@@ -192,6 +192,7 @@ BOOST_PYTHON_MODULE(rdMolTransforms) {
 #endif
 
   python::def("TransformConformer", RDKit::transConformer,
+              (python::arg{"conf"}, python::arg{"trans"}),
               "Transform the coordinates of a conformer");
 
   docString =
@@ -261,6 +262,8 @@ BOOST_PYTHON_MODULE(rdMolTransforms) {
       "Sets the dihedral angle in radians between atoms i, j, k, l; "
       "all atoms bonded to atom l are moved\n");
   python::def("SetDihedralDeg", &MolTransforms::setDihedralDeg,
+              (python::arg("conf"), python::arg("iAtomId"), python::arg("jAtomId"),
+               python::arg("kAtomId"), python::arg("lAtomId"), python::arg("value")),
               "Sets the dihedral angle in degrees between atoms i, j, k, l; "
               "all atoms bonded to atom l are moved\n");
 }
