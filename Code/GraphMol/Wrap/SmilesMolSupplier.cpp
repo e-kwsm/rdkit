@@ -39,7 +39,7 @@ std::string smilesMolSupplierClassDoc =
     1) Lazy evaluation: the molecules are not constructed until we ask for them:\n\n\
        >>> suppl = SmilesMolSupplier('in.smi')\n\
        >>> for mol in suppl:\n\
-       ...    mol.GetNumAtoms()\n\
+       ...     mol.GetNumAtoms()\n\
 \n\
     2) Lazy evaluation 2:\n\n\
        >>> suppl = SmilesMolSupplier('in.smi')\n\
@@ -47,7 +47,7 @@ std::string smilesMolSupplierClassDoc =
        >>> mol2 = next(suppl)\n\
        >>> suppl.reset()\n\
        >>> mol3 = next(suppl)\n\
-       # mol3 and mol1 are the same:\n\
+       >>> # mol3 and mol1 are the same:\n\
        >>> MolToSmiles(mol3)==MolToSmiles(mol1)\n\
 \n\
     3) Random Access:  all molecules are constructed as soon as we ask for the\n\
@@ -55,7 +55,7 @@ std::string smilesMolSupplierClassDoc =
        >>> suppl = SmilesMolSupplier('in.smi')\n\
        >>> nMols = len(suppl)\n\
        >>> for i in range(nMols):\n\
-       ...   suppl[i].GetNumAtoms()\n\
+       ...     suppl[i].GetNumAtoms()\n\
 \n\
   If the input file has a title line and more than two columns (smiles and id), the\n\
   additional columns will be used to set properties on each molecule.  The properties\n\
