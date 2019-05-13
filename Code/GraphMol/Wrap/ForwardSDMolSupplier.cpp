@@ -98,13 +98,13 @@ std::string fsdMolSupplierClassDoc =
     1) Lazy evaluation: the molecules are not constructed until we ask for them:\n\n\
        >>> suppl = ForwardSDMolSupplier(file('in.sdf'))\n\
        >>> for mol in suppl:\n\
-       ...    if mol is not None: mol.GetNumAtoms()\n\
+       ...     if mol is not None: mol.GetNumAtoms()\n\
 \n\
     2) we can also read from compressed files: \n\n\
        >>> import gzip\n\
        >>> suppl = ForwardSDMolSupplier(gzip.open('in.sdf.gz'))\n\
        >>> for mol in suppl:\n\
-       ...   if mol is not None: print mol.GetNumAtoms()\n\
+       ...     if mol is not None: print mol.GetNumAtoms()\n\
 \n\
   Properties in the SD file are used to set properties on each molecule.\n\
   The properties are accessible using the mol.GetProp(propName) method.\n\
