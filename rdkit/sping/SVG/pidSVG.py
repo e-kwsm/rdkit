@@ -330,7 +330,7 @@ class SVGCanvas(Canvas):
     if not edgeColor:
       edgeColor = self.defaultLineColor
     # set edge width...
-    if edgeWidth == None:
+    if edgeWidth is None:
       edgeWidth = self.defaultLineWidth
 
     # SVG markers
