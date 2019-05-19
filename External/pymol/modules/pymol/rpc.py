@@ -455,7 +455,7 @@ def rpcLoadSurfaceData(data, objName='surface', format='', surfaceLevel=1.0):
   gridName = 'grid-%s' % objName
   # it would be nice if we didn't have to go by way of the temporary file,
   # but at the moment pymol will only read shapes from files
-  tempnm = tempfile.mktemp('.grd')
+  tempnm = tempfile.mkstemp('.grd')
   open(tempnm, 'w+').write(data)
   res = rpcLoadSurface(tempnm, objName, format='', surfaceLevel=surfaceLevel)
   os.unlink(tempnm)

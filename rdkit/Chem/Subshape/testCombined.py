@@ -43,11 +43,11 @@ print(pruneStats)
 
 import os, tempfile
 from rdkit import Geometry
-fName = tempfile.mktemp('.grd')
+fName = tempfile.mkstemp('.grd')
 Geometry.WriteGridToFile(ns1.coarseGrid.grid, fName)
 v.server.loadSurface(fName, 'coarse', '', 2.5)
 os.unlink(fName)
-fName = tempfile.mktemp('.grd')
+fName = tempfile.mkstemp('.grd')
 Geometry.WriteGridToFile(ns1.medGrid.grid, fName)
 v.server.loadSurface(fName, 'med', '', 2.5)
 os.unlink(fName)

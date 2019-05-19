@@ -30,7 +30,7 @@ def SmilesToGif(smiles, fileNames, size=(200, 200), cmd=None, dblSize=0, frame=0
       )
     nDone += 1
   if args:
-    fN = tempfile.mktemp('.cmd')
+    fN = tempfile.mkstemp('.cmd')
     open(fN, 'w+').write(args + '\n')
     try:
       cmd = "%s < %s" % (baseCmd, fN)
@@ -54,7 +54,7 @@ def SmilesToGif(smiles, fileNames, size=(200, 200), cmd=None, dblSize=0, frame=0
 
 
 def SmilesToImage(smiles, **kwargs):
-  tempFilename = tempfile.mktemp('.gif')
+  tempFilename = tempfile.mkstemp('.gif')
   ok = SmilesToGif(smiles, tempFilename, **kwargs)
   if ok:
     img = Image.open(tempFilename)

@@ -85,7 +85,7 @@ CCOC,5
 """
         RDLogger.DisableLog('rdApp.error')
 
-        fileN = tempfile.mktemp('.csv')
+        fileN = tempfile.mkstemp('.csv')
         try:
             with open(fileN, 'w+') as f:
                 f.write(txt)

@@ -314,7 +314,7 @@ def Add3DCoordsToMol(data, format, props={}):
     molData = CDXClean(data, format, 'chemical/mdl-molfile')
   else:
     molData = data
-  molFName = tempfile.mktemp('.mol')
+  molFName = tempfile.mkstemp('.mol')
   open(molFName, 'wb+').write(molData)
   doc = c3dApp.Documents.Open(molFName)
 
@@ -333,7 +333,7 @@ def Add3DCoordsToMol(data, format, props={}):
   # and wait for it to finish
   while doc.ComputeStatus in [0x434f4d50, 0x50454e44]:
     pass
-  #outFName = tempfile.mktemp('.mol')
+  #outFName = tempfile.mkstemp('.mol')
   # this is horrible, but apparently Chem3D gets pissy with tempfiles:
   outFName = os.getcwd() + '/to3d.mol'
   doc.SaveAs(outFName)

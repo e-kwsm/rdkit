@@ -96,7 +96,7 @@ class TestCase(unittest.TestCase):
 #   def _testStreamRoundtrip(self):
 #     inD = open(self.fName).read()
 #     supp = Chem.SDMolSupplier(self.fName)
-#     outName = tempfile.mktemp('.sdf')
+#     outName = tempfile.mkstemp('.sdf')
 #     writer = Chem.SDWriter(outName)
 #     _ = next(supp)
 #     for m in supp:
@@ -124,7 +124,7 @@ class TestCase(unittest.TestCase):
 #   def _testLazyDataRoundtrip(self):
 #     inD = open(self.fName).read()
 #     supp = Chem.SDMolSupplier(self.fName)
-#     outName = tempfile.mktemp('.sdf')
+#     outName = tempfile.mkstemp('.sdf')
 #     writer = Chem.SDWriter(outName)
 #     _ = next(supp)
 #     for m in supp:

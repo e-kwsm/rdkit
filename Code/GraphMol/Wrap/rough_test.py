@@ -1962,7 +1962,7 @@ CAS<~>
     for m in ms:
       self.assertTrue(m.HasProp('_MolFileInfo'))
       self.assertTrue(m.HasProp('_MolFileComments'))
-    fName = tempfile.mktemp('.sdf')
+    fName = tempfile.mkstemp('.sdf')
     w = Chem.SDWriter(fName)
     w.SetProps(ms[0].GetPropNames())
     for m in ms:
@@ -3629,7 +3629,7 @@ CAS<~>
     self.assertEqual(path, (1, 2, 3, 16, 17, 18, 20))
 
   def testGithub497(self):
-    outf = gzip.open(tempfile.mktemp(), 'wb+')
+    outf = gzip.open(tempfile.mkstemp(), 'wb+')
     m = Chem.MolFromSmiles('C')
     w = Chem.SDWriter(outf)
     e = False
@@ -3667,7 +3667,7 @@ CAS<~>
       mode = 'w+'
     else:
       mode = 'wt+'
-    outf = gzip.open(tempfile.mktemp(), mode)
+    outf = gzip.open(tempfile.mkstemp(), mode)
     m = Chem.MolFromSmiles('C')
     w = Chem.SDWriter(outf)
     w.write(m)

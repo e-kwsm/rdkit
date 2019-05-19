@@ -107,7 +107,7 @@ if __name__ == '__main__':  # pragma: nocover
     shape = builder.GenerateSubshapeShape(cmpd)
   v = MolViewer()
   if 1:
-    tmpFile = tempfile.mktemp('.grd')
+    tmpFile = tempfile.mkstemp('.grd')
     v.server.deleteAll()
     Geometry.WriteGridToFile(shape.grid, tmpFile)
     time.sleep(1)
