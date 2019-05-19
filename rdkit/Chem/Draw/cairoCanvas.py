@@ -98,7 +98,7 @@ if 'RDK_NOPANGO' not in os.environ:
             if libPath:
                 try:
                     exec(libType + ' = ffi.dlopen("' + libPath.replace('\\', '\\\\') + '")')
-                except:
+                except Exception:
                     if envVarSet:
                         importError = True
                     else:
