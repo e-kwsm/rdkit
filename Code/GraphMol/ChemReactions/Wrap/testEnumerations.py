@@ -31,11 +31,11 @@
 
 
 import unittest
-import os,sys, copy
+import os, sys, copy
 
 from rdkit import rdBase
 from rdkit import Chem
-from rdkit.Chem import AllChem,rdChemReactions
+from rdkit.Chem import AllChem, rdChemReactions
 from rdkit import Geometry
 from rdkit import RDConfig
 import itertools, time
