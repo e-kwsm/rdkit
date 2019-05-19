@@ -62,7 +62,7 @@ class TestCase(unittest.TestCase) :
     self.assertEquals(cartProd.GetNumPermutations(), 10*5*6)
     groups = []
     count = 0
-    print (cartProd.__bool__())
+    print(cartProd.__bool__())
     while cartProd:
       groups.append(tuple(cartProd.next()))
 #      count += 1

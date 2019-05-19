@@ -244,7 +244,7 @@ class TestCase(unittest.TestCase) :
                 self.assertEquals(res, good_res)
             elif status == "bad":
                 self.assertEquals(res, bad_res)
-            print (">"*44)
+            print(">"*44)
             rxnb.Initialize()
             try:
                 rdChemReactions.SanitizeRxn(rxnb)
@@ -253,7 +253,7 @@ class TestCase(unittest.TestCase) :
                 self.assertEquals(res, good_res)
                 assert not status == "fail"
             except:
-                print ("$RXN Failed")
+                print("$RXN Failed")
                 if status == "fail":
                     continue
                 raise
