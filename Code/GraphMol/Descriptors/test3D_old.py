@@ -67,9 +67,9 @@ for smi in A:
  	r=rdMD.CalcWHIM(m)
 	print("Ei:"+str(r[0])+ "," + str(r[1]) + "," + str(r[2])+ "\n")
 	print("Gi:"+str(r[5])+ "," + str(r[6]) + "," + str(r[7])+ "\n")
-	print("SI:"+str(rdMD.CalcSpherocityIndex(m)))
-	print("AS:"+str(rdMD.CalcAsphericity(m)))
-	print("EX:"+str(rdMD.CalcEccentricity(m)))
+	print("SI:"+str(rdMD.CalcSpherocityIndex(m)) + "\n")
+	print("AS:"+str(rdMD.CalcAsphericity(m)) + "\n")
+	print("EX:"+str(rdMD.CalcEccentricity(m)) + "\n")
  	for item in r:
    		thefile.write("%.3f," % item)
 	thefile.write("\n")
