@@ -19,7 +19,7 @@ def TestMolecule(mol):
   try:
     Chem.SanitizeMol(mol)
     mol = Chem.RemoveHs(mol)
-  except ValueError as msg:
+  except ValueError:
     return -1
   except Exception:
     import traceback

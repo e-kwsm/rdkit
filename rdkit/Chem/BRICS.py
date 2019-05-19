@@ -700,7 +700,6 @@ if __name__ == '__main__':
             self.assertTrue(len(allNodes) == 18, allNodes)
 
         def test5(self):
-            allNodes = set()
             frags = [
               '[14*]c1ncncn1',
               '[16*]c1ccccc1',
@@ -716,7 +715,6 @@ if __name__ == '__main__':
             self.assertTrue('c1ccc(-c2ccccn2)cc1' in smis)
 
         def test5a(self):
-            allNodes = set()
             frags = [
               '[3*]O[3*]',
               '[16*]c1ccccc1',
@@ -731,7 +729,6 @@ if __name__ == '__main__':
             self.assertTrue('c1ccc(-c2ccccc2)cc1' in smis)
 
         def test6(self):
-            allNodes = set()
             frags = [
               '[16*]c1ccccc1',
               '[3*]OC',
@@ -748,7 +745,6 @@ if __name__ == '__main__':
             self.assertTrue('c1ccc(-n2cccc2)cc1' in smis, smis)
 
         def test7(self):
-            allNodes = set()
             frags = [
               '[16*]c1ccccc1',
               '[3*]OC',
