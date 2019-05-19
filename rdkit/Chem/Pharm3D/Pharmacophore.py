@@ -177,7 +177,7 @@ class ExplicitPharmacophore:
 
   def initFromLines(self, lines):
     import re
-    spaces = re.compile(r'[ \t]+')
+    spaces = re.compile('[ \t]+')
 
     feats = []
     rads = []

@@ -18,7 +18,7 @@ from rdkit import RDLogger
 from rdkit.Chem import ChemicalFeatures
 
 logger = RDLogger.logger()
-splitExpr = re.compile(r'[ \t,]')
+splitExpr = re.compile('[ \t,]')
 
 
 def GetAtomFeatInfo(factory, mol):
