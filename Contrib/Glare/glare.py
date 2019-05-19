@@ -303,14 +303,14 @@ class Glare:
         criteria.
         """
         # attempt to generate report like glare application
-        print ("------- PARAMETERS: --------------")
-        print ("GOOODNESS THRESHOLD : %s%%"%(self.desiredFinalGoodness * 100))
-        print ("MIN PARTITION SIZE : %s"%self.numPartitions)
+        print("------- PARAMETERS: --------------")
+        print("GOOODNESS THRESHOLD : %s%%"%(self.desiredFinalGoodness * 100))
+        print("MIN PARTITION SIZE : %s"%self.numPartitions)
         if self.initialFraction is None or self.initialFraction > 0.999:
-            print ("INITIAL FRACTION TO KEEP : AUTOMATIC")
+            print("INITIAL FRACTION TO KEEP : AUTOMATIC")
         else:
-            print ("INITAL FRACTION TO KEEP : %s%%"%(self.initialFraction*100))
-        print ("Actual SIZE : %s = %s"%(
+            print("INITAL FRACTION TO KEEP : %s%%"%(self.initialFraction*100))
+        print("Actual SIZE : %s = %s"%(
             " x ".join([str(len(rg.sidechains)) for rg in library.rgroups]),
             reduce(operator.mul, [len(rg.sidechains) for rg in library.rgroups])
         ))
@@ -382,25 +382,25 @@ class Glare:
                 # keep the best fraction...
                 rg.prune(1.0 - fraction_to_reject)
                 
-            print ("-------------- ITERATION : %s ----------------------"%iteration)
-            print ("GOODNESS      : %s%%"%(Gi * 100))
-            print ("NUMBER EVAL   : %s"%(total))
-            print ("CUMUL EVAL    : %s"%(running_total))
-            print ("KEPT IN STEP  : %s%%"%(fraction*100.))
+            print("-------------- ITERATION : %s ----------------------"%iteration)
+            print("GOODNESS      : %s%%"%(Gi * 100))
+            print("NUMBER EVAL   : %s"%(total))
+            print("CUMUL EVAL    : %s"%(running_total))
+            print("KEPT IN STEP  : %s%%"%(fraction*100.))
             if not iteration:
-                print ("GOODNESS THRESHOLD : %s"%self.desiredFinalGoodness)
-                print ("MIN PARTITION SIZE : %s"%self.numPartitions)
-                print ("INITIAL FRACTION TO KEEP : ")
+                print("GOODNESS THRESHOLD : %s"%self.desiredFinalGoodness)
+                print("MIN PARTITION SIZE : %s"%self.numPartitions)
+                print("INITIAL FRACTION TO KEEP : ")
                 if self.fractionToKeep > 0.999:
-                    print ("AUTOMATIC")
+                    print("AUTOMATIC")
                 else:
-                    print ("%s%%"%self.fractionToKeep)
+                    print("%s%%"%self.fractionToKeep)
 
-            print ("Actual SIZE : %s = %s"%(
+            print("Actual SIZE : %s = %s"%(
                 " x ".join([str(len(rg.sidechains)) for rg in library.rgroups]),
                 reduce(operator.mul, [len(rg.sidechains) for rg in library.rgroups])
             ))
-            print ("EFFECTIVENESS : %s%%"%(library.effectiveness()*100.))
+            print("EFFECTIVENESS : %s%%"%(library.effectiveness()*100.))
 
             # stopping critieria
             if iteration and Gi < 1e-12:
