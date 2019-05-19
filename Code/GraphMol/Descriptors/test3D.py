@@ -38,7 +38,7 @@ def simple_case():
     end = time.time()
     print end-start
 
-if(__name__=='__main__'):
+if __name__=='__main__':
     # FIX: We need to actually add some tests here, but this doees not need to
     # to be done until the C++ code and tests are straightened out.
     generateAll()
