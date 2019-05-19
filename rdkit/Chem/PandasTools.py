@@ -192,7 +192,6 @@ def _get_svg_image(mol, size=(200, 200), highlightAtoms=[]):
     """ mol rendered as SVG """
     from IPython.display import SVG
     from rdkit.Chem import rdDepictor
-    from rdkit.Chem.Draw import rdMolDraw2D
     try:
         # If no coordinates, calculate 2D
         mol.GetConformer(-1)
