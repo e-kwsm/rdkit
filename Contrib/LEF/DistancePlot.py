@@ -29,6 +29,7 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 # Created by Greg Landrum and Anna Vulpetti, March 2009
+from __future__ import print_function
 from rdkit import Chem
 from rdkit import DataStructs
 from CreateFps import GetMolFingerprint
@@ -85,7 +86,7 @@ if __name__ == '__main__':
   logger.info('  got %d reasonable pairs' % len(pairs))
 
   logger.info('creating output file')
-  print >> outF, 'nameA|nameB|nameAB|smilesA|smilesB|smilesAB|actA|actB|dAct|dist|disparity'
+  print('nameA|nameB|nameAB|smilesA|smilesB|smilesAB|actA|actB|dAct|dist|disparity', file=outF)
   for i, j in pairs:
     if data[i][2] < data[j][2]:
       i, j = j, i
@@ -97,5 +98,5 @@ if __name__ == '__main__':
       disparity = dAct / dist
     else:
       disparity = 1000
-    print >> outF, '%s|%s|%s_%s|%s|%s|%s.%s|%f|%f|%f|%f|%f' % (
-      nmi, nmj, nmi, nmj, smii, smij, smii, smij, propi, propj, dAct, dist, disparity)
+    print('%s|%s|%s_%s|%s|%s|%s.%s|%f|%f|%f|%f|%f' % (
+      nmi, nmj, nmi, nmj, smii, smij, smii, smij, propi, propj, dAct, dist, disparity), file=outF)

@@ -32,6 +32,8 @@
 #  Created by Greg Landrum, July 2007
 #
 
+from __future__ import print_function
+
 _version = "0.14.0"
 _description = """
      The sd filename argument can be either an SD file or an MDL mol 
@@ -500,7 +502,7 @@ def RunSearch(options, queryFilename):
         for i in range(1, len(cns) - 1):
           pn = cns[i]
           pv = str(row[i])
-          print >> sdfOut, '> <%s>\n%s\n' % (pn, pv)
+          print('> <%s>\n%s\n' % (pn, pv), file=sdfOut)
         print('$$$$', file=sdfOut)
       if smilesOut:
         smi = Chem.MolToSmiles(m, options.chiralSmiles)

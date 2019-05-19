@@ -29,6 +29,7 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 # Created by Greg Landrum and Anna Vulpetti, March 2009
+from __future__ import print_function
 from rdkit import Chem
 from rdkit import DataStructs
 from CreateFps import GetMolFingerprint
@@ -122,7 +123,7 @@ if __name__ == '__main__':
     results[i] = [None] * len(options.similarityThreshold)
   if options.neighborsFile:
     nbrFile = file(options.neighborsFile, 'w+')
-    print >> nbrFile, 'ID|CompoundName|CompoundSmiles|NeighborName|NeighborSmiles|NeighborShift|Similarity'
+    print('ID|CompoundName|CompoundSmiles|NeighborName|NeighborSmiles|NeighborShift|Similarity', file=nbrFile)
     id = 1
   else:
     nbrFile = None
@@ -152,7 +153,7 @@ if __name__ == '__main__':
           nnm, nsmi, nfp, nproperty = data
           outRow = [str(id), nm, smi, nnm, nsmi, str(nproperty), str(dist - 1.)]
           id += 1
-          print >> nbrFile, '|'.join(outRow)
+          print('|'.join(outRow), file=nbrFile)
       nbrs = [x for x in nbrs if x[1] is not None]
       results[i][j] = (nm, smi, prop, pred, len(nbrs))
       if not (i + 1) % 100:
@@ -166,7 +167,7 @@ if __name__ == '__main__':
     headers.append('predShift_%(maxPathLength)d_%(numNeighbors)d_%(thresh).2f' % locals())
     headers.append('dPred_%(maxPathLength)d_%(numNeighbors)d_%(thresh).2f' % locals())
     headers.append('nbrs_%(maxPathLength)d_%(numNeighbors)d_%(thresh).2f' % locals())
-  print >> outF, '|'.join(headers)
+  print('|'.join(headers), file=outF)
   for i in range(len(test)):
     nm = results[i][0][0]
     smi = results[i][0][1]
@@ -178,4 +179,4 @@ if __name__ == '__main__':
       row.append(str(pred))
       row.append(str(abs(prop - pred)))
       row.append(str(nbrs))
-    print >> outF, '|'.join(row)
+    print('|'.join(row), file=outF)
