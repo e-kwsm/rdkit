@@ -149,7 +149,7 @@ except Exception:
 if pd:
     try:
         from pandas.io.formats import format as fmt
-    except:
+    except ImportError:
         try:
             from pandas.formats import format as fmt
         except ImportError:
