@@ -360,7 +360,6 @@ class MolViewer(object):
 
 
 if __name__ == '__main__':
-  from rdkit import Chem
   from rdkit.Chem import rdDistGeom, rdForceFieldHelpers
 
   m = Chem.MolFromSmiles('c1cccc2c1cccc2')
