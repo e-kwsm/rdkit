@@ -507,7 +507,7 @@ class TestCase(unittest.TestCase):
       pass
 
     m.SetBoolProp("a", False)
-    self.assertTrue(m.GetBoolProp("a") == False)
+    self.assertFalse(m.GetBoolProp("a"))
 
     self.assertEqual(m.GetPropsAsDict(), {'a': False, 'prop1': 'foob'})
     m.SetDoubleProp("b", 1000.0)
