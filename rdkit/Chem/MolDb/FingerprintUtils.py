@@ -6,7 +6,6 @@
 
 import pickle
 from rdkit import DataStructs, Chem
-from rdkit import Chem
 
 similarityMethods = {
   'RDK': DataStructs.ExplicitBitVect,
