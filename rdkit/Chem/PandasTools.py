@@ -343,7 +343,7 @@ def LoadSDF(filename, idName='ID', molColName='ROMol', includeFingerprints=False
         if smilesName is not None:
             try:
                 row[smilesName] = Chem.MolToSmiles(mol, isomericSmiles=isomericSmiles)
-            except:
+            except Exception:
                 log.warning('No valid smiles could be generated for molecule %s', i)
                 row[smilesName] = None
         if molColName is not None and not includeFingerprints:
