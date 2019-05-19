@@ -10,7 +10,6 @@ import io
 import unittest
 import pickle
 from rdkit import RDConfig
-from rdkit import Chem
 from rdkit.Chem import ChemicalFeatures
 from rdkit.Geometry import rdGeometry as geom
 
