@@ -141,7 +141,7 @@ except ImportError:
     traceback.print_exc()
     pd = None
 
-except Exception as e:
+except Exception:
     import traceback
     traceback.print_exc()
     pd = None
