@@ -1,5 +1,5 @@
 from rdkit import RDConfig
-import sys, os
+import sys
 from time import sleep
 from multiprocessing import Process, Value
 import unittest

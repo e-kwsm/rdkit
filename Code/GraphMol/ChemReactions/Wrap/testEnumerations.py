@@ -33,8 +33,6 @@
 import unittest
 import os,sys, copy
 
-import pickle
-
 from rdkit import rdBase
 from rdkit import Chem
 from rdkit.Chem import AllChem,rdChemReactions
