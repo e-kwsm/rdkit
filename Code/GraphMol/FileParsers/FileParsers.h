@@ -199,7 +199,6 @@ RDKIT_FILEPARSERS_EXPORT std::unique_ptr<RWMol> MolFromTPLDataStream(
 RDKIT_FILEPARSERS_EXPORT std::unique_ptr<RWMol> MolFromTPLFile(
     const std::string &fName,
     const TPLParserParams &params = TPLParserParams());
-
 }  // namespace FileParsers
 }  // namespace v2
 
@@ -517,6 +516,21 @@ inline std::unique_ptr<RDKit::RWMol> operator""_pdb(const char *text,
   }
 }
 
+namespace v2::FileParsers {
+struct RDKIT_FILEPARSERS_EXPORT CMLFileParserParams {
+  bool sanitize = true; /**< sanitize the molecule after building it */
+  bool removeHs = true; /**< remove Hs after constructing the molecule */
+};
+RDKIT_FILEPARSERS_EXPORT std::unique_ptr<RWMol> MolFromCMLDataStream(
+    std::istream &inStream,
+    const CMLFileParserParams &params = {}) noexcept(false);
+RDKIT_FILEPARSERS_EXPORT std::unique_ptr<RWMol> MolFromCMLBlock(
+    const std::string &cmlBlock,
+    const CMLFileParserParams &params = {}) noexcept(false);
+RDKIT_FILEPARSERS_EXPORT std::unique_ptr<RWMol> MolFromCMLFile(
+    const std::string &fName,
+    const CMLFileParserParams &params = {}) noexcept(false);
+}  // namespace v2::FileParsers
 }  // namespace RDKit
 
 #endif
