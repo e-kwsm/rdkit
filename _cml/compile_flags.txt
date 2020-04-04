@@ -1,0 +1,6 @@
+-I../Code
+-I../External/catch/catch/single_include/catch2
+-I/opt/boost/latest/include
+-I/usr/include/python3.7m
+-std=c++14
+-xc++
