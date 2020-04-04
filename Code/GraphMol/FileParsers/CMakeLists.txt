@@ -40,6 +40,7 @@ rdkit_library(FileParsers
     TplFileParser.cpp TplFileWriter.cpp
     PDBParser.cpp PDBWriter.cpp
     CMLWriter.cpp XYZFileWriter.cpp XYZFileParser.cpp
+    #CMLReader.cpp
     ${maesupplier}
     ProximityBonds.cpp
     SequenceParsers.cpp SequenceWriters.cpp
