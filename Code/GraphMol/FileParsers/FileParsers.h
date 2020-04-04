@@ -170,6 +170,14 @@ RDKIT_FILEPARSERS_EXPORT void MolToCMLFile(const ROMol &mol,
                                            int confId = -1,
                                            bool kekulize = true);
 
+RDKIT_FILEPARSERS_EXPORT RDKit::RWMol *CMLBlockToMol(
+    const std::string &block, bool sanitize = true,
+    bool removeHs = true) noexcept(false);
+
+RDKIT_FILEPARSERS_EXPORT RDKit::RWMol *CMLFileToMol(
+    const std::string &filename, bool sanitize = true,
+    bool removeHs = true) noexcept(false);
+
 RDKIT_FILEPARSERS_EXPORT std::string MolToXYZBlock(const ROMol &mol,
                                                    int confId = -1);
 
