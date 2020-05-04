@@ -166,12 +166,11 @@ std::string DiscreteValueVect::toString() const {
   streamWrite(ss, tInt);
 
 #if defined(BOOST_BIG_ENDIAN)
-  std::uint32_t *td = new std::uint32_t[d_numInts];
+  std::vector<std::uint32_t> td(d_numInts);
   for (unsigned int i = 0; i < d_numInts; ++i)
     td[i] = EndianSwapBytes<HOST_ENDIAN_ORDER, LITTLE_ENDIAN_ORDER>(
         d_data.get()[i]);
-  ss.write((const char *)td, d_numInts * sizeof(tInt));
-  delete[] td;
+  ss.write((const char *)td.data(), d_numInts * sizeof(tInt));
 #else
   ss.write((const char *)d_data.get(), d_numInts * sizeof(tInt));
 #endif

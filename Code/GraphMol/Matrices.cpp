@@ -39,16 +39,14 @@ pathMat: the path matrix, should be dim x dim
 template <class T>
 void FloydWarshall(int dim, T *adjMat, int *pathMat) {
   int k, i, j;
-  T *currD, *lastD, *tTemp;
-  int *currP, *lastP, *iTemp;
+  std::vector<T> currD(dim * dim);
+  std::vector<T> lastD(dim * dim);
+  std::vector<T> tTemp;
+  std::vector<int> currP(dim * dim);
+  std::vector<int> lastP(dim * dim);
+  std::vector<int> iTemp;
 
-  currD = new T[dim * dim];
-  currP = new int[dim * dim];
-  lastD = new T[dim * dim];
-  lastP = new int[dim * dim];
-
-  memcpy(static_cast<void *>(lastD), static_cast<void *>(adjMat),
-         dim * dim * sizeof(T));
+  lastD.assign(adjMat, adjMat + dim * dim);
 
   // initialize the paths
   for (i = 0; i < dim; i++) {
@@ -61,8 +59,7 @@ void FloydWarshall(int dim, T *adjMat, int *pathMat) {
       }
     }
   }
-  memcpy(static_cast<void *>(lastP), static_cast<void *>(pathMat),
-         dim * dim * sizeof(int));
+  lastP.assign(pathMat, pathMat + dim * dim);
 
   for (k = 0; k < dim; k++) {
     int ktab = k * dim;
@@ -88,30 +85,21 @@ void FloydWarshall(int dim, T *adjMat, int *pathMat) {
     currP = lastP;
     lastP = iTemp;
   }
-  memcpy(static_cast<void *>(adjMat), static_cast<void *>(lastD),
-         dim * dim * sizeof(T));
-  memcpy(static_cast<void *>(pathMat), static_cast<void *>(lastP),
-         dim * dim * sizeof(int));
-
-  delete[] currD;
-  delete[] currP;
-  delete[] lastD;
-  delete[] lastP;
+  std::copy(lastD.begin(), lastD.end(), adjMat);
+  std::copy(lastP.begin(), lastP.end(), pathMat);
 }
 
 template <class T>
 void FloydWarshall(int dim, T *adjMat, int *pathMat,
                    const std::vector<int> &activeAtoms) {
-  T *currD, *lastD, *tTemp;
-  int *currP, *lastP, *iTemp;
+  std::vector<T> currD(dim * dim);
+  std::vector<T> lastD(dim * dim);
+  std::vector<T> tTemp;
+  std::vector<int> currP(dim * dim);
+  std::vector<int> lastP(dim * dim);
+  std::vector<int> iTemp;
 
-  currD = new T[dim * dim];
-  currP = new int[dim * dim];
-  lastD = new T[dim * dim];
-  lastP = new int[dim * dim];
-
-  memcpy(static_cast<void *>(lastD), static_cast<void *>(adjMat),
-         dim * dim * sizeof(T));
+  lastD.assign(adjMat, adjMat + dim * dim);
 
   // initialize the paths
   for (auto ai : activeAtoms) {
@@ -124,8 +112,7 @@ void FloydWarshall(int dim, T *adjMat, int *pathMat,
       }
     }
   }
-  memcpy(static_cast<void *>(lastP), static_cast<void *>(pathMat),
-         dim * dim * sizeof(int));
+  lastP.assign(pathMat, pathMat + dim * dim);
 
   for (auto ak : activeAtoms) {
     int ktab = ak * dim;
@@ -151,15 +138,8 @@ void FloydWarshall(int dim, T *adjMat, int *pathMat,
     currP = lastP;
     lastP = iTemp;
   }
-  memcpy(static_cast<void *>(adjMat), static_cast<void *>(lastD),
-         dim * dim * sizeof(T));
-  memcpy(static_cast<void *>(pathMat), static_cast<void *>(lastP),
-         dim * dim * sizeof(int));
-
-  delete[] currD;
-  delete[] currP;
-  delete[] lastD;
-  delete[] lastP;
+  std::copy(lastD.begin(), lastD.end(), adjMat);
+  std::copy(lastP.begin(), lastP.end(), pathMat);
 }
 }  // namespace
 
@@ -271,10 +251,8 @@ double *getDistanceMat(const ROMol &mol, const std::vector<int> &activeAtoms,
     dMat[j * nAts + i] = contrib;
   }
 
-  auto *pathMat = new int[nAts * nAts];
-  memset(static_cast<void *>(pathMat), 0, nAts * nAts * sizeof(int));
-  FloydWarshall(nAts, dMat, pathMat);
-  delete[] pathMat;
+  std::vector<int> pathMat(nAts * nAts, 0);
+  FloydWarshall(nAts, dMat, pathMat.data());
 
   if (useAtomWts) {
     for (i = 0; i < nAts; i++) {

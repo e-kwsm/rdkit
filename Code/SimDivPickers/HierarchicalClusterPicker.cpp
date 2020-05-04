@@ -28,12 +28,9 @@ RDKit::VECT_INT_VECT HierarchicalClusterPicker::cluster(
   // Do the clustering
   auto method = (long int)d_method;
   long int len = poolSize * (poolSize - 1);
-  auto *ia = (long int *)calloc(poolSize, sizeof(long int));
-  auto *ib = (long int *)calloc(poolSize, sizeof(long int));
-  real *crit = (real *)calloc(poolSize, sizeof(real));
-  CHECK_INVARIANT(ia, "failed to allocate memory");
-  CHECK_INVARIANT(ib, "failed to allocate memory");
-  CHECK_INVARIANT(crit, "failed to allocate memory");
+  std::vector<long int> ia(poolSize);
+  std::vector<long int> ib(poolSize);
+  std::vector<real> crit(poolSize);
   auto poolSize2 = static_cast<long int>(poolSize);
 
   distdriver_(&poolSize2,       // number of items in the pool
@@ -78,9 +75,6 @@ RDKit::VECT_INT_VECT HierarchicalClusterPicker::cluster(
     // mark the second cluster as removed
     removed.push_back(cx2);
   }
-  free(ia);
-  free(ib);
-  free(crit);
 
   // sort removed so that looping will be easier later
   std::sort(removed.begin(), removed.end());
