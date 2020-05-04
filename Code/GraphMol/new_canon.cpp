@@ -88,20 +88,12 @@ void compareRingAtomsConcerningNumNeighbors(Canon::canon_atom *atoms,
     unsigned currentRNIdx = 0;
     atoms[idx].neighborNum.reserve(1000);
     atoms[idx].revistedNeighbors.assign(1000, 0);
-    char *visited = (char *)malloc(nAtoms * sizeof(char));
-    CHECK_INVARIANT(visited, "allocation failed");
-    memset(visited, 0, nAtoms * sizeof(char));
+    std::vector<char> visited(nAtoms, 0);
     unsigned count = 1;
     std::vector<int> nextLevelNbrs;
-    char *lastLevelNbrs = (char *)malloc(nAtoms * sizeof(char));
-    CHECK_INVARIANT(lastLevelNbrs, "allocation failed");
-    memset(lastLevelNbrs, 0, nAtoms * sizeof(char));
-    char *currentLevelNbrs = (char *)malloc(nAtoms * sizeof(char));
-    CHECK_INVARIANT(currentLevelNbrs, "allocation failed");
-    memset(currentLevelNbrs, 0, nAtoms * sizeof(char));
-    int *revisitedNeighbors = (int *)malloc(nAtoms * sizeof(int));
-    CHECK_INVARIANT(revisitedNeighbors, "allocation failed");
-    memset(revisitedNeighbors, 0, nAtoms * sizeof(int));
+    std::vector<char> lastLevelNbrs(nAtoms, 0);
+    std::vector<char> currentLevelNbrs(nAtoms, 0);
+    std::vector<int> revisitedNeighbors(nAtoms, 0);
     while (!neighbors.empty()) {
       unsigned int numLevelNbrs = 0;
       nextLevelNbrs.resize(0);
@@ -136,13 +128,13 @@ void compareRingAtomsConcerningNumNeighbors(Canon::canon_atom *atoms,
           }
         }
       }
-      memset(lastLevelNbrs, 0, nAtoms * sizeof(char));
+      std::fill(lastLevelNbrs.begin(), lastLevelNbrs.end(), 0);
       for (unsigned i = 0; i < nAtoms; ++i) {
         if (currentLevelNbrs[i]) {
           lastLevelNbrs[i] = 1;
         }
       }
-      memset(currentLevelNbrs, 0, nAtoms * sizeof(char));
+      std::fill(currentLevelNbrs.begin(), currentLevelNbrs.end(), 0);
       std::vector<int> tmp;
       tmp.reserve(30);
       for (unsigned i = 0; i < nAtoms; ++i) {
@@ -160,7 +152,7 @@ void compareRingAtomsConcerningNumNeighbors(Canon::canon_atom *atoms,
         atoms[idx].revistedNeighbors[currentRNIdx] = i;
         currentRNIdx++;
       }
-      memset(revisitedNeighbors, 0, nAtoms * sizeof(int));
+      std::fill(revisitedNeighbors.begin(), revisitedNeighbors.end(), 0);
 
       atoms[idx].neighborNum.push_back(numLevelNbrs);
       atoms[idx].neighborNum.push_back(-1);
@@ -170,11 +162,6 @@ void compareRingAtomsConcerningNumNeighbors(Canon::canon_atom *atoms,
       count++;
     }
     atoms[idx].revistedNeighbors.resize(currentRNIdx);
-
-    free(visited);
-    free(currentLevelNbrs);
-    free(lastLevelNbrs);
-    free(revisitedNeighbors);
   }
 }
 
@@ -187,18 +174,12 @@ void rankWithFunctor(T &ftor, bool breakTies, int *order,
   const ROMol &mol = *ftor.dp_mol;
   canon_atom *atoms = ftor.dp_atoms;
   unsigned int nAts = mol.getNumAtoms();
-  int *count = (int *)malloc(nAts * sizeof(int));
-  CHECK_INVARIANT(count, "allocation failed");
+  std::vector<int> count(nAts);
   int activeset;
-  int *next = (int *)malloc(nAts * sizeof(int));
-  CHECK_INVARIANT(next, "allocation failed");
-  int *changed = (int *)malloc(nAts * sizeof(int));
-  CHECK_INVARIANT(changed, "allocation failed");
-  char *touched = (char *)malloc(nAts * sizeof(char));
-  CHECK_INVARIANT(touched, "allocation failed");
-  memset(touched, 0, nAts * sizeof(char));
-  memset(changed, 1, nAts * sizeof(int));
-  CreateSinglePartition(nAts, order, count, atoms);
+  std::vector<int> next(nAts);
+  std::vector<int> changed(nAts, 0);
+  std::vector<char> touched(nAts, 0);
+  CreateSinglePartition(nAts, order, count.data(), atoms);
 // ActivatePartitions(nAts,order,count,activeset,next,changed);
 // RefinePartitions(mol,atoms,ftor,false,order,count,activeset,next,changed,touched);
 #ifdef VERBOSE_CANON
@@ -210,7 +191,8 @@ void rankWithFunctor(T &ftor, bool breakTies, int *order,
   }
 #endif
   ftor.df_useNbrs = true;
-  ActivatePartitions(nAts, order, count, activeset, next, changed);
+  ActivatePartitions(nAts, order, count.data(), activeset, next.data(),
+                     changed.data());
 #ifdef VERBOSE_CANON
   std::cerr << "1a--------" << std::endl;
   for (unsigned int i = 0; i < mol.getNumAtoms(); ++i) {
@@ -219,8 +201,8 @@ void rankWithFunctor(T &ftor, bool breakTies, int *order,
               << " count: " << count[order[i]] << std::endl;
   }
 #endif
-  RefinePartitions(mol, atoms, ftor, true, order, count, activeset, next,
-                   changed, touched);
+  RefinePartitions(mol, atoms, ftor, true, order, count.data(), activeset,
+                   next.data(), changed.data(), touched.data());
 #ifdef VERBOSE_CANON
   std::cerr << "2--------" << std::endl;
   for (unsigned int i = 0; i < mol.getNumAtoms(); ++i) {
@@ -238,9 +220,10 @@ void rankWithFunctor(T &ftor, bool breakTies, int *order,
   if (useChirality && ties) {
     SpecialChiralityAtomCompareFunctor scftor(atoms, mol, atomsInPlay,
                                               bondsInPlay);
-    ActivatePartitions(nAts, order, count, activeset, next, changed);
-    RefinePartitions(mol, atoms, scftor, true, order, count, activeset, next,
-                     changed, touched);
+    ActivatePartitions(nAts, order, count.data(), activeset, next.data(),
+                       changed.data());
+    RefinePartitions(mol, atoms, scftor, true, order, count.data(), activeset,
+                     next.data(), changed.data(), touched.data());
 #ifdef VERBOSE_CANON
     std::cerr << "2a--------" << std::endl;
     for (unsigned int i = 0; i < mol.getNumAtoms(); ++i) {
@@ -276,9 +259,10 @@ void rankWithFunctor(T &ftor, bool breakTies, int *order,
     SpecialSymmetryAtomCompareFunctor sftor(atoms, mol, atomsInPlay,
                                             bondsInPlay);
     compareRingAtomsConcerningNumNeighbors(atoms, nAts, mol);
-    ActivatePartitions(nAts, order, count, activeset, next, changed);
-    RefinePartitions(mol, atoms, sftor, true, order, count, activeset, next,
-                     changed, touched);
+    ActivatePartitions(nAts, order, count.data(), activeset, next.data(),
+                       changed.data());
+    RefinePartitions(mol, atoms, sftor, true, order, count.data(), activeset,
+                     next.data(), changed.data(), touched.data());
 #ifdef VERBOSE_CANON
     std::cerr << "2b--------" << std::endl;
     for (unsigned int i = 0; i < mol.getNumAtoms(); ++i) {
@@ -289,8 +273,8 @@ void rankWithFunctor(T &ftor, bool breakTies, int *order,
 #endif
   }
   if (breakTies) {
-    BreakTies(mol, atoms, ftor, true, order, count, activeset, next, changed,
-              touched);
+    BreakTies(mol, atoms, ftor, true, order, count.data(), activeset,
+              next.data(), changed.data(), touched.data());
 #ifdef VERBOSE_CANON
     std::cerr << "3--------" << std::endl;
     for (unsigned int i = 0; i < mol.getNumAtoms(); ++i) {
@@ -300,10 +284,6 @@ void rankWithFunctor(T &ftor, bool breakTies, int *order,
     }
 #endif
   }
-  free(count);
-  free(next);
-  free(touched);
-  free(changed);
 }
 
 namespace {
@@ -428,8 +408,9 @@ void basicInitCanonAtom(const ROMol &mol, Canon::canon_atom &atom,
   atom.index = idx;
   atom.p_symbol = nullptr;
   atom.degree = atom.atom->getDegree();
-  atom.nbrIds = (int *)malloc(atom.degree * sizeof(int));
-  getNbrs(mol, atom.atom, atom.nbrIds);
+  atom.nbrIds.resize(atom.degree);
+  if (!atom.nbrIds.empty())
+    getNbrs(mol, atom.atom, atom.nbrIds.data());
 }
 
 void advancedInitCanonAtom(const ROMol &mol, Canon::canon_atom &atom,
@@ -472,7 +453,7 @@ void initFragmentCanonAtoms(const ROMol &mol,
     // then count the degree in the fragment itself below.
     atoms[i].degree = 0;
     if (atomsInPlay[i]) {
-      atoms[i].nbrIds = (int *)calloc(atoms[i].atom->getDegree(), sizeof(int));
+      atoms[i].nbrIds.resize(atoms[i].atom->getDegree());
       if (atomSymbols) {
         atoms[i].p_symbol = &(*atomSymbols)[i];
       } else {
@@ -532,10 +513,7 @@ void initChiralCanonAtoms(const ROMol &mol,
 
 void freeCanonAtoms(std::vector<Canon::canon_atom> &atoms) {
   for (auto &atom : atoms) {
-    if (atom.nbrIds) {
-      free(atom.nbrIds);
-      atom.nbrIds = nullptr;
-    }
+    atom.nbrIds.clear();
   }
 }
 
@@ -609,14 +587,12 @@ void rankMolAtoms(const ROMol &mol, std::vector<unsigned int> &res,
   ftor.df_useChirality = includeChirality;
   ftor.df_useChiralityRings = includeChirality;
 
-  int *order = (int *)malloc(mol.getNumAtoms() * sizeof(int));
-  PRECONDITION(order, "bad pointer");
-  rankWithFunctor(ftor, breakTies, order, true, includeChirality);
+  std::vector<int> order(mol.getNumAtoms());
+  rankWithFunctor(ftor, breakTies, order.data(), true, includeChirality);
 
   for (unsigned int i = 0; i < mol.getNumAtoms(); ++i) {
     res[order[i]] = atoms[order[i]].index;
   }
-  free(order);
   freeCanonAtoms(atoms);
 
   if (clearRings) {
@@ -657,15 +633,13 @@ void rankFragmentAtoms(const ROMol &mol, std::vector<unsigned int> &res,
   ftor.df_useIsotopes = includeIsotopes;
   ftor.df_useChirality = includeChirality;
 
-  int *order = (int *)malloc(mol.getNumAtoms() * sizeof(int));
-  PRECONDITION(order, "bad pointer");
-  rankWithFunctor(ftor, breakTies, order, true, includeChirality, &atomsInPlay,
-                  &bondsInPlay);
+  std::vector<int> order(mol.getNumAtoms());
+  rankWithFunctor(ftor, breakTies, order.data(), true, includeChirality,
+                  &atomsInPlay, &bondsInPlay);
 
   for (unsigned int i = 0; i < mol.getNumAtoms(); ++i) {
     res[order[i]] = atoms[order[i]].index;
   }
-  free(order);
   freeCanonAtoms(atoms);
   if (clearRings) {
     mol.getRingInfo()->reset();
@@ -688,14 +662,12 @@ void chiralRankMolAtoms(const ROMol &mol, std::vector<unsigned int> &res) {
   initChiralCanonAtoms(mol, atoms);
   ChiralAtomCompareFunctor ftor(&atoms.front(), mol);
 
-  int *order = (int *)malloc(mol.getNumAtoms() * sizeof(int));
-  PRECONDITION(order, "bad pointer");
-  rankWithFunctor(ftor, false, order);
+  std::vector<int> order(mol.getNumAtoms());
+  rankWithFunctor(ftor, false, order.data());
 
   for (unsigned int i = 0; i < mol.getNumAtoms(); ++i) {
     res[order[i]] = atoms[order[i]].index;
   }
-  free(order);
   freeCanonAtoms(atoms);
   if (clearRings) {
     mol.getRingInfo()->reset();

@@ -109,7 +109,7 @@ class RDKIT_GRAPHMOL_EXPORT canon_atom {
 
   canon_atom() {}
 
-  ~canon_atom() { free(nbrIds); }
+  ~canon_atom() {}
 };
 
 RDKIT_GRAPHMOL_EXPORT void updateAtomNeighborIndex(
@@ -253,7 +253,7 @@ class RDKIT_GRAPHMOL_EXPORT AtomCompareFunctor {
       return 0;
     }
 
-    int *nbrs = dp_atoms[i].nbrIds;
+    const auto &nbrs = dp_atoms[i].nbrIds;
     unsigned int code = 0;
     for (unsigned j = 0; j < dp_atoms[i].degree; ++j) {
       if (dp_atoms[nbrs[j]].isRingStereoAtom) {
