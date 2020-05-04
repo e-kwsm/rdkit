@@ -154,19 +154,16 @@ void testUFF2() {
   ff.contribs().push_back(ForceFields::ContribPtr(bs));
   ff.initialize();
 
-  double *p, *g;
-  p = new double[6];
-  g = new double[6];
-  for (int i = 0; i < 6; i++) {
-    p[i] = 0.0;
-    g[i] = 0.0;
-  }
+  std::array<double, 6> p;
+  std::array<double, 6> g;
+  p.fill(0.0);
+  g.fill(0.0);
 
   double E;
   // edge case: zero bond length:
-  E = bs->getEnergy(p);
+  E = bs->getEnergy(p.data());
   TEST_ASSERT(E > 0.0);
-  bs->getGrad(p, g);
+  bs->getGrad(p.data(), g.data());
   for (int i = 0; i < 6; i++) {
     TEST_ASSERT(fabs(g[i]) > 0.0);
   }
@@ -177,9 +174,9 @@ void testUFF2() {
     g[i] = 0.0;
   }
   ff.initialize();
-  E = bs->getEnergy(p);
+  E = bs->getEnergy(p.data());
   TEST_ASSERT(RDKit::feq(E, 0.0));
-  bs->getGrad(p, g);
+  bs->getGrad(p.data(), g.data());
   for (int i = 0; i < 6; i++) {
     TEST_ASSERT(RDKit::feq(g[i], 0.0));
   }
@@ -187,9 +184,9 @@ void testUFF2() {
   (*ff.positions()[1])[0] = 1.814;
   p[3] = 1.814;
   ff.initialize();
-  E = bs->getEnergy(p);
+  E = bs->getEnergy(p.data());
   TEST_ASSERT(RDKit::feq(E, 31.4816));
-  bs->getGrad(p, g);
+  bs->getGrad(p.data(), g.data());
   TEST_ASSERT(RDKit::feq(g[0], -209.8775));
   TEST_ASSERT(RDKit::feq(g[3], 209.8775));
   TEST_ASSERT(RDKit::feq(g[1], 0.0));
@@ -206,9 +203,9 @@ void testUFF2() {
   (*ff.positions()[1])[0] = 0.0;
   (*ff.positions()[1])[2] = 1.814;
   p[5] = 1.814;
-  E = bs->getEnergy(p);
+  E = bs->getEnergy(p.data());
   TEST_ASSERT(RDKit::feq(E, 31.4816));
-  bs->getGrad(p, g);
+  bs->getGrad(p.data(), g.data());
   TEST_ASSERT(RDKit::feq(g[2], -209.8775));
   TEST_ASSERT(RDKit::feq(g[5], 209.8775));
   TEST_ASSERT(RDKit::feq(g[0], 0.0));
@@ -236,8 +233,6 @@ void testUFF2() {
       *(RDGeom::Point3D *)ff.positions()[1];
   TEST_ASSERT(RDKit::feq(d.length(), 1.514, 1e-3));
 
-  delete[] p;
-  delete[] g;
   std::cerr << "  done" << std::endl;
 }
 
@@ -1228,13 +1223,10 @@ void testUFFDistanceConstraints() {
   ps.push_back(&p1);
   ps.push_back(&p2);
 
-  double *p, *g;
-  p = new double[6];
-  g = new double[6];
-  for (int i = 0; i < 6; i++) {
-    p[i] = 0.0;
-    g[i] = 0.0;
-  }
+  std::array<double, 6> p;
+  std::array<double, 6> g;
+  p.fill(0.0);
+  g.fill(0.0);
   p[0] = 0;
   p[3] = 1.40;
 
@@ -1245,9 +1237,9 @@ void testUFFDistanceConstraints() {
   distContribs->addContrib(0, 1, 1.35, 1.55, 1000.0);
   ff.contribs().emplace_back(distContribs);
   double E;
-  E = distContribs->getEnergy(p);
+  E = distContribs->getEnergy(p.data());
   TEST_ASSERT(RDKit::feq(E, 0.0));
-  distContribs->getGrad(p, g);
+  distContribs->getGrad(p.data(), g.data());
   for (int i = 0; i < 6; i++) {
     TEST_ASSERT(RDKit::feq(g[i], 0.0));
   }
@@ -1255,9 +1247,9 @@ void testUFFDistanceConstraints() {
   ff.initialize();
   (*ff.positions()[1])[0] = 1.20;
   p[3] = 1.20;
-  E = distContribs->getEnergy(p);
+  E = distContribs->getEnergy(p.data());
   TEST_ASSERT(RDKit::feq(E, 11.25));
-  distContribs->getGrad(p, g);
+  distContribs->getGrad(p.data(), g.data());
   TEST_ASSERT(RDKit::feq(g[0], 150.0));
   TEST_ASSERT(RDKit::feq(g[3], -150.0));
   TEST_ASSERT(RDKit::feq(g[1], 0.0));
@@ -1285,8 +1277,6 @@ void testUFFDistanceConstraints() {
   TEST_ASSERT(d.length() >= 1.35)
   TEST_ASSERT(d.length() <= 1.55)
 
-  delete[] p;
-  delete[] g;
   std::cerr << "  done" << std::endl;
 }
 
