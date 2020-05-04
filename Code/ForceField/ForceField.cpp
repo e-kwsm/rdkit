@@ -154,15 +154,12 @@ ForceField::~ForceField() {
   d_numPoints = 0;
   d_positions.clear();
   d_contribs.clear();
-  delete[] dp_distMat;
-  dp_distMat = nullptr;
 }
 
 ForceField::ForceField(const ForceField &other)
     : d_dimension(other.d_dimension),
       df_init(false),
-      d_numPoints(other.d_numPoints),
-      dp_distMat(nullptr) {
+      d_numPoints(other.d_numPoints) {
   d_contribs.clear();
   for (const auto &contrib : other.d_contribs) {
     ForceFieldContrib *ncontrib = contrib->copy();
@@ -251,12 +248,11 @@ double ForceField::distance(unsigned int i, unsigned int j, double *pos) const {
 void ForceField::initialize() {
   // clean up if we have used this already:
   df_init = false;
-  delete[] dp_distMat;
-  dp_distMat = nullptr;
+  dp_distMat.clear();
 
   d_numPoints = d_positions.size();
   d_matSize = d_numPoints * (d_numPoints + 1) / 2;
-  dp_distMat = new double[d_matSize];
+  dp_distMat.resize(d_matSize);
   this->initDistanceMatrix();
   df_init = true;
 }
@@ -279,18 +275,17 @@ int ForceField::minimize(unsigned int snapshotFreq,
   unsigned int numIters = 0;
   unsigned int dim = this->d_numPoints * d_dimension;
   double finalForce;
-  auto *points = new double[dim];
+  std::vector<double> points(dim);
 
-  this->scatter(points);
+  this->scatter(points.data());
   ForceFieldsHelper::calcEnergy eCalc(this);
   ForceFieldsHelper::calcGradient gCalc(this);
 
-  int res =
-      BFGSOpt::minimize(dim, points, forceTol, numIters, finalForce, eCalc,
-                        gCalc, snapshotFreq, snapshotVect, energyTol, maxIts);
-  this->gather(points);
+  int res = BFGSOpt::minimize(dim, points.data(), forceTol, numIters,
+                              finalForce, eCalc, gCalc, snapshotFreq,
+                              snapshotVect, energyTol, maxIts);
+  this->gather(points.data());
 
-  delete[] points;
   return res;
 }
 
@@ -306,17 +301,16 @@ double ForceField::calcEnergy(std::vector<double> *contribs) const {
   }
 
   unsigned int N = d_positions.size();
-  auto *pos = new double[d_dimension * N];
-  this->scatter(pos);
+  std::vector<double> pos(d_dimension * N);
+  this->scatter(pos.data());
   // now loop over the contribs
   for (const auto &d_contrib : d_contribs) {
-    double e = d_contrib->getEnergy(pos);
+    double e = d_contrib->getEnergy(pos.data());
     res += e;
     if (contribs) {
       contribs->push_back(e);
     }
   }
-  delete[] pos;
   return res;
 }
 
@@ -347,10 +341,10 @@ void ForceField::calcGrad(double *grad) const {
   }
 
   unsigned int N = d_positions.size();
-  auto *pos = new double[d_dimension * N];
-  this->scatter(pos);
+  std::vector<double> pos(d_dimension * N);
+  this->scatter(pos.data());
   for (const auto &d_contrib : d_contribs) {
-    d_contrib->getGrad(pos, grad);
+    d_contrib->getGrad(pos.data(), grad);
   }
   // zero out gradient values for any fixed points:
   for (int d_fixedPoint : d_fixedPoints) {
@@ -361,7 +355,6 @@ void ForceField::calcGrad(double *grad) const {
       grad[idx + di] = 0.0;
     }
   }
-  delete[] pos;
 }
 void ForceField::calcGrad(double *pos, double *grad) {
   PRECONDITION(df_init, "not initialized");
@@ -416,7 +409,6 @@ void ForceField::gather(double *pos) {
 
 void ForceField::initDistanceMatrix() {
   PRECONDITION(d_numPoints, "no points");
-  PRECONDITION(dp_distMat, "no distance matrix");
   PRECONDITION(static_cast<unsigned int>(d_numPoints * (d_numPoints + 1) / 2) <=
                    d_matSize,
                "matrix size mismatch");

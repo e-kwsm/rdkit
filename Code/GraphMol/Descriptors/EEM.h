@@ -38,15 +38,15 @@ namespace {
 class EEM_arrays {
  public:
   unsigned int n;
-  unsigned int *Atomindex;
-  unsigned int *EEMatomtype;
+  std::vector<unsigned int> Atomindex;
+  std::vector<unsigned int> EEMatomtype;
 
   EEM_arrays() = delete;
   EEM_arrays(const EEM_arrays &) = delete;
   void operator=(const EEM_arrays &) = delete;
 
   EEM_arrays(const ROMol &mol, unsigned int n);
-  ~EEM_arrays();
+  ~EEM_arrays() = default;
 };
 }  // namespace
 

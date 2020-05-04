@@ -31,14 +31,11 @@ extern "C" void distdriver_(boost::int64_t *n, boost::int64_t *len, real *dists,
 void clusterit(real *dataP, boost::int64_t n, boost::int64_t m,
                boost::int64_t iopt, boost::int64_t *ia, boost::int64_t *ib,
                real *crit) {
-  real *dists;
-  boost::int64_t len;
+  boost::int64_t len = (n * (n - 1)) / 2;
   boost::int64_t pos = 0;
   boost::int64_t i, j, k, iTab, jTab;
   double tmp;
-  len = (n * (n - 1)) / 2;
-  dists = (real *)calloc(len, sizeof(real));
-  CHECK_INVARIANT(dists, "failed to allocate memory");
+  std::vector<real> dists(len);
   for (i = 1; i < n; i++) {
     iTab = i * m;
     for (j = 0; j < i; j++) {
@@ -50,9 +47,8 @@ void clusterit(real *dataP, boost::int64_t n, boost::int64_t m,
       pos++;
     }
   }
-  distdriver_(&n, &len, dists, &iopt, ia, ib, crit);
-  free(dists);
-};
+  distdriver_(&n, &len, dists.data(), &iopt, ia, ib, crit);
+}
 
 static PyObject *Clustering_MurtaghCluster(python::object data, int nPts,
                                            int sz, int option) {
