@@ -486,7 +486,7 @@ void testCalcEnergyPassedCoords() {
   TEST_ASSERT(field);
   field->initialize();
   size_t l = 3 * field->numPoints();
-  auto *savedPos = new double[l];
+  std::vector<double> savedPos(l);
   size_t i = 0;
   for (const auto pptr : field->positions()) {
     for (size_t j = 0; j < 3; ++j) {
@@ -498,10 +498,9 @@ void testCalcEnergyPassedCoords() {
   field->minimize(10000, 1.0e-6, 1.0e-3);
   e2 = field->calcEnergy();
   TEST_ASSERT(e2 < e1);
-  e3 = field->calcEnergy(savedPos);
+  e3 = field->calcEnergy(savedPos.data());
   TEST_ASSERT(feq(e3, e1, 0.01));
 
-  delete[] savedPos;
   delete mol;
   delete field;
 
@@ -525,9 +524,9 @@ void testCalcGrad() {
   TEST_ASSERT(field);
   field->initialize();
   size_t l = 3 * field->numPoints();
-  auto *savedPos = new double[l];
-  auto *grad1 = new double[l];
-  auto *grad2 = new double[l];
+  std::vector<double> savedPos(l);
+  std::vector<double> grad1(l);
+  std::vector<double> grad2(l);
   size_t i = 0;
   for (const auto pptr : field->positions()) {
     for (size_t j = 0; j < 3; ++j) {
@@ -536,29 +535,26 @@ void testCalcGrad() {
   }
   TEST_ASSERT(i == l);
 
-  std::memset(grad1, 0, l * sizeof(double));
-  field->calcGrad(grad1);
+  std::fill(grad1.begin(), grad1.end(), 0);
+  field->calcGrad(grad1.data());
   for (i = 0; i < l; ++i) {
     TEST_ASSERT(!feq(grad1[i], 0.0, 0.001));
   }
 
   field->minimize(10000, 1.0e-6, 1.0e-3);
-  std::memset(grad2, 0, l * sizeof(double));
-  field->calcGrad(grad2);
+  std::fill(grad2.begin(), grad2.end(), 0);
+  field->calcGrad(grad2.data());
   for (i = 0; i < l; ++i) {
     TEST_ASSERT(feq(grad2[i], 0.0, 0.001));
   }
 
   field->initialize();
-  std::memset(grad2, 0, l * sizeof(double));
-  field->calcGrad(savedPos, grad2);
+  std::fill(grad2.begin(), grad2.end(), 0);
+  field->calcGrad(savedPos.data(), grad2.data());
   for (i = 0; i < l; ++i) {
     TEST_ASSERT(feq(grad1[i], grad2[i], 0.001));
   }
 
-  delete[] savedPos;
-  delete[] grad1;
-  delete[] grad2;
   delete mol;
   delete field;
 
