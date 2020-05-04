@@ -190,15 +190,6 @@ EEM_arrays::EEM_arrays(const ROMol &mol, unsigned int sz) : n(sz) {
   }
 }
 
-EEM_arrays::~EEM_arrays() {
-  if (Atomindex != nullptr) {
-    delete[] Atomindex;
-  }
-  if (EEMatomtype != nullptr) {
-    delete[] EEMatomtype;
-  }
-}
-
 /* Calculate charges for a particular kappa_data structure */
 void calculate_charges(ROMol mol, double *dist3D, unsigned int numAtoms,
                        const EEM_arrays &EEMatoms, std::vector<double> &res) {
