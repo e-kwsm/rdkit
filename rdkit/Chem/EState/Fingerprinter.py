@@ -26,8 +26,9 @@ def FingerprintMol(mol):
 
   two numeric arrays are returned:
     The first (of ints) contains the number of times each possible atom type is hit
+
     The second (of floats) contains the sum of the EState indices for atoms of
-      each type.
+    each type.
 
   """
   if AtomTypes.esPatterns is None:
