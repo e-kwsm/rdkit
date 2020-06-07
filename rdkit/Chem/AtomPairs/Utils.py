@@ -52,7 +52,7 @@ def ExplainAtomCode(code, branchSubtract=0, includeChirality=False):
     >>> code = GetAtomCode(m.GetAtomWithIdx(1))
     >>> ExplainAtomCode(code)
     ('C', 3, 0)
-    >>> code = GetAtomCode(m.GetAtomWithIdx(1),includeChirality=True)
+    >>> code = GetAtomCode(m.GetAtomWithIdx(1), includeChirality=True)
     >>> ExplainAtomCode(code,includeChirality=True)
     ('C', 3, 0, 'R')
 
@@ -64,15 +64,15 @@ def ExplainAtomCode(code, branchSubtract=0, includeChirality=False):
 
     non-chiral atoms return '' in the 4th field:
 
-    >>> code = GetAtomCode(m.GetAtomWithIdx(0),includeChirality=True)
-    >>> ExplainAtomCode(code,includeChirality=True)
+    >>> code = GetAtomCode(m.GetAtomWithIdx(0), includeChirality=True)
+    >>> ExplainAtomCode(code, includeChirality=True)
     ('C', 1, 0, '')
 
     Obviously switching the chirality changes the results:
 
     >>> m = Chem.MolFromSmiles('C[C@@H](F)Cl')
-    >>> code = GetAtomCode(m.GetAtomWithIdx(1),includeChirality=True)
-    >>> ExplainAtomCode(code,includeChirality=True)
+    >>> code = GetAtomCode(m.GetAtomWithIdx(1), includeChirality=True)
+    >>> ExplainAtomCode(code, includeChirality=True)
     ('C', 3, 0, 'S')
 
     """
