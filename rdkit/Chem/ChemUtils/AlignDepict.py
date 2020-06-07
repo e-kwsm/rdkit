@@ -13,11 +13,11 @@ from rdkit.Chem import rdDepictor
 def AlignDepict(mol, core, corePattern=None, acceptFailure=False):
   """
   Arguments:
-    - mol:          the molecule to be aligned, this will come back
+      mol:          the molecule to be aligned, this will come back
                     with a single conformer.
-    - core:         a molecule with the core atoms to align to;
+      core:         a molecule with the core atoms to align to;
                     this should have a depiction.
-    - corePattern:  (optional) an optional molecule to be used to
+      corePattern:  (optional) an optional molecule to be used to
                     generate the atom mapping between the molecule
                     and the core.
   """
