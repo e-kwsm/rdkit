@@ -15,6 +15,7 @@ R.E. Carhart, D.H. Smith, R. Venkataraghavan;
 Definition and Applications" JCICS 25, 64-73 (1985).
 
 The fingerprints can be accessed through the following functions:
+
 - GetAtomPairFingerprint
 - GetHashedAtomPairFingerprint (identical to GetAtomPairFingerprint)
 - GetAtomPairFingerprintAsIntVect
@@ -38,21 +39,25 @@ def pyScorePair(at1, at2, dist, atomCodes=None, includeChirality=False):
   """ Returns a score for an individual atom pair.
 
   >>> from rdkit import Chem
+  >>> from rdkit.Chem.AtomPairs import Utils
+  >>> from rdkit.Chem.rdMolDescriptors import AtomPairsParameters
   >>> m = Chem.MolFromSmiles('CCCCC')
-  >>> c1 = Utils.GetAtomCode(m.GetAtomWithIdx(0))
-  >>> c2 = Utils.GetAtomCode(m.GetAtomWithIdx(1))
-  >>> c3 = Utils.GetAtomCode(m.GetAtomWithIdx(2))
-  >>> t = 1 | min(c1,c2)<<numPathBits | max(c1,c2)<<(rdMolDescriptors.AtomPairsParameters.codeSize+numPathBits)
-  >>> pyScorePair(m.GetAtomWithIdx(0),m.GetAtomWithIdx(1),1)==t
-  1
-  >>> pyScorePair(m.GetAtomWithIdx(1),m.GetAtomWithIdx(0),1)==t
-  1
-  >>> t = 2 | min(c1,c3)<<numPathBits | max(c1,c3)<<(rdMolDescriptors.AtomPairsParameters.codeSize+numPathBits)
-  >>> pyScorePair(m.GetAtomWithIdx(0),m.GetAtomWithIdx(2),2)==t
-  1
-  >>> pyScorePair(m.GetAtomWithIdx(0),m.GetAtomWithIdx(2),2,
-  ...  atomCodes=(Utils.GetAtomCode(m.GetAtomWithIdx(0)),Utils.GetAtomCode(m.GetAtomWithIdx(2))))==t
-  1
+  >>> c0 = Utils.GetAtomCode(m.GetAtomWithIdx(0))
+  >>> c1 = Utils.GetAtomCode(m.GetAtomWithIdx(1))
+  >>> c2 = Utils.GetAtomCode(m.GetAtomWithIdx(2))
+  >>> t = (1 | min(c0, c1) << AtomPairsParameters.numPathBits
+  ... | max(c0, c1) << (AtomPairsParameters.codeSize + AtomPairsParameters.numPathBits))
+  >>> pyScorePair(m.GetAtomWithIdx(0), m.GetAtomWithIdx(1), 1) == t
+  True
+  >>> pyScorePair(m.GetAtomWithIdx(1), m.GetAtomWithIdx(0), 1) == t
+  True
+  >>> t = (2 | min(c0, c2) << AtomPairsParameters.numPathBits
+  ... | max(c0, c2) << (AtomPairsParameters.codeSize + AtomPairsParameters.numPathBits))
+  >>> pyScorePair(m.GetAtomWithIdx(0), m.GetAtomWithIdx(2), 2) == t
+  True
+  >>> pyScorePair(m.GetAtomWithIdx(0), m.GetAtomWithIdx(2), 2,
+  ... atomCodes=(Utils.GetAtomCode(m.GetAtomWithIdx(0)), Utils.GetAtomCode(m.GetAtomWithIdx(2)))) == t
+  True
 
   """
   if not atomCodes:
@@ -75,30 +80,31 @@ def ExplainPairScore(score,includeChirality=False):
   """
   >>> from rdkit import Chem
   >>> m = Chem.MolFromSmiles('C=CC')
-  >>> score = pyScorePair(m.GetAtomWithIdx(0),m.GetAtomWithIdx(1),1)
+  >>> score = pyScorePair(m.GetAtomWithIdx(0), m.GetAtomWithIdx(1), 1)
   >>> ExplainPairScore(score)
   (('C', 1, 1), 1, ('C', 2, 1))
-  >>> score = pyScorePair(m.GetAtomWithIdx(0),m.GetAtomWithIdx(2),2)
+  >>> score = pyScorePair(m.GetAtomWithIdx(0), m.GetAtomWithIdx(2), 2)
   >>> ExplainPairScore(score)
   (('C', 1, 0), 2, ('C', 1, 1))
-  >>> score = pyScorePair(m.GetAtomWithIdx(1),m.GetAtomWithIdx(2),1)
+  >>> score = pyScorePair(m.GetAtomWithIdx(1), m.GetAtomWithIdx(2), 1)
   >>> ExplainPairScore(score)
   (('C', 1, 0), 1, ('C', 2, 1))
-  >>> score = pyScorePair(m.GetAtomWithIdx(2),m.GetAtomWithIdx(1),1)
+  >>> score = pyScorePair(m.GetAtomWithIdx(2), m.GetAtomWithIdx(1), 1)
   >>> ExplainPairScore(score)
   (('C', 1, 0), 1, ('C', 2, 1))
 
   We can optionally deal with chirality too
+
   >>> m = Chem.MolFromSmiles('C[C@H](F)Cl')
-  >>> score = pyScorePair(m.GetAtomWithIdx(0),m.GetAtomWithIdx(1),1)
+  >>> score = pyScorePair(m.GetAtomWithIdx(0), m.GetAtomWithIdx(1), 1)
   >>> ExplainPairScore(score)
   (('C', 1, 0), 1, ('C', 3, 0))
-  >>> score = pyScorePair(m.GetAtomWithIdx(0),m.GetAtomWithIdx(1),1,includeChirality=True)
-  >>> ExplainPairScore(score,includeChirality=True)
+  >>> score = pyScorePair(m.GetAtomWithIdx(0), m.GetAtomWithIdx(1), 1, includeChirality=True)
+  >>> ExplainPairScore(score, includeChirality=True)
   (('C', 1, 0, ''), 1, ('C', 3, 0, 'R'))
   >>> m = Chem.MolFromSmiles('F[C@@H](Cl)[C@H](F)Cl')
-  >>> score = pyScorePair(m.GetAtomWithIdx(1),m.GetAtomWithIdx(3),1,includeChirality=True)
-  >>> ExplainPairScore(score,includeChirality=True)
+  >>> score = pyScorePair(m.GetAtomWithIdx(1), m.GetAtomWithIdx(3), 1, includeChirality=True)
+  >>> ExplainPairScore(score, includeChirality=True)
   (('C', 3, 0, 'R'), 1, ('C', 3, 0, 'S'))
 
   """
@@ -136,12 +142,12 @@ def GetAtomPairFingerprintAsBitVect(mol):
 
   >>> from rdkit import Chem
   >>> m = Chem.MolFromSmiles('CCC')
-  >>> v = [ pyScorePair(m.GetAtomWithIdx(0),m.GetAtomWithIdx(1),1),
-  ...       pyScorePair(m.GetAtomWithIdx(0),m.GetAtomWithIdx(2),2),
+  >>> v = [ pyScorePair(m.GetAtomWithIdx(0), m.GetAtomWithIdx(1), 1),
+  ...       pyScorePair(m.GetAtomWithIdx(0), m.GetAtomWithIdx(2), 2),
   ...     ]
   >>> v.sort()
   >>> fp = GetAtomPairFingerprintAsBitVect(m)
-  >>> list(fp.GetOnBits())==v
+  >>> list(fp.GetOnBits()) == v
   True
 
   """
