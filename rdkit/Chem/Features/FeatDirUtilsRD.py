@@ -30,10 +30,10 @@ def cross(v1, v2):
 def findNeighbors(atomId, adjMat):
   """
   Find the IDs of the neighboring atom IDs
-  
+
   ARGUMENTS:
-  atomId - atom of interest
-  adjMat - adjacency matrix for the compound
+    atomId: atom of interest
+    adjMat: adjacency matrix for the compound
   """
   return [i for i, nid in enumerate(adjMat[atomId]) if nid >= 1]
 
@@ -59,12 +59,12 @@ def _findAvgVec(conf, center, nbrs):
 def GetAromaticFeatVects(conf, featAtoms, featLoc, scale=1.5):
   """
   Compute the direction vector for an aromatic feature
-  
+
   ARGUMENTS:
-     conf - a conformer
-     featAtoms - list of atom IDs that make up the feature
-     featLoc - location of the aromatic feature specified as point3d
-     scale - the size of the direction vector
+    conf: a conformer
+    featAtoms: list of atom IDs that make up the feature
+    featLoc: location of the aromatic feature specified as point3d
+    scale: the size of the direction vector
   """
   dirType = 'linear'
   head = featLoc
@@ -112,16 +112,16 @@ def ArbAxisRotation(theta, ax, pt):
 def GetAcceptor2FeatVects(conf, featAtoms, scale=1.5):
   """
   Get the direction vectors for Acceptor of type 2
-  
+
   This is the acceptor with two adjacent heavy atoms. We will special case a few things here.
   If the acceptor atom is an oxygen we will assume a sp3 hybridization
   the acceptor directions (two of them)
   reflect that configurations. Otherwise the direction vector in plane with the neighboring
   heavy atoms
-  
+
   ARGUMENTS:
-      featAtoms - list of atoms that are part of the feature
-      scale - length of the direction vector
+    featAtoms: list of atoms that are part of the feature
+    scale: length of the direction vector
   """
   assert len(featAtoms) == 1
   aid = featAtoms[0]
@@ -183,8 +183,8 @@ def GetDonor3FeatVects(conf, featAtoms, scale=1.5):
   is the last fourth arm of the sp3 arrangement
 
   ARGUMENTS:
-    featAtoms - list of atoms that are part of the feature
-    scale - length of the direction vector
+    featAtoms: list of atoms that are part of the feature
+    scale: length of the direction vector
   """
   assert len(featAtoms) == 1
   return _GetTetrahedralFeatVect(conf, featAtoms[0], scale), 'linear'
@@ -199,8 +199,8 @@ def GetAcceptor3FeatVects(conf, featAtoms, scale=1.5):
   is the last fourth arm of the sp3 arrangement
 
   ARGUMENTS:
-    featAtoms - list of atoms that are part of the feature
-    scale - length of the direction vector
+    featAtoms: list of atoms that are part of the feature
+    scale: length of the direction vector
   """
   assert len(featAtoms) == 1
   return _GetTetrahedralFeatVect(conf, featAtoms[0], scale), 'linear'
@@ -232,10 +232,10 @@ def GetDonor2FeatVects(conf, featAtoms, scale=1.5):
     1. two heavy atoms and two hydrogens: we will assume a sp3 arrangement here
     2. two heavy atoms and one hydrogen: this can either be sp2 or sp3
     3. two heavy atoms and no hydrogens
-    
+
   ARGUMENTS:
-    featAtoms - list of atoms that are part of the feature
-    scale - length of the direction vector
+    featAtoms: list of atoms that are part of the feature
+    scale: length of the direction vector
   """
   assert len(featAtoms) == 1
   aid = featAtoms[0]
@@ -308,11 +308,11 @@ def GetDonor1FeatVects(conf, featAtoms, scale=1.5):
   This is a donor with one heavy atom. It is not clear where we should we should be putting the
   direction vector for this. It should probably be a cone. In this case we will just use the
   direction vector from the donor atom to the heavy atom
-    
+
   ARGUMENTS:
-    
-    featAtoms - list of atoms that are part of the feature
-    scale - length of the direction vector
+
+    featAtoms: list of atoms that are part of the feature
+    scale: length of the direction vector
   """
   assert len(featAtoms) == 1
   aid = featAtoms[0]
@@ -341,16 +341,19 @@ def GetAcceptor1FeatVects(conf, featAtoms, scale=1.5):
 
   This is a acceptor with one heavy atom neighbor. There are two possibilities we will
   consider here
+
   1. The bond to the heavy atom is a single bond e.g. CO
+
      In this case we don't know the exact direction and we just use the inversion of this bond direction
      and mark this direction as a 'cone'
   2. The bond to the heavy atom is a double bond e.g. C=O
+
      In this case the we have two possible direction except in some special cases e.g. SO2
      where again we will use bond direction
-     
+
   ARGUMENTS:
-    featAtoms - list of atoms that are part of the feature
-    scale - length of the direction vector
+    featAtoms: list of atoms that are part of the feature
+    scale: length of the direction vector
   """
   assert len(featAtoms) == 1
   aid = featAtoms[0]
