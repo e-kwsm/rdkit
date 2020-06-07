@@ -22,19 +22,19 @@ class FeatMapPoint(ChemicalFeatures.FreeChemicalFeature):
   def initFromFeat(self, feat):
     """
     >>> from rdkit import Geometry
-    >>> sfeat = ChemicalFeatures.FreeChemicalFeature('Aromatic','Foo',Geometry.Point3D(0,0,0))
+    >>> sfeat = ChemicalFeatures.FreeChemicalFeature('Aromatic', 'Foo', Geometry.Point3D(0, 0, 0))
     >>> fmp = FeatMapPoint()
     >>> fmp.initFromFeat(sfeat)
-    >>> fmp.GetFamily()==sfeat.GetFamily()
+    >>> fmp.GetFamily() == sfeat.GetFamily()
     True
-    >>> fmp.GetType()==sfeat.GetType()
+    >>> fmp.GetType() == sfeat.GetType()
     True
     >>> list(fmp.GetPos())
     [0.0, 0.0, 0.0]
     >>> fmp.featDirs == []
     True
 
-    >>> sfeat.featDirs = [Geometry.Point3D(1.0,0,0)]
+    >>> sfeat.featDirs = [Geometry.Point3D(1, 0, 0)]
     >>> fmp.initFromFeat(sfeat)
     >>> len(fmp.featDirs)
     1
@@ -49,12 +49,12 @@ class FeatMapPoint(ChemicalFeatures.FreeChemicalFeature):
   def GetDist2(self, other):
     """
     >>> from rdkit import Geometry
-    >>> sfeat = ChemicalFeatures.FreeChemicalFeature('Aromatic','Foo',Geometry.Point3D(0,0,0))
+    >>> sfeat = ChemicalFeatures.FreeChemicalFeature('Aromatic', 'Foo', Geometry.Point3D(0, 0, 0))
     >>> fmp = FeatMapPoint()
     >>> fmp.initFromFeat(sfeat)
     >>> fmp.GetDist2(sfeat)
     0.0
-    >>> sfeat.SetPos(Geometry.Point3D(2,0,0))
+    >>> sfeat.SetPos(Geometry.Point3D(2, 0, 0))
     >>> fmp.GetDist2(sfeat)
     4.0
     """
@@ -63,30 +63,30 @@ class FeatMapPoint(ChemicalFeatures.FreeChemicalFeature):
   def GetDirMatch(self, other, useBest=True):
     """
     >>> from rdkit import Geometry
-    >>> sfeat = ChemicalFeatures.FreeChemicalFeature('Aromatic','Foo',Geometry.Point3D(0,0,0))
+    >>> sfeat = ChemicalFeatures.FreeChemicalFeature('Aromatic', 'Foo', Geometry.Point3D(0, 0, 0))
     >>> fmp = FeatMapPoint()
     >>> fmp.initFromFeat(sfeat)
     >>> fmp.GetDirMatch(sfeat)
     1.0
 
-    >>> sfeat.featDirs=[Geometry.Point3D(0,0,1),Geometry.Point3D(0,0,-1)]
-    >>> fmp.featDirs=[Geometry.Point3D(0,0,1),Geometry.Point3D(1,0,0)]
+    >>> sfeat.featDirs = [Geometry.Point3D(0, 0, 1), Geometry.Point3D(0, 0, -1)]
+    >>> fmp.featDirs=[Geometry.Point3D(0, 0, 1), Geometry.Point3D(1, 0, 0)]
     >>> fmp.GetDirMatch(sfeat)
     1.0
-    >>> fmp.GetDirMatch(sfeat,useBest=True)
+    >>> fmp.GetDirMatch(sfeat, useBest=True)
     1.0
-    >>> fmp.GetDirMatch(sfeat,useBest=False)
+    >>> fmp.GetDirMatch(sfeat, useBest=False)
     0.0
 
-    >>> sfeat.featDirs=[Geometry.Point3D(0,0,1)]
-    >>> fmp.GetDirMatch(sfeat,useBest=False)
+    >>> sfeat.featDirs = [Geometry.Point3D(0, 0, 1)]
+    >>> fmp.GetDirMatch(sfeat, useBest=False)
     0.5
 
-    >>> sfeat.featDirs=[Geometry.Point3D(0,0,1)]
-    >>> fmp.featDirs=[Geometry.Point3D(0,0,-1)]
+    >>> sfeat.featDirs = [Geometry.Point3D(0, 0, 1)]
+    >>> fmp.featDirs = [Geometry.Point3D(0, 0, -1)]
     >>> fmp.GetDirMatch(sfeat)
     -1.0
-    >>> fmp.GetDirMatch(sfeat,useBest=False)
+    >>> fmp.GetDirMatch(sfeat, useBest=False)
     -1.0
 
 
