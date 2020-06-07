@@ -14,6 +14,7 @@ Kearsley, S. K. et al.
 J. Chem.Inf. Model. 36, 118-127 (1996)
 
 The fingerprints can be accessed through the following functions:
+
 - GetBPFingerprint
 - GetBTFingerprint
 
