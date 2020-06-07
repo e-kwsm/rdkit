@@ -63,10 +63,10 @@ def GetAtomicWeightsForFingerprint(refMol, probeMol, fpFunction, metric=DataStru
     based on a fingerprint function and a metric.
 
     Parameters:
-      refMol -- the reference molecule
-      probeMol -- the probe molecule
-      fpFunction -- the fingerprint function
-      metric -- the similarity metric
+      refMol: the reference molecule
+      probeMol: the probe molecule
+      fpFunction: the fingerprint function
+      metric: the similarity metric
 
     Note:
       If fpFunction needs additional parameters, use a lambda construct
@@ -94,9 +94,9 @@ def GetAtomicWeightsForModel(probeMol, fpFunction, predictionFunction):
     a fingerprint function and the prediction function of a ML model.
 
     Parameters:
-      probeMol -- the probe molecule
-      fpFunction -- the fingerprint function
-      predictionFunction -- the prediction function of the ML model
+      probeMol: the probe molecule
+      fpFunction: the fingerprint function
+      predictionFunction: the prediction function of the ML model
     """
 
   _DeleteFpInfoAttr(probeMol)
@@ -118,7 +118,7 @@ def GetStandardizedWeights(weights):
     such that the absolute maximum weight equals 1.0.
 
     Parameters:
-      weights -- the list with the atomic weights
+      weights: the list with the atomic weights
     """
 
   maxAbsWeight = max(math.fabs(w) for w in weights)
@@ -137,26 +137,26 @@ def GetSimilarityMapFromWeights(mol, weights, draw2d, colorMap=None, scale=-1, s
     Generates the similarity map for a molecule given the atomic weights.
 
     Parameters:
-      mol -- the molecule of interest
-      weights -- the weights to use
-      draw2d -- the RDKit drawing object
-      colorMap -- the matplotlib color map scheme, default is custom PiWG color map
-      scale -- the scaling: scale < 0 -> the absolute maximum weight is used as maximum scale
+      mol: the molecule of interest
+      weights: the weights to use
+      draw2d: the RDKit drawing object
+      colorMap: the matplotlib color map scheme, default is custom PiWG color map
+      scale: the scaling: scale < 0 -> the absolute maximum weight is used as maximum scale
                             scale = double -> this is the maximum scale
-      size -- the size of the figure
-      sigma -- the sigma for the Gaussians
-      coordScale -- scaling factor for the coordinates
-      step -- the step for calcAtomGaussian
-      colors -- color of the contour lines
-      contourLines -- if integer number N: N contour lines are drawn
+      size: the size of the figure
+      sigma: the sigma for the Gaussians
+      coordScale: scaling factor for the coordinates
+      step: the step for calcAtomGaussian
+      colors: color of the contour lines
+      contourLines: if integer number N: N contour lines are drawn
                       if list(numbers): contour lines at these numbers are drawn
-      alpha -- the alpha blending value for the contour lines
-      gridResolution -- the resolution of the grid
-      extraGridPadding -- the extra padding of the grid
-      useFillThreshold -- use a magnitude threshold to determine if a grid box is filled
-      fillThreshold -- the magnitude threshold for filling grid boxes
-      fillThresholdIsFraction -- if True, the fillThreshold is a fraction of the data range
-      kwargs -- additional arguments for drawing
+      alpha: the alpha blending value for the contour lines
+      gridResolution: the resolution of the grid
+      extraGridPadding: the extra padding of the grid
+      useFillThreshold: use a magnitude threshold to determine if a grid box is filled
+      fillThreshold: the magnitude threshold for filling grid boxes
+      fillThresholdIsFraction: if True, the fillThreshold is a fraction of the data range
+      kwargs: additional arguments for drawing
     """
   if mol.GetNumAtoms() < 2:
     raise ValueError("too few atoms")
@@ -217,11 +217,11 @@ def GetSimilarityMapForFingerprint(refMol, probeMol, fpFunction, draw2d,
     fingerprint function and similarity metric.
 
     Parameters:
-      refMol -- the reference molecule
-      probeMol -- the probe molecule
-      fpFunction -- the fingerprint function
-      metric -- the similarity metric.
-      kwargs -- additional arguments for drawing
+      refMol: the reference molecule
+      probeMol: the probe molecule
+      fpFunction: the fingerprint function
+      metric: the similarity metric.
+      kwargs: additional arguments for drawing
     """
 
   weights = GetAtomicWeightsForFingerprint(refMol, probeMol, fpFunction, metric)
@@ -299,10 +299,10 @@ def GetSimilarityMapForModel(probeMol, fpFunction, predictionFunction, draw2d, *
     and fingerprint function.
 
     Parameters:
-      probeMol -- the probe molecule
-      fpFunction -- the fingerprint function
-      predictionFunction -- the prediction function of the ML model
-      kwargs -- additional arguments for drawing
+      probeMol: the probe molecule
+      fpFunction: the fingerprint function
+      predictionFunction: the prediction function of the ML model
+      kwargs: additional arguments for drawing
     """
 
   weights = GetAtomicWeightsForModel(probeMol, fpFunction, predictionFunction)
@@ -328,13 +328,13 @@ def GetAPFingerprint(mol, atomId=-1, fpType='normal', nBits=2048, minLength=1, m
     Calculates the atom pairs fingerprint with the torsions of atomId removed.
 
     Parameters:
-      mol -- the molecule of interest
-      atomId -- the atom to remove the pairs for (if -1, no pair is removed)
-      fpType -- the type of AP fingerprint ('normal', 'hashed', 'bv')
-      nBits -- the size of the bit vector (only for fpType='bv')
-      minLength -- the minimum path length for an atom pair
-      maxLength -- the maxmimum path length for an atom pair
-      nBitsPerEntry -- the number of bits available for each pair
+      mol: the molecule of interest
+      atomId: the atom to remove the pairs for (if -1, no pair is removed)
+      fpType: the type of AP fingerprint ('normal', 'hashed', 'bv')
+      nBits: the size of the bit vector (only for fpType='bv')
+      minLength: the minimum path length for an atom pair
+      maxLength: the maxmimum path length for an atom pair
+      nBitsPerEntry: the number of bits available for each pair
     """
   if fpType not in ['normal', 'hashed', 'bv']:
     raise ValueError("Unknown Atom pairs fingerprint type")
@@ -363,13 +363,13 @@ def GetTTFingerprint(mol, atomId=-1, fpType='normal', nBits=2048, targetSize=4, 
     Calculates the topological torsion fingerprint with the pairs of atomId removed.
 
     Parameters:
-      mol -- the molecule of interest
-      atomId -- the atom to remove the torsions for (if -1, no torsion is removed)
-      fpType -- the type of TT fingerprint ('normal', 'hashed', 'bv')
-      nBits -- the size of the bit vector (only for fpType='bv')
-      minLength -- the minimum path length for an atom pair
-      maxLength -- the maxmimum path length for an atom pair
-      nBitsPerEntry -- the number of bits available for each torsion
+      mol: the molecule of interest
+      atomId: the atom to remove the torsions for (if -1, no torsion is removed)
+      fpType: the type of TT fingerprint ('normal', 'hashed', 'bv')
+      nBits: the size of the bit vector (only for fpType='bv')
+      minLength: the minimum path length for an atom pair
+      maxLength: the maxmimum path length for an atom pair
+      nBitsPerEntry: the number of bits available for each torsion
 
     any additional keyword arguments will be passed to the fingerprinting function.
 
@@ -390,12 +390,12 @@ def GetMorganFingerprint(mol, atomId=-1, radius=2, fpType='bv', nBits=2048, useF
     Calculates the Morgan fingerprint with the environments of atomId removed.
 
     Parameters:
-      mol -- the molecule of interest
-      radius -- the maximum radius
-      fpType -- the type of Morgan fingerprint: 'count' or 'bv'
-      atomId -- the atom to remove the environments for (if -1, no environments is removed)
-      nBits -- the size of the bit vector (only for fpType = 'bv')
-      useFeatures -- if false: ConnectivityMorgan, if true: FeatureMorgan
+      mol: the molecule of interest
+      radius: the maximum radius
+      fpType: the type of Morgan fingerprint: 'count' or 'bv'
+      atomId: the atom to remove the environments for (if -1, no environments is removed)
+      nBits: the size of the bit vector (only for fpType = 'bv')
+      useFeatures: if false: ConnectivityMorgan, if true: FeatureMorgan
 
     any additional keyword arguments will be passed to the fingerprinting function.
     """
@@ -459,13 +459,13 @@ def GetRDKFingerprint(mol, atomId=-1, fpType='bv', nBits=2048, minPath=1, maxPat
     Calculates the RDKit fingerprint with the paths of atomId removed.
 
     Parameters:
-      mol -- the molecule of interest
-      atomId -- the atom to remove the paths for (if -1, no path is removed)
-      fpType -- the type of RDKit fingerprint: 'bv'
-      nBits -- the size of the bit vector
-      minPath -- minimum path length
-      maxPath -- maximum path length
-      nBitsPerHash -- number of to set per path
+      mol: the molecule of interest
+      atomId: the atom to remove the paths for (if -1, no path is removed)
+      fpType: the type of RDKit fingerprint: 'bv'
+      nBits: the size of the bit vector
+      minPath: minimum path length
+      maxPath: maximum path length
+      nBitsPerHash: number of to set per path
     """
   if fpType not in ['bv', '']:
     raise ValueError("Unknown RDKit fingerprint type")
