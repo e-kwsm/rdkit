@@ -15,6 +15,7 @@ R.E. Carhart, D.H. Smith, R. Venkataraghavan;
 Definition and Applications" JCICS 25, 64-73 (1985).
 
 The fingerprints can be accessed through the following functions:
+
 - GetAtomPairFingerprint
 - GetHashedAtomPairFingerprint (identical to GetAtomPairFingerprint)
 - GetAtomPairFingerprintAsIntVect
@@ -38,6 +39,8 @@ def pyScorePair(at1, at2, dist, atomCodes=None, includeChirality=False):
   """ Returns a score for an individual atom pair.
 
   >>> from rdkit import Chem
+  >>> from rdkit.Chem.AtomPairs import Utils
+  >>> from rdkit.Chem.rdMolDescriptors import AtomPairsParameters
   >>> m = Chem.MolFromSmiles('CCCCC')
   >>> c1 = Utils.GetAtomCode(m.GetAtomWithIdx(0))
   >>> c2 = Utils.GetAtomCode(m.GetAtomWithIdx(1))
@@ -89,6 +92,7 @@ def ExplainPairScore(score,includeChirality=False):
   (('C', 1, 0), 1, ('C', 2, 1))
 
   We can optionally deal with chirality too
+
   >>> m = Chem.MolFromSmiles('C[C@H](F)Cl')
   >>> score = pyScorePair(m.GetAtomWithIdx(0), m.GetAtomWithIdx(1), 1)
   >>> ExplainPairScore(score)
