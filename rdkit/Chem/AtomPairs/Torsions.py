@@ -17,6 +17,7 @@ R. Nilakantan, N. Bauman, J. S. Dixon, R. Venkataraghavan;
 Comparison with Other Descriptors" JCICS 27, 82-85 (1987).
 
 The fingerprints can be accessed through the following functions:
+
 - GetTopologicalTorsionFingerprint
 - GetHashedTopologicalTorsionFingerprint
 - GetTopologicalTorsionFingerprintAsIntVect (identical to GetTopologicalTorsionFingerprint)
@@ -42,12 +43,12 @@ def pyScorePath(mol, path, size, atomCodes=None):
   >>> c4 = Utils.GetAtomCode(m.GetAtomWithIdx(3), 1)
   >>> t = c1 | (c2 << rdMolDescriptors.AtomPairsParameters.codeSize) | (c3 << (rdMolDescriptors.AtomPairsParameters.codeSize * 2)) | (c4 << (rdMolDescriptors.AtomPairsParameters.codeSize * 3))
   >>> pyScorePath(m, (0, 1, 2, 3), 4) == t
-  1
+  True
 
   The scores are path direction independent:
 
   >>> pyScorePath(m, (3, 2, 1, 0), 4) == t
-  1
+  True
 
   >>> m = Chem.MolFromSmiles('C=CC(=O)O')
   >>> c1 = Utils.GetAtomCode(m.GetAtomWithIdx(0), 1)
@@ -56,7 +57,7 @@ def pyScorePath(mol, path, size, atomCodes=None):
   >>> c4 = Utils.GetAtomCode(m.GetAtomWithIdx(4), 1)
   >>> t = c1 | (c2 << rdMolDescriptors.AtomPairsParameters.codeSize) | (c3 << (rdMolDescriptors.AtomPairsParameters.codeSize * 2)) | (c4 << (rdMolDescriptors.AtomPairsParameters.codeSize * 3))
   >>> pyScorePath(m, (0, 1, 2, 4), 4) == t
-  1
+  True
 
   """
   codes = [None] * size
@@ -94,7 +95,7 @@ def ExplainPathScore(score, size=4):
 
   >>> from rdkit import Chem
   >>> m = Chem.MolFromSmiles('C=CC')
-  >>> score=pyScorePath(m, (0, 1, 2), 3)
+  >>> score = pyScorePath(m, (0, 1, 2), 3)
   >>> ExplainPathScore(score, 3)
   (('C', 1, 0), ('C', 2, 1), ('C', 1, 1))
 
@@ -105,35 +106,35 @@ def ExplainPathScore(score, size=4):
   (('C', 1, 0), ('C', 2, 1), ('C', 1, 1))
 
   >>> m = Chem.MolFromSmiles('C=CO')
-  >>> score=pyScorePath(m, (0, 1, 2), 3)
+  >>> score = pyScorePath(m, (0, 1, 2), 3)
   >>> ExplainPathScore(score, 3)
   (('C', 1, 1), ('C', 2, 1), ('O', 1, 0))
 
   >>> m = Chem.MolFromSmiles('OC=CO')
-  >>> score=pyScorePath(m, (0, 1, 2, 3), 4)
+  >>> score = pyScorePath(m, (0, 1, 2, 3), 4)
   >>> ExplainPathScore(score, 4)
   (('O', 1, 0), ('C', 2, 1), ('C', 2, 1), ('O', 1, 0))
 
   >>> m = Chem.MolFromSmiles('CC=CO')
-  >>> score=pyScorePath(m, (0, 1, 2, 3), 4)
+  >>> score = pyScorePath(m, (0, 1, 2, 3), 4)
   >>> ExplainPathScore(score, 4)
   (('C', 1, 0), ('C', 2, 1), ('C', 2, 1), ('O', 1, 0))
 
 
   >>> m = Chem.MolFromSmiles('C=CC(=O)O')
-  >>> score=pyScorePath(m, (0, 1, 2, 3), 4)
+  >>> score = pyScorePath(m, (0, 1, 2, 3), 4)
   >>> ExplainPathScore(score, 4)
   (('C', 1, 1), ('C', 2, 1), ('C', 3, 1), ('O', 1, 1))
-  >>> score=pyScorePath(m, (0, 1, 2, 4), 4)
+  >>> score = pyScorePath(m, (0, 1, 2, 4), 4)
   >>> ExplainPathScore(score, 4)
   (('C', 1, 1), ('C', 2, 1), ('C', 3, 1), ('O', 1, 0))
 
 
   >>> m = Chem.MolFromSmiles('OOOO')
-  >>> score=pyScorePath(m, (0, 1, 2), 3)
+  >>> score = pyScorePath(m, (0, 1, 2), 3)
   >>> ExplainPathScore(score, 3)
   (('O', 1, 0), ('O', 2, 0), ('O', 2, 0))
-  >>> score=pyScorePath(m, (0, 1, 2, 3), 4)
+  >>> score = pyScorePath(m, (0, 1, 2, 3), 4)
   >>> ExplainPathScore(score, 4)
   (('O', 1, 0), ('O', 2, 0), ('O', 2, 0), ('O', 1, 0))
 
