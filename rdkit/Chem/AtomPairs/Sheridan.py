@@ -14,6 +14,7 @@ Kearsley, S. K. et al.
 J. Chem.Inf. Model. 36, 118-127 (1996)
 
 The fingerprints can be accessed through the following functions:
+
 - GetBPFingerprint
 - GetBTFingerprint
 
@@ -80,8 +81,8 @@ def GetBPFingerprint(mol, fpfn=GetAtomPairFingerprint):
     >>> fp = GetBPFingerprint(Chem.MolFromSmiles('OCC(=O)O'))
     >>> fp.GetTotalVal()
     10
-    >>> nze=fp.GetNonzeroElements()
-    >>> sorted([(k,v) for k,v in nze.items()])
+    >>> nze = fp.GetNonzeroElements()
+    >>> sorted(nze.items())
     [(32834, 1), (49219, 2), (98370, 2), (98401, 1), (114753, 2), (114786, 1), (114881, 1)]
 
     """
@@ -99,8 +100,8 @@ def GetBTFingerprint(mol, fpfn=GetTopologicalTorsionFingerprint):
     >>> fp = GetBTFingerprint(mol)
     >>> fp.GetTotalVal()
     2
-    >>> nze=fp.GetNonzeroElements()
-    >>> sorted([(k,v) for k,v in nze.items()])
+    >>> nze = fp.GetNonzeroElements()
+    >>> sorted(nze.items())
     [(538446850..., 1), (538446852..., 1)]
 
     """
