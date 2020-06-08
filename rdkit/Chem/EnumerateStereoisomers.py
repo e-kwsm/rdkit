@@ -136,8 +136,8 @@ def GetStereoisomerCount(m, options=StereoEnumerationOptions()):
   """ returns an estimate (upper bound) of the number of possible stereoisomers for a molecule
 
    Arguments:
-      - m: the molecule to work with
-      - options: parameters controlling the enumeration
+     m: the molecule to work with
+     options: parameters controlling the enumeration
 
 
     >>> from rdkit import Chem
@@ -165,9 +165,9 @@ def EnumerateStereoisomers(m, options=StereoEnumerationOptions(), verbose=False)
   """ returns a generator that yields possible stereoisomers for a molecule
 
     Arguments:
-      - m: the molecule to work with
-      - options: parameters controlling the enumeration
-      - verbose: toggles how verbose the output is
+      m: the molecule to work with
+      options: parameters controlling the enumeration
+      verbose: toggles how verbose the output is
 
     If m has stereogroups, they will be expanded
 
@@ -271,7 +271,7 @@ def EnumerateStereoisomers(m, options=StereoEnumerationOptions(), verbose=False)
     >>> opts = StereoEnumerationOptions(maxIsomers=0)
     >>> isomers = EnumerateStereoisomers(m, options=opts)
     >>> for x in range(5):
-    ...   print(Chem.MolToSmiles(next(isomers),isomericSmiles=True))
+    ...   print(Chem.MolToSmiles(next(isomers), isomericSmiles=True))
     F[C@@H](Cl)[C@@H](Cl)[C@@H](Cl)[C@@H](Cl)[C@@H](Cl)[C@@H](Cl)[C@@H](Cl)[C@@H](Cl)[C@@H](Cl)[C@@H](Cl)[C@@H](Cl)[C@@H](Cl)[C@@H](Cl)[C@@H](Cl)[C@@H](Cl)[C@@H](Cl)[C@@H](Cl)[C@@H](Cl)[C@@H](Cl)[C@@H](Cl)Br
     F[C@@H](Cl)[C@@H](Cl)[C@@H](Cl)[C@@H](Cl)[C@@H](Cl)[C@@H](Cl)[C@@H](Cl)[C@@H](Cl)[C@@H](Cl)[C@@H](Cl)[C@@H](Cl)[C@@H](Cl)[C@@H](Cl)[C@@H](Cl)[C@@H](Cl)[C@@H](Cl)[C@@H](Cl)[C@@H](Cl)[C@@H](Cl)[C@H](Cl)Br
     F[C@@H](Cl)[C@@H](Cl)[C@@H](Cl)[C@@H](Cl)[C@@H](Cl)[C@@H](Cl)[C@@H](Cl)[C@@H](Cl)[C@@H](Cl)[C@@H](Cl)[C@@H](Cl)[C@@H](Cl)[C@@H](Cl)[C@@H](Cl)[C@@H](Cl)[C@@H](Cl)[C@@H](Cl)[C@@H](Cl)[C@H](Cl)[C@@H](Cl)Br
