@@ -19,19 +19,19 @@ class FilterMatcher(PythonFilterMatcher):
 
     Simple Example:
 
-    from rdkit.Chem import rdMolDescriptors
-    class MWFilter(FilterMatcher):
-      def __init__(self, minMw, maxMw):
+      from rdkit.Chem import rdMolDescriptors
+      class MWFilter(FilterMatcher):
+        def __init__(self, minMw, maxMw):
           FilterMatcher.__init__(self, "MW violation")
           self.minMw = minMw
           self.maxMw = maxMw
 
-      def IsValid(self):
-         return True
+        def IsValid(self):
+          return True
 
-      def HasMatch(self, mol):
-         mw = rdMolDescriptors.CalcExactMolWt(mol)
-         return not self.minMw <= mw <= self.maxMw
+        def HasMatch(self, mol):
+          mw = rdMolDescriptors.CalcExactMolWt(mol)
+          return not self.minMw <= mw <= self.maxMw
     """
 
   def __init__(self, name="Unamed FilterMatcher"):
@@ -46,14 +46,15 @@ class FilterMatcher(PythonFilterMatcher):
   def GetMatches(self, mol, matchVect):
     """GetMatches(mol, matchVect) -> returns True if the filter matches
         (By default, this calls HasMatch and does not modify matchVect)
-        
+
         matchVect is a vector of FilterMatch's which hold the matching
         filter and the matched query_atom, mol_atom pairs if applicable.
         To append to this vector:
-        v = MatchTypeVect()
-        v.append(IntPair( query_atom_idx, mol_atom_idx ) )
-        match = FilterMatch(self, v)
-        matchVect.append( match )
+
+          v = MatchTypeVect()
+          v.append(IntPair(query_atom_idx, mol_atom_idx))
+          match = FilterMatch(self, v)
+          matchVect.append(match)
         """
     return self.HasMatch(mol)
 
