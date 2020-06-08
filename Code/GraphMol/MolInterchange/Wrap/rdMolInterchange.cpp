@@ -77,7 +77,7 @@ BOOST_PYTHON_MODULE(rdMolInterchange) {
       "Convert a single molecule to JSON\n\
 \n\
     ARGUMENTS:\n\
-      - mol: the molecule to work with\n\
+      mol: the molecule to work with\n\
     RETURNS:\n\
       a string\n";
   python::def("MolToJSON",
@@ -88,7 +88,7 @@ BOOST_PYTHON_MODULE(rdMolInterchange) {
       "Convert a set of molecules to JSON\n\
 \n\
     ARGUMENTS:\n\
-      - mols: the molecules to work with\n\
+      mols: the molecules to work with\n\
     RETURNS:\n\
       a string\n";
   python::def("MolsToJSON", MolsToJSON, (python::arg("mols")),
@@ -97,8 +97,8 @@ BOOST_PYTHON_MODULE(rdMolInterchange) {
       "Convert JSON to a tuple of molecules\n\
 \n\
     ARGUMENTS:\n\
-      - jsonBlock: the molecule to work with\n\
-      - params: (optional) JSONParseParameters controlling the JSON parsing\n\
+      jsonBlock: the molecule to work with\n\
+      params: (optional) JSONParseParameters controlling the JSON parsing\n\
     RETURNS:\n\
       a tuple of Mols\n";
   python::def(
