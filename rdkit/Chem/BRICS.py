@@ -316,32 +316,32 @@ def BreakBRICSBonds(mol, bonds=None, sanitize=True, silent=True):
 
     >>> from rdkit import Chem
     >>> m = Chem.MolFromSmiles('CCCOCC')
-    >>> m2=BreakBRICSBonds(m)
-    >>> Chem.MolToSmiles(m2,True)
+    >>> m2 = BreakBRICSBonds(m)
+    >>> Chem.MolToSmiles(m2, True)
     '[3*]O[3*].[4*]CC.[4*]CCC'
 
     a more complicated case:
 
     >>> m = Chem.MolFromSmiles('CCCOCCC(=O)c1ccccc1')
-    >>> m2=BreakBRICSBonds(m)
-    >>> Chem.MolToSmiles(m2,True)
+    >>> m2 = BreakBRICSBonds(m)
+    >>> Chem.MolToSmiles(m2, True)
     '[16*]c1ccccc1.[3*]O[3*].[4*]CCC.[4*]CCC([6*])=O'
 
 
     can also specify a limited set of bonds to work with:
 
     >>> m = Chem.MolFromSmiles('CCCOCC')
-    >>> m2 = BreakBRICSBonds(m,[((3, 2), ('3', '4'))])
-    >>> Chem.MolToSmiles(m2,True)
+    >>> m2 = BreakBRICSBonds(m, [((3, 2), ('3', '4'))])
+    >>> Chem.MolToSmiles(m2, True)
     '[3*]OCC.[4*]CCC'
 
     this can be used as an alternate approach for doing a BRICS decomposition by
     following BreakBRICSBonds with a call to Chem.GetMolFrags:
 
     >>> m = Chem.MolFromSmiles('CCCOCC')
-    >>> m2=BreakBRICSBonds(m)
-    >>> frags = Chem.GetMolFrags(m2,asMols=True)
-    >>> [Chem.MolToSmiles(x,True) for x in frags]
+    >>> m2 = BreakBRICSBonds(m)
+    >>> frags = Chem.GetMolFrags(m2, asMols=True)
+    >>> [Chem.MolToSmiles(x, True) for x in frags]
     ['[4*]CCC', '[3*]O[3*]', '[4*]CC']
 
     """
@@ -401,10 +401,10 @@ def BRICSDecompose(mol, allNodes=None, minFragmentSize=1, onlyUseReactions=None,
     >>> sorted(res)
     ['[14*]c1ccccn1', '[16*]c1cccc([16*])c1', '[3*]O[3*]', '[4*]CCC', '[4*]C[8*]']
 
-    >>> res = list(BRICSDecompose(m,returnMols=True))
+    >>> res = list(BRICSDecompose(m, returnMols=True))
     >>> res[0]
     <rdkit.Chem.rdchem.Mol object ...>
-    >>> smis = [Chem.MolToSmiles(x,True) for x in res]
+    >>> smis = [Chem.MolToSmiles(x, True) for x in res]
     >>> sorted(smis)
     ['[14*]c1ccccn1', '[16*]c1cccc([16*])c1', '[3*]O[3*]', '[4*]CCC', '[4*]C[8*]']
 
@@ -418,33 +418,33 @@ def BRICSDecompose(mol, allNodes=None, minFragmentSize=1, onlyUseReactions=None,
     it's also possible to keep pieces that haven't been fully decomposed:
 
     >>> m = Chem.MolFromSmiles('CCCOCC')
-    >>> res = list(BRICSDecompose(m,keepNonLeafNodes=True))
+    >>> res = list(BRICSDecompose(m, keepNonLeafNodes=True))
     >>> sorted(res)
     ['CCCOCC', '[3*]OCC', '[3*]OCCC', '[3*]O[3*]', '[4*]CC', '[4*]CCC']
 
     >>> m = Chem.MolFromSmiles('CCCOCc1cc(c2ncccc2)ccc1')
-    >>> res = list(BRICSDecompose(m,keepNonLeafNodes=True))
+    >>> res = list(BRICSDecompose(m, keepNonLeafNodes=True))
     >>> sorted(res)
     ['CCCOCc1cccc(-c2ccccn2)c1', '[14*]c1ccccn1', '[16*]c1cccc(-c2ccccn2)c1', '[16*]c1cccc(COCCC)c1', '[16*]c1cccc([16*])c1', '[3*]OCCC', '[3*]OC[8*]', '[3*]OCc1cccc(-c2ccccn2)c1', '[3*]OCc1cccc([16*])c1', '[3*]O[3*]', '[4*]CCC', '[4*]C[8*]', '[4*]Cc1cccc(-c2ccccn2)c1', '[4*]Cc1cccc([16*])c1', '[8*]COCCC']
 
     or to only do a single pass of decomposition:
 
     >>> m = Chem.MolFromSmiles('CCCOCc1cc(c2ncccc2)ccc1')
-    >>> res = list(BRICSDecompose(m,singlePass=True))
+    >>> res = list(BRICSDecompose(m, singlePass=True))
     >>> sorted(res)
     ['CCCOCc1cccc(-c2ccccn2)c1', '[14*]c1ccccn1', '[16*]c1cccc(-c2ccccn2)c1', '[16*]c1cccc(COCCC)c1', '[3*]OCCC', '[3*]OCc1cccc(-c2ccccn2)c1', '[4*]CCC', '[4*]Cc1cccc(-c2ccccn2)c1', '[8*]COCCC']
 
     setting a minimum size for the fragments:
 
     >>> m = Chem.MolFromSmiles('CCCOCC')
-    >>> res = list(BRICSDecompose(m,keepNonLeafNodes=True,minFragmentSize=2))
+    >>> res = list(BRICSDecompose(m, keepNonLeafNodes=True, minFragmentSize=2))
     >>> sorted(res)
     ['CCCOCC', '[3*]OCC', '[3*]OCCC', '[4*]CC', '[4*]CCC']
     >>> m = Chem.MolFromSmiles('CCCOCC')
-    >>> res = list(BRICSDecompose(m,keepNonLeafNodes=True,minFragmentSize=3))
+    >>> res = list(BRICSDecompose(m, keepNonLeafNodes=True, minFragmentSize=3))
     >>> sorted(res)
     ['CCCOCC', '[3*]OCC', '[4*]CCC']
-    >>> res = list(BRICSDecompose(m,minFragmentSize=2))
+    >>> res = list(BRICSDecompose(m, minFragmentSize=2))
     >>> sorted(res)
     ['[3*]OCC', '[3*]OCCC', '[4*]CC', '[4*]CCC']
 
