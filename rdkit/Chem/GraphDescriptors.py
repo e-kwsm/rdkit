@@ -284,11 +284,12 @@ def _pyChi1v(mol):
 def _pyChiNv_(mol, order=2):
   """  From equations (5),(15) and (16) of Rev. Comp. Chem. vol 2, 367-422, (1991)
 
-  **NOTE**: because the current path finding code does, by design,
-  detect rings as paths (e.g. in C1CC1 there is *1* atom path of
-  length 3), values of ChiNv with N >= 3 may give results that differ
-  from those provided by the old code in molecules that have rings of
-  size 3.
+  NOTE:
+    because the current path finding code does, by design,
+    detect rings as paths (e.g. in C1CC1 there is *1* atom path of
+    length 3), values of ChiNv with N >= 3 may give results that differ
+    from those provided by the old code in molecules that have rings of
+    size 3.
 
   """
   deltas = numpy.array(
@@ -316,10 +317,11 @@ def _pyChi3v(mol):
 def _pyChi4v(mol):
   """ From equations (5),(15) and (16) of Rev. Comp. Chem. vol 2, 367-422, (1991)
 
-  **NOTE**: because the current path finding code does, by design,
-  detect rings as paths (e.g. in C1CC1 there is *1* atom path of
-  length 3), values of Chi4v may give results that differ from those
-  provided by the old code in molecules that have 3 rings.
+  NOTE:
+    because the current path finding code does, by design,
+    detect rings as paths (e.g. in C1CC1 there is *1* atom path of
+    length 3), values of Chi4v may give results that differ from those
+    provided by the old code in molecules that have 3 rings.
 
   """
   return _pyChiNv_(mol, 4)
@@ -355,11 +357,12 @@ def _pyChiNn_(mol, order=2):
   """  Similar to Hall Kier ChiNv, but uses nVal instead of valence
   This makes a big difference after we get out of the first row.
 
-  **NOTE**: because the current path finding code does, by design,
-  detect rings as paths (e.g. in C1CC1 there is *1* atom path of
-  length 3), values of ChiNn with N >= 3 may give results that differ
-  from those provided by the old code in molecules that have rings of
-  size 3.
+  NOTE:
+    because the current path finding code does, by design,
+    detect rings as paths (e.g. in C1CC1 there is *1* atom path of
+    length 3), values of ChiNn with N >= 3 may give results that differ
+    from those provided by the old code in molecules that have rings of
+    size 3.
 
   """
   nval = [_nVal(x) for x in mol.GetAtoms()]
@@ -390,11 +393,11 @@ def _pyChi4n(mol):
   """  Similar to Hall Kier Chi4v, but uses nVal instead of valence
   This makes a big difference after we get out of the first row.
 
-
-  **NOTE**: because the current path finding code does, by design,
-  detect rings as paths (e.g. in C1CC1 there is *1* atom path of
-  length 3), values of Chi4n may give results that differ from those
-  provided by the old code in molecules that have 3 rings.
+  NOTE:
+    because the current path finding code does, by design,
+    detect rings as paths (e.g. in C1CC1 there is *1* atom path of
+    length 3), values of Chi4n may give results that differ from those
+    provided by the old code in molecules that have 3 rings.
 
   """
   return _pyChiNn_(mol, 4)
@@ -430,20 +433,16 @@ ChiNn_.version = rdMolDescriptors._CalcChiNn_version
 def BalabanJ(mol, dMat=None, forceDMat=0):
   """ Calculate Balaban's J value for a molecule
 
-  **Arguments**
-
-    - mol: a molecule
-
-    - dMat: (optional) a distance/adjacency matrix for the molecule, if this
+  Arguments:
+    mol: a molecule
+    dMat: (optional) a distance/adjacency matrix for the molecule, if this
       is not provide, one will be calculated
-
-    - forceDMat: (optional) if this is set, the distance/adjacency matrix
+    forceDMat: (optional) if this is set, the distance/adjacency matrix
       will be recalculated regardless of whether or not _dMat_ is provided
       or the molecule already has one
 
-  **Returns**
-
-    - a float containing the J value
+  Returns:
+    a float containing the J value
 
   We follow the notation of Balaban's paper:
     Chem. Phys. Lett. vol 89, 399-404, (1982)
