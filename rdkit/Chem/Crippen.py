@@ -78,7 +78,8 @@ def _pyGetAtomContribs(mol, patts=None, order=None, verbose=0, force=0):
     if the argument *force* is not set, we'll use the molecules stored
     _crippenContribs value when possible instead of re-calculating.
 
-  **Note:** Changes here affect the version numbers of MolLogP and MolMR
+  Note:
+    Changes here affect the version numbers of MolLogP and MolMR
     as well as the VSA descriptors in Chem.MolSurf
 
   """
@@ -174,11 +175,9 @@ MolLogP.__doc__ = """ Wildman-Crippen LogP value
   Uses an atom-based scheme based on the values in the paper:
      S. A. Wildman and G. M. Crippen JCICS 39 868-873 (1999)
 
-  **Arguments**
-
-    - inMol: a molecule
-
-    - addHs: (optional) toggles adding of Hs to the molecule for the calculation.
+  Arguments:
+    inMol: a molecule
+    addHs: (optional) toggles adding of Hs to the molecule for the calculation.
       If true, hydrogens will be added to the molecule and used in the calculation.
 
 """
@@ -190,11 +189,9 @@ MolMR.__doc__ = """ Wildman-Crippen MR value
   Uses an atom-based scheme based on the values in the paper:
      S. A. Wildman and G. M. Crippen JCICS 39 868-873 (1999)
 
-  **Arguments**
-
-    - inMol: a molecule
-
-    - addHs: (optional) toggles adding of Hs to the molecule for the calculation.
+  Arguments:
+    inMol: a molecule
+    addHs: (optional) toggles adding of Hs to the molecule for the calculation.
       If true, hydrogens will be added to the molecule and used in the calculation.
 
 """
