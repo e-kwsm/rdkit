@@ -12,8 +12,11 @@
 
 
 Sample Usage:
-  python ClusterMols.py  -d data.gdb -t daylight_sig \
-    --idName="CAS_TF" -o clust1.pkl \
+
+.. code-block::
+
+  python ClusterMols.py -d data.gdb -t daylight_sig \\
+    --idName="CAS_TF" -o clust1.pkl \\
     --actTable="dop_test" --actName="moa_quant"
 
 """
