@@ -104,7 +104,7 @@ def PreprocessReaction(reaction, funcGroupFilename=None, propName='molFileValue'
   >>> testFile = os.path.join(RDConfig.RDCodeDir, 'Chem', 'SimpleEnum', 'test_data', 'bad_value1.rxn')
   >>> rxn = AllChem.ReactionFromRxnFile(testFile)
   >>> rxn.Initialize()
-  >>> nWarn,nError,nReacts,nProds,reactantLabels = PreprocessReaction(rxn)
+  >>> nWarn, nError, nReacts, nProds, reactantLabels = PreprocessReaction(rxn)
   Traceback (most recent call last):
     File "/usr/prog/python/2.6.6_gnu/lib/python2.6/doctest.py", line 1253, in __run
       compileflags, 1) in test.globs
@@ -119,7 +119,7 @@ def PreprocessReaction(reaction, funcGroupFilename=None, propName='molFileValue'
   >>> testFile = os.path.join(RDConfig.RDCodeDir, 'Chem', 'SimpleEnum', 'test_data', 'bad_value2.rxn')
   >>> rxn = AllChem.ReactionFromRxnFile(testFile)
   >>> rxn.Initialize()
-  >>> nWarn,nError,nReacts,nProds,reactantLabels = PreprocessReaction(rxn)
+  >>> nWarn, nError, nReacts, nProds, reactantLabels = PreprocessReaction(rxn)
   Traceback (most recent call last):
     File "/usr/prog/python/2.6.6_gnu/lib/python2.6/doctest.py", line 1253, in __run
       compileflags, 1) in test.globs
@@ -131,7 +131,7 @@ def PreprocessReaction(reaction, funcGroupFilename=None, propName='molFileValue'
   >>> testFile = os.path.join(RDConfig.RDCodeDir, 'Chem', 'SimpleEnum', 'test_data', 'bad_value3.rxn')
   >>> rxn = AllChem.ReactionFromRxnFile(testFile)
   >>> rxn.Initialize()
-  >>> nWarn,nError,nReacts,nProds,reactantLabels = PreprocessReaction(rxn)
+  >>> nWarn, nError, nReacts, nProds, reactantLabels = PreprocessReaction(rxn)
   Traceback (most recent call last):
     File "/usr/prog/python/2.6.6_gnu/lib/python2.6/doctest.py", line 1253, in __run
       compileflags, 1) in test.globs
