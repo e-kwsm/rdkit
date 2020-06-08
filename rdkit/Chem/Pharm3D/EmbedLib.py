@@ -36,7 +36,7 @@ def GetAtomHeavyNeighbors(atom):
   >>> l = GetAtomHeavyNeighbors(m.GetAtomWithIdx(0))
   >>> len(l)
   1
-  >>> isinstance(l[0],Chem.Atom)
+  >>> isinstance(l[0], Chem.Atom)
   True
   >>> l[0].GetIdx()
   1
@@ -58,8 +58,8 @@ def ReplaceGroup(match, bounds, slop=0.01, useDirs=False, dirLength=defaultFeatL
    the center of a multi-point feature
 
    returns a 2-tuple:
-     new bounds mat
-     index of point added
+     0. new bounds mat
+     1. index of point added
 
    >>> boundsMat = numpy.array([[0.0, 2.0, 2.0],[1.0, 0.0, 2.0],[1.0, 1.0, 0.0]])
    >>> match = [0, 1, 2]
@@ -161,7 +161,7 @@ def EmbedMol(mol, bm, atomMatch=None, weight=2.0, randomSeed=-1, excludedVolumes
   True
   >>> m.GetNumConformers()
   0
-  >>> EmbedMol(m,bounds,randomSeed=23)
+  >>> EmbedMol(m, bounds, randomSeed=23)
   >>> m.GetNumConformers()
   1
 
@@ -260,8 +260,9 @@ def UpdatePharmacophoreBounds(bm, atomMatch, pcophore, useDirs=False, dirLength=
   """ loops over a distance bounds matrix and replaces the elements
   that are altered by a pharmacophore
 
-  **NOTE** this returns the resulting bounds matrix, but it may also
-  alter the input matrix
+  NOTE:
+    this returns the resulting bounds matrix, but it may also
+    alter the input matrix
 
   atomMatch is a sequence of sequences containing atom indices
   for each of the pharmacophore's features.
@@ -273,7 +274,7 @@ def UpdatePharmacophoreBounds(bm, atomMatch, pcophore, useDirs=False, dirLength=
     ...                                        Geometry.Point3D(0.0, 0.0, 0.0)),
     ...   ChemicalFeatures.FreeChemicalFeature('HBondDonor', 'HDonor1',
     ...                                        Geometry.Point3D(2.65, 0.0, 0.0)),
-    ...   ]
+    ... ]
     >>> pcophore = Pharmacophore.Pharmacophore(feats)
     >>> pcophore.setLowerBound(0,1, 1.0)
     >>> pcophore.setUpperBound(0,1, 2.0)
@@ -334,10 +335,11 @@ def EmbedPharmacophore(mol, atomMatch, pcophore, randomSeed=-1, count=10, smooth
        of embeddings to generate (i.e. we'll have count attempts to generate
        targetNumber embeddings).
 
-  returns: a 3 tuple:
-    1) the molecular bounds matrix adjusted for the pharmacophore
-    2) a list of embeddings (molecules with a single conformer)
-    3) the number of failed attempts at embedding
+  Returns:
+    a 3 tuple:
+      0) the molecular bounds matrix adjusted for the pharmacophore
+      1) a list of embeddings (molecules with a single conformer)
+      2) the number of failed attempts at embedding
 
     >>> from rdkit import Geometry
     >>> from rdkit.Chem.Pharm3D import Pharmacophore
@@ -347,13 +349,13 @@ def EmbedPharmacophore(mol, atomMatch, pcophore, randomSeed=-1, count=10, smooth
     ...                                        Geometry.Point3D(0.0, 0.0, 0.0)),
     ...   ChemicalFeatures.FreeChemicalFeature('HBondDonor', 'HDonor1',
     ...                                        Geometry.Point3D(2.65, 0.0, 0.0)),
-    ...   ]
+    ... ]
     >>> pcophore=Pharmacophore.Pharmacophore(feats)
     >>> pcophore.setLowerBound(0,1, 2.5)
     >>> pcophore.setUpperBound(0,1, 3.5)
     >>> atomMatch = ((0, ), (3, ))
 
-    >>> bm,embeds,nFail = EmbedPharmacophore(m, atomMatch, pcophore, randomSeed=23, silent=1)
+    >>> bm, embeds, nFail = EmbedPharmacophore(m, atomMatch, pcophore, randomSeed=23, silent=1)
     >>> len(embeds)
     10
     >>> nFail
@@ -474,15 +476,26 @@ def OptimizeMol(mol, bm, atomMatches=None, excludedVolumes=None, forceConstant=1
      2) the energy post-embedding
    NOTE that these energies include the energies of the constraints
 
+
+
+=======
+   Returns:
+     a 2-tuple:
+       0) the energy of the initial conformation
+       1) the energy post-embedding
+   NOTE:
+     that these energies include the energies of the constraints
+
+>>>>>>> 3eb856ab8418 (rdkit/Chem/Pharm3D/EmbedLib.py)
     >>> from rdkit import Geometry
     >>> from rdkit.Chem.Pharm3D import Pharmacophore
     >>> m = Chem.MolFromSmiles('OCCN')
     >>> feats = [
-    ...  ChemicalFeatures.FreeChemicalFeature('HBondAcceptor', 'HAcceptor1',
-    ...                                       Geometry.Point3D(0.0, 0.0, 0.0)),
-    ...  ChemicalFeatures.FreeChemicalFeature('HBondDonor', 'HDonor1',
-    ...                                       Geometry.Point3D(2.65, 0.0, 0.0)),
-    ...  ]
+    ...   ChemicalFeatures.FreeChemicalFeature('HBondAcceptor', 'HAcceptor1',
+    ...                                        Geometry.Point3D(0.0, 0.0, 0.0)),
+    ...   ChemicalFeatures.FreeChemicalFeature('HBondDonor', 'HDonor1',
+    ...                                        Geometry.Point3D(2.65, 0.0, 0.0)),
+    ... ]
     >>> pcophore=Pharmacophore.Pharmacophore(feats)
     >>> pcophore.setLowerBound(0,1, 2.5)
     >>> pcophore.setUpperBound(0,1, 2.8)
@@ -494,7 +507,7 @@ def OptimizeMol(mol, bm, atomMatches=None, excludedVolumes=None, forceConstant=1
 
     Do the optimization:
 
-    >>> e1, e2 = OptimizeMol(testM,bm,atomMatches=atomMatch)
+    >>> e1, e2 = OptimizeMol(testM, bm, atomMatches=atomMatch)
 
     Optimizing should have lowered the energy:
 
@@ -507,9 +520,9 @@ def OptimizeMol(mol, bm, atomMatches=None, excludedVolumes=None, forceConstant=1
     >>> p0 = conf.GetAtomPosition(0)
     >>> p3 = conf.GetAtomPosition(3)
     >>> d03 = p0.Distance(p3)
-    >>> d03 >= pcophore.getLowerBound(0,1) - 0.01
+    >>> d03 >= pcophore.getLowerBound(0, 1) - 0.01
     True
-    >>> d03 <= pcophore.getUpperBound(0,1) + 0.01
+    >>> d03 <= pcophore.getUpperBound(0, 1) + 0.01
     True
 
     If we optimize without the distance constraints (provided via the atomMatches
@@ -518,7 +531,7 @@ def OptimizeMol(mol, bm, atomMatches=None, excludedVolumes=None, forceConstant=1
     close together:
 
     >>> testM = embeds[1]
-    >>> e1, e2 = OptimizeMol(testM,bm)
+    >>> e1, e2 = OptimizeMol(testM, bm)
     >>> e2 < e1
     True
     >>> conf = testM.GetConformer(0)
@@ -617,16 +630,17 @@ def EmbedOne(mol, name, match, pcophore, count=1, silent=0, **kwargs):
       4) E4: the energy (no constraints) of the optimized free-molecule
          (starting from the E3 geometry)
 
-  Returns a 9-tuple:
-      1) the mean value of E1
-      2) the sample standard deviation of E1
-      3) the mean value of E2
-      4) the sample standard deviation of E2
-      5) the mean value of E3
-      6) the sample standard deviation of E3
-      7) the mean value of E4
-      8) the sample standard deviation of E4
-      9) The number of embeddings that failed
+  Returns:
+    a 9-tuple:
+      0) the mean value of E1
+      1) the sample standard deviation of E1
+      2) the mean value of E2
+      3) the sample standard deviation of E2
+      4) the mean value of E3
+      5) the sample standard deviation of E3
+      6) the mean value of E4
+      7) the sample standard deviation of E4
+      8) The number of embeddings that failed
 
   """
   global _times
@@ -698,22 +712,24 @@ def EmbedOne(mol, name, match, pcophore, count=1, silent=0, **kwargs):
 def MatchPharmacophoreToMol(mol, featFactory, pcophore):
   """ generates a list of all possible mappings of a pharmacophore to a molecule
 
-  Returns a 2-tuple:
-    1) a boolean indicating whether or not all features were found
-    2) a list, numFeatures long, of sequences of features
+  Returns:
+    a 2-tuple:
+      0) a boolean indicating whether or not all features were found
+      1) a list, numFeatures long, of sequences of features
 
 
     >>> import os.path
     >>> from rdkit import Geometry, RDConfig
     >>> from rdkit.Chem.Pharm3D import Pharmacophore
-    >>> fdefFile = os.path.join(RDConfig.RDCodeDir,'Chem/Pharm3D/test_data/BaseFeatures.fdef')
+    >>> fdefFile = os.path.join(RDConfig.RDCodeDir, 'Chem/Pharm3D/test_data/BaseFeatures.fdef')
     >>> featFactory = ChemicalFeatures.BuildFeatureFactory(fdefFile)
     >>> activeFeats = [
-    ...  ChemicalFeatures.FreeChemicalFeature('Acceptor', Geometry.Point3D(0.0, 0.0, 0.0)),
-    ...  ChemicalFeatures.FreeChemicalFeature('Donor',Geometry.Point3D(0.0, 0.0, 0.0))]
+    ...   ChemicalFeatures.FreeChemicalFeature('Acceptor', Geometry.Point3D(0.0, 0.0, 0.0)),
+    ...   ChemicalFeatures.FreeChemicalFeature('Donor', Geometry.Point3D(0.0, 0.0, 0.0))
+    ... ]
     >>> pcophore= Pharmacophore.Pharmacophore(activeFeats)
     >>> m = Chem.MolFromSmiles('FCCN')
-    >>> match, mList = MatchPharmacophoreToMol(m,featFactory,pcophore)
+    >>> match, mList = MatchPharmacophoreToMol(m, featFactory, pcophore)
     >>> match
     True
 
@@ -781,9 +797,10 @@ def _getFeatDict(mol, featFactory, features):
 def MatchFeatsToMol(mol, featFactory, features):
   """ generates a list of all possible mappings of each feature to a molecule
 
-  Returns a 2-tuple:
-    1) a boolean indicating whether or not all features were found
-    2) a list, numFeatures long, of sequences of features
+  Returns:
+    a 2-tuple:
+      0) a boolean indicating whether or not all features were found
+      1) a list, numFeatures long, of sequences of features
 
 
     >>> import os.path
@@ -870,7 +887,7 @@ def DownsampleBoundsMatrix(bm, indices, maxThresh=4.0):
   the pharmacophore we're interested in. Because the bounds smoothing
   we eventually have to do is N^3, this can be a big win
 
-   >>> boundsMat = numpy.array([[0.0, 3.0, 4.0],[2.0, 0.0, 3.0],[2.0, 2.0, 0.0]])
+   >>> boundsMat = numpy.array([[0.0, 3.0, 4.0], [2.0, 0.0, 3.0], [2.0, 2.0, 0.0]])
    >>> bm = DownsampleBoundsMatrix(boundsMat,(0, ), 3.5)
    >>> bm.shape == (2, 2)
    True
@@ -887,7 +904,7 @@ def DownsampleBoundsMatrix(bm, indices, maxThresh=4.0):
 
    if the threshold is high enough, we don't do anything:
 
-   >>> boundsMat = numpy.array([[0.0, 4.0, 3.0],[2.0, 0.0, 3.0],[2.0, 2.0, 0.0]])
+   >>> boundsMat = numpy.array([[0.0, 4.0, 3.0], [2.0, 0.0, 3.0], [2.0, 2.0, 0.0]])
    >>> bm = DownsampleBoundsMatrix(boundsMat, (0, ), 5.0)
    >>> bm.shape == (3, 3)
    True
@@ -895,7 +912,7 @@ def DownsampleBoundsMatrix(bm, indices, maxThresh=4.0):
    If there's a max value that's close enough to *any* of the indices
    we pass in, we'll keep it:
 
-   >>> boundsMat = numpy.array([[0.0, 4.0, 3.0],[2.0, 0.0, 3.0],[2.0, 2.0, 0.0]])
+   >>> boundsMat = numpy.array([[0.0, 4.0, 3.0], [2.0, 0.0, 3.0], [2.0, 2.0, 0.0]])
    >>> bm = DownsampleBoundsMatrix(boundsMat, (0, 1), 3.5)
    >>> bm.shape == (3, 3)
    True
@@ -937,7 +954,7 @@ def CoarseScreenPharmacophore(atomMatch, bounds, pcophore, verbose=False):
   ...                                        Geometry.Point3D(2.65, 0.0, 0.0)),
   ...   ChemicalFeatures.FreeChemicalFeature('Aromatic', 'Aromatic1',
   ...                                        Geometry.Point3D(5.12, 0.908, 0.0)),
-  ...   ]
+  ... ]
   >>> pcophore = Pharmacophore.Pharmacophore(feats)
   >>> pcophore.setLowerBound(0, 1, 1.1)
   >>> pcophore.setUpperBound(0, 1, 1.9)
@@ -947,22 +964,22 @@ def CoarseScreenPharmacophore(atomMatch, bounds, pcophore, verbose=False):
   >>> pcophore.setUpperBound(1, 2, 3.9)
 
   >>> bounds = numpy.array([[0, 2, 3],[1, 0, 4],[2, 3, 0]], dtype=numpy.float64)
-  >>> CoarseScreenPharmacophore(((0, ),(1, )),bounds, pcophore)
+  >>> CoarseScreenPharmacophore(((0, ), (1, )), bounds, pcophore)
   True
 
-  >>> CoarseScreenPharmacophore(((0, ),(2, )),bounds, pcophore)
+  >>> CoarseScreenPharmacophore(((0, ), (2, )), bounds, pcophore)
   False
 
-  >>> CoarseScreenPharmacophore(((1, ),(2, )),bounds, pcophore)
+  >>> CoarseScreenPharmacophore(((1, ), (2, )), bounds, pcophore)
   False
 
-  >>> CoarseScreenPharmacophore(((0, ),(1, ),(2, )),bounds, pcophore)
+  >>> CoarseScreenPharmacophore(((0, ), (1, ), (2, )), bounds, pcophore)
   True
 
-  >>> CoarseScreenPharmacophore(((1, ),(0, ),(2, )),bounds, pcophore)
+  >>> CoarseScreenPharmacophore(((1, ), (0, ), (2, )), bounds, pcophore)
   False
 
-  >>> CoarseScreenPharmacophore(((2, ),(1, ),(0, )),bounds, pcophore)
+  >>> CoarseScreenPharmacophore(((2, ), (1, ), (0, )), bounds, pcophore)
   False
 
   # we ignore the point locations here and just use their definitions:
@@ -976,7 +993,7 @@ def CoarseScreenPharmacophore(atomMatch, bounds, pcophore, verbose=False):
   ...                                        Geometry.Point3D(5.12, 0.908, 0.0)),
   ...   ChemicalFeatures.FreeChemicalFeature('HBondDonor', 'HDonor1',
   ...                                        Geometry.Point3D(2.65, 0.0, 0.0)),
-  ...                ]
+  ... ]
   >>> pcophore=Pharmacophore.Pharmacophore(feats)
   >>> pcophore.setLowerBound(0,1, 2.1)
   >>> pcophore.setUpperBound(0,1, 2.9)
@@ -1215,7 +1232,7 @@ def ComputeChiralVolume(mol, centerIdx, confId=-1):
 
     >>> import os.path
     >>> from rdkit import RDConfig
-    >>> dataDir = os.path.join(RDConfig.RDCodeDir,'Chem/Pharm3D/test_data')
+    >>> dataDir = os.path.join(RDConfig.RDCodeDir, 'Chem/Pharm3D/test_data')
 
     R configuration atoms give negative volumes:
 
