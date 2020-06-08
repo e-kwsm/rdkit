@@ -231,39 +231,39 @@ BOOST_PYTHON_MODULE(rdDistGeom) {
  coordinates for a molecule\n\n\
  \n\
  ARGUMENTS:\n\n\
-    - mol : the molecule of interest\n\
-    - maxAttempts : the maximum number of attempts to try embedding \n\
-    - randomSeed : provide a seed for the random number generator \n\
-                   so that the same coordinates can be obtained \n\
-                   for a molecule on multiple runs. If -1, the \n\
-                   RNG will not be seeded. \n\
-    - clearConfs : clear all existing conformations on the molecule\n\
-    - useRandomCoords : Start the embedding from random coordinates instead of\n\
+     mol: the molecule of interest\n\
+     maxAttempts: the maximum number of attempts to try embedding\n\
+     randomSeed: provide a seed for the random number generator\n\
+                   so that the same coordinates can be obtained\n\
+                   for a molecule on multiple runs. If -1, the\n\
+                   RNG will not be seeded.\n\
+     clearConfs: clear all existing conformations on the molecule\n\
+     useRandomCoords: Start the embedding from random coordinates instead of\n\
                         using eigenvalues of the distance matrix.\n\
-    - boxSizeMult    Determines the size of the box that is used for\n\
-                     random coordinates. If this is a positive number, the \n\
+     boxSizeMult:   Determines the size of the box that is used for\n\
+                     random coordinates. If this is a positive number, the\n\
                      side length will equal the largest element of the distance\n\
                      matrix times boxSizeMult. If this is a negative number,\n\
                      the side length will equal -boxSizeMult (i.e. independent\n\
                      of the elements of the distance matrix).\n\
-    - randNegEig : If the embedding yields a negative eigenvalue, \n\
-                   pick coordinates that correspond \n\
-                   to this component at random \n\
-    - numZeroFail : fail embedding if we have at least this many zero eigenvalues \n\
-    - coordMap : a dictionary mapping atom IDs->coordinates. Use this to \n\
-                 require some atoms to have fixed coordinates in the resulting \n\
+     randNegEig: If the embedding yields a negative eigenvalue,\n\
+                   pick coordinates that correspond\n\
+                   to this component at random\n\
+     numZeroFail: fail embedding if we have at least this many zero eigenvalues\n\
+     coordMap: a dictionary mapping atom IDs->coordinates. Use this to\n\
+                 require some atoms to have fixed coordinates in the resulting\n\
                  conformation.\n\
-    - forceTol : tolerance to be used during the force-field minimization with \n\
+     forceTol: tolerance to be used during the force-field minimization with\n\
                  the distance geometry force field.\n\
-    - ignoreSmoothingFailures : try to embed the molecule even if triangle smoothing\n\
+     ignoreSmoothingFailures: try to embed the molecule even if triangle smoothing\n\
                  of the bounds matrix fails.\n\
-    - enforceChirality : enforce the correct chirality if chiral centers are present.\n\
-    - useExpTorsionAnglePrefs : impose experimental torsion angle preferences\n\
-    - useBasicKnowledge : impose basic knowledge such as flat rings\n\
-    - printExpTorsionAngles : print the output from the experimental torsion angles\n\
+     enforceChirality: enforce the correct chirality if chiral centers are present.\n\
+     useExpTorsionAnglePrefs: impose experimental torsion angle preferences\n\
+     useBasicKnowledge: impose basic knowledge such as flat rings\n\
+     printExpTorsionAngles: print the output from the experimental torsion angles\n\
 \n\
  RETURNS:\n\n\
-    ID of the new conformation added to the molecule \n\
+    ID of the new conformation added to the molecule\n\
 \n";
   python::def(
       "EmbedMolecule", RDKit::EmbedMolecule,
@@ -287,51 +287,51 @@ BOOST_PYTHON_MODULE(rdDistGeom) {
  coordinates for a molecule\n\
  \n\
  ARGUMENTS:\n\n\
-  - mol : the molecule of interest\n\
-  - numConfs : the number of conformers to generate \n\
-  - maxAttempts : the maximum number of attempts to try embedding \n\
-  - randomSeed : provide a seed for the random number generator \n\
-                 so that the same coordinates can be obtained \n\
-                 for a molecule on multiple runs. If -1, the \n\
-                 RNG will not be seeded. \n\
-  - clearConfs : clear all existing conformations on the molecule\n\
-  - useRandomCoords : Start the embedding from random coordinates instead of\n\
+   mol: the molecule of interest\n\
+   numConfs: the number of conformers to generate\n\
+   maxAttempts: the maximum number of attempts to try embedding\n\
+   randomSeed: provide a seed for the random number generator\n\
+                 so that the same coordinates can be obtained\n\
+                 for a molecule on multiple runs. If -1, the\n\
+                 RNG will not be seeded.\n\
+   clearConfs: clear all existing conformations on the molecule\n\
+   useRandomCoords: Start the embedding from random coordinates instead of\n\
                       using eigenvalues of the distance matrix.\n\
-  - boxSizeMult    Determines the size of the box that is used for\n\
-                   random coordinates. If this is a positive number, the \n\
+   boxSizeMult:   Determines the size of the box that is used for\n\
+                   random coordinates. If this is a positive number, the\n\
                    side length will equal the largest element of the distance\n\
                    matrix times boxSizeMult. If this is a negative number,\n\
                    the side length will equal -boxSizeMult (i.e. independent\n\
                    of the elements of the distance matrix).\n\
-  - randNegEig : If the embedding yields a negative eigenvalue, \n\
-                 pick coordinates that correspond \n\
-                 to this component at random \n\
-  - numZeroFail : fail embedding if we have at least this many zero eigenvalues \n\
-  - pruneRmsThresh : Retain only the conformations out of 'numConfs' \n\
-                    after embedding that are at least \n\
-                    this far apart from each other. \n\
-          RMSD is computed on the heavy atoms. \n\
+   randNegEig: If the embedding yields a negative eigenvalue,\n\
+                 pick coordinates that correspond\n\
+                 to this component at random\n\
+   numZeroFail: fail embedding if we have at least this many zero eigenvalues\n\
+   pruneRmsThresh: Retain only the conformations out of 'numConfs'\n\
+                    after embedding that are at least\n\
+                    this far apart from each other.\n\
+          RMSD is computed on the heavy atoms.\n\
           Pruning is greedy; i.e. the first embedded conformation\n\
           is retained and from then on only those that are at\n\
           least pruneRmsThresh away from all retained conformations\n\
-          are kept. The pruning is done after embedding and \n\
+          are kept. The pruning is done after embedding and\n\
           bounds violation minimization. No pruning by default.\n\
-    - coordMap : a dictionary mapping atom IDs->coordinates. Use this to \n\
-                 require some atoms to have fixed coordinates in the resulting \n\
+   coordMap: a dictionary mapping atom IDs->coordinates. Use this to\n\
+                 require some atoms to have fixed coordinates in the resulting\n\
                  conformation.\n\
-    - forceTol : tolerance to be used during the force-field minimization with \n\
+   forceTol: tolerance to be used during the force-field minimization with\n\
                  the distance geometry force field.\n\
-    - ignoreSmoothingFailures : try to embed the molecule even if triangle smoothing\n\
+   ignoreSmoothingFailures: try to embed the molecule even if triangle smoothing\n\
                  of the bounds matrix fails.\n\
-    - enforceChirality : enforce the correct chirality if chiral centers are present.\n\
-    - numThreads : number of threads to use while embedding. This only has an effect if the RDKit\n\
+   enforceChirality: enforce the correct chirality if chiral centers are present.\n\
+   numThreads: number of threads to use while embedding. This only has an effect if the RDKit\n\
                  was built with multi-thread support.\n\
                 If set to zero, the max supported by the system will be used.\n\
-    - useExpTorsionAnglePrefs : impose experimental torsion angle preferences\n\
-    - useBasicKnowledge : impose basic knowledge such as flat rings\n\
-    - printExpTorsionAngles : print the output from the experimental torsion angles\n\
+   useExpTorsionAnglePrefs: impose experimental torsion angle preferences\n\
+   useBasicKnowledge: impose basic knowledge such as flat rings\n\
+   printExpTorsionAngles: print the output from the experimental torsion angles\n\
  RETURNS:\n\n\
-    List of new conformation IDs \n\
+    List of new conformation IDs\n\
 \n";
   python::def(
       "EmbedMultipleConfs", RDKit::EmbedMultipleConfs,
@@ -449,11 +449,11 @@ BOOST_PYTHON_MODULE(rdDistGeom) {
  coordinates for a molecule\n\
  \n\
  ARGUMENTS:\n\n\
-  - mol : the molecule of interest\n\
-  - numConfs : the number of conformers to generate \n\
-  - params : an EmbedParameters object \n\
+   mol: the molecule of interest\n\
+   numConfs: the number of conformers to generate\n\
+   params: an EmbedParameters object\n\
  RETURNS:\n\n\
-    List of new conformation IDs \n\
+    List of new conformation IDs\n\
 \n";
   python::def(
       "EmbedMultipleConfs", RDKit::EmbedMultipleConfs2,
@@ -465,11 +465,11 @@ BOOST_PYTHON_MODULE(rdDistGeom) {
  coordinates for a molecule\n\n\
  \n\
  ARGUMENTS:\n\n\
-    - mol : the molecule of interest\n\
-    - params : an EmbedParameters object \n\
+     mol: the molecule of interest\n\
+     params: an EmbedParameters object\n\
 \n\
  RETURNS:\n\n\
-    ID of the new conformation added to the molecule \n\
+     ID of the new conformation added to the molecule\n\
 \n";
   python::def("EmbedMolecule", RDKit::EmbedMolecule2,
               (python::arg("mol"), python::arg("params")), docString.c_str());
@@ -500,16 +500,16 @@ BOOST_PYTHON_MODULE(rdDistGeom) {
       "Returns the distance bounds matrix for a molecule\n\
  \n\
  ARGUMENTS:\n\n\
-    - mol : the molecule of interest\n\
-    - set15bounds : set bounds for 1-5 atom distances based on \n\
+     mol: the molecule of interest\n\
+     set15bounds: set bounds for 1-5 atom distances based on\n\
                     topology (otherwise stop at 1-4s)\n\
-    - scaleVDW : scale down the sum of VDW radii when setting the \n\
-                 lower bounds for atoms less than 5 bonds apart \n\
-    - doTriangleSmoothing : run triangle smoothing on the bounds \n\
-                 matrix before returning it \n\
+     scaleVDW: scale down the sum of VDW radii when setting the\n\
+                 lower bounds for atoms less than 5 bonds apart\n\
+     doTriangleSmoothing: run triangle smoothing on the bounds\n\
+                 matrix before returning it\n\
  RETURNS:\n\n\
-    the bounds matrix as a Numeric array with lower bounds in \n\
-    the lower triangle and upper bounds in the upper triangle\n\
+     the bounds matrix as a Numeric array with lower bounds in\n\
+     the lower triangle and upper bounds in the upper triangle\n\
 \n";
   python::def("GetMoleculeBoundsMatrix", RDKit::getMolBoundsMatrix,
               (python::arg("mol"), python::arg("set15bounds") = true,
