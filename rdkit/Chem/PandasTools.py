@@ -7,16 +7,16 @@ If the dataframe is containing a molecule format in a column (e.g. smiles), like
 >>> import pandas as pd
 >>> import os
 >>> from rdkit import RDConfig
->>> antibiotics = pd.DataFrame(columns=['Name','Smiles'])
->>> antibiotics = antibiotics.append({'Smiles':'CC1(C(N2C(S1)C(C2=O)NC(=O)CC3=CC=CC=C3)C(=O)O)C',
-...   'Name':'Penicilline G'}, ignore_index=True)#Penicilline G
+>>> antibiotics = pd.DataFrame(columns=['Name', 'Smiles'])
+>>> antibiotics = antibiotics.append({'Smiles': 'CC1(C(N2C(S1)C(C2=O)NC(=O)CC3=CC=CC=C3)C(=O)O)C',
+...   'Name': 'Penicilline G'}, ignore_index=True)  # Penicilline G
 >>> antibiotics = antibiotics.append({
-...   'Smiles':'CC1(C2CC3C(C(=O)C(=C(C3(C(=O)C2=C(C4=C1C=CC=C4O)O)O)O)C(=O)N)N(C)C)O',
-...   'Name':'Tetracycline'}, ignore_index=True)#Tetracycline
+...   'Smiles': 'CC1(C2CC3C(C(=O)C(=C(C3(C(=O)C2=C(C4=C1C=CC=C4O)O)O)O)C(=O)N)N(C)C)O',
+...   'Name': 'Tetracycline'}, ignore_index=True)  # Tetracycline
 >>> antibiotics = antibiotics.append({
-...   'Smiles':'CC1(C(N2C(S1)C(C2=O)NC(=O)C(C3=CC=CC=C3)N)C(=O)O)C',
-...   'Name':'Ampicilline'}, ignore_index=True)#Ampicilline
->>> print([str(x) for x in  antibiotics.columns])
+...   'Smiles': 'CC1(C(N2C(S1)C(C2=O)NC(=O)C(C3=CC=CC=C3)N)C(=O)O)C',
+...   'Name': 'Ampicilline'}, ignore_index=True)  # Ampicilline
+>>> print([str(x) for x in antibiotics.columns])
 ['Name', 'Smiles']
 >>> print(antibiotics)
             Name                                             Smiles
@@ -27,8 +27,8 @@ If the dataframe is containing a molecule format in a column (e.g. smiles), like
 a new column can be created holding the respective RDKit molecule objects. The fingerprint can be
 included to accelerate substructure searches on the dataframe.
 
->>> PandasTools.AddMoleculeColumnToFrame(antibiotics,'Smiles','Molecule',includeFingerprints=True)
->>> print([str(x) for x in  antibiotics.columns])
+>>> PandasTools.AddMoleculeColumnToFrame(antibiotics, 'Smiles', 'Molecule', includeFingerprints=True)
+>>> print([str(x) for x in antibiotics.columns])
 ['Name', 'Smiles', 'Molecule']
 
 A substructure filter can be applied on the dataframe using the RDKit molecule column,
@@ -45,9 +45,9 @@ Such the antibiotics containing the beta-lactam ring "C1C(=O)NC1" can be obtaine
 
 It is also possible to load an SDF file can be load into a dataframe.
 
->>> sdfFile = os.path.join(RDConfig.RDDataDir,'NCI/first_200.props.sdf')
->>> frame = PandasTools.LoadSDF(sdfFile,smilesName='SMILES',molColName='Molecule',
-...            includeFingerprints=True)
+>>> sdfFile = os.path.join(RDConfig.RDDataDir, 'NCI/first_200.props.sdf')
+>>> frame = PandasTools.LoadSDF(sdfFile, smilesName='SMILES', molColName='Molecule',
+...     includeFingerprints=True)
 >>> frame.info # doctest: +SKIP
 <bound method DataFrame.info of <class 'pandas.core.frame.DataFrame'>
 Int64Index: 200 entries, 0 to 199
@@ -76,9 +76,9 @@ dtypes: object(20)>
 
 The standard ForwardSDMolSupplier keywords are also available:
 
->>> sdfFile = os.path.join(RDConfig.RDDataDir,'NCI/first_200.props.sdf')
->>> frame = PandasTools.LoadSDF(sdfFile,smilesName='SMILES',molColName='Molecule',
-...            includeFingerprints=True, removeHs=False, strictParsing=True)
+>>> sdfFile = os.path.join(RDConfig.RDDataDir, 'NCI/first_200.props.sdf')
+>>> frame = PandasTools.LoadSDF(sdfFile, smilesName='SMILES', molColName='Molecule',
+...     includeFingerprints=True, removeHs=False, strictParsing=True)
 
 Conversion to html is quite easy:
 
@@ -730,8 +730,8 @@ def RGroupDecompositionToFrame(groups, mols, include_core=False, redraw_sidechai
   >>> import pandas as pd
   >>> scaffold = Chem.MolFromSmiles('c1ccccn1')
   >>> mols = [Chem.MolFromSmiles(smi) for smi in 'c1c(F)cccn1 c1c(Cl)c(C)ccn1 c1c(O)cccn1 c1c(F)c(C)ccn1 c1cc(Cl)c(F)cn1'.split()]
-  >>> groups,_ = rdRGroupDecomposition.RGroupDecompose([scaffold],mols,asSmiles=False,asRows=False)
-  >>> df = PandasTools.RGroupDecompositionToFrame(groups,mols,include_core=True)
+  >>> groups, _ = rdRGroupDecomposition.RGroupDecompose([scaffold], mols, asSmiles=False, asRows=False)
+  >>> df = PandasTools.RGroupDecompositionToFrame(groups, mols, include_core=True)
   >>> list(df.columns)
   ['Mol', 'Core', 'R1', 'R2']
   >>> len(df)
