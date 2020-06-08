@@ -272,6 +272,7 @@ def qed(mol, w=WEIGHT_MEAN, qedProperties=None):
   """ Calculate the weighted sum of ADS mapped properties
 
   some examples from the QED paper, reference values from Peter G's original implementation
+
   >>> m = Chem.MolFromSmiles('N=C(CCSCc1csc(N=C(N)N)n1)NS(N)(=O)=O')
   >>> qed(m)
   0.253...
