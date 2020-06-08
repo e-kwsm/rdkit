@@ -36,6 +36,7 @@ of just as a set of fragments. The hope is that this will allow a bit
 more flexibility in working with the results.
 
 For example:
+
 >>> from rdkit import Chem
 >>> from rdkit.Chem import Recap
 >>> m = Chem.MolFromSmiles('C1CC1Oc1ccccc1-c1ncc(OC)cc1')
@@ -48,6 +49,7 @@ For example:
 ['*C1CC1', '*c1ccc(OC)cn1', '*c1ccccc1*', '*c1ccccc1-c1ccc(OC)cn1', '*c1ccccc1OC1CC1']
 
 To get the standard set of RECAP results, use GetLeaves():
+
 >>> leaves=res.GetLeaves()
 >>> sorted(leaves.keys())
 ['*C1CC1', '*c1ccc(OC)cn1', '*c1ccccc1*']
@@ -55,8 +57,8 @@ To get the standard set of RECAP results, use GetLeaves():
 >>> leaf.mol
 <...Chem.rdchem.Mol object at ...>
 
-
 """
+
 import sys
 import weakref
 from rdkit import Chem
