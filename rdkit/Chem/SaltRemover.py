@@ -95,10 +95,11 @@ class SaltRemover(object):
         """
 
         >>> remover = SaltRemover()
-        >>> len(remover.salts)>0
+        >>> len(remover.salts) > 0
         True
 
         Default input format is SMARTS
+
         >>> remover = SaltRemover(defnData="[Cl,Br]")
         >>> len(remover.salts)
         1
@@ -186,7 +187,7 @@ class SaltRemover(object):
         Watch out for this case (everything removed):
 
         >>> remover = SaltRemover()
-        >>> len(remover.salts)>1
+        >>> len(remover.salts) > 1
         True
         >>> mol = Chem.MolFromSmiles('CC(=O)O.[Na]')
         >>> res = remover.StripMol(mol)
@@ -195,7 +196,7 @@ class SaltRemover(object):
 
         dontRemoveEverything helps with this by leaving the last salt:
 
-        >>> res = remover.StripMol(mol,dontRemoveEverything=True)
+        >>> res = remover.StripMol(mol, dontRemoveEverything=True)
         >>> res.GetNumAtoms()
         4
 
@@ -203,7 +204,7 @@ class SaltRemover(object):
         between them, so it returns all of them:
 
         >>> mol = Chem.MolFromSmiles('Cl.Cl')
-        >>> res = remover.StripMol(mol,dontRemoveEverything=True)
+        >>> res = remover.StripMol(mol, dontRemoveEverything=True)
         >>> res.GetNumAtoms()
         2
 
@@ -238,7 +239,7 @@ class SaltRemover(object):
         '[Cl,Br]'
 
         Multiple occurrences of 'Cl' and without tuple destructuring
-        
+
         >>> mol = Chem.MolFromSmiles('CN(C)C.Cl.Cl')
         >>> tup = remover.StripMolWithDeleted(mol)
 
