@@ -37,15 +37,12 @@ def SATISTypes(mol, neighborsToInclude=4):
    each SATIS code is a string consisting of _neighborsToInclude_ + 1
    2 digit numbers
 
-   **Arguments**
-
-     - mol: a molecule
-
-     - neighborsToInclude (optional): the number of neighbors to include
+   Arguments:
+     mol: a molecule
+     neighborsToInclude (optional): the number of neighbors to include
        in the SATIS codes
 
-   **Returns**
-
+   Returns:
      a list of strings nAtoms long
 
   """
