@@ -141,9 +141,9 @@ BOOST_PYTHON_MODULE(rdMolTransforms) {
                the principal axes align up with the x,y, z axes\n\
                The conformer itself is left unchanged\n\
   ARGUMENTS:\n\
-    - conf : the conformer of interest\n\
-    - center : optional center point to compute the principal axes around (defaults to the centroid)\n\
-    - normalizeCovar : optionally normalize the covariance matrix by the number of atoms\n";
+    conf: the conformer of interest\n\
+    center: optional center point to compute the principal axes around (defaults to the centroid)\n\
+    normalizeCovar: optionally normalize the covariance matrix by the number of atoms\n";
   python::def(
       "ComputeCanonicalTransform", RDKit::computeCanonTrans,
       (python::arg("conf"), python::arg("center") = (RDGeom::Point3D *)nullptr,
@@ -159,10 +159,11 @@ BOOST_PYTHON_MODULE(rdMolTransforms) {
        where the coordinates are relative to the center of mass.\n\
 \n\
   ARGUMENTS:\n\
-    - conf : the conformer of interest\n\
-    - ignoreHs : if True, ignore hydrogen atoms\n\
-    - weights : if present, used to weight the atomic coordinates\n\n\
-  Returns a (principal axes, principal moments) tuple\n";
+    conf: the conformer of interest\n\
+    ignoreHs: if True, ignore hydrogen atoms\n\
+    weights: if present, used to weight the atomic coordinates\n\n\
+  Returns:\n\
+    a (principal axes, principal moments) tuple\n";
   python::def(
       "ComputePrincipalAxesAndMoments", RDKit::computePrincAxesMoments,
       (python::arg("conf"), python::arg("ignoreHs") = true,
@@ -177,10 +178,11 @@ BOOST_PYTHON_MODULE(rdMolTransforms) {
        where the coordinates are relative to the center of mass.\n\
 \n\
   ARGUMENTS:\n\
-    - conf : the conformer of interest\n\
-    - ignoreHs : if True, ignore hydrogen atoms\n\
-    - weights : if present, used to weight the atomic coordinates\n\n\
-  Returns a (principal axes, principal moments) tuple\n";
+    conf: the conformer of interest\n\
+    ignoreHs: if True, ignore hydrogen atoms\n\
+    weights: if present, used to weight the atomic coordinates\n\n\
+  Returns:\n\
+    a (principal axes, principal moments) tuple\n";
   python::def(
       "ComputePrincipalAxesAndMomentsFromGyrationMatrix", RDKit::computePrincAxesMomentsFromGyrationMatrix,
       (python::arg("conf"), python::arg("ignoreHs") = true,
@@ -197,10 +199,10 @@ BOOST_PYTHON_MODULE(rdMolTransforms) {
                around the specified center point coincide with the x, y, z axes\n\
   \n\
   ARGUMENTS:\n\
-    - conf : conformer of interest \n\
-    - center : optionally center point about which the principal axes are computed \n\
+    conf: conformer of interest \n\
+    center: optionally center point about which the principal axes are computed \n\
                           if not specified the centroid of the conformer will be used\n\
-    - normalizeCovar : Optionally normalize the covariance matrix by the number of atoms\n";
+    normalizeCovar: Optionally normalize the covariance matrix by the number of atoms\n";
   python::def(
       "CanonicalizeConformer", MolTransforms::canonicalizeConformer,
       (python::arg("conf"), python::arg("center") = (RDGeom::Point3D *)nullptr,
