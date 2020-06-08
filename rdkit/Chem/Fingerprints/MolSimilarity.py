@@ -13,9 +13,11 @@
 
 Sample Usage:
 
-  python MolSimilarity.py  -d data.gdb -t daylight_sig --idName="Mol_ID" \
-      --topN=100 --smiles='c1(C=O)ccc(Oc2ccccc2)cc1' --smilesTable=raw_dop_data \
-      --smilesName="structure" -o results.csv
+.. code-block::
+
+  python MolSimilarity.py  -d data.gdb -t daylight_sig --idName="Mol_ID" \\
+    --topN=100 --smiles='c1(C=O)ccc(Oc2ccccc2)cc1' --smilesTable=raw_dop_data \\
+    --smilesName="structure" -o results.csv
 
 """
 
