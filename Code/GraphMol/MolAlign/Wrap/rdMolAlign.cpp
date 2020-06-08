@@ -565,22 +565,22 @@ BOOST_PYTHON_MODULE(rdMolAlign) {
       squared distance between a specified set of atoms is minimized\n\
      \n\
      ARGUMENTS\n\
-      - prbMol    molecule that is to be aligned\n\
-      - refMol    molecule used as the reference for the alignment\n\
-      - prbCid    ID of the conformation in the probe to be used \n\
+       prbMol:    molecule that is to be aligned\n\
+       refMol:    molecule used as the reference for the alignment\n\
+       prbCid:    ID of the conformation in the probe to be used \n\
                        for the alignment (defaults to first conformation)\n\
-      - refCid    ID of the conformation in the ref molecule to which \n\
+       refCid:    ID of the conformation in the ref molecule to which \n\
                        the alignment is computed (defaults to first conformation)\n\
-      - atomMap   a vector of pairs of atom IDs (probe AtomId, ref AtomId)\n\
+       atomMap:   a vector of pairs of atom IDs (probe AtomId, ref AtomId)\n\
                        used to compute the alignments. If this mapping is \n\
                        not specified an attempt is made to generate one by\n\
                        substructure matching\n\
-      - weights   Optionally specify weights for each of the atom pairs\n\
-      - reflect   if true reflect the conformation of the probe molecule\n\
-      - maxIters  maximum number of iterations used in mimizing the RMSD\n\
+       weights:   Optionally specify weights for each of the atom pairs\n\
+       reflect:   if true reflect the conformation of the probe molecule\n\
+       maxIters:  maximum number of iterations used in mimizing the RMSD\n\
        \n\
       RETURNS\n\
-      a tuple of (RMSD value, transform matrix) \n\
+        a tuple of (RMSD value, transform matrix) \n\
     \n";
   python::def(
       "GetAlignmentTransform", RDKit::getMolAlignTransform,
@@ -599,22 +599,22 @@ BOOST_PYTHON_MODULE(rdMolAlign) {
       This transform is then applied to the specified conformation in the probe molecule\n\
      \n\
      ARGUMENTS\n\
-      - prbMol    molecule that is to be aligned\n\
-      - refMol    molecule used as the reference for the alignment\n\
-      - prbCid    ID of the conformation in the probe to be used \n\
+       prbMol:    molecule that is to be aligned\n\
+       refMol:    molecule used as the reference for the alignment\n\
+       prbCid:    ID of the conformation in the probe to be used \n\
                        for the alignment (defaults to first conformation)\n\
-      - refCid    ID of the conformation in the ref molecule to which \n\
+       refCid:    ID of the conformation in the ref molecule to which \n\
                        the alignment is computed (defaults to first conformation)\n\
-      - atomMap   a vector of pairs of atom IDs (probe AtomId, ref AtomId)\n\
+       atomMap:   a vector of pairs of atom IDs (probe AtomId, ref AtomId)\n\
                        used to compute the alignments. If this mapping is \n\
                        not specified an attempt is made to generate one by\n\
                        substructure matching\n\
-      - weights   Optionally specify weights for each of the atom pairs\n\
-      - reflect   if true reflect the conformation of the probe molecule\n\
-      - maxIters  maximum number of iterations used in mimizing the RMSD\n\
+       weights:   Optionally specify weights for each of the atom pairs\n\
+       reflect:   if true reflect the conformation of the probe molecule\n\
+       maxIters:  maximum number of iterations used in mimizing the RMSD\n\
        \n\
       RETURNS\n\
-      RMSD value\n\
+        RMSD value\n\
     \n";
   python::def(
       "AlignMol", RDKit::AlignMolecule,
@@ -630,29 +630,29 @@ BOOST_PYTHON_MODULE(rdMolAlign) {
        left in the aligned state.\n\
       \n\
        Note:\n\
-       This function will attempt to align all permutations of matching atom\n\
-       orders in both molecules, for some molecules it will lead to\n\
-       'combinatorial explosion' especially if hydrogens are present.\n\
-       Use 'rdkit.Chem.AllChem.AlignMol' to align molecules without changing\n\
-       the atom order.\n\
+         This function will attempt to align all permutations of matching atom\n\
+         orders in both molecules, for some molecules it will lead to\n\
+         'combinatorial explosion' especially if hydrogens are present.\n\
+         Use 'rdkit.Chem.AllChem.AlignMol' to align molecules without changing\n\
+         the atom order.\n\
       \n\
        ARGUMENTS\n\
-        - prbMol:      the molecule to be aligned to the reference\n\
-        - refMol:      the reference molecule\n\
-        - prbId:       (optional) probe conformation to use\n\
-        - refId:       (optional) reference conformation to use\n\
-        - map:         (optional) a list of lists of (probeAtomId,refAtomId)\n\
+         prbMol:       the molecule to be aligned to the reference\n\
+         refMol:       the reference molecule\n\
+         prbId:        (optional) probe conformation to use\n\
+         refId:        (optional) reference conformation to use\n\
+         map:          (optional) a list of lists of (probeAtomId,refAtomId)\n\
                        tuples with the atom-atom mappings of the two\n\
                        molecules. If not provided, these will be generated\n\
                        using a substructure search.\n\
-        - maxMatches:  (optional) if map isn't specified, this will be\n\
+         maxMatches:   (optional) if map isn't specified, this will be\n\
                        the max number of matches found in a SubstructMatch()\n\
         - symmetrizeConjugatedTerminalGroups:  (optional) if set, conjugated\n\
                        terminal functional groups (like nitro or carboxylate)\n\
                        will be considered symmetrically\n\
        \n\
-      RETURNS\n\
-      The best RMSD found\n\
+       RETURNS\n\
+        The best RMSD found\n\
     \n";
   python::def(
       "GetBestRMS", RDKit::GetBestRMS,
@@ -673,20 +673,20 @@ BOOST_PYTHON_MODULE(rdMolAlign) {
        the atom order.\n\
       \n\
        ARGUMENTS\n\
-        - prbMol:      the molecule to be aligned to the reference\n\
-        - refMol:      the reference molecule\n\
-        - prbId:       (optional) probe conformation to use\n\
-        - refId:       (optional) reference conformation to use\n\
-        - map:         (optional) a list of lists of (probeAtomId,refAtomId)\n\
+         prbMol:       the molecule to be aligned to the reference\n\
+         refMol:       the reference molecule\n\
+         prbId:        (optional) probe conformation to use\n\
+         refId:        (optional) reference conformation to use\n\
+         map:          (optional) a list of lists of (probeAtomId,refAtomId)\n\
                        tuples with the atom-atom mappings of the two\n\
                        molecules. If not provided, these will be generated\n\
                        using a substructure search.\n\
-        - maxMatches:  (optional) if map isn't specified, this will be\n\
+         maxMatches:   (optional) if map isn't specified, this will be\n\
                        the max number of matches found in a SubstructMatch()\n\
-        - weights:     (optional) weights for mapping \n\
+         weights:      (optional) weights for mapping \n\
        \n\
-      RETURNS\n\
-      The best RMSD found\n\
+       RETURNS\n\
+         The best RMSD found\n\
     \n";
   python::def(
       "CalcRMS", RDKit::CalcRMS,
@@ -702,13 +702,13 @@ BOOST_PYTHON_MODULE(rdMolAlign) {
       The first conformation in the molecule is used as the reference\n\
      \n\
      ARGUMENTS\n\
-      - mol          molecule of interest\n\
-      - atomIds      List of atom ids to use a points for alingment - defaults to all atoms\n\
-      - confIds      Ids of conformations to align - defaults to all conformers \n\
-      - weights      Optionally specify weights for each of the atom pairs\n\
-      - reflect      if true reflect the conformation of the probe molecule\n\
-      - maxIters     maximum number of iterations used in mimizing the RMSD\n\
-      - RMSlist      if provided, fills in the RMS values between the reference\n\
+       mol:          molecule of interest\n\
+       atomIds:      List of atom ids to use a points for alingment - defaults to all atoms\n\
+       confIds:      Ids of conformations to align - defaults to all conformers\n\
+       weights:      Optionally specify weights for each of the atom pairs\n\
+       reflect:      if true reflect the conformation of the probe molecule\n\
+       maxIters:     maximum number of iterations used in mimizing the RMSD\n\
+       RMSlist:      if provided, fills in the RMS values between the reference\n\
 		     conformation and the other aligned conformations\n\
        \n\
     \n";
@@ -724,10 +724,10 @@ BOOST_PYTHON_MODULE(rdMolAlign) {
       "Perform a random transformation on a molecule\n\
      \n\
      ARGUMENTS\n\
-      - mol    molecule that is to be transformed\n\
-      - cid    ID of the conformation in the mol to be transformed\n\
+       mol:    molecule that is to be transformed\n\
+       cid:    ID of the conformation in the mol to be transformed\n\
                (defaults to first conformation)\n\
-      - seed   seed used to initialize the random generator\n\
+       seed:   seed used to initialize the random generator\n\
                (defaults to -1, that is no seeding)\n\
        \n\
     \n";
@@ -757,31 +757,31 @@ BOOST_PYTHON_MODULE(rdMolAlign) {
       MMFF atom types and charges\n\
      \n\
      ARGUMENTS\n\
-      - prbMol                   molecule that is to be aligned\n\
-      - refMol                   molecule used as the reference for the alignment\n\
-      - prbPyMMFFMolProperties   PyMMFFMolProperties object for the probe molecule as returned\n\
+       prbMol:                   molecule that is to be aligned\n\
+       refMol:                   molecule used as the reference for the alignment\n\
+       prbPyMMFFMolProperties:   PyMMFFMolProperties object for the probe molecule as returned\n\
                                  by SetupMMFFForceField()\n\
-      - refPyMMFFMolProperties   PyMMFFMolProperties object for the reference molecule as returned\n\
+       refPyMMFFMolProperties:   PyMMFFMolProperties object for the reference molecule as returned\n\
                                  by SetupMMFFForceField()\n\
-      - prbCid                   ID of the conformation in the probe to be used \n\
+       prbCid:                   ID of the conformation in the probe to be used \n\
                                  for the alignment (defaults to first conformation)\n\
-      - refCid                   ID of the conformation in the ref molecule to which \n\
+       refCid:                   ID of the conformation in the ref molecule to which \n\
                                  the alignment is computed (defaults to first conformation)\n\
-      - reflect                  if true reflect the conformation of the probe molecule\n\
+       reflect:                  if true reflect the conformation of the probe molecule\n\
                                  (defaults to false)\n\
-      - maxIters                 maximum number of iterations used in mimizing the RMSD\n\
+       maxIters:                 maximum number of iterations used in mimizing the RMSD\n\
                                  (defaults to 50)\n\
-      - options                  least 2 significant bits encode accuracy\n\
+       options:                  least 2 significant bits encode accuracy\n\
                                  (0: maximum, 3: minimum; defaults to 0)\n\
                                  bit 3 triggers local optimization of the alignment\n\
                                  (no computation of the cost matrix; defaults: off)\n\
-      - constraintMap            a vector of pairs of atom IDs (probe AtomId, ref AtomId)\n\
+       constraintMap:            a vector of pairs of atom IDs (probe AtomId, ref AtomId)\n\
                                  which shall be used for the alignment (defaults to [])\n\
-      - constraintWeights        optionally specify weights for each of the constraints\n\
+       constraintWeights:        optionally specify weights for each of the constraints\n\
                                  (weights default to 100.0)\n\
-       \n\
+      \n\
       RETURNS\n\
-      The O3A object\n\
+        The O3A object\n\
     \n";
   python::def("GetO3A", RDKit::MolAlign::getMMFFO3A,
               (python::arg("prbMol"), python::arg("refMol"),
