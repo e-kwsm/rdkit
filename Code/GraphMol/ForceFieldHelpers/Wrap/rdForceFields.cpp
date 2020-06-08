@@ -247,16 +247,17 @@ BOOST_PYTHON_MODULE(rdForceFieldHelpers) {
   std::string docString =
       "uses UFF to optimize a molecule's structure\n\n\
  \n\
- ARGUMENTS:\n\n\
-    - mol : the molecule of interest\n\
-    - maxIters : the maximum number of iterations (defaults to 200)\n\
-    - vdwThresh : used to exclude long-range van der Waals interactions\n\
+ ARGUMENTS:\n\
+     mol: the molecule of interest\n\
+     maxIters: the maximum number of iterations (defaults to 200)\n\
+     vdwThresh: used to exclude long-range van der Waals interactions\n\
                   (defaults to 10.0)\n\
-    - confId : indicates which conformer to optimize\n\
-    - ignoreInterfragInteractions : if true, nonbonded terms between\n\
+     confId: indicates which conformer to optimize\n\
+     ignoreInterfragInteractions: if true, nonbonded terms between\n\
                   fragments will not be added to the forcefield.\n\
 \n\
- RETURNS: 0 if the optimization converged, 1 if more iterations are required.\n\
+ RETURNS:\n\
+     0 if the optimization converged, 1 if more iterations are required.\n\
 \n";
   python::def("UFFOptimizeMolecule", RDKit::UFFHelper,
               (python::arg("self"), python::arg("maxIters") = 200,
@@ -267,18 +268,19 @@ BOOST_PYTHON_MODULE(rdForceFieldHelpers) {
   docString =
       "uses UFF to optimize all of a molecule's conformations\n\n\
  \n\
- ARGUMENTS:\n\n\
-    - mol : the molecule of interest\n\
-    - numThreads : the number of threads to use, only has an effect if the RDKit\n\
+ ARGUMENTS:\n\
+     mol: the molecule of interest\n\
+     numThreads: the number of threads to use, only has an effect if the RDKit\n\
                    was built with thread support (defaults to 1)\n\
                    If set to zero, the max supported by the system will be used.\n\
-    - maxIters : the maximum number of iterations (defaults to 200)\n\
-    - vdwThresh : used to exclude long-range van der Waals interactions\n\
+     maxIters: the maximum number of iterations (defaults to 200)\n\
+     vdwThresh: used to exclude long-range van der Waals interactions\n\
                   (defaults to 10.0)\n\
-    - ignoreInterfragInteractions : if true, nonbonded terms between\n\
+     ignoreInterfragInteractions: if true, nonbonded terms between\n\
                   fragments will not be added to the forcefield.\n\
 \n\
- RETURNS: a list of (not_converged, energy) 2-tuples. \n\
+ RETURNS:\n\
+     a list of (not_converged, energy) 2-tuples.\n\
      If not_converged is 0 the optimization converged for that conformer.\n\
 \n";
   python::def("UFFOptimizeMoleculeConfs", RDKit::UFFConfsHelper,
@@ -290,12 +292,12 @@ BOOST_PYTHON_MODULE(rdForceFieldHelpers) {
   docString =
       "returns a UFF force field for a molecule\n\n\
  \n\
- ARGUMENTS:\n\n\
-    - mol : the molecule of interest\n\
-    - vdwThresh : used to exclude long-range van der Waals interactions\n\
+ ARGUMENTS:\n\
+     mol: the molecule of interest\n\
+     vdwThresh: used to exclude long-range van der Waals interactions\n\
                   (defaults to 10.0)\n\
-    - confId : indicates which conformer to optimize\n\
-    - ignoreInterfragInteractions : if true, nonbonded terms between\n\
+     confId: indicates which conformer to optimize\n\
+     ignoreInterfragInteractions: if true, nonbonded terms between\n\
                   fragments will not be added to the forcefield.\n\
 \n";
   python::def("UFFGetMoleculeForceField", RDKit::UFFGetMoleculeForceField,
@@ -308,8 +310,8 @@ BOOST_PYTHON_MODULE(rdForceFieldHelpers) {
   docString =
       "checks if UFF parameters are available for all of a molecule's atoms\n\n\
  \n\
- ARGUMENTS:\n\n\
-    - mol : the molecule of interest.\n\
+ ARGUMENTS:\n\
+     mol: the molecule of interest.\n\
 \n";
   python::def("UFFHasAllMoleculeParams", RDKit::UFFHasAllMoleculeParams,
               (python::arg("mol")), docString.c_str());
@@ -317,18 +319,19 @@ BOOST_PYTHON_MODULE(rdForceFieldHelpers) {
   docString =
       "uses MMFF to optimize a molecule's structure\n\n\
  \n\
- ARGUMENTS:\n\n\
-    - mol : the molecule of interest\n\
-    - mmffVariant : \"MMFF94\" or \"MMFF94s\"\n\
-    - maxIters : the maximum number of iterations (defaults to 200)\n\
-    - nonBondedThresh : used to exclude long-range non-bonded\n\
+ ARGUMENTS:\n\
+     mol : the molecule of interest\n\
+     mmffVariant : \"MMFF94\" or \"MMFF94s\"\n\
+     maxIters : the maximum number of iterations (defaults to 200)\n\
+     nonBondedThresh : used to exclude long-range non-bonded\n\
                  interactions (defaults to 100.0)\n\
-    - confId : indicates which conformer to optimize\n\
-    - ignoreInterfragInteractions : if true, nonbonded terms between\n\
+     confId : indicates which conformer to optimize\n\
+     ignoreInterfragInteractions : if true, nonbonded terms between\n\
                  fragments will not be added to the forcefield\n\
 \n\
- RETURNS: 0 if the optimization converged, -1 if the forcefield could\n\
-          not be set up, 1 if more iterations are required.\n\
+ RETURNS:\n\
+     0 if the optimization converged, -1 if the forcefield could\n\
+     not be set up, 1 if more iterations are required.\n\
 \n";
   python::def(
       "MMFFOptimizeMolecule", RDKit::MMFFOptimizeMolecule,
@@ -396,19 +399,20 @@ BOOST_PYTHON_MODULE(rdForceFieldHelpers) {
       "uses MMFF to optimize all of a molecule's conformations\n\n\
  \n\
  ARGUMENTS:\n\n\
-    - mol : the molecule of interest\n\
-    - numThreads : the number of threads to use, only has an effect if the RDKit\n\
+     mol : the molecule of interest\n\
+     numThreads : the number of threads to use, only has an effect if the RDKit\n\
                    was built with thread support (defaults to 1)\n\
                    If set to zero, the max supported by the system will be used.\n\
-    - maxIters : the maximum number of iterations (defaults to 200)\n\
-    - mmffVariant : \"MMFF94\" or \"MMFF94s\"\n\
-    - nonBondedThresh : used to exclude long-range non-bonded\n\
+     maxIters : the maximum number of iterations (defaults to 200)\n\
+     mmffVariant : \"MMFF94\" or \"MMFF94s\"\n\
+     nonBondedThresh : used to exclude long-range non-bonded\n\
                   interactions (defaults to 100.0)\n\
-    - ignoreInterfragInteractions : if true, nonbonded terms between\n\
+     ignoreInterfragInteractions : if true, nonbonded terms between\n\
                   fragments will not be added to the forcefield.\n\
 \n\
-RETURNS: a list of (not_converged, energy) 2-tuples. \n\
-    If not_converged is 0 the optimization converged for that conformer.\n\
+ RETURNS:\n\
+     a list of (not_converged, energy) 2-tuples. \n\
+     If not_converged is 0 the optimization converged for that conformer.\n\
 \n";
   python::def(
       "MMFFOptimizeMoleculeConfs", RDKit::MMFFConfsHelper,
@@ -453,11 +457,12 @@ RETURNS: a list of (not_converged, energy) 2-tuples. \n\
   docString =
       "uses the supplied force field to optimize a molecule's structure\n\n\
  \n\
- ARGUMENTS:\n\n\
-    - ff : the force field\n\
-    - maxIters : the maximum number of iterations (defaults to 200)\n\
+ ARGUMENTS:\n\
+     ff: the force field\n\
+     maxIters: the maximum number of iterations (defaults to 200)\n\
 \n\
- RETURNS: 0 if the optimization converged, 1 if more iterations are required.\n\
+ RETURNS:\n\
+     0 if the optimization converged, 1 if more iterations are required.\n\
 \n";
   python::def("OptimizeMolecule", RDKit::FFHelper,
               (python::arg("ff"), python::arg("maxIters") = 200),
@@ -466,15 +471,16 @@ RETURNS: a list of (not_converged, energy) 2-tuples. \n\
   docString =
       "uses the supplied force field to optimize all of a molecule's conformations\n\n\
  \n\
- ARGUMENTS:\n\n\
-    - mol : the molecule of interest\n\
-    - ff : the force field\n\
-    - numThreads : the number of threads to use, only has an effect if the RDKit\n\
+ ARGUMENTS:\n\
+     mol: the molecule of interest\n\
+     ff: the force field\n\
+     numThreads: the number of threads to use, only has an effect if the RDKit\n\
                    was built with thread support (defaults to 1)\n\
                    If set to zero, the max supported by the system will be used.\n\
-    - maxIters : the maximum number of iterations (defaults to 200)\n\
+     maxIters: the maximum number of iterations (defaults to 200)\n\
 \n\
- RETURNS: a list of (not_converged, energy) 2-tuples. \n\
+ RETURNS:\n\
+     a list of (not_converged, energy) 2-tuples. \n\
      If not_converged is 0 the optimization converged for that conformer.\n\
 \n";
   python::def("OptimizeMoleculeConfs", RDKit::FFConfsHelper,
