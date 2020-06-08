@@ -78,11 +78,11 @@ class ForwardDbFpSupplier(DbFpSupplier):
     >>> from rdkit import RDConfig
     >>> from rdkit.Dbase.DbConnection import DbConnect
     >>> fName = RDConfig.RDTestDatabase
-    >>> conn = DbConnect(fName,'simple_combined')
+    >>> conn = DbConnect(fName, 'simple_combined')
     >>> suppl = ForwardDbFpSupplier(conn.GetData())
 
     we can loop over the supplied fingerprints:
-    
+
     >>> fps = []
     >>> for fp in suppl:
     ...   fps.append(fp)
@@ -118,7 +118,7 @@ class RandomAccessDbFpSupplier(DbFpSupplier):
   >>> from rdkit import RDConfig
   >>> from rdkit.Dbase.DbConnection import DbConnect
   >>> fName = RDConfig.RDTestDatabase
-  >>> conn = DbConnect(fName,'simple_combined')
+  >>> conn = DbConnect(fName, 'simple_combined')
   >>> suppl = RandomAccessDbFpSupplier(conn.GetData())
   >>> len(suppl)
   12
