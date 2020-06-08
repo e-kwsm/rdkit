@@ -123,7 +123,8 @@ class ForwardDbMolSupplier(DbMolSupplier):
   def NextMol(self):
     """
 
-      NOTE: this has side effects
+      NOTE:
+        this has side effects
 
     """
     try:
