@@ -14,10 +14,11 @@
 
 Sample Usage:
 
-  python FingerprintMols.py  -d data.gdb \
-        -t 'raw_dop_data' --smilesName="Structure" --idName="Mol_ID"  \
-        --outTable="daylight_sig"
+.. code-block::
 
+  python FingerprintMols.py -d data.gdb \\
+    -t 'raw_dop_data' --smilesName="Structure" --idName="Mol_ID" \\
+    --outTable="daylight_sig"
 
 """
 
@@ -429,11 +430,11 @@ def ParseArgs(details=None):
 
    **Note**:
 
-     - If you make modifications here, please update the global
-       _usageDoc string so the Usage message is up to date.
+   - If you make modifications here, please update the global
+     _usageDoc string so the Usage message is up to date.
 
-     - This routine is used by both the fingerprinter, the clusterer and the
-       screener; not all arguments make sense for all applications.
+   - This routine is used by both the fingerprinter, the clusterer and the
+     screener; not all arguments make sense for all applications.
 
   """
   args = sys.argv[1:]
