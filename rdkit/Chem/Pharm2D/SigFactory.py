@@ -76,18 +76,14 @@ class SigFactory(object):
     def GetBitDescriptionAsText(self, bitIdx, includeBins=0, fullPage=1):
         """  returns text with a description of the bit
 
-        **Arguments**
-
-          - bitIdx: an integer bit index
-
-          - includeBins: (optional) if nonzero, information about the bins will be
+        Arguments:
+          bitIdx: an integer bit index
+          includeBins: (optional) if nonzero, information about the bins will be
             included as well
-
-          - fullPage: (optional) if nonzero, html headers and footers will
+          fullPage: (optional) if nonzero, html headers and footers will
             be included (so as to make the output a complete page)
 
-        **Returns**
-
+        Returns:
           a string with the HTML
 
         """
@@ -96,12 +92,10 @@ class SigFactory(object):
     def GetBitDescription(self, bitIdx):
         """  returns a text description of the bit
 
-        **Arguments**
+        Arguments:
+          bitIdx: an integer bit index
 
-          - bitIdx: an integer bit index
-
-        **Returns**
-
+        Returns:
           a string
 
         """
@@ -117,20 +111,15 @@ class SigFactory(object):
         Internal use only
          Returns the index of a bin defined by a set of distances.
 
-        **Arguments**
+        Arguments:
+          dists: a sequence of distances (not binned)
+          bins: a sorted sequence of distance bins (2-tuples)
+          scaffolds: a list of possible scaffolds (bin combinations)
 
-          - dists: a sequence of distances (not binned)
-
-          - bins: a sorted sequence of distance bins (2-tuples)
-
-          - scaffolds: a list of possible scaffolds (bin combinations)
-
-        **Returns**
-
+        Returns:
           an integer bin index
 
-        **Note**
-
+        Note:
           the value returned here is not an index in the overall
           signature.  It is, rather, an offset of a scaffold in the
           possible combinations of distance bins for a given
@@ -187,18 +176,14 @@ class SigFactory(object):
         """ returns the index for a pharmacophore described using a set of
           feature indices and distances
 
-        **Arguments***
-
-          - featIndices: a sequence of feature indices
-
-          - dists: a sequence of distance between the features, only the
+        Arguments:
+          featIndices: a sequence of feature indices
+          dists: a sequence of distance between the features, only the
             unique distances should be included, and they should be in the
             order defined in Utils.
+          sortIndices: sort the indices
 
-          - sortIndices : sort the indices
-
-        **Returns**
-
+        Returns:
           the integer bit index
 
         """
@@ -253,19 +238,15 @@ class SigFactory(object):
     def GetBitInfo(self, idx):
         """ returns information about the given bit
 
-         **Arguments**
+         Arguments:
+           idx: the bit index to be considered
 
-           - idx: the bit index to be considered
-
-         **Returns**
-
+         Returns:
            a 3-tuple:
 
-             1) the number of points in the pharmacophore
-
-             2) the proto-pharmacophore (tuple of pattern indices)
-
-             3) the scaffold (tuple of distance indices)
+           1) the number of points in the pharmacophore
+           2) the proto-pharmacophore (tuple of pattern indices)
+           3) the scaffold (tuple of distance indices)
 
         """
         if idx >= self._sigSize:
