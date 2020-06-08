@@ -20,13 +20,10 @@ if hasattr(rdMolDescriptors, 'CalcPMI1'):
   PMI1.__doc__ = """ First (smallest) principal moment of inertia
 
 
-    **Arguments**
-
-      - inMol: a molecule
-
-      - confId: (optional) the conformation ID to use
-
-      - useAtomicMasses: (optional) toggles use of atomic masses in the
+    Arguments:
+      inMol: a molecule
+      confId: (optional) the conformation ID to use
+      useAtomicMasses: (optional) toggles use of atomic masses in the
         calculation. Defaults to True
     """
 
@@ -34,13 +31,10 @@ if hasattr(rdMolDescriptors, 'CalcPMI1'):
   PMI2.version = rdMolDescriptors._CalcPMI2_version
   PMI2.__doc__ = """ Second principal moment of inertia
 
-    **Arguments**
-
-      - inMol: a molecule
-
-      - confId: (optional) the conformation ID to use
-
-      - useAtomicMasses: (optional) toggles use of atomic masses in the
+    Arguments:
+      inMol: a molecule
+      confId: (optional) the conformation ID to use
+      useAtomicMasses: (optional) toggles use of atomic masses in the
         calculation. Defaults to True
     """
 
@@ -48,13 +42,10 @@ if hasattr(rdMolDescriptors, 'CalcPMI1'):
   PMI3.version = rdMolDescriptors._CalcPMI3_version
   PMI3.__doc__ = """ Third (largest) principal moment of inertia
 
-    **Arguments**
-
-      - inMol: a molecule
-
-      - confId: (optional) the conformation ID to use
-
-      - useAtomicMasses: (optional) toggles use of atomic masses in the
+    Arguments:
+      inMol: a molecule
+      confId: (optional) the conformation ID to use
+      useAtomicMasses: (optional) toggles use of atomic masses in the
         calculation. Defaults to True
     """
 
@@ -66,13 +57,10 @@ if hasattr(rdMolDescriptors, 'CalcPMI1'):
         https://doi.org/10.1021/ci025599w
 
 
-    **Arguments**
-
-      - inMol: a molecule
-
-      - confId: (optional) the conformation ID to use
-
-      - useAtomicMasses: (optional) toggles use of atomic masses in the
+    Arguments:
+      inMol: a molecule
+      confId: (optional) the conformation ID to use
+      useAtomicMasses: (optional) toggles use of atomic masses in the
         calculation. Defaults to True
     """
 
@@ -84,13 +72,10 @@ if hasattr(rdMolDescriptors, 'CalcPMI1'):
         https://doi.org/10.1021/ci025599w
 
 
-    **Arguments**
-
-      - inMol: a molecule
-
-      - confId: (optional) the conformation ID to use
-
-      - useAtomicMasses: (optional) toggles use of atomic masses in the
+    Arguments:
+      inMol: a molecule
+      confId: (optional) the conformation ID to use
+      useAtomicMasses: (optional) toggles use of atomic masses in the
         calculation. Defaults to True
     """
 
@@ -106,13 +91,10 @@ if hasattr(rdMolDescriptors, 'CalcPMI1'):
          for planar molecules: sqrt( sqrt(pm3*pm2)/MW )
          for nonplanar molecules: sqrt( 2*pi*pow(pm3*pm2*pm1,1/3)/MW )
 
-    **Arguments**
-
-      - inMol: a molecule
-
-      - confId: (optional) the conformation ID to use
-
-      - useAtomicMasses: (optional) toggles use of atomic masses in the
+    Arguments:
+      inMol: a molecule
+      confId: (optional) the conformation ID to use
+      useAtomicMasses: (optional) toggles use of atomic masses in the
         calculation. Defaults to True
     """
 
@@ -127,13 +109,10 @@ if hasattr(rdMolDescriptors, 'CalcPMI1'):
        Definition:
          pm2 / (pm1*pm3)
 
-    **Arguments**
-
-      - inMol: a molecule
-
-      - confId: (optional) the conformation ID to use
-
-      - useAtomicMasses: (optional) toggles use of atomic masses in the
+    Arguments:
+      inMol: a molecule
+      confId: (optional) the conformation ID to use
+      useAtomicMasses: (optional) toggles use of atomic masses in the
         calculation. Defaults to True
     """
 
@@ -148,13 +127,10 @@ if hasattr(rdMolDescriptors, 'CalcPMI1'):
        Definition:
          sqrt(pm3**2 -pm1**2) / pm3
 
-    **Arguments**
-
-      - inMol: a molecule
-
-      - confId: (optional) the conformation ID to use
-
-      - useAtomicMasses: (optional) toggles use of atomic masses in the
+    Arguments:
+      inMol: a molecule
+      confId: (optional) the conformation ID to use
+      useAtomicMasses: (optional) toggles use of atomic masses in the
         calculation. Defaults to True
     """
 
@@ -169,13 +145,10 @@ if hasattr(rdMolDescriptors, 'CalcPMI1'):
        Definition:
          0.5 * ((pm3-pm2)**2 + (pm3-pm1)**2 + (pm2-pm1)**2)/(pm1**2+pm2**2+pm3**2)
 
-    **Arguments**
-
-      - inMol: a molecule
-
-      - confId: (optional) the conformation ID to use
-
-      - useAtomicMasses: (optional) toggles use of atomic masses in the
+    Arguments:
+      inMol: a molecule
+      confId: (optional) the conformation ID to use
+      useAtomicMasses: (optional) toggles use of atomic masses in the
         calculation. Defaults to True
     """
 
@@ -190,10 +163,8 @@ if hasattr(rdMolDescriptors, 'CalcPMI1'):
        Definition:
          3 * pm1 / (pm1+pm2+pm3) where the moments are calculated without weights
 
-    **Arguments**
-
-      - inMol: a molecule
-
-      - confId: (optional) the conformation ID to use
+    Arguments:
+      inMol: a molecule
+      confId: (optional) the conformation ID to use
 
     """
