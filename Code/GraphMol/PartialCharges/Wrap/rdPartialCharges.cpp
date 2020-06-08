@@ -40,9 +40,9 @@ BOOST_PYTHON_MODULE(rdPartialCharges) {
  on the atom (under the property name _GasteigerHCharge)\n\
  \n\
  ARGUMENTS:\n\n\
-    - mol : the molecule of interrest\n\
-    - nIter : number of iteration (defaults to 12)\n\
-    - throwOnParamFailure : toggles whether or not an exception should be raised if parameters\n\
+   mol: the molecule of interrest\n\
+   nIter: number of iteration (defaults to 12)\n\
+   throwOnParamFailure: toggles whether or not an exception should be raised if parameters\n\
       for an atom cannot be found.  If this is false (the default), all parameters for unknown\n\
       atoms will be set to zero.  This has the effect of removing that atom from the iteration.\n\n";
   python::def("ComputeGasteigerCharges", RDKit::ComputeGasteigerCharges,
