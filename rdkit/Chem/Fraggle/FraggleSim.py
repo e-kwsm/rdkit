@@ -348,21 +348,21 @@ def GetFraggleSimilarity(queryMol, refMol, tverskyThresh=0.8):
 
     >>> q = Chem.MolFromSmiles('COc1cc(CN2CCC(NC(=O)c3cncc(C)c3)CC2)c(OC)c2ccccc12')
     >>> m = Chem.MolFromSmiles('COc1cc(CN2CCC(NC(=O)c3ccccc3)CC2)c(OC)c2ccccc12')
-    >>> sim,match = GetFraggleSimilarity(q,m)
+    >>> sim, match = GetFraggleSimilarity(q, m)
     >>> sim
     0.980...
     >>> match
     '*C1CCN(Cc2cc(OC)c3ccccc3c2OC)CC1'
 
     >>> m = Chem.MolFromSmiles('COc1cc(CN2CCC(Nc3nc4ccccc4s3)CC2)c(OC)c2ccccc12')
-    >>> sim,match = GetFraggleSimilarity(q,m)
+    >>> sim, match = GetFraggleSimilarity(q, m)
     >>> sim
     0.794...
     >>> match
     '*C1CCN(Cc2cc(OC)c3ccccc3c2OC)CC1'
 
     >>> q = Chem.MolFromSmiles('COc1ccccc1')
-    >>> sim,match = GetFraggleSimilarity(q,m)
+    >>> sim, match = GetFraggleSimilarity(q, m)
     >>> sim
     0.347...
     >>> match
