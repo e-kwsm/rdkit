@@ -641,18 +641,15 @@ BOOST_PYTHON_MODULE(rdmolfiles) {
       "Construct a molecule from a TPL file.\n\n\
   ARGUMENTS:\n\
 \n\
-    - fileName: name of the file to read\n\
-\n\
-    - sanitize: (optional) toggles sanitization of the molecule.\n\
+    fileName: name of the file to read\n\
+    sanitize: (optional) toggles sanitization of the molecule.\n\
       Defaults to True.\n\
-\n\
-    - skipFirstConf: (optional) skips reading the first conformer.\n\
+    skipFirstConf: (optional) skips reading the first conformer.\n\
       Defaults to False.\n\
       This should be set to True when reading TPLs written by \n\
       the CombiCode.\n\
 \n\
   RETURNS:\n\
-\n\
     a Mol object, None on failure.\n\
 \n";
   python::def("MolFromTPLFile", RDKit::MolFromTPLFile,
@@ -664,19 +661,15 @@ BOOST_PYTHON_MODULE(rdmolfiles) {
   docString =
       "Construct a molecule from a TPL block.\n\n\
   ARGUMENTS:\n\
-\n\
-    - fileName: name of the file to read\n\
-\n\
-    - sanitize: (optional) toggles sanitization of the molecule.\n\
+    fileName: name of the file to read\n\
+    sanitize: (optional) toggles sanitization of the molecule.\n\
       Defaults to True.\n\
-\n\
-    - skipFirstConf: (optional) skips reading the first conformer.\n\
+    skipFirstConf: (optional) skips reading the first conformer.\n\
       Defaults to False.\n\
       This should be set to True when reading TPLs written by \n\
       the CombiCode.\n\
 \n\
   RETURNS:\n\
-\n\
     a Mol object, None on failure.\n\
 \n";
   python::def("MolFromTPLBlock", RDKit::MolFromTPLBlock,
@@ -688,22 +681,17 @@ BOOST_PYTHON_MODULE(rdmolfiles) {
   docString =
       "Construct a molecule from a Mol file.\n\n\
   ARGUMENTS:\n\
-\n\
-    - fileName: name of the file to read\n\
-\n\
-    - sanitize: (optional) toggles sanitization of the molecule.\n\
+    fileName: name of the file to read\n\
+    sanitize: (optional) toggles sanitization of the molecule.\n\
       Defaults to true.\n\
-\n\
-    - removeHs: (optional) toggles removing hydrogens from the molecule.\n\
+    removeHs: (optional) toggles removing hydrogens from the molecule.\n\
       This only make sense when sanitization is done.\n\
       Defaults to true.\n\
-\n\
-    - strictParsing: (optional) if this is false, the parser is more lax about.\n\
+    strictParsing: (optional) if this is false, the parser is more lax about.\n\
       correctness of the content.\n\
       Defaults to true.\n\
 \n\
   RETURNS:\n\
-\n\
     a Mol object, None on failure.\n\
 \n";
   python::def(
@@ -716,22 +704,17 @@ BOOST_PYTHON_MODULE(rdmolfiles) {
   docString =
       "Construct a molecule from a Mol block.\n\n\
   ARGUMENTS:\n\
-\n\
-    - molBlock: string containing the Mol block\n\
-\n\
-    - sanitize: (optional) toggles sanitization of the molecule.\n\
+    molBlock: string containing the Mol block\n\
+    sanitize: (optional) toggles sanitization of the molecule.\n\
       Defaults to True.\n\
-\n\
-    - removeHs: (optional) toggles removing hydrogens from the molecule.\n\
+    removeHs: (optional) toggles removing hydrogens from the molecule.\n\
       This only make sense when sanitization is done.\n\
       Defaults to true.\n\
-\n\
-    - strictParsing: (optional) if this is false, the parser is more lax about.\n\
+    strictParsing: (optional) if this is false, the parser is more lax about.\n\
       correctness of the content.\n\
       Defaults to true.\n\
 \n\
   RETURNS:\n\
-\n\
     a Mol object, None on failure.\n\
 \n";
   python::def(
@@ -744,21 +727,18 @@ BOOST_PYTHON_MODULE(rdmolfiles) {
   docString =
       "Construct a molecule from an RDKit-generate SVG string.\n\n\
   ARGUMENTS:\n\
-\n\
-    - svg: string containing the SVG data (must include molecule metadata)\n\
-\n\
-    - sanitize: (optional) toggles sanitization of the molecule.\n\
+    svg: string containing the SVG data (must include molecule metadata)\n\
+    sanitize: (optional) toggles sanitization of the molecule.\n\
       Defaults to True.\n\
-\n\
-    - removeHs: (optional) toggles removing hydrogens from the molecule.\n\
+    removeHs: (optional) toggles removing hydrogens from the molecule.\n\
       This only make sense when sanitization is done.\n\
       Defaults to true.\n\
 \n\
   RETURNS:\n\
-\n\
     a Mol object, None on failure.\n\
 \n\
-  NOTE: this functionality should be considered beta.\n\
+  NOTE:\n\
+    this functionality should be considered beta.\n\
 \n";
   python::def("MolFromRDKitSVG", RDKit::MolFromSVG,
               (python::arg("molBlock"), python::arg("sanitize") = true,
@@ -774,22 +754,17 @@ BOOST_PYTHON_MODULE(rdmolfiles) {
     Other atom typing schemes are unlikely to work.\n\
 \n\
   ARGUMENTS:\n                                  \
-\n\
-    - fileName: name of the file to read\n\
-\n\
-    - sanitize: (optional) toggles sanitization of the molecule.\n\
+    fileName: name of the file to read\n\
+    sanitize: (optional) toggles sanitization of the molecule.\n\
       Defaults to true.\n\
-\n\
-    - removeHs: (optional) toggles removing hydrogens from the molecule.\n\
+    removeHs: (optional) toggles removing hydrogens from the molecule.\n\
       This only make sense when sanitization is done.\n\
       Defaults to true.\n\
-\n\
-    - cleanupSubstructures: (optional) toggles standardizing some \n\
+    cleanupSubstructures: (optional) toggles standardizing some \n\
       substructures found in mol2 files.\n\
       Defaults to true.\n\
 \n\
   RETURNS:\n\
-\n\
     a Mol object, None on failure.\n\
 \n";
   python::def("MolFromMol2File", RDKit::MolFromMol2File,
@@ -806,22 +781,17 @@ BOOST_PYTHON_MODULE(rdmolfiles) {
     Other atom typing schemes are unlikely to work.\n\
 \n\
   ARGUMENTS:\n\
-\n\
-    - mol2Block: string containing the Mol2 block\n\
-\n\
-    - sanitize: (optional) toggles sanitization of the molecule.\n\
+    mol2Block: string containing the Mol2 block\n\
+    sanitize: (optional) toggles sanitization of the molecule.\n\
       Defaults to True.\n\
-\n\
-    - removeHs: (optional) toggles removing hydrogens from the molecule.\n\
+    removeHs: (optional) toggles removing hydrogens from the molecule.\n\
       This only make sense when sanitization is done.\n\
       Defaults to true.\n\
-\n\
-    - cleanupSubstructures: (optional) toggles standardizing some \n\
+    cleanupSubstructures: (optional) toggles standardizing some \n\
       substructures found in mol2 files.\n\
       Defaults to true.\n\
 \n\
   RETURNS:\n\
-\n\
     a Mol object, None on failure.\n\
 \n";
   python::def("MolFromMol2Block", RDKit::MolFromMol2Block,
@@ -834,22 +804,17 @@ BOOST_PYTHON_MODULE(rdmolfiles) {
   docString =
       "Construct a molecule from a Mol file.\n\n\
   ARGUMENTS:\n\
-\n\
-    - fileName: name of the file to read\n\
-\n\
-    - sanitize: (optional) toggles sanitization of the molecule.\n\
+    fileName: name of the file to read\n\
+    sanitize: (optional) toggles sanitization of the molecule.\n\
       Defaults to true.\n\
-\n\
-    - removeHs: (optional) toggles removing hydrogens from the molecule.\n\
+    removeHs: (optional) toggles removing hydrogens from the molecule.\n\
       This only make sense when sanitization is done.\n\
       Defaults to true.\n\
-\n\
-    - strictParsing: (optional) if this is false, the parser is more lax about.\n\
+    strictParsing: (optional) if this is false, the parser is more lax about.\n\
       correctness of the content.\n\
       Defaults to true.\n\
 \n\
   RETURNS:\n\
-\n\
     a Mol object, None on failure.\n\
 \n";
   python::def(
@@ -862,22 +827,17 @@ BOOST_PYTHON_MODULE(rdmolfiles) {
   docString =
       "Construct a molecule from a Mol block.\n\n\
   ARGUMENTS:\n\
-\n\
-    - molBlock: string containing the Mol block\n\
-\n\
-    - sanitize: (optional) toggles sanitization of the molecule.\n\
+    molBlock: string containing the Mol block\n\
+    sanitize: (optional) toggles sanitization of the molecule.\n\
       Defaults to True.\n\
-\n\
-    - removeHs: (optional) toggles removing hydrogens from the molecule.\n\
+    removeHs: (optional) toggles removing hydrogens from the molecule.\n\
       This only make sense when sanitization is done.\n\
       Defaults to true.\n\
-\n\
-    - strictParsing: (optional) if this is false, the parser is more lax about.\n\
+    strictParsing: (optional) if this is false, the parser is more lax about.\n\
       correctness of the content.\n\
       Defaults to true.\n\
 \n\
   RETURNS:\n\
-\n\
     a Mol object, None on failure.\n\
 \n";
   python::def(
@@ -890,18 +850,16 @@ BOOST_PYTHON_MODULE(rdmolfiles) {
   docString =
       "Returns a Mol block for a molecule\n\
   ARGUMENTS:\n\
-\n\
-    - mol: the molecule\n\
-    - includeStereo: (optional) toggles inclusion of stereochemical\n\
+    mol: the molecule\n\
+    includeStereo: (optional) toggles inclusion of stereochemical\n\
       information in the output\n\
-    - confId: (optional) selects which conformation to output (-1 = default)\n\
-    - kekulize: (optional) triggers kekulization of the molecule before it's written,\n\
+    confId: (optional) selects which conformation to output (-1 = default)\n\
+    kekulize: (optional) triggers kekulization of the molecule before it's written,\n\
       as suggested by the MDL spec.\n\
-    - forceV3000 (optional) force generation a V3000 mol block (happens automatically with \n\
+    forceV3000 (optional) force generation a V3000 mol block (happens automatically with \n\
       more than 999 atoms or bonds)\n\
 \n\
   RETURNS:\n\
-\n\
     a string\n\
 \n";
   python::def("MolToMolBlock", RDKit::MolToMolBlock,
@@ -912,16 +870,14 @@ BOOST_PYTHON_MODULE(rdmolfiles) {
   docString =
       "Returns a V3000 Mol block for a molecule\n\
   ARGUMENTS:\n\
-\n\
-    - mol: the molecule\n\
-    - includeStereo: (optional) toggles inclusion of stereochemical\n\
+    mol: the molecule\n\
+    includeStereo: (optional) toggles inclusion of stereochemical\n\
       information in the output\n\
-    - confId: (optional) selects which conformation to output (-1 = default)\n\
-    - kekulize: (optional) triggers kekulization of the molecule before it's written,\n\
+    confId: (optional) selects which conformation to output (-1 = default)\n\
+    kekulize: (optional) triggers kekulization of the molecule before it's written,\n\
       as suggested by the MDL spec.\n\
 \n\
   RETURNS:\n\
-\n\
     a string\n\
 \n";
   python::def("MolToV3KMolBlock", RDKit::MolToV3KMolBlock,
@@ -932,19 +888,17 @@ BOOST_PYTHON_MODULE(rdmolfiles) {
   docString =
       "Writes a Mol file for a molecule\n\
   ARGUMENTS:\n\
-\n\
-    - mol: the molecule\n\
-    - filename: the file to write to\n\
-    - includeStereo: (optional) toggles inclusion of stereochemical\n\
+    mol: the molecule\n\
+    filename: the file to write to\n\
+    includeStereo: (optional) toggles inclusion of stereochemical\n\
       information in the output\n\
-    - confId: (optional) selects which conformation to output (-1 = default)\n\
-    - kekulize: (optional) triggers kekulization of the molecule before it's written,\n\
+    confId: (optional) selects which conformation to output (-1 = default)\n\
+    kekulize: (optional) triggers kekulization of the molecule before it's written,\n\
       as suggested by the MDL spec.\n\
-    - forceV3000 (optional) force generation a V3000 mol block (happens automatically with \n\
+    forceV3000 (optional) force generation a V3000 mol block (happens automatically with \n\
       more than 999 atoms or bonds)\n\
 \n\
   RETURNS:\n\
-\n\
     a string\n\
 \n";
   python::def(
@@ -957,17 +911,15 @@ BOOST_PYTHON_MODULE(rdmolfiles) {
   docString =
       "Writes a V3000 Mol file for a molecule\n\
   ARGUMENTS:\n\
-\n\
-    - mol: the molecule\n\
-    - filename: the file to write to\n\
-    - includeStereo: (optional) toggles inclusion of stereochemical\n\
+    mol: the molecule\n\
+    filename: the file to write to\n\
+    includeStereo: (optional) toggles inclusion of stereochemical\n\
       information in the output\n\
-    - confId: (optional) selects which conformation to output (-1 = default)\n\
-    - kekulize: (optional) triggers kekulization of the molecule before it's written,\n\
+    confId: (optional) selects which conformation to output (-1 = default)\n\
+    kekulize: (optional) triggers kekulization of the molecule before it's written,\n\
       as suggested by the MDL spec.\n\
 \n\
   RETURNS:\n\
-\n\
     a string\n\
 \n";
   python::def("MolToV3KMolFile", RDKit::MolToV3KMolFile,
@@ -1009,12 +961,10 @@ BOOST_PYTHON_MODULE(rdmolfiles) {
   docString =
       "Returns a XYZ block for a molecule\n\
   ARGUMENTS:\n\
-\n\
-    - mol: the molecule\n\
-    - confId: (optional) selects which conformation to output (-1 = default)\n\
+    mol: the molecule\n\
+    confId: (optional) selects which conformation to output (-1 = default)\n\
 \n\
   RETURNS:\n\
-\n\
     a string\n\
 \n";
   python::def("MolToXYZBlock", RDKit::MolToXYZBlock,
@@ -1024,10 +974,9 @@ BOOST_PYTHON_MODULE(rdmolfiles) {
   docString =
       "Writes a XYZ file for a molecule\n\
   ARGUMENTS:\n\
-\n\
-    - mol: the molecule\n\
-    - filename: the file to write to\n\
-    - confId: (optional) selects which conformation to output (-1 = default)\n\
+    mol: the molecule\n\
+    filename: the file to write to\n\
+    confId: (optional) selects which conformation to output (-1 = default)\n\
 \n";
   python::def(
       "MolToXYZFile", RDKit::MolToXYZFile,
@@ -1078,15 +1027,12 @@ BOOST_PYTHON_MODULE(rdmolfiles) {
   docString =
       "Construct a molecule from a SMILES string.\n\n\
      ARGUMENTS:\n\
-   \n\
-       - SMILES: the smiles string\n\
-   \n\
-       - params: used to provide optional parameters for the SMILES parsing\n\
-   \n\
+       SMILES: the smiles string\n\
+       params: used to provide optional parameters for the SMILES parsing\n\
+\n\
      RETURNS:\n\
-   \n\
        a Mol object, None on failure.\n\
-   \n";
+\n";
   python::def("MolFromSmiles", MolFromSmilesHelper,
               (python::arg("SMILES"), python::arg("params")), docString.c_str(),
               python::return_value_policy<python::manage_new_object>());
@@ -1094,17 +1040,13 @@ BOOST_PYTHON_MODULE(rdmolfiles) {
   docString =
       "Construct a molecule from a SMILES string.\n\n\
   ARGUMENTS:\n\
-\n\
-    - SMILES: the smiles string\n\
-\n\
-    - sanitize: (optional) toggles sanitization of the molecule.\n\
+    SMILES: the smiles string\n\
+    sanitize: (optional) toggles sanitization of the molecule.\n\
       Defaults to True.\n\
-\n\
-    - replacements: (optional) a dictionary of replacement strings (see below)\n\
+    replacements: (optional) a dictionary of replacement strings (see below)\n\
       Defaults to {}.\n\
 \n\
   RETURNS:\n\
-\n\
     a Mol object, None on failure.\n\
 \n\
    The optional replacements dict can be used to do string substitution of abbreviations \n\
@@ -1135,18 +1077,14 @@ BOOST_PYTHON_MODULE(rdmolfiles) {
   docString =
       "Construct a molecule from a SMARTS string.\n\n\
   ARGUMENTS:\n\
-\n\
-    - SMARTS: the smarts string\n\
-\n\
-    - mergeHs: (optional) toggles the merging of explicit Hs in the query into the attached\n\
+    SMARTS: the smarts string\n\
+    mergeHs: (optional) toggles the merging of explicit Hs in the query into the attached\n\
       atoms.  So, for example, 'C[H]' becomes '[C;!H0]'.\n\
       Defaults to 0.\n\
-\n\
-    - replacements: (optional) a dictionary of replacement strings (see below)\n\
+    replacements: (optional) a dictionary of replacement strings (see below)\n\
       Defaults to {}. See the documentation for MolFromSmiles for an explanation.\n\
 \n\
   RETURNS:\n\
-\n\
     a Mol object, None on failure.\n\
 \n";
   python::def("MolFromSmarts", RDKit::MolFromSmarts,
@@ -1212,23 +1150,21 @@ BOOST_PYTHON_MODULE(rdmolfiles) {
   docString =
       "Returns the canonical SMILES string for a molecule\n\
   ARGUMENTS:\n\
-\n\
-    - mol: the molecule\n\
-    - isomericSmiles: (optional) include information about stereochemistry in\n\
+    mol: the molecule\n\
+    isomericSmiles: (optional) include information about stereochemistry in\n\
       the SMILES.  Defaults to true.\n\
-    - kekuleSmiles: (optional) use the Kekule form (no aromatic bonds) in\n\
+    kekuleSmiles: (optional) use the Kekule form (no aromatic bonds) in\n\
       the SMILES.  Defaults to false.\n\
-    - rootedAtAtom: (optional) if non-negative, this forces the SMILES \n\
+    rootedAtAtom: (optional) if non-negative, this forces the SMILES \n\
       to start at a particular atom. Defaults to -1.\n\
-    - canonical: (optional) if false no attempt will be made to canonicalize\n\
+    canonical: (optional) if false no attempt will be made to canonicalize\n\
       the molecule. Defaults to true.\n\
-    - allBondsExplicit: (optional) if true, all bond orders will be explicitly indicated\n\
+    allBondsExplicit: (optional) if true, all bond orders will be explicitly indicated\n\
       in the output SMILES. Defaults to false.\n\
-    - allHsExplicit: (optional) if true, all H counts will be explicitly indicated\n\
+    allHsExplicit: (optional) if true, all H counts will be explicitly indicated\n\
       in the output SMILES. Defaults to false.\n\
 \n\
   RETURNS:\n\
-\n\
     a string\n\
 \n";
   python::def(
@@ -1246,31 +1182,6 @@ BOOST_PYTHON_MODULE(rdmolfiles) {
   ARGUMENTS:\n\
 \n\
     - mol: the molecule\n\
-    - params: the SmilesWriteParams \n\
-    - atomsToUse : a list of atoms to include in the fragment\n\
-    - bondsToUse : (optional) a list of bonds to include in the fragment\n\
-      if not provided, all bonds between the atoms provided\n\
-      will be included.\n\
-    - atomSymbols : (optional) a list with the symbols to use for the atoms\n\
-      in the SMILES. This should have be mol.GetNumAtoms() long.\n\
-    - bondSymbols : (optional) a list with the symbols to use for the bonds\n\
-      in the SMILES. This should have be mol.GetNumBonds() long.\n\
-\n\
-  RETURNS:\n\
-\n\
-    a string\n\
-\n";
-  python::def("MolFragmentToSmiles", MolFragmentToSmilesHelper1<smilesfrag_gen>,
-              (python::arg("mol"), python::arg("params"),
-               python::arg("atomsToUse"), python::arg("bondsToUse") = 0,
-               python::arg("atomSymbols") = 0, python::arg("bondSymbols") = 0),
-              docString.c_str());
-
-  docString =
-      "Returns the canonical SMILES string for a fragment of a molecule\n\
-  ARGUMENTS:\n\
-\n\
-    - mol: the molecule\n\
     - atomsToUse : a list of atoms to include in the fragment\n\
     - bondsToUse : (optional) a list of bonds to include in the fragment\n\
       if not provided, all bonds between the atoms provided\n\
@@ -1281,21 +1192,20 @@ BOOST_PYTHON_MODULE(rdmolfiles) {
       in the SMILES. This should have be mol.GetNumBonds() long.\n\
     - isomericSmiles: (optional) include information about stereochemistry in\n\
       the SMILES.  Defaults to true.\n\
-    - kekuleSmiles: (optional) use the Kekule form (no aromatic bonds) in\n\
+    kekuleSmiles: (optional) use the Kekule form (no aromatic bonds) in\n\
       the SMILES.  Defaults to false.\n\
-    - rootedAtAtom: (optional) if non-negative, this forces the SMILES \n\
+    rootedAtAtom: (optional) if non-negative, this forces the SMILES \n\
       to start at a particular atom. Defaults to -1.\n\
-    - canonical: (optional) if false no attempt will be made to canonicalize\n\
+    canonical: (optional) if false no attempt will be made to canonicalize\n\
       the molecule. Defaults to true.\n\
-    - allBondsExplicit: (optional) if true, all bond orders will be explicitly indicated\n\
+    allBondsExplicit: (optional) if true, all bond orders will be explicitly indicated\n\
       in the output SMILES. Defaults to false.\n\
-    - allHsExplicit: (optional) if true, all H counts will be explicitly indicated\n\
+    allHsExplicit: (optional) if true, all H counts will be explicitly indicated\n\
       in the output SMILES. Defaults to false.\n\
-    - doRandom: (optional) if true, randomized the DFS transversal graph,\n\
+    doRandom: (optional) if true, randomized the DFS transversal graph,\n\
       so we can generate random smiles. Defaults to false.\n\
 \n\
   RETURNS:\n\
-\n\
     a string\n\
 \n";
   python::def(
@@ -1335,23 +1245,21 @@ BOOST_PYTHON_MODULE(rdmolfiles) {
   docString =
       "Returns the CXSMILES string for a molecule\n\
   ARGUMENTS:\n\
-\n\
-    - mol: the molecule\n\
-    - isomericSmiles: (optional) include information about stereochemistry in\n\
+    mol: the molecule\n\
+    isomericSmiles: (optional) include information about stereochemistry in\n\
       the SMILES.  Defaults to true.\n\
-    - kekuleSmiles: (optional) use the Kekule form (no aromatic bonds) in\n\
+    kekuleSmiles: (optional) use the Kekule form (no aromatic bonds) in\n\
       the SMILES.  Defaults to false.\n\
-    - rootedAtAtom: (optional) if non-negative, this forces the SMILES \n\
+    rootedAtAtom: (optional) if non-negative, this forces the SMILES \n\
       to start at a particular atom. Defaults to -1.\n\
-    - canonical: (optional) if false no attempt will be made to canonicalize\n\
+    canonical: (optional) if false no attempt will be made to canonicalize\n\
       the molecule. Defaults to true.\n\
-    - allBondsExplicit: (optional) if true, all bond orders will be explicitly indicated\n\
+    allBondsExplicit: (optional) if true, all bond orders will be explicitly indicated\n\
       in the output SMILES. Defaults to false.\n\
-    - allHsExplicit: (optional) if true, all H counts will be explicitly indicated\n\
+    allHsExplicit: (optional) if true, all H counts will be explicitly indicated\n\
       in the output SMILES. Defaults to false.\n\
 \n\
   RETURNS:\n\
-\n\
     a string\n\
 \n";
   python::def(
@@ -1404,21 +1312,20 @@ BOOST_PYTHON_MODULE(rdmolfiles) {
       in the SMILES. This should have be mol.GetNumBonds() long.\n\
     - isomericSmiles: (optional) include information about stereochemistry in\n\
       the SMILES.  Defaults to true.\n\
-    - kekuleSmiles: (optional) use the Kekule form (no aromatic bonds) in\n\
+    kekuleSmiles: (optional) use the Kekule form (no aromatic bonds) in\n\
       the SMILES.  Defaults to false.\n\
-    - rootedAtAtom: (optional) if non-negative, this forces the SMILES \n\
+    rootedAtAtom: (optional) if non-negative, this forces the SMILES \n\
       to start at a particular atom. Defaults to -1.\n\
-    - canonical: (optional) if false no attempt will be made to canonicalize\n\
+    canonical: (optional) if false no attempt will be made to canonicalize\n\
       the molecule. Defaults to true.\n\
-    - allBondsExplicit: (optional) if true, all bond orders will be explicitly indicated\n\
+    allBondsExplicit: (optional) if true, all bond orders will be explicitly indicated\n\
       in the output SMILES. Defaults to false.\n\
-    - allHsExplicit: (optional) if true, all H counts will be explicitly indicated\n\
+    allHsExplicit: (optional) if true, all H counts will be explicitly indicated\n\
       in the output SMILES. Defaults to false.\n\
-    - doRandom: (optional) if true, randomized the DFS transversal graph,\n\
+    doRandom: (optional) if true, randomized the DFS transversal graph,\n\
       so we can generate random smiles. Defaults to false.\n\
 \n\
   RETURNS:\n\
-\n\
     a string\n\
 \n";
   python::def(
@@ -1434,13 +1341,11 @@ BOOST_PYTHON_MODULE(rdmolfiles) {
   docString =
       "Returns a SMARTS string for a molecule\n\
   ARGUMENTS:\n\
-\n\
-    - mol: the molecule\n\
-    - isomericSmiles: (optional) include information about stereochemistry in\n\
+    mol: the molecule\n\
+    isomericSmiles: (optional) include information about stereochemistry in\n\
       the SMARTS.  Defaults to true.\n\
 \n\
   RETURNS:\n\
-\n\
     a string\n\
 \n";
   python::def("MolToSmarts", RDKit::MolToSmarts,
@@ -1450,15 +1355,13 @@ BOOST_PYTHON_MODULE(rdmolfiles) {
   docString =
       "Returns a SMARTS string for a fragment of a molecule\n\
   ARGUMENTS:\n\
-\n\
-    - mol: the molecule\n\
-    - atomsToUse: indices of atoms to include in the SMARTS string\n\
-    - bondsToUse: indices of bonds to include in the SMARTS string (optional)\n\
-    - isomericSmarts: (optional) include information about stereochemistry in\n\
+    mol: the molecule\n\
+    atomsToUse: indices of atoms to include in the SMARTS string\n\
+    bondsToUse: indices of bonds to include in the SMARTS string (optional)\n\
+    isomericSmarts: (optional) include information about stereochemistry in\n\
       the SMARTS.  Defaults to true.\n\
 \n\
   RETURNS:\n\
-\n\
     a string\n\
 \n";
   python::def(
@@ -1505,12 +1408,11 @@ BOOST_PYTHON_MODULE(rdmolfiles) {
   docString =
       "Writes a molecule to a TPL file.\n\n\
   ARGUMENTS:\n\
-\n\
-    - mol: the molecule\n\
-    - fileName: name of the file to write\n\
-    - partialChargeProp: name of the property to use for partial charges\n\
+    mol: the molecule\n\
+    fileName: name of the file to write\n\
+    partialChargeProp: name of the property to use for partial charges\n\
       Defaults to '_GasteigerCharge'.\n\
-    - writeFirstConfTwice: Defaults to False.\n\
+    writeFirstConfTwice: Defaults to False.\n\
       This should be set to True when writing TPLs to be read by \n\
       the CombiCode.\n\
 \n";
@@ -1523,16 +1425,14 @@ BOOST_PYTHON_MODULE(rdmolfiles) {
   docString =
       "Returns the Tpl block for a molecule.\n\n\
   ARGUMENTS:\n\
-\n\
-    - mol: the molecule\n\
-    - partialChargeProp: name of the property to use for partial charges\n\
+    mol: the molecule\n\
+    partialChargeProp: name of the property to use for partial charges\n\
       Defaults to '_GasteigerCharge'.\n\
-    - writeFirstConfTwice: Defaults to False.\n\
+    writeFirstConfTwice: Defaults to False.\n\
       This should be set to True when writing TPLs to be read by \n\
       the CombiCode.\n\
 \n\
   RETURNS:\n\
-\n\
     a string\n\
 \n";
   python::def("MolToTPLBlock", RDKit::MolToTPLText,
@@ -1544,22 +1444,16 @@ BOOST_PYTHON_MODULE(rdmolfiles) {
   docString =
       "Construct a molecule from a PDB file.\n\n\
   ARGUMENTS:\n\
-\n\
-    - fileName: name of the file to read\n\
-\n\
-    - sanitize: (optional) toggles sanitization of the molecule.\n\
+    fileName: name of the file to read\n\
+    sanitize: (optional) toggles sanitization of the molecule.\n\
       Defaults to true.\n\
-\n\
-    - removeHs: (optional) toggles removing hydrogens from the molecule.\n\
+    removeHs: (optional) toggles removing hydrogens from the molecule.\n\
       This only make sense when sanitization is done.\n\
       Defaults to true.\n\
-\n\
-    - flavor: (optional) \n\
-\n\
-    - proximityBonding: (optional) toggles automatic proximity bonding\n\
+    flavor: (optional) \n\
+    proximityBonding: (optional) toggles automatic proximity bonding\n\
 \n\
   RETURNS:\n\
-\n\
     a Mol object, None on failure.\n\
 \n";
   python::def("MolFromPDBFile", RDKit::MolFromPDBFile,
@@ -1572,22 +1466,16 @@ BOOST_PYTHON_MODULE(rdmolfiles) {
   docString =
       "Construct a molecule from a PDB block.\n\n\
   ARGUMENTS:\n\
-\n\
-    - molBlock: string containing the PDB block\n\
-\n\
-    - sanitize: (optional) toggles sanitization of the molecule.\n\
+    molBlock: string containing the PDB block\n\
+    sanitize: (optional) toggles sanitization of the molecule.\n\
       Defaults to True.\n\
-\n\
-    - removeHs: (optional) toggles removing hydrogens from the molecule.\n\
+    removeHs: (optional) toggles removing hydrogens from the molecule.\n\
       This only make sense when sanitization is done.\n\
       Defaults to true.\n\
-\n\
-    - flavor: (optional) \n\
-\n\
-    - proximityBonding: (optional) toggles automatic proximity bonding\n\
+    flavor: (optional) \n\
+    proximityBonding: (optional) toggles automatic proximity bonding\n\
 \n\
   RETURNS:\n\
-\n\
     a Mol object, None on failure.\n\
 \n";
   python::def("MolFromPDBBlock", RDKit::MolFromPDBBlock,
@@ -1600,10 +1488,9 @@ BOOST_PYTHON_MODULE(rdmolfiles) {
   docString =
       "Returns a PDB block for a molecule\n\
   ARGUMENTS:\n\
-\n\
-    - mol: the molecule\n\
-    - confId: (optional) selects which conformation to output (-1 = default)\n\
-    - flavor: (optional) \n\
+    mol: the molecule\n\
+    confId: (optional) selects which conformation to output (-1 = default)\n\
+    flavor: (optional) \n\
             - flavor & 1 : Write MODEL/ENDMDL lines around each record \n\
             - flavor & 2 : Don't write any CONECT records \n\
             - flavor & 4 : Write CONECT records in both directions \n\
@@ -1612,7 +1499,6 @@ BOOST_PYTHON_MODULE(rdmolfiles) {
             - flavor & 32 : Write TER record \n\
 \n\
   RETURNS:\n\
-\n\
     a string\n\
 \n";
   python::def("MolToPDBBlock", RDKit::MolToPDBBlock,
@@ -1622,11 +1508,10 @@ BOOST_PYTHON_MODULE(rdmolfiles) {
   docString =
       "Writes a PDB file for a molecule\n\
   ARGUMENTS:\n\
-\n\
-    - mol: the molecule\n\
-    - filename: name of the file to write\n\
-    - confId: (optional) selects which conformation to output (-1 = default)\n\
-    - flavor: (optional) \n\
+    mol: the molecule\n\
+    filename: name of the file to write\n\
+    confId: (optional) selects which conformation to output (-1 = default)\n\
+    flavor: (optional) \n\
             - flavor & 1 : Write MODEL/ENDMDL lines around each record \n\
             - flavor & 2 : Don't write any CONECT records \n\
             - flavor & 4 : Write CONECT records in both directions \n\
@@ -1635,7 +1520,6 @@ BOOST_PYTHON_MODULE(rdmolfiles) {
             - flavor & 32 : Write TER record \n\
 \n\
   RETURNS:\n\
-\n\
     a string\n\
 \n";
   python::def("MolToPDBFile", RDKit::MolToPDBFile,
@@ -1646,13 +1530,10 @@ BOOST_PYTHON_MODULE(rdmolfiles) {
   docString =
       "Construct a molecule from a sequence string (currently only supports peptides).\n\n\
   ARGUMENTS:\n\
-\n\
-    - text: string containing the sequence\n\
-\n\
-    - sanitize: (optional) toggles sanitization of the molecule.\n\
+    text: string containing the sequence\n\
+    sanitize: (optional) toggles sanitization of the molecule.\n\
       Defaults to True.\n\
-\n\
-    - flavor: (optional)\n\
+    flavor: (optional)\n\
         - 0 Protein, L amino acids (default)\n\
         - 1 Protein, D amino acids\n\
         - 2 RNA, no cap\n\
@@ -1665,7 +1546,6 @@ BOOST_PYTHON_MODULE(rdmolfiles) {
         - 9 DNA, both caps\n\
 \n\
   RETURNS:\n\
-\n\
     a Mol object, None on failure.\n\
 \n";
   python::def("MolFromSequence", RDKit::MolFromSequence,
@@ -1676,13 +1556,12 @@ BOOST_PYTHON_MODULE(rdmolfiles) {
   docString =
       "Returns the sequence string for a molecule\n\
   ARGUMENTS:\n\
+    mol: the molecule\n\
 \n\
-    - mol: the molecule\n\
-\n\
-  NOTE: the molecule should contain monomer information in AtomMonomerInfo structures \n\
+  NOTE:\n\
+    the molecule should contain monomer information in AtomMonomerInfo structures \n\
 \n\
   RETURNS:\n\
-\n\
     a string\n\
 \n";
   python::def("MolToSequence", RDKit::MolToSequence, (python::arg("mol")),
@@ -1691,25 +1570,21 @@ BOOST_PYTHON_MODULE(rdmolfiles) {
   docString =
       "Construct a molecule from a FASTA string (currently only supports peptides).\n\n\
   ARGUMENTS:\n\
-\n\
-    - text: string containing the FASTA\n\
-\n\
-    - sanitize: (optional) toggles sanitization of the molecule.\n\
+    text: string containing the FASTA\n\
+    sanitize: (optional) toggles sanitization of the molecule.\n\
       Defaults to True.\n\
-\n\
-- flavor: (optional)\n\
-    - 0 Protein, L amino acids (default)\n\
-    - 1 Protein, D amino acids\n\
-    - 2 RNA, no cap\n\
-    - 3 RNA, 5' cap\n\
-    - 4 RNA, 3' cap\n\
-    - 5 RNA, both caps\n\
-    - 6 DNA, no cap\n\
-    - 7 DNA, 5' cap\n\
-    - 8 DNA, 3' cap\n\
-    - 9 DNA, both caps\n\
+    flavor: (optional)\n\
+      - 0 Protein, L amino acids (default)\n\
+      - 1 Protein, D amino acids\n\
+      - 2 RNA, no cap\n\
+      - 3 RNA, 5' cap\n\
+      - 4 RNA, 3' cap\n\
+      - 5 RNA, both caps\n\
+      - 6 DNA, no cap\n\
+      - 7 DNA, 5' cap\n\
+      - 8 DNA, 3' cap\n\
+      - 9 DNA, both caps\n\
   RETURNS:\n\
-\n\
     a Mol object, None on failure.\n\
 \n";
   python::def("MolFromFASTA", RDKit::MolFromFASTA,
@@ -1720,13 +1595,12 @@ BOOST_PYTHON_MODULE(rdmolfiles) {
   docString =
       "Returns the FASTA string for a molecule\n\
   ARGUMENTS:\n\
+    mol: the molecule\n\
 \n\
-    - mol: the molecule\n\
-\n\
-  NOTE: the molecule should contain monomer information in AtomMonomerInfo structures \n\
+  NOTE:\n\
+    the molecule should contain monomer information in AtomMonomerInfo structures \n\
 \n\
   RETURNS:\n\
-\n\
     a string\n\
 \n";
   python::def("MolToFASTA", RDKit::MolToFASTA, (python::arg("mol")),
@@ -1735,14 +1609,11 @@ BOOST_PYTHON_MODULE(rdmolfiles) {
   docString =
       "Construct a molecule from a HELM string (currently only supports peptides).\n\n\
   ARGUMENTS:\n\
-\n\
-    - text: string containing the HELM\n\
-\n\
-    - sanitize: (optional) toggles sanitization of the molecule.\n\
+    text: string containing the HELM\n\
+    sanitize: (optional) toggles sanitization of the molecule.\n\
       Defaults to true.\n\
 \n\
   RETURNS:\n\
-\n\
     a Mol object, None on failure.\n\
 \n";
   python::def("MolFromHELM", RDKit::MolFromHELM,
@@ -1752,13 +1623,12 @@ BOOST_PYTHON_MODULE(rdmolfiles) {
   docString =
       "Returns the HELM string for a molecule\n\
   ARGUMENTS:\n\
+    mol: the molecule\n\
 \n\
-    - mol: the molecule\n\
-\n\
-  NOTE: the molecule should contain monomer information in AtomMonomerInfo structures \n\
+  NOTE:\n\
+    the molecule should contain monomer information in AtomMonomerInfo structures \n\
 \n\
   RETURNS:\n\
-\n\
     a string\n\
 \n";
   python::def("MolToHELM", RDKit::MolToHELM, (python::arg("mol")),
@@ -1779,14 +1649,12 @@ BOOST_PYTHON_MODULE(rdmolfiles) {
   symmetry class.  From the perspective of the Molecular Graph, they are identical.\n\
 \n\
   ARGUMENTS:\n\
-\n\
-    - mol: the molecule\n\
-    - breakTies: (optional) force breaking of ranked ties [default=True]\n\
-    - includeChirality: (optional) use chiral information when computing rank [default=True]\n\
-    - includeIsotopes: (optional) use isotope information when computing rank [default=True]\n\
+    mol: the molecule\n\
+    breakTies: (optional) force breaking of ranked ties [default=True]\n\
+    includeChirality: (optional) use chiral information when computing rank [default=True]\n\
+    includeIsotopes: (optional) use isotope information when computing rank [default=True]\n\
 \n\
   RETURNS:\n\
-\n\
     a string\n\
 \n";
   python::def("CanonicalRankAtoms", CanonicalRankAtoms,
@@ -1806,17 +1674,16 @@ BOOST_PYTHON_MODULE(rdmolfiles) {
    [-1,-1,-1,-1,0,1,0,1]\n\
 \n\
   ARGUMENTS:\n\
-\n\
-    - mol: the molecule\n\
-    - atomsToUse : a list of atoms to include in the fragment\n\
-    - bondsToUse : (optional) a list of bonds to include in the fragment\n\
+    mol: the molecule\n\
+    atomsToUse : a list of atoms to include in the fragment\n\
+    bondsToUse : (optional) a list of bonds to include in the fragment\n\
       if not provided, all bonds between the atoms provided\n\
       will be included.\n\
-    - atomSymbols : (optional) a list with the symbols to use for the atoms\n\
+    atomSymbols : (optional) a list with the symbols to use for the atoms\n\
       in the SMILES. This should have be mol.GetNumAtoms() long.\n\
-    - breakTies: (optional) force breaking of ranked ties\n\
-    - includeChirality: (optional) use chiral information when computing rank [default=True]\n\
-    - includeIsotopes: (optional) use isotope information when computing rank [default=True]\n\
+    breakTies: (optional) force breaking of ranked ties\n\
+    includeChirality: (optional) use chiral information when computing rank [default=True]\n\
+    includeIsotopes: (optional) use isotope information when computing rank [default=True]\n\
 \n\
   RETURNS:\n\
 \n\
