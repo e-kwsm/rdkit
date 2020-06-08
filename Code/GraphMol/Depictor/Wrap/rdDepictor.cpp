@@ -170,22 +170,22 @@ BOOST_PYTHON_MODULE(rdDepictor) {
   docString =
       "Compute 2D coordinates for a molecule. \n\
   The resulting coordinates are stored on each atom of the molecule \n\n\
-  ARGUMENTS: \n\n\
-     mol - the molecule of interest\n\
-     canonOrient - orient the molecule in a canonical way\n\
-     clearConfs - if true, all existing conformations on the molecule\n\
+  ARGUMENTS:\n\n\
+     mol: the molecule of interest\n\
+     canonOrient: orient the molecule in a canonical way\n\
+     clearConfs: if true, all existing conformations on the molecule\n\
              will be cleared\n\
-     coordMap - a dictionary mapping atom Ids -> Point2D objects \n\
+     coordMap: a dictionary mapping atom Ids -> Point2D objects \n\
                 with starting coordinates for atoms that should\n\
                 have their positions locked.\n\
-     nFlipsPerSample - number of rotatable bonds that are\n\
+     nFlipsPerSample: number of rotatable bonds that are\n\
                 flipped at random at a time.\n\
-     nSample - Number of random samplings of rotatable bonds.\n\
-     sampleSeed - seed for the random sampling process.\n\
-     permuteDeg4Nodes - allow permutation of bonds at a degree 4\n\
+     nSample: Number of random samplings of rotatable bonds.\n\
+     sampleSeed: seed for the random sampling process.\n\
+     permuteDeg4Nodes: allow permutation of bonds at a degree 4\n\
                  node during the sampling process \n\
-     bondLength - change the default bond length for depiction \n\
-     forceRDKit - use RDKit to generate coordinates even if \n\
+     bondLength: change the default bond length for depiction \n\
+     forceRDKit: use RDKit to generate coordinates even if \n\
                   preferCoordGen is set to true\n\n\
   RETURNS: \n\n\
      ID of the conformation added to the molecule\n";
@@ -204,26 +204,26 @@ BOOST_PYTHON_MODULE(rdDepictor) {
   that the inter-atom distances mimic those in a user-provided\n\
   distance matrix. \n\
   The resulting coordinates are stored on each atom of the molecule \n\n\
-  ARGUMENTS: \n\n\
-     mol - the molecule of interest\n\
-     distMat - distance matrix that we want the 2D structure to mimic\n\
-     canonOrient - orient the molecule in a canonical way\n\
-     clearConfs - if true, all existing conformations on the molecule\n\
+  ARGUMENTS:\n\n\
+     mol: the molecule of interest\n\
+     distMat: distance matrix that we want the 2D structure to mimic\n\
+     canonOrient: orient the molecule in a canonical way\n\
+     clearConfs: if true, all existing conformations on the molecule\n\
              will be cleared\n\
-     weightDistMat - weight assigned in the cost function to mimicking\n\
+     weightDistMat: weight assigned in the cost function to mimicking\n\
                      the distance matrix.\n\
                      This must be between (0.0,1.0). (1.0-weightDistMat)\n\
                      is then the weight assigned to improving \n\
                      the density of the 2D structure i.e. try to\n\
                      make it spread out\n\
-     nFlipsPerSample - number of rotatable bonds that are\n\
+     nFlipsPerSample: number of rotatable bonds that are\n\
                 flipped at random at a time.\n\
-     nSample - Number of random samplings of rotatable bonds.\n\
-     sampleSeed - seed for the random sampling process.\n\
-     permuteDeg4Nodes - allow permutation of bonds at a degree 4\n\
+     nSample: Number of random samplings of rotatable bonds.\n\
+     sampleSeed: seed for the random sampling process.\n\
+     permuteDeg4Nodes: allow permutation of bonds at a degree 4\n\
                  node during the sampling process \n\
-     bondLength - change the default bond length for depiction \n\
-     forceRDKit - use RDKit to generate coordinates even if \n\
+     bondLength: change the default bond length for depiction \n\
+     forceRDKit: use RDKit to generate coordinates even if \n\
                   preferCoordGen is set to true\n\n\
   RETURNS: \n\n\
      ID of the conformation added to the molecule\n";
@@ -243,19 +243,19 @@ BOOST_PYTHON_MODULE(rdDepictor) {
   This is useful for, for example, generating depictions of SAR data \n\
   sets so that the cores of the molecules are all oriented the same way. \n\
   ARGUMENTS: \n\n\
-  mol -    the molecule to be aligned, this will come back \n\
+    mol:    the molecule to be aligned, this will come back \n\
            with a single conformer. \n\
-  reference -    a molecule with the reference atoms to align to; \n\
+    reference:    a molecule with the reference atoms to align to; \n\
                  this should have a depiction. \n\
-  confId -       (optional) the id of the reference conformation to use \n\
-  refPatt -      (optional) a query molecule to be used to generate \n\
+    confId:       (optional) the id of the reference conformation to use \n\
+    refPatt:      (optional) a query molecule to be used to generate \n\
                  the atom mapping between the molecule and the reference \n\
-  acceptFailure - (optional) if True, standard depictions will be generated \n\
+    acceptFailure: (optional) if True, standard depictions will be generated \n\
                   for molecules that don't have a substructure match to the \n\
                   reference; if False, throws a DepictException.\n\
-  forceRDKit -    (optional) use RDKit to generate coordinates even if \n\
+    forceRDKit:    (optional) use RDKit to generate coordinates even if \n\
                   preferCoordGen is set to true\n\
-  allowRGroups -  (optional) if True, terminal dummy atoms in the \n\
+    allowRGroups:  (optional) if True, terminal dummy atoms in the \n\
                   reference are ignored if they match an implicit \n\
                   hydrogen in the molecule, and a constrained \n\
                   depiction is still attempted\n\n\
@@ -277,15 +277,15 @@ BOOST_PYTHON_MODULE(rdDepictor) {
   This is useful for, for example, generating depictions of SAR data \n\
   sets so that the cores of the molecules are all oriented the same way. \n\
   ARGUMENTS: \n\n\
-  mol -    the molecule to be aligned, this will come back \n\
+    mol:    the molecule to be aligned, this will come back \n\
            with a single conformer. \n\
-  reference -    a molecule with the reference atoms to align to; \n\
+    reference:    a molecule with the reference atoms to align to; \n\
                  this should have a depiction. \n\
-  atomMap -      a sequence of (queryAtomIdx, molAtomIdx) pairs that will \n\
+    atomMap:      a sequence of (queryAtomIdx, molAtomIdx) pairs that will \n\
                  be used to generate the atom mapping between the molecule \n\
                  and the reference. \n\
-  confId -       (optional) the id of the reference conformation to use \n\
-  forceRDKit -   (optional) use RDKit to generate coordinates even if \n\
+    confId:       (optional) the id of the reference conformation to use \n\
+    forceRDKit:   (optional) use RDKit to generate coordinates even if \n\
                  preferCoordGen is set to true\n";
   python::def(
       "GenerateDepictionMatching2DStructure",
@@ -299,19 +299,19 @@ BOOST_PYTHON_MODULE(rdDepictor) {
   is constrained to have coordinates similar to those of a 3D reference \n\
   structure.\n\
   ARGUMENTS: \n\n\
-  mol -    the molecule to be aligned, this will come back \n\
+    mol:    the molecule to be aligned, this will come back \n\
            with a single conformer containing the 2D coordinates. \n\
-  reference -    a molecule with the reference atoms to align to. \n\
+    reference:    a molecule with the reference atoms to align to. \n\
                  By default this should be the same as mol, but with \n\
                  3D coordinates \n\
-  confId -       (optional) the id of the reference conformation to use \n\
-  referencePattern -  (optional) a query molecule to map a subset of \n\
+    confId:       (optional) the id of the reference conformation to use \n\
+    referencePattern:  (optional) a query molecule to map a subset of \n\
                       the reference onto the mol, so that only some of the \n\
                       atoms are aligned. \n\
-  acceptFailure - (optional) if True, standard depictions will be generated \n\
+    acceptFailure: (optional) if True, standard depictions will be generated \n\
                   for molecules that don't match the reference or the\n\
                   referencePattern; if False, throws a DepictException.\n\
-  forceRDKit -    (optional) use RDKit to generate coordinates even if \n\
+    forceRDKit:    (optional) use RDKit to generate coordinates even if \n\
                   preferCoordGen is set to true";
 
   python::def(
