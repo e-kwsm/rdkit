@@ -26,6 +26,7 @@ def MakeScaffoldGeneric(mol):
   'C1CCCCC1'
 
   The following were associated with sf.net issue 246
+
   >>> Chem.MolToSmiles(MakeScaffoldGeneric(Chem.MolFromSmiles('c1[nH]ccc1')))
   'C1CCCC1'
   >>> Chem.MolToSmiles(MakeScaffoldGeneric(Chem.MolFromSmiles('C1[NH2+]C1')))
@@ -68,7 +69,6 @@ def GetScaffoldForMol(mol):
   <rdkit.Chem.rdchem.Mol object at 0x...>
   >>> Chem.MolToSmiles(GetScaffoldForMol(m))
   'c1ccccc1'
-
   >>> m = Chem.MolFromSmiles('Cc1cc(Oc2nccc(CCC)c2)ccc1')
   >>> Chem.MolToSmiles(GetScaffoldForMol(m))
   'c1ccc(Oc2ccccn2)cc1'
@@ -104,7 +104,6 @@ def MurckoScaffoldSmiles(smiles=None, mol=None, includeChirality=False):
 
   >>> MurckoScaffoldSmiles('Cc1cc(Oc2nccc(CCC)c2)ccc1')
   'c1ccc(Oc2ccccn2)cc1'
-
   >>> MurckoScaffoldSmiles(mol=Chem.MolFromSmiles('Cc1cc(Oc2nccc(CCC)c2)ccc1'))
   'c1ccc(Oc2ccccn2)cc1'
 
