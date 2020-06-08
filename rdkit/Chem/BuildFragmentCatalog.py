@@ -84,23 +84,17 @@ def message(msg, dest=sys.stdout):
 def BuildCatalog(suppl, maxPts=-1, groupFileName=None, minPath=2, maxPath=6, reportFreq=10):
     """ builds a fragment catalog from a set of molecules in a delimited text block
 
-      **Arguments**
-
-        - suppl: a mol supplier
-
-        - maxPts: (optional) if provided, this will set an upper bound on the
+      Arguments:
+        suppl: a mol supplier
+        maxPts: (optional) if provided, this will set an upper bound on the
           number of points to be considered
-
-        - groupFileName: (optional) name of the file containing functional group
+        groupFileName: (optional) name of the file containing functional group
           information
-
-        - minPath, maxPath: (optional) names of the minimum and maximum path lengths
+        minPath, maxPath: (optional) names of the minimum and maximum path lengths
           to be considered
+        reportFreq: (optional) how often to display status information
 
-        - reportFreq: (optional) how often to display status information
-
-      **Returns**
-
+      Returns:
         a FragmentCatalog
 
     """
@@ -132,32 +126,22 @@ def BuildCatalog(suppl, maxPts=-1, groupFileName=None, minPath=2, maxPath=6, rep
 def ScoreMolecules(suppl, catalog, maxPts=-1, actName='', acts=None, nActs=2, reportFreq=10):
     """ scores the compounds in a supplier using a catalog
 
-      **Arguments**
-
-        - suppl: a mol supplier
-
-        - catalog: the FragmentCatalog
-
-        - maxPts: (optional) the maximum number of molecules to be
+      Arguments:
+        suppl: a mol supplier
+        catalog: the FragmentCatalog
+        maxPts: (optional) the maximum number of molecules to be
           considered
-
-        - actName: (optional) the name of the molecule's activity property.
+        actName: (optional) the name of the molecule's activity property.
           If this is not provided, the molecule's last property will be used.
-
-        - acts: (optional) a sequence of activity values (integers).
+        acts: (optional) a sequence of activity values (integers).
           If not provided, the activities will be read from the molecules.
+        nActs: (optional) number of possible activity values
+        reportFreq: (optional) how often to display status information
 
-        - nActs: (optional) number of possible activity values
-
-        - reportFreq: (optional) how often to display status information
-
-      **Returns**
-
+      Returns:
         a 2-tuple:
-
-          1) the results table (a 3D array of ints nBits x 2 x nActs)
-
-          2) a list containing the on bit lists for each molecule
+          0) the results table (a 3D array of ints nBits x 2 x nActs)
+          1) a list containing the on bit lists for each molecule
 
     """
     nBits = catalog.GetFPLength()
@@ -196,28 +180,19 @@ def ScoreFromLists(bitLists, suppl, catalog, maxPts=-1, actName='', acts=None, n
     """  similar to _ScoreMolecules()_, but uses pre-calculated bit lists
       for the molecules (this speeds things up a lot)
 
-
-      **Arguments**
-
-        - bitLists: sequence of on bit sequences for the input molecules
-
-        - suppl: the input supplier (we read activities from here)
-
-        - catalog: the FragmentCatalog
-
-        - maxPts: (optional) the maximum number of molecules to be
+      Arguments:
+        bitLists: sequence of on bit sequences for the input molecules
+        suppl: the input supplier (we read activities from here)
+        catalog: the FragmentCatalog
+        maxPts: (optional) the maximum number of molecules to be
           considered
-
-        - actName: (optional) the name of the molecule's activity property.
+        actName: (optional) the name of the molecule's activity property.
           If this is not provided, the molecule's last property will be used.
+        nActs: (optional) number of possible activity values
+        reportFreq: (optional) how often to display status information
 
-        - nActs: (optional) number of possible activity values
-
-        - reportFreq: (optional) how often to display status information
-
-      **Returns**
-
-         the results table (a 3D array of ints nBits x 2 x nActs)
+      Returns:
+        the results table (a 3D array of ints nBits x 2 x nActs)
 
     """
     nBits = catalog.GetFPLength()
@@ -253,9 +228,10 @@ def CalcGains(suppl, catalog, topN=-1, actName='', acts=None, nActs=2, reportFre
     """ calculates info gains by constructing fingerprints
       *DOC*
 
-      Returns a 2-tuple:
-         1) gains matrix
-         2) list of fingerprints
+      Returns:
+        a 2-tuple:
+          0) gains matrix
+          1) list of fingerprints
 
     """
     nBits = catalog.GetFPLength()
