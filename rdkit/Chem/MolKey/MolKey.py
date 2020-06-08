@@ -238,10 +238,10 @@ def GetInchiForCTAB(ctab):
   """
     >>> from rdkit.Chem.MolKey import MolKey
     >>> from rdkit.Avalon import pyAvalonTools
-    >>> res = MolKey.GetInchiForCTAB(pyAvalonTools.Generate2DCoords('c1cn[nH]c1C(Cl)Br',True))
+    >>> res = MolKey.GetInchiForCTAB(pyAvalonTools.Generate2DCoords('c1cn[nH]c1C(Cl)Br', True))
     >>> res.inchi
     'InChI=1/C4H4BrClN2/c5-4(6)3-1-2-7-8-3/h1-2,4H,(H,7,8)/t4?/f/h8H'
-    >>> res = MolKey.GetInchiForCTAB(pyAvalonTools.Generate2DCoords('c1c[nH]nc1C(Cl)Br',True))
+    >>> res = MolKey.GetInchiForCTAB(pyAvalonTools.Generate2DCoords('c1c[nH]nc1C(Cl)Br', True))
     >>> res.inchi
     'InChI=1/C4H4BrClN2/c5-4(6)3-1-2-7-8-3/h1-2,4H,(H,7,8)/t4?/f/h7H'
     >>>
@@ -368,37 +368,37 @@ def GetKeyForCTAB(ctab, stereo_info=None, stereo_comment=None, logger=None):
   """
     >>> from rdkit.Chem.MolKey import MolKey
     >>> from rdkit.Avalon import pyAvalonTools
-    >>> res=MolKey.GetKeyForCTAB(pyAvalonTools.Generate2DCoords('c1ccccc1C(F)Cl',True))
+    >>> res=MolKey.GetKeyForCTAB(pyAvalonTools.Generate2DCoords('c1ccccc1C(F)Cl', True))
     >>> res.mol_key
     '1|L7676nfGsSIU33wkx//NCg=='
     >>> res.stereo_code
     'R_ONE'
-    >>> res=MolKey.GetKeyForCTAB(pyAvalonTools.Generate2DCoords('c1ccccc1[C@H](F)Cl',True))
+    >>> res=MolKey.GetKeyForCTAB(pyAvalonTools.Generate2DCoords('c1ccccc1[C@H](F)Cl', True))
     >>> res.mol_key
     '1|Aj38EIxf13RuPDQG2A0UMw=='
     >>> res.stereo_code
     'S_ABS'
-    >>> res=MolKey.GetKeyForCTAB(pyAvalonTools.Generate2DCoords('c1ccccc1[C@@H](F)Cl',True))
+    >>> res=MolKey.GetKeyForCTAB(pyAvalonTools.Generate2DCoords('c1ccccc1[C@@H](F)Cl', True))
     >>> res.mol_key
     '1|9ypfMrhxn1w0ncRooN5HXw=='
     >>> res.stereo_code
     'S_ABS'
-    >>> res=MolKey.GetKeyForCTAB(pyAvalonTools.Generate2DCoords('c1cccc(C(Br)Cl)c1[C@@H](F)Cl',True))
+    >>> res=MolKey.GetKeyForCTAB(pyAvalonTools.Generate2DCoords('c1cccc(C(Br)Cl)c1[C@@H](F)Cl', True))
     >>> res.mol_key
     '1|c96jMSlbn7O9GW5d5uB9Mw=='
     >>> res.stereo_code
     'S_PART'
-    >>> res=MolKey.GetKeyForCTAB(pyAvalonTools.Generate2DCoords('c1cccc([C@H](Br)Cl)c1[C@@H](F)Cl',True))
+    >>> res=MolKey.GetKeyForCTAB(pyAvalonTools.Generate2DCoords('c1cccc([C@H](Br)Cl)c1[C@@H](F)Cl', True))
     >>> res.mol_key
     '1|+B+GCEardrJteE8xzYdGLA=='
     >>> res.stereo_code
     'S_ABS'
-    >>> res=MolKey.GetKeyForCTAB(pyAvalonTools.Generate2DCoords('c1cccc(C(Br)Cl)c1C(F)Cl',True))
+    >>> res=MolKey.GetKeyForCTAB(pyAvalonTools.Generate2DCoords('c1cccc(C(Br)Cl)c1C(F)Cl', True))
     >>> res.mol_key
     '1|5H9R3LvclagMXHp3Clrc/g=='
     >>> res.stereo_code
     'S_UNKN'
-    >>> res=MolKey.GetKeyForCTAB(pyAvalonTools.Generate2DCoords('c1cccc(C(Br)Cl)c1C(F)Cl',True),stereo_info='S_REL')
+    >>> res=MolKey.GetKeyForCTAB(pyAvalonTools.Generate2DCoords('c1cccc(C(Br)Cl)c1C(F)Cl', True), stereo_info='S_REL')
     >>> res.mol_key
     '1|cqKWVsUEY6QNpGCbDaDTYA=='
     >>> res.stereo_code
