@@ -110,6 +110,7 @@ class InchiInfo(object):
   def get_sp3_stereo(self):
     ''' retrieve sp3 stereo information
         return a 4-item tuple containing
+
         1) Number of stereocenters detected. If 0, the remaining items of the tuple = None
         2) Number of undefined stereocenters. Must be smaller or equal to above
         3) True if the molecule is a meso form (with chiral centers and a plane of symmetry)
@@ -150,8 +151,9 @@ class InchiInfo(object):
   def get_mobile_h(self):
     ''' retrieve mobile H (tautomer) information
         return a 2-item tuple containing
-        1) Number of mobile hydrogen groups detected. If 0, next item = '' 
-        2) List of groups   
+
+        1) Number of mobile hydrogen groups detected. If 0, next item = ''
+        2) List of groups
         '''
     mobile_h = {}
     for con_layer in self.parsed_inchi:
