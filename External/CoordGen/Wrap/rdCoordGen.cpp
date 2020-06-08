@@ -95,8 +95,8 @@ struct coordgen_wrapper {
     docString =
         "Add 2D coordinates.\n"
         "ARGUMENTS:\n"
-        "   - mol: molecule to modify\n"
-        "   - params: (optional) parameters controlling the coordinate "
+        "    mol: molecule to modify\n"
+        "    params: (optional) parameters controlling the coordinate "
         "generation\n"
         "\n";
     python::def("AddCoords", addCoordsHelper,
