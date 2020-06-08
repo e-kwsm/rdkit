@@ -169,17 +169,17 @@ BOOST_PYTHON_MODULE(rdShapeHelpers) {
       "Encode the shape of a molecule (one of its conformer) onto a grid\n\n\
  \n\
  ARGUMENTS:\n\n\
-    - mol : the molecule of interest\n\
-    - grid : grid onto which the encoding is written \n\
-    - confId : id of the conformation of interest on mol (defaults to the first one) \n\
-    - trans : any transformation that needs to be used to encode onto the grid (note the molecule remains unchanged) \n\
-    - vdwScale : Scaling factor for the radius of the atoms to determine the base radius \n\
+     mol: the molecule of interest\n\
+     grid: grid onto which the encoding is written \n\
+     confId: id of the conformation of interest on mol (defaults to the first one) \n\
+     trans: any transformation that needs to be used to encode onto the grid (note the molecule remains unchanged) \n\
+     vdwScale: Scaling factor for the radius of the atoms to determine the base radius \n\
                  used in the encoding - grid points inside this sphere carry the maximum occupancy \n\
-    - setpSize : thickness of the layers outside the base radius, the occupancy value is decreased \n\
+     setpSize: thickness of the layers outside the base radius, the occupancy value is decreased \n\
                  from layer to layer from the maximum value \n\
-    - maxLayers : the maximum number of layers - defaults to the number of bits \n\
-                  used per grid point - e.g. two bits per grid point will allow 3 layers\n\
-    - ignoreHs : when set, the contribution of Hs to the shape will be ignored\n";
+     maxLayers: the maximum number of layers - defaults to the number of bits \n\
+                 used per grid point - e.g. two bits per grid point will allow 3 layers\n\
+     ignoreHs: when set, the contribution of Hs to the shape will be ignored\n";
   python::def(
       "EncodeShape", RDKit::EncodeMolShape,
       (python::arg("mol"), python::arg("grid"), python::arg("confId") = -1,
@@ -192,22 +192,22 @@ BOOST_PYTHON_MODULE(rdShapeHelpers) {
       "Compute the shape tversky index between two molecule based on a predefined alignment\n\
   \n\
   ARGUMENTS:\n\
-    - mol1 : The first molecule of interest \n\
-    - mol2 : The second molecule of interest \n\
-    - alpha : first parameter of the Tversky index\n\
-    - beta : second parameter of the Tversky index\n\
-    - confId1 : Conformer in the first molecule (defaults to first conformer) \n\
-    - confId2 : Conformer in the second molecule (defaults to first conformer) \n\
-    - gridSpacing : resolution of the grid used to encode the molecular shapes \n\
-    - bitsPerPoint : number of bits used to encode the occupancy at each grid point \n\
+    mol1: The first molecule of interest \n\
+    mol2: The second molecule of interest \n\
+    alpha: first parameter of the Tversky index\n\
+    beta: second parameter of the Tversky index\n\
+    confId1: Conformer in the first molecule (defaults to first conformer) \n\
+    confId2: Conformer in the second molecule (defaults to first conformer) \n\
+    gridSpacing: resolution of the grid used to encode the molecular shapes \n\
+    bitsPerPoint: number of bits used to encode the occupancy at each grid point \n\
                           defaults to two bits per grid point \n\
-    - vdwScale : Scaling factor for the radius of the atoms to determine the base radius \n\
+    vdwScale: Scaling factor for the radius of the atoms to determine the base radius \n\
                 used in the encoding - grid points inside this sphere carry the maximum occupancy \n\
-    - stepSize : thickness of the each layer outside the base radius, the occupancy value is decreased \n\
+    stepSize: thickness of the each layer outside the base radius, the occupancy value is decreased \n\
                  from layer to layer from the maximum value \n\
-    - maxLayers : the maximum number of layers - defaults to the number of bits \n\
+    maxLayers: the maximum number of layers - defaults to the number of bits \n\
                   used per grid point - e.g. two bits per grid point will allow 3 layers \n\
-    - ignoreHs : when set, the contribution of Hs to the shape will be ignored\n";
+    ignoreHs: when set, the contribution of Hs to the shape will be ignored\n";
 
   python::def(
       "ShapeTverskyIndex", RDKit::tverskyMolShapes,
@@ -223,20 +223,20 @@ BOOST_PYTHON_MODULE(rdShapeHelpers) {
       "Compute the shape tanimoto distance between two molecule based on a predefined alignment\n\
   \n\
   ARGUMENTS:\n\
-    - mol1 : The first molecule of interest \n\
-    - mol2 : The second molecule of interest \n\
-    - confId1 : Conformer in the first molecule (defaults to first conformer) \n\
-    - confId2 : Conformer in the second molecule (defaults to first conformer) \n\
-    - gridSpacing : resolution of the grid used to encode the molecular shapes \n\
-    - bitsPerPoint : number of bits used to encode the occupancy at each grid point \n\
+    mol1: The first molecule of interest \n\
+    mol2: The second molecule of interest \n\
+    confId1: Conformer in the first molecule (defaults to first conformer) \n\
+    confId2: Conformer in the second molecule (defaults to first conformer) \n\
+    gridSpacing: resolution of the grid used to encode the molecular shapes \n\
+    bitsPerPoint: number of bits used to encode the occupancy at each grid point \n\
                           defaults to two bits per grid point \n\
-    - vdwScale : Scaling factor for the radius of the atoms to determine the base radius \n\
+    vdwScale: Scaling factor for the radius of the atoms to determine the base radius \n\
                 used in the encoding - grid points inside this sphere carry the maximum occupancy \n\
-    - stepSize : thickness of the each layer outside the base radius, the occupancy value is decreased \n\
+    stepSize: thickness of the each layer outside the base radius, the occupancy value is decreased \n\
                  from layer to layer from the maximum value \n\
-    - maxLayers : the maximum number of layers - defaults to the number of bits \n\
+    maxLayers: the maximum number of layers - defaults to the number of bits \n\
                   used per grid point - e.g. two bits per grid point will allow 3 layers \n\
-    - ignoreHs : when set, the contribution of Hs to the shape will be ignored\n";
+    ignoreHs: when set, the contribution of Hs to the shape will be ignored\n";
 
   python::def(
       "ShapeTanimotoDist", RDKit::tanimotoMolShapes,
@@ -251,21 +251,21 @@ BOOST_PYTHON_MODULE(rdShapeHelpers) {
       "Compute the shape protrude distance between two molecule based on a predefined alignment\n\
   \n\
   ARGUMENTS:\n\
-    - mol1 : The first molecule of interest \n\
-    - mol2 : The second molecule of interest \n\
-    - confId1 : Conformer in the first molecule (defaults to first conformer) \n\
-    - confId2 : Conformer in the second molecule (defaults to first conformer) \n\
-    - gridSpacing : resolution of the grid used to encode the molecular shapes \n\
-    - bitsPerPoint : number of bit used to encode the occupancy at each grid point \n\
+    mol1: The first molecule of interest \n\
+    mol2: The second molecule of interest \n\
+    confId1: Conformer in the first molecule (defaults to first conformer) \n\
+    confId2: Conformer in the second molecule (defaults to first conformer) \n\
+    gridSpacing: resolution of the grid used to encode the molecular shapes \n\
+    bitsPerPoint: number of bit used to encode the occupancy at each grid point \n\
                           defaults to two bits per grid point \n\
-    - vdwScale : Scaling factor for the radius of the atoms to determine the base radius \n\
+    vdwScale: Scaling factor for the radius of the atoms to determine the base radius \n\
                 used in the encoding - grid points inside this sphere carry the maximum occupancy \n\
-    - stepSize : thickness of the each layer outside the base radius, the occupancy value is decreased \n\
+    stepSize: thickness of the each layer outside the base radius, the occupancy value is decreased \n\
                  from layer to layer from the maximum value \n\
-    - maxLayers : the maximum number of layers - defaults to the number of bits \n\
+    maxLayers: the maximum number of layers - defaults to the number of bits \n\
                   used per grid point - e.g. two bits per grid point will allow 3 layers \n\
-    - ignoreHs : when set, the contribution of Hs to the shape will be ignored\n\
-    - allowReordering : when set, the order will be automatically updated so that the value calculated\n\
+    ignoreHs: when set, the contribution of Hs to the shape will be ignored\n\
+    allowReordering: when set, the order will be automatically updated so that the value calculated\n\
                         is the protrusion of the smaller shape from the larger one.\n";
   python::def(
       "ShapeProtrudeDist", RDKit::protrudeMolShapes,
