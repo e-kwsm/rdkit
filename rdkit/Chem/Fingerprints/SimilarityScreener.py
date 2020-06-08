@@ -69,17 +69,17 @@ class ThresholdScreener(SimilarityScreener):
 
      **Notes**:
 
-       - This is as lazy as possible, so the data source isn't
-         queried until the client asks for a hit.
+     - This is as lazy as possible, so the data source isn't
+       queried until the client asks for a hit.
 
-       - In addition to being lazy, this class is as thin as possible.
-         (Who'd have thought it was possible!)
-         Hits are *not* stored locally, so if a client resets
-         the iteration and starts over, the same amount of work must
-         be done to retrieve the hits.
+     - In addition to being lazy, this class is as thin as possible.
+       (Who'd have thought it was possible!)
+       Hits are *not* stored locally, so if a client resets
+       the iteration and starts over, the same amount of work must
+       be done to retrieve the hits.
 
-       - The thinness and laziness forces us to support only forward
-         iteration (not random access)
+     - The thinness and laziness forces us to support only forward
+       iteration (not random access)
 
     """
 
@@ -130,7 +130,7 @@ class TopNScreener(SimilarityScreener):
 
       **Notes**
 
-        - supports forward iteration and getitem
+      - supports forward iteration and getitem
 
     """
 
