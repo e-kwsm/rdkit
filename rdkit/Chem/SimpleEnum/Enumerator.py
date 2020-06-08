@@ -42,10 +42,10 @@ from rdkit.Chem import rdChemReactions
 def PreprocessReaction(reaction, funcGroupFilename=None, propName='molFileValue'):
   """
   >>> from rdkit.Chem import AllChem
-  >>> testFile = os.path.join(RDConfig.RDCodeDir,'Chem','SimpleEnum','test_data','boronic1.rxn')
+  >>> testFile = os.path.join(RDConfig.RDCodeDir, 'Chem', 'SimpleEnum', 'test_data', 'boronic1.rxn')
   >>> rxn = AllChem.ReactionFromRxnFile(testFile)
   >>> rxn.Initialize()
-  >>> nWarn,nError,nReacts,nProds,reactantLabels = PreprocessReaction(rxn)
+  >>> nWarn, nError, nReacts, nProds, reactantLabels = PreprocessReaction(rxn)
   >>> nWarn
   0
   >>> nError
@@ -84,7 +84,7 @@ def PreprocessReaction(reaction, funcGroupFilename=None, propName='molFileValue'
 
   We also support or queries in the values field (separated by commas):
 
-  >>> testFile = os.path.join(RDConfig.RDCodeDir,'Chem','SimpleEnum','test_data','azide_reaction.rxn')
+  >>> testFile = os.path.join(RDConfig.RDCodeDir, 'Chem', 'SimpleEnum', 'test_data', 'azide_reaction.rxn')
   >>> rxn = AllChem.ReactionFromRxnFile(testFile)
   >>> rxn.Initialize()
   >>> reactantLabels = PreprocessReaction(rxn)[-1]
@@ -103,10 +103,10 @@ def PreprocessReaction(reaction, funcGroupFilename=None, propName='molFileValue'
 
   unrecognized final group types are returned as None:
 
-  >>> testFile = os.path.join(RDConfig.RDCodeDir,'Chem','SimpleEnum','test_data','bad_value1.rxn')
+  >>> testFile = os.path.join(RDConfig.RDCodeDir, 'Chem', 'SimpleEnum', 'test_data', 'bad_value1.rxn')
   >>> rxn = AllChem.ReactionFromRxnFile(testFile)
   >>> rxn.Initialize()
-  >>> nWarn,nError,nReacts,nProds,reactantLabels = PreprocessReaction(rxn)
+  >>> nWarn, nError, nReacts, nProds, reactantLabels = PreprocessReaction(rxn)
   Traceback (most recent call last):
     File "/usr/prog/python/2.6.6_gnu/lib/python2.6/doctest.py", line 1253, in __run
       compileflags, 1) in test.globs
@@ -118,10 +118,10 @@ def PreprocessReaction(reaction, funcGroupFilename=None, propName='molFileValue'
 
   One unrecognized group type in a comma-separated list makes the whole thing fail:
 
-  >>> testFile = os.path.join(RDConfig.RDCodeDir,'Chem','SimpleEnum','test_data','bad_value2.rxn')
+  >>> testFile = os.path.join(RDConfig.RDCodeDir, 'Chem', 'SimpleEnum', 'test_data', 'bad_value2.rxn')
   >>> rxn = AllChem.ReactionFromRxnFile(testFile)
   >>> rxn.Initialize()
-  >>> nWarn,nError,nReacts,nProds,reactantLabels = PreprocessReaction(rxn)
+  >>> nWarn, nError, nReacts, nProds, reactantLabels = PreprocessReaction(rxn)
   Traceback (most recent call last):
     File "/usr/prog/python/2.6.6_gnu/lib/python2.6/doctest.py", line 1253, in __run
       compileflags, 1) in test.globs
@@ -130,10 +130,10 @@ def PreprocessReaction(reaction, funcGroupFilename=None, propName='molFileValue'
     File "Enumerator.py", line 105, in PreprocessReaction
       reactantLabels = reaction.AddRecursiveQueriesToReaction(queryDict, propName='molFileValue', getLabels=True)
   KeyError: 'carboxylicacid,acidchlroide'
-  >>> testFile = os.path.join(RDConfig.RDCodeDir,'Chem','SimpleEnum','test_data','bad_value3.rxn')
+  >>> testFile = os.path.join(RDConfig.RDCodeDir, 'Chem', 'SimpleEnum', 'test_data', 'bad_value3.rxn')
   >>> rxn = AllChem.ReactionFromRxnFile(testFile)
   >>> rxn.Initialize()
-  >>> nWarn,nError,nReacts,nProds,reactantLabels = PreprocessReaction(rxn)
+  >>> nWarn, nError, nReacts, nProds, reactantLabels = PreprocessReaction(rxn)
   Traceback (most recent call last):
     File "/usr/prog/python/2.6.6_gnu/lib/python2.6/doctest.py", line 1253, in __run
       compileflags, 1) in test.globs
@@ -144,7 +144,7 @@ def PreprocessReaction(reaction, funcGroupFilename=None, propName='molFileValue'
   KeyError: 'carboxyliccaid,acidchloride'
   >>> rxn = rdChemReactions.ChemicalReaction()
   >>> rxn.Initialize()
-  >>> nWarn,nError,nReacts,nProds,reactantLabels = PreprocessReaction(rxn)
+  >>> nWarn, nError, nReacts, nProds, reactantLabels = PreprocessReaction(rxn)
   >>> reactantLabels
   ()
   >>> reactantLabels == ()
@@ -166,15 +166,15 @@ def EnumerateReaction(
     funcGroupFilename=os.path.join(RDConfig.RDDataDir, 'Functional_Group_Hierarchy.txt'),
     propName='molFileValue'):
   """
-  >>> testFile = os.path.join(RDConfig.RDCodeDir,'Chem','SimpleEnum','test_data','boronic1.rxn')
+  >>> testFile = os.path.join(RDConfig.RDCodeDir, 'Chem', 'SimpleEnum', 'test_data', 'boronic1.rxn')
   >>> rxn = AllChem.ReactionFromRxnFile(testFile)
   >>> rxn.Initialize()
-  >>> reacts1=['Brc1ccccc1','Brc1ncccc1','Brc1cnccc1']
+  >>> reacts1=['Brc1ccccc1', 'Brc1ncccc1', 'Brc1cnccc1']
   >>> reacts1=[Chem.MolFromSmiles(x) for x in reacts1]
   >>> reacts2=['CCB(O)O','CCCB(O)O']
   >>> reacts2=[Chem.MolFromSmiles(x) for x in reacts2]
 
-  >>> prods = EnumerateReaction(rxn,(reacts1,reacts2))
+  >>> prods = EnumerateReaction(rxn, (reacts1, reacts2))
   >>> prods = list(prods)
 
   This is a bit nasty because of the symmetry of the boronic acid:
@@ -191,7 +191,7 @@ def EnumerateReaction(
 
   The nastiness can be avoided at the cost of some memory by asking for only unique products:
 
-  >>> prods = EnumerateReaction(rxn,(reacts1,reacts2),uniqueProductsOnly=True)
+  >>> prods = EnumerateReaction(rxn, (reacts1, reacts2), uniqueProductsOnly=True)
   >>> prods = list(prods)
   >>> len(prods)
   6
