@@ -375,10 +375,6 @@ else(RDK_BUILD_PYTHON_WRAPPERS)
   find_package(Boost ${RDK_BOOST_VERSION} REQUIRED)
 endif(RDK_BUILD_PYTHON_WRAPPERS)
 
-# Detect clang, which masquerades as gcc.  CMake 2.6 doesn't know how to
-# detect it.
-string(REGEX MATCH "clang" CMAKE_COMPILER_IS_CLANG "${CMAKE_C_COMPILER}")
-
 find_package(Eigen3)
 if(RDK_BUILD_DESCRIPTORS3D)
   if(NOT EIGEN3_FOUND)
