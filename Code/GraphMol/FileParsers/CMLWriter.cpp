@@ -232,7 +232,7 @@ boost::property_tree::ptree molToPTree(const ROMol& mol, int confId,
         default:
           BOOST_LOG(rdInfoLog)
               << boost::format{"CMLWriter: Unsupported BondType %1%\n"} % btype;
-          bond.put("<xmlattr>.order", "");
+          bond.put("<xmlattr>.order", "unknown");
       }
       // bond/@BondStereo if appropriate
       // http://www.xml-cml.org/convention/molecular#bondStereo-element
