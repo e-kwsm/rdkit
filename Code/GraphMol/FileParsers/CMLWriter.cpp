@@ -39,7 +39,7 @@ boost::property_tree::ptree molToPTree(const ROMol &mol, int confId,
 
   boost::property_tree::ptree pt;
   // prefix namespaces
-  auto &root = pt.add("cml", "");
+  auto &root = pt.put("cml", "");
   root.put("<xmlattr>.xmlns", "http://www.xml-cml.org/schema");
   root.put("<xmlattr>.xmlns:convention", "http://www.xml-cml.org/convention/");
   root.put("<xmlattr>.convention", "convention:molecular");
@@ -48,7 +48,7 @@ boost::property_tree::ptree molToPTree(const ROMol &mol, int confId,
 
   // molecule/@id MUST start with an alphabetical character
   // http://www.xml-cml.org/convention/molecular#molecule-id
-  const auto molecule_id_default_prefix = "m";
+  constexpr auto molecule_id_default_prefix = "m";
   molecule.put("<xmlattr>.id",
                boost::format{"%1%%2%"} % molecule_id_default_prefix % confId);
 
@@ -63,7 +63,7 @@ boost::property_tree::ptree molToPTree(const ROMol &mol, int confId,
 
   // atom/@id MUST start with an alphabetical character
   // http://www.xml-cml.org/convention/molecular#atom-id
-  const auto atom_id_prefix = "a";
+  constexpr auto atom_id_prefix = "a";
 
   const Conformer *conf = nullptr;
   if (rwmol.getNumConformers()) {
@@ -110,6 +110,7 @@ boost::property_tree::ptree molToPTree(const ROMol &mol, int confId,
         atom.put("<xmlattr>.z3", xyz_fmt % pos.z);
       }
     }
+
     // atom/@atomParity if chiral
     // http://www.xml-cml.org/convention/molecular#atom-atomParity
     // the parity is the sign of the chiral volume. We can determine that from
@@ -132,7 +133,7 @@ boost::property_tree::ptree molToPTree(const ROMol &mol, int confId,
         neighbors.push_back(at->getIdx());
       }
 
-      auto &atomParity = atom.add("atomParity", parity);
+      auto &atomParity = atom.put("atomParity", parity);
       atomParity.put("<xmlattr>.atomRefs4",
                      boost::format{"%1%%2% %1%%3% %1%%4% %1%%5%"} %
                          atom_id_prefix % neighbors[0u] % neighbors[1u] %
@@ -152,7 +153,7 @@ boost::property_tree::ptree molToPTree(const ROMol &mol, int confId,
 
   // bond/@id so that it can be referenced
   // http://www.xml-cml.org/convention/molecular#bond-id
-  const auto bond_id_prefix = "b";
+  constexpr auto bond_id_prefix = "b";
   unsigned bond_id = 0u;
 
   auto &bondArray = molecule.add("bondArray", "");
@@ -191,8 +192,7 @@ boost::property_tree::ptree molToPTree(const ROMol &mol, int confId,
         case Bond::AROMATIC:
           bond.put("<xmlattr>.order", 'A');
           break;
-        case Bond::DATIVEONE:
-          FALLTHROUGH;
+
         case Bond::DATIVE:
           FALLTHROUGH;
         case Bond::DATIVEL:
@@ -200,6 +200,11 @@ boost::property_tree::ptree molToPTree(const ROMol &mol, int confId,
         case Bond::DATIVER:
           bond.put("<xmlattr>.order", 'S');
           break;
+
+        case Bond::DATIVEONE:
+          bond.put("<xmlattr>.order", "0.5");
+          break;
+
         // XXX RDKit extension: bond orders greater than 3
         case Bond::QUADRUPLE:
           bond.put("<xmlattr>.order", 4);
@@ -210,6 +215,7 @@ boost::property_tree::ptree molToPTree(const ROMol &mol, int confId,
         case Bond::HEXTUPLE:
           bond.put("<xmlattr>.order", 6);
           break;
+
         // XXX RDKit extension: half-integer orders
         case Bond::THREECENTER:
           bond.put("<xmlattr>.order", "0.5");
@@ -229,11 +235,17 @@ boost::property_tree::ptree molToPTree(const ROMol &mol, int confId,
         case Bond::FIVEANDAHALF:
           bond.put("<xmlattr>.order", "5.5");
           break;
+
+        case Bond::ZERO:
+          bond.put("<xmlattr>.order", 0);
+          break;
+
         default:
           BOOST_LOG(rdInfoLog)
               << boost::format{"CMLWriter: Unsupported BondType %1%\n"} % btype;
-          bond.put("<xmlattr>.order", "");
+          bond.put("<xmlattr>.order", "unknown");
       }
+
       // bond/@BondStereo if appropriate
       // http://www.xml-cml.org/convention/molecular#bondStereo-element
       auto bdir = bptr->getBondDir();
