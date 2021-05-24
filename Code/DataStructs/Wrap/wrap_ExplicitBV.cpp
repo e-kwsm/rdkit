@@ -46,7 +46,7 @@ or by indexing (i.e. bv[i] = 1 or if bv[i]).\n\
 
 struct EBV_wrapper {
   static void wrap() {
-    python::class_<ExplicitBitVect, boost::shared_ptr<ExplicitBitVect> >(
+    python::class_<ExplicitBitVect, boost::shared_ptr<ExplicitBitVect>>(
         "ExplicitBitVect", ebvClassDoc.c_str(), python::init<unsigned int>())
         .def(python::init<std::string>())
         .def(python::init<unsigned int, bool>())
@@ -75,13 +75,13 @@ struct EBV_wrapper {
              "Returns the number of off bits.\n")
         .def("__getitem__", (int (*)(const EBV &, int))get_VectItem)
         .def("__setitem__", (int (*)(EBV &, int, int))set_VectItem)
-        .def("GetOnBits", (IntVect (*)(const EBV &))GetOnBits,
+        .def("GetOnBits", (IntVect(*)(const EBV &))GetOnBits,
              "Returns a tuple containing IDs of the on bits.\n")
-        .def("ToBinary", (python::object (*)(const EBV &))BVToBinary,
+        .def("ToBinary", (python::object(*)(const EBV &))BVToBinary,
              "Returns an internal binary representation of the vector.\n")
         .def("FromBase64", (void (*)(EBV &, const std::string &))InitFromBase64,
              "Initializes the vector from a base64 encoded binary string.\n")
-        .def("ToBase64", (std::string (*)(EBV &))ToBase64,
+        .def("ToBase64", (std::string(*)(EBV &))ToBase64,
              "Converts the vector to a base64 string (the base64 encoded "
              "version of the results of ToString()).\n")
         .def(python::self & python::self)

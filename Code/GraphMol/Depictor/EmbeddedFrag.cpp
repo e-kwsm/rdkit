@@ -326,8 +326,8 @@ void EmbeddedFrag::updateNewNeighs(
                               hIndices.end());
 
   int deg = getDepictDegree(dp_mol->getAtomWithIdx(aid));
-  // order the neighbors by their CIPranks, if the number is between > 0 but less
-  // than 3
+  // order the neighbors by their CIPranks, if the number is between > 0 but
+  // less than 3
   if ((d_eatoms[aid].neighs.size() > 0) &&
       ((deg < 4) || (d_eatoms[aid].neighs.size() < 3))) {
     d_eatoms[aid].neighs = rankAtomsByRank(*dp_mol, d_eatoms[aid].neighs);
@@ -490,9 +490,8 @@ RDGeom::Transform2D EmbeddedFrag::computeTwoAtomTrans(
     unsigned int aid1, unsigned int aid2,
     const RDGeom::INT_POINT2D_MAP &nringCor) {
   // this is an easier thing to do than computeOneAtomTrans
-  // we know that there are at least two atoms in common between the new ring and
-  // the
-  // rings that have already been embedded.
+  // we know that there are at least two atoms in common between the new ring
+  // and the rings that have already been embedded.
   //
   // we are going to simply use the first two atoms on the commIds list and
   // use those to compute a transforms
@@ -712,9 +711,8 @@ void EmbeddedFrag::addAtomToAtomWithAng(unsigned int aid, unsigned int toAid) {
   RDGeom::Point2D origin(0.0, 0.0);
   PRECONDITION(refAtom.angle > 0.0, "");
 
-  // we are adding to either to a ring atom or an atom to which we added at least
-  // one
-  // substituent previously
+  // we are adding to either to a ring atom or an atom to which we added at
+  // least one substituent previously
 
   // determine the angle at which we want to add the new atom based on the
   // number

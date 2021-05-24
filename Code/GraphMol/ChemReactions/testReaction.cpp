@@ -7608,9 +7608,10 @@ void testGithub4114() {
 
 void testGithub4183() {
   BOOST_LOG(rdInfoLog) << "-------------------------------------" << std::endl;
-  BOOST_LOG(rdInfoLog) << "Testing Github #4183: Reading a rxn file in v3000 format that contains agents"
+  BOOST_LOG(rdInfoLog) << "Testing Github #4183: Reading a rxn file in v3000 "
+                          "format that contains agents"
                        << std::endl;
-  
+
   std::string rdbase = getenv("RDBASE");
   std::string fName;
   fName = rdbase + "/Code/GraphMol/ChemReactions/testData/v3k_with_agents.rxn";
@@ -7720,7 +7721,7 @@ int main() {
   testGithub4162();
   testGithub4114();
   testGithub4183();
-  
+
   BOOST_LOG(rdInfoLog)
       << "*******************************************************\n";
   return (0);

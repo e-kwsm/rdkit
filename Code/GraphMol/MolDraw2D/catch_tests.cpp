@@ -151,8 +151,7 @@ static const std::map<std::string, std::hash_result_t> SVG_HASHES = {
     {"testGithub3912.2.svg", 2868397535U},
     {"testGithub2976.svg", 4285372032U},
     {"testReactionCoords.svg", 1266050580U},
-    {"testAnnotationColors.svg", 3669978208U}
-};
+    {"testAnnotationColors.svg", 3669978208U}};
 
 // These PNG hashes aren't completely reliable due to floating point cruft,
 // but they can still reduce the number of drawings that need visual
@@ -186,7 +185,7 @@ std::hash_result_t hash_file(const std::string &filename) {
 }
 
 void check_file_hash(const std::string &filename,
-                     std::hash_result_t exp_hash=0U) {
+                     std::hash_result_t exp_hash = 0U) {
 //    std::cout << filename << " : " << hash_file(filename) << "U" << std::endl;
 
   std::map<std::string, std::hash_result_t>::const_iterator it;
@@ -208,7 +207,7 @@ void check_file_hash(const std::string &filename,
               << "U not the expected " << exp_hash << "U" << std::endl;
   }
 }
-} // namespace
+}  // namespace
 
 using namespace RDKit;
 
@@ -635,7 +634,6 @@ TEST_CASE("zero-order bonds", "[drawing][organometallics]") {
     outs << text;
     outs.close();
     check_file_hash("testZeroOrderBonds_1.svg");
-
 
     CHECK(text.find("stroke-dasharray:2,2") != std::string::npos);
   }
@@ -2410,7 +2408,8 @@ M  END)CTAB"_ctab;
       drawer.drawMolecule(*m);
       drawer.finishDrawing();
       auto text = drawer.getDrawingText();
-      std::string filename((boost::format("testLinkNodes-2-%d.svg") % rotn).str());
+      std::string filename(
+          (boost::format("testLinkNodes-2-%d.svg") % rotn).str());
       std::ofstream outs(filename);
       outs << text;
       outs.close();

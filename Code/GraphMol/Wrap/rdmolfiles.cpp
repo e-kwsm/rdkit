@@ -455,7 +455,8 @@ python::object addMolToPNGStringHelper(const ROMol &mol, python::object png,
   return retval;
 }
 
-python::object addMetadataToPNGFileHelper(python::dict pymetadata, python::object fname) {
+python::object addMetadataToPNGFileHelper(python::dict pymetadata,
+                                          python::object fname) {
   std::string cstr = python::extract<std::string>(fname);
 
   std::vector<std::pair<std::string, std::string>> metadata;
@@ -464,7 +465,7 @@ python::object addMetadataToPNGFileHelper(python::dict pymetadata, python::objec
        ++i) {
     std::string key = python::extract<std::string>(pymetadata.keys()[i]);
     std::string val = python::extract<std::string>(pymetadata.values()[i]);
-    metadata.push_back(std::make_pair(key,val));
+    metadata.push_back(std::make_pair(key, val));
   }
 
   auto res = addMetadataToPNGFile(cstr, metadata);
@@ -474,7 +475,8 @@ python::object addMetadataToPNGFileHelper(python::dict pymetadata, python::objec
   return retval;
 }
 
-python::object addMetadataToPNGStringHelper(python::dict pymetadata, python::object png) {
+python::object addMetadataToPNGStringHelper(python::dict pymetadata,
+                                            python::object png) {
   std::string cstr = python::extract<std::string>(png);
 
   std::vector<std::pair<std::string, std::string>> metadata;
@@ -483,7 +485,7 @@ python::object addMetadataToPNGStringHelper(python::dict pymetadata, python::obj
        ++i) {
     std::string key = python::extract<std::string>(pymetadata.keys()[i]);
     std::string val = python::extract<std::string>(pymetadata.values()[i]);
-    metadata.push_back(std::make_pair(key,val));
+    metadata.push_back(std::make_pair(key, val));
   }
 
   auto res = addMetadataToPNGString(cstr, metadata);
@@ -492,7 +494,6 @@ python::object addMetadataToPNGStringHelper(python::dict pymetadata, python::obj
       python::handle<>(PyBytes_FromStringAndSize(res.c_str(), res.length())));
   return retval;
 }
-
 
 python::object MolsFromPNGFile(const char *filename, const std::string &tag,
                                python::object pyParams) {
@@ -536,33 +537,32 @@ python::tuple MolsFromPNGString(python::object png, const std::string &tag,
 }
 
 namespace {
-python::dict translateMetadata(const std::vector<std::pair<std::string,std::string>> &metadata){
+python::dict translateMetadata(
+    const std::vector<std::pair<std::string, std::string>> &metadata) {
   python::dict res;
-  for(const auto &pr : metadata ){
+  for (const auto &pr : metadata) {
     // keys are safe to extract:
     std::string key = pr.first;
     // but values may include binary, so we convert them directly to bytes:
-    python::object val = python::object(
-        python::handle<>(PyBytes_FromStringAndSize(pr.second.c_str(), pr.second.length())));
+    python::object val = python::object(python::handle<>(
+        PyBytes_FromStringAndSize(pr.second.c_str(), pr.second.length())));
     res[key] = val;
   }
   return res;
 }
 
-}
-python::dict MetadataFromPNGFile(python::object fname){
+}  // namespace
+python::dict MetadataFromPNGFile(python::object fname) {
   std::string cstr = python::extract<std::string>(fname);
   auto metadata = PNGFileToMetadata(cstr);
   return translateMetadata(metadata);
 }
 
-python::dict MetadataFromPNGString(python::object png){
+python::dict MetadataFromPNGString(python::object png) {
   std::string cstr = python::extract<std::string>(png);
   auto metadata = PNGStringToMetadata(cstr);
   return translateMetadata(metadata);
 }
-
-
 
 }  // namespace RDKit
 
@@ -1756,10 +1756,9 @@ BOOST_PYTHON_MODULE(rdmolfiles) {
 
      RETURNS:
        the updated PNG data)DOC";
-  python::def(
-      "AddMetadataToPNGFile", addMetadataToPNGFileHelper,
-      (python::arg("metadata"), python::arg("filename")),
-      docString.c_str());
+  python::def("AddMetadataToPNGFile", addMetadataToPNGFileHelper,
+              (python::arg("metadata"), python::arg("filename")),
+              docString.c_str());
 
   docString =
       R"DOC(Adds metadata to a PNG string.
@@ -1773,22 +1772,18 @@ BOOST_PYTHON_MODULE(rdmolfiles) {
 
      RETURNS:
        the updated PNG data)DOC";
-  python::def(
-      "AddMetadataToPNGString", addMetadataToPNGStringHelper,
-      (python::arg("metadata"), python::arg("png")),
-      docString.c_str());
+  python::def("AddMetadataToPNGString", addMetadataToPNGStringHelper,
+              (python::arg("metadata"), python::arg("png")), docString.c_str());
 
-  python::def(
-      "MetadataFromPNGFile", MetadataFromPNGFile,
-      (python::arg("filename")),
-      "Returns a dict with all metadata from the PNG file. Keys are strings, values are bytes.");
+  python::def("MetadataFromPNGFile", MetadataFromPNGFile,
+              (python::arg("filename")),
+              "Returns a dict with all metadata from the PNG file. Keys are "
+              "strings, values are bytes.");
 
-  python::def(
-      "MetadataFromPNGString", MetadataFromPNGString,
-      (python::arg("png")),
-      "Returns a dict with all metadata from the PNG string. Keys are strings, values are bytes.");
-
-
+  python::def("MetadataFromPNGString", MetadataFromPNGString,
+              (python::arg("png")),
+              "Returns a dict with all metadata from the PNG string. Keys are "
+              "strings, values are bytes.");
 
 /********************************************************
  * MolSupplier stuff

@@ -30,12 +30,10 @@ double matchScore(const std::vector<size_t> &permutation,
   std::cerr << "Scoring permutation "
             << " num matches: " << matches.size() << std::endl;
 
-
   BOOST_LOG(rdDebugLog) << "Scoring" << std::endl;
   for (size_t m = 0; m < permutation.size(); ++m) {  // for each molecule
-    BOOST_LOG(rdDebugLog)
-      << "Molecule " << m << " " << matches[m][permutation[m]].toString()
-      << std::endl;
+    BOOST_LOG(rdDebugLog) << "Molecule " << m << " "
+                          << matches[m][permutation[m]].toString() << std::endl;
   }
 #endif
 
@@ -44,11 +42,11 @@ double matchScore(const std::vector<size_t> &permutation,
   std::map<int, int> num_rgroups;
   for (size_t m = 0; m < permutation.size(); ++m) {  // for each molecule
     for (auto l : matches[m][permutation[m]].rgroups) {
-       N = std::max(N, ++num_rgroups[l.first]);
+      N = std::max(N, ++num_rgroups[l.first]);
     }
   }
   // for each label (r-group)
-  for(auto l : labels ) {
+  for (auto l : labels) {
 #ifdef DEBUG
     std::cerr << "Label: " << l << std::endl;
 #endif
@@ -74,7 +72,8 @@ double matchScore(const std::vector<size_t> &permutation,
 #endif
       }
 #ifdef DEBUG
-        std::cerr << l << " rgroup count" << num_rgroups_for_label << " num atoms" << rg->second->combinedMol->getNumAtoms(false)
+      std::cerr << l << " rgroup count" << num_rgroups_for_label << " num atoms"
+                << rg->second->combinedMol->getNumAtoms(false)
                 // looks like code has been edited round this define
                 // << " score: " << count
                 << std::endl;
@@ -87,20 +86,20 @@ double matchScore(const std::vector<size_t> &permutation,
         unsigned int &count = matchSetVect[i][smiles];
         ++count;
 #ifdef DEBUG
-          std::cerr << i << " smiles:" << smiles << " " << count << std::endl;
+        std::cerr << i << " smiles:" << smiles << " " << count << std::endl;
         std::cerr << " Linker Score: "
                   << linkerMatchSet[rg->second->attachments] << std::endl;
 #endif
         ++i;
       }
     }
-    
+
     double tempScore = 0.;
     for (auto &matchSet : matchSetVect) {
       // get the counts for each rgroup found and sort in reverse order
       // If we don't have as many rgroups as the largest set add a empty ones
-      if( N - num_rgroups_for_label > 0) {
-          matchSet[EMPTY_RGROUP] = N - num_rgroups_for_label;
+      if (N - num_rgroups_for_label > 0) {
+        matchSet[EMPTY_RGROUP] = N - num_rgroups_for_label;
       }
       std::vector<unsigned int> equivalentRGroupCount;
 
@@ -124,8 +123,8 @@ double matchScore(const std::vector<size_t> &permutation,
 #endif
       }
       // make sure to rescale groups like [*:1].[*:1]C otherwise this will be
-        // double counted
-        // WE SHOULD PROBABLY REJECT THESE OUTRIGHT
+      // double counted
+      // WE SHOULD PROBABLY REJECT THESE OUTRIGHT
       tempScore /= matchSetVect.size();
     }
 
@@ -160,7 +159,7 @@ double matchScore(const std::vector<size_t> &permutation,
               << std::endl;
     std::cerr << "Score = " << score << std::endl;
 #endif
-  } // end for each label
+  }  // end for each label
 
 #ifdef DEBUG
   BOOST_LOG(rdDebugLog) << score << std::endl;

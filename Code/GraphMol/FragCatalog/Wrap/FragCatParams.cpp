@@ -33,12 +33,13 @@ struct fragparams_wrapper {
         .def("GetLowerFragLength", &FragCatParams::getLowerFragLength)
         .def("GetTolerance", &FragCatParams::getTolerance)
         .def("GetNumFuncGroups", &FragCatParams::getNumFuncGroups)
-        .def("GetFuncGroup", (const ROMol* (FragCatParams::*)(int) const) &
-                                 FragCatParams::getFuncGroup,
+        .def("GetFuncGroup",
+             (const ROMol* (FragCatParams::*)(int) const) &
+                 FragCatParams::getFuncGroup,
              python::return_value_policy<python::reference_existing_object>())
         .def("Serialize", &FragCatParams::Serialize);
   };
 };
-}
+}  // namespace RDKit
 
 void wrap_fragparams() { RDKit::fragparams_wrapper::wrap(); }

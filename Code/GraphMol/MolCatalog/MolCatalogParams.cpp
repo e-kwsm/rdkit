@@ -35,4 +35,4 @@ void MolCatalogParams::initFromStream(std::istream &ss) {
   RDUNUSED_PARAM(ss);
   // at the moment this is a no-op
 }
-}
+}  // namespace RDKit

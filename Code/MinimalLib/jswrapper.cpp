@@ -18,17 +18,16 @@
 
 using namespace RDKit;
 
-
-
-
 namespace RDKit {
-namespace MinimalLib{
-extern std::string process_details(const std::string &details, unsigned int &width,
-                            unsigned int &height, int &offsetx, int &offsety,
-                            std::string &legend, std::vector<int> &atomIds,
-                            std::vector<int> &bondIds);
+namespace MinimalLib {
+extern std::string process_details(const std::string &details,
+                                   unsigned int &width, unsigned int &height,
+                                   int &offsetx, int &offsety,
+                                   std::string &legend,
+                                   std::vector<int> &atomIds,
+                                   std::vector<int> &bondIds);
 }
-}
+}  // namespace RDKit
 
 namespace {
 std::string draw_to_canvas_with_offset(JSMol &self, emscripten::val canvas,
@@ -70,8 +69,8 @@ std::string draw_to_canvas_with_highlights(JSMol &self, emscripten::val canvas,
   int offsetx = 0;
   int offsety = 0;
   std::string legend = "";
-  auto problems = MinimalLib::process_details(details, w, h, offsetx, offsety, legend,
-                                  atomIds, bondIds);
+  auto problems = MinimalLib::process_details(details, w, h, offsetx, offsety,
+                                              legend, atomIds, bondIds);
   if (!problems.empty()) {
     return problems;
   }

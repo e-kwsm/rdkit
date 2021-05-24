@@ -161,7 +161,7 @@ void FloydWarshall(int dim, T *adjMat, int *pathMat,
   delete[] lastD;
   delete[] lastP;
 }
-}  // end of local utility namespace
+}  // namespace
 
 namespace MolOps {
 double *getDistanceMat(const ROMol &mol, bool useBO, bool useAtomWts,
@@ -196,7 +196,7 @@ double *getDistanceMat(const ROMol &mol, bool useBO, bool useAtomWts,
   ROMol::EDGE_ITER firstB, lastB;
   boost::tie(firstB, lastB) = mol.getEdges();
   while (firstB != lastB) {
-    const Bond* bond = mol[*firstB];
+    const Bond *bond = mol[*firstB];
     i = bond->getBeginAtomIdx();
     j = bond->getEndAtomIdx();
     double contrib;

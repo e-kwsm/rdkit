@@ -189,5 +189,5 @@ bool SubstructMatchCustom(
   return boost::vf2(query, target, atomLabeler, bondLabeler, matchChecker,
                     *match);
 }
-}
-}
+}  // namespace FMCS
+}  // namespace RDKit

@@ -65,22 +65,24 @@ void FilterCatalogParams::fillCatalog(FilterCatalog &catalog) const {
     // XXX Fix Me -> these should probably be shared to save memory
     const FilterProperty_t *props = GetFilterProperties(catalogToAdd);
     CHECK_INVARIANT(props, "No filter properties for catalog");
-    
+
     for (unsigned int i = 0; i < entries; ++i) {
       const FilterData_t &data = GetFilterData(catalogToAdd)[i];
       FilterCatalogEntry *entry =
           MakeFilterCatalogEntry(data, propEntries, props);
 
       if (entry) {
-	catalog.addEntry(entry);  // catalog owns entry
+        catalog.addEntry(entry);  // catalog owns entry
       } else {
-	std::string catalog_name = "Unnamed internal catalog";
-	for(unsigned int i=0; i<propEntries; ++i) {
-	  if (std::string("FilterSet") == props[i].key) {
-	    catalog_name = props[i].value;
-	  }
-	}
-	throw ValueErrorException(std::string("Bad entry in built-in filter catalog: ") + catalog_name);
+        std::string catalog_name = "Unnamed internal catalog";
+        for (unsigned int i = 0; i < propEntries; ++i) {
+          if (std::string("FilterSet") == props[i].key) {
+            catalog_name = props[i].value;
+          }
+        }
+        throw ValueErrorException(
+            std::string("Bad entry in built-in filter catalog: ") +
+            catalog_name);
       }
     }
   }
@@ -251,4 +253,4 @@ bool FilterCatalogCanSerialize() {
   return false;
 #endif
 }
-}
+}  // namespace RDKit

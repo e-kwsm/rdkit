@@ -21,7 +21,7 @@
 #include <boost/tokenizer.hpp>
 #include <Geometry/point.h>
 
-typedef boost::tokenizer<boost::char_separator<char> > tokenizer;
+typedef boost::tokenizer<boost::char_separator<char>> tokenizer;
 
 namespace ForceFields {
 namespace UFF {

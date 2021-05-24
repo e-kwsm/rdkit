@@ -75,4 +75,4 @@ RDGeom::Point3D MolChemicalFeature::getPos(int confId) const {
 
   return res;
 }
-}
+}  // namespace RDKit

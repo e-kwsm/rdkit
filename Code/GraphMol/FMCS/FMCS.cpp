@@ -43,18 +43,16 @@ void MCSParameters::setMCSAtomTyperFromEnum(AtomComparator atomComp) {
   }
 }
 
-void MCSParameters::setMCSAtomTyperFromConstChar(const char *atomComp) {
+void MCSParameters::setMCSAtomTyperFromConstChar(const char* atomComp) {
   PRECONDITION(atomComp, "atomComp must not be NULL");
-  static const std::map<const char *, AtomComparator> atomCompStringToEnum = {
-    { "Any", AtomCompareAny },
-    { "Elements", AtomCompareElements },
-    { "Isotopes", AtomCompareIsotopes },
-    { "AnyHeavy", AtomCompareAnyHeavyAtom }
-  };
+  static const std::map<const char*, AtomComparator> atomCompStringToEnum = {
+      {"Any", AtomCompareAny},
+      {"Elements", AtomCompareElements},
+      {"Isotopes", AtomCompareIsotopes},
+      {"AnyHeavy", AtomCompareAnyHeavyAtom}};
   try {
     setMCSAtomTyperFromEnum(atomCompStringToEnum.at(atomComp));
-  }
-  catch(const std::out_of_range&) {
+  } catch (const std::out_of_range&) {
     // we accept "def" as a no-op
   }
 }
@@ -75,17 +73,15 @@ void MCSParameters::setMCSBondTyperFromEnum(BondComparator bondComp) {
   }
 }
 
-void MCSParameters::setMCSBondTyperFromConstChar(const char *bondComp) {
+void MCSParameters::setMCSBondTyperFromConstChar(const char* bondComp) {
   PRECONDITION(bondComp, "bondComp must not be NULL");
-  static const std::map<const char *, BondComparator> bondCompStringToEnum = {
-    { "Any", BondCompareAny },
-    { "Order", BondCompareOrder },
-    { "OrderExact", BondCompareOrderExact }
-  };
+  static const std::map<const char*, BondComparator> bondCompStringToEnum = {
+      {"Any", BondCompareAny},
+      {"Order", BondCompareOrder},
+      {"OrderExact", BondCompareOrderExact}};
   try {
     setMCSBondTyperFromEnum(bondCompStringToEnum.at(bondComp));
-  }
-  catch(const std::out_of_range&) {
+  } catch (const std::out_of_range&) {
     // we accept "def" as a no-op
   }
 }
@@ -109,8 +105,8 @@ void parseMCSParametersJSON(const char* json, MCSParameters* params) {
         "MatchFormalCharge", p.AtomCompareParameters.MatchFormalCharge);
     p.AtomCompareParameters.RingMatchesRingOnly = pt.get<bool>(
         "RingMatchesRingOnly", p.AtomCompareParameters.RingMatchesRingOnly);
-    p.AtomCompareParameters.MaxDistance = pt.get<double>(
-        "MaxDistance", p.AtomCompareParameters.MaxDistance);
+    p.AtomCompareParameters.MaxDistance =
+        pt.get<double>("MaxDistance", p.AtomCompareParameters.MaxDistance);
     p.BondCompareParameters.RingMatchesRingOnly = pt.get<bool>(
         "RingMatchesRingOnly", p.BondCompareParameters.RingMatchesRingOnly);
     p.AtomCompareParameters.RingMatchesRingOnly = pt.get<bool>(
@@ -130,8 +126,10 @@ void parseMCSParametersJSON(const char* json, MCSParameters* params) {
     p.BondCompareParameters.MatchStereo =
         pt.get<bool>("MatchStereo", p.BondCompareParameters.MatchStereo);
 
-    p.setMCSAtomTyperFromConstChar(pt.get<std::string>("AtomCompare", "def").c_str());
-    p.setMCSBondTyperFromConstChar(pt.get<std::string>("BondCompare", "def").c_str());
+    p.setMCSAtomTyperFromConstChar(
+        pt.get<std::string>("AtomCompare", "def").c_str());
+    p.setMCSBondTyperFromConstChar(
+        pt.get<std::string>("BondCompare", "def").c_str());
 
     p.InitialSeed = pt.get<std::string>("InitialSeed", "");
   }
@@ -214,18 +212,18 @@ bool checkAtomRingMatch(const MCSAtomCompareParameters& p, const ROMol& mol1,
   }
 }
 
-bool checkAtomCharge(const MCSAtomCompareParameters& p,
-                     const ROMol& mol1, unsigned int atom1,
-                     const ROMol& mol2, unsigned int atom2) {
+bool checkAtomCharge(const MCSAtomCompareParameters& p, const ROMol& mol1,
+                     unsigned int atom1, const ROMol& mol2,
+                     unsigned int atom2) {
   RDUNUSED_PARAM(p);
   const Atom& a1 = *mol1.getAtomWithIdx(atom1);
   const Atom& a2 = *mol2.getAtomWithIdx(atom2);
   return a1.getFormalCharge() == a2.getFormalCharge();
 }
 
-bool checkAtomChirality(const MCSAtomCompareParameters& p,
-                        const ROMol& mol1, unsigned int atom1,
-                        const ROMol& mol2, unsigned int atom2) {
+bool checkAtomChirality(const MCSAtomCompareParameters& p, const ROMol& mol1,
+                        unsigned int atom1, const ROMol& mol2,
+                        unsigned int atom2) {
   RDUNUSED_PARAM(p);
   const Atom& a1 = *mol1.getAtomWithIdx(atom1);
   const Atom& a2 = *mol2.getAtomWithIdx(atom2);
@@ -238,13 +236,13 @@ bool checkAtomChirality(const MCSAtomCompareParameters& p,
   return true;
 }
 
-bool checkAtomDistance(const MCSAtomCompareParameters& p,
-                       const ROMol& mol1, unsigned int atom1,
-                       const ROMol& mol2, unsigned int atom2){
-  const Conformer &ci1 = mol1.getConformer(-1);
-  const Conformer &ci2 = mol2.getConformer(-1);
-  const RDGeom::Point3D &pos1 = ci1.getAtomPos(atom1);
-  const RDGeom::Point3D &pos2 = ci2.getAtomPos(atom2);
+bool checkAtomDistance(const MCSAtomCompareParameters& p, const ROMol& mol1,
+                       unsigned int atom1, const ROMol& mol2,
+                       unsigned int atom2) {
+  const Conformer& ci1 = mol1.getConformer(-1);
+  const Conformer& ci2 = mol2.getConformer(-1);
+  const RDGeom::Point3D& pos1 = ci1.getAtomPos(atom1);
+  const RDGeom::Point3D& pos2 = ci2.getAtomPos(atom2);
   bool withinRange = (pos1 - pos2).length() <= p.MaxDistance;
   return withinRange;
 }
@@ -258,7 +256,7 @@ bool MCSAtomCompareAny(const MCSAtomCompareParameters& p, const ROMol& mol1,
   if (p.MatchFormalCharge && !checkAtomCharge(p, mol1, atom1, mol2, atom2)) {
     return false;
   }
-  if (p.MaxDistance > 0 && !checkAtomDistance(p, mol1, atom1, mol2, atom2)){
+  if (p.MaxDistance > 0 && !checkAtomDistance(p, mol1, atom1, mol2, atom2)) {
     return false;
   }
   if (p.RingMatchesRingOnly) {
@@ -285,7 +283,7 @@ bool MCSAtomCompareElements(const MCSAtomCompareParameters& p,
   if (p.MatchFormalCharge && !checkAtomCharge(p, mol1, atom1, mol2, atom2)) {
     return false;
   }
-  if (p.MaxDistance > 0 && !checkAtomDistance(p, mol1, atom1, mol2, atom2)){
+  if (p.MaxDistance > 0 && !checkAtomDistance(p, mol1, atom1, mol2, atom2)) {
     return false;
   }
   if (p.RingMatchesRingOnly) {
@@ -312,7 +310,7 @@ bool MCSAtomCompareIsotopes(const MCSAtomCompareParameters& p,
   if (p.MatchFormalCharge && !checkAtomCharge(p, mol1, atom1, mol2, atom2)) {
     return false;
   }
-  if (p.MaxDistance > 0 && !checkAtomDistance(p, mol1, atom1, mol2, atom2)){
+  if (p.MaxDistance > 0 && !checkAtomDistance(p, mol1, atom1, mol2, atom2)) {
     return false;
   }
   if (p.RingMatchesRingOnly) {
@@ -370,9 +368,9 @@ class BondMatchOrderMatrix {
   }
 };
 
-bool checkBondStereo(const MCSBondCompareParameters& p,
-                     const ROMol& mol1, unsigned int bond1,
-                     const ROMol& mol2, unsigned int bond2) {
+bool checkBondStereo(const MCSBondCompareParameters& p, const ROMol& mol1,
+                     unsigned int bond1, const ROMol& mol2,
+                     unsigned int bond2) {
   RDUNUSED_PARAM(p);
   const Bond* b1 = mol1.getBondWithIdx(bond1);
   const Bond* b2 = mol2.getBondWithIdx(bond2);
@@ -387,8 +385,8 @@ bool checkBondStereo(const MCSBondCompareParameters& p,
 }
 
 bool checkBondRingMatch(const MCSBondCompareParameters&, const ROMol&,
-                               unsigned int bond1, const ROMol& mol2,
-                               unsigned int bond2, void* v_ringMatchMatrixSet) {
+                        unsigned int bond1, const ROMol& mol2,
+                        unsigned int bond2, void* v_ringMatchMatrixSet) {
   if (!v_ringMatchMatrixSet) {
     throw "v_ringMatchMatrixSet is NULL";  // never
   }
@@ -459,10 +457,9 @@ bool MCSBondCompareOrderExact(const MCSBondCompareParameters& p,
 }
 
 //=== RING COMPARE ========================================================
-inline bool ringFusionCheck(const std::uint32_t c1[],
-                            const std::uint32_t c2[], const ROMol& mol1,
-                            const FMCS::Graph& query, const ROMol& mol2,
-                            const FMCS::Graph& target,
+inline bool ringFusionCheck(const std::uint32_t c1[], const std::uint32_t c2[],
+                            const ROMol& mol1, const FMCS::Graph& query,
+                            const ROMol& mol2, const FMCS::Graph& target,
                             const MCSParameters* p) {
   PRECONDITION(p, "p must not be NULL");
   const RingInfo* ri2 = mol2.getRingInfo();
@@ -839,7 +836,7 @@ bool FinalChiralityCheckFunction_1(const short unsigned c1[],
     const unsigned a1Degree =
         boost::out_degree(c1[i], query);  // a1.getDegree();
     if (a1Degree != a2.getDegree()) {  // number of all connected atoms in seed
-      return false;                  // ???
+      return false;                    // ???
     }
     INT_LIST qOrder;
     for (unsigned int j = 0; j < qna && qOrder.size() != a1Degree; ++j) {
