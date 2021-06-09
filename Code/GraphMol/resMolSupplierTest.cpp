@@ -922,7 +922,7 @@ void testGitHub2597() {
     delete resMolSuppl;
     resMolSuppl = new ResonanceMolSupplier(
         *mol, ResonanceMolSupplier::ALLOW_CHARGE_SEPARATION);
-    MyCallBack *callback = new MyCallBack();
+    auto *callback = new MyCallBack();
     resMolSuppl->setProgressCallback(callback);
     TEST_ASSERT(resMolSuppl->getProgressCallback() == callback);
     TEST_ASSERT(resMolSuppl->length() == 12);

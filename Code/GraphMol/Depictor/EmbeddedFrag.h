@@ -296,7 +296,7 @@ class RDKIT_DEPICTOR_EXPORT EmbeddedFrag {
   }
 
   EmbeddedAtom GetEmbeddedAtom(unsigned int aid) const {
-    INT_EATOM_MAP_CI posi = d_eatoms.find(aid);
+    auto posi = d_eatoms.find(aid);
     if (posi == d_eatoms.end()) {
       PRECONDITION(0, "Embedded atom does not contain embedded atom specified");
     }
