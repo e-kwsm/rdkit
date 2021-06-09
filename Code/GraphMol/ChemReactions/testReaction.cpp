@@ -2892,26 +2892,22 @@ void test28RxnDepictor() {
     TEST_ASSERT(nWarn == 0);
     TEST_ASSERT(nError == 0);
 
-    for (RDKit::MOL_SPTR_VECT::const_iterator templIt =
-             rxn->beginReactantTemplates();
+    for (auto templIt = rxn->beginReactantTemplates();
          templIt != rxn->endReactantTemplates(); ++templIt) {
       TEST_ASSERT((*templIt)->getNumConformers() == 0);
     }
-    for (RDKit::MOL_SPTR_VECT::const_iterator templIt =
-             rxn->beginProductTemplates();
+    for (auto templIt = rxn->beginProductTemplates();
          templIt != rxn->endProductTemplates(); ++templIt) {
       TEST_ASSERT((*templIt)->getNumConformers() == 0);
     }
 
     RDDepict::compute2DCoordsForReaction(*rxn);
-    for (RDKit::MOL_SPTR_VECT::const_iterator templIt =
-             rxn->beginReactantTemplates();
+    for (auto templIt = rxn->beginReactantTemplates();
          templIt != rxn->endReactantTemplates(); ++templIt) {
       TEST_ASSERT((*templIt)->getNumConformers() == 1);
       TEST_ASSERT(!(*templIt)->getConformer().is3D());
     }
-    for (RDKit::MOL_SPTR_VECT::const_iterator templIt =
-             rxn->beginProductTemplates();
+    for (auto templIt = rxn->beginProductTemplates();
          templIt != rxn->endProductTemplates(); ++templIt) {
       TEST_ASSERT((*templIt)->getNumConformers() == 1);
       TEST_ASSERT(!(*templIt)->getConformer().is3D());
@@ -4192,7 +4188,7 @@ void test45SmilesWriter() {
     TEST_ASSERT(nError == 0);
 
     std::string res = "";
-    for (MOL_SPTR_VECT::const_iterator iter = rxn->beginReactantTemplates();
+    for (auto iter = rxn->beginReactantTemplates();
          iter != rxn->endReactantTemplates(); ++iter) {
       if (iter != rxn->beginReactantTemplates()) {
         res += ".";
@@ -4200,7 +4196,7 @@ void test45SmilesWriter() {
       res += MolToSmiles(**iter, true);
     }
     res += ">>";
-    for (MOL_SPTR_VECT::const_iterator iter = rxn->beginProductTemplates();
+    for (auto iter = rxn->beginProductTemplates();
          iter != rxn->endProductTemplates(); ++iter) {
       if (iter != rxn->beginProductTemplates()) {
         res += ".";
@@ -4232,7 +4228,7 @@ void test45SmilesWriter() {
     TEST_ASSERT(rxn->getNumProductTemplates() == 1);
 
     std::string res = "";
-    for (MOL_SPTR_VECT::const_iterator iter = rxn->beginReactantTemplates();
+    for (auto iter = rxn->beginReactantTemplates();
          iter != rxn->endReactantTemplates(); ++iter) {
       if (iter != rxn->beginReactantTemplates()) {
         res += ".";
@@ -4240,7 +4236,7 @@ void test45SmilesWriter() {
       res += MolToSmiles(**iter, true);
     }
     res += ">>";
-    for (MOL_SPTR_VECT::const_iterator iter = rxn->beginProductTemplates();
+    for (auto iter = rxn->beginProductTemplates();
          iter != rxn->endProductTemplates(); ++iter) {
       if (iter != rxn->beginProductTemplates()) {
         res += ".";
@@ -4268,7 +4264,7 @@ void test45SmilesWriter() {
     TEST_ASSERT(rxn->getNumProductTemplates() == 1);
 
     std::string res = "";
-    for (MOL_SPTR_VECT::const_iterator iter = rxn->beginReactantTemplates();
+    for (auto iter = rxn->beginReactantTemplates();
          iter != rxn->endReactantTemplates(); ++iter) {
       if (iter != rxn->beginReactantTemplates()) {
         res += ".";
@@ -4276,7 +4272,7 @@ void test45SmilesWriter() {
       res += MolToSmiles(**iter, true);
     }
     res += ">>";
-    for (MOL_SPTR_VECT::const_iterator iter = rxn->beginProductTemplates();
+    for (auto iter = rxn->beginProductTemplates();
          iter != rxn->endProductTemplates(); ++iter) {
       if (iter != rxn->beginProductTemplates()) {
         res += ".";
@@ -5728,8 +5724,7 @@ void test58MolFileValueRoundTrip() {
 
   rxn = RxnBlockToChemicalReaction(rxnB);
   // check the mol file values
-  for (MOL_SPTR_VECT::const_iterator template_mol =
-           rxn->beginReactantTemplates();
+  for (auto template_mol = rxn->beginReactantTemplates();
        template_mol != rxn->endReactantTemplates(); ++template_mol) {
     const Atom *at = (*template_mol)->getAtomWithIdx(1);
     TEST_ASSERT(at->hasProp(common_properties::molFileValue));
@@ -5740,8 +5735,7 @@ void test58MolFileValueRoundTrip() {
   ChemicalReaction *rxn2 =
       RxnBlockToChemicalReaction(ChemicalReactionToRxnBlock(*rxn));
 
-  for (MOL_SPTR_VECT::const_iterator template_mol =
-           rxn2->beginReactantTemplates();
+  for (auto template_mol = rxn2->beginReactantTemplates();
        template_mol != rxn2->endReactantTemplates(); ++template_mol) {
     const Atom *at = (*template_mol)->getAtomWithIdx(1);
     TEST_ASSERT(at->hasProp(common_properties::molFileValue));
@@ -7741,9 +7735,9 @@ void testChemicalReactionCopyAssignment() {
   // Check we copied the reactant/product templates
   TEST_ASSERT(rxn2->getNumReactantTemplates() == 2);
   TEST_ASSERT(rxn2->getNumProductTemplates() == 1);
-  MOL_SPTR_VECT::const_iterator it1 = rxn1->beginReactantTemplates();
-  MOL_SPTR_VECT::const_iterator it2 = rxn2->beginReactantTemplates();
-  MOL_SPTR_VECT::const_iterator end_it1 = rxn1->endReactantTemplates();
+  auto it1 = rxn1->beginReactantTemplates();
+  auto it2 = rxn2->beginReactantTemplates();
+  auto end_it1 = rxn1->endReactantTemplates();
   while (it1 != end_it1) {
     TEST_ASSERT(MolToSmiles(**it1) == MolToSmiles(**it2));
     ++it1;
