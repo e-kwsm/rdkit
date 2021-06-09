@@ -450,7 +450,7 @@ TEST_CASE("testConstReturns") {
     std::string v = "foo";
     RDAny anyv(v);
 
-    std::string tgt = rdany_cast<std::string>(anyv);
+    auto tgt = rdany_cast<std::string>(anyv);
     const std::string &ctgt = rdany_cast<std::string>(anyv);
     REQUIRE(ctgt != "");
   }
@@ -489,7 +489,7 @@ TEST_CASE("testConstReturns") {
     ls = 0;
     start = std::clock();
     for (int i = 0; i < nreps; ++i) {
-      std::string nv = rdany_cast<std::string>(anyv);
+      auto nv = rdany_cast<std::string>(anyv);
       ls += nv.size();
     }
     end = std::clock();
