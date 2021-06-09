@@ -162,8 +162,7 @@ RWMol *toMol(std::string inp, bool doQueries, int debugParse) {
     if (molVect.size() > 0) {
       res = molVect[0];
 
-      for (ROMol::BOND_BOOKMARK_MAP::const_iterator bmIt =
-               res->getBondBookmarks()->begin();
+      for (auto bmIt = res->getBondBookmarks()->begin();
            bmIt != res->getBondBookmarks()->end(); ++bmIt) {
         if (bmIt->first > 0 &&
             bmIt->first < static_cast<int>(res->getNumAtoms())) {
