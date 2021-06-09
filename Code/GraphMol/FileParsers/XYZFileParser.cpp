@@ -127,7 +127,7 @@ std::unique_ptr<RWMol> MolFromXYZDataStream(std::istream &inStream) {
 
   auto mol = std::make_unique<RWMol>();
   if (numAtoms) {
-    Conformer *conf = new Conformer(numAtoms);
+    auto *conf = new Conformer(numAtoms);
     if (!comment.empty()) {
       mol->setProp("_FileComments", comment);
     }
