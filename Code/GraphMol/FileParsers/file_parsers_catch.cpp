@@ -3064,7 +3064,7 @@ TEST_CASE("test output with incomplete monomer info", "[bug][writer]") {
     {
       auto m = "Cl"_smiles;
       // will get deleted by ~Atom()
-      AtomPDBResidueInfo *info = new AtomPDBResidueInfo();
+      auto *info = new AtomPDBResidueInfo();
       info->setResidueName("HCL");
       m->getAtomWithIdx(0)->setMonomerInfo(info);
       std::string pdb = MolToPDBBlock(*m, -1);
@@ -3073,7 +3073,7 @@ TEST_CASE("test output with incomplete monomer info", "[bug][writer]") {
     {
       auto m = "Cl"_smiles;
       // will get deleted by ~Atom()
-      AtomPDBResidueInfo *info = new AtomPDBResidueInfo();
+      auto *info = new AtomPDBResidueInfo();
       info->setResidueName("HCL");
       info->setName("Cl1");
       m->getAtomWithIdx(0)->setMonomerInfo(info);
@@ -3085,7 +3085,7 @@ TEST_CASE("test output with incomplete monomer info", "[bug][writer]") {
       // 2. should add spaces for missing residue name.
       auto m = "Cl"_smiles;
       // will get deleted by ~Atom()
-      AtomPDBResidueInfo *info = new AtomPDBResidueInfo();
+      auto *info = new AtomPDBResidueInfo();
       info->setName("CL");
       m->getAtomWithIdx(0)->setMonomerInfo(info);
       std::string pdb = MolToPDBBlock(*m, -1);
@@ -3096,7 +3096,7 @@ TEST_CASE("test output with incomplete monomer info", "[bug][writer]") {
       // 2. Test that residue names get truncated to 3 letters.
       auto m = "Cl"_smiles;
       // will get deleted by ~Atom()
-      AtomPDBResidueInfo *info = new AtomPDBResidueInfo();
+      auto *info = new AtomPDBResidueInfo();
       info->setName("CHLORINE_ATOM1");
       info->setResidueName("CHLORINE_MOLECULE1");
       m->getAtomWithIdx(0)->setMonomerInfo(info);
