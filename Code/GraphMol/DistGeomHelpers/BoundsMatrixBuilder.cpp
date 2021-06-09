@@ -45,7 +45,6 @@ typedef boost::dynamic_bitset<> BIT_SET;
 //! Bunch of functions to set distance bound based on topology
 
 typedef std::map<int, double> INT_DOUBLE_MAP;
-typedef INT_DOUBLE_MAP::const_iterator INT_DOUBLE_MAP_CI;
 
 typedef std::vector<long int> LINT_VECT;
 
@@ -61,8 +60,6 @@ struct Path14Configuration {
 };
 
 typedef std::vector<Path14Configuration> PATH14_VECT;
-typedef PATH14_VECT::iterator PATH14_VECT_I;
-typedef PATH14_VECT::const_iterator PATH14_VECT_CI;
 
 class ComputedData {
  public:

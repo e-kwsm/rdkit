@@ -521,27 +521,15 @@ class RDKIT_RDGEOMETRYLIB_EXPORT PointND : public Point {
 #endif
 
 typedef std::vector<RDGeom::Point *> PointPtrVect;
-typedef PointPtrVect::iterator PointPtrVect_I;
-typedef PointPtrVect::const_iterator PointPtrVect_CI;
 
 typedef std::vector<RDGeom::Point3D *> Point3DPtrVect;
 typedef std::vector<RDGeom::Point2D *> Point2DPtrVect;
-typedef Point3DPtrVect::iterator Point3DPtrVect_I;
-typedef Point3DPtrVect::const_iterator Point3DPtrVect_CI;
-typedef Point2DPtrVect::iterator Point2DPtrVect_I;
-typedef Point2DPtrVect::const_iterator Point2DPtrVect_CI;
 
 typedef std::vector<const RDGeom::Point3D *> Point3DConstPtrVect;
-typedef Point3DConstPtrVect::iterator Point3DConstPtrVect_I;
-typedef Point3DConstPtrVect::const_iterator Point3DConstPtrVect_CI;
 
 typedef std::vector<Point3D> POINT3D_VECT;
-typedef std::vector<Point3D>::iterator POINT3D_VECT_I;
-typedef std::vector<Point3D>::const_iterator POINT3D_VECT_CI;
 
 typedef std::map<int, Point2D> INT_POINT2D_MAP;
-typedef INT_POINT2D_MAP::iterator INT_POINT2D_MAP_I;
-typedef INT_POINT2D_MAP::const_iterator INT_POINT2D_MAP_CI;
 
 RDKIT_RDGEOMETRYLIB_EXPORT std::ostream &operator<<(std::ostream &target,
                                                     const RDGeom::Point &pt);
