@@ -265,7 +265,7 @@ void streamWrite(std::ostream &ss, const T &val) {
 
 //! special case for string
 inline void streamWrite(std::ostream &ss, const std::string &what) {
-  unsigned int l = rdcast<unsigned int>(what.length());
+  auto l = rdcast<unsigned int>(what.length());
   ss.write((const char *)&l, sizeof(l));
   ss.write(what.c_str(), sizeof(char) * l);
 };
