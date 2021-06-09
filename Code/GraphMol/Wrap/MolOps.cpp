@@ -216,9 +216,7 @@ python::dict splitMolByPDBResidues(const ROMol &mol, python::object pyWhiteList,
   delete whiteList;
 
   python::dict pyres;
-  for (std::map<std::string, boost::shared_ptr<ROMol>>::const_iterator iter =
-           res.begin();
-       iter != res.end(); ++iter) {
+  for (auto iter = res.begin(); iter != res.end(); ++iter) {
     pyres[iter->first] = iter->second;
   }
   return pyres;
@@ -239,9 +237,7 @@ python::dict splitMolByPDBChainId(const ROMol &mol, python::object pyWhiteList,
   delete whiteList;
 
   python::dict pyres;
-  for (std::map<std::string, boost::shared_ptr<ROMol>>::const_iterator iter =
-           res.begin();
-       iter != res.end(); ++iter) {
+  for (auto iter = res.begin(); iter != res.end(); ++iter) {
     pyres[iter->first] = iter->second;
   }
   return pyres;
@@ -265,9 +261,7 @@ python::dict parseQueryDefFileHelper(python::object &input, bool standardize,
   }
 
   python::dict res;
-  for (std::map<std::string, ROMOL_SPTR>::const_iterator iter =
-           queryDefs.begin();
-       iter != queryDefs.end(); ++iter) {
+  for (auto iter = queryDefs.begin(); iter != queryDefs.end(); ++iter) {
     res[iter->first] = iter->second;
   }
 
@@ -858,8 +852,7 @@ ROMol *pathToSubmolHelper(const ROMol &mol, python::object &path, bool useQuery,
     // make sure the optional argument actually was a dictionary
     python::dict typecheck = python::extract<python::dict>(atomMap);
     atomMap.attr("clear")();
-    for (std::map<int, int>::const_iterator mIt = mapping.begin();
-         mIt != mapping.end(); ++mIt) {
+    for (auto mIt = mapping.begin(); mIt != mapping.end(); ++mIt) {
       atomMap[mIt->first] = mIt->second;
     }
   }

@@ -694,7 +694,7 @@ void RWMol::batchRemoveBonds() {
 
   auto &delBonds = *dp_delBonds;
   unsigned int min_idx = getNumBonds();
-  for (unsigned int i = rdcast<unsigned int>(delBonds.size()); i > 0; --i) {
+  for (auto i = rdcast<unsigned int>(delBonds.size()); i > 0; --i) {
     if (!delBonds[i - 1]) {
       continue;
     }
@@ -781,7 +781,7 @@ void RWMol::batchRemoveAtoms() {
   }
 
   auto &delAtoms = *dp_delAtoms;
-  for (unsigned int i = rdcast<unsigned int>(delAtoms.size()); i > 0; --i) {
+  for (auto i = rdcast<unsigned int>(delAtoms.size()); i > 0; --i) {
     if (!delAtoms[i - 1]) {
       continue;
     }

@@ -159,8 +159,7 @@ TEST_CASE("test3SquareMatrix") {
   data[1] = 2.0;
   data[2] = 3.0;
   data[3] = 4.0;
-  SquareMatrix<double> *D =
-      new SquareMatrix<double>(2, Matrix<double>::DATA_SPTR(data));
+  auto *D = new SquareMatrix<double>(2, Matrix<double>::DATA_SPTR(data));
   SquareMatrix<double> E(*D);
   multiply((*D), E, A);
 

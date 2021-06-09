@@ -523,8 +523,8 @@ findAllPathsOfLengthsMtoN(const ROMol &mol, unsigned int lowerLen,
 
       std::vector<boost::dynamic_bitset<>> invars;
 
-      for (PATH_LIST::const_iterator vivI = atomPaths[i].begin();
-           vivI != atomPaths[i].end(); ++vivI) {
+      for (auto vivI = atomPaths[i].begin(); vivI != atomPaths[i].end();
+           ++vivI) {
         boost::dynamic_bitset<> invar(mol.getNumBonds());
         const PATH_TYPE &resi = *vivI;
         PATH_TYPE locV;
