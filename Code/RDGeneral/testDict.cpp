@@ -113,7 +113,7 @@ void testRDAny() {
     d.setVal(RDKit::detail::computedPropName, computed);
     computed.push_back("foo");
     d.setVal(RDKit::detail::computedPropName, computed);
-    STR_VECT computed2 = d.getVal<STR_VECT>(RDKit::detail::computedPropName);
+    auto computed2 = d.getVal<STR_VECT>(RDKit::detail::computedPropName);
     TEST_ASSERT(computed2[0] == "foo");
     Dict d2(d);
     computed2 = d2.getVal<STR_VECT>(RDKit::detail::computedPropName);
@@ -473,7 +473,7 @@ void testConstReturns() {
     std::string v = "foo";
     RDAny anyv(v);
 
-    std::string tgt = rdany_cast<std::string>(anyv);
+    auto tgt = rdany_cast<std::string>(anyv);
     const std::string &ctgt = rdany_cast<std::string>(anyv);
     TEST_ASSERT(ctgt != "");
   }
@@ -537,7 +537,7 @@ void testConstReturns() {
     BOOST_LOG(rdErrorLog) << "copy" << std::endl;
     start = std::clock();
     for (int i = 0; i < nreps; ++i) {
-      std::string nv = rdany_cast<std::string>(anyv);
+      auto nv = rdany_cast<std::string>(anyv);
       ls += nv.size();
     }
     end = std::clock();

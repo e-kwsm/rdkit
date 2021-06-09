@@ -573,7 +573,7 @@ ROMol *TautomerEnumerator::pickCanonical(
       }
     }
   }
-  ROMol *res = new ROMol(*bestMol);
+  auto *res = new ROMol(*bestMol);
   static const bool cleanIt = true;
   static const bool force = true;
   MolOps::assignStereochemistry(*res, cleanIt, force);

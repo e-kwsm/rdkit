@@ -215,8 +215,7 @@ inline PyObject *managingPyObject(T *p) {
 
 template <class Copyable>
 python::object generic__copy__(python::object copyable) {
-  Copyable *newCopyable(
-      new Copyable(python::extract<const Copyable &>(copyable)));
+  auto *newCopyable(new Copyable(python::extract<const Copyable &>(copyable)));
   python::object result(
       python::detail::new_reference(managingPyObject(newCopyable)));
 
@@ -231,15 +230,14 @@ python::object generic__deepcopy__(python::object copyable, python::dict memo) {
   python::object copyMod = python::import("copy");
   python::object deepcopy = copyMod.attr("deepcopy");
 
-  Copyable *newCopyable(
-      new Copyable(python::extract<const Copyable &>(copyable)));
+  auto *newCopyable(new Copyable(python::extract<const Copyable &>(copyable)));
   python::object result(
       python::detail::new_reference(managingPyObject(newCopyable)));
 
   // HACK: copyableId shall be the same as the result of id(copyable) in Python
   // -
   // please tell me that there is a better way! (and which ;-p)
-  size_t copyableId = (size_t)(copyable.ptr());
+  auto copyableId = (size_t)(copyable.ptr());
   memo[copyableId] = result;
 
   python::extract<python::dict>(result.attr("__dict__"))().update(deepcopy(
