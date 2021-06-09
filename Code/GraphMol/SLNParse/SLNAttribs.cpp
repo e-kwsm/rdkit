@@ -446,8 +446,7 @@ void parseBondAttribs(Bond *bond, AttribListType attribs, bool doingQuery) {
 }
 
 void parseMolAttribs(ROMol *mol, AttribListType attribs) {
-  for (AttribListType::const_iterator it = attribs.begin(); it != attribs.end();
-       ++it) {
+  for (auto it = attribs.begin(); it != attribs.end(); ++it) {
     CHECK_INVARIANT(it->first == AttribAnd, "bad attrib type");
 
     boost::shared_ptr<AttribType> attribPtr = it->second;
@@ -500,9 +499,7 @@ void adjustAtomChiralities(RWMol *mol) {
       neighbors.sort();
       // figure out the bond ordering:
       std::list<int> bondOrdering;
-      for (std::list<std::pair<int, int>>::const_iterator nbrIt =
-               neighbors.begin();
-           nbrIt != neighbors.end(); ++nbrIt) {
+      for (auto nbrIt = neighbors.begin(); nbrIt != neighbors.end(); ++nbrIt) {
         bondOrdering.push_back(nbrIt->second);
         // std::cerr << " " << nbrIt->second;
       }
