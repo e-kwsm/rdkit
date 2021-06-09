@@ -368,7 +368,6 @@ void set13Bounds(const ROMol &mol, DistGeom::BoundsMatPtr mmat,
   VECT_INT_VECT atomRings = rinfo->atomRings();
   std::sort(atomRings.begin(), atomRings.end(), lessVector());
   // sort the rings based on the ring size
-  VECT_INT_VECT_CI rii;
   INT_VECT visited(npt, 0);
 
   DOUBLE_VECT angleTaken(npt, 0.0);
@@ -377,7 +376,7 @@ void set13Bounds(const ROMol &mol, DistGeom::BoundsMatPtr mmat,
   BIT_SET donePaths(nb * nb);
   // first deal with all rings and atoms in them
   unsigned int id1, id2;
-  for (rii = atomRings.begin(); rii != atomRings.end(); rii++) {
+  for (auto rii = atomRings.cbegin(); rii != atomRings.cend(); rii++) {
     unsigned int rSize = rii->size();
     aid1 = (*rii)[rSize - 1];
     for (i = 0; i < rSize; i++) {
@@ -1545,7 +1544,6 @@ void set14Bounds(const ROMol &mol, DistGeom::BoundsMatPtr mmat,
       mol.getRingInfo();  // FIX: make sure we have ring info
   CHECK_INVARIANT(rinfo, "");
   const VECT_INT_VECT &bondRings = rinfo->bondRings();
-  VECT_INT_VECT_CI rii;
   unsigned int i, aid2, aid3;
   unsigned int bid1, bid2, bid3;
   ROMol::OEDGE_ITER beg1, beg2, end1, end2;
@@ -1556,7 +1554,7 @@ void set14Bounds(const ROMol &mol, DistGeom::BoundsMatPtr mmat,
   BIT_SET ringBondPairs(nb * nb), donePaths(nb * nb * nb);
   unsigned int id1, id2, pid1, pid2, pid3, pid4;
   // first we will deal with 1-4 atoms that belong to the same ring
-  for (rii = bondRings.begin(); rii != bondRings.end(); rii++) {
+  for (auto rii = bondRings.cbegin(); rii != bondRings.cend(); rii++) {
     // we don't need deal with 3 membered rings
     unsigned int rSize = rii->size();
 
@@ -2074,9 +2072,8 @@ void _set15BoundsHelper(const ROMol &mol, unsigned int bid1, unsigned int bid2,
 // set the 15 distance bounds
 void set15Bounds(const ROMol &mol, DistGeom::BoundsMatPtr mmat,
                  ComputedData &accumData, double *distMatrix) {
-  PATH14_VECT_CI pti;
   unsigned int bid1, bid2, bid3, type;
-  for (pti = accumData.paths14.begin(); pti != accumData.paths14.end(); pti++) {
+  for (auto pti = accumData.paths14.cbegin(); pti != accumData.paths14.cend(); pti++) {
     bid1 = pti->bid1;
     bid2 = pti->bid2;
     bid3 = pti->bid3;
