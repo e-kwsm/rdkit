@@ -79,9 +79,8 @@ class PyResonanceMolSupplierCallback
 };
 
 python::object getProgressCallbackHelper(const ResonanceMolSupplier &suppl) {
-  PyResonanceMolSupplierCallback *cppCallback =
-      dynamic_cast<PyResonanceMolSupplierCallback *>(
-          suppl.getProgressCallback());
+  auto *cppCallback = dynamic_cast<PyResonanceMolSupplierCallback *>(
+      suppl.getProgressCallback());
   python::object res;
   if (cppCallback) {
     res = cppCallback->getPyCallbackObject();
