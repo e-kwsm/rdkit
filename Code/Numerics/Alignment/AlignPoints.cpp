@@ -23,11 +23,10 @@ namespace Alignments {
 RDGeom::Point3D _weightedSumOfPoints(const RDGeom::Point3DConstPtrVect &points,
                                      const DoubleVector &weights) {
   PRECONDITION(points.size() == weights.size(), "");
-  RDGeom::Point3DConstPtrVect_CI pti;
   RDGeom::Point3D tmpPt, res;
   const double *wData = weights.getData();
   unsigned int i = 0;
-  for (pti = points.begin(); pti != points.end(); pti++) {
+  for (auto pti = points.cbegin(); pti != points.cend(); pti++) {
     tmpPt = (*(*pti));
     tmpPt *= wData[i];
     res += tmpPt;
@@ -40,10 +39,9 @@ double _weightedSumOfLenSq(const RDGeom::Point3DConstPtrVect &points,
                            const DoubleVector &weights) {
   PRECONDITION(points.size() == weights.size(), "");
   double res = 0.0;
-  RDGeom::Point3DConstPtrVect_CI pti;
   const double *wData = weights.getData();
   unsigned int i = 0;
-  for (pti = points.begin(); pti != points.end(); pti++) {
+  for (auto pti = points.cbegin(); pti != points.cend(); pti++) {
     res += (wData[i] * ((*pti)->lengthSq()));
     i++;
   }
