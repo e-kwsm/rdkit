@@ -764,7 +764,7 @@ void testIssue3496759() {
 
     std::string pickle;
     MolPickler::pickleMol(*m1, pickle);
-    RWMol *m2 = new RWMol(pickle);
+    auto *m2 = new RWMol(pickle);
     TEST_ASSERT(m2);
 
     std::string smi2 = MolToSmiles(*m2, 1);
@@ -794,7 +794,7 @@ void testIssue3496759() {
 
       std::string pickle;
       MolPickler::pickleMol(*m1, pickle);
-      RWMol *m2 = new RWMol(pickle);
+      auto *m2 = new RWMol(pickle);
       TEST_ASSERT(m2);
 
       std::string smi2 = MolToSmiles(*m2, 1);
@@ -827,7 +827,7 @@ void testIssue280() {
 
     std::string pickle;
     MolPickler::pickleMol(*m1, pickle);
-    RWMol *m2 = new RWMol(pickle);
+    auto *m2 = new RWMol(pickle);
     TEST_ASSERT(m2);
     TEST_ASSERT(
         m2->getAtomWithIdx(0)->hasProp(common_properties::molAtomMapNumber));
@@ -850,7 +850,7 @@ void testIssue280() {
 
     std::string pickle;
     MolPickler::pickleMol(*m1, pickle);
-    RWMol *m2 = new RWMol(pickle);
+    auto *m2 = new RWMol(pickle);
     TEST_ASSERT(m2);
     TEST_ASSERT(
         !m2->getAtomWithIdx(0)->hasProp(common_properties::molAtomMapNumber));
@@ -873,7 +873,7 @@ void testIssue285() {
 
     std::string pickle;
     MolPickler::pickleMol(*m1, pickle);
-    RWMol *m2 = new RWMol(pickle);
+    auto *m2 = new RWMol(pickle);
     TEST_ASSERT(m2);
     TEST_ASSERT(m2->getAtomWithIdx(0)->hasProp(common_properties::dummyLabel));
     m2->getAtomWithIdx(0)->getProp(common_properties::dummyLabel, v);
@@ -910,7 +910,7 @@ void testAtomResidues() {
     std::string pkl;
     MolPickler::pickleMol(*m, pkl);
     delete m;
-    RWMol *m2 = new RWMol(pkl);
+    auto *m2 = new RWMol(pkl);
     TEST_ASSERT(m2);
     TEST_ASSERT((m2->getAtomWithIdx(0)->getMonomerInfo()));
     TEST_ASSERT(m2->getAtomWithIdx(0)->getMonomerInfo()->getName() == "m1");
@@ -1006,7 +1006,7 @@ void testPickleProps() {
   std::string pkl;
   {
     MolPickler::pickleMol(*m, pkl, PicklerOps::AllProps);
-    RWMol *m2 = new RWMol(pkl);
+    auto *m2 = new RWMol(pkl);
     TEST_ASSERT(m2);
     TEST_ASSERT(m2->getProp<double>("double") == 1.0);
     TEST_ASSERT(m2->getProp<int>("int") == 100);
@@ -1031,7 +1031,7 @@ void testPickleProps() {
 
   {
     MolPickler::pickleMol(*m, pkl, PicklerOps::MolProps);
-    RWMol *m2 = new RWMol(pkl);
+    auto *m2 = new RWMol(pkl);
     TEST_ASSERT(m2);
     TEST_ASSERT(m2->getProp<double>("double") == 1.0);
     TEST_ASSERT(m2->getProp<int>("int") == 100);
@@ -1057,7 +1057,7 @@ void testPickleProps() {
 
   {
     MolPickler::pickleMol(*m, pkl, PicklerOps::AtomProps);
-    RWMol *m2 = new RWMol(pkl);
+    auto *m2 = new RWMol(pkl);
     TEST_ASSERT(m2);
     TEST_ASSERT(!m2->hasProp("double"));
     TEST_ASSERT(!m2->hasProp("int"));
@@ -1083,7 +1083,7 @@ void testPickleProps() {
   {
     MolPickler::pickleMol(*m, pkl,
                           PicklerOps::AtomProps | PicklerOps::PrivateProps);
-    RWMol *m2 = new RWMol(pkl);
+    auto *m2 = new RWMol(pkl);
     TEST_ASSERT(m2);
     TEST_ASSERT(!m2->hasProp("double"));
     TEST_ASSERT(!m2->hasProp("int"));
@@ -1109,7 +1109,7 @@ void testPickleProps() {
 
   {
     MolPickler::pickleMol(*m, pkl, PicklerOps::BondProps);
-    RWMol *m2 = new RWMol(pkl);
+    auto *m2 = new RWMol(pkl);
     TEST_ASSERT(m2);
     TEST_ASSERT(!m2->hasProp("double"));
     TEST_ASSERT(!m2->hasProp("int"));
@@ -1135,7 +1135,7 @@ void testPickleProps() {
   {
     MolPickler::pickleMol(*m, pkl,
                           PicklerOps::BondProps | PicklerOps::PrivateProps);
-    RWMol *m2 = new RWMol(pkl);
+    auto *m2 = new RWMol(pkl);
     TEST_ASSERT(m2);
     TEST_ASSERT(!m2->hasProp("double"));
     TEST_ASSERT(!m2->hasProp("int"));
@@ -1210,7 +1210,7 @@ void testGithub1710() {
     m.getBondWithIdx(1)->setStereo(Bond::STEREOCIS);
     std::string pkl;
     MolPickler::pickleMol(m, pkl);
-    RWMol *m2 = new RWMol(pkl);
+    auto *m2 = new RWMol(pkl);
     TEST_ASSERT(m2->getBondWithIdx(1)->getStereo() == Bond::STEREOCIS);
     TEST_ASSERT(m2->getBondWithIdx(1)->getStereoAtoms()[0] == 0);
     TEST_ASSERT(m2->getBondWithIdx(1)->getStereoAtoms()[1] == 3);
@@ -1220,7 +1220,7 @@ void testGithub1710() {
     m.getBondWithIdx(1)->setStereo(Bond::STEREOTRANS);
     std::string pkl;
     MolPickler::pickleMol(m, pkl);
-    RWMol *m2 = new RWMol(pkl);
+    auto *m2 = new RWMol(pkl);
     TEST_ASSERT(m2->getBondWithIdx(1)->getStereo() == Bond::STEREOTRANS);
     TEST_ASSERT(m2->getBondWithIdx(1)->getStereoAtoms()[0] == 0);
     TEST_ASSERT(m2->getBondWithIdx(1)->getStereoAtoms()[1] == 3);
@@ -1660,7 +1660,7 @@ void testAdditionalQueryPickling() {
   m1->getAtomWithIdx(2)->expandQuery(
       makeAtomNumQuery<ATOM_LESS_QUERY>(8, "less_AtomAtomicNum"),
       Queries::CompositeQueryType::COMPOSITE_OR);
-  ATOM_SET_QUERY *sq = new ATOM_SET_QUERY();
+  auto *sq = new ATOM_SET_QUERY();
   sq->setDataFunc(queryAtomNum);
   sq->insert(6);
   sq->insert(8);

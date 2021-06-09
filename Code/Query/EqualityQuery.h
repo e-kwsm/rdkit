@@ -60,7 +60,7 @@ class RDKIT_QUERY_EXPORT EqualityQuery
 
   Query<MatchFuncArgType, DataFuncArgType, needsConversion> *copy()
       const override {
-    EqualityQuery<MatchFuncArgType, DataFuncArgType, needsConversion> *res =
+    auto *res =
         new EqualityQuery<MatchFuncArgType, DataFuncArgType, needsConversion>();
     res->setNegation(this->getNegation());
     res->setVal(this->d_val);

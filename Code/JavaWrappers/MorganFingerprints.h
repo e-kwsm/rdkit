@@ -9,8 +9,7 @@
 RDKit::SparseIntVect<std::uint32_t> *getFeatureFingerprint(
     const RDKit::ROMol &mol, unsigned int radius, bool useChirality = false,
     bool useBondTypes = true, bool useCounts = true) {
-  std::vector<std::uint32_t> *invars =
-      new std::vector<std::uint32_t>(mol.getNumAtoms());
+  auto *invars = new std::vector<std::uint32_t>(mol.getNumAtoms());
   RDKit::MorganFingerprints::getFeatureInvariants(mol, *invars);
   RDKit::SparseIntVect<std::uint32_t> *res =
       RDKit::MorganFingerprints::getFingerprint(

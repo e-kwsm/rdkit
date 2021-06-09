@@ -71,7 +71,7 @@ class RDKIT_MOLALIGN_EXPORT O3AConstraintVect {
   O3AConstraintVect() {}
   ~O3AConstraintVect() = default;
   void append(unsigned int prbIdx, unsigned int refIdx, double weight) {
-    O3AConstraint *o3aConstraint = new O3AConstraint();
+    auto *o3aConstraint = new O3AConstraint();
     o3aConstraint->d_idx = d_count;
     o3aConstraint->d_prbIdx = prbIdx;
     o3aConstraint->d_refIdx = refIdx;
