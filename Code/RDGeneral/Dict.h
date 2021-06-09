@@ -312,7 +312,7 @@ class RDKIT_RDGENERAL_EXPORT Dict {
 
   */
   void clearVal(const std::string &what) {
-    for (DataType::iterator it = _data.begin(); it < _data.end(); ++it) {
+    for (auto it = _data.begin(); it < _data.end(); ++it) {
       if (it->key == what) {
         if (_hasNonPodData) {
           RDValue::cleanup_rdvalue(it->val);
