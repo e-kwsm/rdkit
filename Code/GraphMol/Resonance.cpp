@@ -577,12 +577,10 @@ ConjElectrons::ConjElectrons(const ConjElectrons &ce)
 
 // object destructor
 ConjElectrons::~ConjElectrons() {
-  for (ConjAtomMap::const_iterator it = d_conjAtomMap.begin();
-       it != d_conjAtomMap.end(); ++it) {
+  for (auto it = d_conjAtomMap.cbegin(); it != d_conjAtomMap.cend(); ++it) {
     delete it->second;
   }
-  for (ConjBondMap::const_iterator it = d_conjBondMap.begin();
-       it != d_conjBondMap.end(); ++it) {
+  for (auto it = d_conjBondMap.cbegin(); it != d_conjBondMap.cend(); ++it) {
     delete it->second;
   }
 }
@@ -602,8 +600,7 @@ std::size_t ConjElectrons::computeFP(unsigned int flags) {
     // for each atom, we push a byte to the FP vector whose
     // 4 least significant bits are total valence and the
     // 4 most significant bits are non-bonded electrons
-    for (ConjAtomMap::const_iterator it = d_conjAtomMap.begin();
-         it != d_conjAtomMap.end(); ++it) {
+    for (auto it = d_conjAtomMap.cbegin(); it != d_conjAtomMap.cend(); ++it) {
       byte = it->second->tv() | (it->second->nb() << 4);
       fp.push_back(byte);
     }
@@ -611,8 +608,7 @@ std::size_t ConjElectrons::computeFP(unsigned int flags) {
   if (flags & FP_BONDS) {
     unsigned int i = 0;
     byte = 0;
-    for (ConjBondMap::const_iterator it = d_conjBondMap.begin();
-         it != d_conjBondMap.end(); ++it) {
+    for (auto it = d_conjBondMap.cbegin(); it != d_conjBondMap.cend(); ++it) {
       // for each bond, we push 2 bits to the FP vector which
       // represent the bond order; the FP vector is byte-aligned
       // anyway
@@ -654,14 +650,12 @@ bool ConjElectrons::storeFP(CEMap &ceMap, unsigned int flags) {
 // ConjElectrons object to the ROMol passed as reference
 void ConjElectrons::assignBondsFormalChargesToMol(ROMol &mol) {
   const Bond::BondType bondType[3] = {Bond::SINGLE, Bond::DOUBLE, Bond::TRIPLE};
-  for (ConjAtomMap::const_iterator it = d_conjAtomMap.begin();
-       it != d_conjAtomMap.end(); ++it) {
+  for (auto it = d_conjAtomMap.cbegin(); it != d_conjAtomMap.cend(); ++it) {
     unsigned int ai = it->first;
     AtomElectrons *ae = it->second;
     mol.getAtomWithIdx(ai)->setFormalCharge(ae->fc());
   }
-  for (ConjBondMap::const_iterator it = d_conjBondMap.begin();
-       it != d_conjBondMap.end(); ++it) {
+  for (auto it = d_conjBondMap.cbegin(); it != d_conjBondMap.cend(); ++it) {
     unsigned int bi = it->first;
     BondElectrons *be = it->second;
     if ((be->order() < 1) || (be->order() > 3)) {
@@ -677,12 +671,10 @@ void ConjElectrons::assignBondsFormalChargesToMol(ROMol &mol) {
 // init atom total valences and bond orders from the
 // respective atoms and bonds
 void ConjElectrons::initCeFromMol() {
-  for (ConjAtomMap::const_iterator it = d_conjAtomMap.begin();
-       it != d_conjAtomMap.end(); ++it) {
+  for (auto it = d_conjAtomMap.cbegin(); it != d_conjAtomMap.cend(); ++it) {
     it->second->initTvNbFcFromAtom();
   }
-  for (ConjBondMap::const_iterator it = d_conjBondMap.begin();
-       it != d_conjBondMap.end(); ++it) {
+  for (auto it = d_conjBondMap.cbegin(); it != d_conjBondMap.cend(); ++it) {
     it->second->initOrderFromBond();
   }
   d_currElectrons = 0;
@@ -690,8 +682,7 @@ void ConjElectrons::initCeFromMol() {
 
 // assign non-bonded electrons to atoms
 void ConjElectrons::assignNonBonded() {
-  for (ConjAtomMap::const_iterator it = d_conjAtomMap.begin();
-       it != d_conjAtomMap.end(); ++it) {
+  for (auto it = d_conjAtomMap.cbegin(); it != d_conjAtomMap.cend(); ++it) {
     AtomElectrons *ae = it->second;
     unsigned int nb = std::min(ae->neededNbForOctet(), d_currElectrons);
     decrCurrElectrons(nb);
@@ -701,8 +692,7 @@ void ConjElectrons::assignNonBonded() {
 
 // assign formal charges to atoms
 void ConjElectrons::assignFormalCharge() {
-  for (ConjAtomMap::const_iterator it = d_conjAtomMap.begin();
-       it != d_conjAtomMap.end(); ++it) {
+  for (auto it = d_conjAtomMap.cbegin(); it != d_conjAtomMap.cend(); ++it) {
     it->second->assignFormalCharge();
   }
 }
@@ -715,8 +705,8 @@ bool ConjElectrons::checkChargesAndBondOrders() {
   bool haveNitrogenGroup = false;
   bool havePosLeftOfN = false;
   bool haveNegLeftOfN = false;
-  for (ConjAtomMap::const_iterator it = d_conjAtomMap.begin();
-       areAcceptable && (it != d_conjAtomMap.end()); ++it) {
+  for (auto it = d_conjAtomMap.cbegin();
+       areAcceptable && (it != d_conjAtomMap.cend()); ++it) {
     AtomElectrons *ae = it->second;
     // formal charges should be between -2 and +1
     areAcceptable = ((ae->fc() < 2) && (ae->fc() > -3));
@@ -770,8 +760,8 @@ bool ConjElectrons::checkChargesAndBondOrders() {
       !(d_parent->flags() & ResonanceMolSupplier::ALLOW_INCOMPLETE_OCTETS)) {
     areAcceptable = !(haveIncompleteOctetRightOfC && (d_flags & HAVE_ANION));
   }
-  for (ConjBondMap::const_iterator it = d_conjBondMap.begin();
-       areAcceptable && (it != d_conjBondMap.end()); ++it) {
+  for (auto it = d_conjBondMap.cbegin();
+       areAcceptable && (it != d_conjBondMap.cend()); ++it) {
     BondElectrons *be = it->second;
     AtomElectrons *ae[2] = {d_conjAtomMap[be->bond()->getBeginAtomIdx()],
                             d_conjAtomMap[be->bond()->getEndAtomIdx()]};
@@ -908,8 +898,7 @@ void ConjElectrons::enumerateNonBonded(CEMap &ceMap, CEDegCount &ceDegCount,
   // their octet ant store their indices in aiVec
   std::vector<unsigned int> aiVec;
   unsigned int nbTotal = 0;
-  for (ConjAtomMap::const_iterator it = d_conjAtomMap.begin();
-       it != d_conjAtomMap.end(); ++it) {
+  for (auto it = d_conjAtomMap.cbegin(); it != d_conjAtomMap.cend(); ++it) {
     unsigned int nb = it->second->neededNbForOctet();
     if (nb) {
       nbTotal += nb;
@@ -934,10 +923,10 @@ void ConjElectrons::enumerateNonBonded(CEMap &ceMap, CEDegCount &ceDegCount,
     ResonanceUtils::getNumCombStartV(numCand, aiVec.size(), numComb, v);
     // if there are multiple permutations, make a copy of the original
     // ConjElectrons object, since the latter will be modified
-    ConjElectrons *ceCopy = new ConjElectrons(*this);
+    auto *ceCopy = new ConjElectrons(*this);
     // enumerate all permutations
     for (unsigned int c = 0; c < numComb; ++c) {
-      ConjElectrons *ce = new ConjElectrons(*ceCopy);
+      auto *ce = new ConjElectrons(*ceCopy);
       unsigned int vc = v;
       for (unsigned int i : aiVec) {
         AtomElectrons *ae = ce->getAtomElectronsWithIdx(i);
@@ -963,7 +952,7 @@ void ConjElectrons::enumerateNonBonded(CEMap &ceMap, CEDegCount &ceDegCount,
     }
     delete ceCopy;
   } else if (nbTotal == currElectrons()) {
-    ConjElectrons *ce = new ConjElectrons(*this);
+    auto *ce = new ConjElectrons(*this);
     // if the electrons required to satisfy all octets
     // are as many as those currently available, assignment
     // is univocal
@@ -990,8 +979,7 @@ void ConjElectrons::computeMetrics() {
       1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1090,
       1160, 1340, 1470, 1600, 1650, 1680, 1720, 1920, 1760, 1789, 1854, 2010,
       2190, 2390, 2600, 670,  890};
-  for (ConjAtomMap::const_iterator it = d_conjAtomMap.begin();
-       it != d_conjAtomMap.end(); ++it) {
+  for (auto it = d_conjAtomMap.cbegin(); it != d_conjAtomMap.cend(); ++it) {
     d_ceMetrics.d_absFormalCharges += abs(it->second->fc());
     size_t anIdx = it->second->atom()->getAtomicNum();
     d_ceMetrics.d_wtdFormalCharges +=
@@ -1015,8 +1003,7 @@ void ConjElectrons::updateDegCount(CEDegCount &ceDegCount) {
 // formal charges of the same sign and of opposite signs
 void ConjElectrons::computeDistFormalCharges() {
   unsigned int n = d_parent->mol().getNumAtoms();
-  for (ConjAtomMap::const_iterator it1 = d_conjAtomMap.begin();
-       it1 != d_conjAtomMap.end(); ++it1) {
+  for (auto it1 = d_conjAtomMap.cbegin(); it1 != d_conjAtomMap.cend(); ++it1) {
     if (!it1->second->fc()) {
       continue;
     }
@@ -1025,7 +1012,7 @@ void ConjElectrons::computeDistFormalCharges() {
       if ((it1 == it2) || !it2->second->fc()) {
         continue;
       }
-      unsigned int dist = static_cast<unsigned int>(
+      auto dist = static_cast<unsigned int>(
           MolOps::getDistanceMat(d_parent->mol())[y + it2->first] + 0.1);
       if ((it1->second->fc() * it2->second->fc()) > 0) {
         d_ceMetrics.d_fcSameSignDist += dist;
@@ -1038,8 +1025,7 @@ void ConjElectrons::computeDistFormalCharges() {
 
 // compute the sum of indices of atoms bearing a formal charge
 void ConjElectrons::computeSumFormalChargeIdxs() {
-  for (ConjAtomMap::const_iterator it = d_conjAtomMap.begin();
-       it != d_conjAtomMap.end(); ++it) {
+  for (auto it = d_conjAtomMap.cbegin(); it != d_conjAtomMap.cend(); ++it) {
     if (it->second->fc()) {
       d_ceMetrics.d_sumFormalChargeIdxs += it->first;
     }
@@ -1048,8 +1034,7 @@ void ConjElectrons::computeSumFormalChargeIdxs() {
 
 // compute the sum of indices of multiple bonds
 void ConjElectrons::computeSumMultipleBondIdxs() {
-  for (ConjBondMap::const_iterator it = d_conjBondMap.begin();
-       it != d_conjBondMap.end(); ++it) {
+  for (auto it = d_conjBondMap.cbegin(); it != d_conjBondMap.cend(); ++it) {
     if (it->second->order() > 1) {
       d_ceMetrics.d_sumMultipleBondIdxs += it->first;
     }
@@ -1115,14 +1100,13 @@ bool CEVect2::resonanceStructureCompare(const ConjElectrons *a,
 
 CEVect2::CEVect2(const CEMap &ceMap) {
   d_ceVect.reserve(ceMap.size());
-  for (CEMap::const_iterator it = ceMap.begin(); it != ceMap.end(); ++it) {
+  for (auto it = ceMap.cbegin(); it != ceMap.cend(); ++it) {
     d_ceVect.push_back(it->second);
   }
   std::sort(d_ceVect.begin(), d_ceVect.end(), resonanceStructureCompare);
   bool first = true;
   std::size_t hashPrev;
-  for (CEVect::const_iterator it = d_ceVect.begin(); it != d_ceVect.end();
-       ++it) {
+  for (auto it = d_ceVect.cbegin(); it != d_ceVect.cend(); ++it) {
     if (first || ((*it)->hash() != hashPrev)) {
       first = false;
       hashPrev = (*it)->hash();
@@ -1202,12 +1186,10 @@ AtomElectrons *ConjElectrons::getAtomElectronsWithIdx(unsigned int ai) {
 // count number of total electrons
 unsigned int ConjElectrons::countTotalElectrons() {
   // count total number of valence electrons in conjugated group
-  for (ConjBondMap::const_iterator it = d_conjBondMap.begin();
-       it != d_conjBondMap.end(); ++it) {
+  for (auto it = d_conjBondMap.cbegin(); it != d_conjBondMap.cend(); ++it) {
     d_totalElectrons += (2 * it->second->orderFromBond());
   }
-  for (ConjAtomMap::const_iterator it = d_conjAtomMap.begin();
-       it != d_conjAtomMap.end(); ++it) {
+  for (auto it = d_conjAtomMap.cbegin(); it != d_conjAtomMap.cend(); ++it) {
     const Atom *a = it->second->atom();
     d_totalElectrons +=
         it->second->oe() - a->getTotalValence() - a->getFormalCharge();
@@ -1378,8 +1360,8 @@ ResonanceMolSupplier::ResonanceMolSupplier(ROMol &mol, unsigned int flags,
 
 // object destructor
 ResonanceMolSupplier::~ResonanceMolSupplier() {
-  for (CEVect3::const_iterator ceVect3It = d_ceVect3.begin();
-       ceVect3It != d_ceVect3.end(); ++ceVect3It) {
+  for (auto ceVect3It = d_ceVect3.cbegin(); ceVect3It != d_ceVect3.cend();
+       ++ceVect3It) {
     if (!(*ceVect3It)) {
       continue;
     }

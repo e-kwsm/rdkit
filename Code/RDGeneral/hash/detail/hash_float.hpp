@@ -126,7 +126,7 @@ inline std::hash_result_t float_hash_impl(T v) {
   v -= T(0.5);
   v = gboost::hash_detail::call_ldexp(v,
                                       limits<std::hash_result_t>::digits + 1);
-  std::hash_result_t seed = static_cast<std::hash_result_t>(v);
+  auto seed = static_cast<std::hash_result_t>(v);
   v -= seed;
 
   // ceiling(digits(T) * log2(radix(T))/ digits(hash_result_t)) - 1;
@@ -136,7 +136,7 @@ inline std::hash_result_t float_hash_impl(T v) {
 
   for (std::hash_result_t i = 0; i != length; ++i) {
     v = gboost::hash_detail::call_ldexp(v, limits<std::hash_result_t>::digits);
-    std::hash_result_t part = static_cast<std::hash_result_t>(v);
+    auto part = static_cast<std::hash_result_t>(v);
     v -= part;
     hash_float_combine(seed, part);
   }

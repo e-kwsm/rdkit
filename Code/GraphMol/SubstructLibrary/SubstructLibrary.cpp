@@ -72,7 +72,7 @@ struct Bits {
        const SubstructMatchParameters &ssparams)
       : fps(nullptr), params(ssparams) {
     if (fingerprints) {
-      const TautomerPatternHolder *tp =
+      const auto *tp =
           dynamic_cast<const TautomerPatternHolder *>(fingerprints);
       if (!tp) {
         BOOST_LOG(rdWarningLog) << "Pattern fingerprints for tautomersearch "

@@ -27,7 +27,7 @@ boost::shared_ptr<ROMol> DeprotectWrap(const ROMol &mol,
 }
 
 bool DeprotectInPlaceWrap(ROMol &mol, const python::object &iterable) {
-  RWMol &rwmol = static_cast<RWMol &>(mol);
+  auto &rwmol = static_cast<RWMol &>(mol);
   if (iterable != python::object()) {
     std::vector<Deprotect::DeprotectData> deprotections;
     pythonObjectToVect<Deprotect::DeprotectData>(iterable, deprotections);

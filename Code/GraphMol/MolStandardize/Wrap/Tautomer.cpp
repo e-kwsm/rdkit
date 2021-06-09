@@ -148,7 +148,7 @@ python::tuple smilesTautomerMapItemsHelper(
 }
 
 python::object getCallbackHelper(const MolStandardize::TautomerEnumerator &te) {
-  PyTautomerEnumeratorCallback *cppCallback =
+  auto *cppCallback =
       dynamic_cast<PyTautomerEnumeratorCallback *>(te.getCallback());
   python::object res;
   if (cppCallback) {

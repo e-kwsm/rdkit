@@ -39,6 +39,7 @@
 #include <boost/dynamic_bitset.hpp>
 #include <map>
 #include <algorithm>
+#include <utility>
 #include <GraphMol/ChemTransforms/ChemTransforms.h>
 #include <GraphMol/SmilesParse/SmilesWrite.h>
 #include <GraphMol/ChemReactions/ReactionUtils.h>
@@ -312,8 +313,8 @@ bool ChemicalReaction::validate(unsigned int &numWarnings,
       ostr
           << "mapped atoms in the reactants were not mapped in the products.\n";
       ostr << "  unmapped numbers are: ";
-      for (std::vector<int>::const_iterator ivIt = mapNumbersSeen.begin();
-           ivIt != mapNumbersSeen.end(); ++ivIt) {
+      for (auto ivIt = mapNumbersSeen.cbegin(); ivIt != mapNumbersSeen.cend();
+           ++ivIt) {
         ostr << *ivIt << " ";
       }
       ostr << "\n";
@@ -453,7 +454,7 @@ void addRecursiveQueriesToReaction(
     (*reactantLabels).resize(0);
   }
 
-  for (MOL_SPTR_VECT::const_iterator rIt = rxn.beginReactantTemplates();
+  for (auto rIt = std::as_const(rxn).beginReactantTemplates();
        rIt != rxn.endReactantTemplates(); ++rIt) {
     if (reactantLabels != nullptr) {
       std::vector<std::pair<unsigned int, std::string>> labels;

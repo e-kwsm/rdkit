@@ -22,7 +22,7 @@ namespace {
 ROMol *condenseMolAbbreviationsHelper(const ROMol *mol,
                                       python::object pyabbrevs,
                                       double maxCoverage, bool sanitize) {
-  RWMol *res = new RWMol(*mol);
+  auto *res = new RWMol(*mol);
   auto abbrevs =
       pythonObjectToVect<Abbreviations::AbbreviationDefinition>(pyabbrevs);
   if (abbrevs) {
@@ -33,14 +33,14 @@ ROMol *condenseMolAbbreviationsHelper(const ROMol *mol,
 }
 
 ROMol *condenseAbbreviationSGroupHelper(const ROMol *mol) {
-  RWMol *res = new RWMol(*mol);
+  auto *res = new RWMol(*mol);
   Abbreviations::condenseAbbreviationSubstanceGroups(*res);
   return rdcast<ROMol *>(res);
 }
 
 ROMol *labelMolAbbreviationsHelper(const ROMol *mol, python::object pyabbrevs,
                                    double maxCoverage) {
-  RWMol *res = new RWMol(*mol);
+  auto *res = new RWMol(*mol);
   auto abbrevs =
       pythonObjectToVect<Abbreviations::AbbreviationDefinition>(pyabbrevs);
   if (abbrevs) {

@@ -200,9 +200,8 @@ bool RingMembershipSize::areAtomsInSameAromaticRing(const Atom *atom1,
                             it2->second.getRingIdxSet().begin(),
                             it2->second.getRingIdxSet().end(),
                             std::back_inserter(intersectVect));
-      for (std::vector<std::uint32_t>::const_iterator ivIt =
-               intersectVect.begin();
-           !areInSameAromaticRing && (ivIt != intersectVect.end()); ++ivIt) {
+      for (auto ivIt = intersectVect.cbegin();
+           !areInSameAromaticRing && (ivIt != intersectVect.cend()); ++ivIt) {
         areInSameAromaticRing = *ivIt & IS_AROMATIC_BIT;
       }
     }

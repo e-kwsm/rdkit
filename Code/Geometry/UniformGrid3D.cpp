@@ -282,7 +282,7 @@ UniformGrid3D &UniformGrid3D::operator|=(const UniformGrid3D &other) {
   PRECONDITION(compareParams(other), "incompatible grids");
 
   // EFF: we're probably doing too much copying here:
-  RDKit::DiscreteValueVect *newData =
+  auto *newData =
       new RDKit::DiscreteValueVect((*dp_storage) | (*other.dp_storage));
   delete dp_storage;
   dp_storage = newData;
@@ -295,7 +295,7 @@ UniformGrid3D &UniformGrid3D::operator&=(const UniformGrid3D &other) {
   PRECONDITION(compareParams(other), "incompatible grids");
 
   // EFF: we're probably doing too much copying here:
-  RDKit::DiscreteValueVect *newData =
+  auto *newData =
       new RDKit::DiscreteValueVect((*dp_storage) & (*other.dp_storage));
   delete dp_storage;
   dp_storage = newData;

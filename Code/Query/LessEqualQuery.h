@@ -47,9 +47,8 @@ class RDKIT_QUERY_EXPORT LessEqualQuery
 
   Query<MatchFuncArgType, DataFuncArgType, needsConversion> *copy()
       const override {
-    LessEqualQuery<MatchFuncArgType, DataFuncArgType, needsConversion> *res =
-        new LessEqualQuery<MatchFuncArgType, DataFuncArgType,
-                           needsConversion>();
+    auto *res = new LessEqualQuery<MatchFuncArgType, DataFuncArgType,
+                                   needsConversion>();
     res->setNegation(this->getNegation());
     res->setVal(this->d_val);
     res->setTol(this->d_tol);
