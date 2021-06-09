@@ -1156,7 +1156,7 @@ void checkAndCorrectChiralityOfMatchingAtomsInProduct(
       if (reactantAtom.getDegree() > productAtom->getDegree()) {
         // we lost a bond from the reactant.
         // we can just remove the unmatched reactant bond from the list
-        INT_LIST::iterator rOrderIter = rOrder.begin();
+        auto rOrderIter = rOrder.begin();
         while (rOrderIter != rOrder.end() && rOrder.size() > pOrder.size()) {
           // we may invalidate the iterator so keep track of what comes next:
           auto thisOne = rOrderIter++;

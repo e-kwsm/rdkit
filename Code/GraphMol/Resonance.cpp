@@ -928,10 +928,10 @@ void ConjElectrons::enumerateNonBonded(CEMap &ceMap, CEDegCount &ceDegCount,
     ResonanceUtils::getNumCombStartV(numCand, aiVec.size(), numComb, v);
     // if there are multiple permutations, make a copy of the original
     // ConjElectrons object, since the latter will be modified
-    ConjElectrons *ceCopy = new ConjElectrons(*this);
+    auto *ceCopy = new ConjElectrons(*this);
     // enumerate all permutations
     for (unsigned int c = 0; c < numComb; ++c) {
-      ConjElectrons *ce = new ConjElectrons(*ceCopy);
+      auto *ce = new ConjElectrons(*ceCopy);
       unsigned int vc = v;
       for (unsigned int i : aiVec) {
         AtomElectrons *ae = ce->getAtomElectronsWithIdx(i);
@@ -957,7 +957,7 @@ void ConjElectrons::enumerateNonBonded(CEMap &ceMap, CEDegCount &ceDegCount,
     }
     delete ceCopy;
   } else if (nbTotal == currElectrons()) {
-    ConjElectrons *ce = new ConjElectrons(*this);
+    auto *ce = new ConjElectrons(*this);
     // if the electrons required to satisfy all octets
     // are as many as those currently available, assignment
     // is univocal
@@ -1019,7 +1019,7 @@ void ConjElectrons::computeDistFormalCharges() {
       if ((it1 == it2) || !it2->second->fc()) {
         continue;
       }
-      unsigned int dist = static_cast<unsigned int>(
+      auto dist = static_cast<unsigned int>(
           MolOps::getDistanceMat(d_parent->mol())[y + it2->first] + 0.1);
       if ((it1->second->fc() * it2->second->fc()) > 0) {
         d_ceMetrics.d_fcSameSignDist += dist;
@@ -1109,7 +1109,7 @@ bool CEVect2::resonanceStructureCompare(const ConjElectrons *a,
 
 CEVect2::CEVect2(const CEMap &ceMap) {
   d_ceVect.reserve(ceMap.size());
-  for (CEMap::const_iterator it = ceMap.begin(); it != ceMap.end(); ++it) {
+  for (auto it = ceMap.begin(); it != ceMap.end(); ++it) {
     d_ceVect.push_back(it->second);
   }
   std::sort(d_ceVect.begin(), d_ceVect.end(), resonanceStructureCompare);

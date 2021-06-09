@@ -92,7 +92,7 @@ void AssignHsResidueInfo(RWMol &mol) {
           h_label = "H" + h_label;
           // wrap around id to '3H12'
           h_label = h_label.substr(3, 1) + h_label.substr(0, 3);
-          AtomPDBResidueInfo *newInfo = new AtomPDBResidueInfo(
+          auto *newInfo = new AtomPDBResidueInfo(
               h_label, max_serial, "", info->getResidueName(),
               info->getResidueNumber(), info->getChainId(), "", 1.0, 0.0,
               info->getIsHeteroAtom());

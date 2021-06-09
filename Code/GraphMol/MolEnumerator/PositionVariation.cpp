@@ -95,7 +95,7 @@ std::unique_ptr<ROMol> PositionVariationOp::operator()(
       throw ValueErrorException("bad element value in enumeration");
     }
   }
-  RWMol *res = new RWMol(*dp_mol);
+  auto *res = new RWMol(*dp_mol);
   for (unsigned int i = 0; i < d_variationPoints.size(); ++i) {
     const auto tpl = d_variationPoints[i];
     auto begAtomIdx = tpl.first;

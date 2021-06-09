@@ -1354,7 +1354,7 @@ O3A::O3A(int (*costFunc)(const unsigned int, const unsigned int, double,
     *(bestSDM[0]) = startSDM;
     score[0] = bestSDM[0]->scoreAlignment(scoringFunc, data);
   }
-  RDKit::MatchVectType *o3aMatchVect = new RDKit::MatchVectType(pairs[0]);
+  auto *o3aMatchVect = new RDKit::MatchVectType(pairs[0]);
   auto *o3aWeights = new RDNumeric::DoubleVector(pairs[0]);
   d_o3aMatchVect = o3aMatchVect;
   d_o3aWeights = o3aWeights;
@@ -1505,7 +1505,7 @@ O3A::O3A(ROMol &prbMol, const ROMol &refMol, void *prbProp, void *refProp,
     }
   }
   auto pairs = rdcast<unsigned int>(bestO3A->matches()->size());
-  RDKit::MatchVectType *bestO3AMatchVect = new RDKit::MatchVectType(pairs);
+  auto *bestO3AMatchVect = new RDKit::MatchVectType(pairs);
   auto *bestO3AWeights = new RDNumeric::DoubleVector(pairs);
   d_o3aMatchVect = bestO3AMatchVect;
   d_o3aWeights = bestO3AWeights;

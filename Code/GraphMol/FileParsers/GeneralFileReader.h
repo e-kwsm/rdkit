@@ -117,15 +117,15 @@ std::unique_ptr<MolSupplier> getSupplier(const std::string& path,
   if (fileFormat == "sdf") {
 #ifdef RDK_BUILD_THREADSAFE_SSS
     if (opt.numWriterThreads > 0) {
-      MultithreadedSDMolSupplier* sdsup = new MultithreadedSDMolSupplier(
+      auto* sdsup = new MultithreadedSDMolSupplier(
           strm, true, opt.sanitize, opt.removeHs, opt.strictParsing,
           opt.numWriterThreads);
       std::unique_ptr<MolSupplier> p(sdsup);
       return p;
     }
 #endif
-    ForwardSDMolSupplier* sdsup = new ForwardSDMolSupplier(
-        strm, true, opt.sanitize, opt.removeHs, opt.strictParsing);
+    auto* sdsup = new ForwardSDMolSupplier(strm, true, opt.sanitize,
+                                           opt.removeHs, opt.strictParsing);
     std::unique_ptr<MolSupplier> p(sdsup);
     return p;
   }
@@ -134,15 +134,14 @@ std::unique_ptr<MolSupplier> getSupplier(const std::string& path,
            fileFormat == "tsv") {
 #ifdef RDK_BUILD_THREADSAFE_SSS
     if (opt.numWriterThreads > 0) {
-      MultithreadedSmilesMolSupplier* smsup =
-          new MultithreadedSmilesMolSupplier(
-              strm, true, opt.delimiter, opt.smilesColumn, opt.nameColumn,
-              opt.titleLine, opt.sanitize, opt.numWriterThreads);
+      auto* smsup = new MultithreadedSmilesMolSupplier(
+          strm, true, opt.delimiter, opt.smilesColumn, opt.nameColumn,
+          opt.titleLine, opt.sanitize, opt.numWriterThreads);
       std::unique_ptr<MolSupplier> p(smsup);
       return p;
     }
 #endif
-    SmilesMolSupplier* smsup =
+    auto* smsup =
         new SmilesMolSupplier(strm, true, opt.delimiter, opt.smilesColumn,
                               opt.nameColumn, opt.titleLine, opt.sanitize);
     std::unique_ptr<MolSupplier> p(smsup);
@@ -150,15 +149,14 @@ std::unique_ptr<MolSupplier> getSupplier(const std::string& path,
   }
 #ifdef RDK_BUILD_MAEPARSER_SUPPORT
   else if (fileFormat == "mae") {
-    MaeMolSupplier* maesup =
-        new MaeMolSupplier(strm, true, opt.sanitize, opt.removeHs);
+    auto* maesup = new MaeMolSupplier(strm, true, opt.sanitize, opt.removeHs);
     std::unique_ptr<MolSupplier> p(maesup);
     return p;
   }
 #endif
   else if (fileFormat == "tdt") {
-    TDTMolSupplier* tdtsup = new TDTMolSupplier(
-        strm, true, opt.nameRecord, opt.confId2D, opt.confId3D, opt.sanitize);
+    auto* tdtsup = new TDTMolSupplier(strm, true, opt.nameRecord, opt.confId2D,
+                                      opt.confId3D, opt.sanitize);
     std::unique_ptr<MolSupplier> p(tdtsup);
     return p;
   }

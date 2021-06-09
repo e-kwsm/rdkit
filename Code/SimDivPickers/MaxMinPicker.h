@@ -155,8 +155,8 @@ RDKit::INT_VECT MaxMinPicker::lazyPick(T &func, unsigned int poolSize,
 
   RDKit::INT_VECT picks;
 
-  unsigned int memsize = (unsigned int)(poolSize * sizeof(MaxMinPickInfo));
-  MaxMinPickInfo *pinfo = new MaxMinPickInfo[memsize];
+  auto memsize = (unsigned int)(poolSize * sizeof(MaxMinPickInfo));
+  auto *pinfo = new MaxMinPickInfo[memsize];
   memset(pinfo, 0, memsize);
 
   picks.reserve(pickSize);
@@ -185,8 +185,7 @@ RDKit::INT_VECT MaxMinPicker::lazyPick(T &func, unsigned int poolSize,
     picked = 1;
 
   } else {
-    for (RDKit::INT_VECT::const_iterator pIdx = firstPicks.begin();
-         pIdx != firstPicks.end(); ++pIdx) {
+    for (auto pIdx = firstPicks.begin(); pIdx != firstPicks.end(); ++pIdx) {
       pick = static_cast<unsigned int>(*pIdx);
       if (pick >= poolSize) {
         delete[] pinfo;

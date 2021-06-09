@@ -90,7 +90,7 @@ template <typename AtomType>
 int startMol(std::vector<RWMol *> &molList, AtomType *firstAtom,
              bool doingQuery) {
   PRECONDITION(firstAtom, "empty atom");
-  RWMol *mp = new RWMol();
+  auto *mp = new RWMol();
   mp->addAtom(firstAtom, true, true);
   bookmarkAtomID(mp, firstAtom);
 
@@ -250,8 +250,8 @@ int addBranchToMol(std::vector<RWMol *> &molList, unsigned int molIdx,
        bmIt != branch->getBondBookmarks()->end(); ++bmIt) {
     CHECK_INVARIANT(bmIt->second.size() >= 1,
                     "bad bond bookmark list on branch");
-    for (ROMol::BOND_PTR_LIST::const_iterator bondIt = bmIt->second.begin();
-         bondIt != bmIt->second.end(); ++bondIt) {
+    for (auto bondIt = bmIt->second.begin(); bondIt != bmIt->second.end();
+         ++bondIt) {
       Bond *tgtBond = *bondIt;
       if (bmIt->first > 0 && mp->hasAtomBookmark(bmIt->first)) {
         Atom *tmpAtom = mp->getActiveAtom();

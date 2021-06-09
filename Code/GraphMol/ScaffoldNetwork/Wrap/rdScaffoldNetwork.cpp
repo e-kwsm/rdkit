@@ -22,7 +22,7 @@ ScaffoldNetwork::ScaffoldNetwork *createNetworkHelper(
     python::object pmols,
     const ScaffoldNetwork::ScaffoldNetworkParams &params) {
   auto mols = pythonObjectToVect<ROMOL_SPTR>(pmols);
-  ScaffoldNetwork::ScaffoldNetwork *res = new ScaffoldNetwork::ScaffoldNetwork;
+  auto *res = new ScaffoldNetwork::ScaffoldNetwork;
   if (mols) {
     NOGIL gil;
 

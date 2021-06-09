@@ -171,7 +171,7 @@ void testFilterCatalog() {
 }
 
 void testFilterCatalogEntry() {
-  SmartsMatcher *sm = new SmartsMatcher("Aromatic carbon chain");
+  auto *sm = new SmartsMatcher("Aromatic carbon chain");
   boost::shared_ptr<FilterMatcherBase> matcher(sm);
   TEST_ASSERT(!matcher->isValid());
   const int debugParse = 0;

@@ -96,8 +96,7 @@ class RDKIT_FILEPARSERS_EXPORT MolSupplier {
     // the function "tellg" does not work correctly if we do not open it this
     // way
     //   Jan 2009: Confirmed that this is still the case in visual studio 2008
-    std::ifstream *strm =
-        new std::ifstream(filename.c_str(), std::ios_base::binary);
+    auto *strm = new std::ifstream(filename.c_str(), std::ios_base::binary);
     if ((!(*strm)) || strm->bad()) {
       std::ostringstream errout;
       errout << "Bad input file " << filename;

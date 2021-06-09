@@ -906,7 +906,7 @@ extern "C" BfpSignature *makeBfpSignature(CBfp data) {
   int siglen = ebv->size();
 
   unsigned int varsize = sizeof(BfpSignature) + siglen;
-  BfpSignature *res = (BfpSignature *)palloc0(varsize);
+  auto *res = (BfpSignature *)palloc0(varsize);
   SET_VARSIZE(res, varsize);
 
   res->weight = bitstringWeight(siglen, (uint8 *)ebv->data());
@@ -1021,7 +1021,7 @@ extern "C" bytea *makeLowSparseFingerPrint(CSfp data, int numInts) {
 
   for (iter = v->getNonzeroElements().begin();
        iter != v->getNonzeroElements().end(); iter++) {
-    uint32 iterV = (uint32)iter->second;
+    auto iterV = (uint32)iter->second;
     n = iter->first % numInts;
 
     if (iterV > INTRANGEMAX) {
@@ -1051,7 +1051,7 @@ extern "C" void countOverlapValues(bytea *sign, CSfp data, int numBits,
   *sum = *overlapSum = *overlapN = 0;
 
   if (sign) {
-    unsigned char *s = (unsigned char *)VARDATA(sign);
+    auto *s = (unsigned char *)VARDATA(sign);
     int n;
 
     for (iter = v->getNonzeroElements().begin();
@@ -1080,7 +1080,7 @@ extern "C" void countLowOverlapValues(bytea *sign, CSfp data, int numInts,
                                       int *overlapUp, int *overlapDown) {
   auto *v = (SparseFP *)data;
   SparseFP::StorageType::const_iterator iter;
-  IntRange *s = (IntRange *)VARDATA(sign);
+  auto *s = (IntRange *)VARDATA(sign);
   int n;
 
   *querySum = *keySum = *overlapUp = *overlapDown = 0;
@@ -1381,7 +1381,7 @@ extern "C" CBfp makeLayeredBFP(CROMol data) {
     res = nullptr;
   }
   if (res) {
-    std::string *sres = new std::string(BitVectToBinaryText(*res));
+    auto *sres = new std::string(BitVectToBinaryText(*res));
     delete res;
     return (CBfp)sres;
   } else {
@@ -1404,7 +1404,7 @@ extern "C" CBfp makeRDKitBFP(CROMol data) {
   }
 
   if (res) {
-    std::string *sres = new std::string(BitVectToBinaryText(*res));
+    auto *sres = new std::string(BitVectToBinaryText(*res));
     delete res;
     return (CBfp)sres;
   } else {
@@ -1440,7 +1440,7 @@ extern "C" CBfp makeMorganBFP(CROMol data, int radius) {
   }
 
   if (res) {
-    std::string *sres = new std::string(BitVectToBinaryText(*res));
+    auto *sres = new std::string(BitVectToBinaryText(*res));
     delete res;
     return (CBfp)sres;
   } else {
@@ -1476,7 +1476,7 @@ extern "C" CBfp makeFeatMorganBFP(CROMol data, int radius) {
   }
 
   if (res) {
-    std::string *sres = new std::string(BitVectToBinaryText(*res));
+    auto *sres = new std::string(BitVectToBinaryText(*res));
     delete res;
     return (CBfp)sres;
   } else {
@@ -1564,7 +1564,7 @@ extern "C" CBfp makeAtomPairBFP(CROMol data) {
     elog(ERROR, "makeAtomPairBFP: Unknown exception");
   }
   if (res) {
-    std::string *sres = new std::string(BitVectToBinaryText(*res));
+    auto *sres = new std::string(BitVectToBinaryText(*res));
     delete res;
     return (CBfp)sres;
   } else {
@@ -1582,7 +1582,7 @@ extern "C" CBfp makeTopologicalTorsionBFP(CROMol data) {
     elog(ERROR, "makeTopologicalTorsionBFP: Unknown exception");
   }
   if (res) {
-    std::string *sres = new std::string(BitVectToBinaryText(*res));
+    auto *sres = new std::string(BitVectToBinaryText(*res));
     delete res;
     return (CBfp)sres;
   } else {
@@ -1599,7 +1599,7 @@ extern "C" CBfp makeMACCSBFP(CROMol data) {
     elog(ERROR, "makeMACCSBFP: Unknown exception");
   }
   if (res) {
-    std::string *sres = new std::string(BitVectToBinaryText(*res));
+    auto *sres = new std::string(BitVectToBinaryText(*res));
     delete res;
     return (CBfp)sres;
   } else {
@@ -2086,7 +2086,7 @@ extern "C" CBfp makeReactionBFP(CChemicalReaction data, int size, int fpType) {
   }
 
   if (res) {
-    std::string *sres = new std::string(BitVectToBinaryText(*res));
+    auto *sres = new std::string(BitVectToBinaryText(*res));
     delete res;
     return (CBfp)sres;
   } else {
@@ -2241,8 +2241,7 @@ extern "C" void *addMol2list(void *lst, Mol *mol) {
 extern "C" char *findMCS(void *vmols, char *params) {
   static string mcs;
   mcs.clear();
-  std::vector<RDKit::ROMOL_SPTR> *molecules =
-      (std::vector<RDKit::ROMOL_SPTR> *)vmols;
+  auto *molecules = (std::vector<RDKit::ROMOL_SPTR> *)vmols;
   // char t[256];
   // sprintf(t,"findMCS(): lst=%p, size=%u", molecules, molecules->size());
   // elog(WARNING, t);

@@ -74,15 +74,13 @@ struct TargetMatch {
     }
 
     MatchedAtomSize = match.size();
-    for (match_V_t::const_iterator mit = match.begin(); mit != match.end();
-         mit++) {
+    for (auto mit = match.begin(); mit != match.end(); mit++) {
       TargetAtomIdx[seed.MoleculeFragment.AtomsIdx[mit->first]] = mit->second;
       VisitedTargetAtoms[mit->second] = true;
     }
 
     MatchedBondSize = 0;
-    for (std::vector<const Bond*>::const_iterator bond =
-             seed.MoleculeFragment.Bonds.begin();
+    for (auto bond = seed.MoleculeFragment.Bonds.begin();
          bond != seed.MoleculeFragment.Bonds.end(); bond++) {
       unsigned i = (*bond)->getBeginAtomIdx();
       unsigned j = (*bond)->getEndAtomIdx();
