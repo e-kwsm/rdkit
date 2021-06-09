@@ -130,8 +130,7 @@ class RDKIT_QUERY_EXPORT Query {
    */
   virtual Query<MatchFuncArgType, DataFuncArgType, needsConversion> *copy()
       const {
-    Query<MatchFuncArgType, DataFuncArgType, needsConversion> *res =
-        new Query<MatchFuncArgType, DataFuncArgType, needsConversion>();
+    auto *res = new Query<MatchFuncArgType, DataFuncArgType, needsConversion>();
     for (auto iter = this->beginChildren(); iter != this->endChildren();
          ++iter) {
       res->addChild(CHILD_TYPE(iter->get()->copy()));
