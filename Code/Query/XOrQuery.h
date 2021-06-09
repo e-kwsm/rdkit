@@ -44,7 +44,7 @@ class RDKIT_QUERY_EXPORT XOrQuery
 
   Query<MatchFuncArgType, DataFuncArgType, needsConversion> *copy()
       const override {
-    XOrQuery<MatchFuncArgType, DataFuncArgType, needsConversion> *res =
+    auto *res =
         new XOrQuery<MatchFuncArgType, DataFuncArgType, needsConversion>();
 
     typename BASE::CHILD_VECT_CI i;

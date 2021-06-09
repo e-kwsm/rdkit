@@ -64,7 +64,7 @@ class argless : public std::binary_function<T, T, bool> {
 template <typename T1, typename T2>
 void rankVect(const std::vector<T1> &vect, T2 &res) {
   PRECONDITION(res.size() >= vect.size(), "vector size mismatch");
-  unsigned int nEntries = rdcast<unsigned int>(vect.size());
+  auto nEntries = rdcast<unsigned int>(vect.size());
 
   std::vector<unsigned int> indices(nEntries);
   for (unsigned int i = 0; i < nEntries; ++i) indices[i] = i;

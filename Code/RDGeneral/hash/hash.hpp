@@ -199,7 +199,7 @@ template <class T>
 std::hash_result_t hash_value(T* v)
 #endif
 {
-  std::hash_result_t x =
+  auto x =
       static_cast<std::hash_result_t>(reinterpret_cast<std::ptrdiff_t>(v));
 
   return x + (x >> 3);

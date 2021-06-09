@@ -134,8 +134,6 @@ class RDKIT_DEPICTOR_EXPORT EmbeddedAtom {
 };
 
 typedef std::map<unsigned int, EmbeddedAtom> INT_EATOM_MAP;
-typedef INT_EATOM_MAP::iterator INT_EATOM_MAP_I;
-typedef INT_EATOM_MAP::const_iterator INT_EATOM_MAP_CI;
 
 //! Class containing a fragment of a molecule that has already been embedded
 /*
@@ -295,14 +293,13 @@ class RDKIT_DEPICTOR_EXPORT EmbeddedFrag {
   const INT_EATOM_MAP &GetEmbeddedAtoms() const { return d_eatoms; }
 
   void Translate(const RDGeom::Point2D &shift) {
-    INT_EATOM_MAP_I eari;
-    for (eari = d_eatoms.begin(); eari != d_eatoms.end(); eari++) {
+    for (auto eari = d_eatoms.begin(); eari != d_eatoms.end(); eari++) {
       eari->second.loc += shift;
     }
   }
 
   EmbeddedAtom GetEmbeddedAtom(unsigned int aid) const {
-    INT_EATOM_MAP_CI posi = d_eatoms.find(aid);
+    auto posi = d_eatoms.find(aid);
     if (posi == d_eatoms.end()) {
       PRECONDITION(0, "Embedded atom does not contain embedded atom specified");
     }

@@ -292,9 +292,8 @@ EmbeddedFrag::EmbeddedFrag(const RDKit::Bond *dblBond) {
 int EmbeddedFrag::findNumNeigh(const RDGeom::Point2D &pt, double radius) {
   // find the number of atoms in the current embedded system that are within
   // 'radius' of the specified point
-  INT_EATOM_MAP_CI efi;
   int res = 0;
-  for (efi = d_eatoms.begin(); efi != d_eatoms.end(); efi++) {
+  for (auto efi = d_eatoms.cbegin(); efi != d_eatoms.cend(); efi++) {
     RDGeom::Point2D rloc = efi->second.loc;
     if ((rloc - pt).length() < radius) {
       res++;
@@ -350,9 +349,8 @@ void EmbeddedFrag::setupNewNeighs() {  // const RDKit::ROMol *mol) {
   PRECONDITION(dp_mol, "");
 
   RDKit::ROMol::ADJ_ITER nbrIdx, endNbrs;
-  INT_EATOM_MAP_I eci;
   d_attachPts.clear();
-  for (eci = d_eatoms.begin(); eci != d_eatoms.end(); eci++) {
+  for (auto eci = d_eatoms.begin(); eci != d_eatoms.end(); eci++) {
     unsigned int aid = eci->first;
     this->updateNewNeighs(aid);
   }
@@ -514,9 +512,8 @@ RDGeom::Transform2D EmbeddedFrag::computeTwoAtomTrans(
 
 void EmbeddedFrag::Reflect(const RDGeom::Point2D &loc1,
                            const RDGeom::Point2D &loc2) {
-  INT_EATOM_MAP_I ei;
   RDGeom::Point2D temp;
-  for (ei = d_eatoms.begin(); ei != d_eatoms.end(); ei++) {
+  for (auto ei = d_eatoms.begin(); ei != d_eatoms.end(); ei++) {
     ei->second.Reflect(loc1, loc2);
   }
 }
@@ -595,16 +592,15 @@ void EmbeddedFrag::reflectIfNecessaryDensity(EmbeddedFrag &embFrag,
   RDGeom::Point2D pin2 = d_eatoms[aid2].loc;
   double densityNormal = 0.0;
   double densityReflect = 0.0;
-  INT_EATOM_MAP_CI oci, tci;
   int oaid;
   RDGeom::Point2D loc1, rloc1, loc2, t1, rt1;
   const INT_EATOM_MAP &oatoms = embFrag.GetEmbeddedAtoms();
-  for (oci = oatoms.begin(); oci != oatoms.end(); oci++) {
+  for (auto oci = oatoms.cbegin(); oci != oatoms.cend(); oci++) {
     oaid = oci->first;
     if (d_eatoms.find(oaid) == d_eatoms.end()) {
       loc1 = oci->second.loc;
       rloc1 = reflectPoint(loc1, pin1, pin2);
-      for (tci = d_eatoms.begin(); tci != d_eatoms.end(); tci++) {
+      for (auto tci = d_eatoms.cbegin(); tci != d_eatoms.cend(); tci++) {
         t1 = tci->second.loc;
         t1 -= loc1;
         double td = t1.length();
@@ -658,8 +654,7 @@ void EmbeddedFrag::initFromRingCoords(const RDKit::INT_VECT &ring,
 void EmbeddedFrag::mergeRing(const EmbeddedFrag &embRing, unsigned int nCommon,
                              const RDKit::INT_VECT &pinAtoms) {
   const INT_EATOM_MAP &oatoms = embRing.GetEmbeddedAtoms();
-  INT_EATOM_MAP_CI ori;
-  for (ori = oatoms.begin(); ori != oatoms.end(); ori++) {
+  for (auto ori = oatoms.cbegin(); ori != oatoms.cend(); ori++) {
     int aid = ori->first;
     if (d_eatoms.find(aid) == d_eatoms.end()) {
       d_eatoms[aid] = ori->second;
@@ -875,9 +870,8 @@ RDKit::INT_VECT EmbeddedFrag::findCommonAtoms(const EmbeddedFrag &efrag2) {
   const INT_EATOM_MAP &eatms1 = this->GetEmbeddedAtoms();
   const INT_EATOM_MAP &eatms2 = efrag2.GetEmbeddedAtoms();
 
-  INT_EATOM_MAP_CI eri1, eri2;
-  for (eri1 = eatms1.begin(); eri1 != eatms1.end(); eri1++) {
-    for (eri2 = eatms2.begin(); eri2 != eatms2.end(); eri2++) {
+  for (auto eri1 = eatms1.cbegin(); eri1 != eatms1.cend(); eri1++) {
+    for (auto eri2 = eatms2.cbegin(); eri2 != eatms2.cend(); eri2++) {
       if (eri1->first == eri2->first) {
         res.push_back(eri1->first);
       }
@@ -995,9 +989,8 @@ void EmbeddedFrag::mergeWithCommon(EmbeddedFrag &embObj,
 
   // finally merge the fragment by copying the non common atoms
   const INT_EATOM_MAP &oatoms = embObj.GetEmbeddedAtoms();
-  INT_EATOM_MAP_CI ori;
   // copy the eatoms in embObj to this fragment
-  for (ori = oatoms.begin(); ori != oatoms.end(); ori++) {
+  for (auto ori = oatoms.cbegin(); ori != oatoms.cend(); ori++) {
     int aid = ori->first;
     if (std::find(commAtms.begin(), commAtms.end(), aid) == commAtms.end()) {
       d_eatoms[aid] = ori->second;
@@ -1126,20 +1119,18 @@ void EmbeddedFrag::expandEfrag(RDKit::INT_LIST &nratms,
 }
 
 void EmbeddedFrag::Transform(const RDGeom::Transform2D &trans) {
-  INT_EATOM_MAP_I eri;
-  for (eri = d_eatoms.begin(); eri != d_eatoms.end(); eri++) {
+  for (auto eri = d_eatoms.begin(); eri != d_eatoms.end(); eri++) {
     eri->second.Transform(trans);
   }
 }
 
 void EmbeddedFrag::computeBox() {
-  INT_EATOM_MAP_I eri;
   d_px = -1.0e8;
   d_nx = 1.0e8;
   d_py = -1.0e8;
   d_ny = 1.0e8;
 
-  for (eri = d_eatoms.begin(); eri != d_eatoms.end(); eri++) {
+  for (auto eri = d_eatoms.begin(); eri != d_eatoms.end(); eri++) {
     const RDGeom::Point2D &loc = eri->second.loc;
     if (loc.x > d_px) {
       d_px = loc.x;
@@ -1266,16 +1257,15 @@ PAIR_I_I _findClosestPair(unsigned int beg1, unsigned int end1,
 
 void EmbeddedFrag::computeDistMat(DOUBLE_SMART_PTR &dmat) {
   unsigned ai, aj;
-  INT_EATOM_MAP_I efi, efj;
   RDGeom::Point2D pti, ptj;
 
   auto tempi = d_eatoms.begin();
   tempi++;
   double *dmatPtr = dmat.get();
-  for (efi = tempi; efi != d_eatoms.end(); efi++) {
+  for (auto efi = tempi; efi != d_eatoms.end(); efi++) {
     pti = efi->second.loc;
     ai = efi->first;
-    for (efj = d_eatoms.begin(); efj != efi; efj++) {
+    for (auto efj = d_eatoms.begin(); efj != efi; efj++) {
       ptj = efj->second.loc;
       aj = efj->first;
       ptj -= pti;
@@ -1433,8 +1423,7 @@ void EmbeddedFrag::randomSampleFlipsAndPermutations(
   unsigned int si, fi, bi, ai;
   RDGeom::INT_POINT2D_MAP bestCrdMap;
   double bestDens = this->mimicDistMatAndDensityCostFunc(dmat, mimicDmatWt);
-  INT_EATOM_MAP_I efi;
-  for (efi = d_eatoms.begin(); efi != d_eatoms.end(); efi++) {
+  for (auto efi = d_eatoms.begin(); efi != d_eatoms.end(); efi++) {
     bestCrdMap[efi->first] = efi->second.loc;
   }
   for (si = 0; si < nSamples; ++si) {
@@ -1453,8 +1442,8 @@ void EmbeddedFrag::randomSampleFlipsAndPermutations(
         ai = deg4nodes[d4i];
         // collect the locations for the neighbors
         VECT_C_POINT nbrLocs;
-        for (RDKit::INT_VECT_CI aci = deg4NbrAids[d4i].begin();
-             aci != deg4NbrAids[d4i].end(); aci++) {
+        for (auto aci = deg4NbrAids[d4i].cbegin();
+             aci != deg4NbrAids[d4i].cend(); aci++) {
           nbrLocs.push_back(&(d_eatoms[*aci].loc));
         }
         INT_PAIR_VECT bndPairs = findBondsPairsToPermuteDeg4(
@@ -1478,13 +1467,13 @@ void EmbeddedFrag::randomSampleFlipsAndPermutations(
     // if (density < bestDens) {
     if (bestDens - density > 1e-4) {
       bestDens = density;
-      for (efi = d_eatoms.begin(); efi != d_eatoms.end(); efi++) {
+      for (auto efi = d_eatoms.begin(); efi != d_eatoms.end(); efi++) {
         bestCrdMap[efi->first] = efi->second.loc;
       }
     }
   }
   // now copy the best coordinates to the fragment
-  for (efi = d_eatoms.begin(); efi != d_eatoms.end(); efi++) {
+  for (auto efi = d_eatoms.begin(); efi != d_eatoms.end(); efi++) {
     efi->second.loc = bestCrdMap[efi->first];
   }
 }
@@ -1579,9 +1568,8 @@ std::vector<PAIR_I_I> EmbeddedFrag::findCollisions(const double *dmat,
 }
 
 double EmbeddedFrag::totalDensity() {
-  INT_EATOM_MAP_I efi;
   double res = 0.0;
-  for (efi = d_eatoms.begin(); efi != d_eatoms.end(); efi++) {
+  for (auto efi = d_eatoms.begin(); efi != d_eatoms.end(); efi++) {
     res += efi->second.d_density;
   }
   return res;
@@ -1700,7 +1688,7 @@ void EmbeddedFrag::flipAboutBond(unsigned int bondId, bool flipEnd) {
     }
   }
   for (auto &d_eatom : d_eatoms) {
-    RDKit::INT_VECT_CI fii = std::find(endSideAids.begin(), endSideAids.end(),
+    auto fii = std::find(endSideAids.begin(), endSideAids.end(),
                                        static_cast<int>(d_eatom.first));
     if (endSideFlip ^ (fii == endSideAids.end())) {
       d_eatom.second.Reflect(begLoc, endLoc);

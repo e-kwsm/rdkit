@@ -268,8 +268,7 @@ unsigned int copyCoordinate(RDKit::ROMol &mol, std::list<EmbeddedFrag> &efrags,
   std::list<EmbeddedFrag>::iterator eri;
   for (eri = efrags.begin(); eri != efrags.end(); eri++) {
     const INT_EATOM_MAP &eatoms = eri->GetEmbeddedAtoms();
-    INT_EATOM_MAP_CI eai;
-    for (eai = eatoms.begin(); eai != eatoms.end(); eai++) {
+    for (auto eai = eatoms.cbegin(); eai != eatoms.cend(); eai++) {
       int aid = eai->first;
       RDGeom::Point2D cr = eai->second.loc;
       RDGeom::Point3D fcr(cr.x, cr.y, 0.0);

@@ -258,7 +258,7 @@ void streamWrite(std::ostream &ss, const T &val) {
 
 //! special case for string
 inline void streamWrite(std::ostream &ss, const std::string &what) {
-  unsigned int l = rdcast<unsigned int>(what.length());
+  auto l = rdcast<unsigned int>(what.length());
   ss.write((const char *)&l, sizeof(l));
   ss.write(what.c_str(), sizeof(char) * l);
 };
@@ -477,8 +477,8 @@ inline bool streamWriteProps(std::ostream &ss, const RDProps &props,
 
   const Dict &dict = props.getDict();
   unsigned int count = 0;
-  for (Dict::DataType::const_iterator it = dict.getData().begin();
-       it != dict.getData().end(); ++it) {
+  for (auto it = dict.getData().cbegin();
+       it != dict.getData().cend(); ++it) {
     if (propnames.find(it->key) != propnames.end()) {
       if (isSerializable(*it, handlers)) {
         count++;
@@ -489,8 +489,8 @@ inline bool streamWriteProps(std::ostream &ss, const RDProps &props,
   streamWrite(ss, count);  // packed int?
 
   unsigned int writtenCount = 0;
-  for (Dict::DataType::const_iterator it = dict.getData().begin();
-       it != dict.getData().end(); ++it) {
+  for (auto it = dict.getData().cbegin();
+       it != dict.getData().cend(); ++it) {
     if (propnames.find(it->key) != propnames.end()) {
       if (isSerializable(*it, handlers)) {
         // note - not all properties are serializable, this may be

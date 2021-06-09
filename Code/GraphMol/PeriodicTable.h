@@ -85,7 +85,7 @@ class RDKIT_GRAPHMOL_EXPORT PeriodicTable {
     else if (elementSymbol == "O")
       anum = 8;
     else {
-      STR_UINT_MAP::const_iterator iter = byname.find(elementSymbol);
+      auto iter = byname.find(elementSymbol);
       if (iter != byname.end()) anum = iter->second;
     }
     POSTCONDITION(anum > -1, "Element '" + elementSymbol + "' not found");
@@ -232,9 +232,9 @@ class RDKIT_GRAPHMOL_EXPORT PeriodicTable {
   //! isotope is unknown.
   double getMassForIsotope(UINT atomicNumber, UINT isotope) const {
     PRECONDITION(atomicNumber < byanum.size(), "Atomic number not found");
-    const std::map<unsigned int, std::pair<double, double>> &m =
+    const auto &m =
         byanum[atomicNumber].d_isotopeInfoMap;
-    std::map<unsigned int, std::pair<double, double>>::const_iterator item =
+    auto item =
         m.find(isotope);
     if (item == m.end()) {
       return 0.0;
@@ -257,9 +257,9 @@ class RDKIT_GRAPHMOL_EXPORT PeriodicTable {
   //! isotope is unknown.
   double getAbundanceForIsotope(UINT atomicNumber, UINT isotope) const {
     PRECONDITION(atomicNumber < byanum.size(), "Atomic number not found");
-    const std::map<unsigned int, std::pair<double, double>> &m =
+    const auto &m =
         byanum[atomicNumber].d_isotopeInfoMap;
-    std::map<unsigned int, std::pair<double, double>>::const_iterator item =
+    auto item =
         m.find(isotope);
     if (item == m.end()) {
       return 0.0;
