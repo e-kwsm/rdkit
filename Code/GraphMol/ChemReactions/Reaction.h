@@ -128,17 +128,17 @@ class RDKIT_CHEMREACTIONS_EXPORT ChemicalReaction : public RDProps {
     df_implicitProperties = other.df_implicitProperties;
     m_reactantTemplates.clear();
     m_reactantTemplates.reserve(other.m_reactantTemplates.size());
-    for (ROMOL_SPTR reactant_template : other.m_reactantTemplates) {
+    for (auto reactant_template : other.m_reactantTemplates) {
       m_reactantTemplates.emplace_back(new RWMol(*reactant_template));
     }
     m_productTemplates.clear();
     m_productTemplates.reserve(other.m_productTemplates.size());
-    for (ROMOL_SPTR product_template : other.m_productTemplates) {
+    for (auto product_template : other.m_productTemplates) {
       m_productTemplates.emplace_back(new RWMol(*product_template));
     }
     m_agentTemplates.clear();
     m_agentTemplates.reserve(other.m_agentTemplates.size());
-    for (ROMOL_SPTR agent_template : other.m_agentTemplates) {
+    for (auto agent_template : other.m_agentTemplates) {
       m_agentTemplates.emplace_back(new RWMol(*agent_template));
     }
     d_substructParams = other.d_substructParams;
