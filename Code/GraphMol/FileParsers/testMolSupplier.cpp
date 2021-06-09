@@ -452,7 +452,7 @@ TEST_CASE("testSmilesSup") {
   REQUIRE(i == 200);
 
   fname = rdbase + "/Code/GraphMol/FileParsers/test_data/fewSmi.csv";
-  SmilesMolSupplier *nSup = new SmilesMolSupplier(fname, ",", 1, 0, false);
+  auto *nSup = new SmilesMolSupplier(fname, ",", 1, 0, false);
 
   // check the length before we read anything out...
   //  this was a problem at one point (Issue 113)
@@ -767,7 +767,7 @@ TEST_CASE("testSmilesWriter") {
 
   STR_VECT propNames;
   propNames.push_back(std::string("Column_2"));
-  SmilesWriter *writer = new SmilesWriter(oname, " ");
+  auto *writer = new SmilesWriter(oname, " ");
   writer->setProps(propNames);
 
   STR_VECT names;
