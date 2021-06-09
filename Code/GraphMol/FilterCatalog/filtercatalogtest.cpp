@@ -110,7 +110,7 @@ void testFilterCatalog() {
     int count = 0;
     while (!suppl.atEnd()) {
       mol.reset(suppl.next());
-      std::string name = mol->getProp<std::string>(common_properties::_Name);
+      auto name = mol->getProp<std::string>(common_properties::_Name);
 
       TEST_ASSERT(mol.get());
       if (catalog.hasMatch(*mol)) {
@@ -168,7 +168,7 @@ void testFilterCatalog() {
 }
 
 void testFilterCatalogEntry() {
-  SmartsMatcher *sm = new SmartsMatcher("Aromatic carbon chain");
+  auto *sm = new SmartsMatcher("Aromatic carbon chain");
   boost::shared_ptr<FilterMatcherBase> matcher(sm);
   TEST_ASSERT(!matcher->isValid());
   const int debugParse = 0;

@@ -708,7 +708,7 @@ void MolDraw2D::setScale(int width, int height, const Point2D &minv,
   }
   forceScale_ = true;
 
-  MolDraw2D_detail::DrawMol *drawMol = new MolDraw2D_detail::DrawMol(
+  auto *drawMol = new MolDraw2D_detail::DrawMol(
       panelWidth(), panelHeight(), drawOptions(), *text_drawer_, x_min, x_max,
       y_min, y_max, scale_, fontScale_);
   Point2D trans, scale, toCentre;

@@ -941,7 +941,7 @@ void testConstrainedEmbedding() {
   }
 
   {
-    RWMol *test = static_cast<RWMol *>(sdsup.next());
+    auto *test = static_cast<RWMol *>(sdsup.next());
     MolOps::addHs(*test);
     std::map<int, RDGeom::Point3D> coords;
     coords[4] = ref->getConformer().getAtomPos(0);

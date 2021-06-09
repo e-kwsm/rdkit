@@ -71,7 +71,7 @@ void FragCatalogEntry::setDescription(const FragCatParams *params) {
     INT_VECT fGroups = fMapIt->second;
     std::string label = "", temp;
 
-    INT_VECT::const_iterator fGroupIdx = fGroups.begin();
+    auto fGroupIdx = fGroups.begin();
     const ROMol *fGroup;
     for (unsigned int i = 0; i < fGroups.size() - 1; i++) {
       fGroup = params->getFuncGroup(*fGroupIdx);

@@ -109,9 +109,7 @@ MolChemicalFeatureFactory *buildFeatureFactory(std::istream &inStream) {
     // everything parsed ok
     res = new MolChemicalFeatureFactory();
     // std::copy(featDefs.begin(),featDefs.end(),res->beginFeatureDefs());
-    for (MolChemicalFeatureDef::CollectionType::const_iterator ci =
-             featDefs.begin();
-         ci != featDefs.end(); ci++) {
+    for (auto ci = featDefs.begin(); ci != featDefs.end(); ci++) {
       res->addFeatureDef(*ci);
     }
   }

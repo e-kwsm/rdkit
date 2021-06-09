@@ -113,7 +113,7 @@ MorganFeatureAtomInvGenerator *MorganFeatureAtomInvGenerator::clone() const {
 std::vector<std::uint32_t> *MorganFeatureAtomInvGenerator::getAtomInvariants(
     const ROMol &mol) const {
   unsigned int nAtoms = mol.getNumAtoms();
-  std::vector<std::uint32_t> *result = new std::vector<std::uint32_t>(nAtoms);
+  auto *result = new std::vector<std::uint32_t>(nAtoms);
 
   getFeatureInvariants(mol, *result, dp_patterns);
   return result;
@@ -125,8 +125,7 @@ MorganBondInvGenerator::MorganBondInvGenerator(const bool useBondTypes,
 
 std::vector<std::uint32_t> *MorganBondInvGenerator::getBondInvariants(
     const ROMol &mol) const {
-  std::vector<std::uint32_t> *result =
-      new std::vector<std::uint32_t>(mol.getNumBonds());
+  auto *result = new std::vector<std::uint32_t>(mol.getNumBonds());
   for (unsigned int i = 0; i < mol.getNumBonds(); ++i) {
     Bond const *bond = mol.getBondWithIdx(i);
     int32_t bondInvariant = 1;
@@ -401,8 +400,7 @@ MorganEnvGenerator<OutputType>::getEnvironments(
         std::uint32_t invar = layer;
         gboost::hash_combine(invar, currentInvariants[atomIdx]);
         bool looksChiral = (tAtom->getChiralTag() != Atom::CHI_UNSPECIFIED);
-        for (std::vector<std::pair<int32_t, uint32_t>>::const_iterator it =
-                 neighborhoodInvariants.begin();
+        for (auto it = neighborhoodInvariants.begin();
              it != neighborhoodInvariants.end(); ++it) {
           // add the contribution to the new invariant:
           gboost::hash_combine(invar, *it);

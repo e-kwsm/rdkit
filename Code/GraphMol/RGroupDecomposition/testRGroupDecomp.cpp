@@ -211,7 +211,7 @@ TEST_CASE("testGaBatch", "[RGroupDecomp]") {
 
   // All Cl's should be labeled with the same rgroup
   int i = 0;
-  for (RGroupRows::const_iterator it = rows.begin(); it != rows.end(); ++it) {
+  for (auto it = rows.cbegin(); it != rows.cend(); ++it) {
     CHECK_RGROUP(it, "Core:c1ccc([*:1])cc1 R1:Cl[*:1]", mols[i].get());
   }
   delete core;
@@ -246,8 +246,7 @@ TEST_CASE("testRGroupOnlyMatching", "[RGroupDecomp]") {
   RGroupRows rows = decomp.getRGroupsAsRows();
   // All Cl's should be labeled with the same rgroup
   int i = 0;
-  for (RGroupRows::const_iterator it = rows.begin(); it != rows.end();
-       ++it, ++i) {
+  for (auto it = rows.cbegin(); it != rows.cend(); ++it, ++i) {
     CHECK_RGROUP(it, "Core:c1ccc([*:1])cc1 R1:Cl[*:1]", mols[i].get());
   }
   delete core;
@@ -286,8 +285,7 @@ TEST_CASE("testRingMatching", "[RGroupDecomp]") {
   auto cols = decomp.getRGroupsAsColumns();
   // All Cl's should be labeled with the same rgroup
   int i = 0;
-  for (RGroupRows::const_iterator it = rows.begin(); it != rows.end();
-       ++it, ++i) {
+  for (auto it = rows.cbegin(); it != rows.cend(); ++it, ++i) {
     // Ring rgroups not supported by molzip yet.
     CHECK_RGROUP(it, ringDataRes[i]);
   }
@@ -317,8 +315,7 @@ TEST_CASE("testRingMatching2", "[RGroupDecomp]") {
   RGroupRows rows = decomp.getRGroupsAsRows();
   // All Cl's should be labeled with the same rgroup
   int i = 0;
-  for (RGroupRows::const_iterator it = rows.begin(); it != rows.end();
-       ++it, ++i) {
+  for (auto it = rows.cbegin(); it != rows.cend(); ++it, ++i) {
     CHECK_RGROUP(it, ringDataRes2[i]);
   }
   delete core;
@@ -354,8 +351,7 @@ TEST_CASE("testRingMatching3", "[RGroupDecomp]") {
     RGroupRows rows = decomp.getRGroupsAsRows();
     // All Cl's should be labeled with the same rgroup
     int i = 0;
-    for (RGroupRows::const_iterator it = rows.begin(); it != rows.end();
-         ++it, ++i) {
+    for (auto it = rows.cbegin(); it != rows.cend(); ++it, ++i) {
       CHECK_RGROUP(it, ringDataRes3[i]);
     }
   }
@@ -395,8 +391,7 @@ TEST_CASE("testMultiCore", "[RGroupDecomp]") {
   RGroupRows rows = decomp.getRGroupsAsRows();
   // All Cl's should be labeled with the same rgroup
   int i = 0;
-  for (RGroupRows::const_iterator it = rows.begin(); it != rows.end();
-       ++it, ++i) {
+  for (auto it = rows.cbegin(); it != rows.cend(); ++it, ++i) {
     // molzip doesn't support double attachments yet (it probably should)
     CHECK_RGROUP(it, coreSmiRes[i]);
   }
@@ -969,8 +964,7 @@ TEST_CASE("testRowColumnAlignmentProblem", "[RGroupDecomp]") {
                               "Core:c1cncc([*:1])c1 R1:Cl[*:1]"};
 
     int i = 0;
-    for (RGroupRows::const_iterator it = rows.begin(); it != rows.end();
-         ++it, ++i) {
+    for (auto it = rows.cbegin(); it != rows.cend(); ++it, ++i) {
       CHECK_RGROUP(it, expected[i], mols[i].get());
     }
 
@@ -1451,8 +1445,7 @@ TEST_CASE("testMultiCorePreLabelled", "[RGroupDecomp]") {
       decomp.process();
       RGroupRows rows = decomp.getRGroupsAsRows();
       i = 0;
-      for (RGroupRows::const_iterator it = rows.begin(); it != rows.end();
-           ++it, ++i) {
+      for (auto it = rows.cbegin(); it != rows.cend(); ++it, ++i) {
         CHECK_RGROUP(it, expectedRows[i]);
       }
       RGroupColumns groups = decomp.getRGroupsAsColumns();
@@ -1859,8 +1852,7 @@ M  END
           "Core:C1CCC([*:5])([*:6])CC1 R5:Br[*:5] R6:Cl[*:6]"};
       REQUIRE(rows.size() == res.size());
       size_t i = 0;
-      for (RGroupRows::const_iterator it = rows.begin(); it != rows.end();
-           ++it) {
+      for (auto it = rows.cbegin(); it != rows.cend(); ++it) {
         CHECK_RGROUP(it, res.at(i++));
       }
     }
@@ -1953,7 +1945,7 @@ TEST_CASE("testNoAlignmentAndSymmetry", "[RGroupDecomp]") {
       "Core:c1ncc([*:3])c([*:2])c1[*:1] R1:NC[*:1] R2:Cl[*:2] R3:OC[*:3]"};
   REQUIRE(rows.size() == res.size());
   i = 0;
-  for (RGroupRows::const_iterator it = rows.begin(); it != rows.end(); ++it) {
+  for (auto it = rows.cbegin(); it != rows.cend(); ++it) {
     CHECK_RGROUP(it, res.at(i++));
   }
 }
@@ -1972,7 +1964,7 @@ TEST_CASE("testSingleAtomBridge", "[RGroupDecomp]") {
   const std::string expected(
       "Core:C1CC([*:2])C1[*:1] R1:N([*:1])[*:2]"
       " R2:N([*:1])[*:2]");
-  RGroupRows::const_iterator it = rows.begin();
+  auto it = rows.cbegin();
   CHECK_RGROUP(it, expected);
 
   core = "C1([*:1])CCC1"_smiles;
@@ -2141,7 +2133,7 @@ TEST_CASE("testUnlabelledRGroupsOnAromaticNitrogen", "[RGroupDecomp]") {
       "Core:c1ccc(-c2cccc3c2cnn3[*:2])nc1 R2:C[*:2]",
       "Core:c1cc[n+]([*:1])c(-c2cccc3c2cnn3[*:2])c1 R1:CC[*:1] R2:[H][*:2]",
   };
-  for (RGroupRows::const_iterator it = rows.begin(); it != rows.end(); ++it) {
+  for (auto it = rows.cbegin(); it != rows.cend(); ++it) {
     CHECK_RGROUP(it, expected.at(i++));
   }
 }
@@ -2249,7 +2241,7 @@ C[*:2]
     std::vector<std::string> expected1{
         "Core:Fc1ccc([*:2])c([*:1])c1 R1:C[*:1] R2:Cl[*:2]"};
     i = 0;
-    for (RGroupRows::const_iterator it = rows.begin(); it != rows.end(); ++it) {
+    for (auto it = rows.cbegin(); it != rows.cend(); ++it) {
       CHECK_RGROUP(it, expected1.at(i++));
     }
     REQUIRE(decomp.add(*m2) == 1);
@@ -2260,7 +2252,7 @@ C[*:2]
         "Core:Fc1ccc([*:2])c([*:1])c1 R1:C[*:1] R2:Cl[*:2]",
         "Core:c1ccc([*:3])c([*:1])c1 R1:C[*:1] R3:Br[*:3]"};
     i = 0;
-    for (RGroupRows::const_iterator it = rows.begin(); it != rows.end(); ++it) {
+    for (auto it = rows.cbegin(); it != rows.cend(); ++it) {
       CHECK_RGROUP(it, expected2.at(i++));
     }
   }
@@ -2287,7 +2279,7 @@ C[*:2]
         "Core:c1cc([*:2])c([*:1])cc1[*:3] R1:C[*:1] R2:Br[*:2] R3:[H][*:3]",
         "Core:Fc1ccc([*:2])c([*:1])c1 R1:C[*:1] R2:[H][*:2]"};
     size_t i = 0;
-    for (RGroupRows::const_iterator it = rows.begin(); it != rows.end(); ++it) {
+    for (auto it = rows.cbegin(); it != rows.cend(); ++it) {
       CHECK_RGROUP(it, expected.at(i++));
     }
   }
@@ -2339,7 +2331,7 @@ M  END
   REQUIRE(pos == std::string::npos);
   std::string expected(
       "Core:c1cc([*:2])ncc1[*:1] R1:Cl[*:1] R2:C1CCN([*:2])C1");
-  RGroupRows::const_iterator it = rows.begin();
+  auto it = rows.cbegin();
   CHECK_RGROUP(it, expected);
 }
 

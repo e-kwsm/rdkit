@@ -155,7 +155,7 @@ RDKit::INT_VECT MaxMinPicker::lazyPick(T &func, unsigned int poolSize,
 
   RDKit::INT_VECT picks;
 
-  unsigned int memsize = (unsigned int)(poolSize * sizeof(MaxMinPickInfo));
+  auto memsize = (unsigned int)(poolSize * sizeof(MaxMinPickInfo));
   std::unique_ptr<MaxMinPickInfo[]> pinfo(new MaxMinPickInfo[memsize]);
   memset(pinfo.get(), 0, memsize);
 

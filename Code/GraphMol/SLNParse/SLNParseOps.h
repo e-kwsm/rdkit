@@ -90,7 +90,7 @@ template <typename AtomType>
 int startMol(std::vector<RWMol *> &molList, AtomType *firstAtom,
              bool doingQuery) {
   PRECONDITION(firstAtom, "empty atom");
-  RWMol *mp = new RWMol();
+  auto *mp = new RWMol();
   mp->addAtom(firstAtom, true, true);
   bookmarkAtomID(mp, firstAtom);
 
@@ -219,8 +219,7 @@ int addBranchToMol(std::vector<RWMol *> &molList, unsigned int molIdx,
   mp->insertMol(*branch);
 
   // copy in any atom bookmarks from the branch:
-  for (ROMol::ATOM_BOOKMARK_MAP::const_iterator bmIt =
-           branch->getAtomBookmarks()->begin();
+  for (auto bmIt = branch->getAtomBookmarks()->begin();
        bmIt != branch->getAtomBookmarks()->end(); ++bmIt) {
     if (bmIt->first < 0) {
       continue;
@@ -245,13 +244,12 @@ int addBranchToMol(std::vector<RWMol *> &molList, unsigned int molIdx,
   }
 
   // loop over bond bookmarks in the branch and close the corresponding rings
-  for (ROMol::BOND_BOOKMARK_MAP::const_iterator bmIt =
-           branch->getBondBookmarks()->begin();
+  for (auto bmIt = branch->getBondBookmarks()->begin();
        bmIt != branch->getBondBookmarks()->end(); ++bmIt) {
     CHECK_INVARIANT(bmIt->second.size() >= 1,
                     "bad bond bookmark list on branch");
-    for (ROMol::BOND_PTR_LIST::const_iterator bondIt = bmIt->second.begin();
-         bondIt != bmIt->second.end(); ++bondIt) {
+    for (auto bondIt = bmIt->second.begin(); bondIt != bmIt->second.end();
+         ++bondIt) {
       Bond *tgtBond = *bondIt;
       if (bmIt->first > 0 && mp->hasAtomBookmark(bmIt->first)) {
         Atom *tmpAtom = mp->getActiveAtom();
@@ -319,7 +317,7 @@ int addFragToMol(std::vector<RWMol *> &molList, unsigned int molIdx,
 //! convenience function to convert the argument to a string
 template <typename T>
 std::string convertToString(T val) {
-  std::string res = boost::lexical_cast<std::string>(val);
+  auto res = boost::lexical_cast<std::string>(val);
   return res;
 }
 

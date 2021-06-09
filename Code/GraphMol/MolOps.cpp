@@ -861,7 +861,7 @@ unsigned int getMolFrags(const ROMol &mol, VECT_INT_VECT &frags) {
     comMap[mi].push_back(i);
   }
 
-  for (INT_INT_VECT_MAP_CI mci = comMap.begin(); mci != comMap.end(); mci++) {
+  for (auto mci = comMap.begin(); mci != comMap.end(); mci++) {
     frags.push_back((*mci).second);
   }
   return rdcast<unsigned int>(frags.size());

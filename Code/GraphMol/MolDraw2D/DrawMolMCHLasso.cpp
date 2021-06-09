@@ -430,8 +430,8 @@ void DrawMolMCHLasso::makeIntersectingArcs(
     auto radI = getLassoWidth(this, i, lassoNum);
     if (intersects[i].size() == 1 && intersects[i][0] == i) {
       std::vector<Point2D> pts{atCds_[i], Point2D{radI, radI}};
-      DrawShapeArc *arc = new DrawShapeArc(pts, 0.0, 360.0, LINE_WIDTH,
-                                           SCALE_LINE_WIDTH, col, false, i);
+      auto *arc = new DrawShapeArc(pts, 0.0, 360.0, LINE_WIDTH,
+                                   SCALE_LINE_WIDTH, col, false, i);
       arcs.push_back(arc);
     } else {
       std::vector<double> arcAngs;
@@ -462,7 +462,7 @@ void DrawMolMCHLasso::makeIntersectingArcs(
         if (!areArcEndsInOtherCircle(atCds_[i], radI, sortedArcAngs[j + 1],
                                      sortedArcAngs[j + 2], i, this,
                                      intersects[i], lassoNum)) {
-          DrawShapeArc *arc =
+          auto *arc =
               new DrawShapeArc(pts, sortedArcAngs[j + 1], sortedArcAngs[j + 2],
                                LINE_WIDTH, SCALE_LINE_WIDTH, col, false, i);
           arcs.push_back(arc);
@@ -474,7 +474,7 @@ void DrawMolMCHLasso::makeIntersectingArcs(
       if (!areArcEndsInOtherCircle(atCds_[i], radI, sortedArcAngs.back(),
                                    sortedArcAngs.front(), i, this,
                                    intersects[i], lassoNum)) {
-        DrawShapeArc *arc =
+        auto *arc =
             new DrawShapeArc(pts, sortedArcAngs.back(), sortedArcAngs.front(),
                              LINE_WIDTH, SCALE_LINE_WIDTH, col, false, i);
         arcs.push_back(arc);
@@ -537,7 +537,7 @@ void DrawMolMCHLasso::extractBondLines(
                                     lassoWidthI, p2, p1);
             adjustLineEndForEllipse(atCds_[colAtoms[j]], lassoWidthJ,
                                     lassoWidthJ, p1, p2);
-            DrawShapeSimpleLine *pl = new DrawShapeSimpleLine(
+            auto *pl = new DrawShapeSimpleLine(
                 {p1, p2}, LINE_WIDTH, SCALE_LINE_WIDTH, col, colAtoms[i],
                 colAtoms[j], bond->getIdx(), noDash);
             lines.emplace_back(pl);
@@ -583,10 +583,10 @@ DrawShapeArc *makeArc(LinePair &lp1, LinePair &lp2, const Point2D &atCds) {
     adjustLine(lp2.line1, ip);
     return nullptr;
   }
-  DrawShapeArc *arc = new DrawShapeArc(
-      {atCds, {lp1.radius, lp1.radius}}, lp1.angle2, lp2.angle1,
-      lp1.line1->lineWidth_, lp1.line1->scaleLineWidth_, lp1.line1->lineColour_,
-      false, lp1.atom);
+  auto *arc = new DrawShapeArc({atCds, {lp1.radius, lp1.radius}}, lp1.angle2,
+                               lp2.angle1, lp1.line1->lineWidth_,
+                               lp1.line1->scaleLineWidth_,
+                               lp1.line1->lineColour_, false, lp1.atom);
   return arc;
 }
 
@@ -601,7 +601,7 @@ void DrawMolMCHLasso::extractAtomArcs(
       continue;
     }
     if (atomLine.size() == 1) {
-      DrawShapeArc *arc = new DrawShapeArc(
+      auto *arc = new DrawShapeArc(
           {atCds_[atomLine[0].atom], {atomLine[0].radius, atomLine[0].radius}},
           atomLine[0].angle2, atomLine[0].angle1, atomLine[0].line1->lineWidth_,
           atomLine[0].line1->scaleLineWidth_, atomLine[0].line1->lineColour_,

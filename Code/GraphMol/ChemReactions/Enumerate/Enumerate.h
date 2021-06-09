@@ -171,7 +171,7 @@ class RDKIT_CHEMREACTIONS_EXPORT EnumerateLibrary
       std::string pickle;
       for (auto &j : m_bb) {
         ar & pickle;
-        RWMol *mol = new RWMol();
+        auto *mol = new RWMol();
         MolPickler::molFromPickle(pickle, *mol);
         j.reset(mol);
       }
