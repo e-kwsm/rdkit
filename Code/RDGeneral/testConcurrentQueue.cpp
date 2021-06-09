@@ -11,7 +11,7 @@
 using namespace RDKit;
 
 TEST_CASE("testPushAndPop") {
-  ConcurrentQueue<int> *q = new ConcurrentQueue<int>(4);
+  auto *q = new ConcurrentQueue<int>(4);
   int e1, e2, e3;
   REQUIRE(q->isEmpty());
 

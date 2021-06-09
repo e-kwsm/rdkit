@@ -15,6 +15,7 @@
 #include "RGroupMatch.h"
 #include "RGroupGa.h"
 #include "GraphMol/MolEnumerator/MolEnumerator.h"
+#include <utility>
 
 // #define VERBOSE 1
 
@@ -210,7 +211,7 @@ std::vector<RGroupMatch> RGroupDecompData::GetCurrentBestPermutation() const {
     }
     bool allH = true;
     for (auto &position : results) {
-      R_DECOMP::const_iterator rgroup = position.rgroups.find(label);
+      auto rgroup = std::as_const(position.rgroups).find(label);
       bool labelHasCore =
           labelCores[label].find(position.core_idx) != labelCores[label].end();
       if (labelHasCore && rgroup != position.rgroups.end() &&
@@ -613,7 +614,7 @@ void RGroupDecompData::relabel() {
 double RGroupDecompData::score(
     const std::vector<size_t> &permutation,
     FingerprintVarianceScoreData *fingerprintVarianceScoreData) const {
-  RGroupScore scoreMethod = static_cast<RGroupScore>(params.scoreMethod);
+  auto scoreMethod = static_cast<RGroupScore>(params.scoreMethod);
   switch (scoreMethod) {
     case Match:
       return rGroupScorer.matchScore(permutation, matches, labels);

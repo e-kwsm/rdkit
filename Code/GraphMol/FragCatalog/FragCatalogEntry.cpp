@@ -71,7 +71,7 @@ void FragCatalogEntry::setDescription(const FragCatParams *params) {
     INT_VECT fGroups = fMapIt->second;
     std::string label = "", temp;
 
-    INT_VECT::const_iterator fGroupIdx = fGroups.begin();
+    auto fGroupIdx = fGroups.cbegin();
     const ROMol *fGroup;
     for (unsigned int i = 0; i < fGroups.size() - 1; i++) {
       fGroup = params->getFuncGroup(*fGroupIdx);
@@ -196,7 +196,7 @@ void FragCatalogEntry::toStream(std::ostream &ss) const {
     INT_VECT tmpVect = iivmci.second;
     tmpInt = tmpVect.size();
     streamWrite(ss, tmpInt);
-    for (INT_VECT_CI ivci = tmpVect.begin(); ivci != tmpVect.end(); ivci++) {
+    for (auto ivci = tmpVect.cbegin(); ivci != tmpVect.cend(); ivci++) {
       tmpInt = *ivci;
       streamWrite(ss, tmpInt);
     }
