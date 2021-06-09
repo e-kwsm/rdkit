@@ -66,9 +66,7 @@ void tversky_helper(unsigned int threadId, unsigned int numThreads,
                                               args->threshold);
     (*args->res)[i].clear();
     (*args->res)[i].reserve(r_res.size());
-    for (std::vector<std::pair<double, unsigned int>>::const_iterator rit =
-             r_res.begin();
-         rit != r_res.end(); ++rit) {
+    for (auto rit = r_res.begin(); rit != r_res.end(); ++rit) {
       (*args->res)[i].push_back(
           MultiFPBReader::ResultTuple(rit->first, rit->second, i));
     }
@@ -84,9 +82,7 @@ void tani_helper(unsigned int threadId, unsigned int numThreads,
         args->readers[i]->getTanimotoNeighbors(args->bv, args->threshold);
     (*args->res)[i].clear();
     (*args->res)[i].reserve(r_res.size());
-    for (std::vector<std::pair<double, unsigned int>>::const_iterator rit =
-             r_res.begin();
-         rit != r_res.end(); ++rit) {
+    for (auto rit = r_res.begin(); rit != r_res.end(); ++rit) {
       (*args->res)[i].push_back(
           MultiFPBReader::ResultTuple(rit->first, rit->second, i));
     }
