@@ -459,7 +459,7 @@ void addRecursiveQueriesToReaction(
     (*reactantLabels).resize(0);
   }
 
-  for (MOL_SPTR_VECT::const_iterator rIt = rxn.beginReactantTemplates();
+  for (auto rIt = rxn.beginReactantTemplates();
        rIt != rxn.endReactantTemplates(); ++rIt) {
     if (reactantLabels != nullptr) {
       std::vector<std::pair<unsigned int, std::string>> labels;

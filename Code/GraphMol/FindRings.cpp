@@ -172,11 +172,11 @@ void findSSSRforDupCands(const ROMol &mol, VECT_INT_VECT &res,
         // now find the smallest ring/s around (*dupi)
         VECT_INT_VECT srings;
         bfs_workspace.smallestRingsBfs(mol, dupCand, srings, activeBondsCopy);
-        for (const auto &sring : srings) {
-          if (sring.size() < minSiz) {
-            minSiz = rdcast<unsigned int>(sring.size());
+        for (const auto &sri : srings) {
+          if (sri.size() < minSiz) {
+            minSiz = rdcast<unsigned int>(sri.size());
           }
-          nrings.push_back(sring);
+          nrings.push_back(sri);
         }
       }
       for (const auto &nring : nrings) {

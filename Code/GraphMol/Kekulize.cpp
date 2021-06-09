@@ -30,10 +30,10 @@ void backTrack(RWMol &mol, INT_INT_DEQ_MAP &, int lastOpt, INT_VECT &done,
   INT_VECT tdone;
   tdone.insert(tdone.end(), done.begin(), ei);
 
-  INT_VECT_CRI eri = std::find(done.rbegin(), done.rend(), lastOpt);
+  auto eri = std::find(done.rbegin(), done.rend(), lastOpt);
   ++eri;
   // and push them back onto the stack
-  for (INT_VECT_CRI ri = done.rbegin(); ri != eri; ++ri) {
+  for (auto ri = done.rbegin(); ri != eri; ++ri) {
     aqueue.push_front(*ri);
   }
 
