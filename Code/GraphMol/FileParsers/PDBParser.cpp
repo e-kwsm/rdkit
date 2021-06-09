@@ -239,7 +239,7 @@ void PDBAtomLine(RWMol *mol, const char *ptr, unsigned int len,
   }
 
   tmp = std::string(ptr + 12, 4);
-  AtomPDBResidueInfo *info = new AtomPDBResidueInfo(tmp, serialno);
+  auto *info = new AtomPDBResidueInfo(tmp, serialno);
   atom->setMonomerInfo(info);
 
   if (len >= 20) {
