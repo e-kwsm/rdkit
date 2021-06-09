@@ -73,9 +73,8 @@ class ComputedData {
     bondAdj.reset(bAdj);
     auto *bAngles = new RDNumeric::DoubleSymmMatrix(nBonds, -1.0);
     bondAngles.reset(bAngles);
-    DGeomHelpers::BIT_SET::size_type capacity =
-        boost::numeric_cast<DGeomHelpers::BIT_SET::size_type>(
-            static_cast<unsigned long>(nBonds) * nBonds * nBonds);
+    auto capacity = boost::numeric_cast<DGeomHelpers::BIT_SET::size_type>(
+        static_cast<unsigned long>(nBonds) * nBonds * nBonds);
     cisPaths.resize(capacity);
     transPaths.resize(capacity);
     set15Atoms.resize(nAtoms * nAtoms);
