@@ -88,7 +88,7 @@ void testGlobalPickleProps() {
   {
     MolPickler::setDefaultPickleProperties(PicklerOps::AllProps);
     MolPickler::pickleMol(*m, pkl);
-    RWMol *m2 = new RWMol(pkl);
+    auto *m2 = new RWMol(pkl);
     TEST_ASSERT(m2);
     TEST_ASSERT(m2->getProp<double>("double") == 1.0);
     TEST_ASSERT(m2->getProp<int>("int") == 100);
@@ -115,7 +115,7 @@ void testGlobalPickleProps() {
   {
     MolPickler::setDefaultPickleProperties(PicklerOps::MolProps);
     MolPickler::pickleMol(*m, pkl);
-    RWMol *m2 = new RWMol(pkl);
+    auto *m2 = new RWMol(pkl);
     TEST_ASSERT(m2);
     TEST_ASSERT(m2->getProp<double>("double") == 1.0);
     TEST_ASSERT(m2->getProp<int>("int") == 100);
@@ -141,7 +141,7 @@ void testGlobalPickleProps() {
   {
     MolPickler::setDefaultPickleProperties(PicklerOps::AtomProps);
     MolPickler::pickleMol(*m, pkl);
-    RWMol *m2 = new RWMol(pkl);
+    auto *m2 = new RWMol(pkl);
     TEST_ASSERT(m2);
     TEST_ASSERT(!m2->hasProp("double"));
     TEST_ASSERT(!m2->hasProp("int"));
@@ -169,7 +169,7 @@ void testGlobalPickleProps() {
                                            PicklerOps::PrivateProps);
 
     MolPickler::pickleMol(*m, pkl);
-    RWMol *m2 = new RWMol(pkl);
+    auto *m2 = new RWMol(pkl);
     TEST_ASSERT(m2);
     TEST_ASSERT(!m2->hasProp("double"));
     TEST_ASSERT(!m2->hasProp("int"));
@@ -195,7 +195,7 @@ void testGlobalPickleProps() {
   {
     MolPickler::setDefaultPickleProperties(PicklerOps::BondProps);
     MolPickler::pickleMol(*m, pkl);
-    RWMol *m2 = new RWMol(pkl);
+    auto *m2 = new RWMol(pkl);
     TEST_ASSERT(m2);
     TEST_ASSERT(!m2->hasProp("double"));
     TEST_ASSERT(!m2->hasProp("int"));
@@ -223,7 +223,7 @@ void testGlobalPickleProps() {
                                            PicklerOps::PrivateProps);
 
     MolPickler::pickleMol(*m, pkl);
-    RWMol *m2 = new RWMol(pkl);
+    auto *m2 = new RWMol(pkl);
     TEST_ASSERT(m2);
     TEST_ASSERT(!m2->hasProp("double"));
     TEST_ASSERT(!m2->hasProp("int"));

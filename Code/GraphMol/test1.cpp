@@ -1275,7 +1275,7 @@ M  END
     TEST_ASSERT(m->getNumAtoms() == 4);
     const Atom *a = m->getAtomWithIdx(3);
     TEST_ASSERT(a->hasQuery());
-    const QueryAtom *qa = dynamic_cast<const QueryAtom *>(a);
+    const auto *qa = dynamic_cast<const QueryAtom *>(a);
     TEST_ASSERT(qa);
     TEST_ASSERT(describeQuery(a) == R"MOL(AtomAnd
   AtomAnd
@@ -1297,7 +1297,7 @@ void testReplaceChargedAtomWithQueryAtom() {
   TEST_ASSERT(mol.get());
   auto a = mol->getAtomWithIdx(0);
   TEST_ASSERT(a);
-  const QueryAtom *qa = dynamic_cast<const QueryAtom *>(
+  const auto *qa = dynamic_cast<const QueryAtom *>(
       QueryOps::replaceAtomWithQueryAtom(mol.get(), a));
   TEST_ASSERT(qa);
   TEST_ASSERT(SmartsWrite::GetAtomSmarts(qa) == "[#7&+]");
