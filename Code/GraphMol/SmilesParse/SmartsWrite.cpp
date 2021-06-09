@@ -912,7 +912,7 @@ std::string GetAtomSmarts(const Atom *atom, const SmilesWriteParams &params) {
     return res;
   } else {
     if ((descrip == "AtomOr") || (descrip == "AtomAnd")) {
-      const QueryAtom *qatom = dynamic_cast<const QueryAtom *>(atom);
+      const auto *qatom = dynamic_cast<const QueryAtom *>(atom);
       PRECONDITION(qatom, "could not convert atom to query atom");
       // we have a composite query
       needParen = true;
@@ -926,7 +926,7 @@ std::string GetAtomSmarts(const Atom *atom, const SmilesWriteParams &params) {
       res = getRecursiveStructureQuerySmarts(query, params);
       needParen = true;
     } else {  // we have a simple smarts
-      const QueryAtom *qatom = dynamic_cast<const QueryAtom *>(atom);
+      const auto *qatom = dynamic_cast<const QueryAtom *>(atom);
       PRECONDITION(qatom, "could not convert atom to query atom");
       res = getAtomSmartsSimple(qatom, query, needParen, true, params);
       if (query->getNegation()) {
