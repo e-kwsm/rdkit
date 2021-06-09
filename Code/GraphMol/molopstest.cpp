@@ -1816,7 +1816,7 @@ void testShortestPath() {
 
     INT_LIST path = MolOps::getShortestPath(*m, 1, 20);
     CHECK_INVARIANT(path.size() == 7, "");
-    INT_LIST_CI pi = path.begin();
+    auto pi = path.begin();
     CHECK_INVARIANT((*pi) == 1, "");
     pi++;
     CHECK_INVARIANT((*pi) == 2, "");
@@ -1841,7 +1841,7 @@ void testShortestPath() {
     INT_LIST path = MolOps::getShortestPath(*m, 0, 1);
     std::cerr << "path: " << path.size() << std::endl;
     CHECK_INVARIANT(path.size() == 2, "");
-    INT_LIST_CI pi = path.begin();
+    auto pi = path.begin();
     CHECK_INVARIANT((*pi) == 0, "");
     pi++;
     CHECK_INVARIANT((*pi) == 1, "");
@@ -1860,7 +1860,7 @@ void testShortestPath() {
 
     INT_LIST path = MolOps::getShortestPath(*m, 8, 11);
     CHECK_INVARIANT(path.size() == 7, "");
-    INT_LIST_CI pi = path.begin();
+    auto pi = path.begin();
     CHECK_INVARIANT((*pi) == 8, "");
     pi++;
     CHECK_INVARIANT((*pi) == 7, "");
