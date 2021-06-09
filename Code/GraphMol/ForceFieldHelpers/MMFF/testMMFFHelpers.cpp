@@ -157,8 +157,7 @@ void testMMFFBuilder1() {
   auto *conf = new Conformer(mol->getNumAtoms());
   int cid = static_cast<int>(mol->addConformer(conf, true));
   TEST_ASSERT(mol);
-  MMFF::MMFFMolProperties *mmffMolProperties =
-      new MMFF::MMFFMolProperties(*mol);
+  auto *mmffMolProperties = new MMFF::MMFFMolProperties(*mol);
   TEST_ASSERT(mmffMolProperties);
   TEST_ASSERT(mmffMolProperties->isValid());
   field = new ForceFields::ForceField();
@@ -660,8 +659,7 @@ void testSFIssue1653802() {
   mol = MolFileToMol(pathName + "/cyclobutadiene.mol", false);
   TEST_ASSERT(mol);
   MolOps::sanitizeMol(*mol);
-  MMFF::MMFFMolProperties *mmffMolProperties =
-      new MMFF::MMFFMolProperties(*mol);
+  auto *mmffMolProperties = new MMFF::MMFFMolProperties(*mol);
   TEST_ASSERT(mmffMolProperties);
 
   boost::shared_array<std::uint8_t> nbrMat;
@@ -764,8 +762,7 @@ void testGithub162() {
     ROMol *mol = SmilesToMol("C1=CNC=C1");
     TEST_ASSERT(mol);
     TEST_ASSERT(mol->getAtomWithIdx(2)->getNumExplicitHs() == 1);
-    MMFF::MMFFMolProperties *mmffMolProperties =
-        new MMFF::MMFFMolProperties(*mol);
+    auto *mmffMolProperties = new MMFF::MMFFMolProperties(*mol);
     TEST_ASSERT(mmffMolProperties);
     TEST_ASSERT(mmffMolProperties->isValid());
     TEST_ASSERT(mol->getAtomWithIdx(2)->getNumExplicitHs() == 1);
@@ -786,8 +783,7 @@ void testMMFFParamGetters() {
     ROMol *molH = MolOps::addHs(*mol);
     delete mol;
     TEST_ASSERT(molH);
-    MMFF::MMFFMolProperties *mmffMolProperties =
-        new MMFF::MMFFMolProperties(*molH);
+    auto *mmffMolProperties = new MMFF::MMFFMolProperties(*molH);
     TEST_ASSERT(mmffMolProperties);
     TEST_ASSERT(mmffMolProperties->isValid());
     unsigned int bondType;
@@ -1048,8 +1044,7 @@ void testGithub224() {
   {
     ROMol *mol = SmilesToMol("[1*]C");
     TEST_ASSERT(mol);
-    MMFF::MMFFMolProperties *mmffMolProperties =
-        new MMFF::MMFFMolProperties(*mol);
+    auto *mmffMolProperties = new MMFF::MMFFMolProperties(*mol);
     TEST_ASSERT(mmffMolProperties);
     TEST_ASSERT(!mmffMolProperties->isValid());
 
@@ -1059,8 +1054,7 @@ void testGithub224() {
   {
     ROMol *mol = SmilesToMol("[1*]c1ccc(S(=O)(=O)Nc2ccc([2*])cc2)cc1");
     TEST_ASSERT(mol);
-    MMFF::MMFFMolProperties *mmffMolProperties =
-        new MMFF::MMFFMolProperties(*mol);
+    auto *mmffMolProperties = new MMFF::MMFFMolProperties(*mol);
     TEST_ASSERT(mmffMolProperties);
     TEST_ASSERT(!mmffMolProperties->isValid());
 
