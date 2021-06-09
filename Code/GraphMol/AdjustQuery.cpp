@@ -234,7 +234,7 @@ void setMDLAromaticity(RWMol &mol) {
 
       QueryBond qbSingleAromatic;
       {
-        BOND_OR_QUERY *q = new BOND_OR_QUERY;
+        auto *q = new BOND_OR_QUERY;
         q->addChild(QueryBond::QUERYBOND_QUERY::CHILD_TYPE(
             makeBondOrderEqualsQuery(Bond::SINGLE)));
         q->addChild(QueryBond::QUERYBOND_QUERY::CHILD_TYPE(
@@ -244,7 +244,7 @@ void setMDLAromaticity(RWMol &mol) {
       }
       QueryBond qbDoubleAromatic;
       {
-        BOND_OR_QUERY *q = new BOND_OR_QUERY;
+        auto *q = new BOND_OR_QUERY;
         q->addChild(QueryBond::QUERYBOND_QUERY::CHILD_TYPE(
             makeBondOrderEqualsQuery(Bond::DOUBLE)));
         q->addChild(QueryBond::QUERYBOND_QUERY::CHILD_TYPE(
