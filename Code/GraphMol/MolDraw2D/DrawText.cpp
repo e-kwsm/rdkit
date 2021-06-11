@@ -122,8 +122,7 @@ void DrawText::adjustLineForString(const std::string &label, OrientType orient,
 
   getStringRects(label, orient, rects, draw_modes, draw_chars);
   double bond_len = (end1 - end2).length();
-  for (size_t i = 0; i < rects.size(); ++i) {
-    const auto &r = rects[i];
+  for (auto &r : rects) {
     r->trans_ += lab_pos;
 
     Point2D tl, tr, bl, br;
