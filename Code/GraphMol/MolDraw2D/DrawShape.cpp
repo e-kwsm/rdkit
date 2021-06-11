@@ -133,8 +133,7 @@ void DrawShapeArrow::findExtremes(double &xmin, double &xmax, double &ymin,
   // of a dative bond going to an atom without a symbol on the edge of the
   // drawing seem slim.  findExtremes is only used for finding the extremes
   // of the whole drawing so as to set the scale.
-  for (int i = 0; i < 4; i++) {
-    const Point2D &p = origPts_[i];
+  for (const auto &p : origPts_) {
     xmin = std::min(xmin, p.x);
     xmax = std::max(xmax, p.x);
     ymin = std::min(ymin, p.y);
@@ -145,8 +144,7 @@ void DrawShapeArrow::findExtremes(double &xmin, double &xmax, double &ymin,
 // ****************************************************************************
 void DrawShapeArrow::scale(const Point2D &scale_factor) {
   DrawShape::scale(scale_factor);
-  for (int i = 0; i < 4; i++) {
-    Point2D &p = origPts_[i];
+  for (auto &p : origPts_) {
     p.x *= scale_factor.x;
     p.y *= scale_factor.y;
   }
@@ -155,8 +153,8 @@ void DrawShapeArrow::scale(const Point2D &scale_factor) {
 // ****************************************************************************
 void DrawShapeArrow::move(const Point2D &trans) {
   DrawShape::move(trans);
-  for (int i = 0; i < 4; i++) {
-    origPts_[i] += trans;
+  for (auto &origPt : origPts_) {
+    origPt += trans;
   }
 }
 

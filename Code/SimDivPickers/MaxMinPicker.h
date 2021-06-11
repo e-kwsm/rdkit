@@ -185,9 +185,8 @@ RDKit::INT_VECT MaxMinPicker::lazyPick(T &func, unsigned int poolSize,
     picked = 1;
 
   } else {
-    for (RDKit::INT_VECT::const_iterator pIdx = firstPicks.begin();
-         pIdx != firstPicks.end(); ++pIdx) {
-      pick = static_cast<unsigned int>(*pIdx);
+    for (int firstPick : firstPicks) {
+      pick = static_cast<unsigned int>(firstPick);
       if (pick >= poolSize) {
         throw ValueErrorException("pick index was larger than the poolSize");
       }
