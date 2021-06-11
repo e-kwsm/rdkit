@@ -371,16 +371,16 @@ bool areArcEndsInOtherCircle(const Point2D &centre, double radius, double ang1,
   ang2 *= M_PI / 180.0;
   Point2D end2{centre.x + radius * cos(ang2), centre.y + radius * sin(ang2)};
 
-  for (size_t i = 0; i < otherAtoms.size(); ++i) {
-    if (otherAtoms[i] == atNum) {
+  for (unsigned int otherAtom : otherAtoms) {
+    if (otherAtom == atNum) {
       continue;
     }
-    auto otherRad = getLassoWidth(dm, otherAtoms[i], lassoNum);
-    if ((end1 - dm->atCds_[otherAtoms[i]]).lengthSq() - otherRad * otherRad <
+    auto otherRad = getLassoWidth(dm, otherAtom, lassoNum);
+    if ((end1 - dm->atCds_[otherAtom]).lengthSq() - otherRad * otherRad <
         -1.0e-4) {
       return true;
     }
-    if ((end2 - dm->atCds_[otherAtoms[i]]).lengthSq() - otherRad * otherRad <
+    if ((end2 - dm->atCds_[otherAtom]).lengthSq() - otherRad * otherRad <
         -1.0e-4) {
       return true;
     }
@@ -596,8 +596,7 @@ DrawShapeArc *makeArc(LinePair &lp1, LinePair &lp2, const Point2D &atCds) {
 void DrawMolMCHLasso::extractAtomArcs(
     std::vector<std::vector<LinePair>> &atomLines,
     std::vector<std::unique_ptr<DrawShapeArc>> &arcs) const {
-  for (size_t k = 0; k < atomLines.size(); ++k) {
-    auto &atomLine = atomLines[k];
+  for (auto &atomLine : atomLines) {
     if (atomLine.empty()) {
       continue;
     }
