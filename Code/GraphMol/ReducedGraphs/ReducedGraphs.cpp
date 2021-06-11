@@ -84,10 +84,9 @@ void getErGAtomTypes(const ROMol &mol,
   std::vector<const ROMol *> featureMatchers;
   if (!patterns) {
     featureMatchers.reserve(defaultFeatureSmarts.size());
-    for (std::vector<std::string>::const_iterator smaIt =
-             defaultFeatureSmarts.begin();
-         smaIt != defaultFeatureSmarts.end(); ++smaIt) {
-      const ROMol *matcher = pattern_flyweight(*smaIt).get().getMatcher();
+    for (const auto &defaultFeatureSmart : defaultFeatureSmarts) {
+      const ROMol *matcher =
+          pattern_flyweight(defaultFeatureSmart).get().getMatcher();
       CHECK_INVARIANT(matcher, "bad smarts");
       featureMatchers.push_back(matcher);
     }
@@ -104,9 +103,8 @@ void getErGAtomTypes(const ROMol &mol,
     // to maintain thread safety, we have to copy the pattern
     // molecules:
     SubstructMatch(mol, ROMol(*(*patterns)[i], true), matchVect);
-    for (std::vector<MatchVectType>::const_iterator mvIt = matchVect.begin();
-         mvIt != matchVect.end(); ++mvIt) {
-      types[i].set((*mvIt)[0].second);
+    for (const auto &mvIt : matchVect) {
+      types[i].set(mvIt[0].second);
     }
   }
 }  // end of getAtomTypes;

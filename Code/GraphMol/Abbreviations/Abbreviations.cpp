@@ -262,8 +262,8 @@ RDKIT_ABBREVIATIONS_EXPORT void condenseAbbreviationSubstanceGroups(
       } else {
         abbrevMatch.abbrev.includesXBonds = true;
         bool firstAttachFound = false;
-        for (unsigned int i = 0; i < bnds.size(); ++i) {
-          auto bnd = mol.getBondWithIdx(bnds[i]);
+        for (unsigned int i : bnds) {
+          auto bnd = mol.getBondWithIdx(i);
           unsigned int mAt;  // sgroup atom in the match
           unsigned int oAt;  // add the first attachment point to the beginning
                              // of the atom list
