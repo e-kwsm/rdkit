@@ -1109,17 +1109,16 @@ bool CEVect2::resonanceStructureCompare(const ConjElectrons *a,
 
 CEVect2::CEVect2(const CEMap &ceMap) {
   d_ceVect.reserve(ceMap.size());
-  for (CEMap::const_iterator it = ceMap.begin(); it != ceMap.end(); ++it) {
-    d_ceVect.push_back(it->second);
+  for (auto it : ceMap) {
+    d_ceVect.push_back(it.second);
   }
   std::sort(d_ceVect.begin(), d_ceVect.end(), resonanceStructureCompare);
   bool first = true;
   std::size_t hashPrev;
-  for (CEVect::const_iterator it = d_ceVect.begin(); it != d_ceVect.end();
-       ++it) {
-    if (first || ((*it)->hash() != hashPrev)) {
+  for (auto it : d_ceVect) {
+    if (first || (it->hash() != hashPrev)) {
       first = false;
-      hashPrev = (*it)->hash();
+      hashPrev = it->hash();
       d_degVect.push_back(1);
     } else {
       ++d_degVect.back();
@@ -1372,17 +1371,16 @@ ResonanceMolSupplier::ResonanceMolSupplier(ROMol &mol, unsigned int flags,
 
 // object destructor
 ResonanceMolSupplier::~ResonanceMolSupplier() {
-  for (CEVect3::const_iterator ceVect3It = d_ceVect3.begin();
-       ceVect3It != d_ceVect3.end(); ++ceVect3It) {
-    if (!(*ceVect3It)) {
+  for (auto ceVect3It : d_ceVect3) {
+    if (!ceVect3It) {
       continue;
     }
-    for (unsigned int d = 0; d < (*ceVect3It)->depth(); ++d) {
-      for (unsigned int w = 0; w < (*ceVect3It)->ceCountAtDepth(d); ++w) {
-        delete (*ceVect3It)->getCE(d, w);
+    for (unsigned int d = 0; d < ceVect3It->depth(); ++d) {
+      for (unsigned int w = 0; w < ceVect3It->ceCountAtDepth(d); ++w) {
+        delete ceVect3It->getCE(d, w);
       }
     }
-    delete *ceVect3It;
+    delete ceVect3It;
   }
   if (d_mol) {
     delete d_mol;
