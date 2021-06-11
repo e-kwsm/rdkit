@@ -258,8 +258,8 @@ class RDKIT_FINGERPRINTS_EXPORT MHFPEncoder {
   ExplicitBitVect Fold(const std::vector<uint32_t>& vec,
                        uint32_t length = 2048) {
     ExplicitBitVect ebv(length);
-    for (size_t i = 0; i < vec.size(); i++) {
-      ebv.setBit(vec[i] % length);
+    for (unsigned int i : vec) {
+      ebv.setBit(i % length);
     }
     return ebv;
   }
