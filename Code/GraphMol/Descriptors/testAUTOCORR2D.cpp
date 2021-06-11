@@ -97,8 +97,8 @@ void testGithub3806() {
     std::vector<double> vs;
     RDKit::Descriptors::AUTOCORR2D(*m, vs);
     TEST_ASSERT(vs.size() == 192);
-    for (unsigned i = 0; i < vs.size(); ++i) {
-      TEST_ASSERT(!std::isnan(vs[i]));
+    for (double v : vs) {
+      TEST_ASSERT(!std::isnan(v));
     }
   }
   BOOST_LOG(rdErrorLog) << "  done" << std::endl;
