@@ -598,12 +598,12 @@ void reducedToFullMatches(const RDKit::RWMol &reducedQuery,
       molHsMatches.set(pair.second);
     }
     RDKit::MatchVectType newMatch;
-    for (auto pairIt = match.begin(); pairIt != match.end(); ++pairIt) {
-      const auto reducedQueryAtom = reducedQuery.getAtomWithIdx(pairIt->first);
-      const auto molAtom = molHs.getAtomWithIdx(pairIt->second);
+    for (auto &pairIt : match) {
+      const auto reducedQueryAtom = reducedQuery.getAtomWithIdx(pairIt.first);
+      const auto molAtom = molHs.getAtomWithIdx(pairIt.second);
       unsigned int formerIdx;
       reducedQueryAtom->getProp(FORMER_IDX, formerIdx);
-      pairIt->first = formerIdx;
+      pairIt.first = formerIdx;
       std::vector<unsigned int> formerNbrIndices;
       reducedQueryAtom->getPropIfPresent(FORMER_NBR_INDICES, formerNbrIndices);
       for (const auto &molNbr : molHs.atomNeighbors(molAtom)) {

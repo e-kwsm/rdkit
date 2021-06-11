@@ -450,8 +450,8 @@ std::ostream &operator<<(std::ostream &target, const RDKit::Bond &bond) {
           }
           target << atomAndBonds[0].second[i]->getIdx();
         }
-        for (auto i = 0u; i < atomAndBonds[1].second.size(); ++i) {
-          target << " " << atomAndBonds[1].second[i]->getIdx();
+        for (auto &i : atomAndBonds[1].second) {
+          target << " " << i->getIdx();
         }
         target << ")";
       }

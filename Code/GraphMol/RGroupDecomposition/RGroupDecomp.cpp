@@ -741,7 +741,7 @@ RGroupRows RGroupDecomposition::getRGroupsAsRows() const {
 
   auto usedLabelMap = UsedLabelMap(data->finalRlabelMapping);
 
-  for (auto it = permutation.begin(); it != permutation.end(); ++it) {
+  for (auto &it : permutation) {
     auto Rs_seen(usedLabelMap);
     // make a new rgroup entry
     groups.push_back(RGroupRow());
@@ -752,7 +752,7 @@ RGroupRows RGroupDecomposition::getRGroupsAsRows() const {
                               data->params.removeHydrogensPostMatch));
     }
 
-    const R_DECOMP &in_rgroups = it->rgroups;
+    const R_DECOMP &in_rgroups = it.rgroups;
 
     for (const auto &rgroup : in_rgroups) {
       const auto realLabel = data->finalRlabelMapping.find(rgroup.first);
