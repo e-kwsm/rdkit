@@ -2137,14 +2137,12 @@ std::string get_bond_config_block(
                 }
                 if (atomAndBondVecs[bondAtomIndex].second.size() == 2) {
                   unsigned int firstOtherAtomIdx =
-                      atomAndBondVecs[bondAtomIndex]
-                          .second[0]
-                          ->getOtherAtom(atomAndBondVecs[bondAtomIndex].first)
+                      atomAndBondVec.second[0]
+                          ->getOtherAtom(atomAndBondVec.first)
                           ->getIdx();
                   unsigned int secondOtherAtomIdx =
-                      atomAndBondVecs[bondAtomIndex]
-                          .second[1]
-                          ->getOtherAtom(atomAndBondVecs[bondAtomIndex].first)
+                      atomAndBondVec.second[1]
+                          ->getOtherAtom(atomAndBondVec.first)
                           ->getIdx();
 
                   unsigned int firstReorderedAtomIdx =

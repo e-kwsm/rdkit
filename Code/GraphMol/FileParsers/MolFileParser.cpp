@@ -2114,9 +2114,8 @@ Atom *ParseV3000AtomSymbol(std::string_view token, unsigned int &line,
     std::vector<std::string> splitToken;
     boost::split(splitToken, token, boost::is_any_of(","));
 
-    for (std::vector<std::string>::const_iterator stIt = splitToken.begin();
-         stIt != splitToken.end(); ++stIt) {
-      std::string_view stoken = *stIt;
+    for (const auto &stIt : splitToken) {
+      std::string_view stoken = stIt;
       std::string atSymb(FileParserUtils::strip(stoken));
       if (atSymb.empty()) {
         continue;
