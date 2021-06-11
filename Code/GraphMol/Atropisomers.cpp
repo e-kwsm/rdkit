@@ -1045,17 +1045,17 @@ bool WedgeBondFromAtropisomerOneBond3d(
 
   std::vector<Bond *> useBonds;
 
-  for (unsigned int whichEnd = 0; whichEnd < 2; ++whichEnd) {
-    for (unsigned int whichBond = 0;
-         whichBond < atomAndBondVecs[whichEnd].second.size(); ++whichBond) {
-      auto bond = atomAndBondVecs[whichEnd].second[whichBond];
+  for (auto &atomAndBondVec : atomAndBondVecs) {
+    for (unsigned int whichBond = 0; whichBond < atomAndBondVec.second.size();
+         ++whichBond) {
+      auto bond = atomAndBondVec.second[whichBond];
       auto bondDir = bond->getBondDir();
 
       // see if it is a wedge or hash and its origin is the atom in the
       // main bond
 
       if ((bondDir == Bond::BEGINWEDGE || bondDir == Bond::BEGINDASH) &&
-          bond->getBeginAtom() == atomAndBondVecs[whichEnd].first &&
+          bond->getBeginAtom() == atomAndBondVec.first &&
           canHaveDirection(*bond)) {
         useBonds.push_back(bond);
       }

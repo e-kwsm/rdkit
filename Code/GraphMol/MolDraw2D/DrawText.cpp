@@ -13,6 +13,8 @@
 #include <GraphMol/MolDraw2D/DrawText.h>
 #include <GraphMol/MolDraw2D/MolDraw2DDetails.h>
 
+#include <ranges>
+
 namespace RDKit {
 namespace MolDraw2D_detail {
 
@@ -122,8 +124,7 @@ void DrawText::adjustLineForString(const std::string &label, OrientType orient,
 
   getStringRects(label, orient, rects, draw_modes, draw_chars);
   double bond_len = (end1 - end2).length();
-  for (size_t i = 0; i < rects.size(); ++i) {
-    const auto &r = rects[i];
+  for (auto &r : rects) {
     r->trans_ += lab_pos;
 
     Point2D tl, tr, bl, br;
@@ -511,8 +512,8 @@ void DrawText::getStringRects(const std::string &text, OrientType orient,
     // stick the pieces together again backwards and draw as one so there
     // aren't ugly splits in the string.
     std::string new_lab;
-    for (auto i = text_bits.rbegin(); i != text_bits.rend(); ++i) {
-      new_lab += *i;
+    for (auto &text_bit : std::ranges::reverse_view(text_bits)) {
+      new_lab += text_bit;
     }
     getStringRects(new_lab, rects, draw_modes, draw_chars);
     alignString(TextAlignType::END, draw_modes, rects);
