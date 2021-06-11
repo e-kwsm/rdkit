@@ -2129,21 +2129,18 @@ std::string get_bond_config_block(
                 ++swaps;
               }
 
-              for (unsigned int bondAtomIndex = 0; bondAtomIndex < 2;
-                   ++bondAtomIndex) {
-                if (atomAndBondVecs[bondAtomIndex].first == firstAtom)
+              for (const auto &atomAndBondVec : atomAndBondVecs) {
+                if (atomAndBondVec.first == firstAtom)
                   continue;  // swapped atoms on the side where the wedge bond
                              // is does NOT change the wedge bond
-                if (atomAndBondVecs[bondAtomIndex].second.size() == 2) {
+                if (atomAndBondVec.second.size() == 2) {
                   unsigned int firstOtherAtomIdx =
-                      atomAndBondVecs[bondAtomIndex]
-                          .second[0]
-                          ->getOtherAtom(atomAndBondVecs[bondAtomIndex].first)
+                      atomAndBondVec.second[0]
+                          ->getOtherAtom(atomAndBondVec.first)
                           ->getIdx();
                   unsigned int secondOtherAtomIdx =
-                      atomAndBondVecs[bondAtomIndex]
-                          .second[1]
-                          ->getOtherAtom(atomAndBondVecs[bondAtomIndex].first)
+                      atomAndBondVec.second[1]
+                          ->getOtherAtom(atomAndBondVec.first)
                           ->getIdx();
 
                   unsigned int firstReorderedAtomIdx =
