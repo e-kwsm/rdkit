@@ -25,20 +25,18 @@ python::tuple fragmentMolHelper(const RDKit::ROMol &mol, unsigned int maxCuts,
   bool ok = RDKit::MMPA::fragmentMol(mol, tres, maxCuts, maxCutBonds, pattern);
   python::list pyres;
   if (ok) {
-    for (std::vector<std::pair<RDKit::ROMOL_SPTR, RDKit::ROMOL_SPTR>>::
-             const_iterator pr = tres.begin();
-         pr != tres.end(); ++pr) {
+    for (const auto& tre : tres) {
       python::list lres;
       if (resultsAsMols) {
-        lres.append(pr->first);
-        lres.append(pr->second);
+        lres.append(tre.first);
+        lres.append(tre.second);
       } else {
-        if (pr->first) {
-          lres.append(RDKit::MolToSmiles(*(pr->first), true));
+        if (tre.first) {
+          lres.append(RDKit::MolToSmiles(*(tre.first), true));
         } else {
           lres.append("");
         }
-        lres.append(RDKit::MolToSmiles(*(pr->second), true));
+        lres.append(RDKit::MolToSmiles(*(tre.second), true));
       }
       pyres.append(python::tuple(lres));
     }
@@ -55,20 +53,18 @@ python::tuple fragmentMolHelper2(const RDKit::ROMol &mol, unsigned int minCuts,
                                      pattern);
   python::list pyres;
   if (ok) {
-    for (std::vector<std::pair<RDKit::ROMOL_SPTR, RDKit::ROMOL_SPTR>>::
-             const_iterator pr = tres.begin();
-         pr != tres.end(); ++pr) {
+    for (const auto& tre : tres) {
       python::list lres;
       if (resultsAsMols) {
-        lres.append(pr->first);
-        lres.append(pr->second);
+        lres.append(tre.first);
+        lres.append(tre.second);
       } else {
-        if (pr->first) {
-          lres.append(RDKit::MolToSmiles(*(pr->first), true));
+        if (tre.first) {
+          lres.append(RDKit::MolToSmiles(*(tre.first), true));
         } else {
           lres.append("");
         }
-        lres.append(RDKit::MolToSmiles(*(pr->second), true));
+        lres.append(RDKit::MolToSmiles(*(tre.second), true));
       }
       pyres.append(python::tuple(lres));
     }
@@ -88,20 +84,18 @@ python::tuple fragmentMolHelper3(const RDKit::ROMol &mol, python::object ob,
   bool ok = RDKit::MMPA::fragmentMol(mol, tres, *v, minCuts, maxCuts);
   python::list pyres;
   if (ok) {
-    for (std::vector<std::pair<RDKit::ROMOL_SPTR, RDKit::ROMOL_SPTR>>::
-             const_iterator pr = tres.begin();
-         pr != tres.end(); ++pr) {
+    for (const auto& tre : tres) {
       python::list lres;
       if (resultsAsMols) {
-        lres.append(pr->first);
-        lres.append(pr->second);
+        lres.append(tre.first);
+        lres.append(tre.second);
       } else {
-        if (pr->first) {
-          lres.append(RDKit::MolToSmiles(*(pr->first), true));
+        if (tre.first) {
+          lres.append(RDKit::MolToSmiles(*(tre.first), true));
         } else {
           lres.append("");
         }
-        lres.append(RDKit::MolToSmiles(*(pr->second), true));
+        lres.append(RDKit::MolToSmiles(*(tre.second), true));
       }
       pyres.append(python::tuple(lres));
     }
