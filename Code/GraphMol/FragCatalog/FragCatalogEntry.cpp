@@ -199,8 +199,8 @@ void FragCatalogEntry::toStream(std::ostream &ss) const {
     INT_VECT tmpVect = iivmci.second;
     tmpInt = tmpVect.size();
     streamWrite(ss, tmpInt);
-    for (INT_VECT_CI ivci = tmpVect.begin(); ivci != tmpVect.end(); ivci++) {
-      tmpInt = *ivci;
+    for (int ivci : tmpVect) {
+      tmpInt = ivci;
       streamWrite(ss, tmpInt);
     }
   }
