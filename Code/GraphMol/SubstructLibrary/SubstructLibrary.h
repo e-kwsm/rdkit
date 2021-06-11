@@ -49,7 +49,6 @@
 
 #include <algorithm>
 #include <string>
-#include <boost/lexical_cast.hpp>
 
 namespace RDKit {
 
@@ -391,7 +390,7 @@ class RDKIT_SUBSTRUCTLIBRARY_EXPORT KeyFromPropHolder : public KeyHolderBase {
       // string repr of the
       //  numeric index?
       const static std::string prefix("LIBIDX-");
-      keys.emplace_back(prefix + boost::lexical_cast<std::string>(keys.size()));
+      keys.emplace_back(prefix + std::to_string(keys.size()));
     }
     return keys.size() - 1u;
   };
