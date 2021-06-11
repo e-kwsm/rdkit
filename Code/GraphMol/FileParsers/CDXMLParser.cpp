@@ -724,7 +724,7 @@ std::vector<std::unique_ptr<RWMol>> MolsFromCDXMLDataStream(
     auto xml = dynamic_cast<boost::property_tree::file_parser_error *>(&e);
     if (xml != nullptr) {
       auto msg = std::string(xml->message()) +
-                 " at line: " + boost::lexical_cast<std::string>(xml->line());
+                 " at line: " + std::to_string(xml->line());
       throw FileParseException(msg);
     }
 
