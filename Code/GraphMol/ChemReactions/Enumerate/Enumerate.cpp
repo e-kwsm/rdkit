@@ -243,12 +243,11 @@ boost::uint64_t computeNumProducts(const RGROUPS &sizes) {
 #else
   boost::uint64_t myint = 1;
 
-  for (size_t i = 0; i < sizes.size(); ++i) {
-    if (sizes[i] &&
-        (std::numeric_limits<boost::uint64_t>::max() / sizes[i]) < myint) {
+  for (unsigned long size : sizes) {
+    if (size && (std::numeric_limits<boost::uint64_t>::max() / size) < myint) {
       return EnumerationStrategyBase::EnumerationOverflow;
     }
-    myint *= sizes[i];
+    myint *= size;
   }
   return myint;
 #endif

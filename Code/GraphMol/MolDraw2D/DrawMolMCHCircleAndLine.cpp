@@ -115,15 +115,15 @@ void DrawMolMCHCircleAndLine::makeBondHighlights(
         auto p1 = at1_cds - perp * rad;
         auto p2 = at2_cds - perp * rad;
         std::vector<Point2D> line_pts;
-        for (size_t i = 0; i < hb.second.size(); ++i) {
+        for (const auto &i : hb.second) {
           line_pts.clear();
           line_pts.push_back(p1);
           line_pts.push_back(p1 + perp * col_rad);
           line_pts.push_back(p2 + perp * col_rad);
           line_pts.push_back(p2);
           DrawShape *pl = new DrawShapePolyLine(
-              line_pts, lineWidth, drawOptions_.scaleBondWidth, hb.second[i],
-              true, at1_idx, at2_idx, bond->getIdx(), noDash);
+              line_pts, lineWidth, drawOptions_.scaleBondWidth, i, true,
+              at1_idx, at2_idx, bond->getIdx(), noDash);
           bondHighlights.emplace_back(pl);
           p1 += perp * col_rad;
           p2 += perp * col_rad;
