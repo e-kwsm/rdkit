@@ -204,11 +204,11 @@ class RDKIT_FILTERCATALOG_EXPORT FilterCatalogEntry
     // we only save string based props here...
     STR_VECT keys = d_props.keys();
     std::vector<std::string> string_props;
-    for (size_t i = 0; i < keys.size(); ++i) {
+    for (auto &key : keys) {
       std::string val;
       try {
-        if (d_props.getValIfPresent<std::string>(keys[i], val)) {
-          string_props.push_back(keys[i]);
+        if (d_props.getValIfPresent<std::string>(key, val)) {
+          string_props.push_back(key);
           string_props.push_back(val);
         }
       } catch (const std::bad_any_cast &) {

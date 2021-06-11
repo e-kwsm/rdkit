@@ -1114,20 +1114,20 @@ void MolDraw2D::calcReactionOffsets(
     arrowEnd = Point2D(arrowBeg.x + arrowMult * plusWidth, arrowBeg.y);
   } else {
     xOffset += plusWidth / 2;
-    for (size_t i = 0; i < agents.size(); ++i) {
-      offsets.emplace_back(
-          xOffset, y_offset_ + 0.45 * panelHeight() - agents[i]->height_);
-      xOffset += agents[i]->width_ + plusWidth / 2;
+    for (auto &agent : agents) {
+      offsets.emplace_back(xOffset,
+                           y_offset_ + 0.45 * panelHeight() - agent->height_);
+      xOffset += agent->width_ + plusWidth / 2;
     }
     // the overlap at the end of the arrow has already been added in the loop
     arrowEnd = Point2D(xOffset, arrowBeg.y);
   }
   xOffset = arrowEnd.x + plusWidth / 2;
 
-  for (size_t i = 0; i < products.size(); ++i) {
-    double hOffset = y_offset_ + (panelHeight() - products[i]->height_) / 2.0;
+  for (auto &product : products) {
+    double hOffset = y_offset_ + (panelHeight() - product->height_) / 2.0;
     offsets.emplace_back(xOffset, hOffset);
-    xOffset += products[i]->width_ + plusWidth;
+    xOffset += product->width_ + plusWidth;
   }
 }
 

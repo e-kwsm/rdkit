@@ -147,8 +147,8 @@ std::vector<boost::dynamic_bitset<>> screenSynthonsWithFPs(
   }
   // If all the fragments had a match, these results are valid.
   if (fragsMatched.count() != fragsMatched.size()) {
-    for (size_t i = 0; i < passedFPs.size(); ++i) {
-      passedFPs[i].reset();
+    for (auto &passedFP : passedFPs) {
+      passedFP.reset();
     }
   }
 
@@ -472,8 +472,8 @@ SynthonSpaceSubstructureSearcher::searchFragSet(
     // Find all synthons that match the fragments with each connector
     // combination.
     for (const auto &connComb : connCombs) {
-      for (size_t i = 0; i < connComb.size(); ++i) {
-        for (const auto &[atom, isotopeNum] : connComb[i]) {
+      for (const auto &i : connComb) {
+        for (const auto &[atom, isotopeNum] : i) {
           atom->setIsotope(isotopeNum);
           if (atom->hasQuery()) {
             atom->setQuery(makeAtomTypeQuery(0, false));

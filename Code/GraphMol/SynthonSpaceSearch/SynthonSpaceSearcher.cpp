@@ -286,14 +286,13 @@ SynthonSpaceSearcher::doTheSearch(
 
   std::vector<std::unique_ptr<SynthonSpaceHitSet>> allHits;
   totHits = 0;
-  for (size_t i = 0; i < reactionHits.size(); ++i) {
+  for (auto &reactionHit : reactionHits) {
     totHits += std::accumulate(
-        reactionHits[i].begin(), reactionHits[i].end(), 0,
+        reactionHit.begin(), reactionHit.end(), 0,
         [](const size_t prevVal, const std::unique_ptr<SynthonSpaceHitSet> &hs)
             -> size_t { return prevVal + hs->numHits; });
-    allHits.insert(allHits.end(),
-                   std::make_move_iterator(reactionHits[i].begin()),
-                   std::make_move_iterator(reactionHits[i].end()));
+    allHits.insert(allHits.end(), std::make_move_iterator(reactionHit.begin()),
+                   std::make_move_iterator(reactionHit.end()));
   }
   timedOut = details::checkTimeOut(endTime);
   return allHits;

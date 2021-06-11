@@ -101,10 +101,9 @@ extern int yysmiles_lex(YYSTYPE *,void *,int &, unsigned int&);
 using namespace RDKit;
 namespace {
  void yyErrorCleanup(std::vector<RDKit::RWMol *> *molList){
-  for(std::vector<RDKit::RWMol *>::iterator iter=molList->begin();
-      iter != molList->end(); ++iter){
-      SmilesParseOps::CleanupAfterParseError(*iter);
-      delete *iter;
+  for (auto &iter : *molList) {
+      SmilesParseOps::CleanupAfterParseError(iter);
+      delete iter;
   }
   molList->clear();
   molList->resize(0);
