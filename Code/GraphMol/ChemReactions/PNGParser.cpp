@@ -60,7 +60,7 @@ std::unique_ptr<ChemicalReaction> ReactionFromPNGStream(
   bool formatFound = false;
   for (const auto &pr : metadata) {
     if (boost::starts_with(pr.first, PNGData::rxnPklTag)) {
-      res.reset(new ChemicalReaction(pr.second));
+      res = std::make_unique<ChemicalReaction>(pr.second);
       formatFound = true;
     } else if (boost::starts_with(pr.first, PNGData::rxnSmilesTag)) {
       ReactionFromSmiles(pr.second).swap(res);
