@@ -8103,7 +8103,7 @@ void testRemoveAndTrackIsotopes() {
                std::default_random_engine());
   std::unique_ptr<ROMol> mNoHRen(MolOps::renumberAtoms(*mNoH, randomOrder));
   mH.reset(MolOps::addHs(*mNoHRen));
-  mH_isotopicHsPerHeavy.reset(new IsotopicHsCount(*mH));
+  mH_isotopicHsPerHeavy = std::make_unique<IsotopicHsCount>(*mH);
   IsotopicHsCount::countExplicitImplicitHs(*mH, mH_numExplicitHs,
                                            mH_numImplicitHs);
   TEST_ASSERT(mH_numExplicitHs == 0);
@@ -8115,7 +8115,7 @@ void testRemoveAndTrackIsotopes() {
   TEST_ASSERT(mH_isotopicHsPerHeavy->total() == 12);
   mH2.reset(MolOps::removeHs(*mH));
   TEST_ASSERT(m->getNumAtoms() == mH2->getNumAtoms());
-  mH2_isotopicHsPerHeavy.reset(new IsotopicHsCount(*mH2));
+  mH2_isotopicHsPerHeavy = std::make_unique<IsotopicHsCount>(*mH2);
   IsotopicHsCount::countExplicitImplicitHs(*mH2, mH2_numExplicitHs,
                                            mH2_numImplicitHs);
   MatchVectType matchH2Ren;
@@ -8134,14 +8134,14 @@ void testRemoveAndTrackIsotopes() {
   // This should add 4 isotopes
   UINT_VECT onlyOnAtoms{0, 12};
   mH.reset(MolOps::addHs(*mNoH, false, false, &onlyOnAtoms));
-  mH_isotopicHsPerHeavy.reset(new IsotopicHsCount(*mH));
+  mH_isotopicHsPerHeavy = std::make_unique<IsotopicHsCount>(*mH);
   TEST_ASSERT(mH_isotopicHsPerHeavy->total() == 4);
   TEST_ASSERT(mH_isotopicHsPerHeavy->at(0) == 1);
   TEST_ASSERT(mH_isotopicHsPerHeavy->at(12) == 3);
   // This should add 4 more isotopes
   onlyOnAtoms = UINT_VECT{1, 2, 18};
   mH.reset(MolOps::addHs(*mH, false, false, &onlyOnAtoms));
-  mH_isotopicHsPerHeavy.reset(new IsotopicHsCount(*mH));
+  mH_isotopicHsPerHeavy = std::make_unique<IsotopicHsCount>(*mH);
   TEST_ASSERT(mH_isotopicHsPerHeavy->total() == 8);
   TEST_ASSERT(mH_isotopicHsPerHeavy->at(0) == 1);
   TEST_ASSERT(mH_isotopicHsPerHeavy->at(1) == 1);
@@ -8151,7 +8151,7 @@ void testRemoveAndTrackIsotopes() {
   // This should add the last 4 isotopes
   onlyOnAtoms = UINT_VECT{5, 32};
   mH.reset(MolOps::addHs(*mH, false, false, &onlyOnAtoms));
-  mH_isotopicHsPerHeavy.reset(new IsotopicHsCount(*mH));
+  mH_isotopicHsPerHeavy = std::make_unique<IsotopicHsCount>(*mH);
   TEST_ASSERT(mH_isotopicHsPerHeavy->total() == 12);
   TEST_ASSERT(mH_isotopicHsPerHeavy->at(0) == 1);
   TEST_ASSERT(mH_isotopicHsPerHeavy->at(1) == 1);

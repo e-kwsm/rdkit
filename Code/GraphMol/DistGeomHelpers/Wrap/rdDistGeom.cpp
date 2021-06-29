@@ -22,6 +22,8 @@
 #include <GraphMol/DistGeomHelpers/BoundsMatrixBuilder.h>
 #include <GraphMol/DistGeomHelpers/Embedder.h>
 
+#include <memory>
+
 namespace python = boost::python;
 
 namespace {
@@ -35,7 +37,7 @@ struct PyEmbedParameters
   void setCoordMap(const python::dict &cmap) {
     // the EmbedParameters object doesn't own the memory for the coordMap, so we
     // have to take ownership here.
-    d_coordMap.reset(new std::map<int, RDGeom::Point3D>());
+    d_coordMap = std::make_unique<std::map<int, RDGeom::Point3D>>();
     for (unsigned int i = 0;
          i < python::extract<unsigned int>(cmap.keys().attr("__len__")());
          ++i) {

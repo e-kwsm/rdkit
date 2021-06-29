@@ -26,8 +26,7 @@ void testEnumerator() {
   std::string rdbase = getenv("RDBASE");
   std::string tautomerFile =
       rdbase + "/Code/GraphMol/MolStandardize/test_data/tautomerTransforms.in";
-  auto tautparams = std::unique_ptr<TautomerCatalogParams>(
-      new TautomerCatalogParams(tautomerFile));
+  auto tautparams = std::make_unique<TautomerCatalogParams>(tautomerFile);
 
   unsigned int ntransforms = tautparams->getTransforms().size();
   TEST_ASSERT(ntransforms == 36);
@@ -810,8 +809,7 @@ void testCanonicalize() {
       << "-----------------------\n Testing tautomer canonicalization"
       << std::endl;
 
-  auto tautparams =
-      std::unique_ptr<TautomerCatalogParams>(new TautomerCatalogParams(""));
+  auto tautparams = std::make_unique<TautomerCatalogParams>("");
 
   unsigned int ntransforms = tautparams->getTransforms().size();
   TEST_ASSERT(ntransforms == 37);
@@ -834,8 +832,7 @@ void testPickCanonical() {
   BOOST_LOG(rdInfoLog) << "-----------------------\n Testing pickCanonical"
                        << std::endl;
 
-  auto tautparams =
-      std::unique_ptr<TautomerCatalogParams>(new TautomerCatalogParams(""));
+  auto tautparams = std::make_unique<TautomerCatalogParams>("");
 
   unsigned int ntransforms = tautparams->getTransforms().size();
   TEST_ASSERT(ntransforms == 37);
@@ -859,8 +856,7 @@ void testCustomScoreFunc() {
       << "-----------------------\n Testing custom scoring functions"
       << std::endl;
 
-  auto tautparams =
-      std::unique_ptr<TautomerCatalogParams>(new TautomerCatalogParams(""));
+  auto tautparams = std::make_unique<TautomerCatalogParams>("");
 
   unsigned int ntransforms = tautparams->getTransforms().size();
   TEST_ASSERT(ntransforms == 37);
@@ -928,8 +924,7 @@ void testEnumerationProblems() {
       << "-----------------------\n Testing tautomer enumeration problems"
       << std::endl;
 
-  auto tautparams =
-      std::unique_ptr<TautomerCatalogParams>(new TautomerCatalogParams(""));
+  auto tautparams = std::make_unique<TautomerCatalogParams>("");
 
   unsigned int ntransforms = tautparams->getTransforms().size();
   TEST_ASSERT(ntransforms == 37);
@@ -961,8 +956,7 @@ void testPickCanonical2() {
   BOOST_LOG(rdInfoLog) << "-----------------------\n Testing pickCanonical"
                        << std::endl;
 
-  auto tautparams =
-      std::unique_ptr<TautomerCatalogParams>(new TautomerCatalogParams(""));
+  auto tautparams = std::make_unique<TautomerCatalogParams>("");
   unsigned int ntransforms = tautparams->getTransforms().size();
   TEST_ASSERT(ntransforms == 37);
 
@@ -995,8 +989,7 @@ void testEnumerateDetails() {
       << "-----------------------\n Testing getting details back "
          "from tautomer enumeration"
       << std::endl;
-  auto tautparams =
-      std::unique_ptr<TautomerCatalogParams>(new TautomerCatalogParams(""));
+  auto tautparams = std::make_unique<TautomerCatalogParams>("");
   unsigned int ntransforms = tautparams->getTransforms().size();
   TEST_ASSERT(ntransforms == 37);
   TautomerEnumerator te(new TautomerCatalog(tautparams.get()));
@@ -1050,8 +1043,7 @@ void testGithub2990() {
                           "Tautomer enumeration "
                           "should remove stereo in all tautomers"
                        << std::endl;
-  auto tautparams =
-      std::unique_ptr<TautomerCatalogParams>(new TautomerCatalogParams(""));
+  auto tautparams = std::make_unique<TautomerCatalogParams>("");
 
   unsigned int ntransforms = tautparams->getTransforms().size();
   TEST_ASSERT(ntransforms == 37);
