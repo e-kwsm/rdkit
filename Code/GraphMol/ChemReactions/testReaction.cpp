@@ -7535,7 +7535,7 @@ void testGithub4162() {
   std::unique_ptr<ChemicalReaction> rxnFromPickle(new ChemicalReaction(pkl));
   RxnOps::sanitizeRxn(*rxnFromPickle);
   ReactionPickler::pickleReaction(*rxnFromPickle, pkl);
-  rxnFromPickle.reset(new ChemicalReaction(pkl));
+  rxnFromPickle = std::make_unique<ChemicalReaction>(pkl);
   RxnOps::sanitizeRxn(*rxnFromPickle);
 }
 

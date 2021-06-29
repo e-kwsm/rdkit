@@ -312,7 +312,7 @@ boost::flyweight<std::unique_ptr<Patterns>, boost::flyweights::no_tracking>
     gpats;
 void GenerateFP(const RDKit::ROMol &mol, ExplicitBitVect &fp) {
   if (!gpats.get()) {
-    gpats = std::unique_ptr<Patterns>(new Patterns());
+    gpats = std::make_unique<Patterns>();
   }
   const Patterns &pats = *(gpats.get());
   PRECONDITION(fp.size() == 167, "bad fingerprint");
