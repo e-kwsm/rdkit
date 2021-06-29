@@ -103,7 +103,7 @@ double calcMSDInternal(const Conformer &prbCnf, const Conformer &refCnf,
   unsigned int npt = atomMap.size();
   std::unique_ptr<RDNumeric::DoubleVector> unitWeights;
   if (!weights) {
-    unitWeights.reset(new RDNumeric::DoubleVector(npt, 1.0));
+    unitWeights = std::make_unique<RDNumeric::DoubleVector>(npt, 1.0);
     weights = unitWeights.get();
   } else {
     PRECONDITION(npt == weights->size(), "Mismatch in number of weights");
