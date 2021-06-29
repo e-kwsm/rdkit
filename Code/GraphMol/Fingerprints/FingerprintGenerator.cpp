@@ -329,7 +329,7 @@ FingerprintGenerator<OutputType>::getFingerprintHelper(
   std::unique_ptr<ROMol> tmol;
   if (dp_fingerprintArguments->df_includeChirality &&
       !mol.hasProp(common_properties::_StereochemDone)) {
-    tmol = std::unique_ptr<ROMol>(new ROMol(mol));
+    tmol = std::make_unique<ROMol>(mol);
     MolOps::assignStereochemistry(*tmol);
     lmol = tmol.get();
   }
@@ -345,16 +345,16 @@ FingerprintGenerator<OutputType>::getFingerprintHelper(
 
   std::unique_ptr<std::vector<std::uint32_t>> atomInvariants = nullptr;
   if (args.customAtomInvariants) {
-    atomInvariants.reset(
-        new std::vector<std::uint32_t>(*args.customAtomInvariants));
+    atomInvariants = std::make_unique<std::vector<std::uint32_t>>(
+        *args.customAtomInvariants);
   } else if (dp_atomInvariantsGenerator) {
     atomInvariants.reset(dp_atomInvariantsGenerator->getAtomInvariants(mol));
   }
 
   std::unique_ptr<std::vector<std::uint32_t>> bondInvariants = nullptr;
   if (args.customBondInvariants) {
-    bondInvariants.reset(
-        new std::vector<std::uint32_t>(*args.customBondInvariants));
+    bondInvariants = std::make_unique<std::vector<std::uint32_t>>(
+        *args.customBondInvariants);
   } else if (dp_bondInvariantsGenerator) {
     bondInvariants.reset(dp_bondInvariantsGenerator->getBondInvariants(mol));
   }
@@ -392,9 +392,9 @@ FingerprintGenerator<OutputType>::getFingerprintHelper(
   std::unique_ptr<source_type> randomSource;
   if (dp_fingerprintArguments->d_numBitsPerFeature > 1) {
     // we will only create the RNG if we're going to need it
-    generator.reset(new rng_type(42u));
-    dist.reset(new distrib_type(0, INT_MAX));
-    randomSource.reset(new source_type(*generator, *dist));
+    generator = std::make_unique<rng_type>(42u);
+    dist = std::make_unique<distrib_type>(0, INT_MAX);
+    randomSource = std::make_unique<source_type>(*generator, *dist);
   }
 
   // iterate over every atom environment and generate bit-ids that will make

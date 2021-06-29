@@ -18,6 +18,8 @@
 
 #include <Numerics/Alignment/AlignPoints.h>
 
+#include <memory>
+
 namespace python = boost::python;
 
 namespace RDNumeric {
@@ -126,7 +128,7 @@ PyObject *AlignPointPairs(python::object refPoints, python::object probePoints,
       throw_value_error(
           "Number of weights supplied do not match the number of points");
     }
-    wtsVec.reset(new RDNumeric::DoubleVector(nwts));
+    wtsVec = std::make_unique<RDNumeric::DoubleVector>(nwts);
     data = reinterpret_cast<double *>(PyArray_DATA(wtsMat));
     for (unsigned int i = 0; i < nwts; i++) {
       wtsVec->setVal(i, data[i]);
@@ -140,7 +142,7 @@ PyObject *AlignPointPairs(python::object refPoints, python::object probePoints,
         throw_value_error(
             "Number of weights supplied do not match the number of points");
       }
-      wtsVec.reset(new RDNumeric::DoubleVector(nwts));
+      wtsVec = std::make_unique<RDNumeric::DoubleVector>(nwts);
       for (unsigned int i = 0; i < npt; i++) {
         wtsVec->setVal(i, wts[i]);
       }

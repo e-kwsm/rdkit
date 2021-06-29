@@ -2517,7 +2517,7 @@ void MarvinSuperatomSgroupExpanded::parseMoleculeSpecific(
   PRECONDITION(mol != nullptr, "mol cannot be null");
 
   std::string typ = "SUP";
-  sgroup.reset(new SubstanceGroup(mol, typ));
+  sgroup = std::make_unique<SubstanceGroup>(mol, typ);
   sgroup->setProp<unsigned int>("index", sequenceId);
 
   for (auto atomPtr : this->atoms) {
@@ -2539,7 +2539,7 @@ void MarvinMultipleSgroup::parseMoleculeSpecific(
   // note: sequence continues counting from the loop above
 
   std::string typ = "MUL";
-  sgroup.reset(new SubstanceGroup(mol, typ));
+  sgroup = std::make_unique<SubstanceGroup>(mol, typ);
   sgroup->setProp<unsigned int>("index", sequenceId);
 
   for (auto atomPtr : this->atoms) {
@@ -2575,7 +2575,7 @@ void MarvinSruCoModSgroup::parseMoleculeSpecific(
         "Internal error: unrecognized role in a MarvinSruCoPolSgroup");
   }
 
-  sgroup.reset(new SubstanceGroup(mol, typ));
+  sgroup = std::make_unique<SubstanceGroup>(mol, typ);
   sgroup->setProp<unsigned int>("index", sequenceId);
 
   sgroup->setProp("CONNECT", this->connect);
@@ -2598,7 +2598,7 @@ void MarvinDataSgroup::parseMoleculeSpecific(
   // Now the data groups
 
   std::string typ = "DAT";
-  sgroup.reset(new SubstanceGroup(mol, typ));
+  sgroup = std::make_unique<SubstanceGroup>(mol, typ);
   sgroup->setProp<unsigned int>("index", sequenceId);
 
   for (auto atomPtr : this->atoms) {
@@ -2654,7 +2654,7 @@ void MarvinGenericSgroup::parseMoleculeSpecific(
   PRECONDITION(mol != nullptr, "mol cannot be null");
 
   std::string typ = "GEN";
-  sgroup.reset(new SubstanceGroup(mol, typ));
+  sgroup = std::make_unique<SubstanceGroup>(mol, typ);
   sgroup->setProp<unsigned int>("index", sequenceId);
 
   for (auto atomPtr : this->atoms) {
@@ -2673,7 +2673,7 @@ void MarvinMonomerSgroup::parseMoleculeSpecific(
   PRECONDITION(mol != nullptr, "mol cannot be null");
 
   std::string typ = "MON";
-  sgroup.reset(new SubstanceGroup(mol, typ));
+  sgroup = std::make_unique<SubstanceGroup>(mol, typ);
   sgroup->setProp<unsigned int>("index", sequenceId);
 
   for (auto atomPtr : this->parent->atoms) {
