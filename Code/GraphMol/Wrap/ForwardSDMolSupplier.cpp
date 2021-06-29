@@ -36,7 +36,7 @@ class LocalForwardSDMolSupplier : public RDKit::ForwardSDMolSupplier {
  public:
   LocalForwardSDMolSupplier(python::object &input, bool sanitize, bool removeHs,
                             bool strictParsing) {
-    dp_streambuf.reset(new streambuf(input, 'b'));
+    dp_streambuf = std::make_unique<streambuf>(input, 'b');
     auto sbis = new streambuf::istream(*dp_streambuf);
     bool owner = true;
 
@@ -44,8 +44,9 @@ class LocalForwardSDMolSupplier : public RDKit::ForwardSDMolSupplier {
     params.sanitize = sanitize;
     params.removeHs = removeHs;
     params.strictParsing = strictParsing;
-    dp_supplier.reset(
-        new RDKit::v2::FileParsers::ForwardSDMolSupplier(sbis, owner, params));
+    dp_supplier =
+        std::make_unique<RDKit::v2::FileParsers::ForwardSDMolSupplier>(
+            sbis, owner, params);
     POSTCONDITION(sbis, "bad instream");
   }
   LocalForwardSDMolSupplier(streambuf &input, bool sanitize, bool removeHs,
@@ -57,8 +58,9 @@ class LocalForwardSDMolSupplier : public RDKit::ForwardSDMolSupplier {
     params.sanitize = sanitize;
     params.removeHs = removeHs;
     params.strictParsing = strictParsing;
-    dp_supplier.reset(
-        new RDKit::v2::FileParsers::ForwardSDMolSupplier(sbis, owner, params));
+    dp_supplier =
+        std::make_unique<RDKit::v2::FileParsers::ForwardSDMolSupplier>(
+            sbis, owner, params);
     POSTCONDITION(sbis, "bad instream");
   }
   LocalForwardSDMolSupplier(std::string filename, bool sanitize, bool removeHs,
@@ -77,8 +79,9 @@ class LocalForwardSDMolSupplier : public RDKit::ForwardSDMolSupplier {
     params.sanitize = sanitize;
     params.removeHs = removeHs;
     params.strictParsing = strictParsing;
-    dp_supplier.reset(new RDKit::v2::FileParsers::ForwardSDMolSupplier(
-        tmpStream, owner, params));
+    dp_supplier =
+        std::make_unique<RDKit::v2::FileParsers::ForwardSDMolSupplier>(
+            tmpStream, owner, params);
     POSTCONDITION(tmpStream, "bad instream");
   }
 };
