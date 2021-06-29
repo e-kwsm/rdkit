@@ -212,9 +212,10 @@ void MolDraw2D::drawMolecules(
         highlight_radii ? &(*highlight_radii)[i] : nullptr;
     unique_ptr<vector<int>> lhighlight_bonds;
     if (highlight_bonds) {
-      lhighlight_bonds.reset(new std::vector<int>((*highlight_bonds)[i]));
+      lhighlight_bonds =
+          std::make_unique<std::vector<int>>((*highlight_bonds)[i]);
     } else if (drawOptions().continuousHighlight && highlight_atoms) {
-      lhighlight_bonds.reset(new vector<int>());
+      lhighlight_bonds = std::make_unique<vector<int>>();
       MolDraw2D_detail::getBondHighlightsForAtoms(
           *mols[i], (*highlight_atoms)[i], *lhighlight_bonds);
     };

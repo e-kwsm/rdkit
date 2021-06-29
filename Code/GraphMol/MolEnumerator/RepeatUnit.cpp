@@ -393,7 +393,7 @@ std::unique_ptr<ROMol> RepeatUnitOp::operator()(
   }
   res->commitBatchEdit();
 
-  return std::unique_ptr<ROMol>(new ROMol(*res));
+  return std::make_unique<ROMol>(*res);
 }
 
 }  // namespace MolEnumerator

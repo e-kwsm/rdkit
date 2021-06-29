@@ -980,7 +980,8 @@ std::string MolFragmentToSmarts(const ROMol &mol,
 
   std::unique_ptr<boost::dynamic_bitset<>> bondsInPlay(nullptr);
   if (bondsToUse != nullptr) {
-    bondsInPlay.reset(new boost::dynamic_bitset<>(mol.getNumBonds(), 0));
+    bondsInPlay =
+        std::make_unique<boost::dynamic_bitset<>>(mol.getNumBonds(), 0);
     for (auto bidx : *bondsToUse) {
       bondsInPlay->set(bidx);
     }

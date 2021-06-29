@@ -1402,8 +1402,7 @@ void testNormalizeStraighten() {
   5 12  1  0  0  0  0
 M  END)RES"_ctab;
   {
-    auto noradrenalineMJCopy =
-        std::unique_ptr<RWMol>(new RWMol(*noradrenalineMJ));
+    auto noradrenalineMJCopy = std::make_unique<RWMol>(*noradrenalineMJ);
     const auto &conformer0 = noradrenalineMJCopy->getConformer(0);
     auto conformer1 = new Conformer(conformer0);
     noradrenalineMJCopy->addConformer(conformer1, true);
@@ -1443,8 +1442,7 @@ M  END)RES"_ctab;
     TEST_ASSERT(RDKit::feq(bond4_11Conf2.y, 1.339, 1.e-3));
   }
   {
-    auto noradrenalineMJCopy =
-        std::unique_ptr<RWMol>(new RWMol(*noradrenalineMJ));
+    auto noradrenalineMJCopy = std::make_unique<RWMol>(*noradrenalineMJ);
     const auto &conformer0 = noradrenalineMJCopy->getConformer(0);
     auto conformer1 = new Conformer(conformer0);
     noradrenalineMJCopy->addConformer(conformer1, true);
@@ -1475,8 +1473,7 @@ M  END)RES"_ctab;
     TEST_ASSERT(RDKit::feq(bond10_11Conf2.y, bond10_11Conf1.y, 1.e-3));
   }
   {
-    auto noradrenalineMJCopy =
-        std::unique_ptr<RWMol>(new RWMol(*noradrenalineMJ));
+    auto noradrenalineMJCopy = std::make_unique<RWMol>(*noradrenalineMJ);
     const auto &conformer0 = noradrenalineMJCopy->getConformer(0);
     auto conformer1 = new Conformer(conformer0);
     noradrenalineMJCopy->addConformer(conformer1, true);

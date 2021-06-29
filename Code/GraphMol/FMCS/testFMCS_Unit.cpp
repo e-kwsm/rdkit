@@ -571,7 +571,7 @@ void testJnk1LigandsDistance() {
 
   std::unique_ptr<RDKit::MolSupplier> suppl;
   try {
-    suppl.reset(new RDKit::SDMolSupplier(fn));
+    suppl = std::make_unique<RDKit::SDMolSupplier>(fn);
   } catch (...) {
     std::cerr << "ERROR: RDKit could not load input file" << std::endl;
     TEST_ASSERT(false);

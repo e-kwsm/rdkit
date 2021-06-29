@@ -47,19 +47,19 @@ struct RDKIT_FINGERPRINTS_EXPORT AdditionalOutput {
   atomCountsType *atomCounts = nullptr;
 
   void allocateAtomToBits() {
-    atomToBitsHolder.reset(new atomToBitsType);
+    atomToBitsHolder = std::make_unique<atomToBitsType>();
     atomToBits = atomToBitsHolder.get();
   }
   void allocateBitInfoMap() {
-    bitInfoMapHolder.reset(new bitInfoMapType);
+    bitInfoMapHolder = std::make_unique<bitInfoMapType>();
     bitInfoMap = bitInfoMapHolder.get();
   }
   void allocateBitPaths() {
-    bitPathsHolder.reset(new bitPathsType);
+    bitPathsHolder = std::make_unique<bitPathsType>();
     bitPaths = bitPathsHolder.get();
   }
   void allocateAtomCounts() {
-    atomCountsHolder.reset(new atomCountsType);
+    atomCountsHolder = std::make_unique<atomCountsType>();
     atomCounts = atomCountsHolder.get();
   }
 

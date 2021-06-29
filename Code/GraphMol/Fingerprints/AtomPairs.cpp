@@ -68,7 +68,7 @@ SparseIntVect<std::int32_t> *getAtomPairFingerprint(
   const ROMol *lmol = &mol;
   std::unique_ptr<ROMol> tmol;
   if (includeChirality && !mol.hasProp(common_properties::_StereochemDone)) {
-    tmol = std::unique_ptr<ROMol>(new ROMol(mol));
+    tmol = std::make_unique<ROMol>(mol);
     MolOps::assignStereochemistry(*tmol);
     lmol = tmol.get();
   }
@@ -140,7 +140,7 @@ SparseIntVect<std::int32_t> *getHashedAtomPairFingerprint(
   const ROMol *lmol = &mol;
   std::unique_ptr<ROMol> tmol;
   if (includeChirality && !mol.hasProp(common_properties::_StereochemDone)) {
-    tmol = std::unique_ptr<ROMol>(new ROMol(mol));
+    tmol = std::make_unique<ROMol>(mol);
     MolOps::assignStereochemistry(*tmol);
     lmol = tmol.get();
   }
@@ -208,7 +208,7 @@ SparseIntVect<boost::int64_t> *getTopologicalTorsionFingerprint(
   const ROMol *lmol = &mol;
   std::unique_ptr<ROMol> tmol;
   if (includeChirality && !mol.hasProp(common_properties::_StereochemDone)) {
-    tmol = std::unique_ptr<ROMol>(new ROMol(mol));
+    tmol = std::make_unique<ROMol>(mol);
     MolOps::assignStereochemistry(*tmol);
     lmol = tmol.get();
   }
@@ -318,7 +318,7 @@ void TorsionFpCalc(T *res, const ROMol &mol, unsigned int nBits,
   const ROMol *lmol = &mol;
   std::unique_ptr<ROMol> tmol;
   if (includeChirality && !mol.hasProp(common_properties::_StereochemDone)) {
-    tmol = std::unique_ptr<ROMol>(new ROMol(mol));
+    tmol = std::make_unique<ROMol>(mol);
     MolOps::assignStereochemistry(*tmol);
     lmol = tmol.get();
   }

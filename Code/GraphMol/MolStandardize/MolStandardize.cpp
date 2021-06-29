@@ -225,7 +225,7 @@ RWMol *superParent(const RWMol &mol, const CleanupParameters &params,
   if (!skip_standardize) {
     res.reset(cleanup(mol, params));
   } else {
-    res.reset(new RWMol(mol));
+    res = std::make_unique<RWMol>(mol);
   }
   // we can skip fragmentParent since the chargeParent takes care of that
   res.reset(chargeParent(*res, params, true));

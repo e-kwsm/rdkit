@@ -38,7 +38,7 @@ int scoreRings(const ROMol &mol) {
   auto ringInfo = mol.getRingInfo();
   std::unique_ptr<ROMol> cp;
   if (!ringInfo->isInitialized()) {
-    cp.reset(new ROMol(mol));
+    cp = std::make_unique<ROMol>(mol);
     MolOps::symmetrizeSSSR(*cp);
     ringInfo = cp->getRingInfo();
   }
@@ -156,9 +156,11 @@ TautomerEnumerator::TautomerEnumerator(const CleanupParameters &params)
       d_reassignStereo(params.tautomerReassignStereo) {
   std::unique_ptr<TautomerCatalogParams> tautParams;
   if (params.tautomerTransformData.empty()) {
-    tautParams.reset(new TautomerCatalogParams(params.tautomerTransforms));
+    tautParams =
+        std::make_unique<TautomerCatalogParams>(params.tautomerTransforms);
   } else {
-    tautParams.reset(new TautomerCatalogParams(params.tautomerTransformData));
+    tautParams =
+        std::make_unique<TautomerCatalogParams>(params.tautomerTransformData);
   }
   dp_catalog.reset(new TautomerCatalog(tautParams.get()));
 }

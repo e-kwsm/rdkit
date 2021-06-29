@@ -3020,7 +3020,7 @@ M  END
     CHECK(mb.find("M  V30 6 7 3 4") != std::string::npos);
     std::string pkl;
     MolPickler::pickleMol(*m, pkl);
-    m.reset(new RWMol(pkl));
+    m = std::make_unique<RWMol>(pkl);
     REQUIRE(m);
     REQUIRE(m->getBondWithIdx(3)->hasQuery());
     CHECK(m->getBondWithIdx(3)->getQuery()->getDescription() ==
@@ -3070,7 +3070,7 @@ M  END
     CHECK(mb.find("  3  4  7") != std::string::npos);
     std::string pkl;
     MolPickler::pickleMol(*m, pkl);
-    m.reset(new RWMol(pkl));
+    m = std::make_unique<RWMol>(pkl);
     REQUIRE(m);
     REQUIRE(m->getBondWithIdx(3)->hasQuery());
     CHECK(m->getBondWithIdx(3)->getQuery()->getDescription() ==

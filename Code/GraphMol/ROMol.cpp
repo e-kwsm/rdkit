@@ -118,12 +118,12 @@ void ROMol::initFromOther(const ROMol &other, bool quickCopy, int confId) {
   }
 
   if (other.dp_delAtoms) {
-    dp_delAtoms.reset(new boost::dynamic_bitset<>(*other.dp_delAtoms));
+    dp_delAtoms = std::make_unique<boost::dynamic_bitset<>>(*other.dp_delAtoms);
   } else {
     dp_delAtoms.reset(nullptr);
   }
   if (other.dp_delBonds) {
-    dp_delBonds.reset(new boost::dynamic_bitset<>(*other.dp_delBonds));
+    dp_delBonds = std::make_unique<boost::dynamic_bitset<>>(*other.dp_delBonds);
   } else {
     dp_delBonds.reset(nullptr);
   }

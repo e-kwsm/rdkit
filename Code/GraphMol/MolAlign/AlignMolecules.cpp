@@ -75,7 +75,7 @@ void getAllMatchesPrbRef(const ROMol &prbMol, const ROMol &refMol,
 
   std::unique_ptr<RWMol> prbMolSymm;
   if (symmetrizeConjugatedTerminalGroups) {
-    prbMolSymm.reset(new RWMol(prbMol));
+    prbMolSymm = std::make_unique<RWMol>(prbMol);
     symmetrizeTerminalAtoms(*prbMolSymm);
   }
   const auto &prbMolForMatch = prbMolSymm ? *prbMolSymm : prbMol;
@@ -101,7 +101,7 @@ double calcMSDInternal(const Conformer &prbCnf, const Conformer &refCnf,
   unsigned int npt = atomMap.size();
   std::unique_ptr<RDNumeric::DoubleVector> unitWeights;
   if (!weights) {
-    unitWeights.reset(new RDNumeric::DoubleVector(npt, 1.0));
+    unitWeights = std::make_unique<RDNumeric::DoubleVector>(npt, 1.0);
     weights = unitWeights.get();
   } else {
     PRECONDITION(npt == weights->size(), "Mismatch in number of weights");

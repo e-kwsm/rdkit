@@ -140,8 +140,8 @@ TautomerQuery::TautomerQuery(std::vector<ROMOL_SPTR> tautomers,
 
 TautomerQuery *TautomerQuery::fromMol(
     const ROMol &query, const std::string &tautomerTransformFile) {
-  auto tautomerParams = std::unique_ptr<MolStandardize::TautomerCatalogParams>(
-      new MolStandardize::TautomerCatalogParams(tautomerTransformFile));
+  auto tautomerParams = std::make_unique<MolStandardize::TautomerCatalogParams>(
+      tautomerTransformFile);
   MolStandardize::TautomerEnumerator tautomerEnumerator(
       new MolStandardize::TautomerCatalog(tautomerParams.get()));
   const auto res = tautomerEnumerator.enumerate(query);

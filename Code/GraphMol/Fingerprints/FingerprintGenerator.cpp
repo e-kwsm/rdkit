@@ -202,9 +202,9 @@ FingerprintGenerator<OutputType>::getFingerprintHelper(
   std::unique_ptr<source_type> randomSource;
   if (dp_fingerprintArguments->d_numBitsPerFeature > 1) {
     // we will only create the RNG if we're going to need it
-    generator.reset(new rng_type(42u));
-    dist.reset(new distrib_type(0, INT_MAX));
-    randomSource.reset(new source_type(*generator, *dist));
+    generator = std::make_unique<rng_type>(42u);
+    dist = std::make_unique<distrib_type>(0, INT_MAX);
+    randomSource = std::make_unique<source_type>(*generator, *dist);
   }
 
   // iterate over every atom environment and generate bit-ids that will make up

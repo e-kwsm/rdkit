@@ -934,7 +934,7 @@ std::unique_ptr<ROMol> molzip(
   if (b.getNumAtoms()) {
     newmol.reset(static_cast<RWMol *>(combineMols(a, b)));
   } else {
-    newmol.reset(new RWMol(a));
+    newmol = std::make_unique<RWMol>(a);
   }
 
   std::map<unsigned int, ZipBond> mappings;
