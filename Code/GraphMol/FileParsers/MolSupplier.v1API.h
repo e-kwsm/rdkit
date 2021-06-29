@@ -97,8 +97,8 @@ class RDKIT_FILEPARSERS_EXPORT ForwardSDMolSupplier : public MolSupplier {
     params.sanitize = sanitize;
     params.removeHs = removeHs;
     params.strictParsing = strictParsing;
-    dp_supplier.reset(new v2::FileParsers::ForwardSDMolSupplier(
-        inStream, takeOwnership, params));
+    dp_supplier = std::make_unique<v2::FileParsers::ForwardSDMolSupplier>(
+        inStream, takeOwnership, params);
   };
 
   ~ForwardSDMolSupplier() override {}
@@ -140,7 +140,7 @@ class RDKIT_FILEPARSERS_EXPORT SDMolSupplier : public ForwardSDMolSupplier {
 
  public:
   using ContainedType = v2::FileParsers::SDMolSupplier;
-  SDMolSupplier() { dp_supplier.reset(new ContainedType()); }
+  SDMolSupplier() { dp_supplier = std::make_unique<ContainedType>(); }
 
   /*!
    *   \param fileName - the name of the SD file
@@ -157,7 +157,8 @@ class RDKIT_FILEPARSERS_EXPORT SDMolSupplier : public ForwardSDMolSupplier {
     params.sanitize = sanitize;
     params.removeHs = removeHs;
     params.strictParsing = strictParsing;
-    dp_supplier.reset(new v2::FileParsers::SDMolSupplier(fileName, params));
+    dp_supplier =
+        std::make_unique<v2::FileParsers::SDMolSupplier>(fileName, params);
   }
 
   explicit SDMolSupplier(std::istream *inStream, bool takeOwnership = true,
@@ -167,8 +168,8 @@ class RDKIT_FILEPARSERS_EXPORT SDMolSupplier : public ForwardSDMolSupplier {
     params.sanitize = sanitize;
     params.removeHs = removeHs;
     params.strictParsing = strictParsing;
-    dp_supplier.reset(
-        new v2::FileParsers::SDMolSupplier(inStream, takeOwnership, params));
+    dp_supplier = std::make_unique<v2::FileParsers::SDMolSupplier>(
+        inStream, takeOwnership, params);
   }
 
   void moveTo(unsigned int idx) {
@@ -272,7 +273,8 @@ class RDKIT_FILEPARSERS_EXPORT SmilesMolSupplier : public MolSupplier {
     params.nameColumn = nameColumn;
     params.titleLine = titleLine;
     params.parseParameters.sanitize = sanitize;
-    dp_supplier.reset(new v2::FileParsers::SmilesMolSupplier(fileName, params));
+    dp_supplier =
+        std::make_unique<v2::FileParsers::SmilesMolSupplier>(fileName, params);
   }
   explicit SmilesMolSupplier(std::istream *inStream, bool takeOwnership = true,
                              const std::string &delimiter = " \t",
@@ -284,10 +286,10 @@ class RDKIT_FILEPARSERS_EXPORT SmilesMolSupplier : public MolSupplier {
     params.nameColumn = nameColumn;
     params.titleLine = titleLine;
     params.parseParameters.sanitize = sanitize;
-    dp_supplier.reset(new v2::FileParsers::SmilesMolSupplier(
-        inStream, takeOwnership, params));
+    dp_supplier = std::make_unique<v2::FileParsers::SmilesMolSupplier>(
+        inStream, takeOwnership, params);
   }
-  SmilesMolSupplier() { dp_supplier.reset(new ContainedType()); }
+  SmilesMolSupplier() { dp_supplier = std::make_unique<ContainedType>(); }
 
   void setData(const std::string &text, const std::string &delimiter = " ",
                int smilesColumn = 0, int nameColumn = 1, bool titleLine = true,
@@ -360,7 +362,8 @@ class RDKIT_FILEPARSERS_EXPORT TDTMolSupplier : public MolSupplier {
     params.confId2D = confId2D;
     params.confId3D = confId3D;
     params.parseParameters.sanitize = sanitize;
-    dp_supplier.reset(new v2::FileParsers::TDTMolSupplier(fileName, params));
+    dp_supplier =
+        std::make_unique<v2::FileParsers::TDTMolSupplier>(fileName, params);
   }
   explicit TDTMolSupplier(std::istream *inStream, bool takeOwnership = true,
                           const std::string &nameRecord = "", int confId2D = -1,
@@ -370,10 +373,10 @@ class RDKIT_FILEPARSERS_EXPORT TDTMolSupplier : public MolSupplier {
     params.confId2D = confId2D;
     params.confId3D = confId3D;
     params.parseParameters.sanitize = sanitize;
-    dp_supplier.reset(
-        new v2::FileParsers::TDTMolSupplier(inStream, takeOwnership, params));
+    dp_supplier = std::make_unique<v2::FileParsers::TDTMolSupplier>(
+        inStream, takeOwnership, params);
   }
-  TDTMolSupplier() { dp_supplier.reset(new ContainedType()); }
+  TDTMolSupplier() { dp_supplier = std::make_unique<ContainedType>(); }
   void setData(const std::string &text, const std::string &nameRecord = "",
                int confId2D = -1, int confId3D = 0, bool sanitize = true) {
     PRECONDITION(dp_supplier, "no supplier");
@@ -419,14 +422,14 @@ class RDKIT_FILEPARSERS_EXPORT MaeMolSupplier : public MolSupplier {
 
  public:
   using ContainedType = v2::FileParsers::MaeMolSupplier;
-  MaeMolSupplier() { dp_supplier.reset(new ContainedType()); }
+  MaeMolSupplier() { dp_supplier = std::make_unique<ContainedType>(); }
 
   explicit MaeMolSupplier(std::shared_ptr<std::istream> inStream,
                           bool sanitize = true, bool removeHs = true) {
     v2::FileParsers::MaeMolSupplierParams params;
     params.sanitize = sanitize;
     params.removeHs = removeHs;
-    dp_supplier.reset(new ContainedType(inStream, params));
+    dp_supplier = std::make_unique<ContainedType>(inStream, params);
   }
 
   explicit MaeMolSupplier(std::istream *inStream, bool takeOwnership = true,
@@ -434,7 +437,8 @@ class RDKIT_FILEPARSERS_EXPORT MaeMolSupplier : public MolSupplier {
     v2::FileParsers::MaeMolSupplierParams params;
     params.sanitize = sanitize;
     params.removeHs = removeHs;
-    dp_supplier.reset(new ContainedType(inStream, takeOwnership, params));
+    dp_supplier =
+        std::make_unique<ContainedType>(inStream, takeOwnership, params);
   }
 
   explicit MaeMolSupplier(const std::string &fname, bool sanitize = true,
@@ -442,7 +446,7 @@ class RDKIT_FILEPARSERS_EXPORT MaeMolSupplier : public MolSupplier {
     v2::FileParsers::MaeMolSupplierParams params;
     params.sanitize = sanitize;
     params.removeHs = removeHs;
-    dp_supplier.reset(new ContainedType(fname, params));
+    dp_supplier = std::make_unique<ContainedType>(fname, params);
   }
   void moveTo(unsigned int idx) {
     PRECONDITION(dp_supplier, "no supplier");

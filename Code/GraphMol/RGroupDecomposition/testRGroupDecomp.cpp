@@ -72,7 +72,7 @@ void CHECK_RGROUP(RGroupRows::const_iterator &it, const std::string &expected,
         res = molzip(*res, *rgroups->second.get());
       }
     } else if (mol) {
-      res = std::unique_ptr<ROMol>(new ROMol(*rgroups->second.get()));
+      res = std::make_unique<ROMol>(*rgroups->second.get());
     }
     // rlabel:smiles
     str << rgroups->first << ":" << MolToSmiles(*rgroups->second.get());

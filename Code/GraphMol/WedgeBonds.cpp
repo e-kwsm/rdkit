@@ -402,8 +402,7 @@ std::map<int, std::unique_ptr<Chirality::WedgeInfoBase>> pickBondsToWedge(
     auto bnd1 =
         detail::pickBondToWedge(atom, mol, nChiralNbrs, wedgeInfo, noNbrs);
     if (bnd1 >= 0) {
-      auto wi = std::unique_ptr<RDKit::Chirality::WedgeInfoChiral>(
-          new RDKit::Chirality::WedgeInfoChiral(idx));
+      auto wi = std::make_unique<RDKit::Chirality::WedgeInfoChiral>(idx);
       wedgeInfo[bnd1] = std::move(wi);
     }
   }

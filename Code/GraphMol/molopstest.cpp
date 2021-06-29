@@ -7511,7 +7511,7 @@ TEST_CASE("Testing removeAndTrackIsotopes parameter") {
                std::default_random_engine());
   std::unique_ptr<ROMol> mNoHRen(MolOps::renumberAtoms(*mNoH, randomOrder));
   mH.reset(MolOps::addHs(*mNoHRen));
-  mH_isotopicHsPerHeavy.reset(new IsotopicHsCount(*mH));
+  mH_isotopicHsPerHeavy = std::make_unique<IsotopicHsCount>(*mH);
   IsotopicHsCount::countExplicitImplicitHs(*mH, mH_numExplicitHs,
                                            mH_numImplicitHs);
   REQUIRE(mH_numExplicitHs == 0);

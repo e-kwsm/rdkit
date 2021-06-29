@@ -913,9 +913,9 @@ RDKit::MatchVectType generateDepictionMatching2DStructure(
   p.allowRGroups = p.allowRGroups && hasTerminalRGroupOrQueryHydrogen(query);
   std::unique_ptr<RDKit::ROMol> reducedQuery;
   if (p.allowRGroups) {
-    molHs.reset(new RDKit::RWMol(mol));
+    molHs = std::make_unique<RDKit::RWMol>(mol);
     RDKit::MolOps::addHs(*molHs);
-    queryAdj.reset(new RDKit::RWMol(query));
+    queryAdj = std::make_unique<RDKit::RWMol>(query);
     reducedQuery = prepareTemplateForRGroups(*queryAdj);
     prbMol = static_cast<const RDKit::ROMol *>(molHs.get());
     refMol = reducedQuery ? reducedQuery.get()
@@ -926,7 +926,7 @@ RDKit::MatchVectType generateDepictionMatching2DStructure(
     // is true, then add Hs to reference and find the mapping that maps the
     // largest number of heavy atoms to referencePattern
     if (p.allowRGroups) {
-      referenceHs.reset(new RDKit::RWMol(reference));
+      referenceHs = std::make_unique<RDKit::RWMol>(reference);
       RDKit::MolOps::addHs(*referenceHs);
       CHECK_INVARIANT(queryAdj, "");
       patternToRefMatches = RDKit::SubstructMatch(*referenceHs, *refMol);
