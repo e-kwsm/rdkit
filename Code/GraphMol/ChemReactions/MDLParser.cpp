@@ -77,7 +77,7 @@ void ParseV2000RxnBlock(std::istream &inStream, unsigned int &line,
   if (tempStr.size() < 6) {
     throw ChemicalReactionParserException("rxn counts line is too short");
   }
-  rxn.reset(new ChemicalReaction());
+  rxn = std::make_unique<ChemicalReaction>();
   try {
     nReacts =
         FileParserUtils::stripSpacesAndCast<unsigned int>(tempStr.substr(0, 3));
@@ -209,7 +209,7 @@ void ParseV3000RxnBlock(std::istream &inStream, unsigned int &line,
   if (tempStr.length() < 14 || tempStr.substr(0, 14) != "BEGIN REACTANT") {
     throw FileParseException("BEGIN REACTANT line not found");
   }
-  rxn.reset(new ChemicalReaction());
+  rxn = std::make_unique<ChemicalReaction>();
   const bool expectMEND = false;
   for (unsigned int i = 0; i < nReacts; ++i) {
     RWMol *react;

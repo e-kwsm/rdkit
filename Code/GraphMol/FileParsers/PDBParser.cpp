@@ -586,7 +586,7 @@ std::unique_ptr<RWMol> parsePdbBlock(const char *str, bool sanitize,
         str[4] == ' ' && str[5] == ' ') {
       if (!multi_conformer) {
         if (!mol) {
-          mol.reset(new RWMol());
+          mol = std::make_unique<RWMol>();
         }
         PDBAtomLine(mol.get(), str, len, flavor, amap);
       } else {
@@ -597,7 +597,7 @@ std::unique_ptr<RWMol> parsePdbBlock(const char *str, bool sanitize,
                str[3] == 'A' && str[4] == 'T' && str[5] == 'M') {
       if (!multi_conformer) {
         if (!mol) {
-          mol.reset(new RWMol());
+          mol = std::make_unique<RWMol>();
         }
         PDBAtomLine(mol.get(), str, len, flavor, amap);
       } else {
@@ -613,7 +613,7 @@ std::unique_ptr<RWMol> parsePdbBlock(const char *str, bool sanitize,
     } else if (str[0] == 'C' && str[1] == 'O' && str[2] == 'M' &&
                str[3] == 'P' && str[4] == 'N' && str[5] == 'D') {
       if (!mol) {
-        mol.reset(new RWMol());
+        mol = std::make_unique<RWMol>();
       }
       if (len > 10 &&
           (str[9] == ' ' || !strncmp(str + 9, "2 MOLECULE: ", 12))) {
@@ -623,7 +623,7 @@ std::unique_ptr<RWMol> parsePdbBlock(const char *str, bool sanitize,
     } else if (str[0] == 'H' && str[1] == 'E' && str[2] == 'A' &&
                str[3] == 'D' && str[4] == 'E' && str[5] == 'R') {
       if (!mol) {
-        mol.reset(new RWMol());
+        mol = std::make_unique<RWMol>();
       }
       PDBTitleLine(mol.get(), str, len < 50 ? len : 50);
       // ENDMDL records

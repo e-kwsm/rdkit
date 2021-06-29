@@ -1524,7 +1524,7 @@ Atom *ParseMolFileAtomLine(const std::string_view text, RDGeom::Point3D &pos,
     res->setProp(common_properties::dummyLabel, symb);
   } else if (GenericGroups::genericMatchers.find(symb) !=
              GenericGroups::genericMatchers.end()) {
-    res.reset(new QueryAtom(0));
+    res = std::make_unique<QueryAtom>(0);
     res->setProp(common_properties::atomLabel, std::string(symb));
   } else {
     lookupAtomicNumber(res.get(), symb, strictParsing);
@@ -2127,7 +2127,7 @@ Atom *ParseV3000AtomSymbol(std::string_view token, unsigned int &line,
 
       int atNum = PeriodicTable::getTable()->getAtomicNumber(atSymb);
       if (!res) {
-        res.reset(new QueryAtom(atNum));
+        res = std::make_unique<QueryAtom>(atNum);
       } else {
         res->expandQuery(makeAtomNumQuery(atNum), Queries::COMPOSITE_OR, true);
       }
@@ -2152,7 +2152,7 @@ Atom *ParseV3000AtomSymbol(std::string_view token, unsigned int &line,
         (token[0] == 'R' && token >= "R0" && token <= "R99") || token == "R#" ||
         token == "*") {
       if (isComplexQueryName || token == "*") {
-        res.reset(new QueryAtom(0));
+        res = std::make_unique<QueryAtom>(0);
         if (token == "*") {
           // according to the MDL spec, these match anything
           res->setQuery(makeAtomNullQuery());
@@ -2162,7 +2162,7 @@ Atom *ParseV3000AtomSymbol(std::string_view token, unsigned int &line,
         // queries have no implicit Hs:
         res->setNoImplicit(true);
       } else {
-        res.reset(new Atom(1));
+        res = std::make_unique<Atom>(1);
         res->setAtomicNum(0);
       }
       if (token[0] == 'R' && token >= "R0" && token <= "R99") {
@@ -2184,22 +2184,22 @@ Atom *ParseV3000AtomSymbol(std::string_view token, unsigned int &line,
       }
     } else if (token == "D") {  // mol blocks support "D" and "T" as
                                 // shorthand... handle that.
-      res.reset(new Atom(1));
+      res = std::make_unique<Atom>(1);
       res->setIsotope(2);
     } else if (token == "T") {  // mol blocks support "D" and "T" as
                                 // shorthand... handle that.
-      res.reset(new Atom(1));
+      res = std::make_unique<Atom>(1);
       res->setIsotope(3);
     } else if (token == "Pol" || token == "Mod") {
-      res.reset(new Atom(0));
+      res = std::make_unique<Atom>(0);
       res->setProp(common_properties::dummyLabel, std::string(token));
     } else if (GenericGroups::genericMatchers.find(std::string(token)) !=
                GenericGroups::genericMatchers.end()) {
-      res.reset(new QueryAtom(0));
+      res = std::make_unique<QueryAtom>(0);
       res->setProp(common_properties::atomLabel, std::string(token));
     } else {
       std::string tcopy(token);
-      res.reset(new Atom(0));
+      res = std::make_unique<Atom>(0);
       lookupAtomicNumber(res.get(), tcopy, strictParsing);
     }
   }

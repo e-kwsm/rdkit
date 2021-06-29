@@ -565,7 +565,7 @@ std::unique_ptr<RDKit::RWMol> prepareTemplateForRGroups(
     }
   }
   if (!removedIdxToNbrIdx.empty()) {
-    reducedTemplateMol.reset(new RDKit::RWMol(templateMol));
+    reducedTemplateMol = std::make_unique<RDKit::RWMol>(templateMol);
     for (auto reducedTemplateAtom : reducedTemplateMol->atoms()) {
       auto formerIdx = reducedTemplateAtom->getIdx();
       reducedTemplateAtom->setProp(FORMER_IDX, formerIdx);

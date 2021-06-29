@@ -269,14 +269,14 @@ ExtendedQueryMol::TautomerQuery_T from_pt(bpt::ptree &pt) {
     modifiedBonds.push_back(child.second.get<size_t>(""));
   }
 
-  auto res = ExtendedQueryMol::TautomerQuery_T(
-      new TautomerQuery(tautomers, templ, modifiedAtoms, modifiedBonds));
+  auto res = std::make_unique<TautomerQuery>(tautomers, templ, modifiedAtoms,
+                                             modifiedBonds);
   return res;
 }
 
 template <>
 ExtendedQueryMol::MolBundle_T from_pt(bpt::ptree &pt) {
-  auto res = ExtendedQueryMol::MolBundle_T(new MolBundle);
+  auto res = std::make_unique<MolBundle>();
   for (auto &child : pt.get_child("mols")) {
     res->addMol(ROMOL_SPTR(pt_to_mol(child.second)));
   }

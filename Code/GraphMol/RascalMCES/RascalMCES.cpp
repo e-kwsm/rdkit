@@ -1041,12 +1041,12 @@ RascalStartPoint makeInitialPartitionSet(const ROMol *mol1, const ROMol *mol2,
   RascalStartPoint starter;
   if (mol1->getNumAtoms() <= mol2->getNumAtoms()) {
     starter.d_swapped = false;
-    starter.d_mol1.reset(new ROMol(*mol1));
-    starter.d_mol2.reset(new ROMol(*mol2));
+    starter.d_mol1 = std::make_unique<ROMol>(*mol1);
+    starter.d_mol2 = std::make_unique<ROMol>(*mol2);
   } else {
     starter.d_swapped = true;
-    starter.d_mol1.reset(new ROMol(*mol2));
-    starter.d_mol2.reset(new ROMol(*mol1));
+    starter.d_mol1 = std::make_unique<ROMol>(*mol2);
+    starter.d_mol2 = std::make_unique<ROMol>(*mol1);
   }
   assignEquivalentAtoms(*starter.d_mol1, opts.equivalentAtoms);
   assignEquivalentAtoms(*starter.d_mol2, opts.equivalentAtoms);

@@ -679,7 +679,7 @@ RGroupDecompositionProcessResult RGroupDecompData::process(bool pruneMatches,
 #ifdef DEBUG
     std::cerr << "Processing" << std::endl;
 #endif
-    iterator.reset(new CartesianProduct(permutations));
+    iterator = std::make_unique<CartesianProduct>(permutations);
     // Iterates through the permutation idx, i.e.
     //  [m1_permutation_idx,  m2_permutation_idx, m3_permutation_idx]
 

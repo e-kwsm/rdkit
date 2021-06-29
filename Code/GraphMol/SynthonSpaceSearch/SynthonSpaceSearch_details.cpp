@@ -746,9 +746,9 @@ bool removeQueryAtoms(RWMol &mol) {
         atom->getQuery()->getDescription() != "AtomType") {
       std::unique_ptr<QueryAtom> qat;
       if (atom->getAtomicNum()) {
-        qat.reset(new QueryAtom(atom->getAtomicNum()));
+        qat = std::make_unique<QueryAtom>(atom->getAtomicNum());
       } else {
-        qat.reset(new QueryAtom());
+        qat = std::make_unique<QueryAtom>();
         qat->setQuery(makeAAtomQuery());
       }
       mol.replaceAtom(atom->getIdx(), qat.get());

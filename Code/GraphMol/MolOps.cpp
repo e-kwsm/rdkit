@@ -696,7 +696,7 @@ std::vector<std::unique_ptr<ROMol>> getTheFrags(
     VECT_INT_VECT *fragsMolAtomMapping, bool copyConformers) {
   std::unique_ptr<INT_VECT> mappingStorage;
   if (!frags) {
-    mappingStorage.reset(new INT_VECT);
+    mappingStorage = std::make_unique<INT_VECT>();
     frags = mappingStorage.get();
   }
   int nFrags = getMolFrags(mol, *frags);
@@ -898,7 +898,7 @@ std::map<T, std::unique_ptr<ROMol>> getTheFragsWithQuery(
     }
     assignments[i] = where;
     if (res.find(where) == res.end()) {
-      res[where] = std::unique_ptr<ROMol>(new ROMol());
+      res[where] = std::make_unique<ROMol>();
     }
     auto *frag = static_cast<RWMol *>(res[where].get());
     ids[i] = frag->addAtom(mol.getAtomWithIdx(i)->copy(), false, true);

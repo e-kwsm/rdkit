@@ -21,7 +21,7 @@ class MetalDisconnectorWrap {
  public:
   MetalDisconnectorWrap(python::object options = python::object()) {
     if (options.is_none()) {
-      md_.reset(new RDKit::MolStandardize::MetalDisconnector());
+      md_ = std::make_unique<RDKit::MolStandardize::MetalDisconnector>();
     } else {
       RDKit::MolStandardize::MetalDisconnectorOptions md_opts;
       md_opts.splitGrignards =
@@ -32,7 +32,7 @@ class MetalDisconnectorWrap {
           python::extract<bool>(options.attr("adjustCharges"));
       md_opts.removeHapticDummies =
           python::extract<bool>(options.attr("removeHapticDummies"));
-      md_.reset(new RDKit::MolStandardize::MetalDisconnector(md_opts));
+      md_ = std::make_unique<RDKit::MolStandardize::MetalDisconnector>(md_opts);
     }
   }
 

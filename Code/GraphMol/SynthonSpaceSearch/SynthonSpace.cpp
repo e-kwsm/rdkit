@@ -414,8 +414,7 @@ void readSynthons(
     std::string view(fileMap + synthonPos[i],
                      synthonPos[i + 1] - synthonPos[i]);
     std::istringstream is(view, std::ios::binary);
-    auto tmp =
-        std::make_pair(std::string(), std::unique_ptr<Synthon>(new Synthon));
+    auto tmp = std::make_pair(std::string(), std::make_unique<Synthon>());
     tmp.second->readFromDBStream(is, version);
     tmp.first = tmp.second->getSmiles();
     synthons[i] = std::move(tmp);
@@ -696,7 +695,7 @@ Synthon *SynthonSpace::addSynthonToPool(const std::string &smiles) {
       it != d_synthonPool.end() && it->first == smiles) {
     return it->second.get();
   } else {
-    tmp.second.reset(new Synthon(smiles));
+    tmp.second = std::make_unique<Synthon>(smiles);
     auto retVal = tmp.second.get();
     d_synthonPool.insert(it, std::move(tmp));
     return retVal;
