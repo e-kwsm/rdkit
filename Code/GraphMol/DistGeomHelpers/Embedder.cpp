@@ -1421,7 +1421,7 @@ std::vector<std::vector<unsigned int>> getMolSelfMatches(
 
     std::unique_ptr<RWMol> prbMolSymm;
     if (params.symmetrizeConjugatedTerminalGroupsForPruning) {
-      prbMolSymm.reset(new RWMol(tmol));
+      prbMolSymm = std::make_unique<RWMol>(tmol);
       MolAlign::details::symmetrizeTerminalAtoms(*prbMolSymm);
     }
     const auto &prbMolForMatch = prbMolSymm ? *prbMolSymm : tmol;

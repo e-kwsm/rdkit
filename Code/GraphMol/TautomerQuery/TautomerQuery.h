@@ -145,7 +145,7 @@ class RDKIT_TAUTOMERQUERY_EXPORT TautomerQuery {
     }
     std::string molpkl;
     ar >> molpkl;
-    d_templateMolecule.reset(new ROMol(molpkl));
+    d_templateMolecule = std::make_unique<ROMol>(molpkl);
 
     ar >> d_modifiedAtoms;
     ar >> d_modifiedBonds;
