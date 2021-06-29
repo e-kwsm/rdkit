@@ -13,6 +13,7 @@
 #define NPY_NO_DEPRECATED_API NPY_1_7_API_VERSION
 #include <numpy/arrayobject.h>
 
+#include <memory>
 #include <string>
 #include <cmath>
 
@@ -627,7 +628,7 @@ ExplicitBitVect *wrapLayeredFingerprint(
       pythonObjectToVect(fromAtoms, mol.getNumAtoms());
   std::unique_ptr<std::vector<unsigned int>> atomCountsV;
   if (atomCounts) {
-    atomCountsV.reset(new std::vector<unsigned int>);
+    atomCountsV = std::make_unique<std::vector<unsigned int>>();
     unsigned int nAts =
         python::extract<unsigned int>(atomCounts.attr("__len__")());
     if (nAts < mol.getNumAtoms()) {
@@ -906,7 +907,7 @@ python::tuple detectChemistryProblemsHelper(const ROMol &mol,
 
 ROMol *canonicalizeStereoGroupsHelper(
     ROMol &mol, RDKit::StereoGroupAbsOptions stereoGroupAbsOptions) {
-  auto mol_uptr = std::unique_ptr<ROMol>(new ROMol(mol));
+  auto mol_uptr = std::make_unique<ROMol>(mol);
 
   RDKit::canonicalizeStereoGroups(mol_uptr, stereoGroupAbsOptions);
   return mol_uptr.release();
