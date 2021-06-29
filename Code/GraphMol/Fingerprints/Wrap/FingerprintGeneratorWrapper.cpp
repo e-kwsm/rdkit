@@ -9,6 +9,7 @@
 //
 
 #include <RDBoost/Wrap.h>
+#include <memory>
 #include <string>
 #include <boost/python.hpp>
 #include <RDBoost/boost_numpy.h>
@@ -45,7 +46,7 @@ void convertPyArguments(
   if (!py_fromAtoms.is_none()) {
     unsigned int len = python::len(py_fromAtoms);
     if (len) {
-      fromAtoms.reset(new std::vector<std::uint32_t>());
+      fromAtoms = std::make_unique<std::vector<std::uint32_t>>();
       fromAtoms->reserve(len);
       for (unsigned int i = 0; i < len; ++i) {
         fromAtoms->push_back(python::extract<std::uint32_t>(py_fromAtoms[i]));
@@ -56,7 +57,7 @@ void convertPyArguments(
   if (!py_ignoreAtoms.is_none()) {
     unsigned int len = python::len(py_ignoreAtoms);
     if (len) {
-      ignoreAtoms.reset(new std::vector<std::uint32_t>());
+      ignoreAtoms = std::make_unique<std::vector<std::uint32_t>>();
       ignoreAtoms->reserve(len);
       for (unsigned int i = 0; i < len; ++i) {
         ignoreAtoms->push_back(
@@ -68,7 +69,7 @@ void convertPyArguments(
   if (!py_atomInvs.is_none()) {
     unsigned int len = python::len(py_atomInvs);
     if (len) {
-      customAtomInvariants.reset(new std::vector<std::uint32_t>());
+      customAtomInvariants = std::make_unique<std::vector<std::uint32_t>>();
       customAtomInvariants->reserve(len);
       for (unsigned int i = 0; i < len; ++i) {
         customAtomInvariants->push_back(
@@ -80,7 +81,7 @@ void convertPyArguments(
   if (!py_bondInvs.is_none()) {
     unsigned int len = python::len(py_bondInvs);
     if (len) {
-      customBondInvariants.reset(new std::vector<std::uint32_t>());
+      customBondInvariants = std::make_unique<std::vector<std::uint32_t>>();
       customBondInvariants->reserve(len);
       for (unsigned int i = 0; i < len; ++i) {
         customBondInvariants->push_back(
