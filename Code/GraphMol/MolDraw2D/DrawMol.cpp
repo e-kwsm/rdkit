@@ -170,7 +170,7 @@ void DrawMol::finishCreateDrawObjects() {
 
 // ****************************************************************************
 void DrawMol::initDrawMolecule(const ROMol &mol) {
-  drawMol_.reset(new RWMol(mol));
+  drawMol_ = std::make_unique<RWMol>(mol);
   if (drawOptions_.centreMoleculesBeforeDrawing) {
     if (drawMol_->getNumConformers()) {
       centerMolForDrawing(*drawMol_, confId_);
@@ -3557,7 +3557,7 @@ DrawColour DrawMol::getColour(int atom_idx) const {
               nbr, drawOptions_, highlightBonds_, highlightBondMap_,
               highlightAtoms_, highlightAtomMap_);
           if (!highCol) {
-            highCol.reset(new DrawColour(hc));
+            highCol = std::make_unique<DrawColour>(hc);
           } else {
             if (!(hc == *highCol)) {
               numHighBonds = 0;
