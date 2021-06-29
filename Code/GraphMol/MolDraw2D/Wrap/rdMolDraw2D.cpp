@@ -324,7 +324,7 @@ void drawMoleculesHelper2(MolDraw2D &self, python::object pmols,
           "If highlightAtoms is provided it must be the same length as the "
           "molecule list.");
     }
-    highlightAtoms.reset(new std::vector<std::vector<int>>(nThere));
+    highlightAtoms = std::make_unique<std::vector<std::vector<int>>>(nThere);
     for (unsigned int i = 0; i < nThere; ++i) {
       pythonObjectToVect(highlight_atoms[i], (*highlightAtoms)[i]);
     }
@@ -337,7 +337,7 @@ void drawMoleculesHelper2(MolDraw2D &self, python::object pmols,
           "If highlightBonds is provided it must be the same length as the "
           "molecule list.");
     }
-    highlightBonds.reset(new std::vector<std::vector<int>>(nThere));
+    highlightBonds = std::make_unique<std::vector<std::vector<int>>>(nThere);
     for (unsigned int i = 0; i < nThere; ++i) {
       pythonObjectToVect(highlight_bonds[i], (*highlightBonds)[i]);
     }
@@ -351,7 +351,7 @@ void drawMoleculesHelper2(MolDraw2D &self, python::object pmols,
           "If highlightAtomMap is provided it must be the same length as the "
           "molecule list.");
     }
-    highlightAtomMap.reset(new std::vector<ColourPalette>(nThere));
+    highlightAtomMap = std::make_unique<std::vector<ColourPalette>>(nThere);
     for (unsigned int i = 0; i < nThere; ++i) {
       pyDictToColourMap(highlight_atom_map[i], (*highlightAtomMap)[i]);
     }
@@ -364,7 +364,7 @@ void drawMoleculesHelper2(MolDraw2D &self, python::object pmols,
           "If highlightBondMap is provided it must be the same length as the "
           "molecule list.");
     }
-    highlightBondMap.reset(new std::vector<ColourPalette>(nThere));
+    highlightBondMap = std::make_unique<std::vector<ColourPalette>>(nThere);
     for (unsigned int i = 0; i < nThere; ++i) {
       pyDictToColourMap(highlight_bond_map[i], (*highlightBondMap)[i]);
     }
@@ -377,7 +377,8 @@ void drawMoleculesHelper2(MolDraw2D &self, python::object pmols,
           "If highlightAtomRadii is provided it must be the same length as the "
           "molecule list.");
     }
-    highlightRadii.reset(new std::vector<std::map<int, double>>(nThere));
+    highlightRadii =
+        std::make_unique<std::vector<std::map<int, double>>>(nThere);
     for (unsigned int i = 0; i < nThere; ++i) {
       pyDictToDoubleMap(highlight_atom_radii[i], (*highlightRadii)[i]);
     }
@@ -409,7 +410,7 @@ void drawReactionHelper(MolDraw2D &self, const ChemicalReaction &rxn,
                         python::object pconfIds) {
   std::unique_ptr<std::vector<DrawColour>> highlightColorsReactants;
   if (phighlightColorsReactants) {
-    highlightColorsReactants.reset(new std::vector<DrawColour>);
+    highlightColorsReactants = std::make_unique<std::vector<DrawColour>>();
     pyListToColourVec(phighlightColorsReactants, *highlightColorsReactants);
   }
 
@@ -557,7 +558,7 @@ void contourAndDrawGaussiansHelper(
   if (pylevels) {
     levels = pythonObjectToVect<double>(pylevels);
   } else {
-    levels = std::unique_ptr<std::vector<double>>(new std::vector<double>);
+    levels = std::make_unique<std::vector<double>>();
   }
   ROMol *mol_p = nullptr;
   if (mol) {
@@ -596,7 +597,7 @@ void contourAndDrawGridHelper(RDKit::MolDraw2D &drawer, python::object &data,
   if (pylevels) {
     levels = pythonObjectToVect<double>(pylevels);
   } else {
-    levels = std::unique_ptr<std::vector<double>>(new std::vector<double>);
+    levels = std::make_unique<std::vector<double>>();
   }
 
   if (PyArray_DIM(dataArr, 0) != static_cast<int>(xcoords->size())) {
