@@ -2482,7 +2482,7 @@ void testChargesAndIsotopes() {
 
     std::string pkl;
     MolPickler::pickleMol(*p, pkl);
-    p.reset(new Mol(pkl));
+    p = std::make_unique<Mol>(pkl);
     TEST_ASSERT(p);
     TEST_ASSERT(p->getAtomWithIdx(0)->getFormalCharge() == 0);
     TEST_ASSERT(p->getAtomWithIdx(1)->getFormalCharge() == 0);

@@ -52,7 +52,7 @@ std::vector<std::unique_ptr<Configuration>> findConfigs(
     auto chiraltag = atom->getChiralTag();
     if (chiraltag == Atom::CHI_TETRAHEDRAL_CW ||
         chiraltag == Atom::CHI_TETRAHEDRAL_CCW) {
-      std::unique_ptr<Tetrahedral> cfg{new Tetrahedral(mol, atom)};
+      auto cfg = std::make_unique<Tetrahedral>(mol, atom);
       configs.push_back(std::move(cfg));
     }
   }
@@ -75,8 +75,8 @@ std::vector<std::unique_ptr<Configuration>> findConfigs(
         continue;
     }
 
-    std::unique_ptr<Sp2Bond> cfg(new Sp2Bond(mol, bond, bond->getBeginAtom(),
-                                             bond->getEndAtom(), bond_cfg));
+    auto cfg = std::make_unique<Sp2Bond>(mol, bond, bond->getBeginAtom(),
+                                         bond->getEndAtom(), bond_cfg);
     configs.push_back(std::move(cfg));
   }
 
