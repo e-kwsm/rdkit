@@ -334,8 +334,7 @@ TEST_CASE("Tetrahedral assignment", "[accurateCIP]") {
   CIPLabeler::assignCIPLabels(*mol);
 
   std::string chirality;
-  CHECK(chiral_atom->getPropIfPresent(common_properties::_CIPCode, chirality) ==
-        true);
+  CHECK(chiral_atom->getPropIfPresent(common_properties::_CIPCode, chirality));
   CHECK(chirality == "S");
 }
 
@@ -353,12 +352,10 @@ TEST_CASE("Double bond stereo assignment", "[accurateCIP]") {
   CIPLabeler::assignCIPLabels(*mol);
 
   std::string chirality;
-  CHECK(bond_1->getPropIfPresent(common_properties::_CIPCode, chirality) ==
-        true);
+  CHECK(bond_1->getPropIfPresent(common_properties::_CIPCode, chirality));
   CHECK(chirality == "E");
 
-  CHECK(bond_2->getPropIfPresent(common_properties::_CIPCode, chirality) ==
-        true);
+  CHECK(bond_2->getPropIfPresent(common_properties::_CIPCode, chirality));
   CHECK(chirality == "Z");
 }
 
@@ -376,7 +373,7 @@ TEST_CASE("phosphine and arsine chirality", "[accurateCIP]") {
 
     std::string chirality;
     CHECK(mol->getAtomWithIdx(1)->getPropIfPresent(common_properties::_CIPCode,
-                                                   chirality) == true);
+                                                   chirality));
     CHECK(chirality == ref.second);
   }
 }
@@ -389,8 +386,8 @@ TEST_CASE("assign specific atoms and bonds", "[accurateCIP]") {
     auto atom1 = mol->getAtomWithIdx(1);
     auto atom5 = mol->getAtomWithIdx(5);
 
-    REQUIRE(atom1->hasProp(common_properties::_CIPCode) == true);
-    REQUIRE(atom5->hasProp(common_properties::_CIPCode) == true);
+    REQUIRE(atom1->hasProp(common_properties::_CIPCode));
+    REQUIRE(atom5->hasProp(common_properties::_CIPCode));
 
     atom1->clearProp(common_properties::_CIPCode);
     atom5->clearProp(common_properties::_CIPCode);
@@ -401,10 +398,9 @@ TEST_CASE("assign specific atoms and bonds", "[accurateCIP]") {
     CIPLabeler::assignCIPLabels(*mol, atoms, bonds);
 
     std::string chirality;
-    CHECK(atom1->getPropIfPresent(common_properties::_CIPCode, chirality) ==
-          true);
+    CHECK(atom1->getPropIfPresent(common_properties::_CIPCode, chirality));
     CHECK(chirality == "S");
-    CHECK(atom5->hasProp(common_properties::_CIPCode) == false);
+    CHECK(!atom5->hasProp(common_properties::_CIPCode));
   }
   SECTION("Assign bonds") {
     auto mol = R"(C\C=C\C=C/C)"_smiles;
@@ -416,8 +412,8 @@ TEST_CASE("assign specific atoms and bonds", "[accurateCIP]") {
     REQUIRE(bond1->getBondType() == Bond::DOUBLE);
     REQUIRE(bond3->getBondType() == Bond::DOUBLE);
 
-    REQUIRE(bond1->hasProp(common_properties::_CIPCode) == false);
-    REQUIRE(bond3->hasProp(common_properties::_CIPCode) == false);
+    REQUIRE(!bond1->hasProp(common_properties::_CIPCode));
+    REQUIRE(!bond3->hasProp(common_properties::_CIPCode));
 
     boost::dynamic_bitset<> atoms;
     boost::dynamic_bitset<> bonds(mol->getNumBonds());
@@ -425,8 +421,8 @@ TEST_CASE("assign specific atoms and bonds", "[accurateCIP]") {
     CIPLabeler::assignCIPLabels(*mol, atoms, bonds);
 
     std::string stereo;
-    CHECK(bond1->hasProp(common_properties::_CIPCode) == false);
-    CHECK(bond3->getPropIfPresent(common_properties::_CIPCode, stereo) == true);
+    CHECK(!bond1->hasProp(common_properties::_CIPCode));
+    CHECK(bond3->getPropIfPresent(common_properties::_CIPCode, stereo));
     CHECK(stereo == "Z");
   }
 }
@@ -440,13 +436,13 @@ TEST_CASE("para-stereochemistry", "[accurateCIP]") {
 
     std::string chirality;
     CHECK(mol->getAtomWithIdx(3)->getPropIfPresent(common_properties::_CIPCode,
-                                                   chirality) == true);
+                                                   chirality));
     CHECK(chirality == "R");
     CHECK(mol->getAtomWithIdx(7)->getPropIfPresent(common_properties::_CIPCode,
-                                                   chirality) == true);
+                                                   chirality));
     CHECK(chirality == "r");
     CHECK(mol->getAtomWithIdx(9)->getPropIfPresent(common_properties::_CIPCode,
-                                                   chirality) == true);
+                                                   chirality));
     CHECK(chirality == "S");
   }
   SECTION("example 2") {
@@ -457,13 +453,13 @@ TEST_CASE("para-stereochemistry", "[accurateCIP]") {
 
     std::string chirality;
     CHECK(mol->getAtomWithIdx(3)->getPropIfPresent(common_properties::_CIPCode,
-                                                   chirality) == true);
+                                                   chirality));
     CHECK(chirality == "R");
     CHECK(mol->getAtomWithIdx(7)->getPropIfPresent(common_properties::_CIPCode,
-                                                   chirality) == true);
+                                                   chirality));
     CHECK(chirality == "r");
     CHECK(mol->getAtomWithIdx(9)->getPropIfPresent(common_properties::_CIPCode,
-                                                   chirality) == true);
+                                                   chirality));
     CHECK(chirality == "S");
   }
 }

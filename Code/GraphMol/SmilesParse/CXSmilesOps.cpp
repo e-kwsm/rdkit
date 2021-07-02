@@ -544,10 +544,7 @@ bool processRadicalSection(Iterator &first, Iterator last, RDKit::RWMol &mol,
     }
     mol.getAtomWithIdx(atIdx)->setNumRadicalElectrons(numRadicalElectrons);
   }
-  if (first >= last) {
-    return false;
-  }
-  return true;
+  return first < last;
 }
 
 template <typename Iterator>

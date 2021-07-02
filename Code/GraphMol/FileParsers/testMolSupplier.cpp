@@ -1772,7 +1772,7 @@ void testSetStreamIndices() {
     if (addIndex) {
       pos = ifs.tellg();
     }
-    notEof = (std::getline(ifs, line) ? true : false);
+    notEof = !std::getline(ifs, line).fail();
     if (notEof) {
       if (addIndex) {
         indices.push_back(pos);
