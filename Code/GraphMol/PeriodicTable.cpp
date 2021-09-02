@@ -24,7 +24,7 @@ namespace RDKit {
 class std::unique_ptr<PeriodicTable> PeriodicTable::ds_instance = nullptr;
 
 PeriodicTable::PeriodicTable() {
-  // it is assumed that the atomic atomData string constains atoms
+  // it is assumed that the atomic atomData string contains atoms
   // in sequence and no atoms are missing in between
   byanum.clear();
   byname.clear();

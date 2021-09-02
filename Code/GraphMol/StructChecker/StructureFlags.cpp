@@ -67,7 +67,7 @@ unsigned StructChecker::StringToStructureFlags(const std::string &str) {
     auto it = fmap.find(name);
     if (fmap.end() != it) f |= it->second;
     while (token[len] &&
-           (token[len] == ',' || token[len] <= ' '))  // skip delimeter
+           (token[len] == ',' || token[len] <= ' '))  // skip delimiter
       len++;
     token += len;
   }
