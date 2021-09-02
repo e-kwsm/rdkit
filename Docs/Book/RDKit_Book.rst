@@ -351,7 +351,7 @@ Finally, if you disable parsing of both CXSMILES and names, then extra text in t
   >>> m5 is None
   True
 
-The examples in this sectin all used the SMILES parser, but the SMARTS parser behaves the same way.
+The examples in this section all used the SMILES parser, but the SMARTS parser behaves the same way.
 
 SMARTS Support and Extensions
 =============================
@@ -541,7 +541,7 @@ This subset should be better documented.
 Here are the non-element atom queries that are supported:
   - A: any heavy atom
   - Q: any non-carbon heavy atom
-  - \*: unspecfied (interpreted as any atom)
+  - \*: unspecified (interpreted as any atom)
   - L: (V2000): atom list
   - AH: (ChemAxon Extension) any atom
   - QH: (ChemAxon Extension) any non-carbon atom
@@ -823,7 +823,7 @@ Brief description of the ``findPotentialStereo()`` algorithm
       atom
    6. Set the symbol of any double bond which has two identically ranked atoms
       attached to either end [#eitherend]_ to the default for that bond
-   7. If steps 5 and 6 modfied any atoms or bonds, loop back to step 4. 
+   7. If steps 5 and 6 modified any atoms or bonds, loop back to step 4.
    8. Add any potential stereogenic atom which does not have to identically 
       ranked neighbors to the results 
    9. Add any potential stereogenic atom which does not have two identically

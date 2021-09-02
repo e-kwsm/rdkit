@@ -121,7 +121,7 @@ def VoteAndBuildImage(composite, data, badOnly=0, sortTrueVals=0, xScale=10, ySc
 
     **Arguments**
 
-      - composte: a composite model
+      - composite: a composite model
 
       - data: the examples to be voted upon
 
