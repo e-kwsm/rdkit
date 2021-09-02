@@ -129,7 +129,7 @@ class SparseIntVect {
   //! returns our nonzero elements as a map(IndexType->int)
   const StorageType &getNonzeroElements() const { return d_data; }
 
-  //! this is a "fuzzy" intesection, the final value
+  //! this is a "fuzzy" intersection, the final value
   //! of each element is equal to the minimum from
   //! the two vects.
   SparseIntVect<IndexType> &operator&=(const SparseIntVect<IndexType> &other) {

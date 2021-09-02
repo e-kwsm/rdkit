@@ -32,7 +32,7 @@
 
 # This script will download InChI software distribution version 1.04 and 
 # places it (temporarily) in a /tmp directory.  This directory will 
-# automatically dissappear after you reboot the machine.
+# automatically disappear after you reboot the machine.
 
 if ! which wget > /dev/null
 then

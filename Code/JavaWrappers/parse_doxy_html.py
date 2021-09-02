@@ -153,7 +153,7 @@ Atom * RDKit::Atom::copy 	( 		 )  	const [virtual]
 
 makes a copy of this Atom and returns a pointer to it.
 
-Note: the caller is responsible for deleteing the result
+Note: the caller is responsible for deleting the result
 
 Reimplemented in RDKit::QueryAtom.
 unsigned int RDKit::Atom::getDegree 	( 		 )  	const

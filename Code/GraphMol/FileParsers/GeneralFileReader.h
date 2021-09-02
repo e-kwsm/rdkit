@@ -49,7 +49,7 @@ const std::vector<std::string> supportedCompressionFormats{"gz"};
 
 //! given file path determines the file and compression format
 //! returns true on success, otherwise false
-//! Note: Error handeling is done in the getSupplier method
+//! Note: Error handling is done in the getSupplier method
 
 inline void determineFormat(const std::string path, std::string &fileFormat,
                             std::string &compressionFormat) {

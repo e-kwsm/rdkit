@@ -87,7 +87,7 @@ RDKIT_FREESASALIB_EXPORT bool classifyAtoms(
 //! calculate the Solvent Accessible Surface Area using the FreeSASA library.
 /*!
   SASA atom contribution data is stored in
-  atom.getProp(common_properites::Atom::SASA);
+  atom.getProp(common_properties::Atom::SASA);
 
   \param mol:    Molecule to analyze
   \param radii   vector of radii where radii[idx] is the radius for atom with

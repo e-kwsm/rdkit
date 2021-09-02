@@ -675,7 +675,7 @@ class TestCase(unittest.TestCase):
     """
         test for a ring molecule, repeated generating a conformer with and without enforcing 
         an additional +ve interaction between a pair of non-bonded atoms (termed CPCI, 
-        custom pairwise charge-like interaciton), in every iteration, applying CPCI should
+        custom pairwise charge-like interaction), in every iteration, applying CPCI should
         yield a conformer where this pair of atoms are further apart.
         """
     for i in range(5):

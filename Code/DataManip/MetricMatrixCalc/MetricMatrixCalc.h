@@ -76,7 +76,7 @@ class MetricMatrixCalc {
    */
   void calcMetricMatrix(const vectType &descripts, unsigned int nItems,
                         unsigned int dim, double *distMat) {
-    CHECK_INVARIANT(distMat, "invalid pointer to a distance matix");
+    CHECK_INVARIANT(distMat, "invalid pointer to a distance matrix");
     CHECK_INVARIANT(dp_metricFunc, "metric function has not been set");
 
     for (unsigned int i = 1; i < nItems; i++) {
