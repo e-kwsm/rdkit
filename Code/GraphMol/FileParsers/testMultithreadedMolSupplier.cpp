@@ -349,7 +349,7 @@ void testPerformance() {
                         extras);
       stop = high_resolution_clock::now();
       duration = duration_cast<milliseconds>(stop - start);
-      std::cout << "Duration for testSmiConcurent with " << i
+      std::cout << "Duration for testSmiConcurrent with " << i
                 << "  writer threads: " << duration.count()
                 << " (milliseconds) \n";
     }
@@ -387,7 +387,7 @@ void testPerformance() {
                        i, 1000, 4000, expectedResult, extras);
       stop = high_resolution_clock::now();
       duration = duration_cast<milliseconds>(stop - start);
-      std::cout << "Duration for testSDConcurent with " << i
+      std::cout << "Duration for testSDConcurrent with " << i
                 << "  writer threads: " << duration.count()
                 << " (milliseconds) \n";
     }

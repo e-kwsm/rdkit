@@ -52,7 +52,7 @@ class RDKIT_RDGEOMETRYLIB_EXPORT Transform2D
   /*! \brief Set the transform so that the specified points are aligned
    *
    * The resulting transformation will align pt1 with ref1, and rotation
-   * pt2 such that the line betweem (pt1, pt2) will align with
+   * pt2 such that the line between (pt1, pt2) will align with
    * with the line (ref1, ref2)
    */
   void SetTransform(const Point2D &ref1, const Point2D &ref2,
@@ -75,7 +75,7 @@ class RDKIT_RDGEOMETRYLIB_EXPORT Transform2D
  *
  * The order is important here, on two transforms t1 and t2
  * t3 = t1*t2
- * The resulting transform t3 has the folliwng effect
+ * The resulting transform t3 has the following effect
  *  t3(point) = t1(t2(point))
  */
 RDKIT_RDGEOMETRYLIB_EXPORT RDGeom::Transform2D operator*(

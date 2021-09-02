@@ -75,7 +75,7 @@ namespace RDKit {
 //   v = boost::shared_ptr<ROMol>(new ROMol(m));
 //
 
-// RDValue does not manange memory of non-pod data
+// RDValue does not manage memory of non-pod data
 //  this must be done externally (string, Any, vector...)
 // Tagged union
 

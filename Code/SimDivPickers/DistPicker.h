@@ -51,7 +51,7 @@ class RDKIT_SIMDIVPICKERS_EXPORT DistPicker {
   DistPicker() {}
   virtual ~DistPicker() {}
 
-  /*! \brief this is a virtual function specific to the type of algorihtm used
+  /*! \brief this is a virtual function specific to the type of algorithm used
    *
    *  The child classes need to implement this function
    *
