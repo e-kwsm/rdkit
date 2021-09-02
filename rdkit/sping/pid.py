@@ -256,7 +256,7 @@ class Canvas:
     pass
 
   def flush(self):
-    "Call this to indicate that any comamnds that have been issued \
+    "Call this to indicate that any commands that have been issued \
                     but which might be buffered should be flushed to the screen"
 
     pass

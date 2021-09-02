@@ -100,7 +100,7 @@ void MultithreadedMolSupplier::writer() {
 
       d_outputQueue->push(temp);
     } catch (...) {
-      // fill the queue wih a null value
+      // fill the queue with a null value
       auto nullValue = std::tuple<RWMol *, std::string, unsigned int>{
           nullptr, std::get<0>(r), std::get<2>(r)};
       d_outputQueue->push(nullValue);
@@ -164,9 +164,9 @@ void MultithreadedMolSupplier::endThreads() {
 }
 
 void MultithreadedMolSupplier::startThreads() {
-  // run the reader function in a seperate thread
+  // run the reader function in a separate thread
   d_readerThread = std::thread(&MultithreadedMolSupplier::reader, this);
-  // run the writer function in seperate threads
+  // run the writer function in separate threads
   for (unsigned int i = 0; i < d_params.numWriterThreads; i++) {
     d_writerThreads.emplace_back(
         std::thread(&MultithreadedMolSupplier::writer, this));
