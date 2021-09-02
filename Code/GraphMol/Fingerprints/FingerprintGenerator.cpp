@@ -523,7 +523,7 @@ FingerprintGenerator<OutputType>::getSparseFingerprint(
 
   std::uint32_t effectiveSize = resultSize;
   if (dp_fingerprintArguments->df_countSimulation) {
-    // effective size needs to be smaller than result size to compansate for
+    // effective size needs to be smaller than result size to compensate for
     // count simulation
     effectiveSize /= dp_fingerprintArguments->d_countBounds.size();
   }
