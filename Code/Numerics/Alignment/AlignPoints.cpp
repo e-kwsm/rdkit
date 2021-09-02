@@ -141,7 +141,7 @@ void _covertCovMatToQuad(const double covMat[3][3],
   \param maxIter     max number of iterations
 
   <b>Reference:<\b>
-  This is essentailly a copy of the jacobi routine taken from the program
+  This is essentially a copy of the jacobi routine taken from the program
   quatfit.c available from the Computational Chemistry Archives.
   http://www.ccl.net/cca/software/SOURCES/C/quaternion-mol-fit/index.shtml
   E-mail jkl@osc.edu for details.

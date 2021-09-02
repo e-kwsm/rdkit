@@ -432,7 +432,7 @@ gbfp_inner_consistent(BfpSignature *query, GBfpInnerData *keyData, int siglen,
     /* The key in the inner node stores the union of the fingerprints 
     ** that populate the child nodes. We use this union to compute an
     ** upper bound to the similarity. If this upper bound is lower than the 
-    ** threashold value the subtree may be pruned.
+    ** threshold value the subtree may be pruned.
     **
     ** T = Ncommon / (Na + Nb - Ncommon) <= Ncommon / Na
     **

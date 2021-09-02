@@ -756,7 +756,7 @@ converged.
 
 By default `AllChem.EmbedMultipleConfs` and `AllChem.MMFFOptimizeMoleculeConfs()`
 run single threaded, but you can cause them to use
-multiple threads simultaneously for these embarassingly parallel tasks
+multiple threads simultaneously for these embarrassingly parallel tasks
 via the `numThreads` argument:
 
 .. doctest::

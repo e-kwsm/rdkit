@@ -200,7 +200,7 @@ struct rgroupdecomp_wrapper {
         .export_values();
 
     python::enum_<RDKit::RGroupCoreAlignment>("RGroupCoreAlignment")
-        // DEPRECATED, remove the folowing line in release 2021.03
+        // DEPRECATED, remove the following line in release 2021.03
         .value("None", RDKit::NoAlignment)
         .value("NoAlignment", RDKit::NoAlignment)
         .value("MCS", RDKit::MCS)
@@ -244,7 +244,7 @@ struct rgroupdecomp_wrapper {
         "decomposition\n"
         "                        RGroupLabels.AtomMap - store rgroups as atom "
         "maps (for smiles)\n"
-        "                        RGroupLabels.Isotope - stroe rgroups on the "
+        "                        RGroupLabels.Isotope - store rgroups on the "
         "isotope\n"
         "                        RGroupLabels.MDLRGroup - store rgroups as mdl "
         "rgroups (for molblocks)\n"
@@ -330,7 +330,7 @@ struct rgroupdecomp_wrapper {
              "Note, Process() should be called first")
         .def("GetRGroupsAsRows", &RGroupDecompositionHelper::GetRGroupsAsRows,
              python::arg("asSmiles") = false,
-             "Return the rgroups as rows (note: can be fed directrly into a "
+             "Return the rgroups as rows (note: can be fed directly into a "
              "pandas datatable)\n"
              "  ARGUMENTS:\n"
              "   - asSmiles: if True return smiles strings, otherwise return "
@@ -340,7 +340,7 @@ struct rgroupdecomp_wrapper {
         .def("GetRGroupsAsColumns",
              &RGroupDecompositionHelper::GetRGroupsAsColumn,
              python::arg("asSmiles") = false,
-             "Return the rgroups as columns (note: can be fed directrly into a "
+             "Return the rgroups as columns (note: can be fed directly into a "
              "pandas datatable)\n"
              "  ARGUMENTS:\n"
              "   - asSmiles: if True return smiles strings, otherwise return "
@@ -349,7 +349,7 @@ struct rgroupdecomp_wrapper {
              "       columns[rgroup_label] = [ mols_or_smiles ]\n");
 
     docString =
-        "Decompose a collecion of molecules into their Rgroups\n"
+        "Decompose a collection of molecules into their Rgroups\n"
         "  ARGUMENTS:\n"
         "    - cores: a set of cores from most to least specific.\n"
         "             See RGroupDecompositionParameters for more details\n"

@@ -270,7 +270,7 @@ SparseBitVect *FingerprintGenerator<OutputType>::getSparseFingerprint(
 
   std::uint32_t effectiveSize = resultSize;
   if (dp_fingerprintArguments->d_countSimulation) {
-    // effective size needs to be smaller than result size to compansate for
+    // effective size needs to be smaller than result size to compensate for
     // count simulation
     effectiveSize /= dp_fingerprintArguments->d_countBounds.size();
   }
@@ -334,7 +334,7 @@ ExplicitBitVect *FingerprintGenerator<OutputType>::getFingerprint(
     const std::vector<std::uint32_t> *customBondInvariants) const {
   std::uint32_t effectiveSize = dp_fingerprintArguments->d_fpSize;
   if (dp_fingerprintArguments->d_countSimulation) {
-    // effective size needs to be smaller than result size to compansate for
+    // effective size needs to be smaller than result size to compensate for
     // count simulation
     effectiveSize /= dp_fingerprintArguments->d_countBounds.size();
   }

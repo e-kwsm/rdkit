@@ -119,7 +119,7 @@ def GetConformerRMS(mol, confId1, confId2, atomIds=None, prealigned=False):
       - confId1:    the id of the first conformer
       - confId2:    the id of the second conformer
       - atomIds:    (optional) list of atom ids to use a points for
-                    alingment - defaults to all atoms
+                    alignment - defaults to all atoms
       - prealigned: (optional) by default the conformers are assumed
                     be unaligned and the second conformer be aligned
                     to the first
@@ -152,7 +152,7 @@ def GetConformerRMSMatrix(mol, atomIds=None, prealigned=False):
     Arguments:
       - mol:     the molecule
       - atomIds: (optional) list of atom ids to use a points for
-                 alingment - defaults to all atoms
+                 alignment - defaults to all atoms
       - prealigned: (optional) by default the conformers are assumed
                     be unaligned and will therefore be aligned to the
                     first conformer

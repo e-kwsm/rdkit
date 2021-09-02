@@ -153,7 +153,7 @@ BOOST_PYTHON_MODULE(rdScaffoldNetwork) {
                     "the number of times each node was encountered while "
                     "building the network.")
       .def_readonly("molCounts", &ScaffoldNetwork::ScaffoldNetwork::molCounts,
-                    "the number of moleclues each node was found in.")
+                    "the number of molecules each node was found in.")
       .def_readonly("edges", &ScaffoldNetwork::ScaffoldNetwork::edges,
                     "the sequence of network edges");
 

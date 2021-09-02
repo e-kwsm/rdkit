@@ -37,7 +37,7 @@ class NaiveBayesClassifier:
 
     4) _BadExamples_ : list of examples that were incorrectly classified
 
-    4) _QBoundVals_: Quant bound values for each varaible - a list of lists
+    4) _QBoundVals_: Quant bound values for each variable - a list of lists
 
     5) _QBounds_ : Number of bounds for each variable
 

@@ -120,7 +120,7 @@ void get_log_status(std::ostream &ss, const std::string &name, RDLogger log) {
       ss << "disabled";
     }
   } else {
-    ss << "unitialized";
+    ss << "uninitialized";
   }
 }
 

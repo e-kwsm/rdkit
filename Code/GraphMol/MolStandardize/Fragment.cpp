@@ -66,7 +66,7 @@ FragmentRemover::FragmentRemover(std::istream &fragmentStream, bool leave_last,
   FragmentCatalogParams fparams(fragmentStream);
   this->d_fcat = new FragmentCatalog(&fparams);
   if (!this->d_fcat) {
-    throw ValueErrorException("could not constract fragment catalog");
+    throw ValueErrorException("could not construct fragment catalog");
   }
   this->LEAVE_LAST = leave_last;
   this->SKIP_IF_ALL_MATCH = skip_if_all_match;

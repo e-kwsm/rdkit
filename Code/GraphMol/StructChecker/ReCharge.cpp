@@ -50,7 +50,7 @@ bool AllCentersRefined(const ROMol &mol, std::vector<unsigned> &numbering) {
       const Neighbourhood &nbp = neighbour_array[i];
       parity = AtomParity(mol, i, nbp);  // avalon: i + 1 ???
       if (parity == EVEN_PARITY || parity == ODD_PARITY) {
-        // extraxt numbers of stereoligands
+        // extract numbers of stereoligands
         nref = (unsigned)nbp.Atoms.size();
         for (unsigned j = 0; j < nref; j++) refnum[j] = numbering[nbp.Atoms[j]];
         // sort ligands

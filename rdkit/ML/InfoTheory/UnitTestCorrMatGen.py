@@ -32,7 +32,7 @@ class TestCase(unittest.TestCase):
         #   nbits/2 + i
         # - basically the first half of a fingerprint is same as the second half of the
         #   fingerprint
-        # - if we repeat this process often enough we whould see strong correlation between
+        # - if we repeat this process often enough we would see strong correlation between
         #   the bits i (i < nbits/2) and (nbits/2 + i)
         DataUtils.InitRandomNumbers((100, 23))
         self.nbits = 200

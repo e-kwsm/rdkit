@@ -39,7 +39,7 @@ class RDKIT_MOLALIGN_EXPORT MolAlignException : public std::exception {
 
 //! Compute the transformation required to align a molecule
 /*!
-  The 3D transformation required to align the specied conformation in the probe
+  The 3D transformation required to align the specified conformation in the probe
   molecule
   to a specified conformation in the reference molecule is computed so that the
   root mean
@@ -71,7 +71,7 @@ RDKIT_MOLALIGN_EXPORT double getAlignmentTransform(
 
 //! Optimally (minimum RMSD) align a molecule to another molecule
 /*!
-  The 3D transformation required to align the specied conformation in the probe
+  The 3D transformation required to align the specified conformation in the probe
   molecule
   to a specified conformation in the reference molecule is computed so that the
   root mean

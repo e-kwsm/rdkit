@@ -10,7 +10,7 @@ if rdsimdiv is None:
 
 
 class BitClusterer(object):
-  """ Class to cluster a set of bits based on their correllation
+  """ Class to cluster a set of bits based on their correlation
 
     The correlation matrix is first built using by reading the fingerprints
     from a database or a list of fingerprints

@@ -331,7 +331,7 @@ class MolDrawing(object):
     """Set the molecule to be drawn.
 
     Parameters:
-      hightlightAtoms -- list of atoms to highlight (default [])
+      highlightAtoms -- list of atoms to highlight (default [])
       highlightMap -- dictionary of (atom, color) pairs (default None)
 
     Notes:

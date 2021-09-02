@@ -53,7 +53,7 @@ are now also aromatic. In 2020.03 the three rings were connected by single bonds
 
 ### FindMCS can now return single atom MCSs
 FindMCS() may return single atom MCSs, whereas previously it returned an empty
-MCS unless there was at least one commond bond across the input structures.
+MCS unless there was at least one command bond across the input structures.
 So the MCS between molecules `CC` and `CO` is now `[#6]` rather than being null.
 
 ### New return type for tautomer enumeration
@@ -92,7 +92,7 @@ equal. Previously these molecules were always considered to be different.
 
 ### Handling of empty/invalid files in MolSuppliers
 Attempting to create a MolSupplier from a filename pointing to an empty file, a
-file that does not exist or sometihing that is not a standard file (i.e.
+file that does not exist or something that is not a standard file (i.e.
 something like a directory) now generates an exception.
 
 ### Renaming a cmake option
@@ -125,7 +125,7 @@ the RDKit fingerprint now sets two bits per feature by default.
 
 
 ## Release 2019.03
-As of this realease (2019.03.1) the RDKit no longer supports Python 2.
+As of this release (2019.03.1) the RDKit no longer supports Python 2.
 
 ## Release 2018.09
 

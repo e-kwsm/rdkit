@@ -3,7 +3,7 @@
 #  Copyright (C) 2003 Rational Discovery LLC
 #      All Rights Reserved
 #
-""" Define the class _KNNRegressionModel_, used to represent a k-nearest neighbhors
+""" Define the class _KNNRegressionModel_, used to represent a k-nearest neighbors
 regression model
 
     Inherits from _KNNModel_

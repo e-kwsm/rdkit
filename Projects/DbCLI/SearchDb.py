@@ -518,7 +518,7 @@ def initParser():
                                    description=_description,
                                    formatter_class=argparse.RawDescriptionHelpFormatter)
   
-  parser.add_argument('filename', nargs='?', help='File containg molecules for searching')
+  parser.add_argument('filename', nargs='?', help='File containing molecules for searching')
   parser.add_argument('--version', action='version', version='%(prog)s ' + _version)
 
   parser.add_argument('--dbDir', default='',

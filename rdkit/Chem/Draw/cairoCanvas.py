@@ -184,7 +184,7 @@ class Canvas(CanvasBase):
     self.fileName = fileName
 
   def flush(self):
-    """temporary interface, must be splitted to different methods,
+    """temporary interface, must be split to different methods,
         """
     if self.fileName and self.imageType == 'png':
       self.surface.write_to_png(self.fileName)

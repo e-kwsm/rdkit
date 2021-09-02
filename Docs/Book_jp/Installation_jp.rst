@@ -512,7 +512,7 @@ Windows
 
 オススメの追加項目
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-[`Recommeded extras <https://www.rdkit.org/docs/Install.html#recommended-extras>`__]
+[`Recommended extras <https://www.rdkit.org/docs/Install.html#recommended-extras>`__]
 
 -  aggdraw:Pythonで高画質の描画を行うためのライブラリ。ダウンロードの方法はこちら:
    http://effbot.org/zone/aggdraw-index.htm

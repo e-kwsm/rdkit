@@ -42,7 +42,7 @@ public:
 	virtual double rebuild(Chromosome &c)=0;
 
 	/*
-	 * Return true if two chromosmes are equal at the Genetic level.
+	 * Return true if two chromosomes are equal at the Genetic level.
 	 */
 	virtual bool equals(const Chromosome &c) const=0;
 

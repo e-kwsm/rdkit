@@ -3,7 +3,7 @@
 #  Copyright (C) 2003 Rational Discovery LLC
 #      All Rights Reserved
 #
-""" Define the class _KNNModel_, used to represent a k-nearest neighbhors model
+""" Define the class _KNNModel_, used to represent a k-nearest neighbors model
 
 """
 from rdkit.DataStructs.TopNContainer import TopNContainer

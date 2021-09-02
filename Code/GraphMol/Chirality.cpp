@@ -619,7 +619,7 @@ void updateDoubleBondNeighbors(ROMol &mol, Bond *dblBond, const Conformer *conf,
       return;
     }
     // if bond1 or bond2 are not to the stereo-controlling atoms, flip
-    // our expections of the torsion dir
+    // our expectations of the torsion dir
     int bond1AtomIdx = bond1->getOtherAtomIdx(dblBond->getBeginAtomIdx());
     if (bond1AtomIdx != dblBond->getStereoAtoms()[0] &&
         bond1AtomIdx != dblBond->getStereoAtoms()[1]) {

@@ -439,7 +439,7 @@ class HierarchCatalog : public Catalog<entryType, paramType> {
   // a  map that maps the order type of entries in the catalog to
   // a vector of vertex indices in the graphs above
   // e.g.  for a catalog with molecular fragments, the order of a fragment can
-  // simply be the number of bond in it. The list this oder maps to is all the
+  // simply be the number of bond in it. The list this order maps to is all the
   // vertex ids of these fragment in the catalog that have this many bonds in
   // them
   std::map<orderType, RDKit::INT_VECT> d_orderMap;

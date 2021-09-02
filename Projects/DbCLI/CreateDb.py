@@ -76,7 +76,7 @@ def initParser():
                                    description=_description,
                                    formatter_class=argparse.RawDescriptionHelpFormatter)
 
-  parser.add_argument('filename', nargs='?', help='File containg molecules to load into database')
+  parser.add_argument('filename', nargs='?', help='File containing molecules to load into database')
   parser.add_argument('--version', action='version', version='%(prog)s ' + _version)
   
   parser.add_argument('--outDir', '--dbDir', default='', help='name of the output directory')

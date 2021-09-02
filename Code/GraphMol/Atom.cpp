@@ -427,7 +427,7 @@ int Atom::getImplicitValence() const {
 }
 
 // NOTE: this uses the explicitValence, so it will call
-// calcExplictValence() if it hasn't already been called
+// calcExplicitValence() if it hasn't already been called
 int Atom::calcImplicitValence(bool strict) {
   PRECONDITION(dp_mol,
                "valence not defined for atoms not associated with molecules");

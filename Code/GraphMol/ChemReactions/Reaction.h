@@ -361,7 +361,7 @@ class RDKIT_CHEMREACTIONS_EXPORT ChemicalReaction : public RDProps {
   */
   bool getImplicitPropertiesFlag() const { return df_implicitProperties; }
   //! sets the implicit properties flag. See the documentation for
-  //! getImplicitProertiesFlag() for a discussion of what this means.
+  //! getImplicitPropertiesFlag() for a discussion of what this means.
   void setImplicitPropertiesFlag(bool val) { df_implicitProperties = val; }
 
  private:

@@ -3,7 +3,7 @@
 
 lines = []
 lines.append("This is a test of the <i>stringformat</i> module.")
-lines.append("This module allows you to insert html-like formating tags")
+lines.append("This module allows you to insert html-like formatting tags")
 lines.append("into strings. Built on top of sping and xmllib, stringformat.py")
 
 lines.append(

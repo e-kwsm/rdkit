@@ -703,7 +703,7 @@ BOOST_PYTHON_MODULE(rdMolAlign) {
      \n\
      ARGUMENTS\n\
       - mol          molecule of interest\n\
-      - atomIds      List of atom ids to use a points for alingment - defaults to all atoms\n\
+      - atomIds      List of atom ids to use a points for alignment - defaults to all atoms\n\
       - confIds      Ids of conformations to align - defaults to all conformers \n\
       - weights      Optionally specify weights for each of the atom pairs\n\
       - reflect      if true reflect the conformation of the probe molecule\n\

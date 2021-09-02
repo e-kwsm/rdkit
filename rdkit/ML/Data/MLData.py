@@ -210,7 +210,7 @@ class MLQuantDataSet(MLDataSet):
 
       **Big differences to MLDataSet**
 
-        1) data are stored in a numpy array since they are homogenous
+        1) data are stored in a numpy array since they are homogeneous
 
         2) results are assumed to be quantized (i.e. no qBounds entry is required)
 

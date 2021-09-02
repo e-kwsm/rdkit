@@ -5085,7 +5085,7 @@ void test54RedundantProductMappingNumbersAndRSChirality() {
   unsigned int nWarn, nError;
   std::string smi, cip;
   {
-    // perserve the stereo chemistry of the reactant in the product
+    // preserve the stereo chemistry of the reactant in the product
     smi = "[C:1][O:2]>>[C:1][O:2]N[O:2][C:1]";
     ChemicalReaction *rxn = RxnSmartsToChemicalReaction(smi, nullptr, true);
     TEST_ASSERT(rxn->validate(nWarn, nError, false));

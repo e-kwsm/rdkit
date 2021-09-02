@@ -122,7 +122,7 @@ int RGroupDecomposition::add(const ROMol &inmol) {
       // a substructure match for the molecule if a single molecule atom matches
       // 2 RGroup attachments (see https://github.com/rdkit/rdkit/pull/4002)
 
-      // match the reduced represenation:
+      // match the reduced representation:
       std::vector<MatchVectType> baseMatches =
           SubstructMatch(mol, *core.second.matchingMol, sssparams);
       tmatches.clear();

@@ -85,7 +85,7 @@ struct conformer_wrapper {
         .def("GetId", &Conformer::getId, "Get the ID of the conformer")
         .def("SetId", &Conformer::setId, "Set the ID of the conformer\n")
 
-        .def("GetAtomPosition", GetAtomPos, "Get the posistion of an atom\n")
+        .def("GetAtomPosition", GetAtomPos, "Get the position of an atom\n")
         .def("GetPositions", GetPos, "Get positions of all the atoms\n")
         .def("SetAtomPosition", SetAtomPos,
              "Set the position of the specified atom\n")
