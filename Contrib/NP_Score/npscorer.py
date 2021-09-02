@@ -35,7 +35,7 @@ def readNPModel(filename=os.path.join(os.path.dirname(__file__), 'publicnp.model
 
 def scoreMolWConfidence(mol, fscore):
   """Next to the NP Likeness Score, this function outputs a confidence value
-  between 0..1 that descibes how many fragments of the tested molecule
+  between 0..1 that describes how many fragments of the tested molecule
   were found in the model data set (1: all fragments were found).
 
   Returns namedtuple NPLikeness(nplikeness, confidence)"""

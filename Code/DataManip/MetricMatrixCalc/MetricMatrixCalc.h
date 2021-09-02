@@ -56,7 +56,7 @@ class MetricMatrixCalc {
    *
    *  descrips - vectType container with a entryType for each item
    *  nItems - the number of item in the descripts.
-   *           In several cases this argument is irrelvant since vectType
+   *           In several cases this argument is irrelevant since vectType
    *probably supports
    *           a size() member function, But we would like this interface to
    *take for example
@@ -79,7 +79,7 @@ class MetricMatrixCalc {
    */
   void calcMetricMatrix(const vectType &descripts, unsigned int nItems,
                         unsigned int dim, double *distMat) {
-    CHECK_INVARIANT(distMat, "invalid pointer to a distance matix");
+    CHECK_INVARIANT(distMat, "invalid pointer to a distance matrix");
 
     for (unsigned int i = 1; i < nItems; i++) {
       unsigned int itab = i * (i - 1) / 2;

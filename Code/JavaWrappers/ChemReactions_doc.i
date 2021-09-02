@@ -131,7 +131,7 @@ public";
 %javamethodmodifiers RDKit::ChemicalReaction::setImplicitPropertiesFlag 	( 	bool  	val 	 )  	"
 /**
 <p>
-sets the implicit properties flag. See the documentation for getImplicitProertiesFlag() for a discussion of what this means.
+sets the implicit properties flag. See the documentation for getImplicitPropertiesFlag() for a discussion of what this means.
 */
 public";
 

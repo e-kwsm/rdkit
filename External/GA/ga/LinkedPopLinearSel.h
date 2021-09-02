@@ -9,7 +9,7 @@
 //
 
 /*
- * A template for providing a steady state no-dupliates GA with
+ * A template for providing a steady state no-duplicates GA with
  * linear-normalized parent selection.
  *
  * Requires valid Chromosome and PopulationPolicy classes.

@@ -62,9 +62,9 @@ const std::string _UnknownStereoRxnBond = "_UnknownStereoRxnBond";
 namespace ReactionRunnerUtils {
 
 struct ReactantProductAtomMapping {
-  ReactantProductAtomMapping(unsigned lenghtBitSet) {
-    mappedAtoms.resize(lenghtBitSet);
-    skippedAtoms.resize(lenghtBitSet);
+  ReactantProductAtomMapping(unsigned lengthBitSet) {
+    mappedAtoms.resize(lengthBitSet);
+    skippedAtoms.resize(lengthBitSet);
   }
 
   boost::dynamic_bitset<> mappedAtoms;

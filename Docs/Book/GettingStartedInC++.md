@@ -213,7 +213,7 @@ Groups of molecules are read using a Supplier (for example, an
 [(example2)](./C++Examples/example2.cpp):
 
 ```c++
-std::unqiue_ptr<RDKit::ROMol> mol;
+std::unique_ptr<RDKit::ROMol> mol;
 std::string file_root = getenv( "RDBASE" );
 file_root += "/Docs/Book";
 std::string sdf_file = file_root + "/data/5ht3ligs.sdf";

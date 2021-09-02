@@ -188,7 +188,7 @@ class TKCanvas(tk.Canvas, rdkit.sping.pid.Canvas):
       scrollingViewPortSize=None,  # a 2-tuple to define the size of the viewport
       **kw):
     """This canvas allows you to add a tk.Canvas with a sping API for drawing.
-        To add scrollbars, the simpliest method is to set the 'scrollingViewPortSize'
+        To add scrollbars, the simplest method is to set the 'scrollingViewPortSize'
         equal to a tuple that describes the width and height of the visible porition
         of the canvas on screen.  This sets scrollregion=(0,0, size[0], size[1]).
         Then you can add scrollbars as you would any tk.Canvas.

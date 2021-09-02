@@ -64,7 +64,7 @@ class RDKIT_GRAPHMOL_EXPORT ResonanceMolSupplierCallback {
       (i.e., non-degenerate) generated so far for a certain conjugated
       group.
       \param conjGrpIdx the conjugated group index.
-      \return the number of non-degenrate resonance structures generated
+      \return the number of non-degenerate resonance structures generated
               so far for this group.
    */
   size_t getNumDiverseStructures(unsigned int conjGrpIdx) const;

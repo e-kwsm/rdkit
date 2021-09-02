@@ -29,7 +29,7 @@ RDKitっていったい？
 -  Web上の情報：
 
    -  ホームページ： http://www.rdkit.org ドキュメンテーション、リンク
-   -  Github:(https://github.com/rdkit)　ダウンロード、バグ追跡、Gitリポジトリ
+   -  GitHub:(https://github.com/rdkit)　ダウンロード、バグ追跡、Gitリポジトリ
    -  Sourceforge (http://sourceforge.net/projects/rdkit) メーリングリスト
    -  ブログ (https://rdkit.blogspot.com) うまく使うための秘訣, 技, 雑多な話題
    -  チュートリアル (https://github.com/rdkit/rdkit-tutorials)

@@ -96,7 +96,7 @@ class RDKIT_FORCEFIELD_EXPORT ForceField {
   \return the current energy
 
     <b>Note:</b>
-      This function is less efficient than calcEnergy with postions passed in as
+      This function is less efficient than calcEnergy with positions passed in as
   double *
       the positions need to be converted to double * here
   */
