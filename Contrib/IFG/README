@@ -29,5 +29,5 @@ Authors:
 Notes:
 
 This implementation of Ertl paper was made by Richard Hall in summer 2017.
-Cause RDKit and Peter tool can have distinct aromaticity dectection behaviours, list
-of functionnal groups in aromatic rings may differ in presence of conjugated aromatics rings.
+Cause RDKit and Peter tool can have distinct aromaticity detection behaviours, list
+of functional groups in aromatic rings may differ in presence of conjugated aromatics rings.

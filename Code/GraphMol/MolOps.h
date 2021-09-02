@@ -673,7 +673,7 @@ RDKIT_GRAPHMOL_EXPORT int setAromaticity(
      - modifies nitro groups, so that the nitrogen does not have an
    unreasonable valence of 5, as follows:
          - the nitrogen gets a positive charge
-         - one of the oxygens gets a negative chage and the double bond to
+         - one of the oxygens gets a negative charge and the double bond to
    this oxygen is changed to a single bond The net result is that nitro groups
    can be counted on to be: \c "[N+](=O)[O-]"
      - modifies halogen-oxygen containing species as follows:
@@ -1177,8 +1177,8 @@ RDKIT_GRAPHMOL_EXPORT void removeStereochemistry(ROMol &mol);
 
   This function is useful in the following situations:
     - when parsing a mol file; for the bonds marked here, coordinate
-      information on the neighbors can be used to indentify cis or trans
-  states
+      information on the neighbors can be used to identify cis or trans
+      states
     - when writing a mol file; bonds that can be cis/trans but not marked as
       either need to be specially marked in the mol file
     - finding double bonds with unspecified stereochemistry so they

@@ -60,10 +60,10 @@ def MolFromInchi(inchi, sanitize=True, removeHs=True, logLevel=None, treatWarnin
     removeHs -- set to True to remove Hydrogens from a molecule. This only
     makes sense when sanitization is enabled
     logLevel -- the log level used for logging logs and messages from InChI
-    API. set to None to diable the logging completely
+    API. set to None to disable the logging completely
     treatWarningAsError -- set to True to raise an exception in case of a
     molecule that generates warning in calling InChI API. The resultant
-    molecule  and error message are part of the excpetion
+    molecule and error message are part of the exception
 
     Returns:
     a rdkit.Chem.rdchem.Mol instance

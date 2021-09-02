@@ -39,7 +39,7 @@ namespace RDKit {
 //! Return the functional group hierarchy as a FilterCatalog
 RDKIT_FILTERCATALOG_EXPORT const FilterCatalog &GetFunctionalGroupHierarchy();
 //! Return the flattened functional group hierarchy as a string->ROMOL_SPTR map
-//!  The label is the name of the functional group in the hiearchy
+//!  The label is the name of the functional group in the hierarchy
 //!   e.g. Halogen.Bromine.Aliphatic
 /*
     /param normalized If set to true, return the flattened hierarchy

@@ -54,7 +54,7 @@ struct freefeat_wrapper {
              python::args("self", "family"), "Set the family of the feature")
         .def("SetType", &FreeChemicalFeature::setType,
              python::args("self", "type"),
-             "Set the sepcific type for the feature")
+             "Set the specific type for the feature")
         .def("GetId", &FreeChemicalFeature::getId, python::args("self"),
              "Get the id of the feature")
         .def("GetFamily", &FreeChemicalFeature::getFamily,
@@ -62,7 +62,7 @@ struct freefeat_wrapper {
              python::return_value_policy<python::copy_const_reference>(),
              python::args("self"))
         .def("GetType", &FreeChemicalFeature::getType,
-             "Get the sepcific type for the feature",
+             "Get the specific type for the feature",
              python::return_value_policy<python::copy_const_reference>(),
              python::args("self"))
         .def("SetPos", &FreeChemicalFeature::setPos,

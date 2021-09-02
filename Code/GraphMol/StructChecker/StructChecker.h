@@ -149,7 +149,7 @@ struct RDKIT_STRUCTCHECKER_EXPORT StructCheckerOptions {
   std::vector<IncEntry> ChargeIncTable;
   // std::map AtomSymbol(or AtomicNumber) -> IncEntry
   /* [ReadTransformation() ]
-   * The alpha, beta coefficients of the transfomation function used
+   * The alpha, beta coefficients of the transformation function used
    * to stretch the preliminary pKa values to the actual predictions.
    * The function is pKa = 7 + (pKa'-7)*beta + ((pKa'-7)*alpha)^3.
    */

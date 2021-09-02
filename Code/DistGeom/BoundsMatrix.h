@@ -20,7 +20,7 @@ namespace DistGeom {
 //! Class to store the distance bound
 /*!
   Basically a N by N matrix
-  with lower distance bounds on the lower traingle and upper bounds in the upper
+  with lower distance bounds on the lower triangle and upper bounds in the upper
   triangle
 */
 class RDKIT_DISTGEOMETRY_EXPORT BoundsMatrix

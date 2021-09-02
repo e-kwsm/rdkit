@@ -1016,7 +1016,7 @@ BOOST_PYTHON_MODULE(rdMolDraw2D) {
       .def_readwrite("noAtomLabels", &RDKit::MolDrawOptions::noAtomLabels,
                      "disables inclusion of atom labels in the rendering")
       .def_readwrite("explicitMethyl", &RDKit::MolDrawOptions::explicitMethyl,
-                     "Draw terminal methyls explictly.  Default is false.")
+                     "Draw terminal methyls explicitly.  Default is false.")
       .def_readwrite(
           "includeMetadata", &RDKit::MolDrawOptions::includeMetadata,
           "When possible, include metadata about molecules and reactions to "
