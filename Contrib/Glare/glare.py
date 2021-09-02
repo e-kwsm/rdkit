@@ -9,7 +9,7 @@ Some nomenclature:
 
     http://pubs.acs.org/doi/pdf/10.1021/ci0504871
 
- A Libary is made of RGroups
+ A Library is made of RGroups
  RGroups are a collection of sidechains (the paper uses Fragments)
   that can populate the rgroup position.
 

@@ -162,7 +162,7 @@ def getsimaibj(aipaths, bjpaths, naipaths, nbjpaths):
 
 
 def getmappings(simmatrixarray):
-  '''return a mapping of the atoms in the similarity matix using the heuristic algorithm described in the paper'''
+  '''return a mapping of the atoms in the similarity matrix using the heuristic algorithm described in the paper'''
 
   costarray = numpy.ones(simmatrixarray.shape) - simmatrixarray
 

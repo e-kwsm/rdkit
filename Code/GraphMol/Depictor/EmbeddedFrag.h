@@ -390,7 +390,7 @@ class RDKIT_DEPICTOR_EXPORT EmbeddedFrag {
     - the coordinates for the atoms in the new ring (with the center
       of rings at the origin) are available nringCors. we want to
       translate and rotate this ring to join with the already
-      embeded rings.
+      embedded rings.
     - only one atom is common between this new ring and the atoms
       that are already embedded
     - so we need to compute a transform that includes a translation

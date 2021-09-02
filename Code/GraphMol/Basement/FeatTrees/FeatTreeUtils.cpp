@@ -107,7 +107,7 @@ void mergeRingCycle(FeatTreeGraph &featGraph, FeatTreeGraph &featGraphCopy,
         }
       } else {
         CHECK_INVARIANT(false,
-                        "inconsistent state encounted when replacing a cycle");
+                        "inconsistent state encountered when replacing a cycle");
       }
     }
 

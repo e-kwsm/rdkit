@@ -224,7 +224,7 @@ struct rgroupdecomp_wrapper {
         .export_values();
 
     python::enum_<RDKit::RGroupCoreAlignment>("RGroupCoreAlignment")
-        // DEPRECATED, remove the folowing line in release 2021.03
+        // DEPRECATED, remove the following line in release 2021.03
         .value("None", RDKit::NoAlignment)
         .value("NoAlignment", RDKit::NoAlignment)
         .value("MCS", RDKit::MCS)
@@ -398,7 +398,7 @@ struct rgroupdecomp_wrapper {
              "       columns[rgroup_label] = [ mols_or_smiles ]\n");
 
     docString =
-        "Decompose a collecion of molecules into their Rgroups\n"
+        "Decompose a collection of molecules into their Rgroups\n"
         "  ARGUMENTS:\n"
         "    - cores: a set of cores from most to least specific.\n"
         "             See RGroupDecompositionParameters for more details\n"

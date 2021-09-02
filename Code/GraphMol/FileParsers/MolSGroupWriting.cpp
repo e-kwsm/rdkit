@@ -48,7 +48,7 @@ std::string BuildV2000StringPropLines(const unsigned int entriesPerLine,
                                       const ROMol &mol,
                                       const std::string &propName,
                                       const std::string &propCode,
-                                      const unsigned int fieldWitdh) {
+                                      const unsigned int fieldWidth) {
   std::ostringstream ret;
   std::ostringstream temp;
 
@@ -59,7 +59,7 @@ std::string BuildV2000StringPropLines(const unsigned int entriesPerLine,
     // Write field only if defined
     if (sg->getPropIfPresent(propName, propValue)) {
       temp << FormatV2000IntField(1 + (sg - sgroups.begin()))
-           << FormatV2000StringField(propValue, fieldWitdh, true, true);
+           << FormatV2000StringField(propValue, fieldWidth, true, true);
       if (++count == entriesPerLine) {
         ret << "M  " << propCode << FormatV2000NumEntriesField(entriesPerLine)
             << temp.str() << "\n";

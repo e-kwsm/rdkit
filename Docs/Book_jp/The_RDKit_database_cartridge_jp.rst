@@ -712,7 +712,7 @@ MCSコードの使い方
 
 部分構造検索と正確な構造の検索
 -----------------------------------------------------
-[`Substructure and exact strucure search <https://www.rdkit.org/docs/Cartridge.html#substructure-and-exact-structure-search>`__]
+[`Substructure and exact structure search <https://www.rdkit.org/docs/Cartridge.html#substructure-and-exact-structure-search>`__]
 
 -  @> :
    部分構造検索の演算子。演算子の右側におかれたmolあるいはqmolが、左側のmolの部分構造であるか否かを返します。
@@ -899,7 +899,7 @@ MCSコードの使い方
 
 結合関係記述子
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-[`Connectivity Desctiptors <https://www.rdkit.org/docs/Cartridge.html#connectivity-descriptors>`__]
+[`Connectivity Descriptors <https://www.rdkit.org/docs/Cartridge.html#connectivity-descriptors>`__]
 
 -  mol_chi0v(mol) - mol_chi4v(mol) :
    x=0-4のChiXvの値を返します（\ *2012_01リリースから利用可能*\ ）
