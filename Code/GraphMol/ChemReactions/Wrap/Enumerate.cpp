@@ -196,7 +196,7 @@ struct enumeration_wrapper {
                  1, python::with_custodian_and_ward_postcall<0, 1>>(),
              python::args("self"))
         .def("GetEnumerator", &RDKit::EnumerateLibraryBase::getEnumerator,
-             "Returns the enumation strategy for the current library",
+             "Returns the enumeration strategy for the current library",
              python::return_internal_reference<
                  1, python::with_custodian_and_ward_postcall<0, 1>>(),
              python::args("self"));
@@ -288,7 +288,7 @@ Libraries are also serializable, including their current state:\n\
 s = library.Serialize()\n\
 library2 = EnumerateLibrary()\n\
 library2.InitFromString(s)\n\
-for result in itertools.islice(libary2, 1000):\n\
+for result in itertools.islice(library2, 1000):\n\
     # do something with the next 1000 samples\n\
 ";
     python::class_<EnumerateLibraryWrap, boost::noncopyable,

@@ -32,7 +32,7 @@ FragCatParams::FragCatParams(unsigned int lLen, unsigned int uLen,
 
 FragCatParams::FragCatParams(const FragCatParams &other) {
   d_funcGroups.clear();
-  // copy consttructor
+  // copy constructor
   d_typeStr = other.getTypeStr();
   d_lowerFragLen = other.getLowerFragLength();
   d_upperFragLen = other.getUpperFragLength();

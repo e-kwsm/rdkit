@@ -285,7 +285,7 @@ double tversky(const FPBReader_impl *dp_impl, unsigned int which,
 };
 
 //-----------------------------------------------------
-//  Id procesing
+//  Id processing
 /* Documentation from Andrew's code on the structure of the arena:
 
 The actual layout inside of the chunk is:

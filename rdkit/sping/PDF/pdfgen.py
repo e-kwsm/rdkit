@@ -42,7 +42,7 @@ Progress Reports:
         so we don't get exponentials in the output.
 0.8,1999-10-07, AR:  all changed!
 
-2000-02-07: changed all %0.2f's to %0.4f in order to allow precise ploting of graphs that
+2000-02-07: changed all %0.2f's to %0.4f in order to allow precise plotting of graphs that
         range between 0 and 1 -cwl
 
 """
