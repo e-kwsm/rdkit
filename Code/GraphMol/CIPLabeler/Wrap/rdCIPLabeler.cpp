@@ -51,7 +51,7 @@ void assignCIPLabelsWrapHelper(RDKit::ROMol &mol,
 BOOST_PYTHON_MODULE(rdCIPLabeler) {
   python::scope().attr("__doc__") =
       "Module containing a function to assign stereochemical labels based "
-      "on an accurate CIP rules implementation. This algoritm is a port "
+      "on an accurate CIP rules implementation. This algorithm is a port "
       "of https://github.com/SiMolecule/centres, which was originally "
       "written by John Mayfield. The original algorithm is described in:\n\n"
       "Hanson, R. M., Musacchio, S., Mayfield, J. W., Vainio, M. J., Yerin, "
