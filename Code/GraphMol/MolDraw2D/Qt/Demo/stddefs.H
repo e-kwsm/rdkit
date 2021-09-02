@@ -407,7 +407,7 @@ template <class T> inline void destroy_2d_matrix( T **&in_mat ) {
 
 // *******************************************************************
 // make and destroy 3D matrix - required only 3 allocations of memory
-// and all the values are in 1 continguous array of T elements, so
+// and all the values are in 1 contiguous array of T elements, so
 // that 2 matrices can be compared very rapidly.
 template <class T> inline T*** make_3d_matrix( int num_x , int num_y ,
                                                int num_z ) {

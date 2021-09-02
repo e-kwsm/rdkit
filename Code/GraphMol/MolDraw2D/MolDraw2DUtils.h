@@ -36,7 +36,7 @@ conformation if the molecule does not already have a conformation
 \param wavyBonds: calls addWavyBondsForStereoAny() and clears other markers that
    double bond stereo is unknown
 
-NOTE: the kekulization step can fail, throwing a MolSanitizeExecption. If this
+NOTE: the kekulization step can fail, throwing a MolSanitizeException. If this
 happens the molecule will be in an inconsistent, partially kekulized, state.
 This isn't normally a problem for molecules that have been sanitized, but can be
 problematic if the molecules have been modified post santitization.

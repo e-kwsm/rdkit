@@ -59,7 +59,7 @@ typedef std::list<PAIR_D_I_I> LIST_PAIR_DII;
 
   The length of the arm (l) we want to sweep is easy to compute given the
   bond length (b) we want to use for each bond in the ring (for now
-  we will assume that this bond legnth is the same for all bonds in the ring:
+  we will assume that this bond length is the same for all bonds in the ring:
 
   l = b/sqrt(2*(1 - cos(A))
 

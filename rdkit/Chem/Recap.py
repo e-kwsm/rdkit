@@ -87,7 +87,7 @@ reactions = tuple([Reactions.ReactionFromSmarts(x) for x in reactionDefs])
 
 
 class RecapHierarchyNode(object):
-  """ This class is used to hold the Recap hiearchy
+  """ This class is used to hold the Recap hierarchy
     """
   mol = None
   children = None

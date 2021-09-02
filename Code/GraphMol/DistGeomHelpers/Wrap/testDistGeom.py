@@ -109,7 +109,7 @@ class TestCase(unittest.TestCase):
 
   def test1Small(self):
     #writer = Chem.SDWriter("test.sdf")
-    # single double and tripple atoms cases should not fail
+    # single double and triple atoms cases should not fail
     mol = Chem.MolFromSmiles('O')
     rdDistGeom.EmbedMolecule(mol, 10, 1)
     conf = mol.GetConformer()
@@ -565,7 +565,7 @@ class TestCase(unittest.TestCase):
     """
         test for a ring molecule, repeated generating a conformer with and without enforcing 
         an additional +ve interaction between a pair of non-bonded atoms (termed CPCI, 
-        custom pairwise charge-like interaciton), in every iteration, applying CPCI should
+        custom pairwise charge-like interaction), in every iteration, applying CPCI should
         yield a conformer where this pair of atoms are further apart.
         """
     for i in range(5):
