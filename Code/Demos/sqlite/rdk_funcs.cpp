@@ -308,7 +308,7 @@ static void ucvTanimotoSim(sqlite3_context *context, int argc,
   const unsigned char *t2 = (const unsigned char *)sqlite3_value_blob(argv[1]);
   int nB2 = sqlite3_value_bytes(argv[1]);
   if (nB1 != nB2) {
-    std::string errorMsg = "bit vectors not ths same length";
+    std::string errorMsg = "bit vectors not the same length";
     sqlite3_result_error(context, errorMsg.c_str(), errorMsg.length());
     return;
   }

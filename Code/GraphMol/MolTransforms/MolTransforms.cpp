@@ -271,7 +271,7 @@ RDGeom::Transform3D *computeCanonicalTransform(const Conformer &conf,
   auto *trans = new RDGeom::Transform3D;
   trans->setToIdentity();
 
-  // if we have a single atom system we don't need to do anyhting setting
+  // if we have a single atom system we don't need to do anything setting
   // translation is sufficient
   if (nAtms > 1) {
     Eigen::Matrix3d eigVecs;
@@ -339,7 +339,7 @@ RDGeom::Transform3D *computeCanonicalTransform(const Conformer &conf,
   // find the eigen values and eigen vectors for the covMat
   RDNumeric::DoubleMatrix eigVecs(3, 3);
   RDNumeric::DoubleVector eigVals(3);
-  // if we have a single atom system we don't need to do anyhting other than
+  // if we have a single atom system we don't need to do anything other than
   // setting translation
   // translation
   unsigned int nAtms = conf.getNumAtoms();
@@ -348,7 +348,7 @@ RDGeom::Transform3D *computeCanonicalTransform(const Conformer &conf,
   // set the translation
   origin *= -1.0;
   // trans->SetTranslation(origin);
-  // if we have a single atom system we don't need to do anyhting setting
+  // if we have a single atom system we don't need to do anything setting
   // translation is sufficient
   if (nAtms > 1) {
     RDNumeric::EigenSolvers::powerEigenSolver(3, *covMat, eigVals, eigVecs,

@@ -327,7 +327,7 @@ def EmbedPharmacophore(mol, atomMatch, pcophore, randomSeed=-1, count=10, smooth
   for each of the pharmacophore's features.
 
     - count: is the maximum number of attempts to make a generating an embedding
-    - smoothFirst: toggles triangle smoothing of the molecular bounds matix
+    - smoothFirst: toggles triangle smoothing of the molecular bounds matrix
     - bounds: if provided, should be the molecular bounds matrix. If this isn't
        provided, the matrix will be generated.
     - targetNumber: if this number is positive, it provides a maximum number
@@ -865,7 +865,7 @@ def DownsampleBoundsMatrix(bm, indices, maxThresh=4.0):
   """ Removes rows from a bounds matrix that are that are greater
   than a threshold value away from a set of other points
 
-  Returns the modfied bounds matrix
+  Returns the modified bounds matrix
 
   The goal of this function is to remove rows from the bounds matrix
   that correspond to atoms (atomic index) that are likely to be quite far from
