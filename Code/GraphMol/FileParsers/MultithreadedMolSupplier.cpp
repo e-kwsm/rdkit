@@ -133,7 +133,7 @@ void MultithreadedMolSupplier::writer() {
 
       d_outputQueue->push(temp);
     } catch (...) {
-      // fill the queue wih a null value
+      // fill the queue with a null value
       auto nullValue = std::tuple<RWMol *, std::string, unsigned int>{
           nullptr, std::get<0>(r), std::get<2>(r)};
       d_outputQueue->push(nullValue);

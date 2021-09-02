@@ -79,7 +79,7 @@ unsigned StructChecker::StringToStructureFlags(const std::string &str) {
       f |= it->second;
     }
     while (token[len] &&
-           (token[len] == ',' || token[len] <= ' ')) {  // skip delimeter
+           (token[len] == ',' || token[len] <= ' ')) {  // skip delimiter
       len++;
     }
     token += len;

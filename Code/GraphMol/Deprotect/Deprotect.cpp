@@ -120,7 +120,7 @@ std::unique_ptr<ROMol> deprotect(
     something_happened = false;
     for (auto &deprotect : deprotections) {
       if (!deprotect.isValid()) {
-        // error and contine;
+        // error and continue;
         continue;
       }
       for (auto &prods : deprotect.rxn->runReactant(m, 0)) {
@@ -158,7 +158,7 @@ bool deprotectInPlace(RWMol &mol,
     something_happened = false;
     for (auto &deprotect : deprotections) {
       if (!deprotect.isValid()) {
-        // error and contine;
+        // error and continue;
         continue;
       }
       bool changes = deprotect.rxn->runReactant(mol);

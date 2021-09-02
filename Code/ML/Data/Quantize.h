@@ -25,7 +25,7 @@
 
    - nStarts: int, the length of _starts_
 
-   - results: poitner to int, the result codes
+   - results: pointer to int, the result codes
 
    - nPossibleRes: int, the number of possible result codes
 
@@ -90,7 +90,7 @@ inline long int *GenVarTable(double *vals, int nVals, long int *cuts, int nCuts,
 
    - nStarts: int, the length of _starts_
 
-   - results: poitner to int, the result codes
+   - results: pointer to int, the result codes
 
    - nPossibleRes: int, the number of possible result codes
 

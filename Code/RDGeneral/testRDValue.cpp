@@ -85,7 +85,7 @@ void testVector() {
   RDValue vv;
   copy_rdvalue(vv, v);
   REQUIRE(rdvalue_cast<std::vector<T>>(vv) == data);
-  RDValue::cleanup_rdvalue(v);  // desctructor...
+  RDValue::cleanup_rdvalue(v);  // destructor...
   RDValue::cleanup_rdvalue(vv);
 }
 

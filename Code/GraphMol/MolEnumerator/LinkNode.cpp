@@ -117,7 +117,7 @@ std::unique_ptr<ROMol> LinkNodeOp::operator()(
       throw ValueErrorException("bad element value in enumeration");
     }
   }
-  // we do the enumeration of each of the variation points independantly
+  // we do the enumeration of each of the variation points independently
   ROMOL_SPTR res(new ROMol(*dp_frame));
   for (size_t i = 0; i < which.size(); ++i) {
     auto variationIdx = i + 1;

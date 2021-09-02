@@ -32,7 +32,7 @@ Implementation of
 Notes:
 Some nomenclature:
 
- A Libary is made of RGroups
+ A Library is made of RGroups
  RGroups are a collection of sidechains (the paper uses Fragments)
   that can populate the rgroup position.
 

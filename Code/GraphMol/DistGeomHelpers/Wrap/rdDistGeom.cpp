@@ -775,7 +775,7 @@ BOOST_PYTHON_MODULE(rdDistGeom) {
       docString.c_str());
 
   docString =
-      "Use distance geometry to obtain intial \n\
+      "Use distance geometry to obtain initial \n\
  coordinates for a molecule\n\n\
  Be aware that this function can alter the EmbedParameters object, caution \n\
  is advised when reusing EmbedParameters objects for different embedding runs.\n\

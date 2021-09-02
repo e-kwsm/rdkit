@@ -11,7 +11,7 @@
 //  of the RDKit source tree.
 //
 //
-// Uses RDKit draw funtionality to draw a 2D molecule into a Qt widget
+// Uses RDKit draw functionality to draw a 2D molecule into a Qt widget
 
 #include <QApplication>
 #include <QPainter>

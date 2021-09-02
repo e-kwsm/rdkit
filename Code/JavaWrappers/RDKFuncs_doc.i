@@ -51,7 +51,7 @@ the new molecule
 <p>
 @notes
 <li>it makes no sense to use the addCoords option if the molecule's heavy atoms don't already have coordinates.
-<li>the caller is responsible for deleteing the pointer this returns.
+<li>the caller is responsible for deleting the pointer this returns.
 
 */
 public";
@@ -124,7 +124,7 @@ Designed to be called by the sanitizer to handle special cases before anything i
 Currently this:
 <p>
     * modifies nitro groups, so that the nitrogen does not have a unreasonable valence of 5, as follows:
-          o the nitrogen gets a positve charge
+          o the nitrogen gets a positive charge
           o one of the oxygens gets a negative chage and the double bond to this oxygen is changed to a single bond The net result is that nitro groups can be counted on to be: '[N+](=O)[O-]'
 <p>
 <p>
@@ -413,7 +413,7 @@ the new molecule
 <li>o [C;H1][H] -> [C;H1]
 <li>o [C;H2][H] -> [C;H2]
 <li>Hydrogens which aren't connected to a heavy atom will not be removed. This prevents molecules like '[H][H]' from having all atoms removed.
-<li>o the caller is responsible for deleteing the pointer this returns.
+<li>o the caller is responsible for deleting the pointer this returns.
 
 */
 public";
@@ -457,7 +457,7 @@ the new molecule
 @notes
 <li>Hydrogens which aren't connected to a heavy atom will not be removed. This prevents molecules like '[H][H]' from having all atoms removed.
 <li>Labelled hydrogen (e.g. atoms with atomic number=1, but mass > 1), will not be removed.
-<li>the caller is responsible for deleteing the pointer this returns.
+<li>the caller is responsible for deleting the pointer this returns.
 
 */
 public";
@@ -517,7 +517,7 @@ This is what happens here:
 mol 	the RWMol of interest
 <p>
 @return
-1 on succes, 0 otherwise
+1 on success, 0 otherwise
 Assumptions:
 <p>
     * Kekulization has been done (i.e. MolOps::Kekulize() has already been called)
