@@ -48,7 +48,7 @@ TEST_CASE("parsing") {
         Abbreviations::common_properties::numDummies, nDummies));
     CHECK(nDummies == 1);
   }
-  SECTION("bad SMILES in defintions") {
+  SECTION("bad SMILES in definitions") {
     const std::string defns = R"ABBREVS(CO2Et    C(=O)OCC
 COOEt    fail
 OiBu     OCC(C)C)ABBREVS";
