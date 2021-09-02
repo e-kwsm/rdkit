@@ -49,7 +49,7 @@ def CalcLigRMSD(lig1, lig2, rename_lig2=True, output_filename="tmp.pdb"):
   ref_mol = Chem.MolFromSmarts(res.smartsString)
   # Match the ligands to the MCS
   # For lig2, the molecular symmetry is considered:
-  # If 2 atoms are symmetric (3 and 4), two indeces combinations are printed out
+  # If 2 atoms are symmetric (3 and 4), two indices combinations are printed out
   # ((0,1,2,3,4), (0,1,2,4,3)) and stored in mas2_list
   mas1 = list(lig1.GetSubstructMatch(ref_mol))  # match lig1 to MCS
   mas2_list = lig2.GetSubstructMatches(ref_mol, uniquify=False)

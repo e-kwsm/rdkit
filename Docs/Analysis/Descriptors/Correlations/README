@@ -1,6 +1,6 @@
 Greg,
 
-I've compiled my descriptor correlation results and attached them as various files here.  Here is some explantion:
+I've compiled my descriptor correlation results and attached them as various files here.  Here is some explanation:
 
 I used 3 datasets from ZINC (http://zinc.docking.org/), sp. The Drug-like dataset (66796 structures), Lead-like (97433 structures), Fragment-like (15937 structures), and an in-house set of compounds (~24,000 structures).  For all of the ZINC sets, I downloaed the T80 versions, which have been somewhat filtered for similar compounds in an attempt to get the pairwise Tanimoto below 0.8.  I generated all descriptors from RDKIT including all VSA descriptors that I had access to.  I still cannot get the VSA_Estate and VSA_Slogp descriptors working.
 

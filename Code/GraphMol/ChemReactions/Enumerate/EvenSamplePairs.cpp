@@ -36,7 +36,7 @@
 namespace RDKit {
 
 using namespace EnumerationTypes;
-// Based on an implementation from a correspondance with Bernd Rohde.
+// Based on an implementation from a correspondence with Bernd Rohde.
 void EvenSamplePairsStrategy::initializeStrategy(const ChemicalReaction &,
                                                  const BBS &bbs) {
   // If we fail here, someone has a ridiculous amount of memory

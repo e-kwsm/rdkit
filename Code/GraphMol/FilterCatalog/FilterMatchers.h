@@ -429,7 +429,7 @@ class RDKIT_FILTERCATALOG_EXPORT ExclusionList : public FilterMatcherBase {
 
   bool getMatches(const ROMol &mol, std::vector<FilterMatch> &) const override {
     PRECONDITION(isValid(),
-                 "ExclusionList: one of the exclusion pattens is invalid");
+                 "ExclusionList: one of the exclusion patterns is invalid");
     bool result = true;
     for (size_t i = 0; i < d_offPatterns.size() && result; ++i) {
       result &= !d_offPatterns[i]->hasMatch(mol);
@@ -440,7 +440,7 @@ class RDKIT_FILTERCATALOG_EXPORT ExclusionList : public FilterMatcherBase {
 
   bool hasMatch(const ROMol &mol) const override {
     PRECONDITION(isValid(),
-                 "ExclusionList: one of the exclusion pattens is invalid");
+                 "ExclusionList: one of the exclusion patterns is invalid");
     bool result = true;
     for (size_t i = 0; i < d_offPatterns.size() && result; ++i) {
       result &= !d_offPatterns[i]->hasMatch(mol);
@@ -538,7 +538,7 @@ class RDKIT_FILTERCATALOG_EXPORT FilterHierarchyMatcher
     return getMatches(mol, temp);
   }
 
-  //! copys the FilterHierarchyMatcher into a FilterMatcherBase
+  //! copies the FilterHierarchyMatcher into a FilterMatcherBase
   boost::shared_ptr<FilterMatcherBase> copy() const override {
     return boost::shared_ptr<FilterMatcherBase>(
         new FilterHierarchyMatcher(*this));

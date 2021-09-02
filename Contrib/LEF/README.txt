@@ -1,4 +1,4 @@
-This directory contains scripts for carrying out the calculations and analyis from the publications:
+This directory contains scripts for carrying out the calculations and analysis from the publications:
 
 1) A. Vulpetti, U. Hommel, G. Landrum, R. Lewis and C. Dalvit, "Design and NMR-based screening of LEF,
 a library of chemical fragments with different Local Environment of Fluorine" J. Am. Chem. Soc. 131 (2009) 12949-12959. https://doi.org/10.1021/ja905207t

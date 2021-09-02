@@ -35,7 +35,7 @@ class FilterMatcher(PythonFilterMatcher):
          return not self.minMw <= mw <= self.maxMw
     """
 
-  def __init__(self, name="Unamed FilterMatcher"):
+  def __init__(self, name="Unnamed FilterMatcher"):
     self.name = name
     if rdBase._wrapperType == 'boost':
       PythonFilterMatcher.__init__(self, self)
