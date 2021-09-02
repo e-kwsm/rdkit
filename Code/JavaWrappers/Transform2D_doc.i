@@ -63,7 +63,7 @@ public";
 <p>
 Set the transform so that the specified points are aligned.
 <p>
-The resulting transformation will align pt1 with ref1, and rotation pt2 such that the line betweem (pt1, pt2) will align with with the line (ref1, ref2)
+The resulting transformation will align pt1 with ref1, and rotation pt2 such that the line between (pt1, pt2) will align with the line (ref1, ref2)
 <p>
 
 */
