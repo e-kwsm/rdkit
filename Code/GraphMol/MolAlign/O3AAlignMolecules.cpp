@@ -1494,9 +1494,7 @@ O3A::O3A(ROMol &prbMol, const ROMol &refMol, void *prbProp, void *refProp,
       score[1] = o3a->score();
       if (((score[1] - score[0]) > O3_SCORE_THRESHOLD) ||
           isDoubleZero(score[0])) {
-        if (bestO3A) {
-          delete bestO3A;
-        }
+        delete bestO3A;
         bestO3A = o3a;
         score[0] = score[1];
       } else {

@@ -1390,9 +1390,7 @@ ResonanceMolSupplier::~ResonanceMolSupplier() {
     }
     delete *ceVect3It;
   }
-  if (d_mol) {
-    delete d_mol;
-  }
+  delete d_mol;
 }
 
 void ResonanceMolSupplier::setNumThreads(int numThreads) {
