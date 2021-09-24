@@ -426,12 +426,8 @@ MorganFingerprintHelper(const RDKit::ROMol &mol, unsigned int radius, int nBits,
     }
     delete bitInfoMap;
   }
-  if (invars) {
-    delete invars;
-  }
-  if (froms) {
-    delete froms;
-  }
+  delete invars;
+  delete froms;
   return res;
 }
 

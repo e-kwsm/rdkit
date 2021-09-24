@@ -294,12 +294,8 @@ class RDKIT_MOLALIGN_EXPORT O3A {
       ROMol *extWorkPrbMol = nullptr, LAP *extLAP = nullptr,
       MolHistogram *extPrbHist = nullptr, MolHistogram *extRefHist = nullptr);
   ~O3A() {
-    if (d_o3aMatchVect) {
-      delete d_o3aMatchVect;
-    }
-    if (d_o3aWeights) {
-      delete d_o3aWeights;
-    }
+    delete d_o3aMatchVect;
+    delete d_o3aWeights;
   }
   double align();
   double trans(RDGeom::Transform3D &trans);
