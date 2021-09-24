@@ -191,12 +191,8 @@ EEM_arrays::EEM_arrays(const ROMol &mol, unsigned int sz) : n(sz) {
 }
 
 EEM_arrays::~EEM_arrays() {
-  if (Atomindex != nullptr) {
-    delete[] Atomindex;
-  }
-  if (EEMatomtype != nullptr) {
-    delete[] EEMatomtype;
-  }
+  delete[] Atomindex;
+  delete[] EEMatomtype;
 }
 
 /* Calculate charges for a particular kappa_data structure */
