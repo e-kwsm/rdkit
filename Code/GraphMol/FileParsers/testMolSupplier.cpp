@@ -1593,9 +1593,7 @@ TEST_CASE("testIssue381") {
   count = 0;
   while (!sdsup->atEnd()) {
     nmol = sdsup->next();
-    if (nmol) {
-      delete nmol;
-    }
+    delete nmol;
     count++;
   }
   REQUIRE(sdsup->atEnd());
@@ -1641,9 +1639,7 @@ TEST_CASE("testSetStreamIndices") {
   count = 0;
   while (!sdsup->atEnd()) {
     nmol = sdsup->next();
-    if (nmol) {
-      delete nmol;
-    }
+    delete nmol;
     count++;
   }
   REQUIRE(sdsup->atEnd());

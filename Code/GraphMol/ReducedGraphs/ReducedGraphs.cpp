@@ -263,9 +263,7 @@ ROMol *generateMolExtendedReducedGraph(
   // FIX: still need to do the "highly fused rings" simplification for things
   // like adamantane
 
-  if (latomTypes) {
-    delete latomTypes;
-  }
+  delete latomTypes;
   return res;
 }
 }  // end of namespace ReducedGraphs
