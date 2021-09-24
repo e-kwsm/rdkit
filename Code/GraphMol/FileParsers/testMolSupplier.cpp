@@ -1742,9 +1742,7 @@ void testIssue381() {
   count = 0;
   while (!sdsup->atEnd()) {
     nmol = sdsup->next();
-    if (nmol) {
-      delete nmol;
-    }
+    delete nmol;
     count++;
   }
   TEST_ASSERT(sdsup->atEnd());
@@ -1791,9 +1789,7 @@ void testSetStreamIndices() {
   count = 0;
   while (!sdsup->atEnd()) {
     nmol = sdsup->next();
-    if (nmol) {
-      delete nmol;
-    }
+    delete nmol;
     count++;
   }
   TEST_ASSERT(sdsup->atEnd());
