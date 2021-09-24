@@ -39,7 +39,7 @@ class Priority {
    *
    * @return The type of the descriptor that should be assigned
    */
-  bool isPseudoAsymetric() const { return d_pseudoAsym; }
+  bool isPseudoAsymmetric() const { return d_pseudoAsym; }
 
  private:
   bool d_unique;
