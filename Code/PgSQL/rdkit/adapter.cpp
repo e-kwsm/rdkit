@@ -541,9 +541,7 @@ extern "C" bytea *makeMolSignature(CROMol data) {
     }
   } catch (...) {
     elog(ERROR, "makeMolSignature: Unknown exception");
-    if (res) {
-      delete res;
-    }
+    delete res;
   }
 
   return ret;
@@ -1402,9 +1400,7 @@ extern "C" CBfp makeLayeredBFP(CROMol data) {
                                        getLayeredFpSize());
   } catch (...) {
     elog(ERROR, "makeLayeredBFP: Unknown exception");
-    if (res) {
-      delete res;
-    }
+    delete res;
     res = nullptr;
   }
   if (res) {
@@ -1424,9 +1420,7 @@ extern "C" CBfp makeRDKitBFP(CROMol data) {
     res = RDKit::RDKFingerprintMol(*mol, 1, 6, getRDKitFpSize(), 2);
   } catch (...) {
     elog(ERROR, "makeRDKitBFP: Unknown exception");
-    if (res) {
-      delete res;
-    }
+    delete res;
     res = nullptr;
   }
 
@@ -1880,9 +1874,7 @@ extern "C" bytea *makeReactionSign(CChemicalReaction data) {
     }
   } catch (...) {
     elog(ERROR, "makeReactionSign: Unknown exception");
-    if (res) {
-      delete res;
-    }
+    delete res;
   }
   return ret;
 }
