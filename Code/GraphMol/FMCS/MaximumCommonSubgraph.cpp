@@ -233,7 +233,7 @@ void MaximumCommonSubgraph::init() {
                    // targets
         && (Parameters.BondCompareParameters.CompleteRingsOnly ||
             Parameters.BondCompareParameters.RingMatchesRingOnly)) {
-      RingMatchTables.addTargetBondRingsIndeces(Targets[i].Molecule);
+      RingMatchTables.addTargetBondRingsIndices(Targets[i].Molecule);
       RingMatchTables.computeRingMatchTable(QueryMolecule, Targets[i].Molecule,
                                             Parameters);
     }

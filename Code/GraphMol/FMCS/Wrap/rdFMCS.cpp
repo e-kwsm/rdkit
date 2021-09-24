@@ -82,7 +82,7 @@ struct PyMCSBondCompare : public boost::python::wrapper<PyMCSBondCompare> {
     }
     if (!rmtMols.count(&mol2)) {
       rmt.computeRingMatchTable(&mol1, &mol2, p);
-      rmt.addTargetBondRingsIndeces(&mol2);
+      rmt.addTargetBondRingsIndices(&mol2);
       rmtMols.insert(&mol2);
     }
   }

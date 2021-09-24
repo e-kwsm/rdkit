@@ -61,7 +61,7 @@ int Sort::compareSubstituents(const Node *node, const Edge *a, const Edge *b,
   }
 
   for (const auto &rule : d_rules) {
-    int cmp = rule->getComparision(a, b, deep);
+    int cmp = rule->getComparison(a, b, deep);
 
     if (cmp != 0) {
       return cmp;

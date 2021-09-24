@@ -40,9 +40,9 @@ class SequenceRule {
 
   Descriptor getBondLabel(const Edge *edge) const;
 
-  int getComparision(const Edge *a, const Edge *b) const;
+  int getComparison(const Edge *a, const Edge *b) const;
 
-  virtual int getComparision(const Edge *a, const Edge *b, bool deep) const;
+  virtual int getComparison(const Edge *a, const Edge *b, bool deep) const;
 
   virtual const Sort *getSorter() const;
 

@@ -61,9 +61,9 @@ class RDKIT_FMCS_EXPORT RingMatchTableSet {
   };
 
  private:
-  std::vector<std::vector<size_t>>* QueryBondRingsIndeces{nullptr};
+  std::vector<std::vector<size_t>>* QueryBondRingsIndices{nullptr};
   std::map<const ROMol*, std::vector<std::vector<size_t>>>
-      TargetBondRingsIndecesSet;  // by target molecules
+      TargetBondRingsIndicesSet;  // by target molecules
 
   std::map<const ROMol*, RingMatchTable> MatchMatrixSet;  // by target molecules
   std::map<const INT_VECT*, unsigned> QueryRingIndex;
@@ -81,10 +81,10 @@ class RDKIT_FMCS_EXPORT RingMatchTableSet {
   }
 
   inline bool isQueryBondInRing(unsigned bi) const {
-    return (*QueryBondRingsIndeces)[bi].empty();
+    return (*QueryBondRingsIndices)[bi].empty();
   }
   inline const std::vector<size_t>& getQueryBondRings(unsigned bi) const {
-    return (*QueryBondRingsIndeces)[bi];
+    return (*QueryBondRingsIndices)[bi];
   }
 
   inline bool isTargetBondInRing(const ROMol* target, unsigned bi) const {
@@ -133,8 +133,8 @@ class RDKIT_FMCS_EXPORT RingMatchTableSet {
       }
     }
   }
-  inline void addTargetBondRingsIndeces(const ROMol* mol2) {
-    std::vector<std::vector<size_t>>& m = TargetBondRingsIndecesSet[mol2];
+  inline void addTargetBondRingsIndices(const ROMol* mol2) {
+    std::vector<std::vector<size_t>>& m = TargetBondRingsIndicesSet[mol2];
     m.resize(mol2->getNumBonds());
 
     size_t ri = 0;
