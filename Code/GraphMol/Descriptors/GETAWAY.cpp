@@ -67,12 +67,12 @@ double roundn(double in, int factor) {
   return std::round(in * pow(10., factor)) / pow(10., factor);
 }
 
-double *retreiveMat(MatrixXd matrix) {
+double *retrieveMat(MatrixXd matrix) {
   double *arrayd = matrix.data();
   return arrayd;
 }
 
-double *retreiveVect(VectorXd matrix) {
+double *retrieveVect(VectorXd matrix) {
   double *arrayd = matrix.data();
   return arrayd;
 }

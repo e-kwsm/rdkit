@@ -65,7 +65,7 @@ class Rules : public SequenceRule {
     return 0;
   }
 
-  int getComparision(const Edge *a, const Edge *b, bool deep) const override {
+  int getComparison(const Edge *a, const Edge *b, bool deep) const override {
     (void)deep;
 
     // Try using each rules. The rules will expand the search exhaustively
