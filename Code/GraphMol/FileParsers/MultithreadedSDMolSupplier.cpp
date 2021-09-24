@@ -184,9 +184,7 @@ void MultithreadedSDMolSupplier::readMolProps(ROMol *mol,
           while (stmp.length() != 0) {
             std::getline(inStream, tempStr);
             if (inStream.eof()) {
-              if (mol) {
-                delete mol;
-              }
+              delete mol;
               throw FileParseException("End of data field name not found");
             }
           }
@@ -232,9 +230,7 @@ void MultithreadedSDMolSupplier::readMolProps(ROMol *mol,
           // and issue a warning
           // FIX: should we be deleting the molecule (which is probably fine)
           // because we couldn't read the data ???
-          if (mol) {
-            delete mol;
-          }
+          delete mol;
           throw FileParseException("Problems encountered parsing data fields");
         } else {
           if (!warningIssued) {

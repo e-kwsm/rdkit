@@ -272,9 +272,7 @@ void testAromaticChargedFail(std::string rdbase) {
     std::string fName =
         rdbase + "/Code/GraphMol/FileParsers/test_data/badSubstPyridine.mol2";
     RWMol *m = Mol2FileToMol(fName);
-    if (m) {
-      delete m;
-    }
+    delete m;
   }
 
   BOOST_LOG(rdInfoLog) << "------------------------------------" << std::endl;

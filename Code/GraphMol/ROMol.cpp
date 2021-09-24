@@ -98,9 +98,7 @@ void ROMol::initFromOther(const ROMol &other, bool quickCopy, int confId) {
   }
 
   // ring information
-  if (dp_ringInfo) {
-    delete dp_ringInfo;
-  }
+  delete dp_ringInfo;
   if (other.dp_ringInfo) {
     dp_ringInfo = new RingInfo(*(other.dp_ringInfo));
   } else {

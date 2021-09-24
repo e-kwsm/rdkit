@@ -419,12 +419,8 @@ RDKit::SparseIntVect<std::uint32_t> *MorganFingerprintHelper(
     }
     delete bitInfoMap;
   }
-  if (invars) {
-    delete invars;
-  }
-  if (froms) {
-    delete froms;
-  }
+  delete invars;
+  delete froms;
   return res;
 }
 

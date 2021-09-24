@@ -230,11 +230,7 @@ void Atom::initAtom() {
   d_explicitValence = -1;
 }
 
-Atom::~Atom() {
-  if (dp_monomerInfo) {
-    delete dp_monomerInfo;
-  }
-}
+Atom::~Atom() { delete dp_monomerInfo; }
 
 Atom *Atom::copy() const {
   auto *res = new Atom(*this);
