@@ -426,12 +426,8 @@ double hkAlphaHelper(const RDKit::ROMol &mol, python::object atomContribs) {
     }
     delete bitInfoMap;
   }
-  if (invars) {
-    delete invars;
-  }
-  if (froms) {
-    delete froms;
-  }
+  delete invars;
+  delete froms;
   return res;
 }
 

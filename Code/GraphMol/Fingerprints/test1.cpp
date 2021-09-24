@@ -2823,9 +2823,7 @@ void test3DAtomPairs() {
       ok = true;
     }
     TEST_ASSERT(ok);
-    if (fp != nullptr) {
-      delete fp;
-    }
+    delete fp;
     delete mol;
   }
   {
