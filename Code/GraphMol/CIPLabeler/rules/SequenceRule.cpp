@@ -32,11 +32,11 @@ Descriptor SequenceRule::getBondLabel(const Edge *edge) const {
   return label;
 }
 
-int SequenceRule::getComparision(const Edge *a, const Edge *b) const {
-  return getComparision(a, b, true);
+int SequenceRule::getComparison(const Edge *a, const Edge *b) const {
+  return getComparison(a, b, true);
 }
 
-int SequenceRule::getComparision(const Edge *a, const Edge *b,
+int SequenceRule::getComparison(const Edge *a, const Edge *b,
                                  bool deep) const {
   return deep ? recursiveCompare(a, b) : compare(a, b);
 }
