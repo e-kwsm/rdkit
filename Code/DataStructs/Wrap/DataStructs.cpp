@@ -34,7 +34,7 @@ void wrap_FPB();
 
 namespace {
 template <typename T, typename U>
-void converter(const T &v, python::object destArray, U func) {
+void converter(const T &v, const python::object &destArray, U func) {
   if (!PyArray_Check(destArray.ptr())) {
     throw_value_error("Expecting a Numeric array object");
   }
