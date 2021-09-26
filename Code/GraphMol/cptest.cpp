@@ -125,7 +125,7 @@ void testGithub2144() {
     RWMol mol2(*mol1);
     TEST_ASSERT(mol2.getNumBonds() == mol1->getNumBonds())
     TEST_ASSERT(mol2.getNumAtoms() == mol1->getNumAtoms())
-    RWMol mol3(mol2);
+    const RWMol& mol3(mol2);
     TEST_ASSERT(mol2.getNumBonds() == mol3.getNumBonds())
     TEST_ASSERT(mol2.getNumAtoms() == mol3.getNumAtoms())
   }

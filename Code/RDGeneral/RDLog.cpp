@@ -111,7 +111,7 @@ void disable_logs(const std::string &arg) {
 
 bool is_log_enabled(RDLogger log) { return log && log->df_enabled; }
 
-void get_log_status(std::ostream &ss, const std::string &name, RDLogger log) {
+void get_log_status(std::ostream &ss, const std::string &name, const RDLogger& log) {
   ss << name << ":";
   if (log) {
     if (log->df_enabled) {
