@@ -33,7 +33,7 @@ void wrap_sparseIntVect();
 void wrap_FPB();
 
 template <typename T>
-void convertToNumpyArray(const T &v, python::object destArray) {
+void convertToNumpyArray(const T &v, const python::object& destArray) {
   if (!PyArray_Check(destArray.ptr())) {
     throw_value_error("Expecting a Numeric array object");
   }

@@ -2644,7 +2644,7 @@ void testGithub1423() {
 }
 
 namespace {
-void stereochemTester(RWMol *m, std::string expectedCIP,
+void stereochemTester(RWMol *m, const std::string& expectedCIP,
                       Bond::BondStereo expectedStereo) {
   TEST_ASSERT(m);
   TEST_ASSERT(m->getNumAtoms() == 9)

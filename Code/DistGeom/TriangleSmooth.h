@@ -29,7 +29,7 @@ namespace DistGeom {
 RDKIT_DISTGEOMETRY_EXPORT bool triangleSmoothBounds(BoundsMatrix *boundsMat,
                                                     double tol = 0.);
 //! \overload
-RDKIT_DISTGEOMETRY_EXPORT bool triangleSmoothBounds(BoundsMatPtr boundsMat,
+RDKIT_DISTGEOMETRY_EXPORT bool triangleSmoothBounds(const BoundsMatPtr& boundsMat,
                                                     double tol = 0.);
 }  // namespace DistGeom
 
