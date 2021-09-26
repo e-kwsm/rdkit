@@ -144,7 +144,7 @@ class RDKIT_DATASTRUCTS_EXPORT MultiFPBReader {
                                                 int numThreads = 1) const;
   //! \overload
   std::vector<ResultTuple> getTanimotoNeighbors(
-      boost::shared_array<std::uint8_t> bv, double threshold = 0.7,
+      const boost::shared_array<std::uint8_t>& bv, double threshold = 0.7,
       int numThreads = 1) const {
     return getTanimotoNeighbors(bv.get(), threshold, numThreads);
   }
@@ -173,7 +173,7 @@ class RDKIT_DATASTRUCTS_EXPORT MultiFPBReader {
                                                int numThreads = 1) const;
   //! \overload
   std::vector<ResultTuple> getTverskyNeighbors(
-      boost::shared_array<std::uint8_t> bv, double ca, double cb,
+      const boost::shared_array<std::uint8_t>& bv, double ca, double cb,
       double threshold = 0.7, int numThreads = 1) const {
     return getTverskyNeighbors(bv.get(), ca, cb, threshold, numThreads);
   }
@@ -191,7 +191,7 @@ class RDKIT_DATASTRUCTS_EXPORT MultiFPBReader {
       const std::uint8_t *bv, int numThreads = 1) const;
   //! \overload
   std::vector<std::pair<unsigned int, unsigned int>> getContainingNeighbors(
-      boost::shared_array<std::uint8_t> bv, int numThreads = 1) const {
+      const boost::shared_array<std::uint8_t>& bv, int numThreads = 1) const {
     return getContainingNeighbors(bv.get(), numThreads);
   }
   //! \overload
