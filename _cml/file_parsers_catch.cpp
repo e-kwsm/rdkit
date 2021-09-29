@@ -115,7 +115,7 @@ SCENARIO("CML Reader", "[CML][reader]") {
     boost::optional<std::string> hydrogenCount{"0"};
     boost::optional<std::string> x3{"0.0"}, y3{"0.0"}, z3{"0.0"};
 
-    std::string str() const {
+    auto str() const {
       std::ostringstream ss;
       ss << "<atom";
       put_unless_none{}(ss, "elementType", elementType);
@@ -150,7 +150,7 @@ SCENARIO("CML Reader", "[CML][reader]") {
     // TODO
     // boost::optional<std::string> bondStereo{boost::none};
 
-    std::string str() const {
+    auto str() const {
       std::ostringstream ss;
       ss << "<bond";
       put_unless_none{}(ss, "id", id);
@@ -167,20 +167,36 @@ SCENARIO("CML Reader", "[CML][reader]") {
     REQUIRE_THROWS(CMLBlockToMol(cml_root("") + cml_root("")));
   }
 
+  WHEN("//molecule/@formalCharge") {
+    AND_WHEN("is not numeric") {
+      molecule_node m;
+      m.formalCharge = "abc";
+      auto cml = cml_root(m.str());
+      auto msg =
+          boost::format{
+              ".*/molecule[^/]*/@formalCharge "
+              R"CML(\(= "%s"\) is not convertible to numeric)CML"} %
+          *m.formalCharge;
+      REQUIRE_THROWS_WITH(CMLBlockToMol(cml), Matches(msg.str()));
+    }
+  }
+
   WHEN("//molecule/@spinMultiplicity") {
     AND_WHEN("is not numeric") {
       molecule_node m;
       m.spinMultiplicity = "abc";
-      const auto cml = cml_root(m.str());
-      REQUIRE_THROWS_WITH(
-          CMLBlockToMol(cml),
-          Matches(
-              ".*/molecule[^/]*/@spinMultiplicity .+ is not convertible.*"));
+      auto cml = cml_root(m.str());
+      auto msg =
+          boost::format{
+              ".*/molecule[^/]*/@spinMultiplicity "
+              R"CML(\(= "%s"\) is not convertible to numeric)CML"} %
+          *m.spinMultiplicity;
+      REQUIRE_THROWS_WITH(CMLBlockToMol(cml), Matches(msg.str()));
     }
     AND_WHEN("is zero") {
       molecule_node m;
       m.spinMultiplicity = "0";
-      const auto cml = cml_root(m.str());
+      auto cml = cml_root(m.str());
       REQUIRE_THROWS_WITH(
           CMLBlockToMol(cml),
           Matches(".*/molecule[^/]*/@spinMultiplicity is zero"));
@@ -189,9 +205,10 @@ SCENARIO("CML Reader", "[CML][reader]") {
 
   WHEN("//molecule/atomArray") {
     AND_WHEN("has no atom elements") {
-      const auto cml = cml_root(molecule_node{}.str(cml_atomArray("")));
-      REQUIRE_THROWS_WITH(CMLBlockToMol(cml),
-                          Matches(".*/molecule[^/]*/atomArray has no atom"));
+      auto cml = cml_root(molecule_node{}.str(cml_atomArray("")));
+      REQUIRE_THROWS_WITH(
+          CMLBlockToMol(cml),
+          Matches(".*/molecule[^/]*/atomArray has no atom elements"));
     }
   }
 
@@ -199,7 +216,7 @@ SCENARIO("CML Reader", "[CML][reader]") {
     AND_WHEN("is missing") {
       atom_node a;
       a.id = boost::none;
-      const auto cml = cml_root(molecule_node{}.str(cml_atomArray(a.str())));
+      auto cml = cml_root(molecule_node{}.str(cml_atomArray(a.str())));
       REQUIRE_THROWS_WITH(CMLBlockToMol(cml),
                           Matches(".+/atom/@id is missing"));
     }
@@ -207,17 +224,20 @@ SCENARIO("CML Reader", "[CML][reader]") {
     AND_WHEN("is invalid") {
       atom_node a;
       a.id = "a0 a1";
-      const auto cml = cml_root(molecule_node{}.str(cml_atomArray(a.str())));
-      REQUIRE_THROWS_WITH(CMLBlockToMol(cml),
-                          Matches(".+/atom/@id .*" + *a.id + ".* is invalid"));
+      auto cml = cml_root(molecule_node{}.str(cml_atomArray(a.str())));
+      auto msg =
+          boost::format{R"CML(.+/atom/@id .*\(= "%s"\) is invalid)CML"} % *a.id;
+      REQUIRE_THROWS_WITH(CMLBlockToMol(cml), Matches(msg.str()));
     }
 
     AND_WHEN("is not unique") {
       atom_node a;
-      const auto cml =
+      auto cml =
           cml_root(molecule_node{}.str(cml_atomArray(a.str() + a.str())));
-      REQUIRE_THROWS_WITH(CMLBlockToMol(cml), Matches(".+/atom/@id .*" + *a.id +
-                                                      ".* is not unique"));
+      auto msg =
+          boost::format{R"CML(.+/atom/@id .*\(= "%s"\) is not unique)CML"} %
+          *a.id;
+      REQUIRE_THROWS_WITH(CMLBlockToMol(cml), Matches(msg.str()));
     }
   }
 
@@ -225,7 +245,7 @@ SCENARIO("CML Reader", "[CML][reader]") {
     AND_WHEN("is missing") {
       atom_node a;
       a.elementType = boost::none;
-      const auto cml = cml_root(molecule_node{}.str(cml_atomArray(a.str())));
+      auto cml = cml_root(molecule_node{}.str(cml_atomArray(a.str())));
       REQUIRE_THROWS_WITH(CMLBlockToMol(cml),
                           Matches(".+/atom[^/]*/@elementType is missing"));
     }
@@ -237,11 +257,15 @@ SCENARIO("CML Reader", "[CML][reader]") {
       m.formalCharge = "-1";
       atom_node a;
       a.formalCharge = "0";
-      const auto cml = cml_root(m.str(cml_atomArray(a.str())));
-      REQUIRE_THROWS_WITH(
-          CMLBlockToMol(cml),
-          Matches(".*/molecule[^/]*/@formalCharge .+ is not equal to .* "
-                  ".+/atom/@formalCharge.+"));
+      auto cml = cml_root(m.str(cml_atomArray(a.str())));
+      auto msg =
+          boost::format{
+              ".*/molecule[^/]*/@formalCharge "
+              R"CML(\(= %d\))CML"
+              " is not equal to sum of .+/atom/@formalCharge "
+              R"CML(\(= %d\))CML"} %
+          *m.formalCharge % *a.formalCharge;
+      REQUIRE_THROWS_WITH(CMLBlockToMol(cml), Matches(msg.str()));
     }
   }
 
@@ -249,7 +273,7 @@ SCENARIO("CML Reader", "[CML][reader]") {
     AND_WHEN("is zero") {
       atom_node a;
       a.spinMultiplicity = "0";
-      const auto cml = cml_root(molecule_node{}.str(cml_atomArray(a.str())));
+      auto cml = cml_root(molecule_node{}.str(cml_atomArray(a.str())));
       REQUIRE_THROWS_WITH(CMLBlockToMol(cml),
                           Matches(".+/atom[^/]*/@spinMultiplicity is zero"));
     }
@@ -258,7 +282,7 @@ SCENARIO("CML Reader", "[CML][reader]") {
       m.spinMultiplicity = "3";
       atom_node a;
       a.spinMultiplicity = "1";
-      const auto cml = cml_root(m.str(cml_atomArray(a.str())));
+      auto cml = cml_root(m.str(cml_atomArray(a.str())));
       REQUIRE_THROWS_WITH(
           CMLBlockToMol(cml),
           Matches(".*/molecule[^/]*/@spinMultiplicity .+ is not equal to .* "
@@ -270,7 +294,7 @@ SCENARIO("CML Reader", "[CML][reader]") {
     AND_WHEN("is missing") {
       atom_node a;
       a.x3 = boost::none;
-      const auto cml = cml_root(molecule_node{}.str(cml_atomArray(a.str())));
+      auto cml = cml_root(molecule_node{}.str(cml_atomArray(a.str())));
       REQUIRE_THROWS_WITH(
           CMLBlockToMol(cml),
           Matches(
@@ -280,10 +304,11 @@ SCENARIO("CML Reader", "[CML][reader]") {
 
   WHEN("//molecule/bondArray") {
     AND_WHEN("has no bond elements") {
-      const auto cml = cml_root(molecule_node{}.str(
-          cml_atomArray(atom_node{}.str()) + cml_bondArray("")));
-      REQUIRE_THROWS_WITH(CMLBlockToMol(cml),
-                          Matches(".+/molecule[^/]*/bondArray has no bond"));
+      auto cml = cml_root(molecule_node{}.str(cml_atomArray(atom_node{}.str()) +
+                                              cml_bondArray("")));
+      REQUIRE_THROWS_WITH(
+          CMLBlockToMol(cml),
+          Matches(".+/molecule[^/]*/bondArray has no bond elements"));
     }
   }
 
