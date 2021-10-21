@@ -32,17 +32,17 @@ struct gtDIPair {
 typedef std::priority_queue<PAIR_D_I, VECT_PDI, gtDIPair> PR_QUEUE;
 
 void InfoBitRanker::setBiasList(RDKit::INT_VECT &classList) {
-  URANGE_CHECK(classList.size(), d_classes);
+  URANGE_CHECK(classList.size(), d_classes)
   d_biasList = classList;
   // make sure we don't have any duplicates
   std::sort(d_biasList.begin(), d_biasList.end());
   RDKit::INT_VECT_CI bi = std::unique(d_biasList.begin(), d_biasList.end());
   CHECK_INVARIANT(bi == d_biasList.end(),
-                  "There are duplicates in the class bias list");
+                  "There are duplicates in the class bias list")
 
   // finally make sure all the class ID in d_biasList are within range
   for (bi = d_biasList.begin(); bi != d_biasList.end(); bi++) {
-    URANGE_CHECK(static_cast<unsigned int>(*bi), d_classes);
+    URANGE_CHECK(static_cast<unsigned int>(*bi), d_classes)
   }
 }
 
@@ -55,7 +55,7 @@ void InfoBitRanker::setMaskBits(RDKit::INT_VECT &maskBits) {
 }
 
 bool InfoBitRanker::BiasCheckBit(RDKit::USHORT *resMat) const {
-  PRECONDITION(resMat, "bad results pointer");
+  PRECONDITION(resMat, "bad results pointer")
   if ((d_biasList.size() == 0) || (d_biasList.size() == d_classes)) {
     // we will accept the bit
     return true;
@@ -93,7 +93,7 @@ bool InfoBitRanker::BiasCheckBit(RDKit::USHORT *resMat) const {
 }
 
 double InfoBitRanker::BiasChiSquareGain(RDKit::USHORT *resMat) const {
-  PRECONDITION(resMat, "bad result pointer");
+  PRECONDITION(resMat, "bad result pointer")
   bool bitOk = this->BiasCheckBit(resMat);
   double info = 0.0;
   if (bitOk) {
@@ -103,7 +103,7 @@ double InfoBitRanker::BiasChiSquareGain(RDKit::USHORT *resMat) const {
 }
 
 double InfoBitRanker::BiasInfoEntropyGain(RDKit::USHORT *resMat) const {
-  PRECONDITION(resMat, "bad result pointer");
+  PRECONDITION(resMat, "bad result pointer")
   bool bitOk = this->BiasCheckBit(resMat);
   double info = 0.0;
   if (bitOk) {
@@ -114,8 +114,8 @@ double InfoBitRanker::BiasInfoEntropyGain(RDKit::USHORT *resMat) const {
 
 void InfoBitRanker::accumulateVotes(const ExplicitBitVect &bv,
                                     unsigned int label) {
-  URANGE_CHECK(label, d_classes);
-  CHECK_INVARIANT(bv.getNumBits() == d_dims, "Incorrect bit vector size");
+  URANGE_CHECK(label, d_classes)
+  CHECK_INVARIANT(bv.getNumBits() == d_dims, "Incorrect bit vector size")
 
   d_nInst += 1;
   d_clsCount[label] += 1;
@@ -128,8 +128,8 @@ void InfoBitRanker::accumulateVotes(const ExplicitBitVect &bv,
 
 void InfoBitRanker::accumulateVotes(const SparseBitVect &bv,
                                     unsigned int label) {
-  URANGE_CHECK(label, d_classes);
-  CHECK_INVARIANT(bv.getNumBits() == d_dims, "Incorrect bit vector size");
+  URANGE_CHECK(label, d_classes)
+  CHECK_INVARIANT(bv.getNumBits() == d_dims, "Incorrect bit vector size")
 
   d_nInst += 1;
   d_clsCount[label] += 1;
@@ -154,7 +154,7 @@ double *InfoBitRanker::getTopN(unsigned int num) {
   }
   if (dp_maskBits) {
     CHECK_INVARIANT(num <= dp_maskBits->getNumOnBits(),
-                    "Can't rank more bits than the ensemble size");
+                    "Can't rank more bits than the ensemble size")
   }
   auto *resMat = new RDKit::USHORT[2 * d_classes];
 
