@@ -28,7 +28,7 @@ double infoEntropy(python::object resArr) {
   double res = 0.0;
   // we are expecting a 1 dimensional array
   auto ncols = (long int)PyArray_DIM((PyArrayObject *)matObj, 0);
-  CHECK_INVARIANT(ncols > 0, "");
+  CHECK_INVARIANT(ncols > 0, "")
   if (PyArray_DESCR((PyArrayObject *)matObj)->type_num == NPY_DOUBLE) {
     auto *data = (double *)PyArray_DATA(copy);
     res = InfoEntropy(data, ncols);

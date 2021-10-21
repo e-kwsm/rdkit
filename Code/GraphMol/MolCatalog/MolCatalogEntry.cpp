@@ -21,7 +21,7 @@
 namespace RDKit {
 
 MolCatalogEntry::MolCatalogEntry(const ROMol *omol) {
-  PRECONDITION(omol, "bad mol");
+  PRECONDITION(omol, "bad mol")
   setBitId(-1);
   dp_props = new Dict();
   d_descrip = "";
@@ -55,13 +55,13 @@ MolCatalogEntry::~MolCatalogEntry() {
 }
 
 void MolCatalogEntry::setMol(const ROMol *omol) {
-  PRECONDITION(omol, "bad mol");
+  PRECONDITION(omol, "bad mol")
   delete dp_mol;
   dp_mol = omol;
 }
 
 void MolCatalogEntry::toStream(std::ostream &ss) const {
-  PRECONDITION(dp_mol, "bad mol");
+  PRECONDITION(dp_mol, "bad mol")
   MolPickler::pickleMol(*dp_mol, ss);
 
   std::int32_t tmpInt;

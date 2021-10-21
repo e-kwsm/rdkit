@@ -21,7 +21,7 @@
 
 namespace RDKit {
 class ROMol;
-};
+}
 
 namespace RingUtils {
 typedef std::vector<int> INT_VECT;
@@ -85,6 +85,6 @@ RDKIT_GRAPHMOL_EXPORT void makeRingNeighborMap(const VECT_INT_VECT &brings,
 RDKIT_GRAPHMOL_EXPORT void convertToBonds(const VECT_INT_VECT &res,
                                           VECT_INT_VECT &brings,
                                           const RDKit::ROMol &mol);
-};  // namespace RingUtils
+}  // namespace RingUtils
 
 #endif

@@ -27,7 +27,7 @@ namespace Tools {
 // ---------------------------------------------------------------
 void addAtomChargeFlags(const Atom *atom, std::string &atomKey,
                         bool tolerateChargeMismatch) {
-  PRECONDITION(atom, "bad atom");
+  PRECONDITION(atom, "bad atom")
   int totalValence = atom->getTotalValence();
   int fc = atom->getFormalCharge();
   // FIX: come up with some way of handling metals here
@@ -414,7 +414,7 @@ void addAtomChargeFlags(const Atom *atom, std::string &atomKey,
 
 // ---------------------------------------------------------------
 std::string getAtomLabel(const Atom *atom) {
-  PRECONDITION(atom, "bad atom");
+  PRECONDITION(atom, "bad atom")
   int atNum = atom->getAtomicNum();
   std::string atomKey = atom->getSymbol();
   if (atomKey.size() == 1) {

@@ -145,7 +145,7 @@ class streambuf : public std::basic_streambuf<char> {
         pos_of_read_buffer_end_in_py_file(0),
         pos_of_write_buffer_end_in_py_file(buffer_size),
         farthest_pptr(nullptr) {
-    TEST_ASSERT(buffer_size != 0);
+    TEST_ASSERT(buffer_size != 0)
     /* Some Python file objects (e.g. sys.stdout and sys.stdin)
        have non-functional seek and tell. If so, assign None to
        py_tell and py_seek.
@@ -194,9 +194,9 @@ class streambuf : public std::basic_streambuf<char> {
       : streambuf(python_file_obj, buffer_size_) {
 #if 1
     bp::object io_mod = bp::import("io");
-    CHECK_INVARIANT(io_mod, "module not found");
+    CHECK_INVARIANT(io_mod, "module not found")
     bp::object iobase = io_mod.attr("TextIOBase");
-    CHECK_INVARIANT(iobase, "base class not found");
+    CHECK_INVARIANT(iobase, "base class not found")
 #else
     // using statics to save an undetermined amount of time results in
     // alarming seg faults on windows. so we don't do it. Keep this here
@@ -477,7 +477,7 @@ class streambuf : public std::basic_streambuf<char> {
       farthest_pptr = std::max(farthest_pptr, pptr());
       upper_bound = reinterpret_cast<std::streamsize>(farthest_pptr) + 1;
     } else {
-      CHECK_INVARIANT(0, "unreachable code");
+      CHECK_INVARIANT(0, "unreachable code")
     }
 
     // Sought position in "buffer coordinate"
@@ -489,7 +489,7 @@ class streambuf : public std::basic_streambuf<char> {
     } else if (way == std::ios_base::end) {
       return failure;
     } else {
-      CHECK_INVARIANT(0, "unreachable code");
+      CHECK_INVARIANT(0, "unreachable code")
     }
 
     // if the sought position is not in the buffer, give up
