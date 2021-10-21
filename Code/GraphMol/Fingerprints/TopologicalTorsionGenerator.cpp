@@ -23,7 +23,7 @@ TopologicalTorsionArguments::TopologicalTorsionArguments(
     const std::uint32_t fpSize)
     : FingerprintArguments(countSimulation, countBounds, fpSize, 1,
                            includeChirality),
-      d_torsionAtomCount(torsionAtomCount) {};
+      d_torsionAtomCount(torsionAtomCount) {}
 
 template <typename OutputType>
 OutputType TopologicalTorsionEnvGenerator<OutputType>::getResultSize() const {
@@ -37,7 +37,7 @@ OutputType TopologicalTorsionEnvGenerator<OutputType>::getResultSize() const {
                                    ->df_includeChirality
                                ? numChiralBits
                                : 0)))));
-};
+}
 
 std::string TopologicalTorsionArguments::infoString() const {
   return "TopologicalTorsionArguments torsionAtomCount=" +
@@ -77,7 +77,7 @@ OutputType TopologicalTorsionAtomEnv<OutputType>::getBitId(
     const std::uint64_t                  // fpSize
 ) const {
   return d_bitId;
-};
+}
 
 template <typename OutputType>
 std::vector<AtomEnvironment<OutputType> *>
@@ -172,12 +172,12 @@ TopologicalTorsionEnvGenerator<OutputType>::getEnvironments(
   delete ignoreAtomsBV;
 
   return result;
-};
+}
 
 template <typename OutputType>
 std::string TopologicalTorsionEnvGenerator<OutputType>::infoString() const {
   return "TopologicalTorsionEnvGenerator";
-};
+}
 
 template <typename OutputType>
 FingerprintGenerator<OutputType> *getTopologicalTorsionGenerator(
@@ -196,7 +196,7 @@ FingerprintGenerator<OutputType> *getTopologicalTorsionGenerator(
   return new FingerprintGenerator<OutputType>(
       envGenerator, new TopologicalTorsionArguments(args),
       atomInvariantsGenerator, nullptr, ownsAtomInvGenerator, false);
-};
+}
 template <typename OutputType>
 FingerprintGenerator<OutputType> *getTopologicalTorsionGenerator(
     bool includeChirality, uint32_t torsionAtomCount,
@@ -207,7 +207,7 @@ FingerprintGenerator<OutputType> *getTopologicalTorsionGenerator(
                                         countSimulation, countBounds, fpSize);
   return getTopologicalTorsionGenerator<OutputType>(
       arguments, atomInvariantsGenerator, ownsAtomInvGen);
-};
+}
 
 // Topological torsion fingerprint does not support 32 bit output yet
 

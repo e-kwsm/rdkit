@@ -51,7 +51,7 @@ SmilesWriter::SmilesWriter(std::ostream *outStream, std::string delimiter,
                            std::string nameHeader, bool includeHeader,
                            bool takeOwnership, bool isomericSmiles,
                            bool kekuleSmiles) {
-  PRECONDITION(outStream, "null stream");
+  PRECONDITION(outStream, "null stream")
   if (outStream->bad()) {
     throw FileParseException("Bad output stream.");
   }
@@ -86,7 +86,7 @@ void SmilesWriter::setProps(const STR_VECT &propNames) {
 }
 
 void SmilesWriter::dumpHeader() const {
-  CHECK_INVARIANT(dp_ostream, "no output stream");
+  CHECK_INVARIANT(dp_ostream, "no output stream")
   if (df_includeHeader) {
     (*dp_ostream) << "SMILES" << d_delim;
     if (d_nameHeader != "") {
@@ -114,7 +114,7 @@ SmilesWriter::~SmilesWriter() {
 }
 
 void SmilesWriter::write(const ROMol &mol, int) {
-  CHECK_INVARIANT(dp_ostream, "no output stream");
+  CHECK_INVARIANT(dp_ostream, "no output stream")
   if (d_molid <= 0 && df_includeHeader) {
     dumpHeader();
   }
