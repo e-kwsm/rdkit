@@ -45,8 +45,8 @@ class int_compare_ftor {
   const int *dp_ints{nullptr};
 
  public:
-  int_compare_ftor() {};
-  int_compare_ftor(const int *ints) : dp_ints(ints) {};
+  int_compare_ftor() {}
+  int_compare_ftor(const int *ints) : dp_ints(ints) {}
   int operator()(int i, int j) const {
     PRECONDITION(dp_ints, "no ints");
     unsigned int ivi = dp_ints[i];
@@ -67,7 +67,7 @@ void qs1(const std::vector<std::vector<int>> &vects) {
     int *data = &tv.front();
     qsort(data, tv.size(), sizeof(int), pcmp);
     for (unsigned int j = 1; j < tv.size(); ++j) {
-      TEST_ASSERT(tv[j] >= tv[j - 1]);
+      TEST_ASSERT(tv[j] >= tv[j - 1])
     }
   }
   BOOST_LOG(rdInfoLog) << "done: " << vects.size() << std::endl;
@@ -87,7 +87,7 @@ void hs1(const std::vector<std::vector<int>> &vects) {
     memset(changed, 1, vect.size() * sizeof(int));
     RDKit::hanoisort(indices, vect.size(), count, changed, icmp);
     for (unsigned int j = 1; j < vect.size(); ++j) {
-      TEST_ASSERT(data[indices[j]] >= data[indices[j - 1]]);
+      TEST_ASSERT(data[indices[j]] >= data[indices[j - 1]])
     }
     free(count);
     free(indices);
@@ -126,14 +126,14 @@ void test1() {
   // qs1(vects);
   hs1(vects);
   BOOST_LOG(rdInfoLog) << "Done" << std::endl;
-};
+}
 
 class atomcomparefunctor {
   Canon::canon_atom *d_atoms{nullptr};
 
  public:
-  atomcomparefunctor() {};
-  atomcomparefunctor(Canon::canon_atom *atoms) : d_atoms(atoms) {};
+  atomcomparefunctor() {}
+  atomcomparefunctor(Canon::canon_atom *atoms) : d_atoms(atoms) {}
   int operator()(int i, int j) const {
     PRECONDITION(d_atoms, "no atoms");
     unsigned int ivi, ivj;
@@ -162,8 +162,8 @@ class atomcomparefunctor2 {
   Canon::canon_atom *d_atoms{nullptr};
 
  public:
-  atomcomparefunctor2() {};
-  atomcomparefunctor2(Canon::canon_atom *atoms) : d_atoms(atoms) {};
+  atomcomparefunctor2() {}
+  atomcomparefunctor2(Canon::canon_atom *atoms) : d_atoms(atoms) {}
   int operator()(int i, int j) const {
     PRECONDITION(d_atoms, "no atoms");
     unsigned int ivi, ivj;
@@ -205,7 +205,7 @@ void test2() {
   {
     std::string smi = "FC1C(Cl)C1C";
     RWMol *m = SmilesToMol(smi);
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
     std::vector<Canon::canon_atom> atoms(m->getNumAtoms());
     std::vector<int> indices(m->getNumAtoms());
     for (unsigned int i = 0; i < m->getNumAtoms(); ++i) {
@@ -226,15 +226,15 @@ void test2() {
       // count: "<<count[indices[i]]<<std::endl;
       if (i > 0) {
         TEST_ASSERT(atoms[indices[i]].atom->getAtomicNum() >=
-                    atoms[indices[i - 1]].atom->getAtomicNum());
+                    atoms[indices[i - 1]].atom->getAtomicNum())
         if (atoms[indices[i]].atom->getAtomicNum() !=
             atoms[indices[i - 1]].atom->getAtomicNum()) {
-          TEST_ASSERT(count[indices[i]] != 0);
+          TEST_ASSERT(count[indices[i]] != 0)
         } else {
-          TEST_ASSERT(count[indices[i]] == 0);
+          TEST_ASSERT(count[indices[i]] == 0)
         }
       } else {
-        TEST_ASSERT(count[indices[i]] != 0);
+        TEST_ASSERT(count[indices[i]] != 0)
       }
     }
     delete m;
@@ -242,7 +242,7 @@ void test2() {
     free(changed);
   }
   BOOST_LOG(rdInfoLog) << "Done" << std::endl;
-};
+}
 
 void test3() {
   BOOST_LOG(rdInfoLog) << "Testing basic partition refinement." << std::endl;
@@ -250,7 +250,7 @@ void test3() {
   {
     std::string smi = "FC1C(Cl)CCC1C";
     RWMol *m = SmilesToMol(smi);
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
     std::vector<Canon::canon_atom> atoms(m->getNumAtoms());
     initCanonAtoms(*m, atoms, true);
     atomcomparefunctor ftor(&atoms.front());
@@ -290,13 +290,13 @@ void test3() {
     //   "<<atoms[order[i]].index<<" count: "<<count[order[i]]<<std::endl;
     // }
 
-    TEST_ASSERT(order[0] == 1);
-    TEST_ASSERT(order[6] == 0);
-    TEST_ASSERT(order[7] == 3);
-    TEST_ASSERT(count[order[0]] == 6);
-    TEST_ASSERT(count[order[1]] == 0);
-    TEST_ASSERT(count[order[6]] == 1);
-    TEST_ASSERT(count[order[7]] == 1);
+    TEST_ASSERT(order[0] == 1)
+    TEST_ASSERT(order[6] == 0)
+    TEST_ASSERT(order[7] == 3)
+    TEST_ASSERT(count[order[0]] == 6)
+    TEST_ASSERT(count[order[1]] == 0)
+    TEST_ASSERT(count[order[6]] == 1)
+    TEST_ASSERT(count[order[7]] == 1)
 
     delete m;
     free(count);
@@ -309,7 +309,7 @@ void test3() {
     // this time with smarter invariants
     std::string smi = "FC1C(Cl)CCC1C";
     RWMol *m = SmilesToMol(smi);
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
     std::vector<Canon::canon_atom> atoms(m->getNumAtoms());
     initCanonAtoms(*m, atoms, true);
     atomcomparefunctor2 ftor(&atoms.front());
@@ -337,18 +337,18 @@ void test3() {
     //   "<<count[order[i]]<<std::endl;
     // }
 
-    TEST_ASSERT(order[0] == 7);
-    TEST_ASSERT(order[1] == 0);
-    TEST_ASSERT(order[2] == 3);
-    TEST_ASSERT(order[3] == 4);
-    TEST_ASSERT(order[5] == 1);
-    TEST_ASSERT(count[order[0]] == 1);
-    TEST_ASSERT(count[order[1]] == 1);
-    TEST_ASSERT(count[order[2]] == 1);
-    TEST_ASSERT(count[order[3]] == 2);
-    TEST_ASSERT(count[order[4]] == 0);
-    TEST_ASSERT(count[order[5]] == 3);
-    TEST_ASSERT(count[order[6]] == 0);
+    TEST_ASSERT(order[0] == 7)
+    TEST_ASSERT(order[1] == 0)
+    TEST_ASSERT(order[2] == 3)
+    TEST_ASSERT(order[3] == 4)
+    TEST_ASSERT(order[5] == 1)
+    TEST_ASSERT(count[order[0]] == 1)
+    TEST_ASSERT(count[order[1]] == 1)
+    TEST_ASSERT(count[order[2]] == 1)
+    TEST_ASSERT(count[order[3]] == 2)
+    TEST_ASSERT(count[order[4]] == 0)
+    TEST_ASSERT(count[order[5]] == 3)
+    TEST_ASSERT(count[order[6]] == 0)
     delete m;
     free(count);
     free(order);
@@ -357,7 +357,7 @@ void test3() {
     free(touched);
   }
   BOOST_LOG(rdInfoLog) << "Done" << std::endl;
-};
+}
 
 class atomcomparefunctor3 {
   Canon::canon_atom *dp_atoms{nullptr};
@@ -384,7 +384,7 @@ class atomcomparefunctor3 {
     return res;
   }
   int basecomp(int i, int j) const {
-    PRECONDITION(dp_atoms, "no atoms");
+    PRECONDITION(dp_atoms, "no atoms")
     unsigned int ivi, ivj;
 
     // always start with the current class:
@@ -419,9 +419,9 @@ class atomcomparefunctor3 {
 
  public:
   bool df_useNbrs{false};
-  atomcomparefunctor3() {};
+  atomcomparefunctor3() {}
   atomcomparefunctor3(Canon::canon_atom *atoms, const ROMol &m)
-      : dp_atoms(atoms), dp_mol(&m), df_useNbrs(false) {};
+      : dp_atoms(atoms), dp_mol(&m), df_useNbrs(false) {}
   int operator()(int i, int j) const {
     PRECONDITION(dp_atoms, "no atoms");
     PRECONDITION(dp_mol, "no molecule");
@@ -452,7 +452,7 @@ void test4() {
   {
     std::string smi = "FC1C(Cl)CCC1C";
     RWMol *m = SmilesToMol(smi);
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
     std::vector<Canon::canon_atom> atoms(m->getNumAtoms());
     initCanonAtoms(*m, atoms, true);
     atomcomparefunctor3 ftor(&atoms.front(), *m);
@@ -502,9 +502,9 @@ void test4() {
     for (unsigned int i = 0; i < m->getNumAtoms(); ++i) {
       // std::cerr<<order[i]<<" "<<" index: "<<atoms[order[i]].index<<" count:
       // "<<count[order[i]]<<std::endl;
-      TEST_ASSERT(count[order[i]] == 1);
+      TEST_ASSERT(count[order[i]] == 1)
       if (i > 0) {
-        TEST_ASSERT(ftor(order[i], order[i - 1]) >= 0);
+        TEST_ASSERT(ftor(order[i], order[i - 1]) >= 0)
       }
     }
     delete m;
@@ -518,7 +518,7 @@ void test4() {
   {
     std::string smi = "FC1C(CO)CCC1CC";
     RWMol *m = SmilesToMol(smi);
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
     std::vector<Canon::canon_atom> atoms(m->getNumAtoms());
     initCanonAtoms(*m, atoms, true);
     atomcomparefunctor3 ftor(&atoms.front(), *m);
@@ -555,10 +555,10 @@ void test4() {
     for (unsigned int i = 0; i < m->getNumAtoms(); ++i) {
       // std::cerr<<order[i]<<" "<<" index: "<<atoms[order[i]].index<<" count:
       // "<<count[order[i]]<<std::endl;
-      TEST_ASSERT(count[order[i]] == 1);
+      TEST_ASSERT(count[order[i]] == 1)
       if (i > 0) {
         // std::cerr<<"  ftor: "<<ftor(order[i],order[i-1])<<std::endl;
-        TEST_ASSERT(ftor(order[i], order[i - 1]) >= 0);
+        TEST_ASSERT(ftor(order[i], order[i - 1]) >= 0)
       }
     }
     delete m;
@@ -572,7 +572,7 @@ void test4() {
   {
     std::string smi = "FC1C(CC)CCC1CC";
     RWMol *m = SmilesToMol(smi);
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
     std::vector<Canon::canon_atom> atoms(m->getNumAtoms());
     initCanonAtoms(*m, atoms, true);
     atomcomparefunctor3 ftor(&atoms.front(), *m);
@@ -614,21 +614,21 @@ void test4() {
       // "<<count[order[i]]<<std::endl;
       if (i > 0) {
         // std::cerr<<"  ftor: "<<ftor(order[i],order[i-1])<<std::endl;
-        TEST_ASSERT(ftor(order[i], order[i - 1]) >= 0);
+        TEST_ASSERT(ftor(order[i], order[i - 1]) >= 0)
       }
     }
 
     // here we can't manage to get everything  unique
-    TEST_ASSERT(order[0] == 4 && count[4] == 2);
-    TEST_ASSERT(order[1] == 9 && count[9] == 0);
-    TEST_ASSERT(order[2] == 0 && count[0] == 1);
-    TEST_ASSERT(order[3] == 3 && count[3] == 2);
-    TEST_ASSERT(order[4] == 8 && count[8] == 0);
-    TEST_ASSERT(order[5] == 5 && count[5] == 2);
-    TEST_ASSERT(order[6] == 6 && count[6] == 0);
-    TEST_ASSERT(order[7] == 2 && count[2] == 2);
-    TEST_ASSERT(order[8] == 7 && count[7] == 0);
-    TEST_ASSERT(order[9] == 1 && count[1] == 1);
+    TEST_ASSERT(order[0] == 4 && count[4] == 2)
+    TEST_ASSERT(order[1] == 9 && count[9] == 0)
+    TEST_ASSERT(order[2] == 0 && count[0] == 1)
+    TEST_ASSERT(order[3] == 3 && count[3] == 2)
+    TEST_ASSERT(order[4] == 8 && count[8] == 0)
+    TEST_ASSERT(order[5] == 5 && count[5] == 2)
+    TEST_ASSERT(order[6] == 6 && count[6] == 0)
+    TEST_ASSERT(order[7] == 2 && count[2] == 2)
+    TEST_ASSERT(order[8] == 7 && count[7] == 0)
+    TEST_ASSERT(order[9] == 1 && count[1] == 1)
 
     delete m;
     free(count);
@@ -639,7 +639,7 @@ void test4() {
   }
 
   BOOST_LOG(rdInfoLog) << "Done" << std::endl;
-};
+}
 
 void test5() {
   BOOST_LOG(rdInfoLog) << "testing canonicalization via tie breaking."
@@ -648,7 +648,7 @@ void test5() {
   {
     std::string smi = "FC1C(CC)CCC1CC";
     RWMol *m = SmilesToMol(smi);
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
     std::vector<Canon::canon_atom> atoms(m->getNumAtoms());
     initCanonAtoms(*m, atoms, true);
     atomcomparefunctor3 ftor(&atoms.front(), *m);
@@ -690,23 +690,23 @@ void test5() {
     // }
 
     // here we can't manage to get everything  unique
-    TEST_ASSERT(order[0] == 4 && count[4] == 2);
-    TEST_ASSERT(order[1] == 9 && count[9] == 0);
-    TEST_ASSERT(order[2] == 0 && count[0] == 1);
-    TEST_ASSERT(order[3] == 3 && count[3] == 2);
-    TEST_ASSERT(order[4] == 8 && count[8] == 0);
-    TEST_ASSERT(order[5] == 5 && count[5] == 2);
-    TEST_ASSERT(order[6] == 6 && count[6] == 0);
-    TEST_ASSERT(order[7] == 2 && count[2] == 2);
-    TEST_ASSERT(order[8] == 7 && count[7] == 0);
-    TEST_ASSERT(order[9] == 1 && count[1] == 1);
+    TEST_ASSERT(order[0] == 4 && count[4] == 2)
+    TEST_ASSERT(order[1] == 9 && count[9] == 0)
+    TEST_ASSERT(order[2] == 0 && count[0] == 1)
+    TEST_ASSERT(order[3] == 3 && count[3] == 2)
+    TEST_ASSERT(order[4] == 8 && count[8] == 0)
+    TEST_ASSERT(order[5] == 5 && count[5] == 2)
+    TEST_ASSERT(order[6] == 6 && count[6] == 0)
+    TEST_ASSERT(order[7] == 2 && count[2] == 2)
+    TEST_ASSERT(order[8] == 7 && count[7] == 0)
+    TEST_ASSERT(order[9] == 1 && count[1] == 1)
 
     RDKit::Canon::BreakTies(*m, data, ftor, true, order, count, activeset, next,
                             changed, touched);
     for (unsigned int i = 0; i < m->getNumAtoms(); ++i) {
       // std::cerr<<order[i]<<" "<<" index: "<<atoms[order[i]].index<<" count:
       // "<<count[order[i]]<<std::endl;
-      TEST_ASSERT(count[order[i]] == 1);
+      TEST_ASSERT(count[order[i]] == 1)
     }
     delete m;
     free(count);
@@ -716,7 +716,7 @@ void test5() {
     free(touched);
   }
   BOOST_LOG(rdInfoLog) << "Done" << std::endl;
-};
+}
 
 void test6() {
   BOOST_LOG(rdInfoLog) << "testing canonicalization using the wrapper."
@@ -726,59 +726,59 @@ void test6() {
   {
     std::string smi = "FC1C(CC)CCC1CC";
     RWMol *m = SmilesToMol(smi);
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
 
     std::vector<unsigned int> atomRanks;
     RDKit::Canon::rankMolAtoms(*m, atomRanks);
     boost::dynamic_bitset<> seen(m->getNumAtoms());
     for (unsigned int i = 0; i < m->getNumAtoms(); ++i) {
-      TEST_ASSERT(!seen[atomRanks[i]]);
+      TEST_ASSERT(!seen[atomRanks[i]])
       seen.set(atomRanks[i], 1);
     }
     // std::copy(atomRanks.begin(),atomRanks.end(),std::ostream_iterator<unsigned
     // int>(std::cerr," "));
     // std::cerr<<std::endl;
-    TEST_ASSERT(atomRanks[0] == 2);
-    TEST_ASSERT(atomRanks[1] == 9);
-    TEST_ASSERT(atomRanks[2] == 7);
-    TEST_ASSERT(atomRanks[3] == 3);
-    TEST_ASSERT(atomRanks[4] == 0);
-    TEST_ASSERT(atomRanks[5] == 5);
-    TEST_ASSERT(atomRanks[6] == 6);
-    TEST_ASSERT(atomRanks[7] == 8);
-    TEST_ASSERT(atomRanks[8] == 4);
-    TEST_ASSERT(atomRanks[9] == 1);
+    TEST_ASSERT(atomRanks[0] == 2)
+    TEST_ASSERT(atomRanks[1] == 9)
+    TEST_ASSERT(atomRanks[2] == 7)
+    TEST_ASSERT(atomRanks[3] == 3)
+    TEST_ASSERT(atomRanks[4] == 0)
+    TEST_ASSERT(atomRanks[5] == 5)
+    TEST_ASSERT(atomRanks[6] == 6)
+    TEST_ASSERT(atomRanks[7] == 8)
+    TEST_ASSERT(atomRanks[8] == 4)
+    TEST_ASSERT(atomRanks[9] == 1)
     delete m;
   }
 
   {
     std::string smi = "CC[C@@H]1CCC[C@@H](O1)C(=O)O";
     RWMol *m = SmilesToMol(smi);
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
 
     std::vector<unsigned int> atomRanks;
     RDKit::Canon::rankMolAtoms(*m, atomRanks);
     boost::dynamic_bitset<> seen(m->getNumAtoms());
     for (unsigned int i = 0; i < m->getNumAtoms(); ++i) {
       // std::cerr<<i<<" "<<atomRanks[i]<<std::endl;
-      TEST_ASSERT(!seen[atomRanks[i]]);
+      TEST_ASSERT(!seen[atomRanks[i]])
       seen.set(atomRanks[i], 1);
     }
 
     // for(unsigned int ii=0;ii<atomRanks.size();++ii){
     //    std::cerr<<ii<<":"<<atomRanks[ii]<<std::endl;
     // }
-    TEST_ASSERT(atomRanks[0] == 0);
-    TEST_ASSERT(atomRanks[1] == 4);
-    TEST_ASSERT(atomRanks[2] == 9);
-    TEST_ASSERT(atomRanks[3] == 5);
-    TEST_ASSERT(atomRanks[4] == 3);
-    TEST_ASSERT(atomRanks[5] == 6);
-    TEST_ASSERT(atomRanks[6] == 10);
-    TEST_ASSERT(atomRanks[7] == 7);
-    TEST_ASSERT(atomRanks[8] == 8);
-    TEST_ASSERT(atomRanks[9] == 1);
-    TEST_ASSERT(atomRanks[10] == 2);
+    TEST_ASSERT(atomRanks[0] == 0)
+    TEST_ASSERT(atomRanks[1] == 4)
+    TEST_ASSERT(atomRanks[2] == 9)
+    TEST_ASSERT(atomRanks[3] == 5)
+    TEST_ASSERT(atomRanks[4] == 3)
+    TEST_ASSERT(atomRanks[5] == 6)
+    TEST_ASSERT(atomRanks[6] == 10)
+    TEST_ASSERT(atomRanks[7] == 7)
+    TEST_ASSERT(atomRanks[8] == 8)
+    TEST_ASSERT(atomRanks[9] == 1)
+    TEST_ASSERT(atomRanks[10] == 2)
 
     delete m;
   }
@@ -788,14 +788,14 @@ void test6() {
         "N[C@@H](Cc1c[nH]c2ccccc12)C(=O)N[C@@H](CCCN=C(N)N)C(=O)N[C@@H](Cc3c["
         "nH]c4ccccc34)C(=O)OCc5ccccc5";
     RWMol *m = SmilesToMol(smi);
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
 
     std::vector<unsigned int> atomRanks;
     RDKit::Canon::rankMolAtoms(*m, atomRanks);
     boost::dynamic_bitset<> seen(m->getNumAtoms());
     for (unsigned int i = 0; i < m->getNumAtoms(); ++i) {
       // std::cerr<<i<<" "<<atomRanks[i]<<std::endl;
-      TEST_ASSERT(!seen[atomRanks[i]]);
+      TEST_ASSERT(!seen[atomRanks[i]])
       seen.set(atomRanks[i], 1);
     }
 
@@ -808,14 +808,14 @@ void test6() {
   {
     std::string smi = "BrC=C1CCC(C(=O)O1)c2cccc3ccccc23";
     RWMol *m = SmilesToMol(smi);
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
 
     std::vector<unsigned int> atomRanks;
     RDKit::Canon::rankMolAtoms(*m, atomRanks);
     boost::dynamic_bitset<> seen(m->getNumAtoms());
     for (unsigned int i = 0; i < m->getNumAtoms(); ++i) {
       // std::cerr<<i<<" "<<atomRanks[i]<<std::endl;
-      TEST_ASSERT(!seen[atomRanks[i]]);
+      TEST_ASSERT(!seen[atomRanks[i]])
       seen.set(atomRanks[i], 1);
     }
 
@@ -828,7 +828,7 @@ void test6() {
   {
     std::string smi = "CC12CCCC1CCCC2";
     RWMol *m = SmilesToMol(smi);
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
 
     // start w/o tie breaking here; we shouldn't need it.
     std::vector<unsigned int> atomRanks;
@@ -836,7 +836,7 @@ void test6() {
     boost::dynamic_bitset<> seen(m->getNumAtoms());
     for (unsigned int i = 0; i < m->getNumAtoms(); ++i) {
       //      std::cerr<<"      "<<i<<" "<<atomRanks[i]<<std::endl;
-      TEST_ASSERT(!seen[atomRanks[i]]);
+      TEST_ASSERT(!seen[atomRanks[i]])
       seen.set(atomRanks[i], 1);
     }
     delete m;
@@ -845,30 +845,30 @@ void test6() {
   {
     std::string smi = "CC12CCCC1C1CCC3CC(O)CCC3(C)C1CC2";
     RWMol *m = SmilesToMol(smi);
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
 
     // start w/o tie breaking here; we shouldn't need it.
     std::vector<unsigned int> atomRanks;
     RDKit::Canon::rankMolAtoms(*m, atomRanks, false);
     boost::dynamic_bitset<> seen(m->getNumAtoms());
     for (unsigned int i = 0; i < m->getNumAtoms(); ++i) {
-      TEST_ASSERT(!seen[atomRanks[i]]);
+      TEST_ASSERT(!seen[atomRanks[i]])
       seen.set(atomRanks[i], 1);
     }
     delete m;
   }
 
   BOOST_LOG(rdInfoLog) << "Done" << std::endl;
-};
+}
 
 namespace {
 
 ROMol *_renumber(const ROMol *m, std::vector<unsigned int> &nVect,
                  const std::string & /*inSmiles*/) {
   ROMol *nm = MolOps::renumberAtoms(*m, nVect);
-  TEST_ASSERT(nm);
-  TEST_ASSERT(nm->getNumAtoms() == m->getNumAtoms());
-  TEST_ASSERT(nm->getNumBonds() == m->getNumBonds());
+  TEST_ASSERT(nm)
+  TEST_ASSERT(nm->getNumAtoms() == m->getNumAtoms())
+  TEST_ASSERT(nm->getNumBonds() == m->getNumBonds())
   // MolOps::assignStereochemistry(*nm, true, true);
   // for (unsigned int ii = 0; ii < nm->getNumAtoms(); ++ii) {
   //   if (nm->getAtomWithIdx(ii)->hasProp("_CIPCode")) {
@@ -891,7 +891,7 @@ ROMol *_renumber(const ROMol *m, std::vector<unsigned int> &nVect,
 
 void _renumberTest(const ROMol *m, std::string inSmiles,
                    unsigned int numRenumbers) {
-  PRECONDITION(m, "no molecule");
+  PRECONDITION(m, "no molecule")
   //    std::cerr<<">>>>>>>>>>>>>>>>>>>>>>>>>>>"<<std::endl;
   std::string osmi = MolToSmiles(*m, true);
   std::vector<unsigned int> idxV(m->getNumAtoms());
@@ -924,13 +924,13 @@ void _renumberTest(const ROMol *m, std::string inSmiles,
       }
     }
     delete nm;
-    TEST_ASSERT(smi == osmi);
+    TEST_ASSERT(smi == osmi)
   }
 }
 
 void _renumberTest2(const ROMol *m, std::string inSmiles,
                     unsigned int numRenumbers) {
-  PRECONDITION(m, "no molecule");
+  PRECONDITION(m, "no molecule")
 
   unsigned int nAtoms = m->getNumAtoms();
   std::vector<unsigned int> idxV(m->getNumAtoms());
@@ -959,7 +959,7 @@ void _renumberTest2(const ROMol *m, std::string inSmiles,
           std::cerr << "AtomIdx: " << i << " Rank: " << ranks[i] << std::endl;
         }
       }
-      TEST_ASSERT(ranksSet[i] == 1);
+      TEST_ASSERT(ranksSet[i] == 1)
     }
     delete nm;
     free(ranksSet);
@@ -975,7 +975,7 @@ void test7a() {
   {
     std::string fName = rdbase + "/Code/GraphMol/test_data/canon_reorder1.mol";
     RWMol *m = MolFileToMol(fName, false, false);
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
     MolOps::sanitizeMol(*m);
     std::vector<unsigned int> atomRanks;
     //    std::cerr <<"\n\n\n\n\n\n\n\n\n\n\n\n>--------------" << std::endl;
@@ -991,7 +991,7 @@ void test7a() {
   {
     std::string fName = rdbase + "/Code/GraphMol/test_data/canon_reorder2.mol";
     RWMol *m = MolFileToMol(fName, false, false);
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
     MolOps::sanitizeMol(*m);
     std::vector<unsigned int> atomRanks;
     //    std::cerr <<">--------------" << std::endl;
@@ -1007,7 +1007,7 @@ void test7a() {
   if (smi1 != smi2) {
     std::cerr << smi1 << "\n" << smi2 << std::endl;
   }
-  TEST_ASSERT(smi1 == smi2);
+  TEST_ASSERT(smi1 == smi2)
   BOOST_LOG(rdInfoLog) << "Finished" << std::endl;
 }
 
@@ -1157,7 +1157,7 @@ void test7() {
   while (smis[i] != "EOS") {
     std::string smiles = smis[i++];
     ROMol *m = SmilesToMol(smiles);
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
     MolOps::assignStereochemistry(*m, true);
     //_renumberTest(m, smiles, 1000);
     delete m;
@@ -1233,16 +1233,16 @@ void test8() {
   {
     std::string fName = rdbase + "/Code/GraphMol/test_data/iChi1b.mol";
     RWMol *m = MolFileToMol(fName);
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
     std::string smi1 = MolToSmiles(*m, true);
     delete m;
     m = SmilesToMol(smi1);
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
     std::string smi2 = MolToSmiles(*m, true);
     if (smi1 != smi2) {
       std::cerr << smi1 << "\n" << smi2 << std::endl;
     }
-    TEST_ASSERT(smi1 == smi2);
+    TEST_ASSERT(smi1 == smi2)
     delete m;
   }
 
@@ -1251,13 +1251,13 @@ void test8() {
     while (smis[i] != "EOS") {
       std::string smiles = smis[i++];
       ROMol *m = SmilesToMol(smiles);
-      TEST_ASSERT(m);
+      TEST_ASSERT(m)
       //      std::cerr<<"MolToSMILES 1"<<std::endl;
       std::string smi1 = MolToSmiles(*m, true);
       delete m;
 
       m = SmilesToMol(smi1);
-      TEST_ASSERT(m);
+      TEST_ASSERT(m)
       //      std::cerr<<"MolToSMILES 2"<<std::endl;
       std::string smi2 = MolToSmiles(*m, true);
       delete m;
@@ -1265,16 +1265,16 @@ void test8() {
         std::cerr << "Input smiles: " << smiles << "\n1. Iter: " << smi1
                   << "\n2. Iter: " << smi2 << std::endl;
       }
-      TEST_ASSERT(smi1 == smi2);
+      TEST_ASSERT(smi1 == smi2)
     }
     {
       ROMol *m = MolBlockToMol(molbl1);
-      TEST_ASSERT(m);
+      TEST_ASSERT(m)
       std::string smiles = MolToSmiles(*m, true);
       delete m;
 
       m = SmilesToMol(smiles);
-      TEST_ASSERT(m);
+      TEST_ASSERT(m)
       //      std::cerr<<"MolToSMILES 1"<<std::endl;
       std::string smi1 = MolToSmiles(*m, true);
       delete m;
@@ -1282,16 +1282,16 @@ void test8() {
       if (smiles != smi1) {
         std::cerr << smiles << "\n" << smi1 << std::endl;
       }
-      TEST_ASSERT(smiles == smi1);
+      TEST_ASSERT(smiles == smi1)
     }
     {
       ROMol *m = MolBlockToMol(molbl2);
-      TEST_ASSERT(m);
+      TEST_ASSERT(m)
       std::string smiles = MolToSmiles(*m, true);
       delete m;
 
       m = SmilesToMol(smiles);
-      TEST_ASSERT(m);
+      TEST_ASSERT(m)
       //      std::cerr<<"MolToSMILES 1"<<std::endl;
       std::string smi1 = MolToSmiles(*m, true);
       delete m;
@@ -1299,7 +1299,7 @@ void test8() {
       if (smiles != smi1) {
         std::cerr << smiles << "\n" << smi1 << std::endl;
       }
-      TEST_ASSERT(smiles == smi1);
+      TEST_ASSERT(smiles == smi1)
     }
   }
 
@@ -1313,7 +1313,7 @@ void test9() {
   {
     std::string smi = "C[C@](F)(Cl)I";
     RWMol *m = SmilesToMol(smi, 0, 0);
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
     MolOps::sanitizeMol(*m);
     std::vector<unsigned int> atomRanks;
     // std::cerr<<smi<<std::endl;
@@ -1321,19 +1321,19 @@ void test9() {
     // std::copy(atomRanks.begin(),atomRanks.end(),std::ostream_iterator<unsigned
     // int>(std::cerr," "));
     // std::cerr<<std::endl;
-    TEST_ASSERT(atomRanks[0] < atomRanks[2]);
-    TEST_ASSERT(atomRanks[0] < atomRanks[3]);
-    TEST_ASSERT(atomRanks[0] < atomRanks[4]);
-    TEST_ASSERT(atomRanks[2] < atomRanks[3]);
-    TEST_ASSERT(atomRanks[2] < atomRanks[4]);
-    TEST_ASSERT(atomRanks[3] < atomRanks[4]);
+    TEST_ASSERT(atomRanks[0] < atomRanks[2])
+    TEST_ASSERT(atomRanks[0] < atomRanks[3])
+    TEST_ASSERT(atomRanks[0] < atomRanks[4])
+    TEST_ASSERT(atomRanks[2] < atomRanks[3])
+    TEST_ASSERT(atomRanks[2] < atomRanks[4])
+    TEST_ASSERT(atomRanks[3] < atomRanks[4])
     delete m;
   }
 
   {
     std::string smi = "CC[C@](F)(Cl)C=C";
     RWMol *m = SmilesToMol(smi, 0, 0);
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
     MolOps::sanitizeMol(*m);
     std::vector<unsigned int> atomRanks;
     // std::cerr<<smi<<std::endl;
@@ -1341,12 +1341,12 @@ void test9() {
     // std::copy(atomRanks.begin(),atomRanks.end(),std::ostream_iterator<unsigned
     // int>(std::cerr," "));
     // std::cerr<<std::endl;
-    TEST_ASSERT(atomRanks[1] < atomRanks[3]);
-    TEST_ASSERT(atomRanks[1] < atomRanks[4]);
-    TEST_ASSERT(atomRanks[1] < atomRanks[5]);
-    TEST_ASSERT(atomRanks[3] < atomRanks[4]);
-    TEST_ASSERT(atomRanks[4] > atomRanks[5]);
-    TEST_ASSERT(atomRanks[4] > atomRanks[5]);
+    TEST_ASSERT(atomRanks[1] < atomRanks[3])
+    TEST_ASSERT(atomRanks[1] < atomRanks[4])
+    TEST_ASSERT(atomRanks[1] < atomRanks[5])
+    TEST_ASSERT(atomRanks[3] < atomRanks[4])
+    TEST_ASSERT(atomRanks[4] > atomRanks[5])
+    TEST_ASSERT(atomRanks[4] > atomRanks[5])
     delete m;
   }
 
@@ -1354,7 +1354,7 @@ void test9() {
     // make sure we aren't breaking ties
     std::string smi = "C[C@](C)(Cl)I";
     RWMol *m = SmilesToMol(smi, 0, 0);
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
     MolOps::sanitizeMol(*m);
     std::vector<unsigned int> atomRanks;
     // std::cerr<<smi<<std::endl;
@@ -1362,19 +1362,19 @@ void test9() {
     // std::copy(atomRanks.begin(),atomRanks.end(),std::ostream_iterator<unsigned
     // int>(std::cerr," "));
     // std::cerr<<std::endl;
-    TEST_ASSERT(atomRanks[0] == atomRanks[2]);
-    TEST_ASSERT(atomRanks[0] < atomRanks[3]);
-    TEST_ASSERT(atomRanks[0] < atomRanks[4]);
-    TEST_ASSERT(atomRanks[2] < atomRanks[3]);
-    TEST_ASSERT(atomRanks[2] < atomRanks[4]);
-    TEST_ASSERT(atomRanks[3] < atomRanks[4]);
+    TEST_ASSERT(atomRanks[0] == atomRanks[2])
+    TEST_ASSERT(atomRanks[0] < atomRanks[3])
+    TEST_ASSERT(atomRanks[0] < atomRanks[4])
+    TEST_ASSERT(atomRanks[2] < atomRanks[3])
+    TEST_ASSERT(atomRanks[2] < atomRanks[4])
+    TEST_ASSERT(atomRanks[3] < atomRanks[4])
     delete m;
   }
 
   {
     std::string smi = "N[C@H]1C2CC3CC1C[C@](O)(C3)C2";
     RWMol *m = SmilesToMol(smi, 0, 0);
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
     MolOps::sanitizeMol(*m);
     std::vector<unsigned int> atomRanks;
     // std::cerr<<smi<<std::endl;
@@ -1382,14 +1382,14 @@ void test9() {
     // std::copy(atomRanks.begin(),atomRanks.end(),std::ostream_iterator<unsigned
     // int>(std::cerr," "));
     // std::cerr<<std::endl;
-    TEST_ASSERT(atomRanks[0] > atomRanks[1]);
-    TEST_ASSERT(atomRanks[0] < atomRanks[9]);
-    TEST_ASSERT(atomRanks[2] == atomRanks[6]);
-    TEST_ASSERT(atomRanks[7] == atomRanks[11]);
-    TEST_ASSERT(atomRanks[3] == atomRanks[5]);
-    TEST_ASSERT(atomRanks[2] > atomRanks[3]);
-    TEST_ASSERT(atomRanks[2] > atomRanks[11]);
-    TEST_ASSERT(atomRanks[3] < atomRanks[11]);
+    TEST_ASSERT(atomRanks[0] > atomRanks[1])
+    TEST_ASSERT(atomRanks[0] < atomRanks[9])
+    TEST_ASSERT(atomRanks[2] == atomRanks[6])
+    TEST_ASSERT(atomRanks[7] == atomRanks[11])
+    TEST_ASSERT(atomRanks[3] == atomRanks[5])
+    TEST_ASSERT(atomRanks[2] > atomRanks[3])
+    TEST_ASSERT(atomRanks[2] > atomRanks[11])
+    TEST_ASSERT(atomRanks[3] < atomRanks[11])
     delete m;
   }
 
@@ -1397,7 +1397,7 @@ void test9() {
     // this one was a chiral ranking problem
     std::string smi = "COC(C)CC(C)(C)O";
     RWMol *m = SmilesToMol(smi, 0, 0);
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
     MolOps::sanitizeMol(*m);
     std::vector<unsigned int> atomRanks;
     // std::cerr<<smi<<std::endl;
@@ -1405,8 +1405,8 @@ void test9() {
     // std::copy(atomRanks.begin(),atomRanks.end(),std::ostream_iterator<unsigned
     // int>(std::cerr," "));
     // std::cerr<<std::endl;
-    TEST_ASSERT(atomRanks[1] > atomRanks[8]);
-    TEST_ASSERT(atomRanks[5] > atomRanks[2]);
+    TEST_ASSERT(atomRanks[1] > atomRanks[8])
+    TEST_ASSERT(atomRanks[5] > atomRanks[2])
     delete m;
   }
 
@@ -1414,7 +1414,7 @@ void test9() {
     // are double bonds being handled correctly?
     std::string smi = "OC[C@H](F)C=O";
     RWMol *m = SmilesToMol(smi, 0, 0);
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
     MolOps::sanitizeMol(*m);
     std::vector<unsigned int> atomRanks;
     // std::cerr<<smi<<std::endl;
@@ -1422,8 +1422,8 @@ void test9() {
     // std::copy(atomRanks.begin(),atomRanks.end(),std::ostream_iterator<unsigned
     // int>(std::cerr," "));
     // std::cerr<<std::endl;
-    TEST_ASSERT(atomRanks[0] < atomRanks[5]);
-    TEST_ASSERT(atomRanks[1] < atomRanks[4]);
+    TEST_ASSERT(atomRanks[0] < atomRanks[5])
+    TEST_ASSERT(atomRanks[1] < atomRanks[4])
     delete m;
   }
 
@@ -1431,7 +1431,7 @@ void test9() {
     // are double bonds being handled correctly?
     std::string smi = "O=C[C@H](F)CO";
     RWMol *m = SmilesToMol(smi, 0, 0);
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
     MolOps::sanitizeMol(*m);
     std::vector<unsigned int> atomRanks;
     // std::cerr<<smi<<std::endl;
@@ -1439,8 +1439,8 @@ void test9() {
     // std::copy(atomRanks.begin(),atomRanks.end(),std::ostream_iterator<unsigned
     // int>(std::cerr," "));
     // std::cerr<<std::endl;
-    TEST_ASSERT(atomRanks[0] > atomRanks[5]);
-    TEST_ASSERT(atomRanks[1] > atomRanks[4]);
+    TEST_ASSERT(atomRanks[0] > atomRanks[5])
+    TEST_ASSERT(atomRanks[1] > atomRanks[4])
     delete m;
   }
 
@@ -1448,7 +1448,7 @@ void test9() {
     // are double bonds being handled correctly?
     std::string smi = "CC[C@](C)(CF)C=O";
     RWMol *m = SmilesToMol(smi, 0, 0);
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
     MolOps::sanitizeMol(*m);
     std::vector<unsigned int> atomRanks;
     // std::cerr<<smi<<std::endl;
@@ -1456,8 +1456,8 @@ void test9() {
     // std::copy(atomRanks.begin(),atomRanks.end(),std::ostream_iterator<unsigned
     // int>(std::cerr," "));
     // std::cerr<<std::endl;
-    TEST_ASSERT(atomRanks[4] > atomRanks[6]);
-    TEST_ASSERT(atomRanks[1] < atomRanks[4]);
+    TEST_ASSERT(atomRanks[4] > atomRanks[6])
+    TEST_ASSERT(atomRanks[1] < atomRanks[4])
     delete m;
   }
 
@@ -1472,7 +1472,7 @@ void test10() {
     std::string smiles = smis[i++];
     //    std::cerr<< ">>>Molecule: " << smiles << std::endl;
     ROMol *m = SmilesToMol(smiles);
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
     MolOps::assignStereochemistry(*m, true);
     _renumberTest2(m, smiles, 1);
     delete m;
@@ -1486,7 +1486,7 @@ void test11() {
     std::string smi =
         "C[C@H]([C@H](c1ccccc1)O)N2CCCCC2.C[C@@H]([C@H](c1ccccc1)O)N2CCCCC2";
     ROMol *m = SmilesToMol(smi);
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
     std::vector<std::string> vfragsmi;
     std::vector<std::vector<int>> frags;
     unsigned int numFrag = MolOps::getMolFrags(*m, frags);
@@ -1501,11 +1501,11 @@ void test11() {
 
     smi = "C[C@@H]([C@H](c1ccccc1)O)N2CCCCC2.C[C@H]([C@H](c1ccccc1)O)N2CCCCC2";
     m = SmilesToMol(smi);
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
     std::string smi2 = MolToSmiles(*m, true);
     delete m;
     // std::cout << smi1 << "\n" << smi2 << std::endl;
-    TEST_ASSERT(smi1 == smi2);
+    TEST_ASSERT(smi1 == smi2)
   }
   BOOST_LOG(rdInfoLog) << "Finished" << std::endl;
 }
@@ -1517,16 +1517,16 @@ void test12() {
     std::string fName =
         rdbase + "/Code/GraphMol/FileParsers/test_data/2FVD.pdb";
     ROMol *m = PDBFileToMol(fName);
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
     std::string smi1 = MolToSmiles(*m, true);
     delete m;
 
     m = SmilesToMol(smi1);
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
     std::string smi2 = MolToSmiles(*m, true);
     delete m;
     // std::cout << smi1 << "\n" << smi2 << std::endl;
-    TEST_ASSERT(smi1 == smi2);
+    TEST_ASSERT(smi1 == smi2)
   }
   BOOST_LOG(rdInfoLog) << "Finished" << std::endl;
 }
@@ -1537,7 +1537,7 @@ void testGithub1567() {
       << std::endl;
   {
     ROMol *m1 = SmilesToMol("CC1CN(Cc2cccc(C)c2)C1");
-    TEST_ASSERT(m1);
+    TEST_ASSERT(m1)
     int m1Ats_a[6] = {1, 12, 3, 4, 5, 11};
     std::vector<int> m1Ats(m1Ats_a, m1Ats_a + 6);
     int m1Bnds_a[5] = {12, 11, 3, 4, 13};
@@ -1545,14 +1545,14 @@ void testGithub1567() {
     std::string smi1 = MolFragmentToSmiles(*m1, m1Ats, &m1Bnds);
 
     ROMol *m2 = SmilesToMol("CN(CCC)Cc1cccc(C)c1");
-    TEST_ASSERT(m2);
+    TEST_ASSERT(m2)
     int m2Ats_a[6] = {3, 2, 1, 5, 6, 12};
     std::vector<int> m2Ats(m2Ats_a, m2Ats_a + 6);
     int m2Bnds_a[5] = {2, 1, 4, 5, 12};
     std::vector<int> m2Bnds(m2Bnds_a, m2Bnds_a + 5);
     std::string smi2 = MolFragmentToSmiles(*m2, m2Ats, &m2Bnds);
 
-    TEST_ASSERT(smi1 == smi2);
+    TEST_ASSERT(smi1 == smi2)
 
     delete m1;
     delete m2;

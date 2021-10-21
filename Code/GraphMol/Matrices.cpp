@@ -233,7 +233,7 @@ double *getDistanceMat(const ROMol &mol, bool useBO, bool useAtomWts,
   mol.setProp(propName + "_Paths", iSptr, true);
 
   return dMat;
-};
+}
 
 double *getDistanceMat(const ROMol &mol, const std::vector<int> &activeAtoms,
                        const std::vector<const Bond *> &bonds, bool useBO,
@@ -283,7 +283,7 @@ double *getDistanceMat(const ROMol &mol, const std::vector<int> &activeAtoms,
     }
   }
   return dMat;
-};
+}
 
 // NOTE: do *not* delete results
 double *getAdjacencyMatrix(const ROMol &mol, bool useBO, int emptyVal,
@@ -332,13 +332,13 @@ double *getAdjacencyMatrix(const ROMol &mol, bool useBO, int emptyVal,
   mol.setProp(propName, sptr, true);
 
   return res;
-};
+}
 
 INT_LIST getShortestPath(const ROMol &mol, int aid1, int aid2) {
   int nats = mol.getNumAtoms();
-  RANGE_CHECK(0, aid1, nats - 1);
-  RANGE_CHECK(0, aid2, nats - 1);
-  CHECK_INVARIANT(aid1 != aid2, "");
+  RANGE_CHECK(0, aid1, nats - 1)
+  RANGE_CHECK(0, aid2, nats - 1)
+  CHECK_INVARIANT(aid1 != aid2, "")
 
   INT_VECT pred(nats, -1);  // set all atoms to unprocessed state
   pred[aid1] = -2;          // marks begin
