@@ -551,7 +551,7 @@ static std::uint8_t mmffSimMatrix[99][99] = {
 MolHistogram::MolHistogram(const ROMol &mol, const double *dmat,
                            bool cleanupDmat)
     : d_h(boost::extents[mol.getNumHeavyAtoms()][O3_MAX_H_BINS]) {
-  PRECONDITION(dmat, "empty distance matrix");
+  PRECONDITION(dmat, "empty distance matrix")
   unsigned int nAtoms = mol.getNumAtoms();
   unsigned int y = 0;
   for (unsigned int i = 0; i < nAtoms; ++i) {
@@ -1138,7 +1138,7 @@ void SDM::prepareMatchWeightsVect(
     double (*weightFunc)(const unsigned int, const unsigned int, void *),
     void *data) {
   PRECONDITION(matchVect.size() == weights.size(),
-               "matchVect/weights size mismatch");
+               "matchVect/weights size mismatch")
   double min = MAX_DOUBLE;
   for (unsigned int i = 0; i < matchVect.size(); ++i) {
     // first pair element is prb, second is ref
@@ -1575,7 +1575,7 @@ double _rmsdMatchVect(ROMol *d_prbMol, const ROMol *d_refMol,
   }
 
   return rmsd;
-};
+}
 
 double O3A::align() {
   double rmsd = 0.0;
@@ -1606,7 +1606,7 @@ double O3A::trans(RDGeom::Transform3D &trans) {
                         d_o3aMatchVect);
 
   return rmsd;
-};
+}
 
 void randomTransform(ROMol &mol, const int cid, const int seed) {
   if (seed > 0) {

@@ -46,7 +46,7 @@ void pickFusedRings(int curr, const INT_INT_VECT_MAP &neighMap, INT_VECT &res,
   // contain thousands of rings, which overflows the comparatively small
   // default thread stack on Windows.
   auto pos = neighMap.find(curr);
-  PRECONDITION(pos != neighMap.end(), "bad argument");
+  PRECONDITION(pos != neighMap.end(), "bad argument")
   done[curr] = 1;
   res.push_back(curr);
 
@@ -103,7 +103,7 @@ bool checkFused(const INT_VECT &rids, INT_INT_VECT_MAP &ringNeighs) {
   // in fused if we get a smaller number in fused then rids are not fused
   pickFusedRings(rids.front(), ringNeighs, fused, done);
 
-  CHECK_INVARIANT(fused.size() <= rids.size(), "");
+  CHECK_INVARIANT(fused.size() <= rids.size(), "")
   return (fused.size() == rids.size());
 }
 
@@ -248,7 +248,7 @@ void getMinMaxAtomElecs(ElectronDonorType dtype, int &atlw, int &atup) {
 }
 
 bool incidentNonCyclicMultipleBond(const Atom *at, int &who) {
-  PRECONDITION(at, "bad atom");
+  PRECONDITION(at, "bad atom")
   // check if "at" has an non-cyclic multiple bond on it
   // if yes check which atom this bond goes to
   // and record the atomID in who
@@ -265,7 +265,7 @@ bool incidentNonCyclicMultipleBond(const Atom *at, int &who) {
 }
 
 bool incidentCyclicMultipleBond(const Atom *at) {
-  PRECONDITION(at, "bad atom");
+  PRECONDITION(at, "bad atom")
   const auto &mol = at->getOwningMol();
   for (const auto bond : mol.atomBonds(at)) {
     if (mol.getRingInfo()->numBondRings(bond->getIdx())) {
@@ -278,7 +278,7 @@ bool incidentCyclicMultipleBond(const Atom *at) {
 }
 
 bool incidentMultipleBond(const Atom *at) {
-  PRECONDITION(at, "bad atom");
+  PRECONDITION(at, "bad atom")
   const auto &mol = at->getOwningMol();
   auto deg = at->getDegree() + at->getNumExplicitHs();
   for (const auto bond : mol.atomBonds(at)) {
@@ -438,7 +438,7 @@ bool isAtomCandForArom(const Atom *at, const ElectronDonorType edon,
                        bool allowThirdRow = true, bool allowTripleBonds = true,
                        bool allowHigherExceptions = true, bool onlyCorN = false,
                        bool allowExocyclicMultipleBonds = true) {
-  PRECONDITION(at, "bad atom");
+  PRECONDITION(at, "bad atom")
   if (onlyCorN && at->getAtomicNum() != 6 && at->getAtomicNum() != 7) {
     return false;
   }
@@ -536,7 +536,7 @@ bool isAtomCandForArom(const Atom *at, const ElectronDonorType edon,
 
 ElectronDonorType getAtomDonorTypeArom(
     const Atom *at, bool exocyclicBondsStealElectrons = true) {
-  PRECONDITION(at, "bad atom");
+  PRECONDITION(at, "bad atom")
   const auto &mol = at->getOwningMol();
   if (at->getAtomicNum() == 0) {
     return incidentCyclicMultipleBond(at) ? OneElectronDonorType
@@ -624,7 +624,7 @@ bool isBondOrderQuery(const Bond *bond) {
   return false;
 }
 int countAtomElec(const Atom *at) {
-  PRECONDITION(at, "bad atom");
+  PRECONDITION(at, "bad atom")
 
   // default valence :
   auto dv = PeriodicTable::getTable()->getDefaultValence(at->getAtomicNum());
@@ -1167,7 +1167,7 @@ int setAromaticity(RWMol &mol, AromaticityModel model, int (*func)(RWMol &)) {
     case AROMATICITY_CUSTOM:
       PRECONDITION(
           func,
-          "function must be set when aromaticity model is AROMATICITY_CUSTOM");
+          "function must be set when aromaticity model is AROMATICITY_CUSTOM")
       res = func(mol);
       break;
     default:
@@ -1176,5 +1176,5 @@ int setAromaticity(RWMol &mol, AromaticityModel model, int (*func)(RWMol &)) {
   return res;
 }
 
-};  // end of namespace MolOps
-};  // end of namespace RDKit
+}  // namespace MolOps
+}  // namespace RDKit

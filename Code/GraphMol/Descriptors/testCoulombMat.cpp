@@ -67,7 +67,7 @@ void testCoulombMat1() {
     unsigned int ti = 0;
     for (double x : v) {
       // std::cout << x << ",";
-      TEST_ASSERT(std::fabs(std::stof(tokens[ti]) - x) < 0.001);
+      TEST_ASSERT(std::fabs(std::stof(tokens[ti]) - x) < 0.001)
       ti++;
     }
     // std::cout << "\n";

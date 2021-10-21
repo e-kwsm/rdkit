@@ -52,7 +52,7 @@ const std::vector<TautomerTransform> &TautomerCatalogParams::getTransforms()
 
 const TautomerTransform TautomerCatalogParams::getTransform(
     unsigned int fid) const {
-  URANGE_CHECK(fid, d_transforms.size());
+  URANGE_CHECK(fid, d_transforms.size())
   return d_transforms[fid];  //.get();
 }
 
@@ -67,11 +67,11 @@ std::string TautomerCatalogParams::Serialize() const {
 }
 
 void TautomerCatalogParams::initFromStream(std::istream &) {
-  UNDER_CONSTRUCTION("not implemented");
+  UNDER_CONSTRUCTION("not implemented")
 }
 
 void TautomerCatalogParams::initFromString(const std::string &) {
-  UNDER_CONSTRUCTION("not implemented");
+  UNDER_CONSTRUCTION("not implemented")
 }
 
 }  // namespace MolStandardize

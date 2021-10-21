@@ -25,7 +25,7 @@ void test1() {
   {
     std::string smi = "c1ccccc1CCO";
     ROMol *m1 = SmilesToMol(smi);
-    TEST_ASSERT(m1);
+    TEST_ASSERT(m1)
 
     RDNumeric::DoubleVector *fp = ReducedGraphs::getErGFingerprint(*m1);
     std::cerr << *fp << std::endl;
@@ -37,7 +37,7 @@ void test1() {
   {
     std::string smi = "c1cnccc1CCO";
     ROMol *m1 = SmilesToMol(smi);
-    TEST_ASSERT(m1);
+    TEST_ASSERT(m1)
 
     RDNumeric::DoubleVector *fp = ReducedGraphs::getErGFingerprint(*m1);
     std::cerr << *fp << std::endl;
@@ -49,7 +49,7 @@ void test1() {
   {
     std::string smi = "OCCC1=CC2=C(C=CC=C2)C=C1";
     ROMol *m1 = SmilesToMol(smi);
-    TEST_ASSERT(m1);
+    TEST_ASSERT(m1)
 
     RDNumeric::DoubleVector *fp = ReducedGraphs::getErGFingerprint(*m1);
     std::cerr << *fp << std::endl;
@@ -61,7 +61,7 @@ void test1() {
   {
     std::string smi = "OCCC1=CC2=C(C=CC=C2)N=C1";
     ROMol *m1 = SmilesToMol(smi);
-    TEST_ASSERT(m1);
+    TEST_ASSERT(m1)
 
     RDNumeric::DoubleVector *fp = ReducedGraphs::getErGFingerprint(*m1);
     std::cerr << *fp << std::endl;
@@ -72,7 +72,7 @@ void test1() {
   {
     std::string smi = "OCCC1=CC2=C(CCCC2)N=C1";
     ROMol *m1 = SmilesToMol(smi);
-    TEST_ASSERT(m1);
+    TEST_ASSERT(m1)
 
     RDNumeric::DoubleVector *fp = ReducedGraphs::getErGFingerprint(*m1);
     std::cerr << *fp << std::endl;
@@ -83,7 +83,7 @@ void test1() {
   {
     std::string smi = "OCCc1ccc(CC(C)C)cc1";
     ROMol *m1 = SmilesToMol(smi);
-    TEST_ASSERT(m1);
+    TEST_ASSERT(m1)
 
     RDNumeric::DoubleVector *fp = ReducedGraphs::getErGFingerprint(*m1);
     std::cerr << *fp << std::endl;
@@ -94,7 +94,7 @@ void test1() {
   {
     std::string smi = "OCCC1CCC(CC(C)C)CC1";
     ROMol *m1 = SmilesToMol(smi);
-    TEST_ASSERT(m1);
+    TEST_ASSERT(m1)
 
     RDNumeric::DoubleVector *fp = ReducedGraphs::getErGFingerprint(*m1);
     std::cerr << *fp << std::endl;
@@ -105,7 +105,7 @@ void test1() {
   {
     std::string smi = "OCCC1=CCC(CC(C)C)CC1";
     ROMol *m1 = SmilesToMol(smi);
-    TEST_ASSERT(m1);
+    TEST_ASSERT(m1)
 
     RDNumeric::DoubleVector *fp = ReducedGraphs::getErGFingerprint(*m1);
     std::cerr << *fp << std::endl;
@@ -116,7 +116,7 @@ void test1() {
   {
     std::string smi = "OCCC1=CCC(CC(C)C)C=C1";
     ROMol *m1 = SmilesToMol(smi);
-    TEST_ASSERT(m1);
+    TEST_ASSERT(m1)
 
     RDNumeric::DoubleVector *fp = ReducedGraphs::getErGFingerprint(*m1);
     std::cerr << *fp << std::endl;
@@ -134,14 +134,14 @@ void test2() {
     std::string smi1 = "c1ccccc1CCO";
     std::string smi2 = "C1=CC=CCC1CCO";
     ROMol *m1 = SmilesToMol(smi1);
-    TEST_ASSERT(m1);
+    TEST_ASSERT(m1)
     ROMol *m2 = SmilesToMol(smi2);
-    TEST_ASSERT(m2);
+    TEST_ASSERT(m2)
 
     RDNumeric::DoubleVector *fp1 = ReducedGraphs::getErGFingerprint(*m1);
     RDNumeric::DoubleVector *fp2 = ReducedGraphs::getErGFingerprint(*m2);
 
-    TEST_ASSERT(feq(RDNumeric::TanimotoSimilarity(*fp1, *fp2), 1.0, 0.001));
+    TEST_ASSERT(feq(RDNumeric::TanimotoSimilarity(*fp1, *fp2), 1.0, 0.001))
 
     delete fp1;
     delete fp2;
@@ -152,14 +152,14 @@ void test2() {
     std::string smi1 = "c1ccccc1CCO";
     std::string smi2 = "C1CC=CCC1CCO";
     ROMol *m1 = SmilesToMol(smi1);
-    TEST_ASSERT(m1);
+    TEST_ASSERT(m1)
     ROMol *m2 = SmilesToMol(smi2);
-    TEST_ASSERT(m2);
+    TEST_ASSERT(m2)
 
     RDNumeric::DoubleVector *fp1 = ReducedGraphs::getErGFingerprint(*m1);
     RDNumeric::DoubleVector *fp2 = ReducedGraphs::getErGFingerprint(*m2);
 
-    TEST_ASSERT(!feq(RDNumeric::TanimotoSimilarity(*fp1, *fp2), 1.0, 0.001));
+    TEST_ASSERT(!feq(RDNumeric::TanimotoSimilarity(*fp1, *fp2), 1.0, 0.001))
 
     delete fp1;
     delete fp2;
@@ -180,10 +180,10 @@ void testCanRetrieveProp() {
       ReducedGraphs::generateMolExtendedReducedGraph(*m));
   for (const auto atom : mrg->atoms()) {
     std::vector<int> atomTypes;
-    TEST_ASSERT(atom->getPropIfPresent("_ErGAtomTypes", atomTypes));
+    TEST_ASSERT(atom->getPropIfPresent("_ErGAtomTypes", atomTypes))
     res.push_back(atomTypes);
   }
-  TEST_ASSERT(res == expected);
+  TEST_ASSERT(res == expected)
   BOOST_LOG(rdInfoLog) << "done" << std::endl;
 }
 

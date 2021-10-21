@@ -209,7 +209,7 @@ void MultiFPBReader::init() {
     }
   }
   df_init = true;
-};
+}
 
 MultiFPBReader::MultiFPBReader(std::vector<FPBReader *> &readers,
                                bool takeOwnership, bool initOnSearch) {
@@ -217,24 +217,24 @@ MultiFPBReader::MultiFPBReader(std::vector<FPBReader *> &readers,
   df_takeOwnership = takeOwnership;
   df_initOnSearch = initOnSearch;
   for (auto *rdr : readers) {
-    PRECONDITION(rdr != nullptr, "bad reader");
+    PRECONDITION(rdr != nullptr, "bad reader")
   }
   d_readers = readers;
 }
 
 FPBReader *MultiFPBReader::getReader(unsigned int which) {
-  URANGE_CHECK(which, d_readers.size());
+  URANGE_CHECK(which, d_readers.size())
   return d_readers[which];
 }
 unsigned int MultiFPBReader::nBits() const {
-  PRECONDITION(d_readers.size(), "no readers");
-  PRECONDITION(df_init, "not initialized");
+  PRECONDITION(d_readers.size(), "no readers")
+  PRECONDITION(df_init, "not initialized")
   return d_readers[0]->nBits();
 }
 
 std::vector<MultiFPBReader::ResultTuple> MultiFPBReader::getTanimotoNeighbors(
     const std::uint8_t *bv, double threshold, int numThreads) const {
-  PRECONDITION(df_init || df_initOnSearch, "not initialized");
+  PRECONDITION(df_init || df_initOnSearch, "not initialized")
 
   std::vector<MultiFPBReader::ResultTuple> res;
   get_tani_nbrs(d_readers, bv, threshold, res, numThreads, df_initOnSearch);
@@ -243,7 +243,7 @@ std::vector<MultiFPBReader::ResultTuple> MultiFPBReader::getTanimotoNeighbors(
 
 std::vector<MultiFPBReader::ResultTuple> MultiFPBReader::getTanimotoNeighbors(
     const ExplicitBitVect &ebv, double threshold, int numThreads) const {
-  PRECONDITION(df_init || df_initOnSearch, "not initialized");
+  PRECONDITION(df_init || df_initOnSearch, "not initialized")
   std::vector<MultiFPBReader::ResultTuple> res;
   std::uint8_t *bv = detail::bitsetToBytes(*(ebv.dp_bits));
   get_tani_nbrs(d_readers, bv, threshold, res, numThreads, df_initOnSearch);
@@ -254,7 +254,7 @@ std::vector<MultiFPBReader::ResultTuple> MultiFPBReader::getTanimotoNeighbors(
 std::vector<MultiFPBReader::ResultTuple> MultiFPBReader::getTverskyNeighbors(
     const std::uint8_t *bv, double ca, double cb, double threshold,
     int numThreads) const {
-  PRECONDITION(df_init || df_initOnSearch, "not initialized");
+  PRECONDITION(df_init || df_initOnSearch, "not initialized")
   std::vector<MultiFPBReader::ResultTuple> res;
   get_tversky_nbrs(d_readers, bv, ca, cb, threshold, res, numThreads,
                    df_initOnSearch);
@@ -264,7 +264,7 @@ std::vector<MultiFPBReader::ResultTuple> MultiFPBReader::getTverskyNeighbors(
 std::vector<MultiFPBReader::ResultTuple> MultiFPBReader::getTverskyNeighbors(
     const ExplicitBitVect &ebv, double ca, double cb, double threshold,
     int numThreads) const {
-  PRECONDITION(df_init || df_initOnSearch, "not initialized");
+  PRECONDITION(df_init || df_initOnSearch, "not initialized")
   std::vector<MultiFPBReader::ResultTuple> res;
   std::uint8_t *bv = detail::bitsetToBytes(*(ebv.dp_bits));
   get_tversky_nbrs(d_readers, bv, ca, cb, threshold, res, numThreads,
@@ -276,7 +276,7 @@ std::vector<MultiFPBReader::ResultTuple> MultiFPBReader::getTverskyNeighbors(
 std::vector<std::pair<unsigned int, unsigned int>>
 MultiFPBReader::getContainingNeighbors(const std::uint8_t *bv,
                                        int numThreads) const {
-  PRECONDITION(df_init || df_initOnSearch, "not initialized");
+  PRECONDITION(df_init || df_initOnSearch, "not initialized")
   std::vector<std::pair<unsigned int, unsigned int>> res;
   get_containing_nbrs(d_readers, bv, res, numThreads, df_initOnSearch);
   return res;
@@ -285,7 +285,7 @@ MultiFPBReader::getContainingNeighbors(const std::uint8_t *bv,
 std::vector<std::pair<unsigned int, unsigned int>>
 MultiFPBReader::getContainingNeighbors(const ExplicitBitVect &ebv,
                                        int numThreads) const {
-  PRECONDITION(df_init || df_initOnSearch, "not initialized");
+  PRECONDITION(df_init || df_initOnSearch, "not initialized")
   std::vector<std::pair<unsigned int, unsigned int>> res;
   std::uint8_t *bv = detail::bitsetToBytes(*(ebv.dp_bits));
   get_containing_nbrs(d_readers, bv, res, numThreads, df_initOnSearch);

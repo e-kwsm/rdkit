@@ -41,9 +41,9 @@ void testMHFPInit() {
   auto fp_mol_s = enc.Encode(*mol_s);
   auto fp_mol_t = enc.Encode(*mol_t);
 
-  TEST_ASSERT(fp_s.size() == 128);
-  TEST_ASSERT(fp_s[0] == fp_mol_s[0]);
-  TEST_ASSERT(fp_t[127] == fp_mol_t[127]);
+  TEST_ASSERT(fp_s.size() == 128)
+  TEST_ASSERT(fp_s[0] == fp_mol_s[0])
+  TEST_ASSERT(fp_t[127] == fp_mol_t[127])
 
   delete mol_s;
   delete mol_t;
@@ -64,14 +64,14 @@ void testMHFPHashing() {
                                     810894466,  300249621, 154369992,
                                     2221926165, 283729444};
 
-  TEST_ASSERT(enc.FromArray(input_a) == output_a);
+  TEST_ASSERT(enc.FromArray(input_a) == output_a)
 
   std::vector<std::string> input_b = {"a", "b", "c", "d", "e", "f"};
 
   std::vector<uint32_t> output_b = {631555539, 835857365, 445245415, 4162827301,
                                     955545975, 943207071, 712975995, 363547692};
 
-  TEST_ASSERT(enc.FromStringArray(input_b) == output_b);
+  TEST_ASSERT(enc.FromStringArray(input_b) == output_b)
 
   BOOST_LOG(rdErrorLog) << "  done" << std::endl;
 }
@@ -93,11 +93,11 @@ void testMHFPShingling() {
   auto sh_a = enc.CreateShingling(s);
   auto sh_b = enc.CreateShingling(*mol_s);
 
-  TEST_ASSERT(sh_a.size() == 44);
-  TEST_ASSERT(sh_b.size() == 44);
+  TEST_ASSERT(sh_a.size() == 44)
+  TEST_ASSERT(sh_b.size() == 44)
 
-  TEST_ASSERT(enc.CreateShingling(s, 3, false).size() == 42);
-  TEST_ASSERT(enc.CreateShingling(s, 3, true, false, true, 0).size() == 58);
+  TEST_ASSERT(enc.CreateShingling(s, 3, false).size() == 42)
+  TEST_ASSERT(enc.CreateShingling(s, 3, true, false, true, 0).size() == 58)
 
   delete mol_s;
 
@@ -117,9 +117,9 @@ void testMHFPSECFP() {
 
   auto fp_mol_s = enc.EncodeSECFP(*mol_s, 3, true, false, true, 1, 16);
 
-  TEST_ASSERT(fp_s.size() == 16);
-  TEST_ASSERT(fp_s[10]);
-  TEST_ASSERT(fp_s[15]);
+  TEST_ASSERT(fp_s.size() == 16)
+  TEST_ASSERT(fp_s[10])
+  TEST_ASSERT(fp_s[15])
 
   delete mol_s;
 

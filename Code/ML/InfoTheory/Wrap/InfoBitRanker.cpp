@@ -185,7 +185,6 @@ struct ranker_wrap {
         .value("CHISQUARE", InfoBitRanker::CHISQUARE)
         .value("BIASCHISQUARE", InfoBitRanker::BIASCHISQUARE)
         .export_values();
-    ;
   };
 };
 }  // namespace RDInfoTheory

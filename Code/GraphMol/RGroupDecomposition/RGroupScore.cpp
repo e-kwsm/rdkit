@@ -25,7 +25,7 @@ double RGroupScorer::matchScore(
     const std::vector<std::vector<RGroupMatch>> &matches,
     const std::set<int> &labels) {
   PRECONDITION(permutation.size() <= matches.size(),
-               "permutation.size() should be <= matches.size()");
+               "permutation.size() should be <= matches.size()")
   double score = 0.;
   const std::string EMPTY_RGROUP = "";
   size_t offset = matches.size() - permutation.size();

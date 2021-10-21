@@ -43,7 +43,7 @@ ExplicitBitVect *FragFPGenerator::getFPForMol(const ROMol &mol,
 void FragFPGenerator::computeFP(const ROMol &mol, const FragCatalog &fcat,
                                 const MatchVectType &aidToFid,
                                 ExplicitBitVect *fp) {
-  PRECONDITION(fp, "Bad ExplicitBitVect - FingerPrint");
+  PRECONDITION(fp, "Bad ExplicitBitVect - FingerPrint")
 
   const FragCatParams *fparams = fcat.getCatalogParams();
 
