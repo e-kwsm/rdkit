@@ -29,10 +29,10 @@ namespace Tools {
 // ------------------------------------------------------------------------
 void addBonds(const ROMol &mol, MMFFMolProperties *mmffMolProperties,
               ForceFields::ForceField *field) {
-  PRECONDITION(field, "bad ForceField");
-  PRECONDITION(mmffMolProperties, "bad MMFFMolProperties");
+  PRECONDITION(field, "bad ForceField")
+  PRECONDITION(mmffMolProperties, "bad MMFFMolProperties")
   PRECONDITION(mmffMolProperties->isValid(),
-               "missing atom types - invalid force-field");
+               "missing atom types - invalid force-field")
 
   std::ostream &oStream = mmffMolProperties->getMMFFOStream();
   double totalBondStretchEnergy = 0.0;
@@ -164,10 +164,10 @@ boost::shared_array<std::uint8_t> buildNeighborMatrix(const ROMol &mol) {
 // ------------------------------------------------------------------------
 void addAngles(const ROMol &mol, MMFFMolProperties *mmffMolProperties,
                ForceFields::ForceField *field) {
-  PRECONDITION(field, "bad ForceField");
-  PRECONDITION(mmffMolProperties, "bad MMFFMolProperties");
+  PRECONDITION(field, "bad ForceField")
+  PRECONDITION(mmffMolProperties, "bad MMFFMolProperties")
   PRECONDITION(mmffMolProperties->isValid(),
-               "missing atom types - invalid force-field");
+               "missing atom types - invalid force-field")
 
   std::ostream &oStream = mmffMolProperties->getMMFFOStream();
   unsigned int idx[3];
@@ -281,10 +281,10 @@ void addAngles(const ROMol &mol, MMFFMolProperties *mmffMolProperties,
 // ------------------------------------------------------------------------
 void addStretchBend(const ROMol &mol, MMFFMolProperties *mmffMolProperties,
                     ForceFields::ForceField *field) {
-  PRECONDITION(field, "bad ForceField");
-  PRECONDITION(mmffMolProperties, "bad MMFFMolProperties");
+  PRECONDITION(field, "bad ForceField")
+  PRECONDITION(mmffMolProperties, "bad MMFFMolProperties")
   PRECONDITION(mmffMolProperties->isValid(),
-               "missing atom types - invalid force-field");
+               "missing atom types - invalid force-field")
 
   std::ostream &oStream = mmffMolProperties->getMMFFOStream();
   unsigned int idx[3];
@@ -432,10 +432,10 @@ void addStretchBend(const ROMol &mol, MMFFMolProperties *mmffMolProperties,
 
 void addOop(const ROMol &mol, MMFFMolProperties *mmffMolProperties,
             ForceFields::ForceField *field) {
-  PRECONDITION(field, "bad ForceField");
-  PRECONDITION(mmffMolProperties, "bad MMFFMolProperties");
+  PRECONDITION(field, "bad ForceField")
+  PRECONDITION(mmffMolProperties, "bad MMFFMolProperties")
   PRECONDITION(mmffMolProperties->isValid(),
-               "missing atom types - invalid force-field");
+               "missing atom types - invalid force-field")
 
   std::ostream &oStream = mmffMolProperties->getMMFFOStream();
   unsigned int idx[4];
@@ -589,10 +589,10 @@ const ROMol *DefaultTorsionBondSmarts::query() {
 void addTorsions(const ROMol &mol, MMFFMolProperties *mmffMolProperties,
                  ForceFields::ForceField *field,
                  const std::string &torsionBondSmarts) {
-  PRECONDITION(field, "bad ForceField");
-  PRECONDITION(mmffMolProperties, "bad MMFFMolProperties");
+  PRECONDITION(field, "bad ForceField")
+  PRECONDITION(mmffMolProperties, "bad MMFFMolProperties")
   PRECONDITION(mmffMolProperties->isValid(),
-               "missing atom types - invalid force-field");
+               "missing atom types - invalid force-field")
 
   std::ostream &oStream = mmffMolProperties->getMMFFOStream();
   ROMol::ADJ_ITER nbr1Idx;
@@ -620,7 +620,7 @@ void addTorsions(const ROMol &mol, MMFFMolProperties *mmffMolProperties,
   const ROMol *query = (torsionBondSmarts == DefaultTorsionBondSmarts::string())
                            ? defaultQuery
                            : SmartsToMol(torsionBondSmarts);
-  TEST_ASSERT(query);
+  TEST_ASSERT(query)
   unsigned int nHits = SubstructMatch(mol, *query, matchVect);
   if (query != defaultQuery) {
     delete query;
@@ -631,11 +631,11 @@ void addTorsions(const ROMol &mol, MMFFMolProperties *mmffMolProperties,
 
   for (unsigned int i = 0; i < nHits; ++i) {
     MatchVectType match = matchVect[i];
-    TEST_ASSERT(match.size() == 2);
+    TEST_ASSERT(match.size() == 2)
     int idx2 = match[0].second;
     int idx3 = match[1].second;
     const Bond *bond = mol.getBondBetweenAtoms(idx2, idx3);
-    TEST_ASSERT(bond);
+    TEST_ASSERT(bond)
     const Atom *jAtom = mol.getAtomWithIdx(idx2);
     const Atom *kAtom = mol.getAtomWithIdx(idx3);
     if (((jAtom->getHybridization() == Atom::SP2) ||
@@ -745,10 +745,10 @@ void addVdW(const ROMol &mol, int confId, MMFFMolProperties *mmffMolProperties,
             ForceFields::ForceField *field,
             boost::shared_array<std::uint8_t> neighborMatrix,
             double nonBondedThresh, bool ignoreInterfragInteractions) {
-  PRECONDITION(field, "bad ForceField");
-  PRECONDITION(mmffMolProperties, "bad MMFFMolProperties");
+  PRECONDITION(field, "bad ForceField")
+  PRECONDITION(mmffMolProperties, "bad MMFFMolProperties")
   PRECONDITION(mmffMolProperties->isValid(),
-               "missing atom types - invalid force-field");
+               "missing atom types - invalid force-field")
 
   std::ostream &oStream = mmffMolProperties->getMMFFOStream();
   INT_VECT fragMapping;
@@ -835,10 +835,10 @@ void addEle(const ROMol &mol, int confId, MMFFMolProperties *mmffMolProperties,
             ForceFields::ForceField *field,
             boost::shared_array<std::uint8_t> neighborMatrix,
             double nonBondedThresh, bool ignoreInterfragInteractions) {
-  PRECONDITION(field, "bad ForceField");
-  PRECONDITION(mmffMolProperties, "bad MMFFMolProperties");
+  PRECONDITION(field, "bad ForceField")
+  PRECONDITION(mmffMolProperties, "bad MMFFMolProperties")
   PRECONDITION(mmffMolProperties->isValid(),
-               "missing atom types - invalid force-field");
+               "missing atom types - invalid force-field")
 
   std::ostream &oStream = mmffMolProperties->getMMFFOStream();
   INT_VECT fragMapping;
@@ -1095,7 +1095,7 @@ ForceFields::ForceField *constructForceField(ROMol &mol, double nonBondedThresh,
                                              bool ignoreInterfragInteractions) {
   MMFFMolProperties mmffMolProperties(mol);
   PRECONDITION(mmffMolProperties.isValid(),
-               "missing atom types - invalid force-field");
+               "missing atom types - invalid force-field")
   ForceFields::ForceField *res =
       constructForceField(mol, &mmffMolProperties, nonBondedThresh, confId,
                           ignoreInterfragInteractions);
@@ -1111,9 +1111,9 @@ ForceFields::ForceField *constructForceField(ROMol &mol, double nonBondedThresh,
 ForceFields::ForceField *constructForceField(
     ROMol &mol, MMFFMolProperties *mmffMolProperties, double nonBondedThresh,
     int confId, bool ignoreInterfragInteractions) {
-  PRECONDITION(mmffMolProperties, "bad MMFFMolProperties");
+  PRECONDITION(mmffMolProperties, "bad MMFFMolProperties")
   PRECONDITION(mmffMolProperties->isValid(),
-               "missing atom types - invalid force-field");
+               "missing atom types - invalid force-field")
 
   std::unique_ptr<ForceFields::ForceField> res(new ForceFields::ForceField());
   // add the atomic positions:

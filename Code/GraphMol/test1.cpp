@@ -38,7 +38,7 @@ void testBookmarks(ROMol m) {
   m.setAtomBookmark(a1, 666);
   Atom *a2 = m.getAtomWithBookmark(666);
 
-  TEST_ASSERT(a2->getIdx() == a1->getIdx());
+  TEST_ASSERT(a2->getIdx() == a1->getIdx())
 
   bool ok;
   m.clearAtomBookmark(666);
@@ -51,21 +51,21 @@ void testBookmarks(ROMol m) {
     ok = 1;
   }
   boost::logging::enable_logs("rdApp.error");
-  CHECK_INVARIANT(ok, "atom bookmark not properly cleared");
+  CHECK_INVARIANT(ok, "atom bookmark not properly cleared")
 
   // ------------------------
   // repeat a bookmark
   a1 = m.getAtomWithIdx(1);
-  CHECK_INVARIANT(a1->getIdx() == 1, "");
+  CHECK_INVARIANT(a1->getIdx() == 1, "")
   m.setAtomBookmark(a1, 666);
   m.setAtomBookmark(m.getAtomWithIdx(0), 666);
   a2 = m.getAtomWithBookmark(666);
-  CHECK_INVARIANT(a2->getIdx() == 1, "");
-  CHECK_INVARIANT(a2->getIdx() == a1->getIdx(), "");
+  CHECK_INVARIANT(a2->getIdx() == 1, "")
+  CHECK_INVARIANT(a2->getIdx() == a1->getIdx(), "")
   m.clearAtomBookmark(666, a2);
   a2 = m.getAtomWithBookmark(666);
   i = a2->getIdx();
-  CHECK_INVARIANT(i == 0, "");
+  CHECK_INVARIANT(i == 0, "")
   m.clearAtomBookmark(666, a2);
   boost::logging::disable_logs("rdApp.error");
   try {
@@ -75,7 +75,7 @@ void testBookmarks(ROMol m) {
     ok = 1;
   }
   boost::logging::enable_logs("rdApp.error");
-  CHECK_INVARIANT(ok, "atom bookmark not properly cleared");
+  CHECK_INVARIANT(ok, "atom bookmark not properly cleared")
 
   // make sure clearAtomBookmark doesn't barf if there's no
   // such bookmark:
@@ -86,7 +86,7 @@ void testBookmarks(ROMol m) {
   Bond *b1 = m.getBondWithIdx(0);
   m.setBondBookmark(b1, 23);
   Bond *b2 = m.getBondWithBookmark(23);
-  CHECK_INVARIANT(b2->getIdx() == b1->getIdx(), "");
+  CHECK_INVARIANT(b2->getIdx() == b1->getIdx(), "")
 
   m.clearBondBookmark(23);
   boost::logging::disable_logs("rdApp.error");
@@ -97,15 +97,15 @@ void testBookmarks(ROMol m) {
     ok = 1;
   }
   boost::logging::enable_logs("rdApp.error");
-  CHECK_INVARIANT(ok, "bond bookmark not properly cleared");
+  CHECK_INVARIANT(ok, "bond bookmark not properly cleared")
 
   m.setBondBookmark(b1, 23);
   m.setBondBookmark(m.getBondWithIdx(1), 23);
   b2 = m.getBondWithBookmark(23);
-  CHECK_INVARIANT(b2->getIdx() == b1->getIdx(), "");
+  CHECK_INVARIANT(b2->getIdx() == b1->getIdx(), "")
   m.clearBondBookmark(23, b2);
   b2 = m.getBondWithBookmark(23);
-  CHECK_INVARIANT(b2->getIdx() == 1, "");
+  CHECK_INVARIANT(b2->getIdx() == 1, "")
   m.clearBondBookmark(23, b2);
   boost::logging::disable_logs("rdApp.error");
   try {
@@ -115,7 +115,7 @@ void testBookmarks(ROMol m) {
     ok = 1;
   }
   boost::logging::enable_logs("rdApp.error");
-  CHECK_INVARIANT(ok, "bond bookmark not properly cleared");
+  CHECK_INVARIANT(ok, "bond bookmark not properly cleared")
 
   // make sure clearAtomBookmark doesn't barf if there's no
   // such bookmark:
@@ -132,63 +132,63 @@ void testMolProps() {
   m2.addAtom(new Atom(6), true, true);
   m2.addBond(0, 1, Bond::TRIPLE);
 
-  CHECK_INVARIANT(!m2.hasProp("prop1"), "");
-  CHECK_INVARIANT(!m2.hasProp("prop2"), "");
+  CHECK_INVARIANT(!m2.hasProp("prop1"), "")
+  CHECK_INVARIANT(!m2.hasProp("prop2"), "")
   m2.setProp("prop1", 2);
   int tmpI;
   std::string tmpS;
-  CHECK_INVARIANT(m2.hasProp("prop1"), "");
+  CHECK_INVARIANT(m2.hasProp("prop1"), "")
   m2.getProp("prop1", tmpI);
-  CHECK_INVARIANT(tmpI == 2, "");
+  CHECK_INVARIANT(tmpI == 2, "")
   m2.getProp("prop1", tmpS);
-  CHECK_INVARIANT(tmpS == "2", "");
+  CHECK_INVARIANT(tmpS == "2", "")
   m2.setProp("prop1", std::string("2"));
-  CHECK_INVARIANT(m2.hasProp("prop1"), "");
+  CHECK_INVARIANT(m2.hasProp("prop1"), "")
   m2.getProp("prop1", tmpS);
-  CHECK_INVARIANT(tmpS == "2", "");
+  CHECK_INVARIANT(tmpS == "2", "")
   std::string tmpString("2");
   m2.setProp("prop1", tmpString.c_str());
-  CHECK_INVARIANT(m2.hasProp("prop1"), "");
+  CHECK_INVARIANT(m2.hasProp("prop1"), "")
   m2.getProp("prop1", tmpS);
-  CHECK_INVARIANT(tmpS == "2", "");
+  CHECK_INVARIANT(tmpS == "2", "")
 
   tmpS = "name";
   m2.setProp(common_properties::_Name, tmpS);
 
   propNames = m2.getPropList(false, false);
-  TEST_ASSERT(propNames.size() == 1);
+  TEST_ASSERT(propNames.size() == 1)
   propNames = m2.getPropList(true, false);
-  TEST_ASSERT(propNames.size() == 2);
+  TEST_ASSERT(propNames.size() == 2)
 
   // check for computed properties
   m2.setProp("cprop1", 1, true);
   m2.setProp("cprop2", 2, true);
   STR_VECT cplst;
   m2.getProp(RDKit::detail::computedPropName, cplst);
-  CHECK_INVARIANT(cplst.size() == 2, "");
-  CHECK_INVARIANT(cplst[0] == "cprop1", "");
-  CHECK_INVARIANT(cplst[1] == "cprop2", "");
+  CHECK_INVARIANT(cplst.size() == 2, "")
+  CHECK_INVARIANT(cplst[0] == "cprop1", "")
+  CHECK_INVARIANT(cplst[1] == "cprop2", "")
 
   propNames = m2.getPropList(false, false);
-  TEST_ASSERT(propNames.size() == 1);
+  TEST_ASSERT(propNames.size() == 1)
   propNames = m2.getPropList(true, false);
-  TEST_ASSERT(propNames.size() == 2);
+  TEST_ASSERT(propNames.size() == 2)
   propNames = m2.getPropList(false, true);
-  TEST_ASSERT(propNames.size() == 3);
+  TEST_ASSERT(propNames.size() == 3)
   propNames = m2.getPropList(true, true);
-  TEST_ASSERT(propNames.size() == 5);
+  TEST_ASSERT(propNames.size() == 5)
   propNames = m2.getPropList();
-  TEST_ASSERT(propNames.size() == 5);
+  TEST_ASSERT(propNames.size() == 5)
 
   m2.clearProp("cprop1");
-  CHECK_INVARIANT(!m2.hasProp("cprop1"), "");
+  CHECK_INVARIANT(!m2.hasProp("cprop1"), "")
   m2.getProp(RDKit::detail::computedPropName, cplst);
-  CHECK_INVARIANT(cplst.size() == 1, "");
+  CHECK_INVARIANT(cplst.size() == 1, "")
 
   m2.clearComputedProps();
-  CHECK_INVARIANT(!m2.hasProp("cprop2"), "");
+  CHECK_INVARIANT(!m2.hasProp("cprop2"), "")
   m2.getProp(RDKit::detail::computedPropName, cplst);
-  CHECK_INVARIANT(cplst.size() == 0, "");
+  CHECK_INVARIANT(cplst.size() == 0, "")
 
   BOOST_LOG(rdInfoLog) << "Finished" << std::endl;
 }
@@ -202,25 +202,25 @@ void testClearMol() {
   m2.addAtom(new Atom(6), true, true);
   m2.addBond(0, 1, Bond::TRIPLE);
 
-  TEST_ASSERT(!m2.hasProp("prop1"));
+  TEST_ASSERT(!m2.hasProp("prop1"))
   m2.setProp("prop1", 2);
   int tmpI;
-  TEST_ASSERT(m2.hasProp("prop1"));
+  TEST_ASSERT(m2.hasProp("prop1"))
   m2.getProp("prop1", tmpI);
-  TEST_ASSERT(tmpI == 2);
+  TEST_ASSERT(tmpI == 2)
 
-  TEST_ASSERT(m2.hasProp(RDKit::detail::computedPropName));
+  TEST_ASSERT(m2.hasProp(RDKit::detail::computedPropName))
 
   m2.clear();
-  TEST_ASSERT(!m2.hasProp("prop1"));
-  TEST_ASSERT(m2.getNumAtoms() == 0);
-  TEST_ASSERT(m2.getNumBonds() == 0);
-  TEST_ASSERT(m2.getAtomBookmarks()->empty());
-  TEST_ASSERT(m2.getBondBookmarks()->empty());
+  TEST_ASSERT(!m2.hasProp("prop1"))
+  TEST_ASSERT(m2.getNumAtoms() == 0)
+  TEST_ASSERT(m2.getNumBonds() == 0)
+  TEST_ASSERT(m2.getAtomBookmarks()->empty())
+  TEST_ASSERT(m2.getBondBookmarks()->empty())
 
   TEST_ASSERT(
-      m2.hasProp(RDKit::detail::computedPropName));  // <- github issue 176
-  TEST_ASSERT(m2.getPropList().size() == 1);
+      m2.hasProp(RDKit::detail::computedPropName))  // <- github issue 176
+  TEST_ASSERT(m2.getPropList().size() == 1)
 
   BOOST_LOG(rdInfoLog) << "Finished" << std::endl;
 }
@@ -236,75 +236,75 @@ void testAtomProps() {
   Atom *a1 = m2.getAtomWithIdx(0);
   Atom *a2 = m2.getAtomWithIdx(0);
   Atom *a3 = &(*a1);
-  CHECK_INVARIANT(!a1->hasProp("prop1"), "");
-  CHECK_INVARIANT(!a1->hasProp("prop2"), "");
-  CHECK_INVARIANT(!a2->hasProp("prop1"), "");
-  CHECK_INVARIANT(!a2->hasProp("prop2"), "");
-  CHECK_INVARIANT(!a3->hasProp("prop1"), "");
-  CHECK_INVARIANT(!a3->hasProp("prop2"), "");
+  CHECK_INVARIANT(!a1->hasProp("prop1"), "")
+  CHECK_INVARIANT(!a1->hasProp("prop2"), "")
+  CHECK_INVARIANT(!a2->hasProp("prop1"), "")
+  CHECK_INVARIANT(!a2->hasProp("prop2"), "")
+  CHECK_INVARIANT(!a3->hasProp("prop1"), "")
+  CHECK_INVARIANT(!a3->hasProp("prop2"), "")
   a1->setProp("prop1", 3);
   a1->setProp("prop2", 4);
-  CHECK_INVARIANT(a1->hasProp("prop1"), "");
-  CHECK_INVARIANT(a1->hasProp("prop2"), "");
-  CHECK_INVARIANT(a2->hasProp("prop1"), "");
-  CHECK_INVARIANT(a2->hasProp("prop2"), "");
-  CHECK_INVARIANT(a3->hasProp("prop1"), "");
-  CHECK_INVARIANT(a3->hasProp("prop2"), "");
-  CHECK_INVARIANT(!a1->hasProp("bogus"), "");
-  CHECK_INVARIANT(!a2->hasProp("bogus"), "");
-  CHECK_INVARIANT(!a3->hasProp("bogus"), "");
+  CHECK_INVARIANT(a1->hasProp("prop1"), "")
+  CHECK_INVARIANT(a1->hasProp("prop2"), "")
+  CHECK_INVARIANT(a2->hasProp("prop1"), "")
+  CHECK_INVARIANT(a2->hasProp("prop2"), "")
+  CHECK_INVARIANT(a3->hasProp("prop1"), "")
+  CHECK_INVARIANT(a3->hasProp("prop2"), "")
+  CHECK_INVARIANT(!a1->hasProp("bogus"), "")
+  CHECK_INVARIANT(!a2->hasProp("bogus"), "")
+  CHECK_INVARIANT(!a3->hasProp("bogus"), "")
 
   bool ok = false;
   a1->setProp<double>("dprop", 4);
-  TEST_ASSERT(a1->hasProp("dprop"));
+  TEST_ASSERT(a1->hasProp("dprop"))
   try {
     a1->getProp<int>("dprop");
   } catch (const std::bad_any_cast &) {
     ok = true;
   }
-  TEST_ASSERT(ok);
+  TEST_ASSERT(ok)
   a1->setProp<int>("iprop", 4);
-  TEST_ASSERT(a1->hasProp("iprop"));
+  TEST_ASSERT(a1->hasProp("iprop"))
   ok = false;
   try {
     a1->getProp<double>("iprop");
   } catch (const std::bad_any_cast &) {
     ok = true;
   }
-  TEST_ASSERT(ok);
+  TEST_ASSERT(ok)
 
   int tmp;
   a1->getProp("prop1", tmp);
-  CHECK_INVARIANT(tmp == 3, "");
+  CHECK_INVARIANT(tmp == 3, "")
   a1->getProp("prop2", tmp);
-  CHECK_INVARIANT(tmp == 4, "");
+  CHECK_INVARIANT(tmp == 4, "")
   a2->getProp("prop1", tmp);
-  CHECK_INVARIANT(tmp == 3, "");
+  CHECK_INVARIANT(tmp == 3, "")
   a2->getProp("prop2", tmp);
-  CHECK_INVARIANT(tmp == 4, "");
+  CHECK_INVARIANT(tmp == 4, "")
   a3->getProp("prop1", tmp);
-  CHECK_INVARIANT(tmp == 3, "");
+  CHECK_INVARIANT(tmp == 3, "")
   a3->getProp("prop2", tmp);
-  CHECK_INVARIANT(tmp == 4, "");
+  CHECK_INVARIANT(tmp == 4, "")
 
   // check for computed properties
   a1->setProp("cprop1", 1, true);
   a1->setProp("cprop2", 2, true);
   STR_VECT cplst;
   a1->getProp(RDKit::detail::computedPropName, cplst);
-  CHECK_INVARIANT(cplst.size() == 2, "");
-  CHECK_INVARIANT(cplst[0] == "cprop1", "");
-  CHECK_INVARIANT(cplst[1] == "cprop2", "");
+  CHECK_INVARIANT(cplst.size() == 2, "")
+  CHECK_INVARIANT(cplst[0] == "cprop1", "")
+  CHECK_INVARIANT(cplst[1] == "cprop2", "")
 
   a1->clearProp("cprop1");
-  CHECK_INVARIANT(!a1->hasProp("cprop1"), "");
+  CHECK_INVARIANT(!a1->hasProp("cprop1"), "")
   a1->getProp(RDKit::detail::computedPropName, cplst);
-  CHECK_INVARIANT(cplst.size() == 1, "");
+  CHECK_INVARIANT(cplst.size() == 1, "")
 
   a1->clearComputedProps();
-  CHECK_INVARIANT(!a1->hasProp("cprop2"), "");
+  CHECK_INVARIANT(!a1->hasProp("cprop2"), "")
   a1->getProp(RDKit::detail::computedPropName, cplst);
-  CHECK_INVARIANT(cplst.size() == 0, "");
+  CHECK_INVARIANT(cplst.size() == 0, "")
 
   BOOST_LOG(rdInfoLog) << "Finished" << std::endl;
 }
@@ -319,47 +319,47 @@ void testBondProps() {
 
   Bond *b1 = m2.getBondWithIdx(0);
   Bond *b2 = m2.getBondWithIdx(0);
-  CHECK_INVARIANT(!b1->hasProp("prop1"), "");
-  CHECK_INVARIANT(!b1->hasProp("prop2"), "");
-  CHECK_INVARIANT(!b2->hasProp("prop1"), "");
-  CHECK_INVARIANT(!b2->hasProp("prop2"), "");
+  CHECK_INVARIANT(!b1->hasProp("prop1"), "")
+  CHECK_INVARIANT(!b1->hasProp("prop2"), "")
+  CHECK_INVARIANT(!b2->hasProp("prop1"), "")
+  CHECK_INVARIANT(!b2->hasProp("prop2"), "")
   b1->setProp("prop1", 3);
   b1->setProp("prop2", 4);
-  CHECK_INVARIANT(b1->hasProp("prop1"), "");
-  CHECK_INVARIANT(b1->hasProp("prop2"), "");
-  CHECK_INVARIANT(b2->hasProp("prop1"), "");
-  CHECK_INVARIANT(b2->hasProp("prop2"), "");
-  CHECK_INVARIANT(!b1->hasProp("bogus"), "");
-  CHECK_INVARIANT(!b2->hasProp("bogus"), "");
+  CHECK_INVARIANT(b1->hasProp("prop1"), "")
+  CHECK_INVARIANT(b1->hasProp("prop2"), "")
+  CHECK_INVARIANT(b2->hasProp("prop1"), "")
+  CHECK_INVARIANT(b2->hasProp("prop2"), "")
+  CHECK_INVARIANT(!b1->hasProp("bogus"), "")
+  CHECK_INVARIANT(!b2->hasProp("bogus"), "")
 
   int tmp;
   b1->getProp("prop1", tmp);
-  CHECK_INVARIANT(tmp == 3, "");
+  CHECK_INVARIANT(tmp == 3, "")
   b1->getProp("prop2", tmp);
-  CHECK_INVARIANT(tmp == 4, "");
+  CHECK_INVARIANT(tmp == 4, "")
   b2->getProp("prop1", tmp);
-  CHECK_INVARIANT(tmp == 3, "");
+  CHECK_INVARIANT(tmp == 3, "")
   b2->getProp("prop2", tmp);
-  CHECK_INVARIANT(tmp == 4, "");
+  CHECK_INVARIANT(tmp == 4, "")
 
   // check for computed properties
   b1->setProp("cprop1", 1, true);
   b1->setProp("cprop2", 2, true);
   STR_VECT cplst;
   b1->getProp(RDKit::detail::computedPropName, cplst);
-  CHECK_INVARIANT(cplst.size() == 2, "");
-  CHECK_INVARIANT(cplst[0] == "cprop1", "");
-  CHECK_INVARIANT(cplst[1] == "cprop2", "");
+  CHECK_INVARIANT(cplst.size() == 2, "")
+  CHECK_INVARIANT(cplst[0] == "cprop1", "")
+  CHECK_INVARIANT(cplst[1] == "cprop2", "")
 
   b1->clearProp("cprop1");
-  CHECK_INVARIANT(!b1->hasProp("cprop1"), "");
+  CHECK_INVARIANT(!b1->hasProp("cprop1"), "")
   b1->getProp(RDKit::detail::computedPropName, cplst);
-  CHECK_INVARIANT(cplst.size() == 1, "");
+  CHECK_INVARIANT(cplst.size() == 1, "")
 
   b1->clearComputedProps();
-  CHECK_INVARIANT(!b1->hasProp("cprop2"), "");
+  CHECK_INVARIANT(!b1->hasProp("cprop2"), "")
   b1->getProp(RDKit::detail::computedPropName, cplst);
-  CHECK_INVARIANT(cplst.size() == 0, "");
+  CHECK_INVARIANT(cplst.size() == 0, "")
 
   BOOST_LOG(rdInfoLog) << "Finished" << std::endl;
 }
@@ -377,52 +377,52 @@ void testPropLeak() {
 
   Atom *a1 = m2.getAtomWithIdx(0);
   Atom *a2 = m2.getAtomWithIdx(0);
-  CHECK_INVARIANT(!a1->hasProp("prop1"), "");
-  CHECK_INVARIANT(!a1->hasProp("prop2"), "");
-  CHECK_INVARIANT(!a2->hasProp("prop1"), "");
-  CHECK_INVARIANT(!a2->hasProp("prop2"), "");
+  CHECK_INVARIANT(!a1->hasProp("prop1"), "")
+  CHECK_INVARIANT(!a1->hasProp("prop2"), "")
+  CHECK_INVARIANT(!a2->hasProp("prop1"), "")
+  CHECK_INVARIANT(!a2->hasProp("prop2"), "")
   a1->setProp("prop1", 3);
   a1->setProp("prop2", 4);
-  CHECK_INVARIANT(a1->hasProp("prop1"), "");
-  CHECK_INVARIANT(a1->hasProp("prop2"), "");
-  CHECK_INVARIANT(a2->hasProp("prop1"), "");
-  CHECK_INVARIANT(a2->hasProp("prop2"), "");
-  CHECK_INVARIANT(!a1->hasProp("bogus"), "");
-  CHECK_INVARIANT(!a2->hasProp("bogus"), "");
+  CHECK_INVARIANT(a1->hasProp("prop1"), "")
+  CHECK_INVARIANT(a1->hasProp("prop2"), "")
+  CHECK_INVARIANT(a2->hasProp("prop1"), "")
+  CHECK_INVARIANT(a2->hasProp("prop2"), "")
+  CHECK_INVARIANT(!a1->hasProp("bogus"), "")
+  CHECK_INVARIANT(!a2->hasProp("bogus"), "")
 
   int tmp;
   a1->getProp("prop1", tmp);
-  CHECK_INVARIANT(tmp == 3, "");
+  CHECK_INVARIANT(tmp == 3, "")
   a1->getProp("prop2", tmp);
-  CHECK_INVARIANT(tmp == 4, "");
+  CHECK_INVARIANT(tmp == 4, "")
   a2->getProp("prop1", tmp);
-  CHECK_INVARIANT(tmp == 3, "");
+  CHECK_INVARIANT(tmp == 3, "")
   a2->getProp("prop2", tmp);
-  CHECK_INVARIANT(tmp == 4, "");
+  CHECK_INVARIANT(tmp == 4, "")
 
   Bond *b1 = m2.getBondWithIdx(0);
   Bond *b2 = m2.getBondWithIdx(0);
-  CHECK_INVARIANT(!b1->hasProp("prop1"), "");
-  CHECK_INVARIANT(!b1->hasProp("prop2"), "");
-  CHECK_INVARIANT(!b2->hasProp("prop1"), "");
-  CHECK_INVARIANT(!b2->hasProp("prop2"), "");
+  CHECK_INVARIANT(!b1->hasProp("prop1"), "")
+  CHECK_INVARIANT(!b1->hasProp("prop2"), "")
+  CHECK_INVARIANT(!b2->hasProp("prop1"), "")
+  CHECK_INVARIANT(!b2->hasProp("prop2"), "")
   b1->setProp("prop1", 3);
   b1->setProp("prop2", 4);
-  CHECK_INVARIANT(b1->hasProp("prop1"), "");
-  CHECK_INVARIANT(b1->hasProp("prop2"), "");
-  CHECK_INVARIANT(b2->hasProp("prop1"), "");
-  CHECK_INVARIANT(b2->hasProp("prop2"), "");
-  CHECK_INVARIANT(!b1->hasProp("bogus"), "");
-  CHECK_INVARIANT(!b2->hasProp("bogus"), "");
+  CHECK_INVARIANT(b1->hasProp("prop1"), "")
+  CHECK_INVARIANT(b1->hasProp("prop2"), "")
+  CHECK_INVARIANT(b2->hasProp("prop1"), "")
+  CHECK_INVARIANT(b2->hasProp("prop2"), "")
+  CHECK_INVARIANT(!b1->hasProp("bogus"), "")
+  CHECK_INVARIANT(!b2->hasProp("bogus"), "")
 
   b1->getProp("prop1", tmp);
-  CHECK_INVARIANT(tmp == 3, "");
+  CHECK_INVARIANT(tmp == 3, "")
   b1->getProp("prop2", tmp);
-  CHECK_INVARIANT(tmp == 4, "");
+  CHECK_INVARIANT(tmp == 4, "")
   b2->getProp("prop1", tmp);
-  CHECK_INVARIANT(tmp == 3, "");
+  CHECK_INVARIANT(tmp == 3, "")
   b2->getProp("prop2", tmp);
-  CHECK_INVARIANT(tmp == 4, "");
+  CHECK_INVARIANT(tmp == 4, "")
 
   BOOST_LOG(rdInfoLog) << "Finished" << std::endl;
 }
@@ -444,24 +444,24 @@ void testMisc() {
 
   Bond *bnd;
   bnd = m2.getBondBetweenAtoms(0, 1);
-  CHECK_INVARIANT(bnd, "");
+  CHECK_INVARIANT(bnd, "")
   bnd = m2.getBondBetweenAtoms(1, 0);
-  CHECK_INVARIANT(bnd, "");
+  CHECK_INVARIANT(bnd, "")
   bnd = m2.getBondBetweenAtoms(3, 0);
-  CHECK_INVARIANT(!bnd, "");
+  CHECK_INVARIANT(!bnd, "")
   bnd = m2.getBondBetweenAtoms(0, 3);
-  CHECK_INVARIANT(!bnd, "");
+  CHECK_INVARIANT(!bnd, "")
   const Bond *cbnd;
   cbnd = m2.getBondBetweenAtoms(0, 1);
-  CHECK_INVARIANT(cbnd, "");
+  CHECK_INVARIANT(cbnd, "")
   cbnd = m2.getBondBetweenAtoms(1, 0);
-  CHECK_INVARIANT(cbnd, "");
+  CHECK_INVARIANT(cbnd, "")
   cbnd = m2.getBondBetweenAtoms(0, 3);
-  CHECK_INVARIANT(!cbnd, "");
+  CHECK_INVARIANT(!cbnd, "")
   cbnd = m2.getBondBetweenAtoms(3, 0);
-  CHECK_INVARIANT(!cbnd, "");
+  CHECK_INVARIANT(!cbnd, "")
 
-  CHECK_INVARIANT(m2.getAtomWithIdx(0)->getTotalNumHs() == 2, "");
+  CHECK_INVARIANT(m2.getAtomWithIdx(0)->getTotalNumHs() == 2, "")
 
   // we'll check atom deletion and handling of bookmarks on deletion
   // simultaneously:
@@ -469,40 +469,40 @@ void testMisc() {
   m2.setAtomBookmark(m2.getAtomWithIdx(0), 2342);
   m2.setBondBookmark(m2.getBondWithIdx(0), 2343);
   m2.removeAtom(static_cast<unsigned int>(0));
-  CHECK_INVARIANT(!m2.hasAtomBookmark(2342), "");
-  CHECK_INVARIANT(!m2.hasBondBookmark(2343), "");
-  CHECK_INVARIANT(m2.getNumAtoms() == 3, "");
-  CHECK_INVARIANT(m2.getNumBonds() == 2, "");
+  CHECK_INVARIANT(!m2.hasAtomBookmark(2342), "")
+  CHECK_INVARIANT(!m2.hasBondBookmark(2343), "")
+  CHECK_INVARIANT(m2.getNumAtoms() == 3, "")
+  CHECK_INVARIANT(m2.getNumBonds() == 2, "")
   MolOps::sanitizeMol(m2);
-  CHECK_INVARIANT(m2.getAtomWithIdx(0)->getTotalNumHs() == 3, "");
+  CHECK_INVARIANT(m2.getAtomWithIdx(0)->getTotalNumHs() == 3, "")
 
   m2.addAtom(new Atom(1), true, true);
   m2.addBond(2, 3, Bond::SINGLE);
   MolOps::sanitizeMol(m2);
 
-  CHECK_INVARIANT(m2.getAtomWithIdx(0)->getTotalNumHs() == 3, "");
-  CHECK_INVARIANT(m2.getAtomWithIdx(0)->getTotalNumHs(true) == 3, "");
-  CHECK_INVARIANT(m2.getAtomWithIdx(2)->getTotalNumHs() == 2, "");
-  CHECK_INVARIANT(m2.getAtomWithIdx(2)->getTotalNumHs(true) == 3, "");
+  CHECK_INVARIANT(m2.getAtomWithIdx(0)->getTotalNumHs() == 3, "")
+  CHECK_INVARIANT(m2.getAtomWithIdx(0)->getTotalNumHs(true) == 3, "")
+  CHECK_INVARIANT(m2.getAtomWithIdx(2)->getTotalNumHs() == 2, "")
+  CHECK_INVARIANT(m2.getAtomWithIdx(2)->getTotalNumHs(true) == 3, "")
 
   Atom *other = m2.getBondWithIdx(1)->getOtherAtom(m2.getAtomWithIdx(1));
-  CHECK_INVARIANT(other, "");
+  CHECK_INVARIANT(other, "")
 
   const Atom *at = m2.getAtomWithIdx(1);
   ROMol::OEDGE_ITER begin, end;
   boost::tie(begin, end) = m2.getAtomBonds(at);
   while (begin != end) {
     const Atom *at2 = m2[*begin]->getOtherAtom(at);
-    TEST_ASSERT(at2);
+    TEST_ASSERT(at2)
     begin++;
   }
 
   ROMol::VERTEX_ITER atBegin, atEnd;
   boost::tie(atBegin, atEnd) = m2.getVertices();
-  TEST_ASSERT(atBegin != atEnd);
+  TEST_ASSERT(atBegin != atEnd)
   while (atBegin != atEnd) {
     const Atom *at2 = m2[*atBegin];
-    TEST_ASSERT(at2->getIdx() == *atBegin);
+    TEST_ASSERT(at2->getIdx() == *atBegin)
     atBegin++;
   }
 
@@ -525,12 +525,12 @@ void testDegree() {
   m->addBond(2, 3, Bond::SINGLE);
 
   MolOps::sanitizeMol(*m);
-  TEST_ASSERT(m->getAtomWithIdx(0)->getDegree() == 2);
-  TEST_ASSERT(m->getAtomWithIdx(0)->getTotalNumHs() == 2);
-  TEST_ASSERT(m->getAtomWithIdx(0)->getTotalDegree() == 4);
-  TEST_ASSERT(m->getAtomWithIdx(2)->getDegree() == 3);
-  TEST_ASSERT(m->getAtomWithIdx(2)->getTotalNumHs() == 1);
-  TEST_ASSERT(m->getAtomWithIdx(2)->getTotalDegree() == 4);
+  TEST_ASSERT(m->getAtomWithIdx(0)->getDegree() == 2)
+  TEST_ASSERT(m->getAtomWithIdx(0)->getTotalNumHs() == 2)
+  TEST_ASSERT(m->getAtomWithIdx(0)->getTotalDegree() == 4)
+  TEST_ASSERT(m->getAtomWithIdx(2)->getDegree() == 3)
+  TEST_ASSERT(m->getAtomWithIdx(2)->getTotalNumHs() == 1)
+  TEST_ASSERT(m->getAtomWithIdx(2)->getTotalDegree() == 4)
 
   delete m;
   m = new RWMol();
@@ -546,13 +546,13 @@ void testDegree() {
   m->addBond(0, 4, Bond::SINGLE);
 
   MolOps::sanitizeMol(*m);
-  TEST_ASSERT(m->getAtomWithIdx(0)->getDegree() == 3);
-  TEST_ASSERT(m->getAtomWithIdx(0)->getTotalNumHs() == 1);
-  TEST_ASSERT(m->getAtomWithIdx(0)->getTotalNumHs(true) == 2);
-  TEST_ASSERT(m->getAtomWithIdx(0)->getTotalDegree() == 4);
-  TEST_ASSERT(m->getAtomWithIdx(2)->getDegree() == 3);
-  TEST_ASSERT(m->getAtomWithIdx(2)->getTotalNumHs() == 1);
-  TEST_ASSERT(m->getAtomWithIdx(2)->getTotalDegree() == 4);
+  TEST_ASSERT(m->getAtomWithIdx(0)->getDegree() == 3)
+  TEST_ASSERT(m->getAtomWithIdx(0)->getTotalNumHs() == 1)
+  TEST_ASSERT(m->getAtomWithIdx(0)->getTotalNumHs(true) == 2)
+  TEST_ASSERT(m->getAtomWithIdx(0)->getTotalDegree() == 4)
+  TEST_ASSERT(m->getAtomWithIdx(2)->getDegree() == 3)
+  TEST_ASSERT(m->getAtomWithIdx(2)->getTotalNumHs() == 1)
+  TEST_ASSERT(m->getAtomWithIdx(2)->getTotalDegree() == 4)
   delete m;
 
   BOOST_LOG(rdInfoLog) << "Finished" << std::endl;
@@ -573,14 +573,14 @@ void testIssue1993296() {
   } catch (...) {
     ok = true;
   }
-  TEST_ASSERT(ok);
+  TEST_ASSERT(ok)
   ok = false;
   try {
     m->addBond(1, 0, Bond::SINGLE);
   } catch (...) {
     ok = true;
   }
-  TEST_ASSERT(ok);
+  TEST_ASSERT(ok)
 
   // not technically part of 1993296, but related: we also throw
   // on adding self bonds
@@ -601,7 +601,7 @@ void testIssue1993296() {
   } catch (...) {
     ok = true;
   }
-  TEST_ASSERT(ok);
+  TEST_ASSERT(ok)
 
   // not technically part of 1993296, but related: we also throw
   // on adding self bonds
@@ -613,7 +613,7 @@ void testIssue1993296() {
   } catch (...) {
     ok = true;
   }
-  TEST_ASSERT(ok);
+  TEST_ASSERT(ok)
   delete newB;
   delete m;
 
@@ -678,7 +678,7 @@ void testIssue2381580() {
     } catch (MolSanitizeException &) {
       ok = true;
     }
-    TEST_ASSERT(ok);
+    TEST_ASSERT(ok)
     delete m;
   }
 
@@ -700,7 +700,7 @@ void testIssue2381580() {
     } catch (MolSanitizeException &) {
       ok = true;
     }
-    TEST_ASSERT(ok);
+    TEST_ASSERT(ok)
     delete m;
   }
 
