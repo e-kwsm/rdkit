@@ -126,8 +126,8 @@ bool propertyCompat(const RDProps *r1, const RDProps *r2,
 
 bool atomCompat(const Atom *a1, const Atom *a2,
                 const SubstructMatchParameters &ps) {
-  PRECONDITION(a1, "bad atom");
-  PRECONDITION(a2, "bad atom");
+  PRECONDITION(a1, "bad atom")
+  PRECONDITION(a2, "bad atom")
   // std::cerr << "\t\tatomCompat: "<< a1 << " " << a1->getIdx() << "-" << a2 <<
   // " " << a2->getIdx() << std::endl;
   bool res;
@@ -165,8 +165,8 @@ bool chiralAtomCompat(const Atom *&a1, const Atom *&a2) {
 
 bool bondCompat(const Bond *b1, const Bond *b2,
                 const SubstructMatchParameters &ps) {
-  PRECONDITION(b1, "bad bond");
-  PRECONDITION(b2, "bad bond");
+  PRECONDITION(b1, "bad bond")
+  PRECONDITION(b2, "bad bond")
   bool res;
 
   auto isConjugatedSingleOrDoubleBond([](const Bond *bond) {

@@ -18,12 +18,12 @@ QueryBond::QueryBond(BondType bT) : Bond(bT) {
   } else {
     dp_query = makeBondNullQuery();
   }
-};
+}
 
 QueryBond::~QueryBond() {
   delete dp_query;
   dp_query = nullptr;
-};
+}
 
 QueryBond &QueryBond::operator=(const QueryBond &other) {
   // FIX: should we copy molecule ownership?  I don't think so.
@@ -97,7 +97,7 @@ void QueryBond::expandQuery(QUERYBOND_QUERY *what,
       descrip = "BondXor";
       break;
     default:
-      UNDER_CONSTRUCTION("unrecognized combination query");
+      UNDER_CONSTRUCTION("unrecognized combination query")
   }
   dp_query->setDescription(descrip);
   if (maintainOrder) {
@@ -120,8 +120,8 @@ bool localMatch(BOND_EQUALS_QUERY const *q1, BOND_EQUALS_QUERY const *q2) {
 
 bool queriesMatch(QueryBond::QUERYBOND_QUERY const *q1,
                   QueryBond::QUERYBOND_QUERY const *q2) {
-  PRECONDITION(q1, "no q1");
-  PRECONDITION(q2, "no q2");
+  PRECONDITION(q1, "no q1")
+  PRECONDITION(q2, "no q2")
 
   static const unsigned int nQueries = 6;
   static std::string equalityQueries[nQueries] = {
@@ -204,13 +204,13 @@ bool queriesMatch(QueryBond::QUERYBOND_QUERY const *q1,
 }  // namespace
 
 bool QueryBond::Match(Bond const *what) const {
-  PRECONDITION(what, "bad query bond");
-  PRECONDITION(dp_query, "no query set");
+  PRECONDITION(what, "bad query bond")
+  PRECONDITION(dp_query, "no query set")
   return dp_query->Match(what);
 }
 bool QueryBond::QueryMatch(QueryBond const *what) const {
-  PRECONDITION(what, "bad query bond");
-  PRECONDITION(dp_query, "no query set");
+  PRECONDITION(what, "bad query bond")
+  PRECONDITION(dp_query, "no query set")
   if (!what->hasQuery()) {
     return dp_query->Match(what);
   } else {
