@@ -365,7 +365,7 @@ TEST_CASE("Specialized exceptions for sanitization errors", "[molops]") {
       CHECK_THROWS_AS(SmilesToMol(pr.first), AtomValenceException);
       try {
         auto m = SmilesToMol(pr.first);
-        RDUNUSED_PARAM(m);
+        RDUNUSED_PARAM(m)
       } catch (const AtomValenceException &e) {
         CHECK(e.getType() == "AtomValenceException");
         CHECK(e.getAtomIdx() == pr.second);
@@ -380,7 +380,7 @@ TEST_CASE("Specialized exceptions for sanitization errors", "[molops]") {
       CHECK_THROWS_AS(SmilesToMol(pr.first), AtomKekulizeException);
       try {
         auto m = SmilesToMol(pr.first);
-        RDUNUSED_PARAM(m);
+        RDUNUSED_PARAM(m)
       } catch (const AtomKekulizeException &e) {
         CHECK(e.getType() == "AtomKekulizeException");
         CHECK(e.getAtomIdx() == pr.second);
@@ -396,7 +396,7 @@ TEST_CASE("Specialized exceptions for sanitization errors", "[molops]") {
       CHECK_THROWS_AS(SmilesToMol(pr.first), KekulizeException);
       try {
         auto m = SmilesToMol(pr.first);
-        RDUNUSED_PARAM(m);
+        RDUNUSED_PARAM(m)
       } catch (const KekulizeException &e) {
         CHECK(e.getType() == "KekulizeException");
         CHECK(e.getAtomIndices() == pr.second);
