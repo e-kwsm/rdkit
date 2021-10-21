@@ -254,7 +254,7 @@ std::vector<double> clusterArray2(std::vector<double> data,
 
 std::vector<double> GetGeodesicMatrix(const double *dist, int lag,
                                       int numAtoms) {
-  PRECONDITION(dist != nullptr, "bad array");
+  PRECONDITION(dist != nullptr, "bad array")
 
   int sizeArray = numAtoms * numAtoms;
   std::vector<double> Geodesic;
@@ -1194,8 +1194,8 @@ void GetGETAWAY(double *dist3D, double *AdjMat, std::vector<double> Vpoints,
                 const ROMol &mol, const Conformer &conf,
                 std::vector<int> Heavylist, std::vector<double> &res,
                 unsigned int precision) {
-  PRECONDITION(dist3D != nullptr, "no distance matrix");
-  PRECONDITION(AdjMat != nullptr, "no adjacency matrix");
+  PRECONDITION(dist3D != nullptr, "no distance matrix")
+  PRECONDITION(AdjMat != nullptr, "no adjacency matrix")
 
   int numAtoms = conf.getNumAtoms();
 
