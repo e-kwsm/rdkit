@@ -450,7 +450,7 @@ class PyMCSParameters : public boost::noncopyable {
                                    const ROMol &mol1, unsigned int atom1,
                                    const ROMol &mol2, unsigned int atom2,
                                    void *userData) {
-    PRECONDITION(userData, "userData must not be NULL");
+    PRECONDITION(userData, "userData must not be NULL")
     PyCompareFunctionUserData *cfud =
         static_cast<PyCompareFunctionUserData *>(userData);
     CHECK_INVARIANT(cfud, "");
@@ -467,7 +467,7 @@ class PyMCSParameters : public boost::noncopyable {
                                    const ROMol &mol1, unsigned int bond1,
                                    const ROMol &mol2, unsigned int bond2,
                                    void *userData) {
-    PRECONDITION(userData, "userData must not be NULL");
+    PRECONDITION(userData, "userData must not be NULL")
     PyCompareFunctionUserData *cfud =
         static_cast<PyCompareFunctionUserData *>(userData);
     CHECK_INVARIANT(cfud, "");
@@ -483,7 +483,7 @@ class PyMCSParameters : public boost::noncopyable {
   static bool MCSProgressCallbackPyFunc(const MCSProgressData &stat,
                                         const MCSParameters &params,
                                         void *userData) {
-    PRECONDITION(userData, "userData must not be NULL");
+    PRECONDITION(userData, "userData must not be NULL")
     PyProgressCallbackUserData *pcud =
         static_cast<PyProgressCallbackUserData *>(userData);
     bool res = false;
