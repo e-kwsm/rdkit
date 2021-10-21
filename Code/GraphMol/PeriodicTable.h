@@ -53,13 +53,13 @@ class RDKIT_GRAPHMOL_EXPORT PeriodicTable {
 
   //! returns the atomic weight
   double getAtomicWeight(UINT atomicNumber) const {
-    PRECONDITION(atomicNumber < byanum.size(), "Atomic number not found");
+    PRECONDITION(atomicNumber < byanum.size(), "Atomic number not found")
     double mass = byanum[atomicNumber].Mass();
     return mass;
   }
   //! \overload
   double getAtomicWeight(const std::string &elementSymbol) const {
-    PRECONDITION(byname.count(elementSymbol), "Element not found");
+    PRECONDITION(byname.count(elementSymbol), "Element not found")
     int anum = byname.find(elementSymbol)->second;
     double mass = byanum[anum].Mass();
     return mass;
@@ -92,13 +92,13 @@ class RDKIT_GRAPHMOL_EXPORT PeriodicTable {
         anum = iter->second;
       }
     }
-    POSTCONDITION(anum > -1, "Element '" + elementSymbol + "' not found");
+    POSTCONDITION(anum > -1, "Element '" + elementSymbol + "' not found")
     return anum;
   }
 
   //! returns the atomic symbol
   std::string getElementSymbol(UINT atomicNumber) const {
-    PRECONDITION(atomicNumber < byanum.size(), "Atomic number not found");
+    PRECONDITION(atomicNumber < byanum.size(), "Atomic number not found")
     return byanum[atomicNumber].Symbol();
   }
 
@@ -110,13 +110,13 @@ class RDKIT_GRAPHMOL_EXPORT PeriodicTable {
 
   //! returns the atom's van der Waals radius
   double getRvdw(UINT atomicNumber) const {
-    PRECONDITION(atomicNumber < byanum.size(), "Atomic number not found");
+    PRECONDITION(atomicNumber < byanum.size(), "Atomic number not found")
     return byanum[atomicNumber].Rvdw();
   }
   //! \overload
   double getRvdw(const std::string &elementSymbol) const {
     PRECONDITION(byname.count(elementSymbol),
-                 "Element '" + elementSymbol + "' not found");
+                 "Element '" + elementSymbol + "' not found")
     return getRvdw(byname.find(elementSymbol)->second);
   }
   //! \overload
@@ -126,13 +126,13 @@ class RDKIT_GRAPHMOL_EXPORT PeriodicTable {
 
   //! returns the atom's covalent radius
   double getRcovalent(UINT atomicNumber) const {
-    PRECONDITION(atomicNumber < byanum.size(), "Atomic number not found");
+    PRECONDITION(atomicNumber < byanum.size(), "Atomic number not found")
     return byanum[atomicNumber].Rcov();
   }
   //! \overload
   double getRcovalent(const std::string &elementSymbol) const {
     PRECONDITION(byname.count(elementSymbol),
-                 "Element '" + elementSymbol + "' not found");
+                 "Element '" + elementSymbol + "' not found")
     return getRcovalent(byname.find(elementSymbol)->second);
   }
   //! \overload
@@ -142,13 +142,13 @@ class RDKIT_GRAPHMOL_EXPORT PeriodicTable {
 
   //! returns the atom's bond radius
   double getRb0(UINT atomicNumber) const {
-    PRECONDITION(atomicNumber < byanum.size(), "Atomic number not found");
+    PRECONDITION(atomicNumber < byanum.size(), "Atomic number not found")
     return byanum[atomicNumber].Rb0();
   }
   //! \overload
   double getRb0(const std::string &elementSymbol) const {
     PRECONDITION(byname.count(elementSymbol),
-                 "Element '" + elementSymbol + "' not found");
+                 "Element '" + elementSymbol + "' not found")
     return getRb0(byname.find(elementSymbol)->second);
   }
   //! \overload
@@ -158,13 +158,13 @@ class RDKIT_GRAPHMOL_EXPORT PeriodicTable {
 
   //! returns the atom's default valence
   int getDefaultValence(UINT atomicNumber) const {
-    PRECONDITION(atomicNumber < byanum.size(), "Atomic number not found");
+    PRECONDITION(atomicNumber < byanum.size(), "Atomic number not found")
     return byanum[atomicNumber].DefaultValence();
   }
   //! \overload
   int getDefaultValence(const std::string &elementSymbol) const {
     PRECONDITION(byname.count(elementSymbol),
-                 "Element '" + elementSymbol + "' not found");
+                 "Element '" + elementSymbol + "' not found")
     return getDefaultValence(byname.find(elementSymbol)->second);
   }
   //! \overload
@@ -176,13 +176,13 @@ class RDKIT_GRAPHMOL_EXPORT PeriodicTable {
   //! we really don't have any idea what a reasonable maximum
   //! valence is (like transition metals), the vector ends with -1
   const INT_VECT &getValenceList(UINT atomicNumber) const {
-    PRECONDITION(atomicNumber < byanum.size(), "Atomic number not found");
+    PRECONDITION(atomicNumber < byanum.size(), "Atomic number not found")
     return byanum[atomicNumber].ValenceList();
   }
   //! \overload
   const INT_VECT &getValenceList(const std::string &elementSymbol) const {
     PRECONDITION(byname.count(elementSymbol),
-                 "Element '" + elementSymbol + "' not found");
+                 "Element '" + elementSymbol + "' not found")
     return getValenceList(byname.find(elementSymbol)->second);
   }
   //! \overload
@@ -192,13 +192,13 @@ class RDKIT_GRAPHMOL_EXPORT PeriodicTable {
 
   //! returns the number of outer shell electrons
   int getNouterElecs(UINT atomicNumber) const {
-    PRECONDITION(atomicNumber < byanum.size(), "Atomic number not found");
+    PRECONDITION(atomicNumber < byanum.size(), "Atomic number not found")
     return byanum[atomicNumber].NumOuterShellElec();
   }
   //! \overload
   int getNouterElecs(const std::string &elementSymbol) const {
     PRECONDITION(byname.count(elementSymbol),
-                 "Element '" + elementSymbol + "' not found");
+                 "Element '" + elementSymbol + "' not found")
     return getNouterElecs(byname.find(elementSymbol)->second);
   }
   //! \overload
@@ -208,13 +208,13 @@ class RDKIT_GRAPHMOL_EXPORT PeriodicTable {
 
   //! returns the number of the most common isotope
   int getMostCommonIsotope(UINT atomicNumber) const {
-    PRECONDITION(atomicNumber < byanum.size(), "Atomic number not found");
+    PRECONDITION(atomicNumber < byanum.size(), "Atomic number not found")
     return byanum[atomicNumber].MostCommonIsotope();
   }
   //! \overload
   int getMostCommonIsotope(const std::string &elementSymbol) const {
     PRECONDITION(byname.count(elementSymbol),
-                 "Element '" + elementSymbol + "' not found");
+                 "Element '" + elementSymbol + "' not found")
     return getMostCommonIsotope(byname.find(elementSymbol)->second);
   }
   //! \overload
@@ -224,13 +224,13 @@ class RDKIT_GRAPHMOL_EXPORT PeriodicTable {
 
   //! returns the mass of the most common isotope
   double getMostCommonIsotopeMass(UINT atomicNumber) const {
-    PRECONDITION(atomicNumber < byanum.size(), "Atomic number not found");
+    PRECONDITION(atomicNumber < byanum.size(), "Atomic number not found")
     return byanum[atomicNumber].MostCommonIsotopeMass();
   }
   //! \overload
   double getMostCommonIsotopeMass(const std::string &elementSymbol) const {
     PRECONDITION(byname.count(elementSymbol),
-                 "Element '" + elementSymbol + "' not found");
+                 "Element '" + elementSymbol + "' not found")
     return getMostCommonIsotopeMass(byname.find(elementSymbol)->second);
   }
   //! \overload
@@ -241,7 +241,7 @@ class RDKIT_GRAPHMOL_EXPORT PeriodicTable {
   //! returns the mass of a particular isotope; zero if that
   //! isotope is unknown.
   double getMassForIsotope(UINT atomicNumber, UINT isotope) const {
-    PRECONDITION(atomicNumber < byanum.size(), "Atomic number not found");
+    PRECONDITION(atomicNumber < byanum.size(), "Atomic number not found")
     const std::map<unsigned int, std::pair<double, double>> &m =
         byanum[atomicNumber].d_isotopeInfoMap;
     std::map<unsigned int, std::pair<double, double>>::const_iterator item =
@@ -256,7 +256,7 @@ class RDKIT_GRAPHMOL_EXPORT PeriodicTable {
   double getMassForIsotope(const std::string &elementSymbol,
                            UINT isotope) const {
     PRECONDITION(byname.count(elementSymbol),
-                 "Element '" + elementSymbol + "' not found");
+                 "Element '" + elementSymbol + "' not found")
     return getMassForIsotope(byname.find(elementSymbol)->second, isotope);
   }
   //! \overload
@@ -266,7 +266,7 @@ class RDKIT_GRAPHMOL_EXPORT PeriodicTable {
   //! returns the abundance of a particular isotope; zero if that
   //! isotope is unknown.
   double getAbundanceForIsotope(UINT atomicNumber, UINT isotope) const {
-    PRECONDITION(atomicNumber < byanum.size(), "Atomic number not found");
+    PRECONDITION(atomicNumber < byanum.size(), "Atomic number not found")
     const std::map<unsigned int, std::pair<double, double>> &m =
         byanum[atomicNumber].d_isotopeInfoMap;
     std::map<unsigned int, std::pair<double, double>>::const_iterator item =
@@ -281,7 +281,7 @@ class RDKIT_GRAPHMOL_EXPORT PeriodicTable {
   double getAbundanceForIsotope(const std::string &elementSymbol,
                                 UINT isotope) const {
     PRECONDITION(byname.count(elementSymbol),
-                 "Element '" + elementSymbol + "' not found");
+                 "Element '" + elementSymbol + "' not found")
     return getAbundanceForIsotope(byname.find(elementSymbol)->second, isotope);
   }
   //! \overload
@@ -302,8 +302,8 @@ class RDKIT_GRAPHMOL_EXPORT PeriodicTable {
 
   */
   bool moreElectroNegative(UINT anum1, UINT anum2) const {
-    PRECONDITION(anum1 < byanum.size(), "Atomic number not found");
-    PRECONDITION(anum2 < byanum.size(), "Atomic number not found");
+    PRECONDITION(anum1 < byanum.size(), "Atomic number not found")
+    PRECONDITION(anum2 < byanum.size(), "Atomic number not found")
     // FIX: the atomic_data needs to have real electronegativity values
     UINT ne1 = getNouterElecs(anum1);
     UINT ne2 = getNouterElecs(anum2);
@@ -345,6 +345,6 @@ class RDKIT_GRAPHMOL_EXPORT PeriodicTable {
   std::vector<atomicData> byanum;
   STR_UINT_MAP byname;
 };
-};  // namespace RDKit
+}  // namespace RDKit
 
 #endif

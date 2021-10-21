@@ -32,11 +32,11 @@ class ss_matcher {
     m_needCopies = (pattern.find_first_of("$") != std::string::npos);
     RDKit::RWMol *p = RDKit::SmartsToMol(pattern);
     m_matcher = p;
-    POSTCONDITION(m_matcher, "no matcher");
+    POSTCONDITION(m_matcher, "no matcher")
   };
   const RDKit::ROMol *getMatcher() const { return m_matcher; };
   unsigned int countMatches(const RDKit::ROMol &mol) const {
-    PRECONDITION(m_matcher, "no matcher");
+    PRECONDITION(m_matcher, "no matcher")
     std::vector<RDKit::MatchVectType> matches;
     // This is an ugly one. Recursive queries aren't thread safe.
     // Unfortunately we have to take a performance hit here in order

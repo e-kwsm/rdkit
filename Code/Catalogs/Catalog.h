@@ -83,10 +83,10 @@ class Catalog {
   //------------------------------------
   //! sets our parameters by copying the \c params argument
   virtual void setCatalogParams(const paramType *params) {
-    PRECONDITION(params, "bad parameter object");
+    PRECONDITION(params, "bad parameter object")
     // if we already have a parameter object throw an exception
     PRECONDITION(!dp_cParams,
-                 "A parameter object already exists on the catalog");
+                 "A parameter object already exists on the catalog")
     /*
       if (dp_cParams) {
       // we already have parameter object on the catalog
@@ -177,7 +177,7 @@ class HierarchCatalog : public Catalog<entryType, paramType> {
   //------------------------------------
   //! serializes this object to a stream
   void toStream(std::ostream &ss) const {
-    PRECONDITION(this->getCatalogParams(), "NULL parameter object");
+    PRECONDITION(this->getCatalogParams(), "NULL parameter object")
 
     // the i/o header:
     RDKit::streamWrite(ss, endianId);
@@ -304,7 +304,7 @@ class HierarchCatalog : public Catalog<entryType, paramType> {
 
   */
   unsigned int addEntry(entryType *entry, bool updateFPLength = true) override {
-    PRECONDITION(entry, "bad arguments");
+    PRECONDITION(entry, "bad arguments")
     if (updateFPLength) {
       unsigned int fpl = this->getFPLength();
       entry->setBitId(fpl);
@@ -337,8 +337,8 @@ class HierarchCatalog : public Catalog<entryType, paramType> {
   */
   void addEdge(unsigned int id1, unsigned int id2) {
     unsigned int nents = getNumEntries();
-    URANGE_CHECK(id1, nents);
-    URANGE_CHECK(id2, nents);
+    URANGE_CHECK(id1, nents)
+    URANGE_CHECK(id2, nents)
     // FIX: if we boost::setS for the edgeList BGL will
     // do the checking for duplicity (parallel edges)
     // But for reasons unknown setS results in compile
@@ -355,7 +355,7 @@ class HierarchCatalog : public Catalog<entryType, paramType> {
   //------------------------------------
   //! returns a pointer to our entry with a particular index
   const entryType *getEntryWithIdx(unsigned int idx) const override {
-    URANGE_CHECK(idx, getNumEntries());
+    URANGE_CHECK(idx, getNumEntries())
     int vd = static_cast<int>(boost::vertex(idx, d_graph));
     typename boost::property_map<CatalogGraph, vertex_entry_t>::const_type
         pMap = boost::get(vertex_entry_t(), d_graph);
@@ -365,7 +365,7 @@ class HierarchCatalog : public Catalog<entryType, paramType> {
   //------------------------------------
   //! returns a pointer to our entry with a particular bit ID
   const entryType *getEntryWithBitId(unsigned int idx) const {
-    URANGE_CHECK(idx, this->getFPLength());
+    URANGE_CHECK(idx, this->getFPLength())
     typename boost::property_map<CatalogGraph, vertex_entry_t>::const_type
         pMap = boost::get(vertex_entry_t(), d_graph);
     const entryType *res = nullptr;
@@ -382,7 +382,7 @@ class HierarchCatalog : public Catalog<entryType, paramType> {
   //------------------------------------
   //! returns the index of the entry with a particular bit ID
   int getIdOfEntryWithBitId(unsigned int idx) const {
-    URANGE_CHECK(idx, this->getFPLength());
+    URANGE_CHECK(idx, this->getFPLength())
     typename boost::property_map<CatalogGraph, vertex_entry_t>::const_type
         pMap = boost::get(vertex_entry_t(), d_graph);
     int res = -1;
@@ -426,7 +426,7 @@ class HierarchCatalog : public Catalog<entryType, paramType> {
     elem = d_orderMap.find(ord);
     CHECK_INVARIANT(
         elem != d_orderMap.end(),
-        " catalog does not contain any entries of the order specified");
+        " catalog does not contain any entries of the order specified")
     return elem->second;
   }
 

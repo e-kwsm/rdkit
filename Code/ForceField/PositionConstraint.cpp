@@ -18,9 +18,9 @@ PositionConstraintContrib::PositionConstraintContrib(ForceField *owner,
                                                      unsigned int idx,
                                                      double maxDispl,
                                                      double forceConst) {
-  PRECONDITION(owner, "bad owner");
+  PRECONDITION(owner, "bad owner")
   const RDGeom::PointPtrVect &pos = owner->positions();
-  URANGE_CHECK(idx, pos.size());
+  URANGE_CHECK(idx, pos.size())
 
   dp_forceField = owner;
   d_atIdx = idx;
@@ -30,8 +30,8 @@ PositionConstraintContrib::PositionConstraintContrib(ForceField *owner,
 }
 
 double PositionConstraintContrib::getEnergy(double *pos) const {
-  PRECONDITION(dp_forceField, "no owner");
-  PRECONDITION(pos, "bad vector");
+  PRECONDITION(dp_forceField, "no owner")
+  PRECONDITION(pos, "bad vector")
 
   RDGeom::Point3D p(pos[3 * d_atIdx], pos[3 * d_atIdx + 1],
                     pos[3 * d_atIdx + 2]);
@@ -43,9 +43,9 @@ double PositionConstraintContrib::getEnergy(double *pos) const {
 }
 
 void PositionConstraintContrib::getGrad(double *pos, double *grad) const {
-  PRECONDITION(dp_forceField, "no owner");
-  PRECONDITION(pos, "bad vector");
-  PRECONDITION(grad, "bad vector");
+  PRECONDITION(dp_forceField, "no owner")
+  PRECONDITION(pos, "bad vector")
+  PRECONDITION(grad, "bad vector")
 
   RDGeom::Point3D p(pos[3 * d_atIdx], pos[3 * d_atIdx + 1],
                     pos[3 * d_atIdx + 2]);

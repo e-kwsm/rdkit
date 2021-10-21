@@ -41,7 +41,7 @@ inline auto pairLess = [](const auto &v1, const auto &v2) {
 */
 template <typename T1, typename T2>
 void rankVect(const std::vector<T1> &vect, T2 &res) {
-  PRECONDITION(res.size() >= vect.size(), "vector size mismatch");
+  PRECONDITION(res.size() >= vect.size(), "vector size mismatch")
   unsigned int nEntries = rdcast<unsigned int>(vect.size());
 
   std::vector<unsigned int> indices(nEntries);
