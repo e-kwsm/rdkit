@@ -28,7 +28,7 @@ void testGithub1421() {
   int poolSz = 1000;
   picks = pkr.lazyPick(dist_on_line, poolSz, 10, RDKit::INT_VECT(), 2748);
   for (auto pick : picks) {
-    TEST_ASSERT(pick < poolSz);
+    TEST_ASSERT(pick < poolSz)
   }
   BOOST_LOG(rdErrorLog) << "Done" << std::endl;
 }
@@ -52,7 +52,7 @@ void testGithub2245() {
         break;
       }
     }
-    TEST_ASSERT(maxAllowedFailures);
+    TEST_ASSERT(maxAllowedFailures)
   }
   {  // make sure the default is also random
     RDPickers::MaxMinPicker pkr;
@@ -65,7 +65,7 @@ void testGithub2245() {
         break;
       }
     }
-    TEST_ASSERT(maxAllowedFailures);
+    TEST_ASSERT(maxAllowedFailures)
   }
   {  // and we're still reproducible when we want to be
     RDPickers::MaxMinPicker pkr;
@@ -74,7 +74,7 @@ void testGithub2245() {
         pkr.lazyPick(dist_on_line, poolSz, 10, RDKit::INT_VECT(), 0xf00d);
     auto picks2 =
         pkr.lazyPick(dist_on_line, poolSz, 10, RDKit::INT_VECT(), 0xf00d);
-    TEST_ASSERT(picks1 == picks2);
+    TEST_ASSERT(picks1 == picks2)
   }
   BOOST_LOG(rdErrorLog) << "Done" << std::endl;
 }
