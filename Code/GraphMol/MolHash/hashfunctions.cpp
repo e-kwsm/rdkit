@@ -39,7 +39,7 @@ void addCXExtensions(RDKit::RWMol *mol, std::string &result,
   }
 }
 unsigned int NMRDKitBondGetOrder(const RDKit::Bond *bnd) {
-  PRECONDITION(bnd, "bad bond");
+  PRECONDITION(bnd, "bad bond")
   switch (bnd->getBondType()) {
     case RDKit::Bond::AROMATIC:
     case RDKit::Bond::SINGLE:
@@ -62,9 +62,9 @@ unsigned int NMRDKitBondGetOrder(const RDKit::Bond *bnd) {
 RDKit::Bond *NMRDKitMolNewBond(RDKit::RWMol *mol, RDKit::Atom *src,
                                RDKit::Atom *dst, unsigned int order,
                                bool arom) {
-  PRECONDITION(mol, "bad molecule");
-  PRECONDITION(src, "bad src atom");
-  PRECONDITION(dst, "bad dest atom");
+  PRECONDITION(mol, "bad molecule")
+  PRECONDITION(src, "bad src atom")
+  PRECONDITION(dst, "bad dest atom")
   RDKit::Bond *result;
   result = mol->getBondBetweenAtoms(src->getIdx(), dst->getIdx());
   if (result) {
@@ -114,7 +114,7 @@ RDKit::Bond *NMRDKitMolNewBond(RDKit::RWMol *mol, RDKit::Atom *src,
 }
 
 void NMRDKitSanitizeHydrogens(RDKit::RWMol *mol) {
-  PRECONDITION(mol, "bad molecule");
+  PRECONDITION(mol, "bad molecule")
   // Move all of the implicit Hs into one box
   for (auto aptr : mol->atoms()) {
     unsigned int hcount = aptr->getTotalNumHs();
@@ -135,8 +135,8 @@ namespace MolHash {
 namespace {
 unsigned int NMDetermineComponents(RWMol *mol, unsigned int *parts,
                                    unsigned int acount) {
-  PRECONDITION(mol, "bad molecule");
-  PRECONDITION(parts, "bad parts pointer");
+  PRECONDITION(mol, "bad molecule")
+  PRECONDITION(parts, "bad parts pointer")
   memset(parts, 0, acount * sizeof(unsigned int));
   std::vector<Atom *> todo;
 
@@ -167,8 +167,8 @@ unsigned int NMDetermineComponents(RWMol *mol, unsigned int *parts,
 
 std::string NMMolecularFormula(RWMol *mol, const unsigned int *parts,
                                unsigned int part) {
-  PRECONDITION(mol, "bad molecule");
-  PRECONDITION((!part || parts), "bad parts pointer");
+  PRECONDITION(mol, "bad molecule")
+  PRECONDITION((!part || parts), "bad parts pointer")
   unsigned int hist[256];
   int charge = 0;
 
@@ -220,7 +220,7 @@ std::string NMMolecularFormula(RWMol *mol, const unsigned int *parts,
 }
 
 std::string NMMolecularFormula(RWMol *mol, bool sep = false) {
-  PRECONDITION(mol, "bad molecule");
+  PRECONDITION(mol, "bad molecule")
   if (!sep) {
     return NMMolecularFormula(mol, nullptr, 0);
   }
@@ -255,7 +255,7 @@ std::string NMMolecularFormula(RWMol *mol, bool sep = false) {
 }
 
 void NormalizeHCount(Atom *aptr) {
-  PRECONDITION(aptr, "bad atom pointer");
+  PRECONDITION(aptr, "bad atom pointer")
   unsigned int hcount;
 
   switch (aptr->getAtomicNum()) {
@@ -935,8 +935,8 @@ std::string TautomerHash(RWMol *mol, bool proto, bool useCXSmiles,
 }
 
 bool TraverseForRing(Atom *atom, unsigned char *visit) {
-  PRECONDITION(atom, "bad atom pointer");
-  PRECONDITION(visit, "bad pointer");
+  PRECONDITION(atom, "bad atom pointer")
+  PRECONDITION(visit, "bad pointer")
   visit[atom->getIdx()] = 1;
   for (auto nbri : boost::make_iterator_range(
            atom->getOwningMol().getAtomNeighbors(atom))) {
@@ -955,8 +955,8 @@ bool TraverseForRing(Atom *atom, unsigned char *visit) {
 }
 
 bool DepthFirstSearchForRing(Atom *root, Atom *nbor, unsigned int maxatomidx) {
-  PRECONDITION(root, "bad atom pointer");
-  PRECONDITION(nbor, "bad atom pointer");
+  PRECONDITION(root, "bad atom pointer")
+  PRECONDITION(nbor, "bad atom pointer")
 
   unsigned int natoms = maxatomidx;
   auto *visit = (unsigned char *)alloca(natoms);
@@ -967,7 +967,7 @@ bool DepthFirstSearchForRing(Atom *root, Atom *nbor, unsigned int maxatomidx) {
 }
 
 bool IsInScaffold(Atom *atom, unsigned int maxatomidx) {
-  PRECONDITION(atom, "bad atom pointer");
+  PRECONDITION(atom, "bad atom pointer")
   if (RDKit::queryIsAtomInRing(atom)) {
     return true;
   }
@@ -984,8 +984,8 @@ bool IsInScaffold(Atom *atom, unsigned int maxatomidx) {
 }
 
 bool HasNbrInScaffold(Atom *aptr, unsigned char *is_in_scaffold) {
-  PRECONDITION(aptr, "bad atom pointer");
-  PRECONDITION(is_in_scaffold, "bad pointer");
+  PRECONDITION(aptr, "bad atom pointer")
+  PRECONDITION(is_in_scaffold, "bad pointer")
   for (auto nbri : boost::make_iterator_range(
            aptr->getOwningMol().getAtomNeighbors(aptr))) {
     auto nptr = aptr->getOwningMol()[nbri];
@@ -1091,7 +1091,7 @@ std::string MurckoScaffoldHash(RWMol *mol, bool useCXSmiles,
 }
 
 std::string NetChargeHash(RWMol *mol) {
-  PRECONDITION(mol, "bad molecule");
+  PRECONDITION(mol, "bad molecule")
   int totalq = 0;
 
   for (auto aptr : mol->atoms()) {
@@ -1104,7 +1104,7 @@ std::string NetChargeHash(RWMol *mol) {
 }
 
 std::string SmallWorldHash(RWMol *mol, bool brl) {
-  PRECONDITION(mol, "bad molecule");
+  PRECONDITION(mol, "bad molecule")
   char buffer[64];
 
   unsigned int acount = mol->getNumAtoms();
@@ -1146,7 +1146,7 @@ void DegreeVector(RWMol *mol, unsigned int *v) {
 }
 
 bool HasDoubleBond(Atom *atom) {
-  PRECONDITION(atom, "bad atom");
+  PRECONDITION(atom, "bad atom")
   for (const auto &nbri :
        boost::make_iterator_range(atom->getOwningMol().getAtomBonds(atom))) {
     auto bptr = (atom->getOwningMol())[nbri];
@@ -1165,7 +1165,7 @@ bool HasDoubleBond(Atom *atom) {
 // 3 means break, with asterisks on both beg and end
 
 int RegioisomerBond(Bond *bnd) {
-  PRECONDITION(bnd, "bad bond");
+  PRECONDITION(bnd, "bad bond")
   if (NMRDKitBondGetOrder(bnd) != 1) {
     return -1;
   }
@@ -1203,7 +1203,7 @@ int RegioisomerBond(Bond *bnd) {
 }
 
 void ClearEZStereo(Atom *atm) {
-  PRECONDITION(atm, "bad atom");
+  PRECONDITION(atm, "bad atom")
   for (const auto &nbri :
        boost::make_iterator_range(atm->getOwningMol().getAtomBonds(atm))) {
     auto bptr = (atm->getOwningMol())[nbri];
@@ -1272,7 +1272,7 @@ std::string RegioisomerHash(RWMol *mol, bool useCXSmiles,
 }
 
 std::string ArthorSubOrderHash(RWMol *mol) {
-  PRECONDITION(mol, "bad molecule");
+  PRECONDITION(mol, "bad molecule")
   char buffer[256];
 
   unsigned int acount = mol->getNumAtoms();

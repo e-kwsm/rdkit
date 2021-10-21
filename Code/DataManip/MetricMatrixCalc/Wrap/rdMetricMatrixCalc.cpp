@@ -88,7 +88,7 @@ PyObject *getEuclideanDistMat(python::object descripMat) {
     int nrows = PyArray_DIM((PyArrayObject *)descMatObj, 0);
     int ncols = PyArray_DIM((PyArrayObject *)descMatObj, 1);
     int i;
-    CHECK_INVARIANT((nrows > 0) && (ncols > 0), "");
+    CHECK_INVARIANT((nrows > 0) && (ncols > 0), "")
 
     npy_intp dMatLen = nrows * (nrows - 1) / 2;
 
@@ -170,7 +170,7 @@ PyObject *getEuclideanDistMat(python::object descripMat) {
     unsigned int ncols = 0;
     unsigned int nrows =
         python::extract<unsigned int>(descripMat.attr("__len__")());
-    CHECK_INVARIANT(nrows > 0, "Empty list passed in");
+    CHECK_INVARIANT(nrows > 0, "Empty list passed in")
 
     npy_intp dMatLen = nrows * (nrows - 1) / 2;
     distRes = (PyArrayObject *)PyArray_SimpleNew(1, &dMatLen, NPY_DOUBLE);
@@ -205,7 +205,7 @@ PyObject *getTanimotoDistMat(python::object bitVectList) {
   // we will assume here that we have a either a list of ExplicitBitVectors or
   // SparseBitVects
   int nrows = python::extract<int>(bitVectList.attr("__len__")());
-  CHECK_INVARIANT(nrows > 1, "");
+  CHECK_INVARIANT(nrows > 1, "")
 
   // First check what type of vector we have
   python::object v1 = bitVectList[0];
@@ -240,7 +240,7 @@ PyObject *getTanimotoSimMat(python::object bitVectList) {
   // we will assume here that we have a either a list of ExplicitBitVectors or
   // SparseBitVects
   int nrows = python::extract<int>(bitVectList.attr("__len__")());
-  CHECK_INVARIANT(nrows > 1, "");
+  CHECK_INVARIANT(nrows > 1, "")
 
   // First check what type of vector we have
   python::object v1 = bitVectList[0];

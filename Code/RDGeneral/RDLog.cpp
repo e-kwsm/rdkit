@@ -60,7 +60,7 @@ LogStateSetter::~LogStateSetter() {
 namespace boost {
 namespace logging {
 
-void enable_logs(const char *arg) { enable_logs(std::string(arg)); };
+void enable_logs(const char *arg) { enable_logs(std::string(arg)); }
 void enable_logs(const std::string &arg) {
   // Yes... this is extremely crude
   if (arg == "rdApp.debug" || arg == "rdApp.*") {
@@ -83,8 +83,8 @@ void enable_logs(const std::string &arg) {
       rdErrorLog->df_enabled = true;
     }
   }
-};
-void disable_logs(const char *arg) { disable_logs(std::string(arg)); };
+}
+void disable_logs(const char *arg) { disable_logs(std::string(arg)); }
 void disable_logs(const std::string &arg) {
   // Yes... this is extremely crude
   if (arg == "rdApp.debug" || arg == "rdApp.*") {
@@ -107,7 +107,7 @@ void disable_logs(const std::string &arg) {
       rdErrorLog->df_enabled = false;
     }
   }
-};
+}
 
 bool is_log_enabled(RDLogger log) { return log && log->df_enabled; }
 
@@ -224,7 +224,7 @@ void InitLogs() {
 #endif
   // start with the debug log disabled:
   logging::disable_logs("rdApp.debug");
-};
+}
 
 }  // namespace RDLog
 #endif
