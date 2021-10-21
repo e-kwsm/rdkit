@@ -24,7 +24,7 @@ namespace Descriptors {
 
 double getLabuteAtomContribs(const ROMol &mol, std::vector<double> &Vi,
                              double &hContrib, bool includeHs, bool force) {
-  TEST_ASSERT(Vi.size() == mol.getNumAtoms());
+  TEST_ASSERT(Vi.size() == mol.getNumAtoms())
   if (!force && mol.hasProp(common_properties::_labuteAtomContribs)) {
     mol.getProp(common_properties::_labuteAtomContribs, Vi);
     mol.getProp(common_properties::_labuteAtomHContrib, hContrib);
@@ -102,7 +102,7 @@ double calcLabuteASA(const ROMol &mol, bool includeHs, bool force) {
 
 double getTPSAAtomContribs(const ROMol &mol, std::vector<double> &Vi,
                            bool force, bool includeSandP) {
-  TEST_ASSERT(Vi.size() >= mol.getNumAtoms());
+  TEST_ASSERT(Vi.size() >= mol.getNumAtoms())
   double res = 0;
   std::string pname =
       (boost::format("%s-%s") % common_properties::_tpsa % includeSandP).str();
@@ -364,8 +364,8 @@ void assignContribsToBins(const std::vector<double> &contribs,
                           const std::vector<double> &binProp,
                           const std::vector<double> &bins,
                           std::vector<double> &res) {
-  PRECONDITION(contribs.size() == binProp.size(), "mismatched array sizes");
-  PRECONDITION(res.size() >= bins.size() + 1, "mismatched array sizes");
+  PRECONDITION(contribs.size() == binProp.size(), "mismatched array sizes")
+  PRECONDITION(res.size() >= bins.size() + 1, "mismatched array sizes")
   for (unsigned int i = 0; i < contribs.size(); ++i) {
     double cVal = contribs[i];
     double bVal = binProp[i];

@@ -134,7 +134,7 @@ void test2() {
   CHECK_INVARIANT(iv[5] == 0, "bad frag membership");
   CHECK_INVARIANT(iv[6] == 1, "bad frag membership");
   delete m;
-};
+}
 
 void test3() {
   string smi;

@@ -19,7 +19,7 @@ void getVariations(size_t level, std::vector<size_t> base,
                    std::vector<std::vector<size_t>> &variations,
                    const std::vector<size_t> &variationCounts,
                    size_t maxToEnumerate, bool doRandom) {
-  PRECONDITION(level < variationCounts.size(), "bad recursion");
+  PRECONDITION(level < variationCounts.size(), "bad recursion")
   for (size_t i = 0; i < variationCounts[level]; ++i) {
     base[level] = i;
     if (level + 1 >= variationCounts.size()) {
@@ -38,7 +38,7 @@ void enumerateVariations(std::vector<std::vector<size_t>> &variations,
                          const std::vector<size_t> &variationCounts,
                          const MolEnumeratorParams &params) {
   if (params.doRandom) {
-    UNDER_CONSTRUCTION("random enumeration not yet supported");
+    UNDER_CONSTRUCTION("random enumeration not yet supported")
   }
   variations.clear();
   std::vector<size_t> base(variationCounts.size(), 0);
