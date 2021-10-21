@@ -37,17 +37,17 @@ void test1Canonicalization() {
   int cid = mol->addConformer(conf, true);
   CHECK_INVARIANT(cid >= 0, "")
   RDGeom::Point3D pt = computeCentroid(*conf);
-  CHECK_INVARIANT(comparePts(pt, RDGeom::Point3D(4.0, 5.0, 6.0)), "");
+  CHECK_INVARIANT(comparePts(pt, RDGeom::Point3D(4.0, 5.0, 6.0)), "")
 
   RDGeom::Transform3D *trans = computeCanonicalTransform(*conf);
   transformConformer(*conf, *trans);
   CHECK_INVARIANT(
-      comparePts(conf->getAtomPos(0), RDGeom::Point3D(0.0, 0.0, 0.0)), "");
+      comparePts(conf->getAtomPos(0), RDGeom::Point3D(0.0, 0.0, 0.0)), "")
 
   conf->setAtomPos(0, RDGeom::Point3D(4.0, 5.0, 6.0));
   canonicalizeConformer(*conf);
   CHECK_INVARIANT(
-      comparePts(conf->getAtomPos(0), RDGeom::Point3D(0.0, 0.0, 0.0)), "");
+      comparePts(conf->getAtomPos(0), RDGeom::Point3D(0.0, 0.0, 0.0)), "")
 
   delete mol;
   // delete conf;
@@ -61,9 +61,9 @@ void test1Canonicalization() {
   trans = computeCanonicalTransform(*conf);
   canonicalizeConformer(*conf);
   CHECK_INVARIANT(
-      comparePts(conf->getAtomPos(0), RDGeom::Point3D(-0.75, 0.0, 0.0)), "");
+      comparePts(conf->getAtomPos(0), RDGeom::Point3D(-0.75, 0.0, 0.0)), "")
   CHECK_INVARIANT(
-      comparePts(conf->getAtomPos(1), RDGeom::Point3D(0.75, 0.0, 0.0)), "");
+      comparePts(conf->getAtomPos(1), RDGeom::Point3D(0.75, 0.0, 0.0)), "")
 
   conf->setAtomPos(0, RDGeom::Point3D(0.0, 0.0, 0.0));
   conf->setAtomPos(1, RDGeom::Point3D(0.0, 1.5, 0.0));
@@ -72,9 +72,9 @@ void test1Canonicalization() {
   canonicalizeConformer(*conf);
 
   CHECK_INVARIANT(
-      comparePts(conf->getAtomPos(0), RDGeom::Point3D(-0.75, 0.0, 0.0)), "");
+      comparePts(conf->getAtomPos(0), RDGeom::Point3D(-0.75, 0.0, 0.0)), "")
   CHECK_INVARIANT(
-      comparePts(conf->getAtomPos(1), RDGeom::Point3D(0.75, 0.0, 0.0)), "");
+      comparePts(conf->getAtomPos(1), RDGeom::Point3D(0.75, 0.0, 0.0)), "")
   delete mol;
   delete trans;
 
@@ -87,9 +87,9 @@ void test1Canonicalization() {
   transformConformer(*conf, *trans);
   canonicalizeConformer(*conf);
   CHECK_INVARIANT(
-      comparePts(conf->getAtomPos(0), RDGeom::Point3D(-0.75, 0.0, 0.0)), "");
+      comparePts(conf->getAtomPos(0), RDGeom::Point3D(-0.75, 0.0, 0.0)), "")
   CHECK_INVARIANT(
-      comparePts(conf->getAtomPos(1), RDGeom::Point3D(0.75, 0.0, 0.0)), "");
+      comparePts(conf->getAtomPos(1), RDGeom::Point3D(0.75, 0.0, 0.0)), "")
   delete mol;
   delete trans;
 
@@ -117,9 +117,9 @@ void test1Canonicalization() {
       RDGeom::Point3D(-0.2029, -0.8602, 0.0),
       RDGeom::Point3D(0.8447, 0.2445, 0.0)};
 #endif
-  CHECK_INVARIANT(comparePts(conf->getAtomPos(0), expected.at(0)), "");
-  CHECK_INVARIANT(comparePts(conf->getAtomPos(1), expected.at(1)), "");
-  CHECK_INVARIANT(comparePts(conf->getAtomPos(2), expected.at(2)), "");
+  CHECK_INVARIANT(comparePts(conf->getAtomPos(0), expected.at(0)), "")
+  CHECK_INVARIANT(comparePts(conf->getAtomPos(1), expected.at(1)), "")
+  CHECK_INVARIANT(comparePts(conf->getAtomPos(2), expected.at(2)), "")
   MolToMolFile(*mol, "junk.mol", true, 0);
   delete mol;
 
@@ -137,7 +137,7 @@ void test1Canonicalization() {
   Conformer &conf2 = mol2->getConformer();
   unsigned int i, nats = mol->getNumAtoms();
   for (i = 0; i < nats; ++i) {
-    CHECK_INVARIANT(comparePts(conf1.getAtomPos(i), conf2.getAtomPos(i)), "");
+    CHECK_INVARIANT(comparePts(conf1.getAtomPos(i), conf2.getAtomPos(i)), "")
   }
 
   delete mol;
@@ -156,16 +156,16 @@ void testGetSetBondLength() {
       rdbase +
       "/Code/GraphMol/MolTransforms/test_data/3-cyclohexylpyridine.mol";
   RWMol *m = MolFileToMol(fName, true, false);
-  TEST_ASSERT(m);
+  TEST_ASSERT(m)
   Conformer &conf = m->getConformer();
   double dist = getBondLength(conf, 0, 19);
-  TEST_ASSERT(RDKit::feq(dist, 1.36));
+  TEST_ASSERT(RDKit::feq(dist, 1.36))
   setBondLength(conf, 0, 19, 2.5);
   dist = getBondLength(conf, 0, 19);
-  TEST_ASSERT(RDKit::feq(dist, 2.5));
+  TEST_ASSERT(RDKit::feq(dist, 2.5))
   setBondLength(conf, 19, 0, 3.0);
   dist = getBondLength(conf, 0, 19);
-  TEST_ASSERT(RDKit::feq(dist, 3.0));
+  TEST_ASSERT(RDKit::feq(dist, 3.0))
   delete m;
 }
 
@@ -175,18 +175,18 @@ void testGetSetAngle() {
       rdbase +
       "/Code/GraphMol/MolTransforms/test_data/3-cyclohexylpyridine.mol";
   RWMol *m = MolFileToMol(fName, true, false);
-  TEST_ASSERT(m);
+  TEST_ASSERT(m)
   Conformer &conf = m->getConformer();
   double angle = getAngleDeg(conf, 0, 19, 21);
-  TEST_ASSERT(RDKit::feq(angle, 109.7, 0.05));
+  TEST_ASSERT(RDKit::feq(angle, 109.7, 0.05))
   setAngleDeg(conf, 0, 19, 21, 125.0);
   angle = getAngleDeg(conf, 0, 19, 21);
-  TEST_ASSERT(RDKit::feq(angle, 125.0));
+  TEST_ASSERT(RDKit::feq(angle, 125.0))
   setAngleRad(conf, 21, 19, 0, M_PI / 2.);
   angle = getAngleRad(conf, 0, 19, 21);
-  TEST_ASSERT(RDKit::feq(angle, M_PI / 2.));
+  TEST_ASSERT(RDKit::feq(angle, M_PI / 2.))
   angle = getAngleDeg(conf, 0, 19, 21);
-  TEST_ASSERT(RDKit::feq(angle, 90.0));
+  TEST_ASSERT(RDKit::feq(angle, 90.0))
   delete m;
 }
 
@@ -196,21 +196,21 @@ void testGetSetDihedral() {
       rdbase +
       "/Code/GraphMol/MolTransforms/test_data/3-cyclohexylpyridine.mol";
   RWMol *m = MolFileToMol(fName, true, false);
-  TEST_ASSERT(m);
+  TEST_ASSERT(m)
   Conformer &conf = m->getConformer();
   double dihedral = getDihedralDeg(conf, 0, 19, 21, 24);
-  TEST_ASSERT(RDKit::feq(dihedral, 176.05, 0.05));
+  TEST_ASSERT(RDKit::feq(dihedral, 176.05, 0.05))
   setDihedralDeg(conf, 8, 0, 19, 21, 65.0);
   dihedral = getDihedralDeg(conf, 8, 0, 19, 21);
-  TEST_ASSERT(RDKit::feq(dihedral, 65.0));
+  TEST_ASSERT(RDKit::feq(dihedral, 65.0))
   setDihedralDeg(conf, 8, 0, 19, 21, -130.0);
   dihedral = getDihedralDeg(conf, 8, 0, 19, 21);
-  TEST_ASSERT(RDKit::feq(dihedral, -130.0));
+  TEST_ASSERT(RDKit::feq(dihedral, -130.0))
   setDihedralRad(conf, 21, 19, 0, 8, -2. / 3. * M_PI);
   dihedral = getDihedralRad(conf, 8, 0, 19, 21);
-  TEST_ASSERT(RDKit::feq(dihedral, -2. / 3. * M_PI));
+  TEST_ASSERT(RDKit::feq(dihedral, -2. / 3. * M_PI))
   dihedral = getDihedralDeg(conf, 8, 0, 19, 21);
-  TEST_ASSERT(RDKit::feq(dihedral, -120.0));
+  TEST_ASSERT(RDKit::feq(dihedral, -120.0))
   delete m;
 }
 
@@ -219,29 +219,29 @@ void testGetSetDihedralThroughTripleBond() {
   std::string fName =
       rdbase + "/Code/GraphMol/MolTransforms/test_data/github1262_2.mol";
   RWMol *m = MolFileToMol(fName, true, false);
-  TEST_ASSERT(m);
+  TEST_ASSERT(m)
   Conformer &conf = m->getConformer();
   setDihedralDeg(conf, 6, 1, 2, 9, 0.0);
   double dihedral = getDihedralDeg(conf, 6, 1, 2, 9);
-  TEST_ASSERT(RDKit::feq(dihedral, 0.0));
+  TEST_ASSERT(RDKit::feq(dihedral, 0.0))
   double dist = getBondLength(conf, 6, 9);
   setDihedralDeg(conf, 6, 1, 2, 9, 120.0);
   dihedral = getDihedralDeg(conf, 6, 1, 2, 9);
-  TEST_ASSERT(RDKit::feq(dihedral, 120.0));
+  TEST_ASSERT(RDKit::feq(dihedral, 120.0))
   double dist2 = getBondLength(conf, 6, 7);
-  TEST_ASSERT(RDKit::feq(dist, dist2, 0.05));
+  TEST_ASSERT(RDKit::feq(dist, dist2, 0.05))
   setDihedralDeg(conf, 6, 1, 2, 9, 180.0);
   dihedral = getDihedralDeg(conf, 6, 1, 2, 9);
-  TEST_ASSERT(RDKit::feq(dihedral, 180.0));
+  TEST_ASSERT(RDKit::feq(dihedral, 180.0))
   double dist3 = getBondLength(conf, 6, 9);
-  TEST_ASSERT(!RDKit::feq(dist, dist3, 0.3));
+  TEST_ASSERT(!RDKit::feq(dist, dist3, 0.3))
   bool exceptionRaised = false;
   try {
     setDihedralDeg(conf, 6, 0, 3, 9, 0.0);
   } catch (ValueErrorException &) {
     exceptionRaised = true;
   }
-  TEST_ASSERT(exceptionRaised);
+  TEST_ASSERT(exceptionRaised)
   delete m;
 }
 
@@ -250,7 +250,7 @@ void testGithub1262() {}
 #else
 void _calcAxesAndMoments(RWMol *m, Eigen::Matrix3d &axes,
                          Eigen::Vector3d &moments) {
-  TEST_ASSERT(m);
+  TEST_ASSERT(m)
   Conformer &conf = m->getConformer();
   std::vector<double> weights;
   weights.resize(m->getNumAtoms());
@@ -269,13 +269,13 @@ void testGithub1262() {
     std::string fName =
         rdbase + "/Code/GraphMol/MolTransforms/test_data/github1262_1.mol";
     RWMol *m = MolFileToMol(fName, true, false);
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
     Eigen::Matrix3d axes;
     Eigen::Vector3d moments;
     _calcAxesAndMoments(m, axes, moments);
-    TEST_ASSERT((moments(2) - moments(0)) > 10.);
-    TEST_ASSERT((moments(2) - moments(1)) > 10.);
-    TEST_ASSERT((moments(1) - moments(0)) < 1e-2);
+    TEST_ASSERT((moments(2) - moments(0)) > 10.)
+    TEST_ASSERT((moments(2) - moments(1)) > 10.)
+    TEST_ASSERT((moments(1) - moments(0)) < 1e-2)
 
     delete m;
   }
@@ -283,13 +283,13 @@ void testGithub1262() {
     std::string fName =
         rdbase + "/Code/GraphMol/MolTransforms/test_data/github1262_2.mol";
     RWMol *m = MolFileToMol(fName, true, false);
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
     Eigen::Matrix3d axes;
     Eigen::Vector3d moments;
     _calcAxesAndMoments(m, axes, moments);
-    TEST_ASSERT((moments(2) - moments(0)) > 10.);
-    TEST_ASSERT((moments(2) - moments(1)) < 1e-2);
-    TEST_ASSERT((moments(1) - moments(0)) > 10);
+    TEST_ASSERT((moments(2) - moments(0)) > 10.)
+    TEST_ASSERT((moments(2) - moments(1)) < 1e-2)
+    TEST_ASSERT((moments(1) - moments(0)) > 10)
 
     delete m;
   }
@@ -297,13 +297,13 @@ void testGithub1262() {
     std::string fName =
         rdbase + "/Code/GraphMol/MolTransforms/test_data/github1262_3.mol";
     RWMol *m = MolFileToMol(fName, true, false);
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
     Eigen::Matrix3d axes;
     Eigen::Vector3d moments;
     _calcAxesAndMoments(m, axes, moments);
-    TEST_ASSERT((moments(2) - moments(0)) < 1e-2);
-    TEST_ASSERT((moments(2) - moments(1)) < 1e-2);
-    TEST_ASSERT((moments(1) - moments(0)) < 1e-2);
+    TEST_ASSERT((moments(2) - moments(0)) < 1e-2)
+    TEST_ASSERT((moments(2) - moments(1)) < 1e-2)
+    TEST_ASSERT((moments(1) - moments(0)) < 1e-2)
 
     delete m;
   }
@@ -316,47 +316,47 @@ void testGithub1908() {
     std::string fName =
         rdbase + "/Code/GraphMol/MolTransforms/test_data/github1908_2.mol";
     std::unique_ptr<RWMol> m(MolFileToMol(fName));
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
 
     Conformer &conf = m->getConformer();
     double dist = getBondLength(conf, 0, 1);
     // std::cerr << " 1: " << dist << std::endl;
-    TEST_ASSERT(feq(dist, 1.38, .02));
+    TEST_ASSERT(feq(dist, 1.38, .02))
     dist = getBondLength(conf, 1, 2);
     // std::cerr << " 2: " << dist << std::endl;
-    TEST_ASSERT(feq(dist, 1.38, .02));
+    TEST_ASSERT(feq(dist, 1.38, .02))
 
     canonicalizeConformer(conf);
 
     dist = getBondLength(conf, 0, 1);
     // std::cerr << " 3: " << dist << std::endl;
-    TEST_ASSERT(feq(dist, 1.38, .02));
+    TEST_ASSERT(feq(dist, 1.38, .02))
     dist = getBondLength(conf, 1, 2);
     // std::cerr << " 4: " << dist << std::endl;
-    TEST_ASSERT(feq(dist, 1.38, .02));
+    TEST_ASSERT(feq(dist, 1.38, .02))
   }
   {  // a disc (benzene)
     std::string fName =
         rdbase + "/Code/GraphMol/MolTransforms/test_data/github1908_1.mol";
     std::unique_ptr<RWMol> m(MolFileToMol(fName));
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
 
     Conformer &conf = m->getConformer();
     double dist = getBondLength(conf, 0, 1);
     // std::cerr << " 1: " << dist << std::endl;
-    TEST_ASSERT(feq(dist, 1.38, .02));
+    TEST_ASSERT(feq(dist, 1.38, .02))
     dist = getBondLength(conf, 1, 2);
     // std::cerr << " 2: " << dist << std::endl;
-    TEST_ASSERT(feq(dist, 1.38, .02));
+    TEST_ASSERT(feq(dist, 1.38, .02))
 
     canonicalizeConformer(conf);
 
     dist = getBondLength(conf, 0, 1);
     // std::cerr << " 3: " << dist << std::endl;
-    TEST_ASSERT(feq(dist, 1.38, .02));
+    TEST_ASSERT(feq(dist, 1.38, .02))
     dist = getBondLength(conf, 1, 2);
     // std::cerr << " 4: " << dist << std::endl;
-    TEST_ASSERT(feq(dist, 1.38, .02));
+    TEST_ASSERT(feq(dist, 1.38, .02))
   }
 }
 
@@ -378,7 +378,7 @@ void testGithub4302() {
     // or distorted coordinates with these conformations
 #ifdef RDK_HAS_EIGEN3
     for (unsigned int i = 0; i < mol->getNumAtoms(); ++i) {
-      TEST_ASSERT(comparePts(canonConf->getAtomPos(i), conf.getAtomPos(i)));
+      TEST_ASSERT(comparePts(canonConf->getAtomPos(i), conf.getAtomPos(i)))
     }
 #endif
     writer.write(*mol, cid);
@@ -409,7 +409,7 @@ void testWeightedCentroid() {
       ctd += conf.getAtomPos(a->getIdx()) * atomicMass;
     }
     ctd /= totalMass;
-    TEST_ASSERT((ctd - computeCentroid(conf, true, &weights)).length() < 1.e-4);
+    TEST_ASSERT((ctd - computeCentroid(conf, true, &weights)).length() < 1.e-4)
   }
 }
 

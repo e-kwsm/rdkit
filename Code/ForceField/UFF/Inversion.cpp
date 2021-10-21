@@ -88,11 +88,11 @@ InversionContrib::InversionContrib(ForceField *owner, unsigned int idx1,
                                    unsigned int idx4, int at2AtomicNum,
                                    bool isCBoundToO,
                                    double oobForceScalingFactor) {
-  PRECONDITION(owner, "bad owner");
-  URANGE_CHECK(idx1, owner->positions().size());
-  URANGE_CHECK(idx2, owner->positions().size());
-  URANGE_CHECK(idx3, owner->positions().size());
-  URANGE_CHECK(idx4, owner->positions().size());
+  PRECONDITION(owner, "bad owner")
+  URANGE_CHECK(idx1, owner->positions().size())
+  URANGE_CHECK(idx2, owner->positions().size())
+  URANGE_CHECK(idx3, owner->positions().size())
+  URANGE_CHECK(idx4, owner->positions().size())
 
   dp_forceField = owner;
   d_at1Idx = idx1;
@@ -109,8 +109,8 @@ InversionContrib::InversionContrib(ForceField *owner, unsigned int idx1,
 }
 
 double InversionContrib::getEnergy(double *pos) const {
-  PRECONDITION(dp_forceField, "no owner");
-  PRECONDITION(pos, "bad vector");
+  PRECONDITION(dp_forceField, "no owner")
+  PRECONDITION(pos, "bad vector")
 
   RDGeom::Point3D p1(pos[3 * d_at1Idx], pos[3 * d_at1Idx + 1],
                      pos[3 * d_at1Idx + 2]);
@@ -133,9 +133,9 @@ double InversionContrib::getEnergy(double *pos) const {
   return res;
 }
 void InversionContrib::getGrad(double *pos, double *grad) const {
-  PRECONDITION(dp_forceField, "no owner");
-  PRECONDITION(pos, "bad vector");
-  PRECONDITION(grad, "bad vector");
+  PRECONDITION(dp_forceField, "no owner")
+  PRECONDITION(pos, "bad vector")
+  PRECONDITION(grad, "bad vector")
 
   RDGeom::Point3D p1(pos[3 * d_at1Idx], pos[3 * d_at1Idx + 1],
                      pos[3 * d_at1Idx + 2]);

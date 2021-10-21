@@ -20,7 +20,7 @@ namespace RDKit {
 // local utility namespace:
 namespace {
 bool isAtomConjugCand(const Atom *at) {
-  PRECONDITION(at, "bad atom");
+  PRECONDITION(at, "bad atom")
   // the second check here is for Issue211, where the c-P bonds in
   // Pc1ccccc1 were being marked as conjugated.  This caused the P atom
   // itself to be SP2 hybridized.  This is wrong.  For now we'll do a quick
@@ -34,7 +34,7 @@ bool isAtomConjugCand(const Atom *at) {
 }
 
 void markConjAtomBonds(Atom *at) {
-  PRECONDITION(at, "bad atom");
+  PRECONDITION(at, "bad atom")
   if (!isAtomConjugCand(at)) {
     return;
   }
@@ -72,7 +72,7 @@ void markConjAtomBonds(Atom *at) {
 }
 
 int numBondsPlusLonePairs(Atom *at) {
-  PRECONDITION(at, "bad atom");
+  PRECONDITION(at, "bad atom")
   int deg = at->getTotalDegree();
 
   auto &mol = at->getOwningMol();
@@ -106,7 +106,7 @@ int numBondsPlusLonePairs(Atom *at) {
 
 namespace MolOps {
 bool atomHasConjugatedBond(const Atom *at) {
-  PRECONDITION(at, "bad atom");
+  PRECONDITION(at, "bad atom")
 
   auto &mol = at->getOwningMol();
   for (const auto &nbri : boost::make_iterator_range(mol.getAtomBonds(at))) {

@@ -19,9 +19,9 @@ DistViolationContrib::DistViolationContrib(ForceFields::ForceField *owner,
                                            unsigned int idx1, unsigned int idx2,
                                            double ub, double lb,
                                            double weight) {
-  PRECONDITION(owner, "bad owner");
-  URANGE_CHECK(idx1, owner->positions().size());
-  URANGE_CHECK(idx2, owner->positions().size());
+  PRECONDITION(owner, "bad owner")
+  URANGE_CHECK(idx1, owner->positions().size())
+  URANGE_CHECK(idx2, owner->positions().size())
 
   dp_forceField = owner;
   d_end1Idx = idx1;
@@ -32,8 +32,8 @@ DistViolationContrib::DistViolationContrib(ForceFields::ForceField *owner,
 }
 
 double DistViolationContrib::getEnergy(double *pos) const {
-  PRECONDITION(dp_forceField, "no owner");
-  PRECONDITION(pos, "bad vector");
+  PRECONDITION(dp_forceField, "no owner")
+  PRECONDITION(pos, "bad vector")
 
   double d =
       this->dp_forceField->distance(this->d_end1Idx, this->d_end2Idx, pos);
@@ -59,9 +59,9 @@ double DistViolationContrib::getEnergy(double *pos) const {
 }
 
 void DistViolationContrib::getGrad(double *pos, double *grad) const {
-  PRECONDITION(dp_forceField, "no owner");
-  PRECONDITION(pos, "bad vector");
-  PRECONDITION(grad, "bad vector");
+  PRECONDITION(dp_forceField, "no owner")
+  PRECONDITION(pos, "bad vector")
+  PRECONDITION(grad, "bad vector")
   unsigned int dim = this->dp_forceField->dimension();
   double d =
       this->dp_forceField->distance(this->d_end1Idx, this->d_end2Idx, pos);

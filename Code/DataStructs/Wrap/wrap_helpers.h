@@ -21,7 +21,7 @@ namespace python = boost::python;
 template <typename T>
 void InitFromBase64(T& self, const std::string& inD) {
   self.initFromText(inD.c_str(), inD.length(), true);
-};
+}
 
 template <typename T>
 std::string ToBase64(T& self) {
@@ -31,7 +31,7 @@ std::string ToBase64(T& self) {
   std::string res(txt);
   delete[] txt;
   return res;
-};
+}
 
 template <typename T>
 void SetBitsFromList(T* bv, python::object onBitList) {

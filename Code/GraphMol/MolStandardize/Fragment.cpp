@@ -73,7 +73,7 @@ FragmentRemover::FragmentRemover(std::istream &fragmentStream, bool leave_last,
 }
 
 // Destructor
-FragmentRemover::~FragmentRemover() { delete d_fcat; };
+FragmentRemover::~FragmentRemover() { delete d_fcat; }
 
 ROMol *FragmentRemover::remove(const ROMol &mol) {
   auto molcp = new RWMol(mol);
@@ -83,10 +83,10 @@ ROMol *FragmentRemover::remove(const ROMol &mol) {
 
 void FragmentRemover::removeInPlace(RWMol &mol) {
   BOOST_LOG(rdInfoLog) << "Running FragmentRemover\n";
-  PRECONDITION(this->d_fcat, "");
+  PRECONDITION(this->d_fcat, "")
   const FragmentCatalogParams *fparams = this->d_fcat->getCatalogParams();
 
-  PRECONDITION(fparams, "");
+  PRECONDITION(fparams, "")
 
   const std::vector<std::shared_ptr<ROMol>> &fgrps = fparams->getFuncGroups();
   bool sanitizeFrags = false;

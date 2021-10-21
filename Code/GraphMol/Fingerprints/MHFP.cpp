@@ -157,7 +157,7 @@ std::vector<std::string> MHFPEncoder::CreateShingling(
     const std::string& smiles, unsigned char radius, bool rings, bool isomeric,
     bool kekulize, unsigned char min_radius) {
   std::unique_ptr<RWMol> m(SmilesToMol(smiles));
-  PRECONDITION(m, "could not parse smiles");
+  PRECONDITION(m, "could not parse smiles")
   return CreateShingling(*m, radius, rings, isomeric, kekulize, min_radius);
 }
 

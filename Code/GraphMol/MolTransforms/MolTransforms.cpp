@@ -25,7 +25,7 @@ namespace MolTransforms {
 
 using namespace RDKit;
 void transformAtom(Atom *atom, RDGeom::Transform3D &tform) {
-  PRECONDITION(atom, "no atom");
+  PRECONDITION(atom, "no atom")
   ROMol &mol = atom->getOwningMol();
   for (ROMol::ConstConformerIterator ci = mol.beginConformers();
        ci != mol.endConformers(); ci++) {
@@ -35,7 +35,7 @@ void transformAtom(Atom *atom, RDGeom::Transform3D &tform) {
   // atom->setPos(pos);
 }
 void transformMolsAtoms(ROMol *mol, RDGeom::Transform3D &tform) {
-  PRECONDITION(mol, "no molecule");
+  PRECONDITION(mol, "no molecule")
 
   ROMol::AtomIterator atomIt;
   for (atomIt = mol->beginAtoms(); atomIt != mol->endAtoms(); atomIt++) {
@@ -46,7 +46,7 @@ void transformMolsAtoms(ROMol *mol, RDGeom::Transform3D &tform) {
 RDGeom::Point3D computeCentroid(const Conformer &conf, bool ignoreHs,
                                 const std::vector<double> *weights) {
   PRECONDITION(!weights || weights->size() >= conf.getNumAtoms(),
-               "bad weights vector");
+               "bad weights vector")
   RDGeom::Point3D res(0.0, 0.0, 0.0);
   const ROMol &mol = conf.getOwningMol();
   double wSum = 0.0;
@@ -69,7 +69,7 @@ void computeCovarianceTerms(const Conformer &conf,
                             double &zz, bool normalize, bool ignoreHs,
                             const std::vector<double> *weights) {
   PRECONDITION(!weights || weights->size() >= conf.getNumAtoms(),
-               "bad weights vector");
+               "bad weights vector")
 
   xx = xy = xz = yy = yz = zz = 0.0;
   const ROMol &mol = conf.getOwningMol();
@@ -126,7 +126,7 @@ void computeInertiaTerms(const Conformer &conf, const RDGeom::Point3D &center,
                          double &yz, double &zz, bool ignoreHs,
                          const std::vector<double> *weights) {
   PRECONDITION(!weights || weights->size() >= conf.getNumAtoms(),
-               "bad weights vector");
+               "bad weights vector")
 
   xx = xy = xz = yy = yz = zz = 0.0;
   const ROMol &mol = conf.getOwningMol();
@@ -182,7 +182,7 @@ bool getEigenValEigenVectFromCovMat(const RDKit::Conformer &conf,
                                     bool ignoreHs, bool normalizeCovar,
                                     const std::vector<double> *weights) {
   PRECONDITION((!weights || weights->size() >= conf.getNumAtoms()),
-               "bad weights vector");
+               "bad weights vector")
 
   // std::cerr << "getEigenValEigenVectFromCovMat ignoreHs " << ignoreHs << "
   // normalizeCovar " << normalizeCovar << " weights " << weights << " origin "
@@ -202,7 +202,7 @@ bool computePrincipalAxesAndMoments(const RDKit::Conformer &conf,
                                     bool force,
                                     const std::vector<double> *weights) {
   PRECONDITION((!weights || weights->size() >= conf.getNumAtoms()),
-               "bad weights vector");
+               "bad weights vector")
   const char *axesPropName = ignoreHs ? "_principalAxes_noH" : "_principalAxes";
   const char *momentsPropName =
       ignoreHs ? "_principalMoments_noH" : "_principalMoments";
@@ -279,7 +279,7 @@ RDGeom::Transform3D *computeCanonicalTransform(const Conformer &conf,
     if (getEigenValEigenVectFromCovMat(conf, eigVecs, eigVals, origin, ignoreHs,
                                        normalizeCovar, nullptr)) {
       std::vector<std::pair<unsigned int, double>> eigValsSorted;
-      CHECK_INVARIANT(eigVals.size() == DIM, "less eigenvalues than expected");
+      CHECK_INVARIANT(eigVals.size() == DIM, "less eigenvalues than expected")
       auto eigVecCoeffSums = eigVecs.colwise().sum();
       eigValsSorted.reserve(DIM);
       for (unsigned int i = 0; i < DIM; ++i) {
@@ -469,8 +469,8 @@ void _toBeMovedIdxList(const ROMol &mol, unsigned int iAtomId,
 double getBondLength(const Conformer &conf, unsigned int iAtomId,
                      unsigned int jAtomId) {
   const RDGeom::POINT3D_VECT &pos = conf.getPositions();
-  URANGE_CHECK(iAtomId, pos.size());
-  URANGE_CHECK(jAtomId, pos.size());
+  URANGE_CHECK(iAtomId, pos.size())
+  URANGE_CHECK(jAtomId, pos.size())
 
   return (pos[iAtomId] - pos[jAtomId]).length();
 }
@@ -478,8 +478,8 @@ double getBondLength(const Conformer &conf, unsigned int iAtomId,
 void setBondLength(Conformer &conf, unsigned int iAtomId, unsigned int jAtomId,
                    double value) {
   RDGeom::POINT3D_VECT &pos = conf.getPositions();
-  URANGE_CHECK(iAtomId, pos.size());
-  URANGE_CHECK(jAtomId, pos.size());
+  URANGE_CHECK(iAtomId, pos.size())
+  URANGE_CHECK(jAtomId, pos.size())
   ROMol &mol = conf.getOwningMol();
   Bond *bond = mol.getBondBetweenAtoms(iAtomId, jAtomId);
   if (!bond) {
@@ -506,9 +506,9 @@ void setBondLength(Conformer &conf, unsigned int iAtomId, unsigned int jAtomId,
 double getAngleRad(const Conformer &conf, unsigned int iAtomId,
                    unsigned int jAtomId, unsigned int kAtomId) {
   const RDGeom::POINT3D_VECT &pos = conf.getPositions();
-  URANGE_CHECK(iAtomId, pos.size());
-  URANGE_CHECK(jAtomId, pos.size());
-  URANGE_CHECK(kAtomId, pos.size());
+  URANGE_CHECK(iAtomId, pos.size())
+  URANGE_CHECK(jAtomId, pos.size())
+  URANGE_CHECK(kAtomId, pos.size())
   RDGeom::Point3D rJI = pos[iAtomId] - pos[jAtomId];
   double rJISqLength = rJI.lengthSq();
   if (rJISqLength <= 1.e-16) {
@@ -525,9 +525,9 @@ double getAngleRad(const Conformer &conf, unsigned int iAtomId,
 void setAngleRad(Conformer &conf, unsigned int iAtomId, unsigned int jAtomId,
                  unsigned int kAtomId, double value) {
   RDGeom::POINT3D_VECT &pos = conf.getPositions();
-  URANGE_CHECK(iAtomId, pos.size());
-  URANGE_CHECK(jAtomId, pos.size());
-  URANGE_CHECK(kAtomId, pos.size());
+  URANGE_CHECK(iAtomId, pos.size())
+  URANGE_CHECK(jAtomId, pos.size())
+  URANGE_CHECK(kAtomId, pos.size())
   ROMol &mol = conf.getOwningMol();
   Bond *bondJI = mol.getBondBetweenAtoms(jAtomId, iAtomId);
   if (!bondJI) {
@@ -579,10 +579,10 @@ double getDihedralRad(const Conformer &conf, unsigned int iAtomId,
                       unsigned int jAtomId, unsigned int kAtomId,
                       unsigned int lAtomId) {
   const RDGeom::POINT3D_VECT &pos = conf.getPositions();
-  URANGE_CHECK(iAtomId, pos.size());
-  URANGE_CHECK(jAtomId, pos.size());
-  URANGE_CHECK(kAtomId, pos.size());
-  URANGE_CHECK(lAtomId, pos.size());
+  URANGE_CHECK(iAtomId, pos.size())
+  URANGE_CHECK(jAtomId, pos.size())
+  URANGE_CHECK(kAtomId, pos.size())
+  URANGE_CHECK(lAtomId, pos.size())
   RDGeom::Point3D rIJ = pos[jAtomId] - pos[iAtomId];
   double rIJSqLength = rIJ.lengthSq();
   if (rIJSqLength <= 1.e-16) {
@@ -612,10 +612,10 @@ double getDihedralRad(const Conformer &conf, unsigned int iAtomId,
 void setDihedralRad(Conformer &conf, unsigned int iAtomId, unsigned int jAtomId,
                     unsigned int kAtomId, unsigned int lAtomId, double value) {
   RDGeom::POINT3D_VECT &pos = conf.getPositions();
-  URANGE_CHECK(iAtomId, pos.size());
-  URANGE_CHECK(jAtomId, pos.size());
-  URANGE_CHECK(kAtomId, pos.size());
-  URANGE_CHECK(lAtomId, pos.size());
+  URANGE_CHECK(iAtomId, pos.size())
+  URANGE_CHECK(jAtomId, pos.size())
+  URANGE_CHECK(kAtomId, pos.size())
+  URANGE_CHECK(lAtomId, pos.size())
   ROMol &mol = conf.getOwningMol();
   Bond *bondJK = mol.getBondBetweenAtoms(jAtomId, kAtomId);
   if (!bondJK) {

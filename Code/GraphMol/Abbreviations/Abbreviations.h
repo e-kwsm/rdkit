@@ -95,7 +95,7 @@ parseAbbreviations(const std::string& text, bool removeExtraDummies = false,
 inline std::vector<AbbreviationDefinition> parseLinkers(
     const std::string& text) {
   return parseAbbreviations(text, true, true);
-};
+}
 }  // namespace Utils
 
 //! returns all matches for the abbreviations across the molecule

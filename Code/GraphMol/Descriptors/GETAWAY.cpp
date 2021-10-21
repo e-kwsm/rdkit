@@ -255,7 +255,7 @@ std::vector<double> clusterArray2(std::vector<double> data,
 
 std::vector<double> GetGeodesicMatrix(const double* dist, int lag,
                                       int numAtoms) {
-  PRECONDITION(dist != nullptr, "bad array");
+  PRECONDITION(dist != nullptr, "bad array")
 
   int sizeArray = numAtoms * numAtoms;
   std::vector<double> Geodesic;
@@ -325,8 +325,8 @@ std::vector<int> GetHeavyList(const ROMol& mol) {
 }
 
 double* AppendDouble(double* w, const double* Append, int length, int pos) {
-  PRECONDITION(w != nullptr, "bad array");
-  PRECONDITION(Append != nullptr, "bad array");
+  PRECONDITION(w != nullptr, "bad array")
+  PRECONDITION(Append != nullptr, "bad array")
 
   for (int i = pos; i < pos + length; i++) {
     w[i] = Append[i - pos];
@@ -360,7 +360,7 @@ double getHATS(double W1, double W2, double H1, double H2) {
 double getH(double W1, double W2, double H) { return W1 * H * W2; }
 
 double getMax(const double* Rk) {
-  PRECONDITION(Rk != nullptr, "bad rK");
+  PRECONDITION(Rk != nullptr, "bad rK")
   double RTp = 0;
   for (int j = 0; j < 8; j++) {
     if (Rk[j] > RTp) {
@@ -1164,8 +1164,8 @@ void GetGETAWAYone(double* dist3D, double* AdjMat, std::vector<double> Vpoints,
                    std::vector<int> Heavylist, std::vector<double>& res,
                    unsigned int precision,
                    const std::string& customAtomPropName) {
-  PRECONDITION(dist3D != nullptr, "no distance matrix");
-  PRECONDITION(AdjMat != nullptr, "no adjacency matrix");
+  PRECONDITION(dist3D != nullptr, "no distance matrix")
+  PRECONDITION(AdjMat != nullptr, "no adjacency matrix")
   int numAtoms = conf.getNumAtoms();
 
   Map<MatrixXd> ADJ(AdjMat, numAtoms, numAtoms);
@@ -1192,8 +1192,8 @@ void GetGETAWAY(double* dist3D, double* AdjMat, std::vector<double> Vpoints,
                 const ROMol& mol, const Conformer& conf,
                 std::vector<int> Heavylist, std::vector<double>& res,
                 unsigned int precision) {
-  PRECONDITION(dist3D != nullptr, "no distance matrix");
-  PRECONDITION(AdjMat != nullptr, "no adjacency matrix");
+  PRECONDITION(dist3D != nullptr, "no distance matrix")
+  PRECONDITION(AdjMat != nullptr, "no adjacency matrix")
 
   int numAtoms = conf.getNumAtoms();
 

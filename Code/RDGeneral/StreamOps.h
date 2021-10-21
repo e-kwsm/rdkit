@@ -134,7 +134,7 @@ inline void appendPackedIntToStream(std::stringstream &ss,
       nbytes = 4;
       break;
     } else {
-      CHECK_INVARIANT(0, "ERROR: Integer too big to pack\n");
+      CHECK_INVARIANT(0, "ERROR: Integer too big to pack\n")
     }
   }
   // val = EndianSwapBytes<HOST_ENDIAN_ORDER,LITTLE_ENDIAN_ORDER>(val);
@@ -268,7 +268,7 @@ inline void streamWrite(std::ostream &ss, const std::string &what) {
   unsigned int l = rdcast<unsigned int>(what.length());
   ss.write((const char *)&l, sizeof(l));
   ss.write(what.c_str(), sizeof(char) * l);
-};
+}
 
 template <typename T>
 void streamWriteVec(std::ostream &ss, const T &val) {
@@ -292,12 +292,12 @@ void streamRead(std::istream &ss, T &loc) {
 //! special case for string
 template <class T>
 void streamRead(std::istream &ss, T &obj, int version) {
-  RDUNUSED_PARAM(version);
+  RDUNUSED_PARAM(version)
   streamRead(ss, obj);
 }
 
 inline void streamRead(std::istream &ss, std::string &what, int version) {
-  RDUNUSED_PARAM(version);
+  RDUNUSED_PARAM(version)
   unsigned int l;
   ss.read((char *)&l, sizeof(l));
   if (ss.fail()) {
@@ -310,7 +310,7 @@ inline void streamRead(std::istream &ss, std::string &what, int version) {
   }
   what = std::string(buff, l);
   delete[] buff;
-};
+}
 
 template <class T>
 void streamReadVec(std::istream &ss, T &val) {
@@ -521,7 +521,7 @@ inline bool streamWriteProps(
     }
   }
   POSTCONDITION(count == writtenCount,
-                "Estimated property count not equal to written");
+                "Estimated property count not equal to written")
   return true;
 }
 
@@ -638,7 +638,7 @@ inline unsigned int streamReadProps(std::istream &ss, RDProps &props,
   for (unsigned index = 0; index < count; ++index) {
     CHECK_INVARIANT(streamReadProp(ss, dict.getData()[startSz + index],
                                    dict.getNonPODStatus(), handlers),
-                    "Corrupted property serialization detected");
+                    "Corrupted property serialization detected")
   }
 
   return static_cast<unsigned int>(count);

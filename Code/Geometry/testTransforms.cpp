@@ -40,7 +40,7 @@ double randNum(double x = 5) {
 
 void testPointND() {
   PointND pt(5);
-  TEST_ASSERT(pt.dimension() == 5);
+  TEST_ASSERT(pt.dimension() == 5)
   unsigned int i;
   for (i = 0; i < 5; ++i) {
     pt[i] = i + 1.0;
@@ -54,39 +54,39 @@ void testPointND() {
   ep[4] = 0.6742;
 
   for (i = 0; i < 5; ++i) {
-    TEST_ASSERT(fabs(pt[i] - ep[i]) < 1.e-4);
+    TEST_ASSERT(fabs(pt[i] - ep[i]) < 1.e-4)
   }
 
   PointND pt2(pt);
   for (i = 0; i < 5; ++i) {
-    TEST_ASSERT(fabs(pt2[i] - ep[i]) < 1.e-4);
+    TEST_ASSERT(fabs(pt2[i] - ep[i]) < 1.e-4)
   }
 
   pt2 += pt;
   for (i = 0; i < 5; ++i) {
-    TEST_ASSERT(fabs(pt2[i] - 2 * ep[i]) < 1.e-4);
+    TEST_ASSERT(fabs(pt2[i] - 2 * ep[i]) < 1.e-4)
   }
 
   pt2 /= 2.0;
   for (i = 0; i < 5; ++i) {
-    TEST_ASSERT(fabs(pt2[i] - ep[i]) < 1.e-4);
+    TEST_ASSERT(fabs(pt2[i] - ep[i]) < 1.e-4)
   }
 
   pt2 -= pt;
   for (i = 0; i < 5; ++i) {
-    TEST_ASSERT(fabs(pt2[i] - 0.0) < 1.e-4);
+    TEST_ASSERT(fabs(pt2[i] - 0.0) < 1.e-4)
   }
   pt2 = pt;
   pt2 *= 2.;
   for (i = 0; i < 5; ++i) {
-    TEST_ASSERT(fabs(pt2[i] - 2 * ep[i]) < 1.e-4);
+    TEST_ASSERT(fabs(pt2[i] - 2 * ep[i]) < 1.e-4)
   }
 
   double dp = pt.dotProduct(pt2);
-  TEST_ASSERT(fabs(dp - 2.0) < 1.e-4);
+  TEST_ASSERT(fabs(dp - 2.0) < 1.e-4)
 
   double angle = pt.angleTo(pt2);
-  TEST_ASSERT(fabs(angle - 0.0) < 1.e-4);
+  TEST_ASSERT(fabs(angle - 0.0) < 1.e-4)
 }
 
 void testPointOps3D() {
@@ -95,24 +95,24 @@ void testPointOps3D() {
   Point3D pt2(-1, 0, 0);
   Point3D pt3(0, -1, 0);
 
-  TEST_ASSERT(fabs(pt0.angleTo(pt0)) < 1e-4);
-  TEST_ASSERT(fabs(pt0.angleTo(pt1) - M_PI / 2.) < 1e-4);
-  TEST_ASSERT(fabs(pt0.angleTo(pt2) - M_PI) < 1e-4);
-  TEST_ASSERT(fabs(pt0.angleTo(pt3) - M_PI / 2.) < 1e-4);
+  TEST_ASSERT(fabs(pt0.angleTo(pt0)) < 1e-4)
+  TEST_ASSERT(fabs(pt0.angleTo(pt1) - M_PI / 2.) < 1e-4)
+  TEST_ASSERT(fabs(pt0.angleTo(pt2) - M_PI) < 1e-4)
+  TEST_ASSERT(fabs(pt0.angleTo(pt3) - M_PI / 2.) < 1e-4)
 
-  TEST_ASSERT(fabs(pt1.angleTo(pt0) - M_PI / 2.) < 1e-4);
-  TEST_ASSERT(fabs(pt1.angleTo(pt1)) < 1e-4);
-  TEST_ASSERT(fabs(pt1.angleTo(pt2) - M_PI / 2.) < 1e-4);
-  TEST_ASSERT(fabs(pt1.angleTo(pt3) - M_PI) < 1e-4);
+  TEST_ASSERT(fabs(pt1.angleTo(pt0) - M_PI / 2.) < 1e-4)
+  TEST_ASSERT(fabs(pt1.angleTo(pt1)) < 1e-4)
+  TEST_ASSERT(fabs(pt1.angleTo(pt2) - M_PI / 2.) < 1e-4)
+  TEST_ASSERT(fabs(pt1.angleTo(pt3) - M_PI) < 1e-4)
 
-  TEST_ASSERT(fabs(pt0.signedAngleTo(pt0)) < 1e-4);
-  TEST_ASSERT(fabs(pt0.signedAngleTo(pt1) - M_PI / 2.) < 1e-4);
-  TEST_ASSERT(fabs(pt0.signedAngleTo(pt2) - M_PI) < 1e-4);
-  TEST_ASSERT(fabs(pt0.signedAngleTo(pt3) - 3. * M_PI / 2.) < 1e-4);
+  TEST_ASSERT(fabs(pt0.signedAngleTo(pt0)) < 1e-4)
+  TEST_ASSERT(fabs(pt0.signedAngleTo(pt1) - M_PI / 2.) < 1e-4)
+  TEST_ASSERT(fabs(pt0.signedAngleTo(pt2) - M_PI) < 1e-4)
+  TEST_ASSERT(fabs(pt0.signedAngleTo(pt3) - 3. * M_PI / 2.) < 1e-4)
 
   Point3D diffPt = pt0.directionVector(pt1);
   Point3D ref(-sqrt(2.) / 2., sqrt(2.) / 2., 0);
-  TEST_ASSERT(ptEq(diffPt, ref));
+  TEST_ASSERT(ptEq(diffPt, ref))
 }
 void testPointOps2D() {
   Point2D pt0(1, 0);
@@ -120,24 +120,24 @@ void testPointOps2D() {
   Point2D pt2(-1, 0);
   Point2D pt3(0, -1);
 
-  TEST_ASSERT(fabs(pt0.angleTo(pt0)) < 1e-4);
-  TEST_ASSERT(fabs(pt0.angleTo(pt1) - M_PI / 2.) < 1e-4);
-  TEST_ASSERT(fabs(pt0.angleTo(pt2) - M_PI) < 1e-4);
-  TEST_ASSERT(fabs(pt0.angleTo(pt3) - M_PI / 2.) < 1e-4);
+  TEST_ASSERT(fabs(pt0.angleTo(pt0)) < 1e-4)
+  TEST_ASSERT(fabs(pt0.angleTo(pt1) - M_PI / 2.) < 1e-4)
+  TEST_ASSERT(fabs(pt0.angleTo(pt2) - M_PI) < 1e-4)
+  TEST_ASSERT(fabs(pt0.angleTo(pt3) - M_PI / 2.) < 1e-4)
 
-  TEST_ASSERT(fabs(pt1.angleTo(pt0) - M_PI / 2.) < 1e-4);
-  TEST_ASSERT(fabs(pt1.angleTo(pt1)) < 1e-4);
-  TEST_ASSERT(fabs(pt1.angleTo(pt2) - M_PI / 2.) < 1e-4);
-  TEST_ASSERT(fabs(pt1.angleTo(pt3) - M_PI) < 1e-4);
+  TEST_ASSERT(fabs(pt1.angleTo(pt0) - M_PI / 2.) < 1e-4)
+  TEST_ASSERT(fabs(pt1.angleTo(pt1)) < 1e-4)
+  TEST_ASSERT(fabs(pt1.angleTo(pt2) - M_PI / 2.) < 1e-4)
+  TEST_ASSERT(fabs(pt1.angleTo(pt3) - M_PI) < 1e-4)
 
-  TEST_ASSERT(fabs(pt0.signedAngleTo(pt0)) < 1e-4);
-  TEST_ASSERT(fabs(pt0.signedAngleTo(pt1) - M_PI / 2.) < 1e-4);
-  TEST_ASSERT(fabs(pt0.signedAngleTo(pt2) - M_PI) < 1e-4);
-  TEST_ASSERT(fabs(pt0.signedAngleTo(pt3) - 3. * M_PI / 2.) < 1e-4);
+  TEST_ASSERT(fabs(pt0.signedAngleTo(pt0)) < 1e-4)
+  TEST_ASSERT(fabs(pt0.signedAngleTo(pt1) - M_PI / 2.) < 1e-4)
+  TEST_ASSERT(fabs(pt0.signedAngleTo(pt2) - M_PI) < 1e-4)
+  TEST_ASSERT(fabs(pt0.signedAngleTo(pt3) - 3. * M_PI / 2.) < 1e-4)
 
   Point2D diffPt = pt0.directionVector(pt1);
   Point2D ref(-sqrt(2.) / 2., sqrt(2.) / 2.);
-  TEST_ASSERT(ptEq(diffPt, ref));
+  TEST_ASSERT(ptEq(diffPt, ref))
 }
 
 void test12D() {
@@ -145,8 +145,8 @@ void test12D() {
   Transform2D trans;
   trans.TransformPoint(pt);
 
-  CHECK_INVARIANT(fabs(pt.x - 1.0) < 1.e-8, "");
-  CHECK_INVARIANT(fabs(pt.y - 2.0) < 1.e-8, "");
+  CHECK_INVARIANT(fabs(pt.x - 1.0) < 1.e-8, "")
+  CHECK_INVARIANT(fabs(pt.y - 2.0) < 1.e-8, "")
 
   Point2D ref1(randNum(), randNum());
   Point2D ref2(randNum(), randNum());
@@ -166,8 +166,8 @@ void test12D() {
 
   // make sure pt1 overlaps ref1
   Point2D dif1 = pt1 - ref1;
-  CHECK_INVARIANT(fabs(dif1.x) < 1.e-8, "");
-  CHECK_INVARIANT(fabs(dif1.y) < 1.e-8, "");
+  CHECK_INVARIANT(fabs(dif1.x) < 1.e-8, "")
+  CHECK_INVARIANT(fabs(dif1.y) < 1.e-8, "")
 
   // now check that the angle between the two vectors (ref2 - ref1) and
   // (pt2 - pt1) is zero
@@ -176,7 +176,7 @@ void test12D() {
   rvec.normalize();
   pvec.normalize();
   double pdot = rvec.dotProduct(pvec);
-  CHECK_INVARIANT(fabs(pdot - 1.0) < 1.e-8, "");
+  CHECK_INVARIANT(fabs(pdot - 1.0) < 1.e-8, "")
 
   // compute the reverse transform and make sure we are basically getting the
   // identity
@@ -185,8 +185,8 @@ void test12D() {
   tdi.TransformPoint(pt1);
   tdi.TransformPoint(pt2);
 
-  CHECK_INVARIANT(ptEq(pt1, pt1o), "");
-  CHECK_INVARIANT(ptEq(pt2, pt2o), "");
+  CHECK_INVARIANT(ptEq(pt1, pt1o), "")
+  CHECK_INVARIANT(ptEq(pt2, pt2o), "")
 
   // the following product should result in an identity matrix
   tdi *= t2d;
@@ -194,8 +194,8 @@ void test12D() {
   tdi.TransformPoint(pt1);
   tdi.TransformPoint(pt2);
 
-  CHECK_INVARIANT(ptEq(pt1, pt1o), "");
-  CHECK_INVARIANT(ptEq(pt2, pt2o), "");
+  CHECK_INVARIANT(ptEq(pt1, pt1o), "")
+  CHECK_INVARIANT(ptEq(pt2, pt2o), "")
 
   Point2D npt1(1.0, 0.0);
   Point2D npt2(5.0, 0.0);
@@ -206,8 +206,8 @@ void test12D() {
   ntd.TransformPoint(npt1);
   ntd.TransformPoint(npt2);
 
-  CHECK_INVARIANT(ptEq(npt1, opt1), "");
-  CHECK_INVARIANT(ptEq(npt2, opt2), "");
+  CHECK_INVARIANT(ptEq(npt1, opt1), "")
+  CHECK_INVARIANT(ptEq(npt2, opt2), "")
 }
 
 void test23D() {
@@ -216,34 +216,34 @@ void test23D() {
   Transform3D trans;
   trans.SetRotation(M_PI / 2., X_Axis);
   trans.TransformPoint(pt);
-  CHECK_INVARIANT(ptEq(tpt, pt), "");
+  CHECK_INVARIANT(ptEq(tpt, pt), "")
 
   Point3D pt2(0.0, 1.0, 0.0);
   Point3D tpt2(0.0, 0.0, 1.0);
   trans.TransformPoint(pt2);
-  CHECK_INVARIANT(ptEq(tpt2, pt2), "");
+  CHECK_INVARIANT(ptEq(tpt2, pt2), "")
 
   Point3D pt3(0.0, 0.0, 1.0);
   Point3D tpt3(0.0, -1.0, 0.0);
   trans.TransformPoint(pt3);
-  CHECK_INVARIANT(ptEq(tpt3, pt3), "");
+  CHECK_INVARIANT(ptEq(tpt3, pt3), "")
 
   // rotate around y-axis
   Transform3D transy;
   transy.SetRotation(M_PI / 2., Y_Axis);
   transy.TransformPoint(pt);
   Point3D tpt4(0.0, 0.0, -1.0);
-  CHECK_INVARIANT(ptEq(tpt4, pt), "");
+  CHECK_INVARIANT(ptEq(tpt4, pt), "")
 
   Point3D pt5(0.0, 1.0, 0.0);
   Point3D tpt5(0.0, 1.0, 0.0);
   transy.TransformPoint(pt5);
-  CHECK_INVARIANT(ptEq(tpt5, pt5), "");
+  CHECK_INVARIANT(ptEq(tpt5, pt5), "")
 
   Point3D pt6(0.0, 0.0, 1.0);
   Point3D tpt6(1.0, 0.0, 0.0);
   transy.TransformPoint(pt6);
-  CHECK_INVARIANT(ptEq(tpt6, pt6), "");
+  CHECK_INVARIANT(ptEq(tpt6, pt6), "")
 
   // z-axis
   Transform3D transz;
@@ -251,17 +251,17 @@ void test23D() {
   Point3D pt7(1.0, 0.0, 0.0);
   Point3D tpt7(0.0, 1.0, 0.0);
   transz.TransformPoint(pt7);
-  CHECK_INVARIANT(ptEq(tpt7, pt7), "");
+  CHECK_INVARIANT(ptEq(tpt7, pt7), "")
 
   Point3D pt8(0.0, 1.0, 0.0);
   Point3D tpt8(-1.0, 0.0, 0.0);
   transz.TransformPoint(pt8);
-  CHECK_INVARIANT(ptEq(tpt8, pt8), "");
+  CHECK_INVARIANT(ptEq(tpt8, pt8), "")
 
   Point3D pt9(0.0, 0.0, 1.0);
   Point3D tpt9(0.0, 0.0, 1.0);
   transz.TransformPoint(pt9);
-  CHECK_INVARIANT(ptEq(tpt9, pt9), "");
+  CHECK_INVARIANT(ptEq(tpt9, pt9), "")
 }
 
 void test3MatMultiply() {
@@ -315,13 +315,13 @@ void test3MatMultiply() {
   t3.TransformPoint(pt2);
   std::cout << "Pt1: " << pt1 << " Pt2: " << pt2 << "\n";
   // check the transformed points align with the new points on z-axis
-  CHECK_INVARIANT(ptEq(pt1, npt1), "");
-  CHECK_INVARIANT(ptEq(pt2, npt2), "");
+  CHECK_INVARIANT(ptEq(pt1, npt1), "")
+  CHECK_INVARIANT(ptEq(pt2, npt2), "")
 
   t4.TransformPoint(opt1);
   t4.TransformPoint(opt2);
-  CHECK_INVARIANT(ptEq(opt1, npt1), "");
-  CHECK_INVARIANT(ptEq(opt2, npt2), "");
+  CHECK_INVARIANT(ptEq(opt1, npt1), "")
+  CHECK_INVARIANT(ptEq(opt2, npt2), "")
 }
 
 void testFromQuaternion() {
@@ -339,7 +339,7 @@ void testFromQuaternion() {
   unsigned int i, j;
   for (i = 0; i < 4; i++) {
     for (j = 0; j < 4; j++) {
-      CHECK_INVARIANT(RDKit::feq(trans.getVal(i, j), ntrans.getVal(i, j)), "");
+      CHECK_INVARIANT(RDKit::feq(trans.getVal(i, j), ntrans.getVal(i, j)), "")
     }
   }
 }

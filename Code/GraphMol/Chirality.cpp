@@ -61,7 +61,7 @@ bool is_regular_h(const Atom &atom) {
 
 Bond::BondDir getOppositeBondDir(Bond::BondDir dir) {
   PRECONDITION(dir == Bond::ENDDOWNRIGHT || dir == Bond::ENDUPRIGHT,
-               "bad bond direction");
+               "bad bond direction")
   switch (dir) {
     case Bond::ENDDOWNRIGHT:
       return Bond::ENDUPRIGHT;
@@ -74,11 +74,11 @@ Bond::BondDir getOppositeBondDir(Bond::BondDir dir) {
 
 void setBondDirRelativeToAtom(Bond *bond, Atom *atom, Bond::BondDir dir,
                               bool reverse, boost::dynamic_bitset<> &) {
-  PRECONDITION(bond, "bad bond");
-  PRECONDITION(atom, "bad atom");
-  PRECONDITION(dir == Bond::ENDUPRIGHT || dir == Bond::ENDDOWNRIGHT, "bad dir");
+  PRECONDITION(bond, "bad bond")
+  PRECONDITION(atom, "bad atom")
+  PRECONDITION(dir == Bond::ENDUPRIGHT || dir == Bond::ENDDOWNRIGHT, "bad dir")
   PRECONDITION(atom == bond->getBeginAtom() || atom == bond->getEndAtom(),
-               "atom doesn't belong to bond");
+               "atom doesn't belong to bond")
 
   if (bond->getBeginAtom() != atom) {
     reverse = !reverse;
@@ -166,8 +166,8 @@ void updateDoubleBondNeighbors(ROMol &mol, Bond *dblBond, const Conformer *conf,
                                std::vector<unsigned int> &singleBondCounts,
                                const VECT_INT_VECT &singleBondNbrs) {
   // we want to deal only with double bonds:
-  PRECONDITION(dblBond, "bad bond");
-  PRECONDITION(dblBond->getBondType() == Bond::DOUBLE, "not a double bond");
+  PRECONDITION(dblBond, "bad bond")
+  PRECONDITION(dblBond->getBondType() == Bond::DOUBLE, "not a double bond")
   if (!needsDir[dblBond->getIdx()]) {
     return;
   }
@@ -216,7 +216,7 @@ void updateDoubleBondNeighbors(ROMol &mol, Bond *dblBond, const Conformer *conf,
     return;
   }
 
-  CHECK_INVARIANT(bond1 && bond2, "no bonds found");
+  CHECK_INVARIANT(bond1 && bond2, "no bonds found")
 
   bool sameTorsionDir = false;
   if (conf) {
@@ -405,7 +405,7 @@ void updateDoubleBondNeighbors(ROMol &mol, Bond *dblBond, const Conformer *conf,
 }
 
 bool isBondCandidateForStereo(const Bond *bond) {
-  PRECONDITION(bond, "no bond");
+  PRECONDITION(bond, "no bond")
   return bond->getBondType() == Bond::DOUBLE &&
          bond->getStereo() != Bond::STEREOANY &&
          bond->getBondDir() != Bond::EITHERDOUBLE &&
@@ -415,7 +415,7 @@ bool isBondCandidateForStereo(const Bond *bond) {
 }
 
 const Atom *findHighestCIPNeighbor(const Atom *atom, const Atom *skipAtom) {
-  PRECONDITION(atom, "bad atom");
+  PRECONDITION(atom, "bad atom")
 
   unsigned bestCipRank = 0;
   const Atom *bestCipRankedAtom = nullptr;
@@ -920,8 +920,8 @@ bool getUseLegacyStereoPerception() {
 namespace detail {
 bool bondAffectsAtomChirality(const Bond *bond, const Atom *atom) {
   // FIX consider how to handle organometallics
-  PRECONDITION(bond, "bad bond pointer");
-  PRECONDITION(atom, "bad atom pointer");
+  PRECONDITION(bond, "bad bond pointer")
+  PRECONDITION(atom, "bad atom pointer")
   if (bond->getBondType() == Bond::BondType::UNSPECIFIED ||
       bond->getBondType() == Bond::BondType::ZERO ||
       (bond->getBondType() == Bond::BondType::DATIVE &&
@@ -931,8 +931,8 @@ bool bondAffectsAtomChirality(const Bond *bond, const Atom *atom) {
   return true;
 }
 unsigned int getAtomNonzeroDegree(const Atom *atom) {
-  PRECONDITION(atom, "bad pointer");
-  PRECONDITION(atom->hasOwningMol(), "no owning molecule");
+  PRECONDITION(atom, "bad pointer")
+  PRECONDITION(atom->hasOwningMol(), "no owning molecule")
   unsigned int res = 0;
   for (auto bond : atom->getOwningMol().atomBonds(atom)) {
     if (!bondAffectsAtomChirality(bond, atom)) {
@@ -1015,7 +1015,7 @@ void debugVect(const std::vector<T> arg) {
 //
 // --------------------------------------------------
 void buildCIPInvariants(const ROMol &mol, DOUBLE_VECT &res) {
-  PRECONDITION(res.size() >= mol.getNumAtoms(), "res vect too small");
+  PRECONDITION(res.size() >= mol.getNumAtoms(), "res vect too small")
   int atsSoFar = 0;
   //
   // NOTE:
@@ -1091,8 +1091,8 @@ void buildCIPInvariants(const ROMol &mol, DOUBLE_VECT &res) {
 
 void iterateCIPRanks(const ROMol &mol, const DOUBLE_VECT &invars,
                      UINT_VECT &ranks, bool seedWithInvars) {
-  PRECONDITION(invars.size() == mol.getNumAtoms(), "bad invars size");
-  PRECONDITION(ranks.size() >= mol.getNumAtoms(), "bad ranks size");
+  PRECONDITION(invars.size() == mol.getNumAtoms(), "bad invars size")
+  PRECONDITION(ranks.size() >= mol.getNumAtoms(), "bad ranks size")
 
   unsigned int numAtoms = mol.getNumAtoms();
   CIP_ENTRY_VECT cipEntries(numAtoms);
@@ -1174,7 +1174,7 @@ void iterateCIPRanks(const ROMol &mol, const DOUBLE_VECT &invars,
             unsigned int nbrDeg = nbr->getDegree();
             isChiralPhosphorusSpecialCase = nbrDeg == 3 || nbrDeg == 4;
           }
-        };
+        }
 
         // general justification of this is:
         // Paragraph 2.2. in the 1966 article is "Valence-Bond Conventions:
@@ -1255,7 +1255,7 @@ void iterateCIPRanks(const ROMol &mol, const DOUBLE_VECT &invars,
 // Figure out the CIP ranks for the atoms of a molecule
 void assignAtomCIPRanks(const ROMol &mol, UINT_VECT &ranks) {
   PRECONDITION((!ranks.size() || ranks.size() >= mol.getNumAtoms()),
-               "bad ranks size");
+               "bad ranks size")
   if (!ranks.size()) {
     ranks.resize(mol.getNumAtoms());
   }
@@ -1283,8 +1283,8 @@ void findAtomNeighborDirHelper(const ROMol &mol, const Atom *atom,
                                const Bond *refBond, UINT_VECT &ranks,
                                INT_PAIR_VECT &neighbors,
                                bool &hasExplicitUnknownStereo) {
-  PRECONDITION(atom, "bad atom");
-  PRECONDITION(refBond, "bad bond");
+  PRECONDITION(atom, "bad atom")
+  PRECONDITION(refBond, "bad bond")
 
   bool seenDir = false;
   for (const auto bond : mol.atomBonds(atom)) {
@@ -1330,7 +1330,7 @@ void findAtomNeighborDirHelper(const ROMol &mol, const Atom *atom,
       // bond's direction to be reversed:
       if (neighbors[0].second != Bond::ENDDOWNRIGHT &&
           neighbors[0].second != Bond::ENDUPRIGHT) {
-        CHECK_INVARIANT(neighbors.size() > 1, "too few neighbors");
+        CHECK_INVARIANT(neighbors.size() > 1, "too few neighbors")
         neighbors[0].second = neighbors[1].second == Bond::ENDDOWNRIGHT
                                   ? Bond::ENDUPRIGHT
                                   : Bond::ENDDOWNRIGHT;
@@ -1353,8 +1353,8 @@ void findAtomNeighborsHelper(const ROMol &mol, const Atom *atom,
                              const Bond *refBond, UINT_VECT &neighbors,
                              bool checkDir = false,
                              bool includeAromatic = false) {
-  PRECONDITION(atom, "bad atom");
-  PRECONDITION(refBond, "bad bond");
+  PRECONDITION(atom, "bad atom")
+  PRECONDITION(refBond, "bad bond")
   neighbors.clear();
   for (const auto bond : mol.atomBonds(atom)) {
     if (bond == refBond) {
@@ -1383,7 +1383,7 @@ void findAtomNeighborsHelper(const ROMol &mol, const Atom *atom,
 //     example for this last one: C[C@H]1CC2CCCC3CCCC(C1)[C@@H]23
 // Note that N atoms are only candidates if they are in a 3-ring
 bool atomIsCandidateForRingStereochem(const ROMol &mol, const Atom *atom) {
-  PRECONDITION(atom, "bad atom");
+  PRECONDITION(atom, "bad atom")
   bool res = false;
   std::set<unsigned int> nbrRanks;
   if (!atom->getPropIfPresent(common_properties::_ringStereochemCand, res)) {
@@ -1449,7 +1449,7 @@ bool atomIsCandidateForRingStereochem(const ROMol &mol, const Atom *atom) {
 void findChiralAtomSpecialCases(ROMol &mol,
                                 boost::dynamic_bitset<> &possibleSpecialCases) {
   PRECONDITION(possibleSpecialCases.size() >= mol.getNumAtoms(),
-               "bit vector too small");
+               "bit vector too small")
   possibleSpecialCases.reset();
   if (!mol.getRingInfo()->isInitialized()) {
     VECT_INT_VECT sssrs;
@@ -1546,7 +1546,7 @@ void findChiralAtomSpecialCases(ROMol &mol,
         INT_VECT lringatoms(0);
         mol.getAtomWithIdx(ringAtomIdx)
             ->getPropIfPresent(common_properties::_ringStereoAtoms, lringatoms);
-        CHECK_INVARIANT(lringatoms.size() > 0, "no other ring atoms found.");
+        CHECK_INVARIANT(lringatoms.size() > 0, "no other ring atoms found.")
         for (auto orae = rae + 1; orae != ringStereoAtoms.end(); ++orae) {
           int oringAtomEntry = *orae;
           int oringAtomIdx =
@@ -1558,7 +1558,7 @@ void findChiralAtomSpecialCases(ROMol &mol,
           mol.getAtomWithIdx(oringAtomIdx)
               ->getPropIfPresent(common_properties::_ringStereoAtoms,
                                  olringatoms);
-          CHECK_INVARIANT(olringatoms.size() > 0, "no other ring atoms found.");
+          CHECK_INVARIANT(olringatoms.size() > 0, "no other ring atoms found.")
           olringatoms.push_back(theseDifferent ? -(ringAtomIdx + 1)
                                                : (ringAtomIdx + 1));
           mol.getAtomWithIdx(oringAtomIdx)
@@ -1647,7 +1647,7 @@ std::pair<bool, bool> isAtomPotentialChiralCenter(
           continue;
         }
         CHECK_INVARIANT(ranks[otherIdx] < mol.getNumAtoms(),
-                        "CIP rank higher than the number of atoms.");
+                        "CIP rank higher than the number of atoms.")
         // watch for neighbors with duplicate ranks, which would mean
         // that we cannot be chiral:
         if (codesSeen[ranks[otherIdx]]) {
@@ -1668,7 +1668,7 @@ std::pair<bool, bool> isAtomPotentialChiralCenter(
 std::pair<bool, bool> assignAtomChiralCodes(ROMol &mol, UINT_VECT &ranks,
                                             bool flagPossibleStereoCenters) {
   PRECONDITION((!ranks.size() || ranks.size() == mol.getNumAtoms()),
-               "bad rank vector size");
+               "bad rank vector size")
   bool atomChanged = false;
   unsigned int unassignedAtoms = 0;
 
@@ -1752,7 +1752,7 @@ std::pair<bool, bool> assignAtomChiralCodes(ROMol &mol, UINT_VECT &ranks,
 //   2) did we assign any?
 std::pair<bool, bool> assignBondStereoCodes(ROMol &mol, UINT_VECT &ranks) {
   PRECONDITION((!ranks.size() || ranks.size() == mol.getNumAtoms()),
-               "bad rank vector size");
+               "bad rank vector size")
   bool assignedABond = false;
   unsigned int unassignedBonds = 0;
   boost::dynamic_bitset<> bondsToClear(mol.getNumBonds());
@@ -1992,7 +1992,7 @@ void assignBondCisTrans(ROMol &mol, const StereoInfo &sinfo) {
 // reassign atom ranks by supplementing the current ranks
 // with information about known chirality
 void rerankAtoms(const ROMol &mol, UINT_VECT &ranks) {
-  PRECONDITION(ranks.size() == mol.getNumAtoms(), "bad rank vector size");
+  PRECONDITION(ranks.size() == mol.getNumAtoms(), "bad rank vector size")
   unsigned int factor = 100;
   while (factor < mol.getNumAtoms()) {
     factor *= 10;
@@ -2044,13 +2044,13 @@ void rerankAtoms(const ROMol &mol, UINT_VECT &ranks) {
 }
 
 bool hasStereoBondDir(const Bond *bond) {
-  PRECONDITION(bond, "no bond");
+  PRECONDITION(bond, "no bond")
   return bond->getBondDir() == Bond::BondDir::ENDDOWNRIGHT ||
          bond->getBondDir() == Bond::BondDir::ENDUPRIGHT;
 }
 
 const Bond *getNeighboringDirectedBond(const ROMol &mol, const Atom *atom) {
-  PRECONDITION(atom, "no atom");
+  PRECONDITION(atom, "no atom")
   for (const auto &bondIdx :
        boost::make_iterator_range(mol.getAtomBonds(atom))) {
     const Bond *bond = mol[bondIdx];
@@ -2075,11 +2075,11 @@ Bond::BondStereo translateEZLabelToCisTrans(Bond::BondStereo label) {
 }
 
 INT_VECT findStereoAtoms(const Bond *bond) {
-  PRECONDITION(bond, "bad bond");
-  PRECONDITION(bond->hasOwningMol(), "no mol");
-  PRECONDITION(bond->getBondType() == Bond::DOUBLE, "not double bond");
+  PRECONDITION(bond, "bad bond")
+  PRECONDITION(bond->hasOwningMol(), "no mol")
+  PRECONDITION(bond->getBondType() == Bond::DOUBLE, "not double bond")
   PRECONDITION(bond->getStereo() > Bond::BondStereo::STEREOANY,
-               "no defined stereo");
+               "no defined stereo")
 
   if (!bond->getStereoAtoms().empty()) {
     return bond->getStereoAtoms();

@@ -79,23 +79,23 @@ class Vector {
 
   //! returns the value at a particular index
   inline TYPE getVal(unsigned int i) const {
-    PRECONDITION(i < d_size, "bad index");
+    PRECONDITION(i < d_size, "bad index")
     return d_data[i];
   }
 
   //! sets the index at a particular value
   inline void setVal(unsigned int i, TYPE val) {
-    PRECONDITION(i < d_size, "bad index");
+    PRECONDITION(i < d_size, "bad index")
     d_data[i] = val;
   }
 
   inline TYPE operator[](unsigned int i) const {
-    PRECONDITION(i < d_size, "bad index");
+    PRECONDITION(i < d_size, "bad index")
     return d_data[i];
   }
 
   inline TYPE &operator[](unsigned int i) {
-    PRECONDITION(i < d_size, "bad index");
+    PRECONDITION(i < d_size, "bad index")
     return d_data[i];
   }
 
@@ -113,7 +113,7 @@ class Vector {
    */
 
   Vector<TYPE> &assign(const Vector<TYPE> &other) {
-    PRECONDITION(d_size == other.size(), "Size mismatch in vector copying");
+    PRECONDITION(d_size == other.size(), "Size mismatch in vector copying")
     const TYPE *otherData = other.getData();
     memcpy(static_cast<void *>(d_data.get()),
            static_cast<const void *>(otherData), d_size * sizeof(TYPE));
@@ -122,7 +122,7 @@ class Vector {
 
   //! elementwise addition, vectors must be the same size.
   Vector<TYPE> &operator+=(const Vector<TYPE> &other) {
-    PRECONDITION(d_size == other.size(), "Size mismatch in vector addition");
+    PRECONDITION(d_size == other.size(), "Size mismatch in vector addition")
     const TYPE *otherData = other.getData();
     TYPE *data = d_data.get();
     unsigned int i;
@@ -134,7 +134,7 @@ class Vector {
 
   //! elementwise subtraction, vectors must be the same size.
   Vector<TYPE> &operator-=(const Vector<TYPE> &other) {
-    PRECONDITION(d_size == other.size(), "Size mismatch in vector subtraction");
+    PRECONDITION(d_size == other.size(), "Size mismatch in vector subtraction")
     const TYPE *otherData = other.getData();
     TYPE *data = d_data.get();
     unsigned int i;
@@ -246,7 +246,7 @@ class Vector {
   //! returns the dot product between two Vectors
   inline TYPE dotProduct(const Vector<TYPE> other) const {
     PRECONDITION(d_size == other.size(),
-                 "Size mismatch in vector doct product");
+                 "Size mismatch in vector doct product")
     const TYPE *oData = other.getData();
     unsigned int i;
     TYPE res = (TYPE)(0.0);

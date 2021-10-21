@@ -73,7 +73,7 @@ int scoreRings(const ROMol &mol) {
     }
   }
   return score;
-};
+}
 
 struct smarts_mol_holder {
   std::string d_smarts;
@@ -265,9 +265,9 @@ TautomerEnumeratorResult TautomerEnumerator::enumerate(const ROMol &mol) const {
 #ifdef VERBOSE_ENUMERATION
   std::cout << "**********************************" << std::endl;
 #endif
-  PRECONDITION(dp_catalog, "no catalog!");
+  PRECONDITION(dp_catalog, "no catalog!")
   const TautomerCatalogParams *tautparams = dp_catalog->getCatalogParams();
-  PRECONDITION(tautparams, "");
+  PRECONDITION(tautparams, "")
 
   TautomerEnumeratorResult res;
 

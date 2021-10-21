@@ -141,11 +141,11 @@ RDGeom::Transform3D operator*(const RDGeom::Transform3D &t1,
   RDGeom::Transform3D res;
   RDNumeric::multiply(t1, t2, res);
   return res;
-};
+}
 
 RDGeom::Point3D operator*(const RDGeom::Transform3D &t,
                           const RDGeom::Point3D &pt) {
   RDGeom::Point3D res = pt;
   t.TransformPoint(res);
   return res;
-};
+}

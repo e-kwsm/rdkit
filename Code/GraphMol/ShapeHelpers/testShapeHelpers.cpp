@@ -33,7 +33,7 @@ void test1Encode() {
   MolShapes::EncodeShape(*m, grd, 0);
   delete m;
 
-  CHECK_INVARIANT(grd.getOccupancyVect()->getTotalVal() == 7405, "");
+  CHECK_INVARIANT(grd.getOccupancyVect()->getTotalVal() == 7405, "")
 }
 
 void test2Compare() {
@@ -48,9 +48,9 @@ void test2Compare() {
   MolTransforms::canonicalizeMol(*mdup);
 
   double dist = MolShapes::tanimotoDistance(*m, *mdup);
-  CHECK_INVARIANT(dist == 0.0, "");
+  CHECK_INVARIANT(dist == 0.0, "")
   dist = MolShapes::tverskyIndex(*m, *mdup, 1.0, 1.0);
-  CHECK_INVARIANT(dist == 1.0, "");
+  CHECK_INVARIANT(dist == 1.0, "")
 
   delete m;
   delete mdup;
@@ -60,11 +60,11 @@ void test2Compare() {
       rdbase + "/Code/GraphMol/ShapeHelpers/test_data/1oir_conf.mol";
   ROMol *m2 = MolFileToMol(fname2);
   double rmsd = MolAlign::alignMol(*m, *m2);
-  CHECK_INVARIANT(rmsd >= 0.0, "");
+  CHECK_INVARIANT(rmsd >= 0.0, "")
   dist = MolShapes::tanimotoDistance(*m, *m2);
-  CHECK_INVARIANT(RDKit::feq(dist, 0.31, 0.01), "");
+  CHECK_INVARIANT(RDKit::feq(dist, 0.31, 0.01), "")
   dist = MolShapes::tverskyIndex(*m, *m2, 1.0, 1.0);
-  CHECK_INVARIANT(RDKit::feq(dist, 0.68, 0.01), "");
+  CHECK_INVARIANT(RDKit::feq(dist, 0.68, 0.01), "")
   delete m2;
 
   m2 = MolFileToMol(fname2);
@@ -78,7 +78,7 @@ void test2Compare() {
   rmsd = MolAlign::alignMol(*m2, *m, 0, 0, &atomMap);
   dist = MolShapes::tanimotoDistance(*m, *m2);
 
-  CHECK_INVARIANT(RDKit::feq(dist, 0.3593), "");
+  CHECK_INVARIANT(RDKit::feq(dist, 0.3593), "")
   delete m;
   delete m2;
 }
@@ -97,10 +97,10 @@ void testGithub4364() {
   MolTransforms::canonicalizeMol(*m2);
   int cid1 = -1, cid2 = -1;
   auto dist = MolShapes::tanimotoDistance(*m, *m2, cid1, cid2);
-  TEST_ASSERT(RDKit::feq(dist, 0.31, 0.01));
+  TEST_ASSERT(RDKit::feq(dist, 0.31, 0.01))
   double gridSpacing = 1.0;
   auto dist2 = MolShapes::tanimotoDistance(*m, *m2, cid1, cid2, gridSpacing);
-  TEST_ASSERT(fabs(dist - dist2) > 0.001);
+  TEST_ASSERT(fabs(dist - dist2) > 0.001)
 }
 
 int main() {

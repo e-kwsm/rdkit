@@ -81,32 +81,32 @@ void test1() {
   oLoc[0] = 0;
   oLoc[1] = 1.0;
   oVal = func(oLoc);
-  TEST_ASSERT(fabs(oVal - 1.0) < 1e-4);
+  TEST_ASSERT(fabs(oVal - 1.0) < 1e-4)
   gradFunc(oLoc, grad);
   dir[0] = 0;
   dir[1] = -.5;
 
   BFGSOpt::linearSearch(dim, oLoc, oVal, grad, dir, nLoc, nVal, func, 0.5,
                         resCode);
-  TEST_ASSERT(resCode == 0);
-  TEST_ASSERT(fabs(nVal - 0.25) < 1e-4);
-  TEST_ASSERT(fabs(nLoc[0]) < 1e-4);
-  TEST_ASSERT(fabs(nLoc[1] - 0.5) < 1e-4);
+  TEST_ASSERT(resCode == 0)
+  TEST_ASSERT(fabs(nVal - 0.25) < 1e-4)
+  TEST_ASSERT(fabs(nLoc[0]) < 1e-4)
+  TEST_ASSERT(fabs(nLoc[1] - 0.5) < 1e-4)
 
   oLoc[0] = 1.0;
   oLoc[1] = 1.0;
   oVal = func(oLoc);
-  TEST_ASSERT(fabs(oVal - 2.0) < 1e-4);
+  TEST_ASSERT(fabs(oVal - 2.0) < 1e-4)
   gradFunc(oLoc, grad);
   dir[0] = -.5;
   dir[1] = -.5;
 
   BFGSOpt::linearSearch(dim, oLoc, oVal, grad, dir, nLoc, nVal, func, 1.0,
                         resCode);
-  TEST_ASSERT(resCode == 0);
-  TEST_ASSERT(fabs(nVal - 0.5) < 1e-4);
-  TEST_ASSERT(fabs(nLoc[0] - 0.5) < 1e-4);
-  TEST_ASSERT(fabs(nLoc[1] - 0.5) < 1e-4);
+  TEST_ASSERT(resCode == 0)
+  TEST_ASSERT(fabs(nVal - 0.5) < 1e-4)
+  TEST_ASSERT(fabs(nLoc[0] - 0.5) < 1e-4)
+  TEST_ASSERT(fabs(nLoc[1] - 0.5) < 1e-4)
 
   // we go hugely too far, but the dir gets cut in half, so we
   // immediately hit the minimum
@@ -114,17 +114,17 @@ void test1() {
   oLoc[0] = 0;
   oLoc[1] = 1.0;
   oVal = func(oLoc);
-  TEST_ASSERT(fabs(oVal - 1.0) < 1e-4);
+  TEST_ASSERT(fabs(oVal - 1.0) < 1e-4)
   gradFunc(oLoc, grad);
   dir[0] = 0;
   dir[1] = -2;
 
   BFGSOpt::linearSearch(dim, oLoc, oVal, grad, dir, nLoc, nVal, func, 2.0,
                         resCode);
-  TEST_ASSERT(resCode == 0);
-  TEST_ASSERT(fabs(nVal) < 1e-4);
-  TEST_ASSERT(fabs(nLoc[0]) < 1e-4);
-  TEST_ASSERT(fabs(nLoc[1]) < 1e-4);
+  TEST_ASSERT(resCode == 0)
+  TEST_ASSERT(fabs(nVal) < 1e-4)
+  TEST_ASSERT(fabs(nLoc[0]) < 1e-4)
+  TEST_ASSERT(fabs(nLoc[1]) < 1e-4)
   std::cerr << "  done" << std::endl;
 }
 
@@ -144,13 +144,13 @@ void test2() {
   oLoc[0] = 0;
   oLoc[1] = 1.0;
   oVal = func(oLoc);
-  TEST_ASSERT(fabs(oVal - 1.0) < 1e-4);
+  TEST_ASSERT(fabs(oVal - 1.0) < 1e-4)
 
   BFGSOpt::minimize(dim, oLoc, 1e-4, nIters, nVal, func, gradFunc);
-  TEST_ASSERT(nIters = 1);
-  TEST_ASSERT(fabs(nVal) < 1e-4);
-  TEST_ASSERT(fabs(oLoc[0]) < 1e-4);
-  TEST_ASSERT(fabs(oLoc[1]) < 1e-4);
+  TEST_ASSERT(nIters = 1)
+  TEST_ASSERT(fabs(nVal) < 1e-4)
+  TEST_ASSERT(fabs(oLoc[0]) < 1e-4)
+  TEST_ASSERT(fabs(oLoc[1]) < 1e-4)
 
   func = func2;
   gradFunc = grad2;
@@ -158,18 +158,18 @@ void test2() {
   oLoc[1] = 0.5;
   BFGSOpt::minimize(dim, oLoc, 1e-4, nIters, nVal, func, gradFunc);
   // TEST_ASSERT(nIters=1);
-  TEST_ASSERT(fabs(nVal) < 1e-4);
-  TEST_ASSERT(fabs(oLoc[0] - 1) < 1e-3);
-  TEST_ASSERT(fabs(oLoc[1]) < 1e-3);
+  TEST_ASSERT(fabs(nVal) < 1e-4)
+  TEST_ASSERT(fabs(oLoc[0] - 1) < 1e-3)
+  TEST_ASSERT(fabs(oLoc[1]) < 1e-3)
 
   // up the tolerance:
   oLoc[0] = 2.0;
   oLoc[1] = 0.5;
   BFGSOpt::minimize(dim, oLoc, 1e-4, nIters, nVal, func, gradFunc, 1e-8);
   // TEST_ASSERT(nIters=1);
-  TEST_ASSERT(fabs(nVal) < 1e-4);
-  TEST_ASSERT(fabs(oLoc[0] - 1) < 1e-4);
-  TEST_ASSERT(fabs(oLoc[1]) < 1e-4);
+  TEST_ASSERT(fabs(nVal) < 1e-4)
+  TEST_ASSERT(fabs(oLoc[0] - 1) < 1e-4)
+  TEST_ASSERT(fabs(oLoc[1]) < 1e-4)
 
   std::cerr << "  done" << std::endl;
 }
