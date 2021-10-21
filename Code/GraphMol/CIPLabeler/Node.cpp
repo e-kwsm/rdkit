@@ -82,7 +82,7 @@ int Node::getAtomicNum() const {
     return 1;
   }
   return dp_atom->getAtomicNum();
-};
+}
 
 unsigned Node::getMassNum() const {
   if (dp_atom == nullptr || isDuplicate()) {
@@ -146,7 +146,7 @@ std::vector<Edge *> Node::getEdges(Atom *end) const {
   for (auto &edge : getEdges()) {
     if (edge->getEnd()->isDuplicate()) {
       continue;
-    };
+    }
     if (end == edge->getBeg()->getAtom() || end == edge->getEnd()->getAtom()) {
       res.push_back(edge);
     }

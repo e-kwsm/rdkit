@@ -616,7 +616,7 @@ class RDKIT_SUBSTRUCTLIBRARY_EXPORT SubstructLibrary {
   }
 
   const MolHolderBase &getMolecules() const {
-    PRECONDITION(mols, "Molecule holder NULL in SubstructLibrary");
+    PRECONDITION(mols, "Molecule holder NULL in SubstructLibrary")
     return *mols;
   }
 
@@ -724,7 +724,7 @@ class RDKIT_SUBSTRUCTLIBRARY_EXPORT SubstructLibrary {
     params.useChirality = useChirality;
     params.useQueryQueryMatches = useQueryQueryMatches;
     return getMatches(query, startIdx, endIdx, params, numThreads, maxResults);
-  };
+  }
   //! overload
   std::vector<unsigned int> getMatches(const ROMol &query,
                                        unsigned int startIdx,
@@ -812,7 +812,7 @@ class RDKIT_SUBSTRUCTLIBRARY_EXPORT SubstructLibrary {
     params.useChirality = useChirality;
     params.useQueryQueryMatches = useQueryQueryMatches;
     return countMatches(query, startIdx, endIdx, params, numThreads);
-  };
+  }
 
   //! overload
   unsigned int countMatches(const ROMol &query, unsigned int startIdx,
@@ -885,7 +885,7 @@ class RDKIT_SUBSTRUCTLIBRARY_EXPORT SubstructLibrary {
     params.useChirality = useChirality;
     params.useQueryQueryMatches = useQueryQueryMatches;
     return hasMatch(query, startIdx, endIdx, params, numThreads);
-  };
+  }
   //! overload
   bool hasMatch(const ROMol &query, unsigned int startIdx, unsigned int endIdx,
                 const SubstructMatchParameters &params,
@@ -909,7 +909,7 @@ class RDKIT_SUBSTRUCTLIBRARY_EXPORT SubstructLibrary {
   */
   boost::shared_ptr<ROMol> getMol(unsigned int idx) const {
     // expects implementation to throw IndexError if out of range
-    PRECONDITION(mols, "molholder is null in SubstructLibrary");
+    PRECONDITION(mols, "molholder is null in SubstructLibrary")
     return mols->getMol(idx);
   }
 
@@ -920,13 +920,13 @@ class RDKIT_SUBSTRUCTLIBRARY_EXPORT SubstructLibrary {
   */
   boost::shared_ptr<ROMol> operator[](unsigned int idx) {
     // expects implementation to throw IndexError if out of range
-    PRECONDITION(mols, "molholder is null in SubstructLibrary");
+    PRECONDITION(mols, "molholder is null in SubstructLibrary")
     return mols->getMol(idx);
   }
 
   //! return the number of molecules in the library
   unsigned int size() const {
-    PRECONDITION(mols, "molholder is null in SubstructLibrary");
+    PRECONDITION(mols, "molholder is null in SubstructLibrary")
     return rdcast<unsigned int>(molholder->size());
   }
 

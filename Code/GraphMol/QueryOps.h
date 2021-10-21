@@ -76,16 +76,16 @@ typedef Queries::Query<int, Atom const *, true> ATOM_NULL_QUERY;
 
 static inline int queryAtomAromatic(Atom const *at) {
   return at->getIsAromatic();
-};
+}
 static inline int queryAtomAliphatic(Atom const *at) {
   return !(at->getIsAromatic());
-};
+}
 static inline int queryAtomExplicitDegree(Atom const *at) {
   return at->getDegree();
-};
+}
 static inline int queryAtomTotalDegree(Atom const *at) {
   return at->getTotalDegree();
-};
+}
 //! D and T are treated as "non-hydrogen" here
 static inline int queryAtomNonHydrogenDegree(Atom const *at) {
   int res = 0;
@@ -98,7 +98,7 @@ static inline int queryAtomNonHydrogenDegree(Atom const *at) {
   }
 
   return res;
-};
+}
 //! D and T are not treated as heavy atoms here
 static inline int queryAtomHeavyAtomDegree(Atom const *at) {
   int heavyDegree = 0;
@@ -111,28 +111,28 @@ static inline int queryAtomHeavyAtomDegree(Atom const *at) {
   }
 
   return heavyDegree;
-};
+}
 static inline int queryAtomHCount(Atom const *at) {
   return at->getTotalNumHs(true);
-};
+}
 static inline int queryAtomImplicitHCount(Atom const *at) {
   return at->getTotalNumHs(false);
-};
+}
 static inline int queryAtomHasImplicitH(Atom const *at) {
   return int(at->getTotalNumHs(false) > 0);
-};
+}
 static inline int queryAtomImplicitValence(Atom const *at) {
   return at->getValence(Atom::ValenceType::IMPLICIT);
-};
+}
 static inline int queryAtomExplicitValence(Atom const *at) {
   return at->getValence(Atom::ValenceType::EXPLICIT) - at->getNumExplicitHs();
-};
+}
 static inline int queryAtomTotalValence(Atom const *at) {
   return at->getTotalValence();
-};
+}
 static inline int queryAtomUnsaturated(Atom const *at) {
   return at->getTotalDegree() < at->getTotalValence();
-};
+}
 static inline int queryAtomNum(Atom const *at) { return at->getAtomicNum(); }
 static inline int makeAtomType(int atomic_num, bool aromatic) {
   return atomic_num + 1000 * static_cast<int>(aromatic);
@@ -156,34 +156,34 @@ static inline int getAtomTypeAtomicNum(int val) {
 
 static inline int queryAtomType(Atom const *at) {
   return makeAtomType(at->getAtomicNum(), at->getIsAromatic());
-};
+}
 const int massIntegerConversionFactor = 1000;
 static inline int queryAtomMass(Atom const *at) {
   return static_cast<int>(
       std::round(massIntegerConversionFactor * at->getMass()));
-};
+}
 static inline int queryAtomIsotope(Atom const *at) {
   return static_cast<int>(at->getIsotope());
-};
+}
 static inline int queryAtomFormalCharge(Atom const *at) {
   return static_cast<int>(at->getFormalCharge());
-};
+}
 static inline int queryAtomNegativeFormalCharge(Atom const *at) {
   return static_cast<int>(-1 * at->getFormalCharge());
-};
+}
 static inline int queryAtomHybridization(Atom const *at) {
   return at->getHybridization();
-};
+}
 static inline int queryAtomNumRadicalElectrons(Atom const *at) {
   return at->getNumRadicalElectrons();
-};
+}
 static inline int queryAtomHasChiralTag(Atom const *at) {
   return at->getChiralTag() != Atom::CHI_UNSPECIFIED;
-};
+}
 static inline int queryAtomMissingChiralTag(Atom const *at) {
   return at->getChiralTag() == Atom::CHI_UNSPECIFIED &&
          at->hasProp(common_properties::_ChiralityPossible);
-};
+}
 
 static inline int queryAtomHasHeteroatomNbrs(Atom const *at) {
   ROMol::ADJ_ITER nbrIdx, endNbrs;
@@ -196,7 +196,7 @@ static inline int queryAtomHasHeteroatomNbrs(Atom const *at) {
     ++nbrIdx;
   }
   return 0;
-};
+}
 
 static inline int queryAtomNumHeteroatomNbrs(Atom const *at) {
   int res = 0;
@@ -210,7 +210,7 @@ static inline int queryAtomNumHeteroatomNbrs(Atom const *at) {
     ++nbrIdx;
   }
   return res;
-};
+}
 
 static inline int queryAtomHasAliphaticHeteroatomNbrs(Atom const *at) {
   ROMol::ADJ_ITER nbrIdx, endNbrs;
@@ -224,7 +224,7 @@ static inline int queryAtomHasAliphaticHeteroatomNbrs(Atom const *at) {
     ++nbrIdx;
   }
   return 0;
-};
+}
 
 static inline int queryAtomNumAliphaticHeteroatomNbrs(Atom const *at) {
   int res = 0;
@@ -239,7 +239,7 @@ static inline int queryAtomNumAliphaticHeteroatomNbrs(Atom const *at) {
     ++nbrIdx;
   }
   return res;
-};
+}
 
 RDKIT_GRAPHMOL_EXPORT unsigned int queryAtomBondProduct(Atom const *at);
 RDKIT_GRAPHMOL_EXPORT unsigned int queryAtomAllBondProduct(Atom const *at);
@@ -249,43 +249,43 @@ RDKIT_GRAPHMOL_EXPORT unsigned int queryAtomAllBondProduct(Atom const *at);
 
 static inline int queryBondOrder(Bond const *bond) {
   return static_cast<int>(bond->getBondType());
-};
+}
 static inline int queryBondIsSingleOrAromatic(Bond const *bond) {
   return static_cast<int>(bond->getBondType() == Bond::SINGLE ||
                           bond->getBondType() == Bond::AROMATIC);
-};
+}
 static inline int queryBondIsDoubleOrAromatic(Bond const *bond) {
   return static_cast<int>(bond->getBondType() == Bond::DOUBLE ||
                           bond->getBondType() == Bond::AROMATIC);
-};
+}
 static inline int queryBondIsSingleOrDouble(Bond const *bond) {
   return static_cast<int>(bond->getBondType() == Bond::SINGLE ||
                           bond->getBondType() == Bond::DOUBLE);
-};
+}
 static inline int queryBondIsSingleOrDoubleOrAromatic(Bond const *bond) {
   return static_cast<int>(bond->getBondType() == Bond::SINGLE ||
                           bond->getBondType() == Bond::DOUBLE ||
                           bond->getBondType() == Bond::AROMATIC);
-};
+}
 static inline int queryBondDir(Bond const *bond) {
   return static_cast<int>(bond->getBondDir());
-};
+}
 static inline int queryIsBondInNRings(Bond const *at) {
   return at->getOwningMol().getRingInfo()->numBondRings(at->getIdx());
-};
+}
 static inline int queryBondHasStereo(Bond const *bnd) {
   return bnd->getStereo() > Bond::STEREONONE;
-};
+}
 
 // -------------------------------------------------
 // ring queries
 
 static inline int queryIsAtomInNRings(Atom const *at) {
   return at->getOwningMol().getRingInfo()->numAtomRings(at->getIdx());
-};
+}
 static inline int queryIsAtomInRing(Atom const *at) {
   return at->getOwningMol().getRingInfo()->numAtomRings(at->getIdx()) != 0;
-};
+}
 static inline int queryAtomHasRingBond(Atom const *at) {
   ROMol::OBOND_ITER_PAIR atomBonds = at->getOwningMol().getAtomBonds(at);
   while (atomBonds.first != atomBonds.second) {
@@ -297,18 +297,18 @@ static inline int queryAtomHasRingBond(Atom const *at) {
     ++atomBonds.first;
   }
   return 0;
-};
+}
 RDKIT_GRAPHMOL_EXPORT int queryIsAtomBridgehead(Atom const *at);
 
 static inline int queryIsBondInRing(Bond const *bond) {
   return bond->getOwningMol().getRingInfo()->numBondRings(bond->getIdx()) != 0;
-};
+}
 static inline int queryAtomMinRingSize(Atom const *at) {
   return at->getOwningMol().getRingInfo()->minAtomRingSize(at->getIdx());
-};
+}
 static inline int queryBondMinRingSize(Bond const *bond) {
   return bond->getOwningMol().getRingInfo()->minBondRingSize(bond->getIdx());
-};
+}
 
 static inline int queryAtomRingBondCount(Atom const *at) {
   // EFF: cache this result
@@ -364,7 +364,7 @@ int queryAtomIsInRingOfSize(Atom const *at) {
   } else {
     return 0;
   }
-};
+}
 template <int tgt>
 int queryBondIsInRingOfSize(Bond const *bond) {
   if (bond->getOwningMol().getRingInfo()->isBondInRingOfSize(bond->getIdx(),
@@ -373,7 +373,7 @@ int queryBondIsInRingOfSize(Bond const *bond) {
   } else {
     return 0;
   }
-};
+}
 
 template <class T>
 T *makeAtomSimpleQuery(int what, std::function<int(Atom const *)> func,
@@ -811,7 +811,7 @@ class RDKIT_GRAPHMOL_EXPORT RecursiveStructureQuery
   }
   //! returns the index of an atom
   static inline int getAtIdx(Atom const *at) {
-    PRECONDITION(at, "bad atom argument");
+    PRECONDITION(at, "bad atom argument")
     return at->getIdx();
   }
 
