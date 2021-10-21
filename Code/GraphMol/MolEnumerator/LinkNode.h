@@ -89,7 +89,7 @@ inline std::vector<LinkNode> getMolLinkNodes(
     if (node.nBonds != 2) {
       if (strict) {
         UNDER_CONSTRUCTION(
-            "only link nodes with 2 bonds are currently supported");
+            "only link nodes with 2 bonds are currently supported")
       } else {
         BOOST_LOG(rdWarningLog)
             << "only link nodes with 2 bonds are currently supported"

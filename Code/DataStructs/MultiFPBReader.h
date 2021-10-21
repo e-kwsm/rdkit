@@ -119,7 +119,7 @@ class RDKIT_DATASTRUCTS_EXPORT MultiFPBReader {
     \returns a count of the current number of readers
   */
   unsigned int addReader(FPBReader *rdr) {
-    PRECONDITION(rdr, "no reader provided");
+    PRECONDITION(rdr, "no reader provided")
     d_readers.push_back(rdr);
     if (df_init) {
       rdr->init();
