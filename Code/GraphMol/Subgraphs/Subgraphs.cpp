@@ -349,7 +349,7 @@ INT_PATH_LIST_MAP findAllSubgraphsOfLengthsMtoN(const ROMol &mol,
                                                 unsigned int lowerLen,
                                                 unsigned int upperLen,
                                                 bool useHs, int rootedAtAtom) {
-  PRECONDITION(lowerLen <= upperLen, "");
+  PRECONDITION(lowerLen <= upperLen, "")
   boost::dynamic_bitset<> forbidden(mol.getNumBonds());
 
   INT_INT_VECT_MAP nbrs;
@@ -453,7 +453,7 @@ findAllPathsOfLengthsMtoN(const ROMol &mol, unsigned int lowerLen,
   //  in with the paths.  So we have to construct paths of atoms and
   //  then convert them into bond paths.
   //
-  PRECONDITION(lowerLen <= upperLen, "");
+  PRECONDITION(lowerLen <= upperLen, "")
 
   // the molecule owns the distance matrix pointer (if we need to get it)
   double *distMat = onlyShortestPaths ? MolOps::getDistanceMat(mol) : nullptr;

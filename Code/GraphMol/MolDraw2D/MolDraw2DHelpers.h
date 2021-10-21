@@ -48,7 +48,7 @@ struct DrawColour {
     return {r - other.r, g - other.g, b - other.b, a - other.a};
   }
   DrawColour operator/(double v) const {
-    PRECONDITION(v != 0.0, "divide by zero");
+    PRECONDITION(v != 0.0, "divide by zero")
     return {r / v, g / v, b / v, a / v};
   }
   DrawColour operator*(double v) const { return {r * v, g * v, b * v, a * v}; }
