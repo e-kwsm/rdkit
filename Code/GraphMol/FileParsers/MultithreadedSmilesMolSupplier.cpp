@@ -17,8 +17,8 @@ MultithreadedSmilesMolSupplier::MultithreadedSmilesMolSupplier(
     const std::string &fileName, const Parameters &params,
     const SmilesMolSupplierParams &parseParams) {
   dp_inStream = openAndCheckStream(fileName);
-  CHECK_INVARIANT(dp_inStream, "bad instream");
-  CHECK_INVARIANT(!(dp_inStream->eof()), "early EOF");
+  CHECK_INVARIANT(dp_inStream, "bad instream")
+  CHECK_INVARIANT(!(dp_inStream->eof()), "early EOF")
   // set df_takeOwnership = true
   initFromSettings(true, params, parseParams);
   POSTCONDITION(dp_inStream, "bad instream");
@@ -66,7 +66,7 @@ void MultithreadedSmilesMolSupplier::initFromSettings(
 }
 
 bool MultithreadedSmilesMolSupplier::getEnd() const {
-  PRECONDITION(dp_inStream, "no stream");
+  PRECONDITION(dp_inStream, "no stream")
   return df_end;
 }
 
@@ -75,7 +75,7 @@ bool MultithreadedSmilesMolSupplier::getEnd() const {
 //  Reads and processes the title line
 //
 void MultithreadedSmilesMolSupplier::processTitleLine() {
-  PRECONDITION(dp_inStream, "bad stream");
+  PRECONDITION(dp_inStream, "bad stream")
   std::string tempStr = getLine(dp_inStream);
   // loop until we get a valid line
   while (!dp_inStream->eof() && !dp_inStream->fail() &&
@@ -95,7 +95,7 @@ void MultithreadedSmilesMolSupplier::processTitleLine() {
 bool MultithreadedSmilesMolSupplier::extractNextRecord(std::string &record,
                                                        unsigned int &lineNum,
                                                        unsigned int &index) {
-  PRECONDITION(dp_inStream, "bad stream");
+  PRECONDITION(dp_inStream, "bad stream")
   if (dp_inStream->eof()) {
     df_end = true;
     return false;

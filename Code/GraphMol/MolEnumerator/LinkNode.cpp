@@ -66,7 +66,7 @@ void LinkNodeOp::initFromMol() {
   for (auto node : nodes) {
     if (node.nBonds != 2) {
       UNDER_CONSTRUCTION(
-          "only link nodes with 2 bonds are currently supported");
+          "only link nodes with 2 bonds are currently supported")
     }
     std::string productSmarts = "";
     d_countAtEachPoint.push_back(node.maxRep - node.minRep + 1);
@@ -106,8 +106,8 @@ std::vector<size_t> LinkNodeOp::getVariationCounts() const {
 
 std::unique_ptr<ROMol> LinkNodeOp::operator()(
     const std::vector<size_t> &which) const {
-  PRECONDITION(dp_mol, "no molecule");
-  PRECONDITION(dp_frame, "not initialized");
+  PRECONDITION(dp_mol, "no molecule")
+  PRECONDITION(dp_frame, "not initialized")
   if (which.size() != d_countAtEachPoint.size()) {
     throw ValueErrorException("bad element choice in enumeration");
   }

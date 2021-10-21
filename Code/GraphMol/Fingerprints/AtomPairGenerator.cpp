@@ -82,7 +82,7 @@ AtomPairArguments::AtomPairArguments(
       df_use2D(use2D),
       d_minDistance(minDistance),
       d_maxDistance(maxDistance) {
-  PRECONDITION(minDistance <= maxDistance, "bad distances provided");
+  PRECONDITION(minDistance <= maxDistance, "bad distances provided")
 }
 
 std::string AtomPairArguments::infoString() const {
@@ -137,7 +137,7 @@ OutputType AtomPairAtomEnv<OutputType>::getBitId(
 ) const {
   PRECONDITION((atomInvariants->size() >= d_atomIdFirst) &&
                    (atomInvariants->size() >= d_atomIdSecond),
-               "bad atom invariants size");
+               "bad atom invariants size")
 
   auto *atomPairArguments = dynamic_cast<AtomPairArguments *>(arguments);
 
@@ -187,7 +187,7 @@ AtomPairEnvGenerator<OutputType>::getEnvironments(
   const unsigned int atomCount = mol.getNumAtoms();
   PRECONDITION(!additionalOutput || !additionalOutput->atomToBits ||
                    additionalOutput->atomToBits->size() == atomCount,
-               "bad atomToBits size in AdditionalOutput");
+               "bad atomToBits size in AdditionalOutput")
 
   auto *atomPairArguments = dynamic_cast<AtomPairArguments *>(arguments);
   std::vector<AtomEnvironment<OutputType> *> result =

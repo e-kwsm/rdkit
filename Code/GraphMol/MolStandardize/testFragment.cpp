@@ -37,74 +37,74 @@ void test2() {
   smi1 = "CN(C)C.Cl";
   std::shared_ptr<ROMol> m1(SmilesToMol(smi1));
   std::shared_ptr<ROMol> remove(fragremover.remove(*m1));
-  TEST_ASSERT(MolToSmiles(*remove) == "CN(C)C");
+  TEST_ASSERT(MolToSmiles(*remove) == "CN(C)C")
 
   // double salt removal
   smi2 = "CN(C)C.Cl.Cl.Br";
   std::shared_ptr<ROMol> m2(SmilesToMol(smi2));
   std::shared_ptr<ROMol> remove2(fragremover.remove(*m2));
-  TEST_ASSERT(MolToSmiles(*remove2) == "CN(C)C");
+  TEST_ASSERT(MolToSmiles(*remove2) == "CN(C)C")
 
   // FragmentPatterns should match entire fragments only,
   // matches within larger fragments should be left
   smi3 = "CN(Br)Cl";
   std::shared_ptr<ROMol> m3(SmilesToMol(smi3));
   std::shared_ptr<ROMol> remove3(fragremover.remove(*m3));
-  TEST_ASSERT(MolToSmiles(*remove3) == "CN(Cl)Br");
+  TEST_ASSERT(MolToSmiles(*remove3) == "CN(Cl)Br")
 
   // FragmentPatterns should match entire fragments only,
   // matches within larger fragments should be left
   smi4 = "CN(Br)Cl.Cl";
   std::shared_ptr<ROMol> m4(SmilesToMol(smi4));
   std::shared_ptr<ROMol> remove4(fragremover.remove(*m4));
-  TEST_ASSERT(MolToSmiles(*remove4) == "CN(Cl)Br");
+  TEST_ASSERT(MolToSmiles(*remove4) == "CN(Cl)Br")
 
   // charged salts
   smi5 = "C[NH+](C)(C).[Cl-]";
   std::shared_ptr<ROMol> m5(SmilesToMol(smi5));
   std::shared_ptr<ROMol> remove5(fragremover.remove(*m5));
-  TEST_ASSERT(MolToSmiles(*remove5) == "C[NH+](C)C");
+  TEST_ASSERT(MolToSmiles(*remove5) == "C[NH+](C)C")
 
   // Last match should be left.
   smi6 = "CC(=O)O.[Na]";
   std::shared_ptr<ROMol> m6(SmilesToMol(smi6));
   std::shared_ptr<ROMol> remove6(fragremover.remove(*m6));
-  TEST_ASSERT(MolToSmiles(*remove6) == "CC(=O)O");
+  TEST_ASSERT(MolToSmiles(*remove6) == "CC(=O)O")
 
   // Last match should be removed.
   FragmentRemover fr_noleavelast(defaultCleanupParameters.fragmentFile, false);
   std::shared_ptr<ROMol> remove7(fr_noleavelast.remove(*m6));
-  TEST_ASSERT(MolToSmiles(*remove7) == "");
+  TEST_ASSERT(MolToSmiles(*remove7) == "")
 
   // Multiple identical last fragments should all be left.
   smi8 = "Cl.Cl";
   std::shared_ptr<ROMol> m8(SmilesToMol(smi8));
   std::shared_ptr<ROMol> remove8(fragremover.remove(*m8));
-  TEST_ASSERT(MolToSmiles(*remove8) == "Cl.Cl");
+  TEST_ASSERT(MolToSmiles(*remove8) == "Cl.Cl")
 
   // Last match should be left.
   smi9 = "[Na+].OC(=O)Cc1ccc(CN)cc1.OS(=O)(=O)C(F)(F)F";
   std::shared_ptr<ROMol> m9(SmilesToMol(smi9));
   std::shared_ptr<ROMol> remove9(fragremover.remove(*m9));
-  TEST_ASSERT(MolToSmiles(*remove9) == "NCc1ccc(CC(=O)O)cc1");
+  TEST_ASSERT(MolToSmiles(*remove9) == "NCc1ccc(CC(=O)O)cc1")
 
   // 1,4-Dioxane should be removed..
   smi10 = "c1ccccc1O.O1CCOCC1";
   std::shared_ptr<ROMol> m10(SmilesToMol(smi10));
   std::shared_ptr<ROMol> remove10(fragremover.remove(*m10));
-  TEST_ASSERT(MolToSmiles(*remove10) == "Oc1ccccc1");
+  TEST_ASSERT(MolToSmiles(*remove10) == "Oc1ccccc1")
 
   // Benzene should be removed.
   smi11 = "c1ccccc1.CCCBr";
   std::shared_ptr<ROMol> m11(SmilesToMol(smi11));
   std::shared_ptr<ROMol> remove11(fragremover.remove(*m11));
-  TEST_ASSERT(MolToSmiles(*remove11) == "CCCBr");
+  TEST_ASSERT(MolToSmiles(*remove11) == "CCCBr")
 
   // Various fragments should be removed.
   smi12 = "CC(NC1=CC=C(O)C=C1)=O.CCCCC.O.CCO.CCCO.C1CCCCC1.C1CCCCCC1";
   std::shared_ptr<ROMol> m12(SmilesToMol(smi12));
   std::shared_ptr<ROMol> remove12(fragremover.remove(*m12));
-  TEST_ASSERT(MolToSmiles(*remove12) == "CC(=O)Nc1ccc(O)cc1");
+  TEST_ASSERT(MolToSmiles(*remove12) == "CC(=O)Nc1ccc(O)cc1")
   BOOST_LOG(rdDebugLog) << "Finished" << std::endl;
 }
 
@@ -168,17 +168,17 @@ void test_largest_fragment() {
   std::shared_ptr<RWMol> m6(SmilesToMol(smi6));
   //	MolStandardize::cleanup(*m6, params);
   std::shared_ptr<RWMol> res6(MolStandardize::fragmentParent(*m6, params));
-  TEST_ASSERT(MolToSmiles(*res6) == "O=C([O-])c1ccccc1");
+  TEST_ASSERT(MolToSmiles(*res6) == "O=C([O-])c1ccccc1")
 
   smi7 = "c1ccccc1C(=O)O[Ca]OC(=O)c1ccccc1";
   std::shared_ptr<RWMol> m7(SmilesToMol(smi7));
   std::shared_ptr<RWMol> res7(MolStandardize::fragmentParent(*m7, params));
-  TEST_ASSERT(MolToSmiles(*res7) == "O=C([O-])c1ccccc1");
+  TEST_ASSERT(MolToSmiles(*res7) == "O=C([O-])c1ccccc1")
 
   smi8 = "[Pt](Cl)(Cl)(O)(O)(NC(C)C)NC(C)C";
   std::shared_ptr<RWMol> m8(SmilesToMol(smi8));
   std::shared_ptr<RWMol> res8(MolStandardize::fragmentParent(*m8, params));
-  TEST_ASSERT(MolToSmiles(*res8) == "CC(C)[NH-]");
+  TEST_ASSERT(MolToSmiles(*res8) == "CC(C)[NH-]")
 
   // Mercury containing compound.
   smi9 = "CC[Hg]SC1=C(C=CC=C1)C(=O)[O][Na]";
@@ -190,7 +190,7 @@ void test_largest_fragment() {
   smi10 = "[Ag]OC(=O)O[Ag]";
   std::shared_ptr<RWMol> m10(SmilesToMol(smi10));
   std::shared_ptr<RWMol> res10(MolStandardize::fragmentParent(*m10, params));
-  TEST_ASSERT(MolToSmiles(*res10) == "O=C([O-])[O-]");
+  TEST_ASSERT(MolToSmiles(*res10) == "O=C([O-])[O-]")
 
   // Different fragment chosen depending on whether atom count is limited to
   // heavy or not.
@@ -301,7 +301,7 @@ void testWhiteSpaceInSmarts() {
   for (const auto &smarts : data) {
     std::istringstream input(smarts);
     auto groups = readFuncGroups(input);
-    TEST_ASSERT(groups.size() == *reference);
+    TEST_ASSERT(groups.size() == *reference)
     ++reference;
   }
   BOOST_LOG(rdDebugLog) << "---- Done" << std::endl;
@@ -325,8 +325,8 @@ void testFragmentWithoutSmarts() {
     } catch (const ValueErrorException &) {
       ok = true;
     }
-    TEST_ASSERT(ok);
-    TEST_ASSERT(groups.empty());
+    TEST_ASSERT(ok)
+    TEST_ASSERT(groups.empty())
   }
   BOOST_LOG(rdDebugLog) << "---- Done" << std::endl;
 }
@@ -339,7 +339,7 @@ void testParameters() {
         {"hydrogen", "[H]"}, {"fluorine", "[F]"}, {"chlorine", "[Cl]"}};
 
     auto groups = readFuncGroups(data);
-    TEST_ASSERT(groups.size() == data.size());
+    TEST_ASSERT(groups.size() == data.size())
   }
   {  // parse failure
     std::vector<std::pair<std::string, std::string>> data{
@@ -350,7 +350,7 @@ void testParameters() {
     } catch (const ValueErrorException &) {
       ok = true;
     }
-    TEST_ASSERT(ok);
+    TEST_ASSERT(ok)
   }
   {
     std::vector<std::pair<std::string, std::string>> data{
@@ -358,11 +358,11 @@ void testParameters() {
 
     FragmentRemover remover(data, true);
     auto m = "[F-].[Cl-].[Br-].CC"_smiles;
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
 
     std::unique_ptr<ROMol> nm{remover.remove(*m)};
-    TEST_ASSERT(nm);
-    TEST_ASSERT(MolToSmiles(*nm) == "CC.[Br-]");
+    TEST_ASSERT(nm)
+    TEST_ASSERT(MolToSmiles(*nm) == "CC.[Br-]")
   }
 
   BOOST_LOG(rdDebugLog) << "---- Done" << std::endl;
@@ -376,7 +376,7 @@ void testEmptyMol() {
   LargestFragmentChooser lfragchooser;
   std::unique_ptr<ROMol> emptyMol(new ROMol());
   std::unique_ptr<ROMol> largestMol(lfragchooser.choose(*emptyMol));
-  TEST_ASSERT(!largestMol->getNumAtoms());
+  TEST_ASSERT(!largestMol->getNumAtoms())
 }
 
 int main() {

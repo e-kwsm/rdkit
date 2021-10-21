@@ -487,7 +487,7 @@ bool generateInitialCoords(RDGeom::PointPtrVect *positions,
   if (!embedParams.useRandomCoords) {
     double largestDistance =
         DistGeom::pickRandomDistMat(*eargs.mmat, distMat, *rng);
-    RDUNUSED_PARAM(largestDistance);
+    RDUNUSED_PARAM(largestDistance)
     gotCoords = DistGeom::computeInitialCoords(distMat, *positions, *rng,
                                                embedParams.randNegEig,
                                                embedParams.numZeroFail);
@@ -640,7 +640,7 @@ bool minimizeFourthDimension(RDGeom::PointPtrVect *positions,
 bool minimizeWithExpTorsions(RDGeom::PointPtrVect &positions,
                              const detail::EmbedArgs &eargs,
                              const EmbedParameters &embedParams) {
-  PRECONDITION(eargs.etkdgDetails, "bogus etkdgDetails pointer");
+  PRECONDITION(eargs.etkdgDetails, "bogus etkdgDetails pointer")
   bool planar = true;
 
   // convert to 3D positions and create coordMap
@@ -873,7 +873,7 @@ bool embedPoints(RDGeom::PointPtrVect *positions, detail::EmbedArgs eargs,
 
   RDKit::double_source_type *rng = nullptr;
   CHECK_INVARIANT(seed >= -1,
-                  "random seed must either be positive, zero, or negative one");
+                  "random seed must either be positive, zero, or negative one")
   if (seed > -1) {
     generator.reset(new RDKit::rng_type(42u));
     generator->seed(seed);
@@ -1100,7 +1100,7 @@ void findChiralSets(const ROMol &mol, DistGeom::VECT_CHIRALSET &chiralCenters,
         // if we have less than 4 heavy atoms as neighbors,
         // we need to include the chiral center into the mix
         // we should at least have 3 though
-        CHECK_INVARIANT(nbrs.size() >= 3, "Cannot be a chiral center");
+        CHECK_INVARIANT(nbrs.size() >= 3, "Cannot be a chiral center")
 
         double volLowerBound = 5.0;
         double volUpperBound = 100.0;
@@ -1237,7 +1237,7 @@ void adjustBoundsMatFromCoordMap(
 
 void initETKDG(ROMol *mol, const EmbedParameters &params,
                ForceFields::CrystalFF::CrystalFFDetails &etkdgDetails) {
-  PRECONDITION(mol, "bad molecule");
+  PRECONDITION(mol, "bad molecule")
   unsigned int nAtoms = mol->getNumAtoms();
   if (params.useExpTorsionAnglePrefs || params.useBasicKnowledge) {
     ForceFields::CrystalFF::getExperimentalTorsions(
@@ -1257,7 +1257,7 @@ bool setupInitialBoundsMatrix(
     const std::map<int, RDGeom::Point3D> *coordMap,
     const EmbedParameters &params,
     ForceFields::CrystalFF::CrystalFFDetails &etkdgDetails) {
-  PRECONDITION(mol, "bad molecule");
+  PRECONDITION(mol, "bad molecule")
   unsigned int nAtoms = mol->getNumAtoms();
   if (params.useExpTorsionAnglePrefs || params.useBasicKnowledge) {
     setTopolBounds(*mol, mmat, etkdgDetails.bonds, etkdgDetails.angles, true,
@@ -1308,7 +1308,7 @@ bool setupInitialBoundsMatrix(
 
 void _fillAtomPositions(RDGeom::Point3DConstPtrVect &pts, const Conformer &conf,
                         const ROMol &, const std::vector<unsigned int> &match) {
-  PRECONDITION(pts.size() == match.size(), "bad pts size");
+  PRECONDITION(pts.size() == match.size(), "bad pts size")
   for (unsigned int i = 0; i < match.size(); i++) {
     pts[i] = &conf.getAtomPos(match[i]);
   }
@@ -1391,7 +1391,7 @@ void embedHelper_(int threadId, int numThreads, EmbedArgs *eargs,
 
     CHECK_INVARIANT(
         params->randomSeed >= -1,
-        "random seed must either be positive, zero, or negative one");
+        "random seed must either be positive, zero, or negative one")
     int new_seed = params->randomSeed;
     if (new_seed > -1) {
       if (params->enableSequentialRandomSeeds) {

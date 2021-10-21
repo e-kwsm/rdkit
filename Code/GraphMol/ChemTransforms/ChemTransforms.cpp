@@ -182,7 +182,7 @@ std::vector<ROMOL_SPTR> replaceSubstructs(
     bool replaceAll, unsigned int replacementConnectionPoint,
     bool useChirality) {
   PRECONDITION(replacementConnectionPoint < replacement.getNumAtoms(),
-               "bad replacementConnectionPoint");
+               "bad replacementConnectionPoint")
   std::vector<ROMOL_SPTR> res;
   std::vector<MatchVectType> fgpMatches;
 
@@ -235,7 +235,7 @@ std::vector<ROMOL_SPTR> replaceSubstructs(
       if (!std::binary_search(sortMatch.begin(), sortMatch.end(),
                               int(*nbrIdx))) {
         Bond *oBond = newMol->getBondBetweenAtoms(match[0], *nbrIdx);
-        CHECK_INVARIANT(oBond, "required bond not found");
+        CHECK_INVARIANT(oBond, "required bond not found")
         newMol->addBond(numOrigAtoms + replacementConnectionPoint, *nbrIdx,
                         oBond->getBondType());
       }
@@ -407,7 +407,7 @@ int findNbrBond(RWMol &mol, Bond *bond, Atom *bondAtom, const INT_VECT &bring,
 void setSubMolBrokenRingStereo(RWMol &mol,
                                const boost::dynamic_bitset<> &removedAtoms) {
   PRECONDITION(mol.getRingInfo() && mol.getRingInfo()->isInitialized(),
-               "bad ringinfo");
+               "bad ringinfo")
 
   for (const auto &bring : mol.getRingInfo()->bondRings()) {
     // check whether or not this bond ring is affected by the removal
@@ -492,7 +492,7 @@ ROMol *replaceCore(const ROMol &mol, const ROMol &core,
         CHECK_INVARIANT(
             coreAtom->getDegree() == 1,
             "Multiple core atoms match a mol atom, but one of the core "
-            "atoms has degree > 1 ");
+            "atoms has degree > 1 ")
         auto coreNeighborIdx =
             core[*core.getAtomNeighbors(coreAtom).first]->getIdx();
         auto molNeighborIdx =
@@ -505,7 +505,7 @@ ROMol *replaceCore(const ROMol &mol, const ROMol &core,
           auto connectingBond =
               mol.getBondBetweenAtoms(mappingInfo.molIndex, molNeighborIdx);
           CHECK_INVARIANT(connectingBond,
-                          "expected bond in molecule not found");
+                          "expected bond in molecule not found")
           multipleOwnedBonds.set(connectingBond->getIdx());
         }
       }
@@ -974,7 +974,7 @@ void parseQueryDefFile(std::istream *inStream,
                        bool standardize, const std::string &delimiter,
                        const std::string &comment, unsigned int nameColumn,
                        unsigned int smartsColumn) {
-  PRECONDITION(inStream, "no stream");
+  PRECONDITION(inStream, "no stream")
   queryDefs.clear();
 
   boost::char_separator<char> sep(delimiter.c_str());

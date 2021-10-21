@@ -34,7 +34,7 @@ class PyForceField {
   }
 
   int addExtraPoint(double x, double y, double z, bool fixed = true) {
-    PRECONDITION(this->field, "no force field");
+    PRECONDITION(this->field, "no force field")
     RDGeom::Point3D *pt = new RDGeom::Point3D(x, y, z);
     this->extraPoints.push_back(boost::shared_ptr<RDGeom::Point3D>(pt));
     unsigned int ptIdx = this->extraPoints.size() - 1;
@@ -56,7 +56,7 @@ class PyForceField {
   PyObject *positions();
 
   int minimize(int maxIts, double forceTol, double energyTol) {
-    PRECONDITION(this->field, "no force field");
+    PRECONDITION(this->field, "no force field")
     return this->field->minimize(maxIts, forceTol, energyTol);
   }
 
@@ -64,17 +64,17 @@ class PyForceField {
                                           double forceTol, double energyTol);
 
   void initialize() {
-    PRECONDITION(this->field, "no force field");
+    PRECONDITION(this->field, "no force field")
     this->field->initialize();
   }
 
   unsigned int dimension() {
-    PRECONDITION(this->field, "no force field");
+    PRECONDITION(this->field, "no force field")
     return this->field->dimension();
   }
 
   unsigned int numPoints() {
-    PRECONDITION(this->field, "no force field");
+    PRECONDITION(this->field, "no force field")
     return this->field->numPoints();
   }
 

@@ -32,11 +32,11 @@ double calcNonbondedDepth(const AtomicParams *at1Params,
 vdWContrib::vdWContrib(ForceField *owner, unsigned int idx1, unsigned int idx2,
                        const AtomicParams *at1Params,
                        const AtomicParams *at2Params, double threshMultiplier) {
-  PRECONDITION(owner, "bad owner");
-  PRECONDITION(at1Params, "bad params pointer");
-  PRECONDITION(at2Params, "bad params pointer");
-  URANGE_CHECK(idx1, owner->positions().size());
-  URANGE_CHECK(idx2, owner->positions().size());
+  PRECONDITION(owner, "bad owner")
+  PRECONDITION(at1Params, "bad params pointer")
+  PRECONDITION(at2Params, "bad params pointer")
+  URANGE_CHECK(idx1, owner->positions().size())
+  URANGE_CHECK(idx2, owner->positions().size())
 
   dp_forceField = owner;
   d_at1Idx = idx1;
@@ -52,8 +52,8 @@ vdWContrib::vdWContrib(ForceField *owner, unsigned int idx1, unsigned int idx2,
 }
 
 double vdWContrib::getEnergy(double *pos) const {
-  PRECONDITION(dp_forceField, "no owner");
-  PRECONDITION(pos, "bad vector");
+  PRECONDITION(dp_forceField, "no owner")
+  PRECONDITION(pos, "bad vector")
 
   double dist = dp_forceField->distance(d_at1Idx, d_at2Idx, pos);
   if (dist > d_thresh || dist <= 0.0) {
@@ -69,9 +69,9 @@ double vdWContrib::getEnergy(double *pos) const {
   return res;
 }
 void vdWContrib::getGrad(double *pos, double *grad) const {
-  PRECONDITION(dp_forceField, "no owner");
-  PRECONDITION(pos, "bad vector");
-  PRECONDITION(grad, "bad vector");
+  PRECONDITION(dp_forceField, "no owner")
+  PRECONDITION(pos, "bad vector")
+  PRECONDITION(grad, "bad vector")
 
   double dist = dp_forceField->distance(d_at1Idx, d_at2Idx, pos);
   if (dist > d_thresh) {

@@ -27,14 +27,14 @@ bool powerEigenSolver(unsigned int numEig, DoubleSymmMatrix &mat,
 
   // first check all the sizes
   unsigned int N = mat.numRows();
-  CHECK_INVARIANT(eigenValues.size() >= numEig, "");
-  CHECK_INVARIANT(numEig <= N, "");
+  CHECK_INVARIANT(eigenValues.size() >= numEig, "")
+  CHECK_INVARIANT(numEig <= N, "")
   if (eigenVectors) {
     unsigned int evRows, evCols;
     evRows = eigenVectors->numRows();
     evCols = eigenVectors->numCols();
-    CHECK_INVARIANT(evCols >= N, "");
-    CHECK_INVARIANT(evRows >= numEig, "");
+    CHECK_INVARIANT(evCols >= N, "")
+    CHECK_INVARIANT(evRows >= numEig, "")
   }
 
   unsigned int ei;
