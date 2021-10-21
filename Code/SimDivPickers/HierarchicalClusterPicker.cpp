@@ -21,9 +21,9 @@ namespace RDPickers {
 
 RDKit::VECT_INT_VECT HierarchicalClusterPicker::cluster(
     const double *distMat, unsigned int poolSize, unsigned int pickSize) const {
-  PRECONDITION(distMat, "Invalid Distance Matrix");
+  PRECONDITION(distMat, "Invalid Distance Matrix")
   PRECONDITION((poolSize >= pickSize),
-               "pickSize cannot be larger than the poolSize");
+               "pickSize cannot be larger than the poolSize")
 
   // Do the clustering
   auto method = (long int)d_method;
@@ -31,9 +31,9 @@ RDKit::VECT_INT_VECT HierarchicalClusterPicker::cluster(
   auto *ia = (long int *)calloc(poolSize, sizeof(long int));
   auto *ib = (long int *)calloc(poolSize, sizeof(long int));
   real *crit = (real *)calloc(poolSize, sizeof(real));
-  CHECK_INVARIANT(ia, "failed to allocate memory");
-  CHECK_INVARIANT(ib, "failed to allocate memory");
-  CHECK_INVARIANT(crit, "failed to allocate memory");
+  CHECK_INVARIANT(ia, "failed to allocate memory")
+  CHECK_INVARIANT(ib, "failed to allocate memory")
+  CHECK_INVARIANT(crit, "failed to allocate memory")
   auto poolSize2 = static_cast<long int>(poolSize);
 
   distdriver_(&poolSize2,       // number of items in the pool
@@ -91,7 +91,7 @@ RDKit::VECT_INT_VECT HierarchicalClusterPicker::cluster(
   RDKit::INT_VECT_CI nEnd = std::unique(removed.begin(), removed.end());
   CHECK_INVARIANT(
       nEnd == removed.end(),
-      "Somehow there are duplicates in the list of removed clusters");
+      "Somehow there are duplicates in the list of removed clusters")
 
   RDKit::VECT_INT_VECT res;
   unsigned int j = 0;
@@ -108,9 +108,9 @@ RDKit::VECT_INT_VECT HierarchicalClusterPicker::cluster(
 RDKit::INT_VECT HierarchicalClusterPicker::pick(const double *distMat,
                                                 unsigned int poolSize,
                                                 unsigned int pickSize) const {
-  PRECONDITION(distMat, "bad distance matrix");
+  PRECONDITION(distMat, "bad distance matrix")
   RDKit::VECT_INT_VECT clusters = this->cluster(distMat, poolSize, pickSize);
-  CHECK_INVARIANT(clusters.size() == pickSize, "");
+  CHECK_INVARIANT(clusters.size() == pickSize, "")
 
   // the last step: find a representative element from each of the
   // remaining clusters

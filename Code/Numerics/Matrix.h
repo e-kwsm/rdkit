@@ -84,16 +84,16 @@ class Matrix {
 
   //! returns a particular element of the matrix
   inline virtual TYPE getVal(unsigned int i, unsigned int j) const {
-    PRECONDITION(i < d_nRows, "bad index");
-    PRECONDITION(j < d_nCols, "bad index");
+    PRECONDITION(i < d_nRows, "bad index")
+    PRECONDITION(j < d_nCols, "bad index")
     unsigned int id = i * d_nCols + j;
     return d_data[id];
   }
 
   //! sets a particular element of the matrix
   inline virtual void setVal(unsigned int i, unsigned int j, TYPE val) {
-    PRECONDITION(i < d_nRows, "bad index");
-    PRECONDITION(j < d_nCols, "bad index");
+    PRECONDITION(i < d_nRows, "bad index")
+    PRECONDITION(j < d_nCols, "bad index")
     unsigned int id = i * d_nCols + j;
 
     d_data[id] = val;
@@ -114,8 +114,8 @@ class Matrix {
   }
   //! returns a copy of a row of the matrix
   inline virtual void getRow(unsigned int i, Vector<TYPE> &row) const {
-    PRECONDITION(i < d_nRows, "bad index");
-    PRECONDITION(d_nCols == row.size(), "");
+    PRECONDITION(i < d_nRows, "bad index")
+    PRECONDITION(d_nCols == row.size(), "")
     unsigned int id = i * d_nCols;
     TYPE *rData = row.getData();
     TYPE *data = d_data.get();
@@ -125,8 +125,8 @@ class Matrix {
 
   //! returns a copy of a column of the matrix
   inline virtual void getCol(unsigned int i, Vector<TYPE> &col) const {
-    PRECONDITION(i < d_nCols, "bad index");
-    PRECONDITION(d_nRows == col.size(), "");
+    PRECONDITION(i < d_nCols, "bad index")
+    PRECONDITION(d_nRows == col.size(), "")
     unsigned int j, id;
     TYPE *rData = col.getData();
     TYPE *data = d_data.get();
@@ -148,9 +148,9 @@ class Matrix {
 
   Matrix<TYPE> &assign(const Matrix<TYPE> &other) {
     PRECONDITION(d_nRows == other.numRows(),
-                 "Num rows mismatch in matrix copying");
+                 "Num rows mismatch in matrix copying")
     PRECONDITION(d_nCols == other.numCols(),
-                 "Num cols mismatch in matrix copying");
+                 "Num cols mismatch in matrix copying")
     const TYPE *otherData = other.getData();
     TYPE *data = d_data.get();
     memcpy(static_cast<void *>(data), static_cast<const void *>(otherData),
@@ -163,9 +163,9 @@ class Matrix {
    */
   virtual Matrix<TYPE> &operator+=(const Matrix<TYPE> &other) {
     PRECONDITION(d_nRows == other.numRows(),
-                 "Num rows mismatch in matrix addition");
+                 "Num rows mismatch in matrix addition")
     PRECONDITION(d_nCols == other.numCols(),
-                 "Num cols mismatch in matrix addition");
+                 "Num cols mismatch in matrix addition")
     const TYPE *oData = other.getData();
     unsigned int i;
     TYPE *data = d_data.get();
@@ -180,9 +180,9 @@ class Matrix {
    */
   virtual Matrix<TYPE> &operator-=(const Matrix<TYPE> &other) {
     PRECONDITION(d_nRows == other.numRows(),
-                 "Num rows mismatch in matrix addition");
+                 "Num rows mismatch in matrix addition")
     PRECONDITION(d_nCols == other.numCols(),
-                 "Num cols mismatch in matrix addition");
+                 "Num cols mismatch in matrix addition")
     const TYPE *oData = other.getData();
     unsigned int i;
     TYPE *data = d_data.get();
@@ -223,8 +223,8 @@ class Matrix {
   virtual Matrix<TYPE> &transpose(Matrix<TYPE> &transpose) const {
     unsigned int tRows = transpose.numRows();
     unsigned int tCols = transpose.numCols();
-    PRECONDITION(d_nCols == tRows, "Size mismatch during transposing");
-    PRECONDITION(d_nRows == tCols, "Size mismatch during transposing");
+    PRECONDITION(d_nCols == tRows, "Size mismatch during transposing")
+    PRECONDITION(d_nRows == tCols, "Size mismatch during transposing")
     unsigned int i, j;
     unsigned int idA, idAt, idT;
     TYPE *tData = transpose.getData();
@@ -272,9 +272,9 @@ Matrix<TYPE> &multiply(const Matrix<TYPE> &A, const Matrix<TYPE> &B,
   unsigned int cCols = C.numCols();
   unsigned int bRows = B.numRows();
   unsigned int bCols = B.numCols();
-  CHECK_INVARIANT(aCols == bRows, "Size mismatch during multiplication");
-  CHECK_INVARIANT(aRows == cRows, "Size mismatch during multiplication");
-  CHECK_INVARIANT(bCols == cCols, "Size mismatch during multiplication");
+  CHECK_INVARIANT(aCols == bRows, "Size mismatch during multiplication")
+  CHECK_INVARIANT(aRows == cRows, "Size mismatch during multiplication")
+  CHECK_INVARIANT(bCols == cCols, "Size mismatch during multiplication")
 
   // we have the sizes check do do the multiplication
   TYPE *cData = C.getData();
@@ -296,7 +296,7 @@ Matrix<TYPE> &multiply(const Matrix<TYPE> &A, const Matrix<TYPE> &B,
     }
   }
   return C;
-};
+}
 
 //! Matrix-Vector multiplication
 /*!
@@ -317,8 +317,8 @@ Vector<TYPE> &multiply(const Matrix<TYPE> &A, const Vector<TYPE> &x,
   unsigned int aCols = A.numCols();
   unsigned int xSiz = x.size();
   unsigned int ySiz = y.size();
-  CHECK_INVARIANT(aCols == xSiz, "Size mismatch during multiplication");
-  CHECK_INVARIANT(aRows == ySiz, "Size mismatch during multiplication");
+  CHECK_INVARIANT(aCols == xSiz, "Size mismatch during multiplication")
+  CHECK_INVARIANT(aRows == ySiz, "Size mismatch during multiplication")
   unsigned int i, j;
   unsigned int idA, idAt;
   const TYPE *xData = x.getData();
@@ -333,10 +333,10 @@ Vector<TYPE> &multiply(const Matrix<TYPE> &A, const Vector<TYPE> &x,
     }
   }
   return y;
-};
+}
 
 typedef Matrix<double> DoubleMatrix;
-};  // namespace RDNumeric
+}  // namespace RDNumeric
 
 //! ostream operator for Matrix's
 template <class TYPE>

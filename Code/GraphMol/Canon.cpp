@@ -821,13 +821,13 @@ void canonicalDFSTraversal(ROMol &mol, int atomIdx, int inBondIdx,
   PRECONDITION(colors.size() >= mol.getNumAtoms(), "vector too small");
   PRECONDITION(ranks.size() >= mol.getNumAtoms(), "vector too small");
   PRECONDITION(atomRingClosures.size() >= mol.getNumAtoms(),
-               "vector too small");
+               "vector too small")
   PRECONDITION(atomTraversalBondOrder.size() >= mol.getNumAtoms(),
-               "vector too small");
+               "vector too small")
   PRECONDITION(!bondsInPlay || bondsInPlay->size() >= mol.getNumBonds(),
-               "bondsInPlay too small");
+               "bondsInPlay too small")
   PRECONDITION(!bondSymbols || bondSymbols->size() >= mol.getNumBonds(),
-               "bondSymbols too small");
+               "bondSymbols too small")
 
   std::vector<AtomColors> tcolors;
   tcolors.resize(colors.size());
@@ -842,11 +842,11 @@ void canonicalDFSTraversal(ROMol &mol, int atomIdx, int inBondIdx,
 void clearBondDirs(ROMol &mol, Bond *refBond, const Atom *fromAtom,
                    UINT_VECT &bondDirCounts, UINT_VECT &atomDirCounts,
                    const UINT_VECT &) {
-  PRECONDITION(bondDirCounts.size() >= mol.getNumBonds(), "bad dirCount size");
-  PRECONDITION(refBond, "bad bond");
-  PRECONDITION(&refBond->getOwningMol() == &mol, "bad bond");
-  PRECONDITION(fromAtom, "bad atom");
-  PRECONDITION(&fromAtom->getOwningMol() == &mol, "bad bond");
+  PRECONDITION(bondDirCounts.size() >= mol.getNumBonds(), "bad dirCount size")
+  PRECONDITION(refBond, "bad bond")
+  PRECONDITION(&refBond->getOwningMol() == &mol, "bad bond")
+  PRECONDITION(fromAtom, "bad atom")
+  PRECONDITION(&fromAtom->getOwningMol() == &mol, "bad bond")
 
   ROMol::OEDGE_ITER beg, end;
   boost::tie(beg, end) = mol.getAtomBonds(fromAtom);
