@@ -116,6 +116,6 @@ class RDKIT_CHEMREACTIONS_EXPORT ReactionPickler {
   //! unpickle standard properties
   static void _unpickleProperties(std::istream &ss, RDProps &props);
 };
-};  // namespace RDKit
+}  // namespace RDKit
 
 #endif
