@@ -49,9 +49,9 @@ void testSmiConcurrent(std::istream *strm, bool takeOwnership,
       strm, takeOwnership, delimiter, smilesColumn, nameColumn, titleLine,
       sanitize, numWriterThreads, sizeInputQueue, sizeOutputQueue);
   // we have not called the next method yet
-  TEST_ASSERT(sup.getLastRecordId() == 0);
+  TEST_ASSERT(sup.getLastRecordId() == 0)
   // initially no bit is set in the bitVector, sanity check
-  TEST_ASSERT(!bitVector.any());
+  TEST_ASSERT(!bitVector.any())
 
   while (!sup.atEnd()) {
     ROMol *mol = sup.next();
@@ -67,8 +67,8 @@ void testSmiConcurrent(std::istream *strm, bool takeOwnership,
     delete mol;
   }
   // if all bits are set then we have seen possible ids
-  TEST_ASSERT(bitVector.all());
-  TEST_ASSERT(nMols == expectedResult);
+  TEST_ASSERT(bitVector.all())
+  TEST_ASSERT(nMols == expectedResult)
 }
 
 void testSmiConcurrent(std::string path, std::string delimiter,
@@ -101,7 +101,7 @@ void testSmiOld(std::string path, std::string delimiter, int smilesColumn,
     }
     delete mol;
   }
-  TEST_ASSERT(numMols == expectedResult);
+  TEST_ASSERT(numMols == expectedResult)
 }
 
 void testSmiProperties() {
@@ -127,10 +127,10 @@ void testSmiProperties() {
     if (mol != nullptr) {
       mol->getProp(common_properties::_Name, tempStr);
       TEST_ASSERT(std::find(nameVector.begin(), nameVector.end(), tempStr) !=
-                  nameVector.end());
+                  nameVector.end())
       mol->getProp("TPSA", tempStr);
       TEST_ASSERT(std::find(tpsaVector.begin(), tpsaVector.end(), tempStr) !=
-                  tpsaVector.end());
+                  tpsaVector.end())
     }
   }
 }
@@ -180,9 +180,9 @@ void testSDConcurrent(std::istream *strm, bool takeOwnership, bool sanitize,
                                  strictParsing, numWriterThreads,
                                  sizeInputQueue, sizeOutputQueue);
   // we have not called the next method yet
-  TEST_ASSERT(sup.getLastRecordId() == 0);
+  TEST_ASSERT(sup.getLastRecordId() == 0)
   // initially no bit is set in the bitVector, sanity check
-  TEST_ASSERT(!bitVector.any());
+  TEST_ASSERT(!bitVector.any())
   while (!sup.atEnd()) {
     ROMol *mol = sup.next();
     if (mol) {
@@ -197,8 +197,8 @@ void testSDConcurrent(std::istream *strm, bool takeOwnership, bool sanitize,
     delete mol;
   }
   // if all bits are set then we have seen possible ids
-  TEST_ASSERT(bitVector.all());
-  TEST_ASSERT(nMols == expectedResult);
+  TEST_ASSERT(bitVector.all())
+  TEST_ASSERT(nMols == expectedResult)
 }
 
 void testSDConcurrent(std::string path, bool sanitize, bool removeHs,
@@ -225,12 +225,12 @@ void testSDProperties() {
   while (!multiSup.atEnd()) {
     std::unique_ptr<ROMol> mol{multiSup.next()};
     if (mol != nullptr) {
-      TEST_ASSERT(mol->hasProp(common_properties::_Name));
+      TEST_ASSERT(mol->hasProp(common_properties::_Name))
       mol->getProp(common_properties::_Name, tempStr);
       nameVector.push_back(tempStr);
-      TEST_ASSERT(mol->hasProp("NCI_AIDS_Antiviral_Screen_Conclusion"));
-      TEST_ASSERT(mol->hasProp("CAS_RN"));
-      TEST_ASSERT(mol->hasProp("NSC"));
+      TEST_ASSERT(mol->hasProp("NCI_AIDS_Antiviral_Screen_Conclusion"))
+      TEST_ASSERT(mol->hasProp("CAS_RN"))
+      TEST_ASSERT(mol->hasProp("NSC"))
     }
   }
 
@@ -239,7 +239,7 @@ void testSDProperties() {
     if (mol != nullptr) {
       mol->getProp(common_properties::_Name, tempStr);
       TEST_ASSERT(std::find(nameVector.begin(), nameVector.end(), tempStr) !=
-                  nameVector.end());
+                  nameVector.end())
     }
   }
 }
@@ -260,7 +260,7 @@ void testSDOld(std::string path, bool sanitize, bool removeHs,
     }
     delete mol;
   }
-  TEST_ASSERT(numMols == expectedResult);
+  TEST_ASSERT(numMols == expectedResult)
 }
 
 void testSDCorrectness() {

@@ -57,7 +57,7 @@ void testRDFcustom() {
   int nDone = 0;
   while (!reader.atEnd()) {
     RDKit::ROMol *m = reader.next();
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
     std::string nm;
     m->getProp("_Name", nm);
 
@@ -70,7 +70,7 @@ void testRDFcustom() {
 
     std::vector<std::string> myrow = data[nDone];
     std::string inm = myrow[0];
-    TEST_ASSERT(inm == nm);
+    TEST_ASSERT(inm == nm)
 
     // std::cerr << inm << ",";
     for (size_t i = 0; i < drdf.size(); i++) {
@@ -81,7 +81,7 @@ void testRDFcustom() {
       //    << " file: " << ref << " computed: " << drdf[i] ; // << std::endl;
       //}
 
-      TEST_ASSERT(fabs(ref - drdf[i]) < 0.001);
+      TEST_ASSERT(fabs(ref - drdf[i]) < 0.001)
     }
     // std::cerr << "\n";
 
@@ -123,7 +123,7 @@ void testMORSEcustom() {
   int nDone = 0;
   while (!reader.atEnd()) {
     RDKit::ROMol *m = reader.next();
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
     std::string nm;
     m->getProp("_Name", nm);
 
@@ -136,7 +136,7 @@ void testMORSEcustom() {
 
     std::vector<std::string> myrow = data[nDone];
     std::string inm = myrow[0];
-    TEST_ASSERT(inm == nm);
+    TEST_ASSERT(inm == nm)
 
     // std::cerr << inm << ",";
     for (size_t i = 0; i < dmorse.size(); i++) {
@@ -148,7 +148,7 @@ void testMORSEcustom() {
       //    << " file: " << ref << " computed: " << drdf[i] ; // << std::endl;
       //}
 
-      TEST_ASSERT(fabs(ref - dmorse[i]) < 0.001);
+      TEST_ASSERT(fabs(ref - dmorse[i]) < 0.001)
     }
     // std::cerr << "\n";
 
@@ -190,7 +190,7 @@ void testAUTOCORR3Dcustom() {
   int nDone = 0;
   while (!reader.atEnd()) {
     RDKit::ROMol *m = reader.next();
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
     std::string nm;
     m->getProp("_Name", nm);
 
@@ -203,7 +203,7 @@ void testAUTOCORR3Dcustom() {
 
     std::vector<std::string> myrow = data[nDone];
     std::string inm = myrow[0];
-    TEST_ASSERT(inm == nm);
+    TEST_ASSERT(inm == nm)
 
     // std::cerr << inm << ",";
     for (size_t i = 0; i < dauto3d.size(); i++) {
@@ -215,7 +215,7 @@ void testAUTOCORR3Dcustom() {
       //    << " file: " << ref << " computed: " << drdf[i] ; // << std::endl;
       //}
 
-      TEST_ASSERT(fabs(ref - dauto3d[i]) < 0.001);
+      TEST_ASSERT(fabs(ref - dauto3d[i]) < 0.001)
     }
     // std::cerr << "\n";
 
@@ -257,7 +257,7 @@ void testWHIMcustom() {
   int nDone = 0;
   while (!reader.atEnd()) {
     RDKit::ROMol *m = reader.next();
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
     std::string nm;
     m->getProp("_Name", nm);
 
@@ -276,7 +276,7 @@ void testWHIMcustom() {
     */
     std::vector<std::string> myrow = data[nDone];
     std::string inm = myrow[0];
-    TEST_ASSERT(inm == nm);
+    TEST_ASSERT(inm == nm)
 
     // std::cerr << inm << ",";
     for (size_t i = 0; i < dwhim.size(); i++) {
@@ -288,7 +288,7 @@ void testWHIMcustom() {
       //    << " file: " << ref << " computed: " << drdf[i] ; // << std::endl;
       //}
 
-      TEST_ASSERT(fabs(ref - dwhim[i]) < 0.01);
+      TEST_ASSERT(fabs(ref - dwhim[i]) < 0.01)
     }
     // std::cerr << "\n";
 
@@ -330,7 +330,7 @@ void testWHIMcustom1() {
   int nDone = 0;
   while (!reader.atEnd()) {
     RDKit::ROMol *m = reader.next();
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
     std::string nm;
     m->getProp("_Name", nm);
 
@@ -345,7 +345,7 @@ void testWHIMcustom1() {
 
     std::vector<std::string> myrow = data[nDone];
     std::string inm = myrow[0];
-    TEST_ASSERT(inm == nm);
+    TEST_ASSERT(inm == nm)
 
     // std::cerr << inm << ",";
     for (size_t i = 0; i < dwhim.size(); i++) {
@@ -357,7 +357,7 @@ void testWHIMcustom1() {
       //    << " file: " << ref << " computed: " << dwhim[i] ; // << std::endl;
       //}
 
-      TEST_ASSERT(fabs(ref - dwhim[i]) < 0.01);
+      TEST_ASSERT(fabs(ref - dwhim[i]) < 0.01)
     }
     // std::cerr << "\n";
 
@@ -399,7 +399,7 @@ void testGETAWAYcustom() {
   int nDone = 0;
   while (!reader.atEnd()) {
     RDKit::ROMol *m = reader.next();
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
     std::string nm;
     m->getProp("_Name", nm);
 
@@ -418,7 +418,7 @@ void testGETAWAYcustom() {
 
     std::vector<std::string> myrow = data[nDone];
     std::string inm = myrow[0];
-    TEST_ASSERT(inm == nm);
+    TEST_ASSERT(inm == nm)
 
     // std::cerr << inm << ",";
     for (size_t i = 0; i < dgetaway.size(); i++) {
@@ -430,7 +430,7 @@ void testGETAWAYcustom() {
       //    << " file: " << ref << " computed: " << drdf[i] ; // << std::endl;
       //}
 
-      TEST_ASSERT(fabs(ref - dgetaway[i]) < 0.001);
+      TEST_ASSERT(fabs(ref - dgetaway[i]) < 0.001)
     }
     // std::cerr << "\n";
 

@@ -49,7 +49,7 @@ bool isAtomPotentialNontetrahedralCenter(const Atom *atom) {
   return false;
 }
 bool isAtomPotentialTetrahedralCenter(const Atom *atom) {
-  PRECONDITION(atom, "atom is null");
+  PRECONDITION(atom, "atom is null")
   auto nzDegree = getAtomNonzeroDegree(atom);
   auto tnzDegree = nzDegree + atom->getTotalNumHs();
   if (tnzDegree > 4) {
@@ -126,7 +126,7 @@ bool isAtomPotentialStereoAtom(const Atom *atom) {
 }
 
 StereoInfo getStereoInfo(const Bond *bond) {
-  PRECONDITION(bond, "bond is null");
+  PRECONDITION(bond, "bond is null")
   StereoInfo sinfo;
   const auto beginAtom = bond->getBeginAtom();
   const auto endAtom = bond->getEndAtom();
@@ -221,7 +221,7 @@ StereoInfo getStereoInfo(const Bond *bond) {
           sinfo.descriptor = Chirality::StereoDescriptor::Bond_Trans;
           break;
         default:
-          UNDER_CONSTRUCTION("unrecognized bond stereo type");
+          UNDER_CONSTRUCTION("unrecognized bond stereo type")
       }
     } else {
       sinfo.specified = Chirality::StereoSpecified::Unspecified;
@@ -278,7 +278,7 @@ StereoInfo getStereoInfo(const Bond *bond) {
 }
 
 StereoInfo getStereoInfo(const Atom *atom) {
-  PRECONDITION(atom, "atom is null");
+  PRECONDITION(atom, "atom is null")
   StereoInfo sinfo;
 
   sinfo.type = StereoType::Atom_Tetrahedral;
@@ -322,7 +322,7 @@ StereoInfo getStereoInfo(const Atom *atom) {
           sinfo.descriptor = StereoDescriptor::Tet_CW;
           break;
         default:
-          UNDER_CONSTRUCTION("unrecognized chiral flag");
+          UNDER_CONSTRUCTION("unrecognized chiral flag")
       }
     } else if (getAllowNontetrahedralChirality() &&
                isAtomPotentialNontetrahedralCenter(atom)) {
@@ -377,7 +377,7 @@ StereoInfo getStereoInfo(const Atom *atom) {
 }
 
 bool isBondPotentialStereoBond(const Bond *bond) {
-  PRECONDITION(bond, "bond is null");
+  PRECONDITION(bond, "bond is null")
   if (bond->getBondType() != Bond::BondType::DOUBLE) {
     return false;
   }
@@ -412,7 +412,7 @@ bool isBondPotentialStereoBond(const Bond *bond) {
 
 std::string getBondSymbol(const Bond *bond) {
   // FIX: this is not complete
-  PRECONDITION(bond, "bad bond");
+  PRECONDITION(bond, "bad bond")
   std::string res;
   if (bond->getIsAromatic()) {
     res = ":";

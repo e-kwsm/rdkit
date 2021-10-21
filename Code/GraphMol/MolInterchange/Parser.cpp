@@ -55,7 +55,7 @@ struct DefaultValueCache {
   mutable std::map<const char *, bool> boolMap;
   mutable std::map<const char *, std::string> stringMap;
   int getInt(const char *key) const {
-    PRECONDITION(key, "no key");
+    PRECONDITION(key, "no key")
     const auto &lookup = intMap.find(key);
     if (lookup != intMap.end()) {
       return lookup->second;
@@ -76,7 +76,7 @@ struct DefaultValueCache {
     return 0;
   }
   bool getBool(const char *key) const {
-    PRECONDITION(key, "no key");
+    PRECONDITION(key, "no key")
     const auto &lookup = boolMap.find(key);
     if (lookup != boolMap.end()) {
       return lookup->second;
@@ -98,7 +98,7 @@ struct DefaultValueCache {
   }
 
   std::string getString(const char *key) const {
-    PRECONDITION(key, "no key");
+    PRECONDITION(key, "no key")
     const auto &lookup = stringMap.find(key);
     if (lookup != stringMap.end()) {
       return lookup->second;

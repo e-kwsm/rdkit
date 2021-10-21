@@ -183,14 +183,14 @@ ExplicitBitVect *RDKFingerprintMol(
     const std::vector<std::uint32_t> *fromAtoms,
     std::vector<std::vector<std::uint32_t>> *atomBits,
     std::map<std::uint32_t, std::vector<std::vector<int>>> *bitInfo) {
-  PRECONDITION(minPath != 0, "minPath==0");
-  PRECONDITION(maxPath >= minPath, "maxPath<minPath");
-  PRECONDITION(fpSize != 0, "fpSize==0");
-  PRECONDITION(nBitsPerHash != 0, "nBitsPerHash==0");
+  PRECONDITION(minPath != 0, "minPath==0")
+  PRECONDITION(maxPath >= minPath, "maxPath<minPath")
+  PRECONDITION(fpSize != 0, "fpSize==0")
+  PRECONDITION(nBitsPerHash != 0, "nBitsPerHash==0")
   PRECONDITION(!atomInvariants || atomInvariants->size() >= mol.getNumAtoms(),
-               "bad atomInvariants size");
+               "bad atomInvariants size")
   PRECONDITION(!atomBits || atomBits->size() >= mol.getNumAtoms(),
-               "bad atomBits size");
+               "bad atomBits size")
 
   std::unique_ptr<FingerprintGenerator<std::uint32_t>> fpgen(
       RDKit::RDKitFP::getRDKitFPGenerator<std::uint32_t>(
@@ -254,13 +254,13 @@ ExplicitBitVect *LayeredFingerprintMol(
     unsigned int maxPath, unsigned int fpSize,
     std::vector<unsigned int> *atomCounts, ExplicitBitVect *setOnlyBits,
     bool branchedPaths, const std::vector<std::uint32_t> *fromAtoms) {
-  PRECONDITION(minPath != 0, "minPath==0");
-  PRECONDITION(maxPath >= minPath, "maxPath<minPath");
-  PRECONDITION(fpSize != 0, "fpSize==0");
+  PRECONDITION(minPath != 0, "minPath==0")
+  PRECONDITION(maxPath >= minPath, "maxPath<minPath")
+  PRECONDITION(fpSize != 0, "fpSize==0")
   PRECONDITION(!atomCounts || atomCounts->size() >= mol.getNumAtoms(),
-               "bad atomCounts size");
+               "bad atomCounts size")
   PRECONDITION(!setOnlyBits || setOnlyBits->getNumBits() == fpSize,
-               "bad setOnlyBits size");
+               "bad setOnlyBits size")
 
   if (!mol.getRingInfo()->isInitialized()) {
     MolOps::findSSSR(mol);
@@ -528,12 +528,12 @@ SparseIntVect<boost::uint64_t> *getUnfoldedRDKFingerprintMol(
     const std::vector<std::uint32_t> *fromAtoms,
     std::vector<std::vector<boost::uint64_t>> *atomBits,
     std::map<boost::uint64_t, std::vector<std::vector<int>>> *bitInfo) {
-  PRECONDITION(minPath != 0, "minPath==0");
-  PRECONDITION(maxPath >= minPath, "maxPath<minPath");
+  PRECONDITION(minPath != 0, "minPath==0")
+  PRECONDITION(maxPath >= minPath, "maxPath<minPath")
   PRECONDITION(!atomInvariants || atomInvariants->size() >= mol.getNumAtoms(),
-               "bad atomInvariants size");
+               "bad atomInvariants size")
   PRECONDITION(!atomBits || atomBits->size() >= mol.getNumAtoms(),
-               "bad atomBits size");
+               "bad atomBits size")
 
   std::unique_ptr<FingerprintGenerator<std::uint64_t>> fpgen(
       RDKit::RDKitFP::getRDKitFPGenerator<std::uint64_t>(

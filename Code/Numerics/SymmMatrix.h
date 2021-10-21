@@ -81,8 +81,8 @@ class SymmMatrix {
   }
 
   TYPE getVal(unsigned int i, unsigned int j) const {
-    URANGE_CHECK(i, d_size);
-    URANGE_CHECK(j, d_size);
+    URANGE_CHECK(i, d_size)
+    URANGE_CHECK(j, d_size)
     unsigned int id;
     if (i >= j) {
       id = i * (i + 1) / 2 + j;
@@ -93,8 +93,8 @@ class SymmMatrix {
   }
 
   void setVal(unsigned int i, unsigned int j, TYPE val) {
-    URANGE_CHECK(i, d_size);
-    URANGE_CHECK(j, d_size);
+    URANGE_CHECK(i, d_size)
+    URANGE_CHECK(j, d_size)
     unsigned int id;
     if (i >= j) {
       id = i * (i + 1) / 2 + j;
@@ -105,7 +105,7 @@ class SymmMatrix {
   }
 
   void getRow(unsigned int i, Vector<TYPE> &row) {
-    CHECK_INVARIANT(d_size == row.size(), "");
+    CHECK_INVARIANT(d_size == row.size(), "")
     TYPE *rData = row.getData();
     TYPE *data = d_data.get();
     for (unsigned int j = 0; j < d_size; j++) {
@@ -120,7 +120,7 @@ class SymmMatrix {
   }
 
   void getCol(unsigned int i, Vector<TYPE> &col) {
-    CHECK_INVARIANT(d_size == col.size(), "");
+    CHECK_INVARIANT(d_size == col.size(), "")
     TYPE *rData = col.getData();
     TYPE *data = d_data.get();
     for (unsigned int j = 0; j < d_size; j++) {
@@ -158,7 +158,7 @@ class SymmMatrix {
 
   SymmMatrix<TYPE> &operator+=(const SymmMatrix<TYPE> &other) {
     CHECK_INVARIANT(d_size == other.numRows(),
-                    "Sizes don't match in the addition");
+                    "Sizes don't match in the addition")
     const TYPE *oData = other.getData();
     TYPE *data = d_data.get();
     for (unsigned int i = 0; i < d_dataSize; i++) {
@@ -169,7 +169,7 @@ class SymmMatrix {
 
   SymmMatrix<TYPE> &operator-=(const SymmMatrix<TYPE> &other) {
     CHECK_INVARIANT(d_size == other.numRows(),
-                    "Sizes don't match in the addition");
+                    "Sizes don't match in the addition")
     const TYPE *oData = other.getData();
     TYPE *data = d_data.get();
     for (unsigned int i = 0; i < d_dataSize; i++) {
@@ -181,7 +181,7 @@ class SymmMatrix {
   //! in-place matrix multiplication
   SymmMatrix<TYPE> &operator*=(const SymmMatrix<TYPE> &B) {
     CHECK_INVARIANT(d_size == B.numRows(),
-                    "Size mismatch during multiplication");
+                    "Size mismatch during multiplication")
     TYPE *cData = new TYPE[d_dataSize];
     const TYPE *bData = B.getData();
     TYPE *data = d_data.get();
@@ -218,7 +218,7 @@ class SymmMatrix {
    */
   SymmMatrix<TYPE> &transpose(SymmMatrix<TYPE> &transpose) const {
     CHECK_INVARIANT(d_size == transpose.numRows(),
-                    "Size mismatch during transposing");
+                    "Size mismatch during transposing")
     TYPE *tData = transpose.getData();
     TYPE *data = d_data.get();
     for (unsigned int i = 0; i < d_dataSize; i++) {
@@ -263,9 +263,9 @@ SymmMatrix<TYPE> &multiply(const SymmMatrix<TYPE> &A, const SymmMatrix<TYPE> &B,
                            SymmMatrix<TYPE> &C) {
   unsigned int aSize = A.numRows();
   CHECK_INVARIANT(B.numRows() == aSize,
-                  "Size mismatch in matric multiplication");
+                  "Size mismatch in matric multiplication")
   CHECK_INVARIANT(C.numRows() == aSize,
-                  "Size mismatch in matric multiplication");
+                  "Size mismatch in matric multiplication")
   TYPE *cData = C.getData();
   const TYPE *aData = A.getData();
   const TYPE *bData = B.getData();
@@ -313,8 +313,8 @@ template <class TYPE>
 Vector<TYPE> &multiply(const SymmMatrix<TYPE> &A, const Vector<TYPE> &x,
                        Vector<TYPE> &y) {
   unsigned int aSize = A.numRows();
-  CHECK_INVARIANT(aSize == x.size(), "Size mismatch during multiplication");
-  CHECK_INVARIANT(aSize == y.size(), "Size mismatch during multiplication");
+  CHECK_INVARIANT(aSize == x.size(), "Size mismatch during multiplication")
+  CHECK_INVARIANT(aSize == y.size(), "Size mismatch during multiplication")
   const TYPE *xData = x.getData();
   const TYPE *aData = A.getData();
   TYPE *yData = y.getData();

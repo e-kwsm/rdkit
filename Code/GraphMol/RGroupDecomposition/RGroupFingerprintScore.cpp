@@ -157,7 +157,7 @@ double fingerprintVarianceScore(
   std::cerr << "Fingerprint Scoring permutation "
             << " num matches: " << matches.size() << std::endl;
 #endif
-  CHECK_INVARIANT(permutation.size() <= matches.size(), "");
+  CHECK_INVARIANT(permutation.size() <= matches.size(), "")
   FingerprintVarianceScoreData fingerprintVarianceScoreData2;
   if (!fingerprintVarianceScoreData) {
     fingerprintVarianceScoreData = &fingerprintVarianceScoreData2;
@@ -230,7 +230,7 @@ double FingerprintVarianceScoreData::fingerprintVarianceGroupScore() {
 
   // Heuristic correction of missing user r_groups - equivalent to a variance
   // penalty of 1 for each missing user R-group across the entire dataset
-  CHECK_INVARIANT(numberOfMolecules > 0, "No compounds to be scored!");
+  CHECK_INVARIANT(numberOfMolecules > 0, "No compounds to be scored!")
   double rgroupPenalty =
       (double)numberOfMissingUserRGroups / (double)numberOfMolecules;
   // double the penalty to catch systems like

@@ -70,8 +70,8 @@ static bool IsBlacklistedAtom(Atom *atom) {
 }
 
 bool IsBlacklistedPair(Atom *beg_atom, Atom *end_atom) {
-  PRECONDITION(beg_atom, "empty atom");
-  PRECONDITION(end_atom, "empty atom");
+  PRECONDITION(beg_atom, "empty atom")
+  PRECONDITION(end_atom, "empty atom")
 
   auto *beg_info = (AtomPDBResidueInfo *)beg_atom->getMonomerInfo();
   auto *end_info = (AtomPDBResidueInfo *)end_atom->getMonomerInfo();
@@ -168,7 +168,7 @@ static void ConnectTheDots_Large(RWMol *mol, unsigned int flags) {
 
   unsigned int count = mol->getNumAtoms();
   auto *tmp = (ProximityEntry *)malloc(count * sizeof(ProximityEntry));
-  CHECK_INVARIANT(tmp, "bad allocation");
+  CHECK_INVARIANT(tmp, "bad allocation")
   PeriodicTable *table = PeriodicTable::getTable();
   Conformer *conf = &mol->getConformer();
 

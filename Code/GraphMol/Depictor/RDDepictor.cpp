@@ -66,7 +66,7 @@ void embedSquarePlanar(const RDKit::ROMol &mol, const RDKit::Atom *atom,
       RDGeom::Point2D(-ISQRT2 * BOND_LEN, -ISQRT2 * BOND_LEN),
       RDGeom::Point2D(-ISQRT2 * BOND_LEN, ISQRT2 * BOND_LEN),
   };
-  PRECONDITION(atom, "bad atom");
+  PRECONDITION(atom, "bad atom")
   if (atom->getChiralTag() != RDKit::Atom::ChiralType::CHI_SQUAREPLANAR) {
     return;
   }
@@ -106,7 +106,7 @@ void embedTBP(const RDKit::ROMol &mol, const RDKit::Atom *atom,
                       -BOND_LEN / 2),  // equatorial
       RDGeom::Point2D(BOND_LEN, 0),    // equatorial
   };
-  PRECONDITION(atom, "bad atom");
+  PRECONDITION(atom, "bad atom")
   if (atom->getChiralTag() !=
       RDKit::Atom::ChiralType::CHI_TRIGONALBIPYRAMIDAL) {
     return;
@@ -144,7 +144,7 @@ void embedOctahedral(const RDKit::ROMol &mol, const RDKit::Atom *atom,
       RDGeom::Point2D(-SQRT3_2 * BOND_LEN, -BOND_LEN / 2),  // equatorial
       RDGeom::Point2D(-SQRT3_2 * BOND_LEN, BOND_LEN / 2),   // equatorial
   };
-  PRECONDITION(atom, "bad atom");
+  PRECONDITION(atom, "bad atom")
   if (atom->getChiralTag() != RDKit::Atom::ChiralType::CHI_OCTAHEDRAL) {
     return;
   }
@@ -592,7 +592,7 @@ unsigned int compute2DCoords(RDKit::ROMol &mol,
     }
     auto cid = RDKit::CoordGen::addCoords(mol, &coordgen_params);
     return cid;
-  };
+  }
 #endif
 
   RDKit::ROMol cp(mol);
