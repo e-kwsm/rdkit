@@ -34,7 +34,7 @@ using boost_adaptbx::python::streambuf;
 namespace {
 
 bool streamIsGoodOrExhausted(std::istream *stream) {
-  PRECONDITION(stream, "bad stream");
+  PRECONDITION(stream, "bad stream")
   return stream->good() || (stream->eof() && stream->fail() && !stream->bad());
 }
 

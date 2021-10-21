@@ -155,11 +155,11 @@ python::object getCallbackHelper(const MolStandardize::TautomerEnumerator &te) {
     res = cppCallback->getPyCallbackObject();
   }
   return res;
-};
+}
 
 void setCallbackHelper(MolStandardize::TautomerEnumerator &te,
                        PyObject *callback) {
-  PRECONDITION(callback, "callback must not be NULL");
+  PRECONDITION(callback, "callback must not be NULL")
   if (callback == Py_None) {
     te.setCallback(nullptr);
     return;

@@ -395,7 +395,7 @@ void test1() {
   std::cout << " ----------------- Test 1" << std::endl;
   {
     auto m = "CO[C@@H](O)C1=C(O[C@H](F)Cl)C(C#N)=C1ONNC[NH3+]"_smiles;
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
     RDDepict::compute2DCoords(*m);
     Chirality::wedgeMolBonds(*m, &(m->getConformer()));
     std::ofstream outs("test1_1.svg");
@@ -410,21 +410,21 @@ void test1() {
     // make sure this works with the stringstream too:
     std::string smiles = "CO[C@@H](O)C1=C(O[C@H](F)Cl)C=C1ONNC[NH3+]";
     ROMol *m = SmilesToMol(smiles);
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
     RDDepict::compute2DCoords(*m);
     Chirality::wedgeMolBonds(*m, &(m->getConformer()));
     MolDraw2DSVG drawer(300, 300);
     drawer.drawMolecule(*m);
     drawer.finishDrawing();
     std::string text = drawer.getDrawingText();
-    TEST_ASSERT(text.find("<svg") != std::string::npos);
-    TEST_ASSERT(text.find("</svg>") != std::string::npos);
+    TEST_ASSERT(text.find("<svg") != std::string::npos)
+    TEST_ASSERT(text.find("</svg>") != std::string::npos)
     delete m;
   }
   {
     std::string smiles = "Cc1c(C(=O)NCCO)[n+](=O)c2ccccc2n1[O-]";
     ROMol *m = SmilesToMol(smiles);
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
     RDDepict::compute2DCoords(*m);
     Chirality::wedgeMolBonds(*m, &(m->getConformer()));
     std::ofstream outs("test1_2.svg");
@@ -439,7 +439,7 @@ void test1() {
   {
     std::string smiles = "Cc1c(C(=O)NCCO)[n+](=O)c2ccccc2n1[O-]";
     ROMol *m = SmilesToMol(smiles);
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
     RDDepict::compute2DCoords(*m);
     Chirality::wedgeMolBonds(*m, &(m->getConformer()));
     std::ofstream outs("test1_3.svg");
@@ -458,7 +458,7 @@ void test1() {
   {
     std::string smiles = "CO[C@@H](O)C1=C(O[C@H](F)Cl)C(C#N)=C1ONNC[NH3+]";
     ROMol *m = SmilesToMol(smiles);
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
     RDDepict::compute2DCoords(*m);
     Chirality::wedgeMolBonds(*m, &(m->getConformer()));
     std::ofstream outs("test1_4.svg");
@@ -478,7 +478,7 @@ void test1() {
     std::string smiles =
         "CN1CC[C@]23c4c5ccc(O)c4O[C@H]2[C@@H](O)C=C[C@H]3[C@H]1C5";
     ROMol *m = SmilesToMol(smiles);
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
     std::unique_ptr<ROMol> romol(MolOps::removeAllHs(*m));
     RDDepict::compute2DCoords(*romol);
     Chirality::wedgeMolBonds(*romol, &(romol->getConformer()));
@@ -499,7 +499,7 @@ void test1() {
     std::string smiles = "C[NH+](C)CCC";
     std::string nameBase = "test1_6";
     ROMol *m = SmilesToMol(smiles);
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
     RDDepict::compute2DCoords(*m);
     Chirality::wedgeMolBonds(*m, &(m->getConformer()));
     MolDraw2DSVG drawer(300, 300);
@@ -516,7 +516,7 @@ void test1() {
   {
     // check that splitBonds is working
     auto m = "c1ccncc1COC"_smiles;
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
     RDDepict::compute2DCoords(*m);
     Chirality::wedgeMolBonds(*m, &(m->getConformer()));
     std::ofstream outs("test1_7.svg");
@@ -544,10 +544,10 @@ void test1() {
       return count;
     };
     // this is a double bond
-    TEST_ASSERT(countSubstring(txt, "class='bond-0 atom-0'") == 2);
-    TEST_ASSERT(countSubstring(txt, "class='bond-0 atom-1'") == 2);
+    TEST_ASSERT(countSubstring(txt, "class='bond-0 atom-0'") == 2)
+    TEST_ASSERT(countSubstring(txt, "class='bond-0 atom-1'") == 2)
     // this is how it would be if splitBonds wasn't working.
-    TEST_ASSERT(countSubstring(txt, "class='bond-0 atom-0 atom-1'") == 0);
+    TEST_ASSERT(countSubstring(txt, "class='bond-0 atom-0 atom-1'") == 0)
     check_file_hash("test1_7.svg");
   }
   std::cout << " Done" << std::endl;
@@ -630,7 +630,7 @@ void test3() {
     std::string smiles = "C1CC1CC1ON1";
     std::string nameBase = "test3_1";
     ROMol *m = SmilesToMol(smiles);
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
     RDDepict::compute2DCoords(*m);
     Chirality::wedgeMolBonds(*m, &(m->getConformer()));
     static const int ha[] = {0, 3, 4, 5};
@@ -669,7 +669,7 @@ void test3() {
     std::string smiles = "C1CC1CC1ON1";
     std::string nameBase = "test3_2";
     ROMol *m = SmilesToMol(smiles);
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
     RDDepict::compute2DCoords(*m);
     Chirality::wedgeMolBonds(*m, &(m->getConformer()));
     static const int ha[] = {0, 3, 4, 5};
@@ -701,7 +701,7 @@ void test3() {
     std::string smiles = "Cc1c(C(=O)NCCO)[n+](=O)c2ccccc2n1[O-]";
     std::string nameBase = "test3_3";
     ROMol *m = SmilesToMol(smiles);
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
     RDDepict::compute2DCoords(*m);
     Chirality::wedgeMolBonds(*m, &(m->getConformer()));
     static const int ha[] = {11, 12, 13, 14, 15, 16};
@@ -736,7 +736,7 @@ void test3() {
     std::string smiles = "Cc1c(C(=O)NCCO)[n+](=O)c2ccccc2n1[O-]";
     std::string nameBase = "test3_4";
     ROMol *m = SmilesToMol(smiles);
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
     RDDepict::compute2DCoords(*m);
     Chirality::wedgeMolBonds(*m, &(m->getConformer()));
     static const int ha[] = {11, 12, 13, 14, 15, 16, 3};
@@ -776,7 +776,7 @@ void test3() {
         "CCOC(=O)Nc1ccc(SCC2COC(Cn3ccnc3)(c3ccc(Cl)cc3Cl)O2)cc1";
     std::string nameBase = "test3_5";
     ROMol *m = SmilesToMol(smiles);
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
     RDDepict::compute2DCoords(*m);
     Chirality::wedgeMolBonds(*m, &(m->getConformer()));
 
@@ -816,7 +816,7 @@ void test3() {
         "CCOC(=O)Nc1ccc(SCC2COC(Cn3ccnc3)(c3ccc(Cl)cc3Cl)O2)cc1";
     std::string nameBase = "test3_6";
     ROMol *m = SmilesToMol(smiles);
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
     RDDepict::compute2DCoords(*m);
     Chirality::wedgeMolBonds(*m, &(m->getConformer()));
 
@@ -856,7 +856,7 @@ void test3() {
         "CCOC(=O)Nc1ccc(SCC2COC(Cn3ccnc3)(c3ccc(Cl)cc3Cl)O2)cc1";
     std::string nameBase = "test3_7";
     ROMol *m = SmilesToMol(smiles);
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
     RDDepict::compute2DCoords(*m);
     Chirality::wedgeMolBonds(*m, &(m->getConformer()));
 
@@ -905,7 +905,7 @@ void test4() {
     fName += "/clash.mol";
     ROMol *m = MolFileToMol(fName);
     std::string nameBase = "test4_1";
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
 
 #ifdef RDK_BUILD_CAIRO_SUPPORT
     {
@@ -937,7 +937,7 @@ void test5() {
     std::string smiles = "*c1cc(*)cc(*)c1";
     std::string nameBase = "test5_1";
     ROMol *m = SmilesToMol(smiles);
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
     RDDepict::compute2DCoords(*m);
     Chirality::wedgeMolBonds(*m, &(m->getConformer()));
     MolDrawOptions options;
@@ -969,7 +969,7 @@ void test5() {
     std::string smiles = "*C";
     std::string nameBase = "test5_2";
     ROMol *m = SmilesToMol(smiles);
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
     RDDepict::compute2DCoords(*m, nullptr, true);
     Chirality::wedgeMolBonds(*m, &(m->getConformer()));
     MolDrawOptions options;
@@ -1000,7 +1000,7 @@ void test5() {
     std::string smiles = "CC(F)(Cl)Br";
     std::string nameBase = "test5_3";
     ROMol *m = SmilesToMol(smiles);
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
     m->getBondBetweenAtoms(1, 2)->setBondDir(Bond::UNKNOWN);
     RDDepict::compute2DCoords(*m, nullptr, true);
     Chirality::wedgeMolBonds(*m, &(m->getConformer()));
@@ -1048,7 +1048,7 @@ void runblock(const std::vector<ROMol *> &mols,
       drawer.drawMolecule(*mol);
       drawer.finishDrawing();
       std::string text = drawer.getDrawingText();
-      TEST_ASSERT(text == refData[i]);
+      TEST_ASSERT(text == refData[i])
     }
   }
 }
@@ -1081,8 +1081,8 @@ void testMultiThreaded() {
     drawer.drawMolecule(*(mols[i]));
     drawer.finishDrawing();
     refData[i] = drawer.getDrawingText();
-    TEST_ASSERT(refData[i].find("<svg") != std::string::npos);
-    TEST_ASSERT(refData[i].find("</svg>") != std::string::npos);
+    TEST_ASSERT(refData[i].find("<svg") != std::string::npos)
+    TEST_ASSERT(refData[i].find("</svg>") != std::string::npos)
   }
 
   std::vector<std::future<void>> tg;
@@ -1112,7 +1112,7 @@ void test6() {
     std::string smiles = "CC[13CH2][CH2:7][CH-]C[15NH2+]C";
     std::string nameBase = "test6_1";
     ROMol *m = SmilesToMol(smiles);
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
     RDDepict::compute2DCoords(*m);
     Chirality::wedgeMolBonds(*m, &(m->getConformer()));
     MolDraw2DSVG drawer(300, 300);
@@ -1131,13 +1131,13 @@ void test6() {
   {
     auto m = "[C]1[C][C][CH][CH][CH]1"_smiles;
     std::string nameBase = "test6_2";
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
     RDDepict::compute2DCoords(*m);
     MolDraw2DSVG drawer(300, 300);
     drawer.drawMolecule(*m);
     drawer.finishDrawing();
     std::string txt = drawer.getDrawingText();
-    TEST_ASSERT(txt.find("<svg") != std::string::npos);
+    TEST_ASSERT(txt.find("<svg") != std::string::npos)
     std::ofstream outs(nameBase + ".svg");
     outs << txt;
     outs.close();
@@ -1156,13 +1156,13 @@ void test6() {
   {
     auto m = "N[C]"_smiles;
     std::string nameBase = "test6_3";
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
     RDDepict::compute2DCoords(*m);
     MolDraw2DSVG drawer(300, 300);
     drawer.drawMolecule(*m);
     drawer.finishDrawing();
     std::string txt = drawer.getDrawingText();
-    TEST_ASSERT(txt.find("<svg") != std::string::npos);
+    TEST_ASSERT(txt.find("<svg") != std::string::npos)
     std::ofstream outs(nameBase + ".svg");
     outs << txt;
     outs.close();
@@ -1193,7 +1193,7 @@ void test7() {
   std::cout << " ----------------- Test 7 (backgrounds)" << std::endl;
   std::string smiles = "CCC";
   ROMol *m = SmilesToMol(smiles);
-  TEST_ASSERT(m);
+  TEST_ASSERT(m)
   RDDepict::compute2DCoords(*m);
   {
     std::string nameBase = "test7_1";
@@ -1207,8 +1207,8 @@ void test7() {
     outs.flush();
     outs.close();
     check_file_hash(nameBase + ".svg");
-    TEST_ASSERT(txt.find("<svg") != std::string::npos);
-    TEST_ASSERT(txt.find("<rect") == std::string::npos);
+    TEST_ASSERT(txt.find("<svg") != std::string::npos)
+    TEST_ASSERT(txt.find("<rect") == std::string::npos)
   }
 #ifdef RDK_BUILD_CAIRO_SUPPORT
   {
@@ -1233,9 +1233,9 @@ void test7() {
     outs.flush();
     outs.close();
     check_file_hash(nameBase + ".svg");
-    TEST_ASSERT(txt.find("<svg") != std::string::npos);
-    TEST_ASSERT(txt.find("<rect") != std::string::npos);
-    TEST_ASSERT(txt.find("fill:#CCCCCC") != std::string::npos);
+    TEST_ASSERT(txt.find("<svg") != std::string::npos)
+    TEST_ASSERT(txt.find("<rect") != std::string::npos)
+    TEST_ASSERT(txt.find("fill:#CCCCCC") != std::string::npos)
   }
 #ifdef RDK_BUILD_CAIRO_SUPPORT
   {
@@ -1257,71 +1257,71 @@ void test8PrepareMolForDrawing() {
   {
     std::string smiles = "c1ccccc1[C@H](F)Cl";
     ROMol *m = SmilesToMol(smiles);
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
     {
       RWMol nm(*m);
       TEST_ASSERT(nm.getNumAtoms() == 9)
       MolDraw2DUtils::prepareMolForDrawing(nm);
-      TEST_ASSERT(nm.getNumAtoms() == 9);  // this is a test for github #982
-      TEST_ASSERT(nm.getNumConformers() == 1);
-      TEST_ASSERT(!nm.getConformer().is3D());
+      TEST_ASSERT(nm.getNumAtoms() == 9)  // this is a test for github #982
+      TEST_ASSERT(nm.getNumConformers() == 1)
+      TEST_ASSERT(!nm.getConformer().is3D())
       TEST_ASSERT(nm.getBondBetweenAtoms(0, 1)->getBondType() !=
-                  Bond::AROMATIC);
-      TEST_ASSERT(nm.getBondBetweenAtoms(0, 1)->getIsAromatic());
-      TEST_ASSERT(nm.getBondBetweenAtoms(6, 7)->getBondType() == Bond::SINGLE);
+                  Bond::AROMATIC)
+      TEST_ASSERT(nm.getBondBetweenAtoms(0, 1)->getIsAromatic())
+      TEST_ASSERT(nm.getBondBetweenAtoms(6, 7)->getBondType() == Bond::SINGLE)
       TEST_ASSERT(nm.getBondBetweenAtoms(6, 7)->getBondDir() ==
-                  Bond::BEGINWEDGE);
+                  Bond::BEGINWEDGE)
 
       // make sure we can do it again:
       MolDraw2DUtils::prepareMolForDrawing(nm);
-      TEST_ASSERT(nm.getNumAtoms() == 9);
-      TEST_ASSERT(nm.getNumConformers() == 1);
+      TEST_ASSERT(nm.getNumAtoms() == 9)
+      TEST_ASSERT(nm.getNumConformers() == 1)
       TEST_ASSERT(nm.getBondBetweenAtoms(0, 1)->getBondType() !=
-                  Bond::AROMATIC);
-      TEST_ASSERT(nm.getBondBetweenAtoms(0, 1)->getIsAromatic());
+                  Bond::AROMATIC)
+      TEST_ASSERT(nm.getBondBetweenAtoms(0, 1)->getIsAromatic())
     }
     {
       RWMol nm(*m);
       TEST_ASSERT(nm.getNumAtoms() == 9)
       MolDraw2DUtils::prepareMolForDrawing(nm, false);
-      TEST_ASSERT(nm.getNumAtoms() == 9);
-      TEST_ASSERT(nm.getNumConformers() == 1);
+      TEST_ASSERT(nm.getNumAtoms() == 9)
+      TEST_ASSERT(nm.getNumConformers() == 1)
       TEST_ASSERT(nm.getBondBetweenAtoms(0, 1)->getBondType() ==
-                  Bond::AROMATIC);
-      TEST_ASSERT(nm.getBondBetweenAtoms(0, 1)->getIsAromatic());
+                  Bond::AROMATIC)
+      TEST_ASSERT(nm.getBondBetweenAtoms(0, 1)->getIsAromatic())
     }
     {
       RWMol nm(*m);
       TEST_ASSERT(nm.getNumAtoms() == 9)
       MolDraw2DUtils::prepareMolForDrawing(nm, false, false);
-      TEST_ASSERT(nm.getNumAtoms() == 9);
-      TEST_ASSERT(nm.getNumConformers() == 1);
+      TEST_ASSERT(nm.getNumAtoms() == 9)
+      TEST_ASSERT(nm.getNumConformers() == 1)
       TEST_ASSERT(nm.getBondBetweenAtoms(0, 1)->getBondType() ==
-                  Bond::AROMATIC);
-      TEST_ASSERT(nm.getBondBetweenAtoms(0, 1)->getIsAromatic());
+                  Bond::AROMATIC)
+      TEST_ASSERT(nm.getBondBetweenAtoms(0, 1)->getIsAromatic())
     }
     {
       RWMol nm(*m);
       TEST_ASSERT(nm.getNumAtoms() == 9)
       MolDraw2DUtils::prepareMolForDrawing(nm, false, true);
-      TEST_ASSERT(nm.getNumAtoms() == 9);
-      TEST_ASSERT(nm.getNumConformers() == 1);
+      TEST_ASSERT(nm.getNumAtoms() == 9)
+      TEST_ASSERT(nm.getNumConformers() == 1)
       TEST_ASSERT(nm.getBondBetweenAtoms(0, 1)->getBondType() ==
-                  Bond::AROMATIC);
-      TEST_ASSERT(nm.getBondBetweenAtoms(0, 1)->getIsAromatic());
+                  Bond::AROMATIC)
+      TEST_ASSERT(nm.getBondBetweenAtoms(0, 1)->getIsAromatic())
     }
 
     {
       RWMol nm(*m);
       TEST_ASSERT(nm.getNumAtoms() == 9)
       MolDraw2DUtils::prepareMolForDrawing(nm, true, true, false);
-      TEST_ASSERT(nm.getNumAtoms() == 9);
-      TEST_ASSERT(nm.getNumConformers() == 1);
+      TEST_ASSERT(nm.getNumAtoms() == 9)
+      TEST_ASSERT(nm.getNumConformers() == 1)
       TEST_ASSERT(nm.getBondBetweenAtoms(0, 1)->getBondType() !=
-                  Bond::AROMATIC);
-      TEST_ASSERT(nm.getBondBetweenAtoms(0, 1)->getIsAromatic());
-      TEST_ASSERT(nm.getBondBetweenAtoms(6, 7)->getBondType() == Bond::SINGLE);
-      TEST_ASSERT(nm.getBondBetweenAtoms(6, 7)->getBondDir() == Bond::NONE);
+                  Bond::AROMATIC)
+      TEST_ASSERT(nm.getBondBetweenAtoms(0, 1)->getIsAromatic())
+      TEST_ASSERT(nm.getBondBetweenAtoms(6, 7)->getBondType() == Bond::SINGLE)
+      TEST_ASSERT(nm.getBondBetweenAtoms(6, 7)->getBondDir() == Bond::NONE)
     }
 
     {
@@ -1331,13 +1331,13 @@ void test8PrepareMolForDrawing() {
       nm.getConformer().set3D(true);  // it's not really, we're cheating
       TEST_ASSERT(nm.getNumAtoms() == 9)
       MolDraw2DUtils::prepareMolForDrawing(nm);
-      TEST_ASSERT(nm.getNumAtoms() == 9);
-      TEST_ASSERT(nm.getNumConformers() == 1);  // we have a conformer anyway
-      TEST_ASSERT(nm.getConformer().is3D());
+      TEST_ASSERT(nm.getNumAtoms() == 9)
+      TEST_ASSERT(nm.getNumConformers() == 1)  // we have a conformer anyway
+      TEST_ASSERT(nm.getConformer().is3D())
 
       // but if we do force, it blows out that conformer:
       MolDraw2DUtils::prepareMolForDrawing(nm, true, true, true, true);
-      TEST_ASSERT(!nm.getConformer().is3D());
+      TEST_ASSERT(!nm.getConformer().is3D())
     }
 
     delete m;
@@ -1345,35 +1345,35 @@ void test8PrepareMolForDrawing() {
   {
     std::string smiles = "C1CC[C@H]2NCCCC2C1";
     ROMol *m = SmilesToMol(smiles);
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
     {
       RWMol nm(*m);
       TEST_ASSERT(nm.getNumAtoms() == 10)
       MolDraw2DUtils::prepareMolForDrawing(nm);
-      TEST_ASSERT(nm.getNumAtoms() == 11);
-      TEST_ASSERT(nm.getNumConformers() == 1);
-      TEST_ASSERT(!nm.getConformer().is3D());
-      TEST_ASSERT(nm.getBondBetweenAtoms(3, 10)->getBondType() == Bond::SINGLE);
+      TEST_ASSERT(nm.getNumAtoms() == 11)
+      TEST_ASSERT(nm.getNumConformers() == 1)
+      TEST_ASSERT(!nm.getConformer().is3D())
+      TEST_ASSERT(nm.getBondBetweenAtoms(3, 10)->getBondType() == Bond::SINGLE)
       TEST_ASSERT(nm.getBondBetweenAtoms(3, 10)->getBondDir() ==
-                  Bond::BEGINDASH);
+                  Bond::BEGINDASH)
 
       // make sure we can do it again:
       MolDraw2DUtils::prepareMolForDrawing(nm);
-      TEST_ASSERT(nm.getNumAtoms() == 11);
-      TEST_ASSERT(nm.getNumConformers() == 1);
-      TEST_ASSERT(nm.getBondBetweenAtoms(3, 10)->getBondType() == Bond::SINGLE);
+      TEST_ASSERT(nm.getNumAtoms() == 11)
+      TEST_ASSERT(nm.getNumConformers() == 1)
+      TEST_ASSERT(nm.getBondBetweenAtoms(3, 10)->getBondType() == Bond::SINGLE)
       TEST_ASSERT(nm.getBondBetweenAtoms(3, 10)->getBondDir() ==
-                  Bond::BEGINDASH);
+                  Bond::BEGINDASH)
     }
     {
       RWMol nm(*m);
       TEST_ASSERT(nm.getNumAtoms() == 10)
       MolDraw2DUtils::prepareMolForDrawing(nm, false, false);
-      TEST_ASSERT(nm.getNumAtoms() == 10);
-      TEST_ASSERT(nm.getNumConformers() == 1);
-      TEST_ASSERT(nm.getBondBetweenAtoms(3, 2)->getBondType() == Bond::SINGLE);
+      TEST_ASSERT(nm.getNumAtoms() == 10)
+      TEST_ASSERT(nm.getNumConformers() == 1)
+      TEST_ASSERT(nm.getBondBetweenAtoms(3, 2)->getBondType() == Bond::SINGLE)
       TEST_ASSERT(nm.getBondBetweenAtoms(3, 2)->getBondDir() ==
-                  Bond::BEGINWEDGE);
+                  Bond::BEGINWEDGE)
     }
     delete m;
   }
@@ -1386,13 +1386,13 @@ void testGithub781() {
             << std::endl;
   {
     auto m = "C"_smiles;
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
     RDDepict::compute2DCoords(*m);
     MolDraw2DSVG drawer(300, 300);
     drawer.drawMolecule(*m);
     drawer.finishDrawing();
     std::string txt = drawer.getDrawingText();
-    TEST_ASSERT(txt.find("<svg") != std::string::npos);
+    TEST_ASSERT(txt.find("<svg") != std::string::npos)
     // write the file so we can update the coords below more easily
     // if the font changes, for example.
     std::ofstream outs("testGithub781_1.svg");
@@ -1418,13 +1418,13 @@ void testGithub781() {
   }
   {
     auto m = "O"_smiles;
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
     RDDepict::compute2DCoords(*m);
     MolDraw2DSVG drawer(300, 300);
     drawer.drawMolecule(*m);
     drawer.finishDrawing();
     std::string txt = drawer.getDrawingText();
-    TEST_ASSERT(txt.find("<svg") != std::string::npos);
+    TEST_ASSERT(txt.find("<svg") != std::string::npos)
     std::ofstream outs("testGithub781_2.svg");
     outs << txt;
     outs.close();
@@ -1432,10 +1432,10 @@ void testGithub781() {
 #if DO_TEST_ASSERT
     // start of the H
     TEST_ASSERT(txt.find("<path class='atom-0' d='M 114.9 128.9") !=
-                std::string::npos);
+                std::string::npos)
     // start of the O
     TEST_ASSERT(txt.find("<path class='atom-0' d='M 142.7 156.2") !=
-                std::string::npos);
+                std::string::npos)
 #endif
 #else
     TEST_ASSERT(txt.find("<tspan>OH</tspan>") == std::string::npos);
@@ -1444,13 +1444,13 @@ void testGithub781() {
   }
   {
     auto m = "[C]"_smiles;
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
     RDDepict::compute2DCoords(*m);
     MolDraw2DSVG drawer(600, 600);
     drawer.drawMolecule(*m);
     drawer.finishDrawing();
     std::string txt = drawer.getDrawingText();
-    TEST_ASSERT(txt.find("<svg") != std::string::npos);
+    TEST_ASSERT(txt.find("<svg") != std::string::npos)
     std::ofstream outs("testGithub781_3.svg");
     outs << txt;
     outs.close();
@@ -1458,11 +1458,11 @@ void testGithub781() {
 #if DO_TEST_ASSERT
     // The C
     TEST_ASSERT(txt.find("<path class='atom-0' d='M 285.3 299.9") !=
-                std::string::npos);
+                std::string::npos)
     // the first radical marker
     TEST_ASSERT(
         txt.find("<path class='atom-0' d='M 315.2,311.8 L 315.2,312.0") !=
-        std::string::npos);
+        std::string::npos)
 #endif
 #else
     TEST_ASSERT(txt.find(">C</text>") != std::string::npos);
@@ -1475,13 +1475,13 @@ void testGithub781() {
   }
   {
     auto m = "C.CC.[Cl-]"_smiles;
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
     RDDepict::compute2DCoords(*m);
     MolDraw2DSVG drawer(300, 300);
     drawer.drawMolecule(*m);
     drawer.finishDrawing();
     std::string txt = drawer.getDrawingText();
-    TEST_ASSERT(txt.find("<svg") != std::string::npos);
+    TEST_ASSERT(txt.find("<svg") != std::string::npos)
     std::ofstream outs("testGithub781_4.svg");
     outs << txt;
     outs.close();
@@ -1503,13 +1503,13 @@ void testGithub781() {
   }
   {  // empty molecule
     auto *m = new ROMol();
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
     RDDepict::compute2DCoords(*m);
     MolDraw2DSVG drawer(300, 300);
     drawer.drawMolecule(*m);
     drawer.finishDrawing();
     std::string txt = drawer.getDrawingText();
-    TEST_ASSERT(txt.find("<svg") != std::string::npos);
+    TEST_ASSERT(txt.find("<svg") != std::string::npos)
     // the Freetype version just draws the white canvas.
     std::ofstream outs("testGithub781_5.svg");
     outs << txt;
@@ -1525,14 +1525,14 @@ void testGithub781() {
     // Make sure it also centres correctly with a maxFontSize, which it
     // didn't always do.
     auto m = "C"_smiles;
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
     RDDepict::compute2DCoords(*m);
     MolDraw2DSVG drawer(200, 200);
     drawer.drawOptions().maxFontSize = 14;
     drawer.drawMolecule(*m);
     drawer.finishDrawing();
     std::string txt = drawer.getDrawingText();
-    TEST_ASSERT(txt.find("<svg") != std::string::npos);
+    TEST_ASSERT(txt.find("<svg") != std::string::npos)
     // write the file so we can update the coords below more easily
     // if the font changes, for example.
     std::ofstream outs("testGithub781_6.svg");
@@ -1567,7 +1567,7 @@ void testGithub774() {
         "Cc1c(C(=O)NCC[NH3+])[n+](=O)c2cc(CC[C@](F)(Cl)Br)ccc2n1[O-]";
     std::string nameBase = "test774_1";
     RWMol *m = SmilesToMol(smiles);
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
     RDDepict::compute2DCoords(*m);
     Chirality::wedgeMolBonds(*m, &(m->getConformer()));
     MolOps::Kekulize(*m);
@@ -1592,8 +1592,8 @@ void testGithub774() {
       Point2D dcoords =
           drawer.getAtomCoords(std::make_pair(ocoords.x, ocoords.y));
       Point2D acoords = drawer.getDrawCoords(dcoords);
-      TEST_ASSERT(feq(acoords.x, 1.0));
-      TEST_ASSERT(feq(acoords.y, 2.0));
+      TEST_ASSERT(feq(acoords.x, 1.0))
+      TEST_ASSERT(feq(acoords.y, 2.0))
       check_file_hash(nameBase + ".svg");
     }
     // m->setProp("_Name","mol");
@@ -1605,7 +1605,7 @@ void testGithub774() {
         "CC(=O)\\C=C\\CC1[C@H]2N([C@@H](C(=O)O)C(C)(C)S2(=O)=O)C1=O";
     std::string nameBase = "test774_2";
     RWMol *m = SmilesToMol(smiles);
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
     RDDepict::compute2DCoords(*m);
     Chirality::wedgeMolBonds(*m, &(m->getConformer()));
     MolOps::Kekulize(*m);
@@ -1639,7 +1639,7 @@ void test9MolLegends() {
   std::cout << " ----------------- Test 9 (molecule legends)" << std::endl;
   {
     auto m = "CC[13CH2][CH2:7][CH-]C[15NH2+]C"_smiles;
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
     RDDepict::compute2DCoords(*m);
     Chirality::wedgeMolBonds(*m, &(m->getConformer()));
     MolDraw2DSVG drawer(300, 300);
@@ -1664,7 +1664,7 @@ void testGithub852() {
         "COc1cccc(NC(=O)[C@H](Cl)Sc2nc(ns2)c3ccccc3Cl)c1";  // made up
     std::string nameBase = "test852_1";
     RWMol *m = SmilesToMol(smiles);
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
     MolDraw2DUtils::prepareMolForDrawing(*m);
 
 #ifdef RDK_BUILD_CAIRO_SUPPORT
@@ -1692,7 +1692,7 @@ void testGithub852() {
         "C[C@]12CC[C@@H]3c4ccc(cc4CC[C@H]3[C@@H]1CC[C@@H]2O)O";  // estradiol
     std::string nameBase = "test852_2";
     RWMol *m = SmilesToMol(smiles);
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
     MolDraw2DUtils::prepareMolForDrawing(*m);
 
 #ifdef RDK_BUILD_CAIRO_SUPPORT
@@ -1719,7 +1719,7 @@ void testGithub852() {
     std::string smiles =
         "C[C@]12CC[C@@H]3c4ccc(cc4CC[C@H]3[C@@H]1CC[C@@H]2O)O";  // estradiol
     RWMol *m = SmilesToMol(smiles);
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
     MolDraw2DUtils::prepareMolForDrawing(*m);
     {
       std::cerr << "----------------" << std::endl;
@@ -1778,7 +1778,7 @@ void testGithub860() {
   {
     auto m = "[15NH3+:1]-C#C-[15NH3+:2]"_smiles;
     std::string nameBase = "test860_1";
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
     MolDraw2DUtils::prepareMolForDrawing(*m);
 
 #ifdef RDK_BUILD_CAIRO_SUPPORT
@@ -1803,7 +1803,7 @@ void testGithub860() {
   {
     auto m = "[15NH3+:1]-C#C-C([15NH3+:2])([15NH3+:3])-C#C-[15NH3+:4]"_smiles;
     std::string nameBase = "test860_2";
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
     MolDraw2DUtils::prepareMolForDrawing(*m);
 
 #ifdef RDK_BUILD_CAIRO_SUPPORT
@@ -1828,7 +1828,7 @@ void testGithub860() {
   {
     auto m = "[15NH3+:1]-CCCCCCCC-[15NH3+:4]"_smiles;
     std::string nameBase = "test860_3";
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
     MolDraw2DUtils::prepareMolForDrawing(*m);
 
 #ifdef RDK_BUILD_CAIRO_SUPPORT
@@ -1866,7 +1866,7 @@ void testGithub910() {
         "O)"
         "NCC(=O)N[C@@H](Cc1c[nH]cn1)C(=O)N[C@@H](CO)C(=O)O";
     ROMol *m = SmilesToMol(smiles);
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
     RDDepict::compute2DCoords(*m);
     Chirality::wedgeMolBonds(*m, &(m->getConformer()));
     std::ofstream outs("test910_1.svg");
@@ -1885,7 +1885,7 @@ void testGithub910() {
         "O)"
         "NCC(=O)N[C@@H](Cc1c[nH]cn1)C(=O)N[C@@H](CO)C(=O)O";
     RWMol *m = SmilesToMol(smiles);
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
     MolDraw2DUtils::prepareMolForDrawing(*m);
     std::ofstream outs("test910_2.svg");
     MolDraw2DSVG drawer(600, 300, outs);
@@ -1906,14 +1906,14 @@ void testGithub932() {
   {
     std::string smiles = "CC[C@](F)(Cl)Br";
     RWMol *m = SmilesToMol(smiles);
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
     MolDraw2DUtils::prepareMolForDrawing(*m);
     MolDraw2DSVG drawer(200, 200);
     drawer.drawMolecule(*m);
     drawer.finishDrawing();
 
     std::string text = drawer.getDrawingText();
-    TEST_ASSERT(text.find("evenoddstroke") == std::string::npos);
+    TEST_ASSERT(text.find("evenoddstroke") == std::string::npos)
     delete m;
   }
   std::cerr << " Done" << std::endl;
@@ -1926,14 +1926,14 @@ void testGithub953() {
   {
     std::string smiles = "[Nb]";
     RWMol *m = SmilesToMol(smiles);
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
     MolDraw2DUtils::prepareMolForDrawing(*m);
     MolDraw2DSVG drawer(200, 200);
     drawer.drawMolecule(*m);
     drawer.finishDrawing();
 
     std::string text = drawer.getDrawingText();
-    TEST_ASSERT(text.find("#00FFFF") == std::string::npos);
+    TEST_ASSERT(text.find("#00FFFF") == std::string::npos)
     delete m;
   }
   std::cerr << " Done" << std::endl;
@@ -1964,7 +1964,7 @@ void testGithub983() {
   3  6  1  0  0  0  0\n\
 M  END";
     RWMol *m = MolBlockToMol(mb, false, false);
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
     MolOps::sanitizeMol(*m);
     MolDraw2DUtils::prepareMolForDrawing(*m);
 
@@ -2023,12 +2023,12 @@ M  END";
   8  4  1  0  0  0  0\n\
 M  END";
     RWMol *m = MolBlockToMol(mb);
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
     MolDraw2DUtils::prepareMolForDrawing(*m);
-    TEST_ASSERT(m->getBondBetweenAtoms(2, 1)->getBondType() == Bond::SINGLE);
-    TEST_ASSERT(m->getBondBetweenAtoms(2, 1)->getBondDir() == Bond::NONE);
-    TEST_ASSERT(m->getBondBetweenAtoms(2, 4)->getBondType() == Bond::SINGLE);
-    TEST_ASSERT(m->getBondBetweenAtoms(2, 4)->getBondDir() == Bond::BEGINWEDGE);
+    TEST_ASSERT(m->getBondBetweenAtoms(2, 1)->getBondType() == Bond::SINGLE)
+    TEST_ASSERT(m->getBondBetweenAtoms(2, 1)->getBondDir() == Bond::NONE)
+    TEST_ASSERT(m->getBondBetweenAtoms(2, 4)->getBondType() == Bond::SINGLE)
+    TEST_ASSERT(m->getBondBetweenAtoms(2, 4)->getBondDir() == Bond::BEGINWEDGE)
 
     MolDraw2DSVG drawer(200, 200);
     drawer.drawMolecule(*m);
@@ -2052,17 +2052,17 @@ M  END";
     check_file_hash("test983_2.svg");
 
     MolDraw2DUtils::prepareMolForDrawing(*m);
-    TEST_ASSERT(m->getBondBetweenAtoms(2, 1)->getBondType() == Bond::SINGLE);
-    TEST_ASSERT(m->getBondBetweenAtoms(2, 1)->getBondDir() == Bond::NONE);
-    TEST_ASSERT(m->getBondBetweenAtoms(2, 4)->getBondType() == Bond::SINGLE);
-    TEST_ASSERT(m->getBondBetweenAtoms(2, 4)->getBondDir() == Bond::BEGINWEDGE);
+    TEST_ASSERT(m->getBondBetweenAtoms(2, 1)->getBondType() == Bond::SINGLE)
+    TEST_ASSERT(m->getBondBetweenAtoms(2, 1)->getBondDir() == Bond::NONE)
+    TEST_ASSERT(m->getBondBetweenAtoms(2, 4)->getBondType() == Bond::SINGLE)
+    TEST_ASSERT(m->getBondBetweenAtoms(2, 4)->getBondDir() == Bond::BEGINWEDGE)
 
     RWMol nm(*m);
     MolDraw2DUtils::prepareMolForDrawing(nm);
-    TEST_ASSERT(nm.getBondBetweenAtoms(2, 1)->getBondType() == Bond::SINGLE);
-    TEST_ASSERT(nm.getBondBetweenAtoms(2, 1)->getBondDir() == Bond::NONE);
-    TEST_ASSERT(nm.getBondBetweenAtoms(2, 4)->getBondType() == Bond::SINGLE);
-    TEST_ASSERT(nm.getBondBetweenAtoms(2, 4)->getBondDir() == Bond::BEGINWEDGE);
+    TEST_ASSERT(nm.getBondBetweenAtoms(2, 1)->getBondType() == Bond::SINGLE)
+    TEST_ASSERT(nm.getBondBetweenAtoms(2, 1)->getBondDir() == Bond::NONE)
+    TEST_ASSERT(nm.getBondBetweenAtoms(2, 4)->getBondType() == Bond::SINGLE)
+    TEST_ASSERT(nm.getBondBetweenAtoms(2, 4)->getBondDir() == Bond::BEGINWEDGE)
 
     delete m;
   }
@@ -2115,7 +2115,7 @@ void testDeuteriumTritium() {
     }
 #ifdef RDK_BUILD_FREETYPE_SUPPORT
 #if DO_TEST_ASSERT
-    TEST_ASSERT(count == 8);
+    TEST_ASSERT(count == 8)
 #endif
 #else
     // the first superscript 2
@@ -2165,7 +2165,7 @@ void testDeuteriumTritium() {
     }
 #ifdef RDK_BUILD_FREETYPE_SUPPORT
 #if DO_TEST_ASSERT
-    TEST_ASSERT(count == 8);
+    TEST_ASSERT(count == 8)
 #endif
 #else
     TEST_ASSERT(count == 1);
@@ -2208,7 +2208,7 @@ void testDeuteriumTritium() {
 #endif
     }
 #if DO_TEST_ASSERT
-    TEST_ASSERT(count == 4);
+    TEST_ASSERT(count == 4)
 #endif
     check_file_hash(nameBase + ".svg");
   }
@@ -2248,7 +2248,7 @@ void testDeuteriumTritium() {
 #endif
     }
 #if DO_TEST_ASSERT
-    TEST_ASSERT(count == 4);
+    TEST_ASSERT(count == 4)
 #endif
     check_file_hash(nameBase + ".svg");
   }
@@ -2260,7 +2260,7 @@ void testCrossedBonds() {
   {
     std::string smiles = "CC=CC";
     RWMol *m = SmilesToMol(smiles);
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
     m->getBondWithIdx(1)->setBondDir(Bond::EITHERDOUBLE);
     MolDraw2DUtils::prepareMolForDrawing(*m);
 
@@ -2291,7 +2291,7 @@ void test10DrawSecondMol() {
 M  END";
 
   RWMol *m1 = MolBlockToMol(mb1);
-  TEST_ASSERT(m1);
+  TEST_ASSERT(m1)
   MolOps::sanitizeMol(*m1);
   MolDraw2DUtils::prepareMolForDrawing(*m1);
   RDGeom::Point3D c1 = MolTransforms::computeCentroid(m1->getConformer());
@@ -2311,7 +2311,7 @@ M  END";
   2  3  1  0  0  0  0\n\
 M  END";
   RWMol *m2 = MolBlockToMol(mb2);
-  TEST_ASSERT(m2);
+  TEST_ASSERT(m2)
   MolOps::sanitizeMol(*m2);
   MolDraw2DUtils::prepareMolForDrawing(*m2);
   RDGeom::Point3D c2 = MolTransforms::computeCentroid(m2->getConformer());
@@ -2431,7 +2431,7 @@ void test11DrawMolGrid() {
             << std::endl;
 
   auto m1 = "COc1cccc(NC(=O)[C@H](Cl)Sc2nc(ns2)c3ccccc3Cl)c1"_smiles;
-  TEST_ASSERT(m1);
+  TEST_ASSERT(m1)
   MolDraw2DUtils::prepareMolForDrawing(*m1);
   RDGeom::Point3D c1 = MolTransforms::computeCentroid(m1->getConformer());
   for (unsigned int i = 0; i < m1->getNumAtoms(); ++i) {
@@ -2439,7 +2439,7 @@ void test11DrawMolGrid() {
     p -= c1;
   }
   auto m2 = "NC(=O)[C@H](Cl)Sc1ncns1"_smiles;
-  TEST_ASSERT(m2);
+  TEST_ASSERT(m2)
   MolDraw2DUtils::prepareMolForDrawing(*m2);
   RDGeom::Point3D c2 = MolTransforms::computeCentroid(m2->getConformer());
   for (unsigned int i = 0; i < m2->getNumAtoms(); ++i) {
@@ -2447,7 +2447,7 @@ void test11DrawMolGrid() {
     p -= c2;
   }
   auto m3 = "BrCNC(=O)[C@H](Cl)Sc1ncns1"_smiles;
-  TEST_ASSERT(m3);
+  TEST_ASSERT(m3)
   MolDraw2DUtils::prepareMolForDrawing(*m3);
   RDGeom::Point3D c3 = MolTransforms::computeCentroid(m3->getConformer());
   for (unsigned int i = 0; i < m3->getNumAtoms(); ++i) {
@@ -2507,7 +2507,7 @@ void test12DrawMols() {
                       std::vector<ROMol *> &mols,
                       std::vector<std::string> &legends) {
     mols.push_back(SmilesToMol(smi));
-    TEST_ASSERT(mols.back());
+    TEST_ASSERT(mols.back())
     legends.push_back(leg);
   };
   std::vector<ROMol *> mols;
@@ -2624,7 +2624,7 @@ void test13JSONConfig() {
 #endif
     // these days the bond line width scales with the rest of the
     // drawing, and at this size this comes out as 5px.
-    TEST_ASSERT(text.find("stroke-width:5.0px") != std::string::npos);
+    TEST_ASSERT(text.find("stroke-width:5.0px") != std::string::npos)
     check_file_hash("test13_1.svg");
   }
   {
@@ -2664,7 +2664,7 @@ void testGithub1090() {
 
   std::string smiles = "CCOC";  // made up
   RWMol *m1 = SmilesToMol(smiles);
-  TEST_ASSERT(m1);
+  TEST_ASSERT(m1)
   MolDraw2DUtils::prepareMolForDrawing(*m1);
   {
     ROMol lm(*m1);
@@ -2680,10 +2680,10 @@ void testGithub1090() {
     outs.flush();
     outs.close();
     check_file_hash("testGithub1090_1.svg");
-    TEST_ASSERT(text.find("C&1") == std::string::npos);
-    TEST_ASSERT(text.find("<<") == std::string::npos);
-    TEST_ASSERT(text.find(">>") == std::string::npos);
-    TEST_ASSERT(text.find("d&l") == std::string::npos);
+    TEST_ASSERT(text.find("C&1") == std::string::npos)
+    TEST_ASSERT(text.find("<<") == std::string::npos)
+    TEST_ASSERT(text.find(">>") == std::string::npos)
+    TEST_ASSERT(text.find("d&l") == std::string::npos)
   }
   delete m1;
   std::cerr << " Done" << std::endl;
@@ -2696,7 +2696,7 @@ void testGithub1035() {
 
   std::string smiles = "CCOC";  // made up
   RWMol *m1 = SmilesToMol(smiles);
-  TEST_ASSERT(m1);
+  TEST_ASSERT(m1)
   MolDraw2DUtils::prepareMolForDrawing(*m1);
   std::vector<int> highlights;
   highlights.push_back(0);
@@ -2710,7 +2710,7 @@ void testGithub1035() {
     } catch (const ValueErrorException &) {
       ok = true;
     }
-    TEST_ASSERT(ok);
+    TEST_ASSERT(ok)
   }
   {
     MolDraw2DSVG drawer(250, 200);
@@ -2721,7 +2721,7 @@ void testGithub1035() {
     } catch (const ValueErrorException &) {
       ok = true;
     }
-    TEST_ASSERT(ok);
+    TEST_ASSERT(ok)
   }
   {
     MolDraw2DSVG drawer(250, 200);
@@ -2732,7 +2732,7 @@ void testGithub1035() {
     } catch (const ValueErrorException &) {
       ok = true;
     }
-    TEST_ASSERT(ok);
+    TEST_ASSERT(ok)
   }
 
   delete m1;
@@ -2754,7 +2754,7 @@ void testGithub1271() {
   1  2  1  0\n\
 M  END";
     RWMol *m = MolBlockToMol(mb);
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
     MolDraw2DUtils::prepareMolForDrawing(*m);
 
     MolDraw2DSVG drawer(200, 200);
@@ -2766,7 +2766,7 @@ M  END";
     outs.flush();
     outs.close();
     check_file_hash("test1271_1.svg");
-    TEST_ASSERT(text.find("d='M 0,200 0,200") == std::string::npos);
+    TEST_ASSERT(text.find("d='M 0,200 0,200") == std::string::npos)
     delete m;
   }
   {
@@ -2780,7 +2780,7 @@ M  END";
   1  2  1  0\n\
 M  END";
     RWMol *m = MolBlockToMol(mb);
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
     MolDraw2DUtils::prepareMolForDrawing(*m);
 
     MolDraw2DSVG drawer(200, 200);
@@ -2792,7 +2792,7 @@ M  END";
     outs.flush();
     outs.close();
     check_file_hash("test1271_2.svg");
-    TEST_ASSERT(text.find("d='M 0,200 0,200") == std::string::npos);
+    TEST_ASSERT(text.find("d='M 0,200 0,200") == std::string::npos)
     delete m;
   }
   {
@@ -2804,7 +2804,7 @@ M  END";
    -0.0000    0.0000    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0\n\
 M  END";
     RWMol *m = MolBlockToMol(mb);
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
     MolDraw2DUtils::prepareMolForDrawing(*m);
 
     MolDraw2DSVG drawer(200, 200);
@@ -2816,7 +2816,7 @@ M  END";
     outs.flush();
     outs.close();
     check_file_hash("test1271_3.svg");
-    TEST_ASSERT(text.find("d='M 0,200 0,200") == std::string::npos);
+    TEST_ASSERT(text.find("d='M 0,200 0,200") == std::string::npos)
     delete m;
   }
   {
@@ -2828,7 +2828,7 @@ M  END";
    -0.0000    0.5000    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0\n\
 M  END";
     RWMol *m = MolBlockToMol(mb);
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
     MolDraw2DUtils::prepareMolForDrawing(*m);
 
     MolDraw2DSVG drawer(200, 200);
@@ -2840,17 +2840,17 @@ M  END";
     outs.flush();
     outs.close();
     check_file_hash("test1271_4.svg");
-    TEST_ASSERT(text.find("d='M 0,200 0,200") == std::string::npos);
+    TEST_ASSERT(text.find("d='M 0,200 0,200") == std::string::npos)
     delete m;
   }
   {
     std::string smiles = "C=C(O)C(O)";  // made up
     RWMol *m1 = SmilesToMol(smiles);
-    TEST_ASSERT(m1);
+    TEST_ASSERT(m1)
     MolDraw2DUtils::prepareMolForDrawing(*m1);
     smiles = "O";
     RWMol *m2 = SmilesToMol(smiles);
-    TEST_ASSERT(m2);
+    TEST_ASSERT(m2)
     MolDraw2DUtils::prepareMolForDrawing(*m2);
 
     MolDraw2DSVG drawer(500, 200, 250, 200);
@@ -2876,7 +2876,7 @@ void testGithub1322() {
             << std::endl;
   {
     auto m1 = "CCC[Se]"_smiles;  // made up
-    TEST_ASSERT(m1);
+    TEST_ASSERT(m1)
     MolDraw2DUtils::prepareMolForDrawing(*m1);
 
     {
@@ -2903,7 +2903,7 @@ void testGithub1322() {
         ++count;
         ++start_pos;
       }
-      TEST_ASSERT(count == 4);
+      TEST_ASSERT(count == 4)
 #endif
 #else
       TEST_ASSERT(text.find(">S</text>") != std::string::npos);
@@ -2936,7 +2936,7 @@ void testGithub1322() {
         ++count;
         ++start_pos;
       }
-      TEST_ASSERT(count == 13);
+      TEST_ASSERT(count == 13)
 #endif
 #else
       TEST_ASSERT(text.find(">S</text>") == std::string::npos);
@@ -2954,7 +2954,7 @@ void test14BWPalette() {
   {
     std::string smiles = "CNC(Cl)C(=O)O";
     RWMol *m1 = SmilesToMol(smiles);
-    TEST_ASSERT(m1);
+    TEST_ASSERT(m1)
     MolDraw2DUtils::prepareMolForDrawing(*m1);
 
     {  // start with color
@@ -2963,7 +2963,7 @@ void test14BWPalette() {
       drawer.finishDrawing();
       std::string text = drawer.getDrawingText();
 
-      TEST_ASSERT(text.find("stroke:#00CC00") != std::string::npos);
+      TEST_ASSERT(text.find("stroke:#00CC00") != std::string::npos)
 
       std::ofstream outs("test14_1.svg");
       outs << text;
@@ -2978,7 +2978,7 @@ void test14BWPalette() {
       drawer.finishDrawing();
       std::string text = drawer.getDrawingText();
 
-      TEST_ASSERT(text.find("stroke:#00CC00") == std::string::npos);
+      TEST_ASSERT(text.find("stroke:#00CC00") == std::string::npos)
 
       std::ofstream outs("test14_2.svg");
       outs << text;
@@ -3000,10 +3000,10 @@ void test15ContinuousHighlightingWithGrid() {
     std::string smiles =
         "COc1cccc(NC(=O)[C@H](Cl)Sc2nc(ns2)c3ccccc3Cl)c1";  // made up
     RWMol *m1 = SmilesToMol(smiles);
-    TEST_ASSERT(m1);
+    TEST_ASSERT(m1)
     smiles = "NC(=O)[C@H](Cl)Sc1ncns1";  // made up
     RWMol *m2 = SmilesToMol(smiles);
-    TEST_ASSERT(m2);
+    TEST_ASSERT(m2)
     std::vector<ROMol *> mols;
     mols.push_back(m1);
     mols.push_back(m2);
@@ -3030,7 +3030,7 @@ void test15ContinuousHighlightingWithGrid() {
       check_file_hash("test15_1.svg");
 #if DO_TEST_ASSERT
       TEST_ASSERT(text.find("stroke:#FF7F7F;stroke-width:0.0px;") ==
-                  std::string::npos);
+                  std::string::npos)
 #endif
     }
     {
@@ -3047,7 +3047,7 @@ void test15ContinuousHighlightingWithGrid() {
       check_file_hash("test15_2.svg");
 #if DO_TEST_ASSERT
       TEST_ASSERT(text.find("stroke:#FF7F7F;stroke-width:0.0px") !=
-                  std::string::npos);
+                  std::string::npos)
 #endif
     }
     for (auto &&mol : mols) {
@@ -3079,7 +3079,7 @@ void test16MoleculeMetadata() {
   {
     std::string smiles = "CN[C@H](Cl)C(=O)O";
     std::unique_ptr<RWMol> m1(SmilesToMol(smiles));
-    TEST_ASSERT(m1);
+    TEST_ASSERT(m1)
     MolDraw2DUtils::prepareMolForDrawing(*m1);
 
     {  // one molecule
@@ -3094,9 +3094,9 @@ void test16MoleculeMetadata() {
       outs.close();
 #if DO_TEST_ASSERT
       TEST_ASSERT(text.find("idx=\"2\" atom-smiles=\"[NH]\" drawing-x=\"55.") !=
-                  std::string::npos);
+                  std::string::npos)
       TEST_ASSERT(text.find("idx=\"2\" begin-atom-idx=\"2\" end-atom-idx=\"3\" "
-                            "bond-smiles=\"-\"") != std::string::npos);
+                            "bond-smiles=\"-\"") != std::string::npos)
 #endif
       check_file_hash("test16_1.svg");
     }
@@ -3116,10 +3116,10 @@ void test16MoleculeMetadata() {
       outs.close();
 #if DO_TEST_ASSERT
       TEST_ASSERT(text.find("idx=\"2\" atom-smiles=\"[NH]\" drawing-x=\"55.") !=
-                  std::string::npos);
+                  std::string::npos)
       TEST_ASSERT(
           text.find("idx=\"2\" atom-smiles=\"[NH]\" drawing-x=\"255.") !=
-          std::string::npos);
+          std::string::npos)
 #endif
       check_file_hash("test16_2.svg");
       for (auto ptr : ms) {
@@ -3160,7 +3160,7 @@ M  V30 END BOND
 M  V30 END CTAB
 M  END
 )CTAB"_ctab;
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
     std::string nameBase = "test17_";
 #if 1
     {
@@ -3267,7 +3267,7 @@ void test18FixedScales() {
   std::string nameBase = "test18_";
   {
     auto m = "Clc1ccccc1"_smiles;
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
     {
       MolDraw2DSVG drawer(300, 300);
       drawer.drawMolecule(*m, "default");
@@ -3317,7 +3317,7 @@ void test18FixedScales() {
         "C[C@@H](N[C@@H]1CC[C@@H](C(=O)N2CCC(C(=O)N3CCCC3)"
         "(c3ccccc3)CC2)C(C)(C)C1)c1ccc(Cl)cc1";
     std::unique_ptr<ROMol> m(SmilesToMol(smi));
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
 
     {
       MolDraw2DSVG drawer(300, 300);
@@ -3387,7 +3387,7 @@ void test18FixedScales() {
       drawer.drawOptions().maxFontSize = 20;
       drawer.drawMolecule(*m, "fontSize 24");
       drawer.finishDrawing();
-      TEST_ASSERT(drawer.fontSize() == 24);
+      TEST_ASSERT(drawer.fontSize() == 24)
       std::string text = drawer.getDrawingText();
       std::ofstream outs((nameBase + "6.svg").c_str());
       outs << text;
@@ -3409,7 +3409,7 @@ void test18FixedScales() {
       drawer.drawOptions().fixedFontSize = 4;
       drawer.drawMolecule(*m, "fontSize 4");
       drawer.finishDrawing();
-      TEST_ASSERT(drawer.fontSize() == 4);
+      TEST_ASSERT(drawer.fontSize() == 4)
       std::string text = drawer.getDrawingText();
       std::ofstream outs((nameBase + "7.svg").c_str());
       outs << text;
@@ -3436,7 +3436,7 @@ void test19RotateDrawing() {
   {
     std::string smi = "Clc1ccccc1";
     std::unique_ptr<ROMol> m(SmilesToMol(smi));
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
     {
       MolDraw2DSVG drawer(300, 300);
       drawer.drawMolecule(*m);

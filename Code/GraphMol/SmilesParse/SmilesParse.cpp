@@ -70,7 +70,7 @@ int smarts_parse_helper(const std::string &inp,
   void *scanner;
   int res = 1;  // initialize with fail code
 
-  TEST_ASSERT(!yysmarts_lex_init(&scanner));
+  TEST_ASSERT(!yysmarts_lex_init(&scanner))
   try {
     size_t ltrim = setup_smarts_string(inp, scanner);
     unsigned numAtomsParsed = 0;
@@ -532,7 +532,7 @@ std::unique_ptr<RWMol> MolFromSmiles(const std::string &smiles,
     }
   }
   return res;
-};
+}
 
 std::unique_ptr<Atom> AtomFromSmarts(const std::string &smiles) {
   yysmarts_debug = false;
@@ -574,7 +574,7 @@ std::unique_ptr<RWMol> MolFromSmarts(const std::string &smarts,
     }
   }
   return res;
-};
+}
 }  // namespace SmilesParse
 }  // namespace v2
 }  // namespace RDKit

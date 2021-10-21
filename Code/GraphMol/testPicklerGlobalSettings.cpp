@@ -89,25 +89,25 @@ void testGlobalPickleProps() {
     MolPickler::setDefaultPickleProperties(PicklerOps::AllProps);
     MolPickler::pickleMol(*m, pkl);
     RWMol *m2 = new RWMol(pkl);
-    TEST_ASSERT(m2);
-    TEST_ASSERT(m2->getProp<double>("double") == 1.0);
-    TEST_ASSERT(m2->getProp<int>("int") == 100);
-    TEST_ASSERT(m2->getProp<bool>("bool") == true);
-    TEST_ASSERT(m2->getProp<bool>("boolfalse") == false);
+    TEST_ASSERT(m2)
+    TEST_ASSERT(m2->getProp<double>("double") == 1.0)
+    TEST_ASSERT(m2->getProp<int>("int") == 100)
+    TEST_ASSERT(m2->getProp<bool>("bool") == true)
+    TEST_ASSERT(m2->getProp<bool>("boolfalse") == false)
 
     a = m2->getAtomWithIdx(0);
-    TEST_ASSERT(a->getProp<double>("double") == 1.0);
-    TEST_ASSERT(a->getProp<int>("int") == 100);
-    TEST_ASSERT(a->getProp<bool>("bool") == true);
-    TEST_ASSERT(a->getProp<bool>("boolfalse") == false);
-    TEST_ASSERT(a->getProp<bool>("_private") == true);
+    TEST_ASSERT(a->getProp<double>("double") == 1.0)
+    TEST_ASSERT(a->getProp<int>("int") == 100)
+    TEST_ASSERT(a->getProp<bool>("bool") == true)
+    TEST_ASSERT(a->getProp<bool>("boolfalse") == false)
+    TEST_ASSERT(a->getProp<bool>("_private") == true)
 
     b = m2->getBondWithIdx(0);
-    TEST_ASSERT(b->getProp<double>("double") == 1.0);
-    TEST_ASSERT(b->getProp<int>("int") == 100);
-    TEST_ASSERT(b->getProp<bool>("bool") == true);
-    TEST_ASSERT(b->getProp<bool>("boolfalse") == false);
-    TEST_ASSERT(b->getProp<bool>("_private") == true);
+    TEST_ASSERT(b->getProp<double>("double") == 1.0)
+    TEST_ASSERT(b->getProp<int>("int") == 100)
+    TEST_ASSERT(b->getProp<bool>("bool") == true)
+    TEST_ASSERT(b->getProp<bool>("boolfalse") == false)
+    TEST_ASSERT(b->getProp<bool>("_private") == true)
     // TEST_ASSERT(b->getProp<std::vector<double> >("dvec") == v);
     delete m2;
   }
@@ -116,25 +116,25 @@ void testGlobalPickleProps() {
     MolPickler::setDefaultPickleProperties(PicklerOps::MolProps);
     MolPickler::pickleMol(*m, pkl);
     RWMol *m2 = new RWMol(pkl);
-    TEST_ASSERT(m2);
-    TEST_ASSERT(m2->getProp<double>("double") == 1.0);
-    TEST_ASSERT(m2->getProp<int>("int") == 100);
-    TEST_ASSERT(m2->getProp<bool>("bool") == true);
-    TEST_ASSERT(m2->getProp<bool>("boolfalse") == false);
+    TEST_ASSERT(m2)
+    TEST_ASSERT(m2->getProp<double>("double") == 1.0)
+    TEST_ASSERT(m2->getProp<int>("int") == 100)
+    TEST_ASSERT(m2->getProp<bool>("bool") == true)
+    TEST_ASSERT(m2->getProp<bool>("boolfalse") == false)
 
     a = m2->getAtomWithIdx(0);
-    TEST_ASSERT(!a->hasProp("double"));
-    TEST_ASSERT(!a->hasProp("int"));
-    TEST_ASSERT(!a->hasProp("bool"));
-    TEST_ASSERT(!a->hasProp("boolfalse"));
-    TEST_ASSERT(!a->hasProp("_private"));
+    TEST_ASSERT(!a->hasProp("double"))
+    TEST_ASSERT(!a->hasProp("int"))
+    TEST_ASSERT(!a->hasProp("bool"))
+    TEST_ASSERT(!a->hasProp("boolfalse"))
+    TEST_ASSERT(!a->hasProp("_private"))
 
     b = m2->getBondWithIdx(0);
-    TEST_ASSERT(!b->hasProp("double"));
-    TEST_ASSERT(!b->hasProp("int"));
-    TEST_ASSERT(!b->hasProp("bool"));
-    TEST_ASSERT(!b->hasProp("boolfalse"));
-    TEST_ASSERT(!b->hasProp("_private"));
+    TEST_ASSERT(!b->hasProp("double"))
+    TEST_ASSERT(!b->hasProp("int"))
+    TEST_ASSERT(!b->hasProp("bool"))
+    TEST_ASSERT(!b->hasProp("boolfalse"))
+    TEST_ASSERT(!b->hasProp("_private"))
     delete m2;
   }
 
@@ -142,25 +142,25 @@ void testGlobalPickleProps() {
     MolPickler::setDefaultPickleProperties(PicklerOps::AtomProps);
     MolPickler::pickleMol(*m, pkl);
     RWMol *m2 = new RWMol(pkl);
-    TEST_ASSERT(m2);
-    TEST_ASSERT(!m2->hasProp("double"));
-    TEST_ASSERT(!m2->hasProp("int"));
-    TEST_ASSERT(!m2->hasProp("bool"));
-    TEST_ASSERT(!m2->hasProp("boolfalse"));
+    TEST_ASSERT(m2)
+    TEST_ASSERT(!m2->hasProp("double"))
+    TEST_ASSERT(!m2->hasProp("int"))
+    TEST_ASSERT(!m2->hasProp("bool"))
+    TEST_ASSERT(!m2->hasProp("boolfalse"))
 
     a = m2->getAtomWithIdx(0);
-    TEST_ASSERT(a->getProp<double>("double") == 1.0);
-    TEST_ASSERT(a->getProp<int>("int") == 100);
-    TEST_ASSERT(a->getProp<bool>("bool") == true);
-    TEST_ASSERT(a->getProp<bool>("boolfalse") == false);
-    TEST_ASSERT(!a->hasProp("_private"));
+    TEST_ASSERT(a->getProp<double>("double") == 1.0)
+    TEST_ASSERT(a->getProp<int>("int") == 100)
+    TEST_ASSERT(a->getProp<bool>("bool") == true)
+    TEST_ASSERT(a->getProp<bool>("boolfalse") == false)
+    TEST_ASSERT(!a->hasProp("_private"))
 
     b = m2->getBondWithIdx(0);
-    TEST_ASSERT(!b->hasProp("double"));
-    TEST_ASSERT(!b->hasProp("int"));
-    TEST_ASSERT(!b->hasProp("bool"));
-    TEST_ASSERT(!b->hasProp("boolfalse"));
-    TEST_ASSERT(!b->hasProp("_private"));
+    TEST_ASSERT(!b->hasProp("double"))
+    TEST_ASSERT(!b->hasProp("int"))
+    TEST_ASSERT(!b->hasProp("bool"))
+    TEST_ASSERT(!b->hasProp("boolfalse"))
+    TEST_ASSERT(!b->hasProp("_private"))
     delete m2;
   }
 
@@ -170,25 +170,25 @@ void testGlobalPickleProps() {
 
     MolPickler::pickleMol(*m, pkl);
     RWMol *m2 = new RWMol(pkl);
-    TEST_ASSERT(m2);
-    TEST_ASSERT(!m2->hasProp("double"));
-    TEST_ASSERT(!m2->hasProp("int"));
-    TEST_ASSERT(!m2->hasProp("bool"));
-    TEST_ASSERT(!m2->hasProp("boolfalse"));
+    TEST_ASSERT(m2)
+    TEST_ASSERT(!m2->hasProp("double"))
+    TEST_ASSERT(!m2->hasProp("int"))
+    TEST_ASSERT(!m2->hasProp("bool"))
+    TEST_ASSERT(!m2->hasProp("boolfalse"))
 
     a = m2->getAtomWithIdx(0);
-    TEST_ASSERT(a->getProp<double>("double") == 1.0);
-    TEST_ASSERT(a->getProp<int>("int") == 100);
-    TEST_ASSERT(a->getProp<bool>("bool") == true);
-    TEST_ASSERT(a->getProp<bool>("boolfalse") == false);
-    TEST_ASSERT(a->getProp<bool>("_private") == true);
+    TEST_ASSERT(a->getProp<double>("double") == 1.0)
+    TEST_ASSERT(a->getProp<int>("int") == 100)
+    TEST_ASSERT(a->getProp<bool>("bool") == true)
+    TEST_ASSERT(a->getProp<bool>("boolfalse") == false)
+    TEST_ASSERT(a->getProp<bool>("_private") == true)
 
     b = m2->getBondWithIdx(0);
-    TEST_ASSERT(!b->hasProp("double"));
-    TEST_ASSERT(!b->hasProp("int"));
-    TEST_ASSERT(!b->hasProp("bool"));
-    TEST_ASSERT(!b->hasProp("boolfalse"));
-    TEST_ASSERT(!b->hasProp("_private"));
+    TEST_ASSERT(!b->hasProp("double"))
+    TEST_ASSERT(!b->hasProp("int"))
+    TEST_ASSERT(!b->hasProp("bool"))
+    TEST_ASSERT(!b->hasProp("boolfalse"))
+    TEST_ASSERT(!b->hasProp("_private"))
     delete m2;
   }
 
@@ -196,25 +196,25 @@ void testGlobalPickleProps() {
     MolPickler::setDefaultPickleProperties(PicklerOps::BondProps);
     MolPickler::pickleMol(*m, pkl);
     RWMol *m2 = new RWMol(pkl);
-    TEST_ASSERT(m2);
-    TEST_ASSERT(!m2->hasProp("double"));
-    TEST_ASSERT(!m2->hasProp("int"));
-    TEST_ASSERT(!m2->hasProp("bool"));
-    TEST_ASSERT(!m2->hasProp("boolfalse"));
+    TEST_ASSERT(m2)
+    TEST_ASSERT(!m2->hasProp("double"))
+    TEST_ASSERT(!m2->hasProp("int"))
+    TEST_ASSERT(!m2->hasProp("bool"))
+    TEST_ASSERT(!m2->hasProp("boolfalse"))
 
     a = m2->getAtomWithIdx(0);
-    TEST_ASSERT(!a->hasProp("double"));
-    TEST_ASSERT(!a->hasProp("int"));
-    TEST_ASSERT(!a->hasProp("bool"));
-    TEST_ASSERT(!a->hasProp("boolfalse"));
-    TEST_ASSERT(!a->hasProp("_private"));
+    TEST_ASSERT(!a->hasProp("double"))
+    TEST_ASSERT(!a->hasProp("int"))
+    TEST_ASSERT(!a->hasProp("bool"))
+    TEST_ASSERT(!a->hasProp("boolfalse"))
+    TEST_ASSERT(!a->hasProp("_private"))
 
     b = m2->getBondWithIdx(0);
-    TEST_ASSERT(b->getProp<double>("double") == 1.0);
-    TEST_ASSERT(b->getProp<int>("int") == 100);
-    TEST_ASSERT(b->getProp<bool>("bool") == true);
-    TEST_ASSERT(b->getProp<bool>("boolfalse") == false);
-    TEST_ASSERT(!b->hasProp("_private"));
+    TEST_ASSERT(b->getProp<double>("double") == 1.0)
+    TEST_ASSERT(b->getProp<int>("int") == 100)
+    TEST_ASSERT(b->getProp<bool>("bool") == true)
+    TEST_ASSERT(b->getProp<bool>("boolfalse") == false)
+    TEST_ASSERT(!b->hasProp("_private"))
     delete m2;
   }
 
@@ -224,25 +224,25 @@ void testGlobalPickleProps() {
 
     MolPickler::pickleMol(*m, pkl);
     RWMol *m2 = new RWMol(pkl);
-    TEST_ASSERT(m2);
-    TEST_ASSERT(!m2->hasProp("double"));
-    TEST_ASSERT(!m2->hasProp("int"));
-    TEST_ASSERT(!m2->hasProp("bool"));
-    TEST_ASSERT(!m2->hasProp("boolfalse"));
+    TEST_ASSERT(m2)
+    TEST_ASSERT(!m2->hasProp("double"))
+    TEST_ASSERT(!m2->hasProp("int"))
+    TEST_ASSERT(!m2->hasProp("bool"))
+    TEST_ASSERT(!m2->hasProp("boolfalse"))
 
     a = m2->getAtomWithIdx(0);
-    TEST_ASSERT(!a->hasProp("double"));
-    TEST_ASSERT(!a->hasProp("int"));
-    TEST_ASSERT(!a->hasProp("bool"));
-    TEST_ASSERT(!a->hasProp("boolfalse"));
-    TEST_ASSERT(!a->hasProp("_private"));
+    TEST_ASSERT(!a->hasProp("double"))
+    TEST_ASSERT(!a->hasProp("int"))
+    TEST_ASSERT(!a->hasProp("bool"))
+    TEST_ASSERT(!a->hasProp("boolfalse"))
+    TEST_ASSERT(!a->hasProp("_private"))
 
     b = m2->getBondWithIdx(0);
-    TEST_ASSERT(b->getProp<double>("double") == 1.0);
-    TEST_ASSERT(b->getProp<int>("int") == 100);
-    TEST_ASSERT(b->getProp<bool>("bool") == true);
-    TEST_ASSERT(b->getProp<bool>("boolfalse") == false);
-    TEST_ASSERT(b->getProp<bool>("_private") == true);
+    TEST_ASSERT(b->getProp<double>("double") == 1.0)
+    TEST_ASSERT(b->getProp<int>("int") == 100)
+    TEST_ASSERT(b->getProp<bool>("bool") == true)
+    TEST_ASSERT(b->getProp<bool>("boolfalse") == false)
+    TEST_ASSERT(b->getProp<bool>("_private") == true)
     delete m2;
   }
 
