@@ -712,7 +712,6 @@ BOOST_PYTHON_MODULE(rdFingerprintGenerator) {
       .value("AtomPairFP", FPType::AtomPairFP)
       .value("TopologicalTorsionFP", FPType::TopologicalTorsionFP)
       .export_values();
-  ;
 
   python::def("GetSparseCountFPs", &getSparseCountFPBulkPy,
               (python::arg("molecules") = python::list(),

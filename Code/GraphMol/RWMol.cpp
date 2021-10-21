@@ -272,7 +272,7 @@ void RWMol::replaceAtom(unsigned int idx, Atom *atom_pin, bool,
     group = StereoGroup(group.getGroupType(), std::move(atoms),
                         std::move(bonds), groupId);
   }
-};
+}
 
 void RWMol::replaceBond(unsigned int idx, Bond *bond_pin, bool preserveProps,
                         bool keepSGroups) {
@@ -322,7 +322,7 @@ void RWMol::replaceBond(unsigned int idx, Bond *bond_pin, bool preserveProps,
       }
     }
   }
-};
+}
 
 Atom *RWMol::getActiveAtom() {
   if (hasAtomBookmark(ci_RIGHTMOST_ATOM)) {
@@ -330,23 +330,23 @@ Atom *RWMol::getActiveAtom() {
   } else {
     return getLastAtom();
   }
-};
+}
 
 void RWMol::setActiveAtom(Atom *at) {
-  PRECONDITION(at, "NULL atom provided");
+  PRECONDITION(at, "NULL atom provided")
   clearAtomBookmark(ci_RIGHTMOST_ATOM);
   setAtomBookmark(at, ci_RIGHTMOST_ATOM);
-};
+}
 void RWMol::setActiveAtom(unsigned int idx) {
   setActiveAtom(getAtomWithIdx(idx));
-};
+}
 
 void RWMol::removeAtom(unsigned int idx) { removeAtom(getAtomWithIdx(idx)); }
 
 void RWMol::removeAtom(Atom *atom, bool clearProps) {
   PRECONDITION(atom, "NULL atom provided");
   PRECONDITION(static_cast<RWMol *>(&atom->getOwningMol()) == this,
-               "atom not owned by this molecule");
+               "atom not owned by this molecule")
   unsigned int idx = atom->getIdx();
 
   // remove bonds attached to the atom
@@ -500,11 +500,11 @@ void RWMol::removeAtom(Atom *atom) { removeAtom(atom, true); }
 
 unsigned int RWMol::addBond(unsigned int atomIdx1, unsigned int atomIdx2,
                             Bond::BondType bondType) {
-  URANGE_CHECK(atomIdx1, getNumAtoms());
-  URANGE_CHECK(atomIdx2, getNumAtoms());
-  PRECONDITION(atomIdx1 != atomIdx2, "attempt to add self-bond");
+  URANGE_CHECK(atomIdx1, getNumAtoms())
+  URANGE_CHECK(atomIdx2, getNumAtoms())
+  PRECONDITION(atomIdx1 != atomIdx2, "attempt to add self-bond")
   PRECONDITION(!(boost::edge(atomIdx1, atomIdx2, d_graph).second),
-               "bond already exists");
+               "bond already exists")
 
   auto *b = new Bond(bondType);
   b->setOwningMol(this);
@@ -550,7 +550,7 @@ unsigned int RWMol::addBond(unsigned int atomIdx1, unsigned int atomIdx2,
 }
 
 unsigned int RWMol::addBond(Atom *atom1, Atom *atom2, Bond::BondType bondType) {
-  PRECONDITION(atom1 && atom2, "NULL atom passed in");
+  PRECONDITION(atom1 && atom2, "NULL atom passed in")
   return addBond(atom1->getIdx(), atom2->getIdx(), bondType);
 }
 
@@ -634,7 +634,7 @@ void RWMol::removeBond(unsigned int aid1, unsigned int aid2) {
 }
 
 Bond *RWMol::createPartialBond(unsigned int atomIdx1, Bond::BondType bondType) {
-  URANGE_CHECK(atomIdx1, getNumAtoms());
+  URANGE_CHECK(atomIdx1, getNumAtoms())
 
   auto *b = new Bond(bondType);
   b->setOwningMol(this);
@@ -645,8 +645,8 @@ Bond *RWMol::createPartialBond(unsigned int atomIdx1, Bond::BondType bondType) {
 
 unsigned int RWMol::finishPartialBond(unsigned int atomIdx2, int bondBookmark,
                                       Bond::BondType bondType) {
-  PRECONDITION(hasBondBookmark(bondBookmark), "no such partial bond");
-  URANGE_CHECK(atomIdx2, getNumAtoms());
+  PRECONDITION(hasBondBookmark(bondBookmark), "no such partial bond")
+  URANGE_CHECK(atomIdx2, getNumAtoms())
 
   auto *bsp = getBondWithBookmark(bondBookmark);
   if (bondType == Bond::UNSPECIFIED) {

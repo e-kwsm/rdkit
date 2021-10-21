@@ -271,7 +271,7 @@ inline void streamWrite(std::ostream &ss, const std::string &what) {
   unsigned int l = static_cast<unsigned int>(what.length());
   streamWrite(ss, l);
   ss.write(what.c_str(), sizeof(char) * l);
-};
+}
 
 template <typename T>
 void streamWriteVec(std::ostream &ss, const T &val) {
@@ -309,7 +309,7 @@ inline void streamRead(std::istream &ss, std::string &what, int version) {
     throw std::runtime_error("failed to read from stream");
   }
   what = std::string(buff.get(), l);
-};
+}
 
 template <class T>
 void streamReadVec(std::istream &ss, T &val) {

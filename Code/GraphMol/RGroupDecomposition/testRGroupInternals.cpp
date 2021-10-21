@@ -78,7 +78,7 @@ void testCoresLabelledProperly() {
       if (atom->hasProp(RLABEL)) {
         int rlabel = atom->getProp<int>(RLABEL);
         if (rlabel < 0) {
-          TEST_ASSERT(rlabels.find(rlabel) == rlabels.end());
+          TEST_ASSERT(rlabels.find(rlabel) == rlabels.end())
           rlabels.insert(rlabel);
         }
       }
@@ -151,12 +151,12 @@ void testRingMatching3Score() {
 
   // expect test1 to have better score than test2 since all halogens are on R1
 
-  TEST_ASSERT(test1 > test2);
+  TEST_ASSERT(test1 > test2)
 
   auto testFp1 = fingerprintVarianceScore(permutation, allMatches1, labels);
   auto testFp2 = fingerprintVarianceScore(permutation, allMatches2, labels);
 
-  TEST_ASSERT(testFp1 > testFp2);
+  TEST_ASSERT(testFp1 > testFp2)
 }
 
 void testGithub3746() {
@@ -179,16 +179,16 @@ void testGithub3746() {
   size_t i = 0;
   for (const auto &smi : smilesData) {
     ROMOL_SPTR mol(static_cast<ROMol *>(SmilesToMol(smi)));
-    TEST_ASSERT(decomposition.add(*mol) == static_cast<int>(i++));
+    TEST_ASSERT(decomposition.add(*mol) == static_cast<int>(i++))
   }
 
   auto data = decomposition.data;
   RGroupGa ga(*data);
   auto numberPermutations = ga.numberPermutations();
 
-  TEST_ASSERT(numberPermutations == 4);
+  TEST_ASSERT(numberPermutations == 4)
   // criteria for exhaustive search instead of GA
-  TEST_ASSERT(numberPermutations < ga.getPopsize() * 100);
+  TEST_ASSERT(numberPermutations < ga.getPopsize() * 100)
 }
 
 int main() {
