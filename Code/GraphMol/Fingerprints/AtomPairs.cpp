@@ -86,7 +86,7 @@ SparseIntVect<std::int32_t> *getAtomPairFingerprint(
   return getAtomPairFingerprint(mol, 1, maxPathLen - 1, fromAtoms, ignoreAtoms,
                                 atomInvariants, includeChirality, use2D,
                                 confId);
-};
+}
 
 SparseIntVect<std::int32_t> *getAtomPairFingerprint(
     const ROMol &mol, unsigned int minLength, unsigned int maxLength,
@@ -125,9 +125,9 @@ ExplicitBitVect *getHashedAtomPairFingerprintAsBitVect(
     const std::vector<std::uint32_t> *ignoreAtoms,
     const std::vector<std::uint32_t> *atomInvariants,
     unsigned int nBitsPerEntry, bool includeChirality, bool use2D, int confId) {
-  PRECONDITION(minLength <= maxLength, "bad lengths provided");
+  PRECONDITION(minLength <= maxLength, "bad lengths provided")
   PRECONDITION(!atomInvariants || atomInvariants->size() >= mol.getNumAtoms(),
-               "bad atomInvariants size");
+               "bad atomInvariants size")
   static int bounds[4] = {1, 2, 4, 8};
 
   unsigned int blockLength = nBits / nBitsPerEntry;
@@ -163,7 +163,7 @@ SparseIntVect<boost::int64_t> *getTopologicalTorsionFingerprint(
     const std::vector<std::uint32_t> *atomInvariants, bool includeChirality) {
   RDLog::deprecationWarning("please use TopologicalTorsionGenerator");
   PRECONDITION(!atomInvariants || atomInvariants->size() >= mol.getNumAtoms(),
-               "bad atomInvariants size");
+               "bad atomInvariants size")
   const ROMol *lmol = &mol;
   std::unique_ptr<ROMol> tmol;
   if (includeChirality && !mol.hasProp(common_properties::_StereochemDone)) {
@@ -273,7 +273,7 @@ void TorsionFpCalc(T *res, const ROMol &mol, unsigned int nBits,
                    const std::vector<std::uint32_t> *atomInvariants,
                    bool includeChirality) {
   PRECONDITION(!atomInvariants || atomInvariants->size() >= mol.getNumAtoms(),
-               "bad atomInvariants size");
+               "bad atomInvariants size")
   const ROMol *lmol = &mol;
   std::unique_ptr<ROMol> tmol;
   if (includeChirality && !mol.hasProp(common_properties::_StereochemDone)) {
@@ -302,7 +302,7 @@ SparseIntVect<boost::int64_t> *getHashedTopologicalTorsionFingerprint(
     const std::vector<std::uint32_t> *atomInvariants, bool includeChirality) {
   RDLog::deprecationWarning("please use TopologicalTorsionGenerator");
   PRECONDITION(!atomInvariants || atomInvariants->size() >= mol.getNumAtoms(),
-               "bad atomInvariants size");
+               "bad atomInvariants size")
   auto *res = new SparseIntVect<boost::int64_t>(nBits);
   TorsionFpCalc(res, mol, nBits, targetSize, fromAtoms, ignoreAtoms,
                 atomInvariants, includeChirality);
@@ -317,7 +317,7 @@ ExplicitBitVect *getHashedTopologicalTorsionFingerprintAsBitVect(
     unsigned int nBitsPerEntry, bool includeChirality) {
   RDLog::deprecationWarning("please use TopologicalTorsionGenerator");
   PRECONDITION(!atomInvariants || atomInvariants->size() >= mol.getNumAtoms(),
-               "bad atomInvariants size");
+               "bad atomInvariants size")
   static int bounds[4] = {1, 2, 4, 8};
   unsigned int blockLength = nBits / nBitsPerEntry;
   auto *sres = new SparseIntVect<boost::int64_t>(blockLength);

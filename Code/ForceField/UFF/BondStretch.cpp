@@ -21,9 +21,9 @@ namespace UFF {
 namespace Utils {
 double calcBondRestLength(double bondOrder, const AtomicParams *end1Params,
                           const AtomicParams *end2Params) {
-  PRECONDITION(bondOrder > 0, "bad bond order");
-  PRECONDITION(end1Params, "bad params pointer");
-  PRECONDITION(end2Params, "bad params pointer");
+  PRECONDITION(bondOrder > 0, "bad bond order")
+  PRECONDITION(end1Params, "bad params pointer")
+  PRECONDITION(end2Params, "bad params pointer")
 
   double ri = end1Params->r1, rj = end2Params->r1;
 
@@ -51,11 +51,11 @@ BondStretchContrib::BondStretchContrib(ForceField *owner, unsigned int idx1,
                                        unsigned int idx2, double bondOrder,
                                        const AtomicParams *end1Params,
                                        const AtomicParams *end2Params) {
-  PRECONDITION(owner, "bad owner");
-  PRECONDITION(end1Params, "bad params pointer");
-  PRECONDITION(end2Params, "bad params pointer");
-  URANGE_CHECK(idx1, owner->positions().size());
-  URANGE_CHECK(idx2, owner->positions().size());
+  PRECONDITION(owner, "bad owner")
+  PRECONDITION(end1Params, "bad params pointer")
+  PRECONDITION(end2Params, "bad params pointer")
+  URANGE_CHECK(idx1, owner->positions().size())
+  URANGE_CHECK(idx2, owner->positions().size())
 
   dp_forceField = owner;
   d_end1Idx = idx1;
@@ -67,8 +67,8 @@ BondStretchContrib::BondStretchContrib(ForceField *owner, unsigned int idx1,
 }
 
 double BondStretchContrib::getEnergy(double *pos) const {
-  PRECONDITION(dp_forceField, "no owner");
-  PRECONDITION(pos, "bad vector");
+  PRECONDITION(dp_forceField, "no owner")
+  PRECONDITION(pos, "bad vector")
 
   double distTerm =
       dp_forceField->distance(d_end1Idx, d_end2Idx, pos) - d_restLen;
@@ -76,9 +76,9 @@ double BondStretchContrib::getEnergy(double *pos) const {
   return res;
 }
 void BondStretchContrib::getGrad(double *pos, double *grad) const {
-  PRECONDITION(dp_forceField, "no owner");
-  PRECONDITION(pos, "bad vector");
-  PRECONDITION(grad, "bad vector");
+  PRECONDITION(dp_forceField, "no owner")
+  PRECONDITION(pos, "bad vector")
+  PRECONDITION(grad, "bad vector")
 
   double dist = dp_forceField->distance(d_end1Idx, d_end2Idx, pos);
   double preFactor = d_forceConstant * (dist - d_restLen);

@@ -37,7 +37,7 @@ bool AllAtomsMatch(const ROMol &mol, const Atom &atom,
                    BondMatcherFunc bondMatcher = nullptr,
                    AtomMatcherFunc atLeastOneAtom = nullptr,
                    BondMatcherFunc atLeastOneBond = nullptr) {
-  PRECONDITION(&atom.getOwningMol() == &mol, "atom not owned by molecule");
+  PRECONDITION(&atom.getOwningMol() == &mol, "atom not owned by molecule")
   if (matcher && !matcher(atom)) {
     return false;
   }
@@ -377,7 +377,7 @@ bool FusedRingMatch(const ROMol &mol, const Atom &atom,
                     AtomMatcherFunc atLeastOneAtomPerRing = nullptr,
                     BondMatcherFunc atLeastOneBondPerRing = nullptr,
                     AtomMatcherFunc atLeastOneAtom = nullptr) {
-  PRECONDITION(&atom.getOwningMol() == &mol, "atom not owned by molecule");
+  PRECONDITION(&atom.getOwningMol() == &mol, "atom not owned by molecule")
   if (atomMatcher && !atomMatcher(atom)) {
     return false;
   }

@@ -55,8 +55,8 @@ void testMMFFO3A() {
   delete refMol;
   // newMol->close();
   // std::cerr<<cumScore<<","<<sqrt(cumMsd)<<std::endl;
-  TEST_ASSERT(RDKit::feq(cumScore, 6941.8, 1));
-  TEST_ASSERT(RDKit::feq(sqrt(cumMsd), .345, .001));
+  TEST_ASSERT(RDKit::feq(cumScore, 6941.8, 1))
+  TEST_ASSERT(RDKit::feq(sqrt(cumMsd), .345, .001))
 }
 
 void testCrippenO3A() {
@@ -100,8 +100,8 @@ void testCrippenO3A() {
   delete refMol;
   // newMol->close();
   // std::cerr<<cumScore<<","<<sqrt(cumMsd)<<std::endl;
-  TEST_ASSERT(RDKit::feq(cumScore, 4918.1, 1));
-  TEST_ASSERT(RDKit::feq(sqrt(cumMsd), .304, .001));
+  TEST_ASSERT(RDKit::feq(cumScore, 4918.1, 1))
+  TEST_ASSERT(RDKit::feq(sqrt(cumMsd), .304, .001))
 }
 
 void testMMFFO3AMolHist() {
@@ -138,8 +138,8 @@ void testMMFFO3AMolHist() {
   delete refMol;
   // newMol->close();
   // std::cerr<<cumScore<<","<<sqrt(cumMsd)<<std::endl;
-  TEST_ASSERT(RDKit::feq(cumScore, 6941.8, 1));
-  TEST_ASSERT(RDKit::feq(sqrt(cumMsd), .345, .001));
+  TEST_ASSERT(RDKit::feq(cumScore, 6941.8, 1))
+  TEST_ASSERT(RDKit::feq(sqrt(cumMsd), .345, .001))
 }
 
 void testCrippenO3AMolHist() {
@@ -189,20 +189,20 @@ void testCrippenO3AMolHist() {
   delete refMol;
   // newMol->close();
   // std::cerr<<cumScore<<","<<sqrt(cumMsd)<<std::endl;
-  TEST_ASSERT(RDKit::feq(cumScore, 4918.1, 1));
-  TEST_ASSERT(RDKit::feq(sqrt(cumMsd), .304, .001));
+  TEST_ASSERT(RDKit::feq(cumScore, 4918.1, 1))
+  TEST_ASSERT(RDKit::feq(sqrt(cumMsd), .304, .001))
 }
 
 void testMMFFO3AConstraints() {
   ROMol *m = SmilesToMol("n1ccc(cc1)-c1ccccc1");
-  TEST_ASSERT(m);
+  TEST_ASSERT(m)
   ROMol *m1 = MolOps::addHs(*m);
   delete m;
-  TEST_ASSERT(m1);
+  TEST_ASSERT(m1)
   DGeomHelpers::EmbedMolecule(*m1);
   MMFF::sanitizeMMFFMol((RWMol &)(*m1));
   MMFF::MMFFMolProperties mp(*m1);
-  TEST_ASSERT(mp.isValid());
+  TEST_ASSERT(mp.isValid())
   ForceFields::ForceField *field = MMFF::constructForceField(*m1, &mp);
   field->initialize();
   field->minimize();
@@ -210,7 +210,7 @@ void testMMFFO3AConstraints() {
 
   RWMol *patt = SmartsToMol("nccc-cccc");
   MatchVectType matchVect;
-  TEST_ASSERT(SubstructMatch(*m1, (ROMol &)*patt, matchVect));
+  TEST_ASSERT(SubstructMatch(*m1, (ROMol &)*patt, matchVect))
   delete patt;
   unsigned int nIdx = matchVect[0].second;
   unsigned int cIdx = matchVect[matchVect.size() - 1].second;
@@ -221,43 +221,43 @@ void testMMFFO3AConstraints() {
   MolAlign::randomTransform(m2);
   ROMol m3(m2);
   auto *o3a = new MolAlign::O3A(m2, *m1, &mp, &mp);
-  TEST_ASSERT(o3a);
+  TEST_ASSERT(o3a)
   o3a->align();
   delete o3a;
   double d =
       (m2.getConformer().getAtomPos(cIdx) - m1->getConformer().getAtomPos(cIdx))
           .length();
-  TEST_ASSERT(feq(d, 0.0, 1));
+  TEST_ASSERT(feq(d, 0.0, 1))
   MatchVectType constraintMap;
   constraintMap.push_back(std::make_pair(cIdx, nIdx));
   o3a = new MolAlign::O3A(m3, *m1, &mp, &mp, MolAlign::O3A::MMFF94, -1, -1,
                           false, 50, 0, &constraintMap);
-  TEST_ASSERT(o3a);
+  TEST_ASSERT(o3a)
   o3a->align();
   delete o3a;
   d = (m3.getConformer().getAtomPos(cIdx) - m1->getConformer().getAtomPos(cIdx))
           .length();
-  TEST_ASSERT(feq(d, 7.0, 1.0));
+  TEST_ASSERT(feq(d, 7.0, 1.0))
   delete m1;
 }
 
 void testCrippenO3AConstraints() {
   ROMol *m = SmilesToMol("n1ccc(cc1)-c1ccccc1");
-  TEST_ASSERT(m);
+  TEST_ASSERT(m)
   ROMol *m1 = MolOps::addHs(*m);
   delete m;
-  TEST_ASSERT(m1);
+  TEST_ASSERT(m1)
   DGeomHelpers::EmbedMolecule(*m1);
   MMFF::sanitizeMMFFMol((RWMol &)(*m1));
   MMFF::MMFFMolProperties mp(*m1);
-  TEST_ASSERT(mp.isValid());
+  TEST_ASSERT(mp.isValid())
   ForceFields::ForceField *field = MMFF::constructForceField(*m1, &mp);
   field->initialize();
   field->minimize();
   delete field;
   RWMol *patt = SmartsToMol("nccc-cccc");
   MatchVectType matchVect;
-  TEST_ASSERT(SubstructMatch(*m1, (ROMol &)*patt, matchVect));
+  TEST_ASSERT(SubstructMatch(*m1, (ROMol &)*patt, matchVect))
   delete patt;
   unsigned int nIdx = matchVect[0].second;
   unsigned int cIdx = matchVect[matchVect.size() - 1].second;
@@ -276,24 +276,24 @@ void testCrippenO3AConstraints() {
                                       &prbAtomTypes, &prbAtomTypeLabels);
   auto *o3a = new MolAlign::O3A(m2, *m1, &prbLogpContribs, &prbLogpContribs,
                                 MolAlign::O3A::CRIPPEN);
-  TEST_ASSERT(o3a);
+  TEST_ASSERT(o3a)
   o3a->align();
   delete o3a;
   double d =
       (m2.getConformer().getAtomPos(cIdx) - m1->getConformer().getAtomPos(cIdx))
           .length();
-  TEST_ASSERT(feq(d, 0.0, 1));
+  TEST_ASSERT(feq(d, 0.0, 1))
   MatchVectType constraintMap;
   constraintMap.push_back(std::make_pair(cIdx, nIdx));
   o3a = new MolAlign::O3A(m3, *m1, &prbLogpContribs, &prbLogpContribs,
                           MolAlign::O3A::CRIPPEN, -1, -1, false, 50, 0,
                           &constraintMap);
-  TEST_ASSERT(o3a);
+  TEST_ASSERT(o3a)
   o3a->align();
   delete o3a;
   d = (m3.getConformer().getAtomPos(cIdx) - m1->getConformer().getAtomPos(cIdx))
           .length();
-  TEST_ASSERT(feq(d, 7.0, 1.0));
+  TEST_ASSERT(feq(d, 7.0, 1.0))
   delete m1;
 }
 
@@ -321,12 +321,12 @@ void testMMFFO3AConstraintsAndLocalOnly() {
                                       true, &prbAtomTypes, &prbAtomTypeLabels);
   RWMol *patt = SmartsToMol("S");
   MatchVectType matchVect;
-  TEST_ASSERT(SubstructMatch(*refMol, (ROMol &)*patt, matchVect));
+  TEST_ASSERT(SubstructMatch(*refMol, (ROMol &)*patt, matchVect))
   delete patt;
   unsigned int refSIdx = matchVect[0].second;
   matchVect.clear();
   patt = SmartsToMol("O");
-  TEST_ASSERT(SubstructMatch(*prbMol, (ROMol &)*patt, matchVect));
+  TEST_ASSERT(SubstructMatch(*prbMol, (ROMol &)*patt, matchVect))
   delete patt;
   unsigned int prbOIdx = matchVect[0].second;
   std::vector<double> distOS(2);
@@ -344,19 +344,19 @@ void testMMFFO3AConstraintsAndLocalOnly() {
         new MolAlign::O3A(*prbMol, *refMol, &prbLogpContribs, &refLogpContribs,
                           MolAlign::O3A::CRIPPEN, -1, -1, false, 50, 0,
                           &constraintMap, &constraintWeights);
-    TEST_ASSERT(o3a);
+    TEST_ASSERT(o3a)
     o3a->align();
     delete o3a;
     o3a = new MolAlign::O3A(*prbMol, *refMol, &prbLogpContribs,
                             &refLogpContribs, MolAlign::O3A::CRIPPEN, -1, -1,
                             false, 50, MolAlign::O3_LOCAL_ONLY);
-    TEST_ASSERT(o3a);
+    TEST_ASSERT(o3a)
     o3a->align();
     delete o3a;
     double d = (prbMol->getConformer().getAtomPos(prbOIdx) -
                 refMol->getConformer().getAtomPos(refSIdx))
                    .length();
-    TEST_ASSERT(feq(d, distOS[i], 0.1));
+    TEST_ASSERT(feq(d, distOS[i], 0.1))
   }
   delete refMol;
   delete prbMol;
@@ -371,17 +371,17 @@ void testCrippenO3AConstraintsAndLocalOnly() {
   ROMol *refMol = supplier[refNum];
   ROMol *prbMol = supplier[prbNum];
   MMFF::MMFFMolProperties refMP(*refMol);
-  TEST_ASSERT(refMP.isValid());
+  TEST_ASSERT(refMP.isValid())
   MMFF::MMFFMolProperties prbMP(*prbMol);
-  TEST_ASSERT(prbMP.isValid());
+  TEST_ASSERT(prbMP.isValid())
   RWMol *patt = SmartsToMol("S");
   MatchVectType matchVect;
-  TEST_ASSERT(SubstructMatch(*refMol, (ROMol &)*patt, matchVect));
+  TEST_ASSERT(SubstructMatch(*refMol, (ROMol &)*patt, matchVect))
   delete patt;
   unsigned int refSIdx = matchVect[0].second;
   matchVect.clear();
   patt = SmartsToMol("O");
-  TEST_ASSERT(SubstructMatch(*prbMol, (ROMol &)*patt, matchVect));
+  TEST_ASSERT(SubstructMatch(*prbMol, (ROMol &)*patt, matchVect))
   delete patt;
   unsigned int prbOIdx = matchVect[0].second;
   std::vector<double> distOS(2);
@@ -398,19 +398,19 @@ void testCrippenO3AConstraintsAndLocalOnly() {
     auto *o3a = new MolAlign::O3A(*prbMol, *refMol, &prbMP, &refMP,
                                   MolAlign::O3A::MMFF94, -1, -1, false, 50, 0,
                                   &constraintMap, &constraintWeights);
-    TEST_ASSERT(o3a);
+    TEST_ASSERT(o3a)
     o3a->align();
     delete o3a;
     o3a = new MolAlign::O3A(*prbMol, *refMol, &prbMP, &refMP,
                             MolAlign::O3A::MMFF94, -1, -1, false, 50,
                             MolAlign::O3_LOCAL_ONLY);
-    TEST_ASSERT(o3a);
+    TEST_ASSERT(o3a)
     o3a->align();
     delete o3a;
     double d = (prbMol->getConformer().getAtomPos(prbOIdx) -
                 refMol->getConformer().getAtomPos(refSIdx))
                    .length();
-    TEST_ASSERT(feq(d, distOS[i], 0.1));
+    TEST_ASSERT(feq(d, distOS[i], 0.1))
   }
   delete prbMol;
   delete refMol;
@@ -436,8 +436,8 @@ void runblock_o3a_mmff(ROMol *refMol, const std::vector<ROMol *> &mols,
       MolAlign::O3A o3a(prbMol, *refMol, &prbMP, &refMP);
       double rmsd = o3a.align();
       double score = o3a.score();
-      TEST_ASSERT(feq(rmsd, rmsds[i]));
-      TEST_ASSERT(feq(score, scores[i]));
+      TEST_ASSERT(feq(rmsd, rmsds[i]))
+      TEST_ASSERT(feq(score, scores[i]))
     }
   }
 }
@@ -475,8 +475,8 @@ void runblock_o3a_crippen(ROMol *refMol, const std::vector<ROMol *> &mols,
                         MolAlign::O3A::CRIPPEN);
       double rmsd = o3a.align();
       double score = o3a.score();
-      TEST_ASSERT(feq(rmsd, rmsds[i]));
-      TEST_ASSERT(feq(score, scores[i]));
+      TEST_ASSERT(feq(rmsd, rmsds[i]))
+      TEST_ASSERT(feq(score, scores[i]))
     }
   }
 }
@@ -614,12 +614,12 @@ void testGetO3AForProbeConfs() {
 
   SDMolSupplier suppl(sdf, true, false);
   ROMol *refMol = suppl[13];
-  TEST_ASSERT(refMol);
+  TEST_ASSERT(refMol)
 
   sdf = rdbase + "/Code/GraphMol/MolAlign/test_data/probe_mol.sdf";
   SDMolSupplier psuppl(sdf, true, false);
   ROMol *prbMol = psuppl.next();
-  TEST_ASSERT(prbMol);
+  TEST_ASSERT(prbMol)
   while (!psuppl.atEnd()) {
     ROMol *mol = psuppl.next();
     if (!mol) {
@@ -629,7 +629,7 @@ void testGetO3AForProbeConfs() {
     prbMol->addConformer(conf, true);
     delete mol;
   }
-  TEST_ASSERT(prbMol->getNumConformers() == 50);
+  TEST_ASSERT(prbMol->getNumConformers() == 50)
 
   MMFF::MMFFMolProperties refMP(*refMol);
   MMFF::MMFFMolProperties prbMP(*prbMol);
@@ -646,10 +646,10 @@ void testGetO3AForProbeConfs() {
   {
     std::vector<boost::shared_ptr<MolAlign::O3A>> o3s;
     MolAlign::getO3AForProbeConfs(*prbMol, *refMol, &prbMP, &refMP, o3s);
-    TEST_ASSERT(o3s.size() == prbMol->getNumConformers());
+    TEST_ASSERT(o3s.size() == prbMol->getNumConformers())
     for (unsigned int i = 0; i < prbMol->getNumConformers(); ++i) {
-      TEST_ASSERT(feq(oscores[i].first, o3s[i]->align()));
-      TEST_ASSERT(feq(oscores[i].second, o3s[i]->score()));
+      TEST_ASSERT(feq(oscores[i].first, o3s[i]->align()))
+      TEST_ASSERT(feq(oscores[i].second, o3s[i]->score()))
     }
   }
 #ifdef RDK_TEST_MULTITHREADED
@@ -664,12 +664,12 @@ void testGetO3AForProbeConfs() {
 
     std::vector<boost::shared_ptr<MolAlign::O3A>> o3s;
     MolAlign::getO3AForProbeConfs(prbMol2, *refMol, &prbMP, &refMP, o3s, 4);
-    TEST_ASSERT(o3s.size() == prbMol2.getNumConformers());
+    TEST_ASSERT(o3s.size() == prbMol2.getNumConformers())
     for (unsigned int i = 0; i < prbMol2.getNumConformers(); ++i) {
       TEST_ASSERT(
-          feq(oscores[i % prbMol->getNumConformers()].first, o3s[i]->align()));
+          feq(oscores[i % prbMol->getNumConformers()].first, o3s[i]->align()))
       TEST_ASSERT(
-          feq(oscores[i % prbMol->getNumConformers()].second, o3s[i]->score()));
+          feq(oscores[i % prbMol->getNumConformers()].second, o3s[i]->score()))
     }
   }
 
@@ -699,10 +699,10 @@ void testO3AMultiThreadBug() {
     }
     mols.push_back(mol);
   }
-  TEST_ASSERT(mols.size() == 10);
+  TEST_ASSERT(mols.size() == 10)
 
   auto *refMol = new ROMol(*mols[0]);
-  TEST_ASSERT(refMol);
+  TEST_ASSERT(refMol)
 
   MMFF::MMFFMolProperties refMP(*refMol);
 
@@ -710,7 +710,7 @@ void testO3AMultiThreadBug() {
   {
     for (auto &mol : mols) {
       ROMol prbMol = *mol;
-      TEST_ASSERT(prbMol.getNumConformers() == 20);
+      TEST_ASSERT(prbMol.getNumConformers() == 20)
 
       MMFF::MMFFMolProperties prbMP(prbMol);
 
@@ -726,12 +726,12 @@ void testO3AMultiThreadBug() {
       ROMol prbMol2 = *mol;
       std::vector<boost::shared_ptr<MolAlign::O3A>> o3s;
       MolAlign::getO3AForProbeConfs(prbMol2, *refMol, &prbMP, &refMP, o3s, 0);
-      TEST_ASSERT(o3s.size() == prbMol2.getNumConformers());
+      TEST_ASSERT(o3s.size() == prbMol2.getNumConformers())
       for (unsigned int i = 0; i < prbMol2.getNumConformers(); ++i) {
         TEST_ASSERT(
-            feq(oscores[i % prbMol.getNumConformers()].first, o3s[i]->align()));
+            feq(oscores[i % prbMol.getNumConformers()].first, o3s[i]->align()))
         TEST_ASSERT(feq(oscores[i % prbMol.getNumConformers()].second,
-                        o3s[i]->score()));
+                        o3s[i]->score()))
       }
     }
   }

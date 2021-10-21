@@ -70,7 +70,7 @@ int scoreRings(const ROMol &mol) {
     }
   }
   return score;
-};
+}
 
 SubstructTerm::SubstructTerm(std::string aname, std::string asmarts, int ascore)
     : name(std::move(aname)), smarts(std::move(asmarts)), score(ascore) {
@@ -248,9 +248,9 @@ TautomerEnumeratorResult TautomerEnumerator::enumerate(const ROMol &mol) const {
 #ifdef VERBOSE_ENUMERATION
   std::cout << "**********************************" << std::endl;
 #endif
-  PRECONDITION(dp_catalog, "no catalog!");
+  PRECONDITION(dp_catalog, "no catalog!")
   const TautomerCatalogParams *tautparams = dp_catalog->getCatalogParams();
-  PRECONDITION(tautparams, "");
+  PRECONDITION(tautparams, "")
 
   TautomerEnumeratorResult res;
 

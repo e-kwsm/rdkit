@@ -38,7 +38,7 @@ SDMolSupplier::SDMolSupplier(const std::string &fileName,
     // 19):
     d_len = 0;
   }
-  POSTCONDITION(dp_inStream, "bad instream");
+  POSTCONDITION(dp_inStream, "bad instream")
 }
 
 SDMolSupplier::SDMolSupplier(std::istream *inStream, bool takeOwnership,
@@ -55,7 +55,7 @@ SDMolSupplier::SDMolSupplier(std::istream *inStream, bool takeOwnership,
     // 19):
     d_len = 0;
   }
-  POSTCONDITION(dp_inStream, "bad instream");
+  POSTCONDITION(dp_inStream, "bad instream")
 }
 
 void SDMolSupplier::init() {
@@ -81,7 +81,7 @@ void SDMolSupplier::setData(const std::string &text) {
     // 19):
     d_len = 0;
   }
-  POSTCONDITION(dp_inStream, "bad instream");
+  POSTCONDITION(dp_inStream, "bad instream")
 }
 
 void SDMolSupplier::setData(const std::string &text,
@@ -91,7 +91,7 @@ void SDMolSupplier::setData(const std::string &text,
 }
 
 void SDMolSupplier::checkForEnd() {
-  PRECONDITION(dp_inStream, "no stream");
+  PRECONDITION(dp_inStream, "no stream")
   // we will call it end of file if we have more than 4 contiguous empty lines
   // or we reach end of file in the meantime
   if (dp_inStream->eof()) {
@@ -156,7 +156,7 @@ void SDMolSupplier::peekCheckForEnd(char *bufPtr, char *bufEnd,
 }
 
 void SDMolSupplier::reset() {
-  PRECONDITION(dp_inStream, "no stream");
+  PRECONDITION(dp_inStream, "no stream")
   dp_inStream->clear();
   dp_inStream->seekg(0, std::ios::beg);
   df_end = false;
@@ -195,7 +195,7 @@ std::unique_ptr<RWMol> SDMolSupplier::next() {
 }
 
 std::string SDMolSupplier::getItemText(unsigned int idx) {
-  PRECONDITION(dp_inStream, "no stream");
+  PRECONDITION(dp_inStream, "no stream")
   unsigned int holder = d_last;
   moveTo(idx);
   std::streampos begP = d_molpos[idx];
@@ -218,7 +218,7 @@ std::string SDMolSupplier::getItemText(unsigned int idx) {
 }
 
 void SDMolSupplier::moveTo(unsigned int idx) {
-  PRECONDITION(dp_inStream, "no stream");
+  PRECONDITION(dp_inStream, "no stream")
 
   // dp_inStream->seekg() is called for all idx values
   // and earlier calls to next() may have put the stream into a bad state
@@ -263,7 +263,7 @@ std::unique_ptr<RWMol> SDMolSupplier::operator[](unsigned int idx) {
 }
 
 unsigned int SDMolSupplier::length() {
-  PRECONDITION(dp_inStream, "no stream");
+  PRECONDITION(dp_inStream, "no stream")
   // return the number of mol blocks in the sdfile
   if (d_len > 0 || (df_end && d_len == 0)) {
     return d_len;
@@ -375,7 +375,7 @@ void SDMolSupplier::buildIndexTo(unsigned int targetIdx) {
 }
 
 bool SDMolSupplier::atEnd() {
-  PRECONDITION(dp_inStream, "no stream");
+  PRECONDITION(dp_inStream, "no stream")
   return df_end;
 }
 

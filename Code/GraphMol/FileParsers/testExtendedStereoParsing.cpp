@@ -35,11 +35,11 @@ void testOr() {
                        << std::endl;
 
   auto m = readTestFile("two_centers_or.mol");
-  TEST_ASSERT(m.get());
-  TEST_ASSERT(m->getNumAtoms() == 8);
+  TEST_ASSERT(m.get())
+  TEST_ASSERT(m->getNumAtoms() == 8)
 
   auto stereo_groups = m->getStereoGroups();
-  TEST_ASSERT(stereo_groups.size() == 2);
+  TEST_ASSERT(stereo_groups.size() == 2)
   TEST_ASSERT(stereo_groups[0].getGroupType() ==
               RDKit::StereoGroupType::STEREO_ABSOLUTE);
   TEST_ASSERT(stereo_groups[0].getReadId() == 0u);
@@ -64,11 +64,11 @@ void testAnd() {
                        << std::endl;
 
   auto m = readTestFile("two_centers_and.mol");
-  TEST_ASSERT(m.get());
-  TEST_ASSERT(m->getNumAtoms() == 8);
+  TEST_ASSERT(m.get())
+  TEST_ASSERT(m->getNumAtoms() == 8)
 
   auto stereo_groups = m->getStereoGroups();
-  TEST_ASSERT(stereo_groups.size() == 2);
+  TEST_ASSERT(stereo_groups.size() == 2)
   TEST_ASSERT(stereo_groups[0].getGroupType() ==
               RDKit::StereoGroupType::STEREO_ABSOLUTE);
   TEST_ASSERT(stereo_groups[0].getReadId() == 0u);
@@ -88,7 +88,7 @@ void testWrite() {
   BOOST_LOG(rdInfoLog) << "testing extended stereo file writing" << std::endl;
 
   auto m0 = readTestFile("two_centers_and.mol");
-  TEST_ASSERT(m0.get());
+  TEST_ASSERT(m0.get())
   std::string block = RDKit::MolToMolBlock(*m0);
   auto m1 = RDKit::MolBlockToMol(block);
 
@@ -96,17 +96,17 @@ void testWrite() {
   // types and same atoms marked for extended stereo.
   auto stereo_groups0 = m0->getStereoGroups();
   auto stereo_groups1 = m1->getStereoGroups();
-  TEST_ASSERT(stereo_groups0.size() == stereo_groups1.size());
+  TEST_ASSERT(stereo_groups0.size() == stereo_groups1.size())
 
   for (unsigned i = 0u; i < 2; ++i) {
     TEST_ASSERT(stereo_groups0[i].getGroupType() ==
-                stereo_groups1[i].getGroupType());
+                stereo_groups1[i].getGroupType())
     TEST_ASSERT(stereo_groups0[i].getAtoms().size() ==
-                stereo_groups1[i].getAtoms().size());
+                stereo_groups1[i].getAtoms().size())
     for (auto &&atom0 = stereo_groups0[i].getAtoms().begin(),
               atom1 = stereo_groups1[i].getAtoms().begin();
          atom0 != stereo_groups0[i].getAtoms().end(); ++atom0, ++atom1) {
-      TEST_ASSERT((*atom0)->getIdx() == (*atom1)->getIdx());
+      TEST_ASSERT((*atom0)->getIdx() == (*atom1)->getIdx())
     }
   }
   delete (m1);

@@ -37,7 +37,7 @@ namespace {
 void internalAddPatterns(SubstructLibrary &sslib, int numThreads,
                          boost::shared_ptr<FPHolderBase> *patterns) {
   PRECONDITION(sslib.getFpHolder().get() == nullptr,
-               "Substruct library already has fingerprints");
+               "Substruct library already has fingerprints")
   numThreads = (int)getNumThreadsToUse(numThreads);
 
   boost::shared_ptr<FPHolderBase> ptr;
@@ -84,7 +84,7 @@ void addPatterns(SubstructLibrary &sslib, int numThreads) {
 
 void addPatterns(SubstructLibrary &sslib,
                  boost::shared_ptr<FPHolderBase> patterns, int numThreads) {
-  PRECONDITION(patterns.get() != nullptr, "Null PatternHolder");
+  PRECONDITION(patterns.get() != nullptr, "Null PatternHolder")
   internalAddPatterns(sslib, numThreads, &patterns);
 }
 

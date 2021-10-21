@@ -57,7 +57,7 @@ void testGETAWAY() {
     //   break;
     // }
     RDKit::ROMol *m = reader.next();
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
     std::string nm;
     m->getProp("_Name", nm);
 
@@ -67,7 +67,7 @@ void testGETAWAY() {
 
     std::vector<std::string> myrow = data[nDone];
     std::string inm = myrow[0];
-    TEST_ASSERT(inm == nm);
+    TEST_ASSERT(inm == nm)
     // std::cout <<  "\n";
     // int numAtoms = m->getNumAtoms();
     // std::cout << "number of Atoms : " << numAtoms << "\n";
@@ -92,7 +92,7 @@ void testGETAWAY() {
       }
       // if (i != 0) outstrm << "\t";
       // outstrm << dgetaway[i];
-      TEST_ASSERT(fabs(ref - dgetaway[i]) < 0.05);
+      TEST_ASSERT(fabs(ref - dgetaway[i]) < 0.05)
     }
     // outstrm << "\n";
     delete m;

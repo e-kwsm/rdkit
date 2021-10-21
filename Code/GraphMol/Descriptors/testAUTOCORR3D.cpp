@@ -54,7 +54,7 @@ void testautocorrelation() {
   int nDone = 0;
   while (!reader.atEnd()) {
     RDKit::ROMol *m = reader.next();
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
     std::string nm;
     m->getProp("_Name", nm);
 
@@ -65,7 +65,7 @@ void testautocorrelation() {
     std::vector<std::string> myrow = data[nDone];
     std::string inm = myrow[0];
 
-    TEST_ASSERT(inm == nm);
+    TEST_ASSERT(inm == nm)
 
     for (int i = 0; i < 80; i++) {
       double ref = atof(myrow[i + 1].c_str());
@@ -73,7 +73,7 @@ void testautocorrelation() {
         std::cout << "value mismatch: pos" << i << " " << inm << " " << ref
                   << " " << da3d[i] << std::endl;
       }
-      TEST_ASSERT(fabs(ref - da3d[i]) < 0.0015);
+      TEST_ASSERT(fabs(ref - da3d[i]) < 0.0015)
     }
     delete m;
     ++nDone;

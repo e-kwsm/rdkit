@@ -19,7 +19,7 @@ namespace MolOps {
 ROMol *renumberAtoms(const ROMol &mol,
                      const std::vector<unsigned int> &newOrder) {
   unsigned int nAts = mol.getNumAtoms();
-  PRECONDITION(newOrder.size() == nAts, "bad newOrder size");
+  PRECONDITION(newOrder.size() == nAts, "bad newOrder size")
 
   std::vector<unsigned int> revOrder(nAts);
   for (unsigned int nIdx = 0; nIdx < nAts; ++nIdx) {
@@ -130,5 +130,5 @@ ROMol *renumberAtoms(const ROMol &mol,
   return dynamic_cast<ROMol *>(res);
 }  // namespace
 
-};  // end of namespace MolOps
-};  // end of namespace RDKit
+}  // namespace MolOps
+}  // namespace RDKit

@@ -84,7 +84,7 @@ void splitChargeConjugated(const ROMol &mol, DOUBLE_VECT &charges) {
 namespace RDKit {
 void computeGasteigerCharges(const ROMol *mol, int nIter,
                              bool throwOnParamFailure) {
-  PRECONDITION(mol, "bad molecule");
+  PRECONDITION(mol, "bad molecule")
   computeGasteigerCharges(*mol, nIter, throwOnParamFailure);
 }
 void computeGasteigerCharges(const ROMol &mol, int nIter,
@@ -102,7 +102,7 @@ void computeGasteigerCharges(const ROMol &mol, int nIter,
  */
 void computeGasteigerCharges(const ROMol &mol, std::vector<double> &charges,
                              int nIter, bool throwOnParamFailure) {
-  PRECONDITION(charges.size() >= mol.getNumAtoms(), "bad array size");
+  PRECONDITION(charges.size() >= mol.getNumAtoms(), "bad array size")
 
   PeriodicTable *table = PeriodicTable::getTable();
   const GasteigerParams *params = GasteigerParams::getParams();

@@ -186,7 +186,7 @@ std::string MultithreadedMolSupplier::getLastItemText() const {
 }
 
 void MultithreadedMolSupplier::reset() {
-  UNDER_CONSTRUCTION("reset() not supported for MultithreadedMolSupplier();");
+  UNDER_CONSTRUCTION("reset() not supported for MultithreadedMolSupplier()");
 }
 }  // namespace FileParsers
 }  // namespace v2

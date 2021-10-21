@@ -54,19 +54,19 @@ TorsionAngleContribM6::TorsionAngleContribM6(
       d_at4Idx(idx4),
       d_V(std::move(V)),
       d_sign(std::move(signs)) {
-  PRECONDITION(owner, "bad owner");
+  PRECONDITION(owner, "bad owner")
   PRECONDITION((idx1 != idx2) && (idx1 != idx3) && (idx1 != idx4) &&
                    (idx2 != idx3) && (idx2 != idx4) && (idx3 != idx4),
-               "degenerate points");
-  URANGE_CHECK(idx1, owner->positions().size());
-  URANGE_CHECK(idx2, owner->positions().size());
-  URANGE_CHECK(idx3, owner->positions().size());
-  URANGE_CHECK(idx4, owner->positions().size());
-};
+               "degenerate points")
+  URANGE_CHECK(idx1, owner->positions().size())
+  URANGE_CHECK(idx2, owner->positions().size())
+  URANGE_CHECK(idx3, owner->positions().size())
+  URANGE_CHECK(idx4, owner->positions().size())
+}
 
 double TorsionAngleContribM6::getEnergy(double *pos) const {
-  PRECONDITION(dp_forceField, "no owner");
-  PRECONDITION(pos, "bad vector");
+  PRECONDITION(dp_forceField, "no owner")
+  PRECONDITION(pos, "bad vector")
 
   RDGeom::Point3D iPoint(pos[3 * d_at1Idx], pos[3 * d_at1Idx + 1],
                          pos[3 * d_at1Idx + 2]);
@@ -82,9 +82,9 @@ double TorsionAngleContribM6::getEnergy(double *pos) const {
 }
 
 void TorsionAngleContribM6::getGrad(double *pos, double *grad) const {
-  PRECONDITION(dp_forceField, "no owner");
-  PRECONDITION(pos, "bad vector");
-  PRECONDITION(grad, "bad vector");
+  PRECONDITION(dp_forceField, "no owner")
+  PRECONDITION(pos, "bad vector")
+  PRECONDITION(grad, "bad vector")
 
   RDGeom::Point3D iPoint(pos[3 * d_at1Idx], pos[3 * d_at1Idx + 1],
                          pos[3 * d_at1Idx + 2]);

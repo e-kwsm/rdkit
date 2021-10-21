@@ -53,7 +53,7 @@ void testMORSE() {
   int nDone = 0;
   while (!reader.atEnd()) {
     RDKit::ROMol *m = reader.next();
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
     std::string nm;
     m->getProp("_Name", nm);
 
@@ -63,7 +63,7 @@ void testMORSE() {
 
     std::vector<std::string> myrow = data[nDone];
     std::string inm = myrow[0];
-    TEST_ASSERT(inm == nm);
+    TEST_ASSERT(inm == nm)
 
     for (size_t i = 0; i < dmorse.size(); i++) {
       double ref = atof(myrow[i + 1].c_str());
@@ -87,7 +87,7 @@ void testMORSE() {
       }
       // we're testing reasonably sized values and want to be sure that we're
       // within 2% of the reference.
-      TEST_ASSERT(ref < 1 || fabs(ref - dmorse[i]) / ref < 0.02);
+      TEST_ASSERT(ref < 1 || fabs(ref - dmorse[i]) / ref < 0.02)
     }
 
     delete m;

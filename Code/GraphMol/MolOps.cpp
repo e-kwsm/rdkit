@@ -854,7 +854,7 @@ unsigned int getMolFrags(const ROMol &mol, INT_VECT &mapping) {
   mapping.resize(natms);
   return natms ? boost::connected_components(mol.getTopology(), &mapping[0])
                : 0;
-};
+}
 
 unsigned int getMolFrags(const ROMol &mol, VECT_INT_VECT &frags) {
   frags.clear();
@@ -1017,7 +1017,7 @@ int getFormalCharge(const ROMol &mol) {
     accum += (*atomIt)->getFormalCharge();
   }
   return accum;
-};
+}
 
 unsigned getNumAtomsWithDistinctProperty(const ROMol &mol,
                                          const std::string_view &prop) {

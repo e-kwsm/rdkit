@@ -37,7 +37,7 @@ namespace Descriptors {
 
 void CoulombMat(const ROMol &mol, std::vector<std::vector<double>> &res,
                 int confId) {
-  PRECONDITION(mol.getNumConformers() >= 1, "molecule has no conformers");
+  PRECONDITION(mol.getNumConformers() >= 1, "molecule has no conformers")
 
   unsigned int numAtoms = mol.getNumAtoms();
 

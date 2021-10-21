@@ -49,7 +49,7 @@ ROMol *getSmarts(std::string &&tmpStr) {
   ++token;
 
   // There must be a SMARTS expression
-  CHECK_INVARIANT(token != tokens.end(), tmpStr);
+  CHECK_INVARIANT(token != tokens.end(), tmpStr)
 
   // grab the smarts:
   std::string smarts = *token;
@@ -57,7 +57,7 @@ ROMol *getSmarts(std::string &&tmpStr) {
   ++token;
 
   mol = SmartsToMol(smarts);
-  CHECK_INVARIANT(mol, smarts);
+  CHECK_INVARIANT(mol, smarts)
   mol->setProp(common_properties::_Name, name);
   mol->setProp(common_properties::_fragSMARTS, smarts);
   return mol;
@@ -100,7 +100,7 @@ MOL_SPTR_VECT readFuncGroups(std::string fileName) {
 
 MatchVectType findFuncGroupsOnMol(const ROMol &mol, const FragCatParams *params,
                                   INT_VECT &fgBonds) {
-  PRECONDITION(params, "bad params");
+  PRECONDITION(params, "bad params")
 
   fgBonds.clear();
 
@@ -175,7 +175,7 @@ MatchVectType findFuncGroupsOnMol(const ROMol &mol, const FragCatParams *params,
 
 ROMol *prepareMol(const ROMol &mol, const FragCatParams *fparams,
                   MatchVectType &aToFmap) {
-  PRECONDITION(fparams, "");
+  PRECONDITION(fparams, "")
 
   // get a mapping of the functional groups onto the molecule
   INT_VECT fgBonds;

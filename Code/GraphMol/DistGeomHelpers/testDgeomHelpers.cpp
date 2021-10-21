@@ -1209,7 +1209,7 @@ void runblock(const std::vector<ROMol *> &mols,
       delete field;
     }
   }
-};
+}
 }  // namespace
 
 #include <thread>

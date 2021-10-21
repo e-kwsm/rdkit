@@ -44,7 +44,7 @@ std::string GetDefaultAtomNumber(const Atom *atom,
 
 std::string GetPDBAtomLine(const Atom *atom, const Conformer *conf,
                            std::map<unsigned int, unsigned int> &elem) {
-  PRECONDITION(atom, "bad atom");
+  PRECONDITION(atom, "bad atom")
   std::stringstream ss;
 
   std::string symb = atom->getSymbol();
@@ -166,7 +166,7 @@ std::string GetDefaultAtomNumber(const Atom *atom,
 
 std::string GetPDBBondLines(const Atom *atom, bool all, bool both, bool mult,
                             unsigned int &conect_count) {
-  PRECONDITION(atom, "bad atom");
+  PRECONDITION(atom, "bad atom")
   unsigned int src = atom->getIdx() + 1;
   std::vector<unsigned int> v;
 
@@ -342,7 +342,7 @@ PDBWriter::PDBWriter(const std::string &fileName, unsigned int flavor) {
 
 PDBWriter::PDBWriter(std::ostream *outStream, bool takeOwnership,
                      unsigned int flavor) {
-  PRECONDITION(outStream, "null stream");
+  PRECONDITION(outStream, "null stream")
   if (outStream->bad()) {
     throw FileParseException("Bad output stream");
   }
@@ -360,7 +360,7 @@ PDBWriter::~PDBWriter() {
 }
 
 void PDBWriter::write(const ROMol &mol, int confId) {
-  PRECONDITION(dp_ostream, "no output stream");
+  PRECONDITION(dp_ostream, "no output stream")
 
   d_count++;
   if (d_flavor & 1) {

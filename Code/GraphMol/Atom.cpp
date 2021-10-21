@@ -187,12 +187,12 @@ Atom::Atom() : RDProps() {
 Atom::Atom(unsigned int num) : RDProps() {
   d_atomicNum = num;
   initAtom();
-};
+}
 
 Atom::Atom(const std::string &what) : RDProps() {
   d_atomicNum = PeriodicTable::getTable()->getAtomicNumber(what);
   initAtom();
-};
+}
 
 void Atom::initFromOther(const Atom &other) {
   RDProps::operator=(other);
@@ -697,7 +697,7 @@ void Atom::setQuery(Atom::QUERYATOM_QUERY *) {
   //  Atoms don't have complex queries so this has to fail
   PRECONDITION(0, "plain atoms have no Query");
 }
-Atom::QUERYATOM_QUERY *Atom::getQuery() const { return nullptr; };
+Atom::QUERYATOM_QUERY *Atom::getQuery() const { return nullptr; }
 void Atom::expandQuery(Atom::QUERYATOM_QUERY *, Queries::CompositeQueryType,
                        bool) {
   PRECONDITION(0, "plain atoms have no Query");
@@ -1053,4 +1053,4 @@ std::ostream &operator<<(std::ostream &target, const RDKit::Atom &at) {
     target << " query: " << at.getQuery()->getDescription();
   }
   return target;
-};
+}

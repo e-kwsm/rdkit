@@ -20,21 +20,21 @@
 namespace RDKit {
 
 RDGeom::Point2D Snapshot::getPoint2D(unsigned int pointNum) const {
-  PRECONDITION(d_pos, "d_pos must not be NULL");
-  PRECONDITION(d_trajectory, "d_trajectory must not be NULL");
-  PRECONDITION(d_trajectory->dimension() == 2, "d_dimension must be == 2");
-  PRECONDITION(d_trajectory->numPoints(), "d_numPoints must be > 0");
-  URANGE_CHECK(pointNum, d_trajectory->numPoints());
+  PRECONDITION(d_pos, "d_pos must not be NULL")
+  PRECONDITION(d_trajectory, "d_trajectory must not be NULL")
+  PRECONDITION(d_trajectory->dimension() == 2, "d_dimension must be == 2")
+  PRECONDITION(d_trajectory->numPoints(), "d_numPoints must be > 0")
+  URANGE_CHECK(pointNum, d_trajectory->numPoints())
   unsigned int i = pointNum * d_trajectory->dimension();
   return RDGeom::Point2D(d_pos[i], d_pos[i + 1]);
 }
 
 RDGeom::Point3D Snapshot::getPoint3D(unsigned int pointNum) const {
-  PRECONDITION(d_pos, "d_pos must not be NULL");
-  PRECONDITION(d_trajectory, "d_trajectory must not be NULL");
-  PRECONDITION(d_trajectory->dimension() >= 2, "d_dimension must be >= 2");
-  PRECONDITION(d_trajectory->numPoints(), "d_numPoints must be > 0");
-  URANGE_CHECK(pointNum, d_trajectory->numPoints());
+  PRECONDITION(d_pos, "d_pos must not be NULL")
+  PRECONDITION(d_trajectory, "d_trajectory must not be NULL")
+  PRECONDITION(d_trajectory->dimension() >= 2, "d_dimension must be >= 2")
+  PRECONDITION(d_trajectory->numPoints(), "d_numPoints must be > 0")
+  URANGE_CHECK(pointNum, d_trajectory->numPoints())
   unsigned int i = pointNum * d_trajectory->dimension();
   return (
       RDGeom::Point3D(d_pos[i], d_pos[i + 1],
@@ -68,35 +68,35 @@ unsigned int Trajectory::addSnapshot(const Snapshot &s) {
 }
 
 const Snapshot &Trajectory::getSnapshot(unsigned int snapshotNum) const {
-  URANGE_CHECK(snapshotNum, d_snapshotVect->size());
+  URANGE_CHECK(snapshotNum, d_snapshotVect->size())
   return (*d_snapshotVect)[snapshotNum];
 }
 
 unsigned int Trajectory::insertSnapshot(unsigned int snapshotNum, Snapshot s) {
-  URANGE_CHECK(snapshotNum, d_snapshotVect->size() + 1);
+  URANGE_CHECK(snapshotNum, d_snapshotVect->size() + 1)
   s.d_trajectory = this;
   return (d_snapshotVect->insert(d_snapshotVect->begin() + snapshotNum, s) -
           d_snapshotVect->begin());
 }
 
 unsigned int Trajectory::removeSnapshot(unsigned int snapshotNum) {
-  URANGE_CHECK(snapshotNum, d_snapshotVect->size());
+  URANGE_CHECK(snapshotNum, d_snapshotVect->size())
   return (d_snapshotVect->erase(d_snapshotVect->begin() + snapshotNum) -
           d_snapshotVect->begin());
 }
 
 unsigned int Trajectory::addConformersToMol(ROMol &mol, int from, int to) {
   PRECONDITION(d_numPoints == mol.getNumAtoms(),
-               "Number of atom mismatch between ROMol and Trajectory");
-  PRECONDITION(from < static_cast<int>(size()), "from must be < size()");
-  PRECONDITION(to < static_cast<int>(size()), "to must be < size()");
+               "Number of atom mismatch between ROMol and Trajectory")
+  PRECONDITION(from < static_cast<int>(size()), "from must be < size()")
+  PRECONDITION(to < static_cast<int>(size()), "to must be < size()")
   if (from < 0) {
     from = 0;
   }
   if (to < 0) {
     to = size() - 1;
   }
-  PRECONDITION(!size() || (from <= to), "from must be <= to");
+  PRECONDITION(!size() || (from <= to), "from must be <= to")
   int n;
   unsigned int nConf;
   for (n = from, nConf = 0; size() && (n <= to); ++n, ++nConf) {
@@ -111,7 +111,7 @@ unsigned int Trajectory::addConformersToMol(ROMol &mol, int from, int to) {
 
 unsigned int readAmberTrajectory(const std::string &fName, Trajectory &traj) {
   PRECONDITION(traj.dimension() == 3,
-               "The trajectory must have dimension == 3");
+               "The trajectory must have dimension == 3")
   std::ifstream inStream(fName.c_str());
   if (!inStream || inStream.bad()) {
     std::stringstream ss;
@@ -152,7 +152,7 @@ unsigned int readAmberTrajectory(const std::string &fName, Trajectory &traj) {
 
 unsigned int readGromosTrajectory(const std::string &fName, Trajectory &traj) {
   PRECONDITION(traj.dimension() == 3,
-               "The trajectory must have dimension == 3");
+               "The trajectory must have dimension == 3")
   std::ifstream inStream(fName.c_str());
   if (!inStream || inStream.bad()) {
     std::stringstream ss;

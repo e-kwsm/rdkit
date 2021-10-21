@@ -296,7 +296,7 @@ std::string getAtomSmartsSimple(const QueryAtom *qatom,
         break;
       case Modifiers::RANGE:
         rquery = dynamic_cast<const ATOM_RANGE_QUERY *>(query);
-        CHECK_INVARIANT(rquery, "query could not be converted to range query");
+        CHECK_INVARIANT(rquery, "query could not be converted to range query")
         res << ((const ATOM_RANGE_QUERY *)query)->getLower() << "-"
             << ((const ATOM_RANGE_QUERY *)query)->getUpper();
         break;
@@ -341,7 +341,7 @@ std::string getRecursiveStructureQuerySmarts(
   PRECONDITION(query, "bad query");
   PRECONDITION(query->getDescription() == "RecursiveStructure", "bad query");
   const auto *rquery = dynamic_cast<const RecursiveStructureQuery *>(query);
-  PRECONDITION(rquery, "could not convert query to RecursiveStructureQuery");
+  PRECONDITION(rquery, "could not convert query to RecursiveStructureQuery")
   auto *qmol = const_cast<ROMol *>(rquery->getQueryMol());
   std::string res = MolToSmarts(*qmol, params);
   res = "$(" + res + ")";
@@ -500,7 +500,7 @@ std::string _recurseGetSmarts(const QueryAtom *qatom,
 
   ++chi;
   CHECK_INVARIANT(chi != node->endChildren(),
-                  "Not enough children on the query");
+                  "Not enough children on the query")
 
   bool needParen;
   std::string csmarts1;
@@ -587,8 +587,8 @@ std::string _recurseBondSmarts(const Bond *bond,
   // following rules
   //   NOT (a AND b) = ( NOT (a)) AND ( NOT (b))
   //   NOT (a OR b) = ( NOT (a)) OR ( NOT (b))
-  PRECONDITION(bond, "bad bond");
-  PRECONDITION(node, "bad node");
+  PRECONDITION(bond, "bad bond")
+  PRECONDITION(node, "bad node")
   std::string descrip = node->getDescription();
   std::string res = "";
 
@@ -606,7 +606,7 @@ std::string _recurseBondSmarts(const Bond *bond,
   // OK we should be at the end of vector by now - since we can have only two
   // children,
   // well - at least in this case
-  CHECK_INVARIANT(chi == node->endChildren(), "Too many children on the query");
+  CHECK_INVARIANT(chi == node->endChildren(), "Too many children on the query")
 
   std::string dsc1, dsc2;
   dsc1 = child1->getDescription();
@@ -729,8 +729,8 @@ std::string FragmentSmartsConstruct(
 // this is the used when converting a SMILES or
 // non-query atom from a mol file into SMARTS.
 std::string getNonQueryAtomSmarts(const Atom *atom) {
-  PRECONDITION(atom, "bad atom");
-  PRECONDITION(!atom->hasQuery(), "atom should not have query");
+  PRECONDITION(atom, "bad atom")
+  PRECONDITION(!atom->hasQuery(), "atom should not have query")
   std::stringstream res;
   res << "[";
 
@@ -903,7 +903,7 @@ std::string GetAtomSmarts(const Atom *atom, const SmilesWriteParams &params) {
     return res;
   }
   const auto query = atom->getQuery();
-  PRECONDITION(query, "atom has no query");
+  PRECONDITION(query, "atom has no query")
   unsigned int queryFeatures = 0;
   std::string descrip = query->getDescription();
   if (descrip.empty()) {
@@ -962,7 +962,7 @@ std::string GetBondSmarts(const Bond *bond, const SmilesWriteParams &params,
   std::string res = "";
 
   // BOOST_LOG(rdInfoLog) << "bond: " << bond->getIdx() << std::endl;
-  ;
+
   // it is possible that we are regular single bond and we don't need to write
   // anything
   if (!bond->hasQuery()) {
@@ -977,10 +977,10 @@ std::string GetBondSmarts(const Bond *bond, const SmilesWriteParams &params,
     BOOST_LOG(rdInfoLog) << "\tbasic:" << res << std::endl;
     return res;
   }
-  CHECK_INVARIANT(qbond, "could not convert bond to QueryBond");
+  CHECK_INVARIANT(qbond, "could not convert bond to QueryBond")
 
   const auto query = qbond->getQuery();
-  CHECK_INVARIANT(query, "bond has no query");
+  CHECK_INVARIANT(query, "bond has no query")
 
   unsigned int queryFeatures = 0;
   auto descrip = query->getDescription();

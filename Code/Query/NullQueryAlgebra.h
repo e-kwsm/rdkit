@@ -66,11 +66,11 @@ void mergeNullQFirst(T *&returnQuery, T *&otherQ,
 template <class T>
 void mergeNullQueries(T *&returnQuery, bool isQueryNull, T *&otherQuery,
                       bool isOtherQNull, Queries::CompositeQueryType how) {
-  PRECONDITION(returnQuery, "bad query");
-  PRECONDITION(otherQuery, "bad query");
+  PRECONDITION(returnQuery, "bad query")
+  PRECONDITION(otherQuery, "bad query")
   PRECONDITION(how == Queries::COMPOSITE_AND || how == Queries::COMPOSITE_OR ||
                    how == Queries::COMPOSITE_XOR,
-               "bad combination op");
+               "bad combination op")
 
   if (isQueryNull && isOtherQNull) {
     mergeBothNullQ(returnQuery, otherQuery, how);

@@ -47,9 +47,7 @@ class StringChromosomeBase {
       : rng(rng_),
         chromosomePolicy(chromosomePolicy_),
         length(length_),
-        string(new T[length_]) {
-    ;
-  }
+        string(new T[length_]) {}
 
   virtual ~StringChromosomeBase() {}
 

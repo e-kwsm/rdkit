@@ -177,7 +177,7 @@ std::string DiscreteValueVect::toString() const {
 #endif
   std::string res(ss.str());
   return res;
-};
+}
 
 void DiscreteValueVect::initFromText(const char *pkl, const unsigned int len) {
   std::stringstream ss(std::ios_base::binary | std::ios_base::in |
@@ -215,7 +215,7 @@ void DiscreteValueVect::initFromText(const char *pkl, const unsigned int len) {
 #else
   d_data.reset(data);
 #endif
-};
+}
 
 DiscreteValueVect DiscreteValueVect::operator&(
     const DiscreteValueVect &other) const {
@@ -231,7 +231,7 @@ DiscreteValueVect DiscreteValueVect::operator&(
     ans.setVal(i, std::min(v2, v1));
   }
   return (ans);
-};
+}
 
 DiscreteValueVect DiscreteValueVect::operator|(
     const DiscreteValueVect &other) const {
@@ -247,7 +247,7 @@ DiscreteValueVect DiscreteValueVect::operator|(
     ans.setVal(i, std::max(v2, v1));
   }
   return (ans);
-};
+}
 
 DiscreteValueVect &DiscreteValueVect::operator+=(
     const DiscreteValueVect &other) {
@@ -277,12 +277,12 @@ DiscreteValueVect operator+(const DiscreteValueVect &p1,
   DiscreteValueVect res(p1);
   res += p2;
   return res;
-};
+}
 DiscreteValueVect operator-(const DiscreteValueVect &p1,
                             const DiscreteValueVect &p2) {
   DiscreteValueVect res(p1);
   res -= p2;
   return res;
-};
+}
 
 }  // end of namespace RDKit

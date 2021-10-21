@@ -297,7 +297,7 @@ void fixExplicitImplicitHs(ROMol &mol) {
 // object constructor
 AtomElectrons::AtomElectrons(ConjElectrons *parent, const Atom *a)
     : d_nb(0), d_fc(0), d_flags(0), d_atom(a), d_parent(parent) {
-  PRECONDITION(d_atom, "d_atom cannot be NULL");
+  PRECONDITION(d_atom, "d_atom cannot be NULL")
   d_tv = static_cast<std::uint8_t>(a->getTotalDegree());
   const ROMol &mol = d_atom->getOwningMol();
   for (const auto &bNbri :
@@ -471,7 +471,7 @@ void AtomElectrons::finalizeAtom() {
 // object constructor
 BondElectrons::BondElectrons(ConjElectrons *parent, const Bond *b)
     : d_bo(1), d_flags(0), d_bond(b), d_parent(parent) {
-  PRECONDITION(d_bond, "d_bond cannot be NULL");
+  PRECONDITION(d_bond, "d_bond cannot be NULL")
 }
 
 // copy constructor
@@ -1211,13 +1211,13 @@ unsigned int ConjElectrons::countTotalElectrons() {
 
 size_t ResonanceMolSupplierCallback::getNumStructures(
     unsigned int conjGrpIdx) const {
-  PRECONDITION(conjGrpIdx < d_progress.size(), "conjGrpIdx out of bounds");
+  PRECONDITION(conjGrpIdx < d_progress.size(), "conjGrpIdx out of bounds")
   return d_progress.at(conjGrpIdx).d_totalStructs;
 }
 
 size_t ResonanceMolSupplierCallback::getNumDiverseStructures(
     unsigned int conjGrpIdx) const {
-  PRECONDITION(conjGrpIdx < d_progress.size(), "conjGrpIdx out of bounds");
+  PRECONDITION(conjGrpIdx < d_progress.size(), "conjGrpIdx out of bounds")
   return d_progress.at(conjGrpIdx).d_diverseStructs;
 }
 

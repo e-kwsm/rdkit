@@ -19,7 +19,7 @@ namespace RDKit {
 namespace Descriptors {
 namespace detail {
 void hkDeltas(const ROMol &mol, std::vector<double> &deltas, bool force) {
-  PRECONDITION(deltas.size() >= mol.getNumAtoms(), "bad vector size");
+  PRECONDITION(deltas.size() >= mol.getNumAtoms(), "bad vector size")
   if (!force && mol.hasProp(common_properties::_connectivityHKDeltas)) {
     mol.getProp(common_properties::_connectivityHKDeltas, deltas);
     return;
@@ -48,7 +48,7 @@ void hkDeltas(const ROMol &mol, std::vector<double> &deltas, bool force) {
 }
 
 void nVals(const ROMol &mol, std::vector<double> &nVs, bool force) {
-  PRECONDITION(nVs.size() >= mol.getNumAtoms(), "bad vector size");
+  PRECONDITION(nVs.size() >= mol.getNumAtoms(), "bad vector size")
   if (!force && mol.hasProp(common_properties::_connectivityNVals)) {
     mol.getProp(common_properties::_connectivityNVals, nVs);
     return;
@@ -89,7 +89,7 @@ double getAlpha(const Atom &atom, bool &found) {
         default:
           res = 0.00;
           found = true;
-      };
+      }
       break;
     case 7:
       switch (atom.getHybridization()) {
@@ -105,7 +105,7 @@ double getAlpha(const Atom &atom, bool &found) {
           res = -0.04;
           found = true;
           break;
-      };
+      }
       break;
     case 8:
       switch (atom.getHybridization()) {
@@ -117,7 +117,7 @@ double getAlpha(const Atom &atom, bool &found) {
           res = -0.04;
           found = true;
           break;
-      };
+      }
       break;
     case 9:
       res = -0.07;
@@ -133,7 +133,7 @@ double getAlpha(const Atom &atom, bool &found) {
           res = 0.43;
           found = true;
           break;
-      };
+      }
       break;
     case 16:
       switch (atom.getHybridization()) {
@@ -145,7 +145,7 @@ double getAlpha(const Atom &atom, bool &found) {
           res = 0.35;
           found = true;
           break;
-      };
+      }
       break;
     case 17:
       res = 0.29;
@@ -172,7 +172,7 @@ double calcChiNv(const ROMol &mol, unsigned int n, bool force) {
   PATH_LIST ps = findAllPathsOfLengthN(mol, n + 1, false);
   double res = 0.0;
   for (const auto &p : ps) {
-    TEST_ASSERT(p.size() == n + 1);
+    TEST_ASSERT(p.size() == n + 1)
     double accum = 1.0;
     for (unsigned int i = 0; i < n; ++i) {
       accum *= hkDs[p[i]];
@@ -191,7 +191,7 @@ double calcChiNn(const ROMol &mol, unsigned int n, bool force) {
   PATH_LIST ps = findAllPathsOfLengthN(mol, n + 1, false);
   double res = 0.0;
   for (const auto &p : ps) {
-    TEST_ASSERT(p.size() == n + 1);
+    TEST_ASSERT(p.size() == n + 1)
     double accum = 1.0;
     for (unsigned int i = 0; i < n; ++i) {
       accum *= nVs[p[i]];
@@ -210,7 +210,7 @@ double calcChi0v(const ROMol &mol, bool force) {
   std::vector<double> hkDs(mol.getNumAtoms());
   detail::hkDeltas(mol, hkDs, force);
   return std::accumulate(hkDs.begin(), hkDs.end(), 0.0);
-};
+}
 double calcChi1v(const ROMol &mol, bool force) {
   std::vector<double> hkDs(mol.getNumAtoms());
   detail::hkDeltas(mol, hkDs, force);
@@ -224,22 +224,22 @@ double calcChi1v(const ROMol &mol, bool force) {
     ++firstB;
   }
   return res;
-};
+}
 double calcChi2v(const ROMol &mol, bool force) {
   return calcChiNv(mol, 2, force);
-};
+}
 double calcChi3v(const ROMol &mol, bool force) {
   return calcChiNv(mol, 3, force);
-};
+}
 double calcChi4v(const ROMol &mol, bool force) {
   return calcChiNv(mol, 4, force);
-};
+}
 
 double calcChi0n(const ROMol &mol, bool force) {
   std::vector<double> nVs(mol.getNumAtoms());
   detail::nVals(mol, nVs, force);
   return std::accumulate(nVs.begin(), nVs.end(), 0.0);
-};
+}
 double calcChi1n(const ROMol &mol, bool force) {
   std::vector<double> nVs(mol.getNumAtoms());
   detail::nVals(mol, nVs, force);
@@ -253,20 +253,20 @@ double calcChi1n(const ROMol &mol, bool force) {
     ++firstB;
   }
   return res;
-};
+}
 double calcChi2n(const ROMol &mol, bool force) {
   return calcChiNn(mol, 2, force);
-};
+}
 double calcChi3n(const ROMol &mol, bool force) {
   return calcChiNn(mol, 3, force);
-};
+}
 double calcChi4n(const ROMol &mol, bool force) {
   return calcChiNn(mol, 4, force);
-};
+}
 
 double calcHallKierAlpha(const ROMol &mol, std::vector<double> *atomContribs) {
   PRECONDITION(!atomContribs || atomContribs->size() >= mol.getNumAtoms(),
-               "bad atomContribs vector");
+               "bad atomContribs vector")
   const PeriodicTable *tbl = PeriodicTable::getTable();
   double alphaSum = 0.0;
   double rC = tbl->getRb0(6);
@@ -291,7 +291,7 @@ double calcHallKierAlpha(const ROMol &mol, std::vector<double> *atomContribs) {
     }
   }
   return alphaSum;
-};
+}
 
 namespace {
 double kappa1Helper(double P1, double A, double alpha) {
