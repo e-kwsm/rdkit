@@ -12,7 +12,7 @@
 
 namespace RDPickers {
 double getDistFromLTM(const double *distMat, unsigned int i, unsigned int j) {
-  CHECK_INVARIANT(distMat, "");
+  CHECK_INVARIANT(distMat, "")
   if (i == j) {
     return 0.0;
   } else if (i > j) {

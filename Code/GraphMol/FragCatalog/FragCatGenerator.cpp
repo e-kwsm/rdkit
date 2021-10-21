@@ -24,7 +24,7 @@ namespace RDKit {
 unsigned int addOrder1Paths(PATH_LIST &paths, const ROMol &mol,
                             FragCatalog *fcat, DOUBLE_INT_MAP &mapkm1,
                             const MatchVectType &aidToFid) {
-  PRECONDITION(fcat, "");
+  PRECONDITION(fcat, "")
   bool found;
   const FragCatalogEntry *entry;
   // INT_VECT o1entries;
@@ -32,7 +32,7 @@ unsigned int addOrder1Paths(PATH_LIST &paths, const ROMol &mol,
 
   unsigned int lLen = fparams->getLowerFragLength();
   unsigned int uLen = fparams->getUpperFragLength();
-  CHECK_INVARIANT(lLen <= uLen, "");
+  CHECK_INVARIANT(lLen <= uLen, "")
   unsigned int n01 = 0;
   double tol = fparams->getTolerance();
 
@@ -79,7 +79,7 @@ unsigned int addHigherOrderPaths(const INT_PATH_LIST_MAP &allPaths,
                                  const ROMol &mol, FragCatalog *fcat,
                                  DOUBLE_INT_MAP &mapkm1,
                                  const MatchVectType &aidToFid) {
-  PRECONDITION(fcat, "");
+  PRECONDITION(fcat, "")
 
   // This works something like this
   // - for each path of order k in the mol
@@ -218,7 +218,7 @@ unsigned int addHigherOrderPaths(const INT_PATH_LIST_MAP &allPaths,
 
 unsigned int FragCatGenerator::addFragsFromMol(const ROMol &mol,
                                                FragCatalog *fcat) {
-  PRECONDITION(fcat, "");
+  PRECONDITION(fcat, "")
 
   INT_PATH_LIST_MAP allPaths;
   allPaths.clear();
@@ -230,7 +230,7 @@ unsigned int FragCatGenerator::addFragsFromMol(const ROMol &mol,
 
   unsigned int lLen = fparams->getLowerFragLength();
   unsigned int uLen = fparams->getUpperFragLength();
-  CHECK_INVARIANT(lLen <= uLen, "");
+  CHECK_INVARIANT(lLen <= uLen, "")
 
   // prepare the molecule to add to the catalog
   // i.e. find functional groups, remove them from the mol etc.

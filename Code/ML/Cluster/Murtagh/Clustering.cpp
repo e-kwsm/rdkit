@@ -38,7 +38,7 @@ static void clusterit(real *dataP, boost::int64_t n, boost::int64_t m,
   double tmp;
   len = (n * (n - 1)) / 2;
   dists = (real *)calloc(len, sizeof(real));
-  CHECK_INVARIANT(dists, "failed to allocate memory");
+  CHECK_INVARIANT(dists, "failed to allocate memory")
   for (i = 1; i < n; i++) {
     iTab = i * m;
     for (j = 0; j < i; j++) {
@@ -52,7 +52,7 @@ static void clusterit(real *dataP, boost::int64_t n, boost::int64_t m,
   }
   distdriver_(&n, &len, dists, &iopt, ia, ib, crit);
   free(dists);
-};
+}
 
 static void capsule_cleanup(PyObject *capsule) {
   void *ptr = PyCapsule_GetPointer(capsule, nullptr);
@@ -107,7 +107,7 @@ static PyObject *Clustering_MurtaghCluster(python::object data, int nPts,
   PyTuple_SetItem(res, 2, (PyObject *)tmp);
 
   return res;
-};
+}
 
 void distclusterit(real *dists, boost::int64_t n, boost::int64_t iopt,
                    boost::int64_t *ia, boost::int64_t *ib, real *crit) {
@@ -115,7 +115,7 @@ void distclusterit(real *dists, boost::int64_t n, boost::int64_t iopt,
 
   len = (n * (n - 1)) / 2;
   distdriver_(&n, &len, dists, &iopt, ia, ib, crit);
-};
+}
 
 static PyObject *Clustering_MurtaghDistCluster(python::object data, int nPts,
                                                int option) {
@@ -165,7 +165,7 @@ static PyObject *Clustering_MurtaghDistCluster(python::object data, int nPts,
   PyTuple_SetItem(res, 2, tmp);
 
   return res;
-};
+}
 
 BOOST_PYTHON_MODULE(Clustering) {
   rdkit_import_array();
