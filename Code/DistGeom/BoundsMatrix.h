@@ -36,8 +36,8 @@ class RDKIT_DISTGEOMETRY_EXPORT BoundsMatrix
 
   //! Get the upper bound between points i and j
   inline double getUpperBound(unsigned int i, unsigned int j) const {
-    URANGE_CHECK(i, d_nRows);
-    URANGE_CHECK(j, d_nCols);
+    URANGE_CHECK(i, d_nRows)
+    URANGE_CHECK(j, d_nCols)
 
     if (i < j) {
       return getVal(i, j);
@@ -48,9 +48,9 @@ class RDKIT_DISTGEOMETRY_EXPORT BoundsMatrix
 
   //! Set the lower bound between points i and j
   inline void setUpperBound(unsigned int i, unsigned int j, double val) {
-    URANGE_CHECK(i, d_nRows);
-    URANGE_CHECK(j, d_nCols);
-    CHECK_INVARIANT(val >= 0.0, "Negative upper bound");
+    URANGE_CHECK(i, d_nRows)
+    URANGE_CHECK(j, d_nCols)
+    CHECK_INVARIANT(val >= 0.0, "Negative upper bound")
     if (i < j) {
       setVal(i, j, val);
     } else {
@@ -69,9 +69,9 @@ class RDKIT_DISTGEOMETRY_EXPORT BoundsMatrix
 
   //! Set the lower bound between points i and j
   inline void setLowerBound(unsigned int i, unsigned int j, double val) {
-    URANGE_CHECK(i, d_nRows);
-    URANGE_CHECK(j, d_nCols);
-    CHECK_INVARIANT(val >= 0.0, "Negative lower bound");
+    URANGE_CHECK(i, d_nRows)
+    URANGE_CHECK(j, d_nCols)
+    CHECK_INVARIANT(val >= 0.0, "Negative lower bound")
     if (i < j) {
       setVal(j, i, val);
     } else {
@@ -90,8 +90,8 @@ class RDKIT_DISTGEOMETRY_EXPORT BoundsMatrix
 
   //! Get the lower bound between points i and j
   inline double getLowerBound(unsigned int i, unsigned int j) const {
-    URANGE_CHECK(i, d_nRows);
-    URANGE_CHECK(j, d_nCols);
+    URANGE_CHECK(i, d_nRows)
+    URANGE_CHECK(j, d_nCols)
 
     if (i < j) {
       return getVal(j, i);

@@ -52,10 +52,10 @@ template <typename EnergyFunctor>
 void linearSearch(unsigned int dim, double *oldPt, double oldVal, double *grad,
                   double *dir, double *newPt, double &newVal,
                   EnergyFunctor func, double maxStep, int &resCode) {
-  PRECONDITION(oldPt, "bad input array");
-  PRECONDITION(grad, "bad input array");
-  PRECONDITION(dir, "bad input array");
-  PRECONDITION(newPt, "bad input array");
+  PRECONDITION(oldPt, "bad input array")
+  PRECONDITION(grad, "bad input array")
+  PRECONDITION(dir, "bad input array")
+  PRECONDITION(newPt, "bad input array")
 
   const unsigned int MAX_ITER_LINEAR_SEARCH = 1000;
   double sum = 0.0, slope = 0.0, test = 0.0, lambda = 0.0;
@@ -195,9 +195,9 @@ int minimize(unsigned int dim, double *pos, double gradTol,
              GradientFunctor gradFunc, unsigned int snapshotFreq,
              RDKit::SnapshotVect *snapshotVect, double funcTol = TOLX,
              unsigned int maxIts = MAXITS) {
-  RDUNUSED_PARAM(funcTol);
-  PRECONDITION(pos, "bad input array");
-  PRECONDITION(gradTol > 0, "bad tolerance");
+  RDUNUSED_PARAM(funcTol)
+  PRECONDITION(pos, "bad input array")
+  PRECONDITION(gradTol > 0, "bad tolerance")
 
   double sum, maxStep, fp;
 
@@ -237,7 +237,7 @@ int minimize(unsigned int dim, double *pos, double gradTol,
     // do the line search:
     linearSearch(dim, pos, fp, grad, xi, newPos, funcVal, func, maxStep,
                  status);
-    CHECK_INVARIANT(status >= 0, "bad direction in linearSearch");
+    CHECK_INVARIANT(status >= 0, "bad direction in linearSearch")
 
     // save the function value for the next search:
     fp = funcVal;
@@ -261,7 +261,7 @@ int minimize(unsigned int dim, double *pos, double gradTol,
         snapshotVect->push_back(s);
         newPos = nullptr;
       }
-      CLEANUP();
+      CLEANUP()
       return 0;
     }
 
@@ -285,7 +285,7 @@ int minimize(unsigned int dim, double *pos, double gradTol,
         snapshotVect->push_back(s);
         newPos = nullptr;
       }
-      CLEANUP();
+      CLEANUP()
       return 0;
     }
 
@@ -365,7 +365,7 @@ int minimize(unsigned int dim, double *pos, double gradTol,
       newPos = new double[dim];
     }
   }
-  CLEANUP();
+  CLEANUP()
   return 1;
 }
 

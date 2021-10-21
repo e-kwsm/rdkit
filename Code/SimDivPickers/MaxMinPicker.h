@@ -113,7 +113,7 @@ class RDKIT_SIMDIVPICKERS_EXPORT MaxMinPicker : public DistPicker {
   RDKit::INT_VECT pick(const double *distMat, unsigned int poolSize,
                        unsigned int pickSize, RDKit::INT_VECT firstPicks,
                        int seed = -1) const {
-    CHECK_INVARIANT(distMat, "Invalid Distance Matrix");
+    CHECK_INVARIANT(distMat, "Invalid Distance Matrix")
     if (!poolSize) {
       throw ValueErrorException("empty pool to pick from");
     }
@@ -242,7 +242,7 @@ RDKit::INT_VECT MaxMinPicker::lazyPick(T &func, unsigned int poolSize,
         unsigned int pi = pinfo[poolIdx].picks;
         while (pi < picked) {
           unsigned int picki = picks[pi];
-          CHECK_INVARIANT(poolIdx != picki, "pool index != pick index");
+          CHECK_INVARIANT(poolIdx != picki, "pool index != pick index")
           double dist = func(poolIdx, picki);
           pi++;
           if (dist <= minTOi) {
@@ -298,6 +298,6 @@ RDKit::INT_VECT MaxMinPicker::lazyPick(T &func, unsigned int poolSize,
   return MaxMinPicker::lazyPick(func, poolSize, pickSize, firstPicks, seed,
                                 threshold);
 }
-};  // namespace RDPickers
+}  // namespace RDPickers
 
 #endif

@@ -56,7 +56,7 @@ void constructFragmenterAtomTypes(
     std::istream *inStream, std::map<unsigned int, std::string> &defs,
     const std::string &comment, bool validate,
     std::map<unsigned int, ROMOL_SPTR> *environs) {
-  PRECONDITION(inStream, "no stream");
+  PRECONDITION(inStream, "no stream")
   defs.clear();
   unsigned int line = 0;
   while (!inStream->eof() && !inStream->fail()) {
@@ -145,7 +145,7 @@ void constructFragmenterBondTypes(
     const std::map<unsigned int, std::string> &atomTypes,
     std::vector<FragmenterBondType> &defs, const std::string &comment,
     bool validate, bool labelByConnector) {
-  PRECONDITION(inStream, "no stream");
+  PRECONDITION(inStream, "no stream")
   defs.clear();
   defs.resize(0);
 
@@ -319,9 +319,9 @@ void fragmentOnSomeBonds(
     const std::vector<Bond::BondType> *bondTypes,
     std::vector<std::vector<unsigned int>> *nCutsPerAtom) {
   PRECONDITION((!dummyLabels || dummyLabels->size() == bondIndices.size()),
-               "bad dummyLabel vector");
+               "bad dummyLabel vector")
   PRECONDITION((!bondTypes || bondTypes->size() == bondIndices.size()),
-               "bad bondType vector");
+               "bad bondType vector")
   if (bondIndices.size() > 63) {
     throw ValueErrorException("currently can only fragment on up to 63 bonds");
   }
@@ -416,7 +416,7 @@ void checkChiralityPostMove(const ROMol &mol, const Atom *oAt, Atom *nAt,
 
 std::vector<std::pair<Bond *, std::vector<int>>> getNbrBondStereo(
     RWMol &mol, const Bond *bnd) {
-  PRECONDITION(bnd, "null bond");
+  PRECONDITION(bnd, "null bond")
   // loop over neighboring double bonds and remove their stereo atom
   std::vector<std::pair<Bond *, std::vector<int>>> res;
   const auto bgn = bnd->getBeginAtom();
@@ -441,11 +441,11 @@ ROMol *fragmentOnBonds(
     const std::vector<Bond::BondType> *bondTypes,
     std::vector<unsigned int> *nCutsPerAtom) {
   PRECONDITION((!dummyLabels || dummyLabels->size() == bondIndices.size()),
-               "bad dummyLabel vector");
+               "bad dummyLabel vector")
   PRECONDITION((!bondTypes || bondTypes->size() == bondIndices.size()),
-               "bad bondType vector");
+               "bad bondType vector")
   PRECONDITION((!nCutsPerAtom || nCutsPerAtom->size() == mol.getNumAtoms()),
-               "bad nCutsPerAtom vector");
+               "bad nCutsPerAtom vector")
   if (nCutsPerAtom) {
     for (auto &nCuts : *nCutsPerAtom) {
       nCuts = 0;
@@ -558,7 +558,7 @@ ROMol *fragmentOnBonds(const ROMol &mol,
                        const std::map<unsigned int, ROMOL_SPTR> *atomEnvirons,
                        std::vector<unsigned int> *nCutsPerAtom) {
   PRECONDITION((!nCutsPerAtom || nCutsPerAtom->size() == mol.getNumAtoms()),
-               "bad nCutsPerAtom vector");
+               "bad nCutsPerAtom vector")
   std::vector<unsigned int> bondIndices;
   std::vector<std::pair<unsigned int, unsigned int>> dummyLabels;
   std::vector<Bond::BondType> bondTypes;
@@ -591,7 +591,7 @@ ROMol *fragmentOnBonds(const ROMol &mol,
     for (const auto &mv : bondMatches) {
       const Bond *bond = mol.getBondBetweenAtoms(mv[0].second, mv[1].second);
       // std::cerr<<"          "<<bond->getIdx()<<std::endl;
-      TEST_ASSERT(bond);
+      TEST_ASSERT(bond)
       if (bondsUsed[bond->getIdx()]) {
         // BOOST_LOG(rdWarningLog)<<"bond #"<<bond->getIdx()<<" matched multiple
         // times in decomposition. Later matches ignored."<<std::endl;
@@ -680,7 +680,7 @@ unsigned int get_label(const Atom *a, const MolzipParams &p) {
 // Return the connected atom
 //  n.b. There can be only one connection from a mapped atom
 Atom *get_other_atom(Atom *a) {
-  PRECONDITION(a, "null atom in MolZip::get_other_atom");
+  PRECONDITION(a, "null atom in MolZip::get_other_atom")
   auto &m = a->getOwningMol();
   if (m.getAtomDegree(a) != 1) {
     return nullptr;
@@ -718,10 +718,10 @@ struct ZipBond {
   // Backup the original chirality mark_chirality must be called first
   //  as it checks the datastructure for validity;
   void mark_chirality() const {
-    PRECONDITION(a, "Must have a begin atom to bond");
-    PRECONDITION(b, "Must have an end atom to bond");
-    PRECONDITION(a_dummy, "Must have a begin dummy atom");
-    PRECONDITION(b_dummy, "Must have an end dummy atom");
+    PRECONDITION(a, "Must have a begin atom to bond")
+    PRECONDITION(b, "Must have an end atom to bond")
+    PRECONDITION(a_dummy, "Must have a begin dummy atom")
+    PRECONDITION(b_dummy, "Must have an end dummy atom")
 
     mark(a, a_dummy, b);
     mark(b, b_dummy, a);
@@ -746,7 +746,7 @@ struct ZipBond {
 
     if (!a->getOwningMol().getBondBetweenAtoms(a->getIdx(), b->getIdx())) {
       CHECK_INVARIANT(&a->getOwningMol() == &newmol,
-                      "Owning mol is not the combined molecule!!");
+                      "Owning mol is not the combined molecule!!")
       auto bnd = newmol.getBondBetweenAtoms(a->getIdx(), a_dummy->getIdx());
       CHECK_INVARIANT(bnd != nullptr,
                       "molzip: begin atom and specified dummy atom connection "
@@ -829,10 +829,10 @@ struct ZipBond {
 
   // Restore the marked chirality (mark_chirality must be called first)
   void restore_chirality(std::set<Atom *> &already_checked) const {
-    PRECONDITION(a, "Must have a begin atom to bond");
-    PRECONDITION(b, "Must have an end atom to bond");
-    PRECONDITION(a_dummy, "Must have a begin dummy atom");
-    PRECONDITION(b_dummy, "Must have an end dummy atom");
+    PRECONDITION(a, "Must have a begin atom to bond")
+    PRECONDITION(b, "Must have an end atom to bond")
+    PRECONDITION(a_dummy, "Must have a begin dummy atom")
+    PRECONDITION(b_dummy, "Must have an end dummy atom")
     if (already_checked.find(a) == already_checked.end()) {
       restore(a);
       already_checked.insert(a);
@@ -987,7 +987,7 @@ std::unique_ptr<ROMol> molzip(
           CHECK_INVARIANT(
               !bond.a,
               "molzip: bond info already setup for bgn atom with label:" +
-                  std::to_string(molno));
+                  std::to_string(molno))
           bond.a = attached_atom;
           bond.a_dummy = atom;
         } else {
@@ -995,11 +995,11 @@ std::unique_ptr<ROMol> molzip(
           CHECK_INVARIANT(
               bond.a,
               "molzip: bond info not properly setup for bgn atom with label:" +
-                  std::to_string(molno));
+                  std::to_string(molno))
           CHECK_INVARIANT(
               !bond.b,
               "molzip: bond info already exists for end atom with label:" +
-                  std::to_string(molno));
+                  std::to_string(molno))
           bond.b = attached_atom;
           bond.b_dummy = atom;
           mappings_by_atom[bond.a].push_back(&bond);

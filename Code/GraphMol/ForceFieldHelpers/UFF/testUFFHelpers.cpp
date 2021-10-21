@@ -38,99 +38,99 @@ void testUFFTyper1() {
   std::string key;
 
   mol = SmilesToMol("[SiH3]CC(=O)NC");
-  TEST_ASSERT(mol);
+  TEST_ASSERT(mol)
 
   key = UFF::Tools::getAtomLabel(mol->getAtomWithIdx(0));
-  TEST_ASSERT(key == "Si3");
+  TEST_ASSERT(key == "Si3")
   key = UFF::Tools::getAtomLabel(mol->getAtomWithIdx(1));
-  TEST_ASSERT(key == "C_3");
+  TEST_ASSERT(key == "C_3")
   key = UFF::Tools::getAtomLabel(mol->getAtomWithIdx(2));
-  TEST_ASSERT(key == "C_R");
+  TEST_ASSERT(key == "C_R")
   key = UFF::Tools::getAtomLabel(mol->getAtomWithIdx(3));
-  TEST_ASSERT(key == "O_R");
+  TEST_ASSERT(key == "O_R")
   key = UFF::Tools::getAtomLabel(mol->getAtomWithIdx(4));
-  TEST_ASSERT(key == "N_R");
+  TEST_ASSERT(key == "N_R")
 
   delete mol;
   mol = SmilesToMol("CC(=O)C");
-  TEST_ASSERT(mol);
+  TEST_ASSERT(mol)
 
   key = UFF::Tools::getAtomLabel(mol->getAtomWithIdx(0));
-  TEST_ASSERT(key == "C_3");
+  TEST_ASSERT(key == "C_3")
   key = UFF::Tools::getAtomLabel(mol->getAtomWithIdx(1));
-  TEST_ASSERT(key == "C_2");
+  TEST_ASSERT(key == "C_2")
   key = UFF::Tools::getAtomLabel(mol->getAtomWithIdx(2));
-  TEST_ASSERT(key == "O_2");
+  TEST_ASSERT(key == "O_2")
   key = UFF::Tools::getAtomLabel(mol->getAtomWithIdx(3));
-  TEST_ASSERT(key == "C_3");
+  TEST_ASSERT(key == "C_3")
 
   delete mol;
   mol = SmilesToMol("C(=O)S");
-  TEST_ASSERT(mol);
+  TEST_ASSERT(mol)
 
   key = UFF::Tools::getAtomLabel(mol->getAtomWithIdx(0));
-  TEST_ASSERT(key == "C_2");
+  TEST_ASSERT(key == "C_2")
   key = UFF::Tools::getAtomLabel(mol->getAtomWithIdx(1));
-  TEST_ASSERT(key == "O_2");
+  TEST_ASSERT(key == "O_2")
   key = UFF::Tools::getAtomLabel(mol->getAtomWithIdx(2));
-  TEST_ASSERT(key == "S_3+2");
+  TEST_ASSERT(key == "S_3+2")
 
   delete mol;
   mol = SmilesToMol("SCS(=O)S(=O)(=O)O");
-  TEST_ASSERT(mol);
+  TEST_ASSERT(mol)
 
   key = UFF::Tools::getAtomLabel(mol->getAtomWithIdx(0));
-  TEST_ASSERT(key == "S_3+2");
+  TEST_ASSERT(key == "S_3+2")
   key = UFF::Tools::getAtomLabel(mol->getAtomWithIdx(1));
-  TEST_ASSERT(key == "C_3");
+  TEST_ASSERT(key == "C_3")
   key = UFF::Tools::getAtomLabel(mol->getAtomWithIdx(2));
-  TEST_ASSERT(key == "S_3+4");
+  TEST_ASSERT(key == "S_3+4")
   key = UFF::Tools::getAtomLabel(mol->getAtomWithIdx(4));
-  TEST_ASSERT(key == "S_3+6");
+  TEST_ASSERT(key == "S_3+6")
 
   delete mol;
   mol = SmilesToMol("PCP(O)CP(=O)(=O)");
-  TEST_ASSERT(mol);
+  TEST_ASSERT(mol)
 
   key = UFF::Tools::getAtomLabel(mol->getAtomWithIdx(0));
-  TEST_ASSERT(key == "P_3+3");
+  TEST_ASSERT(key == "P_3+3")
   key = UFF::Tools::getAtomLabel(mol->getAtomWithIdx(1));
-  TEST_ASSERT(key == "C_3");
+  TEST_ASSERT(key == "C_3")
   key = UFF::Tools::getAtomLabel(mol->getAtomWithIdx(2));
-  TEST_ASSERT(key == "P_3+3");
+  TEST_ASSERT(key == "P_3+3")
   // FIX: I am not 100% convinced that this should be SP2
   key = UFF::Tools::getAtomLabel(mol->getAtomWithIdx(5));
-  TEST_ASSERT(key == "P_3+5");
+  TEST_ASSERT(key == "P_3+5")
 
   delete mol;
   mol = SmilesToMol("C(F)(Cl)(Br)I");
-  TEST_ASSERT(mol);
+  TEST_ASSERT(mol)
 
   key = UFF::Tools::getAtomLabel(mol->getAtomWithIdx(0));
-  TEST_ASSERT(key == "C_3");
+  TEST_ASSERT(key == "C_3")
   key = UFF::Tools::getAtomLabel(mol->getAtomWithIdx(1));
-  TEST_ASSERT(key == "F_");
+  TEST_ASSERT(key == "F_")
   key = UFF::Tools::getAtomLabel(mol->getAtomWithIdx(2));
-  TEST_ASSERT(key == "Cl");
+  TEST_ASSERT(key == "Cl")
   key = UFF::Tools::getAtomLabel(mol->getAtomWithIdx(3));
-  TEST_ASSERT(key == "Br");
+  TEST_ASSERT(key == "Br")
   key = UFF::Tools::getAtomLabel(mol->getAtomWithIdx(4));
-  TEST_ASSERT(key == "I_");
+  TEST_ASSERT(key == "I_")
 
   delete mol;
   mol = SmilesToMol("[Li].[Na].[K].[Rb].[Cs]");
-  TEST_ASSERT(mol);
+  TEST_ASSERT(mol)
 
   key = UFF::Tools::getAtomLabel(mol->getAtomWithIdx(0));
-  TEST_ASSERT(key == "Li");
+  TEST_ASSERT(key == "Li")
   key = UFF::Tools::getAtomLabel(mol->getAtomWithIdx(1));
-  TEST_ASSERT(key == "Na");
+  TEST_ASSERT(key == "Na")
   key = UFF::Tools::getAtomLabel(mol->getAtomWithIdx(2));
-  TEST_ASSERT(key == "K_");
+  TEST_ASSERT(key == "K_")
   key = UFF::Tools::getAtomLabel(mol->getAtomWithIdx(3));
-  TEST_ASSERT(key == "Rb");
+  TEST_ASSERT(key == "Rb")
   key = UFF::Tools::getAtomLabel(mol->getAtomWithIdx(4));
-  TEST_ASSERT(key == "Cs");
+  TEST_ASSERT(key == "Cs")
   delete mol;
 
   BOOST_LOG(rdErrorLog) << "  done" << std::endl;
@@ -144,63 +144,63 @@ void testUFFTyper2() {
   std::string key;
 
   mol = SmilesToMol("[SiH3]CC(=O)NC");
-  TEST_ASSERT(mol);
+  TEST_ASSERT(mol)
 
   UFF::AtomicParamVect types;
   bool foundAll;
   boost::tie(types, foundAll) = UFF::getAtomTypes(*mol);
-  TEST_ASSERT(foundAll);
-  TEST_ASSERT(types.size() == mol->getNumAtoms());
+  TEST_ASSERT(foundAll)
+  TEST_ASSERT(types.size() == mol->getNumAtoms())
   for (UFF::AtomicParamVect::const_iterator it = types.begin();
        it != types.end(); it++) {
-    TEST_ASSERT((*it));
+    TEST_ASSERT((*it))
   }
   mol2 = MolOps::addHs(*mol);
   delete mol;
   boost::tie(types, foundAll) = UFF::getAtomTypes(*mol2);
-  TEST_ASSERT(foundAll);
-  TEST_ASSERT(types.size() == mol2->getNumAtoms());
+  TEST_ASSERT(foundAll)
+  TEST_ASSERT(types.size() == mol2->getNumAtoms())
   for (UFF::AtomicParamVect::const_iterator it = types.begin();
        it != types.end(); it++) {
-    TEST_ASSERT((*it));
+    TEST_ASSERT((*it))
   }
   delete mol2;
 
   // connected with sf.net bug 2094445
   mol = SmilesToMol("[SiH2]=C");
-  TEST_ASSERT(mol);
+  TEST_ASSERT(mol)
   key = UFF::Tools::getAtomLabel(mol->getAtomWithIdx(0));
-  TEST_ASSERT(key == "Si3");
+  TEST_ASSERT(key == "Si3")
   key = UFF::Tools::getAtomLabel(mol->getAtomWithIdx(1));
-  TEST_ASSERT(key == "C_2");
+  TEST_ASSERT(key == "C_2")
   delete mol;
 
   mol = SmilesToMol("[AlH]=C");
-  TEST_ASSERT(mol);
+  TEST_ASSERT(mol)
   key = UFF::Tools::getAtomLabel(mol->getAtomWithIdx(0));
-  TEST_ASSERT(key == "Al3");
+  TEST_ASSERT(key == "Al3")
   key = UFF::Tools::getAtomLabel(mol->getAtomWithIdx(1));
-  TEST_ASSERT(key == "C_2");
+  TEST_ASSERT(key == "C_2")
   delete mol;
 
   mol = SmilesToMol("[Mg]=C");
-  TEST_ASSERT(mol);
+  TEST_ASSERT(mol)
   key = UFF::Tools::getAtomLabel(mol->getAtomWithIdx(0));
-  TEST_ASSERT(key == "Mg3+2");
+  TEST_ASSERT(key == "Mg3+2")
   key = UFF::Tools::getAtomLabel(mol->getAtomWithIdx(1));
-  TEST_ASSERT(key == "C_2");
+  TEST_ASSERT(key == "C_2")
   delete mol;
 
   mol = SmilesToMol("[SiH3][Si]([SiH3])=C");
-  TEST_ASSERT(mol);
+  TEST_ASSERT(mol)
   key = UFF::Tools::getAtomLabel(mol->getAtomWithIdx(0));
-  TEST_ASSERT(key == "Si3");
+  TEST_ASSERT(key == "Si3")
   key = UFF::Tools::getAtomLabel(mol->getAtomWithIdx(1));
-  TEST_ASSERT(key == "Si3");
+  TEST_ASSERT(key == "Si3")
   key = UFF::Tools::getAtomLabel(mol->getAtomWithIdx(2));
-  TEST_ASSERT(key == "Si3");
+  TEST_ASSERT(key == "Si3")
   key = UFF::Tools::getAtomLabel(mol->getAtomWithIdx(3));
-  TEST_ASSERT(key == "C_2");
+  TEST_ASSERT(key == "C_2")
   delete mol;
 
   BOOST_LOG(rdErrorLog) << "  done" << std::endl;
@@ -221,10 +221,10 @@ void testUFFBuilder1() {
   mol = SmilesToMol("CC(O)C");
   auto *conf = new Conformer(mol->getNumAtoms());
   int cid = static_cast<int>(mol->addConformer(conf, true));
-  TEST_ASSERT(mol);
+  TEST_ASSERT(mol)
   boost::tie(types, foundAll) = UFF::getAtomTypes(*mol);
-  TEST_ASSERT(foundAll);
-  TEST_ASSERT(types.size() == mol->getNumAtoms());
+  TEST_ASSERT(foundAll)
+  TEST_ASSERT(types.size() == mol->getNumAtoms())
   field = new ForceFields::ForceField();
   // add the atomic positions:
   for (unsigned int i = 0; i < mol->getNumAtoms(); ++i) {
@@ -233,7 +233,7 @@ void testUFFBuilder1() {
 
   UFF::Tools::addBonds(*mol, types, field);
 
-  TEST_ASSERT(field->contribs().size() == 3);
+  TEST_ASSERT(field->contribs().size() == 3)
 
   nbrMat = UFF::Tools::buildNeighborMatrix(*mol);
   // the neighbor matrix is an upper triangular matrix
@@ -242,34 +242,34 @@ void testUFFBuilder1() {
   //     4  5  6
   //        7  8
   //           9
-  TEST_ASSERT(UFF::Tools::twoBitCellPos(mol->getNumAtoms(), 1, 1) == 4);
-  TEST_ASSERT(UFF::Tools::twoBitCellPos(mol->getNumAtoms(), 2, 1) == 5);
-  TEST_ASSERT(UFF::Tools::twoBitCellPos(mol->getNumAtoms(), 1, 2) == 5);
-  TEST_ASSERT(UFF::Tools::getTwoBitCell(nbrMat, 0) == UFF::Tools::RELATION_1_X);
-  TEST_ASSERT(UFF::Tools::getTwoBitCell(nbrMat, 1) == UFF::Tools::RELATION_1_2);
-  TEST_ASSERT(UFF::Tools::getTwoBitCell(nbrMat, 2) == UFF::Tools::RELATION_1_3);
-  TEST_ASSERT(UFF::Tools::getTwoBitCell(nbrMat, 3) == UFF::Tools::RELATION_1_3);
+  TEST_ASSERT(UFF::Tools::twoBitCellPos(mol->getNumAtoms(), 1, 1) == 4)
+  TEST_ASSERT(UFF::Tools::twoBitCellPos(mol->getNumAtoms(), 2, 1) == 5)
+  TEST_ASSERT(UFF::Tools::twoBitCellPos(mol->getNumAtoms(), 1, 2) == 5)
+  TEST_ASSERT(UFF::Tools::getTwoBitCell(nbrMat, 0) == UFF::Tools::RELATION_1_X)
+  TEST_ASSERT(UFF::Tools::getTwoBitCell(nbrMat, 1) == UFF::Tools::RELATION_1_2)
+  TEST_ASSERT(UFF::Tools::getTwoBitCell(nbrMat, 2) == UFF::Tools::RELATION_1_3)
+  TEST_ASSERT(UFF::Tools::getTwoBitCell(nbrMat, 3) == UFF::Tools::RELATION_1_3)
 
   UFF::Tools::addAngles(*mol, types, field);
-  TEST_ASSERT(field->contribs().size() == 6);
+  TEST_ASSERT(field->contribs().size() == 6)
 
   // there are no non-bonded terms here:
   UFF::Tools::addNonbonded(*mol, cid, types, field, nbrMat);
-  TEST_ASSERT(field->contribs().size() == 6);
+  TEST_ASSERT(field->contribs().size() == 6)
 
   // and no torsions either, until we add Hs:
   UFF::Tools::addTorsions(*mol, types, field);
-  TEST_ASSERT(field->contribs().size() == 6);
+  TEST_ASSERT(field->contribs().size() == 6)
 
   delete mol;
   delete field;
   mol = SmilesToMol("CCOC");
   auto *conf2 = new Conformer(mol->getNumAtoms());
   cid = static_cast<int>(mol->addConformer(conf2, true));
-  TEST_ASSERT(mol);
+  TEST_ASSERT(mol)
   boost::tie(types, foundAll) = UFF::getAtomTypes(*mol);
-  TEST_ASSERT(foundAll);
-  TEST_ASSERT(types.size() == mol->getNumAtoms());
+  TEST_ASSERT(foundAll)
+  TEST_ASSERT(types.size() == mol->getNumAtoms())
   field = new ForceFields::ForceField();
   // add the atomic positions:
   for (unsigned int i = 0; i < mol->getNumAtoms(); ++i) {
@@ -278,30 +278,30 @@ void testUFFBuilder1() {
 
   UFF::Tools::addBonds(*mol, types, field);
 
-  TEST_ASSERT(field->contribs().size() == 3);
+  TEST_ASSERT(field->contribs().size() == 3)
 
   nbrMat = UFF::Tools::buildNeighborMatrix(*mol);
-  TEST_ASSERT(UFF::Tools::getTwoBitCell(nbrMat, 0) == UFF::Tools::RELATION_1_X);
-  TEST_ASSERT(UFF::Tools::getTwoBitCell(nbrMat, 1) == UFF::Tools::RELATION_1_2);
-  TEST_ASSERT(UFF::Tools::getTwoBitCell(nbrMat, 2) == UFF::Tools::RELATION_1_3);
-  TEST_ASSERT(UFF::Tools::getTwoBitCell(nbrMat, 3) == UFF::Tools::RELATION_1_X);
+  TEST_ASSERT(UFF::Tools::getTwoBitCell(nbrMat, 0) == UFF::Tools::RELATION_1_X)
+  TEST_ASSERT(UFF::Tools::getTwoBitCell(nbrMat, 1) == UFF::Tools::RELATION_1_2)
+  TEST_ASSERT(UFF::Tools::getTwoBitCell(nbrMat, 2) == UFF::Tools::RELATION_1_3)
+  TEST_ASSERT(UFF::Tools::getTwoBitCell(nbrMat, 3) == UFF::Tools::RELATION_1_X)
 
   UFF::Tools::addAngles(*mol, types, field);
-  TEST_ASSERT(field->contribs().size() == 5);
+  TEST_ASSERT(field->contribs().size() == 5)
   UFF::Tools::addNonbonded(*mol, cid, types, field, nbrMat);
-  TEST_ASSERT(field->contribs().size() == 6);
+  TEST_ASSERT(field->contribs().size() == 6)
   UFF::Tools::addTorsions(*mol, types, field);
-  TEST_ASSERT(field->contribs().size() == 7);
+  TEST_ASSERT(field->contribs().size() == 7)
 
   delete mol;
   delete field;
   mol = SmilesToMol("CO");
   auto *conf3 = new Conformer(mol->getNumAtoms());
   cid = static_cast<int>(mol->addConformer(conf3, true));
-  TEST_ASSERT(mol);
+  TEST_ASSERT(mol)
   boost::tie(types, foundAll) = UFF::getAtomTypes(*mol);
-  TEST_ASSERT(foundAll);
-  TEST_ASSERT(types.size() == mol->getNumAtoms());
+  TEST_ASSERT(foundAll)
+  TEST_ASSERT(types.size() == mol->getNumAtoms())
 
   field = new ForceFields::ForceField();
   // add the atomic positions:
@@ -311,26 +311,26 @@ void testUFFBuilder1() {
 
   UFF::Tools::addBonds(*mol, types, field);
 
-  TEST_ASSERT(field->contribs().size() == 1);
+  TEST_ASSERT(field->contribs().size() == 1)
 
   nbrMat = UFF::Tools::buildNeighborMatrix(*mol);
-  TEST_ASSERT(UFF::Tools::getTwoBitCell(nbrMat, 0) == UFF::Tools::RELATION_1_X);
-  TEST_ASSERT(UFF::Tools::getTwoBitCell(nbrMat, 1) == UFF::Tools::RELATION_1_2);
+  TEST_ASSERT(UFF::Tools::getTwoBitCell(nbrMat, 0) == UFF::Tools::RELATION_1_X)
+  TEST_ASSERT(UFF::Tools::getTwoBitCell(nbrMat, 1) == UFF::Tools::RELATION_1_2)
 
   UFF::Tools::addAngles(*mol, types, field);
-  TEST_ASSERT(field->contribs().size() == 1);
+  TEST_ASSERT(field->contribs().size() == 1)
   UFF::Tools::addNonbonded(*mol, cid, types, field, nbrMat);
-  TEST_ASSERT(field->contribs().size() == 1);
+  TEST_ASSERT(field->contribs().size() == 1)
   UFF::Tools::addTorsions(*mol, types, field);
-  TEST_ASSERT(field->contribs().size() == 1);
+  TEST_ASSERT(field->contribs().size() == 1)
 
   mol2 = MolOps::addHs(*mol);
-  TEST_ASSERT(mol2->getNumAtoms() == 6);
+  TEST_ASSERT(mol2->getNumAtoms() == 6)
   delete field;
 
   boost::tie(types, foundAll) = UFF::getAtomTypes(*mol2);
-  TEST_ASSERT(foundAll);
-  TEST_ASSERT(types.size() == mol2->getNumAtoms());
+  TEST_ASSERT(foundAll)
+  TEST_ASSERT(types.size() == mol2->getNumAtoms())
   auto *conf4 = new Conformer(mol2->getNumAtoms());
   cid = static_cast<int>(mol2->addConformer(conf4, true));
 
@@ -341,15 +341,15 @@ void testUFFBuilder1() {
   }
 
   UFF::Tools::addBonds(*mol2, types, field);
-  TEST_ASSERT(field->contribs().size() == 5);
+  TEST_ASSERT(field->contribs().size() == 5)
 
   nbrMat = UFF::Tools::buildNeighborMatrix(*mol2);
   UFF::Tools::addAngles(*mol2, types, field);
-  TEST_ASSERT(field->contribs().size() == 12);
+  TEST_ASSERT(field->contribs().size() == 12)
   UFF::Tools::addNonbonded(*mol2, cid, types, field, nbrMat);
-  TEST_ASSERT(field->contribs().size() == 15);
+  TEST_ASSERT(field->contribs().size() == 15)
   UFF::Tools::addTorsions(*mol2, types, field);
-  TEST_ASSERT(field->contribs().size() == 18);
+  TEST_ASSERT(field->contribs().size() == 18)
   delete mol2;
 
   delete mol;
@@ -366,15 +366,15 @@ void testUFFBuilder2() {
   pathName += "/Code/GraphMol/ForceFieldHelpers/UFF/test_data";
   {
     RWMol *mol = MolFileToMol(pathName + "/small1.mol", false);
-    TEST_ASSERT(mol);
+    TEST_ASSERT(mol)
     MolOps::sanitizeMol(*mol);
 
     ForceFields::ForceField *field;
     field = UFF::constructForceField(*mol);
-    TEST_ASSERT(field);
+    TEST_ASSERT(field)
     field->initialize();
     int needMore = field->minimize();
-    TEST_ASSERT(!needMore);
+    TEST_ASSERT(!needMore)
     // std::cout << MolToMolBlock(mol);
     delete mol;
     delete field;
@@ -382,7 +382,7 @@ void testUFFBuilder2() {
 
   {  // make sure the confId argument works
     RWMol *mol = MolFileToMol(pathName + "/small1.mol", false);
-    TEST_ASSERT(mol);
+    TEST_ASSERT(mol)
     MolOps::sanitizeMol(*mol);
     auto *newConf = new Conformer(mol->getConformer());
     newConf->setId(111);
@@ -392,20 +392,20 @@ void testUFFBuilder2() {
 
     ForceFields::ForceField *field;
     field = UFF::constructForceField(*mol, 100, 111);
-    TEST_ASSERT(field);
+    TEST_ASSERT(field)
     field->initialize();
     int needMore = field->minimize();
-    TEST_ASSERT(!needMore);
+    TEST_ASSERT(!needMore)
     // std::cout << MolToMolBlock(mol);
 
     RDGeom::Point3D np0 = mol->getConformer().getAtomPos(0);
     RDGeom::Point3D np1 = mol->getConformer().getAtomPos(1);
-    TEST_ASSERT(feq(p0.x, np0.x));
-    TEST_ASSERT(feq(p0.y, np0.y));
-    TEST_ASSERT(feq(p0.z, np0.z));
-    TEST_ASSERT(feq(p1.x, np1.x));
-    TEST_ASSERT(feq(p1.y, np1.y));
-    TEST_ASSERT(feq(p1.z, np1.z));
+    TEST_ASSERT(feq(p0.x, np0.x))
+    TEST_ASSERT(feq(p0.y, np0.y))
+    TEST_ASSERT(feq(p0.z, np0.z))
+    TEST_ASSERT(feq(p1.x, np1.x))
+    TEST_ASSERT(feq(p1.y, np1.y))
+    TEST_ASSERT(feq(p1.z, np1.z))
 
     delete mol;
     delete field;
@@ -413,60 +413,60 @@ void testUFFBuilder2() {
 
   {
     RWMol *mol = MolFileToMol(pathName + "/small2.mol", false);
-    TEST_ASSERT(mol);
+    TEST_ASSERT(mol)
     MolOps::sanitizeMol(*mol);
 
     ForceFields::ForceField *field;
     field = UFF::constructForceField(*mol);
-    TEST_ASSERT(field);
+    TEST_ASSERT(field)
     field->initialize();
     int needMore = field->minimize(150);
-    TEST_ASSERT(!needMore);
+    TEST_ASSERT(!needMore)
     // std::cout << MolToMolBlock(mol);
     delete mol;
     delete field;
   }
   {
     RWMol *mol = MolFileToMol(pathName + "/benzene.mol", false);
-    TEST_ASSERT(mol);
+    TEST_ASSERT(mol)
     MolOps::sanitizeMol(*mol);
 
     ForceFields::ForceField *field;
     field = UFF::constructForceField(*mol);
-    TEST_ASSERT(field);
+    TEST_ASSERT(field)
     field->initialize();
     int needMore = field->minimize();
-    TEST_ASSERT(!needMore);
+    TEST_ASSERT(!needMore)
     // std::cout << MolToMolBlock(mol);
     delete mol;
     delete field;
   }
   {
     RWMol *mol = MolFileToMol(pathName + "/toluene.mol", false);
-    TEST_ASSERT(mol);
+    TEST_ASSERT(mol)
     MolOps::sanitizeMol(*mol);
 
     ForceFields::ForceField *field;
     field = UFF::constructForceField(*mol);
-    TEST_ASSERT(field);
+    TEST_ASSERT(field)
     field->initialize();
     int needMore = field->minimize();
-    TEST_ASSERT(!needMore);
+    TEST_ASSERT(!needMore)
     // std::cout << MolToMolBlock(mol);
     delete mol;
     delete field;
   }
   {
     RWMol *mol = MolFileToMol(pathName + "/complex1.mol", false);
-    TEST_ASSERT(mol);
+    TEST_ASSERT(mol)
     MolOps::sanitizeMol(*mol);
 
     ForceFields::ForceField *field;
     field = UFF::constructForceField(*mol);
-    TEST_ASSERT(field);
+    TEST_ASSERT(field)
     field->initialize();
     int needMore = field->minimize();
-    TEST_ASSERT(!needMore);
+    TEST_ASSERT(!needMore)
     // std::cout << MolToMolBlock(mol);
     delete mol;
     delete field;
@@ -474,7 +474,7 @@ void testUFFBuilder2() {
 
   {  // test the convenience function
     RWMol *mol = MolFileToMol(pathName + "/small1.mol", false);
-    TEST_ASSERT(mol);
+    TEST_ASSERT(mol)
     MolOps::sanitizeMol(*mol);
 
     UFF::AtomicParamVect types;
@@ -506,20 +506,20 @@ void testUFFBuilder2() {
     auto *mol2 = new RWMol(*mol);
 
     field = UFF::constructForceField(*mol2);
-    TEST_ASSERT(field);
+    TEST_ASSERT(field)
     field->initialize();
     int needMore = field->minimize();
-    TEST_ASSERT(!needMore);
+    TEST_ASSERT(!needMore)
     delete field;
 
     needMore = UFF::UFFOptimizeMolecule(*mol2).first;
-    TEST_ASSERT(!needMore);
+    TEST_ASSERT(!needMore)
     for (unsigned int i = 0; i < mol->getNumAtoms(); ++i) {
       const RDGeom::Point3D p1 = mol->getConformer().getAtomPos(i);
       const RDGeom::Point3D p2 = mol2->getConformer().getAtomPos(i);
-      TEST_ASSERT(feq(p1.x, p2.x));
-      TEST_ASSERT(feq(p1.y, p2.y));
-      TEST_ASSERT(feq(p1.z, p2.z));
+      TEST_ASSERT(feq(p1.x, p2.x))
+      TEST_ASSERT(feq(p1.y, p2.y))
+      TEST_ASSERT(feq(p1.z, p2.z))
     }
 
     delete mol;
@@ -528,7 +528,7 @@ void testUFFBuilder2() {
 
   {  // test the convenience function for all confs
     RWMol *mol = MolFileToMol(pathName + "/complex1.mol", false);
-    TEST_ASSERT(mol);
+    TEST_ASSERT(mol)
     MolOps::sanitizeMol(*mol);
     auto *mol2 = new RWMol(*mol);
     auto *newConf = new Conformer(mol->getConformer());
@@ -537,10 +537,10 @@ void testUFFBuilder2() {
 
     ForceFields::ForceField *field;
     field = UFF::constructForceField(*mol, 100, 111);
-    TEST_ASSERT(field);
+    TEST_ASSERT(field)
     field->initialize();
     int needMore = field->minimize();
-    TEST_ASSERT(!needMore);
+    TEST_ASSERT(!needMore)
     delete field;
 
     // the first conf is the same as above,
@@ -551,18 +551,18 @@ void testUFFBuilder2() {
 
     std::vector<std::pair<int, double>> res;
     UFF::UFFOptimizeMoleculeConfs(*mol2, res);
-    TEST_ASSERT(res.size() == 2);
-    TEST_ASSERT(!res[0].first);
-    TEST_ASSERT(!res[1].first);
+    TEST_ASSERT(res.size() == 2)
+    TEST_ASSERT(!res[0].first)
+    TEST_ASSERT(!res[1].first)
     // we expect the energy to go down at least a little bit.
-    TEST_ASSERT(res[1].second < res[0].second);
+    TEST_ASSERT(res[1].second < res[0].second)
 
     for (unsigned int i = 0; i < mol->getNumAtoms(); ++i) {
       const RDGeom::Point3D p1 = mol->getConformer(111).getAtomPos(i);
       const RDGeom::Point3D p2 = mol2->getConformer(0).getAtomPos(i);
-      TEST_ASSERT(feq(p1.x, p2.x));
-      TEST_ASSERT(feq(p1.y, p2.y));
-      TEST_ASSERT(feq(p1.z, p2.z));
+      TEST_ASSERT(feq(p1.x, p2.x))
+      TEST_ASSERT(feq(p1.y, p2.y))
+      TEST_ASSERT(feq(p1.z, p2.z))
     }
 
     delete mol;
@@ -639,42 +639,42 @@ void testUFFBuilderSpecialCases() {
   //  Trigonal bipyramid
   // ----------
   mol = MolFileToMol(pathName + "/tbp.mol", false);
-  TEST_ASSERT(mol);
+  TEST_ASSERT(mol)
   MolOps::sanitizeMol(*mol);
 
   const Conformer &conf = mol->getConformer();
   field = UFF::constructForceField(*mol);
-  TEST_ASSERT(field);
+  TEST_ASSERT(field)
   field->initialize();
   needMore = field->minimize(200, 1e-8, 1e-4);
-  TEST_ASSERT(!needMore);
+  TEST_ASSERT(!needMore)
   v1 = conf.getAtomPos(0).directionVector(conf.getAtomPos(1));
   v2 = conf.getAtomPos(0).directionVector(conf.getAtomPos(2));
-  TEST_ASSERT(feq(v1.dotProduct(v2), -1.0, 1e-3));
+  TEST_ASSERT(feq(v1.dotProduct(v2), -1.0, 1e-3))
   v2 = conf.getAtomPos(0).directionVector(conf.getAtomPos(3));
-  TEST_ASSERT(feq(v1.dotProduct(v2), 0.0, 1e-3));
+  TEST_ASSERT(feq(v1.dotProduct(v2), 0.0, 1e-3))
   v2 = conf.getAtomPos(0).directionVector(conf.getAtomPos(4));
-  TEST_ASSERT(feq(v1.dotProduct(v2), 0.0, 1e-3));
+  TEST_ASSERT(feq(v1.dotProduct(v2), 0.0, 1e-3))
   v2 = conf.getAtomPos(0).directionVector(conf.getAtomPos(5));
-  TEST_ASSERT(feq(v1.dotProduct(v2), 0.0, 1e-3));
+  TEST_ASSERT(feq(v1.dotProduct(v2), 0.0, 1e-3))
 
   v1 = conf.getAtomPos(0).directionVector(conf.getAtomPos(2));
   v2 = conf.getAtomPos(0).directionVector(conf.getAtomPos(3));
-  TEST_ASSERT(feq(v1.dotProduct(v2), 0.0, 1e-3));
+  TEST_ASSERT(feq(v1.dotProduct(v2), 0.0, 1e-3))
   v2 = conf.getAtomPos(0).directionVector(conf.getAtomPos(4));
-  TEST_ASSERT(feq(v1.dotProduct(v2), 0.0, 1e-3));
+  TEST_ASSERT(feq(v1.dotProduct(v2), 0.0, 1e-3))
   v2 = conf.getAtomPos(0).directionVector(conf.getAtomPos(5));
-  TEST_ASSERT(feq(v1.dotProduct(v2), 0.0, 1e-3));
+  TEST_ASSERT(feq(v1.dotProduct(v2), 0.0, 1e-3))
 
   v1 = conf.getAtomPos(0).directionVector(conf.getAtomPos(3));
   v2 = conf.getAtomPos(0).directionVector(conf.getAtomPos(4));
-  TEST_ASSERT(feq(v1.dotProduct(v2), -0.5, 1e-3));
+  TEST_ASSERT(feq(v1.dotProduct(v2), -0.5, 1e-3))
   v2 = conf.getAtomPos(0).directionVector(conf.getAtomPos(5));
-  TEST_ASSERT(feq(v1.dotProduct(v2), -0.5, 1e-3));
+  TEST_ASSERT(feq(v1.dotProduct(v2), -0.5, 1e-3))
 
   v1 = conf.getAtomPos(0).directionVector(conf.getAtomPos(4));
   v2 = conf.getAtomPos(0).directionVector(conf.getAtomPos(5));
-  TEST_ASSERT(feq(v1.dotProduct(v2), -0.5, 1e-3));
+  TEST_ASSERT(feq(v1.dotProduct(v2), -0.5, 1e-3))
 
   delete mol;
   delete field;
@@ -695,17 +695,17 @@ void testIssue239() {
   std::string pathName = getenv("RDBASE");
   pathName += "/Code/GraphMol/ForceFieldHelpers/UFF/test_data";
   mol = MolFileToMol(pathName + "/Issue239.mol", false);
-  TEST_ASSERT(mol);
+  TEST_ASSERT(mol)
   MolOps::sanitizeMol(*mol);
 
   field = UFF::constructForceField(*mol);
-  TEST_ASSERT(field);
+  TEST_ASSERT(field)
   field->initialize();
   needMore = field->minimize(200, 1e-6, 1e-3);
   e1 = field->calcEnergy();
   needMore = field->minimize(200, 1e-6, 1e-3);
   e2 = field->calcEnergy();
-  TEST_ASSERT(feq(e2, e1, 0.1));
+  TEST_ASSERT(feq(e2, e1, 0.1))
 
   delete mol;
   delete field;
@@ -726,11 +726,11 @@ void testCalcEnergyPassedCoords() {
   std::string pathName = getenv("RDBASE");
   pathName += "/Code/GraphMol/ForceFieldHelpers/MMFF/test_data";
   mol = MolFileToMol(pathName + "/Issue239.mol", false);
-  TEST_ASSERT(mol);
+  TEST_ASSERT(mol)
   MolOps::sanitizeMol(*mol);
 
   field = UFF::constructForceField(*mol);
-  TEST_ASSERT(field);
+  TEST_ASSERT(field)
   field->initialize();
   auto *savedPos = new double[3 * field->numPoints()];
   size_t i = 0;
@@ -742,9 +742,9 @@ void testCalcEnergyPassedCoords() {
   e1 = field->calcEnergy();
   field->minimize(10000, 1.0e-6, 1.0e-3);
   e2 = field->calcEnergy();
-  TEST_ASSERT(e2 < e1);
+  TEST_ASSERT(e2 < e1)
   e3 = field->calcEnergy(savedPos);
-  TEST_ASSERT(feq(e3, e1, 0.01));
+  TEST_ASSERT(feq(e3, e1, 0.01))
 
   delete[] savedPos;
   delete mol;
@@ -763,11 +763,11 @@ void testCalcGrad() {
   std::string pathName = getenv("RDBASE");
   pathName += "/Code/GraphMol/ForceFieldHelpers/MMFF/test_data";
   mol = MolFileToMol(pathName + "/Issue239.mol", false);
-  TEST_ASSERT(mol);
+  TEST_ASSERT(mol)
   MolOps::sanitizeMol(*mol);
 
   field = UFF::constructForceField(*mol);
-  TEST_ASSERT(field);
+  TEST_ASSERT(field)
   field->initialize();
   size_t l = 3 * field->numPoints();
   auto *savedPos = new double[l];
@@ -779,26 +779,26 @@ void testCalcGrad() {
       savedPos[i++] = (*pptr)[j];
     }
   }
-  TEST_ASSERT(i == l);
+  TEST_ASSERT(i == l)
 
   std::memset(grad1, 0, l * sizeof(double));
   field->calcGrad(grad1);
   for (i = 0; i < l; ++i) {
-    TEST_ASSERT(!feq(grad1[i], 0.0, 0.001));
+    TEST_ASSERT(!feq(grad1[i], 0.0, 0.001))
   }
 
   field->minimize(10000, 1.0e-6, 1.0e-3);
   std::memset(grad2, 0, l * sizeof(double));
   field->calcGrad(grad2);
   for (i = 0; i < l; ++i) {
-    TEST_ASSERT(feq(grad2[i], 0.0, 0.001));
+    TEST_ASSERT(feq(grad2[i], 0.0, 0.001))
   }
 
   field->initialize();
   std::memset(grad2, 0, l * sizeof(double));
   field->calcGrad(savedPos, grad2);
   for (i = 0; i < l; ++i) {
-    TEST_ASSERT(feq(grad1[i], grad2[i], 0.001));
+    TEST_ASSERT(feq(grad1[i], grad2[i], 0.001))
   }
 
   delete[] savedPos;
@@ -932,15 +932,15 @@ void testSFIssue1653802() {
   pathName += "/Code/GraphMol/ForceFieldHelpers/UFF/test_data";
 
   mol = MolFileToMol(pathName + "/cyclobutadiene.mol", false);
-  TEST_ASSERT(mol);
+  TEST_ASSERT(mol)
   MolOps::sanitizeMol(*mol);
 
   UFF::AtomicParamVect types;
   bool foundAll;
   boost::shared_array<std::uint8_t> nbrMat;
   boost::tie(types, foundAll) = UFF::getAtomTypes(*mol);
-  TEST_ASSERT(foundAll);
-  TEST_ASSERT(types.size() == mol->getNumAtoms());
+  TEST_ASSERT(foundAll)
+  TEST_ASSERT(types.size() == mol->getNumAtoms())
   field = new ForceFields::ForceField();
   // add the atomic positions:
   for (unsigned int i = 0; i < mol->getNumAtoms(); ++i) {
@@ -948,21 +948,21 @@ void testSFIssue1653802() {
   }
 
   UFF::Tools::addBonds(*mol, types, field);
-  TEST_ASSERT(field->contribs().size() == 8);
+  TEST_ASSERT(field->contribs().size() == 8)
 
   nbrMat = UFF::Tools::buildNeighborMatrix(*mol);
   UFF::Tools::addAngles(*mol, types, field);
-  TEST_ASSERT(field->contribs().size() == 20);
+  TEST_ASSERT(field->contribs().size() == 20)
   UFF::Tools::addTorsions(*mol, types, field);
   // std::cout << field->contribs().size() << std::endl;
-  TEST_ASSERT(field->contribs().size() == 36);
+  TEST_ASSERT(field->contribs().size() == 36)
   UFF::Tools::addNonbonded(*mol, 0, types, field, nbrMat);
   delete field;
 
   field = UFF::constructForceField(*mol);
   field->initialize();
   needMore = field->minimize(200, 1e-6, 1e-3);
-  TEST_ASSERT(!needMore);
+  TEST_ASSERT(!needMore)
 
   delete mol;
   delete field;
@@ -977,52 +977,52 @@ void testSFIssue2378119() {
   pathName += "/Code/GraphMol/ForceFieldHelpers/UFF/test_data";
   {
     RWMol *mol = MolFileToMol(pathName + "/Issue2378119.mol");
-    TEST_ASSERT(mol);
+    TEST_ASSERT(mol)
     ForceFields::ForceField *field = UFF::constructForceField(*mol);
-    TEST_ASSERT(field);
+    TEST_ASSERT(field)
     field->initialize();
     double e1 = field->calcEnergy();
-    TEST_ASSERT(e1 > 0.0 && e1 < 1e12);
+    TEST_ASSERT(e1 > 0.0 && e1 < 1e12)
 
     int needMore = field->minimize(200, 1e-6, 1e-3);
-    TEST_ASSERT(!needMore);
+    TEST_ASSERT(!needMore)
     double e2 = field->calcEnergy();
-    TEST_ASSERT(e2 < e1);
+    TEST_ASSERT(e2 < e1)
 
     delete mol;
     delete field;
   }
   {
     RWMol *mol = MolFileToMol(pathName + "/Issue2378119.2.mol");
-    TEST_ASSERT(mol);
+    TEST_ASSERT(mol)
     ForceFields::ForceField *field = UFF::constructForceField(*mol);
-    TEST_ASSERT(field);
+    TEST_ASSERT(field)
     field->initialize();
     double e1 = field->calcEnergy();
-    TEST_ASSERT(e1 == 0.0);
+    TEST_ASSERT(e1 == 0.0)
 
     int needMore = field->minimize(200, 1e-6, 1e-3);
-    TEST_ASSERT(!needMore);
+    TEST_ASSERT(!needMore)
     double e2 = field->calcEnergy();
-    TEST_ASSERT(e2 == e1);
+    TEST_ASSERT(e2 == e1)
 
     delete mol;
     delete field;
   }
   {
     RWMol *mol = MolFileToMol(pathName + "/Issue2378119.2.mol");
-    TEST_ASSERT(mol);
+    TEST_ASSERT(mol)
     ForceFields::ForceField *field =
         UFF::constructForceField(*mol, 100.0, -1, false);
-    TEST_ASSERT(field);
+    TEST_ASSERT(field)
     field->initialize();
     double e1 = field->calcEnergy();
-    TEST_ASSERT(e1 > 0.0 && e1 < 1e12);
+    TEST_ASSERT(e1 > 0.0 && e1 < 1e12)
 
     int needMore = field->minimize(200, 1e-6, 1e-3);
-    TEST_ASSERT(!needMore);
+    TEST_ASSERT(!needMore)
     double e2 = field->calcEnergy();
-    TEST_ASSERT(e2 < e1);
+    TEST_ASSERT(e2 < e1)
 
     delete mol;
     delete field;
@@ -1040,27 +1040,27 @@ void testMissingParams() {
     bool foundAll;
 
     ROMol *mol = SmilesToMol("[Cu](C)(C)(C)(C)C");
-    TEST_ASSERT(mol);
+    TEST_ASSERT(mol)
 
     ROMol *mol2 = MolOps::addHs(*mol);
     delete mol;
 
-    TEST_ASSERT(DGeomHelpers::EmbedMolecule(*mol2) >= 0);
+    TEST_ASSERT(DGeomHelpers::EmbedMolecule(*mol2) >= 0)
 
     boost::tie(types, foundAll) = UFF::getAtomTypes(*mol2);
-    TEST_ASSERT(!foundAll);
-    TEST_ASSERT(types.size() == mol2->getNumAtoms());
-    TEST_ASSERT(!types[0]);
+    TEST_ASSERT(!foundAll)
+    TEST_ASSERT(types.size() == mol2->getNumAtoms())
+    TEST_ASSERT(!types[0])
 
     // make sure we can optimize anyway:
     ForceFields::ForceField *field = UFF::constructForceField(*mol2, types);
-    TEST_ASSERT(field);
+    TEST_ASSERT(field)
     field->initialize();
     double e1 = field->calcEnergy();
     int needMore = field->minimize();
-    TEST_ASSERT(needMore);
+    TEST_ASSERT(needMore)
     double e2 = field->calcEnergy();
-    TEST_ASSERT(e2 < e1);
+    TEST_ASSERT(e2 < e1)
     // std::cerr<<" DE: "<<e1<<" -> "<<e2<<std::endl;
     delete mol2;
     delete field;
@@ -1076,34 +1076,34 @@ void testSFIssue3009337() {
   pathName += "/Code/GraphMol/ForceFieldHelpers/UFF/test_data";
   {
     RWMol *mol = MolFileToMol(pathName + "/Issue3009337.mol", true, false);
-    TEST_ASSERT(mol);
+    TEST_ASSERT(mol)
     ForceFields::ForceField *field = UFF::constructForceField(*mol);
-    TEST_ASSERT(field);
+    TEST_ASSERT(field)
     field->initialize();
     double e1 = field->calcEnergy();
-    TEST_ASSERT(e1 > 0.0 && e1 < 1e12);
+    TEST_ASSERT(e1 > 0.0 && e1 < 1e12)
 
     int needMore = field->minimize(200, 1e-6, 1e-3);
-    TEST_ASSERT(!needMore);
+    TEST_ASSERT(!needMore)
     double e2 = field->calcEnergy();
-    TEST_ASSERT(e2 < e1);
+    TEST_ASSERT(e2 < e1)
 
     delete mol;
     delete field;
   }
   {
     RWMol *mol = MolFileToMol(pathName + "/Issue3009337.2.mol", true, false);
-    TEST_ASSERT(mol);
+    TEST_ASSERT(mol)
     ForceFields::ForceField *field = UFF::constructForceField(*mol);
-    TEST_ASSERT(field);
+    TEST_ASSERT(field)
     field->initialize();
     double e1 = field->calcEnergy();
-    TEST_ASSERT(e1 > 0.0 && e1 < 1e12);
+    TEST_ASSERT(e1 > 0.0 && e1 < 1e12)
 
     int needMore = field->minimize(200, 1e-6, 1e-3);
-    TEST_ASSERT(!needMore);
+    TEST_ASSERT(!needMore)
     double e2 = field->calcEnergy();
-    TEST_ASSERT(e2 < e1);
+    TEST_ASSERT(e2 < e1)
 
     delete mol;
     delete field;
@@ -1126,21 +1126,21 @@ void testGitHubIssue62() {
       auto *tmp = smiSupplier[i];
       ROMol *mol = MolOps::addHs(*tmp);
       delete tmp;
-      TEST_ASSERT(mol);
+      TEST_ASSERT(mol)
       std::string molName = "";
       if (mol->hasProp(common_properties::_Name)) {
         mol->getProp(common_properties::_Name, molName);
       }
       DGeomHelpers::EmbedMolecule(*mol);
       ForceFields::ForceField *field = UFF::constructForceField(*mol);
-      TEST_ASSERT(field);
+      TEST_ASSERT(field)
       field->initialize();
       int needMore = field->minimize(200, 1.e-6, 1.e-3);
-      TEST_ASSERT(!needMore);
+      TEST_ASSERT(!needMore)
       sdfWriter->write(*mol);
       double e = field->calcEnergy();
       BOOST_LOG(rdErrorLog) << molName << " " << e << std::endl;
-      TEST_ASSERT(fabs(e - energyValues[i]) < 1.);
+      TEST_ASSERT(fabs(e - energyValues[i]) < 1.)
       delete field;
       delete mol;
     }
@@ -1155,37 +1155,37 @@ void testUFFParamGetters() {
                         << std::endl;
   {
     ROMol *mol = SmilesToMol("c1ccccc1CCNN");
-    TEST_ASSERT(mol);
+    TEST_ASSERT(mol)
     ROMol *molH = MolOps::addHs(*mol);
     delete mol;
-    TEST_ASSERT(molH);
+    TEST_ASSERT(molH)
     ForceFields::UFF::UFFBond uffBondStretchParams;
     TEST_ASSERT(
-        UFF::getUFFBondStretchParams(*molH, 6, 7, uffBondStretchParams));
+        UFF::getUFFBondStretchParams(*molH, 6, 7, uffBondStretchParams))
     TEST_ASSERT(((int)std::round(uffBondStretchParams.kb * 1000) == 699592) &&
-                ((int)std::round(uffBondStretchParams.r0 * 1000) == 1514));
+                ((int)std::round(uffBondStretchParams.r0 * 1000) == 1514))
     TEST_ASSERT(
-        !UFF::getUFFBondStretchParams(*molH, 0, 7, uffBondStretchParams));
+        !UFF::getUFFBondStretchParams(*molH, 0, 7, uffBondStretchParams))
     ForceFields::UFF::UFFAngle uffAngleBendParams;
-    TEST_ASSERT(UFF::getUFFAngleBendParams(*molH, 6, 7, 8, uffAngleBendParams));
+    TEST_ASSERT(UFF::getUFFAngleBendParams(*molH, 6, 7, 8, uffAngleBendParams))
     TEST_ASSERT(((int)std::round(uffAngleBendParams.ka * 1000) == 303297) &&
-                ((int)std::round(uffAngleBendParams.theta0 * 1000) == 109470));
+                ((int)std::round(uffAngleBendParams.theta0 * 1000) == 109470))
     TEST_ASSERT(
-        !UFF::getUFFAngleBendParams(*molH, 0, 7, 8, uffAngleBendParams));
+        !UFF::getUFFAngleBendParams(*molH, 0, 7, 8, uffAngleBendParams))
     ForceFields::UFF::UFFTor uffTorsionParams;
-    TEST_ASSERT(UFF::getUFFTorsionParams(*molH, 6, 7, 8, 9, uffTorsionParams));
-    TEST_ASSERT(((int)std::round(uffTorsionParams.V * 1000) == 976));
-    TEST_ASSERT(!UFF::getUFFTorsionParams(*molH, 0, 7, 8, 9, uffTorsionParams));
+    TEST_ASSERT(UFF::getUFFTorsionParams(*molH, 6, 7, 8, 9, uffTorsionParams))
+    TEST_ASSERT(((int)std::round(uffTorsionParams.V * 1000) == 976))
+    TEST_ASSERT(!UFF::getUFFTorsionParams(*molH, 0, 7, 8, 9, uffTorsionParams))
     ForceFields::UFF::UFFInv uffInversionParams;
     TEST_ASSERT(
-        UFF::getUFFInversionParams(*molH, 6, 5, 4, 0, uffInversionParams));
-    TEST_ASSERT(((int)std::round(uffInversionParams.K * 1000) == 2000));
+        UFF::getUFFInversionParams(*molH, 6, 5, 4, 0, uffInversionParams))
+    TEST_ASSERT(((int)std::round(uffInversionParams.K * 1000) == 2000))
     TEST_ASSERT(
-        !UFF::getUFFInversionParams(*molH, 6, 5, 4, 1, uffInversionParams));
+        !UFF::getUFFInversionParams(*molH, 6, 5, 4, 1, uffInversionParams))
     ForceFields::UFF::UFFVdW uffVdWParams;
-    TEST_ASSERT(UFF::getUFFVdWParams(*molH, 0, 9, uffVdWParams));
+    TEST_ASSERT(UFF::getUFFVdWParams(*molH, 0, 9, uffVdWParams))
     TEST_ASSERT(((int)std::round(uffVdWParams.x_ij * 1000) == 3754) &&
-                ((int)std::round(uffVdWParams.D_ij * 1000) == 85));
+                ((int)std::round(uffVdWParams.D_ij * 1000) == 85))
     delete molH;
   }
 }
@@ -1210,12 +1210,12 @@ void runblock_uff(const std::vector<ROMol *> &mols,
       } catch (...) {
         field = nullptr;
       }
-      TEST_ASSERT(field);
+      TEST_ASSERT(field)
       field->initialize();
       int failed = field->minimize(500);
-      TEST_ASSERT(!failed);
+      TEST_ASSERT(!failed)
       double eng = field->calcEnergy();
-      TEST_ASSERT(feq(eng, energies[i]));
+      TEST_ASSERT(feq(eng, energies[i]))
       delete field;
     }
   }
@@ -1256,10 +1256,10 @@ void testUFFMultiThread() {
     } catch (...) {
       field = nullptr;
     }
-    TEST_ASSERT(field);
+    TEST_ASSERT(field)
     field->initialize();
     int failed = field->minimize(500);
-    TEST_ASSERT(!failed);
+    TEST_ASSERT(!failed)
     energies[i] = field->calcEnergy();
     delete field;
   }
@@ -1292,7 +1292,7 @@ void testUFFMultiThread2() {
   pathName += "/Code/GraphMol/ForceFieldHelpers/UFF/test_data";
   SDMolSupplier suppl(pathName + "/bulk.sdf");
   ROMol *m = suppl[4];
-  TEST_ASSERT(m);
+  TEST_ASSERT(m)
   auto *om = new ROMol(*m);
   for (unsigned int i = 0; i < 200; ++i) {
     m->addConformer(new Conformer(m->getConformer()), true);
@@ -1302,20 +1302,20 @@ void testUFFMultiThread2() {
   UFF::UFFOptimizeMolecule(*om);
   UFF::UFFOptimizeMoleculeConfs(*m, res, 0);
   for (unsigned int i = 1; i < res.size(); ++i) {
-    TEST_ASSERT(!res[i].first);
-    TEST_ASSERT(feq(res[i].second, res[0].second, .00001));
+    TEST_ASSERT(!res[i].first)
+    TEST_ASSERT(feq(res[i].second, res[0].second, .00001))
   }
   for (unsigned int i = 0; i < m->getNumAtoms(); ++i) {
     RDGeom::Point3D p0 = om->getConformer().getAtomPos(i);
     RDGeom::Point3D np0 = m->getConformer().getAtomPos(i);
-    TEST_ASSERT(feq(p0.x, np0.x));
-    TEST_ASSERT(feq(p0.y, np0.y));
-    TEST_ASSERT(feq(p0.z, np0.z));
+    TEST_ASSERT(feq(p0.x, np0.x))
+    TEST_ASSERT(feq(p0.y, np0.y))
+    TEST_ASSERT(feq(p0.z, np0.z))
     np0 =
         m->getConformer(11).getAtomPos(i);  // pick some random other conformer
-    TEST_ASSERT(feq(p0.x, np0.x));
-    TEST_ASSERT(feq(p0.y, np0.y));
-    TEST_ASSERT(feq(p0.z, np0.z));
+    TEST_ASSERT(feq(p0.x, np0.x))
+    TEST_ASSERT(feq(p0.y, np0.y))
+    TEST_ASSERT(feq(p0.z, np0.z))
   }
   delete m;
   delete om;
@@ -1330,7 +1330,7 @@ void testUFFMultiThread3() {
   pathName += "/Code/GraphMol/ForceFieldHelpers/UFF/test_data";
   SDMolSupplier suppl(pathName + "/bulk.sdf");
   ROMol *m = suppl[4];
-  TEST_ASSERT(m);
+  TEST_ASSERT(m)
   auto *om = new ROMol(*m);
   for (unsigned int i = 0; i < 200; ++i) {
     m->addConformer(new Conformer(m->getConformer()), true);
@@ -1338,29 +1338,29 @@ void testUFFMultiThread3() {
   std::vector<std::pair<int, double>> res;
 
   ForceFields::ForceField *omField = UFF::constructForceField(*om);
-  TEST_ASSERT(omField);
+  TEST_ASSERT(omField)
   omField->initialize();
   ForceFields::ForceField *mField = UFF::constructForceField(*m);
-  TEST_ASSERT(mField);
+  TEST_ASSERT(mField)
   mField->initialize();
 
   ForceFieldsHelper::OptimizeMolecule(*omField);
   ForceFieldsHelper::OptimizeMoleculeConfs(*m, *mField, res, 0);
   for (unsigned int i = 1; i < res.size(); ++i) {
-    TEST_ASSERT(!res[i].first);
-    TEST_ASSERT(feq(res[i].second, res[0].second, .00001));
+    TEST_ASSERT(!res[i].first)
+    TEST_ASSERT(feq(res[i].second, res[0].second, .00001))
   }
   for (unsigned int i = 0; i < m->getNumAtoms(); ++i) {
     RDGeom::Point3D p0 = om->getConformer().getAtomPos(i);
     RDGeom::Point3D np0 = m->getConformer().getAtomPos(i);
-    TEST_ASSERT(feq(p0.x, np0.x));
-    TEST_ASSERT(feq(p0.y, np0.y));
-    TEST_ASSERT(feq(p0.z, np0.z));
+    TEST_ASSERT(feq(p0.x, np0.x))
+    TEST_ASSERT(feq(p0.y, np0.y))
+    TEST_ASSERT(feq(p0.z, np0.z))
     np0 =
         m->getConformer(11).getAtomPos(i);  // pick some random other conformer
-    TEST_ASSERT(feq(p0.x, np0.x));
-    TEST_ASSERT(feq(p0.y, np0.y));
-    TEST_ASSERT(feq(p0.z, np0.z));
+    TEST_ASSERT(feq(p0.x, np0.x))
+    TEST_ASSERT(feq(p0.y, np0.y))
+    TEST_ASSERT(feq(p0.z, np0.z))
   }
   delete m;
   delete om;
@@ -1378,20 +1378,20 @@ void testGitHubIssue613() {
   {
     ROMol *mol =
         SmilesToMol("[Eu+3]123456.[Cl]1.[Cl]2.[Cl]3.[Cl]4.[Cl]5.[Cl]6");
-    TEST_ASSERT(mol);
+    TEST_ASSERT(mol)
     mol->getAtomWithIdx(0)->setHybridization(Atom::SP3D2);
 
     UFF::AtomicParamVect types;
     bool foundAll;
     boost::tie(types, foundAll) = UFF::getAtomTypes(*mol);
-    TEST_ASSERT(foundAll);
-    TEST_ASSERT(types.size() == mol->getNumAtoms());
+    TEST_ASSERT(foundAll)
+    TEST_ASSERT(types.size() == mol->getNumAtoms())
 
     auto params = ForceFields::UFF::ParamCollection::getParams();
     const ForceFields::UFF::AtomicParams *ap = (*params)("Eu6+3");
-    TEST_ASSERT(ap);
-    TEST_ASSERT(ap->r1 == types[0]->r1);
-    TEST_ASSERT(ap->theta0 == types[0]->theta0);
+    TEST_ASSERT(ap)
+    TEST_ASSERT(ap->r1 == types[0]->r1)
+    TEST_ASSERT(ap->theta0 == types[0]->theta0)
     delete mol;
   }
   BOOST_LOG(rdErrorLog) << "  done" << std::endl;
@@ -1422,23 +1422,23 @@ M  V30 END BOND
 M  V30 END CTAB
 M  END
 )CTAB"_ctab;
-  TEST_ASSERT(mol);
+  TEST_ASSERT(mol)
   // explicit hybridization:
   mol->getAtomWithIdx(1)->setHybridization(Atom::HybridizationType::SP2D);
 
   std::unique_ptr<ForceFields::ForceField> field{
       UFF::constructForceField(*mol)};
-  TEST_ASSERT(field);
+  TEST_ASSERT(field)
   field->initialize();
   auto e1 = field->calcEnergy();
   auto needMore = field->minimize(200, 1e-6, 1e-3);
   auto e2 = field->calcEnergy();
-  TEST_ASSERT(e2 < e1);
-  TEST_ASSERT(!needMore);
+  TEST_ASSERT(e2 < e1)
+  TEST_ASSERT(!needMore)
   // make sure it's still square planar
   auto conf = mol->getConformer();
   for (unsigned int i = 0; i < mol->getNumAtoms(); ++i) {
-    TEST_ASSERT(feq(conf.getAtomPos(i).z, 0.0));
+    TEST_ASSERT(feq(conf.getAtomPos(i).z, 0.0))
   }
   BOOST_LOG(rdErrorLog) << "  done" << std::endl;
 }
@@ -1472,19 +1472,19 @@ M  V30 END BOND
 M  V30 END CTAB
 M  END
 )CTAB"_ctab;
-  TEST_ASSERT(mol);
+  TEST_ASSERT(mol)
   TEST_ASSERT(mol->getAtomWithIdx(1)->getHybridization() ==
-              Atom::HybridizationType::SP3D2);
+              Atom::HybridizationType::SP3D2)
 
   std::unique_ptr<ForceFields::ForceField> field{
       UFF::constructForceField(*mol)};
-  TEST_ASSERT(field);
+  TEST_ASSERT(field)
   field->initialize();
   auto e1 = field->calcEnergy();
   auto needMore = field->minimize(200, 1e-6, 1e-3);
   auto e2 = field->calcEnergy();
-  TEST_ASSERT(e2 < e1);
-  TEST_ASSERT(!needMore);
+  TEST_ASSERT(e2 < e1)
+  TEST_ASSERT(!needMore)
   BOOST_LOG(rdErrorLog) << "  done" << std::endl;
 }
 

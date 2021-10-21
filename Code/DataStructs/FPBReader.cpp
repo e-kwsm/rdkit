@@ -69,7 +69,7 @@ void readChunkData(std::istream &istrm, boost::uint64_t &sz,
 
 void extractPopCounts(FPBReader_impl *dp_impl, boost::uint64_t sz,
                       const boost::uint8_t *chunk) {
-  PRECONDITION(dp_impl, "bad pointer");
+  PRECONDITION(dp_impl, "bad pointer")
   /* this section of the FPB format is under-documented in Andrew's code,
    * fortunately it looks pretty simple
    */
@@ -87,7 +87,7 @@ void extractPopCounts(FPBReader_impl *dp_impl, boost::uint64_t sz,
         *reinterpret_cast<const boost::uint32_t *>(chunk));
     chunk += 4;
   }
-};
+}
 
 //-----------------------------------------------------
 //  Arena processing
@@ -114,8 +114,8 @@ To get the number of fingerprints in the arena:
  (len(arena content) - 4 - 4 - 1 - $spacer_size) // $storage_size
  */
 void extractArenaDetails(FPBReader_impl *dp_impl, boost::uint64_t sz) {
-  PRECONDITION(dp_impl, "bad pointer");
-  PRECONDITION(dp_impl->df_lazy, "should only be used in lazy mode");
+  PRECONDITION(dp_impl, "bad pointer")
+  PRECONDITION(dp_impl->df_lazy, "should only be used in lazy mode")
 
   boost::uint32_t numBytesPerFingerprint;
   streamRead(*dp_impl->istrm, numBytesPerFingerprint);
@@ -141,7 +141,7 @@ void extractArenaDetails(FPBReader_impl *dp_impl, boost::uint64_t sz) {
 }
 void extractArena(FPBReader_impl *dp_impl, boost::uint64_t sz,
                   const boost::uint8_t *chunk) {
-  PRECONDITION(dp_impl, "bad pointer");
+  PRECONDITION(dp_impl, "bad pointer")
 
   boost::uint32_t numBytesPerFingerprint =
       *reinterpret_cast<const boost::uint32_t *>(chunk);
@@ -158,18 +158,18 @@ void extractArena(FPBReader_impl *dp_impl, boost::uint64_t sz,
 
   dp_impl->dp_fpData = chunk;
   dp_impl->len = (sz - 9 - spacer) / dp_impl->numBytesStoredPerFingerprint;
-};
+}
 
 // if dp_impl->df_lazy is true, we'll use the memory in fpData (should be large
 // enough to hold the result!), otherwise
 // we update it to a pointer to the memory dp_impl owns.
 void extractBytes(const FPBReader_impl *dp_impl, unsigned int which,
                   boost::uint8_t *&fpData, unsigned int nToRead = 1) {
-  PRECONDITION(dp_impl, "bad reader pointer");
-  PRECONDITION((dp_impl->df_lazy || dp_impl->dp_fpData), "bad fpdata pointer");
-  PRECONDITION(!dp_impl->df_lazy || dp_impl->istrm, "no stream in lazy mode");
-  PRECONDITION(!dp_impl->df_lazy || fpData, "no fpData in lazy mode");
-  PRECONDITION(nToRead > 0, "bad nToRead");
+  PRECONDITION(dp_impl, "bad reader pointer")
+  PRECONDITION((dp_impl->df_lazy || dp_impl->dp_fpData), "bad fpdata pointer")
+  PRECONDITION(!dp_impl->df_lazy || dp_impl->istrm, "no stream in lazy mode")
+  PRECONDITION(!dp_impl->df_lazy || fpData, "no fpData in lazy mode")
+  PRECONDITION(nToRead > 0, "bad nToRead")
 
   if (which + nToRead > dp_impl->len) {
     throw ValueErrorException("bad index");
@@ -183,11 +183,11 @@ void extractBytes(const FPBReader_impl *dp_impl, unsigned int which,
     dp_impl->istrm->read(reinterpret_cast<char *>(fpData),
                          nToRead * dp_impl->numBytesStoredPerFingerprint);
   }
-};
+}
 
 // the caller is responsible for delete[]'ing this
 boost::uint8_t *copyBytes(const FPBReader_impl *dp_impl, unsigned int which) {
-  PRECONDITION(dp_impl, "bad reader pointer");
+  PRECONDITION(dp_impl, "bad reader pointer")
   boost::uint8_t *res;
   res = new boost::uint8_t[dp_impl->numBytesStoredPerFingerprint];
   if (!dp_impl->df_lazy) {
@@ -199,7 +199,7 @@ boost::uint8_t *copyBytes(const FPBReader_impl *dp_impl, unsigned int which) {
     extractBytes(dp_impl, which, res);
   }
   return res;
-};
+}
 
 // caller is responsible for delete'ing the result
 RDKIT_DATASTRUCTS_EXPORT boost::dynamic_bitset<> *bytesToBitset(
@@ -231,7 +231,7 @@ RDKIT_DATASTRUCTS_EXPORT boost::uint8_t *bitsetToBytes(
 
 // the caller is responsible for delete'ing this
 ExplicitBitVect *extractFP(const FPBReader_impl *dp_impl, unsigned int which) {
-  PRECONDITION(dp_impl, "bad reader pointer");
+  PRECONDITION(dp_impl, "bad reader pointer")
   boost::uint8_t *fpData;
   if (dp_impl->df_lazy) {
     fpData = new boost::uint8_t[dp_impl->numBytesStoredPerFingerprint];
@@ -242,12 +242,12 @@ ExplicitBitVect *extractFP(const FPBReader_impl *dp_impl, unsigned int which) {
     delete[] fpData;
   }
   return new ExplicitBitVect(resDBS);
-};
+}
 
 double tanimoto(const FPBReader_impl *dp_impl, unsigned int which,
                 const ::boost::uint8_t *bv) {
-  PRECONDITION(dp_impl, "bad reader pointer");
-  PRECONDITION(bv, "bad bv pointer");
+  PRECONDITION(dp_impl, "bad reader pointer")
+  PRECONDITION(bv, "bad bv pointer")
   if (which >= dp_impl->len) {
     throw ValueErrorException("bad index");
   }
@@ -262,12 +262,12 @@ double tanimoto(const FPBReader_impl *dp_impl, unsigned int which,
     delete[] fpData;
   }
   return res;
-};
+}
 
 double tversky(const FPBReader_impl *dp_impl, unsigned int which,
                const ::boost::uint8_t *bv, double ca, double cb) {
-  PRECONDITION(dp_impl, "bad reader pointer");
-  PRECONDITION(bv, "bad bv pointer");
+  PRECONDITION(dp_impl, "bad reader pointer")
+  PRECONDITION(bv, "bad bv pointer")
   if (which >= dp_impl->len) {
     throw ValueErrorException("bad index");
   }
@@ -282,7 +282,7 @@ double tversky(const FPBReader_impl *dp_impl, unsigned int which,
     delete[] fpData;
   }
   return res;
-};
+}
 
 //-----------------------------------------------------
 //  Id procesing
@@ -329,7 +329,7 @@ uint64)
   id = bytes[start:end-1]
  */
 void extractIdsDetails(FPBReader_impl *dp_impl, boost::uint64_t sz) {
-  PRECONDITION(dp_impl, "bad pointer");
+  PRECONDITION(dp_impl, "bad pointer")
   std::streampos start = dp_impl->istrm->tellg();
   dp_impl->idChunkOffset = start;
   streamRead(*dp_impl->istrm, dp_impl->num4ByteElements);
@@ -340,11 +340,11 @@ void extractIdsDetails(FPBReader_impl *dp_impl, boost::uint64_t sz) {
                           dp_impl->num8ByteElements * 8;
   dp_impl->istrm->seekg(start + static_cast<std::streampos>(sz),
                         std::ios_base::beg);
-};
+}
 
 void extractIds(FPBReader_impl *dp_impl, boost::uint64_t sz,
                 const boost::uint8_t *chunk) {
-  PRECONDITION(dp_impl, "bad pointer");
+  PRECONDITION(dp_impl, "bad pointer")
   dp_impl->num4ByteElements = *reinterpret_cast<const boost::uint32_t *>(chunk);
   chunk += sizeof(boost::uint32_t);
   dp_impl->num8ByteElements = *reinterpret_cast<const boost::uint32_t *>(chunk);
@@ -352,13 +352,13 @@ void extractIds(FPBReader_impl *dp_impl, boost::uint64_t sz,
   dp_impl->dp_idOffsets = dp_impl->dp_idChunk.get() + sz -
                           (dp_impl->num4ByteElements + 1) * 4 -
                           dp_impl->num8ByteElements * 8;
-};
+}
 
 std::string extractId(const FPBReader_impl *dp_impl, unsigned int which) {
-  PRECONDITION(dp_impl, "bad reader pointer");
+  PRECONDITION(dp_impl, "bad reader pointer")
   PRECONDITION((dp_impl->df_lazy || dp_impl->dp_idOffsets),
-               "bad idOffsets pointer");
-  PRECONDITION(!dp_impl->df_lazy || dp_impl->istrm, "no stream in lazy mode");
+               "bad idOffsets pointer")
+  PRECONDITION(!dp_impl->df_lazy || dp_impl->istrm, "no stream in lazy mode")
 
   if (which >= dp_impl->num4ByteElements + dp_impl->num8ByteElements) {
     throw ValueErrorException("bad index");
@@ -422,16 +422,16 @@ std::string extractId(const FPBReader_impl *dp_impl, unsigned int which) {
     res = std::string(reinterpret_cast<const char *>(buff.get()));
   }
   return res;
-};
+}
 
 void tanimotoNeighbors(const FPBReader_impl *dp_impl, const boost::uint8_t *bv,
                        double threshold,
                        std::vector<std::pair<double, unsigned int>> &res,
                        bool usePopcountScreen, unsigned int readCache = 1000) {
-  PRECONDITION(dp_impl, "bad reader pointer");
-  PRECONDITION(bv, "bad bv");
-  RANGE_CHECK(-1e-6, threshold, 1.0 + 1e-6);
-  PRECONDITION(readCache > 0, "bad cache size");
+  PRECONDITION(dp_impl, "bad reader pointer")
+  PRECONDITION(bv, "bad bv")
+  RANGE_CHECK(-1e-6, threshold, 1.0 + 1e-6)
+  PRECONDITION(readCache > 0, "bad cache size")
   res.clear();
   boost::uint64_t probeCount =
       CalcBitmapPopcount(bv, dp_impl->numBytesStoredPerFingerprint);
@@ -484,9 +484,9 @@ void tverskyNeighbors(const FPBReader_impl *dp_impl, const boost::uint8_t *bv,
                       double ca, double cb, double threshold,
                       std::vector<std::pair<double, unsigned int>> &res,
                       bool usePopcountScreen) {
-  PRECONDITION(dp_impl, "bad reader pointer");
-  PRECONDITION(bv, "bad bv");
-  RANGE_CHECK(-1e-6, threshold, 1.0 + 1e-6);
+  PRECONDITION(dp_impl, "bad reader pointer")
+  PRECONDITION(bv, "bad bv")
+  RANGE_CHECK(-1e-6, threshold, 1.0 + 1e-6)
   res.clear();
   boost::uint64_t probeCount =
       CalcBitmapPopcount(bv, dp_impl->numBytesStoredPerFingerprint);
@@ -536,8 +536,8 @@ void tverskyNeighbors(const FPBReader_impl *dp_impl, const boost::uint8_t *bv,
 void containingNeighbors(const FPBReader_impl *dp_impl,
                          const boost::uint8_t *bv,
                          std::vector<unsigned int> &res) {
-  PRECONDITION(dp_impl, "bad reader pointer");
-  PRECONDITION(bv, "bad bv");
+  PRECONDITION(dp_impl, "bad reader pointer")
+  PRECONDITION(bv, "bad bv")
   res.clear();
   boost::uint64_t probeCount =
       CalcBitmapPopcount(bv, dp_impl->numBytesStoredPerFingerprint);
@@ -566,7 +566,7 @@ void containingNeighbors(const FPBReader_impl *dp_impl,
 }  // namespace detail
 
 void FPBReader::init() {
-  PRECONDITION(dp_istrm, "no stream");
+  PRECONDITION(dp_istrm, "no stream")
   if (df_init) {
     return;
   }
@@ -633,7 +633,7 @@ void FPBReader::init() {
   }
 
   df_init = true;
-};
+}
 
 void FPBReader::destroy() {
   if (dp_impl) {
@@ -645,42 +645,42 @@ void FPBReader::destroy() {
   }
   delete dp_impl;
   dp_impl = nullptr;
-};
+}
 
 boost::shared_ptr<ExplicitBitVect> FPBReader::getFP(unsigned int idx) const {
-  PRECONDITION(df_init, "not initialized");
+  PRECONDITION(df_init, "not initialized")
 
   return boost::shared_ptr<ExplicitBitVect>(detail::extractFP(dp_impl, idx));
-};
+}
 boost::shared_array<boost::uint8_t> FPBReader::getBytes(
     unsigned int idx) const {
-  PRECONDITION(df_init, "not initialized");
+  PRECONDITION(df_init, "not initialized")
 
   return boost::shared_array<boost::uint8_t>(detail::copyBytes(dp_impl, idx));
-};
+}
 
 std::string FPBReader::getId(unsigned int idx) const {
-  PRECONDITION(df_init, "not initialized");
+  PRECONDITION(df_init, "not initialized")
 
   std::string res = detail::extractId(dp_impl, idx);
   return res;
-};
+}
 unsigned int FPBReader::length() const {
-  PRECONDITION(df_init, "not initialized");
-  PRECONDITION(dp_impl, "no impl");
+  PRECONDITION(df_init, "not initialized")
+  PRECONDITION(dp_impl, "no impl")
   return dp_impl->len;
-};
+}
 unsigned int FPBReader::nBits() const {
-  PRECONDITION(df_init, "not initialized");
-  PRECONDITION(dp_impl, "no impl");
+  PRECONDITION(df_init, "not initialized")
+  PRECONDITION(dp_impl, "no impl")
   return dp_impl->nBits;
-};
+}
 std::pair<unsigned int, unsigned int> FPBReader::getFPIdsInCountRange(
     unsigned int minCount, unsigned int maxCount) {
-  PRECONDITION(df_init, "not initialized");
-  PRECONDITION(dp_impl, "no impl");
-  URANGE_CHECK(maxCount, dp_impl->nBits + 1);
-  PRECONDITION(maxCount >= minCount, "max < min");
+  PRECONDITION(df_init, "not initialized")
+  PRECONDITION(dp_impl, "no impl")
+  URANGE_CHECK(maxCount, dp_impl->nBits + 1)
+  PRECONDITION(maxCount >= minCount, "max < min")
   if (dp_impl->popCountOffsets.size() == dp_impl->nBits + 2) {
     return std::make_pair(dp_impl->popCountOffsets[minCount],
                           dp_impl->popCountOffsets[maxCount + 1]);
@@ -689,10 +689,10 @@ std::pair<unsigned int, unsigned int> FPBReader::getFPIdsInCountRange(
     // FIX: complete this
     return std::make_pair(0, 0);
   }
-};
+}
 double FPBReader::getTanimoto(unsigned int idx,
                               const boost::uint8_t *bv) const {
-  PRECONDITION(df_init, "not initialized");
+  PRECONDITION(df_init, "not initialized")
   return detail::tanimoto(dp_impl, idx, bv);
 }
 double FPBReader::getTanimoto(unsigned int idx,
@@ -705,7 +705,7 @@ double FPBReader::getTanimoto(unsigned int idx,
 
 std::vector<std::pair<double, unsigned int>> FPBReader::getTanimotoNeighbors(
     const boost::uint8_t *bv, double threshold, bool usePopcountScreen) const {
-  PRECONDITION(df_init, "not initialized");
+  PRECONDITION(df_init, "not initialized")
   std::vector<std::pair<double, unsigned int>> res;
   detail::tanimotoNeighbors(dp_impl, bv, threshold, res, usePopcountScreen);
   std::sort(res.begin(), res.end(), Rankers::pairGreater);
@@ -724,7 +724,7 @@ std::vector<std::pair<double, unsigned int>> FPBReader::getTanimotoNeighbors(
 
 double FPBReader::getTversky(unsigned int idx, const boost::uint8_t *bv,
                              double ca, double cb) const {
-  PRECONDITION(df_init, "not initialized");
+  PRECONDITION(df_init, "not initialized")
   return detail::tversky(dp_impl, idx, bv, ca, cb);
 }
 double FPBReader::getTversky(unsigned int idx, const ExplicitBitVect &ebv,
@@ -738,7 +738,7 @@ double FPBReader::getTversky(unsigned int idx, const ExplicitBitVect &ebv,
 std::vector<std::pair<double, unsigned int>> FPBReader::getTverskyNeighbors(
     const boost::uint8_t *bv, double ca, double cb, double threshold,
     bool usePopcountScreen) const {
-  PRECONDITION(df_init, "not initialized");
+  PRECONDITION(df_init, "not initialized")
   std::vector<std::pair<double, unsigned int>> res;
   detail::tverskyNeighbors(dp_impl, bv, ca, cb, threshold, res,
                            usePopcountScreen);
@@ -758,7 +758,7 @@ std::vector<std::pair<double, unsigned int>> FPBReader::getTverskyNeighbors(
 
 std::vector<unsigned int> FPBReader::getContainingNeighbors(
     const boost::uint8_t *bv) const {
-  PRECONDITION(df_init, "not initialized");
+  PRECONDITION(df_init, "not initialized")
   std::vector<unsigned int> res;
   detail::containingNeighbors(dp_impl, bv, res);
   std::sort(res.begin(), res.end());
