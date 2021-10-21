@@ -291,7 +291,6 @@ struct mol_wrapper {
         .value("CoordsAsDouble", RDKit::PicklerOps::CoordsAsDouble)
         .value("NoConformers", RDKit::PicklerOps::NoConformers)
         .export_values();
-    ;
 
     RegisterVectorConverter<StereoGroup>("StereoGroup_vect");
 

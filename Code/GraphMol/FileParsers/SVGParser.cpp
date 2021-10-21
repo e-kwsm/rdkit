@@ -25,7 +25,7 @@ namespace pt = boost::property_tree;
 namespace RDKit {
 namespace {
 void ptreeToMol(RWMol *mol, const pt::ptree &molE) {
-  PRECONDITION(mol, "no molecule");
+  PRECONDITION(mol, "no molecule")
   std::vector<RDGeom::Point3D> pts;
   bool is3D = false;
   for (const auto &atE : molE) {
@@ -75,7 +75,7 @@ void ptreeToMol(RWMol *mol, const pt::ptree &molE) {
 }  // namespace
 
 RWMol *RDKitSVGToMol(std::istream *instream, bool sanitize, bool removeHs) {
-  PRECONDITION(instream, "bad stream");
+  PRECONDITION(instream, "bad stream")
   pt::ptree tree;
   pt::read_xml(*instream, tree);
   RWMol *res = nullptr;

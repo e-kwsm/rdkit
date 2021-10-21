@@ -1167,5 +1167,5 @@ int setAromaticity(RWMol &mol, AromaticityModel model, int (*func)(RWMol &)) {
   }
 }
 
-};  // end of namespace MolOps
-};  // end of namespace RDKit
+}  // namespace MolOps
+}  // namespace RDKit

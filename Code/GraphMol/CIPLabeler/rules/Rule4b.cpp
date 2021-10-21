@@ -282,7 +282,7 @@ Sort Rule4b::getRefSorter(const SequenceRule *replacement_rule) const {
   const auto &rules = getSorter()->getRules();
 
   CHECK_INVARIANT(std::find(rules.begin(), rules.end(), this) != rules.end(),
-                  "Rule4b instance not in rule set");
+                  "Rule4b instance not in rule set")
 
   std::vector<const SequenceRule *> new_rules;
   new_rules.reserve(rules.size());

@@ -314,7 +314,7 @@ void GenerateFP(const RDKit::ROMol &mol, ExplicitBitVect &fp) {
     gpats = std::unique_ptr<Patterns>(new Patterns());
   }
   const Patterns &pats = *(gpats.get());
-  PRECONDITION(fp.size() == 167, "bad fingerprint");
+  PRECONDITION(fp.size() == 167, "bad fingerprint")
   fp.clearBits();
 
   if (!mol.getNumAtoms()) {

@@ -38,7 +38,7 @@ struct RDKIT_MOLALIGN_EXPORT O3AFuncData {
 };
 inline bool isDoubleZero(const double x) {
   return ((x < 1.0e-10) && (x > -1.0e-10));
-};
+}
 
 class O3AConstraintVect;
 
@@ -133,8 +133,8 @@ class RDKIT_MOLALIGN_EXPORT MolHistogram {
   MolHistogram(const ROMol &mol, const double *dmat, bool cleanupDmat = false);
   ~MolHistogram() = default;
   inline int get(const unsigned int y, const unsigned int x) const {
-    PRECONDITION(y < d_h.shape()[0], "Invalid index on MolHistogram");
-    PRECONDITION(x < d_h.shape()[1], "Invalid index on MolHistogram");
+    PRECONDITION(y < d_h.shape()[0], "Invalid index on MolHistogram")
+    PRECONDITION(x < d_h.shape()[1], "Invalid index on MolHistogram")
     return d_h[y][x];
   }
 
@@ -156,12 +156,12 @@ class RDKIT_MOLALIGN_EXPORT LAP {
         d_cost(boost::extents[dim][dim]) {}
   ~LAP() = default;
   int getCost(const unsigned int i, const unsigned int j) {
-    PRECONDITION(i < d_cost.shape()[0], "Invalid index on LAP.cost");
-    PRECONDITION(j < d_cost.shape()[1], "Invalid index on LAP.cost");
+    PRECONDITION(i < d_cost.shape()[0], "Invalid index on LAP.cost")
+    PRECONDITION(j < d_cost.shape()[1], "Invalid index on LAP.cost")
     return d_cost[i][j];
   }
   int getRowSol(const unsigned int i) {
-    PRECONDITION(i < d_rowSol.size(), "Invalid index on LAP.rowSol");
+    PRECONDITION(i < d_rowSol.size(), "Invalid index on LAP.rowSol")
     return d_rowSol[i];
   }
   void computeMinCostPath(const int dim);

@@ -137,7 +137,7 @@ TEST_CASE("test2") {
   REQUIRE_MSG(iv[5] == 0, "bad frag membership");
   REQUIRE_MSG(iv[6] == 1, "bad frag membership");
   delete m;
-};
+}
 
 TEST_CASE("flat RingInfo storage preserves membership and fused semantics") {
   RingInfo ringInfo;

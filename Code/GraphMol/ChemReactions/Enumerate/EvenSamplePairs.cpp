@@ -42,7 +42,7 @@ void EvenSamplePairsStrategy::initializeStrategy(const ChemicalReaction &,
   // If we fail here, someone has a ridiculous amount of memory
   PRECONDITION(
       m_numPermutations != EnumerationStrategyBase::EnumerationOverflow,
-      "Cannot represent all permutations for the even sampler");
+      "Cannot represent all permutations for the even sampler")
 
   boost::uint64_t npos = bbs.size();
   used_count.resize(npos);
@@ -74,7 +74,6 @@ void EvenSamplePairsStrategy::initializeStrategy(const ChemicalReaction &,
   /* Initialize random number generator */
   /* Find modulus */
   for (M = 1; M < rdcast<boost::uint64_t>(m_numPermutations); M = 2 * M) {
-    ;
   }
   /* Set factor */
   a = 5;
