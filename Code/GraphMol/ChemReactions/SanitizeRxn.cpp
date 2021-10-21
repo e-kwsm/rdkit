@@ -129,7 +129,7 @@ struct AtomInfo {
   }
 
   void setRLabel(unsigned int rlabel) {
-    PRECONDITION(atom, "Internal error in SanitizeRxn - null atom");
+    PRECONDITION(atom, "Internal error in SanitizeRxn - null atom")
     auto &mol = dynamic_cast<RWMol &>(atom->getOwningMol());
 
     QueryAtom qatom(*atom);

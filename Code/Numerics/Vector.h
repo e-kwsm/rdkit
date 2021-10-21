@@ -110,7 +110,7 @@ class Vector {
    */
 
   Vector<TYPE> &assign(const Vector<TYPE> &other) {
-    PRECONDITION(d_size == other.size(), "Size mismatch in vector copying");
+    PRECONDITION(d_size == other.size(), "Size mismatch in vector copying")
     const TYPE *otherData = other.getData();
     memcpy(static_cast<void *>(d_data.get()),
            static_cast<const void *>(otherData), d_size * sizeof(TYPE));
@@ -119,7 +119,7 @@ class Vector {
 
   //! elementwise addition, vectors must be the same size.
   Vector<TYPE> &operator+=(const Vector<TYPE> &other) {
-    PRECONDITION(d_size == other.size(), "Size mismatch in vector addition");
+    PRECONDITION(d_size == other.size(), "Size mismatch in vector addition")
     const TYPE *otherData = other.getData();
     TYPE *data = d_data.get();
     unsigned int i;
@@ -131,7 +131,7 @@ class Vector {
 
   //! elementwise subtraction, vectors must be the same size.
   Vector<TYPE> &operator-=(const Vector<TYPE> &other) {
-    PRECONDITION(d_size == other.size(), "Size mismatch in vector subtraction");
+    PRECONDITION(d_size == other.size(), "Size mismatch in vector subtraction")
     const TYPE *otherData = other.getData();
     TYPE *data = d_data.get();
     unsigned int i;
@@ -243,7 +243,7 @@ class Vector {
   //! returns the dot product between two Vectors
   TYPE dotProduct(const Vector<TYPE> other) const {
     PRECONDITION(d_size == other.size(),
-                 "Size mismatch in vector doct product");
+                 "Size mismatch in vector doct product")
     const TYPE *oData = other.getData();
     unsigned int i;
     TYPE res = (TYPE)(0.0);

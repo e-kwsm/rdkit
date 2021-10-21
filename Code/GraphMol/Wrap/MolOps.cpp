@@ -842,7 +842,7 @@ python::object findAllSubgraphsOfLengthsMtoNHelper(const ROMol &mol,
     res.append(tmp);
   }
   return python::tuple(res);
-};
+}
 
 PATH_TYPE findAtomEnvironmentOfRadiusNHelper(const ROMol &mol,
                                              unsigned int radius,
@@ -1181,7 +1181,6 @@ struct molops_wrapper {
                MolOps::SANITIZE_CLEANUP_ORGANOMETALLICS)
         .value("SANITIZE_ALL", MolOps::SANITIZE_ALL)
         .export_values();
-    ;
 
     // ------------------------------------------------------------------------
     docString =

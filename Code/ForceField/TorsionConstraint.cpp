@@ -27,13 +27,13 @@ inline void checkPrecondition(const ForceField *owner, unsigned int idx1,
                               unsigned int idx2, unsigned int idx3,
                               unsigned int idx4, double minDihedralDeg,
                               double maxDihedralDeg) {
-  PRECONDITION(owner, "bad owner");
+  PRECONDITION(owner, "bad owner")
   PRECONDITION(!(minDihedralDeg > maxDihedralDeg),
-               "minDihedralDeg must be <= maxDihedralDeg");
-  URANGE_CHECK(idx1, owner->positions().size());
-  URANGE_CHECK(idx2, owner->positions().size());
-  URANGE_CHECK(idx3, owner->positions().size());
-  URANGE_CHECK(idx4, owner->positions().size());
+               "minDihedralDeg must be <= maxDihedralDeg")
+  URANGE_CHECK(idx1, owner->positions().size())
+  URANGE_CHECK(idx2, owner->positions().size())
+  URANGE_CHECK(idx3, owner->positions().size())
+  URANGE_CHECK(idx4, owner->positions().size())
 }
 
 double TorsionConstraintContrib::computeDihedralTerm(double dihedral) const {
@@ -101,8 +101,8 @@ TorsionConstraintContrib::TorsionConstraintContrib(
 }
 
 double TorsionConstraintContrib::getEnergy(double *pos) const {
-  PRECONDITION(dp_forceField, "no owner");
-  PRECONDITION(pos, "bad vector");
+  PRECONDITION(dp_forceField, "no owner")
+  PRECONDITION(pos, "bad vector")
   double dihedral;
   RDKit::ForceFieldsHelper::computeDihedral(pos, d_at1Idx, d_at2Idx, d_at3Idx,
                                             d_at4Idx, &dihedral);
@@ -114,9 +114,9 @@ double TorsionConstraintContrib::getEnergy(double *pos) const {
 }
 
 void TorsionConstraintContrib::getGrad(double *pos, double *grad) const {
-  PRECONDITION(dp_forceField, "no owner");
-  PRECONDITION(pos, "bad vector");
-  PRECONDITION(grad, "bad vector");
+  PRECONDITION(dp_forceField, "no owner")
+  PRECONDITION(pos, "bad vector")
+  PRECONDITION(grad, "bad vector")
 
   double *g[4] = {&(grad[3 * d_at1Idx]), &(grad[3 * d_at2Idx]),
                   &(grad[3 * d_at3Idx]), &(grad[3 * d_at4Idx])};

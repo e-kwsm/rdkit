@@ -33,7 +33,7 @@ void test1() {
   std::ifstream instrm(fName.c_str());
   while (!reader.atEnd()) {
     RDKit::ROMol *m = reader.next();
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
     std::string nm;
     m->getProp("_Name", nm);
     double dpbf = RDKit::Descriptors::PBF(*m);
@@ -42,12 +42,12 @@ void test1() {
     double ref;
     instrm >> inm;
     instrm >> ref;
-    TEST_ASSERT(inm == nm);
+    TEST_ASSERT(inm == nm)
     if (fabs(ref - dpbf) > .001) {
       std::cerr << "value mismatch: " << inm << " " << ref << " " << dpbf
                 << std::endl;
     }
-    TEST_ASSERT(fabs(ref - dpbf) < 0.001);
+    TEST_ASSERT(fabs(ref - dpbf) < 0.001)
     delete m;
   }
   BOOST_LOG(rdErrorLog) << "  done" << std::endl;
@@ -63,9 +63,9 @@ void testPBFEdges() {
         pathName + "/Code/GraphMol/Descriptors/test_data/linear.mol";
 
     RDKit::ROMol *m = RDKit::MolFileToMol(sdfName);
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
     double dpbf = RDKit::Descriptors::PBF(*m);
-    TEST_ASSERT(dpbf <= 1e-4);
+    TEST_ASSERT(dpbf <= 1e-4)
     delete m;
   }
   {
@@ -74,9 +74,9 @@ void testPBFEdges() {
         pathName + "/Code/GraphMol/Descriptors/test_data/linear_2atom.mol";
 
     RDKit::ROMol *m = RDKit::MolFileToMol(sdfName);
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
     double dpbf = RDKit::Descriptors::PBF(*m);
-    TEST_ASSERT(dpbf <= 1e-4);
+    TEST_ASSERT(dpbf <= 1e-4)
     delete m;
   }
   {
@@ -85,9 +85,9 @@ void testPBFEdges() {
         pathName + "/Code/GraphMol/Descriptors/test_data/planar.mol";
 
     RDKit::ROMol *m = RDKit::MolFileToMol(sdfName);
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
     double dpbf = RDKit::Descriptors::PBF(*m);
-    TEST_ASSERT(dpbf <= 1e-4);
+    TEST_ASSERT(dpbf <= 1e-4)
     delete m;
   }
   {
@@ -96,9 +96,9 @@ void testPBFEdges() {
         pathName + "/Code/GraphMol/Descriptors/test_data/planar_3atom.mol";
 
     RDKit::ROMol *m = RDKit::MolFileToMol(sdfName);
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
     double dpbf = RDKit::Descriptors::PBF(*m);
-    TEST_ASSERT(dpbf <= 1e-4);
+    TEST_ASSERT(dpbf <= 1e-4)
     delete m;
   }
   {
@@ -113,7 +113,7 @@ void testPBFEdges() {
     m.addAtom(new RDKit::Atom(6), updateLabel, takeOwnership);
     m.addConformer(new RDKit::Conformer(m.getNumAtoms()));
     double dpbf = RDKit::Descriptors::PBF(m);
-    TEST_ASSERT(dpbf <= 1e-4);
+    TEST_ASSERT(dpbf <= 1e-4)
   }
 
   BOOST_LOG(rdErrorLog) << "  done" << std::endl;

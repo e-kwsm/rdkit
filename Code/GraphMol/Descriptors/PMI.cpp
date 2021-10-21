@@ -160,7 +160,7 @@ double PMI3(const ROMol &mol, int confId, bool useAtomicMasses, bool force) {
 
 double radiusOfGyration(const ROMol &mol, int confId, bool useAtomicMasses,
                         bool force) {
-  PRECONDITION(mol.getNumConformers() >= 1, "molecule has no conformers");
+  PRECONDITION(mol.getNumConformers() >= 1, "molecule has no conformers")
   double pm1, pm2, pm3;
   if (!getMomentsFromGyration(mol, confId, useAtomicMasses, pm1, pm2, pm3,
                               force)) {
@@ -172,7 +172,7 @@ double radiusOfGyration(const ROMol &mol, int confId, bool useAtomicMasses,
 
 double inertialShapeFactor(const ROMol &mol, int confId, bool useAtomicMasses,
                            bool force) {
-  PRECONDITION(mol.getNumConformers() >= 1, "molecule has no conformers");
+  PRECONDITION(mol.getNumConformers() >= 1, "molecule has no conformers")
   double pm1, pm2, pm3;
   if (!getMoments(mol, confId, useAtomicMasses, pm1, pm2, pm3, force)) {
     // the eigenvector calculation failed
@@ -187,7 +187,7 @@ double inertialShapeFactor(const ROMol &mol, int confId, bool useAtomicMasses,
 }
 double eccentricity(const ROMol &mol, int confId, bool useAtomicMasses,
                     bool force) {
-  PRECONDITION(mol.getNumConformers() >= 1, "molecule has no conformers");
+  PRECONDITION(mol.getNumConformers() >= 1, "molecule has no conformers")
   double pm1, pm2, pm3;
   if (!getMoments(mol, confId, useAtomicMasses, pm1, pm2, pm3, force)) {
     // the eigenvector calculation failed
@@ -203,7 +203,7 @@ double eccentricity(const ROMol &mol, int confId, bool useAtomicMasses,
 
 double asphericity(const ROMol &mol, int confId, bool useAtomicMasses,
                    bool force) {
-  PRECONDITION(mol.getNumConformers() >= 1, "molecule has no conformers");
+  PRECONDITION(mol.getNumConformers() >= 1, "molecule has no conformers")
   double pm1, pm2, pm3;
   if (!getMomentsFromGyration(mol, confId, useAtomicMasses, pm1, pm2, pm3,
                               force)) {

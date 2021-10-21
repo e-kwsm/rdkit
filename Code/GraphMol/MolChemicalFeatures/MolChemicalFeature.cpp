@@ -16,14 +16,14 @@ namespace RDKit {
 
 const std::string &MolChemicalFeature::getFamily() const {
   return dp_def->getFamily();  // return d_family;
-};
+}
 
 const std::string &MolChemicalFeature::getType() const {
   return dp_def->getType();  // return d_type;
-};
+}
 
 void MolChemicalFeature::setActiveConformer(int confId) {
-  PRECONDITION(dp_mol, "bad molecule");
+  PRECONDITION(dp_mol, "bad molecule")
   d_activeConf = confId;
 }
 
@@ -32,8 +32,8 @@ RDGeom::Point3D MolChemicalFeature::getPos() const {
 }
 
 RDGeom::Point3D MolChemicalFeature::getPos(int confId) const {
-  PRECONDITION(dp_mol, "bad molecule");
-  PRECONDITION(dp_mol->getNumConformers(), "molecule has no conformers");
+  PRECONDITION(dp_mol, "bad molecule")
+  PRECONDITION(dp_mol->getNumConformers(), "molecule has no conformers")
   if (confId == -1) {
     confId = (*dp_mol->beginConformers())->getId();
   }
@@ -52,9 +52,9 @@ RDGeom::Point3D MolChemicalFeature::getPos(int confId) const {
   if (d_atoms.size() == 1) {
     res = dp_mol->getConformer(confId).getAtomPos((*d_atoms.begin())->getIdx());
   } else {
-    PRECONDITION(dp_def, "bad definition");
+    PRECONDITION(dp_def, "bad definition")
     PRECONDITION(dp_def->getNumWeights() == this->getNumAtoms(),
-                 "weight/atom mismatch");
+                 "weight/atom mismatch")
     auto weightIt = dp_def->beginWeights();
     const Conformer &conf = dp_mol->getConformer(confId);
     for (auto atomIt = d_atoms.begin(); atomIt != d_atoms.end();

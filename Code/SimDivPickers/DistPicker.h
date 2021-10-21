@@ -87,6 +87,6 @@ class distmatFunctor {
 };
 }  // namespace
 
-};  // namespace RDPickers
+}  // namespace RDPickers
 
 #endif

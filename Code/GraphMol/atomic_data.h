@@ -78,5 +78,5 @@ class RDKIT_GRAPHMOL_EXPORT atomicData {
   double commonIsotopeMass;  // most common isotopic mass
   unsigned int row;          // row in the periodic table
 };
-};  // namespace RDKit
+}  // namespace RDKit
 #endif
