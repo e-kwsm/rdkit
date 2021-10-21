@@ -3592,7 +3592,6 @@ void test35ParensInReactants1() {
       rxn = RxnSmartsToChemicalReaction(smi);
       TEST_ASSERT(!rxn);
     } catch (const ChemicalReactionParserException &) {
-      ;
     }
     delete rxn;
   }
@@ -3603,7 +3602,6 @@ void test35ParensInReactants1() {
       rxn = RxnSmartsToChemicalReaction(smi);
       TEST_ASSERT(!rxn);
     } catch (const ChemicalReactionParserException &) {
-      ;
     }
     delete rxn;
   }
@@ -3614,7 +3612,6 @@ void test35ParensInReactants1() {
       rxn = RxnSmartsToChemicalReaction(smi);
       TEST_ASSERT(!rxn);
     } catch (const ChemicalReactionParserException &) {
-      ;
     }
     delete rxn;
   }
@@ -4558,7 +4555,6 @@ void test47TestReactionMoleculeConversion() {
 
     delete rxn;
     delete m;
-    ;
   }
   {
     // test for molecule with correct rxn role for only one reactant
@@ -4703,7 +4699,6 @@ void test48ParensInProducts1() {
       rxn = RxnSmartsToChemicalReaction(smi);
       TEST_ASSERT(!rxn);
     } catch (const ChemicalReactionParserException &) {
-      ;
     }
     delete rxn;
   }
@@ -4714,7 +4709,6 @@ void test48ParensInProducts1() {
       rxn = RxnSmartsToChemicalReaction(smi);
       TEST_ASSERT(!rxn);
     } catch (const ChemicalReactionParserException &) {
-      ;
     }
     delete rxn;
   }
@@ -4725,7 +4719,6 @@ void test48ParensInProducts1() {
       rxn = RxnSmartsToChemicalReaction(smi);
       TEST_ASSERT(!rxn);
     } catch (const ChemicalReactionParserException &) {
-      ;
     }
     delete rxn;
   }
@@ -4736,7 +4729,6 @@ void test48ParensInProducts1() {
       rxn = RxnSmartsToChemicalReaction(smi);
       TEST_ASSERT(!rxn);
     } catch (const ChemicalReactionParserException &) {
-      ;
     }
     delete rxn;
   }
@@ -6962,7 +6954,7 @@ ROMOL_SPTR run_simple_reaction(const std::string &reaction,
   TEST_ASSERT(prods[0].size() == 1);
 
   return prods[0][0];
-};
+}
 
 void run_gist_reaction_tests(const std::vector<RWMOL_SPTR> &mols) {
   TEST_ASSERT(check_bond_stereo(mols[0], 1, 0, 3, Bond::BondStereo::STEREOE));

@@ -35,15 +35,15 @@ void testBasic() {
 
   RDGeom::Transform3D trans;
   double ssr = AlignPoints(rpts, qpts, trans);
-  CHECK_INVARIANT(RDKit::feq(ssr, 0.0), "");
+  CHECK_INVARIANT(RDKit::feq(ssr, 0.0), "")
 
   // transform qpts and see if we match the rpts
   trans.TransformPoint(qpt1);
   trans.TransformPoint(qpt2);
   qpt1 -= rpt1;
   qpt2 -= rpt2;
-  CHECK_INVARIANT(RDKit::feq(qpt1.length(), 0.0), "");
-  CHECK_INVARIANT(RDKit::feq(qpt2.length(), 0.0), "");
+  CHECK_INVARIANT(RDKit::feq(qpt1.length(), 0.0), "")
+  CHECK_INVARIANT(RDKit::feq(qpt2.length(), 0.0), "")
 }
 
 void testTraingle() {
@@ -66,7 +66,7 @@ void testTraingle() {
 
   RDGeom::Transform3D trans;
   double ssr = AlignPoints(rpts, qpts, trans);
-  CHECK_INVARIANT(RDKit::feq(ssr, 3.0), "");
+  CHECK_INVARIANT(RDKit::feq(ssr, 3.0), "")
   RDGeom::Point3D nqpt1, nqpt2, nqpt3;
   nqpt1 = qpt1;
   nqpt2 = qpt2;
@@ -78,16 +78,16 @@ void testTraingle() {
   nqpt2 -= rpt2;
   nqpt3 -= rpt3;
 
-  CHECK_INVARIANT(RDKit::feq(nqpt1.length(), 1.0), "");
-  CHECK_INVARIANT(RDKit::feq(nqpt2.length(), 1.0), "");
-  CHECK_INVARIANT(RDKit::feq(nqpt3.length(), 1.0), "");
+  CHECK_INVARIANT(RDKit::feq(nqpt1.length(), 1.0), "")
+  CHECK_INVARIANT(RDKit::feq(nqpt2.length(), 1.0), "")
+  CHECK_INVARIANT(RDKit::feq(nqpt3.length(), 1.0), "")
 
   DoubleVector wts(3);
   wts.setVal(0, 1.0);
   wts.setVal(1, 1.0);
   wts.setVal(2, 2.0);
   ssr = AlignPoints(rpts, qpts, trans, &wts);
-  CHECK_INVARIANT(RDKit::feq(ssr, 3.75), "");
+  CHECK_INVARIANT(RDKit::feq(ssr, 3.75), "")
   nqpt1 = qpt1;
   nqpt2 = qpt2;
   nqpt3 = qpt3;
@@ -99,16 +99,16 @@ void testTraingle() {
   nqpt2 -= rpt2;
   nqpt3 -= rpt3;
 
-  CHECK_INVARIANT(RDKit::feq(nqpt1.length(), 1.14564), "");
-  CHECK_INVARIANT(RDKit::feq(nqpt2.length(), 1.14564), "");
-  CHECK_INVARIANT(RDKit::feq(nqpt3.length(), 0.75), "");
+  CHECK_INVARIANT(RDKit::feq(nqpt1.length(), 1.14564), "")
+  CHECK_INVARIANT(RDKit::feq(nqpt2.length(), 1.14564), "")
+  CHECK_INVARIANT(RDKit::feq(nqpt3.length(), 0.75), "")
 
   wts.setVal(0, 1.0);
   wts.setVal(1, 2.0);
   wts.setVal(2, 2.0);
 
   ssr = AlignPoints(rpts, qpts, trans, &wts);
-  CHECK_INVARIANT(RDKit::feq(ssr, 4.8), "");
+  CHECK_INVARIANT(RDKit::feq(ssr, 4.8), "")
   nqpt1 = qpt1;
   nqpt2 = qpt2;
   nqpt3 = qpt3;
@@ -121,9 +121,9 @@ void testTraingle() {
   nqpt1 -= rpt1;
   nqpt2 -= rpt2;
   nqpt3 -= rpt3;
-  CHECK_INVARIANT(RDKit::feq(nqpt1.length(), 1.2), "");
-  CHECK_INVARIANT(RDKit::feq(nqpt2.length(), 0.9165), "");
-  CHECK_INVARIANT(RDKit::feq(nqpt3.length(), 0.9165), "");
+  CHECK_INVARIANT(RDKit::feq(nqpt1.length(), 1.2), "")
+  CHECK_INVARIANT(RDKit::feq(nqpt2.length(), 0.9165), "")
+  CHECK_INVARIANT(RDKit::feq(nqpt3.length(), 0.9165), "")
 }
 
 void testFourPts() {
@@ -150,7 +150,7 @@ void testFourPts() {
 
   RDGeom::Transform3D trans;
   double ssr = AlignPoints(rpts, qpts, trans);
-  CHECK_INVARIANT(RDKit::feq(ssr, 0.0), "");
+  CHECK_INVARIANT(RDKit::feq(ssr, 0.0), "")
   trans.TransformPoint(qpt1);
   trans.TransformPoint(qpt2);
   trans.TransformPoint(qpt3);
@@ -159,10 +159,10 @@ void testFourPts() {
   qpt2 -= rpt2;
   qpt3 -= rpt3;
   qpt4 -= rpt4;
-  CHECK_INVARIANT(RDKit::feq(qpt1.length(), 0.0), "");
-  CHECK_INVARIANT(RDKit::feq(qpt2.length(), 0.0), "");
-  CHECK_INVARIANT(RDKit::feq(qpt3.length(), 0.0), "");
-  CHECK_INVARIANT(RDKit::feq(qpt4.length(), 0.0), "");
+  CHECK_INVARIANT(RDKit::feq(qpt1.length(), 0.0), "")
+  CHECK_INVARIANT(RDKit::feq(qpt2.length(), 0.0), "")
+  CHECK_INVARIANT(RDKit::feq(qpt3.length(), 0.0), "")
+  CHECK_INVARIANT(RDKit::feq(qpt4.length(), 0.0), "")
 }
 
 void testReflection() {
@@ -189,10 +189,10 @@ void testReflection() {
 
   RDGeom::Transform3D trans;
   double ssr = AlignPoints(rpts, qpts, trans);
-  CHECK_INVARIANT(RDKit::feq(ssr, 1.0), "");
+  CHECK_INVARIANT(RDKit::feq(ssr, 1.0), "")
 
   ssr = AlignPoints(rpts, qpts, trans, nullptr, true);
-  CHECK_INVARIANT(RDKit::feq(ssr, 0.0), "");
+  CHECK_INVARIANT(RDKit::feq(ssr, 0.0), "")
 
   trans.TransformPoint(qpt1);
   trans.TransformPoint(qpt2);
@@ -203,10 +203,10 @@ void testReflection() {
   qpt3 -= rpt3;
   qpt4 -= rpt4;
 
-  CHECK_INVARIANT(RDKit::feq(qpt1.length(), 0.0), "");
-  CHECK_INVARIANT(RDKit::feq(qpt2.length(), 0.0), "");
-  CHECK_INVARIANT(RDKit::feq(qpt3.length(), 0.0), "");
-  CHECK_INVARIANT(RDKit::feq(qpt4.length(), 0.0), "");
+  CHECK_INVARIANT(RDKit::feq(qpt1.length(), 0.0), "")
+  CHECK_INVARIANT(RDKit::feq(qpt2.length(), 0.0), "")
+  CHECK_INVARIANT(RDKit::feq(qpt3.length(), 0.0), "")
+  CHECK_INVARIANT(RDKit::feq(qpt4.length(), 0.0), "")
 }
 
 int main() {

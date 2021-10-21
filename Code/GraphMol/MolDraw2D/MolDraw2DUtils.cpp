@@ -426,7 +426,7 @@ void contourAndDrawGrid(MolDraw2D &drawer, const double *grid,
     drawer.setFillPolys(ofill);
     drawer.setLineWidth(owidth);
   }
-};
+}
 
 void contourAndDrawGaussians(MolDraw2D &drawer,
                              const std::vector<Point2D> &locs,
@@ -500,7 +500,7 @@ void contourAndDrawGaussians(MolDraw2D &drawer,
   paramsCopy.setScale = false;  // if scaling was needed, we did it already
   contourAndDrawGrid(drawer, grid.get(), xcoords, ycoords, nContours, levels,
                      paramsCopy);
-};
+}
 
 // ****************************************************************************
 void drawMolACS1996(MolDraw2D &drawer, const ROMol &mol,
