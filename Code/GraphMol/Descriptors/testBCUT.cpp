@@ -63,9 +63,9 @@ void test1() {
   for (size_t i = 0; i < vec.size(); ++i) {
     std::unique_ptr<ROMol> m(SmilesToMol(vec[i]));
     auto bcut = Descriptors::BCUT2D(*m);
-    TEST_ASSERT(bcut.size() == expected[i].size());
+    TEST_ASSERT(bcut.size() == expected[i].size())
     for (size_t j = 0; j < bcut.size(); ++j) {
-      TEST_ASSERT(feq(bcut[j], expected[i][j]));
+      TEST_ASSERT(feq(bcut[j], expected[i][j]))
     }
   }
   BOOST_LOG(rdErrorLog) << "  done" << std::endl;
@@ -82,17 +82,17 @@ void test2() {
   RDKit::SDMolSupplier reader(sdfName, true, false);
   while (!reader.atEnd()) {
     std::unique_ptr<RDKit::ROMol> m(reader.next());
-    TEST_ASSERT(m.get());
+    TEST_ASSERT(m.get())
     std::vector<double> bcuts = Descriptors::BCUT2D(*m);
-    TEST_ASSERT(bcuts.size() == 8);
-    TEST_ASSERT(feq(bcuts[0], m->getProp<double>("bcut1")));
-    TEST_ASSERT(feq(bcuts[1], m->getProp<double>("bcut2")));
-    TEST_ASSERT(feq(bcuts[2], m->getProp<double>("bcut3")));
-    TEST_ASSERT(feq(bcuts[3], m->getProp<double>("bcut4")));
-    TEST_ASSERT(feq(bcuts[4], m->getProp<double>("bcut5")));
-    TEST_ASSERT(feq(bcuts[5], m->getProp<double>("bcut6")));
-    TEST_ASSERT(feq(bcuts[6], m->getProp<double>("bcut7")));
-    TEST_ASSERT(feq(bcuts[7], m->getProp<double>("bcut8")));
+    TEST_ASSERT(bcuts.size() == 8)
+    TEST_ASSERT(feq(bcuts[0], m->getProp<double>("bcut1")))
+    TEST_ASSERT(feq(bcuts[1], m->getProp<double>("bcut2")))
+    TEST_ASSERT(feq(bcuts[2], m->getProp<double>("bcut3")))
+    TEST_ASSERT(feq(bcuts[3], m->getProp<double>("bcut4")))
+    TEST_ASSERT(feq(bcuts[4], m->getProp<double>("bcut5")))
+    TEST_ASSERT(feq(bcuts[5], m->getProp<double>("bcut6")))
+    TEST_ASSERT(feq(bcuts[6], m->getProp<double>("bcut7")))
+    TEST_ASSERT(feq(bcuts[7], m->getProp<double>("bcut8")))
   }
 }
 

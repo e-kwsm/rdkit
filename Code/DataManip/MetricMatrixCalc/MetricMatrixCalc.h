@@ -79,7 +79,7 @@ class MetricMatrixCalc {
    */
   void calcMetricMatrix(const vectType &descripts, unsigned int nItems,
                         unsigned int dim, double *distMat) {
-    CHECK_INVARIANT(distMat, "invalid pointer to a distance matix");
+    CHECK_INVARIANT(distMat, "invalid pointer to a distance matix")
 
     for (unsigned int i = 1; i < nItems; i++) {
       unsigned int itab = i * (i - 1) / 2;
@@ -101,6 +101,6 @@ class MetricMatrixCalc {
    */
   double (*dp_metricFunc)(const entryType &, const entryType &, unsigned int);
 };
-};  // namespace RDDataManip
+}  // namespace RDDataManip
 
 #endif
