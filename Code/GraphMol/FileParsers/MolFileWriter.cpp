@@ -656,7 +656,7 @@ const std::string GetMolFileAtomLine(const Atom *atom, const Conformer *conf,
   res += dest;
 #endif
   return res;
-};
+}
 
 int BondGetMolFileSymbol(const Bond *bond) {
   PRECONDITION(bond, "");
@@ -876,7 +876,7 @@ const std::string GetV3000MolFileAtomLine(
   // HCOUNT - *query* hydrogen count. Not written by this writer.
 
   return ss.str();
-};
+}
 
 int GetV3000BondCode(const Bond *bond) {
   // JHJ: As far as I can tell, the V3000 bond codes are the same as for V2000.

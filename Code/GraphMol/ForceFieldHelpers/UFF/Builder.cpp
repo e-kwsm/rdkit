@@ -32,8 +32,8 @@ namespace Tools {
 // ------------------------------------------------------------------------
 void addBonds(const ROMol &mol, const AtomicParamVect &params,
               ForceFields::ForceField *field) {
-  PRECONDITION(mol.getNumAtoms() == params.size(), "bad parameters");
-  PRECONDITION(field, "bad forcefield");
+  PRECONDITION(mol.getNumAtoms() == params.size(), "bad parameters")
+  PRECONDITION(field, "bad forcefield")
 
   for (ROMol::ConstBondIterator bi = mol.beginBonds(); bi != mol.endBonds();
        bi++) {
@@ -138,8 +138,8 @@ boost::shared_array<std::uint8_t> buildNeighborMatrix(const ROMol &mol) {
 // ------------------------------------------------------------------------
 void addAngles(const ROMol &mol, const AtomicParamVect &params,
                ForceFields::ForceField *field) {
-  PRECONDITION(mol.getNumAtoms() == params.size(), "bad parameters");
-  PRECONDITION(field, "bad forcefield");
+  PRECONDITION(mol.getNumAtoms() == params.size(), "bad parameters")
+  PRECONDITION(field, "bad forcefield")
   ROMol::ADJ_ITER nbr1Idx;
   ROMol::ADJ_ITER end1Nbrs;
   ROMol::ADJ_ITER nbr2Idx;
@@ -249,11 +249,11 @@ void addAngles(const ROMol &mol, const AtomicParamVect &params,
 void addTrigonalBipyramidAngles(const Atom *atom, const ROMol &mol, int confId,
                                 const AtomicParamVect &params,
                                 ForceFields::ForceField *field) {
-  PRECONDITION(atom, "bad atom");
-  PRECONDITION(atom->getHybridization() == Atom::SP3D, "bad hybridization");
-  PRECONDITION(atom->getDegree() == 5, "bad degree");
-  PRECONDITION(mol.getNumAtoms() == params.size(), "bad parameters");
-  PRECONDITION(field, "bad forcefield");
+  PRECONDITION(atom, "bad atom")
+  PRECONDITION(atom->getHybridization() == Atom::SP3D, "bad hybridization")
+  PRECONDITION(atom->getDegree() == 5, "bad degree")
+  PRECONDITION(mol.getNumAtoms() == params.size(), "bad parameters")
+  PRECONDITION(field, "bad forcefield")
 
   const Bond *ax1 = nullptr, *ax2 = nullptr;
   const Bond *eq1 = nullptr, *eq2 = nullptr, *eq3 = nullptr;
@@ -290,8 +290,8 @@ void addTrigonalBipyramidAngles(const Atom *atom, const ROMol &mol, int confId,
     }
     ++beg1;
   }
-  CHECK_INVARIANT(ax1, "axial bond not found");
-  CHECK_INVARIANT(ax2, "axial bond not found");
+  CHECK_INVARIANT(ax1, "axial bond not found")
+  CHECK_INVARIANT(ax2, "axial bond not found")
 
   boost::tie(beg1, end1) = mol.getAtomBonds(atom);
   while (beg1 != end1) {
@@ -309,9 +309,9 @@ void addTrigonalBipyramidAngles(const Atom *atom, const ROMol &mol, int confId,
     }
   }
 
-  CHECK_INVARIANT(eq1, "equatorial bond not found");
-  CHECK_INVARIANT(eq2, "equatorial bond not found");
-  CHECK_INVARIANT(eq3, "equatorial bond not found");
+  CHECK_INVARIANT(eq1, "equatorial bond not found")
+  CHECK_INVARIANT(eq2, "equatorial bond not found")
+  CHECK_INVARIANT(eq3, "equatorial bond not found")
 
   //------------------------------------------------------------
   // alright, add the angles:
@@ -413,8 +413,8 @@ void addTrigonalBipyramidAngles(const Atom *atom, const ROMol &mol, int confId,
 void addAngleSpecialCases(const ROMol &mol, int confId,
                           const AtomicParamVect &params,
                           ForceFields::ForceField *field) {
-  PRECONDITION(mol.getNumAtoms() == params.size(), "bad parameters");
-  PRECONDITION(field, "bad forcefield");
+  PRECONDITION(mol.getNumAtoms() == params.size(), "bad parameters")
+  PRECONDITION(field, "bad forcefield")
 
   unsigned int nAtoms = mol.getNumAtoms();
   for (unsigned int i = 0; i < nAtoms; i++) {
@@ -435,8 +435,8 @@ void addNonbonded(const ROMol &mol, int confId, const AtomicParamVect &params,
                   ForceFields::ForceField *field,
                   boost::shared_array<std::uint8_t> neighborMatrix,
                   double vdwThresh, bool ignoreInterfragInteractions) {
-  PRECONDITION(mol.getNumAtoms() == params.size(), "bad parameters");
-  PRECONDITION(field, "bad forcefield");
+  PRECONDITION(mol.getNumAtoms() == params.size(), "bad parameters")
+  PRECONDITION(field, "bad forcefield")
 
   INT_VECT fragMapping;
   if (ignoreInterfragInteractions) {
@@ -521,8 +521,8 @@ const ROMol *DefaultTorsionBondSmarts::query() {
 void addTorsions(const ROMol &mol, const AtomicParamVect &params,
                  ForceFields::ForceField *field,
                  const std::string &torsionBondSmarts) {
-  PRECONDITION(mol.getNumAtoms() == params.size(), "bad parameters");
-  PRECONDITION(field, "bad forcefield");
+  PRECONDITION(mol.getNumAtoms() == params.size(), "bad parameters")
+  PRECONDITION(field, "bad forcefield")
 
   // find all of the torsion bonds:
   std::vector<MatchVectType> matchVect;
@@ -530,7 +530,7 @@ void addTorsions(const ROMol &mol, const AtomicParamVect &params,
   const ROMol *query = (torsionBondSmarts == DefaultTorsionBondSmarts::string())
                            ? defaultQuery
                            : SmartsToMol(torsionBondSmarts);
-  TEST_ASSERT(query);
+  TEST_ASSERT(query)
   unsigned int nHits = SubstructMatch(mol, *query, matchVect);
   if (query != defaultQuery) {
     delete query;
@@ -538,7 +538,7 @@ void addTorsions(const ROMol &mol, const AtomicParamVect &params,
 
   for (unsigned int i = 0; i < nHits; i++) {
     MatchVectType match = matchVect[i];
-    TEST_ASSERT(match.size() == 2);
+    TEST_ASSERT(match.size() == 2)
     int idx1 = match[0].second;
     int idx2 = match[1].second;
     if (!params[idx1] || !params[idx2]) {
@@ -546,7 +546,7 @@ void addTorsions(const ROMol &mol, const AtomicParamVect &params,
     }
     const Bond *bond = mol.getBondBetweenAtoms(idx1, idx2);
     std::vector<TorsionAngleContrib *> contribsHere;
-    TEST_ASSERT(bond);
+    TEST_ASSERT(bond)
     const Atom *atom1 = mol.getAtomWithIdx(idx1);
     const Atom *atom2 = mol.getAtomWithIdx(idx2);
 
@@ -614,8 +614,8 @@ void addTorsions(const ROMol &mol, const AtomicParamVect &params,
 // ------------------------------------------------------------------------
 void addInversions(const ROMol &mol, const AtomicParamVect &params,
                    ForceFields::ForceField *field) {
-  PRECONDITION(mol.getNumAtoms() == params.size(), "bad parameters");
-  PRECONDITION(field, "bad forcefield");
+  PRECONDITION(mol.getNumAtoms() == params.size(), "bad parameters")
+  PRECONDITION(field, "bad forcefield")
 
   unsigned int idx[4];
   unsigned int n[4];
@@ -697,7 +697,7 @@ ForceFields::ForceField *constructForceField(ROMol &mol,
                                              const AtomicParamVect &params,
                                              double vdwThresh, int confId,
                                              bool ignoreInterfragInteractions) {
-  PRECONDITION(mol.getNumAtoms() == params.size(), "bad parameters");
+  PRECONDITION(mol.getNumAtoms() == params.size(), "bad parameters")
 
   if (MolOps::needsHs(mol)) {
     BOOST_LOG(rdWarningLog)

@@ -47,7 +47,7 @@ SDWriter::SDWriter(const std::string &fileName) {
 }
 
 SDWriter::SDWriter(std::ostream *outStream, bool takeOwnership) {
-  PRECONDITION(outStream, "null stream");
+  PRECONDITION(outStream, "null stream")
   if (outStream->bad()) {
     throw FileParseException("Bad output stream");
   }
@@ -77,7 +77,7 @@ void SDWriter::setProps(const STR_VECT &propNames) {
 namespace {
 void _writePropToStream(std::ostream *dp_ostream, const ROMol &mol,
                         const std::string &name, int d_molid) {
-  PRECONDITION(dp_ostream, "no output stream");
+  PRECONDITION(dp_ostream, "no output stream")
 
   // write the property value
   // FIX: we will assume for now that the desired property value is
@@ -118,7 +118,7 @@ void _writePropToStream(std::ostream *dp_ostream, const ROMol &mol,
 void _MolToSDStream(std::ostream *dp_ostream, const ROMol &mol, int confId,
                     bool df_kekulize, bool df_forceV3000, int d_molid,
                     STR_VECT *props) {
-  PRECONDITION(dp_ostream, "no output stream");
+  PRECONDITION(dp_ostream, "no output stream")
 
   // write the molecule
   (*dp_ostream) << MolToMolBlock(mol, true, confId, df_kekulize, df_forceV3000);
@@ -166,17 +166,17 @@ std::string SDWriter::getText(const ROMol &mol, int confId, bool kekulize,
   std::stringstream sstr;
   _MolToSDStream(&sstr, mol, confId, kekulize, forceV3000, molid, propNames);
   return sstr.str();
-};
+}
 
 void SDWriter::write(const ROMol &mol, int confId) {
-  PRECONDITION(dp_ostream, "no output stream");
+  PRECONDITION(dp_ostream, "no output stream")
   _MolToSDStream(dp_ostream, mol, confId, df_kekulize, df_forceV3000, d_molid,
                  &d_props);
   ++d_molid;
 }
 
 void SDWriter::writeProperty(const ROMol &mol, const std::string &name) {
-  PRECONDITION(dp_ostream, "no output stream");
+  PRECONDITION(dp_ostream, "no output stream")
 
   _writePropToStream(dp_ostream, mol, name, d_molid);
 }

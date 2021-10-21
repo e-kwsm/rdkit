@@ -23,7 +23,7 @@ namespace MMFF {
 namespace Utils {
 
 double calcAngleRestValue(const MMFFAngle *mmffAngleParams) {
-  PRECONDITION(mmffAngleParams, "angle parameters not found");
+  PRECONDITION(mmffAngleParams, "angle parameters not found")
 
   return mmffAngleParams->theta0;
 }
@@ -39,7 +39,7 @@ double calcCosTheta(RDGeom::Point3D p1, RDGeom::Point3D p2, RDGeom::Point3D p3,
 }
 
 double calcAngleForceConstant(const MMFFAngle *mmffAngleParams) {
-  PRECONDITION(mmffAngleParams, "angle parameters not found");
+  PRECONDITION(mmffAngleParams, "angle parameters not found")
 
   return mmffAngleParams->ka;
 }
@@ -89,12 +89,12 @@ AngleBendContrib::AngleBendContrib(ForceField *owner, unsigned int idx1,
                                    unsigned int idx2, unsigned int idx3,
                                    const MMFFAngle *mmffAngleParams,
                                    const MMFFProp *mmffPropParamsCentralAtom) {
-  PRECONDITION(owner, "bad owner");
+  PRECONDITION(owner, "bad owner")
   PRECONDITION(((idx1 != idx2) && (idx2 != idx3) && (idx1 != idx3)),
-               "degenerate points");
-  URANGE_CHECK(idx1, owner->positions().size());
-  URANGE_CHECK(idx2, owner->positions().size());
-  URANGE_CHECK(idx3, owner->positions().size());
+               "degenerate points")
+  URANGE_CHECK(idx1, owner->positions().size())
+  URANGE_CHECK(idx2, owner->positions().size())
+  URANGE_CHECK(idx3, owner->positions().size())
 
   dp_forceField = owner;
   d_at1Idx = idx1;
@@ -107,8 +107,8 @@ AngleBendContrib::AngleBendContrib(ForceField *owner, unsigned int idx1,
 }
 
 double AngleBendContrib::getEnergy(double *pos) const {
-  PRECONDITION(dp_forceField, "no owner");
-  PRECONDITION(pos, "bad vector");
+  PRECONDITION(dp_forceField, "no owner")
+  PRECONDITION(pos, "bad vector")
 
   double dist1 = dp_forceField->distance(d_at1Idx, d_at2Idx, pos);
   double dist2 = dp_forceField->distance(d_at2Idx, d_at3Idx, pos);
@@ -126,9 +126,9 @@ double AngleBendContrib::getEnergy(double *pos) const {
 }
 
 void AngleBendContrib::getGrad(double *pos, double *grad) const {
-  PRECONDITION(dp_forceField, "no owner");
-  PRECONDITION(pos, "bad vector");
-  PRECONDITION(grad, "bad vector");
+  PRECONDITION(dp_forceField, "no owner")
+  PRECONDITION(pos, "bad vector")
+  PRECONDITION(grad, "bad vector")
   double dist[2] = {dp_forceField->distance(d_at1Idx, d_at2Idx, pos),
                     dp_forceField->distance(d_at2Idx, d_at3Idx, pos)};
 

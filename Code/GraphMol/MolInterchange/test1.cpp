@@ -42,33 +42,33 @@ void test1() {
     }
 
     auto mols = MolInterchange::JSONDataStreamToMols(&inStream);
-    TEST_ASSERT(mols.size() == 1);
+    TEST_ASSERT(mols.size() == 1)
     auto m = mols[0].get();
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
     // m->debugMol(std::cerr);
-    TEST_ASSERT(m->getNumAtoms() == 15);
-    TEST_ASSERT(m->getNumBonds() == 15);
-    TEST_ASSERT(m->getAtomWithIdx(0)->getIsAromatic());
-    TEST_ASSERT(m->getAtomWithIdx(13)->getFormalCharge() == 1);
+    TEST_ASSERT(m->getNumAtoms() == 15)
+    TEST_ASSERT(m->getNumBonds() == 15)
+    TEST_ASSERT(m->getAtomWithIdx(0)->getIsAromatic())
+    TEST_ASSERT(m->getAtomWithIdx(13)->getFormalCharge() == 1)
     TEST_ASSERT(m->getAtomWithIdx(12)->getChiralTag() ==
-                Atom::CHI_TETRAHEDRAL_CCW);
-    TEST_ASSERT(m->getBondBetweenAtoms(10, 11));
-    TEST_ASSERT(m->getBondBetweenAtoms(10, 11)->getBondType() == Bond::DOUBLE);
-    TEST_ASSERT(m->getBondBetweenAtoms(10, 11)->getStereo() == Bond::STEREOCIS);
-    TEST_ASSERT(m->getBondBetweenAtoms(0, 1));
-    TEST_ASSERT(m->getBondBetweenAtoms(0, 1)->getIsAromatic());
-    TEST_ASSERT(m->getNumConformers() == 0);
+                Atom::CHI_TETRAHEDRAL_CCW)
+    TEST_ASSERT(m->getBondBetweenAtoms(10, 11))
+    TEST_ASSERT(m->getBondBetweenAtoms(10, 11)->getBondType() == Bond::DOUBLE)
+    TEST_ASSERT(m->getBondBetweenAtoms(10, 11)->getStereo() == Bond::STEREOCIS)
+    TEST_ASSERT(m->getBondBetweenAtoms(0, 1))
+    TEST_ASSERT(m->getBondBetweenAtoms(0, 1)->getIsAromatic())
+    TEST_ASSERT(m->getNumConformers() == 0)
     TEST_ASSERT(m->getProp<std::string>(common_properties::_Name) ==
-                std::string("example 1"));
-    TEST_ASSERT(m->hasProp("prop1"));
-    TEST_ASSERT(m->getProp<int>("prop1") == 1);
-    TEST_ASSERT(m->hasProp("prop2"));
-    TEST_ASSERT(feq(m->getProp<double>("prop2"), 3.14));
-    TEST_ASSERT(m->hasProp("prop3"));
-    TEST_ASSERT(m->getProp<std::string>("prop3") == "foo");
-    TEST_ASSERT(m->getRingInfo()->isInitialized());
-    TEST_ASSERT(m->getRingInfo()->atomRings().size() == 1);
-    TEST_ASSERT(m->getRingInfo()->atomRings()[0].size() == 6);
+                std::string("example 1"))
+    TEST_ASSERT(m->hasProp("prop1"))
+    TEST_ASSERT(m->getProp<int>("prop1") == 1)
+    TEST_ASSERT(m->hasProp("prop2"))
+    TEST_ASSERT(feq(m->getProp<double>("prop2"), 3.14))
+    TEST_ASSERT(m->hasProp("prop3"))
+    TEST_ASSERT(m->getProp<std::string>("prop3") == "foo")
+    TEST_ASSERT(m->getRingInfo()->isInitialized())
+    TEST_ASSERT(m->getRingInfo()->atomRings().size() == 1)
+    TEST_ASSERT(m->getRingInfo()->atomRings()[0].size() == 6)
   }
   {
     std::string fName =
@@ -81,25 +81,25 @@ void test1() {
     }
 
     auto mols = MolInterchange::JSONDataStreamToMols(&inStream);
-    TEST_ASSERT(mols.size() == 1);
+    TEST_ASSERT(mols.size() == 1)
     auto m = mols[0].get();
-    TEST_ASSERT(m);
-    TEST_ASSERT(m->getNumAtoms() == 6);
-    TEST_ASSERT(m->getNumBonds() == 5);
+    TEST_ASSERT(m)
+    TEST_ASSERT(m->getNumAtoms() == 6)
+    TEST_ASSERT(m->getNumBonds() == 5)
     TEST_ASSERT(m->getAtomWithIdx(1)->getChiralTag() ==
-                Atom::CHI_TETRAHEDRAL_CW);
-    TEST_ASSERT(m->getNumConformers() == 2);
-    TEST_ASSERT(!m->getConformer(0).is3D());
-    TEST_ASSERT(m->getConformer(1).is3D());
+                Atom::CHI_TETRAHEDRAL_CW)
+    TEST_ASSERT(m->getNumConformers() == 2)
+    TEST_ASSERT(!m->getConformer(0).is3D())
+    TEST_ASSERT(m->getConformer(1).is3D())
     TEST_ASSERT(m->getProp<std::string>(common_properties::_Name) ==
-                std::string("example 2"));
-    TEST_ASSERT(m->getAtomWithIdx(1)->getIsotope() == 0);
-    TEST_ASSERT(m->getAtomWithIdx(2)->getIsotope() == 35);
+                std::string("example 2"))
+    TEST_ASSERT(m->getAtomWithIdx(1)->getIsotope() == 0)
+    TEST_ASSERT(m->getAtomWithIdx(2)->getIsotope() == 35)
     TEST_ASSERT(
-        m->getAtomWithIdx(0)->hasProp(common_properties::_GasteigerCharge));
+        m->getAtomWithIdx(0)->hasProp(common_properties::_GasteigerCharge))
     TEST_ASSERT(feq(m->getAtomWithIdx(0)->getProp<double>(
                         common_properties::_GasteigerCharge),
-                    -0.352));
+                    -0.352))
   }
 
   {
@@ -117,11 +117,11 @@ void test1() {
         "\"aromaticAtoms\": [], \"aromaticBonds\": [], \"cipRanks\": [0, 1, "
         "2], \"cipCodes\": [], \"atomRings\": []}]}]}";
     auto mols = MolInterchange::JSONDataToMols(json);
-    TEST_ASSERT(mols.size() == 1);
+    TEST_ASSERT(mols.size() == 1)
     auto m = mols[0].get();
-    TEST_ASSERT(m);
-    TEST_ASSERT(m->getBondBetweenAtoms(1, 2));
-    TEST_ASSERT(m->getBondBetweenAtoms(1, 2)->getBondType() == Bond::ZERO);
+    TEST_ASSERT(m)
+    TEST_ASSERT(m->getBondBetweenAtoms(1, 2))
+    TEST_ASSERT(m->getBondBetweenAtoms(1, 2)->getBondType() == Bond::ZERO)
   }
 #endif
 
@@ -135,11 +135,11 @@ void test1() {
         "\"molecules\":[{\"name\":\"mol1 "
         "name\",\"atoms\":[{},{}],\"bonds\":[{\"bo\":1, \"atoms\":[0, 1]}]}]}";
     auto mols = MolInterchange::JSONDataToMols(json);
-    TEST_ASSERT(mols.size() == 1);
+    TEST_ASSERT(mols.size() == 1)
     auto m = mols[0].get();
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
     TEST_ASSERT(m->getNumAtoms() == 2)
-    TEST_ASSERT(m->getBondBetweenAtoms(0, 1));
+    TEST_ASSERT(m->getBondBetweenAtoms(0, 1))
   }
 
   BOOST_LOG(rdErrorLog) << "done" << std::endl;
@@ -147,13 +147,13 @@ void test1() {
 
 void roundtripSmi(const char *smi) {
   std::unique_ptr<RWMol> mol(SmilesToMol(smi));
-  TEST_ASSERT(mol);
+  TEST_ASSERT(mol)
   mol->setProp("_Name", "test mol");
   auto json = MolInterchange::MolToJSONData(*mol);
   std::cerr << json << std::endl;
   std::string smi1 = MolToSmiles(*mol);
   auto newMols = MolInterchange::JSONDataToMols(json);
-  TEST_ASSERT(newMols.size() == 1);
+  TEST_ASSERT(newMols.size() == 1)
   std::string smi2 = MolToSmiles(*newMols[0]);
   if (smi1 != smi2) {
     mol->debugMol(std::cerr);
@@ -161,7 +161,7 @@ void roundtripSmi(const char *smi) {
     std::cerr << "smi1: " << smi1 << std::endl;
     std::cerr << "smi2: " << smi2 << std::endl;
   }
-  TEST_ASSERT(smi1 == smi2);
+  TEST_ASSERT(smi1 == smi2)
 }
 
 void test2() {
@@ -169,7 +169,7 @@ void test2() {
 #if 1
   {
     std::unique_ptr<RWMol> mol(SmilesToMol("CC"));
-    TEST_ASSERT(mol);
+    TEST_ASSERT(mol)
     mol->setProp("_Name", "mol1 name");
     auto json = MolInterchange::MolToJSONData(*mol);
     std::cerr << json << std::endl;
@@ -208,18 +208,18 @@ void test3() {
         rdbase + "/Code/GraphMol/MolInterchange/test_data/test2.json";
     std::ifstream inStream(fName);
     auto mols = MolInterchange::JSONDataStreamToMols(&inStream);
-    TEST_ASSERT(mols.size() == 1);
-    TEST_ASSERT(mols[0]->getNumConformers() == 2);
-    TEST_ASSERT(!mols[0]->getConformer(0).is3D());
-    TEST_ASSERT(mols[0]->getConformer(1).is3D());
+    TEST_ASSERT(mols.size() == 1)
+    TEST_ASSERT(mols[0]->getNumConformers() == 2)
+    TEST_ASSERT(!mols[0]->getConformer(0).is3D())
+    TEST_ASSERT(mols[0]->getConformer(1).is3D())
     std::string json = MolInterchange::MolToJSONData(*mols[0]);
     std::cerr << json << std::endl;
-    TEST_ASSERT(json.find("conformers") != std::string::npos);
+    TEST_ASSERT(json.find("conformers") != std::string::npos)
     auto newMols = MolInterchange::JSONDataToMols(json);
-    TEST_ASSERT(newMols.size() == 1);
-    TEST_ASSERT(newMols[0]->getNumConformers() == 2);
-    TEST_ASSERT(!newMols[0]->getConformer(0).is3D());
-    TEST_ASSERT(newMols[0]->getConformer(1).is3D());
+    TEST_ASSERT(newMols.size() == 1)
+    TEST_ASSERT(newMols[0]->getNumConformers() == 2)
+    TEST_ASSERT(!newMols[0]->getConformer(0).is3D())
+    TEST_ASSERT(newMols[0]->getConformer(1).is3D())
   }
   BOOST_LOG(rdErrorLog) << "done" << std::endl;
 }
@@ -229,23 +229,23 @@ void test4() {
 #if 1
   {
     std::unique_ptr<RWMol> mol(SmilesToMol("CC"));
-    TEST_ASSERT(mol);
+    TEST_ASSERT(mol)
     mol->setProp("foo_string", "bar");
     mol->setProp("foo_int", 1);
     mol->setProp("foo_double", 1.2);
     auto json = MolInterchange::MolToJSONData(*mol);
     std::cerr << json << std::endl;
-    TEST_ASSERT(json.find("foo_string") != std::string::npos);
-    TEST_ASSERT(json.find("foo_int") != std::string::npos);
-    TEST_ASSERT(json.find("foo_double") != std::string::npos);
+    TEST_ASSERT(json.find("foo_string") != std::string::npos)
+    TEST_ASSERT(json.find("foo_int") != std::string::npos)
+    TEST_ASSERT(json.find("foo_double") != std::string::npos)
     auto newMols = MolInterchange::JSONDataToMols(json);
-    TEST_ASSERT(newMols.size() == 1);
-    TEST_ASSERT(newMols[0]->hasProp("foo_string"));
-    TEST_ASSERT(newMols[0]->getProp<std::string>("foo_string") == "bar");
-    TEST_ASSERT(newMols[0]->hasProp("foo_int"));
-    TEST_ASSERT(newMols[0]->getProp<int>("foo_int") == 1);
-    TEST_ASSERT(newMols[0]->hasProp("foo_double"));
-    TEST_ASSERT(newMols[0]->getProp<double>("foo_double") == 1.2);
+    TEST_ASSERT(newMols.size() == 1)
+    TEST_ASSERT(newMols[0]->hasProp("foo_string"))
+    TEST_ASSERT(newMols[0]->getProp<std::string>("foo_string") == "bar")
+    TEST_ASSERT(newMols[0]->hasProp("foo_int"))
+    TEST_ASSERT(newMols[0]->getProp<int>("foo_int") == 1)
+    TEST_ASSERT(newMols[0]->hasProp("foo_double"))
+    TEST_ASSERT(newMols[0]->getProp<double>("foo_double") == 1.2)
   }
 #endif
   BOOST_LOG(rdErrorLog) << "done" << std::endl;
@@ -256,25 +256,25 @@ void test5() {
 
   {
     std::unique_ptr<RWMol> mol(SmilesToMol("CO"));
-    TEST_ASSERT(mol);
+    TEST_ASSERT(mol)
     mol->getAtomWithIdx(0)->setProp(common_properties::_GasteigerCharge, 0.5);
     mol->getAtomWithIdx(1)->setProp(common_properties::_GasteigerCharge, -0.5);
 
     auto json = MolInterchange::MolToJSONData(*mol);
     std::cerr << json << std::endl;
-    TEST_ASSERT(json.find("partialCharges") != std::string::npos);
+    TEST_ASSERT(json.find("partialCharges") != std::string::npos)
     auto newMols = MolInterchange::JSONDataToMols(json);
-    TEST_ASSERT(newMols.size() == 1);
+    TEST_ASSERT(newMols.size() == 1)
     TEST_ASSERT(newMols[0]->getAtomWithIdx(0)->hasProp(
-        common_properties::_GasteigerCharge));
+        common_properties::_GasteigerCharge))
     TEST_ASSERT(feq(newMols[0]->getAtomWithIdx(0)->getProp<double>(
                         common_properties::_GasteigerCharge),
-                    0.5));
+                    0.5))
     TEST_ASSERT(newMols[0]->getAtomWithIdx(1)->hasProp(
-        common_properties::_GasteigerCharge));
+        common_properties::_GasteigerCharge))
     TEST_ASSERT(feq(newMols[0]->getAtomWithIdx(1)->getProp<double>(
                         common_properties::_GasteigerCharge),
-                    -0.5));
+                    -0.5))
   }
 }
 
@@ -357,66 +357,66 @@ void test6() {
   {
     MolInterchange::JSONParseParameters ps;
     auto mols = MolInterchange::JSONDataToMols(jsond, ps);
-    TEST_ASSERT(mols.size() == 1);
+    TEST_ASSERT(mols.size() == 1)
     auto m = mols[0].get();
-    TEST_ASSERT(m);
-    TEST_ASSERT(m->getNumAtoms() == 6);
-    TEST_ASSERT(m->getNumBonds() == 5);
-    TEST_ASSERT(m->getNumConformers() == 2);
+    TEST_ASSERT(m)
+    TEST_ASSERT(m->getNumAtoms() == 6)
+    TEST_ASSERT(m->getNumBonds() == 5)
+    TEST_ASSERT(m->getNumConformers() == 2)
     TEST_ASSERT(m->getProp<std::string>(common_properties::_Name) ==
-                std::string("example 2"));
-    TEST_ASSERT(m->hasProp("prop3"));
+                std::string("example 2"))
+    TEST_ASSERT(m->hasProp("prop3"))
     TEST_ASSERT(
-        m->getAtomWithIdx(0)->hasProp(common_properties::_GasteigerCharge));
+        m->getAtomWithIdx(0)->hasProp(common_properties::_GasteigerCharge))
   }
   {
     MolInterchange::JSONParseParameters ps;
     ps.parseConformers = false;
     auto mols = MolInterchange::JSONDataToMols(jsond, ps);
-    TEST_ASSERT(mols.size() == 1);
+    TEST_ASSERT(mols.size() == 1)
     auto m = mols[0].get();
-    TEST_ASSERT(m);
-    TEST_ASSERT(m->getNumAtoms() == 6);
-    TEST_ASSERT(m->getNumBonds() == 5);
-    TEST_ASSERT(m->getNumConformers() == 0);
+    TEST_ASSERT(m)
+    TEST_ASSERT(m->getNumAtoms() == 6)
+    TEST_ASSERT(m->getNumBonds() == 5)
+    TEST_ASSERT(m->getNumConformers() == 0)
     TEST_ASSERT(m->getProp<std::string>(common_properties::_Name) ==
-                std::string("example 2"));
-    TEST_ASSERT(m->hasProp("prop3"));
+                std::string("example 2"))
+    TEST_ASSERT(m->hasProp("prop3"))
     TEST_ASSERT(
-        m->getAtomWithIdx(0)->hasProp(common_properties::_GasteigerCharge));
+        m->getAtomWithIdx(0)->hasProp(common_properties::_GasteigerCharge))
   }
   {
     MolInterchange::JSONParseParameters ps;
     ps.parseConformers = false;
     ps.parseProperties = false;
     auto mols = MolInterchange::JSONDataToMols(jsond, ps);
-    TEST_ASSERT(mols.size() == 1);
+    TEST_ASSERT(mols.size() == 1)
     auto m = mols[0].get();
-    TEST_ASSERT(m);
-    TEST_ASSERT(m->getNumAtoms() == 6);
-    TEST_ASSERT(m->getNumBonds() == 5);
-    TEST_ASSERT(m->getNumConformers() == 0);
+    TEST_ASSERT(m)
+    TEST_ASSERT(m->getNumAtoms() == 6)
+    TEST_ASSERT(m->getNumBonds() == 5)
+    TEST_ASSERT(m->getNumConformers() == 0)
     TEST_ASSERT(m->getProp<std::string>(common_properties::_Name) ==
-                std::string("example 2"));  // we always parse the name
-    TEST_ASSERT(!m->hasProp("prop3"));
+                std::string("example 2"))  // we always parse the name
+    TEST_ASSERT(!m->hasProp("prop3"))
     TEST_ASSERT(
-        m->getAtomWithIdx(0)->hasProp(common_properties::_GasteigerCharge));
+        m->getAtomWithIdx(0)->hasProp(common_properties::_GasteigerCharge))
   }
   {
     MolInterchange::JSONParseParameters ps;
     ps.parseProperties = false;
     auto mols = MolInterchange::JSONDataToMols(jsond, ps);
-    TEST_ASSERT(mols.size() == 1);
+    TEST_ASSERT(mols.size() == 1)
     auto m = mols[0].get();
-    TEST_ASSERT(m);
-    TEST_ASSERT(m->getNumAtoms() == 6);
-    TEST_ASSERT(m->getNumBonds() == 5);
-    TEST_ASSERT(m->getNumConformers() == 2);
+    TEST_ASSERT(m)
+    TEST_ASSERT(m->getNumAtoms() == 6)
+    TEST_ASSERT(m->getNumBonds() == 5)
+    TEST_ASSERT(m->getNumConformers() == 2)
     TEST_ASSERT(m->getProp<std::string>(common_properties::_Name) ==
-                std::string("example 2"));  // we always parse the name
-    TEST_ASSERT(!m->hasProp("prop3"));
+                std::string("example 2"))  // we always parse the name
+    TEST_ASSERT(!m->hasProp("prop3"))
     TEST_ASSERT(
-        m->getAtomWithIdx(0)->hasProp(common_properties::_GasteigerCharge));
+        m->getAtomWithIdx(0)->hasProp(common_properties::_GasteigerCharge))
   }
   BOOST_LOG(rdErrorLog) << "done" << std::endl;
 }
@@ -428,12 +428,12 @@ void testGithub2046() {
   roundtripSmi("C1CCO[C@H]1F");
   {
     std::unique_ptr<RWMol> mol(SmilesToMol("C1CCO[C@H]1F"));
-    TEST_ASSERT(mol);
+    TEST_ASSERT(mol)
     mol->setProp("_Name", "mol1 name");
     auto jsond = MolInterchange::MolToJSONData(*mol);
     auto mols = MolInterchange::JSONDataToMols(jsond);
     TEST_ASSERT(mols[0]->getAtomWithIdx(3)->getProp<unsigned int>(
-                    RDKit::common_properties::_CIPRank) > 0);
+                    RDKit::common_properties::_CIPRank) > 0)
   }
   BOOST_LOG(rdErrorLog) << "done" << std::endl;
 }
@@ -442,19 +442,19 @@ void testEitherStereo() {
   BOOST_LOG(rdErrorLog) << "testing 'either' stereochemistry" << std::endl;
   {
     auto mol = "CC=CC/C=C/C"_smiles;
-    TEST_ASSERT(mol);
+    TEST_ASSERT(mol)
     mol->getBondWithIdx(1)->setStereo(Bond::STEREOANY);
     auto jsond = MolInterchange::MolToJSONData(*mol);
     auto mols = MolInterchange::JSONDataToMols(jsond);
-    TEST_ASSERT(mols[0]->getBondWithIdx(1)->getStereo() == Bond::STEREOANY);
+    TEST_ASSERT(mols[0]->getBondWithIdx(1)->getStereo() == Bond::STEREOANY)
   }
   {
     auto mol = "CC=CC"_smiles;
-    TEST_ASSERT(mol);
+    TEST_ASSERT(mol)
     mol->getBondWithIdx(1)->setStereo(Bond::STEREOANY);
     auto jsond = MolInterchange::MolToJSONData(*mol);
     auto mols = MolInterchange::JSONDataToMols(jsond);
-    TEST_ASSERT(mols[0]->getBondWithIdx(1)->getStereo() == Bond::STEREOANY);
+    TEST_ASSERT(mols[0]->getBondWithIdx(1)->getStereo() == Bond::STEREOANY)
   }
   BOOST_LOG(rdErrorLog) << "done" << std::endl;
 }

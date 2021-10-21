@@ -393,7 +393,7 @@ class AtomLabelFunctor {
  public:
   AtomLabelFunctor(const ROMol &query, const ROMol &mol,
                    const SubstructMatchParameters &ps)
-      : d_query(query), d_mol(mol), d_params(ps) {};
+      : d_query(query), d_mol(mol), d_params(ps) {}
 
   bool operator()(unsigned int i, unsigned int j) const {
     bool res = false;
@@ -461,7 +461,7 @@ void ResSubstructMatchHelper_(const ResSubstructMatchHelperArgs_ &args,
     }
     delete mol;
   }
-};
+}
 
 struct RecursiveLocker {
   std::vector<RecursiveStructureQuery *> locked;

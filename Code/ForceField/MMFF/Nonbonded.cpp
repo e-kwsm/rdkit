@@ -92,10 +92,10 @@ double calcEleEnergy(unsigned int, unsigned int, double dist, double chargeTerm,
 
 VdWContrib::VdWContrib(ForceField *owner, unsigned int idx1, unsigned int idx2,
                        const MMFFVdWRijstarEps *mmffVdWConstants) {
-  PRECONDITION(owner, "bad owner");
-  PRECONDITION(mmffVdWConstants, "bad MMFFVdW parameters");
-  URANGE_CHECK(idx1, owner->positions().size());
-  URANGE_CHECK(idx2, owner->positions().size());
+  PRECONDITION(owner, "bad owner")
+  PRECONDITION(mmffVdWConstants, "bad MMFFVdW parameters")
+  URANGE_CHECK(idx1, owner->positions().size())
+  URANGE_CHECK(idx2, owner->positions().size())
 
   dp_forceField = owner;
   d_at1Idx = idx1;
@@ -105,17 +105,17 @@ VdWContrib::VdWContrib(ForceField *owner, unsigned int idx1, unsigned int idx2,
 }
 
 double VdWContrib::getEnergy(double *pos) const {
-  PRECONDITION(dp_forceField, "no owner");
-  PRECONDITION(pos, "bad vector");
+  PRECONDITION(dp_forceField, "no owner")
+  PRECONDITION(pos, "bad vector")
 
   double dist = dp_forceField->distance(d_at1Idx, d_at2Idx, pos);
   return Utils::calcVdWEnergy(dist, d_R_ij_star, d_wellDepth);
 }
 
 void VdWContrib::getGrad(double *pos, double *grad) const {
-  PRECONDITION(dp_forceField, "no owner");
-  PRECONDITION(pos, "bad vector");
-  PRECONDITION(grad, "bad vector");
+  PRECONDITION(dp_forceField, "no owner")
+  PRECONDITION(pos, "bad vector")
+  PRECONDITION(grad, "bad vector")
 
   double const vdw1 = 1.07;
   double const vdw1m1 = vdw1 - 1.0;
@@ -149,9 +149,9 @@ void VdWContrib::getGrad(double *pos, double *grad) const {
 
 EleContrib::EleContrib(ForceField *owner, unsigned int idx1, unsigned int idx2,
                        double chargeTerm, std::uint8_t dielModel, bool is1_4) {
-  PRECONDITION(owner, "bad owner");
-  URANGE_CHECK(idx1, owner->positions().size());
-  URANGE_CHECK(idx2, owner->positions().size());
+  PRECONDITION(owner, "bad owner")
+  URANGE_CHECK(idx1, owner->positions().size())
+  URANGE_CHECK(idx2, owner->positions().size())
 
   dp_forceField = owner;
   d_at1Idx = idx1;
@@ -162,8 +162,8 @@ EleContrib::EleContrib(ForceField *owner, unsigned int idx1, unsigned int idx2,
 }
 
 double EleContrib::getEnergy(double *pos) const {
-  PRECONDITION(dp_forceField, "no owner");
-  PRECONDITION(pos, "bad vector");
+  PRECONDITION(dp_forceField, "no owner")
+  PRECONDITION(pos, "bad vector")
 
   return Utils::calcEleEnergy(d_at1Idx, d_at2Idx,
                               dp_forceField->distance(d_at1Idx, d_at2Idx, pos),
@@ -171,9 +171,9 @@ double EleContrib::getEnergy(double *pos) const {
 }
 
 void EleContrib::getGrad(double *pos, double *grad) const {
-  PRECONDITION(dp_forceField, "no owner");
-  PRECONDITION(pos, "bad vector");
-  PRECONDITION(grad, "bad vector");
+  PRECONDITION(dp_forceField, "no owner")
+  PRECONDITION(pos, "bad vector")
+  PRECONDITION(grad, "bad vector")
 
   double dist = dp_forceField->distance(d_at1Idx, d_at2Idx, pos);
   double *at1Coords = &(pos[3 * d_at1Idx]);

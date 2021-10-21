@@ -316,7 +316,7 @@ inline int EmbedMolecule(
       ETversion, nullptr, true, useSmallRingTorsions, useMacrocycleTorsions,
       useMacrocycle14config);
   return EmbedMolecule(mol, params);
-};
+}
 
 //*! Embed multiple conformations for a molecule
 /*!
@@ -415,7 +415,7 @@ inline void EmbedMultipleConfs(
       onlyHeavyAtomsForRMS, ETversion, nullptr, true, useSmallRingTorsions,
       useMacrocycleTorsions, useMacrocycle14config);
   EmbedMultipleConfs(mol, res, numConfs, params);
-};
+}
 //! \overload
 inline INT_VECT EmbedMultipleConfs(
     ROMol &mol, unsigned int numConfs = 10, unsigned int maxIterations = 30,
@@ -439,7 +439,7 @@ inline INT_VECT EmbedMultipleConfs(
   INT_VECT res;
   EmbedMultipleConfs(mol, res, numConfs, params);
   return res;
-};
+}
 
 //! Parameters corresponding to Sereina Riniker's KDG approach
 RDKIT_DISTGEOMHELPERS_EXPORT extern const EmbedParameters KDG;

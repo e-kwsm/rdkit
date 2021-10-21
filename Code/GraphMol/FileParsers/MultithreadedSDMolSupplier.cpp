@@ -68,7 +68,7 @@ MultithreadedSDMolSupplier::~MultithreadedSDMolSupplier() {
 // from the file, implementation identical to the method in
 // in ForwardSDMolSupplier
 void MultithreadedSDMolSupplier::checkForEnd() {
-  PRECONDITION(dp_inStream, "no stream");
+  PRECONDITION(dp_inStream, "no stream")
   // we will call it end of file if we have more than 4 contiguous empty lines
   // or we reach end of file in the meantime
   if (dp_inStream->eof()) {
@@ -102,14 +102,14 @@ void MultithreadedSDMolSupplier::checkForEnd() {
 }
 
 bool MultithreadedSDMolSupplier::getEnd() const {
-  PRECONDITION(dp_inStream, "no stream");
+  PRECONDITION(dp_inStream, "no stream")
   return df_end;
 }
 
 bool MultithreadedSDMolSupplier::extractNextRecord(std::string &record,
                                                    unsigned int &lineNum,
                                                    unsigned int &index) {
-  PRECONDITION(dp_inStream, "no stream");
+  PRECONDITION(dp_inStream, "no stream")
   if (dp_inStream->eof()) {
     df_end = true;
     return false;
@@ -239,7 +239,7 @@ void MultithreadedSDMolSupplier::readMolProps(RWMol &mol,
 
 RWMol *MultithreadedSDMolSupplier::processMoleculeRecord(
     const std::string &record, unsigned int lineNum) {
-  PRECONDITION(dp_inStream, "no stream");
+  PRECONDITION(dp_inStream, "no stream")
   std::istringstream inStream(record);
   auto res =
       v2::FileParsers::MolFromMolDataStream(inStream, lineNum, d_parseParams);

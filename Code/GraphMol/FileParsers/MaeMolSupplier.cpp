@@ -124,7 +124,7 @@ class PDBInfo {
 };
 
 bool streamIsGoodOrExhausted(std::istream *stream) {
-  PRECONDITION(stream, "bad stream");
+  PRECONDITION(stream, "bad stream")
   return stream->good() || (stream->eof() && stream->fail() && !stream->bad());
 }
 
@@ -136,7 +136,7 @@ void parseChiralityLabel(RWMol &mol, const std::string &stereo_prop) {
 
   const int chiral_idx = FileParserUtils::toInt(*tItr) - 1;
   Atom *chiral_atom = mol.getAtomWithIdx(chiral_idx);
-  CHECK_INVARIANT(chiral_atom != nullptr, "bad prop value");
+  CHECK_INVARIANT(chiral_atom != nullptr, "bad prop value")
 
   unsigned nSwaps = 2;
   const char rotation_direction = (++tItr)->back();
@@ -152,17 +152,17 @@ void parseChiralityLabel(RWMol &mol, const std::string &stereo_prop) {
     default:
       break;
   }
-  CHECK_INVARIANT(nSwaps < 2, "bad prop value");
+  CHECK_INVARIANT(nSwaps < 2, "bad prop value")
 
   INT_LIST bond_indexes;
   for (++tItr; tItr != tokenizer.end(); ++tItr) {
     const int nbr_idx = FileParserUtils::toInt(*tItr) - 1;
     const Bond *bnd = mol.getBondBetweenAtoms(chiral_idx, nbr_idx);
-    CHECK_INVARIANT(bnd, "bad chiral bond");
+    CHECK_INVARIANT(bnd, "bad chiral bond")
     bond_indexes.push_back(bnd->getIdx());
   }
   CHECK_INVARIANT(bond_indexes.size() == chiral_atom->getDegree(),
-                  "bad prop value");
+                  "bad prop value")
 
   nSwaps += chiral_atom->getPerturbationOrder(bond_indexes);
   switch (nSwaps % 2) {
@@ -191,7 +191,7 @@ void parseStereoBondLabel(RWMol &mol, const std::string &stereo_prop) {
       atom_indexes.push_back(FileParserUtils::toInt(t) - 1);
     }
   }
-  CHECK_INVARIANT(type != Bond::STEREONONE, "bad prop value");
+  CHECK_INVARIANT(type != Bond::STEREONONE, "bad prop value")
 
   // We currently don't support allenes or allene-likes
   if (atom_indexes.size() != 4) {
@@ -199,8 +199,8 @@ void parseStereoBondLabel(RWMol &mol, const std::string &stereo_prop) {
   }
 
   auto *bond = mol.getBondBetweenAtoms(atom_indexes[1], atom_indexes[2]);
-  CHECK_INVARIANT(bond, "bad stereo bond");
-  CHECK_INVARIANT(bond->getBondType() == Bond::DOUBLE, "bad stereo bond");
+  CHECK_INVARIANT(bond, "bad stereo bond")
+  CHECK_INVARIANT(bond->getBondType() == Bond::DOUBLE, "bad stereo bond")
 
   bond->setStereoAtoms(atom_indexes[0], atom_indexes[3]);
   bond->setStereo(type);
@@ -543,7 +543,7 @@ MaeMolSupplier::MaeMolSupplier(const std::string &fileName,
 void MaeMolSupplier::init() {
   PRECONDITION(dp_sInStream, "no input stream")
   d_reader.reset(new mae::Reader(dp_sInStream));
-  CHECK_INVARIANT(streamIsGoodOrExhausted(dp_inStream), "bad instream");
+  CHECK_INVARIANT(streamIsGoodOrExhausted(dp_inStream), "bad instream")
 
   d_position = 0;
   d_length = 0;

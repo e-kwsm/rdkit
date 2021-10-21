@@ -25,8 +25,8 @@ namespace Canon {
 namespace {
 void flipIfNeeded(Bond::BondStereo &st1,
                   const canon_atom *const *controllingAtoms) {
-  CHECK_INVARIANT(controllingAtoms[0], "missing controlling atom");
-  CHECK_INVARIANT(controllingAtoms[2], "missing controlling atom");
+  CHECK_INVARIANT(controllingAtoms[0], "missing controlling atom")
+  CHECK_INVARIANT(controllingAtoms[2], "missing controlling atom")
   bool flip = false;
   if (controllingAtoms[1] &&
       controllingAtoms[1]->index > controllingAtoms[0]->index) {
@@ -95,9 +95,9 @@ int bondholder::compareStereo(const bondholder &o) const {
 
 void CreateSinglePartition(unsigned int nAtoms, int *order, int *count,
                            canon_atom *atoms) {
-  PRECONDITION(order, "bad pointer");
-  PRECONDITION(count, "bad pointer");
-  PRECONDITION(atoms, "bad pointer");
+  PRECONDITION(order, "bad pointer")
+  PRECONDITION(count, "bad pointer")
+  PRECONDITION(atoms, "bad pointer")
 
   for (unsigned int i = 0; i < nAtoms; i++) {
     atoms[i].index = 0;
@@ -109,10 +109,10 @@ void CreateSinglePartition(unsigned int nAtoms, int *order, int *count,
 
 void ActivatePartitions(unsigned int nAtoms, int *order, int *count,
                         int &activeset, int *next, int *changed) {
-  PRECONDITION(order, "bad pointer");
-  PRECONDITION(count, "bad pointer");
-  PRECONDITION(next, "bad pointer");
-  PRECONDITION(changed, "bad pointer");
+  PRECONDITION(order, "bad pointer")
+  PRECONDITION(count, "bad pointer")
+  PRECONDITION(next, "bad pointer")
+  PRECONDITION(changed, "bad pointer")
   unsigned int i, j;
   activeset = -1;
   for (i = 0; i < nAtoms; i++) {
@@ -148,7 +148,7 @@ void ActivatePartitions(unsigned int nAtoms, int *order, int *count,
 void compareRingAtomsConcerningNumNeighbors(Canon::canon_atom *atoms,
                                             unsigned int nAtoms,
                                             const ROMol &mol) {
-  PRECONDITION(atoms, "bad pointer");
+  PRECONDITION(atoms, "bad pointer")
   RingInfo *ringInfo = mol.getRingInfo();
 
   auto visited = std::make_unique<char[]>(nAtoms);
@@ -248,7 +248,7 @@ void rankWithFunctor(T &ftor, bool breakTies, int *order, bool useSpecial,
                      bool useChirality,
                      const boost::dynamic_bitset<> *atomsInPlay,
                      const boost::dynamic_bitset<> *bondsInPlay) {
-  PRECONDITION(order, "bad pointer");
+  PRECONDITION(order, "bad pointer")
   const ROMol &mol = *ftor.dp_mol;
   canon_atom *atoms = ftor.dp_atoms;
   unsigned int nAts = mol.getNumAtoms();
@@ -365,7 +365,7 @@ void rankWithFunctor(T &ftor, bool breakTies, int *order, bool useSpecial,
 }  // namespace detail
 namespace {
 bool hasRingNbr(const ROMol &mol, const Atom *at) {
-  PRECONDITION(at, "bad pointer");
+  PRECONDITION(at, "bad pointer")
   for (const auto nbr : mol.atomNeighbors(at)) {
     if ((nbr->getChiralTag() == Atom::CHI_TETRAHEDRAL_CW ||
          nbr->getChiralTag() == Atom::CHI_TETRAHEDRAL_CCW) &&
@@ -377,8 +377,8 @@ bool hasRingNbr(const ROMol &mol, const Atom *at) {
 }
 
 void getNbrs(const ROMol &mol, const Atom *at, int *ids) {
-  PRECONDITION(at, "bad pointer");
-  PRECONDITION(ids, "bad pointer");
+  PRECONDITION(at, "bad pointer")
+  PRECONDITION(ids, "bad pointer")
   ROMol::ADJ_ITER beg, end;
   boost::tie(beg, end) = mol.getAtomNeighbors(at);
   unsigned int idx = 0;
@@ -390,7 +390,7 @@ void getNbrs(const ROMol &mol, const Atom *at, int *ids) {
 bondholder makeBondHolder(const Bond *bond, unsigned int otherIdx,
                           bool includeChirality,
                           const std::vector<Canon::canon_atom> &atoms) {
-  PRECONDITION(bond, "bad pointer");
+  PRECONDITION(bond, "bad pointer")
   Bond::BondStereo stereo = Bond::STEREONONE;
   if (includeChirality) {
     stereo = bond->getStereo();
@@ -464,7 +464,7 @@ bondholder makeBondHolder(const Bond *bond, unsigned int otherIdx,
 void getBonds(const ROMol &mol, const Atom *at, std::vector<bondholder> &nbrs,
               bool includeChirality,
               const std::vector<Canon::canon_atom> &atoms) {
-  PRECONDITION(at, "bad pointer");
+  PRECONDITION(at, "bad pointer")
   ROMol::OEDGE_ITER beg, end;
   boost::tie(beg, end) = mol.getAtomBonds(at);
   while (beg != end) {
@@ -478,7 +478,7 @@ void getBonds(const ROMol &mol, const Atom *at, std::vector<bondholder> &nbrs,
 
 void getChiralBonds(const ROMol &mol, const Atom *at,
                     std::vector<bondholder> &nbrs) {
-  PRECONDITION(at, "bad pointer");
+  PRECONDITION(at, "bad pointer")
   ROMol::OEDGE_ITER beg, end;
   boost::tie(beg, end) = mol.getAtomBonds(at);
   while (beg != end) {
@@ -593,9 +593,9 @@ void initFragmentCanonAtoms(const ROMol &mol,
                             bool needsInit) {
   needsInit = true;
   PRECONDITION(!atomSymbols || atomSymbols->size() == mol.getNumAtoms(),
-               "bad atom symbols");
+               "bad atom symbols")
   PRECONDITION(!bondSymbols || bondSymbols->size() == mol.getNumBonds(),
-               "bad bond symbols");
+               "bad bond symbols")
   // start by initializing the atoms
   for (const auto atom : mol.atoms()) {
     auto i = atom->getIdx();
@@ -678,7 +678,7 @@ void initChiralCanonAtoms(const ROMol &mol,
 
 }  // namespace detail
 void updateAtomNeighborIndex(canon_atom *atoms, std::vector<bondholder> &nbrs) {
-  PRECONDITION(atoms, "bad pointer");
+  PRECONDITION(atoms, "bad pointer")
   for (auto &nbr : nbrs) {
     unsigned nbrIdx = nbr.nbrIdx;
     unsigned newSymClass = atoms[nbrIdx].index;
@@ -805,9 +805,9 @@ void rankFragmentAtoms(const ROMol &mol, std::vector<unsigned int> &res,
   PRECONDITION(atomsInPlay.size() == mol.getNumAtoms(), "bad atomsInPlay size");
   PRECONDITION(bondsInPlay.size() == mol.getNumBonds(), "bad bondsInPlay size");
   PRECONDITION(!atomSymbols || atomSymbols->size() == mol.getNumAtoms(),
-               "bad atomSymbols size");
+               "bad atomSymbols size")
   PRECONDITION(!bondSymbols || bondSymbols->size() == mol.getNumBonds(),
-               "bad bondSymbols size");
+               "bad bondSymbols size")
 
   if (!mol.getNumAtoms()) {
     return;

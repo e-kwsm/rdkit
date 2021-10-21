@@ -33,14 +33,14 @@ SmilesMolSupplier::SmilesMolSupplier(const std::string &fileName,
                                      const SmilesMolSupplierParams &params) {
   init();
   dp_inStream = openAndCheckStream(fileName);
-  CHECK_INVARIANT(dp_inStream, "bad instream");
-  CHECK_INVARIANT(!(dp_inStream->eof()), "early EOF");
+  CHECK_INVARIANT(dp_inStream, "bad instream")
+  CHECK_INVARIANT(!(dp_inStream->eof()), "early EOF")
 
   d_params = params;
   df_end = false;
 
   this->checkForEnd();
-  POSTCONDITION(dp_inStream, "bad instream");
+  POSTCONDITION(dp_inStream, "bad instream")
 }
 
 SmilesMolSupplier::SmilesMolSupplier(std::istream *inStream, bool takeOwnership,
@@ -54,7 +54,7 @@ SmilesMolSupplier::SmilesMolSupplier(std::istream *inStream, bool takeOwnership,
   d_params = params;
   df_end = false;
   this->checkForEnd();
-  POSTCONDITION(dp_inStream, "bad instream");
+  POSTCONDITION(dp_inStream, "bad instream")
 }
 
 void SmilesMolSupplier::init() {
@@ -82,13 +82,13 @@ void SmilesMolSupplier::setData(const std::string &text,
   df_end = false;
 
   this->checkForEnd();
-  POSTCONDITION(dp_inStream, "bad instream");
+  POSTCONDITION(dp_inStream, "bad instream")
 }
 
 // ensures that there is a line available to be read
 // from the file:
 void SmilesMolSupplier::checkForEnd() {
-  PRECONDITION(dp_inStream, "no stream");
+  PRECONDITION(dp_inStream, "no stream")
   int pos = this->skipComments();
   if (pos != -1) {
     d_line = -1;
@@ -98,7 +98,7 @@ void SmilesMolSupplier::checkForEnd() {
 }
 
 void SmilesMolSupplier::reset() {
-  PRECONDITION(dp_inStream, "no stream");
+  PRECONDITION(dp_inStream, "no stream")
   dp_inStream->clear();
 
   df_end = 0;
@@ -222,7 +222,7 @@ std::unique_ptr<RWMol> SmilesMolSupplier::processLine(std::string inLine) {
 //
 // --------------------------------------------------
 std::string SmilesMolSupplier::nextLine() {
-  PRECONDITION(dp_inStream, "bad stream");
+  PRECONDITION(dp_inStream, "bad stream")
   if (df_end) {
     return "";
   }
@@ -255,7 +255,7 @@ std::string SmilesMolSupplier::nextLine() {
 //    - Our d_line counter is incremented for each line read
 //
 long int SmilesMolSupplier::skipComments() {
-  PRECONDITION(dp_inStream, "bad stream");
+  PRECONDITION(dp_inStream, "bad stream")
   if (this->atEnd()) {
     return -1;
   }
@@ -284,7 +284,7 @@ long int SmilesMolSupplier::skipComments() {
 //  Reads and processes the title line
 //
 void SmilesMolSupplier::processTitleLine() {
-  PRECONDITION(dp_inStream, "bad stream");
+  PRECONDITION(dp_inStream, "bad stream")
   int pos = this->skipComments();
   if (pos >= 0) {
     dp_inStream->seekg(pos);
@@ -302,7 +302,7 @@ void SmilesMolSupplier::processTitleLine() {
 }
 
 std::string SmilesMolSupplier::getItemText(unsigned int idx) {
-  PRECONDITION(dp_inStream, "no stream");
+  PRECONDITION(dp_inStream, "no stream")
   unsigned int holder = d_next;
   bool endHolder = df_end;
   // this throws the relevant exception if we go too far:
@@ -322,7 +322,7 @@ std::string SmilesMolSupplier::getItemText(unsigned int idx) {
 //    will be thrown
 //
 void SmilesMolSupplier::moveTo(unsigned int idx) {
-  PRECONDITION(dp_inStream, "bad instream");
+  PRECONDITION(dp_inStream, "bad instream")
   // get the easy situations (boundary conditions) out of the
   // way first:
   if (d_len > -1 && idx >= static_cast<unsigned int>(d_len)) {
@@ -391,7 +391,7 @@ void SmilesMolSupplier::moveTo(unsigned int idx) {
     }
   }
 
-  POSTCONDITION(d_molpos.size() > idx, "not enough lines");
+  POSTCONDITION(d_molpos.size() > idx, "not enough lines")
   dp_inStream->seekg(d_molpos[idx]);
   d_next = idx;
   return;
@@ -415,7 +415,7 @@ std::unique_ptr<RWMol> SmilesMolSupplier::next() {
   // This throws an exception if it fails:
   moveTo(d_next);
   CHECK_INVARIANT(static_cast<int>(d_molpos.size()) > d_next,
-                  "bad index length");
+                  "bad index length")
 
   // ---------
   // if we get here we can just build the molecule:
@@ -474,7 +474,7 @@ std::unique_ptr<RWMol> SmilesMolSupplier::operator[](unsigned int idx) {
 //  Returns the number of entries in the input stream
 //
 unsigned int SmilesMolSupplier::length() {
-  PRECONDITION(dp_inStream, "no stream");
+  PRECONDITION(dp_inStream, "no stream")
   // return the number of molecule lines in the file
   if (d_len > 0) {
     return d_len;
