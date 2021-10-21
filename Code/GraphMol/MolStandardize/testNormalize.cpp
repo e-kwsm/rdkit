@@ -118,7 +118,7 @@ Pyridine oxide to n+O-	[n:1]=[O:2]>>[n+:1][O-:2]
     std::unique_ptr<ROMol> imol(
         SmilesToMol("O=N(=O)CCN=N#N", debugParse, sanitize));
     std::unique_ptr<ROMol> m2(nn.normalize(*imol));
-    TEST_ASSERT(MolToSmiles(*m2) == "N#N=NCC[N+](=O)[O-]");
+    TEST_ASSERT(MolToSmiles(*m2) == "N#N=NCC[N+](=O)[O-]")
   }
   {
     // initialization from vector:
@@ -135,7 +135,7 @@ Pyridine oxide to n+O-	[n:1]=[O:2]>>[n+:1][O-:2]
     std::unique_ptr<ROMol> imol(
         SmilesToMol("O=N(=O)CCN=N#N", debugParse, sanitize));
     std::unique_ptr<ROMol> m2(nn.normalize(*imol));
-    TEST_ASSERT(MolToSmiles(*m2) == "N#N=NCC[N+](=O)[O-]");
+    TEST_ASSERT(MolToSmiles(*m2) == "N#N=NCC[N+](=O)[O-]")
   }
   BOOST_LOG(rdInfoLog) << "Finished" << std::endl;
 }
@@ -454,11 +454,11 @@ Alkaline oxide to ions	[Li,Na,K;+0:1]-[O+0:2]>>([*+1:1].[O-:2])
   bool removeHs = false;
   std::unique_ptr<ROMol> imol(MolBlockToMol(molb, sanitize, removeHs));
   std::unique_ptr<ROMol> m2(nn.normalize(*imol));
-  TEST_ASSERT(m2);
+  TEST_ASSERT(m2)
   auto p = "[Na]-O"_smarts;
-  TEST_ASSERT(p);
-  TEST_ASSERT(SubstructMatch(*imol, *p).size() == 9);
-  TEST_ASSERT(SubstructMatch(*m2, *p).size() == 0);
+  TEST_ASSERT(p)
+  TEST_ASSERT(SubstructMatch(*imol, *p).size() == 9)
+  TEST_ASSERT(SubstructMatch(*m2, *p).size() == 0)
   BOOST_LOG(rdInfoLog) << "Finished" << std::endl;
 }
 
@@ -490,7 +490,7 @@ Broken azide to N=N+=N-	[N:2]=[N:3]=[N:4]>>[NH0:2]=[NH0+:3]=[NH0-:4])DATA";
     }
   }
   rdInfoLog->df_enabled = ostate;
-  TEST_ASSERT(count == 1);
+  TEST_ASSERT(count == 1)
   BOOST_LOG(rdInfoLog) << "Finished" << std::endl;
 }
 
@@ -504,13 +504,13 @@ void testGithub3460() {
   rdInfoLog->SetTee(captureLog);
   Normalizer nn;
   auto mol = "[O-][S+]1Nc2c(Cl)cc(Cl)c3c(Cl)cc(Cl)c(c23)N1"_smiles;
-  TEST_ASSERT(mol);
+  TEST_ASSERT(mol)
   ROMOL_SPTR normalized(nn.normalize(*mol));
   rdInfoLog->ClearTee();
   rdInfoLog->df_enabled = ostate;
   auto logged = captureLog.str();
-  TEST_ASSERT(logged.find("Running Normalizer") != std::string::npos);
-  TEST_ASSERT(logged.find("Rule applied: C/S+NtoC/S=N+") == std::string::npos);
+  TEST_ASSERT(logged.find("Running Normalizer") != std::string::npos)
+  TEST_ASSERT(logged.find("Rule applied: C/S+NtoC/S=N+") == std::string::npos)
   BOOST_LOG(rdInfoLog) << "Finished" << std::endl;
 }
 
@@ -521,7 +521,7 @@ void testEmptyMol() {
   Normalizer nn;
   std::unique_ptr<ROMol> emptyMol(new ROMol());
   std::unique_ptr<ROMol> normalized(nn.normalize(*emptyMol));
-  TEST_ASSERT(!normalized->getNumAtoms());
+  TEST_ASSERT(!normalized->getNumAtoms())
 }
 
 void testGithub4281() {
@@ -539,7 +539,7 @@ void testGithub4281() {
   rdInfoLog->ClearTee();
   rdInfoLog->df_enabled = ostate;
   auto logged = captureLog.str();
-  TEST_ASSERT(logged.find("FAILED sanitizeMol") == std::string::npos);
+  TEST_ASSERT(logged.find("FAILED sanitizeMol") == std::string::npos)
 }
 
 int main() {

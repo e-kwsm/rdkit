@@ -71,7 +71,7 @@ class PySequenceHolder {
       throw_value_error("cannot extract desired type from sequence");
     }
 
-    POSTCONDITION(0, "cannot reach this point");
+    POSTCONDITION(0, "cannot reach this point")
     return static_cast<T>(T());
   }
 

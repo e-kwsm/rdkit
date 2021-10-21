@@ -34,7 +34,7 @@ void testRDKitValidation() {
   for (const auto &msg : errout1) {
     TEST_ASSERT(msg ==
                 "INFO: [ValenceValidation] Explicit valence for atom # 1 O, 3, "
-                "is greater than permitted");
+                "is greater than permitted")
   }
 
   // testing for molecule with no atoms
@@ -58,7 +58,7 @@ void testRDKitValidation() {
   for (const auto &msg : errout3) {
     msgs1.push_back(msg);
   }
-  TEST_ASSERT(msgs1 == ans1);
+  TEST_ASSERT(msgs1 == ans1)
 
   // testing molecule with multiple valency errors and only outputting
   // first error
@@ -103,7 +103,7 @@ void testMolVSValidation() {
   vector<ValidationErrorInfo> errout2 = vm.validate(*m2, true);
   for (const auto &msg : errout2) {
     TEST_ASSERT(msg ==
-                "INFO: [NeutralValidation] Not an overall neutral system (-1)");
+                "INFO: [NeutralValidation] Not an overall neutral system (-1)")
   }
 
   smi3 = "CN=[NH+]CN=N";
@@ -112,7 +112,7 @@ void testMolVSValidation() {
   for (const auto &msg : errout3) {
     TEST_ASSERT(
         msg ==
-        "INFO: [NeutralValidation] Not an overall neutral system (+1)");  // fix
+        "INFO: [NeutralValidation] Not an overall neutral system (+1)")  // fix
                                                                           // to
                                                                           // show
                                                                           // +
@@ -124,7 +124,7 @@ void testMolVSValidation() {
   vector<ValidationErrorInfo> errout4 = vm.validate(*m4, true);
   for (const auto &msg : errout4) {
     TEST_ASSERT(msg ==
-                "INFO: [IsotopeValidation] Molecule contains isotope 13C");
+                "INFO: [IsotopeValidation] Molecule contains isotope 13C")
   }
 
   smi5 = "[2H]C(Cl)(Cl)Cl";
@@ -132,7 +132,7 @@ void testMolVSValidation() {
   vector<ValidationErrorInfo> errout5 = vm.validate(*m5, true);
   for (const auto &msg : errout5) {
     TEST_ASSERT(msg ==
-                "INFO: [IsotopeValidation] Molecule contains isotope 2H");
+                "INFO: [IsotopeValidation] Molecule contains isotope 2H")
   }
 
   smi6 = "[2H]OC([2H])([2H])[2H]";
@@ -140,7 +140,7 @@ void testMolVSValidation() {
   vector<ValidationErrorInfo> errout6 = vm.validate(*m6, true);
   for (const auto &msg : errout6) {
     TEST_ASSERT(msg ==
-                "INFO: [IsotopeValidation] Molecule contains isotope 2H");
+                "INFO: [IsotopeValidation] Molecule contains isotope 2H")
   }
 
   std::string smi7 = "COc1cccc(C=N[N-]C(N)=O)c1[O-].O.O.O.O=[U+2]=O";
@@ -157,7 +157,7 @@ void testMolVSValidation() {
   TEST_ASSERT(errout8.size() != 0);
   for (const auto &msg : errout8) {
     TEST_ASSERT(msg ==
-                "INFO: [FragmentValidation] acetate/acetic acid is present");
+                "INFO: [FragmentValidation] acetate/acetic acid is present")
   }
 
   std::string smi9 = "N#CC(Br)(Br)C#N.[Br-].[K+]";
@@ -166,7 +166,7 @@ void testMolVSValidation() {
   std::vector<std::string> ans = {
       "INFO: [FragmentValidation] bromine is present",
       "INFO: [FragmentValidation] potassium is present"};
-  TEST_ASSERT(errout9.size() == ans.size());
+  TEST_ASSERT(errout9.size() == ans.size())
   for (size_t i = 0; i < errout9.size(); ++i) {
     TEST_ASSERT(errout9[i] == ans[i]);
   }
@@ -177,7 +177,7 @@ void testMolVSValidation() {
   std::vector<std::string> ans10 = {
       "INFO: [FragmentValidation] 1,2-dimethoxyethane is present",
       "INFO: [FragmentValidation] 1,4-dioxane is present"};
-  TEST_ASSERT(errout10.size() == ans10.size());
+  TEST_ASSERT(errout10.size() == ans10.size())
   for (size_t i = 0; i < errout10.size(); ++i) {
     TEST_ASSERT(errout10[i] == ans10[i]);
   }
@@ -252,7 +252,7 @@ void testAllowedAtomsValidation() {
   for (const auto &msg : errout1) {
     TEST_ASSERT(
         msg ==
-        "INFO: [AllowedAtomsValidation] Atom F is not in allowedAtoms list");
+        "INFO: [AllowedAtomsValidation] Atom F is not in allowedAtoms list")
   }
   BOOST_LOG(rdInfoLog) << "Finished" << std::endl;
 }
@@ -280,7 +280,7 @@ void testDisallowedAtomsValidation() {
   for (const auto &msg : errout1) {
     TEST_ASSERT(
         msg ==
-        "INFO: [DisallowedAtomsValidation] Atom F is in disallowedAtoms list");
+        "INFO: [DisallowedAtomsValidation] Atom F is in disallowedAtoms list")
   }
   BOOST_LOG(rdInfoLog) << "Finished" << std::endl;
 }
@@ -299,7 +299,7 @@ void testFragment() {
   vector<ValidationErrorInfo> errout1 = vm.validate(*m1, true);
   for (const auto &msg : errout1) {
     TEST_ASSERT(msg ==
-                "INFO: [FragmentValidation] 1,2-dichloroethane is present");
+                "INFO: [FragmentValidation] 1,2-dichloroethane is present")
   }
 
   smi2 = "COCCOC.CCCBr";
@@ -307,7 +307,7 @@ void testFragment() {
   vector<ValidationErrorInfo> errout2 = vm.validate(*m2, true);
   for (const auto &msg : errout2) {
     TEST_ASSERT(msg ==
-                "INFO: [FragmentValidation] 1,2-dimethoxyethane is present");
+                "INFO: [FragmentValidation] 1,2-dimethoxyethane is present")
   }
   BOOST_LOG(rdInfoLog) << "Finished" << std::endl;
 }
@@ -1621,7 +1621,7 @@ void testValidateSmiles() {
     std::string msg = e.what();
     TEST_ASSERT(msg ==
                 "SMILES Parse Error: syntax error for input: 3478q439g98h")
-  };
+  }
 
   vector<ValidationErrorInfo> errout2 = validateSmiles("");
   for (const auto &msg : errout2) {
@@ -1631,7 +1631,7 @@ void testValidateSmiles() {
   vector<ValidationErrorInfo> errout3 = validateSmiles("ClCCCl.c1ccccc1O");
   for (const auto &msg : errout3) {
     TEST_ASSERT(msg ==
-                "INFO: [FragmentValidation] 1,2-dichloroethane is present");
+                "INFO: [FragmentValidation] 1,2-dichloroethane is present")
   }
   BOOST_LOG(rdInfoLog) << "Finished" << std::endl;
 }
