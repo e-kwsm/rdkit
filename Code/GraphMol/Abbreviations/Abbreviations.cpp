@@ -58,7 +58,7 @@ void applyMatches(RWMol& mol, const std::vector<AbbreviationMatch>& matches) {
 
     for (unsigned int i = 2; i < amatch.match.size(); ++i) {
       const auto& pr = amatch.match.at(i);
-      CHECK_INVARIANT(!atomsToRemove[pr.second], "overlapping matches");
+      CHECK_INVARIANT(!atomsToRemove[pr.second], "overlapping matches")
       atomsToRemove.set(pr.second);
       for (const auto bond : mol.atomBonds(mol.getAtomWithIdx(pr.second))) {
         bondsToRemove.set(bond->getIdx());
@@ -88,11 +88,11 @@ void applyMatches(RWMol& mol, const std::vector<AbbreviationMatch>& matches) {
       int bondIdx = -1;
       for (const auto bond : mol.atomBonds(mol.getAtomWithIdx(oaidx))) {
         if (bondsToRemove.test(bond->getIdx())) {
-          CHECK_INVARIANT(bondIdx == -1, "bondIdx must be unique");
+          CHECK_INVARIANT(bondIdx == -1, "bondIdx must be unique")
           bondIdx = bond->getIdx();
         }
       }
-      CHECK_INVARIANT(bondIdx != -1, "bondIdx not found");
+      CHECK_INVARIANT(bondIdx != -1, "bondIdx not found")
       mol.addBond(oaidx, connectIdx, Bond::BondType::SINGLE);
       addedBonds.push_back(hasPrevMapping ? prevBondMapping.at(bondIdx)
                                           : bondIdx);
@@ -118,9 +118,9 @@ void applyMatches(RWMol& mol, const std::vector<AbbreviationMatch>& matches) {
   mol.commitBatchEdit();
   bondMapping.insert(bondMapping.end(), addedBonds.begin(), addedBonds.end());
   CHECK_INVARIANT(atomMapping.size() == mol.getNumAtoms(),
-                  "atomMapping mismatch");
+                  "atomMapping mismatch")
   CHECK_INVARIANT(bondMapping.size() == mol.getNumBonds(),
-                  "bondMapping mismatch");
+                  "bondMapping mismatch")
   mol.setProp(common_properties::origAtomMapping, atomMapping);
   mol.setProp(common_properties::origBondMapping, bondMapping);
 }
@@ -137,7 +137,7 @@ void labelMatches(RWMol& mol, const std::vector<AbbreviationMatch>& matches) {
     }
     auto bnd =
         mol.getBondBetweenAtoms(amatch.match[0].second, amatch.match[1].second);
-    CHECK_INVARIANT(bnd, "bond to attachment point not found");
+    CHECK_INVARIANT(bnd, "bond to attachment point not found")
     sg.addBondWithIdx(bnd->getIdx());
     sg.addAttachPoint(amatch.match[1].second, amatch.match[0].second, "1");
     addSubstanceGroup(mol, sg);
@@ -164,7 +164,7 @@ std::vector<AbbreviationMatch> findApplicableAbbreviationMatches(
   boost::dynamic_bitset<> covered(mol.getNumAtoms());
 
   for (const auto& abbrev : abbrevs) {
-    CHECK_INVARIANT(abbrev.mol, "molecule is null");
+    CHECK_INVARIANT(abbrev.mol, "molecule is null")
     if (maxCoverage > 0) {
       unsigned int nDummies;
       abbrev.mol->getProp(common_properties::numDummies, nDummies);
@@ -175,7 +175,7 @@ std::vector<AbbreviationMatch> findApplicableAbbreviationMatches(
     }
     auto matches = SubstructMatch(mol, *abbrev.mol);
     for (const auto& match : matches) {
-      CHECK_INVARIANT(match.size() > 1, "bad match size");
+      CHECK_INVARIANT(match.size() > 1, "bad match size")
       // if we've already covered the first non-dummy atom or used it as a first
       // atom skip this.
       if (firstAts[match[1].second] || covered[match[1].second]) {
@@ -227,7 +227,7 @@ void condenseMolAbbreviations(
   if (sanitize) {
     MolOps::symmetrizeSSSR(mol);
   }
-};
+}
 
 void labelMolAbbreviations(RWMol& mol,
                            const std::vector<AbbreviationDefinition>& abbrevs,
@@ -235,7 +235,7 @@ void labelMolAbbreviations(RWMol& mol,
   auto applicable =
       findApplicableAbbreviationMatches(mol, abbrevs, maxCoverage);
   labelMatches(mol, applicable);
-};
+}
 
 RDKIT_ABBREVIATIONS_EXPORT void condenseAbbreviationSubstanceGroups(
     RWMol& mol) {
@@ -300,7 +300,7 @@ RDKIT_ABBREVIATIONS_EXPORT void condenseAbbreviationSubstanceGroups(
   } else {
     BOOST_LOG(rdWarningLog) << "no suitable SubstanceGroups found" << std::endl;
   }
-};  // namespace Abbreviations
+}
 
 }  // namespace Abbreviations
 }  // namespace RDKit

@@ -35,7 +35,7 @@ void testWHIM2() {
     ++nDone;
 
     RDKit::ROMol *m = reader.next();
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
     std::string nm;
     m->getProp("_Name", nm);
 
@@ -67,7 +67,7 @@ void testWHIM3() {
     ++nDone;
 
     RDKit::ROMol *m = reader.next();
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
     std::string nm;
     m->getProp("_Name", nm);
 
@@ -99,7 +99,7 @@ void testWHIM1() {
     ++nDone;
 
     RDKit::ROMol *m = reader.next();
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
     std::string nm;
     m->getProp("_Name", nm);
 
@@ -153,14 +153,14 @@ void testWHIM() {
   int nDone = 0;
   while (!reader.atEnd()) {
     RDKit::ROMol *m = reader.next();
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
     std::string nm;
     m->getProp("_Name", nm);
     std::vector<double> dwhim;
     RDKit::Descriptors::WHIM(*m, dwhim, -1, 0.01);
     std::vector<std::string> myrow = data[nDone];
     std::string inm = myrow[0];
-    TEST_ASSERT(inm == nm);
+    TEST_ASSERT(inm == nm)
     // outstrm << nm;
     for (int i = 0; i < 114; i++) {
       double ref = atof(myrow[i + 1].c_str());
@@ -171,7 +171,7 @@ void testWHIM() {
       // outstrm << "\t" << dwhim[i];
       // TEST_ASSERT((ref < 1e-3 && dwhim[i] < 1e-3) ||
       //             fabs(ref - dwhim[i]) / ref < 0.01);
-      TEST_ASSERT(fabs(ref - dwhim[i]) < 0.01);
+      TEST_ASSERT(fabs(ref - dwhim[i]) < 0.01)
     }
     // outstrm << std::endl;
     delete m;

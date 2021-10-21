@@ -91,14 +91,14 @@ class RDKIT_FILTERCATALOG_EXPORT And : public FilterMatcherBase {
 
   bool hasMatch(const ROMol &mol) const override {
     PRECONDITION(isValid(),
-                 "FilterMatchOps::And is not valid, null arg1 or arg2");
+                 "FilterMatchOps::And is not valid, null arg1 or arg2")
     return arg1->hasMatch(mol) && arg2->hasMatch(mol);
   }
 
   bool getMatches(const ROMol &mol,
                   std::vector<FilterMatch> &matchVect) const override {
     PRECONDITION(isValid(),
-                 "FilterMatchOps::And is not valid, null arg1 or arg2");
+                 "FilterMatchOps::And is not valid, null arg1 or arg2")
     std::vector<FilterMatch> matches;
     if (arg1->getMatches(mol, matches) && arg2->getMatches(mol, matches)) {
       matchVect = matches;
@@ -116,7 +116,7 @@ class RDKIT_FILTERCATALOG_EXPORT And : public FilterMatcherBase {
   friend class boost::serialization::access;
   template <class Archive>
   void serialize(Archive &ar, const unsigned int version) {
-    RDUNUSED_PARAM(version);
+    RDUNUSED_PARAM(version)
     ar &boost::serialization::base_object<FilterMatcherBase>(*this);
 
     ar &arg1;
@@ -154,14 +154,14 @@ class RDKIT_FILTERCATALOG_EXPORT Or : public FilterMatcherBase {
   }
 
   bool hasMatch(const ROMol &mol) const override {
-    PRECONDITION(isValid(), "Or is not valid, null arg1 or arg2");
+    PRECONDITION(isValid(), "Or is not valid, null arg1 or arg2")
     return arg1->hasMatch(mol) || arg2->hasMatch(mol);
   }
 
   bool getMatches(const ROMol &mol,
                   std::vector<FilterMatch> &matchVect) const override {
     PRECONDITION(isValid(),
-                 "FilterMatchOps::Or is not valid, null arg1 or arg2");
+                 "FilterMatchOps::Or is not valid, null arg1 or arg2")
     // we want both matches to run in order to accumulate all matches
     //  into matchVect, otherwise the or can be arbitrary...
     bool res1 = arg1->getMatches(mol, matchVect);
@@ -177,7 +177,7 @@ class RDKIT_FILTERCATALOG_EXPORT Or : public FilterMatcherBase {
   friend class boost::serialization::access;
   template <class Archive>
   void serialize(Archive &ar, const unsigned int version) {
-    RDUNUSED_PARAM(version);
+    RDUNUSED_PARAM(version)
     ar &boost::serialization::base_object<FilterMatcherBase>(*this);
     ar &arg1;
     ar &arg2;
@@ -211,12 +211,12 @@ class RDKIT_FILTERCATALOG_EXPORT Not : public FilterMatcherBase {
   bool isValid() const override { return arg1.get() && arg1->isValid(); }
 
   bool hasMatch(const ROMol &mol) const override {
-    PRECONDITION(isValid(), "FilterMatchOps::Not: arg1 is null");
+    PRECONDITION(isValid(), "FilterMatchOps::Not: arg1 is null")
     return !arg1->hasMatch(mol);
   }
 
   bool getMatches(const ROMol &mol, std::vector<FilterMatch> &) const override {
-    PRECONDITION(isValid(), "FilterMatchOps::Not: arg1 is null");
+    PRECONDITION(isValid(), "FilterMatchOps::Not: arg1 is null")
     // If we are a not, we really can't hold the match for
     //  this query since by definition it won't exist!
     std::vector<FilterMatch> matchVect;
@@ -232,7 +232,7 @@ class RDKIT_FILTERCATALOG_EXPORT Not : public FilterMatcherBase {
   friend class boost::serialization::access;
   template <class Archive>
   void serialize(Archive &ar, const unsigned int version) {
-    RDUNUSED_PARAM(version);
+    RDUNUSED_PARAM(version)
     ar &boost::serialization::base_object<FilterMatcherBase>(*this);
     ar &arg1;
   }
@@ -345,7 +345,7 @@ class RDKIT_FILTERCATALOG_EXPORT SmartsMatcher : public FilterMatcherBase {
   friend class boost::serialization::access;
   template <class Archive>
   void save(Archive &ar, const unsigned int version) const {
-    RDUNUSED_PARAM(version);
+    RDUNUSED_PARAM(version)
     ar &boost::serialization::base_object<FilterMatcherBase>(*this);
     std::string res;
     MolPickler::pickleMol(*d_pattern.get(), res);
@@ -356,14 +356,14 @@ class RDKIT_FILTERCATALOG_EXPORT SmartsMatcher : public FilterMatcherBase {
   template <class Archive>
   void load(Archive &ar, const unsigned int version) {
     ar &boost::serialization::base_object<FilterMatcherBase>(*this);
-    RDUNUSED_PARAM(version);
+    RDUNUSED_PARAM(version)
     std::string res;
     ar &res;
     d_pattern = boost::shared_ptr<ROMol>(new ROMol(res));
     ar &d_min_count;
     ar &d_max_count;
   }
-  BOOST_SERIALIZATION_SPLIT_MEMBER();
+  BOOST_SERIALIZATION_SPLIT_MEMBER()
 #endif
 };
 
@@ -418,7 +418,7 @@ class RDKIT_FILTERCATALOG_EXPORT ExclusionList : public FilterMatcherBase {
   }
 
   void addPattern(const FilterMatcherBase &base) {
-    PRECONDITION(base.isValid(), "Invalid FilterMatcherBase");
+    PRECONDITION(base.isValid(), "Invalid FilterMatcherBase")
     d_offPatterns.push_back(base.copy());
   }
 
@@ -429,7 +429,7 @@ class RDKIT_FILTERCATALOG_EXPORT ExclusionList : public FilterMatcherBase {
 
   bool getMatches(const ROMol &mol, std::vector<FilterMatch> &) const override {
     PRECONDITION(isValid(),
-                 "ExclusionList: one of the exclusion pattens is invalid");
+                 "ExclusionList: one of the exclusion pattens is invalid")
     bool result = true;
     for (size_t i = 0; i < d_offPatterns.size() && result; ++i) {
       result &= !d_offPatterns[i]->hasMatch(mol);
@@ -440,7 +440,7 @@ class RDKIT_FILTERCATALOG_EXPORT ExclusionList : public FilterMatcherBase {
 
   bool hasMatch(const ROMol &mol) const override {
     PRECONDITION(isValid(),
-                 "ExclusionList: one of the exclusion pattens is invalid");
+                 "ExclusionList: one of the exclusion pattens is invalid")
     bool result = true;
     for (size_t i = 0; i < d_offPatterns.size() && result; ++i) {
       result &= !d_offPatterns[i]->hasMatch(mol);
@@ -458,7 +458,7 @@ class RDKIT_FILTERCATALOG_EXPORT ExclusionList : public FilterMatcherBase {
   friend class boost::serialization::access;
   template <class Archive>
   void serialize(Archive &ar, const unsigned int version) {
-    RDUNUSED_PARAM(version);
+    RDUNUSED_PARAM(version)
     ar &boost::serialization::base_object<FilterMatcherBase>(*this);
     ar &d_offPatterns;
   }
@@ -500,9 +500,9 @@ class RDKIT_FILTERCATALOG_EXPORT FilterHierarchyMatcher
     \param matcher The new FilterMatcherBase
   */
   void setPattern(const FilterMatcherBase &matcher) {
-    PRECONDITION(matcher.isValid(), "Adding invalid patterns is not allowed.");
+    PRECONDITION(matcher.isValid(), "Adding invalid patterns is not allowed.")
     d_matcher = matcher.copy();
-    PRECONDITION(getName() == d_matcher->getName(), "Opps");
+    PRECONDITION(getName() == d_matcher->getName(), "Opps")
   }
 
   //! add a FilterHierarchy as a child.
@@ -514,7 +514,7 @@ class RDKIT_FILTERCATALOG_EXPORT FilterHierarchyMatcher
   boost::shared_ptr<FilterHierarchyMatcher> addChild(
       const FilterHierarchyMatcher &hierarchy) {
     PRECONDITION(hierarchy.d_matcher.get() && hierarchy.d_matcher->isValid(),
-                 "Only one root node is allowed in a FilterHierarchyMatcher");
+                 "Only one root node is allowed in a FilterHierarchyMatcher")
 
     d_children.push_back(boost::shared_ptr<FilterHierarchyMatcher>(
         new FilterHierarchyMatcher(hierarchy)));
@@ -549,7 +549,7 @@ class RDKIT_FILTERCATALOG_EXPORT FilterHierarchyMatcher
   friend class boost::serialization::access;
   template <class Archive>
   void serialize(Archive &ar, const unsigned int version) {
-    RDUNUSED_PARAM(version);
+    RDUNUSED_PARAM(version)
     ar &boost::serialization::base_object<FilterMatcherBase>(*this);
     ar &d_children;
     ar &d_matcher;

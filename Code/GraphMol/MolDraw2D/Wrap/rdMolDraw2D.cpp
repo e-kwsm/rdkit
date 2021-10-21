@@ -428,7 +428,7 @@ python::object getCairoDrawingText(const RDKit::MolDraw2DCairo &self) {
 #endif
 ROMol *prepMolForDrawing(const ROMol *m, bool kekulize, bool addChiralHs,
                          bool wedgeBonds, bool forceCoords, bool wavyBonds) {
-  PRECONDITION(m, "molecule must not be None");
+  PRECONDITION(m, "molecule must not be None")
   auto *res = new RWMol(*m);
   MolDraw2DUtils::prepareMolForDrawing(*res, kekulize, addChiralHs, wedgeBonds,
                                        forceCoords, wavyBonds);
@@ -683,7 +683,7 @@ std::string molToSVG(const ROMol &mol, unsigned int width, unsigned int height,
                      unsigned int lineWidthMult, bool includeAtomCircles,
                      int confId) {
   // FIX: we really should be using kekulize here
-  RDUNUSED_PARAM(kekulize);
+  RDUNUSED_PARAM(kekulize)
   std::unique_ptr<std::vector<int>> highlightAtoms =
       pythonObjectToVect(pyHighlightAtoms, static_cast<int>(mol.getNumAtoms()));
   std::stringstream outs;

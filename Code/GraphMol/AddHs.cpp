@@ -24,10 +24,10 @@ namespace RDKit {
 // Local utility functionality:
 namespace {
 Atom *getAtomNeighborNot(ROMol *mol, const Atom *atom, const Atom *other) {
-  PRECONDITION(mol, "bad molecule");
-  PRECONDITION(atom, "bad atom");
-  PRECONDITION(atom->getDegree() > 1, "bad degree");
-  PRECONDITION(other, "bad atom");
+  PRECONDITION(mol, "bad molecule")
+  PRECONDITION(atom, "bad atom")
+  PRECONDITION(atom->getDegree() > 1, "bad degree")
+  PRECONDITION(other, "bad atom")
   Atom *res = nullptr;
 
   ROMol::ADJ_ITER nbrIdx, endNbrs;
@@ -40,7 +40,7 @@ Atom *getAtomNeighborNot(ROMol *mol, const Atom *atom, const Atom *other) {
     ++nbrIdx;
   }
 
-  POSTCONDITION(res, "no neighbor found");
+  POSTCONDITION(res, "no neighbor found")
   return res;
 }
 
@@ -178,11 +178,11 @@ RDGeom::Point3D pickBisector(const RDGeom::Point3D &nbr1Vect,
 void setTerminalAtomCoords(ROMol &mol, unsigned int idx,
                            unsigned int otherIdx) {
   // we will loop over all the coordinates
-  PRECONDITION(otherIdx != idx, "degenerate atoms");
+  PRECONDITION(otherIdx != idx, "degenerate atoms")
   Atom *atom = mol.getAtomWithIdx(idx);
-  PRECONDITION(mol.getAtomDegree(atom) == 1, "bad atom degree");
+  PRECONDITION(mol.getAtomDegree(atom) == 1, "bad atom degree")
   const Bond *bond = mol.getBondBetweenAtoms(otherIdx, idx);
-  PRECONDITION(bond, "no bond between atoms");
+  PRECONDITION(bond, "no bond between atoms")
 
   const Atom *otherAtom = mol.getAtomWithIdx(otherIdx);
   double bondLength =
@@ -312,8 +312,8 @@ void setTerminalAtomCoords(ROMol &mol, unsigned int idx,
         }
         ++nbrIdx;
       }
-      TEST_ASSERT(nbr1);
-      TEST_ASSERT(nbr2);
+      TEST_ASSERT(nbr1)
+      TEST_ASSERT(nbr2)
       for (auto cfi = mol.beginConformers(); cfi != mol.endConformers();
            ++cfi) {
         // start along the average of the two vectors:
@@ -591,14 +591,14 @@ ROMol *addHs(const ROMol &mol, bool explicitOnly, bool addCoords,
   auto *res = new RWMol(mol);
   addHs(*res, explicitOnly, addCoords, onlyOnAtoms, addResidueInfo);
   return static_cast<ROMol *>(res);
-};
+}
 
 namespace {
 // returns whether or not an adjustment was made, in case we want that info
 bool adjustStereoAtomsIfRequired(RWMol &mol, const Atom *atom,
                                  const Atom *heavyAtom) {
-  PRECONDITION(atom != nullptr, "bad atom");
-  PRECONDITION(heavyAtom != nullptr, "bad heavy atom");
+  PRECONDITION(atom != nullptr, "bad atom")
+  PRECONDITION(heavyAtom != nullptr, "bad heavy atom")
   // nothing we can do if the degree is only 2 (and we should have covered
   // that earlier anyway)
   if (heavyAtom->getDegree() == 2) {
@@ -651,7 +651,7 @@ bool adjustStereoAtomsIfRequired(RWMol &mol, const Atom *atom,
 
 void molRemoveH(RWMol &mol, unsigned int idx, bool updateExplicitCount) {
   auto atom = mol.getAtomWithIdx(idx);
-  PRECONDITION(atom->getAtomicNum() == 1, "idx corresponds to a non-Hydrogen");
+  PRECONDITION(atom->getAtomicNum() == 1, "idx corresponds to a non-Hydrogen")
   for (const auto bond : mol.atomBonds(atom)) {
     Atom *heavyAtom = bond->getOtherAtom(atom);
     int heavyAtomNum = heavyAtom->getAtomicNum();
@@ -1004,7 +1004,7 @@ void removeHs(RWMol &mol, const RemoveHsParameters &ps, bool sanitize) {
   if (!atomsToRemove.empty() && ps.removeNonimplicit && sanitize) {
     sanitizeMol(mol);
   }
-};
+}
 ROMol *removeHs(const ROMol &mol, const RemoveHsParameters &ps, bool sanitize) {
   auto *res = new RWMol(mol);
   try {
@@ -1021,7 +1021,7 @@ void removeHs(RWMol &mol, bool implicitOnly, bool updateExplicitCount,
   ps.removeNonimplicit = !implicitOnly;
   ps.updateExplicitCount = updateExplicitCount;
   removeHs(mol, ps, sanitize);
-};
+}
 ROMol *removeHs(const ROMol &mol, bool implicitOnly, bool updateExplicitCount,
                 bool sanitize) {
   auto *res = new RWMol(mol);
@@ -1050,7 +1050,7 @@ void removeAllHs(RWMol &mol, bool sanitize) {
   ps.removeHydrides = true;
   ps.removeNontetrahedralNeighbors = true;
   removeHs(mol, ps, sanitize);
-};
+}
 ROMol *removeAllHs(const ROMol &mol, bool sanitize) {
   auto *res = new RWMol(mol);
   try {
@@ -1064,7 +1064,7 @@ ROMol *removeAllHs(const ROMol &mol, bool sanitize) {
 
 namespace {
 bool isQueryH(const Atom *atom) {
-  PRECONDITION(atom, "bogus atom");
+  PRECONDITION(atom, "bogus atom")
   if (atom->getAtomicNum() == 1) {
     // the simple case: the atom is flagged as being an H and
     // has no query
@@ -1205,7 +1205,7 @@ void mergeQueryHs(RWMol &mol, bool mergeUnmappedOnly, bool mergeIsotopes) {
       if (atom->hasQuery()) {
         if (atom->getQuery()->getDescription() == "RecursiveStructure") {
           auto *rsq = dynamic_cast<RecursiveStructureQuery *>(atom->getQuery());
-          CHECK_INVARIANT(rsq, "could not convert recursive structure query");
+          CHECK_INVARIANT(rsq, "could not convert recursive structure query")
           RWMol *rqm = new RWMol(*rsq->getQueryMol());
           mergeQueryHs(*rqm, mergeUnmappedOnly, mergeIsotopes);
           rsq->setQueryMol(rqm);
@@ -1219,7 +1219,7 @@ void mergeQueryHs(RWMol &mol, bool mergeUnmappedOnly, bool mergeIsotopes) {
           childStack.pop_front();
           if (qry->getDescription() == "RecursiveStructure") {
             auto *rsq = dynamic_cast<RecursiveStructureQuery *>(qry.get());
-            CHECK_INVARIANT(rsq, "could not convert recursive structure query");
+            CHECK_INVARIANT(rsq, "could not convert recursive structure query")
             RWMol *rqm = new RWMol(*rsq->getQueryMol());
             mergeQueryHs(*rqm, mergeUnmappedOnly, mergeIsotopes);
             rsq->setQueryMol(rqm);
@@ -1237,13 +1237,13 @@ void mergeQueryHs(RWMol &mol, bool mergeUnmappedOnly, bool mergeIsotopes) {
     mol.removeAtom(aidx);
   }
   mol.commitBatchEdit();
-};
+}
 ROMol *mergeQueryHs(const ROMol &mol, bool mergeUnmappedOnly,
                     bool mergeIsotopes) {
   auto *res = new RWMol(mol);
   mergeQueryHs(*res, mergeUnmappedOnly, mergeIsotopes);
   return static_cast<ROMol *>(res);
-};
+}
 
 bool needsHs(const ROMol &mol) {
   for (const auto atom : mol.atoms()) {

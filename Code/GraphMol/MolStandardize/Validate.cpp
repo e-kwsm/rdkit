@@ -69,7 +69,7 @@ void NoAtomValidation::run(const ROMol &mol, bool,
 void FragmentValidation::run(const ROMol &mol, bool reportAllFailures,
                              std::vector<ValidationErrorInfo> &errors) const {
   // REVIEW: reportAllFailures is not being used here. is that correct?
-  RDUNUSED_PARAM(reportAllFailures);
+  RDUNUSED_PARAM(reportAllFailures)
   std::shared_ptr<FragmentCatalogParams> fparams(new FragmentCatalogParams(""));
   FragmentCatalog fcat(fparams.get());
 
@@ -188,7 +188,7 @@ MolVSValidation::MolVSValidation(const MolVSValidation &other) {
   d_validations = other.d_validations;
 }
 
-MolVSValidation::~MolVSValidation(){};
+MolVSValidation::~MolVSValidation() {}
 
 std::vector<ValidationErrorInfo> MolVSValidation::validate(
     const ROMol &mol, bool reportAllFailures) const {

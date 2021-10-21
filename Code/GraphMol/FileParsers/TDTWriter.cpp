@@ -51,7 +51,7 @@ TDTWriter::TDTWriter(const std::string &fileName) {
 }
 
 TDTWriter::TDTWriter(std::ostream *outStream, bool takeOwnership) {
-  PRECONDITION(outStream, "null stream");
+  PRECONDITION(outStream, "null stream")
   if (outStream->bad()) {
     throw FileParseException("Bad output stream");
   }
@@ -80,7 +80,7 @@ void TDTWriter::setProps(const STR_VECT &propNames) {
 }
 
 void TDTWriter::write(const ROMol &mol, int confId) {
-  CHECK_INVARIANT(dp_ostream, "no output stream");
+  CHECK_INVARIANT(dp_ostream, "no output stream")
   // start by writing a "|" line unless this is the first line
   if (d_molid > 0) {
     (*dp_ostream) << "|\n";
@@ -160,7 +160,7 @@ void TDTWriter::write(const ROMol &mol, int confId) {
 }
 
 void TDTWriter::writeProperty(const ROMol &mol, const std::string &name) {
-  PRECONDITION(dp_ostream, "no output stream");
+  PRECONDITION(dp_ostream, "no output stream")
   (*dp_ostream) << name << "<";
 
   // write the property value

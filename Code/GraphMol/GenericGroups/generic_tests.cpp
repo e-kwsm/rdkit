@@ -172,13 +172,13 @@ M  END
 
 namespace {
 bool no_match(const ROMol &mol, const std::vector<unsigned int> &ids) {
-  RDUNUSED_PARAM(mol);
-  RDUNUSED_PARAM(ids);
+  RDUNUSED_PARAM(mol)
+  RDUNUSED_PARAM(ids)
   return false;
 }
 bool always_match(const ROMol &mol, const std::vector<unsigned int> &ids) {
-  RDUNUSED_PARAM(mol);
-  RDUNUSED_PARAM(ids);
+  RDUNUSED_PARAM(mol)
+  RDUNUSED_PARAM(ids)
   return true;
 }
 }  // namespace

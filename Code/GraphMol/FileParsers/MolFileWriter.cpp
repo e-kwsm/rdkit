@@ -52,8 +52,8 @@ namespace RDKit {
 namespace {
 
 int getQueryBondTopology(const Bond *bond) {
-  PRECONDITION(bond, "no bond");
-  PRECONDITION(bond->hasQuery(), "no query");
+  PRECONDITION(bond, "no bond")
+  PRECONDITION(bond->hasQuery(), "no query")
   int res = 0;
   Bond::QUERYBOND_QUERY *qry = bond->getQuery();
   // start by catching combined bond order + bond topology queries
@@ -82,8 +82,8 @@ int getQueryBondTopology(const Bond *bond) {
 
 // returns 0 if there's a basic bond-order query
 int getQueryBondSymbol(const Bond *bond) {
-  PRECONDITION(bond, "no bond");
-  PRECONDITION(bond->hasQuery(), "no query");
+  PRECONDITION(bond, "no bond")
+  PRECONDITION(bond->hasQuery(), "no query")
   int res = 8;
 
   Bond::QUERYBOND_QUERY *qry = bond->getQuery();
@@ -205,7 +205,7 @@ const std::string GetMolFileChargeInfo(const RWMol &mol) {
 }
 
 bool hasComplexQuery(const Atom *atom) {
-  PRECONDITION(atom, "bad atom");
+  PRECONDITION(atom, "bad atom")
   bool res = false;
   if (atom->hasQuery()) {
     res = true;
@@ -384,7 +384,7 @@ const std::string GetMolFileZBOInfo(const RWMol &mol) {
 const std::string AtomGetMolFileSymbol(
     const Atom *atom, bool padWithSpaces,
     boost::dynamic_bitset<> &queryListAtoms) {
-  PRECONDITION(atom, "");
+  PRECONDITION(atom, "")
 
   std::string res;
   if (atom->hasProp(common_properties::_MolFileRLabel)) {
@@ -489,8 +489,8 @@ const std::string AtomGetMolFileSymbol(
 
 namespace {
 unsigned int getAtomParityFlag(const Atom *atom, const Conformer *conf) {
-  PRECONDITION(atom, "bad atom");
-  PRECONDITION(conf, "bad conformer");
+  PRECONDITION(atom, "bad atom")
+  PRECONDITION(conf, "bad conformer")
   if (!conf->is3D() ||
       !(atom->getDegree() >= 3 && atom->getTotalDegree() == 4)) {
     return 0;
@@ -553,7 +553,7 @@ void GetMolFileAtomProperties(const Atom *atom, const Conformer *conf,
                               int &totValence, int &atomMapNumber,
                               unsigned int &parityFlag, double &x, double &y,
                               double &z) {
-  PRECONDITION(atom, "");
+  PRECONDITION(atom, "")
   totValence = 0;
   atomMapNumber = 0;
   parityFlag = 0;
@@ -592,7 +592,7 @@ void GetMolFileAtomProperties(const Atom *atom, const Conformer *conf,
 
 const std::string GetMolFileAtomLine(const Atom *atom, const Conformer *conf,
                                      boost::dynamic_bitset<> &queryListAtoms) {
-  PRECONDITION(atom, "");
+  PRECONDITION(atom, "")
   std::string res;
   int totValence, atomMapNumber;
   unsigned int parityFlag;
@@ -651,7 +651,7 @@ const std::string GetMolFileAtomLine(const Atom *atom, const Conformer *conf,
   res += dest;
 #endif
   return res;
-};
+}
 
 namespace {
 /*
@@ -671,12 +671,12 @@ namespace {
 class RequiresV3000Exception : public std::runtime_error {
  public:
   explicit RequiresV3000Exception()
-      : std::runtime_error("RequiresV3000Exception"){};
+      : std::runtime_error("RequiresV3000Exception") {}
 };
 }  // namespace
 
 int BondGetMolFileSymbol(const Bond *bond) {
-  PRECONDITION(bond, "");
+  PRECONDITION(bond, "")
   // FIX: should eventually recognize queries
   int res = 0;
   if (bond->hasQuery()) {
@@ -743,8 +743,8 @@ int BondGetDirCode(const Bond::BondDir dir) {
 
 namespace {
 bool checkNeighbors(const Bond *bond, const Atom *atom) {
-  PRECONDITION(bond, "no bond");
-  PRECONDITION(atom, "no atom");
+  PRECONDITION(bond, "no bond")
+  PRECONDITION(atom, "no atom")
   std::vector<int> nbrRanks;
   for (auto bondIt :
        boost::make_iterator_range(bond->getOwningMol().getAtomBonds(atom))) {
@@ -774,7 +774,7 @@ bool checkNeighbors(const Bond *bond, const Atom *atom) {
 void GetMolFileBondStereoInfo(const Bond *bond, const INT_MAP_INT &wedgeBonds,
                               const Conformer *conf, int &dirCode,
                               bool &reverse) {
-  PRECONDITION(bond, "");
+  PRECONDITION(bond, "")
   dirCode = 0;
   reverse = false;
   Bond::BondDir dir = Bond::NONE;
@@ -840,7 +840,7 @@ void GetMolFileBondStereoInfo(const Bond *bond, const INT_MAP_INT &wedgeBonds,
 const std::string GetMolFileBondLine(const Bond *bond,
                                      const INT_MAP_INT &wedgeBonds,
                                      const Conformer *conf) {
-  PRECONDITION(bond, "");
+  PRECONDITION(bond, "")
 
   int dirCode;
   bool reverse;
@@ -872,7 +872,7 @@ const std::string GetMolFileBondLine(const Bond *bond,
 const std::string GetV3000MolFileAtomLine(
     const Atom *atom, const Conformer *conf,
     boost::dynamic_bitset<> &queryListAtoms) {
-  PRECONDITION(atom, "");
+  PRECONDITION(atom, "")
   int totValence, atomMapNumber;
   unsigned int parityFlag;
   double x, y, z;
@@ -996,12 +996,12 @@ const std::string GetV3000MolFileAtomLine(
   // HCOUNT - *query* hydrogen count. Not written by this writer.
 
   return ss.str();
-};
+}
 
 int GetV3000BondCode(const Bond *bond) {
   // JHJ: As far as I can tell, the V3000 bond codes are the same as for V2000.
   //      Except: The dative bond type is only supported in V3000.
-  PRECONDITION(bond, "");
+  PRECONDITION(bond, "")
   int res = 0;
   // FIX: should eventually recognize queries
   if (bond->hasQuery()) {
@@ -1088,7 +1088,7 @@ void moveAdditionalPropertiesToSGroups(RWMol &mol) {
 const std::string GetV3000MolFileBondLine(const Bond *bond,
                                           const INT_MAP_INT &wedgeBonds,
                                           const Conformer *conf) {
-  PRECONDITION(bond, "");
+  PRECONDITION(bond, "")
 
   int dirCode;
   bool reverse;

@@ -502,7 +502,7 @@ void DrawText::getStringRects(const std::string &text, OrientType orient,
                               std::vector<TextDrawType> &draw_modes,
                               std::vector<char> &draw_chars, bool dontSplit,
                               TextAlignType textAlign) const {
-  PRECONDITION(!text.empty(), "empty string");
+  PRECONDITION(!text.empty(), "empty string")
   std::vector<std::string> text_bits;
   if (!dontSplit) {
     text_bits = atomLabelToPieces(text, orient);

@@ -130,8 +130,8 @@ unsigned int RWMol::addAtom(bool updateLabel) {
 
 void RWMol::replaceAtom(unsigned int idx, Atom *atom_pin, bool,
                         bool preserveProps) {
-  PRECONDITION(atom_pin, "bad atom passed to replaceAtom");
-  URANGE_CHECK(idx, getNumAtoms());
+  PRECONDITION(atom_pin, "bad atom passed to replaceAtom")
+  URANGE_CHECK(idx, getNumAtoms())
   Atom *atom_p = atom_pin->copy();
   atom_p->setOwningMol(this);
   atom_p->setIdx(idx);
@@ -165,12 +165,12 @@ void RWMol::replaceAtom(unsigned int idx, Atom *atom_pin, bool,
     }
     group = StereoGroup(group.getGroupType(), std::move(atoms));
   }
-};
+}
 
 void RWMol::replaceBond(unsigned int idx, Bond *bond_pin, bool preserveProps,
                         bool keepSGroups) {
-  PRECONDITION(bond_pin, "bad bond passed to replaceBond");
-  URANGE_CHECK(idx, getNumBonds());
+  PRECONDITION(bond_pin, "bad bond passed to replaceBond")
+  URANGE_CHECK(idx, getNumBonds())
   BOND_ITER_PAIR bIter = getEdges();
   for (unsigned int i = 0; i < idx; i++) {
     ++bIter.first;
@@ -202,7 +202,7 @@ void RWMol::replaceBond(unsigned int idx, Bond *bond_pin, bool preserveProps,
       }
     }
   }
-};
+}
 
 Atom *RWMol::getActiveAtom() {
   if (hasAtomBookmark(ci_RIGHTMOST_ATOM)) {
@@ -210,23 +210,23 @@ Atom *RWMol::getActiveAtom() {
   } else {
     return getLastAtom();
   }
-};
+}
 
 void RWMol::setActiveAtom(Atom *at) {
-  PRECONDITION(at, "NULL atom provided");
+  PRECONDITION(at, "NULL atom provided")
   clearAtomBookmark(ci_RIGHTMOST_ATOM);
   setAtomBookmark(at, ci_RIGHTMOST_ATOM);
-};
+}
 void RWMol::setActiveAtom(unsigned int idx) {
   setActiveAtom(getAtomWithIdx(idx));
-};
+}
 
 void RWMol::removeAtom(unsigned int idx) { removeAtom(getAtomWithIdx(idx)); }
 
 void RWMol::removeAtom(Atom *atom) {
-  PRECONDITION(atom, "NULL atom provided");
+  PRECONDITION(atom, "NULL atom provided")
   PRECONDITION(static_cast<RWMol *>(&atom->getOwningMol()) == this,
-               "atom not owned by this molecule");
+               "atom not owned by this molecule")
   unsigned int idx = atom->getIdx();
   if (dp_delAtoms) {
     // we're in a batch edit
@@ -374,11 +374,11 @@ void RWMol::removeAtom(Atom *atom) {
 
 unsigned int RWMol::addBond(unsigned int atomIdx1, unsigned int atomIdx2,
                             Bond::BondType bondType) {
-  URANGE_CHECK(atomIdx1, getNumAtoms());
-  URANGE_CHECK(atomIdx2, getNumAtoms());
-  PRECONDITION(atomIdx1 != atomIdx2, "attempt to add self-bond");
+  URANGE_CHECK(atomIdx1, getNumAtoms())
+  URANGE_CHECK(atomIdx2, getNumAtoms())
+  PRECONDITION(atomIdx1 != atomIdx2, "attempt to add self-bond")
   PRECONDITION(!(boost::edge(atomIdx1, atomIdx2, d_graph).second),
-               "bond already exists");
+               "bond already exists")
 
   auto *b = new Bond(bondType);
   b->setOwningMol(this);
@@ -415,13 +415,13 @@ unsigned int RWMol::addBond(unsigned int atomIdx1, unsigned int atomIdx2,
 }
 
 unsigned int RWMol::addBond(Atom *atom1, Atom *atom2, Bond::BondType bondType) {
-  PRECONDITION(atom1 && atom2, "NULL atom passed in");
+  PRECONDITION(atom1 && atom2, "NULL atom passed in")
   return addBond(atom1->getIdx(), atom2->getIdx(), bondType);
 }
 
 void RWMol::removeBond(unsigned int aid1, unsigned int aid2) {
-  URANGE_CHECK(aid1, getNumAtoms());
-  URANGE_CHECK(aid2, getNumAtoms());
+  URANGE_CHECK(aid1, getNumAtoms())
+  URANGE_CHECK(aid2, getNumAtoms())
   Bond *bnd = getBondBetweenAtoms(aid1, aid2);
   if (!bnd) {
     return;
@@ -514,7 +514,7 @@ void RWMol::removeBond(unsigned int aid1, unsigned int aid2) {
 }
 
 Bond *RWMol::createPartialBond(unsigned int atomIdx1, Bond::BondType bondType) {
-  URANGE_CHECK(atomIdx1, getNumAtoms());
+  URANGE_CHECK(atomIdx1, getNumAtoms())
 
   auto *b = new Bond(bondType);
   b->setOwningMol(this);
@@ -525,8 +525,8 @@ Bond *RWMol::createPartialBond(unsigned int atomIdx1, Bond::BondType bondType) {
 
 unsigned int RWMol::finishPartialBond(unsigned int atomIdx2, int bondBookmark,
                                       Bond::BondType bondType) {
-  PRECONDITION(hasBondBookmark(bondBookmark), "no such partial bond");
-  URANGE_CHECK(atomIdx2, getNumAtoms());
+  PRECONDITION(hasBondBookmark(bondBookmark), "no such partial bond")
+  URANGE_CHECK(atomIdx2, getNumAtoms())
 
   Bond *bsp = getBondWithBookmark(bondBookmark);
   if (bondType == Bond::UNSPECIFIED) {
@@ -555,7 +555,7 @@ void RWMol::commitBatchEdit() {
   for (unsigned int i = delBonds.size(); i > 0; --i) {
     if (delBonds[i - 1]) {
       const auto bnd = getBondWithIdx(i - 1);
-      CHECK_INVARIANT(bnd, "bond not found");
+      CHECK_INVARIANT(bnd, "bond not found")
       removeBond(bnd->getBeginAtomIdx(), bnd->getEndAtomIdx());
     }
   }

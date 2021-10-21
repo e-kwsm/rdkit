@@ -134,7 +134,7 @@ inline std::string MolToSmiles(const ROMol &mol, bool doIsomericSmiles = true,
   ps.allHsExplicit = allHsExplicit;
   ps.doRandom = doRandom;
   return MolToSmiles(mol, ps);
-};
+}
 
 //! \brief returns a vector of random SMILES for a molecule (may contain
 //! duplicates)
@@ -240,7 +240,7 @@ inline std::string MolToCXSmiles(const ROMol &mol, bool doIsomericSmiles = true,
   ps.allHsExplicit = allHsExplicit;
   ps.doRandom = doRandom;
   return MolToCXSmiles(mol, ps);
-};
+}
 
 //! \brief returns canonical CXSMILES for part of a molecule
 RDKIT_SMILESPARSE_EXPORT std::string MolFragmentToCXSmiles(

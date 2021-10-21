@@ -74,7 +74,7 @@ class MolBundle : public RDProps {
 
   //! adds a new molecule and returns the total number of molecules
   virtual size_t addMol(boost::shared_ptr<ROMol> nmol) {
-    PRECONDITION(nmol.get(), "bad mol pointer");
+    PRECONDITION(nmol.get(), "bad mol pointer")
     d_mols.push_back(nmol);
     return (d_mols.size());
   }
@@ -182,7 +182,7 @@ class FixedMolSizeMolBundle : public MolBundle {
   //!  enforces that the new molecule has the same number of atoms and bonds
   //!  as the molecules that are already there.
   size_t addMol(boost::shared_ptr<ROMol> nmol) override {
-    PRECONDITION(nmol.get(), "bad mol pointer");
+    PRECONDITION(nmol.get(), "bad mol pointer")
     if (d_mols.size()) {
       if (nmol->getNumAtoms() != d_mols[0]->getNumAtoms()) {
         throw ValueErrorException(
@@ -199,5 +199,5 @@ class FixedMolSizeMolBundle : public MolBundle {
   }
 };
 
-};  // namespace RDKit
+}  // namespace RDKit
 #endif

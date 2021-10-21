@@ -25,7 +25,7 @@ namespace RDGeom {
 unsigned int ci_GRIDPICKLE_VERSION = 0x1;
 
 UniformGrid3D::UniformGrid3D(const UniformGrid3D &other) : Grid3D(other) {
-  PRECONDITION(other.dp_storage, "cannot copy an uninitialized grid");
+  PRECONDITION(other.dp_storage, "cannot copy an uninitialized grid")
   auto *data = new RDKit::DiscreteValueVect(*other.dp_storage);
   initGrid(other.d_numX * other.d_spacing, other.d_numY * other.d_spacing,
            other.d_numZ * other.d_spacing, other.d_spacing,
@@ -36,7 +36,7 @@ UniformGrid3D &UniformGrid3D::operator=(const UniformGrid3D &other) {
   if (&other == this) {
     return *this;
   }
-  PRECONDITION(other.dp_storage, "cannot copy an uninitialized grid");
+  PRECONDITION(other.dp_storage, "cannot copy an uninitialized grid")
   delete dp_storage;
   auto *data = new RDKit::DiscreteValueVect(*other.dp_storage);
   initGrid(other.d_numX * other.d_spacing, other.d_numY * other.d_spacing,
@@ -49,17 +49,17 @@ void UniformGrid3D::initGrid(
     double dimX, double dimY, double dimZ, double spacing,
     RDKit::DiscreteValueVect::DiscreteValueType valType,
     const RDGeom::Point3D &offSet, RDKit::DiscreteValueVect *data) {
-  PRECONDITION(dimX > 0.0, "Invalid x-dimension for grid");
-  PRECONDITION(dimY > 0.0, "Invalid y-dimension for grid");
-  PRECONDITION(dimZ > 0.0, "Invalid z-dimension for grid");
-  PRECONDITION(spacing > 0.0, "Invalid spacing for grid");
+  PRECONDITION(dimX > 0.0, "Invalid x-dimension for grid")
+  PRECONDITION(dimY > 0.0, "Invalid y-dimension for grid")
+  PRECONDITION(dimZ > 0.0, "Invalid z-dimension for grid")
+  PRECONDITION(spacing > 0.0, "Invalid spacing for grid")
   d_numX = static_cast<unsigned int>(floor(dimX / spacing + 0.5));
   d_numY = static_cast<unsigned int>(floor(dimY / spacing + 0.5));
   d_numZ = static_cast<unsigned int>(floor(dimZ / spacing + 0.5));
   PRECONDITION((!data) || data->getValueType() == valType,
-               "grid data type mismatch");
+               "grid data type mismatch")
   PRECONDITION((!data) || data->getLength() == d_numX * d_numY * d_numZ,
-               "grid data size mismatch");
+               "grid data size mismatch")
 
   d_spacing = spacing;
   d_offSet = offSet;
@@ -284,9 +284,9 @@ void UniformGrid3D::setSphereOccupancy(const Point3D &center, double radius,
 }
 
 UniformGrid3D &UniformGrid3D::operator|=(const UniformGrid3D &other) {
-  PRECONDITION(dp_storage, "uninitialized grid");
-  PRECONDITION(other.dp_storage, "uninitialized grid");
-  PRECONDITION(compareParams(other), "incompatible grids");
+  PRECONDITION(dp_storage, "uninitialized grid")
+  PRECONDITION(other.dp_storage, "uninitialized grid")
+  PRECONDITION(compareParams(other), "incompatible grids")
 
   // EFF: we're probably doing too much copying here:
   RDKit::DiscreteValueVect *newData =
@@ -297,9 +297,9 @@ UniformGrid3D &UniformGrid3D::operator|=(const UniformGrid3D &other) {
 }
 
 UniformGrid3D &UniformGrid3D::operator&=(const UniformGrid3D &other) {
-  PRECONDITION(dp_storage, "uninitialized grid");
-  PRECONDITION(other.dp_storage, "uninitialized grid");
-  PRECONDITION(compareParams(other), "incompatible grids");
+  PRECONDITION(dp_storage, "uninitialized grid")
+  PRECONDITION(other.dp_storage, "uninitialized grid")
+  PRECONDITION(compareParams(other), "incompatible grids")
 
   // EFF: we're probably doing too much copying here:
   RDKit::DiscreteValueVect *newData =
@@ -310,9 +310,9 @@ UniformGrid3D &UniformGrid3D::operator&=(const UniformGrid3D &other) {
 }
 
 UniformGrid3D &UniformGrid3D::operator+=(const UniformGrid3D &other) {
-  PRECONDITION(dp_storage, "uninitialized grid");
-  PRECONDITION(other.dp_storage, "uninitialized grid");
-  PRECONDITION(compareParams(other), "incompatible grids");
+  PRECONDITION(dp_storage, "uninitialized grid")
+  PRECONDITION(other.dp_storage, "uninitialized grid")
+  PRECONDITION(compareParams(other), "incompatible grids")
 
   // EFF: we're probably doing too much copying here:
   *dp_storage += *other.dp_storage;
@@ -320,9 +320,9 @@ UniformGrid3D &UniformGrid3D::operator+=(const UniformGrid3D &other) {
 }
 
 UniformGrid3D &UniformGrid3D::operator-=(const UniformGrid3D &other) {
-  PRECONDITION(dp_storage, "uninitialized grid");
-  PRECONDITION(other.dp_storage, "uninitialized grid");
-  PRECONDITION(compareParams(other), "incompatible grids");
+  PRECONDITION(dp_storage, "uninitialized grid")
+  PRECONDITION(other.dp_storage, "uninitialized grid")
+  PRECONDITION(compareParams(other), "incompatible grids")
 
   // EFF: we're probably doing too much copying here:
   *dp_storage -= *other.dp_storage;

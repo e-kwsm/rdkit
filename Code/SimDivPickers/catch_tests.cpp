@@ -44,7 +44,7 @@ TEST_CASE(
     fps.emplace_back(new ExplicitBitVect(fpsText.size() * 4));
     UpdateBitVectFromFPSText(*fps.back(), fpsText);
     std::getline(inf, fpsText);
-  };
+  }
   REQUIRE(fps.size() == 1000);
   BVFunctor<std::vector<std::unique_ptr<ExplicitBitVect>>> bvf(fps);
   RDPickers::LeaderPicker pkr;

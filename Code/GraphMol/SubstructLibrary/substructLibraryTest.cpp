@@ -62,10 +62,10 @@ boost::dynamic_bitset<> runTest(SubstructLibrary &ssslib, const ROMol &pattern,
     bool matched = SubstructMatch(*ssslib.getMol(i), pattern, match);
     // std::cerr << MolToSmiles(*ssslib.getMol(i), true) << " " << hasMatch[i]
     //           << " " << matched << std::endl;
-    TEST_ASSERT(hasMatch[i] == matched);
+    TEST_ASSERT(hasMatch[i] == matched)
   }
   return hasMatch;
-};
+}
 
 void runTest(SubstructLibrary &ssslib, const ROMol &pattern, int nThreads,
              const boost::dynamic_bitset<> &hasMatch) {
@@ -74,16 +74,16 @@ void runTest(SubstructLibrary &ssslib, const ROMol &pattern, int nThreads,
   for (auto idx : libMatches) {
     hasMatch2[idx] = 1;
   }
-  TEST_ASSERT(hasMatch == hasMatch2);
+  TEST_ASSERT(hasMatch == hasMatch2)
 
   for (unsigned int i = 0; i < ssslib.size(); ++i) {
     MatchVectType match;
     bool matched = SubstructMatch(*ssslib.getMol(i), pattern, match);
     // std::cerr << MolToSmiles(*ssslib.getMol(i), true) << " " << hasMatch[i]
     //           << " " << matched << std::endl;
-    TEST_ASSERT(hasMatch[i] == matched);
+    TEST_ASSERT(hasMatch[i] == matched)
   }
-};
+}
 
 }  // namespace
 
@@ -116,7 +116,7 @@ void test1() {
   std::string pickle = ssslib.Serialize();
   SubstructLibrary serialized;
   serialized.initFromString(pickle);
-  TEST_ASSERT(serialized.size() == ssslib.size());
+  TEST_ASSERT(serialized.size() == ssslib.size())
   libs.push_back(&serialized);
 #endif
 
@@ -191,16 +191,16 @@ void test2() {
   std::string pickle = ssslib.Serialize();
   SubstructLibrary serialized;
   serialized.initFromString(pickle);
-  TEST_ASSERT(serialized.size() == ssslib.size());
+  TEST_ASSERT(serialized.size() == ssslib.size())
 
   // check to see if we are still the right base type
   MolHolderBase *_holder = serialized.getMolHolder().get();
-  TEST_ASSERT(_holder != nullptr);
-  TEST_ASSERT(dynamic_cast<MolHolder *>(_holder) != nullptr);
+  TEST_ASSERT(_holder != nullptr)
+  TEST_ASSERT(dynamic_cast<MolHolder *>(_holder) != nullptr)
   try {
     serialized.getFingerprints();
   } catch (...) {
-    TEST_ASSERT(0);
+    TEST_ASSERT(0)
   }
 
   libs.push_back(&serialized);
@@ -245,27 +245,27 @@ void test3() {
   std::string pickle = ssslib.Serialize();
   SubstructLibrary serialized;
   serialized.initFromString(pickle);
-  TEST_ASSERT(serialized.size() == ssslib.size());
+  TEST_ASSERT(serialized.size() == ssslib.size())
   libs.push_back(&serialized);
   // check to see if we are still the right base type
   MolHolderBase *_holder = serialized.getMolHolder().get();
-  TEST_ASSERT(_holder != nullptr);
-  TEST_ASSERT(dynamic_cast<MolHolder *>(_holder) != nullptr);
+  TEST_ASSERT(_holder != nullptr)
+  TEST_ASSERT(dynamic_cast<MolHolder *>(_holder) != nullptr)
 #endif
 
   for (auto lib : libs) {
     ROMol *query = SmartsToMol("C-1-C-C-O-C(-[O])(-[N])1");
     std::vector<unsigned int> res = lib->getMatches(*query, true, false);
-    TEST_ASSERT(res.size() == 40);
+    TEST_ASSERT(res.size() == 40)
 
     delete query;
     query = SmartsToMol("C-1-C-C-O-[C@@](-[O])(-[N])1");
 
     res = lib->getMatches(*query, true, true);
-    TEST_ASSERT(res.size() == 20);
+    TEST_ASSERT(res.size() == 20)
 
     res = lib->getMatches(*query, true, false);
-    TEST_ASSERT(res.size() == 40);
+    TEST_ASSERT(res.size() == 40)
 
     delete query;
   }
@@ -294,28 +294,28 @@ void test4() {
   std::string pickle = ssslib.Serialize();
   SubstructLibrary serialized;
   serialized.initFromString(pickle);
-  TEST_ASSERT(serialized.size() == ssslib.size());
+  TEST_ASSERT(serialized.size() == ssslib.size())
   libs.push_back(&serialized);
   // check to see if we are still the right base type
   MolHolderBase *_holder = serialized.getMolHolder().get();
-  TEST_ASSERT(_holder != nullptr);
-  TEST_ASSERT(dynamic_cast<CachedSmilesMolHolder *>(_holder) != nullptr);
+  TEST_ASSERT(_holder != nullptr)
+  TEST_ASSERT(dynamic_cast<CachedSmilesMolHolder *>(_holder) != nullptr)
 #endif
 
   for (auto lib : libs) {
     ROMol *query = SmartsToMol("C-1-C-C-O-C(-[O])(-[N])1");
 
     std::vector<unsigned int> res = lib->getMatches(*query, true, false);
-    TEST_ASSERT(res.size() == 40);
+    TEST_ASSERT(res.size() == 40)
 
     delete query;
     query = SmartsToMol("C-1-C-C-O-[C@@](-[O])(-[N])1");
 
     res = lib->getMatches(*query, true, true);
-    TEST_ASSERT(res.size() == 20);
+    TEST_ASSERT(res.size() == 20)
 
     res = lib->getMatches(*query, true, false);
-    TEST_ASSERT(res.size() == 40);
+    TEST_ASSERT(res.size() == 40)
     delete query;
   }
 
@@ -397,9 +397,9 @@ void ringTest(const std::string &name) {
   SubstructLibrary lib(molHolder, patternHolder);
   lib.addMol(*m.get());
   std::vector<unsigned int> results = lib.getMatches(*q.get());
-  TEST_ASSERT(results.size() == 1);
+  TEST_ASSERT(results.size() == 1)
   results = lib.getMatches(*q2.get());
-  TEST_ASSERT(results.size() == 1);
+  TEST_ASSERT(results.size() == 1)
 
   BOOST_LOG(rdErrorLog) << "    Done (C++ ring query tests)" << std::endl;
 }
@@ -456,10 +456,10 @@ void testAddPatterns() {
     addPatterns(ssslib_with_taut_patterns, patterns, nthreads);
     for (unsigned int i = 0; i < ssslib.size(); ++i) {
       TEST_ASSERT(ssslib.countMatches(*ssslib.getMol(i).get()) ==
-                  ssslib_with_patterns.countMatches(*ssslib.getMol(i).get()));
+                  ssslib_with_patterns.countMatches(*ssslib.getMol(i).get()))
       TEST_ASSERT(
           ssslib.countMatches(*ssslib.getMol(i).get()) ==
-          ssslib_with_taut_patterns.countMatches(*ssslib.getMol(i).get()));
+          ssslib_with_taut_patterns.countMatches(*ssslib.getMol(i).get()))
     }
   }
 }
@@ -495,15 +495,15 @@ void testMaxResultsNumThreads() {
   boost::logging::enable_logs("rdApp.error");
   std::vector<std::vector<unsigned int>> resVect;
   ROMOL_SPTR query(SmartsToMol("N"));
-  TEST_ASSERT(query);
+  TEST_ASSERT(query)
   for (auto numThreads : {1, 2, 4, 8}) {
     resVect.emplace_back(
         ssslib.getMatches(*query, true, false, false, numThreads));
   }
   for (auto it = resVect.begin() + 1; it != resVect.end(); ++it) {
-    TEST_ASSERT(resVect.front().size() == it->size());
+    TEST_ASSERT(resVect.front().size() == it->size())
     for (size_t i = 0; i < resVect.front().size(); ++i) {
-      TEST_ASSERT(resVect.front().at(i) == it->at(i));
+      TEST_ASSERT(resVect.front().at(i) == it->at(i))
     }
   }
   size_t results60 = resVect.front().size() * 0.6;
@@ -515,9 +515,9 @@ void testMaxResultsNumThreads() {
           ssslib.getMatches(*query, true, false, false, numThreads, maxRes));
     }
     for (auto it = resVectPartial.begin(); it != resVectPartial.end(); ++it) {
-      TEST_ASSERT(it->size() == maxRes);
+      TEST_ASSERT(it->size() == maxRes)
       for (size_t i = 0; i < maxRes; ++i) {
-        TEST_ASSERT(resVect.front().at(i) == it->at(i));
+        TEST_ASSERT(resVect.front().at(i) == it->at(i))
       }
     }
   }
@@ -543,16 +543,16 @@ void testMaxResultsAllSameNumThreads() {
   boost::logging::enable_logs("rdApp.error");
   std::vector<std::vector<unsigned int>> resVect;
   ROMOL_SPTR query(SmartsToMol("N"));
-  TEST_ASSERT(query);
+  TEST_ASSERT(query)
   for (auto numThreads : {1, 2, 4, 8}) {
     resVect.emplace_back(
         ssslib.getMatches(*query, true, false, false, numThreads));
-    TEST_ASSERT(resVect.back().size() == 999);
+    TEST_ASSERT(resVect.back().size() == 999)
   }
   for (auto it = resVect.begin() + 1; it != resVect.end(); ++it) {
-    TEST_ASSERT(resVect.front().size() == it->size());
+    TEST_ASSERT(resVect.front().size() == it->size())
     for (size_t i = 0; i < resVect.front().size(); ++i) {
-      TEST_ASSERT(resVect.front().at(i) == it->at(i));
+      TEST_ASSERT(resVect.front().at(i) == it->at(i))
     }
   }
   size_t results60 = resVect.front().size() * 0.6;
@@ -564,9 +564,9 @@ void testMaxResultsAllSameNumThreads() {
           ssslib.getMatches(*query, true, false, false, numThreads, maxRes));
     }
     for (auto it = resVectPartial.begin(); it != resVectPartial.end(); ++it) {
-      TEST_ASSERT(it->size() == maxRes);
+      TEST_ASSERT(it->size() == maxRes)
       for (size_t i = 0; i < maxRes; ++i) {
-        TEST_ASSERT(resVect.front().at(i) == it->at(i));
+        TEST_ASSERT(resVect.front().at(i) == it->at(i))
       }
     }
   }
@@ -607,49 +607,49 @@ void testPatternHolder(const std::string &name) {
   }
   boost::logging::enable_logs("rdApp.error");
   ROMOL_SPTR query(SmartsToMol("N"));
-  TEST_ASSERT(query);
+  TEST_ASSERT(query)
   {
     auto matches1 = ssslib1.getMatches(*query);
     std::sort(matches1.begin(), matches1.end());
     auto matches2 = ssslib2.getMatches(*query);
     std::sort(matches2.begin(), matches2.end());
-    TEST_ASSERT(matches1.size() == matches2.size());
+    TEST_ASSERT(matches1.size() == matches2.size())
     for (size_t i = 0; i < matches1.size(); ++i) {
-      TEST_ASSERT(matches1.at(i) == matches2.at(i));
+      TEST_ASSERT(matches1.at(i) == matches2.at(i))
     }
   }
 #ifdef RDK_USE_BOOST_SERIALIZATION
   std::string pickle = ssslib1.Serialize();
   SubstructLibrary serialized;
   serialized.initFromString(pickle);
-  TEST_ASSERT(serialized.size() == ssslib1.size());
+  TEST_ASSERT(serialized.size() == ssslib1.size())
   SubstructLibrary serializedLegacy;
   std::string pklName = getenv("RDBASE");
-  TEST_ASSERT(!pklName.empty());
+  TEST_ASSERT(!pklName.empty())
   pklName += "/Code/GraphMol/test_data/substructLibV1.pkl";
   std::ifstream pickle_istream(pklName.c_str(), std::ios_base::binary);
   serializedLegacy.initFromStream(pickle_istream);
   pickle_istream.close();
-  TEST_ASSERT(serializedLegacy.size() == serialized.size());
+  TEST_ASSERT(serializedLegacy.size() == serialized.size())
   {
     auto matches1 = serializedLegacy.getMatches(*query);
     std::sort(matches1.begin(), matches1.end());
     auto matches2 = serialized.getMatches(*query);
     std::sort(matches2.begin(), matches2.end());
-    TEST_ASSERT(matches1.size() == matches2.size());
+    TEST_ASSERT(matches1.size() == matches2.size())
     for (size_t i = 0; i < matches1.size(); ++i) {
-      TEST_ASSERT(matches1.at(i) == matches2.at(i));
+      TEST_ASSERT(matches1.at(i) == matches2.at(i))
     }
   }
   for (size_t i = 0; i < 2; ++i) {
     auto serialized_pattern_holder =
         dynamic_cast<Holder *>(serialized.getFpHolder().get());
-    TEST_ASSERT(serialized_pattern_holder);
+    TEST_ASSERT(serialized_pattern_holder)
     auto orig_pattern_holder =
         dynamic_cast<Holder *>(ssslib1.getFpHolder().get());
-    TEST_ASSERT(orig_pattern_holder);
+    TEST_ASSERT(orig_pattern_holder)
     TEST_ASSERT(serialized_pattern_holder->getNumBits() ==
-                orig_pattern_holder->getNumBits());
+                orig_pattern_holder->getNumBits())
     if (i) {
       break;
     }
@@ -680,9 +680,9 @@ void testSegFaultInHolder() {
   SubstructLibrary sss2(mols2);
   ROMOL_SPTR query(SmartsToMol("c1ccccc1"));
   auto matches1 = sss.getMatches(*query);
-  TEST_ASSERT(matches1.size() == 50);
+  TEST_ASSERT(matches1.size() == 50)
   matches1 = sss2.getMatches(*query);
-  TEST_ASSERT(matches1.size() == 50);
+  TEST_ASSERT(matches1.size() == 50)
 
   // Check that we don't segfault when adding patterns
   addPatterns(sss, 2);
@@ -702,17 +702,17 @@ void testTautomerQueries() {
   // TEST_ASSERT(matches1.size() == 0);
   std::unique_ptr<TautomerQuery> tq(TautomerQuery::fromMol(*query));
   auto matches2 = sss.getMatches(*tq);
-  TEST_ASSERT(matches2.size() == 1);
+  TEST_ASSERT(matches2.size() == 1)
 
   SubstructLibrary sss2(sss);
   addPatterns(sss, boost::make_shared<TautomerPatternHolder>());
   matches2 = sss.getMatches(*tq);
-  TEST_ASSERT(matches2.size() == 1);
+  TEST_ASSERT(matches2.size() == 1)
 
   // should work but throw logging errors
   addPatterns(sss2);
   matches2 = sss2.getMatches(*tq);
-  TEST_ASSERT(matches2.size() == 1);
+  TEST_ASSERT(matches2.size() == 1)
 }
 
 void github3881() {
@@ -724,7 +724,7 @@ void github3881() {
   mols->addSmiles("c1ccccc1S(=O)(=O)Cl");
   SubstructLibrary sss(mols);
   auto pat = "[$(S-!@[#6]):2](=O)(=O)(Cl)"_smarts;
-  TEST_ASSERT(sss.getMatches(*pat).size() == 1);
+  TEST_ASSERT(sss.getMatches(*pat).size() == 1)
 }
 
 int main() {

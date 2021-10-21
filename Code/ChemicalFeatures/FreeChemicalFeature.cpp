@@ -39,7 +39,7 @@ std::string FreeChemicalFeature::toString() const {
   streamWrite(ss, d_position.z);
   std::string res(ss.str());
   return res;
-};
+}
 
 void FreeChemicalFeature::initFromString(const std::string &pickle) {
   std::stringstream ss(
@@ -81,5 +81,5 @@ void FreeChemicalFeature::initFromString(const std::string &pickle) {
   streamRead(ss, d_position.x);
   streamRead(ss, d_position.y);
   streamRead(ss, d_position.z);
-};
+}
 }  // namespace ChemicalFeatures

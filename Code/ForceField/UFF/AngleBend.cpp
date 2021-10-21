@@ -70,15 +70,15 @@ AngleBendContrib::AngleBendContrib(ForceField *owner, unsigned int idx1,
                                    const AtomicParams *at2Params,
                                    const AtomicParams *at3Params,
                                    unsigned int order) {
-  PRECONDITION(owner, "bad owner");
-  PRECONDITION(at1Params, "bad params pointer");
-  PRECONDITION(at2Params, "bad params pointer");
-  PRECONDITION(at3Params, "bad params pointer");
+  PRECONDITION(owner, "bad owner")
+  PRECONDITION(at1Params, "bad params pointer")
+  PRECONDITION(at2Params, "bad params pointer")
+  PRECONDITION(at3Params, "bad params pointer")
   PRECONDITION((idx1 != idx2 && idx2 != idx3 && idx1 != idx3),
-               "degenerate points");
-  URANGE_CHECK(idx1, owner->positions().size());
-  URANGE_CHECK(idx2, owner->positions().size());
-  URANGE_CHECK(idx3, owner->positions().size());
+               "degenerate points")
+  URANGE_CHECK(idx1, owner->positions().size())
+  URANGE_CHECK(idx2, owner->positions().size())
+  URANGE_CHECK(idx3, owner->positions().size())
   // the following is a hack to get decent geometries
   // with 3- and 4-membered rings incorporating sp2 atoms
   double theta0 = at2Params->theta0;
@@ -117,8 +117,8 @@ AngleBendContrib::AngleBendContrib(ForceField *owner, unsigned int idx1,
 }
 
 double AngleBendContrib::getEnergy(double *pos) const {
-  PRECONDITION(dp_forceField, "no owner");
-  PRECONDITION(pos, "bad vector");
+  PRECONDITION(dp_forceField, "no owner")
+  PRECONDITION(pos, "bad vector")
 
   double dist1 = dp_forceField->distance(d_at1Idx, d_at2Idx, pos);
   double dist2 = dp_forceField->distance(d_at2Idx, d_at3Idx, pos);
@@ -143,9 +143,9 @@ double AngleBendContrib::getEnergy(double *pos) const {
 }
 
 void AngleBendContrib::getGrad(double *pos, double *grad) const {
-  PRECONDITION(dp_forceField, "no owner");
-  PRECONDITION(pos, "bad vector");
-  PRECONDITION(grad, "bad vector");
+  PRECONDITION(dp_forceField, "no owner")
+  PRECONDITION(pos, "bad vector")
+  PRECONDITION(grad, "bad vector")
 
   double dist[2] = {dp_forceField->distance(d_at1Idx, d_at2Idx, pos),
                     dp_forceField->distance(d_at2Idx, d_at3Idx, pos)};
@@ -181,7 +181,7 @@ double AngleBendContrib::getEnergyTerm(double cosTheta,
                                        double sinThetaSq) const {
   PRECONDITION(d_order == 0 || d_order == 1 || d_order == 2 || d_order == 3 ||
                    d_order == 4,
-               "bad order");
+               "bad order")
   // cos(2x) = cos^2(x) - sin^2(x);
   double cos2Theta = cosTheta * cosTheta - sinThetaSq;
 
@@ -215,7 +215,7 @@ double AngleBendContrib::getEnergyTerm(double cosTheta,
 double AngleBendContrib::getThetaDeriv(double cosTheta, double sinTheta) const {
   PRECONDITION(d_order == 0 || d_order == 1 || d_order == 2 || d_order == 3 ||
                    d_order == 4,
-               "bad order");
+               "bad order")
 
   double dE_dTheta = 0.0;
   double sin2Theta = 2. * sinTheta * cosTheta;

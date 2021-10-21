@@ -19,7 +19,7 @@ static rng_type generator(42u);
 uniform_double dist(0.0, 1.0);
 static double_source_type dbRandSource(generator, dist);
 
-double_source_type &getDoubleRandomSource() { return dbRandSource; };
+double_source_type &getDoubleRandomSource() { return dbRandSource; }
 
 rng_type &getRandomGenerator(int seed) {
   if (seed > 0) {

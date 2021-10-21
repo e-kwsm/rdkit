@@ -112,7 +112,7 @@ void reflectPoints(RDGeom::INT_POINT2D_MAP &coordMap,
 
 RDKit::INT_VECT setNbrOrder(unsigned int aid, const RDKit::INT_VECT &nbrs,
                             const RDKit::ROMol &mol) {
-  PRECONDITION(aid < mol.getNumAtoms(), "");
+  PRECONDITION(aid < mol.getNumAtoms(), "")
   PR_QUEUE subsAid;
   int ref = -1;
   // find the neighbor of aid that is not in nbrs i.e. atom A from the comments
@@ -131,7 +131,7 @@ RDKit::INT_VECT setNbrOrder(unsigned int aid, const RDKit::INT_VECT &nbrs,
     thold.push_back(ref);
   }
   // we should be here unless we have more than 3 atoms to worry about
-  CHECK_INVARIANT(thold.size() > 3, "");
+  CHECK_INVARIANT(thold.size() > 3, "")
   thold = rankAtomsByRank(mol, thold);
 
   // swap the position of the 3rd to last and second to last items in sorted
@@ -153,7 +153,7 @@ RDKit::INT_VECT setNbrOrder(unsigned int aid, const RDKit::INT_VECT &nbrs,
     res.insert(res.end(), thold.begin(), pos);
   }
 
-  POSTCONDITION(res.size() == nbrs.size(), "");
+  POSTCONDITION(res.size() == nbrs.size(), "")
   return res;
 }
 
@@ -207,8 +207,8 @@ RDKit::INT_VECT findNextRingToEmbed(const RDKit::INT_VECT &doneRings,
   // if we do not have a system with two rings in common then we will return the
   // ring with max,
   // common atoms
-  PRECONDITION(doneRings.size() > 0, "");
-  PRECONDITION(fusedRings.size() > 1, "");
+  PRECONDITION(doneRings.size() > 0, "")
+  PRECONDITION(fusedRings.size() > 1, "")
 
   RDKit::INT_VECT commonAtoms, res, doneAtoms, notDone;
   for (int i = 0; i < rdcast<int>(fusedRings.size()); i++) {
@@ -288,7 +288,7 @@ RDKit::INT_VECT findNextRingToEmbed(const RDKit::INT_VECT &doneRings,
     }
   }
 
-  POSTCONDITION(res.size() > 0, "");
+  POSTCONDITION(res.size() > 0, "")
   return res;
 }
 
@@ -306,18 +306,18 @@ RDKit::INT_VECT getAllRotatableBonds(const RDKit::ROMol &mol) {
 
 RDKit::INT_VECT getRotatableBonds(const RDKit::ROMol &mol, unsigned int aid1,
                                   unsigned int aid2) {
-  PRECONDITION(aid1 < mol.getNumAtoms(), "");
-  PRECONDITION(aid2 < mol.getNumAtoms(), "");
+  PRECONDITION(aid1 < mol.getNumAtoms(), "")
+  PRECONDITION(aid2 < mol.getNumAtoms(), "")
 
   RDKit::INT_LIST path = RDKit::MolOps::getShortestPath(mol, aid1, aid2);
   RDKit::INT_VECT res;
   if (path.size() >= 4) {
     // remove the first atom (aid1) and last atom (aid2)
     CHECK_INVARIANT(static_cast<unsigned int>(path.front()) == aid1,
-                    "bad first element");
+                    "bad first element")
     path.pop_front();
     CHECK_INVARIANT(static_cast<unsigned int>(path.back()) == aid2,
-                    "bad last element");
+                    "bad last element")
     path.pop_back();
 
     auto pid = path.front();
@@ -339,9 +339,9 @@ RDKit::INT_VECT getRotatableBonds(const RDKit::ROMol &mol, unsigned int aid1,
 
 void getNbrAtomAndBondIds(unsigned int aid, const RDKit::ROMol *mol,
                           RDKit::INT_VECT &aids, RDKit::INT_VECT &bids) {
-  CHECK_INVARIANT(mol, "");
+  CHECK_INVARIANT(mol, "")
   unsigned int na = mol->getNumAtoms();
-  URANGE_CHECK(aid, na);
+  URANGE_CHECK(aid, na)
 
   for (auto nbr : mol->atomNeighbors(mol->getAtomWithIdx(aid))) {
     auto bi = mol->getBondBetweenAtoms(aid, nbr->getIdx())->getIdx();
@@ -372,8 +372,8 @@ INT_PAIR_VECT findBondsPairsToPermuteDeg4(const RDGeom::Point2D &center,
   INT_PAIR_VECT res;
 
   // make sure there are four of them
-  CHECK_INVARIANT(nbrBids.size() == 4, "");
-  CHECK_INVARIANT(nbrLocs.size() == 4, "");
+  CHECK_INVARIANT(nbrBids.size() == 4, "")
+  CHECK_INVARIANT(nbrLocs.size() == 4, "")
 
   std::vector<RDGeom::Point2D> nbrPts;
   nbrPts.reserve(nbrLocs.size());

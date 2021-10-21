@@ -27,7 +27,7 @@ namespace RDKit {
 
 FragCatalogEntry::FragCatalogEntry(const ROMol *omol, const PATH_TYPE &path,
                                    const MatchVectType &aidToFid) {
-  PRECONDITION(omol, "bad mol");
+  PRECONDITION(omol, "bad mol")
   // start with the assumption that this entry is not participating in
   //  any find of fingerprinting
   d_aToFmap.clear();
@@ -65,7 +65,7 @@ FragCatalogEntry::FragCatalogEntry(const std::string &pickle) {
 }
 
 void FragCatalogEntry::setDescription(const FragCatParams *params) {
-  PRECONDITION(params, "");
+  PRECONDITION(params, "")
   INT_INT_VECT_MAP::const_iterator fMapIt;
   for (fMapIt = d_aToFmap.begin(); fMapIt != d_aToFmap.end(); fMapIt++) {
     int atIdx = fMapIt->first;
@@ -89,10 +89,10 @@ void FragCatalogEntry::setDescription(const FragCatParams *params) {
   std::string smi = MolToSmiles(*dp_mol);
   // std::cerr << "----" << smi << "----" << std::endl;
   d_descrip = smi;
-};
+}
 
 bool FragCatalogEntry::match(const FragCatalogEntry *other, double tol) const {
-  PRECONDITION(other, "bad fragment to compare");
+  PRECONDITION(other, "bad fragment to compare")
   // std::cerr << " MATCH: "<<d_order<<" " << other->getOrder()<<std::endl;
   if (d_order != other->getOrder()) {
     return false;

@@ -242,11 +242,11 @@ constexpr unsigned char trigonalbipyramidal_axial[21][2] = {
 };
 
 int isTrigonalBipyramidalAxialBond(const Atom *cen, const Bond *qry) {
-  PRECONDITION(cen, "bad center pointer");
-  PRECONDITION(qry, "bad query pointer");
-  PRECONDITION(cen->hasOwningMol() && qry->hasOwningMol(), "no owning mol");
+  PRECONDITION(cen, "bad center pointer")
+  PRECONDITION(qry, "bad query pointer")
+  PRECONDITION(cen->hasOwningMol() && qry->hasOwningMol(), "no owning mol")
   PRECONDITION(&cen->getOwningMol() == &qry->getOwningMol(),
-               "center and query must come from the same molecule");
+               "center and query must come from the same molecule")
   if (cen->getDegree() > 5 ||
       cen->getChiralTag() != Atom::CHI_TRIGONALBIPYRAMIDAL) {
     return false;
@@ -272,9 +272,9 @@ int isTrigonalBipyramidalAxialBond(const Atom *cen, const Bond *qry) {
 }
 
 int isTrigonalBipyramidalAxialAtom(const Atom *cen, const Atom *qry) {
-  PRECONDITION(cen, "bad center pointer");
-  PRECONDITION(qry, "bad query pointer");
-  PRECONDITION(cen->hasOwningMol(), "no owning mol");
+  PRECONDITION(cen, "bad center pointer")
+  PRECONDITION(qry, "bad query pointer")
+  PRECONDITION(cen->hasOwningMol(), "no owning mol")
   auto bnd =
       cen->getOwningMol().getBondBetweenAtoms(cen->getIdx(), qry->getIdx());
   if (!bnd) {
@@ -284,11 +284,11 @@ int isTrigonalBipyramidalAxialAtom(const Atom *cen, const Atom *qry) {
 }
 
 Bond *getChiralAcrossBond(const Atom *cen, const Bond *qry) {
-  PRECONDITION(cen, "bad center pointer");
-  PRECONDITION(qry, "bad query pointer");
-  PRECONDITION(cen->hasOwningMol() && qry->hasOwningMol(), "no owning mol");
+  PRECONDITION(cen, "bad center pointer")
+  PRECONDITION(qry, "bad query pointer")
+  PRECONDITION(cen->hasOwningMol() && qry->hasOwningMol(), "no owning mol")
   PRECONDITION(&cen->getOwningMol() == &qry->getOwningMol(),
-               "center and query must come from the same molecule");
+               "center and query must come from the same molecule")
 
   Atom::ChiralType tag = cen->getChiralTag();
   unsigned int ref_max = 0;
@@ -364,9 +364,9 @@ Bond *getChiralAcrossBond(const Atom *cen, const Bond *qry) {
 
 /* Alternate wrappers */
 Bond *getChiralAcrossBond(const Atom *cen, const Atom *qry) {
-  PRECONDITION(cen, "bad center pointer");
-  PRECONDITION(qry, "bad query pointer");
-  PRECONDITION(cen->hasOwningMol(), "no owning mol");
+  PRECONDITION(cen, "bad center pointer")
+  PRECONDITION(qry, "bad query pointer")
+  PRECONDITION(cen->hasOwningMol(), "no owning mol")
   auto bnd =
       cen->getOwningMol().getBondBetweenAtoms(cen->getIdx(), qry->getIdx());
   if (!bnd) {
@@ -381,9 +381,9 @@ Atom *getChiralAcrossAtom(const Atom *cen, const Bond *qry) {
 }
 
 Atom *getChiralAcrossAtom(const Atom *cen, const Atom *qry) {
-  PRECONDITION(cen, "bad center pointer");
-  PRECONDITION(qry, "bad query pointer");
-  PRECONDITION(cen->hasOwningMol(), "no owning mol");
+  PRECONDITION(cen, "bad center pointer")
+  PRECONDITION(qry, "bad query pointer")
+  PRECONDITION(cen->hasOwningMol(), "no owning mol")
   auto bnd =
       cen->getOwningMol().getBondBetweenAtoms(cen->getIdx(), qry->getIdx());
   if (!bnd) {
@@ -395,14 +395,14 @@ Atom *getChiralAcrossAtom(const Atom *cen, const Atom *qry) {
 
 double getIdealAngleBetweenLigands(const Atom *cen, const Atom *lig1,
                                    const Atom *lig2) {
-  PRECONDITION(cen, "bad center pointer");
-  PRECONDITION(lig1 && lig2, "bad ligand pointer");
+  PRECONDITION(cen, "bad center pointer")
+  PRECONDITION(lig1 && lig2, "bad ligand pointer")
   PRECONDITION(
       cen->hasOwningMol() && lig1->hasOwningMol() && lig2->hasOwningMol(),
-      "no owning mol");
+      "no owning mol")
   PRECONDITION(&cen->getOwningMol() == &lig1->getOwningMol() &&
                    &cen->getOwningMol() == &lig2->getOwningMol(),
-               "center and ligands must come from the same molecule");
+               "center and ligands must come from the same molecule")
   auto tag = cen->getChiralTag();
   switch (tag) {
     case Atom::ChiralType::CHI_SQUAREPLANAR:
@@ -428,8 +428,8 @@ double getIdealAngleBetweenLigands(const Atom *cen, const Atom *lig1,
 }
 
 Bond *getTrigonalBipyramidalAxialBond(const Atom *cen, int axial) {
-  PRECONDITION(cen, "bad center pointer");
-  PRECONDITION(cen->hasOwningMol(), "no owning mol");
+  PRECONDITION(cen, "bad center pointer")
+  PRECONDITION(cen->hasOwningMol(), "no owning mol")
   if (cen->getChiralTag() != RDKit::Atom::ChiralType::CHI_TRIGONALBIPYRAMIDAL ||
       cen->getDegree() > 5)
     return nullptr;
@@ -450,13 +450,13 @@ Bond *getTrigonalBipyramidalAxialBond(const Atom *cen, int axial) {
 }
 
 Atom *getTrigonalBipyramidalAxialAtom(const Atom *cen, int axial) {
-  PRECONDITION(cen, "bad center pointer");
-  PRECONDITION(cen->hasOwningMol(), "no owning mol");
+  PRECONDITION(cen, "bad center pointer")
+  PRECONDITION(cen->hasOwningMol(), "no owning mol")
   auto bnd = getTrigonalBipyramidalAxialBond(cen, axial);
   return bnd ? bnd->getOtherAtom(cen) : nullptr;
 }
 bool hasNonTetrahedralStereo(const Atom *cen) {
-  PRECONDITION(cen, "bad center pointer");
+  PRECONDITION(cen, "bad center pointer")
   if (!cen->hasOwningMol()) {
     return false;
   }
@@ -467,8 +467,8 @@ bool hasNonTetrahedralStereo(const Atom *cen) {
 }
 
 unsigned int getChiralPermutation(const Atom *cen, const INT_LIST &probe) {
-  PRECONDITION(cen, "bad center pointer");
-  PRECONDITION(cen->hasOwningMol(), "no owning mol");
+  PRECONDITION(cen, "bad center pointer")
+  PRECONDITION(cen->hasOwningMol(), "no owning mol")
 
   int perm;
   if (!cen->getPropIfPresent(common_properties::_chiralPermutation, perm) ||
@@ -498,7 +498,7 @@ unsigned int getChiralPermutation(const Atom *cen, const INT_LIST &probe) {
   for (const auto bnd : cen->getOwningMol().atomBonds(cen)) {
     order[bnd->getIdx()] = nbrIdx++;
   }
-  CHECK_INVARIANT(nbrIdx == probe.size(), "probe vector size does not match");
+  CHECK_INVARIANT(nbrIdx == probe.size(), "probe vector size does not match")
 
   // nbrPerm maps original index to array position
   std::vector<unsigned int> nbrPerm(nbrIdx);
@@ -516,7 +516,7 @@ unsigned int getChiralPermutation(const Atom *cen, const INT_LIST &probe) {
       continue;
     }
     auto tgt = std::find(nbrPerm.begin() + i, nbrPerm.end(), pval);
-    TEST_ASSERT(tgt != nbrPerm.end());
+    TEST_ASSERT(tgt != nbrPerm.end())
     perm = swap_func(perm, i, tgt - nbrPerm.begin());
     std::swap(*tgt, nbrPerm[i]);
   }

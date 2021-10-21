@@ -165,9 +165,9 @@ MorganEnvGenerator<OutputType>::getEnvironments(
     const bool  // hashResults
 ) const {
   PRECONDITION(atomInvariants && (atomInvariants->size() >= mol.getNumAtoms()),
-               "bad atom invariants size");
+               "bad atom invariants size")
   PRECONDITION(bondInvariants && (bondInvariants->size() >= mol.getNumBonds()),
-               "bad bond invariants size");
+               "bad bond invariants size")
   unsigned int nAtoms = mol.getNumAtoms();
   std::vector<AtomEnvironment<OutputType> *> result =
       std::vector<AtomEnvironment<OutputType> *>();

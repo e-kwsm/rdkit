@@ -288,7 +288,7 @@ std::string getAtomSmartsSimple(const QueryAtom *qatom,
         break;
       case Modifiers::RANGE:
         rquery = dynamic_cast<const ATOM_RANGE_QUERY *>(query);
-        CHECK_INVARIANT(rquery, "query could not be converted to range query");
+        CHECK_INVARIANT(rquery, "query could not be converted to range query")
         res << ((const ATOM_RANGE_QUERY *)query)->getLower() << "-"
             << ((const ATOM_RANGE_QUERY *)query)->getUpper();
         break;
@@ -330,10 +330,10 @@ std::string getAtomSmartsSimple(const QueryAtom *qatom,
 
 std::string getRecursiveStructureQuerySmarts(
     const QueryAtom::QUERYATOM_QUERY *query) {
-  PRECONDITION(query, "bad query");
-  PRECONDITION(query->getDescription() == "RecursiveStructure", "bad query");
+  PRECONDITION(query, "bad query")
+  PRECONDITION(query->getDescription() == "RecursiveStructure", "bad query")
   const auto *rquery = dynamic_cast<const RecursiveStructureQuery *>(query);
-  PRECONDITION(rquery, "could not convert query to RecursiveStructureQuery");
+  PRECONDITION(rquery, "could not convert query to RecursiveStructureQuery")
   auto *qmol = const_cast<ROMol *>(rquery->getQueryMol());
   std::string res = MolToSmarts(*qmol);
   res = "$(" + res + ")";
@@ -389,8 +389,8 @@ std::string getBasicBondRepr(Bond::BondType typ, Bond::BondDir dir,
 std::string getBondSmartsSimple(const Bond *bond,
                                 const QueryBond::QUERYBOND_QUERY *bquery,
                                 int atomToLeftIdx) {
-  PRECONDITION(bond, "bad bond");
-  PRECONDITION(bquery, "bad query");
+  PRECONDITION(bond, "bad bond")
+  PRECONDITION(bquery, "bad query")
 
   auto *equery = dynamic_cast<const BOND_EQUALS_QUERY *>(bquery);
 
@@ -437,7 +437,7 @@ std::string getBondSmartsSimple(const Bond *bond,
 std::string _recurseGetSmarts(const QueryAtom *qatom,
                               const QueryAtom::QUERYATOM_QUERY *node,
                               bool negate, unsigned int &features) {
-  PRECONDITION(node, "bad node");
+  PRECONDITION(node, "bad node")
   // the algorithm goes something like this
   // - recursively get the smarts for the child queries
   // - combine the child smarts using the following rules:
@@ -469,7 +469,7 @@ std::string _recurseGetSmarts(const QueryAtom *qatom,
 
   ++chi;
   CHECK_INVARIANT(chi != node->endChildren(),
-                  "Not enough children on the query");
+                  "Not enough children on the query")
 
   bool needParen;
   std::string csmarts1;
@@ -555,8 +555,8 @@ std::string _recurseBondSmarts(const Bond *bond,
   // following rules
   //   NOT (a AND b) = ( NOT (a)) AND ( NOT (b))
   //   NOT (a OR b) = ( NOT (a)) OR ( NOT (b))
-  PRECONDITION(bond, "bad bond");
-  PRECONDITION(node, "bad node");
+  PRECONDITION(bond, "bad bond")
+  PRECONDITION(node, "bad node")
   std::string descrip = node->getDescription();
   std::string res = "";
 
@@ -574,7 +574,7 @@ std::string _recurseBondSmarts(const Bond *bond,
   // OK we should be at the end of vector by now - since we can have only two
   // children,
   // well - at least in this case
-  CHECK_INVARIANT(chi == node->endChildren(), "Too many children on the query");
+  CHECK_INVARIANT(chi == node->endChildren(), "Too many children on the query")
 
   std::string dsc1, dsc2;
   dsc1 = child1->getDescription();
@@ -696,8 +696,8 @@ std::string FragmentSmartsConstruct(
 // this is the used when converting a SMILES or
 // non-query atom from a mol file into SMARTS.
 std::string getNonQueryAtomSmarts(const Atom *atom) {
-  PRECONDITION(atom, "bad atom");
-  PRECONDITION(!atom->hasQuery(), "atom should not have query");
+  PRECONDITION(atom, "bad atom")
+  PRECONDITION(!atom->hasQuery(), "atom should not have query")
   std::stringstream res;
   res << "[";
 
@@ -766,7 +766,7 @@ std::string getNonQueryAtomSmarts(const Atom *atom) {
 // this is the used when converting a SMILES or
 // non-query bond from a mol file into SMARTS.
 std::string getNonQueryBondSmarts(const Bond *qbond, int atomToLeftIdx) {
-  PRECONDITION(qbond, "bad bond");
+  PRECONDITION(qbond, "bad bond")
   std::string res;
 
   if (qbond->getIsAromatic()) {
@@ -854,7 +854,7 @@ std::string molToSmarts(const ROMol &inmol, bool doIsomericSmiles,
 
 namespace SmartsWrite {
 std::string GetAtomSmarts(const Atom *atom) {
-  PRECONDITION(atom, "bad atom");
+  PRECONDITION(atom, "bad atom")
   std::string res;
   bool needParen = false;
 
@@ -865,7 +865,7 @@ std::string GetAtomSmarts(const Atom *atom) {
     return res;
   }
   const auto query = atom->getQuery();
-  PRECONDITION(query, "atom has no query");
+  PRECONDITION(query, "atom has no query")
   unsigned int queryFeatures = 0;
   std::string descrip = query->getDescription();
   if (descrip.empty()) {
@@ -918,11 +918,11 @@ std::string GetAtomSmarts(const Atom *atom) {
 }
 
 std::string GetBondSmarts(const Bond *bond, int atomToLeftIdx) {
-  PRECONDITION(bond, "bad bond");
+  PRECONDITION(bond, "bad bond")
   std::string res = "";
 
   // BOOST_LOG(rdInfoLog) << "bond: " << bond->getIdx() << std::endl;
-  ;
+
   // it is possible that we are regular single bond and we don't need to write
   // anything
   if (!bond->hasQuery()) {
@@ -937,10 +937,10 @@ std::string GetBondSmarts(const Bond *bond, int atomToLeftIdx) {
     BOOST_LOG(rdInfoLog) << "\tbasic:" << res << std::endl;
     return res;
   }
-  CHECK_INVARIANT(qbond, "could not convert bond to QueryBond");
+  CHECK_INVARIANT(qbond, "could not convert bond to QueryBond")
 
   const auto query = qbond->getQuery();
-  CHECK_INVARIANT(query, "bond has no query");
+  CHECK_INVARIANT(query, "bond has no query")
 
   unsigned int queryFeatures = 0;
   auto descrip = query->getDescription();
@@ -977,8 +977,8 @@ std::string MolFragmentToSmarts(const ROMol &mol,
                                 const std::vector<int> &atomsToUse,
                                 const std::vector<int> *bondsToUse,
                                 bool doIsomericSmarts) {
-  PRECONDITION(!atomsToUse.empty(), "no atoms provided");
-  PRECONDITION(!bondsToUse || !bondsToUse->empty(), "no bonds provided");
+  PRECONDITION(!atomsToUse.empty(), "no atoms provided")
+  PRECONDITION(!bondsToUse || !bondsToUse->empty(), "no bonds provided")
 
   auto nAtoms = mol.getNumAtoms();
   if (!nAtoms) {

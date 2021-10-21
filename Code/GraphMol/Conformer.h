@@ -94,7 +94,7 @@ class RDKIT_GRAPHMOL_EXPORT Conformer : public RDProps {
 
   //! Get the molecule that owns this instance
   ROMol &getOwningMol() const {
-    PRECONDITION(dp_mol, "no owner");
+    PRECONDITION(dp_mol, "no owner")
     return *dp_mol;
   }
 

@@ -132,7 +132,7 @@ RDKIT_MOLDRAW2D_EXPORT inline void contourAndDrawGrid(
   std::vector<double> levels;
   contourAndDrawGrid(drawer, grid, xcoords, ycoords, nContours, levels, ps,
                      mol);
-};
+}
 
 //! Generates and draws contours for a set of gaussians
 /*
@@ -176,7 +176,7 @@ RDKIT_MOLDRAW2D_EXPORT inline void contourAndDrawGaussians(
   std::vector<double> levels;
   contourAndDrawGaussians(drawer, locs, heights, widths, nContours, levels, ps,
                           mol);
-};
+}
 
 //! Draw a molecule to a MolDraw2D object according to ACS 1996 guidelines
 /*

@@ -60,7 +60,7 @@ void ROMol::destroy() {
 
   getSubstanceGroups(*this).clear();
   d_stereo_groups.clear();
-};
+}
 
 ROMol::ROMol(const std::string &pickle) : RDProps() {
   initMol();
@@ -182,12 +182,12 @@ void ROMol::initMol() {
 }
 
 unsigned int ROMol::getAtomDegree(const Atom *at) const {
-  PRECONDITION(at, "no atom");
-  PRECONDITION(at->hasOwningMol(), "atom not associated with a molecule");
+  PRECONDITION(at, "no atom")
+  PRECONDITION(at->hasOwningMol(), "atom not associated with a molecule")
   PRECONDITION(&at->getOwningMol() == this,
-               "atom not associated with this molecule");
+               "atom not associated with this molecule")
   return rdcast<unsigned int>(boost::out_degree(at->getIdx(), d_graph));
-};
+}
 
 unsigned int ROMol::getNumAtoms(bool onlyExplicit) const {
   int res = rdcast<int>(boost::num_vertices(d_graph));
@@ -199,7 +199,7 @@ unsigned int ROMol::getNumAtoms(bool onlyExplicit) const {
     }
   }
   return res;
-};
+}
 unsigned int ROMol::getNumHeavyAtoms() const {
   unsigned int res = 0;
   for (ConstAtomIterator ai = beginAtoms(); ai != endAtoms(); ++ai) {
@@ -208,68 +208,68 @@ unsigned int ROMol::getNumHeavyAtoms() const {
     }
   }
   return res;
-};
+}
 
 Atom *ROMol::getAtomWithIdx(unsigned int idx) {
-  PRECONDITION(getNumAtoms() > 0, "no atoms");
-  URANGE_CHECK(idx, getNumAtoms());
+  PRECONDITION(getNumAtoms() > 0, "no atoms")
+  URANGE_CHECK(idx, getNumAtoms())
 
   MolGraph::vertex_descriptor vd = boost::vertex(idx, d_graph);
   Atom *res = d_graph[vd];
-  POSTCONDITION(res, "");
+  POSTCONDITION(res, "")
   return res;
 }
 
 const Atom *ROMol::getAtomWithIdx(unsigned int idx) const {
-  PRECONDITION(getNumAtoms() > 0, "no atoms");
-  URANGE_CHECK(idx, getNumAtoms());
+  PRECONDITION(getNumAtoms() > 0, "no atoms")
+  URANGE_CHECK(idx, getNumAtoms())
 
   MolGraph::vertex_descriptor vd = boost::vertex(idx, d_graph);
   const Atom *res = d_graph[vd];
 
-  POSTCONDITION(res, "");
+  POSTCONDITION(res, "")
   return res;
 }
 
 // returns the first inserted atom with the given bookmark
 Atom *ROMol::getAtomWithBookmark(int mark) {
-  PRECONDITION(d_atomBookmarks.count(mark) != 0, "atom bookmark not found");
+  PRECONDITION(d_atomBookmarks.count(mark) != 0, "atom bookmark not found")
   PRECONDITION(d_atomBookmarks[mark].begin() != d_atomBookmarks[mark].end(),
-               "atom bookmark not found");
+               "atom bookmark not found")
   return *(d_atomBookmarks[mark].begin());
-};
+}
 
 // returns all atoms with the given bookmark
 ROMol::ATOM_PTR_LIST &ROMol::getAllAtomsWithBookmark(int mark) {
-  PRECONDITION(d_atomBookmarks.count(mark) != 0, "atom bookmark not found");
+  PRECONDITION(d_atomBookmarks.count(mark) != 0, "atom bookmark not found")
   return d_atomBookmarks[mark];
-};
+}
 
 // returns the unique atom with the given bookmark
 Atom *ROMol::getUniqueAtomWithBookmark(int mark) {
   PRECONDITION(d_atomBookmarks.count(mark) == 1,
-               "multiple atoms with same bookmark");
+               "multiple atoms with same bookmark")
   return getAtomWithBookmark(mark);
 }
 
 // returns the first inserted bond with the given bookmark
 Bond *ROMol::getBondWithBookmark(int mark) {
-  PRECONDITION(d_bondBookmarks.count(mark) != 0, "bond bookmark not found");
+  PRECONDITION(d_bondBookmarks.count(mark) != 0, "bond bookmark not found")
   PRECONDITION(d_bondBookmarks[mark].begin() != d_bondBookmarks[mark].end(),
-               "bond bookmark not found");
+               "bond bookmark not found")
   return *(d_bondBookmarks[mark].begin());
-};
+}
 
 // returns all bonds with the given bookmark
 ROMol::BOND_PTR_LIST &ROMol::getAllBondsWithBookmark(int mark) {
-  PRECONDITION(d_bondBookmarks.count(mark) != 0, "bond bookmark not found");
+  PRECONDITION(d_bondBookmarks.count(mark) != 0, "bond bookmark not found")
   return d_bondBookmarks[mark];
-};
+}
 
 // returns the unique bond with the given bookmark
 Bond *ROMol::getUniqueBondWithBookmark(int mark) {
   PRECONDITION(d_bondBookmarks.count(mark) == 1,
-               "multiple bonds with same bookmark");
+               "multiple bonds with same bookmark")
   return getBondWithBookmark(mark);
 }
 
@@ -322,8 +322,8 @@ unsigned int ROMol::getNumBonds(bool onlyHeavy) const {
 }
 
 Bond *ROMol::getBondWithIdx(unsigned int idx) {
-  PRECONDITION(getNumBonds() > 0, "no bonds");
-  URANGE_CHECK(idx, getNumBonds());
+  PRECONDITION(getNumBonds() > 0, "no bonds")
+  URANGE_CHECK(idx, getNumBonds())
 
   BOND_ITER_PAIR bIter = getEdges();
   for (unsigned int i = 0; i < idx; i++) {
@@ -331,13 +331,13 @@ Bond *ROMol::getBondWithIdx(unsigned int idx) {
   }
   Bond *res = d_graph[*(bIter.first)];
 
-  POSTCONDITION(res != nullptr, "Invalid bond requested");
+  POSTCONDITION(res != nullptr, "Invalid bond requested")
   return res;
 }
 
 const Bond *ROMol::getBondWithIdx(unsigned int idx) const {
-  PRECONDITION(getNumBonds() > 0, "no bonds");
-  URANGE_CHECK(idx, getNumBonds());
+  PRECONDITION(getNumBonds() > 0, "no bonds")
+  URANGE_CHECK(idx, getNumBonds())
 
   BOND_ITER_PAIR bIter = getEdges();
   for (unsigned int i = 0; i < idx; i++) {
@@ -345,13 +345,13 @@ const Bond *ROMol::getBondWithIdx(unsigned int idx) const {
   }
   const Bond *res = d_graph[*(bIter.first)];
 
-  POSTCONDITION(res != nullptr, "Invalid bond requested");
+  POSTCONDITION(res != nullptr, "Invalid bond requested")
   return res;
 }
 
 Bond *ROMol::getBondBetweenAtoms(unsigned int idx1, unsigned int idx2) {
-  URANGE_CHECK(idx1, getNumAtoms());
-  URANGE_CHECK(idx2, getNumAtoms());
+  URANGE_CHECK(idx1, getNumAtoms())
+  URANGE_CHECK(idx2, getNumAtoms())
   Bond *res = nullptr;
 
   MolGraph::edge_descriptor edge;
@@ -366,8 +366,8 @@ Bond *ROMol::getBondBetweenAtoms(unsigned int idx1, unsigned int idx2) {
 
 const Bond *ROMol::getBondBetweenAtoms(unsigned int idx1,
                                        unsigned int idx2) const {
-  URANGE_CHECK(idx1, getNumAtoms());
-  URANGE_CHECK(idx2, getNumAtoms());
+  URANGE_CHECK(idx1, getNumAtoms())
+  URANGE_CHECK(idx2, getNumAtoms())
   const Bond *res = nullptr;
 
   MolGraph::edge_descriptor edge;
@@ -381,18 +381,18 @@ const Bond *ROMol::getBondBetweenAtoms(unsigned int idx1,
 }
 
 ROMol::ADJ_ITER_PAIR ROMol::getAtomNeighbors(Atom const *at) const {
-  PRECONDITION(at, "no atom");
-  PRECONDITION(at->hasOwningMol(), "atom not associated with a molecule");
+  PRECONDITION(at, "no atom")
+  PRECONDITION(at->hasOwningMol(), "atom not associated with a molecule")
   PRECONDITION(&at->getOwningMol() == this,
-               "atom not associated with this molecule");
+               "atom not associated with this molecule")
   return boost::adjacent_vertices(at->getIdx(), d_graph);
-};
+}
 
 ROMol::OBOND_ITER_PAIR ROMol::getAtomBonds(Atom const *at) const {
-  PRECONDITION(at, "no atom");
-  PRECONDITION(at->hasOwningMol(), "atom not associated with a molecule");
+  PRECONDITION(at, "no atom")
+  PRECONDITION(at->hasOwningMol(), "atom not associated with a molecule")
   PRECONDITION(&at->getOwningMol() == this,
-               "atom not associated with this molecule");
+               "atom not associated with this molecule")
   return boost::out_edges(at->getIdx(), d_graph);
 }
 
@@ -405,10 +405,10 @@ ROMol::BOND_ITER_PAIR ROMol::getEdges() const { return boost::edges(d_graph); }
 
 unsigned int ROMol::addAtom(Atom *atom_pin, bool updateLabel,
                             bool takeOwnership) {
-  PRECONDITION(atom_pin, "null atom passed in");
+  PRECONDITION(atom_pin, "null atom passed in")
   PRECONDITION(!takeOwnership || !atom_pin->hasOwningMol() ||
                    &atom_pin->getOwningMol() == this,
-               "cannot take ownership of an atom which already has an owner");
+               "cannot take ownership of an atom which already has an owner")
   Atom *atom_p;
   if (!takeOwnership) {
     atom_p = atom_pin->copy();
@@ -428,21 +428,21 @@ unsigned int ROMol::addAtom(Atom *atom_pin, bool updateLabel,
     (*cfi)->setAtomPos(which, RDGeom::Point3D(0.0, 0.0, 0.0));
   }
   return rdcast<unsigned int>(which);
-};
+}
 
 unsigned int ROMol::addBond(Bond *bond_pin, bool takeOwnership) {
-  PRECONDITION(bond_pin, "null bond passed in");
+  PRECONDITION(bond_pin, "null bond passed in")
   PRECONDITION(!takeOwnership || !bond_pin->hasOwningMol() ||
                    &bond_pin->getOwningMol() == this,
-               "cannot take ownership of an bond which already has an owner");
-  URANGE_CHECK(bond_pin->getBeginAtomIdx(), getNumAtoms());
-  URANGE_CHECK(bond_pin->getEndAtomIdx(), getNumAtoms());
+               "cannot take ownership of an bond which already has an owner")
+  URANGE_CHECK(bond_pin->getBeginAtomIdx(), getNumAtoms())
+  URANGE_CHECK(bond_pin->getEndAtomIdx(), getNumAtoms())
   PRECONDITION(bond_pin->getBeginAtomIdx() != bond_pin->getEndAtomIdx(),
-               "attempt to add self-bond");
+               "attempt to add self-bond")
   PRECONDITION(!(boost::edge(bond_pin->getBeginAtomIdx(),
                              bond_pin->getEndAtomIdx(), d_graph)
                      .second),
-               "bond already exists");
+               "bond already exists")
 
   Bond *bond_p;
   if (!takeOwnership) {
@@ -456,7 +456,7 @@ unsigned int ROMol::addBond(Bond *bond_pin, bool takeOwnership) {
   MolGraph::edge_descriptor which;
   boost::tie(which, ok) = boost::add_edge(bond_p->getBeginAtomIdx(),
                                           bond_p->getEndAtomIdx(), d_graph);
-  CHECK_INVARIANT(ok, "bond could not be added");
+  CHECK_INVARIANT(ok, "bond could not be added")
   d_graph[which] = bond_p;
   numBonds++;
   //  int res = rdcast<int>(boost::num_edges(d_graph));
@@ -677,9 +677,9 @@ void ROMol::removeConformer(unsigned int id) {
 }
 
 unsigned int ROMol::addConformer(Conformer *conf, bool assignId) {
-  PRECONDITION(conf, "bad conformer");
+  PRECONDITION(conf, "bad conformer")
   PRECONDITION(conf->getNumAtoms() == this->getNumAtoms(),
-               "Number of atom mismatch");
+               "Number of atom mismatch")
   if (assignId) {
     int maxId = -1;
     for (auto cptr : d_confs) {

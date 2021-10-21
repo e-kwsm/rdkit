@@ -133,7 +133,7 @@ DiscrimTuple calcPathDiscriminators(const ROMol &mol, const PATH_TYPE &path,
                                     std::vector<std::uint32_t> *extraInvars) {
   if (extraInvars) {
     CHECK_INVARIANT(extraInvars->size() == mol.getNumAtoms(),
-                    "bad extra invars");
+                    "bad extra invars")
   }
 
   // Start by collecting the atoms in the path and their degrees

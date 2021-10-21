@@ -56,7 +56,7 @@ PyObject *GetPos(const Conformer *conf) {
 void SetAtomPos(Conformer *conf, unsigned int aid, python::object loc) {
   // const std::vector<double> &loc) {
   int dim = python::extract<int>(loc.attr("__len__")());
-  CHECK_INVARIANT(dim == 3, "");
+  CHECK_INVARIANT(dim == 3, "")
   PySequenceHolder<double> pdata(loc);
   RDGeom::Point3D pt(pdata[0], pdata[1], pdata[2]);
   conf->setAtomPos(aid, pt);

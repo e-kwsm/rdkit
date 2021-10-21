@@ -57,7 +57,7 @@ class RDKIT_MOLENUMERATOR_EXPORT PositionVariationOp : public MolEnumeratorOp {
  public:
   PositionVariationOp() {}
   PositionVariationOp(const std::shared_ptr<ROMol> mol) : dp_mol(mol) {
-    PRECONDITION(mol, "bad molecule");
+    PRECONDITION(mol, "bad molecule")
     initFromMol();
   }
   PositionVariationOp(const ROMol &mol) : dp_mol(new ROMol(mol)) {
@@ -103,7 +103,7 @@ class RDKIT_MOLENUMERATOR_EXPORT LinkNodeOp : public MolEnumeratorOp {
  public:
   LinkNodeOp() {}
   LinkNodeOp(const std::shared_ptr<ROMol> mol) : dp_mol(mol) {
-    PRECONDITION(mol, "bad molecule");
+    PRECONDITION(mol, "bad molecule")
     initFromMol();
   }
   LinkNodeOp(const ROMol &mol) : dp_mol(new ROMol(mol)) { initFromMol(); }
@@ -168,7 +168,7 @@ class RDKIT_MOLENUMERATOR_EXPORT RepeatUnitOp : public MolEnumeratorOp {
  public:
   RepeatUnitOp(){};
   RepeatUnitOp(const std::shared_ptr<ROMol> mol) : dp_mol(mol) {
-    PRECONDITION(mol, "bad molecule");
+    PRECONDITION(mol, "bad molecule")
     initFromMol();
   };
   RepeatUnitOp(const ROMol &mol) : dp_mol(new ROMol(mol)) { initFromMol(); };
@@ -269,7 +269,7 @@ inline MolBundle enumerate(const ROMol &mol,
                            const MolEnumeratorParams &params) {
   std::vector<MolEnumeratorParams> v = {params};
   return enumerate(mol, v);
-};
+}
 }  // namespace MolEnumerator
 }  // namespace RDKit
 

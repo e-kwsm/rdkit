@@ -50,7 +50,7 @@ void Test(T arg) {
   TXTMSG("Num:", t1.getNumBits());
   TXTMSG("NumOn:", t1.getNumOnBits());
   TXTMSG("NumOff:", t1.getNumOffBits());
-  TEST_ASSERT(t1 == t1);
+  TEST_ASSERT(t1 == t1)
 
   IntVect onBits;
   t1.getOnBits(onBits);
@@ -63,7 +63,7 @@ void Test(T arg) {
   TXTMSG("t2[19]:", t2[19]);
   TXTMSG("t2[14]:", t2[14]);
 
-  TEST_ASSERT(t2 == t1);
+  TEST_ASSERT(t2 == t1)
 
   t2 = t1;
   // onBits = t2.getOnBits();
@@ -72,7 +72,7 @@ void Test(T arg) {
   TXTMSG("t2[14]:", t2[14]);
   t2.setBit(15);
   t2.setBit(17);
-  TEST_ASSERT(t2 != t1);
+  TEST_ASSERT(t2 != t1)
 
   std::cout << "t1: ";
   t1.getOnBits(onBits);
@@ -123,16 +123,16 @@ void Test(T arg) {
   }
 
   T t4(t1.toString());
-  TEST_ASSERT(t4 == t1);
-  TEST_ASSERT(feq(TanimotoSimilarity(t1, t4), 1.0));
+  TEST_ASSERT(t4 == t1)
+  TEST_ASSERT(feq(TanimotoSimilarity(t1, t4), 1.0))
 
   T *t5 = FoldFingerprint(t1);
-  TEST_ASSERT(t5->getNumBits() == t1.getNumBits() / 2);
-  TEST_ASSERT(t5->getBit(0));
-  TEST_ASSERT(t5->getBit(1));
-  TEST_ASSERT(t5->getBit(4));
-  TEST_ASSERT(!t5->getBit(2));
-  TEST_ASSERT(!t5->getBit(3));
+  TEST_ASSERT(t5->getNumBits() == t1.getNumBits() / 2)
+  TEST_ASSERT(t5->getBit(0))
+  TEST_ASSERT(t5->getBit(1))
+  TEST_ASSERT(t5->getBit(4))
+  TEST_ASSERT(!t5->getBit(2))
+  TEST_ASSERT(!t5->getBit(3))
   delete t5;
 
   std::string pkl = t1.toString();
@@ -140,7 +140,7 @@ void Test(T arg) {
   T t6(t1.getNumBits());
   t6.initFromText(pkl64, strlen(pkl64), true);
   delete[] pkl64;
-  TEST_ASSERT(t6 == t1);
+  TEST_ASSERT(t6 == t1)
 }
 
 template <typename T>
@@ -162,17 +162,17 @@ void TaniTest(T &arg) {
       T v2(256);
       FromDaylightString(v2, fps[j]);
       double tani = TanimotoSimilarity(v1, v2);
-      TEST_ASSERT(feq(tani, dists[idx]));
+      TEST_ASSERT(feq(tani, dists[idx]))
       tani = TverskySimilarity(v1, v2, 1., 1.);
-      TEST_ASSERT(feq(tani, dists[idx]));
+      TEST_ASSERT(feq(tani, dists[idx]))
       tani = SimilarityWrapper(v1, v2, TanimotoSimilarity<T, T>);
-      TEST_ASSERT(feq(tani, dists[idx]));
+      TEST_ASSERT(feq(tani, dists[idx]))
       tani = SimilarityWrapper(v1, v2, 1., 1., TverskySimilarity<T, T>);
-      TEST_ASSERT(feq(tani, dists[idx]));
+      TEST_ASSERT(feq(tani, dists[idx]))
       tani = SimilarityWrapper(v1, v2, TanimotoSimilarity<T, T>, true);
-      TEST_ASSERT(feq(tani, 1. - dists[idx]));
+      TEST_ASSERT(feq(tani, 1. - dists[idx]))
       tani = SimilarityWrapper(v1, v2, 1., 1., TverskySimilarity<T, T>, true);
-      TEST_ASSERT(feq(tani, 1. - dists[idx]));
+      TEST_ASSERT(feq(tani, 1. - dists[idx]))
       idx++;
     }
   }
@@ -190,19 +190,19 @@ void ProbeTest(T &arg) {
     }
   }
   std::string pkl = t1.toString();
-  TEST_ASSERT(AllProbeBitsMatch(t1, pkl));
-  TEST_ASSERT(AllProbeBitsMatch(t2, pkl));
-  TEST_ASSERT(AllProbeBitsMatch(t1.toString(), pkl));
-  TEST_ASSERT(AllProbeBitsMatch(t2.toString(), pkl));
-  TEST_ASSERT(AllProbeBitsMatch(t1.toString().c_str(), pkl.c_str()));
-  TEST_ASSERT(AllProbeBitsMatch(t2.toString().c_str(), pkl.c_str()));
+  TEST_ASSERT(AllProbeBitsMatch(t1, pkl))
+  TEST_ASSERT(AllProbeBitsMatch(t2, pkl))
+  TEST_ASSERT(AllProbeBitsMatch(t1.toString(), pkl))
+  TEST_ASSERT(AllProbeBitsMatch(t2.toString(), pkl))
+  TEST_ASSERT(AllProbeBitsMatch(t1.toString().c_str(), pkl.c_str()))
+  TEST_ASSERT(AllProbeBitsMatch(t2.toString().c_str(), pkl.c_str()))
   pkl = t2.toString();
-  TEST_ASSERT(!AllProbeBitsMatch(t1, pkl));
-  TEST_ASSERT(AllProbeBitsMatch(t2, pkl));
-  TEST_ASSERT(!AllProbeBitsMatch(t1.toString(), pkl));
-  TEST_ASSERT(AllProbeBitsMatch(t2.toString(), pkl));
-  TEST_ASSERT(!AllProbeBitsMatch(t1.toString().c_str(), pkl.c_str()));
-  TEST_ASSERT(AllProbeBitsMatch(t2.toString().c_str(), pkl.c_str()));
+  TEST_ASSERT(!AllProbeBitsMatch(t1, pkl))
+  TEST_ASSERT(AllProbeBitsMatch(t2, pkl))
+  TEST_ASSERT(!AllProbeBitsMatch(t1.toString(), pkl))
+  TEST_ASSERT(AllProbeBitsMatch(t2.toString(), pkl))
+  TEST_ASSERT(!AllProbeBitsMatch(t1.toString().c_str(), pkl.c_str()))
+  TEST_ASSERT(AllProbeBitsMatch(t2.toString().c_str(), pkl.c_str()))
 }
 
 void test1DiscreteVect() {
@@ -212,10 +212,10 @@ void test1DiscreteVect() {
     vect1.setVal(2 * i, 1);
   }
 
-  TEST_ASSERT(vect1.getLength() == 30);
-  TEST_ASSERT(vect1.getTotalVal() == 15);
+  TEST_ASSERT(vect1.getLength() == 30)
+  TEST_ASSERT(vect1.getTotalVal() == 15)
   for (i = 0; i < vect1.getLength(); ++i) {
-    TEST_ASSERT(vect1.getVal(i) == (i + 1) % 2);
+    TEST_ASSERT(vect1.getVal(i) == (i + 1) % 2)
   }
   try {
     vect1.setVal(28, 2);
@@ -231,9 +231,9 @@ void test1DiscreteVect() {
   }
 
   for (i = 0; i < vect2.getLength(); ++i) {
-    TEST_ASSERT(vect2.getVal(i) == i % 4);
+    TEST_ASSERT(vect2.getVal(i) == i % 4)
   }
-  TEST_ASSERT(vect2.getTotalVal() == 43);
+  TEST_ASSERT(vect2.getTotalVal() == 43)
   try {
     vect2.setVal(28, 10);
   } catch (ValueErrorException &dexp) {
@@ -246,9 +246,9 @@ void test1DiscreteVect() {
   }
 
   for (i = 0; i < vect4.getLength(); ++i) {
-    TEST_ASSERT(vect4.getVal(i) == i % 16);
+    TEST_ASSERT(vect4.getVal(i) == i % 16)
   }
-  TEST_ASSERT(vect4.getTotalVal() == 211);
+  TEST_ASSERT(vect4.getTotalVal() == 211)
   try {
     vect4.setVal(28, 16);
   } catch (ValueErrorException &dexp) {
@@ -261,9 +261,9 @@ void test1DiscreteVect() {
   }
 
   for (i = 0; i < vect8.getLength(); ++i) {
-    TEST_ASSERT(vect8.getVal(i) == i % 256);
+    TEST_ASSERT(vect8.getVal(i) == i % 256)
   }
-  TEST_ASSERT(vect8.getTotalVal() == 496);
+  TEST_ASSERT(vect8.getTotalVal() == 496)
   try {
     vect8.setVal(28, 257);
   } catch (ValueErrorException &dexp) {
@@ -276,10 +276,10 @@ void test1DiscreteVect() {
   }
 
   for (i = 0; i < vect16.getLength(); ++i) {
-    TEST_ASSERT(vect16.getVal(i) == i % 300);
+    TEST_ASSERT(vect16.getVal(i) == i % 300)
   }
 
-  TEST_ASSERT(vect16.getTotalVal() == 44850);
+  TEST_ASSERT(vect16.getTotalVal() == 44850)
   vect16.setVal(28, 65535);
   try {
     vect16.setVal(28, 65536);
@@ -296,12 +296,12 @@ void test2DiscreteVectDists() {
     v1.setVal(2 * i, 1);
     v2.setVal(2 * i, 1);
   }
-  TEST_ASSERT(computeL1Norm(v1, v2) == 0);
+  TEST_ASSERT(computeL1Norm(v1, v2) == 0)
   for (i = 0; i < 30; ++i) {
     v2.setVal(i, i % 2);
   }
 
-  TEST_ASSERT(computeL1Norm(v1, v2) == 30);
+  TEST_ASSERT(computeL1Norm(v1, v2) == 30)
 
   for (i = 0; i < 30; ++i) {
     if (i % 3 == 0) {
@@ -311,7 +311,7 @@ void test2DiscreteVectDists() {
     }
   }
 
-  TEST_ASSERT(computeL1Norm(v1, v2) == 15);
+  TEST_ASSERT(computeL1Norm(v1, v2) == 15)
 
   DiscreteValueVect v21(DiscreteValueVect::TWOBITVALUE, 30);
   DiscreteValueVect v22(DiscreteValueVect::TWOBITVALUE, 30);
@@ -319,11 +319,11 @@ void test2DiscreteVectDists() {
     v21.setVal(i, i % 4);
     v22.setVal(i, i % 4);
   }
-  TEST_ASSERT(computeL1Norm(v21, v22) == 0);
+  TEST_ASSERT(computeL1Norm(v21, v22) == 0)
   for (i = 0; i < 30; ++i) {
     v22.setVal(i, (i + 1) % 4);
   }
-  TEST_ASSERT(computeL1Norm(v21, v22) == 44);
+  TEST_ASSERT(computeL1Norm(v21, v22) == 44)
 
   DiscreteValueVect v41(DiscreteValueVect::FOURBITVALUE, 16);
   DiscreteValueVect v42(DiscreteValueVect::FOURBITVALUE, 16);
@@ -331,15 +331,15 @@ void test2DiscreteVectDists() {
     v41.setVal(i, i % 16);
     v42.setVal(i, i % 16);
   }
-  TEST_ASSERT(computeL1Norm(v41, v42) == 0);
+  TEST_ASSERT(computeL1Norm(v41, v42) == 0)
 
   for (i = 0; i < 16; ++i) {
     v42.setVal(i, i % 5);
   }
-  TEST_ASSERT(computeL1Norm(v41, v42) == 90);
+  TEST_ASSERT(computeL1Norm(v41, v42) == 90)
 
   DiscreteValueVect v43(v42);
-  TEST_ASSERT(computeL1Norm(v42, v43) == 0);
+  TEST_ASSERT(computeL1Norm(v42, v43) == 0)
 
   DiscreteValueVect v81(DiscreteValueVect::EIGHTBITVALUE, 5);
   DiscreteValueVect v82(DiscreteValueVect::EIGHTBITVALUE, 5);
@@ -353,14 +353,14 @@ void test2DiscreteVectDists() {
   v82.setVal(3, 56);
   v81.setVal(4, 128);
   v82.setVal(4, 128);
-  TEST_ASSERT(computeL1Norm(v81, v82) == 0);
+  TEST_ASSERT(computeL1Norm(v81, v82) == 0)
 
   v82.setVal(0, 14);
   v82.setVal(1, 67);
   v82.setVal(2, 103);
   v82.setVal(3, 6);
   v82.setVal(4, 228);
-  TEST_ASSERT(computeL1Norm(v81, v82) == 370);
+  TEST_ASSERT(computeL1Norm(v81, v82) == 370)
 
   DiscreteValueVect v161(DiscreteValueVect::SIXTEENBITVALUE, 3);
   DiscreteValueVect v162(DiscreteValueVect::SIXTEENBITVALUE, 3);
@@ -370,12 +370,12 @@ void test2DiscreteVectDists() {
   v162.setVal(1, 64578);
   v161.setVal(2, 34);
   v162.setVal(2, 34);
-  TEST_ASSERT(computeL1Norm(v161, v162) == 0);
+  TEST_ASSERT(computeL1Norm(v161, v162) == 0)
 
   v162.setVal(0, 1345);
   v162.setVal(1, 54578);
   v162.setVal(2, 10034);
-  TEST_ASSERT(computeL1Norm(v161, v162) == 21000);
+  TEST_ASSERT(computeL1Norm(v161, v162) == 21000)
 }
 
 void test3DiscreteVectPickles() {
@@ -385,21 +385,21 @@ void test3DiscreteVectPickles() {
     v1.setVal(2 * i, 1);
   }
   DiscreteValueVect v2(v1.toString());
-  TEST_ASSERT(computeL1Norm(v1, v2) == 0);
+  TEST_ASSERT(computeL1Norm(v1, v2) == 0)
 
   DiscreteValueVect v21(DiscreteValueVect::TWOBITVALUE, 30);
   for (i = 0; i < 30; ++i) {
     v21.setVal(i, i % 4);
   }
   DiscreteValueVect v22(v21.toString());
-  TEST_ASSERT(computeL1Norm(v21, v22) == 0);
+  TEST_ASSERT(computeL1Norm(v21, v22) == 0)
 
   DiscreteValueVect v41(DiscreteValueVect::FOURBITVALUE, 16);
   for (i = 0; i < 16; ++i) {
     v41.setVal(i, i % 16);
   }
   DiscreteValueVect v42(v41.toString());
-  TEST_ASSERT(computeL1Norm(v41, v42) == 0);
+  TEST_ASSERT(computeL1Norm(v41, v42) == 0)
 
   DiscreteValueVect v81(DiscreteValueVect::EIGHTBITVALUE, 5);
   v81.setVal(0, 34);
@@ -408,14 +408,14 @@ void test3DiscreteVectPickles() {
   v81.setVal(3, 56);
   v81.setVal(4, 128);
   DiscreteValueVect v82(v81.toString());
-  TEST_ASSERT(computeL1Norm(v81, v82) == 0);
+  TEST_ASSERT(computeL1Norm(v81, v82) == 0)
 
   DiscreteValueVect v161(DiscreteValueVect::SIXTEENBITVALUE, 3);
   v161.setVal(0, 2345);
   v161.setVal(1, 64578);
   v161.setVal(2, 34);
   DiscreteValueVect v162(v161.toString());
-  TEST_ASSERT(computeL1Norm(v161, v162) == 0);
+  TEST_ASSERT(computeL1Norm(v161, v162) == 0)
 }
 
 void test4DiscreteVectOps1() {
@@ -423,22 +423,22 @@ void test4DiscreteVectOps1() {
   for (unsigned int i = 0; i < 4; ++i) {
     vect1.setVal(2 * i, 1);
   }
-  TEST_ASSERT(vect1.getLength() == 8);
-  TEST_ASSERT(vect1.getTotalVal() == 4);
+  TEST_ASSERT(vect1.getLength() == 8)
+  TEST_ASSERT(vect1.getTotalVal() == 4)
 
   DiscreteValueVect vect2(DiscreteValueVect::ONEBITVALUE, 8);
   for (unsigned int i = 0; i < 4; ++i) {
     vect2.setVal(2 * i + 1, 1);
   }
-  TEST_ASSERT(vect2.getTotalVal() == 4);
+  TEST_ASSERT(vect2.getTotalVal() == 4)
 
   DiscreteValueVect vect3 = vect1 & vect2;
-  TEST_ASSERT(vect3.getLength() == 8);
-  TEST_ASSERT(vect3.getTotalVal() == 0);
+  TEST_ASSERT(vect3.getLength() == 8)
+  TEST_ASSERT(vect3.getTotalVal() == 0)
 
   DiscreteValueVect vect4 = vect1 | vect2;
-  TEST_ASSERT(vect4.getLength() == 8);
-  TEST_ASSERT(vect4.getTotalVal() == 8);
+  TEST_ASSERT(vect4.getLength() == 8)
+  TEST_ASSERT(vect4.getTotalVal() == 8)
 #if 0
   DiscreteValueVect vect5=~vect1;
   TEST_ASSERT(vect5.getLength() == 8);
@@ -454,32 +454,32 @@ void test5DiscreteVectOps2() {
   for (unsigned int i = 0; i < 4; ++i) {
     vect1.setVal(2 * i, 2);
   }
-  TEST_ASSERT(vect1.getLength() == 8);
-  TEST_ASSERT(vect1.getTotalVal() == 8);
+  TEST_ASSERT(vect1.getLength() == 8)
+  TEST_ASSERT(vect1.getTotalVal() == 8)
 
   DiscreteValueVect vect2(DiscreteValueVect::TWOBITVALUE, 8);
   for (unsigned int i = 0; i < 4; ++i) {
     vect2.setVal(2 * i + 1, 2);
     vect2.setVal(2 * i, 1);
   }
-  TEST_ASSERT(vect2.getTotalVal() == 12);
+  TEST_ASSERT(vect2.getTotalVal() == 12)
 
   DiscreteValueVect vect3 = vect1 & vect2;
-  TEST_ASSERT(vect3.getLength() == 8);
-  TEST_ASSERT(vect3.getTotalVal() == 4);
+  TEST_ASSERT(vect3.getLength() == 8)
+  TEST_ASSERT(vect3.getTotalVal() == 4)
 
   DiscreteValueVect vect4 = vect1 | vect2;
-  TEST_ASSERT(vect4.getLength() == 8);
-  TEST_ASSERT(vect4.getTotalVal() == 16);
+  TEST_ASSERT(vect4.getLength() == 8)
+  TEST_ASSERT(vect4.getTotalVal() == 16)
 
   DiscreteValueVect vect5 = vect1 + vect2;
-  TEST_ASSERT(vect5.getLength() == 8);
-  TEST_ASSERT(vect5.getTotalVal() == 20);
+  TEST_ASSERT(vect5.getLength() == 8)
+  TEST_ASSERT(vect5.getTotalVal() == 20)
 
   vect5 = vect1 - vect2;
-  TEST_ASSERT(vect5.getTotalVal() == 4);
+  TEST_ASSERT(vect5.getTotalVal() == 4)
   vect5 = vect2 - vect1;
-  TEST_ASSERT(vect5.getTotalVal() == 8);
+  TEST_ASSERT(vect5.getTotalVal() == 8)
 
 #if 0
   DiscreteValueVect vect5=~vect1;
@@ -494,61 +494,56 @@ void test5DiscreteVectOps2() {
 void test6SparseIntVect() {
   SparseIntVect<int> iVect(255);
 
-  TEST_ASSERT(iVect.getLength() == 255);
-  TEST_ASSERT(iVect.getVal(23) == 0);
+  TEST_ASSERT(iVect.getLength() == 255)
+  TEST_ASSERT(iVect.getVal(23) == 0)
   iVect.setVal(23, 14);
-  TEST_ASSERT(iVect.getVal(23) == 14);
+  TEST_ASSERT(iVect.getVal(23) == 14)
 
   SparseIntVect<int> oVect(iVect);
-  TEST_ASSERT(oVect.getLength() == 255);
-  TEST_ASSERT(oVect.getVal(23) == 14);
+  TEST_ASSERT(oVect.getLength() == 255)
+  TEST_ASSERT(oVect.getVal(23) == 14)
 
   std::vector<int> tmpV(3);
   tmpV[0] = 1;
   tmpV[1] = 5;
   tmpV[2] = 1;
-  TEST_ASSERT(iVect.getVal(1) == 0);
-  TEST_ASSERT(iVect[1] == 0);
-  TEST_ASSERT(iVect.getVal(5) == 0);
-  TEST_ASSERT(iVect[5] == 0);
+  TEST_ASSERT(iVect.getVal(1) == 0)
+  TEST_ASSERT(iVect[1] == 0)
+  TEST_ASSERT(iVect.getVal(5) == 0)
+  TEST_ASSERT(iVect[5] == 0)
   updateFromSequence(iVect, tmpV);
-  TEST_ASSERT(iVect.getVal(1) == 2);
-  TEST_ASSERT(iVect[1] == 2);
-  TEST_ASSERT(iVect.getVal(5) == 1);
-  TEST_ASSERT(iVect[5] == 1);
+  TEST_ASSERT(iVect.getVal(1) == 2)
+  TEST_ASSERT(iVect[1] == 2)
+  TEST_ASSERT(iVect.getVal(5) == 1)
+  TEST_ASSERT(iVect[5] == 1)
 
   iVect.setVal(3, -4);
-  TEST_ASSERT(iVect.getTotalVal() == 13);
+  TEST_ASSERT(iVect.getTotalVal() == 13)
 
   try {
     iVect.setVal(-1, 13);
-    TEST_ASSERT(0);
+    TEST_ASSERT(0)
   } catch (IndexErrorException &) {
-    ;
   }
   try {
     iVect.setVal(255, 42);
-    TEST_ASSERT(0);
+    TEST_ASSERT(0)
   } catch (IndexErrorException &) {
-    ;
   }
   try {
     iVect.getVal(-1);
-    TEST_ASSERT(0);
+    TEST_ASSERT(0)
   } catch (IndexErrorException &) {
-    ;
   }
   try {
     iVect.getVal(255);
-    TEST_ASSERT(0);
+    TEST_ASSERT(0)
   } catch (IndexErrorException &) {
-    ;
   }
   try {
     iVect[-1];
-    TEST_ASSERT(0);
+    TEST_ASSERT(0)
   } catch (IndexErrorException &) {
-    ;
   }
 
   {
@@ -557,17 +552,17 @@ void test6SparseIntVect() {
     iV1.setVal(0, 2);
     iV1.setVal(3, 1);
     auto iter = iV1.getNonzeroElements().begin();
-    TEST_ASSERT(iter->first == 0);
-    TEST_ASSERT(iter->second == 2);
+    TEST_ASSERT(iter->first == 0)
+    TEST_ASSERT(iter->second == 2)
     ++iter;
-    TEST_ASSERT(iter->first == 3);
-    TEST_ASSERT(iter->second == 1);
+    TEST_ASSERT(iter->first == 3)
+    TEST_ASSERT(iter->second == 1)
     ++iter;
-    TEST_ASSERT(iter->first == 4);
-    TEST_ASSERT(iter->second == 4);
+    TEST_ASSERT(iter->first == 4)
+    TEST_ASSERT(iter->second == 4)
     ++iter;
-    TEST_ASSERT(iter == iV1.getNonzeroElements().end());
-    TEST_ASSERT(feq(DiceSimilarity(iV1, iV1), 1.));
+    TEST_ASSERT(iter == iV1.getNonzeroElements().end())
+    TEST_ASSERT(feq(DiceSimilarity(iV1, iV1), 1.))
   }
 
   {  // iV1 &= iV2
@@ -582,35 +577,34 @@ void test6SparseIntVect() {
     iV2.setVal(3, 4);
     iV2.setVal(4, 6);
 
-    TEST_ASSERT(feq(DiceSimilarity(iV1, iV2), 18. / 26.));
+    TEST_ASSERT(feq(DiceSimilarity(iV1, iV2), 18. / 26.))
 
     iV1 &= iV2;
-    TEST_ASSERT(iV1[0] == 0);
-    TEST_ASSERT(iV1[1] == 0);
-    TEST_ASSERT(iV1[2] == 1);
-    TEST_ASSERT(iV1[3] == 4);
-    TEST_ASSERT(iV1[4] == 4);
+    TEST_ASSERT(iV1[0] == 0)
+    TEST_ASSERT(iV1[1] == 0)
+    TEST_ASSERT(iV1[2] == 1)
+    TEST_ASSERT(iV1[3] == 4)
+    TEST_ASSERT(iV1[4] == 4)
 
-    TEST_ASSERT(iV2[0] == 0);
-    TEST_ASSERT(iV2[1] == 2);
-    TEST_ASSERT(iV2[2] == 3);
-    TEST_ASSERT(iV2[3] == 4);
-    TEST_ASSERT(iV2[4] == 6);
+    TEST_ASSERT(iV2[0] == 0)
+    TEST_ASSERT(iV2[1] == 2)
+    TEST_ASSERT(iV2[2] == 3)
+    TEST_ASSERT(iV2[3] == 4)
+    TEST_ASSERT(iV2[4] == 6)
 
-    TEST_ASSERT(feq(DiceSimilarity(iV1, iV2), 18. / 24.));
-    TEST_ASSERT(feq(TverskySimilarity(iV1, iV2, 0.5, 0.5, false), 9. / 12.));
-    TEST_ASSERT(feq(TverskySimilarity(iV1, iV2, 1.0, 1.0, false), 9. / 15.));
-    TEST_ASSERT(feq(TanimotoSimilarity(iV1, iV2), 9. / 15.));
+    TEST_ASSERT(feq(DiceSimilarity(iV1, iV2), 18. / 24.))
+    TEST_ASSERT(feq(TverskySimilarity(iV1, iV2, 0.5, 0.5, false), 9. / 12.))
+    TEST_ASSERT(feq(TverskySimilarity(iV1, iV2, 1.0, 1.0, false), 9. / 15.))
+    TEST_ASSERT(feq(TanimotoSimilarity(iV1, iV2), 9. / 15.))
     TEST_ASSERT(
         feq(TverskySimilarity(iV1, iV2, 0.333333333, 0.66666666667, false),
-            9. / 13.));
-    TEST_ASSERT(feq(TverskySimilarity(iV1, iV2, 1.0, 0.0, false), 9. / 9.));
+            9. / 13.))
+    TEST_ASSERT(feq(TverskySimilarity(iV1, iV2, 1.0, 0.0, false), 9. / 9.))
 
     try {
       iV1 &= iVect;
-      TEST_ASSERT(0);
+      TEST_ASSERT(0)
     } catch (ValueErrorException &) {
-      ;
     }
   }
 
@@ -627,23 +621,23 @@ void test6SparseIntVect() {
     iV2.setVal(4, 6);
 
     iV3 = iV1 & iV2;
-    TEST_ASSERT(iV3[0] == 0);
-    TEST_ASSERT(iV3[1] == 0);
-    TEST_ASSERT(iV3[2] == 1);
-    TEST_ASSERT(iV3[3] == 4);
-    TEST_ASSERT(iV3[4] == 4);
+    TEST_ASSERT(iV3[0] == 0)
+    TEST_ASSERT(iV3[1] == 0)
+    TEST_ASSERT(iV3[2] == 1)
+    TEST_ASSERT(iV3[3] == 4)
+    TEST_ASSERT(iV3[4] == 4)
 
-    TEST_ASSERT(iV1[0] == 2);
-    TEST_ASSERT(iV1[1] == 0);
-    TEST_ASSERT(iV1[2] == 1);
-    TEST_ASSERT(iV1[3] == 4);
-    TEST_ASSERT(iV1[4] == 4);
+    TEST_ASSERT(iV1[0] == 2)
+    TEST_ASSERT(iV1[1] == 0)
+    TEST_ASSERT(iV1[2] == 1)
+    TEST_ASSERT(iV1[3] == 4)
+    TEST_ASSERT(iV1[4] == 4)
 
-    TEST_ASSERT(iV2[0] == 0);
-    TEST_ASSERT(iV2[1] == 2);
-    TEST_ASSERT(iV2[2] == 3);
-    TEST_ASSERT(iV2[3] == 4);
-    TEST_ASSERT(iV2[4] == 6);
+    TEST_ASSERT(iV2[0] == 0)
+    TEST_ASSERT(iV2[1] == 2)
+    TEST_ASSERT(iV2[2] == 3)
+    TEST_ASSERT(iV2[3] == 4)
+    TEST_ASSERT(iV2[4] == 6)
   }
 
   {  // iV2 &= iV1
@@ -659,23 +653,22 @@ void test6SparseIntVect() {
     iV2.setVal(4, 6);
 
     iV2 &= iV1;
-    TEST_ASSERT(iV2[0] == 0);
-    TEST_ASSERT(iV2[1] == 0);
-    TEST_ASSERT(iV2[2] == 1);
-    TEST_ASSERT(iV2[3] == 4);
-    TEST_ASSERT(iV2[4] == 4);
+    TEST_ASSERT(iV2[0] == 0)
+    TEST_ASSERT(iV2[1] == 0)
+    TEST_ASSERT(iV2[2] == 1)
+    TEST_ASSERT(iV2[3] == 4)
+    TEST_ASSERT(iV2[4] == 4)
 
-    TEST_ASSERT(iV1[0] == 2);
-    TEST_ASSERT(iV1[1] == 0);
-    TEST_ASSERT(iV1[2] == 1);
-    TEST_ASSERT(iV1[3] == 4);
-    TEST_ASSERT(iV1[4] == 4);
+    TEST_ASSERT(iV1[0] == 2)
+    TEST_ASSERT(iV1[1] == 0)
+    TEST_ASSERT(iV1[2] == 1)
+    TEST_ASSERT(iV1[3] == 4)
+    TEST_ASSERT(iV1[4] == 4)
 
     try {
       iV2 &= iVect;
-      TEST_ASSERT(0);
+      TEST_ASSERT(0)
     } catch (ValueErrorException &) {
-      ;
     }
   }
 
@@ -692,23 +685,22 @@ void test6SparseIntVect() {
     iV2.setVal(4, 6);
 
     iV1 |= iV2;
-    TEST_ASSERT(iV1[0] == 2);
-    TEST_ASSERT(iV1[1] == 2);
-    TEST_ASSERT(iV1[2] == 3);
-    TEST_ASSERT(iV1[3] == 4);
-    TEST_ASSERT(iV1[4] == 6);
+    TEST_ASSERT(iV1[0] == 2)
+    TEST_ASSERT(iV1[1] == 2)
+    TEST_ASSERT(iV1[2] == 3)
+    TEST_ASSERT(iV1[3] == 4)
+    TEST_ASSERT(iV1[4] == 6)
 
-    TEST_ASSERT(iV2[0] == 0);
-    TEST_ASSERT(iV2[1] == 2);
-    TEST_ASSERT(iV2[2] == 3);
-    TEST_ASSERT(iV2[3] == 4);
-    TEST_ASSERT(iV2[4] == 6);
+    TEST_ASSERT(iV2[0] == 0)
+    TEST_ASSERT(iV2[1] == 2)
+    TEST_ASSERT(iV2[2] == 3)
+    TEST_ASSERT(iV2[3] == 4)
+    TEST_ASSERT(iV2[4] == 6)
 
     try {
       iV1 |= iVect;
-      TEST_ASSERT(0);
+      TEST_ASSERT(0)
     } catch (ValueErrorException &) {
-      ;
     }
   }
 
@@ -725,23 +717,23 @@ void test6SparseIntVect() {
     iV2.setVal(4, 6);
 
     iV3 = iV1 | iV2;
-    TEST_ASSERT(iV3[0] == 2);
-    TEST_ASSERT(iV3[1] == 2);
-    TEST_ASSERT(iV3[2] == 3);
-    TEST_ASSERT(iV3[3] == 4);
-    TEST_ASSERT(iV3[4] == 6);
+    TEST_ASSERT(iV3[0] == 2)
+    TEST_ASSERT(iV3[1] == 2)
+    TEST_ASSERT(iV3[2] == 3)
+    TEST_ASSERT(iV3[3] == 4)
+    TEST_ASSERT(iV3[4] == 6)
 
-    TEST_ASSERT(iV1[0] == 2);
-    TEST_ASSERT(iV1[1] == 0);
-    TEST_ASSERT(iV1[2] == 1);
-    TEST_ASSERT(iV1[3] == 4);
-    TEST_ASSERT(iV1[4] == 4);
+    TEST_ASSERT(iV1[0] == 2)
+    TEST_ASSERT(iV1[1] == 0)
+    TEST_ASSERT(iV1[2] == 1)
+    TEST_ASSERT(iV1[3] == 4)
+    TEST_ASSERT(iV1[4] == 4)
 
-    TEST_ASSERT(iV2[0] == 0);
-    TEST_ASSERT(iV2[1] == 2);
-    TEST_ASSERT(iV2[2] == 3);
-    TEST_ASSERT(iV2[3] == 4);
-    TEST_ASSERT(iV2[4] == 6);
+    TEST_ASSERT(iV2[0] == 0)
+    TEST_ASSERT(iV2[1] == 2)
+    TEST_ASSERT(iV2[2] == 3)
+    TEST_ASSERT(iV2[3] == 4)
+    TEST_ASSERT(iV2[4] == 6)
   }
 
   {  // iV2 |= iV1
@@ -757,17 +749,17 @@ void test6SparseIntVect() {
     iV2.setVal(4, 6);
 
     iV2 |= iV1;
-    TEST_ASSERT(iV2[0] == 2);
-    TEST_ASSERT(iV2[1] == 2);
-    TEST_ASSERT(iV2[2] == 3);
-    TEST_ASSERT(iV2[3] == 4);
-    TEST_ASSERT(iV2[4] == 6);
+    TEST_ASSERT(iV2[0] == 2)
+    TEST_ASSERT(iV2[1] == 2)
+    TEST_ASSERT(iV2[2] == 3)
+    TEST_ASSERT(iV2[3] == 4)
+    TEST_ASSERT(iV2[4] == 6)
 
-    TEST_ASSERT(iV1[0] == 2);
-    TEST_ASSERT(iV1[1] == 0);
-    TEST_ASSERT(iV1[2] == 1);
-    TEST_ASSERT(iV1[3] == 4);
-    TEST_ASSERT(iV1[4] == 4);
+    TEST_ASSERT(iV1[0] == 2)
+    TEST_ASSERT(iV1[1] == 0)
+    TEST_ASSERT(iV1[2] == 1)
+    TEST_ASSERT(iV1[3] == 4)
+    TEST_ASSERT(iV1[4] == 4)
   }
 
   {  // iV1 += iV2
@@ -783,17 +775,17 @@ void test6SparseIntVect() {
     iV2.setVal(4, 6);
 
     iV1 += iV2;
-    TEST_ASSERT(iV1[0] == 2);
-    TEST_ASSERT(iV1[1] == 2);
-    TEST_ASSERT(iV1[2] == 4);
-    TEST_ASSERT(iV1[3] == 0);
-    TEST_ASSERT(iV1[4] == 10);
+    TEST_ASSERT(iV1[0] == 2)
+    TEST_ASSERT(iV1[1] == 2)
+    TEST_ASSERT(iV1[2] == 4)
+    TEST_ASSERT(iV1[3] == 0)
+    TEST_ASSERT(iV1[4] == 10)
 
-    TEST_ASSERT(iV2[0] == 0);
-    TEST_ASSERT(iV2[1] == 2);
-    TEST_ASSERT(iV2[2] == 3);
-    TEST_ASSERT(iV2[3] == -4);
-    TEST_ASSERT(iV2[4] == 6);
+    TEST_ASSERT(iV2[0] == 0)
+    TEST_ASSERT(iV2[1] == 2)
+    TEST_ASSERT(iV2[2] == 3)
+    TEST_ASSERT(iV2[3] == -4)
+    TEST_ASSERT(iV2[4] == 6)
   }
   {  // iV3 = IV1 + iV2
     SparseIntVect<int> iV1(5), iV2(5), iV3(5);
@@ -808,22 +800,22 @@ void test6SparseIntVect() {
     iV2.setVal(4, 6);
 
     iV3 = iV1 + iV2;
-    TEST_ASSERT(iV3[0] == 2);
-    TEST_ASSERT(iV3[1] == 2);
-    TEST_ASSERT(iV3[2] == 4);
-    TEST_ASSERT(iV3[3] == 0);
-    TEST_ASSERT(iV3[4] == 10);
+    TEST_ASSERT(iV3[0] == 2)
+    TEST_ASSERT(iV3[1] == 2)
+    TEST_ASSERT(iV3[2] == 4)
+    TEST_ASSERT(iV3[3] == 0)
+    TEST_ASSERT(iV3[4] == 10)
 
-    TEST_ASSERT(iV1[0] == 2);
-    TEST_ASSERT(iV1[1] == 0);
-    TEST_ASSERT(iV1[2] == 1);
-    TEST_ASSERT(iV1[3] == 4);
-    TEST_ASSERT(iV1[4] == 4);
-    TEST_ASSERT(iV2[0] == 0);
-    TEST_ASSERT(iV2[1] == 2);
-    TEST_ASSERT(iV2[2] == 3);
-    TEST_ASSERT(iV2[3] == -4);
-    TEST_ASSERT(iV2[4] == 6);
+    TEST_ASSERT(iV1[0] == 2)
+    TEST_ASSERT(iV1[1] == 0)
+    TEST_ASSERT(iV1[2] == 1)
+    TEST_ASSERT(iV1[3] == 4)
+    TEST_ASSERT(iV1[4] == 4)
+    TEST_ASSERT(iV2[0] == 0)
+    TEST_ASSERT(iV2[1] == 2)
+    TEST_ASSERT(iV2[2] == 3)
+    TEST_ASSERT(iV2[3] == -4)
+    TEST_ASSERT(iV2[4] == 6)
   }
 
   {  // iV1 -= iV2
@@ -839,17 +831,17 @@ void test6SparseIntVect() {
     iV2.setVal(4, 6);
 
     iV1 -= iV2;
-    TEST_ASSERT(iV1[0] == 2);
-    TEST_ASSERT(iV1[1] == -2);
-    TEST_ASSERT(iV1[2] == -2);
-    TEST_ASSERT(iV1[3] == 0);
-    TEST_ASSERT(iV1[4] == -2);
+    TEST_ASSERT(iV1[0] == 2)
+    TEST_ASSERT(iV1[1] == -2)
+    TEST_ASSERT(iV1[2] == -2)
+    TEST_ASSERT(iV1[3] == 0)
+    TEST_ASSERT(iV1[4] == -2)
 
-    TEST_ASSERT(iV2[0] == 0);
-    TEST_ASSERT(iV2[2] == 3);
-    TEST_ASSERT(iV2[1] == 2);
-    TEST_ASSERT(iV2[4] == 6);
-    TEST_ASSERT(iV2[3] == 4);
+    TEST_ASSERT(iV2[0] == 0)
+    TEST_ASSERT(iV2[2] == 3)
+    TEST_ASSERT(iV2[1] == 2)
+    TEST_ASSERT(iV2[4] == 6)
+    TEST_ASSERT(iV2[3] == 4)
   }
   {  // iV3 = IV1 - iV2
     SparseIntVect<int> iV1(5), iV2(5), iV3(5);
@@ -864,22 +856,22 @@ void test6SparseIntVect() {
     iV2.setVal(2, 3);
 
     iV3 = iV1 - iV2;
-    TEST_ASSERT(iV3[0] == 2);
-    TEST_ASSERT(iV3[1] == -2);
-    TEST_ASSERT(iV3[2] == -2);
-    TEST_ASSERT(iV3[3] == 0);
-    TEST_ASSERT(iV3[4] == -2);
+    TEST_ASSERT(iV3[0] == 2)
+    TEST_ASSERT(iV3[1] == -2)
+    TEST_ASSERT(iV3[2] == -2)
+    TEST_ASSERT(iV3[3] == 0)
+    TEST_ASSERT(iV3[4] == -2)
 
-    TEST_ASSERT(iV1[0] == 2);
-    TEST_ASSERT(iV1[1] == 0);
-    TEST_ASSERT(iV1[2] == 1);
-    TEST_ASSERT(iV1[3] == 4);
-    TEST_ASSERT(iV1[4] == 4);
-    TEST_ASSERT(iV2[0] == 0);
-    TEST_ASSERT(iV2[1] == 2);
-    TEST_ASSERT(iV2[2] == 3);
-    TEST_ASSERT(iV2[3] == 4);
-    TEST_ASSERT(iV2[4] == 6);
+    TEST_ASSERT(iV1[0] == 2)
+    TEST_ASSERT(iV1[1] == 0)
+    TEST_ASSERT(iV1[2] == 1)
+    TEST_ASSERT(iV1[3] == 4)
+    TEST_ASSERT(iV1[4] == 4)
+    TEST_ASSERT(iV2[0] == 0)
+    TEST_ASSERT(iV2[1] == 2)
+    TEST_ASSERT(iV2[2] == 3)
+    TEST_ASSERT(iV2[3] == 4)
+    TEST_ASSERT(iV2[4] == 6)
   }
 
   {  // operator== and operator!=
@@ -899,16 +891,16 @@ void test6SparseIntVect() {
     iV4.setVal(3, 4);
     iV4.setVal(4, 6);
 
-    TEST_ASSERT(iV1 == iV1);
-    TEST_ASSERT(iV2 == iV2);
-    TEST_ASSERT(iV3 == iV3);
-    TEST_ASSERT(iV1 != iV2);
-    TEST_ASSERT(iV1 != iV3);
-    TEST_ASSERT(iV2 != iV1);
-    TEST_ASSERT(iV3 != iV1);
-    TEST_ASSERT(iV1 != iV3);
-    TEST_ASSERT(iV1 != iV4);
-    TEST_ASSERT(iV2 == iV4);
+    TEST_ASSERT(iV1 == iV1)
+    TEST_ASSERT(iV2 == iV2)
+    TEST_ASSERT(iV3 == iV3)
+    TEST_ASSERT(iV1 != iV2)
+    TEST_ASSERT(iV1 != iV3)
+    TEST_ASSERT(iV2 != iV1)
+    TEST_ASSERT(iV3 != iV1)
+    TEST_ASSERT(iV1 != iV3)
+    TEST_ASSERT(iV1 != iV4)
+    TEST_ASSERT(iV2 == iV4)
   }
 
   {  // test negative values (was sf.net Issue 3295215)
@@ -923,7 +915,7 @@ void test6SparseIntVect() {
     iV2.setVal(3, -4);
     iV2.setVal(4, 6);
 
-    TEST_ASSERT(feq(DiceSimilarity(iV1, iV2), 18. / 26.));
+    TEST_ASSERT(feq(DiceSimilarity(iV1, iV2), 18. / 26.))
   }
 }
 
@@ -936,11 +928,11 @@ void test7SparseIntVectPickles() {
     iV1.setVal(4, 4);
 
     iV2.setVal(2, 3);
-    TEST_ASSERT(iV1 != iV2);
+    TEST_ASSERT(iV1 != iV2)
     std::string pkl;
     pkl = iV1.toString();
     iV2.fromString(pkl);
-    TEST_ASSERT(iV1 == iV2);
+    TEST_ASSERT(iV1 == iV2)
   }
 
   {
@@ -954,7 +946,7 @@ void test7SparseIntVectPickles() {
     std::string pkl;
     pkl = iV1.toString();
     iV2.fromString(pkl);
-    TEST_ASSERT(iV2.getLength() == iV1.getLength());
+    TEST_ASSERT(iV2.getLength() == iV1.getLength())
     TEST_ASSERT(iV2[0] == 2)
     TEST_ASSERT(iV2[1] == 0)
     TEST_ASSERT(iV2[2] == 1)
@@ -972,9 +964,8 @@ void test7SparseIntVectPickles() {
     pkl = iV1.toString();
     try {
       iV2.fromString(pkl);
-      TEST_ASSERT(0);
+      TEST_ASSERT(0)
     } catch (ValueErrorException &) {
-      ;
     }
   }
 }
@@ -1015,10 +1006,10 @@ void test8BitVectPickles() {
     delete[] buff;
     ExplicitBitVect bv(pkl);
 
-    TEST_ASSERT(bv.getNumBits() == 32);
-    TEST_ASSERT(bv.getNumOnBits() == 16);
-    TEST_ASSERT(bv[0]);
-    TEST_ASSERT(!bv[1]);
+    TEST_ASSERT(bv.getNumBits() == 32)
+    TEST_ASSERT(bv.getNumOnBits() == 16)
+    TEST_ASSERT(bv[0])
+    TEST_ASSERT(!bv[1])
   }
 }
 
@@ -1028,7 +1019,7 @@ void test9BitVectFPS() {
     std::string fps;
 
     fps = BitVectToFPSText(bv);
-    TEST_ASSERT(fps == "00000000");
+    TEST_ASSERT(fps == "00000000")
 
     bv.setBit(0);
     bv.setBit(1);
@@ -1037,16 +1028,16 @@ void test9BitVectFPS() {
     bv.setBit(31);
 
     fps = BitVectToFPSText(bv);
-    TEST_ASSERT(fps == "03008280");
+    TEST_ASSERT(fps == "03008280")
   }
   {
     ExplicitBitVect bv(32), bv2(32);
     std::string fps;
 
     fps = BitVectToFPSText(bv);
-    TEST_ASSERT(fps == "00000000");
+    TEST_ASSERT(fps == "00000000")
     UpdateBitVectFromFPSText(bv2, fps);
-    TEST_ASSERT(bv == bv2);
+    TEST_ASSERT(bv == bv2)
 
     bv.setBit(0);
     bv.setBit(1);
@@ -1057,29 +1048,29 @@ void test9BitVectFPS() {
 
     fps = BitVectToFPSText(bv);
     UpdateBitVectFromFPSText(bv2, fps);
-    TEST_ASSERT(bv == bv2);
+    TEST_ASSERT(bv == bv2)
   }
   {
     ExplicitBitVect bv(33);
     std::string fps;
 
     fps = BitVectToFPSText(bv);
-    TEST_ASSERT(fps == "0000000000");
+    TEST_ASSERT(fps == "0000000000")
 
     bv.setBit(0);
     bv.setBit(32);
 
     fps = BitVectToFPSText(bv);
-    TEST_ASSERT(fps == "0100000001");
+    TEST_ASSERT(fps == "0100000001")
   }
   {
     ExplicitBitVect bv(33), bv2(33);
     std::string fps;
 
     fps = BitVectToFPSText(bv);
-    TEST_ASSERT(fps == "0000000000");
+    TEST_ASSERT(fps == "0000000000")
     UpdateBitVectFromFPSText(bv2, fps);
-    TEST_ASSERT(bv == bv2);
+    TEST_ASSERT(bv == bv2)
 
     bv.setBit(0);
     bv.setBit(1);
@@ -1090,7 +1081,7 @@ void test9BitVectFPS() {
 
     fps = BitVectToFPSText(bv);
     UpdateBitVectFromFPSText(bv2, fps);
-    TEST_ASSERT(bv == bv2);
+    TEST_ASSERT(bv == bv2)
   }
 }
 
@@ -1100,9 +1091,9 @@ void test10BitVectBinaryText() {
     std::string fps;
 
     fps = BitVectToBinaryText(bv);
-    TEST_ASSERT(fps.size() == 4);
+    TEST_ASSERT(fps.size() == 4)
     for (char fp : fps) {
-      TEST_ASSERT(fp == 0);
+      TEST_ASSERT(fp == 0)
     }
 
     bv.setBit(0);
@@ -1111,9 +1102,9 @@ void test10BitVectBinaryText() {
     bv.setBit(26);
 
     fps = BitVectToBinaryText(bv);
-    TEST_ASSERT(fps.size() == 4);
+    TEST_ASSERT(fps.size() == 4)
     for (char fp : fps) {
-      TEST_ASSERT(fp != 0);
+      TEST_ASSERT(fp != 0)
     }
   }
   {
@@ -1121,12 +1112,12 @@ void test10BitVectBinaryText() {
     std::string fps;
 
     fps = BitVectToBinaryText(bv);
-    TEST_ASSERT(fps.size() == 4);
+    TEST_ASSERT(fps.size() == 4)
     for (char fp : fps) {
-      TEST_ASSERT(fp == 0);
+      TEST_ASSERT(fp == 0)
     }
     UpdateBitVectFromBinaryText(bv2, fps);
-    TEST_ASSERT(bv == bv2);
+    TEST_ASSERT(bv == bv2)
 
     bv.setBit(0);
     bv.setBit(1);
@@ -1137,37 +1128,37 @@ void test10BitVectBinaryText() {
 
     fps = BitVectToBinaryText(bv);
     UpdateBitVectFromBinaryText(bv2, fps);
-    TEST_ASSERT(bv == bv2);
+    TEST_ASSERT(bv == bv2)
   }
   {
     ExplicitBitVect bv(33);
     std::string fps;
 
     fps = BitVectToBinaryText(bv);
-    TEST_ASSERT(fps.size() == 5);
+    TEST_ASSERT(fps.size() == 5)
     for (char fp : fps) {
-      TEST_ASSERT(fp == 0);
+      TEST_ASSERT(fp == 0)
     }
 
     bv.setBit(0);
     bv.setBit(32);
 
     fps = BitVectToBinaryText(bv);
-    TEST_ASSERT(fps.size() == 5);
-    TEST_ASSERT(fps[0] != 0);
+    TEST_ASSERT(fps.size() == 5)
+    TEST_ASSERT(fps[0] != 0)
     for (unsigned int i = 1; i < fps.size() - 1; ++i) {
-      TEST_ASSERT(fps[i] == 0);
+      TEST_ASSERT(fps[i] == 0)
     }
-    TEST_ASSERT(fps[fps.size() - 1] != 0);
+    TEST_ASSERT(fps[fps.size() - 1] != 0)
   }
   {
     ExplicitBitVect bv(33), bv2(33);
     std::string fps;
 
     fps = BitVectToBinaryText(bv);
-    TEST_ASSERT(fps.size() == 5);
+    TEST_ASSERT(fps.size() == 5)
     UpdateBitVectFromBinaryText(bv2, fps);
-    TEST_ASSERT(bv == bv2);
+    TEST_ASSERT(bv == bv2)
 
     bv.setBit(0);
     bv.setBit(1);
@@ -1178,7 +1169,7 @@ void test10BitVectBinaryText() {
 
     fps = BitVectToBinaryText(bv);
     UpdateBitVectFromBinaryText(bv2, fps);
-    TEST_ASSERT(bv == bv2);
+    TEST_ASSERT(bv == bv2)
   }
 }
 
@@ -1192,16 +1183,16 @@ void test11SimilaritiesBV() {
   bv.setBit(9);
   ExplicitBitVect bv2 = bv;
 
-  TEST_ASSERT(feq(TanimotoSimilarity(bv, bv2), 1.));
-  TEST_ASSERT(feq(DiceSimilarity(bv, bv2), 1.));
-  TEST_ASSERT(feq(CosineSimilarity(bv, bv2), 1.));
-  TEST_ASSERT(feq(KulczynskiSimilarity(bv, bv2), 1.));
-  TEST_ASSERT(feq(SokalSimilarity(bv, bv2), 1.));
-  TEST_ASSERT(feq(McConnaugheySimilarity(bv, bv2), 1.));
-  TEST_ASSERT(feq(BraunBlanquetSimilarity(bv, bv2), 1.));
-  TEST_ASSERT(feq(RusselSimilarity(bv, bv2), 0.5));
-  TEST_ASSERT(feq(RogotGoldbergSimilarity(bv, bv2), 1.));
-  TEST_ASSERT(feq(AllBitSimilarity(bv, bv2), 1.));
+  TEST_ASSERT(feq(TanimotoSimilarity(bv, bv2), 1.))
+  TEST_ASSERT(feq(DiceSimilarity(bv, bv2), 1.))
+  TEST_ASSERT(feq(CosineSimilarity(bv, bv2), 1.))
+  TEST_ASSERT(feq(KulczynskiSimilarity(bv, bv2), 1.))
+  TEST_ASSERT(feq(SokalSimilarity(bv, bv2), 1.))
+  TEST_ASSERT(feq(McConnaugheySimilarity(bv, bv2), 1.))
+  TEST_ASSERT(feq(BraunBlanquetSimilarity(bv, bv2), 1.))
+  TEST_ASSERT(feq(RusselSimilarity(bv, bv2), 0.5))
+  TEST_ASSERT(feq(RogotGoldbergSimilarity(bv, bv2), 1.))
+  TEST_ASSERT(feq(AllBitSimilarity(bv, bv2), 1.))
 
   // similarity = 0.0
   bv2 = ExplicitBitVect(10);
@@ -1211,16 +1202,16 @@ void test11SimilaritiesBV() {
   bv2.setBit(7);
   bv2.setBit(8);
 
-  TEST_ASSERT(feq(TanimotoSimilarity(bv, bv2), 0.));
-  TEST_ASSERT(feq(DiceSimilarity(bv, bv2), 0.));
-  TEST_ASSERT(feq(CosineSimilarity(bv, bv2), 0.));
-  TEST_ASSERT(feq(KulczynskiSimilarity(bv, bv2), 0.));
-  TEST_ASSERT(feq(SokalSimilarity(bv, bv2), 0.));
-  TEST_ASSERT(feq(McConnaugheySimilarity(bv, bv2), -1.));
-  TEST_ASSERT(feq(BraunBlanquetSimilarity(bv, bv2), 0.));
-  TEST_ASSERT(feq(RusselSimilarity(bv, bv2), 0.));
-  TEST_ASSERT(feq(RogotGoldbergSimilarity(bv, bv2), 0.));
-  TEST_ASSERT(feq(AllBitSimilarity(bv, bv2), 0.));
+  TEST_ASSERT(feq(TanimotoSimilarity(bv, bv2), 0.))
+  TEST_ASSERT(feq(DiceSimilarity(bv, bv2), 0.))
+  TEST_ASSERT(feq(CosineSimilarity(bv, bv2), 0.))
+  TEST_ASSERT(feq(KulczynskiSimilarity(bv, bv2), 0.))
+  TEST_ASSERT(feq(SokalSimilarity(bv, bv2), 0.))
+  TEST_ASSERT(feq(McConnaugheySimilarity(bv, bv2), -1.))
+  TEST_ASSERT(feq(BraunBlanquetSimilarity(bv, bv2), 0.))
+  TEST_ASSERT(feq(RusselSimilarity(bv, bv2), 0.))
+  TEST_ASSERT(feq(RogotGoldbergSimilarity(bv, bv2), 0.))
+  TEST_ASSERT(feq(AllBitSimilarity(bv, bv2), 0.))
 
   // similarity ~= 0.5
   bv.setBit(5);
@@ -1232,16 +1223,16 @@ void test11SimilaritiesBV() {
   bv2.setBit(8);
   bv2.setBit(9);
 
-  TEST_ASSERT(feq(TanimotoSimilarity(bv, bv2), 0.5));
-  TEST_ASSERT(feq(DiceSimilarity(bv, bv2), 0.6666));
-  TEST_ASSERT(feq(CosineSimilarity(bv, bv2), 0.6666));
-  TEST_ASSERT(feq(KulczynskiSimilarity(bv, bv2), 0.6666));
-  TEST_ASSERT(feq(SokalSimilarity(bv, bv2), 0.3333));
-  TEST_ASSERT(feq(McConnaugheySimilarity(bv, bv2), 0.3333));
-  TEST_ASSERT(feq(BraunBlanquetSimilarity(bv, bv2), 0.6666));
-  TEST_ASSERT(feq(RusselSimilarity(bv, bv2), 0.4));
-  TEST_ASSERT(feq(RogotGoldbergSimilarity(bv, bv2), 0.5833));
-  TEST_ASSERT(feq(AllBitSimilarity(bv, bv2), 0.6));
+  TEST_ASSERT(feq(TanimotoSimilarity(bv, bv2), 0.5))
+  TEST_ASSERT(feq(DiceSimilarity(bv, bv2), 0.6666))
+  TEST_ASSERT(feq(CosineSimilarity(bv, bv2), 0.6666))
+  TEST_ASSERT(feq(KulczynskiSimilarity(bv, bv2), 0.6666))
+  TEST_ASSERT(feq(SokalSimilarity(bv, bv2), 0.3333))
+  TEST_ASSERT(feq(McConnaugheySimilarity(bv, bv2), 0.3333))
+  TEST_ASSERT(feq(BraunBlanquetSimilarity(bv, bv2), 0.6666))
+  TEST_ASSERT(feq(RusselSimilarity(bv, bv2), 0.4))
+  TEST_ASSERT(feq(RogotGoldbergSimilarity(bv, bv2), 0.5833))
+  TEST_ASSERT(feq(AllBitSimilarity(bv, bv2), 0.6))
 }
 
 void test12SimilaritiesSparseBV() {
@@ -1254,16 +1245,16 @@ void test12SimilaritiesSparseBV() {
   sbv.setBit(9);
   SparseBitVect sbv2 = sbv;
 
-  TEST_ASSERT(feq(TanimotoSimilarity(sbv, sbv2), 1.));
-  TEST_ASSERT(feq(DiceSimilarity(sbv, sbv2), 1.));
-  TEST_ASSERT(feq(CosineSimilarity(sbv, sbv2), 1.));
-  TEST_ASSERT(feq(KulczynskiSimilarity(sbv, sbv2), 1.));
-  TEST_ASSERT(feq(SokalSimilarity(sbv, sbv2), 1.));
-  TEST_ASSERT(feq(McConnaugheySimilarity(sbv, sbv2), 1.));
-  TEST_ASSERT(feq(BraunBlanquetSimilarity(sbv, sbv2), 1.));
-  TEST_ASSERT(feq(RusselSimilarity(sbv, sbv2), 0.5));
-  TEST_ASSERT(feq(RogotGoldbergSimilarity(sbv, sbv2), 1.));
-  TEST_ASSERT(feq(AllBitSimilarity(sbv, sbv2), 1.));
+  TEST_ASSERT(feq(TanimotoSimilarity(sbv, sbv2), 1.))
+  TEST_ASSERT(feq(DiceSimilarity(sbv, sbv2), 1.))
+  TEST_ASSERT(feq(CosineSimilarity(sbv, sbv2), 1.))
+  TEST_ASSERT(feq(KulczynskiSimilarity(sbv, sbv2), 1.))
+  TEST_ASSERT(feq(SokalSimilarity(sbv, sbv2), 1.))
+  TEST_ASSERT(feq(McConnaugheySimilarity(sbv, sbv2), 1.))
+  TEST_ASSERT(feq(BraunBlanquetSimilarity(sbv, sbv2), 1.))
+  TEST_ASSERT(feq(RusselSimilarity(sbv, sbv2), 0.5))
+  TEST_ASSERT(feq(RogotGoldbergSimilarity(sbv, sbv2), 1.))
+  TEST_ASSERT(feq(AllBitSimilarity(sbv, sbv2), 1.))
 
   // similarity = 0.0
   sbv2 = SparseBitVect(10);
@@ -1273,16 +1264,16 @@ void test12SimilaritiesSparseBV() {
   sbv2.setBit(7);
   sbv2.setBit(8);
 
-  TEST_ASSERT(feq(TanimotoSimilarity(sbv, sbv2), 0.));
-  TEST_ASSERT(feq(DiceSimilarity(sbv, sbv2), 0.));
-  TEST_ASSERT(feq(CosineSimilarity(sbv, sbv2), 0.));
-  TEST_ASSERT(feq(KulczynskiSimilarity(sbv, sbv2), 0.));
-  TEST_ASSERT(feq(SokalSimilarity(sbv, sbv2), 0.));
-  TEST_ASSERT(feq(McConnaugheySimilarity(sbv, sbv2), -1.));
-  TEST_ASSERT(feq(BraunBlanquetSimilarity(sbv, sbv2), 0.));
-  TEST_ASSERT(feq(RusselSimilarity(sbv, sbv2), 0.));
-  TEST_ASSERT(feq(RogotGoldbergSimilarity(sbv, sbv2), 0.));
-  TEST_ASSERT(feq(AllBitSimilarity(sbv, sbv2), 0.));
+  TEST_ASSERT(feq(TanimotoSimilarity(sbv, sbv2), 0.))
+  TEST_ASSERT(feq(DiceSimilarity(sbv, sbv2), 0.))
+  TEST_ASSERT(feq(CosineSimilarity(sbv, sbv2), 0.))
+  TEST_ASSERT(feq(KulczynskiSimilarity(sbv, sbv2), 0.))
+  TEST_ASSERT(feq(SokalSimilarity(sbv, sbv2), 0.))
+  TEST_ASSERT(feq(McConnaugheySimilarity(sbv, sbv2), -1.))
+  TEST_ASSERT(feq(BraunBlanquetSimilarity(sbv, sbv2), 0.))
+  TEST_ASSERT(feq(RusselSimilarity(sbv, sbv2), 0.))
+  TEST_ASSERT(feq(RogotGoldbergSimilarity(sbv, sbv2), 0.))
+  TEST_ASSERT(feq(AllBitSimilarity(sbv, sbv2), 0.))
 
   // similarity ~= 0.5
   sbv.setBit(5);
@@ -1294,27 +1285,27 @@ void test12SimilaritiesSparseBV() {
   sbv2.setBit(8);
   sbv2.setBit(9);
 
-  TEST_ASSERT(feq(TanimotoSimilarity(sbv, sbv2), 0.5));
-  TEST_ASSERT(feq(DiceSimilarity(sbv, sbv2), 0.6666));
-  TEST_ASSERT(feq(CosineSimilarity(sbv, sbv2), 0.6666));
-  TEST_ASSERT(feq(KulczynskiSimilarity(sbv, sbv2), 0.6666));
-  TEST_ASSERT(feq(SokalSimilarity(sbv, sbv2), 0.3333));
-  TEST_ASSERT(feq(McConnaugheySimilarity(sbv, sbv2), 0.3333));
-  TEST_ASSERT(feq(BraunBlanquetSimilarity(sbv, sbv2), 0.6666));
-  TEST_ASSERT(feq(RusselSimilarity(sbv, sbv2), 0.4));
-  TEST_ASSERT(feq(RogotGoldbergSimilarity(sbv, sbv2), 0.5833));
-  TEST_ASSERT(feq(AllBitSimilarity(sbv, sbv2), 0.6));
+  TEST_ASSERT(feq(TanimotoSimilarity(sbv, sbv2), 0.5))
+  TEST_ASSERT(feq(DiceSimilarity(sbv, sbv2), 0.6666))
+  TEST_ASSERT(feq(CosineSimilarity(sbv, sbv2), 0.6666))
+  TEST_ASSERT(feq(KulczynskiSimilarity(sbv, sbv2), 0.6666))
+  TEST_ASSERT(feq(SokalSimilarity(sbv, sbv2), 0.3333))
+  TEST_ASSERT(feq(McConnaugheySimilarity(sbv, sbv2), 0.3333))
+  TEST_ASSERT(feq(BraunBlanquetSimilarity(sbv, sbv2), 0.6666))
+  TEST_ASSERT(feq(RusselSimilarity(sbv, sbv2), 0.4))
+  TEST_ASSERT(feq(RogotGoldbergSimilarity(sbv, sbv2), 0.5833))
+  TEST_ASSERT(feq(AllBitSimilarity(sbv, sbv2), 0.6))
 }
 
 void test13BitVectAllOnes() {
   {
     ExplicitBitVect bv(32, false);
-    TEST_ASSERT(bv.getNumOnBits() == 0);
-    TEST_ASSERT(bv[0] == 0);
+    TEST_ASSERT(bv.getNumOnBits() == 0)
+    TEST_ASSERT(bv[0] == 0)
 
     ExplicitBitVect bv2(32, true);
-    TEST_ASSERT(bv2.getNumOnBits() == 32);
-    TEST_ASSERT(bv2[0] == 1);
+    TEST_ASSERT(bv2.getNumOnBits() == 32)
+    TEST_ASSERT(bv2[0] == 1)
   }
 }
 
@@ -1323,81 +1314,81 @@ void test14BitVectConcatenation() {
     ExplicitBitVect bv(32, false);
     ExplicitBitVect bv2(32, true);
     ExplicitBitVect bv3 = bv + bv2;
-    TEST_ASSERT(bv3.getNumBits() == 64);
-    TEST_ASSERT(bv3.getNumOnBits() == 32);
-    TEST_ASSERT(bv3.getNumOffBits() == 32);
+    TEST_ASSERT(bv3.getNumBits() == 64)
+    TEST_ASSERT(bv3.getNumOnBits() == 32)
+    TEST_ASSERT(bv3.getNumOffBits() == 32)
   }
 }
 
 void test15BitmapOps() {
   {
     const unsigned char bv1[5] = {0x1, 0x1, 0x1, 0x1, 0x1};
-    TEST_ASSERT(CalcBitmapPopcount(bv1, 5) == 5);
+    TEST_ASSERT(CalcBitmapPopcount(bv1, 5) == 5)
   }
   {
     const unsigned char bv1[5] = {0x1, 0x1, 0x3, 0x1, 0x1};
-    TEST_ASSERT(CalcBitmapPopcount(bv1, 5) == 6);
+    TEST_ASSERT(CalcBitmapPopcount(bv1, 5) == 6)
   }
   {
     const unsigned char bv1[5] = {0x0, 0x0, 0x0, 0x0, 0x0};
-    TEST_ASSERT(CalcBitmapPopcount(bv1, 5) == 0);
+    TEST_ASSERT(CalcBitmapPopcount(bv1, 5) == 0)
   }
   {
     const unsigned char bv1[5] = {0x1, 0x1, 0x1, 0x1, 0x1};
     const unsigned char bv2[5] = {0x1, 0x1, 0x1, 0x1, 0x1};
-    TEST_ASSERT(feq(CalcBitmapTanimoto(bv1, bv2, 5), 1.0));
+    TEST_ASSERT(feq(CalcBitmapTanimoto(bv1, bv2, 5), 1.0))
   }
   {
     const unsigned char bv1[5] = {0x1, 0x1, 0x1, 0x1, 0x1};
     const unsigned char bv2[5] = {0x1, 0x1, 0x1, 0x0, 0x1};
-    TEST_ASSERT(feq(CalcBitmapTanimoto(bv1, bv2, 5), 0.8));
+    TEST_ASSERT(feq(CalcBitmapTanimoto(bv1, bv2, 5), 0.8))
   }
   {
     const unsigned char bv1[5] = {0x1, 0x1, 0x1, 0x1, 0x1};
     const unsigned char bv2[5] = {0x1, 0x1, 0x1, 0x1, 0x1};
-    TEST_ASSERT(feq(CalcBitmapTversky(bv1, bv2, 5, 1., 1.), 1.0));
+    TEST_ASSERT(feq(CalcBitmapTversky(bv1, bv2, 5, 1., 1.), 1.0))
   }
   {
     const unsigned char bv1[5] = {0x1, 0x1, 0x1, 0x1, 0x1};
     const unsigned char bv2[5] = {0x1, 0x1, 0x1, 0x0, 0x1};
-    TEST_ASSERT(feq(CalcBitmapTversky(bv1, bv2, 5, 1., 1.), 0.8));
+    TEST_ASSERT(feq(CalcBitmapTversky(bv1, bv2, 5, 1., 1.), 0.8))
   }
   {
     const unsigned char bv1[5] = {0x1, 0x1, 0x1, 0x1, 0x1};
     const unsigned char bv2[5] = {0x1, 0x1, 0x1, 0x1, 0x1};
-    TEST_ASSERT(feq(CalcBitmapDice(bv1, bv2, 5), 1.0));
+    TEST_ASSERT(feq(CalcBitmapDice(bv1, bv2, 5), 1.0))
   }
   {
     const unsigned char bv1[5] = {0x1, 0x1, 0x1, 0x1, 0x1};
     const unsigned char bv2[5] = {0x1, 0x1, 0x1, 0x0, 0x1};
-    TEST_ASSERT(feq(CalcBitmapDice(bv1, bv2, 5), 8. / 9));
+    TEST_ASSERT(feq(CalcBitmapDice(bv1, bv2, 5), 8. / 9))
   }
   {
     const unsigned char bv1[5] = {0x1, 0x1, 0x1, 0x1, 0x1};
     const unsigned char bv2[5] = {0x1, 0x1, 0x1, 0x1, 0x1};
-    TEST_ASSERT(feq(CalcBitmapTversky(bv1, bv2, 5, 0.5, 0.5), 1.0));
+    TEST_ASSERT(feq(CalcBitmapTversky(bv1, bv2, 5, 0.5, 0.5), 1.0))
   }
   {
     const unsigned char bv1[5] = {0x1, 0x1, 0x1, 0x1, 0x1};
     const unsigned char bv2[5] = {0x1, 0x1, 0x1, 0x0, 0x1};
-    TEST_ASSERT(feq(CalcBitmapTversky(bv1, bv2, 5, 0.5, 0.5), 8. / 9));
+    TEST_ASSERT(feq(CalcBitmapTversky(bv1, bv2, 5, 0.5, 0.5), 8. / 9))
   }
 
   {
     const unsigned char bv1[5] = {0x1, 0x0, 0x1, 0x0, 0x1};
     const unsigned char bv2[5] = {0x1, 0x1, 0x5, 0x1, 0x1};
-    TEST_ASSERT(CalcBitmapAllProbeBitsMatch(bv1, bv2, 5));
+    TEST_ASSERT(CalcBitmapAllProbeBitsMatch(bv1, bv2, 5))
   }
   {
     const unsigned char bv1[5] = {0x1, 0x0, 0x1, 0x0, 0x1};
     const unsigned char bv2[5] = {0x1, 0x1, 0x2, 0x1, 0x1};
-    TEST_ASSERT(!CalcBitmapAllProbeBitsMatch(bv1, bv2, 5));
+    TEST_ASSERT(!CalcBitmapAllProbeBitsMatch(bv1, bv2, 5))
   }
 
   {
     const unsigned char bv1[5] = {0x1, 0x0, 0x1, 0x0, 0x1};
     const unsigned char bv2[5] = {0x1, 0x1, 0x5, 0x1, 0x1};
-    TEST_ASSERT(feq(CalcBitmapTversky(bv1, bv2, 5, 1.0, 0.), 1.0));
+    TEST_ASSERT(feq(CalcBitmapTversky(bv1, bv2, 5, 1.0, 0.), 1.0))
   }
 }
 
@@ -1408,7 +1399,7 @@ void test16BitVectProps() {
   }
 
   ExplicitBitVect bv2(bv.toString());
-  TEST_ASSERT(bv == bv2);
+  TEST_ASSERT(bv == bv2)
 
   Dict d;
   d.setVal<ExplicitBitVect>("exp", bv);
@@ -1417,14 +1408,14 @@ void test16BitVectProps() {
   DataStructsExplicitBitVecPropHandler bv_handler;
   std::vector<CustomPropHandler *> handlers = {&bv_handler, bv_handler.clone()};
   for (auto handler : handlers) {
-    TEST_ASSERT(handler->canSerialize(value));
+    TEST_ASSERT(handler->canSerialize(value))
     RDValue bad_value = 1;
-    TEST_ASSERT(!handler->canSerialize(bad_value));
+    TEST_ASSERT(!handler->canSerialize(bad_value))
     std::stringstream ss;
-    TEST_ASSERT(handler->write(ss, value));
+    TEST_ASSERT(handler->write(ss, value))
     RDValue newValue;
-    TEST_ASSERT(handler->read(ss, newValue));
-    TEST_ASSERT(from_rdvalue<ExplicitBitVect>(newValue) == bv);
+    TEST_ASSERT(handler->read(ss, newValue))
+    TEST_ASSERT(from_rdvalue<ExplicitBitVect>(newValue) == bv)
     newValue.destroy();
   }
   delete handlers[1];
@@ -1441,14 +1432,14 @@ void test17Github3994() {
   siv2.setVal(99, 4);
 
   auto siv3 = siv1;
-  TEST_ASSERT(siv3.getNonzeroElements().size() == 2);
-  TEST_ASSERT(siv3 == siv1);
-  TEST_ASSERT(siv3 != siv2);
+  TEST_ASSERT(siv3.getNonzeroElements().size() == 2)
+  TEST_ASSERT(siv3 == siv1)
+  TEST_ASSERT(siv3 != siv2)
 
   siv1 = siv2;
-  TEST_ASSERT(siv1.getNonzeroElements().size() == 3);
-  TEST_ASSERT(siv1 != siv3);
-  TEST_ASSERT(siv1 == siv2);
+  TEST_ASSERT(siv1.getNonzeroElements().size() == 3)
+  TEST_ASSERT(siv1 != siv3)
+  TEST_ASSERT(siv1 == siv2)
 }
 
 int main() {

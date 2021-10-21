@@ -28,15 +28,15 @@ boost::rational<int> CIPMol::getFractionalAtomicNum(Atom *atom) const {
 
 unsigned CIPMol::getNumAtoms() const { return d_mol.getNumAtoms(); }
 
-unsigned CIPMol::getNumBonds() const { return d_mol.getNumBonds(); };
+unsigned CIPMol::getNumBonds() const { return d_mol.getNumBonds(); }
 
-Atom *CIPMol::getAtom(int idx) const { return d_mol.getAtomWithIdx(idx); };
+Atom *CIPMol::getAtom(int idx) const { return d_mol.getAtomWithIdx(idx); }
 
 CXXAtomIterator<MolGraph, Atom *> CIPMol::atoms() const {
   return d_mol.atoms();
 }
 
-Bond *CIPMol::getBond(int idx) const { return d_mol.getBondWithIdx(idx); };
+Bond *CIPMol::getBond(int idx) const { return d_mol.getBondWithIdx(idx); }
 
 CIPMolSpan<Bond *, ROMol::OEDGE_ITER> CIPMol::getBonds(Atom *atom) const {
   PRECONDITION(atom, "bad atom")
@@ -57,7 +57,7 @@ bool CIPMol::isInRing(Bond *bond) const {
   }
 
   return rings->numBondRings(bond->getIdx()) != 0u;
-};
+}
 
 int CIPMol::getBondOrder(Bond *bond) const {
   PRECONDITION(bond, "bad bond")
@@ -101,7 +101,7 @@ int CIPMol::getBondOrder(Bond *bond) const {
     default:
       throw std::runtime_error("Non integer-order bonds are not allowed.");
   }
-};
+}
 
 }  // namespace CIPLabeler
 }  // namespace RDKit

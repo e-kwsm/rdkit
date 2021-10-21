@@ -37,7 +37,7 @@ void testBookmarks(ROMol m) {
   m.setAtomBookmark(a1, 666);
   Atom *a2 = m.getAtomWithBookmark(666);
 
-  TEST_ASSERT(a2->getIdx() == a1->getIdx());
+  TEST_ASSERT(a2->getIdx() == a1->getIdx())
 
   bool ok;
   m.clearAtomBookmark(666);
@@ -50,21 +50,21 @@ void testBookmarks(ROMol m) {
     ok = 1;
   }
   boost::logging::enable_logs("rdApp.error");
-  CHECK_INVARIANT(ok, "atom bookmark not properly cleared");
+  CHECK_INVARIANT(ok, "atom bookmark not properly cleared")
 
   // ------------------------
   // repeat a bookmark
   a1 = m.getAtomWithIdx(1);
-  CHECK_INVARIANT(a1->getIdx() == 1, "");
+  CHECK_INVARIANT(a1->getIdx() == 1, "")
   m.setAtomBookmark(a1, 666);
   m.setAtomBookmark(m.getAtomWithIdx(0), 666);
   a2 = m.getAtomWithBookmark(666);
-  CHECK_INVARIANT(a2->getIdx() == 1, "");
-  CHECK_INVARIANT(a2->getIdx() == a1->getIdx(), "");
+  CHECK_INVARIANT(a2->getIdx() == 1, "")
+  CHECK_INVARIANT(a2->getIdx() == a1->getIdx(), "")
   m.clearAtomBookmark(666, a2);
   a2 = m.getAtomWithBookmark(666);
   i = a2->getIdx();
-  CHECK_INVARIANT(i == 0, "");
+  CHECK_INVARIANT(i == 0, "")
   m.clearAtomBookmark(666, a2);
   boost::logging::disable_logs("rdApp.error");
   try {
@@ -74,7 +74,7 @@ void testBookmarks(ROMol m) {
     ok = 1;
   }
   boost::logging::enable_logs("rdApp.error");
-  CHECK_INVARIANT(ok, "atom bookmark not properly cleared");
+  CHECK_INVARIANT(ok, "atom bookmark not properly cleared")
 
   // make sure clearAtomBookmark doesn't barf if there's no
   // such bookmark:
@@ -85,7 +85,7 @@ void testBookmarks(ROMol m) {
   Bond *b1 = m.getBondWithIdx(0);
   m.setBondBookmark(b1, 23);
   Bond *b2 = m.getBondWithBookmark(23);
-  CHECK_INVARIANT(b2->getIdx() == b1->getIdx(), "");
+  CHECK_INVARIANT(b2->getIdx() == b1->getIdx(), "")
 
   m.clearBondBookmark(23);
   boost::logging::disable_logs("rdApp.error");
@@ -96,15 +96,15 @@ void testBookmarks(ROMol m) {
     ok = 1;
   }
   boost::logging::enable_logs("rdApp.error");
-  CHECK_INVARIANT(ok, "bond bookmark not properly cleared");
+  CHECK_INVARIANT(ok, "bond bookmark not properly cleared")
 
   m.setBondBookmark(b1, 23);
   m.setBondBookmark(m.getBondWithIdx(1), 23);
   b2 = m.getBondWithBookmark(23);
-  CHECK_INVARIANT(b2->getIdx() == b1->getIdx(), "");
+  CHECK_INVARIANT(b2->getIdx() == b1->getIdx(), "")
   m.clearBondBookmark(23, b2);
   b2 = m.getBondWithBookmark(23);
-  CHECK_INVARIANT(b2->getIdx() == 1, "");
+  CHECK_INVARIANT(b2->getIdx() == 1, "")
   m.clearBondBookmark(23, b2);
   boost::logging::disable_logs("rdApp.error");
   try {
@@ -114,7 +114,7 @@ void testBookmarks(ROMol m) {
     ok = 1;
   }
   boost::logging::enable_logs("rdApp.error");
-  CHECK_INVARIANT(ok, "bond bookmark not properly cleared");
+  CHECK_INVARIANT(ok, "bond bookmark not properly cleared")
 
   // make sure clearAtomBookmark doesn't barf if there's no
   // such bookmark:
@@ -131,63 +131,63 @@ void testMolProps() {
   m2.addAtom(new Atom(6), true, true);
   m2.addBond(0, 1, Bond::TRIPLE);
 
-  CHECK_INVARIANT(!m2.hasProp("prop1"), "");
-  CHECK_INVARIANT(!m2.hasProp("prop2"), "");
+  CHECK_INVARIANT(!m2.hasProp("prop1"), "")
+  CHECK_INVARIANT(!m2.hasProp("prop2"), "")
   m2.setProp("prop1", 2);
   int tmpI;
   std::string tmpS;
-  CHECK_INVARIANT(m2.hasProp("prop1"), "");
+  CHECK_INVARIANT(m2.hasProp("prop1"), "")
   m2.getProp("prop1", tmpI);
-  CHECK_INVARIANT(tmpI == 2, "");
+  CHECK_INVARIANT(tmpI == 2, "")
   m2.getProp("prop1", tmpS);
-  CHECK_INVARIANT(tmpS == "2", "");
+  CHECK_INVARIANT(tmpS == "2", "")
   m2.setProp("prop1", std::string("2"));
-  CHECK_INVARIANT(m2.hasProp("prop1"), "");
+  CHECK_INVARIANT(m2.hasProp("prop1"), "")
   m2.getProp("prop1", tmpS);
-  CHECK_INVARIANT(tmpS == "2", "");
+  CHECK_INVARIANT(tmpS == "2", "")
   std::string tmpString("2");
   m2.setProp("prop1", tmpString.c_str());
-  CHECK_INVARIANT(m2.hasProp("prop1"), "");
+  CHECK_INVARIANT(m2.hasProp("prop1"), "")
   m2.getProp("prop1", tmpS);
-  CHECK_INVARIANT(tmpS == "2", "");
+  CHECK_INVARIANT(tmpS == "2", "")
 
   tmpS = "name";
   m2.setProp(common_properties::_Name, tmpS);
 
   propNames = m2.getPropList(false, false);
-  TEST_ASSERT(propNames.size() == 1);
+  TEST_ASSERT(propNames.size() == 1)
   propNames = m2.getPropList(true, false);
-  TEST_ASSERT(propNames.size() == 2);
+  TEST_ASSERT(propNames.size() == 2)
 
   // check for computed properties
   m2.setProp("cprop1", 1, true);
   m2.setProp("cprop2", 2, true);
   STR_VECT cplst;
   m2.getProp(RDKit::detail::computedPropName, cplst);
-  CHECK_INVARIANT(cplst.size() == 2, "");
-  CHECK_INVARIANT(cplst[0] == "cprop1", "");
-  CHECK_INVARIANT(cplst[1] == "cprop2", "");
+  CHECK_INVARIANT(cplst.size() == 2, "")
+  CHECK_INVARIANT(cplst[0] == "cprop1", "")
+  CHECK_INVARIANT(cplst[1] == "cprop2", "")
 
   propNames = m2.getPropList(false, false);
-  TEST_ASSERT(propNames.size() == 1);
+  TEST_ASSERT(propNames.size() == 1)
   propNames = m2.getPropList(true, false);
-  TEST_ASSERT(propNames.size() == 2);
+  TEST_ASSERT(propNames.size() == 2)
   propNames = m2.getPropList(false, true);
-  TEST_ASSERT(propNames.size() == 3);
+  TEST_ASSERT(propNames.size() == 3)
   propNames = m2.getPropList(true, true);
-  TEST_ASSERT(propNames.size() == 5);
+  TEST_ASSERT(propNames.size() == 5)
   propNames = m2.getPropList();
-  TEST_ASSERT(propNames.size() == 5);
+  TEST_ASSERT(propNames.size() == 5)
 
   m2.clearProp("cprop1");
-  CHECK_INVARIANT(!m2.hasProp("cprop1"), "");
+  CHECK_INVARIANT(!m2.hasProp("cprop1"), "")
   m2.getProp(RDKit::detail::computedPropName, cplst);
-  CHECK_INVARIANT(cplst.size() == 1, "");
+  CHECK_INVARIANT(cplst.size() == 1, "")
 
   m2.clearComputedProps();
-  CHECK_INVARIANT(!m2.hasProp("cprop2"), "");
+  CHECK_INVARIANT(!m2.hasProp("cprop2"), "")
   m2.getProp(RDKit::detail::computedPropName, cplst);
-  CHECK_INVARIANT(cplst.size() == 0, "");
+  CHECK_INVARIANT(cplst.size() == 0, "")
 
   BOOST_LOG(rdInfoLog) << "Finished" << std::endl;
 }
@@ -201,25 +201,25 @@ void testClearMol() {
   m2.addAtom(new Atom(6), true, true);
   m2.addBond(0, 1, Bond::TRIPLE);
 
-  TEST_ASSERT(!m2.hasProp("prop1"));
+  TEST_ASSERT(!m2.hasProp("prop1"))
   m2.setProp("prop1", 2);
   int tmpI;
-  TEST_ASSERT(m2.hasProp("prop1"));
+  TEST_ASSERT(m2.hasProp("prop1"))
   m2.getProp("prop1", tmpI);
-  TEST_ASSERT(tmpI == 2);
+  TEST_ASSERT(tmpI == 2)
 
-  TEST_ASSERT(m2.hasProp(RDKit::detail::computedPropName));
+  TEST_ASSERT(m2.hasProp(RDKit::detail::computedPropName))
 
   m2.clear();
-  TEST_ASSERT(!m2.hasProp("prop1"));
-  TEST_ASSERT(m2.getNumAtoms() == 0);
-  TEST_ASSERT(m2.getNumBonds() == 0);
-  TEST_ASSERT(m2.getAtomBookmarks()->empty());
-  TEST_ASSERT(m2.getBondBookmarks()->empty());
+  TEST_ASSERT(!m2.hasProp("prop1"))
+  TEST_ASSERT(m2.getNumAtoms() == 0)
+  TEST_ASSERT(m2.getNumBonds() == 0)
+  TEST_ASSERT(m2.getAtomBookmarks()->empty())
+  TEST_ASSERT(m2.getBondBookmarks()->empty())
 
   TEST_ASSERT(
-      m2.hasProp(RDKit::detail::computedPropName));  // <- github issue 176
-  TEST_ASSERT(m2.getPropList().size() == 1);
+      m2.hasProp(RDKit::detail::computedPropName))  // <- github issue 176
+  TEST_ASSERT(m2.getPropList().size() == 1)
 
   BOOST_LOG(rdInfoLog) << "Finished" << std::endl;
 }
@@ -235,75 +235,75 @@ void testAtomProps() {
   Atom *a1 = m2.getAtomWithIdx(0);
   Atom *a2 = m2.getAtomWithIdx(0);
   Atom *a3 = &(*a1);
-  CHECK_INVARIANT(!a1->hasProp("prop1"), "");
-  CHECK_INVARIANT(!a1->hasProp("prop2"), "");
-  CHECK_INVARIANT(!a2->hasProp("prop1"), "");
-  CHECK_INVARIANT(!a2->hasProp("prop2"), "");
-  CHECK_INVARIANT(!a3->hasProp("prop1"), "");
-  CHECK_INVARIANT(!a3->hasProp("prop2"), "");
+  CHECK_INVARIANT(!a1->hasProp("prop1"), "")
+  CHECK_INVARIANT(!a1->hasProp("prop2"), "")
+  CHECK_INVARIANT(!a2->hasProp("prop1"), "")
+  CHECK_INVARIANT(!a2->hasProp("prop2"), "")
+  CHECK_INVARIANT(!a3->hasProp("prop1"), "")
+  CHECK_INVARIANT(!a3->hasProp("prop2"), "")
   a1->setProp("prop1", 3);
   a1->setProp("prop2", 4);
-  CHECK_INVARIANT(a1->hasProp("prop1"), "");
-  CHECK_INVARIANT(a1->hasProp("prop2"), "");
-  CHECK_INVARIANT(a2->hasProp("prop1"), "");
-  CHECK_INVARIANT(a2->hasProp("prop2"), "");
-  CHECK_INVARIANT(a3->hasProp("prop1"), "");
-  CHECK_INVARIANT(a3->hasProp("prop2"), "");
-  CHECK_INVARIANT(!a1->hasProp("bogus"), "");
-  CHECK_INVARIANT(!a2->hasProp("bogus"), "");
-  CHECK_INVARIANT(!a3->hasProp("bogus"), "");
+  CHECK_INVARIANT(a1->hasProp("prop1"), "")
+  CHECK_INVARIANT(a1->hasProp("prop2"), "")
+  CHECK_INVARIANT(a2->hasProp("prop1"), "")
+  CHECK_INVARIANT(a2->hasProp("prop2"), "")
+  CHECK_INVARIANT(a3->hasProp("prop1"), "")
+  CHECK_INVARIANT(a3->hasProp("prop2"), "")
+  CHECK_INVARIANT(!a1->hasProp("bogus"), "")
+  CHECK_INVARIANT(!a2->hasProp("bogus"), "")
+  CHECK_INVARIANT(!a3->hasProp("bogus"), "")
 
   bool ok = false;
   a1->setProp<double>("dprop", 4);
-  TEST_ASSERT(a1->hasProp("dprop"));
+  TEST_ASSERT(a1->hasProp("dprop"))
   try {
     a1->getProp<int>("dprop");
   } catch (const boost::bad_any_cast &) {
     ok = true;
   }
-  TEST_ASSERT(ok);
+  TEST_ASSERT(ok)
   a1->setProp<int>("iprop", 4);
-  TEST_ASSERT(a1->hasProp("iprop"));
+  TEST_ASSERT(a1->hasProp("iprop"))
   ok = false;
   try {
     a1->getProp<double>("iprop");
   } catch (const boost::bad_any_cast &) {
     ok = true;
   }
-  TEST_ASSERT(ok);
+  TEST_ASSERT(ok)
 
   int tmp;
   a1->getProp("prop1", tmp);
-  CHECK_INVARIANT(tmp == 3, "");
+  CHECK_INVARIANT(tmp == 3, "")
   a1->getProp("prop2", tmp);
-  CHECK_INVARIANT(tmp == 4, "");
+  CHECK_INVARIANT(tmp == 4, "")
   a2->getProp("prop1", tmp);
-  CHECK_INVARIANT(tmp == 3, "");
+  CHECK_INVARIANT(tmp == 3, "")
   a2->getProp("prop2", tmp);
-  CHECK_INVARIANT(tmp == 4, "");
+  CHECK_INVARIANT(tmp == 4, "")
   a3->getProp("prop1", tmp);
-  CHECK_INVARIANT(tmp == 3, "");
+  CHECK_INVARIANT(tmp == 3, "")
   a3->getProp("prop2", tmp);
-  CHECK_INVARIANT(tmp == 4, "");
+  CHECK_INVARIANT(tmp == 4, "")
 
   // check for computed properties
   a1->setProp("cprop1", 1, true);
   a1->setProp("cprop2", 2, true);
   STR_VECT cplst;
   a1->getProp(RDKit::detail::computedPropName, cplst);
-  CHECK_INVARIANT(cplst.size() == 2, "");
-  CHECK_INVARIANT(cplst[0] == "cprop1", "");
-  CHECK_INVARIANT(cplst[1] == "cprop2", "");
+  CHECK_INVARIANT(cplst.size() == 2, "")
+  CHECK_INVARIANT(cplst[0] == "cprop1", "")
+  CHECK_INVARIANT(cplst[1] == "cprop2", "")
 
   a1->clearProp("cprop1");
-  CHECK_INVARIANT(!a1->hasProp("cprop1"), "");
+  CHECK_INVARIANT(!a1->hasProp("cprop1"), "")
   a1->getProp(RDKit::detail::computedPropName, cplst);
-  CHECK_INVARIANT(cplst.size() == 1, "");
+  CHECK_INVARIANT(cplst.size() == 1, "")
 
   a1->clearComputedProps();
-  CHECK_INVARIANT(!a1->hasProp("cprop2"), "");
+  CHECK_INVARIANT(!a1->hasProp("cprop2"), "")
   a1->getProp(RDKit::detail::computedPropName, cplst);
-  CHECK_INVARIANT(cplst.size() == 0, "");
+  CHECK_INVARIANT(cplst.size() == 0, "")
 
   BOOST_LOG(rdInfoLog) << "Finished" << std::endl;
 }
@@ -318,47 +318,47 @@ void testBondProps() {
 
   Bond *b1 = m2.getBondWithIdx(0);
   Bond *b2 = m2.getBondWithIdx(0);
-  CHECK_INVARIANT(!b1->hasProp("prop1"), "");
-  CHECK_INVARIANT(!b1->hasProp("prop2"), "");
-  CHECK_INVARIANT(!b2->hasProp("prop1"), "");
-  CHECK_INVARIANT(!b2->hasProp("prop2"), "");
+  CHECK_INVARIANT(!b1->hasProp("prop1"), "")
+  CHECK_INVARIANT(!b1->hasProp("prop2"), "")
+  CHECK_INVARIANT(!b2->hasProp("prop1"), "")
+  CHECK_INVARIANT(!b2->hasProp("prop2"), "")
   b1->setProp("prop1", 3);
   b1->setProp("prop2", 4);
-  CHECK_INVARIANT(b1->hasProp("prop1"), "");
-  CHECK_INVARIANT(b1->hasProp("prop2"), "");
-  CHECK_INVARIANT(b2->hasProp("prop1"), "");
-  CHECK_INVARIANT(b2->hasProp("prop2"), "");
-  CHECK_INVARIANT(!b1->hasProp("bogus"), "");
-  CHECK_INVARIANT(!b2->hasProp("bogus"), "");
+  CHECK_INVARIANT(b1->hasProp("prop1"), "")
+  CHECK_INVARIANT(b1->hasProp("prop2"), "")
+  CHECK_INVARIANT(b2->hasProp("prop1"), "")
+  CHECK_INVARIANT(b2->hasProp("prop2"), "")
+  CHECK_INVARIANT(!b1->hasProp("bogus"), "")
+  CHECK_INVARIANT(!b2->hasProp("bogus"), "")
 
   int tmp;
   b1->getProp("prop1", tmp);
-  CHECK_INVARIANT(tmp == 3, "");
+  CHECK_INVARIANT(tmp == 3, "")
   b1->getProp("prop2", tmp);
-  CHECK_INVARIANT(tmp == 4, "");
+  CHECK_INVARIANT(tmp == 4, "")
   b2->getProp("prop1", tmp);
-  CHECK_INVARIANT(tmp == 3, "");
+  CHECK_INVARIANT(tmp == 3, "")
   b2->getProp("prop2", tmp);
-  CHECK_INVARIANT(tmp == 4, "");
+  CHECK_INVARIANT(tmp == 4, "")
 
   // check for computed properties
   b1->setProp("cprop1", 1, true);
   b1->setProp("cprop2", 2, true);
   STR_VECT cplst;
   b1->getProp(RDKit::detail::computedPropName, cplst);
-  CHECK_INVARIANT(cplst.size() == 2, "");
-  CHECK_INVARIANT(cplst[0] == "cprop1", "");
-  CHECK_INVARIANT(cplst[1] == "cprop2", "");
+  CHECK_INVARIANT(cplst.size() == 2, "")
+  CHECK_INVARIANT(cplst[0] == "cprop1", "")
+  CHECK_INVARIANT(cplst[1] == "cprop2", "")
 
   b1->clearProp("cprop1");
-  CHECK_INVARIANT(!b1->hasProp("cprop1"), "");
+  CHECK_INVARIANT(!b1->hasProp("cprop1"), "")
   b1->getProp(RDKit::detail::computedPropName, cplst);
-  CHECK_INVARIANT(cplst.size() == 1, "");
+  CHECK_INVARIANT(cplst.size() == 1, "")
 
   b1->clearComputedProps();
-  CHECK_INVARIANT(!b1->hasProp("cprop2"), "");
+  CHECK_INVARIANT(!b1->hasProp("cprop2"), "")
   b1->getProp(RDKit::detail::computedPropName, cplst);
-  CHECK_INVARIANT(cplst.size() == 0, "");
+  CHECK_INVARIANT(cplst.size() == 0, "")
 
   BOOST_LOG(rdInfoLog) << "Finished" << std::endl;
 }
@@ -376,52 +376,52 @@ void testPropLeak() {
 
   Atom *a1 = m2.getAtomWithIdx(0);
   Atom *a2 = m2.getAtomWithIdx(0);
-  CHECK_INVARIANT(!a1->hasProp("prop1"), "");
-  CHECK_INVARIANT(!a1->hasProp("prop2"), "");
-  CHECK_INVARIANT(!a2->hasProp("prop1"), "");
-  CHECK_INVARIANT(!a2->hasProp("prop2"), "");
+  CHECK_INVARIANT(!a1->hasProp("prop1"), "")
+  CHECK_INVARIANT(!a1->hasProp("prop2"), "")
+  CHECK_INVARIANT(!a2->hasProp("prop1"), "")
+  CHECK_INVARIANT(!a2->hasProp("prop2"), "")
   a1->setProp("prop1", 3);
   a1->setProp("prop2", 4);
-  CHECK_INVARIANT(a1->hasProp("prop1"), "");
-  CHECK_INVARIANT(a1->hasProp("prop2"), "");
-  CHECK_INVARIANT(a2->hasProp("prop1"), "");
-  CHECK_INVARIANT(a2->hasProp("prop2"), "");
-  CHECK_INVARIANT(!a1->hasProp("bogus"), "");
-  CHECK_INVARIANT(!a2->hasProp("bogus"), "");
+  CHECK_INVARIANT(a1->hasProp("prop1"), "")
+  CHECK_INVARIANT(a1->hasProp("prop2"), "")
+  CHECK_INVARIANT(a2->hasProp("prop1"), "")
+  CHECK_INVARIANT(a2->hasProp("prop2"), "")
+  CHECK_INVARIANT(!a1->hasProp("bogus"), "")
+  CHECK_INVARIANT(!a2->hasProp("bogus"), "")
 
   int tmp;
   a1->getProp("prop1", tmp);
-  CHECK_INVARIANT(tmp == 3, "");
+  CHECK_INVARIANT(tmp == 3, "")
   a1->getProp("prop2", tmp);
-  CHECK_INVARIANT(tmp == 4, "");
+  CHECK_INVARIANT(tmp == 4, "")
   a2->getProp("prop1", tmp);
-  CHECK_INVARIANT(tmp == 3, "");
+  CHECK_INVARIANT(tmp == 3, "")
   a2->getProp("prop2", tmp);
-  CHECK_INVARIANT(tmp == 4, "");
+  CHECK_INVARIANT(tmp == 4, "")
 
   Bond *b1 = m2.getBondWithIdx(0);
   Bond *b2 = m2.getBondWithIdx(0);
-  CHECK_INVARIANT(!b1->hasProp("prop1"), "");
-  CHECK_INVARIANT(!b1->hasProp("prop2"), "");
-  CHECK_INVARIANT(!b2->hasProp("prop1"), "");
-  CHECK_INVARIANT(!b2->hasProp("prop2"), "");
+  CHECK_INVARIANT(!b1->hasProp("prop1"), "")
+  CHECK_INVARIANT(!b1->hasProp("prop2"), "")
+  CHECK_INVARIANT(!b2->hasProp("prop1"), "")
+  CHECK_INVARIANT(!b2->hasProp("prop2"), "")
   b1->setProp("prop1", 3);
   b1->setProp("prop2", 4);
-  CHECK_INVARIANT(b1->hasProp("prop1"), "");
-  CHECK_INVARIANT(b1->hasProp("prop2"), "");
-  CHECK_INVARIANT(b2->hasProp("prop1"), "");
-  CHECK_INVARIANT(b2->hasProp("prop2"), "");
-  CHECK_INVARIANT(!b1->hasProp("bogus"), "");
-  CHECK_INVARIANT(!b2->hasProp("bogus"), "");
+  CHECK_INVARIANT(b1->hasProp("prop1"), "")
+  CHECK_INVARIANT(b1->hasProp("prop2"), "")
+  CHECK_INVARIANT(b2->hasProp("prop1"), "")
+  CHECK_INVARIANT(b2->hasProp("prop2"), "")
+  CHECK_INVARIANT(!b1->hasProp("bogus"), "")
+  CHECK_INVARIANT(!b2->hasProp("bogus"), "")
 
   b1->getProp("prop1", tmp);
-  CHECK_INVARIANT(tmp == 3, "");
+  CHECK_INVARIANT(tmp == 3, "")
   b1->getProp("prop2", tmp);
-  CHECK_INVARIANT(tmp == 4, "");
+  CHECK_INVARIANT(tmp == 4, "")
   b2->getProp("prop1", tmp);
-  CHECK_INVARIANT(tmp == 3, "");
+  CHECK_INVARIANT(tmp == 3, "")
   b2->getProp("prop2", tmp);
-  CHECK_INVARIANT(tmp == 4, "");
+  CHECK_INVARIANT(tmp == 4, "")
 
   BOOST_LOG(rdInfoLog) << "Finished" << std::endl;
 }
@@ -443,24 +443,24 @@ void testMisc() {
 
   Bond *bnd;
   bnd = m2.getBondBetweenAtoms(0, 1);
-  CHECK_INVARIANT(bnd, "");
+  CHECK_INVARIANT(bnd, "")
   bnd = m2.getBondBetweenAtoms(1, 0);
-  CHECK_INVARIANT(bnd, "");
+  CHECK_INVARIANT(bnd, "")
   bnd = m2.getBondBetweenAtoms(3, 0);
-  CHECK_INVARIANT(!bnd, "");
+  CHECK_INVARIANT(!bnd, "")
   bnd = m2.getBondBetweenAtoms(0, 3);
-  CHECK_INVARIANT(!bnd, "");
+  CHECK_INVARIANT(!bnd, "")
   const Bond *cbnd;
   cbnd = m2.getBondBetweenAtoms(0, 1);
-  CHECK_INVARIANT(cbnd, "");
+  CHECK_INVARIANT(cbnd, "")
   cbnd = m2.getBondBetweenAtoms(1, 0);
-  CHECK_INVARIANT(cbnd, "");
+  CHECK_INVARIANT(cbnd, "")
   cbnd = m2.getBondBetweenAtoms(0, 3);
-  CHECK_INVARIANT(!cbnd, "");
+  CHECK_INVARIANT(!cbnd, "")
   cbnd = m2.getBondBetweenAtoms(3, 0);
-  CHECK_INVARIANT(!cbnd, "");
+  CHECK_INVARIANT(!cbnd, "")
 
-  CHECK_INVARIANT(m2.getAtomWithIdx(0)->getTotalNumHs() == 2, "");
+  CHECK_INVARIANT(m2.getAtomWithIdx(0)->getTotalNumHs() == 2, "")
 
   // we'll check atom deletion and handling of bookmarks on deletion
   // simultaneously:
@@ -468,40 +468,40 @@ void testMisc() {
   m2.setAtomBookmark(m2.getAtomWithIdx(0), 2342);
   m2.setBondBookmark(m2.getBondWithIdx(0), 2343);
   m2.removeAtom(static_cast<unsigned int>(0));
-  CHECK_INVARIANT(!m2.hasAtomBookmark(2342), "");
-  CHECK_INVARIANT(!m2.hasBondBookmark(2343), "");
-  CHECK_INVARIANT(m2.getNumAtoms() == 3, "");
-  CHECK_INVARIANT(m2.getNumBonds() == 2, "");
+  CHECK_INVARIANT(!m2.hasAtomBookmark(2342), "")
+  CHECK_INVARIANT(!m2.hasBondBookmark(2343), "")
+  CHECK_INVARIANT(m2.getNumAtoms() == 3, "")
+  CHECK_INVARIANT(m2.getNumBonds() == 2, "")
   MolOps::sanitizeMol(m2);
-  CHECK_INVARIANT(m2.getAtomWithIdx(0)->getTotalNumHs() == 3, "");
+  CHECK_INVARIANT(m2.getAtomWithIdx(0)->getTotalNumHs() == 3, "")
 
   m2.addAtom(new Atom(1), true, true);
   m2.addBond(2, 3, Bond::SINGLE);
   MolOps::sanitizeMol(m2);
 
-  CHECK_INVARIANT(m2.getAtomWithIdx(0)->getTotalNumHs() == 3, "");
-  CHECK_INVARIANT(m2.getAtomWithIdx(0)->getTotalNumHs(true) == 3, "");
-  CHECK_INVARIANT(m2.getAtomWithIdx(2)->getTotalNumHs() == 2, "");
-  CHECK_INVARIANT(m2.getAtomWithIdx(2)->getTotalNumHs(true) == 3, "");
+  CHECK_INVARIANT(m2.getAtomWithIdx(0)->getTotalNumHs() == 3, "")
+  CHECK_INVARIANT(m2.getAtomWithIdx(0)->getTotalNumHs(true) == 3, "")
+  CHECK_INVARIANT(m2.getAtomWithIdx(2)->getTotalNumHs() == 2, "")
+  CHECK_INVARIANT(m2.getAtomWithIdx(2)->getTotalNumHs(true) == 3, "")
 
   Atom *other = m2.getBondWithIdx(1)->getOtherAtom(m2.getAtomWithIdx(1));
-  CHECK_INVARIANT(other, "");
+  CHECK_INVARIANT(other, "")
 
   const Atom *at = m2.getAtomWithIdx(1);
   ROMol::OEDGE_ITER begin, end;
   boost::tie(begin, end) = m2.getAtomBonds(at);
   while (begin != end) {
     const Atom *at2 = m2[*begin]->getOtherAtom(at);
-    TEST_ASSERT(at2);
+    TEST_ASSERT(at2)
     begin++;
   }
 
   ROMol::VERTEX_ITER atBegin, atEnd;
   boost::tie(atBegin, atEnd) = m2.getVertices();
-  TEST_ASSERT(atBegin != atEnd);
+  TEST_ASSERT(atBegin != atEnd)
   while (atBegin != atEnd) {
     const Atom *at2 = m2[*atBegin];
-    TEST_ASSERT(at2->getIdx() == *atBegin);
+    TEST_ASSERT(at2->getIdx() == *atBegin)
     atBegin++;
   }
 
@@ -524,12 +524,12 @@ void testDegree() {
   m->addBond(2, 3, Bond::SINGLE);
 
   MolOps::sanitizeMol(*m);
-  TEST_ASSERT(m->getAtomWithIdx(0)->getDegree() == 2);
-  TEST_ASSERT(m->getAtomWithIdx(0)->getTotalNumHs() == 2);
-  TEST_ASSERT(m->getAtomWithIdx(0)->getTotalDegree() == 4);
-  TEST_ASSERT(m->getAtomWithIdx(2)->getDegree() == 3);
-  TEST_ASSERT(m->getAtomWithIdx(2)->getTotalNumHs() == 1);
-  TEST_ASSERT(m->getAtomWithIdx(2)->getTotalDegree() == 4);
+  TEST_ASSERT(m->getAtomWithIdx(0)->getDegree() == 2)
+  TEST_ASSERT(m->getAtomWithIdx(0)->getTotalNumHs() == 2)
+  TEST_ASSERT(m->getAtomWithIdx(0)->getTotalDegree() == 4)
+  TEST_ASSERT(m->getAtomWithIdx(2)->getDegree() == 3)
+  TEST_ASSERT(m->getAtomWithIdx(2)->getTotalNumHs() == 1)
+  TEST_ASSERT(m->getAtomWithIdx(2)->getTotalDegree() == 4)
 
   delete m;
   m = new RWMol();
@@ -545,13 +545,13 @@ void testDegree() {
   m->addBond(0, 4, Bond::SINGLE);
 
   MolOps::sanitizeMol(*m);
-  TEST_ASSERT(m->getAtomWithIdx(0)->getDegree() == 3);
-  TEST_ASSERT(m->getAtomWithIdx(0)->getTotalNumHs() == 1);
-  TEST_ASSERT(m->getAtomWithIdx(0)->getTotalNumHs(true) == 2);
-  TEST_ASSERT(m->getAtomWithIdx(0)->getTotalDegree() == 4);
-  TEST_ASSERT(m->getAtomWithIdx(2)->getDegree() == 3);
-  TEST_ASSERT(m->getAtomWithIdx(2)->getTotalNumHs() == 1);
-  TEST_ASSERT(m->getAtomWithIdx(2)->getTotalDegree() == 4);
+  TEST_ASSERT(m->getAtomWithIdx(0)->getDegree() == 3)
+  TEST_ASSERT(m->getAtomWithIdx(0)->getTotalNumHs() == 1)
+  TEST_ASSERT(m->getAtomWithIdx(0)->getTotalNumHs(true) == 2)
+  TEST_ASSERT(m->getAtomWithIdx(0)->getTotalDegree() == 4)
+  TEST_ASSERT(m->getAtomWithIdx(2)->getDegree() == 3)
+  TEST_ASSERT(m->getAtomWithIdx(2)->getTotalNumHs() == 1)
+  TEST_ASSERT(m->getAtomWithIdx(2)->getTotalDegree() == 4)
   delete m;
 
   BOOST_LOG(rdInfoLog) << "Finished" << std::endl;
@@ -572,14 +572,14 @@ void testIssue1993296() {
   } catch (...) {
     ok = true;
   }
-  TEST_ASSERT(ok);
+  TEST_ASSERT(ok)
   ok = false;
   try {
     m->addBond(1, 0, Bond::SINGLE);
   } catch (...) {
     ok = true;
   }
-  TEST_ASSERT(ok);
+  TEST_ASSERT(ok)
 
   // not technically part of 1993296, but related: we also throw
   // on adding self bonds
@@ -600,7 +600,7 @@ void testIssue1993296() {
   } catch (...) {
     ok = true;
   }
-  TEST_ASSERT(ok);
+  TEST_ASSERT(ok)
 
   // not technically part of 1993296, but related: we also throw
   // on adding self bonds
@@ -612,7 +612,7 @@ void testIssue1993296() {
   } catch (...) {
     ok = true;
   }
-  TEST_ASSERT(ok);
+  TEST_ASSERT(ok)
   delete newB;
   delete m;
 
@@ -633,9 +633,9 @@ void testIssue2381580() {
     m->addBond(0, 2, Bond::SINGLE);
     m->addBond(0, 3, Bond::SINGLE);
     MolOps::sanitizeMol(*m);
-    TEST_ASSERT(m->getAtomWithIdx(0)->getFormalCharge() == 0);
-    TEST_ASSERT(m->getAtomWithIdx(0)->getExplicitValence() == 3);
-    TEST_ASSERT(m->getAtomWithIdx(0)->getNumImplicitHs() == 0);
+    TEST_ASSERT(m->getAtomWithIdx(0)->getFormalCharge() == 0)
+    TEST_ASSERT(m->getAtomWithIdx(0)->getExplicitValence() == 3)
+    TEST_ASSERT(m->getAtomWithIdx(0)->getNumImplicitHs() == 0)
     delete m;
   }
 
@@ -652,9 +652,9 @@ void testIssue2381580() {
     m->addBond(0, 4, Bond::SINGLE);
     m->getAtomWithIdx(0)->setFormalCharge(-1);
     MolOps::sanitizeMol(*m);
-    TEST_ASSERT(m->getAtomWithIdx(0)->getFormalCharge() == -1);
-    TEST_ASSERT(m->getAtomWithIdx(0)->getExplicitValence() == 4);
-    TEST_ASSERT(m->getAtomWithIdx(0)->getNumImplicitHs() == 0);
+    TEST_ASSERT(m->getAtomWithIdx(0)->getFormalCharge() == -1)
+    TEST_ASSERT(m->getAtomWithIdx(0)->getExplicitValence() == 4)
+    TEST_ASSERT(m->getAtomWithIdx(0)->getNumImplicitHs() == 0)
     delete m;
   }
 
@@ -675,7 +675,7 @@ void testIssue2381580() {
     } catch (MolSanitizeException &) {
       ok = true;
     }
-    TEST_ASSERT(ok);
+    TEST_ASSERT(ok)
     delete m;
   }
 
@@ -697,7 +697,7 @@ void testIssue2381580() {
     } catch (MolSanitizeException &) {
       ok = true;
     }
-    TEST_ASSERT(ok);
+    TEST_ASSERT(ok)
     delete m;
   }
 
@@ -710,9 +710,9 @@ void testIssue2381580() {
     m->addBond(0, 2, Bond::SINGLE);
     m->getAtomWithIdx(0)->setFormalCharge(+1);
     MolOps::sanitizeMol(*m);
-    TEST_ASSERT(m->getAtomWithIdx(0)->getFormalCharge() == 1);
-    TEST_ASSERT(m->getAtomWithIdx(0)->getExplicitValence() == 2);
-    TEST_ASSERT(m->getAtomWithIdx(0)->getNumImplicitHs() == 0);
+    TEST_ASSERT(m->getAtomWithIdx(0)->getFormalCharge() == 1)
+    TEST_ASSERT(m->getAtomWithIdx(0)->getExplicitValence() == 2)
+    TEST_ASSERT(m->getAtomWithIdx(0)->getNumImplicitHs() == 0)
     delete m;
   }
 
@@ -727,21 +727,21 @@ void testIssue2381580() {
     m->addBond(0, 3, Bond::SINGLE);
     m->getAtomWithIdx(0)->setFormalCharge(-1);
     MolOps::sanitizeMol(*m);
-    TEST_ASSERT(m->getAtomWithIdx(0)->getFormalCharge() == -1);
-    TEST_ASSERT(m->getAtomWithIdx(0)->getExplicitValence() == 3);
-    TEST_ASSERT(m->getAtomWithIdx(0)->getNumImplicitHs() == 1);
+    TEST_ASSERT(m->getAtomWithIdx(0)->getFormalCharge() == -1)
+    TEST_ASSERT(m->getAtomWithIdx(0)->getExplicitValence() == 3)
+    TEST_ASSERT(m->getAtomWithIdx(0)->getNumImplicitHs() == 1)
     TEST_ASSERT(m->getAtomWithIdx(0)->getExplicitValence() +
                     m->getAtomWithIdx(0)->getImplicitValence() ==
-                rdcast<int>(m->getAtomWithIdx(0)->getTotalValence()));
+                rdcast<int>(m->getAtomWithIdx(0)->getTotalValence()))
     TEST_ASSERT(m->getAtomWithIdx(1)->getExplicitValence() +
                     m->getAtomWithIdx(1)->getImplicitValence() ==
-                rdcast<int>(m->getAtomWithIdx(1)->getTotalValence()));
+                rdcast<int>(m->getAtomWithIdx(1)->getTotalValence()))
     TEST_ASSERT(m->getAtomWithIdx(2)->getExplicitValence() +
                     m->getAtomWithIdx(2)->getImplicitValence() ==
-                rdcast<int>(m->getAtomWithIdx(2)->getTotalValence()));
+                rdcast<int>(m->getAtomWithIdx(2)->getTotalValence()))
     TEST_ASSERT(m->getAtomWithIdx(3)->getExplicitValence() +
                     m->getAtomWithIdx(3)->getImplicitValence() ==
-                rdcast<int>(m->getAtomWithIdx(3)->getTotalValence()));
+                rdcast<int>(m->getAtomWithIdx(3)->getTotalValence()))
     delete m;
   }
 
@@ -766,9 +766,9 @@ void testIssue2840217() {
       }
       m->addBond(i * 6, i * 6 + 5, Bond::AROMATIC);
     }
-    TEST_ASSERT(m->getNumBonds() == 1200);
+    TEST_ASSERT(m->getNumBonds() == 1200)
     MolOps::sanitizeMol(*m);
-    TEST_ASSERT(m->getNumAtoms() == 1200);
+    TEST_ASSERT(m->getNumAtoms() == 1200)
     delete m;
   }
 
@@ -781,33 +781,33 @@ void test1() {
     auto *newAtom = new Atom(8);
 
     m.addAtom(newAtom, true, true);
-    CHECK_INVARIANT(m.getAtomWithIdx(0)->getIdx() == 0, "");
+    CHECK_INVARIANT(m.getAtomWithIdx(0)->getIdx() == 0, "")
     newAtom = new Atom(6);
     m.addAtom(newAtom, true, true);
-    CHECK_INVARIANT(m.getAtomWithIdx(0)->getIdx() == 0, "");
-    CHECK_INVARIANT(m.getAtomWithIdx(1)->getIdx() == 1, "");
+    CHECK_INVARIANT(m.getAtomWithIdx(0)->getIdx() == 0, "")
+    CHECK_INVARIANT(m.getAtomWithIdx(1)->getIdx() == 1, "")
 
     newAtom = new Atom(7);
     m.addAtom(newAtom, true, true);
-    CHECK_INVARIANT(m.getAtomWithIdx(0)->getIdx() == 0, "");
-    CHECK_INVARIANT(m.getAtomWithIdx(1)->getIdx() == 1, "");
-    CHECK_INVARIANT(m.getAtomWithIdx(2)->getIdx() == 2, "");
+    CHECK_INVARIANT(m.getAtomWithIdx(0)->getIdx() == 0, "")
+    CHECK_INVARIANT(m.getAtomWithIdx(1)->getIdx() == 1, "")
+    CHECK_INVARIANT(m.getAtomWithIdx(2)->getIdx() == 2, "")
     CHECK_INVARIANT(
         m.getAtomWithIdx(1)->getOwningMol().getAtomWithIdx(1)->getIdx() == 1,
-        "");
+        "")
 
     m.addBond(0, 1, Bond::SINGLE);
     m.addBond(1, 2, Bond::DOUBLE);
-    CHECK_INVARIANT(m.getBondWithIdx(0)->getIdx() == 0, "");
-    CHECK_INVARIANT(m.getBondWithIdx(1)->getIdx() == 1, "");
+    CHECK_INVARIANT(m.getBondWithIdx(0)->getIdx() == 0, "")
+    CHECK_INVARIANT(m.getBondWithIdx(1)->getIdx() == 1, "")
 
-    CHECK_INVARIANT(m.getBondWithIdx(0)->getBondType() == Bond::SINGLE, "");
-    CHECK_INVARIANT(m.getBondWithIdx(1)->getBondType() == Bond::DOUBLE, "");
+    CHECK_INVARIANT(m.getBondWithIdx(0)->getBondType() == Bond::SINGLE, "")
+    CHECK_INVARIANT(m.getBondWithIdx(1)->getBondType() == Bond::DOUBLE, "")
 
-    CHECK_INVARIANT(m.getBondWithIdx(0)->getBeginAtom()->getIdx() == 0, "");
-    CHECK_INVARIANT(m.getBondWithIdx(0)->getEndAtom()->getIdx() == 1, "");
-    CHECK_INVARIANT(m.getBondWithIdx(1)->getBeginAtom()->getIdx() == 1, "");
-    CHECK_INVARIANT(m.getBondWithIdx(1)->getEndAtom()->getIdx() == 2, "");
+    CHECK_INVARIANT(m.getBondWithIdx(0)->getBeginAtom()->getIdx() == 0, "")
+    CHECK_INVARIANT(m.getBondWithIdx(0)->getEndAtom()->getIdx() == 1, "")
+    CHECK_INVARIANT(m.getBondWithIdx(1)->getBeginAtom()->getIdx() == 1, "")
+    CHECK_INVARIANT(m.getBondWithIdx(1)->getEndAtom()->getIdx() == 2, "")
 
     testBookmarks(m);
 
@@ -871,14 +871,14 @@ void test1() {
     auto *repA = new Atom(22);
     m.replaceAtom(newIdx, repA);
     delete repA;
-    TEST_ASSERT(m.getAtomWithIdx(newIdx)->getAtomicNum() == 22);
+    TEST_ASSERT(m.getAtomWithIdx(newIdx)->getAtomicNum() == 22)
     auto *nbnd = new Bond(Bond::DOUBLE);
     TEST_ASSERT(m.getBondWithIdx(m.getNumBonds() - 1)->getBondType() ==
-                Bond::AROMATIC);
+                Bond::AROMATIC)
     m.replaceBond(m.getNumBonds() - 1, nbnd);
     m.debugMol(std::cerr);
     TEST_ASSERT(m.getBondWithIdx(m.getNumBonds() - 1)->getBondType() ==
-                nbnd->getBondType());
+                nbnd->getBondType())
     delete nbnd;
     delete bsp;
   }
@@ -896,23 +896,23 @@ void test1() {
     // insert molecule without a conf:
     m2.addAtom(new Atom(6), true, true);
     m.insertMol(m2);
-    TEST_ASSERT(m.getConformer().getNumAtoms() == m.getNumAtoms());
-    TEST_ASSERT(feq(m.getConformer().getAtomPos(2).x, 0.0));
-    TEST_ASSERT(feq(m.getConformer().getAtomPos(2).y, 0.0));
-    TEST_ASSERT(feq(m.getConformer().getAtomPos(2).z, 0.0));
+    TEST_ASSERT(m.getConformer().getNumAtoms() == m.getNumAtoms())
+    TEST_ASSERT(feq(m.getConformer().getAtomPos(2).x, 0.0))
+    TEST_ASSERT(feq(m.getConformer().getAtomPos(2).y, 0.0))
+    TEST_ASSERT(feq(m.getConformer().getAtomPos(2).z, 0.0))
 
     // insert molecule with a conf:
     conf = new Conformer(m2.getNumAtoms());
     m2.addConformer(conf);
     m2.getConformer().setAtomPos(0, RDGeom::Point3D(1.0, 1.0, 0.0));
     m.insertMol(m2);
-    TEST_ASSERT(m.getConformer().getNumAtoms() == m.getNumAtoms());
-    TEST_ASSERT(feq(m.getConformer().getAtomPos(2).x, 0.0));
-    TEST_ASSERT(feq(m.getConformer().getAtomPos(2).y, 0.0));
-    TEST_ASSERT(feq(m.getConformer().getAtomPos(2).z, 0.0));
-    TEST_ASSERT(feq(m.getConformer().getAtomPos(3).x, 1.0));
-    TEST_ASSERT(feq(m.getConformer().getAtomPos(3).y, 1.0));
-    TEST_ASSERT(feq(m.getConformer().getAtomPos(3).z, 0.0));
+    TEST_ASSERT(m.getConformer().getNumAtoms() == m.getNumAtoms())
+    TEST_ASSERT(feq(m.getConformer().getAtomPos(2).x, 0.0))
+    TEST_ASSERT(feq(m.getConformer().getAtomPos(2).y, 0.0))
+    TEST_ASSERT(feq(m.getConformer().getAtomPos(2).z, 0.0))
+    TEST_ASSERT(feq(m.getConformer().getAtomPos(3).x, 1.0))
+    TEST_ASSERT(feq(m.getConformer().getAtomPos(3).y, 1.0))
+    TEST_ASSERT(feq(m.getConformer().getAtomPos(3).z, 0.0))
   }
   {
     // start with a molecule with no conf
@@ -920,27 +920,27 @@ void test1() {
     m.addAtom(new Atom(6), true, true);
     m.addAtom(new Atom(6), true, true);
     m.addBond(0, 1, Bond::SINGLE);
-    TEST_ASSERT(m.getNumConformers() == 0);
+    TEST_ASSERT(m.getNumConformers() == 0)
 
     RWMol m2;
     // insert molecule without a conf:
     m2.addAtom(new Atom(6), true, true);
     m.insertMol(m2);
-    TEST_ASSERT(m.getNumConformers() == 0);
+    TEST_ASSERT(m.getNumConformers() == 0)
 
     // insert molecule with a conf:
     auto *conf = new Conformer(m2.getNumAtoms());
     m2.addConformer(conf);
     m2.getConformer().setAtomPos(0, RDGeom::Point3D(1.0, 1.0, 0.0));
     m.insertMol(m2);
-    TEST_ASSERT(m.getNumConformers() == 1);
-    TEST_ASSERT(m.getConformer().getNumAtoms() == m.getNumAtoms());
-    TEST_ASSERT(feq(m.getConformer().getAtomPos(0).x, 0.0));
-    TEST_ASSERT(feq(m.getConformer().getAtomPos(0).y, 0.0));
-    TEST_ASSERT(feq(m.getConformer().getAtomPos(0).z, 0.0));
-    TEST_ASSERT(feq(m.getConformer().getAtomPos(3).x, 1.0));
-    TEST_ASSERT(feq(m.getConformer().getAtomPos(3).y, 1.0));
-    TEST_ASSERT(feq(m.getConformer().getAtomPos(3).z, 0.0));
+    TEST_ASSERT(m.getNumConformers() == 1)
+    TEST_ASSERT(m.getConformer().getNumAtoms() == m.getNumAtoms())
+    TEST_ASSERT(feq(m.getConformer().getAtomPos(0).x, 0.0))
+    TEST_ASSERT(feq(m.getConformer().getAtomPos(0).y, 0.0))
+    TEST_ASSERT(feq(m.getConformer().getAtomPos(0).z, 0.0))
+    TEST_ASSERT(feq(m.getConformer().getAtomPos(3).x, 1.0))
+    TEST_ASSERT(feq(m.getConformer().getAtomPos(3).y, 1.0))
+    TEST_ASSERT(feq(m.getConformer().getAtomPos(3).z, 0.0))
   }
 }
 
@@ -948,28 +948,28 @@ void testPeriodicTable() {
   BOOST_LOG(rdInfoLog) << "-----------------------\n";
   BOOST_LOG(rdInfoLog) << "Testing properties from periodic table" << std::endl;
 
-  TEST_ASSERT(PeriodicTable::getTable()->getDefaultValence(6) == 4);
-  TEST_ASSERT(PeriodicTable::getTable()->getNouterElecs(6) == 4);
-  TEST_ASSERT(PeriodicTable::getTable()->getMostCommonIsotope(6) == 12);
-  TEST_ASSERT(PeriodicTable::getTable()->getMostCommonIsotopeMass(6) == 12.0);
-  TEST_ASSERT(PeriodicTable::getTable()->getMostCommonIsotopeMass(6) == 12.0);
+  TEST_ASSERT(PeriodicTable::getTable()->getDefaultValence(6) == 4)
+  TEST_ASSERT(PeriodicTable::getTable()->getNouterElecs(6) == 4)
+  TEST_ASSERT(PeriodicTable::getTable()->getMostCommonIsotope(6) == 12)
+  TEST_ASSERT(PeriodicTable::getTable()->getMostCommonIsotopeMass(6) == 12.0)
+  TEST_ASSERT(PeriodicTable::getTable()->getMostCommonIsotopeMass(6) == 12.0)
   TEST_ASSERT(feq(PeriodicTable::getTable()->getMostCommonIsotopeMass(4),
-                  9.0122, 1e-4));
-  TEST_ASSERT(feq(PeriodicTable::getTable()->getRb0(6), 0.77, 1e-2));
+                  9.0122, 1e-4))
+  TEST_ASSERT(feq(PeriodicTable::getTable()->getRb0(6), 0.77, 1e-2))
 
-  TEST_ASSERT(PeriodicTable::getTable()->getDefaultValence(26) == -1);
-  TEST_ASSERT(PeriodicTable::getTable()->getDefaultValence(57) == -1);
+  TEST_ASSERT(PeriodicTable::getTable()->getDefaultValence(26) == -1)
+  TEST_ASSERT(PeriodicTable::getTable()->getDefaultValence(57) == -1)
 
   // this was sf.net issue 269
   int anum;
   anum = PeriodicTable::getTable()->getAtomicNumber("C");
-  TEST_ASSERT(anum == 6);
+  TEST_ASSERT(anum == 6)
   try {
     anum = PeriodicTable::getTable()->getAtomicNumber("Xx");
   } catch (...) {
     anum = -1;
   }
-  TEST_ASSERT(anum == -1);
+  TEST_ASSERT(anum == -1)
 
   BOOST_LOG(rdInfoLog) << "Finished" << std::endl;
 }
@@ -989,7 +989,7 @@ void testAddAtomWithConf() {
     m.addConformer(conf);
 
     m.addAtom(new Atom(6), true, true);
-    TEST_ASSERT(m.getConformer().getNumAtoms() == m.getNumAtoms());
+    TEST_ASSERT(m.getConformer().getNumAtoms() == m.getNumAtoms())
   }
   {
     RWMol m;
@@ -1001,7 +1001,7 @@ void testAddAtomWithConf() {
     m.addConformer(conf);
 
     m.addAtom();
-    TEST_ASSERT(m.getConformer().getNumAtoms() == m.getNumAtoms());
+    TEST_ASSERT(m.getConformer().getNumAtoms() == m.getNumAtoms())
   }
   {  // make sure things are ok even if there is no conformer
     RWMol m;
@@ -1009,7 +1009,7 @@ void testAddAtomWithConf() {
     m.addAtom(new Atom(6), true, true);
     m.addAtom(new Atom(6), true, true);
     m.addAtom(new Atom(6), true, true);
-    TEST_ASSERT(m.getNumConformers() == 0);
+    TEST_ASSERT(m.getNumConformers() == 0)
   }
 
   BOOST_LOG(rdInfoLog) << "Finished" << std::endl;
@@ -1025,7 +1025,7 @@ void testIssue267() {
     m.addAtom(new Atom(0), true, true);
     m.updatePropertyCache();
 
-    TEST_ASSERT(m.getAtomWithIdx(0)->getImplicitValence() == 0);
+    TEST_ASSERT(m.getAtomWithIdx(0)->getImplicitValence() == 0)
   }
   {
     RWMol m;
@@ -1053,11 +1053,11 @@ void testIssue284() {
     m.addBond(0, 1, Bond::SINGLE);
     m.addBond(1, 2, Bond::SINGLE);
     m.updatePropertyCache();
-    TEST_ASSERT(m.getBondBetweenAtoms(0, 1)->getIdx() == 0);
-    TEST_ASSERT(m.getBondBetweenAtoms(1, 2)->getIdx() == 1);
+    TEST_ASSERT(m.getBondBetweenAtoms(0, 1)->getIdx() == 0)
+    TEST_ASSERT(m.getBondBetweenAtoms(1, 2)->getIdx() == 1)
     m.removeBond(0, 1);
-    TEST_ASSERT(!m.getBondBetweenAtoms(0, 1));
-    TEST_ASSERT(m.getBondBetweenAtoms(1, 2)->getIdx() == 0);
+    TEST_ASSERT(!m.getBondBetweenAtoms(0, 1))
+    TEST_ASSERT(m.getBondBetweenAtoms(1, 2)->getIdx() == 0)
   }
   BOOST_LOG(rdInfoLog) << "Finished" << std::endl;
 }
@@ -1077,35 +1077,35 @@ void testAtomResidues() {
     m->addAtom(new Atom(6), true, true);
     m->addBond(2, 3, Bond::SINGLE);
 
-    TEST_ASSERT(!(m->getAtomWithIdx(0)->getMonomerInfo()));
-    TEST_ASSERT(!(m->getAtomWithIdx(1)->getMonomerInfo()));
-    TEST_ASSERT(!(m->getAtomWithIdx(2)->getMonomerInfo()));
-    TEST_ASSERT(!(m->getAtomWithIdx(3)->getMonomerInfo()));
+    TEST_ASSERT(!(m->getAtomWithIdx(0)->getMonomerInfo()))
+    TEST_ASSERT(!(m->getAtomWithIdx(1)->getMonomerInfo()))
+    TEST_ASSERT(!(m->getAtomWithIdx(2)->getMonomerInfo()))
+    TEST_ASSERT(!(m->getAtomWithIdx(3)->getMonomerInfo()))
 
     m->getAtomWithIdx(0)->setMonomerInfo(
         new AtomMonomerInfo(AtomMonomerInfo::OTHER, "m1"));
-    TEST_ASSERT((m->getAtomWithIdx(0)->getMonomerInfo()));
-    TEST_ASSERT(m->getAtomWithIdx(0)->getMonomerInfo()->getName() == "m1");
+    TEST_ASSERT((m->getAtomWithIdx(0)->getMonomerInfo()))
+    TEST_ASSERT(m->getAtomWithIdx(0)->getMonomerInfo()->getName() == "m1")
 
     m->getAtomWithIdx(1)->setMonomerInfo(new AtomPDBResidueInfo("Ca", 3));
-    TEST_ASSERT((m->getAtomWithIdx(1)->getMonomerInfo()));
-    TEST_ASSERT(m->getAtomWithIdx(1)->getMonomerInfo()->getName() == "Ca");
+    TEST_ASSERT((m->getAtomWithIdx(1)->getMonomerInfo()))
+    TEST_ASSERT(m->getAtomWithIdx(1)->getMonomerInfo()->getName() == "Ca")
     TEST_ASSERT(static_cast<const AtomPDBResidueInfo *>(
                     m->getAtomWithIdx(1)->getMonomerInfo())
-                    ->getSerialNumber() == 3);
+                    ->getSerialNumber() == 3)
 
     auto *m2 = new RWMol(*m);
     delete m;
 
-    TEST_ASSERT((m2->getAtomWithIdx(0)->getMonomerInfo()));
-    TEST_ASSERT(m2->getAtomWithIdx(0)->getMonomerInfo()->getName() == "m1");
-    TEST_ASSERT((m2->getAtomWithIdx(1)->getMonomerInfo()));
-    TEST_ASSERT(m2->getAtomWithIdx(1)->getMonomerInfo()->getName() == "Ca");
+    TEST_ASSERT((m2->getAtomWithIdx(0)->getMonomerInfo()))
+    TEST_ASSERT(m2->getAtomWithIdx(0)->getMonomerInfo()->getName() == "m1")
+    TEST_ASSERT((m2->getAtomWithIdx(1)->getMonomerInfo()))
+    TEST_ASSERT(m2->getAtomWithIdx(1)->getMonomerInfo()->getName() == "Ca")
     TEST_ASSERT(static_cast<const AtomPDBResidueInfo *>(
                     m2->getAtomWithIdx(1)->getMonomerInfo())
-                    ->getSerialNumber() == 3);
-    TEST_ASSERT(!(m2->getAtomWithIdx(2)->getMonomerInfo()));
-    TEST_ASSERT(!(m2->getAtomWithIdx(3)->getMonomerInfo()));
+                    ->getSerialNumber() == 3)
+    TEST_ASSERT(!(m2->getAtomWithIdx(2)->getMonomerInfo()))
+    TEST_ASSERT(!(m2->getAtomWithIdx(3)->getMonomerInfo()))
     delete m2;
   }
   BOOST_LOG(rdInfoLog) << "Finished" << std::endl;
@@ -1119,11 +1119,11 @@ void testNeedsUpdatePropertyCache() {
     RWMol m;
 
     m.addAtom(new Atom(0), true, true);
-    TEST_ASSERT(m.needsUpdatePropertyCache() == true);
+    TEST_ASSERT(m.needsUpdatePropertyCache() == true)
     m.updatePropertyCache();
 
-    TEST_ASSERT(m.getAtomWithIdx(0)->getImplicitValence() == 0);
-    TEST_ASSERT(m.needsUpdatePropertyCache() == false);
+    TEST_ASSERT(m.getAtomWithIdx(0)->getImplicitValence() == 0)
+    TEST_ASSERT(m.needsUpdatePropertyCache() == false)
   }
   {
     RWMol m;
@@ -1136,17 +1136,17 @@ void testNeedsUpdatePropertyCache() {
     }
     m.addAtom(new Atom(6), true, true);
     m.addBond(0, 1, Bond::SINGLE);
-    TEST_ASSERT(m.needsUpdatePropertyCache() == true);
+    TEST_ASSERT(m.needsUpdatePropertyCache() == true)
     m.updatePropertyCache();
-    TEST_ASSERT(m.needsUpdatePropertyCache() == false);
+    TEST_ASSERT(m.needsUpdatePropertyCache() == false)
   }
   {
     RWMol m;
     m.addAtom(new Atom(6), true, true);
     m.getAtomWithIdx(0)->calcExplicitValence(false);
-    TEST_ASSERT(m.getAtomWithIdx(0)->needsUpdatePropertyCache());
+    TEST_ASSERT(m.getAtomWithIdx(0)->needsUpdatePropertyCache())
     m.getAtomWithIdx(0)->setNoImplicit(true);
-    TEST_ASSERT(!m.getAtomWithIdx(0)->needsUpdatePropertyCache());
+    TEST_ASSERT(!m.getAtomWithIdx(0)->needsUpdatePropertyCache())
   }
   BOOST_LOG(rdInfoLog) << "Finished" << std::endl;
 }
@@ -1206,22 +1206,22 @@ void testAtomListLineRoundTrip() {
   RWMol *m =
       MolDataStreamToMol(inStream, line, sanitize, removeHs, strictParsing);
   std::string desc = qhelper(m->getAtomWithIdx(3)->getQuery());
-  TEST_ASSERT(m);
-  TEST_ASSERT(m->getNumAtoms() == 9);
+  TEST_ASSERT(m)
+  TEST_ASSERT(m->getNumAtoms() == 9)
 
   std::string molblock = MolToMolBlock(*m);
-  TEST_ASSERT(molblock.find(" ALS ") != std::string::npos);
+  TEST_ASSERT(molblock.find(" ALS ") != std::string::npos)
   std::istringstream inStream2(molblock);
   RWMol *m2 =
       MolDataStreamToMol(inStream2, line, sanitize, removeHs, strictParsing);
-  TEST_ASSERT(m2);
-  TEST_ASSERT(desc == qhelper(m2->getAtomWithIdx(3)->getQuery()));
+  TEST_ASSERT(m2)
+  TEST_ASSERT(desc == qhelper(m2->getAtomWithIdx(3)->getQuery()))
   Atom *cl(new Atom(17));
   Atom *o(new Atom(8));
-  TEST_ASSERT(dynamic_cast<QueryAtom *>(m->getAtomWithIdx(3))->Match(cl));
-  TEST_ASSERT(dynamic_cast<QueryAtom *>(m->getAtomWithIdx(3))->Match(o));
-  TEST_ASSERT(dynamic_cast<QueryAtom *>(m2->getAtomWithIdx(3))->Match(cl));
-  TEST_ASSERT(dynamic_cast<QueryAtom *>(m2->getAtomWithIdx(3))->Match(o));
+  TEST_ASSERT(dynamic_cast<QueryAtom *>(m->getAtomWithIdx(3))->Match(cl))
+  TEST_ASSERT(dynamic_cast<QueryAtom *>(m->getAtomWithIdx(3))->Match(o))
+  TEST_ASSERT(dynamic_cast<QueryAtom *>(m2->getAtomWithIdx(3))->Match(cl))
+  TEST_ASSERT(dynamic_cast<QueryAtom *>(m2->getAtomWithIdx(3))->Match(o))
   delete cl;
   delete o;
   delete m;
@@ -1272,11 +1272,11 @@ M  END
 
   for (const auto &molblock : molblocks) {
     RWMOL_SPTR m(MolBlockToMol(molblock, sanitize, removeHs, strictParsing));
-    TEST_ASSERT(m->getNumAtoms() == 4);
+    TEST_ASSERT(m->getNumAtoms() == 4)
     const Atom *a = m->getAtomWithIdx(3);
-    TEST_ASSERT(a->hasQuery());
+    TEST_ASSERT(a->hasQuery())
     const QueryAtom *qa = dynamic_cast<const QueryAtom *>(a);
-    TEST_ASSERT(qa);
+    TEST_ASSERT(qa)
     TEST_ASSERT(describeQuery(a) == R"MOL(AtomAnd
   AtomAnd
     AtomOr
@@ -1284,8 +1284,8 @@ M  END
       AtomAtomicNum 16 = val
     AtomFormalCharge -1 = val
   AtomExplicitDegree 1 = val
-)MOL");
-    TEST_ASSERT(SmartsWrite::GetAtomSmarts(qa) == "[#8,#16;-;D1:2]");
+)MOL")
+    TEST_ASSERT(SmartsWrite::GetAtomSmarts(qa) == "[#8,#16-;D1:2]");
   }
 }
 
@@ -1294,13 +1294,13 @@ void testReplaceChargedAtomWithQueryAtom() {
   BOOST_LOG(rdInfoLog) << "Test replaceAtomWithQueryAtom on a charged atom"
                        << std::endl;
   auto mol = "[NH3+]C"_smiles;
-  TEST_ASSERT(mol.get());
+  TEST_ASSERT(mol.get())
   auto a = mol->getAtomWithIdx(0);
-  TEST_ASSERT(a);
+  TEST_ASSERT(a)
   const QueryAtom *qa = dynamic_cast<const QueryAtom *>(
       QueryOps::replaceAtomWithQueryAtom(mol.get(), a));
-  TEST_ASSERT(qa);
-  TEST_ASSERT(SmartsWrite::GetAtomSmarts(qa) == "[#7&+]");
+  TEST_ASSERT(qa)
+  TEST_ASSERT(SmartsWrite::GetAtomSmarts(qa) == "[#7&+]")
 }
 
 void testGithub608() {
@@ -1310,21 +1310,21 @@ void testGithub608() {
 
   {
     RWMol *m = SmilesToMol("N1NN1");
-    TEST_ASSERT(m);
-    TEST_ASSERT(m->getNumAtoms() == 3);
+    TEST_ASSERT(m)
+    TEST_ASSERT(m->getNumAtoms() == 3)
     RWMol *f = SmilesToMol("C/C=C/C");
-    TEST_ASSERT(f);
-    TEST_ASSERT(f->getNumAtoms() == 4);
-    TEST_ASSERT(f->getBondBetweenAtoms(1, 2)->getStereoAtoms().size() == 2);
-    TEST_ASSERT(f->getBondBetweenAtoms(1, 2)->getStereoAtoms()[0] == 0);
-    TEST_ASSERT(f->getBondBetweenAtoms(1, 2)->getStereoAtoms()[1] == 3);
+    TEST_ASSERT(f)
+    TEST_ASSERT(f->getNumAtoms() == 4)
+    TEST_ASSERT(f->getBondBetweenAtoms(1, 2)->getStereoAtoms().size() == 2)
+    TEST_ASSERT(f->getBondBetweenAtoms(1, 2)->getStereoAtoms()[0] == 0)
+    TEST_ASSERT(f->getBondBetweenAtoms(1, 2)->getStereoAtoms()[1] == 3)
 
     m->insertMol(*f);
-    TEST_ASSERT(m->getNumAtoms() == 7);
-    TEST_ASSERT(m->getBondBetweenAtoms(4, 5)->getBondType() == Bond::DOUBLE);
-    TEST_ASSERT(m->getBondBetweenAtoms(4, 5)->getStereoAtoms().size() == 2);
-    TEST_ASSERT(m->getBondBetweenAtoms(4, 5)->getStereoAtoms()[0] == 3);
-    TEST_ASSERT(m->getBondBetweenAtoms(4, 5)->getStereoAtoms()[1] == 6);
+    TEST_ASSERT(m->getNumAtoms() == 7)
+    TEST_ASSERT(m->getBondBetweenAtoms(4, 5)->getBondType() == Bond::DOUBLE)
+    TEST_ASSERT(m->getBondBetweenAtoms(4, 5)->getStereoAtoms().size() == 2)
+    TEST_ASSERT(m->getBondBetweenAtoms(4, 5)->getStereoAtoms()[0] == 3)
+    TEST_ASSERT(m->getBondBetweenAtoms(4, 5)->getStereoAtoms()[1] == 6)
 
     delete m;
     delete f;
@@ -1333,19 +1333,19 @@ void testGithub608() {
   {
     INT_VECT nAtoms;
     RWMol *m = SmilesToMol("N1NN1");
-    TEST_ASSERT(m);
-    TEST_ASSERT(m->getNumAtoms() == 3);
+    TEST_ASSERT(m)
+    TEST_ASSERT(m->getNumAtoms() == 3)
     RWMol *f = SmilesToMol("C[C@]1(F)CC[C@](Cl)(Br)CC1");
-    TEST_ASSERT(f);
-    TEST_ASSERT(f->getNumAtoms() == 10);
+    TEST_ASSERT(f)
+    TEST_ASSERT(f->getNumAtoms() == 10)
     TEST_ASSERT(f->getAtomWithIdx(1)->getPropIfPresent(
-        common_properties::_ringStereoAtoms, nAtoms));
-    TEST_ASSERT(std::find(nAtoms.begin(), nAtoms.end(), 6) != nAtoms.end());
+        common_properties::_ringStereoAtoms, nAtoms))
+    TEST_ASSERT(std::find(nAtoms.begin(), nAtoms.end(), 6) != nAtoms.end())
     m->insertMol(*f);
-    TEST_ASSERT(m->getNumAtoms() == 13);
+    TEST_ASSERT(m->getNumAtoms() == 13)
     TEST_ASSERT(m->getAtomWithIdx(4)->getPropIfPresent(
-        common_properties::_ringStereoAtoms, nAtoms));
-    TEST_ASSERT(std::find(nAtoms.begin(), nAtoms.end(), 9) != nAtoms.end());
+        common_properties::_ringStereoAtoms, nAtoms))
+    TEST_ASSERT(std::find(nAtoms.begin(), nAtoms.end(), 9) != nAtoms.end())
 
     delete m;
     delete f;
@@ -1363,10 +1363,10 @@ namespace {
 void runblock(std::vector<const PeriodicTable *> *pts, int idx) {
   const PeriodicTable *pt = PeriodicTable::getTable();
   (*pts)[idx] = pt;
-  TEST_ASSERT(pt->getAtomicNumber("C") == 6);
-  TEST_ASSERT(pt->getAtomicNumber("N") == 7);
-  TEST_ASSERT(pt->getAtomicNumber("O") == 8);
-};
+  TEST_ASSERT(pt->getAtomicNumber("C") == 6)
+  TEST_ASSERT(pt->getAtomicNumber("N") == 7)
+  TEST_ASSERT(pt->getAtomicNumber("O") == 8)
+}
 }  // namespace
 void testGithub381() {
   BOOST_LOG(rdErrorLog) << "-------------------------------------" << std::endl;
@@ -1385,9 +1385,9 @@ void testGithub381() {
   for (auto &fut : tg) {
     fut.get();
   }
-  TEST_ASSERT(pts[0] != nullptr);
+  TEST_ASSERT(pts[0] != nullptr)
   for (unsigned int i = 1; i < count; ++i) {
-    TEST_ASSERT(pts[i] == pts[0]);
+    TEST_ASSERT(pts[i] == pts[0])
   }
 #endif
 
@@ -1410,7 +1410,7 @@ void testGithub1041() {
     } catch (const Invar::Invariant &) {
       ok = true;
     }
-    TEST_ASSERT(ok);
+    TEST_ASSERT(ok)
   }
   {
     Bond b;
@@ -1420,7 +1420,7 @@ void testGithub1041() {
     } catch (const Invar::Invariant &) {
       ok = true;
     }
-    TEST_ASSERT(ok);
+    TEST_ASSERT(ok)
   }
   BOOST_LOG(rdErrorLog) << "  done" << std::endl;
 }
@@ -1436,11 +1436,11 @@ void testGithub1453() {
   m2.addAtom(new Atom(6), true, true);
   m2.addAtom(new Atom(6), true, true);
   m2.addBond(0, 1, Bond::TRIPLE);
-  TEST_ASSERT(m2.getNumAtoms() == 2);
-  TEST_ASSERT(m2.getNumBonds() == 1);
+  TEST_ASSERT(m2.getNumAtoms() == 2)
+  TEST_ASSERT(m2.getNumBonds() == 1)
   m2.clear();
-  TEST_ASSERT(m2.getNumAtoms() == 0);
-  TEST_ASSERT(m2.getNumBonds() == 0);
+  TEST_ASSERT(m2.getNumAtoms() == 0)
+  TEST_ASSERT(m2.getNumBonds() == 0)
 
   BOOST_LOG(rdErrorLog) << "  done" << std::endl;
 }
@@ -1449,46 +1449,46 @@ void testRanges() {
   BOOST_LOG(rdErrorLog) << "-------------------------------------" << std::endl;
   BOOST_LOG(rdErrorLog) << "    Test range-based for loops." << std::endl;
   RWMol *m = SmilesToMol("C1CC1");
-  TEST_ASSERT(m);
-  TEST_ASSERT(m->getNumAtoms() == 3);
+  TEST_ASSERT(m)
+  TEST_ASSERT(m->getNumAtoms() == 3)
 
   // For by value (ok since the atoms are pointers)
   unsigned int i = 0;
   for (auto atom : m->atoms()) {
-    TEST_ASSERT(atom->getIdx() == i);
+    TEST_ASSERT(atom->getIdx() == i)
     i++;
   }
 
   // try refs
   i = 0;
   for (auto &atom : m->atoms()) {
-    TEST_ASSERT(atom->getIdx() == i);
+    TEST_ASSERT(atom->getIdx() == i)
     i++;
   }
 
   // try const refs
   i = 0;
   for (auto const &atom : m->atoms()) {
-    TEST_ASSERT(atom->getIdx() == i);
+    TEST_ASSERT(atom->getIdx() == i)
     i++;
   }
 
   const RWMol *cm = m;
   i = 0;
   for (auto atom : cm->atoms()) {
-    TEST_ASSERT(atom->getIdx() == i);
+    TEST_ASSERT(atom->getIdx() == i)
     i++;
   }
 
   i = 0;
   for (auto bond : m->bonds()) {
-    TEST_ASSERT(bond->getIdx() == i);
+    TEST_ASSERT(bond->getIdx() == i)
     i++;
   }
 
   i = 0;
   for (auto bond : cm->bonds()) {
-    TEST_ASSERT(bond->getIdx() == i);
+    TEST_ASSERT(bond->getIdx() == i)
     i++;
   }
 
@@ -1497,40 +1497,40 @@ void testRanges() {
   for (const auto &nbri :
        boost::make_iterator_range(m->getAtomNeighbors(atom))) {
     const auto &nbr = (*m)[nbri];
-    TEST_ASSERT(nbr->getAtomicNum() == 6);
+    TEST_ASSERT(nbr->getAtomicNum() == 6)
     i++;
   }
-  TEST_ASSERT(i == 2);
+  TEST_ASSERT(i == 2)
 
   i = 0;
   for (const auto &nbri : boost::make_iterator_range(m->getAtomBonds(atom))) {
     const auto &bnd = (*m)[nbri];
-    TEST_ASSERT(bnd->getBondType() == Bond::SINGLE);
+    TEST_ASSERT(bnd->getBondType() == Bond::SINGLE)
     i++;
   }
-  TEST_ASSERT(i == 2);
+  TEST_ASSERT(i == 2)
 
   // non-const versions of the same things
   i = 0;
   for (const auto &nbri :
        boost::make_iterator_range(m->getAtomNeighbors(atom))) {
     auto nbr = (*m)[nbri];
-    TEST_ASSERT(nbr->getAtomicNum() == 6);
+    TEST_ASSERT(nbr->getAtomicNum() == 6)
     nbr->setAtomicNum(7);
     nbr->setAtomicNum(6);
     i++;
   }
-  TEST_ASSERT(i == 2);
+  TEST_ASSERT(i == 2)
 
   i = 0;
   for (const auto &nbri : boost::make_iterator_range(m->getAtomBonds(atom))) {
     auto bnd = (*m)[nbri];
-    TEST_ASSERT(bnd->getBondType() == Bond::SINGLE);
+    TEST_ASSERT(bnd->getBondType() == Bond::SINGLE)
     bnd->setBondType(Bond::DOUBLE);
     bnd->setBondType(Bond::SINGLE);
     i++;
   }
-  TEST_ASSERT(i == 2);
+  TEST_ASSERT(i == 2)
 
   delete m;
 
@@ -1550,12 +1550,12 @@ void testGithub1642() {
     m2.addAtom(carbon);
   }
 
-  TEST_ASSERT(m2.getNumAtoms() == big_num_atoms);
+  TEST_ASSERT(m2.getNumAtoms() == big_num_atoms)
 
   for (int i = big_num_atoms; i > 0; --i) {
     m2.removeAtom(i - 1);
   }
-  TEST_ASSERT(m2.getNumAtoms() == 0);
+  TEST_ASSERT(m2.getNumAtoms() == 0)
 
   delete carbon;
   BOOST_LOG(rdErrorLog) << "Finished" << std::endl;

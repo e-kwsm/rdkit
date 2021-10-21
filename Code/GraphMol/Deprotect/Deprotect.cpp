@@ -184,7 +184,7 @@ bool deprotectInPlace(RWMol &mol,
   mol.setProp("DEPROTECTIONS", deprotections_used);
   mol.setProp<int>("DEPROTECTION_COUNT", deprotections_used.size());
   return modified;
-};
+}
 
 }  // namespace Deprotect
 }  // namespace RDKit

@@ -318,7 +318,7 @@ ROMOL_SPTR RCore::replaceCoreAtomsWithMolMatches(
         // matched in the query
         CHECK_INVARIANT(bond->getBeginAtom()->getAtomicNum() == 0 ||
                             bond->getEndAtom()->getAtomicNum() == 0,
-                        "Failed to find core bond in molecule");
+                        "Failed to find core bond in molecule")
       } else {
         Bond newBond(molBond->getBondType());
         newBond.setIsAromatic(molBond->getIsAromatic());
@@ -697,7 +697,7 @@ std::vector<MatchVectType> RCore::matchTerminalUserRGroups(
   // duplicate bonds
   for (const auto &dummyMapping : allAvailableMappings) {
     CHECK_INVARIANT(match.size() + dummyMapping.size() == size,
-                    "Size error in dummy mapping");
+                    "Size error in dummy mapping")
     auto duplicateBonds = false;
     targetBondsPresent.reset();
     for (size_t i = 0; i < dummyMapping.size(); i++) {
@@ -772,7 +772,7 @@ bool RCore::checkAllBondsToAttachmentPointPresent(
 
   CHECK_INVARIANT(
       coreNeighbors.size() >= 1,
-      "Unable to find target atom(s) matching core for attachment point");
+      "Unable to find target atom(s) matching core for attachment point")
   if (coreNeighbors.size() == 1) {
     // currently this routine is only called when we know the attachment to
     // one core atom exists.
@@ -813,7 +813,7 @@ bool RCore::checkAllBondsToAttachmentPointPresent(
 int RCore::matchingIndexToCoreIndex(int matchingIndex) const {
   auto atom = matchingMol->getAtomWithIdx(matchingIndex);
   CHECK_INVARIANT(atom->hasProp(RLABEL_CORE_INDEX),
-                  "Matched atom missing core index");
+                  "Matched atom missing core index")
   return atom->getProp<int>(RLABEL_CORE_INDEX);
 }
 }  // namespace RDKit

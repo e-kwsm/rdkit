@@ -119,4 +119,4 @@ RDGeom::Transform2D operator*(const RDGeom::Transform2D &t1,
   RDGeom::Transform2D res;
   RDNumeric::multiply(t1, t2, res);
   return res;
-};
+}

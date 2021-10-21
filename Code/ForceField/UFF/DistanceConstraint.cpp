@@ -20,10 +20,10 @@ namespace UFF {
 DistanceConstraintContrib::DistanceConstraintContrib(
     ForceField *owner, unsigned int idx1, unsigned int idx2, double minLen,
     double maxLen, double forceConst) {
-  PRECONDITION(owner, "bad owner");
-  URANGE_CHECK(idx1, owner->positions().size());
-  URANGE_CHECK(idx2, owner->positions().size());
-  PRECONDITION(maxLen >= minLen, "bad bounds");
+  PRECONDITION(owner, "bad owner")
+  URANGE_CHECK(idx1, owner->positions().size())
+  URANGE_CHECK(idx2, owner->positions().size())
+  PRECONDITION(maxLen >= minLen, "bad bounds")
 
   dp_forceField = owner;
   d_end1Idx = idx1;
@@ -36,11 +36,11 @@ DistanceConstraintContrib::DistanceConstraintContrib(
 DistanceConstraintContrib::DistanceConstraintContrib(
     ForceField *owner, unsigned int idx1, unsigned int idx2, bool relative,
     double minLen, double maxLen, double forceConst) {
-  PRECONDITION(owner, "bad owner");
+  PRECONDITION(owner, "bad owner")
   const RDGeom::PointPtrVect &pos = owner->positions();
-  URANGE_CHECK(idx1, pos.size());
-  URANGE_CHECK(idx2, pos.size());
-  PRECONDITION(maxLen >= minLen, "bad bounds");
+  URANGE_CHECK(idx1, pos.size())
+  URANGE_CHECK(idx2, pos.size())
+  PRECONDITION(maxLen >= minLen, "bad bounds")
 
   double dist = 0.0;
   if (relative) {
@@ -57,8 +57,8 @@ DistanceConstraintContrib::DistanceConstraintContrib(
 }
 
 double DistanceConstraintContrib::getEnergy(double *pos) const {
-  PRECONDITION(dp_forceField, "no owner");
-  PRECONDITION(pos, "bad vector");
+  PRECONDITION(dp_forceField, "no owner")
+  PRECONDITION(pos, "bad vector")
 
   double dist = dp_forceField->distance(d_end1Idx, d_end2Idx, pos);
   double distTerm = 0.0;
@@ -73,9 +73,9 @@ double DistanceConstraintContrib::getEnergy(double *pos) const {
 }
 
 void DistanceConstraintContrib::getGrad(double *pos, double *grad) const {
-  PRECONDITION(dp_forceField, "no owner");
-  PRECONDITION(pos, "bad vector");
-  PRECONDITION(grad, "bad vector");
+  PRECONDITION(dp_forceField, "no owner")
+  PRECONDITION(pos, "bad vector")
+  PRECONDITION(grad, "bad vector")
 
   double dist = dp_forceField->distance(d_end1Idx, d_end2Idx, pos);
 

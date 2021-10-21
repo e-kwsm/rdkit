@@ -882,7 +882,7 @@ TEST_CASE("Github #5169: Standardization via RDKit breaks molecules",
       MolStandardize::Uncharger uncharger;
       std::unique_ptr<ROMol> outm(uncharger.uncharge(*m));
       REQUIRE(outm);
-      INFO("failing for smiles " << smi);
+      INFO("failing for smiles " << smi)
       CHECK(outm->getAtomWithIdx(1)->getFormalCharge() == 1);
     }
   }
@@ -901,7 +901,7 @@ TEST_CASE("asymmetric imine tautomer generation", "[tautomers]") {
     };
     // clang-format on
     for (const auto &pr : data) {
-      INFO(pr.first);
+      INFO(pr.first)
       std::unique_ptr<RWMol> m(SmilesToMol(pr.first));
       auto res = tenum.enumerate(*m);
       CHECK(res.size() == pr.second);

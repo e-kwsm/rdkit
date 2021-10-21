@@ -62,7 +62,7 @@ using namespace RDKit;
 //  starts at the same point
 void pickleTest(EnumerationStrategyBase &en, size_t len) {
   boost::shared_ptr<EnumerationStrategyBase> base(en.copy());
-  TEST_ASSERT(std::string(base->type()) == std::string(en.type()));
+  TEST_ASSERT(std::string(base->type()) == std::string(en.type()))
 
   for (size_t i = 0; i < len; ++i) {
     std::stringstream ss;
@@ -75,9 +75,9 @@ void pickleTest(EnumerationStrategyBase &en, size_t len) {
       boost::archive::text_iarchive ar(ss);
       ar &copy;
     }
-    TEST_ASSERT(std::string(base->type()) == std::string(copy->type()));
-    TEST_ASSERT(base->next() == copy->next());
-    TEST_ASSERT(base->getPosition() == en.next());
+    TEST_ASSERT(std::string(base->type()) == std::string(copy->type()))
+    TEST_ASSERT(base->next() == copy->next())
+    TEST_ASSERT(base->getPosition() == en.next())
   }
 }
 #endif
@@ -114,7 +114,7 @@ void testSamplers() {
   enumerators.emplace_back(even.copy());
 #ifdef RDK_USE_BOOST_SERIALIZATION
   for (auto &enumerator : enumerators) {
-    TEST_ASSERT(enumerator->getNumPermutations() == 10 * 5 * 6);
+    TEST_ASSERT(enumerator->getNumPermutations() == 10 * 5 * 6)
     pickleTest(*enumerator, 10 * 5 * 6);
   }
 #endif
@@ -150,7 +150,7 @@ void testEvenSamplers() {
   EvenSamplePairsStrategy even;
   even.initialize(rxn, bbs);
   std::cout << even.getNumPermutations() << " " << R1 * R2 * R3 << std::endl;
-  TEST_ASSERT(even.getNumPermutations() == R1 * R2 * R3);
+  TEST_ASSERT(even.getNumPermutations() == R1 * R2 * R3)
 
   for (size_t i = 0; i < 5000; ++i) {
     even.next();
@@ -184,23 +184,23 @@ void testEnumerations() {
     size_t i = 0;
     for (; (bool)en; ++i) {
       std::vector<std::vector<std::string>> res = en.nextSmiles();
-      TEST_ASSERT(res.size() == 1);
-      TEST_ASSERT(res[0].size() == 1);
-      TEST_ASSERT(res[0][0] == smiresults[i]);
-      TEST_ASSERT(i <= 6);
+      TEST_ASSERT(res.size() == 1)
+      TEST_ASSERT(res[0].size() == 1)
+      TEST_ASSERT(res[0][0] == smiresults[i])
+      TEST_ASSERT(i <= 6)
     }
-    TEST_ASSERT(i == 6);
+    TEST_ASSERT(i == 6)
     // tests reset
     en.resetState();
     i = 0;
     for (; (bool)en; ++i) {
       std::vector<std::vector<std::string>> res = en.nextSmiles();
-      TEST_ASSERT(res.size() == 1);
-      TEST_ASSERT(res[0].size() == 1);
-      TEST_ASSERT(res[0][0] == smiresults[i]);
-      TEST_ASSERT(i <= 6);
+      TEST_ASSERT(res.size() == 1)
+      TEST_ASSERT(res[0].size() == 1)
+      TEST_ASSERT(res[0][0] == smiresults[i])
+      TEST_ASSERT(i <= 6)
     }
-    TEST_ASSERT(i == 6);
+    TEST_ASSERT(i == 6)
   }
 
 #ifdef RDK_USE_BOOST_SERIALIZATION
@@ -230,12 +230,12 @@ void testEnumerations() {
       }
 
       for (size_t j = 0; j < 10; ++j) {
-        TEST_ASSERT(en->nextSmiles() == copy->nextSmiles());
+        TEST_ASSERT(en->nextSmiles() == copy->nextSmiles())
       }
 
       copy->resetState();
       for (size_t j = 0; j < 10; ++j) {
-        TEST_ASSERT(smir[j] == copy->nextSmiles());
+        TEST_ASSERT(smir[j] == copy->nextSmiles())
       }
     }
   }
@@ -323,9 +323,9 @@ void testInsaneEnumerations() {
     ThereCanBeOnlyOne.reagentMaxMatchCount = 1;
     EnumerationTypes::BBS bbs2 =
         removeNonmatchingReagents(*rxn, bbs, ThereCanBeOnlyOne);
-    TEST_ASSERT(bbs2[0].size() == 1);
-    TEST_ASSERT(bbs2[1].size() == 1);
-    TEST_ASSERT(bbs2[2].size() == 1);
+    TEST_ASSERT(bbs2[0].size() == 1)
+    TEST_ASSERT(bbs2[1].size() == 1)
+    TEST_ASSERT(bbs2[2].size() == 1)
 
     delete rxn;
   }
@@ -369,7 +369,7 @@ void testGithub1657() {
     } catch (const ValueErrorException &) {
       ok = true;
     }
-    TEST_ASSERT(ok);
+    TEST_ASSERT(ok)
   }
   delete rxn;
   BOOST_LOG(rdInfoLog) << "\tdone" << std::endl;

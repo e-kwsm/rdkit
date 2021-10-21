@@ -135,7 +135,7 @@ class RDKIT_GRAPHMOL_EXPORT Atom : public RDProps {
 
   //! returns a reference to the ROMol that owns this instance
   ROMol &getOwningMol() const {
-    PRECONDITION(dp_mol, "no owner");
+    PRECONDITION(dp_mol, "no owner")
     return *dp_mol;
   }
 
@@ -376,7 +376,7 @@ class RDKIT_GRAPHMOL_EXPORT Atom : public RDProps {
   void setAtomMapNum(int mapno, bool strict = true) {
     PRECONDITION(
         !strict || (mapno >= 0 && mapno < 1000),
-        "atom map number out of range [0..1000], use strict=false to override");
+        "atom map number out of range [0..1000], use strict=false to override")
     if (mapno) {
       setProp(common_properties::molAtomMapNumber, mapno);
     } else if (hasProp(common_properties::molAtomMapNumber)) {
@@ -440,7 +440,7 @@ RDKIT_GRAPHMOL_EXPORT std::string getAtomValue(const Atom *atom);
 RDKIT_GRAPHMOL_EXPORT void setSupplementalSmilesLabel(Atom *atom,
                                                       const std::string &label);
 RDKIT_GRAPHMOL_EXPORT std::string getSupplementalSmilesLabel(const Atom *atom);
-};  // namespace RDKit
+}  // namespace RDKit
 //! allows Atom objects to be dumped to streams
 RDKIT_GRAPHMOL_EXPORT std::ostream &operator<<(std::ostream &target,
                                                const RDKit::Atom &at);

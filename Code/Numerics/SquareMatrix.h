@@ -39,7 +39,7 @@ class SquareMatrix : public Matrix<TYPE> {
   //! In place matrix multiplication
   virtual SquareMatrix<TYPE> &operator*=(const SquareMatrix<TYPE> &B) {
     CHECK_INVARIANT(this->d_nCols == B.numRows(),
-                    "Size mismatch during multiplication");
+                    "Size mismatch during multiplication")
 
     const TYPE *bData = B.getData();
     TYPE *newData = new TYPE[this->d_dataSize];

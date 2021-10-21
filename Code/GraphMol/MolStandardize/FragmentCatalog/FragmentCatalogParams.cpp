@@ -35,7 +35,7 @@ FragmentCatalogParams::FragmentCatalogParams(
     const std::vector<std::pair<std::string, std::string>> &data) {
   d_funcGroups.clear();
   d_funcGroups = readFuncGroups(data);
-};
+}
 
 FragmentCatalogParams::FragmentCatalogParams(
     const FragmentCatalogParams &other) {
@@ -57,7 +57,7 @@ const std::vector<std::shared_ptr<ROMol>>
 }
 
 const ROMol *FragmentCatalogParams::getFuncGroup(unsigned int fid) const {
-  URANGE_CHECK(fid, d_funcGroups.size());
+  URANGE_CHECK(fid, d_funcGroups.size())
   return d_funcGroups[fid].get();
 }
 
@@ -81,11 +81,11 @@ std::string FragmentCatalogParams::Serialize() const {
 }
 
 void FragmentCatalogParams::initFromStream(std::istream &) {
-  UNDER_CONSTRUCTION("not implemented");
+  UNDER_CONSTRUCTION("not implemented")
 }
 
 void FragmentCatalogParams::initFromString(const std::string &) {
-  UNDER_CONSTRUCTION("not implemented");
+  UNDER_CONSTRUCTION("not implemented")
 }
 
 }  // namespace MolStandardize

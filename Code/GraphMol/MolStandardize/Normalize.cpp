@@ -150,10 +150,10 @@ void Normalizer::normalizeInPlace(RWMol &mol) {
 
 ROMol *Normalizer::normalize(const ROMol &mol) {
   BOOST_LOG(rdInfoLog) << "Running Normalizer\n";
-  PRECONDITION(this->d_tcat, "");
+  PRECONDITION(this->d_tcat, "")
   const TransformCatalogParams *tparams = this->d_tcat->getCatalogParams();
 
-  PRECONDITION(tparams, "");
+  PRECONDITION(tparams, "")
   if (!mol.getNumAtoms()) {
     return new ROMol(mol);
   }

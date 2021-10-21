@@ -88,16 +88,16 @@ TorsionAngleContrib::TorsionAngleContrib(
     RDKit::Atom::HybridizationType hyb2, RDKit::Atom::HybridizationType hyb3,
     const AtomicParams *at2Params, const AtomicParams *at3Params,
     bool endAtomIsSP2) {
-  PRECONDITION(owner, "bad owner");
-  PRECONDITION(at2Params, "bad params pointer");
-  PRECONDITION(at3Params, "bad params pointer");
+  PRECONDITION(owner, "bad owner")
+  PRECONDITION(at2Params, "bad params pointer")
+  PRECONDITION(at3Params, "bad params pointer")
   PRECONDITION((idx1 != idx2 && idx1 != idx3 && idx1 != idx4 && idx2 != idx3 &&
                 idx2 != idx4 && idx3 != idx4),
-               "degenerate points");
-  URANGE_CHECK(idx1, owner->positions().size());
-  URANGE_CHECK(idx2, owner->positions().size());
-  URANGE_CHECK(idx3, owner->positions().size());
-  URANGE_CHECK(idx4, owner->positions().size());
+               "degenerate points")
+  URANGE_CHECK(idx1, owner->positions().size())
+  URANGE_CHECK(idx2, owner->positions().size())
+  URANGE_CHECK(idx3, owner->positions().size())
+  URANGE_CHECK(idx4, owner->positions().size())
 
   dp_forceField = owner;
   d_at1Idx = idx1;
@@ -118,7 +118,7 @@ void TorsionAngleContrib::calcTorsionParams(double bondOrder23, int atNum2,
                                             bool endAtomIsSP2) {
   PRECONDITION((hyb2 == RDKit::Atom::SP2 || hyb2 == RDKit::Atom::SP3) &&
                    (hyb3 == RDKit::Atom::SP2 || hyb3 == RDKit::Atom::SP3),
-               "bad hybridizations");
+               "bad hybridizations")
 
   if (hyb2 == RDKit::Atom::SP3 && hyb3 == RDKit::Atom::SP3) {
     // general case:
@@ -172,9 +172,9 @@ void TorsionAngleContrib::calcTorsionParams(double bondOrder23, int atNum2,
   }
 }
 double TorsionAngleContrib::getEnergy(double *pos) const {
-  PRECONDITION(dp_forceField, "no owner");
-  PRECONDITION(pos, "bad vector");
-  PRECONDITION(d_order == 2 || d_order == 3 || d_order == 6, "bad order");
+  PRECONDITION(dp_forceField, "no owner")
+  PRECONDITION(pos, "bad vector")
+  PRECONDITION(d_order == 2 || d_order == 3 || d_order == 6, "bad order")
 
   RDGeom::Point3D p1(pos[3 * d_at1Idx], pos[3 * d_at1Idx + 1],
                      pos[3 * d_at1Idx + 2]);
@@ -215,9 +215,9 @@ double TorsionAngleContrib::getEnergy(double *pos) const {
 }
 
 void TorsionAngleContrib::getGrad(double *pos, double *grad) const {
-  PRECONDITION(dp_forceField, "no owner");
-  PRECONDITION(pos, "bad vector");
-  PRECONDITION(grad, "bad vector");
+  PRECONDITION(dp_forceField, "no owner")
+  PRECONDITION(pos, "bad vector")
+  PRECONDITION(grad, "bad vector")
 
   double *g[4] = {&(grad[3 * d_at1Idx]), &(grad[3 * d_at2Idx]),
                   &(grad[3 * d_at3Idx]), &(grad[3 * d_at4Idx])};
@@ -250,7 +250,7 @@ void TorsionAngleContrib::getGrad(double *pos, double *grad) const {
 
 double TorsionAngleContrib::getThetaDeriv(double cosTheta,
                                           double sinTheta) const {
-  PRECONDITION(d_order == 2 || d_order == 3 || d_order == 6, "bad order");
+  PRECONDITION(d_order == 2 || d_order == 3 || d_order == 6, "bad order")
   double sinThetaSq = sinTheta * sinTheta;
   // cos(6x) = 1 - 32*sin^6(x) + 48*sin^4(x) - 18*sin^2(x)
 

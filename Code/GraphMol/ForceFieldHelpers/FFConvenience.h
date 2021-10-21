@@ -22,10 +22,10 @@ inline void OptimizeMoleculeConfsHelper_(ForceFields::ForceField ff, ROMol *mol,
                                   std::vector<std::pair<int, double>> *res,
                                   unsigned int threadIdx,
                                   unsigned int numThreads, int maxIters) {
-  PRECONDITION(mol, "mol must not be nullptr");
-  PRECONDITION(res, "res must not be nullptr");
+  PRECONDITION(mol, "mol must not be nullptr")
+  PRECONDITION(res, "res must not be nullptr")
   PRECONDITION(res->size() >= mol->getNumConformers(),
-               "res->size() must be >= mol->getNumConformers()");
+               "res->size() must be >= mol->getNumConformers()")
   unsigned int i = 0;
   ff.positions().resize(mol->getNumAtoms());
   for (ROMol::ConformerIterator cit = mol->beginConformers();
@@ -63,7 +63,7 @@ inline void OptimizeMoleculeConfsST(ROMol &mol, ForceFields::ForceField &ff,
                              std::vector<std::pair<int, double>> &res,
                              int maxIters) {
   PRECONDITION(res.size() >= mol.getNumConformers(),
-               "res.size() must be >= mol.getNumConformers()");
+               "res.size() must be >= mol.getNumConformers()")
   unsigned int i = 0;
   for (ROMol::ConformerIterator cit = mol.beginConformers();
        cit != mol.endConformers(); ++cit, ++i) {

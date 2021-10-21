@@ -87,7 +87,7 @@ std::string getAtomChiralityInfo(const Atom *atom) {
 
 std::string GetAtomSmiles(const Atom *atom, bool doKekule, const Bond *,
                           bool allHsExplicit, bool isomericSmiles) {
-  PRECONDITION(atom, "bad atom");
+  PRECONDITION(atom, "bad atom")
   std::string res;
   int fc = atom->getFormalCharge();
   int num = atom->getAtomicNum();
@@ -210,7 +210,7 @@ std::string GetAtomSmiles(const Atom *atom, bool doKekule, const Bond *,
 
 std::string GetBondSmiles(const Bond *bond, int atomToLeftIdx, bool doKekule,
                           bool allBondsExplicit) {
-  PRECONDITION(bond, "bad bond");
+  PRECONDITION(bond, "bad bond")
   if (atomToLeftIdx < 0) {
     atomToLeftIdx = bond->getBeginAtomIdx();
   }
@@ -338,13 +338,13 @@ std::string FragmentSmilesConstruct(
     const std::vector<std::string> *atomSymbols = nullptr,
     const std::vector<std::string> *bondSymbols = nullptr) {
   PRECONDITION(!atomsInPlay || atomsInPlay->size() >= mol.getNumAtoms(),
-               "bad atomsInPlay");
+               "bad atomsInPlay")
   PRECONDITION(!bondsInPlay || bondsInPlay->size() >= mol.getNumBonds(),
-               "bad bondsInPlay");
+               "bad bondsInPlay")
   PRECONDITION(!atomSymbols || atomSymbols->size() >= mol.getNumAtoms(),
-               "bad atomSymbols");
+               "bad atomSymbols")
   PRECONDITION(!bondSymbols || bondSymbols->size() >= mol.getNumBonds(),
-               "bad bondSymbols");
+               "bad bondSymbols")
   if (params.doKekule) {
     if (atomsInPlay && bondsInPlay) {
       MolOps::details::KekulizeFragment(static_cast<RWMol &>(mol), *atomsInPlay,
@@ -470,7 +470,7 @@ std::string MolToSmiles(const ROMol &mol, const SmilesWriteParams &params,
   PRECONDITION(
       params.rootedAtAtom < 0 ||
           static_cast<unsigned int>(params.rootedAtAtom) < mol.getNumAtoms(),
-      "rootedAtomAtom must be less than the number of atoms");
+      "rootedAtomAtom must be less than the number of atoms")
   int rootedAtAtom = params.rootedAtAtom;
   std::vector<std::vector<int>> fragsMolAtomMapping;
   auto mols =
@@ -591,7 +591,7 @@ std::string MolToSmiles(const ROMol &mol, const SmilesWriteParams &params,
         }
       }
     }
-    CHECK_INVARIANT(nextAtomIdx >= 0, "no start atom found");
+    CHECK_INVARIANT(nextAtomIdx >= 0, "no start atom found")
     subSmi = SmilesWrite::FragmentSmilesConstruct(
         *tmol, nextAtomIdx, colors, ranks, params, atomOrdering, bondOrdering);
 
@@ -705,26 +705,26 @@ std::vector<std::string> MolToRandomSmilesVect(
                               doRandom));
   }
   return res;
-};
+}
 std::string MolFragmentToSmiles(const ROMol &mol,
                                 const SmilesWriteParams &params,
                                 const std::vector<int> &atomsToUse,
                                 const std::vector<int> *bondsToUse,
                                 const std::vector<std::string> *atomSymbols,
                                 const std::vector<std::string> *bondSymbols) {
-  PRECONDITION(atomsToUse.size(), "no atoms provided");
+  PRECONDITION(atomsToUse.size(), "no atoms provided")
   PRECONDITION(
       params.rootedAtAtom < 0 ||
           static_cast<unsigned int>(params.rootedAtAtom) < mol.getNumAtoms(),
-      "rootedAtomAtom must be less than the number of atoms");
+      "rootedAtomAtom must be less than the number of atoms")
   PRECONDITION(params.rootedAtAtom < 0 ||
                    std::find(atomsToUse.begin(), atomsToUse.end(),
                              params.rootedAtAtom) != atomsToUse.end(),
-               "rootedAtAtom not found in atomsToUse");
+               "rootedAtAtom not found in atomsToUse")
   PRECONDITION(!atomSymbols || atomSymbols->size() >= mol.getNumAtoms(),
-               "bad atomSymbols vector");
+               "bad atomSymbols vector")
   PRECONDITION(!bondSymbols || bondSymbols->size() >= mol.getNumBonds(),
-               "bad bondSymbols vector");
+               "bad bondSymbols vector")
   if (!mol.getNumAtoms()) {
     return "";
   }
@@ -860,7 +860,7 @@ std::string MolFragmentToSmiles(const ROMol &mol,
         }
       }
     }
-    CHECK_INVARIANT(nextAtomIdx >= 0, "no start atom found");
+    CHECK_INVARIANT(nextAtomIdx >= 0, "no start atom found")
     auto subSmi = SmilesWrite::FragmentSmilesConstruct(
         tmol, nextAtomIdx, colors, ranks, params, atomOrdering, bondOrdering,
         &atomsInPlay, &bondsInPlay, atomSymbols, bondSymbols);

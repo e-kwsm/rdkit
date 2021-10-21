@@ -57,7 +57,7 @@ void calcDistances(const RDGeom::Point3DConstPtrVect &coords,
 
 void calcCentroid(const RDGeom::Point3DConstPtrVect &coords,
                   RDGeom::Point3D &pt) {
-  PRECONDITION(!coords.empty(), "no coordinates");
+  PRECONDITION(!coords.empty(), "no coordinates")
   // set pt to zero
   pt *= 0.0;
   // loop over coordinates
@@ -68,7 +68,7 @@ void calcCentroid(const RDGeom::Point3DConstPtrVect &coords,
 }
 
 unsigned int largestValId(const std::vector<double> &v) {
-  PRECONDITION(!v.empty(), "no values");
+  PRECONDITION(!v.empty(), "no values")
   double res = v[0];
   unsigned int id = 0;
   for (unsigned int i = 1; i < v.size(); ++i) {
@@ -81,7 +81,7 @@ unsigned int largestValId(const std::vector<double> &v) {
 }
 
 unsigned int smallestValId(const std::vector<double> &v) {
-  PRECONDITION(!v.empty(), "no values");
+  PRECONDITION(!v.empty(), "no values")
   double res = v[0];
   unsigned int id = 0;
   for (unsigned int i = 1; i < v.size(); ++i) {
@@ -135,7 +135,7 @@ class ss_matcher {
   ss_matcher(){};
   ss_matcher(const std::string &pattern) {
     RDKit::RWMol *p = RDKit::SmartsToMol(pattern);
-    TEST_ASSERT(p);
+    TEST_ASSERT(p)
     m_matcher.reset(p);
   };
   const RDKit::ROMol *getMatcher() const { return m_matcher.get(); };
@@ -162,7 +162,7 @@ void getAtomIdsForFeatures(const ROMol &mol,
                            std::vector<std::vector<unsigned int>> &atomIds) {
   unsigned int numFeatures = featureSmarts.size();
   PRECONDITION(atomIds.size() == numFeatures,
-               "atomIds must have be the same size as featureSmarts");
+               "atomIds must have be the same size as featureSmarts")
   std::vector<const ROMol *> featureMatchers;
   featureMatchers.reserve(numFeatures);
   for (const auto &feature : featureSmarts) {
@@ -186,7 +186,7 @@ void getAtomIdsForFeatures(const ROMol &mol,
 namespace Descriptors {
 
 void USR(const ROMol &mol, std::vector<double> &descriptor, int confId) {
-  PRECONDITION(descriptor.size() == 12, "descriptor must have 12 elements");
+  PRECONDITION(descriptor.size() == 12, "descriptor must have 12 elements")
   unsigned int na = mol.getNumAtoms();
   // check that number of atoms > 3
   if (na < 3) {
@@ -231,7 +231,7 @@ void USRCAT(const ROMol &mol, std::vector<double> &descriptor,
     getAtomIdsForFeatures(mol, atomIds);
   }
   PRECONDITION(descriptor.size() == 12 * (numClasses + 1),
-               "descriptor wrong size");
+               "descriptor wrong size")
 
   const Conformer &conf = mol.getConformer(confId);
   RDGeom::Point3DConstPtrVect coords(na);
@@ -267,8 +267,8 @@ void USRCAT(const ROMol &mol, std::vector<double> &descriptor,
 void calcUSRDistributions(const RDGeom::Point3DConstPtrVect &coords,
                           std::vector<std::vector<double>> &dist,
                           std::vector<RDGeom::Point3D> &points) {
-  PRECONDITION(dist.size() == 4, "dist must have 4 elements");
-  PRECONDITION(points.size() == 4, "points must have 4 elements");
+  PRECONDITION(dist.size() == 4, "dist must have 4 elements")
+  PRECONDITION(points.size() == 4, "points must have 4 elements")
   // ctd = centroid
   calcCentroid(coords, points[0]);
   calcDistances(coords, points[0], dist[0]);
@@ -287,7 +287,7 @@ void calcUSRDistributionsFromPoints(const RDGeom::Point3DConstPtrVect &coords,
                                     const std::vector<RDGeom::Point3D> &points,
                                     std::vector<std::vector<double>> &dist) {
   PRECONDITION(points.size() == dist.size(),
-               "points and dist must have the same size");
+               "points and dist must have the same size")
   for (unsigned int i = 0; i < points.size(); ++i) {
     calcDistances(coords, points[i], dist[i]);
   }
@@ -296,7 +296,7 @@ void calcUSRDistributionsFromPoints(const RDGeom::Point3DConstPtrVect &coords,
 void calcUSRFromDistributions(const std::vector<std::vector<double>> &dist,
                               std::vector<double> &descriptor) {
   PRECONDITION(descriptor.size() == 3 * dist.size(),
-               "descriptor must have 3 times more elements than dist");
+               "descriptor must have 3 times more elements than dist")
   for (unsigned int i = 0; i < dist.size(); ++i) {
     calcMoments(dist[i], descriptor, 3 * i);
   }
@@ -306,9 +306,9 @@ double calcUSRScore(const std::vector<double> &d1,
                     const std::vector<double> &d2,
                     const std::vector<double> &weights) {
   unsigned int num = 12;  // length of each subset
-  PRECONDITION(d1.size() == d2.size(), "descriptors must have the same size");
+  PRECONDITION(d1.size() == d2.size(), "descriptors must have the same size")
   PRECONDITION(weights.size() == (d1.size() / num),
-               "size of weights not correct");
+               "size of weights not correct")
   double score = 1.0;
   for (unsigned int w = 0; w < (d1.size() / num); ++w) {
     double tmpScore = 0.0;

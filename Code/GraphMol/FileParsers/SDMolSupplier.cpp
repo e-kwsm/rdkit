@@ -39,12 +39,12 @@ SDMolSupplier::SDMolSupplier(const std::string &fileName, bool sanitize,
     // 19):
     d_len = 0;
   }
-  POSTCONDITION(dp_inStream, "bad instream");
+  POSTCONDITION(dp_inStream, "bad instream")
 }
 
 SDMolSupplier::SDMolSupplier(std::istream *inStream, bool takeOwnership,
                              bool sanitize, bool removeHs, bool strictParsing) {
-  PRECONDITION(inStream, "bad stream");
+  PRECONDITION(inStream, "bad stream")
   init();
   dp_inStream = inStream;
   df_owner = takeOwnership;
@@ -58,7 +58,7 @@ SDMolSupplier::SDMolSupplier(std::istream *inStream, bool takeOwnership,
     // 19):
     d_len = 0;
   }
-  POSTCONDITION(dp_inStream, "bad instream");
+  POSTCONDITION(dp_inStream, "bad instream")
 }
 
 void SDMolSupplier::init() {
@@ -87,7 +87,7 @@ void SDMolSupplier::setDataCommon(const std::string &text, bool sanitize,
     // 19):
     d_len = 0;
   }
-  POSTCONDITION(dp_inStream, "bad instream");
+  POSTCONDITION(dp_inStream, "bad instream")
 }
 
 void SDMolSupplier::setData(const std::string &text, bool sanitize,
@@ -103,7 +103,7 @@ void SDMolSupplier::setData(const std::string &text, bool sanitize,
 }
 
 void SDMolSupplier::checkForEnd() {
-  PRECONDITION(dp_inStream, "no stream");
+  PRECONDITION(dp_inStream, "no stream")
   // we will call it end of file if we have more than 4 contiguous empty lines
   // or we reach end of file in the meantime
   if (dp_inStream->eof()) {
@@ -132,7 +132,7 @@ void SDMolSupplier::checkForEnd() {
 }
 
 void SDMolSupplier::reset() {
-  PRECONDITION(dp_inStream, "no stream");
+  PRECONDITION(dp_inStream, "no stream")
   dp_inStream->clear();
   dp_inStream->seekg(0, std::ios::beg);
   df_end = false;
@@ -141,7 +141,7 @@ void SDMolSupplier::reset() {
 }
 
 ROMol *SDMolSupplier::next() {
-  PRECONDITION(dp_inStream, "no stream");
+  PRECONDITION(dp_inStream, "no stream")
   if (df_end && d_last >= d_len) {
     throw FileParseException("EOF hit.");
   }
@@ -172,7 +172,7 @@ ROMol *SDMolSupplier::next() {
 }
 
 std::string SDMolSupplier::getItemText(unsigned int idx) {
-  PRECONDITION(dp_inStream, "no stream");
+  PRECONDITION(dp_inStream, "no stream")
   unsigned int holder = d_last;
   moveTo(idx);
   std::streampos begP = d_molpos[idx];
@@ -195,7 +195,7 @@ std::string SDMolSupplier::getItemText(unsigned int idx) {
 }
 
 void SDMolSupplier::moveTo(unsigned int idx) {
-  PRECONDITION(dp_inStream, "no stream");
+  PRECONDITION(dp_inStream, "no stream")
 
   // dp_inStream->seekg() is called for all idx values
   // and earlier calls to next() may have put the stream into a bad state
@@ -235,14 +235,14 @@ void SDMolSupplier::moveTo(unsigned int idx) {
 }
 
 ROMol *SDMolSupplier::operator[](unsigned int idx) {
-  PRECONDITION(dp_inStream, "no stream");
+  PRECONDITION(dp_inStream, "no stream")
   // get the molecule with index idx
   moveTo(idx);
   return next();
 }
 
 unsigned int SDMolSupplier::length() {
-  PRECONDITION(dp_inStream, "no stream");
+  PRECONDITION(dp_inStream, "no stream")
   // return the number of mol blocks in the sdfile
   if (d_len > 0 || (df_end && d_len == 0)) {
     return d_len;
@@ -272,7 +272,7 @@ unsigned int SDMolSupplier::length() {
 }
 
 bool SDMolSupplier::atEnd() {
-  PRECONDITION(dp_inStream, "no stream");
+  PRECONDITION(dp_inStream, "no stream")
   return df_end;
 }
 

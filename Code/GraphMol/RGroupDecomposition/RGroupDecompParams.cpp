@@ -177,7 +177,7 @@ bool RGroupDecompositionParameters::prepareCore(RWMol &core,
         bool target_matched1 = SubstructMatch(core, *m, match1);
         bool target_matched2 = SubstructMatch(*alignCore, *m, match2);
         CHECK_INVARIANT(match1.size() == match2.size(),
-                        "Matches should be the same size in prepareCore");
+                        "Matches should be the same size in prepareCore")
 
         if (target_matched1 && target_matched2) {
           for (size_t i = 0; i < match1.size(); ++i) {
@@ -186,7 +186,7 @@ bool RGroupDecompositionParameters::prepareCore(RWMol &core,
             int queryAtomIdx2 = match2[i].first;
             int alignCoreAtomIdx = match2[i].second;
             CHECK_INVARIANT(queryAtomIdx1 == queryAtomIdx2,
-                            "query atoms aren't the same");
+                            "query atoms aren't the same")
             Atom *coreAtm = core.getAtomWithIdx(coreAtomIdx);
             const Atom *alignCoreAtm =
                 alignCore->getAtomWithIdx(alignCoreAtomIdx);

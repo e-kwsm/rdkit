@@ -27,8 +27,8 @@
 namespace RDKit {
 void ParseTPLAtomLine(std::string text, unsigned int lineNum, RWMol *mol,
                       Conformer *conf) {
-  PRECONDITION(mol, "no molecule");
-  PRECONDITION(conf, "no conformer");
+  PRECONDITION(mol, "no molecule")
+  PRECONDITION(conf, "no conformer")
   std::vector<std::string> splitLine;
   boost::split(splitLine, text, boost::is_any_of(" \t"),
                boost::token_compress_on);
@@ -64,7 +64,7 @@ void ParseTPLAtomLine(std::string text, unsigned int lineNum, RWMol *mol,
 }
 
 void ParseTPLBondLine(std::string text, unsigned int lineNum, RWMol *mol) {
-  PRECONDITION(mol, "no molecule");
+  PRECONDITION(mol, "no molecule")
 
   std::vector<std::string> splitLine;
   boost::split(splitLine, text, boost::is_any_of(" \t"),
@@ -109,8 +109,8 @@ void ParseTPLBondLine(std::string text, unsigned int lineNum, RWMol *mol) {
 
 Conformer *ParseConfData(std::istream *inStream, unsigned int &line, RWMol *mol,
                          unsigned int confId) {
-  PRECONDITION(inStream, "no stream");
-  PRECONDITION(mol, "no mol");
+  PRECONDITION(inStream, "no stream")
+  PRECONDITION(mol, "no mol")
 
   std::string tempStr;
   std::vector<std::string> splitLine;
@@ -169,7 +169,7 @@ Conformer *ParseConfData(std::istream *inStream, unsigned int &line, RWMol *mol,
 //*************************************
 RWMol *TPLDataStreamToMol(std::istream *inStream, unsigned int &line,
                           bool sanitize, bool skipFirstConf) {
-  PRECONDITION(inStream, "no stream");
+  PRECONDITION(inStream, "no stream")
   std::string tempStr;
   std::vector<std::string> splitText;
 

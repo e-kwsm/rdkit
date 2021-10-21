@@ -35,7 +35,7 @@ bool isUnsaturated(const Atom *atom, const ROMol &mol) {
 
 bool hasSingleHQuery(const Atom::QUERYATOM_QUERY *q) {
   // list queries are series of nested ors of AtomAtomicNum queries
-  PRECONDITION(q, "bad query");
+  PRECONDITION(q, "bad query")
   bool res = false;
   std::string descr = q->getDescription();
   if (descr == "AtomAnd") {
@@ -72,7 +72,7 @@ bool atomHasFourthValence(const Atom *atom) {
 bool chiralAtomNeedsTagInversion(const RDKit::ROMol &mol,
                                  const RDKit::Atom *atom, bool isAtomFirst,
                                  size_t numClosures) {
-  PRECONDITION(atom, "bad atom");
+  PRECONDITION(atom, "bad atom")
   return atom->getDegree() == 3 &&
          ((isAtomFirst && atom->getNumExplicitHs() == 1) ||
           (!details::atomHasFourthValence(atom) && numClosures == 1 &&
@@ -117,9 +117,9 @@ bool checkBondsInSameBranch(MolStack &molStack, Bond *dblBnd, Bond *dirBnd) {
 }
 
 void switchBondDir(Bond *bond) {
-  PRECONDITION(bond, "bad bond");
+  PRECONDITION(bond, "bad bond")
   PRECONDITION(bond->getBondType() == Bond::SINGLE || bond->getIsAromatic(),
-               "bad bond type");
+               "bad bond type")
   switch (bond->getBondDir()) {
     case Bond::ENDUPRIGHT:
       bond->setBondDir(Bond::ENDDOWNRIGHT);
@@ -151,13 +151,13 @@ void canonicalizeDoubleBond(Bond *dblBond, UINT_VECT &bondVisitOrders,
                             UINT_VECT &atomVisitOrders,
                             UINT_VECT &bondDirCounts, UINT_VECT &atomDirCounts,
                             MolStack &molStack) {
-  PRECONDITION(dblBond, "bad bond");
-  PRECONDITION(dblBond->getBondType() == Bond::DOUBLE, "bad bond order");
-  PRECONDITION(dblBond->getStereo() > Bond::STEREOANY, "bad bond stereo");
-  PRECONDITION(dblBond->getStereoAtoms().size() >= 2, "bad bond stereo atoms");
+  PRECONDITION(dblBond, "bad bond")
+  PRECONDITION(dblBond->getBondType() == Bond::DOUBLE, "bad bond order")
+  PRECONDITION(dblBond->getStereo() > Bond::STEREOANY, "bad bond stereo")
+  PRECONDITION(dblBond->getStereoAtoms().size() >= 2, "bad bond stereo atoms")
   PRECONDITION(atomVisitOrders[dblBond->getBeginAtomIdx()] > 0 ||
                    atomVisitOrders[dblBond->getEndAtomIdx()] > 0,
-               "neither end atom traversed");
+               "neither end atom traversed")
 
   Atom *atom1 = dblBond->getBeginAtom();
   Atom *atom2 = dblBond->getEndAtom();
@@ -226,12 +226,12 @@ void canonicalizeDoubleBond(Bond *dblBond, UINT_VECT &bondVisitOrders,
   }
 
   // make sure we found everything we need to find:
-  CHECK_INVARIANT(firstFromAtom1, "could not find atom1");
-  CHECK_INVARIANT(firstFromAtom2, "could not find atom2");
+  CHECK_INVARIANT(firstFromAtom1, "could not find atom1")
+  CHECK_INVARIANT(firstFromAtom2, "could not find atom2")
   CHECK_INVARIANT(atom1->getDegree() == 2 || secondFromAtom1,
-                  "inconsistency at atom1");
+                  "inconsistency at atom1")
   CHECK_INVARIANT(atom2->getDegree() == 2 || secondFromAtom2,
-                  "inconsistency at atom2");
+                  "inconsistency at atom2")
 
   bool setFromBond1 = true;
   Bond::BondDir atom1Dir = Bond::NONE;
@@ -263,14 +263,14 @@ void canonicalizeDoubleBond(Bond *dblBond, UINT_VECT &bondVisitOrders,
           CHECK_INVARIANT(
               ((firstFromAtom1->getBeginAtomIdx() == atom1->getIdx()) ^
                (secondFromAtom1->getBeginAtomIdx() == atom1->getIdx())),
-              "inconsistent state");
+              "inconsistent state")
         }
       }
     } else {
       // the second bond must be present and setting the direction:
-      CHECK_INVARIANT(secondFromAtom1, "inconsistent state");
+      CHECK_INVARIANT(secondFromAtom1, "inconsistent state")
       CHECK_INVARIANT(bondDirCounts[secondFromAtom1->getIdx()] > 0,
-                      "inconsistent state");
+                      "inconsistent state")
       // It must be the second bond setting the direction.
       // This happens when the bond dir is set in a branch:
       //        v- this double bond
@@ -310,14 +310,14 @@ void canonicalizeDoubleBond(Bond *dblBond, UINT_VECT &bondVisitOrders,
           CHECK_INVARIANT(
               ((firstFromAtom2->getBeginAtomIdx() == atom2->getIdx()) ^
                (secondFromAtom2->getBeginAtomIdx() == atom2->getIdx())),
-              "inconsistent state");
+              "inconsistent state")
         }
       }
     } else {
       // the second bond must be present and setting the direction:
-      CHECK_INVARIANT(secondFromAtom2, "inconsistent state");
+      CHECK_INVARIANT(secondFromAtom2, "inconsistent state")
       CHECK_INVARIANT(bondDirCounts[secondFromAtom2->getIdx()] > 0,
-                      "inconsistent state");
+                      "inconsistent state")
       // It must be the second bond setting the direction.
       // This happens when the bond dir is set in a branch:
       //        v- this double bond
@@ -355,7 +355,7 @@ void canonicalizeDoubleBond(Bond *dblBond, UINT_VECT &bondVisitOrders,
                dblBond->getStereo() == Bond::STEREOCIS) {
       atom2Dir = flipBondDir(atom1Dir);
     }
-    CHECK_INVARIANT(atom2Dir != Bond::NONE, "stereo not set");
+    CHECK_INVARIANT(atom2Dir != Bond::NONE, "stereo not set")
 
     // If we're not looking at the bonds used to determine the
     // stereochemistry, we need to flip the setting on the other bond:
@@ -399,7 +399,7 @@ void canonicalizeDoubleBond(Bond *dblBond, UINT_VECT &bondVisitOrders,
                dblBond->getStereo() == Bond::STEREOTRANS) {
       atom1Dir = flipBondDir(atom2Dir);
     }
-    CHECK_INVARIANT(atom1Dir != Bond::NONE, "stereo not set");
+    CHECK_INVARIANT(atom1Dir != Bond::NONE, "stereo not set")
     // If we're not looking at the bonds used to determine the
     // stereochemistry, we need to flip the setting on the other bond:
     const INT_VECT &stereoAtoms = dblBond->getStereoAtoms();
@@ -878,18 +878,18 @@ void canonicalDFSTraversal(ROMol &mol, int atomIdx, int inBondIdx,
                            const boost::dynamic_bitset<> *bondsInPlay,
                            const std::vector<std::string> *bondSymbols,
                            bool doRandom) {
-  PRECONDITION(colors.size() >= mol.getNumAtoms(), "vector too small");
-  PRECONDITION(ranks.size() >= mol.getNumAtoms(), "vector too small");
-  PRECONDITION(atomOrders.size() >= mol.getNumAtoms(), "vector too small");
-  PRECONDITION(bondVisitOrders.size() >= mol.getNumBonds(), "vector too small");
+  PRECONDITION(colors.size() >= mol.getNumAtoms(), "vector too small")
+  PRECONDITION(ranks.size() >= mol.getNumAtoms(), "vector too small")
+  PRECONDITION(atomOrders.size() >= mol.getNumAtoms(), "vector too small")
+  PRECONDITION(bondVisitOrders.size() >= mol.getNumBonds(), "vector too small")
   PRECONDITION(atomRingClosures.size() >= mol.getNumAtoms(),
-               "vector too small");
+               "vector too small")
   PRECONDITION(atomTraversalBondOrder.size() >= mol.getNumAtoms(),
-               "vector too small");
+               "vector too small")
   PRECONDITION(!bondsInPlay || bondsInPlay->size() >= mol.getNumBonds(),
-               "bondsInPlay too small");
+               "bondsInPlay too small")
   PRECONDITION(!bondSymbols || bondSymbols->size() >= mol.getNumBonds(),
-               "bondSymbols too small");
+               "bondSymbols too small")
 
   std::vector<AtomColors> tcolors;
   tcolors.resize(colors.size());
@@ -902,7 +902,7 @@ void canonicalDFSTraversal(ROMol &mol, int atomIdx, int inBondIdx,
 }
 
 bool canHaveDirection(const Bond *bond) {
-  PRECONDITION(bond, "bad bond");
+  PRECONDITION(bond, "bad bond")
   Bond::BondType bondType = bond->getBondType();
   return (bondType == Bond::SINGLE || bondType == Bond::AROMATIC);
 }
@@ -910,11 +910,11 @@ bool canHaveDirection(const Bond *bond) {
 void clearBondDirs(ROMol &mol, Bond *refBond, const Atom *fromAtom,
                    UINT_VECT &bondDirCounts, UINT_VECT &atomDirCounts,
                    const UINT_VECT &) {
-  PRECONDITION(bondDirCounts.size() >= mol.getNumBonds(), "bad dirCount size");
-  PRECONDITION(refBond, "bad bond");
-  PRECONDITION(&refBond->getOwningMol() == &mol, "bad bond");
-  PRECONDITION(fromAtom, "bad atom");
-  PRECONDITION(&fromAtom->getOwningMol() == &mol, "bad bond");
+  PRECONDITION(bondDirCounts.size() >= mol.getNumBonds(), "bad dirCount size")
+  PRECONDITION(refBond, "bad bond")
+  PRECONDITION(&refBond->getOwningMol() == &mol, "bad bond")
+  PRECONDITION(fromAtom, "bad atom")
+  PRECONDITION(&fromAtom->getOwningMol() == &mol, "bad bond")
 
 #if 0
     std::copy(bondDirCounts.begin(),bondDirCounts.end(),std::ostream_iterator<int>(std::cerr,", "));
@@ -971,7 +971,7 @@ void removeRedundantBondDirSpecs(ROMol &mol, MolStack &molStack,
                                  UINT_VECT &bondDirCounts,
                                  UINT_VECT &atomDirCounts,
                                  const UINT_VECT &bondVisitOrders) {
-  PRECONDITION(bondDirCounts.size() >= mol.getNumBonds(), "bad dirCount size");
+  PRECONDITION(bondDirCounts.size() >= mol.getNumBonds(), "bad dirCount size")
 #if 0
     std::cerr<<"rRBDS: ";
     mol.debugMol(std::cerr);
@@ -1035,9 +1035,9 @@ void canonicalizeFragment(ROMol &mol, int atomIdx,
   PRECONDITION(colors.size() >= mol.getNumAtoms(), "vector too small");
   PRECONDITION(ranks.size() >= mol.getNumAtoms(), "vector too small");
   PRECONDITION(!bondsInPlay || bondsInPlay->size() >= mol.getNumBonds(),
-               "bondsInPlay too small");
+               "bondsInPlay too small")
   PRECONDITION(!bondSymbols || bondSymbols->size() >= mol.getNumBonds(),
-               "bondSymbols too small");
+               "bondSymbols too small")
   unsigned int nAtoms = mol.getNumAtoms();
 
   UINT_VECT atomVisitOrders(nAtoms, 0);
@@ -1069,9 +1069,9 @@ void canonicalizeFragment(ROMol &mol, int atomIdx,
       atomVisitOrders, bondVisitOrders, atomRingClosures,
       atomTraversalBondOrder, bondsInPlay, bondSymbols, doRandom);
 
-  CHECK_INVARIANT(!molStack.empty(), "Empty stack.");
+  CHECK_INVARIANT(!molStack.empty(), "Empty stack.")
   CHECK_INVARIANT(molStack.begin()->type == MOL_STACK_ATOM,
-                  "Corrupted stack. First element should be an atom.");
+                  "Corrupted stack. First element should be an atom.")
 
   // collect some information about traversal order on chiral atoms
   boost::dynamic_bitset<> numSwapsChiralAtoms(nAtoms);

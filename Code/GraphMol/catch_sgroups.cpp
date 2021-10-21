@@ -496,15 +496,15 @@ M  END
 
     for (const auto &sg : getSubstanceGroups(*v2000_mol)) {
       ++count;
-      TEST_ASSERT(sg.getPropIfPresent("index", index));
-      TEST_ASSERT(index == count);
+      TEST_ASSERT(sg.getPropIfPresent("index", index))
+      TEST_ASSERT(index == count)
     }
 
     count = 0;
     for (const auto &sg : getSubstanceGroups(*v3000_mol)) {
       ++count;
-      TEST_ASSERT(sg.getPropIfPresent("index", index));
-      TEST_ASSERT(index == count);
+      TEST_ASSERT(sg.getPropIfPresent("index", index))
+      TEST_ASSERT(index == count)
     }
   }
 }

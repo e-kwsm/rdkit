@@ -41,7 +41,7 @@ class RDKIT_DISTGEOMETRY_EXPORT ChiralSet {
         d_idx4(pid4),
         d_volumeLowerBound(lowerVolBound),
         d_volumeUpperBound(upperVolBound) {
-    CHECK_INVARIANT(lowerVolBound <= upperVolBound, "Inconsistent bounds\n");
+    CHECK_INVARIANT(lowerVolBound <= upperVolBound, "Inconsistent bounds\n")
     d_volumeLowerBound = lowerVolBound;
     d_volumeUpperBound = upperVolBound;
   }

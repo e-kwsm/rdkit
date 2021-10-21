@@ -49,8 +49,8 @@ std::vector<Atom::HybridizationType> HS{Atom::SP, Atom::SP2, Atom::SP3,
 
 void AtomFeatVector(const RDKit::Atom* atom, const ROMol* mol,
                     std::vector<double>& feats, bool addchiral) {
-  PRECONDITION(atom, "bad atom");
-  PRECONDITION(mol, "bad mol");
+  PRECONDITION(atom, "bad atom")
+  PRECONDITION(mol, "bad mol")
 
   if (addchiral) {
     feats.reserve(52);

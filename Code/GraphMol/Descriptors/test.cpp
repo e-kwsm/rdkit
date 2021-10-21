@@ -49,12 +49,12 @@ void test1() {
                         << std::endl;
 
   const CrippenParamCollection *params = CrippenParamCollection::getParams();
-  TEST_ASSERT(params);
+  TEST_ASSERT(params)
 
   CrippenParams p = *(params->begin());
-  TEST_ASSERT(p.idx == 0);
-  TEST_ASSERT(p.label == "C1");
-  TEST_ASSERT(p.smarts == "[CH4]");
+  TEST_ASSERT(p.idx == 0)
+  TEST_ASSERT(p.label == "C1")
+  TEST_ASSERT(p.smarts == "[CH4]")
 
   BOOST_LOG(rdErrorLog) << "  done" << std::endl;
 }
@@ -67,74 +67,74 @@ void test2() {
   double logp, mr;
 
   mol = SmilesToMol("C");
-  TEST_ASSERT(mol);
+  TEST_ASSERT(mol)
   calcCrippenDescriptors(*mol, logp, mr);
-  TEST_ASSERT(feq(logp, 0.6361));
-  TEST_ASSERT(feq(mr, 6.7310));
+  TEST_ASSERT(feq(logp, 0.6361))
+  TEST_ASSERT(feq(mr, 6.7310))
   // check singleton functions
-  TEST_ASSERT(calcClogP(*mol) == logp);
-  TEST_ASSERT(calcMR(*mol) == mr);
+  TEST_ASSERT(calcClogP(*mol) == logp)
+  TEST_ASSERT(calcMR(*mol) == mr)
   // check that caching works:
   calcCrippenDescriptors(*mol, logp, mr);
-  TEST_ASSERT(feq(logp, 0.6361));
-  TEST_ASSERT(feq(mr, 6.7310));
+  TEST_ASSERT(feq(logp, 0.6361))
+  TEST_ASSERT(feq(mr, 6.7310))
   calcCrippenDescriptors(*mol, logp, mr, true, true);
-  TEST_ASSERT(feq(logp, 0.6361));
-  TEST_ASSERT(feq(mr, 6.7310));
+  TEST_ASSERT(feq(logp, 0.6361))
+  TEST_ASSERT(feq(mr, 6.7310))
 
   // check that things work when we don't add Hs:
   calcCrippenDescriptors(*mol, logp, mr, false, true);
-  TEST_ASSERT(feq(logp, 0.1441));
-  TEST_ASSERT(feq(mr, 2.503));
+  TEST_ASSERT(feq(logp, 0.1441))
+  TEST_ASSERT(feq(mr, 2.503))
   delete mol;
 
   mol = SmilesToMol("C=C");
-  TEST_ASSERT(mol);
+  TEST_ASSERT(mol)
   calcCrippenDescriptors(*mol, logp, mr, true);
-  TEST_ASSERT(feq(logp, 0.8022));
-  TEST_ASSERT(feq(mr, 11.2540));
+  TEST_ASSERT(feq(logp, 0.8022))
+  TEST_ASSERT(feq(mr, 11.2540))
   delete mol;
 
   mol = SmilesToMol("C#C");
-  TEST_ASSERT(mol);
+  TEST_ASSERT(mol)
   calcCrippenDescriptors(*mol, logp, mr);
-  TEST_ASSERT(feq(logp, 0.2494));
-  TEST_ASSERT(feq(mr, 9.8900));
+  TEST_ASSERT(feq(logp, 0.2494))
+  TEST_ASSERT(feq(mr, 9.8900))
   delete mol;
 
   mol = SmilesToMol("CO");
-  TEST_ASSERT(mol);
+  TEST_ASSERT(mol)
   calcCrippenDescriptors(*mol, logp, mr);
-  TEST_ASSERT(feq(logp, -0.3915));
-  TEST_ASSERT(feq(mr, 8.1428));
+  TEST_ASSERT(feq(logp, -0.3915))
+  TEST_ASSERT(feq(mr, 8.1428))
   delete mol;
 
   mol = SmilesToMol("C=O");
-  TEST_ASSERT(mol);
+  TEST_ASSERT(mol)
   calcCrippenDescriptors(*mol, logp, mr);
-  TEST_ASSERT(feq(logp, -0.1849));
-  TEST_ASSERT(feq(mr, 7.121));
+  TEST_ASSERT(feq(logp, -0.1849))
+  TEST_ASSERT(feq(mr, 7.121))
   delete mol;
 
   mol = SmilesToMol("C#[O+]");
-  TEST_ASSERT(mol);
+  TEST_ASSERT(mol)
   calcCrippenDescriptors(*mol, logp, mr);
-  TEST_ASSERT(feq(logp, 0.0059));
-  TEST_ASSERT(feq(mr, 5.6315));
+  TEST_ASSERT(feq(logp, 0.0059))
+  TEST_ASSERT(feq(mr, 5.6315))
   delete mol;
 
   mol = SmilesToMol("C(C)(C)C");
-  TEST_ASSERT(mol);
+  TEST_ASSERT(mol)
   calcCrippenDescriptors(*mol, logp, mr);
-  TEST_ASSERT(feq(logp, 1.6623));
-  TEST_ASSERT(feq(mr, 20.512));
+  TEST_ASSERT(feq(logp, 1.6623))
+  TEST_ASSERT(feq(mr, 20.512))
   delete mol;
 
   mol = SmilesToMol("C(C)(C)(C)O");
-  TEST_ASSERT(mol);
+  TEST_ASSERT(mol)
   calcCrippenDescriptors(*mol, logp, mr);
-  TEST_ASSERT(feq(logp, 0.7772));
-  TEST_ASSERT(feq(mr, 21.9718));
+  TEST_ASSERT(feq(logp, 0.7772))
+  TEST_ASSERT(feq(mr, 21.9718))
   delete mol;
 
   BOOST_LOG(rdErrorLog) << "  done" << std::endl;
@@ -152,24 +152,24 @@ void testIssue262() {
   double rlogp, rmr, logp, mr;
 
   mol = SmilesToMol("c1ncccc1");
-  TEST_ASSERT(mol);
+  TEST_ASSERT(mol)
   calcCrippenDescriptors(*mol, rlogp, rmr);
 
   MolPickler::pickleMol(*mol, pkl);
 
   mol2 = new ROMol(pkl);
-  TEST_ASSERT(mol2);
+  TEST_ASSERT(mol2)
   calcCrippenDescriptors(*mol2, logp, mr);
-  TEST_ASSERT(feq(logp, rlogp));
-  TEST_ASSERT(feq(mr, rmr));
+  TEST_ASSERT(feq(logp, rlogp))
+  TEST_ASSERT(feq(mr, rmr))
 
   mol3 = new RWMol();
-  TEST_ASSERT(mol3);
+  TEST_ASSERT(mol3)
   MolPickler::molFromPickle(pkl, mol3);
 
   calcCrippenDescriptors(*mol3, logp, mr);
-  TEST_ASSERT(feq(logp, rlogp));
-  TEST_ASSERT(feq(mr, rmr));
+  TEST_ASSERT(feq(logp, rlogp))
+  TEST_ASSERT(feq(mr, rmr))
 
   delete mol;
   delete mol2;
@@ -186,33 +186,33 @@ void test3() {
   double amw;
 
   mol = SmilesToMol("C");
-  TEST_ASSERT(mol);
+  TEST_ASSERT(mol)
   amw = calcAMW(*mol);
-  TEST_ASSERT(feq(amw, 16.043, .001));
+  TEST_ASSERT(feq(amw, 16.043, .001))
   amw = calcAMW(*mol, true);
-  TEST_ASSERT(feq(amw, 12.011, .001));
+  TEST_ASSERT(feq(amw, 12.011, .001))
   mol2 = MolOps::addHs(*mol);
   amw = calcAMW(*mol2);
-  TEST_ASSERT(feq(amw, 16.043, .001));
+  TEST_ASSERT(feq(amw, 16.043, .001))
   amw = calcAMW(*mol2, true);
-  TEST_ASSERT(feq(amw, 12.011, .001));
+  TEST_ASSERT(feq(amw, 12.011, .001))
   delete mol;
   delete mol2;
 
   mol = SmilesToMol("[CH4]");
-  TEST_ASSERT(mol);
+  TEST_ASSERT(mol)
   amw = calcAMW(*mol);
-  TEST_ASSERT(feq(amw, 16.043, .001));
+  TEST_ASSERT(feq(amw, 16.043, .001))
   amw = calcAMW(*mol, true);
-  TEST_ASSERT(feq(amw, 12.011, .001));
+  TEST_ASSERT(feq(amw, 12.011, .001))
   delete mol;
 
   mol = SmilesToMol("C[2H]");
-  TEST_ASSERT(mol);
+  TEST_ASSERT(mol)
   amw = calcAMW(*mol);
   delete mol;
 
-  TEST_ASSERT(feq(amw, 17.0, .1));
+  TEST_ASSERT(feq(amw, 17.0, .1))
 
   BOOST_LOG(rdErrorLog) << "  done" << std::endl;
 }
@@ -225,57 +225,57 @@ void test3a() {
   double mw;
 
   mol = SmilesToMol("C");
-  TEST_ASSERT(mol);
+  TEST_ASSERT(mol)
   mw = calcExactMW(*mol);
-  TEST_ASSERT(feq(mw, 16.031, .001));
+  TEST_ASSERT(feq(mw, 16.031, .001))
   mw = calcExactMW(*mol, true);
-  TEST_ASSERT(feq(mw, 12.000, .001));
+  TEST_ASSERT(feq(mw, 12.000, .001))
   mol2 = MolOps::addHs(*mol);
   mw = calcExactMW(*mol2);
-  TEST_ASSERT(feq(mw, 16.031, .001));
+  TEST_ASSERT(feq(mw, 16.031, .001))
   mw = calcExactMW(*mol2, true);
-  TEST_ASSERT(feq(mw, 12.000, .001));
+  TEST_ASSERT(feq(mw, 12.000, .001))
   delete mol;
   delete mol2;
 
   mol = SmilesToMol("[CH4]");
-  TEST_ASSERT(mol);
+  TEST_ASSERT(mol)
   mw = calcExactMW(*mol);
-  TEST_ASSERT(feq(mw, 16.031, .001));
+  TEST_ASSERT(feq(mw, 16.031, .001))
   mw = calcExactMW(*mol, true);
-  TEST_ASSERT(feq(mw, 12.000, .001));
+  TEST_ASSERT(feq(mw, 12.000, .001))
   delete mol;
 
   mol = SmilesToMol("C[2H]");
-  TEST_ASSERT(mol);
+  TEST_ASSERT(mol)
   mw = calcExactMW(*mol);
-  TEST_ASSERT(feq(mw, 17.037, .001));
+  TEST_ASSERT(feq(mw, 17.037, .001))
   mw = calcExactMW(*mol, true);
-  TEST_ASSERT(feq(mw, 12.000, .001));
+  TEST_ASSERT(feq(mw, 12.000, .001))
   delete mol;
 
   mol = SmilesToMol("Cl");
-  TEST_ASSERT(mol);
+  TEST_ASSERT(mol)
   mw = calcAMW(*mol);
-  TEST_ASSERT(feq(mw, 35.453 + 1.008, .001));
+  TEST_ASSERT(feq(mw, 35.453 + 1.008, .001))
   mw = calcExactMW(*mol);
-  TEST_ASSERT(feq(mw, 34.9688 + 1.0078, .001));
+  TEST_ASSERT(feq(mw, 34.9688 + 1.0078, .001))
   delete mol;
 
   mol = SmilesToMol("[35ClH]");
-  TEST_ASSERT(mol);
+  TEST_ASSERT(mol)
   mw = calcAMW(*mol);
-  TEST_ASSERT(feq(mw, 34.9688 + 1.008, .001));
+  TEST_ASSERT(feq(mw, 34.9688 + 1.008, .001))
   mw = calcExactMW(*mol);
-  TEST_ASSERT(feq(mw, 34.9688 + 1.0078, .001));
+  TEST_ASSERT(feq(mw, 34.9688 + 1.0078, .001))
   delete mol;
 
   mol = SmilesToMol("[36ClH]");
-  TEST_ASSERT(mol);
+  TEST_ASSERT(mol)
   mw = calcAMW(*mol);
-  TEST_ASSERT(feq(mw, 35.9683 + 1.008, .001));
+  TEST_ASSERT(feq(mw, 35.9683 + 1.008, .001))
   mw = calcExactMW(*mol);
-  TEST_ASSERT(feq(mw, 35.9683 + 1.0078, .001));
+  TEST_ASSERT(feq(mw, 35.9683 + 1.0078, .001))
   delete mol;
 
   BOOST_LOG(rdErrorLog) << "  done" << std::endl;
@@ -289,21 +289,21 @@ void testLabute() {
 
   mol = SmilesToMol("CO");
   asa = calcLabuteASA(*mol);
-  TEST_ASSERT(feq(asa, 13.5335, .0001));
+  TEST_ASSERT(feq(asa, 13.5335, .0001))
   asa = calcLabuteASA(*mol);
-  TEST_ASSERT(feq(asa, 13.5335, .0001));
+  TEST_ASSERT(feq(asa, 13.5335, .0001))
   asa = calcLabuteASA(*mol, true, true);
-  TEST_ASSERT(feq(asa, 13.5335, .0001));
+  TEST_ASSERT(feq(asa, 13.5335, .0001))
 
   delete mol;
   mol = SmilesToMol("OC(=O)c1ccncc1C(=O)O");
   asa = calcLabuteASA(*mol);
-  TEST_ASSERT(feq(asa, 67.2924, .0001));
+  TEST_ASSERT(feq(asa, 67.2924, .0001))
 
   delete mol;
   mol = SmilesToMol("C1CCC(c2cccnc2)NC1");
   asa = calcLabuteASA(*mol);
-  TEST_ASSERT(feq(asa, 73.0198, .0001));
+  TEST_ASSERT(feq(asa, 73.0198, .0001))
 
   delete mol;
   BOOST_LOG(rdErrorLog) << "  done" << std::endl;
@@ -316,7 +316,7 @@ void testTPSA() {
   std::string fName = getenv("RDBASE");
   fName += "/Data/NCI/first_200.tpsa.csv";
   std::ifstream inf(fName.c_str());
-  TEST_ASSERT(inf && !inf.bad());
+  TEST_ASSERT(inf && !inf.bad())
 
   while (!inf.eof()) {
     std::string inl = getLine(inf);
@@ -332,7 +332,7 @@ void testTPSA() {
     std::string smiles = tokens[0];
     auto oTPSA = boost::lexical_cast<double>(tokens[1]);
     ROMol *mol = SmilesToMol(smiles);
-    TEST_ASSERT(mol);
+    TEST_ASSERT(mol)
     double nTPSA = calcTPSA(*mol);
     if (!feq(nTPSA, oTPSA, .0001)) {
       std::cerr << " TPSA ERR: " << smiles << " " << oTPSA << " " << nTPSA
@@ -343,13 +343,13 @@ void testTPSA() {
         std::cerr << "\t" << i << "\t" << contribs[i] << std::endl;
       }
     }
-    TEST_ASSERT(feq(nTPSA, oTPSA, .0001));
+    TEST_ASSERT(feq(nTPSA, oTPSA, .0001))
 
     // make sure that adding Hs doesn't affect the value
     // (this was issue 1969745)
     ROMol *mol2 = MolOps::addHs(*mol);
     double hTPSA = calcTPSA(*mol2);
-    TEST_ASSERT(feq(nTPSA, hTPSA, .0001));
+    TEST_ASSERT(feq(nTPSA, hTPSA, .0001))
 
     delete mol2;
     delete mol;
@@ -401,7 +401,7 @@ void testLipinski1() {
       std::cerr << "  failed: " << idx << " " << oVal << " " << nVal
                 << std::endl;
     }
-    TEST_ASSERT(oVal == nVal);
+    TEST_ASSERT(oVal == nVal)
 
     mol->getProp("NUM_HDONORS", foo);
     oVal = boost::lexical_cast<unsigned int>(foo);
@@ -410,7 +410,7 @@ void testLipinski1() {
       std::cerr << "  failed: " << idx << " " << oVal << " " << nVal
                 << std::endl;
     }
-    TEST_ASSERT(oVal == nVal);
+    TEST_ASSERT(oVal == nVal)
 
     mol->getProp("NUM_LIPINSKIHDONORS", foo);
     oVal = boost::lexical_cast<unsigned int>(foo);
@@ -419,7 +419,7 @@ void testLipinski1() {
       std::cerr << "  failed: " << idx << " " << oVal << " " << nVal
                 << std::endl;
     }
-    TEST_ASSERT(oVal == nVal);
+    TEST_ASSERT(oVal == nVal)
 
     mol->getProp("NUM_LIPINSKIHACCEPTORS", foo);
     oVal = boost::lexical_cast<unsigned int>(foo);
@@ -428,7 +428,7 @@ void testLipinski1() {
       std::cerr << "  failed: " << idx << " " << oVal << " " << nVal
                 << std::endl;
     }
-    TEST_ASSERT(oVal == nVal);
+    TEST_ASSERT(oVal == nVal)
 
     mol->getProp("NUM_RINGS", foo);
     oVal = boost::lexical_cast<unsigned int>(foo);
@@ -437,7 +437,7 @@ void testLipinski1() {
       std::cerr << "  failed: " << idx << " " << oVal << " " << nVal
                 << std::endl;
     }
-    TEST_ASSERT(oVal == nVal);
+    TEST_ASSERT(oVal == nVal)
 
     mol->getProp("NUM_HETEROATOMS", foo);
     oVal = boost::lexical_cast<unsigned int>(foo);
@@ -446,7 +446,7 @@ void testLipinski1() {
       std::cerr << "  failed: " << idx << " " << oVal << " " << nVal
                 << std::endl;
     }
-    TEST_ASSERT(oVal == nVal);
+    TEST_ASSERT(oVal == nVal)
 
     mol->getProp(rot_prop, foo);
     oVal = boost::lexical_cast<unsigned int>(foo);
@@ -455,7 +455,7 @@ void testLipinski1() {
       std::cerr << "  failed: " << idx << " " << oVal << " " << nVal
                 << " using stored sd prop " << rot_prop << std::endl;
     }
-    TEST_ASSERT(oVal == nVal);
+    TEST_ASSERT(oVal == nVal)
 
     mol->getProp(NonStrictRotProp, foo);
     oVal = boost::lexical_cast<unsigned int>(foo);
@@ -464,7 +464,7 @@ void testLipinski1() {
       std::cerr << "  failed: " << idx << " " << oVal << " " << nVal
                 << " using stored sd prop " << rot_prop << std::endl;
     }
-    TEST_ASSERT(oVal == nVal);
+    TEST_ASSERT(oVal == nVal)
 
     mol->getProp(StrictRotProp, foo);
     oVal = boost::lexical_cast<unsigned int>(foo);
@@ -473,7 +473,7 @@ void testLipinski1() {
       std::cerr << "  failed: " << idx << " " << oVal << " " << nVal
                 << " using stored sd prop " << rot_prop << std::endl;
     }
-    TEST_ASSERT(oVal == nVal);
+    TEST_ASSERT(oVal == nVal)
 
     delete mol;
   }
@@ -491,51 +491,51 @@ void testVSADescriptors() {
 
     mol = SmilesToMol("CO");
     vals = calcSlogP_VSA(*mol);
-    TEST_ASSERT(vals.size() == 12);
+    TEST_ASSERT(vals.size() == 12)
     for (unsigned int i = 0; i < vals.size(); ++i) {
       switch (i) {
         case 1:
-          TEST_ASSERT(feq(vals[i], 12.216, .001));
+          TEST_ASSERT(feq(vals[i], 12.216, .001))
           break;
         default:
-          TEST_ASSERT(feq(vals[i], 0, .001));
+          TEST_ASSERT(feq(vals[i], 0, .001))
       }
     }
     delete mol;
 
     mol = SmilesToMol("CCO");
     vals = calcSlogP_VSA(*mol);
-    TEST_ASSERT(vals.size() == 12);
+    TEST_ASSERT(vals.size() == 12)
     for (unsigned int i = 0; i < vals.size(); ++i) {
       switch (i) {
         case 1:
-          TEST_ASSERT(feq(vals[i], 11.713, .001));
+          TEST_ASSERT(feq(vals[i], 11.713, .001))
           break;
         case 4:
-          TEST_ASSERT(feq(vals[i], 6.924, .001));
+          TEST_ASSERT(feq(vals[i], 6.924, .001))
           break;
         default:
-          TEST_ASSERT(feq(vals[i], 0, .001));
+          TEST_ASSERT(feq(vals[i], 0, .001))
       }
     }
     delete mol;
 
     mol = SmilesToMol("Fc1ccccc1");
     vals = calcSlogP_VSA(*mol);
-    TEST_ASSERT(vals.size() == 12);
+    TEST_ASSERT(vals.size() == 12)
     for (unsigned int i = 0; i < vals.size(); ++i) {
       switch (i) {
         case 3:
-          TEST_ASSERT(feq(vals[i], 5.817, .001));
+          TEST_ASSERT(feq(vals[i], 5.817, .001))
           break;
         case 5:
-          TEST_ASSERT(feq(vals[i], 30.332, .001));
+          TEST_ASSERT(feq(vals[i], 30.332, .001))
           break;
         case 9:
-          TEST_ASSERT(feq(vals[i], 4.390, .001));
+          TEST_ASSERT(feq(vals[i], 4.390, .001))
           break;
         default:
-          TEST_ASSERT(feq(vals[i], 0, .001));
+          TEST_ASSERT(feq(vals[i], 0, .001))
       }
     }
     delete mol;
@@ -547,37 +547,37 @@ void testVSADescriptors() {
 
     mol = SmilesToMol("CO");
     vals = calcSMR_VSA(*mol);
-    TEST_ASSERT(vals.size() == 10);
+    TEST_ASSERT(vals.size() == 10)
     for (unsigned int i = 0; i < vals.size(); ++i) {
       switch (i) {
         case 0:
-          TEST_ASSERT(feq(vals[i], 5.106, .001));
+          TEST_ASSERT(feq(vals[i], 5.106, .001))
           break;
         case 5:
-          TEST_ASSERT(feq(vals[i], 7.110, .001));
+          TEST_ASSERT(feq(vals[i], 7.110, .001))
           break;
         default:
-          TEST_ASSERT(feq(vals[i], 0, .001));
+          TEST_ASSERT(feq(vals[i], 0, .001))
       }
     }
     delete mol;
 
     mol = SmilesToMol("CCO");
     vals = calcSMR_VSA(*mol);
-    TEST_ASSERT(vals.size() == 10);
+    TEST_ASSERT(vals.size() == 10)
     for (unsigned int i = 0; i < vals.size(); ++i) {
       switch (i) {
         case 0:
-          TEST_ASSERT(feq(vals[i], 5.106, .001));
+          TEST_ASSERT(feq(vals[i], 5.106, .001))
           break;
         case 4:
-          TEST_ASSERT(feq(vals[i], 6.924, .001));
+          TEST_ASSERT(feq(vals[i], 6.924, .001))
           break;
         case 5:
-          TEST_ASSERT(feq(vals[i], 6.607, .001));
+          TEST_ASSERT(feq(vals[i], 6.607, .001))
           break;
         default:
-          TEST_ASSERT(feq(vals[i], 0, .001));
+          TEST_ASSERT(feq(vals[i], 0, .001))
       }
     }
     delete mol;
@@ -589,37 +589,37 @@ void testVSADescriptors() {
 
     mol = SmilesToMol("CO");
     vals = calcPEOE_VSA(*mol);
-    TEST_ASSERT(vals.size() == 14);
+    TEST_ASSERT(vals.size() == 14)
     for (unsigned int i = 0; i < vals.size(); ++i) {
       switch (i) {
         case 0:
-          TEST_ASSERT(feq(vals[i], 5.106, .001));
+          TEST_ASSERT(feq(vals[i], 5.106, .001))
           break;
         case 7:
-          TEST_ASSERT(feq(vals[i], 7.110, .001));
+          TEST_ASSERT(feq(vals[i], 7.110, .001))
           break;
         default:
-          TEST_ASSERT(feq(vals[i], 0, .001));
+          TEST_ASSERT(feq(vals[i], 0, .001))
       }
     }
     delete mol;
 
     mol = SmilesToMol("CCO");
     vals = calcPEOE_VSA(*mol);
-    TEST_ASSERT(vals.size() == 14);
+    TEST_ASSERT(vals.size() == 14)
     for (unsigned int i = 0; i < vals.size(); ++i) {
       switch (i) {
         case 0:
-          TEST_ASSERT(feq(vals[i], 5.106, .001));
+          TEST_ASSERT(feq(vals[i], 5.106, .001))
           break;
         case 6:
-          TEST_ASSERT(feq(vals[i], 6.924, .001));
+          TEST_ASSERT(feq(vals[i], 6.924, .001))
           break;
         case 7:
-          TEST_ASSERT(feq(vals[i], 6.607, .001));
+          TEST_ASSERT(feq(vals[i], 6.607, .001))
           break;
         default:
-          TEST_ASSERT(feq(vals[i], 0, .001));
+          TEST_ASSERT(feq(vals[i], 0, .001))
       }
     }
     delete mol;
@@ -637,119 +637,119 @@ void testMolFormula() {
   std::string formula;
 
   mol = SmilesToMol("C");
-  TEST_ASSERT(mol);
+  TEST_ASSERT(mol)
   formula = calcMolFormula(*mol);
-  TEST_ASSERT(formula == "CH4");
+  TEST_ASSERT(formula == "CH4")
   mol2 = MolOps::addHs(*mol);
   formula = calcMolFormula(*mol2);
-  TEST_ASSERT(formula == "CH4");
+  TEST_ASSERT(formula == "CH4")
   delete mol;
   delete mol2;
 
   mol = SmilesToMol("[CH4]");
-  TEST_ASSERT(mol);
+  TEST_ASSERT(mol)
   formula = calcMolFormula(*mol);
-  TEST_ASSERT(formula == "CH4");
+  TEST_ASSERT(formula == "CH4")
   delete mol;
 
   mol = SmilesToMol("CO");
-  TEST_ASSERT(mol);
+  TEST_ASSERT(mol)
   formula = calcMolFormula(*mol);
-  TEST_ASSERT(formula == "CH4O");
+  TEST_ASSERT(formula == "CH4O")
   mol2 = MolOps::addHs(*mol);
   formula = calcMolFormula(*mol2);
-  TEST_ASSERT(formula == "CH4O");
+  TEST_ASSERT(formula == "CH4O")
   delete mol;
   delete mol2;
 
   mol = SmilesToMol("C(=O)N");
-  TEST_ASSERT(mol);
+  TEST_ASSERT(mol)
   formula = calcMolFormula(*mol);
-  TEST_ASSERT(formula == "CH3NO");
+  TEST_ASSERT(formula == "CH3NO")
   mol2 = MolOps::addHs(*mol);
   formula = calcMolFormula(*mol2);
-  TEST_ASSERT(formula == "CH3NO");
+  TEST_ASSERT(formula == "CH3NO")
   delete mol;
   delete mol2;
 
   mol = SmilesToMol("C(=O)=O");
-  TEST_ASSERT(mol);
+  TEST_ASSERT(mol)
   formula = calcMolFormula(*mol);
-  TEST_ASSERT(formula == "CO2");
+  TEST_ASSERT(formula == "CO2")
   delete mol;
 
   mol = SmilesToMol("C(=O)[O-]");
-  TEST_ASSERT(mol);
+  TEST_ASSERT(mol)
   formula = calcMolFormula(*mol);
-  TEST_ASSERT(formula == "CHO2-");
+  TEST_ASSERT(formula == "CHO2-")
   delete mol;
 
   mol = SmilesToMol("C([O-])[O-]");
-  TEST_ASSERT(mol);
+  TEST_ASSERT(mol)
   formula = calcMolFormula(*mol);
-  TEST_ASSERT(formula == "CH2O2-2");
+  TEST_ASSERT(formula == "CH2O2-2")
   delete mol;
 
   mol = SmilesToMol("C([NH3+])[O-]");
-  TEST_ASSERT(mol);
+  TEST_ASSERT(mol)
   formula = calcMolFormula(*mol);
-  TEST_ASSERT(formula == "CH5NO");
+  TEST_ASSERT(formula == "CH5NO")
   delete mol;
 
   mol = SmilesToMol("C([NH3+])O");
-  TEST_ASSERT(mol);
+  TEST_ASSERT(mol)
   formula = calcMolFormula(*mol);
-  TEST_ASSERT(formula == "CH6NO+");
+  TEST_ASSERT(formula == "CH6NO+")
   delete mol;
 
   mol = SmilesToMol("C([NH3+])[NH3+]");
-  TEST_ASSERT(mol);
+  TEST_ASSERT(mol)
   formula = calcMolFormula(*mol);
-  TEST_ASSERT(formula == "CH8N2+2");
+  TEST_ASSERT(formula == "CH8N2+2")
   delete mol;
 
   // H isotope tests
   mol = SmilesToMol("[2H]C([3H])O");
-  TEST_ASSERT(mol);
+  TEST_ASSERT(mol)
   formula = calcMolFormula(*mol);
-  TEST_ASSERT(formula == "CH4O");
+  TEST_ASSERT(formula == "CH4O")
   formula = calcMolFormula(*mol, true);
-  TEST_ASSERT(formula == "CH2DTO");
+  TEST_ASSERT(formula == "CH2DTO")
   formula = calcMolFormula(*mol, true, false);
-  TEST_ASSERT(formula == "CH2[2H][3H]O");
+  TEST_ASSERT(formula == "CH2[2H][3H]O")
   delete mol;
 
   // isotope test
   mol = SmilesToMol("[13CH3]C([2H])O");
-  TEST_ASSERT(mol);
+  TEST_ASSERT(mol)
   formula = calcMolFormula(*mol);
-  TEST_ASSERT(formula == "C2H6O");
+  TEST_ASSERT(formula == "C2H6O")
   formula = calcMolFormula(*mol, true);
-  TEST_ASSERT(formula == "C[13C]H5DO");
+  TEST_ASSERT(formula == "C[13C]H5DO")
   formula = calcMolFormula(*mol, true, false);
-  TEST_ASSERT(formula == "C[13C]H5[2H]O");
+  TEST_ASSERT(formula == "C[13C]H5[2H]O")
   delete mol;
 
   // isotope test
   mol = SmilesToMol("[13CH3]C[13CH2]C");
-  TEST_ASSERT(mol);
+  TEST_ASSERT(mol)
   formula = calcMolFormula(*mol);
-  TEST_ASSERT(formula == "C4H10");
+  TEST_ASSERT(formula == "C4H10")
   formula = calcMolFormula(*mol, true);
-  TEST_ASSERT(formula == "C2[13C]2H10");
+  TEST_ASSERT(formula == "C2[13C]2H10")
   formula = calcMolFormula(*mol, true, false);
-  TEST_ASSERT(formula == "C2[13C]2H10");
+  TEST_ASSERT(formula == "C2[13C]2H10")
   delete mol;
 
   // order test
   mol = SmilesToMol("[13CH3]C[13CH2]CB(O)O[2H]");
-  TEST_ASSERT(mol);
+  TEST_ASSERT(mol)
   formula = calcMolFormula(*mol);
-  TEST_ASSERT(formula == "C4H11BO2");
+  TEST_ASSERT(formula == "C4H11BO2")
   formula = calcMolFormula(*mol, true);
-  TEST_ASSERT(formula == "C2[13C]2H10DBO2");
+  TEST_ASSERT(formula == "C2[13C]2H10DBO2")
   formula = calcMolFormula(*mol, true, false);
-  TEST_ASSERT(formula == "C2[13C]2H10[2H]BO2");
+  TEST_ASSERT(formula == "C2[13C]2H10[2H]BO2")
   delete mol;
 
   BOOST_LOG(rdErrorLog) << "  done" << std::endl;
@@ -761,44 +761,44 @@ void testIssue3415534() {
 
   {
     ROMol *mol = SmilesToMol("CN");
-    TEST_ASSERT(mol);
+    TEST_ASSERT(mol)
     int nHBD = calcLipinskiHBD(*mol);
-    TEST_ASSERT(nHBD == 2);
+    TEST_ASSERT(nHBD == 2)
     delete mol;
   }
   {
     ROMol *mol = SmilesToMol("CNC");
-    TEST_ASSERT(mol);
+    TEST_ASSERT(mol)
     int nHBD = calcLipinskiHBD(*mol);
-    TEST_ASSERT(nHBD == 1);
+    TEST_ASSERT(nHBD == 1)
     delete mol;
   }
   {
     ROMol *mol = SmilesToMol("C[NH3+]");
-    TEST_ASSERT(mol);
+    TEST_ASSERT(mol)
     int nHBD = calcLipinskiHBD(*mol);
-    TEST_ASSERT(nHBD == 3);
+    TEST_ASSERT(nHBD == 3)
     delete mol;
   }
   {
     ROMol *mol = SmilesToMol("CO");
-    TEST_ASSERT(mol);
+    TEST_ASSERT(mol)
     int nHBD = calcLipinskiHBD(*mol);
-    TEST_ASSERT(nHBD == 1);
+    TEST_ASSERT(nHBD == 1)
     delete mol;
   }
   {
     ROMol *mol = SmilesToMol("C[OH2+]");
-    TEST_ASSERT(mol);
+    TEST_ASSERT(mol)
     int nHBD = calcLipinskiHBD(*mol);
-    TEST_ASSERT(nHBD == 2);
+    TEST_ASSERT(nHBD == 2)
     delete mol;
   }
   {
     ROMol *mol = SmilesToMol("COC");
-    TEST_ASSERT(mol);
+    TEST_ASSERT(mol)
     int nHBD = calcLipinskiHBD(*mol);
-    TEST_ASSERT(nHBD == 0);
+    TEST_ASSERT(nHBD == 0)
     delete mol;
   }
   BOOST_LOG(rdErrorLog) << "  done" << std::endl;
@@ -814,15 +814,15 @@ void testIssue3433771() {
   double logp, mr;
 
   mol = SmilesToMol("O=C(NC)n1cccc1");
-  TEST_ASSERT(mol);
+  TEST_ASSERT(mol)
   calcCrippenDescriptors(*mol, logp, mr);
-  TEST_ASSERT(feq(logp, 0.6756, .001));
+  TEST_ASSERT(feq(logp, 0.6756, .001))
 
   delete mol;
   mol = SmilesToMol("O=C(n1cccc1)n1cccc1");
-  TEST_ASSERT(mol);
+  TEST_ASSERT(mol)
   calcCrippenDescriptors(*mol, logp, mr);
-  TEST_ASSERT(feq(logp, 1.806, .001));
+  TEST_ASSERT(feq(logp, 1.806, .001))
   delete mol;
 
   BOOST_LOG(rdErrorLog) << "  done" << std::endl;
@@ -845,10 +845,10 @@ void runblock(const std::vector<ROMol *> &mols, unsigned int count,
       std::string foo;
       mol->getProp("NUM_HACCEPTORS", foo);
       oVal = boost::lexical_cast<int>(foo);
-      TEST_ASSERT(oVal == nHBA);
+      TEST_ASSERT(oVal == nHBA)
       mol->getProp("NUM_HDONORS", foo);
       oVal = boost::lexical_cast<unsigned int>(foo);
-      TEST_ASSERT(oVal == nHBD);
+      TEST_ASSERT(oVal == nHBD)
 
       unsigned int nAmide = calcNumAmideBonds(*mol);
       (void)nAmide;
@@ -856,7 +856,7 @@ void runblock(const std::vector<ROMol *> &mols, unsigned int count,
       calcCrippenDescriptors(*mol, logp, mr);
     }
   }
-};
+}
 }  // namespace
 #include <thread>
 #include <future>
@@ -910,24 +910,24 @@ void testCrippenContribs() {
   {
     ROMol *mol;
     mol = SmilesToMol("n1ccccc1CO");
-    TEST_ASSERT(mol);
+    TEST_ASSERT(mol)
     std::vector<double> logp(mol->getNumAtoms());
     std::vector<double> mr(mol->getNumAtoms());
     std::vector<unsigned int> ts(mol->getNumAtoms());
     std::vector<std::string> ls(mol->getNumAtoms());
 
     getCrippenAtomContribs(*mol, logp, mr, true, &ts, &ls);
-    TEST_ASSERT(ts[0] == 59);
-    TEST_ASSERT(ts[1] == 25);
-    TEST_ASSERT(ts[2] == 25);
-    TEST_ASSERT(ts[3] == 25);
-    TEST_ASSERT(ts[4] == 25);
-    TEST_ASSERT(ts[5] == 28);
-    TEST_ASSERT(ts[6] == 17);
-    TEST_ASSERT(ts[7] == 69);
+    TEST_ASSERT(ts[0] == 59)
+    TEST_ASSERT(ts[1] == 25)
+    TEST_ASSERT(ts[2] == 25)
+    TEST_ASSERT(ts[3] == 25)
+    TEST_ASSERT(ts[4] == 25)
+    TEST_ASSERT(ts[5] == 28)
+    TEST_ASSERT(ts[6] == 17)
+    TEST_ASSERT(ts[7] == 69)
 
-    TEST_ASSERT(ls[0] == "N11");
-    TEST_ASSERT(ls[7] == "O2");
+    TEST_ASSERT(ls[0] == "N11")
+    TEST_ASSERT(ls[7] == "O2")
     delete mol;
   }
 
@@ -943,180 +943,180 @@ void testIssue252() {
   {
     ROMol *mol;
     mol = SmilesToMol("O=[N+]([O-])C");
-    TEST_ASSERT(mol);
+    TEST_ASSERT(mol)
     std::vector<double> logp(mol->getNumAtoms());
     std::vector<double> mr(mol->getNumAtoms());
 
     getCrippenAtomContribs(*mol, logp, mr, true);
-    TEST_ASSERT(feq(logp[0], 0.0335, .001));
-    TEST_ASSERT(feq(logp[1], -0.3396, .001));
-    TEST_ASSERT(feq(logp[2], 0.0335, .001));
-    TEST_ASSERT(feq(logp[3], -0.2035, .001));
+    TEST_ASSERT(feq(logp[0], 0.0335, .001))
+    TEST_ASSERT(feq(logp[1], -0.3396, .001))
+    TEST_ASSERT(feq(logp[2], 0.0335, .001))
+    TEST_ASSERT(feq(logp[3], -0.2035, .001))
     delete mol;
   }
   {
     ROMol *mol;
     mol = SmilesToMol("CP");
-    TEST_ASSERT(mol);
+    TEST_ASSERT(mol)
     std::vector<double> logp(mol->getNumAtoms());
     std::vector<double> mr(mol->getNumAtoms());
 
     getCrippenAtomContribs(*mol, logp, mr, true);
-    TEST_ASSERT(feq(logp[0], -0.2035, .001));
+    TEST_ASSERT(feq(logp[0], -0.2035, .001))
     delete mol;
   }
   {
     ROMol *mol;
     mol = SmilesToMol("C(C)P");
-    TEST_ASSERT(mol);
+    TEST_ASSERT(mol)
     std::vector<double> logp(mol->getNumAtoms());
     std::vector<double> mr(mol->getNumAtoms());
 
     getCrippenAtomContribs(*mol, logp, mr, true);
-    TEST_ASSERT(feq(logp[0], -0.2035, .001));
+    TEST_ASSERT(feq(logp[0], -0.2035, .001))
     delete mol;
   }
   {
     ROMol *mol;
     mol = SmilesToMol("C(C)(C)P");
-    TEST_ASSERT(mol);
+    TEST_ASSERT(mol)
     std::vector<double> logp(mol->getNumAtoms());
     std::vector<double> mr(mol->getNumAtoms());
 
     getCrippenAtomContribs(*mol, logp, mr, true);
-    TEST_ASSERT(feq(logp[0], -0.2051, .001));
+    TEST_ASSERT(feq(logp[0], -0.2051, .001))
     delete mol;
   }
   {
     ROMol *mol;
     mol = SmilesToMol("C(C)(C)(C)P");
-    TEST_ASSERT(mol);
+    TEST_ASSERT(mol)
     std::vector<double> logp(mol->getNumAtoms());
     std::vector<double> mr(mol->getNumAtoms());
 
     getCrippenAtomContribs(*mol, logp, mr, true);
-    TEST_ASSERT(feq(logp[0], -0.2051, .001));
+    TEST_ASSERT(feq(logp[0], -0.2051, .001))
     delete mol;
   }
   {
     ROMol *mol;
     mol = SmilesToMol("C(=C)c1ccccc1");
-    TEST_ASSERT(mol);
+    TEST_ASSERT(mol)
     std::vector<double> logp(mol->getNumAtoms());
     std::vector<double> mr(mol->getNumAtoms());
 
     getCrippenAtomContribs(*mol, logp, mr, true);
-    TEST_ASSERT(feq(logp[0], 0.264, .001));
+    TEST_ASSERT(feq(logp[0], 0.264, .001))
     delete mol;
   }
   {
     ROMol *mol;
     mol = SmilesToMol("C(=C)(C)c1ccccc1");
-    TEST_ASSERT(mol);
+    TEST_ASSERT(mol)
     std::vector<double> logp(mol->getNumAtoms());
     std::vector<double> mr(mol->getNumAtoms());
 
     getCrippenAtomContribs(*mol, logp, mr, true);
-    TEST_ASSERT(feq(logp[0], 0.264, .001));
+    TEST_ASSERT(feq(logp[0], 0.264, .001))
     delete mol;
   }
   {
     ROMol *mol;
     mol = SmilesToMol("C=C");
-    TEST_ASSERT(mol);
+    TEST_ASSERT(mol)
     std::vector<double> logp(mol->getNumAtoms());
     std::vector<double> mr(mol->getNumAtoms());
 
     getCrippenAtomContribs(*mol, logp, mr, true);
-    TEST_ASSERT(feq(logp[0], 0.1551, .001));
+    TEST_ASSERT(feq(logp[0], 0.1551, .001))
     delete mol;
   }
   {
     ROMol *mol;
     mol = SmilesToMol("O=S");
-    TEST_ASSERT(mol);
+    TEST_ASSERT(mol)
     std::vector<double> logp(mol->getNumAtoms());
     std::vector<double> mr(mol->getNumAtoms());
 
     getCrippenAtomContribs(*mol, logp, mr, true);
-    TEST_ASSERT(feq(logp[0], -0.3339, .001));
+    TEST_ASSERT(feq(logp[0], -0.3339, .001))
     delete mol;
   }
   {
     ROMol *mol;
     mol = SmilesToMol("S=O");
-    TEST_ASSERT(mol);
+    TEST_ASSERT(mol)
     std::vector<double> logp(mol->getNumAtoms());
     std::vector<double> mr(mol->getNumAtoms());
 
     getCrippenAtomContribs(*mol, logp, mr, true);
-    TEST_ASSERT(feq(logp[0], -0.0024, .001));
+    TEST_ASSERT(feq(logp[0], -0.0024, .001))
     delete mol;
   }
   {
     ROMol *mol;
     mol = SmilesToMol("C(Cl)C");
-    TEST_ASSERT(mol);
+    TEST_ASSERT(mol)
     std::vector<double> logp(mol->getNumAtoms());
     std::vector<double> mr(mol->getNumAtoms());
 
     getCrippenAtomContribs(*mol, logp, mr, true);
-    TEST_ASSERT(feq(logp[0], -0.2035, .001));
+    TEST_ASSERT(feq(logp[0], -0.2035, .001))
     delete mol;
   }
   {
     ROMol *mol;
     mol = SmilesToMol("C(Cl)(Cl)C");
-    TEST_ASSERT(mol);
+    TEST_ASSERT(mol)
     std::vector<double> logp(mol->getNumAtoms());
     std::vector<double> mr(mol->getNumAtoms());
 
     getCrippenAtomContribs(*mol, logp, mr, true);
-    TEST_ASSERT(feq(logp[0], -0.2051, .001));
+    TEST_ASSERT(feq(logp[0], -0.2051, .001))
     delete mol;
   }
   {
     ROMol *mol;
     mol = SmilesToMol("C(Cl)(Cl)(Cl)C");
-    TEST_ASSERT(mol);
+    TEST_ASSERT(mol)
     std::vector<double> logp(mol->getNumAtoms());
     std::vector<double> mr(mol->getNumAtoms());
 
     getCrippenAtomContribs(*mol, logp, mr, true);
-    TEST_ASSERT(feq(logp[0], -0.2051, .001));
+    TEST_ASSERT(feq(logp[0], -0.2051, .001))
     delete mol;
   }
   {
     ROMol *mol;
     mol = SmilesToMol("C(Cl)c1ccccc1");
-    TEST_ASSERT(mol);
+    TEST_ASSERT(mol)
     std::vector<double> logp(mol->getNumAtoms());
     std::vector<double> mr(mol->getNumAtoms());
 
     getCrippenAtomContribs(*mol, logp, mr, true);
-    TEST_ASSERT(feq(logp[0], -0.0516, .001));
+    TEST_ASSERT(feq(logp[0], -0.0516, .001))
     delete mol;
   }
   {
     ROMol *mol;
     mol = SmilesToMol("C(Cl)(Cl)c1ccccc1");
-    TEST_ASSERT(mol);
+    TEST_ASSERT(mol)
     std::vector<double> logp(mol->getNumAtoms());
     std::vector<double> mr(mol->getNumAtoms());
 
     getCrippenAtomContribs(*mol, logp, mr, true);
-    TEST_ASSERT(feq(logp[0], 0.1193, .001));
+    TEST_ASSERT(feq(logp[0], 0.1193, .001))
     delete mol;
   }
   {
     ROMol *mol;
     mol = SmilesToMol("C(Cl)(Cl)(Cl)c1ccccc1");
-    TEST_ASSERT(mol);
+    TEST_ASSERT(mol)
     std::vector<double> logp(mol->getNumAtoms());
     std::vector<double> mr(mol->getNumAtoms());
 
     getCrippenAtomContribs(*mol, logp, mr, true);
-    TEST_ASSERT(feq(logp[0], -0.0967, .001));
+    TEST_ASSERT(feq(logp[0], -0.0967, .001))
     delete mol;
   }
 
@@ -1138,9 +1138,9 @@ void testChiVs() {
     while (sdata[idx] != "EOS") {
       ROMol *mol;
       mol = SmilesToMol(sdata[idx]);
-      TEST_ASSERT(mol);
+      TEST_ASSERT(mol)
       double v = calcChi0v(*mol);
-      TEST_ASSERT(feq(v, ddata[idx], 0.002));
+      TEST_ASSERT(feq(v, ddata[idx], 0.002))
       ++idx;
       delete mol;
     }
@@ -1156,9 +1156,9 @@ void testChiVs() {
     while (sdata[idx] != "EOS") {
       ROMol *mol;
       mol = SmilesToMol(sdata[idx]);
-      TEST_ASSERT(mol);
+      TEST_ASSERT(mol)
       double v = calcChi1v(*mol);
-      TEST_ASSERT(feq(v, ddata[idx], 0.002));
+      TEST_ASSERT(feq(v, ddata[idx], 0.002))
       ++idx;
       delete mol;
     }
@@ -1175,9 +1175,9 @@ void testChiVs() {
     while (sdata[idx] != "EOS") {
       ROMol *mol;
       mol = SmilesToMol(sdata[idx]);
-      TEST_ASSERT(mol);
+      TEST_ASSERT(mol)
       double v = calcChi2v(*mol);
-      TEST_ASSERT(feq(v, ddata[idx], 0.002));
+      TEST_ASSERT(feq(v, ddata[idx], 0.002))
       ++idx;
       delete mol;
     }
@@ -1195,9 +1195,9 @@ void testChiVs() {
     while (sdata[idx] != "EOS") {
       ROMol *mol;
       mol = SmilesToMol(sdata[idx]);
-      TEST_ASSERT(mol);
+      TEST_ASSERT(mol)
       double v = calcChi3v(*mol);
-      TEST_ASSERT(feq(v, ddata[idx], 0.002));
+      TEST_ASSERT(feq(v, ddata[idx], 0.002))
       ++idx;
       delete mol;
     }
@@ -1215,9 +1215,9 @@ void testChiVs() {
     while (sdata[idx] != "EOS") {
       ROMol *mol;
       mol = SmilesToMol(sdata[idx]);
-      TEST_ASSERT(mol);
+      TEST_ASSERT(mol)
       double v = calcChi4v(*mol);
-      TEST_ASSERT(feq(v, ddata[idx], 0.002));
+      TEST_ASSERT(feq(v, ddata[idx], 0.002))
       ++idx;
       delete mol;
     }
@@ -1241,9 +1241,9 @@ void testChiNs() {
     while (sdata[idx] != "EOS") {
       ROMol *mol;
       mol = SmilesToMol(sdata[idx]);
-      TEST_ASSERT(mol);
+      TEST_ASSERT(mol)
       double v = calcChi0n(*mol);
-      TEST_ASSERT(feq(v, ddata[idx], 0.002));
+      TEST_ASSERT(feq(v, ddata[idx], 0.002))
       ++idx;
       delete mol;
     }
@@ -1259,9 +1259,9 @@ void testChiNs() {
     while (sdata[idx] != "EOS") {
       ROMol *mol;
       mol = SmilesToMol(sdata[idx]);
-      TEST_ASSERT(mol);
+      TEST_ASSERT(mol)
       double v = calcChi1n(*mol);
-      TEST_ASSERT(feq(v, ddata[idx], 0.002));
+      TEST_ASSERT(feq(v, ddata[idx], 0.002))
       ++idx;
       delete mol;
     }
@@ -1278,9 +1278,9 @@ void testChiNs() {
     while (sdata[idx] != "EOS") {
       ROMol *mol;
       mol = SmilesToMol(sdata[idx]);
-      TEST_ASSERT(mol);
+      TEST_ASSERT(mol)
       double v = calcChi2n(*mol);
-      TEST_ASSERT(feq(v, ddata[idx], 0.002));
+      TEST_ASSERT(feq(v, ddata[idx], 0.002))
       ++idx;
       delete mol;
     }
@@ -1298,9 +1298,9 @@ void testChiNs() {
     while (sdata[idx] != "EOS") {
       ROMol *mol;
       mol = SmilesToMol(sdata[idx]);
-      TEST_ASSERT(mol);
+      TEST_ASSERT(mol)
       double v = calcChi3n(*mol);
-      TEST_ASSERT(feq(v, ddata[idx], 0.002));
+      TEST_ASSERT(feq(v, ddata[idx], 0.002))
       ++idx;
       delete mol;
     }
@@ -1318,9 +1318,9 @@ void testChiNs() {
     while (sdata[idx] != "EOS") {
       ROMol *mol;
       mol = SmilesToMol(sdata[idx]);
-      TEST_ASSERT(mol);
+      TEST_ASSERT(mol)
       double v = calcChi4n(*mol);
-      TEST_ASSERT(feq(v, ddata[idx], 0.002));
+      TEST_ASSERT(feq(v, ddata[idx], 0.002))
       ++idx;
       delete mol;
     }
@@ -1354,9 +1354,9 @@ void testHallKierAlpha() {
     while (sdata[idx] != "EOS") {
       ROMol *mol;
       mol = SmilesToMol(sdata[idx]);
-      TEST_ASSERT(mol);
+      TEST_ASSERT(mol)
       double v = calcHallKierAlpha(*mol);
-      TEST_ASSERT(feq(v, ddata[idx], 0.002));
+      TEST_ASSERT(feq(v, ddata[idx], 0.002))
       ++idx;
       delete mol;
     }
@@ -1377,9 +1377,9 @@ void testKappa1() {
     while (sdata[idx] != "EOS") {
       ROMol *mol;
       mol = SmilesToMol(sdata[idx]);
-      TEST_ASSERT(mol);
+      TEST_ASSERT(mol)
       double v = calcKappa1(*mol);
-      TEST_ASSERT(feq(v, ddata[idx], 0.002));
+      TEST_ASSERT(feq(v, ddata[idx], 0.002))
       ++idx;
       delete mol;
     }
@@ -1425,9 +1425,9 @@ void testKappa2() {
     while (sdata[idx] != "EOS") {
       ROMol *mol;
       mol = SmilesToMol(sdata[idx]);
-      TEST_ASSERT(mol);
+      TEST_ASSERT(mol)
       double v = calcKappa2(*mol);
-      TEST_ASSERT(feq(v, ddata[idx], 0.002));
+      TEST_ASSERT(feq(v, ddata[idx], 0.002))
       ++idx;
       delete mol;
     }
@@ -1449,9 +1449,9 @@ void testKappa3() {
     while (sdata[idx] != "EOS") {
       ROMol *mol;
       mol = SmilesToMol(sdata[idx]);
-      TEST_ASSERT(mol);
+      TEST_ASSERT(mol)
       double v = calcKappa3(*mol);
-      TEST_ASSERT(feq(v, ddata[idx], 0.002));
+      TEST_ASSERT(feq(v, ddata[idx], 0.002))
       ++idx;
       delete mol;
     }
@@ -1468,30 +1468,30 @@ void testRingDescriptors() {
   SDMolSupplier suppl(fName);
   while (!suppl.atEnd()) {
     ROMol *mol = suppl.next();
-    TEST_ASSERT(mol);
+    TEST_ASSERT(mol)
     unsigned int iv;
     mol->getProp("NumRings", iv);
-    TEST_ASSERT(iv == calcNumRings(*mol));
+    TEST_ASSERT(iv == calcNumRings(*mol))
     mol->getProp("NumAromaticRings", iv);
-    TEST_ASSERT(iv == calcNumAromaticRings(*mol));
+    TEST_ASSERT(iv == calcNumAromaticRings(*mol))
     mol->getProp("NumSaturatedRings", iv);
-    TEST_ASSERT(iv == calcNumSaturatedRings(*mol));
+    TEST_ASSERT(iv == calcNumSaturatedRings(*mol))
     mol->getProp("NumAromaticHeterocycles", iv);
-    TEST_ASSERT(iv == calcNumAromaticHeterocycles(*mol));
+    TEST_ASSERT(iv == calcNumAromaticHeterocycles(*mol))
     mol->getProp("NumAromaticCarbocycles", iv);
-    TEST_ASSERT(iv == calcNumAromaticCarbocycles(*mol));
+    TEST_ASSERT(iv == calcNumAromaticCarbocycles(*mol))
     mol->getProp("NumSaturatedHeterocycles", iv);
-    TEST_ASSERT(iv == calcNumSaturatedHeterocycles(*mol));
+    TEST_ASSERT(iv == calcNumSaturatedHeterocycles(*mol))
     mol->getProp("NumSaturatedCarbocycles", iv);
-    TEST_ASSERT(iv == calcNumSaturatedCarbocycles(*mol));
+    TEST_ASSERT(iv == calcNumSaturatedCarbocycles(*mol))
     mol->getProp("NumAliphaticRings", iv);
-    TEST_ASSERT(iv == calcNumAliphaticRings(*mol));
+    TEST_ASSERT(iv == calcNumAliphaticRings(*mol))
     mol->getProp("NumAliphaticHeterocycles", iv);
-    TEST_ASSERT(iv == calcNumAliphaticHeterocycles(*mol));
+    TEST_ASSERT(iv == calcNumAliphaticHeterocycles(*mol))
     mol->getProp("NumAliphaticCarbocycles", iv);
-    TEST_ASSERT(iv == calcNumAliphaticCarbocycles(*mol));
+    TEST_ASSERT(iv == calcNumAliphaticCarbocycles(*mol))
     mol->getProp("NumHeterocycles", iv);
-    TEST_ASSERT(iv == calcNumHeterocycles(*mol));
+    TEST_ASSERT(iv == calcNumHeterocycles(*mol))
 
     delete mol;
   }
@@ -1506,25 +1506,25 @@ void testMiscCountDescriptors() {
   {
     ROMol *mol;
     mol = SmilesToMol("OCCO");
-    TEST_ASSERT(feq(calcFractionCSP3(*mol), 1.0, 0.001));
+    TEST_ASSERT(feq(calcFractionCSP3(*mol), 1.0, 0.001))
     delete mol;
   }
   {
     ROMol *mol;
     mol = SmilesToMol("OO");
-    TEST_ASSERT(feq(calcFractionCSP3(*mol), 0.0, 0.001));
+    TEST_ASSERT(feq(calcFractionCSP3(*mol), 0.0, 0.001))
     delete mol;
   }
   {
     ROMol *mol;
     mol = SmilesToMol("OC=CO");
-    TEST_ASSERT(feq(calcFractionCSP3(*mol), 0.0, 0.001));
+    TEST_ASSERT(feq(calcFractionCSP3(*mol), 0.0, 0.001))
     delete mol;
   }
   {
     ROMol *mol;
     mol = SmilesToMol("CCC=C");
-    TEST_ASSERT(feq(calcFractionCSP3(*mol), 0.5, 0.001));
+    TEST_ASSERT(feq(calcFractionCSP3(*mol), 0.5, 0.001))
     delete mol;
   }
 
@@ -1557,9 +1557,9 @@ void testMQNs() {
     SDMolSupplier suppl(fName);
     while (!suppl.atEnd()) {
       ROMol *mol = suppl.next();
-      TEST_ASSERT(mol);
+      TEST_ASSERT(mol)
       std::vector<unsigned int> v = calcMQNs(*mol);
-      TEST_ASSERT(v.size() == 42);
+      TEST_ASSERT(v.size() == 42)
       for (unsigned int i = 0; i < 42; ++i) {
         accum[i] += v[i];
       }
@@ -1570,23 +1570,23 @@ void testMQNs() {
         std::cerr << " !! " << i << " " << accum[i] << "!=" << tgt[i]
                   << std::endl;
       }
-      TEST_ASSERT(accum[i] == tgt[i]);
+      TEST_ASSERT(accum[i] == tgt[i])
     }
   }
   {  // github #623
     ROMol *mol;
     mol = SmilesToMol("CC*");
-    TEST_ASSERT(mol);
+    TEST_ASSERT(mol)
     std::vector<unsigned int> v = calcMQNs(*mol);
-    TEST_ASSERT(v[11] == 2);
+    TEST_ASSERT(v[11] == 2)
     delete mol;
   }
   {  // github #623
     ROMol *mol;
     mol = SmilesToMol("[2H][2H]");
-    TEST_ASSERT(mol);
+    TEST_ASSERT(mol)
     std::vector<unsigned int> v = calcMQNs(*mol);
-    TEST_ASSERT(v[11] == 0);
+    TEST_ASSERT(v[11] == 0)
     delete mol;
   }
   BOOST_LOG(rdErrorLog) << "  done" << std::endl;
@@ -1601,9 +1601,9 @@ void testGitHubIssue56() {
     mol = SmilesToMol("[H+]");
     double mw;
     mw = calcAMW(*mol);
-    TEST_ASSERT(feq(mw, 1.008, 0.001));
+    TEST_ASSERT(feq(mw, 1.008, 0.001))
     mw = calcExactMW(*mol);
-    TEST_ASSERT(feq(mw, 1.0078, 0.001));
+    TEST_ASSERT(feq(mw, 1.0078, 0.001))
     delete mol;
   }
   {
@@ -1611,9 +1611,9 @@ void testGitHubIssue56() {
     mol = SmilesToMol("[2H+]");
     double mw;
     mw = calcAMW(*mol);
-    TEST_ASSERT(feq(mw, 2.014, 0.001));
+    TEST_ASSERT(feq(mw, 2.014, 0.001))
     mw = calcExactMW(*mol);
-    TEST_ASSERT(feq(mw, 2.014, 0.001));
+    TEST_ASSERT(feq(mw, 2.014, 0.001))
     delete mol;
   }
   {
@@ -1621,9 +1621,9 @@ void testGitHubIssue56() {
     mol = SmilesToMol("[H]");
     double mw;
     mw = calcAMW(*mol);
-    TEST_ASSERT(feq(mw, 1.008, 0.001));
+    TEST_ASSERT(feq(mw, 1.008, 0.001))
     mw = calcExactMW(*mol);
-    TEST_ASSERT(feq(mw, 1.0078, 0.001));
+    TEST_ASSERT(feq(mw, 1.0078, 0.001))
     delete mol;
   }
   {
@@ -1631,9 +1631,9 @@ void testGitHubIssue56() {
     mol = SmilesToMol("[2H]");
     double mw;
     mw = calcAMW(*mol);
-    TEST_ASSERT(feq(mw, 2.014, 0.001));
+    TEST_ASSERT(feq(mw, 2.014, 0.001))
     mw = calcExactMW(*mol);
-    TEST_ASSERT(feq(mw, 2.014, 0.001));
+    TEST_ASSERT(feq(mw, 2.014, 0.001))
     delete mol;
   }
 
@@ -1648,13 +1648,13 @@ void testGitHubIssue92() {
   {
     RWMol *mol;
     mol = SmilesToMol("c1cccn1[H]", 0, 0);
-    TEST_ASSERT(mol);
+    TEST_ASSERT(mol)
     MolOps::sanitizeMol(*mol);
-    TEST_ASSERT(mol->getNumAtoms() == 6);
+    TEST_ASSERT(mol->getNumAtoms() == 6)
     std::vector<double> logp(mol->getNumAtoms());
     std::vector<double> mr(mol->getNumAtoms());
     getCrippenAtomContribs(*mol, logp, mr, true);
-    TEST_ASSERT(feq(logp[5], 0.2142, .001));
+    TEST_ASSERT(feq(logp[5], 0.2142, .001))
     delete mol;
   }
   BOOST_LOG(rdErrorLog) << "  done" << std::endl;
@@ -1669,13 +1669,13 @@ void testGitHubIssue463() {
   {  // start with the hall-kier delta values:
     RWMol *mol;
     mol = SmilesToMol("O=C(Nc1nccs1)NC(C1CC1)C");
-    TEST_ASSERT(mol);
-    TEST_ASSERT(mol->getNumAtoms() == 14);
+    TEST_ASSERT(mol)
+    TEST_ASSERT(mol->getNumAtoms() == 14)
     unsigned int order[] = {0, 11, 8, 7, 2, 4, 5, 13, 10, 12, 9, 3, 1, 6};
     std::vector<unsigned int> nVect(
         order, order + sizeof(order) / sizeof(unsigned int));
     ROMol *nm = MolOps::renumberAtoms(*mol, nVect);
-    TEST_ASSERT(nm);
+    TEST_ASSERT(nm)
 
     std::vector<double> hkds(mol->getNumAtoms());
     Descriptors::detail::hkDeltas(*mol, hkds, true);
@@ -1683,7 +1683,7 @@ void testGitHubIssue463() {
     Descriptors::detail::hkDeltas(*nm, nhkds, true);
 
     for (unsigned int j = 0; j < mol->getNumAtoms(); ++j) {
-      TEST_ASSERT(feq(hkds[nVect[j]], nhkds[j]));
+      TEST_ASSERT(feq(hkds[nVect[j]], nhkds[j]))
     }
 
     delete mol;
@@ -1694,18 +1694,18 @@ void testGitHubIssue463() {
 
     RWMol *mol;
     mol = SmilesToMol("O=C(Nc1nccs1)NC(C1CC1)C");
-    TEST_ASSERT(mol);
-    TEST_ASSERT(mol->getNumAtoms() == 14);
+    TEST_ASSERT(mol)
+    TEST_ASSERT(mol->getNumAtoms() == 14)
     unsigned int order[] = {0, 11, 8, 7, 2, 4, 5, 13, 10, 12, 9, 3, 1, 6};
     std::vector<unsigned int> nVect(
         order, order + sizeof(order) / sizeof(unsigned int));
     ROMol *nm = MolOps::renumberAtoms(*mol, nVect);
-    TEST_ASSERT(nm);
+    TEST_ASSERT(nm)
 
     double cv = calcChi3v(*mol);
     double ncv = calcChi3v(*nm);
 
-    TEST_ASSERT(feq(cv, ncv));
+    TEST_ASSERT(feq(cv, ncv))
 
     delete mol;
     delete nm;
@@ -1715,18 +1715,18 @@ void testGitHubIssue463() {
 
     RWMol *mol;
     mol = SmilesToMol("O=C(Nc1nccs1)NC(C1CC1)C");
-    TEST_ASSERT(mol);
-    TEST_ASSERT(mol->getNumAtoms() == 14);
+    TEST_ASSERT(mol)
+    TEST_ASSERT(mol->getNumAtoms() == 14)
     unsigned int order[] = {0, 11, 8, 7, 2, 4, 5, 13, 10, 12, 9, 3, 1, 6};
     std::vector<unsigned int> nVect(
         order, order + sizeof(order) / sizeof(unsigned int));
     ROMol *nm = MolOps::renumberAtoms(*mol, nVect);
-    TEST_ASSERT(nm);
+    TEST_ASSERT(nm)
 
     double cv = calcChi3n(*mol);
     double ncv = calcChi3n(*nm);
 
-    TEST_ASSERT(feq(cv, ncv));
+    TEST_ASSERT(feq(cv, ncv))
 
     delete mol;
     delete nm;
@@ -1735,15 +1735,15 @@ void testGitHubIssue463() {
   {  // the root cause was handling of rings
     RWMol *mol;
     mol = SmilesToMol("C1CC1");
-    TEST_ASSERT(mol);
-    TEST_ASSERT(mol->getNumAtoms() == 3);
+    TEST_ASSERT(mol)
+    TEST_ASSERT(mol->getNumAtoms() == 3)
     std::vector<double> hkds(mol->getNumAtoms());
     Descriptors::detail::hkDeltas(*mol, hkds, true);
 
     double cv = calcChi3v(*mol);
-    TEST_ASSERT(feq(hkds[0], hkds[1]));
-    TEST_ASSERT(feq(hkds[1], hkds[2]));
-    TEST_ASSERT(feq(cv, hkds[0] * hkds[0] * hkds[0]));
+    TEST_ASSERT(feq(hkds[0], hkds[1]))
+    TEST_ASSERT(feq(hkds[1], hkds[2]))
+    TEST_ASSERT(feq(cv, hkds[0] * hkds[0] * hkds[0]))
 
     delete mol;
   }
@@ -1759,13 +1759,13 @@ void testSpiroAndBridgeheads() {
   {
     RWMol *mol;
     mol = SmilesToMol("C1CC2CCC1CC2");
-    TEST_ASSERT(mol);
+    TEST_ASSERT(mol)
 
     unsigned int nSpiro = Descriptors::calcNumSpiroAtoms(*mol);
-    TEST_ASSERT(nSpiro == 0);
+    TEST_ASSERT(nSpiro == 0)
 
     unsigned int nBridgehead = Descriptors::calcNumBridgeheadAtoms(*mol);
-    TEST_ASSERT(nBridgehead == 2);
+    TEST_ASSERT(nBridgehead == 2)
 
     delete mol;
   }
@@ -1773,13 +1773,13 @@ void testSpiroAndBridgeheads() {
   {
     RWMol *mol;
     mol = SmilesToMol("C1CCC2(C1)CC1CCC2CC1");
-    TEST_ASSERT(mol);
+    TEST_ASSERT(mol)
 
     unsigned int nSpiro = Descriptors::calcNumSpiroAtoms(*mol);
-    TEST_ASSERT(nSpiro == 1);
+    TEST_ASSERT(nSpiro == 1)
 
     unsigned int nBridgehead = Descriptors::calcNumBridgeheadAtoms(*mol);
-    TEST_ASSERT(nBridgehead == 2);
+    TEST_ASSERT(nBridgehead == 2)
 
     delete mol;
   }
@@ -1787,13 +1787,13 @@ void testSpiroAndBridgeheads() {
   {
     RWMol *mol;
     mol = SmilesToMol("CC1(C)CC2(C)CCC1(C)CC2");
-    TEST_ASSERT(mol);
+    TEST_ASSERT(mol)
 
     unsigned int nSpiro = Descriptors::calcNumSpiroAtoms(*mol);
-    TEST_ASSERT(nSpiro == 0);
+    TEST_ASSERT(nSpiro == 0)
 
     unsigned int nBridgehead = Descriptors::calcNumBridgeheadAtoms(*mol);
-    TEST_ASSERT(nBridgehead == 2);
+    TEST_ASSERT(nBridgehead == 2)
 
     delete mol;
   }
@@ -1801,22 +1801,22 @@ void testSpiroAndBridgeheads() {
   {  // test the atoms parameter
     RWMol *mol;
     mol = SmilesToMol("C1CCC2(C1)CC1CCC2CC1");
-    TEST_ASSERT(mol);
+    TEST_ASSERT(mol)
 
     std::vector<unsigned int> atoms;
 
     unsigned int nSpiro = Descriptors::calcNumSpiroAtoms(*mol, &atoms);
-    TEST_ASSERT(nSpiro == 1);
-    TEST_ASSERT(atoms.size() == nSpiro);
-    TEST_ASSERT(std::find(atoms.begin(), atoms.end(), 3) != atoms.end());
+    TEST_ASSERT(nSpiro == 1)
+    TEST_ASSERT(atoms.size() == nSpiro)
+    TEST_ASSERT(std::find(atoms.begin(), atoms.end(), 3) != atoms.end())
 
     atoms.clear();
     unsigned int nBridgehead =
         Descriptors::calcNumBridgeheadAtoms(*mol, &atoms);
-    TEST_ASSERT(nBridgehead == 2);
-    TEST_ASSERT(atoms.size() == nBridgehead);
-    TEST_ASSERT(std::find(atoms.begin(), atoms.end(), 9) != atoms.end());
-    TEST_ASSERT(std::find(atoms.begin(), atoms.end(), 6) != atoms.end());
+    TEST_ASSERT(nBridgehead == 2)
+    TEST_ASSERT(atoms.size() == nBridgehead)
+    TEST_ASSERT(std::find(atoms.begin(), atoms.end(), 9) != atoms.end())
+    TEST_ASSERT(std::find(atoms.begin(), atoms.end(), 6) != atoms.end())
 
     delete mol;
   }
@@ -1832,34 +1832,34 @@ void testGitHubIssue694() {
 
   {
     ROMol *mol = SmilesToMol("[35Cl]");
-    TEST_ASSERT(mol);
+    TEST_ASSERT(mol)
     double mw = calcExactMW(*mol);
     TEST_ASSERT(
-        feq(mw, PeriodicTable::getTable()->getMassForIsotope(17, 35), .000001));
+        feq(mw, PeriodicTable::getTable()->getMassForIsotope(17, 35), .000001))
     delete mol;
     mol = SmilesToMol("[35Cl-]");
-    TEST_ASSERT(mol);
+    TEST_ASSERT(mol)
     mw = calcExactMW(*mol);
     TEST_ASSERT(feq(mw,
                     PeriodicTable::getTable()->getMassForIsotope(17, 35) +
                         constants::electronMass,
-                    .000001));
+                    .000001))
     delete mol;
     mol = SmilesToMol("[35Cl+]");
-    TEST_ASSERT(mol);
+    TEST_ASSERT(mol)
     mw = calcExactMW(*mol);
     TEST_ASSERT(feq(mw,
                     PeriodicTable::getTable()->getMassForIsotope(17, 35) -
                         constants::electronMass,
-                    .000001));
+                    .000001))
     delete mol;
     mol = SmilesToMol("[35Cl+2]");
-    TEST_ASSERT(mol);
+    TEST_ASSERT(mol)
     mw = calcExactMW(*mol);
     TEST_ASSERT(feq(mw,
                     PeriodicTable::getTable()->getMassForIsotope(17, 35) -
                         2 * constants::electronMass,
-                    .000001));
+                    .000001))
     delete mol;
   }
   BOOST_LOG(rdErrorLog) << "  done" << std::endl;
@@ -1876,7 +1876,7 @@ void testProperties() {
     Properties sink;
     std::vector<std::string> names = sink.getPropertyNames();
 
-    TEST_ASSERT(names == all_names);
+    TEST_ASSERT(names == all_names)
 
     RWMol *mol;
     mol = SmilesToMol("C1CCC2(C1)CC1CCC2CC1");
@@ -1888,11 +1888,11 @@ void testProperties() {
       props.push_back(prop);
       Properties property(props);
       std::vector<double> computedProps = property.computeProperties(*mol);
-      TEST_ASSERT(computedProps.size() == 1);
+      TEST_ASSERT(computedProps.size() == 1)
       res.push_back(computedProps[0]);
     }
 
-    TEST_ASSERT(props == res);
+    TEST_ASSERT(props == res)
     delete mol;
   }
   {
@@ -1901,28 +1901,28 @@ void testProperties() {
     names.emplace_back("NumBridgeheadAtoms");
     Properties sink(names);
     std::vector<std::string> sink_names = sink.getPropertyNames();
-    TEST_ASSERT(names == sink_names);
+    TEST_ASSERT(names == sink_names)
     std::vector<double> res;
     res.push_back(1.);
     res.push_back(2.);
 
     RWMol *mol;
     mol = SmilesToMol("C1CCC2(C1)CC1CCC2CC1");
-    TEST_ASSERT(mol);
+    TEST_ASSERT(mol)
     // Test annotation as well
     std::vector<double> props = sink.computeProperties(*mol, true);
 
-    TEST_ASSERT(props == res);
-    TEST_ASSERT(mol->getProp<double>("NumSpiroAtoms") == 1.);
-    TEST_ASSERT(mol->getProp<double>("NumBridgeheadAtoms") == 2.);
+    TEST_ASSERT(props == res)
+    TEST_ASSERT(mol->getProp<double>("NumSpiroAtoms") == 1.)
+    TEST_ASSERT(mol->getProp<double>("NumBridgeheadAtoms") == 2.)
     delete mol;
 
     mol = SmilesToMol("C1CCC2(C1)CC1CCC2CC1");
-    TEST_ASSERT(mol);
+    TEST_ASSERT(mol)
     // Test annotation as well
     sink.annotateProperties(*mol);
-    TEST_ASSERT(mol->getProp<double>("NumSpiroAtoms") == 1.);
-    TEST_ASSERT(mol->getProp<double>("NumBridgeheadAtoms") == 2.);
+    TEST_ASSERT(mol->getProp<double>("NumSpiroAtoms") == 1.)
+    TEST_ASSERT(mol->getProp<double>("NumBridgeheadAtoms") == 2.)
     delete mol;
   }
 
@@ -1931,7 +1931,7 @@ void testProperties() {
       std::vector<std::string> names;
       names.emplace_back("FakeName");
       Properties sink(names);
-      TEST_ASSERT(0);  // should throw
+      TEST_ASSERT(0)  // should throw
     } catch (KeyErrorException &) {
       BOOST_LOG(rdErrorLog)
           << "---Caught keyerror (bad property name)---" << std::endl;
@@ -1944,28 +1944,28 @@ void testPropertyQueries() {
   mol = SmilesToMol("C1CCC2(C1)CC1CCC2CC1");
   {
     PROP_RANGE_QUERY *query = makePropertyRangeQuery("exactmw", 50, 300);
-    TEST_ASSERT(query->Match(*mol));
+    TEST_ASSERT(query->Match(*mol))
     delete query;
   }
   {
     PROP_RANGE_QUERY *query = makePropertyRangeQuery("exactmw", 1000, 10300);
-    TEST_ASSERT(!query->Match(*mol));
+    TEST_ASSERT(!query->Match(*mol))
     delete query;
   }
 
   {
     auto pq = std::unique_ptr<PROP_EQUALS_QUERY>(
         makePropertyQuery<PROP_EQUALS_QUERY>("exactmw", calcExactMW(*mol)));
-    TEST_ASSERT(pq->Match(*mol));
+    TEST_ASSERT(pq->Match(*mol))
 
     pq = std::unique_ptr<PROP_EQUALS_QUERY>(
         makePropertyQuery<PROP_EQUALS_QUERY>("NumHBA", calcNumHBA(*mol)));
-    TEST_ASSERT(pq->Match(*mol));
+    TEST_ASSERT(pq->Match(*mol))
 
     pq =
         std::unique_ptr<PROP_EQUALS_QUERY>(makePropertyQuery<PROP_EQUALS_QUERY>(
             "lipinskiHBA", calcLipinskiHBA(*mol)));
-    TEST_ASSERT(pq->Match(*mol));
+    TEST_ASSERT(pq->Match(*mol))
   }
   delete mol;
 }
@@ -1974,7 +1974,7 @@ void testStereoCounting() {
   const bool debugParse = false;
   const bool sanitize = false;
   ROMol *m = SmilesToMol("NC(C)(F)C(=O)O", debugParse, sanitize);
-  TEST_ASSERT(!m->hasProp(common_properties::_StereochemDone));
+  TEST_ASSERT(!m->hasProp(common_properties::_StereochemDone))
 
   std::vector<std::string> names;
   names.emplace_back("NumAtomStereoCenters");
@@ -1983,7 +1983,7 @@ void testStereoCounting() {
 
   try {
     prop.computeProperties(*m);
-    TEST_ASSERT(0);  // didn't catch exception
+    TEST_ASSERT(0)  // didn't catch exception
   } catch (ValueErrorException &) {
     BOOST_LOG(rdErrorLog) << "---Caught stereo value error---" << std::endl;
   }
@@ -1991,8 +1991,8 @@ void testStereoCounting() {
   delete m;
   m = SmilesToMol("NC(C)(F)C(=O)O", sanitize);
   std::vector<double> res = prop.computeProperties(*m);
-  TEST_ASSERT(res[0] == 1);
-  TEST_ASSERT(res[1] == 1);
+  TEST_ASSERT(res[0] == 1)
+  TEST_ASSERT(res[1] == 1)
   delete m;
 }
 
@@ -2010,7 +2010,7 @@ void testUSRDescriptor() {
     ok = true;
   }
   delete mol;
-  TEST_ASSERT(ok);
+  TEST_ASSERT(ok)
 
   // number of atoms < 3
   mol = SmilesToMol("CC");
@@ -2021,7 +2021,7 @@ void testUSRDescriptor() {
     ok = true;
   }
   delete mol;
-  TEST_ASSERT(ok);
+  TEST_ASSERT(ok)
 
   // DESCRIPTOR
   // comparing to results produced by Adrian Schreyer's code
@@ -2038,7 +2038,7 @@ void testUSRDescriptor() {
   std::vector<double> myUSR(12);
   USR(*mol, myUSR);
   for (unsigned int i = 0; i < myUSR.size(); ++i) {
-    TEST_ASSERT(feq(myUSR[i], refUSR[i]));
+    TEST_ASSERT(feq(myUSR[i], refUSR[i]))
   }
   delete mol;
   BOOST_LOG(rdErrorLog) << "  done" << std::endl;
@@ -2056,7 +2056,7 @@ void testUSRScore() {
   std::vector<double> d1(m1, m1 + sizeof(m1) / sizeof(double));
   std::vector<double> d2(m2, m2 + sizeof(m2) / sizeof(double));
   std::vector<double> weights(1, 1.0);
-  TEST_ASSERT(feq(calcUSRScore(d1, d2, weights), 0.812, 0.001));
+  TEST_ASSERT(feq(calcUSRScore(d1, d2, weights), 0.812, 0.001))
 
   BOOST_LOG(rdErrorLog) << "  done" << std::endl;
 }
@@ -2074,7 +2074,7 @@ void testUSRCATDescriptor() {
   } catch (ConformerException &) {
     ok = true;
   }
-  TEST_ASSERT(ok);
+  TEST_ASSERT(ok)
 
   // number of atoms < 3
   mol = SmilesToMol("CC");
@@ -2084,7 +2084,7 @@ void testUSRCATDescriptor() {
   } catch (ValueErrorException &) {
     ok = true;
   }
-  TEST_ASSERT(ok);
+  TEST_ASSERT(ok)
 
   // DESCRIPTOR
   // comparing to results produced by Adrian Schreyer's code
@@ -2111,7 +2111,7 @@ void testUSRCATDescriptor() {
   std::vector<double> myUSR(12);
   USRCAT(*mol, myUSR, atomIds);
   for (unsigned int i = 0; i < myUSR.size(); ++i) {
-    TEST_ASSERT(feq(myUSR[i], refUSR[i]));
+    TEST_ASSERT(feq(myUSR[i], refUSR[i]))
   }
 
   atomIds.resize(4);
@@ -2121,7 +2121,7 @@ void testUSRCATDescriptor() {
   atomIds[0] = hydrophobic;
   USRCAT(*mol, myUSR, atomIds);
   for (unsigned int i = 0; i < myUSR.size(); ++i) {
-    TEST_ASSERT(feq(myUSR[i], refUSR[i]));
+    TEST_ASSERT(feq(myUSR[i], refUSR[i]))
   }
 
   BOOST_LOG(rdErrorLog) << "  done" << std::endl;
@@ -2137,7 +2137,7 @@ void testGithub1702() {
   ROMol *mol = SmilesToMol("C1CCCCC1");
   std::vector<double> dvals;
   AUTOCORR2D(*mol, dvals);
-  TEST_ASSERT(dvals.size() == 192);
+  TEST_ASSERT(dvals.size() == 192)
   delete mol;
   BOOST_LOG(rdErrorLog) << "  done" << std::endl;
 }
@@ -2160,13 +2160,13 @@ void testGithub1973() {
     std::vector<double> new_tpsa = {100.88, 104.64, 149.69};
     for (unsigned int i = 0; i < smiles.size(); ++i) {
       std::unique_ptr<ROMol> mol(SmilesToMol(smiles[i]));
-      TEST_ASSERT(mol);
+      TEST_ASSERT(mol)
       auto oTPSA = calcTPSA(*mol);
-      TEST_ASSERT(feq(oTPSA, orig_tpsa[i], 0.01));
+      TEST_ASSERT(feq(oTPSA, orig_tpsa[i], 0.01))
       auto nTPSA = calcTPSA(*mol, true, true);
       // std::cerr << smiles[i] << " " << new_tpsa[i] << " " << nTPSA <<
       // std::endl;
-      TEST_ASSERT(feq(nTPSA, new_tpsa[i], 0.01));
+      TEST_ASSERT(feq(nTPSA, new_tpsa[i], 0.01))
     }
   }
   {
@@ -2180,13 +2180,13 @@ void testGithub1973() {
                                     13.59, 51.21, 26.88, 40.54};
     for (unsigned int i = 0; i < smiles.size(); ++i) {
       std::unique_ptr<ROMol> mol(SmilesToMol(smiles[i]));
-      TEST_ASSERT(mol);
+      TEST_ASSERT(mol)
       auto oTPSA = calcTPSA(*mol);
-      TEST_ASSERT(feq(oTPSA, orig_tpsa[i], 0.01));
+      TEST_ASSERT(feq(oTPSA, orig_tpsa[i], 0.01))
       auto nTPSA = calcTPSA(*mol, true, true);
       // std::cerr << smiles[i] << " " << new_tpsa[i] << " " << nTPSA <<
       // std::endl;
-      TEST_ASSERT(feq(nTPSA, new_tpsa[i], 0.01));
+      TEST_ASSERT(feq(nTPSA, new_tpsa[i], 0.01))
     }
   }
   BOOST_LOG(rdErrorLog) << "  done" << std::endl;

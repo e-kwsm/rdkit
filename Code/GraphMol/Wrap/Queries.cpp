@@ -173,19 +173,19 @@ struct queries_wrapper {
               " is True.",                                               \
               python::return_value_policy<python::manage_new_object>());
 
-    QADEF1(AtomNum);
-    QADEF1(ExplicitValence);
-    QADEF1(TotalValence);
-    QADEF1(ExplicitDegree);
-    QADEF1(TotalDegree);
-    QADEF1(HCount);
-    QADEF1(Mass);
-    QADEF1(Isotope);
-    QADEF1(FormalCharge);
-    QADEF1(Hybridization);
-    QADEF1(InNRings);
-    QADEF1(MinRingSize);
-    QADEF1(RingBondCount);
+    QADEF1(AtomNum)
+    QADEF1(ExplicitValence)
+    QADEF1(TotalValence)
+    QADEF1(ExplicitDegree)
+    QADEF1(TotalDegree)
+    QADEF1(HCount)
+    QADEF1(Mass)
+    QADEF1(Isotope)
+    QADEF1(FormalCharge)
+    QADEF1(Hybridization)
+    QADEF1(InNRings)
+    QADEF1(MinRingSize)
+    QADEF1(RingBondCount)
     QADEF1(NumRadicalElectrons)
     QADEF1(NumHeteroatomNeighbors)
     QADEF1(NumAliphaticHeteroatomNeighbors)
@@ -312,7 +312,7 @@ struct queries_wrapper {
                 "has the specified "
                 "value +- tolerance",
                 python::return_value_policy<python::manage_new_object>());
-  };
+  }
 };
 }  // namespace RDKit
 

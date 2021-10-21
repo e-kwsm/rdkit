@@ -36,7 +36,7 @@ void testRDKitValidation() {
     std::string msg = query.what();
     TEST_ASSERT(msg ==
                 "INFO: [ValenceValidation] Explicit valence for atom # 1 O, 3, "
-                "is greater than permitted");
+                "is greater than permitted")
   }
 
   // testing for molecule with no atoms
@@ -45,7 +45,7 @@ void testRDKitValidation() {
   vector<ValidationErrorInfo> errout2 = vm.validate(*m2, true);
   for (auto &query : errout2) {
     std::string msg = query.what();
-    TEST_ASSERT(msg == "ERROR: [NoAtomValidation] Molecule has no atoms");
+    TEST_ASSERT(msg == "ERROR: [NoAtomValidation] Molecule has no atoms")
   }
 
   // testing molecule with multiple valency errors
@@ -61,7 +61,7 @@ void testRDKitValidation() {
   for (auto &query : errout3) {
     msgs1.emplace_back(query.what());
   }
-  TEST_ASSERT(msgs1 == ans1);
+  TEST_ASSERT(msgs1 == ans1)
 
   // testing molecule with multiple valency errors and only outputting
   // first error
@@ -75,7 +75,7 @@ void testRDKitValidation() {
   for (auto &query : errout4) {
     msgs2.emplace_back(query.what());
   }
-  TEST_ASSERT(msgs2 == ans2);
+  TEST_ASSERT(msgs2 == ans2)
   BOOST_LOG(rdInfoLog) << "Finished" << std::endl;
 }
 
@@ -92,7 +92,7 @@ void testMolVSValidation() {
   vector<ValidationErrorInfo> errout1 = vm.validate(*m1, true);
   for (auto &query : errout1) {
     std::string msg = query.what();
-    TEST_ASSERT(msg == "ERROR: [NoAtomValidation] Molecule has no atoms");
+    TEST_ASSERT(msg == "ERROR: [NoAtomValidation] Molecule has no atoms")
   }
 
   smi2 = "O=C([O-])c1ccccc1";
@@ -101,7 +101,7 @@ void testMolVSValidation() {
   for (auto &query : errout2) {
     std::string msg = query.what();
     TEST_ASSERT(msg ==
-                "INFO: [NeutralValidation] Not an overall neutral system (-1)");
+                "INFO: [NeutralValidation] Not an overall neutral system (-1)")
   }
 
   smi3 = "CN=[NH+]CN=N";
@@ -111,7 +111,7 @@ void testMolVSValidation() {
     std::string msg = query.what();
     TEST_ASSERT(
         msg ==
-        "INFO: [NeutralValidation] Not an overall neutral system (+1)");  // fix
+        "INFO: [NeutralValidation] Not an overall neutral system (+1)")  // fix
                                                                           // to
                                                                           // show
                                                                           // +
@@ -124,7 +124,7 @@ void testMolVSValidation() {
   for (auto &query : errout4) {
     std::string msg = query.what();
     TEST_ASSERT(msg ==
-                "INFO: [IsotopeValidation] Molecule contains isotope 13C");
+                "INFO: [IsotopeValidation] Molecule contains isotope 13C")
   }
 
   smi5 = "[2H]C(Cl)(Cl)Cl";
@@ -133,7 +133,7 @@ void testMolVSValidation() {
   for (auto &query : errout5) {
     std::string msg = query.what();
     TEST_ASSERT(msg ==
-                "INFO: [IsotopeValidation] Molecule contains isotope 2H");
+                "INFO: [IsotopeValidation] Molecule contains isotope 2H")
   }
 
   smi6 = "[2H]OC([2H])([2H])[2H]";
@@ -142,26 +142,26 @@ void testMolVSValidation() {
   for (auto &query : errout6) {
     std::string msg = query.what();
     TEST_ASSERT(msg ==
-                "INFO: [IsotopeValidation] Molecule contains isotope 2H");
+                "INFO: [IsotopeValidation] Molecule contains isotope 2H")
   }
 
   std::string smi7 = "COc1cccc(C=N[N-]C(N)=O)c1[O-].O.O.O.O=[U+2]=O";
   unique_ptr<ROMol> m7(SmilesToMol(smi7, 0, false));
   vector<ValidationErrorInfo> errout7 = vm.validate(*m7, true);
-  TEST_ASSERT(errout7.size() != 0);
+  TEST_ASSERT(errout7.size() != 0)
   for (auto &query : errout7) {
     std::string msg = query.what();
-    TEST_ASSERT(msg == "INFO: [FragmentValidation] water/hydroxide is present");
+    TEST_ASSERT(msg == "INFO: [FragmentValidation] water/hydroxide is present")
   }
 
   std::string smi8 = "CC(=O)O.NCC(=O)NCCCCCCCCCCNC(=O)CN";
   unique_ptr<ROMol> m8(SmilesToMol(smi8, 0, false));
   vector<ValidationErrorInfo> errout8 = vm.validate(*m8, true);
-  TEST_ASSERT(errout8.size() != 0);
+  TEST_ASSERT(errout8.size() != 0)
   for (auto &query : errout8) {
     std::string msg = query.what();
     TEST_ASSERT(msg ==
-                "INFO: [FragmentValidation] acetate/acetic acid is present");
+                "INFO: [FragmentValidation] acetate/acetic acid is present")
   }
 
   std::string smi9 = "N#CC(Br)(Br)C#N.[Br-].[K+]";
@@ -170,9 +170,9 @@ void testMolVSValidation() {
   std::vector<std::string> ans = {
       "INFO: [FragmentValidation] bromine is present",
       "INFO: [FragmentValidation] potassium is present"};
-  TEST_ASSERT(errout9.size() == ans.size());
+  TEST_ASSERT(errout9.size() == ans.size())
   for (size_t i = 0; i < errout9.size(); ++i) {
-    TEST_ASSERT(errout9[i].what() == ans[i]);
+    TEST_ASSERT(errout9[i].what() == ans[i])
   }
 
   std::string smi10 = "C1COCCO1.O=C(NO)NO";
@@ -181,9 +181,9 @@ void testMolVSValidation() {
   std::vector<std::string> ans10 = {
       "INFO: [FragmentValidation] 1,2-dimethoxyethane is present",
       "INFO: [FragmentValidation] 1,4-dioxane is present"};
-  TEST_ASSERT(errout10.size() == ans10.size());
+  TEST_ASSERT(errout10.size() == ans10.size())
   for (size_t i = 0; i < errout10.size(); ++i) {
-    TEST_ASSERT(errout10[i].what() == ans10[i]);
+    TEST_ASSERT(errout10[i].what() == ans10[i])
   }
   BOOST_LOG(rdInfoLog) << "Finished" << std::endl;
 }
@@ -203,7 +203,7 @@ void testMolVSOptions() {
   for (auto &query : errout1) {
     std::string msg = query.what();
     //    TEST_ASSERT(msg == "ERROR: [NoAtomValidation] Molecule has no atoms");
-    TEST_ASSERT(msg == "");
+    TEST_ASSERT(msg == "")
   }
 
   string smi2 = "O=C([O-])c1ccccc1";
@@ -214,7 +214,7 @@ void testMolVSOptions() {
     //    TEST_ASSERT(msg ==
     //                "INFO: [NeutralValidation] Not an overall neutral system
     //                (-1)");
-    TEST_ASSERT(msg == "");
+    TEST_ASSERT(msg == "")
   }
   BOOST_LOG(rdInfoLog) << "Finished" << std::endl;
 }
@@ -243,7 +243,7 @@ void testAllowedAtomsValidation() {
     std::string msg = query.what();
     TEST_ASSERT(
         msg ==
-        "INFO: [AllowedAtomsValidation] Atom F is not in allowedAtoms list");
+        "INFO: [AllowedAtomsValidation] Atom F is not in allowedAtoms list")
   }
   BOOST_LOG(rdInfoLog) << "Finished" << std::endl;
 }
@@ -272,7 +272,7 @@ void testDisallowedAtomsValidation() {
     std::string msg = query.what();
     TEST_ASSERT(
         msg ==
-        "INFO: [DisallowedAtomsValidation] Atom F is in disallowedAtoms list");
+        "INFO: [DisallowedAtomsValidation] Atom F is in disallowedAtoms list")
   }
   BOOST_LOG(rdInfoLog) << "Finished" << std::endl;
 }
@@ -292,7 +292,7 @@ void testFragment() {
   for (auto &query : errout1) {
     std::string msg = query.what();
     TEST_ASSERT(msg ==
-                "INFO: [FragmentValidation] 1,2-dichloroethane is present");
+                "INFO: [FragmentValidation] 1,2-dichloroethane is present")
   }
 
   smi2 = "COCCOC.CCCBr";
@@ -301,7 +301,7 @@ void testFragment() {
   for (auto &query : errout2) {
     std::string msg = query.what();
     TEST_ASSERT(msg ==
-                "INFO: [FragmentValidation] 1,2-dimethoxyethane is present");
+                "INFO: [FragmentValidation] 1,2-dimethoxyethane is present")
   }
   BOOST_LOG(rdInfoLog) << "Finished" << std::endl;
 }
@@ -317,19 +317,19 @@ void testValidateSmiles() {
     std::string msg = e.what();
     TEST_ASSERT(msg ==
                 "SMILES Parse Error: syntax error for input: 3478q439g98h")
-  };
+  }
 
   vector<ValidationErrorInfo> errout2 = validateSmiles("");
   for (auto &query : errout2) {
     std::string msg = query.what();
-    TEST_ASSERT(msg == "ERROR: [NoAtomValidation] Molecule has no atoms");
+    TEST_ASSERT(msg == "ERROR: [NoAtomValidation] Molecule has no atoms")
   }
 
   vector<ValidationErrorInfo> errout3 = validateSmiles("ClCCCl.c1ccccc1O");
   for (auto &query : errout3) {
     std::string msg = query.what();
     TEST_ASSERT(msg ==
-                "INFO: [FragmentValidation] 1,2-dichloroethane is present");
+                "INFO: [FragmentValidation] 1,2-dichloroethane is present")
   }
   BOOST_LOG(rdInfoLog) << "Finished" << std::endl;
 }

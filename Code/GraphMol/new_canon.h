@@ -153,9 +153,9 @@ class RDKIT_GRAPHMOL_EXPORT SpecialChiralityAtomCompareFunctor {
         dp_atomsInPlay(atomsInPlay),
         dp_bondsInPlay(bondsInPlay) {}
   int operator()(int i, int j) const {
-    PRECONDITION(dp_atoms, "no atoms");
-    PRECONDITION(dp_mol, "no molecule");
-    PRECONDITION(i != j, "bad call");
+    PRECONDITION(dp_atoms, "no atoms")
+    PRECONDITION(dp_mol, "no molecule")
+    PRECONDITION(i != j, "bad call")
     if (dp_atomsInPlay && !((*dp_atomsInPlay)[i] || (*dp_atomsInPlay)[j])) {
       return 0;
     }
@@ -210,9 +210,9 @@ class RDKIT_GRAPHMOL_EXPORT SpecialSymmetryAtomCompareFunctor {
         dp_atomsInPlay(atomsInPlay),
         dp_bondsInPlay(bondsInPlay) {}
   int operator()(int i, int j) const {
-    PRECONDITION(dp_atoms, "no atoms");
-    PRECONDITION(dp_mol, "no molecule");
-    PRECONDITION(i != j, "bad call");
+    PRECONDITION(dp_atoms, "no atoms")
+    PRECONDITION(dp_mol, "no molecule")
+    PRECONDITION(i != j, "bad call")
     if (dp_atomsInPlay && !((*dp_atomsInPlay)[i] || (*dp_atomsInPlay)[j])) {
       return 0;
     }
@@ -541,7 +541,7 @@ class RDKIT_GRAPHMOL_EXPORT ChiralAtomCompareFunctor {
   }
 
   int basecomp(int i, int j) const {
-    PRECONDITION(dp_atoms, "no atoms");
+    PRECONDITION(dp_atoms, "no atoms")
     unsigned int ivi, ivj;
 
     // always start with the current class:
@@ -601,9 +601,9 @@ class RDKIT_GRAPHMOL_EXPORT ChiralAtomCompareFunctor {
   ChiralAtomCompareFunctor(Canon::canon_atom *atoms, const ROMol &m)
       : dp_atoms(atoms), dp_mol(&m), df_useNbrs(false) {}
   int operator()(int i, int j) const {
-    PRECONDITION(dp_atoms, "no atoms");
-    PRECONDITION(dp_mol, "no molecule");
-    PRECONDITION(i != j, "bad call");
+    PRECONDITION(dp_atoms, "no atoms")
+    PRECONDITION(dp_mol, "no molecule")
+    PRECONDITION(i != j, "bad call")
     int v = basecomp(i, j);
     if (v) {
       return v;
@@ -829,7 +829,7 @@ inline void rankFragmentAtoms(
     bool includeIsotopes = true) {
   rankFragmentAtoms(mol, res, atomsInPlay, bondsInPlay, atomSymbols, nullptr,
                     breakTies, includeChirality, includeIsotopes);
-};
+}
 
 RDKIT_GRAPHMOL_EXPORT void chiralRankMolAtoms(const ROMol &mol,
                                               std::vector<unsigned int> &res);

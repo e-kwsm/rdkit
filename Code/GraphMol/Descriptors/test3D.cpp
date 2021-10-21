@@ -62,13 +62,13 @@ void testPMI1() {
   int nDone = 0;
   while (!reader.atEnd()) {
     RDKit::ROMol *m = reader.next();
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
     RDKit::ROMol mcpy(*m);
     std::string nm;
     m->getProp("_Name", nm);
     std::string inm;
     instrm >> inm;
-    TEST_ASSERT(inm == nm);
+    TEST_ASSERT(inm == nm)
     double val;
     double pmi1_m, pmi2_m, pmi3_m, pmi1_nom, pmi2_nom, pmi3_nom;
     instrm >> pmi1_m;
@@ -79,33 +79,33 @@ void testPMI1() {
     instrm >> pmi3_nom;
 
     val = RDKit::Descriptors::PMI1(*m);
-    TEST_ASSERT(compare(inm, pmi1_m, val));
+    TEST_ASSERT(compare(inm, pmi1_m, val))
     val = RDKit::Descriptors::PMI2(*m);
-    TEST_ASSERT(compare(inm, pmi2_m, val));
+    TEST_ASSERT(compare(inm, pmi2_m, val))
     val = RDKit::Descriptors::PMI3(*m);
-    TEST_ASSERT(compare(inm, pmi3_m, val));
+    TEST_ASSERT(compare(inm, pmi3_m, val))
 
     val = RDKit::Descriptors::PMI1(*m, -1, false);
-    TEST_ASSERT(compare(inm, pmi1_nom, val));
+    TEST_ASSERT(compare(inm, pmi1_nom, val))
     val = RDKit::Descriptors::PMI2(*m, -1, false);
-    TEST_ASSERT(compare(inm, pmi2_nom, val));
+    TEST_ASSERT(compare(inm, pmi2_nom, val))
     val = RDKit::Descriptors::PMI3(*m, -1, false);
-    TEST_ASSERT(compare(inm, pmi3_nom, val));
+    TEST_ASSERT(compare(inm, pmi3_nom, val))
 
     // now try doing it in the reverse order to make sure caching doesn't
     // screw up.
     val = RDKit::Descriptors::PMI1(mcpy, -1, false);
-    TEST_ASSERT(compare(inm, pmi1_nom, val));
+    TEST_ASSERT(compare(inm, pmi1_nom, val))
     val = RDKit::Descriptors::PMI2(mcpy, -1, false);
-    TEST_ASSERT(compare(inm, pmi2_nom, val));
+    TEST_ASSERT(compare(inm, pmi2_nom, val))
     val = RDKit::Descriptors::PMI3(mcpy, -1, false);
-    TEST_ASSERT(compare(inm, pmi3_nom, val));
+    TEST_ASSERT(compare(inm, pmi3_nom, val))
     val = RDKit::Descriptors::PMI1(mcpy);
-    TEST_ASSERT(compare(inm, pmi1_m, val));
+    TEST_ASSERT(compare(inm, pmi1_m, val))
     val = RDKit::Descriptors::PMI2(mcpy);
-    TEST_ASSERT(compare(inm, pmi2_m, val));
+    TEST_ASSERT(compare(inm, pmi2_m, val))
     val = RDKit::Descriptors::PMI3(mcpy);
-    TEST_ASSERT(compare(inm, pmi3_m, val));
+    TEST_ASSERT(compare(inm, pmi3_m, val))
 
     delete m;
     ++nDone;
@@ -123,17 +123,17 @@ void testPMIEdges() {
         pathName + "/Code/GraphMol/Descriptors/test_data/linear.mol";
 
     RDKit::ROMol *m = MolFileToMol(sdfName);
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
     double val;
 
     val = RDKit::Descriptors::PMI1(*m);
-    TEST_ASSERT(fabs(val) < 1e-4);
+    TEST_ASSERT(fabs(val) < 1e-4)
     val = RDKit::Descriptors::PMI2(*m);
-    TEST_ASSERT(fabs(val) >= 10);
+    TEST_ASSERT(fabs(val) >= 10)
     val = RDKit::Descriptors::PMI3(*m);
-    TEST_ASSERT(val >= 10);
+    TEST_ASSERT(val >= 10)
     TEST_ASSERT(RDKit::Descriptors::PMI3(*m) - RDKit::Descriptors::PMI2(*m) <
-                1e-2);
+                1e-2)
 
     delete m;
   }
@@ -143,17 +143,17 @@ void testPMIEdges() {
         pathName + "/Code/GraphMol/Descriptors/test_data/linear_2atom.mol";
 
     RDKit::ROMol *m = MolFileToMol(sdfName);
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
     double val;
 
     val = RDKit::Descriptors::PMI1(*m);
-    TEST_ASSERT(fabs(val) < 1e-4);
+    TEST_ASSERT(fabs(val) < 1e-4)
     val = RDKit::Descriptors::PMI2(*m);
-    TEST_ASSERT(fabs(val) >= 1);
+    TEST_ASSERT(fabs(val) >= 1)
     val = RDKit::Descriptors::PMI3(*m);
-    TEST_ASSERT(val >= 1);
+    TEST_ASSERT(val >= 1)
     TEST_ASSERT(RDKit::Descriptors::PMI3(*m) - RDKit::Descriptors::PMI2(*m) <
-                1e-2);
+                1e-2)
 
     delete m;
   }
@@ -163,12 +163,12 @@ void testPMIEdges() {
         pathName + "/Code/GraphMol/Descriptors/test_data/planar.mol";
 
     RDKit::ROMol *m = MolFileToMol(sdfName);
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
 
     TEST_ASSERT(RDKit::Descriptors::PMI2(*m) - RDKit::Descriptors::PMI1(*m) <
-                1e-2);
+                1e-2)
     TEST_ASSERT(RDKit::Descriptors::PMI3(*m) - RDKit::Descriptors::PMI1(*m) >
-                10);
+                10)
     delete m;
   }
   {
@@ -177,12 +177,12 @@ void testPMIEdges() {
         pathName + "/Code/GraphMol/Descriptors/test_data/planar_3atom.mol";
 
     RDKit::ROMol *m = MolFileToMol(sdfName);
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
 
     TEST_ASSERT(RDKit::Descriptors::PMI2(*m) - RDKit::Descriptors::PMI1(*m) <
-                1e-2);
+                1e-2)
     TEST_ASSERT(RDKit::Descriptors::PMI3(*m) - RDKit::Descriptors::PMI1(*m) >
-                1);
+                1)
     delete m;
   }
 
@@ -198,11 +198,11 @@ void testPMIEdges() {
     m.addAtom(new RDKit::Atom(6), updateLabel, takeOwnership);
     m.addConformer(new RDKit::Conformer(m.getNumAtoms()));
     double val = RDKit::Descriptors::PMI1(m);
-    TEST_ASSERT(fabs(val) < 1e-4);
+    TEST_ASSERT(fabs(val) < 1e-4)
     val = RDKit::Descriptors::PMI2(m);
-    TEST_ASSERT(fabs(val) < 1e-4);
+    TEST_ASSERT(fabs(val) < 1e-4)
     val = RDKit::Descriptors::PMI3(m);
-    TEST_ASSERT(fabs(val) < 1e-4);
+    TEST_ASSERT(fabs(val) < 1e-4)
   }
 
   BOOST_LOG(rdErrorLog) << "  done" << std::endl;
@@ -219,7 +219,7 @@ void testPMI2() {
   RDKit::SDMolSupplier reader(sdfName, true, false);
   while (!reader.atEnd()) {
     RDKit::ROMol *mnoh = reader.next();
-    TEST_ASSERT(mnoh);
+    TEST_ASSERT(mnoh)
     bool explicitOnly = false, addCoords = true;
     RDKit::ROMol *m = MolOps::addHs(*mnoh, explicitOnly, addCoords);
     delete mnoh;
@@ -232,12 +232,12 @@ void testPMI2() {
 
     // tolerances are coarse because the reference values come from MOE
     // and the placement of Hs is not identical
-    TEST_ASSERT(compare("pmi1", m->getProp<double>("pmi1"), pmi1, pmi1 / 100));
-    TEST_ASSERT(compare("pmi2", m->getProp<double>("pmi2"), pmi2, pmi2 / 100));
-    TEST_ASSERT(compare("pmi3", m->getProp<double>("pmi3"), pmi3, pmi3 / 100));
+    TEST_ASSERT(compare("pmi1", m->getProp<double>("pmi1"), pmi1, pmi1 / 100))
+    TEST_ASSERT(compare("pmi2", m->getProp<double>("pmi2"), pmi2, pmi2 / 100))
+    TEST_ASSERT(compare("pmi3", m->getProp<double>("pmi3"), pmi3, pmi3 / 100))
 
-    TEST_ASSERT(compare("npr1", m->getProp<double>("npr1"), npr1, npr1 / 100));
-    TEST_ASSERT(compare("npr2", m->getProp<double>("npr2"), npr2, npr2 / 100));
+    TEST_ASSERT(compare("npr1", m->getProp<double>("npr1"), npr1, npr1 / 100))
+    TEST_ASSERT(compare("npr2", m->getProp<double>("npr2"), npr2, npr2 / 100))
     delete m;
   }
   BOOST_LOG(rdErrorLog) << "  done" << std::endl;
@@ -255,7 +255,7 @@ void testNPR1() {
   int nDone = 0;
   while (!reader.atEnd()) {
     RDKit::ROMol *m = reader.next();
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
     RDKit::ROMol mcpy(*m);
     std::string nm;
     m->getProp("_Name", nm);
@@ -295,13 +295,13 @@ void testNPREdges() {
         pathName + "/Code/GraphMol/Descriptors/test_data/linear.mol";
 
     RDKit::ROMol *m = MolFileToMol(sdfName);
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
     double val;
 
     val = RDKit::Descriptors::NPR1(*m);
-    TEST_ASSERT(fabs(val) < 1e-4);
+    TEST_ASSERT(fabs(val) < 1e-4)
     val = RDKit::Descriptors::NPR2(*m);
-    TEST_ASSERT(fabs(val - 1) < 1e-4);
+    TEST_ASSERT(fabs(val - 1) < 1e-4)
 
     delete m;
   }
@@ -311,13 +311,13 @@ void testNPREdges() {
         pathName + "/Code/GraphMol/Descriptors/test_data/linear_2atom.mol";
 
     RDKit::ROMol *m = MolFileToMol(sdfName);
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
     double val;
 
     val = RDKit::Descriptors::NPR1(*m);
-    TEST_ASSERT(fabs(val) < 1e-4);
+    TEST_ASSERT(fabs(val) < 1e-4)
     val = RDKit::Descriptors::NPR2(*m);
-    TEST_ASSERT(fabs(val - 1) < 1e-4);
+    TEST_ASSERT(fabs(val - 1) < 1e-4)
 
     delete m;
   }
@@ -327,13 +327,13 @@ void testNPREdges() {
         pathName + "/Code/GraphMol/Descriptors/test_data/planar.mol";
 
     RDKit::ROMol *m = MolFileToMol(sdfName);
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
     double val;
 
     val = RDKit::Descriptors::NPR1(*m);
-    TEST_ASSERT(fabs(val - 0.5) < 1e-4);
+    TEST_ASSERT(fabs(val - 0.5) < 1e-4)
     val = RDKit::Descriptors::NPR2(*m);
-    TEST_ASSERT(fabs(val - 0.5) < 1e-4);
+    TEST_ASSERT(fabs(val - 0.5) < 1e-4)
 
     delete m;
   }
@@ -343,13 +343,13 @@ void testNPREdges() {
         pathName + "/Code/GraphMol/Descriptors/test_data/planar_3atom.mol";
 
     RDKit::ROMol *m = MolFileToMol(sdfName);
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
     double val;
 
     val = RDKit::Descriptors::NPR1(*m);
-    TEST_ASSERT(fabs(val - 0.5) < 1e-4);
+    TEST_ASSERT(fabs(val - 0.5) < 1e-4)
     val = RDKit::Descriptors::NPR2(*m);
-    TEST_ASSERT(fabs(val - 0.5) < 1e-4);
+    TEST_ASSERT(fabs(val - 0.5) < 1e-4)
 
     delete m;
   }
@@ -365,9 +365,9 @@ void testNPREdges() {
     m.addAtom(new RDKit::Atom(6), updateLabel, takeOwnership);
     m.addConformer(new RDKit::Conformer(m.getNumAtoms()));
     double val = RDKit::Descriptors::NPR1(m);
-    TEST_ASSERT(fabs(val) < 1e-4);
+    TEST_ASSERT(fabs(val) < 1e-4)
     val = RDKit::Descriptors::NPR2(m);
-    TEST_ASSERT(fabs(val) < 1e-4);
+    TEST_ASSERT(fabs(val) < 1e-4)
   }
 
   BOOST_LOG(rdErrorLog) << "  done" << std::endl;
@@ -381,17 +381,17 @@ void test3DVals() {
     std::string fName =
         rdbase + "/Code/GraphMol/MolTransforms/test_data/github1262_1.mol";
     RWMol *m = MolFileToMol(fName, true, false);
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
     double val;
 
     val = RDKit::Descriptors::radiusOfGyration(*m);
-    TEST_ASSERT(fabs(val - 1.511) < 1e-2);
+    TEST_ASSERT(fabs(val - 1.511) < 1e-2)
     val = RDKit::Descriptors::eccentricity(*m);
-    TEST_ASSERT(fabs(val - 0.866) < 1e-2);
+    TEST_ASSERT(fabs(val - 0.866) < 1e-2)
     val = RDKit::Descriptors::asphericity(*m);
-    TEST_ASSERT(fabs(val - 0.25) < 1e-2);
+    TEST_ASSERT(fabs(val - 0.25) < 1e-2)
     val = RDKit::Descriptors::spherocityIndex(*m);
-    TEST_ASSERT(fabs(val) < 1e-2);
+    TEST_ASSERT(fabs(val) < 1e-2)
 
     delete m;
   }
@@ -399,18 +399,18 @@ void test3DVals() {
     std::string fName =
         rdbase + "/Code/GraphMol/MolTransforms/test_data/github1262_2.mol";
     RWMol *m = MolFileToMol(fName, true, false);
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
     double val;
 
     val = RDKit::Descriptors::radiusOfGyration(*m);
-    TEST_ASSERT(fabs(val - 1.686) < 1e-2);
+    TEST_ASSERT(fabs(val - 1.686) < 1e-2)
     val = RDKit::Descriptors::eccentricity(*m);
-    TEST_ASSERT(fabs(val - 1.0) < 1e-2);
+    TEST_ASSERT(fabs(val - 1.0) < 1e-2)
     val = RDKit::Descriptors::asphericity(*m);
-    TEST_ASSERT(fabs(val - 0.875) < 1e-2);
+    TEST_ASSERT(fabs(val - 0.875) < 1e-2)
     val = RDKit::Descriptors::spherocityIndex(*m);
     // nothing really precise to say here
-    TEST_ASSERT((0 < val) && (val < 0.25));
+    TEST_ASSERT((0 < val) && (val < 0.25))
 
     delete m;
   }
@@ -418,17 +418,17 @@ void test3DVals() {
     std::string fName =
         rdbase + "/Code/GraphMol/MolTransforms/test_data/github1262_3.mol";
     RWMol *m = MolFileToMol(fName, true, false);
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
     double val;
 
     val = RDKit::Descriptors::radiusOfGyration(*m);
-    TEST_ASSERT(fabs(val - 1.827) < 1e-2);
+    TEST_ASSERT(fabs(val - 1.827) < 1e-2)
     val = RDKit::Descriptors::eccentricity(*m);
-    TEST_ASSERT(fabs(val) < 1e-2);
+    TEST_ASSERT(fabs(val) < 1e-2)
     val = RDKit::Descriptors::asphericity(*m);
-    TEST_ASSERT(fabs(val) < 1e-2);
+    TEST_ASSERT(fabs(val) < 1e-2)
     val = RDKit::Descriptors::spherocityIndex(*m);
-    TEST_ASSERT(fabs(val - 1) < 1e-2);
+    TEST_ASSERT(fabs(val - 1) < 1e-2)
 
     delete m;
   }
@@ -458,13 +458,13 @@ void test3DEdges() {
     m.getConformer().setAtomPos(5, RDGeom::Point3D(0, 0, -1));
     double val;
     val = RDKit::Descriptors::radiusOfGyration(m);
-    TEST_ASSERT(fabs(val) > 0.1);
+    TEST_ASSERT(fabs(val) > 0.1)
     val = RDKit::Descriptors::eccentricity(m);
-    TEST_ASSERT(fabs(val) < 1e-4);
+    TEST_ASSERT(fabs(val) < 1e-4)
     val = RDKit::Descriptors::asphericity(m);
-    TEST_ASSERT(fabs(val) < 1e-4);
+    TEST_ASSERT(fabs(val) < 1e-4)
     val = RDKit::Descriptors::spherocityIndex(m);
-    TEST_ASSERT(fabs(1. - val) < 1e-4);
+    TEST_ASSERT(fabs(1. - val) < 1e-4)
   }
 
   {
@@ -480,15 +480,15 @@ void test3DEdges() {
     m.addConformer(new RDKit::Conformer(m.getNumAtoms()));
     double val;
     val = RDKit::Descriptors::radiusOfGyration(m);
-    TEST_ASSERT(fabs(val) < 1e-4);
+    TEST_ASSERT(fabs(val) < 1e-4)
     val = RDKit::Descriptors::inertialShapeFactor(m);
-    TEST_ASSERT(fabs(val) < 1e-4);
+    TEST_ASSERT(fabs(val) < 1e-4)
     val = RDKit::Descriptors::eccentricity(m);
-    TEST_ASSERT(fabs(val) < 1e-4);
+    TEST_ASSERT(fabs(val) < 1e-4)
     val = RDKit::Descriptors::asphericity(m);
-    TEST_ASSERT(fabs(val) < 1e-4);
+    TEST_ASSERT(fabs(val) < 1e-4)
     val = RDKit::Descriptors::spherocityIndex(m);
-    TEST_ASSERT(fabs(val) < 1e-4);
+    TEST_ASSERT(fabs(val) < 1e-4)
   }
 
   BOOST_LOG(rdErrorLog) << "  done" << std::endl;
@@ -503,13 +503,13 @@ void testInertialShapeFactor() {
         pathName + "/Code/GraphMol/Descriptors/test_data/doravirine.mol";
     bool sanitize = true, removeHs = false;
     std::unique_ptr<RDKit::ROMol> m(MolFileToMol(sdfName, sanitize, removeHs));
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
 
     auto pmi1 = RDKit::Descriptors::PMI1(*m);
     auto pmi2 = RDKit::Descriptors::PMI2(*m);
     auto pmi3 = RDKit::Descriptors::PMI3(*m);
     auto isf = RDKit::Descriptors::inertialShapeFactor(*m);
-    TEST_ASSERT(feq(isf, pmi2 / (pmi1 * pmi3)));
+    TEST_ASSERT(feq(isf, pmi2 / (pmi1 * pmi3)))
   }
   BOOST_LOG(rdErrorLog) << "  done" << std::endl;
 }

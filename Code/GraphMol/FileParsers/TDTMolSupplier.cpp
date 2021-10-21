@@ -90,8 +90,8 @@ TDTMolSupplier::TDTMolSupplier(const std::string &fileName,
 TDTMolSupplier::TDTMolSupplier(std::istream *inStream, bool takeOwnership,
                                const std::string &nameRecord, int confId2D,
                                int confId3D, bool sanitize) {
-  CHECK_INVARIANT(inStream, "bad instream");
-  CHECK_INVARIANT(!(inStream->eof()), "early EOF");
+  CHECK_INVARIANT(inStream, "bad instream")
+  CHECK_INVARIANT(!(inStream->eof()), "early EOF")
   init();
   dp_inStream = inStream;
   df_owner = takeOwnership;
@@ -132,11 +132,11 @@ void TDTMolSupplier::setData(const std::string &text,
   d_molpos.push_back(dp_inStream->tellg());
   df_sanitize = sanitize;
   this->checkForEnd();
-  POSTCONDITION(dp_inStream, "bad instream");
+  POSTCONDITION(dp_inStream, "bad instream")
 }
 
 bool TDTMolSupplier::advanceToNextRecord() {
-  PRECONDITION(dp_inStream, "no stream");
+  PRECONDITION(dp_inStream, "no stream")
   std::streampos pos;
   bool res = false;
   while (1) {
@@ -157,7 +157,7 @@ bool TDTMolSupplier::advanceToNextRecord() {
 }
 
 void TDTMolSupplier::checkForEnd() {
-  PRECONDITION(dp_inStream, "no stream");
+  PRECONDITION(dp_inStream, "no stream")
   if (dp_inStream->eof() || dp_inStream->bad()) {
     df_end = true;
     // the -1 here is because by the time we get here we've already pushed on
@@ -184,7 +184,7 @@ void TDTMolSupplier::checkForEnd() {
 }
 
 void TDTMolSupplier::reset() {
-  PRECONDITION(dp_inStream, "no stream");
+  PRECONDITION(dp_inStream, "no stream")
   dp_inStream->clear();
 
   dp_inStream->seekg(0, std::ios::beg);
@@ -194,7 +194,7 @@ void TDTMolSupplier::reset() {
 }
 
 ROMol *TDTMolSupplier::parseMol(std::string inLine) {
-  PRECONDITION(dp_inStream, "no stream");
+  PRECONDITION(dp_inStream, "no stream")
   Utils::LocaleSwitcher ls;
   std::size_t startP = inLine.find("<");
   std::size_t endP = inLine.find_last_of(">");
@@ -271,7 +271,7 @@ ROMol *TDTMolSupplier::parseMol(std::string inLine) {
 }
 
 ROMol *TDTMolSupplier::next() {
-  PRECONDITION(dp_inStream, "no stream");
+  PRECONDITION(dp_inStream, "no stream")
   // set the stream to the appropriate position
   dp_inStream->seekg(d_molpos[d_last]);
 
@@ -321,7 +321,7 @@ ROMol *TDTMolSupplier::next() {
 }
 
 std::string TDTMolSupplier::getItemText(unsigned int idx) {
-  PRECONDITION(dp_inStream, "no stream");
+  PRECONDITION(dp_inStream, "no stream")
   unsigned int holder = d_last;
   moveTo(idx);
   std::streampos begP = d_molpos[idx];
@@ -346,7 +346,7 @@ std::string TDTMolSupplier::getItemText(unsigned int idx) {
 }
 
 void TDTMolSupplier::moveTo(unsigned int idx) {
-  PRECONDITION(dp_inStream, "no stream");
+  PRECONDITION(dp_inStream, "no stream")
 
   // dp_inStream->seekg() is called for all idx values
   // and earlier calls to next() may have put the stream into a bad state
@@ -382,14 +382,14 @@ void TDTMolSupplier::moveTo(unsigned int idx) {
 }
 
 ROMol *TDTMolSupplier::operator[](unsigned int idx) {
-  PRECONDITION(dp_inStream, "no stream");
+  PRECONDITION(dp_inStream, "no stream")
   // get the molecule with index idx
   moveTo(idx);
   return next();
 }
 
 unsigned int TDTMolSupplier::length() {
-  PRECONDITION(dp_inStream, "no stream");
+  PRECONDITION(dp_inStream, "no stream")
   // return the number of mol blocks in the sdfile
   if (d_len > 0) {
     return d_len;
@@ -412,7 +412,7 @@ unsigned int TDTMolSupplier::length() {
 }
 
 bool TDTMolSupplier::atEnd() {
-  PRECONDITION(dp_inStream, "no stream");
+  PRECONDITION(dp_inStream, "no stream")
   return df_end;
 }
 }  // namespace RDKit

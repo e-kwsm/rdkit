@@ -33,18 +33,18 @@ void test1() {
   {
     std::string smi = "C1=CC=CC=C1";
     RWMol *m1 = SmilesToMol(smi);
-    TEST_ASSERT(m1->getNumAtoms() == 6);
+    TEST_ASSERT(m1->getNumAtoms() == 6)
     ExplicitBitVect *fp1 = RDKFingerprintMol(*m1);
     ExplicitBitVect *fp2 = RDKFingerprintMol(*m1);
-    TEST_ASSERT(TanimotoSimilarity(*fp1, *fp2) == 1.0);
-    TEST_ASSERT(TanimotoSimilarity(*fp1, *fp2) >= 0.0);
+    TEST_ASSERT(TanimotoSimilarity(*fp1, *fp2) == 1.0)
+    TEST_ASSERT(TanimotoSimilarity(*fp1, *fp2) >= 0.0)
 
     smi = "C1=CC=CC=N1";
     RWMol *m2 = SmilesToMol(smi);
     delete fp2;
     fp2 = RDKFingerprintMol(*m2);
-    TEST_ASSERT(TanimotoSimilarity(*fp1, *fp2) < 1.0);
-    TEST_ASSERT(TanimotoSimilarity(*fp1, *fp2) > 0.0);
+    TEST_ASSERT(TanimotoSimilarity(*fp1, *fp2) < 1.0)
+    TEST_ASSERT(TanimotoSimilarity(*fp1, *fp2) > 0.0)
 
     delete m1;
     delete m2;
@@ -72,7 +72,7 @@ void test1() {
     ExplicitBitVect *fp2 =
         RDKFingerprintMol(*m2, 1, 5, 1024, 1, 0, -1, 0, 1, 1, &vs2);
 
-    TEST_ASSERT(((*fp1) & (*fp2)) == (*fp2));
+    TEST_ASSERT(((*fp1) & (*fp2)) == (*fp2))
     delete m1;
     delete m2;
     delete fp1;
@@ -109,7 +109,7 @@ void test1() {
                 std::ostream_iterator<int>(std::cerr, ", "));
       std::cerr << std::endl;
 
-      TEST_ASSERT((*fp1) == (*fp2));
+      TEST_ASSERT((*fp1) == (*fp2))
       delete m2;
       delete fp2;
     }
@@ -142,7 +142,7 @@ void test1() {
               std::ostream_iterator<int>(std::cerr, ", "));
     std::cerr << std::endl;
 
-    TEST_ASSERT(((*fp1) & (*fp2)) == (*fp2));
+    TEST_ASSERT(((*fp1) & (*fp2)) == (*fp2))
     delete m1;
     delete m2;
     delete fp1;
@@ -156,36 +156,36 @@ void test2() {
 
   std::string smi = "CC(=O)COC";
   RWMol *m1 = SmilesToMol(smi);
-  TEST_ASSERT(m1->getNumAtoms() == 6);
+  TEST_ASSERT(m1->getNumAtoms() == 6)
   BOOST_LOG(rdInfoLog) << "--------------------  fp1 " << std::endl;
   ExplicitBitVect *fp1 = RDKFingerprintMol(*m1, 1, 4, 2048, 4, false);
   BOOST_LOG(rdInfoLog) << "--------------------  fp2 " << std::endl;
   ExplicitBitVect *fp2 = RDKFingerprintMol(*m1, 1, 4, 2048, 4, false);
-  TEST_ASSERT(TanimotoSimilarity(*fp1, *fp2) == 1.0);
+  TEST_ASSERT(TanimotoSimilarity(*fp1, *fp2) == 1.0)
 
   RWMol *m2 = SmilesToMol("CC");
   delete fp2;
   BOOST_LOG(rdInfoLog) << "--------------------  fp2 " << std::endl;
   fp2 = RDKFingerprintMol(*m2, 1, 4, 2048, 4, false);
-  TEST_ASSERT(TanimotoSimilarity(*fp1, *fp2) < 1.0);
-  TEST_ASSERT(TanimotoSimilarity(*fp1, *fp2) > 0.0);
-  TEST_ASSERT(OnBitProjSimilarity(*fp2, *fp1)[0] == 1.0);
+  TEST_ASSERT(TanimotoSimilarity(*fp1, *fp2) < 1.0)
+  TEST_ASSERT(TanimotoSimilarity(*fp1, *fp2) > 0.0)
+  TEST_ASSERT(OnBitProjSimilarity(*fp2, *fp1)[0] == 1.0)
 
   delete m2;
   m2 = SmilesToMol("CC=O");
   delete fp2;
   fp2 = RDKFingerprintMol(*m2, 1, 4, 2048, 4, false);
-  TEST_ASSERT(TanimotoSimilarity(*fp1, *fp2) < 1.0);
-  TEST_ASSERT(TanimotoSimilarity(*fp1, *fp2) > 0.0);
-  TEST_ASSERT(OnBitProjSimilarity(*fp2, *fp1)[0] == 1.0);
+  TEST_ASSERT(TanimotoSimilarity(*fp1, *fp2) < 1.0)
+  TEST_ASSERT(TanimotoSimilarity(*fp1, *fp2) > 0.0)
+  TEST_ASSERT(OnBitProjSimilarity(*fp2, *fp1)[0] == 1.0)
 
   delete m2;
   m2 = SmilesToMol("CCCOC");
   delete fp2;
   fp2 = RDKFingerprintMol(*m2, 1, 4, 2048, 4, false);
-  TEST_ASSERT(TanimotoSimilarity(*fp1, *fp2) < 1.0);
-  TEST_ASSERT(TanimotoSimilarity(*fp1, *fp2) > 0.0);
-  TEST_ASSERT(OnBitProjSimilarity(*fp2, *fp1)[0] == 1.0);
+  TEST_ASSERT(TanimotoSimilarity(*fp1, *fp2) < 1.0)
+  TEST_ASSERT(TanimotoSimilarity(*fp1, *fp2) > 0.0)
+  TEST_ASSERT(OnBitProjSimilarity(*fp2, *fp1)[0] == 1.0)
 
   delete m1;
   delete m2;
@@ -202,15 +202,15 @@ void test3() {
 
   ExplicitBitVect *fp1, *fp2;
   fp2 = RDKFingerprintMol(*m, 1, 4, 2048, 4, false, 0.3, 256);
-  TEST_ASSERT(fp2->getNumBits() == 256);
+  TEST_ASSERT(fp2->getNumBits() == 256)
 
   delete m;
   delete fp2;
   m = SmilesToMol("CN(C)Cc1n-2c(nn1)CN=C(c1ccccc1)c1cc(Cl)ccc12");
   fp1 = RDKFingerprintMol(*m, 1, 4, 2048, 4, false);
-  TEST_ASSERT(fp1->getNumBits() == 2048);
+  TEST_ASSERT(fp1->getNumBits() == 2048)
   fp2 = RDKFingerprintMol(*m, 1, 4, 2048, 4, false, 0.3, 256);
-  TEST_ASSERT(fp2->getNumBits() < fp1->getNumBits());
+  TEST_ASSERT(fp2->getNumBits() < fp1->getNumBits())
 
   delete m;
   delete fp1;
@@ -223,17 +223,17 @@ void test1alg2() {
 
   std::string smi = "C1=CC=CC=C1";
   RWMol *m1 = SmilesToMol(smi);
-  TEST_ASSERT(m1->getNumAtoms() == 6);
+  TEST_ASSERT(m1->getNumAtoms() == 6)
   ExplicitBitVect *fp1 = RDKFingerprintMol(*m1);
   ExplicitBitVect *fp2 = RDKFingerprintMol(*m1);
-  TEST_ASSERT(TanimotoSimilarity(*fp1, *fp2) == 1.0);
+  TEST_ASSERT(TanimotoSimilarity(*fp1, *fp2) == 1.0)
 
   smi = "C1=CC=CC=N1";
   RWMol *m2 = SmilesToMol(smi);
   delete fp2;
   fp2 = RDKFingerprintMol(*m2);
-  TEST_ASSERT(TanimotoSimilarity(*fp1, *fp2) < 1.0);
-  TEST_ASSERT(TanimotoSimilarity(*fp1, *fp2) > 0.0);
+  TEST_ASSERT(TanimotoSimilarity(*fp1, *fp2) < 1.0)
+  TEST_ASSERT(TanimotoSimilarity(*fp1, *fp2) > 0.0)
 
   delete m1;
   delete m2;
@@ -247,36 +247,36 @@ void test2alg2() {
 
   std::string smi = "CC(=O)COC";
   RWMol *m1 = SmilesToMol(smi);
-  TEST_ASSERT(m1->getNumAtoms() == 6);
+  TEST_ASSERT(m1->getNumAtoms() == 6)
   BOOST_LOG(rdInfoLog) << "--------------------  fp1 " << std::endl;
   ExplicitBitVect *fp1 = RDKFingerprintMol(*m1, 1, 4, 2048, 4, false);
   BOOST_LOG(rdInfoLog) << "--------------------  fp2 " << std::endl;
   ExplicitBitVect *fp2 = RDKFingerprintMol(*m1, 1, 4, 2048, 4, false);
-  TEST_ASSERT(TanimotoSimilarity(*fp1, *fp2) == 1.0);
+  TEST_ASSERT(TanimotoSimilarity(*fp1, *fp2) == 1.0)
 
   RWMol *m2 = SmilesToMol("CC");
   delete fp2;
   BOOST_LOG(rdInfoLog) << "--------------------  fp2 " << std::endl;
   fp2 = RDKFingerprintMol(*m2, 1, 4, 2048, 4, false);
-  TEST_ASSERT(TanimotoSimilarity(*fp1, *fp2) < 1.0);
-  TEST_ASSERT(TanimotoSimilarity(*fp1, *fp2) > 0.0);
-  TEST_ASSERT(OnBitProjSimilarity(*fp2, *fp1)[0] == 1.0);
+  TEST_ASSERT(TanimotoSimilarity(*fp1, *fp2) < 1.0)
+  TEST_ASSERT(TanimotoSimilarity(*fp1, *fp2) > 0.0)
+  TEST_ASSERT(OnBitProjSimilarity(*fp2, *fp1)[0] == 1.0)
 
   delete m2;
   m2 = SmilesToMol("CC=O");
   delete fp2;
   fp2 = RDKFingerprintMol(*m2, 1, 4, 2048, 4, false);
-  TEST_ASSERT(TanimotoSimilarity(*fp1, *fp2) < 1.0);
-  TEST_ASSERT(TanimotoSimilarity(*fp1, *fp2) > 0.0);
-  TEST_ASSERT(OnBitProjSimilarity(*fp2, *fp1)[0] == 1.0);
+  TEST_ASSERT(TanimotoSimilarity(*fp1, *fp2) < 1.0)
+  TEST_ASSERT(TanimotoSimilarity(*fp1, *fp2) > 0.0)
+  TEST_ASSERT(OnBitProjSimilarity(*fp2, *fp1)[0] == 1.0)
 
   delete m2;
   m2 = SmilesToMol("CCCOC");
   delete fp2;
   fp2 = RDKFingerprintMol(*m2, 1, 4, 2048, 4, false);
-  TEST_ASSERT(TanimotoSimilarity(*fp1, *fp2) < 1.0);
-  TEST_ASSERT(TanimotoSimilarity(*fp1, *fp2) > 0.0);
-  TEST_ASSERT(OnBitProjSimilarity(*fp2, *fp1)[0] == 1.0);
+  TEST_ASSERT(TanimotoSimilarity(*fp1, *fp2) < 1.0)
+  TEST_ASSERT(TanimotoSimilarity(*fp1, *fp2) > 0.0)
+  TEST_ASSERT(OnBitProjSimilarity(*fp2, *fp1)[0] == 1.0)
 
   delete m1;
   delete m2;
@@ -309,7 +309,7 @@ void test4Trends() {
   delete fp2;
   fp2 = RDKFingerprintMol(*m);
   sim2 = TanimotoSimilarity(*fp1, *fp2);
-  TEST_ASSERT(sim2 > sim1);
+  TEST_ASSERT(sim2 > sim1)
   sim2 = sim1;
 
   delete m;
@@ -321,7 +321,7 @@ void test4Trends() {
   delete fp2;
   fp2 = RDKFingerprintMol(*m);
   sim2 = TanimotoSimilarity(*fp1, *fp2);
-  TEST_ASSERT(sim2 > sim1);
+  TEST_ASSERT(sim2 > sim1)
   sim2 = sim1;
 
   delete m;
@@ -333,7 +333,7 @@ void test4Trends() {
   delete fp2;
   fp2 = RDKFingerprintMol(*m);
   sim2 = TanimotoSimilarity(*fp1, *fp2);
-  TEST_ASSERT(sim2 > sim1);
+  TEST_ASSERT(sim2 > sim1)
   sim2 = sim1;
 
   delete m;
@@ -345,7 +345,7 @@ void test4Trends() {
   delete fp2;
   fp2 = RDKFingerprintMol(*m);
   sim2 = TanimotoSimilarity(*fp1, *fp2);
-  TEST_ASSERT(sim2 > sim1);
+  TEST_ASSERT(sim2 > sim1)
   sim2 = sim1;
 
   delete m;
@@ -364,7 +364,7 @@ void test5BackwardsCompatibility() {
 
   m = SmilesToMol("CC");
   fp1 = RDKFingerprintMol(*m, 1, 7, 2048, 4);
-  TEST_ASSERT(fp1->getNumOnBits() == 4);
+  TEST_ASSERT(fp1->getNumOnBits() == 4)
 #if BOOST_VERSION / 100 < 1040
   // bug fixes in the uniform_int<> distribution in version 1.40
   // necessitate this
@@ -373,10 +373,10 @@ void test5BackwardsCompatibility() {
   TEST_ASSERT((*fp1)[1436]);
   TEST_ASSERT((*fp1)[1590]);
 #else
-  TEST_ASSERT((*fp1)[419]);
-  TEST_ASSERT((*fp1)[718]);
-  TEST_ASSERT((*fp1)[1499]);
-  TEST_ASSERT((*fp1)[1504]);
+  TEST_ASSERT((*fp1)[419])
+  TEST_ASSERT((*fp1)[718])
+  TEST_ASSERT((*fp1)[1499])
+  TEST_ASSERT((*fp1)[1504])
 #endif
   delete fp1;
 
@@ -396,26 +396,26 @@ void test1Layers() {
 
     ExplicitBitVect *fp1 = LayeredFingerprintMol(*m1);
     ExplicitBitVect *fp2 = LayeredFingerprintMol(*m1);
-    TEST_ASSERT(TanimotoSimilarity(*fp1, *fp2) == 1.0);
+    TEST_ASSERT(TanimotoSimilarity(*fp1, *fp2) == 1.0)
 
     delete fp2;
     fp2 = LayeredFingerprintMol(*m2);
-    TEST_ASSERT(TanimotoSimilarity(*fp1, *fp2) < 1.0);
-    TEST_ASSERT(TanimotoSimilarity(*fp1, *fp2) > 0.0);
+    TEST_ASSERT(TanimotoSimilarity(*fp1, *fp2) < 1.0)
+    TEST_ASSERT(TanimotoSimilarity(*fp1, *fp2) > 0.0)
 
     ExplicitBitVect *fp3 = LayeredFingerprintMol(*m3);
-    TEST_ASSERT(TanimotoSimilarity(*fp1, *fp3) < 1.0);
-    TEST_ASSERT(TanimotoSimilarity(*fp1, *fp3) > 0.0);
-    TEST_ASSERT(TanimotoSimilarity(*fp2, *fp3) < 1.0);
-    TEST_ASSERT(TanimotoSimilarity(*fp2, *fp3) > 0.0);
+    TEST_ASSERT(TanimotoSimilarity(*fp1, *fp3) < 1.0)
+    TEST_ASSERT(TanimotoSimilarity(*fp1, *fp3) > 0.0)
+    TEST_ASSERT(TanimotoSimilarity(*fp2, *fp3) < 1.0)
+    TEST_ASSERT(TanimotoSimilarity(*fp2, *fp3) > 0.0)
 
     ExplicitBitVect *fp4 = LayeredFingerprintMol(*m4);
-    TEST_ASSERT(TanimotoSimilarity(*fp1, *fp4) < 1.0);
-    TEST_ASSERT(TanimotoSimilarity(*fp1, *fp4) > 0.0);
-    TEST_ASSERT(TanimotoSimilarity(*fp2, *fp4) < 1.0);
-    TEST_ASSERT(TanimotoSimilarity(*fp2, *fp4) > 0.0);
-    TEST_ASSERT(TanimotoSimilarity(*fp3, *fp4) < 1.0);
-    TEST_ASSERT(TanimotoSimilarity(*fp3, *fp4) > 0.0);
+    TEST_ASSERT(TanimotoSimilarity(*fp1, *fp4) < 1.0)
+    TEST_ASSERT(TanimotoSimilarity(*fp1, *fp4) > 0.0)
+    TEST_ASSERT(TanimotoSimilarity(*fp2, *fp4) < 1.0)
+    TEST_ASSERT(TanimotoSimilarity(*fp2, *fp4) > 0.0)
+    TEST_ASSERT(TanimotoSimilarity(*fp3, *fp4) < 1.0)
+    TEST_ASSERT(TanimotoSimilarity(*fp3, *fp4) > 0.0)
 
     delete fp1;
     delete fp2;
@@ -436,13 +436,13 @@ void test1Layers() {
     ExplicitBitVect *fp1 = LayeredFingerprintMol(*m1, layers, 1, 5);
 
     ExplicitBitVect *fp2 = LayeredFingerprintMol(*m2, layers, 1, 5);
-    TEST_ASSERT(TanimotoSimilarity(*fp1, *fp2) == 1.0);
+    TEST_ASSERT(TanimotoSimilarity(*fp1, *fp2) == 1.0)
 
     ExplicitBitVect *fp3 = LayeredFingerprintMol(*m3, layers, 1, 5);
-    TEST_ASSERT(TanimotoSimilarity(*fp1, *fp3) == 1.0);
+    TEST_ASSERT(TanimotoSimilarity(*fp1, *fp3) == 1.0)
 
     ExplicitBitVect *fp4 = LayeredFingerprintMol(*m4, layers, 1, 5);
-    TEST_ASSERT(TanimotoSimilarity(*fp1, *fp4) == 1.0);
+    TEST_ASSERT(TanimotoSimilarity(*fp1, *fp4) == 1.0)
 
     delete fp1;
     delete fp2;
@@ -463,15 +463,15 @@ void test1Layers() {
     ExplicitBitVect *fp1 = LayeredFingerprintMol(*m1, layers, 1, 5);
 
     ExplicitBitVect *fp2 = LayeredFingerprintMol(*m2, layers, 1, 5);
-    TEST_ASSERT(TanimotoSimilarity(*fp1, *fp2) == 1.0);
+    TEST_ASSERT(TanimotoSimilarity(*fp1, *fp2) == 1.0)
 
     ExplicitBitVect *fp3 = LayeredFingerprintMol(*m3, layers, 1, 5);
-    TEST_ASSERT(TanimotoSimilarity(*fp1, *fp3) == 1.0);
+    TEST_ASSERT(TanimotoSimilarity(*fp1, *fp3) == 1.0)
 
     ExplicitBitVect *fp4 = LayeredFingerprintMol(*m4, layers, 1, 5);
-    TEST_ASSERT(TanimotoSimilarity(*fp1, *fp4) <= 1.0);
-    TEST_ASSERT(TanimotoSimilarity(*fp1, *fp4) > 0.0);
-    TEST_ASSERT(TanimotoSimilarity(*fp3, *fp4) == 1.0);
+    TEST_ASSERT(TanimotoSimilarity(*fp1, *fp4) <= 1.0)
+    TEST_ASSERT(TanimotoSimilarity(*fp1, *fp4) > 0.0)
+    TEST_ASSERT(TanimotoSimilarity(*fp3, *fp4) == 1.0)
 
     delete fp1;
     delete fp2;
@@ -492,19 +492,19 @@ void test1Layers() {
     ExplicitBitVect *fp1 = LayeredFingerprintMol(*m1, layers, 1, 5);
 
     ExplicitBitVect *fp2 = LayeredFingerprintMol(*m2, layers, 1, 5);
-    TEST_ASSERT(TanimotoSimilarity(*fp1, *fp2) < 1.0);
-    TEST_ASSERT(TanimotoSimilarity(*fp1, *fp2) > 0.0);
+    TEST_ASSERT(TanimotoSimilarity(*fp1, *fp2) < 1.0)
+    TEST_ASSERT(TanimotoSimilarity(*fp1, *fp2) > 0.0)
 
     ExplicitBitVect *fp3 = LayeredFingerprintMol(*m3, layers, 1, 5);
-    TEST_ASSERT(TanimotoSimilarity(*fp1, *fp3) == 1.0);
-    TEST_ASSERT(TanimotoSimilarity(*fp2, *fp3) < 1.0);
-    TEST_ASSERT(TanimotoSimilarity(*fp2, *fp3) > 0.0);
+    TEST_ASSERT(TanimotoSimilarity(*fp1, *fp3) == 1.0)
+    TEST_ASSERT(TanimotoSimilarity(*fp2, *fp3) < 1.0)
+    TEST_ASSERT(TanimotoSimilarity(*fp2, *fp3) > 0.0)
 
     ExplicitBitVect *fp4 = LayeredFingerprintMol(*m4, layers, 1, 5);
-    TEST_ASSERT(TanimotoSimilarity(*fp1, *fp4) == 1.0);
-    TEST_ASSERT(TanimotoSimilarity(*fp2, *fp4) < 1.0);
-    TEST_ASSERT(TanimotoSimilarity(*fp2, *fp4) > 0.0);
-    TEST_ASSERT(TanimotoSimilarity(*fp3, *fp4) == 1.0);
+    TEST_ASSERT(TanimotoSimilarity(*fp1, *fp4) == 1.0)
+    TEST_ASSERT(TanimotoSimilarity(*fp2, *fp4) < 1.0)
+    TEST_ASSERT(TanimotoSimilarity(*fp2, *fp4) > 0.0)
+    TEST_ASSERT(TanimotoSimilarity(*fp3, *fp4) == 1.0)
 
     delete fp1;
     delete fp2;
@@ -525,17 +525,17 @@ void test1Layers() {
     ExplicitBitVect *fp1 = LayeredFingerprintMol(*m1, layers, 1, 5);
 
     ExplicitBitVect *fp2 = LayeredFingerprintMol(*m2, layers, 1, 5);
-    TEST_ASSERT(TanimotoSimilarity(*fp1, *fp2) == 1.0);
+    TEST_ASSERT(TanimotoSimilarity(*fp1, *fp2) == 1.0)
 
     ExplicitBitVect *fp3 = LayeredFingerprintMol(*m3, layers, 1, 5);
-    TEST_ASSERT(TanimotoSimilarity(*fp1, *fp3) < 1.0);
-    TEST_ASSERT(TanimotoSimilarity(*fp1, *fp3) > 0.0);
-    TEST_ASSERT(TanimotoSimilarity(*fp2, *fp3) < 1.0);
-    TEST_ASSERT(TanimotoSimilarity(*fp2, *fp3) > 0.0);
+    TEST_ASSERT(TanimotoSimilarity(*fp1, *fp3) < 1.0)
+    TEST_ASSERT(TanimotoSimilarity(*fp1, *fp3) > 0.0)
+    TEST_ASSERT(TanimotoSimilarity(*fp2, *fp3) < 1.0)
+    TEST_ASSERT(TanimotoSimilarity(*fp2, *fp3) > 0.0)
 
     ExplicitBitVect *fp4 = LayeredFingerprintMol(*m4, layers, 1, 5);
-    TEST_ASSERT(TanimotoSimilarity(*fp1, *fp4) == 1.0);
-    TEST_ASSERT(TanimotoSimilarity(*fp2, *fp4) == 1.0);
+    TEST_ASSERT(TanimotoSimilarity(*fp1, *fp4) == 1.0)
+    TEST_ASSERT(TanimotoSimilarity(*fp2, *fp4) == 1.0)
 
     delete fp1;
     delete fp2;
@@ -556,21 +556,21 @@ void test1Layers() {
     ExplicitBitVect *fp1 = LayeredFingerprintMol(*m1, layers, 1, 5);
 
     ExplicitBitVect *fp2 = LayeredFingerprintMol(*m2, layers, 1, 5);
-    TEST_ASSERT(TanimotoSimilarity(*fp1, *fp2) == 1.0);
+    TEST_ASSERT(TanimotoSimilarity(*fp1, *fp2) == 1.0)
 
     ExplicitBitVect *fp3 = LayeredFingerprintMol(*m3, layers, 1, 5);
-    TEST_ASSERT(TanimotoSimilarity(*fp1, *fp3) < 1.0);
-    TEST_ASSERT(TanimotoSimilarity(*fp1, *fp3) > 0.0);
-    TEST_ASSERT(TanimotoSimilarity(*fp2, *fp3) < 1.0);
-    TEST_ASSERT(TanimotoSimilarity(*fp2, *fp3) > 0.0);
+    TEST_ASSERT(TanimotoSimilarity(*fp1, *fp3) < 1.0)
+    TEST_ASSERT(TanimotoSimilarity(*fp1, *fp3) > 0.0)
+    TEST_ASSERT(TanimotoSimilarity(*fp2, *fp3) < 1.0)
+    TEST_ASSERT(TanimotoSimilarity(*fp2, *fp3) > 0.0)
 
     ExplicitBitVect *fp4 = LayeredFingerprintMol(*m4, layers, 1, 5);
-    TEST_ASSERT(TanimotoSimilarity(*fp1, *fp4) < 1.0);
-    TEST_ASSERT(TanimotoSimilarity(*fp1, *fp4) > 0.0);
-    TEST_ASSERT(TanimotoSimilarity(*fp2, *fp4) < 1.0);
-    TEST_ASSERT(TanimotoSimilarity(*fp2, *fp4) > 0.0);
-    TEST_ASSERT(TanimotoSimilarity(*fp3, *fp4) < 1.0);
-    TEST_ASSERT(TanimotoSimilarity(*fp3, *fp4) > 0.0);
+    TEST_ASSERT(TanimotoSimilarity(*fp1, *fp4) < 1.0)
+    TEST_ASSERT(TanimotoSimilarity(*fp1, *fp4) > 0.0)
+    TEST_ASSERT(TanimotoSimilarity(*fp2, *fp4) < 1.0)
+    TEST_ASSERT(TanimotoSimilarity(*fp2, *fp4) > 0.0)
+    TEST_ASSERT(TanimotoSimilarity(*fp3, *fp4) < 1.0)
+    TEST_ASSERT(TanimotoSimilarity(*fp3, *fp4) > 0.0)
 
     delete fp1;
     delete fp2;
@@ -589,9 +589,9 @@ void test1Layers() {
     ExplicitBitVect *fp1 = LayeredFingerprintMol(*m1, layers, 1, 5);
 
     ExplicitBitVect *fp2 = LayeredFingerprintMol(*m2, layers, 1, 5);
-    TEST_ASSERT(TanimotoSimilarity(*fp1, *fp2) < 1.0);
-    TEST_ASSERT(TanimotoSimilarity(*fp1, *fp2) > 0.0);
-    TEST_ASSERT(((*fp1) & (*fp2)) == (*fp1));
+    TEST_ASSERT(TanimotoSimilarity(*fp1, *fp2) < 1.0)
+    TEST_ASSERT(TanimotoSimilarity(*fp1, *fp2) > 0.0)
+    TEST_ASSERT(((*fp1) & (*fp2)) == (*fp1))
 
     delete fp1;
     delete fp2;
@@ -610,7 +610,7 @@ void test2Layers() {
 
     ExplicitBitVect *fp1 = LayeredFingerprintMol(*m1);
     ExplicitBitVect *fp2 = LayeredFingerprintMol(*m1);
-    TEST_ASSERT(TanimotoSimilarity(*fp1, *fp2) == 1.0);
+    TEST_ASSERT(TanimotoSimilarity(*fp1, *fp2) == 1.0)
 
     atomCounts.clear();
     atomCounts.resize(m1->getNumAtoms());
@@ -620,19 +620,19 @@ void test2Layers() {
 
     delete fp2;
     fp2 = LayeredFingerprintMol(*m1, 0xFFFFFFFF, 1, 7, 2048, &atomCounts);
-    TEST_ASSERT(TanimotoSimilarity(*fp1, *fp2) == 1.0);
-    TEST_ASSERT(atomCounts[0] == 4);
-    TEST_ASSERT(atomCounts[1] == 7);
-    TEST_ASSERT(atomCounts[2] == 4);
-    TEST_ASSERT(atomCounts[3] == 4);
+    TEST_ASSERT(TanimotoSimilarity(*fp1, *fp2) == 1.0)
+    TEST_ASSERT(atomCounts[0] == 4)
+    TEST_ASSERT(atomCounts[1] == 7)
+    TEST_ASSERT(atomCounts[2] == 4)
+    TEST_ASSERT(atomCounts[3] == 4)
 
     delete fp2;
     fp2 = LayeredFingerprintMol(*m1, 0xFFFFFFFF, 1, 7, 2048, &atomCounts);
-    TEST_ASSERT(TanimotoSimilarity(*fp1, *fp2) == 1.0);
-    TEST_ASSERT(atomCounts[0] == 8);
-    TEST_ASSERT(atomCounts[1] == 14);
-    TEST_ASSERT(atomCounts[2] == 8);
-    TEST_ASSERT(atomCounts[3] == 8);
+    TEST_ASSERT(TanimotoSimilarity(*fp1, *fp2) == 1.0)
+    TEST_ASSERT(atomCounts[0] == 8)
+    TEST_ASSERT(atomCounts[1] == 14)
+    TEST_ASSERT(atomCounts[2] == 8)
+    TEST_ASSERT(atomCounts[3] == 8)
 
     delete fp1;
     delete fp2;
@@ -646,7 +646,7 @@ void test2Layers() {
 
     ExplicitBitVect *fp1 = LayeredFingerprintMol(*m1);
     ExplicitBitVect *fp2 = LayeredFingerprintMol(*m2);
-    TEST_ASSERT(TanimotoSimilarity(*fp1, *fp2) < 1.0);
+    TEST_ASSERT(TanimotoSimilarity(*fp1, *fp2) < 1.0)
 
     atomCounts.clear();
     atomCounts.resize(m1->getNumAtoms());
@@ -656,11 +656,11 @@ void test2Layers() {
 
     ExplicitBitVect *fp3 =
         LayeredFingerprintMol(*m1, 0xFFFFFFFF, 1, 7, 2048, &atomCounts, fp2);
-    TEST_ASSERT(TanimotoSimilarity(*fp1, *fp3) < 1.0);
-    TEST_ASSERT(atomCounts[0] == 3);
-    TEST_ASSERT(atomCounts[1] == 6);
-    TEST_ASSERT(atomCounts[2] == 3);
-    TEST_ASSERT(atomCounts[3] == 3);
+    TEST_ASSERT(TanimotoSimilarity(*fp1, *fp3) < 1.0)
+    TEST_ASSERT(atomCounts[0] == 3)
+    TEST_ASSERT(atomCounts[1] == 6)
+    TEST_ASSERT(atomCounts[2] == 3)
+    TEST_ASSERT(atomCounts[3] == 3)
 
     delete fp1;
     delete fp2;
@@ -680,7 +680,7 @@ void test3Layers() {
 
     ExplicitBitVect *fp1 = LayeredFingerprintMol(*m1, 0x7, 1, 5, 256);
     ExplicitBitVect *fp2 = LayeredFingerprintMol(*m2, 0x7, 1, 5, 256);
-    TEST_ASSERT(fp2->getNumOnBits());
+    TEST_ASSERT(fp2->getNumOnBits())
 
     ExplicitBitVect fp3 = (*fp1) & (*fp2);
 #if 0
@@ -689,7 +689,7 @@ void test3Layers() {
     std::cerr<<BitVectToText(*fp2)<<std::endl;
     std::cerr<<BitVectToText(fp3)<<std::endl;
 #endif
-    TEST_ASSERT(fp3 == (*fp2));
+    TEST_ASSERT(fp3 == (*fp2))
 
     delete fp1;
     delete fp2;
@@ -703,10 +703,10 @@ void test3Layers() {
 
     ExplicitBitVect *fp1 = LayeredFingerprintMol(*m1, 0x7, 1, 5, 256);
     ExplicitBitVect *fp2 = LayeredFingerprintMol(*m2, 0x7, 1, 5, 256);
-    TEST_ASSERT(fp2->getNumOnBits());
+    TEST_ASSERT(fp2->getNumOnBits())
 
     ExplicitBitVect fp3 = (*fp1) & (*fp2);
-    TEST_ASSERT(fp3 == (*fp2));
+    TEST_ASSERT(fp3 == (*fp2))
 
     delete fp1;
     delete fp2;
@@ -720,11 +720,11 @@ void test3Layers() {
 
     ExplicitBitVect *fp1 = LayeredFingerprintMol(*m1, 0x7, 1, 5, 256);
     ExplicitBitVect *fp2 = LayeredFingerprintMol(*m2, 0x7, 1, 5, 256);
-    TEST_ASSERT(fp2->getNumOnBits());
+    TEST_ASSERT(fp2->getNumOnBits())
 
     ExplicitBitVect fp3 = (*fp1) & (*fp2);
-    TEST_ASSERT(fp3 != (*fp2));
-    TEST_ASSERT(fp3 != (*fp1));
+    TEST_ASSERT(fp3 != (*fp2))
+    TEST_ASSERT(fp3 != (*fp1))
 
     delete fp1;
     delete fp2;
@@ -738,10 +738,10 @@ void test3Layers() {
 
     ExplicitBitVect *fp1 = LayeredFingerprintMol(*m1, 0x7, 1, 5, 256);
     ExplicitBitVect *fp2 = LayeredFingerprintMol(*m2, 0x7, 1, 5, 256);
-    TEST_ASSERT(fp2->getNumOnBits());
+    TEST_ASSERT(fp2->getNumOnBits())
 
     ExplicitBitVect fp3 = (*fp1) & (*fp2);
-    TEST_ASSERT(fp3 == (*fp2));
+    TEST_ASSERT(fp3 == (*fp2))
 
     delete fp1;
     delete fp2;
@@ -755,11 +755,11 @@ void test3Layers() {
 
     ExplicitBitVect *fp1 = LayeredFingerprintMol(*m1, 0x7, 1, 5, 256);
     ExplicitBitVect *fp2 = LayeredFingerprintMol(*m2, 0x7, 1, 5, 256);
-    TEST_ASSERT(fp2->getNumOnBits());
+    TEST_ASSERT(fp2->getNumOnBits())
 
     // the query says "!C", but we still match in the fp...
     ExplicitBitVect fp3 = (*fp1) & (*fp2);
-    TEST_ASSERT(fp3 == (*fp2));
+    TEST_ASSERT(fp3 == (*fp2))
 
     // of course we better match if the thing really isn't a C:
     delete fp1;
@@ -767,7 +767,7 @@ void test3Layers() {
     m1 = SmilesToMol("CC(O)C");
     fp1 = LayeredFingerprintMol(*m1, 0x7, 1, 5, 256);
     fp3 = (*fp1) & (*fp2);
-    TEST_ASSERT(fp3 == (*fp2));
+    TEST_ASSERT(fp3 == (*fp2))
 
     delete fp1;
     delete fp2;
@@ -781,10 +781,10 @@ void test3Layers() {
 
     ExplicitBitVect *fp1 = LayeredFingerprintMol(*m1, 0x7, 1, 5, 256);
     ExplicitBitVect *fp2 = LayeredFingerprintMol(*m2, 0x7, 1, 5, 256);
-    TEST_ASSERT(fp2->getNumOnBits());
+    TEST_ASSERT(fp2->getNumOnBits())
 
     ExplicitBitVect fp3 = (*fp1) & (*fp2);
-    TEST_ASSERT(fp3 == (*fp2));
+    TEST_ASSERT(fp3 == (*fp2))
 
     delete fp1;
     delete fp2;
@@ -797,10 +797,10 @@ void test3Layers() {
     RWMol *m2 = SmartsToMol("cccc");
     ExplicitBitVect *fp1 = LayeredFingerprintMol(*m1, 0x7, 1, 5, 256);
     ExplicitBitVect *fp2 = LayeredFingerprintMol(*m2, 0x7, 1, 5, 256);
-    TEST_ASSERT(fp2->getNumOnBits());
+    TEST_ASSERT(fp2->getNumOnBits())
 
     ExplicitBitVect fp3 = (*fp1) & (*fp2);
-    TEST_ASSERT(fp3 == (*fp2));
+    TEST_ASSERT(fp3 == (*fp2))
 
     delete fp1;
     delete m1;
@@ -810,7 +810,7 @@ void test3Layers() {
     m1 = SmilesToMol("C1CCCCC1");
     fp1 = LayeredFingerprintMol(*m1, 0x7, 1, 5, 256);
     fp3 = (*fp1) & (*fp2);
-    TEST_ASSERT(fp3 == (*fp2));
+    TEST_ASSERT(fp3 == (*fp2))
 
     delete fp1;
     delete fp2;
@@ -823,25 +823,25 @@ void test3Layers() {
     RWMol *m2 = SmartsToMol("c:c:c");
     ExplicitBitVect *fp1 = LayeredFingerprintMol(*m1, 0xFFFF, 1, 5, 512);
     ExplicitBitVect *fp2 = LayeredFingerprintMol(*m2, 0x5, 1, 5, 512);
-    TEST_ASSERT(fp2->getNumOnBits());
+    TEST_ASSERT(fp2->getNumOnBits())
     ExplicitBitVect fp3 = (*fp1) & (*fp2);
-    TEST_ASSERT(fp3 == (*fp2));
+    TEST_ASSERT(fp3 == (*fp2))
 
     delete fp1;
     delete m1;
     m1 = SmilesToMol("C1CCCCC1");
     fp1 = LayeredFingerprintMol(*m1, 0xFFFF, 1, 5, 512);
     fp3 = (*fp1) & (*fp2);
-    TEST_ASSERT(fp3 == (*fp2));
+    TEST_ASSERT(fp3 == (*fp2))
     delete fp2;
     fp2 = LayeredFingerprintMol(*m2, 0x7, 1, 5, 512);
     fp3 = (*fp1) & (*fp2);
-    TEST_ASSERT(fp3 == (*fp2));
+    TEST_ASSERT(fp3 == (*fp2))
 
     delete fp2;
     fp2 = LayeredFingerprintMol(*m2, 0x25, 1, 5, 512);
     fp3 = (*fp1) & (*fp2);
-    TEST_ASSERT(fp3 != (*fp2));
+    TEST_ASSERT(fp3 != (*fp2))
 
     delete fp2;
     fp2 = LayeredFingerprintMol(*m2, 0x7, 1, 5, 512);
@@ -851,16 +851,16 @@ void test3Layers() {
     m1 = SmilesToMol("c1ncncn1");
     fp1 = LayeredFingerprintMol(*m1, 0xFFFF, 1, 5, 512);
     fp3 = (*fp1) & (*fp2);
-    TEST_ASSERT(fp3 != (*fp2));
+    TEST_ASSERT(fp3 != (*fp2))
 
     delete fp2;
     delete m2;
     // but queries switch us back to generic types, so we match again:
     m2 = SmartsToMol("[C,N]:[C,N]:[C,N]");
     fp2 = LayeredFingerprintMol(*m2, 0x7, 1, 5, 512);
-    TEST_ASSERT(fp2->getNumOnBits());
+    TEST_ASSERT(fp2->getNumOnBits())
     fp3 = (*fp1) & (*fp2);
-    TEST_ASSERT(fp3 == (*fp2));
+    TEST_ASSERT(fp3 == (*fp2))
 
     delete fp1;
     delete fp2;
@@ -881,35 +881,35 @@ void test1MorganFPs() {
 
     mol = SmilesToMol("CCCCC");
     fp = MorganFingerprints::getFingerprint(*mol, 0);
-    TEST_ASSERT(fp->getNonzeroElements().size() == 2);
+    TEST_ASSERT(fp->getNonzeroElements().size() == 2)
     delete fp;
 
     fp = MorganFingerprints::getFingerprint(*mol, 0, nullptr, nullptr, false,
                                             true, false);
-    TEST_ASSERT(fp->getNonzeroElements().size() == 2);
+    TEST_ASSERT(fp->getNonzeroElements().size() == 2)
     for (auto iter = fp->getNonzeroElements().begin();
          iter != fp->getNonzeroElements().end(); ++iter) {
-      TEST_ASSERT(iter->second == 1);  // check that count == 1
+      TEST_ASSERT(iter->second == 1)  // check that count == 1
     }
     delete fp;
 
     fp = MorganFingerprints::getHashedFingerprint(*mol, 0);
-    TEST_ASSERT(fp->getNonzeroElements().size() == 2);
+    TEST_ASSERT(fp->getNonzeroElements().size() == 2)
     delete fp;
 
     fp = MorganFingerprints::getFingerprint(*mol, 1);
-    TEST_ASSERT(fp->getNonzeroElements().size() == 5);
+    TEST_ASSERT(fp->getNonzeroElements().size() == 5)
     delete fp;
     fp = MorganFingerprints::getHashedFingerprint(*mol, 1);
-    TEST_ASSERT(fp->getNonzeroElements().size() == 5);
+    TEST_ASSERT(fp->getNonzeroElements().size() == 5)
     delete fp;
 
     fp = MorganFingerprints::getFingerprint(*mol, 2);
-    TEST_ASSERT(fp->getNonzeroElements().size() == 7);
+    TEST_ASSERT(fp->getNonzeroElements().size() == 7)
     delete fp;
 
     fp = MorganFingerprints::getFingerprint(*mol, 3);
-    TEST_ASSERT(fp->getNonzeroElements().size() == 7);
+    TEST_ASSERT(fp->getNonzeroElements().size() == 7)
     delete fp;
 
     delete mol;
@@ -920,16 +920,16 @@ void test1MorganFPs() {
 
     mol = SmilesToMol("O=C(O)CC1CC1");
     fp = MorganFingerprints::getFingerprint(*mol, 0);
-    TEST_ASSERT(fp->getNonzeroElements().size() == 6);
+    TEST_ASSERT(fp->getNonzeroElements().size() == 6)
     delete fp;
     fp = MorganFingerprints::getFingerprint(*mol, 1);
-    TEST_ASSERT(fp->getNonzeroElements().size() == 12);
+    TEST_ASSERT(fp->getNonzeroElements().size() == 12)
     delete fp;
     fp = MorganFingerprints::getFingerprint(*mol, 2);
-    TEST_ASSERT(fp->getNonzeroElements().size() == 16);
+    TEST_ASSERT(fp->getNonzeroElements().size() == 16)
     delete fp;
     fp = MorganFingerprints::getFingerprint(*mol, 3);
-    TEST_ASSERT(fp->getNonzeroElements().size() == 17);
+    TEST_ASSERT(fp->getNonzeroElements().size() == 17)
     delete fp;
 
     delete mol;
@@ -945,33 +945,33 @@ void test1MorganFPs() {
     mol2 = SmilesToMol("OC(=O)CC1CC1");
     fp = MorganFingerprints::getFingerprint(*mol, 0);
     fp2 = MorganFingerprints::getFingerprint(*mol2, 0);
-    TEST_ASSERT(fp->getNonzeroElements().size() == 6);
-    TEST_ASSERT(fp2->getNonzeroElements().size() == 6);
-    TEST_ASSERT(*fp == *fp2);
+    TEST_ASSERT(fp->getNonzeroElements().size() == 6)
+    TEST_ASSERT(fp2->getNonzeroElements().size() == 6)
+    TEST_ASSERT(*fp == *fp2)
     delete fp;
     delete fp2;
 
     fp = MorganFingerprints::getFingerprint(*mol, 1);
     fp2 = MorganFingerprints::getFingerprint(*mol2, 1);
-    TEST_ASSERT(fp->getNonzeroElements().size() == 12);
-    TEST_ASSERT(fp2->getNonzeroElements().size() == 12);
-    TEST_ASSERT(*fp == *fp2);
+    TEST_ASSERT(fp->getNonzeroElements().size() == 12)
+    TEST_ASSERT(fp2->getNonzeroElements().size() == 12)
+    TEST_ASSERT(*fp == *fp2)
     delete fp;
     delete fp2;
 
     fp = MorganFingerprints::getFingerprint(*mol, 2);
     fp2 = MorganFingerprints::getFingerprint(*mol2, 2);
-    TEST_ASSERT(fp->getNonzeroElements().size() == 16);
-    TEST_ASSERT(fp2->getNonzeroElements().size() == 16);
-    TEST_ASSERT(*fp == *fp2);
+    TEST_ASSERT(fp->getNonzeroElements().size() == 16)
+    TEST_ASSERT(fp2->getNonzeroElements().size() == 16)
+    TEST_ASSERT(*fp == *fp2)
     delete fp;
     delete fp2;
 
     fp = MorganFingerprints::getFingerprint(*mol, 3);
     fp2 = MorganFingerprints::getFingerprint(*mol2, 3);
-    TEST_ASSERT(fp->getNonzeroElements().size() == 17);
-    TEST_ASSERT(fp2->getNonzeroElements().size() == 17);
-    TEST_ASSERT(*fp == *fp2);
+    TEST_ASSERT(fp->getNonzeroElements().size() == 17)
+    TEST_ASSERT(fp2->getNonzeroElements().size() == 17)
+    TEST_ASSERT(*fp == *fp2)
     delete fp;
     delete fp2;
 
@@ -986,11 +986,11 @@ void test1MorganFPs() {
 
     mol = SmilesToMol("OCCCCO");
     fp = MorganFingerprints::getFingerprint(*mol, 2);
-    TEST_ASSERT(fp->getNonzeroElements().size() == 7);
+    TEST_ASSERT(fp->getNonzeroElements().size() == 7)
     SparseIntVect<std::uint32_t>::StorageType::const_iterator iter;
     for (iter = fp->getNonzeroElements().begin();
          iter != fp->getNonzeroElements().end(); ++iter) {
-      TEST_ASSERT(iter->second == 2 || iter->second == 4);
+      TEST_ASSERT(iter->second == 2 || iter->second == 4)
     }
 
     delete fp;
@@ -1004,25 +1004,25 @@ void test1MorganFPs() {
 
     mol = SmilesToMol("CC(F)(Cl)C(F)(Cl)C");
     fp = MorganFingerprints::getFingerprint(*mol, 0);
-    TEST_ASSERT(fp->getNonzeroElements().size() == 4);
+    TEST_ASSERT(fp->getNonzeroElements().size() == 4)
     delete fp;
     fp = MorganFingerprints::getFingerprint(*mol, 1);
-    TEST_ASSERT(fp->getNonzeroElements().size() == 8);
+    TEST_ASSERT(fp->getNonzeroElements().size() == 8)
     delete mol;
     delete fp;
 
     mol = SmilesToMol("CC(F)(Cl)[C@](F)(Cl)C");
     fp = MorganFingerprints::getFingerprint(*mol, 0);
-    TEST_ASSERT(fp->getNonzeroElements().size() == 4);
+    TEST_ASSERT(fp->getNonzeroElements().size() == 4)
     delete fp;
     fp = MorganFingerprints::getFingerprint(*mol, 1);
-    TEST_ASSERT(fp->getNonzeroElements().size() == 8);
+    TEST_ASSERT(fp->getNonzeroElements().size() == 8)
     delete fp;
     fp = MorganFingerprints::getFingerprint(*mol, 0, nullptr, nullptr, true);
-    TEST_ASSERT(fp->getNonzeroElements().size() == 4);
+    TEST_ASSERT(fp->getNonzeroElements().size() == 4)
     delete fp;
     fp = MorganFingerprints::getFingerprint(*mol, 1, nullptr, nullptr, true);
-    TEST_ASSERT(fp->getNonzeroElements().size() == 9);
+    TEST_ASSERT(fp->getNonzeroElements().size() == 9)
     delete fp;
     delete mol;
   }
@@ -1043,23 +1043,23 @@ void test2MorganFPsFromAtoms() {
 
     mol = SmilesToMol("CCCCC");
     fp = MorganFingerprints::getFingerprint(*mol, 0);
-    TEST_ASSERT(fp->getNonzeroElements().size() == 2);
+    TEST_ASSERT(fp->getNonzeroElements().size() == 2)
     delete fp;
 
     fp = MorganFingerprints::getFingerprint(
         *mol, 0, (std::vector<std::uint32_t> *)nullptr, &atoms);
-    TEST_ASSERT(fp->getNonzeroElements().size() == 1);
+    TEST_ASSERT(fp->getNonzeroElements().size() == 1)
     delete fp;
 
     fp = MorganFingerprints::getFingerprint(
         *mol, 1, (std::vector<std::uint32_t> *)nullptr, &atoms);
-    TEST_ASSERT(fp->getNonzeroElements().size() == 2);
+    TEST_ASSERT(fp->getNonzeroElements().size() == 2)
     delete fp;
 
     // tests issue 3415636
     fp = MorganFingerprints::getFingerprint(
         *mol, 2, (std::vector<std::uint32_t> *)nullptr, &atoms);
-    TEST_ASSERT(fp->getNonzeroElements().size() == 3);
+    TEST_ASSERT(fp->getNonzeroElements().size() == 3)
     delete fp;
 
     delete mol;
@@ -1073,12 +1073,12 @@ void test2MorganFPsFromAtoms() {
     mol = SmilesToMol("CCCCC");
     fp = MorganFingerprints::getFingerprint(
         *mol, 0, (std::vector<std::uint32_t> *)nullptr, &atoms);
-    TEST_ASSERT(fp->getNonzeroElements().size() == 0);
+    TEST_ASSERT(fp->getNonzeroElements().size() == 0)
     delete fp;
 
     fp = MorganFingerprints::getFingerprint(
         *mol, 1, (std::vector<std::uint32_t> *)nullptr, &atoms);
-    TEST_ASSERT(fp->getNonzeroElements().size() == 0);
+    TEST_ASSERT(fp->getNonzeroElements().size() == 0)
     delete fp;
 
     delete mol;
@@ -1094,23 +1094,23 @@ void test2MorganFPsFromAtoms() {
 
     fp = MorganFingerprints::getFingerprint(
         *mol, 0, (std::vector<std::uint32_t> *)nullptr, &atoms);
-    TEST_ASSERT(fp->getNonzeroElements().size() == 1);
+    TEST_ASSERT(fp->getNonzeroElements().size() == 1)
     delete fp;
 
     fp = MorganFingerprints::getFingerprint(
         *mol, 1, (std::vector<std::uint32_t> *)nullptr, &atoms);
-    TEST_ASSERT(fp->getNonzeroElements().size() == 2);
+    TEST_ASSERT(fp->getNonzeroElements().size() == 2)
     delete fp;
 
     fp = MorganFingerprints::getFingerprint(
         *mol, 2, (std::vector<std::uint32_t> *)nullptr, &atoms);
-    TEST_ASSERT(fp->getNonzeroElements().size() == 3);
+    TEST_ASSERT(fp->getNonzeroElements().size() == 3)
     delete fp;
 
     // tests issue 3415636
     fp = MorganFingerprints::getFingerprint(
         *mol, 3, (std::vector<std::uint32_t> *)nullptr, &atoms);
-    TEST_ASSERT(fp->getNonzeroElements().size() == 3);
+    TEST_ASSERT(fp->getNonzeroElements().size() == 3)
     delete fp;
 
     delete mol;
@@ -1130,16 +1130,16 @@ void test3MorganFPs() {
 
     mol = SmilesToMol("CCCCC");
     fp = MorganFingerprints::getFingerprintAsBitVect(*mol, 0, 2048);
-    TEST_ASSERT(fp->getNumOnBits() == 2);
+    TEST_ASSERT(fp->getNumOnBits() == 2)
     delete fp;
     fp = MorganFingerprints::getFingerprintAsBitVect(*mol, 1, 2048);
-    TEST_ASSERT(fp->getNumOnBits() == 5);
+    TEST_ASSERT(fp->getNumOnBits() == 5)
     delete fp;
     fp = MorganFingerprints::getFingerprintAsBitVect(*mol, 2, 2048);
-    TEST_ASSERT(fp->getNumOnBits() == 7);
+    TEST_ASSERT(fp->getNumOnBits() == 7)
     delete fp;
     fp = MorganFingerprints::getFingerprintAsBitVect(*mol, 3, 2048);
-    TEST_ASSERT(fp->getNumOnBits() == 7);
+    TEST_ASSERT(fp->getNumOnBits() == 7)
     delete fp;
 
     delete mol;
@@ -1155,34 +1155,34 @@ void test4MorganFPs() {
   {
     ROMol *mol;
     mol = SmilesToMol("Cc1ccccc1");
-    TEST_ASSERT(mol);
+    TEST_ASSERT(mol)
     std::vector<std::uint32_t> invars(mol->getNumAtoms());
     MorganFingerprints::getFeatureInvariants(*mol, invars);
-    TEST_ASSERT(invars[0] == 0);
-    TEST_ASSERT(invars[1] != 0);
-    TEST_ASSERT(invars[1] == invars[2]);
-    TEST_ASSERT(invars[1] == invars[3]);
-    TEST_ASSERT(invars[1] == invars[4]);
-    TEST_ASSERT(invars[1] == invars[5]);
-    TEST_ASSERT(invars[1] == invars[6]);
+    TEST_ASSERT(invars[0] == 0)
+    TEST_ASSERT(invars[1] != 0)
+    TEST_ASSERT(invars[1] == invars[2])
+    TEST_ASSERT(invars[1] == invars[3])
+    TEST_ASSERT(invars[1] == invars[4])
+    TEST_ASSERT(invars[1] == invars[5])
+    TEST_ASSERT(invars[1] == invars[6])
     delete mol;
   }
   {
     ROMol *mol;
     mol = SmilesToMol("FCCCl");
-    TEST_ASSERT(mol);
+    TEST_ASSERT(mol)
     std::vector<std::uint32_t> invars(mol->getNumAtoms());
     MorganFingerprints::getFeatureInvariants(*mol, invars);
-    TEST_ASSERT(invars[1] == invars[2]);
-    TEST_ASSERT(invars[1] == 0);
-    TEST_ASSERT(invars[0] == invars[3]);
-    TEST_ASSERT(invars[0] != 0);
+    TEST_ASSERT(invars[1] == invars[2])
+    TEST_ASSERT(invars[1] == 0)
+    TEST_ASSERT(invars[0] == invars[3])
+    TEST_ASSERT(invars[0] != 0)
     delete mol;
   }
   {
     ROMol *mol;
     mol = SmilesToMol("Cc1ncccc1O");
-    TEST_ASSERT(mol);
+    TEST_ASSERT(mol)
     std::vector<std::uint32_t> invars(mol->getNumAtoms());
 
     std::vector<const ROMol *> patterns(2);
@@ -1193,11 +1193,11 @@ void test4MorganFPs() {
     patterns[1] = static_cast<const ROMol *>(p);
 
     MorganFingerprints::getFeatureInvariants(*mol, invars, &patterns);
-    TEST_ASSERT(invars[0] != 0);
-    TEST_ASSERT(invars[1] != 0);
-    TEST_ASSERT(invars[0] != invars[1]);
-    TEST_ASSERT(invars[1] == invars[2]);
-    TEST_ASSERT(invars[0] == invars[7]);
+    TEST_ASSERT(invars[0] != 0)
+    TEST_ASSERT(invars[1] != 0)
+    TEST_ASSERT(invars[0] != invars[1])
+    TEST_ASSERT(invars[1] == invars[2])
+    TEST_ASSERT(invars[0] == invars[7])
     delete mol;
     delete patterns[0];
     delete patterns[1];
@@ -1219,9 +1219,9 @@ void test5MorganFPs() {
     invars[2] = 1;
 
     m1 = SmilesToMol("CCC");
-    TEST_ASSERT(m1);
+    TEST_ASSERT(m1)
     m2 = SmilesToMol("CC=C");
-    TEST_ASSERT(m2);
+    TEST_ASSERT(m2)
 
     fp1 = MorganFingerprints::getFingerprintAsBitVect(*m1, 2, 2048, &invars,
                                                       nullptr, false, true);
@@ -1230,7 +1230,7 @@ void test5MorganFPs() {
     invars[2] = 1;
     fp2 = MorganFingerprints::getFingerprintAsBitVect(*m2, 2, 2048, &invars,
                                                       nullptr, false, true);
-    TEST_ASSERT((*fp1) != (*fp2));
+    TEST_ASSERT((*fp1) != (*fp2))
     delete fp1;
     delete fp2;
 
@@ -1244,7 +1244,7 @@ void test5MorganFPs() {
     invars[2] = 1;
     fp2 = MorganFingerprints::getFingerprintAsBitVect(*m2, 2, 2048, &invars,
                                                       nullptr, false, false);
-    TEST_ASSERT((*fp1) == (*fp2));
+    TEST_ASSERT((*fp1) == (*fp2))
     delete fp1;
     delete fp2;
 
@@ -1257,11 +1257,11 @@ void test5MorganFPs() {
     ExplicitBitVect *fp1, *fp2, *fp3;
 
     m1 = SmilesToMol("C[C@H](F)Cl");
-    TEST_ASSERT(m1);
+    TEST_ASSERT(m1)
     m2 = SmilesToMol("C[C@@H](F)Cl");
-    TEST_ASSERT(m2);
+    TEST_ASSERT(m2)
     m3 = SmilesToMol("CC(F)Cl");
-    TEST_ASSERT(m3);
+    TEST_ASSERT(m3)
 
     fp1 = MorganFingerprints::getFingerprintAsBitVect(*m1, 2, 2048, nullptr,
                                                       nullptr, false, true);
@@ -1269,9 +1269,9 @@ void test5MorganFPs() {
                                                       nullptr, false, true);
     fp3 = MorganFingerprints::getFingerprintAsBitVect(*m3, 2, 2048, nullptr,
                                                       nullptr, false, true);
-    TEST_ASSERT((*fp1) == (*fp2));
-    TEST_ASSERT((*fp1) == (*fp3));
-    TEST_ASSERT((*fp2) == (*fp3));
+    TEST_ASSERT((*fp1) == (*fp2))
+    TEST_ASSERT((*fp1) == (*fp3))
+    TEST_ASSERT((*fp2) == (*fp3))
     delete fp1;
     delete fp2;
     delete fp3;
@@ -1282,9 +1282,9 @@ void test5MorganFPs() {
                                                       nullptr, true, true);
     fp3 = MorganFingerprints::getFingerprintAsBitVect(*m3, 2, 2048, nullptr,
                                                       nullptr, true, true);
-    TEST_ASSERT((*fp1) != (*fp2));
-    TEST_ASSERT((*fp1) != (*fp3));
-    TEST_ASSERT((*fp2) != (*fp3));
+    TEST_ASSERT((*fp1) != (*fp2))
+    TEST_ASSERT((*fp1) != (*fp3))
+    TEST_ASSERT((*fp2) != (*fp3))
     delete fp1;
     delete fp2;
     delete fp3;
@@ -1313,17 +1313,17 @@ void testIssue2875658() {
 #if BOOST_VERSION / 100 >= 1040
   // bug fixes in the uniform_int<> distribution in version 1.40
   // necessitate this
-  TEST_ASSERT(fp1->getNumOnBits() == 24);
-  TEST_ASSERT((*fp1)[11]);
-  TEST_ASSERT((*fp1)[857]);
-  TEST_ASSERT((*fp1)[1786]);
-  TEST_ASSERT((*fp1)[2020]);
+  TEST_ASSERT(fp1->getNumOnBits() == 24)
+  TEST_ASSERT((*fp1)[11])
+  TEST_ASSERT((*fp1)[857])
+  TEST_ASSERT((*fp1)[1786])
+  TEST_ASSERT((*fp1)[2020])
 
-  TEST_ASSERT(fp2->getNumOnBits() == 64);
-  TEST_ASSERT((*fp2)[11]);
-  TEST_ASSERT((*fp2)[179]);
-  TEST_ASSERT((*fp2)[1878]);
-  TEST_ASSERT((*fp2)[2020]);
+  TEST_ASSERT(fp2->getNumOnBits() == 64)
+  TEST_ASSERT((*fp2)[11])
+  TEST_ASSERT((*fp2)[179])
+  TEST_ASSERT((*fp2)[1878])
+  TEST_ASSERT((*fp2)[2020])
 #else
   TEST_ASSERT(fp1->getNumOnBits() == 24);
   TEST_ASSERT((*fp1)[23]);
@@ -1349,42 +1349,42 @@ void testAtomCodes() {
   std::uint32_t tgt;
   mol = SmilesToMol("C=C");
   TEST_ASSERT(AtomPairs::getAtomCode(mol->getAtomWithIdx(0)) ==
-              AtomPairs::getAtomCode(mol->getAtomWithIdx(1)));
+              AtomPairs::getAtomCode(mol->getAtomWithIdx(1)))
   tgt = 1 | (1 | 1 << AtomPairs::numPiBits) << AtomPairs::numBranchBits;
-  TEST_ASSERT(AtomPairs::getAtomCode(mol->getAtomWithIdx(0)) == tgt);
+  TEST_ASSERT(AtomPairs::getAtomCode(mol->getAtomWithIdx(0)) == tgt)
   tgt = 1 << AtomPairs::numBranchBits |
         1 << (AtomPairs::numBranchBits + AtomPairs::numPiBits);
-  TEST_ASSERT(AtomPairs::getAtomCode(mol->getAtomWithIdx(0), 1) == tgt);
+  TEST_ASSERT(AtomPairs::getAtomCode(mol->getAtomWithIdx(0), 1) == tgt)
 
   delete mol;
   mol = SmilesToMol("C#CO");
   tgt = 1 | 2 << AtomPairs::numBranchBits |
         1 << (AtomPairs::numBranchBits + AtomPairs::numPiBits);
-  TEST_ASSERT(AtomPairs::getAtomCode(mol->getAtomWithIdx(0)) == tgt);
+  TEST_ASSERT(AtomPairs::getAtomCode(mol->getAtomWithIdx(0)) == tgt)
   tgt = 2 | 2 << AtomPairs::numBranchBits |
         1 << (AtomPairs::numBranchBits + AtomPairs::numPiBits);
-  TEST_ASSERT(AtomPairs::getAtomCode(mol->getAtomWithIdx(1)) == tgt);
+  TEST_ASSERT(AtomPairs::getAtomCode(mol->getAtomWithIdx(1)) == tgt)
   tgt = 1 | 0 << AtomPairs::numBranchBits |
         3 << (AtomPairs::numBranchBits + AtomPairs::numPiBits);
-  TEST_ASSERT(AtomPairs::getAtomCode(mol->getAtomWithIdx(2)) == tgt);
+  TEST_ASSERT(AtomPairs::getAtomCode(mol->getAtomWithIdx(2)) == tgt)
 
   delete mol;
   mol = SmilesToMol("CC(O)C(O)(O)C");
   tgt = 1 | 0 << AtomPairs::numBranchBits |
         1 << (AtomPairs::numBranchBits + AtomPairs::numPiBits);
-  TEST_ASSERT(AtomPairs::getAtomCode(mol->getAtomWithIdx(1), 2) == tgt);
+  TEST_ASSERT(AtomPairs::getAtomCode(mol->getAtomWithIdx(1), 2) == tgt)
   tgt = 2 | 0 << AtomPairs::numBranchBits |
         1 << (AtomPairs::numBranchBits + AtomPairs::numPiBits);
-  TEST_ASSERT(AtomPairs::getAtomCode(mol->getAtomWithIdx(3), 2) == tgt);
+  TEST_ASSERT(AtomPairs::getAtomCode(mol->getAtomWithIdx(3), 2) == tgt)
 
   delete mol;
   mol = SmilesToMol("C=CC(=O)O");
   tgt = 0 | 0 << AtomPairs::numBranchBits |
         3 << (AtomPairs::numBranchBits + AtomPairs::numPiBits);
-  TEST_ASSERT(AtomPairs::getAtomCode(mol->getAtomWithIdx(4), 1) == tgt);
+  TEST_ASSERT(AtomPairs::getAtomCode(mol->getAtomWithIdx(4), 1) == tgt)
   tgt = 3 | 1 << AtomPairs::numBranchBits |
         1 << (AtomPairs::numBranchBits + AtomPairs::numPiBits);
-  TEST_ASSERT(AtomPairs::getAtomCode(mol->getAtomWithIdx(2)) == tgt);
+  TEST_ASSERT(AtomPairs::getAtomCode(mol->getAtomWithIdx(2)) == tgt)
 
   delete mol;
   BOOST_LOG(rdErrorLog) << "  done" << std::endl;
@@ -1405,38 +1405,38 @@ void testAtomPairs() {
   c3 = AtomPairs::getAtomCode(mol->getAtomWithIdx(2));
   tgt = 1 | (std::min(c1, c2) | std::max(c1, c2) << AtomPairs::codeSize)
                 << AtomPairs::numPathBits;
-  TEST_ASSERT(AtomPairs::getAtomPairCode(c1, c2, 1) == tgt);
-  TEST_ASSERT(AtomPairs::getAtomPairCode(c2, c1, 1) == tgt);
+  TEST_ASSERT(AtomPairs::getAtomPairCode(c1, c2, 1) == tgt)
+  TEST_ASSERT(AtomPairs::getAtomPairCode(c2, c1, 1) == tgt)
   tgt = 2 | (std::min(c1, c3) | std::max(c1, c3) << AtomPairs::codeSize)
                 << AtomPairs::numPathBits;
-  TEST_ASSERT(AtomPairs::getAtomPairCode(c1, c3, 2) == tgt);
-  TEST_ASSERT(AtomPairs::getAtomPairCode(c3, c1, 2) == tgt);
+  TEST_ASSERT(AtomPairs::getAtomPairCode(c1, c3, 2) == tgt)
+  TEST_ASSERT(AtomPairs::getAtomPairCode(c3, c1, 2) == tgt)
 
   delete mol;
   mol = SmilesToMol("CCC");
   fp = AtomPairs::getAtomPairFingerprint(*mol);
-  TEST_ASSERT(fp->getTotalVal() == 3);
-  TEST_ASSERT(fp->getNonzeroElements().size() == 2);
+  TEST_ASSERT(fp->getTotalVal() == 3)
+  TEST_ASSERT(fp->getNonzeroElements().size() == 2)
 
   c1 = AtomPairs::getAtomCode(mol->getAtomWithIdx(0));
   c2 = AtomPairs::getAtomCode(mol->getAtomWithIdx(1));
   c3 = AtomPairs::getAtomCode(mol->getAtomWithIdx(2));
-  TEST_ASSERT(fp->getVal(AtomPairs::getAtomPairCode(c1, c2, 1)) == 2);
-  TEST_ASSERT(fp->getVal(AtomPairs::getAtomPairCode(c1, c3, 2)) == 1);
+  TEST_ASSERT(fp->getVal(AtomPairs::getAtomPairCode(c1, c2, 1)) == 2)
+  TEST_ASSERT(fp->getVal(AtomPairs::getAtomPairCode(c1, c3, 2)) == 1)
 
   delete mol;
   delete fp;
   mol = SmilesToMol("CC=O.Cl");
   fp = AtomPairs::getAtomPairFingerprint(*mol);
-  TEST_ASSERT(fp->getTotalVal() == 3);
-  TEST_ASSERT(fp->getNonzeroElements().size() == 3);
+  TEST_ASSERT(fp->getTotalVal() == 3)
+  TEST_ASSERT(fp->getNonzeroElements().size() == 3)
 
   c1 = AtomPairs::getAtomCode(mol->getAtomWithIdx(0));
   c2 = AtomPairs::getAtomCode(mol->getAtomWithIdx(1));
   c3 = AtomPairs::getAtomCode(mol->getAtomWithIdx(2));
-  TEST_ASSERT(fp->getVal(AtomPairs::getAtomPairCode(c1, c2, 1)) == 1);
-  TEST_ASSERT(fp->getVal(AtomPairs::getAtomPairCode(c1, c2, 1)) == 1);
-  TEST_ASSERT(fp->getVal(AtomPairs::getAtomPairCode(c2, c3, 1)) == 1);
+  TEST_ASSERT(fp->getVal(AtomPairs::getAtomPairCode(c1, c2, 1)) == 1)
+  TEST_ASSERT(fp->getVal(AtomPairs::getAtomPairCode(c1, c2, 1)) == 1)
+  TEST_ASSERT(fp->getVal(AtomPairs::getAtomPairCode(c2, c3, 1)) == 1)
 
   delete mol;
   delete fp;
@@ -1453,13 +1453,13 @@ void testAtomPairs2() {
 
     mol = SmilesToMol("CCC");
     fp = AtomPairs::getAtomPairFingerprint(*mol, 1, 2);
-    TEST_ASSERT(fp->getTotalVal() == 3);
-    TEST_ASSERT(fp->getNonzeroElements().size() == 2);
+    TEST_ASSERT(fp->getTotalVal() == 3)
+    TEST_ASSERT(fp->getNonzeroElements().size() == 2)
 
     delete fp;
     fp = AtomPairs::getAtomPairFingerprint(*mol, 2, 2);
-    TEST_ASSERT(fp->getTotalVal() == 1);
-    TEST_ASSERT(fp->getNonzeroElements().size() == 1);
+    TEST_ASSERT(fp->getTotalVal() == 1)
+    TEST_ASSERT(fp->getNonzeroElements().size() == 1)
     delete fp;
     delete mol;
   }
@@ -1478,14 +1478,14 @@ void testHashedAtomPairs() {
     fp1 = AtomPairs::getHashedAtomPairFingerprint(*mol);
     SparseIntVect<std::int32_t> *fp2;
     fp2 = AtomPairs::getHashedAtomPairFingerprint(*mol);
-    TEST_ASSERT(DiceSimilarity(*fp1, *fp2) == 1.0);
-    TEST_ASSERT(*fp1 == *fp2);
+    TEST_ASSERT(DiceSimilarity(*fp1, *fp2) == 1.0)
+    TEST_ASSERT(*fp1 == *fp2)
 
     delete mol;
     delete fp2;
     mol = SmilesToMol("c1ccccn1");
     fp2 = AtomPairs::getHashedAtomPairFingerprint(*mol);
-    RANGE_CHECK(0.0, DiceSimilarity(*fp1, *fp2), 1.0);
+    RANGE_CHECK(0.0, DiceSimilarity(*fp1, *fp2), 1.0)
 
     delete mol;
     delete fp1;
@@ -1499,12 +1499,12 @@ void testHashedAtomPairs() {
     fp1 = AtomPairs::getHashedAtomPairFingerprint(*mol, 2048);
     SparseIntVect<std::int32_t> *fp2;
     fp2 = AtomPairs::getHashedAtomPairFingerprint(*mol, 2048, 1, 3);
-    TEST_ASSERT(DiceSimilarity(*fp1, *fp2) == 1.0);
-    TEST_ASSERT(*fp1 == *fp2);
+    TEST_ASSERT(DiceSimilarity(*fp1, *fp2) == 1.0)
+    TEST_ASSERT(*fp1 == *fp2)
 
     delete fp2;
     fp2 = AtomPairs::getHashedAtomPairFingerprint(*mol, 2048, 1, 2);
-    RANGE_CHECK(0.0, DiceSimilarity(*fp1, *fp2), 1.0);
+    RANGE_CHECK(0.0, DiceSimilarity(*fp1, *fp2), 1.0)
 
     delete mol;
     delete fp1;
@@ -1536,23 +1536,23 @@ void testTorsions() {
   codes.push_back(static_cast<unsigned int>(c2));
   codes.push_back(static_cast<unsigned int>(c3));
   codes.push_back(static_cast<unsigned int>(c4));
-  TEST_ASSERT(AtomPairs::getTopologicalTorsionCode(codes) == tgt);
+  TEST_ASSERT(AtomPairs::getTopologicalTorsionCode(codes) == tgt)
 
   fp = AtomPairs::getTopologicalTorsionFingerprint(*mol);
-  TEST_ASSERT(fp->getTotalVal() == 1);
-  TEST_ASSERT(fp->getNonzeroElements().size() == 1);
+  TEST_ASSERT(fp->getTotalVal() == 1)
+  TEST_ASSERT(fp->getNonzeroElements().size() == 1)
 
   delete mol;
   delete fp;
   mol = SmilesToMol("CCCCO.Cl");
   fp = AtomPairs::getTopologicalTorsionFingerprint(*mol);
-  TEST_ASSERT(fp->getTotalVal() == 2);
-  TEST_ASSERT(fp->getNonzeroElements().size() == 2);
+  TEST_ASSERT(fp->getTotalVal() == 2)
+  TEST_ASSERT(fp->getNonzeroElements().size() == 2)
 
   delete fp;
   fp = AtomPairs::getTopologicalTorsionFingerprint(*mol, 3);
-  TEST_ASSERT(fp->getTotalVal() == 3);
-  TEST_ASSERT(fp->getNonzeroElements().size() == 3);
+  TEST_ASSERT(fp->getTotalVal() == 3)
+  TEST_ASSERT(fp->getNonzeroElements().size() == 3)
 
   delete mol;
   delete fp;
@@ -1570,14 +1570,14 @@ void testHashedTorsions() {
     fp1 = AtomPairs::getHashedTopologicalTorsionFingerprint(*mol);
     SparseIntVect<boost::int64_t> *fp2;
     fp2 = AtomPairs::getHashedTopologicalTorsionFingerprint(*mol);
-    TEST_ASSERT(DiceSimilarity(*fp1, *fp2) == 1.0);
-    TEST_ASSERT(*fp1 == *fp2);
+    TEST_ASSERT(DiceSimilarity(*fp1, *fp2) == 1.0)
+    TEST_ASSERT(*fp1 == *fp2)
 
     delete mol;
     delete fp2;
     mol = SmilesToMol("c1ccccn1");
     fp2 = AtomPairs::getHashedTopologicalTorsionFingerprint(*mol);
-    RANGE_CHECK(0.0, DiceSimilarity(*fp1, *fp2), 1.0);
+    RANGE_CHECK(0.0, DiceSimilarity(*fp1, *fp2), 1.0)
 
     delete mol;
     delete fp1;
@@ -1591,14 +1591,14 @@ void testHashedTorsions() {
     fp1 = AtomPairs::getHashedTopologicalTorsionFingerprint(*mol, 2048, 6);
     SparseIntVect<boost::int64_t> *fp2;
     fp2 = AtomPairs::getHashedTopologicalTorsionFingerprint(*mol, 2048, 6);
-    TEST_ASSERT(DiceSimilarity(*fp1, *fp2) == 1.0);
-    TEST_ASSERT(*fp1 == *fp2);
+    TEST_ASSERT(DiceSimilarity(*fp1, *fp2) == 1.0)
+    TEST_ASSERT(*fp1 == *fp2)
 
     delete mol;
     delete fp2;
     mol = SmilesToMol("c1ccccn1");
     fp2 = AtomPairs::getHashedTopologicalTorsionFingerprint(*mol, 2048, 6);
-    RANGE_CHECK(0.0, DiceSimilarity(*fp1, *fp2), 1.0);
+    RANGE_CHECK(0.0, DiceSimilarity(*fp1, *fp2), 1.0)
 
     delete mol;
     delete fp1;
@@ -1619,7 +1619,7 @@ void testBulkTorsions() {
     ROMol *mol = suppl.next();
     SparseIntVect<boost::int64_t> *fp;
     fp = AtomPairs::getTopologicalTorsionFingerprint(*mol);
-    TEST_ASSERT(fp->getTotalVal() > 1);
+    TEST_ASSERT(fp->getTotalVal() > 1)
     delete mol;
     delete fp;
   }
@@ -1637,18 +1637,18 @@ void testRootedAtomPairs() {
   mol = SmilesToMol("OCCCCC");
   fp1 = AtomPairs::getAtomPairFingerprint(*mol);
   SparseIntVect<std::int32_t>::StorageType nz1 = fp1->getNonzeroElements();
-  TEST_ASSERT(nz1.size() > 0);
+  TEST_ASSERT(nz1.size() > 0)
 
   roots.push_back(0);
   fp2 = AtomPairs::getAtomPairFingerprint(*mol, &roots);
   SparseIntVect<std::int32_t>::StorageType nz2 = fp2->getNonzeroElements();
-  TEST_ASSERT(nz2.size() > 0);
-  TEST_ASSERT(nz2.size() < nz1.size());
+  TEST_ASSERT(nz2.size() > 0)
+  TEST_ASSERT(nz2.size() < nz1.size())
 
   for (SparseIntVect<std::int32_t>::StorageType::const_iterator bIt =
            nz2.begin();
        bIt != nz2.end(); ++bIt) {
-    TEST_ASSERT(bIt->second <= fp2->getVal(bIt->first));
+    TEST_ASSERT(bIt->second <= fp2->getVal(bIt->first))
   }
 
   delete mol;
@@ -1671,17 +1671,17 @@ void testIgnoreAtomPairs() {
     mol = SmilesToMol("OCCCCC");
     fp1 = AtomPairs::getAtomPairFingerprint(*mol, 1, 5);
     SparseIntVect<std::int32_t>::StorageType nz1 = fp1->getNonzeroElements();
-    TEST_ASSERT(nz1.size() > 0);
+    TEST_ASSERT(nz1.size() > 0)
 
     roots.push_back(0);
     fp2 = AtomPairs::getAtomPairFingerprint(*mol, 1, 5, nullptr, &roots);
     SparseIntVect<std::int32_t>::StorageType nz2 = fp2->getNonzeroElements();
-    TEST_ASSERT(nz2.size() == nz1.size() - 5);
+    TEST_ASSERT(nz2.size() == nz1.size() - 5)
 
     for (SparseIntVect<std::int32_t>::StorageType::const_iterator bIt =
              nz2.begin();
          bIt != nz2.end(); ++bIt) {
-      TEST_ASSERT(bIt->second <= fp2->getVal(bIt->first));
+      TEST_ASSERT(bIt->second <= fp2->getVal(bIt->first))
     }
 
     delete mol;
@@ -1697,7 +1697,7 @@ void testIgnoreAtomPairs() {
     roots.push_back(0);
     fp2 = AtomPairs::getAtomPairFingerprint(*mol, 1, 5, &roots, &roots);
     SparseIntVect<std::int32_t>::StorageType nz2 = fp2->getNonzeroElements();
-    TEST_ASSERT(nz2.size() == 0);
+    TEST_ASSERT(nz2.size() == 0)
 
     delete mol;
     delete fp2;
@@ -1711,18 +1711,18 @@ void testIgnoreAtomPairs() {
     mol = SmilesToMol("OCCCCC");
     fp1 = AtomPairs::getHashedAtomPairFingerprint(*mol, 4096, 1, 5);
     SparseIntVect<std::int32_t>::StorageType nz1 = fp1->getNonzeroElements();
-    TEST_ASSERT(nz1.size() > 0);
+    TEST_ASSERT(nz1.size() > 0)
 
     roots.push_back(0);
     fp2 = AtomPairs::getHashedAtomPairFingerprint(*mol, 4096, 1, 5, nullptr,
                                                   &roots);
     SparseIntVect<std::int32_t>::StorageType nz2 = fp2->getNonzeroElements();
-    TEST_ASSERT(nz2.size() < nz1.size());
+    TEST_ASSERT(nz2.size() < nz1.size())
 
     for (SparseIntVect<std::int32_t>::StorageType::const_iterator bIt =
              nz2.begin();
          bIt != nz2.end(); ++bIt) {
-      TEST_ASSERT(bIt->second <= fp2->getVal(bIt->first));
+      TEST_ASSERT(bIt->second <= fp2->getVal(bIt->first))
     }
 
     delete mol;
@@ -1746,17 +1746,17 @@ void testRootedTorsions() {
 
   fp1 = AtomPairs::getTopologicalTorsionFingerprint(*mol);
   SparseIntVect<boost::int64_t>::StorageType nz1 = fp1->getNonzeroElements();
-  TEST_ASSERT(nz1.size() > 0);
+  TEST_ASSERT(nz1.size() > 0)
 
   fp2 = AtomPairs::getTopologicalTorsionFingerprint(*mol, 4, &roots);
   SparseIntVect<boost::int64_t>::StorageType nz2 = fp2->getNonzeroElements();
-  TEST_ASSERT(nz2.size() > 0);
-  TEST_ASSERT(nz2.size() < nz1.size());
+  TEST_ASSERT(nz2.size() > 0)
+  TEST_ASSERT(nz2.size() < nz1.size())
 
   for (SparseIntVect<boost::int64_t>::StorageType::const_iterator bIt =
            nz2.begin();
        bIt != nz2.end(); ++bIt) {
-    TEST_ASSERT(bIt->second <= fp2->getVal(bIt->first));
+    TEST_ASSERT(bIt->second <= fp2->getVal(bIt->first))
   }
 
   delete mol;
@@ -1780,16 +1780,16 @@ void testIgnoreTorsions() {
 
     fp1 = AtomPairs::getTopologicalTorsionFingerprint(*mol);
     SparseIntVect<boost::int64_t>::StorageType nz1 = fp1->getNonzeroElements();
-    TEST_ASSERT(nz1.size() == 2);
+    TEST_ASSERT(nz1.size() == 2)
 
     fp2 = AtomPairs::getTopologicalTorsionFingerprint(*mol, 4, nullptr, &roots);
     SparseIntVect<boost::int64_t>::StorageType nz2 = fp2->getNonzeroElements();
-    TEST_ASSERT(nz2.size() == 1);
+    TEST_ASSERT(nz2.size() == 1)
 
     for (SparseIntVect<boost::int64_t>::StorageType::const_iterator bIt =
              nz2.begin();
          bIt != nz2.end(); ++bIt) {
-      TEST_ASSERT(bIt->second <= fp2->getVal(bIt->first));
+      TEST_ASSERT(bIt->second <= fp2->getVal(bIt->first))
     }
 
     delete mol;
@@ -1806,7 +1806,7 @@ void testIgnoreTorsions() {
 
     fp2 = AtomPairs::getTopologicalTorsionFingerprint(*mol, 4, nullptr, &roots);
     SparseIntVect<boost::int64_t>::StorageType nz2 = fp2->getNonzeroElements();
-    TEST_ASSERT(nz2.size() == 0);
+    TEST_ASSERT(nz2.size() == 0)
 
     delete mol;
     delete fp2;
@@ -1822,7 +1822,7 @@ void testIgnoreTorsions() {
 
     fp2 = AtomPairs::getTopologicalTorsionFingerprint(*mol, 4, &roots, &roots);
     SparseIntVect<boost::int64_t>::StorageType nz2 = fp2->getNonzeroElements();
-    TEST_ASSERT(nz2.size() == 0);
+    TEST_ASSERT(nz2.size() == 0)
 
     delete mol;
     delete fp2;
@@ -1846,16 +1846,16 @@ void testMorganAtomInfo() {
     fp = MorganFingerprints::getFingerprint(*mol, 0, nullptr, nullptr, false,
                                             true, true, false, &bitInfo);
     nze = fp->getNonzeroElements();
-    TEST_ASSERT(nze.size() == 2);
-    TEST_ASSERT(bitInfo.size() == 2);
+    TEST_ASSERT(nze.size() == 2)
+    TEST_ASSERT(bitInfo.size() == 2)
     for (SparseIntVect<std::uint32_t>::StorageType::const_iterator iter =
              nze.begin();
          iter != nze.end(); ++iter) {
-      TEST_ASSERT(iter->second == rdcast<int>(bitInfo[iter->first].size()));
+      TEST_ASSERT(iter->second == rdcast<int>(bitInfo[iter->first].size()))
     }
     for (MorganFingerprints::BitInfoMap::const_iterator iter = bitInfo.begin();
          iter != bitInfo.end(); ++iter) {
-      TEST_ASSERT(iter->second.begin()->second == 0);
+      TEST_ASSERT(iter->second.begin()->second == 0)
     }
 
     delete fp;
@@ -1863,16 +1863,16 @@ void testMorganAtomInfo() {
     bitInfo.clear();
     fp = MorganFingerprints::getFingerprint(*mol, 1, nullptr, nullptr, false,
                                             true, true, false, &bitInfo);
-    TEST_ASSERT(fp->getNonzeroElements().size() == 5);
+    TEST_ASSERT(fp->getNonzeroElements().size() == 5)
     for (SparseIntVect<std::uint32_t>::StorageType::const_iterator iter =
              nze.begin();
          iter != nze.end(); ++iter) {
-      TEST_ASSERT(iter->second == rdcast<int>(bitInfo[iter->first].size()));
+      TEST_ASSERT(iter->second == rdcast<int>(bitInfo[iter->first].size()))
     }
     for (MorganFingerprints::BitInfoMap::const_iterator iter = bitInfo.begin();
          iter != bitInfo.end(); ++iter) {
       TEST_ASSERT(iter->second.begin()->second == 0 ||
-                  iter->second.begin()->second == 1);
+                  iter->second.begin()->second == 1)
     }
     delete fp;
 
@@ -1887,33 +1887,33 @@ void testMorganAtomInfo() {
     mol = SmilesToMol("CCCCC");
     fp = MorganFingerprints::getFingerprintAsBitVect(
         *mol, 0, 2048, nullptr, nullptr, false, true, false, &bitInfo);
-    TEST_ASSERT(fp->getNumOnBits() == 2);
-    TEST_ASSERT(bitInfo.size() == 2);
+    TEST_ASSERT(fp->getNumOnBits() == 2)
+    TEST_ASSERT(bitInfo.size() == 2)
     for (MorganFingerprints::BitInfoMap::const_iterator iter = bitInfo.begin();
          iter != bitInfo.end(); ++iter) {
-      TEST_ASSERT(iter->first < 2048);
-      TEST_ASSERT(fp->getBit(iter->first));
+      TEST_ASSERT(iter->first < 2048)
+      TEST_ASSERT(fp->getBit(iter->first))
     }
     for (MorganFingerprints::BitInfoMap::const_iterator iter = bitInfo.begin();
          iter != bitInfo.end(); ++iter) {
-      TEST_ASSERT(iter->second.begin()->second == 0);
+      TEST_ASSERT(iter->second.begin()->second == 0)
     }
 
     delete fp;
     bitInfo.clear();
     fp = MorganFingerprints::getFingerprintAsBitVect(
         *mol, 1, 2048, nullptr, nullptr, false, true, false, &bitInfo);
-    TEST_ASSERT(fp->getNumOnBits() == 5);
-    TEST_ASSERT(bitInfo.size() == 5);
+    TEST_ASSERT(fp->getNumOnBits() == 5)
+    TEST_ASSERT(bitInfo.size() == 5)
     for (MorganFingerprints::BitInfoMap::const_iterator iter = bitInfo.begin();
          iter != bitInfo.end(); ++iter) {
-      TEST_ASSERT(iter->first < 2048);
-      TEST_ASSERT(fp->getBit(iter->first));
+      TEST_ASSERT(iter->first < 2048)
+      TEST_ASSERT(fp->getBit(iter->first))
     }
     for (MorganFingerprints::BitInfoMap::const_iterator iter = bitInfo.begin();
          iter != bitInfo.end(); ++iter) {
       TEST_ASSERT(iter->second.begin()->second == 0 ||
-                  iter->second.begin()->second == 1);
+                  iter->second.begin()->second == 1)
     }
     delete fp;
 
@@ -1937,13 +1937,13 @@ void testMorganAtomInfo() {
         *mol, 2, 2048, nullptr, nullptr, false, true, false, &bitInfo2);
     delete iv;
 
-    TEST_ASSERT(bitInfo1.size() == bitInfo2.size());
+    TEST_ASSERT(bitInfo1.size() == bitInfo2.size())
 
     for (MorganFingerprints::BitInfoMap::const_iterator iter1 =
              bitInfo1.begin();
          iter1 != bitInfo1.end(); ++iter1) {
-      TEST_ASSERT(iter1->first < 2048);
-      TEST_ASSERT(bitInfo2.find(iter1->first) != bitInfo2.end());
+      TEST_ASSERT(iter1->first < 2048)
+      TEST_ASSERT(bitInfo2.find(iter1->first) != bitInfo2.end())
     }
 
     delete mol;
@@ -1969,14 +1969,14 @@ void testMorganAtomInfoRedundantEnv() {
     fp = MorganFingerprints::getFingerprint(*mol, 2, nullptr, nullptr, false,
                                             true, true, false, &bitInfo, false);
 
-    TEST_ASSERT(bitInfo.size() == 14);
+    TEST_ASSERT(bitInfo.size() == 14)
 
     delete fp;
 
     bitInfo.clear();
     fp = MorganFingerprints::getFingerprint(*mol, 2, nullptr, nullptr, false,
                                             true, true, false, &bitInfo, true);
-    TEST_ASSERT(bitInfo.size() == 17);
+    TEST_ASSERT(bitInfo.size() == 17)
 
     delete fp;
 
@@ -1992,13 +1992,13 @@ void testRDKitFPOptions() {
   {
     std::string smi = "C1=CC=CC=C1";
     RWMol *m1 = SmilesToMol(smi);
-    TEST_ASSERT(m1);
+    TEST_ASSERT(m1)
     smi = "C1=CC=CC=N1";
     RWMol *m2 = SmilesToMol(smi);
-    TEST_ASSERT(m2);
+    TEST_ASSERT(m2)
     ExplicitBitVect *fp1 = RDKFingerprintMol(*m1);
     ExplicitBitVect *fp2 = RDKFingerprintMol(*m2);
-    TEST_ASSERT(*fp1 != *fp2);
+    TEST_ASSERT(*fp1 != *fp2)
     delete m1;
     delete m2;
     delete fp1;
@@ -2008,15 +2008,15 @@ void testRDKitFPOptions() {
     UINT_VECT invars(6, 1);
     std::string smi = "C1=CC=CC=C1";
     RWMol *m1 = SmilesToMol(smi);
-    TEST_ASSERT(m1);
+    TEST_ASSERT(m1)
     smi = "C1=CC=CC=N1";
     RWMol *m2 = SmilesToMol(smi);
-    TEST_ASSERT(m2);
+    TEST_ASSERT(m2)
     ExplicitBitVect *fp1 = RDKFingerprintMol(*m1, 1, 7, 2048, 2, true, 0, 128,
                                              true, true, &invars);
     ExplicitBitVect *fp2 = RDKFingerprintMol(*m2, 1, 7, 2048, 2, true, 0, 128,
                                              true, true, &invars);
-    TEST_ASSERT(*fp1 == *fp2);
+    TEST_ASSERT(*fp1 == *fp2)
     delete m1;
     delete m2;
     delete fp1;
@@ -2026,15 +2026,15 @@ void testRDKitFPOptions() {
     UINT_VECT invars(6, 1);
     std::string smi = "C1=CC=CC=C1";
     RWMol *m1 = SmilesToMol(smi);
-    TEST_ASSERT(m1);
+    TEST_ASSERT(m1)
     smi = "C1CCCCN1";
     RWMol *m2 = SmilesToMol(smi);
-    TEST_ASSERT(m2);
+    TEST_ASSERT(m2)
     ExplicitBitVect *fp1 = RDKFingerprintMol(*m1, 1, 7, 2048, 2, true, 0, 128,
                                              true, false, &invars);
     ExplicitBitVect *fp2 = RDKFingerprintMol(*m2, 1, 7, 2048, 2, true, 0, 128,
                                              true, false, &invars);
-    TEST_ASSERT(*fp1 == *fp2);
+    TEST_ASSERT(*fp1 == *fp2)
     delete m1;
     delete m2;
     delete fp1;
@@ -2049,13 +2049,13 @@ void testPairsAndTorsionsOptions() {
   {
     std::string smi = "C1=CC=CC=C1";
     RWMol *m1 = SmilesToMol(smi);
-    TEST_ASSERT(m1);
+    TEST_ASSERT(m1)
     smi = "C1=CC=CC=N1";
     RWMol *m2 = SmilesToMol(smi);
-    TEST_ASSERT(m2);
+    TEST_ASSERT(m2)
     SparseIntVect<std::int32_t> *fp1 = AtomPairs::getAtomPairFingerprint(*m1);
     SparseIntVect<std::int32_t> *fp2 = AtomPairs::getAtomPairFingerprint(*m2);
-    TEST_ASSERT(*fp1 != *fp2);
+    TEST_ASSERT(*fp1 != *fp2)
     delete fp1;
     delete fp2;
 
@@ -2067,7 +2067,7 @@ void testPairsAndTorsionsOptions() {
         *m1, (const std::vector<std::uint32_t> *)nullptr,
         (const std::vector<std::uint32_t> *)nullptr, &invars);
 
-    TEST_ASSERT(*fp1 == *fp2);
+    TEST_ASSERT(*fp1 == *fp2)
     delete m1;
     delete m2;
     delete fp1;
@@ -2076,15 +2076,15 @@ void testPairsAndTorsionsOptions() {
   {
     std::string smi = "C1=CC=CC=C1";
     RWMol *m1 = SmilesToMol(smi);
-    TEST_ASSERT(m1);
+    TEST_ASSERT(m1)
     smi = "C1=CC=CC=N1";
     RWMol *m2 = SmilesToMol(smi);
-    TEST_ASSERT(m2);
+    TEST_ASSERT(m2)
     SparseIntVect<std::int32_t> *fp1 =
         AtomPairs::getHashedAtomPairFingerprint(*m1, 1024, 1, 5);
     SparseIntVect<std::int32_t> *fp2 =
         AtomPairs::getHashedAtomPairFingerprint(*m2, 1024, 1, 5);
-    TEST_ASSERT(*fp1 != *fp2);
+    TEST_ASSERT(*fp1 != *fp2)
     delete fp1;
     delete fp2;
 
@@ -2096,7 +2096,7 @@ void testPairsAndTorsionsOptions() {
         *m2, 1024, 1, 5, (const std::vector<std::uint32_t> *)nullptr,
         (const std::vector<std::uint32_t> *)nullptr, &invars);
 
-    TEST_ASSERT(*fp1 == *fp2);
+    TEST_ASSERT(*fp1 == *fp2)
     delete m1;
     delete m2;
     delete fp1;
@@ -2105,15 +2105,15 @@ void testPairsAndTorsionsOptions() {
   {
     std::string smi = "C1=CC=CC=C1";
     RWMol *m1 = SmilesToMol(smi);
-    TEST_ASSERT(m1);
+    TEST_ASSERT(m1)
     smi = "C1=CC=CC=N1";
     RWMol *m2 = SmilesToMol(smi);
-    TEST_ASSERT(m2);
+    TEST_ASSERT(m2)
     ExplicitBitVect *fp1 =
         AtomPairs::getHashedAtomPairFingerprintAsBitVect(*m1, 1024, 1, 5);
     ExplicitBitVect *fp2 =
         AtomPairs::getHashedAtomPairFingerprintAsBitVect(*m2, 1024, 1, 5);
-    TEST_ASSERT(*fp1 != *fp2);
+    TEST_ASSERT(*fp1 != *fp2)
     delete fp1;
     delete fp2;
 
@@ -2125,7 +2125,7 @@ void testPairsAndTorsionsOptions() {
         *m2, 1024, 1, 5, (const std::vector<std::uint32_t> *)nullptr,
         (const std::vector<std::uint32_t> *)nullptr, &invars);
 
-    TEST_ASSERT(*fp1 == *fp2);
+    TEST_ASSERT(*fp1 == *fp2)
     delete m1;
     delete m2;
     delete fp1;
@@ -2134,15 +2134,15 @@ void testPairsAndTorsionsOptions() {
   {
     std::string smi = "C1=CC=CC=C1";
     RWMol *m1 = SmilesToMol(smi);
-    TEST_ASSERT(m1);
+    TEST_ASSERT(m1)
     smi = "C1=CC=CC=N1";
     RWMol *m2 = SmilesToMol(smi);
-    TEST_ASSERT(m2);
+    TEST_ASSERT(m2)
     SparseIntVect<boost::int64_t> *fp1 =
         AtomPairs::getTopologicalTorsionFingerprint(*m1);
     SparseIntVect<boost::int64_t> *fp2 =
         AtomPairs::getTopologicalTorsionFingerprint(*m2);
-    TEST_ASSERT(*fp1 != *fp2);
+    TEST_ASSERT(*fp1 != *fp2)
     delete fp1;
     delete fp2;
 
@@ -2154,7 +2154,7 @@ void testPairsAndTorsionsOptions() {
         *m2, 4, (const std::vector<std::uint32_t> *)nullptr,
         (const std::vector<std::uint32_t> *)nullptr, &invars);
 
-    TEST_ASSERT(*fp1 == *fp2);
+    TEST_ASSERT(*fp1 == *fp2)
     delete m1;
     delete m2;
     delete fp1;
@@ -2163,16 +2163,16 @@ void testPairsAndTorsionsOptions() {
   {
     std::string smi = "C1=CC=CC=C1";
     RWMol *m1 = SmilesToMol(smi);
-    TEST_ASSERT(m1);
+    TEST_ASSERT(m1)
     smi = "C1=CC=CC=N1";
     RWMol *m2 = SmilesToMol(smi);
-    TEST_ASSERT(m2);
+    TEST_ASSERT(m2)
     SparseIntVect<boost::int64_t> *fp1 =
         AtomPairs::getHashedTopologicalTorsionFingerprint(*m1);
     SparseIntVect<boost::int64_t> *fp2 =
         AtomPairs::getHashedTopologicalTorsionFingerprint(*m2);
 
-    TEST_ASSERT(*fp1 != *fp2);
+    TEST_ASSERT(*fp1 != *fp2)
     delete fp1;
     delete fp2;
 
@@ -2183,7 +2183,7 @@ void testPairsAndTorsionsOptions() {
     fp2 = AtomPairs::getHashedTopologicalTorsionFingerprint(
         *m2, 1024, 4, (const std::vector<std::uint32_t> *)nullptr,
         (const std::vector<std::uint32_t> *)nullptr, &invars);
-    TEST_ASSERT(*fp1 == *fp2);
+    TEST_ASSERT(*fp1 == *fp2)
     delete m1;
     delete m2;
     delete fp1;
@@ -2192,16 +2192,16 @@ void testPairsAndTorsionsOptions() {
   {
     std::string smi = "C1=CC=CC=C1";
     RWMol *m1 = SmilesToMol(smi);
-    TEST_ASSERT(m1);
+    TEST_ASSERT(m1)
     smi = "C1=CC=CC=N1";
     RWMol *m2 = SmilesToMol(smi);
-    TEST_ASSERT(m2);
+    TEST_ASSERT(m2)
     ExplicitBitVect *fp1 =
         AtomPairs::getHashedTopologicalTorsionFingerprintAsBitVect(*m1);
     ExplicitBitVect *fp2 =
         AtomPairs::getHashedTopologicalTorsionFingerprintAsBitVect(*m2);
 
-    TEST_ASSERT(*fp1 != *fp2);
+    TEST_ASSERT(*fp1 != *fp2)
     delete fp1;
     delete fp2;
 
@@ -2212,7 +2212,7 @@ void testPairsAndTorsionsOptions() {
     fp2 = AtomPairs::getHashedTopologicalTorsionFingerprintAsBitVect(
         *m2, 1024, 4, (const std::vector<std::uint32_t> *)nullptr,
         (const std::vector<std::uint32_t> *)nullptr, &invars);
-    TEST_ASSERT(*fp1 == *fp2);
+    TEST_ASSERT(*fp1 == *fp2)
     delete m1;
     delete m2;
     delete fp1;
@@ -2229,76 +2229,76 @@ void testRDKitFromAtoms() {
   {
     std::string smi = "CCCCCC";
     RWMol *m1 = SmilesToMol(smi);
-    TEST_ASSERT(m1);
+    TEST_ASSERT(m1)
     std::vector<std::uint32_t> fromAtoms;
     fromAtoms.push_back(0);
     ExplicitBitVect *fp1 = RDKFingerprintMol(*m1, 1, 4, 2048, 1, true, 0, 128,
                                              true, true, nullptr, &fromAtoms);
-    TEST_ASSERT(fp1->getNumOnBits() == 4);
+    TEST_ASSERT(fp1->getNumOnBits() == 4)
     delete m1;
     delete fp1;
   }
   {
     std::string smi = "CCCCCO";
     RWMol *m1 = SmilesToMol(smi);
-    TEST_ASSERT(m1);
+    TEST_ASSERT(m1)
     std::vector<std::uint32_t> fromAtoms;
     fromAtoms.push_back(0);
     fromAtoms.push_back(5);
     ExplicitBitVect *fp1 = RDKFingerprintMol(*m1, 1, 4, 2048, 1, true, 0, 128,
                                              true, true, nullptr, &fromAtoms);
-    TEST_ASSERT(fp1->getNumOnBits() == 8);
+    TEST_ASSERT(fp1->getNumOnBits() == 8)
     delete m1;
     delete fp1;
   }
   {
     std::string smi = "CCCCCO";
     RWMol *m1 = SmilesToMol(smi);
-    TEST_ASSERT(m1);
+    TEST_ASSERT(m1)
     std::vector<std::uint32_t> fromAtoms;
     fromAtoms.push_back(0);
     fromAtoms.push_back(5);
     ExplicitBitVect *fp1 = RDKFingerprintMol(*m1, 1, 4, 2048, 1, true, 0, 128,
                                              false, true, nullptr, &fromAtoms);
-    TEST_ASSERT(fp1->getNumOnBits() == 8);
+    TEST_ASSERT(fp1->getNumOnBits() == 8)
     delete m1;
     delete fp1;
   }
   {
     std::string smi = "CCCCCO";
     RWMol *m1 = SmilesToMol(smi);
-    TEST_ASSERT(m1);
+    TEST_ASSERT(m1)
     std::vector<std::uint32_t> fromAtoms;
     fromAtoms.push_back(0);
     ExplicitBitVect *fp1 = LayeredFingerprintMol(
         *m1, 0xFFFFFFFF, 1, 4, 2048, nullptr, nullptr, true, &fromAtoms);
-    TEST_ASSERT(fp1->getNumOnBits() == 20);
+    TEST_ASSERT(fp1->getNumOnBits() == 20)
     delete m1;
     delete fp1;
   }
   {
     std::string smi = "CCCCCO";
     RWMol *m1 = SmilesToMol(smi);
-    TEST_ASSERT(m1);
+    TEST_ASSERT(m1)
     std::vector<std::uint32_t> fromAtoms;
     fromAtoms.push_back(0);
     fromAtoms.push_back(5);
     ExplicitBitVect *fp1 = LayeredFingerprintMol(
         *m1, 0xFFFFFFFF, 1, 4, 2048, nullptr, nullptr, true, &fromAtoms);
-    TEST_ASSERT(fp1->getNumOnBits() == 24);
+    TEST_ASSERT(fp1->getNumOnBits() == 24)
     delete m1;
     delete fp1;
   }
   {
     std::string smi = "CCCCCO";
     RWMol *m1 = SmilesToMol(smi);
-    TEST_ASSERT(m1);
+    TEST_ASSERT(m1)
     std::vector<std::uint32_t> fromAtoms;
     fromAtoms.push_back(0);
     fromAtoms.push_back(5);
     ExplicitBitVect *fp1 = LayeredFingerprintMol(
         *m1, 0xFFFFFFFF, 1, 4, 2048, nullptr, nullptr, false, &fromAtoms);
-    TEST_ASSERT(fp1->getNumOnBits() == 24);
+    TEST_ASSERT(fp1->getNumOnBits() == 24)
     delete m1;
     delete fp1;
   }
@@ -2311,15 +2311,15 @@ void testMACCS() {
   {
     std::string smi = "CNO";
     RWMol *m1 = SmilesToMol(smi);
-    TEST_ASSERT(m1);
+    TEST_ASSERT(m1)
     ExplicitBitVect *fp1 = MACCSFingerprints::getFingerprintAsBitVect(*m1);
-    TEST_ASSERT(fp1->getNumOnBits() == 15);
+    TEST_ASSERT(fp1->getNumOnBits() == 15)
     unsigned int _onBits[] = {24,  68,  69,  71,  93,  94,  102, 124,
                               131, 139, 151, 158, 160, 161, 164};
     std::vector<unsigned int> onBits(
         _onBits, _onBits + sizeof(_onBits) / sizeof(*_onBits));
     for (auto ob : onBits) {
-      TEST_ASSERT((*fp1)[ob]);
+      TEST_ASSERT((*fp1)[ob])
     }
     delete m1;
     delete fp1;
@@ -2327,14 +2327,14 @@ void testMACCS() {
   {
     std::string smi = "CCC";
     RWMol *m1 = SmilesToMol(smi);
-    TEST_ASSERT(m1);
+    TEST_ASSERT(m1)
     ExplicitBitVect *fp1 = MACCSFingerprints::getFingerprintAsBitVect(*m1);
-    TEST_ASSERT(fp1->getNumOnBits() == 5);
+    TEST_ASSERT(fp1->getNumOnBits() == 5)
     unsigned int _onBits[] = {74, 114, 149, 155, 160};
     std::vector<unsigned int> onBits(
         _onBits, _onBits + sizeof(_onBits) / sizeof(*_onBits));
     for (auto ob : onBits) {
-      TEST_ASSERT((*fp1)[ob]);
+      TEST_ASSERT((*fp1)[ob])
     }
     delete m1;
     delete fp1;
@@ -2342,14 +2342,14 @@ void testMACCS() {
   {
     std::string smi = "CC.CO";
     RWMol *m1 = SmilesToMol(smi);
-    TEST_ASSERT(m1);
+    TEST_ASSERT(m1)
     ExplicitBitVect *fp1 = MACCSFingerprints::getFingerprintAsBitVect(*m1);
-    TEST_ASSERT(fp1->getNumOnBits() == 8);
+    TEST_ASSERT(fp1->getNumOnBits() == 8)
     unsigned int _onBits[] = {93, 139, 141, 149, 157, 160, 164, 166};
     std::vector<unsigned int> onBits(
         _onBits, _onBits + sizeof(_onBits) / sizeof(*_onBits));
     for (auto ob : onBits) {
-      TEST_ASSERT((*fp1)[ob]);
+      TEST_ASSERT((*fp1)[ob])
     }
     delete m1;
     delete fp1;
@@ -2358,9 +2358,9 @@ void testMACCS() {
     // check that bit 44 "OTHER" gets properly set:
     std::string smi = "CC[SeH]";
     RWMol *m1 = SmilesToMol(smi);
-    TEST_ASSERT(m1);
+    TEST_ASSERT(m1)
     ExplicitBitVect *fp1 = MACCSFingerprints::getFingerprintAsBitVect(*m1);
-    TEST_ASSERT((*fp1)[44]);
+    TEST_ASSERT((*fp1)[44])
     delete m1;
     delete fp1;
   }
@@ -2368,10 +2368,10 @@ void testMACCS() {
     // check bits 124 and 130 part 1
     std::string smi = "CNNCOOC";
     RWMol *m1 = SmilesToMol(smi);
-    TEST_ASSERT(m1);
+    TEST_ASSERT(m1)
     ExplicitBitVect *fp1 = MACCSFingerprints::getFingerprintAsBitVect(*m1);
-    TEST_ASSERT((*fp1)[124]);
-    TEST_ASSERT((*fp1)[130]);
+    TEST_ASSERT((*fp1)[124])
+    TEST_ASSERT((*fp1)[130])
     delete m1;
     delete fp1;
   }
@@ -2379,10 +2379,10 @@ void testMACCS() {
     // check bits 124 and 130 part 2
     std::string smi = "CNNCC";
     RWMol *m1 = SmilesToMol(smi);
-    TEST_ASSERT(m1);
+    TEST_ASSERT(m1)
     ExplicitBitVect *fp1 = MACCSFingerprints::getFingerprintAsBitVect(*m1);
-    TEST_ASSERT((*fp1)[124]);
-    TEST_ASSERT(!(*fp1)[130]);
+    TEST_ASSERT((*fp1)[124])
+    TEST_ASSERT(!(*fp1)[130])
     delete m1;
     delete fp1;
   }
@@ -2390,10 +2390,10 @@ void testMACCS() {
     // check bits 124 and 130 part 3
     std::string smi = "CNCCC";
     RWMol *m1 = SmilesToMol(smi);
-    TEST_ASSERT(m1);
+    TEST_ASSERT(m1)
     ExplicitBitVect *fp1 = MACCSFingerprints::getFingerprintAsBitVect(*m1);
-    TEST_ASSERT(!(*fp1)[124]);
-    TEST_ASSERT(!(*fp1)[130]);
+    TEST_ASSERT(!(*fp1)[124])
+    TEST_ASSERT(!(*fp1)[130])
     delete m1;
     delete fp1;
   }
@@ -2407,14 +2407,14 @@ void testRDKitAtomBits() {
   {
     std::string smi = "CCCCCC";
     RWMol *m1 = SmilesToMol(smi);
-    TEST_ASSERT(m1);
+    TEST_ASSERT(m1)
     std::vector<std::vector<std::uint32_t>> atomBits(m1->getNumAtoms());
     ExplicitBitVect *fp1 =
         RDKFingerprintMol(*m1, 1, 4, 2048, 1, true, 0, 128, true, true, nullptr,
                           nullptr, &atomBits);
-    TEST_ASSERT(fp1->getNumOnBits() == 4);
+    TEST_ASSERT(fp1->getNumOnBits() == 4)
     for (unsigned int i = 0; i < m1->getNumAtoms(); ++i) {
-      TEST_ASSERT(atomBits[i].size() == 4);
+      TEST_ASSERT(atomBits[i].size() == 4)
     }
     delete m1;
     delete fp1;
@@ -2422,16 +2422,16 @@ void testRDKitAtomBits() {
   {
     std::string smi = "CCCO";
     RWMol *m1 = SmilesToMol(smi);
-    TEST_ASSERT(m1);
+    TEST_ASSERT(m1)
     std::vector<std::vector<std::uint32_t>> atomBits(m1->getNumAtoms());
     ExplicitBitVect *fp1 =
         RDKFingerprintMol(*m1, 1, 2, 2048, 1, true, 0, 128, true, true, nullptr,
                           nullptr, &atomBits);
-    TEST_ASSERT(fp1->getNumOnBits() == 4);
-    TEST_ASSERT(atomBits[0].size() == 2);
-    TEST_ASSERT(atomBits[1].size() == 3);
-    TEST_ASSERT(atomBits[2].size() == 4);
-    TEST_ASSERT(atomBits[3].size() == 2);
+    TEST_ASSERT(fp1->getNumOnBits() == 4)
+    TEST_ASSERT(atomBits[0].size() == 2)
+    TEST_ASSERT(atomBits[1].size() == 3)
+    TEST_ASSERT(atomBits[2].size() == 4)
+    TEST_ASSERT(atomBits[3].size() == 2)
     delete m1;
     delete fp1;
   }
@@ -2446,27 +2446,27 @@ void testChiralPairs() {
   ROMol *m1, *m2, *m3;
 
   m1 = SmilesToMol("CC[CH](F)Cl");
-  TEST_ASSERT(m1);
+  TEST_ASSERT(m1)
   m2 = SmilesToMol("CC[C@H](F)Cl");
-  TEST_ASSERT(m1);
+  TEST_ASSERT(m1)
   m3 = SmilesToMol("CC[C@@H](F)Cl");
-  TEST_ASSERT(m1);
+  TEST_ASSERT(m1)
 
   {
     SparseIntVect<int> *fp1, *fp2, *fp3;
     fp1 = AtomPairs::getAtomPairFingerprint(*m1, 1, 5);
-    TEST_ASSERT(fp1->getTotalVal() == 10);
-    TEST_ASSERT(fp1->getNonzeroElements().size() == 10);
+    TEST_ASSERT(fp1->getTotalVal() == 10)
+    TEST_ASSERT(fp1->getNonzeroElements().size() == 10)
     fp2 = AtomPairs::getAtomPairFingerprint(*m2, 1, 5);
-    TEST_ASSERT(fp2->getTotalVal() == 10);
-    TEST_ASSERT(fp2->getNonzeroElements().size() == 10);
+    TEST_ASSERT(fp2->getTotalVal() == 10)
+    TEST_ASSERT(fp2->getNonzeroElements().size() == 10)
     fp3 = AtomPairs::getAtomPairFingerprint(*m3, 1, 5);
-    TEST_ASSERT(fp3->getTotalVal() == 10);
-    TEST_ASSERT(fp3->getNonzeroElements().size() == 10);
+    TEST_ASSERT(fp3->getTotalVal() == 10)
+    TEST_ASSERT(fp3->getNonzeroElements().size() == 10)
 
-    TEST_ASSERT((*fp1) == (*fp2));
-    TEST_ASSERT((*fp1) == (*fp3));
-    TEST_ASSERT((*fp2) == (*fp3));
+    TEST_ASSERT((*fp1) == (*fp2))
+    TEST_ASSERT((*fp1) == (*fp3))
+    TEST_ASSERT((*fp2) == (*fp3))
 
     delete fp1;
     delete fp2;
@@ -2474,20 +2474,20 @@ void testChiralPairs() {
 
     fp1 = AtomPairs::getAtomPairFingerprint(*m1, 1, 5, nullptr, nullptr,
                                             nullptr, true);
-    TEST_ASSERT(fp1->getTotalVal() == 10);
-    TEST_ASSERT(fp1->getNonzeroElements().size() == 10);
+    TEST_ASSERT(fp1->getTotalVal() == 10)
+    TEST_ASSERT(fp1->getNonzeroElements().size() == 10)
     fp2 = AtomPairs::getAtomPairFingerprint(*m2, 1, 5, nullptr, nullptr,
                                             nullptr, true);
-    TEST_ASSERT(fp2->getTotalVal() == 10);
-    TEST_ASSERT(fp2->getNonzeroElements().size() == 10);
+    TEST_ASSERT(fp2->getTotalVal() == 10)
+    TEST_ASSERT(fp2->getNonzeroElements().size() == 10)
     fp3 = AtomPairs::getAtomPairFingerprint(*m3, 1, 5, nullptr, nullptr,
                                             nullptr, true);
-    TEST_ASSERT(fp3->getTotalVal() == 10);
-    TEST_ASSERT(fp3->getNonzeroElements().size() == 10);
+    TEST_ASSERT(fp3->getTotalVal() == 10)
+    TEST_ASSERT(fp3->getNonzeroElements().size() == 10)
 
-    TEST_ASSERT((*fp1) != (*fp2));
-    TEST_ASSERT((*fp1) != (*fp3));
-    TEST_ASSERT((*fp2) != (*fp3));
+    TEST_ASSERT((*fp1) != (*fp2))
+    TEST_ASSERT((*fp1) != (*fp3))
+    TEST_ASSERT((*fp2) != (*fp3))
 
     delete fp1;
     delete fp2;
@@ -2497,18 +2497,18 @@ void testChiralPairs() {
   {
     SparseIntVect<int> *fp1, *fp2, *fp3;
     fp1 = AtomPairs::getHashedAtomPairFingerprint(*m1, 4096, 1, 5);
-    TEST_ASSERT(fp1->getTotalVal() == 10);
-    TEST_ASSERT(fp1->getNonzeroElements().size() == 10);
+    TEST_ASSERT(fp1->getTotalVal() == 10)
+    TEST_ASSERT(fp1->getNonzeroElements().size() == 10)
     fp2 = AtomPairs::getHashedAtomPairFingerprint(*m2, 4096, 1, 5);
-    TEST_ASSERT(fp2->getTotalVal() == 10);
-    TEST_ASSERT(fp2->getNonzeroElements().size() == 10);
+    TEST_ASSERT(fp2->getTotalVal() == 10)
+    TEST_ASSERT(fp2->getNonzeroElements().size() == 10)
     fp3 = AtomPairs::getHashedAtomPairFingerprint(*m3, 4096, 1, 5);
-    TEST_ASSERT(fp3->getTotalVal() == 10);
-    TEST_ASSERT(fp3->getNonzeroElements().size() == 10);
+    TEST_ASSERT(fp3->getTotalVal() == 10)
+    TEST_ASSERT(fp3->getNonzeroElements().size() == 10)
 
-    TEST_ASSERT((*fp1) == (*fp2));
-    TEST_ASSERT((*fp1) == (*fp3));
-    TEST_ASSERT((*fp2) == (*fp3));
+    TEST_ASSERT((*fp1) == (*fp2))
+    TEST_ASSERT((*fp1) == (*fp3))
+    TEST_ASSERT((*fp2) == (*fp3))
 
     delete fp1;
     delete fp2;
@@ -2516,20 +2516,20 @@ void testChiralPairs() {
 
     fp1 = AtomPairs::getHashedAtomPairFingerprint(*m1, 4096, 1, 5, nullptr,
                                                   nullptr, nullptr, true);
-    TEST_ASSERT(fp1->getTotalVal() == 10);
-    TEST_ASSERT(fp1->getNonzeroElements().size() == 10);
+    TEST_ASSERT(fp1->getTotalVal() == 10)
+    TEST_ASSERT(fp1->getNonzeroElements().size() == 10)
     fp2 = AtomPairs::getHashedAtomPairFingerprint(*m2, 4096, 1, 5, nullptr,
                                                   nullptr, nullptr, true);
-    TEST_ASSERT(fp2->getTotalVal() == 10);
-    TEST_ASSERT(fp2->getNonzeroElements().size() == 10);
+    TEST_ASSERT(fp2->getTotalVal() == 10)
+    TEST_ASSERT(fp2->getNonzeroElements().size() == 10)
     fp3 = AtomPairs::getHashedAtomPairFingerprint(*m3, 4096, 1, 5, nullptr,
                                                   nullptr, nullptr, true);
-    TEST_ASSERT(fp3->getTotalVal() == 10);
-    TEST_ASSERT(fp3->getNonzeroElements().size() == 10);
+    TEST_ASSERT(fp3->getTotalVal() == 10)
+    TEST_ASSERT(fp3->getNonzeroElements().size() == 10)
 
-    TEST_ASSERT((*fp1) != (*fp2));
-    TEST_ASSERT((*fp1) != (*fp3));
-    TEST_ASSERT((*fp2) != (*fp3));
+    TEST_ASSERT((*fp1) != (*fp2))
+    TEST_ASSERT((*fp1) != (*fp3))
+    TEST_ASSERT((*fp2) != (*fp3))
 
     delete fp1;
     delete fp2;
@@ -2550,27 +2550,27 @@ void testChiralTorsions() {
   ROMol *m1, *m2, *m3;
 
   m1 = SmilesToMol("CC[CH](F)Cl");
-  TEST_ASSERT(m1);
+  TEST_ASSERT(m1)
   m2 = SmilesToMol("CC[C@H](F)Cl");
-  TEST_ASSERT(m1);
+  TEST_ASSERT(m1)
   m3 = SmilesToMol("CC[C@@H](F)Cl");
-  TEST_ASSERT(m1);
+  TEST_ASSERT(m1)
 
   {
     SparseIntVect<boost::int64_t> *fp1, *fp2, *fp3;
     fp1 = AtomPairs::getTopologicalTorsionFingerprint(*m1);
-    TEST_ASSERT(fp1->getTotalVal() == 2);
-    TEST_ASSERT(fp1->getNonzeroElements().size() == 2);
+    TEST_ASSERT(fp1->getTotalVal() == 2)
+    TEST_ASSERT(fp1->getNonzeroElements().size() == 2)
     fp2 = AtomPairs::getTopologicalTorsionFingerprint(*m2);
-    TEST_ASSERT(fp2->getTotalVal() == 2);
-    TEST_ASSERT(fp2->getNonzeroElements().size() == 2);
+    TEST_ASSERT(fp2->getTotalVal() == 2)
+    TEST_ASSERT(fp2->getNonzeroElements().size() == 2)
     fp3 = AtomPairs::getTopologicalTorsionFingerprint(*m3);
-    TEST_ASSERT(fp3->getTotalVal() == 2);
-    TEST_ASSERT(fp3->getNonzeroElements().size() == 2);
+    TEST_ASSERT(fp3->getTotalVal() == 2)
+    TEST_ASSERT(fp3->getNonzeroElements().size() == 2)
 
-    TEST_ASSERT((*fp1) == (*fp2));
-    TEST_ASSERT((*fp1) == (*fp3));
-    TEST_ASSERT((*fp2) == (*fp3));
+    TEST_ASSERT((*fp1) == (*fp2))
+    TEST_ASSERT((*fp1) == (*fp3))
+    TEST_ASSERT((*fp2) == (*fp3))
 
     delete fp1;
     delete fp2;
@@ -2578,20 +2578,20 @@ void testChiralTorsions() {
 
     fp1 = AtomPairs::getTopologicalTorsionFingerprint(*m1, 4, nullptr, nullptr,
                                                       nullptr, true);
-    TEST_ASSERT(fp1->getTotalVal() == 2);
-    TEST_ASSERT(fp1->getNonzeroElements().size() == 2);
+    TEST_ASSERT(fp1->getTotalVal() == 2)
+    TEST_ASSERT(fp1->getNonzeroElements().size() == 2)
     fp2 = AtomPairs::getTopologicalTorsionFingerprint(*m2, 4, nullptr, nullptr,
                                                       nullptr, true);
-    TEST_ASSERT(fp2->getTotalVal() == 2);
-    TEST_ASSERT(fp2->getNonzeroElements().size() == 2);
+    TEST_ASSERT(fp2->getTotalVal() == 2)
+    TEST_ASSERT(fp2->getNonzeroElements().size() == 2)
     fp3 = AtomPairs::getTopologicalTorsionFingerprint(*m3, 4, nullptr, nullptr,
                                                       nullptr, true);
-    TEST_ASSERT(fp3->getTotalVal() == 2);
-    TEST_ASSERT(fp3->getNonzeroElements().size() == 2);
+    TEST_ASSERT(fp3->getTotalVal() == 2)
+    TEST_ASSERT(fp3->getNonzeroElements().size() == 2)
 
-    TEST_ASSERT((*fp1) != (*fp2));
-    TEST_ASSERT((*fp1) != (*fp3));
-    TEST_ASSERT((*fp2) != (*fp3));
+    TEST_ASSERT((*fp1) != (*fp2))
+    TEST_ASSERT((*fp1) != (*fp3))
+    TEST_ASSERT((*fp2) != (*fp3))
 
     delete fp1;
     delete fp2;
@@ -2601,18 +2601,18 @@ void testChiralTorsions() {
   {
     SparseIntVect<boost::int64_t> *fp1, *fp2, *fp3;
     fp1 = AtomPairs::getHashedTopologicalTorsionFingerprint(*m1, 4096);
-    TEST_ASSERT(fp1->getTotalVal() == 2);
-    TEST_ASSERT(fp1->getNonzeroElements().size() == 2);
+    TEST_ASSERT(fp1->getTotalVal() == 2)
+    TEST_ASSERT(fp1->getNonzeroElements().size() == 2)
     fp2 = AtomPairs::getHashedTopologicalTorsionFingerprint(*m2, 4096);
-    TEST_ASSERT(fp2->getTotalVal() == 2);
-    TEST_ASSERT(fp2->getNonzeroElements().size() == 2);
+    TEST_ASSERT(fp2->getTotalVal() == 2)
+    TEST_ASSERT(fp2->getNonzeroElements().size() == 2)
     fp3 = AtomPairs::getHashedTopologicalTorsionFingerprint(*m3, 4096);
-    TEST_ASSERT(fp3->getTotalVal() == 2);
-    TEST_ASSERT(fp3->getNonzeroElements().size() == 2);
+    TEST_ASSERT(fp3->getTotalVal() == 2)
+    TEST_ASSERT(fp3->getNonzeroElements().size() == 2)
 
-    TEST_ASSERT((*fp1) == (*fp2));
-    TEST_ASSERT((*fp1) == (*fp3));
-    TEST_ASSERT((*fp2) == (*fp3));
+    TEST_ASSERT((*fp1) == (*fp2))
+    TEST_ASSERT((*fp1) == (*fp3))
+    TEST_ASSERT((*fp2) == (*fp3))
 
     delete fp1;
     delete fp2;
@@ -2620,20 +2620,20 @@ void testChiralTorsions() {
 
     fp1 = AtomPairs::getHashedTopologicalTorsionFingerprint(
         *m1, 4096, 4, nullptr, nullptr, nullptr, true);
-    TEST_ASSERT(fp1->getTotalVal() == 2);
-    TEST_ASSERT(fp1->getNonzeroElements().size() == 2);
+    TEST_ASSERT(fp1->getTotalVal() == 2)
+    TEST_ASSERT(fp1->getNonzeroElements().size() == 2)
     fp2 = AtomPairs::getHashedTopologicalTorsionFingerprint(
         *m2, 4096, 4, nullptr, nullptr, nullptr, true);
-    TEST_ASSERT(fp2->getTotalVal() == 2);
-    TEST_ASSERT(fp2->getNonzeroElements().size() == 2);
+    TEST_ASSERT(fp2->getTotalVal() == 2)
+    TEST_ASSERT(fp2->getNonzeroElements().size() == 2)
     fp3 = AtomPairs::getHashedTopologicalTorsionFingerprint(
         *m3, 4096, 4, nullptr, nullptr, nullptr, true);
-    TEST_ASSERT(fp3->getTotalVal() == 2);
-    TEST_ASSERT(fp3->getNonzeroElements().size() == 2);
+    TEST_ASSERT(fp3->getTotalVal() == 2)
+    TEST_ASSERT(fp3->getNonzeroElements().size() == 2)
 
-    TEST_ASSERT((*fp1) != (*fp2));
-    TEST_ASSERT((*fp1) != (*fp3));
-    TEST_ASSERT((*fp2) != (*fp3));
+    TEST_ASSERT((*fp1) != (*fp2))
+    TEST_ASSERT((*fp1) != (*fp3))
+    TEST_ASSERT((*fp2) != (*fp3))
 
     delete fp1;
     delete fp2;
@@ -2654,55 +2654,55 @@ void testGitHubIssue25() {
 
   {
     ROMol *m1 = SmilesToMol("CCCCO");
-    TEST_ASSERT(m1);
+    TEST_ASSERT(m1)
     SparseIntVect<boost::int64_t> *fp1;
     fp1 = AtomPairs::getTopologicalTorsionFingerprint(*m1);
-    TEST_ASSERT(fp1);
-    TEST_ASSERT(fp1->getTotalVal() == 2);
-    TEST_ASSERT(fp1->getNonzeroElements().size() == 2);
-    TEST_ASSERT((*fp1)[4437590048LL] == 1);
-    TEST_ASSERT((*fp1)[12893306913LL] == 1);
+    TEST_ASSERT(fp1)
+    TEST_ASSERT(fp1->getTotalVal() == 2)
+    TEST_ASSERT(fp1->getNonzeroElements().size() == 2)
+    TEST_ASSERT((*fp1)[4437590048LL] == 1)
+    TEST_ASSERT((*fp1)[12893306913LL] == 1)
     delete fp1;
     delete m1;
   }
   {
     ROMol *m1 = SmilesToMol("CCCCO");
-    TEST_ASSERT(m1);
+    TEST_ASSERT(m1)
     SparseIntVect<boost::int64_t> *fp1;
     fp1 = AtomPairs::getHashedTopologicalTorsionFingerprint(*m1, 1000);
-    TEST_ASSERT(fp1);
-    TEST_ASSERT(fp1->getTotalVal() == 2);
-    TEST_ASSERT(fp1->getNonzeroElements().size() == 2);
-    TEST_ASSERT((*fp1)[24] == 1);
-    TEST_ASSERT((*fp1)[288] == 1);
+    TEST_ASSERT(fp1)
+    TEST_ASSERT(fp1->getTotalVal() == 2)
+    TEST_ASSERT(fp1->getNonzeroElements().size() == 2)
+    TEST_ASSERT((*fp1)[24] == 1)
+    TEST_ASSERT((*fp1)[288] == 1)
     delete fp1;
     delete m1;
   }
   {
     ROMol *m1 = SmilesToMol("CCO");
-    TEST_ASSERT(m1);
+    TEST_ASSERT(m1)
     SparseIntVect<std::int32_t> *fp1;
     fp1 = AtomPairs::getAtomPairFingerprint(*m1);
-    TEST_ASSERT(fp1);
-    TEST_ASSERT(fp1->getTotalVal() == 3);
-    TEST_ASSERT(fp1->getNonzeroElements().size() == 3);
-    TEST_ASSERT((*fp1)[558113] == 1);
-    TEST_ASSERT((*fp1)[1590306] == 1);
-    TEST_ASSERT((*fp1)[1590337] == 1);
+    TEST_ASSERT(fp1)
+    TEST_ASSERT(fp1->getTotalVal() == 3)
+    TEST_ASSERT(fp1->getNonzeroElements().size() == 3)
+    TEST_ASSERT((*fp1)[558113] == 1)
+    TEST_ASSERT((*fp1)[1590306] == 1)
+    TEST_ASSERT((*fp1)[1590337] == 1)
     delete fp1;
     delete m1;
   }
   {
     ROMol *m1 = SmilesToMol("CCO");
-    TEST_ASSERT(m1);
+    TEST_ASSERT(m1)
     SparseIntVect<std::int32_t> *fp1;
     fp1 = AtomPairs::getHashedAtomPairFingerprint(*m1);
-    TEST_ASSERT(fp1);
-    TEST_ASSERT(fp1->getTotalVal() == 3);
-    TEST_ASSERT(fp1->getNonzeroElements().size() == 3);
-    TEST_ASSERT((*fp1)[1375] == 1);
-    TEST_ASSERT((*fp1)[1423] == 1);
-    TEST_ASSERT((*fp1)[1503] == 1);
+    TEST_ASSERT(fp1)
+    TEST_ASSERT(fp1->getTotalVal() == 3)
+    TEST_ASSERT(fp1->getNonzeroElements().size() == 3)
+    TEST_ASSERT((*fp1)[1375] == 1)
+    TEST_ASSERT((*fp1)[1423] == 1)
+    TEST_ASSERT((*fp1)[1503] == 1)
     delete fp1;
     delete m1;
   }
@@ -2717,15 +2717,15 @@ void testGitHubIssue151() {
 
   {
     ROMol *qm = SmilesToMol("CCCn1c2ccccc2c2ccccc21");
-    TEST_ASSERT(qm);
+    TEST_ASSERT(qm)
     ROMol *m =
         SmilesToMol("O=C1NCc2c1c1c3cc(Br)ccc3n3c1c1c2c2ccccc2n1CC(CO)C3");
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
     ExplicitBitVect *qbv = PatternFingerprintMol(*qm, 2048);
     ExplicitBitVect *mbv = PatternFingerprintMol(*m, 2048);
     MatchVectType mv;
-    TEST_ASSERT(SubstructMatch(*m, *qm, mv));
-    TEST_ASSERT(AllProbeBitsMatch(*qbv, *mbv));
+    TEST_ASSERT(SubstructMatch(*m, *qm, mv))
+    TEST_ASSERT(AllProbeBitsMatch(*qbv, *mbv))
 
     delete qbv;
     delete mbv;
@@ -2734,15 +2734,15 @@ void testGitHubIssue151() {
   }
   {
     ROMol *qm = SmilesToMol("c1ccc2c(c1)[nH]c1ccccc12");
-    TEST_ASSERT(qm);
+    TEST_ASSERT(qm)
     ROMol *m =
         SmilesToMol("O=C1NCc2c1c1c3cc(Br)ccc3n3c1c1c2c2ccccc2n1CC(CO)C3");
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
     ExplicitBitVect *qbv = PatternFingerprintMol(*qm, 2048);
     ExplicitBitVect *mbv = PatternFingerprintMol(*m, 2048);
     MatchVectType mv;
-    TEST_ASSERT(SubstructMatch(*m, *qm, mv));
-    TEST_ASSERT(AllProbeBitsMatch(*qbv, *mbv));
+    TEST_ASSERT(SubstructMatch(*m, *qm, mv))
+    TEST_ASSERT(AllProbeBitsMatch(*qbv, *mbv))
 
     delete qbv;
     delete mbv;
@@ -2751,14 +2751,14 @@ void testGitHubIssue151() {
   }
   {
     ROMol *qm = SmilesToMol("CC(C)c1nnc(N)[nH]1");
-    TEST_ASSERT(qm);
+    TEST_ASSERT(qm)
     ROMol *m = SmilesToMol("CC(C)c1nc2NCCCn2n1");
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
     ExplicitBitVect *qbv = PatternFingerprintMol(*qm, 2048);
     ExplicitBitVect *mbv = PatternFingerprintMol(*m, 2048);
     MatchVectType mv;
-    TEST_ASSERT(SubstructMatch(*m, *qm, mv));
-    TEST_ASSERT(AllProbeBitsMatch(*qbv, *mbv));
+    TEST_ASSERT(SubstructMatch(*m, *qm, mv))
+    TEST_ASSERT(AllProbeBitsMatch(*qbv, *mbv))
 
     delete qbv;
     delete mbv;
@@ -2767,15 +2767,15 @@ void testGitHubIssue151() {
   }
   {
     ROMol *qm = SmilesToMol("CC(C)c1nnc(N)[nH]1");
-    TEST_ASSERT(qm);
+    TEST_ASSERT(qm)
     ROMol *m = SmilesToMol(
         "CN1c2nc(C3CCN(S(=O)(=O)c4ccc(Cl)cc4Cl)CC3)nn2S(=O)(=O)c2ccccc21");
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
     ExplicitBitVect *qbv = PatternFingerprintMol(*qm, 2048);
     ExplicitBitVect *mbv = PatternFingerprintMol(*m, 2048);
     MatchVectType mv;
-    TEST_ASSERT(SubstructMatch(*m, *qm, mv));
-    TEST_ASSERT(AllProbeBitsMatch(*qbv, *mbv));
+    TEST_ASSERT(SubstructMatch(*m, *qm, mv))
+    TEST_ASSERT(AllProbeBitsMatch(*qbv, *mbv))
 
     delete qbv;
     delete mbv;
@@ -2799,15 +2799,15 @@ void test3DAtomPairs() {
     fp = AtomPairs::getHashedAtomPairFingerprint(
         *mol, 2048, 1, AtomPairs::maxPathLen - 1, nullptr, nullptr, nullptr,
         false, false);
-    TEST_ASSERT(fp->getTotalVal() == 3);
-    TEST_ASSERT(fp->getNonzeroElements().size() == 1);
+    TEST_ASSERT(fp->getTotalVal() == 3)
+    TEST_ASSERT(fp->getNonzeroElements().size() == 1)
     delete fp;
     // now do the 2D version
     fp = AtomPairs::getHashedAtomPairFingerprint(
         *mol, 2048, 1, AtomPairs::maxPathLen - 1, nullptr, nullptr, nullptr,
         false, true);
-    TEST_ASSERT(fp->getTotalVal() == 3);
-    TEST_ASSERT(fp->getNonzeroElements().size() == 1);
+    TEST_ASSERT(fp->getTotalVal() == 3)
+    TEST_ASSERT(fp->getNonzeroElements().size() == 1)
     delete fp;
     fp = nullptr;
 
@@ -2821,7 +2821,7 @@ void test3DAtomPairs() {
     } catch (ConformerException &) {
       ok = true;
     }
-    TEST_ASSERT(ok);
+    TEST_ASSERT(ok)
     if (fp != nullptr) {
       delete fp;
     }
@@ -2834,15 +2834,15 @@ void test3DAtomPairs() {
     fp = AtomPairs::getHashedAtomPairFingerprint(
         *mol, 2048, 1, AtomPairs::maxPathLen - 1, nullptr, nullptr, nullptr,
         false, false);
-    TEST_ASSERT(fp->getTotalVal() == 3);
-    TEST_ASSERT(fp->getNonzeroElements().size() == 2);
+    TEST_ASSERT(fp->getTotalVal() == 3)
+    TEST_ASSERT(fp->getNonzeroElements().size() == 2)
     delete fp;
     // now do the 2D version
     fp = AtomPairs::getHashedAtomPairFingerprint(
         *mol, 2048, 1, AtomPairs::maxPathLen - 1, nullptr, nullptr, nullptr,
         false, true);
-    TEST_ASSERT(fp->getTotalVal() == 3);
-    TEST_ASSERT(fp->getNonzeroElements().size() == 1);
+    TEST_ASSERT(fp->getTotalVal() == 3)
+    TEST_ASSERT(fp->getNonzeroElements().size() == 1)
     delete fp;
     delete mol;
   }
@@ -2858,7 +2858,7 @@ void testGitHubIssue195() {
   {
     auto *m1 = new ROMol();
     ExplicitBitVect *fp1 = MACCSFingerprints::getFingerprintAsBitVect(*m1);
-    TEST_ASSERT(fp1->getNumOnBits() == 0);
+    TEST_ASSERT(fp1->getNumOnBits() == 0)
     delete fp1;
     delete m1;
   }
@@ -2873,15 +2873,15 @@ void testGitHubIssue258() {
 
   {
     ROMol *qm = SmartsToMol("n2c(-[#6])ccc2-[#6]", 0, true);
-    TEST_ASSERT(qm);
+    TEST_ASSERT(qm)
     ROMol *m = SmilesToMol("Clc1c(cccc1)-n2c(c(cc2C)C=NNC(=O)CSc3ncccn3)C");
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
 
     ExplicitBitVect *qbv = PatternFingerprintMol(*qm, 2048);
     ExplicitBitVect *mbv = PatternFingerprintMol(*m, 2048);
     MatchVectType mv;
-    TEST_ASSERT(SubstructMatch(*m, *qm, mv));
-    TEST_ASSERT(AllProbeBitsMatch(*qbv, *mbv));
+    TEST_ASSERT(SubstructMatch(*m, *qm, mv))
+    TEST_ASSERT(AllProbeBitsMatch(*qbv, *mbv))
 
     delete qm;
     delete m;
@@ -2890,15 +2890,15 @@ void testGitHubIssue258() {
   }
   {
     ROMol *qm = SmartsToMol("n2c(cc(c2-[#6]))-[#6]", 0, true);
-    TEST_ASSERT(qm);
+    TEST_ASSERT(qm)
     ROMol *m = SmilesToMol("Clc1c(cccc1)-n2c(c(cc2C)C=NNC(=O)CSc3ncccn3)C");
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
 
     ExplicitBitVect *qbv = PatternFingerprintMol(*qm, 2048);
     ExplicitBitVect *mbv = PatternFingerprintMol(*m, 2048);
     MatchVectType mv;
-    TEST_ASSERT(SubstructMatch(*m, *qm, mv));
-    TEST_ASSERT(AllProbeBitsMatch(*qbv, *mbv));
+    TEST_ASSERT(SubstructMatch(*m, *qm, mv))
+    TEST_ASSERT(AllProbeBitsMatch(*qbv, *mbv))
 
     delete qm;
     delete m;
@@ -2909,9 +2909,9 @@ void testGitHubIssue258() {
     ROMol *qm = SmartsToMol(
         "n2(-[#6]:1:[!#1]:[#6]:[#6]:[#6]:[#6]:1)c(cc(c2-[#6;X4]))-[#6;X4]", 0,
         true);
-    TEST_ASSERT(qm);
+    TEST_ASSERT(qm)
     ROMol *m = SmilesToMol("n2(-c:1:c:c:c:c:c:1)c(cc(c2-C))-C", 0, true);
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
 
     ExplicitBitVect *qbv = PatternFingerprintMol(*qm, 2048);
     ExplicitBitVect *mbv = PatternFingerprintMol(*m, 2048);
@@ -2925,8 +2925,8 @@ void testGitHubIssue258() {
     std::cerr<<std::endl;
 #endif
     MatchVectType mv;
-    TEST_ASSERT(SubstructMatch(*m, *qm, mv));
-    TEST_ASSERT(AllProbeBitsMatch(*qbv, *mbv));
+    TEST_ASSERT(SubstructMatch(*m, *qm, mv))
+    TEST_ASSERT(AllProbeBitsMatch(*qbv, *mbv))
 
     delete qm;
     delete m;
@@ -2937,16 +2937,16 @@ void testGitHubIssue258() {
     ROMol *qm = SmartsToMol(
         "n2(-[#6]:1:[!#1]:[#6]:[#6]:[#6]:[#6]:1)c(cc(c2-[#6;X4]))-[#6;X4]", 0,
         true);
-    TEST_ASSERT(qm);
+    TEST_ASSERT(qm)
     ROMol *m = SmilesToMol("Clc1c(cccc1)-n2c(c(cc2C)C=NNC(=O)CSc3ncccn3)C");
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
 
     ExplicitBitVect *qbv = PatternFingerprintMol(*qm, 2048);
     ExplicitBitVect *mbv = PatternFingerprintMol(*m, 2048);
 
     MatchVectType mv;
-    TEST_ASSERT(SubstructMatch(*m, *qm, mv));
-    TEST_ASSERT(AllProbeBitsMatch(*qbv, *mbv));
+    TEST_ASSERT(SubstructMatch(*m, *qm, mv))
+    TEST_ASSERT(AllProbeBitsMatch(*qbv, *mbv))
 
     delete qm;
     delete m;
@@ -2957,15 +2957,15 @@ void testGitHubIssue258() {
     ROMol *qm = SmartsToMol(
         "n2(-[#6]:1:[!#1]:[#6]:[#6]:[#6]:[#6]:1)c(cc(c2-[#6;X4])-[#1])-[#6;X4]",
         0, true);
-    TEST_ASSERT(qm);
+    TEST_ASSERT(qm)
     ROMol *m = SmilesToMol("Clc1c(cccc1)-n2c(c(cc2C)C=NNC(=O)CSc3ncccn3)C");
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
 
     ExplicitBitVect *qbv = PatternFingerprintMol(*qm, 2048);
     ExplicitBitVect *mbv = PatternFingerprintMol(*m, 2048);
     MatchVectType mv;
-    TEST_ASSERT(SubstructMatch(*m, *qm, mv));
-    TEST_ASSERT(AllProbeBitsMatch(*qbv, *mbv));
+    TEST_ASSERT(SubstructMatch(*m, *qm, mv))
+    TEST_ASSERT(AllProbeBitsMatch(*qbv, *mbv))
 
     delete qm;
     delete m;
@@ -2990,12 +2990,12 @@ void runblock(const std::vector<ROMol *> &mols, unsigned int count,
       ROMol *mol = mols[i];
       ExplicitBitVect *lbv = PatternFingerprintMol(*mol, 2048);
       if (referenceData.size() && referenceData[i]) {
-        TEST_ASSERT((*lbv) == (*referenceData[i]));
+        TEST_ASSERT((*lbv) == (*referenceData[i]))
       }
       delete lbv;
     }
   }
-};
+}
 }  // namespace
 #include <thread>
 #include <future>
@@ -3071,43 +3071,43 @@ void testGitHubIssue334() {
 
   {
     ROMol *m1 = SmilesToMol("N#C");
-    TEST_ASSERT(m1);
+    TEST_ASSERT(m1)
     SparseIntVect<std::int32_t> *fp1;
     fp1 = AtomPairs::getAtomPairFingerprint(*m1);
-    TEST_ASSERT(fp1);
+    TEST_ASSERT(fp1)
     delete m1;
 
     m1 = SmilesToMol("N#[CH]");
     SparseIntVect<std::int32_t> *fp2;
     fp2 = AtomPairs::getAtomPairFingerprint(*m1);
-    TEST_ASSERT(fp2);
+    TEST_ASSERT(fp2)
     delete m1;
 
-    TEST_ASSERT(fp1->getTotalVal() == fp2->getTotalVal());
+    TEST_ASSERT(fp1->getTotalVal() == fp2->getTotalVal())
     TEST_ASSERT(fp1->getNonzeroElements().size() ==
-                fp2->getNonzeroElements().size());
-    TEST_ASSERT(*fp1 == *fp2);
+                fp2->getNonzeroElements().size())
+    TEST_ASSERT(*fp1 == *fp2)
     delete fp1;
     delete fp2;
   }
   {
     ROMol *m1 = SmilesToMol("N#C");
-    TEST_ASSERT(m1);
+    TEST_ASSERT(m1)
     SparseIntVect<boost::int64_t> *fp1;
     fp1 = AtomPairs::getTopologicalTorsionFingerprint(*m1);
-    TEST_ASSERT(fp1);
+    TEST_ASSERT(fp1)
     delete m1;
 
     m1 = SmilesToMol("N#[CH]");
     SparseIntVect<boost::int64_t> *fp2;
     fp2 = AtomPairs::getTopologicalTorsionFingerprint(*m1);
-    TEST_ASSERT(fp2);
+    TEST_ASSERT(fp2)
     delete m1;
 
-    TEST_ASSERT(fp1->getTotalVal() == fp2->getTotalVal());
+    TEST_ASSERT(fp1->getTotalVal() == fp2->getTotalVal())
     TEST_ASSERT(fp1->getNonzeroElements().size() ==
-                fp2->getNonzeroElements().size());
-    TEST_ASSERT(*fp1 == *fp2);
+                fp2->getNonzeroElements().size())
+    TEST_ASSERT(*fp1 == *fp2)
     delete fp1;
     delete fp2;
   }
@@ -3123,34 +3123,34 @@ void testGitHubIssue695() {
 
   {
     ROMol *m1 = SmilesToMol("CC=CC");
-    TEST_ASSERT(m1);
+    TEST_ASSERT(m1)
     SparseIntVect<std::uint32_t> *fp;
     SparseIntVect<std::uint32_t>::StorageType::const_iterator iter;
 
     fp = MorganFingerprints::getFingerprint(*m1, 1, nullptr, nullptr, false);
-    TEST_ASSERT(fp);
-    TEST_ASSERT(fp->getNonzeroElements().size() == 4);
+    TEST_ASSERT(fp)
+    TEST_ASSERT(fp->getNonzeroElements().size() == 4)
     iter = fp->getNonzeroElements().find(736731344);
-    TEST_ASSERT(iter != fp->getNonzeroElements().end() && iter->second == 2);
+    TEST_ASSERT(iter != fp->getNonzeroElements().end() && iter->second == 2)
     iter = fp->getNonzeroElements().find(2246703798);
-    TEST_ASSERT(iter != fp->getNonzeroElements().end() && iter->second == 2);
+    TEST_ASSERT(iter != fp->getNonzeroElements().end() && iter->second == 2)
     iter = fp->getNonzeroElements().find(2246728737);
-    TEST_ASSERT(iter != fp->getNonzeroElements().end() && iter->second == 2);
+    TEST_ASSERT(iter != fp->getNonzeroElements().end() && iter->second == 2)
     iter = fp->getNonzeroElements().find(3545353036);
-    TEST_ASSERT(iter != fp->getNonzeroElements().end() && iter->second == 2);
+    TEST_ASSERT(iter != fp->getNonzeroElements().end() && iter->second == 2)
     delete fp;
 
     fp = MorganFingerprints::getFingerprint(*m1, 1, nullptr, nullptr, true);
-    TEST_ASSERT(fp);
-    TEST_ASSERT(fp->getNonzeroElements().size() == 4);
+    TEST_ASSERT(fp)
+    TEST_ASSERT(fp->getNonzeroElements().size() == 4)
     iter = fp->getNonzeroElements().find(736731344);
-    TEST_ASSERT(iter != fp->getNonzeroElements().end() && iter->second == 2);
+    TEST_ASSERT(iter != fp->getNonzeroElements().end() && iter->second == 2)
     iter = fp->getNonzeroElements().find(2246703798);
-    TEST_ASSERT(iter != fp->getNonzeroElements().end() && iter->second == 2);
+    TEST_ASSERT(iter != fp->getNonzeroElements().end() && iter->second == 2)
     iter = fp->getNonzeroElements().find(2246728737);
-    TEST_ASSERT(iter != fp->getNonzeroElements().end() && iter->second == 2);
+    TEST_ASSERT(iter != fp->getNonzeroElements().end() && iter->second == 2)
     iter = fp->getNonzeroElements().find(3545353036);
-    TEST_ASSERT(iter != fp->getNonzeroElements().end() && iter->second == 2);
+    TEST_ASSERT(iter != fp->getNonzeroElements().end() && iter->second == 2)
 
     delete fp;
 
@@ -3158,26 +3158,26 @@ void testGitHubIssue695() {
   }
   {
     ROMol *m1 = SmilesToMol("C/C=C/C");
-    TEST_ASSERT(m1);
+    TEST_ASSERT(m1)
     SparseIntVect<std::uint32_t> *fp;
     SparseIntVect<std::uint32_t>::StorageType::const_iterator iter;
 
     fp = MorganFingerprints::getFingerprint(*m1, 1, nullptr, nullptr, false);
-    TEST_ASSERT(fp);
-    TEST_ASSERT(fp->getNonzeroElements().size() == 4);
+    TEST_ASSERT(fp)
+    TEST_ASSERT(fp->getNonzeroElements().size() == 4)
     iter = fp->getNonzeroElements().find(736731344);
-    TEST_ASSERT(iter != fp->getNonzeroElements().end() && iter->second == 2);
+    TEST_ASSERT(iter != fp->getNonzeroElements().end() && iter->second == 2)
     iter = fp->getNonzeroElements().find(2246703798);
-    TEST_ASSERT(iter != fp->getNonzeroElements().end() && iter->second == 2);
+    TEST_ASSERT(iter != fp->getNonzeroElements().end() && iter->second == 2)
     iter = fp->getNonzeroElements().find(2246728737);
-    TEST_ASSERT(iter != fp->getNonzeroElements().end() && iter->second == 2);
+    TEST_ASSERT(iter != fp->getNonzeroElements().end() && iter->second == 2)
     iter = fp->getNonzeroElements().find(3545353036);
-    TEST_ASSERT(iter != fp->getNonzeroElements().end() && iter->second == 2);
+    TEST_ASSERT(iter != fp->getNonzeroElements().end() && iter->second == 2)
     delete fp;
 
     fp = MorganFingerprints::getFingerprint(*m1, 1, nullptr, nullptr, true);
-    TEST_ASSERT(fp);
-    TEST_ASSERT(fp->getNonzeroElements().size() == 4);
+    TEST_ASSERT(fp)
+    TEST_ASSERT(fp->getNonzeroElements().size() == 4)
 
 #if 0
     for (iter = fp->getNonzeroElements().begin();
@@ -3188,34 +3188,34 @@ void testGitHubIssue695() {
 #endif
 
     iter = fp->getNonzeroElements().find(736735794);
-    TEST_ASSERT(iter != fp->getNonzeroElements().end() && iter->second == 2);
+    TEST_ASSERT(iter != fp->getNonzeroElements().end() && iter->second == 2)
     iter = fp->getNonzeroElements().find(2246703798);
-    TEST_ASSERT(iter != fp->getNonzeroElements().end() && iter->second == 2);
+    TEST_ASSERT(iter != fp->getNonzeroElements().end() && iter->second == 2)
     iter = fp->getNonzeroElements().find(2246728737);
-    TEST_ASSERT(iter != fp->getNonzeroElements().end() && iter->second == 2);
+    TEST_ASSERT(iter != fp->getNonzeroElements().end() && iter->second == 2)
     iter = fp->getNonzeroElements().find(3545353036);
-    TEST_ASSERT(iter != fp->getNonzeroElements().end() && iter->second == 2);
+    TEST_ASSERT(iter != fp->getNonzeroElements().end() && iter->second == 2)
     delete fp;
 
     delete m1;
   }
   {
     ROMol *m1 = SmilesToMol("C/C=C\\C");
-    TEST_ASSERT(m1);
+    TEST_ASSERT(m1)
     SparseIntVect<std::uint32_t> *fp;
     SparseIntVect<std::uint32_t>::StorageType::const_iterator iter;
 
     fp = MorganFingerprints::getFingerprint(*m1, 1, nullptr, nullptr, false);
-    TEST_ASSERT(fp);
-    TEST_ASSERT(fp->getNonzeroElements().size() == 4);
+    TEST_ASSERT(fp)
+    TEST_ASSERT(fp->getNonzeroElements().size() == 4)
     iter = fp->getNonzeroElements().find(736731344);
-    TEST_ASSERT(iter != fp->getNonzeroElements().end() && iter->second == 2);
+    TEST_ASSERT(iter != fp->getNonzeroElements().end() && iter->second == 2)
     iter = fp->getNonzeroElements().find(2246703798);
-    TEST_ASSERT(iter != fp->getNonzeroElements().end() && iter->second == 2);
+    TEST_ASSERT(iter != fp->getNonzeroElements().end() && iter->second == 2)
     iter = fp->getNonzeroElements().find(2246728737);
-    TEST_ASSERT(iter != fp->getNonzeroElements().end() && iter->second == 2);
+    TEST_ASSERT(iter != fp->getNonzeroElements().end() && iter->second == 2)
     iter = fp->getNonzeroElements().find(3545353036);
-    TEST_ASSERT(iter != fp->getNonzeroElements().end() && iter->second == 2);
+    TEST_ASSERT(iter != fp->getNonzeroElements().end() && iter->second == 2)
     delete fp;
 
     fp = MorganFingerprints::getFingerprint(*m1, 1, nullptr, nullptr, true);
@@ -3226,16 +3226,16 @@ void testGitHubIssue695() {
     }
     std::cerr << "  ------------ " << std::endl;
 #endif
-    TEST_ASSERT(fp);
-    TEST_ASSERT(fp->getNonzeroElements().size() == 4);
+    TEST_ASSERT(fp)
+    TEST_ASSERT(fp->getNonzeroElements().size() == 4)
     iter = fp->getNonzeroElements().find(736735858);
-    TEST_ASSERT(iter != fp->getNonzeroElements().end() && iter->second == 2);
+    TEST_ASSERT(iter != fp->getNonzeroElements().end() && iter->second == 2)
     iter = fp->getNonzeroElements().find(2246703798);
-    TEST_ASSERT(iter != fp->getNonzeroElements().end() && iter->second == 2);
+    TEST_ASSERT(iter != fp->getNonzeroElements().end() && iter->second == 2)
     iter = fp->getNonzeroElements().find(2246728737);
-    TEST_ASSERT(iter != fp->getNonzeroElements().end() && iter->second == 2);
+    TEST_ASSERT(iter != fp->getNonzeroElements().end() && iter->second == 2)
     iter = fp->getNonzeroElements().find(3545353036);
-    TEST_ASSERT(iter != fp->getNonzeroElements().end() && iter->second == 2);
+    TEST_ASSERT(iter != fp->getNonzeroElements().end() && iter->second == 2)
     delete fp;
 
     delete m1;
@@ -3253,9 +3253,9 @@ void testGitHubIssue811() {
     dirName += "/Code/GraphMol/Fingerprints/testData/";
 
     ROMol *m1 = MolFileToMol(dirName + "github811a.mol");
-    TEST_ASSERT(m1);
+    TEST_ASSERT(m1)
     ROMol *m2 = MolFileToMol(dirName + "github811b.mol");
-    TEST_ASSERT(m2);
+    TEST_ASSERT(m2)
 
     SparseIntVect<boost::int64_t> *fp1, *fp2;
 
@@ -3264,12 +3264,12 @@ void testGitHubIssue811() {
 
     fp1 = AtomPairs::getTopologicalTorsionFingerprint(*m1, 7, &roots);
     SparseIntVect<boost::int64_t>::StorageType nz1 = fp1->getNonzeroElements();
-    TEST_ASSERT(nz1.size() == 4);
+    TEST_ASSERT(nz1.size() == 4)
     fp2 = AtomPairs::getTopologicalTorsionFingerprint(*m2, 7, &roots);
     SparseIntVect<boost::int64_t>::StorageType nz2 = fp2->getNonzeroElements();
-    TEST_ASSERT(nz2.size() == 4);
+    TEST_ASSERT(nz2.size() == 4)
 
-    TEST_ASSERT(*fp1 == *fp2);
+    TEST_ASSERT(*fp1 == *fp2)
 
     delete fp1;
     delete fp2;
@@ -3278,13 +3278,13 @@ void testGitHubIssue811() {
   }
   {
     ROMol *m1 = SmilesToMol("C1CC1");
-    TEST_ASSERT(m1);
+    TEST_ASSERT(m1)
 
     SparseIntVect<boost::int64_t> *fp1;
 
     fp1 = AtomPairs::getTopologicalTorsionFingerprint(*m1);
     SparseIntVect<boost::int64_t>::StorageType nz1 = fp1->getNonzeroElements();
-    TEST_ASSERT(nz1.size() == 1);
+    TEST_ASSERT(nz1.size() == 1)
     delete fp1;
     delete m1;
   }
@@ -3296,12 +3296,12 @@ void testRDKFPUnfolded() {
   BOOST_LOG(rdErrorLog) << "    Test unfolded version of RDKFP   " << std::endl;
   {
     ROMol *m1 = SmilesToMol("c1ccccc1N");
-    TEST_ASSERT(m1);
+    TEST_ASSERT(m1)
     SparseIntVect<boost::uint64_t> *fp1;
     SparseIntVect<boost::uint64_t>::StorageType::const_iterator iter;
 
     fp1 = getUnfoldedRDKFingerprintMol(*m1);
-    TEST_ASSERT(fp1);
+    TEST_ASSERT(fp1)
 #if 0
     for (iter = fp1->getNonzeroElements().begin();
          iter != fp1->getNonzeroElements().end(); ++iter) {
@@ -3309,37 +3309,37 @@ void testRDKFPUnfolded() {
     }
     std::cerr << "  ------------ " << std::endl;
 #endif
-    TEST_ASSERT(fp1->getNonzeroElements().size() == 19);
+    TEST_ASSERT(fp1->getNonzeroElements().size() == 19)
     iter = fp1->getNonzeroElements().find(374073638);
-    TEST_ASSERT(iter != fp1->getNonzeroElements().end() && iter->second == 6);
+    TEST_ASSERT(iter != fp1->getNonzeroElements().end() && iter->second == 6)
     iter = fp1->getNonzeroElements().find(464351883);
-    TEST_ASSERT(iter != fp1->getNonzeroElements().end() && iter->second == 2);
+    TEST_ASSERT(iter != fp1->getNonzeroElements().end() && iter->second == 2)
     iter = fp1->getNonzeroElements().find(1949583554);
-    TEST_ASSERT(iter != fp1->getNonzeroElements().end() && iter->second == 6);
+    TEST_ASSERT(iter != fp1->getNonzeroElements().end() && iter->second == 6)
     iter = fp1->getNonzeroElements().find(4105342207);
-    TEST_ASSERT(iter != fp1->getNonzeroElements().end() && iter->second == 1);
+    TEST_ASSERT(iter != fp1->getNonzeroElements().end() && iter->second == 1)
     iter = fp1->getNonzeroElements().find(794080973);
-    TEST_ASSERT(iter != fp1->getNonzeroElements().end() && iter->second == 1);
+    TEST_ASSERT(iter != fp1->getNonzeroElements().end() && iter->second == 1)
     iter = fp1->getNonzeroElements().find(3826517238);
-    TEST_ASSERT(iter != fp1->getNonzeroElements().end() && iter->second == 2);
+    TEST_ASSERT(iter != fp1->getNonzeroElements().end() && iter->second == 2)
     delete fp1;
     delete m1;
   }
   {
     ROMol *m1 = SmilesToMol("Cl");
-    TEST_ASSERT(m1);
+    TEST_ASSERT(m1)
     SparseIntVect<boost::uint64_t> *fp1;
     SparseIntVect<boost::uint64_t>::StorageType::const_iterator iter;
 
     fp1 = getUnfoldedRDKFingerprintMol(*m1);
-    TEST_ASSERT(fp1);
-    TEST_ASSERT(fp1->getNonzeroElements().size() == 0);
+    TEST_ASSERT(fp1)
+    TEST_ASSERT(fp1->getNonzeroElements().size() == 0)
     delete fp1;
     delete m1;
   }
   {
     ROMol *m1 = SmilesToMol("CCCO");
-    TEST_ASSERT(m1);
+    TEST_ASSERT(m1)
     SparseIntVect<boost::uint64_t> *fp1;
     SparseIntVect<boost::uint64_t>::StorageType::const_iterator iter;
     std::map<boost::uint64_t, std::vector<std::vector<int>>> bitInfo;
@@ -3348,7 +3348,7 @@ void testRDKFPUnfolded() {
 
     fp1 = getUnfoldedRDKFingerprintMol(*m1, 1, 7, true, true, true, nullptr,
                                        nullptr, nullptr, &bitInfo);
-    TEST_ASSERT(fp1);
+    TEST_ASSERT(fp1)
 
 #if 0
     for (iter = fp1->getNonzeroElements().begin();
@@ -3373,36 +3373,36 @@ void testRDKFPUnfolded() {
     std::cerr << "  ------------ " << std::endl;
 #endif
 
-    TEST_ASSERT(fp1->getNonzeroElements().size() == 5);
+    TEST_ASSERT(fp1->getNonzeroElements().size() == 5)
     iter = fp1->getNonzeroElements().find(1524090560);
-    TEST_ASSERT(iter != fp1->getNonzeroElements().end() && iter->second == 1);
+    TEST_ASSERT(iter != fp1->getNonzeroElements().end() && iter->second == 1)
     iter = fp1->getNonzeroElements().find(1940446997);
-    TEST_ASSERT(iter != fp1->getNonzeroElements().end() && iter->second == 1);
+    TEST_ASSERT(iter != fp1->getNonzeroElements().end() && iter->second == 1)
     iter = fp1->getNonzeroElements().find(3977409745);
-    TEST_ASSERT(iter != fp1->getNonzeroElements().end() && iter->second == 1);
+    TEST_ASSERT(iter != fp1->getNonzeroElements().end() && iter->second == 1)
     iter = fp1->getNonzeroElements().find(4274652475);
-    TEST_ASSERT(iter != fp1->getNonzeroElements().end() && iter->second == 1);
+    TEST_ASSERT(iter != fp1->getNonzeroElements().end() && iter->second == 1)
     iter = fp1->getNonzeroElements().find(4275705116);
-    TEST_ASSERT(iter != fp1->getNonzeroElements().end() && iter->second == 2);
+    TEST_ASSERT(iter != fp1->getNonzeroElements().end() && iter->second == 2)
 
     iter2 = bitInfo.find(4275705116);
-    TEST_ASSERT(iter2 != bitInfo.end() && iter2->second[0][0] == 0);
+    TEST_ASSERT(iter2 != bitInfo.end() && iter2->second[0][0] == 0)
     TEST_ASSERT(iter2 != bitInfo.end() && iter2->second.size() == 2 &&
-                iter2->second[1][0] == 1);
+                iter2->second[1][0] == 1)
     iter2 = bitInfo.find(4274652475);
-    TEST_ASSERT(iter2 != bitInfo.end() && iter2->second[0][0] == 2);
+    TEST_ASSERT(iter2 != bitInfo.end() && iter2->second[0][0] == 2)
     iter2 = bitInfo.find(3977409745);
     TEST_ASSERT(iter2 != bitInfo.end() && iter2->second[0].size() == 3 &&
-                iter2->second[0][0] == 0);
+                iter2->second[0][0] == 0)
     TEST_ASSERT(iter2 != bitInfo.end() && iter2->second[0].size() == 3 &&
-                iter2->second[0][1] == 1);
+                iter2->second[0][1] == 1)
     TEST_ASSERT(iter2 != bitInfo.end() && iter2->second[0].size() == 3 &&
-                iter2->second[0][2] == 2);
+                iter2->second[0][2] == 2)
     iter2 = bitInfo.find(1524090560);
     TEST_ASSERT(iter2 != bitInfo.end() && iter2->second[0].size() == 2 &&
-                iter2->second[0][0] == 1);
+                iter2->second[0][0] == 1)
     TEST_ASSERT(iter2 != bitInfo.end() && iter2->second[0].size() == 2 &&
-                iter2->second[0][1] == 2);
+                iter2->second[0][1] == 2)
     delete fp1;
     delete m1;
   }
@@ -3414,7 +3414,7 @@ void testRDKFPBitInfo() {
 
   {
     ROMol *m1 = SmilesToMol("CCCO");
-    TEST_ASSERT(m1);
+    TEST_ASSERT(m1)
     ExplicitBitVect *fp1;
     std::map<std::uint32_t, std::vector<std::vector<int>>> bitInfo;
     std::map<std::uint32_t, std::vector<std::vector<int>>>::const_iterator
@@ -3422,7 +3422,7 @@ void testRDKFPBitInfo() {
 
     fp1 = RDKFingerprintMol(*m1, 1, 7, 2048, 2, true, 0.0, 128, true, true,
                             nullptr, nullptr, nullptr, &bitInfo);
-    TEST_ASSERT(fp1);
+    TEST_ASSERT(fp1)
 
 #if 1
     for (iter2 = bitInfo.begin(); iter2 != bitInfo.end(); ++iter2) {
@@ -3440,23 +3440,23 @@ void testRDKFPBitInfo() {
 #endif
 
     iter2 = bitInfo.find(1772);
-    TEST_ASSERT(iter2 != bitInfo.end() && iter2->second[0][0] == 0);
+    TEST_ASSERT(iter2 != bitInfo.end() && iter2->second[0][0] == 0)
     TEST_ASSERT(iter2 != bitInfo.end() && iter2->second.size() == 2 &&
-                iter2->second[1][0] == 1);
+                iter2->second[1][0] == 1)
     iter2 = bitInfo.find(562);
-    TEST_ASSERT(iter2 != bitInfo.end() && iter2->second[0][0] == 2);
+    TEST_ASSERT(iter2 != bitInfo.end() && iter2->second[0][0] == 2)
     iter2 = bitInfo.find(1118);
     TEST_ASSERT(iter2 != bitInfo.end() && iter2->second[0].size() == 3 &&
-                iter2->second[0][0] == 0);
+                iter2->second[0][0] == 0)
     TEST_ASSERT(iter2 != bitInfo.end() && iter2->second[0].size() == 3 &&
-                iter2->second[0][1] == 1);
+                iter2->second[0][1] == 1)
     TEST_ASSERT(iter2 != bitInfo.end() && iter2->second[0].size() == 3 &&
-                iter2->second[0][2] == 2);
+                iter2->second[0][2] == 2)
     iter2 = bitInfo.find(1183);
     TEST_ASSERT(iter2 != bitInfo.end() && iter2->second[0].size() == 2 &&
-                iter2->second[0][0] == 1);
+                iter2->second[0][0] == 1)
     TEST_ASSERT(iter2 != bitInfo.end() && iter2->second[0].size() == 2 &&
-                iter2->second[0][1] == 2);
+                iter2->second[0][1] == 2)
     delete fp1;
     delete m1;
   }
@@ -3470,15 +3470,15 @@ void testGitHubIssue874() {
   {
     std::string smiles = "Cl";
     ROMol *m1 = SmilesToMol(smiles);
-    TEST_ASSERT(m1);
-    TEST_ASSERT(m1->getNumAtoms() == 1);
+    TEST_ASSERT(m1)
+    TEST_ASSERT(m1->getNumAtoms() == 1)
 
     SparseIntVect<std::uint32_t> *fp;
     fp = MorganFingerprints::getFingerprint(*m1, 0);
-    TEST_ASSERT(fp->getNonzeroElements().size() == 1);
+    TEST_ASSERT(fp->getNonzeroElements().size() == 1)
     delete fp;
     fp = MorganFingerprints::getFingerprint(*m1, 1);
-    TEST_ASSERT(fp->getNonzeroElements().size() == 1);
+    TEST_ASSERT(fp->getNonzeroElements().size() == 1)
     delete fp;
 
     delete m1;
@@ -3494,24 +3494,24 @@ void testGitHubIssue879() {
   {
     std::string smiles = "Cl";
     ROMol *m1 = SmilesToMol(smiles);
-    TEST_ASSERT(m1);
-    TEST_ASSERT(m1->getNumAtoms() == 1);
+    TEST_ASSERT(m1)
+    TEST_ASSERT(m1->getNumAtoms() == 1)
 
     ExplicitBitVect *bv = PatternFingerprintMol(*m1, 2048);
-    TEST_ASSERT(bv);
-    TEST_ASSERT(bv->getNumOnBits() == 2);
+    TEST_ASSERT(bv)
+    TEST_ASSERT(bv->getNumOnBits() == 2)
     delete bv;
     delete m1;
   }
   {
     std::string smiles = "Cl.[Na]";
     ROMol *m1 = SmilesToMol(smiles);
-    TEST_ASSERT(m1);
-    TEST_ASSERT(m1->getNumAtoms() == 2);
+    TEST_ASSERT(m1)
+    TEST_ASSERT(m1->getNumAtoms() == 2)
 
     ExplicitBitVect *bv = PatternFingerprintMol(*m1, 2048);
-    TEST_ASSERT(bv);
-    TEST_ASSERT(bv->getNumOnBits() == 4);
+    TEST_ASSERT(bv)
+    TEST_ASSERT(bv->getNumOnBits() == 4)
     delete bv;
     delete m1;
   }
@@ -3526,19 +3526,19 @@ void testGitHubIssue1496() {
   {
     std::string smiles = "C";
     ROMol *m1 = SmilesToMol(smiles);
-    TEST_ASSERT(m1);
-    TEST_ASSERT(m1->getNumAtoms() == 1);
+    TEST_ASSERT(m1)
+    TEST_ASSERT(m1->getNumAtoms() == 1)
     ExplicitBitVect *bv1 = PatternFingerprintMol(*m1, 2048);
-    TEST_ASSERT(bv1);
+    TEST_ASSERT(bv1)
 
     std::string smarts = "[#6]";
     ROMol *m2 = SmartsToMol(smarts);
-    TEST_ASSERT(m2);
-    TEST_ASSERT(m2->getNumAtoms() == 1);
+    TEST_ASSERT(m2)
+    TEST_ASSERT(m2->getNumAtoms() == 1)
     ExplicitBitVect *bv2 = PatternFingerprintMol(*m2, 2048);
-    TEST_ASSERT(bv2);
+    TEST_ASSERT(bv2)
     TEST_ASSERT(bv1->getNumOnBits() >= bv2->getNumOnBits())
-    TEST_ASSERT(AllProbeBitsMatch(*bv2, *bv1));
+    TEST_ASSERT(AllProbeBitsMatch(*bv2, *bv1))
 
     delete m1;
     delete bv1;
@@ -3548,19 +3548,19 @@ void testGitHubIssue1496() {
   {
     std::string smiles = "CC";
     ROMol *m1 = SmilesToMol(smiles);
-    TEST_ASSERT(m1);
-    TEST_ASSERT(m1->getNumAtoms() == 2);
+    TEST_ASSERT(m1)
+    TEST_ASSERT(m1->getNumAtoms() == 2)
     ExplicitBitVect *bv1 = PatternFingerprintMol(*m1, 2048);
-    TEST_ASSERT(bv1);
+    TEST_ASSERT(bv1)
 
     std::string smarts = "[#6]";
     ROMol *m2 = SmartsToMol(smarts);
-    TEST_ASSERT(m2);
-    TEST_ASSERT(m2->getNumAtoms() == 1);
+    TEST_ASSERT(m2)
+    TEST_ASSERT(m2->getNumAtoms() == 1)
     ExplicitBitVect *bv2 = PatternFingerprintMol(*m2, 2048);
-    TEST_ASSERT(bv2);
+    TEST_ASSERT(bv2)
     TEST_ASSERT(bv1->getNumOnBits() > bv2->getNumOnBits())
-    TEST_ASSERT(AllProbeBitsMatch(*bv2, *bv1));
+    TEST_ASSERT(AllProbeBitsMatch(*bv2, *bv1))
 
     delete m1;
     delete bv1;
@@ -3578,8 +3578,8 @@ void testGitHubIssue1793() {
   {
     std::string smiles = "CC";
     ROMol *m1 = SmilesToMol(smiles);
-    TEST_ASSERT(m1);
-    TEST_ASSERT(m1->getNumAtoms() == 2);
+    TEST_ASSERT(m1)
+    TEST_ASSERT(m1->getNumAtoms() == 2)
 
     unsigned int minPath = 1;
     unsigned int maxPath = 7;
@@ -3593,7 +3593,7 @@ void testGitHubIssue1793() {
     ExplicitBitVect *bv1 =
         RDKFingerprintMol(*m1, minPath, maxPath, fpSize, nBitsPerHash, useHs,
                           tgtDensity, minSize, branchedPaths);
-    TEST_ASSERT(bv1);
+    TEST_ASSERT(bv1)
     delete m1;
     delete bv1;
   }
@@ -3609,8 +3609,8 @@ void testGitHubIssue1993() {
   {
     std::string smiles = "CC(F)(Cl)CC";
     std::unique_ptr<ROMol> m1(SmilesToMol(smiles));
-    TEST_ASSERT(m1);
-    TEST_ASSERT(m1->getNumAtoms() == 6);
+    TEST_ASSERT(m1)
+    TEST_ASSERT(m1->getNumAtoms() == 6)
     m1->clearProp(common_properties::_StereochemDone);
     std::unique_ptr<ROMol> m2(new ROMol(*m1));
     m2->getAtomWithIdx(1)->setChiralTag(Atom::CHI_TETRAHEDRAL_CW);
@@ -3622,19 +3622,19 @@ void testGitHubIssue1993() {
       std::unique_ptr<SparseIntVect<std::uint32_t>> fp1(
           MorganFingerprints::getFingerprint(*m1, 1, nullptr, nullptr,
                                              useChirality));
-      TEST_ASSERT(fp1);
+      TEST_ASSERT(fp1)
       std::unique_ptr<SparseIntVect<std::uint32_t>> fp2(
           MorganFingerprints::getFingerprint(*m2, 1, nullptr, nullptr,
                                              useChirality));
-      TEST_ASSERT(fp2);
+      TEST_ASSERT(fp2)
       std::unique_ptr<SparseIntVect<std::uint32_t>> fp3(
           MorganFingerprints::getFingerprint(*m3, 1, nullptr, nullptr,
                                              useChirality));
-      TEST_ASSERT(fp3);
+      TEST_ASSERT(fp3)
 
-      TEST_ASSERT((*fp1) == (*fp2));
-      TEST_ASSERT((*fp1) == (*fp3));
-      TEST_ASSERT((*fp2) == (*fp3));
+      TEST_ASSERT((*fp1) == (*fp2))
+      TEST_ASSERT((*fp1) == (*fp3))
+      TEST_ASSERT((*fp2) == (*fp3))
     }
 
     {  // mfp, with chirality
@@ -3642,19 +3642,19 @@ void testGitHubIssue1993() {
       std::unique_ptr<SparseIntVect<std::uint32_t>> fp1(
           MorganFingerprints::getFingerprint(*m1, 1, nullptr, nullptr,
                                              useChirality));
-      TEST_ASSERT(fp1);
+      TEST_ASSERT(fp1)
       std::unique_ptr<SparseIntVect<std::uint32_t>> fp2(
           MorganFingerprints::getFingerprint(*m2, 1, nullptr, nullptr,
                                              useChirality));
-      TEST_ASSERT(fp2);
+      TEST_ASSERT(fp2)
       std::unique_ptr<SparseIntVect<std::uint32_t>> fp3(
           MorganFingerprints::getFingerprint(*m3, 1, nullptr, nullptr,
                                              useChirality));
-      TEST_ASSERT(fp3);
+      TEST_ASSERT(fp3)
 
-      TEST_ASSERT((*fp1) != (*fp2));
-      TEST_ASSERT((*fp1) != (*fp3));
-      TEST_ASSERT((*fp2) != (*fp3));
+      TEST_ASSERT((*fp1) != (*fp2))
+      TEST_ASSERT((*fp1) != (*fp3))
+      TEST_ASSERT((*fp2) != (*fp3))
     }
 
     {  // ap, no chirality
@@ -3662,38 +3662,38 @@ void testGitHubIssue1993() {
       std::unique_ptr<SparseIntVect<std::int32_t>> fp1(
           AtomPairs::getAtomPairFingerprint(*m1, nullptr, nullptr, nullptr,
                                             useChirality));
-      TEST_ASSERT(fp1);
+      TEST_ASSERT(fp1)
       std::unique_ptr<SparseIntVect<std::int32_t>> fp2(
           AtomPairs::getAtomPairFingerprint(*m2, nullptr, nullptr, nullptr,
                                             useChirality));
-      TEST_ASSERT(fp2);
+      TEST_ASSERT(fp2)
       std::unique_ptr<SparseIntVect<std::int32_t>> fp3(
           AtomPairs::getAtomPairFingerprint(*m3, nullptr, nullptr, nullptr,
                                             useChirality));
-      TEST_ASSERT(fp3);
+      TEST_ASSERT(fp3)
 
-      TEST_ASSERT((*fp1) == (*fp2));
-      TEST_ASSERT((*fp1) == (*fp3));
-      TEST_ASSERT((*fp2) == (*fp3));
+      TEST_ASSERT((*fp1) == (*fp2))
+      TEST_ASSERT((*fp1) == (*fp3))
+      TEST_ASSERT((*fp2) == (*fp3))
     }
     {  // ap, with chirality
       bool useChirality = true;
       std::unique_ptr<SparseIntVect<std::int32_t>> fp1(
           AtomPairs::getAtomPairFingerprint(*m1, nullptr, nullptr, nullptr,
                                             useChirality));
-      TEST_ASSERT(fp1);
+      TEST_ASSERT(fp1)
       std::unique_ptr<SparseIntVect<std::int32_t>> fp2(
           AtomPairs::getAtomPairFingerprint(*m2, nullptr, nullptr, nullptr,
                                             useChirality));
-      TEST_ASSERT(fp2);
+      TEST_ASSERT(fp2)
       std::unique_ptr<SparseIntVect<std::int32_t>> fp3(
           AtomPairs::getAtomPairFingerprint(*m3, nullptr, nullptr, nullptr,
                                             useChirality));
-      TEST_ASSERT(fp3);
+      TEST_ASSERT(fp3)
 
-      TEST_ASSERT((*fp1) != (*fp2));
-      TEST_ASSERT((*fp1) != (*fp3));
-      TEST_ASSERT((*fp2) != (*fp3));
+      TEST_ASSERT((*fp1) != (*fp2))
+      TEST_ASSERT((*fp1) != (*fp3))
+      TEST_ASSERT((*fp2) != (*fp3))
     }
     {  // ap, no chirality
       bool useChirality = false;
@@ -3702,21 +3702,21 @@ void testGitHubIssue1993() {
           AtomPairs::getHashedAtomPairFingerprint(*m1, 2048, minLength,
                                                   maxLength, nullptr, nullptr,
                                                   nullptr, useChirality));
-      TEST_ASSERT(fp1);
+      TEST_ASSERT(fp1)
       std::unique_ptr<SparseIntVect<std::int32_t>> fp2(
           AtomPairs::getHashedAtomPairFingerprint(*m2, 2048, minLength,
                                                   maxLength, nullptr, nullptr,
                                                   nullptr, useChirality));
-      TEST_ASSERT(fp2);
+      TEST_ASSERT(fp2)
       std::unique_ptr<SparseIntVect<std::int32_t>> fp3(
           AtomPairs::getHashedAtomPairFingerprint(*m3, 2048, minLength,
                                                   maxLength, nullptr, nullptr,
                                                   nullptr, useChirality));
-      TEST_ASSERT(fp3);
+      TEST_ASSERT(fp3)
 
-      TEST_ASSERT((*fp1) == (*fp2));
-      TEST_ASSERT((*fp1) == (*fp3));
-      TEST_ASSERT((*fp2) == (*fp3));
+      TEST_ASSERT((*fp1) == (*fp2))
+      TEST_ASSERT((*fp1) == (*fp3))
+      TEST_ASSERT((*fp2) == (*fp3))
     }
     {  // ap, with chirality
       bool useChirality = true;
@@ -3725,21 +3725,21 @@ void testGitHubIssue1993() {
           AtomPairs::getHashedAtomPairFingerprint(*m1, 2048, minLength,
                                                   maxLength, nullptr, nullptr,
                                                   nullptr, useChirality));
-      TEST_ASSERT(fp1);
+      TEST_ASSERT(fp1)
       std::unique_ptr<SparseIntVect<std::int32_t>> fp2(
           AtomPairs::getHashedAtomPairFingerprint(*m2, 2048, minLength,
                                                   maxLength, nullptr, nullptr,
                                                   nullptr, useChirality));
-      TEST_ASSERT(fp2);
+      TEST_ASSERT(fp2)
       std::unique_ptr<SparseIntVect<std::int32_t>> fp3(
           AtomPairs::getHashedAtomPairFingerprint(*m3, 2048, minLength,
                                                   maxLength, nullptr, nullptr,
                                                   nullptr, useChirality));
-      TEST_ASSERT(fp3);
+      TEST_ASSERT(fp3)
 
-      TEST_ASSERT((*fp1) != (*fp2));
-      TEST_ASSERT((*fp1) != (*fp3));
-      TEST_ASSERT((*fp2) != (*fp3));
+      TEST_ASSERT((*fp1) != (*fp2))
+      TEST_ASSERT((*fp1) != (*fp3))
+      TEST_ASSERT((*fp2) != (*fp3))
     }
 
     {  // tt, no chirality
@@ -3747,76 +3747,76 @@ void testGitHubIssue1993() {
       std::unique_ptr<SparseIntVect<boost::int64_t>> fp1(
           AtomPairs::getTopologicalTorsionFingerprint(*m1, 4, nullptr, nullptr,
                                                       nullptr, useChirality));
-      TEST_ASSERT(fp1);
+      TEST_ASSERT(fp1)
       std::unique_ptr<SparseIntVect<boost::int64_t>> fp2(
           AtomPairs::getTopologicalTorsionFingerprint(*m2, 4, nullptr, nullptr,
                                                       nullptr, useChirality));
-      TEST_ASSERT(fp2);
+      TEST_ASSERT(fp2)
       std::unique_ptr<SparseIntVect<boost::int64_t>> fp3(
           AtomPairs::getTopologicalTorsionFingerprint(*m3, 4, nullptr, nullptr,
                                                       nullptr, useChirality));
-      TEST_ASSERT(fp3);
+      TEST_ASSERT(fp3)
 
-      TEST_ASSERT((*fp1) == (*fp2));
-      TEST_ASSERT((*fp1) == (*fp3));
-      TEST_ASSERT((*fp2) == (*fp3));
+      TEST_ASSERT((*fp1) == (*fp2))
+      TEST_ASSERT((*fp1) == (*fp3))
+      TEST_ASSERT((*fp2) == (*fp3))
     }
     {  // tt, with chirality
       bool useChirality = true;
       std::unique_ptr<SparseIntVect<boost::int64_t>> fp1(
           AtomPairs::getTopologicalTorsionFingerprint(*m1, 4, nullptr, nullptr,
                                                       nullptr, useChirality));
-      TEST_ASSERT(fp1);
+      TEST_ASSERT(fp1)
       std::unique_ptr<SparseIntVect<boost::int64_t>> fp2(
           AtomPairs::getTopologicalTorsionFingerprint(*m2, 4, nullptr, nullptr,
                                                       nullptr, useChirality));
-      TEST_ASSERT(fp2);
+      TEST_ASSERT(fp2)
       std::unique_ptr<SparseIntVect<boost::int64_t>> fp3(
           AtomPairs::getTopologicalTorsionFingerprint(*m3, 4, nullptr, nullptr,
                                                       nullptr, useChirality));
-      TEST_ASSERT(fp3);
+      TEST_ASSERT(fp3)
 
-      TEST_ASSERT((*fp1) != (*fp2));
-      TEST_ASSERT((*fp1) != (*fp3));
-      TEST_ASSERT((*fp2) != (*fp3));
+      TEST_ASSERT((*fp1) != (*fp2))
+      TEST_ASSERT((*fp1) != (*fp3))
+      TEST_ASSERT((*fp2) != (*fp3))
     }
     {  // tt, no chirality
       bool useChirality = false;
       std::unique_ptr<SparseIntVect<boost::int64_t>> fp1(
           AtomPairs::getHashedTopologicalTorsionFingerprint(
               *m1, 2048, 4, nullptr, nullptr, nullptr, useChirality));
-      TEST_ASSERT(fp1);
+      TEST_ASSERT(fp1)
       std::unique_ptr<SparseIntVect<boost::int64_t>> fp2(
           AtomPairs::getHashedTopologicalTorsionFingerprint(
               *m2, 2048, 4, nullptr, nullptr, nullptr, useChirality));
-      TEST_ASSERT(fp2);
+      TEST_ASSERT(fp2)
       std::unique_ptr<SparseIntVect<boost::int64_t>> fp3(
           AtomPairs::getHashedTopologicalTorsionFingerprint(
               *m3, 2048, 4, nullptr, nullptr, nullptr, useChirality));
-      TEST_ASSERT(fp3);
+      TEST_ASSERT(fp3)
 
-      TEST_ASSERT((*fp1) == (*fp2));
-      TEST_ASSERT((*fp1) == (*fp3));
-      TEST_ASSERT((*fp2) == (*fp3));
+      TEST_ASSERT((*fp1) == (*fp2))
+      TEST_ASSERT((*fp1) == (*fp3))
+      TEST_ASSERT((*fp2) == (*fp3))
     }
     {  // tt, with chirality
       bool useChirality = true;
       std::unique_ptr<SparseIntVect<boost::int64_t>> fp1(
           AtomPairs::getHashedTopologicalTorsionFingerprint(
               *m1, 2048, 4, nullptr, nullptr, nullptr, useChirality));
-      TEST_ASSERT(fp1);
+      TEST_ASSERT(fp1)
       std::unique_ptr<SparseIntVect<boost::int64_t>> fp2(
           AtomPairs::getHashedTopologicalTorsionFingerprint(
               *m2, 2048, 4, nullptr, nullptr, nullptr, useChirality));
-      TEST_ASSERT(fp2);
+      TEST_ASSERT(fp2)
       std::unique_ptr<SparseIntVect<boost::int64_t>> fp3(
           AtomPairs::getHashedTopologicalTorsionFingerprint(
               *m3, 2048, 4, nullptr, nullptr, nullptr, useChirality));
-      TEST_ASSERT(fp3);
+      TEST_ASSERT(fp3)
 
-      TEST_ASSERT((*fp1) != (*fp2));
-      TEST_ASSERT((*fp1) != (*fp3));
-      TEST_ASSERT((*fp2) != (*fp3));
+      TEST_ASSERT((*fp1) != (*fp2))
+      TEST_ASSERT((*fp1) != (*fp3))
+      TEST_ASSERT((*fp2) != (*fp3))
     }
   }
   BOOST_LOG(rdErrorLog) << "  done" << std::endl;
@@ -3828,7 +3828,7 @@ void testGitHubIssue2115() {
       << "Github #2115: BitInfo not complete for RDKFingerprint" << std::endl;
   {
     auto mol = "c1ccccc1O"_smiles;
-    TEST_ASSERT(mol);
+    TEST_ASSERT(mol)
 
     unsigned int minPath = 1;
     unsigned int maxPath = 7;
@@ -3848,12 +3848,12 @@ void testGitHubIssue2115() {
         RDKFingerprintMol(*mol, minPath, maxPath, fpSize, nBitsPerHash, useHs,
                           tgtDensity, minSize, branchedPaths, useBondOrder,
                           atomInvariants, fromAtoms, atomBits, &bitInfo));
-    TEST_ASSERT(fp1->getNumOnBits() == bitInfo.size());
+    TEST_ASSERT(fp1->getNumOnBits() == bitInfo.size())
   }
 
   {  // test that for atomBits too
     auto m1("CCCO"_smiles);
-    TEST_ASSERT(m1);
+    TEST_ASSERT(m1)
     std::vector<std::vector<std::uint32_t>> atomBits(m1->getNumAtoms());
     unsigned int minPath = 1;
     unsigned int maxPath = 2;
@@ -3870,11 +3870,11 @@ void testGitHubIssue2115() {
     std::unique_ptr<ExplicitBitVect> fp1(RDKFingerprintMol(
         *m1, minPath, maxPath, fpSize, nBitsPerHash, useHs, tgtDensity, minSize,
         branchedPaths, useBondOrder, atomInvariants, fromAtoms, &atomBits));
-    TEST_ASSERT(fp1->getNumOnBits() == 8);
-    TEST_ASSERT(atomBits[0].size() == 4);
-    TEST_ASSERT(atomBits[1].size() == 6);
-    TEST_ASSERT(atomBits[2].size() == 8);
-    TEST_ASSERT(atomBits[3].size() == 4);
+    TEST_ASSERT(fp1->getNumOnBits() == 8)
+    TEST_ASSERT(atomBits[0].size() == 4)
+    TEST_ASSERT(atomBits[1].size() == 6)
+    TEST_ASSERT(atomBits[2].size() == 8)
+    TEST_ASSERT(atomBits[3].size() == 4)
   }
 
   BOOST_LOG(rdErrorLog) << "  done" << std::endl;

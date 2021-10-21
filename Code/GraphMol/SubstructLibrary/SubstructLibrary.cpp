@@ -99,12 +99,12 @@ unsigned int SubstructLibrary::addMol(const ROMol &m) {
   if (fps) {
     unsigned int fpidx = fps->addMol(m);
     CHECK_INVARIANT(idx == fpidx,
-                    "#mols different than #fingerprints in SubstructLibrary");
+                    "#mols different than #fingerprints in SubstructLibrary")
   }
   if (keyholder.get() != nullptr) {
     unsigned int keyidx = keyholder->addMol(m);
     CHECK_INVARIANT(idx == keyidx,
-                    "#mols different than #keys in SubstructLibrary");
+                    "#mols different than #keys in SubstructLibrary")
   }
 
   return idx;
@@ -148,7 +148,7 @@ void SubSearcher(const Query &in_query, const Bits &bits,
                  const std::vector<unsigned int> &searchOrder,
                  std::vector<unsigned int> *idxs) {
   PRECONDITION(searchOrder.empty() || searchOrder.size() >= end,
-               "bad searchOrder data");
+               "bad searchOrder data")
   Query query(in_query);
   for (unsigned int idx = start; idx < end; idx += numThreads) {
     unsigned int sidx = idx;
@@ -194,10 +194,10 @@ int internalGetMatches(const Query &query, MolHolderBase &mols,
                        int maxResults, boost::dynamic_bitset<> &found,
                        const std::vector<unsigned int> &searchOrder,
                        std::vector<unsigned int> *idxs) {
-  PRECONDITION(startIdx < mols.size(), "startIdx out of bounds");
+  PRECONDITION(startIdx < mols.size(), "startIdx out of bounds")
   PRECONDITION(searchOrder.empty() || startIdx < searchOrder.size(),
-               "startIdx out of bounds");
-  PRECONDITION(endIdx > startIdx, "endIdx > startIdx");
+               "startIdx out of bounds")
+  PRECONDITION(endIdx > startIdx, "endIdx > startIdx")
 
   // do not do any work if no results were requested
   if (maxResults == 0) {

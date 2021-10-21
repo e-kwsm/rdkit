@@ -28,7 +28,7 @@
 using namespace RDKit;
 
 int getBitId(const char*& text, int format, int size, int curr) {
-  PRECONDITION(text, "no text");
+  PRECONDITION(text, "no text")
   int res = -1;
   if ((format == 0) ||
       ((format == 1) && (size >= std::numeric_limits<unsigned short>::max()))) {
@@ -53,8 +53,8 @@ bool AllProbeBitsMatch(const std::string& probe, const std::string& ref) {
 }
 
 bool AllProbeBitsMatch(const char* probe, const char* ref) {
-  PRECONDITION(probe, "no probe text");
-  PRECONDITION(ref, "no probe text");
+  PRECONDITION(probe, "no probe text")
+  PRECONDITION(ref, "no probe text")
   int probeFormat = 0;
   int refFormat = 0;
   int version = 0;
@@ -281,8 +281,8 @@ double TanimotoSimilarity(const T1& bv1, const T2& bv2) {
 
 template <typename T1, typename T2>
 double TverskySimilarity(const T1& bv1, const T2& bv2, double a, double b) {
-  RANGE_CHECK(0, a, 1);
-  RANGE_CHECK(0, b, 1);
+  RANGE_CHECK(0, a, 1)
+  RANGE_CHECK(0, b, 1)
   if (bv1.getNumBits() != bv2.getNumBits()) {
     throw ValueErrorException("BitVects must be same length");
   }
@@ -729,8 +729,8 @@ std::string BitVectToBinaryText(const T1& bv1) {
 
 template <typename T1>
 void UpdateBitVectFromFPSText(T1& bv1, const std::string& fps) {
-  PRECONDITION(fps.length() * 4 >= bv1.getNumBits(), "bad FPS length");
-  PRECONDITION(fps.length() % 2 == 0, "bad FPS length");
+  PRECONDITION(fps.length() * 4 >= bv1.getNumBits(), "bad FPS length")
+  PRECONDITION(fps.length() % 2 == 0, "bad FPS length")
   unsigned int bitIdx = 0;
   char tptr[3];
   tptr[2] = (char)0;
@@ -758,7 +758,7 @@ void UpdateBitVectFromFPSText(T1& bv1, const std::string& fps) {
 
 template <typename T1>
 void UpdateBitVectFromBinaryText(T1& bv1, const std::string& fps) {
-  PRECONDITION(fps.length() * 8 >= bv1.getNumBits(), "bad FPS length");
+  PRECONDITION(fps.length() * 8 >= bv1.getNumBits(), "bad FPS length")
   unsigned int bitIdx = 0;
   for (unsigned int i = 0; i < fps.size() && bitIdx < bv1.getNumBits(); i++) {
     unsigned short c = fps[i];
@@ -910,7 +910,7 @@ static int byte_popcounts[] = {
     4, 5, 5, 6, 5, 6, 6, 7, 5, 6, 6, 7, 6, 7, 7, 8};
 }
 unsigned int CalcBitmapPopcount(const unsigned char* afp, unsigned int nBytes) {
-  PRECONDITION(afp, "no afp");
+  PRECONDITION(afp, "no afp")
   unsigned int popcount = 0;
 #ifndef RDK_OPTIMIZE_POPCNT
   for (unsigned int i = 0; i < nBytes; i++) {
@@ -932,8 +932,8 @@ unsigned int CalcBitmapPopcount(const unsigned char* afp, unsigned int nBytes) {
 unsigned int CalcBitmapNumBitsInCommon(const unsigned char* afp,
                                        const unsigned char* bfp,
                                        unsigned int nBytes) {
-  PRECONDITION(afp, "no afp");
-  PRECONDITION(bfp, "no bfp");
+  PRECONDITION(afp, "no afp")
+  PRECONDITION(bfp, "no bfp")
   unsigned int intersect_popcount = 0;
 #ifndef RDK_OPTIMIZE_POPCNT
   for (unsigned int i = 0; i < nBytes; i++) {
@@ -955,8 +955,8 @@ unsigned int CalcBitmapNumBitsInCommon(const unsigned char* afp,
 
 double CalcBitmapTanimoto(const unsigned char* afp, const unsigned char* bfp,
                           unsigned int nBytes) {
-  PRECONDITION(afp, "no afp");
-  PRECONDITION(bfp, "no bfp");
+  PRECONDITION(afp, "no afp")
+  PRECONDITION(bfp, "no bfp")
   unsigned int union_popcount = 0, intersect_popcount = 0;
 #ifndef RDK_OPTIMIZE_POPCNT
   for (unsigned int i = 0; i < nBytes; i++) {
@@ -986,8 +986,8 @@ double CalcBitmapTanimoto(const unsigned char* afp, const unsigned char* bfp,
 
 double CalcBitmapDice(const unsigned char* afp, const unsigned char* bfp,
                       unsigned int nBytes) {
-  PRECONDITION(afp, "no afp");
-  PRECONDITION(bfp, "no bfp");
+  PRECONDITION(afp, "no afp")
+  PRECONDITION(bfp, "no bfp")
   unsigned int intersect_popcount = 0, a_popcount = 0, b_popcount = 0;
 
 #ifndef RDK_OPTIMIZE_POPCNT
@@ -1022,8 +1022,8 @@ double CalcBitmapDice(const unsigned char* afp, const unsigned char* bfp,
 
 double CalcBitmapTversky(const unsigned char* afp, const unsigned char* bfp,
                          unsigned int nBytes, double ca, double cb) {
-  PRECONDITION(afp, "no afp");
-  PRECONDITION(bfp, "no bfp");
+  PRECONDITION(afp, "no afp")
+  PRECONDITION(bfp, "no bfp")
   unsigned int intersect_popcount = 0, acount = 0, bcount = 0;
 
 #ifndef RDK_OPTIMIZE_POPCNT
@@ -1059,8 +1059,8 @@ double CalcBitmapTversky(const unsigned char* afp, const unsigned char* bfp,
 bool CalcBitmapAllProbeBitsMatch(const unsigned char* probe,
                                  const unsigned char* ref,
                                  unsigned int nBytes) {
-  PRECONDITION(probe, "no probe");
-  PRECONDITION(ref, "no ref");
+  PRECONDITION(probe, "no probe")
+  PRECONDITION(ref, "no ref")
 
 #ifndef RDK_OPTIMIZE_POPCNT
   for (unsigned int i = 0; i < nBytes; i++) {

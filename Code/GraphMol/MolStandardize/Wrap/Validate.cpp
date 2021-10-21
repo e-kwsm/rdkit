@@ -184,7 +184,6 @@ struct validate_wrapper {
              (python::arg("self"), python::arg("mol"),
               python::arg("reportAllFailures") = false),
              "");
-    ;
 
     python::class_<MolStandardize::DisallowedAtomsValidation,
                    boost::noncopyable>("DisallowedAtomsValidation",

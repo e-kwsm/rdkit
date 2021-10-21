@@ -62,7 +62,7 @@ int smarts_parse_helper(const std::string &inp,
   void *scanner;
   int res = 1;  // initialize with fail code
 
-  TEST_ASSERT(!yysmarts_lex_init(&scanner));
+  TEST_ASSERT(!yysmarts_lex_init(&scanner))
   try {
     size_t ltrim = setup_smarts_string(inp, scanner);
     unsigned numAtomsParsed = 0;
@@ -116,7 +116,7 @@ int smiles_parse_helper(const std::string &inp,
   int res = 1;  // initialize with fail code
   unsigned numAtomsParsed = 0;
   unsigned numBondsParsed = 0;
-  TEST_ASSERT(!yysmiles_lex_init(&scanner));
+  TEST_ASSERT(!yysmiles_lex_init(&scanner))
   try {
     size_t ltrim = setup_smiles_string(inp, scanner);
     res = yysmiles_parse(inp.c_str() + ltrim, &molVect, atom, bond,
@@ -351,7 +351,7 @@ Atom *SmilesToAtom(const std::string &smiles) {
   Atom *res = nullptr;
   res = toAtom(smiles, smiles_atom_parse);
   return res;
-};
+}
 
 Bond *SmilesToBond(const std::string &smiles) {
   yysmiles_debug = false;
@@ -359,7 +359,7 @@ Bond *SmilesToBond(const std::string &smiles) {
   Bond *res = nullptr;
   res = toBond(smiles, smiles_bond_parse);
   return res;
-};
+}
 
 namespace {
 template <typename T>
@@ -472,7 +472,7 @@ RWMol *SmilesToMol(const std::string &smiles,
     }
   }
   return res;
-};
+}
 
 Atom *SmartsToAtom(const std::string &smiles) {
   yysmarts_debug = false;
@@ -480,7 +480,7 @@ Atom *SmartsToAtom(const std::string &smiles) {
   Atom *res = nullptr;
   res = toAtom(smiles, smarts_atom_parse);
   return res;
-};
+}
 
 Bond *SmartsToBond(const std::string &smiles) {
   yysmarts_debug = false;
@@ -488,7 +488,7 @@ Bond *SmartsToBond(const std::string &smiles) {
   Bond *res = nullptr;
   res = toBond(smiles, smarts_bond_parse);
   return res;
-};
+}
 
 RWMol *SmartsToMol(const std::string &smarts,
                    const SmartsParserParams &params) {
@@ -524,5 +524,5 @@ RWMol *SmartsToMol(const std::string &smarts,
     }
   }
   return res;
-};
+}
 }  // namespace RDKit

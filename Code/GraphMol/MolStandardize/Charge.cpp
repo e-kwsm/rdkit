@@ -306,16 +306,16 @@ Uncharger::Uncharger()
           // hali(a)te, perhalate
           "$([O-][Cl,Br,I;+,+2,+3][O-]),"
           // tetrazole
-          "$([n-]1nnnc1),$([n-]1ncnn1)]")){};
+          "$([n-]1nnnc1),$([n-]1ncnn1)]")) {}
 
 Uncharger::Uncharger(const Uncharger &other) {
   pos_h = other.pos_h;
   pos_noh = other.pos_noh;
   neg = other.neg;
   neg_acid = other.neg_acid;
-};
+}
 
-Uncharger::~Uncharger(){};
+Uncharger::~Uncharger() {}
 
 void neutralizeNeg(Atom *atom, int hDelta = 1) {
   atom->setNumExplicitHs(atom->getTotalNumHs() + hDelta);

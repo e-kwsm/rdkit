@@ -193,7 +193,7 @@ RDKIT_CHEMREACTIONS_EXPORT ChemicalReaction *PNGStreamToChemicalReaction(
 inline ChemicalReaction *PNGStringToChemicalReaction(const std::string &data) {
   std::stringstream inStream(data);
   return PNGStreamToChemicalReaction(inStream);
-};
+}
 //! \brief constructs a ChemicalReaction from the metadata in a PNG file
 //! See \c PNGStreamToChemicalReaction() for more details
 inline ChemicalReaction *PNGFileToChemicalReaction(const std::string &fname) {
@@ -202,7 +202,7 @@ inline ChemicalReaction *PNGFileToChemicalReaction(const std::string &fname) {
     throw BadFileException((boost::format("Bad input file %s") % fname).str());
   }
   return PNGStreamToChemicalReaction(inStream);
-};
+}
 
 //! \brief adds metadata for a ChemicalReaction to the data from a PNG stream.
 //! The modified PNG data is returned.

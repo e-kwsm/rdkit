@@ -35,17 +35,17 @@ void testDeleteSubstruct() {
   // a lot of the seemingly repetitive stuff is here for Issue96
   smi = "CCC(=O).C=O";
   mol1 = SmilesToMol(smi);
-  TEST_ASSERT(mol1);
+  TEST_ASSERT(mol1)
   TEST_ASSERT(mol1->getNumAtoms() == 6)
   sma = "C=O";
   matcher1 = SmartsToMol(sma);
-  TEST_ASSERT(matcher1);
+  TEST_ASSERT(matcher1)
   mol2 = deleteSubstructs(*mol1, *matcher1, 0);
   delete mol1;
-  TEST_ASSERT(mol2);
+  TEST_ASSERT(mol2)
   TEST_ASSERT(mol2->getNumAtoms() == 2)
   mol1 = deleteSubstructs(*mol2, *matcher1, 0);
-  TEST_ASSERT(mol2);
+  TEST_ASSERT(mol2)
   TEST_ASSERT(mol2->getNumAtoms() == 2)
   delete matcher1;
   delete mol1;
@@ -58,26 +58,26 @@ void testDeleteSubstruct() {
   sma = "[O;H2,H1&-,X0&-2]";
   matcher3 = SmartsToMol(sma);
   mol1 = SmilesToMol("CCO.Cl");
-  TEST_ASSERT(mol1);
-  TEST_ASSERT(mol1->getNumAtoms() == 4);
+  TEST_ASSERT(mol1)
+  TEST_ASSERT(mol1->getNumAtoms() == 4)
   mol2 = deleteSubstructs(*mol1, *matcher1, true);
   delete mol1;
-  TEST_ASSERT(mol2);
-  TEST_ASSERT(mol2->getNumAtoms() == 3);
+  TEST_ASSERT(mol2)
+  TEST_ASSERT(mol2->getNumAtoms() == 3)
   mol1 = deleteSubstructs(*mol2, *matcher2, true);
   delete mol1;
-  TEST_ASSERT(mol2);
-  TEST_ASSERT(mol2->getNumAtoms() == 3);
+  TEST_ASSERT(mol2)
+  TEST_ASSERT(mol2->getNumAtoms() == 3)
   mol1 = deleteSubstructs(*mol2, *matcher3, true);
   delete mol1;
-  TEST_ASSERT(mol2);
-  TEST_ASSERT(mol2->getNumAtoms() == 3);
+  TEST_ASSERT(mol2)
+  TEST_ASSERT(mol2->getNumAtoms() == 3)
   delete mol2;
   delete matcher3;
 
   mol1 = SmilesToMol("CC(=O)[O-].[Na+]");
-  TEST_ASSERT(mol1);
-  TEST_ASSERT(mol1->getNumAtoms() == 5);
+  TEST_ASSERT(mol1)
+  TEST_ASSERT(mol1->getNumAtoms() == 5)
 
   delete matcher1;
   matcher1 = SmartsToMol("[Cl;H1&X1,-]");
@@ -86,15 +86,15 @@ void testDeleteSubstruct() {
 
   mol2 = deleteSubstructs(*mol1, *matcher1, true);
   delete mol1;
-  TEST_ASSERT(mol2);
-  TEST_ASSERT(mol2->getNumAtoms() == 5);
+  TEST_ASSERT(mol2)
+  TEST_ASSERT(mol2->getNumAtoms() == 5)
   mol1 = deleteSubstructs(*mol2, *matcher2, true);
   delete mol2;
-  TEST_ASSERT(mol1);
-  TEST_ASSERT(mol1->getNumAtoms() == 4);
+  TEST_ASSERT(mol1)
+  TEST_ASSERT(mol1->getNumAtoms() == 4)
   mol2 = deleteSubstructs(*mol1, *matcher1, true);
-  TEST_ASSERT(mol1);
-  TEST_ASSERT(mol1->getNumAtoms() == 4);
+  TEST_ASSERT(mol1)
+  TEST_ASSERT(mol1->getNumAtoms() == 4)
   delete mol2;
   delete mol1;
   delete matcher1;
@@ -107,14 +107,14 @@ void testDeleteSubstruct() {
   mol2 = deleteSubstructs(*mol1, *matcher1, false, true);
   std::string smi1 = MolToSmiles(*mol2, true);
   std::cerr << "1 smi: " << smi1 << std::endl;
-  TEST_ASSERT(smi1 == "CC");
+  TEST_ASSERT(smi1 == "CC")
   delete mol2;
 
   // still matches with non-chiral
   mol2 = deleteSubstructs(*mol1, *matcher1, false, false);
   smi1 = MolToSmiles(*mol2, true);
   std::cerr << "1 smi: " << smi1 << std::endl;
-  TEST_ASSERT(smi1 == "CC");
+  TEST_ASSERT(smi1 == "CC")
   delete mol2;
   delete matcher1;
 
@@ -122,14 +122,14 @@ void testDeleteSubstruct() {
   mol2 = deleteSubstructs(*mol1, *matcher1, false, true);
   smi1 = MolToSmiles(*mol2, true);
   std::cerr << "2 smi: " << smi1 << std::endl;
-  TEST_ASSERT(smi1 == "CCO[C@H](N)P");
+  TEST_ASSERT(smi1 == "CCO[C@H](N)P")
   delete mol2;
 
   // still matches with non-chiral
   mol2 = deleteSubstructs(*mol1, *matcher1, false, false);
   smi1 = MolToSmiles(*mol2, true);
   std::cerr << "2 smi: " << smi1 << std::endl;
-  TEST_ASSERT(smi1 == "CC");
+  TEST_ASSERT(smi1 == "CC")
   delete mol2;
   delete mol1;
   delete matcher1;
@@ -147,110 +147,110 @@ void testReplaceSubstructs() {
 
   smi = "CCCC";
   mol1 = SmilesToMol(smi);
-  TEST_ASSERT(mol1);
+  TEST_ASSERT(mol1)
 
   sma = "C(=O)O";
   matcher1 = SmartsToMol(sma);
-  TEST_ASSERT(matcher1);
+  TEST_ASSERT(matcher1)
 
   smi = "N";
   frag = SmilesToMol(smi);
-  TEST_ASSERT(frag);
+  TEST_ASSERT(frag)
 
   vect = replaceSubstructs(*mol1, *matcher1, *frag);
-  TEST_ASSERT(vect.size() == 1);
-  TEST_ASSERT(mol1->getNumAtoms() == 4);
-  TEST_ASSERT(vect[0]->getNumAtoms() == 4);
+  TEST_ASSERT(vect.size() == 1)
+  TEST_ASSERT(mol1->getNumAtoms() == 4)
+  TEST_ASSERT(vect[0]->getNumAtoms() == 4)
 
   delete mol1;
   smi = "CCCC(=O)O";
   mol1 = SmilesToMol(smi);
-  TEST_ASSERT(mol1);
+  TEST_ASSERT(mol1)
   vect = replaceSubstructs(*mol1, *matcher1, *frag);
-  TEST_ASSERT(vect.size() == 1);
-  TEST_ASSERT(mol1->getNumAtoms() == 6);
-  TEST_ASSERT(vect[0]->getNumAtoms() == 4);
+  TEST_ASSERT(vect.size() == 1)
+  TEST_ASSERT(mol1->getNumAtoms() == 6)
+  TEST_ASSERT(vect[0]->getNumAtoms() == 4)
 
   vect = replaceSubstructs(*mol1, *matcher1, *frag, true);
-  TEST_ASSERT(vect.size() == 1);
-  TEST_ASSERT(mol1->getNumAtoms() == 6);
-  TEST_ASSERT(vect[0]->getNumAtoms() == 4);
+  TEST_ASSERT(vect.size() == 1)
+  TEST_ASSERT(mol1->getNumAtoms() == 6)
+  TEST_ASSERT(vect[0]->getNumAtoms() == 4)
 
   delete mol1;
   smi = "OC(=O)CCCC(=O)O";
   mol1 = SmilesToMol(smi);
-  TEST_ASSERT(mol1);
+  TEST_ASSERT(mol1)
   vect = replaceSubstructs(*mol1, *matcher1, *frag);
-  TEST_ASSERT(vect.size() == 2);
-  TEST_ASSERT(mol1->getNumAtoms() == 9);
-  TEST_ASSERT(vect[0]->getNumAtoms() == 7);
-  TEST_ASSERT(vect[1]->getNumAtoms() == 7);
+  TEST_ASSERT(vect.size() == 2)
+  TEST_ASSERT(mol1->getNumAtoms() == 9)
+  TEST_ASSERT(vect[0]->getNumAtoms() == 7)
+  TEST_ASSERT(vect[1]->getNumAtoms() == 7)
 
   // use replaceAll when a single replacement is available:
   vect = replaceSubstructs(*mol1, *matcher1, *frag, true);
-  TEST_ASSERT(vect.size() == 1);
-  TEST_ASSERT(mol1->getNumAtoms() == 9);
-  TEST_ASSERT(vect[0]->getNumAtoms() == 5);
+  TEST_ASSERT(vect.size() == 1)
+  TEST_ASSERT(mol1->getNumAtoms() == 9)
+  TEST_ASSERT(vect[0]->getNumAtoms() == 5)
 
   delete matcher1;
   sma = "C=O";
   matcher1 = SmartsToMol(sma);
-  TEST_ASSERT(matcher1);
+  TEST_ASSERT(matcher1)
 
   delete mol1;
   smi = "CC(=O)C";
   mol1 = SmilesToMol(smi);
-  TEST_ASSERT(mol1);
+  TEST_ASSERT(mol1)
   vect = replaceSubstructs(*mol1, *matcher1, *frag);
-  TEST_ASSERT(vect.size() == 1);
-  TEST_ASSERT(mol1->getNumAtoms() == 4);
-  TEST_ASSERT(vect[0]->getNumAtoms() == 3);
+  TEST_ASSERT(vect.size() == 1)
+  TEST_ASSERT(mol1->getNumAtoms() == 4)
+  TEST_ASSERT(vect[0]->getNumAtoms() == 3)
 
   delete mol1;
   smi = "C1C(=O)C1";
   mol1 = SmilesToMol(smi);
-  TEST_ASSERT(mol1);
+  TEST_ASSERT(mol1)
   vect = replaceSubstructs(*mol1, *matcher1, *frag);
-  TEST_ASSERT(vect.size() == 1);
-  TEST_ASSERT(mol1->getNumAtoms() == 4);
-  TEST_ASSERT(vect[0]->getNumAtoms() == 3);
-  TEST_ASSERT(vect[0]->getNumBonds() == 3);
+  TEST_ASSERT(vect.size() == 1)
+  TEST_ASSERT(mol1->getNumAtoms() == 4)
+  TEST_ASSERT(vect[0]->getNumAtoms() == 3)
+  TEST_ASSERT(vect[0]->getNumBonds() == 3)
 
   // test chirality
   delete mol1;
   delete matcher1;
   sma = "P([C@H](N)O)";
   matcher1 = SmartsToMol(sma);
-  TEST_ASSERT(matcher1);
+  TEST_ASSERT(matcher1)
 
   // test stereo matching
   smi = "CCP([C@H](N)O)CC";
   mol1 = SmilesToMol(smi);
   vect = replaceSubstructs(*mol1, *matcher1, *frag, false, 0, true);
-  TEST_ASSERT(vect.size() == 1);
+  TEST_ASSERT(vect.size() == 1)
   std::string smi1 = MolToSmiles(*vect[0], true);
-  TEST_ASSERT(smi1 == "CCNCC");
+  TEST_ASSERT(smi1 == "CCNCC")
 
   // should also match when matching non-chiral
   vect = replaceSubstructs(*mol1, *matcher1, *frag, false, 0, false);
-  TEST_ASSERT(vect.size() == 1);
+  TEST_ASSERT(vect.size() == 1)
   smi1 = MolToSmiles(*vect[0], true);
-  TEST_ASSERT(smi1 == "CCNCC");
+  TEST_ASSERT(smi1 == "CCNCC")
   delete mol1;
 
   smi = "CCP([C@@H](N)O)CC";
   mol1 = SmilesToMol(smi);
   vect = replaceSubstructs(*mol1, *matcher1, *frag, false, 0, true);
-  TEST_ASSERT(vect.size() == 1);
+  TEST_ASSERT(vect.size() == 1)
   smi1 = MolToSmiles(*vect[0], true);
   std::cerr << "replaceSub smi1:" << smi1 << std::endl;
-  ;
+
   // no change
-  TEST_ASSERT(smi1 == "CCP(CC)[C@@H](N)O");
+  TEST_ASSERT(smi1 == "CCP(CC)[C@@H](N)O")
 
   // should also match when matching non-chiral
   vect = replaceSubstructs(*mol1, *matcher1, *frag, false, 0, false);
-  TEST_ASSERT(vect.size() == 1);
+  TEST_ASSERT(vect.size() == 1)
   smi1 = MolToSmiles(*vect[0], true);
   std::cerr << "replaceSub smi1:" << smi1 << std::endl;
   delete mol1;
@@ -258,7 +258,7 @@ void testReplaceSubstructs() {
   delete matcher1;
 
   // no change
-  TEST_ASSERT(smi1 == "CCNCC");
+  TEST_ASSERT(smi1 == "CCNCC")
 
   BOOST_LOG(rdInfoLog) << "\tdone" << std::endl;
 }
@@ -270,33 +270,33 @@ void testReplaceSubstructs2() {
   {
     std::string smi = "CCC(=O)O";
     ROMol *mol1 = SmilesToMol(smi);
-    TEST_ASSERT(mol1);
+    TEST_ASSERT(mol1)
 
     std::string sma = "[$(O-C(=O))]";
     ROMol *matcher1 = SmartsToMol(sma);
-    TEST_ASSERT(matcher1);
+    TEST_ASSERT(matcher1)
 
     std::string repl = "NC";
     ROMol *frag = SmilesToMol(repl);
-    TEST_ASSERT(frag);
+    TEST_ASSERT(frag)
 
     std::vector<ROMOL_SPTR> vect = replaceSubstructs(*mol1, *matcher1, *frag);
-    TEST_ASSERT(vect.size() == 1);
-    TEST_ASSERT(mol1->getNumAtoms() == 5);
+    TEST_ASSERT(vect.size() == 1)
+    TEST_ASSERT(mol1->getNumAtoms() == 5)
 
-    TEST_ASSERT(vect[0]->getNumAtoms() == 6);
+    TEST_ASSERT(vect[0]->getNumAtoms() == 6)
     std::string csmi1 = MolToSmiles(*vect[0], true);
 
     repl = "CN";
     delete frag;
     frag = SmilesToMol(repl);
-    TEST_ASSERT(frag);
+    TEST_ASSERT(frag)
     vect = replaceSubstructs(*mol1, *matcher1, *frag, true, 1);
-    TEST_ASSERT(vect.size() == 1);
-    TEST_ASSERT(mol1->getNumAtoms() == 5);
-    TEST_ASSERT(vect[0]->getNumAtoms() == 6);
+    TEST_ASSERT(vect.size() == 1)
+    TEST_ASSERT(mol1->getNumAtoms() == 5)
+    TEST_ASSERT(vect[0]->getNumAtoms() == 6)
     std::string csmi2 = MolToSmiles(*vect[0], true);
-    TEST_ASSERT(csmi2 == csmi1);
+    TEST_ASSERT(csmi2 == csmi1)
     delete mol1;
     delete frag;
     delete matcher1;
@@ -314,51 +314,51 @@ void testReplaceSidechains() {
 
   smi = "ClC1CC(F)C1";
   mol1 = SmilesToMol(smi);
-  TEST_ASSERT(mol1);
+  TEST_ASSERT(mol1)
 
   sma = "C1CCC1";
   matcher1 = SmartsToMol(sma);
-  TEST_ASSERT(matcher1);
+  TEST_ASSERT(matcher1)
 
   mol2 = replaceSidechains(*mol1, *matcher1);
-  TEST_ASSERT(mol2);
-  TEST_ASSERT(mol2->getNumAtoms() == 6);
+  TEST_ASSERT(mol2)
+  TEST_ASSERT(mol2->getNumAtoms() == 6)
   delete mol2;
   delete mol1;
 
   smi = "ClC1C(F)C1";
   mol1 = SmilesToMol(smi);
-  TEST_ASSERT(mol1);
+  TEST_ASSERT(mol1)
   mol2 = replaceSidechains(*mol1, *matcher1);
-  TEST_ASSERT(!mol2);
+  TEST_ASSERT(!mol2)
   delete mol1;
   delete mol2;
 
   delete matcher1;
   sma = "C=O";
   matcher1 = SmartsToMol(sma);
-  TEST_ASSERT(matcher1);
+  TEST_ASSERT(matcher1)
 
   smi = "CC=O";
   mol1 = SmilesToMol(smi);
-  TEST_ASSERT(mol1);
+  TEST_ASSERT(mol1)
   mol2 = replaceSidechains(*mol1, *matcher1);
-  TEST_ASSERT(mol2);
-  TEST_ASSERT(mol2->getNumAtoms() == 3);
+  TEST_ASSERT(mol2)
+  TEST_ASSERT(mol2->getNumAtoms() == 3)
   smi = MolToSmiles(*mol2, true);
-  TEST_ASSERT(smi == "[1*]C=O");
+  TEST_ASSERT(smi == "[1*]C=O")
   delete mol1;
   delete mol2;
 
   smi = "CC(C)=O";
   mol1 = SmilesToMol(smi);
-  TEST_ASSERT(mol1);
+  TEST_ASSERT(mol1)
   mol2 = replaceSidechains(*mol1, *matcher1);
-  TEST_ASSERT(mol2);
-  TEST_ASSERT(mol2->getNumAtoms() == 4);
+  TEST_ASSERT(mol2)
+  TEST_ASSERT(mol2->getNumAtoms() == 4)
   smi = MolToSmiles(*mol2, true);
   // there's no way to guarantee the order here:
-  TEST_ASSERT(smi == "[1*]C([2*])=O" || smi == "[2*]C([1*])=O");
+  TEST_ASSERT(smi == "[1*]C([2*])=O" || smi == "[2*]C([1*])=O")
 
   delete mol1;
   delete mol2;
@@ -366,17 +366,17 @@ void testReplaceSidechains() {
 
   sma = "P([C@H](N)O)";
   matcher1 = SmartsToMol(sma);
-  TEST_ASSERT(matcher1);
+  TEST_ASSERT(matcher1)
   smi = "CCP([C@H](N)O)CC";
   mol1 = SmilesToMol(smi);
   mol2 = replaceSidechains(*mol1, *matcher1, true);
-  TEST_ASSERT(mol2);
+  TEST_ASSERT(mol2)
   smi = MolToSmiles(*mol2, true);
   std::cerr << "sidechains chiral=true smi1;;; " << smi << std::endl;
   delete mol2;
 
   mol2 = replaceSidechains(*mol1, *matcher1, true);
-  TEST_ASSERT(mol2);
+  TEST_ASSERT(mol2)
   smi = MolToSmiles(*mol2, true);
   std::cerr << "sidechains chiral=false smi1;;; " << smi << std::endl;
 
@@ -396,259 +396,259 @@ void testReplaceCore() {
 
   smi = "ClC1CC(F)C1";
   mol1 = SmilesToMol(smi);
-  TEST_ASSERT(mol1);
+  TEST_ASSERT(mol1)
   sma = "C1CC1";
   matcher1 = SmartsToMol(sma);
-  TEST_ASSERT(matcher1);
+  TEST_ASSERT(matcher1)
   mol2 = replaceCore(*mol1, *matcher1);
-  TEST_ASSERT(!mol2);
+  TEST_ASSERT(!mol2)
   delete mol1;
   delete mol2;
   delete matcher1;
 
   smi = "ClC1CC(F)C1";
   mol1 = SmilesToMol(smi);
-  TEST_ASSERT(mol1);
+  TEST_ASSERT(mol1)
   sma = "C1CCC1";
   matcher1 = SmartsToMol(sma);
-  TEST_ASSERT(matcher1);
+  TEST_ASSERT(matcher1)
   mol2 = replaceCore(*mol1, *matcher1);
-  TEST_ASSERT(mol2);
-  TEST_ASSERT(mol2->getNumAtoms() == 4);
+  TEST_ASSERT(mol2)
+  TEST_ASSERT(mol2->getNumAtoms() == 4)
   smi = MolToSmiles(*mol2, true);
   // there's no way to guarantee the order here:
-  TEST_ASSERT(smi == "[1*]Cl.[2*]F" || smi == "[2*]Cl.[1*]F");
+  TEST_ASSERT(smi == "[1*]Cl.[2*]F" || smi == "[2*]Cl.[1*]F")
   delete mol1;
   delete mol2;
   delete matcher1;
 
   smi = "CCC=O";
   mol1 = SmilesToMol(smi);
-  TEST_ASSERT(mol1);
+  TEST_ASSERT(mol1)
   sma = "C=O";
   matcher1 = SmartsToMol(sma);
-  TEST_ASSERT(matcher1);
+  TEST_ASSERT(matcher1)
   mol2 = replaceCore(*mol1, *matcher1);
-  TEST_ASSERT(mol2);
-  TEST_ASSERT(mol2->getNumAtoms() == 3);
+  TEST_ASSERT(mol2)
+  TEST_ASSERT(mol2->getNumAtoms() == 3)
   smi = MolToSmiles(*mol2, true);
-  TEST_ASSERT(smi == "[1*]CC");
+  TEST_ASSERT(smi == "[1*]CC")
   delete mol1;
   delete mol2;
   delete matcher1;
 
   smi = "C1C(=O)CC1";
   mol1 = SmilesToMol(smi);
-  TEST_ASSERT(mol1);
+  TEST_ASSERT(mol1)
   sma = "C=O";
   matcher1 = SmartsToMol(sma);
-  TEST_ASSERT(matcher1);
+  TEST_ASSERT(matcher1)
   mol2 = replaceCore(*mol1, *matcher1);
-  TEST_ASSERT(mol2);
-  TEST_ASSERT(mol2->getNumAtoms() == 5);
+  TEST_ASSERT(mol2)
+  TEST_ASSERT(mol2->getNumAtoms() == 5)
   smi = MolToSmiles(*mol2, true);
   // there's no way to guarantee the order here:
-  TEST_ASSERT(smi == "[1*]CCC[2*]" || smi == "[1*]CCC[2*]");
+  TEST_ASSERT(smi == "[1*]CCC[2*]" || smi == "[1*]CCC[2*]")
   delete mol1;
   delete mol2;
   delete matcher1;
 
   smi = "CNC";
   mol1 = SmilesToMol(smi);
-  TEST_ASSERT(mol1);
+  TEST_ASSERT(mol1)
   sma = "N";
   matcher1 = SmartsToMol(sma);
-  TEST_ASSERT(matcher1);
+  TEST_ASSERT(matcher1)
   mol2 = replaceCore(*mol1, *matcher1);
-  TEST_ASSERT(mol2);
-  TEST_ASSERT(mol2->getNumAtoms() == 4);
+  TEST_ASSERT(mol2)
+  TEST_ASSERT(mol2->getNumAtoms() == 4)
   smi = MolToSmiles(*mol2, true);
   // there's no way to guarantee the order here:
-  TEST_ASSERT(smi == "[1*]C.[2*]C" || smi == "[2*]C.[1*]C");
+  TEST_ASSERT(smi == "[1*]C.[2*]C" || smi == "[2*]C.[1*]C")
   delete mol1;
   delete mol2;
   delete matcher1;
 
   smi = "OC1CCC1";
   mol1 = SmilesToMol(smi);
-  TEST_ASSERT(mol1);
+  TEST_ASSERT(mol1)
   sma = "[CH2][CH2][CH2]";
   matcher1 = SmartsToMol(sma);
-  TEST_ASSERT(matcher1);
+  TEST_ASSERT(matcher1)
   mol2 = replaceCore(*mol1, *matcher1);
-  TEST_ASSERT(mol2);
+  TEST_ASSERT(mol2)
   smi = MolToSmiles(*mol2, true);
-  TEST_ASSERT(mol2->getNumAtoms() == 4);
+  TEST_ASSERT(mol2->getNumAtoms() == 4)
   smi = MolToSmiles(*mol2, true);
   // there's no way to guarantee the order here:
-  TEST_ASSERT(smi == "[2*]C([1*])O" || smi == "[1*]C([2*])O");
+  TEST_ASSERT(smi == "[2*]C([1*])O" || smi == "[1*]C([2*])O")
   delete mol1;
   delete mol2;
   delete matcher1;
 
   smi = "C/C=C/CN/C=C/O";
   mol1 = SmilesToMol(smi);
-  TEST_ASSERT(mol1);
+  TEST_ASSERT(mol1)
   sma = "N";
   matcher1 = SmartsToMol(sma);
-  TEST_ASSERT(matcher1);
+  TEST_ASSERT(matcher1)
   mol2 = replaceCore(*mol1, *matcher1);
-  TEST_ASSERT(mol2);
-  TEST_ASSERT(mol2->getNumAtoms() == 9);
+  TEST_ASSERT(mol2)
+  TEST_ASSERT(mol2->getNumAtoms() == 9)
   smi = MolToSmiles(*mol2, true);
   // there's no way to guarantee the order here:
   TEST_ASSERT(smi == "[1*]C/C=C/C.[2*]/C=C/O" ||
-              smi == "[1*]/C=C/O.[2*]C/C=C/C");
+              smi == "[1*]/C=C/O.[2*]C/C=C/C")
   delete mol1;
   delete mol2;
   delete matcher1;
 
   smi = "C[C@](F)(Cl)N";
   mol1 = SmilesToMol(smi);
-  TEST_ASSERT(mol1);
+  TEST_ASSERT(mol1)
   sma = "N";
   matcher1 = SmartsToMol(sma);
-  TEST_ASSERT(matcher1);
+  TEST_ASSERT(matcher1)
   mol2 = replaceCore(*mol1, *matcher1);
-  TEST_ASSERT(mol2);
-  TEST_ASSERT(mol2->getNumAtoms() == 5);
+  TEST_ASSERT(mol2)
+  TEST_ASSERT(mol2->getNumAtoms() == 5)
   smi = MolToSmiles(*mol2, true);
-  TEST_ASSERT(smi == "[1*][C@@](C)(F)Cl");
+  TEST_ASSERT(smi == "[1*][C@@](C)(F)Cl")
   delete mol1;
   delete mol2;
 
   smi = "C[C@](F)(N)Cl";
   mol1 = SmilesToMol(smi);
-  TEST_ASSERT(mol1);
+  TEST_ASSERT(mol1)
   mol2 = replaceCore(*mol1, *matcher1);
-  TEST_ASSERT(mol2);
-  TEST_ASSERT(mol2->getNumAtoms() == 5);
+  TEST_ASSERT(mol2)
+  TEST_ASSERT(mol2->getNumAtoms() == 5)
   smi = MolToSmiles(*mol2, true);
-  TEST_ASSERT(smi == "[1*][C@](C)(F)Cl");
+  TEST_ASSERT(smi == "[1*][C@](C)(F)Cl")
   delete mol1;
   delete mol2;
 
   smi = "N[C@](C)(F)Cl";
   mol1 = SmilesToMol(smi);
-  TEST_ASSERT(mol1);
+  TEST_ASSERT(mol1)
   mol2 = replaceCore(*mol1, *matcher1);
-  TEST_ASSERT(mol2);
-  TEST_ASSERT(mol2->getNumAtoms() == 5);
+  TEST_ASSERT(mol2)
+  TEST_ASSERT(mol2->getNumAtoms() == 5)
   smi = MolToSmiles(*mol2, true);
-  TEST_ASSERT(smi == "[1*][C@](C)(F)Cl");
+  TEST_ASSERT(smi == "[1*][C@](C)(F)Cl")
   delete mol1;
   delete mol2;
   delete matcher1;
 
   smi = "C[C@@](F)(Cl)N";
   mol1 = SmilesToMol(smi);
-  TEST_ASSERT(mol1);
+  TEST_ASSERT(mol1)
   sma = "N";
   matcher1 = SmartsToMol(sma);
-  TEST_ASSERT(matcher1);
+  TEST_ASSERT(matcher1)
   mol2 = replaceCore(*mol1, *matcher1);
-  TEST_ASSERT(mol2);
-  TEST_ASSERT(mol2->getNumAtoms() == 5);
+  TEST_ASSERT(mol2)
+  TEST_ASSERT(mol2->getNumAtoms() == 5)
   smi = MolToSmiles(*mol2, true);
-  TEST_ASSERT(smi == "[1*][C@](C)(F)Cl");
+  TEST_ASSERT(smi == "[1*][C@](C)(F)Cl")
   delete mol1;
   delete mol2;
 
   smi = "C[C@@](F)(N)Cl";
   mol1 = SmilesToMol(smi);
-  TEST_ASSERT(mol1);
+  TEST_ASSERT(mol1)
   mol2 = replaceCore(*mol1, *matcher1);
-  TEST_ASSERT(mol2);
-  TEST_ASSERT(mol2->getNumAtoms() == 5);
+  TEST_ASSERT(mol2)
+  TEST_ASSERT(mol2->getNumAtoms() == 5)
   smi = MolToSmiles(*mol2, true);
-  TEST_ASSERT(smi == "[1*][C@@](C)(F)Cl");
+  TEST_ASSERT(smi == "[1*][C@@](C)(F)Cl")
   smi = "C[C@@](N)(Cl)F";
   delete mol1;
   delete mol2;
 
   mol1 = SmilesToMol(smi);
-  TEST_ASSERT(mol1);
+  TEST_ASSERT(mol1)
   mol2 = replaceCore(*mol1, *matcher1);
-  TEST_ASSERT(mol2);
-  TEST_ASSERT(mol2->getNumAtoms() == 5);
+  TEST_ASSERT(mol2)
+  TEST_ASSERT(mol2->getNumAtoms() == 5)
   smi = MolToSmiles(*mol2, true);
-  TEST_ASSERT(smi == "[1*][C@@](C)(F)Cl");
+  TEST_ASSERT(smi == "[1*][C@@](C)(F)Cl")
   delete mol1;
   delete mol2;
   delete matcher1;
 
   smi = "C[C@H](F)N";
   mol1 = SmilesToMol(smi);
-  TEST_ASSERT(mol1);
+  TEST_ASSERT(mol1)
   sma = "N";
   matcher1 = SmartsToMol(sma);
-  TEST_ASSERT(matcher1);
+  TEST_ASSERT(matcher1)
   mol2 = replaceCore(*mol1, *matcher1);
-  TEST_ASSERT(mol2);
-  TEST_ASSERT(mol2->getNumAtoms() == 4);
+  TEST_ASSERT(mol2)
+  TEST_ASSERT(mol2->getNumAtoms() == 4)
   smi = MolToSmiles(*mol2, true);
-  TEST_ASSERT(smi == "[1*][C@H](C)F");
+  TEST_ASSERT(smi == "[1*][C@H](C)F")
   delete mol1;
   delete mol2;
 
   smi = "C[C@H](N)F";
   mol1 = SmilesToMol(smi);
-  TEST_ASSERT(mol1);
+  TEST_ASSERT(mol1)
   mol2 = replaceCore(*mol1, *matcher1);
-  TEST_ASSERT(mol2);
-  TEST_ASSERT(mol2->getNumAtoms() == 4);
+  TEST_ASSERT(mol2)
+  TEST_ASSERT(mol2->getNumAtoms() == 4)
   smi = MolToSmiles(*mol2, true);
-  TEST_ASSERT(smi == "[1*][C@@H](C)F");
+  TEST_ASSERT(smi == "[1*][C@@H](C)F")
   delete mol1;
   delete mol2;
 
   smi = "N[C@H](C)F";
   mol1 = SmilesToMol(smi);
-  TEST_ASSERT(mol1);
+  TEST_ASSERT(mol1)
   mol2 = replaceCore(*mol1, *matcher1);
-  TEST_ASSERT(mol2);
-  TEST_ASSERT(mol2->getNumAtoms() == 4);
+  TEST_ASSERT(mol2)
+  TEST_ASSERT(mol2->getNumAtoms() == 4)
   smi = MolToSmiles(*mol2, true);
-  TEST_ASSERT(smi == "[1*][C@H](C)F");
+  TEST_ASSERT(smi == "[1*][C@H](C)F")
   delete mol1;
   delete mol2;
 
   smi = "F[C@H](C)N";
   mol1 = SmilesToMol(smi);
-  TEST_ASSERT(mol1);
+  TEST_ASSERT(mol1)
   mol2 = replaceCore(*mol1, *matcher1);
-  TEST_ASSERT(mol2);
-  TEST_ASSERT(mol2->getNumAtoms() == 4);
+  TEST_ASSERT(mol2)
+  TEST_ASSERT(mol2->getNumAtoms() == 4)
   smi = MolToSmiles(*mol2, true);
-  TEST_ASSERT(smi == "[1*][C@@H](C)F");
+  TEST_ASSERT(smi == "[1*][C@@H](C)F")
   delete mol1;
   delete mol2;
 
   smi = "N[C@H]1CCCO1";
   mol1 = SmilesToMol(smi);
-  TEST_ASSERT(mol1);
+  TEST_ASSERT(mol1)
   mol2 = replaceCore(*mol1, *matcher1);
-  TEST_ASSERT(mol2);
-  TEST_ASSERT(mol2->getNumAtoms() == 6);
+  TEST_ASSERT(mol2)
+  TEST_ASSERT(mol2->getNumAtoms() == 6)
   smi = MolToSmiles(*mol2, true);
-  TEST_ASSERT(smi == "[1*][C@H]1CCCO1");
+  TEST_ASSERT(smi == "[1*][C@H]1CCCO1")
   delete mol1;
   delete mol2;
   delete matcher1;
 
   smi = "ClC1CC(F)C1";
   mol1 = SmilesToMol(smi);
-  TEST_ASSERT(mol1);
+  TEST_ASSERT(mol1)
   sma = "*C1CC(*)C1";
   matcher1 = SmartsToMol(sma);
-  TEST_ASSERT(matcher1);
+  TEST_ASSERT(matcher1)
   mol2 = replaceCore(*mol1, *matcher1, false);
-  TEST_ASSERT(mol2);
+  TEST_ASSERT(mol2)
   smi = MolToSmiles(*mol2, true);
-  TEST_ASSERT(mol2->getNumAtoms() == 4);
+  TEST_ASSERT(mol2->getNumAtoms() == 4)
   smi = MolToSmiles(*mol2, true);
   // there's no way to guarantee the order here:
-  TEST_ASSERT(smi == "[1*]F.[2*]Cl" || smi == "[1*]Cl.[2*]F");
+  TEST_ASSERT(smi == "[1*]F.[2*]Cl" || smi == "[1*]Cl.[2*]F")
 
   delete mol1;
   delete mol2;
@@ -740,7 +740,7 @@ void testReplaceCore2() {
                                tests[i].requireDummyMatch,
                                tests[i].useChirality));
     if (tests[i].expected) {
-      TEST_ASSERT(res.get());
+      TEST_ASSERT(res.get())
       std::string smi = MolToSmiles(*res.get(), true);
       if (smi != tests[i].expected) {
         std::cerr << i << " " << tests[i].smiles << " " << tests[i].smarts
@@ -751,9 +751,9 @@ void testReplaceCore2() {
                   << " expected:" << tests[i].expected << " got => " << smi
                   << std::endl;
       }
-      TEST_ASSERT(smi == tests[i].expected);
+      TEST_ASSERT(smi == tests[i].expected)
     } else {
-      TEST_ASSERT(!res.get());
+      TEST_ASSERT(!res.get())
     }
 
     MatchVectType matchV;
@@ -762,13 +762,13 @@ void testReplaceCore2() {
     const bool recursionPossible = true;
     bool matchFound = SubstructMatch(*mol.get(), *smarts.get(), matchV,
                                      recursionPossible, tests[i].useChirality);
-    TEST_ASSERT(matchFound);
+    TEST_ASSERT(matchFound)
     res = ROMOL_SPTR(replaceCore(*mol.get(), *smarts.get(), matchV,
                                  tests[i].replaceDummies, tests[i].labelByIndex,
                                  tests[i].requireDummyMatch));
 
     if (tests[i].expected) {
-      TEST_ASSERT(res.get());
+      TEST_ASSERT(res.get())
       std::string smi = MolToSmiles(*res.get(), true);
       if (smi != tests[i].expected) {
         std::cerr << i << " " << tests[i].smiles << " " << tests[i].smarts
@@ -779,9 +779,9 @@ void testReplaceCore2() {
                   << " expected:" << tests[i].expected << " got => " << smi
                   << std::endl;
       }
-      TEST_ASSERT(smi == tests[i].expected);
+      TEST_ASSERT(smi == tests[i].expected)
     } else {
-      TEST_ASSERT(!res.get());
+      TEST_ASSERT(!res.get())
     }
   }
 }
@@ -793,17 +793,17 @@ void testReplaceCoreLabels() {
   {
     std::string sma = "n1cocc1";
     ROMol *matcher = SmartsToMol(sma);
-    TEST_ASSERT(matcher);
+    TEST_ASSERT(matcher)
 
     std::string smi = "n1c(CC)oc(C)c1";
     ROMol *mol1 = SmilesToMol(smi);
-    TEST_ASSERT(mol1);
+    TEST_ASSERT(mol1)
 
     ROMol *mol2 = replaceCore(*mol1, *matcher, true, true);
-    TEST_ASSERT(mol2);
-    TEST_ASSERT(mol2->getNumAtoms() == 5);
+    TEST_ASSERT(mol2)
+    TEST_ASSERT(mol2->getNumAtoms() == 5)
     smi = MolToSmiles(*mol2, true);
-    TEST_ASSERT(smi == "[1*]CC.[3*]C");
+    TEST_ASSERT(smi == "[1*]CC.[3*]C")
 
     delete mol1;
     delete mol2;
@@ -813,16 +813,16 @@ void testReplaceCoreLabels() {
   {
     std::string sma = "n1cocc1";
     ROMol *matcher = SmartsToMol(sma);
-    TEST_ASSERT(matcher);
+    TEST_ASSERT(matcher)
 
     std::string smi = "n1c(C)oc(CC)c1";
     ROMol *mol1 = SmilesToMol(smi);
-    TEST_ASSERT(mol1);
+    TEST_ASSERT(mol1)
 
     ROMol *mol2 = replaceCore(*mol1, *matcher, true, true);
-    TEST_ASSERT(mol2);
+    TEST_ASSERT(mol2)
     smi = MolToSmiles(*mol2, true);
-    TEST_ASSERT(smi == "[1*]C.[3*]CC");
+    TEST_ASSERT(smi == "[1*]C.[3*]CC")
 
     delete mol1;
     delete mol2;
@@ -832,16 +832,16 @@ void testReplaceCoreLabels() {
   {
     std::string sma = "n1cocc1";
     ROMol *matcher = SmartsToMol(sma);
-    TEST_ASSERT(matcher);
+    TEST_ASSERT(matcher)
 
     std::string smi = "CCC1=C(OC)N=C(C)O1";
     ROMol *mol1 = SmilesToMol(smi);
-    TEST_ASSERT(mol1);
+    TEST_ASSERT(mol1)
 
     ROMol *mol2 = replaceCore(*mol1, *matcher, true, true);
-    TEST_ASSERT(mol2);
+    TEST_ASSERT(mol2)
     smi = MolToSmiles(*mol2, true);
-    TEST_ASSERT(smi == "[1*]C.[3*]CC.[4*]OC");
+    TEST_ASSERT(smi == "[1*]C.[3*]CC.[4*]OC")
 
     delete mol1;
     delete mol2;
@@ -851,16 +851,16 @@ void testReplaceCoreLabels() {
   {
     std::string sma = "n1cocc1";
     ROMol *matcher = SmartsToMol(sma);
-    TEST_ASSERT(matcher);
+    TEST_ASSERT(matcher)
 
     std::string smi = "C1=C(OC)N=CO1";
     ROMol *mol1 = SmilesToMol(smi);
-    TEST_ASSERT(mol1);
+    TEST_ASSERT(mol1)
 
     ROMol *mol2 = replaceCore(*mol1, *matcher, true, true);
-    TEST_ASSERT(mol2);
+    TEST_ASSERT(mol2)
     smi = MolToSmiles(*mol2, true);
-    TEST_ASSERT(smi == "[4*]OC");
+    TEST_ASSERT(smi == "[4*]OC")
 
     delete mol1;
     delete mol2;
@@ -880,22 +880,22 @@ void testReplaceCoreCrash() {
   std::string pathName = getenv("RDBASE");
   pathName += "/Code/GraphMol/ChemTransforms/testData/oldcrash.mol";
   mol1 = MolFileToMol(pathName);
-  TEST_ASSERT(mol1);
+  TEST_ASSERT(mol1)
 
   sma = "N";
   matcher1 = SmartsToMol(sma);
-  TEST_ASSERT(matcher1);
+  TEST_ASSERT(matcher1)
 
   mol2 = replaceCore(*mol1, *matcher1);
-  TEST_ASSERT(mol2);
-  TEST_ASSERT(mol2->getNumAtoms() == 6);
+  TEST_ASSERT(mol2)
+  TEST_ASSERT(mol2->getNumAtoms() == 6)
   smi = MolToSmiles(*mol2, true);
   delete mol1;
   delete mol2;
   delete matcher1;
 
   // there's no way to guarantee the order here:
-  TEST_ASSERT(smi == "[1*]CC.[2*]CC" || smi == "[2*]CC.[1*]CC");
+  TEST_ASSERT(smi == "[1*]CC.[2*]CC" || smi == "[2*]CC.[1*]CC")
   BOOST_LOG(rdInfoLog) << "\tdone" << std::endl;
 }
 
@@ -911,38 +911,38 @@ void testReplaceCorePositions() {
   std::string pathName = getenv("RDBASE");
   pathName += "/Code/GraphMol/ChemTransforms/testData/core_location.mol";
   mol1 = MolFileToMol(pathName);
-  TEST_ASSERT(mol1);
-  TEST_ASSERT(mol1->getNumAtoms() == 8);
+  TEST_ASSERT(mol1)
+  TEST_ASSERT(mol1->getNumAtoms() == 8)
 
   sma = "c1ccccc1";
   matcher1 = SmartsToMol(sma);
-  TEST_ASSERT(matcher1);
+  TEST_ASSERT(matcher1)
 
   mol2 = replaceCore(*mol1, *matcher1);
-  TEST_ASSERT(mol2);
-  TEST_ASSERT(mol2->getNumAtoms() == 4);
+  TEST_ASSERT(mol2)
+  TEST_ASSERT(mol2->getNumAtoms() == 4)
 
   RDGeom::Point3D op, np;
   op = mol1->getConformer().getAtomPos(6);
   np = mol2->getConformer().getAtomPos(0);
-  TEST_ASSERT(feq(op.x, np.x));
-  TEST_ASSERT(feq(op.y, np.y));
-  TEST_ASSERT(feq(op.z, np.z));
+  TEST_ASSERT(feq(op.x, np.x))
+  TEST_ASSERT(feq(op.y, np.y))
+  TEST_ASSERT(feq(op.z, np.z))
   op = mol1->getConformer().getAtomPos(7);
   np = mol2->getConformer().getAtomPos(1);
-  TEST_ASSERT(feq(op.x, np.x));
-  TEST_ASSERT(feq(op.y, np.y));
-  TEST_ASSERT(feq(op.z, np.z));
+  TEST_ASSERT(feq(op.x, np.x))
+  TEST_ASSERT(feq(op.y, np.y))
+  TEST_ASSERT(feq(op.z, np.z))
   op = mol1->getConformer().getAtomPos(0);
   np = mol2->getConformer().getAtomPos(2);
-  TEST_ASSERT(feq(op.x, np.x));
-  TEST_ASSERT(feq(op.y, np.y));
-  TEST_ASSERT(feq(op.z, np.z));
+  TEST_ASSERT(feq(op.x, np.x))
+  TEST_ASSERT(feq(op.y, np.y))
+  TEST_ASSERT(feq(op.z, np.z))
   op = mol1->getConformer().getAtomPos(4);
   np = mol2->getConformer().getAtomPos(3);
-  TEST_ASSERT(feq(op.x, np.x));
-  TEST_ASSERT(feq(op.y, np.y));
-  TEST_ASSERT(feq(op.z, np.z));
+  TEST_ASSERT(feq(op.x, np.x))
+  TEST_ASSERT(feq(op.y, np.y))
+  TEST_ASSERT(feq(op.z, np.z))
   delete mol1;
   delete mol2;
   delete matcher1;
@@ -965,7 +965,7 @@ void testReplaceCoreMatchVectMultipleMappingToCore() {
 
   ROMOL_SPTR result(replaceCore(*mol.get(), *core.get(), mapping, false));
   std::string smi = MolToSmiles(*result.get(), true);
-  TEST_ASSERT("[1*]N[2*]" == smi);
+  TEST_ASSERT("[1*]N[2*]" == smi)
 
   // 3 dummies in core map to single N in molecule
   core = "C1([*:1])C([*:2])C([*:3])C1"_smiles;
@@ -973,7 +973,7 @@ void testReplaceCoreMatchVectMultipleMappingToCore() {
   mapping.assign({{0, 4}, {1, 3}, {2, 2}, {3, 3}, {4, 1}, {5, 3}, {6, 0}});
   result.reset(replaceCore(*mol.get(), *core.get(), mapping, false));
   smi = MolToSmiles(*result.get(), true);
-  TEST_ASSERT("[1*]N([2*])[3*]" == smi);
+  TEST_ASSERT("[1*]N([2*])[3*]" == smi)
 }
 
 void testReplaceCoreMatchVect() {
@@ -997,7 +997,7 @@ void testReplaceCoreMatchVect() {
   const bool uniquify = false;
   unsigned int matchCount =
       SubstructMatch(*mol.get(), *query.get(), matches, uniquify);
-  TEST_ASSERT(matchCount);
+  TEST_ASSERT(matchCount)
 
   std::map<std::string, int> results;
   const bool replaceDummies = false;
@@ -1008,7 +1008,7 @@ void testReplaceCoreMatchVect() {
     results[smi] = results[smi] + 1;
   }
 
-  TEST_ASSERT(expected == results);
+  TEST_ASSERT(expected == results)
 
   {
     MatchVectType fake;
@@ -1016,7 +1016,7 @@ void testReplaceCoreMatchVect() {
     try {
       ROMOL_SPTR res(
           replaceCore(*mol.get(), *query.get(), fake, replaceDummies));
-      TEST_ASSERT(0);
+      TEST_ASSERT(0)
     } catch (...) {
       BOOST_LOG(rdInfoLog) << "-- caught error";
     }
@@ -1028,7 +1028,7 @@ void testReplaceCoreMatchVect() {
     try {
       ROMOL_SPTR res(
           replaceCore(*mol.get(), *query.get(), fake, replaceDummies));
-      TEST_ASSERT(0);
+      TEST_ASSERT(0)
     } catch (...) {
       BOOST_LOG(rdInfoLog) << "-- caught error";
     }
@@ -1040,7 +1040,7 @@ void testReplaceCoreMatchVect() {
     try {
       ROMOL_SPTR res(
           replaceCore(*mol.get(), *query.get(), fake, replaceDummies));
-      TEST_ASSERT(0);
+      TEST_ASSERT(0)
     } catch (...) {
       BOOST_LOG(rdInfoLog) << "-- caught error";
     }
@@ -1052,7 +1052,7 @@ void testReplaceCoreMatchVect() {
     try {
       ROMOL_SPTR res(
           replaceCore(*mol.get(), *query.get(), fake, replaceDummies));
-      TEST_ASSERT(0);
+      TEST_ASSERT(0)
     } catch (...) {
       BOOST_LOG(rdInfoLog) << "-- caught error";
     }
@@ -1103,19 +1103,19 @@ void testMurckoDecomp() {
     }
     ROMol *mol = SmilesToMol(smi);
     ROMol *nMol = MurckoDecompose(*mol);
-    TEST_ASSERT(nMol);
+    TEST_ASSERT(nMol)
     delete mol;
     if (tgt != "") {
-      TEST_ASSERT(nMol->getNumAtoms());
+      TEST_ASSERT(nMol->getNumAtoms())
       MolOps::sanitizeMol(static_cast<RWMol &>(*nMol));
       smi = MolToSmiles(*nMol, true);
       mol = SmilesToMol(tgt);
-      TEST_ASSERT(mol);
+      TEST_ASSERT(mol)
       tgt = MolToSmiles(*mol, true);
       delete mol;
-      TEST_ASSERT(smi == tgt);
+      TEST_ASSERT(smi == tgt)
     } else {
-      TEST_ASSERT(nMol->getNumAtoms() == 0);
+      TEST_ASSERT(nMol->getNumAtoms() == 0)
     }
     delete nMol;
   }
@@ -1130,30 +1130,30 @@ void testReplaceCoreRequireDummies() {
   {
     std::string sma = "n1c(*)oc(*)c1";
     ROMol *matcher = SmartsToMol(sma);
-    TEST_ASSERT(matcher);
+    TEST_ASSERT(matcher)
 
     std::string smi = "n1c(CC)oc(C)c1";
     ROMol *mol1 = SmilesToMol(smi);
-    TEST_ASSERT(mol1);
+    TEST_ASSERT(mol1)
 
     bool replaceDummies = false;
     bool labelByIndex = true;
     bool requireDummyMatch = false;
     ROMol *mol2 = replaceCore(*mol1, *matcher, replaceDummies, labelByIndex,
                               requireDummyMatch);
-    TEST_ASSERT(mol2);
-    TEST_ASSERT(mol2->getNumAtoms() == 5);
+    TEST_ASSERT(mol2)
+    TEST_ASSERT(mol2->getNumAtoms() == 5)
     smi = MolToSmiles(*mol2, true);
     // If dummies existed and were replaced
     //  use THEIR atom indices
-    TEST_ASSERT(smi == "[2*]CC.[5*]C");
+    TEST_ASSERT(smi == "[2*]CC.[5*]C")
 
     delete mol1;
     delete mol2;
 
     smi = "n1c(CC)oc(C)c1C";
     mol1 = SmilesToMol(smi);
-    TEST_ASSERT(mol1);
+    TEST_ASSERT(mol1)
 
     replaceDummies = false;
     labelByIndex = true;
@@ -1161,12 +1161,12 @@ void testReplaceCoreRequireDummies() {
     mol2 = replaceCore(*mol1, *matcher, replaceDummies, labelByIndex,
                        requireDummyMatch);
 
-    TEST_ASSERT(!mol2);
+    TEST_ASSERT(!mol2)
     delete mol1;
 
     smi = "n1c(CC)occ1C";
     mol1 = SmilesToMol(smi);
-    TEST_ASSERT(mol1);
+    TEST_ASSERT(mol1)
 
     replaceDummies = false;
     labelByIndex = true;
@@ -1174,7 +1174,7 @@ void testReplaceCoreRequireDummies() {
     mol2 = replaceCore(*mol1, *matcher, replaceDummies, labelByIndex,
                        requireDummyMatch);
 
-    TEST_ASSERT(!mol2);
+    TEST_ASSERT(!mol2)
     delete mol1;
 
     delete matcher;
@@ -1195,37 +1195,37 @@ void testIssue3453144() {
   std::string pathName = getenv("RDBASE");
   pathName += "/Code/GraphMol/ChemTransforms/testData/ethanol.mol";
   mol1 = MolFileToMol(pathName);
-  TEST_ASSERT(mol1);
-  TEST_ASSERT(mol1->getNumAtoms() == 3);
+  TEST_ASSERT(mol1)
+  TEST_ASSERT(mol1->getNumAtoms() == 3)
 
   sma = "O";
   matcher1 = SmartsToMol(sma);
-  TEST_ASSERT(matcher1);
+  TEST_ASSERT(matcher1)
 
   smi = "N";
   replacement = SmilesToMol(smi);
-  TEST_ASSERT(replacement);
+  TEST_ASSERT(replacement)
 
   std::vector<ROMOL_SPTR> rs;
   rs = replaceSubstructs(*mol1, *matcher1, *replacement);
-  TEST_ASSERT(rs.size() == 1);
+  TEST_ASSERT(rs.size() == 1)
 
-  TEST_ASSERT(rs[0]->getNumAtoms() == 3);
-  TEST_ASSERT(rs[0]->getAtomWithIdx(2)->getAtomicNum() == 7);
+  TEST_ASSERT(rs[0]->getNumAtoms() == 3)
+  TEST_ASSERT(rs[0]->getAtomWithIdx(2)->getAtomicNum() == 7)
 
-  TEST_ASSERT(rs[0]->getNumConformers() == mol1->getNumConformers());
+  TEST_ASSERT(rs[0]->getNumConformers() == mol1->getNumConformers())
 
   RDGeom::Point3D op, np;
   op = mol1->getConformer().getAtomPos(0);
   np = rs[0]->getConformer().getAtomPos(0);
-  TEST_ASSERT(feq(op.x, np.x));
-  TEST_ASSERT(feq(op.y, np.y));
-  TEST_ASSERT(feq(op.z, np.z));
+  TEST_ASSERT(feq(op.x, np.x))
+  TEST_ASSERT(feq(op.y, np.y))
+  TEST_ASSERT(feq(op.z, np.z))
   op = mol1->getConformer().getAtomPos(1);
   np = rs[0]->getConformer().getAtomPos(1);
-  TEST_ASSERT(feq(op.x, np.x));
-  TEST_ASSERT(feq(op.y, np.y));
-  TEST_ASSERT(feq(op.z, np.z));
+  TEST_ASSERT(feq(op.x, np.x))
+  TEST_ASSERT(feq(op.y, np.y))
+  TEST_ASSERT(feq(op.z, np.z))
   delete mol1;
   delete matcher1;
   delete replacement;
@@ -1244,18 +1244,18 @@ void testIssue3537675() {
   {
     std::string smi = "c1cccp1C";
     RWMol *mol = SmilesToMol(smi);
-    TEST_ASSERT(mol);
+    TEST_ASSERT(mol)
     ROMol *nMol = MurckoDecompose(*mol);
-    TEST_ASSERT(nMol->getAtomWithIdx(4)->getNumExplicitHs());
+    TEST_ASSERT(nMol->getAtomWithIdx(4)->getNumExplicitHs())
     delete mol;
     delete nMol;
   }
   {
     std::string smi = "c1cccn1C";
     RWMol *mol = SmilesToMol(smi);
-    TEST_ASSERT(mol);
+    TEST_ASSERT(mol)
     ROMol *nMol = MurckoDecompose(*mol);
-    TEST_ASSERT(nMol->getAtomWithIdx(4)->getNumExplicitHs());
+    TEST_ASSERT(nMol->getAtomWithIdx(4)->getNumExplicitHs())
     delete mol;
     delete nMol;
   }
@@ -1275,9 +1275,9 @@ void testCombineMols() {
 
     ROMol *mol3 = combineMols(*mol1, *mol2);
     TEST_ASSERT(mol3->getNumAtoms() ==
-                (mol1->getNumAtoms() + mol2->getNumAtoms()));
+                (mol1->getNumAtoms() + mol2->getNumAtoms()))
     MolOps::findSSSR(*mol3);
-    TEST_ASSERT(mol3->getRingInfo()->numRings() == 2);
+    TEST_ASSERT(mol3->getRingInfo()->numRings() == 2)
     delete mol1;
     delete mol2;
     delete mol3;
@@ -1286,33 +1286,33 @@ void testCombineMols() {
     std::string pathName = getenv("RDBASE");
     pathName += "/Code/GraphMol/ChemTransforms/testData/ethanol.mol";
     ROMol *mol1 = MolFileToMol(pathName);
-    TEST_ASSERT(mol1);
+    TEST_ASSERT(mol1)
     ROMol *mol2 = MolFileToMol(pathName);
-    TEST_ASSERT(mol2);
-    TEST_ASSERT(mol1->getNumAtoms() == 3);
-    TEST_ASSERT(mol2->getNumAtoms() == 3);
+    TEST_ASSERT(mol2)
+    TEST_ASSERT(mol1->getNumAtoms() == 3)
+    TEST_ASSERT(mol2->getNumAtoms() == 3)
     ROMol *mol3 = combineMols(*mol1, *mol2);
     TEST_ASSERT(mol3->getNumAtoms() ==
-                (mol1->getNumAtoms() + mol2->getNumAtoms()));
-    TEST_ASSERT(mol3->getNumConformers() == 1);
+                (mol1->getNumAtoms() + mol2->getNumAtoms()))
+    TEST_ASSERT(mol3->getNumConformers() == 1)
     TEST_ASSERT(feq(mol3->getConformer().getAtomPos(0).x,
-                    mol3->getConformer().getAtomPos(3).x));
+                    mol3->getConformer().getAtomPos(3).x))
     TEST_ASSERT(feq(mol3->getConformer().getAtomPos(0).y,
-                    mol3->getConformer().getAtomPos(3).y));
+                    mol3->getConformer().getAtomPos(3).y))
     TEST_ASSERT(feq(mol3->getConformer().getAtomPos(0).z,
-                    mol3->getConformer().getAtomPos(3).z));
+                    mol3->getConformer().getAtomPos(3).z))
 
     delete mol3;
     mol3 = combineMols(*mol1, *mol2, RDGeom::Point3D(1, 0, 0));
     TEST_ASSERT(mol3->getNumAtoms() ==
-                (mol1->getNumAtoms() + mol2->getNumAtoms()));
-    TEST_ASSERT(mol3->getNumConformers() == 1);
+                (mol1->getNumAtoms() + mol2->getNumAtoms()))
+    TEST_ASSERT(mol3->getNumConformers() == 1)
     TEST_ASSERT(!feq(mol3->getConformer().getAtomPos(0).x,
-                     mol3->getConformer().getAtomPos(3).x));
+                     mol3->getConformer().getAtomPos(3).x))
     TEST_ASSERT(feq(mol3->getConformer().getAtomPos(0).y,
-                    mol3->getConformer().getAtomPos(3).y));
+                    mol3->getConformer().getAtomPos(3).y))
     TEST_ASSERT(feq(mol3->getConformer().getAtomPos(0).z,
-                    mol3->getConformer().getAtomPos(3).z));
+                    mol3->getConformer().getAtomPos(3).z))
     delete mol1;
     delete mol2;
     delete mol3;
@@ -1335,15 +1335,15 @@ void testAddRecursiveQueries() {
     std::map<std::string, ROMOL_SPTR> mp;
     mp["foo"] = q1;
 
-    TEST_ASSERT(!mol1->getAtomWithIdx(0)->hasQuery());
+    TEST_ASSERT(!mol1->getAtomWithIdx(0)->hasQuery())
     addRecursiveQueries(*mol1, mp, "replaceme");
-    TEST_ASSERT(!mol1->getAtomWithIdx(0)->hasQuery());
+    TEST_ASSERT(!mol1->getAtomWithIdx(0)->hasQuery())
     mol1->getAtomWithIdx(0)->setProp("replaceme", "foo");
     addRecursiveQueries(*mol1, mp, "replaceme");
-    TEST_ASSERT(mol1->getAtomWithIdx(0)->hasQuery());
+    TEST_ASSERT(mol1->getAtomWithIdx(0)->hasQuery())
     TEST_ASSERT(mol1->getAtomWithIdx(0)->getQuery()->getDescription() ==
-                "AtomAnd");
-    TEST_ASSERT(!mol1->getAtomWithIdx(1)->hasQuery());
+                "AtomAnd")
+    TEST_ASSERT(!mol1->getAtomWithIdx(1)->hasQuery())
 
     mol1->getAtomWithIdx(0)->setProp("replaceme", "bar");
     bool ok = false;
@@ -1352,7 +1352,7 @@ void testAddRecursiveQueries() {
     } catch (KeyErrorException &) {
       ok = true;
     }
-    TEST_ASSERT(ok);
+    TEST_ASSERT(ok)
     delete mol1;
   }
 
@@ -1369,8 +1369,8 @@ void testAddRecursiveQueries() {
 
     mol1->getAtomWithIdx(0)->setProp("replaceme", "foo");
     addRecursiveQueries(*mol1, mp, "replaceme", &labels);
-    TEST_ASSERT(mol1->getAtomWithIdx(0)->hasQuery());
-    TEST_ASSERT(labels.size() == 1);
+    TEST_ASSERT(mol1->getAtomWithIdx(0)->hasQuery())
+    TEST_ASSERT(labels.size() == 1)
 
     delete mol1;
   }
@@ -1393,13 +1393,13 @@ void testAddRecursiveQueries() {
     mol1->getAtomWithIdx(0)->setProp("replaceme", "foo");
     mol1->getAtomWithIdx(1)->setProp("replaceme", "bar");
     addRecursiveQueries(*mol1, mp, "replaceme", &labels);
-    TEST_ASSERT(mol1->getAtomWithIdx(0)->hasQuery());
-    TEST_ASSERT(mol1->getAtomWithIdx(1)->hasQuery());
+    TEST_ASSERT(mol1->getAtomWithIdx(0)->hasQuery())
+    TEST_ASSERT(mol1->getAtomWithIdx(1)->hasQuery())
     TEST_ASSERT(mol1->getAtomWithIdx(0)->getQuery()->getDescription() ==
-                "AtomAnd");
+                "AtomAnd")
     TEST_ASSERT(mol1->getAtomWithIdx(1)->getQuery()->getDescription() ==
-                "AtomAnd");
-    TEST_ASSERT(labels.size() == 2);
+                "AtomAnd")
+    TEST_ASSERT(labels.size() == 2)
 
     delete mol1;
   }
@@ -1419,28 +1419,28 @@ void testAddRecursiveQueries() {
 
     mol1->getAtomWithIdx(0)->setProp("replaceme", "foo,bar");
     addRecursiveQueries(*mol1, mp, "replaceme");
-    TEST_ASSERT(mol1->getAtomWithIdx(0)->hasQuery());
-    TEST_ASSERT(!mol1->getAtomWithIdx(1)->hasQuery());
+    TEST_ASSERT(mol1->getAtomWithIdx(0)->hasQuery())
+    TEST_ASSERT(!mol1->getAtomWithIdx(1)->hasQuery())
     TEST_ASSERT(mol1->getAtomWithIdx(0)->getQuery()->getDescription() ==
-                "AtomAnd");
+                "AtomAnd")
 
     MatchVectType mv;
     std::string msmi = "CCC";
     ROMol *mmol = SmilesToMol(msmi);
-    TEST_ASSERT(mmol);
-    TEST_ASSERT(!SubstructMatch(*mmol, *mol1, mv));
+    TEST_ASSERT(mmol)
+    TEST_ASSERT(!SubstructMatch(*mmol, *mol1, mv))
     delete mmol;
 
     msmi = "CCO";
     mmol = SmilesToMol(msmi);
-    TEST_ASSERT(mmol);
-    TEST_ASSERT(SubstructMatch(*mmol, *mol1, mv));
+    TEST_ASSERT(mmol)
+    TEST_ASSERT(SubstructMatch(*mmol, *mol1, mv))
     delete mmol;
 
     msmi = "CCN";
     mmol = SmilesToMol(msmi);
-    TEST_ASSERT(mmol);
-    TEST_ASSERT(SubstructMatch(*mmol, *mol1, mv));
+    TEST_ASSERT(mmol)
+    TEST_ASSERT(SubstructMatch(*mmol, *mol1, mv))
     delete mmol;
 
     delete mol1;
@@ -1454,22 +1454,22 @@ void testAddRecursiveQueries() {
     std::map<std::string, ROMOL_SPTR> mp;
     mol1->getAtomWithIdx(0)->setProp("replaceme", "CO");
     addRecursiveQueries(*mol1, mp, "replaceme");
-    TEST_ASSERT(mol1->getAtomWithIdx(0)->hasQuery());
-    TEST_ASSERT(!mol1->getAtomWithIdx(1)->hasQuery());
+    TEST_ASSERT(mol1->getAtomWithIdx(0)->hasQuery())
+    TEST_ASSERT(!mol1->getAtomWithIdx(1)->hasQuery())
     TEST_ASSERT(mol1->getAtomWithIdx(0)->getQuery()->getDescription() ==
-                "AtomAnd");
+                "AtomAnd")
 
     MatchVectType mv;
     std::string msmi = "CCC";
     ROMol *mmol = SmilesToMol(msmi);
-    TEST_ASSERT(mmol);
-    TEST_ASSERT(!SubstructMatch(*mmol, *mol1, mv));
+    TEST_ASSERT(mmol)
+    TEST_ASSERT(!SubstructMatch(*mmol, *mol1, mv))
     delete mmol;
 
     msmi = "CCO";
     mmol = SmilesToMol(msmi);
-    TEST_ASSERT(mmol);
-    TEST_ASSERT(SubstructMatch(*mmol, *mol1, mv));
+    TEST_ASSERT(mmol)
+    TEST_ASSERT(SubstructMatch(*mmol, *mol1, mv))
     delete mmol;
 
     delete mol1;
@@ -1486,18 +1486,18 @@ void testParseQueryDefFile() {
     pathName += "/Code/GraphMol/ChemTransforms/testData/query_file1.txt";
     std::map<std::string, ROMOL_SPTR> qdefs;
     parseQueryDefFile(pathName, qdefs, false);
-    TEST_ASSERT(!qdefs.empty());
-    TEST_ASSERT(qdefs.size() == 7);
-    TEST_ASSERT(qdefs.find("AcidChloride") != qdefs.end());
-    TEST_ASSERT(qdefs.find("AcideChloride") == qdefs.end());
-    TEST_ASSERT(qdefs.find("AcidChloride.Aliphatic") != qdefs.end());
-    TEST_ASSERT(qdefs.find("CarboxylicAcid.AlphaAmino") != qdefs.end());
+    TEST_ASSERT(!qdefs.empty())
+    TEST_ASSERT(qdefs.size() == 7)
+    TEST_ASSERT(qdefs.find("AcidChloride") != qdefs.end())
+    TEST_ASSERT(qdefs.find("AcideChloride") == qdefs.end())
+    TEST_ASSERT(qdefs.find("AcidChloride.Aliphatic") != qdefs.end())
+    TEST_ASSERT(qdefs.find("CarboxylicAcid.AlphaAmino") != qdefs.end())
 
     std::string msmi = "CCC(=O)Cl";
     ROMol *mmol = SmilesToMol(msmi);
-    TEST_ASSERT(mmol);
+    TEST_ASSERT(mmol)
     MatchVectType mv;
-    TEST_ASSERT(SubstructMatch(*mmol, *(qdefs["AcidChloride"]), mv));
+    TEST_ASSERT(SubstructMatch(*mmol, *(qdefs["AcidChloride"]), mv))
     delete mmol;
   }
   {
@@ -1505,7 +1505,7 @@ void testParseQueryDefFile() {
     pathName += "/Code/GraphMol/ChemTransforms/testData/query_file2.txt";
     std::map<std::string, ROMOL_SPTR> qdefs;
     parseQueryDefFile(pathName, qdefs);
-    TEST_ASSERT(qdefs.empty());
+    TEST_ASSERT(qdefs.empty())
   }
   /*{
     std::string pathName = getenv("RDBASE");
@@ -1529,10 +1529,10 @@ void testIssue275() {
   {
     std::string smi = "CCCCC[C@H]1CC[C@H](C(=O)O)CC1";
     RWMol *mol = SmilesToMol(smi);
-    TEST_ASSERT(mol);
+    TEST_ASSERT(mol)
     ROMol *nMol = MurckoDecompose(*mol);
     smi = MolToSmiles(*nMol, true);
-    TEST_ASSERT(smi == "C1CCCCC1");
+    TEST_ASSERT(smi == "C1CCCCC1")
     delete mol;
     delete nMol;
   }
@@ -1540,10 +1540,10 @@ void testIssue275() {
   {
     std::string smi = "CCCCC[C@H]1CC[C@H](C(=O)O)CC1";
     RWMol *mol = SmilesToMol(smi);
-    TEST_ASSERT(mol);
+    TEST_ASSERT(mol)
     ROMol *nMol = MurckoDecompose(*mol);
     smi = MolToSmiles(*nMol, false);
-    TEST_ASSERT(smi == "C1CCCCC1");
+    TEST_ASSERT(smi == "C1CCCCC1")
     delete mol;
     delete nMol;
   }
@@ -1558,75 +1558,75 @@ void testFragmentOnBonds() {
   {
     std::string smi = "OCCCN";
     RWMol *mol = SmilesToMol(smi);
-    TEST_ASSERT(mol);
-    TEST_ASSERT(mol->getNumAtoms() == 5);
+    TEST_ASSERT(mol)
+    TEST_ASSERT(mol->getNumAtoms() == 5)
     unsigned int indices[] = {0, 3};
     std::vector<unsigned int> bindices(
         indices, indices + (sizeof(indices) / sizeof(indices[0])));
     ROMol *nmol = MolFragmenter::fragmentOnBonds(*mol, bindices, false);
-    TEST_ASSERT(nmol);
-    TEST_ASSERT(nmol->getNumAtoms() == 5);
+    TEST_ASSERT(nmol)
+    TEST_ASSERT(nmol->getNumAtoms() == 5)
     delete mol;
     delete nmol;
   }
   {
     std::string smi = "OCCCN";
     RWMol *mol = SmilesToMol(smi);
-    TEST_ASSERT(mol);
-    TEST_ASSERT(mol->getNumAtoms() == 5);
+    TEST_ASSERT(mol)
+    TEST_ASSERT(mol->getNumAtoms() == 5)
     unsigned int indices[] = {0, 1};
     std::vector<unsigned int> bindices(
         indices, indices + (sizeof(indices) / sizeof(indices[0])));
     std::vector<unsigned int> cutsPerAtom(mol->getNumAtoms());
     ROMol *nmol = MolFragmenter::fragmentOnBonds(*mol, bindices, false, nullptr,
                                                  nullptr, &cutsPerAtom);
-    TEST_ASSERT(nmol);
-    TEST_ASSERT(nmol->getNumAtoms() == 5);
-    TEST_ASSERT(cutsPerAtom[0] == 1);
-    TEST_ASSERT(cutsPerAtom[1] == 2);
-    TEST_ASSERT(cutsPerAtom[2] == 1);
-    TEST_ASSERT(cutsPerAtom[3] == 0);
+    TEST_ASSERT(nmol)
+    TEST_ASSERT(nmol->getNumAtoms() == 5)
+    TEST_ASSERT(cutsPerAtom[0] == 1)
+    TEST_ASSERT(cutsPerAtom[1] == 2)
+    TEST_ASSERT(cutsPerAtom[2] == 1)
+    TEST_ASSERT(cutsPerAtom[3] == 0)
     delete mol;
     delete nmol;
   }
   {
     std::string smi = "OCCCN";
     RWMol *mol = SmilesToMol(smi);
-    TEST_ASSERT(mol);
-    TEST_ASSERT(mol->getNumAtoms() == 5);
-    TEST_ASSERT(mol->getBondBetweenAtoms(0, 1));
-    TEST_ASSERT(mol->getBondBetweenAtoms(3, 4));
+    TEST_ASSERT(mol)
+    TEST_ASSERT(mol->getNumAtoms() == 5)
+    TEST_ASSERT(mol->getBondBetweenAtoms(0, 1))
+    TEST_ASSERT(mol->getBondBetweenAtoms(3, 4))
     unsigned int indices[] = {0, 3};
     std::vector<unsigned int> bindices(
         indices, indices + (sizeof(indices) / sizeof(indices[0])));
     ROMol *nmol = MolFragmenter::fragmentOnBonds(*mol, bindices);
-    TEST_ASSERT(nmol);
-    TEST_ASSERT(nmol->getNumAtoms() == 9);
-    TEST_ASSERT(!nmol->getBondBetweenAtoms(0, 1));
-    TEST_ASSERT(!nmol->getBondBetweenAtoms(3, 4));
-    TEST_ASSERT(nmol->getAtomWithIdx(5)->getAtomicNum() == 0);
-    TEST_ASSERT(nmol->getAtomWithIdx(5)->getIsotope() == 0);
-    TEST_ASSERT(nmol->getBondBetweenAtoms(1, 5));
-    TEST_ASSERT(nmol->getAtomWithIdx(6)->getAtomicNum() == 0);
-    TEST_ASSERT(nmol->getAtomWithIdx(6)->getIsotope() == 1);
-    TEST_ASSERT(nmol->getBondBetweenAtoms(0, 6));
+    TEST_ASSERT(nmol)
+    TEST_ASSERT(nmol->getNumAtoms() == 9)
+    TEST_ASSERT(!nmol->getBondBetweenAtoms(0, 1))
+    TEST_ASSERT(!nmol->getBondBetweenAtoms(3, 4))
+    TEST_ASSERT(nmol->getAtomWithIdx(5)->getAtomicNum() == 0)
+    TEST_ASSERT(nmol->getAtomWithIdx(5)->getIsotope() == 0)
+    TEST_ASSERT(nmol->getBondBetweenAtoms(1, 5))
+    TEST_ASSERT(nmol->getAtomWithIdx(6)->getAtomicNum() == 0)
+    TEST_ASSERT(nmol->getAtomWithIdx(6)->getIsotope() == 1)
+    TEST_ASSERT(nmol->getBondBetweenAtoms(0, 6))
 
-    TEST_ASSERT(nmol->getAtomWithIdx(7)->getAtomicNum() == 0);
-    TEST_ASSERT(nmol->getAtomWithIdx(7)->getIsotope() == 3);
-    TEST_ASSERT(nmol->getBondBetweenAtoms(4, 7));
-    TEST_ASSERT(nmol->getAtomWithIdx(8)->getAtomicNum() == 0);
-    TEST_ASSERT(nmol->getAtomWithIdx(8)->getIsotope() == 4);
-    TEST_ASSERT(nmol->getBondBetweenAtoms(3, 8));
+    TEST_ASSERT(nmol->getAtomWithIdx(7)->getAtomicNum() == 0)
+    TEST_ASSERT(nmol->getAtomWithIdx(7)->getIsotope() == 3)
+    TEST_ASSERT(nmol->getBondBetweenAtoms(4, 7))
+    TEST_ASSERT(nmol->getAtomWithIdx(8)->getAtomicNum() == 0)
+    TEST_ASSERT(nmol->getAtomWithIdx(8)->getIsotope() == 4)
+    TEST_ASSERT(nmol->getBondBetweenAtoms(3, 8))
     delete mol;
     delete nmol;
   }
   {
     std::string smi = "OCCCN";
     RWMol *mol = SmilesToMol(smi);
-    TEST_ASSERT(mol);
-    TEST_ASSERT(mol->getNumAtoms() == 5);
-    TEST_ASSERT(mol->getBondBetweenAtoms(0, 1));
-    TEST_ASSERT(mol->getBondBetweenAtoms(3, 4));
+    TEST_ASSERT(mol)
+    TEST_ASSERT(mol->getNumAtoms() == 5)
+    TEST_ASSERT(mol->getBondBetweenAtoms(0, 1))
+    TEST_ASSERT(mol->getBondBetweenAtoms(3, 4))
     unsigned int indices[] = {0, 3};
     std::vector<unsigned int> bindices(
         indices, indices + (sizeof(indices) / sizeof(indices[0])));
@@ -1635,23 +1635,23 @@ void testFragmentOnBonds() {
     dummyLabels[1] = std::make_pair(100, 110);
     ROMol *nmol =
         MolFragmenter::fragmentOnBonds(*mol, bindices, true, &dummyLabels);
-    TEST_ASSERT(nmol);
-    TEST_ASSERT(nmol->getNumAtoms() == 9);
-    TEST_ASSERT(!nmol->getBondBetweenAtoms(0, 1));
-    TEST_ASSERT(!nmol->getBondBetweenAtoms(3, 4));
-    TEST_ASSERT(nmol->getAtomWithIdx(5)->getAtomicNum() == 0);
-    TEST_ASSERT(nmol->getAtomWithIdx(5)->getIsotope() == 10);
-    TEST_ASSERT(nmol->getBondBetweenAtoms(1, 5));
-    TEST_ASSERT(nmol->getAtomWithIdx(6)->getAtomicNum() == 0);
-    TEST_ASSERT(nmol->getAtomWithIdx(6)->getIsotope() == 11);
-    TEST_ASSERT(nmol->getBondBetweenAtoms(0, 6));
+    TEST_ASSERT(nmol)
+    TEST_ASSERT(nmol->getNumAtoms() == 9)
+    TEST_ASSERT(!nmol->getBondBetweenAtoms(0, 1))
+    TEST_ASSERT(!nmol->getBondBetweenAtoms(3, 4))
+    TEST_ASSERT(nmol->getAtomWithIdx(5)->getAtomicNum() == 0)
+    TEST_ASSERT(nmol->getAtomWithIdx(5)->getIsotope() == 10)
+    TEST_ASSERT(nmol->getBondBetweenAtoms(1, 5))
+    TEST_ASSERT(nmol->getAtomWithIdx(6)->getAtomicNum() == 0)
+    TEST_ASSERT(nmol->getAtomWithIdx(6)->getIsotope() == 11)
+    TEST_ASSERT(nmol->getBondBetweenAtoms(0, 6))
 
-    TEST_ASSERT(nmol->getAtomWithIdx(7)->getAtomicNum() == 0);
-    TEST_ASSERT(nmol->getAtomWithIdx(7)->getIsotope() == 100);
-    TEST_ASSERT(nmol->getBondBetweenAtoms(4, 7));
-    TEST_ASSERT(nmol->getAtomWithIdx(8)->getAtomicNum() == 0);
-    TEST_ASSERT(nmol->getAtomWithIdx(8)->getIsotope() == 110);
-    TEST_ASSERT(nmol->getBondBetweenAtoms(3, 8));
+    TEST_ASSERT(nmol->getAtomWithIdx(7)->getAtomicNum() == 0)
+    TEST_ASSERT(nmol->getAtomWithIdx(7)->getIsotope() == 100)
+    TEST_ASSERT(nmol->getBondBetweenAtoms(4, 7))
+    TEST_ASSERT(nmol->getAtomWithIdx(8)->getAtomicNum() == 0)
+    TEST_ASSERT(nmol->getAtomWithIdx(8)->getIsotope() == 110)
+    TEST_ASSERT(nmol->getBondBetweenAtoms(3, 8))
     delete mol;
     delete nmol;
   }
@@ -1666,29 +1666,29 @@ void testFragmentOnBRICSBonds() {
   {
     std::string smi = "c1ccccc1OC";
     RWMol *mol = SmilesToMol(smi);
-    TEST_ASSERT(mol);
-    TEST_ASSERT(mol->getNumAtoms() == 8);
-    TEST_ASSERT(mol->getBondBetweenAtoms(5, 6));
-    TEST_ASSERT(mol->getBondBetweenAtoms(6, 7));
+    TEST_ASSERT(mol)
+    TEST_ASSERT(mol->getNumAtoms() == 8)
+    TEST_ASSERT(mol->getBondBetweenAtoms(5, 6))
+    TEST_ASSERT(mol->getBondBetweenAtoms(6, 7))
 
     std::vector<MolFragmenter::FragmenterBondType> fbts;
     MolFragmenter::constructBRICSBondTypes(fbts);
     ROMol *nmol = MolFragmenter::fragmentOnBonds(*mol, fbts);
-    TEST_ASSERT(nmol);
+    TEST_ASSERT(nmol)
 
-    TEST_ASSERT(nmol->getNumAtoms() == 10);
-    TEST_ASSERT(!nmol->getBondBetweenAtoms(5, 6));
-    TEST_ASSERT(nmol->getBondBetweenAtoms(6, 7));
+    TEST_ASSERT(nmol->getNumAtoms() == 10)
+    TEST_ASSERT(!nmol->getBondBetweenAtoms(5, 6))
+    TEST_ASSERT(nmol->getBondBetweenAtoms(6, 7))
 
     smi = MolToSmiles(*nmol, true);
-    TEST_ASSERT(smi == "[16*]c1ccccc1.[3*]OC");
+    TEST_ASSERT(smi == "[16*]c1ccccc1.[3*]OC")
 
-    TEST_ASSERT(nmol->getAtomWithIdx(8)->getAtomicNum() == 0);
-    TEST_ASSERT(nmol->getAtomWithIdx(8)->getIsotope() == 3);
-    TEST_ASSERT(nmol->getBondBetweenAtoms(6, 8));
-    TEST_ASSERT(nmol->getAtomWithIdx(9)->getAtomicNum() == 0);
-    TEST_ASSERT(nmol->getAtomWithIdx(9)->getIsotope() == 16);
-    TEST_ASSERT(nmol->getBondBetweenAtoms(5, 9));
+    TEST_ASSERT(nmol->getAtomWithIdx(8)->getAtomicNum() == 0)
+    TEST_ASSERT(nmol->getAtomWithIdx(8)->getIsotope() == 3)
+    TEST_ASSERT(nmol->getBondBetweenAtoms(6, 8))
+    TEST_ASSERT(nmol->getAtomWithIdx(9)->getAtomicNum() == 0)
+    TEST_ASSERT(nmol->getAtomWithIdx(9)->getIsotope() == 16)
+    TEST_ASSERT(nmol->getBondBetweenAtoms(5, 9))
 
     delete mol;
     delete nmol;
@@ -1697,18 +1697,18 @@ void testFragmentOnBRICSBonds() {
   {
     std::string smi = "c1ccccc1";
     RWMol *mol = SmilesToMol(smi);
-    TEST_ASSERT(mol);
-    TEST_ASSERT(mol->getNumAtoms() == 6);
+    TEST_ASSERT(mol)
+    TEST_ASSERT(mol->getNumAtoms() == 6)
 
     std::vector<MolFragmenter::FragmenterBondType> fbts;
     MolFragmenter::constructBRICSBondTypes(fbts);
     ROMol *nmol = MolFragmenter::fragmentOnBonds(*mol, fbts);
-    TEST_ASSERT(nmol);
+    TEST_ASSERT(nmol)
 
-    TEST_ASSERT(nmol->getNumAtoms() == 6);
+    TEST_ASSERT(nmol->getNumAtoms() == 6)
 
     smi = MolToSmiles(*nmol, true);
-    TEST_ASSERT(smi == "c1ccccc1");
+    TEST_ASSERT(smi == "c1ccccc1")
 
     delete mol;
     delete nmol;
@@ -1717,18 +1717,18 @@ void testFragmentOnBRICSBonds() {
   {
     std::string smi = "OC(C)=CC";
     RWMol *mol = SmilesToMol(smi);
-    TEST_ASSERT(mol);
-    TEST_ASSERT(mol->getNumAtoms() == 5);
+    TEST_ASSERT(mol)
+    TEST_ASSERT(mol->getNumAtoms() == 5)
 
     std::vector<MolFragmenter::FragmenterBondType> fbts;
     MolFragmenter::constructBRICSBondTypes(fbts);
     ROMol *nmol = MolFragmenter::fragmentOnBonds(*mol, fbts);
-    TEST_ASSERT(nmol);
+    TEST_ASSERT(nmol)
 
-    TEST_ASSERT(nmol->getNumAtoms() == 7);
+    TEST_ASSERT(nmol->getNumAtoms() == 7)
 
     smi = MolToSmiles(*nmol, true);
-    TEST_ASSERT(smi == "[7*]=C(C)O.[7*]=CC");
+    TEST_ASSERT(smi == "[7*]=C(C)O.[7*]=CC")
 
     delete mol;
     delete nmol;
@@ -1737,13 +1737,13 @@ void testFragmentOnBRICSBonds() {
   {
     std::string smi = "c1ccccc1OC";
     RWMol *mol = SmilesToMol(smi);
-    TEST_ASSERT(mol);
-    TEST_ASSERT(mol->getNumAtoms() == 8);
+    TEST_ASSERT(mol)
+    TEST_ASSERT(mol->getNumAtoms() == 8)
     ROMol *nmol = MolFragmenter::fragmentOnBRICSBonds(*mol);
-    TEST_ASSERT(nmol);
-    TEST_ASSERT(nmol->getNumAtoms() == 10);
+    TEST_ASSERT(nmol)
+    TEST_ASSERT(nmol->getNumAtoms() == 10)
     smi = MolToSmiles(*nmol, true);
-    TEST_ASSERT(smi == "[16*]c1ccccc1.[3*]OC");
+    TEST_ASSERT(smi == "[16*]c1ccccc1.[3*]OC")
 
     delete mol;
     delete nmol;
@@ -1751,15 +1751,15 @@ void testFragmentOnBRICSBonds() {
   {
     std::string smi = "OC(C)=CC";
     RWMol *mol = SmilesToMol(smi);
-    TEST_ASSERT(mol);
-    TEST_ASSERT(mol->getNumAtoms() == 5);
+    TEST_ASSERT(mol)
+    TEST_ASSERT(mol->getNumAtoms() == 5)
 
     ROMol *nmol = MolFragmenter::fragmentOnBRICSBonds(*mol);
-    TEST_ASSERT(nmol);
+    TEST_ASSERT(nmol)
 
-    TEST_ASSERT(nmol->getNumAtoms() == 7);
+    TEST_ASSERT(nmol->getNumAtoms() == 7)
     smi = MolToSmiles(*nmol, true);
-    TEST_ASSERT(smi == "[7*]=C(C)O.[7*]=CC");
+    TEST_ASSERT(smi == "[7*]=C(C)O.[7*]=CC")
 
     delete mol;
     delete nmol;
@@ -1768,18 +1768,18 @@ void testFragmentOnBRICSBonds() {
   {
     std::string smi = "CCCOCCC(=O)c1ccccc1";
     RWMol *mol = SmilesToMol(smi);
-    TEST_ASSERT(mol);
-    TEST_ASSERT(mol->getNumAtoms() == 14);
+    TEST_ASSERT(mol)
+    TEST_ASSERT(mol->getNumAtoms() == 14)
 
     ROMol *nmol = MolFragmenter::fragmentOnBRICSBonds(*mol);
-    TEST_ASSERT(nmol);
+    TEST_ASSERT(nmol)
 
-    TEST_ASSERT(nmol->getNumAtoms() == 20);
+    TEST_ASSERT(nmol->getNumAtoms() == 20)
     smi = MolToSmiles(*nmol, true);
-    TEST_ASSERT(smi == "[16*]c1ccccc1.[3*]O[3*].[4*]CCC.[4*]CCC([6*])=O");
+    TEST_ASSERT(smi == "[16*]c1ccccc1.[3*]O[3*].[4*]CCC.[4*]CCC([6*])=O")
     MolOps::sanitizeMol(static_cast<RWMol &>(*nmol));
     smi = MolToSmiles(*nmol, true);
-    TEST_ASSERT(smi == "[16*]c1ccccc1.[3*]O[3*].[4*]CCC.[4*]CCC([6*])=O");
+    TEST_ASSERT(smi == "[16*]c1ccccc1.[3*]O[3*].[4*]CCC.[4*]CCC([6*])=O")
 
     delete mol;
     delete nmol;
@@ -1788,22 +1788,22 @@ void testFragmentOnBRICSBonds() {
   {
     std::string smi = "Cl.CC(=O)O[C@]1(c2ccccc2)CCN(C)[C@H]2CCCC[C@@H]21";
     RWMol *mol = SmilesToMol(smi);
-    TEST_ASSERT(mol);
-    TEST_ASSERT(mol->getNumAtoms() == 22);
+    TEST_ASSERT(mol)
+    TEST_ASSERT(mol->getNumAtoms() == 22)
     ROMol *nmol = MolFragmenter::fragmentOnBRICSBonds(*mol);
-    TEST_ASSERT(nmol);
+    TEST_ASSERT(nmol)
 
-    TEST_ASSERT(nmol->getNumAtoms() == 28);
+    TEST_ASSERT(nmol->getNumAtoms() == 28)
     smi = MolToSmiles(*nmol, true);
     // std::cerr<<smi<<std::endl;
     TEST_ASSERT(smi ==
                 "Cl.[1*]C(C)=O.[15*]C1([15*])CCN(C)[C@H]2CCCC[C@@H]21.[16*]"
-                "c1ccccc1.[3*]O[3*]");
+                "c1ccccc1.[3*]O[3*]")
     MolOps::sanitizeMol(static_cast<RWMol &>(*nmol));
     smi = MolToSmiles(*nmol, true);
     TEST_ASSERT(smi ==
                 "Cl.[1*]C(C)=O.[15*]C1([15*])CCN(C)[C@H]2CCCC[C@@H]21.[16*]"
-                "c1ccccc1.[3*]O[3*]");
+                "c1ccccc1.[3*]O[3*]")
 
     delete mol;
     delete nmol;
@@ -1836,33 +1836,33 @@ void testFragmentOnSomeBonds() {
   {
     std::string smi = "OCCCCN";
     RWMol *mol = SmilesToMol(smi);
-    TEST_ASSERT(mol);
-    TEST_ASSERT(mol->getNumAtoms());
+    TEST_ASSERT(mol)
+    TEST_ASSERT(mol->getNumAtoms())
     unsigned int indices[] = {0, 2, 4};
     std::vector<unsigned int> bindices(
         indices, indices + (sizeof(indices) / sizeof(indices[0])));
     std::vector<ROMOL_SPTR> frags;
     MolFragmenter::fragmentOnSomeBonds(*mol, bindices, frags, 2);
-    TEST_ASSERT(frags.size() == 3);
+    TEST_ASSERT(frags.size() == 3)
     std::vector<std::vector<int>> fragMap;
 
-    TEST_ASSERT(MolOps::getMolFrags(*frags[0], fragMap) == 3);
-    TEST_ASSERT(fragMap.size() == 3);
-    TEST_ASSERT(fragMap[0].size() == 2);
-    TEST_ASSERT(fragMap[1].size() == 4);
-    TEST_ASSERT(fragMap[2].size() == 4);
+    TEST_ASSERT(MolOps::getMolFrags(*frags[0], fragMap) == 3)
+    TEST_ASSERT(fragMap.size() == 3)
+    TEST_ASSERT(fragMap[0].size() == 2)
+    TEST_ASSERT(fragMap[1].size() == 4)
+    TEST_ASSERT(fragMap[2].size() == 4)
 
-    TEST_ASSERT(MolOps::getMolFrags(*frags[1], fragMap) == 3);
-    TEST_ASSERT(fragMap.size() == 3);
-    TEST_ASSERT(fragMap[0].size() == 2);
-    TEST_ASSERT(fragMap[1].size() == 6);
-    TEST_ASSERT(fragMap[2].size() == 2);
+    TEST_ASSERT(MolOps::getMolFrags(*frags[1], fragMap) == 3)
+    TEST_ASSERT(fragMap.size() == 3)
+    TEST_ASSERT(fragMap[0].size() == 2)
+    TEST_ASSERT(fragMap[1].size() == 6)
+    TEST_ASSERT(fragMap[2].size() == 2)
 
-    TEST_ASSERT(MolOps::getMolFrags(*frags[2], fragMap) == 3);
-    TEST_ASSERT(fragMap.size() == 3);
-    TEST_ASSERT(fragMap[0].size() == 4);
-    TEST_ASSERT(fragMap[1].size() == 4);
-    TEST_ASSERT(fragMap[2].size() == 2);
+    TEST_ASSERT(MolOps::getMolFrags(*frags[2], fragMap) == 3)
+    TEST_ASSERT(fragMap.size() == 3)
+    TEST_ASSERT(fragMap[0].size() == 4)
+    TEST_ASSERT(fragMap[1].size() == 4)
+    TEST_ASSERT(fragMap[2].size() == 2)
 
     delete mol;
   }
@@ -1870,8 +1870,8 @@ void testFragmentOnSomeBonds() {
   {
     std::string smi = "OCCCCN";
     RWMol *mol = SmilesToMol(smi);
-    TEST_ASSERT(mol);
-    TEST_ASSERT(mol->getNumAtoms());
+    TEST_ASSERT(mol)
+    TEST_ASSERT(mol->getNumAtoms())
     unsigned int indices[] = {0, 2, 4};
     std::vector<unsigned int> bindices(
         indices, indices + (sizeof(indices) / sizeof(indices[0])));
@@ -1879,11 +1879,11 @@ void testFragmentOnSomeBonds() {
     std::vector<std::vector<unsigned int>> cpa;
     MolFragmenter::fragmentOnSomeBonds(*mol, bindices, frags, 2, false, nullptr,
                                        nullptr, &cpa);
-    TEST_ASSERT(frags.size() == 3);
-    TEST_ASSERT(cpa.size() == 3);
-    TEST_ASSERT(cpa[0].size() == mol->getNumAtoms());
-    TEST_ASSERT(cpa[1].size() == mol->getNumAtoms());
-    TEST_ASSERT(cpa[2].size() == mol->getNumAtoms());
+    TEST_ASSERT(frags.size() == 3)
+    TEST_ASSERT(cpa.size() == 3)
+    TEST_ASSERT(cpa[0].size() == mol->getNumAtoms())
+    TEST_ASSERT(cpa[1].size() == mol->getNumAtoms())
+    TEST_ASSERT(cpa[2].size() == mol->getNumAtoms())
 
     delete mol;
   }
@@ -1901,14 +1901,14 @@ void testGithubIssue429() {
   {
     std::string smi = "c1cccn1CC1CC1";
     RWMol *mol = SmilesToMol(smi);
-    TEST_ASSERT(mol);
-    TEST_ASSERT(mol->getNumAtoms());
+    TEST_ASSERT(mol)
+    TEST_ASSERT(mol->getNumAtoms())
     unsigned int indices[] = {4, 5};
     std::vector<unsigned int> bindices(
         indices, indices + (sizeof(indices) / sizeof(indices[0])));
     std::vector<ROMOL_SPTR> frags;
     MolFragmenter::fragmentOnSomeBonds(*mol, bindices, frags, 1, false);
-    TEST_ASSERT(frags.size() == 2);
+    TEST_ASSERT(frags.size() == 2)
     std::vector<std::vector<int>> fragMap;
 
     for (auto romol : frags) {
@@ -1935,26 +1935,26 @@ void testGithubIssue430() {
   {
     std::string smi = "c1cccn1CC1CC1";
     RWMol *mol = SmilesToMol(smi);
-    TEST_ASSERT(mol);
-    TEST_ASSERT(mol->getNumAtoms());
+    TEST_ASSERT(mol)
+    TEST_ASSERT(mol->getNumAtoms())
     std::vector<unsigned int> bindices;
     std::vector<ROMOL_SPTR> frags;
     MolFragmenter::fragmentOnSomeBonds(*mol, bindices, frags, 1, false);
-    TEST_ASSERT(frags.size() == 0);
+    TEST_ASSERT(frags.size() == 0)
     delete mol;
   }
 
   {
     std::string smi = "c1cccn1CC1CC1";
     RWMol *mol = SmilesToMol(smi);
-    TEST_ASSERT(mol);
-    TEST_ASSERT(mol->getNumAtoms());
+    TEST_ASSERT(mol)
+    TEST_ASSERT(mol->getNumAtoms())
     unsigned int indices[] = {4, 5};
     std::vector<unsigned int> bindices(
         indices, indices + (sizeof(indices) / sizeof(indices[0])));
     std::vector<ROMOL_SPTR> frags;
     MolFragmenter::fragmentOnSomeBonds(*mol, bindices, frags, 0, false);
-    TEST_ASSERT(frags.size() == 0);
+    TEST_ASSERT(frags.size() == 0)
     delete mol;
   }
 
@@ -1971,20 +1971,20 @@ void testGithubIssue511() {
      // complication
     std::string smi = "CO[C@](CC)(C)N";
     RWMol *mol = SmilesToMol(smi);
-    TEST_ASSERT(mol);
+    TEST_ASSERT(mol)
     TEST_ASSERT(mol->getNumAtoms() == 7)
     std::vector<unsigned int> bindices;
     bindices.push_back(1);
     ROMol *frags = MolFragmenter::fragmentOnBonds(*mol, bindices, true);
-    TEST_ASSERT(frags->getNumAtoms() == 9);
+    TEST_ASSERT(frags->getNumAtoms() == 9)
 
     std::string csmi1 = MolToSmiles(*mol, true);
     // std::cerr << csmi1 << std::endl;
 
-    TEST_ASSERT(csmi1 == "CC[C@@](C)(N)OC");
+    TEST_ASSERT(csmi1 == "CC[C@@](C)(N)OC")
     std::string csmi2 = MolToSmiles(*frags, true);
     // std::cerr << csmi2 << std::endl;
-    TEST_ASSERT(csmi2 == "[1*][C@](C)(N)CC.[2*]OC");
+    TEST_ASSERT(csmi2 == "[1*][C@](C)(N)CC.[2*]OC")
 
     delete mol;
     delete frags;
@@ -1993,18 +1993,18 @@ void testGithubIssue511() {
   {  // Steve's original bug report
     std::string smi = "CO[C@]1(C)NCC1";
     RWMol *mol = SmilesToMol(smi);
-    TEST_ASSERT(mol);
+    TEST_ASSERT(mol)
     TEST_ASSERT(mol->getNumAtoms() == 7)
     std::vector<unsigned int> bindices;
     bindices.push_back(1);
     ROMol *frags = MolFragmenter::fragmentOnBonds(*mol, bindices, true);
-    TEST_ASSERT(frags->getNumAtoms() == 9);
+    TEST_ASSERT(frags->getNumAtoms() == 9)
 
     std::string csmi1 = MolToSmiles(*mol, true);
-    TEST_ASSERT(csmi1 == "CO[C@@]1(C)CCN1");
+    TEST_ASSERT(csmi1 == "CO[C@@]1(C)CCN1")
     std::string csmi2 = MolToSmiles(*frags, true);
     // std::cerr << csmi2 << std::endl;
-    TEST_ASSERT(csmi2 == "[1*][C@@]1(C)CCN1.[2*]OC");
+    TEST_ASSERT(csmi2 == "[1*][C@@]1(C)CCN1.[2*]OC")
 
     delete mol;
     delete frags;
@@ -2013,19 +2013,19 @@ void testGithubIssue511() {
   {  // further complicated by adding stereochem on both sides
     std::string smi = "C[C@](O)(F)[C@@]1(C)CCN1";
     RWMol *mol = SmilesToMol(smi);
-    TEST_ASSERT(mol);
+    TEST_ASSERT(mol)
     TEST_ASSERT(mol->getNumAtoms() == 9)
     std::vector<unsigned int> bindices;
     bindices.push_back(3);
     ROMol *frags = MolFragmenter::fragmentOnBonds(*mol, bindices, true);
-    TEST_ASSERT(frags->getNumAtoms() == 11);
+    TEST_ASSERT(frags->getNumAtoms() == 11)
 
     std::string csmi1 = MolToSmiles(*mol, true);
     // std::cerr << csmi1 << std::endl;
-    TEST_ASSERT(csmi1 == "C[C@](O)(F)[C@@]1(C)CCN1");
+    TEST_ASSERT(csmi1 == "C[C@](O)(F)[C@@]1(C)CCN1")
     std::string csmi2 = MolToSmiles(*frags, true);
     // std::cerr << csmi2 << std::endl;
-    TEST_ASSERT(csmi2 == "[1*][C@@]1(C)CCN1.[4*][C@@](C)(O)F");
+    TEST_ASSERT(csmi2 == "[1*][C@@]1(C)CCN1.[4*][C@@](C)(O)F")
 
     delete mol;
     delete frags;
@@ -2043,26 +2043,26 @@ void testGithub1734() {
   {  // no implicit H on chiral center
     std::string smi = "c1ccccc1[C@]([I])(C)NC";
     RWMol *mol = SmilesToMol(smi);
-    TEST_ASSERT(mol);
+    TEST_ASSERT(mol)
     TEST_ASSERT(mol->getNumAtoms() == 11)
     ROMol *nmol = MolFragmenter::fragmentOnBRICSBonds(*mol);
-    TEST_ASSERT(nmol);
-    TEST_ASSERT(nmol->getNumAtoms() == 15);
+    TEST_ASSERT(nmol)
+    TEST_ASSERT(nmol->getNumAtoms() == 15)
     smi = MolToSmiles(*nmol, true);
-    TEST_ASSERT(smi == "[16*]c1ccccc1.[4*][C@]([8*])(C)I.[5*]NC");
+    TEST_ASSERT(smi == "[16*]c1ccccc1.[4*][C@]([8*])(C)I.[5*]NC")
     delete mol;
     delete nmol;
   }
   {  // The original example
     std::string smi = "c1ccccc1[C@H](C)NC";
     RWMol *mol = SmilesToMol(smi);
-    TEST_ASSERT(mol);
+    TEST_ASSERT(mol)
     TEST_ASSERT(mol->getNumAtoms() == 10)
     ROMol *nmol = MolFragmenter::fragmentOnBRICSBonds(*mol);
-    TEST_ASSERT(nmol);
-    TEST_ASSERT(nmol->getNumAtoms() == 14);
+    TEST_ASSERT(nmol)
+    TEST_ASSERT(nmol->getNumAtoms() == 14)
     smi = MolToSmiles(*nmol, true);
-    TEST_ASSERT(smi == "[16*]c1ccccc1.[4*][C@H]([8*])C.[5*]NC");
+    TEST_ASSERT(smi == "[16*]c1ccccc1.[4*][C@H]([8*])C.[5*]NC")
     delete mol;
     delete nmol;
   }
@@ -2083,18 +2083,18 @@ void testGithub3206() {
     mp["bar"] = ROMOL_SPTR(SmilesToMol("CN"));
     mp["baz"] = ROMOL_SPTR(SmilesToMol("CF"));
 
-    TEST_ASSERT(!mol1->getAtomWithIdx(0)->hasQuery());
+    TEST_ASSERT(!mol1->getAtomWithIdx(0)->hasQuery())
     addRecursiveQueries(*mol1, mp, "replaceme");
-    TEST_ASSERT(!mol1->getAtomWithIdx(0)->hasQuery());
+    TEST_ASSERT(!mol1->getAtomWithIdx(0)->hasQuery())
     mol1->getAtomWithIdx(0)->setProp("replaceme", "foo,bar,baz");
     addRecursiveQueries(*mol1, mp, "replaceme");
-    TEST_ASSERT(mol1->getAtomWithIdx(0)->hasQuery());
+    TEST_ASSERT(mol1->getAtomWithIdx(0)->hasQuery())
     TEST_ASSERT(mol1->getAtomWithIdx(0)->getQuery()->getDescription() ==
-                "AtomAnd");
-    TEST_ASSERT(!mol1->getAtomWithIdx(1)->hasQuery());
+                "AtomAnd")
+    TEST_ASSERT(!mol1->getAtomWithIdx(1)->hasQuery())
 
     auto sma = MolToSmarts(*mol1);
-    TEST_ASSERT(sma == "[#6;$([#6]-[#8]),$([#6]-[#7]),$([#6]-[#9])]-[#6]");
+    TEST_ASSERT(sma == "[#6$([#6]-[#8]),$([#6]-[#7]),$([#6]-[#9])]-[#6]");
   }
   BOOST_LOG(rdInfoLog) << "\tdone" << std::endl;
 }
@@ -2114,14 +2114,14 @@ void testGithub4019() {
     for (auto a : molNoSidechain->atoms()) {
       if (a->getAtomicNum() == 0) {
         hasDummy = true;
-        TEST_ASSERT(!a->getIsAromatic());
+        TEST_ASSERT(!a->getIsAromatic())
         a->setAtomicNum(1);
         a->setIsotope(0);
       }
     }
-    TEST_ASSERT(hasDummy);
+    TEST_ASSERT(hasDummy)
     molNoSidechain.reset(MolOps::removeHs(*molNoSidechain));
-    TEST_ASSERT(MolToSmiles(*molNoSidechain) == "c1ccc2[nH]ccc2c1");
+    TEST_ASSERT(MolToSmiles(*molNoSidechain) == "c1ccc2[nH]ccc2c1")
   }
   {
     auto mol = "c1ccc2[nH]ccc2c1"_smiles;
@@ -2131,16 +2131,16 @@ void testGithub4019() {
     for (auto a : molNoSidechain->atoms()) {
       if (a->getAtomicNum() == 0) {
         ++nDummies;
-        TEST_ASSERT(!a->getIsAromatic());
-        TEST_ASSERT(!a->getNumExplicitHs());
+        TEST_ASSERT(!a->getIsAromatic())
+        TEST_ASSERT(!a->getNumExplicitHs())
       }
     }
-    TEST_ASSERT(nDummies == 2);
+    TEST_ASSERT(nDummies == 2)
     for (auto b : molNoSidechain->bonds()) {
       if (b->getBeginAtom()->getAtomicNum() == 0 ||
           b->getEndAtom()->getAtomicNum() == 0) {
-        TEST_ASSERT(!b->getIsAromatic());
-        TEST_ASSERT(b->getBondType() == Bond::SINGLE);
+        TEST_ASSERT(!b->getIsAromatic())
+        TEST_ASSERT(b->getBondType() == Bond::SINGLE)
       }
     }
   }
@@ -2152,13 +2152,13 @@ void testGithub4019() {
     for (auto a : molNoSidechain->atoms()) {
       if (a->getAtomicNum() == 0) {
         dummies.push_back(a->getIdx());
-        TEST_ASSERT(!a->getIsAromatic());
-        TEST_ASSERT(!a->getNumExplicitHs());
+        TEST_ASSERT(!a->getIsAromatic())
+        TEST_ASSERT(!a->getNumExplicitHs())
       }
     }
-    TEST_ASSERT(dummies.size() == 2);
+    TEST_ASSERT(dummies.size() == 2)
     TEST_ASSERT(
-        !molNoSidechain->getBondBetweenAtoms(dummies.front(), dummies.back()));
+        !molNoSidechain->getBondBetweenAtoms(dummies.front(), dummies.back()))
   }
 }
 

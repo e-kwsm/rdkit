@@ -176,7 +176,7 @@ std::string DiscreteValueVect::toString() const {
 #endif
   std::string res(ss.str());
   return res;
-};
+}
 
 void DiscreteValueVect::initFromText(const char *pkl, const unsigned int len) {
   std::stringstream ss(std::ios_base::binary | std::ios_base::in |
@@ -214,11 +214,11 @@ void DiscreteValueVect::initFromText(const char *pkl, const unsigned int len) {
 #else
   d_data.reset(data);
 #endif
-};
+}
 
 DiscreteValueVect DiscreteValueVect::operator&(
     const DiscreteValueVect &other) const {
-  PRECONDITION(other.d_length == d_length, "length mismatch");
+  PRECONDITION(other.d_length == d_length, "length mismatch")
   DiscreteValueType typ = d_type;
   if (other.d_type < typ) {
     typ = other.d_type;
@@ -234,11 +234,11 @@ DiscreteValueVect DiscreteValueVect::operator&(
     }
   }
   return (ans);
-};
+}
 
 DiscreteValueVect DiscreteValueVect::operator|(
     const DiscreteValueVect &other) const {
-  PRECONDITION(other.d_length == d_length, "length mismatch");
+  PRECONDITION(other.d_length == d_length, "length mismatch")
   DiscreteValueType typ = d_type;
   if (other.d_type > typ) {
     typ = other.d_type;
@@ -254,11 +254,11 @@ DiscreteValueVect DiscreteValueVect::operator|(
     }
   }
   return (ans);
-};
+}
 
 DiscreteValueVect &DiscreteValueVect::operator+=(
     const DiscreteValueVect &other) {
-  PRECONDITION(other.d_length == d_length, "length mismatch");
+  PRECONDITION(other.d_length == d_length, "length mismatch")
   unsigned int maxVal = (1 << d_bitsPerVal) - 1;
 
   for (unsigned int i = 0; i < d_length; i++) {
@@ -272,7 +272,7 @@ DiscreteValueVect &DiscreteValueVect::operator+=(
 }
 DiscreteValueVect &DiscreteValueVect::operator-=(
     const DiscreteValueVect &other) {
-  PRECONDITION(other.d_length == d_length, "length mismatch");
+  PRECONDITION(other.d_length == d_length, "length mismatch")
 
   for (unsigned int i = 0; i < d_length; i++) {
     unsigned int v1 = getVal(i);
@@ -295,7 +295,7 @@ DiscreteValueVect &DiscreteValueVect::operator-=(
       ans.setVal(i,maxVal-v1);
     }
     return(ans);
-  };
+  }
 #endif
 
 DiscreteValueVect operator+(const DiscreteValueVect &p1,
@@ -303,12 +303,12 @@ DiscreteValueVect operator+(const DiscreteValueVect &p1,
   DiscreteValueVect res(p1);
   res += p2;
   return res;
-};
+}
 DiscreteValueVect operator-(const DiscreteValueVect &p1,
                             const DiscreteValueVect &p2) {
   DiscreteValueVect res(p1);
   res -= p2;
   return res;
-};
+}
 
 }  // end of namespace RDKit

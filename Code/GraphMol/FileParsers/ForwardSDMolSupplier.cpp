@@ -38,14 +38,14 @@ std::string strip(const std::string &orig) {
 ForwardSDMolSupplier::ForwardSDMolSupplier(std::istream *inStream,
                                            bool takeOwnership, bool sanitize,
                                            bool removeHs, bool strictParsing) {
-  PRECONDITION(inStream, "bad stream");
+  PRECONDITION(inStream, "bad stream")
   init();
   dp_inStream = inStream;
   df_owner = takeOwnership;
   df_sanitize = sanitize;
   df_removeHs = removeHs;
   df_strictParsing = strictParsing;
-  POSTCONDITION(dp_inStream, "bad instream");
+  POSTCONDITION(dp_inStream, "bad instream")
 }
 
 void ForwardSDMolSupplier::init() {
@@ -57,12 +57,12 @@ void ForwardSDMolSupplier::init() {
 }
 
 void ForwardSDMolSupplier::reset() {
-  UNDER_CONSTRUCTION("reset() not supported for ForwardSDMolSuppliers();");
+  UNDER_CONSTRUCTION("reset() not supported for ForwardSDMolSuppliers()");
 }
 
 void ForwardSDMolSupplier::readMolProps(ROMol *mol) {
-  PRECONDITION(dp_inStream, "no stream");
-  PRECONDITION(mol, "no molecule");
+  PRECONDITION(dp_inStream, "no stream")
+  PRECONDITION(mol, "no molecule")
   d_line++;
   bool hasProp = false;
   bool warningIssued = false;
@@ -176,7 +176,7 @@ void ForwardSDMolSupplier::readMolProps(ROMol *mol) {
 }
 
 ROMol *ForwardSDMolSupplier::next() {
-  PRECONDITION(dp_inStream, "no stream");
+  PRECONDITION(dp_inStream, "no stream")
   ROMol *res = nullptr;
 
   if (dp_inStream->eof()) {
@@ -190,7 +190,7 @@ ROMol *ForwardSDMolSupplier::next() {
 }
 
 ROMol *ForwardSDMolSupplier::_next() {
-  PRECONDITION(dp_inStream, "no stream");
+  PRECONDITION(dp_inStream, "no stream")
 
   std::string tempStr;
   ROMol *res = nullptr;
@@ -296,7 +296,7 @@ ROMol *ForwardSDMolSupplier::_next() {
 }
 
 void ForwardSDMolSupplier::checkForEnd() {
-  PRECONDITION(dp_inStream, "no stream");
+  PRECONDITION(dp_inStream, "no stream")
   // we will call it end of file if we have more than 4 contiguous empty lines
   // or we reach end of file in the meantime
   if (dp_inStream->eof()) {
@@ -322,7 +322,7 @@ void ForwardSDMolSupplier::checkForEnd() {
 }
 
 bool ForwardSDMolSupplier::atEnd() {
-  PRECONDITION(dp_inStream, "no stream");
+  PRECONDITION(dp_inStream, "no stream")
   return df_end;
 }
 }  // namespace RDKit

@@ -178,7 +178,7 @@ void MolDraw2DSVG::drawWavyLine(const Point2D &cds1, const Point2D &cds2,
                                 const DrawColour &col1, const DrawColour &,
                                 unsigned int nSegments, double vertOffset,
                                 bool rawCoords) {
-  PRECONDITION(nSegments > 1, "too few segments");
+  PRECONDITION(nSegments > 1, "too few segments")
 
   setColour(col1);
 
@@ -245,7 +245,7 @@ void MolDraw2DSVG::drawLine(const Point2D &cds1, const Point2D &cds2,
 // ****************************************************************************
 void MolDraw2DSVG::drawPolygon(const std::vector<Point2D> &cds,
                                bool rawCoords) {
-  PRECONDITION(cds.size() >= 3, "must have at least three points");
+  PRECONDITION(cds.size() >= 3, "must have at least three points")
 
   std::string col = DrawColourToSVG(colour());
   double width = getDrawLineWidth();
@@ -327,7 +327,7 @@ void MolDraw2DSVG::clearDrawing() {
 // ****************************************************************************
 static const char *RDKIT_SVG_VERSION = "0.9";
 void MolDraw2DSVG::addMoleculeMetadata(const ROMol &mol, int confId) const {
-  PRECONDITION(d_os, "no output stream");
+  PRECONDITION(d_os, "no output stream")
   d_os << "<metadata>" << std::endl;
   d_os << "<rdkit:mol"
        << " xmlns:rdkit = \"http://www.rdkit.org/xml\""
@@ -388,12 +388,12 @@ void MolDraw2DSVG::addMoleculeMetadata(const std::vector<ROMol *> &mols,
     setActiveMolIdx(i);
     addMoleculeMetadata(*(mols[i]), confId);
   }
-};
+}
 
 // ****************************************************************************
 void MolDraw2DSVG::tagAtoms(const ROMol &mol, double radius,
                             const std::map<std::string, std::string> &events) {
-  PRECONDITION(d_os, "no output stream");
+  PRECONDITION(d_os, "no output stream")
   // first bonds so that they are under the atoms
   for (const auto &bond : mol.bonds()) {
     const auto this_idx = bond->getIdx();

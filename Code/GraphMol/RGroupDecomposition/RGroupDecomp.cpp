@@ -561,7 +561,7 @@ RGroupRows RGroupDecomposition::getRGroupsAsRows() const {
     for (const auto &rgroup : in_rgroups) {
       const auto realLabel = data->finalRlabelMapping.find(rgroup.first);
       CHECK_INVARIANT(realLabel != data->finalRlabelMapping.end(),
-                      "unprocessed rlabel, please call process() first.");
+                      "unprocessed rlabel, please call process() first.")
       Rs_seen.setIsUsed(realLabel->second);
       out_rgroups[RPREFIX + std::to_string(realLabel->second)] =
           rgroup.second->combinedMol;
@@ -589,12 +589,12 @@ RGroupColumns RGroupDecomposition::getRGroupsAsColumns() const {
     for (const auto &rgroup : in_rgroups) {
       const auto realLabel = data->finalRlabelMapping.find(rgroup.first);
       CHECK_INVARIANT(realLabel != data->finalRlabelMapping.end(),
-                      "unprocessed rlabel, please call process() first.");
+                      "unprocessed rlabel, please call process() first.")
       CHECK_INVARIANT(rgroup.second->combinedMol->hasProp(done),
-                      "Not done! Call process()");
+                      "Not done! Call process()")
 
       CHECK_INVARIANT(!Rs_seen.getIsUsed(realLabel->second),
-                      "R group label appears multiple times!");
+                      "R group label appears multiple times!")
       Rs_seen.setIsUsed(realLabel->second);
       std::string r = RPREFIX + std::to_string(realLabel->second);
       RGroupColumn &col = groups[r];

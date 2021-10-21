@@ -25,7 +25,7 @@ namespace RDKit {
 
 FeatSPtrList MolChemicalFeatureFactory::getFeaturesForMol(
     const ROMol &mol, const char *includeOnly, int confId) const {
-  PRECONDITION(includeOnly, "bad limits");
+  PRECONDITION(includeOnly, "bad limits")
   std::string limits(includeOnly);
 
 #ifdef USE_VFLIB

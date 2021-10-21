@@ -35,7 +35,7 @@ Conformer &Conformer::operator=(const Conformer &other) {
 }
 
 void Conformer::setOwningMol(ROMol *mol) {
-  PRECONDITION(mol, "");
+  PRECONDITION(mol, "")
   dp_mol = mol;
 }
 
@@ -43,31 +43,31 @@ void Conformer::setOwningMol(ROMol &mol) { setOwningMol(&mol); }
 
 const RDGeom::POINT3D_VECT &Conformer::getPositions() const {
   if (dp_mol) {
-    PRECONDITION(dp_mol->getNumAtoms() == d_positions.size(), "");
+    PRECONDITION(dp_mol->getNumAtoms() == d_positions.size(), "")
   }
   return d_positions;
 }
 
 RDGeom::POINT3D_VECT &Conformer::getPositions() {
   if (dp_mol) {
-    PRECONDITION(dp_mol->getNumAtoms() == d_positions.size(), "");
+    PRECONDITION(dp_mol->getNumAtoms() == d_positions.size(), "")
   }
   return d_positions;
 }
 
 const RDGeom::Point3D &Conformer::getAtomPos(unsigned int atomId) const {
   if (dp_mol) {
-    PRECONDITION(dp_mol->getNumAtoms() == d_positions.size(), "");
+    PRECONDITION(dp_mol->getNumAtoms() == d_positions.size(), "")
   }
-  URANGE_CHECK(atomId, d_positions.size());
+  URANGE_CHECK(atomId, d_positions.size())
   return d_positions[atomId];
 }
 
 RDGeom::Point3D &Conformer::getAtomPos(unsigned int atomId) {
   if (dp_mol) {
-    PRECONDITION(dp_mol->getNumAtoms() == d_positions.size(), "");
+    PRECONDITION(dp_mol->getNumAtoms() == d_positions.size(), "")
   }
-  URANGE_CHECK(atomId, d_positions.size());
+  URANGE_CHECK(atomId, d_positions.size())
   return d_positions[atomId];
 }
 }  // namespace RDKit

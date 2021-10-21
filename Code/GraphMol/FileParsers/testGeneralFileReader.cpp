@@ -39,32 +39,32 @@ void testDetermineFormat() {
   std::string fileFormat, compressionFormat;
 
   determineFormat(fname1, fileFormat, compressionFormat);
-  TEST_ASSERT(fileFormat == "mae");
-  TEST_ASSERT(compressionFormat == "gz");
+  TEST_ASSERT(fileFormat == "mae")
+  TEST_ASSERT(compressionFormat == "gz")
 
   determineFormat(fname2, fileFormat, compressionFormat);
-  TEST_ASSERT(fileFormat == "csv");
-  TEST_ASSERT(compressionFormat == "");
+  TEST_ASSERT(fileFormat == "csv")
+  TEST_ASSERT(compressionFormat == "")
 
   determineFormat(fname3, fileFormat, compressionFormat);
-  TEST_ASSERT(fileFormat == "sdf");
-  TEST_ASSERT(compressionFormat == "");
+  TEST_ASSERT(fileFormat == "sdf")
+  TEST_ASSERT(compressionFormat == "")
 
   determineFormat(fname4, fileFormat, compressionFormat);
-  TEST_ASSERT(fileFormat == "sdf");
-  TEST_ASSERT(compressionFormat == "gz");
+  TEST_ASSERT(fileFormat == "sdf")
+  TEST_ASSERT(compressionFormat == "gz")
 
   determineFormat(fname5, fileFormat, compressionFormat);
-  TEST_ASSERT(fileFormat == "mae");
-  TEST_ASSERT(compressionFormat == "");
+  TEST_ASSERT(fileFormat == "mae")
+  TEST_ASSERT(compressionFormat == "")
 
   determineFormat(fname6, fileFormat, compressionFormat);
-  TEST_ASSERT(fileFormat == "sdf");
-  TEST_ASSERT(compressionFormat == "gz");
+  TEST_ASSERT(fileFormat == "sdf")
+  TEST_ASSERT(compressionFormat == "gz")
 
   determineFormat(fname7, fileFormat, compressionFormat);
-  TEST_ASSERT(fileFormat == "sdf");
-  TEST_ASSERT(compressionFormat == "gz");
+  TEST_ASSERT(fileFormat == "sdf")
+  TEST_ASSERT(compressionFormat == "gz")
 }
 
 void testSdf() {
@@ -77,15 +77,15 @@ void testSdf() {
   unsigned int i = 0;
   while (!sdsup->atEnd()) {
     ROMol* nmol = sdsup->next();
-    TEST_ASSERT(nmol || sdsup->atEnd());
+    TEST_ASSERT(nmol || sdsup->atEnd())
     if (nmol) {
-      TEST_ASSERT(nmol->hasProp(common_properties::_Name));
-      TEST_ASSERT(nmol->hasProp("NCI_AIDS_Antiviral_Screen_Conclusion"));
+      TEST_ASSERT(nmol->hasProp(common_properties::_Name))
+      TEST_ASSERT(nmol->hasProp("NCI_AIDS_Antiviral_Screen_Conclusion"))
       delete nmol;
       i++;
     }
   }
-  TEST_ASSERT(i == 16);
+  TEST_ASSERT(i == 16)
 
   //! Use Multithreaded Supplier
   struct SupplierOptions optConcurrent;
@@ -96,13 +96,13 @@ void testSdf() {
   while (!sdsupMulti->atEnd()) {
     ROMol* nmol = sdsupMulti->next();
     if (nmol) {
-      TEST_ASSERT(nmol->hasProp(common_properties::_Name));
-      TEST_ASSERT(nmol->hasProp("NCI_AIDS_Antiviral_Screen_Conclusion"));
+      TEST_ASSERT(nmol->hasProp(common_properties::_Name))
+      TEST_ASSERT(nmol->hasProp("NCI_AIDS_Antiviral_Screen_Conclusion"))
       delete nmol;
       i++;
     }
   }
-  TEST_ASSERT(i == 16);
+  TEST_ASSERT(i == 16)
 
   //! Open compressed SDF file format
   fname = rdbase + "/Code/GraphMol/FileParsers/test_data/NCI_aids_few.sdf.gz";
@@ -112,13 +112,13 @@ void testSdf() {
   while (!sdsup2->atEnd()) {
     ROMol* nmol = sdsup2->next();
     if (nmol) {
-      TEST_ASSERT(nmol->hasProp(common_properties::_Name));
-      TEST_ASSERT(nmol->hasProp("NCI_AIDS_Antiviral_Screen_Conclusion"));
+      TEST_ASSERT(nmol->hasProp(common_properties::_Name))
+      TEST_ASSERT(nmol->hasProp("NCI_AIDS_Antiviral_Screen_Conclusion"))
       delete nmol;
       i++;
     }
   }
-  TEST_ASSERT(i == 16);
+  TEST_ASSERT(i == 16)
 }
 
 void testSmi() {
@@ -139,14 +139,14 @@ void testSmi() {
     ROMol* mol = sup->next();
     if (i == 3) {
       mol->getProp(common_properties::_Name, mname);
-      CHECK_INVARIANT(mname == "4", "");
+      CHECK_INVARIANT(mname == "4", "")
       mol->getProp("TPSA", mname);
-      CHECK_INVARIANT(mname == "82.78", "");
+      CHECK_INVARIANT(mname == "82.78", "")
     }
     delete mol;
     i++;
   }
-  TEST_ASSERT(i == 10);
+  TEST_ASSERT(i == 10)
 
   //! Use Multithreaded Supplier
   opt_smi.numWriterThreads = 2;
@@ -159,7 +159,7 @@ void testSmi() {
       i++;
     }
   }
-  TEST_ASSERT(i == 10);
+  TEST_ASSERT(i == 10)
 }
 
 void testMae() {
@@ -171,51 +171,51 @@ void testMae() {
   struct SupplierOptions opt;
   auto maesup = getSupplier(fname, opt);
   std::unique_ptr<ROMol> nmol(maesup->next());
-  TEST_ASSERT(nmol);
+  TEST_ASSERT(nmol)
 
   //! Test mol properties
-  TEST_ASSERT(nmol->hasProp(common_properties::_Name));
-  TEST_ASSERT(nmol->hasProp("b_sd_chiral_flag"));
-  TEST_ASSERT(nmol->getProp<bool>("b_sd_chiral_flag") == false);
-  TEST_ASSERT(nmol->hasProp("i_sd_NSC"));
-  TEST_ASSERT(nmol->getProp<int>("i_sd_NSC") == 48);
-  TEST_ASSERT(nmol->hasProp("s_m_entry_name"));
-  TEST_ASSERT(nmol->getProp<std::string>("s_m_entry_name") == "NCI_aids_few.1");
-  TEST_ASSERT(nmol->hasProp("r_f3d_dummy"));
-  TEST_ASSERT(std::abs(nmol->getProp<double>("r_f3d_dummy") - 42.123) < 0.0001);
+  TEST_ASSERT(nmol->hasProp(common_properties::_Name))
+  TEST_ASSERT(nmol->hasProp("b_sd_chiral_flag"))
+  TEST_ASSERT(nmol->getProp<bool>("b_sd_chiral_flag") == false)
+  TEST_ASSERT(nmol->hasProp("i_sd_NSC"))
+  TEST_ASSERT(nmol->getProp<int>("i_sd_NSC") == 48)
+  TEST_ASSERT(nmol->hasProp("s_m_entry_name"))
+  TEST_ASSERT(nmol->getProp<std::string>("s_m_entry_name") == "NCI_aids_few.1")
+  TEST_ASSERT(nmol->hasProp("r_f3d_dummy"))
+  TEST_ASSERT(std::abs(nmol->getProp<double>("r_f3d_dummy") - 42.123) < 0.0001)
 
   //! Test atom properties
-  TEST_ASSERT(nmol->getNumAtoms() == 19);
+  TEST_ASSERT(nmol->getNumAtoms() == 19)
   for (int i = 0; i < 19; ++i) {
     const auto* atom = nmol->getAtomWithIdx(i);
 
     //! The integer property is present for all atoms
-    TEST_ASSERT(atom->hasProp("i_m_minimize_atom_index"));
-    TEST_ASSERT(atom->getProp<int>("i_m_minimize_atom_index") == 1 + i);
+    TEST_ASSERT(atom->hasProp("i_m_minimize_atom_index"))
+    TEST_ASSERT(atom->getProp<int>("i_m_minimize_atom_index") == 1 + i)
 
     //! The bool property is only defined for i < 10
     if (i < 10) {
-      TEST_ASSERT(atom->hasProp("b_m_dummy"));
-      TEST_ASSERT(atom->getProp<bool>("b_m_dummy") == static_cast<bool>(i % 2));
+      TEST_ASSERT(atom->hasProp("b_m_dummy"))
+      TEST_ASSERT(atom->getProp<bool>("b_m_dummy") == static_cast<bool>(i % 2))
     } else {
-      TEST_ASSERT(!atom->hasProp("b_m_dummy"));
+      TEST_ASSERT(!atom->hasProp("b_m_dummy"))
     }
 
     //! The real property is only defined for i >= 10
     if (i >= 10) {
-      TEST_ASSERT(atom->hasProp("r_f3d_dummy"));
+      TEST_ASSERT(atom->hasProp("r_f3d_dummy"))
       TEST_ASSERT(std::abs(atom->getProp<double>("r_f3d_dummy") - (19.1 - i)) <
-                  0.0001);
+                  0.0001)
     } else {
-      TEST_ASSERT(!atom->hasProp("r_f3d_dummy"));
+      TEST_ASSERT(!atom->hasProp("r_f3d_dummy"))
     }
 
     //! All atoms have the string prop
-    TEST_ASSERT(atom->hasProp("s_m_dummy"));
+    TEST_ASSERT(atom->hasProp("s_m_dummy"))
     TEST_ASSERT(atom->getProp<std::string>("s_m_dummy") ==
-                std::to_string(19 - i));
+                std::to_string(19 - i))
   }
-  TEST_ASSERT(maesup->atEnd());
+  TEST_ASSERT(maesup->atEnd())
 
   //! Open compressed MAE file, .maegz format
   fname = rdbase + "/Code/GraphMol/FileParsers/test_data/1kv1.maegz";
@@ -225,9 +225,9 @@ void testMae() {
   nmol2.reset(cmaesup->next());
   const Atom* atom = nmol2->getAtomWithIdx(0);
   auto* info = (AtomPDBResidueInfo*)(atom->getMonomerInfo());
-  TEST_ASSERT(info->getResidueName() == "ARG ");
-  TEST_ASSERT(info->getChainId() == "A");
-  TEST_ASSERT(info->getResidueNumber() == 5);
+  TEST_ASSERT(info->getResidueName() == "ARG ")
+  TEST_ASSERT(info->getChainId() == "A")
+  TEST_ASSERT(info->getResidueNumber() == 5)
 #endif
 }
 
@@ -245,25 +245,25 @@ void testTdt() {
     ROMol* nmol = suppl->next();
     if (nmol) {
       std::string prop1, prop2;
-      TEST_ASSERT(nmol->getNumAtoms() > 0);
-      TEST_ASSERT(nmol->hasProp("PN"));
-      TEST_ASSERT(nmol->hasProp(common_properties::_Name));
-      TEST_ASSERT(nmol->hasProp("MFCD"));
+      TEST_ASSERT(nmol->getNumAtoms() > 0)
+      TEST_ASSERT(nmol->hasProp("PN"))
+      TEST_ASSERT(nmol->hasProp(common_properties::_Name))
+      TEST_ASSERT(nmol->hasProp("MFCD"))
 
       nmol->getProp("PN", prop1);
       nmol->getProp(common_properties::_Name, prop2);
-      TEST_ASSERT(prop1 == prop2);
+      TEST_ASSERT(prop1 == prop2)
 
       //! we didn't ask for 2D conformers, so there should be a property 2D:
-      TEST_ASSERT(nmol->hasProp(common_properties::TWOD));
+      TEST_ASSERT(nmol->hasProp(common_properties::TWOD))
       //! and no conformer:
-      TEST_ASSERT(!nmol->getNumConformers());
+      TEST_ASSERT(!nmol->getNumConformers())
 
       delete nmol;
       i++;
     }
   }
-  TEST_ASSERT(i == 10);
+  TEST_ASSERT(i == 10)
 }
 
 int main() {

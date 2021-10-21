@@ -55,12 +55,12 @@
 #include <boost/serialization/export.hpp>
 #include <RDGeneral/BoostEndInclude.h>
 
-BOOST_CLASS_EXPORT(RDKit::EnumerationStrategyBase);
-BOOST_CLASS_EXPORT(RDKit::CartesianProductStrategy);
-BOOST_CLASS_EXPORT(RDKit::RandomSampleStrategy);
-BOOST_CLASS_EXPORT(RDKit::RandomSampleAllBBsStrategy);
-BOOST_CLASS_EXPORT(RDKit::EvenSamplePairsStrategy);
-BOOST_CLASS_EXPORT(RDKit::EnumerateLibrary);
+BOOST_CLASS_EXPORT(RDKit::EnumerationStrategyBase)
+BOOST_CLASS_EXPORT(RDKit::CartesianProductStrategy)
+BOOST_CLASS_EXPORT(RDKit::RandomSampleStrategy)
+BOOST_CLASS_EXPORT(RDKit::RandomSampleAllBBsStrategy)
+BOOST_CLASS_EXPORT(RDKit::EvenSamplePairsStrategy)
+BOOST_CLASS_EXPORT(RDKit::EnumerateLibrary)
 #endif
 
 namespace RDKit {
@@ -71,7 +71,7 @@ const RGROUPS &EnumerateLibraryBase::getPosition() const {
 }
 
 std::string EnumerateLibraryBase::getState() const {
-  PRECONDITION(m_enumerator.get(), "Null Enumerator");
+  PRECONDITION(m_enumerator.get(), "Null Enumerator")
   std::string state;
   EnumerationStrategyPickler::pickle(m_enumerator, state);
   return state;
@@ -82,7 +82,7 @@ void EnumerateLibraryBase::setState(const std::string &state) {
 }
 
 void EnumerateLibraryBase::resetState() {
-  PRECONDITION(m_initialEnumerator.get(), "Unset initial enumerator");
+  PRECONDITION(m_initialEnumerator.get(), "Unset initial enumerator")
   m_enumerator.reset(m_initialEnumerator->copy());
 }
 
@@ -117,7 +117,7 @@ size_t countMatches(const ROMol &bb, const ROMol &query, int maxMatches) {
 BBS removeNonmatchingReagents(const ChemicalReaction &rxn, BBS bbs,
                               const EnumerationParams &params) {
   PRECONDITION(bbs.size() <= rxn.getNumReactantTemplates(),
-               "Number of Reagents not compatible with reaction templates");
+               "Number of Reagents not compatible with reaction templates")
   BBS result;
   result.resize(bbs.size());
 
@@ -201,7 +201,7 @@ EnumerateLibrary::EnumerateLibrary(const EnumerateLibrary &rhs)
     : EnumerateLibraryBase(rhs), m_bbs(rhs.m_bbs) {}
 
 std::vector<MOL_SPTR_VECT> EnumerateLibrary::next() {
-  PRECONDITION(static_cast<bool>(*this), "No more enumerations");
+  PRECONDITION(static_cast<bool>(*this), "No more enumerations")
   const RGROUPS &reactantIndices = m_enumerator->next();
   MOL_SPTR_VECT reactants(m_bbs.size());
 
@@ -260,7 +260,7 @@ boost::uint64_t computeNumProducts(const RGROUPS &sizes) {
 MOL_SPTR_VECT getReactantsFromRGroups(const std::vector<MOL_SPTR_VECT> &bbs,
                                       const RGROUPS &rgroups) {
   PRECONDITION(bbs.size() == rgroups.size(),
-               "BBS and RGROUPS must have the same # reactants");
+               "BBS and RGROUPS must have the same # reactants")
   MOL_SPTR_VECT result;
   result.reserve(bbs.size());
   for (size_t i = 0; i < bbs.size(); ++i) {

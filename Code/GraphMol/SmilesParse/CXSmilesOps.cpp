@@ -40,7 +40,7 @@ std::map<std::string, std::string> sgroupTypemap = {
 
 template <typename Q>
 void addquery(Q *qry, std::string symbol, RDKit::RWMol &mol, unsigned int idx) {
-  PRECONDITION(qry, "bad query");
+  PRECONDITION(qry, "bad query")
   auto *qa = new QueryAtom(0);
   qa->setQuery(qry);
   qa->setNoImplicit(true);

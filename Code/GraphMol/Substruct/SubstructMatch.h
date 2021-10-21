@@ -140,7 +140,7 @@ bool SubstructMatch(T1 &mol, const T2 &query, MatchVectType &matchVect,
     matchVect.clear();
   }
   return matchVect.size() != 0;
-};
+}
 
 //! Find all substructure matches for a query
 /*!
@@ -181,7 +181,7 @@ unsigned int SubstructMatch(T1 &mol, const T2 &query,
   params.numThreads = numThreads;
   matchVect = SubstructMatch(mol, query, params);
   return static_cast<unsigned int>(matchVect.size());
-};
+}
 
 // ----------------------------------------------
 //
@@ -223,7 +223,7 @@ inline unsigned int SubstructMatch(ResonanceMolSupplier &resMolSupplier,
   params.numThreads = numThreads;
   matchVect = SubstructMatch(resMolSupplier, query, params);
   return static_cast<unsigned int>(matchVect.size());
-};
+}
 
 //! Class used as a final step to confirm whether or not a given atom->atom
 //! mapping is a valid substructure match.

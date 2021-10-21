@@ -82,7 +82,7 @@ template RDKIT_DATASTRUCTS_EXPORT void FromDaylightString(ExplicitBitVect &sbv,
 //! BitString
 template <typename T>
 void FromBitString(T &sbv, const std::string &s) {
-  PRECONDITION(s.length() <= sbv.getNumBits(), "bad bitvect length");
+  PRECONDITION(s.length() <= sbv.getNumBits(), "bad bitvect length")
   sbv.clearBits();
   for (unsigned int i = 0; i < sbv.getNumBits(); ++i) {
     if (s[i] == '1') {

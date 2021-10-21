@@ -49,7 +49,7 @@ void testRDF() {
   int nDone = 0;
   while (!reader.atEnd()) {
     RDKit::ROMol *m = reader.next();
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
     std::string nm;
     m->getProp("_Name", nm);
 
@@ -59,7 +59,7 @@ void testRDF() {
 
     std::vector<std::string> myrow = data[nDone];
     std::string inm = myrow[0];
-    TEST_ASSERT(inm == nm);
+    TEST_ASSERT(inm == nm)
 
     for (size_t i = 0; i < drdf.size(); i++) {
       double ref = atof(myrow[i + 1].c_str());
@@ -83,7 +83,7 @@ void testRDF() {
                   << " dragon: " << ref << " rdkit: " << drdf[i] << " "
                   << fabs(ref - drdf[i]) / ref << std::endl;
       }
-      TEST_ASSERT(ref < 0.5 || fabs(ref - drdf[i]) / ref < 0.02);
+      TEST_ASSERT(ref < 0.5 || fabs(ref - drdf[i]) / ref < 0.02)
     }
 
     delete m;

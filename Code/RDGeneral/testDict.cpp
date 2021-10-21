@@ -68,36 +68,36 @@ void testRDAny() {
     for (int i = 0; i < 100; ++i) {
       vi += i;
       v = rdvalue_cast<int>(v) + i;
-      TEST_ASSERT(vi == rdvalue_cast<int>(v));
+      TEST_ASSERT(vi == rdvalue_cast<int>(v))
     }
   }
   std::cerr << "Testing RDAny" << std::endl;
   {
     RDAny a(1);
     RDAny b = a;
-    TEST_ASSERT(rdany_cast<int>(a) == 1);
-    TEST_ASSERT(rdany_cast<int>(b) == 1);
+    TEST_ASSERT(rdany_cast<int>(a) == 1)
+    TEST_ASSERT(rdany_cast<int>(b) == 1)
   }
 
   {
     RDAny a(1);
     RDAny b = a;
-    TEST_ASSERT(rdany_cast<int>(a) == 1);
-    TEST_ASSERT(rdany_cast<int>(b) == rdany_cast<int>(a));
+    TEST_ASSERT(rdany_cast<int>(a) == 1)
+    TEST_ASSERT(rdany_cast<int>(b) == rdany_cast<int>(a))
     std::map<std::string, RDAny> foo;
     foo["foo"] = a;
     foo["bar"] = std::string("This is a test");
-    TEST_ASSERT(rdany_cast<int>(foo["foo"]) == 1);
-    TEST_ASSERT(rdany_cast<int>(foo["foo"]) == rdany_cast<int>(a));
-    TEST_ASSERT(rdany_cast<std::string>(foo["bar"]) == "This is a test");
+    TEST_ASSERT(rdany_cast<int>(foo["foo"]) == 1)
+    TEST_ASSERT(rdany_cast<int>(foo["foo"]) == rdany_cast<int>(a))
+    TEST_ASSERT(rdany_cast<std::string>(foo["bar"]) == "This is a test")
   }
 
   {
     bool a = true;
     RDValue v(a);
-    TEST_ASSERT(rdvalue_cast<bool>(v) == true);
+    TEST_ASSERT(rdvalue_cast<bool>(v) == true)
     v = (int)10;
-    TEST_ASSERT(rdvalue_cast<int>(v) == 10);
+    TEST_ASSERT(rdvalue_cast<int>(v) == 10)
   }
 
   {
@@ -114,10 +114,10 @@ void testRDAny() {
     computed.push_back("foo");
     d.setVal(RDKit::detail::computedPropName, computed);
     STR_VECT computed2 = d.getVal<STR_VECT>(RDKit::detail::computedPropName);
-    TEST_ASSERT(computed2[0] == "foo");
+    TEST_ASSERT(computed2[0] == "foo")
     Dict d2(d);
     computed2 = d2.getVal<STR_VECT>(RDKit::detail::computedPropName);
-    TEST_ASSERT(computed2[0] == "foo");
+    TEST_ASSERT(computed2[0] == "foo")
   }
 
   {
@@ -137,7 +137,7 @@ void testRDAny() {
       RDAny a(fooV);
       std::cerr << "retrieve int vect" << std::endl;
       fooV2 = rdany_cast<std::vector<int>>(a);
-      TEST_ASSERT(fooV == fooV2);
+      TEST_ASSERT(fooV == fooV2)
     }
 
     {
@@ -146,7 +146,7 @@ void testRDAny() {
       d.setVal("bar", fooV);
       std::cerr << "dict get int vect" << std::endl;
       d.getVal("bar", fooV2);
-      TEST_ASSERT(fooV == fooV2);
+      TEST_ASSERT(fooV == fooV2)
     }
   }
 
@@ -161,9 +161,9 @@ void testRDAny() {
     RDAny baz(foo);
 
     for (int i = 0; i < 4; ++i) {
-      TEST_ASSERT(rdany_cast<std::vector<int>>(foo)[i] == i);
-      TEST_ASSERT(rdany_cast<std::vector<int>>(bar)[i] == i);
-      TEST_ASSERT(rdany_cast<std::vector<int>>(baz)[i] == i);
+      TEST_ASSERT(rdany_cast<std::vector<int>>(foo)[i] == i)
+      TEST_ASSERT(rdany_cast<std::vector<int>>(bar)[i] == i)
+      TEST_ASSERT(rdany_cast<std::vector<int>>(baz)[i] == i)
     }
   }
 
@@ -176,13 +176,13 @@ void testRDAny() {
     RDAny foo(v);
 
     for (int i = 0; i < 4; ++i) {
-      TEST_ASSERT(rdany_cast<std::vector<double>>(foo)[i] == i);
+      TEST_ASSERT(rdany_cast<std::vector<double>>(foo)[i] == i)
     }
 
     RDAny b = foo;
 
     for (int i = 0; i < 4; ++i) {
-      TEST_ASSERT(rdany_cast<std::vector<double>>(b)[i] == i);
+      TEST_ASSERT(rdany_cast<std::vector<double>>(b)[i] == i)
     }
   }
   const int loops = 10000000;
@@ -269,17 +269,17 @@ void testRDAny() {
 
   {  // checks replacement with vector
     RDAny vv(2.0);
-    TEST_ASSERT(rdany_cast<double>(vv) == 2.0);
+    TEST_ASSERT(rdany_cast<double>(vv) == 2.0)
 
     std::vector<int> vect;
     vect.push_back(1);
     vv = vect;
-    TEST_ASSERT(rdany_cast<std::vector<int>>(vv)[0] == 1);
+    TEST_ASSERT(rdany_cast<std::vector<int>>(vv)[0] == 1)
 
     // tests copy
     RDAny vvv(vv);
 
-    TEST_ASSERT(rdany_cast<std::vector<int>>(vvv)[0] == 1);
+    TEST_ASSERT(rdany_cast<std::vector<int>>(vvv)[0] == 1)
   }
 
   {
@@ -299,10 +299,10 @@ void testRDAny() {
 
     const std::vector<std::pair<int, int>> &pv =
         rdany_cast<std::vector<std::pair<int, int>>>(vv);
-    TEST_ASSERT(pv[0].first == 2);
+    TEST_ASSERT(pv[0].first == 2)
     RDAny vvv(vv);
     TEST_ASSERT(
-        (rdany_cast<std::vector<std::pair<int, int>>>(vvv)[0].first == 2));
+        (rdany_cast<std::vector<std::pair<int, int>>>(vvv)[0].first == 2))
   }
 
   {
@@ -314,13 +314,13 @@ void testRDAny() {
     try {
       rdany_cast<std::vector<int>>(v);
 #ifndef UNSAFE_RDVALUE
-      PRECONDITION(0, "Should throw bad cast");
+      PRECONDITION(0, "Should throw bad cast")
 #endif
     } catch (boost::bad_any_cast &) {
     }
 
-    TEST_ASSERT((*rdany_cast<std::vector<int> *>(vv))[0] == 100);
-    TEST_ASSERT((*rdany_cast<std::vector<int> *>((const RDAny &)vv))[0] == 100);
+    TEST_ASSERT((*rdany_cast<std::vector<int> *>(vv))[0] == 100)
+    TEST_ASSERT((*rdany_cast<std::vector<int> *>((const RDAny &)vv))[0] == 100)
     delete p;
 
     auto *m = new std::map<int, int>();
@@ -328,7 +328,7 @@ void testRDAny() {
     RDAny mv(m);
     // leaks
     auto *anym = rdany_cast<std::map<int, int> *>(mv);
-    TEST_ASSERT(anym->find(0) != anym->end());
+    TEST_ASSERT(anym->find(0) != anym->end())
     delete anym;
   }
 
@@ -339,9 +339,9 @@ void testRDAny() {
     p->push_back(100);
     RDAny v(p);
     RDAny vv(v);
-    TEST_ASSERT((*rdany_cast<vptr>(v))[0] == 100);
-    TEST_ASSERT((*rdany_cast<vptr>(vv))[0] == 100);
-    TEST_ASSERT((*rdany_cast<vptr>((const RDAny &)vv))[0] == 100);
+    TEST_ASSERT((*rdany_cast<vptr>(v))[0] == 100)
+    TEST_ASSERT((*rdany_cast<vptr>(vv))[0] == 100)
+    TEST_ASSERT((*rdany_cast<vptr>((const RDAny &)vv))[0] == 100)
 
     typedef boost::shared_ptr<std::map<int, int>> mptr;
     mptr m(new std::map<int, int>());
@@ -349,10 +349,10 @@ void testRDAny() {
     RDAny mv(m);
     // leaks
     mptr anym = rdany_cast<mptr>(mv);
-    TEST_ASSERT(anym->find(0) != anym->end());
+    TEST_ASSERT(anym->find(0) != anym->end())
 
     RDAny any3(boost::shared_ptr<Foo>(new Foo(1, 2.f)));
-    TEST_ASSERT(any3.m_value.getTag() == RDTypeTag::AnyTag);
+    TEST_ASSERT(any3.m_value.getTag() == RDTypeTag::AnyTag)
   }
 }
 
@@ -380,14 +380,14 @@ void testStringVals() {
     d.setVal("foo", sv);
     int iv;
     d.getVal("foo", iv);
-    TEST_ASSERT(iv == 1);
+    TEST_ASSERT(iv == 1)
   }
   {
     Dict d;
     d.setVal("foo", "1");
     int iv;
     d.getVal("foo", iv);
-    TEST_ASSERT(iv == 1);
+    TEST_ASSERT(iv == 1)
   }
   {
     Dict d;
@@ -396,7 +396,7 @@ void testStringVals() {
     d.setVal("foo", sv);
     double dv;
     d.getVal("foo", dv);
-    TEST_ASSERT(feq(dv, 1.3));
+    TEST_ASSERT(feq(dv, 1.3))
   }
 
   {
@@ -405,9 +405,9 @@ void testStringVals() {
     d.setVal("foo", iv);
     std::string sv;
     d.getVal("foo", sv);
-    TEST_ASSERT(sv == "1");
+    TEST_ASSERT(sv == "1")
     sv = d.getVal<std::string>("foo");
-    TEST_ASSERT(sv == "1");
+    TEST_ASSERT(sv == "1")
   }
 
   BOOST_LOG(rdErrorLog) << "\tdone" << std::endl;
@@ -424,7 +424,7 @@ void testVectToString() {
     d.setVal("foo", v);
     std::string sv;
     d.getVal("foo", sv);
-    TEST_ASSERT(sv == "[1,0,]");
+    TEST_ASSERT(sv == "[1,0,]")
   }
   {
     Dict d;
@@ -434,9 +434,9 @@ void testVectToString() {
     d.setVal("foo", v);
     std::string sv;
     d.getVal("foo", sv);
-    TEST_ASSERT(sv == "[1,0,]");
+    TEST_ASSERT(sv == "[1,0,]")
     sv = d.getVal<std::string>("foo");
-    TEST_ASSERT(sv == "[1,0,]");
+    TEST_ASSERT(sv == "[1,0,]")
   }
   {
     Dict d;
@@ -446,9 +446,9 @@ void testVectToString() {
     d.setVal("foo", v);
     std::string sv;
     d.getVal("foo", sv);
-    TEST_ASSERT(sv == "[1.2,0,]");
+    TEST_ASSERT(sv == "[1.2,0,]")
     sv = d.getVal<std::string>("foo");
-    TEST_ASSERT(sv == "[1.2,0,]");
+    TEST_ASSERT(sv == "[1.2,0,]")
   }
   {
     Dict d;
@@ -458,9 +458,9 @@ void testVectToString() {
     d.setVal("foo", v);
     std::string sv;
     d.getVal("foo", sv);
-    TEST_ASSERT(sv == "[10001,0,]");
+    TEST_ASSERT(sv == "[10001,0,]")
     sv = d.getVal<std::string>("foo");
-    TEST_ASSERT(sv == "[10001,0,]");
+    TEST_ASSERT(sv == "[10001,0,]")
   }
 
   BOOST_LOG(rdErrorLog) << "\tdone" << std::endl;
@@ -475,7 +475,7 @@ void testConstReturns() {
 
     std::string tgt = rdany_cast<std::string>(anyv);
     const std::string &ctgt = rdany_cast<std::string>(anyv);
-    TEST_ASSERT(ctgt != "");
+    TEST_ASSERT(ctgt != "")
   }
 
   {
@@ -485,7 +485,7 @@ void testConstReturns() {
 
     // const std::string nv=d.getVal<const std::string &>("foo");
     std::string nv = d.getVal<std::string>("foo");
-    TEST_ASSERT(nv == "foo");
+    TEST_ASSERT(nv == "foo")
   }
 
 #if 0
@@ -610,10 +610,10 @@ void testUpdate() {
 
     Dict d2;
     d2.update(d);
-    TEST_ASSERT(d.getVal<std::string>("foo") == d2.getVal<std::string>("foo"));
-    TEST_ASSERT(d.getVal<double>("foo2") == d2.getVal<double>("foo2"));
+    TEST_ASSERT(d.getVal<std::string>("foo") == d2.getVal<std::string>("foo"))
+    TEST_ASSERT(d.getVal<double>("foo2") == d2.getVal<double>("foo2"))
     TEST_ASSERT(d.getVal<std::vector<int>>("foo3") ==
-                d2.getVal<std::vector<int>>("foo3"));
+                d2.getVal<std::vector<int>>("foo3"))
   }
 
   {  // a few tests to make sure copying/updating with nonPOD data is ok
@@ -631,26 +631,26 @@ void testUpdate() {
       Dict d2;
       d2.setVal("foo", 1);
       d2.update(d, true);
-      TEST_ASSERT(d2.getVal<std::string>("foo") == "1.3");
-      TEST_ASSERT(d.getVal<double>("foo2") == d2.getVal<double>("foo2"));
+      TEST_ASSERT(d2.getVal<std::string>("foo") == "1.3")
+      TEST_ASSERT(d.getVal<double>("foo2") == d2.getVal<double>("foo2"))
       TEST_ASSERT(d.getVal<std::vector<int>>("foo3") ==
-                  d2.getVal<std::vector<int>>("foo3"));
+                  d2.getVal<std::vector<int>>("foo3"))
     }
 
     {
       Dict d2 = d;
       d2.setVal("foo", 1);
-      TEST_ASSERT(1 == d2.getVal<int>("foo"));
-      TEST_ASSERT(d.getVal<double>("foo2") == d2.getVal<double>("foo2"));
+      TEST_ASSERT(1 == d2.getVal<int>("foo"))
+      TEST_ASSERT(d.getVal<double>("foo2") == d2.getVal<double>("foo2"))
       TEST_ASSERT(d.getVal<std::vector<int>>("foo3") ==
-                  d2.getVal<std::vector<int>>("foo3"));
+                  d2.getVal<std::vector<int>>("foo3"))
     }
 
     {
       Dict d2(d);
-      TEST_ASSERT(d.getVal<double>("foo2") == d2.getVal<double>("foo2"));
+      TEST_ASSERT(d.getVal<double>("foo2") == d2.getVal<double>("foo2"))
       TEST_ASSERT(d.getVal<std::vector<int>>("foo3") ==
-                  d2.getVal<std::vector<int>>("foo3"));
+                  d2.getVal<std::vector<int>>("foo3"))
     }
   }
   BOOST_LOG(rdErrorLog) << "\tdone" << std::endl;
@@ -697,15 +697,15 @@ void testCustomProps() {
   std::vector<CustomPropHandler *> handlers = {&foo_handler,
                                                foo_handler.clone()};
   for (auto handler : handlers) {
-    TEST_ASSERT(handler->canSerialize(value));
+    TEST_ASSERT(handler->canSerialize(value))
     RDValue bad_value = 1;
-    TEST_ASSERT(!handler->canSerialize(bad_value));
+    TEST_ASSERT(!handler->canSerialize(bad_value))
     std::stringstream ss;
-    TEST_ASSERT(handler->write(ss, value));
+    TEST_ASSERT(handler->write(ss, value))
     RDValue newValue;
-    TEST_ASSERT(handler->read(ss, newValue));
-    TEST_ASSERT(from_rdvalue<const Foo &>(newValue).bar == f.bar);
-    TEST_ASSERT(from_rdvalue<const Foo &>(newValue).baz == f.baz);
+    TEST_ASSERT(handler->read(ss, newValue))
+    TEST_ASSERT(from_rdvalue<const Foo &>(newValue).bar == f.bar)
+    TEST_ASSERT(from_rdvalue<const Foo &>(newValue).baz == f.baz)
     newValue.destroy();
   }
   delete handlers[1];
@@ -729,83 +729,83 @@ int main() {
   INT_VECT fooV;
   fooV.resize(3);
   BOOST_LOG(rdInfoLog) << "dict test" << std::endl;
-  TEST_ASSERT(!d.hasVal("foo"));
+  TEST_ASSERT(!d.hasVal("foo"))
   int x = 1;
   d.setVal("foo", x);
-  TEST_ASSERT(d.hasVal("foo"));
-  TEST_ASSERT(!d.hasVal("bar"));
+  TEST_ASSERT(d.hasVal("foo"))
+  TEST_ASSERT(!d.hasVal("bar"))
   int v, v2;
   d.getVal("foo", v);
-  TEST_ASSERT(v == 1);
+  TEST_ASSERT(v == 1)
   v2 = d.getVal<int>("foo");
-  TEST_ASSERT(v2 == v);
+  TEST_ASSERT(v2 == v)
   d.setVal("bar", fooV);
   d.getVal("foo", v);
-  TEST_ASSERT(v == 1);
+  TEST_ASSERT(v == 1)
   v2 = d.getVal<int>("foo");
-  TEST_ASSERT(v2 == v);
+  TEST_ASSERT(v2 == v)
   INT_VECT fooV2, fooV3;
   d.getVal("bar", fooV2);
   fooV3 = d.getVal<INT_VECT>("bar");
-  TEST_ASSERT(fooV == fooV2);
-  TEST_ASSERT(fooV2 == fooV3);
+  TEST_ASSERT(fooV == fooV2)
+  TEST_ASSERT(fooV2 == fooV3)
 
   VECT_INT_VECT fooV4;
   fooV4.resize(3);
-  TEST_ASSERT(!d.hasVal("baz"));
+  TEST_ASSERT(!d.hasVal("baz"))
   d.setVal("baz", fooV4);
-  TEST_ASSERT(d.hasVal("baz"));
+  TEST_ASSERT(d.hasVal("baz"))
 
   DictCon dc1;
-  TEST_ASSERT(!dc1.getDict()->hasVal("foo"));
+  TEST_ASSERT(!dc1.getDict()->hasVal("foo"))
   int y = 1;
   dc1.getDict()->setVal("foo", y);
-  TEST_ASSERT(dc1.getDict()->hasVal("foo"));
-  TEST_ASSERT(!dc1.getDict()->hasVal("bar"));
+  TEST_ASSERT(dc1.getDict()->hasVal("foo"))
+  TEST_ASSERT(!dc1.getDict()->hasVal("bar"))
   dc1.getDict()->setVal("bar", fooV);
   dc1.getDict()->getVal("foo", v);
-  TEST_ASSERT(v == 1);
+  TEST_ASSERT(v == 1)
   dc1.getDict()->getVal("bar", fooV2);
-  TEST_ASSERT(fooV == fooV2);
+  TEST_ASSERT(fooV == fooV2)
   fooV4.resize(3);
-  TEST_ASSERT(!dc1.getDict()->hasVal("baz"));
+  TEST_ASSERT(!dc1.getDict()->hasVal("baz"))
   dc1.getDict()->setVal("baz", fooV4);
-  TEST_ASSERT(dc1.getDict()->hasVal("baz"));
+  TEST_ASSERT(dc1.getDict()->hasVal("baz"))
 
   dc1.getDict()->reset();
 
   DictCon dc2 = dc1;
-  TEST_ASSERT(!dc2.getDict()->hasVal("foo"));
+  TEST_ASSERT(!dc2.getDict()->hasVal("foo"))
   int z = 1;
   dc2.getDict()->setVal("foo", z);
-  TEST_ASSERT(dc2.getDict()->hasVal("foo"));
-  TEST_ASSERT(!dc2.getDict()->hasVal("bar"));
+  TEST_ASSERT(dc2.getDict()->hasVal("foo"))
+  TEST_ASSERT(!dc2.getDict()->hasVal("bar"))
   dc2.getDict()->setVal("bar", fooV);
   dc2.getDict()->getVal("foo", v);
-  TEST_ASSERT(v == 1);
+  TEST_ASSERT(v == 1)
   dc2.getDict()->getVal("bar", fooV2);
-  TEST_ASSERT(fooV == fooV2);
+  TEST_ASSERT(fooV == fooV2)
   fooV4.resize(3);
-  TEST_ASSERT(!dc2.getDict()->hasVal("baz"));
+  TEST_ASSERT(!dc2.getDict()->hasVal("baz"))
   dc2.getDict()->setVal("baz", fooV4);
-  TEST_ASSERT(dc2.getDict()->hasVal("baz"));
+  TEST_ASSERT(dc2.getDict()->hasVal("baz"))
 
   DictCon dc3(dc2);
-  TEST_ASSERT(dc3.getDict()->hasVal("foo"));
+  TEST_ASSERT(dc3.getDict()->hasVal("foo"))
   dc3.getDict()->getVal("foo", v);
-  TEST_ASSERT(v == 1);
+  TEST_ASSERT(v == 1)
   dc3.getDict()->getVal("bar", fooV2);
-  TEST_ASSERT(fooV == fooV2);
+  TEST_ASSERT(fooV == fooV2)
   fooV4.resize(3);
-  TEST_ASSERT(dc3.getDict()->hasVal("baz"));
+  TEST_ASSERT(dc3.getDict()->hasVal("baz"))
 
-  TEST_ASSERT(dc3.getDict()->hasVal("foo"));
+  TEST_ASSERT(dc3.getDict()->hasVal("foo"))
   dc3.getDict()->getVal("foo", v);
-  TEST_ASSERT(v == 1);
+  TEST_ASSERT(v == 1)
   dc3.getDict()->getVal("bar", fooV2);
-  TEST_ASSERT(fooV == fooV2);
+  TEST_ASSERT(fooV == fooV2)
   fooV4.resize(3);
-  TEST_ASSERT(dc3.getDict()->hasVal("baz"));
+  TEST_ASSERT(dc3.getDict()->hasVal("baz"))
 
   testStringVals();
   testVectToString();

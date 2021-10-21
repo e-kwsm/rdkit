@@ -98,7 +98,7 @@ class LeaderPicker : public DistPicker {
   RDKit::INT_VECT pick(const double *distMat, unsigned int poolSize,
                        unsigned int pickSize, const RDKit::INT_VECT &firstPicks,
                        double threshold, int nthreads) const {
-    CHECK_INVARIANT(distMat, "Invalid Distance Matrix");
+    CHECK_INVARIANT(distMat, "Invalid Distance Matrix")
     if (!poolSize) {
       throw ValueErrorException("empty pool to pick from");
     }
@@ -465,6 +465,6 @@ RDKit::INT_VECT LeaderPicker::lazyPick(T &func, unsigned int poolSize,
                                 default_nthreads);
 }
 
-};  // namespace RDPickers
+}  // namespace RDPickers
 
 #endif

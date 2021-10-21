@@ -23,7 +23,7 @@ FragCatParams::FragCatParams(unsigned int lLen, unsigned int uLen,
   d_funcGroups.clear();
   d_typeStr = "Fragment Catalog Parameters";
   CHECK_INVARIANT(lLen <= uLen,
-                  "The upper length for fragments must be >= lower length");
+                  "The upper length for fragments must be >= lower length")
   d_lowerFragLen = lLen;
   d_upperFragLen = uLen;
   d_tolerance = tol;
@@ -63,7 +63,7 @@ const MOL_SPTR_VECT &FragCatParams::getFuncGroups() const {
 }
 
 const ROMol *FragCatParams::getFuncGroup(unsigned int fid) const {
-  URANGE_CHECK(fid, d_funcGroups.size());
+  URANGE_CHECK(fid, d_funcGroups.size())
   // return d_funcGroups[fid];
   return d_funcGroups[fid].get();
 }

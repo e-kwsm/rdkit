@@ -33,7 +33,7 @@ void testCleanup() {
   {
     RWMOL_SPTR m = "CCC(=O)O[Na]"_smiles;
     RWMOL_SPTR res(MolStandardize::cleanup(*m, params));
-    TEST_ASSERT(MolToSmiles(*res) == "CCC(=O)[O-].[Na+]");
+    TEST_ASSERT(MolToSmiles(*res) == "CCC(=O)[O-].[Na+]")
   }
   {
     // Github 5997
@@ -46,7 +46,7 @@ void testCleanup() {
   {
     RWMOL_SPTR m = "CCC(=O)[O-].[Na+]"_smiles;
     RWMOL_SPTR res(MolStandardize::cleanup(*m, params));
-    TEST_ASSERT(MolToSmiles(*res) == "CCC(=O)[O-].[Na+]");
+    TEST_ASSERT(MolToSmiles(*res) == "CCC(=O)[O-].[Na+]")
   }
 
   // Test Hg is disconnected from O during standardize.
@@ -73,35 +73,35 @@ void testStandardizeSm() {
   {
     std::string smi = "C1=CC=CC=C1";
     std::string ss = MolStandardize::standardizeSmiles(smi);
-    TEST_ASSERT(ss == "c1ccccc1");
+    TEST_ASSERT(ss == "c1ccccc1")
   }
 
   // both rings should be aromatic
   {
     std::string smi = "C[N]1C=NC2=C1C(=O)N(C)C(=O)N2C";
     std::string ss = MolStandardize::standardizeSmiles(smi);
-    TEST_ASSERT(ss == "Cn1c(=O)c2c(ncn2C)n(C)c1=O");
+    TEST_ASSERT(ss == "Cn1c(=O)c2c(ncn2C)n(C)c1=O")
   }
 
   // both rings should be aromatic
   {
     std::string smi = "C=Cc1ccc2c(c1)[nH]c(=O)/c/2=C\\c1ccc[nH]1";
     std::string ss = MolStandardize::standardizeSmiles(smi);
-    TEST_ASSERT(ss == "C=Cc1ccc2c(c1)NC(=O)/C2=C\\c1ccc[nH]1");
+    TEST_ASSERT(ss == "C=Cc1ccc2c(c1)NC(=O)/C2=C\\c1ccc[nH]1")
   }
 
   // check stereochemistry is correctly perceived
   {
     std::string smi = "Cl\\C=C/Cl";
     std::string ss = MolStandardize::standardizeSmiles(smi);
-    TEST_ASSERT(ss == "Cl/C=C\\Cl");
+    TEST_ASSERT(ss == "Cl/C=C\\Cl")
   }
 
   // Break metal-organic covalent bonds
   {
     std::string smi = "[Na]OC(=O)c1ccccc1";
     std::string ss = MolStandardize::standardizeSmiles(smi);
-    TEST_ASSERT(ss == "O=C([O-])c1ccccc1.[Na+]");
+    TEST_ASSERT(ss == "O=C([O-])c1ccccc1.[Na+]")
   }
 
   // SMILES parsing error should stop tests
@@ -127,23 +127,23 @@ void testMetalDisconnector() {
   // testing overloaded function
   {
     ROMOL_SPTR m("CCC(=O)O[Na]"_smiles);
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
     ROMOL_SPTR nm(md.disconnect(*m));
-    TEST_ASSERT(MolToSmiles(*nm) == "CCC(=O)[O-].[Na+]");
+    TEST_ASSERT(MolToSmiles(*nm) == "CCC(=O)[O-].[Na+]")
   }
 
   {
     RWMOL_SPTR m("[Na]OC(=O)CCC(=O)O[Na]"_smiles);
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
     md.disconnect(*m);
-    TEST_ASSERT(MolToSmiles(*m) == "O=C([O-])CCC(=O)[O-].[Na+].[Na+]");
+    TEST_ASSERT(MolToSmiles(*m) == "O=C([O-])CCC(=O)[O-].[Na+].[Na+]")
   }
 
   {
     RWMOL_SPTR m("c1ccccc1[Mg]Br"_smiles);
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
     md.disconnect(*m);
-    TEST_ASSERT(MolToSmiles(*m) == "Br[Mg]c1ccccc1");
+    TEST_ASSERT(MolToSmiles(*m) == "Br[Mg]c1ccccc1")
   }
 
   {
@@ -155,9 +155,9 @@ void testMetalDisconnector() {
 
   {
     RWMOL_SPTR m("Br[Mg]c1ccccc1CCC(=O)O[Na]"_smiles);
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
     md.disconnect(*m);
-    TEST_ASSERT(MolToSmiles(*m) == "O=C([O-])CCc1ccccc1[Mg]Br.[Na+]");
+    TEST_ASSERT(MolToSmiles(*m) == "O=C([O-])CCc1ccccc1[Mg]Br.[Na+]")
   }
 
   // test input own dp_metal_non, dp_metal_nof
@@ -170,18 +170,18 @@ void testMetalDisconnector() {
                     "W,Re,Os,Ir,Pt,Au,Hg,Tl,Pb,Bi]~[#7,#8,F]"));
     md2.setMetalNof(*metal_nof);
     ROMOL_SPTR m("CCC(=O)O[Na]"_smiles);
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
     ROMOL_SPTR nm(md2.disconnect(*m));
-    TEST_ASSERT(MolToSmiles(*nm) == "CCC(=O)O[Na]");  // not disconnected
+    TEST_ASSERT(MolToSmiles(*nm) == "CCC(=O)O[Na]")  // not disconnected
   }
 
   // test that metals are not assigned excess positive charge
   {
     RWMOL_SPTR m(SmilesToMol("[Be](F)(F)(F)OC", 0, false));
     MolOps::sanitizeMol(*m, failedOp, MolOps::SANITIZE_CLEANUP);
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
     md.disconnect(*m);
-    TEST_ASSERT(MolToSmiles(*m) == "C[O-].[Be+2].[F-].[F-].[F-]");
+    TEST_ASSERT(MolToSmiles(*m) == "C[O-].[Be+2].[F-].[F-].[F-]")
   }
 
   // test that badly written complexes with 4ary nitrogen
@@ -190,18 +190,18 @@ void testMetalDisconnector() {
   {
     RWMOL_SPTR m(SmilesToMol("[Ru](SC)(SC)(SC)N(C)(C)C", 0, false));
     MolOps::sanitizeMol(*m, failedOp, MolOps::SANITIZE_CLEANUP);
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
     md.disconnect(*m);
-    TEST_ASSERT(MolToSmiles(*m) == "CN(C)C.C[S-].C[S-].C[S-].[Ru+3]");
+    TEST_ASSERT(MolToSmiles(*m) == "CN(C)C.C[S-].C[S-].C[S-].[Ru+3]")
   }
 
   // test that badly written salts are not assigned excess formal charges
   {
     RWMOL_SPTR m(SmilesToMol("[Na+][O-]C(=O)C", 0, false));
     MolOps::sanitizeMol(*m, failedOp, MolOps::SANITIZE_CLEANUP);
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
     md.disconnect(*m);
-    TEST_ASSERT(MolToSmiles(*m) == "CC(=O)[O-].[Na+]");
+    TEST_ASSERT(MolToSmiles(*m) == "CC(=O)[O-].[Na+]")
   }
   // make sure that -1 as a valence is dealt with (Github 5997)
   {
@@ -217,9 +217,9 @@ void testMetalDisconnector() {
     RWMOL_SPTR m(
         SmilesToMol("CC1=CC=CC2=[N]1[Cu+2]3[N](=C2)NC(=[S]3)N(C)C", 0, false));
     MolOps::sanitizeMol(*m, failedOp, MolOps::SANITIZE_CLEANUP);
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
     md.disconnect(*m);
-    TEST_ASSERT(MolToSmiles(*m) == "CC1=CC=CC(C=NNC(=S)N(C)C)=N1.[Cu+2]");
+    TEST_ASSERT(MolToSmiles(*m) == "CC1=CC=CC(C=NNC(=S)N(C)C)=N1.[Cu+2]")
   }
 
   // test that carbonyl complexes are not assigned excess formal charges
@@ -228,69 +228,69 @@ void testMetalDisconnector() {
                              0, false));
     MolOps::sanitizeMol(
         *m, failedOp, MolOps::SANITIZE_CLEANUP | MolOps::SANITIZE_FINDRADICALS);
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
     md.disconnect(*m);
     TEST_ASSERT(MolToSmiles(*m) ==
-                "[C]=O.[C]=O.[C]=O.[C]=O.[C]=O.[C]=O.[Ni+2]");
+                "[C]=O.[C]=O.[C]=O.[C]=O.[C]=O.[C]=O.[Ni+2]")
   }
 
   // test that dative bonds are handled appropriately
   {
     RWMOL_SPTR m("O->[Fe](<-O)(O)O"_smiles);
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
     md.disconnect(*m);
-    TEST_ASSERT(MolToSmiles(*m) == "O.O.[Fe+2].[OH-].[OH-]");
+    TEST_ASSERT(MolToSmiles(*m) == "O.O.[Fe+2].[OH-].[OH-]")
   }
 
   // test that dative bonds are handled appropriately
   {
     RWMOL_SPTR m("[OH-]->[Co+3](<-[OH-])(<-O)<-O"_smiles);
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
     md.disconnect(*m);
-    TEST_ASSERT(MolToSmiles(*m) == "O.O.[Co+3].[OH-].[OH-]");
+    TEST_ASSERT(MolToSmiles(*m) == "O.O.[Co+3].[OH-].[OH-]")
   }
 
   // test that pre-existing formal charges on metals are honored (github #3625)
   {
     RWMOL_SPTR m("[Pd+]Cl"_smiles);
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
     md.disconnect(*m);
-    TEST_ASSERT(MolToSmiles(*m) == "[Cl-].[Pd+2]");
+    TEST_ASSERT(MolToSmiles(*m) == "[Cl-].[Pd+2]")
   }
 
   {
     RWMOL_SPTR m("[Pd+2]<-[Cl-]"_smiles);
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
     md.disconnect(*m);
-    TEST_ASSERT(MolToSmiles(*m) == "[Cl-].[Pd+2]");
+    TEST_ASSERT(MolToSmiles(*m) == "[Cl-].[Pd+2]")
   }
 
   {
     RWMOL_SPTR m("[Al](Cl)(Cl)Cl"_smiles);
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
     md.disconnect(*m);
-    TEST_ASSERT(MolToSmiles(*m) == "[Al+3].[Cl-].[Cl-].[Cl-]");
+    TEST_ASSERT(MolToSmiles(*m) == "[Al+3].[Cl-].[Cl-].[Cl-]")
   }
 
   {
     RWMOL_SPTR m("[Al+](<-[Cl-])(Cl)Cl"_smiles);
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
     md.disconnect(*m);
-    TEST_ASSERT(MolToSmiles(*m) == "[Al+3].[Cl-].[Cl-].[Cl-]");
+    TEST_ASSERT(MolToSmiles(*m) == "[Al+3].[Cl-].[Cl-].[Cl-]")
   }
 
   {
     RWMOL_SPTR m("[Al+](Cl)Cl"_smiles);
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
     md.disconnect(*m);
-    TEST_ASSERT(MolToSmiles(*m) == "[Al+3].[Cl-].[Cl-]");
+    TEST_ASSERT(MolToSmiles(*m) == "[Al+3].[Cl-].[Cl-]")
   }
 
   {
     RWMOL_SPTR m("[Al+2]Cl"_smiles);
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
     md.disconnect(*m);
-    TEST_ASSERT(MolToSmiles(*m) == "[Al+3].[Cl-]");
+    TEST_ASSERT(MolToSmiles(*m) == "[Al+3].[Cl-]")
   }
 
   BOOST_LOG(rdDebugLog) << "Finished" << std::endl;
@@ -311,70 +311,70 @@ void testNormalize() {
   {
     RWMOL_SPTR m = "C1(=CC=CC=C1)[N+](=O)[O-]"_smiles;
     RWMOL_SPTR res(MolStandardize::cleanup(*m, params));
-    TEST_ASSERT(MolToSmiles(*res) == "O=[N+]([O-])c1ccccc1");
+    TEST_ASSERT(MolToSmiles(*res) == "O=[N+]([O-])c1ccccc1")
   }
 
   // Normalize nitro group.
   {
     RWMOL_SPTR m = "O=[N](=O)c1ccccc1"_smiles;
     RWMOL_SPTR res(MolStandardize::cleanup(*m, params));
-    TEST_ASSERT(MolToSmiles(*res) == "O=[N+]([O-])c1ccccc1");
+    TEST_ASSERT(MolToSmiles(*res) == "O=[N+]([O-])c1ccccc1")
   }
 
   // Normalize nitro group.
   {
     RWMOL_SPTR m = "[O-][N+](=O)c1ccccc1"_smiles;
     RWMOL_SPTR res(MolStandardize::cleanup(*m, params));
-    TEST_ASSERT(MolToSmiles(*res) == "O=[N+]([O-])c1ccccc1");
+    TEST_ASSERT(MolToSmiles(*res) == "O=[N+]([O-])c1ccccc1")
   }
 
   // Normalize nitro group.
   {
     RWMOL_SPTR m = "[N](=O)(=O)O"_smiles;
     RWMOL_SPTR res(MolStandardize::cleanup(*m, params));
-    TEST_ASSERT(MolToSmiles(*res) == "O=[N+]([O-])O");
+    TEST_ASSERT(MolToSmiles(*res) == "O=[N+]([O-])O")
   }
 
   // Normalize nitro group.
   {
     RWMOL_SPTR m = "O[N+](=O)[O-]"_smiles;
     RWMOL_SPTR res(MolStandardize::cleanup(*m, params));
-    TEST_ASSERT(MolToSmiles(*res) == "O=[N+]([O-])O");
+    TEST_ASSERT(MolToSmiles(*res) == "O=[N+]([O-])O")
   }
 
   // Normalize pyridine oxide.
   {
     RWMOL_SPTR m = "C1=[N](C=CC=C1)=O"_smiles;
     RWMOL_SPTR res(MolStandardize::cleanup(*m, params));
-    TEST_ASSERT(MolToSmiles(*res) == "[O-][n+]1ccccc1");
+    TEST_ASSERT(MolToSmiles(*res) == "[O-][n+]1ccccc1")
   }
 
   // Normalize pyridine oxide.
   {
     RWMOL_SPTR m = "O=n1ccccc1"_smiles;
     RWMOL_SPTR res(MolStandardize::cleanup(*m, params));
-    TEST_ASSERT(MolToSmiles(*res) == "[O-][n+]1ccccc1");
+    TEST_ASSERT(MolToSmiles(*res) == "[O-][n+]1ccccc1")
   }
 
   // normalize sulfone.
   {
     RWMOL_SPTR m = "C[S+2]([O-])([O-])C"_smiles;
     RWMOL_SPTR res(MolStandardize::cleanup(*m, params));
-    TEST_ASSERT(MolToSmiles(*res) == "CS(C)(=O)=O");
+    TEST_ASSERT(MolToSmiles(*res) == "CS(C)(=O)=O")
   }
 
   // normalize sulfone.
   {
     RWMOL_SPTR m = "C[S+2]([O-])([O-])O"_smiles;
     RWMOL_SPTR res(MolStandardize::cleanup(*m, params));
-    TEST_ASSERT(MolToSmiles(*res) == "CS(=O)(=O)O");
+    TEST_ASSERT(MolToSmiles(*res) == "CS(=O)(=O)O")
   }
 
   // normalize sulfoxide..
   {
     RWMOL_SPTR m = "CS(=O)C"_smiles;
     RWMOL_SPTR res(MolStandardize::cleanup(*m, params));
-    TEST_ASSERT(MolToSmiles(*res) == "C[S+](C)[O-]");
+    TEST_ASSERT(MolToSmiles(*res) == "C[S+](C)[O-]")
   }
 
   // normalize sulfoxide.
@@ -383,7 +383,7 @@ void testNormalize() {
         "COC1=CC2=C(C=C1)[N]C(=N2)[S](=O)CC3=C(C(=C(C=N3)C)OC)C"_smiles;
     RWMOL_SPTR res(MolStandardize::cleanup(*m, params));
     TEST_ASSERT(MolToSmiles(*res) ==
-                "COc1ccc2c(c1)N=C([S+]([O-])Cc1ncc(C)c(OC)c1C)[N]2");
+                "COc1ccc2c(c1)N=C([S+]([O-])Cc1ncc(C)c(OC)c1C)[N]2")
   }
 
   // Normalize sulfoxide.
@@ -391,42 +391,42 @@ void testNormalize() {
     RWMOL_SPTR m = "COc1ccc2c(c1)nc([nH]2)S(=O)Cc1ncc(c(c1C)OC)C"_smiles;
     RWMOL_SPTR res(MolStandardize::cleanup(*m, params));
     TEST_ASSERT(MolToSmiles(*res) ==
-                "COc1ccc2[nH]c([S+]([O-])Cc3ncc(C)c(OC)c3C)nc2c1");
+                "COc1ccc2[nH]c([S+]([O-])Cc3ncc(C)c(OC)c3C)nc2c1")
   }
 
   // Normalize azide.
   {
     RWMOL_SPTR m = "C1(=CC=C(C=C1)N)N=[N]#N"_smiles;
     RWMOL_SPTR res(MolStandardize::cleanup(*m, params));
-    TEST_ASSERT(MolToSmiles(*res) == "[N-]=[N+]=Nc1ccc(N)cc1");
+    TEST_ASSERT(MolToSmiles(*res) == "[N-]=[N+]=Nc1ccc(N)cc1")
   }
 
   // Normalize diazo.
   {
     RWMOL_SPTR m = "[N](#N)=C1C(NC(N=C1)=O)=O"_smiles;
     RWMOL_SPTR res(MolStandardize::cleanup(*m, params));
-    TEST_ASSERT(MolToSmiles(*res) == "[N-]=[N+]=C1C=NC(=O)NC1=O");
+    TEST_ASSERT(MolToSmiles(*res) == "[N-]=[N+]=C1C=NC(=O)NC1=O")
   }
 
   // Normalize phosphate.
   {
     RWMOL_SPTR m = "C1=NC=C([N]1)CO[P+]([O-])([O-])[O-]"_smiles;
     RWMOL_SPTR res(MolStandardize::cleanup(*m, params));
-    TEST_ASSERT(MolToSmiles(*res) == "O=P([O-])([O-])OCC1=CN=C[N]1");
+    TEST_ASSERT(MolToSmiles(*res) == "O=P([O-])([O-])OCC1=CN=C[N]1")
   }
 
   // Normalize hydrazine-diazonium.
   {
     RWMOL_SPTR m = "CNNC[N+]#N"_smiles;
     RWMOL_SPTR res(MolStandardize::cleanup(*m, params));
-    TEST_ASSERT(MolToSmiles(*res) == "CN=[NH+]CN=N");
+    TEST_ASSERT(MolToSmiles(*res) == "CN=[NH+]CN=N")
   }
 
   // Normalize amidinium.
   {
     RWMOL_SPTR m = "[C+](C)(N)N"_smiles;
     RWMOL_SPTR res(MolStandardize::cleanup(*m, params));
-    TEST_ASSERT(MolToSmiles(*res) == "CC(N)=[NH2+]");
+    TEST_ASSERT(MolToSmiles(*res) == "CC(N)=[NH2+]")
     BOOST_LOG(rdDebugLog) << "Finished" << std::endl;
   }
 }
@@ -446,42 +446,42 @@ void testNormalizeMultiFrags() {
   {
     RWMOL_SPTR m = "[Na]OC(=O)c1ccc(C[S+2]([O-])([O-]))cc1"_smiles;
     RWMOL_SPTR res(MolStandardize::cleanup(*m, params));
-    TEST_ASSERT(MolToSmiles(*res) == "O=C([O-])c1ccc(C[S](=O)=O)cc1.[Na+]");
+    TEST_ASSERT(MolToSmiles(*res) == "O=C([O-])c1ccc(C[S](=O)=O)cc1.[Na+]")
   }
 
   // All fragments should stay if one gets transformed by normalization.
   {
     RWMOL_SPTR m = "[Na+].[O-]C(=O)c1ccc(C[S+2]([O-])([O-]))cc1"_smiles;
     RWMOL_SPTR res(MolStandardize::cleanup(*m, params));
-    TEST_ASSERT(MolToSmiles(*res) == "O=C([O-])c1ccc(C[S](=O)=O)cc1.[Na+]");
+    TEST_ASSERT(MolToSmiles(*res) == "O=C([O-])c1ccc(C[S](=O)=O)cc1.[Na+]")
   }
 
   // Recombine non-aromatic 1,3-separated charges.
   {
     RWMOL_SPTR m = "C[N-]C(C)=[N+](C)C"_smiles;
     RWMOL_SPTR res(MolStandardize::cleanup(*m, params));
-    TEST_ASSERT(MolToSmiles(*res) == "CN=C(C)N(C)C");
+    TEST_ASSERT(MolToSmiles(*res) == "CN=C(C)N(C)C")
   }
 
   // Recombine aromatic 1,3-separated charges.
   {
     RWMOL_SPTR m = "[n-]1c(=[N+](C)C)cccc1"_smiles;
     RWMOL_SPTR res(MolStandardize::cleanup(*m, params));
-    TEST_ASSERT(MolToSmiles(*res) == "CN(C)c1ccccn1");
+    TEST_ASSERT(MolToSmiles(*res) == "CN(C)c1ccccn1")
   }
 
   // Recombine aromatic 1,3-separated charges.
   {
     RWMOL_SPTR m = "C[n+]1c([N-](C))cccc1"_smiles;
     RWMOL_SPTR res(MolStandardize::cleanup(*m, params));
-    TEST_ASSERT(MolToSmiles(*res) == "CN=c1ccccn1C");
+    TEST_ASSERT(MolToSmiles(*res) == "CN=c1ccccn1C")
   }
 
   // Recombine aromatic 1,3-separated charges to form pyrimidone.
   {
     RWMOL_SPTR m = "[O-]c1[n+](C)cccc1"_smiles;
     RWMOL_SPTR res(MolStandardize::cleanup(*m, params));
-    TEST_ASSERT(MolToSmiles(*res) == "Cn1ccccc1=O");
+    TEST_ASSERT(MolToSmiles(*res) == "Cn1ccccc1=O")
   }
 
   // Recombine aromatic 1,3-separated charges to form pyrimidone.
@@ -490,63 +490,63 @@ void testNormalizeMultiFrags() {
         "COc1cc2ccc3c4c(OC)cc(OC)c(OC)c4c([O-])[n+](C)c3c2cc1OC"_smiles;
     RWMOL_SPTR res(MolStandardize::cleanup(*m, params));
     TEST_ASSERT(MolToSmiles(*res) ==
-                "COc1cc2ccc3c4c(OC)cc(OC)c(OC)c4c(=O)n(C)c3c2cc1OC");
+                "COc1cc2ccc3c4c(OC)cc(OC)c(OC)c4c(=O)n(C)c3c2cc1OC")
   }
 
   // Recombine non-aromatic 1,5-separated charges.
   {
     RWMOL_SPTR m = "C[N-]C=CC=[N+](C)C"_smiles;
     RWMOL_SPTR res(MolStandardize::cleanup(*m, params));
-    TEST_ASSERT(MolToSmiles(*res) == "CN=CC=CN(C)C");
+    TEST_ASSERT(MolToSmiles(*res) == "CN=CC=CN(C)C")
   }
 
   // Recombine aromatic 1,5-separated charges.
   {
     RWMOL_SPTR m = "[n-]1ccc(=[N+](C)C)cc1"_smiles;
     RWMOL_SPTR res(MolStandardize::cleanup(*m, params));
-    TEST_ASSERT(MolToSmiles(*res) == "CN(C)c1ccncc1");
+    TEST_ASSERT(MolToSmiles(*res) == "CN(C)c1ccncc1")
   }
 
   // Recombine aromatic 1,5-separated charges.
   {
     RWMOL_SPTR m = "C[n+]1ccc([N-]C)cc1"_smiles;
     RWMOL_SPTR res(MolStandardize::cleanup(*m, params));
-    TEST_ASSERT(MolToSmiles(*res) == "CN=c1ccn(C)cc1");
+    TEST_ASSERT(MolToSmiles(*res) == "CN=c1ccn(C)cc1")
   }
 
   // Shift positive charge from nonprotonated to protonated atom.
   {
     RWMOL_SPTR m = "CNC=[N+](C)C"_smiles;
     RWMOL_SPTR res(MolStandardize::cleanup(*m, params));
-    TEST_ASSERT(MolToSmiles(*res) == "C[NH+]=CN(C)C");
+    TEST_ASSERT(MolToSmiles(*res) == "C[NH+]=CN(C)C")
   }
 
   // Shift positive charge from nonprotonated to protonated atom."
   {
     RWMOL_SPTR m = "CNC=CC=[N+](C)C"_smiles;
     RWMOL_SPTR res(MolStandardize::cleanup(*m, params));
-    TEST_ASSERT(MolToSmiles(*res) == "C[NH+]=CC=CN(C)C");
+    TEST_ASSERT(MolToSmiles(*res) == "C[NH+]=CC=CN(C)C")
   }
 
   // Shift positive charge from nonprotonated to protonated atom."
   {
     RWMOL_SPTR m = "[nH]1ccc(=[N+](C)C)cc1"_smiles;
     RWMOL_SPTR res(MolStandardize::cleanup(*m, params));
-    TEST_ASSERT(MolToSmiles(*res) == "CN(C)c1cc[nH+]cc1");
+    TEST_ASSERT(MolToSmiles(*res) == "CN(C)c1cc[nH+]cc1")
   }
 
   // Ensure no transforms inadvertently breaks open rings.
   {
     RWMOL_SPTR m = "[O-]C1=CC=CC2=CC=CC=[N+]12"_smiles;
     RWMOL_SPTR res(MolStandardize::cleanup(*m, params));
-    TEST_ASSERT(MolToSmiles(*res) == "O=c1cccc2ccccn12");
+    TEST_ASSERT(MolToSmiles(*res) == "O=c1cccc2ccccn12")
   }
 
   // Shift positive charge from nonprotonated to protonated atom.
   {
     RWMOL_SPTR m = "[nH]1c(=[N+](C)C)cccc1"_smiles;
     RWMOL_SPTR res(MolStandardize::cleanup(*m, params));
-    TEST_ASSERT(MolToSmiles(*res) == "CN(C)c1cccc[nH+]1");
+    TEST_ASSERT(MolToSmiles(*res) == "CN(C)c1cccc[nH+]1")
     BOOST_LOG(rdDebugLog) << "Finished" << std::endl;
   }
 }
@@ -561,7 +561,7 @@ void testCharge() {
     std::string ss = MolStandardize::standardizeSmiles(smi);
     TEST_ASSERT(
         ss ==
-        "C=C(CC(=O)[CH-]CCCCCCCCCCCCCCCC)C(=O)[O-].CC(C)[O-].CCC.[O-2].[Ti+5]");
+        "C=C(CC(=O)[CH-]CCCCCCCCCCCCCCCC)C(=O)[O-].CC(C)[O-].CCC.[O-2].[Ti+5]")
   }
 
   // Reionization should not infinitely loop forever on these molecules.
@@ -574,7 +574,7 @@ void testCharge() {
     TEST_ASSERT(
         ss ==
         "O=P([O-])(O)O.O=P([O-])([O-])O.O=S(=O)([O-])[O-].[Cl-].[Cl-].[K+"
-        "].[K+].[Mg+2].[Na+].[Na+].[Na+]");
+        "].[K+].[Mg+2].[Na+].[Na+].[Na+]")
   }
 
   // Charge parent!!
@@ -582,7 +582,7 @@ void testCharge() {
   {
     std::string smi = "[Na].[Na]";
     std::string ss = MolStandardize::standardizeSmiles(smi);
-    TEST_ASSERT(ss == "[Na+].[Na+]");
+    TEST_ASSERT(ss == "[Na+].[Na+]")
   }
 
   // TODO: Arguably should become selenite ion... O=[Se]([O-])[O-].
@@ -590,7 +590,7 @@ void testCharge() {
   {
     std::string smi = "[Na].[Na].O[Se](O)=O";
     std::string ss = MolStandardize::standardizeSmiles(smi);
-    TEST_ASSERT(ss == "O=[Se](O)O.[Na+].[Na+]");
+    TEST_ASSERT(ss == "O=[Se](O)O.[Na+].[Na+]")
     BOOST_LOG(rdDebugLog) << "Finished" << std::endl;
   }
 
@@ -598,7 +598,7 @@ void testCharge() {
   {
     std::string smi = "c1nn[n-]n1.[Na+]";
     std::string ss = MolStandardize::standardizeSmiles(smi);
-    TEST_ASSERT(ss == "[Na+].c1nn[n-]n1");
+    TEST_ASSERT(ss == "[Na+].c1nn[n-]n1")
     BOOST_LOG(rdDebugLog) << "Finished" << std::endl;
   }
 
@@ -606,7 +606,7 @@ void testCharge() {
   {
     std::string smi = "CCCc1cc(-c2ccccc2)cc(CCC)[n+]1-c1nn[n-]n1";
     std::string ss = MolStandardize::standardizeSmiles(smi);
-    TEST_ASSERT(ss == "CCCc1cc(-c2ccccc2)cc(CCC)[n+]1-c1nn[n-]n1");
+    TEST_ASSERT(ss == "CCCc1cc(-c2ccccc2)cc(CCC)[n+]1-c1nn[n-]n1")
     BOOST_LOG(rdDebugLog) << "Finished" << std::endl;
   }
 }

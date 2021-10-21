@@ -524,11 +524,11 @@ void _DFS(const Graph& g, const boost::dynamic_bitset<>& ringBonds,
       for (auto ai = apath.rbegin(); ai != apath.rend() && *ai != oVertex;
            ++ai) {
         auto epair = boost::edge(*ai, *(ai + 1), g);
-        CHECK_INVARIANT(epair.second, "edge not found");
+        CHECK_INVARIANT(epair.second, "edge not found")
         openBonds.reset(g[epair.first]);
       }
       auto epair = boost::edge(oVertex, *apath.rbegin(), g);
-      CHECK_INVARIANT(epair.second, "edge not found");
+      CHECK_INVARIANT(epair.second, "edge not found")
       openBonds.reset(g[epair.first]);
     } else if (colors[oVertex] == 0) {
       std::vector<unsigned> napath = apath;
@@ -566,7 +566,7 @@ bool checkIfRingsAreClosed(const Seed& fs) {
       while (bonds.first != bonds.second && fs.Topology[*(bonds.first)] != bi) {
         ++bonds.first;
       }
-      CHECK_INVARIANT(bonds.first != bonds.second, "bond not found");
+      CHECK_INVARIANT(bonds.first != bonds.second, "bond not found")
       unsigned startVertex = boost::source(*(bonds.first), fs.Topology);
       std::vector<unsigned> apath = {startVertex};
       _DFS(fs.Topology, ringBonds, openBonds, startVertex, apath, colors,

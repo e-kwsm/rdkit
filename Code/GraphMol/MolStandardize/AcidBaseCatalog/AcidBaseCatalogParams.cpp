@@ -59,7 +59,7 @@ const std::vector<std::pair<ROMOL_SPTR, ROMOL_SPTR>>
 
 const std::pair<ROMOL_SPTR, ROMOL_SPTR> AcidBaseCatalogParams::getPair(
     unsigned int fid) const {
-  URANGE_CHECK(fid, d_pairs.size());
+  URANGE_CHECK(fid, d_pairs.size())
   return d_pairs[fid];
 }
 
@@ -74,11 +74,11 @@ std::string AcidBaseCatalogParams::Serialize() const {
 }
 
 void AcidBaseCatalogParams::initFromStream(std::istream &) {
-  UNDER_CONSTRUCTION("not implemented");
+  UNDER_CONSTRUCTION("not implemented")
 }
 
 void AcidBaseCatalogParams::initFromString(const std::string &) {
-  UNDER_CONSTRUCTION("not implemented");
+  UNDER_CONSTRUCTION("not implemented")
 }
 
 }  // namespace MolStandardize

@@ -70,7 +70,7 @@ class RDKIT_RDGEOMETRYLIB_EXPORT Point3D : public Point {
   inline unsigned int dimension() const override { return 3; }
 
   inline double operator[](unsigned int i) const override {
-    PRECONDITION(i < 3, "Invalid index on Point3D");
+    PRECONDITION(i < 3, "Invalid index on Point3D")
     if (i == 0) {
       return x;
     } else if (i == 1) {
@@ -81,7 +81,7 @@ class RDKIT_RDGEOMETRYLIB_EXPORT Point3D : public Point {
   }
 
   inline double &operator[](unsigned int i) override {
-    PRECONDITION(i < 3, "Invalid index on Point3D");
+    PRECONDITION(i < 3, "Invalid index on Point3D")
     if (i == 0) {
       return x;
     } else if (i == 1) {
@@ -248,7 +248,7 @@ class RDKIT_RDGEOMETRYLIB_EXPORT Point3D : public Point {
       res.x = 1;
     }
     double l = res.length();
-    POSTCONDITION(l > 0.0, "zero perpendicular");
+    POSTCONDITION(l > 0.0, "zero perpendicular")
     res /= l;
     return res;
   }
@@ -289,7 +289,7 @@ class RDKIT_RDGEOMETRYLIB_EXPORT Point2D : public Point {
   inline unsigned int dimension() const override { return 2; }
 
   inline double operator[](unsigned int i) const override {
-    PRECONDITION(i < 2, "Invalid index on Point2D");
+    PRECONDITION(i < 2, "Invalid index on Point2D")
     if (i == 0) {
       return x;
     } else {
@@ -298,7 +298,7 @@ class RDKIT_RDGEOMETRYLIB_EXPORT Point2D : public Point {
   }
 
   inline double &operator[](unsigned int i) override {
-    PRECONDITION(i < 2, "Invalid index on Point2D");
+    PRECONDITION(i < 2, "Invalid index on Point2D")
     if (i == 0) {
       return x;
     } else {
@@ -490,7 +490,7 @@ class RDKIT_RDGEOMETRYLIB_EXPORT PointND : public Point {
 
   PointND directionVector(const PointND &other) {
     PRECONDITION(this->dimension() == other.dimension(),
-                 "Point dimensions do not match");
+                 "Point dimensions do not match")
     PointND np(other);
     np -= (*this);
     np.normalize();

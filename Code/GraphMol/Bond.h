@@ -182,7 +182,7 @@ class RDKIT_GRAPHMOL_EXPORT Bond : public RDProps {
 
   //! returns a reference to the ROMol that owns this instance
   ROMol &getOwningMol() const {
-    PRECONDITION(dp_mol, "no owner");
+    PRECONDITION(dp_mol, "no owner")
     return *dp_mol;
   }
   //! sets our owning molecule
@@ -384,7 +384,7 @@ class RDKIT_GRAPHMOL_EXPORT Bond : public RDProps {
 //! (e.g. SINGLE->2, AROMATIC->3, etc.)
 RDKIT_GRAPHMOL_EXPORT extern uint8_t getTwiceBondType(const RDKit::Bond &b);
 
-};  // namespace RDKit
+}  // namespace RDKit
 
 //! allows Bond objects to be dumped to streams
 RDKIT_GRAPHMOL_EXPORT extern std::ostream &operator<<(std::ostream &target,

@@ -85,7 +85,7 @@ std::vector<size_t> PositionVariationOp::getVariationCounts() const {
 
 std::unique_ptr<ROMol> PositionVariationOp::operator()(
     const std::vector<size_t> &which) const {
-  PRECONDITION(dp_mol, "no molecule");
+  PRECONDITION(dp_mol, "no molecule")
   if (which.size() != d_variationPoints.size()) {
     throw ValueErrorException("bad element choice in enumeration");
   }

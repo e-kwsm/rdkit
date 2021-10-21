@@ -139,7 +139,7 @@ class RDKIT_FILTERCATALOG_EXPORT FilterMatcherBase
   friend class boost::serialization::access;
   template <class Archive>
   void serialize(Archive &ar, const unsigned int version) {
-    RDUNUSED_PARAM(version);
+    RDUNUSED_PARAM(version)
     ar &d_filterName;
   }
 #endif

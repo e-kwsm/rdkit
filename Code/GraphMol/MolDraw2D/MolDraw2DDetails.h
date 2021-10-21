@@ -76,7 +76,7 @@ RDKIT_MOLDRAW2D_EXPORT inline void addAtomIndices(const ROMol &mol) {
     }
     atom->setProp(common_properties::atomNote, lab);
   }
-};
+}
 
 //! add annotations with bond indices.
 RDKIT_MOLDRAW2D_EXPORT inline void addBondIndices(const ROMol &mol) {
@@ -94,7 +94,7 @@ RDKIT_MOLDRAW2D_EXPORT inline void addBondIndices(const ROMol &mol) {
     }
     bond->setProp(common_properties::bondNote, lab);
   }
-};
+}
 
 RDKIT_MOLDRAW2D_EXPORT std::vector<Point2D> getBracketPoints(
     const Point2D &p1, const Point2D &p2, const Point2D &refPt,

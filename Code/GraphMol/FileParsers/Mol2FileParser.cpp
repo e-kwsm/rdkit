@@ -75,9 +75,9 @@ void fixNitroSubstructureAndCharge(RWMol *res, unsigned int atIdx) {
 }
 
 void readFormalChargesFromAttr(std::istream *inStream, RWMol *res) {
-  PRECONDITION(inStream, "inStream not valid");
-  PRECONDITION(!inStream->eof(), "inStream is at eof");
-  PRECONDITION(res, "RWMol not valid");
+  PRECONDITION(inStream, "inStream not valid")
+  PRECONDITION(!inStream->eof(), "inStream is at eof")
+  PRECONDITION(res, "RWMol not valid")
   typedef boost::tokenizer<boost::char_separator<char>> tokenizer;
   boost::char_separator<char> sep(" \t\n");
   bool readNextAtomAttribs = true;
@@ -706,10 +706,10 @@ Bond *ParseMol2FileBondLine(const std::string bondLine,
 
 void ParseMol2AtomBlock(std::istream *inStream, RWMol *res, unsigned int nAtoms,
                         INT_VECT &idxCorresp) {
-  PRECONDITION(inStream, "inStream not valid");
-  PRECONDITION(!inStream->eof(), "inStream is at eof");
-  PRECONDITION(res, "RWMol not valid");
-  PRECONDITION(idxCorresp.size() == nAtoms, "vector size mismatch");
+  PRECONDITION(inStream, "inStream not valid")
+  PRECONDITION(!inStream->eof(), "inStream is at eof")
+  PRECONDITION(res, "RWMol not valid")
+  PRECONDITION(idxCorresp.size() == nAtoms, "vector size mismatch")
   unsigned int nLP = 0;
   bool hasHAtoms = false;
 
@@ -757,14 +757,14 @@ void ParseMol2AtomBlock(std::istream *inStream, RWMol *res, unsigned int nAtoms,
   res->addConformer(conf, true);
 
   POSTCONDITION(res->getNumAtoms() == (nAtoms - nLP),
-                "Wrong number of atoms in molecule");
+                "Wrong number of atoms in molecule")
 }
 
 void ParseMol2BondBlock(std::istream *inStream, RWMol *res, unsigned int nBonds,
                         const INT_VECT &idxCorresp) {
-  PRECONDITION(inStream, "inStream not valid");
-  PRECONDITION(!inStream->eof(), "inStream is at eof");
-  PRECONDITION(res, "RWMol not valid");
+  PRECONDITION(inStream, "inStream not valid")
+  PRECONDITION(!inStream->eof(), "inStream is at eof")
+  PRECONDITION(res, "RWMol not valid")
   unsigned int nBadBonds = 0;
 
   for (unsigned int i = 0; i < nBonds; ++i) {
@@ -788,10 +788,10 @@ void ParseMol2BondBlock(std::istream *inStream, RWMol *res, unsigned int nBonds,
     }
   }
   POSTCONDITION(res->getNumBonds() == (nBonds - nBadBonds),
-                "Wrong number of atoms in molecule");
+                "Wrong number of atoms in molecule")
 }
 
-};  // end of anonymous namespace
+}  // namespace
 
 //------------------------------------------------
 //
@@ -800,7 +800,7 @@ void ParseMol2BondBlock(std::istream *inStream, RWMol *res, unsigned int nBonds,
 //------------------------------------------------
 RWMol *Mol2DataStreamToMol(std::istream *inStream, bool sanitize, bool removeHs,
                            Mol2Type, bool cleanupSubstructures) {
-  PRECONDITION(inStream, "no stream");
+  PRECONDITION(inStream, "no stream")
   std::string tempStr, lineBeg;
   typedef boost::tokenizer<boost::char_separator<char>> tokenizer;
   boost::char_separator<char> sep(" \t\n");
@@ -979,13 +979,13 @@ RWMol *Mol2DataStreamToMol(std::istream *inStream, bool sanitize, bool removeHs,
   }
 
   return res;
-};
+}
 
 RWMol *Mol2DataStreamToMol(std::istream &inStream, bool sanitize, bool removeHs,
                            Mol2Type variant, bool cleanupSubstructures) {
   return Mol2DataStreamToMol(&inStream, sanitize, removeHs, variant,
                              cleanupSubstructures);
-};
+}
 //------------------------------------------------
 //
 //  Read a molecule from a string

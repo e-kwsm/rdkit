@@ -67,8 +67,8 @@ void testSmilesWriter() {
     std::string mname, pval;
     mol->getProp(common_properties::_Name, mname);
     mol->getProp("Column_2", pval);
-    CHECK_INVARIANT(mname == names[i], "");
-    CHECK_INVARIANT(pval == props[i], "");
+    CHECK_INVARIANT(mname == names[i], "")
+    CHECK_INVARIANT(pval == props[i], "")
     i++;
     delete mol;
     try {
@@ -97,7 +97,7 @@ void testSmilesWriter2() {
     writer->write(*mol);
     delete mol;
     writer->close();
-    TEST_ASSERT(ss.str() == "c1ccccc1 0\nFC(Cl)Br 1\n");
+    TEST_ASSERT(ss.str() == "c1ccccc1 0\nFC(Cl)Br 1\n")
     delete writer;
   }
   {
@@ -116,7 +116,7 @@ void testSmilesWriter2() {
     writer->write(*mol);
     delete mol;
     writer->close();
-    TEST_ASSERT(ss.str() == "C1=CC=CC=C1 0\nF[C@H](Cl)Br 1\n");
+    TEST_ASSERT(ss.str() == "C1=CC=CC=C1 0\nF[C@H](Cl)Br 1\n")
     delete writer;
   }
 }
@@ -161,8 +161,8 @@ void testSmilesWriterNoNames() {
     mol->getProp(common_properties::_Name, mname);
     mol->getProp("Column_2", pval);
     delete mol;
-    TEST_ASSERT(mname != "bogus");
-    TEST_ASSERT(pval == props[i]);
+    TEST_ASSERT(mname != "bogus")
+    TEST_ASSERT(pval == props[i])
     i++;
     try {
       mol = nSup->next();
@@ -170,7 +170,7 @@ void testSmilesWriterNoNames() {
       break;
     }
   }
-  TEST_ASSERT(writer->numMols() == nSup->length());
+  TEST_ASSERT(writer->numMols() == nSup->length())
   writer->close();
   delete writer;
   delete nSup;
@@ -216,8 +216,8 @@ void testSmilesWriterClose() {
     mol->getProp(common_properties::_Name, mname);
     mol->getProp("Column_2", pval);
     delete mol;
-    TEST_ASSERT(mname != "bogus");
-    TEST_ASSERT(pval == props[i]);
+    TEST_ASSERT(mname != "bogus")
+    TEST_ASSERT(pval == props[i])
     i++;
     try {
       mol = nSup->next();
@@ -225,7 +225,7 @@ void testSmilesWriterClose() {
       break;
     }
   }
-  TEST_ASSERT(writer->numMols() == nSup->length());
+  TEST_ASSERT(writer->numMols() == nSup->length())
   writer->close();
   delete nSup;
   delete writer;
@@ -254,7 +254,7 @@ void testSDWriter() {
     delete mol;
   }
   writer->flush();
-  CHECK_INVARIANT(writer->numMols() == 16, "");
+  CHECK_INVARIANT(writer->numMols() == 16, "")
 
   // make sure we can close() the writer and delete it:
   writer->close();
@@ -267,7 +267,7 @@ void testSDWriter() {
     ROMol *mol = reader.next();
     std::string mname;
     mol->getProp(common_properties::_Name, mname);
-    CHECK_INVARIANT(mname == names[i], "");
+    CHECK_INVARIANT(mname == names[i], "")
 
     delete mol;
     i++;
@@ -282,7 +282,7 @@ void testSDWriter() {
     ROMol *mol = nreader.next();
     std::string mname;
     mol->getProp(common_properties::_Name, mname);
-    CHECK_INVARIANT(mname == names[i], "");
+    CHECK_INVARIANT(mname == names[i], "")
     i++;
 
     delete mol;
@@ -309,7 +309,7 @@ void testTDTWriter() {
     writer->write(*mol);
     delete mol;
   }
-  TEST_ASSERT(writer->numMols() == 16);
+  TEST_ASSERT(writer->numMols() == 16)
   writer->close();
   delete writer;
 
@@ -321,12 +321,12 @@ void testTDTWriter() {
     if (mol) {
       std::string mname;
       mol->getProp("CAS_RN", mname);
-      CHECK_INVARIANT(mname == names[i], "");
+      CHECK_INVARIANT(mname == names[i], "")
       delete mol;
     }
     i++;
   }
-  TEST_ASSERT(i == 16);
+  TEST_ASSERT(i == 16)
 }
 
 void testSmilesWriterStrm() {
@@ -373,8 +373,8 @@ void testSmilesWriterStrm() {
     std::string mname, pval;
     mol->getProp(common_properties::_Name, mname);
     mol->getProp("Column_2", pval);
-    CHECK_INVARIANT(mname == names[i], "");
-    CHECK_INVARIANT(pval == props[i], "");
+    CHECK_INVARIANT(mname == names[i], "")
+    CHECK_INVARIANT(pval == props[i], "")
     i++;
     delete mol;
     try {
@@ -412,7 +412,7 @@ void testSDWriterStrm() {
       delete mol;
     }
     writer->flush();
-    CHECK_INVARIANT(writer->numMols() == 16, "");
+    CHECK_INVARIANT(writer->numMols() == 16, "")
     writer->close();
     delete writer;
     delete oStream;
@@ -424,7 +424,7 @@ void testSDWriterStrm() {
       ROMol *mol = reader.next();
       std::string mname;
       mol->getProp(common_properties::_Name, mname);
-      CHECK_INVARIANT(mname == names[i], "");
+      CHECK_INVARIANT(mname == names[i], "")
 
       delete mol;
       i++;
@@ -439,11 +439,11 @@ void testSDWriterStrm() {
     unsigned int i = 0;
     while (!nreader.atEnd()) {
       ROMol *mol = nreader.next();
-      TEST_ASSERT(mol);
+      TEST_ASSERT(mol)
       ++i;
       delete mol;
     }
-    TEST_ASSERT(i == 16);
+    TEST_ASSERT(i == 16)
   }
 }
 
@@ -470,7 +470,7 @@ void testTDTWriterStrm() {
     delete mol;
   }
   writer->flush();
-  TEST_ASSERT(writer->numMols() == 16);
+  TEST_ASSERT(writer->numMols() == 16)
   writer->close();
   delete writer;
   delete oStream;
@@ -483,12 +483,12 @@ void testTDTWriterStrm() {
     if (mol) {
       std::string mname;
       mol->getProp("CAS_RN", mname);
-      CHECK_INVARIANT(mname == names[i], "");
+      CHECK_INVARIANT(mname == names[i], "")
       delete mol;
     }
     i++;
   }
-  TEST_ASSERT(i == 16);
+  TEST_ASSERT(i == 16)
 }
 
 void testSDMemoryCorruption() {
@@ -517,7 +517,7 @@ void testSDMemoryCorruption() {
     // std::cerr<<nDone<<std::endl;
     ROMol *mol = sdsup.next();
     // std::cerr<<"m:"<<mol<<std::endl;
-    TEST_ASSERT(mol);
+    TEST_ASSERT(mol)
     std::string mname;
     mol->getProp(common_properties::_Name, mname);
     names.push_back(mname);
@@ -529,9 +529,9 @@ void testSDMemoryCorruption() {
     delete mol;
     nDone++;
   }
-  CHECK_INVARIANT(nDone == 200, "");
+  CHECK_INVARIANT(nDone == 200, "")
   writer->flush();
-  CHECK_INVARIANT(writer->numMols() == 200, "");
+  CHECK_INVARIANT(writer->numMols() == 200, "")
   writer->close();
 
   delete writer;
@@ -544,7 +544,7 @@ void testSDMemoryCorruption() {
     ROMol *mol = reader.next();
     std::string mname;
     mol->getProp(common_properties::_Name, mname);
-    CHECK_INVARIANT(mname == names[i], "");
+    CHECK_INVARIANT(mname == names[i], "")
 
     delete mol;
     i++;
@@ -558,64 +558,64 @@ void testIssue3525000() {
     std::string fname =
         rdbase + "/Code/GraphMol/FileParsers/test_data/Issue3525000.sdf";
     RWMol *mol = MolFileToMol(fname);
-    TEST_ASSERT(mol);
+    TEST_ASSERT(mol)
 
     std::string cip;
-    TEST_ASSERT(mol->getAtomWithIdx(0)->hasProp(common_properties::_CIPCode));
+    TEST_ASSERT(mol->getAtomWithIdx(0)->hasProp(common_properties::_CIPCode))
     mol->getAtomWithIdx(0)->getProp(common_properties::_CIPCode, cip);
-    TEST_ASSERT(cip == "R");
-    TEST_ASSERT(mol->getAtomWithIdx(3)->hasProp(common_properties::_CIPCode));
+    TEST_ASSERT(cip == "R")
+    TEST_ASSERT(mol->getAtomWithIdx(3)->hasProp(common_properties::_CIPCode))
     mol->getAtomWithIdx(3)->getProp(common_properties::_CIPCode, cip);
-    TEST_ASSERT(cip == "R");
-    TEST_ASSERT(mol->getAtomWithIdx(6)->hasProp(common_properties::_CIPCode));
+    TEST_ASSERT(cip == "R")
+    TEST_ASSERT(mol->getAtomWithIdx(6)->hasProp(common_properties::_CIPCode))
     mol->getAtomWithIdx(6)->getProp(common_properties::_CIPCode, cip);
-    TEST_ASSERT(cip == "R");
-    TEST_ASSERT(mol->getAtomWithIdx(8)->hasProp(common_properties::_CIPCode));
+    TEST_ASSERT(cip == "R")
+    TEST_ASSERT(mol->getAtomWithIdx(8)->hasProp(common_properties::_CIPCode))
     mol->getAtomWithIdx(8)->getProp(common_properties::_CIPCode, cip);
-    TEST_ASSERT(cip == "R");
-    TEST_ASSERT(mol->getAtomWithIdx(9)->hasProp(common_properties::_CIPCode));
+    TEST_ASSERT(cip == "R")
+    TEST_ASSERT(mol->getAtomWithIdx(9)->hasProp(common_properties::_CIPCode))
     mol->getAtomWithIdx(9)->getProp(common_properties::_CIPCode, cip);
-    TEST_ASSERT(cip == "R");
-    TEST_ASSERT(mol->getAtomWithIdx(10)->hasProp(common_properties::_CIPCode));
+    TEST_ASSERT(cip == "R")
+    TEST_ASSERT(mol->getAtomWithIdx(10)->hasProp(common_properties::_CIPCode))
     mol->getAtomWithIdx(10)->getProp(common_properties::_CIPCode, cip);
-    TEST_ASSERT(cip == "S");
-    TEST_ASSERT(mol->getAtomWithIdx(14)->hasProp(common_properties::_CIPCode));
+    TEST_ASSERT(cip == "S")
+    TEST_ASSERT(mol->getAtomWithIdx(14)->hasProp(common_properties::_CIPCode))
     // FIX: Marvin disagrees about this one:
     mol->getAtomWithIdx(14)->getProp(common_properties::_CIPCode, cip);
-    TEST_ASSERT(cip == "R");
-    TEST_ASSERT(mol->getAtomWithIdx(15)->hasProp(common_properties::_CIPCode));
+    TEST_ASSERT(cip == "R")
+    TEST_ASSERT(mol->getAtomWithIdx(15)->hasProp(common_properties::_CIPCode))
     mol->getAtomWithIdx(15)->getProp(common_properties::_CIPCode, cip);
-    TEST_ASSERT(cip == "R");
+    TEST_ASSERT(cip == "R")
 
     std::string mb = MolToMolBlock(*mol);
     delete mol;
     mol = MolBlockToMol(mb);
-    TEST_ASSERT(mol);
-    TEST_ASSERT(mol->getAtomWithIdx(0)->hasProp(common_properties::_CIPCode));
+    TEST_ASSERT(mol)
+    TEST_ASSERT(mol->getAtomWithIdx(0)->hasProp(common_properties::_CIPCode))
     mol->getAtomWithIdx(0)->getProp(common_properties::_CIPCode, cip);
-    TEST_ASSERT(cip == "R");
-    TEST_ASSERT(mol->getAtomWithIdx(3)->hasProp(common_properties::_CIPCode));
+    TEST_ASSERT(cip == "R")
+    TEST_ASSERT(mol->getAtomWithIdx(3)->hasProp(common_properties::_CIPCode))
     mol->getAtomWithIdx(3)->getProp(common_properties::_CIPCode, cip);
-    TEST_ASSERT(cip == "R");
-    TEST_ASSERT(mol->getAtomWithIdx(6)->hasProp(common_properties::_CIPCode));
+    TEST_ASSERT(cip == "R")
+    TEST_ASSERT(mol->getAtomWithIdx(6)->hasProp(common_properties::_CIPCode))
     mol->getAtomWithIdx(6)->getProp(common_properties::_CIPCode, cip);
-    TEST_ASSERT(cip == "R");
-    TEST_ASSERT(mol->getAtomWithIdx(8)->hasProp(common_properties::_CIPCode));
+    TEST_ASSERT(cip == "R")
+    TEST_ASSERT(mol->getAtomWithIdx(8)->hasProp(common_properties::_CIPCode))
     mol->getAtomWithIdx(8)->getProp(common_properties::_CIPCode, cip);
-    TEST_ASSERT(cip == "R");
-    TEST_ASSERT(mol->getAtomWithIdx(9)->hasProp(common_properties::_CIPCode));
+    TEST_ASSERT(cip == "R")
+    TEST_ASSERT(mol->getAtomWithIdx(9)->hasProp(common_properties::_CIPCode))
     mol->getAtomWithIdx(9)->getProp(common_properties::_CIPCode, cip);
-    TEST_ASSERT(cip == "R");
-    TEST_ASSERT(mol->getAtomWithIdx(10)->hasProp(common_properties::_CIPCode));
+    TEST_ASSERT(cip == "R")
+    TEST_ASSERT(mol->getAtomWithIdx(10)->hasProp(common_properties::_CIPCode))
     mol->getAtomWithIdx(10)->getProp(common_properties::_CIPCode, cip);
-    TEST_ASSERT(cip == "S");
-    TEST_ASSERT(mol->getAtomWithIdx(14)->hasProp(common_properties::_CIPCode));
+    TEST_ASSERT(cip == "S")
+    TEST_ASSERT(mol->getAtomWithIdx(14)->hasProp(common_properties::_CIPCode))
     // FIX: Marvin disagrees about this one:
     mol->getAtomWithIdx(14)->getProp(common_properties::_CIPCode, cip);
-    TEST_ASSERT(cip == "R");
-    TEST_ASSERT(mol->getAtomWithIdx(15)->hasProp(common_properties::_CIPCode));
+    TEST_ASSERT(cip == "R")
+    TEST_ASSERT(mol->getAtomWithIdx(15)->hasProp(common_properties::_CIPCode))
     mol->getAtomWithIdx(15)->getProp(common_properties::_CIPCode, cip);
-    TEST_ASSERT(cip == "R");
+    TEST_ASSERT(cip == "R")
     delete mol;
   }
   {
@@ -623,45 +623,45 @@ void testIssue3525000() {
     std::string fname =
         rdbase + "/Code/GraphMol/FileParsers/test_data/Issue3525000b.sdf";
     RWMol *mol = MolFileToMol(fname);
-    TEST_ASSERT(mol);
+    TEST_ASSERT(mol)
     MolOps::assignChiralTypesFrom3D(*mol);
     MolOps::assignStereochemistry(*mol);
     std::string cip;
-    TEST_ASSERT(mol->getAtomWithIdx(0)->hasProp(common_properties::_CIPCode));
+    TEST_ASSERT(mol->getAtomWithIdx(0)->hasProp(common_properties::_CIPCode))
     mol->getAtomWithIdx(0)->getProp(common_properties::_CIPCode, cip);
-    TEST_ASSERT(cip == "S");
-    TEST_ASSERT(mol->getAtomWithIdx(1)->hasProp(common_properties::_CIPCode));
+    TEST_ASSERT(cip == "S")
+    TEST_ASSERT(mol->getAtomWithIdx(1)->hasProp(common_properties::_CIPCode))
     mol->getAtomWithIdx(1)->getProp(common_properties::_CIPCode, cip);
-    TEST_ASSERT(cip == "S");
-    TEST_ASSERT(mol->getAtomWithIdx(2)->hasProp(common_properties::_CIPCode));
+    TEST_ASSERT(cip == "S")
+    TEST_ASSERT(mol->getAtomWithIdx(2)->hasProp(common_properties::_CIPCode))
     mol->getAtomWithIdx(2)->getProp(common_properties::_CIPCode, cip);
-    TEST_ASSERT(cip == "R");
-    TEST_ASSERT(mol->getAtomWithIdx(3)->hasProp(common_properties::_CIPCode));
+    TEST_ASSERT(cip == "R")
+    TEST_ASSERT(mol->getAtomWithIdx(3)->hasProp(common_properties::_CIPCode))
     mol->getAtomWithIdx(3)->getProp(common_properties::_CIPCode, cip);
-    TEST_ASSERT(cip == "R");
-    TEST_ASSERT(mol->getAtomWithIdx(4)->hasProp(common_properties::_CIPCode));
+    TEST_ASSERT(cip == "R")
+    TEST_ASSERT(mol->getAtomWithIdx(4)->hasProp(common_properties::_CIPCode))
     mol->getAtomWithIdx(4)->getProp(common_properties::_CIPCode, cip);
-    TEST_ASSERT(cip == "S");
+    TEST_ASSERT(cip == "S")
 
     std::string mb = MolToMolBlock(*mol);
     delete mol;
     mol = MolBlockToMol(mb);
-    TEST_ASSERT(mol);
-    TEST_ASSERT(mol->getAtomWithIdx(0)->hasProp(common_properties::_CIPCode));
+    TEST_ASSERT(mol)
+    TEST_ASSERT(mol->getAtomWithIdx(0)->hasProp(common_properties::_CIPCode))
     mol->getAtomWithIdx(0)->getProp(common_properties::_CIPCode, cip);
-    TEST_ASSERT(cip == "S");
-    TEST_ASSERT(mol->getAtomWithIdx(1)->hasProp(common_properties::_CIPCode));
+    TEST_ASSERT(cip == "S")
+    TEST_ASSERT(mol->getAtomWithIdx(1)->hasProp(common_properties::_CIPCode))
     mol->getAtomWithIdx(1)->getProp(common_properties::_CIPCode, cip);
-    TEST_ASSERT(cip == "S");
-    TEST_ASSERT(mol->getAtomWithIdx(2)->hasProp(common_properties::_CIPCode));
+    TEST_ASSERT(cip == "S")
+    TEST_ASSERT(mol->getAtomWithIdx(2)->hasProp(common_properties::_CIPCode))
     mol->getAtomWithIdx(2)->getProp(common_properties::_CIPCode, cip);
-    TEST_ASSERT(cip == "R");
-    TEST_ASSERT(mol->getAtomWithIdx(3)->hasProp(common_properties::_CIPCode));
+    TEST_ASSERT(cip == "R")
+    TEST_ASSERT(mol->getAtomWithIdx(3)->hasProp(common_properties::_CIPCode))
     mol->getAtomWithIdx(3)->getProp(common_properties::_CIPCode, cip);
-    TEST_ASSERT(cip == "R");
-    TEST_ASSERT(mol->getAtomWithIdx(4)->hasProp(common_properties::_CIPCode));
+    TEST_ASSERT(cip == "R")
+    TEST_ASSERT(mol->getAtomWithIdx(4)->hasProp(common_properties::_CIPCode))
     mol->getAtomWithIdx(4)->getProp(common_properties::_CIPCode, cip);
-    TEST_ASSERT(cip == "S");
+    TEST_ASSERT(cip == "S")
     delete mol;
   }
 }
@@ -669,7 +669,7 @@ void testIssue3525000() {
 void testIssue265() {
   {
     ROMol *m1 = SmilesToMol("C1ON1");
-    TEST_ASSERT(m1);
+    TEST_ASSERT(m1)
     auto *conf = new Conformer(m1->getNumAtoms());
     RDGeom::Point3D p1(0, 0, 0);
     RDGeom::Point3D p2(1, 0, 0);
@@ -683,7 +683,7 @@ void testIssue265() {
     TDTWriter writer(&sstream);
     writer.write(*m1);
     std::string otext = sstream.str();
-    TEST_ASSERT(otext == "$SMI<C1NO1>\n3D<0,0,0,0,1,0,1,0,0;>\n");
+    TEST_ASSERT(otext == "$SMI<C1NO1>\n3D<0,0,0,0,1,0,1,0,0>\n");
     writer.close();
     delete m1;
   }
@@ -692,7 +692,7 @@ void testIssue265() {
 void testMolFileChiralFlag() {
   {
     ROMol *m1 = SmilesToMol("C[C@H](Cl)F");
-    TEST_ASSERT(m1);
+    TEST_ASSERT(m1)
 
     std::string mb = MolToMolBlock(*m1);
     delete m1;
@@ -703,13 +703,13 @@ void testMolFileChiralFlag() {
   }
   {
     ROMol *m1 = SmilesToMol("C[C@H](Cl)F");
-    TEST_ASSERT(m1);
+    TEST_ASSERT(m1)
     m1->setProp(common_properties::_MolFileChiralFlag,
                 static_cast<unsigned int>(1));
     std::string mb = MolToMolBlock(*m1);
     delete m1;
     m1 = MolBlockToMol(mb);
-    TEST_ASSERT(m1->hasProp(common_properties::_MolFileChiralFlag));
+    TEST_ASSERT(m1->hasProp(common_properties::_MolFileChiralFlag))
     delete m1;
   }
 }
@@ -723,11 +723,11 @@ void testMolFileTotalValence() {
     std::string mb = MolToMolBlock(*m1);
     delete m1;
     m1 = MolBlockToMol(mb);
-    TEST_ASSERT(m1);
-    TEST_ASSERT(m1->getNumAtoms() == 1);
-    TEST_ASSERT(m1->getAtomWithIdx(0)->getNoImplicit());
-    TEST_ASSERT(m1->getAtomWithIdx(0)->getNumExplicitHs() == 0);
-    TEST_ASSERT(m1->getAtomWithIdx(0)->getNumRadicalElectrons() == 1);
+    TEST_ASSERT(m1)
+    TEST_ASSERT(m1->getNumAtoms() == 1)
+    TEST_ASSERT(m1->getAtomWithIdx(0)->getNoImplicit())
+    TEST_ASSERT(m1->getAtomWithIdx(0)->getNumExplicitHs() == 0)
+    TEST_ASSERT(m1->getAtomWithIdx(0)->getNumRadicalElectrons() == 1)
     delete m1;
   }
   {
@@ -735,11 +735,11 @@ void testMolFileTotalValence() {
     std::string mb = MolToMolBlock(*m1);
     delete m1;
     m1 = MolBlockToMol(mb);
-    TEST_ASSERT(m1);
-    TEST_ASSERT(m1->getNumAtoms() == 1);
-    TEST_ASSERT(m1->getAtomWithIdx(0)->getNoImplicit());
-    TEST_ASSERT(m1->getAtomWithIdx(0)->getNumExplicitHs() == 1);
-    TEST_ASSERT(m1->getAtomWithIdx(0)->getNumRadicalElectrons() == 1);
+    TEST_ASSERT(m1)
+    TEST_ASSERT(m1->getNumAtoms() == 1)
+    TEST_ASSERT(m1->getAtomWithIdx(0)->getNoImplicit())
+    TEST_ASSERT(m1->getAtomWithIdx(0)->getNumExplicitHs() == 1)
+    TEST_ASSERT(m1->getAtomWithIdx(0)->getNumRadicalElectrons() == 1)
 
     delete m1;
   }
@@ -748,11 +748,11 @@ void testMolFileTotalValence() {
     std::string mb = MolToMolBlock(*m1);
     delete m1;
     m1 = MolBlockToMol(mb);
-    TEST_ASSERT(m1);
-    TEST_ASSERT(m1->getNumAtoms() == 1);
-    TEST_ASSERT(m1->getAtomWithIdx(0)->getNoImplicit());
-    TEST_ASSERT(m1->getAtomWithIdx(0)->getNumExplicitHs() == 2);
-    TEST_ASSERT(m1->getAtomWithIdx(0)->getNumRadicalElectrons() == 2);
+    TEST_ASSERT(m1)
+    TEST_ASSERT(m1->getNumAtoms() == 1)
+    TEST_ASSERT(m1->getAtomWithIdx(0)->getNoImplicit())
+    TEST_ASSERT(m1->getAtomWithIdx(0)->getNumExplicitHs() == 2)
+    TEST_ASSERT(m1->getAtomWithIdx(0)->getNumRadicalElectrons() == 2)
     delete m1;
   }
   {
@@ -760,11 +760,11 @@ void testMolFileTotalValence() {
     std::string mb = MolToMolBlock(*m1);
     delete m1;
     m1 = MolBlockToMol(mb);
-    TEST_ASSERT(m1);
-    TEST_ASSERT(m1->getNumAtoms() == 1);
-    TEST_ASSERT(m1->getAtomWithIdx(0)->getNoImplicit());
-    TEST_ASSERT(m1->getAtomWithIdx(0)->getNumExplicitHs() == 3);
-    TEST_ASSERT(m1->getAtomWithIdx(0)->getNumRadicalElectrons() == 1);
+    TEST_ASSERT(m1)
+    TEST_ASSERT(m1->getNumAtoms() == 1)
+    TEST_ASSERT(m1->getAtomWithIdx(0)->getNoImplicit())
+    TEST_ASSERT(m1->getAtomWithIdx(0)->getNumExplicitHs() == 3)
+    TEST_ASSERT(m1->getAtomWithIdx(0)->getNumRadicalElectrons() == 1)
     delete m1;
   }
 
@@ -781,48 +781,48 @@ void testMolFileWithRxn() {
     std::string fName;
     fName = rdbase + "rxn1.mol";
     ROMol *m = MolFileToMol(fName);
-    TEST_ASSERT(m);
-    TEST_ASSERT(m->getNumAtoms() == 18);
-    TEST_ASSERT(m->getNumBonds() == 16);
+    TEST_ASSERT(m)
+    TEST_ASSERT(m->getNumAtoms() == 18)
+    TEST_ASSERT(m->getNumBonds() == 16)
 
-    TEST_ASSERT(m->getAtomWithIdx(0)->hasProp(common_properties::molRxnRole));
+    TEST_ASSERT(m->getAtomWithIdx(0)->hasProp(common_properties::molRxnRole))
     TEST_ASSERT(
-        m->getAtomWithIdx(0)->getProp<int>(common_properties::molRxnRole) == 1);
+        m->getAtomWithIdx(0)->getProp<int>(common_properties::molRxnRole) == 1)
     TEST_ASSERT(
-        m->getAtomWithIdx(0)->hasProp(common_properties::molRxnComponent));
+        m->getAtomWithIdx(0)->hasProp(common_properties::molRxnComponent))
     TEST_ASSERT(m->getAtomWithIdx(0)->getProp<int>(
-                    common_properties::molRxnComponent) == 1);
+                    common_properties::molRxnComponent) == 1)
 
-    TEST_ASSERT(m->getAtomWithIdx(17)->hasProp(common_properties::molRxnRole));
+    TEST_ASSERT(m->getAtomWithIdx(17)->hasProp(common_properties::molRxnRole))
     TEST_ASSERT(m->getAtomWithIdx(17)->getProp<int>(
-                    common_properties::molRxnRole) == 2);
+                    common_properties::molRxnRole) == 2)
     TEST_ASSERT(
-        m->getAtomWithIdx(17)->hasProp(common_properties::molRxnComponent));
+        m->getAtomWithIdx(17)->hasProp(common_properties::molRxnComponent))
     TEST_ASSERT(m->getAtomWithIdx(17)->getProp<int>(
-                    common_properties::molRxnComponent) == 3);
+                    common_properties::molRxnComponent) == 3)
 
     std::string mb = MolToMolBlock(*m);
     delete m;
     m = MolBlockToMol(mb);
-    TEST_ASSERT(m);
-    TEST_ASSERT(m->getNumAtoms() == 18);
-    TEST_ASSERT(m->getNumBonds() == 16);
+    TEST_ASSERT(m)
+    TEST_ASSERT(m->getNumAtoms() == 18)
+    TEST_ASSERT(m->getNumBonds() == 16)
 
-    TEST_ASSERT(m->getAtomWithIdx(0)->hasProp(common_properties::molRxnRole));
+    TEST_ASSERT(m->getAtomWithIdx(0)->hasProp(common_properties::molRxnRole))
     TEST_ASSERT(
-        m->getAtomWithIdx(0)->getProp<int>(common_properties::molRxnRole) == 1);
+        m->getAtomWithIdx(0)->getProp<int>(common_properties::molRxnRole) == 1)
     TEST_ASSERT(
-        m->getAtomWithIdx(0)->hasProp(common_properties::molRxnComponent));
+        m->getAtomWithIdx(0)->hasProp(common_properties::molRxnComponent))
     TEST_ASSERT(m->getAtomWithIdx(0)->getProp<int>(
-                    common_properties::molRxnComponent) == 1);
+                    common_properties::molRxnComponent) == 1)
 
-    TEST_ASSERT(m->getAtomWithIdx(17)->hasProp(common_properties::molRxnRole));
+    TEST_ASSERT(m->getAtomWithIdx(17)->hasProp(common_properties::molRxnRole))
     TEST_ASSERT(m->getAtomWithIdx(17)->getProp<int>(
-                    common_properties::molRxnRole) == 2);
+                    common_properties::molRxnRole) == 2)
     TEST_ASSERT(
-        m->getAtomWithIdx(17)->hasProp(common_properties::molRxnComponent));
+        m->getAtomWithIdx(17)->hasProp(common_properties::molRxnComponent))
     TEST_ASSERT(m->getAtomWithIdx(17)->getProp<int>(
-                    common_properties::molRxnComponent) == 3);
+                    common_properties::molRxnComponent) == 3)
     delete m;
   }
   BOOST_LOG(rdInfoLog) << "done" << std::endl;
@@ -837,12 +837,12 @@ void testSDWriterOptions() {
     writer.write(*mol);
     delete mol;
     writer.flush();
-    CHECK_INVARIANT(writer.numMols() == 1, "");
+    CHECK_INVARIANT(writer.numMols() == 1, "")
     writer.close();
 
     std::string txt = ss.str();
-    TEST_ASSERT(txt.find("V2000") != std::string::npos);
-    TEST_ASSERT(txt.find("V3000") == std::string::npos);
+    TEST_ASSERT(txt.find("V2000") != std::string::npos)
+    TEST_ASSERT(txt.find("V3000") == std::string::npos)
   }
   {
     std::stringstream ss;
@@ -852,12 +852,12 @@ void testSDWriterOptions() {
     writer.write(*mol);
     delete mol;
     writer.flush();
-    CHECK_INVARIANT(writer.numMols() == 1, "");
+    CHECK_INVARIANT(writer.numMols() == 1, "")
     writer.close();
 
     std::string txt = ss.str();
-    TEST_ASSERT(txt.find("V2000") == std::string::npos);
-    TEST_ASSERT(txt.find("V3000") != std::string::npos);
+    TEST_ASSERT(txt.find("V2000") == std::string::npos)
+    TEST_ASSERT(txt.find("V3000") != std::string::npos)
   }
   {
     std::stringstream ss;
@@ -868,13 +868,13 @@ void testSDWriterOptions() {
     writer.write(*mol);
     delete mol;
     writer.flush();
-    CHECK_INVARIANT(writer.numMols() == 2, "");
+    CHECK_INVARIANT(writer.numMols() == 2, "")
     writer.close();
 
     std::string txt = ss.str();
-    TEST_ASSERT(txt.find("V2000") != std::string::npos);
-    TEST_ASSERT(txt.find("V3000") != std::string::npos);
-    TEST_ASSERT(txt.find("V2000") < txt.find("V3000"));
+    TEST_ASSERT(txt.find("V2000") != std::string::npos)
+    TEST_ASSERT(txt.find("V3000") != std::string::npos)
+    TEST_ASSERT(txt.find("V2000") < txt.find("V3000"))
   }
   {
     std::stringstream ss;
@@ -886,13 +886,13 @@ void testSDWriterOptions() {
     writer.write(*mol);
     delete mol;
     writer.flush();
-    CHECK_INVARIANT(writer.numMols() == 2, "");
+    CHECK_INVARIANT(writer.numMols() == 2, "")
     writer.close();
 
     std::string txt = ss.str();
-    TEST_ASSERT(txt.find("V2000") != std::string::npos);
-    TEST_ASSERT(txt.find("V3000") != std::string::npos);
-    TEST_ASSERT(txt.find("V2000") > txt.find("V3000"));
+    TEST_ASSERT(txt.find("V2000") != std::string::npos)
+    TEST_ASSERT(txt.find("V3000") != std::string::npos)
+    TEST_ASSERT(txt.find("V2000") > txt.find("V3000"))
   }
   {
     // kekulization
@@ -902,12 +902,12 @@ void testSDWriterOptions() {
     writer.write(*mol);
     delete mol;
     writer.flush();
-    CHECK_INVARIANT(writer.numMols() == 1, "");
+    CHECK_INVARIANT(writer.numMols() == 1, "")
     writer.close();
 
     std::string txt = ss.str();
-    TEST_ASSERT(txt.find("  1  2  2") != std::string::npos);
-    TEST_ASSERT(txt.find("  1  2  4") == std::string::npos);
+    TEST_ASSERT(txt.find("  1  2  2") != std::string::npos)
+    TEST_ASSERT(txt.find("  1  2  4") == std::string::npos)
   }
   {
     // kekulization
@@ -918,12 +918,12 @@ void testSDWriterOptions() {
     writer.write(*mol);
     delete mol;
     writer.flush();
-    CHECK_INVARIANT(writer.numMols() == 1, "");
+    CHECK_INVARIANT(writer.numMols() == 1, "")
     writer.close();
 
     std::string txt = ss.str();
-    TEST_ASSERT(txt.find("  1  2  2") == std::string::npos);
-    TEST_ASSERT(txt.find("  1  2  4") != std::string::npos);
+    TEST_ASSERT(txt.find("  1  2  2") == std::string::npos)
+    TEST_ASSERT(txt.find("  1  2  4") != std::string::npos)
   }
   {
     // kekulization
@@ -935,13 +935,13 @@ void testSDWriterOptions() {
     writer.write(*mol);
     delete mol;
     writer.flush();
-    CHECK_INVARIANT(writer.numMols() == 2, "");
+    CHECK_INVARIANT(writer.numMols() == 2, "")
     writer.close();
 
     std::string txt = ss.str();
-    TEST_ASSERT(txt.find("  1  2  2") != std::string::npos);
-    TEST_ASSERT(txt.find("  1  2  4") != std::string::npos);
-    TEST_ASSERT(txt.find("  1  2  2") < txt.find("  1  2  4"));
+    TEST_ASSERT(txt.find("  1  2  2") != std::string::npos)
+    TEST_ASSERT(txt.find("  1  2  4") != std::string::npos)
+    TEST_ASSERT(txt.find("  1  2  2") < txt.find("  1  2  4"))
   }
   {
     // kekulization
@@ -954,13 +954,13 @@ void testSDWriterOptions() {
     writer.write(*mol);
     delete mol;
     writer.flush();
-    CHECK_INVARIANT(writer.numMols() == 2, "");
+    CHECK_INVARIANT(writer.numMols() == 2, "")
     writer.close();
 
     std::string txt = ss.str();
-    TEST_ASSERT(txt.find("  1  2  2") != std::string::npos);
-    TEST_ASSERT(txt.find("  1  2  4") != std::string::npos);
-    TEST_ASSERT(txt.find("  1  2  2") > txt.find("  1  2  4"));
+    TEST_ASSERT(txt.find("  1  2  2") != std::string::npos)
+    TEST_ASSERT(txt.find("  1  2  4") != std::string::npos)
+    TEST_ASSERT(txt.find("  1  2  2") > txt.find("  1  2  4"))
   }
   BOOST_LOG(rdInfoLog) << "done" << std::endl;
 }
@@ -973,26 +973,26 @@ void testZBO() {
     std::string fName;
     fName = rdbase + "FeCO5.mol";
     ROMol *m = MolFileToMol(fName);
-    TEST_ASSERT(m);
-    TEST_ASSERT(m->getNumAtoms() == 11);
-    TEST_ASSERT(m->getNumBonds() == 10);
-    TEST_ASSERT(m->getBondWithIdx(0)->getBondType() == Bond::ZERO);
-    TEST_ASSERT(m->getBondWithIdx(1)->getBondType() == Bond::ZERO);
-    TEST_ASSERT(m->getBondWithIdx(2)->getBondType() == Bond::ZERO);
-    TEST_ASSERT(m->getBondWithIdx(6)->getBondType() == Bond::ZERO);
-    TEST_ASSERT(m->getBondWithIdx(7)->getBondType() == Bond::ZERO);
+    TEST_ASSERT(m)
+    TEST_ASSERT(m->getNumAtoms() == 11)
+    TEST_ASSERT(m->getNumBonds() == 10)
+    TEST_ASSERT(m->getBondWithIdx(0)->getBondType() == Bond::ZERO)
+    TEST_ASSERT(m->getBondWithIdx(1)->getBondType() == Bond::ZERO)
+    TEST_ASSERT(m->getBondWithIdx(2)->getBondType() == Bond::ZERO)
+    TEST_ASSERT(m->getBondWithIdx(6)->getBondType() == Bond::ZERO)
+    TEST_ASSERT(m->getBondWithIdx(7)->getBondType() == Bond::ZERO)
 
     std::string mb = MolToMolBlock(*m);
     delete m;
     m = MolBlockToMol(mb);
-    TEST_ASSERT(m);
-    TEST_ASSERT(m->getNumAtoms() == 11);
-    TEST_ASSERT(m->getNumBonds() == 10);
-    TEST_ASSERT(m->getBondWithIdx(0)->getBondType() == Bond::ZERO);
-    TEST_ASSERT(m->getBondWithIdx(1)->getBondType() == Bond::ZERO);
-    TEST_ASSERT(m->getBondWithIdx(2)->getBondType() == Bond::ZERO);
-    TEST_ASSERT(m->getBondWithIdx(6)->getBondType() == Bond::ZERO);
-    TEST_ASSERT(m->getBondWithIdx(7)->getBondType() == Bond::ZERO);
+    TEST_ASSERT(m)
+    TEST_ASSERT(m->getNumAtoms() == 11)
+    TEST_ASSERT(m->getNumBonds() == 10)
+    TEST_ASSERT(m->getBondWithIdx(0)->getBondType() == Bond::ZERO)
+    TEST_ASSERT(m->getBondWithIdx(1)->getBondType() == Bond::ZERO)
+    TEST_ASSERT(m->getBondWithIdx(2)->getBondType() == Bond::ZERO)
+    TEST_ASSERT(m->getBondWithIdx(6)->getBondType() == Bond::ZERO)
+    TEST_ASSERT(m->getBondWithIdx(7)->getBondType() == Bond::ZERO)
 
     delete m;
   }
@@ -1001,31 +1001,31 @@ void testZBO() {
     std::string fName;
     fName = rdbase + "H3BNH3.mol";
     ROMol *m = MolFileToMol(fName);
-    TEST_ASSERT(m);
-    TEST_ASSERT(m->getNumAtoms() == 2);
-    TEST_ASSERT(m->getNumBonds() == 1);
-    TEST_ASSERT(m->getBondWithIdx(0)->getBondType() == Bond::ZERO);
-    TEST_ASSERT(m->getAtomWithIdx(0)->getFormalCharge() == 0);
-    TEST_ASSERT(m->getAtomWithIdx(1)->getFormalCharge() == 0);
-    TEST_ASSERT(m->getAtomWithIdx(0)->getNumExplicitHs() == 3);
-    TEST_ASSERT(m->getAtomWithIdx(1)->getNumExplicitHs() == 0);
-    TEST_ASSERT(m->getAtomWithIdx(0)->getTotalNumHs() == 3);
-    TEST_ASSERT(m->getAtomWithIdx(1)->getTotalNumHs() == 3);
+    TEST_ASSERT(m)
+    TEST_ASSERT(m->getNumAtoms() == 2)
+    TEST_ASSERT(m->getNumBonds() == 1)
+    TEST_ASSERT(m->getBondWithIdx(0)->getBondType() == Bond::ZERO)
+    TEST_ASSERT(m->getAtomWithIdx(0)->getFormalCharge() == 0)
+    TEST_ASSERT(m->getAtomWithIdx(1)->getFormalCharge() == 0)
+    TEST_ASSERT(m->getAtomWithIdx(0)->getNumExplicitHs() == 3)
+    TEST_ASSERT(m->getAtomWithIdx(1)->getNumExplicitHs() == 0)
+    TEST_ASSERT(m->getAtomWithIdx(0)->getTotalNumHs() == 3)
+    TEST_ASSERT(m->getAtomWithIdx(1)->getTotalNumHs() == 3)
 
     std::string mb = MolToMolBlock(*m);
     delete m;
     // std::cerr<<"MOLBLOCK:\n"<<mb<<"------\n";
     m = MolBlockToMol(mb);
-    TEST_ASSERT(m);
-    TEST_ASSERT(m->getNumAtoms() == 2);
-    TEST_ASSERT(m->getNumBonds() == 1);
-    TEST_ASSERT(m->getBondWithIdx(0)->getBondType() == Bond::ZERO);
-    TEST_ASSERT(m->getAtomWithIdx(0)->getFormalCharge() == 0);
-    TEST_ASSERT(m->getAtomWithIdx(1)->getFormalCharge() == 0);
-    TEST_ASSERT(m->getAtomWithIdx(0)->getNumExplicitHs() == 3);
-    TEST_ASSERT(m->getAtomWithIdx(1)->getNumExplicitHs() == 3);
-    TEST_ASSERT(m->getAtomWithIdx(0)->getTotalNumHs() == 3);
-    TEST_ASSERT(m->getAtomWithIdx(1)->getTotalNumHs() == 3);
+    TEST_ASSERT(m)
+    TEST_ASSERT(m->getNumAtoms() == 2)
+    TEST_ASSERT(m->getNumBonds() == 1)
+    TEST_ASSERT(m->getBondWithIdx(0)->getBondType() == Bond::ZERO)
+    TEST_ASSERT(m->getAtomWithIdx(0)->getFormalCharge() == 0)
+    TEST_ASSERT(m->getAtomWithIdx(1)->getFormalCharge() == 0)
+    TEST_ASSERT(m->getAtomWithIdx(0)->getNumExplicitHs() == 3)
+    TEST_ASSERT(m->getAtomWithIdx(1)->getNumExplicitHs() == 3)
+    TEST_ASSERT(m->getAtomWithIdx(0)->getTotalNumHs() == 3)
+    TEST_ASSERT(m->getAtomWithIdx(1)->getTotalNumHs() == 3)
 
     delete m;
   }
@@ -1039,48 +1039,48 @@ void testV3000WriterDetails() {
   {
     std::string fName = rdbase + "chebi_57262.v3k.mol";
     RWMol *m = MolFileToMol(fName);
-    TEST_ASSERT(m);
-    TEST_ASSERT(m->getNumAtoms() == 22);
-    TEST_ASSERT(m->getNumBonds() == 21);
-    TEST_ASSERT(m->getAtomWithIdx(18)->getAtomicNum() == 0);
-    TEST_ASSERT(!m->getAtomWithIdx(18)->hasQuery());
-    TEST_ASSERT(m->getAtomWithIdx(18)->getIsotope() == 1);
-    TEST_ASSERT(m->getAtomWithIdx(21)->getAtomicNum() == 0);
-    TEST_ASSERT(!m->getAtomWithIdx(21)->hasQuery());
-    TEST_ASSERT(m->getAtomWithIdx(21)->getIsotope() == 2);
+    TEST_ASSERT(m)
+    TEST_ASSERT(m->getNumAtoms() == 22)
+    TEST_ASSERT(m->getNumBonds() == 21)
+    TEST_ASSERT(m->getAtomWithIdx(18)->getAtomicNum() == 0)
+    TEST_ASSERT(!m->getAtomWithIdx(18)->hasQuery())
+    TEST_ASSERT(m->getAtomWithIdx(18)->getIsotope() == 1)
+    TEST_ASSERT(m->getAtomWithIdx(21)->getAtomicNum() == 0)
+    TEST_ASSERT(!m->getAtomWithIdx(21)->hasQuery())
+    TEST_ASSERT(m->getAtomWithIdx(21)->getIsotope() == 2)
 
     std::string mb = MolToMolBlock(*m, true, -1, true, true);
-    TEST_ASSERT(mb.find("MASS=1") != std::string::npos);
-    TEST_ASSERT(mb.find("MASS=2") != std::string::npos);
+    TEST_ASSERT(mb.find("MASS=1") != std::string::npos)
+    TEST_ASSERT(mb.find("MASS=2") != std::string::npos)
 
     delete m;
     m = MolBlockToMol(mb);
-    TEST_ASSERT(m);
-    TEST_ASSERT(m->getNumAtoms() == 22);
-    TEST_ASSERT(m->getNumBonds() == 21);
-    TEST_ASSERT(m->getAtomWithIdx(18)->getAtomicNum() == 0);
-    TEST_ASSERT(!m->getAtomWithIdx(18)->hasQuery());
-    TEST_ASSERT(m->getAtomWithIdx(18)->getIsotope() == 1);
-    TEST_ASSERT(m->getAtomWithIdx(21)->getAtomicNum() == 0);
-    TEST_ASSERT(!m->getAtomWithIdx(21)->hasQuery());
-    TEST_ASSERT(m->getAtomWithIdx(21)->getIsotope() == 2);
+    TEST_ASSERT(m)
+    TEST_ASSERT(m->getNumAtoms() == 22)
+    TEST_ASSERT(m->getNumBonds() == 21)
+    TEST_ASSERT(m->getAtomWithIdx(18)->getAtomicNum() == 0)
+    TEST_ASSERT(!m->getAtomWithIdx(18)->hasQuery())
+    TEST_ASSERT(m->getAtomWithIdx(18)->getIsotope() == 1)
+    TEST_ASSERT(m->getAtomWithIdx(21)->getAtomicNum() == 0)
+    TEST_ASSERT(!m->getAtomWithIdx(21)->hasQuery())
+    TEST_ASSERT(m->getAtomWithIdx(21)->getIsotope() == 2)
 
     // repeat that one more time to make sure we're really solid:
     mb = MolToMolBlock(*m, true, -1, true, true);
-    TEST_ASSERT(mb.find("MASS=1") != std::string::npos);
-    TEST_ASSERT(mb.find("MASS=2") != std::string::npos);
+    TEST_ASSERT(mb.find("MASS=1") != std::string::npos)
+    TEST_ASSERT(mb.find("MASS=2") != std::string::npos)
 
     delete m;
     m = MolBlockToMol(mb);
-    TEST_ASSERT(m);
-    TEST_ASSERT(m->getNumAtoms() == 22);
-    TEST_ASSERT(m->getNumBonds() == 21);
-    TEST_ASSERT(m->getAtomWithIdx(18)->getAtomicNum() == 0);
-    TEST_ASSERT(!m->getAtomWithIdx(18)->hasQuery());
-    TEST_ASSERT(m->getAtomWithIdx(18)->getIsotope() == 1);
-    TEST_ASSERT(m->getAtomWithIdx(21)->getAtomicNum() == 0);
-    TEST_ASSERT(!m->getAtomWithIdx(21)->hasQuery());
-    TEST_ASSERT(m->getAtomWithIdx(21)->getIsotope() == 2);
+    TEST_ASSERT(m)
+    TEST_ASSERT(m->getNumAtoms() == 22)
+    TEST_ASSERT(m->getNumBonds() == 21)
+    TEST_ASSERT(m->getAtomWithIdx(18)->getAtomicNum() == 0)
+    TEST_ASSERT(!m->getAtomWithIdx(18)->hasQuery())
+    TEST_ASSERT(m->getAtomWithIdx(18)->getIsotope() == 1)
+    TEST_ASSERT(m->getAtomWithIdx(21)->getAtomicNum() == 0)
+    TEST_ASSERT(!m->getAtomWithIdx(21)->hasQuery())
+    TEST_ASSERT(m->getAtomWithIdx(21)->getIsotope() == 2)
 
     delete m;
   }
@@ -1097,16 +1097,16 @@ void testGithub187() {
   {
     std::string fName = rdbase + "github187.mol";
     RWMol *m = MolFileToMol(fName);
-    TEST_ASSERT(m);
-    TEST_ASSERT(m->getNumAtoms() == 1);
-    TEST_ASSERT(m->getNumBonds() == 0);
-    TEST_ASSERT(m->getAtomWithIdx(0)->hasQuery());
+    TEST_ASSERT(m)
+    TEST_ASSERT(m->getNumAtoms() == 1)
+    TEST_ASSERT(m->getNumBonds() == 0)
+    TEST_ASSERT(m->getAtomWithIdx(0)->hasQuery())
     std::string mb = MolToMolBlock(*m);
-    TEST_ASSERT(mb.find(" A   0") != std::string::npos);
+    TEST_ASSERT(mb.find(" A   0") != std::string::npos)
 
     // try the v3000 version:
     mb = MolToMolBlock(*m, true, -1, true, true);
-    TEST_ASSERT(mb.find("V30 1 A 0") != std::string::npos);
+    TEST_ASSERT(mb.find("V30 1 A 0") != std::string::npos)
 
     delete m;
   }
@@ -1114,16 +1114,16 @@ void testGithub187() {
   {
     std::string fName = rdbase + "github187.v3k.mol";
     RWMol *m = MolFileToMol(fName);
-    TEST_ASSERT(m);
-    TEST_ASSERT(m->getNumAtoms() == 1);
-    TEST_ASSERT(m->getNumBonds() == 0);
-    TEST_ASSERT(m->getAtomWithIdx(0)->hasQuery());
+    TEST_ASSERT(m)
+    TEST_ASSERT(m->getNumAtoms() == 1)
+    TEST_ASSERT(m->getNumBonds() == 0)
+    TEST_ASSERT(m->getAtomWithIdx(0)->hasQuery())
     std::string mb = MolToMolBlock(*m);
-    TEST_ASSERT(mb.find(" A   0") != std::string::npos);
+    TEST_ASSERT(mb.find(" A   0") != std::string::npos)
 
     // try the v3000 version:
     mb = MolToMolBlock(*m, true, -1, true, true);
-    TEST_ASSERT(mb.find("V30 1 A 0") != std::string::npos);
+    TEST_ASSERT(mb.find("V30 1 A 0") != std::string::npos)
 
     delete m;
   }
@@ -1131,17 +1131,17 @@ void testGithub187() {
   {
     std::string fName = rdbase + "github187.2.mol";
     RWMol *m = MolFileToMol(fName);
-    TEST_ASSERT(m);
-    TEST_ASSERT(m->getNumAtoms() == 1);
-    TEST_ASSERT(m->getNumBonds() == 0);
-    TEST_ASSERT(m->getAtomWithIdx(0)->hasQuery());
+    TEST_ASSERT(m)
+    TEST_ASSERT(m->getNumAtoms() == 1)
+    TEST_ASSERT(m->getNumBonds() == 0)
+    TEST_ASSERT(m->getAtomWithIdx(0)->hasQuery())
     std::string mb = MolToMolBlock(*m);
-    TEST_ASSERT(mb.find(" Q   0") != std::string::npos);
+    TEST_ASSERT(mb.find(" Q   0") != std::string::npos)
 
     // try the v3000 version:
     mb = MolToMolBlock(*m, true, -1, true, true);
-    TEST_ASSERT(mb.find("V30 1 \"NOT [C,H]\" 0") == std::string::npos);
-    TEST_ASSERT(mb.find("1 Q 0") != std::string::npos);
+    TEST_ASSERT(mb.find("V30 1 \"NOT [C,H]\" 0") == std::string::npos)
+    TEST_ASSERT(mb.find("1 Q 0") != std::string::npos)
 
     delete m;
   }
@@ -1158,20 +1158,20 @@ void testGithub186() {
   {
     std::string fName = rdbase + "github186.mol";
     RWMol *m = MolFileToMol(fName);
-    TEST_ASSERT(m);
-    TEST_ASSERT(m->getNumAtoms() == 11);
-    TEST_ASSERT(m->getNumBonds() == 10);
+    TEST_ASSERT(m)
+    TEST_ASSERT(m->getNumAtoms() == 11)
+    TEST_ASSERT(m->getNumBonds() == 10)
     TEST_ASSERT(m->getAtomWithIdx(6)->getChiralTag() != Atom::CHI_UNSPECIFIED &&
-                m->getAtomWithIdx(6)->getChiralTag() != Atom::CHI_OTHER);
+                m->getAtomWithIdx(6)->getChiralTag() != Atom::CHI_OTHER)
 
     std::string mb = MolToMolBlock(*m);
     delete m;
     m = MolBlockToMol(mb);
-    TEST_ASSERT(m);
-    TEST_ASSERT(m->getNumAtoms() == 11);
-    TEST_ASSERT(m->getNumBonds() == 10);
+    TEST_ASSERT(m)
+    TEST_ASSERT(m->getNumAtoms() == 11)
+    TEST_ASSERT(m->getNumBonds() == 10)
     TEST_ASSERT(m->getAtomWithIdx(6)->getChiralTag() != Atom::CHI_UNSPECIFIED &&
-                m->getAtomWithIdx(6)->getChiralTag() != Atom::CHI_OTHER);
+                m->getAtomWithIdx(6)->getChiralTag() != Atom::CHI_OTHER)
 
     delete m;
   }
@@ -1187,30 +1187,30 @@ void testGithub189() {
   {
     std::string fName = rdbase + "github189.mol";
     RWMol *m = MolFileToMol(fName);
-    TEST_ASSERT(m);
-    TEST_ASSERT(m->getNumAtoms() == 8);
-    TEST_ASSERT(m->getNumBonds() == 8);
-    TEST_ASSERT(m->getAtomWithIdx(2)->getNoImplicit());
-    TEST_ASSERT(m->getAtomWithIdx(2)->getTotalValence() == 4);
+    TEST_ASSERT(m)
+    TEST_ASSERT(m->getNumAtoms() == 8)
+    TEST_ASSERT(m->getNumBonds() == 8)
+    TEST_ASSERT(m->getAtomWithIdx(2)->getNoImplicit())
+    TEST_ASSERT(m->getAtomWithIdx(2)->getTotalValence() == 4)
 
     std::string mb = MolToMolBlock(*m);
     delete m;
     m = MolBlockToMol(mb);
-    TEST_ASSERT(m);
-    TEST_ASSERT(m->getNumAtoms() == 8);
-    TEST_ASSERT(m->getNumBonds() == 8);
-    TEST_ASSERT(m->getAtomWithIdx(2)->getNoImplicit());
-    TEST_ASSERT(m->getAtomWithIdx(2)->getTotalValence() == 4);
+    TEST_ASSERT(m)
+    TEST_ASSERT(m->getNumAtoms() == 8)
+    TEST_ASSERT(m->getNumBonds() == 8)
+    TEST_ASSERT(m->getAtomWithIdx(2)->getNoImplicit())
+    TEST_ASSERT(m->getAtomWithIdx(2)->getTotalValence() == 4)
 
     // try v3k
     mb = MolToMolBlock(*m, true, -1, true, true);
     delete m;
     m = MolBlockToMol(mb);
-    TEST_ASSERT(m);
-    TEST_ASSERT(m->getNumAtoms() == 8);
-    TEST_ASSERT(m->getNumBonds() == 8);
-    TEST_ASSERT(m->getAtomWithIdx(2)->getNoImplicit());
-    TEST_ASSERT(m->getAtomWithIdx(2)->getTotalValence() == 4);
+    TEST_ASSERT(m)
+    TEST_ASSERT(m->getNumAtoms() == 8)
+    TEST_ASSERT(m->getNumBonds() == 8)
+    TEST_ASSERT(m->getAtomWithIdx(2)->getNoImplicit())
+    TEST_ASSERT(m->getAtomWithIdx(2)->getTotalValence() == 4)
 
     delete m;
   }
@@ -1226,27 +1226,27 @@ void testGithub266() {
   {
     std::string fName = rdbase + "bond-query.mol";
     RWMol *m = MolFileToMol(fName);
-    TEST_ASSERT(m);
-    TEST_ASSERT(m->getNumBonds() == 4);
-    TEST_ASSERT(m->getBondWithIdx(1)->hasQuery());
+    TEST_ASSERT(m)
+    TEST_ASSERT(m->getNumBonds() == 4)
+    TEST_ASSERT(m->getBondWithIdx(1)->hasQuery())
     TEST_ASSERT(m->getBondWithIdx(1)->getQuery()->getDescription() ==
-                "SingleOrDoubleBond");
+                "SingleOrDoubleBond")
 
     std::string mb = MolToMolBlock(*m);
     RWMol *m2 = MolBlockToMol(mb);
-    TEST_ASSERT(m2->getNumBonds() == 4);
-    TEST_ASSERT(m2->getBondWithIdx(1)->hasQuery());
+    TEST_ASSERT(m2->getNumBonds() == 4)
+    TEST_ASSERT(m2->getBondWithIdx(1)->hasQuery())
     TEST_ASSERT(m2->getBondWithIdx(1)->getQuery()->getDescription() ==
-                "SingleOrDoubleBond");
+                "SingleOrDoubleBond")
 
     // try v3k
     mb = MolToMolBlock(*m, true, -1, true, true);
     delete m2;
     m2 = MolBlockToMol(mb);
-    TEST_ASSERT(m2->getNumBonds() == 4);
-    TEST_ASSERT(m2->getBondWithIdx(1)->hasQuery());
+    TEST_ASSERT(m2->getNumBonds() == 4)
+    TEST_ASSERT(m2->getBondWithIdx(1)->hasQuery())
     TEST_ASSERT(m2->getBondWithIdx(1)->getQuery()->getDescription() ==
-                "SingleOrDoubleBond");
+                "SingleOrDoubleBond")
 
     delete m;
     delete m2;
@@ -1255,27 +1255,27 @@ void testGithub266() {
   {
     std::string fName = rdbase + "bond-query2.mol";
     RWMol *m = MolFileToMol(fName);
-    TEST_ASSERT(m);
-    TEST_ASSERT(m->getNumBonds() == 4);
-    TEST_ASSERT(m->getBondWithIdx(1)->hasQuery());
+    TEST_ASSERT(m)
+    TEST_ASSERT(m->getNumBonds() == 4)
+    TEST_ASSERT(m->getBondWithIdx(1)->hasQuery())
     TEST_ASSERT(m->getBondWithIdx(1)->getQuery()->getDescription() ==
-                "SingleOrAromaticBond");
+                "SingleOrAromaticBond")
 
     std::string mb = MolToMolBlock(*m);
     RWMol *m2 = MolBlockToMol(mb);
-    TEST_ASSERT(m2->getNumBonds() == 4);
-    TEST_ASSERT(m2->getBondWithIdx(1)->hasQuery());
+    TEST_ASSERT(m2->getNumBonds() == 4)
+    TEST_ASSERT(m2->getBondWithIdx(1)->hasQuery())
     TEST_ASSERT(m2->getBondWithIdx(1)->getQuery()->getDescription() ==
-                "SingleOrAromaticBond");
+                "SingleOrAromaticBond")
 
     // try v3k
     mb = MolToMolBlock(*m, true, -1, true, true);
     delete m2;
     m2 = MolBlockToMol(mb);
-    TEST_ASSERT(m2->getNumBonds() == 4);
-    TEST_ASSERT(m2->getBondWithIdx(1)->hasQuery());
+    TEST_ASSERT(m2->getNumBonds() == 4)
+    TEST_ASSERT(m2->getBondWithIdx(1)->hasQuery())
     TEST_ASSERT(m2->getBondWithIdx(1)->getQuery()->getDescription() ==
-                "SingleOrAromaticBond");
+                "SingleOrAromaticBond")
 
     delete m;
     delete m2;
@@ -1284,27 +1284,27 @@ void testGithub266() {
   {
     std::string fName = rdbase + "bond-query3.mol";
     RWMol *m = MolFileToMol(fName);
-    TEST_ASSERT(m);
-    TEST_ASSERT(m->getNumBonds() == 4);
-    TEST_ASSERT(m->getBondWithIdx(1)->hasQuery());
+    TEST_ASSERT(m)
+    TEST_ASSERT(m->getNumBonds() == 4)
+    TEST_ASSERT(m->getBondWithIdx(1)->hasQuery())
     TEST_ASSERT(m->getBondWithIdx(1)->getQuery()->getDescription() ==
-                "DoubleOrAromaticBond");
+                "DoubleOrAromaticBond")
 
     std::string mb = MolToMolBlock(*m);
     RWMol *m2 = MolBlockToMol(mb);
-    TEST_ASSERT(m2->getNumBonds() == 4);
-    TEST_ASSERT(m2->getBondWithIdx(1)->hasQuery());
+    TEST_ASSERT(m2->getNumBonds() == 4)
+    TEST_ASSERT(m2->getBondWithIdx(1)->hasQuery())
     TEST_ASSERT(m2->getBondWithIdx(1)->getQuery()->getDescription() ==
-                "DoubleOrAromaticBond");
+                "DoubleOrAromaticBond")
 
     // try v3k
     mb = MolToMolBlock(*m, true, -1, true, true);
     delete m2;
     m2 = MolBlockToMol(mb);
-    TEST_ASSERT(m2->getNumBonds() == 4);
-    TEST_ASSERT(m2->getBondWithIdx(1)->hasQuery());
+    TEST_ASSERT(m2->getNumBonds() == 4)
+    TEST_ASSERT(m2->getBondWithIdx(1)->hasQuery())
     TEST_ASSERT(m2->getBondWithIdx(1)->getQuery()->getDescription() ==
-                "DoubleOrAromaticBond");
+                "DoubleOrAromaticBond")
 
     delete m;
     delete m2;
@@ -1312,20 +1312,20 @@ void testGithub266() {
 
   {
     ROMol *m = SmartsToMol("C-CN");
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
     std::string mb = MolToMolBlock(*m);
     RWMol *m2 = MolBlockToMol(mb);
-    TEST_ASSERT(m2->getNumBonds() == 2);
-    TEST_ASSERT(!m2->getAtomWithIdx(0)->hasQuery());
-    TEST_ASSERT(!m2->getAtomWithIdx(1)->hasQuery());
-    TEST_ASSERT(!m2->getAtomWithIdx(2)->hasQuery());
-    TEST_ASSERT(m2->getAtomWithIdx(0)->getAtomicNum() == 6);
-    TEST_ASSERT(m2->getAtomWithIdx(1)->getAtomicNum() == 6);
-    TEST_ASSERT(m2->getAtomWithIdx(2)->getAtomicNum() == 7);
-    TEST_ASSERT(!m2->getBondWithIdx(0)->hasQuery());
-    TEST_ASSERT(m2->getBondWithIdx(1)->hasQuery());
+    TEST_ASSERT(m2->getNumBonds() == 2)
+    TEST_ASSERT(!m2->getAtomWithIdx(0)->hasQuery())
+    TEST_ASSERT(!m2->getAtomWithIdx(1)->hasQuery())
+    TEST_ASSERT(!m2->getAtomWithIdx(2)->hasQuery())
+    TEST_ASSERT(m2->getAtomWithIdx(0)->getAtomicNum() == 6)
+    TEST_ASSERT(m2->getAtomWithIdx(1)->getAtomicNum() == 6)
+    TEST_ASSERT(m2->getAtomWithIdx(2)->getAtomicNum() == 7)
+    TEST_ASSERT(!m2->getBondWithIdx(0)->hasQuery())
+    TEST_ASSERT(m2->getBondWithIdx(1)->hasQuery())
     TEST_ASSERT(m2->getBondWithIdx(1)->getQuery()->getDescription() ==
-                "SingleOrAromaticBond");
+                "SingleOrAromaticBond")
     delete m;
     delete m2;
   }
@@ -1341,26 +1341,26 @@ void testGithub268() {
   {
     std::string fName = rdbase + "bond-query4.mol";
     RWMol *m = MolFileToMol(fName);
-    TEST_ASSERT(m);
-    TEST_ASSERT(m->getNumBonds() == 4);
-    TEST_ASSERT(m->getBondWithIdx(1)->hasQuery());
+    TEST_ASSERT(m)
+    TEST_ASSERT(m->getNumBonds() == 4)
+    TEST_ASSERT(m->getBondWithIdx(1)->hasQuery())
     TEST_ASSERT(m->getBondWithIdx(1)->getQuery()->getDescription() ==
-                "BondAnd");
+                "BondAnd")
     std::string mb = MolToMolBlock(*m);
     RWMol *m2 = MolBlockToMol(mb);
-    TEST_ASSERT(m2->getNumBonds() == 4);
-    TEST_ASSERT(m2->getBondWithIdx(1)->hasQuery());
+    TEST_ASSERT(m2->getNumBonds() == 4)
+    TEST_ASSERT(m2->getBondWithIdx(1)->hasQuery())
     TEST_ASSERT(m2->getBondWithIdx(1)->getQuery()->getDescription() ==
-                "BondAnd");
+                "BondAnd")
 
     // try v3k
     mb = MolToMolBlock(*m, true, -1, true, true);
     delete m2;
     m2 = MolBlockToMol(mb);
-    TEST_ASSERT(m2->getNumBonds() == 4);
-    TEST_ASSERT(m2->getBondWithIdx(1)->hasQuery());
+    TEST_ASSERT(m2->getNumBonds() == 4)
+    TEST_ASSERT(m2->getBondWithIdx(1)->hasQuery())
     TEST_ASSERT(m2->getBondWithIdx(1)->getQuery()->getDescription() ==
-                "BondAnd");
+                "BondAnd")
 
     delete m;
     delete m2;
@@ -1373,14 +1373,14 @@ void testGithub357() {
                        << std::endl;
   {
     ROMol *m1 = SmilesToMol("O");
-    TEST_ASSERT(m1);
+    TEST_ASSERT(m1)
     ROMol *m2 = MolOps::addHs(*m1);
-    TEST_ASSERT(m2);
+    TEST_ASSERT(m2)
     delete m1;
     std::string mb = MolToMolBlock(*m2);
     TEST_ASSERT(
         mb.find("    0.0000    0.0000    0.0000 H   0  0  0  0  0  1") ==
-        std::string::npos);
+        std::string::npos)
     delete m2;
   }
 }
@@ -1391,12 +1391,12 @@ void testNeedsUpdatePropertyCacheSDWriter() {
       << std::endl;
   {
     ROMol *m1 = SmilesToMol("c1ccccc1[NH]C(=O)", 0, false);
-    TEST_ASSERT(m1);
-    TEST_ASSERT(m1->needsUpdatePropertyCache() == true);
+    TEST_ASSERT(m1)
+    TEST_ASSERT(m1->needsUpdatePropertyCache() == true)
     std::string mb = MolToMolBlock(*m1);
     delete m1;
     ROMol *m2 = MolBlockToMol(mb);
-    TEST_ASSERT(m2);
+    TEST_ASSERT(m2)
     delete m2;
   }
 }
@@ -1407,7 +1407,7 @@ void testGithub488() {
                        << std::endl;
   {
     ROMol *m1 = SmilesToMol("O");
-    TEST_ASSERT(m1);
+    TEST_ASSERT(m1)
     m1->setProp("_Name", "");
     std::stringstream ss;
     SmilesWriter w(&ss);
@@ -1420,10 +1420,10 @@ void testGithub488() {
     w.write(*m1);
     w.close();
     std::string txt = ss.str();
-    TEST_ASSERT(txt.find("O 0") != std::string::npos);
-    TEST_ASSERT(txt.find("O foo") != std::string::npos);
-    TEST_ASSERT(txt.find("O 2") != std::string::npos);
-    TEST_ASSERT(txt.find("O  \n") != std::string::npos);
+    TEST_ASSERT(txt.find("O 0") != std::string::npos)
+    TEST_ASSERT(txt.find("O foo") != std::string::npos)
+    TEST_ASSERT(txt.find("O 2") != std::string::npos)
+    TEST_ASSERT(txt.find("O  \n") != std::string::npos)
     delete m1;
   }
 }
@@ -1437,14 +1437,14 @@ void testGithub611() {
   {
     std::string fName = rdbase + "Github611.mol";
     RWMol *m = MolFileToMol(fName);
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
     std::string mb = MolToMolBlock(*m);
-    TEST_ASSERT(mb.find("3  5  1  1") != std::string::npos);
+    TEST_ASSERT(mb.find("3  5  1  1") != std::string::npos)
 
     m->getBondWithIdx(2)->setBondDir(Bond::BEGINWEDGE);
     mb = MolToMolBlock(*m);
-    TEST_ASSERT(mb.find("3  5  1  1") == std::string::npos);
-    TEST_ASSERT(mb.find("3  4  1  1") != std::string::npos);
+    TEST_ASSERT(mb.find("3  5  1  1") == std::string::npos)
+    TEST_ASSERT(mb.find("3  4  1  1") != std::string::npos)
     delete m;
   }
 }
@@ -1459,20 +1459,20 @@ void testGetSDText() {
 
     while (!sdsup.atEnd()) {
       ROMol *mol = sdsup.next();
-      TEST_ASSERT(mol);
+      TEST_ASSERT(mol)
       std::string sdf = SDWriter::getText(*mol);
       SDMolSupplier tsupp;
       tsupp.setData(sdf);
       ROMol *mol2 = tsupp[0];
-      TEST_ASSERT(mol2);
+      TEST_ASSERT(mol2)
       std::string csmi1 = MolToSmiles(*mol, true);
       std::string csmi2 = MolToSmiles(*mol2, true);
-      TEST_ASSERT(csmi1 == csmi2);
+      TEST_ASSERT(csmi1 == csmi2)
       STR_VECT pns = mol->getPropList(false, false);
       for (const auto &pn : pns) {
-        TEST_ASSERT(mol2->hasProp(pn));
+        TEST_ASSERT(mol2->hasProp(pn))
         TEST_ASSERT(mol->getProp<std::string>(pn) ==
-                    mol2->getProp<std::string>(pn));
+                    mol2->getProp<std::string>(pn))
       }
       delete mol;
       delete mol2;
@@ -1488,22 +1488,22 @@ void testMolFileWriterDativeBonds() {
   {
     std::string fName = rdbase + "dative_bonds_two.mol";
     RWMol *m = MolFileToMol(fName);
-    TEST_ASSERT(m);
-    TEST_ASSERT(m->getBondWithIdx(8)->getBondType() == Bond::DATIVE);
-    TEST_ASSERT(m->getBondWithIdx(9)->getBondType() == Bond::DATIVE);
+    TEST_ASSERT(m)
+    TEST_ASSERT(m->getBondWithIdx(8)->getBondType() == Bond::DATIVE)
+    TEST_ASSERT(m->getBondWithIdx(9)->getBondType() == Bond::DATIVE)
 
     std::string mb = MolToMolBlock(*m);
     // Bonds #9 and #10 (index 8 and 9) will have a bond type of 9
     // in the molfile.  Bond # --+ +-- Bond type.
     //                           | |
-    TEST_ASSERT(mb.find("M  V30 9 9 5 11") != std::string::npos);
-    TEST_ASSERT(mb.find("M  V30 10 9 10 11") != std::string::npos);
+    TEST_ASSERT(mb.find("M  V30 9 9 5 11") != std::string::npos)
+    TEST_ASSERT(mb.find("M  V30 10 9 10 11") != std::string::npos)
 
     // Roundtrip - can we read produced mol block above ?
     RWMol *m2 = MolBlockToMol(mb);
-    TEST_ASSERT(m2);
-    TEST_ASSERT(m->getBondWithIdx(8)->getBondType() == Bond::DATIVE);
-    TEST_ASSERT(m->getBondWithIdx(9)->getBondType() == Bond::DATIVE);
+    TEST_ASSERT(m2)
+    TEST_ASSERT(m->getBondWithIdx(8)->getBondType() == Bond::DATIVE)
+    TEST_ASSERT(m->getBondWithIdx(9)->getBondType() == Bond::DATIVE)
     delete m;
     delete m2;
   }
@@ -1511,20 +1511,20 @@ void testMolFileWriterDativeBonds() {
   // Small molecules without dative bonds are output in V2000 format.
   {
     RWMol *m = SmilesToMol("CCC(=O)O[Cu]");
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
     std::string mb = MolToMolBlock(*m);
-    TEST_ASSERT(mb.find("0999 V2000") != std::string::npos);
-    TEST_ASSERT(mb.find("0999 V3000") == std::string::npos);
+    TEST_ASSERT(mb.find("0999 V2000") != std::string::npos)
+    TEST_ASSERT(mb.find("0999 V3000") == std::string::npos)
     delete m;
   }
   // ... but molecules with dative bonds will always be
   // output in V3000 format.
   {
     RWMol *m = SmilesToMol("CCC(=O)O->[Cu]");
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
     std::string mb = MolToMolBlock(*m);
-    TEST_ASSERT(mb.find("0999 V2000") == std::string::npos);
-    TEST_ASSERT(mb.find("0999 V3000") != std::string::npos);
+    TEST_ASSERT(mb.find("0999 V2000") == std::string::npos)
+    TEST_ASSERT(mb.find("0999 V3000") != std::string::npos)
     delete m;
   }
 }

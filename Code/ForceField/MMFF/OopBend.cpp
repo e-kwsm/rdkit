@@ -38,7 +38,7 @@ double calcOopChi(const RDGeom::Point3D &iPoint, const RDGeom::Point3D &jPoint,
 }
 
 double calcOopBendForceConstant(const MMFFOop *mmffOopParams) {
-  PRECONDITION(mmffOopParams, "no OOP parameters");
+  PRECONDITION(mmffOopParams, "no OOP parameters")
 
   return mmffOopParams->koop;
 }
@@ -53,15 +53,15 @@ OopBendContrib::OopBendContrib(ForceField *owner, unsigned int idx1,
                                unsigned int idx2, unsigned int idx3,
                                unsigned int idx4,
                                const MMFFOop *mmffOopParams) {
-  PRECONDITION(owner, "bad owner");
-  PRECONDITION(mmffOopParams, "no OOP parameters");
+  PRECONDITION(owner, "bad owner")
+  PRECONDITION(mmffOopParams, "no OOP parameters")
   PRECONDITION((idx1 != idx2) && (idx1 != idx3) && (idx1 != idx4) &&
                    (idx2 != idx3) && (idx2 != idx4) && (idx3 != idx4),
-               "degenerate points");
-  URANGE_CHECK(idx1, owner->positions().size());
-  URANGE_CHECK(idx2, owner->positions().size());
-  URANGE_CHECK(idx3, owner->positions().size());
-  URANGE_CHECK(idx4, owner->positions().size());
+               "degenerate points")
+  URANGE_CHECK(idx1, owner->positions().size())
+  URANGE_CHECK(idx2, owner->positions().size())
+  URANGE_CHECK(idx3, owner->positions().size())
+  URANGE_CHECK(idx4, owner->positions().size())
 
   dp_forceField = owner;
   d_at1Idx = idx1;
@@ -72,8 +72,8 @@ OopBendContrib::OopBendContrib(ForceField *owner, unsigned int idx1,
 }
 
 double OopBendContrib::getEnergy(double *pos) const {
-  PRECONDITION(dp_forceField, "no owner");
-  PRECONDITION(pos, "bad vector");
+  PRECONDITION(dp_forceField, "no owner")
+  PRECONDITION(pos, "bad vector")
   RDGeom::Point3D p1(pos[3 * d_at1Idx], pos[3 * d_at1Idx + 1],
                      pos[3 * d_at1Idx + 2]);
   RDGeom::Point3D p2(pos[3 * d_at2Idx], pos[3 * d_at2Idx + 1],
@@ -87,9 +87,9 @@ double OopBendContrib::getEnergy(double *pos) const {
 }
 
 void OopBendContrib::getGrad(double *pos, double *grad) const {
-  PRECONDITION(dp_forceField, "no owner");
-  PRECONDITION(pos, "bad vector");
-  PRECONDITION(grad, "bad vector");
+  PRECONDITION(dp_forceField, "no owner")
+  PRECONDITION(pos, "bad vector")
+  PRECONDITION(grad, "bad vector")
 
   RDGeom::Point3D iPoint(pos[3 * d_at1Idx], pos[3 * d_at1Idx + 1],
                          pos[3 * d_at1Idx + 2]);

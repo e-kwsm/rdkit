@@ -398,6 +398,6 @@ RDKIT_RDGENERAL_EXPORT void Union(const VECT_INT_VECT &rings, INT_VECT &res,
 */
 RDKIT_RDGENERAL_EXPORT int nextCombination(INT_VECT &comb, int tot);
 
-};  // namespace RDKit
+}  // namespace RDKit
 
 #endif

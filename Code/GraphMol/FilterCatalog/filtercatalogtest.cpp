@@ -52,7 +52,6 @@ void dump(std::string name, const T &v) {
   std::cerr << name << " = { " << std::endl;
   for (size_t i = 0; i < v.size(); ++i) {
     std::cerr << "\t" << v[i].first << "," << v[i].second << "}," << std::endl;
-    ;
   }
   std::cerr << "}" << std::endl;
 }
@@ -113,28 +112,28 @@ void testFilterCatalog() {
       mol.reset(suppl.next());
       std::string name = mol->getProp<std::string>(common_properties::_Name);
 
-      TEST_ASSERT(mol.get());
+      TEST_ASSERT(mol.get())
       if (catalog.hasMatch(*mol)) {
         std::cerr << "Warning: molecule failed filter " << std::endl;
       }
       // More detailed
       FilterCatalog::CONST_SENTRY entry = catalog.getFirstMatch(*mol);
-      TEST_ASSERT(entry);
+      TEST_ASSERT(entry)
       if (entry) {
         std::cerr << "Warning: molecule failed filter: reason "
                   << entry->getDescription() << std::endl;
         switch (count) {
           case 0:
-            TEST_ASSERT(entry->getDescription() == "hzone_phenol_A(479)");
+            TEST_ASSERT(entry->getDescription() == "hzone_phenol_A(479)")
             break;
           case 1:
-            TEST_ASSERT(entry->getDescription() == "cyano_imine_B(17)");
+            TEST_ASSERT(entry->getDescription() == "cyano_imine_B(17)")
             break;
           case 2:
-            TEST_ASSERT(entry->getDescription() == "keto_keto_gamma(5)");
+            TEST_ASSERT(entry->getDescription() == "keto_keto_gamma(5)")
             break;
         }
-        TEST_ASSERT(entry->getDescription() == name);
+        TEST_ASSERT(entry->getDescription() == name)
 
         // get the substructure atoms for visualization
         std::vector<FilterMatch> matches;
@@ -150,13 +149,13 @@ void testFilterCatalog() {
             const MatchVectType &vect = fm.atomPairs;
             switch (count) {
               case 0:
-                TEST_ASSERT(check(vect, matchvec1));
+                TEST_ASSERT(check(vect, matchvec1))
                 break;
               case 1:
-                TEST_ASSERT(check(vect, matchvec2));
+                TEST_ASSERT(check(vect, matchvec2))
                 break;
               case 2:
-                TEST_ASSERT(check(vect, matchvec3));
+                TEST_ASSERT(check(vect, matchvec3))
                 break;
             }
 
@@ -173,28 +172,28 @@ void testFilterCatalog() {
 void testFilterCatalogEntry() {
   SmartsMatcher *sm = new SmartsMatcher("Aromatic carbon chain");
   boost::shared_ptr<FilterMatcherBase> matcher(sm);
-  TEST_ASSERT(!matcher->isValid());
+  TEST_ASSERT(!matcher->isValid())
   const int debugParse = 0;
   const bool mergeHs = true;
   ROMOL_SPTR pattern(SmartsToMol("c:c:c:c:c", debugParse, mergeHs));
-  TEST_ASSERT(pattern.get() != nullptr);
+  TEST_ASSERT(pattern.get() != nullptr)
   sm->setPattern(pattern);
   sm->setMinCount(1);
   FilterCatalogEntry entry("Bar", matcher);
-  TEST_ASSERT(entry.getDescription() == "Bar");
-  TEST_ASSERT(sm->getMinCount() == 1);
-  TEST_ASSERT(sm->getMaxCount() == (unsigned int)-1);
+  TEST_ASSERT(entry.getDescription() == "Bar")
+  TEST_ASSERT(sm->getMinCount() == 1)
+  TEST_ASSERT(sm->getMaxCount() == (unsigned int)-1)
 
   entry.setDescription("Foo");
-  TEST_ASSERT(entry.getDescription() == "Foo");
+  TEST_ASSERT(entry.getDescription() == "Foo")
 
   entry.setProp("foo", "foo");
-  TEST_ASSERT(entry.getProp<std::string>("foo") == "foo");
+  TEST_ASSERT(entry.getProp<std::string>("foo") == "foo")
   entry.setProp(std::string("bar"), "bar");
-  TEST_ASSERT(entry.getProp<std::string>("bar") == "bar");
+  TEST_ASSERT(entry.getProp<std::string>("bar") == "bar")
 
   RWMol *newM = SmilesToMol("c1ccccc1", 0, true);
-  TEST_ASSERT(entry.hasFilterMatch(*newM));
+  TEST_ASSERT(entry.hasFilterMatch(*newM))
   delete newM;
 }
 
@@ -220,23 +219,23 @@ void testFilterCatalogThreadedRunner() {
     }
     count += 1;
   }
-  TEST_ASSERT(smiles.size() == 3);
+  TEST_ASSERT(smiles.size() == 3)
 
   int numThreads = 3;  // one per entry
   auto results = RunFilterCatalog(catalog, smiles, numThreads);
-  TEST_ASSERT(results.size() == smiles.size());
+  TEST_ASSERT(results.size() == smiles.size())
   count = 0;
   for (auto &entries : results) {
     TEST_ASSERT(entries.size() > 0);
     switch (count) {
       case 0:
-        TEST_ASSERT(entries[0]->getDescription() == "hzone_phenol_A(479)");
+        TEST_ASSERT(entries[0]->getDescription() == "hzone_phenol_A(479)")
         break;
       case 1:
-        TEST_ASSERT(entries[0]->getDescription() == "cyano_imine_B(17)");
+        TEST_ASSERT(entries[0]->getDescription() == "cyano_imine_B(17)")
         break;
       case 2:
-        TEST_ASSERT(entries[0]->getDescription() == "keto_keto_gamma(5)");
+        TEST_ASSERT(entries[0]->getDescription() == "keto_keto_gamma(5)")
         break;
     }
     count += 1;

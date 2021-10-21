@@ -134,7 +134,7 @@ class RDKIT_MOLSTANDARDIZE_EXPORT TautomerEnumeratorResult {
   size_t size() const { return d_tautomers.size(); }
   bool empty() const { return d_tautomers.empty(); }
   const ROMOL_SPTR &at(size_t pos) const {
-    PRECONDITION(pos < d_tautomers.size(), "index out of bounds");
+    PRECONDITION(pos < d_tautomers.size(), "index out of bounds")
     return d_tautomersItVec.at(pos)->second.tautomer;
   }
   const ROMOL_SPTR &operator[](size_t pos) const { return at(pos); }

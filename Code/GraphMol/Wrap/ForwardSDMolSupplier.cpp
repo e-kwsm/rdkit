@@ -40,7 +40,7 @@ class LocalForwardSDMolSupplier : public RDKit::ForwardSDMolSupplier {
     df_sanitize = sanitize;
     df_removeHs = removeHs;
     df_strictParsing = strictParsing;
-    POSTCONDITION(dp_inStream, "bad instream");
+    POSTCONDITION(dp_inStream, "bad instream")
   }
   LocalForwardSDMolSupplier(streambuf &input, bool sanitize, bool removeHs,
                             bool strictParsing) {
@@ -49,7 +49,7 @@ class LocalForwardSDMolSupplier : public RDKit::ForwardSDMolSupplier {
     df_sanitize = sanitize;
     df_removeHs = removeHs;
     df_strictParsing = strictParsing;
-    POSTCONDITION(dp_inStream, "bad instream");
+    POSTCONDITION(dp_inStream, "bad instream")
   }
   LocalForwardSDMolSupplier(std::string filename, bool sanitize, bool removeHs,
                             bool strictParsing) {
@@ -67,7 +67,7 @@ class LocalForwardSDMolSupplier : public RDKit::ForwardSDMolSupplier {
     df_sanitize = sanitize;
     df_removeHs = removeHs;
     df_strictParsing = strictParsing;
-    POSTCONDITION(dp_inStream, "bad instream");
+    POSTCONDITION(dp_inStream, "bad instream")
   }
 };
 

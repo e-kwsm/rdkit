@@ -217,13 +217,13 @@ RWMol *superParent(const RWMol &mol, const CleanupParameters &params,
 }
 
 RWMol *normalize(const RWMol *mol, const CleanupParameters &params) {
-  PRECONDITION(mol, "bad molecule");
+  PRECONDITION(mol, "bad molecule")
   std::unique_ptr<Normalizer> normalizer{normalizerFromParams(params)};
   return static_cast<RWMol *>(normalizer->normalize(*mol));
 }
 
 RWMol *reionize(const RWMol *mol, const CleanupParameters &params) {
-  PRECONDITION(mol, "bad molecule");
+  PRECONDITION(mol, "bad molecule")
   std::unique_ptr<Reionizer> reionizer{reionizerFromParams(params)};
   return static_cast<RWMol *>(reionizer->reionize(*mol));
 }
@@ -239,7 +239,7 @@ void reionizeInPlace(RWMol &mol, const CleanupParameters &params) {
 }
 
 RWMol *removeFragments(const RWMol *mol, const CleanupParameters &params) {
-  PRECONDITION(mol, "bad molecule");
+  PRECONDITION(mol, "bad molecule")
   std::unique_ptr<FragmentRemover> remover{fragmentRemoverFromParams(params)};
   return static_cast<RWMol *>(remover->remove(*mol));
 }
@@ -250,7 +250,7 @@ void removeFragmentsInPlace(RWMol &mol, const CleanupParameters &params) {
 }
 
 RWMol *canonicalTautomer(const RWMol *mol, const CleanupParameters &params) {
-  PRECONDITION(mol, "bad molecule");
+  PRECONDITION(mol, "bad molecule")
   std::unique_ptr<TautomerEnumerator> te{tautomerEnumeratorFromParams(params)};
   return static_cast<RWMol *>(te->canonicalize(*mol));
 }

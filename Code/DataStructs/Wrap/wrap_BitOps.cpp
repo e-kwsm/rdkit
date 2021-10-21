@@ -211,29 +211,29 @@ python::list BulkTverskySimilarity(const T *bv1, python::object bvs, double a,
 struct BitOps_wrapper {
   static void wrap() {
     BIG_DEF(TanimotoSimilarity, TanimotoSimilarity_w, BulkTanimotoSimilarity,
-            "B(bv1&bv2) / (B(bv1) + B(bv2) - B(bv1&bv2))");
+            "B(bv1&bv2) / (B(bv1) + B(bv2) - B(bv1&bv2))")
     BIG_DEF(CosineSimilarity, CosineSimilarity_w, BulkCosineSimilarity,
-            "B(bv1&bv2) / sqrt(B(bv1) * B(bv2))");
+            "B(bv1&bv2) / sqrt(B(bv1) * B(bv2))")
     BIG_DEF(KulczynskiSimilarity, KulczynskiSimilarity_w,
             BulkKulczynskiSimilarity,
-            "B(bv1&bv2)*(B(bv1) + B(bv2)) / (2 * B(bv1) * B(bv2))");
+            "B(bv1&bv2)*(B(bv1) + B(bv2)) / (2 * B(bv1) * B(bv2))")
     BIG_DEF(DiceSimilarity, DiceSimilarity_w, BulkDiceSimilarity,
-            "2*B(bv1&bv2) / (B(bv1) + B(bv2))");
+            "2*B(bv1&bv2) / (B(bv1) + B(bv2))")
     BIG_DEF(SokalSimilarity, SokalSimilarity_w, BulkSokalSimilarity,
-            "B(bv1&bv2) / (2*B(bv1) + 2*B(bv2) - 3*B(bv1&bv2))");
+            "B(bv1&bv2) / (2*B(bv1) + 2*B(bv2) - 3*B(bv1&bv2))")
 
     BIG_DEF(
         McConnaugheySimilarity, McConnaugheySimilarity_w,
         BulkMcConnaugheySimilarity,
-        "(B(bv1&bv2) * (B(bv1)+B(bv2)) - B(bv1)*B(bv2)) / (B(bv1) * B(bv2))");
+        "(B(bv1&bv2) * (B(bv1)+B(bv2)) - B(bv1)*B(bv2)) / (B(bv1) * B(bv2))")
     BIG_DEF(AsymmetricSimilarity, AsymmetricSimilarity_w,
-            BulkAsymmetricSimilarity, "B(bv1&bv2) / min(B(bv1),B(bv2))");
+            BulkAsymmetricSimilarity, "B(bv1&bv2) / min(B(bv1),B(bv2))")
     BIG_DEF(BraunBlanquetSimilarity, BraunBlanquetSimilarity_w,
-            BulkBraunBlanquetSimilarity, "B(bv1&bv2) / max(B(bv1),B(bv2))");
+            BulkBraunBlanquetSimilarity, "B(bv1&bv2) / max(B(bv1),B(bv2))")
     BIG_DEF(RusselSimilarity, RusselSimilarity_w, BulkRusselSimilarity,
-            "B(bv1&bv2) / B(bv1)");
+            "B(bv1&bv2) / B(bv1)")
     BIG_DEF(RogotGoldbergSimilarity, RogotGoldbergSimilarity_w,
-            BulkRogotGoldbergSimilarity, "B(bv1&bv2) / B(bv1)");
+            BulkRogotGoldbergSimilarity, "B(bv1&bv2) / B(bv1)")
 
     {
       std::string help = "B(bv1&bv2) / (a*B(bv1)+b*B(bv2)+(1-a-b)*B(bv1&bv2)";
@@ -274,9 +274,9 @@ struct BitOps_wrapper {
           help.c_str());
     }
 
-    DBL_DEF(OnBitSimilarity, BulkOnBitSimilarity, "B(bv1&bv2) / B(bv1|bv2)");
+    DBL_DEF(OnBitSimilarity, BulkOnBitSimilarity, "B(bv1&bv2) / B(bv1|bv2)")
     DBL_DEF(AllBitSimilarity, BulkAllBitSimilarity,
-            "(B(bv1) - B(bv1^bv2)) / B(bv1)");
+            "(B(bv1) - B(bv1^bv2)) / B(bv1)")
 
     python::def("OnBitProjSimilarity",
                 (DoubleVect(*)(const SBV &, const SBV &))OnBitProjSimilarity);

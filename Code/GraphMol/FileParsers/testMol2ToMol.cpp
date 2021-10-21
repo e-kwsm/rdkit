@@ -62,21 +62,21 @@ void testGeneral(std::string rdbase) {
     } catch (const BadFileException &) {
       ok = true;
     }
-    TEST_ASSERT(ok);
+    TEST_ASSERT(ok)
   }
   {
     std::string fName =
         rdbase + "/Code/GraphMol/FileParsers/test_data/pyrazole_pyridine.mol2";
     RWMol *m = Mol2FileToMol(fName);
-    TEST_ASSERT(m);
-    TEST_ASSERT(m->getNumAtoms() == 5);
+    TEST_ASSERT(m)
+    TEST_ASSERT(m->getNumAtoms() == 5)
 
     // this was sf.net issue 2727976:
-    TEST_ASSERT(m->getNumConformers() == 1);
-    TEST_ASSERT(m->getConformer().is3D());
-    TEST_ASSERT(feq(m->getConformer().getAtomPos(0).x, 1.5019));
-    TEST_ASSERT(feq(m->getConformer().getAtomPos(0).y, 1.0435));
-    TEST_ASSERT(feq(m->getConformer().getAtomPos(0).z, 0.0000));
+    TEST_ASSERT(m->getNumConformers() == 1)
+    TEST_ASSERT(m->getConformer().is3D())
+    TEST_ASSERT(feq(m->getConformer().getAtomPos(0).x, 1.5019))
+    TEST_ASSERT(feq(m->getConformer().getAtomPos(0).y, 1.0435))
+    TEST_ASSERT(feq(m->getConformer().getAtomPos(0).z, 0.0000))
 
     delete m;
   }
@@ -84,8 +84,8 @@ void testGeneral(std::string rdbase) {
     std::string fName =
         rdbase + "/Code/GraphMol/FileParsers/test_data/benzene.mol2";
     RWMol *m = Mol2FileToMol(fName);
-    TEST_ASSERT(m);
-    TEST_ASSERT(m->getNumAtoms() == 6);
+    TEST_ASSERT(m)
+    TEST_ASSERT(m->getNumAtoms() == 6)
     delete m;
   }
   {
@@ -98,7 +98,7 @@ void testGeneral(std::string rdbase) {
     } catch (const FileParseException &) {
       ok = true;
     }
-    TEST_ASSERT(ok);
+    TEST_ASSERT(ok)
   }
   {
     bool ok = false;
@@ -110,23 +110,23 @@ void testGeneral(std::string rdbase) {
     } catch (const FileParseException &) {
       ok = true;
     }
-    TEST_ASSERT(ok);
+    TEST_ASSERT(ok)
   }
   {
     std::string fName =
         rdbase + "/Code/GraphMol/FileParsers/test_data/lonePairMol.mol2";
     RWMol *m = Mol2FileToMol(fName);
-    TEST_ASSERT(m);
-    TEST_ASSERT(m->getNumAtoms() == 5 && m->getNumBonds() == 4);
+    TEST_ASSERT(m)
+    TEST_ASSERT(m->getNumAtoms() == 5 && m->getNumBonds() == 4)
     delete m;
   }
   {
     std::string fName =
         rdbase + "/Code/GraphMol/FileParsers/test_data/symmetricGuanidine.mol2";
     RWMol *m = Mol2FileToMol(fName, false);
-    TEST_ASSERT(m);
-    TEST_ASSERT(m->getAtomWithIdx(1)->getFormalCharge() == 1);
-    TEST_ASSERT(m->getAtomWithIdx(8)->getFormalCharge() == 1);
+    TEST_ASSERT(m)
+    TEST_ASSERT(m->getAtomWithIdx(1)->getFormalCharge() == 1)
+    TEST_ASSERT(m->getAtomWithIdx(8)->getFormalCharge() == 1)
     delete m;
   }
 
@@ -135,89 +135,89 @@ void testGeneral(std::string rdbase) {
         rdbase +
         "/Code/GraphMol/FileParsers/test_data/highlySymmetricGuanidine.mol2";
     RWMol *m = Mol2FileToMol(fName);
-    TEST_ASSERT(m);
-    TEST_ASSERT(m->getAtomWithIdx(4)->getFormalCharge() == 1);
-    TEST_ASSERT(m->getAtomWithIdx(12)->getFormalCharge() == 1);
-    TEST_ASSERT(m->getAtomWithIdx(20)->getFormalCharge() == 1);
+    TEST_ASSERT(m)
+    TEST_ASSERT(m->getAtomWithIdx(4)->getFormalCharge() == 1)
+    TEST_ASSERT(m->getAtomWithIdx(12)->getFormalCharge() == 1)
+    TEST_ASSERT(m->getAtomWithIdx(20)->getFormalCharge() == 1)
     delete m;
   }
   {
     std::string fName =
         rdbase + "/Code/GraphMol/FileParsers/test_data/Noxide.mol2";
     RWMol *m = Mol2FileToMol(fName);
-    TEST_ASSERT(m);
-    TEST_ASSERT(m->getAtomWithIdx(8)->getFormalCharge() == 1);
-    TEST_ASSERT(m->getAtomWithIdx(9)->getFormalCharge() == -1);
+    TEST_ASSERT(m)
+    TEST_ASSERT(m->getAtomWithIdx(8)->getFormalCharge() == 1)
+    TEST_ASSERT(m->getAtomWithIdx(9)->getFormalCharge() == -1)
     delete m;
   }
   {
     std::string fName =
         rdbase + "/Code/GraphMol/FileParsers/test_data/Noxide.mol2";
     RWMol *m = Mol2FileToMol(fName);
-    TEST_ASSERT(m);
-    TEST_ASSERT(m->getAtomWithIdx(8)->getFormalCharge() == 1);
-    TEST_ASSERT(m->getAtomWithIdx(9)->getFormalCharge() == -1);
+    TEST_ASSERT(m)
+    TEST_ASSERT(m->getAtomWithIdx(8)->getFormalCharge() == 1)
+    TEST_ASSERT(m->getAtomWithIdx(9)->getFormalCharge() == -1)
     delete m;
   }
   {
     std::string fName =
         rdbase + "/Code/GraphMol/FileParsers/test_data/fusedRing.mol2";
     RWMol *m = Mol2FileToMol(fName);
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
 
-    TEST_ASSERT(m->getAtomWithIdx(0)->getFormalCharge() == 0);
-    TEST_ASSERT(m->getAtomWithIdx(5)->getFormalCharge() == 0);
-    TEST_ASSERT(m->getAtomWithIdx(8)->getFormalCharge() == 0);
-    TEST_ASSERT(m->getAtomWithIdx(13)->getFormalCharge() == 0);
+    TEST_ASSERT(m->getAtomWithIdx(0)->getFormalCharge() == 0)
+    TEST_ASSERT(m->getAtomWithIdx(5)->getFormalCharge() == 0)
+    TEST_ASSERT(m->getAtomWithIdx(8)->getFormalCharge() == 0)
+    TEST_ASSERT(m->getAtomWithIdx(13)->getFormalCharge() == 0)
     delete m;
   }
   {
     std::string fName =
         rdbase + "/Code/GraphMol/FileParsers/test_data/pyridiniumPhenyl.mol2";
     RWMol *m = Mol2FileToMol(fName);
-    TEST_ASSERT(m);
-    TEST_ASSERT(m->getAtomWithIdx(5)->getFormalCharge() == 1);
-    TEST_ASSERT(m->getAtomWithIdx(6)->getFormalCharge() == 0);
+    TEST_ASSERT(m)
+    TEST_ASSERT(m->getAtomWithIdx(5)->getFormalCharge() == 1)
+    TEST_ASSERT(m->getAtomWithIdx(6)->getFormalCharge() == 0)
     delete m;
   }
   {
     std::string fName =
         rdbase + "/Code/GraphMol/FileParsers/test_data/sulfonAmide.mol2";
     RWMol *m = Mol2FileToMol(fName);
-    TEST_ASSERT(m);
-    TEST_ASSERT(m->getAtomWithIdx(1)->getFormalCharge() == 0);
+    TEST_ASSERT(m)
+    TEST_ASSERT(m->getAtomWithIdx(1)->getFormalCharge() == 0)
     delete m;
   }
   {
     std::string fName =
         rdbase + "/Code/GraphMol/FileParsers/test_data/chargedAmidineRWH.mol2";
     RWMol *m = Mol2FileToMol(fName);
-    TEST_ASSERT(m);
-    TEST_ASSERT(m->getAtomWithIdx(6)->getFormalCharge() == 1);
+    TEST_ASSERT(m)
+    TEST_ASSERT(m->getAtomWithIdx(6)->getFormalCharge() == 1)
     delete m;
   }
   {
     std::string fName =
         rdbase + "/Code/GraphMol/FileParsers/test_data/chargedAmidineEC.mol2";
     RWMol *m = Mol2FileToMol(fName);
-    TEST_ASSERT(m);
-    TEST_ASSERT(m->getAtomWithIdx(3)->getFormalCharge() == 1);
+    TEST_ASSERT(m)
+    TEST_ASSERT(m->getAtomWithIdx(3)->getFormalCharge() == 1)
     delete m;
   }
   {
     std::string fName =
         rdbase + "/Code/GraphMol/FileParsers/test_data/chargedAmidine.mol2";
     RWMol *m = Mol2FileToMol(fName);
-    TEST_ASSERT(m);
-    TEST_ASSERT(m->getAtomWithIdx(9)->getFormalCharge() == 1);
+    TEST_ASSERT(m)
+    TEST_ASSERT(m->getAtomWithIdx(9)->getFormalCharge() == 1)
     delete m;
   }
   {
     std::string fName =
         rdbase + "/Code/GraphMol/FileParsers/test_data/dbtranslateCharged.mol2";
     RWMol *m = Mol2FileToMol(fName);
-    TEST_ASSERT(m);
-    TEST_ASSERT(m->getAtomWithIdx(8)->getFormalCharge() == 1);
+    TEST_ASSERT(m)
+    TEST_ASSERT(m->getAtomWithIdx(8)->getFormalCharge() == 1)
     delete m;
   }
   {
@@ -225,8 +225,8 @@ void testGeneral(std::string rdbase) {
         rdbase +
         "/Code/GraphMol/FileParsers/test_data/dbtranslateUncharged.mol2";
     RWMol *m = Mol2FileToMol(fName);
-    TEST_ASSERT(m);
-    TEST_ASSERT(m->getAtomWithIdx(8)->getFormalCharge() == 0);
+    TEST_ASSERT(m)
+    TEST_ASSERT(m->getAtomWithIdx(8)->getFormalCharge() == 0)
     delete m;
   }
   {
@@ -234,8 +234,8 @@ void testGeneral(std::string rdbase) {
         rdbase +
         "/Code/GraphMol/FileParsers/test_data/dbtranslateUnchargedRing.mol2";
     RWMol *m = Mol2FileToMol(fName);
-    TEST_ASSERT(m);
-    TEST_ASSERT(m->getAtomWithIdx(2)->getFormalCharge() == 0);
+    TEST_ASSERT(m)
+    TEST_ASSERT(m->getAtomWithIdx(2)->getFormalCharge() == 0)
     delete m;
   }
 
@@ -294,9 +294,9 @@ void testIssue3399798(std::string rdbase) {
     std::string fName =
         rdbase + "/Code/GraphMol/FileParsers/test_data/Issue3399798.mol2";
     RWMol *m = Mol2FileToMol(fName);
-    TEST_ASSERT(m);
-    TEST_ASSERT(m->getAtomWithIdx(0)->getChiralTag() == Atom::CHI_UNSPECIFIED);
-    TEST_ASSERT(m->getAtomWithIdx(3)->getChiralTag() == Atom::CHI_UNSPECIFIED);
+    TEST_ASSERT(m)
+    TEST_ASSERT(m->getAtomWithIdx(0)->getChiralTag() == Atom::CHI_UNSPECIFIED)
+    TEST_ASSERT(m->getAtomWithIdx(3)->getChiralTag() == Atom::CHI_UNSPECIFIED)
 
     delete m;
   }
@@ -305,9 +305,9 @@ void testIssue3399798(std::string rdbase) {
     std::string fName =
         rdbase + "/Code/GraphMol/FileParsers/test_data/Issue3399798.2.mol2";
     RWMol *m = Mol2FileToMol(fName);
-    TEST_ASSERT(m);
-    TEST_ASSERT(m->getAtomWithIdx(0)->getChiralTag() == Atom::CHI_UNSPECIFIED);
-    TEST_ASSERT(m->getAtomWithIdx(3)->getChiralTag() != Atom::CHI_UNSPECIFIED);
+    TEST_ASSERT(m)
+    TEST_ASSERT(m->getAtomWithIdx(0)->getChiralTag() == Atom::CHI_UNSPECIFIED)
+    TEST_ASSERT(m->getAtomWithIdx(3)->getChiralTag() != Atom::CHI_UNSPECIFIED)
 
     delete m;
   }
@@ -326,8 +326,8 @@ void testIssue114(std::string rdbase) {
   std::string fName =
       rdbase + "/Code/GraphMol/FileParsers/test_data/EZ_mol2_issue114.mol2";
   RWMol *mol = Mol2FileToMol(fName);
-  TEST_ASSERT(mol);
-  TEST_ASSERT(mol->getBondWithIdx(1)->getStereo() == Bond::STEREOZ);
+  TEST_ASSERT(mol)
+  TEST_ASSERT(mol->getBondWithIdx(1)->getStereo() == Bond::STEREOZ)
   delete mol;
 
   BOOST_LOG(rdInfoLog) << "------------------------------------" << std::endl;
@@ -346,16 +346,16 @@ void testGithub438(std::string rdbase) {
     std::string fName =
         rdbase + "/Code/GraphMol/FileParsers/test_data/github438_1.mol2";
     RWMol *mol = Mol2FileToMol(fName);
-    TEST_ASSERT(mol);
-    TEST_ASSERT(mol->getAtomWithIdx(0)->getFormalCharge() == 1);
+    TEST_ASSERT(mol)
+    TEST_ASSERT(mol->getAtomWithIdx(0)->getFormalCharge() == 1)
     delete mol;
   }
   {
     std::string fName =
         rdbase + "/Code/GraphMol/FileParsers/test_data/github438_2.mol2";
     RWMol *mol = Mol2FileToMol(fName);
-    TEST_ASSERT(mol);
-    TEST_ASSERT(mol->getAtomWithIdx(0)->getFormalCharge() == 2);
+    TEST_ASSERT(mol)
+    TEST_ASSERT(mol->getAtomWithIdx(0)->getFormalCharge() == 2)
     delete mol;
   }
   BOOST_LOG(rdInfoLog) << "------------------------------------" << std::endl;
@@ -379,21 +379,21 @@ void testDisableCleanup(std::string rdbase) {
       bool cleanupSubstructures = true;  // the default
       std::unique_ptr<ROMol> mol(Mol2FileToMol(fName, sanitize, removeHs,
                                                variant, cleanupSubstructures));
-      TEST_ASSERT(mol);
-      TEST_ASSERT(mol->getBondBetweenAtoms(3, 12));
+      TEST_ASSERT(mol)
+      TEST_ASSERT(mol->getBondBetweenAtoms(3, 12))
       TEST_ASSERT(mol->getBondBetweenAtoms(3, 12)->getBondType() ==
-                  Bond::SINGLE);
-      TEST_ASSERT(mol->getAtomWithIdx(12)->getFormalCharge() == 0);
+                  Bond::SINGLE)
+      TEST_ASSERT(mol->getAtomWithIdx(12)->getFormalCharge() == 0)
     }
     {
       bool cleanupSubstructures = false;
       std::unique_ptr<ROMol> mol(Mol2FileToMol(fName, sanitize, removeHs,
                                                variant, cleanupSubstructures));
-      TEST_ASSERT(mol);
-      TEST_ASSERT(mol->getBondBetweenAtoms(3, 12));
+      TEST_ASSERT(mol)
+      TEST_ASSERT(mol->getBondBetweenAtoms(3, 12))
       TEST_ASSERT(mol->getBondBetweenAtoms(3, 12)->getBondType() ==
-                  Bond::DOUBLE);
-      TEST_ASSERT(mol->getAtomWithIdx(12)->getFormalCharge() == 1);
+                  Bond::DOUBLE)
+      TEST_ASSERT(mol->getAtomWithIdx(12)->getFormalCharge() == 1)
     }
   }
   BOOST_LOG(rdInfoLog) << "------------------------------------" << std::endl;

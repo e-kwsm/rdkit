@@ -47,7 +47,7 @@ template <typename T>
 void streamWrite(std::ostream &ss, MolPickler::Tags tag, const T &what) {
   streamWrite(ss, tag);
   streamWrite(ss, what);
-};
+}
 
 void streamRead(std::istream &ss, MolPickler::Tags &tag, int version) {
   if (version < 7000) {
@@ -309,7 +309,7 @@ namespace PicklerOps {
 
 template <class T>
 QueryDetails getQueryDetails(const Query<int, T const *, true> *query) {
-  PRECONDITION(query, "no query");
+  PRECONDITION(query, "no query")
   if (typeid(*query) == typeid(AndQuery<int, T const *, true>)) {
     return QueryDetails(MolPickler::QUERY_AND);
   } else if (typeid(*query) == typeid(OrQuery<int, T const *, true>)) {
@@ -394,7 +394,7 @@ template RDKIT_GRAPHMOL_EXPORT QueryDetails getQueryDetails<RDKit::Bond>(
 namespace {
 template <class T>
 void pickleQuery(std::ostream &ss, const Query<int, T const *, true> *query) {
-  PRECONDITION(query, "no query");
+  PRECONDITION(query, "no query")
   streamWrite(ss, query->getDescription());
   if (!query->getTypeLabel().empty()) {
     streamWrite(ss, MolPickler::QUERY_TYPELABEL);
@@ -467,7 +467,7 @@ void pickleQuery(std::ostream &ss, const Query<int, T const *, true> *query) {
 template <class T>
 Query<int, T const *, true> *buildBaseQuery(std::istream &ss, T const *owner,
                                             MolPickler::Tags tag, int version) {
-  PRECONDITION(owner, "no query");
+  PRECONDITION(owner, "no query")
   std::string descr;
   Query<int, T const *, true> *res = nullptr;
   int32_t val;
@@ -590,13 +590,13 @@ Query<int, T const *, true> *buildBaseQuery(std::istream &ss, T const *owner,
       throw MolPicklerException("unknown query-type tag encountered");
   }
 
-  POSTCONDITION(res, "no match found");
+  POSTCONDITION(res, "no match found")
   return res;
 }
 
 Query<int, Atom const *, true> *unpickleQuery(std::istream &ss,
                                               Atom const *owner, int version) {
-  PRECONDITION(owner, "no query");
+  PRECONDITION(owner, "no query")
   std::string descr;
   std::string typeLabel = "";
   bool isNegated = false;
@@ -641,7 +641,7 @@ Query<int, Atom const *, true> *unpickleQuery(std::istream &ss,
       res = buildBaseQuery(ss, owner, tag, version);
       break;
   }
-  CHECK_INVARIANT(res, "no query!");
+  CHECK_INVARIANT(res, "no query!")
 
   res->setNegation(isNegated);
   res->setDescription(descr);
@@ -668,7 +668,7 @@ Query<int, Atom const *, true> *unpickleQuery(std::istream &ss,
 }
 Query<int, Bond const *, true> *unpickleQuery(std::istream &ss,
                                               Bond const *owner, int version) {
-  PRECONDITION(owner, "no query");
+  PRECONDITION(owner, "no query")
   std::string descr;
   std::string typeLabel = "";
   bool isNegated = false;
@@ -685,7 +685,7 @@ Query<int, Bond const *, true> *unpickleQuery(std::istream &ss,
     streamRead(ss, tag, version);
   }
   res = buildBaseQuery(ss, owner, tag, version);
-  CHECK_INVARIANT(res, "no query!");
+  CHECK_INVARIANT(res, "no query!")
 
   res->setNegation(isNegated);
   res->setDescription(descr);
@@ -710,7 +710,7 @@ Query<int, Bond const *, true> *unpickleQuery(std::istream &ss,
 
 void pickleAtomPDBResidueInfo(std::ostream &ss,
                               const AtomPDBResidueInfo *info) {
-  PRECONDITION(info, "no info");
+  PRECONDITION(info, "no info")
   if (info->getSerialNumber()) {
     streamWrite(ss, MolPickler::ATOM_PDB_RESIDUE_SERIALNUMBER,
                 info->getSerialNumber());
@@ -757,7 +757,7 @@ void pickleAtomPDBResidueInfo(std::ostream &ss,
 
 void unpickleAtomPDBResidueInfo(std::istream &ss, AtomPDBResidueInfo *info,
                                 int version) {
-  PRECONDITION(info, "no info");
+  PRECONDITION(info, "no info")
   std::string sval;
   double dval;
   char cval;
@@ -821,7 +821,7 @@ void unpickleAtomPDBResidueInfo(std::istream &ss, AtomPDBResidueInfo *info,
 }
 
 void pickleAtomMonomerInfo(std::ostream &ss, const AtomMonomerInfo *info) {
-  PRECONDITION(info, "no info");
+  PRECONDITION(info, "no info")
   streamWrite(ss, info->getName());
   streamWrite(ss, static_cast<unsigned int>(info->getMonomerType()));
   switch (info->getMonomerType()) {
@@ -893,7 +893,7 @@ void MolPickler::pickleMol(const ROMol *mol, std::ostream &ss) {
 
 void MolPickler::pickleMol(const ROMol *mol, std::ostream &ss,
                            unsigned int propertyFlags) {
-  PRECONDITION(mol, "empty molecule");
+  PRECONDITION(mol, "empty molecule")
 
   // Ensure that the exception state of the `ostream` is reset to the previous
   // state after we're done.
@@ -944,7 +944,7 @@ void MolPickler::pickleMol(const ROMol *mol, std::string &res) {
 
 void MolPickler::pickleMol(const ROMol *mol, std::string &res,
                            unsigned int pickleFlags) {
-  PRECONDITION(mol, "empty molecule");
+  PRECONDITION(mol, "empty molecule")
   std::stringstream ss(std::ios_base::binary | std::ios_base::out |
                        std::ios_base::in);
   MolPickler::pickleMol(mol, ss, pickleFlags);
@@ -960,7 +960,7 @@ void MolPickler::pickleMol(const ROMol &mol, std::string &ss) {
 // will be blown out by the end of this process.
 void MolPickler::molFromPickle(std::istream &ss, ROMol *mol,
                                unsigned int propertyFlags) {
-  PRECONDITION(mol, "empty molecule");
+  PRECONDITION(mol, "empty molecule")
 
   // Ensure that the exception state of the `istream` is reset to the previous
   // state after we're done.
@@ -1038,7 +1038,7 @@ void MolPickler::molFromPickle(std::istream &ss, ROMol *mol,
 }
 void MolPickler::molFromPickle(const std::string &pickle, ROMol *mol,
                                unsigned int propertyFlags) {
-  PRECONDITION(mol, "empty molecule");
+  PRECONDITION(mol, "empty molecule")
   std::stringstream ss(std::ios_base::binary | std::ios_base::out |
                        std::ios_base::in);
   ss.write(pickle.c_str(), pickle.length());
@@ -1053,7 +1053,7 @@ void MolPickler::molFromPickle(const std::string &pickle, ROMol *mol,
 template <typename T>
 void MolPickler::_pickle(const ROMol *mol, std::ostream &ss,
                          unsigned int propertyFlags) {
-  PRECONDITION(mol, "empty molecule");
+  PRECONDITION(mol, "empty molecule")
   int32_t tmpInt;
   std::map<int, int> atomIdxMap;
   std::map<int, int> bondIdxMap;
@@ -1203,7 +1203,7 @@ void MolPickler::_pickle(const ROMol *mol, std::ostream &ss,
 template <typename T>
 void MolPickler::_depickle(std::istream &ss, ROMol *mol, int version,
                            int numAtoms, unsigned int propertyFlags) {
-  PRECONDITION(mol, "empty molecule");
+  PRECONDITION(mol, "empty molecule")
   bool directMap = mol->getNumAtoms() == 0;
   Tags tag;
   int32_t tmpInt;
@@ -1420,7 +1420,7 @@ void MolPickler::_depickle(std::istream &ss, ROMol *mol, int version,
 
 namespace {
 bool getAtomMapNumber(const Atom *atom, int &mapNum) {
-  PRECONDITION(atom, "bad atom");
+  PRECONDITION(atom, "bad atom")
   if (!atom->hasProp(common_properties::molAtomMapNumber)) {
     return false;
   }
@@ -1570,7 +1570,7 @@ void MolPickler::_unpickleAtomData(std::istream &ss, Atom *atom, int version) {
 // T refers to the type of the atom indices written
 template <typename T>
 void MolPickler::_pickleAtom(std::ostream &ss, const Atom *atom) {
-  PRECONDITION(atom, "empty atom");
+  PRECONDITION(atom, "empty atom")
   char tmpChar;
   unsigned char tmpUchar;
   int tmpInt;
@@ -1634,7 +1634,7 @@ void MolPickler::_pickleAtom(std::ostream &ss, const Atom *atom) {
 
 template <typename T, typename C>
 void MolPickler::_pickleConformer(std::ostream &ss, const Conformer *conf) {
-  PRECONDITION(conf, "empty conformer");
+  PRECONDITION(conf, "empty conformer")
   char tmpChr = static_cast<int>(conf->is3D());
   streamWrite(ss, tmpChr);
   auto tmpInt = static_cast<int32_t>(conf->getId());
@@ -1690,7 +1690,7 @@ Conformer *MolPickler::_conformerFromPickle(std::istream &ss, int version) {
 template <typename T>
 Atom *MolPickler::_addAtomFromPickle(std::istream &ss, ROMol *mol,
                                      RDGeom::Point3D &pos, int version, bool) {
-  PRECONDITION(mol, "empty molecule");
+  PRECONDITION(mol, "empty molecule")
   float x, y, z;
   char tmpChar;
   unsigned char tmpUchar;
@@ -1870,7 +1870,7 @@ Atom *MolPickler::_addAtomFromPickle(std::istream &ss, ROMol *mol,
 template <typename T>
 void MolPickler::_pickleBond(std::ostream &ss, const Bond *bond,
                              std::map<int, int> &atomIdxMap) {
-  PRECONDITION(bond, "empty bond");
+  PRECONDITION(bond, "empty bond")
   T tmpT;
   char tmpChar;
   char flags;
@@ -1932,7 +1932,7 @@ void MolPickler::_pickleBond(std::ostream &ss, const Bond *bond,
 template <typename T>
 Bond *MolPickler::_addBondFromPickle(std::istream &ss, ROMol *mol, int version,
                                      bool directMap) {
-  PRECONDITION(mol, "empty molecule");
+  PRECONDITION(mol, "empty molecule")
   char tmpChar;
   char flags;
   int begIdx, endIdx;
@@ -2064,7 +2064,7 @@ void MolPickler::_pickleSSSR(std::ostream &ss, const RingInfo *ringInfo,
 template <typename T>
 void MolPickler::_addRingInfoFromPickle(std::istream &ss, ROMol *mol,
                                         int version, bool directMap) {
-  PRECONDITION(mol, "empty molecule");
+  PRECONDITION(mol, "empty molecule")
   RingInfo *ringInfo = mol->getRingInfo();
   if (!ringInfo->isInitialized()) {
     ringInfo->initialize();
@@ -2388,7 +2388,7 @@ void MolPickler::_unpickleProperties(std::istream &ss, RDProps &props,
 //--------------------------------------
 
 void MolPickler::_pickleV1(const ROMol *mol, std::ostream &ss) {
-  PRECONDITION(mol, "empty molecule");
+  PRECONDITION(mol, "empty molecule")
   ROMol::ConstAtomIterator atIt;
   const Conformer *conf = nullptr;
   if (mol->getNumConformers() > 0) {
@@ -2444,7 +2444,7 @@ void MolPickler::_pickleV1(const ROMol *mol, std::ostream &ss) {
 }
 
 void MolPickler::_depickleV1(std::istream &ss, ROMol *mol) {
-  PRECONDITION(mol, "empty molecule");
+  PRECONDITION(mol, "empty molecule")
   Tags tag;
 
   auto *conf = new Conformer();
@@ -2459,7 +2459,7 @@ void MolPickler::_depickleV1(std::istream &ss, ROMol *mol) {
         _addBondFromPickleV1(ss, mol);
         break;
       default:
-        UNDER_CONSTRUCTION("bad tag in pickle");
+        UNDER_CONSTRUCTION("bad tag in pickle")
     }
     streamRead(ss, tag, 1);
   }
@@ -2468,7 +2468,7 @@ void MolPickler::_depickleV1(std::istream &ss, ROMol *mol) {
 }
 
 void MolPickler::_addAtomFromPickleV1(std::istream &ss, ROMol *mol) {
-  PRECONDITION(mol, "empty molecule");
+  PRECONDITION(mol, "empty molecule")
   Tags tag;
   int intVar;
   double dblVar;
@@ -2523,7 +2523,7 @@ void MolPickler::_addAtomFromPickleV1(std::istream &ss, ROMol *mol) {
   conf.setAtomPos(id, pos);
 }
 void MolPickler::_addBondFromPickleV1(std::istream &ss, ROMol *mol) {
-  PRECONDITION(mol, "empty molecule");
+  PRECONDITION(mol, "empty molecule")
   Tags tag;
   int intVar, idx = -1;
   int version = 1;
@@ -2559,4 +2559,4 @@ void MolPickler::_addBondFromPickleV1(std::istream &ss, ROMol *mol) {
   }
   mol->addBond(bond, true);
 }
-};  // namespace RDKit
+}  // namespace RDKit

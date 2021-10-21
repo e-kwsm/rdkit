@@ -46,7 +46,7 @@ ScaffoldNetworkParams::ScaffoldNetworkParams(
     rxn->initReactantMatchers();
     bondBreakersRxns.emplace_back(rxn);
   }
-};
+}
 
 namespace detail {
 
@@ -486,7 +486,7 @@ ScaffoldNetworkParams getBRICSNetworkParams() {
   ScaffoldNetworkParams res{BRICSDefinitions};
   res.keepOnlyFirstFragment = false;
   return res;
-};
+}
 
 // const ScaffoldNetworkParams BRICSNetworkParams;
 

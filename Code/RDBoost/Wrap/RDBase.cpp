@@ -212,9 +212,9 @@ class BlockLogs : public boost::noncopyable {
 
   void exit(python::object exc_type, python::object exc_val,
             python::object traceback) {
-    RDUNUSED_PARAM(exc_type);
-    RDUNUSED_PARAM(exc_val);
-    RDUNUSED_PARAM(traceback);
+    RDUNUSED_PARAM(exc_type)
+    RDUNUSED_PARAM(exc_val)
+    RDUNUSED_PARAM(traceback)
     m_log_setter.reset();
   }
 

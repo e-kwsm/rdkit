@@ -42,6 +42,6 @@ RDKIT_SMILESPARSE_EXPORT std::string MolToCXSmarts(
 RDKIT_SMILESPARSE_EXPORT std::string MolFragmentToCXSmarts(
     const ROMol &mol, const std::vector<int> &atomsToUse,
     const std::vector<int> *bondsToUse = nullptr, bool doIsomericSmarts = true);
-};  // namespace RDKit
+}  // namespace RDKit
 
 #endif

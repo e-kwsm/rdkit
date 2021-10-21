@@ -24,8 +24,8 @@ namespace Canon {
 namespace {
 void flipIfNeeded(Bond::BondStereo &st1,
                   const canon_atom *const *controllingAtoms) {
-  CHECK_INVARIANT(controllingAtoms[0], "missing controlling atom");
-  CHECK_INVARIANT(controllingAtoms[2], "missing controlling atom");
+  CHECK_INVARIANT(controllingAtoms[0], "missing controlling atom")
+  CHECK_INVARIANT(controllingAtoms[2], "missing controlling atom")
   bool flip = false;
   if (controllingAtoms[1] &&
       controllingAtoms[1]->index > controllingAtoms[0]->index) {
@@ -94,9 +94,9 @@ int bondholder::compareStereo(const bondholder &o) const {
 
 void CreateSinglePartition(unsigned int nAtoms, int *order, int *count,
                            canon_atom *atoms) {
-  PRECONDITION(order, "bad pointer");
-  PRECONDITION(count, "bad pointer");
-  PRECONDITION(atoms, "bad pointer");
+  PRECONDITION(order, "bad pointer")
+  PRECONDITION(count, "bad pointer")
+  PRECONDITION(atoms, "bad pointer")
 
   for (unsigned int i = 0; i < nAtoms; i++) {
     atoms[i].index = 0;
@@ -108,10 +108,10 @@ void CreateSinglePartition(unsigned int nAtoms, int *order, int *count,
 
 void ActivatePartitions(unsigned int nAtoms, int *order, int *count,
                         int &activeset, int *next, int *changed) {
-  PRECONDITION(order, "bad pointer");
-  PRECONDITION(count, "bad pointer");
-  PRECONDITION(next, "bad pointer");
-  PRECONDITION(changed, "bad pointer");
+  PRECONDITION(order, "bad pointer")
+  PRECONDITION(count, "bad pointer")
+  PRECONDITION(next, "bad pointer")
+  PRECONDITION(changed, "bad pointer")
   unsigned int i, j;
   activeset = -1;
   for (i = 0; i < nAtoms; i++) {
@@ -147,7 +147,7 @@ void ActivatePartitions(unsigned int nAtoms, int *order, int *count,
 void compareRingAtomsConcerningNumNeighbors(Canon::canon_atom *atoms,
                                             unsigned int nAtoms,
                                             const ROMol &mol) {
-  PRECONDITION(atoms, "bad pointer");
+  PRECONDITION(atoms, "bad pointer")
   RingInfo *ringInfo = mol.getRingInfo();
   for (unsigned idx = 0; idx < nAtoms; ++idx) {
     const Canon::canon_atom &a = atoms[idx];
@@ -161,18 +161,18 @@ void compareRingAtomsConcerningNumNeighbors(Canon::canon_atom *atoms,
     atoms[idx].neighborNum.reserve(1000);
     atoms[idx].revistedNeighbors.assign(1000, 0);
     char *visited = (char *)malloc(nAtoms * sizeof(char));
-    CHECK_INVARIANT(visited, "allocation failed");
+    CHECK_INVARIANT(visited, "allocation failed")
     memset(visited, 0, nAtoms * sizeof(char));
     unsigned count = 1;
     std::vector<int> nextLevelNbrs;
     char *lastLevelNbrs = (char *)malloc(nAtoms * sizeof(char));
-    CHECK_INVARIANT(lastLevelNbrs, "allocation failed");
+    CHECK_INVARIANT(lastLevelNbrs, "allocation failed")
     memset(lastLevelNbrs, 0, nAtoms * sizeof(char));
     char *currentLevelNbrs = (char *)malloc(nAtoms * sizeof(char));
-    CHECK_INVARIANT(currentLevelNbrs, "allocation failed");
+    CHECK_INVARIANT(currentLevelNbrs, "allocation failed")
     memset(currentLevelNbrs, 0, nAtoms * sizeof(char));
     int *revisitedNeighbors = (int *)malloc(nAtoms * sizeof(int));
-    CHECK_INVARIANT(revisitedNeighbors, "allocation failed");
+    CHECK_INVARIANT(revisitedNeighbors, "allocation failed")
     memset(revisitedNeighbors, 0, nAtoms * sizeof(int));
     while (!neighbors.empty()) {
       unsigned int numLevelNbrs = 0;
@@ -256,19 +256,19 @@ void rankWithFunctor(T &ftor, bool breakTies, int *order, bool useSpecial,
                      bool useChirality,
                      const boost::dynamic_bitset<> *atomsInPlay,
                      const boost::dynamic_bitset<> *bondsInPlay) {
-  PRECONDITION(order, "bad pointer");
+  PRECONDITION(order, "bad pointer")
   const ROMol &mol = *ftor.dp_mol;
   canon_atom *atoms = ftor.dp_atoms;
   unsigned int nAts = mol.getNumAtoms();
   int *count = (int *)malloc(nAts * sizeof(int));
-  CHECK_INVARIANT(count, "allocation failed");
+  CHECK_INVARIANT(count, "allocation failed")
   int activeset;
   int *next = (int *)malloc(nAts * sizeof(int));
-  CHECK_INVARIANT(next, "allocation failed");
+  CHECK_INVARIANT(next, "allocation failed")
   int *changed = (int *)malloc(nAts * sizeof(int));
-  CHECK_INVARIANT(changed, "allocation failed");
+  CHECK_INVARIANT(changed, "allocation failed")
   char *touched = (char *)malloc(nAts * sizeof(char));
-  CHECK_INVARIANT(touched, "allocation failed");
+  CHECK_INVARIANT(touched, "allocation failed")
   memset(touched, 0, nAts * sizeof(char));
   memset(changed, 1, nAts * sizeof(int));
   CreateSinglePartition(nAts, order, count, atoms);
@@ -381,7 +381,7 @@ void rankWithFunctor(T &ftor, bool breakTies, int *order, bool useSpecial,
 }  // namespace detail
 namespace {
 bool hasRingNbr(const ROMol &mol, const Atom *at) {
-  PRECONDITION(at, "bad pointer");
+  PRECONDITION(at, "bad pointer")
   for (const auto nbr : mol.atomNeighbors(at)) {
     if ((nbr->getChiralTag() == Atom::CHI_TETRAHEDRAL_CW ||
          nbr->getChiralTag() == Atom::CHI_TETRAHEDRAL_CCW) &&
@@ -393,8 +393,8 @@ bool hasRingNbr(const ROMol &mol, const Atom *at) {
 }
 
 void getNbrs(const ROMol &mol, const Atom *at, int *ids) {
-  PRECONDITION(at, "bad pointer");
-  PRECONDITION(ids, "bad pointer");
+  PRECONDITION(at, "bad pointer")
+  PRECONDITION(ids, "bad pointer")
   ROMol::ADJ_ITER beg, end;
   boost::tie(beg, end) = mol.getAtomNeighbors(at);
   unsigned int idx = 0;
@@ -406,7 +406,7 @@ void getNbrs(const ROMol &mol, const Atom *at, int *ids) {
 bondholder makeBondHolder(const Bond *bond, unsigned int otherIdx,
                           bool includeChirality,
                           const std::vector<Canon::canon_atom> &atoms) {
-  PRECONDITION(bond, "bad pointer");
+  PRECONDITION(bond, "bad pointer")
   Bond::BondStereo stereo = Bond::STEREONONE;
   if (includeChirality) {
     stereo = bond->getStereo();
@@ -447,7 +447,7 @@ bondholder makeBondHolder(const Bond *bond, unsigned int otherIdx,
 void getBonds(const ROMol &mol, const Atom *at, std::vector<bondholder> &nbrs,
               bool includeChirality,
               const std::vector<Canon::canon_atom> &atoms) {
-  PRECONDITION(at, "bad pointer");
+  PRECONDITION(at, "bad pointer")
   ROMol::OEDGE_ITER beg, end;
   boost::tie(beg, end) = mol.getAtomBonds(at);
   while (beg != end) {
@@ -461,7 +461,7 @@ void getBonds(const ROMol &mol, const Atom *at, std::vector<bondholder> &nbrs,
 
 void getChiralBonds(const ROMol &mol, const Atom *at,
                     std::vector<bondholder> &nbrs) {
-  PRECONDITION(at, "bad pointer");
+  PRECONDITION(at, "bad pointer")
   ROMol::OEDGE_ITER beg, end;
   boost::tie(beg, end) = mol.getAtomBonds(at);
   while (beg != end) {
@@ -576,9 +576,9 @@ void initFragmentCanonAtoms(const ROMol &mol,
                             bool needsInit) {
   needsInit = true;
   PRECONDITION(!atomSymbols || atomSymbols->size() == mol.getNumAtoms(),
-               "bad atom symbols");
+               "bad atom symbols")
   PRECONDITION(!bondSymbols || bondSymbols->size() == mol.getNumBonds(),
-               "bad bond symbols");
+               "bad bond symbols")
   // start by initializing the atoms
   for (const auto atom : mol.atoms()) {
     auto i = atom->getIdx();
@@ -669,7 +669,7 @@ void freeCanonAtoms(std::vector<Canon::canon_atom> &atoms) {
 }
 }  // namespace detail
 void updateAtomNeighborIndex(canon_atom *atoms, std::vector<bondholder> &nbrs) {
-  PRECONDITION(atoms, "bad pointer");
+  PRECONDITION(atoms, "bad pointer")
   for (auto &nbr : nbrs) {
     unsigned nbrIdx = nbr.nbrIdx;
     unsigned newSymClass = atoms[nbrIdx].index;
@@ -739,7 +739,7 @@ void rankMolAtoms(const ROMol &mol, std::vector<unsigned int> &res,
   ftor.df_useChiralityRings = includeChirality;
 
   int *order = (int *)malloc(mol.getNumAtoms() * sizeof(int));
-  PRECONDITION(order, "bad pointer");
+  PRECONDITION(order, "bad pointer")
   detail::rankWithFunctor(ftor, breakTies, order, true, includeChirality);
 
   for (unsigned int i = 0; i < mol.getNumAtoms(); ++i) {
@@ -760,12 +760,12 @@ void rankFragmentAtoms(const ROMol &mol, std::vector<unsigned int> &res,
                        const std::vector<std::string> *bondSymbols,
                        bool breakTies, bool includeChirality,
                        bool includeIsotopes) {
-  PRECONDITION(atomsInPlay.size() == mol.getNumAtoms(), "bad atomsInPlay size");
-  PRECONDITION(bondsInPlay.size() == mol.getNumBonds(), "bad bondsInPlay size");
+  PRECONDITION(atomsInPlay.size() == mol.getNumAtoms(), "bad atomsInPlay size")
+  PRECONDITION(bondsInPlay.size() == mol.getNumBonds(), "bad bondsInPlay size")
   PRECONDITION(!atomSymbols || atomSymbols->size() == mol.getNumAtoms(),
-               "bad atomSymbols size");
+               "bad atomSymbols size")
   PRECONDITION(!bondSymbols || bondSymbols->size() == mol.getNumBonds(),
-               "bad bondSymbols size");
+               "bad bondSymbols size")
 
   if (!mol.getNumAtoms()) {
     return;
@@ -787,7 +787,7 @@ void rankFragmentAtoms(const ROMol &mol, std::vector<unsigned int> &res,
   ftor.df_useChirality = includeChirality;
 
   int *order = (int *)malloc(mol.getNumAtoms() * sizeof(int));
-  CHECK_INVARIANT(order, "bad pointer");
+  CHECK_INVARIANT(order, "bad pointer")
   detail::rankWithFunctor(ftor, breakTies, order, true, includeChirality,
                           &atomsInPlay, &bondsInPlay);
 
@@ -818,7 +818,7 @@ void chiralRankMolAtoms(const ROMol &mol, std::vector<unsigned int> &res) {
   ChiralAtomCompareFunctor ftor(&atoms.front(), mol);
 
   int *order = (int *)malloc(mol.getNumAtoms() * sizeof(int));
-  PRECONDITION(order, "bad pointer");
+  PRECONDITION(order, "bad pointer")
   detail::rankWithFunctor(ftor, false, order);
 
   for (unsigned int i = 0; i < mol.getNumAtoms(); ++i) {

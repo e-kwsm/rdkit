@@ -198,7 +198,7 @@ MCSResult findMCS(const std::vector<ROMOL_SPTR>& mols, bool maximizeBonds,
 
 bool MCSProgressCallbackTimeout(const MCSProgressData&,
                                 const MCSParameters& params, void* userData) {
-  PRECONDITION(userData, "userData must not be NULL");
+  PRECONDITION(userData, "userData must not be NULL")
   auto* t0 = (unsigned long long*)userData;
   unsigned long long t = nanoClock();
   return t - *t0 <= params.Timeout * 1000000ULL;
@@ -466,7 +466,7 @@ inline bool ringFusionCheck(const std::uint32_t c1[], const std::uint32_t c2[],
                             const ROMol& mol1, const FMCS::Graph& query,
                             const ROMol& mol2, const FMCS::Graph& target,
                             const MCSParameters* p) {
-  PRECONDITION(p, "p must not be NULL");
+  PRECONDITION(p, "p must not be NULL")
   const RingInfo* ri2 = mol2.getRingInfo();
   const VECT_INT_VECT& br2 = ri2->bondRings();
   std::vector<size_t> nonFusedBonds(br2.size(), 0);
@@ -612,7 +612,7 @@ bool FinalMatchCheckFunction(const std::uint32_t c1[], const std::uint32_t c2[],
                              const ROMol& mol1, const FMCS::Graph& query,
                              const ROMol& mol2, const FMCS::Graph& target,
                              const MCSParameters* p) {
-  PRECONDITION(p, "p must not be NULL");
+  PRECONDITION(p, "p must not be NULL")
   if ((p->BondCompareParameters.MatchFusedRings ||
        p->BondCompareParameters.MatchFusedRingsStrict) &&
       !ringFusionCheck(c1, c2, mol1, query, mol2, target, p)) {
@@ -765,7 +765,7 @@ bool FinalChiralityCheckFunction(const std::uint32_t c1[],
     const Bond* mBnd =
         mol2.getBondBetweenAtoms(target[c2[qMap[qBnd->getBeginAtomIdx()]]],
                                  target[c2[qMap[qBnd->getEndAtomIdx()]]]);
-    CHECK_INVARIANT(mBnd, "Matching bond not found");
+    CHECK_INVARIANT(mBnd, "Matching bond not found")
     if (mBnd->getBondType() != Bond::DOUBLE ||
         mBnd->getStereo() <= Bond::STEREOANY) {
       continue;
@@ -892,7 +892,7 @@ bool FinalChiralityCheckFunction_1(const short unsigned c1[],
     const Bond* mBnd =
         mol2.getBondBetweenAtoms(target[c2[qMap[qBnd->getBeginAtomIdx()]]],
                                  target[c2[qMap[qBnd->getEndAtomIdx()]]]);
-    CHECK_INVARIANT(mBnd, "Matching bond not found");
+    CHECK_INVARIANT(mBnd, "Matching bond not found")
     if (mBnd->getBondType() != Bond::DOUBLE ||
         mBnd->getStereo() <= Bond::STEREOANY) {
       continue;

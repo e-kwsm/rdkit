@@ -173,7 +173,7 @@ void findSSSRforDupCands(const ROMol &mol, VECT_INT_VECT &res,
         boost::dynamic_bitset<> activeBondsCopy = activeBonds;
         INT_SET changed;
         auto dmci = dupMap.find(dupCand);
-        CHECK_INVARIANT(dmci != dupMap.end(), "duplicate could not be found");
+        CHECK_INVARIANT(dmci != dupMap.end(), "duplicate could not be found")
         for (int dni : dmci->second) {
           trimBonds(dni, mol, changed, atomDegreesCopy, activeBondsCopy);
         }
@@ -465,21 +465,21 @@ void findRingsD3Node(const ROMol &tMol, VECT_INT_VECT &res,
     while (beg != end && !activeBonds[tMol[*beg]->getIdx()]) {
       ++beg;
     }
-    CHECK_INVARIANT(beg != end, "neighbor not found");
+    CHECK_INVARIANT(beg != end, "neighbor not found")
     n1 = tMol[*beg]->getOtherAtomIdx(cand);
 
     ++beg;
     while (beg != end && !activeBonds[tMol[*beg]->getIdx()]) {
       ++beg;
     }
-    CHECK_INVARIANT(beg != end, "neighbor not found");
+    CHECK_INVARIANT(beg != end, "neighbor not found")
     n2 = tMol[*beg]->getOtherAtomIdx(cand);
 
     ++beg;
     while (beg != end && !activeBonds[tMol[*beg]->getIdx()]) {
       ++beg;
     }
-    CHECK_INVARIANT(beg != end, "neighbor not found");
+    CHECK_INVARIANT(beg != end, "neighbor not found")
     n3 = tMol[*beg]->getOtherAtomIdx(cand);
 
     if (nsmall == 2) {
@@ -503,7 +503,7 @@ void findRingsD3Node(const ROMol &tMol, VECT_INT_VECT &res,
                   srings[1].end())) {
         f = n3;
       }
-      CHECK_INVARIANT(f >= 0, "third ring not found");
+      CHECK_INVARIANT(f >= 0, "third ring not found")
 
       // now find the smallest possible ring that does not contain f
       VECT_INT_VECT trings;
@@ -538,8 +538,8 @@ void findRingsD3Node(const ROMol &tMol, VECT_INT_VECT &res,
         f1 = n1;
         f2 = n2;
       }
-      CHECK_INVARIANT(f1 >= 0, "rings not found");
-      CHECK_INVARIANT(f2 >= 0, "rings not found");
+      CHECK_INVARIANT(f1 >= 0, "rings not found")
+      CHECK_INVARIANT(f2 >= 0, "rings not found")
 
       // now find two rings that include cand, one of these rings should include
       // f1
@@ -819,10 +819,10 @@ bool findRingConnectingAtoms(const ROMol &tMol, const Bond *bond,
                              VECT_INT_VECT &res, RINGINVAR_SET &invars,
                              boost::dynamic_bitset<> &ringBonds,
                              boost::dynamic_bitset<> &ringAtoms) {
-  PRECONDITION(bond, "bad bond");
-  PRECONDITION(!ringBonds[bond->getIdx()], "not a ring bond");
-  PRECONDITION(ringAtoms[bond->getBeginAtomIdx()], "not a ring atom");
-  PRECONDITION(ringAtoms[bond->getEndAtomIdx()], "not a ring atom");
+  PRECONDITION(bond, "bad bond")
+  PRECONDITION(!ringBonds[bond->getIdx()], "not a ring bond")
+  PRECONDITION(ringAtoms[bond->getBeginAtomIdx()], "not a ring atom")
+  PRECONDITION(ringAtoms[bond->getEndAtomIdx()], "not a ring atom")
 
   INT_VECT nring;
   if (_atomSearchBFS(tMol, bond->getBeginAtomIdx(), bond->getEndAtomIdx(),
@@ -943,7 +943,7 @@ int findSSSR(const ROMol &mol, VECT_INT_VECT &res, bool includeDativeBonds) {
 
     // check to see if this fragment can even have a possible ring
     CHECK_INVARIANT(bndcnt_with_zero_order_bonds % 2 == 0,
-                    "fragment graph has a dangling degree");
+                    "fragment graph has a dangling degree")
     bndcnt_with_zero_order_bonds = bndcnt_with_zero_order_bonds / 2;
     int num_possible_rings = bndcnt_with_zero_order_bonds - curFrag.size() + 1;
     if (num_possible_rings < 1) {
@@ -951,7 +951,7 @@ int findSSSR(const ROMol &mol, VECT_INT_VECT &res, bool includeDativeBonds) {
     }
 
     CHECK_INVARIANT(nbnds % 2 == 0,
-                    "fragment graph problem when including zero-order bonds");
+                    "fragment graph problem when including zero-order bonds")
     nbnds = nbnds / 2;
 
     boost::dynamic_bitset<> doneAts(nats);
@@ -1128,7 +1128,7 @@ int findSSSR(const ROMol &mol, VECT_INT_VECT &res, bool includeDativeBonds) {
 int symmetrizeSSSR(ROMol &mol, bool includeDativeBonds) {
   VECT_INT_VECT tmp;
   return symmetrizeSSSR(mol, tmp, includeDativeBonds);
-};
+}
 
 int symmetrizeSSSR(ROMol &mol, VECT_INT_VECT &res, bool includeDativeBonds) {
   res.clear();
@@ -1225,8 +1225,8 @@ void _DFS(const ROMol &mol, const Atom *atom, INT_VECT &atomColors,
           const Atom *fromAtom = nullptr) {
   // std::cerr<<"  dfs: "<<atom->getIdx()<<" from
   // "<<(fromAtom?fromAtom->getIdx():-1)<<std::endl;
-  PRECONDITION(atom, "bad atom");
-  PRECONDITION(atomColors[atom->getIdx()] == 0, "bad color");
+  PRECONDITION(atom, "bad atom")
+  PRECONDITION(atomColors[atom->getIdx()] == 0, "bad color")
   atomColors[atom->getIdx()] = 1;
   traversalOrder.push_back(atom);
 

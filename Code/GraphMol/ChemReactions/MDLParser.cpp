@@ -82,7 +82,7 @@ void ParseV2000RxnBlock(std::istream &inStream, unsigned int &line,
     nProds = FileParserUtils::stripSpacesAndCast<unsigned int>(
         tempStr.substr(spos, 3));
     spos = 6;
-    ;
+
     if (tempStr.size() > 6) {
       std::string trimmed = boost::trim_copy(tempStr.substr(spos, 3));
       if (trimmed.size() > 0) {
@@ -367,7 +367,7 @@ ChemicalReaction *RxnDataStreamToChemicalReaction(std::istream &inStream,
   // RXN-based reactions do not have implicit properties
   res->setImplicitPropertiesFlag(false);
   return res;
-};
+}
 
 ChemicalReaction *RxnBlockToChemicalReaction(const std::string &rxnBlock,
                                              bool sanitize, bool removeHs,
@@ -376,7 +376,7 @@ ChemicalReaction *RxnBlockToChemicalReaction(const std::string &rxnBlock,
   unsigned int line = 0;
   return RxnDataStreamToChemicalReaction(inStream, line, sanitize, removeHs,
                                          strictParsing);
-};
+}
 
 ChemicalReaction *RxnFileToChemicalReaction(const std::string &fName,
                                             bool sanitize, bool removeHs,
@@ -392,5 +392,5 @@ ChemicalReaction *RxnFileToChemicalReaction(const std::string &fName,
                                           strictParsing);
   }
   return res;
-};
+}
 }  // namespace RDKit

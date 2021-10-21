@@ -64,7 +64,7 @@ struct DefaultValueCache {
   mutable std::map<const char *, bool> boolMap;
   mutable std::map<const char *, std::string> stringMap;
   int getInt(const char *key) const {
-    PRECONDITION(key, "no key");
+    PRECONDITION(key, "no key")
     const auto &lookup = intMap.find(key);
     if (lookup != intMap.end()) {
       return lookup->second;
@@ -83,7 +83,7 @@ struct DefaultValueCache {
     return 0;
   }
   bool getBool(const char *key) const {
-    PRECONDITION(key, "no key");
+    PRECONDITION(key, "no key")
     const auto &lookup = boolMap.find(key);
     if (lookup != boolMap.end()) {
       return lookup->second;
@@ -102,7 +102,7 @@ struct DefaultValueCache {
     return false;
   }
   std::string getString(const char *key) const {
-    PRECONDITION(key, "no key");
+    PRECONDITION(key, "no key")
     const auto &lookup = stringMap.find(key);
     if (lookup != stringMap.end()) {
       return lookup->second;
@@ -124,7 +124,7 @@ struct DefaultValueCache {
 
 int getIntDefaultValue(const char *key, const rj::Value &from,
                        const DefaultValueCache &defaults) {
-  PRECONDITION(key, "no key");
+  PRECONDITION(key, "no key")
   auto endp = from.MemberEnd();
   auto miter = from.FindMember(key);
   if (miter != endp) {
@@ -139,7 +139,7 @@ int getIntDefaultValue(const char *key, const rj::Value &from,
 }
 bool getBoolDefaultValue(const char *key, const rj::Value &from,
                          const DefaultValueCache &defaults) {
-  PRECONDITION(key, "no key");
+  PRECONDITION(key, "no key")
   auto endp = from.MemberEnd();
   auto miter = from.FindMember(key);
   if (miter != endp) {
@@ -154,7 +154,7 @@ bool getBoolDefaultValue(const char *key, const rj::Value &from,
 }
 std::string getStringDefaultValue(const char *key, const rj::Value &from,
                                   const DefaultValueCache &defaults) {
-  PRECONDITION(key, "no key");
+  PRECONDITION(key, "no key")
   auto endp = from.MemberEnd();
   auto miter = from.FindMember(key);
   if (miter != endp) {
@@ -171,7 +171,7 @@ std::string getStringDefaultValue(const char *key, const rj::Value &from,
 void readAtom(RWMol *mol, const rj::Value &atomVal,
               const DefaultValueCache &atomDefaults,
               const JSONParseParameters &params) {
-  PRECONDITION(mol, "no mol");
+  PRECONDITION(mol, "no mol")
   Atom *at = new Atom(getIntDefaultValue("z", atomVal, atomDefaults));
   if (params.useHCounts) {
     at->setNoImplicit(true);
@@ -192,7 +192,7 @@ void readAtom(RWMol *mol, const rj::Value &atomVal,
 
 void readBond(RWMol *mol, const rj::Value &bondVal,
               const DefaultValueCache &bondDefaults, bool &needStereoLoop) {
-  PRECONDITION(mol, "no mol");
+  PRECONDITION(mol, "no mol")
   const auto &aids = bondVal["atoms"].GetArray();
   unsigned int bid = mol->addBond(aids[0].GetInt(), aids[1].GetInt()) - 1;
   Bond *bnd = mol->getBondWithIdx(bid);
@@ -380,7 +380,7 @@ void readSubstanceGroups(RWMol *mol, const rj::Value &sgVals) {
 
 void readBondStereo(Bond *bnd, const rj::Value &bondVal,
                     const DefaultValueCache &bondDefaults) {
-  PRECONDITION(bnd, "no bond");
+  PRECONDITION(bnd, "no bond")
 
   std::string stereo = getStringDefaultValue("stereo", bondVal, bondDefaults);
   if (stereo == "unspecified") {
@@ -401,7 +401,7 @@ void readBondStereo(Bond *bnd, const rj::Value &bondVal,
 }  // namespace
 
 void readConformer(Conformer *conf, const rj::Value &confVal) {
-  PRECONDITION(conf, "no conformer");
+  PRECONDITION(conf, "no conformer")
 
   if (!confVal.HasMember("dim")) {
     throw FileParseException("Bad Format: no conformer dimension");
@@ -435,9 +435,9 @@ void readConformer(Conformer *conf, const rj::Value &confVal) {
 
 void readPartialCharges(RWMol *mol, const rj::Value &repVal,
                         const JSONParseParameters &) {
-  PRECONDITION(mol, "no molecule");
+  PRECONDITION(mol, "no molecule")
   PRECONDITION(repVal["name"].GetString() == std::string("partialCharges"),
-               "bad charges");
+               "bad charges")
   if (!repVal.HasMember("formatVersion")) {
     throw FileParseException("Bad Format: missing version");
   }
@@ -485,8 +485,8 @@ template <class T>
 Query<int, T const *, true> *readBaseQuery(T const *owner,
                                            const rj::Value &repVal,
                                            const JSONParseParameters &) {
-  PRECONDITION(owner, "no query");
-  PRECONDITION(repVal.HasMember("tag"), "no tag");
+  PRECONDITION(owner, "no query")
+  PRECONDITION(repVal.HasMember("tag"), "no tag")
   int tag = repVal["tag"].GetInt();
   if (!repVal.HasMember("descr")) {
     throw FileParseException("Bad Format: missing query description");
@@ -590,8 +590,8 @@ void finishQuery(T const *owner, U *res, const rj::Value &repVal,
                  const DefaultValueCache &atomDefaults,
                  const DefaultValueCache &bondDefaults,
                  const JSONParseParameters &params) {
-  PRECONDITION(owner, "no owner");
-  PRECONDITION(res, "no result");
+  PRECONDITION(owner, "no owner")
+  PRECONDITION(res, "no result")
   std::string descr = repVal["descr"].GetString();
   res->setDescription(descr);
   std::string typ;
@@ -622,7 +622,7 @@ Query<int, Atom const *, true> *readQuery(Atom const *owner,
                                           const DefaultValueCache &atomDefaults,
                                           const DefaultValueCache &bondDefaults,
                                           const JSONParseParameters &params) {
-  PRECONDITION(owner, "no owner");
+  PRECONDITION(owner, "no owner")
   if (!repVal.HasMember("tag")) {
     throw FileParseException("Bad Format: missing atom query tag");
   }
@@ -656,7 +656,7 @@ Query<int, Bond const *, true> *readQuery(Bond const *bond,
                                           const DefaultValueCache &atomDefaults,
                                           const DefaultValueCache &bondDefaults,
                                           const JSONParseParameters &params) {
-  PRECONDITION(bond, "no owner");
+  PRECONDITION(bond, "no owner")
   if (!repVal.HasMember("tag")) {
     throw FileParseException("Bad Format: missing bond query tag");
   }
@@ -673,9 +673,9 @@ void readQueries(RWMol *mol, const rj::Value &repVal,
                  const DefaultValueCache &atomDefaults,
                  const DefaultValueCache &bondDefaults,
                  const JSONParseParameters &params) {
-  PRECONDITION(mol, "no molecule");
+  PRECONDITION(mol, "no molecule")
   PRECONDITION(repVal["name"].GetString() == std::string("rdkitQueries"),
-               "bad queries");
+               "bad queries")
   if (!repVal.HasMember("formatVersion")) {
     throw FileParseException("Bad Format: missing format_version");
   }
@@ -701,7 +701,7 @@ void readQueries(RWMol *mol, const rj::Value &repVal,
           throw FileParseException("too much atom data found");
         }
         auto atom = mol->getAtomWithIdx(idx);
-        CHECK_INVARIANT(atom != nullptr, "no atom");
+        CHECK_INVARIANT(atom != nullptr, "no atom")
         // we need to replace the current atom with a query atom:
         QueryAtom qatom(*atom);
         // that copy created a bunch of query info by default,
@@ -732,7 +732,7 @@ void readQueries(RWMol *mol, const rj::Value &repVal,
           throw FileParseException("too much bond data found");
         }
         auto bond = mol->getBondWithIdx(idx);
-        CHECK_INVARIANT(bond != nullptr, "no bond");
+        CHECK_INVARIANT(bond != nullptr, "no bond")
         QueryBond qbond(*bond);
         qbond.setQuery(nullptr);
         mol->replaceBond(idx, &qbond);
@@ -747,9 +747,9 @@ void readQueries(RWMol *mol, const rj::Value &repVal,
 
 void readRDKitRepresentation(RWMol *mol, const rj::Value &repVal,
                              const JSONParseParameters &params) {
-  PRECONDITION(mol, "no molecule");
+  PRECONDITION(mol, "no molecule")
   PRECONDITION(repVal["name"].GetString() == std::string("rdkitRepresentation"),
-               "bad representation");
+               "bad representation")
   if (!repVal.HasMember("formatVersion")) {
     throw FileParseException("Bad Format: missing format_version");
   }
@@ -814,7 +814,7 @@ void readRDKitRepresentation(RWMol *mol, const rj::Value &repVal,
     const auto &miter = repVal.FindMember("atomRings");
     if (miter != repVal.MemberEnd()) {
       CHECK_INVARIANT(!mol->getRingInfo()->isInitialized(),
-                      "rings already initialized");
+                      "rings already initialized")
       auto ri = mol->getRingInfo();
       ri->initialize();
       for (const auto &val : miter->value.GetArray()) {
@@ -831,14 +831,14 @@ void readRDKitRepresentation(RWMol *mol, const rj::Value &repVal,
           int idx2 = val[i + 1].GetInt();
           atomRing.push_back(idx1);
           const auto &bnd = mol->getBondBetweenAtoms(idx1, idx2);
-          CHECK_INVARIANT(bnd, "no bond found for ring");
+          CHECK_INVARIANT(bnd, "no bond found for ring")
           bondRing.push_back(bnd->getIdx());
         }
         int idx1 = val[sz - 1].GetInt();
         int idx2 = val[0].GetInt();
         atomRing.push_back(idx1);
         const auto &bnd = mol->getBondBetweenAtoms(idx1, idx2);
-        CHECK_INVARIANT(bnd, "no bond found for ring");
+        CHECK_INVARIANT(bnd, "no bond found for ring")
         bondRing.push_back(bnd->getIdx());
         ri->addRing(atomRing, bondRing);
       }
@@ -980,7 +980,7 @@ std::vector<boost::shared_ptr<ROMol>> DocToMols(
 
 std::vector<boost::shared_ptr<ROMol>> JSONDataStreamToMols(
     std::istream *inStream, const JSONParseParameters &params) {
-  PRECONDITION(inStream, "no stream");
+  PRECONDITION(inStream, "no stream")
 
   rj::IStreamWrapper isw(*inStream);
   rj::Document doc;

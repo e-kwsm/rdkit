@@ -13,7 +13,7 @@
 
 namespace RDKit {
 RingInfo::INT_VECT RingInfo::atomRingSizes(unsigned int idx) const {
-  PRECONDITION(df_init, "RingInfo not initialized");
+  PRECONDITION(df_init, "RingInfo not initialized")
 
   if (idx < d_atomMembers.size()) {
     INT_VECT res(d_atomMembers[idx].size());
@@ -25,7 +25,7 @@ RingInfo::INT_VECT RingInfo::atomRingSizes(unsigned int idx) const {
   return INT_VECT();
 }
 bool RingInfo::isAtomInRingOfSize(unsigned int idx, unsigned int size) const {
-  PRECONDITION(df_init, "RingInfo not initialized");
+  PRECONDITION(df_init, "RingInfo not initialized")
 
   if (idx < d_atomMembers.size()) {
     return std::find_if(d_atomMembers[idx].begin(), d_atomMembers[idx].end(),
@@ -36,7 +36,7 @@ bool RingInfo::isAtomInRingOfSize(unsigned int idx, unsigned int size) const {
   return false;
 }
 unsigned int RingInfo::minAtomRingSize(unsigned int idx) const {
-  PRECONDITION(df_init, "RingInfo not initialized");
+  PRECONDITION(df_init, "RingInfo not initialized")
 
   if (idx < d_atomMembers.size() && !d_atomMembers[idx].empty()) {
     auto ri = *std::min_element(
@@ -49,7 +49,7 @@ unsigned int RingInfo::minAtomRingSize(unsigned int idx) const {
   return 0;
 }
 unsigned int RingInfo::numAtomRings(unsigned int idx) const {
-  PRECONDITION(df_init, "RingInfo not initialized");
+  PRECONDITION(df_init, "RingInfo not initialized")
 
   if (idx < d_atomMembers.size()) {
     return rdcast<unsigned int>(d_atomMembers[idx].size());
@@ -57,7 +57,7 @@ unsigned int RingInfo::numAtomRings(unsigned int idx) const {
   return 0;
 }
 RingInfo::INT_VECT RingInfo::atomMembers(unsigned int idx) const {
-  PRECONDITION(df_init, "RingInfo not initialized");
+  PRECONDITION(df_init, "RingInfo not initialized")
 
   static const INT_VECT emptyVect;
   if (idx < d_atomMembers.size()) {
@@ -67,7 +67,7 @@ RingInfo::INT_VECT RingInfo::atomMembers(unsigned int idx) const {
 }
 bool RingInfo::areAtomsInSameRingOfSize(unsigned int idx1, unsigned int idx2,
                                         unsigned int size) const {
-  PRECONDITION(df_init, "RingInfo not initialized");
+  PRECONDITION(df_init, "RingInfo not initialized")
 
   if (idx1 >= d_atomMembers.size() || idx2 >= d_atomMembers.size()) {
     return false;
@@ -89,7 +89,7 @@ bool RingInfo::areAtomsInSameRingOfSize(unsigned int idx1, unsigned int idx2,
   return false;
 }
 RingInfo::INT_VECT RingInfo::bondRingSizes(unsigned int idx) const {
-  PRECONDITION(df_init, "RingInfo not initialized");
+  PRECONDITION(df_init, "RingInfo not initialized")
 
   if (idx < d_bondMembers.size()) {
     INT_VECT res(d_bondMembers[idx].size());
@@ -101,7 +101,7 @@ RingInfo::INT_VECT RingInfo::bondRingSizes(unsigned int idx) const {
   return INT_VECT();
 }
 bool RingInfo::isBondInRingOfSize(unsigned int idx, unsigned int size) const {
-  PRECONDITION(df_init, "RingInfo not initialized");
+  PRECONDITION(df_init, "RingInfo not initialized")
 
   if (idx < d_bondMembers.size()) {
     return std::find_if(d_bondMembers[idx].begin(), d_bondMembers[idx].end(),
@@ -112,7 +112,7 @@ bool RingInfo::isBondInRingOfSize(unsigned int idx, unsigned int size) const {
   return false;
 }
 unsigned int RingInfo::minBondRingSize(unsigned int idx) const {
-  PRECONDITION(df_init, "RingInfo not initialized");
+  PRECONDITION(df_init, "RingInfo not initialized")
 
   if (idx < d_bondMembers.size() && d_bondMembers[idx].size()) {
     return d_bondRings
@@ -126,7 +126,7 @@ unsigned int RingInfo::minBondRingSize(unsigned int idx) const {
   return 0;
 }
 unsigned int RingInfo::numBondRings(unsigned int idx) const {
-  PRECONDITION(df_init, "RingInfo not initialized");
+  PRECONDITION(df_init, "RingInfo not initialized")
 
   if (idx < d_bondMembers.size()) {
     return rdcast<unsigned int>(d_bondMembers[idx].size());
@@ -134,7 +134,7 @@ unsigned int RingInfo::numBondRings(unsigned int idx) const {
   return 0;
 }
 RingInfo::INT_VECT RingInfo::bondMembers(unsigned int idx) const {
-  PRECONDITION(df_init, "RingInfo not initialized");
+  PRECONDITION(df_init, "RingInfo not initialized")
 
   if (idx < d_bondMembers.size()) {
     return d_bondMembers[idx];
@@ -143,7 +143,7 @@ RingInfo::INT_VECT RingInfo::bondMembers(unsigned int idx) const {
 }
 bool RingInfo::areBondsInSameRingOfSize(unsigned int idx1, unsigned int idx2,
                                         unsigned int size) const {
-  PRECONDITION(df_init, "RingInfo not initialized");
+  PRECONDITION(df_init, "RingInfo not initialized")
 
   if (idx1 >= d_bondMembers.size() || idx2 >= d_bondMembers.size()) {
     return false;
@@ -166,15 +166,15 @@ bool RingInfo::areBondsInSameRingOfSize(unsigned int idx1, unsigned int idx2,
 }
 
 unsigned int RingInfo::numRings() const {
-  PRECONDITION(df_init, "RingInfo not initialized");
-  PRECONDITION(d_atomRings.size() == d_bondRings.size(), "length mismatch");
+  PRECONDITION(df_init, "RingInfo not initialized")
+  PRECONDITION(d_atomRings.size() == d_bondRings.size(), "length mismatch")
   return rdcast<unsigned int>(d_atomRings.size());
 }
 
 unsigned int RingInfo::addRing(const INT_VECT &atomIndices,
                                const INT_VECT &bondIndices) {
-  PRECONDITION(df_init, "RingInfo not initialized");
-  PRECONDITION(atomIndices.size() == bondIndices.size(), "length mismatch");
+  PRECONDITION(df_init, "RingInfo not initialized")
+  PRECONDITION(atomIndices.size() == bondIndices.size(), "length mismatch")
   for (auto i : atomIndices) {
     if (i >= static_cast<int>(d_atomMembers.size())) {
       d_atomMembers.resize((i) + 1);
@@ -189,37 +189,37 @@ unsigned int RingInfo::addRing(const INT_VECT &atomIndices,
   }
   d_atomRings.push_back(atomIndices);
   d_bondRings.push_back(bondIndices);
-  POSTCONDITION(d_atomRings.size() == d_bondRings.size(), "length mismatch");
+  POSTCONDITION(d_atomRings.size() == d_bondRings.size(), "length mismatch")
   return rdcast<unsigned int>(d_atomRings.size());
 }
 
 #ifdef RDK_USE_URF
 unsigned int RingInfo::numRingFamilies() const {
-  PRECONDITION(df_init, "RingInfo not initialized");
+  PRECONDITION(df_init, "RingInfo not initialized")
   return d_atomRingFamilies.size();
-};
+}
 
 unsigned int RingInfo::numRelevantCycles() const {
-  PRECONDITION(df_init, "RingInfo not initialized");
+  PRECONDITION(df_init, "RingInfo not initialized")
   return rdcast<unsigned int>(RDL_getNofRC(dp_urfData.get()));
-};
+}
 
 unsigned int RingInfo::addRingFamily(const INT_VECT &atomIndices,
                                      const INT_VECT &bondIndices) {
-  PRECONDITION(df_init, "RingInfo not initialized");
+  PRECONDITION(df_init, "RingInfo not initialized")
   d_atomRingFamilies.push_back(atomIndices);
   d_bondRingFamilies.push_back(bondIndices);
   POSTCONDITION(d_atomRingFamilies.size() == d_bondRingFamilies.size(),
-                "length mismatch");
+                "length mismatch")
 
   return rdcast<unsigned int>(d_atomRingFamilies.size());
 }
 #endif
 
 void RingInfo::initialize() {
-  PRECONDITION(!df_init, "already initialized");
+  PRECONDITION(!df_init, "already initialized")
   df_init = true;
-};
+}
 void RingInfo::reset() {
   if (!df_init) {
     return;

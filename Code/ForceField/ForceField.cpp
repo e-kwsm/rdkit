@@ -51,10 +51,10 @@ void computeDihedral(const RDGeom::Point3D *p1, const RDGeom::Point3D *p2,
                      const RDGeom::Point3D *p3, const RDGeom::Point3D *p4,
                      double *dihedral, double *cosPhi, RDGeom::Point3D r[4],
                      RDGeom::Point3D t[2], double d[2]) {
-  PRECONDITION(p1, "p1 must not be null");
-  PRECONDITION(p2, "p2 must not be null");
-  PRECONDITION(p3, "p3 must not be null");
-  PRECONDITION(p4, "p4 must not be null");
+  PRECONDITION(p1, "p1 must not be null")
+  PRECONDITION(p2, "p2 must not be null")
+  PRECONDITION(p3, "p3 must not be null")
+  PRECONDITION(p4, "p4 must not be null")
   RDGeom::Point3D rLocal[4];
   RDGeom::Point3D tLocal[2];
   double dLocal[2];
@@ -96,7 +96,7 @@ void computeDihedral(const RDGeom::Point3D *p1, const RDGeom::Point3D *p2,
 namespace ForceFieldsHelper {
 class calcEnergy {
  public:
-  calcEnergy(ForceFields::ForceField *ffHolder) : mp_ffHolder(ffHolder){};
+  calcEnergy(ForceFields::ForceField *ffHolder) : mp_ffHolder(ffHolder) {}
   double operator()(double *pos) const { return mp_ffHolder->calcEnergy(pos); }
 
  private:
@@ -105,7 +105,7 @@ class calcEnergy {
 
 class calcGradient {
  public:
-  calcGradient(ForceFields::ForceField *ffHolder) : mp_ffHolder(ffHolder){};
+  calcGradient(ForceFields::ForceField *ffHolder) : mp_ffHolder(ffHolder) {}
   double operator()(double *pos, double *grad) const {
     double res = 1.0;
     // the contribs to the gradient function use +=, so we need
@@ -169,19 +169,19 @@ ForceField::ForceField(const ForceField &other)
     ncontrib->dp_forceField = this;
     d_contribs.push_back(ContribPtr(ncontrib));
   }
-};
+}
 
 double ForceField::distance(unsigned int i, unsigned int j, double *pos) {
-  PRECONDITION(df_init, "not initialized");
-  URANGE_CHECK(i, d_numPoints);
-  URANGE_CHECK(j, d_numPoints);
+  PRECONDITION(df_init, "not initialized")
+  URANGE_CHECK(i, d_numPoints)
+  URANGE_CHECK(j, d_numPoints)
   if (j < i) {
     int tmp = j;
     j = i;
     i = tmp;
   }
   unsigned int idx = i + j * (j + 1) / 2;
-  CHECK_INVARIANT(idx < d_matSize, "Bad index");
+  CHECK_INVARIANT(idx < d_matSize, "Bad index")
   double &res = dp_distMat[idx];
   if (res < 0.0) {
     // we need to calculate this distance:
@@ -213,9 +213,9 @@ double ForceField::distance(unsigned int i, unsigned int j, double *pos) {
 }
 
 double ForceField::distance(unsigned int i, unsigned int j, double *pos) const {
-  PRECONDITION(df_init, "not initialized");
-  URANGE_CHECK(i, d_numPoints);
-  URANGE_CHECK(j, d_numPoints);
+  PRECONDITION(df_init, "not initialized")
+  URANGE_CHECK(i, d_numPoints)
+  URANGE_CHECK(j, d_numPoints)
   if (j < i) {
     int tmp = j;
     j = i;
@@ -269,9 +269,9 @@ int ForceField::minimize(unsigned int maxIts, double forceTol,
 int ForceField::minimize(unsigned int snapshotFreq,
                          RDKit::SnapshotVect *snapshotVect, unsigned int maxIts,
                          double forceTol, double energyTol) {
-  PRECONDITION(df_init, "not initialized");
+  PRECONDITION(df_init, "not initialized")
   PRECONDITION(static_cast<unsigned int>(d_numPoints) == d_positions.size(),
-               "size mismatch");
+               "size mismatch")
   if (d_contribs.empty()) {
     return 0;
   }
@@ -295,7 +295,7 @@ int ForceField::minimize(unsigned int snapshotFreq,
 }
 
 double ForceField::calcEnergy(std::vector<double> *contribs) const {
-  PRECONDITION(df_init, "not initialized");
+  PRECONDITION(df_init, "not initialized")
   double res = 0.0;
   if (d_contribs.empty()) {
     return res;
@@ -321,8 +321,8 @@ double ForceField::calcEnergy(std::vector<double> *contribs) const {
 }
 
 double ForceField::calcEnergy(double *pos) {
-  PRECONDITION(df_init, "not initialized");
-  PRECONDITION(pos, "bad position vector");
+  PRECONDITION(df_init, "not initialized")
+  PRECONDITION(pos, "bad position vector")
   double res = 0.0;
 
   this->initDistanceMatrix();
@@ -340,8 +340,8 @@ double ForceField::calcEnergy(double *pos) {
 }
 
 void ForceField::calcGrad(double *grad) const {
-  PRECONDITION(df_init, "not initialized");
-  PRECONDITION(grad, "bad gradient vector");
+  PRECONDITION(df_init, "not initialized")
+  PRECONDITION(grad, "bad gradient vector")
   if (d_contribs.empty()) {
     return;
   }
@@ -355,7 +355,7 @@ void ForceField::calcGrad(double *grad) const {
   // zero out gradient values for any fixed points:
   for (int d_fixedPoint : d_fixedPoints) {
     CHECK_INVARIANT(static_cast<unsigned int>(d_fixedPoint) < d_numPoints,
-                    "bad fixed point index");
+                    "bad fixed point index")
     unsigned int idx = d_dimension * d_fixedPoint;
     for (unsigned int di = 0; di < this->dimension(); ++di) {
       grad[idx + di] = 0.0;
@@ -364,9 +364,9 @@ void ForceField::calcGrad(double *grad) const {
   delete[] pos;
 }
 void ForceField::calcGrad(double *pos, double *grad) {
-  PRECONDITION(df_init, "not initialized");
-  PRECONDITION(pos, "bad position vector");
-  PRECONDITION(grad, "bad gradient vector");
+  PRECONDITION(df_init, "not initialized")
+  PRECONDITION(pos, "bad position vector")
+  PRECONDITION(grad, "bad gradient vector")
   if (d_contribs.empty()) {
     return;
   }
@@ -379,7 +379,7 @@ void ForceField::calcGrad(double *pos, double *grad) {
   for (INT_VECT::const_iterator it = d_fixedPoints.begin();
        it != d_fixedPoints.end(); it++) {
     CHECK_INVARIANT(static_cast<unsigned int>(*it) < d_numPoints,
-                    "bad fixed point index");
+                    "bad fixed point index")
     unsigned int idx = d_dimension * (*it);
     for (unsigned int di = 0; di < this->dimension(); ++di) {
       grad[idx + di] = 0.0;
@@ -388,8 +388,8 @@ void ForceField::calcGrad(double *pos, double *grad) {
 }
 
 void ForceField::scatter(double *pos) const {
-  PRECONDITION(df_init, "not initialized");
-  PRECONDITION(pos, "bad position vector");
+  PRECONDITION(df_init, "not initialized")
+  PRECONDITION(pos, "bad position vector")
 
   unsigned int tab = 0;
   for (auto d_position : d_positions) {
@@ -398,12 +398,12 @@ void ForceField::scatter(double *pos) const {
     }
     tab += this->dimension();
   }
-  POSTCONDITION(tab == this->dimension() * d_positions.size(), "bad index");
+  POSTCONDITION(tab == this->dimension() * d_positions.size(), "bad index")
 }
 
 void ForceField::gather(double *pos) {
-  PRECONDITION(df_init, "not initialized");
-  PRECONDITION(pos, "bad position vector");
+  PRECONDITION(df_init, "not initialized")
+  PRECONDITION(pos, "bad position vector")
 
   unsigned int tab = 0;
   for (auto &d_position : d_positions) {
@@ -415,11 +415,11 @@ void ForceField::gather(double *pos) {
 }
 
 void ForceField::initDistanceMatrix() {
-  PRECONDITION(d_numPoints, "no points");
-  PRECONDITION(dp_distMat, "no distance matrix");
+  PRECONDITION(d_numPoints, "no points")
+  PRECONDITION(dp_distMat, "no distance matrix")
   PRECONDITION(static_cast<unsigned int>(d_numPoints * (d_numPoints + 1) / 2) <=
                    d_matSize,
-               "matrix size mismatch");
+               "matrix size mismatch")
   for (unsigned int i = 0; i < d_numPoints * (d_numPoints + 1) / 2; i++) {
     dp_distMat[i] = -1.0;
   }

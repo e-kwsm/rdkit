@@ -11,13 +11,13 @@ namespace DistGeom {
 ChiralViolationContrib::ChiralViolationContrib(ForceFields::ForceField *owner,
                                                const ChiralSet *cset,
                                                double weight) {
-  PRECONDITION(owner, "bad owner");
+  PRECONDITION(owner, "bad owner")
   PRECONDITION(cset, "bad chiral set")
 
-  URANGE_CHECK(cset->d_idx1, owner->positions().size());
-  URANGE_CHECK(cset->d_idx2, owner->positions().size());
-  URANGE_CHECK(cset->d_idx3, owner->positions().size());
-  URANGE_CHECK(cset->d_idx4, owner->positions().size());
+  URANGE_CHECK(cset->d_idx1, owner->positions().size())
+  URANGE_CHECK(cset->d_idx2, owner->positions().size())
+  URANGE_CHECK(cset->d_idx3, owner->positions().size())
+  URANGE_CHECK(cset->d_idx4, owner->positions().size())
 
   dp_forceField = owner;
 
@@ -33,8 +33,8 @@ ChiralViolationContrib::ChiralViolationContrib(ForceFields::ForceField *owner,
 }
 
 double ChiralViolationContrib::getEnergy(double *pos) const {
-  PRECONDITION(dp_forceField, "no owner");
-  PRECONDITION(pos, "bad vector");
+  PRECONDITION(dp_forceField, "no owner")
+  PRECONDITION(pos, "bad vector")
 
   unsigned int dim = dp_forceField->dimension();
   double vol = calcChiralVolume(d_idx1, d_idx2, d_idx3, d_idx4, pos, dim);
@@ -49,8 +49,8 @@ double ChiralViolationContrib::getEnergy(double *pos) const {
 }
 
 void ChiralViolationContrib::getGrad(double *pos, double *grad) const {
-  PRECONDITION(dp_forceField, "no owner");
-  PRECONDITION(pos, "bad vector");
+  PRECONDITION(dp_forceField, "no owner")
+  PRECONDITION(pos, "bad vector")
 
   unsigned int dim = dp_forceField->dimension();
 

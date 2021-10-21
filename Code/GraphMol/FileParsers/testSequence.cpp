@@ -44,7 +44,7 @@ static void testSeq(const char *seq) {
 
 static void testHELM(const char *helm) {
   RDKit::RWMol *mol = RDKit::HELMToMol(helm);
-  TEST_ASSERT(mol);
+  TEST_ASSERT(mol)
   testToSequence(*mol);
   testToHELM(*mol);
   testToSmiles(*mol);

@@ -89,7 +89,7 @@ class RDKIT_CHEMREACTIONS_EXPORT EnumerateLibraryBase {
 
   //! Are there any enumerations left?
   virtual operator bool() const {
-    PRECONDITION(m_enumerator.get(), "Null enumeration strategy");
+    PRECONDITION(m_enumerator.get(), "Null enumeration strategy")
     return static_cast<bool>(*m_enumerator);
   }
 
@@ -105,7 +105,7 @@ class RDKIT_CHEMREACTIONS_EXPORT EnumerateLibraryBase {
 
   //! return the current enumeration strategy
   const EnumerationStrategyBase &getEnumerator() {
-    PRECONDITION(m_enumerator.get(), "Null Enumerator");
+    PRECONDITION(m_enumerator.get(), "Null Enumerator")
     return *m_enumerator;
   }
 
@@ -189,7 +189,7 @@ class RDKIT_CHEMREACTIONS_EXPORT EnumerateLibraryBase {
     m_initialEnumerator = EnumerationStrategyPickler::fromPickle(pickle);
   }
 
-  BOOST_SERIALIZATION_SPLIT_MEMBER();
+  BOOST_SERIALIZATION_SPLIT_MEMBER()
 #endif
 };
 

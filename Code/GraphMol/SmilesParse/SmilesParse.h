@@ -79,7 +79,7 @@ inline RWMol *SmilesToMol(
     params.removeHs = false;
   }
   return SmilesToMol(smi, params);
-};
+}
 
 struct RDKIT_SMILESPARSE_EXPORT SmartsParserParams {
   int debugParse = 0; /**< enable debugging in the SMARTS parser*/
@@ -117,7 +117,7 @@ inline RWMol *SmartsToMol(
   ps.mergeHs = mergeHs;
   ps.replacements = replacements;
   return SmartsToMol(sma, ps);
-};
+}
 
 RDKIT_SMILESPARSE_EXPORT Atom *SmartsToAtom(const std::string &sma);
 RDKIT_SMILESPARSE_EXPORT Bond *SmartsToBond(const std::string &sma);

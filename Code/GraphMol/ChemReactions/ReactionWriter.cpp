@@ -120,13 +120,13 @@ namespace RDKit {
 //! returns the reaction SMARTS for a reaction
 std::string ChemicalReactionToRxnSmarts(const ChemicalReaction &rxn) {
   return chemicalReactionToRxnToString(rxn, false, false);
-};
+}
 
 //! returns the reaction SMILES for a reaction
 std::string ChemicalReactionToRxnSmiles(const ChemicalReaction &rxn,
                                         bool canonical) {
   return chemicalReactionToRxnToString(rxn, true, canonical);
-};
+}
 
 //! returns an RXN block for a reaction
 std::string ChemicalReactionToV3KRxnBlock(const ChemicalReaction &rxn,
@@ -233,7 +233,7 @@ std::string ChemicalReactionToRxnBlock(const ChemicalReaction &rxn,
     }
   }
   return res.str();
-};
+}
 
 //! returns a ROMol with RXNMolRole used for a reaction
 ROMol *ChemicalReactionToRxnMol(const ChemicalReaction &rxn) {

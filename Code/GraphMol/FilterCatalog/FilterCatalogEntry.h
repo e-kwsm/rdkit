@@ -227,7 +227,7 @@ class RDKIT_FILTERCATALOG_EXPORT FilterCatalogEntry
   friend class boost::serialization::access;
   template <class Archive>
   void save(Archive &ar, const unsigned int version) const {
-    RDUNUSED_PARAM(version);
+    RDUNUSED_PARAM(version)
     registerFilterMatcherTypes(ar);
 
     ar &d_matcher;
@@ -251,7 +251,7 @@ class RDKIT_FILTERCATALOG_EXPORT FilterCatalogEntry
 
   template <class Archive>
   void load(Archive &ar, const unsigned int version) {
-    RDUNUSED_PARAM(version);
+    RDUNUSED_PARAM(version)
     registerFilterMatcherTypes(ar);
 
     ar &d_matcher;
@@ -264,13 +264,13 @@ class RDKIT_FILTERCATALOG_EXPORT FilterCatalogEntry
     }
   }
 
-  BOOST_SERIALIZATION_SPLIT_MEMBER();
+  BOOST_SERIALIZATION_SPLIT_MEMBER()
 #endif
 };
 }  // namespace RDKit
 
 #ifdef RDK_USE_BOOST_SERIALIZATION
-BOOST_CLASS_VERSION(RDKit::FilterCatalogEntry, 1);
+BOOST_CLASS_VERSION(RDKit::FilterCatalogEntry, 1)
 #endif
 
 #endif  //__RD_FILTER_CATALOG_H__

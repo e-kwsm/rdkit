@@ -32,8 +32,8 @@ FingerprintArguments::FingerprintArguments(
       d_fpSize(fpSize),
       d_numBitsPerFeature(numBitsPerFeature) {
   PRECONDITION(!countSimulation || !countBounds.empty(),
-               "bad count bounds provided");
-  PRECONDITION(d_numBitsPerFeature > 0, "numBitsPerFeature must be >0");
+               "bad count bounds provided")
+  PRECONDITION(d_numBitsPerFeature > 0, "numBitsPerFeature must be >0")
 }
 
 std::string FingerprintArguments::commonArgumentsString() const {

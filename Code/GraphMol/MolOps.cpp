@@ -57,7 +57,7 @@ void nitrogenCleanup(RWMol &mol, Atom *atom) {
   //   zwitterionic form.  e.g.:
   //   C-N=N#N -> C-N=[N+]=[N-]
 
-  PRECONDITION(atom, "bad atom");
+  PRECONDITION(atom, "bad atom")
   bool aromHolder;
 
   // we only want to do neutrals so that things like this don't get
@@ -111,7 +111,7 @@ void phosphorusCleanup(RWMol &mol, Atom *atom) {
   // - neutral 5 coordinate Ps with one double bonds to an Os
   //   and one to a C or N to the zwitterionic form.  e.g.:
   //   C=P(=O)X -> C=[P+]([O-])X
-  PRECONDITION(atom, "bad atom");
+  PRECONDITION(atom, "bad atom")
 
   // we only want to do neutrals
   if (atom->getFormalCharge()) {
@@ -142,7 +142,7 @@ void phosphorusCleanup(RWMol &mol, Atom *atom) {
       }
     }  // end of loop over the first neigh
     if (hasDoubleToCorN && dbl_to_O != nullptr) {
-      TEST_ASSERT(O_atom != nullptr);
+      TEST_ASSERT(O_atom != nullptr)
       O_atom->setFormalCharge(-1);
       dbl_to_O->setBondType(Bond::SINGLE);
       atom->setFormalCharge(1);
@@ -153,7 +153,7 @@ void phosphorusCleanup(RWMol &mol, Atom *atom) {
 }
 
 void halogenCleanup(RWMol &mol, Atom *atom) {
-  PRECONDITION(atom, "bad atom");
+  PRECONDITION(atom, "bad atom")
   // Conversions done:
   //    X(=O)(=O)(=O)O -> [X+3]([O-])([O-])([O-])O
   //    X(=O)(=O)O -> [X+2]([O-])([O-])O
@@ -783,7 +783,7 @@ unsigned int getMolFrags(const ROMol &mol, INT_VECT &mapping) {
   mapping.resize(natms);
   return natms ? boost::connected_components(mol.getTopology(), &mapping[0])
                : 0;
-};
+}
 
 unsigned int getMolFrags(const ROMol &mol, VECT_INT_VECT &frags) {
   frags.clear();
@@ -810,7 +810,7 @@ template <typename T>
 std::map<T, boost::shared_ptr<ROMol>> getMolFragsWithQuery(
     const ROMol &mol, T (*query)(const ROMol &, const Atom *),
     bool sanitizeFrags, const std::vector<T> *whiteList, bool negateList) {
-  PRECONDITION(query, "no query");
+  PRECONDITION(query, "no query")
 
   std::vector<T> assignments(mol.getNumAtoms());
   std::vector<int> ids(mol.getNumAtoms(), -1);
@@ -954,7 +954,7 @@ int getFormalCharge(const ROMol &mol) {
     accum += (*atomIt)->getFormalCharge();
   }
   return accum;
-};
+}
 
 unsigned getNumAtomsWithDistinctProperty(const ROMol &mol, std::string prop) {
   unsigned numPropAtoms = 0;

@@ -79,7 +79,6 @@ width='300px' height='300px' >
               "1' "
               "/>"
            << std::endl;
-      ;
     }
     outs << "</svg>" << std::endl;
     delete[] grid;

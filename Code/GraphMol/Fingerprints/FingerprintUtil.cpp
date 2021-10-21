@@ -40,7 +40,7 @@
 namespace RDKit {
 namespace AtomPairs {
 unsigned int numPiElectrons(const Atom *atom) {
-  PRECONDITION(atom, "no atom");
+  PRECONDITION(atom, "no atom")
   unsigned int res = 0;
   if (atom->getIsAromatic()) {
     res = 1;
@@ -55,7 +55,7 @@ unsigned int numPiElectrons(const Atom *atom) {
       }
     }
     CHECK_INVARIANT(val >= physical_bonds,
-                    "explicit valence exceeds atom degree");
+                    "explicit valence exceeds atom degree")
     res = val - physical_bonds;
   }
   return res;
@@ -63,7 +63,7 @@ unsigned int numPiElectrons(const Atom *atom) {
 
 std::uint32_t getAtomCode(const Atom *atom, unsigned int branchSubtract,
                           bool includeChirality) {
-  PRECONDITION(atom, "no atom");
+  PRECONDITION(atom, "no atom")
   std::uint32_t code;
 
   unsigned int numBranches = 0;
@@ -105,13 +105,13 @@ std::uint32_t getAtomCode(const Atom *atom, unsigned int branchSubtract,
   }
   POSTCONDITION(code < static_cast<std::uint32_t>(
                            1 << (codeSize + (includeChirality ? 2 : 0))),
-                "code exceeds number of bits");
+                "code exceeds number of bits")
   return code;
-};
+}
 
 std::uint32_t getAtomPairCode(std::uint32_t codeI, std::uint32_t codeJ,
                               unsigned int dist, bool includeChirality) {
-  PRECONDITION(dist < maxPathLen, "dist too long");
+  PRECONDITION(dist < maxPathLen, "dist too long")
   std::uint32_t res = dist;
   res |= std::min(codeI, codeJ) << numPathBits;
   res |= std::max(codeI, codeJ)
@@ -205,12 +205,12 @@ $([N;H0&+0]([C;!$(C(=O))])([C;!$(C(=O))])[C;!$(C(=O))])]",  // Basic
 
 const RDKit::ROMol *ss_matcher::getMatcher() const { return m_matcher.get(); }
 
-ss_matcher::ss_matcher(){};
+ss_matcher::ss_matcher() {}
 ss_matcher::ss_matcher(const std::string &pattern) {
   RDKit::RWMol *p = RDKit::SmartsToMol(pattern);
-  TEST_ASSERT(p);
+  TEST_ASSERT(p)
   m_matcher.reset(p);
-};
+}
 
 typedef boost::flyweight<boost::flyweights::key_value<std::string, ss_matcher>,
                          boost::flyweights::no_tracking>
@@ -224,7 +224,7 @@ typedef boost::flyweight<boost::flyweights::key_value<std::string, ss_matcher>,
 void getFeatureInvariants(const ROMol &mol, std::vector<uint32_t> &invars,
                           std::vector<const ROMol *> *patterns) {
   unsigned int nAtoms = mol.getNumAtoms();
-  PRECONDITION(invars.size() >= nAtoms, "vector too small");
+  PRECONDITION(invars.size() >= nAtoms, "vector too small")
 
   std::vector<const ROMol *> featureMatchers;
   if (!patterns) {
@@ -233,7 +233,7 @@ void getFeatureInvariants(const ROMol &mol, std::vector<uint32_t> &invars,
              defaultFeatureSmarts.begin();
          smaIt != defaultFeatureSmarts.end(); ++smaIt) {
       const ROMol *matcher = pattern_flyweight(*smaIt).get().getMatcher();
-      CHECK_INVARIANT(matcher, "bad smarts");
+      CHECK_INVARIANT(matcher, "bad smarts")
       featureMatchers.push_back(matcher);
     }
     patterns = &featureMatchers;
@@ -257,7 +257,7 @@ void getFeatureInvariants(const ROMol &mol, std::vector<uint32_t> &invars,
 void getConnectivityInvariants(const ROMol &mol, std::vector<uint32_t> &invars,
                                bool includeRingMembership) {
   unsigned int nAtoms = mol.getNumAtoms();
-  PRECONDITION(invars.size() >= nAtoms, "vector too small");
+  PRECONDITION(invars.size() >= nAtoms, "vector too small")
   gboost::hash<std::vector<uint32_t>> vectHasher;
   for (unsigned int i = 0; i < nAtoms; ++i) {
     Atom const *atom = mol.getAtomWithIdx(i);
@@ -363,7 +363,7 @@ std::vector<unsigned int> generateBondHashes(
     const std::vector<short> &isQueryBond, const PATH_TYPE &path,
     bool useBondOrder, const std::vector<std::uint32_t> *atomInvariants) {
   PRECONDITION(!atomInvariants || atomInvariants->size() >= mol.getNumAtoms(),
-               "bad atomInvariants size");
+               "bad atomInvariants size")
 
   std::vector<unsigned int> bondHashes;
   atomsInPath.reset();
@@ -371,7 +371,7 @@ std::vector<unsigned int> generateBondHashes(
   std::vector<unsigned int> atomDegrees(mol.getNumAtoms(), 0);
   for (unsigned int i = 0; i < path.size() && !queryInPath; ++i) {
     const Bond *bi = bondCache[path[i]];
-    CHECK_INVARIANT(bi, "bond not in cache");
+    CHECK_INVARIANT(bi, "bond not in cache")
     atomDegrees[bi->getBeginAtomIdx()]++;
     atomDegrees[bi->getEndAtomIdx()]++;
     atomsInPath.set(bi->getBeginAtomIdx());

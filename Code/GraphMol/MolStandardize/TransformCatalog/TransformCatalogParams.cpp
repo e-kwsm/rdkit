@@ -36,7 +36,7 @@ TransformCatalogParams::TransformCatalogParams(
     const std::vector<std::pair<std::string, std::string>> &data) {
   d_transformations.clear();
   d_transformations = readTransformations(data);
-};
+}
 
 TransformCatalogParams::TransformCatalogParams(
     const TransformCatalogParams &other) {
@@ -60,7 +60,7 @@ const std::vector<std::shared_ptr<ChemicalReaction>>
 
 const ChemicalReaction *TransformCatalogParams::getTransformation(
     unsigned int fid) const {
-  URANGE_CHECK(fid, d_transformations.size());
+  URANGE_CHECK(fid, d_transformations.size())
   // return d_transformations[fid];
   return d_transformations[fid].get();
 }
@@ -76,11 +76,11 @@ std::string TransformCatalogParams::Serialize() const {
 }
 
 void TransformCatalogParams::initFromStream(std::istream &) {
-  UNDER_CONSTRUCTION("not implemented");
+  UNDER_CONSTRUCTION("not implemented")
 }
 
 void TransformCatalogParams::initFromString(const std::string &) {
-  UNDER_CONSTRUCTION("not implemented");
+  UNDER_CONSTRUCTION("not implemented")
 }
 
 }  // namespace MolStandardize

@@ -260,7 +260,7 @@ bool kekulizeWorker(RWMol &mol, const INT_VECT &allAtms,
         }
       }
     }
-    CHECK_INVARIANT(curr >= 0, "starting point not found");
+    CHECK_INVARIANT(curr >= 0, "starting point not found")
     done.push_back(curr);
 
     // loop over the neighbors if we can add double bonds or
@@ -274,7 +274,7 @@ bool kekulizeWorker(RWMol &mol, const INT_VECT &allAtms,
     // if we are here because of backtracking
     if (options.find(curr) != options.end()) {
       opts = options[curr];
-      CHECK_INVARIANT(opts.size() > 0, "");
+      CHECK_INVARIANT(opts.size() > 0, "")
     } else {
       for (const auto &nbrIdx : boost::make_iterator_range(
                mol.getAtomNeighbors(mol.getAtomWithIdx(curr)))) {
@@ -507,7 +507,7 @@ void KekulizeFragment(RWMol &mol, const boost::dynamic_bitset<> &atomsToUse,
                       boost::dynamic_bitset<> bondsToUse, bool markAtomsBonds,
                       unsigned int maxBackTracks) {
   PRECONDITION(atomsToUse.size() == mol.getNumAtoms(),
-               "atomsToUse is wrong size");
+               "atomsToUse is wrong size")
   PRECONDITION(bondsToUse.size() == mol.getNumBonds(),
                "bondsToUse is wrong size");
   // if there are no atoms to use we can directly return

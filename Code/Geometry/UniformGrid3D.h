@@ -162,8 +162,8 @@ class RDKIT_RDGEOMETRYLIB_EXPORT UniformGrid3D : public Grid3D {
   std::string toString() const;
 
   UniformGrid3D operator&(const UniformGrid3D &other) const {
-    PRECONDITION(dp_storage, "bad storage");
-    PRECONDITION(compareParams(other), "mismatched params");
+    PRECONDITION(dp_storage, "bad storage")
+    PRECONDITION(compareParams(other), "mismatched params")
     UniformGrid3D res(d_numX * d_spacing, d_numY * d_spacing,
                       d_numZ * d_spacing, d_spacing, dp_storage->getValueType(),
                       &d_offSet);

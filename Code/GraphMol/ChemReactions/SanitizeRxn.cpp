@@ -129,7 +129,7 @@ struct AtomInfo {
   }
 
   void setRLabel(unsigned int rlabel) {
-    PRECONDITION(atom, "Internal error in SanitizeRxn - null atom");
+    PRECONDITION(atom, "Internal error in SanitizeRxn - null atom")
     auto &mol = dynamic_cast<RWMol &>(atom->getOwningMol());
 
     QueryAtom qatom(*atom);
@@ -304,7 +304,7 @@ void fixReactantTemplateAromaticity(ChemicalReaction &rxn) {
     if (rw) {
       sanitizeMol(*rw, ops, MolOps::SANITIZE_SETAROMATICITY);
     } else
-      PRECONDITION(rw, "Oops, not really a RWMol?");
+      PRECONDITION(rw, "Oops, not really a RWMol?")
   }
 }
 
@@ -362,7 +362,7 @@ void fixHs(ChemicalReaction &rxn) {
     if (rw) {
       MolOps::mergeQueryHs(*rw, mergeUnmappedOnly);
     } else
-      PRECONDITION(rw, "Oops, not really an RWMol?");
+      PRECONDITION(rw, "Oops, not really an RWMol?")
   }
 }
 
@@ -374,7 +374,7 @@ void adjustTemplates(ChemicalReaction &rxn,
     if (rw) {
       adjustQueryProperties(*rw, &params);
     } else
-      PRECONDITION(rw, "Oops, not really a RWMol?");
+      PRECONDITION(rw, "Oops, not really a RWMol?")
   }
 }
 void sanitizeRxn(ChemicalReaction &rxn, unsigned int &operationsThatFailed,

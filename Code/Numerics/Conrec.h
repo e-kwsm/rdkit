@@ -35,13 +35,13 @@ struct ConrecSegment {
 inline void Contour(const double *d, size_t ilb, size_t iub, size_t jlb,
                     size_t jub, const double *x, const double *y, size_t nc,
                     double *z, std::vector<ConrecSegment> &res) {
-  PRECONDITION(d, "no data");
-  PRECONDITION(x, "no data");
-  PRECONDITION(y, "no data");
-  PRECONDITION(z, "no data");
-  PRECONDITION(nc > 0, "no contours");
-  PRECONDITION(iub > ilb, "bad bounds");
-  PRECONDITION(jub > jlb, "bad bounds");
+  PRECONDITION(d, "no data")
+  PRECONDITION(x, "no data")
+  PRECONDITION(y, "no data")
+  PRECONDITION(z, "no data")
+  PRECONDITION(nc > 0, "no contours")
+  PRECONDITION(iub > ilb, "bad bounds")
+  PRECONDITION(jub > jlb, "bad bounds")
 
   int m1, m2, m3, case_value;
   double dmin, dmax, x1 = 0, x2 = 0, y1 = 0, y2 = 0;

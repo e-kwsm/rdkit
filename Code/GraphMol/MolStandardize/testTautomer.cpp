@@ -28,7 +28,7 @@ void testEnumerator() {
       new TautomerCatalogParams(tautomerFile));
 
   unsigned int ntransforms = tautparams->getTransforms().size();
-  TEST_ASSERT(ntransforms == 36);
+  TEST_ASSERT(ntransforms == 36)
 
   TautomerEnumerator te(new TautomerCatalog(tautparams.get()));
 
@@ -37,7 +37,7 @@ void testEnumerator() {
                     const std::vector<std::string> &ans) {
         ROMOL_SPTR m(SmilesToMol(smi));
         TautomerEnumeratorResult res = te.enumerate(*m);
-        TEST_ASSERT(res.status() == TautomerEnumeratorStatus::Completed);
+        TEST_ASSERT(res.status() == TautomerEnumeratorStatus::Completed)
         size_t sz = std::max(res.size(), ans.size());
         bool exceedingTautomer = false;
         bool missingTautomer = false;
@@ -56,7 +56,7 @@ void testEnumerator() {
                       << ", ans " << ans[i] << std::endl;
           }
         }
-        TEST_ASSERT(!(missingTautomer || exceedingTautomer || wrongTautomer));
+        TEST_ASSERT(!(missingTautomer || exceedingTautomer || wrongTautomer))
       });
 
   // Enumerate 1,3 keto/enol tautomer.
@@ -322,8 +322,8 @@ void testEnumerator() {
   TautomerEnumeratorResult res66 = te.enumerate(*m66);
   std::vector<std::string> ans66 = {"C=C(O)C=CC", "C=CC=C(C)O", "C=CCC(=C)O",
                                     "C=CCC(C)=O", "CC=CC(C)=O"};
-  TEST_ASSERT(res66.size() == ans66.size());
-  TEST_ASSERT(res66.status() == TautomerEnumeratorStatus::Completed);
+  TEST_ASSERT(res66.size() == ans66.size())
+  TEST_ASSERT(res66.status() == TautomerEnumeratorStatus::Completed)
 
   std::vector<std::string> sm66;
   for (const auto &r : res66) {
@@ -332,7 +332,7 @@ void testEnumerator() {
   // sort both for alphabetical order
   std::sort(sm66.begin(), sm66.end());
   std::sort(ans66.begin(), ans66.end());
-  TEST_ASSERT(sm66 == ans66);
+  TEST_ASSERT(sm66 == ans66)
 
   // Gaunine tautomers
   std::string smi67 = "N1C(N)=NC=2N=CNC2C1=O";
@@ -347,8 +347,8 @@ void testEnumerator() {
       "Nc1nc(O)c2nc[nH]c2n1",         "Nc1nc(O)c2ncnc-2[nH]1",
       "Nc1nc2[nH]cnc2c(=O)[nH]1",     "Nc1nc2nc[nH]c2c(=O)[nH]1",
       "Nc1nc2ncnc-2c(O)[nH]1"};
-  TEST_ASSERT(res67.size() == ans67.size());
-  TEST_ASSERT(res67.status() == TautomerEnumeratorStatus::Completed);
+  TEST_ASSERT(res67.size() == ans67.size())
+  TEST_ASSERT(res67.status() == TautomerEnumeratorStatus::Completed)
   std::vector<std::string> sm67;
   for (const auto &r : res67) {
     sm67.push_back(MolToSmiles(*r));
@@ -356,15 +356,15 @@ void testEnumerator() {
   // sort both by alphabetical order
   std::sort(sm67.begin(), sm67.end());
   std::sort(ans67.begin(), ans67.end());
-  TEST_ASSERT(sm67 == ans67);
+  TEST_ASSERT(sm67 == ans67)
 
   // Test a structure with hundreds of tautomers.
   std::string smi68 = "[H][C](CO)(NC(=O)C1=C(O)C(O)=CC=C1)C(O)=O";
   ROMOL_SPTR m68(SmilesToMol(smi68));
   TautomerEnumeratorResult res68 = te.enumerate(*m68);
   // the maxTransforms limit is hit before the maxTautomers one
-  TEST_ASSERT(res68.size() == 292);
-  TEST_ASSERT(res68.status() == TautomerEnumeratorStatus::MaxTransformsReached);
+  TEST_ASSERT(res68.size() == 292)
+  TEST_ASSERT(res68.status() == TautomerEnumeratorStatus::MaxTransformsReached)
   BOOST_LOG(rdInfoLog) << "Finished" << std::endl;
 }
 
@@ -380,50 +380,50 @@ void testEnumeratorParams() {
   {
     TautomerEnumerator te;
     TautomerEnumeratorResult res68 = te.enumerate(*m68);
-    TEST_ASSERT(res68.status() == TautomerEnumeratorStatus::Completed);
-    TEST_ASSERT(res68.size() == 72);
+    TEST_ASSERT(res68.status() == TautomerEnumeratorStatus::Completed)
+    TEST_ASSERT(res68.size() == 72)
   }
   {  // test v1 of the tautomerization parameters
     std::unique_ptr<TautomerEnumerator> te(getV1TautomerEnumerator());
     TautomerEnumeratorResult res68 = te->enumerate(*m68);
     TEST_ASSERT(res68.status() ==
-                TautomerEnumeratorStatus::MaxTransformsReached);
-    TEST_ASSERT(res68.size() == 292);
+                TautomerEnumeratorStatus::MaxTransformsReached)
+    TEST_ASSERT(res68.size() == 292)
   }
   {
     CleanupParameters params;
     params.maxTautomers = 50;
     TautomerEnumerator te(params);
     TautomerEnumeratorResult res68 = te.enumerate(*m68);
-    TEST_ASSERT(res68.size() == 50);
+    TEST_ASSERT(res68.size() == 50)
     TEST_ASSERT(res68.status() ==
-                TautomerEnumeratorStatus::MaxTautomersReached);
+                TautomerEnumeratorStatus::MaxTautomersReached)
   }
   std::string sAlaSmi = "C[C@H](N)C(=O)O";
   ROMOL_SPTR sAla(SmilesToMol(sAlaSmi));
   {
     // test remove (S)-Ala stereochemistry
     TEST_ASSERT(sAla->getAtomWithIdx(1)->getChiralTag() ==
-                Atom::CHI_TETRAHEDRAL_CCW);
+                Atom::CHI_TETRAHEDRAL_CCW)
     TEST_ASSERT(sAla->getAtomWithIdx(1)->getProp<std::string>(
-                    common_properties::_CIPCode) == "S");
+                    common_properties::_CIPCode) == "S")
     CleanupParameters params;
     params.tautomerRemoveSp3Stereo = true;
     TautomerEnumerator te(params);
     TautomerEnumeratorResult res = te.enumerate(*sAla);
     for (const auto &taut : res) {
       TEST_ASSERT(taut->getAtomWithIdx(1)->getChiralTag() ==
-                  Atom::CHI_UNSPECIFIED);
+                  Atom::CHI_UNSPECIFIED)
       TEST_ASSERT(
-          !taut->getAtomWithIdx(1)->hasProp(common_properties::_CIPCode));
+          !taut->getAtomWithIdx(1)->hasProp(common_properties::_CIPCode))
     }
   }
   {
     // test retain (S)-Ala stereochemistry
     TEST_ASSERT(sAla->getAtomWithIdx(1)->getChiralTag() ==
-                Atom::CHI_TETRAHEDRAL_CCW);
+                Atom::CHI_TETRAHEDRAL_CCW)
     TEST_ASSERT(sAla->getAtomWithIdx(1)->getProp<std::string>(
-                    common_properties::_CIPCode) == "S");
+                    common_properties::_CIPCode) == "S")
     CleanupParameters params;
     params.tautomerRemoveSp3Stereo = false;
     TautomerEnumerator te(params);
@@ -431,19 +431,19 @@ void testEnumeratorParams() {
     for (const auto &taut : res) {
       const auto tautAtom = taut->getAtomWithIdx(1);
       if (tautAtom->getHybridization() == Atom::SP3) {
-        TEST_ASSERT(tautAtom->hasProp(common_properties::_CIPCode));
+        TEST_ASSERT(tautAtom->hasProp(common_properties::_CIPCode))
         TEST_ASSERT(
-            tautAtom->getProp<std::string>(common_properties::_CIPCode) == "S");
-        TEST_ASSERT(tautAtom->getChiralTag() == Atom::CHI_TETRAHEDRAL_CCW);
+            tautAtom->getProp<std::string>(common_properties::_CIPCode) == "S")
+        TEST_ASSERT(tautAtom->getChiralTag() == Atom::CHI_TETRAHEDRAL_CCW)
       } else {
-        TEST_ASSERT(!tautAtom->hasProp(common_properties::_CIPCode));
-        TEST_ASSERT(tautAtom->getChiralTag() == Atom::CHI_UNSPECIFIED);
+        TEST_ASSERT(!tautAtom->hasProp(common_properties::_CIPCode))
+        TEST_ASSERT(tautAtom->getChiralTag() == Atom::CHI_UNSPECIFIED)
       }
     }
   }
   std::string eEnolSmi = "C/C=C/O";
   ROMOL_SPTR eEnol(SmilesToMol(eEnolSmi));
-  TEST_ASSERT(eEnol->getBondWithIdx(1)->getStereo() == Bond::STEREOE);
+  TEST_ASSERT(eEnol->getBondWithIdx(1)->getStereo() == Bond::STEREOE)
   {
     // test remove enol E stereochemistry
     CleanupParameters params;
@@ -451,7 +451,7 @@ void testEnumeratorParams() {
     TautomerEnumerator te(params);
     TautomerEnumeratorResult res = te.enumerate(*eEnol);
     for (const auto &taut : res) {
-      TEST_ASSERT(taut->getBondWithIdx(1)->getStereo() == Bond::STEREONONE);
+      TEST_ASSERT(taut->getBondWithIdx(1)->getStereo() == Bond::STEREONONE)
     }
   }
   {
@@ -462,12 +462,12 @@ void testEnumeratorParams() {
     TautomerEnumeratorResult res = te.enumerate(*eEnol);
     for (const auto &taut : res) {
       if (taut->getBondWithIdx(1)->getBondType() == Bond::DOUBLE) {
-        TEST_ASSERT(taut->getBondWithIdx(1)->getStereo() == Bond::STEREOE);
+        TEST_ASSERT(taut->getBondWithIdx(1)->getStereo() == Bond::STEREOE)
       }
     }
   }
   ROMOL_SPTR zEnol = "C/C=C\\O"_smiles;
-  TEST_ASSERT(zEnol->getBondWithIdx(1)->getStereo() == Bond::STEREOZ);
+  TEST_ASSERT(zEnol->getBondWithIdx(1)->getStereo() == Bond::STEREOZ)
   {
     // test remove enol Z stereochemistry
     CleanupParameters params;
@@ -475,7 +475,7 @@ void testEnumeratorParams() {
     TautomerEnumerator te(params);
     TautomerEnumeratorResult res = te.enumerate(*zEnol);
     for (const auto &taut : res) {
-      TEST_ASSERT(taut->getBondWithIdx(1)->getStereo() == Bond::STEREONONE);
+      TEST_ASSERT(taut->getBondWithIdx(1)->getStereo() == Bond::STEREONONE)
     }
   }
   {
@@ -486,7 +486,7 @@ void testEnumeratorParams() {
     TautomerEnumeratorResult res = te.enumerate(*zEnol);
     for (const auto &taut : res) {
       if (taut->getBondWithIdx(1)->getBondType() == Bond::DOUBLE) {
-        TEST_ASSERT(taut->getBondWithIdx(1)->getStereo() == Bond::STEREOZ);
+        TEST_ASSERT(taut->getBondWithIdx(1)->getStereo() == Bond::STEREOZ)
       }
     }
   }
@@ -496,7 +496,7 @@ void testEnumeratorParams() {
   hparams.removeAndTrackIsotopes = true;
   chembl2024142.reset(MolOps::removeHs(*chembl2024142, hparams));
   TEST_ASSERT(chembl2024142->getAtomWithIdx(12)->hasProp(
-      common_properties::_isotopicHs));
+      common_properties::_isotopicHs))
   {
     // test remove isotopic Hs involved in tautomerism
     CleanupParameters params;
@@ -505,7 +505,7 @@ void testEnumeratorParams() {
     TautomerEnumeratorResult res = te.enumerate(*chembl2024142);
     for (const auto &taut : res) {
       const auto tautAtom = taut->getAtomWithIdx(12);
-      TEST_ASSERT(!tautAtom->hasProp(common_properties::_isotopicHs));
+      TEST_ASSERT(!tautAtom->hasProp(common_properties::_isotopicHs))
     }
   }
   {
@@ -516,13 +516,13 @@ void testEnumeratorParams() {
     TautomerEnumeratorResult res = te.enumerate(*chembl2024142);
     for (const auto &taut : res) {
       const auto tautAtom = taut->getAtomWithIdx(12);
-      TEST_ASSERT(tautAtom->hasProp(common_properties::_isotopicHs));
+      TEST_ASSERT(tautAtom->hasProp(common_properties::_isotopicHs))
     }
   }
   ROMOL_SPTR enolexample = "[2H]OC=C"_smiles;
   enolexample.reset(MolOps::removeHs(*enolexample, hparams));
   TEST_ASSERT(
-      enolexample->getAtomWithIdx(0)->hasProp(common_properties::_isotopicHs));
+      enolexample->getAtomWithIdx(0)->hasProp(common_properties::_isotopicHs))
   {
     CleanupParameters params;
     params.tautomerRemoveIsotopicHs = true;
@@ -531,7 +531,7 @@ void testEnumeratorParams() {
     for (const auto &taut : res) {
       const auto tautAtom = taut->getAtomWithIdx(0);
       TEST_ASSERT(!(tautAtom->hasProp(common_properties::_isotopicHs) &&
-                    !tautAtom->getTotalNumHs()));
+                    !tautAtom->getTotalNumHs()))
     }
   }
   {
@@ -542,7 +542,7 @@ void testEnumeratorParams() {
     for (const auto &taut : res) {
       const auto tautAtom = taut->getAtomWithIdx(0);
       TEST_ASSERT(!(tautAtom->hasProp(common_properties::_isotopicHs) &&
-                    !tautAtom->getTotalNumHs()));
+                    !tautAtom->getTotalNumHs()))
     }
   }
   BOOST_LOG(rdInfoLog) << "Finished" << std::endl;
@@ -596,8 +596,8 @@ void testEnumeratorCallback() {
     if (hasCompleted) {
       std::cerr << "Enumeration has completed" << std::endl;
     }
-    TEST_ASSERT(hasReachedTimeout || hasCompleted);
-    TEST_ASSERT(hasReachedTimeout ^ hasCompleted);
+    TEST_ASSERT(hasReachedTimeout || hasCompleted)
+    TEST_ASSERT(hasReachedTimeout ^ hasCompleted)
   }
   {
     TautomerEnumerator te(params);
@@ -618,8 +618,8 @@ void testEnumeratorCallback() {
     if (hasCompleted) {
       std::cerr << "Enumeration has completed" << std::endl;
     }
-    TEST_ASSERT(hasReachedTimeout || hasCompleted);
-    TEST_ASSERT(hasReachedTimeout ^ hasCompleted);
+    TEST_ASSERT(hasReachedTimeout || hasCompleted)
+    TEST_ASSERT(hasReachedTimeout ^ hasCompleted)
   }
   {
     // GitHub #4736
@@ -628,7 +628,7 @@ void testEnumeratorCallback() {
     TautomerEnumeratorResult res68 = te.enumerate(*m68);
     TautomerEnumerator teCopy(te);
     TautomerEnumeratorResult res68Copy = teCopy.enumerate(*m68);
-    TEST_ASSERT(res68.status() == res68Copy.status());
+    TEST_ASSERT(res68.status() == res68Copy.status())
   }
 
   BOOST_LOG(rdInfoLog) << "Finished" << std::endl;
@@ -712,16 +712,16 @@ void testCanonicalize() {
       std::unique_ptr<TautomerCatalogParams>(new TautomerCatalogParams(""));
 
   unsigned int ntransforms = tautparams->getTransforms().size();
-  TEST_ASSERT(ntransforms == 37);
+  TEST_ASSERT(ntransforms == 37)
 
   TautomerEnumerator te(new TautomerCatalog(tautparams.get()));
 
   for (const auto &itm : canonTautomerData) {
     std::unique_ptr<ROMol> mol{SmilesToMol(itm.first)};
-    TEST_ASSERT(mol);
+    TEST_ASSERT(mol)
     std::unique_ptr<ROMol> res{te.canonicalize(*mol)};
-    TEST_ASSERT(res);
-    TEST_ASSERT(MolToSmiles(*res) == itm.second);
+    TEST_ASSERT(res)
+    TEST_ASSERT(MolToSmiles(*res) == itm.second)
   }
   BOOST_LOG(rdInfoLog) << "Finished" << std::endl;
 }
@@ -734,18 +734,18 @@ void testPickCanonical() {
       std::unique_ptr<TautomerCatalogParams>(new TautomerCatalogParams(""));
 
   unsigned int ntransforms = tautparams->getTransforms().size();
-  TEST_ASSERT(ntransforms == 37);
+  TEST_ASSERT(ntransforms == 37)
 
   TautomerEnumerator te(new TautomerCatalog(tautparams.get()));
 
   for (const auto &itm : canonTautomerData) {
     std::unique_ptr<ROMol> mol{SmilesToMol(itm.first)};
-    TEST_ASSERT(mol);
+    TEST_ASSERT(mol)
     auto tautRes = te.enumerate(*mol);
     std::unique_ptr<ROMol> res{te.pickCanonical(tautRes)};
-    TEST_ASSERT(res);
+    TEST_ASSERT(res)
     // std::cerr << itm.first<<" -> "<<MolToSmiles(*res)<<std::endl;
-    TEST_ASSERT(MolToSmiles(*res) == itm.second);
+    TEST_ASSERT(MolToSmiles(*res) == itm.second)
   }
   BOOST_LOG(rdInfoLog) << "Finished" << std::endl;
 }
@@ -759,7 +759,7 @@ void testCustomScoreFunc() {
       std::unique_ptr<TautomerCatalogParams>(new TautomerCatalogParams(""));
 
   unsigned int ntransforms = tautparams->getTransforms().size();
-  TEST_ASSERT(ntransforms == 37);
+  TEST_ASSERT(ntransforms == 37)
 
   TautomerEnumerator te(new TautomerCatalog(tautparams.get()));
 
@@ -773,15 +773,15 @@ void testCustomScoreFunc() {
   };
   for (const auto &itm : subsetTautomerData) {
     std::unique_ptr<ROMol> mol{SmilesToMol(itm.first)};
-    TEST_ASSERT(mol);
+    TEST_ASSERT(mol)
     {
       // this uses the non-templated pickCanonical() function
       std::unique_ptr<ROMol> res{
           te.canonicalize(*mol, [](const ROMol &m) -> int {
             return MolStandardize::TautomerScoringFunctions::scoreRings(m);
           })};
-      TEST_ASSERT(res);
-      TEST_ASSERT(MolToSmiles(*res) == itm.second);
+      TEST_ASSERT(res)
+      TEST_ASSERT(MolToSmiles(*res) == itm.second)
     }
     {
       // this uses the non-templated pickCanonical() overload
@@ -790,8 +790,8 @@ void testCustomScoreFunc() {
           te.pickCanonical(tautRes, [](const ROMol &m) -> int {
             return MolStandardize::TautomerScoringFunctions::scoreRings(m);
           })};
-      TEST_ASSERT(res);
-      TEST_ASSERT(MolToSmiles(*res) == itm.second);
+      TEST_ASSERT(res)
+      TEST_ASSERT(MolToSmiles(*res) == itm.second)
     }
     {
       // this tests the templated pickCanonical() overload on a std::vector
@@ -800,8 +800,8 @@ void testCustomScoreFunc() {
           te.pickCanonical(tautRes.tautomers(), [](const ROMol &m) -> int {
             return MolStandardize::TautomerScoringFunctions::scoreRings(m);
           })};
-      TEST_ASSERT(res);
-      TEST_ASSERT(MolToSmiles(*res) == itm.second);
+      TEST_ASSERT(res)
+      TEST_ASSERT(MolToSmiles(*res) == itm.second)
     }
     {
       // this tests the templated pickCanonical() overload
@@ -812,8 +812,8 @@ void testCustomScoreFunc() {
           te.pickCanonical(tautomerSet, [](const ROMol &m) -> int {
             return MolStandardize::TautomerScoringFunctions::scoreRings(m);
           })};
-      TEST_ASSERT(res);
-      TEST_ASSERT(MolToSmiles(*res) == itm.second);
+      TEST_ASSERT(res)
+      TEST_ASSERT(MolToSmiles(*res) == itm.second)
     }
   }
   BOOST_LOG(rdInfoLog) << "Finished" << std::endl;
@@ -828,26 +828,26 @@ void testEnumerationProblems() {
       std::unique_ptr<TautomerCatalogParams>(new TautomerCatalogParams(""));
 
   unsigned int ntransforms = tautparams->getTransforms().size();
-  TEST_ASSERT(ntransforms == 37);
+  TEST_ASSERT(ntransforms == 37)
 
   TautomerEnumerator te(new TautomerCatalog(tautparams.get()));
 #if 1
   {  // from the discussion of #2908
     auto mol = "O=C(C1=C[NH+]=CC=C1)[O-]"_smiles;
     auto tautRes = te.enumerate(*mol);
-    TEST_ASSERT(tautRes.size() == 1);
+    TEST_ASSERT(tautRes.size() == 1)
   }
 #endif
   {  // one of the examples from the tautobase paper
     auto m =
         "[S:1]=[c:2]1[nH+:3][c:5]([NH2:9])[nH:8][c:7]2[c:4]1[n:6][nH:10][n:11]2"_smiles;
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
 
     auto tautRes = te.enumerate(*m);
     // for (auto taut : tauts) {
     //   std::cerr << MolToSmiles(*taut) << std::endl;
     // }
-    TEST_ASSERT(tautRes.size() == 12);
+    TEST_ASSERT(tautRes.size() == 12)
   }
 
   BOOST_LOG(rdInfoLog) << "Finished" << std::endl;
@@ -860,12 +860,12 @@ void testPickCanonical2() {
   auto tautparams =
       std::unique_ptr<TautomerCatalogParams>(new TautomerCatalogParams(""));
   unsigned int ntransforms = tautparams->getTransforms().size();
-  TEST_ASSERT(ntransforms == 37);
+  TEST_ASSERT(ntransforms == 37)
 
   TautomerEnumerator te(new TautomerCatalog(tautparams.get()));
   {
     auto mol = "CN=c1nc[nH]cc1"_smiles;
-    TEST_ASSERT(mol);
+    TEST_ASSERT(mol)
     auto tautRes = te.enumerate(*mol);
     for (const auto &taut : tautRes) {
       std::cerr << MolToSmiles(*taut) << std::endl;
@@ -875,7 +875,7 @@ void testPickCanonical2() {
   }
   {
     auto mol = "CN=c1[nH]cccc1"_smiles;
-    TEST_ASSERT(mol);
+    TEST_ASSERT(mol)
     auto tautRes = te.enumerate(*mol);
     for (const auto &taut : tautRes) {
       std::cerr << MolToSmiles(*taut) << std::endl;
@@ -894,27 +894,27 @@ void testEnumerateDetails() {
   auto tautparams =
       std::unique_ptr<TautomerCatalogParams>(new TautomerCatalogParams(""));
   unsigned int ntransforms = tautparams->getTransforms().size();
-  TEST_ASSERT(ntransforms == 37);
+  TEST_ASSERT(ntransforms == 37)
   TautomerEnumerator te(new TautomerCatalog(tautparams.get()));
   {
     auto mol = "c1ccccc1CN=c1[nH]cccc1"_smiles;
-    TEST_ASSERT(mol);
+    TEST_ASSERT(mol)
 
     auto tautRes = te.enumerate(*mol);
-    TEST_ASSERT(tautRes.size() == 2);
-    TEST_ASSERT(tautRes.modifiedAtoms().count() == 2);
-    TEST_ASSERT(tautRes.modifiedBonds().count() == 7);
-    TEST_ASSERT(tautRes.modifiedAtoms().test(7));
-    TEST_ASSERT(tautRes.modifiedAtoms().test(9));
-    TEST_ASSERT(!tautRes.modifiedBonds().test(0));
-    TEST_ASSERT(tautRes.modifiedBonds().test(7));
-    TEST_ASSERT(tautRes.modifiedBonds().test(8));
-    TEST_ASSERT(tautRes.modifiedBonds().test(14));
+    TEST_ASSERT(tautRes.size() == 2)
+    TEST_ASSERT(tautRes.modifiedAtoms().count() == 2)
+    TEST_ASSERT(tautRes.modifiedBonds().count() == 7)
+    TEST_ASSERT(tautRes.modifiedAtoms().test(7))
+    TEST_ASSERT(tautRes.modifiedAtoms().test(9))
+    TEST_ASSERT(!tautRes.modifiedBonds().test(0))
+    TEST_ASSERT(tautRes.modifiedBonds().test(7))
+    TEST_ASSERT(tautRes.modifiedBonds().test(8))
+    TEST_ASSERT(tautRes.modifiedBonds().test(14))
   }
   {
     // test the deprecated form
     auto mol = "c1ccccc1CN=c1[nH]cccc1"_smiles;
-    TEST_ASSERT(mol);
+    TEST_ASSERT(mol)
     boost::dynamic_bitset<> atomsModified(mol->getNumAtoms());
     boost::dynamic_bitset<> bondsModified(mol->getNumBonds());
 
@@ -928,15 +928,15 @@ void testEnumerateDetails() {
 #if defined(__GNUC__)
 #pragma GCC diagnostic pop
 #endif
-    TEST_ASSERT(tauts.size() == 2);
-    TEST_ASSERT(atomsModified.count() == 2);
-    TEST_ASSERT(bondsModified.count() == 7);
-    TEST_ASSERT(atomsModified[7]);
-    TEST_ASSERT(atomsModified[9]);
-    TEST_ASSERT(!bondsModified[0]);
-    TEST_ASSERT(bondsModified[7]);
-    TEST_ASSERT(bondsModified[8]);
-    TEST_ASSERT(bondsModified[14]);
+    TEST_ASSERT(tauts.size() == 2)
+    TEST_ASSERT(atomsModified.count() == 2)
+    TEST_ASSERT(bondsModified.count() == 7)
+    TEST_ASSERT(atomsModified[7])
+    TEST_ASSERT(atomsModified[9])
+    TEST_ASSERT(!bondsModified[0])
+    TEST_ASSERT(bondsModified[7])
+    TEST_ASSERT(bondsModified[8])
+    TEST_ASSERT(bondsModified[14])
   }
   BOOST_LOG(rdInfoLog) << "Finished" << std::endl;
 }
@@ -950,62 +950,62 @@ void testGithub2990() {
       std::unique_ptr<TautomerCatalogParams>(new TautomerCatalogParams(""));
 
   unsigned int ntransforms = tautparams->getTransforms().size();
-  TEST_ASSERT(ntransforms == 37);
+  TEST_ASSERT(ntransforms == 37)
   TautomerEnumerator te(new TautomerCatalog(tautparams.get()));
   {
     // atom stereo
     auto mol = "COC(=O)[C@@H](N)CO"_smiles;
-    TEST_ASSERT(mol);
+    TEST_ASSERT(mol)
     auto res = te.enumerate(*mol);
     for (const auto &taut : res) {
       auto smi = MolToSmiles(*taut);
       // std::cerr << smi << std::endl;
-      TEST_ASSERT(smi.find("@H") == std::string::npos);
+      TEST_ASSERT(smi.find("@H") == std::string::npos)
     }
   }
   {
     // atom stereo, atoms not in the tautomer zone are still ok
     auto mol = "C[C@](Cl)(F)COC(=O)[C@@H](N)CO"_smiles;
-    TEST_ASSERT(mol);
+    TEST_ASSERT(mol)
     auto res = te.enumerate(*mol);
     for (const auto &taut : res) {
       auto smi = MolToSmiles(*taut);
       // std::cerr << smi << std::endl;
-      TEST_ASSERT(smi.find("@H") == std::string::npos);
-      TEST_ASSERT(smi.find("@]") != std::string::npos);
+      TEST_ASSERT(smi.find("@H") == std::string::npos)
+      TEST_ASSERT(smi.find("@]") != std::string::npos)
     }
   }
   {
     // bond stereo
     auto mol = "C/C=C/C/N=c1/[nH]cccc1"_smiles;
-    TEST_ASSERT(mol);
+    TEST_ASSERT(mol)
     TEST_ASSERT(mol->getBondBetweenAtoms(0, 1)->getBondDir() !=
-                Bond::BondDir::NONE);
+                Bond::BondDir::NONE)
     TEST_ASSERT(mol->getBondBetweenAtoms(2, 3)->getBondDir() !=
-                Bond::BondDir::NONE);
+                Bond::BondDir::NONE)
     TEST_ASSERT(mol->getBondBetweenAtoms(3, 4)->getBondDir() !=
-                Bond::BondDir::NONE);
+                Bond::BondDir::NONE)
     TEST_ASSERT(mol->getBondBetweenAtoms(5, 6)->getBondDir() !=
-                Bond::BondDir::NONE);
+                Bond::BondDir::NONE)
     TEST_ASSERT(mol->getBondBetweenAtoms(1, 2)->getStereo() >
-                Bond::BondStereo::STEREOANY);
+                Bond::BondStereo::STEREOANY)
     TEST_ASSERT(mol->getBondBetweenAtoms(4, 5)->getStereo() >
-                Bond::BondStereo::STEREOANY);
+                Bond::BondStereo::STEREOANY)
 
     auto res = te.enumerate(*mol);
     for (const auto &taut : res) {
       TEST_ASSERT(taut->getBondBetweenAtoms(0, 1)->getBondDir() !=
-                  Bond::BondDir::NONE);
+                  Bond::BondDir::NONE)
       TEST_ASSERT(taut->getBondBetweenAtoms(2, 3)->getBondDir() !=
-                  Bond::BondDir::NONE);
+                  Bond::BondDir::NONE)
       TEST_ASSERT(taut->getBondBetweenAtoms(3, 4)->getBondDir() ==
-                  Bond::BondDir::NONE);
+                  Bond::BondDir::NONE)
       TEST_ASSERT(taut->getBondBetweenAtoms(5, 6)->getBondDir() ==
-                  Bond::BondDir::NONE);
+                  Bond::BondDir::NONE)
       TEST_ASSERT(taut->getBondBetweenAtoms(1, 2)->getStereo() >
-                  Bond::BondStereo::STEREOANY);
+                  Bond::BondStereo::STEREOANY)
       TEST_ASSERT(taut->getBondBetweenAtoms(4, 5)->getStereo() ==
-                  Bond::BondStereo::STEREONONE);
+                  Bond::BondStereo::STEREONONE)
     }
   }
 
@@ -1036,28 +1036,28 @@ void testPickCanonicalCIPChangeOnChiralCenter() {
                               return (a < b);
                             });
       TEST_ASSERT(*std::max_element(scores.begin(), scores.end()) ==
-                  scores.at(bestIdx));
+                  scores.at(bestIdx))
       return res.at(bestIdx);
     }
   };
 
   auto mol = "CC\\C=C(/O)[C@@H](C)C(C)=O"_smiles;
-  TEST_ASSERT(mol.get());
+  TEST_ASSERT(mol.get())
   TEST_ASSERT(mol->getAtomWithIdx(5)->getChiralTag() ==
-              Atom::CHI_TETRAHEDRAL_CW);
+              Atom::CHI_TETRAHEDRAL_CW)
   TEST_ASSERT(mol->getAtomWithIdx(5)->getProp<std::string>(
-                  common_properties::_CIPCode) == "R");
+                  common_properties::_CIPCode) == "R")
   {
     // here the chirality disappears as the chiral center is itself involved in
     // tautomerism
     TautomerEnumerator te;
     ROMOL_SPTR canTaut(te.canonicalize(*mol));
-    TEST_ASSERT(canTaut.get());
+    TEST_ASSERT(canTaut.get())
     TEST_ASSERT(canTaut->getAtomWithIdx(5)->getChiralTag() ==
-                Atom::CHI_UNSPECIFIED);
+                Atom::CHI_UNSPECIFIED)
     TEST_ASSERT(
-        !canTaut->getAtomWithIdx(5)->hasProp(common_properties::_CIPCode));
-    TEST_ASSERT(MolToSmiles(*canTaut) == "CCCC(=O)C(C)C(C)=O");
+        !canTaut->getAtomWithIdx(5)->hasProp(common_properties::_CIPCode))
+    TEST_ASSERT(MolToSmiles(*canTaut) == "CCCC(=O)C(C)C(C)=O")
   }
   {
     // here the chirality stays even if the chiral center is itself involved in
@@ -1067,27 +1067,27 @@ void testPickCanonicalCIPChangeOnChiralCenter() {
     params.tautomerRemoveSp3Stereo = false;
     TautomerEnumerator te(params);
     ROMOL_SPTR canTaut(te.canonicalize(*mol));
-    TEST_ASSERT(canTaut.get());
+    TEST_ASSERT(canTaut.get())
     TEST_ASSERT(canTaut->getAtomWithIdx(5)->getChiralTag() ==
-                Atom::CHI_TETRAHEDRAL_CW);
+                Atom::CHI_TETRAHEDRAL_CW)
     TEST_ASSERT(canTaut->getAtomWithIdx(5)->getProp<std::string>(
-                    common_properties::_CIPCode) == "S");
-    TEST_ASSERT(MolToSmiles(*canTaut) == "CCCC(=O)[C@@H](C)C(C)=O");
+                    common_properties::_CIPCode) == "S")
+    TEST_ASSERT(MolToSmiles(*canTaut) == "CCCC(=O)[C@@H](C)C(C)=O")
   }
   {
     // here the chirality disappears as the chiral center is itself involved in
     // tautomerism; the reassignStereo setting has no influence
     TautomerEnumerator te;
     auto res = te.enumerate(*mol);
-    TEST_ASSERT(res.status() == TautomerEnumeratorStatus::Completed);
-    TEST_ASSERT(res.size() == 8);
+    TEST_ASSERT(res.status() == TautomerEnumeratorStatus::Completed)
+    TEST_ASSERT(res.size() == 8)
     ROMOL_SPTR bestTaut = CanonicalTaut::get(res);
-    TEST_ASSERT(bestTaut.get());
+    TEST_ASSERT(bestTaut.get())
     TEST_ASSERT(bestTaut->getAtomWithIdx(5)->getChiralTag() ==
-                Atom::CHI_UNSPECIFIED);
+                Atom::CHI_UNSPECIFIED)
     TEST_ASSERT(
-        !bestTaut->getAtomWithIdx(5)->hasProp(common_properties::_CIPCode));
-    TEST_ASSERT(MolToSmiles(*bestTaut) == "CCCC(=O)C(C)C(C)=O");
+        !bestTaut->getAtomWithIdx(5)->hasProp(common_properties::_CIPCode))
+    TEST_ASSERT(MolToSmiles(*bestTaut) == "CCCC(=O)C(C)C(C)=O")
   }
   {
     // here the chirality disappears as the chiral center is itself involved in
@@ -1096,15 +1096,15 @@ void testPickCanonicalCIPChangeOnChiralCenter() {
     params.tautomerReassignStereo = false;
     TautomerEnumerator te(params);
     auto res = te.enumerate(*mol);
-    TEST_ASSERT(res.status() == TautomerEnumeratorStatus::Completed);
-    TEST_ASSERT(res.size() == 8);
+    TEST_ASSERT(res.status() == TautomerEnumeratorStatus::Completed)
+    TEST_ASSERT(res.size() == 8)
     ROMOL_SPTR bestTaut = CanonicalTaut::get(res);
-    TEST_ASSERT(bestTaut.get());
+    TEST_ASSERT(bestTaut.get())
     TEST_ASSERT(bestTaut->getAtomWithIdx(5)->getChiralTag() ==
-                Atom::CHI_UNSPECIFIED);
+                Atom::CHI_UNSPECIFIED)
     TEST_ASSERT(
-        !bestTaut->getAtomWithIdx(5)->hasProp(common_properties::_CIPCode));
-    TEST_ASSERT(MolToSmiles(*bestTaut) == "CCCC(=O)C(C)C(C)=O");
+        !bestTaut->getAtomWithIdx(5)->hasProp(common_properties::_CIPCode))
+    TEST_ASSERT(MolToSmiles(*bestTaut) == "CCCC(=O)C(C)C(C)=O")
   }
   {
     // here the chirality stays even if the chiral center is itself involved in
@@ -1115,15 +1115,15 @@ void testPickCanonicalCIPChangeOnChiralCenter() {
     params.tautomerRemoveSp3Stereo = false;
     TautomerEnumerator te(params);
     auto res = te.enumerate(*mol);
-    TEST_ASSERT(res.status() == TautomerEnumeratorStatus::Completed);
-    TEST_ASSERT(res.size() == 8);
+    TEST_ASSERT(res.status() == TautomerEnumeratorStatus::Completed)
+    TEST_ASSERT(res.size() == 8)
     ROMOL_SPTR bestTaut = CanonicalTaut::get(res);
-    TEST_ASSERT(bestTaut.get());
+    TEST_ASSERT(bestTaut.get())
     TEST_ASSERT(bestTaut->getAtomWithIdx(5)->getChiralTag() ==
-                Atom::CHI_TETRAHEDRAL_CW);
+                Atom::CHI_TETRAHEDRAL_CW)
     TEST_ASSERT(bestTaut->getAtomWithIdx(5)->getProp<std::string>(
-                    common_properties::_CIPCode) == "S");
-    TEST_ASSERT(MolToSmiles(*bestTaut) == "CCCC(=O)[C@@H](C)C(C)=O");
+                    common_properties::_CIPCode) == "S")
+    TEST_ASSERT(MolToSmiles(*bestTaut) == "CCCC(=O)[C@@H](C)C(C)=O")
   }
   {
     // here the chirality stays even if the chiral center is itself involved in
@@ -1135,61 +1135,61 @@ void testPickCanonicalCIPChangeOnChiralCenter() {
     params.tautomerReassignStereo = false;
     TautomerEnumerator te(params);
     auto res = te.enumerate(*mol);
-    TEST_ASSERT(res.status() == TautomerEnumeratorStatus::Completed);
-    TEST_ASSERT(res.size() == 8);
+    TEST_ASSERT(res.status() == TautomerEnumeratorStatus::Completed)
+    TEST_ASSERT(res.size() == 8)
     ROMOL_SPTR bestTaut = CanonicalTaut::get(res);
-    TEST_ASSERT(bestTaut.get());
+    TEST_ASSERT(bestTaut.get())
     TEST_ASSERT(bestTaut->getAtomWithIdx(5)->getChiralTag() ==
-                Atom::CHI_TETRAHEDRAL_CW);
+                Atom::CHI_TETRAHEDRAL_CW)
     TEST_ASSERT(bestTaut->getAtomWithIdx(5)->getProp<std::string>(
-                    common_properties::_CIPCode) == "R");
-    TEST_ASSERT(MolToSmiles(*bestTaut) == "CCCC(=O)[C@@H](C)C(C)=O");
+                    common_properties::_CIPCode) == "R")
+    TEST_ASSERT(MolToSmiles(*bestTaut) == "CCCC(=O)[C@@H](C)C(C)=O")
   }
 
   mol = "CC\\C=C(/O)[C@@](CC)(C)C(C)=O"_smiles;
-  TEST_ASSERT(mol.get());
+  TEST_ASSERT(mol.get())
   TEST_ASSERT(mol->getAtomWithIdx(5)->getChiralTag() ==
-              Atom::CHI_TETRAHEDRAL_CW);
+              Atom::CHI_TETRAHEDRAL_CW)
   TEST_ASSERT(mol->getAtomWithIdx(5)->getProp<std::string>(
-                  common_properties::_CIPCode) == "S");
+                  common_properties::_CIPCode) == "S")
   // here the chirality stays no matter how tautomerRemoveSp3Stereo
   // is set as the chiral center is not involved in tautomerism
   {
     TautomerEnumerator te;
     ROMOL_SPTR canTaut(te.canonicalize(*mol));
-    TEST_ASSERT(canTaut.get());
+    TEST_ASSERT(canTaut.get())
     TEST_ASSERT(canTaut->getAtomWithIdx(5)->getChiralTag() ==
-                Atom::CHI_TETRAHEDRAL_CW);
+                Atom::CHI_TETRAHEDRAL_CW)
     TEST_ASSERT(canTaut->getAtomWithIdx(5)->getProp<std::string>(
-                    common_properties::_CIPCode) == "R");
-    TEST_ASSERT(MolToSmiles(*canTaut) == "CCCC(=O)[C@](C)(CC)C(C)=O");
+                    common_properties::_CIPCode) == "R")
+    TEST_ASSERT(MolToSmiles(*canTaut) == "CCCC(=O)[C@](C)(CC)C(C)=O")
   }
   {
     CleanupParameters params;
     params.tautomerRemoveSp3Stereo = false;
     TautomerEnumerator te(params);
     ROMOL_SPTR canTaut(te.canonicalize(*mol));
-    TEST_ASSERT(canTaut.get());
+    TEST_ASSERT(canTaut.get())
     TEST_ASSERT(canTaut->getAtomWithIdx(5)->getChiralTag() ==
-                Atom::CHI_TETRAHEDRAL_CW);
+                Atom::CHI_TETRAHEDRAL_CW)
     TEST_ASSERT(canTaut->getAtomWithIdx(5)->getProp<std::string>(
-                    common_properties::_CIPCode) == "R");
-    TEST_ASSERT(MolToSmiles(*canTaut) == "CCCC(=O)[C@](C)(CC)C(C)=O");
+                    common_properties::_CIPCode) == "R")
+    TEST_ASSERT(MolToSmiles(*canTaut) == "CCCC(=O)[C@](C)(CC)C(C)=O")
   }
   {
     // as reassignStereo by default is true, the CIP code has been recomputed
     // and therefore it is now R (correct)
     TautomerEnumerator te;
     auto res = te.enumerate(*mol);
-    TEST_ASSERT(res.status() == TautomerEnumeratorStatus::Completed);
-    TEST_ASSERT(res.size() == 4);
+    TEST_ASSERT(res.status() == TautomerEnumeratorStatus::Completed)
+    TEST_ASSERT(res.size() == 4)
     ROMOL_SPTR bestTaut = CanonicalTaut::get(res);
-    TEST_ASSERT(bestTaut.get());
+    TEST_ASSERT(bestTaut.get())
     TEST_ASSERT(bestTaut->getAtomWithIdx(5)->getChiralTag() ==
-                Atom::CHI_TETRAHEDRAL_CW);
+                Atom::CHI_TETRAHEDRAL_CW)
     TEST_ASSERT(bestTaut->getAtomWithIdx(5)->getProp<std::string>(
-                    common_properties::_CIPCode) == "R");
-    TEST_ASSERT(MolToSmiles(*bestTaut) == "CCCC(=O)[C@](C)(CC)C(C)=O");
+                    common_properties::_CIPCode) == "R")
+    TEST_ASSERT(MolToSmiles(*bestTaut) == "CCCC(=O)[C@](C)(CC)C(C)=O")
   }
   {
     // as reassignStereo is false, the CIP code has not been recomputed
@@ -1198,15 +1198,15 @@ void testPickCanonicalCIPChangeOnChiralCenter() {
     params.tautomerReassignStereo = false;
     TautomerEnumerator te(params);
     auto res = te.enumerate(*mol);
-    TEST_ASSERT(res.status() == TautomerEnumeratorStatus::Completed);
-    TEST_ASSERT(res.size() == 4);
+    TEST_ASSERT(res.status() == TautomerEnumeratorStatus::Completed)
+    TEST_ASSERT(res.size() == 4)
     ROMOL_SPTR bestTaut = CanonicalTaut::get(res);
-    TEST_ASSERT(bestTaut.get());
+    TEST_ASSERT(bestTaut.get())
     TEST_ASSERT(bestTaut->getAtomWithIdx(5)->getChiralTag() ==
-                Atom::CHI_TETRAHEDRAL_CW);
+                Atom::CHI_TETRAHEDRAL_CW)
     TEST_ASSERT(bestTaut->getAtomWithIdx(5)->getProp<std::string>(
-                    common_properties::_CIPCode) == "S");
-    TEST_ASSERT(MolToSmiles(*bestTaut) == "CCCC(=O)[C@](C)(CC)C(C)=O");
+                    common_properties::_CIPCode) == "S")
+    TEST_ASSERT(MolToSmiles(*bestTaut) == "CCCC(=O)[C@](C)(CC)C(C)=O")
   }
   {
     // as reassignStereo by default is true, the CIP code has  been recomputed
@@ -1215,15 +1215,15 @@ void testPickCanonicalCIPChangeOnChiralCenter() {
     params.tautomerRemoveSp3Stereo = false;
     TautomerEnumerator te(params);
     auto res = te.enumerate(*mol);
-    TEST_ASSERT(res.status() == TautomerEnumeratorStatus::Completed);
-    TEST_ASSERT(res.size() == 4);
+    TEST_ASSERT(res.status() == TautomerEnumeratorStatus::Completed)
+    TEST_ASSERT(res.size() == 4)
     ROMOL_SPTR bestTaut = CanonicalTaut::get(res);
-    TEST_ASSERT(bestTaut.get());
+    TEST_ASSERT(bestTaut.get())
     TEST_ASSERT(bestTaut->getAtomWithIdx(5)->getChiralTag() ==
-                Atom::CHI_TETRAHEDRAL_CW);
+                Atom::CHI_TETRAHEDRAL_CW)
     TEST_ASSERT(bestTaut->getAtomWithIdx(5)->getProp<std::string>(
-                    common_properties::_CIPCode) == "R");
-    TEST_ASSERT(MolToSmiles(*bestTaut) == "CCCC(=O)[C@](C)(CC)C(C)=O");
+                    common_properties::_CIPCode) == "R")
+    TEST_ASSERT(MolToSmiles(*bestTaut) == "CCCC(=O)[C@](C)(CC)C(C)=O")
   }
   {
     // here the chirality stays even if the tautomerRemoveSp3Stereo parameter
@@ -1235,15 +1235,15 @@ void testPickCanonicalCIPChangeOnChiralCenter() {
     params.tautomerReassignStereo = false;
     TautomerEnumerator te(params);
     auto res = te.enumerate(*mol);
-    TEST_ASSERT(res.status() == TautomerEnumeratorStatus::Completed);
-    TEST_ASSERT(res.size() == 4);
+    TEST_ASSERT(res.status() == TautomerEnumeratorStatus::Completed)
+    TEST_ASSERT(res.size() == 4)
     ROMOL_SPTR bestTaut = CanonicalTaut::get(res);
-    TEST_ASSERT(bestTaut.get());
+    TEST_ASSERT(bestTaut.get())
     TEST_ASSERT(bestTaut->getAtomWithIdx(5)->getChiralTag() ==
-                Atom::CHI_TETRAHEDRAL_CW);
+                Atom::CHI_TETRAHEDRAL_CW)
     TEST_ASSERT(bestTaut->getAtomWithIdx(5)->getProp<std::string>(
-                    common_properties::_CIPCode) == "S");
-    TEST_ASSERT(MolToSmiles(*bestTaut) == "CCCC(=O)[C@](C)(CC)C(C)=O");
+                    common_properties::_CIPCode) == "S")
+    TEST_ASSERT(MolToSmiles(*bestTaut) == "CCCC(=O)[C@](C)(CC)C(C)=O")
   }
 
   BOOST_LOG(rdInfoLog) << "Finished" << std::endl;
@@ -1257,84 +1257,84 @@ void testTautomerEnumeratorResult_const_iterator() {
   RWMOL_SPTR mol = "Cc1nnc(NC(=O)N2CCN(Cc3ccc(F)cc3)C(=O)C2)s1"_smiles;
   TautomerEnumerator te;
   auto res = te.enumerate(*mol);
-  TEST_ASSERT(res.status() == TautomerEnumeratorStatus::Completed);
-  TEST_ASSERT(res.size() == 6);
+  TEST_ASSERT(res.status() == TautomerEnumeratorStatus::Completed)
+  TEST_ASSERT(res.size() == 6)
   auto it = res.begin();
   auto it2 = res.begin();
   // Test semantic requirements of bidirectional_iterator
   // https://en.cppreference.com/w/cpp/iterator/bidirectional_iterator
-  TEST_ASSERT(it == it2);
-  TEST_ASSERT(it++ == it2);
-  TEST_ASSERT(it == ++it2);
-  TEST_ASSERT(it == it2);
-  TEST_ASSERT(it-- == it2);
-  TEST_ASSERT(it == --it2);
-  TEST_ASSERT(it == it2);
+  TEST_ASSERT(it == it2)
+  TEST_ASSERT(it++ == it2)
+  TEST_ASSERT(it == ++it2)
+  TEST_ASSERT(it == it2)
+  TEST_ASSERT(it-- == it2)
+  TEST_ASSERT(it == --it2)
+  TEST_ASSERT(it == it2)
   ++it;
   ++it2;
-  TEST_ASSERT(++(--it) == it2);
-  TEST_ASSERT(--(++it) == it2);
-  TEST_ASSERT(std::addressof(--it) == std::addressof(it));
+  TEST_ASSERT(++(--it) == it2)
+  TEST_ASSERT(--(++it) == it2)
+  TEST_ASSERT(std::addressof(--it) == std::addressof(it))
   ++it;
-  TEST_ASSERT(it == it2);
+  TEST_ASSERT(it == it2)
   it--;
   --it2;
-  TEST_ASSERT(it == it2);
-  TEST_ASSERT(*it == res[0]);
-  TEST_ASSERT(*it++ == res.at(0));
-  TEST_ASSERT(*it == res[1]);
-  TEST_ASSERT(*++it == res.at(2));
-  TEST_ASSERT(*it == res[2]);
+  TEST_ASSERT(it == it2)
+  TEST_ASSERT(*it == res[0])
+  TEST_ASSERT(*it++ == res.at(0))
+  TEST_ASSERT(*it == res[1])
+  TEST_ASSERT(*++it == res.at(2))
+  TEST_ASSERT(*it == res[2])
   ++it;
-  TEST_ASSERT(*it == res[3]);
+  TEST_ASSERT(*it == res[3])
   ++it;
-  TEST_ASSERT(*it == res[4]);
+  TEST_ASSERT(*it == res[4])
   it++;
-  TEST_ASSERT(*it == res[5]);
-  TEST_ASSERT(*it-- == res.at(5));
-  TEST_ASSERT(*it == res[4]);
-  TEST_ASSERT(*--it == res.at(3));
-  TEST_ASSERT(*it == res[3]);
+  TEST_ASSERT(*it == res[5])
+  TEST_ASSERT(*it-- == res.at(5))
+  TEST_ASSERT(*it == res[4])
+  TEST_ASSERT(*--it == res.at(3))
+  TEST_ASSERT(*it == res[3])
   --it;
-  TEST_ASSERT(*it == res[2]);
+  TEST_ASSERT(*it == res[2])
   --it;
-  TEST_ASSERT(*it == res[1]);
+  TEST_ASSERT(*it == res[1])
   it--;
-  TEST_ASSERT(*it == res[0]);
+  TEST_ASSERT(*it == res[0])
   std::ptrdiff_t i = 0;
   for (auto t : res) {
-    TEST_ASSERT(t == res[i++]);
+    TEST_ASSERT(t == res[i++])
   }
   i = 0;
   for (auto it = res.begin(); it != res.end(); ++it) {
-    TEST_ASSERT(std::distance(res.begin(), it) == i);
-    TEST_ASSERT(*it == res[i]);
-    TEST_ASSERT(it->getNumAtoms() == res[i++]->getNumAtoms());
+    TEST_ASSERT(std::distance(res.begin(), it) == i)
+    TEST_ASSERT(*it == res[i])
+    TEST_ASSERT(it->getNumAtoms() == res[i++]->getNumAtoms())
   }
   i = res.size();
   for (auto it = res.end(); it != res.begin();) {
-    TEST_ASSERT(std::distance(res.begin(), it) == i);
-    TEST_ASSERT(*--it == res[--i]);
-    TEST_ASSERT(it->getNumAtoms() == res[i]->getNumAtoms());
+    TEST_ASSERT(std::distance(res.begin(), it) == i)
+    TEST_ASSERT(*--it == res[--i])
+    TEST_ASSERT(it->getNumAtoms() == res[i]->getNumAtoms())
   }
   i = 0;
   for (const auto &pair : res.smilesTautomerMap()) {
-    TEST_ASSERT(pair.first == MolToSmiles(*res[i]));
-    TEST_ASSERT(pair.second.tautomer == res[i++]);
+    TEST_ASSERT(pair.first == MolToSmiles(*res[i]))
+    TEST_ASSERT(pair.second.tautomer == res[i++])
   }
   i = 0;
   for (auto it = res.smilesTautomerMap().begin();
        it != res.smilesTautomerMap().end(); ++it) {
-    TEST_ASSERT(std::distance(res.smilesTautomerMap().begin(), it) == i);
-    TEST_ASSERT(it->first == MolToSmiles(*res[i]));
-    TEST_ASSERT(it->second.tautomer == res[i++]);
+    TEST_ASSERT(std::distance(res.smilesTautomerMap().begin(), it) == i)
+    TEST_ASSERT(it->first == MolToSmiles(*res[i]))
+    TEST_ASSERT(it->second.tautomer == res[i++])
   }
   i = res.smilesTautomerMap().size();
   for (auto it = res.smilesTautomerMap().end();
        it != res.smilesTautomerMap().begin();) {
-    TEST_ASSERT(std::distance(res.smilesTautomerMap().begin(), it) == i);
-    TEST_ASSERT((--it)->first == MolToSmiles(*res[--i]));
-    TEST_ASSERT(it->second.tautomer == res[i]);
+    TEST_ASSERT(std::distance(res.smilesTautomerMap().begin(), it) == i)
+    TEST_ASSERT((--it)->first == MolToSmiles(*res[--i]))
+    TEST_ASSERT(it->second.tautomer == res[i])
   }
 }
 
@@ -1348,7 +1348,7 @@ void testGithub3430() {
                                "CCCCC(=O)N=c1nc(C)c2ncn(C)c2[nH]1"_smiles,
                                "c12ccccc1[nH]c(=N)[nH]2"_smiles};
   for (auto mol : mols) {
-    TEST_ASSERT(mol);
+    TEST_ASSERT(mol)
     TautomerEnumerator te;
     auto res = te.enumerate(*mol);
     std::vector<int> scores;
@@ -1359,7 +1359,7 @@ void testGithub3430() {
                    });
 
     std::sort(scores.begin(), scores.end(), std::greater<int>());
-    TEST_ASSERT(scores[1] < scores[0]);
+    TEST_ASSERT(scores[1] < scores[0])
   }
 }
 
@@ -1375,9 +1375,9 @@ void testGithub3755() {
   TautomerEnumerator te;
   for (const auto &pair : orig_vs_expected) {
     ROMOL_SPTR orig(SmilesToMol(pair.first));
-    TEST_ASSERT(orig);
+    TEST_ASSERT(orig)
     ROMOL_SPTR canonical(te.canonicalize(*orig));
-    TEST_ASSERT(MolToSmiles(*canonical) == pair.second);
+    TEST_ASSERT(MolToSmiles(*canonical) == pair.second)
   }
 }
 

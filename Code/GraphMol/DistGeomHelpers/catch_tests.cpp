@@ -87,18 +87,18 @@ TEST_CASE("Torsions not found in fused macrocycles", "[macrocycles]") {
 namespace {
 void compareConfs(const ROMol *m, const ROMol *expected, int molConfId = -1,
                   int expectedConfId = -1) {
-  PRECONDITION(m, "bad pointer");
-  PRECONDITION(expected, "bad pointer");
-  TEST_ASSERT(m->getNumAtoms() == expected->getNumAtoms());
+  PRECONDITION(m, "bad pointer")
+  PRECONDITION(expected, "bad pointer")
+  TEST_ASSERT(m->getNumAtoms() == expected->getNumAtoms())
   const Conformer &conf1 = m->getConformer(molConfId);
   const Conformer &conf2 = expected->getConformer(expectedConfId);
   for (unsigned int i = 0; i < m->getNumAtoms(); i++) {
     TEST_ASSERT(m->getAtomWithIdx(i)->getAtomicNum() ==
-                expected->getAtomWithIdx(i)->getAtomicNum());
+                expected->getAtomWithIdx(i)->getAtomicNum())
 
     RDGeom::Point3D pt1i = conf1.getAtomPos(i);
     RDGeom::Point3D pt2i = conf2.getAtomPos(i);
-    TEST_ASSERT((pt1i - pt2i).length() < 0.05);
+    TEST_ASSERT((pt1i - pt2i).length() < 0.05)
   }
 }
 }  // namespace

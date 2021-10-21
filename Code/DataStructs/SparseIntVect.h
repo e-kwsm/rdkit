@@ -397,7 +397,7 @@ class SparseIntVect {
   }
   template <typename T>
   void readVals(std::stringstream &ss) {
-    PRECONDITION(sizeof(T) <= sizeof(IndexType), "invalid size");
+    PRECONDITION(sizeof(T) <= sizeof(IndexType), "invalid size")
     T tVal;
     streamRead(ss, tVal);
     d_length = tVal;
@@ -535,7 +535,7 @@ template <typename IndexType>
 double TverskySimilarity(const SparseIntVect<IndexType> &v1,
                          const SparseIntVect<IndexType> &v2, double a, double b,
                          bool returnDistance = false, double bounds = 0.0) {
-  RDUNUSED_PARAM(bounds);
+  RDUNUSED_PARAM(bounds)
   if (v1.getLength() != v2.getLength()) {
     throw ValueErrorException("SparseIntVect size mismatch");
   }

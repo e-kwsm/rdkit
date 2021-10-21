@@ -34,7 +34,7 @@ void test1() {
     //	std::shared_ptr<RWMol> m1( SmilesToMol(smi1) );
     RWMOL_SPTR m = "C1=CC=CC=C1"_smiles;
     RWMOL_SPTR res(cleanup(*m, params));
-    TEST_ASSERT(MolToSmiles(*res) == "c1ccccc1");
+    TEST_ASSERT(MolToSmiles(*res) == "c1ccccc1")
   }
 
   //	std::string smi1 = "CCC(=O)O[Na]";
@@ -50,9 +50,9 @@ void testMetal() {
   MetalDisconnector md;
 
   RWMOL_SPTR m = "CCC(=O)O[Na]"_smiles;
-  TEST_ASSERT(m);
+  TEST_ASSERT(m)
   md.disconnect(*m);
-  TEST_ASSERT(MolToSmiles(*m) == "CCC(=O)[O-].[Na+]");
+  TEST_ASSERT(MolToSmiles(*m) == "CCC(=O)[O-].[Na+]")
   BOOST_LOG(rdInfoLog) << "Finished" << std::endl;
 }
 
@@ -70,7 +70,7 @@ void testValidate() {
       TEST_ASSERT(
           msg ==
           "INFO: [ValenceValidation] Explicit valence for atom # 1 O, 3, "
-          "is greater than permitted");
+          "is greater than permitted")
     }
   }
   //**************************
@@ -83,7 +83,7 @@ void testValidate() {
       std::string msg = query.what();
       TEST_ASSERT(
           msg ==
-          "INFO: [NeutralValidation] Not an overall neutral system (-1)");
+          "INFO: [NeutralValidation] Not an overall neutral system (-1)")
     }
   }
   // ************************
@@ -103,7 +103,7 @@ void testValidate() {
       std::string msg = query.what();
       TEST_ASSERT(
           msg ==
-          "INFO: [AllowedAtomsValidation] Atom F is not in allowedAtoms list");
+          "INFO: [AllowedAtomsValidation] Atom F is not in allowedAtoms list")
     }
   }
   //********************************
@@ -123,7 +123,7 @@ void testValidate() {
       std::string msg = query.what();
       TEST_ASSERT(msg ==
                   "INFO: [DisallowedAtomsValidation] Atom F is in "
-                  "disallowedAtoms list");
+                  "disallowedAtoms list")
     }
   }
   //********************************
@@ -137,7 +137,7 @@ void testValidate() {
     for (auto &query : errout) {
       std::string msg = query.what();
       TEST_ASSERT(msg ==
-                  "INFO: [FragmentValidation] 1,2-dichloroethane is present");
+                  "INFO: [FragmentValidation] 1,2-dichloroethane is present")
     }
     BOOST_LOG(rdInfoLog) << "Finished" << std::endl;
   }
@@ -152,7 +152,7 @@ void testCharge() {
   {
     RWMOL_SPTR m = "[Na].[Cl]"_smiles;
     ROMOL_SPTR reionized(reionizer.reionize(*m));
-    TEST_ASSERT(MolToSmiles(*reionized) == "[Cl-].[Na+]");
+    TEST_ASSERT(MolToSmiles(*reionized) == "[Cl-].[Na+]")
   }
   //*******************************
   MolStandardize::CleanupParameters params;
@@ -164,14 +164,14 @@ void testCharge() {
   {
     RWMOL_SPTR m = "C(C(=O)[O-])(Cc1n[n-]nn1)(C[NH3+])(C[N+](=O)[O-])"_smiles;
     RWMOL_SPTR res(MolStandardize::chargeParent(*m, params));
-    TEST_ASSERT(MolToSmiles(*res) == "NCC(Cc1nn[nH]n1)(C[N+](=O)[O-])C(=O)O");
+    TEST_ASSERT(MolToSmiles(*res) == "NCC(Cc1nn[nH]n1)(C[N+](=O)[O-])C(=O)O")
   }
   //**********************************
   // Testing MolStandardize::reionize
   {
     RWMOL_SPTR m = "C1=C(C=CC(=C1)[S]([O-])=O)[S](O)(=O)=O"_smiles;
     RWMOL_SPTR res(MolStandardize::reionize(m.get(), params));
-    TEST_ASSERT(MolToSmiles(*res) == "O=S(O)c1ccc(S(=O)(=O)[O-])cc1");
+    TEST_ASSERT(MolToSmiles(*res) == "O=S(O)c1ccc(S(=O)(=O)[O-])cc1")
     BOOST_LOG(rdInfoLog) << "Finished" << std::endl;
   }
 }
@@ -186,14 +186,14 @@ void testNormalize() {
   {
     RWMOL_SPTR m = "CS(C)=O"_smiles;
     ROMOL_SPTR normalized(normalizer.normalize(*m));
-    TEST_ASSERT(MolToSmiles(*normalized) == "C[S+](C)[O-]");
+    TEST_ASSERT(MolToSmiles(*normalized) == "C[S+](C)[O-]")
   }
 
   // normalize sulfone.
   {
     RWMOL_SPTR m = "C[S+2]([O-])([O-])C"_smiles;
     ROMOL_SPTR normalized(normalizer.normalize(*m));
-    TEST_ASSERT(MolToSmiles(*normalized) == "CS(C)(=O)=O");
+    TEST_ASSERT(MolToSmiles(*normalized) == "CS(C)(=O)=O")
     BOOST_LOG(rdInfoLog) << "Finished" << std::endl;
   }
 }

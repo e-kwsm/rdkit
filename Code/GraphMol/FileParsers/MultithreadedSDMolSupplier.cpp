@@ -20,7 +20,7 @@ MultithreadedSDMolSupplier::MultithreadedSDMolSupplier(
   dp_inStream = openAndCheckStream(fileName);
   initFromSettings(true, sanitize, removeHs, strictParsing, numWriterThreads,
                    sizeInputQueue, sizeOutputQueue);
-  POSTCONDITION(dp_inStream, "bad instream");
+  POSTCONDITION(dp_inStream, "bad instream")
   startThreads();
 }
 
@@ -28,11 +28,11 @@ MultithreadedSDMolSupplier::MultithreadedSDMolSupplier(
     std::istream *inStream, bool takeOwnership, bool sanitize, bool removeHs,
     bool strictParsing, unsigned int numWriterThreads, size_t sizeInputQueue,
     size_t sizeOutputQueue) {
-  PRECONDITION(inStream, "bad stream");
+  PRECONDITION(inStream, "bad stream")
   dp_inStream = inStream;
   initFromSettings(takeOwnership, sanitize, removeHs, strictParsing,
                    numWriterThreads, sizeInputQueue, sizeOutputQueue);
-  POSTCONDITION(dp_inStream, "bad instream");
+  POSTCONDITION(dp_inStream, "bad instream")
   startThreads();
 }
 
@@ -79,7 +79,7 @@ MultithreadedSDMolSupplier::~MultithreadedSDMolSupplier() {
 // from the file, implementation identical to the method in
 // in ForwardSDMolSupplier
 void MultithreadedSDMolSupplier::checkForEnd() {
-  PRECONDITION(dp_inStream, "no stream");
+  PRECONDITION(dp_inStream, "no stream")
   // we will call it end of file if we have more than 4 contiguous empty lines
   // or we reach end of file in the meantime
   if (dp_inStream->eof()) {
@@ -113,14 +113,14 @@ void MultithreadedSDMolSupplier::checkForEnd() {
 }
 
 bool MultithreadedSDMolSupplier::getEnd() const {
-  PRECONDITION(dp_inStream, "no stream");
+  PRECONDITION(dp_inStream, "no stream")
   return df_end;
 }
 
 bool MultithreadedSDMolSupplier::extractNextRecord(std::string &record,
                                                    unsigned int &lineNum,
                                                    unsigned int &index) {
-  PRECONDITION(dp_inStream, "no stream");
+  PRECONDITION(dp_inStream, "no stream")
   if (dp_inStream->eof()) {
     df_end = true;
     return false;
@@ -149,8 +149,8 @@ bool MultithreadedSDMolSupplier::extractNextRecord(std::string &record,
 
 void MultithreadedSDMolSupplier::readMolProps(ROMol *mol,
                                               std::istringstream &inStream) {
-  PRECONDITION(inStream, "no stream");
-  PRECONDITION(mol, "no molecule");
+  PRECONDITION(inStream, "no stream")
+  PRECONDITION(mol, "no molecule")
   bool hasProp = false;
   bool warningIssued = false;
   std::string tempStr;
@@ -257,7 +257,7 @@ void MultithreadedSDMolSupplier::readMolProps(ROMol *mol,
 
 ROMol *MultithreadedSDMolSupplier::processMoleculeRecord(
     const std::string &record, unsigned int lineNum) {
-  PRECONDITION(dp_inStream, "no stream");
+  PRECONDITION(dp_inStream, "no stream")
   std::istringstream inStream(record);
   auto res = MolDataStreamToMol(inStream, lineNum, df_sanitize, df_removeHs,
                                 df_strictParsing);

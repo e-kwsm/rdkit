@@ -22,7 +22,7 @@ namespace Alignments {
 
 RDGeom::Point3D _weightedSumOfPoints(const RDGeom::Point3DConstPtrVect &points,
                                      const DoubleVector &weights) {
-  PRECONDITION(points.size() == weights.size(), "");
+  PRECONDITION(points.size() == weights.size(), "")
   RDGeom::Point3DConstPtrVect_CI pti;
   RDGeom::Point3D tmpPt, res;
   const double *wData = weights.getData();
@@ -38,7 +38,7 @@ RDGeom::Point3D _weightedSumOfPoints(const RDGeom::Point3DConstPtrVect &points,
 
 double _weightedSumOfLenSq(const RDGeom::Point3DConstPtrVect &points,
                            const DoubleVector &weights) {
-  PRECONDITION(points.size() == weights.size(), "");
+  PRECONDITION(points.size() == weights.size(), "")
   double res = 0.0;
   RDGeom::Point3DConstPtrVect_CI pti;
   const double *wData = weights.getData();
@@ -54,7 +54,7 @@ double _sumOfWeights(const DoubleVector &weights) {
   const double *wData = weights.getData();
   double res = 0.0;
   for (unsigned int i = 0; i < weights.size(); i++) {
-    CHECK_INVARIANT(wData[i] > 0.0, "Negative weight specified for a point");
+    CHECK_INVARIANT(wData[i] > 0.0, "Negative weight specified for a point")
     res += wData[i];
   }
   return res;
@@ -70,9 +70,9 @@ void _computeCovarianceMat(const RDGeom::Point3DConstPtrVect &refPoints,
     }
   }
   unsigned int npt = refPoints.size();
-  CHECK_INVARIANT(npt == probePoints.size(), "Number of points mismatch");
+  CHECK_INVARIANT(npt == probePoints.size(), "Number of points mismatch")
   CHECK_INVARIANT(npt == weights.size(),
-                  "Number of points and number of weights do not match");
+                  "Number of points and number of weights do not match")
   const double *wData = weights.getData();
 
   const RDGeom::Point3D *rpt, *ppt;
@@ -276,13 +276,13 @@ double AlignPoints(const RDGeom::Point3DConstPtrVect &refPoints,
                    RDGeom::Transform3D &trans, const DoubleVector *weights,
                    bool reflect, unsigned int maxIterations) {
   unsigned int npt = refPoints.size();
-  PRECONDITION(npt == probePoints.size(), "Mismatch in number of points");
+  PRECONDITION(npt == probePoints.size(), "Mismatch in number of points")
   trans.setToIdentity();
   const DoubleVector *wts;
   double wtsSum;
   bool ownWts;
   if (weights) {
-    PRECONDITION(npt == weights->size(), "Mismatch in number of points");
+    PRECONDITION(npt == weights->size(), "Mismatch in number of points")
     wts = weights;
     wtsSum = _sumOfWeights(*wts);
     ownWts = false;

@@ -134,13 +134,13 @@ inline std::string qhelper(Bond::QUERYBOND_QUERY *q, unsigned int depth) {
 }
 }  // namespace detail
 inline std::string describeQuery(const Bond *bond) {
-  PRECONDITION(bond, "bad bond");
+  PRECONDITION(bond, "bad bond")
   std::string res = "";
   if (bond->hasQuery()) {
     res = detail::qhelper(bond->getQuery(), 0);
   }
   return res;
 }
-};  // namespace RDKit
+}  // namespace RDKit
 
 #endif

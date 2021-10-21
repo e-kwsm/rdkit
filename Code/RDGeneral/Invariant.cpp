@@ -73,4 +73,4 @@ std::string Invariant::toUserString() const {
   return stringRep;
 }
 
-};  // namespace Invar
+}  // namespace Invar

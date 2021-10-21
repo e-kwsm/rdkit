@@ -140,7 +140,7 @@ std::vector<std::pair<std::string, std::string>> PNGStreamToMetadata(
         }
 #endif
       } else {
-        CHECK_INVARIANT(0, "impossible value");
+        CHECK_INVARIANT(0, "impossible value")
       }
       if (!value.empty()) {
         res.push_back(std::make_pair(key, value));
@@ -151,7 +151,7 @@ std::vector<std::pair<std::string, std::string>> PNGStreamToMetadata(
   }
 
   return res;
-};
+}
 
 std::string addMetadataToPNGStream(
     std::istream &inStream,
@@ -268,7 +268,7 @@ std::string addMolToPNGStream(const ROMol &mol, std::istream &iStream,
     metadata.push_back(std::make_pair(augmentTagName(PNGData::molTag), mb));
   }
   return addMetadataToPNGStream(iStream, metadata);
-};
+}
 
 ROMol *PNGStreamToMol(std::istream &inStream,
                       const SmilesParserParams &params) {

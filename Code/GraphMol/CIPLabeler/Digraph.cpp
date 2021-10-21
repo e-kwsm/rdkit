@@ -62,9 +62,9 @@ Digraph::Digraph(const CIPMol &mol, Atom *atom) : d_mol{mol} {
   dp_origin = dp_root;
 }
 
-const CIPMol &Digraph::getMol() const { return d_mol; };
+const CIPMol &Digraph::getMol() const { return d_mol; }
 
-Node *Digraph::getOriginalRoot() const { return dp_origin; };
+Node *Digraph::getOriginalRoot() const { return dp_origin; }
 
 Node *Digraph::getCurrentRoot() const { return dp_root; }
 

@@ -445,14 +445,12 @@ struct atom_wrapper {
         .value("CHI_TRIGONALBIPYRAMIDAL", Atom::CHI_TRIGONALBIPYRAMIDAL)
         .value("CHI_OCTAHEDRAL", Atom::CHI_OCTAHEDRAL)
         .export_values();
-    ;
 
     python::enum_<Queries::CompositeQueryType>("CompositeQueryType")
         .value("COMPOSITE_AND", Queries::COMPOSITE_AND)
         .value("COMPOSITE_OR", Queries::COMPOSITE_OR)
         .value("COMPOSITE_XOR", Queries::COMPOSITE_XOR)
         .export_values();
-    ;
 
     atomClassDoc =
         "The class to store QueryAtoms.\n\

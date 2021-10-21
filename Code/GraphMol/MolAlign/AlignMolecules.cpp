@@ -33,7 +33,7 @@ void symmetrizeTerminalAtoms(RWMol &mol) {
   static SmartsParserParams ps;
   ps.replacements = &replacements;
   static const std::unique_ptr<RWMol> qry{SmartsToMol(qsmarts, ps)};
-  CHECK_INVARIANT(qry, "bad query pattern");
+  CHECK_INVARIANT(qry, "bad query pattern")
 
   auto matches = SubstructMatch(mol, *qry);
   if (matches.empty()) {
@@ -45,7 +45,7 @@ void symmetrizeTerminalAtoms(RWMol &mol) {
   for (const auto &match : matches) {
     mol.getAtomWithIdx(match[0].second)->setFormalCharge(0);
     auto obond = mol.getBondBetweenAtoms(match[0].second, match[1].second);
-    CHECK_INVARIANT(obond, "could not find expected bond");
+    CHECK_INVARIANT(obond, "could not find expected bond")
     mol.replaceBond(obond->getIdx(), &qb);
   }
 }

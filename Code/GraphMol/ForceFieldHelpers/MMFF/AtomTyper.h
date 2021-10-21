@@ -90,17 +90,17 @@ class RDKIT_FORCEFIELDHELPERS_EXPORT MMFFMolProperties {
   const ForceFields::MMFF::MMFFBond *getMMFFBondStretchEmpiricalRuleParams(
       const ROMol &mol, const Bond *bond);
   std::uint8_t getMMFFAtomType(const unsigned int idx) {
-    URANGE_CHECK(idx, this->d_MMFFAtomPropertiesPtrVect.size());
+    URANGE_CHECK(idx, this->d_MMFFAtomPropertiesPtrVect.size())
 
     return this->d_MMFFAtomPropertiesPtrVect[idx]->mmffAtomType;
   }
   double getMMFFFormalCharge(const unsigned int idx) {
-    URANGE_CHECK(idx, this->d_MMFFAtomPropertiesPtrVect.size());
+    URANGE_CHECK(idx, this->d_MMFFAtomPropertiesPtrVect.size())
 
     return this->d_MMFFAtomPropertiesPtrVect[idx]->mmffFormalCharge;
   }
   double getMMFFPartialCharge(const unsigned int idx) {
-    URANGE_CHECK(idx, this->d_MMFFAtomPropertiesPtrVect.size());
+    URANGE_CHECK(idx, this->d_MMFFAtomPropertiesPtrVect.size())
 
     return this->d_MMFFAtomPropertiesPtrVect[idx]->mmffPartialCharge;
   }
@@ -122,7 +122,7 @@ class RDKIT_FORCEFIELDHELPERS_EXPORT MMFFMolProperties {
   bool getMMFFEleTerm() { return this->d_eleTerm; }
   void setMMFFVariant(const std::string &mmffVariant) {
     PRECONDITION((mmffVariant == "MMFF94") || (mmffVariant == "MMFF94s"),
-                 "bad MMFF variant");
+                 "bad MMFF variant")
 
     this->d_mmffs = mmffVariant == "MMFF94s";
   }
@@ -130,7 +130,7 @@ class RDKIT_FORCEFIELDHELPERS_EXPORT MMFFMolProperties {
     return (this->d_mmffs ? "MMFF94s" : "MMFF94");
   }
   void setMMFFDielectricConstant(const double dielConst) {
-    PRECONDITION(dielConst > 0.0, "bad dielectric constant");
+    PRECONDITION(dielConst > 0.0, "bad dielectric constant")
 
     this->d_dielConst = dielConst;
   }
@@ -175,12 +175,12 @@ class RDKIT_FORCEFIELDHELPERS_EXPORT MMFFMolProperties {
   void setMMFFHeavyAtomType(const RingMembershipSize &rmSize, const Atom *atom);
   void setMMFFHydrogenType(const Atom *atom);
   void setMMFFFormalCharge(const unsigned int idx, const double fChg) {
-    URANGE_CHECK(idx, this->d_MMFFAtomPropertiesPtrVect.size());
+    URANGE_CHECK(idx, this->d_MMFFAtomPropertiesPtrVect.size())
 
     this->d_MMFFAtomPropertiesPtrVect[idx]->mmffFormalCharge = fChg;
   }
   void setMMFFPartialCharge(const unsigned int idx, const double pChg) {
-    URANGE_CHECK(idx, this->d_MMFFAtomPropertiesPtrVect.size());
+    URANGE_CHECK(idx, this->d_MMFFAtomPropertiesPtrVect.size())
 
     this->d_MMFFAtomPropertiesPtrVect[idx]->mmffPartialCharge = pChg;
   }

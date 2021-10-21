@@ -35,7 +35,7 @@ namespace {
 constexpr int BCNAM(char A, char B, char C) { return (A << 16) | (B << 8) | C; }
 
 Atom *PDBAtomFromSymbol(const char *symb) {
-  PRECONDITION(symb, "bad char ptr");
+  PRECONDITION(symb, "bad char ptr")
   if (symb[0] == 'D' && !symb[1]) {
     auto *result = new Atom(1);
     result->setIsotope(2);
@@ -51,8 +51,8 @@ Atom *PDBAtomFromSymbol(const char *symb) {
 
 void PDBAtomLine(RWMol *mol, const char *ptr, unsigned int len,
                  unsigned int flavor, std::map<int, Atom *> &amap) {
-  PRECONDITION(mol, "bad mol");
-  PRECONDITION(ptr, "bad char ptr");
+  PRECONDITION(mol, "bad mol")
+  PRECONDITION(ptr, "bad char ptr")
   std::string tmp;
 
   if (len < 16) {
@@ -310,8 +310,8 @@ void PDBAtomLine(RWMol *mol, const char *ptr, unsigned int len,
 
 void PDBBondLine(RWMol *mol, const char *ptr, unsigned int len,
                  std::map<int, Atom *> &amap, std::map<Bond *, int> &bmap) {
-  PRECONDITION(mol, "bad mol");
-  PRECONDITION(ptr, "bad char ptr");
+  PRECONDITION(mol, "bad mol")
+  PRECONDITION(ptr, "bad char ptr")
 
   if (len < 16) {
     return;
@@ -419,8 +419,8 @@ void PDBBondLine(RWMol *mol, const char *ptr, unsigned int len,
 }
 
 void PDBTitleLine(RWMol *mol, const char *ptr, unsigned int len) {
-  PRECONDITION(mol, "bad mol");
-  PRECONDITION(ptr, "bad char ptr");
+  PRECONDITION(mol, "bad mol")
+  PRECONDITION(ptr, "bad char ptr")
   std::string title;
   while (ptr[len - 1] == ' ') {
     len--;
@@ -440,8 +440,8 @@ void PDBTitleLine(RWMol *mol, const char *ptr, unsigned int len) {
 
 void PDBConformerLine(RWMol *mol, const char *ptr, unsigned int len,
                       Conformer *&conf, int &conformer_atmidx) {
-  PRECONDITION(mol, "bad mol");
-  PRECONDITION(ptr, "bad char ptr");
+  PRECONDITION(mol, "bad mol")
+  PRECONDITION(ptr, "bad char ptr")
 
   if (len >= 38) {
     RDGeom::Point3D pos;
@@ -548,7 +548,7 @@ void BasicPDBCleanup(RWMol &mol) {
 
 void parsePdbBlock(RWMol *&mol, const char *str, bool sanitize, bool removeHs,
                    unsigned int flavor, bool proximityBonding) {
-  PRECONDITION(str, "bad char ptr");
+  PRECONDITION(str, "bad char ptr")
   std::map<int, Atom *> amap;
   std::map<Bond *, int> bmap;
   Utils::LocaleSwitcher ls;
@@ -689,7 +689,7 @@ RWMol *PDBBlockToMol(const std::string &str, bool sanitize, bool removeHs,
 
 RWMol *PDBDataStreamToMol(std::istream *inStream, bool sanitize, bool removeHs,
                           unsigned int flavor, bool proximityBonding) {
-  PRECONDITION(inStream, "bad stream");
+  PRECONDITION(inStream, "bad stream")
   std::string buffer;
   while (!inStream->eof() && !inStream->fail()) {
     std::string line;

@@ -37,8 +37,8 @@ void tagAtoms(std::shared_ptr<ROMol> mol, const Bond *bond,
               const boost::dynamic_bitset<> &sgatoms, unsigned int index,
               const std::string &marker, const std::string &framemarker,
               const std::string &connect) {
-  PRECONDITION(mol, "bad molecule");
-  PRECONDITION(bond, "bad bond");
+  PRECONDITION(mol, "bad molecule")
+  PRECONDITION(bond, "bad bond")
   if (sgatoms[bond->getBeginAtomIdx()]) {
     bond->getBeginAtom()->setProp(marker, index);
     if (connect == "HH") {
@@ -335,8 +335,8 @@ void constructHeadAndTailMaps(RWMol &mol, std::map<unsigned, Atom *> &headMap,
 
 std::unique_ptr<ROMol> RepeatUnitOp::operator()(
     const std::vector<size_t> &which) const {
-  PRECONDITION(dp_mol, "no molecule");
-  PRECONDITION(dp_frame, "not initialized");
+  PRECONDITION(dp_mol, "no molecule")
+  PRECONDITION(dp_frame, "not initialized")
   if (which.size() != d_countAtEachPoint.size()) {
     throw ValueErrorException("bad element choice in enumeration");
   }

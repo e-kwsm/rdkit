@@ -98,7 +98,7 @@ DrawShapeArrow::DrawShapeArrow(const std::vector<Point2D> &points,
                 atom2, bond),
       frac_(frac),
       angle_(angle) {
-  PRECONDITION(points_.size() == 2, "arrow bad points size");
+  PRECONDITION(points_.size() == 2, "arrow bad points size")
 
   // the two ends of the arrowhead are used for collision detection so we
   // may as well store them.
@@ -144,7 +144,7 @@ DrawShapeEllipse::DrawShapeEllipse(const std::vector<Point2D> &points,
                                    double lineWidth, bool scaleLineWidth,
                                    DrawColour lineColour, bool fill, int atom1)
     : DrawShape(points, lineWidth, scaleLineWidth, lineColour, fill, atom1) {
-  PRECONDITION(points_.size() == 2, "ellipse wrong points");
+  PRECONDITION(points_.size() == 2, "ellipse wrong points")
 }
 
 // ****************************************************************************
@@ -207,7 +207,7 @@ DrawShapeSimpleLine::DrawShapeSimpleLine(const std::vector<Point2D> &points,
     : DrawShape(points, lineWidth, scaleLineWidth, lineColour, false, atom1,
                 atom2, bond),
       dashPattern_(dashPattern) {
-  PRECONDITION(points_.size() == 2, "simple line wrong number of points");
+  PRECONDITION(points_.size() == 2, "simple line wrong number of points")
 }
 
 // ****************************************************************************
@@ -251,7 +251,7 @@ DrawShapePolyLine::DrawShapePolyLine(const std::vector<Point2D> &points,
     : DrawShape(points, lineWidth, scaleLineWidth, lineColour, fill, atom1,
                 atom2, bond),
       dashPattern_(dashPattern) {
-  PRECONDITION(points_.size() > 2, "polyline not enough points");
+  PRECONDITION(points_.size() > 2, "polyline not enough points")
 }
 
 // ****************************************************************************
@@ -286,7 +286,7 @@ DrawShapeSolidWedge::DrawShapeSolidWedge(const std::vector<Point2D> points,
       col2_(col2),
       splitBonds_(splitBonds),
       otherBondVecs_(otherBondVecs) {
-  PRECONDITION(points_.size() == 3, "solid wedge wrong points");
+  PRECONDITION(points_.size() == 3, "solid wedge wrong points")
   if (otherBondVecs_.size() > 2) {
     trimOtherBondVecs();
   }
@@ -502,7 +502,7 @@ DrawShapeDashedWedge::DrawShapeDashedWedge(const std::vector<Point2D> points,
     : DrawShape(points, lineWidth, false, col1, false, atom1, atom2, bond),
       col2_(col2),
       oneLessDash_(oneLessDash) {
-  PRECONDITION(points_.size() == 3, "dashed wedge wrong points");
+  PRECONDITION(points_.size() == 3, "dashed wedge wrong points")
   at1Cds_ = points[0];
   end1Cds_ = points[1];
   end2Cds_ = points[2];
@@ -632,7 +632,7 @@ DrawShapeWavyLine::DrawShapeWavyLine(const std::vector<Point2D> points,
                 bond),
       col2_(col2),
       offset_(offset) {
-  PRECONDITION(points_.size() == 2, "wavy line wrong points");
+  PRECONDITION(points_.size() == 2, "wavy line wrong points")
 }
 
 // ****************************************************************************
@@ -667,9 +667,9 @@ DrawShapeArc::DrawShapeArc(const std::vector<Point2D> points, double ang1,
     : DrawShape(points, lineWidth, scaleLineWidth, col1, fill, atom1),
       ang1_(ang1),
       ang2_(ang2) {
-  PRECONDITION(points_.size() == 2, "arc wrong points");
-  RANGE_CHECK(0., ang1_, 360.);
-  RANGE_CHECK(0., ang2_, 360.);
+  PRECONDITION(points_.size() == 2, "arc wrong points")
+  RANGE_CHECK(0., ang1_, 360.)
+  RANGE_CHECK(0., ang2_, 360.)
 }
 
 // ****************************************************************************

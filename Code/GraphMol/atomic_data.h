@@ -76,5 +76,5 @@ class RDKIT_GRAPHMOL_EXPORT atomicData {
   int commonIsotope;         // most common isotope
   double commonIsotopeMass;  // most common isotope
 };
-};  // namespace RDKit
+}  // namespace RDKit
 #endif

@@ -87,11 +87,11 @@ python::object getProgressCallbackHelper(const ResonanceMolSupplier &suppl) {
     res = cppCallback->getPyCallbackObject();
   }
   return res;
-};
+}
 
 void setProgressCallbackHelper(ResonanceMolSupplier &suppl,
                                PyObject *callback) {
-  PRECONDITION(callback, "callback must not be NULL");
+  PRECONDITION(callback, "callback must not be NULL")
   if (callback == Py_None) {
     suppl.setProgressCallback(nullptr);
     return;
@@ -328,7 +328,7 @@ struct resmolsup_wrap {
              "atom in\n"
              "         this molecule that matches the first atom in the "
              "query.\n");
-  };
+  }
 };
 }  // namespace RDKit
 

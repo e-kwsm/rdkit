@@ -355,7 +355,7 @@ void test1() {
     if (test_failed) {
       n_failed++;
     }
-    TEST_ASSERT(!test_failed);
+    TEST_ASSERT(!test_failed)
   }
   BOOST_LOG(rdInfoLog) << "\tdone" << std::endl;
 }
@@ -724,7 +724,7 @@ int main() {
       << "*******************************************************\n";
   if (0 != n_failed) {
     std::cout << n_failed << " TEST CASES FAILED \n";
-    TEST_ASSERT(0 != n_failed);
+    TEST_ASSERT(0 != n_failed)
   } else {
     std::cout << " --- ALL TEST CASES PASSED --- \n";
   }

@@ -24,31 +24,31 @@ void testLimits() {
     std::cerr << "min: " << std::numeric_limits<T>::min() << " "
               << rdvalue_cast<T>(v) << std::endl;
     CHECK_INVARIANT(rdvalue_cast<T>(v) == std::numeric_limits<T>::min(),
-                    "bad min");
+                    "bad min")
     CHECK_INVARIANT(
         rdvalue_cast<T>(RDValue(v)) == std::numeric_limits<T>::min(),
-        "bad min");
+        "bad min")
     v = std::numeric_limits<T>::max();
     CHECK_INVARIANT(rdvalue_cast<T>(v) == std::numeric_limits<T>::max(),
-                    "bad max");
+                    "bad max")
     CHECK_INVARIANT(
         rdvalue_cast<T>(RDValue(v)) == std::numeric_limits<T>::max(),
-        "bad max");
+        "bad max")
   }
   {
     RDValue v(std::numeric_limits<T>::max());
     CHECK_INVARIANT(rdvalue_cast<T>(v) == std::numeric_limits<T>::max(),
-                    "bad max");
+                    "bad max")
     RDValue vv(v);
     CHECK_INVARIANT(rdvalue_cast<T>(vv) == std::numeric_limits<T>::max(),
-                    "bad max");
+                    "bad max")
 
     v = std::numeric_limits<T>::min();
     RDValue vvv(v);
     CHECK_INVARIANT(rdvalue_cast<T>(v) == std::numeric_limits<T>::min(),
-                    "bad min");
+                    "bad min")
     CHECK_INVARIANT(rdvalue_cast<T>(vvv) == std::numeric_limits<T>::min(),
-                    "bad min");
+                    "bad min")
   }
   BOOST_LOG(rdErrorLog) << "..done" << std::endl;
 }
@@ -73,11 +73,11 @@ void testVector() {
   data.push_back(T());
 
   RDValue v(data);
-  CHECK_INVARIANT(rdvalue_cast<std::vector<T>>(v) == data, "bad vec");
+  CHECK_INVARIANT(rdvalue_cast<std::vector<T>>(v) == data, "bad vec")
   RDValue vv;
   copy_rdvalue(vv, v);
   CHECK_INVARIANT(rdvalue_cast<std::vector<T>>(vv) == data,
-                  "bad copy constructor");
+                  "bad copy constructor")
   RDValue::cleanup_rdvalue(v);  // desctructor...
   RDValue::cleanup_rdvalue(vv);
 }
@@ -101,18 +101,18 @@ void testStringVect() {
   vecs.emplace_back("fleas");
   RDValue v(vecs);
   CHECK_INVARIANT(rdvalue_cast<std::vector<std::string>>(v) == vecs,
-                  "bad vect");
+                  "bad vect")
   RDValue vc;
   copy_rdvalue(vc, v);
   CHECK_INVARIANT(rdvalue_cast<std::vector<std::string>>(vc) == vecs,
-                  "bad vect");
+                  "bad vect")
   RDValue vv = vecs;
   RDValue vvc;
   copy_rdvalue(vvc, vv);
   CHECK_INVARIANT(rdvalue_cast<std::vector<std::string>>(vv) == vecs,
-                  "bad vect");
+                  "bad vect")
   CHECK_INVARIANT(rdvalue_cast<std::vector<std::string>>(vvc) == vecs,
-                  "bad vect");
+                  "bad vect")
 
   RDValue::cleanup_rdvalue(v);    // desctructor...
   RDValue::cleanup_rdvalue(vc);   // desctructor...
@@ -129,7 +129,7 @@ void testMapsAndLists() {
     m["foo"] = 1;
     m["bar"] = 2;
     RDValue v(m);
-    CHECK_INVARIANT(rdvalue_cast<listtype>(v) == m, "bad map cast");
+    CHECK_INVARIANT(rdvalue_cast<listtype>(v) == m, "bad map cast")
     RDValue::cleanup_rdvalue(v);
   }
   {
@@ -138,7 +138,7 @@ void testMapsAndLists() {
     m.emplace_back("bar");
     RDValue v(m);
     CHECK_INVARIANT(rdvalue_cast<std::list<std::string>>(v) == m,
-                    "bad map cast");
+                    "bad map cast")
     RDValue::cleanup_rdvalue(v);
   }
   BOOST_LOG(rdErrorLog) << "..done" << std::endl;
@@ -149,14 +149,14 @@ void testNaN() {
   BOOST_LOG(rdErrorLog) << "Test NaN" << std::endl;
   double nan = sqrt(-1.0);
   RDValue v(nan);
-  TEST_ASSERT(v.getTag() == RDTypeTag::DoubleTag);
+  TEST_ASSERT(v.getTag() == RDTypeTag::DoubleTag)
 
   CHECK_INVARIANT(std::isnan(rdvalue_cast<double>(v)),
-                  "Oops, can't store NaNs!");
+                  "Oops, can't store NaNs!")
 
   RDValue vv(2.0);
-  TEST_ASSERT(rdvalue_is<double>(vv));
-  TEST_ASSERT(vv.getTag() == RDTypeTag::DoubleTag);
+  TEST_ASSERT(rdvalue_is<double>(vv))
+  TEST_ASSERT(vv.getTag() == RDTypeTag::DoubleTag)
   BOOST_LOG(rdErrorLog) << "..done" << std::endl;
 }
 
@@ -179,15 +179,15 @@ void testProp(T val) {
   {
     RDProps p;
     p.setProp<T>("foo", val);
-    TEST_ASSERT(streamWriteProps(ss, p));
+    TEST_ASSERT(streamWriteProps(ss, p))
   }
 
   {
     RDProps p2;
     streamReadProps(ss, p2);
-    TEST_ASSERT(p2.getProp<T>("foo") == val);
+    TEST_ASSERT(p2.getProp<T>("foo") == val)
   }
-};
+}
 
 void testPropertyPickler() {
   BOOST_LOG(rdErrorLog) << "Test Property Pickler" << std::endl;
@@ -242,13 +242,13 @@ void testPickleBinaryString() {
   {
     RDProps p;
     p.setProp<std::string>("foo", str);
-    TEST_ASSERT(streamWriteProps(ss, p));
+    TEST_ASSERT(streamWriteProps(ss, p))
   }
 
   {
     RDProps p2;
     streamReadProps(ss, p2);
-    TEST_ASSERT(p2.getProp<std::string>("foo") == str);
+    TEST_ASSERT(p2.getProp<std::string>("foo") == str)
   }
   BOOST_LOG(rdErrorLog) << "..done" << std::endl;
 }
@@ -298,37 +298,37 @@ void testIntConversions() {
   p.setProp<int>("foo", 32767 + 1);
   try {
     p.getProp<std::int8_t>("foo");  // should fail
-    TEST_ASSERT(0);
+    TEST_ASSERT(0)
   } catch (boost::numeric::positive_overflow&) {
   }
   try {
     p.getProp<std::uint8_t>("foo");  // should fail
-    TEST_ASSERT(0);
+    TEST_ASSERT(0)
   } catch (boost::numeric::positive_overflow&) {
   }
   try {
     p.getProp<std::int16_t>("foo");  // should fail
-    TEST_ASSERT(0);
+    TEST_ASSERT(0)
   } catch (boost::numeric::positive_overflow&) {
   }
   p.setProp<int>("foo", 65535 + 1);
   try {
     p.getProp<std::uint16_t>("foo");  // should fail
-    TEST_ASSERT(0);
+    TEST_ASSERT(0)
   } catch (boost::numeric::positive_overflow&) {
   }
 
   p.setProp<int>("foo", -1);
   try {
     p.getProp<std::uint8_t>("foo");  // should fail
-    TEST_ASSERT(0);
+    TEST_ASSERT(0)
   } catch (boost::numeric::negative_overflow&) {
   }
 
   p.getProp<std::int16_t>("foo");  // should pass
   try {
     p.getProp<std::uint16_t>("foo");  // should fail
-    TEST_ASSERT(0);
+    TEST_ASSERT(0)
   } catch (boost::numeric::negative_overflow&) {
   }
 }

@@ -38,7 +38,7 @@ void test1() {
   std::cerr << "Unit tests for force field basics." << std::endl;
 
   ForceFields::ForceField ff;
-  TEST_ASSERT(ff.dimension() == 3);
+  TEST_ASSERT(ff.dimension() == 3)
 
   RDGeom::Point3D p1(0, 0, 0), p2(1, 0, 0), p3(2, 0, 0), p4(0, 1, 0);
   RDGeom::PointPtrVect &ps = ff.positions();
@@ -55,21 +55,21 @@ void test1() {
   fs.push_back(&f3);
   fs.push_back(&f4);
 #endif
-  TEST_ASSERT(ff.positions().size() == 4);
+  TEST_ASSERT(ff.positions().size() == 4)
   // TEST_ASSERT(ff.forces().size()==4);
 
   ff.initialize();
 
-  TEST_ASSERT(RDKit::feq(ff.distance(0, 1), 1.0));
-  TEST_ASSERT(RDKit::feq(ff.distance(1, 0), 1.0));
-  TEST_ASSERT(RDKit::feq(ff.distance(0, 0), 0.0));
-  TEST_ASSERT(RDKit::feq(ff.distance(0, 2), 2.0));
-  TEST_ASSERT(RDKit::feq(ff.distance(2, 0), 2.0));
-  TEST_ASSERT(RDKit::feq(ff.distance(0, 3), 1.0));
-  TEST_ASSERT(RDKit::feq(ff.distance(3, 0), 1.0));
-  TEST_ASSERT(RDKit::feq(ff.distance(3, 3), 0.0));
-  TEST_ASSERT(RDKit::feq(ff.distance(1, 2), 1.0));
-  TEST_ASSERT(RDKit::feq(ff.distance(2, 1), 1.0));
+  TEST_ASSERT(RDKit::feq(ff.distance(0, 1), 1.0))
+  TEST_ASSERT(RDKit::feq(ff.distance(1, 0), 1.0))
+  TEST_ASSERT(RDKit::feq(ff.distance(0, 0), 0.0))
+  TEST_ASSERT(RDKit::feq(ff.distance(0, 2), 2.0))
+  TEST_ASSERT(RDKit::feq(ff.distance(2, 0), 2.0))
+  TEST_ASSERT(RDKit::feq(ff.distance(0, 3), 1.0))
+  TEST_ASSERT(RDKit::feq(ff.distance(3, 0), 1.0))
+  TEST_ASSERT(RDKit::feq(ff.distance(3, 3), 0.0))
+  TEST_ASSERT(RDKit::feq(ff.distance(1, 2), 1.0))
+  TEST_ASSERT(RDKit::feq(ff.distance(2, 1), 1.0))
 
   std::cerr << "  done" << std::endl;
 }
@@ -88,11 +88,11 @@ void testUFF1() {
 
   // sp3 - sp3: checks basics
   restLen = ForceFields::UFF::Utils::calcBondRestLength(1.0, &p1, &p1);
-  TEST_ASSERT(RDKit::feq(restLen, 1.514));
+  TEST_ASSERT(RDKit::feq(restLen, 1.514))
 
   forceConstant =
       ForceFields::UFF::Utils::calcBondForceConstant(restLen, &p1, &p1);
-  TEST_ASSERT(RDKit::feq(forceConstant, 699.5918));
+  TEST_ASSERT(RDKit::feq(forceConstant, 699.5918))
 
   // sp2 carbon:
   p2.r1 = .732;
@@ -100,11 +100,11 @@ void testUFF1() {
   p2.GMP_Xi = 5.343;
   // sp2 - sp2: checks rBO
   restLen = ForceFields::UFF::Utils::calcBondRestLength(2.0, &p2, &p2);
-  TEST_ASSERT(RDKit::feq(restLen, 1.32883, 1e-5));
+  TEST_ASSERT(RDKit::feq(restLen, 1.32883, 1e-5))
 
   forceConstant =
       ForceFields::UFF::Utils::calcBondForceConstant(restLen, &p2, &p2);
-  TEST_ASSERT(RDKit::feq(forceConstant, 1034.69, 1e-2));
+  TEST_ASSERT(RDKit::feq(forceConstant, 1034.69, 1e-2))
 
   // sp3 nitrogen:
   p2.r1 = .700;
@@ -113,11 +113,11 @@ void testUFF1() {
 
   // Csp3 - Nsp3: checks rEN
   restLen = ForceFields::UFF::Utils::calcBondRestLength(1.0, &p1, &p2);
-  TEST_ASSERT(RDKit::feq(restLen, 1.451071, 1e-5));
+  TEST_ASSERT(RDKit::feq(restLen, 1.451071, 1e-5))
 
   forceConstant =
       ForceFields::UFF::Utils::calcBondForceConstant(restLen, &p1, &p2);
-  TEST_ASSERT(RDKit::feq(forceConstant, 1057.27, 1e-2));
+  TEST_ASSERT(RDKit::feq(forceConstant, 1057.27, 1e-2))
 
   // amide bond: check we can reproduce values from the UFF paper:
   // C_R:
@@ -131,11 +131,11 @@ void testUFF1() {
 
   restLen = ForceFields::UFF::Utils::calcBondRestLength(
       ForceFields::UFF::Params::amideBondOrder, &p1, &p2);
-  TEST_ASSERT(RDKit::feq(restLen, 1.357, 1e-3));  // NOTE: the paper has 1.366
+  TEST_ASSERT(RDKit::feq(restLen, 1.357, 1e-3))  // NOTE: the paper has 1.366
 
   forceConstant =
       ForceFields::UFF::Utils::calcBondForceConstant(restLen, &p1, &p2);
-  TEST_ASSERT(RDKit::feq(forceConstant, 1293., 1));  // NOTE: the paper has 1293
+  TEST_ASSERT(RDKit::feq(forceConstant, 1293., 1))  // NOTE: the paper has 1293
 
   std::cerr << "  done" << std::endl;
 }
@@ -173,10 +173,10 @@ void testUFF2() {
   double E;
   // edge case: zero bond length:
   E = bs->getEnergy(p);
-  TEST_ASSERT(E > 0.0);
+  TEST_ASSERT(E > 0.0)
   bs->getGrad(p, g);
   for (int i = 0; i < 6; i++) {
-    TEST_ASSERT(fabs(g[i]) > 0.0);
+    TEST_ASSERT(fabs(g[i]) > 0.0)
   }
 
   p[0] = 0;
@@ -186,24 +186,24 @@ void testUFF2() {
   }
   ff.initialize();
   E = bs->getEnergy(p);
-  TEST_ASSERT(RDKit::feq(E, 0.0));
+  TEST_ASSERT(RDKit::feq(E, 0.0))
   bs->getGrad(p, g);
   for (int i = 0; i < 6; i++) {
-    TEST_ASSERT(RDKit::feq(g[i], 0.0));
+    TEST_ASSERT(RDKit::feq(g[i], 0.0))
   }
 
   (*ff.positions()[1])[0] = 1.814;
   p[3] = 1.814;
   ff.initialize();
   E = bs->getEnergy(p);
-  TEST_ASSERT(RDKit::feq(E, 31.4816));
+  TEST_ASSERT(RDKit::feq(E, 31.4816))
   bs->getGrad(p, g);
-  TEST_ASSERT(RDKit::feq(g[0], -209.8775));
-  TEST_ASSERT(RDKit::feq(g[3], 209.8775));
-  TEST_ASSERT(RDKit::feq(g[1], 0.0));
-  TEST_ASSERT(RDKit::feq(g[2], 0.0));
-  TEST_ASSERT(RDKit::feq(g[4], 0.0));
-  TEST_ASSERT(RDKit::feq(g[5], 0.0));
+  TEST_ASSERT(RDKit::feq(g[0], -209.8775))
+  TEST_ASSERT(RDKit::feq(g[3], 209.8775))
+  TEST_ASSERT(RDKit::feq(g[1], 0.0))
+  TEST_ASSERT(RDKit::feq(g[2], 0.0))
+  TEST_ASSERT(RDKit::feq(g[4], 0.0))
+  TEST_ASSERT(RDKit::feq(g[5], 0.0))
 
   // try a different axis:
   for (int i = 0; i < 6; i++) {
@@ -215,14 +215,14 @@ void testUFF2() {
   (*ff.positions()[1])[2] = 1.814;
   p[5] = 1.814;
   E = bs->getEnergy(p);
-  TEST_ASSERT(RDKit::feq(E, 31.4816));
+  TEST_ASSERT(RDKit::feq(E, 31.4816))
   bs->getGrad(p, g);
-  TEST_ASSERT(RDKit::feq(g[2], -209.8775));
-  TEST_ASSERT(RDKit::feq(g[5], 209.8775));
-  TEST_ASSERT(RDKit::feq(g[0], 0.0));
-  TEST_ASSERT(RDKit::feq(g[1], 0.0));
-  TEST_ASSERT(RDKit::feq(g[3], 0.0));
-  TEST_ASSERT(RDKit::feq(g[4], 0.0));
+  TEST_ASSERT(RDKit::feq(g[2], -209.8775))
+  TEST_ASSERT(RDKit::feq(g[5], 209.8775))
+  TEST_ASSERT(RDKit::feq(g[0], 0.0))
+  TEST_ASSERT(RDKit::feq(g[1], 0.0))
+  TEST_ASSERT(RDKit::feq(g[3], 0.0))
+  TEST_ASSERT(RDKit::feq(g[4], 0.0))
 
   // try a bit of minimization
   RDGeom::Point3D d;
@@ -232,7 +232,7 @@ void testUFF2() {
   ff.minimize(10, 1e-8);
   d = *(RDGeom::Point3D *)ff.positions()[0] -
       *(RDGeom::Point3D *)ff.positions()[1];
-  TEST_ASSERT(RDKit::feq(d.length(), 1.514, 1e-3));
+  TEST_ASSERT(RDKit::feq(d.length(), 1.514, 1e-3))
 
   // minimize in "3D"
   ff.initialize();
@@ -242,7 +242,7 @@ void testUFF2() {
   ff.minimize(10, 1e-8);
   d = *(RDGeom::Point3D *)ff.positions()[0] -
       *(RDGeom::Point3D *)ff.positions()[1];
-  TEST_ASSERT(RDKit::feq(d.length(), 1.514, 1e-3));
+  TEST_ASSERT(RDKit::feq(d.length(), 1.514, 1e-3))
 
   delete[] p;
   delete[] g;
@@ -264,7 +264,7 @@ void testUFF3() {
 
   // sp3 - sp3: checks basics
   restLen = ForceFields::UFF::Utils::calcBondRestLength(1.0, &p3, &p3);
-  TEST_ASSERT(RDKit::feq(restLen, 1.514));
+  TEST_ASSERT(RDKit::feq(restLen, 1.514))
 
   // C_3 - C_3 - C_3
   forceConstant = ForceFields::UFF::Utils::calcAngleForceConstant(
@@ -284,13 +284,13 @@ void testUFF3() {
   p2.theta0 = 120.0 * M_PI / 180.;
   restLen = ForceFields::UFF::Utils::calcBondRestLength(
       ForceFields::UFF::Params::amideBondOrder, &p1, &p2);
-  TEST_ASSERT(RDKit::feq(restLen, 1.357, 1e-3));
+  TEST_ASSERT(RDKit::feq(restLen, 1.357, 1e-3))
   restLen = ForceFields::UFF::Utils::calcBondRestLength(1.0, &p2, &p3);
-  TEST_ASSERT(RDKit::feq(restLen, 1.450, 1e-3));
+  TEST_ASSERT(RDKit::feq(restLen, 1.450, 1e-3))
 
   forceConstant = ForceFields::UFF::Utils::calcAngleForceConstant(
       p2.theta0, ForceFields::UFF::Params::amideBondOrder, 1, &p1, &p2, &p3);
-  TEST_ASSERT(RDKit::feq(forceConstant, 211.0, 1e-1));  //  paper has 105.5
+  TEST_ASSERT(RDKit::feq(forceConstant, 211.0, 1e-1))  //  paper has 105.5
 
   std::cerr << "  done" << std::endl;
 }
@@ -340,9 +340,9 @@ void testUFF4() {
        *(RDGeom::Point3D *)ff.positions()[2];
   theta = v1.angleTo(v2);
 
-  TEST_ASSERT(RDKit::feq(v1.length(), 1.514, 1e-3));
-  TEST_ASSERT(RDKit::feq(v2.length(), 1.514, 1e-3));
-  TEST_ASSERT(RDKit::feq(theta, 90 * M_PI / 180., 1e-4));
+  TEST_ASSERT(RDKit::feq(v1.length(), 1.514, 1e-3))
+  TEST_ASSERT(RDKit::feq(v2.length(), 1.514, 1e-3))
+  TEST_ASSERT(RDKit::feq(theta, 90 * M_PI / 180., 1e-4))
 
   // ------- ------- ------- ------- ------- ------- -------
   // more complicated atomic coords:
@@ -364,9 +364,9 @@ void testUFF4() {
        *(RDGeom::Point3D *)ff.positions()[2];
   theta = v1.angleTo(v2);
 
-  TEST_ASSERT(RDKit::feq(v1.length(), 1.514, 1e-3));
-  TEST_ASSERT(RDKit::feq(v2.length(), 1.514, 1e-3));
-  TEST_ASSERT(RDKit::feq(theta, 90 * M_PI / 180., 1e-4));
+  TEST_ASSERT(RDKit::feq(v1.length(), 1.514, 1e-3))
+  TEST_ASSERT(RDKit::feq(v2.length(), 1.514, 1e-3))
+  TEST_ASSERT(RDKit::feq(theta, 90 * M_PI / 180., 1e-4))
 
   // ------- ------- ------- ------- ------- ------- -------
   // try for the tetrahedral angle instead of 90:
@@ -393,9 +393,9 @@ void testUFF4() {
   v2 = *(RDGeom::Point3D *)ff.positions()[2] -
        *(RDGeom::Point3D *)ff.positions()[1];
   theta = v1.angleTo(v2);
-  TEST_ASSERT(RDKit::feq(v1.length(), 1.514, 1e-3));
-  TEST_ASSERT(RDKit::feq(v2.length(), 1.514, 1e-3));
-  TEST_ASSERT(RDKit::feq(theta, param1.theta0, 1e-4));
+  TEST_ASSERT(RDKit::feq(v1.length(), 1.514, 1e-3))
+  TEST_ASSERT(RDKit::feq(v2.length(), 1.514, 1e-3))
+  TEST_ASSERT(RDKit::feq(theta, param1.theta0, 1e-4))
 
 #endif
 
@@ -434,11 +434,11 @@ void testUFF4() {
        *(RDGeom::Point3D *)ff.positions()[1];
   theta = v1.angleTo(v2);
 
-  TEST_ASSERT(RDKit::feq(v1.length(), 1.514, 1e-3));
-  TEST_ASSERT(RDKit::feq(v2.length(), 1.514, 1e-3));
+  TEST_ASSERT(RDKit::feq(v1.length(), 1.514, 1e-3))
+  TEST_ASSERT(RDKit::feq(v2.length(), 1.514, 1e-3))
   std::cerr << "theta = " << theta << "; theta0 = " << param1.theta0
             << std::endl;
-  TEST_ASSERT(RDKit::feq(theta, param1.theta0, 1e-4));
+  TEST_ASSERT(RDKit::feq(theta, param1.theta0, 1e-4))
 
   // ------- ------- ------- ------- ------- ------- -------
   // test n=3:
@@ -469,12 +469,12 @@ void testUFF4() {
        *(RDGeom::Point3D *)ff.positions()[1];
   theta = v1.angleTo(v2);
 
-  TEST_ASSERT(RDKit::feq(v1.length(), 1.514, 1e-3));
-  TEST_ASSERT(RDKit::feq(v2.length(), 1.514, 1e-3));
+  TEST_ASSERT(RDKit::feq(v1.length(), 1.514, 1e-3))
+  TEST_ASSERT(RDKit::feq(v2.length(), 1.514, 1e-3))
   std::cerr << "theta = " << std::fixed << std::setprecision(6) << theta
             << ", param1.theta0 = " << std::fixed << std::setprecision(6)
             << param1.theta0 << std::endl;
-  TEST_ASSERT(RDKit::feq(theta, param1.theta0, 1e-4));
+  TEST_ASSERT(RDKit::feq(theta, param1.theta0, 1e-4))
 
   // ------- ------- ------- ------- ------- ------- -------
   // test n=4:
@@ -505,9 +505,9 @@ void testUFF4() {
        *(RDGeom::Point3D *)ff.positions()[1];
   theta = v1.angleTo(v2);
 
-  TEST_ASSERT(RDKit::feq(v1.length(), 1.514, 1e-3));
-  TEST_ASSERT(RDKit::feq(v2.length(), 1.514, 1e-3));
-  TEST_ASSERT(RDKit::feq(theta, param1.theta0, 1e-4));
+  TEST_ASSERT(RDKit::feq(v1.length(), 1.514, 1e-3))
+  TEST_ASSERT(RDKit::feq(v2.length(), 1.514, 1e-3))
+  TEST_ASSERT(RDKit::feq(theta, param1.theta0, 1e-4))
 
 #if 0
   std::cerr << " " << *ff.positions()[0] << std::endl;
@@ -630,19 +630,19 @@ void testUFF5() {
   v2 = *(RDGeom::Point3D *)ff.positions()[0] -
        *(RDGeom::Point3D *)ff.positions()[2];
   theta = v1.angleTo(v2);
-  TEST_ASSERT(RDKit::feq(v1.length(), CCDblBondLen, 1e-3));
-  TEST_ASSERT(RDKit::feq(v2.length(), CHBondLen, 1e-3));
-  TEST_ASSERT(RDKit::feq(theta, param1.theta0, 1e-4));
+  TEST_ASSERT(RDKit::feq(v1.length(), CCDblBondLen, 1e-3))
+  TEST_ASSERT(RDKit::feq(v2.length(), CHBondLen, 1e-3))
+  TEST_ASSERT(RDKit::feq(theta, param1.theta0, 1e-4))
   v2 = *(RDGeom::Point3D *)ff.positions()[0] -
        *(RDGeom::Point3D *)ff.positions()[3];
   theta = v1.angleTo(v2);
-  TEST_ASSERT(RDKit::feq(v2.length(), CHBondLen, 1e-3));
-  TEST_ASSERT(RDKit::feq(theta, param1.theta0, 1e-4));
+  TEST_ASSERT(RDKit::feq(v2.length(), CHBondLen, 1e-3))
+  TEST_ASSERT(RDKit::feq(theta, param1.theta0, 1e-4))
 
   v1 = *(RDGeom::Point3D *)ff.positions()[0] -
        *(RDGeom::Point3D *)ff.positions()[2];
   theta = v1.angleTo(v2);
-  TEST_ASSERT(RDKit::feq(theta, param1.theta0, 1e-4));
+  TEST_ASSERT(RDKit::feq(theta, param1.theta0, 1e-4))
 
   std::cerr << "  done" << std::endl;
 }
@@ -677,14 +677,14 @@ void testUFF6() {
   // edge case: our energy at zero length should be zero:
   double E;
   E = ff.calcEnergy();
-  TEST_ASSERT(RDKit::feq(E, 0.0));
+  TEST_ASSERT(RDKit::feq(E, 0.0))
 
   (*ff.positions()[0])[0] = 0.0;
   (*ff.positions()[1])[0] = 4.0;
   ff.minimize(10, 1e-8, 1e-8);
   d = *(RDGeom::Point3D *)ff.positions()[0] -
       *(RDGeom::Point3D *)ff.positions()[1];
-  TEST_ASSERT(RDKit::feq(d.length(), 3.851, 1e-3));
+  TEST_ASSERT(RDKit::feq(d.length(), 3.851, 1e-3))
 
   // minimize in "3D"
   ff.initialize();
@@ -697,7 +697,7 @@ void testUFF6() {
   ff.minimize(10, 1e-8, 1e-8);
   d = *(RDGeom::Point3D *)ff.positions()[0] -
       *(RDGeom::Point3D *)ff.positions()[1];
-  TEST_ASSERT(RDKit::feq(d.length(), 3.851, 1e-3));
+  TEST_ASSERT(RDKit::feq(d.length(), 3.851, 1e-3))
 
   std::cerr << "  done" << std::endl;
 }
@@ -759,7 +759,7 @@ void testUFF7() {
       *(RDGeom::Point3D *)ff.positions()[1],
       *(RDGeom::Point3D *)ff.positions()[2],
       *(RDGeom::Point3D *)ff.positions()[3]);
-  TEST_ASSERT(RDKit::feq(cosPhi, 0.5, 1e-4));
+  TEST_ASSERT(RDKit::feq(cosPhi, 0.5, 1e-4))
 
   // ------- ------- ------- ------- ------- ------- -------
   // Basic SP2 - SP2
@@ -792,7 +792,7 @@ void testUFF7() {
       *(RDGeom::Point3D *)ff.positions()[1],
       *(RDGeom::Point3D *)ff.positions()[2],
       *(RDGeom::Point3D *)ff.positions()[3]);
-  TEST_ASSERT(RDKit::feq(cosPhi, 1.0, 1e-4));
+  TEST_ASSERT(RDKit::feq(cosPhi, 1.0, 1e-4))
 
   // ------- ------- ------- ------- ------- ------- -------
   // Basic SP2 - SP3
@@ -825,7 +825,7 @@ void testUFF7() {
       *(RDGeom::Point3D *)ff.positions()[1],
       *(RDGeom::Point3D *)ff.positions()[2],
       *(RDGeom::Point3D *)ff.positions()[3]);
-  TEST_ASSERT(RDKit::feq(cosPhi, 0.5, 1e-4));
+  TEST_ASSERT(RDKit::feq(cosPhi, 0.5, 1e-4))
 
   // ------- ------- ------- ------- ------- ------- -------
   // special case for group 6 - group 6 bonds:
@@ -858,7 +858,7 @@ void testUFF7() {
       *(RDGeom::Point3D *)ff.positions()[1],
       *(RDGeom::Point3D *)ff.positions()[2],
       *(RDGeom::Point3D *)ff.positions()[3]);
-  TEST_ASSERT(RDKit::feq(cosPhi, 0.0, 1e-4));
+  TEST_ASSERT(RDKit::feq(cosPhi, 0.0, 1e-4))
 
   // ------- ------- ------- ------- ------- ------- -------
   // special case for SP3 group 6 - SP2 other group
@@ -891,7 +891,7 @@ void testUFF7() {
       *(RDGeom::Point3D *)ff.positions()[1],
       *(RDGeom::Point3D *)ff.positions()[2],
       *(RDGeom::Point3D *)ff.positions()[3]);
-  TEST_ASSERT(RDKit::feq(cosPhi, 0.0, 1e-4));
+  TEST_ASSERT(RDKit::feq(cosPhi, 0.0, 1e-4))
 
 #endif
 
@@ -926,7 +926,7 @@ void testUFF7() {
       *(RDGeom::Point3D *)ff.positions()[1],
       *(RDGeom::Point3D *)ff.positions()[2],
       *(RDGeom::Point3D *)ff.positions()[3]);
-  TEST_ASSERT(RDKit::feq(cosPhi, 0.5, 1e-4));
+  TEST_ASSERT(RDKit::feq(cosPhi, 0.5, 1e-4))
 
   std::cerr << "  done" << std::endl;
 }
@@ -936,27 +936,27 @@ void testUFFParams() {
   std::cerr << " Test UFF Parameter objects" << std::endl;
 
   auto params = ForceFields::UFF::ParamCollection::getParams();
-  TEST_ASSERT(params);
+  TEST_ASSERT(params)
 
   const ForceFields::UFF::AtomicParams *ptr;
   ptr = (*params)("C_3");
-  TEST_ASSERT(ptr);
-  TEST_ASSERT(RDKit::feq(ptr->r1, 0.757));
-  TEST_ASSERT(RDKit::feq(ptr->theta0, 109.47 * M_PI / 180.));
-  TEST_ASSERT(RDKit::feq(ptr->x1, 3.851));
-  TEST_ASSERT(RDKit::feq(ptr->D1, 0.105));
-  TEST_ASSERT(RDKit::feq(ptr->zeta, 12.73));
-  TEST_ASSERT(RDKit::feq(ptr->Z1, 1.912));
-  TEST_ASSERT(RDKit::feq(ptr->V1, 2.119));
-  TEST_ASSERT(RDKit::feq(ptr->GMP_Xi, 5.343));
-  TEST_ASSERT(RDKit::feq(ptr->GMP_Hardness, 5.063));
-  TEST_ASSERT(RDKit::feq(ptr->GMP_Radius, 0.759));
+  TEST_ASSERT(ptr)
+  TEST_ASSERT(RDKit::feq(ptr->r1, 0.757))
+  TEST_ASSERT(RDKit::feq(ptr->theta0, 109.47 * M_PI / 180.))
+  TEST_ASSERT(RDKit::feq(ptr->x1, 3.851))
+  TEST_ASSERT(RDKit::feq(ptr->D1, 0.105))
+  TEST_ASSERT(RDKit::feq(ptr->zeta, 12.73))
+  TEST_ASSERT(RDKit::feq(ptr->Z1, 1.912))
+  TEST_ASSERT(RDKit::feq(ptr->V1, 2.119))
+  TEST_ASSERT(RDKit::feq(ptr->GMP_Xi, 5.343))
+  TEST_ASSERT(RDKit::feq(ptr->GMP_Hardness, 5.063))
+  TEST_ASSERT(RDKit::feq(ptr->GMP_Radius, 0.759))
 
   ptr = (*params)("N_3");
-  TEST_ASSERT(ptr);
+  TEST_ASSERT(ptr)
 
   ptr = (*params)("C_5");
-  TEST_ASSERT(!ptr);
+  TEST_ASSERT(!ptr)
 }
 
 void testUFF8() {
@@ -978,10 +978,10 @@ void testUFF8() {
 
   // C_2 (sp2 carbon):
   param1 = (*params)("C_2");
-  TEST_ASSERT(param1);
+  TEST_ASSERT(param1)
   // H_:
   param2 = (*params)("H_");
-  TEST_ASSERT(param2);
+  TEST_ASSERT(param2)
   ForceFields::ForceFieldContrib *contrib;
 
   // build ethylene:
@@ -1081,19 +1081,19 @@ void testUFF8() {
   v2 = *(RDGeom::Point3D *)ff.positions()[0] -
        *(RDGeom::Point3D *)ff.positions()[2];
   theta = v1.angleTo(v2);
-  TEST_ASSERT(RDKit::feq(v1.length(), CCDblBondLen, 1e-3));
-  TEST_ASSERT(RDKit::feq(v2.length(), CHBondLen, 1e-3));
-  TEST_ASSERT(RDKit::feq(theta, param1->theta0, 1e-4));
+  TEST_ASSERT(RDKit::feq(v1.length(), CCDblBondLen, 1e-3))
+  TEST_ASSERT(RDKit::feq(v2.length(), CHBondLen, 1e-3))
+  TEST_ASSERT(RDKit::feq(theta, param1->theta0, 1e-4))
   v2 = *(RDGeom::Point3D *)ff.positions()[0] -
        *(RDGeom::Point3D *)ff.positions()[3];
   theta = v1.angleTo(v2);
-  TEST_ASSERT(RDKit::feq(v2.length(), CHBondLen, 1e-3));
-  TEST_ASSERT(RDKit::feq(theta, param1->theta0, 1e-4));
+  TEST_ASSERT(RDKit::feq(v2.length(), CHBondLen, 1e-3))
+  TEST_ASSERT(RDKit::feq(theta, param1->theta0, 1e-4))
 
   v1 = *(RDGeom::Point3D *)ff.positions()[0] -
        *(RDGeom::Point3D *)ff.positions()[2];
   theta = v1.angleTo(v2);
-  TEST_ASSERT(RDKit::feq(theta, param1->theta0, 1e-4));
+  TEST_ASSERT(RDKit::feq(theta, param1->theta0, 1e-4))
 
   std::cerr << "  done" << std::endl;
 }
@@ -1118,13 +1118,13 @@ void testUFFTorsionConflict() {
 
   // C_2 (sp2 carbon):
   param1 = (*params)("C_2");
-  TEST_ASSERT(param1);
+  TEST_ASSERT(param1)
   // H_:
   param2 = (*params)("H_");
-  TEST_ASSERT(param2);
+  TEST_ASSERT(param2)
   // C_3 (sp3 carbon):
   param3 = (*params)("C_3");
-  TEST_ASSERT(param3);
+  TEST_ASSERT(param3)
 
   ForceFields::ForceFieldContrib *contrib;
 
@@ -1275,24 +1275,24 @@ void testUFFDistanceConstraints() {
   ff.contribs().push_back(ForceFields::ContribPtr(bs));
   double E;
   E = bs->getEnergy(p);
-  TEST_ASSERT(RDKit::feq(E, 0.0));
+  TEST_ASSERT(RDKit::feq(E, 0.0))
   bs->getGrad(p, g);
   for (int i = 0; i < 6; i++) {
-    TEST_ASSERT(RDKit::feq(g[i], 0.0));
+    TEST_ASSERT(RDKit::feq(g[i], 0.0))
   }
 
   ff.initialize();
   (*ff.positions()[1])[0] = 1.20;
   p[3] = 1.20;
   E = bs->getEnergy(p);
-  TEST_ASSERT(RDKit::feq(E, 11.25));
+  TEST_ASSERT(RDKit::feq(E, 11.25))
   bs->getGrad(p, g);
-  TEST_ASSERT(RDKit::feq(g[0], 150.0));
-  TEST_ASSERT(RDKit::feq(g[3], -150.0));
-  TEST_ASSERT(RDKit::feq(g[1], 0.0));
-  TEST_ASSERT(RDKit::feq(g[2], 0.0));
-  TEST_ASSERT(RDKit::feq(g[4], 0.0));
-  TEST_ASSERT(RDKit::feq(g[5], 0.0));
+  TEST_ASSERT(RDKit::feq(g[0], 150.0))
+  TEST_ASSERT(RDKit::feq(g[3], -150.0))
+  TEST_ASSERT(RDKit::feq(g[1], 0.0))
+  TEST_ASSERT(RDKit::feq(g[2], 0.0))
+  TEST_ASSERT(RDKit::feq(g[4], 0.0))
+  TEST_ASSERT(RDKit::feq(g[5], 0.0))
 
   // try a bit of minimization
   RDGeom::Point3D d;
@@ -1368,17 +1368,17 @@ void testUFFAllConstraints() {
   // distance constraints
   ForceFields::UFF::DistanceConstraintContrib *dc;
   mol = RDKit::MolBlockToMol(molBlock, true, false);
-  TEST_ASSERT(mol);
+  TEST_ASSERT(mol)
   MolTransforms::setBondLength(mol->getConformer(), 1, 3, 2.0);
   field = RDKit::UFF::constructForceField(*mol);
-  TEST_ASSERT(field);
+  TEST_ASSERT(field)
   field->initialize();
   dc = new ForceFields::UFF::DistanceConstraintContrib(field, 1, 3, 2.0, 2.0,
                                                        1.0e5);
   field->contribs().push_back(ForceFields::ContribPtr(dc));
   field->minimize();
   TEST_ASSERT(RDKit::feq(
-      MolTransforms::getBondLength(mol->getConformer(), 1, 3), 2.0, 0.1));
+      MolTransforms::getBondLength(mol->getConformer(), 1, 3), 2.0, 0.1))
   delete field;
   field = RDKit::UFF::constructForceField(*mol);
   field->initialize();
@@ -1386,24 +1386,24 @@ void testUFFAllConstraints() {
                                                        0.2, 1.0e5);
   field->contribs().push_back(ForceFields::ContribPtr(dc));
   field->minimize();
-  TEST_ASSERT(MolTransforms::getBondLength(mol->getConformer(), 1, 3) > 1.79);
+  TEST_ASSERT(MolTransforms::getBondLength(mol->getConformer(), 1, 3) > 1.79)
   delete field;
   delete mol;
 
   // angle constraints
   ForceFields::UFF::AngleConstraintContrib *ac;
   mol = RDKit::MolBlockToMol(molBlock, true, false);
-  TEST_ASSERT(mol);
+  TEST_ASSERT(mol)
   MolTransforms::setAngleDeg(mol->getConformer(), 1, 3, 6, 90.0);
   field = RDKit::UFF::constructForceField(*mol);
-  TEST_ASSERT(field);
+  TEST_ASSERT(field)
   field->initialize();
   ac = new ForceFields::UFF::AngleConstraintContrib(field, 1, 3, 6, 90.0, 90.0,
                                                     100.0);
   field->contribs().push_back(ForceFields::ContribPtr(ac));
   field->minimize();
   TEST_ASSERT(RDKit::feq(
-      MolTransforms::getAngleDeg(mol->getConformer(), 1, 3, 6), 90.0, 0.5));
+      MolTransforms::getAngleDeg(mol->getConformer(), 1, 3, 6), 90.0, 0.5))
   delete field;
   field = RDKit::UFF::constructForceField(*mol);
   field->initialize();
@@ -1412,7 +1412,7 @@ void testUFFAllConstraints() {
   field->contribs().push_back(ForceFields::ContribPtr(ac));
   field->minimize();
   TEST_ASSERT(RDKit::feq(
-      MolTransforms::getAngleDeg(mol->getConformer(), 1, 3, 6), 100.0, 0.5));
+      MolTransforms::getAngleDeg(mol->getConformer(), 1, 3, 6), 100.0, 0.5))
   delete field;
   MolTransforms::setAngleDeg(mol->getConformer(), 1, 3, 6, 0.0);
   field = RDKit::UFF::constructForceField(*mol);
@@ -1422,17 +1422,17 @@ void testUFFAllConstraints() {
   field->contribs().push_back(ForceFields::ContribPtr(ac));
   field->minimize();
   TEST_ASSERT(RDKit::feq(
-      MolTransforms::getAngleDeg(mol->getConformer(), 1, 3, 6), 10.0, 0.5));
+      MolTransforms::getAngleDeg(mol->getConformer(), 1, 3, 6), 10.0, 0.5))
   delete field;
   delete mol;
 
   // torsion constraints
   ForceFields::UFF::TorsionConstraintContrib *tc;
   mol = RDKit::MolBlockToMol(molBlock, true, false);
-  TEST_ASSERT(mol);
+  TEST_ASSERT(mol)
   MolTransforms::setDihedralDeg(mol->getConformer(), 1, 3, 6, 8, 15.0);
   field = RDKit::UFF::constructForceField(*mol);
-  TEST_ASSERT(field);
+  TEST_ASSERT(field)
   field->initialize();
   tc = new ForceFields::UFF::TorsionConstraintContrib(field, 1, 3, 6, 8, 10.0,
                                                       10.0, 100.0);
@@ -1440,7 +1440,7 @@ void testUFFAllConstraints() {
   field->minimize();
   TEST_ASSERT(
       RDKit::feq(MolTransforms::getDihedralDeg(mol->getConformer(), 1, 3, 6, 8),
-                 10.0, 0.5));
+                 10.0, 0.5))
   delete field;
   MolTransforms::setDihedralDeg(mol->getConformer(), 1, 3, 6, 8, -30.0);
   field = RDKit::UFF::constructForceField(*mol);
@@ -1451,7 +1451,7 @@ void testUFFAllConstraints() {
   field->minimize();
   TEST_ASSERT(
       RDKit::feq(MolTransforms::getDihedralDeg(mol->getConformer(), 1, 3, 6, 8),
-                 -30.0, 1.5));
+                 -30.0, 1.5))
   delete field;
   MolTransforms::setDihedralDeg(mol->getConformer(), 1, 3, 6, 8, -10.0);
   field = RDKit::UFF::constructForceField(*mol);
@@ -1462,37 +1462,37 @@ void testUFFAllConstraints() {
   field->minimize(500);
   TEST_ASSERT(
       RDKit::feq(MolTransforms::getDihedralDeg(mol->getConformer(), 1, 3, 6, 8),
-                 -9.0, 2.0));
+                 -9.0, 2.0))
   delete field;
   delete mol;
 
   // position constraints
   ForceFields::UFF::PositionConstraintContrib *pc;
   mol = RDKit::MolBlockToMol(molBlock, true, false);
-  TEST_ASSERT(mol);
+  TEST_ASSERT(mol)
   field = RDKit::UFF::constructForceField(*mol);
-  TEST_ASSERT(field);
+  TEST_ASSERT(field)
   field->initialize();
   RDGeom::Point3D p = mol->getConformer().getAtomPos(1);
   pc = new ForceFields::UFF::PositionConstraintContrib(field, 1, 0.3, 1.0e5);
   field->contribs().push_back(ForceFields::ContribPtr(pc));
   field->minimize();
   RDGeom::Point3D q = mol->getConformer().getAtomPos(1);
-  TEST_ASSERT((p - q).length() < 0.3);
+  TEST_ASSERT((p - q).length() < 0.3)
   delete field;
   delete mol;
 
   // fixed atoms
   mol = RDKit::MolBlockToMol(molBlock, true, false);
-  TEST_ASSERT(mol);
+  TEST_ASSERT(mol)
   field = RDKit::UFF::constructForceField(*mol);
-  TEST_ASSERT(field);
+  TEST_ASSERT(field)
   field->initialize();
   RDGeom::Point3D fp = mol->getConformer().getAtomPos(1);
   field->fixedPoints().push_back(1);
   field->minimize();
   RDGeom::Point3D fq = mol->getConformer().getAtomPos(1);
-  TEST_ASSERT((fp - fq).length() < 0.01);
+  TEST_ASSERT((fp - fq).length() < 0.01)
   delete field;
   delete mol;
 
@@ -1544,18 +1544,18 @@ void testUFFCopy() {
       "M  END\n";
   {
     RDKit::RWMol *mol = RDKit::MolBlockToMol(molBlock, true, false);
-    TEST_ASSERT(mol);
+    TEST_ASSERT(mol)
     auto *cmol = new RDKit::RWMol(*mol);
-    TEST_ASSERT(cmol);
+    TEST_ASSERT(cmol)
 
     ForceFields::ForceField *field = RDKit::UFF::constructForceField(*mol);
-    TEST_ASSERT(field);
+    TEST_ASSERT(field)
     field->initialize();
     auto *dc = new ForceFields::UFF::DistanceConstraintContrib(field, 1, 3, 2.0,
                                                                2.0, 1.0e5);
     field->contribs().push_back(ForceFields::ContribPtr(dc));
     field->minimize();
-    TEST_ASSERT(MolTransforms::getBondLength(mol->getConformer(), 1, 3) > 1.99);
+    TEST_ASSERT(MolTransforms::getBondLength(mol->getConformer(), 1, 3) > 1.99)
 
     auto *cfield = new ForceFields::ForceField(*field);
     cfield->positions().clear();
@@ -1566,17 +1566,17 @@ void testUFFCopy() {
     cfield->initialize();
     cfield->minimize();
     TEST_ASSERT(MolTransforms::getBondLength(cmol->getConformer(), 1, 3) >
-                1.99);
-    TEST_ASSERT(RDKit::feq(field->calcEnergy(), cfield->calcEnergy()));
+                1.99)
+    TEST_ASSERT(RDKit::feq(field->calcEnergy(), cfield->calcEnergy()))
 
     const RDKit::Conformer &conf = mol->getConformer();
     const RDKit::Conformer &cconf = cmol->getConformer();
     for (unsigned int i = 0; i < mol->getNumAtoms(); i++) {
       RDGeom::Point3D p = conf.getAtomPos(i);
       RDGeom::Point3D cp = cconf.getAtomPos(i);
-      TEST_ASSERT(RDKit::feq(p.x, cp.x));
-      TEST_ASSERT(RDKit::feq(p.y, cp.y));
-      TEST_ASSERT(RDKit::feq(p.z, cp.z));
+      TEST_ASSERT(RDKit::feq(p.x, cp.x))
+      TEST_ASSERT(RDKit::feq(p.y, cp.y))
+      TEST_ASSERT(RDKit::feq(p.z, cp.z))
     }
 
     delete field;
@@ -1627,7 +1627,7 @@ M  END
 
   // torsion constraints
   std::unique_ptr<ROMol> mol(MolBlockToMol(molblock, true, false));
-  TEST_ASSERT(mol);
+  TEST_ASSERT(mol)
   std::vector<std::pair<double, double>> diheEnergyVect;
   std::vector<std::pair<double, double>> expectedDiheEnergyVect{
       {179.9997, 1.7649},  {-175.1001, 1.8314}, {-170.1003, 2.0318},
@@ -1656,7 +1656,7 @@ M  END
       {165.1004, 2.3527},  {170.1003, 2.0318},  {175.1001, 1.8314}};
   std::unique_ptr<ForceFields::ForceField> globalFF(
       RDKit::UFF::constructForceField(*mol));
-  TEST_ASSERT(globalFF);
+  TEST_ASSERT(globalFF)
   globalFF->initialize();
   std::unique_ptr<ROMol> mol2(new ROMol(*mol));
   const int start = -180;
@@ -1666,15 +1666,15 @@ M  END
   for (int diheIn = start; diheIn < end; diheIn += incr) {
     std::unique_ptr<ForceFields::ForceField> localFF(
         RDKit::UFF::constructForceField(*mol2));
-    TEST_ASSERT(localFF);
+    TEST_ASSERT(localFF)
     localFF->initialize();
     auto *tc = new ForceFields::UFF::TorsionConstraintContrib(
         localFF.get(), 0, 1, 2, 3, static_cast<double>(diheIn) - 0.1,
         static_cast<double>(diheIn) + 0.1, 100.0);
     localFF->contribs().push_back(ForceFields::ContribPtr(tc));
-    TEST_ASSERT(localFF->minimize(10000) == 0);
+    TEST_ASSERT(localFF->minimize(10000) == 0)
     std::vector<double> pos(3 * localFF->numPoints());
-    TEST_ASSERT(localFF->numPoints() == globalFF->numPoints());
+    TEST_ASSERT(localFF->numPoints() == globalFF->numPoints())
     auto posns = localFF->positions();
     for (unsigned int i = 0; i < localFF->numPoints(); ++i) {
       for (unsigned int j = 0; j < 3; ++j) {
@@ -1688,9 +1688,9 @@ M  END
   }
   for (size_t i = 0; i < diheEnergyVect.size(); ++i) {
     TEST_ASSERT(RDKit::feq(diheEnergyVect.at(i).first,
-                           expectedDiheEnergyVect.at(i).first, 1.0));
+                           expectedDiheEnergyVect.at(i).first, 1.0))
     TEST_ASSERT(RDKit::feq(diheEnergyVect.at(i).second,
-                           expectedDiheEnergyVect.at(i).second, 0.2));
+                           expectedDiheEnergyVect.at(i).second, 0.2))
   }
 
   std::cerr << "  done" << std::endl;

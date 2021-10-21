@@ -108,8 +108,8 @@ SubstanceGroup *FindSgIdx(IDX_TO_SGROUP_MAP &sGroupMap, int sgIdx,
 void ParseSGroupV2000STYLine(IDX_TO_SGROUP_MAP &sGroupMap, RWMol *mol,
                              const std::string &text, unsigned int line,
                              bool strictParsing) {
-  PRECONDITION(mol, "bad mol");
-  PRECONDITION(text.substr(0, 6) == "M  STY", "bad STY line");
+  PRECONDITION(mol, "bad mol")
+  PRECONDITION(text.substr(0, 6) == "M  STY", "bad STY line")
 
   unsigned int pos = 6;
   bool ok;
@@ -151,7 +151,7 @@ void ParseSGroupV2000STYLine(IDX_TO_SGROUP_MAP &sGroupMap, RWMol *mol,
 void ParseSGroupV2000VectorDataLine(IDX_TO_SGROUP_MAP &sGroupMap, RWMol *mol,
                                     const std::string &text, unsigned int line,
                                     bool strictParsing) {
-  PRECONDITION(mol, "bad mol");
+  PRECONDITION(mol, "bad mol")
 
   std::string typ = text.substr(3, 3);
 
@@ -213,8 +213,8 @@ void ParseSGroupV2000VectorDataLine(IDX_TO_SGROUP_MAP &sGroupMap, RWMol *mol,
 void ParseSGroupV2000SDILine(IDX_TO_SGROUP_MAP &sGroupMap, RWMol *mol,
                              const std::string &text, unsigned int line,
                              bool strictParsing) {
-  PRECONDITION(mol, "bad mol");
-  PRECONDITION(text.substr(0, 6) == "M  SDI", "bad SDI line");
+  PRECONDITION(mol, "bad mol")
+  PRECONDITION(text.substr(0, 6) == "M  SDI", "bad SDI line")
 
   unsigned int pos = 6;
   bool ok;
@@ -269,8 +269,8 @@ void ParseSGroupV2000SDILine(IDX_TO_SGROUP_MAP &sGroupMap, RWMol *mol,
 void ParseSGroupV2000SSTLine(IDX_TO_SGROUP_MAP &sGroupMap, RWMol *mol,
                              const std::string &text, unsigned int line,
                              bool strictParsing) {
-  PRECONDITION(mol, "bad mol");
-  PRECONDITION(text.substr(0, 6) == "M  SST", "bad SST line");
+  PRECONDITION(mol, "bad mol")
+  PRECONDITION(text.substr(0, 6) == "M  SST", "bad SST line")
 
   unsigned int pos = 6;
   bool ok;
@@ -296,7 +296,7 @@ void ParseSGroupV2000SSTLine(IDX_TO_SGROUP_MAP &sGroupMap, RWMol *mol,
     SubstanceGroup *sgroup = FindSgIdx(sGroupMap, sgIdx, line);
     if (!sgroup) {
       return;
-    };
+    }
 
     std::string subType = text.substr(++pos, 3);
 
@@ -317,8 +317,8 @@ void ParseSGroupV2000SSTLine(IDX_TO_SGROUP_MAP &sGroupMap, RWMol *mol,
 void ParseSGroupV2000SMTLine(IDX_TO_SGROUP_MAP &sGroupMap, RWMol *mol,
                              const std::string &text, unsigned int line,
                              bool strictParsing) {
-  PRECONDITION(mol, "bad mol");
-  PRECONDITION(text.substr(0, 6) == "M  SMT", "bad SMT line");
+  PRECONDITION(mol, "bad mol")
+  PRECONDITION(text.substr(0, 6) == "M  SMT", "bad SMT line")
 
   unsigned int pos = 6;
   bool ok;
@@ -354,8 +354,8 @@ void ParseSGroupV2000SMTLine(IDX_TO_SGROUP_MAP &sGroupMap, RWMol *mol,
 void ParseSGroupV2000SLBLine(IDX_TO_SGROUP_MAP &sGroupMap, RWMol *mol,
                              const std::string &text, unsigned int line,
                              bool strictParsing) {
-  PRECONDITION(mol, "bad mol");
-  PRECONDITION(text.substr(0, 6) == "M  SLB", "bad SLB line");
+  PRECONDITION(mol, "bad mol")
+  PRECONDITION(text.substr(0, 6) == "M  SLB", "bad SLB line")
 
   unsigned int pos = 6;
   bool ok;
@@ -403,8 +403,8 @@ void ParseSGroupV2000SLBLine(IDX_TO_SGROUP_MAP &sGroupMap, RWMol *mol,
 void ParseSGroupV2000SCNLine(IDX_TO_SGROUP_MAP &sGroupMap, RWMol *mol,
                              const std::string &text, unsigned int line,
                              bool strictParsing) {
-  PRECONDITION(mol, "bad mol");
-  PRECONDITION(text.substr(0, 6) == "M  SCN", "bad SCN line");
+  PRECONDITION(mol, "bad mol")
+  PRECONDITION(text.substr(0, 6) == "M  SCN", "bad SCN line")
 
   unsigned int pos = 6;
   bool ok;
@@ -452,8 +452,8 @@ void ParseSGroupV2000SCNLine(IDX_TO_SGROUP_MAP &sGroupMap, RWMol *mol,
 void ParseSGroupV2000SDSLine(IDX_TO_SGROUP_MAP &sGroupMap, RWMol *mol,
                              const std::string &text, unsigned int line,
                              bool strictParsing) {
-  PRECONDITION(mol, "bad mol");
-  PRECONDITION(text.substr(0, 10) == "M  SDS EXP", "bad SDS line");
+  PRECONDITION(mol, "bad mol")
+  PRECONDITION(text.substr(0, 10) == "M  SDS EXP", "bad SDS line")
 
   unsigned int pos = 10;
   bool ok;
@@ -487,8 +487,8 @@ void ParseSGroupV2000SDSLine(IDX_TO_SGROUP_MAP &sGroupMap, RWMol *mol,
 void ParseSGroupV2000SBVLine(IDX_TO_SGROUP_MAP &sGroupMap, RWMol *mol,
                              const std::string &text, unsigned int line,
                              bool strictParsing) {
-  PRECONDITION(mol, "bad mol");
-  PRECONDITION(text.substr(0, 6) == "M  SBV", "bad SBV line");
+  PRECONDITION(mol, "bad mol")
+  PRECONDITION(text.substr(0, 6) == "M  SBV", "bad SBV line")
 
   unsigned int pos = 6;
   bool ok;
@@ -536,8 +536,8 @@ void ParseSGroupV2000SBVLine(IDX_TO_SGROUP_MAP &sGroupMap, RWMol *mol,
 void ParseSGroupV2000SDTLine(IDX_TO_SGROUP_MAP &sGroupMap, RWMol *mol,
                              const std::string &text, unsigned int line,
                              bool strictParsing) {
-  PRECONDITION(mol, "bad mol");
-  PRECONDITION(text.substr(0, 6) == "M  SDT", "bad SDT line");
+  PRECONDITION(mol, "bad mol")
+  PRECONDITION(text.substr(0, 6) == "M  SDT", "bad SDT line")
 
   unsigned int pos = 6;
   bool ok;
@@ -597,8 +597,8 @@ void ParseSGroupV2000SDTLine(IDX_TO_SGROUP_MAP &sGroupMap, RWMol *mol,
 void ParseSGroupV2000SDDLine(IDX_TO_SGROUP_MAP &sGroupMap, RWMol *mol,
                              const std::string &text, unsigned int line,
                              bool strictParsing) {
-  PRECONDITION(mol, "bad mol");
-  PRECONDITION(text.substr(0, 6) == "M  SDD", "bad SDD line");
+  PRECONDITION(mol, "bad mol")
+  PRECONDITION(text.substr(0, 6) == "M  SDD", "bad SDD line")
 
   unsigned int pos = 6;
   bool ok;
@@ -624,7 +624,7 @@ void ParseSGroupV2000SCDSEDLine(IDX_TO_SGROUP_MAP &sGroupMap,
                                 bool strictParsing, unsigned int &counter,
                                 unsigned int &lastDataSGroup,
                                 std::ostringstream &currentDataField) {
-  PRECONDITION(mol, "bad mol");
+  PRECONDITION(mol, "bad mol")
 
   unsigned int pos = 3;
   std::string type = text.substr(pos, 3);
@@ -691,8 +691,8 @@ void ParseSGroupV2000SCDSEDLine(IDX_TO_SGROUP_MAP &sGroupMap,
 void ParseSGroupV2000SPLLine(IDX_TO_SGROUP_MAP &sGroupMap, RWMol *mol,
                              const std::string &text, unsigned int line,
                              bool strictParsing) {
-  PRECONDITION(mol, "bad mol");
-  PRECONDITION(text.substr(0, 6) == "M  SPL", "bad SPL line");
+  PRECONDITION(mol, "bad mol")
+  PRECONDITION(text.substr(0, 6) == "M  SPL", "bad SPL line")
 
   unsigned int pos = 6;
   bool ok;
@@ -728,8 +728,8 @@ void ParseSGroupV2000SPLLine(IDX_TO_SGROUP_MAP &sGroupMap, RWMol *mol,
 void ParseSGroupV2000SNCLine(IDX_TO_SGROUP_MAP &sGroupMap, RWMol *mol,
                              const std::string &text, unsigned int line,
                              bool strictParsing) {
-  PRECONDITION(mol, "bad mol");
-  PRECONDITION(text.substr(0, 6) == "M  SNC", "bad SNC line");
+  PRECONDITION(mol, "bad mol")
+  PRECONDITION(text.substr(0, 6) == "M  SNC", "bad SNC line")
 
   unsigned int pos = 6;
   bool ok;
@@ -778,8 +778,8 @@ void ParseSGroupV2000SNCLine(IDX_TO_SGROUP_MAP &sGroupMap, RWMol *mol,
 void ParseSGroupV2000SAPLine(IDX_TO_SGROUP_MAP &sGroupMap, RWMol *mol,
                              const std::string &text, unsigned int line,
                              bool strictParsing) {
-  PRECONDITION(mol, "bad mol");
-  PRECONDITION(text.substr(0, 6) == "M  SAP", "bad SAP line");
+  PRECONDITION(mol, "bad mol")
+  PRECONDITION(text.substr(0, 6) == "M  SAP", "bad SAP line")
 
   unsigned int pos = 6;
   bool ok;
@@ -854,8 +854,8 @@ void ParseSGroupV2000SAPLine(IDX_TO_SGROUP_MAP &sGroupMap, RWMol *mol,
 void ParseSGroupV2000SCLLine(IDX_TO_SGROUP_MAP &sGroupMap, RWMol *mol,
                              const std::string &text, unsigned int line,
                              bool strictParsing) {
-  PRECONDITION(mol, "bad mol");
-  PRECONDITION(text.substr(0, 6) == "M  SCL", "bad SCL line");
+  PRECONDITION(mol, "bad mol")
+  PRECONDITION(text.substr(0, 6) == "M  SCL", "bad SCL line")
 
   unsigned int pos = 6;
   bool ok;
@@ -882,8 +882,8 @@ void ParseSGroupV2000SCLLine(IDX_TO_SGROUP_MAP &sGroupMap, RWMol *mol,
 void ParseSGroupV2000SBTLine(IDX_TO_SGROUP_MAP &sGroupMap, RWMol *mol,
                              const std::string &text, unsigned int line,
                              bool strictParsing) {
-  PRECONDITION(mol, "bad mol");
-  PRECONDITION(text.substr(0, 6) == "M  SBT", "bad SBT line");
+  PRECONDITION(mol, "bad mol")
+  PRECONDITION(text.substr(0, 6) == "M  SBT", "bad SBT line")
 
   unsigned int pos = 6;
   bool ok;
@@ -1082,7 +1082,7 @@ void ParseV3000ParseLabel(const std::string &label,
                           std::stringstream &lineStream, STR_VECT &dataFields,
                           unsigned int line, SubstanceGroup &sgroup, size_t,
                           RWMol *mol, bool strictParsing) {
-  PRECONDITION(mol, "bad mol");
+  PRECONDITION(mol, "bad mol")
   // TODO: we could handle these in a more structured way
   try {
     if (label == "XBHEAD" || label == "XBCORR") {
@@ -1178,8 +1178,8 @@ void ParseV3000ParseLabel(const std::string &label,
 std::string ParseV3000SGroupsBlock(std::istream *inStream, unsigned int line,
                                    unsigned int nSgroups, RWMol *mol,
                                    bool strictParsing) {
-  PRECONDITION(inStream, "no stream");
-  PRECONDITION(mol, "no molecule");
+  PRECONDITION(inStream, "no stream")
+  PRECONDITION(mol, "no molecule")
   unsigned int defaultLineNum = 0;
   std::string defaultString;
 

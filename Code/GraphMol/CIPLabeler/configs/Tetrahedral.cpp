@@ -37,10 +37,10 @@ Tetrahedral::Tetrahedral(const CIPMol &mol, Atom *focus)
     // than the implicit H.
     carriers.push_back(nullptr);
   }
-  POSTCONDITION(carriers.size() == 4, "configurtion must have 4 carriers");
+  POSTCONDITION(carriers.size() == 4, "configurtion must have 4 carriers")
 
   setCarriers(std::move(carriers));
-};
+}
 
 void Tetrahedral::setPrimaryLabel(Descriptor desc) {
   switch (desc) {

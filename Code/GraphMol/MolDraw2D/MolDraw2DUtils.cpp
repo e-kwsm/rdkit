@@ -132,7 +132,7 @@ void get_rgba(const boost::property_tree::ptree &node, DrawColour &colour) {
 
 void get_colour_option(boost::property_tree::ptree *pt, const char *pnm,
                        DrawColour &colour) {
-  PRECONDITION(pnm && strlen(pnm), "bad property name");
+  PRECONDITION(pnm && strlen(pnm), "bad property name")
   if (pt->find(pnm) == pt->not_found()) {
     return;
   }
@@ -143,7 +143,7 @@ void get_colour_option(boost::property_tree::ptree *pt, const char *pnm,
 
 void get_colour_palette_option(boost::property_tree::ptree *pt, const char *pnm,
                                ColourPalette &palette) {
-  PRECONDITION(pnm && strlen(pnm), "bad property name");
+  PRECONDITION(pnm && strlen(pnm), "bad property name")
   if (pt->find(pnm) == pt->not_found()) {
     return;
   }
@@ -244,9 +244,9 @@ void contourAndDrawGrid(MolDraw2D &drawer, const double *grid,
                         const std::vector<double> &ycoords, size_t nContours,
                         std::vector<double> &levels,
                         const ContourParams &params, const ROMol *mol) {
-  PRECONDITION(grid, "no data");
+  PRECONDITION(grid, "no data")
   PRECONDITION(params.colourMap.size() > 1,
-               "colourMap must have at least two entries");
+               "colourMap must have at least two entries")
 
   if (params.setScale) {
     Point2D minP = {xcoords[0], ycoords[0]};
@@ -351,7 +351,7 @@ void contourAndDrawGrid(MolDraw2D &drawer, const double *grid,
   drawer.setColour(ocolor);
   drawer.setFillPolys(ofill);
   drawer.setLineWidth(owidth);
-};
+}
 
 void contourAndDrawGaussians(MolDraw2D &drawer,
                              const std::vector<Point2D> &locs,
@@ -359,8 +359,8 @@ void contourAndDrawGaussians(MolDraw2D &drawer,
                              const std::vector<double> &widths,
                              size_t nContours, std::vector<double> &levels,
                              const ContourParams &params, const ROMol *mol) {
-  PRECONDITION(locs.size() == weights.size(), "size mismatch");
-  PRECONDITION(locs.size() == widths.size(), "size mismatch");
+  PRECONDITION(locs.size() == weights.size(), "size mismatch")
+  PRECONDITION(locs.size() == widths.size(), "size mismatch")
 
   // start by setting up the grid
   if (params.setScale) {
@@ -422,7 +422,7 @@ void contourAndDrawGaussians(MolDraw2D &drawer,
   paramsCopy.setScale = false;  // if scaling was needed, we did it already
   contourAndDrawGrid(drawer, grid.get(), xcoords, ycoords, nContours, levels,
                      paramsCopy);
-};
+}
 
 // ****************************************************************************
 void drawMolACS1996(MolDraw2D &drawer, const ROMol &mol,

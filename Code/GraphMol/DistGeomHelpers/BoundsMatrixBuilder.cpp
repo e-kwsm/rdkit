@@ -183,8 +183,8 @@ void _checkAndSetBounds(unsigned int i, unsigned int j, double lb, double ub,
   double clb = mmat->getLowerBound(i, j);
   double cub = mmat->getUpperBound(i, j);
 
-  CHECK_INVARIANT(ub > lb, "upper bound not greater than lower bound");
-  CHECK_INVARIANT(lb > DIST12_DELTA || clb > DIST12_DELTA, "bad lower bound");
+  CHECK_INVARIANT(ub > lb, "upper bound not greater than lower bound")
+  CHECK_INVARIANT(lb > DIST12_DELTA || clb > DIST12_DELTA, "bad lower bound")
 
   if (clb <= DIST12_DELTA) {
     mmat->setLowerBound(i, j, lb);
@@ -206,12 +206,12 @@ void _checkAndSetBounds(unsigned int i, unsigned int j, double lb, double ub,
 void set12Bounds(const ROMol &mol, DistGeom::BoundsMatPtr mmat,
                  ComputedData &accumData) {
   unsigned int npt = mmat->numRows();
-  CHECK_INVARIANT(npt == mol.getNumAtoms(), "Wrong size metric matrix");
+  CHECK_INVARIANT(npt == mol.getNumAtoms(), "Wrong size metric matrix")
   CHECK_INVARIANT(accumData.bondLengths.size() >= mol.getNumBonds(),
                   "Wrong size accumData");
   auto [atomParams, foundAll] = UFF::getAtomTypes(mol);
   CHECK_INVARIANT(atomParams.size() == mol.getNumAtoms(),
-                  "parameter vector size mismatch");
+                  "parameter vector size mismatch")
 
   boost::dynamic_bitset<> squishAtoms(mol.getNumAtoms());
   // find larger heteroatoms in conjugated 5 rings, because we need to add a bit
@@ -354,11 +354,11 @@ auto lessVector = [](const auto &v1, const auto &v2) {
 void set13Bounds(const ROMol &mol, DistGeom::BoundsMatPtr mmat,
                  ComputedData &accumData) {
   auto npt = mmat->numRows();
-  CHECK_INVARIANT(npt == mol.getNumAtoms(), "Wrong size metric matrix");
+  CHECK_INVARIANT(npt == mol.getNumAtoms(), "Wrong size metric matrix")
   CHECK_INVARIANT(accumData.bondAngles->numRows() == mol.getNumBonds(),
-                  "Wrong size bond angle matrix");
+                  "Wrong size bond angle matrix")
   CHECK_INVARIANT(accumData.bondAdj->numRows() == mol.getNumBonds(),
-                  "Wrong size bond adjacency matrix");
+                  "Wrong size bond adjacency matrix")
 
   // Since most of the special cases arise out of ring system, we will do
   // the following here:
@@ -598,18 +598,18 @@ void _setInRing14Bounds(const ROMol &mol, const Bond *bnd1, const Bond *bnd2,
                         const Bond *bnd3, ComputedData &accumData,
                         DistGeom::BoundsMatPtr mmat, double *dmat,
                         int ringSize) {
-  PRECONDITION(bnd1, "");
-  PRECONDITION(bnd2, "");
-  PRECONDITION(bnd3, "");
+  PRECONDITION(bnd1, "")
+  PRECONDITION(bnd2, "")
+  PRECONDITION(bnd3, "")
   unsigned int bid1, bid2, bid3;
   bid1 = bnd1->getIdx();
   bid2 = bnd2->getIdx();
   bid3 = bnd3->getIdx();
   const Atom *atm2 = mol.getAtomWithIdx(accumData.bondAdj->getVal(bid1, bid2));
-  PRECONDITION(atm2, "");
+  PRECONDITION(atm2, "")
   Atom::HybridizationType ahyb2 = atm2->getHybridization();
   const Atom *atm3 = mol.getAtomWithIdx(accumData.bondAdj->getVal(bid2, bid3));
-  PRECONDITION(atm3, "");
+  PRECONDITION(atm3, "")
   Atom::HybridizationType ahyb3 = atm3->getHybridization();
 
   unsigned int aid1 = bnd1->getOtherAtomIdx(atm2->getIdx());
@@ -630,8 +630,8 @@ void _setInRing14Bounds(const ROMol &mol, const Bond *bnd1, const Bond *bnd2,
   double ba12 = accumData.bondAngles->getVal(bid1, bid2);
   double ba23 = accumData.bondAngles->getVal(bid2, bid3);
 
-  CHECK_INVARIANT(ba12 > 0.0, "");
-  CHECK_INVARIANT(ba23 > 0.0, "");
+  CHECK_INVARIANT(ba12 > 0.0, "")
+  CHECK_INVARIANT(ba23 > 0.0, "")
   double dl, du;
   unsigned int nb = mol.getNumBonds();
   // several special cases here
@@ -713,17 +713,17 @@ void _setTwoInSameRing14Bounds(const ROMol &mol, const Bond *bnd1,
                                const Bond *bnd2, const Bond *bnd3,
                                ComputedData &accumData,
                                DistGeom::BoundsMatPtr mmat, double *dmat) {
-  PRECONDITION(bnd1, "");
-  PRECONDITION(bnd2, "");
-  PRECONDITION(bnd3, "");
+  PRECONDITION(bnd1, "")
+  PRECONDITION(bnd2, "")
+  PRECONDITION(bnd3, "")
   unsigned int bid1, bid2, bid3;
   bid1 = bnd1->getIdx();
   bid2 = bnd2->getIdx();
   bid3 = bnd3->getIdx();
   const Atom *atm2 = mol.getAtomWithIdx(accumData.bondAdj->getVal(bid1, bid2));
-  PRECONDITION(atm2, "");
+  PRECONDITION(atm2, "")
   const Atom *atm3 = mol.getAtomWithIdx(accumData.bondAdj->getVal(bid2, bid3));
-  PRECONDITION(atm3, "");
+  PRECONDITION(atm3, "")
 
   unsigned int aid1 = bnd1->getOtherAtomIdx(atm2->getIdx());
   unsigned int aid4 = bnd3->getOtherAtomIdx(atm3->getIdx());
@@ -753,8 +753,8 @@ void _setTwoInSameRing14Bounds(const ROMol &mol, const Bond *bnd1,
 
   double ba12 = accumData.bondAngles->getVal(bid1, bid2);
   double ba23 = accumData.bondAngles->getVal(bid2, bid3);
-  CHECK_INVARIANT(ba12 > 0.0, "");
-  CHECK_INVARIANT(ba23 > 0.0, "");
+  CHECK_INVARIANT(ba12 > 0.0, "")
+  CHECK_INVARIANT(ba23 > 0.0, "")
   double dl, du;
   Path14Configuration path14;
   unsigned int nb = mol.getNumBonds();
@@ -939,7 +939,7 @@ bool _checkMacrocycleAllInSameRingAmideEster14(const ROMol &mol, const Bond *,
 }
 
 bool _isCarbonyl(const ROMol &mol, const Atom *at) {
-  PRECONDITION(at, "bad atom");
+  PRECONDITION(at, "bad atom")
   if (at->getAtomicNum() == 6 && at->getDegree() > 2) {
     for (const auto nbr : mol.atomNeighbors(at)) {
       unsigned int atNum = nbr->getAtomicNum();
@@ -972,17 +972,17 @@ void _setChain14Bounds(const ROMol &mol, const Bond *bnd1, const Bond *bnd2,
                        const Bond *bnd3, ComputedData &accumData,
                        DistGeom::BoundsMatPtr mmat, double *,
                        bool forceTransAmides) {
-  PRECONDITION(bnd1, "");
-  PRECONDITION(bnd2, "");
-  PRECONDITION(bnd3, "");
+  PRECONDITION(bnd1, "")
+  PRECONDITION(bnd2, "")
+  PRECONDITION(bnd3, "")
   unsigned int bid1, bid2, bid3;
   bid1 = bnd1->getIdx();
   bid2 = bnd2->getIdx();
   bid3 = bnd3->getIdx();
   const Atom *atm2 = mol.getAtomWithIdx(accumData.bondAdj->getVal(bid1, bid2));
-  PRECONDITION(atm2, "");
+  PRECONDITION(atm2, "")
   const Atom *atm3 = mol.getAtomWithIdx(accumData.bondAdj->getVal(bid2, bid3));
-  PRECONDITION(atm3, "");
+  PRECONDITION(atm3, "")
 
   unsigned int aid1 = bnd1->getOtherAtomIdx(atm2->getIdx());
   unsigned int aid4 = bnd3->getOtherAtomIdx(atm3->getIdx());
@@ -995,8 +995,8 @@ void _setChain14Bounds(const ROMol &mol, const Bond *bnd1, const Bond *bnd2,
 
   double ba12 = accumData.bondAngles->getVal(bid1, bid2);
   double ba23 = accumData.bondAngles->getVal(bid2, bid3);
-  CHECK_INVARIANT(ba12 > 0.0, "");
-  CHECK_INVARIANT(ba23 > 0.0, "");
+  CHECK_INVARIANT(ba12 > 0.0, "")
+  CHECK_INVARIANT(ba23 > 0.0, "")
   bool setTheBound = true;
   double dl = 0.0, du = 0.0;
 
@@ -1216,10 +1216,10 @@ void _setChain14Bounds(const ROMol &mol, const Bond *bnd1, const Bond *bnd2,
 void _record14Path(const ROMol &mol, unsigned int bid1, unsigned int bid2,
                    unsigned int bid3, ComputedData &accumData) {
   const Atom *atm2 = mol.getAtomWithIdx(accumData.bondAdj->getVal(bid1, bid2));
-  PRECONDITION(atm2, "");
+  PRECONDITION(atm2, "")
   Atom::HybridizationType ahyb2 = atm2->getHybridization();
   const Atom *atm3 = mol.getAtomWithIdx(accumData.bondAdj->getVal(bid2, bid3));
-  PRECONDITION(atm3, "");
+  PRECONDITION(atm3, "")
   Atom::HybridizationType ahyb3 = atm3->getHybridization();
   unsigned int nb = mol.getNumBonds();
   Path14Configuration path14;
@@ -1271,17 +1271,17 @@ void _setMacrocycleTwoInSameRing14Bounds(const ROMol &mol, const Bond *bnd1,
                                          ComputedData &accumData,
                                          DistGeom::BoundsMatPtr mmat,
                                          double *dmat) {
-  PRECONDITION(bnd1, "");
-  PRECONDITION(bnd2, "");
-  PRECONDITION(bnd3, "");
+  PRECONDITION(bnd1, "")
+  PRECONDITION(bnd2, "")
+  PRECONDITION(bnd3, "")
   unsigned int bid1, bid2, bid3;
   bid1 = bnd1->getIdx();
   bid2 = bnd2->getIdx();
   bid3 = bnd3->getIdx();
   const Atom *atm2 = mol.getAtomWithIdx(accumData.bondAdj->getVal(bid1, bid2));
-  PRECONDITION(atm2, "");
+  PRECONDITION(atm2, "")
   const Atom *atm3 = mol.getAtomWithIdx(accumData.bondAdj->getVal(bid2, bid3));
-  PRECONDITION(atm3, "");
+  PRECONDITION(atm3, "")
 
   unsigned int aid1 = bnd1->getOtherAtomIdx(atm2->getIdx());
   unsigned int aid4 = bnd3->getOtherAtomIdx(atm3->getIdx());
@@ -1313,8 +1313,8 @@ void _setMacrocycleTwoInSameRing14Bounds(const ROMol &mol, const Bond *bnd1,
 
   double ba12 = accumData.bondAngles->getVal(bid1, bid2);
   double ba23 = accumData.bondAngles->getVal(bid2, bid3);
-  CHECK_INVARIANT(ba12 > 0.0, "");
-  CHECK_INVARIANT(ba23 > 0.0, "");
+  CHECK_INVARIANT(ba12 > 0.0, "")
+  CHECK_INVARIANT(ba23 > 0.0, "")
   double dl, du;
   Path14Configuration path14;
   unsigned int nb = mol.getNumBonds();
@@ -1375,17 +1375,17 @@ void _setMacrocycleAllInSameRing14Bounds(const ROMol &mol, const Bond *bnd1,
                                          double *) {
   // This is adapted from `_setChain14Bounds`, with changes on how trans amide
   // is handled
-  PRECONDITION(bnd1, "");
-  PRECONDITION(bnd2, "");
-  PRECONDITION(bnd3, "");
+  PRECONDITION(bnd1, "")
+  PRECONDITION(bnd2, "")
+  PRECONDITION(bnd3, "")
   unsigned int bid1, bid2, bid3;
   bid1 = bnd1->getIdx();
   bid2 = bnd2->getIdx();
   bid3 = bnd3->getIdx();
   const Atom *atm2 = mol.getAtomWithIdx(accumData.bondAdj->getVal(bid1, bid2));
-  PRECONDITION(atm2, "");
+  PRECONDITION(atm2, "")
   const Atom *atm3 = mol.getAtomWithIdx(accumData.bondAdj->getVal(bid2, bid3));
-  PRECONDITION(atm3, "");
+  PRECONDITION(atm3, "")
 
   unsigned int aid1 = bnd1->getOtherAtomIdx(atm2->getIdx());
   unsigned int aid4 = bnd3->getOtherAtomIdx(atm3->getIdx());
@@ -1399,8 +1399,8 @@ void _setMacrocycleAllInSameRing14Bounds(const ROMol &mol, const Bond *bnd1,
 
   double ba12 = accumData.bondAngles->getVal(bid1, bid2);
   double ba23 = accumData.bondAngles->getVal(bid2, bid3);
-  CHECK_INVARIANT(ba12 > 0.0, "");
-  CHECK_INVARIANT(ba23 > 0.0, "");
+  CHECK_INVARIANT(ba12 > 0.0, "")
+  CHECK_INVARIANT(ba23 > 0.0, "")
   bool setTheBound = true;
   double dl = 0.0, du = 0.0;
 
@@ -1576,11 +1576,11 @@ void set14Bounds(const ROMol &mol, DistGeom::BoundsMatPtr mmat,
                  ComputedData &accumData, double *distMatrix,
                  bool useMacrocycle14config, bool forceTransAmides) {
   unsigned int npt = mmat->numRows();
-  CHECK_INVARIANT(npt == mol.getNumAtoms(), "Wrong size metric matrix");
+  CHECK_INVARIANT(npt == mol.getNumAtoms(), "Wrong size metric matrix")
 
   const RingInfo *rinfo =
       mol.getRingInfo();  // FIX: make sure we have ring info
-  CHECK_INVARIANT(rinfo, "");
+  CHECK_INVARIANT(rinfo, "")
   const VECT_INT_VECT &bondRings = rinfo->bondRings();
   VECT_INT_VECT_CI rii;
   unsigned int i, aid2, aid3;
@@ -1719,12 +1719,12 @@ void initBoundsMat(DistGeom::BoundsMatrix *mmat, double defaultMin,
 void initBoundsMat(DistGeom::BoundsMatPtr mmat, double defaultMin,
                    double defaultMax) {
   initBoundsMat(mmat.get(), defaultMin, defaultMax);
-};
+}
 
 void setTopolBounds(const ROMol &mol, DistGeom::BoundsMatPtr mmat,
                     bool set15bounds, bool scaleVDW, bool useMacrocycle14config,
                     bool forceTransAmides) {
-  PRECONDITION(mmat.get(), "bad pointer");
+  PRECONDITION(mmat.get(), "bad pointer")
   unsigned int nb = mol.getNumBonds();
   unsigned int na = mol.getNumAtoms();
   if (!na) {
@@ -1800,7 +1800,7 @@ void setTopolBounds(const ROMol &mol, DistGeom::BoundsMatPtr mmat,
                     std::vector<std::vector<int>> &angles, bool set15bounds,
                     bool scaleVDW, bool useMacrocycle14config,
                     bool forceTransAmides) {
-  PRECONDITION(mmat.get(), "bad pointer");
+  PRECONDITION(mmat.get(), "bad pointer")
   bonds.clear();
   angles.clear();
   unsigned int nb = mol.getNumBonds();

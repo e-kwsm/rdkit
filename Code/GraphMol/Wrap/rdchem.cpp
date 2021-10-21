@@ -62,7 +62,7 @@ PyObject *kekulizeExceptionType = nullptr;
 // https://stackoverflow.com/questions/11448735/boostpython-export-custom-exception-and-inherit-from-pythons-exception
 template <typename EXC_TYPE>
 void sanitExceptionTranslator(const EXC_TYPE &x, PyObject *pyExcType) {
-  PRECONDITION(pyExcType != nullptr, "global type not initialized");
+  PRECONDITION(pyExcType != nullptr, "global type not initialized")
   python::object pyExcInstance(python::handle<>(python::borrowed(pyExcType)));
   pyExcInstance.attr("cause") = x;
   PyErr_SetString(pyExcType, x.what());
