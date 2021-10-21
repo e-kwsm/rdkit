@@ -340,7 +340,7 @@ inline int EmbedMolecule(
                          .useMacrocycle14config = useMacrocycle14config};
 
   return EmbedMolecule(mol, params);
-};
+}
 
 //*! Embed multiple conformations for a molecule
 /*!
@@ -456,7 +456,7 @@ inline void EmbedMultipleConfs(
                          .useMacrocycle14config = useMacrocycle14config,
                          .timeout = timeout};
   EmbedMultipleConfs(mol, res, numConfs, params);
-};
+}
 //! \overload
 inline INT_VECT EmbedMultipleConfs(
     ROMol &mol, unsigned int numConfs = 10, unsigned int maxIterations = 30,
@@ -497,7 +497,7 @@ inline INT_VECT EmbedMultipleConfs(
   INT_VECT res;
   EmbedMultipleConfs(mol, res, numConfs, params);
   return res;
-};
+}
 
 // Overloads for serialization to JSON
 inline std::ostream &operator<<(std::ostream &os,

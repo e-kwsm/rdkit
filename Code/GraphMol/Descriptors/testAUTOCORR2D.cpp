@@ -55,7 +55,7 @@ void testautocorrelation() {
   int nDone = 0;
   while (!reader.atEnd()) {
     RDKit::ROMol *m = reader.next();
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
     std::string nm;
     m->getProp("_Name", nm);
 
@@ -66,7 +66,7 @@ void testautocorrelation() {
     std::vector<std::string> myrow = data[nDone];
     std::string inm = myrow[0];
 
-    TEST_ASSERT(inm == nm);
+    TEST_ASSERT(inm == nm)
 
     for (int i = 0; i < 192; i++) {
       double ref = atof(myrow[i + 1].c_str());
@@ -75,7 +75,7 @@ void testautocorrelation() {
         std::cout << "value mismatch: pos" << i << " " << inm << " " << ref
                   << " " << res2d[i] << std::endl;
       }
-      TEST_ASSERT(fabs(ref - res2d[i]) < 0.05);
+      TEST_ASSERT(fabs(ref - res2d[i]) < 0.05)
     }
 
     res2d.clear();
@@ -96,9 +96,9 @@ void testGithub3806() {
     auto m = "CC"_smiles;
     std::vector<double> vs;
     RDKit::Descriptors::AUTOCORR2D(*m, vs);
-    TEST_ASSERT(vs.size() == 192);
+    TEST_ASSERT(vs.size() == 192)
     for (unsigned i = 0; i < vs.size(); ++i) {
-      TEST_ASSERT(!std::isnan(vs[i]));
+      TEST_ASSERT(!std::isnan(vs[i]))
     }
   }
   BOOST_LOG(rdErrorLog) << "  done" << std::endl;
