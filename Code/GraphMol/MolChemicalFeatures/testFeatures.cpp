@@ -40,30 +40,30 @@ void test1() {
 
   inLine = "AtomType donor [N,O]";
   Local::parseAtomType(inLine, atomTypeDefs, 0);
-  TEST_ASSERT(atomTypeDefs.count("{donor}"));
-  TEST_ASSERT(!atomTypeDefs.count("{unsaturatedDonor}"));
-  TEST_ASSERT(atomTypeDefs["{donor}"] == "$([N,O])");
+  TEST_ASSERT(atomTypeDefs.count("{donor}"))
+  TEST_ASSERT(!atomTypeDefs.count("{unsaturatedDonor}"))
+  TEST_ASSERT(atomTypeDefs["{donor}"] == "$([N,O])")
 
   // check robustness to whitespace as we expand:
   inLine = " AtomType donor\t[S]";
   Local::parseAtomType(inLine, atomTypeDefs, 0);
-  TEST_ASSERT(atomTypeDefs.count("{donor}"));
-  TEST_ASSERT(!atomTypeDefs.count("{unsaturatedDonor}"));
-  TEST_ASSERT(atomTypeDefs["{donor}"] == "$([N,O,$([S])])");
+  TEST_ASSERT(atomTypeDefs.count("{donor}"))
+  TEST_ASSERT(!atomTypeDefs.count("{unsaturatedDonor}"))
+  TEST_ASSERT(atomTypeDefs["{donor}"] == "$([N,O,$([S])])")
 
   inLine = "AtomType !donor [NH0]";
   Local::parseAtomType(inLine, atomTypeDefs, 0);
-  TEST_ASSERT(atomTypeDefs.count("{donor}"));
-  TEST_ASSERT(!atomTypeDefs.count("{unsaturatedDonor}"));
-  TEST_ASSERT(atomTypeDefs["{donor}"] == "$([!$([NH0]);N,O,$([S])])");
+  TEST_ASSERT(atomTypeDefs.count("{donor}"))
+  TEST_ASSERT(!atomTypeDefs.count("{unsaturatedDonor}"))
+  TEST_ASSERT(atomTypeDefs["{donor}"] == "$([!$([NH0])N,O,$([S])])");
 
   inLine = "AtomType unsaturatedDonor [$([{donor}]!-[*])]";
   Local::parseAtomType(inLine, atomTypeDefs, 0);
-  TEST_ASSERT(atomTypeDefs.count("{donor}"));
-  TEST_ASSERT(atomTypeDefs.count("{unsaturatedDonor}"));
-  TEST_ASSERT(atomTypeDefs["{donor}"] == "$([!$([NH0]);N,O,$([S])])");
+  TEST_ASSERT(atomTypeDefs.count("{donor}"))
+  TEST_ASSERT(atomTypeDefs.count("{unsaturatedDonor}"))
+  TEST_ASSERT(atomTypeDefs["{donor}"] == "$([!$([NH0])N,O,$([S])])");
   TEST_ASSERT(atomTypeDefs["{unsaturatedDonor}"] ==
-              "$([$([$([!$([NH0]);N,O,$([S])])]!-[*])])");
+              "$([$([$([!$([NH0])N,O,$([S])])]!-[*])])");
 
   ok = false;
   try {
@@ -71,9 +71,9 @@ void test1() {
     Local::parseAtomType(inLine, atomTypeDefs, 0);
   } catch (FeatureFileParseException &fpe) {
     ok = true;
-    TEST_ASSERT(fpe.lineNo() == 0);
+    TEST_ASSERT(fpe.lineNo() == 0)
   }
-  CHECK_INVARIANT(ok, "expected parse failure did not happen");
+  CHECK_INVARIANT(ok, "expected parse failure did not happen")
 
   ok = false;
   try {
@@ -81,9 +81,9 @@ void test1() {
     Local::parseAtomType(inLine, atomTypeDefs, 0);
   } catch (FeatureFileParseException &fpe) {
     ok = true;
-    TEST_ASSERT(fpe.lineNo() == 0);
+    TEST_ASSERT(fpe.lineNo() == 0)
   }
-  CHECK_INVARIANT(ok, "expected parse failure did not happen");
+  CHECK_INVARIANT(ok, "expected parse failure did not happen")
 
   ok = false;
   try {
@@ -91,9 +91,9 @@ void test1() {
     Local::parseAtomType(inLine, atomTypeDefs, 0);
   } catch (FeatureFileParseException &fpe) {
     ok = true;
-    TEST_ASSERT(fpe.lineNo() == 0);
+    TEST_ASSERT(fpe.lineNo() == 0)
   }
-  CHECK_INVARIANT(ok, "expected parse failure did not happen");
+  CHECK_INVARIANT(ok, "expected parse failure did not happen")
 
   ok = false;
   try {
@@ -101,9 +101,9 @@ void test1() {
     Local::parseAtomType(inLine, atomTypeDefs, 0);
   } catch (FeatureFileParseException &fpe) {
     ok = true;
-    TEST_ASSERT(fpe.lineNo() == 0);
+    TEST_ASSERT(fpe.lineNo() == 0)
   }
-  CHECK_INVARIANT(ok, "expected parse failure did not happen");
+  CHECK_INVARIANT(ok, "expected parse failure did not happen")
 
   ok = false;
   try {
@@ -111,9 +111,9 @@ void test1() {
     Local::parseAtomType(inLine, atomTypeDefs, 0);
   } catch (FeatureFileParseException &fpe) {
     ok = true;
-    TEST_ASSERT(fpe.lineNo() == 0);
+    TEST_ASSERT(fpe.lineNo() == 0)
   }
-  CHECK_INVARIANT(ok, "expected parse failure did not happen");
+  CHECK_INVARIANT(ok, "expected parse failure did not happen")
 
   BOOST_LOG(rdErrorLog) << "  done" << std::endl;
 }
@@ -140,12 +140,12 @@ void test2() {
   inLine = RDKit::getLine(ss);
   unsigned int tmpLine = 2;
   featDef = Local::parseFeatureDef(ss, inLine, tmpLine, atomTypeDefs);
-  TEST_ASSERT(featDef);
-  TEST_ASSERT(featDef->getFamily() == "HDONOR");
-  TEST_ASSERT(featDef->getType() == "HDonor1");
-  TEST_ASSERT(featDef->getSmarts() == "[O,N]");
-  TEST_ASSERT(featDef->getNumWeights() == 1);
-  TEST_ASSERT(feq(*featDef->beginWeights(), 1.0));
+  TEST_ASSERT(featDef)
+  TEST_ASSERT(featDef->getFamily() == "HDONOR")
+  TEST_ASSERT(featDef->getType() == "HDonor1")
+  TEST_ASSERT(featDef->getSmarts() == "[O,N]")
+  TEST_ASSERT(featDef->getNumWeights() == 1)
+  TEST_ASSERT(feq(*featDef->beginWeights(), 1.0))
   delete featDef;
 
   inText =
@@ -157,12 +157,12 @@ void test2() {
   ss.str(inText);
   inLine = RDKit::getLine(ss);
   featDef = Local::parseFeatureDef(ss, inLine, tmpLine, atomTypeDefs);
-  TEST_ASSERT(featDef);
-  TEST_ASSERT(featDef->getFamily() == "HDONOR");
-  TEST_ASSERT(featDef->getType() == "HDonor1");
-  TEST_ASSERT(featDef->getSmarts() == "[$([O,N])]");
-  TEST_ASSERT(featDef->getNumWeights() == 1);
-  TEST_ASSERT(feq(*featDef->beginWeights(), 1.0));
+  TEST_ASSERT(featDef)
+  TEST_ASSERT(featDef->getFamily() == "HDONOR")
+  TEST_ASSERT(featDef->getType() == "HDonor1")
+  TEST_ASSERT(featDef->getSmarts() == "[$([O,N])]")
+  TEST_ASSERT(featDef->getNumWeights() == 1)
+  TEST_ASSERT(feq(*featDef->beginWeights(), 1.0))
   delete featDef;
 
   inText =
@@ -174,13 +174,13 @@ void test2() {
   ss.str(inText);
   inLine = RDKit::getLine(ss);
   featDef = Local::parseFeatureDef(ss, inLine, tmpLine, atomTypeDefs);
-  TEST_ASSERT(featDef);
-  TEST_ASSERT(featDef->getFamily() == "HDONOR");
-  TEST_ASSERT(featDef->getType() == "HDonorPair");
-  TEST_ASSERT(featDef->getSmarts() == "[$([O,N])][$([O,N])]");
-  TEST_ASSERT(featDef->getNumWeights() == 2);
-  TEST_ASSERT(feq(*featDef->beginWeights(), 0.5));
-  TEST_ASSERT(feq(*++(featDef->beginWeights()), 0.5));
+  TEST_ASSERT(featDef)
+  TEST_ASSERT(featDef->getFamily() == "HDONOR")
+  TEST_ASSERT(featDef->getType() == "HDonorPair")
+  TEST_ASSERT(featDef->getSmarts() == "[$([O,N])][$([O,N])]")
+  TEST_ASSERT(featDef->getNumWeights() == 2)
+  TEST_ASSERT(feq(*featDef->beginWeights(), 0.5))
+  TEST_ASSERT(feq(*++(featDef->beginWeights()), 0.5))
   delete featDef;
 
   ok = false;
@@ -196,7 +196,7 @@ void test2() {
   } catch (FeatureFileParseException &) {
     ok = true;
   }
-  CHECK_INVARIANT(ok, "expected parse failure did not happen");
+  CHECK_INVARIANT(ok, "expected parse failure did not happen")
 
   ok = false;
   inText =
@@ -210,7 +210,7 @@ void test2() {
   } catch (FeatureFileParseException &) {
     ok = true;
   }
-  CHECK_INVARIANT(ok, "expected parse failure did not happen");
+  CHECK_INVARIANT(ok, "expected parse failure did not happen")
 
   BOOST_LOG(rdErrorLog) << "  done" << std::endl;
 }
@@ -235,9 +235,9 @@ void test3() {
       "  Weights 1.0\n"
       "EndFeature\n";
   res = parseFeatureData(inText, featureDefs);
-  TEST_ASSERT(!res);
-  TEST_ASSERT(featureDefs.size() == 1);
-  TEST_ASSERT((*featureDefs.begin())->getSmarts() == "[$([!$([H0]);N,O])]");
+  TEST_ASSERT(!res)
+  TEST_ASSERT(featureDefs.size() == 1)
+  TEST_ASSERT((*featureDefs.begin())->getSmarts() == "[$([!$([H0])N,O])]");
 
   BOOST_LOG(rdErrorLog) << "  done" << std::endl;
 }
@@ -264,33 +264,33 @@ void test4() {
       "  Weights 1.0\n"
       "EndFeature\n";
   res = parseFeatureData(inText, featureDefs);
-  TEST_ASSERT(!res);
-  TEST_ASSERT(featureDefs.size() == 2);
+  TEST_ASSERT(!res)
+  TEST_ASSERT(featureDefs.size() == 2)
   featDefIt = featureDefs.begin();
   featDef = *featDefIt;
-  TEST_ASSERT(featDef->getSmarts() == "[N,O;!H0]");
-  TEST_ASSERT(featDef->getPattern());
-  TEST_ASSERT(featDef->getPattern()->getNumAtoms() == 1);
-  TEST_ASSERT(featDef->getNumWeights() == 1);
+  TEST_ASSERT(featDef->getSmarts() == "[N,O!H0]");
+  TEST_ASSERT(featDef->getPattern())
+  TEST_ASSERT(featDef->getPattern()->getNumAtoms() == 1)
+  TEST_ASSERT(featDef->getNumWeights() == 1)
 
   featDef = *(++featureDefs.begin());
-  TEST_ASSERT(featDef->getSmarts() == "[N,O]");
-  TEST_ASSERT(featDef->getPattern());
-  TEST_ASSERT(featDef->getPattern()->getNumAtoms() == 1);
-  TEST_ASSERT(featDef->getNumWeights() == 1);
+  TEST_ASSERT(featDef->getSmarts() == "[N,O]")
+  TEST_ASSERT(featDef->getPattern())
+  TEST_ASSERT(featDef->getPattern()->getNumAtoms() == 1)
+  TEST_ASSERT(featDef->getNumWeights() == 1)
 
   testMol = SmilesToMol("COCN");
-  TEST_ASSERT(testMol);
+  TEST_ASSERT(testMol)
   featDef = *featureDefs.begin();
-  TEST_ASSERT(SubstructMatch(*testMol, *featDef->getPattern(), mv));
-  TEST_ASSERT(mv.size() == 1);
-  TEST_ASSERT(mv[0].first == 0);
-  TEST_ASSERT(mv[0].second == 3);
+  TEST_ASSERT(SubstructMatch(*testMol, *featDef->getPattern(), mv))
+  TEST_ASSERT(mv.size() == 1)
+  TEST_ASSERT(mv[0].first == 0)
+  TEST_ASSERT(mv[0].second == 3)
   featDef = *(++featureDefs.begin());
-  TEST_ASSERT(SubstructMatch(*testMol, *featDef->getPattern(), mv));
-  TEST_ASSERT(mv.size() == 1);
-  TEST_ASSERT(mv[0].first == 0);
-  TEST_ASSERT(mv[0].second == 1 || mv[0].second == 3);
+  TEST_ASSERT(SubstructMatch(*testMol, *featDef->getPattern(), mv))
+  TEST_ASSERT(mv.size() == 1)
+  TEST_ASSERT(mv[0].first == 0)
+  TEST_ASSERT(mv[0].second == 1 || mv[0].second == 3)
   delete testMol;
 
   BOOST_LOG(rdErrorLog) << "  done" << std::endl;
@@ -321,59 +321,59 @@ void test5() {
       "EndFeature\n";
 
   factory = buildFeatureFactory(inText);
-  TEST_ASSERT(factory);
-  TEST_ASSERT(factory->getNumFeatureDefs() == 2);
+  TEST_ASSERT(factory)
+  TEST_ASSERT(factory->getNumFeatureDefs() == 2)
 
   testMol = SmilesToMol("COCN");
-  TEST_ASSERT(testMol);
+  TEST_ASSERT(testMol)
   featDef = *factory->beginFeatureDefs();
-  TEST_ASSERT(SubstructMatch(*testMol, *featDef->getPattern(), mv));
+  TEST_ASSERT(SubstructMatch(*testMol, *featDef->getPattern(), mv))
   BOOST_LOG(rdErrorLog) << "1" << std::endl;
-  TEST_ASSERT(mv.size() == 1);
-  TEST_ASSERT(mv[0].first == 0);
-  TEST_ASSERT(mv[0].second == 3);
+  TEST_ASSERT(mv.size() == 1)
+  TEST_ASSERT(mv[0].first == 0)
+  TEST_ASSERT(mv[0].second == 3)
   featDef = *(++factory->beginFeatureDefs());
-  TEST_ASSERT(SubstructMatch(*testMol, *featDef->getPattern(), mv));
+  TEST_ASSERT(SubstructMatch(*testMol, *featDef->getPattern(), mv))
   BOOST_LOG(rdErrorLog) << "2" << std::endl;
-  TEST_ASSERT(mv.size() == 1);
-  TEST_ASSERT(mv[0].first == 0);
-  TEST_ASSERT(mv[0].second == 1 || mv[0].second == 3);
+  TEST_ASSERT(mv.size() == 1)
+  TEST_ASSERT(mv[0].first == 0)
+  TEST_ASSERT(mv[0].second == 1 || mv[0].second == 3)
 
   // Test using the factory to find features:
   featSPtrs = factory->getFeaturesForMol(*testMol);
   BOOST_LOG(rdErrorLog) << "3" << std::endl;
-  TEST_ASSERT(featSPtrs.size() == 3);
+  TEST_ASSERT(featSPtrs.size() == 3)
   featSPtr = *featSPtrs.begin();
-  TEST_ASSERT(featSPtr->getFamily() == "HBondDonor");
-  TEST_ASSERT(featSPtr->getType() == "HDonor1");
+  TEST_ASSERT(featSPtr->getFamily() == "HBondDonor")
+  TEST_ASSERT(featSPtr->getType() == "HDonor1")
   featSPtr = *(++featSPtrs.begin());
-  TEST_ASSERT(featSPtr->getFamily() == "HBondAcceptor");
-  TEST_ASSERT(featSPtr->getType() == "HAcceptor1");
+  TEST_ASSERT(featSPtr->getFamily() == "HBondAcceptor")
+  TEST_ASSERT(featSPtr->getType() == "HAcceptor1")
   featSPtr = *(++featSPtrs.begin());
-  TEST_ASSERT(featSPtr->getFamily() == "HBondAcceptor");
-  TEST_ASSERT(featSPtr->getType() == "HAcceptor1");
+  TEST_ASSERT(featSPtr->getFamily() == "HBondAcceptor")
+  TEST_ASSERT(featSPtr->getType() == "HAcceptor1")
 
   // Test limiting stuff with includeOnly
   featSPtrs = factory->getFeaturesForMol(*testMol, "HBondAcceptor");
   BOOST_LOG(rdErrorLog) << "4" << std::endl;
-  TEST_ASSERT(featSPtrs.size() == 2);
+  TEST_ASSERT(featSPtrs.size() == 2)
   featSPtr = *featSPtrs.begin();
-  TEST_ASSERT(featSPtr->getFamily() == "HBondAcceptor");
-  TEST_ASSERT(featSPtr->getType() == "HAcceptor1");
+  TEST_ASSERT(featSPtr->getFamily() == "HBondAcceptor")
+  TEST_ASSERT(featSPtr->getType() == "HAcceptor1")
   featSPtr = *(++featSPtrs.begin());
-  TEST_ASSERT(featSPtr->getFamily() == "HBondAcceptor");
-  TEST_ASSERT(featSPtr->getType() == "HAcceptor1");
+  TEST_ASSERT(featSPtr->getFamily() == "HBondAcceptor")
+  TEST_ASSERT(featSPtr->getType() == "HAcceptor1")
 
   featSPtrs = factory->getFeaturesForMol(*testMol, "HBondDonor");
   BOOST_LOG(rdErrorLog) << "5" << std::endl;
-  TEST_ASSERT(featSPtrs.size() == 1);
+  TEST_ASSERT(featSPtrs.size() == 1)
   featSPtr = *featSPtrs.begin();
-  TEST_ASSERT(featSPtr->getFamily() == "HBondDonor");
-  TEST_ASSERT(featSPtr->getType() == "HDonor1");
+  TEST_ASSERT(featSPtr->getFamily() == "HBondDonor")
+  TEST_ASSERT(featSPtr->getType() == "HDonor1")
 
   featSPtrs = factory->getFeaturesForMol(*testMol, "NotPresent");
   BOOST_LOG(rdErrorLog) << "6" << std::endl;
-  TEST_ASSERT(featSPtrs.size() == 0);
+  TEST_ASSERT(featSPtrs.size() == 0)
 
   delete testMol;
   delete factory;
@@ -406,11 +406,11 @@ void test6() {
       "EndFeature\n";
 
   factory = buildFeatureFactory(inText);
-  TEST_ASSERT(factory);
-  TEST_ASSERT(factory->getNumFeatureDefs() == 2);
+  TEST_ASSERT(factory)
+  TEST_ASSERT(factory->getNumFeatureDefs() == 2)
 
   testMol = SmilesToMol("C(=O)O");
-  TEST_ASSERT(testMol);
+  TEST_ASSERT(testMol)
   conf = new Conformer(3);
   testMol->addConformer(conf);
   conf->setAtomPos(0, RDGeom::Point3D(0, 0, 0.0));
@@ -418,20 +418,20 @@ void test6() {
   conf->setAtomPos(2, RDGeom::Point3D(0, 1.5, 0.0));
 
   featSPtrs = factory->getFeaturesForMol(*testMol);
-  TEST_ASSERT(featSPtrs.size() == 2);
+  TEST_ASSERT(featSPtrs.size() == 2)
   featSPtr = *featSPtrs.begin();
-  TEST_ASSERT(featSPtr->getFamily() == "HBondDonor");
-  TEST_ASSERT(featSPtr->getType() == "HDonor1");
-  TEST_ASSERT(feq(featSPtr->getPos().x, 0.0));
-  TEST_ASSERT(feq(featSPtr->getPos().y, 1.5));
-  TEST_ASSERT(feq(featSPtr->getPos().z, 0.0));
+  TEST_ASSERT(featSPtr->getFamily() == "HBondDonor")
+  TEST_ASSERT(featSPtr->getType() == "HDonor1")
+  TEST_ASSERT(feq(featSPtr->getPos().x, 0.0))
+  TEST_ASSERT(feq(featSPtr->getPos().y, 1.5))
+  TEST_ASSERT(feq(featSPtr->getPos().z, 0.0))
 
   featSPtr = *(++featSPtrs.begin());
-  TEST_ASSERT(featSPtr->getFamily() == "ZnBinder");
-  TEST_ASSERT(featSPtr->getType() == "Carboxyl1");
-  TEST_ASSERT(feq(featSPtr->getPos().x, 0.4));
-  TEST_ASSERT(feq(featSPtr->getPos().y, 0.5));
-  TEST_ASSERT(feq(featSPtr->getPos().z, 0.0));
+  TEST_ASSERT(featSPtr->getFamily() == "ZnBinder")
+  TEST_ASSERT(featSPtr->getType() == "Carboxyl1")
+  TEST_ASSERT(feq(featSPtr->getPos().x, 0.4))
+  TEST_ASSERT(feq(featSPtr->getPos().y, 0.5))
+  TEST_ASSERT(feq(featSPtr->getPos().z, 0.0))
   delete testMol;
 
   delete factory;
@@ -453,23 +453,23 @@ void test7() {
   MolChemicalFeatureDef::CollectionType::value_type featDef;
 
   std::ifstream inStream(fName.c_str());
-  TEST_ASSERT(inStream.is_open());
+  TEST_ASSERT(inStream.is_open())
 
   auto &instrm = static_cast<std::istream &>(inStream);
   factory = buildFeatureFactory(instrm);
-  TEST_ASSERT(factory);
-  TEST_ASSERT(factory->getNumFeatureDefs() == 2);
+  TEST_ASSERT(factory)
+  TEST_ASSERT(factory->getNumFeatureDefs() == 2)
   featDefIt = factory->beginFeatureDefs();
   featDef = *featDefIt;
-  TEST_ASSERT(featDef->getFamily() == "HBondDonor");
+  TEST_ASSERT(featDef->getFamily() == "HBondDonor")
 
   featDefIt++;
   featDef = *featDefIt;
-  TEST_ASSERT(featDefIt != factory->endFeatureDefs());
-  TEST_ASSERT(featDef->getFamily() == "HBondAcceptor");
+  TEST_ASSERT(featDefIt != factory->endFeatureDefs())
+  TEST_ASSERT(featDef->getFamily() == "HBondAcceptor")
 
   featDefIt++;
-  TEST_ASSERT(featDefIt == factory->endFeatureDefs());
+  TEST_ASSERT(featDefIt == factory->endFeatureDefs())
 
   delete (factory);
 
@@ -498,12 +498,12 @@ void testIssue224() {
   inLine = RDKit::getLine(ss);
   unsigned int tmpLine = 2;
   featDef = Local::parseFeatureDef(ss, inLine, tmpLine, atomTypeDefs);
-  TEST_ASSERT(featDef);
-  TEST_ASSERT(featDef->getFamily() == "HDONOR");
-  TEST_ASSERT(featDef->getType() == "HDonor1");
-  TEST_ASSERT(featDef->getSmarts() == "[O,N]");
-  TEST_ASSERT(featDef->getNumWeights() == 1);
-  TEST_ASSERT(feq(*featDef->beginWeights(), 1.0));
+  TEST_ASSERT(featDef)
+  TEST_ASSERT(featDef->getFamily() == "HDONOR")
+  TEST_ASSERT(featDef->getType() == "HDonor1")
+  TEST_ASSERT(featDef->getSmarts() == "[O,N]")
+  TEST_ASSERT(featDef->getNumWeights() == 1)
+  TEST_ASSERT(feq(*featDef->beginWeights(), 1.0))
   delete featDef;
 
   inText =
@@ -521,12 +521,12 @@ void testIssue224() {
   ss.str(inText);
   inLine = RDKit::getLine(ss);
   featDef = Local::parseFeatureDef(ss, inLine, tmpLine, atomTypeDefs);
-  TEST_ASSERT(featDef);
-  TEST_ASSERT(featDef->getFamily() == "HDONOR");
-  TEST_ASSERT(featDef->getType() == "HDonor1");
-  TEST_ASSERT(featDef->getSmarts() == "[O,N]");
-  TEST_ASSERT(featDef->getNumWeights() == 1);
-  TEST_ASSERT(feq(*featDef->beginWeights(), 1.0));
+  TEST_ASSERT(featDef)
+  TEST_ASSERT(featDef->getFamily() == "HDONOR")
+  TEST_ASSERT(featDef->getType() == "HDonor1")
+  TEST_ASSERT(featDef->getSmarts() == "[O,N]")
+  TEST_ASSERT(featDef->getNumWeights() == 1)
+  TEST_ASSERT(feq(*featDef->beginWeights(), 1.0))
   delete featDef;
 
   // repeat those tests using some continuation lines
@@ -546,12 +546,12 @@ void testIssue224() {
   ss.str(inText);
   inLine = RDKit::getLine(ss);
   featDef = Local::parseFeatureDef(ss, inLine, tmpLine, atomTypeDefs);
-  TEST_ASSERT(featDef);
-  TEST_ASSERT(featDef->getFamily() == "HDONOR");
-  TEST_ASSERT(featDef->getType() == "HDonor1");
-  TEST_ASSERT(featDef->getSmarts() == "[O,N]");
-  TEST_ASSERT(featDef->getNumWeights() == 1);
-  TEST_ASSERT(feq(*featDef->beginWeights(), 1.0));
+  TEST_ASSERT(featDef)
+  TEST_ASSERT(featDef->getFamily() == "HDONOR")
+  TEST_ASSERT(featDef->getType() == "HDonor1")
+  TEST_ASSERT(featDef->getSmarts() == "[O,N]")
+  TEST_ASSERT(featDef->getNumWeights() == 1)
+  TEST_ASSERT(feq(*featDef->beginWeights(), 1.0))
   delete featDef;
 
   inText =
@@ -571,12 +571,12 @@ void testIssue224() {
   ss.str(inText);
   inLine = RDKit::getLine(ss);
   featDef = Local::parseFeatureDef(ss, inLine, tmpLine, atomTypeDefs);
-  TEST_ASSERT(featDef);
-  TEST_ASSERT(featDef->getFamily() == "HDONOR");
-  TEST_ASSERT(featDef->getType() == "HDonor1");
-  TEST_ASSERT(featDef->getSmarts() == "[O,N]");
-  TEST_ASSERT(featDef->getNumWeights() == 1);
-  TEST_ASSERT(feq(*featDef->beginWeights(), 1.0));
+  TEST_ASSERT(featDef)
+  TEST_ASSERT(featDef->getFamily() == "HDONOR")
+  TEST_ASSERT(featDef->getType() == "HDonor1")
+  TEST_ASSERT(featDef->getSmarts() == "[O,N]")
+  TEST_ASSERT(featDef->getNumWeights() == 1)
+  TEST_ASSERT(feq(*featDef->beginWeights(), 1.0))
   delete featDef;
 
   BOOST_LOG(rdErrorLog) << "  done" << std::endl;
@@ -604,20 +604,20 @@ void testIssue225() {
       "  Weights 1.0\n"
       "EndFeature\n";
   res = parseFeatureData(inText, featureDefs);
-  TEST_ASSERT(!res);
-  TEST_ASSERT(featureDefs.size() == 2);
+  TEST_ASSERT(!res)
+  TEST_ASSERT(featureDefs.size() == 2)
   featDefIt = featureDefs.begin();
   featDef = *featDefIt;
-  TEST_ASSERT(featDef->getSmarts() == "[N,O;!H0]");
-  TEST_ASSERT(featDef->getPattern());
-  TEST_ASSERT(featDef->getPattern()->getNumAtoms() == 1);
-  TEST_ASSERT(featDef->getNumWeights() == 1);
+  TEST_ASSERT(featDef->getSmarts() == "[N,O!H0]");
+  TEST_ASSERT(featDef->getPattern())
+  TEST_ASSERT(featDef->getPattern()->getNumAtoms() == 1)
+  TEST_ASSERT(featDef->getNumWeights() == 1)
 
   featDef = *(++featureDefs.begin());
-  TEST_ASSERT(featDef->getSmarts() == "[N,O]");
-  TEST_ASSERT(featDef->getPattern());
-  TEST_ASSERT(featDef->getPattern()->getNumAtoms() == 1);
-  TEST_ASSERT(featDef->getNumWeights() == 1);
+  TEST_ASSERT(featDef->getSmarts() == "[N,O]")
+  TEST_ASSERT(featDef->getPattern())
+  TEST_ASSERT(featDef->getPattern()->getNumAtoms() == 1)
+  TEST_ASSERT(featDef->getNumWeights() == 1)
 
   BOOST_LOG(rdErrorLog) << "  done" << std::endl;
 }
@@ -635,23 +635,23 @@ void testIssue346() {
   MolChemicalFeatureDef::CollectionType::value_type featDef;
 
   std::ifstream inStream(fName.c_str());
-  TEST_ASSERT(inStream.is_open());
+  TEST_ASSERT(inStream.is_open())
 
   auto &instrm = static_cast<std::istream &>(inStream);
   factory = buildFeatureFactory(instrm);
-  TEST_ASSERT(factory);
-  TEST_ASSERT(factory->getNumFeatureDefs() == 2);
+  TEST_ASSERT(factory)
+  TEST_ASSERT(factory->getNumFeatureDefs() == 2)
   featDefIt = factory->beginFeatureDefs();
   featDef = *featDefIt;
-  TEST_ASSERT(featDef->getFamily() == "HBondDonor");
+  TEST_ASSERT(featDef->getFamily() == "HBondDonor")
 
   featDefIt++;
   featDef = *featDefIt;
-  TEST_ASSERT(featDefIt != factory->endFeatureDefs());
-  TEST_ASSERT(featDef->getFamily() == "HBondAcceptor");
+  TEST_ASSERT(featDefIt != factory->endFeatureDefs())
+  TEST_ASSERT(featDef->getFamily() == "HBondAcceptor")
 
   featDefIt++;
-  TEST_ASSERT(featDefIt == factory->endFeatureDefs());
+  TEST_ASSERT(featDefIt == factory->endFeatureDefs())
 
   delete (factory);
 
@@ -681,26 +681,26 @@ void testIssue347() {
       "  Weights 1.0,1.0\n"
       "EndFeature\n";
   factory = buildFeatureFactory(fdef);
-  TEST_ASSERT(factory);
-  TEST_ASSERT(factory->getNumFeatureDefs() == 2);
+  TEST_ASSERT(factory)
+  TEST_ASSERT(factory->getNumFeatureDefs() == 2)
   featDefIt = factory->beginFeatureDefs();
   featDef = *featDefIt;
-  TEST_ASSERT(featDef->getFamily() == "LumpedHydrophobe");
+  TEST_ASSERT(featDef->getFamily() == "LumpedHydrophobe")
 
   featDefIt++;
   featDef = *featDefIt;
-  TEST_ASSERT(featDef->getFamily() == "LumpedHydrophobe");
+  TEST_ASSERT(featDef->getFamily() == "LumpedHydrophobe")
 
   featDefIt++;
-  TEST_ASSERT(featDefIt == factory->endFeatureDefs());
+  TEST_ASSERT(featDefIt == factory->endFeatureDefs())
 
   testMol = SmilesToMol("CCC");
-  TEST_ASSERT(testMol);
+  TEST_ASSERT(testMol)
   featSPtrs = factory->getFeaturesForMol(*testMol);
-  TEST_ASSERT(featSPtrs.size() == 1);
+  TEST_ASSERT(featSPtrs.size() == 1)
   featSPtr = *featSPtrs.begin();
-  TEST_ASSERT(featSPtr->getFamily() == "LumpedHydrophobe");
-  TEST_ASSERT(featSPtr->getType() == "CTriplet");
+  TEST_ASSERT(featSPtr->getFamily() == "LumpedHydrophobe")
+  TEST_ASSERT(featSPtr->getType() == "CTriplet")
 
   delete factory;
   // now reverse the order and we should get two matches:
@@ -714,28 +714,28 @@ void testIssue347() {
       "  Weights 1.0,1.0,1.0\n"
       "EndFeature\n";
   factory = buildFeatureFactory(fdef);
-  TEST_ASSERT(factory);
-  TEST_ASSERT(factory->getNumFeatureDefs() == 2);
+  TEST_ASSERT(factory)
+  TEST_ASSERT(factory->getNumFeatureDefs() == 2)
   featDefIt = factory->beginFeatureDefs();
   featDef = *featDefIt;
-  TEST_ASSERT(featDef->getFamily() == "LumpedHydrophobe");
+  TEST_ASSERT(featDef->getFamily() == "LumpedHydrophobe")
 
   featDefIt++;
   featDef = *featDefIt;
-  TEST_ASSERT(featDef->getFamily() == "LumpedHydrophobe");
+  TEST_ASSERT(featDef->getFamily() == "LumpedHydrophobe")
 
   featDefIt++;
-  TEST_ASSERT(featDefIt == factory->endFeatureDefs());
+  TEST_ASSERT(featDefIt == factory->endFeatureDefs())
   featSPtrs = factory->getFeaturesForMol(*testMol);
-  TEST_ASSERT(featSPtrs.size() == 3);
+  TEST_ASSERT(featSPtrs.size() == 3)
 
   featSPtr = *featSPtrs.begin();
-  TEST_ASSERT(featSPtr->getFamily() == "LumpedHydrophobe");
-  TEST_ASSERT(featSPtr->getType() == "CPair");
+  TEST_ASSERT(featSPtr->getFamily() == "LumpedHydrophobe")
+  TEST_ASSERT(featSPtr->getType() == "CPair")
 
   featSPtr = *(++featSPtrs.begin());
-  TEST_ASSERT(featSPtr->getFamily() == "LumpedHydrophobe");
-  TEST_ASSERT(featSPtr->getType() == "CPair");
+  TEST_ASSERT(featSPtr->getFamily() == "LumpedHydrophobe")
+  TEST_ASSERT(featSPtr->getType() == "CPair")
 
   featSPtr = *(++ ++featSPtrs.begin());
   TEST_ASSERT(featSPtr->getFamily() == "LumpedHydrophobe");
@@ -776,9 +776,9 @@ void testIssue348() {
     ok = false;
   } catch (FeatureFileParseException &fpe) {
     ok = true;
-    TEST_ASSERT(fpe.lineNo() == 6);
+    TEST_ASSERT(fpe.lineNo() == 6)
   }
-  TEST_ASSERT(ok);
+  TEST_ASSERT(ok)
 }
 
 void testNestedAtomTypes() {
@@ -802,8 +802,8 @@ void testNestedAtomTypes() {
       "EndFeature\n";
 
   res = parseFeatureData(inText, featureDefs);
-  TEST_ASSERT(!res);
-  TEST_ASSERT(featureDefs.size() == 1);
+  TEST_ASSERT(!res)
+  TEST_ASSERT(featureDefs.size() == 1)
   std::cerr << (*featureDefs.begin())->getSmarts() << std::endl;
 }
 
@@ -830,14 +830,14 @@ void testGithub252() {
       "  Weights 1.0,1.0\n"
       "EndFeature\n";
   factory = buildFeatureFactory(fdef);
-  TEST_ASSERT(factory);
-  TEST_ASSERT(factory->getNumFeatureDefs() == 2);
+  TEST_ASSERT(factory)
+  TEST_ASSERT(factory->getNumFeatureDefs() == 2)
   testMol = SmilesToMol("CCC");
-  TEST_ASSERT(testMol);
+  TEST_ASSERT(testMol)
   featSPtrs = factory->getFeaturesForMol(*testMol);
-  TEST_ASSERT(featSPtrs.size() == 1);
+  TEST_ASSERT(featSPtrs.size() == 1)
   featSPtr = *featSPtrs.begin();
-  TEST_ASSERT(featSPtr->getFamily() == "LumpedHydrophobe");
+  TEST_ASSERT(featSPtr->getFamily() == "LumpedHydrophobe")
   bool ok = false;
   try {
     featSPtr->getPos();
@@ -848,7 +848,7 @@ void testGithub252() {
   delete factory;
   delete testMol;
 
-  TEST_ASSERT(ok);
+  TEST_ASSERT(ok)
   BOOST_LOG(rdErrorLog) << "   Done" << std::endl;
 }
 
@@ -879,11 +879,11 @@ void testGithub2077() {
       "EndFeature\n";
 
   factory = buildFeatureFactory(inText);
-  TEST_ASSERT(factory);
-  TEST_ASSERT(factory->getNumFeatureDefs() == 2);
+  TEST_ASSERT(factory)
+  TEST_ASSERT(factory->getNumFeatureDefs() == 2)
 
   testMol = SmilesToMol("C(=O)O");
-  TEST_ASSERT(testMol);
+  TEST_ASSERT(testMol)
   conf = new Conformer(3);
   testMol->addConformer(conf, true);
   conf->setAtomPos(0, RDGeom::Point3D(0, 0, 0.0));
@@ -898,25 +898,25 @@ void testGithub2077() {
 
   {
     featSPtrs = factory->getFeaturesForMol(*testMol);
-    TEST_ASSERT(featSPtrs.size() == 2);
+    TEST_ASSERT(featSPtrs.size() == 2)
     featSPtr = *featSPtrs.begin();
-    TEST_ASSERT(featSPtr->getActiveConformer() == -1);
-    TEST_ASSERT(featSPtr->getFamily() == "HBondDonor");
-    TEST_ASSERT(featSPtr->getType() == "HDonor1");
-    TEST_ASSERT(feq(featSPtr->getPos().x, 0.0));
-    TEST_ASSERT(feq(featSPtr->getPos().y, 1.5));
-    TEST_ASSERT(feq(featSPtr->getPos().z, 0.0));
+    TEST_ASSERT(featSPtr->getActiveConformer() == -1)
+    TEST_ASSERT(featSPtr->getFamily() == "HBondDonor")
+    TEST_ASSERT(featSPtr->getType() == "HDonor1")
+    TEST_ASSERT(feq(featSPtr->getPos().x, 0.0))
+    TEST_ASSERT(feq(featSPtr->getPos().y, 1.5))
+    TEST_ASSERT(feq(featSPtr->getPos().z, 0.0))
   }
   {
     featSPtrs = factory->getFeaturesForMol(*testMol, "", 1);
-    TEST_ASSERT(featSPtrs.size() == 2);
+    TEST_ASSERT(featSPtrs.size() == 2)
     featSPtr = *featSPtrs.begin();
-    TEST_ASSERT(featSPtr->getActiveConformer() == 1);
-    TEST_ASSERT(featSPtr->getFamily() == "HBondDonor");
-    TEST_ASSERT(featSPtr->getType() == "HDonor1");
-    TEST_ASSERT(feq(featSPtr->getPos().x, 1.0));
-    TEST_ASSERT(feq(featSPtr->getPos().y, 1.5));
-    TEST_ASSERT(feq(featSPtr->getPos().z, 0.0));
+    TEST_ASSERT(featSPtr->getActiveConformer() == 1)
+    TEST_ASSERT(featSPtr->getFamily() == "HBondDonor")
+    TEST_ASSERT(featSPtr->getType() == "HDonor1")
+    TEST_ASSERT(feq(featSPtr->getPos().x, 1.0))
+    TEST_ASSERT(feq(featSPtr->getPos().y, 1.5))
+    TEST_ASSERT(feq(featSPtr->getPos().z, 0.0))
   }
   delete testMol;
 

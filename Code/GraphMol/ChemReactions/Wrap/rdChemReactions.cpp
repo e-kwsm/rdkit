@@ -298,7 +298,7 @@ bool IsMoleculeAgentOfReaction(const ChemicalReaction &rxn, const ROMol &mol) {
 
 ChemicalReaction *ReactionFromSmarts(const char *smarts, python::dict replDict,
                                      bool useSmiles) {
-  PRECONDITION(smarts, "null SMARTS string");
+  PRECONDITION(smarts, "null SMARTS string")
   std::map<std::string, std::string> replacements;
   const auto items = replDict.items();
   for (unsigned int i = 0; i < python::len(items); ++i) {
@@ -1258,7 +1258,6 @@ One unrecognized group type in a comma-separated list makes the whole thing fail
       .value("SANITIZE_MERGEHS", RDKit::RxnOps::SANITIZE_MERGEHS)
       .value("SANITIZE_ALL", RDKit::RxnOps::SANITIZE_ALL)
       .export_values();
-  ;
 
   python::def(
       "GetDefaultAdjustParams", RDKit::RxnOps::DefaultRxnAdjustParams,

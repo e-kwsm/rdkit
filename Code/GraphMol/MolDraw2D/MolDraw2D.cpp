@@ -180,24 +180,24 @@ void MolDraw2D::drawMolecules(
     const std::vector<std::map<int, DrawColour>> *highlight_bond_maps,
     const std::vector<std::map<int, double>> *highlight_radii,
     const std::vector<int> *confIds) {
-  PRECONDITION(!legends || legends->size() == mols.size(), "bad size");
+  PRECONDITION(!legends || legends->size() == mols.size(), "bad size")
   PRECONDITION(!highlight_atoms || highlight_atoms->size() == mols.size(),
-               "bad size");
+               "bad size")
   PRECONDITION(!highlight_bonds || highlight_bonds->size() == mols.size(),
-               "bad size");
+               "bad size")
   PRECONDITION(
       !highlight_atom_maps || highlight_atom_maps->size() == mols.size(),
-      "bad size");
+      "bad size")
   PRECONDITION(
       !highlight_bond_maps || highlight_bond_maps->size() == mols.size(),
-      "bad size");
+      "bad size")
   PRECONDITION(!highlight_radii || highlight_radii->size() == mols.size(),
-               "bad size");
-  PRECONDITION(!confIds || confIds->size() == mols.size(), "bad size");
-  PRECONDITION(panel_width_ != 0, "panel width cannot be zero");
-  PRECONDITION(panel_height_ != 0, "panel height cannot be zero");
+               "bad size")
+  PRECONDITION(!confIds || confIds->size() == mols.size(), "bad size")
+  PRECONDITION(panel_width_ != 0, "panel width cannot be zero")
+  PRECONDITION(panel_height_ != 0, "panel height cannot be zero")
   PRECONDITION(width_ > 0 && height_ > 0,
-               "drawMolecules() needs a fixed canvas size");
+               "drawMolecules() needs a fixed canvas size")
   if (mols.empty()) {
     return;
   }
@@ -229,7 +229,7 @@ void MolDraw2D::drawMolecules(
       lhighlight_bonds.reset(new vector<int>());
       MolDraw2D_detail::getBondHighlightsForAtoms(
           *mols[i], (*highlight_atoms)[i], *lhighlight_bonds);
-    };
+    }
     auto prevSize = drawMols_.size();
     drawMols_.emplace_back(new MolDraw2D_detail::DrawMol(
         *mols[i], legend, panelWidth(), panelHeight(), drawOptions(),
@@ -387,7 +387,7 @@ void MolDraw2D::drawTriangle(const Point2D &cds1, const Point2D &cds2,
     std::move(lpts.begin(), lpts.end(), std::back_inserter(pts));
   }
   drawPolygon(pts, rawCoords);
-};
+}
 
 // ****************************************************************************
 void MolDraw2D::drawEllipse(const Point2D &cds1, const Point2D &cds2,
@@ -524,7 +524,7 @@ void MolDraw2D::drawString(const std::string &str, const Point2D &cds,
 // transform a set of coords in the molecule's coordinate system
 // to drawing system coordinates.  Prefers globalDrawTrans_ if it exists.
 Point2D MolDraw2D::getDrawCoords(const Point2D &mol_cds) const {
-  PRECONDITION(globalDrawTrans_ || !drawMols_.empty(), "no scaling info");
+  PRECONDITION(globalDrawTrans_ || !drawMols_.empty(), "no scaling info")
   if (globalDrawTrans_) {
     return globalDrawTrans_->getDrawCoords(mol_cds);
   } else {
@@ -537,18 +537,18 @@ Point2D MolDraw2D::getDrawCoords(int at_num) const {
   // this one can't use globalDrawTrans_, obviously.
   PRECONDITION(activeMolIdx_ >= 0 &&
                    static_cast<size_t>(activeMolIdx_) <= drawMols_.size(),
-               "bad active mol index");
-  PRECONDITION(!drawMols_.empty(), "no draw mols");
+               "bad active mol index")
+  PRECONDITION(!drawMols_.empty(), "no draw mols")
   PRECONDITION(
       static_cast<size_t>(at_num) < drawMols_[activeMolIdx_]->atCds_.size(),
-      "bad atom number");
+      "bad atom number")
   return drawMols_[activeMolIdx_]->getDrawCoords(at_num);
 }
 
 // ****************************************************************************
 Point2D MolDraw2D::getAtomCoords(const pair<int, int> &screen_cds) const {
   // Prefers globalDrawTrans_ if it exists.
-  PRECONDITION(globalDrawTrans_ || !drawMols_.empty(), "no scaling info");
+  PRECONDITION(globalDrawTrans_ || !drawMols_.empty(), "no scaling info")
   return getAtomCoords(
       make_pair(double(screen_cds.first), double(screen_cds.second)));
 }
@@ -557,7 +557,7 @@ Point2D MolDraw2D::getAtomCoords(const pair<int, int> &screen_cds) const {
 // Prefers globalDrawTrans_ if it exists.
 Point2D MolDraw2D::getAtomCoords(const pair<double, double> &screen_cds) const {
   // Prefers globalDrawTrans_ if it exists.
-  PRECONDITION(globalDrawTrans_ || !drawMols_.empty(), "no scaling info");
+  PRECONDITION(globalDrawTrans_ || !drawMols_.empty(), "no scaling info")
   if (globalDrawTrans_) {
     return globalDrawTrans_->getAtomCoords(
         Point2D(screen_cds.first, screen_cds.second));
@@ -571,13 +571,13 @@ Point2D MolDraw2D::getAtomCoords(const pair<double, double> &screen_cds) const {
 Point2D MolDraw2D::getAtomCoords(int at_num) const {
   PRECONDITION(!drawMols_.empty() && activeMolIdx_ >= 0 &&
                    static_cast<size_t>(activeMolIdx_) <= drawMols_.size(),
-               "bad active mol index");
+               "bad active mol index")
   return drawMols_[activeMolIdx_]->getAtomCoords(at_num);
 }
 
 // ****************************************************************************
 const std::vector<Point2D> &MolDraw2D::atomCoords() const {
-  PRECONDITION(activeMolIdx_ >= 0, "no index");
+  PRECONDITION(activeMolIdx_ >= 0, "no index")
   return drawMols_[activeMolIdx_]->atCds_;
 }
 
@@ -604,7 +604,7 @@ double MolDraw2D::getDrawLineWidth() const {
 // ****************************************************************************
 Point2D MolDraw2D::minPt() const {
   // Prefers globalDrawTrans_ if it exists.
-  PRECONDITION(globalDrawTrans_ || activeMolIdx_ >= 0, "bad active mol");
+  PRECONDITION(globalDrawTrans_ || activeMolIdx_ >= 0, "bad active mol")
   // the ys are inverted in the DrawMol.
   if (globalDrawTrans_) {
     return Point2D(globalDrawTrans_->xMin_, -globalDrawTrans_->yMax_);
@@ -616,7 +616,7 @@ Point2D MolDraw2D::minPt() const {
 // ****************************************************************************
 Point2D MolDraw2D::range() const {
   // Prefers globalDrawTrans_ if it exists.
-  PRECONDITION(globalDrawTrans_ || activeMolIdx_ >= 0, "bad active mol");
+  PRECONDITION(globalDrawTrans_ || activeMolIdx_ >= 0, "bad active mol")
   if (globalDrawTrans_) {
     return Point2D(globalDrawTrans_->xRange_, globalDrawTrans_->yRange_);
   } else {
@@ -629,7 +629,7 @@ Point2D MolDraw2D::range() const {
 double MolDraw2D::scale() const {
   PRECONDITION(activeMolIdx_ >= 0 &&
                    static_cast<size_t>(activeMolIdx_) <= drawMols_.size(),
-               "bad active mol index");
+               "bad active mol index")
   return drawMols_[activeMolIdx_]->getScale();
 }
 
@@ -647,8 +647,8 @@ void MolDraw2D::setScale(double newScale) { scale_ = newScale; }
 // ****************************************************************************
 void MolDraw2D::setScale(int width, int height, const Point2D &minv,
                          const Point2D &maxv, const ROMol *mol) {
-  PRECONDITION(width > 0, "bad width");
-  PRECONDITION(height > 0, "bad height");
+  PRECONDITION(width > 0, "bad width")
+  PRECONDITION(height > 0, "bad height")
 
   double x_min, x_max, x_range, y_min, y_max, y_range;
   bool setFontScale = false;
@@ -784,7 +784,7 @@ void MolDraw2D::getStringExtremes(const string &label,
 // ****************************************************************************
 void MolDraw2D::setActiveMolIdx(int newIdx) {
   PRECONDITION(newIdx >= -1 && newIdx < static_cast<int>(drawMols_.size()),
-               "bad new activeMolIdx_");
+               "bad new activeMolIdx_")
   activeMolIdx_ = newIdx;
 }
 
