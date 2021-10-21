@@ -59,7 +59,7 @@ std::unique_ptr<Eigen::MatrixXd> make_burden(const ROMol &m) {
         break;
       default:
         CHECK_INVARIANT(
-            0, "Bond order must be Single, Double, Triple or Aromatic");
+            0, "Bond order must be Single, Double, Triple or Aromatic")
     }
     (*burden)(i, j) = (*burden)(j, i) = score;
   }
@@ -87,7 +87,7 @@ std::pair<double, double> BCUT2D(const ROMol &m,
                                  const std::vector<double> &atom_props) {
   unsigned int num_atoms = m.getNumAtoms();
   PRECONDITION(atom_props.size() == num_atoms,
-               "Number of atom props not equal to number of atoms");
+               "Number of atom props not equal to number of atoms")
 
   if (num_atoms == 0) {
     return std::pair<double, double>(0, 0);

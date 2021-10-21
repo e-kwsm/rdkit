@@ -16,7 +16,7 @@ void rdkit_import_array()
   // (to comply with the Py_InitModule signature) so it can't be called
   // directly from within the BOOST_PYTHON_MODULE init function (that
   // returns void)
-  import_array();
+  import_array()
 #if PY_MAJOR_VERSION >= 3
   return nullptr;
 #endif

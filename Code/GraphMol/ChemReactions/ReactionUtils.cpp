@@ -46,7 +46,6 @@ MOL_SPTR_VECT::const_iterator getStartIterator(const ChemicalReaction &rxn,
   }
   if (t == Product) {
     begin = rxn.beginProductTemplates();
-    ;
   }
   if (t == Agent) {
     begin = rxn.beginAgentTemplates();
@@ -62,7 +61,6 @@ MOL_SPTR_VECT::const_iterator getEndIterator(const ChemicalReaction &rxn,
   }
   if (t == Product) {
     end = rxn.endProductTemplates();
-    ;
   }
   if (t == Agent) {
     end = rxn.endAgentTemplates();
@@ -236,8 +234,8 @@ bool checkOrderOverlap(std::vector<int> &order, unsigned int nUnmapped,
 // returns -1 if we don't find a good match
 int countSwapsBetweenReactantAndProduct(const Atom *reactAtom,
                                         const Atom *prodAtom) {
-  PRECONDITION(reactAtom, "bad atom");
-  PRECONDITION(prodAtom, "bad atom");
+  PRECONDITION(reactAtom, "bad atom")
+  PRECONDITION(prodAtom, "bad atom")
   if (reactAtom->getDegree() >= 3 && prodAtom->getDegree() >= 3 &&
       std::abs(static_cast<int>(prodAtom->getDegree()) -
                static_cast<int>(reactAtom->getDegree())) <= 1) {
@@ -313,7 +311,7 @@ void updateProductsStereochem(ChemicalReaction *rxn) {
               } else if (mival == 2) {
                 prodAtom->setProp(common_properties::molInversionFlag, 1);
               } else {
-                CHECK_INVARIANT(false, "inconsistent molInversionFlag");
+                CHECK_INVARIANT(false, "inconsistent molInversionFlag")
               }
             }
           } else {

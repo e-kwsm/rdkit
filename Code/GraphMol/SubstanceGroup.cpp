@@ -28,24 +28,24 @@ void remove_element(std::vector<T> &container, unsigned int element) {
 
 SubstanceGroup::SubstanceGroup(ROMol *owning_mol, const std::string &type)
     : RDProps(), dp_mol(owning_mol) {
-  PRECONDITION(owning_mol, "supplied owning molecule is bad");
+  PRECONDITION(owning_mol, "supplied owning molecule is bad")
 
   // TYPE is required to be set , as other properties will depend on it.
   setProp<std::string>("TYPE", type);
 }
 
 void SubstanceGroup::setOwningMol(ROMol *mol) {
-  PRECONDITION(mol, "owning molecule is nullptr");
+  PRECONDITION(mol, "owning molecule is nullptr")
 
   dp_mol = mol;
 }
 
 unsigned int SubstanceGroup::getIndexInMol() const {
-  PRECONDITION(dp_mol, "SubstanceGroup is not owned by any molecule");
+  PRECONDITION(dp_mol, "SubstanceGroup is not owned by any molecule")
 
   const auto &sgroups = getSubstanceGroups(*dp_mol);
   CHECK_INVARIANT(!sgroups.empty(),
-                  "No SubstanceGroups found on owning molecule");
+                  "No SubstanceGroups found on owning molecule")
 
   auto match_sgroup = [&](const SubstanceGroup &sg) { return this == &sg; };
   auto sgroupItr = std::find_if(sgroups.begin(), sgroups.end(), match_sgroup);
@@ -106,9 +106,9 @@ void SubstanceGroup::addAtomWithIdx(unsigned int idx) {
 }
 
 void SubstanceGroup::addAtomWithBookmark(int mark) {
-  PRECONDITION(dp_mol, "bad mol");
+  PRECONDITION(dp_mol, "bad mol")
   Atom *atom = dp_mol->getUniqueAtomWithBookmark(mark);
-  PRECONDITION(atom, "atom not found");
+  PRECONDITION(atom, "atom not found")
   d_atoms.push_back(atom->getIdx());
 }
 
@@ -127,7 +127,7 @@ void SubstanceGroup::addParentAtomWithIdx(unsigned int idx) {
 }
 
 void SubstanceGroup::addParentAtomWithBookmark(int mark) {
-  PRECONDITION(dp_mol, "bad mol");
+  PRECONDITION(dp_mol, "bad mol")
 
   Atom *atom = dp_mol->getUniqueAtomWithBookmark(mark);
   unsigned int idx = atom->getIdx();
@@ -151,23 +151,23 @@ void SubstanceGroup::addBondWithIdx(unsigned int idx) {
 }
 
 void SubstanceGroup::addBondWithBookmark(int mark) {
-  PRECONDITION(dp_mol, "bad mol");
+  PRECONDITION(dp_mol, "bad mol")
   Bond *bond = dp_mol->getUniqueBondWithBookmark(mark);
   d_bonds.push_back(bond->getIdx());
 }
 
 void SubstanceGroup::removeAtomWithIdx(unsigned int idx) {
-  PRECONDITION(dp_mol, "bad mol");
+  PRECONDITION(dp_mol, "bad mol")
   remove_element(d_atoms, idx);
 }
 
 void SubstanceGroup::removeParentAtomWithIdx(unsigned int idx) {
-  PRECONDITION(dp_mol, "bad mol");
+  PRECONDITION(dp_mol, "bad mol")
   remove_element(d_patoms, idx);
 }
 
 void SubstanceGroup::removeBondWithIdx(unsigned int idx) {
-  PRECONDITION(dp_mol, "bad mol");
+  PRECONDITION(dp_mol, "bad mol")
   remove_element(d_bonds, idx);
 }
 
@@ -177,8 +177,8 @@ void SubstanceGroup::addBracket(const SubstanceGroup::Bracket &bracket) {
 
 void SubstanceGroup::addCState(unsigned int bondIdx,
                                const RDGeom::Point3D &vector) {
-  PRECONDITION(dp_mol, "bad mol");
-  PRECONDITION(!d_bonds.empty(), "no bonds");
+  PRECONDITION(dp_mol, "bad mol")
+  PRECONDITION(!d_bonds.empty(), "no bonds")
 
   if (getBondType(bondIdx) != SubstanceGroup::BondType::XBOND) {
     std::ostringstream errout;
@@ -389,7 +389,7 @@ bool removedParentInHierarchy(
     unsigned int idx, const std::vector<SubstanceGroup> &sgs,
     const boost::dynamic_bitset<> &toRemove,
     const std::map<unsigned int, unsigned int> &indexLookup) {
-  PRECONDITION(idx < sgs.size(), "cannot find SubstanceGroup");
+  PRECONDITION(idx < sgs.size(), "cannot find SubstanceGroup")
   if (toRemove[idx]) {
     return true;
   }

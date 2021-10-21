@@ -32,8 +32,8 @@ void testGitHubIssue485() {
     ROMol *mol = SmilesToMol(smi);
     std::vector<double> charges(mol->getNumAtoms(), 0);
     computeGasteigerCharges(*mol, charges, 12, true);
-    TEST_ASSERT(charges[0] == charges[0]);  // test for nan
-    TEST_ASSERT(charges[2] == charges[2]);  // test for nan
+    TEST_ASSERT(charges[0] == charges[0])  // test for nan
+    TEST_ASSERT(charges[2] == charges[2])  // test for nan
 
     delete mol;
   }
@@ -42,8 +42,8 @@ void testGitHubIssue485() {
     ROMol *mol = SmilesToMol(smi);
     std::vector<double> charges(mol->getNumAtoms(), 0);
     computeGasteigerCharges(*mol, charges, 12, true);
-    TEST_ASSERT(charges[0] == charges[0]);  // test for nan
-    TEST_ASSERT(charges[2] == charges[2]);  // test for nan
+    TEST_ASSERT(charges[0] == charges[0])  // test for nan
+    TEST_ASSERT(charges[2] == charges[2])  // test for nan
 
     delete mol;
   }

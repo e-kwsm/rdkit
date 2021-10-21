@@ -48,8 +48,8 @@ class int_compare_ftor {
   const int *dp_ints{nullptr};
 
  public:
-  int_compare_ftor() {};
-  int_compare_ftor(const int *ints) : dp_ints(ints) {};
+  int_compare_ftor() {}
+  int_compare_ftor(const int *ints) : dp_ints(ints) {}
   int operator()(int i, int j) const {
     PRECONDITION(dp_ints, "no ints");
     unsigned int ivi = dp_ints[i];
@@ -70,7 +70,7 @@ void qs1(const std::vector<std::vector<int>> &vects) {
     auto *data = tv.data();
     qsort(data, tv.size(), sizeof(int), pcmp);
     for (unsigned int j = 1; j < tv.size(); ++j) {
-      TEST_ASSERT(tv[j] >= tv[j - 1]);
+      TEST_ASSERT(tv[j] >= tv[j - 1])
     }
   }
   BOOST_LOG(rdInfoLog) << "done: " << vects.size() << std::endl;
@@ -90,7 +90,7 @@ void hs1(const std::vector<std::vector<int>> &vects) {
     std::vector<int> changed(vect.size(), 1);
     RDKit::hanoisort(ispan, count, changed, icmp);
     for (unsigned int j = 1; j < vect.size(); ++j) {
-      TEST_ASSERT(data[indices[j]] >= data[indices[j - 1]]);
+      TEST_ASSERT(data[indices[j]] >= data[indices[j - 1]])
     }
   }
   BOOST_LOG(rdInfoLog) << "done: " << vects.size() << std::endl;
@@ -126,14 +126,14 @@ void test1() {
   // qs1(vects);
   hs1(vects);
   BOOST_LOG(rdInfoLog) << "Done" << std::endl;
-};
+}
 
 class atomcomparefunctor {
   Canon::canon_atom *d_atoms{nullptr};
 
  public:
-  atomcomparefunctor() {};
-  atomcomparefunctor(Canon::canon_atom *atoms) : d_atoms(atoms) {};
+  atomcomparefunctor() {}
+  atomcomparefunctor(Canon::canon_atom *atoms) : d_atoms(atoms) {}
   int operator()(int i, int j) const {
     PRECONDITION(d_atoms, "no atoms");
     unsigned int ivi, ivj;
@@ -162,8 +162,8 @@ class atomcomparefunctor2 {
   Canon::canon_atom *d_atoms{nullptr};
 
  public:
-  atomcomparefunctor2() {};
-  atomcomparefunctor2(Canon::canon_atom *atoms) : d_atoms(atoms) {};
+  atomcomparefunctor2() {}
+  atomcomparefunctor2(Canon::canon_atom *atoms) : d_atoms(atoms) {}
   int operator()(int i, int j) const {
     PRECONDITION(d_atoms, "no atoms");
     unsigned int ivi, ivj;

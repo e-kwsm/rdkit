@@ -85,7 +85,7 @@ SmartsMatcher::SmartsMatcher(const SmartsMatcher &rhs)
 
 bool SmartsMatcher::getMatches(const ROMol &mol,
                                std::vector<FilterMatch> &matchVect) const {
-  PRECONDITION(d_pattern.get(), "bad on pattern");
+  PRECONDITION(d_pattern.get(), "bad on pattern")
 
   bool onPatExists = false;
   std::vector<RDKit::MatchVectType> matches;
@@ -113,7 +113,7 @@ bool SmartsMatcher::getMatches(const ROMol &mol,
 }
 
 bool SmartsMatcher::hasMatch(const ROMol &mol) const {
-  PRECONDITION(d_pattern.get(), "bad on pattern");
+  PRECONDITION(d_pattern.get(), "bad on pattern")
 
   if (d_min_count == 1 && d_max_count == UINT_MAX) {
     RDKit::MatchVectType matches;

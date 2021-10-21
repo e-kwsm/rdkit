@@ -57,7 +57,7 @@ void ForwardSDMolSupplier::init() {
 }
 
 void ForwardSDMolSupplier::reset() {
-  UNDER_CONSTRUCTION("reset() not supported for ForwardSDMolSuppliers();");
+  UNDER_CONSTRUCTION("reset() not supported for ForwardSDMolSuppliers()");
 }
 
 void ForwardSDMolSupplier::readMolProps(ROMol &mol) {
@@ -303,7 +303,7 @@ std::unique_ptr<RWMol> ForwardSDMolSupplier::_next() {
 }
 
 void ForwardSDMolSupplier::checkForEnd() {
-  PRECONDITION(dp_inStream, "no stream");
+  PRECONDITION(dp_inStream, "no stream")
   // we will call it end of file if we have more than 4 contiguous empty lines
   // or we reach end of file in the meantime
   if (dp_inStream->eof()) {
@@ -329,7 +329,7 @@ void ForwardSDMolSupplier::checkForEnd() {
 }
 
 bool ForwardSDMolSupplier::atEnd() {
-  PRECONDITION(dp_inStream, "no stream");
+  PRECONDITION(dp_inStream, "no stream")
   return df_end;
 }
 }  // namespace FileParsers

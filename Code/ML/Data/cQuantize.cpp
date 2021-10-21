@@ -80,7 +80,7 @@ static python::tuple cQuantize_RecurseOnBounds(python::object vals,
 
   python::ssize_t nCuts = python::len(pyCuts);
   cuts = (long int *)calloc(nCuts, sizeof(long int));
-  CHECK_INVARIANT(cuts, "failed to allocate memory");
+  CHECK_INVARIANT(cuts, "failed to allocate memory")
   for (python::ssize_t i = 0; i < nCuts; i++) {
     python::object elem = pyCuts[i];
     cuts[i] = python::extract<long int>(elem);
@@ -88,7 +88,7 @@ static python::tuple cQuantize_RecurseOnBounds(python::object vals,
 
   python::ssize_t nStarts = python::len(pyStarts);
   starts = (long int *)calloc(nStarts, sizeof(long int));
-  CHECK_INVARIANT(starts, "failed to allocate memory");
+  CHECK_INVARIANT(starts, "failed to allocate memory")
   for (python::ssize_t i = 0; i < nStarts; i++) {
     python::object elem = pyStarts[i];
     starts[i] = python::extract<long int>(elem);

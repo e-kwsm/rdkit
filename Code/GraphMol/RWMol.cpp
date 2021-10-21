@@ -272,7 +272,7 @@ void RWMol::replaceAtom(unsigned int idx, Atom *atom_pin, bool,
     group = StereoGroup(group.getGroupType(), std::move(atoms),
                         std::move(bonds), groupId);
   }
-};
+}
 
 void RWMol::replaceBond(unsigned int idx, Bond *bond_pin, bool preserveProps,
                         bool keepSGroups) {
@@ -322,7 +322,7 @@ void RWMol::replaceBond(unsigned int idx, Bond *bond_pin, bool preserveProps,
       }
     }
   }
-};
+}
 
 Atom *RWMol::getActiveAtom() {
   if (hasAtomBookmark(ci_RIGHTMOST_ATOM)) {
@@ -330,23 +330,23 @@ Atom *RWMol::getActiveAtom() {
   } else {
     return getLastAtom();
   }
-};
+}
 
 void RWMol::setActiveAtom(Atom *at) {
-  PRECONDITION(at, "NULL atom provided");
+  PRECONDITION(at, "NULL atom provided")
   clearAtomBookmark(ci_RIGHTMOST_ATOM);
   setAtomBookmark(at, ci_RIGHTMOST_ATOM);
-};
+}
 void RWMol::setActiveAtom(unsigned int idx) {
   setActiveAtom(getAtomWithIdx(idx));
-};
+}
 
 void RWMol::removeAtom(unsigned int idx) { removeAtom(getAtomWithIdx(idx)); }
 
 void RWMol::removeAtom(Atom *atom, bool clearProps) {
   PRECONDITION(atom, "NULL atom provided");
   PRECONDITION(static_cast<RWMol *>(&atom->getOwningMol()) == this,
-               "atom not owned by this molecule");
+               "atom not owned by this molecule")
   unsigned int idx = atom->getIdx();
 
   // remove bonds attached to the atom

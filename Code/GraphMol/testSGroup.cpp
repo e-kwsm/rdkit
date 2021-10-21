@@ -370,9 +370,19 @@ void testParseSubstanceGroups(const std::string &rdbase) {
 
     const auto sgroup = sgroups.at(0);
 
+<<<<<<< HEAD
     TEST_ASSERT(sgroup.getProp<std::string>("TYPE") == "SUP");
     TEST_ASSERT(sgroup.getProp<std::string>("CLASS") == "AA");
     TEST_ASSERT(sgroup.getProp<std::string>("LABEL") == "abbrev");
+||||||| parent of e5a37ac48241 (chore: remove extra ‘;’)
+    TEST_ASSERT(sgroup.getProp<std::string>("TYPE") == "SUP");
+    TEST_ASSERT(sgroup.getProp<std::string>("CLASS") == "DEMOCLASS");
+    TEST_ASSERT(sgroup.getProp<std::string>("LABEL") == "abbrev");
+=======
+    TEST_ASSERT(sgroup.getProp<std::string>("TYPE") == "SUP");
+    TEST_ASSERT(sgroup.getProp<std::string>("CLASS") == "DEMOCLASS");
+    TEST_ASSERT(sgroup.getProp<std::string>("LABEL") == "abbrev");
+>>>>>>> e5a37ac48241 (chore: remove extra ‘;’)
 
     std::vector<unsigned int> atoms_reference = {6, 7, 8, 9, 11, 12};
     testIdxVector(sgroup.getAtoms(), atoms_reference);
@@ -919,9 +929,9 @@ void testSubstanceGroupsAndRemoveAtoms(const std::string &rdbase) {
       TEST_ASSERT(sgroups[2].getBonds().size() == 2);
       tgt = {1, 5};
       TEST_ASSERT(sgroups[2].getBonds() == tgt);
-      TEST_ASSERT(!sgroups[2].hasProp("PARENT"))
+      TEST_ASSERT(!sgroups[2].hasProp("PARENT"));
 
-      TEST_ASSERT(sgroups[0].hasProp("index"))
+      TEST_ASSERT(sgroups[0].hasProp("index"));
       TEST_ASSERT(sgroups[0].getProp<unsigned int>("index") == 2);
       TEST_ASSERT(sgroups[0].getAtoms().size() == 2);
       tgt = {3, 2};
@@ -929,7 +939,7 @@ void testSubstanceGroupsAndRemoveAtoms(const std::string &rdbase) {
       TEST_ASSERT(sgroups[0].getBonds().size() == 2);
       tgt = {1, 3};
       TEST_ASSERT(sgroups[0].getBonds() == tgt);
-      TEST_ASSERT(sgroups[0].hasProp("PARENT"))
+      TEST_ASSERT(sgroups[0].hasProp("PARENT"));
       TEST_ASSERT(sgroups[0].getProp<unsigned int>("PARENT") == 10);
     }
     // remove an atom that's not in an S-group
@@ -938,7 +948,7 @@ void testSubstanceGroupsAndRemoveAtoms(const std::string &rdbase) {
     {
       auto &sgroups = getSubstanceGroups(*mol);
       TEST_ASSERT(sgroups.size() == 3);
-      TEST_ASSERT(sgroups[2].hasProp("index"))
+      TEST_ASSERT(sgroups[2].hasProp("index"));
       TEST_ASSERT(sgroups[2].getProp<unsigned int>("index") == 10);
       TEST_ASSERT(sgroups[2].getAtoms().size() == 5);
       std::vector<unsigned int> tgt{2, 1, 3, 4, 6};
@@ -946,9 +956,9 @@ void testSubstanceGroupsAndRemoveAtoms(const std::string &rdbase) {
       TEST_ASSERT(sgroups[2].getBonds().size() == 2);
       tgt = {0, 4};
       TEST_ASSERT(sgroups[2].getBonds() == tgt);
-      TEST_ASSERT(!sgroups[2].hasProp("PARENT"))
+      TEST_ASSERT(!sgroups[2].hasProp("PARENT"));
 
-      TEST_ASSERT(sgroups[0].hasProp("index"))
+      TEST_ASSERT(sgroups[0].hasProp("index"));
       TEST_ASSERT(sgroups[0].getProp<unsigned int>("index") == 2);
       TEST_ASSERT(sgroups[0].getAtoms().size() == 2);
       tgt = {2, 1};
@@ -956,7 +966,7 @@ void testSubstanceGroupsAndRemoveAtoms(const std::string &rdbase) {
       TEST_ASSERT(sgroups[0].getBonds().size() == 2);
       tgt = {0, 2};
       TEST_ASSERT(sgroups[0].getBonds() == tgt);
-      TEST_ASSERT(sgroups[0].hasProp("PARENT"))
+      TEST_ASSERT(sgroups[0].hasProp("PARENT"));
       TEST_ASSERT(sgroups[0].getProp<unsigned int>("PARENT") == 10);
     }
     // remove an atom from parent, make sure children also get deleted
@@ -977,7 +987,7 @@ void testSubstanceGroupsAndRemoveAtoms(const std::string &rdbase) {
     {
       auto &sgroups = getSubstanceGroups(*mol);
       TEST_ASSERT(sgroups.size() == 3);
-      TEST_ASSERT(sgroups[2].hasProp("index"))
+      TEST_ASSERT(sgroups[2].hasProp("index"));
       TEST_ASSERT(sgroups[2].getProp<unsigned int>("index") == 10);
       TEST_ASSERT(sgroups[2].getAtoms().size() == 5);
       std::vector<unsigned int> tgt{3, 2, 4, 5, 7};
@@ -985,9 +995,9 @@ void testSubstanceGroupsAndRemoveAtoms(const std::string &rdbase) {
       TEST_ASSERT(sgroups[2].getBonds().size() == 2);
       tgt = {1, 5};
       TEST_ASSERT(sgroups[2].getBonds() == tgt);
-      TEST_ASSERT(!sgroups[2].hasProp("PARENT"))
+      TEST_ASSERT(!sgroups[2].hasProp("PARENT"));
 
-      TEST_ASSERT(sgroups[0].hasProp("index"))
+      TEST_ASSERT(sgroups[0].hasProp("index"));
       TEST_ASSERT(sgroups[0].getProp<unsigned int>("index") == 2);
       TEST_ASSERT(sgroups[0].getAtoms().size() == 2);
       tgt = {3, 2};
@@ -995,7 +1005,7 @@ void testSubstanceGroupsAndRemoveAtoms(const std::string &rdbase) {
       TEST_ASSERT(sgroups[0].getBonds().size() == 2);
       tgt = {1, 3};
       TEST_ASSERT(sgroups[0].getBonds() == tgt);
-      TEST_ASSERT(sgroups[0].hasProp("PARENT"))
+      TEST_ASSERT(sgroups[0].hasProp("PARENT"));
       TEST_ASSERT(sgroups[0].getProp<unsigned int>("PARENT") == 10);
     }
   }
