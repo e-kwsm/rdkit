@@ -17,7 +17,7 @@ namespace RDKit {
 QueryAtom::~QueryAtom() {
   delete dp_query;
   dp_query = nullptr;
-};
+}
 
 Atom *QueryAtom::copy() const {
   auto *res = new QueryAtom(*this);
@@ -52,7 +52,7 @@ void QueryAtom::expandQuery(QUERYATOM_QUERY *what,
       descrip = "AtomXor";
       break;
     default:
-      UNDER_CONSTRUCTION("unrecognized combination query");
+      UNDER_CONSTRUCTION("unrecognized combination query")
   }
   dp_query->setDescription(descrip);
   if (maintainOrder) {
@@ -74,8 +74,8 @@ bool localMatch(ATOM_EQUALS_QUERY const *q1, ATOM_EQUALS_QUERY const *q2) {
 }
 bool queriesMatch(QueryAtom::QUERYATOM_QUERY const *q1,
                   QueryAtom::QUERYATOM_QUERY const *q2) {
-  PRECONDITION(q1, "no q1");
-  PRECONDITION(q2, "no q2");
+  PRECONDITION(q1, "no q1")
+  PRECONDITION(q2, "no q2")
 
   static const unsigned int nQueries = 20;
   static std::string equalityQueries[nQueries] = {"AtomType",
@@ -178,13 +178,13 @@ bool queriesMatch(QueryAtom::QUERYATOM_QUERY const *q1,
 }  // namespace
 
 bool QueryAtom::Match(Atom const *what) const {
-  PRECONDITION(what, "bad query atom");
-  PRECONDITION(dp_query, "no query set");
+  PRECONDITION(what, "bad query atom")
+  PRECONDITION(dp_query, "no query set")
   return dp_query->Match(what);
 }
 bool QueryAtom::QueryMatch(QueryAtom const *what) const {
-  PRECONDITION(what, "bad query atom");
-  PRECONDITION(dp_query, "no query set");
+  PRECONDITION(what, "bad query atom")
+  PRECONDITION(dp_query, "no query set")
   if (!what->hasQuery()) {
     return dp_query->Match(what);
   } else {
@@ -192,4 +192,4 @@ bool QueryAtom::QueryMatch(QueryAtom const *what) const {
   }
 }
 
-};  // namespace RDKit
+}  // namespace RDKit

@@ -61,9 +61,9 @@ class RDKIT_TAUTOMERQUERY_EXPORT TautomerQuery {
                                : nullptr),
         d_modifiedAtoms(other.d_modifiedAtoms),
         d_modifiedBonds(other.d_modifiedBonds) {
-    PRECONDITION(other.d_templateMolecule != nullptr, "Null template");
+    PRECONDITION(other.d_templateMolecule != nullptr, "Null template")
     for (auto taut : other.d_tautomers) {
-      PRECONDITION(taut.get() != nullptr, "Null tautomer");
+      PRECONDITION(taut.get() != nullptr, "Null tautomer")
       d_tautomers.push_back(boost::make_shared<ROMol>(*taut));
     }
   }
@@ -118,7 +118,7 @@ class RDKIT_TAUTOMERQUERY_EXPORT TautomerQuery {
 #ifdef RDK_USE_BOOST_SERIALIZATION
   template <class Archive>
   void save(Archive &ar, const unsigned int version) const {
-    RDUNUSED_PARAM(version);
+    RDUNUSED_PARAM(version)
     std::vector<std::string> pkls;
     for (const auto &taut : d_tautomers) {
       std::string pkl;
@@ -135,7 +135,7 @@ class RDKIT_TAUTOMERQUERY_EXPORT TautomerQuery {
 
   template <class Archive>
   void load(Archive &ar, const unsigned int version) {
-    RDUNUSED_PARAM(version);
+    RDUNUSED_PARAM(version)
 
     std::vector<std::string> pkls;
     ar >> pkls;

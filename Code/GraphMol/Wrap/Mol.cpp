@@ -185,17 +185,17 @@ class ReadWriteMol : public RWMol {
     return addBond(begAtomIdx, endAtomIdx, order);
   };
   int AddAtom(Atom *atom) {
-    PRECONDITION(atom, "bad atom");
+    PRECONDITION(atom, "bad atom")
     return addAtom(atom, true, false);
   };
   void ReplaceAtom(unsigned int idx, Atom *atom, bool updateLabel,
                    bool preserveProps) {
-    PRECONDITION(atom, "bad atom");
+    PRECONDITION(atom, "bad atom")
     replaceAtom(idx, atom, updateLabel, preserveProps);
   };
   void ReplaceBond(unsigned int idx, Bond *bond, bool preserveProps,
                    bool keepSGroups) {
-    PRECONDITION(bond, "bad bond");
+    PRECONDITION(bond, "bad bond")
     replaceBond(idx, bond, preserveProps, keepSGroups);
   };
   void SetStereoGroups(python::list &stereo_groups) {
@@ -225,8 +225,8 @@ class ReadWriteMol : public RWMol {
   }
   bool exit(python::object exc_type, python::object exc_val,
             python::object traceback) {
-    RDUNUSED_PARAM(exc_val);
-    RDUNUSED_PARAM(traceback);
+    RDUNUSED_PARAM(exc_val)
+    RDUNUSED_PARAM(traceback)
     if (exc_type != python::object()) {
       // exception thrown, abort the edits
       rollbackBatchEdit();
@@ -282,7 +282,6 @@ struct mol_wrapper {
         .value("CoordsAsDouble", RDKit::PicklerOps::CoordsAsDouble)
         .value("NoConformers", RDKit::PicklerOps::NoConformers)
         .export_values();
-    ;
 
     RegisterVectorConverter<StereoGroup>("StereoGroup_vect");
 

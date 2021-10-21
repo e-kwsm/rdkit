@@ -29,13 +29,13 @@ void test1() {
   // MolCatalogParams are currently unused, so testing is easy:
   auto *mparams = new MolCatalogParams();
   std::string pkl = mparams->Serialize();
-  TEST_ASSERT(pkl.empty());
+  TEST_ASSERT(pkl.empty())
 
   auto *mcat = new MolCatalog(mparams);
   delete mparams;
 
-  TEST_ASSERT(mcat->getNumEntries() == 0);
-  TEST_ASSERT(mcat->getFPLength() == 0);
+  TEST_ASSERT(mcat->getNumEntries() == 0)
+  TEST_ASSERT(mcat->getFPLength() == 0)
 
   MolCatalogEntry *entry;
   std::string smi;
@@ -43,16 +43,16 @@ void test1() {
 
   mol = SmilesToMol("c1ccc(O)cc1C(=O)O");
   entry = new MolCatalogEntry(mol);
-  TEST_ASSERT(entry->getMol() == mol);
+  TEST_ASSERT(entry->getMol() == mol)
   entry->setDescription("top");
-  TEST_ASSERT(entry->getDescription() == "top");
+  TEST_ASSERT(entry->getDescription() == "top")
   entry->setOrder(0);
-  TEST_ASSERT(entry->getOrder() == 0);
+  TEST_ASSERT(entry->getOrder() == 0)
 
   mcat->addEntry(entry);
-  TEST_ASSERT(mcat->getNumEntries() == 1);
-  TEST_ASSERT(mcat->getFPLength() == 1);
-  TEST_ASSERT(mcat->getEntryWithBitId(0) == entry);
+  TEST_ASSERT(mcat->getNumEntries() == 1)
+  TEST_ASSERT(mcat->getFPLength() == 1)
+  TEST_ASSERT(mcat->getEntryWithBitId(0) == entry)
 
   mol = SmilesToMol("O");
   entry = new MolCatalogEntry(mol);
@@ -66,53 +66,53 @@ void test1() {
   entry->setOrder(1);
   mcat->addEntry(entry);
 
-  TEST_ASSERT(mcat->getNumEntries() == 3);
-  TEST_ASSERT(mcat->getFPLength() == 3);
+  TEST_ASSERT(mcat->getNumEntries() == 3)
+  TEST_ASSERT(mcat->getFPLength() == 3)
 
   TEST_ASSERT(
-      mcat->getEntryWithIdx(mcat->getIdOfEntryWithBitId(0))->getBitId() == 0);
+      mcat->getEntryWithIdx(mcat->getIdOfEntryWithBitId(0))->getBitId() == 0)
   TEST_ASSERT(
-      mcat->getEntryWithIdx(mcat->getIdOfEntryWithBitId(2))->getBitId() == 2);
-  TEST_ASSERT(mcat->getEntryWithBitId(0)->getMol()->getNumAtoms() == 10);
-  TEST_ASSERT(mcat->getEntryWithBitId(1)->getMol()->getNumAtoms() == 1);
-  TEST_ASSERT(mcat->getEntryWithBitId(2)->getMol()->getNumAtoms() == 3);
+      mcat->getEntryWithIdx(mcat->getIdOfEntryWithBitId(2))->getBitId() == 2)
+  TEST_ASSERT(mcat->getEntryWithBitId(0)->getMol()->getNumAtoms() == 10)
+  TEST_ASSERT(mcat->getEntryWithBitId(1)->getMol()->getNumAtoms() == 1)
+  TEST_ASSERT(mcat->getEntryWithBitId(2)->getMol()->getNumAtoms() == 3)
 
-  TEST_ASSERT(mcat->getDownEntryList(0).size() == 0);
-  TEST_ASSERT(mcat->getDownEntryList(1).size() == 0);
-  TEST_ASSERT(mcat->getDownEntryList(2).size() == 0);
+  TEST_ASSERT(mcat->getDownEntryList(0).size() == 0)
+  TEST_ASSERT(mcat->getDownEntryList(1).size() == 0)
+  TEST_ASSERT(mcat->getDownEntryList(2).size() == 0)
 
-  TEST_ASSERT(mcat->getEntriesOfOrder(0).size() == 1);
-  TEST_ASSERT(mcat->getEntriesOfOrder(1).size() == 2);
-  TEST_ASSERT(mcat->getEntriesOfOrder(2).size() == 0);
+  TEST_ASSERT(mcat->getEntriesOfOrder(0).size() == 1)
+  TEST_ASSERT(mcat->getEntriesOfOrder(1).size() == 2)
+  TEST_ASSERT(mcat->getEntriesOfOrder(2).size() == 0)
 
   mcat->addEdge(0, 1);
   mcat->addEdge(0, 2);
 
-  TEST_ASSERT(mcat->getDownEntryList(0).size() == 2);
-  TEST_ASSERT(mcat->getDownEntryList(1).size() == 0);
-  TEST_ASSERT(mcat->getDownEntryList(2).size() == 0);
+  TEST_ASSERT(mcat->getDownEntryList(0).size() == 2)
+  TEST_ASSERT(mcat->getDownEntryList(1).size() == 0)
+  TEST_ASSERT(mcat->getDownEntryList(2).size() == 0)
 
-  TEST_ASSERT(mcat->getEntriesOfOrder(0).size() == 1);
-  TEST_ASSERT(mcat->getEntriesOfOrder(1).size() == 2);
-  TEST_ASSERT(mcat->getEntriesOfOrder(2).size() == 0);
+  TEST_ASSERT(mcat->getEntriesOfOrder(0).size() == 1)
+  TEST_ASSERT(mcat->getEntriesOfOrder(1).size() == 2)
+  TEST_ASSERT(mcat->getEntriesOfOrder(2).size() == 0)
 
   pkl = mcat->Serialize();
   delete mcat;
 
   mcat = new MolCatalog(pkl);
-  TEST_ASSERT(mcat->getNumEntries() == 3);
-  TEST_ASSERT(mcat->getFPLength() == 3);
-  TEST_ASSERT(mcat->getDownEntryList(0).size() == 2);
-  TEST_ASSERT(mcat->getDownEntryList(1).size() == 0);
-  TEST_ASSERT(mcat->getDownEntryList(2).size() == 0);
+  TEST_ASSERT(mcat->getNumEntries() == 3)
+  TEST_ASSERT(mcat->getFPLength() == 3)
+  TEST_ASSERT(mcat->getDownEntryList(0).size() == 2)
+  TEST_ASSERT(mcat->getDownEntryList(1).size() == 0)
+  TEST_ASSERT(mcat->getDownEntryList(2).size() == 0)
 
-  TEST_ASSERT(mcat->getEntriesOfOrder(0).size() == 1);
-  TEST_ASSERT(mcat->getEntriesOfOrder(1).size() == 2);
-  TEST_ASSERT(mcat->getEntriesOfOrder(2).size() == 0);
+  TEST_ASSERT(mcat->getEntriesOfOrder(0).size() == 1)
+  TEST_ASSERT(mcat->getEntriesOfOrder(1).size() == 2)
+  TEST_ASSERT(mcat->getEntriesOfOrder(2).size() == 0)
 
-  TEST_ASSERT(mcat->getEntryWithBitId(0)->getMol()->getNumAtoms() == 10);
-  TEST_ASSERT(mcat->getEntryWithBitId(1)->getMol()->getNumAtoms() == 1);
-  TEST_ASSERT(mcat->getEntryWithBitId(2)->getMol()->getNumAtoms() == 3);
+  TEST_ASSERT(mcat->getEntryWithBitId(0)->getMol()->getNumAtoms() == 10)
+  TEST_ASSERT(mcat->getEntryWithBitId(1)->getMol()->getNumAtoms() == 1)
+  TEST_ASSERT(mcat->getEntryWithBitId(2)->getMol()->getNumAtoms() == 3)
 
   delete mcat;
 
