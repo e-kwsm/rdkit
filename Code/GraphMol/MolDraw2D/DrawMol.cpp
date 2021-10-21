@@ -230,7 +230,7 @@ void DrawMol::extractAll(double scale) {
 
 // ****************************************************************************
 void DrawMol::extractAtomCoords() {
-  PRECONDITION(static_cast<int>(drawMol_->getNumConformers()) > 0, "no coords");
+  PRECONDITION(static_cast<int>(drawMol_->getNumConformers()) > 0, "no coords")
 
   const RDGeom::POINT3D_VECT &locs =
       drawMol_->getConformer(confId_).getPositions();
@@ -634,7 +634,7 @@ void DrawMol::extractSGroupData() {
       int atomIdx = -1;
       if (!sg.getAtoms().empty()) {
         atomIdx = sg.getAtoms()[0];
-      };
+      }
       bool located = false;
       std::string fieldDisp;
       Point2D origLoc(0.0, 0.0);
@@ -1026,7 +1026,7 @@ void DrawMol::extractCloseContacts() {
           new DrawShapePolyLine(points, drawOptions_.bondLineWidth, false,
                                 DrawColour(1.0, 0.0, 0.0), false, i);
       postShapes_.emplace_back(pl);
-    };
+    }
   }
 }
 
@@ -1941,7 +1941,7 @@ void DrawMol::makeStandardBond(Bond *bond, double doubleBondOffset) {
 
 // ****************************************************************************
 void DrawMol::makeQueryBond(Bond *bond, double doubleBondOffset) {
-  PRECONDITION(bond->hasQuery(), "no query");
+  PRECONDITION(bond->hasQuery(), "no query")
   const auto qry = bond->getQuery();
 
   auto begAt = bond->getBeginAtom();
@@ -2569,7 +2569,7 @@ void DrawMol::makeBondHighlightLines(double lineWidth, double scale) {
 // ****************************************************************************
 void DrawMol::calcAnnotationPosition(const Atom *atom,
                                      DrawAnnotation &annot) const {
-  PRECONDITION(atom, "no atom");
+  PRECONDITION(atom, "no atom")
   double start_ang = getNoteStartAngle(atom);
   Point2D const &atCds = atCds_[atom->getIdx()];
   double radStep = 0.25;
@@ -2605,7 +2605,7 @@ void DrawMol::calcAnnotationPosition(const Atom *atom,
 // ****************************************************************************
 void DrawMol::calcAnnotationPosition(const Bond *bond,
                                      DrawAnnotation &annot) const {
-  PRECONDITION(bond, "no bond");
+  PRECONDITION(bond, "no bond")
   Point2D const &at1_cds = atCds_[bond->getBeginAtomIdx()];
   Point2D at2_cds = atCds_[bond->getEndAtomIdx()];
   // If the atoms are on top of each other, perp comes out as NaN which
@@ -2911,7 +2911,7 @@ Point2D DrawMol::getDrawCoords(const Point2D &atCds) const {
 // ****************************************************************************
 Point2D DrawMol::getDrawCoords(int atnum) const {
   PRECONDITION(atnum >= 0 && atnum < static_cast<int>(atCds_.size()),
-               "bad atom number");
+               "bad atom number")
   return getDrawCoords(Point2D(atCds_[atnum].x, -atCds_[atnum].y));
 }
 
@@ -2931,7 +2931,7 @@ Point2D DrawMol::getAtomCoords(const Point2D &screenCds) const {
 // ****************************************************************************
 Point2D DrawMol::getAtomCoords(int atnum) const {
   PRECONDITION(atnum >= 0 && atnum < static_cast<int>(atCds_.size()),
-               "bad atom number");
+               "bad atom number")
   return atCds_[atnum];
 }
 

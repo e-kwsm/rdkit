@@ -179,7 +179,7 @@ bool ChemicalReaction::validate(unsigned int &numWarnings,
           //   if it is mapped multiple times
           // ------------
           const Atom *rAtom = reactingAtoms[mapNum];
-          CHECK_INVARIANT(rAtom, "missing atom");
+          CHECK_INVARIANT(rAtom, "missing atom")
           if (rAtom->getDegree() != (*atomIt)->getDegree()) {
             (*atomIt)->setProp(common_properties::_ReactionDegreeChanged, 1);
           }
@@ -204,7 +204,7 @@ bool ChemicalReaction::validate(unsigned int &numWarnings,
           //   The atom is mapped, check to see if its connectivity changes
           // ------------
           const Atom *rAtom = reactingAtoms[mapNum];
-          CHECK_INVARIANT(rAtom, "missing atom");
+          CHECK_INVARIANT(rAtom, "missing atom")
           if (rAtom->getDegree() != (*atomIt)->getDegree()) {
             (*atomIt)->setProp(common_properties::_ReactionDegreeChanged, 1);
           }
@@ -494,7 +494,7 @@ int numComplexQueries(
 bool isChangedAtom(const Atom &rAtom, const Atom &pAtom, int mapNum,
                    const std::map<int, const Atom *> &mappedProductAtoms) {
   PRECONDITION(mappedProductAtoms.find(mapNum) != mappedProductAtoms.end(),
-               "atom not mapped in products");
+               "atom not mapped in products")
 
   if (rAtom.getAtomicNum() != pAtom.getAtomicNum() &&
       pAtom.getAtomicNum() > 0) {

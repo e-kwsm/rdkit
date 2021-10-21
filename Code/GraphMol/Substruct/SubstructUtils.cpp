@@ -126,8 +126,8 @@ bool propertyCompat(const RDProps *r1, const RDProps *r2,
 
 bool atomCompat(const Atom *a1, const Atom *a2,
                 const SubstructMatchParameters &ps) {
-  PRECONDITION(a1, "bad atom");
-  PRECONDITION(a2, "bad atom");
+  PRECONDITION(a1, "bad atom")
+  PRECONDITION(a2, "bad atom")
   // std::cerr << "\t\tatomCompat: "<< a1 << " " << a1->getIdx() << "-" << a2 <<
   // " " << a2->getIdx() << std::endl;
 
