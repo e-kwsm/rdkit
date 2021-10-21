@@ -52,7 +52,7 @@ RDKIT_RDGENERAL_EXPORT double_source_type &getDoubleRandomSource();
 
 template <class T>
 unsigned int countSwapsToInterconvert(const T &ref, T probe) {
-  PRECONDITION(ref.size() == probe.size(), "size mismatch");
+  PRECONDITION(ref.size() == probe.size(), "size mismatch")
   typename T::const_iterator refIt = ref.begin();
   typename T::iterator probeIt = probe.begin();
   typename T::iterator probeIt2;
@@ -68,7 +68,7 @@ unsigned int countSwapsToInterconvert(const T &ref, T probe) {
       if (probeIt2 != probe.end()) {
         foundIt = true;
       }
-      CHECK_INVARIANT(foundIt, "could not find probe element");
+      CHECK_INVARIANT(foundIt, "could not find probe element")
 
       std::swap(*probeIt, *probeIt2);
       nSwaps++;

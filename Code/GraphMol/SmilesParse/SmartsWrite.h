@@ -92,6 +92,6 @@ inline std::string MolFragmentToCXSmarts(
   params.doIsomericSmiles = doIsomericSmarts;
   return MolFragmentToCXSmarts(mol, params, atomsToUse, bondsToUse);
 }
-};  // namespace RDKit
+}  // namespace RDKit
 
 #endif

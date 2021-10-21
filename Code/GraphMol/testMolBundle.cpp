@@ -29,29 +29,29 @@ void testBaseFunctionality() {
 
   {
     MolBundle bundle;
-    TEST_ASSERT(bundle.size() == 0);
-    TEST_ASSERT(bundle.addMol(mol) == 1);
-    TEST_ASSERT(bundle.size() == 1);
-    TEST_ASSERT(bundle.addMol(ROMOL_SPTR(SmilesToMol("CC[C@@H](C)F"))) == 2);
-    TEST_ASSERT(bundle.size() == 2);
+    TEST_ASSERT(bundle.size() == 0)
+    TEST_ASSERT(bundle.addMol(mol) == 1)
+    TEST_ASSERT(bundle.size() == 1)
+    TEST_ASSERT(bundle.addMol(ROMOL_SPTR(SmilesToMol("CC[C@@H](C)F"))) == 2)
+    TEST_ASSERT(bundle.size() == 2)
 
     MolBundle bundle2(bundle);
-    TEST_ASSERT(bundle2.size() == 2);
+    TEST_ASSERT(bundle2.size() == 2)
 
-    TEST_ASSERT(bundle.getMol(0)->getNumAtoms() == 5);
-    TEST_ASSERT(bundle[0]->getNumAtoms() == 5);
+    TEST_ASSERT(bundle.getMol(0)->getNumAtoms() == 5)
+    TEST_ASSERT(bundle[0]->getNumAtoms() == 5)
   }
 
   {
     FixedMolSizeMolBundle bundle;
-    TEST_ASSERT(bundle.size() == 0);
-    TEST_ASSERT(bundle.addMol(mol) == 1);
-    TEST_ASSERT(bundle.size() == 1);
-    TEST_ASSERT(bundle.addMol(ROMOL_SPTR(SmilesToMol("CC[C@@H](C)F"))) == 2);
-    TEST_ASSERT(bundle.size() == 2);
+    TEST_ASSERT(bundle.size() == 0)
+    TEST_ASSERT(bundle.addMol(mol) == 1)
+    TEST_ASSERT(bundle.size() == 1)
+    TEST_ASSERT(bundle.addMol(ROMOL_SPTR(SmilesToMol("CC[C@@H](C)F"))) == 2)
+    TEST_ASSERT(bundle.size() == 2)
 
     FixedMolSizeMolBundle bundle2(bundle);
-    TEST_ASSERT(bundle2.size() == 2);
+    TEST_ASSERT(bundle2.size() == 2)
   }
 
   BOOST_LOG(rdInfoLog) << "  Done." << std::endl;
@@ -62,59 +62,59 @@ void testSubstructFunctionality() {
                        << "    testSubstructFunctionality" << std::endl;
   {
     MolBundle bundle;
-    TEST_ASSERT(bundle.addMol(ROMOL_SPTR(SmilesToMol("CC[C@H](Cl)F"))) == 1);
-    TEST_ASSERT(bundle.addMol(ROMOL_SPTR(SmilesToMol("CC[C@@H](Cl)F"))) == 2);
+    TEST_ASSERT(bundle.addMol(ROMOL_SPTR(SmilesToMol("CC[C@H](Cl)F"))) == 1)
+    TEST_ASSERT(bundle.addMol(ROMOL_SPTR(SmilesToMol("CC[C@@H](Cl)F"))) == 2)
 
     ROMOL_SPTR qry(SmilesToMol("C[C@@H](Cl)F"));
     MatchVectType match;
-    TEST_ASSERT(SubstructMatch(bundle, *qry, match));
-    TEST_ASSERT(SubstructMatch(bundle, *qry, match, true, true));
+    TEST_ASSERT(SubstructMatch(bundle, *qry, match))
+    TEST_ASSERT(SubstructMatch(bundle, *qry, match, true, true))
     ROMOL_SPTR qry2(SmilesToMol("C[C@@H](Br)F"));
-    TEST_ASSERT(!SubstructMatch(bundle, *qry2, match));
-    TEST_ASSERT(!SubstructMatch(bundle, *qry2, match, true, true));
+    TEST_ASSERT(!SubstructMatch(bundle, *qry2, match))
+    TEST_ASSERT(!SubstructMatch(bundle, *qry2, match, true, true))
 
     std::vector<MatchVectType> matches;
-    TEST_ASSERT(SubstructMatch(bundle, *qry, matches) == 1);
-    TEST_ASSERT(SubstructMatch(bundle, *qry, matches, false, true, true) == 1);
-    TEST_ASSERT(SubstructMatch(bundle, *qry2, matches) == 0);
-    TEST_ASSERT(SubstructMatch(bundle, *qry2, matches, false, true, true) == 0);
+    TEST_ASSERT(SubstructMatch(bundle, *qry, matches) == 1)
+    TEST_ASSERT(SubstructMatch(bundle, *qry, matches, false, true, true) == 1)
+    TEST_ASSERT(SubstructMatch(bundle, *qry2, matches) == 0)
+    TEST_ASSERT(SubstructMatch(bundle, *qry2, matches, false, true, true) == 0)
   }
   {
     MolBundle bundle;
-    TEST_ASSERT(bundle.addMol(ROMOL_SPTR(SmilesToMol("C[C@H](Cl)F"))) == 1);
-    TEST_ASSERT(bundle.addMol(ROMOL_SPTR(SmilesToMol("C[C@@H](Cl)F"))) == 2);
+    TEST_ASSERT(bundle.addMol(ROMOL_SPTR(SmilesToMol("C[C@H](Cl)F"))) == 1)
+    TEST_ASSERT(bundle.addMol(ROMOL_SPTR(SmilesToMol("C[C@@H](Cl)F"))) == 2)
 
     ROMOL_SPTR mol(SmilesToMol("CC[C@@H](Cl)F"));
     MatchVectType match;
-    TEST_ASSERT(SubstructMatch(*mol, bundle, match));
-    TEST_ASSERT(SubstructMatch(*mol, bundle, match, true, true));
+    TEST_ASSERT(SubstructMatch(*mol, bundle, match))
+    TEST_ASSERT(SubstructMatch(*mol, bundle, match, true, true))
     ROMOL_SPTR mol2(SmilesToMol("CC[C@@H](Br)F"));
-    TEST_ASSERT(!SubstructMatch(*mol2, bundle, match));
-    TEST_ASSERT(!SubstructMatch(*mol2, bundle, match, true, true));
+    TEST_ASSERT(!SubstructMatch(*mol2, bundle, match))
+    TEST_ASSERT(!SubstructMatch(*mol2, bundle, match, true, true))
 
     std::vector<MatchVectType> matches;
-    TEST_ASSERT(SubstructMatch(*mol, bundle, matches) == 1);
-    TEST_ASSERT(SubstructMatch(*mol, bundle, matches, false, true, true) == 1);
-    TEST_ASSERT(SubstructMatch(*mol2, bundle, matches) == 0);
-    TEST_ASSERT(SubstructMatch(*mol2, bundle, matches, false, true, true) == 0);
+    TEST_ASSERT(SubstructMatch(*mol, bundle, matches) == 1)
+    TEST_ASSERT(SubstructMatch(*mol, bundle, matches, false, true, true) == 1)
+    TEST_ASSERT(SubstructMatch(*mol2, bundle, matches) == 0)
+    TEST_ASSERT(SubstructMatch(*mol2, bundle, matches, false, true, true) == 0)
   }
   {
     MolBundle bundle;
-    TEST_ASSERT(bundle.addMol(ROMOL_SPTR(SmilesToMol("CC[C@H](Cl)F"))) == 1);
-    TEST_ASSERT(bundle.addMol(ROMOL_SPTR(SmilesToMol("CC[C@@H](Cl)F"))) == 2);
+    TEST_ASSERT(bundle.addMol(ROMOL_SPTR(SmilesToMol("CC[C@H](Cl)F"))) == 1)
+    TEST_ASSERT(bundle.addMol(ROMOL_SPTR(SmilesToMol("CC[C@@H](Cl)F"))) == 2)
 
     MolBundle qbundle;
-    TEST_ASSERT(qbundle.addMol(ROMOL_SPTR(SmilesToMol("C[13C@H](Cl)F"))) == 1);
-    TEST_ASSERT(qbundle.addMol(ROMOL_SPTR(SmilesToMol("C[C@@H](Cl)F"))) == 2);
+    TEST_ASSERT(qbundle.addMol(ROMOL_SPTR(SmilesToMol("C[13C@H](Cl)F"))) == 1)
+    TEST_ASSERT(qbundle.addMol(ROMOL_SPTR(SmilesToMol("C[C@@H](Cl)F"))) == 2)
 
     MatchVectType match;
-    TEST_ASSERT(SubstructMatch(bundle, qbundle, match));
-    TEST_ASSERT(SubstructMatch(bundle, qbundle, match, true, true));
+    TEST_ASSERT(SubstructMatch(bundle, qbundle, match))
+    TEST_ASSERT(SubstructMatch(bundle, qbundle, match, true, true))
 
     std::vector<MatchVectType> matches;
-    TEST_ASSERT(SubstructMatch(bundle, qbundle, matches) == 1);
+    TEST_ASSERT(SubstructMatch(bundle, qbundle, matches) == 1)
     TEST_ASSERT(SubstructMatch(bundle, qbundle, matches, false, true, true) ==
-                1);
+                1)
   }
   BOOST_LOG(rdInfoLog) << "  Done." << std::endl;
 }
@@ -127,9 +127,9 @@ void testExceptions() {
   {
     // FixedMolSizeMolBundle requires all molecules to have the same size
     FixedMolSizeMolBundle bundle;
-    TEST_ASSERT(bundle.size() == 0);
-    TEST_ASSERT(bundle.addMol(mol) == 1);
-    TEST_ASSERT(bundle.size() == 1);
+    TEST_ASSERT(bundle.size() == 0)
+    TEST_ASSERT(bundle.addMol(mol) == 1)
+    TEST_ASSERT(bundle.size() == 1)
     {
       bool ok = false;
       try {
@@ -137,7 +137,7 @@ void testExceptions() {
       } catch (const ValueErrorException &) {
         ok = true;
       }
-      TEST_ASSERT(ok);
+      TEST_ASSERT(ok)
     }
     {
       bool ok = false;
@@ -146,7 +146,7 @@ void testExceptions() {
       } catch (const ValueErrorException &) {
         ok = true;
       }
-      TEST_ASSERT(ok);
+      TEST_ASSERT(ok)
     }
     {
       bool ok = false;
@@ -155,7 +155,7 @@ void testExceptions() {
       } catch (const IndexErrorException &) {
         ok = true;
       }
-      TEST_ASSERT(ok);
+      TEST_ASSERT(ok)
     }
     {
       bool ok = false;
@@ -164,18 +164,18 @@ void testExceptions() {
       } catch (const IndexErrorException &) {
         ok = true;
       }
-      TEST_ASSERT(ok);
+      TEST_ASSERT(ok)
     }
   }
   {
     // MolBundle requires supports different size molecules
     MolBundle bundle;
-    TEST_ASSERT(bundle.size() == 0);
-    TEST_ASSERT(bundle.addMol(mol) == 1);
-    TEST_ASSERT(bundle.size() == 1);
+    TEST_ASSERT(bundle.size() == 0)
+    TEST_ASSERT(bundle.addMol(mol) == 1)
+    TEST_ASSERT(bundle.size() == 1)
     bundle.addMol(ROMOL_SPTR(SmilesToMol("C1CC1")));
     bundle.addMol(ROMOL_SPTR(SmilesToMol("CCCC")));
-    TEST_ASSERT(bundle.size() == 3);
+    TEST_ASSERT(bundle.size() == 3)
   }
   BOOST_LOG(rdInfoLog) << "  Done." << std::endl;
 }
