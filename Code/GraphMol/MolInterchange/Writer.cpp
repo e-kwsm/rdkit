@@ -149,7 +149,7 @@ void addQuery(const Q &query, rj::Value &rjQuery, rj::Document &doc,
   if (typeid(query) == typeid(RecursiveStructureQuery)) {
     auto rq = (const RecursiveStructureQuery *)&query;
     auto submol = rq->getQueryMol();
-    PRECONDITION(submol, "bad recursive query");
+    PRECONDITION(submol, "bad recursive query")
     rj::Value subquery(rj::kObjectType);
     addMol(*submol, subquery, doc,
            *rj::GetValueByPointer(doc, "/defaults/atom"),
@@ -692,7 +692,7 @@ std::string MolsToJSONData(const std::vector<T> &mols,
   writer.SetMaxDecimalPlaces(4);
   doc.Accept(writer);
   return buffer.GetString();
-};
+}
 
 template RDKIT_MOLINTERCHANGE_EXPORT std::string MolsToJSONData<ROMol *>(
     const std::vector<ROMol *> &, const JSONWriteParameters &);

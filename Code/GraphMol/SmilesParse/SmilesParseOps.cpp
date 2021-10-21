@@ -23,7 +23,7 @@ namespace SmilesParseOps {
 using namespace RDKit;
 
 void ClearAtomChemicalProps(RDKit::Atom *atom) {
-  TEST_ASSERT(atom);
+  TEST_ASSERT(atom)
   atom->setIsotope(0);
   atom->setFormalCharge(0);
   atom->setNumExplicitHs(0);
@@ -50,8 +50,8 @@ void CheckRingClosureBranchStatus(RDKit::Atom *atom, RDKit::RWMol *mp) {
   //   2) [C@@](Cl)1(F)I.Br1    (reverse)
   //   3) [C@@](Cl)(F)1I.Br1    (ok)
   //   4) [C@@](Cl)(F)(I)1.Br1  (reverse)
-  PRECONDITION(atom, "bad atom");
-  PRECONDITION(mp, "bad mol");
+  PRECONDITION(atom, "bad atom")
+  PRECONDITION(mp, "bad mol")
   if (atom->getIdx() != mp->getNumAtoms(true) - 1 &&
       (atom->getDegree() == 1 ||
        (atom->getDegree() == 2 && atom->getIdx() != 0) ||
@@ -64,7 +64,7 @@ void CheckRingClosureBranchStatus(RDKit::Atom *atom, RDKit::RWMol *mp) {
 }
 
 void ReportParseError(const char *message, bool throwIt) {
-  PRECONDITION(message, "bad message");
+  PRECONDITION(message, "bad message")
   if (!throwIt) {
     BOOST_LOG(rdErrorLog) << "SMILES Parse Error: " << message << std::endl;
   } else {
@@ -73,7 +73,7 @@ void ReportParseError(const char *message, bool throwIt) {
 }
 
 void CleanupAfterParseError(RWMol *mol) {
-  PRECONDITION(mol, "no molecule");
+  PRECONDITION(mol, "no molecule")
   // blow out any partial bonds:
   for (auto markI : *mol->getBondBookmarks()) {
     RWMol::BOND_PTR_LIST &bonds = markI.second;
@@ -92,9 +92,9 @@ bool couldBeRingClosure(int val) { return val < 100000 && val >= 0; }
 //
 void AddFragToMol(RWMol *mol, RWMol *frag, Bond::BondType bondOrder,
                   Bond::BondDir bondDir) {
-  PRECONDITION(mol, "no molecule");
-  PRECONDITION(frag, "no fragment");
-  PRECONDITION(mol->getActiveAtom(), "no active atom");
+  PRECONDITION(mol, "no molecule")
+  PRECONDITION(frag, "no fragment")
+  PRECONDITION(mol->getActiveAtom(), "no active atom")
   Atom *lastAt = mol->getActiveAtom();
   int nOrigAtoms = mol->getNumAtoms();
   int nOrigBonds = mol->getNumBonds();
@@ -196,7 +196,7 @@ void AddFragToMol(RWMol *mol, RWMol *frag, Bond::BondType bondOrder,
 
   frag->clearAllAtomBookmarks();
   frag->clearAllBondBookmarks();
-};
+}
 
 typedef std::pair<size_t, int> SIZET_PAIR;
 typedef std::pair<int, int> INT_PAIR;
@@ -206,7 +206,7 @@ bool operator<(const std::pair<T, T> &p1, const std::pair<T, T> &p2) {
 }
 
 void AdjustAtomChiralityFlags(RWMol *mol) {
-  PRECONDITION(mol, "no molecule");
+  PRECONDITION(mol, "no molecule")
   for (auto atom : mol->atoms()) {
     Atom::ChiralType chiralType = atom->getChiralTag();
     if (chiralType == Atom::CHI_TETRAHEDRAL_CW ||
@@ -251,7 +251,7 @@ void AdjustAtomChiralityFlags(RWMol *mol) {
       if (selfPos->first != atom->getIdx()) {
         ++selfPos;
       }
-      CHECK_INVARIANT(selfPos->first == atom->getIdx(), "weird atom ordering");
+      CHECK_INVARIANT(selfPos->first == atom->getIdx(), "weird atom ordering")
 
       // copy over the bond ids:
       INT_LIST bondOrdering;
@@ -314,9 +314,9 @@ void AdjustAtomChiralityFlags(RWMol *mol) {
 
 Bond::BondType GetUnspecifiedBondType(const RWMol *mol, const Atom *atom1,
                                       const Atom *atom2) {
-  PRECONDITION(mol, "no molecule");
-  PRECONDITION(atom1, "no atom1");
-  PRECONDITION(atom2, "no atom2");
+  PRECONDITION(mol, "no molecule")
+  PRECONDITION(atom1, "no atom1")
+  PRECONDITION(atom2, "no atom2")
   Bond::BondType res;
   if (atom1->getIsAromatic() && atom2->getIsAromatic()) {
     res = Bond::AROMATIC;
@@ -326,7 +326,7 @@ Bond::BondType GetUnspecifiedBondType(const RWMol *mol, const Atom *atom1,
   return res;
 }
 void SetUnspecifiedBondTypes(RWMol *mol) {
-  PRECONDITION(mol, "no molecule");
+  PRECONDITION(mol, "no molecule")
   for (auto bond : mol->bonds()) {
     if (bond->hasProp(RDKit::common_properties::_unspecifiedOrder)) {
       bond->setBondType(GetUnspecifiedBondType(mol, bond->getBeginAtom(),
@@ -342,8 +342,8 @@ void SetUnspecifiedBondTypes(RWMol *mol) {
 
 namespace {
 void swapBondDirIfNeeded(Bond *bond1, const Bond *bond2) {
-  PRECONDITION(bond1, "bad bond1");
-  PRECONDITION(bond2, "bad bond2");
+  PRECONDITION(bond1, "bad bond1")
+  PRECONDITION(bond2, "bad bond2")
   if (bond1->getBondDir() == Bond::NONE && bond2->getBondDir() != Bond::NONE) {
     bond1->setBondDir(bond2->getBondDir());
     if (bond1->getBeginAtom() != bond2->getBeginAtom()) {
@@ -379,7 +379,7 @@ bool checkChiralPermutation(int chiralTag, int permutation) {
 }
 
 void CheckChiralitySpecifications(RDKit::RWMol *mol, bool strict) {
-  PRECONDITION(mol, "no molecule");
+  PRECONDITION(mol, "no molecule")
   for (const auto atom : mol->atoms()) {
     int permutation;
     if (atom->getChiralTag() > RDKit::Atom::ChiralType::CHI_OTHER &&
@@ -421,7 +421,7 @@ void CloseMolRings(RWMol *mol, bool toleratePartials) {
   //       whilst doing this, we have to be cognizant of the fact that
   //          there may well be partial bonds in the molecule which need
   //          to be tied in as well.  WOO HOO! IT'S A BIG MESS!
-  PRECONDITION(mol, "no molecule");
+  PRECONDITION(mol, "no molecule")
 
   auto bookmarkIt = mol->getAtomBookmarks()->begin();
   while (bookmarkIt != mol->getAtomBookmarks()->end()) {
@@ -465,7 +465,7 @@ void CloseMolRings(RWMol *mol, bool toleratePartials) {
           // the ring index was used.  We give the first specification
           // priority.
           CHECK_INVARIANT(mol->hasBondBookmark(bookmark.first),
-                          "Missing bond bookmark");
+                          "Missing bond bookmark")
 
           // now use the info from the partial bond:
           // The partial bond itself will have a proper order and
@@ -474,7 +474,7 @@ void CloseMolRings(RWMol *mol, bool toleratePartials) {
           RWMol::BOND_PTR_LIST bonds =
               mol->getAllBondsWithBookmark(bookmark.first);
           auto bondIt = bonds.begin();
-          CHECK_INVARIANT(bonds.size() >= 2, "Missing bond");
+          CHECK_INVARIANT(bonds.size() >= 2, "Missing bond")
 
           // get pointers to the two bonds:
           Bond *bond1 = *bondIt;
@@ -487,9 +487,9 @@ void CloseMolRings(RWMol *mol, bool toleratePartials) {
 
           // Make sure the bonds have the correct starting atoms:
           CHECK_INVARIANT(bond1->getBeginAtomIdx() == atom1->getIdx(),
-                          "bad begin atom");
+                          "bad begin atom")
           CHECK_INVARIANT(bond2->getBeginAtomIdx() == atom2->getIdx(),
-                          "bad begin atom");
+                          "bad begin atom")
 
           // we use the _cxsmilesBondIdx value from the second one, if it's
           // there
@@ -565,13 +565,13 @@ void CloseMolRings(RWMol *mol, bool toleratePartials) {
             CHECK_INVARIANT(
                 atom1->hasProp(common_properties::_RingClosures) &&
                     atom2->hasProp(common_properties::_RingClosures),
-                "somehow atom doesn't have _RingClosures property.");
+                "somehow atom doesn't have _RingClosures property.")
             INT_VECT closures;
             atom1->getProp(common_properties::_RingClosures, closures);
             auto closurePos = std::find(closures.begin(), closures.end(),
                                         -(bookmark.first + 1));
             CHECK_INVARIANT(closurePos != closures.end(),
-                            "could not find bookmark in atom _RingClosures");
+                            "could not find bookmark in atom _RingClosures")
             *closurePos = bondIdx - 1;
             atom1->setProp(common_properties::_RingClosures, closures);
 
@@ -579,7 +579,7 @@ void CloseMolRings(RWMol *mol, bool toleratePartials) {
             closurePos = std::find(closures.begin(), closures.end(),
                                    -(bookmark.first + 1));
             CHECK_INVARIANT(closurePos != closures.end(),
-                            "could not find bookmark in atom _RingClosures");
+                            "could not find bookmark in atom _RingClosures")
             *closurePos = bondIdx - 1;
             atom2->setProp(common_properties::_RingClosures, closures);
           }
@@ -596,10 +596,10 @@ void CloseMolRings(RWMol *mol, bool toleratePartials) {
       ++bookmarkIt;
     }
   }
-};
+}
 
 void CleanupAfterParsing(RWMol *mol) {
-  PRECONDITION(mol, "no molecule");
+  PRECONDITION(mol, "no molecule")
   for (auto atom : mol->atoms()) {
     atom->clearProp(common_properties::_RingClosures);
     atom->clearProp(common_properties::_SmilesStart);

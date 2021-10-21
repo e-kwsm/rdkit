@@ -45,7 +45,7 @@ double pickRandomDistMat(const BoundsMatrix &mmat,
                          RDKit::double_source_type &rng) {
   // make sure the sizes match up
   unsigned int npt = mmat.numRows();
-  CHECK_INVARIANT(npt == distMat.numRows(), "Size mismatch");
+  CHECK_INVARIANT(npt == distMat.numRows(), "Size mismatch")
 
   double largestVal = -1.0;
   double *ddata = distMat.getData();
@@ -54,7 +54,7 @@ double pickRandomDistMat(const BoundsMatrix &mmat,
     for (unsigned int j = 0; j < i; j++) {
       double ub = mmat.getUpperBound(i, j);
       double lb = mmat.getLowerBound(i, j);
-      CHECK_INVARIANT(ub >= lb, "");
+      CHECK_INVARIANT(ub >= lb, "")
       double rval = rng();
       // std::cerr<<i<<"-"<<j<<": "<<rval<<std::endl;
       double d = lb + (rval) * (ub - lb);
@@ -83,7 +83,7 @@ bool computeInitialCoords(const RDNumeric::SymmMatrix<double> &distMat,
                           unsigned int numZeroFail) {
   unsigned int N = distMat.numRows();
   unsigned int nPt = positions.size();
-  CHECK_INVARIANT(nPt == N, "Size mismatch");
+  CHECK_INVARIANT(nPt == N, "Size mismatch")
 
   unsigned int dim = positions.front()->dimension();
 
@@ -171,7 +171,7 @@ bool computeRandomCoords(RDGeom::PointPtrVect &positions, double boxSize,
 }
 bool computeRandomCoords(RDGeom::PointPtrVect &positions, double boxSize,
                          RDKit::double_source_type &rng) {
-  CHECK_INVARIANT(boxSize > 0.0, "bad boxSize");
+  CHECK_INVARIANT(boxSize > 0.0, "bad boxSize")
 
   for (auto pt : positions) {
     for (unsigned int i = 0; i < pt->dimension(); ++i) {
@@ -187,7 +187,7 @@ ForceFields::ForceField *constructForceField(
     std::map<std::pair<int, int>, double> *extraWeights, double basinSizeTol,
     boost::dynamic_bitset<> *fixedPts) {
   unsigned int N = mmat.numRows();
-  CHECK_INVARIANT(N == positions.size(), "");
+  CHECK_INVARIANT(N == positions.size(), "")
   auto *field = new ForceFields::ForceField(positions[0]->dimension());
   field->positions().insert(field->positions().begin(), positions.begin(),
                             positions.end());

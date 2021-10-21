@@ -25,7 +25,7 @@ namespace Utils {
 
 std::pair<double, double> calcStbnForceConstants(
     const MMFFStbn *mmffStbnParams) {
-  PRECONDITION(mmffStbnParams, "stretch-bend parameters not found");
+  PRECONDITION(mmffStbnParams, "stretch-bend parameters not found")
 
   return std::make_pair(mmffStbnParams->kbaIJK, mmffStbnParams->kbaKJI);
 }
@@ -45,12 +45,12 @@ StretchBendContrib::StretchBendContrib(
     const unsigned int idx3, const MMFFStbn *mmffStbnParams,
     const MMFFAngle *mmffAngleParams, const MMFFBond *mmffBondParams1,
     const MMFFBond *mmffBondParams2) {
-  PRECONDITION(owner, "bad owner");
+  PRECONDITION(owner, "bad owner")
   PRECONDITION(((idx1 != idx2) && (idx2 != idx3) && (idx1 != idx3)),
-               "degenerate points");
-  URANGE_CHECK(idx1, owner->positions().size());
-  URANGE_CHECK(idx2, owner->positions().size());
-  URANGE_CHECK(idx3, owner->positions().size());
+               "degenerate points")
+  URANGE_CHECK(idx1, owner->positions().size())
+  URANGE_CHECK(idx2, owner->positions().size())
+  URANGE_CHECK(idx3, owner->positions().size())
 
   dp_forceField = owner;
   d_at1Idx = idx1;
@@ -63,8 +63,8 @@ StretchBendContrib::StretchBendContrib(
 }
 
 double StretchBendContrib::getEnergy(double *pos) const {
-  PRECONDITION(dp_forceField, "no owner");
-  PRECONDITION(pos, "bad vector");
+  PRECONDITION(dp_forceField, "no owner")
+  PRECONDITION(pos, "bad vector")
   double dist1 = dp_forceField->distance(d_at1Idx, d_at2Idx, pos);
   double dist2 = dp_forceField->distance(d_at2Idx, d_at3Idx, pos);
 
@@ -84,9 +84,9 @@ double StretchBendContrib::getEnergy(double *pos) const {
 }
 
 void StretchBendContrib::getGrad(double *pos, double *grad) const {
-  PRECONDITION(dp_forceField, "no owner");
-  PRECONDITION(pos, "bad vector");
-  PRECONDITION(grad, "bad vector");
+  PRECONDITION(dp_forceField, "no owner")
+  PRECONDITION(pos, "bad vector")
+  PRECONDITION(grad, "bad vector")
   double dist1 = dp_forceField->distance(d_at1Idx, d_at2Idx, pos);
   double dist2 = dp_forceField->distance(d_at2Idx, d_at3Idx, pos);
 
