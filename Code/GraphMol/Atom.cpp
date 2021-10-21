@@ -187,12 +187,12 @@ Atom::Atom() : RDProps() {
 Atom::Atom(unsigned int num) : RDProps() {
   d_atomicNum = num;
   initAtom();
-};
+}
 
 Atom::Atom(const std::string &what) : RDProps() {
   d_atomicNum = PeriodicTable::getTable()->getAtomicNumber(what);
   initAtom();
-};
+}
 
 void Atom::initFromOther(const Atom &other) {
   RDProps::operator=(other);
@@ -301,14 +301,14 @@ unsigned int Atom::getNumImplicitHs() const {
 
   PRECONDITION(d_implicitValence > -1,
                "getNumImplicitHs() called without preceding call to "
-               "calcImplicitValence()");
+               "calcImplicitValence()")
   return getImplicitValence();
 }
 
 int Atom::getExplicitValence() const {
   PRECONDITION(
       d_explicitValence > -1,
-      "getExplicitValence() called without call to calcExplicitValence()");
+      "getExplicitValence() called without call to calcExplicitValence()")
   return d_explicitValence;
 }
 
@@ -688,16 +688,16 @@ bool Atom::hasValenceViolation() const {
 
 void Atom::setQuery(Atom::QUERYATOM_QUERY *) {
   //  Atoms don't have complex queries so this has to fail
-  PRECONDITION(0, "plain atoms have no Query");
+  PRECONDITION(0, "plain atoms have no Query")
 }
-Atom::QUERYATOM_QUERY *Atom::getQuery() const { return nullptr; };
+Atom::QUERYATOM_QUERY *Atom::getQuery() const { return nullptr; }
 void Atom::expandQuery(Atom::QUERYATOM_QUERY *, Queries::CompositeQueryType,
                        bool) {
-  PRECONDITION(0, "plain atoms have no Query");
+  PRECONDITION(0, "plain atoms have no Query")
 }
 
 bool Atom::Match(Atom const *what) const {
-  PRECONDITION(what, "bad query atom");
+  PRECONDITION(what, "bad query atom")
   bool res = getAtomicNum() == what->getAtomicNum();
 
   // special dummy--dummy match case:
@@ -852,10 +852,10 @@ bool Atom::invertChirality() {
 }
 
 void setAtomRLabel(Atom *atm, int rlabel) {
-  PRECONDITION(atm, "bad atom");
+  PRECONDITION(atm, "bad atom")
   // rlabel ==> n2 => 0..99
   PRECONDITION(rlabel >= 0 && rlabel < 100,
-               "rlabel out of range for MDL files");
+               "rlabel out of range for MDL files")
   if (rlabel) {
     atm->setProp(common_properties::_MolFileRLabel,
                  static_cast<unsigned int>(rlabel));
@@ -865,14 +865,14 @@ void setAtomRLabel(Atom *atm, int rlabel) {
 }
 //! Gets the atom's RLabel
 int getAtomRLabel(const Atom *atom) {
-  PRECONDITION(atom, "bad atom");
+  PRECONDITION(atom, "bad atom")
   unsigned int rlabel = 0;
   atom->getPropIfPresent(common_properties::_MolFileRLabel, rlabel);
   return static_cast<int>(rlabel);
 }
 
 void setAtomAlias(Atom *atom, const std::string &alias) {
-  PRECONDITION(atom, "bad atom");
+  PRECONDITION(atom, "bad atom")
   if (alias != "") {
     atom->setProp(common_properties::molFileAlias, alias);
   } else {
@@ -881,14 +881,14 @@ void setAtomAlias(Atom *atom, const std::string &alias) {
 }
 
 std::string getAtomAlias(const Atom *atom) {
-  PRECONDITION(atom, "bad atom");
+  PRECONDITION(atom, "bad atom")
   std::string alias;
   atom->getPropIfPresent(common_properties::molFileAlias, alias);
   return alias;
 }
 
 void setAtomValue(Atom *atom, const std::string &value) {
-  PRECONDITION(atom, "bad atom");
+  PRECONDITION(atom, "bad atom")
   if (value != "") {
     atom->setProp(common_properties::molFileValue, value);
   } else {
@@ -897,14 +897,14 @@ void setAtomValue(Atom *atom, const std::string &value) {
 }
 
 std::string getAtomValue(const Atom *atom) {
-  PRECONDITION(atom, "bad atom");
+  PRECONDITION(atom, "bad atom")
   std::string value;
   atom->getPropIfPresent(common_properties::molFileValue, value);
   return value;
 }
 
 void setSupplementalSmilesLabel(Atom *atom, const std::string &label) {
-  PRECONDITION(atom, "bad atom");
+  PRECONDITION(atom, "bad atom")
   if (label != "") {
     atom->setProp(common_properties::_supplementalSmilesLabel, label);
   } else {
@@ -913,7 +913,7 @@ void setSupplementalSmilesLabel(Atom *atom, const std::string &label) {
 }
 
 std::string getSupplementalSmilesLabel(const Atom *atom) {
-  PRECONDITION(atom, "bad atom");
+  PRECONDITION(atom, "bad atom")
   std::string label;
   atom->getPropIfPresent(common_properties::_supplementalSmilesLabel, label);
   return label;
@@ -1042,4 +1042,4 @@ std::ostream &operator<<(std::ostream &target, const RDKit::Atom &at) {
     target << " query: " << at.getQuery()->getDescription();
   }
   return target;
-};
+}

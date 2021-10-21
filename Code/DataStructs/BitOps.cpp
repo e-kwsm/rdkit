@@ -950,8 +950,8 @@ unsigned int CalcBitmapPopcount(const unsigned char *afp, unsigned int nBytes) {
 unsigned int CalcBitmapNumBitsInCommon(const unsigned char *afp,
                                        const unsigned char *bfp,
                                        unsigned int nBytes) {
-  PRECONDITION(afp, "no afp");
-  PRECONDITION(bfp, "no bfp");
+  PRECONDITION(afp, "no afp")
+  PRECONDITION(bfp, "no bfp")
   unsigned int intersect_popcount = 0;
 #ifndef RDK_OPTIMIZE_POPCNT
   for (unsigned int i = 0; i < nBytes; i++) {
@@ -973,8 +973,8 @@ unsigned int CalcBitmapNumBitsInCommon(const unsigned char *afp,
 
 double CalcBitmapTanimoto(const unsigned char *afp, const unsigned char *bfp,
                           unsigned int nBytes) {
-  PRECONDITION(afp, "no afp");
-  PRECONDITION(bfp, "no bfp");
+  PRECONDITION(afp, "no afp")
+  PRECONDITION(bfp, "no bfp")
   unsigned int union_popcount = 0, intersect_popcount = 0;
 #ifndef RDK_OPTIMIZE_POPCNT
   for (unsigned int i = 0; i < nBytes; i++) {
@@ -1004,8 +1004,8 @@ double CalcBitmapTanimoto(const unsigned char *afp, const unsigned char *bfp,
 
 double CalcBitmapDice(const unsigned char *afp, const unsigned char *bfp,
                       unsigned int nBytes) {
-  PRECONDITION(afp, "no afp");
-  PRECONDITION(bfp, "no bfp");
+  PRECONDITION(afp, "no afp")
+  PRECONDITION(bfp, "no bfp")
   unsigned int intersect_popcount = 0, a_popcount = 0, b_popcount = 0;
 
 #ifndef RDK_OPTIMIZE_POPCNT
@@ -1040,8 +1040,8 @@ double CalcBitmapDice(const unsigned char *afp, const unsigned char *bfp,
 
 double CalcBitmapTversky(const unsigned char *afp, const unsigned char *bfp,
                          unsigned int nBytes, double ca, double cb) {
-  PRECONDITION(afp, "no afp");
-  PRECONDITION(bfp, "no bfp");
+  PRECONDITION(afp, "no afp")
+  PRECONDITION(bfp, "no bfp")
   unsigned int intersect_popcount = 0, acount = 0, bcount = 0;
 
 #ifndef RDK_OPTIMIZE_POPCNT
@@ -1077,8 +1077,8 @@ double CalcBitmapTversky(const unsigned char *afp, const unsigned char *bfp,
 bool CalcBitmapAllProbeBitsMatch(const unsigned char *probe,
                                  const unsigned char *ref,
                                  unsigned int nBytes) {
-  PRECONDITION(probe, "no probe");
-  PRECONDITION(ref, "no ref");
+  PRECONDITION(probe, "no probe")
+  PRECONDITION(ref, "no ref")
 
 #ifndef RDK_OPTIMIZE_POPCNT
   for (unsigned int i = 0; i < nBytes; i++) {

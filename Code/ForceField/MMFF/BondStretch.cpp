@@ -23,13 +23,13 @@ namespace MMFF {
 namespace Utils {
 
 double calcBondRestLength(const MMFFBond *mmffBondParams) {
-  PRECONDITION(mmffBondParams, "bond parameters not found");
+  PRECONDITION(mmffBondParams, "bond parameters not found")
 
   return mmffBondParams->r0;
 }
 
 double calcBondForceConstant(const MMFFBond *mmffBondParams) {
-  PRECONDITION(mmffBondParams, "bond parameters not found");
+  PRECONDITION(mmffBondParams, "bond parameters not found")
 
   return mmffBondParams->kb;
 }
@@ -51,9 +51,9 @@ BondStretchContrib::BondStretchContrib(ForceField *owner,
                                        const unsigned int idx1,
                                        const unsigned int idx2,
                                        const MMFFBond *mmffBondParams) {
-  PRECONDITION(owner, "bad owner");
-  URANGE_CHECK(idx1, owner->positions().size());
-  URANGE_CHECK(idx2, owner->positions().size());
+  PRECONDITION(owner, "bad owner")
+  URANGE_CHECK(idx1, owner->positions().size())
+  URANGE_CHECK(idx2, owner->positions().size())
 
   dp_forceField = owner;
   d_at1Idx = idx1;
@@ -63,17 +63,17 @@ BondStretchContrib::BondStretchContrib(ForceField *owner,
 }
 
 double BondStretchContrib::getEnergy(double *pos) const {
-  PRECONDITION(dp_forceField, "no owner");
-  PRECONDITION(pos, "bad vector");
+  PRECONDITION(dp_forceField, "no owner")
+  PRECONDITION(pos, "bad vector")
 
   return Utils::calcBondStretchEnergy(
       d_r0, d_kb, dp_forceField->distance(d_at1Idx, d_at2Idx, pos));
 }
 
 void BondStretchContrib::getGrad(double *pos, double *grad) const {
-  PRECONDITION(dp_forceField, "no owner");
-  PRECONDITION(pos, "bad vector");
-  PRECONDITION(grad, "bad vector");
+  PRECONDITION(dp_forceField, "no owner")
+  PRECONDITION(pos, "bad vector")
+  PRECONDITION(grad, "bad vector")
 
   double dist = dp_forceField->distance(d_at1Idx, d_at2Idx, pos);
 
