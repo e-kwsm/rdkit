@@ -76,8 +76,8 @@ bool getBestFitPlane(const Conformer &conf,
                      std::vector<double> &plane,
                      const std::vector<double> *weights) {
   PRECONDITION((!weights || weights->size() >= points.size()),
-               "bad weights vector");
-  PRECONDITION(plane.size() >= 4, "bad plane");
+               "bad weights vector")
+  PRECONDITION(plane.size() >= 4, "bad plane")
   RDGeom::Point3D origin(0, 0, 0);
   double wSum = 0.0;
 

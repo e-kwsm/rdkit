@@ -64,7 +64,7 @@ void FilterCatalogParams::fillCatalog(FilterCatalog &catalog) const {
     const unsigned int propEntries = GetNumPropertyEntries(catalogToAdd);
     // XXX Fix Me -> these should probably be shared to save memory
     const FilterProperty_t *props = GetFilterProperties(catalogToAdd);
-    CHECK_INVARIANT(props, "No filter properties for catalog");
+    CHECK_INVARIANT(props, "No filter properties for catalog")
 
     for (unsigned int i = 0; i < entries; ++i) {
       const FilterData_t &data = GetFilterData(catalogToAdd)[i];

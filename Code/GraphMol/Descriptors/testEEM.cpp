@@ -54,7 +54,7 @@ void testEEM1() {
   int errorMols = 0;
   while (!reader.atEnd()) {
     RDKit::ROMol *m = reader.next();
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
     std::string nm;
     m->getProp("_Name", nm);
     int errorAtoms = 0;
@@ -62,7 +62,7 @@ void testEEM1() {
     std::vector<std::string> myrow = data[nDone];
     std::string inm = myrow[0];
 
-    TEST_ASSERT(inm == nm);
+    TEST_ASSERT(inm == nm)
 
     int confId = -1;
     std::vector<double> charges;
@@ -90,7 +90,7 @@ void testEEM1() {
       std::cout << nDone << " " << inm << " " << errorAtoms << "\n";
       ++errorMols;
     }
-    TEST_ASSERT(errorAtoms == 0);
+    TEST_ASSERT(errorAtoms == 0)
     delete m;
     // break;
     ++nDone;
@@ -100,7 +100,7 @@ void testEEM1() {
   std::cout << "Elapsed time: " << elapsed.count() << " s\n";
 
   std::cout << "Errors:" << errorMols << "\n";
-  TEST_ASSERT(errorMols == 0);
+  TEST_ASSERT(errorMols == 0)
 
   BOOST_LOG(rdErrorLog) << "test on : " << nDone << " molecules done"
                         << std::endl;
@@ -137,7 +137,7 @@ void testEEM2() {
   int errorMols = 0;
   while (!reader.atEnd()) {
     RDKit::ROMol *m = reader.next();
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
     std::string nm;
     m->getProp("_Name", nm);
     int errorAtoms = 0;
@@ -145,7 +145,7 @@ void testEEM2() {
     std::vector<std::string> myrow = data[nDone];
     std::string inm = myrow[0];
 
-    TEST_ASSERT(inm == nm);
+    TEST_ASSERT(inm == nm)
 
     int confId = -1;
     std::vector<double> charges;
@@ -162,7 +162,7 @@ void testEEM2() {
         ++errorAtoms;
       }
 
-      TEST_ASSERT(fabs(ref - charges[i]) < 0.01);
+      TEST_ASSERT(fabs(ref - charges[i]) < 0.01)
     }
     if (nDone % 100 == 0) {
       std::cout << nDone << "\n";

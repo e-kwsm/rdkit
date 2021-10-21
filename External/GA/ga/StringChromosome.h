@@ -35,9 +35,7 @@ class GA_EXPORT StringChromosome<bool, BinaryStringChromosomePolicy>
  public:
   StringChromosome(int length_, GarethUtil::RandomUtil &rng_,
                    BinaryStringChromosomePolicy &chromosomePolicy_)
-      : StringChromosomeBase(length_, rng_, chromosomePolicy_) {
-    ;
-  }
+      : StringChromosomeBase(length_, rng_, chromosomePolicy_) {}
 
   int decodeToInt(int start, int nBits) const;
   int decodeByte(int byteNo) const { return decodeToInt(byteNo * 8, 8); }
@@ -56,9 +54,7 @@ class GA_EXPORT StringChromosome<int, IntegerStringChromosomePolicy>
  public:
   StringChromosome(int length_, GarethUtil::RandomUtil &rng_,
                    IntegerStringChromosomePolicy &chromosomePolicy_)
-      : StringChromosomeBase(length_, rng_, chromosomePolicy_) {
-    ;
-  }
+      : StringChromosomeBase(length_, rng_, chromosomePolicy_) {}
 
   void fullMixing(const IntegerStringChromosome &parent2,
                   IntegerStringChromosome &child1,

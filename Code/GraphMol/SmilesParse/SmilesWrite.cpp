@@ -822,7 +822,7 @@ std::vector<std::string> MolToRandomSmilesVect(
                               doRandom));
   }
   return res;
-};
+}
 std::string MolFragmentToSmiles(const ROMol &mol,
                                 const SmilesWriteParams &params,
                                 const std::vector<int> &atomsToUse,
