@@ -317,7 +317,7 @@ std::vector<std::tuple<Point2D, Point2D, Point2D, Point2D>> getWavyLineSegments(
     double vertOffset) {
   std::vector<std::tuple<Point2D, Point2D, Point2D, Point2D>> res;
 
-  PRECONDITION(nSegments > 1, "too few segments");
+  PRECONDITION(nSegments > 1, "too few segments")
 
   if (nSegments % 2) {
     ++nSegments;  // we're going to assume an even number of segments

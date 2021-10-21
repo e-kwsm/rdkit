@@ -181,7 +181,7 @@ class RDKIT_QUERY_EXPORT Query {
   /// result
   MatchFuncArgType TypeConvert(DataFuncArgType what,
                                Int2Type<true> /*d*/) const {
-    PRECONDITION(this->d_dataFunc, "no data function");
+    PRECONDITION(this->d_dataFunc, "no data function")
     MatchFuncArgType mfArg;
     mfArg = this->d_dataFunc(what);
     return mfArg;
@@ -205,6 +205,6 @@ int queryCmp(const T1 v1, const T2 v2, const T1 tol) {
   } else {
     return 1;
   }
-};
+}
 }  // namespace Queries
 #endif

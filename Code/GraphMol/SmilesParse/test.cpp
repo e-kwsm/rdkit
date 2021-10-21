@@ -1572,10 +1572,10 @@ void testIssue256() {
     auto mol = v2::SmilesParse::MolFromSmiles(smi, ps);
     TEST_ASSERT(mol);
     auto bond = mol->getBondBetweenAtoms(3, 0);
-    TEST_ASSERT(bond)
+    TEST_ASSERT(bond);
     TEST_ASSERT(bond->getBondType() == Bond::SINGLE);
     bond = mol->getBondBetweenAtoms(3, 6);
-    TEST_ASSERT(bond)
+    TEST_ASSERT(bond);
     TEST_ASSERT(bond->getBondType() == Bond::DOUBLE);
   }
 
@@ -1584,10 +1584,10 @@ void testIssue256() {
     auto mol = v2::SmilesParse::MolFromSmiles(smi, ps);
     TEST_ASSERT(mol);
     auto bond = mol->getBondBetweenAtoms(3, 0);
-    TEST_ASSERT(bond)
+    TEST_ASSERT(bond);
     TEST_ASSERT(bond->getBondType() == Bond::DOUBLE);
     bond = mol->getBondBetweenAtoms(3, 6);
-    TEST_ASSERT(bond)
+    TEST_ASSERT(bond);
     TEST_ASSERT(bond->getBondType() == Bond::SINGLE);
   }
 
@@ -3386,10 +3386,8 @@ void testRingStereochem() {
       std::string smi2 = inSmiles[idx++];
 
       RWMol *m1 = SmilesToMol(smi1);
-      ;
       TEST_ASSERT(m1);
       RWMol *m2 = SmilesToMol(smi2);
-      ;
       TEST_ASSERT(m2);
       TEST_ASSERT(m1->getNumAtoms() == m2->getNumAtoms());
       TEST_ASSERT(m1->getNumBonds() == m2->getNumBonds());

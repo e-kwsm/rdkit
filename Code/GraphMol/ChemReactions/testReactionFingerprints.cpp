@@ -57,20 +57,20 @@ void testStructuralFingerprintsReaction() {
 
     rxn = RxnSmartsToChemicalReaction(reaction, nullptr, true);
     rxnq = RxnSmartsToChemicalReaction(reactionq, nullptr, true);
-    TEST_ASSERT(rxn);
-    TEST_ASSERT(rxnq);
+    TEST_ASSERT(rxn)
+    TEST_ASSERT(rxnq)
     ReactionFingerprintParams params;
     params.fpType = FingerprintType::PatternFP;
     params.fpSize = 4096;
 
     ExplicitBitVect *rxnFP = StructuralFingerprintChemReaction(*rxn, params);
     ExplicitBitVect *rxnqFP = StructuralFingerprintChemReaction(*rxnq, params);
-    TEST_ASSERT(AllProbeBitsMatch(*rxnqFP, *rxnFP));
+    TEST_ASSERT(AllProbeBitsMatch(*rxnqFP, *rxnFP))
 
-    TEST_ASSERT(rxn->getNumReactantTemplates() == 1);
-    TEST_ASSERT(rxn->getNumProductTemplates() == 1);
-    TEST_ASSERT(rxnq->getNumReactantTemplates() == 1);
-    TEST_ASSERT(rxnq->getNumProductTemplates() == 1);
+    TEST_ASSERT(rxn->getNumReactantTemplates() == 1)
+    TEST_ASSERT(rxn->getNumProductTemplates() == 1)
+    TEST_ASSERT(rxnq->getNumReactantTemplates() == 1)
+    TEST_ASSERT(rxnq->getNumProductTemplates() == 1)
 
     MOL_SPTR_VECT::const_iterator reacts_iter = rxn->beginReactantTemplates();
     MOL_SPTR_VECT::const_iterator reacts_iterq = rxnq->beginReactantTemplates();
@@ -97,8 +97,8 @@ void testStructuralFingerprintsReaction() {
 
     rxn = RxnSmartsToChemicalReaction(reaction, nullptr, true);
     rxnq = RxnSmartsToChemicalReaction(reactionq, nullptr, true);
-    TEST_ASSERT(rxn);
-    TEST_ASSERT(rxnq);
+    TEST_ASSERT(rxn)
+    TEST_ASSERT(rxnq)
 
     ReactionFingerprintParams params;
     params.fpType = FingerprintType::PatternFP;
@@ -107,12 +107,12 @@ void testStructuralFingerprintsReaction() {
     ExplicitBitVect *rxnFP = StructuralFingerprintChemReaction(*rxn, params);
     ExplicitBitVect *rxnqFP = StructuralFingerprintChemReaction(*rxnq, params);
 
-    TEST_ASSERT(!AllProbeBitsMatch(*rxnqFP, *rxnFP));
+    TEST_ASSERT(!AllProbeBitsMatch(*rxnqFP, *rxnFP))
 
-    TEST_ASSERT(rxn->getNumReactantTemplates() == 1);
-    TEST_ASSERT(rxn->getNumProductTemplates() == 1);
-    TEST_ASSERT(rxnq->getNumReactantTemplates() == 1);
-    TEST_ASSERT(rxnq->getNumProductTemplates() == 1);
+    TEST_ASSERT(rxn->getNumReactantTemplates() == 1)
+    TEST_ASSERT(rxn->getNumProductTemplates() == 1)
+    TEST_ASSERT(rxnq->getNumReactantTemplates() == 1)
+    TEST_ASSERT(rxnq->getNumProductTemplates() == 1)
 
     MOL_SPTR_VECT::const_iterator reacts_iter = rxn->beginReactantTemplates();
     MOL_SPTR_VECT::const_iterator reacts_iterq = rxnq->beginReactantTemplates();
@@ -141,9 +141,9 @@ void testStructuralFingerprintsReaction() {
     rxn = RxnSmartsToChemicalReaction(reaction, nullptr, true);
     rxnq = RxnSmartsToChemicalReaction(reactionq, nullptr, true);
     rxnq2 = RxnSmartsToChemicalReaction(reactionq2, nullptr, true);
-    TEST_ASSERT(rxn);
-    TEST_ASSERT(rxnq);
-    TEST_ASSERT(rxnq2);
+    TEST_ASSERT(rxn)
+    TEST_ASSERT(rxnq)
+    TEST_ASSERT(rxnq2)
 
     ReactionFingerprintParams params;
     params.fpType = FingerprintType::PatternFP;
@@ -153,15 +153,15 @@ void testStructuralFingerprintsReaction() {
     ExplicitBitVect *rxnq2FP =
         StructuralFingerprintChemReaction(*rxnq2, params);
 
-    TEST_ASSERT(AllProbeBitsMatch(*rxnqFP, *rxnFP));
-    TEST_ASSERT(!AllProbeBitsMatch(*rxnq2FP, *rxnFP));
+    TEST_ASSERT(AllProbeBitsMatch(*rxnqFP, *rxnFP))
+    TEST_ASSERT(!AllProbeBitsMatch(*rxnq2FP, *rxnFP))
 
-    TEST_ASSERT(rxn->getNumReactantTemplates() == 1);
-    TEST_ASSERT(rxn->getNumProductTemplates() == 1);
-    TEST_ASSERT(rxnq->getNumReactantTemplates() == 0);
-    TEST_ASSERT(rxnq->getNumProductTemplates() == 1);
-    TEST_ASSERT(rxnq2->getNumReactantTemplates() == 0);
-    TEST_ASSERT(rxnq2->getNumProductTemplates() == 1);
+    TEST_ASSERT(rxn->getNumReactantTemplates() == 1)
+    TEST_ASSERT(rxn->getNumProductTemplates() == 1)
+    TEST_ASSERT(rxnq->getNumReactantTemplates() == 0)
+    TEST_ASSERT(rxnq->getNumProductTemplates() == 1)
+    TEST_ASSERT(rxnq2->getNumReactantTemplates() == 0)
+    TEST_ASSERT(rxnq2->getNumProductTemplates() == 1)
 
     MOL_SPTR_VECT::const_iterator products_iter = rxn->beginProductTemplates();
     MOL_SPTR_VECT::const_iterator products_iterq =
@@ -193,9 +193,9 @@ void testStructuralFingerprintsReaction() {
     rxn = RxnSmartsToChemicalReaction(reaction, nullptr, true);
     rxnq = RxnSmartsToChemicalReaction(reactionq, nullptr, true);
     rxnq2 = RxnSmartsToChemicalReaction(reactionq2, nullptr, true);
-    TEST_ASSERT(rxn);
-    TEST_ASSERT(rxnq);
-    TEST_ASSERT(rxnq2);
+    TEST_ASSERT(rxn)
+    TEST_ASSERT(rxnq)
+    TEST_ASSERT(rxnq2)
 
     ReactionFingerprintParams params;
     params.fpType = FingerprintType::PatternFP;
@@ -206,15 +206,15 @@ void testStructuralFingerprintsReaction() {
     ExplicitBitVect *rxnq2FP =
         StructuralFingerprintChemReaction(*rxnq2, params);
 
-    TEST_ASSERT(AllProbeBitsMatch(*rxnqFP, *rxnFP));
-    TEST_ASSERT(!AllProbeBitsMatch(*rxnq2FP, *rxnFP));
+    TEST_ASSERT(AllProbeBitsMatch(*rxnqFP, *rxnFP))
+    TEST_ASSERT(!AllProbeBitsMatch(*rxnq2FP, *rxnFP))
 
-    TEST_ASSERT(rxn->getNumReactantTemplates() == 1);
-    TEST_ASSERT(rxn->getNumProductTemplates() == 1);
-    TEST_ASSERT(rxnq->getNumReactantTemplates() == 1);
-    TEST_ASSERT(rxnq->getNumProductTemplates() == 0);
-    TEST_ASSERT(rxnq2->getNumReactantTemplates() == 1);
-    TEST_ASSERT(rxnq2->getNumProductTemplates() == 0);
+    TEST_ASSERT(rxn->getNumReactantTemplates() == 1)
+    TEST_ASSERT(rxn->getNumProductTemplates() == 1)
+    TEST_ASSERT(rxnq->getNumReactantTemplates() == 1)
+    TEST_ASSERT(rxnq->getNumProductTemplates() == 0)
+    TEST_ASSERT(rxnq2->getNumReactantTemplates() == 1)
+    TEST_ASSERT(rxnq2->getNumProductTemplates() == 0)
 
     MOL_SPTR_VECT::const_iterator react_iter = rxn->beginReactantTemplates();
     MOL_SPTR_VECT::const_iterator react_iterq = rxnq->beginReactantTemplates();
@@ -243,9 +243,9 @@ void testStructuralFingerprintsReaction() {
     rxn = RxnSmartsToChemicalReaction(reaction, nullptr, true);
     rxnq = RxnSmartsToChemicalReaction(reactionq, nullptr, true);
     rxnq2 = RxnSmartsToChemicalReaction(reactionq2, nullptr, true);
-    TEST_ASSERT(rxn);
-    TEST_ASSERT(rxnq);
-    TEST_ASSERT(rxnq2);
+    TEST_ASSERT(rxn)
+    TEST_ASSERT(rxnq)
+    TEST_ASSERT(rxnq2)
 
     ReactionFingerprintParams params;
     params.fpType = FingerprintType::PatternFP;
@@ -256,15 +256,15 @@ void testStructuralFingerprintsReaction() {
     ExplicitBitVect *rxnq2FP =
         StructuralFingerprintChemReaction(*rxnq2, params);
 
-    TEST_ASSERT(AllProbeBitsMatch(*rxnqFP, *rxnFP));
-    TEST_ASSERT(AllProbeBitsMatch(*rxnq2FP, *rxnFP));
+    TEST_ASSERT(AllProbeBitsMatch(*rxnqFP, *rxnFP))
+    TEST_ASSERT(AllProbeBitsMatch(*rxnq2FP, *rxnFP))
 
-    TEST_ASSERT(rxn->getNumReactantTemplates() == 1);
-    TEST_ASSERT(rxn->getNumProductTemplates() == 1);
-    TEST_ASSERT(rxnq->getNumReactantTemplates() == 1);
-    TEST_ASSERT(rxnq->getNumProductTemplates() == 1);
-    TEST_ASSERT(rxnq2->getNumReactantTemplates() == 1);
-    TEST_ASSERT(rxnq2->getNumProductTemplates() == 1);
+    TEST_ASSERT(rxn->getNumReactantTemplates() == 1)
+    TEST_ASSERT(rxn->getNumProductTemplates() == 1)
+    TEST_ASSERT(rxnq->getNumReactantTemplates() == 1)
+    TEST_ASSERT(rxnq->getNumProductTemplates() == 1)
+    TEST_ASSERT(rxnq2->getNumReactantTemplates() == 1)
+    TEST_ASSERT(rxnq2->getNumProductTemplates() == 1)
 
     MOL_SPTR_VECT::const_iterator react_iter = rxn->beginReactantTemplates();
     MOL_SPTR_VECT::const_iterator react_iterq = rxnq->beginReactantTemplates();
@@ -301,9 +301,9 @@ void testStructuralFingerprintsReaction() {
     rxn = RxnSmartsToChemicalReaction(reaction, nullptr, true);
     rxnq = RxnSmartsToChemicalReaction(reactionq, nullptr, true);
     rxnq2 = RxnSmartsToChemicalReaction(reactionq2, nullptr, true);
-    TEST_ASSERT(rxn);
-    TEST_ASSERT(rxnq);
-    TEST_ASSERT(rxnq2);
+    TEST_ASSERT(rxn)
+    TEST_ASSERT(rxnq)
+    TEST_ASSERT(rxnq2)
 
     ReactionFingerprintParams params;
     params.fpType = FingerprintType::PatternFP;
@@ -314,11 +314,11 @@ void testStructuralFingerprintsReaction() {
     ExplicitBitVect *rxnq2FP =
         StructuralFingerprintChemReaction(*rxnq2, params);
 
-    TEST_ASSERT(AllProbeBitsMatch(*rxnqFP, *rxnFP));
-    TEST_ASSERT(AllProbeBitsMatch(*rxnq2FP, *rxnFP));
+    TEST_ASSERT(AllProbeBitsMatch(*rxnqFP, *rxnFP))
+    TEST_ASSERT(AllProbeBitsMatch(*rxnq2FP, *rxnFP))
 
-    TEST_ASSERT(hasReactionSubstructMatch(*rxn, *rxnq));
-    TEST_ASSERT(hasReactionSubstructMatch(*rxn, *rxnq2));
+    TEST_ASSERT(hasReactionSubstructMatch(*rxn, *rxnq))
+    TEST_ASSERT(hasReactionSubstructMatch(*rxn, *rxnq2))
 
     delete rxn;
     delete rxnq;
@@ -338,9 +338,9 @@ void testStructuralFingerprintsReaction() {
     rxn = RxnSmartsToChemicalReaction(reaction, nullptr, true);
     rxnq = RxnSmartsToChemicalReaction(reactionq, nullptr, true);
     rxnq2 = RxnSmartsToChemicalReaction(reactionq2, nullptr, true);
-    TEST_ASSERT(rxn);
-    TEST_ASSERT(rxnq);
-    TEST_ASSERT(rxnq2);
+    TEST_ASSERT(rxn)
+    TEST_ASSERT(rxnq)
+    TEST_ASSERT(rxnq2)
 
     ReactionFingerprintParams params;
     params.fpType = FingerprintType::MorganFP;
@@ -351,8 +351,8 @@ void testStructuralFingerprintsReaction() {
     ExplicitBitVect *rxnq2FP =
         StructuralFingerprintChemReaction(*rxnq2, params);
 
-    TEST_ASSERT(AllProbeBitsMatch(*rxnqFP, *rxnFP));
-    TEST_ASSERT(!AllProbeBitsMatch(*rxnq2FP, *rxnFP));
+    TEST_ASSERT(AllProbeBitsMatch(*rxnqFP, *rxnFP))
+    TEST_ASSERT(!AllProbeBitsMatch(*rxnq2FP, *rxnFP))
 
     delete rxn;
     delete rxnq;
@@ -372,9 +372,9 @@ void testStructuralFingerprintsReaction() {
     rxn = RxnSmartsToChemicalReaction(reaction, nullptr, true);
     rxnq = RxnSmartsToChemicalReaction(reactionq, nullptr, true);
     rxnq2 = RxnSmartsToChemicalReaction(reactionq2, nullptr, true);
-    TEST_ASSERT(rxn);
-    TEST_ASSERT(rxnq);
-    TEST_ASSERT(rxnq2);
+    TEST_ASSERT(rxn)
+    TEST_ASSERT(rxnq)
+    TEST_ASSERT(rxnq2)
 
     ReactionFingerprintParams params;
     params.fpSize = 4096;
@@ -384,8 +384,8 @@ void testStructuralFingerprintsReaction() {
     ExplicitBitVect *rxnq2FP =
         StructuralFingerprintChemReaction(*rxnq2, params);
 
-    TEST_ASSERT(AllProbeBitsMatch(*rxnqFP, *rxnFP));
-    TEST_ASSERT(!AllProbeBitsMatch(*rxnq2FP, *rxnFP));
+    TEST_ASSERT(AllProbeBitsMatch(*rxnqFP, *rxnFP))
+    TEST_ASSERT(!AllProbeBitsMatch(*rxnq2FP, *rxnFP))
 
     delete rxn;
     delete rxnq;
@@ -405,9 +405,9 @@ void testStructuralFingerprintsReaction() {
     rxn = RxnSmartsToChemicalReaction(reaction, nullptr, true);
     rxnq = RxnSmartsToChemicalReaction(reactionq, nullptr, true);
     rxnq2 = RxnSmartsToChemicalReaction(reactionq2, nullptr, true);
-    TEST_ASSERT(rxn);
-    TEST_ASSERT(rxnq);
-    TEST_ASSERT(rxnq2);
+    TEST_ASSERT(rxn)
+    TEST_ASSERT(rxnq)
+    TEST_ASSERT(rxnq2)
 
     ReactionFingerprintParams params;
     params.fpType = FingerprintType::TopologicalTorsionFP;
@@ -418,8 +418,8 @@ void testStructuralFingerprintsReaction() {
     ExplicitBitVect *rxnq2FP =
         StructuralFingerprintChemReaction(*rxnq2, params);
 
-    TEST_ASSERT(AllProbeBitsMatch(*rxnqFP, *rxnFP));
-    TEST_ASSERT(!AllProbeBitsMatch(*rxnq2FP, *rxnFP));
+    TEST_ASSERT(AllProbeBitsMatch(*rxnqFP, *rxnFP))
+    TEST_ASSERT(!AllProbeBitsMatch(*rxnq2FP, *rxnFP))
 
     delete rxn;
     delete rxnq;
@@ -439,9 +439,9 @@ void testStructuralFingerprintsReaction() {
     rxn = RxnSmartsToChemicalReaction(reaction, nullptr, true);
     rxnq = RxnSmartsToChemicalReaction(reactionq, nullptr, true);
     rxnq2 = RxnSmartsToChemicalReaction(reactionq2, nullptr, true);
-    TEST_ASSERT(rxn);
-    TEST_ASSERT(rxnq);
-    TEST_ASSERT(rxnq2);
+    TEST_ASSERT(rxn)
+    TEST_ASSERT(rxnq)
+    TEST_ASSERT(rxnq2)
 
     ReactionFingerprintParams params;
     params.fpType = FingerprintType::RDKitFP;
@@ -452,8 +452,8 @@ void testStructuralFingerprintsReaction() {
     ExplicitBitVect *rxnq2FP =
         StructuralFingerprintChemReaction(*rxnq2, params);
 
-    TEST_ASSERT(AllProbeBitsMatch(*rxnqFP, *rxnFP));
-    TEST_ASSERT(!AllProbeBitsMatch(*rxnq2FP, *rxnFP));
+    TEST_ASSERT(AllProbeBitsMatch(*rxnqFP, *rxnFP))
+    TEST_ASSERT(!AllProbeBitsMatch(*rxnq2FP, *rxnFP))
 
     delete rxn;
     delete rxnq;
@@ -473,9 +473,9 @@ void testStructuralFingerprintsReaction() {
     rxn = RxnSmartsToChemicalReaction(reaction, nullptr, true);
     rxnq = RxnSmartsToChemicalReaction(reactionq, nullptr, true);
     rxnq2 = RxnSmartsToChemicalReaction(reactionq2, nullptr, true);
-    TEST_ASSERT(rxn);
-    TEST_ASSERT(rxnq);
-    TEST_ASSERT(rxnq2);
+    TEST_ASSERT(rxn)
+    TEST_ASSERT(rxnq)
+    TEST_ASSERT(rxnq2)
 
     ReactionFingerprintParams params;
     params.fpType = FingerprintType::RDKitFP;
@@ -486,8 +486,8 @@ void testStructuralFingerprintsReaction() {
     ExplicitBitVect *rxnq2FP =
         StructuralFingerprintChemReaction(*rxnq2, params);
 
-    TEST_ASSERT(AllProbeBitsMatch(*rxnqFP, *rxnFP));
-    TEST_ASSERT(!AllProbeBitsMatch(*rxnq2FP, *rxnFP));
+    TEST_ASSERT(AllProbeBitsMatch(*rxnqFP, *rxnFP))
+    TEST_ASSERT(!AllProbeBitsMatch(*rxnq2FP, *rxnFP))
 
     delete rxn;
     delete rxnq;
@@ -507,9 +507,9 @@ void testStructuralFingerprintsReaction() {
     rxn = RxnSmartsToChemicalReaction(reaction, nullptr, true);
     rxnq = RxnSmartsToChemicalReaction(reactionq, nullptr, true);
     rxnq2 = RxnSmartsToChemicalReaction(reactionq2, nullptr, true);
-    TEST_ASSERT(rxn);
-    TEST_ASSERT(rxnq);
-    TEST_ASSERT(rxnq2);
+    TEST_ASSERT(rxn)
+    TEST_ASSERT(rxnq)
+    TEST_ASSERT(rxnq2)
 
     ExplicitBitVect *rxnFP =
         StructuralFingerprintChemReaction(*rxn, DefaultStructuralFPParams);
@@ -518,8 +518,8 @@ void testStructuralFingerprintsReaction() {
     ExplicitBitVect *rxnq2FP =
         StructuralFingerprintChemReaction(*rxnq2, DefaultStructuralFPParams);
 
-    TEST_ASSERT(AllProbeBitsMatch(*rxnqFP, *rxnFP));
-    TEST_ASSERT(AllProbeBitsMatch(*rxnq2FP, *rxnFP));
+    TEST_ASSERT(AllProbeBitsMatch(*rxnqFP, *rxnFP))
+    TEST_ASSERT(AllProbeBitsMatch(*rxnq2FP, *rxnFP))
 
     delete rxn;
     delete rxnq;
@@ -539,9 +539,9 @@ void testStructuralFingerprintsReaction() {
     rxn = RxnSmartsToChemicalReaction(reaction, nullptr, true);
     rxnq = RxnSmartsToChemicalReaction(reactionq, nullptr, true);
     rxnq2 = RxnSmartsToChemicalReaction(reactionq2, nullptr, true);
-    TEST_ASSERT(rxn);
-    TEST_ASSERT(rxnq);
-    TEST_ASSERT(rxnq2);
+    TEST_ASSERT(rxn)
+    TEST_ASSERT(rxnq)
+    TEST_ASSERT(rxnq2)
 
     ExplicitBitVect *rxnFP =
         StructuralFingerprintChemReaction(*rxn, DefaultStructuralFPParams);
@@ -550,8 +550,8 @@ void testStructuralFingerprintsReaction() {
     ExplicitBitVect *rxnq2FP =
         StructuralFingerprintChemReaction(*rxnq2, DefaultStructuralFPParams);
 
-    TEST_ASSERT(!AllProbeBitsMatch(*rxnqFP, *rxnFP));
-    TEST_ASSERT(AllProbeBitsMatch(*rxnq2FP, *rxnFP));
+    TEST_ASSERT(!AllProbeBitsMatch(*rxnqFP, *rxnFP))
+    TEST_ASSERT(AllProbeBitsMatch(*rxnq2FP, *rxnFP))
 
     delete rxn;
     delete rxnq;
@@ -575,15 +575,15 @@ void testDifferenceFingerprintsReaction() {
 
     rxn1 = RxnSmartsToChemicalReaction(reaction1, nullptr, true);
     rxn2 = RxnSmartsToChemicalReaction(reaction2, nullptr, true);
-    TEST_ASSERT(rxn1);
-    TEST_ASSERT(rxn2);
+    TEST_ASSERT(rxn1)
+    TEST_ASSERT(rxn2)
 
     SparseIntVect<std::uint32_t> *rxn1FP =
         DifferenceFingerprintChemReaction(*rxn1);
     SparseIntVect<std::uint32_t> *rxn2FP =
         DifferenceFingerprintChemReaction(*rxn2);
 
-    TEST_ASSERT(TanimotoSimilarity(*rxn1FP, *rxn2FP) == 0.0);
+    TEST_ASSERT(TanimotoSimilarity(*rxn1FP, *rxn2FP) == 0.0)
     ;
 
     delete rxn1;
@@ -600,16 +600,16 @@ void testDifferenceFingerprintsReaction() {
 
     rxn1 = RxnSmartsToChemicalReaction(reaction1, nullptr, true);
     rxn2 = RxnSmartsToChemicalReaction(reaction2, nullptr, true);
-    TEST_ASSERT(rxn1);
-    TEST_ASSERT(rxn2);
+    TEST_ASSERT(rxn1)
+    TEST_ASSERT(rxn2)
 
     SparseIntVect<std::uint32_t> *rxn1FP =
         DifferenceFingerprintChemReaction(*rxn1);
     SparseIntVect<std::uint32_t> *rxn2FP =
         DifferenceFingerprintChemReaction(*rxn2);
 
-    TEST_ASSERT(TanimotoSimilarity(*rxn1FP, *rxn2FP) > 0.0);
-    TEST_ASSERT(TanimotoSimilarity(*rxn1FP, *rxn2FP) <= 1.0);
+    TEST_ASSERT(TanimotoSimilarity(*rxn1FP, *rxn2FP) > 0.0)
+    TEST_ASSERT(TanimotoSimilarity(*rxn1FP, *rxn2FP) <= 1.0)
 
     delete rxn1;
     delete rxn2;
@@ -624,16 +624,16 @@ void testDifferenceFingerprintsReaction() {
     reaction2 = "c1ccccc1>>c1ccncc1";
     rxn1 = RxnSmartsToChemicalReaction(reaction1, nullptr, true);
     rxn2 = RxnSmartsToChemicalReaction(reaction2, nullptr, true);
-    TEST_ASSERT(rxn1);
-    TEST_ASSERT(rxn2);
+    TEST_ASSERT(rxn1)
+    TEST_ASSERT(rxn2)
 
     SparseIntVect<std::uint32_t> *rxn1FP =
         DifferenceFingerprintChemReaction(*rxn1);
     SparseIntVect<std::uint32_t> *rxn2FP =
         DifferenceFingerprintChemReaction(*rxn2);
 
-    TEST_ASSERT(TanimotoSimilarity(*rxn1FP, *rxn2FP) > 0.0);
-    TEST_ASSERT(TanimotoSimilarity(*rxn1FP, *rxn2FP) <= 1.0);
+    TEST_ASSERT(TanimotoSimilarity(*rxn1FP, *rxn2FP) > 0.0)
+    TEST_ASSERT(TanimotoSimilarity(*rxn1FP, *rxn2FP) <= 1.0)
 
     delete rxn1;
     delete rxn2;
@@ -648,8 +648,8 @@ void testDifferenceFingerprintsReaction() {
     reaction2 = "c1ccccc1>>c1ccncc1";
     rxn1 = RxnSmartsToChemicalReaction(reaction1, nullptr, true);
     rxn2 = RxnSmartsToChemicalReaction(reaction2, nullptr, true);
-    TEST_ASSERT(rxn1);
-    TEST_ASSERT(rxn2);
+    TEST_ASSERT(rxn1)
+    TEST_ASSERT(rxn2)
 
     ReactionFingerprintParams params;
     params.fpType = FingerprintType::MorganFP;
@@ -659,8 +659,8 @@ void testDifferenceFingerprintsReaction() {
     SparseIntVect<std::uint32_t> *rxn2FP =
         DifferenceFingerprintChemReaction(*rxn2, params);
 
-    TEST_ASSERT(TanimotoSimilarity(*rxn1FP, *rxn2FP) > 0.0);
-    TEST_ASSERT(TanimotoSimilarity(*rxn1FP, *rxn2FP) <= 1.0);
+    TEST_ASSERT(TanimotoSimilarity(*rxn1FP, *rxn2FP) > 0.0)
+    TEST_ASSERT(TanimotoSimilarity(*rxn1FP, *rxn2FP) <= 1.0)
 
     delete rxn1;
     delete rxn2;
@@ -675,8 +675,8 @@ void testDifferenceFingerprintsReaction() {
     reaction2 = "c1ccccc1>>c1ccncc1";
     rxn1 = RxnSmartsToChemicalReaction(reaction1, nullptr, true);
     rxn2 = RxnSmartsToChemicalReaction(reaction2, nullptr, true);
-    TEST_ASSERT(rxn1);
-    TEST_ASSERT(rxn2);
+    TEST_ASSERT(rxn1)
+    TEST_ASSERT(rxn2)
 
     ReactionFingerprintParams params;
     params.fpType = FingerprintType::TopologicalTorsionFP;
@@ -686,8 +686,8 @@ void testDifferenceFingerprintsReaction() {
     SparseIntVect<std::uint32_t> *rxn2FP =
         DifferenceFingerprintChemReaction(*rxn2, params);
 
-    TEST_ASSERT(TanimotoSimilarity(*rxn1FP, *rxn2FP) > 0.0);
-    TEST_ASSERT(TanimotoSimilarity(*rxn1FP, *rxn2FP) <= 1.0);
+    TEST_ASSERT(TanimotoSimilarity(*rxn1FP, *rxn2FP) > 0.0)
+    TEST_ASSERT(TanimotoSimilarity(*rxn1FP, *rxn2FP) <= 1.0)
 
     delete rxn1;
     delete rxn2;
