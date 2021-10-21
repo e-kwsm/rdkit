@@ -85,7 +85,7 @@ void test1() {
 
   delete m;
   BOOST_LOG(rdInfoLog) << "test1 done" << endl;
-};
+}
 
 void test2() {
   string smi = "C1COC1";
@@ -126,7 +126,7 @@ void test2() {
 
   delete m;
   BOOST_LOG(rdInfoLog) << "test2 done" << endl;
-};
+}
 
 void test3() {
   string smi = "C1COCCNCOCNSCC1";
@@ -161,7 +161,7 @@ void test3() {
 
   delete m;
   BOOST_LOG(rdInfoLog) << "test3 done" << endl;
-};
+}
 
 void test4() {
   string smi = "C1COCCNCOCNSCC1";
@@ -214,7 +214,7 @@ void test4() {
   delete m;
   delete q;
   BOOST_LOG(rdInfoLog) << "test4 done" << endl;
-};
+}
 
 void test5() {
   string smi = "CCCC";
@@ -310,7 +310,7 @@ void test6() {
 
   delete m;
   BOOST_LOG(rdInfoLog) << "test6 done" << endl;
-};
+}
 
 void test7() {
   string smi = "c1ccccc1C";
@@ -388,7 +388,7 @@ void test8() {
   }
 
   BOOST_LOG(rdInfoLog) << "test8 done" << endl;
-};
+}
 
 int main() {
   RDLog::InitLogs();

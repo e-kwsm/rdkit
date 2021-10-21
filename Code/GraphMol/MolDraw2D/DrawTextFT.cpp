@@ -87,7 +87,7 @@ double DrawTextFT::extractOutline() {
 
   FT_Error error = FT_Outline_Decompose(&outline, &callbacks, this);
   if (error != FT_Err_Ok) {
-    /* not sure what to do in this case */;
+    /* not sure what to do in this case */
   }
   return fontCoordToDrawCoord(slot->advance.x);
 }

@@ -834,7 +834,7 @@ bool FinalChiralityCheckFunction(const std::uint32_t c1[],
     const auto mBnd =
         mol2.getBondBetweenAtoms(target[c2[qMap[qBnd->getBeginAtomIdx()]]],
                                  target[c2[qMap[qBnd->getEndAtomIdx()]]]);
-    CHECK_INVARIANT(mBnd, "Matching bond not found");
+    CHECK_INVARIANT(mBnd, "Matching bond not found")
     if (mBnd->getBondType() != Bond::DOUBLE ||
         mBnd->getStereo() <= Bond::STEREOANY) {
       continue;
@@ -958,7 +958,7 @@ bool FinalChiralityCheckFunction_1(const short unsigned int c1[],
     const Bond *mBnd =
         mol2.getBondBetweenAtoms(target[c2[qMap[qBnd->getBeginAtomIdx()]]],
                                  target[c2[qMap[qBnd->getEndAtomIdx()]]]);
-    CHECK_INVARIANT(mBnd, "Matching bond not found");
+    CHECK_INVARIANT(mBnd, "Matching bond not found")
     if (mBnd->getBondType() != Bond::DOUBLE ||
         mBnd->getStereo() <= Bond::STEREOANY) {
       continue;

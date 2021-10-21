@@ -41,46 +41,46 @@ void testMols(std::vector<std::unique_ptr<ROMol>> &mols, FragFPGenerator &fpGen,
     ExplicitBitVect *fp = fpGen.getFPForMol(*mi, fcat);
     switch (nDone) {
       case 0:
-        TEST_ASSERT(fp->getNumOnBits() == 3);
-        TEST_ASSERT((*fp)[0]);
-        TEST_ASSERT((*fp)[1]);
-        TEST_ASSERT((*fp)[2]);
+        TEST_ASSERT(fp->getNumOnBits() == 3)
+        TEST_ASSERT((*fp)[0])
+        TEST_ASSERT((*fp)[1])
+        TEST_ASSERT((*fp)[2])
         break;
       case 1:
-        TEST_ASSERT(fp->getNumOnBits() == 2);
-        TEST_ASSERT((*fp)[1]);
-        TEST_ASSERT((*fp)[3]);
+        TEST_ASSERT(fp->getNumOnBits() == 2)
+        TEST_ASSERT((*fp)[1])
+        TEST_ASSERT((*fp)[3])
         break;
       case 2:
-        TEST_ASSERT(fp->getNumOnBits() == 3);
-        TEST_ASSERT((*fp)[1]);
-        TEST_ASSERT((*fp)[4]);
-        TEST_ASSERT((*fp)[5]);
+        TEST_ASSERT(fp->getNumOnBits() == 3)
+        TEST_ASSERT((*fp)[1])
+        TEST_ASSERT((*fp)[4])
+        TEST_ASSERT((*fp)[5])
         break;
       case 3:
-        TEST_ASSERT(fp->getNumOnBits() == 3);
-        TEST_ASSERT((*fp)[1]);
-        TEST_ASSERT((*fp)[6]);
-        TEST_ASSERT((*fp)[7]);
+        TEST_ASSERT(fp->getNumOnBits() == 3)
+        TEST_ASSERT((*fp)[1])
+        TEST_ASSERT((*fp)[6])
+        TEST_ASSERT((*fp)[7])
         break;
       case 4:
-        TEST_ASSERT(fp->getNumOnBits() == 2);
-        TEST_ASSERT((*fp)[0]);
-        TEST_ASSERT((*fp)[8]);
+        TEST_ASSERT(fp->getNumOnBits() == 2)
+        TEST_ASSERT((*fp)[0])
+        TEST_ASSERT((*fp)[8])
         break;
       case 5:
-        TEST_ASSERT(fp->getNumOnBits() == 3);
-        TEST_ASSERT((*fp)[0]);
-        TEST_ASSERT((*fp)[6]);
-        TEST_ASSERT((*fp)[9]);
+        TEST_ASSERT(fp->getNumOnBits() == 3)
+        TEST_ASSERT((*fp)[0])
+        TEST_ASSERT((*fp)[6])
+        TEST_ASSERT((*fp)[9])
         break;
       case 6:
-        TEST_ASSERT(fp->getNumOnBits() == 5);
-        TEST_ASSERT((*fp)[0]);
-        TEST_ASSERT((*fp)[1]);
-        TEST_ASSERT((*fp)[2]);
-        TEST_ASSERT((*fp)[3]);
-        TEST_ASSERT((*fp)[10]);
+        TEST_ASSERT(fp->getNumOnBits() == 5)
+        TEST_ASSERT((*fp)[0])
+        TEST_ASSERT((*fp)[1])
+        TEST_ASSERT((*fp)[2])
+        TEST_ASSERT((*fp)[3])
+        TEST_ASSERT((*fp)[10])
         break;
     }
     delete fp;
@@ -96,7 +96,7 @@ void test1() {
   SmilesMolSupplier suppl(fname, " ", 0, 1, false);
 
   auto *fparams = new FragCatParams(1, 6, fgrpFile, 1.0e-8);
-  TEST_ASSERT(fparams->getNumFuncGroups() == 15);
+  TEST_ASSERT(fparams->getNumFuncGroups() == 15)
   FragCatalog fcat(fparams);
   FragCatGenerator catGen;
 
@@ -113,11 +113,11 @@ void test1() {
       m = nullptr;
     }
   }
-  TEST_ASSERT(mols.size() == 16);
-  TEST_ASSERT(nDone == 16);
+  TEST_ASSERT(mols.size() == 16)
+  TEST_ASSERT(nDone == 16)
   int nents = fcat.getNumEntries();
   std::cerr << " " << nents << std::endl;
-  TEST_ASSERT(nents == 21);
+  TEST_ASSERT(nents == 21)
   FragFPGenerator fpGen;
 
   BOOST_LOG(rdInfoLog) << "----- Test 1" << std::endl;
@@ -132,33 +132,33 @@ void test1() {
   FragCatParams newParams;
   std::string pickle = fparams->Serialize();
   newParams.initFromString(pickle);
-  TEST_ASSERT(newParams.getLowerFragLength() == fparams->getLowerFragLength());
-  TEST_ASSERT(newParams.getUpperFragLength() == fparams->getUpperFragLength());
-  TEST_ASSERT(newParams.getTolerance() == fparams->getTolerance());
-  TEST_ASSERT(newParams.getNumFuncGroups() == fparams->getNumFuncGroups());
+  TEST_ASSERT(newParams.getLowerFragLength() == fparams->getLowerFragLength())
+  TEST_ASSERT(newParams.getUpperFragLength() == fparams->getUpperFragLength())
+  TEST_ASSERT(newParams.getTolerance() == fparams->getTolerance())
+  TEST_ASSERT(newParams.getNumFuncGroups() == fparams->getNumFuncGroups())
 
   // make sure we can pickle and unpickle catalog entries:
   const FragCatalogEntry *fpEntry = fcat.getEntryWithIdx(0);
   auto *fpEntry2 = new FragCatalogEntry();
   fpEntry2->initFromString(fpEntry->Serialize());
-  TEST_ASSERT(fpEntry->getDescription() == fpEntry2->getDescription());
-  TEST_ASSERT(fpEntry->getOrder() == fpEntry2->getOrder());
-  TEST_ASSERT(fpEntry->getBitId() == fpEntry2->getBitId());
-  TEST_ASSERT(fpEntry2->match(fpEntry, 1e-8));
-  TEST_ASSERT(fpEntry->match(fpEntry2, 1e-8));
+  TEST_ASSERT(fpEntry->getDescription() == fpEntry2->getDescription())
+  TEST_ASSERT(fpEntry->getOrder() == fpEntry2->getOrder())
+  TEST_ASSERT(fpEntry->getBitId() == fpEntry2->getBitId())
+  TEST_ASSERT(fpEntry2->match(fpEntry, 1e-8))
+  TEST_ASSERT(fpEntry->match(fpEntry2, 1e-8))
   delete fpEntry2;
 
   // test catalogs' initFromString:
   FragCatalog fcat2;
   fcat2.initFromString(fcat.Serialize());
-  TEST_ASSERT(fcat2.getNumEntries() == fcat.getNumEntries());
+  TEST_ASSERT(fcat2.getNumEntries() == fcat.getNumEntries())
   BOOST_LOG(rdInfoLog) << "----- Test 2" << std::endl;
   testMols(mols, fpGen, fcat2);
   BOOST_LOG(rdInfoLog) << "---- Done" << std::endl;
 
   // and the pickle ctor:
   FragCatalog *fcat3 = new FragCatalog(fcat.Serialize());
-  TEST_ASSERT(fcat3->getNumEntries() == fcat.getNumEntries());
+  TEST_ASSERT(fcat3->getNumEntries() == fcat.getNumEntries())
   BOOST_LOG(rdInfoLog) << "----- Test 3" << std::endl;
   testMols(mols, fpGen, *fcat3);
   BOOST_LOG(rdInfoLog) << "---- Done" << std::endl;
@@ -169,7 +169,7 @@ void test1() {
   BOOST_LOG(rdInfoLog) << "----- Test Issue 115" << std::endl;
   delete fparams;
   fparams = new FragCatParams(3, 3, fgrpFile, 1.0e-8);
-  TEST_ASSERT(fparams->getNumFuncGroups() == 15);
+  TEST_ASSERT(fparams->getNumFuncGroups() == 15)
   delete fcat3;
   fcat3 = new FragCatalog(fparams);
   suppl.reset();
@@ -180,11 +180,11 @@ void test1() {
     catGen.addFragsFromMol(*m, fcat3);
     delete m;
   }
-  TEST_ASSERT(nDone == suppl.length());
-  TEST_ASSERT(fcat3->getNumEntries() == 21);
-  TEST_ASSERT(fcat3->getFPLength() == 10);
+  TEST_ASSERT(nDone == suppl.length())
+  TEST_ASSERT(fcat3->getNumEntries() == 21)
+  TEST_ASSERT(fcat3->getFPLength() == 10)
   for (unsigned int i = 0; i < fcat3->getFPLength(); i++) {
-    TEST_ASSERT(fcat3->getEntryWithBitId(i)->getOrder() == 3);
+    TEST_ASSERT(fcat3->getEntryWithBitId(i)->getOrder() == 3)
   }
   BOOST_LOG(rdInfoLog) << "---- Done" << std::endl;
 
@@ -197,12 +197,12 @@ void test1() {
   delete fcat3;
   fcat3 = new FragCatalog(fparams);
   ROMol *tmpMol = SmilesToMol("OC(N)CO");
-  TEST_ASSERT(tmpMol);
+  TEST_ASSERT(tmpMol)
   catGen.addFragsFromMol(*tmpMol, fcat3);
-  TEST_ASSERT(fcat3->getNumEntries() == 1);
+  TEST_ASSERT(fcat3->getNumEntries() == 1)
   // std::cout << fcat3->getEntryWithBitId(0)->getDescription() << std::endl;
   TEST_ASSERT(fcat3->getEntryWithBitId(0)->getDescription() ==
-              "C(<-O>)<-N>C<-O>");
+              "C(<-O>)<-N>C<-O>")
   BOOST_LOG(rdInfoLog) << "---- Done" << std::endl;
 
   delete tmpMol;
@@ -235,7 +235,7 @@ void testIssue294() {
     }
   }
   int nents = fcat.getNumEntries();
-  TEST_ASSERT(nents == 21);
+  TEST_ASSERT(nents == 21)
   FragFPGenerator fpGen;
 
   for (unsigned int i = 0; i < 200; i++) {
@@ -263,7 +263,7 @@ void testWhiteSpaceInSmarts() {
   for (const auto &smarts : data) {
     std::istringstream input(smarts);
     auto groups = readFuncGroups(input);
-    TEST_ASSERT(groups.size() == *reference);
+    TEST_ASSERT(groups.size() == *reference)
     ++reference;
   }
   BOOST_LOG(rdInfoLog) << "---- Done" << std::endl;
@@ -287,8 +287,8 @@ void testFragmentWithoutSmarts() {
     } catch (const Invar::Invariant &) {
       ok = true;
     }
-    TEST_ASSERT(ok);
-    TEST_ASSERT(groups.empty());
+    TEST_ASSERT(ok)
+    TEST_ASSERT(groups.empty())
   }
   BOOST_LOG(rdInfoLog) << "---- Done" << std::endl;
 }

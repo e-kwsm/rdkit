@@ -59,7 +59,7 @@ const Atom *getNonsharedAtom(const Bond &bond1, const Bond &bond2) {
              bond1.getEndAtomIdx() == bond2.getEndAtomIdx()) {
     return bond1.getBeginAtom();
   }
-  POSTCONDITION(0, "bonds don't share an atom");
+  POSTCONDITION(0, "bonds don't share an atom")
 }
 
 const unsigned StereoBondThresholds::DBL_BOND_NO_STEREO;
@@ -199,9 +199,9 @@ Bond::BondDir DetermineBondWedgeState(
 // converts them to the RD standard:
 
 void DetectAtomStereoChemistry(RWMol &mol, const Conformer *conf) {
-  PRECONDITION(conf, "no conformer");
+  PRECONDITION(conf, "no conformer")
   PRECONDITION(&(conf->getOwningMol()) == &mol,
-               "conformer does not belong to molecule");
+               "conformer does not belong to molecule")
   MolOps::assignChiralTypesFromBondDirs(mol, conf->getId(), true);
 }
 
@@ -210,9 +210,9 @@ void ClearSingleBondDirFlags(ROMol &mol) {
 }
 
 void DetectBondStereoChemistry(ROMol &mol, const Conformer *conf) {
-  PRECONDITION(conf, "no conformer");
+  PRECONDITION(conf, "no conformer")
   PRECONDITION(&(conf->getOwningMol()) == &mol,
-               "conformer does not belong to molecule");
+               "conformer does not belong to molecule")
   MolOps::detectBondStereochemistry(mol, conf->getId());
 }
 void reapplyMolBlockWedging(RWMol &mol) {

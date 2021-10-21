@@ -49,7 +49,7 @@ std::string addChemicalReactionToPNGStream(const ChemicalReaction &rxn,
     metadata.push_back(std::make_pair(augmentTagName(PNGData::rxnRxnTag), mb));
   }
   return addMetadataToPNGStream(iStream, metadata);
-};
+}
 
 namespace v2 {
 namespace ReactionParser {

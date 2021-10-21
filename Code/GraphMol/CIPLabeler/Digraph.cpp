@@ -64,9 +64,9 @@ Digraph::Digraph(const CIPMol &mol, Atom *atom, bool atropisomerMode)
   d_atropisomerMode = atropisomerMode;
 }
 
-const CIPMol &Digraph::getMol() const { return d_mol; };
+const CIPMol &Digraph::getMol() const { return d_mol; }
 
-Node *Digraph::getOriginalRoot() const { return dp_origin; };
+Node *Digraph::getOriginalRoot() const { return dp_origin; }
 
 Node *Digraph::getCurrentRoot() const { return dp_root; }
 
