@@ -15,12 +15,12 @@
 
 namespace RDKit {
 
-Bond::Bond() : RDProps() { initBond(); };
+Bond::Bond() : RDProps() { initBond(); }
 
 Bond::Bond(BondType bT) : RDProps() {
   initBond();
   d_bondType = bT;
-};
+}
 
 Bond::Bond(const Bond &other) : RDProps(other) {
   // NOTE: we do *not* copy ownership!
@@ -90,40 +90,40 @@ unsigned int Bond::getOtherAtomIdx(const unsigned int thisIdx) const {
 
 void Bond::setBeginAtomIdx(unsigned int what) {
   if (dp_mol) {
-    URANGE_CHECK(what, getOwningMol().getNumAtoms());
+    URANGE_CHECK(what, getOwningMol().getNumAtoms())
   }
   d_beginAtomIdx = what;
-};
+}
 
 void Bond::setEndAtomIdx(unsigned int what) {
   if (dp_mol) {
-    URANGE_CHECK(what, getOwningMol().getNumAtoms());
+    URANGE_CHECK(what, getOwningMol().getNumAtoms())
   }
   d_endAtomIdx = what;
-};
+}
 
 void Bond::setBeginAtom(Atom *at) {
-  PRECONDITION(dp_mol != nullptr, "no owning molecule for bond");
+  PRECONDITION(dp_mol != nullptr, "no owning molecule for bond")
   setBeginAtomIdx(at->getIdx());
 }
 void Bond::setEndAtom(Atom *at) {
-  PRECONDITION(dp_mol != nullptr, "no owning molecule for bond");
+  PRECONDITION(dp_mol != nullptr, "no owning molecule for bond")
   setEndAtomIdx(at->getIdx());
 }
 
 Atom *Bond::getBeginAtom() const {
-  PRECONDITION(dp_mol != nullptr, "no owning molecule for bond");
+  PRECONDITION(dp_mol != nullptr, "no owning molecule for bond")
   return dp_mol->getAtomWithIdx(d_beginAtomIdx);
-};
+}
 Atom *Bond::getEndAtom() const {
-  PRECONDITION(dp_mol != nullptr, "no owning molecule for bond");
+  PRECONDITION(dp_mol != nullptr, "no owning molecule for bond")
   return dp_mol->getAtomWithIdx(d_endAtomIdx);
-};
+}
 Atom *Bond::getOtherAtom(Atom const *what) const {
-  PRECONDITION(dp_mol != nullptr, "no owning molecule for bond");
+  PRECONDITION(dp_mol != nullptr, "no owning molecule for bond")
 
   return dp_mol->getAtomWithIdx(getOtherAtomIdx(what->getIdx()));
-};
+}
 
 double Bond::getBondTypeAsDouble() const {
   double res;
@@ -179,7 +179,7 @@ double Bond::getBondTypeAsDouble() const {
       res = 0.0;
       break;
     default:
-      UNDER_CONSTRUCTION("Bad bond type");
+      UNDER_CONSTRUCTION("Bad bond type")
   }
   return res;
 }
@@ -207,13 +207,13 @@ void Bond::setQuery(QUERYBOND_QUERY *) {
   //  It would be nice to be able to do substructure searches
   //  using molecules alone, so it'd be nice if we got this
   //  issue resolved ASAP.
-  PRECONDITION(0, "plain bonds have no Query");
+  PRECONDITION(0, "plain bonds have no Query")
 }
 
 Bond::QUERYBOND_QUERY *Bond::getQuery() const {
-  PRECONDITION(0, "plain bonds have no Query");
+  PRECONDITION(0, "plain bonds have no Query")
   return nullptr;
-};
+}
 
 bool Bond::Match(Bond const *what) const {
   bool res;
@@ -224,12 +224,12 @@ bool Bond::Match(Bond const *what) const {
     res = getBondType() == what->getBondType();
   }
   return res;
-};
+}
 
 void Bond::expandQuery(Bond::QUERYBOND_QUERY *, Queries::CompositeQueryType,
                        bool) {
-  PRECONDITION(0, "plain bonds have no query");
-};
+  PRECONDITION(0, "plain bonds have no query")
+}
 
 void Bond::initBond() {
   d_bondType = UNSPECIFIED;
@@ -242,21 +242,21 @@ void Bond::initBond() {
   d_index = 0;
   df_isConjugated = 0;
   dp_stereoAtoms = nullptr;
-};
+}
 
 void Bond::setStereoAtoms(unsigned int bgnIdx, unsigned int endIdx) {
   PRECONDITION(
       getOwningMol().getBondBetweenAtoms(getBeginAtomIdx(), bgnIdx) != nullptr,
-      "bgnIdx not connected to begin atom of bond");
+      "bgnIdx not connected to begin atom of bond")
   PRECONDITION(
       getOwningMol().getBondBetweenAtoms(getEndAtomIdx(), endIdx) != nullptr,
-      "endIdx not connected to end atom of bond");
+      "endIdx not connected to end atom of bond")
 
   auto &atoms = getStereoAtoms();
   atoms.clear();
   atoms.push_back(bgnIdx);
   atoms.push_back(endIdx);
-};
+}
 
 uint8_t getTwiceBondType(const Bond &b) {
   switch (b.getBondType()) {
@@ -311,7 +311,7 @@ uint8_t getTwiceBondType(const Bond &b) {
       return 0;
       break;
     default:
-      UNDER_CONSTRUCTION("Bad bond type");
+      UNDER_CONSTRUCTION("Bad bond type")
   }
 }
 
@@ -330,7 +330,7 @@ bool Bond::invertChirality() {
   return false;
 }
 
-};  // namespace RDKit
+}  // namespace RDKit
 
 namespace {
 constexpr const char *bondTypeToString(RDKit::Bond::BondType d) {
