@@ -111,8 +111,8 @@ RDKitFPArguments::RDKitFPArguments(unsigned int minPath, unsigned int maxPath,
       df_useHs(useHs),
       df_branchedPaths(branchedPaths),
       df_useBondOrder(useBondOrder) {
-  PRECONDITION(minPath != 0, "minPath==0");
-  PRECONDITION(maxPath >= minPath, "maxPath<minPath");
+  PRECONDITION(minPath != 0, "minPath==0")
+  PRECONDITION(maxPath >= minPath, "maxPath<minPath")
 }
 
 template <typename OutputType>
@@ -188,7 +188,7 @@ RDKitFPEnvGenerator<OutputType>::getEnvironments(
     const bool                           // hashResults
 ) const {
   PRECONDITION(!atomInvariants || atomInvariants->size() >= mol.getNumAtoms(),
-               "bad atomInvariants size");
+               "bad atomInvariants size")
 
   auto *fpArguments = dynamic_cast<RDKitFPArguments *>(arguments);
 

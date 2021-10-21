@@ -86,7 +86,7 @@ class RDKIT_FILEPARSERS_EXPORT SmilesWriter : public MolWriter {
 
   //! \brief flush the ostream
   void flush() override {
-    PRECONDITION(dp_ostream, "no output stream");
+    PRECONDITION(dp_ostream, "no output stream")
     try {
       dp_ostream->flush();
     } catch (...) {
@@ -166,7 +166,7 @@ class RDKIT_FILEPARSERS_EXPORT SDWriter : public MolWriter {
 
   //! \brief flush the ostream
   void flush() override {
-    PRECONDITION(dp_ostream, "no output stream");
+    PRECONDITION(dp_ostream, "no output stream")
     try {
       dp_ostream->flush();
     } catch (...) {
@@ -239,7 +239,7 @@ class RDKIT_FILEPARSERS_EXPORT TDTWriter : public MolWriter {
 
   //! \brief flush the ostream
   void flush() override {
-    PRECONDITION(dp_ostream, "no output stream");
+    PRECONDITION(dp_ostream, "no output stream")
     try {
       dp_ostream->flush();
     } catch (...) {
@@ -309,7 +309,7 @@ class RDKIT_FILEPARSERS_EXPORT PDBWriter : public MolWriter {
 
   //! \brief flush the ostream
   void flush() override {
-    PRECONDITION(dp_ostream, "no output stream");
+    PRECONDITION(dp_ostream, "no output stream")
     try {
       dp_ostream->flush();
     } catch (...) {

@@ -33,7 +33,7 @@ void testSnapshot() {
     } catch (...) {
       e = true;
     }
-    TEST_ASSERT(e);
+    TEST_ASSERT(e)
   }
   {
     boost::shared_array<double> pos(new double[3]());
@@ -44,7 +44,7 @@ void testSnapshot() {
     } catch (...) {
       e = true;
     }
-    TEST_ASSERT(e);
+    TEST_ASSERT(e)
   }
 }
 
@@ -55,8 +55,8 @@ void testTrajectory2D() {
   const unsigned int np = 10;
   const unsigned int ns = 5;
   Trajectory traj(dim, np);
-  CHECK_INVARIANT(traj.dimension() == dim, "");
-  CHECK_INVARIANT(traj.numPoints() == np, "");
+  CHECK_INVARIANT(traj.dimension() == dim, "")
+  CHECK_INVARIANT(traj.numPoints() == np, "")
   boost::shared_array<double> c(new double[np * dim]);
   for (unsigned int i = 0; i < np * dim; ++i) {
     c[i] = static_cast<double>(i);
@@ -64,7 +64,7 @@ void testTrajectory2D() {
   for (unsigned int i = 0; i < ns; ++i) {
     traj.addSnapshot(Snapshot(c, static_cast<double>(i)));
   }
-  TEST_ASSERT(traj.size() == ns);
+  TEST_ASSERT(traj.size() == ns)
   {
     bool e = false;
     try {
@@ -72,7 +72,7 @@ void testTrajectory2D() {
     } catch (...) {
       e = true;
     }
-    TEST_ASSERT(e);
+    TEST_ASSERT(e)
   }
   {
     bool e = false;
@@ -81,41 +81,41 @@ void testTrajectory2D() {
     } catch (...) {
       e = true;
     }
-    TEST_ASSERT(e);
+    TEST_ASSERT(e)
   }
   for (unsigned int i = 0; i < np; ++i) {
     TEST_ASSERT(RDKit::feq(std::round(traj.getSnapshot(0).getPoint2D(i).x),
-                           static_cast<double>(i * dim)));
+                           static_cast<double>(i * dim)))
     TEST_ASSERT(RDKit::feq(std::round(traj.getSnapshot(0).getPoint2D(i).y),
-                           static_cast<double>(i * dim + 1)));
+                           static_cast<double>(i * dim + 1)))
     bool e = false;
     try {
       TEST_ASSERT(
-          RDKit::feq(std::round(traj.getSnapshot(0).getPoint3D(i).z), 0.0));
+          RDKit::feq(std::round(traj.getSnapshot(0).getPoint3D(i).z), 0.0))
     } catch (...) {
       e = true;
     }
-    TEST_ASSERT(!e);
+    TEST_ASSERT(!e)
   }
   for (unsigned int i = 0; i < ns; ++i) {
     TEST_ASSERT(RDKit::feq(std::round(traj.getSnapshot(i).getEnergy()),
-                           static_cast<double>(i)));
+                           static_cast<double>(i)))
   }
   traj.removeSnapshot(0);
-  TEST_ASSERT(traj.size() == ns - 1);
+  TEST_ASSERT(traj.size() == ns - 1)
   for (unsigned int i = 0; i < ns - 1; ++i) {
     TEST_ASSERT(RDKit::feq(std::round(traj.getSnapshot(i).getEnergy()),
-                           static_cast<double>(i + 1)));
+                           static_cast<double>(i + 1)))
   }
   traj.insertSnapshot(0, Snapshot(c, 999.0));
-  TEST_ASSERT(traj.size() == ns);
+  TEST_ASSERT(traj.size() == ns)
   Snapshot copySnapshot(traj.getSnapshot(0));
   traj.addSnapshot(copySnapshot);
-  TEST_ASSERT(traj.size() == ns + 1);
-  TEST_ASSERT(RDKit::feq(std::round(traj.getSnapshot(0).getEnergy()), 999.0));
-  TEST_ASSERT(RDKit::feq(std::round(traj.getSnapshot(1).getEnergy()), 1.0));
+  TEST_ASSERT(traj.size() == ns + 1)
+  TEST_ASSERT(RDKit::feq(std::round(traj.getSnapshot(0).getEnergy()), 999.0))
+  TEST_ASSERT(RDKit::feq(std::round(traj.getSnapshot(1).getEnergy()), 1.0))
   TEST_ASSERT(RDKit::feq(
-      std::round(traj.getSnapshot(traj.size() - 1).getEnergy()), 999.0));
+      std::round(traj.getSnapshot(traj.size() - 1).getEnergy()), 999.0))
   Trajectory traj2(traj);
   BOOST_LOG(rdErrorLog) << "done" << std::endl;
 }
@@ -127,8 +127,8 @@ void testTrajectory3D() {
   const unsigned int np = 10;
   const unsigned int ns = 5;
   Trajectory traj(dim, np);
-  CHECK_INVARIANT(traj.dimension() == dim, "");
-  CHECK_INVARIANT(traj.numPoints() == np, "");
+  CHECK_INVARIANT(traj.dimension() == dim, "")
+  CHECK_INVARIANT(traj.numPoints() == np, "")
   boost::shared_array<double> c(new double[np * dim]);
   for (unsigned int i = 0; i < np * dim; ++i) {
     c[i] = static_cast<double>(i);
@@ -136,7 +136,7 @@ void testTrajectory3D() {
   for (unsigned int i = 0; i < ns; ++i) {
     traj.addSnapshot(Snapshot(c, static_cast<double>(i)));
   }
-  TEST_ASSERT(traj.size() == ns);
+  TEST_ASSERT(traj.size() == ns)
   {
     bool e = false;
     try {
@@ -144,7 +144,7 @@ void testTrajectory3D() {
     } catch (...) {
       e = true;
     }
-    TEST_ASSERT(e);
+    TEST_ASSERT(e)
   }
   {
     bool e = false;
@@ -153,15 +153,15 @@ void testTrajectory3D() {
     } catch (...) {
       e = true;
     }
-    TEST_ASSERT(e);
+    TEST_ASSERT(e)
   }
   for (unsigned int i = 0; i < np; ++i) {
     TEST_ASSERT(RDKit::feq(std::round(traj.getSnapshot(0).getPoint3D(i).x),
-                           static_cast<double>(i * dim)));
+                           static_cast<double>(i * dim)))
     TEST_ASSERT(RDKit::feq(std::round(traj.getSnapshot(0).getPoint3D(i).y),
-                           static_cast<double>(i * dim + 1)));
+                           static_cast<double>(i * dim + 1)))
     TEST_ASSERT(RDKit::feq(std::round(traj.getSnapshot(0).getPoint3D(i).z),
-                           static_cast<double>(i * dim + 2)));
+                           static_cast<double>(i * dim + 2)))
     if (!i) {
       bool e = false;
       try {
@@ -169,28 +169,28 @@ void testTrajectory3D() {
       } catch (...) {
         e = true;
       }
-      TEST_ASSERT(e);
+      TEST_ASSERT(e)
     }
   }
   for (unsigned int i = 0; i < ns; ++i) {
     TEST_ASSERT(RDKit::feq(std::round(traj.getSnapshot(i).getEnergy()),
-                           static_cast<double>(i)));
+                           static_cast<double>(i)))
   }
   traj.removeSnapshot(0);
-  TEST_ASSERT(traj.size() == ns - 1);
+  TEST_ASSERT(traj.size() == ns - 1)
   for (unsigned int i = 0; i < ns - 1; ++i) {
     TEST_ASSERT(RDKit::feq(std::round(traj.getSnapshot(i).getEnergy()),
-                           static_cast<double>(i + 1)));
+                           static_cast<double>(i + 1)))
   }
   traj.insertSnapshot(0, Snapshot(c, 999.0));
-  TEST_ASSERT(traj.size() == ns);
+  TEST_ASSERT(traj.size() == ns)
   Snapshot copySnapshot(traj.getSnapshot(0));
   traj.addSnapshot(copySnapshot);
-  TEST_ASSERT(traj.size() == ns + 1);
-  TEST_ASSERT(RDKit::feq(std::round(traj.getSnapshot(0).getEnergy()), 999.0));
-  TEST_ASSERT(RDKit::feq(std::round(traj.getSnapshot(1).getEnergy()), 1.0));
+  TEST_ASSERT(traj.size() == ns + 1)
+  TEST_ASSERT(RDKit::feq(std::round(traj.getSnapshot(0).getEnergy()), 999.0))
+  TEST_ASSERT(RDKit::feq(std::round(traj.getSnapshot(1).getEnergy()), 1.0))
   TEST_ASSERT(RDKit::feq(
-      std::round(traj.getSnapshot(traj.size() - 1).getEnergy()), 999.0));
+      std::round(traj.getSnapshot(traj.size() - 1).getEnergy()), 999.0))
   Trajectory traj2(traj);
   BOOST_LOG(rdErrorLog) << "done" << std::endl;
 }
@@ -209,7 +209,7 @@ void testReadAmber() {
     } catch (...) {
       ok = true;
     }
-    TEST_ASSERT(ok);
+    TEST_ASSERT(ok)
   }
   {
     Trajectory traj(3, 3);
@@ -220,7 +220,7 @@ void testReadAmber() {
       BOOST_LOG(rdErrorLog) << e.what() << std::endl;
       ok = true;
     }
-    TEST_ASSERT(ok);
+    TEST_ASSERT(ok)
   }
   fName = rdbase + "/Code/GraphMol/test_data/water_coords_bad2.trx";
   {
@@ -232,19 +232,19 @@ void testReadAmber() {
       BOOST_LOG(rdErrorLog) << e.what() << std::endl;
       ok = true;
     }
-    TEST_ASSERT(ok);
+    TEST_ASSERT(ok)
   }
   fName = rdbase + "/Code/GraphMol/test_data/water_coords.trx";
   {
     Trajectory traj(3, 3);
     readAmberTrajectory(fName, traj);
-    TEST_ASSERT(traj.size() == 1);
+    TEST_ASSERT(traj.size() == 1)
   }
   fName = rdbase + "/Code/GraphMol/test_data/water_coords2.trx";
   {
     Trajectory traj(3, 3);
     readAmberTrajectory(fName, traj);
-    TEST_ASSERT(traj.size() == 2);
+    TEST_ASSERT(traj.size() == 2)
     Trajectory trajCopy(traj);
   }
   BOOST_LOG(rdErrorLog) << "done" << std::endl;
@@ -264,7 +264,7 @@ void testReadGromos() {
     } catch (...) {
       ok = true;
     }
-    TEST_ASSERT(ok);
+    TEST_ASSERT(ok)
   }
   {
     Trajectory traj(3, 3);
@@ -275,7 +275,7 @@ void testReadGromos() {
       BOOST_LOG(rdErrorLog) << e.what() << std::endl;
       ok = true;
     }
-    TEST_ASSERT(ok);
+    TEST_ASSERT(ok)
   }
   fName = rdbase + "/Code/GraphMol/test_data/water_coords_bad2.trc";
   {
@@ -287,19 +287,19 @@ void testReadGromos() {
       BOOST_LOG(rdErrorLog) << e.what() << std::endl;
       ok = true;
     }
-    TEST_ASSERT(ok);
+    TEST_ASSERT(ok)
   }
   fName = rdbase + "/Code/GraphMol/test_data/water_coords.trc";
   {
     Trajectory traj(3, 3);
     readGromosTrajectory(fName, traj);
-    TEST_ASSERT(traj.size() == 1);
+    TEST_ASSERT(traj.size() == 1)
   }
   fName = rdbase + "/Code/GraphMol/test_data/water_coords2.trc";
   {
     Trajectory traj(3, 3);
     readGromosTrajectory(fName, traj);
-    TEST_ASSERT(traj.size() == 2);
+    TEST_ASSERT(traj.size() == 2)
     Trajectory trajCopy(traj);
   }
   BOOST_LOG(rdErrorLog) << "done" << std::endl;
@@ -473,7 +473,7 @@ void testAddConformersFromTrajectory() {
   field->initialize();
   auto *sv = new SnapshotVect;
   int res = field->minimize(everySteps, sv, maxIts, gradTol);
-  TEST_ASSERT(res == 0);
+  TEST_ASSERT(res == 0)
   Trajectory traj(3, mol->getNumAtoms(), sv);
   mol->removeConformer(0);
   traj.addConformersToMol(*mol);
@@ -489,7 +489,7 @@ void testAddConformersFromTrajectory() {
   unsigned int n1 = mol->getNumConformers();
   traj.addConformersToMol(*mol);
   unsigned int n2 = mol->getNumConformers();
-  TEST_ASSERT(n1 == n2);
+  TEST_ASSERT(n1 == n2)
   // getSnapshot should raise exception after Clear()
   bool ok = false;
   try {
@@ -498,7 +498,7 @@ void testAddConformersFromTrajectory() {
     BOOST_LOG(rdErrorLog) << e.what() << std::endl;
     ok = true;
   }
-  TEST_ASSERT(ok);
+  TEST_ASSERT(ok)
   delete field;
   delete mol;
 }
@@ -513,13 +513,13 @@ void testAddConformersFromAmberTrajectory() {
   {
     Trajectory traj(3, mol->getNumAtoms());
     readAmberTrajectory(fName, traj);
-    TEST_ASSERT(traj.size() == 1);
+    TEST_ASSERT(traj.size() == 1)
     for (unsigned int i = 0; i < 2; ++i) {
       traj.addConformersToMol(*mol);
-      TEST_ASSERT(mol->getNumConformers() == i + 1);
-      TEST_ASSERT(mol->getConformer(i).getNumAtoms() == 3);
-      TEST_ASSERT(RDKit::feq(mol->getConformer(i).getAtomPos(0).x, 0.1941767));
-      TEST_ASSERT(RDKit::feq(mol->getConformer(i).getAtomPos(2).z, -0.4088006));
+      TEST_ASSERT(mol->getNumConformers() == i + 1)
+      TEST_ASSERT(mol->getConformer(i).getNumAtoms() == 3)
+      TEST_ASSERT(RDKit::feq(mol->getConformer(i).getAtomPos(0).x, 0.1941767))
+      TEST_ASSERT(RDKit::feq(mol->getConformer(i).getAtomPos(2).z, -0.4088006))
     }
     mol->clearConformers();
     bool e = false;
@@ -528,21 +528,21 @@ void testAddConformersFromAmberTrajectory() {
     } catch (...) {
       e = true;
     }
-    TEST_ASSERT(e);
-    TEST_ASSERT(mol->getNumConformers() == 0);
+    TEST_ASSERT(e)
+    TEST_ASSERT(mol->getNumConformers() == 0)
   }
   fName = rdbase + "/Code/GraphMol/test_data/water_coords2.trx";
   {
     Trajectory traj(3, mol->getNumAtoms());
     readAmberTrajectory(fName, traj);
-    TEST_ASSERT(traj.size() == 2);
+    TEST_ASSERT(traj.size() == 2)
     traj.addConformersToMol(*mol);
-    TEST_ASSERT(mol->getNumConformers() == 2);
+    TEST_ASSERT(mol->getNumConformers() == 2)
     mol->clearConformers();
     traj.addConformersToMol(*mol, 0, 0);
-    TEST_ASSERT(mol->getNumConformers() == 1);
+    TEST_ASSERT(mol->getNumConformers() == 1)
     traj.addConformersToMol(*mol, 1);
-    TEST_ASSERT(mol->getNumConformers() == 2);
+    TEST_ASSERT(mol->getNumConformers() == 2)
   }
   delete mol;
   BOOST_LOG(rdErrorLog) << "done" << std::endl;
@@ -558,13 +558,13 @@ void testAddConformersFromGromosTrajectory() {
   {
     Trajectory traj(3, mol->getNumAtoms());
     readGromosTrajectory(fName, traj);
-    TEST_ASSERT(traj.size() == 1);
+    TEST_ASSERT(traj.size() == 1)
     for (unsigned int i = 0; i < 2; ++i) {
       traj.addConformersToMol(*mol);
-      TEST_ASSERT(mol->getNumConformers() == i + 1);
-      TEST_ASSERT(mol->getConformer(i).getNumAtoms() == 3);
-      TEST_ASSERT(RDKit::feq(mol->getConformer(i).getAtomPos(0).x, 1.941767));
-      TEST_ASSERT(RDKit::feq(mol->getConformer(i).getAtomPos(2).z, -4.088006));
+      TEST_ASSERT(mol->getNumConformers() == i + 1)
+      TEST_ASSERT(mol->getConformer(i).getNumAtoms() == 3)
+      TEST_ASSERT(RDKit::feq(mol->getConformer(i).getAtomPos(0).x, 1.941767))
+      TEST_ASSERT(RDKit::feq(mol->getConformer(i).getAtomPos(2).z, -4.088006))
     }
     mol->clearConformers();
     bool e = false;
@@ -573,22 +573,22 @@ void testAddConformersFromGromosTrajectory() {
     } catch (...) {
       e = true;
     }
-    TEST_ASSERT(e);
-    TEST_ASSERT(mol->getNumConformers() == 0);
+    TEST_ASSERT(e)
+    TEST_ASSERT(mol->getNumConformers() == 0)
   }
   fName = rdbase + "/Code/GraphMol/test_data/water_coords2.trc";
   {
     Trajectory traj(3, mol->getNumAtoms());
     readGromosTrajectory(fName, traj);
-    TEST_ASSERT(traj.size() == 2);
+    TEST_ASSERT(traj.size() == 2)
     traj.addConformersToMol(*mol);
-    TEST_ASSERT(mol->getNumConformers() == 2);
+    TEST_ASSERT(mol->getNumConformers() == 2)
     mol->clearConformers();
     traj.addConformersToMol(*mol, 0, 0);
-    TEST_ASSERT(mol->getNumConformers() == 1);
+    TEST_ASSERT(mol->getNumConformers() == 1)
     mol->clearConformers();
     traj.addConformersToMol(*mol, 1);
-    TEST_ASSERT(mol->getNumConformers() == 1);
+    TEST_ASSERT(mol->getNumConformers() == 1)
   }
   delete mol;
   BOOST_LOG(rdErrorLog) << "done" << std::endl;

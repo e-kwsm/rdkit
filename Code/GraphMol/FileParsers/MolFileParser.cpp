@@ -145,7 +145,7 @@ double toDouble(const std::string &input, bool acceptSpaces) {
 std::string getV3000Line(std::istream *inStream, unsigned int &line) {
   // FIX: technically V3K blocks are case-insensitive. We should really be
   // up-casing everything here.
-  PRECONDITION(inStream, "bad stream");
+  PRECONDITION(inStream, "bad stream")
   std::string res;
   ++line;
   auto inl = getLine(inStream);
@@ -289,7 +289,7 @@ std::string parseEnhancedStereo(std::istream *inStream, unsigned int &line,
 
 void ParseOldAtomList(RWMol *mol, const std::string_view &text,
                       unsigned int line) {
-  PRECONDITION(mol, "bad mol");
+  PRECONDITION(mol, "bad mol")
   unsigned int idx;
   try {
     idx = FileParserUtils::stripSpacesAndCast<unsigned int>(text.substr(0, 3)) -
@@ -301,7 +301,7 @@ void ParseOldAtomList(RWMol *mol, const std::string_view &text,
     throw FileParseException(errout.str());
   }
 
-  URANGE_CHECK(idx, mol->getNumAtoms());
+  URANGE_CHECK(idx, mol->getNumAtoms())
   QueryAtom a(*(mol->getAtomWithIdx(idx)));
 
   auto *q = new ATOM_OR_QUERY;
@@ -339,7 +339,7 @@ void ParseOldAtomList(RWMol *mol, const std::string_view &text,
     throw FileParseException(errout.str());
   }
 
-  RANGE_CHECK(0, nQueries, 5);
+  RANGE_CHECK(0, nQueries, 5)
   for (int i = 0; i < nQueries; i++) {
     int pos = 11 + i * 4;
     int atNum;
@@ -358,7 +358,7 @@ void ParseOldAtomList(RWMol *mol, const std::string_view &text,
              << line;
       throw FileParseException(errout.str());
     }
-    RANGE_CHECK(0, atNum, 200);  // goofy!
+    RANGE_CHECK(0, atNum, 200)  // goofy!
     q->addChild(
         QueryAtom::QUERYATOM_QUERY::CHILD_TYPE(makeAtomNumQuery(atNum)));
     if (!i) {
@@ -374,8 +374,8 @@ void ParseOldAtomList(RWMol *mol, const std::string_view &text,
 
 void ParseChargeLine(RWMol *mol, const std::string &text, bool firstCall,
                      unsigned int line) {
-  PRECONDITION(mol, "bad mol");
-  PRECONDITION(text.substr(0, 6) == std::string("M  CHG"), "bad charge line");
+  PRECONDITION(mol, "bad mol")
+  PRECONDITION(text.substr(0, 6) == std::string("M  CHG"), "bad charge line")
 
   // if this line is specified all the atom other than those specified
   // here should carry a charge of 0; but we should only do this once:
@@ -414,8 +414,8 @@ void ParseChargeLine(RWMol *mol, const std::string &text, bool firstCall,
 
 void ParseRadicalLine(RWMol *mol, const std::string &text, bool firstCall,
                       unsigned int line) {
-  PRECONDITION(mol, "bad mol");
-  PRECONDITION(text.substr(0, 6) == std::string("M  RAD"), "bad charge line");
+  PRECONDITION(mol, "bad mol")
+  PRECONDITION(text.substr(0, 6) == std::string("M  RAD"), "bad charge line")
 
   // if this line is specified all the atom other than those specified
   // here should carry a charge of 0; but we should only do this once:
@@ -474,8 +474,8 @@ void ParseRadicalLine(RWMol *mol, const std::string &text, bool firstCall,
 }
 
 void ParsePXALine(RWMol *mol, const std::string &text, unsigned int line) {
-  PRECONDITION(mol, "bad mol");
-  PRECONDITION(text.substr(0, 6) == "M  PXA", "bad PXA line");
+  PRECONDITION(mol, "bad mol")
+  PRECONDITION(text.substr(0, 6) == "M  PXA", "bad PXA line")
   unsigned int pos = 7;
   try {
     auto atIdx =
@@ -492,8 +492,8 @@ void ParsePXALine(RWMol *mol, const std::string &text, unsigned int line) {
 }
 
 void ParseIsotopeLine(RWMol *mol, const std::string &text, unsigned int line) {
-  PRECONDITION(mol, "bad mol");
-  PRECONDITION(text.substr(0, 6) == std::string("M  ISO"), "bad isotope line");
+  PRECONDITION(mol, "bad mol")
+  PRECONDITION(text.substr(0, 6) == std::string("M  ISO"), "bad isotope line")
 
   unsigned int nent;
   try {
@@ -534,8 +534,8 @@ void ParseIsotopeLine(RWMol *mol, const std::string &text, unsigned int line) {
 
 void ParseSubstitutionCountLine(RWMol *mol, const std::string &text,
                                 unsigned int line) {
-  PRECONDITION(mol, "bad mol");
-  PRECONDITION(text.substr(0, 6) == std::string("M  SUB"), "bad SUB line");
+  PRECONDITION(mol, "bad mol")
+  PRECONDITION(text.substr(0, 6) == std::string("M  SUB"), "bad SUB line")
 
   unsigned int nent;
   try {
@@ -605,8 +605,8 @@ void ParseSubstitutionCountLine(RWMol *mol, const std::string &text,
 
 void ParseUnsaturationLine(RWMol *mol, const std::string &text,
                            unsigned int line) {
-  PRECONDITION(mol, "bad mol");
-  PRECONDITION(text.substr(0, 6) == std::string("M  UNS"), "bad UNS line");
+  PRECONDITION(mol, "bad mol")
+  PRECONDITION(text.substr(0, 6) == std::string("M  UNS"), "bad UNS line")
 
   unsigned int nent;
   try {
@@ -658,8 +658,8 @@ void ParseUnsaturationLine(RWMol *mol, const std::string &text,
 
 void ParseRingBondCountLine(RWMol *mol, const std::string &text,
                             unsigned int line) {
-  PRECONDITION(mol, "bad mol");
-  PRECONDITION(text.substr(0, 6) == std::string("M  RBC"), "bad RBC line");
+  PRECONDITION(mol, "bad mol")
+  PRECONDITION(text.substr(0, 6) == std::string("M  RBC"), "bad RBC line")
 
   unsigned int nent;
   try {
@@ -730,8 +730,8 @@ void ParseRingBondCountLine(RWMol *mol, const std::string &text,
 void ParseZCHLine(RWMol *mol, const std::string &text, unsigned int line) {
   // part of Alex Clark's ZBO proposal
   // from JCIM 51:3149-57 (2011)
-  PRECONDITION(mol, "bad mol");
-  PRECONDITION(text.substr(0, 6) == std::string("M  ZCH"), "bad ZCH line");
+  PRECONDITION(mol, "bad mol")
+  PRECONDITION(text.substr(0, 6) == std::string("M  ZCH"), "bad ZCH line")
 
   unsigned int nent;
   try {
@@ -781,8 +781,8 @@ void ParseZCHLine(RWMol *mol, const std::string &text, unsigned int line) {
 void ParseHYDLine(RWMol *mol, const std::string &text, unsigned int line) {
   // part of Alex Clark's ZBO proposal
   // from JCIM 51:3149-57 (2011)
-  PRECONDITION(mol, "bad mol");
-  PRECONDITION(text.substr(0, 6) == std::string("M  HYD"), "bad HYD line");
+  PRECONDITION(mol, "bad mol")
+  PRECONDITION(text.substr(0, 6) == std::string("M  HYD"), "bad HYD line")
 
   unsigned int nent;
   try {
@@ -835,8 +835,8 @@ void ParseHYDLine(RWMol *mol, const std::string &text, unsigned int line) {
 void ParseZBOLine(RWMol *mol, const std::string &text, unsigned int line) {
   // part of Alex Clark's ZBO proposal
   // from JCIM 51:3149-57 (2011)
-  PRECONDITION(mol, "bad mol");
-  PRECONDITION(text.substr(0, 6) == std::string("M  ZBO"), "bad ZBO line");
+  PRECONDITION(mol, "bad mol")
+  PRECONDITION(text.substr(0, 6) == std::string("M  ZBO"), "bad ZBO line")
 
   unsigned int nent;
   try {
@@ -910,7 +910,7 @@ void ParseMarvinSmartsLine(RWMol *mol, const std::string &text,
     throw FileParseException(errout.str());
   }
 
-  URANGE_CHECK(idx, mol->getNumAtoms());
+  URANGE_CHECK(idx, mol->getNumAtoms())
   // Should we check the validity of the marvin line here?  Should we
   // automatically
   //   Add these as recursive smarts?  I tend to think so...
@@ -943,8 +943,8 @@ void ParseMarvinSmartsLine(RWMol *mol, const std::string &text,
 
 void ParseAttachPointLine(RWMol *mol, const std::string &text,
                           unsigned int line, bool strictParsing) {
-  PRECONDITION(mol, "bad mol");
-  PRECONDITION(text.substr(0, 6) == std::string("M  APO"), "bad APO line");
+  PRECONDITION(mol, "bad mol")
+  PRECONDITION(text.substr(0, 6) == std::string("M  APO"), "bad APO line")
 
   unsigned int nent;
   try {
@@ -1016,8 +1016,8 @@ void ParseAttachPointLine(RWMol *mol, const std::string &text,
 // the format differs between V2000 and V3000, so we have to do a bit of
 // translation here
 void ParseLinkNodeLine(RWMol *mol, const std::string &text, unsigned int line) {
-  PRECONDITION(mol, "bad mol");
-  PRECONDITION(text.substr(0, 6) == std::string("M  LIN"), "bad LIN line");
+  PRECONDITION(mol, "bad mol")
+  PRECONDITION(text.substr(0, 6) == std::string("M  LIN"), "bad LIN line")
 
   unsigned int nent;
   try {
@@ -1131,9 +1131,8 @@ void ParseNewAtomList(RWMol *mol, const std::string &text, unsigned int line) {
     errout << "Atom list line too short: '" << text << "'";
     throw FileParseException(errout.str());
   }
-  PRECONDITION(mol, "bad mol");
-  PRECONDITION(text.substr(0, 6) == std::string("M  ALS"),
-               "bad atom list line");
+  PRECONDITION(mol, "bad mol")
+  PRECONDITION(text.substr(0, 6) == std::string("M  ALS"), "bad atom list line")
 
   unsigned int idx;
   try {
@@ -1145,7 +1144,7 @@ void ParseNewAtomList(RWMol *mol, const std::string &text, unsigned int line) {
            << line;
     throw FileParseException(errout.str());
   }
-  URANGE_CHECK(idx, mol->getNumAtoms());
+  URANGE_CHECK(idx, mol->getNumAtoms())
 
   int nQueries;
   try {
@@ -1240,8 +1239,8 @@ void ParseNewAtomList(RWMol *mol, const std::string &text, unsigned int line) {
 
 void ParseV3000RGroups(RWMol *mol, Atom *&atom, std::string_view text,
                        unsigned int line) {
-  PRECONDITION(mol, "bad mol");
-  PRECONDITION(atom, "bad atom");
+  PRECONDITION(mol, "bad mol")
+  PRECONDITION(atom, "bad atom")
   if (text[0] != '(' || text.back() != ')') {
     std::ostringstream errout;
     errout << "Bad RGROUPS specification '" << text << "' on line " << line
@@ -1292,9 +1291,9 @@ void ParseV3000RGroups(RWMol *mol, Atom *&atom, std::string_view text,
 }
 
 void ParseRGroupLabels(RWMol *mol, const std::string &text, unsigned int line) {
-  PRECONDITION(mol, "bad mol");
+  PRECONDITION(mol, "bad mol")
   PRECONDITION(text.substr(0, 6) == std::string("M  RGP"),
-               "bad R group label line");
+               "bad R group label line")
 
   int nLabels;
   try {
@@ -1357,8 +1356,8 @@ void ParseRGroupLabels(RWMol *mol, const std::string &text, unsigned int line) {
 
 void ParseAtomAlias(RWMol *mol, std::string text, const std::string &nextLine,
                     unsigned int line) {
-  PRECONDITION(mol, "bad mol");
-  PRECONDITION(text.substr(0, 2) == std::string("A "), "bad atom alias line");
+  PRECONDITION(mol, "bad mol")
+  PRECONDITION(text.substr(0, 2) == std::string("A "), "bad atom alias line")
 
   unsigned int idx;
   try {
@@ -1370,14 +1369,14 @@ void ParseAtomAlias(RWMol *mol, std::string text, const std::string &nextLine,
            << line;
     throw FileParseException(errout.str());
   }
-  URANGE_CHECK(idx, mol->getNumAtoms());
+  URANGE_CHECK(idx, mol->getNumAtoms())
   Atom *at = mol->getAtomWithIdx(idx);
   at->setProp(common_properties::molFileAlias, nextLine);
 }
 
 void ParseAtomValue(RWMol *mol, std::string text, unsigned int line) {
-  PRECONDITION(mol, "bad mol");
-  PRECONDITION(text.substr(0, 2) == std::string("V "), "bad atom value line");
+  PRECONDITION(mol, "bad mol")
+  PRECONDITION(text.substr(0, 2) == std::string("V "), "bad atom value line")
 
   unsigned int idx;
   try {
@@ -1389,7 +1388,7 @@ void ParseAtomValue(RWMol *mol, std::string text, unsigned int line) {
            << line;
     throw FileParseException(errout.str());
   }
-  URANGE_CHECK(idx, mol->getNumAtoms());
+  URANGE_CHECK(idx, mol->getNumAtoms())
   Atom *at = mol->getAtomWithIdx(idx);
   at->setProp(common_properties::molFileValue,
               text.substr(7, text.length() - 7));
@@ -1797,7 +1796,6 @@ Bond *ParseMolFileBondLine(const std::string_view text, unsigned int line) {
       }
       res->setProp(common_properties::_MolFileBondStereo, stereo);
     } catch (boost::bad_lexical_cast &) {
-      ;
     }
   }
   if (text.size() >= 18 && text.substr(15, 3) != "  0") {
@@ -1825,7 +1823,6 @@ Bond *ParseMolFileBondLine(const std::string_view text, unsigned int line) {
         res->expandQuery(q);
       }
     } catch (boost::bad_lexical_cast &) {
-      ;
     }
   }
   if (text.size() >= 21 && text.substr(18, 3) != "  0") {
@@ -1833,7 +1830,6 @@ Bond *ParseMolFileBondLine(const std::string_view text, unsigned int line) {
       int reactStatus = FileParserUtils::toInt(text.substr(18, 3));
       res->setProp("molReactStatus", reactStatus);
     } catch (boost::bad_lexical_cast &) {
-      ;
     }
   }
   return res;
@@ -1842,9 +1838,9 @@ Bond *ParseMolFileBondLine(const std::string_view text, unsigned int line) {
 void ParseMolBlockAtoms(std::istream *inStream, unsigned int &line,
                         unsigned int nAtoms, RWMol *mol, Conformer *conf,
                         bool strictParsing) {
-  PRECONDITION(inStream, "bad stream");
-  PRECONDITION(mol, "bad molecule");
-  PRECONDITION(conf, "bad conformer");
+  PRECONDITION(inStream, "bad stream")
+  PRECONDITION(mol, "bad molecule")
+  PRECONDITION(conf, "bad conformer")
   for (unsigned int i = 1; i <= nAtoms; ++i) {
     ++line;
     std::string tempStr = getLine(inStream);
@@ -1862,8 +1858,8 @@ void ParseMolBlockAtoms(std::istream *inStream, unsigned int &line,
 void ParseMolBlockBonds(std::istream *inStream, unsigned int &line,
                         unsigned int nBonds, RWMol *mol,
                         bool &chiralityPossible) {
-  PRECONDITION(inStream, "bad stream");
-  PRECONDITION(mol, "bad molecule");
+  PRECONDITION(inStream, "bad stream")
+  PRECONDITION(mol, "bad molecule")
   for (unsigned int i = 1; i <= nBonds; ++i) {
     ++line;
     std::string tempStr = getLine(inStream);
@@ -1928,8 +1924,8 @@ bool checkAttachmentPointsAreValid(
 
 bool ParseMolBlockProperties(std::istream *inStream, unsigned int &line,
                              RWMol *mol, bool strictParsing) {
-  PRECONDITION(inStream, "bad stream");
-  PRECONDITION(mol, "bad molecule");
+  PRECONDITION(inStream, "bad stream")
+  PRECONDITION(mol, "bad molecule")
   // older mol files can have an atom list block here
   std::string tempStr = getLine(inStream);
   ++line;
@@ -2235,8 +2231,8 @@ template <class T>
 void ParseV3000AtomProps(RWMol *mol, Atom *&atom, typename T::iterator &token,
                          const T &tokens, unsigned int &line,
                          bool strictParsing) {
-  PRECONDITION(mol, "bad molecule");
-  PRECONDITION(atom, "bad atom");
+  PRECONDITION(mol, "bad molecule")
+  PRECONDITION(atom, "bad atom")
   std::ostringstream errout;
   while (token != tokens.end()) {
     std::string prop;
@@ -2681,9 +2677,9 @@ void ParseV3000AtomBlock(std::istream *inStream, unsigned int &line,
 void ParseV3000BondBlock(std::istream *inStream, unsigned int &line,
                          unsigned int nBonds, RWMol *mol,
                          bool &chiralityPossible) {
-  PRECONDITION(inStream, "bad stream");
-  PRECONDITION(nBonds > 0, "bad bond count");
-  PRECONDITION(mol, "bad molecule");
+  PRECONDITION(inStream, "bad stream")
+  PRECONDITION(nBonds > 0, "bad bond count")
+  PRECONDITION(mol, "bad molecule")
 
   auto inl = getV3000Line(inStream, line);
   std::string_view tempStr = inl;
@@ -3147,7 +3143,7 @@ void processSGroups(RWMol *mol) {
 }
 
 void ProcessMolProps(RWMol *mol) {
-  PRECONDITION(mol, "no molecule");
+  PRECONDITION(mol, "no molecule")
   // we have to loop the ugly way because we may need to actually replace an
   // atom
   for (unsigned int aidx = 0; aidx < mol->getNumAtoms(); ++aidx) {

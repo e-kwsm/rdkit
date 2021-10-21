@@ -220,7 +220,7 @@ void hierarchy_create() {
           fd.level < MAX_DEPTH,
           std::string(
               "Invalid Depth in Built in Functional Group Hierarchy: ") +
-              fd.name);
+              fd.name)
       boost::shared_ptr<FilterHierarchyMatcher> real_node =
           stack[fd.level - 1]->addChild(node);
 

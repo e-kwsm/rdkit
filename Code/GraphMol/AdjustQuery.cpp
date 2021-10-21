@@ -275,7 +275,7 @@ void setMDLAromaticity(RWMol &mol) {
 }  // namespace
 void parseAdjustQueryParametersFromJSON(MolOps::AdjustQueryParameters &p,
                                         const std::string &json) {
-  PRECONDITION(!json.empty(), "empty JSON provided");
+  PRECONDITION(!json.empty(), "empty JSON provided")
   std::istringstream ss;
   ss.str(json);
 

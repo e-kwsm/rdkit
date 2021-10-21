@@ -465,6 +465,6 @@ RDKIT_DEPICTOR_EXPORT double normalizeDepiction(RDKit::ROMol &mol,
                                                 int confId = -1,
                                                 int canonicalize = 1,
                                                 double scaleFactor = -1.0);
-};  // namespace RDDepict
+}  // namespace RDDepict
 
 #endif

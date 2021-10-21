@@ -519,7 +519,7 @@ std::unique_ptr<RWMol> MolFromSmiles(const std::string &smiles,
     }
   }
   return res;
-};
+}
 
 std::unique_ptr<Atom> AtomFromSmarts(const std::string &smiles) {
   yysmarts_debug = false;
@@ -561,7 +561,7 @@ std::unique_ptr<RWMol> MolFromSmarts(const std::string &smarts,
     }
   }
   return res;
-};
+}
 }  // namespace SmilesParse
 }  // namespace v2
 }  // namespace RDKit
