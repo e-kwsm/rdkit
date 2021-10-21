@@ -38,7 +38,7 @@ inline uint32_t hash(const std::string& str, uint32_t hash = seed) {
   }
 
   return hash;
-};
+}
 }  // namespace FNV
 
 class RDKIT_FINGERPRINTS_EXPORT MHFPEncoder {

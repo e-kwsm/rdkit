@@ -35,16 +35,16 @@ void test2() {
   mol->addBond(1, 2, Bond::SINGLE);
   mol->setAtomBookmark(mol->getAtomWithIdx(1), 1);
   mol->setBondBookmark(mol->getBondWithIdx(0), 2);
-  CHECK_INVARIANT(mol->hasAtomBookmark(1), "");
-  CHECK_INVARIANT(mol->getAtomWithBookmark(1)->getIdx() == 1, "");
-  CHECK_INVARIANT(mol->hasBondBookmark(2), "");
-  CHECK_INVARIANT(mol->getBondWithBookmark(2)->getIdx() == 0, "");
+  CHECK_INVARIANT(mol->hasAtomBookmark(1), "")
+  CHECK_INVARIANT(mol->getAtomWithBookmark(1)->getIdx() == 1, "")
+  CHECK_INVARIANT(mol->hasBondBookmark(2), "")
+  CHECK_INVARIANT(mol->getBondWithBookmark(2)->getIdx() == 0, "")
 
   auto *mol2 = new RWMol(*mol);
-  CHECK_INVARIANT(mol2->hasAtomBookmark(1), "");
-  CHECK_INVARIANT(mol2->getAtomWithBookmark(1)->getIdx() == 1, "");
-  CHECK_INVARIANT(mol2->hasBondBookmark(2), "");
-  CHECK_INVARIANT(mol2->getBondWithBookmark(2)->getIdx() == 0, "");
+  CHECK_INVARIANT(mol2->hasAtomBookmark(1), "")
+  CHECK_INVARIANT(mol2->getAtomWithBookmark(1)->getIdx() == 1, "")
+  CHECK_INVARIANT(mol2->hasBondBookmark(2), "")
+  CHECK_INVARIANT(mol2->getBondWithBookmark(2)->getIdx() == 0, "")
   delete mol;
   delete mol2;
 }
@@ -59,7 +59,7 @@ void testQueryCopying() {
         "[$([O,S;H1;v2]-[!$(*=[O,N,P,S])]),$([O,S;H0;v2]),$([O,S;-]),$([N;v3;!$"
         "(N-*=!@[O,N,P,S])]),$([nH0,o,s;+0])]";
     auto *m = static_cast<ROMol *>(SmartsToMol(smi));
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
     std::cerr << "\n\n\nCOPY" << std::endl;
     auto *m2 = new ROMol(*m, true);
 
@@ -77,7 +77,7 @@ void testConformerCopying() {
   {
     std::string smi = "CCC";
     auto *m = static_cast<ROMol *>(SmilesToMol(smi));
-    TEST_ASSERT(m);
+    TEST_ASSERT(m)
 
     auto *conf = new Conformer(m->getNumAtoms());
     conf->setId(1);
@@ -87,24 +87,24 @@ void testConformerCopying() {
     m->addConformer(conf, false);
     {
       auto *m2 = new ROMol(*m);
-      TEST_ASSERT(m2->getNumConformers() == 2);
+      TEST_ASSERT(m2->getNumConformers() == 2)
       delete m2;
     }
     {
       auto *m2 = new ROMol(*m, false, 1);
-      TEST_ASSERT(m2->getNumConformers() == 1);
-      TEST_ASSERT(m2->getConformer().getId() == 1);
+      TEST_ASSERT(m2->getNumConformers() == 1)
+      TEST_ASSERT(m2->getConformer().getId() == 1)
       delete m2;
     }
     {
       auto *m2 = new ROMol(*m, false, 2);
-      TEST_ASSERT(m2->getNumConformers() == 1);
-      TEST_ASSERT(m2->getConformer().getId() == 2);
+      TEST_ASSERT(m2->getNumConformers() == 1)
+      TEST_ASSERT(m2->getConformer().getId() == 2)
       delete m2;
     }
     {
       auto *m2 = new ROMol(*m, false, 3);
-      TEST_ASSERT(m2->getNumConformers() == 0);
+      TEST_ASSERT(m2->getNumConformers() == 0)
       delete m2;
     }
 
@@ -121,7 +121,7 @@ void testGithub2144() {
 
   {
     auto mol1 = "C1CCCCC1"_smiles;
-    TEST_ASSERT(mol1);
+    TEST_ASSERT(mol1)
     RWMol mol2(*mol1);
     TEST_ASSERT(mol2.getNumBonds() == mol1->getNumBonds())
     TEST_ASSERT(mol2.getNumAtoms() == mol1->getNumAtoms())

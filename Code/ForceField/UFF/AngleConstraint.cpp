@@ -21,12 +21,12 @@ namespace UFF {
 AngleConstraintContrib::AngleConstraintContrib(
     ForceField *owner, unsigned int idx1, unsigned int idx2, unsigned int idx3,
     double minAngleDeg, double maxAngleDeg, double forceConst) {
-  PRECONDITION(owner, "bad owner");
-  URANGE_CHECK(idx1, owner->positions().size());
-  URANGE_CHECK(idx2, owner->positions().size());
-  URANGE_CHECK(idx3, owner->positions().size());
+  PRECONDITION(owner, "bad owner")
+  URANGE_CHECK(idx1, owner->positions().size())
+  URANGE_CHECK(idx2, owner->positions().size())
+  URANGE_CHECK(idx3, owner->positions().size())
   PRECONDITION(!(minAngleDeg > maxAngleDeg),
-               "minAngleDeg must be <= maxAngleDeg");
+               "minAngleDeg must be <= maxAngleDeg")
   RDKit::ForceFieldsHelper::normalizeAngleDeg(minAngleDeg);
   RDKit::ForceFieldsHelper::normalizeAngleDeg(maxAngleDeg);
 
@@ -42,13 +42,13 @@ AngleConstraintContrib::AngleConstraintContrib(
 AngleConstraintContrib::AngleConstraintContrib(
     ForceField *owner, unsigned int idx1, unsigned int idx2, unsigned int idx3,
     bool relative, double minAngleDeg, double maxAngleDeg, double forceConst) {
-  PRECONDITION(owner, "bad owner");
+  PRECONDITION(owner, "bad owner")
   const RDGeom::PointPtrVect &pos = owner->positions();
-  URANGE_CHECK(idx1, pos.size());
-  URANGE_CHECK(idx2, pos.size());
-  URANGE_CHECK(idx3, pos.size());
+  URANGE_CHECK(idx1, pos.size())
+  URANGE_CHECK(idx2, pos.size())
+  URANGE_CHECK(idx3, pos.size())
   PRECONDITION(!(minAngleDeg > maxAngleDeg),
-               "minAngleDeg must be <= maxAngleDeg");
+               "minAngleDeg must be <= maxAngleDeg")
 
   double angle = 0.0;
   if (relative) {
@@ -87,8 +87,8 @@ double AngleConstraintContrib::computeAngleTerm(double angle) const {
 }
 
 double AngleConstraintContrib::getEnergy(double *pos) const {
-  PRECONDITION(dp_forceField, "no owner");
-  PRECONDITION(pos, "bad vector");
+  PRECONDITION(dp_forceField, "no owner")
+  PRECONDITION(pos, "bad vector")
 
   RDGeom::Point3D p1(pos[3 * d_at1Idx], pos[3 * d_at1Idx + 1],
                      pos[3 * d_at1Idx + 2]);
@@ -110,9 +110,9 @@ double AngleConstraintContrib::getEnergy(double *pos) const {
 }
 
 void AngleConstraintContrib::getGrad(double *pos, double *grad) const {
-  PRECONDITION(dp_forceField, "no owner");
-  PRECONDITION(pos, "bad vector");
-  PRECONDITION(grad, "bad vector");
+  PRECONDITION(dp_forceField, "no owner")
+  PRECONDITION(pos, "bad vector")
+  PRECONDITION(grad, "bad vector")
 
   RDGeom::Point3D p1(pos[3 * d_at1Idx], pos[3 * d_at1Idx + 1],
                      pos[3 * d_at1Idx + 2]);

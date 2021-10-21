@@ -35,7 +35,7 @@ template <typename T>
 void streamWrite(std::ostream &ss, ReactionPickler::Tags tag, const T &what) {
   streamWrite(ss, tag);
   streamWrite(ss, what);
-};
+}
 
 void streamRead(std::istream &ss, ReactionPickler::Tags &tag) {
   int32_t tmp;
@@ -51,7 +51,7 @@ void ReactionPickler::pickleReaction(const ChemicalReaction *rxn,
 void ReactionPickler::pickleReaction(const ChemicalReaction *rxn,
                                      std::ostream &ss,
                                      unsigned int propertyFlags) {
-  PRECONDITION(rxn, "empty reaction");
+  PRECONDITION(rxn, "empty reaction")
   streamWrite(ss, endianId);
   streamWrite(ss, VERSION);
   streamWrite(ss, versionMajor);
@@ -67,7 +67,7 @@ void ReactionPickler::pickleReaction(const ChemicalReaction *rxn,
 void ReactionPickler::pickleReaction(const ChemicalReaction *rxn,
                                      std::string &res,
                                      unsigned int propertyFlags) {
-  PRECONDITION(rxn, "empty reaction");
+  PRECONDITION(rxn, "empty reaction")
   std::stringstream ss(std::ios_base::binary | std::ios_base::out |
                        std::ios_base::in);
   ReactionPickler::pickleReaction(rxn, ss, propertyFlags);
@@ -78,7 +78,7 @@ void ReactionPickler::pickleReaction(const ChemicalReaction *rxn,
 // be left intact.
 void ReactionPickler::reactionFromPickle(std::istream &ss,
                                          ChemicalReaction *rxn) {
-  PRECONDITION(rxn, "empty reaction");
+  PRECONDITION(rxn, "empty reaction")
   Tags tag;
   int32_t tmpInt;
 
@@ -110,7 +110,7 @@ void ReactionPickler::reactionFromPickle(std::istream &ss,
 }
 void ReactionPickler::reactionFromPickle(const std::string &pickle,
                                          ChemicalReaction *rxn) {
-  PRECONDITION(rxn, "empty reaction");
+  PRECONDITION(rxn, "empty reaction")
   std::stringstream ss(std::ios_base::binary | std::ios_base::out |
                        std::ios_base::in);
   ss.write(pickle.c_str(), pickle.length());
@@ -119,7 +119,7 @@ void ReactionPickler::reactionFromPickle(const std::string &pickle,
 
 void ReactionPickler::_pickle(const ChemicalReaction *rxn, std::ostream &ss,
                               unsigned int propertyFlags) {
-  PRECONDITION(rxn, "empty reaction");
+  PRECONDITION(rxn, "empty reaction")
   uint32_t tmpInt;
 
   tmpInt = static_cast<int32_t>(rxn->getNumReactantTemplates());
@@ -210,7 +210,7 @@ void ReactionPickler::_unpickleProperties(std::istream &ss, RDProps &props) {
 
 void ReactionPickler::_depickle(std::istream &ss, ChemicalReaction *rxn,
                                 int version) {
-  PRECONDITION(rxn, "empty reaction");
+  PRECONDITION(rxn, "empty reaction")
 
   Tags tag;
   uint32_t numReactants, numProducts, numAgents = 0;
@@ -306,4 +306,4 @@ void ReactionPickler::_depickle(std::istream &ss, ChemicalReaction *rxn,
   rxn->df_needsInit = flag & 0x2;
 
 }  // end of _depickle
-};  // namespace RDKit
+}  // namespace RDKit

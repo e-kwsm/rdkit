@@ -34,7 +34,7 @@ class ss_matcher {
   ss_matcher(){};
   ss_matcher(const std::string &pattern) {
     RDKit::RWMol *p = RDKit::SmartsToMol(pattern);
-    TEST_ASSERT(p);
+    TEST_ASSERT(p)
     m_matcher.reset(p);
   };
 
@@ -88,7 +88,7 @@ void getErGAtomTypes(const ROMol &mol,
              defaultFeatureSmarts.begin();
          smaIt != defaultFeatureSmarts.end(); ++smaIt) {
       const ROMol *matcher = pattern_flyweight(*smaIt).get().getMatcher();
-      CHECK_INVARIANT(matcher, "bad smarts");
+      CHECK_INVARIANT(matcher, "bad smarts")
       featureMatchers.push_back(matcher);
     }
     patterns = &featureMatchers;
@@ -129,7 +129,7 @@ RDNumeric::DoubleVector *getErGFingerprint(
 RDNumeric::DoubleVector *generateErGFingerprintForReducedGraph(
     const ROMol &mol, std::vector<boost::dynamic_bitset<>> *atomTypes,
     double fuzzIncrement, unsigned int minPath, unsigned int maxPath) {
-  PRECONDITION(maxPath > minPath, "maxPath<=minPath");
+  PRECONDITION(maxPath > minPath, "maxPath<=minPath")
   // FIX: this isn't doing the special handling for flip/flop bits
   unsigned int nTypes = nFeatures;
   if (atomTypes) {

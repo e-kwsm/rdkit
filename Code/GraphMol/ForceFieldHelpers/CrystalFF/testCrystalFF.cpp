@@ -76,7 +76,7 @@ void testTorsionAngleM6() {
       *(RDGeom::Point3D *)ff.positions()[1],
       *(RDGeom::Point3D *)ff.positions()[2],
       *(RDGeom::Point3D *)ff.positions()[3]);
-  TEST_ASSERT(RDKit::feq(cosPhi, 0.5, 1e-4));
+  TEST_ASSERT(RDKit::feq(cosPhi, 0.5, 1e-4))
 
   // ------- ------- ------- ------- ------- ------- -------
   // Basic SP2 - SP2
@@ -114,23 +114,23 @@ void testTorsionAngleM6() {
       *(RDGeom::Point3D *)ff.positions()[1],
       *(RDGeom::Point3D *)ff.positions()[2],
       *(RDGeom::Point3D *)ff.positions()[3]);
-  TEST_ASSERT(RDKit::feq(cosPhi, 1.0, 1e-4));
+  TEST_ASSERT(RDKit::feq(cosPhi, 1.0, 1e-4))
 }
 
 void testTorsionPrefs() {
   ROMol *mol;
   mol = SmilesToMol("CCCC");
-  TEST_ASSERT(mol);
+  TEST_ASSERT(mol)
 
   ForceFields::CrystalFF::CrystalFFDetails details;
   ForceFields::CrystalFF::getExperimentalTorsions(*mol, details, true, false,
                                                   false, false, 1, false);
-  TEST_ASSERT(details.expTorsionAtoms.size() == 1);
-  TEST_ASSERT(details.expTorsionAngles.size() == 1);
-  TEST_ASSERT(details.expTorsionAtoms[0][0] == 0);
-  TEST_ASSERT(details.expTorsionAtoms[0][3] == 3);
-  TEST_ASSERT(details.expTorsionAngles[0].first.size() == 6);
-  TEST_ASSERT(details.expTorsionAngles[0].second.size() == 6);
+  TEST_ASSERT(details.expTorsionAtoms.size() == 1)
+  TEST_ASSERT(details.expTorsionAngles.size() == 1)
+  TEST_ASSERT(details.expTorsionAtoms[0][0] == 0)
+  TEST_ASSERT(details.expTorsionAtoms[0][3] == 3)
+  TEST_ASSERT(details.expTorsionAngles[0].first.size() == 6)
+  TEST_ASSERT(details.expTorsionAngles[0].second.size() == 6)
 
   std::vector<std::tuple<unsigned int, std::vector<unsigned int>,
                          const ForceFields::CrystalFF::ExpTorsionAngle *>>
@@ -161,19 +161,19 @@ void testTorsionPrefsSmallRings() {
   ROMol *mol;
   ForceFields::CrystalFF::CrystalFFDetails details;
   mol = SmilesToMol("C1COCC1");
-  TEST_ASSERT(mol);
+  TEST_ASSERT(mol)
 
   // small ring torsion turned off
   ForceFields::CrystalFF::getExperimentalTorsions(*mol, details, true, false,
                                                   false, false, 1, false);
-  TEST_ASSERT(details.expTorsionAtoms.size() == 0);
-  TEST_ASSERT(details.expTorsionAngles.size() == 0);
+  TEST_ASSERT(details.expTorsionAtoms.size() == 0)
+  TEST_ASSERT(details.expTorsionAngles.size() == 0)
 
   // small ring torsion turned on
   ForceFields::CrystalFF::getExperimentalTorsions(*mol, details, true, true,
                                                   false, false, 1, false);
-  TEST_ASSERT(details.expTorsionAtoms.size() > 0);
-  TEST_ASSERT(details.expTorsionAngles.size() > 0);
+  TEST_ASSERT(details.expTorsionAtoms.size() > 0)
+  TEST_ASSERT(details.expTorsionAngles.size() > 0)
   delete mol;
 }
 
@@ -183,13 +183,13 @@ void testTorsionPrefsBridgedSmallRings() {
   ForceFields::CrystalFF::CrystalFFDetails details;
 
   mol = SmilesToMol("O[C@H]1C[C@H]2CC[C@]1(C)C2(C)C");
-  TEST_ASSERT(mol);
+  TEST_ASSERT(mol)
 
   // small ring torsion turned off
   ForceFields::CrystalFF::getExperimentalTorsions(*mol, details, true, true,
                                                   false, false, 1, false);
-  TEST_ASSERT(details.expTorsionAtoms.size() == 0);
-  TEST_ASSERT(details.expTorsionAngles.size() == 0);
+  TEST_ASSERT(details.expTorsionAtoms.size() == 0)
+  TEST_ASSERT(details.expTorsionAngles.size() == 0)
   delete mol;
 }
 
@@ -197,19 +197,19 @@ void testTorsionPrefsMacrocycles() {
   ROMol *mol;
   ForceFields::CrystalFF::CrystalFFDetails details;
   mol = SmilesToMol("C1COCCCCCCC1");
-  TEST_ASSERT(mol);
+  TEST_ASSERT(mol)
 
   // macrocycle ring torsion turned off
   ForceFields::CrystalFF::getExperimentalTorsions(*mol, details, true, false,
                                                   false, false, 1, false);
-  TEST_ASSERT(details.expTorsionAtoms.size() == 0);
-  TEST_ASSERT(details.expTorsionAngles.size() == 0);
+  TEST_ASSERT(details.expTorsionAtoms.size() == 0)
+  TEST_ASSERT(details.expTorsionAngles.size() == 0)
 
   // macrocycle ring torsion turned on
   ForceFields::CrystalFF::getExperimentalTorsions(*mol, details, true, false,
                                                   true, false, 1, false);
-  TEST_ASSERT(details.expTorsionAtoms.size() > 0);
-  TEST_ASSERT(details.expTorsionAngles.size() > 0);
+  TEST_ASSERT(details.expTorsionAtoms.size() > 0)
+  TEST_ASSERT(details.expTorsionAngles.size() > 0)
   delete mol;
 }
 

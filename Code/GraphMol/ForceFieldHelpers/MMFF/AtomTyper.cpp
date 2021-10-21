@@ -141,7 +141,7 @@ RingMembershipSize::RingMembershipSize(const ROMol &mol) {
   static const unsigned int MAX_NUM_RINGS = (0xFFFFFFFF >> 1);
   const RingInfo *ringInfo = mol.getRingInfo();
   const VECT_INT_VECT &atomRings = ringInfo->atomRings();
-  PRECONDITION(atomRings.size() < MAX_NUM_RINGS, "Too many rings");
+  PRECONDITION(atomRings.size() < MAX_NUM_RINGS, "Too many rings")
   for (std::uint32_t ringIdx = 0; ringIdx < atomRings.size(); ++ringIdx) {
     unsigned int ringSize = atomRings[ringIdx].size();
     std::uint32_t ringIdxWithAromaticFlag = ringIdx;
@@ -2579,7 +2579,7 @@ unsigned int MMFFMolProperties::getMMFFAngleType(const ROMol &mol,
                                                  const unsigned int idx1,
                                                  const unsigned int idx2,
                                                  const unsigned int idx3) {
-  PRECONDITION(this->isValid(), "missing atom types - invalid force-field");
+  PRECONDITION(this->isValid(), "missing atom types - invalid force-field")
 
   // ftp://ftp.wiley.com/public/journals/jcc/suppmat/17/553/MMFF-III_AppendixA.html
   //
@@ -2621,8 +2621,8 @@ unsigned int MMFFMolProperties::getMMFFAngleType(const ROMol &mol,
 
 // returns the MMFF bond type of the bond
 unsigned int MMFFMolProperties::getMMFFBondType(const Bond *bond) {
-  PRECONDITION(this->isValid(), "missing atom types - invalid force-field");
-  PRECONDITION(bond, "invalid bond");
+  PRECONDITION(this->isValid(), "missing atom types - invalid force-field")
+  PRECONDITION(bond, "invalid bond")
 
   const MMFFPropCollection *mmffProp = DefaultParameters::getMMFFProp();
   const ForceFields::MMFF::MMFFProp *mmffPropAtom1 =
@@ -2696,7 +2696,7 @@ MMFFMolProperties::getMMFFTorsionType(const ROMol &mol, const unsigned int idx1,
                                       const unsigned int idx2,
                                       const unsigned int idx3,
                                       const unsigned int idx4) {
-  PRECONDITION(this->isValid(), "missing atom types - invalid force-field");
+  PRECONDITION(this->isValid(), "missing atom types - invalid force-field")
 
   const Bond *bondJK = mol.getBondBetweenAtoms(idx2, idx3);
   unsigned int bondTypeIJ =
@@ -2742,7 +2742,7 @@ MMFFMolProperties::getMMFFTorsionType(const ROMol &mol, const unsigned int idx1,
 const ForceFields::MMFF::MMFFBond *
 MMFFMolProperties::getMMFFBondStretchEmpiricalRuleParams(const ROMol &,
                                                          const Bond *bond) {
-  PRECONDITION(this->isValid(), "missing atom types - invalid force-field");
+  PRECONDITION(this->isValid(), "missing atom types - invalid force-field")
 
   const MMFFBond *mmffBndkParams;
   const MMFFHerschbachLaurie *mmffHerschbachLaurieParams;
@@ -2767,14 +2767,14 @@ MMFFMolProperties::getMMFFBondStretchEmpiricalRuleParams(const ROMol &,
 
   PRECONDITION(mmffAtomCovRadPauEleParams[0],
                "covalent radius/Pauling electronegativity parameters for atom "
-               "1 not found");
+               "1 not found")
   PRECONDITION(mmffAtomCovRadPauEleParams[1],
                "covalent radius/Pauling electronegativity parameters for atom "
-               "2 not found");
+               "2 not found")
   PRECONDITION(mmffAtomPropParams[0],
-               "property parameters for atom 1 not found");
+               "property parameters for atom 1 not found")
   PRECONDITION(mmffAtomPropParams[1],
-               "property parameters for atom 2 not found");
+               "property parameters for atom 2 not found")
 
   auto *mmffBondParams = new ForceFields::MMFF::MMFFBond();
   const double c = (((atomicNum1 == 1) || (atomicNum2 == 1)) ? 0.050 : 0.085);
@@ -3046,7 +3046,7 @@ const ForceFields::MMFF::MMFFTor *
 MMFFMolProperties::getMMFFTorsionEmpiricalRuleParams(const ROMol &mol,
                                                      unsigned int idx2,
                                                      unsigned int idx3) {
-  PRECONDITION(this->isValid(), "missing atom types - invalid force-field");
+  PRECONDITION(this->isValid(), "missing atom types - invalid force-field")
 
   const MMFFPropCollection *mmffProp = DefaultParameters::getMMFFProp();
   const MMFFAromCollection *mmffArom = DefaultParameters::getMMFFArom();
@@ -3235,7 +3235,7 @@ MMFFMolProperties::getMMFFTorsionEmpiricalRuleParams(const ROMol &mol,
 // populates the MMFFMolProperties object with MMFF
 // formal and partial charges
 void MMFFMolProperties::computeMMFFCharges(const ROMol &mol) {
-  PRECONDITION(this->isValid(), "missing atom types - invalid force-field");
+  PRECONDITION(this->isValid(), "missing atom types - invalid force-field")
 
   unsigned int idx;
   unsigned int i;

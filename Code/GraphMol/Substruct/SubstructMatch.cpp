@@ -41,7 +41,7 @@ namespace detail {
 
 namespace {
 bool hasChiralLabel(const Atom *at) {
-  PRECONDITION(at, "bad atom");
+  PRECONDITION(at, "bad atom")
   return at->getChiralTag() == Atom::CHI_TETRAHEDRAL_CW ||
          at->getChiralTag() == Atom::CHI_TETRAHEDRAL_CCW;
 }
@@ -268,8 +268,8 @@ bool MolMatchFinalCheckFunctor::operator()(const std::uint32_t q_c[],
         }
       }
     }
-    CHECK_INVARIANT(qOrder.size() == qAt->getDegree(), "missing matches");
-    CHECK_INVARIANT(qOrder.size() == mOrder.size(), "bad matches");
+    CHECK_INVARIANT(qOrder.size() == qAt->getDegree(), "missing matches")
+    CHECK_INVARIANT(qOrder.size() == mOrder.size(), "bad matches")
     int qPermCount = qAt->getPerturbationOrder(qOrder);
 
     unsigned unmatchedNeighbors = mAt->getDegree() - mOrder.size();
@@ -329,7 +329,7 @@ bool MolMatchFinalCheckFunctor::operator()(const std::uint32_t q_c[],
 
     const Bond *mBnd = d_mol.getBondBetweenAtoms(
         q_to_mol[qBnd->getBeginAtomIdx()], q_to_mol[qBnd->getEndAtomIdx()]);
-    CHECK_INVARIANT(mBnd, "Matching bond not found");
+    CHECK_INVARIANT(mBnd, "Matching bond not found")
     if (mBnd->getBondType() != Bond::DOUBLE ||
         qBnd->getStereo() <= Bond::STEREOANY) {
       continue;
@@ -388,7 +388,7 @@ class AtomLabelFunctor {
  public:
   AtomLabelFunctor(const ROMol &query, const ROMol &mol,
                    const SubstructMatchParameters &ps)
-      : d_query(query), d_mol(mol), d_params(ps){};
+      : d_query(query), d_mol(mol), d_params(ps) {}
   bool operator()(unsigned int i, unsigned int j) const {
     bool res = false;
     if (d_params.useChirality) {
@@ -453,7 +453,7 @@ void ResSubstructMatchHelper_(const ResSubstructMatchHelperArgs_ &args,
     }
     delete mol;
   }
-};
+}
 
 struct RecursiveLocker {
   std::vector<RecursiveStructureQuery *> locked;

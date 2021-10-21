@@ -129,7 +129,7 @@ const ReactionFingerprintParams DefaultDifferenceFPParams(true, 0.0, 10, 1,
 SparseIntVect<std::uint32_t> *generateFingerprintChemReactionAsCountVect(
     const ChemicalReaction &rxn, unsigned int fpSize, FingerprintType t,
     ReactionMoleculeType mt) {
-  PRECONDITION(fpSize != 0, "fpSize==0");
+  PRECONDITION(fpSize != 0, "fpSize==0")
 
   auto *result = new SparseIntVect<std::uint32_t>(fpSize);
   auto begin = getStartIterator(rxn, mt);
@@ -145,7 +145,7 @@ SparseIntVect<std::uint32_t> *generateFingerprintChemReactionAsCountVect(
 ExplicitBitVect *generateFingerprintChemReactionAsBitVect(
     const ChemicalReaction &rxn, unsigned int fpSize, FingerprintType t,
     ReactionMoleculeType mt) {
-  PRECONDITION(fpSize != 0, "fpSize==0");
+  PRECONDITION(fpSize != 0, "fpSize==0")
 
   auto *result = new ExplicitBitVect(fpSize);
   auto begin = getStartIterator(rxn, mt);
@@ -161,7 +161,7 @@ ExplicitBitVect *generateFingerprintChemReactionAsBitVect(
 // caller owns the result, it must be deleted
 ExplicitBitVect *StructuralFingerprintChemReaction(
     const ChemicalReaction &rxn, const ReactionFingerprintParams &params) {
-  PRECONDITION(params.fpSize != 0, "fpSize==0");
+  PRECONDITION(params.fpSize != 0, "fpSize==0")
 
   unsigned int fpSize_final = params.fpSize / 2;
   if (params.includeAgents) {
@@ -196,9 +196,9 @@ ExplicitBitVect *StructuralFingerprintChemReaction(
 
 SparseIntVect<std::uint32_t> *DifferenceFingerprintChemReaction(
     const ChemicalReaction &rxn, const ReactionFingerprintParams &params) {
-  PRECONDITION(params.fpSize != 0, "fpSize==0");
+  PRECONDITION(params.fpSize != 0, "fpSize==0")
   PRECONDITION(params.fpType > 0 && params.fpType < 4,
-               "Fingerprinttype not supported");
+               "Fingerprinttype not supported")
 
   SparseIntVect<std::uint32_t> *reactantFP =
       generateFingerprintChemReactionAsCountVect(rxn, params.fpSize,

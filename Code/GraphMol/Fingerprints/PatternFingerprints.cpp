@@ -41,7 +41,7 @@ class ss_matcher {
   ss_matcher(){};
   ss_matcher(const std::string &pattern) {
     RDKit::RWMol *p = RDKit::SmartsToMol(pattern);
-    TEST_ASSERT(p);
+    TEST_ASSERT(p)
     m_matcher.reset(p);
   };
 
@@ -184,11 +184,11 @@ void updatePatternFingerprint(const ROMol &mol, ExplicitBitVect &fp,
                               std::vector<unsigned int> *atomCounts,
                               ExplicitBitVect *setOnlyBits,
                               bool tautomericFingerprint) {
-  PRECONDITION(fpSize != 0, "fpSize==0");
+  PRECONDITION(fpSize != 0, "fpSize==0")
   PRECONDITION(!atomCounts || atomCounts->size() >= mol.getNumAtoms(),
-               "bad atomCounts size");
+               "bad atomCounts size")
   PRECONDITION(!setOnlyBits || setOnlyBits->getNumBits() == fpSize,
-               "bad setOnlyBits size");
+               "bad setOnlyBits size")
 
   std::vector<const ROMol *> patts;
   patts.reserve(10);
@@ -200,7 +200,7 @@ void updatePatternFingerprint(const ROMol &mol, ExplicitBitVect &fp,
     }
     ++idx;
     const ROMol *matcher = pattern_flyweight(pq).get().getMatcher();
-    CHECK_INVARIANT(matcher, "bad smarts");
+    CHECK_INVARIANT(matcher, "bad smarts")
     patts.push_back(matcher);
   }
 
@@ -361,11 +361,11 @@ ExplicitBitVect *PatternFingerprintMol(const ROMol &mol, unsigned int fpSize,
                                        std::vector<unsigned int> *atomCounts,
                                        ExplicitBitVect *setOnlyBits,
                                        bool tautomericFingerprint) {
-  PRECONDITION(fpSize != 0, "fpSize==0");
+  PRECONDITION(fpSize != 0, "fpSize==0")
   PRECONDITION(!atomCounts || atomCounts->size() >= mol.getNumAtoms(),
-               "bad atomCounts size");
+               "bad atomCounts size")
   PRECONDITION(!setOnlyBits || setOnlyBits->getNumBits() == fpSize,
-               "bad setOnlyBits size");
+               "bad setOnlyBits size")
   auto *res = new ExplicitBitVect(fpSize);
   updatePatternFingerprint(mol, *res, fpSize, atomCounts, setOnlyBits,
                            tautomericFingerprint);
@@ -377,9 +377,9 @@ ExplicitBitVect *PatternFingerprintMol(const MolBundle &bundle,
                                        unsigned int fpSize,
                                        ExplicitBitVect *setOnlyBits,
                                        bool tautomericFingerprint) {
-  PRECONDITION(fpSize != 0, "fpSize==0");
+  PRECONDITION(fpSize != 0, "fpSize==0")
   PRECONDITION(!setOnlyBits || setOnlyBits->getNumBits() == fpSize,
-               "bad setOnlyBits size");
+               "bad setOnlyBits size")
   ExplicitBitVect *res = nullptr;
   for (const auto &molp : bundle.getMols()) {
     ExplicitBitVect molfp(fpSize);
