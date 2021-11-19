@@ -542,7 +542,7 @@ Available parameters and their default values are:
 ### Parameters
 
 -   rdkit.tanimoto\_threshold : threshold value for the Tanimoto similarity operator. Searches done using Tanimoto similarity will only return results with a similarity of at least this value.
--   rdkit.dice\_threshold : threshold value for the Dice similiarty operator. Searches done using Dice similarity will only return results with a similarity of at least this value.
+-   rdkit.dice\_threshold : threshold value for the Dice similarity operator. Searches done using Dice similarity will only return results with a similarity of at least this value.
 -   rdkit.do\_chiral\_sss : toggles whether or not stereochemistry is used in substructure matching. (*available from 2013\_03 release*).
 -   rdkit.do\_enhanced\_stereo\_sss : toggles whether or not enhanced stereo is used in substructure matching. Has no effect if `rdkit.do_chiral_sss` is false. (*available from 2021\_09 release*).
 -   rdkit.sss\_fp\_size : the size (in bits) of the fingerprint used for substructure screening.
