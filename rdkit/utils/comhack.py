@@ -4,7 +4,7 @@ $Id$
 Original author:  Thorsten Henninger <henni@brainbot.com>
 Info about this file: http://mail.python.org/pipermail/python-win32/2003-December/001453.html
 
-Use this in confuction with McMillan-Installer, if you need COM-Support in your application.
+Use this in conjunction with McMillan-Installer, if you need COM-Support in your application.
 McMillan Installer as well as PythonCOM do overwrite the import Method for their needs.
 
 _myimport advises the imports to either PythonCOM-Import or McMillan Import.

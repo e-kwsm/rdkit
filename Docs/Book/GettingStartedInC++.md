@@ -785,7 +785,7 @@ Number of atoms : 9
 ```
 Recall that there are two versions of `RDKit::MolOps::addHs`, as
 described [above](#twoAddHs).
-The Hs can be removed again using the `RDKit::MolOps::RemoveHs`
+The Hs can be removed again using the `RDKit::MolOps::removeHs`
 function, which again has two forms
 [(example8)](./C++Examples/example8.cpp):
 ```c++

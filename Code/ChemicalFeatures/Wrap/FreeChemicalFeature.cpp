@@ -52,13 +52,13 @@ struct freefeat_wrapper {
         .def("SetFamily", &FreeChemicalFeature::setFamily,
              "Set the family of the feature")
         .def("SetType", &FreeChemicalFeature::setType,
-             "Set the sepcific type for the feature")
+             "Set the specific type for the feature")
         .def("GetId", &FreeChemicalFeature::getId, "Get the id of the feature")
         .def("GetFamily", &FreeChemicalFeature::getFamily,
              "Get the family of the feature",
              python::return_value_policy<python::copy_const_reference>())
         .def("GetType", &FreeChemicalFeature::getType,
-             "Get the sepcific type for the feature",
+             "Get the specific type for the feature",
              python::return_value_policy<python::copy_const_reference>())
         .def("SetPos", &FreeChemicalFeature::setPos, "Set the feature position")
         .def("GetPos", &FreeChemicalFeature::getPos,

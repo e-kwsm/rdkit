@@ -168,7 +168,7 @@ class PsDSC:
   def __init__(self):
     pass
 
-  ## Genral DSC conventions
+  ## General DSC conventions
   def documentHeader(self):
     return "%!PS-Adobe-3.0"
 
@@ -205,7 +205,7 @@ class EpsDSC(PsDSC):
   def __init__(self):
     PsDSC.__init__(self)
 
-  ## Genral DSC conventions
+  ## General DSC conventions
   def documentHeader(self):
     return "%!PS-Adobe-3.0 EPSF-3.0"
 

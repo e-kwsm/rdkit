@@ -315,7 +315,7 @@ LabuteASA.version = rdMolDescriptors._CalcLabuteASA_version
 
 
 def _pyTPSAContribs(mol, verbose=False):
-  """ DEPRECATED: this has been reimplmented in C++
+  """ DEPRECATED: this has been reimplemented in C++
   calculates atomic contributions to a molecules TPSA
 
    Algorithm described in:
@@ -459,7 +459,7 @@ def _pyTPSAContribs(mol, verbose=False):
 
 
 def _pyTPSA(mol, verbose=False):
-  """ DEPRECATED: this has been reimplmented in C++
+  """ DEPRECATED: this has been reimplemented in C++
    calculates the polar surface area of a molecule based upon fragments
 
    Algorithm in:

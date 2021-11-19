@@ -249,7 +249,7 @@ class SVGCanvas(Canvas):
 
   def save(self, file=None, format=None):
     """Hand hand this either a file= <filename> or
-    file = <an open file object>.  By default, I've made the fomrat extension be
+    file = <an open file object>.  By default, I've made the format extension be
     .svg.  By default it saves the file to "self.name" + '.svg' """
 
     if file is None:

@@ -192,7 +192,7 @@ a QDAT file.
     homogeneous data set.  This can be accomplished using filtering.
     The filtering process works by selecting a particular target
     fraction and target value.  For example, in a case where 95% of
-    the original training set has activity 0 and ony 5% activity 1, we
+    the original training set has activity 0 and only 5% activity 1, we
     could filter (by randomly removing points with activity 0) so that
     30% of the data set used to build the composite has activity 1.
 
