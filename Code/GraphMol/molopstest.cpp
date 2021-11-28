@@ -37,7 +37,7 @@
 using namespace RDKit;
 using namespace std;
 RWMol _t;
-typedef class ROMol Mol;
+using Mol = class ROMol;
 
 void test1() {
   string smi;
