@@ -260,9 +260,9 @@ namespace FileParsers {
 //  MOL2 handling
 //-----
 
-typedef enum {
+enum Mol2Type {
   CORINA = 0  //!< supports output from Corina and some dbtranslate output
-} Mol2Type;
+};
 
 struct Mol2ParserParams {
   bool sanitize = true; /**< sanitize the molecule after building it */
