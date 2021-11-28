@@ -27,7 +27,7 @@
 #include <RDGeneral/BoostEndInclude.h>
 
 namespace RDKit {
-typedef std::vector<std::string> STR_VECT;
+using STR_VECT = std::vector<std::string>;
 
 //! \brief The \c Dict class can be used to store objects of arbitrary
 //!        type keyed by \c strings.
@@ -50,7 +50,7 @@ class RDKIT_RDGENERAL_EXPORT Dict {
     void cleanup() { RDValue::cleanup_rdvalue(val); }
   };
 
-  typedef std::vector<Pair> DataType;
+  using DataType = std::vector<Pair>;
 
   Dict() {}
 
