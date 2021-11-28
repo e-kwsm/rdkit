@@ -157,7 +157,7 @@ static string StringData;
  * Real sparse vector
  */
 
-typedef SparseIntVect<std::uint32_t> SparseFP;
+using SparseFP = SparseIntVect<std::uint32_t>;
 
 /*******************************************
  *        ROMol transformation             *
