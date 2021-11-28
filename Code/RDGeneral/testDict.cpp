@@ -330,7 +330,7 @@ TEST_CASE("testRDValue") {
     REQUIRE((*rdany_cast<vptr>(vv))[0] == 100);
     REQUIRE((*rdany_cast<vptr>((const RDAny &)vv))[0] == 100);
 
-    typedef boost::shared_ptr<std::map<int, int>> mptr;
+    using mptr = boost::shared_ptr<std::map<int, int>>;
     mptr m(new std::map<int, int>());
     (*m)[0] = 1;
     RDAny mv(m);
