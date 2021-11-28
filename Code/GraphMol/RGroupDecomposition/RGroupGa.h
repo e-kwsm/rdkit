@@ -33,14 +33,14 @@ class RGroupDecompositionChromosome;
 class RGroupGa;
 struct RGroupDecompData;
 
-typedef LinkedPopLinearSel<RGroupDecompositionChromosome, RGroupGa>
-    RGroupGaPopulation;
+using RGroupGaPopulation =
+    LinkedPopLinearSel<RGroupDecompositionChromosome, RGroupGa>;
 
-typedef enum {
+enum OperationName {
   RgroupMutate = 0x01,
   Crossover = 0x02,
   Create = 0x04,
-} OperationName;
+};
 
 class RGroupDecompositionChromosome : public IntegerStringChromosome {
  public:

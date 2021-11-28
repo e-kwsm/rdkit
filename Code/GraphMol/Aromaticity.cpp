@@ -164,17 +164,17 @@ VECT_INT_VECT findFusedRingSystems(const VECT_INT_VECT &rings) {
 namespace {
 using namespace RDKit;
 
-typedef enum {
+enum ElectronDonorType {
   VacantElectronDonorType,
   OneElectronDonorType,
   TwoElectronDonorType,
   OneOrTwoElectronDonorType,
   AnyElectronDonorType,
   NoElectronDonorType
-} ElectronDonorType;  // used in setting aromaticity
-typedef std::vector<ElectronDonorType> VECT_EDON_TYPE;
-typedef VECT_EDON_TYPE::iterator VECT_EDON_TYPE_I;
-typedef VECT_EDON_TYPE::const_iterator VECT_EDON_TYPE_CI;
+};  // used in setting aromaticity
+using VECT_EDON_TYPE = std::vector<ElectronDonorType>;
+using VECT_EDON_TYPE_I = VECT_EDON_TYPE::iterator;
+using VECT_EDON_TYPE_CI = VECT_EDON_TYPE::const_iterator;
 
 /******************************************************************************
  * SUMMARY:

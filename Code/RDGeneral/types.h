@@ -203,7 +203,7 @@ inline constexpr std::string_view _displayLabelW = "_displayLabelW";
 #ifndef WIN32
 using LONGINT = long long int;
 #else
-typedef __int64 LONGINT;
+using LONGINT = __int64;
 #endif
 #ifdef max
 #undef max  // FUCK I hate this nonsense

@@ -60,9 +60,9 @@ class ss_matcher {
 };
 }  // namespace
 
-typedef boost::flyweight<boost::flyweights::key_value<std::string, ss_matcher>,
-                         boost::flyweights::no_tracking>
-    pattern_flyweight;
+using pattern_flyweight =
+    boost::flyweight<boost::flyweights::key_value<std::string, ss_matcher>,
+                     boost::flyweights::no_tracking>;
 #define SMARTSCOUNTFUNC(nm, pattern, vers)         \
   const std::string nm##Version = vers;            \
   unsigned int calc##nm(const RDKit::ROMol &mol) { \

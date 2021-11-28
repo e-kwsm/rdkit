@@ -38,7 +38,7 @@ using namespace boost;
 using namespace std;
 using namespace RDKit;
 
-typedef scoped_ptr<RWMol> pRWMol;
+using pRWMol = scoped_ptr<RWMol>;
 
 static const int LINE_WIDTH_MULT = 4;
 // this size seems to work well with the relative scale of the Drawing
