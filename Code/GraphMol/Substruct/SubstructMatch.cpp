@@ -118,13 +118,13 @@ bool enhancedStereoIsOK(
 
 }  // namespace
 
-typedef std::map<unsigned int, QueryAtom::QUERYATOM_QUERY *> SUBQUERY_MAP;
+using SUBQUERY_MAP = std::map<unsigned int, QueryAtom::QUERYATOM_QUERY *>;
 
-typedef struct {
+struct ResSubstructMatchHelperArgs_ {
   ResonanceMolSupplier &resMolSupplier;
   const ROMol &query;
   const SubstructMatchParameters &params;
-} ResSubstructMatchHelperArgs_;
+};
 
 void MatchSubqueries(const ROMol &mol, QueryAtom::QUERYATOM_QUERY *q,
                      const SubstructMatchParameters &params,
@@ -175,9 +175,8 @@ void ResSubstructMatchHelper_(const ResSubstructMatchHelperArgs_ &args,
                               std::set<MatchVectType> *matches, unsigned int bi,
                               unsigned int ei);
 
-typedef std::list<
-    std::pair<MolGraph::vertex_descriptor, MolGraph::vertex_descriptor>>
-    ssPairType;
+using ssPairType = std::list<
+    std::pair<MolGraph::vertex_descriptor, MolGraph::vertex_descriptor>>;
 
 }  // namespace detail
 
