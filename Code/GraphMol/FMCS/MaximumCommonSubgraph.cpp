@@ -685,7 +685,7 @@ struct AtomMatch {  // for each seed atom (matched)
   unsigned int TargetAtomIdx;
   AtomMatch() : QueryAtomIdx(NotSet), TargetAtomIdx(NotSet) {}
 };
-typedef std::vector<AtomMatch> AtomMatchSet;
+using AtomMatchSet = std::vector<AtomMatch>;
 
 std::pair<std::string, ROMOL_SPTR>
 MaximumCommonSubgraph::generateResultSMARTSAndQueryMol(

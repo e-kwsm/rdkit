@@ -16,7 +16,7 @@ namespace python = boost::python;
 
 #include <RDBoost/import_array.h>
 
-typedef double real;
+using real = double;
 
 extern "C" void distdriver_(boost::int64_t *n, boost::int64_t *len, real *dists,
                             boost::int64_t *toggle, boost::int64_t *ia,
