@@ -29,9 +29,9 @@ class RWMol;
 class Atom;
 class Bond;
 class Conformer;
-typedef std::vector<double> INVAR_VECT;
-typedef INVAR_VECT::iterator INVAR_VECT_I;
-typedef INVAR_VECT::const_iterator INVAR_VECT_CI;
+using INVAR_VECT = std::vector<double>;
+using INVAR_VECT_I = INVAR_VECT::iterator;
+using INVAR_VECT_CI = INVAR_VECT::const_iterator;
 
 //! \brief Groups a variety of molecular query and transformation operations.
 namespace MolOps {
@@ -309,7 +309,7 @@ RDKIT_GRAPHMOL_EXPORT void mergeQueryHs(RWMol &mol,
                                         bool mergeUnmappedOnly = false,
                                         bool mergeIsotopes = false);
 
-typedef enum {
+enum AdjustQueryWhichFlags {
   ADJUST_IGNORENONE = 0x0,
   ADJUST_IGNORECHAINS = 0x1,
   ADJUST_IGNORERINGS = 0x4,
@@ -317,7 +317,7 @@ typedef enum {
   ADJUST_IGNORENONDUMMIES = 0x8,
   ADJUST_IGNOREMAPPED = 0x10,
   ADJUST_IGNOREALL = 0xFFFFFFF
-} AdjustQueryWhichFlags;
+};
 
 //! Parameters controlling the behavior of MolOps::adjustQueryProperties
 /*!
@@ -429,7 +429,7 @@ RDKIT_GRAPHMOL_EXPORT ROMol *renumberAtoms(
 //! \name Sanitization
 /// {
 
-typedef enum {
+enum SanitizeFlags {
   SANITIZE_NONE = 0x0,
   SANITIZE_CLEANUP = 0x1,
   SANITIZE_PROPERTIES = 0x2,
@@ -443,7 +443,7 @@ typedef enum {
   SANITIZE_ADJUSTHS = 0x200,
   SANITIZE_CLEANUP_ORGANOMETALLICS = 0x400,
   SANITIZE_ALL = 0xFFFFFFF
-} SanitizeFlags;
+};
 
 //! \brief carries out a collection of tasks for cleaning up a molecule and
 //! ensuring that it makes "chemical sense"
@@ -522,13 +522,13 @@ does not consider the outer envelope of fused rings)
 - \c AROMATICITY_MDL
 - \c AROMATICITY_CUSTOM uses a caller-provided function
 */
-typedef enum {
+enum AromaticityModel {
   AROMATICITY_DEFAULT = 0x0,  ///< future proofing
   AROMATICITY_RDKIT = 0x1,
   AROMATICITY_SIMPLE = 0x2,
   AROMATICITY_MDL = 0x4,
   AROMATICITY_CUSTOM = 0xFFFFFFF  ///< use a function
-} AromaticityModel;
+};
 
 //! Sets up the aromaticity for a molecule
 /*!

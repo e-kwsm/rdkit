@@ -111,14 +111,14 @@ inline const MolOps::AdjustQueryParameters MatchOnlyAtRgroupsAdjustParams() {
   return params;
 }
 
-typedef enum {
+enum SanitizeRxnFlags {
   SANITIZE_NONE = 0x0,
   SANITIZE_RGROUP_NAMES = 0x1,
   SANITIZE_ATOM_MAPS = 0x2,
   SANITIZE_ADJUST_REACTANTS = 0x4,
   SANITIZE_MERGEHS = 0x8,
   SANITIZE_ALL = 0xFFFFFFFF
-} SanitizeRxnFlags;
+};
 
 //! \brief carries out a collection of tasks for cleaning up a reaction and
 /// ensuring

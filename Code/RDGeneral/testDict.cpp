@@ -334,7 +334,7 @@ void testRDAny() {
 
   {
     // check shared ptrs -- boost::any deletes these :)
-    typedef boost::shared_ptr<std::vector<int>> vptr;
+    using vptr = boost::shared_ptr<std::vector<int>>;
     vptr p(new std::vector<int>());
     p->push_back(100);
     RDAny v(p);
@@ -343,7 +343,7 @@ void testRDAny() {
     TEST_ASSERT((*rdany_cast<vptr>(vv))[0] == 100);
     TEST_ASSERT((*rdany_cast<vptr>((const RDAny &)vv))[0] == 100);
 
-    typedef boost::shared_ptr<std::map<int, int>> mptr;
+    using mptr = boost::shared_ptr<std::map<int, int>>;
     mptr m(new std::map<int, int>());
     (*m)[0] = 1;
     RDAny mv(m);

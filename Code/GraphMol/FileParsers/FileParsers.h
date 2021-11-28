@@ -45,7 +45,7 @@ class RDKIT_FILEPARSERS_EXPORT MolFileUnhandledFeatureException
 //-----
 // mol files
 //-----
-typedef std::vector<RWMOL_SPTR> RWMOL_SPTR_VECT;
+using RWMOL_SPTR_VECT = std::vector<RWMOL_SPTR>;
 // \brief construct a molecule from MDL mol data in a stream
 /*!
  *   \param inStream - stream containing the data
@@ -233,9 +233,9 @@ RDKIT_FILEPARSERS_EXPORT void MolToTPLFile(
 //  MOL2 handling
 //-----
 
-typedef enum {
+enum Mol2Type {
   CORINA = 0  //!< supports output from Corina and some dbtranslate output
-} Mol2Type;
+};
 
 // \brief construct a molecule from a Tripos mol2 file
 /*!

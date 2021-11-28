@@ -16,7 +16,7 @@
 #include "FileParsers.h"
 #include <GraphMol/SmilesParse/SmilesParse.h>
 #include <boost/tokenizer.hpp>
-typedef boost::tokenizer<boost::char_separator<char>> tokenizer;
+using tokenizer = boost::tokenizer<boost::char_separator<char>>;
 
 #include <fstream>
 #include <iostream>

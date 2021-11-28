@@ -38,32 +38,32 @@ static const double minMacrocycleRingSize = 9;
 namespace RDKit {
 namespace DGeomHelpers {
 // forward declarations:
-typedef boost::shared_ptr<RDNumeric::IntSymmMatrix> SymmIntMatPtr;
-typedef boost::shared_ptr<RDNumeric::DoubleSymmMatrix> SymmDoubleMatPtr;
+using SymmIntMatPtr = boost::shared_ptr<RDNumeric::IntSymmMatrix>;
+using SymmDoubleMatPtr = boost::shared_ptr<RDNumeric::DoubleSymmMatrix>;
 
-typedef boost::dynamic_bitset<> BIT_SET;
+using BIT_SET = boost::dynamic_bitset<>;
 
 //! Bunch of functions to set distance bound based on topology
 
-typedef std::map<int, double> INT_DOUBLE_MAP;
-typedef INT_DOUBLE_MAP::const_iterator INT_DOUBLE_MAP_CI;
+using INT_DOUBLE_MAP = std::map<int, double>;
+using INT_DOUBLE_MAP_CI = INT_DOUBLE_MAP::const_iterator;
 
-typedef std::vector<long int> LINT_VECT;
+using LINT_VECT = std::vector<long>;
 
 //! A structure used to store planar 14 paths - cis/trans
 struct Path14Configuration {
   unsigned int bid1, bid2, bid3;
-  typedef enum {
+  enum Path14Type {
     CIS = 0,
     TRANS,
     OTHER,
-  } Path14Type;
+  };
   Path14Type type;
 };
 
-typedef std::vector<Path14Configuration> PATH14_VECT;
-typedef PATH14_VECT::iterator PATH14_VECT_I;
-typedef PATH14_VECT::const_iterator PATH14_VECT_CI;
+using PATH14_VECT = std::vector<Path14Configuration>;
+using PATH14_VECT_I = PATH14_VECT::iterator;
+using PATH14_VECT_CI = PATH14_VECT::const_iterator;
 
 class ComputedData {
  public:

@@ -48,7 +48,7 @@ class RDKIT_GRAPHMOL_EXPORT MolPicklerException : public std::exception {
 };
 
 namespace PicklerOps {
-typedef enum {
+enum PropertyPickleOptions {
   NoProps = 0,  // no data pickled (default pickling, single-precision coords)
   MolProps = 0x1,  // only public non computed properties
   AtomProps = 0x2,
@@ -61,7 +61,7 @@ typedef enum {
   CoordsAsDouble = 0x00010000,  // save coordinates in double precision
   NoConformers =
       0x00020000  // do not include conformers or associated properties
-} PropertyPickleOptions;
+};
 }  // namespace PicklerOps
 
 //! handles pickling (serializing) molecules
@@ -76,7 +76,7 @@ class RDKIT_GRAPHMOL_EXPORT MolPickler {
   //! NOTE: if you add to this list, be sure to put new entries AT THE BOTTOM,
   /// otherwise
   //! you will break old pickles.
-  typedef enum {
+  enum Tags {
     VERSION = 0,
     BEGINATOM,
     ATOM_INDEX,
@@ -145,7 +145,7 @@ class RDKIT_GRAPHMOL_EXPORT MolPickler {
     QUERY_TYPELABEL,
     // add new entries above here
     INVALID_TAG = 255
-  } Tags;
+  };
 
   static unsigned int getDefaultPickleProperties();
   static void setDefaultPickleProperties(unsigned int);

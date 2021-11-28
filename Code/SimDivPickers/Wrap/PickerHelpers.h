@@ -16,7 +16,7 @@
 // NOTE: TANIMOTO and DICE provably return the same results for the diversity
 // picking this is still here just in case we ever later want to support other
 //    methods.
-typedef enum { TANIMOTO = 1, DICE } DistanceMethod;
+enum DistanceMethod { TANIMOTO = 1, DICE };
 
 template <typename BV>
 class pyBVFunctor {

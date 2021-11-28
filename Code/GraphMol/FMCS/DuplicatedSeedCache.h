@@ -18,7 +18,7 @@ namespace RDKit {
 namespace FMCS {
 class DuplicatedSeedCache {
  public:
-  typedef bool TValue;
+  using TValue = bool;
   class TKey {
     std::vector<unsigned> AtomIdx;  // sorted
     std::vector<unsigned> BondIdx;  // sorted

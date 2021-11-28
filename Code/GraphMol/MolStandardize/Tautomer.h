@@ -28,9 +28,8 @@ class RWMol;
 
 namespace MolStandardize {
 
-typedef RDCatalog::HierarchCatalog<TautomerCatalogEntry, TautomerCatalogParams,
-                                   int>
-    TautomerCatalog;
+using TautomerCatalog = RDCatalog::HierarchCatalog<TautomerCatalogEntry,
+                                                   TautomerCatalogParams, int>;
 
 namespace TautomerScoringFunctions {
 const std::string tautomerScoringVersion = "1.0.0";
@@ -71,8 +70,8 @@ class Tautomer {
   bool d_done;
 };
 
-typedef std::map<std::string, Tautomer> SmilesTautomerMap;
-typedef std::pair<std::string, Tautomer> SmilesTautomerPair;
+using SmilesTautomerMap = std::map<std::string, Tautomer>;
+using SmilesTautomerPair = std::pair<std::string, Tautomer>;
 
 //! Contains results of tautomer enumeration
 class RDKIT_MOLSTANDARDIZE_EXPORT TautomerEnumeratorResult {
@@ -81,11 +80,11 @@ class RDKIT_MOLSTANDARDIZE_EXPORT TautomerEnumeratorResult {
  public:
   class const_iterator {
    public:
-    typedef ROMOL_SPTR value_type;
-    typedef std::ptrdiff_t difference_type;
-    typedef const ROMol *pointer;
-    typedef const ROMOL_SPTR &reference;
-    typedef std::bidirectional_iterator_tag iterator_category;
+    using value_type = ROMOL_SPTR;
+    using difference_type = std::ptrdiff_t;
+    using pointer = const ROMol *;
+    using reference = const ROMOL_SPTR &;
+    using iterator_category = std::bidirectional_iterator_tag;
 
     explicit const_iterator(const SmilesTautomerMap::const_iterator &it)
         : d_it(it) {}

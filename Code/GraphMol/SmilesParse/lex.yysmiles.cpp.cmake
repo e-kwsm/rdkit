@@ -263,19 +263,19 @@
 #endif
 
 #include <inttypes.h>
-typedef int8_t flex_int8_t;
-typedef uint8_t flex_uint8_t;
-typedef int16_t flex_int16_t;
-typedef uint16_t flex_uint16_t;
-typedef int32_t flex_int32_t;
-typedef uint32_t flex_uint32_t;
+using flex_int8_t = int8_t;
+using flex_uint8_t = uint8_t;
+using flex_int16_t = int16_t;
+using flex_uint16_t = uint16_t;
+using flex_int32_t = int32_t;
+using flex_uint32_t = uint32_t;
 #else
-typedef signed char flex_int8_t;
-typedef short int flex_int16_t;
-typedef int flex_int32_t;
-typedef unsigned char flex_uint8_t; 
-typedef unsigned short int flex_uint16_t;
-typedef unsigned int flex_uint32_t;
+using flex_int8_t = signed char;
+using flex_int16_t = short int;
+using flex_int32_t = int;
+using flex_uint8_t = unsigned char;
+using flex_uint16_t = unsigned short int;
+using flex_uint32_t = unsigned int;
 
 /* Limits of integral types. */
 #ifndef INT8_MIN
@@ -336,7 +336,7 @@ typedef unsigned int flex_uint32_t;
 /* An opaque pointer. */
 #ifndef YY_TYPEDEF_YY_SCANNER_T
 #define YY_TYPEDEF_YY_SCANNER_T
-typedef void* yyscan_t;
+using yyscan_t = void *;
 #endif
 
 /* For convenience, these vars (plus the bison vars far below)
@@ -386,12 +386,12 @@ typedef void* yyscan_t;
 
 #ifndef YY_TYPEDEF_YY_BUFFER_STATE
 #define YY_TYPEDEF_YY_BUFFER_STATE
-typedef struct yy_buffer_state *YY_BUFFER_STATE;
+using YY_BUFFER_STATE = struct yy_buffer_state *;
 #endif
 
 #ifndef YY_TYPEDEF_YY_SIZE_T
 #define YY_TYPEDEF_YY_SIZE_T
-typedef size_t yy_size_t;
+using yy_size_t = size_t;
 #endif
 
 #define EOB_ACT_CONTINUE_SCAN 0
@@ -541,9 +541,9 @@ void yyfree ( void * , yyscan_t yyscanner );
 
 #define yysmiles_wrap(yyscanner) (/*CONSTCOND*/1)
 #define YY_SKIP_YYWRAP
-typedef flex_uint8_t YY_CHAR;
+using YY_CHAR = flex_uint8_t;
 
-typedef int yy_state_type;
+using yy_state_type = int;
 
 #define yytext_ptr yytext_r
 

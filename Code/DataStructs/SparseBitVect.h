@@ -18,9 +18,9 @@ using std::set;
 #include <iterator>
 #include <algorithm>
 
-typedef set<int> IntSet;
-typedef IntSet::iterator IntSetIter;
-typedef IntSet::const_iterator IntSetConstIter;
+using IntSet = set<int>;
+using IntSetIter = IntSet::iterator;
+using IntSetConstIter = IntSet::const_iterator;
 
 //! a class for bit vectors that are sparsely occupied.
 /*!

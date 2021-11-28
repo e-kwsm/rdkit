@@ -28,7 +28,7 @@ namespace RDNumeric {
 template <class TYPE>
 class Vector {
  public:
-  typedef boost::shared_array<TYPE> DATA_SPTR;
+  using DATA_SPTR = boost::shared_array<TYPE>;
 
   //! Initialize with only a size.
   explicit Vector(unsigned int N) {
@@ -293,7 +293,7 @@ class Vector {
   Vector<TYPE> &operator=(const Vector<TYPE> &other);
 };
 
-typedef Vector<double> DoubleVector;
+using DoubleVector = Vector<double>;
 
 //! returns the algebraic tanimoto similarity [defn' from JCIM 46:587-96 (2006)]
 template <typename T>

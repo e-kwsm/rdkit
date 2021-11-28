@@ -163,7 +163,7 @@ class RDKIT_GRAPHMOL_EXPORT Conformer : public RDProps {
   void initFromOther(const Conformer &conf);
 };
 
-typedef boost::shared_ptr<Conformer> CONFORMER_SPTR;
+using CONFORMER_SPTR = boost::shared_ptr<Conformer>;
 
 //! Returns true if any of the z coords are non zero, false otherwise
 /*!

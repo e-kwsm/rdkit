@@ -212,15 +212,15 @@ ss_matcher::ss_matcher(const std::string &pattern) {
   m_matcher.reset(p);
 };
 
-typedef boost::flyweight<boost::flyweights::key_value<std::string, ss_matcher>,
-                         boost::flyweights::no_tracking>
-    pattern_flyweight;
+using pattern_flyweight =
+    boost::flyweight<boost::flyweights::key_value<std::string, ss_matcher>,
+                     boost::flyweights::no_tracking>;
 
 std::vector<std::string> defaultFeatureSmarts(smartsPatterns,
                                               smartsPatterns + 6);
-typedef boost::flyweight<boost::flyweights::key_value<std::string, ss_matcher>,
-                         boost::flyweights::no_tracking>
-    pattern_flyweight;
+using pattern_flyweight =
+    boost::flyweight<boost::flyweights::key_value<std::string, ss_matcher>,
+                     boost::flyweights::no_tracking>;
 void getFeatureInvariants(const ROMol &mol, std::vector<uint32_t> &invars,
                           std::vector<const ROMol *> *patterns) {
   unsigned int nAtoms = mol.getNumAtoms();
