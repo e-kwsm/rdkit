@@ -24,7 +24,7 @@ class RDKIT_FMCS_EXPORT SubstructureCache {
  public:
 #pragma pack(push, 1)
   struct KeyNumericMetrics {
-    typedef unsigned long long TValue;
+    using TValue = unsigned long long;
     TValue Value{0};
 
    public:
@@ -110,8 +110,8 @@ class RDKIT_FMCS_EXPORT SubstructureCache {
     */
   };
 
-  typedef HashKey TKey;
-  typedef std::list<FMCS::Graph> TIndexEntry;  // hash-key is not unique key
+  using TKey = HashKey;
+  using TIndexEntry = std::list<FMCS::Graph>;  // hash-key is not unique key
  private:
   std::vector<TIndexEntry> ValueStorage;
   std::map<KeyNumericMetrics::TValue, size_t> NumericIndex;  // TIndexEntry
