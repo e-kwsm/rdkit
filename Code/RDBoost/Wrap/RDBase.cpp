@@ -210,7 +210,7 @@ class BlockLogs : public boost::noncopyable {
 
 namespace {
 struct python_streambuf_wrapper {
-  typedef boost_adaptbx::python::streambuf wt;
+  using wt = boost_adaptbx::python::streambuf;
 
   static void wrap() {
     using namespace boost::python;
@@ -222,7 +222,7 @@ struct python_streambuf_wrapper {
 };
 
 struct python_ostream_wrapper {
-  typedef boost_adaptbx::python::ostream wt;
+  using wt = boost_adaptbx::python::ostream;
 
   static void wrap() {
     using namespace boost::python;
