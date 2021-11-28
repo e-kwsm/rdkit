@@ -19,7 +19,7 @@
 #include <boost/tokenizer.hpp>
 #include <algorithm>
 
-typedef boost::tokenizer<boost::char_separator<char>> tokenizer;
+using tokenizer = boost::tokenizer<boost::char_separator<char>>;
 
 namespace RDKit {
 namespace MolEnumerator {

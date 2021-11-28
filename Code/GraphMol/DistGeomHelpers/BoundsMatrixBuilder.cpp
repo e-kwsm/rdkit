@@ -44,14 +44,14 @@ static const double minMacrocycleRingSize = 9;
 namespace RDKit {
 namespace DGeomHelpers {
 // forward declarations:
-typedef boost::shared_ptr<RDNumeric::IntSymmMatrix> SymmIntMatPtr;
-typedef boost::shared_ptr<RDNumeric::DoubleSymmMatrix> SymmDoubleMatPtr;
+using SymmIntMatPtr = boost::shared_ptr<RDNumeric::IntSymmMatrix>;
+using SymmDoubleMatPtr = boost::shared_ptr<RDNumeric::DoubleSymmMatrix>;
 
-typedef boost::dynamic_bitset<> BIT_SET;
+using BIT_SET = boost::dynamic_bitset<>;
 
 //! Bunch of functions to set distance bound based on topology
 
-typedef std::vector<long int> LINT_VECT;
+using LINT_VECT = std::vector<long int>;
 
 enum class Type14 {
   IN_CHAIN,
