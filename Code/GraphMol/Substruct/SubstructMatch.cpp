@@ -115,11 +115,11 @@ bool enhancedStereoIsOK(
 
 }  // namespace
 
-typedef struct {
+struct ResSubstructMatchHelperArgs_ {
   ResonanceMolSupplier &resMolSupplier;
   const ROMol &query;
   const SubstructMatchParameters &params;
-} ResSubstructMatchHelperArgs_;
+};
 
 bool insertIfNeeded(std::set<MatchVectType> &matches, const MatchVectType &m) {
   bool shouldInsert = true;
@@ -165,9 +165,8 @@ void ResSubstructMatchHelper_(const ResSubstructMatchHelperArgs_ &args,
                               std::set<MatchVectType> *matches, unsigned int bi,
                               unsigned int ei);
 
-typedef std::vector<
-    std::pair<MolGraph::vertex_descriptor, MolGraph::vertex_descriptor>>
-    ssPairType;
+using ssPairType = std::vector<
+    std::pair<MolGraph::vertex_descriptor, MolGraph::vertex_descriptor>>;
 
 }  // namespace detail
 

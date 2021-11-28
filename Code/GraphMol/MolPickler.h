@@ -75,7 +75,7 @@ class RDKIT_GRAPHMOL_EXPORT MolPickler {
   //! NOTE: if you add to this list, be sure to put new entries AT THE BOTTOM,
   /// otherwise
   //! you will break old pickles.
-  typedef enum {
+  enum Tags {
     VERSION = 0,
     BEGINATOM,
     ATOM_INDEX,
@@ -156,7 +156,7 @@ class RDKIT_GRAPHMOL_EXPORT MolPickler {
     END_ATOM_MONOMER_INFO,
     // add new entries above here
     INVALID_TAG = 255
-  } Tags;
+  };
 
   static unsigned int getDefaultPickleProperties();
   static void setDefaultPickleProperties(unsigned int);
