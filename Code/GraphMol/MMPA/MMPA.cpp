@@ -25,8 +25,8 @@
 namespace RDKit {
 namespace MMPA {
 
-typedef std::vector<std::pair<unsigned, unsigned>>
-    BondVector_t;  // pair of BeginAtomIdx, EndAtomIdx
+using BondVector_t = std::vector<
+    std::pair<unsigned int, unsigned int>>;  // pair of BeginAtomIdx, EndAtomIdx
 
 namespace detail {
 unsigned long long computeMorganCodeHash(const ROMol &mol) {

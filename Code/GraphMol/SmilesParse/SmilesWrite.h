@@ -25,7 +25,7 @@ class Atom;
 class Bond;
 class ROMol;
 
-typedef std::vector<boost::shared_ptr<ROMol>> MOL_SPTR_VECT;
+using MOL_SPTR_VECT = std::vector<boost::shared_ptr<ROMol>>;
 
 struct RDKIT_SMILESPARSE_EXPORT SmilesWriteParams {
   bool doIsomericSmiles =
