@@ -273,7 +273,7 @@ void CMLMoleculeParser::parse_atomArray(
     auto msg = boost::format{"%1% has no atom elements"} % xpath_to_atomArray;
     throw RDKit::FileParseException{msg.str()};
   }
-  conformer->resize(num_atoms);
+  conformer->reserve(num_atoms);
 
   unsigned atom_idx = 0u;
   for (const auto& atomitr : atomArray) {
