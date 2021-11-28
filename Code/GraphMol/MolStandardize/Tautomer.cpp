@@ -83,10 +83,9 @@ struct smarts_mol_holder {
   }
 };
 
-typedef boost::flyweight<
+using smarts_mol_flyweight = boost::flyweight<
     boost::flyweights::key_value<std::string, smarts_mol_holder>,
-    boost::flyweights::no_tracking>
-    smarts_mol_flyweight;
+    boost::flyweights::no_tracking>;
 
 struct SubstructTerm {
   std::string name;
