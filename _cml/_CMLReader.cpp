@@ -117,9 +117,9 @@ class CMLMoleculeParser {
   }
 
   template <typename T>
-  boost::optional<T> get_attribute_optionally(
+  static boost::optional<T> get_attribute_optionally(
       const boost::property_tree::ptree& pt, const std::string& name,
-      const std::string& parent) const noexcept(false) {
+      const std::string& parent) noexcept(false) {
     return pt.get_optional<T>("<xmlattr>." + name,
                               LexicalTranslator<T>{parent + "/@" + name});
   }
@@ -145,8 +145,8 @@ class CMLMoleculeParser {
   std::unique_ptr<RDKit::Conformer> conformer =
       std::make_unique<RDKit::Conformer>();
 
-  std::unordered_map<std::string, std::unique_ptr<RDKit::Atom>> id_atoms;
-  std::unordered_map<std::string, boost::optional<unsigned>> id_hydrogenCounts;
+  std::unordered_map<std::string, std::unique_ptr<RDKit::Atom>> id_atom;
+  std::unordered_map<std::string, boost::optional<unsigned>> id_hydrogenCount;
   std::unordered_set<std::string> bond_ids;
   int sum_formalCharge = 0;
 };
@@ -239,8 +239,8 @@ std::unique_ptr<RWMol> CMLMoleculeParser::parse(bool sanitize, bool removeHs) {
     molecule->addConformer(conformer.release());
   }
 
+  check_hydrogenCount();
   if (sanitize) {
-    check_hydrogenCount();
     if (removeHs) {
       MolOps::RemoveHsParameters ps;
       MolOps::removeHs(*molecule, ps, true);
@@ -299,7 +299,7 @@ void CMLMoleculeParser::parse_atomArray(
 
   // TODO check spinMultiplicity
 
-  for (auto&& p : id_atoms) {
+  for (auto&& p : id_atom) {
     molecule->addAtom(p.second.release(), true, true);
   }
 }
@@ -317,7 +317,7 @@ void CMLMoleculeParser::parse_atom(std::string xpath_to_atom,
     auto msg =
         boost::format{"%1%/@id (= \"%2%\") is invalid"} % xpath_to_atom % *id;
     throw RDKit::FileParseException{msg.str()};
-  } else if (id_atoms.count(*id)) {
+  } else if (id_atom.count(*id)) {
     // http://www.xml-cml.org/convention/molecular#atom-id
     // > The value of the id MUST be unique amongst the atoms within the eldest
     // > containing molecule.
@@ -383,7 +383,7 @@ void CMLMoleculeParser::parse_atom(std::string xpath_to_atom,
   const auto hydrogenCount = atom_node.get_optional<unsigned>(
       "<xmlattr>.hydrogenCount",
       LexicalTranslator<unsigned>{xpath_to_atom + "/@hydrogenCount"});
-  id_hydrogenCounts[xpath_to_atom] = hydrogenCount;
+  id_hydrogenCount[xpath_to_atom] = hydrogenCount;
 
   // http://www.xml-cml.org/convention/molecular#atom-x3
   // > An atom MAY have an x3 attribute, the value of which is the x coordinate
@@ -417,7 +417,7 @@ void CMLMoleculeParser::parse_atom(std::string xpath_to_atom,
         << std::endl;
   }
 
-  id_atoms[*id] = std::move(atom);
+  id_atom[*id] = std::move(atom);
 }
 
 void CMLMoleculeParser::parse_bondArray(
@@ -544,8 +544,8 @@ void CMLMoleculeParser::parse_bond(
   }
 
   auto distance = [&](const auto& atom_id) {
-    auto i = id_atoms.find(atom_id);
-    if (i == id_atoms.end()) {
+    auto i = id_atom.find(atom_id);
+    if (i == id_atom.end()) {
       auto msg =
           boost::format{
               "%1%/@atomRefs2 (= \"%2%\") refers to non-existing "
@@ -553,7 +553,7 @@ void CMLMoleculeParser::parse_bond(
           xpath_to_bond % *atomRefs2 % atom_id;
       throw RDKit::FileParseException{msg.str()};
     }
-    return std::distance(id_atoms.begin(), i);
+    return static_cast<unsigned>(std::distance(id_atom.begin(), i));
   };
 
   const auto index_bgn = distance(id_bgn);
@@ -590,7 +590,7 @@ void CMLMoleculeParser::parse_bond(
 
 void CMLMoleculeParser::check_hydrogenCount() {
   unsigned i = 0u;
-  for (const auto& id_hc : id_hydrogenCounts) {
+  for (const auto& id_hc : id_hydrogenCount) {
     const auto& atom = (*molecule)[i++];
     atom->calcExplicitValence(false);
     unsigned nh = 0u;
