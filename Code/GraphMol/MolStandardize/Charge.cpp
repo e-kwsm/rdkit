@@ -30,17 +30,15 @@ std::vector<ChargeCorrection> CHARGE_CORRECTIONS = {
     ChargeCorrection("[Mg,Ca]", "[Mg,Ca;X0+0]", 2),
     ChargeCorrection("[Cl]", "[Cl;X0+0]", -1)};
 
-typedef boost::flyweight<
+using param_filename_flyweight = boost::flyweight<
     boost::flyweights::key_value<std::string, AcidBaseCatalogParams>,
-    boost::flyweights::no_tracking>
-    param_filename_flyweight;
+    boost::flyweights::no_tracking>;
 
-typedef boost::flyweight<
+using param_data_flyweight = boost::flyweight<
     boost::flyweights::key_value<
         std::vector<std::tuple<std::string, std::string, std::string>>,
         AcidBaseCatalogParams>,
-    boost::flyweights::no_tracking>
-    param_data_flyweight;
+    boost::flyweights::no_tracking>;
 
 // constructor
 Reionizer::Reionizer() {

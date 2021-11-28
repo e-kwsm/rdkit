@@ -17,14 +17,14 @@
 namespace RDKit {
 namespace FMCS {
 class RDKIT_FMCS_EXPORT SeedSet {  // sorted by amount of bonds
-  typedef std::list<Seed> ValueSet;
+  using ValueSet = std::list<Seed>;
   ValueSet Seeds;
   Seed EmptySeed;
 
  public:
-  typedef Seed Value;
-  typedef ValueSet::iterator iterator;
-  typedef ValueSet::const_iterator const_iterator;
+  using Value = Seed;
+  using iterator = ValueSet::iterator;
+  using const_iterator = ValueSet::const_iterator;
 
  public:
   void clear() { Seeds.clear(); }

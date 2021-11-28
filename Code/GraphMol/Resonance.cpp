@@ -22,8 +22,8 @@
 namespace RDKit {
 // class definitions that do not need being exposed in Resonance.h
 
-typedef std::set<std::size_t> CESet;
-typedef std::unordered_map<std::size_t, unsigned int> CEDegCount;
+using CESet = std::set<std::size_t>;
+using CEDegCount = std::unordered_map<std::size_t, unsigned int>;
 
 class CEVect2 {
  public:
@@ -80,12 +80,15 @@ struct CEStats {
 
 class ConjElectrons {
  public:
-  typedef enum {
+  enum ConjElectronsFlags {
     HAVE_CATION_RIGHT_OF_N = (1 << 0),
     HAVE_CATION = (1 << 1),
     HAVE_ANION = (1 << 2)
-  } ConjElectronsFlags;
-  typedef enum { FP_BONDS = (1 << 0), FP_ATOMS = (1 << 1) } FPFlags;
+  };
+  enum FPFlags {
+    FP_BONDS = (1 << 0),
+    FP_ATOMS = (1 << 1)
+  };
   ConjElectrons(ResonanceMolSupplier *parent, unsigned int groupIdx);
   ConjElectrons(const ConjElectrons &ce);
   ~ConjElectrons();
@@ -173,13 +176,15 @@ class CEVect2Store {
 
 class AtomElectrons {
  public:
-  typedef enum {
+  enum AtomElectronsFlags {
     LAST_BOND = (1 << 0),
     DEFINITIVE = (1 << 1),
     STACKED = (1 << 2),
     HAS_MULTIPLE_BOND = (1 << 3),
-  } AtomElectronsFlags;
-  typedef enum { NEED_CHARGE_BIT = 1 } AllowedBondFlag;
+  };
+  enum AllowedBondFlag {
+    NEED_CHARGE_BIT = 1
+  };
   AtomElectrons(ConjElectrons *parent, const Atom *a);
   AtomElectrons(ConjElectrons *parent, const AtomElectrons &ae);
   ~AtomElectrons() = default;
@@ -227,7 +232,9 @@ class AtomElectrons {
 
 class BondElectrons {
  public:
-  typedef enum { DEFINITIVE = (1 << 0) } BondElectronsFlags;
+  enum BondElectronsFlags {
+    DEFINITIVE = (1 << 0)
+  };
   BondElectrons(ConjElectrons *parent, const Bond *b);
   BondElectrons(ConjElectrons *parent, const BondElectrons &be);
   ~BondElectrons() = default;

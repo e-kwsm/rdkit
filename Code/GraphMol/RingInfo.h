@@ -39,10 +39,10 @@ class RDKIT_GRAPHMOL_EXPORT RingInfo {
   friend class MolPickler;
 
  public:
-  typedef std::vector<int> MemberType;
-  typedef std::vector<MemberType> DataType;
-  typedef std::vector<int> INT_VECT;
-  typedef std::vector<INT_VECT> VECT_INT_VECT;
+  using MemberType = std::vector<int>;
+  using DataType = std::vector<MemberType>;
+  using INT_VECT = std::vector<int>;
+  using VECT_INT_VECT = std::vector<INT_VECT>;
 
   RingInfo() {}
   RingInfo(const RingInfo &other) = default;
