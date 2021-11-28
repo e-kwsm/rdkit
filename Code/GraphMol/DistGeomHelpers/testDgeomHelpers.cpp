@@ -38,7 +38,7 @@
 #include <RDGeneral/Exceptions.h>
 
 #include <boost/tokenizer.hpp>
-typedef boost::tokenizer<boost::char_separator<char>> tokenizer;
+using tokenizer = boost::tokenizer<boost::char_separator<char>>;
 
 using namespace RDKit;
 

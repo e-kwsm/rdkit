@@ -96,9 +96,9 @@ const char *pqs[] = {
                       "[*]~[*](~[*])~[*](~[*])(~[*])~[*]",
 #endif
     ""};
-typedef boost::flyweight<boost::flyweights::key_value<std::string, ss_matcher>,
-                         boost::flyweights::no_tracking>
-    pattern_flyweight;
+using pattern_flyweight =
+    boost::flyweight<boost::flyweights::key_value<std::string, ss_matcher>,
+                     boost::flyweights::no_tracking>;
 
 namespace detail {
 void getAtomNumbers(const Atom *a, std::vector<int> &atomNums) {
