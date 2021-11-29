@@ -78,24 +78,7 @@ class RDKIT_CHEMREACTIONS_EXPORT EvenSamplePairsStrategy
         pair_counts(),
         selected() {}
 
-  EvenSamplePairsStrategy(const EvenSamplePairsStrategy &rhs)
-      : EnumerationStrategyBase(rhs),
-        m_numPermutationsProcessed(rhs.m_numPermutationsProcessed),
-        used_count(rhs.used_count),
-        var_used(rhs.var_used),
-        pair_used(rhs.pair_used),
-        pair_counts(rhs.pair_counts),
-        selected(rhs.selected),
-        seed(rhs.seed),
-        M(rhs.M),
-        a(rhs.a),
-        b(rhs.b),
-        nslack(rhs.nslack),
-        min_nslack(rhs.min_nslack),
-        rejected_period(rhs.rejected_period),
-        rejected_unique(rhs.rejected_unique),
-        rejected_slack_condition(rhs.rejected_slack_condition),
-        rejected_bb_sampling_condition(rhs.rejected_bb_sampling_condition) {}
+  EvenSamplePairsStrategy(const EvenSamplePairsStrategy &rhs) = default;
 
   const char *type() const override { return "EvenSamplePairsStrategy"; }
 

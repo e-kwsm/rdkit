@@ -86,7 +86,7 @@ class RDKIT_FORCEFIELDHELPERS_EXPORT DefaultTorsionBondSmarts
   static const ROMol *query();
 
  private:
-  DefaultTorsionBondSmarts() {}
+  DefaultTorsionBondSmarts() = default;
   static void create();
   static const std::string ds_string;
   static boost::scoped_ptr<const ROMol> ds_instance;

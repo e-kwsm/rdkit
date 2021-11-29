@@ -86,7 +86,7 @@ struct RDKIT_SUBSTRUCTMATCH_EXPORT SubstructMatchParameters {
   bool extraBondCheckOverridesDefaultCheck =
       false;  //!< if set, only the extraBondCheck will be used to determine
               //!< whether or not bonds match
-  SubstructMatchParameters() {}
+  SubstructMatchParameters() = default;
 };
 
 RDKIT_SUBSTRUCTMATCH_EXPORT void updateSubstructMatchParamsFromJSON(

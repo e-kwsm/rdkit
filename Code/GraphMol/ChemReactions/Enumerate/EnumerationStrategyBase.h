@@ -133,7 +133,7 @@ class RDKIT_CHEMREACTIONS_EXPORT EnumerationStrategyBase {
       static_cast<boost::uint64_t>(-1);
   EnumerationStrategyBase() : m_permutation(), m_permutationSizes() {}
 
-  virtual ~EnumerationStrategyBase() {}
+  virtual ~EnumerationStrategyBase() = default;
 
   virtual const char *type() const { return "EnumerationStrategyBase"; }
 

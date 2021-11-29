@@ -472,7 +472,7 @@ struct RDKIT_GRAPHMOL_EXPORT AdjustQueryParameters {
     res.aromatizeIfPossible = false;
     return res;
   }
-  AdjustQueryParameters() {}
+  AdjustQueryParameters() = default;
 };
 
 //! updates an AdjustQueryParameters object from a JSON string

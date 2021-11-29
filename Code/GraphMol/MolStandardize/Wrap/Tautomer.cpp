@@ -85,7 +85,7 @@ class PyTautomerEnumeratorCallback
     : public MolStandardize::TautomerEnumeratorCallback,
       public python::wrapper<MolStandardize::TautomerEnumeratorCallback> {
  public:
-  PyTautomerEnumeratorCallback() {}
+  PyTautomerEnumeratorCallback() = default;
   PyTautomerEnumeratorCallback(const python::object &pyCallbackObject) {
     PyTautomerEnumeratorCallback *pyCallback =
         python::extract<PyTautomerEnumeratorCallback *>(pyCallbackObject);

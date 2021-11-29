@@ -52,7 +52,7 @@ class RDKIT_GRAPHMOL_EXPORT StereoGroup {
   unsigned d_writeId = 0u;
 
  public:
-  StereoGroup() {}
+  StereoGroup() = default;
   // Takes control of atoms if possible.
   StereoGroup(StereoGroupType grouptype, std::vector<Atom *> &&atoms,
               std::vector<Bond *> &&bonds, unsigned readId = 0);

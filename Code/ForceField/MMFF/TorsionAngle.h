@@ -27,7 +27,7 @@ class MMFFTor;
 //! the torsion term for MMFF
 class RDKIT_FORCEFIELD_EXPORT TorsionAngleContrib : public ForceFieldContrib {
  public:
-  TorsionAngleContrib() {}
+  TorsionAngleContrib() = default;
   //! Constructor
   TorsionAngleContrib(ForceField *owner);
   /*!

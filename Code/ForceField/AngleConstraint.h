@@ -18,7 +18,7 @@ namespace ForceFields {
 class RDKIT_FORCEFIELD_EXPORT AngleConstraintContrib
     : public ForceFieldContrib {
  public:
-  AngleConstraintContrib() {}
+  AngleConstraintContrib() = default;
   //! Constructor
   /*!
   \param owner       pointer to the owning ForceField
