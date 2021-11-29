@@ -19,7 +19,7 @@ template <typename FAMILYMARKER, typename TYPEMARKER = FAMILYMARKER,
           typename LOCTYPE = RDGeom::Point3D>
 class ExplicitFeature {
  public:
-  ExplicitFeature() {}
+  ExplicitFeature() = default;
   explicit ExplicitFeature(const FAMILYMARKER &f, const TYPEMARKER &t)
       : d_family(f), d_type(t) {}
   ExplicitFeature(const FAMILYMARKER &f, const TYPEMARKER &t,

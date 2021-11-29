@@ -48,8 +48,8 @@ class RDKIT_SIMDIVPICKERS_EXPORT DistPicker {
   /*! \brief Default constructor
    *
    */
-  DistPicker() {}
-  virtual ~DistPicker() {}
+  DistPicker() = default;
+  virtual ~DistPicker() = default;
 
   /*! \brief this is a virtual function specific to the type of algorihtm used
    *

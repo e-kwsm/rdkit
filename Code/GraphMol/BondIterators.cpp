@@ -29,13 +29,7 @@ BondIterator_::BondIterator_(const BondIterator_ &other) {
   _end = other._end;
 }
 
-BondIterator_ &BondIterator_::operator=(const BondIterator_ &other) {
-  _mol = other._mol;
-  _pos = other._pos;
-  _beg = other._beg;
-  _end = other._end;
-  return *this;
-}
+BondIterator_ &BondIterator_::operator=(const BondIterator_ &other) = default;
 
 bool BondIterator_::operator==(const BondIterator_ &other) const {
   return _mol == other._mol && _pos == other._pos;
@@ -95,13 +89,7 @@ ConstBondIterator_::ConstBondIterator_(const ConstBondIterator_ &other) {
   _end = other._end;
 }
 ConstBondIterator_ &ConstBondIterator_::operator=(
-    const ConstBondIterator_ &other) {
-  _mol = other._mol;
-  _pos = other._pos;
-  _beg = other._beg;
-  _end = other._end;
-  return *this;
-}
+    const ConstBondIterator_ &other) = default;
 bool ConstBondIterator_::operator==(const ConstBondIterator_ &other) const {
   return _mol == other._mol && _pos == other._pos;
 }

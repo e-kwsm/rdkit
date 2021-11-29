@@ -77,11 +77,7 @@ void SmartsMatcher::setPattern(const ROMol &mol) {
   d_pattern.reset(new ROMol(mol));
 }
 
-SmartsMatcher::SmartsMatcher(const SmartsMatcher &rhs)
-    : FilterMatcherBase(rhs),
-      d_pattern(rhs.d_pattern),
-      d_min_count(rhs.d_min_count),
-      d_max_count(rhs.d_max_count) {}
+SmartsMatcher::SmartsMatcher(const SmartsMatcher &rhs) = default;
 
 bool SmartsMatcher::getMatches(const ROMol &mol,
                                std::vector<FilterMatch> &matchVect) const {

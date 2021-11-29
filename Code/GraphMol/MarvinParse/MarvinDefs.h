@@ -165,7 +165,7 @@ class MarvinBond {
   std::string queryType;
   std::string convention;
 
-  MarvinBond() {}
+  MarvinBond() = default;
 
   MarvinBond(const MarvinBond &bondToCopy, std::string newId,
              std::string atomRef1, std::string atomRef2);
@@ -262,7 +262,7 @@ class MarvinMolBase {
 
   int getExplicitValence(const MarvinAtom &marvinAtom) const;
 
-  MarvinMolBase() {}
+  MarvinMolBase() = default;
 
   virtual ~MarvinMolBase();
 

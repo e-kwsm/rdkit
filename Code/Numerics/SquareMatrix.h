@@ -18,7 +18,7 @@ template <typename TYPE>
 class SquareMatrix : public Matrix<TYPE> {
  public:
   //! brief Square matrix of size N
-  SquareMatrix() {}
+  SquareMatrix() = default;
 
   explicit SquareMatrix(unsigned int N) : Matrix<TYPE>(N, N) {}
 

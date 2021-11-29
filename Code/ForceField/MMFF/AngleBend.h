@@ -22,7 +22,7 @@ class MMFFProp;
 //! The angle-bend term for MMFF
 class RDKIT_FORCEFIELD_EXPORT AngleBendContrib : public ForceFieldContrib {
  public:
-  AngleBendContrib() {}
+  AngleBendContrib() = default;
   //! Constructor
   AngleBendContrib(ForceField *owner);
   /*! Adds an angle to the contrib

@@ -49,7 +49,7 @@ FragCatParams::FragCatParams(const std::string &pickle) {
   this->initFromString(pickle);
 }
 
-FragCatParams::~FragCatParams() {}
+FragCatParams::~FragCatParams() = default;
 
 const MOL_SPTR_VECT &FragCatParams::getFuncGroups() const {
   return d_funcGroups;

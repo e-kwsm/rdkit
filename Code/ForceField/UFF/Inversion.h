@@ -21,7 +21,7 @@ class AtomicParams;
 //! The inversion term for the Universal Force Field
 class RDKIT_FORCEFIELD_EXPORT InversionContrib : public ForceFieldContrib {
  public:
-  InversionContrib() {}
+  InversionContrib() = default;
   //! Constructor
   /*!
     \param owner          pointer to the owning ForceField

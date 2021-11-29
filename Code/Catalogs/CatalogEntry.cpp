@@ -11,5 +11,5 @@
 #include "CatalogEntry.h"
 
 namespace RDCatalog {
-CatalogEntry::~CatalogEntry() {}
+CatalogEntry::~CatalogEntry() = default;
 }  // namespace RDCatalog

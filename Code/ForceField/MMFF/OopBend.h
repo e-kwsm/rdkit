@@ -20,7 +20,7 @@ class MMFFOop;
 //! the out-of-plane term for MMFF
 class RDKIT_FORCEFIELD_EXPORT OopBendContrib : public ForceFieldContrib {
  public:
-  OopBendContrib() {}
+  OopBendContrib() = default;
   //! Constructor
   OopBendContrib(ForceField *owner);
   /*! Adds an out-of-plane term to the force field contrib.

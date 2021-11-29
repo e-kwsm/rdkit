@@ -31,7 +31,7 @@ namespace CrystalFF {
 class RDKIT_FORCEFIELDHELPERS_EXPORT TorsionAngleContribM6
     : public ForceFields::ForceFieldContrib {
  public:
-  TorsionAngleContribM6() {}
+  TorsionAngleContribM6() = default;
   //! Constructor
   /*!
    The torsion is between atom1 - atom2 - atom3 - atom4

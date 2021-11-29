@@ -41,9 +41,8 @@ class RDKIT_FILEPARSERS_EXPORT MultithreadedMolSupplier : public MolSupplier {
     size_t sizeOutputQueue = 5;
   };
 
-  MultithreadedMolSupplier() {}
+  MultithreadedMolSupplier() = default;
 
-  
   // Derived classes MUST have a destructor that calls close
   //  to properly end threads while the instance is alive
   virtual ~MultithreadedMolSupplier() {close();}
@@ -171,7 +170,7 @@ class RDKIT_FILEPARSERS_EXPORT MultithreadedMolSupplier : public MolSupplier {
   //! time
  public:
   using ContainedType = v2::FileParsers::MultithreadedMolSupplier;
-  MultithreadedMolSupplier() {}
+  MultithreadedMolSupplier() = default;
 
   //! included for the interface, always returns false
   bool getEOFHitOnRead() const {
