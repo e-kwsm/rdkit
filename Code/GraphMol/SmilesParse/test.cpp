@@ -324,7 +324,7 @@ void testLeak() {
 
   smi = "C1CC1";
   for (i = 0; i < 1000000; i++) {
-    mol = SmilesToMol(smi, 0, 1);
+    mol = SmilesToMol(smi, 0, true);
     if (!(i % 1000)) {
       BOOST_LOG(rdInfoLog) << i << std::endl;
     }
@@ -351,7 +351,7 @@ void testStereochem() {
   TEST_ASSERT(mol->getAtomWithIdx(1)->hasProp(common_properties::_CIPCode));
   mol->getAtomWithIdx(1)->getProp(common_properties::_CIPCode, cip);
   TEST_ASSERT(cip == "S");
-  refSmi = MolToSmiles(*mol, 1);
+  refSmi = MolToSmiles(*mol, true);
 
   delete mol;
   smi = "F[C@](Br)(I)Cl";
@@ -363,7 +363,7 @@ void testStereochem() {
   TEST_ASSERT(mol->getAtomWithIdx(1)->hasProp(common_properties::_CIPCode));
   mol->getAtomWithIdx(1)->getProp(common_properties::_CIPCode, cip);
   TEST_ASSERT(cip == "S");
-  smi = MolToSmiles(*mol, 1);
+  smi = MolToSmiles(*mol, true);
   TEST_ASSERT(smi == refSmi);
 
   delete mol;
@@ -371,7 +371,7 @@ void testStereochem() {
   mol = SmilesToMol(smi);
   TEST_ASSERT(mol->getAtomWithIdx(1)->getChiralTag() ==
               Atom::CHI_TETRAHEDRAL_CCW);
-  smi = MolToSmiles(*mol, 1);
+  smi = MolToSmiles(*mol, true);
   TEST_ASSERT(smi == refSmi);
 
   delete mol;
@@ -383,7 +383,7 @@ void testStereochem() {
   TEST_ASSERT(mol->getAtomWithIdx(1)->hasProp(common_properties::_CIPCode));
   mol->getAtomWithIdx(1)->getProp(common_properties::_CIPCode, cip);
   TEST_ASSERT(cip == "S");
-  smi = MolToSmiles(*mol, 1);
+  smi = MolToSmiles(*mol, true);
   TEST_ASSERT(smi == refSmi);
 
   delete mol;
@@ -395,7 +395,7 @@ void testStereochem() {
   TEST_ASSERT(mol->getAtomWithIdx(1)->hasProp(common_properties::_CIPCode));
   mol->getAtomWithIdx(1)->getProp(common_properties::_CIPCode, cip);
   TEST_ASSERT(cip == "S");
-  smi = MolToSmiles(*mol, 1);
+  smi = MolToSmiles(*mol, true);
   TEST_ASSERT(smi == refSmi);
 
   delete mol;
@@ -407,7 +407,7 @@ void testStereochem() {
   TEST_ASSERT(mol->getAtomWithIdx(1)->hasProp(common_properties::_CIPCode));
   mol->getAtomWithIdx(1)->getProp(common_properties::_CIPCode, cip);
   TEST_ASSERT(cip == "S");
-  smi = MolToSmiles(*mol, 1);
+  smi = MolToSmiles(*mol, true);
   TEST_ASSERT(smi == refSmi);
 
   delete mol;
@@ -419,7 +419,7 @@ void testStereochem() {
   TEST_ASSERT(mol->getAtomWithIdx(1)->hasProp(common_properties::_CIPCode));
   mol->getAtomWithIdx(1)->getProp(common_properties::_CIPCode, cip);
   TEST_ASSERT(cip == "S");
-  smi = MolToSmiles(*mol, 1);
+  smi = MolToSmiles(*mol, true);
   TEST_ASSERT(smi == refSmi);
 
   delete mol;
@@ -431,7 +431,7 @@ void testStereochem() {
   TEST_ASSERT(mol->getAtomWithIdx(1)->hasProp(common_properties::_CIPCode));
   mol->getAtomWithIdx(1)->getProp(common_properties::_CIPCode, cip);
   TEST_ASSERT(cip == "S");
-  smi = MolToSmiles(*mol, 1);
+  smi = MolToSmiles(*mol, true);
   TEST_ASSERT(smi == refSmi);
 
   delete mol;
@@ -443,7 +443,7 @@ void testStereochem() {
   TEST_ASSERT(mol->getAtomWithIdx(1)->hasProp(common_properties::_CIPCode));
   mol->getAtomWithIdx(1)->getProp(common_properties::_CIPCode, cip);
   TEST_ASSERT(cip == "S");
-  smi = MolToSmiles(*mol, 1);
+  smi = MolToSmiles(*mol, true);
   TEST_ASSERT(smi == refSmi);
 
   delete mol;
@@ -455,7 +455,7 @@ void testStereochem() {
   TEST_ASSERT(mol->getAtomWithIdx(1)->hasProp(common_properties::_CIPCode));
   mol->getAtomWithIdx(1)->getProp(common_properties::_CIPCode, cip);
   TEST_ASSERT(cip == "S");
-  smi = MolToSmiles(*mol, 1);
+  smi = MolToSmiles(*mol, true);
   TEST_ASSERT(smi == refSmi);
 
   delete mol;
@@ -467,7 +467,7 @@ void testStereochem() {
   TEST_ASSERT(mol->getAtomWithIdx(1)->hasProp(common_properties::_CIPCode));
   mol->getAtomWithIdx(1)->getProp(common_properties::_CIPCode, cip);
   TEST_ASSERT(cip == "S");
-  smi = MolToSmiles(*mol, 1);
+  smi = MolToSmiles(*mol, true);
   TEST_ASSERT(smi == refSmi);
 
   delete mol;
@@ -479,7 +479,7 @@ void testStereochem() {
   TEST_ASSERT(mol->getAtomWithIdx(0)->hasProp(common_properties::_CIPCode));
   mol->getAtomWithIdx(0)->getProp(common_properties::_CIPCode, cip);
   TEST_ASSERT(cip == "S");
-  smi = MolToSmiles(*mol, 1);
+  smi = MolToSmiles(*mol, true);
   TEST_ASSERT(smi == refSmi);
 
   delete mol;
@@ -491,14 +491,14 @@ void testStereochem() {
   TEST_ASSERT(mol->getAtomWithIdx(1)->hasProp(common_properties::_CIPCode));
   mol->getAtomWithIdx(1)->getProp(common_properties::_CIPCode, cip);
   TEST_ASSERT(cip == "R");
-  refSmi = MolToSmiles(*mol, 1);
+  refSmi = MolToSmiles(*mol, true);
 
   delete mol;
   smi = "Br[C@H](F)Cl";
   mol = SmilesToMol(smi);
   TEST_ASSERT(mol->getAtomWithIdx(1)->getChiralTag() ==
               Atom::CHI_TETRAHEDRAL_CCW);
-  smi = MolToSmiles(*mol, 1);
+  smi = MolToSmiles(*mol, true);
   MolOps::assignStereochemistry(*mol);
   TEST_ASSERT(mol->getAtomWithIdx(1)->hasProp(common_properties::_CIPCode));
   mol->getAtomWithIdx(1)->getProp(common_properties::_CIPCode, cip);
@@ -514,7 +514,7 @@ void testStereochem() {
   TEST_ASSERT(mol->getAtomWithIdx(1)->hasProp(common_properties::_CIPCode));
   mol->getAtomWithIdx(1)->getProp(common_properties::_CIPCode, cip);
   TEST_ASSERT(cip == "R");
-  smi = MolToSmiles(*mol, 1);
+  smi = MolToSmiles(*mol, true);
   TEST_ASSERT(smi == refSmi);
 
   delete mol;
@@ -526,7 +526,7 @@ void testStereochem() {
   TEST_ASSERT(mol->getAtomWithIdx(1)->hasProp(common_properties::_CIPCode));
   mol->getAtomWithIdx(1)->getProp(common_properties::_CIPCode, cip);
   TEST_ASSERT(cip == "R");
-  smi = MolToSmiles(*mol, 1);
+  smi = MolToSmiles(*mol, true);
   TEST_ASSERT(smi == refSmi);
 
   delete mol;
@@ -538,7 +538,7 @@ void testStereochem() {
   TEST_ASSERT(mol->getAtomWithIdx(1)->hasProp(common_properties::_CIPCode));
   mol->getAtomWithIdx(1)->getProp(common_properties::_CIPCode, cip);
   TEST_ASSERT(cip == "R");
-  smi = MolToSmiles(*mol, 1);
+  smi = MolToSmiles(*mol, true);
   TEST_ASSERT(smi == refSmi);
 
   delete mol;
@@ -550,7 +550,7 @@ void testStereochem() {
   TEST_ASSERT(mol->getAtomWithIdx(1)->hasProp(common_properties::_CIPCode));
   mol->getAtomWithIdx(1)->getProp(common_properties::_CIPCode, cip);
   TEST_ASSERT(cip == "R");
-  smi = MolToSmiles(*mol, 1);
+  smi = MolToSmiles(*mol, true);
   TEST_ASSERT(smi == refSmi);
 
   delete mol;
@@ -562,7 +562,7 @@ void testStereochem() {
   TEST_ASSERT(mol->getAtomWithIdx(1)->hasProp(common_properties::_CIPCode));
   mol->getAtomWithIdx(1)->getProp(common_properties::_CIPCode, cip);
   TEST_ASSERT(cip == "R");
-  smi = MolToSmiles(*mol, 1);
+  smi = MolToSmiles(*mol, true);
   TEST_ASSERT(smi == refSmi);
 
   delete mol;
@@ -574,7 +574,7 @@ void testStereochem() {
   TEST_ASSERT(mol->getAtomWithIdx(1)->hasProp(common_properties::_CIPCode));
   mol->getAtomWithIdx(1)->getProp(common_properties::_CIPCode, cip);
   TEST_ASSERT(cip == "R");
-  smi = MolToSmiles(*mol, 1);
+  smi = MolToSmiles(*mol, true);
   TEST_ASSERT(smi == refSmi);
 
   delete mol;
@@ -586,7 +586,7 @@ void testStereochem() {
   TEST_ASSERT(mol->getAtomWithIdx(0)->hasProp(common_properties::_CIPCode));
   mol->getAtomWithIdx(0)->getProp(common_properties::_CIPCode, cip);
   TEST_ASSERT(cip == "R");
-  smi = MolToSmiles(*mol, 1);
+  smi = MolToSmiles(*mol, true);
   TEST_ASSERT(smi == refSmi);
 
   delete mol;
@@ -598,7 +598,7 @@ void testStereochem() {
   TEST_ASSERT(mol->getAtomWithIdx(0)->hasProp(common_properties::_CIPCode));
   mol->getAtomWithIdx(0)->getProp(common_properties::_CIPCode, cip);
   TEST_ASSERT(cip == "R");
-  smi = MolToSmiles(*mol, 1);
+  smi = MolToSmiles(*mol, true);
   TEST_ASSERT(smi == refSmi);
 
   // an additional set of test cases from the Chirality notes document.
@@ -706,116 +706,116 @@ void testStereochem() {
   delete mol;
   smi = "F\\C=C/Br";
   mol = SmilesToMol(smi);
-  refSmi = MolToSmiles(*mol, 1);
+  refSmi = MolToSmiles(*mol, true);
 
   delete mol;
   mol = SmilesToMol(refSmi);
-  smi = MolToSmiles(*mol, 1);
+  smi = MolToSmiles(*mol, true);
   TEST_ASSERT(refSmi == smi);
 
   delete mol;
   smi = "Br\\C=C/F";
   mol = SmilesToMol(smi);
-  smi = MolToSmiles(*mol, 1);
+  smi = MolToSmiles(*mol, true);
   TEST_ASSERT(refSmi == smi);
 
   delete mol;
   smi = "Br/C=C\\F";
   mol = SmilesToMol(smi);
-  smi = MolToSmiles(*mol, 1);
+  smi = MolToSmiles(*mol, true);
   TEST_ASSERT(refSmi == smi);
 
   delete mol;
   smi = "F/C=C\\Br";
   mol = SmilesToMol(smi);
-  smi = MolToSmiles(*mol, 1);
+  smi = MolToSmiles(*mol, true);
   TEST_ASSERT(refSmi == smi);
 
   //-- trans --
   delete mol;
   smi = "F\\C=C\\Br";
   mol = SmilesToMol(smi);
-  refSmi = MolToSmiles(*mol, 1);
+  refSmi = MolToSmiles(*mol, true);
 
   delete mol;
   mol = SmilesToMol(refSmi);
-  smi = MolToSmiles(*mol, 1);
+  smi = MolToSmiles(*mol, true);
   TEST_ASSERT(refSmi == smi);
 
   delete mol;
   smi = "Br\\C=C\\F";
   mol = SmilesToMol(smi);
-  smi = MolToSmiles(*mol, 1);
+  smi = MolToSmiles(*mol, true);
   TEST_ASSERT(refSmi == smi);
 
   delete mol;
   smi = "Br/C=C/F";
   mol = SmilesToMol(smi);
-  smi = MolToSmiles(*mol, 1);
+  smi = MolToSmiles(*mol, true);
   TEST_ASSERT(refSmi == smi);
 
   delete mol;
   smi = "F/C=C/Br";
   mol = SmilesToMol(smi);
-  smi = MolToSmiles(*mol, 1);
+  smi = MolToSmiles(*mol, true);
   TEST_ASSERT(refSmi == smi);
 
   //-- more complex --
   delete mol;
   smi = "F\\C=C(/Cl)\\Br";
   mol = SmilesToMol(smi);
-  refSmi = MolToSmiles(*mol, 1);
+  refSmi = MolToSmiles(*mol, true);
 
   delete mol;
   mol = SmilesToMol(refSmi);
-  smi = MolToSmiles(*mol, 1);
+  smi = MolToSmiles(*mol, true);
   TEST_ASSERT(refSmi == smi);
 
   delete mol;
   smi = "F/C=C(\\Cl)/Br";
   mol = SmilesToMol(smi);
-  smi = MolToSmiles(*mol, 1);
+  smi = MolToSmiles(*mol, true);
   TEST_ASSERT(refSmi == smi);
 
   delete mol;
   smi = "F/C=C(\\Cl)Br";
   mol = SmilesToMol(smi);
-  smi = MolToSmiles(*mol, 1);
+  smi = MolToSmiles(*mol, true);
   TEST_ASSERT(refSmi == smi);
 
   delete mol;
   smi = "F/C=C(Cl)/Br";
   mol = SmilesToMol(smi);
-  smi = MolToSmiles(*mol, 1);
+  smi = MolToSmiles(*mol, true);
   TEST_ASSERT(refSmi == smi);
 
   //-- combine chirality with cis/trans --
   delete mol;
   smi = "F[C@H](Cl)\\C=C(/F)";
   mol = SmilesToMol(smi);
-  refSmi = MolToSmiles(*mol, 1);
+  refSmi = MolToSmiles(*mol, true);
 
   delete mol;
   mol = SmilesToMol(refSmi);
-  smi = MolToSmiles(*mol, 1);
+  smi = MolToSmiles(*mol, true);
   TEST_ASSERT(refSmi == smi);
 
   delete mol;
   smi = "F[C@H](Cl)/C=C(\\F)";
   mol = SmilesToMol(smi);
-  smi = MolToSmiles(*mol, 1);
+  smi = MolToSmiles(*mol, true);
   TEST_ASSERT(refSmi == smi);
   delete mol;
 
   smi = "Cl[C@@H](F)/C=C(\\F)";
   mol = SmilesToMol(smi);
-  smi = MolToSmiles(*mol, 1);
+  smi = MolToSmiles(*mol, true);
   TEST_ASSERT(refSmi == smi);
   delete mol;
 
   smi = "Cl[C@@H](F)\\C=C(/F)";
   mol = SmilesToMol(smi);
-  smi = MolToSmiles(*mol, 1);
+  smi = MolToSmiles(*mol, true);
   TEST_ASSERT(refSmi == smi);
   delete mol;
 
@@ -844,11 +844,11 @@ void testIssue127() {
   delete mol2;
 
   // now do the true SMILES:
-  refSmi = MolToSmiles(*mol, 1);
+  refSmi = MolToSmiles(*mol, true);
   mol2 = SmilesToMol(refSmi);
   // mol2->debugMol(std::cout);
   TEST_ASSERT(mol2);
-  tempStr = MolToSmiles(*mol2, 1);
+  tempStr = MolToSmiles(*mol2, true);
   // std::cout << refSmi << " : " << tempStr << std::endl;
   TEST_ASSERT(refSmi == tempStr);
   delete mol2;
@@ -1157,7 +1157,7 @@ void testIssue159() {
 
   TEST_ASSERT(mol->getBondWithIdx(0)->getStereo() == Bond::STEREONONE);
   TEST_ASSERT(mol->getBondWithIdx(1)->getStereo() == Bond::STEREOE);
-  refSmi = MolToSmiles(*mol, 1);
+  refSmi = MolToSmiles(*mol, true);
 
   delete mol;
   smi = "C(\\C)=C/O";
@@ -1166,7 +1166,7 @@ void testIssue159() {
 
   TEST_ASSERT(mol->getBondWithIdx(0)->getStereo() == Bond::STEREONONE);
   TEST_ASSERT(mol->getBondWithIdx(1)->getStereo() == Bond::STEREOE);
-  smi = MolToSmiles(*mol, 1);
+  smi = MolToSmiles(*mol, true);
   TEST_ASSERT(refSmi == smi);
 
   delete mol;
@@ -1176,7 +1176,7 @@ void testIssue159() {
 
   TEST_ASSERT(mol->getBondWithIdx(0)->getStereo() == Bond::STEREONONE);
   TEST_ASSERT(mol->getBondWithIdx(1)->getStereo() == Bond::STEREOE);
-  smi = MolToSmiles(*mol, 1);
+  smi = MolToSmiles(*mol, true);
   TEST_ASSERT(refSmi == smi);
 
   delete mol;
@@ -1184,7 +1184,7 @@ void testIssue159() {
   mol = SmilesToMol(smi);
   TEST_ASSERT(mol);
   TEST_ASSERT(mol->getBondWithIdx(0)->getStereo() == Bond::STEREOE);
-  smi = MolToSmiles(*mol, 1);
+  smi = MolToSmiles(*mol, true);
   TEST_ASSERT(refSmi == smi);
 
   delete mol;
@@ -1398,7 +1398,7 @@ void testIssue180() {
   TEST_ASSERT(mol);
   TEST_ASSERT(mol->getBondWithIdx(1)->getStereo() == Bond::STEREOZ);
   TEST_ASSERT(mol->getBondWithIdx(4)->getStereo() == Bond::STEREOE);
-  refSmi = MolToSmiles(*mol, 1);
+  refSmi = MolToSmiles(*mol, true);
 
   delete mol;
   smi = "Cl/C(/C(Br)=N\\O)=N\\O";
@@ -1406,7 +1406,7 @@ void testIssue180() {
   TEST_ASSERT(mol);
   TEST_ASSERT(mol->getBondWithIdx(3)->getStereo() == Bond::STEREOE);
   TEST_ASSERT(mol->getBondWithIdx(5)->getStereo() == Bond::STEREOZ);
-  smi = MolToSmiles(*mol, 1);
+  smi = MolToSmiles(*mol, true);
   TEST_ASSERT(refSmi == smi);
   delete mol;
 
@@ -1430,7 +1430,7 @@ void testIssue184() {
   TEST_ASSERT(mol->getBondWithIdx(4)->getStereo() == Bond::STEREOZ);
   TEST_ASSERT(mol->getBondWithIdx(7)->getBondType() == Bond::DOUBLE);
   TEST_ASSERT(mol->getBondWithIdx(7)->getStereo() == Bond::STEREOZ);
-  refSmi = MolToSmiles(*mol, 1);
+  refSmi = MolToSmiles(*mol, true);
   delete mol;
   mol = SmilesToMol(refSmi);
   TEST_ASSERT(mol);
@@ -1442,7 +1442,7 @@ void testIssue184() {
     }
   }
 
-  smi = MolToSmiles(*mol, 1);
+  smi = MolToSmiles(*mol, true);
   TEST_ASSERT(refSmi == smi);
   delete mol;
 
@@ -1464,7 +1464,7 @@ void testIssue185() {
   TEST_ASSERT(mol);
   TEST_ASSERT(mol->getBondWithIdx(1)->getBondType() == Bond::DOUBLE);
   TEST_ASSERT(mol->getBondWithIdx(1)->getStereo() == Bond::STEREOZ);
-  refSmi = MolToSmiles(*mol, 1, 0, 0);
+  refSmi = MolToSmiles(*mol, true, false, 0);
   BOOST_LOG(rdInfoLog) << refSmi << std::endl;
   TEST_ASSERT(refSmi == "C(\\C)=N\\O");
   delete mol;
@@ -1483,7 +1483,7 @@ void testIssue185() {
   TEST_ASSERT(mol->getBondWithIdx(1)->getStereo() == Bond::STEREOE);
   TEST_ASSERT(mol->getBondWithIdx(4)->getBondType() == Bond::DOUBLE);
   TEST_ASSERT(mol->getBondWithIdx(4)->getStereo() == Bond::STEREOE);
-  refSmi = MolToSmiles(*mol, 1);
+  refSmi = MolToSmiles(*mol, true);
   BOOST_LOG(rdInfoLog) << refSmi << std::endl;
   delete mol;
   mol = SmilesToMol(refSmi);
@@ -1495,7 +1495,7 @@ void testIssue185() {
       TEST_ASSERT((*bondIt)->getStereo() == Bond::STEREOE);
     }
   }
-  smi = MolToSmiles(*mol, 1);
+  smi = MolToSmiles(*mol, true);
   // std::cout << "ref: " << refSmi << " -> " << smi << std::endl;
   TEST_ASSERT(refSmi == smi);
 
@@ -1536,7 +1536,7 @@ void testIssue191() {
   TEST_ASSERT(mol);
   TEST_ASSERT(mol->getBondWithIdx(7)->getBondType() == Bond::DOUBLE);
   TEST_ASSERT(mol->getBondWithIdx(7)->getStereo() == Bond::STEREOE);
-  refSmi = MolToSmiles(*mol, 1);
+  refSmi = MolToSmiles(*mol, true);
   delete mol;
   // std::cout << "ref: " << refSmi << std::endl;
   mol = SmilesToMol(refSmi);
@@ -1553,7 +1553,7 @@ void testIssue191() {
     }
   }
   TEST_ASSERT(numE == 1);
-  smi = MolToSmiles(*mol, 1);
+  smi = MolToSmiles(*mol, true);
   // std::cout << "ref: " << refSmi << " -> " << smi << std::endl;
   TEST_ASSERT(refSmi == smi);
   delete mol;

@@ -47,9 +47,9 @@ void testBookmarks(ROMol m) {
   boost::logging::disable_logs("rdApp.error");
   try {
     a2 = m.getAtomWithBookmark(666);
-    ok = 0;
+    ok = false;
   } catch (...) {
-    ok = 1;
+    ok = true;
   }
   boost::logging::enable_logs("rdApp.error");
   CHECK_INVARIANT(ok, "atom bookmark not properly cleared");
@@ -71,9 +71,9 @@ void testBookmarks(ROMol m) {
   boost::logging::disable_logs("rdApp.error");
   try {
     a2 = m.getAtomWithBookmark(666);
-    ok = 0;
+    ok = false;
   } catch (...) {
-    ok = 1;
+    ok = true;
   }
   boost::logging::enable_logs("rdApp.error");
   CHECK_INVARIANT(ok, "atom bookmark not properly cleared");
@@ -93,9 +93,9 @@ void testBookmarks(ROMol m) {
   boost::logging::disable_logs("rdApp.error");
   try {
     b2 = m.getBondWithBookmark(23);
-    ok = 0;
+    ok = false;
   } catch (...) {
-    ok = 1;
+    ok = true;
   }
   boost::logging::enable_logs("rdApp.error");
   CHECK_INVARIANT(ok, "bond bookmark not properly cleared");
@@ -111,9 +111,9 @@ void testBookmarks(ROMol m) {
   boost::logging::disable_logs("rdApp.error");
   try {
     b2 = m.getBondWithBookmark(23);
-    ok = 0;
+    ok = false;
   } catch (...) {
-    ok = 1;
+    ok = true;
   }
   boost::logging::enable_logs("rdApp.error");
   CHECK_INVARIANT(ok, "bond bookmark not properly cleared");
