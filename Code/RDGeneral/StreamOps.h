@@ -110,7 +110,7 @@ inline void appendPackedIntToStream(std::stringstream &ss,
   char tc;
 
   res = num;
-  while (1) {
+  while (true) {
     if (res < (1 << 7)) {
       val = (res << 1);
       nbytes = 1;
