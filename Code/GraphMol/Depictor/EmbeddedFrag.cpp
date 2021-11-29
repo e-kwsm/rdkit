@@ -1267,7 +1267,7 @@ void EmbeddedFrag::mergeFragsWithComm(std::list<EmbeddedFrag> &efrags) {
   PRECONDITION(dp_mol, "");
   // first merge any fragments what share atoms in common
   auto nfri = efrags.end();
-  while (1) {
+  while (true) {
     RDKit::INT_VECT commAtms;
     for (auto efri = efrags.begin(); efri != efrags.end(); ++efri) {
       if (!efri->isDone()) {
@@ -2272,7 +2272,7 @@ void EmbeddedFrag::removeCollisionsBondAndSpiroFlip() {
 void EmbeddedFrag::removeCollisionsOpenAngles() {
   auto dmat = RDKit::MolOps::getDistanceMat(*dp_mol);
   // try opening up angles
-  for (const auto &cpi : this->findCollisions(dmat, 0)) {
+  for (const auto &cpi : this->findCollisions(dmat, false)) {
     // find out which of the two offending atoms we want to move
     // we will use the one with the smallest degree
     this->openAngles(dmat, cpi.first, cpi.second);
@@ -2290,7 +2290,7 @@ void EmbeddedFrag::removeCollisionsShortenBonds() {
   //  - on the other hand if we have non-ring bonds as well in the path
   //    between the colliding atoms we will simply shorten each one of
   //    them by a little bit.
-  auto colls = this->findCollisions(dmat, 0);
+  auto colls = this->findCollisions(dmat, false);
   auto ncols = colls.size();
   auto iter = 0u;
   while (ncols && iter < MAX_COLL_ITERS) {
@@ -2382,7 +2382,7 @@ void EmbeddedFrag::removeCollisionsShortenBonds() {
           d_eatoms[rpi].loc += moveMap[rpi];
         }
       }
-      colls = this->findCollisions(dmat, 0);
+      colls = this->findCollisions(dmat, false);
     }
     ncols = colls.size();
     ++iter;
@@ -2584,9 +2584,9 @@ void EmbeddedFrag::removeCollisionsPathAngleExpansion() {
   // in one queue can reject an atom-clash improvement merely because crossings
   // remain for the second stage.
   auto findPathAngleCollisions = [&]() {
-    auto collisions = this->findCollisions(dmat, 0, 0);
+    auto collisions = this->findCollisions(dmat, false, false);
     if (collisions.empty()) {
-      collisions = this->findCollisions(dmat, 1, 0);
+      collisions = this->findCollisions(dmat, true, false);
     }
     return collisions;
   };

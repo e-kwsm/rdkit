@@ -267,7 +267,7 @@ void getExperimentalTorsionsImpl(
   for (auto rii = bondRings.begin(); rii != bondRings.end(); ++rii) {
     boost::dynamic_bitset<> rs1(nb);  // bitset for ring 1
     for (auto riiv : *rii) {
-      rs1[riiv] = 1;
+      rs1[riiv] = true;
     }
     for (auto rjj = rii + 1; rjj != bondRings.end(); ++rjj) {
       // we don't worry about the overlap if both rings are macrocycles:
@@ -287,12 +287,12 @@ void getExperimentalTorsionsImpl(
         // exclude bonds from non-macrocycles:
         if (rii->size() < MIN_MACROCYCLE_SIZE) {
           for (unsigned int i = 0; i < rii->size(); i++) {
-            excludedBonds[(*rii)[i]] = 1;  // exclude all bonds of ring 1
+            excludedBonds[(*rii)[i]] = true;  // exclude all bonds of ring 1
           }
         }
         if (rjj->size() < MIN_MACROCYCLE_SIZE) {
           for (unsigned int i = 0; i < rjj->size(); i++) {
-            excludedBonds[(*rjj)[i]] = 1;  // exclude all bonds of ring 2
+            excludedBonds[(*rjj)[i]] = true;  // exclude all bonds of ring 2
           }
         }
       }
@@ -321,7 +321,7 @@ void getExperimentalTorsionsImpl(
 
       if (excludedBonds[bndIdx] ||
           mol.getRingInfo()->numBondRings(bndIdx) > 3) {
-        doneBonds[bndIdx] = 1;
+        doneBonds[bndIdx] = true;
       }
       if (doneBonds[bndIdx]) {
         continue;
@@ -381,7 +381,7 @@ void getExperimentalTorsionsImpl(
 
         // check that a bond is part of maximum one ring
         if (excludedBonds[bid2] || mol.getRingInfo()->numBondRings(bid2) > 3) {
-          doneBonds[bid2] = 1;
+          doneBonds[bid2] = true;
         }
         if (doneBonds[bid2]) {
           continue;
@@ -395,7 +395,7 @@ void getExperimentalTorsionsImpl(
         }
         std::vector<unsigned int> aids{aid1, aid2, aid3, aid4};
         torsionBonds.emplace_back(bid2, aids, &param);
-        doneBonds[bid2] = 1;
+        doneBonds[bid2] = true;
         std::vector<int> atoms(4);
         atoms[0] = aid1;
         atoms[1] = aid2;
@@ -507,7 +507,7 @@ void getExperimentalTorsionsImpl(
             (mol.getAtomWithIdx(aid2)->getHybridization() == Atom::SP2) &&
             (mol.getAtomWithIdx(aid3)->getHybridization() == Atom::SP2) &&
             (mol.getAtomWithIdx(aid4)->getHybridization() == Atom::SP2)) {
-          doneBonds[bid2] = 1;
+          doneBonds[bid2] = true;
           std::vector<int> atoms(4);
           atoms[0] = aid1;
           atoms[1] = aid2;

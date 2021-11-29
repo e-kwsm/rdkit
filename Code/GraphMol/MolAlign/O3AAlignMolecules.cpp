@@ -1082,8 +1082,8 @@ void SDM::fillFromDist(double threshold,
                            (!(prbUsed[d_SDMPtrVect[i]->idx[1]]));
        ++i) {
     ++pairs;
-    refUsed[d_SDMPtrVect[i]->idx[0]] = 1;
-    prbUsed[d_SDMPtrVect[i]->idx[1]] = 1;
+    refUsed[d_SDMPtrVect[i]->idx[0]] = true;
+    prbUsed[d_SDMPtrVect[i]->idx[1]] = true;
   }
   d_SDMPtrVect.resize(pairs);
 }
