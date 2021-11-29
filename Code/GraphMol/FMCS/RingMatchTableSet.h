@@ -69,7 +69,7 @@ class RDKIT_FMCS_EXPORT RingMatchTableSet {
   std::map<const INT_VECT*, unsigned> QueryRingIndex;
 
  public:
-  RingMatchTableSet() {}
+  RingMatchTableSet() = default;
 
   inline void clear() {
     if (QueryBondRingsIndeces) {

@@ -73,12 +73,9 @@ class RDKIT_FILTERCATALOG_EXPORT FilterCatalogEntry
     setDescription(name);
   }
 
-  FilterCatalogEntry(const FilterCatalogEntry &rhs)
-      : RDCatalog::CatalogEntry(rhs),
-        d_matcher(rhs.d_matcher),
-        d_props(rhs.d_props) {}
+  FilterCatalogEntry(const FilterCatalogEntry &rhs) = default;
 
-  ~FilterCatalogEntry() override {}
+  ~FilterCatalogEntry() override = default;
 
   //------------------------------------
   //! Returns true if the Filters stored in this catalog entry are valid

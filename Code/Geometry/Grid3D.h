@@ -37,7 +37,7 @@ class RDKIT_RDGEOMETRYLIB_EXPORT GridException : public std::exception {
 //! Virtual base class for a grid object
 class RDKIT_RDGEOMETRYLIB_EXPORT Grid3D {
  public:
-  virtual ~Grid3D() {}
+  virtual ~Grid3D() = default;
   virtual int getGridPointIndex(const Point3D &point) const = 0;
   virtual int getVal(const Point3D &point) const = 0;
   virtual void setVal(const Point3D &point, unsigned int val) = 0;

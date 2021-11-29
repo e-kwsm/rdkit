@@ -8,7 +8,7 @@
 
 using namespace std;
 
-MolData3Ddescriptors::MolData3Ddescriptors() {}
+MolData3Ddescriptors::MolData3Ddescriptors() = default;
 
 std::vector<double> MolData3Ddescriptors::GetUn(int numAtoms) {
   std::vector<double> u(numAtoms, 1.0);

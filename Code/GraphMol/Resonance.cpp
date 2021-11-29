@@ -47,7 +47,7 @@ class CEMetrics {
   friend class ConjElectrons;
 
  public:
-  CEMetrics(){};
+  CEMetrics() = default;
   bool operator==(const CEMetrics &other) const {
     return (d_hash == other.d_hash);
   }

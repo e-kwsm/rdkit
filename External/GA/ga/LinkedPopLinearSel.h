@@ -77,7 +77,7 @@ class LinkedPopLinearSel {
  public:
   LinkedPopLinearSel(PopulationPolicy& populationPolicy_);
 
-  virtual ~LinkedPopLinearSel(){};
+  virtual ~LinkedPopLinearSel() = default;
   void create();
   void iterate();
   void rebuild();

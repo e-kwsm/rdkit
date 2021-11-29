@@ -66,7 +66,7 @@ struct RDKIT_SUBSTRUCTMATCH_EXPORT SubstructMatchParameters {
       extraFinalCheck;  //!< a function to be called at the end to validate a
                         //!< match
 
-  SubstructMatchParameters() {}
+  SubstructMatchParameters() = default;
 };
 
 RDKIT_SUBSTRUCTMATCH_EXPORT void updateSubstructMatchParamsFromJSON(

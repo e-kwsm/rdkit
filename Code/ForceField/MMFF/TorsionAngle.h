@@ -25,7 +25,7 @@ class MMFFTor;
 //! the torsion term for MMFF
 class RDKIT_FORCEFIELD_EXPORT TorsionAngleContrib : public ForceFieldContrib {
  public:
-  TorsionAngleContrib() {}
+  TorsionAngleContrib() = default;
   //! Constructor
   /*!
     The torsion is between atom1 - atom2 - atom3 - atom4

@@ -63,7 +63,7 @@ RDKIT_SUBSTRUCTLIBRARY_EXPORT bool SubstructLibraryCanSerialize();
  */
 class RDKIT_SUBSTRUCTLIBRARY_EXPORT MolHolderBase {
  public:
-  virtual ~MolHolderBase() {}
+  virtual ~MolHolderBase() = default;
 
   //! Add a new molecule to the substructure search library
   //!  Returns the molecules index in the library
@@ -347,7 +347,7 @@ class RDKIT_SUBSTRUCTLIBRARY_EXPORT TautomerPatternHolder
 
 class RDKIT_SUBSTRUCTLIBRARY_EXPORT KeyHolderBase {
  public:
-  virtual ~KeyHolderBase() {}
+  virtual ~KeyHolderBase() = default;
 
   //! Add a key to the database getting it from the molecule
   virtual unsigned int addMol(const ROMol &m) = 0;

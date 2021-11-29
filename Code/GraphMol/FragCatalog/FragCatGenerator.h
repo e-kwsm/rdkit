@@ -24,7 +24,7 @@ typedef RDCatalog::HierarchCatalog<FragCatalogEntry, FragCatParams, int>
 
 class RDKIT_FRAGCATALOG_EXPORT FragCatGenerator {
  public:
-  FragCatGenerator() {}
+  FragCatGenerator() = default;
 
   unsigned int addFragsFromMol(const ROMol &mol, FragCatalog *fcat);
 };

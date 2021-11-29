@@ -16,7 +16,7 @@ BinaryStringChromosomePolicy::BinaryStringChromosomePolicy(
     GarethUtil::RandomUtil& rng_)
     : rng(rng_) {}
 
-BinaryStringChromosomePolicy::~BinaryStringChromosomePolicy() {}
+BinaryStringChromosomePolicy::~BinaryStringChromosomePolicy() = default;
 
 bool BinaryStringChromosomePolicy::mutate(int pos, bool currentValue) const {
   (void)pos;  // not used

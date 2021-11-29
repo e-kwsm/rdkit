@@ -74,10 +74,9 @@ class RDKIT_FILTERCATALOG_EXPORT FilterCatalogParams
     addCatalog(catalogs);
   }
 
-  FilterCatalogParams(const FilterCatalogParams &other)
-      : RDCatalog::CatalogParams(other), d_catalogs(other.d_catalogs) {}
+  FilterCatalogParams(const FilterCatalogParams &other) = default;
 
-  ~FilterCatalogParams() override {}
+  ~FilterCatalogParams() override = default;
 
   //------------------------------------
   //! Adds an existing FilterCatalog specification to be used in the
@@ -140,8 +139,7 @@ class RDKIT_FILTERCATALOG_EXPORT FilterCatalog : public FCatalog {
     setCatalogParams(&params);
   }
 
-  FilterCatalog(const FilterCatalog &rhs)
-      : FCatalog(rhs), d_entries(rhs.d_entries) {}
+  FilterCatalog(const FilterCatalog &rhs) = default;
 
   FilterCatalog(const std::string &binStr);
 

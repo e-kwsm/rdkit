@@ -56,7 +56,7 @@ struct RDKIT_DESCRIPTORS_EXPORT PropertyFunctor {
       : propName(std::move(name)),
         propVersion(std::move(version)),
         d_dataFunc(func) {}
-  virtual ~PropertyFunctor() {}
+  virtual ~PropertyFunctor() = default;
 
   //! Compute the value of the property
   virtual double operator()(const RDKit::ROMol &) const = 0;

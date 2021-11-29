@@ -313,7 +313,7 @@ Uncharger::Uncharger(const Uncharger &other) {
   neg_acid = other.neg_acid;
 };
 
-Uncharger::~Uncharger(){};
+Uncharger::~Uncharger() = default;
 
 void neutralizeNeg(Atom *atom, int hDelta = 1) {
   atom->setNumExplicitHs(atom->getTotalNumHs() + hDelta);

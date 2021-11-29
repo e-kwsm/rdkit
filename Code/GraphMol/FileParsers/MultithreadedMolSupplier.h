@@ -32,7 +32,7 @@ class RDKIT_FILEPARSERS_EXPORT MultithreadedMolSupplier : public MolSupplier {
   //! this is an abstract base class to concurrently supply molecules one at a
   //! time
  public:
-  MultithreadedMolSupplier() {}
+  MultithreadedMolSupplier() = default;
   ~MultithreadedMolSupplier() override;
   //! pop elements from the output queue
   ROMol *next() override;

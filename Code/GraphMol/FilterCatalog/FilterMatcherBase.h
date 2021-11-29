@@ -60,8 +60,7 @@ struct RDKIT_FILTERCATALOG_EXPORT FilterMatch {
               MatchVectType atomPairs)
       : filterMatch(std::move(filter)), atomPairs(std::move(atomPairs)) {}
 
-  FilterMatch(const FilterMatch &rhs)
-      : filterMatch(rhs.filterMatch), atomPairs(rhs.atomPairs) {}
+  FilterMatch(const FilterMatch &rhs) = default;
 
   bool operator==(const FilterMatch &rhs) const {
     return (filterMatch.get() == rhs.filterMatch.get() &&
@@ -90,7 +89,7 @@ class RDKIT_FILTERCATALOG_EXPORT FilterMatcherBase
       : boost::enable_shared_from_this<FilterMatcherBase>(),
         d_filterName(rhs.d_filterName) {}
 
-  virtual ~FilterMatcherBase() {}
+  virtual ~FilterMatcherBase() = default;
 
   virtual bool isValid() const = 0;
 

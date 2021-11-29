@@ -19,7 +19,7 @@ namespace DistGeom {
 class RDKIT_DISTGEOMETRY_EXPORT DistViolationContrib
     : public ForceFields::ForceFieldContrib {
  public:
-  DistViolationContrib() {}
+  DistViolationContrib() = default;
 
   //! Constructor
   /*!

@@ -33,7 +33,7 @@ typedef IntSet::const_iterator IntSetConstIter;
  */
 class RDKIT_DATASTRUCTS_EXPORT SparseBitVect : public BitVect {
  public:
-  SparseBitVect() {}
+  SparseBitVect() = default;
   //! initialize with a particular size;
   explicit SparseBitVect(unsigned int size) : dp_bits(nullptr), d_size(0) {
     _initForSize(size);

@@ -22,7 +22,7 @@ class MMFFBondStretchEmpiricalRule;
 //! The bond-stretch term for MMFF
 class RDKIT_FORCEFIELD_EXPORT BondStretchContrib : public ForceFieldContrib {
  public:
-  BondStretchContrib() {}
+  BondStretchContrib() = default;
   //! Constructor
   /*!
     \param owner       pointer to the owning ForceField

@@ -22,7 +22,7 @@ namespace UFF {
 class RDKIT_FORCEFIELD_EXPORT TorsionConstraintContrib
     : public ForceFieldContrib {
  public:
-  TorsionConstraintContrib() {}
+  TorsionConstraintContrib() = default;
   //! Constructor
   /*!
   \param owner          pointer to the owning ForceField

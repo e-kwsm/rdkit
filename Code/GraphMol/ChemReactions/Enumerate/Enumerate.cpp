@@ -197,8 +197,7 @@ EnumerateLibrary::EnumerateLibrary(const ChemicalReaction &rxn, const BBS &bbs,
   m_initialEnumerator.reset(m_enumerator->copy());
 }
 
-EnumerateLibrary::EnumerateLibrary(const EnumerateLibrary &rhs)
-    : EnumerateLibraryBase(rhs), m_bbs(rhs.m_bbs) {}
+EnumerateLibrary::EnumerateLibrary(const EnumerateLibrary &rhs) = default;
 
 std::vector<MOL_SPTR_VECT> EnumerateLibrary::next() {
   PRECONDITION(static_cast<bool>(*this), "No more enumerations");

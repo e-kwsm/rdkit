@@ -1905,8 +1905,7 @@ struct RGroup {
   int mapno;
   RGroup(Atom *atom, Bond::BondType type, int curmapno = -1)
       : rAtom(atom), bond_type(type), mapno(curmapno) {}
-  RGroup(const RGroup &rhs)
-      : rAtom(rhs.rAtom), bond_type(rhs.bond_type), mapno(rhs.mapno) {}
+  RGroup(const RGroup &rhs) = default;
 };
 }  // namespace
 ROMol *reduceProductToSideChains(const ROMOL_SPTR &product,

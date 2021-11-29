@@ -34,7 +34,7 @@ class RDKIT_GRAPHMOL_EXPORT RingInfo {
   typedef std::vector<int> INT_VECT;
   typedef std::vector<INT_VECT> VECT_INT_VECT;
 
-  RingInfo() {}
+  RingInfo() = default;
   RingInfo(const RingInfo &other) = default;
   RingInfo &operator=(const RingInfo &other) = default;
   RingInfo(RingInfo &&other) noexcept = default;

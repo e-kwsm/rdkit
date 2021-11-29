@@ -31,7 +31,7 @@ namespace {
 // FIX: this is duplicated here and in the MorganFingerprints code
 class ss_matcher {
  public:
-  ss_matcher(){};
+  ss_matcher() = default;
   ss_matcher(const std::string &pattern) {
     RDKit::RWMol *p = RDKit::SmartsToMol(pattern);
     TEST_ASSERT(p);

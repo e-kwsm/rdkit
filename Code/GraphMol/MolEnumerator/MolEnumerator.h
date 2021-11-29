@@ -32,8 +32,8 @@ void removeOrigIndices(ROMol &mol);
 //! abstract base class for the a molecule enumeration operation
 class RDKIT_MOLENUMERATOR_EXPORT MolEnumeratorOp {
  public:
-  MolEnumeratorOp() {}
-  virtual ~MolEnumeratorOp() {}
+  MolEnumeratorOp() = default;
+  virtual ~MolEnumeratorOp() = default;
   //! returns a vector of the number of possible variations at variability point
   //! covered by this operation
   virtual std::vector<size_t> getVariationCounts() const = 0;
@@ -55,7 +55,7 @@ class RDKIT_MOLENUMERATOR_EXPORT MolEnumeratorOp {
  */
 class RDKIT_MOLENUMERATOR_EXPORT PositionVariationOp : public MolEnumeratorOp {
  public:
-  PositionVariationOp() {}
+  PositionVariationOp() = default;
   PositionVariationOp(const std::shared_ptr<ROMol> mol) : dp_mol(mol) {
     PRECONDITION(mol, "bad molecule");
     initFromMol();
@@ -101,7 +101,7 @@ class RDKIT_MOLENUMERATOR_EXPORT PositionVariationOp : public MolEnumeratorOp {
  */
 class RDKIT_MOLENUMERATOR_EXPORT LinkNodeOp : public MolEnumeratorOp {
  public:
-  LinkNodeOp() {}
+  LinkNodeOp() = default;
   LinkNodeOp(const std::shared_ptr<ROMol> mol) : dp_mol(mol) {
     PRECONDITION(mol, "bad molecule");
     initFromMol();
@@ -166,7 +166,7 @@ class RDKIT_MOLENUMERATOR_EXPORT LinkNodeOp : public MolEnumeratorOp {
  */
 class RDKIT_MOLENUMERATOR_EXPORT RepeatUnitOp : public MolEnumeratorOp {
  public:
-  RepeatUnitOp(){};
+  RepeatUnitOp() = default;
   RepeatUnitOp(const std::shared_ptr<ROMol> mol) : dp_mol(mol) {
     PRECONDITION(mol, "bad molecule");
     initFromMol();

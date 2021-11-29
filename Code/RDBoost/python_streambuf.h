@@ -514,14 +514,14 @@ class streambuf : public std::basic_streambuf<char> {
       exceptions(std::ios_base::badbit);
     }
 
-    ~istream() override {
+    ~istream() override = default; /* {
       // do nothing.
       // This used to do:
       // if (this->good()) this->sync();
       // but that caused problems if the underlying file had been closed
       // (see github #579) and really doesn't seem necessary for what we're
       // doing.
-    }
+    } */
   };
 
   class ostream : public std::ostream {

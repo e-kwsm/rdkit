@@ -42,7 +42,7 @@ struct RDKIT_GRAPHMOL_EXPORT bondholder {
       nullptr};  // if provided, this is used to order bonds
   unsigned int bondIdx{0};
 
-  bondholder(){};
+  bondholder() = default;
   bondholder(Bond::BondType bt, Bond::BondStereo bs, unsigned int ni,
              unsigned int nsc, unsigned int bidx)
       : bondType(bt),
@@ -113,7 +113,7 @@ struct RDKIT_GRAPHMOL_EXPORT canon_atom {
   std::vector<int> revistedNeighbors;
   std::vector<bondholder> bonds;
 
-  canon_atom() {}
+  canon_atom() = default;
 
   ~canon_atom() { free(nbrIds); }
 };
@@ -143,7 +143,7 @@ class RDKIT_GRAPHMOL_EXPORT SpecialChiralityAtomCompareFunctor {
   const boost::dynamic_bitset<> *dp_atomsInPlay{nullptr},
       *dp_bondsInPlay{nullptr};
 
-  SpecialChiralityAtomCompareFunctor() {}
+  SpecialChiralityAtomCompareFunctor() = default;
   SpecialChiralityAtomCompareFunctor(
       Canon::canon_atom *atoms, const ROMol &m,
       const boost::dynamic_bitset<> *atomsInPlay = nullptr,
@@ -200,7 +200,7 @@ class RDKIT_GRAPHMOL_EXPORT SpecialSymmetryAtomCompareFunctor {
   const boost::dynamic_bitset<> *dp_atomsInPlay{nullptr},
       *dp_bondsInPlay{nullptr};
 
-  SpecialSymmetryAtomCompareFunctor() {}
+  SpecialSymmetryAtomCompareFunctor() = default;
   SpecialSymmetryAtomCompareFunctor(
       Canon::canon_atom *atoms, const ROMol &m,
       const boost::dynamic_bitset<> *atomsInPlay = nullptr,
@@ -469,7 +469,7 @@ class RDKIT_GRAPHMOL_EXPORT AtomCompareFunctor {
   bool df_useChirality{true};
   bool df_useChiralityRings{true};
 
-  AtomCompareFunctor() {}
+  AtomCompareFunctor() = default;
   AtomCompareFunctor(Canon::canon_atom *atoms, const ROMol &m,
                      const boost::dynamic_bitset<> *atomsInPlay = nullptr,
                      const boost::dynamic_bitset<> *bondsInPlay = nullptr)
@@ -597,7 +597,7 @@ class RDKIT_GRAPHMOL_EXPORT ChiralAtomCompareFunctor {
   Canon::canon_atom *dp_atoms{nullptr};
   const ROMol *dp_mol{nullptr};
   bool df_useNbrs{false};
-  ChiralAtomCompareFunctor() {}
+  ChiralAtomCompareFunctor() = default;
   ChiralAtomCompareFunctor(Canon::canon_atom *atoms, const ROMol &m)
       : dp_atoms(atoms), dp_mol(&m), df_useNbrs(false) {}
   int operator()(int i, int j) const {

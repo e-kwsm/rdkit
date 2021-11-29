@@ -43,9 +43,7 @@ struct RDKIT_FMCS_EXPORT NewBond {
   unsigned EndAtomIdx{0};  // index in the seed. RING. "New" Atom on the another
                            // end of new bond is already exists in the seed.
 
-  NewBond()
-
-  {}
+  NewBond() = default;
 
   NewBond(unsigned from_atom, unsigned bond_idx, unsigned new_atom,
           unsigned to_atom, const Atom* a)
@@ -79,9 +77,7 @@ class RDKIT_FMCS_EXPORT Seed {
 #endif
   std::vector<TargetMatch> MatchResult;  // for each target
  public:
-  Seed()
-
-  {}
+  Seed() = default;
 
   void setMoleculeFragment(const Seed& src) {
     MoleculeFragment = src.MoleculeFragment;

@@ -125,7 +125,7 @@ struct RDKIT_FMCS_EXPORT MCSProgressData {
   unsigned SeedProcessed{0};
 
  public:
-  MCSProgressData() {}
+  MCSProgressData() = default;
 };
 
 typedef bool (*MCSProgressCallback)(const MCSProgressData& stat,
@@ -166,7 +166,7 @@ struct RDKIT_FMCS_EXPORT MCSResult {
   ROMOL_SPTR QueryMol;
 
  public:
-  MCSResult() {}
+  MCSResult() = default;
   bool isCompleted() const { return !Canceled; }
 };
 

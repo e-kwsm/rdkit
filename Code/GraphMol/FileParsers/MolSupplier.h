@@ -59,8 +59,8 @@ RDKIT_FILEPARSERS_EXPORT std::string strip(const std::string &orig);
 class RDKIT_FILEPARSERS_EXPORT MolSupplier {
   // this is an abstract base class to supply molecules one at a time
  public:
-  MolSupplier() {}
-  virtual ~MolSupplier() {}
+  MolSupplier() = default;
+  virtual ~MolSupplier() = default;
   virtual void init() = 0;
   virtual void reset() = 0;
   virtual bool atEnd() = 0;
@@ -409,7 +409,7 @@ class RDKIT_FILEPARSERS_EXPORT MaeMolSupplier : public MolSupplier {
    */
 
  public:
-  MaeMolSupplier() {}
+  MaeMolSupplier() = default;
 
   explicit MaeMolSupplier(std::shared_ptr<std::istream> inStream,
                           bool sanitize = true, bool removeHs = true);
@@ -420,7 +420,7 @@ class RDKIT_FILEPARSERS_EXPORT MaeMolSupplier : public MolSupplier {
   explicit MaeMolSupplier(const std::string &fname, bool sanitize = true,
                           bool removeHs = true);
 
-  ~MaeMolSupplier() override {}
+  ~MaeMolSupplier() override = default;
 
   void init() override;
   void reset() override;

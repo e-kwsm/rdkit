@@ -51,7 +51,7 @@ TransformCatalogParams::TransformCatalogParams(
   }
 }
 
-TransformCatalogParams::~TransformCatalogParams() {}
+TransformCatalogParams::~TransformCatalogParams() = default;
 
 const std::vector<std::shared_ptr<ChemicalReaction>>
     &TransformCatalogParams::getTransformations() const {

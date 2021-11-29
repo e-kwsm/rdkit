@@ -188,7 +188,7 @@ MolVSValidation::MolVSValidation(const MolVSValidation &other) {
   d_validations = other.d_validations;
 }
 
-MolVSValidation::~MolVSValidation(){};
+MolVSValidation::~MolVSValidation() = default;
 
 std::vector<ValidationErrorInfo> MolVSValidation::validate(
     const ROMol &mol, bool reportAllFailures) const {
