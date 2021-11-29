@@ -336,10 +336,6 @@ void CMLMoleculeParser::parse_atom(std::string xpath_to_atom,
     throw RDKit::FileParseException{msg.str()};
   }
 
-#if 0
-  BOOST_LOG(rdDebugLog) << xpath_to_atom_w_id << elementType << '\n';
-#endif
-
   // http://www.xml-cml.org/schema/schema3/schema.xsd
   // > Du. ("dummy") This does not correspond to a "real" atom and can support a
   // > point in space or within a chemical graph.
@@ -592,6 +588,11 @@ void CMLMoleculeParser::check_hydrogenCount() {
   unsigned i = 0u;
   for (const auto& id_hc : id_hydrogenCount) {
     const auto& atom = (*molecule)[i++];
+    const auto& hydrogenCount = id_hc.second;
+    if (!hydrogenCount) {
+      continue;
+    }
+
     atom->calcExplicitValence(false);
     unsigned nh = 0u;
     for (const auto neighbor :
@@ -600,12 +601,7 @@ void CMLMoleculeParser::check_hydrogenCount() {
         nh++;
       }
     }
-    BOOST_LOG(rdDebugLog) << *atom << " " << nh << "\n";
 
-    const auto& hydrogenCount = id_hc.second;
-    if (!hydrogenCount) {
-      continue;
-    }
     if (*hydrogenCount < nh) {
       BOOST_LOG(rdWarningLog) <<
           boost::format{
