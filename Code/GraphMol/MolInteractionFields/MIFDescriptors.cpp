@@ -79,7 +79,7 @@ VdWaals::VdWaals(const RDKit::ROMol &mol, int confId, double cutoff) {
   d_wellDepth.reserve(d_nAtoms);
   // this will throw a ConformerException if confId does not exist
   const RDKit::Conformer &conf = mol.getConformer(confId);
-  d_mol.reset(new RDKit::ROMol(mol, false, conf.getId()));
+  d_mol = std::make_unique<RDKit::ROMol>(mol, false, conf.getId());
 }
 
 void VdWaals::fillVectors() {
@@ -97,7 +97,7 @@ MMFFVdWaals::MMFFVdWaals(const RDKit::ROMol &mol, int confId,
                          unsigned int probeAtomType, bool scaling,
                          double cutoff)
     : VdWaals::VdWaals(mol, confId, cutoff), d_scaling(scaling) {
-  d_props.reset(new RDKit::MMFF::MMFFMolProperties(*d_mol));
+  d_props = std::make_unique<RDKit::MMFF::MMFFMolProperties>(*d_mol);
   if (!d_props->isValid()) {
     throw ValueErrorException(
         "No MMFF atom types available for at least one atom in molecule.");
@@ -1944,7 +1944,7 @@ std::unique_ptr<RDKit::RWMol> readFromCubeStream(
   }
   std::unique_ptr<RDKit::RWMol> molecule;
   if (nAtoms) {
-    molecule.reset(new RDKit::RWMol());
+    molecule = std::make_unique<RDKit::RWMol>();
     std::unique_ptr<RDKit::Conformer> conf(new RDKit::Conformer(nAtoms));
     int atomNum;
     for (auto i = 0; i < nAtoms; ++i) {

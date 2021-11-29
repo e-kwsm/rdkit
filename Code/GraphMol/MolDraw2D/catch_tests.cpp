@@ -11003,7 +11003,7 @@ M  END
   std::regex coordRegex(
       "<path class='bond-\\d atom-\\d atom-\\d' d='M (\\d+\\.\\d+),(\\d+\\.\\d+) L (\\d+\\.\\d+),(\\d+\\.\\d+)'");
   auto resetDrawer = [](std::unique_ptr<MolDraw2DSVG> &drawer) {
-    drawer.reset(new MolDraw2DSVG(300, 200, -1, -1, NO_FREETYPE));
+    drawer = std::make_unique<MolDraw2DSVG>(300, 200, -1, -1, NO_FREETYPE);
     drawer->drawOptions().padding = 0.2;
   };
   auto extractCoords = [coordRegex](

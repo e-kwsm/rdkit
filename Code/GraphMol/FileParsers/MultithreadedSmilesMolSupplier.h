@@ -84,8 +84,9 @@ class RDKIT_FILEPARSERS_EXPORT MultithreadedSmilesMolSupplier
     parseParams.titleLine = titleLine;
     parseParams.parseParameters.sanitize = sanitize;
 
-    dp_supplier.reset(new v2::FileParsers::MultithreadedSmilesMolSupplier(
-        fileName, params, parseParams));
+    dp_supplier =
+        std::make_unique<v2::FileParsers::MultithreadedSmilesMolSupplier>(
+            fileName, params, parseParams);
   }
 
   explicit MultithreadedSmilesMolSupplier(
@@ -105,8 +106,9 @@ class RDKIT_FILEPARSERS_EXPORT MultithreadedSmilesMolSupplier
     parseParams.titleLine = titleLine;
     parseParams.parseParameters.sanitize = sanitize;
 
-    dp_supplier.reset(new v2::FileParsers::MultithreadedSmilesMolSupplier(
-        inStream, takeOwnership, params, parseParams));
+    dp_supplier =
+        std::make_unique<v2::FileParsers::MultithreadedSmilesMolSupplier>(
+            inStream, takeOwnership, params, parseParams);
   }
 
   //! included for the interface, always returns false
