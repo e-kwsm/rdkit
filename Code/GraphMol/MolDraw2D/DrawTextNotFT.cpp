@@ -21,7 +21,7 @@ DrawTextNotFT::DrawTextNotFT(double max_fnt_sz, double min_fnt_sz)
     : DrawText(max_fnt_sz, min_fnt_sz) {}
 
 // ****************************************************************************
-DrawTextNotFT::~DrawTextNotFT() {}
+DrawTextNotFT::~DrawTextNotFT() = default;
 
 // ****************************************************************************
 void DrawTextNotFT::alignString(
