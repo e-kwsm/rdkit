@@ -3271,7 +3271,7 @@ void MMFFMolProperties::computeMMFFCharges(const ROMol &mol) {
         nConj = 1;
         old_nConj = 0;
         conjNBitVect.reset();
-        conjNBitVect[idx] = 1;
+        conjNBitVect[idx] = true;
         while (nConj > old_nConj) {
           old_nConj = nConj;
           for (i = 0; i < mol.getNumAtoms(); ++i) {
@@ -3307,7 +3307,7 @@ void MMFFMolProperties::computeMMFFCharges(const ROMol &mol) {
                 // mark it and increment the counter and eventually
                 // adjust the total formal charge of the conjugated system
                 if (!conjNBitVect[j]) {
-                  conjNBitVect[j] = 1;
+                  conjNBitVect[j] = true;
                   fChg += (double)(nbr2Atom->getFormalCharge());
                   ++nConj;
                 }

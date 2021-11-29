@@ -819,7 +819,7 @@ bool updateAtoms(ROMol &mol, const std::vector<unsigned int> &aranks,
         } else {
           // Only do another round if we change anything here
           needAnotherRound |= possibleAtoms[aidx];
-          possibleAtoms[aidx] = 0;
+          possibleAtoms[aidx] = false;
           atomSymbols[aidx] = getAtomCompareSymbol(*atom);
 
           // if this was creating possible ring stereo, update that info now
@@ -963,7 +963,7 @@ bool updateBonds(ROMol &mol, const std::vector<unsigned int> &aranks,
           }
           sinfos.push_back(std::move(sinfo));
         } else if (possibleBonds[bidx]) {
-          possibleBonds[bidx] = 0;
+          possibleBonds[bidx] = false;
           bondSymbols[bidx] = getBondSymbol(bond);
           needAnotherRound = true;
         }
@@ -1168,8 +1168,8 @@ std::vector<StereoInfo> runCleanup(ROMol &mol, bool flagPossible,
     // flag every center/bond where we removed stereo as possible:
     for (auto i = 0u; i < mol.getNumAtoms(); ++i) {
       if (!fixedAtoms[i] && knownAtoms[i]) {
-        possibleAtoms[i] = 1;
-        knownAtoms[i] = 0;
+        possibleAtoms[i] = true;
+        knownAtoms[i] = false;
       }
       if (possibleAtoms[i]) {
         atomSymbols[i] += "_" + std::to_string(i);
@@ -1178,8 +1178,8 @@ std::vector<StereoInfo> runCleanup(ROMol &mol, bool flagPossible,
     possibleBonds = origPossibleBonds;
     for (auto i = 0u; i < mol.getNumBonds(); ++i) {
       if (!fixedBonds[i] && knownBonds[i]) {
-        possibleBonds[i] = 1;
-        knownBonds[i] = 0;
+        possibleBonds[i] = true;
+        knownBonds[i] = false;
       }
       if (possibleBonds[i]) {
         bondSymbols[i] += "_" + std::to_string(i);
