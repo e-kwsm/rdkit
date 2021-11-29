@@ -82,7 +82,7 @@ struct RDKIT_MOLSTANDARDIZE_EXPORT CleanupParameters {
   std::vector<std::tuple<std::string, std::string, std::string>> acidbaseData;
   std::vector<std::tuple<std::string, std::string, std::string, std::string>>
       tautomerTransformData;
-  CleanupParameters() {}
+  CleanupParameters() = default;
 };
 
 RDKIT_MOLSTANDARDIZE_EXPORT extern const CleanupParameters

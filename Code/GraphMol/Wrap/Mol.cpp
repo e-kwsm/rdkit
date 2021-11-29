@@ -176,7 +176,7 @@ void setSubstructMatchFinalCheck(SubstructMatchParameters &ps,
 
 class ReadWriteMol : public RWMol {
  public:
-  ReadWriteMol() {};
+  ReadWriteMol() = default;
   ReadWriteMol(const ROMol &m, bool quickCopy = false, int confId = -1)
       : RWMol(m, quickCopy, confId) {};
 
