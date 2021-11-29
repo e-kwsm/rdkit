@@ -656,8 +656,8 @@ void RWMol::beginBatchEdit() {
   if (dp_delAtoms || dp_delBonds) {
     throw ValueErrorException("Attempt to re-enter batchEdit mode");
   }
-  dp_delAtoms.reset(new boost::dynamic_bitset<>(getNumAtoms()));
-  dp_delBonds.reset(new boost::dynamic_bitset<>(getNumBonds()));
+  dp_delAtoms = std::make_unique<boost::dynamic_bitset<>>(getNumAtoms());
+  dp_delBonds = std::make_unique<boost::dynamic_bitset<>>(getNumBonds());
 }
 
 void RWMol::commitBatchEdit() {

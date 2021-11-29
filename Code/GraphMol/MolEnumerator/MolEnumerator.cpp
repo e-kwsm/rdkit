@@ -79,7 +79,7 @@ void clearReactionProps(ROMol &mol) {
 
 MolBundle enumerate(const ROMol &mol,
                     const std::vector<MolEnumeratorParams> &paramLists) {
-  std::unique_ptr<MolBundle> accum{new MolBundle()};
+  auto accum = std::make_unique<MolBundle>();
   boost::shared_ptr<ROMol> molCpy{new ROMol(mol)};
   detail::preserveOrigIndices(*molCpy);
   accum->addMol(molCpy);
@@ -88,7 +88,7 @@ MolBundle enumerate(const ROMol &mol,
     if (!params.dp_operation) {
       throw ValueErrorException("MolEnumeratorParams has no operation set");
     }
-    std::unique_ptr<MolBundle> thisRound{new MolBundle()};
+    auto thisRound = std::make_unique<MolBundle>();
     for (const auto &tmol : accum->getMols()) {
       // copy the op since we will modify it:
       auto op = params.dp_operation->copy();

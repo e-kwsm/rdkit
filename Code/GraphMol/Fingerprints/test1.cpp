@@ -3550,9 +3550,9 @@ void testGitHubIssue1993() {
     TEST_ASSERT(m1);
     TEST_ASSERT(m1->getNumAtoms() == 6);
     m1->clearProp(common_properties::_StereochemDone);
-    std::unique_ptr<ROMol> m2(new ROMol(*m1));
+    auto m2 = std::make_unique<ROMol>(*m1);
     m2->getAtomWithIdx(1)->setChiralTag(Atom::CHI_TETRAHEDRAL_CW);
-    std::unique_ptr<ROMol> m3(new ROMol(*m1));
+    auto m3 = std::make_unique<ROMol>(*m1);
     m3->getAtomWithIdx(1)->setChiralTag(Atom::CHI_TETRAHEDRAL_CCW);
 
     {  // mfp, no chirality
