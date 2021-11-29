@@ -70,7 +70,7 @@ MolDraw2D::MolDraw2D(int width, int height, int panelWidth, int panelHeight)
       activeBndIdx_(-1) {}
 
 // ****************************************************************************
-MolDraw2D::~MolDraw2D() {}
+MolDraw2D::~MolDraw2D() = default;
 
 // ****************************************************************************
 void MolDraw2D::drawMolecule(const ROMol &mol, const std::string &legend,

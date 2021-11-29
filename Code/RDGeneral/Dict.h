@@ -51,7 +51,7 @@ class RDKIT_RDGENERAL_EXPORT Dict {
 
   using DataType = std::vector<Pair>;
 
-  Dict() {}
+  Dict() = default;
 
   Dict(const Dict &other) : _data(other._data) {
     _hasNonPodData = other._hasNonPodData;

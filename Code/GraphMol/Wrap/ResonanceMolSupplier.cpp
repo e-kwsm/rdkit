@@ -46,7 +46,7 @@ class PyResonanceMolSupplierCallback
     : public ResonanceMolSupplierCallback,
       public python::wrapper<ResonanceMolSupplierCallback> {
  public:
-  PyResonanceMolSupplierCallback() {}
+  PyResonanceMolSupplierCallback() = default;
   PyResonanceMolSupplierCallback(const python::object &pyCallbackObject) {
     PyResonanceMolSupplierCallback *pyCallback =
         python::extract<PyResonanceMolSupplierCallback *>(pyCallbackObject);

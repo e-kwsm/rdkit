@@ -276,7 +276,7 @@ using INT_SET_CI = INT_SET::const_iterator;
 //! functor to compare two doubles with a tolerance
 struct RDKIT_RDGENERAL_EXPORT ltDouble {
  public:
-  ltDouble() {}
+  ltDouble() = default;
   bool operator()(double d1, double d2) const {
     if (fabs(d1 - d2) < _tol) {
       return false;
