@@ -25,16 +25,15 @@ class ConcurrentQueue {
   mutable std::mutex d_lock;
   std::condition_variable d_notEmpty, d_notFull;
 
- private:
-  ConcurrentQueue(const ConcurrentQueue<E>&);
-  ConcurrentQueue& operator=(const ConcurrentQueue<E>&);
-
  public:
   ConcurrentQueue(unsigned int capacity)
       : d_capacity(capacity), d_done(false), d_head(0), d_tail(0) {
     std::vector<E> elements(capacity);
     d_elements = elements;
   }
+
+  ConcurrentQueue(const ConcurrentQueue<E>&) = delete;
+  ConcurrentQueue& operator=(const ConcurrentQueue<E>&) = delete;
 
   //! tries to push an element into the queue if it is not full without
   //! modifying the variable element, if the queue is full then pushing an
