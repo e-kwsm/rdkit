@@ -74,8 +74,8 @@ std::string ExtendedQueryMol::toBinary() const {
 namespace {
 
 ExtendedQueryMol::TautomerBundle_T readTautomerQueries(std::stringstream &ss) {
-  ExtendedQueryMol::TautomerBundle_T res{
-      new std::vector<ExtendedQueryMol::TautomerQuery_T>()};
+  ExtendedQueryMol::TautomerBundle_T res =
+      std::make_unique<std::vector<ExtendedQueryMol::TautomerQuery_T>>();
   std::uint16_t nTauts = 0;
   streamRead(ss, nTauts);
   res->reserve(nTauts);
@@ -269,14 +269,14 @@ ExtendedQueryMol::TautomerQuery_T from_pt(bpt::ptree &pt) {
     modifiedBonds.push_back(child.second.get<size_t>(""));
   }
 
-  auto res = ExtendedQueryMol::TautomerQuery_T(
-      new TautomerQuery(tautomers, templ, modifiedAtoms, modifiedBonds));
+  auto res = std::make_unique<TautomerQuery>(tautomers, templ, modifiedAtoms,
+                                             modifiedBonds);
   return res;
 }
 
 template <>
 ExtendedQueryMol::MolBundle_T from_pt(bpt::ptree &pt) {
-  auto res = ExtendedQueryMol::MolBundle_T(new MolBundle);
+  auto res = std::make_unique<MolBundle>();
   for (auto &child : pt.get_child("mols")) {
     res->addMol(ROMOL_SPTR(pt_to_mol(child.second)));
   }
@@ -285,8 +285,8 @@ ExtendedQueryMol::MolBundle_T from_pt(bpt::ptree &pt) {
 
 template <>
 ExtendedQueryMol::TautomerBundle_T from_pt(bpt::ptree &pt) {
-  ExtendedQueryMol::TautomerBundle_T res{
-      new std::vector<std::unique_ptr<TautomerQuery>>()};
+  ExtendedQueryMol::TautomerBundle_T res =
+      std::make_unique<std::vector<std::unique_ptr<TautomerQuery>>>();
   for (auto &child : pt.get_child("tautomerQueries")) {
     res->emplace_back(from_pt<ExtendedQueryMol::TautomerQuery_T>(child.second));
   }
