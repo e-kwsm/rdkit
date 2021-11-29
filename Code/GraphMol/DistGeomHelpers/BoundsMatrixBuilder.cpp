@@ -414,8 +414,8 @@ void set13Bounds(const ROMol &mol, DistGeom::BoundsMatPtr mmat,
         accumData.bondAdj->setVal(bid1, bid2, aid2);
         visited[aid2] += 1;
         angleTaken[aid2] += angle;
-        donePaths[id1] = 1;
-        donePaths[id2] = 1;
+        donePaths[id1] = true;
+        donePaths[id2] = true;
         // donePaths.push_back(invar);
       }
       aid1 = aid2;
@@ -2057,8 +2057,8 @@ void _set15BoundsHelper(const ROMol &mol, unsigned int bid1, unsigned int bid2,
 
           // std::cerr<<"3: "<<aid1<<"-"<<aid5<<std::endl;
           _checkAndSetBounds(aid1, aid5, dl, du, mmat);
-          accumData.set15Atoms[aid1 * na + aid5] = 1;
-          accumData.set15Atoms[aid5 * na + aid1] = 1;
+          accumData.set15Atoms[aid1 * na + aid5] = true;
+          accumData.set15Atoms[aid5 * na + aid1] = true;
         }
       }
     }

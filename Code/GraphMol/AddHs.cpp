@@ -556,7 +556,7 @@ void addHs(RWMol &mol, const AddHsParameters &params,
     numImplicitHs[at->getIdx()] = at->getNumImplicitHs();
     if (onAtoms[at->getIdx()]) {
       if (params.skipQueries && isQueryAtom(mol, *at)) {
-        onAtoms.set(at->getIdx(), 0);
+        onAtoms.set(at->getIdx(), false);
         continue;
       }
       numAddHyds += at->getNumExplicitHs();
