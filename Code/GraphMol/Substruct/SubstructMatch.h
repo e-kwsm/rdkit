@@ -71,7 +71,7 @@ struct RDKIT_SUBSTRUCTMATCH_EXPORT SubstructMatchParameters {
   bool specifiedStereoQueryMatchesUnspecified =
       false;  //!< If set, query atoms and bonds with specified stereochemistry
               //!< will match atoms and bonds with unspecified stereochemistry
-  SubstructMatchParameters() {}
+  SubstructMatchParameters() = default;
 };
 
 RDKIT_SUBSTRUCTMATCH_EXPORT void updateSubstructMatchParamsFromJSON(
