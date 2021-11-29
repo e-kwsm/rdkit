@@ -54,10 +54,7 @@ struct RGroupDecompData;
 struct RCore;
 class RDKIT_RGROUPDECOMPOSITION_EXPORT RGroupDecomposition {
  private:
-  RGroupDecompData *data;                            // implementation details
-  RGroupDecomposition(const RGroupDecomposition &);  // no copy construct
-  RGroupDecomposition &operator=(
-      const RGroupDecomposition &);  // Prevent assignment
+  RGroupDecompData *data;  // implementation details
   RWMOL_SPTR outputCoreMolecule(const RGroupMatch &match,
                                 const UsedLabelMap &usedRGroupMap) const;
   int getMatchingCoreInternal(RWMol &mol, const RCore *&rcore,
@@ -72,7 +69,10 @@ class RDKIT_RGROUPDECOMPOSITION_EXPORT RGroupDecomposition {
   RGroupDecomposition(const std::vector<ROMOL_SPTR> &cores,
                       const RGroupDecompositionParameters &params =
                           RGroupDecompositionParameters());
-
+  RGroupDecomposition(const RGroupDecomposition &) =
+      delete;  // no copy construct
+  RGroupDecomposition &operator=(const RGroupDecomposition &) =
+      delete;  // Prevent assignment
   ~RGroupDecomposition();
 
   //! Returns the index of the core matching the passed molecule

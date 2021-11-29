@@ -20,7 +20,7 @@ namespace GapeGa {
 
 template <typename T, typename ChromosomePolicy>
 class StringChromosome : public StringChromosomeBase<T, ChromosomePolicy> {
- private:
+ public:
   // we should never use the default implementation
   StringChromosome() = delete;
 };
@@ -28,16 +28,14 @@ class StringChromosome : public StringChromosomeBase<T, ChromosomePolicy> {
 template <>
 class GA_EXPORT StringChromosome<bool, BinaryStringChromosomePolicy>
     : public StringChromosomeBase<bool, BinaryStringChromosomePolicy> {
- private:
-  StringChromosome(const StringChromosome &other) = delete;
-  StringChromosome &operator=(const StringChromosome &other) = delete;
-
  public:
   StringChromosome(int length_, GarethUtil::RandomUtil &rng_,
                    BinaryStringChromosomePolicy &chromosomePolicy_)
       : StringChromosomeBase(length_, rng_, chromosomePolicy_) {
     ;
   }
+  StringChromosome(const StringChromosome &other) = delete;
+  StringChromosome &operator=(const StringChromosome &other) = delete;
 
   int decodeToInt(int start, int nBits) const;
   int decodeByte(int byteNo) const { return decodeToInt(byteNo * 8, 8); }
@@ -49,16 +47,14 @@ using IntegerStringChromosome =
 template <>
 class GA_EXPORT StringChromosome<int, IntegerStringChromosomePolicy>
     : public StringChromosomeBase<int, IntegerStringChromosomePolicy> {
- private:
-  StringChromosome(const StringChromosome &other) = delete;
-  StringChromosome &operator=(const StringChromosome &other) = delete;
-
  public:
   StringChromosome(int length_, GarethUtil::RandomUtil &rng_,
                    IntegerStringChromosomePolicy &chromosomePolicy_)
       : StringChromosomeBase(length_, rng_, chromosomePolicy_) {
     ;
   }
+  StringChromosome(const StringChromosome &other) = delete;
+  StringChromosome &operator=(const StringChromosome &other) = delete;
 
   void fullMixing(const IntegerStringChromosome &parent2,
                   IntegerStringChromosome &child1,

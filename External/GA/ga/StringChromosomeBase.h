@@ -34,8 +34,6 @@ class StringChromosomeBase {
  private:
   RandomUtil &rng;
   ChromosomePolicy &chromosomePolicy;
-  StringChromosomeBase(const StringChromosomeBase &other);
-  StringChromosomeBase &operator=(const StringChromosomeBase &other);
 
  protected:
   const int length;
@@ -50,6 +48,8 @@ class StringChromosomeBase {
         string(new T[length_]) {
     ;
   }
+  StringChromosomeBase(const StringChromosomeBase &other) = delete;
+  StringChromosomeBase &operator=(const StringChromosomeBase &other) = delete;
 
   virtual ~StringChromosomeBase() {}
 

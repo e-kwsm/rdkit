@@ -51,6 +51,8 @@ class RDKIT_GRAPHMOL_EXPORT PeriodicTable {
     byname.clear();
   }
 
+  PeriodicTable &operator=(const PeriodicTable &) = delete;
+
   //! returns the atomic weight
   double getAtomicWeight(UINT atomicNumber) const {
     PRECONDITION(atomicNumber < byanum.size(), "Atomic number not found");
