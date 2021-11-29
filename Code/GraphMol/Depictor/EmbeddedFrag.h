@@ -321,7 +321,7 @@ class RDKIT_DEPICTOR_EXPORT EmbeddedFrag {
   void openAngles(const double *dmat, unsigned int aid1, unsigned int aid2);
 
   std::vector<PAIR_I_I> findCollisions(const double *dmat,
-                                       bool includeBonds = 1);
+                                       bool includeBonds = true);
 
   void computeDistMat(DOUBLE_SMART_PTR &dmat);
 
