@@ -217,7 +217,7 @@ void embedNontetrahedralStereo(const RDKit::ROMol &mol,
   boost::dynamic_bitset<> consider(mol.getNumAtoms());
   for (const auto atm : mol.atoms()) {
     if (RDKit::Chirality::hasNonTetrahedralStereo(atm)) {
-      consider[atm->getIdx()] = 1;
+      consider[atm->getIdx()] = true;
     }
   }
   if (consider.empty()) {
@@ -327,7 +327,7 @@ RDKit::INT_LIST getNonEmbeddedAtoms(const RDKit::ROMol &mol,
   for (const auto &efrag : efrags) {
     const auto &oatoms = efrag.GetEmbeddedAtoms();
     for (const auto &oatom : oatoms) {
-      done[oatom.first] = 1;
+      done[oatom.first] = true;
     }
   }
   for (auto aid = 0u; aid < mol.getNumAtoms(); ++aid) {

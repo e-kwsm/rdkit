@@ -597,7 +597,7 @@ void setMMFFAromaticity(RWMol &mol) {
       // loop again over all ring atoms
       for (j = 0, canBeAromatic = true; j < atomRings[i].size(); ++j) {
         // set aromaticity as perceived
-        aromBitVect[atomRings[i][j]] = 1;
+        aromBitVect[atomRings[i][j]] = true;
         atom = mol.getAtomWithIdx(atomRings[i][j]);
         // if this is is a non-sp2 carbon or nitrogen
         // then this ring can't be aromatic
@@ -618,7 +618,7 @@ void setMMFFAromaticity(RWMol &mol) {
       // if this ring satisfies the 4n+2 rule,
       // then mark its atoms as aromatic
       if ((pi_e > 2) && (!((pi_e - 2) % 4))) {
-        aromRingBitVect[i] = 1;
+        aromRingBitVect[i] = true;
         for (j = 0; j < atomRings[i].size(); ++j) {
           atom = mol.getAtomWithIdx(atomRings[i][j]);
           atom->setIsAromatic(true);
@@ -3437,7 +3437,7 @@ void MMFFMolProperties::computeMMFFCharges(const ROMol &mol) {
         nConj = 1;
         old_nConj = 0;
         conjNBitVect.reset();
-        conjNBitVect[idx] = 1;
+        conjNBitVect[idx] = true;
         while (nConj > old_nConj) {
           old_nConj = nConj;
           for (i = 0; i < mol.getNumAtoms(); ++i) {
@@ -3473,7 +3473,7 @@ void MMFFMolProperties::computeMMFFCharges(const ROMol &mol) {
                 // mark it and increment the counter and eventually
                 // adjust the total formal charge of the conjugated system
                 if (!conjNBitVect[j]) {
-                  conjNBitVect[j] = 1;
+                  conjNBitVect[j] = true;
                   fChg += (double)(nbr2Atom->getFormalCharge());
                   ++nConj;
                 }

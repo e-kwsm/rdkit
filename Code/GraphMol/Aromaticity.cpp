@@ -44,7 +44,7 @@ void pickFusedRings(int curr, const INT_INT_VECT_MAP &neighMap, INT_VECT &res,
                     boost::dynamic_bitset<> &done, int depth) {
   auto pos = neighMap.find(curr);
   PRECONDITION(pos != neighMap.end(), "bad argument");
-  done[curr] = 1;
+  done[curr] = true;
   res.push_back(curr);
 
   const auto &neighs = pos->second;
@@ -71,7 +71,7 @@ bool checkFused(const INT_VECT &rids, INT_INT_VECT_MAP &ringNeighs) {
   for (const auto &nci : ringNeighs) {
     rid = nci.first;
     if (std::find(rids.begin(), rids.end(), rid) == rids.end()) {
-      done[rid] = 1;
+      done[rid] = true;
     }
   }
 
@@ -363,7 +363,7 @@ void applyHuckelToFused(
     nRingBonds = rdcast<unsigned int>(fusedBonds.count());
   }
   std::set<unsigned int> doneBonds;
-  while (1) {
+  while (true) {
     if (pos == -1) {
       // If a ring system has more than 300 rings and a ring combination search
       // larger than 2 is reached, the calculation becomes exponentially longer,
@@ -706,7 +706,7 @@ int mdlAromaticityHelper(RWMol &mol, const VECT_INT_VECT &srings) {
         }
         continue;
       }
-      aseen[firstIdx] = 1;
+      aseen[firstIdx] = true;
 
       // now that the atom is part of ring check if it can donate
       // electron or has empty orbitals. Record the donor type
@@ -824,7 +824,7 @@ int aromaticityHelper(RWMol &mol, const VECT_INT_VECT &srings,
         }
         continue;
       }
-      aseen[firstIdx] = 1;
+      aseen[firstIdx] = true;
 
       // now that the atom is part of ring check if it can donate
       // electron or has empty orbitals. Record the donor type
