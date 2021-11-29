@@ -520,7 +520,7 @@ void makeModularProduct(const ROMol &mol1,
       }
       if (distsOk && adjMatrix1[vtxPairs[i].first][vtxPairs[j].first] ==
                          adjMatrix2[vtxPairs[i].second][vtxPairs[j].second]) {
-        modProd[i][j] = modProd[j][i] = 1;
+        modProd[i][j] = modProd[j][i] = true;
       }
     }
   }
@@ -650,7 +650,7 @@ RWMol *makeCliqueFrags(const ROMol &mol,
     } else {
       bond = molFrags->getBondWithIdx(vtxPairs[mem].second);
     }
-    bInClique[bond->getIdx()] = 1;
+    bInClique[bond->getIdx()] = true;
     aInClique.set(bond->getBeginAtomIdx());
     bond->getBeginAtom()->setProp<int>("ORIG_INDEX", bond->getBeginAtomIdx());
     aInClique.set(bond->getEndAtomIdx());
