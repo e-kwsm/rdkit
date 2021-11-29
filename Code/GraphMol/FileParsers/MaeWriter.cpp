@@ -551,7 +551,9 @@ MaeWriter::MaeWriter(std::shared_ptr<std::ostream> outStream)
 
 MaeWriter::~MaeWriter() { close(); };
 
-void MaeWriter::open() { dp_writer.reset(new mae::Writer(dp_ostream)); }
+void MaeWriter::open() {
+  dp_writer = std::make_unique<mae::Writer>(dp_ostream);
+}
 
 void MaeWriter::setProps(const STR_VECT &propNames) {
   if (d_molid > 0) {

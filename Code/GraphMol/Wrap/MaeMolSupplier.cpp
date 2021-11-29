@@ -49,8 +49,8 @@ class LocalMaeMolSupplier : public RDKit::MaeMolSupplier {
     RDKit::v2::FileParsers::MaeMolSupplierParams params;
     params.sanitize = sanitize;
     params.removeHs = removeHs;
-    dp_supplier.reset(
-        new RDKit::v2::FileParsers::MaeMolSupplier(inStream, owner, params));
+    dp_supplier = std::make_unique<RDKit::v2::FileParsers::MaeMolSupplier>(
+        inStream, owner, params);
   }
   LocalMaeMolSupplier(streambuf &input, bool sanitize, bool removeHs) {
     auto inStream = new streambuf::istream(input);
@@ -59,8 +59,8 @@ class LocalMaeMolSupplier : public RDKit::MaeMolSupplier {
     RDKit::v2::FileParsers::MaeMolSupplierParams params;
     params.sanitize = sanitize;
     params.removeHs = removeHs;
-    dp_supplier.reset(
-        new RDKit::v2::FileParsers::MaeMolSupplier(inStream, owner, params));
+    dp_supplier = std::make_unique<RDKit::v2::FileParsers::MaeMolSupplier>(
+        inStream, owner, params);
   }
 
   LocalMaeMolSupplier(const std::string &fname, bool sanitize = true,

@@ -145,7 +145,7 @@ std::unique_ptr<ROMol> deprotect(
 
   m->setProp("DEPROTECTIONS", deprotections_used);
   m->setProp<int>("DEPROTECTION_COUNT", deprotections_used.size());
-  return std::unique_ptr<ROMol>(new ROMol(*m.get()));
+  return std::make_unique<ROMol>(*m.get());
 }
 
 bool deprotectInPlace(RWMol &mol,

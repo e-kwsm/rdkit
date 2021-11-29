@@ -509,7 +509,7 @@ unsigned int numAtomStereoCenters(const ROMol &mol) {
   std::unique_ptr<ROMol> tmol;
   const ROMol *mptr = &mol;
   if (!hasStereoAssigned(mol)) {
-    tmol.reset(new ROMol(mol));
+    tmol = std::make_unique<ROMol>(mol);
     constexpr bool cleanIt = true;
     constexpr bool force = true;
     constexpr bool flagPossible = true;
@@ -531,7 +531,7 @@ unsigned int numUnspecifiedAtomStereoCenters(const ROMol &mol) {
   std::unique_ptr<ROMol> tmol;
   const ROMol *mptr = &mol;
   if (!hasStereoAssigned(mol)) {
-    tmol.reset(new ROMol(mol));
+    tmol = std::make_unique<ROMol>(mol);
     constexpr bool cleanIt = true;
     constexpr bool force = true;
     constexpr bool flagPossible = true;
