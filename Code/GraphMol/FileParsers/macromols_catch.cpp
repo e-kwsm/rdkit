@@ -36,7 +36,7 @@ class ScsiMolTest {
  public:
   bool generateExpectedFiles = false;
 
-  ScsiMolTest() {}
+  ScsiMolTest() = default;
 
   class ScsiTest {
    public:

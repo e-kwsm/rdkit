@@ -46,9 +46,7 @@ struct RDKIT_FMCS_EXPORT NewBond {
   // added into seed. Another end of new bond
   const Atom *NewAtom{nullptr};
 
-  NewBond()
-
-  {}
+  NewBond() = default;
 
   NewBond(unsigned int bond_idx, unsigned int new_atom, unsigned int to_atom,
           const Atom *a)
@@ -95,9 +93,7 @@ class RDKIT_FMCS_EXPORT Seed {
   std::vector<TargetMatch> MatchResult;
 
  public:
-  Seed()
-
-  {}
+  Seed() = default;
 
   void setMoleculeFragment(const Seed &src) {
     MoleculeFragment = src.MoleculeFragment;

@@ -51,7 +51,7 @@ class StringChromosomeBase {
     ;
   }
 
-  virtual ~StringChromosomeBase() {}
+  virtual ~StringChromosomeBase() = default;
 
   void initialize();
   bool equals(const StringChromosomeBase &other) const;

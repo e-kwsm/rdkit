@@ -30,13 +30,13 @@ class SCSRMol {
   std::vector<std::unique_ptr<ROMol>> p_templates;
 
  public:
-  SCSRMol() {};
+  SCSRMol() = default;
   SCSRMol(const SCSRMol &other) = delete;
   SCSRMol(SCSRMol &&other) noexcept = delete;
   SCSRMol &operator=(SCSRMol &&other) noexcept = delete;
 
   SCSRMol &operator=(const SCSRMol &) = delete;  // disable assignment
-  ~SCSRMol() {}
+  ~SCSRMol() = default;
 
   void addTemplate(std::unique_ptr<ROMol> templateMol) {
     PRECONDITION(templateMol, "bad template molecule");

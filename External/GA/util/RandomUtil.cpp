@@ -22,7 +22,7 @@ namespace GarethUtil {
 
 RandomUtil::RandomUtil() : realDistribution(0, 1) {}
 
-RandomUtil::~RandomUtil() {}
+RandomUtil::~RandomUtil() = default;
 
 void RandomUtil::seed(uint32_t seed_) { rng.seed(seed_); }
 

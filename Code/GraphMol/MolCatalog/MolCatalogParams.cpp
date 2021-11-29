@@ -13,7 +13,7 @@ MolCatalogParams::MolCatalogParams(const std::string &pickle) {
   this->initFromString(pickle);
 }
 
-MolCatalogParams::~MolCatalogParams() {}
+MolCatalogParams::~MolCatalogParams() = default;
 
 void MolCatalogParams::toStream(std::ostream &) const {
   // at the moment this is a no-op

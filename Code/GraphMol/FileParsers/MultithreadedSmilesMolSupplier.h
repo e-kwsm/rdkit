@@ -67,7 +67,7 @@ class RDKIT_FILEPARSERS_EXPORT MultithreadedSmilesMolSupplier
   //! time
  public:
   using ContainedType = v2::FileParsers::MultithreadedSmilesMolSupplier;
-  MultithreadedSmilesMolSupplier() {}
+  MultithreadedSmilesMolSupplier() = default;
   explicit MultithreadedSmilesMolSupplier(
       const std::string &fileName, const std::string &delimiter = " \t",
       int smilesColumn = 0, int nameColumn = 1, bool titleLine = true,

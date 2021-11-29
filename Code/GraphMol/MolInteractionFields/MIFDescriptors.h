@@ -512,7 +512,7 @@ class RDKIT_MOLINTERACTIONFIELDS_EXPORT Hydrophilic {
    */
   Hydrophilic(const RDKit::ROMol &mol, int confId = -1, bool fixed = true,
               double cutoff = 1.0);
-  ~Hydrophilic() {};
+  ~Hydrophilic() = default;
 
   double operator()(double x, double y, double z, double thres) const;
 

@@ -85,7 +85,7 @@ class RDKIT_CHEMREACTIONS_EXPORT EnumerateLibraryBase {
         m_enumerator(rhs.m_enumerator ? rhs.m_enumerator->copy() : nullptr),
         m_initialEnumerator(m_enumerator->copy()) {}
 
-  virtual ~EnumerateLibraryBase() {}
+  virtual ~EnumerateLibraryBase() = default;
 
   //! Are there any enumerations left?
   virtual operator bool() const {

@@ -26,7 +26,7 @@ class MMFFProp;
 //! The angle-bend term for MMFF
 class RDKIT_FORCEFIELD_EXPORT StretchBendContrib : public ForceFieldContrib {
  public:
-  StretchBendContrib() {}
+  StretchBendContrib() = default;
   //! Constructor
   StretchBendContrib(ForceField *owner);
   /*!

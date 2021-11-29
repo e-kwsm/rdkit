@@ -27,7 +27,7 @@ class RDKIT_GRAPHMOL_EXPORT AtomMonomerInfo {
  public:
   typedef enum { UNKNOWN = 0, PDBRESIDUE, OTHER } AtomMonomerType;
 
-  virtual ~AtomMonomerInfo() {}
+  virtual ~AtomMonomerInfo() = default;
 
   AtomMonomerInfo() = default;
   AtomMonomerInfo(AtomMonomerType typ, std::string nm = "")
