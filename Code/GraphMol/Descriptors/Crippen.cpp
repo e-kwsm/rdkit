@@ -66,7 +66,7 @@ void getCrippenAtomContribs(const ROMol &mol, std::vector<double> &logpContribs,
          matchIt != matches.end(); ++matchIt) {
       int idx = (*matchIt)[0].second;
       if (atomNeeded[idx]) {
-        atomNeeded[idx] = 0;
+        atomNeeded[idx] = false;
         logpContribs[idx] = param.logp;
         mrContribs[idx] = param.mr;
         if (atomTypes) {
