@@ -38,6 +38,13 @@ class RDKIT_FILEPARSERS_EXPORT MolSupplier {
  public:
   MolSupplier() {}
   virtual ~MolSupplier() {}
+  // disable automatic copy constructors and assignment operators
+  // for this class and its subclasses.  They will likely be
+  // carrying around stream pointers and copying those is a recipe
+  // for disaster.
+  MolSupplier(const MolSupplier &) = delete;
+  MolSupplier &operator=(const MolSupplier &) = delete;
+
   void init() {
     if (dp_supplier) {
       dp_supplier->init();
@@ -65,14 +72,6 @@ class RDKIT_FILEPARSERS_EXPORT MolSupplier {
       dp_supplier->close();
     }
   }
-
- private:
-  // disable automatic copy constructors and assignment operators
-  // for this class and its subclasses.  They will likely be
-  // carrying around stream pointers and copying those is a recipe
-  // for disaster.
-  MolSupplier(const MolSupplier &);
-  MolSupplier &operator=(const MolSupplier &);
 
  protected:
   std::unique_ptr<v2::FileParsers::MolSupplier> dp_supplier;
