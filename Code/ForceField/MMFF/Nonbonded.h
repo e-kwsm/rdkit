@@ -23,7 +23,7 @@ class MMFFVdW;
 //! the van der Waals term for MMFF
 class RDKIT_FORCEFIELD_EXPORT VdWContrib : public ForceFieldContrib {
  public:
-  VdWContrib() {}
+  VdWContrib() = default;
 
   //! Constructor
   /*!
@@ -47,7 +47,7 @@ class RDKIT_FORCEFIELD_EXPORT VdWContrib : public ForceFieldContrib {
 //! the electrostatic term for MMFF
 class RDKIT_FORCEFIELD_EXPORT EleContrib : public ForceFieldContrib {
  public:
-  EleContrib() {}
+  EleContrib() = default;
 
   //! Constructor
   /*!
