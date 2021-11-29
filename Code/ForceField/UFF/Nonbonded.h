@@ -30,7 +30,7 @@ class AtomicParams;
  */
 class RDKIT_FORCEFIELD_EXPORT vdWContrib : public ForceFieldContrib {
  public:
-  vdWContrib() {}
+  vdWContrib() = default;
 
   //! Constructor
   /*!
