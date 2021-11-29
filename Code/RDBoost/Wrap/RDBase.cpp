@@ -258,7 +258,7 @@ BOOST_PYTHON_MODULE(rdBase) {
   RegisterVectorConverter<int>();
   RegisterVectorConverter<unsigned>();
   RegisterVectorConverter<double>();
-  RegisterVectorConverter<std::string>(1);
+  RegisterVectorConverter<std::string>(true);
   RegisterVectorConverter<std::vector<int>>();
   RegisterVectorConverter<std::vector<unsigned>>();
   RegisterVectorConverter<std::vector<double>>();

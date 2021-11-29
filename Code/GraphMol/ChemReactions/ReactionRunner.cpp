@@ -468,18 +468,18 @@ ReactantProductAtomMapping *getAtomMappingsReactantProduct(
         for (auto a : atomIdxs) {
           unsigned int pIdx = a->getIdx();
           mapping->reactProdAtomMap[i.second].push_back(pIdx);
-          mapping->mappedAtoms[i.second] = 1;
+          mapping->mappedAtoms[i.second] = true;
           CHECK_INVARIANT(pIdx < product->getNumAtoms(), "yikes!");
           mapping->prodReactAtomMap[pIdx] = i.second;
         }
       } else {
         // this skippedAtom has an atomMapNumber, but it's not in this product
         // (it's either in another product or it's not mapped at all).
-        mapping->skippedAtoms[i.second] = 1;
+        mapping->skippedAtoms[i.second] = true;
       }
     } else {
       // This skippedAtom appears in the match, but not in a product:
-      mapping->skippedAtoms[i.second] = 1;
+      mapping->skippedAtoms[i.second] = true;
     }
   }
   return mapping;
@@ -966,7 +966,7 @@ void addReactantNeighborsToProduct(
     std::vector<unsigned> lReactantAtomProductIndex =
         mapping->reactProdAtomMap[lReactantAtom->getIdx()];
     unsigned lreactIdx = lReactantAtom->getIdx();
-    visitedAtoms[lreactIdx] = 1;
+    visitedAtoms[lreactIdx] = true;
     // Check our neighbors:
     ROMol::ADJ_ITER nbrIdx, endNbrs;
     boost::tie(nbrIdx, endNbrs) = reactant.getAtomNeighbors(lReactantAtom);
