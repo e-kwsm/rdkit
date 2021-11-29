@@ -21,6 +21,8 @@
 namespace RDDepict {
 class RDKIT_DEPICTOR_EXPORT CoordinateTemplates {
  public:
+  CoordinateTemplates(const CoordinateTemplates &) = delete;
+  CoordinateTemplates &operator=(const CoordinateTemplates &) = delete;
   //! returns a reference to the singleton CoordinateTemplates
   /*
       \return a reference to the singleton CoordinateTemplates
@@ -76,8 +78,6 @@ class RDKIT_DEPICTOR_EXPORT CoordinateTemplates {
 
  private:
   CoordinateTemplates() { loadDefaultTemplates(); }
-  CoordinateTemplates(const CoordinateTemplates &) = delete;
-  CoordinateTemplates &operator=(const CoordinateTemplates &) = delete;
 
   void clearTemplates() {
     for (auto &[atom_cout, romols] : m_templates) {
