@@ -73,7 +73,7 @@ void nitrogenCleanup(RWMol &mol, Atom *atom) {
   // explicit valence code modifies its results for aromatic
   // atoms.
   aromHolder = atom->getIsAromatic();
-  atom->setIsAromatic(0);
+  atom->setIsAromatic(false);
   // NOTE that we are calling calcExplicitValence() here, we do
   // this because we cannot be sure that it has already been
   // called on the atom (cleanUp() gets called pretty early in
