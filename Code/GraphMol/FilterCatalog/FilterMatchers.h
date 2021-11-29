@@ -77,8 +77,7 @@ class RDKIT_FILTERCATALOG_EXPORT And : public FilterMatcherBase {
         arg1(std::move(arg1)),
         arg2(std::move(arg2)) {}
 
-  And(const And &rhs)
-      : FilterMatcherBase(rhs), arg1(rhs.arg1), arg2(rhs.arg2) {}
+  And(const And &rhs) = default;
 
   std::string getName() const override {
     return "(" + getArgName(arg1) + " " + FilterMatcherBase::getName() + " " +
@@ -142,7 +141,7 @@ class RDKIT_FILTERCATALOG_EXPORT Or : public FilterMatcherBase {
      boost::shared_ptr<FilterMatcherBase> arg2)
       : FilterMatcherBase("Or"), arg1(std::move(arg1)), arg2(std::move(arg2)) {}
 
-  Or(const Or &rhs) : FilterMatcherBase(rhs), arg1(rhs.arg1), arg2(rhs.arg2) {}
+  Or(const Or &rhs) = default;
 
   std::string getName() const override {
     return "(" + getArgName(arg1) + " " + FilterMatcherBase::getName() + " " +
@@ -202,7 +201,7 @@ class RDKIT_FILTERCATALOG_EXPORT Not : public FilterMatcherBase {
   Not(boost::shared_ptr<FilterMatcherBase> arg1)
       : FilterMatcherBase("Not"), arg1(std::move(arg1)) {}
 
-  Not(const Not &rhs) : FilterMatcherBase(rhs), arg1(rhs.arg1) {}
+  Not(const Not &rhs) = default;
 
   std::string getName() const override {
     return "(" + FilterMatcherBase::getName() + " " + getArgName(arg1) + ")";

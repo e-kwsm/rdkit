@@ -32,7 +32,7 @@ class RDKIT_GRAPHMOL_EXPORT MolSanitizeException : public std::exception {
   MolSanitizeException(const MolSanitizeException &other)
       : d_msg(other.d_msg) {}
   const char *what() const noexcept override { return d_msg.c_str(); }
-  ~MolSanitizeException() noexcept override {}
+  ~MolSanitizeException() noexcept override = default;
   virtual MolSanitizeException *copy() const {
     return new MolSanitizeException(*this);
   }
@@ -49,10 +49,9 @@ class RDKIT_GRAPHMOL_EXPORT AtomSanitizeException
       : MolSanitizeException(msg), d_atomIdx(atomIdx) {}
   AtomSanitizeException(const std::string &msg, unsigned int atomIdx)
       : MolSanitizeException(msg), d_atomIdx(atomIdx) {}
-  AtomSanitizeException(const AtomSanitizeException &other)
-      : MolSanitizeException(other), d_atomIdx(other.d_atomIdx) {}
+  AtomSanitizeException(const AtomSanitizeException &other) = default;
   unsigned int getAtomIdx() const { return d_atomIdx; }
-  ~AtomSanitizeException() noexcept override {}
+  ~AtomSanitizeException() noexcept override = default;
   MolSanitizeException *copy() const override {
     return new AtomSanitizeException(*this);
   }
@@ -69,9 +68,8 @@ class RDKIT_GRAPHMOL_EXPORT AtomValenceException
       : AtomSanitizeException(msg, atomIdx) {}
   AtomValenceException(const std::string &msg, unsigned int atomIdx)
       : AtomSanitizeException(msg, atomIdx) {}
-  AtomValenceException(const AtomValenceException &other)
-      : AtomSanitizeException(other) {}
-  ~AtomValenceException() noexcept override {}
+  AtomValenceException(const AtomValenceException &other) = default;
+  ~AtomValenceException() noexcept override = default;
   MolSanitizeException *copy() const override {
     return new AtomValenceException(*this);
   }
@@ -85,9 +83,8 @@ class RDKIT_GRAPHMOL_EXPORT AtomKekulizeException
       : AtomSanitizeException(msg, atomIdx) {}
   AtomKekulizeException(const std::string &msg, unsigned int atomIdx)
       : AtomSanitizeException(msg, atomIdx) {}
-  AtomKekulizeException(const AtomKekulizeException &other)
-      : AtomSanitizeException(other) {}
-  ~AtomKekulizeException() noexcept override {}
+  AtomKekulizeException(const AtomKekulizeException &other) = default;
+  ~AtomKekulizeException() noexcept override = default;
   MolSanitizeException *copy() const override {
     return new AtomKekulizeException(*this);
   }
@@ -100,12 +97,11 @@ class RDKIT_GRAPHMOL_EXPORT KekulizeException : public MolSanitizeException {
       : MolSanitizeException(msg), d_atomIndices(std::move(indices)) {}
   KekulizeException(const std::string &msg, std::vector<unsigned int> indices)
       : MolSanitizeException(msg), d_atomIndices(std::move(indices)) {}
-  KekulizeException(const KekulizeException &other)
-      : MolSanitizeException(other), d_atomIndices(other.d_atomIndices) {}
+  KekulizeException(const KekulizeException &other) = default;
   const std::vector<unsigned int> &getAtomIndices() const {
     return d_atomIndices;
   }
-  ~KekulizeException() noexcept override {}
+  ~KekulizeException() noexcept override = default;
   MolSanitizeException *copy() const override {
     return new KekulizeException(*this);
   }

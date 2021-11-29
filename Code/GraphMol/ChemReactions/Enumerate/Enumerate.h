@@ -60,11 +60,9 @@ namespace RDKit {
 struct RDKIT_CHEMREACTIONS_EXPORT EnumerationParams {
   int reagentMaxMatchCount{INT_MAX};
   bool sanePartialProducts{false};
-  EnumerationParams() {}
+  EnumerationParams() = default;
 
-  EnumerationParams(const EnumerationParams &rhs)
-      : reagentMaxMatchCount(rhs.reagentMaxMatchCount),
-        sanePartialProducts(rhs.sanePartialProducts) {}
+  EnumerationParams(const EnumerationParams &rhs) = default;
 };
 
 //!  Helper function, remove reagents that are incompatible

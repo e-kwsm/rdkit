@@ -28,7 +28,7 @@ class AtomicParams;
 //! the torsion term for the Universal Force Field
 class RDKIT_FORCEFIELD_EXPORT TorsionAngleContrib : public ForceFieldContrib {
  public:
-  TorsionAngleContrib() {}
+  TorsionAngleContrib() = default;
   //! Constructor
   /*!
     The torsion is between atom1 - atom2 - atom3 - atom4

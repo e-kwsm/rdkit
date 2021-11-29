@@ -87,7 +87,7 @@ class RDKIT_FILTERCATALOG_EXPORT FilterMatcherBase
       : boost::enable_shared_from_this<FilterMatcherBase>(),
         d_filterName(rhs.d_filterName) {}
 
-  virtual ~FilterMatcherBase() {}
+  virtual ~FilterMatcherBase() = default;
 
   virtual bool isValid() const = 0;
 

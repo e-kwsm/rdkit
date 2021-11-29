@@ -1174,7 +1174,7 @@ struct HELMMonomer {
   Atom *r3{nullptr};
   Atom *oxt{nullptr};
 
-  HELMMonomer() {}
+  HELMMonomer() = default;
   HELMMonomer(Atom *x, Atom *y, Atom *z) : r1(x), r2(y), r3(z), oxt(nullptr) {}
 };
 

@@ -25,7 +25,7 @@ typedef std::vector<std::pair<int, int>> MatchVectType;
 
 class RDKIT_FRAGCATALOG_EXPORT FragFPGenerator {
  public:
-  FragFPGenerator() {}
+  FragFPGenerator() = default;
 
   ExplicitBitVect *getFPForMol(const ROMol &mol, const FragCatalog &fcat);
 

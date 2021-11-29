@@ -43,7 +43,7 @@ TautomerCatalogParams::TautomerCatalogParams(
   }
 }
 
-TautomerCatalogParams::~TautomerCatalogParams() {}
+TautomerCatalogParams::~TautomerCatalogParams() = default;
 
 const std::vector<TautomerTransform> &TautomerCatalogParams::getTransforms()
     const {

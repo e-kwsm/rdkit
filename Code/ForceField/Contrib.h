@@ -19,9 +19,9 @@ class RDKIT_FORCEFIELD_EXPORT ForceFieldContrib {
  public:
   friend class ForceField;
 
-  ForceFieldContrib() {}
+  ForceFieldContrib() = default;
   ForceFieldContrib(ForceFields::ForceField *owner) : dp_forceField(owner) {}
-  virtual ~ForceFieldContrib() {}
+  virtual ~ForceFieldContrib() = default;
 
   //! returns our contribution to the energy of a position
   virtual double getEnergy(double *pos) const = 0;
