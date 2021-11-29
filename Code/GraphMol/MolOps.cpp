@@ -83,7 +83,7 @@ void nitrogensCleanup(RWMol &mol) {
     // explicit valence code modifies its results for aromatic
     // atoms.
     auto aromHolder = atom->getIsAromatic();
-    atom->setIsAromatic(0);
+    atom->setIsAromatic(false);
     unsigned int aid = atom->getIdx();
     bool updateNeeded = false;
     for (const auto nbr : mol.atomNeighbors(atom)) {
@@ -112,7 +112,7 @@ void nitrogensCleanup(RWMol &mol) {
        aid = nitrogensToConsider.find_next(aid)) {
     Atom *atom = mol.getAtomWithIdx(aid);
     auto aromHolder = atom->getIsAromatic();
-    atom->setIsAromatic(0);
+    atom->setIsAromatic(false);
     bool updateNeeded = false;
     for (const auto nbr : mol.atomNeighbors(atom)) {
       if ((nbr->getAtomicNum() == 7) && (nbr->getFormalCharge() == 0) &&
@@ -419,13 +419,13 @@ void includeAromaticAtoms(const RWMol &mol,
                           boost::dynamic_bitset<> &atomsToAdjust) {
   for (const auto atom : mol.atoms()) {
     if (atom->getIsAromatic()) {
-      atomsToAdjust[atom->getIdx()] = 1;
+      atomsToAdjust[atom->getIdx()] = true;
     }
   }
   for (const auto bond : mol.bonds()) {
     if (bond->getIsAromatic()) {
-      atomsToAdjust[bond->getBeginAtomIdx()] = 1;
-      atomsToAdjust[bond->getEndAtomIdx()] = 1;
+      atomsToAdjust[bond->getBeginAtomIdx()] = true;
+      atomsToAdjust[bond->getEndAtomIdx()] = true;
     }
   }
 }

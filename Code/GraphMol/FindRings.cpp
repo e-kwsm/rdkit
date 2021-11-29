@@ -141,7 +141,7 @@ void trimBonds(unsigned int cand, const ROMol &tMol, std::queue<int> &changed,
     if (atomDegrees[oIdx] <= 2) {
       changed.push(oIdx);
     }
-    activeBonds[bond->getIdx()] = 0;
+    activeBonds[bond->getIdx()] = false;
     atomDegrees[oIdx] -= 1;
     atomDegrees[cand] -= 1;
   }
@@ -295,7 +295,7 @@ void markUselessD2s(unsigned int root, const ROMol &tMol,
     }
     unsigned int oIdx = bond->getOtherAtomIdx(root);
     if (!forb[oIdx] && atomDegrees[oIdx] == 2) {
-      forb[oIdx] = 1;
+      forb[oIdx] = true;
       markUselessD2s(oIdx, tMol, forb, atomDegrees, activeBonds);
     }
   }
@@ -308,13 +308,13 @@ void pickD2Nodes(const ROMol &tMol, INT_VECT &d2nodes, const INT_VECT &currFrag,
 
   // forb contains all d2 nodes, not just the ones we want to keep
   boost::dynamic_bitset<> forb(tMol.getNumAtoms());
-  while (1) {
+  while (true) {
     int root = -1;
     for (int axci : currFrag) {
       if (atomDegrees[axci] == 2 && !forb[axci]) {
         root = axci;
         d2nodes.push_back(axci);
-        forb[axci] = 1;
+        forb[axci] = true;
         break;
       }
     }
@@ -742,7 +742,7 @@ void findRingsFigueras(const ROMol &mol, VECT_INT_VECT &res,
     if (auto bt = bond->getBondType();
         bt == Bond::ZERO || (!includeDativeBonds && isDative(bt)) ||
         (!includeHydrogenBonds && bt == Bond::HYDROGEN)) {
-      activeBonds[bond->getIdx()] = 0;
+      activeBonds[bond->getIdx()] = false;
     }
   }
 
@@ -895,7 +895,7 @@ void findRingsFigueras(const ROMol &mol, VECT_INT_VECT &res,
         bool ringFound = FindRings::findRingConnectingAtoms(
             mol, possibleBonds[0], fragRes, invars, ringBonds, ringAtoms);
         if (!ringFound) {
-          deadBonds.set(possibleBonds[0]->getIdx(), 1);
+          deadBonds.set(possibleBonds[0]->getIdx(), true);
         }
         possibleBonds.clear();
         // check if we need to repeat the process:

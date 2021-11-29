@@ -899,9 +899,9 @@ extern "C" char *get_log_buffer(void *log_handle) {
 extern "C" short clear_log_buffer(void *log_handle) {
   if (log_handle) {
     reinterpret_cast<MinimalLib::LogHandle *>(log_handle)->clearBuffer();
-    return 1;
+    return true;
   }
-  return 0;
+  return false;
 }
 
 extern "C" short has_prop(const char *mol_pkl, size_t mol_pkl_sz,

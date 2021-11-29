@@ -74,7 +74,7 @@ TEST_CASE("ignoreAtoms") {
 
     // check that ignoreAtoms works:
     boost::dynamic_bitset<> ignoreAtoms(m->getNumAtoms());
-    ignoreAtoms[0] = 1;
+    ignoreAtoms[0] = true;
     auto ps2 = findAllPathsOfLengthN(*m, 3, useBonds, useHs, rootedAt,
                                      onlyShortestPaths, &ignoreAtoms);
     CHECK(ps2.empty());
@@ -97,7 +97,7 @@ TEST_CASE("ignoreAtoms") {
 
     // check that ignoreAtoms works:
     boost::dynamic_bitset<> ignoreAtoms(m->getNumAtoms());
-    ignoreAtoms[0] = 1;
+    ignoreAtoms[0] = true;
     auto ps2 = findAllPathsOfLengthsMtoN(*m, 3, 3, useBonds, useHs, rootedAt,
                                          onlyShortestPaths, &ignoreAtoms);
     CHECK(ps2.empty());
@@ -117,7 +117,7 @@ TEST_CASE("ignoreAtoms") {
 
     // check that ignoreAtoms works:
     boost::dynamic_bitset<> ignoreAtoms(m->getNumAtoms());
-    ignoreAtoms[0] = 1;
+    ignoreAtoms[0] = true;
     auto ps2 = findAllSubgraphsOfLengthN(*m, 3, useHs, rootedAt, &ignoreAtoms);
     CHECK(ps2.empty());
 
@@ -136,7 +136,7 @@ TEST_CASE("ignoreAtoms") {
 
     // check that ignoreAtoms works:
     boost::dynamic_bitset<> ignoreAtoms(m->getNumAtoms());
-    ignoreAtoms[0] = 1;
+    ignoreAtoms[0] = true;
     auto ps2 =
         findAllSubgraphsOfLengthsMtoN(*m, 3, 3, useHs, rootedAt, &ignoreAtoms);
     CHECK(ps2.size() == 1);
