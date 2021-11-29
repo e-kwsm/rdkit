@@ -19,6 +19,10 @@ namespace GapeGa {
 class GA_EXPORT BinaryStringChromosomePolicy {
  public:
   BinaryStringChromosomePolicy(GarethUtil::RandomUtil &rng_);
+  BinaryStringChromosomePolicy(const BinaryStringChromosomePolicy &orig) =
+      delete;
+  BinaryStringChromosomePolicy &operator=(
+      const BinaryStringChromosomePolicy &other) = delete;
   virtual ~BinaryStringChromosomePolicy();
 
   bool mutate(int pos, bool currentValue) const;
@@ -27,9 +31,6 @@ class GA_EXPORT BinaryStringChromosomePolicy {
 
  private:
   GarethUtil::RandomUtil &rng;
-  BinaryStringChromosomePolicy(const BinaryStringChromosomePolicy &orig);
-  BinaryStringChromosomePolicy &operator=(
-      const BinaryStringChromosomePolicy &other);
 };
 
 }  // namespace GapeGa
