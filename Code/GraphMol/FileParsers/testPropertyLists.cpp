@@ -242,15 +242,15 @@ TEST_CASE("createAtomPropertyLists") {
     REQUIRE(m->hasProp("atom.prop.foo3"));
     CHECK(m->getProp<std::string>("atom.prop.foo3") == "[?] 1 4 ?");
 
-    m->getAtomWithIdx(0)->setProp<bool>("foo4", 1);
-    m->getAtomWithIdx(1)->setProp<bool>("foo4", 0);
-    m->getAtomWithIdx(2)->setProp<bool>("foo4", 0);
+    m->getAtomWithIdx(0)->setProp<bool>("foo4", true);
+    m->getAtomWithIdx(1)->setProp<bool>("foo4", false);
+    m->getAtomWithIdx(2)->setProp<bool>("foo4", false);
     FileParserUtils::createAtomBoolPropertyList(*m, "foo4");
     REQUIRE(m->hasProp("atom.bprop.foo4"));
     CHECK(m->getProp<std::string>("atom.bprop.foo4") == "1 0 0");
 
-    m->getBondWithIdx(0)->setProp<bool>("foo5", 1);
-    m->getBondWithIdx(1)->setProp<bool>("foo5", 0);
+    m->getBondWithIdx(0)->setProp<bool>("foo5", true);
+    m->getBondWithIdx(1)->setProp<bool>("foo5", false);
     FileParserUtils::createBondBoolPropertyList(*m, "foo5");
     REQUIRE(m->hasProp("bond.bprop.foo5"));
     CHECK(m->getProp<std::string>("bond.bprop.foo5") == "1 0");
