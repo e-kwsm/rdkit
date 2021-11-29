@@ -30,7 +30,7 @@ bool comparePts(const RDGeom::Point3D &pt1, const RDGeom::Point3D &pt2,
 }
 
 void test1Canonicalization() {
-  ROMol *mol = SmilesToMol("C", 0, 1);
+  ROMol *mol = SmilesToMol("C", 0, true);
   auto *conf = new Conformer(1);
   conf->setAtomPos(0, RDGeom::Point3D(4.0, 5.0, 6.0));
   int cid = mol->addConformer(conf, true);
@@ -52,7 +52,7 @@ void test1Canonicalization() {
   // delete conf;
   delete trans;
   // lets try two points now
-  mol = SmilesToMol("CC", 0, 1);
+  mol = SmilesToMol("CC", 0, true);
   conf = new Conformer(2);
   conf->setAtomPos(0, RDGeom::Point3D(0.0, 0.0, 0.0));
   conf->setAtomPos(1, RDGeom::Point3D(1.5, 0.0, 0.0));
@@ -77,7 +77,7 @@ void test1Canonicalization() {
   delete mol;
   delete trans;
 
-  mol = SmilesToMol("CC", 0, 1);
+  mol = SmilesToMol("CC", 0, true);
   conf = new Conformer(2);
   conf->setAtomPos(0, RDGeom::Point3D(0.0, 0.0, 0.0));
   conf->setAtomPos(1, RDGeom::Point3D(1.5, 0.0, 0.0));
@@ -92,7 +92,7 @@ void test1Canonicalization() {
   delete mol;
   delete trans;
 
-  mol = SmilesToMol("C1CC1", 0, 1);
+  mol = SmilesToMol("C1CC1", 0, true);
   conf = new Conformer(3);
   conf->setAtomPos(0, RDGeom::Point3D(0.58, -0.66, -0.08));
   conf->setAtomPos(1, RDGeom::Point3D(-0.88, -0.18, -0.04));

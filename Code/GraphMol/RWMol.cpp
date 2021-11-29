@@ -510,15 +510,15 @@ unsigned int RWMol::addBond(unsigned int atomIdx1, unsigned int atomIdx2,
   auto *b = new Bond(bondType);
   b->setOwningMol(this);
   if (bondType == Bond::AROMATIC) {
-    b->setIsAromatic(1);
+    b->setIsAromatic(true);
     //
     // assume that aromatic bonds connect aromatic atoms
     //   This is relevant for file formats like MOL, where there
     //   is no such thing as an aromatic atom, but bonds can be
     //   marked aromatic.
     //
-    beginAtom->setIsAromatic(1);
-    endAtom->setIsAromatic(1);
+    beginAtom->setIsAromatic(true);
+    endAtom->setIsAromatic(true);
   }
   auto [which, ok] = boost::add_edge(atomIdx1, atomIdx2, d_graph);
   d_graph[which] = b;

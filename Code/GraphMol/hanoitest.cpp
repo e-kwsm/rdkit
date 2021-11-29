@@ -688,7 +688,7 @@ void test6() {
     boost::dynamic_bitset<> seen(m->getNumAtoms());
     for (unsigned int i = 0; i < m->getNumAtoms(); ++i) {
       TEST_ASSERT(!seen[atomRanks[i]]);
-      seen.set(atomRanks[i], 1);
+      seen.set(atomRanks[i], true);
     }
     // std::copy(atomRanks.begin(),atomRanks.end(),std::ostream_iterator<unsigned
     // int>(std::cerr," "));
@@ -717,7 +717,7 @@ void test6() {
     for (unsigned int i = 0; i < m->getNumAtoms(); ++i) {
       // std::cerr<<i<<" "<<atomRanks[i]<<std::endl;
       TEST_ASSERT(!seen[atomRanks[i]]);
-      seen.set(atomRanks[i], 1);
+      seen.set(atomRanks[i], true);
     }
 
     // for(unsigned int ii=0;ii<atomRanks.size();++ii){
@@ -751,7 +751,7 @@ void test6() {
     for (unsigned int i = 0; i < m->getNumAtoms(); ++i) {
       // std::cerr<<i<<" "<<atomRanks[i]<<std::endl;
       TEST_ASSERT(!seen[atomRanks[i]]);
-      seen.set(atomRanks[i], 1);
+      seen.set(atomRanks[i], true);
     }
 
     // for(unsigned int ii=0;ii<atomRanks.size();++ii){
@@ -771,7 +771,7 @@ void test6() {
     for (unsigned int i = 0; i < m->getNumAtoms(); ++i) {
       // std::cerr<<i<<" "<<atomRanks[i]<<std::endl;
       TEST_ASSERT(!seen[atomRanks[i]]);
-      seen.set(atomRanks[i], 1);
+      seen.set(atomRanks[i], true);
     }
 
     // for(unsigned int ii=0;ii<atomRanks.size();++ii){
@@ -792,7 +792,7 @@ void test6() {
     for (unsigned int i = 0; i < m->getNumAtoms(); ++i) {
       //      std::cerr<<"      "<<i<<" "<<atomRanks[i]<<std::endl;
       TEST_ASSERT(!seen[atomRanks[i]]);
-      seen.set(atomRanks[i], 1);
+      seen.set(atomRanks[i], true);
     }
     delete m;
   }
@@ -808,7 +808,7 @@ void test6() {
     boost::dynamic_bitset<> seen(m->getNumAtoms());
     for (unsigned int i = 0; i < m->getNumAtoms(); ++i) {
       TEST_ASSERT(!seen[atomRanks[i]]);
-      seen.set(atomRanks[i], 1);
+      seen.set(atomRanks[i], true);
     }
     delete m;
   }
@@ -1274,7 +1274,7 @@ void test9() {
 
   {
     std::string smi = "C[C@](F)(Cl)I";
-    RWMol *m = SmilesToMol(smi, 0, 0);
+    RWMol *m = SmilesToMol(smi, 0, false);
     TEST_ASSERT(m);
     MolOps::sanitizeMol(*m);
     std::vector<unsigned int> atomRanks;
@@ -1294,7 +1294,7 @@ void test9() {
 
   {
     std::string smi = "CC[C@](F)(Cl)C=C";
-    RWMol *m = SmilesToMol(smi, 0, 0);
+    RWMol *m = SmilesToMol(smi, 0, false);
     TEST_ASSERT(m);
     MolOps::sanitizeMol(*m);
     std::vector<unsigned int> atomRanks;
@@ -1315,7 +1315,7 @@ void test9() {
   {
     // make sure we aren't breaking ties
     std::string smi = "C[C@](C)(Cl)I";
-    RWMol *m = SmilesToMol(smi, 0, 0);
+    RWMol *m = SmilesToMol(smi, 0, false);
     TEST_ASSERT(m);
     MolOps::sanitizeMol(*m);
     std::vector<unsigned int> atomRanks;
@@ -1335,7 +1335,7 @@ void test9() {
 
   {
     std::string smi = "N[C@H]1C2CC3CC1C[C@](O)(C3)C2";
-    RWMol *m = SmilesToMol(smi, 0, 0);
+    RWMol *m = SmilesToMol(smi, 0, false);
     TEST_ASSERT(m);
     MolOps::sanitizeMol(*m);
     std::vector<unsigned int> atomRanks;
@@ -1358,7 +1358,7 @@ void test9() {
   {
     // this one was a chiral ranking problem
     std::string smi = "COC(C)CC(C)(C)O";
-    RWMol *m = SmilesToMol(smi, 0, 0);
+    RWMol *m = SmilesToMol(smi, 0, false);
     TEST_ASSERT(m);
     MolOps::sanitizeMol(*m);
     std::vector<unsigned int> atomRanks;
@@ -1375,7 +1375,7 @@ void test9() {
   {
     // are double bonds being handled correctly?
     std::string smi = "OC[C@H](F)C=O";
-    RWMol *m = SmilesToMol(smi, 0, 0);
+    RWMol *m = SmilesToMol(smi, 0, false);
     TEST_ASSERT(m);
     MolOps::sanitizeMol(*m);
     std::vector<unsigned int> atomRanks;
@@ -1392,7 +1392,7 @@ void test9() {
   {
     // are double bonds being handled correctly?
     std::string smi = "O=C[C@H](F)CO";
-    RWMol *m = SmilesToMol(smi, 0, 0);
+    RWMol *m = SmilesToMol(smi, 0, false);
     TEST_ASSERT(m);
     MolOps::sanitizeMol(*m);
     std::vector<unsigned int> atomRanks;
@@ -1409,7 +1409,7 @@ void test9() {
   {
     // are double bonds being handled correctly?
     std::string smi = "CC[C@](C)(CF)C=O";
-    RWMol *m = SmilesToMol(smi, 0, 0);
+    RWMol *m = SmilesToMol(smi, 0, false);
     TEST_ASSERT(m);
     MolOps::sanitizeMol(*m);
     std::vector<unsigned int> atomRanks;
