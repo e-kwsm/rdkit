@@ -28,7 +28,7 @@
  */
 class RDKIT_DATASTRUCTS_EXPORT ExplicitBitVect : public BitVect {
  public:
-  ExplicitBitVect() {}
+  ExplicitBitVect() = default;
   //! initialize with a particular size;
   explicit ExplicitBitVect(unsigned int size)
       : dp_bits(nullptr), d_size(0), d_numOnBits(0) {

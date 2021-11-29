@@ -117,7 +117,7 @@ void FilterCatalogParams::initFromString(const std::string &text) {
   initFromStream(ss);
 }
 
-FilterCatalog::~FilterCatalog() {}
+FilterCatalog::~FilterCatalog() = default;
 
 void FilterCatalog::Clear() { d_entries.clear(); }
 
