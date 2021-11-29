@@ -19,7 +19,7 @@ namespace ForceFields {
 class RDKIT_FORCEFIELD_EXPORT PositionConstraintContrib
     : public ForceFieldContrib {
  public:
-  PositionConstraintContrib() {}
+  PositionConstraintContrib() = default;
   //! Constructor
   /*!
     \param owner       pointer to the owning ForceField

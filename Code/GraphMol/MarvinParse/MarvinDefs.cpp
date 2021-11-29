@@ -1062,7 +1062,7 @@ ptree MarvinBond::toPtree() const {
   return out;
 }
 
-MarvinMolBase::~MarvinMolBase() {}
+MarvinMolBase::~MarvinMolBase() = default;
 
 int MarvinMolBase::getAtomIndex(std::string id) const {
   auto atomIter =
@@ -2094,7 +2094,7 @@ MarvinSuperatomSgroupExpanded::MarvinSuperatomSgroupExpanded(
   }
 }
 
-MarvinSuperatomSgroupExpanded::~MarvinSuperatomSgroupExpanded() {}
+MarvinSuperatomSgroupExpanded::~MarvinSuperatomSgroupExpanded() = default;
 
 MarvinMolBase *MarvinSuperatomSgroupExpanded::copyMol(
     const std::string &idAppendage) const {
@@ -2319,7 +2319,7 @@ MarvinMol::MarvinMol(ptree &molTree) {
   this->parseAtomsAndBonds(molTree);
 }
 
-MarvinMol::~MarvinMol() {}
+MarvinMol::~MarvinMol() = default;
 
 std::string MarvinMol::role() const { return "MarvinMol"; }
 
@@ -4055,7 +4055,7 @@ ptree MarvinMol::toMolPtree() const {
   return out;
 }
 
-MarvinReaction::~MarvinReaction() {}
+MarvinReaction::~MarvinReaction() = default;
 
 void MarvinReaction::prepSgroupsForRDKit() {
   // This routine converts all the mols in the rxn to be ready for conversion
