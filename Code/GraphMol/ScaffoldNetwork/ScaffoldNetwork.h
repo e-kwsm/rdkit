@@ -105,7 +105,7 @@ struct RDKIT_SCAFFOLDNETWORK_EXPORT ScaffoldNetwork {
   std::vector<unsigned>
       molCounts;  ///< number of molecules each scaffold was found in
   std::vector<NetworkEdge> edges;  ///< edges in the network
-  ScaffoldNetwork() {}
+  ScaffoldNetwork() = default;
 #ifdef RDK_USE_BOOST_SERIALIZATION
   ScaffoldNetwork(const std::string &pkl) {
     std::stringstream iss(pkl);

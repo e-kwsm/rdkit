@@ -49,7 +49,7 @@ FragmentCatalogParams::FragmentCatalogParams(
   }
 }
 
-FragmentCatalogParams::~FragmentCatalogParams() {}
+FragmentCatalogParams::~FragmentCatalogParams() = default;
 
 const std::vector<std::shared_ptr<ROMol>>
     &FragmentCatalogParams::getFuncGroups() const {

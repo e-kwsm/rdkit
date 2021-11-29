@@ -15,7 +15,7 @@ namespace DistGeom {
 class RDKIT_DISTGEOMETRY_EXPORT FourthDimContrib
     : public ForceFields::ForceFieldContrib {
  public:
-  FourthDimContrib() {}
+  FourthDimContrib() = default;
 
   //! Constructor
   /*!

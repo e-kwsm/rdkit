@@ -50,7 +50,7 @@ AcidBaseCatalogParams::AcidBaseCatalogParams(
   }
 }
 
-AcidBaseCatalogParams::~AcidBaseCatalogParams() {}
+AcidBaseCatalogParams::~AcidBaseCatalogParams() = default;
 
 const std::vector<std::pair<ROMOL_SPTR, ROMOL_SPTR>>
     &AcidBaseCatalogParams::getPairs() const {

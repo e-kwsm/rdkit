@@ -29,7 +29,7 @@ namespace RDGeom {
 class RDKIT_RDGEOMETRYLIB_EXPORT Point {
   // this is the virtual base class, mandating certain functions
  public:
-  virtual ~Point() {}
+  virtual ~Point() = default;
 
   virtual double operator[](unsigned int i) const = 0;
   virtual double &operator[](unsigned int i) = 0;
@@ -57,13 +57,12 @@ class RDKIT_RDGEOMETRYLIB_EXPORT Point3D : public Point {
   double y{0.0};
   double z{0.0};
 
-  Point3D() {}
+  Point3D() = default;
   Point3D(double xv, double yv, double zv) : x(xv), y(yv), z(zv) {}
 
   ~Point3D() override = default;
 
-  Point3D(const Point3D &other)
-      : Point(other), x(other.x), y(other.y), z(other.z) {}
+  Point3D(const Point3D &other) = default;
 
   Point *copy() const override { return new Point3D(*this); }
 
@@ -276,11 +275,11 @@ class RDKIT_RDGEOMETRYLIB_EXPORT Point2D : public Point {
   double x{0.0};
   double y{0.0};
 
-  Point2D() {}
+  Point2D() = default;
   Point2D(double xv, double yv) : x(xv), y(yv) {}
   ~Point2D() override = default;
 
-  Point2D(const Point2D &other) : Point(other), x(other.x), y(other.y) {}
+  Point2D(const Point2D &other) = default;
   //! construct from a Point3D (ignoring the z coordinate)
   Point2D(const Point3D &p3d) : Point(p3d), x(p3d.x), y(p3d.y) {}
 

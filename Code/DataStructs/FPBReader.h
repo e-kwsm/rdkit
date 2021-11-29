@@ -57,7 +57,7 @@ struct FPBReader_impl;
 */
 class RDKIT_DATASTRUCTS_EXPORT FPBReader {
  public:
-  FPBReader() {}
+  FPBReader() = default;
 
   //! ctor for reading from a named file
   /*!
