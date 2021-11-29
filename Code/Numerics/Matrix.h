@@ -73,7 +73,7 @@ class Matrix {
     d_data.reset(data);
   }
 
-  virtual ~Matrix() {}
+  virtual ~Matrix() = default;
 
   //! returns the number of rows
   inline unsigned int numRows() const { return d_nRows; }

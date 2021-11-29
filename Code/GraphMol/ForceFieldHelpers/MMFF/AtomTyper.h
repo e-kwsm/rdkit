@@ -57,7 +57,7 @@ class RingMembershipSize;
 using namespace ForceFields::MMFF;
 class RDKIT_FORCEFIELDHELPERS_EXPORT MMFFAtomProperties {
  public:
-  MMFFAtomProperties() {}
+  MMFFAtomProperties() = default;
   ~MMFFAtomProperties() = default;
   std::uint8_t mmffAtomType{0};
   double mmffFormalCharge{0.0};

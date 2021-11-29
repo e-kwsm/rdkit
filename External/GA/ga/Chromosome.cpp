@@ -16,6 +16,6 @@ int Chromosome::idCounter = 0;
 
 Chromosome::Chromosome() : chromosomeId(idCounter++), fitness(0) {}
 
-Chromosome::~Chromosome() {}
+Chromosome::~Chromosome() = default;
 
 }  // namespace GapeGa
