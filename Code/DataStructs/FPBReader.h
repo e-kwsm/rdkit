@@ -100,6 +100,13 @@ class RDKIT_DATASTRUCTS_EXPORT FPBReader {
     df_init = false;
   }
 
+  // disable automatic copy constructors and assignment operators
+  // for this class and its subclasses.  They will likely be
+  // carrying around stream pointers and copying those is a recipe
+  // for disaster.
+  FPBReader(const FPBReader &) = delete;
+  FPBReader &operator=(const FPBReader &) = delete;
+
   //! Read the data from the file and initialize internal data structures
   /*!
   This must be called before most of the other methods of this class.
@@ -254,12 +261,6 @@ class RDKIT_DATASTRUCTS_EXPORT FPBReader {
   bool df_init{false};
   bool df_lazyRead{false};
 
-  // disable automatic copy constructors and assignment operators
-  // for this class and its subclasses.  They will likely be
-  // carrying around stream pointers and copying those is a recipe
-  // for disaster.
-  FPBReader(const FPBReader &);
-  FPBReader &operator=(const FPBReader &);
   void destroy();
   void _initFromFilename(const char *fname, bool lazyRead) {
     std::istream *tmpStream = static_cast<std::istream *>(
