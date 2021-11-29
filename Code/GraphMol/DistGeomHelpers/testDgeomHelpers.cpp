@@ -59,7 +59,7 @@ void test1() {
   for (tokenizer::iterator token = tokens.begin(); token != tokens.end();
        ++token) {
     std::string smi = *token;
-    RWMol *m = SmilesToMol(smi, 0, 1);
+    RWMol *m = SmilesToMol(smi, 0, true);
     int cid = DGeomHelpers::EmbedMolecule(*m, 10, 1, true, false, 2, true, 1,
                                           nullptr, 1e-2);
     CHECK_INVARIANT(cid >= 0, "");
@@ -132,7 +132,7 @@ void test2() {
   boost::logging::disable_logs("rdApp.warning");
   // check for in ring distances, and distances containing two bonds in a ring
   std::string smi = "Cc1c(C=CC(C)N2)c2[nH]n1";
-  ROMol *mol = SmilesToMol(smi, 0, 1);
+  ROMol *mol = SmilesToMol(smi, 0, true);
   DistGeom::BoundsMatPtr bm;
   RDNumeric::DoubleSymmMatrix *dmat;
   int cid;
@@ -175,7 +175,7 @@ void test2() {
 
   // chain of singles
   smi = "CCCC";
-  mol = SmilesToMol(smi, 0, 1);
+  mol = SmilesToMol(smi, 0, true);
   nat = mol->getNumAtoms();
   bm.reset(new DistGeom::BoundsMatrix(nat));
   DGeomHelpers::initBoundsMat(bm, 0.0, 1000.0);
@@ -193,7 +193,7 @@ void test2() {
   delete dmat;
 
   smi = "C=C=C=C";
-  mol = SmilesToMol(smi, 0, 1);
+  mol = SmilesToMol(smi, 0, true);
   nat = mol->getNumAtoms();
   bm.reset(new DistGeom::BoundsMatrix(nat));
   DGeomHelpers::initBoundsMat(bm, 0.0, 1000.0);
@@ -213,7 +213,7 @@ void test2() {
   delete dmat;
   std::cerr << "-------------------------------------\n\n";
   smi = "C/C=C/C";
-  mol = SmilesToMol(smi, 0, 1);
+  mol = SmilesToMol(smi, 0, true);
   nat = mol->getNumAtoms();
   bm.reset(new DistGeom::BoundsMatrix(nat));
   DGeomHelpers::initBoundsMat(bm, 0.0, 1000.0);
@@ -233,7 +233,7 @@ void test2() {
   delete dmat;
 
   smi = "C/C=C\\C";
-  mol = SmilesToMol(smi, 0, 1);
+  mol = SmilesToMol(smi, 0, true);
   nat = mol->getNumAtoms();
   bm.reset(new DistGeom::BoundsMatrix(nat));
   DGeomHelpers::initBoundsMat(bm, 0.0, 1000.0);
@@ -251,7 +251,7 @@ void test2() {
   delete dmat;
 
   smi = "CC=CC";
-  mol = SmilesToMol(smi, 0, 1);
+  mol = SmilesToMol(smi, 0, true);
   nat = mol->getNumAtoms();
   bm.reset(new DistGeom::BoundsMatrix(nat));
   DGeomHelpers::initBoundsMat(bm, 0.0, 1000.0);
@@ -269,7 +269,7 @@ void test2() {
   delete dmat;
 
   smi = "O=S-S=O";
-  mol = SmilesToMol(smi, 0, 1);
+  mol = SmilesToMol(smi, 0, true);
   nat = mol->getNumAtoms();
   bm.reset(new DistGeom::BoundsMatrix(nat));
   DGeomHelpers::initBoundsMat(bm, 0.0, 1000.0);
@@ -336,7 +336,7 @@ void test4() {
 
   std::string smi =
       "c1cc(C(F)(F)F)ccc1/C=N/NC(=O)c(n2)c[n]3cc(C(F)(F)F)cc(c23)Cl";
-  ROMol *m = SmilesToMol(smi, 0, 1);
+  ROMol *m = SmilesToMol(smi, 0, true);
   DGeomHelpers::EmbedMolecule(*m, 10, 1);  // etCoords(*m, iter);
   std::string fname = "test.mol";
   MolToMolFile(*m, fname);
@@ -352,7 +352,7 @@ void test5() {
   SmilesMolSupplier smiSup(smifile, ",", 0, 1);
 
   int cid;
-  while (1) {
+  while (true) {
     try {
       std::unique_ptr<RWMol> mol{static_cast<RWMol *>(smiSup.next())};
       MolOps::addHs(*mol);
@@ -489,7 +489,7 @@ void test15Dists() {
 
   delete m;
 
-  m = SmilesToMol("C/C=C/C=C/C", 0, 1);
+  m = SmilesToMol("C/C=C/C=C/C", 0, true);
   nat = m->getNumAtoms();
 
   mmat.reset(new DistGeom::BoundsMatrix(nat));
@@ -510,7 +510,7 @@ void testMultipleConfs() {
   boost::logging::disable_logs("rdApp.warning");
 
   std::string smi = "CC(C)(C)c(cc1)ccc1c(cc23)n[n]3C(=O)/C(=C\\N2)C(=O)OCC";
-  ROMol *m = SmilesToMol(smi, 0, 1);
+  ROMol *m = SmilesToMol(smi, 0, true);
   INT_VECT cids =
       DGeomHelpers::EmbedMultipleConfs(*m, 10, 30, 100, true, false, -1);
   INT_VECT_CI ci;
@@ -534,7 +534,7 @@ void testMultipleConfs() {
 void testMultipleConfsExpTors() {
   boost::logging::disable_logs("rdApp.warning");
   std::string smi = "CC(C)(C)c(cc1)ccc1c(cc23)n[n]3C(=O)/C(=C\\N2)C(=O)OCC";
-  ROMol *m = SmilesToMol(smi, 0, 1);
+  ROMol *m = SmilesToMol(smi, 0, true);
   INT_VECT cids = DGeomHelpers::EmbedMultipleConfs(
       *m, 10, 30, 100, true, false, -1, true, 1, -1.0, nullptr, 1e-3, false,
       true, false, false, false, 5.0, false, 1, false, false);
@@ -559,7 +559,7 @@ void testMultipleConfsExpTors() {
 
 void testOrdering() {
   std::string smi = "CC(C)(C)C(=O)NC(C1)CC(N2C)CCC12";
-  ROMol *m = SmilesToMol(smi, 0, 1);
+  ROMol *m = SmilesToMol(smi, 0, true);
   unsigned int nat = m->getNumAtoms();
   auto *mat = new DistGeom::BoundsMatrix(nat);
   DGeomHelpers::initBoundsMat(mat);
@@ -568,7 +568,7 @@ void testOrdering() {
   delete m;
 
   std::string smi2 = "CN1C2CCC1CC(NC(=O)C(C)(C)C)C2";
-  ROMol *m2 = SmilesToMol(smi2, 0, 1);
+  ROMol *m2 = SmilesToMol(smi2, 0, true);
   auto *mat2 = new DistGeom::BoundsMatrix(nat);
   DGeomHelpers::initBoundsMat(mat2);
   DistGeom::BoundsMatPtr mmat2(mat2);
@@ -579,7 +579,7 @@ void testOrdering() {
 void testIssue227() {
   std::string smi =
       "CCOP1(OCC)=CC(c2ccccc2)=C(c2ccc([N+]([O-])=O)cc2)N=C1c1ccccc1";
-  ROMol *m = SmilesToMol(smi, 0, 1);
+  ROMol *m = SmilesToMol(smi, 0, true);
   unsigned int nat = m->getNumAtoms();
   auto *mat = new DistGeom::BoundsMatrix(nat);
   DistGeom::BoundsMatPtr bm(mat);
@@ -590,7 +590,7 @@ void testIssue227() {
   delete m;
 
   smi = "OC(=O)c1cc2cc(c1)-c1c(O)c(ccc1)-c1cc(C(O)=O)cc(c1)OCCOCCO2";
-  m = SmilesToMol(smi, 0, 1);
+  m = SmilesToMol(smi, 0, true);
   nat = m->getNumAtoms();
   auto *nmat = new DistGeom::BoundsMatrix(nat);
   bm.reset(nmat);
@@ -604,7 +604,7 @@ void testIssue227() {
 void testIssue236() {
   std::string smi =
       "Cn1c2n(-c3ccccc3)c(=O)c3c(nc4ccc([N+]([O-])=O)cc4c3)c2c(=O)n(C)c1=O";
-  ROMol *m = SmilesToMol(smi, 0, 1);
+  ROMol *m = SmilesToMol(smi, 0, true);
   unsigned int nat = m->getNumAtoms();
   auto *mat = new DistGeom::BoundsMatrix(nat);
   DistGeom::BoundsMatPtr bm(mat);
@@ -615,7 +615,7 @@ void testIssue236() {
   delete m;
 
   smi = "Cc1cccc2c1c(C3=CCC3)c(C)cc2";
-  m = SmilesToMol(smi, 0, 1);
+  m = SmilesToMol(smi, 0, true);
   nat = m->getNumAtoms();
   auto *nmat = new DistGeom::BoundsMatrix(nat);
   bm.reset(nmat);
@@ -631,7 +631,7 @@ void testIssue244() {
   // bounds, so just completing the calls to setTopolBounds() indicates
   // success
   std::string smi = "NC1C(=O)N2C1SCC(Cl)=C2C(O)=O";
-  ROMol *m = SmilesToMol(smi, 0, 1);
+  ROMol *m = SmilesToMol(smi, 0, true);
   unsigned int nat = m->getNumAtoms();
   auto *mat = new DistGeom::BoundsMatrix(nat);
   DistGeom::BoundsMatPtr bm(mat);
@@ -640,7 +640,7 @@ void testIssue244() {
   delete m;
 
   smi = "NC1C(=O)N2C1SCC(Cl)=C2C(O)=O";
-  m = SmilesToMol(smi, 0, 1);
+  m = SmilesToMol(smi, 0, true);
   nat = m->getNumAtoms();
   bm.reset(new DistGeom::BoundsMatrix(nat));
   DGeomHelpers::initBoundsMat(bm);
@@ -648,7 +648,7 @@ void testIssue244() {
   delete m;
 
   smi = "CC1(C)SC2N(C1C(O)=O)C(=O)C2N";
-  m = SmilesToMol(smi, 0, 1);
+  m = SmilesToMol(smi, 0, true);
   nat = m->getNumAtoms();
   bm.reset(new DistGeom::BoundsMatrix(nat));
   DGeomHelpers::initBoundsMat(bm);
@@ -658,7 +658,7 @@ void testIssue244() {
 
 void testIssue251() {
   std::string smi = "COC=O";
-  ROMol *m = SmilesToMol(smi, 0, 1);
+  ROMol *m = SmilesToMol(smi, 0, true);
   unsigned int nat = m->getNumAtoms();
   auto *mat = new DistGeom::BoundsMatrix(nat);
   DistGeom::BoundsMatPtr bm(mat);
@@ -672,7 +672,7 @@ void testIssue251() {
 void testIssue276() {
   bool ok;
   std::string smi = "CP1(C)=CC=CN=C1C";
-  ROMol *m = SmilesToMol(smi, 0, 1);
+  ROMol *m = SmilesToMol(smi, 0, true);
   unsigned int nat = m->getNumAtoms();
   auto *mat = new DistGeom::BoundsMatrix(nat);
   DistGeom::BoundsMatPtr bm(mat);
@@ -687,7 +687,7 @@ void testIssue276() {
 void testIssue284() {
   bool ok;
   std::string smi = "CNC(=O)C";
-  ROMol *m = SmilesToMol(smi, 0, 1);
+  ROMol *m = SmilesToMol(smi, 0, true);
   TEST_ASSERT(m);
   unsigned int nat = m->getNumAtoms();
   auto *mat = new DistGeom::BoundsMatrix(nat);
@@ -705,7 +705,7 @@ void testIssue284() {
   delete m;
 
   smi = "CN(C)C(=O)C";
-  m = SmilesToMol(smi, 0, 1);
+  m = SmilesToMol(smi, 0, true);
   TEST_ASSERT(m);
   nat = m->getNumAtoms();
 
@@ -734,7 +734,7 @@ void testIssue284() {
 void testIssue285() {
   bool ok;
   std::string smi = "CNC(=O)C";
-  RWMol *m = SmilesToMol(smi, 0, 1);
+  RWMol *m = SmilesToMol(smi, 0, true);
   TEST_ASSERT(m);
   MolOps::addHs(*m);
   unsigned int nat = m->getNumAtoms();
@@ -767,7 +767,7 @@ void testIssue285() {
 void testIssue355() {
   bool ok;
   std::string smi = "CNC(=O)C";
-  ROMol *m = SmilesToMol(smi, 0, 1);
+  ROMol *m = SmilesToMol(smi, 0, true);
   TEST_ASSERT(m);
   unsigned int nat = m->getNumAtoms();
   auto *mat = new DistGeom::BoundsMatrix(nat);
@@ -787,7 +787,7 @@ void testIssue355() {
   delete m;
 
   smi = "CNC(=O)NC";
-  m = SmilesToMol(smi, 0, 1);
+  m = SmilesToMol(smi, 0, true);
   TEST_ASSERT(m);
   bm.reset(new DistGeom::BoundsMatrix(m->getNumAtoms()));
   DGeomHelpers::initBoundsMat(bm);
@@ -805,7 +805,7 @@ void testIssue355() {
   delete m;
 
   smi = "CNC(=O)Nc1ccccc1";
-  m = SmilesToMol(smi, 0, 1);
+  m = SmilesToMol(smi, 0, true);
   TEST_ASSERT(m);
   bm.reset(new DistGeom::BoundsMatrix(m->getNumAtoms()));
   DGeomHelpers::initBoundsMat(bm);
@@ -842,7 +842,7 @@ void testRandomCoords() {
        ++token) {
     std::string smi = *token;
     // std::cerr << "SMI: " << smi << std::endl;
-    ROMol *m = SmilesToMol(smi, 0, 1);
+    ROMol *m = SmilesToMol(smi, 0, true);
     auto *m2 = (RWMol *)MolOps::addHs(*m);
     delete m;
     m = m2;
@@ -883,7 +883,7 @@ void testRandomCoords() {
 void testIssue1989539() {
   {
     std::string smi = "c1ccccc1.Cl";
-    ROMol *m = SmilesToMol(smi, 0, 1);
+    ROMol *m = SmilesToMol(smi, 0, true);
     auto *m2 = (RWMol *)MolOps::addHs(*m);
     delete m;
     m = m2;
@@ -896,7 +896,7 @@ void testIssue1989539() {
   }
   {
     std::string smi = "[Cl-].c1ccccc1C[NH3+]";
-    RWMol *m = SmilesToMol(smi, 0, 1);
+    RWMol *m = SmilesToMol(smi, 0, true);
     MolOps::addHs(*m);
     int cid = DGeomHelpers::EmbedMolecule(*m);
     TEST_ASSERT(cid >= 0);
@@ -1370,7 +1370,7 @@ void testMultiThreadMultiConf() {
   const double ENERGY_TOLERANCE = ((tokenVect[2] != "MINGW") ? 1.0e-6 : 1.0);
   const double MSD_TOLERANCE = ((tokenVect[2] != "MINGW") ? 1.0e-6 : 1.0e-5);
   std::string smi = "CC(C)(C)c(cc1)ccc1c(cc23)n[n]3C(=O)/C(=C\\N2)C(=O)OCC";
-  std::unique_ptr<RWMol> m{SmilesToMol(smi, 0, 1)};
+  std::unique_ptr<RWMol> m{SmilesToMol(smi, 0, true)};
   TEST_ASSERT(m);
   MolOps::addHs(*m);
   INT_VECT cids;
