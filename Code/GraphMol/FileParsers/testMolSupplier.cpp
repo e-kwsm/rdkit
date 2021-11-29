@@ -445,7 +445,7 @@ void testSmilesSup() {
   smiSup.reset();
   int i = 0;
   mol = smiSup.next();
-  while (1) {
+  while (true) {
     std::string mname;
     mol->getProp(common_properties::_Name, mname);
     i++;
@@ -1041,7 +1041,7 @@ void testCisTrans() {
     std::string mname;
     mol->getProp(common_properties::_Name, mname);
     BOOST_LOG(rdInfoLog) << mname << " ";
-    BOOST_LOG(rdInfoLog) << MolToSmiles(*mol, 1) << "\n";
+    BOOST_LOG(rdInfoLog) << MolToSmiles(*mol, true) << "\n";
     delete mol;
   }
   delete reader;
@@ -1074,12 +1074,12 @@ void testStereoRound() {
     // mol->debugMol(std::cout);
     std::string mname;
     mol->getProp(common_properties::_Name, mname);
-    nameSmi[mname] = MolToSmiles(*mol, 1);
+    nameSmi[mname] = MolToSmiles(*mol, true);
 
     ROMol *nmol = SmilesToMol(nameSmi[mname]);
     // nmol->debugMol(std::cout);
 
-    std::string nsmi = MolToSmiles(*nmol, 1);
+    std::string nsmi = MolToSmiles(*nmol, true);
     // BOOST_LOG(rdErrorLog) << mname << "\n";
     if (nameSmi[mname] != nsmi) {
       BOOST_LOG(rdInfoLog) << mname << " " << nameSmi[mname] << " " << nsmi
@@ -1112,7 +1112,7 @@ void testStereoRound() {
   while (!reader->atEnd()) {
     ROMol *mol = reader->next();
     // mol->debugMol(std::cout);
-    std::string smiles = MolToSmiles(*mol, 1);
+    std::string smiles = MolToSmiles(*mol, true);
     std::string mname;
     mol->getProp(common_properties::_Name, mname);
     if (nameSmi[mname] != smiles) {
@@ -2129,7 +2129,7 @@ void testGetItemText() {
 
     mol1 = smisup[0];
     TEST_ASSERT(mol1);
-    smiles = MolToSmiles(*mol1, 1);
+    smiles = MolToSmiles(*mol1, true);
     TEST_ASSERT(smiles == "CC1=CC(=O)C=CC1=O");
     TEST_ASSERT(mol1->getNumAtoms() == 9);
     delete mol1;
@@ -2194,7 +2194,7 @@ void testGetItemText() {
 
     mol1 = tdtsup[0];
     TEST_ASSERT(mol1);
-    smiles = MolToSmiles(*mol1, 1);
+    smiles = MolToSmiles(*mol1, true);
     TEST_ASSERT(smiles == "Cc1nnc(N)nc1C");
     TEST_ASSERT(mol1->getNumAtoms() == 9);
     delete mol1;
@@ -2204,7 +2204,7 @@ void testGetItemText() {
     mol1 = tdtsup.next();
     TEST_ASSERT(mol1);
     TEST_ASSERT(mol1->getNumAtoms() == 9);
-    smiles = MolToSmiles(*mol1, 1);
+    smiles = MolToSmiles(*mol1, true);
     TEST_ASSERT(smiles == "Cc1n[nH]c(=O)nc1N");
     delete mol1;
 
