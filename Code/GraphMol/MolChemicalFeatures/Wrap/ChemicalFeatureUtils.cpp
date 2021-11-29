@@ -36,7 +36,7 @@ python::object GetAtomMatch(python::object featMatch, int maxAts = 1024) {
       if (indices[idx]) {
         return python::list();
       } else {
-        indices[idx] = 1;
+        indices[idx] = true;
       }
       local.append(idx);
     }
