@@ -298,7 +298,7 @@ ROMol *replaceSidechains(const ROMol &mol, const ROMol &coreQuery,
 
   boost::dynamic_bitset<> matchingIndices(mol.getNumAtoms());
   for (auto mvit : matchV) {
-    matchingIndices[mvit.second] = 1;
+    matchingIndices[mvit.second] = true;
   }
 
   auto *newMol = new RWMol(mol);
@@ -789,7 +789,7 @@ ROMol *MurckoDecompose(const ROMol &mol) {
   const RingInfo *ringInfo = res->getRingInfo();
   for (unsigned int i = 0; i < nAtoms; ++i) {
     if (ringInfo->numAtomRings(i)) {
-      keepAtoms[i] = 1;
+      keepAtoms[i] = true;
     }
   }
   const VECT_INT_VECT &rings = ringInfo->atomRings();
@@ -802,7 +802,7 @@ ROMol *MurckoDecompose(const ROMol &mol) {
       int atomJ = (*ringsItJ)[0];
       // std::cerr<<atomI<<" -> "<<atomJ<<": ";
       while (atomI != atomJ) {
-        keepAtoms[atomI] = 1;
+        keepAtoms[atomI] = true;
         atomI = pathMat[atomJ * nAtoms + atomI];
         // test for the disconnected case:
         if (atomI < 0) {

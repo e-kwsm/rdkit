@@ -1973,7 +1973,7 @@ yyreduce:
   //  FIX: there's maybe a leak here
   RWMol *molP = (*molList)[(yyvsp[-1].moli)];
   // close any rings in the molecule:
-  SmilesParseOps::CloseMolRings(molP,0);
+  SmilesParseOps::CloseMolRings(molP, false);
 
   //molP->debugMol(std::cout);
   qA->setQuery(new RecursiveStructureQuery(molP));
@@ -1997,7 +1997,7 @@ yyreduce:
   //  FIX: there's maybe a leak here
   RWMol *molP = (*molList)[(yyvsp[-3].moli)];
   // close any rings in the molecule:
-  SmilesParseOps::CloseMolRings(molP,0);
+  SmilesParseOps::CloseMolRings(molP, false);
 
   //molP->debugMol(std::cout);
   qA->setQuery(new RecursiveStructureQuery(molP,(yyvsp[0].ival)));
@@ -2506,7 +2506,7 @@ yyerrlab:
 yyerrorlab:
   /* Pacify compilers when the user code never invokes YYERROR and the
      label yyerrorlab therefore never appears in user code.  */
-  if (0)
+  if (false)
     YYERROR;
   ++yynerrs;
 
