@@ -63,7 +63,7 @@ class MolBundle : public RDProps {
   //! copy constructor
   MolBundle(const MolBundle &other) : RDProps(other) { d_mols = other.d_mols; }
   MolBundle(const std::string &pkl) { initFromString(pkl); }
-  virtual ~MolBundle() {}
+  virtual ~MolBundle() = default;
 
   MolBundle &operator=(const MolBundle &other) = default;
 
@@ -175,8 +175,7 @@ class FixedMolSizeMolBundle : public MolBundle {
   FixedMolSizeMolBundle() : MolBundle() {}
 
   //! copy constructor
-  FixedMolSizeMolBundle(const FixedMolSizeMolBundle &other)
-      : MolBundle(other) {}
+  FixedMolSizeMolBundle(const FixedMolSizeMolBundle &other) = default;
 
   ~FixedMolSizeMolBundle() override = default;
 

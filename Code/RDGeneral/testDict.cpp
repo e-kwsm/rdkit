@@ -27,7 +27,7 @@ using namespace std;
 struct Foo {
   int bar{0};
   float baz{0.f};
-  Foo() {}
+  Foo() = default;
   Foo(int bar, float baz) : bar(bar), baz(baz) {}
   ~Foo() {}
 };
@@ -347,10 +347,7 @@ class DictCon {
  public:
   DictCon() { d.reset(); };
   DictCon(const DictCon &other) { d = other.d; };
-  DictCon &operator=(const DictCon &other) {
-    d = other.d;
-    return *this;
-  };
+  DictCon &operator=(const DictCon &other) = default;
   Dict *getDict() { return &d; };
 
  private:

@@ -55,9 +55,9 @@ namespace MarvinParser {
 */
 class MarvinCMLReader {
  public:
-  MarvinCMLReader() {};
+  MarvinCMLReader() = default;
 
-  ~MarvinCMLReader() {};
+  ~MarvinCMLReader() = default;
 
   std::unique_ptr<RWMol> parseMolecule(boost::property_tree::ptree molTree,
                                        bool sanitize = false,
