@@ -126,7 +126,7 @@ TEST_CASE("test2", "[substruct]") {
   REQUIRE(matches[0].size() == 2);
   REQUIRE(SubstructMatch(*m, *q1, matchV));
   REQUIRE(matchV.size() == 2);
-  m.reset(new RWMol());
+  m = std::make_unique<RWMol>();
   m->addAtom(new Atom(6), updateLabel, takeOwnership);
   m->addAtom(new Atom(6), updateLabel, takeOwnership);
   m->addAtom(new Atom(8), updateLabel, takeOwnership);
@@ -299,8 +299,8 @@ TEST_CASE("test5", "[substruct]") {
   REQUIRE(matches[0].size() == 2);
 }
 TEST_CASE("test5QueryRoot", "[substruct]") {
-  auto a6 = std::unique_ptr<Atom>(new Atom(6));
-  auto a8 = std::unique_ptr<Atom>(new Atom(8));
+  auto a6 = std::make_unique<Atom>(6);
+  auto a8 = std::make_unique<Atom>(8);
   // CC(OC)C
   auto m = std::make_unique<RWMol>();
   m->addAtom(a6.get());
@@ -504,8 +504,8 @@ TEST_CASE("testRecursiveSerialNumbers", "[substruct][recursive]") {
     q2->addAtom(new QueryAtom(8), true, true);
     q2->addBond(0, 1, Bond::UNSPECIFIED);
 
-    qA.reset(new QueryAtom(6));
-    rsq.reset(new RecursiveStructureQuery(new RWMol(*q1), 1));
+    qA = std::make_unique<QueryAtom>(6);
+    rsq = std::make_unique<RecursiveStructureQuery>(new RWMol(*q1), 1);
     qA->expandQuery(rsq.release(), Queries::COMPOSITE_AND);
     q2->addAtom(qA.release(), true, true);
     q2->addBond(1, 2, Bond::UNSPECIFIED);

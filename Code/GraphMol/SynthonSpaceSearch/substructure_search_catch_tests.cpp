@@ -38,7 +38,7 @@ const char *rdbase = getenv("RDBASE");
 
 std::unique_ptr<SubstructLibrary> loadSubstructLibrary(
     const std::string &smiFile) {
-  std::unique_ptr<SubstructLibrary> subsLib(new SubstructLibrary());
+  auto subsLib = std::make_unique<SubstructLibrary>();
   v2::FileParsers::SmilesMolSupplierParams params;
   params.titleLine = false;
   v2::FileParsers::SmilesMolSupplier suppl(smiFile, params);

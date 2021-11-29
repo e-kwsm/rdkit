@@ -244,13 +244,14 @@ std::unique_ptr<FingerprintGenerator<std::uint64_t>> generatorFromJSON(
           "FingerprintArguments type not specified in JSON");
     }
     if (*typ == "MorganArguments") {
-      fpArgs.reset(new MorganFingerprint::MorganArguments());
+      fpArgs = std::make_unique<MorganFingerprint::MorganArguments>();
     } else if (*typ == "RDKitFPArguments") {
-      fpArgs.reset(new RDKitFP::RDKitFPArguments());
+      fpArgs = std::make_unique<RDKitFP::RDKitFPArguments>();
     } else if (*typ == "AtomPairArguments") {
-      fpArgs.reset(new AtomPair::AtomPairArguments());
+      fpArgs = std::make_unique<AtomPair::AtomPairArguments>();
     } else if (*typ == "TopologicalTorsionArguments") {
-      fpArgs.reset(new TopologicalTorsion::TopologicalTorsionArguments());
+      fpArgs =
+          std::make_unique<TopologicalTorsion::TopologicalTorsionArguments>();
     } else {
       throw ValueErrorException("Unknown FingerprintArguments type: " + *typ);
     }
@@ -264,14 +265,16 @@ std::unique_ptr<FingerprintGenerator<std::uint64_t>> generatorFromJSON(
           "AtomEnvironmentGenerator type not specified in JSON");
     }
     if (*typ == "MorganEnvGenerator") {
-      envGen.reset(new MorganFingerprint::MorganEnvGenerator<std::uint64_t>());
+      envGen = std::make_unique<
+          MorganFingerprint::MorganEnvGenerator<std::uint64_t>>();
     } else if (*typ == "RDKitFPEnvGenerator") {
-      envGen.reset(new RDKitFP::RDKitFPEnvGenerator<std::uint64_t>());
+      envGen = std::make_unique<RDKitFP::RDKitFPEnvGenerator<std::uint64_t>>();
     } else if (*typ == "AtomPairEnvGenerator") {
-      envGen.reset(new AtomPair::AtomPairEnvGenerator<std::uint64_t>());
+      envGen =
+          std::make_unique<AtomPair::AtomPairEnvGenerator<std::uint64_t>>();
     } else if (*typ == "TopologicalTorsionEnvGenerator") {
-      envGen.reset(new TopologicalTorsion::TopologicalTorsionEnvGenerator<
-                   std::uint64_t>());
+      envGen = std::make_unique<
+          TopologicalTorsion::TopologicalTorsionEnvGenerator<std::uint64_t>>();
     } else {
       throw ValueErrorException("Unknown AtomEnvGenerator type: " + *typ);
     }
@@ -285,13 +288,15 @@ std::unique_ptr<FingerprintGenerator<std::uint64_t>> generatorFromJSON(
           "AtomInvariantsGenerator type not specified in JSON");
     }
     if (*typ == "MorganAtomInvGenerator") {
-      atomInvGen.reset(new MorganFingerprint::MorganAtomInvGenerator());
+      atomInvGen =
+          std::make_unique<MorganFingerprint::MorganAtomInvGenerator>();
     } else if (*typ == "MorganFeatureAtomInvGenerator") {
-      atomInvGen.reset(new MorganFingerprint::MorganFeatureAtomInvGenerator());
+      atomInvGen =
+          std::make_unique<MorganFingerprint::MorganFeatureAtomInvGenerator>();
     } else if (*typ == "RDKitFPAtomInvGenerator") {
-      atomInvGen.reset(new RDKitFP::RDKitFPAtomInvGenerator());
+      atomInvGen = std::make_unique<RDKitFP::RDKitFPAtomInvGenerator>();
     } else if (*typ == "AtomPairAtomInvGenerator") {
-      atomInvGen.reset(new AtomPair::AtomPairAtomInvGenerator());
+      atomInvGen = std::make_unique<AtomPair::AtomPairAtomInvGenerator>();
     } else {
       throw ValueErrorException("Unknown AtomInvariantsGenerator type: " +
                                 *typ);
@@ -306,7 +311,8 @@ std::unique_ptr<FingerprintGenerator<std::uint64_t>> generatorFromJSON(
           "BondInvariantsGenerator type not specified in JSON");
     }
     if (*typ == "MorganBondInvGenerator") {
-      bondInvGen.reset(new MorganFingerprint::MorganBondInvGenerator());
+      bondInvGen =
+          std::make_unique<MorganFingerprint::MorganBondInvGenerator>();
     } else {
       throw ValueErrorException("Unknown BondInvariantsGenerator type: " +
                                 *typ);
@@ -329,7 +335,7 @@ FingerprintGenerator<OutputType>::getFingerprintHelper(
   std::unique_ptr<ROMol> tmol;
   if (dp_fingerprintArguments->df_includeChirality &&
       !mol.hasProp(common_properties::_StereochemDone)) {
-    tmol = std::unique_ptr<ROMol>(new ROMol(mol));
+    tmol = std::make_unique<ROMol>(mol);
     MolOps::assignStereochemistry(*tmol);
     lmol = tmol.get();
   }
@@ -345,16 +351,16 @@ FingerprintGenerator<OutputType>::getFingerprintHelper(
 
   std::unique_ptr<std::vector<std::uint32_t>> atomInvariants = nullptr;
   if (args.customAtomInvariants) {
-    atomInvariants.reset(
-        new std::vector<std::uint32_t>(*args.customAtomInvariants));
+    atomInvariants = std::make_unique<std::vector<std::uint32_t>>(
+        *args.customAtomInvariants);
   } else if (dp_atomInvariantsGenerator) {
     atomInvariants.reset(dp_atomInvariantsGenerator->getAtomInvariants(mol));
   }
 
   std::unique_ptr<std::vector<std::uint32_t>> bondInvariants = nullptr;
   if (args.customBondInvariants) {
-    bondInvariants.reset(
-        new std::vector<std::uint32_t>(*args.customBondInvariants));
+    bondInvariants = std::make_unique<std::vector<std::uint32_t>>(
+        *args.customBondInvariants);
   } else if (dp_bondInvariantsGenerator) {
     bondInvariants.reset(dp_bondInvariantsGenerator->getBondInvariants(mol));
   }
@@ -392,9 +398,9 @@ FingerprintGenerator<OutputType>::getFingerprintHelper(
   std::unique_ptr<source_type> randomSource;
   if (dp_fingerprintArguments->d_numBitsPerFeature > 1) {
     // we will only create the RNG if we're going to need it
-    generator.reset(new rng_type(42u));
-    dist.reset(new distrib_type(0, INT_MAX));
-    randomSource.reset(new source_type(*generator, *dist));
+    generator = std::make_unique<rng_type>(42u);
+    dist = std::make_unique<distrib_type>(0, INT_MAX);
+    randomSource = std::make_unique<source_type>(*generator, *dist);
   }
 
   // iterate over every atom environment and generate bit-ids that will make

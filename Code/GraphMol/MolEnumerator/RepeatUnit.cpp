@@ -406,7 +406,7 @@ std::unique_ptr<ROMol> RepeatUnitOp::operator()(
     }
   }
 
-  std::unique_ptr<RWMol> res{new RWMol()};
+  auto res = std::make_unique<RWMol>();
   res->insertMol(*dp_frame);
 
   // ---------------------
@@ -456,7 +456,7 @@ std::unique_ptr<ROMol> RepeatUnitOp::operator()(
   }
   res->commitBatchEdit();
 
-  return std::unique_ptr<ROMol>(new ROMol(*res));
+  return std::make_unique<ROMol>(*res);
 }
 
 }  // namespace MolEnumerator

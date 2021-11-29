@@ -1598,7 +1598,7 @@ TEST_CASE("Testing double bond stereochemistry") {
       REQUIRE(m2->getBondWithIdx(1)->getStereoAtoms()[1] == 3);
     }
 
-    m2.reset(new RWMol());
+    m2 = std::make_unique<RWMol>();
     m2->addAtom(new Atom(9), true, true);
     m2->addAtom(new Atom(6), true, true);
     m2->addAtom(new Atom(6), true, true);
@@ -7565,8 +7565,7 @@ TEST_CASE("Testing removeAndTrackIsotopes parameter") {
   auto m =
       "[2H]C1=C(C(=C2C(=C1[2H])C(=O)C(=C(C2=O)C([2H])([2H])[2H])C/C=C(\\C)/CC([2H])([2H])/C=C(/CC/C=C(\\C)/CCC=C(C)C)\\C([2H])([2H])[2H])[2H])[2H]"_smiles;
   REQUIRE(m.get());
-  std::unique_ptr<IsotopicHsCount> m_isotopicHsPerHeavy(
-      new IsotopicHsCount(*m));
+  auto m_isotopicHsPerHeavy = std::make_unique<IsotopicHsCount>(*m);
   unsigned int m_numExplicitHs;
   unsigned int m_numImplicitHs;
   IsotopicHsCount::countExplicitImplicitHs(*m, m_numExplicitHs,
@@ -7596,8 +7595,7 @@ TEST_CASE("Testing removeAndTrackIsotopes parameter") {
   REQUIRE(mNoH_numImplicitHs == 40);
   REQUIRE(mNoH_isotopicHsPerHeavy.total() == 0);
   std::unique_ptr<ROMol> mH(MolOps::addHs(*mNoH));
-  std::unique_ptr<IsotopicHsCount> mH_isotopicHsPerHeavy(
-      new IsotopicHsCount(*mH));
+  auto mH_isotopicHsPerHeavy = std::make_unique<IsotopicHsCount>(*mH);
   unsigned int mH_numExplicitHs;
   unsigned int mH_numImplicitHs;
   IsotopicHsCount::countExplicitImplicitHs(*mH, mH_numExplicitHs,
@@ -7610,8 +7608,7 @@ TEST_CASE("Testing removeAndTrackIsotopes parameter") {
   REQUIRE(mH_isotopicHsPerHeavy->total() == 12);
   std::unique_ptr<ROMol> mH2(MolOps::removeHs(*mH));
   REQUIRE(m->getNumAtoms() == mH2->getNumAtoms());
-  std::unique_ptr<IsotopicHsCount> mH2_isotopicHsPerHeavy(
-      new IsotopicHsCount(*mH2));
+  auto mH2_isotopicHsPerHeavy = std::make_unique<IsotopicHsCount>(*mH2);
   unsigned int mH2_numExplicitHs;
   unsigned int mH2_numImplicitHs;
   IsotopicHsCount::countExplicitImplicitHs(*mH2, mH2_numExplicitHs,
@@ -7634,7 +7631,7 @@ TEST_CASE("Testing removeAndTrackIsotopes parameter") {
                std::default_random_engine());
   std::unique_ptr<ROMol> mNoHRen(MolOps::renumberAtoms(*mNoH, randomOrder));
   mH.reset(MolOps::addHs(*mNoHRen));
-  mH_isotopicHsPerHeavy.reset(new IsotopicHsCount(*mH));
+  mH_isotopicHsPerHeavy = std::make_unique<IsotopicHsCount>(*mH);
   IsotopicHsCount::countExplicitImplicitHs(*mH, mH_numExplicitHs,
                                            mH_numImplicitHs);
   REQUIRE(mH_numExplicitHs == 0);
@@ -7646,7 +7643,7 @@ TEST_CASE("Testing removeAndTrackIsotopes parameter") {
   REQUIRE(mH_isotopicHsPerHeavy->total() == 12);
   mH2.reset(MolOps::removeHs(*mH));
   REQUIRE(m->getNumAtoms() == mH2->getNumAtoms());
-  mH2_isotopicHsPerHeavy.reset(new IsotopicHsCount(*mH2));
+  mH2_isotopicHsPerHeavy = std::make_unique<IsotopicHsCount>(*mH2);
   IsotopicHsCount::countExplicitImplicitHs(*mH2, mH2_numExplicitHs,
                                            mH2_numImplicitHs);
   MatchVectType matchH2Ren;
@@ -7665,14 +7662,14 @@ TEST_CASE("Testing removeAndTrackIsotopes parameter") {
   // This should add 4 isotopes
   UINT_VECT onlyOnAtoms{0, 12};
   mH.reset(MolOps::addHs(*mNoH, false, false, &onlyOnAtoms));
-  mH_isotopicHsPerHeavy.reset(new IsotopicHsCount(*mH));
+  mH_isotopicHsPerHeavy = std::make_unique<IsotopicHsCount>(*mH);
   REQUIRE(mH_isotopicHsPerHeavy->total() == 4);
   REQUIRE(mH_isotopicHsPerHeavy->at(0) == 1);
   REQUIRE(mH_isotopicHsPerHeavy->at(12) == 3);
   // This should add 4 more isotopes
   onlyOnAtoms = UINT_VECT{1, 2, 18};
   mH.reset(MolOps::addHs(*mH, false, false, &onlyOnAtoms));
-  mH_isotopicHsPerHeavy.reset(new IsotopicHsCount(*mH));
+  mH_isotopicHsPerHeavy = std::make_unique<IsotopicHsCount>(*mH);
   REQUIRE(mH_isotopicHsPerHeavy->total() == 8);
   REQUIRE(mH_isotopicHsPerHeavy->at(0) == 1);
   REQUIRE(mH_isotopicHsPerHeavy->at(1) == 1);
@@ -7682,7 +7679,7 @@ TEST_CASE("Testing removeAndTrackIsotopes parameter") {
   // This should add the last 4 isotopes
   onlyOnAtoms = UINT_VECT{5, 32};
   mH.reset(MolOps::addHs(*mH, false, false, &onlyOnAtoms));
-  mH_isotopicHsPerHeavy.reset(new IsotopicHsCount(*mH));
+  mH_isotopicHsPerHeavy = std::make_unique<IsotopicHsCount>(*mH);
   REQUIRE(mH_isotopicHsPerHeavy->total() == 12);
   REQUIRE(mH_isotopicHsPerHeavy->at(0) == 1);
   REQUIRE(mH_isotopicHsPerHeavy->at(1) == 1);
@@ -7712,7 +7709,7 @@ TEST_CASE("Testing removeAndTrackIsotopes parameter") {
   for (unsigned int i : {0, 1}) {
     unsigned int hIdx = i + 24;
     std::string expectedCipCode(1, 'R' + i);
-    std::unique_ptr<ROMol> mChiral(new ROMol(*m));
+    auto mChiral = std::make_unique<ROMol>(*m);
     mChiral->getAtomWithIdx(23)->setChiralTag(Atom::CHI_TETRAHEDRAL_CW);
     mChiral->getAtomWithIdx(hIdx)->setIsotope(0);
     MolOps::assignStereochemistry(*mChiral, true, true);
@@ -7768,7 +7765,7 @@ TEST_CASE("Testing removeAndTrackIsotopes parameter") {
   for (unsigned int i : {0, 1}) {
     unsigned int hIdx = i + 24;
     std::string expectedCipCode(1, 'R' + i);
-    std::unique_ptr<ROMol> mChiral(new ROMol(*m));
+    auto mChiral = std::make_unique<ROMol>(*m);
     mChiral->getAtomWithIdx(23)->setChiralTag(Atom::CHI_TETRAHEDRAL_CCW);
     mChiral->getAtomWithIdx(hIdx)->setIsotope(3);
     MolOps::assignStereochemistry(*mChiral, true, true);

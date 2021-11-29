@@ -1349,7 +1349,7 @@ void testGithub2441() {
   std::string pickle;
   MolPickler::pickleMol(*m1, pickle);
   {
-    std::unique_ptr<ROMol> m2(new ROMol());
+    auto m2 = std::make_unique<ROMol>();
     MolPickler::molFromPickle(pickle, *m2);
     TEST_ASSERT(m2->getConformer().getId() == 23);
     TEST_ASSERT(m2->getConformer(12).getId() == 12);
@@ -1360,7 +1360,7 @@ void testGithub2441() {
 
   MolPickler::pickleMol(*m1, pickle, pparms);
   {
-    std::unique_ptr<ROMol> m2(new ROMol());
+    auto m2 = std::make_unique<ROMol>();
     MolPickler::molFromPickle(pickle, *m2);
     TEST_ASSERT(m2->getConformer().getId() == 23);
     TEST_ASSERT(m2->getConformer(12).getId() == 12);
@@ -1389,7 +1389,7 @@ void testNegativeMaps() {
   std::string pickle;
   MolPickler::pickleMol(*m1, pickle);
   {
-    std::unique_ptr<ROMol> m2(new ROMol(pickle));
+    auto m2 = std::make_unique<ROMol>(pickle);
     TEST_ASSERT(m2)
   }
 

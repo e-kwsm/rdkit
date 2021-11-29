@@ -1353,7 +1353,7 @@ M  END
 
 TEST_CASE("CML writer", "[CML][writer]") {
   SECTION("basics") {
-    std::unique_ptr<RWMol> mol{new RWMol{}};
+    auto mol = std::make_unique<RWMol>();
     mol->setProp(common_properties::_Name, "S-lactic acid");
 
     for (auto z : {6u, 1u, 1u, 1u, 6u, 1u, 8u, 1u, 6u, 8u, 8u}) {
@@ -1564,7 +1564,7 @@ M  END
 
 TEST_CASE("XYZ", "[XYZ][writer]") {
   SECTION("basics") {
-    std::unique_ptr<RWMol> mol{new RWMol{}};
+    auto mol = std::make_unique<RWMol>();
     mol->setProp(common_properties::_Name,
                  "methane\nthis part should not be output");
 
@@ -1594,7 +1594,7 @@ H      0.635000    0.635000    0.635000
     CHECK(xyzblock == xyzblock_expected);
   }
   SECTION("precistion") {
-    std::unique_ptr<RWMol> mol{new RWMol{}};
+    auto mol = std::make_unique<RWMol>();
     mol->setProp(common_properties::_Name, "CHEMBL506259");
 
     for (unsigned z : {8, 6, 8, 6, 9, 9, 9}) {
@@ -3366,7 +3366,7 @@ M  END
     CHECK(mb.find("M  V30 6 7 3 4") != std::string::npos);
     std::string pkl;
     MolPickler::pickleMol(*m, pkl);
-    m.reset(new RWMol(pkl));
+    m = std::make_unique<RWMol>(pkl);
     REQUIRE(m);
     REQUIRE(m->getBondWithIdx(3)->hasQuery());
     CHECK(m->getBondWithIdx(3)->getQuery()->getDescription() ==
@@ -3416,7 +3416,7 @@ M  END
     CHECK(mb.find("  3  4  7") != std::string::npos);
     std::string pkl;
     MolPickler::pickleMol(*m, pkl);
-    m.reset(new RWMol(pkl));
+    m = std::make_unique<RWMol>(pkl);
     REQUIRE(m);
     REQUIRE(m->getBondWithIdx(3)->hasQuery());
     CHECK(m->getBondWithIdx(3)->getQuery()->getDescription() ==
