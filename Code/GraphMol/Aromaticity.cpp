@@ -47,7 +47,7 @@ void pickFusedRings(int curr, const INT_INT_VECT_MAP &neighMap, INT_VECT &res,
   // default thread stack on Windows.
   auto pos = neighMap.find(curr);
   PRECONDITION(pos != neighMap.end(), "bad argument");
-  done[curr] = 1;
+  done[curr] = true;
   res.push_back(curr);
 
   // Each entry stores a ring index and the next neighbor to visit. Advancing
@@ -78,7 +78,7 @@ void pickFusedRings(int curr, const INT_INT_VECT_MAP &neighMap, INT_VECT &res,
     // We haven't seen this ring yet, so add it to the stack
     pos = neighMap.find(neigh);
     CHECK_INVARIANT(pos != neighMap.end(), "neighboring ring not found");
-    done[neigh] = 1;
+    done[neigh] = true;
     res.push_back(neigh);
     stack.emplace_back(neigh, 0);
   }
@@ -428,7 +428,7 @@ void applyHuckelToFused(
     nRingBonds = rdcast<unsigned int>(fusedBonds.count());
   }
   std::set<unsigned int> doneBonds;
-  while (1) {
+  while (true) {
     if (pos == -1) {
       // If a ring system has more than 300 rings and a ring combination search
       // larger than 2 is reached, the calculation becomes exponentially longer,
@@ -779,7 +779,7 @@ int mdlAromaticityHelper(RWMol &mol, const RingInfo::RingsView &srings) {
         }
         continue;
       }
-      aseen[firstIdx] = 1;
+      aseen[firstIdx] = true;
 
       // now that the atom is part of ring check if it can donate
       // electron or has empty orbitals. Record the donor type
@@ -904,7 +904,7 @@ int aromaticityHelper(RWMol &mol, const RingInfo::RingsView &srings,
         }
         continue;
       }
-      aseen[firstIdx] = 1;
+      aseen[firstIdx] = true;
 
       // Check if this atom can donate electrons or has empty orbitals.
       ElectronDonorType donorType = getAtomDonorTypeArom(at);
@@ -1072,7 +1072,7 @@ void setMMFFAromaticity(RWMol &mol) {
       // loop again over all ring atoms
       for (j = 0, canBeAromatic = true; j < atomRings[i].size(); ++j) {
         // set aromaticity as perceived
-        aromBitVect[atomRings[i][j]] = 1;
+        aromBitVect[atomRings[i][j]] = true;
         atom = mol.getAtomWithIdx(atomRings[i][j]);
         // if this is is a non-sp2 carbon or nitrogen
         // then this ring can't be aromatic
@@ -1093,7 +1093,7 @@ void setMMFFAromaticity(RWMol &mol) {
       // if this ring satisfies the 4n+2 rule,
       // then mark its atoms as aromatic
       if ((pi_e > 2) && (!((pi_e - 2) % 4))) {
-        aromRingBitVect[i] = 1;
+        aromRingBitVect[i] = true;
         for (j = 0; j < atomRings[i].size(); ++j) {
           atom = mol.getAtomWithIdx(atomRings[i][j]);
           atom->setIsAromatic(true);
