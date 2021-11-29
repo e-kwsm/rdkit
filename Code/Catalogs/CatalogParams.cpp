@@ -11,5 +11,5 @@
 #include "CatalogParams.h"
 
 namespace RDCatalog {
-CatalogParams::~CatalogParams() {};
+CatalogParams::~CatalogParams() = default;
 }

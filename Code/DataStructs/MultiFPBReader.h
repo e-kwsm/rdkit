@@ -53,7 +53,7 @@ namespace RDKit {
 class RDKIT_DATASTRUCTS_EXPORT MultiFPBReader {
  public:
   typedef std::tuple<double, unsigned int, unsigned int> ResultTuple;
-  MultiFPBReader() {}
+  MultiFPBReader() = default;
 
   /*!
     \param initOnSearch: if this is true, the \c init() method on child readers

@@ -72,7 +72,7 @@ class Matrix {
     d_data.reset(data);
   }
   Matrix(Matrix<TYPE> &&other) = default;
-  virtual ~Matrix() {}
+  virtual ~Matrix() = default;
 
   Matrix<TYPE> &operator=(const Matrix<TYPE> &other) {
     if (this == &other) {

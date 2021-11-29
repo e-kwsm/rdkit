@@ -34,7 +34,7 @@ class MetricMatrixCalc {
   /*! \brief Default Constructor
    *
    */
-  MetricMatrixCalc() {}
+  MetricMatrixCalc() = default;
 
   /*! \brief Set the metric function
    *

@@ -34,7 +34,7 @@ namespace RDMIF {
 
 class testfunctor {
  public:
-  testfunctor() {}
+  testfunctor() = default;
   double operator()(const double &, const double &, const double &,
                     double) const {
     return 1.0;

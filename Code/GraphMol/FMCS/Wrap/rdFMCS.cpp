@@ -22,13 +22,13 @@ namespace RDKit {
 
 struct PyMCSWrapper : public boost::python::wrapper<PyMCSWrapper> {
  public:
-  PyMCSWrapper() {}
+  PyMCSWrapper() = default;
   PyMCSWrapper(PyObject *obj) {
     PRECONDITION(obj, "PyObject* must not be NULL");
     d_pyObject.reset(
         new python::object(python::handle<>(python::borrowed(obj))));
   }
-  virtual ~PyMCSWrapper() {}
+  virtual ~PyMCSWrapper() = default;
   virtual const char *subclassName() const {
     throw std::invalid_argument(
         "subclassName() must be overridden in the "
@@ -103,9 +103,9 @@ struct PyMCSWrapper : public boost::python::wrapper<PyMCSWrapper> {
 
 struct PyMCSAtomCompare : public PyMCSWrapper {
  public:
-  PyMCSAtomCompare() {}
+  PyMCSAtomCompare() = default;
   PyMCSAtomCompare(PyObject *obj) : PyMCSWrapper(obj) {}
-  ~PyMCSAtomCompare() override {}
+  ~PyMCSAtomCompare() override = default;
   bool extractAtomComparator(AtomComparator &ac) {
     bool res = false;
     python::extract<AtomComparator> predefinedAtomComparator(pyObject());
@@ -148,9 +148,9 @@ struct PyMCSAtomCompare : public PyMCSWrapper {
 };
 
 struct PyMCSBondCompare : public PyMCSWrapper {
-  PyMCSBondCompare() {}
+  PyMCSBondCompare() = default;
   PyMCSBondCompare(PyObject *obj) : PyMCSWrapper(obj) {}
-  ~PyMCSBondCompare() override {}
+  ~PyMCSBondCompare() override = default;
   bool extractBondComparator(BondComparator &bc) {
     bool res = false;
     python::extract<BondComparator> predefinedBondComparator(pyObject());
@@ -216,9 +216,9 @@ struct PyMCSAcceptanceFunctionUserData : public PyBaseUserData {
 };
 
 struct PyMCSProgress : public PyMCSWrapper {
-  PyMCSProgress() {}
+  PyMCSProgress() = default;
   PyMCSProgress(PyObject *obj) : PyMCSWrapper(obj) { extractPyMCSWrapper(); }
-  ~PyMCSProgress() override {}
+  ~PyMCSProgress() override = default;
   PyMCSProgress *extractPyObject() const {
     auto res = dynamic_cast<PyMCSProgress *>(pyObjectExtract());
     if (!res) {
@@ -253,11 +253,11 @@ class PyMCSProgressData {
 };
 
 struct PyMCSFinalMatchCheck : public PyMCSWrapper {
-  PyMCSFinalMatchCheck() {}
+  PyMCSFinalMatchCheck() = default;
   PyMCSFinalMatchCheck(PyObject *obj) : PyMCSWrapper(obj) {
     extractPyMCSWrapper();
   }
-  ~PyMCSFinalMatchCheck() override {}
+  ~PyMCSFinalMatchCheck() override = default;
   PyMCSFinalMatchCheck *extractPyObject() const {
     auto res = dynamic_cast<PyMCSFinalMatchCheck *>(pyObjectExtract());
     if (!res) {
@@ -275,9 +275,9 @@ struct PyMCSFinalMatchCheck : public PyMCSWrapper {
 };
 
 struct PyMCSAcceptance : public PyMCSWrapper {
-  PyMCSAcceptance() {}
+  PyMCSAcceptance() = default;
   PyMCSAcceptance(PyObject *obj) : PyMCSWrapper(obj) { extractPyMCSWrapper(); }
-  ~PyMCSAcceptance() override {}
+  ~PyMCSAcceptance() override = default;
   PyMCSAcceptance *extractPyObject() const {
     auto res = dynamic_cast<PyMCSAcceptance *>(pyObjectExtract());
     if (!res) {
