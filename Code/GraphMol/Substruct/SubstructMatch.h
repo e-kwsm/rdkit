@@ -73,7 +73,7 @@ struct RDKIT_SUBSTRUCTMATCH_EXPORT SubstructMatchParameters {
               //!< will match atoms and bonds with unspecified stereochemistry
   bool aromaticMatchesSingleOrDouble = false;  //!< Aromatic bonds match single
                                                //!< or double bonds
-  SubstructMatchParameters() {}
+  SubstructMatchParameters() = default;
 };
 
 RDKIT_SUBSTRUCTMATCH_EXPORT void updateSubstructMatchParamsFromJSON(

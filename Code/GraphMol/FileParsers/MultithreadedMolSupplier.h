@@ -41,7 +41,7 @@ class RDKIT_FILEPARSERS_EXPORT MultithreadedMolSupplier : public MolSupplier {
     size_t sizeOutputQueue = 5;
   };
 
-  MultithreadedMolSupplier() {}
+  MultithreadedMolSupplier() = default;
   ~MultithreadedMolSupplier() override;
   //! pop elements from the output queue
   std::unique_ptr<RWMol> next() override;
@@ -157,7 +157,7 @@ class RDKIT_FILEPARSERS_EXPORT MultithreadedMolSupplier : public MolSupplier {
   //! time
  public:
   using ContainedType = v2::FileParsers::MultithreadedMolSupplier;
-  MultithreadedMolSupplier() {}
+  MultithreadedMolSupplier() = default;
 
   //! included for the interface, always returns false
   bool getEOFHitOnRead() const {
