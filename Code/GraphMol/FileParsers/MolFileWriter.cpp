@@ -338,8 +338,8 @@ const std::string GetMolFileZBOInfo(const RWMol &mol) {
         nEntries = 0;
         ss.str("");
       }
-      atomsAffected[bond->getBeginAtomIdx()] = 1;
-      atomsAffected[bond->getEndAtomIdx()] = 1;
+      atomsAffected[bond->getBeginAtomIdx()] = true;
+      atomsAffected[bond->getEndAtomIdx()] = true;
     }
   }
   if (nEntries) {
@@ -998,8 +998,8 @@ void createZBOSubstanceGroups(ROMol &mol) {
   for (const auto bond : mol.bonds()) {
     if (bond->getBondType() == Bond::ZERO) {
       bsg.addBondWithIdx(bond->getIdx());
-      atomsAffected[bond->getBeginAtomIdx()] = 1;
-      atomsAffected[bond->getEndAtomIdx()] = 1;
+      atomsAffected[bond->getBeginAtomIdx()] = true;
+      atomsAffected[bond->getEndAtomIdx()] = true;
     }
   }
   if (atomsAffected.any()) {

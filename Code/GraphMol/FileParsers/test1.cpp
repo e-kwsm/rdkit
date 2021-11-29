@@ -4690,7 +4690,7 @@ void testParseCHG() {
   bool sanitize = false;
   std::unique_ptr<RWMol> m(MolBlockToMol(molblock_chg, sanitize));
   size_t i = 0;
-  while (1) {
+  while (true) {
     if (charges[i] == 0) {
       break;
     }

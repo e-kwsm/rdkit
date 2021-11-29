@@ -245,7 +245,7 @@ TEST_CASE("github #7675 : pickling HasProp queries") {
 
 TEST_CASE("pickling HasPropWithValue queries") {
   SECTION("basics") {
-    if (0) {
+    if (false) {
       auto mol = "CC"_smarts;
       REQUIRE(mol);
       mol->getAtomWithIdx(0)->expandQuery(
