@@ -131,7 +131,7 @@ void testRDAny() {
     fooV[0] = 1;
     fooV[1] = 2;
     fooV[2] = 3;
-    if (0) {
+    if (false) {
       std::vector<int> fooV2;
       std::cerr << "send int vect" << std::endl;
       RDAny a(fooV);
