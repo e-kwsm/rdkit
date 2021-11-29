@@ -62,8 +62,8 @@ namespace FileParsers {
 class RDKIT_FILEPARSERS_EXPORT MolSupplier {
   // this is an abstract base class to supply molecules one at a time
  public:
-  MolSupplier() {}
-  virtual ~MolSupplier() {}
+  MolSupplier() = default;
+  virtual ~MolSupplier() = default;
   virtual void init() = 0;
   virtual void reset() = 0;
   virtual bool atEnd() = 0;
@@ -413,7 +413,7 @@ class RDKIT_FILEPARSERS_EXPORT MaeMolSupplier : public MolSupplier {
    */
 
  public:
-  MaeMolSupplier() {}
+  MaeMolSupplier() = default;
 
   explicit MaeMolSupplier(
       std::shared_ptr<std::istream> inStream,
@@ -427,7 +427,7 @@ class RDKIT_FILEPARSERS_EXPORT MaeMolSupplier : public MolSupplier {
       const std::string &fname,
       const MaeMolSupplierParams &params = MaeMolSupplierParams());
 
-  ~MaeMolSupplier() override {}
+  ~MaeMolSupplier() override = default;
 
   void init() override;
   void reset() override;

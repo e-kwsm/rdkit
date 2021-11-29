@@ -28,7 +28,7 @@ namespace RDGeom {
 class RDKIT_RDGEOMETRYLIB_EXPORT Point {
   // this is the virtual base class, mandating certain functions
  public:
-  constexpr virtual ~Point() {}
+  constexpr virtual ~Point() = default;
 
   virtual double operator[](unsigned int i) const = 0;
   virtual double &operator[](unsigned int i) = 0;
@@ -56,13 +56,12 @@ class RDKIT_RDGEOMETRYLIB_EXPORT Point3D : public Point {
   double y{0.0};
   double z{0.0};
 
-  constexpr Point3D() {}
+  constexpr Point3D() = default;
   constexpr Point3D(double xv, double yv, double zv) : x(xv), y(yv), z(zv) {}
 
-  constexpr ~Point3D() override {};
+  constexpr ~Point3D() override = default;
 
-  constexpr Point3D(const Point3D &other)
-      : Point(other), x(other.x), y(other.y), z(other.z) {}
+  constexpr Point3D(const Point3D &other) = default;
 
   [[nodiscard]] constexpr Point *copy() const override {
     return new Point3D(*this);
@@ -286,12 +285,11 @@ class RDKIT_RDGEOMETRYLIB_EXPORT Point2D : public Point {
   double x{0.0};
   double y{0.0};
 
-  constexpr Point2D() {}
+  constexpr Point2D() = default;
   constexpr Point2D(double xv, double yv) : x(xv), y(yv) {}
-  constexpr ~Point2D() override {};
+  constexpr ~Point2D() override = default;
 
-  constexpr Point2D(const Point2D &other)
-      : Point(other), x(other.x), y(other.y) {}
+  constexpr Point2D(const Point2D &other) = default;
   //! construct from a Point3D (ignoring the z coordinate)
   constexpr Point2D(const Point3D &p3d) : Point(p3d), x(p3d.x), y(p3d.y) {}
 

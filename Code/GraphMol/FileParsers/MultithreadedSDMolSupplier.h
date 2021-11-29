@@ -69,7 +69,7 @@ class RDKIT_FILEPARSERS_EXPORT MultithreadedSDMolSupplier : public MolSupplier {
   //! time
  public:
   using ContainedType = v2::FileParsers::MultithreadedSDMolSupplier;
-  MultithreadedSDMolSupplier() {}
+  MultithreadedSDMolSupplier() = default;
   explicit MultithreadedSDMolSupplier(
       const std::string &fileName, bool sanitize = true, bool removeHs = true,
       bool strictParsing = true, unsigned int numWriterThreads = 1,

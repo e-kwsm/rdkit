@@ -161,7 +161,7 @@ union Value {
   std::vector<unsigned int> *vu;
   std::vector<std::string> *vs;
 
-  inline Value() {}
+  inline Value() = default;
   inline Value(double v) : d(v) {}
   inline Value(float v) : f(v) {}
   inline Value(int v) : i(v) {}
