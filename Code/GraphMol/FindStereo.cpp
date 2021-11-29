@@ -797,7 +797,7 @@ bool updateAtoms(ROMol &mol, const std::vector<unsigned int> &aranks,
           }
           sinfos.push_back(std::move(sinfo));
         } else if (possibleAtoms[aidx]) {
-          possibleAtoms[aidx] = 0;
+          possibleAtoms[aidx] = false;
           atomSymbols[aidx] = getAtomCompareSymbol(*atom);
           needAnotherRound = true;
 
@@ -928,7 +928,7 @@ bool updateBonds(ROMol &mol, const std::vector<unsigned int> &aranks,
           }
           sinfos.push_back(std::move(sinfo));
         } else if (possibleBonds[bidx]) {
-          possibleBonds[bidx] = 0;
+          possibleBonds[bidx] = false;
           bondSymbols[bidx] = getBondSymbol(bond);
           needAnotherRound = true;
         }
