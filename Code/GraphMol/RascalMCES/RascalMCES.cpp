@@ -680,7 +680,7 @@ RWMol *makeCliqueFrags(const ROMol &mol,
     } else {
       bond = molFrags->getBondWithIdx(vtxPairs[mem].second);
     }
-    bInClique[bond->getIdx()] = 1;
+    bInClique[bond->getIdx()] = true;
     aInClique.set(bond->getBeginAtomIdx());
     bond->getBeginAtom()->setProp<int>("ORIG_INDEX", bond->getBeginAtomIdx());
     aInClique.set(bond->getEndAtomIdx());
