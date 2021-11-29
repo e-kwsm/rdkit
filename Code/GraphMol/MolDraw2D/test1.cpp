@@ -2510,8 +2510,7 @@ void test12DrawMols() {
     legends.push_back(leg);
   };
   std::vector<ROMol *> mols;
-  std::unique_ptr<std::vector<std::string>> legends(
-      new std::vector<std::string>());
+  auto legends = std::make_unique<std::vector<std::string>>();
   // made up SMILES, each with sequence F, Cl, Br so we can see which
   // ones are drawn, which ones are missing.
   setup_mol("COc1cccc(NC(=O)[C@H](F)Sc2nc(ns2)c3ccccc3F)c1", "m1", mols,

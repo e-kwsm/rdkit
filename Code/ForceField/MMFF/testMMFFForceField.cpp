@@ -1834,7 +1834,7 @@ M  END
       RDKit::MMFF::constructForceField(*mol, &mmffMolProperties));
   TEST_ASSERT(globalFF);
   globalFF->initialize();
-  std::unique_ptr<ROMol> mol2(new ROMol(*mol));
+  auto mol2 = std::make_unique<ROMol>(*mol);
   const int start = -180;
   const int end = 180;
   const int incr = 5;

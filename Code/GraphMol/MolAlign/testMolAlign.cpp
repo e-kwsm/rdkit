@@ -72,9 +72,9 @@ void test1GetBestRMS() {
   SDMolSupplier supplier(fname, true, false);
   std::unique_ptr<ROMol> prb(supplier[1]);
   std::unique_ptr<ROMol> ref(supplier[2]);
-  std::unique_ptr<ROMol> prbCopy1(new ROMol(*prb));
-  std::unique_ptr<ROMol> prbCopy2(new ROMol(*prb));
-  std::unique_ptr<ROMol> prbCopy3(new ROMol(*prb));
+  auto prbCopy1 = std::make_unique<ROMol>(*prb);
+  auto prbCopy2 = std::make_unique<ROMol>(*prb);
+  auto prbCopy3 = std::make_unique<ROMol>(*prb);
   RDGeom::Transform3D bestTrans;
   MatchVectType bestMatch;
 
