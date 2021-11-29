@@ -18,7 +18,7 @@ namespace ForceFields {
 class RDKIT_FORCEFIELD_EXPORT DistanceConstraintContrib
     : public ForceFieldContrib {
  public:
-  DistanceConstraintContrib() {}
+  DistanceConstraintContrib() = default;
   //! Constructor
   /*!
     \param owner       pointer to the owning ForceField
@@ -36,7 +36,7 @@ class RDKIT_FORCEFIELD_EXPORT DistanceConstraintContrib
                             unsigned int idx2, bool relative, double minLen,
                             double maxLen, double forceConst);
 
-  ~DistanceConstraintContrib() override {}
+  ~DistanceConstraintContrib() override = default;
   double getEnergy(double *pos) const override;
 
   void getGrad(double *pos, double *grad) const override;
