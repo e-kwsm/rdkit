@@ -580,7 +580,7 @@ void FPBReader::init() {
   if (detail::FPB_MAGIC != std::string(magic, detail::magicSize)) {
     throw BadFileException("Invalid FPB magic");
   }
-  while (1) {
+  while (true) {
     if (dp_istrm->eof()) {
       throw BadFileException("EOF hit before FEND record");
     }

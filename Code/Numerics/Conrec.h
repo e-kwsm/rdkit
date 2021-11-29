@@ -255,7 +255,7 @@ connectLineSegments(const std::vector<ConrecSegment> &segments,
     auto currKey = singlePoint->first;
     auto currVal = segments[segId].isoVal;
     std::vector<RDGeom::Point2D> contour;
-    while (1) {
+    while (true) {
       segmentsDone.set(segId, true);
       // move onto the next segment
       const auto seg = segments[segId];

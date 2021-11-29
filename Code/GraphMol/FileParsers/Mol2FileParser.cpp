@@ -317,7 +317,7 @@ bool cleanUpMol2Substructures(RWMol *res) {
         b->setBondType(Bond::DOUBLE);
         b->setIsAromatic(false);
         at->setIsAromatic(false);
-        isFixed[idx] = 1;
+        isFixed[idx] = true;
         for (auto onbr : res->atomNeighbors(nbr)) {
           if (onbr->getAtomicNum() == 8 && !isFixed[onbr->getIdx()] &&
               onbr->getProp<std::string>(common_properties::_TriposAtomType) ==
@@ -327,11 +327,11 @@ bool cleanUpMol2Substructures(RWMol *res) {
             ob->setIsAromatic(false);
             onbr->setFormalCharge(-1);
             onbr->setIsAromatic(false);
-            isFixed[onbr->getIdx()] = 1;
+            isFixed[onbr->getIdx()] = true;
           }
         }
         nbr->setIsAromatic(false);
-        isFixed[nbr->getIdx()] = 1;
+        isFixed[nbr->getIdx()] = true;
 
       } else if (tATT == "C.2" || tATT == "S.o2") {
         // carboxylates and sulfonates
@@ -344,14 +344,14 @@ bool cleanUpMol2Substructures(RWMol *res) {
           at->setFormalCharge(-1);
           at->setIsAromatic(false);
           nbr->setIsAromatic(false);
-          isFixed[idx] = 1;
-          isFixed[nbr->getIdx()] = 1;
+          isFixed[idx] = true;
+          isFixed[nbr->getIdx()] = true;
         } else {
           // the other occurrences are not charged and have a double bond
           b->setBondType(Bond::DOUBLE);
           b->setIsAromatic(false);
           at->setIsAromatic(false);
-          isFixed[idx] = 1;
+          isFixed[idx] = true;
         }
       } else {
         std::string nm;
@@ -368,7 +368,7 @@ bool cleanUpMol2Substructures(RWMol *res) {
       // heavy atoms will get the double bond and the positive charge.
       // remember : this is not canonical!
       // first - set the C.cat as fixed
-      isFixed[idx] = 1;
+      isFixed[idx] = true;
       ROMol::ADJ_ITER nbrIdxIt, endNbrsIdxIt, tmpIdxIt;
       unsigned int lowestDeg = 100;
       boost::tie(nbrIdxIt, endNbrsIdxIt) = res->getAtomNeighbors(at);
@@ -422,7 +422,7 @@ bool cleanUpMol2Substructures(RWMol *res) {
                   << nm << ": warning - charged amidine and isFixed atom."
                   << std::endl;
             }
-            isFixed[*nbrIdxIt] = 1;
+            isFixed[*nbrIdxIt] = true;
             if (firstIdent) {
               idxIt2 = nbrIdxIt;
             } else {
@@ -501,7 +501,7 @@ bool cleanUpMol2Substructures(RWMol *res) {
             b->setIsAromatic(false);
             nbr->setIsAromatic(false);
             // set N.pl3 as fixed
-            isFixed[*nbrIdxIt] = 1;
+            isFixed[*nbrIdxIt] = true;
           } else {
             // the N is already fixed - since we don't touch this atom make the
             // bond to single
