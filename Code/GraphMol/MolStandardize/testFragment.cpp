@@ -374,7 +374,7 @@ void testEmptyMol() {
          "LargestFragmentChooser does not crash on an empty mol"
       << std::endl;
   LargestFragmentChooser lfragchooser;
-  std::unique_ptr<ROMol> emptyMol(new ROMol());
+  auto emptyMol = std::make_unique<ROMol>();
   std::unique_ptr<ROMol> largestMol(lfragchooser.choose(*emptyMol));
   TEST_ASSERT(!largestMol->getNumAtoms());
 }

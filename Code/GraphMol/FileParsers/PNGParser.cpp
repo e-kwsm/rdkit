@@ -343,7 +343,7 @@ std::string addMolToPNGStream(const ROMol &mol, std::istream &iStream,
     int confId = -1;
     bool kekulize = false;
     if (params.restoreBondDirs == RestoreBondDirOptionTrue) {
-      molOrigWedging.reset(new ROMol(mol));
+      molOrigWedging = std::make_unique<ROMol>(mol);
       Chirality::reapplyMolBlockWedging(*molOrigWedging);
       molRef = molOrigWedging.get();
     }

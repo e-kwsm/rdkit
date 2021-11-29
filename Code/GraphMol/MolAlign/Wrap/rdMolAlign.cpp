@@ -109,7 +109,7 @@ void alignMolConfs(ROMol &mol, python::object atomIds, python::object confIds,
   std::unique_ptr<std::vector<unsigned int>> cIds(translateIntSeq(confIds));
   std::unique_ptr<std::vector<double>> RMSvector;
   if (RMSlist != python::object()) {
-    RMSvector.reset(new std::vector<double>());
+    RMSvector = std::make_unique<std::vector<double>>();
   }
   {
     NOGIL gil;
@@ -392,7 +392,7 @@ PyO3A *getMMFFO3A(ROMol &prbMol, ROMol &refMol, python::object prbProps,
         python::extract<ForceFields::PyMMFFMolProperties *>(prbProps);
     prbMolPropsPtr = prbPyMMFFMolProperties->mmffMolProperties.get();
   } else {
-    prbMolProps.reset(new MMFF::MMFFMolProperties(prbMol));
+    prbMolProps = std::make_unique<MMFF::MMFFMolProperties>(prbMol);
     if (!prbMolProps->isValid()) {
       throw_value_error("missing MMFF94 parameters for probe molecule");
     }
@@ -403,7 +403,7 @@ PyO3A *getMMFFO3A(ROMol &prbMol, ROMol &refMol, python::object prbProps,
         python::extract<ForceFields::PyMMFFMolProperties *>(refProps);
     refMolPropsPtr = refPyMMFFMolProperties->mmffMolProperties.get();
   } else {
-    refMolProps.reset(new MMFF::MMFFMolProperties(refMol));
+    refMolProps = std::make_unique<MMFF::MMFFMolProperties>(refMol);
     if (!refMolProps->isValid()) {
       throw_value_error("missing MMFF94 parameters for reference molecule");
     }
@@ -460,7 +460,7 @@ python::tuple getMMFFO3AForConfs(
         python::extract<ForceFields::PyMMFFMolProperties *>(prbProps);
     prbMolPropsPtr = prbPyMMFFMolProperties->mmffMolProperties.get();
   } else {
-    prbMolProps.reset(new MMFF::MMFFMolProperties(prbMol));
+    prbMolProps = std::make_unique<MMFF::MMFFMolProperties>(prbMol);
     if (!prbMolProps->isValid()) {
       throw_value_error("missing MMFF94 parameters for probe molecule");
     }
@@ -471,7 +471,7 @@ python::tuple getMMFFO3AForConfs(
         python::extract<ForceFields::PyMMFFMolProperties *>(refProps);
     refMolPropsPtr = refPyMMFFMolProperties->mmffMolProperties.get();
   } else {
-    refMolProps.reset(new MMFF::MMFFMolProperties(refMol));
+    refMolProps = std::make_unique<MMFF::MMFFMolProperties>(refMol);
     if (!refMolProps->isValid()) {
       throw_value_error("missing MMFF94 parameters for reference molecule");
     }

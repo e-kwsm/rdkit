@@ -24,79 +24,79 @@ TEST_CASE("Basic MolHash", "[molhash]") {
     auto om = "C1CCCC(O)C1c1ccnc(OC)c1"_smiles;
     REQUIRE(om);
     {
-      std::unique_ptr<RWMol> m(new RWMol(*om));
+      auto m = std::make_unique<RWMol>(*om);
       auto hsh =
           MolHash::MolHash(m.get(), MolHash::HashFunction::AnonymousGraph);
       CHECK(hsh == "***1****(*2*****2*)*1");
     }
     {
-      std::unique_ptr<RWMol> m(new RWMol(*om));
+      auto m = std::make_unique<RWMol>(*om);
       auto hsh = MolHash::MolHash(m.get(), MolHash::HashFunction::ElementGraph);
       CHECK(hsh == "COC1CC(C2CCCCC2O)CCN1");
     }
     {
-      std::unique_ptr<RWMol> m(new RWMol(*om));
+      auto m = std::make_unique<RWMol>(*om);
       auto hsh =
           MolHash::MolHash(m.get(), MolHash::HashFunction::CanonicalSmiles);
       CHECK(hsh == "COc1cc(C2CCCCC2O)ccn1");
     }
     {
-      std::unique_ptr<RWMol> m(new RWMol(*om));
+      auto m = std::make_unique<RWMol>(*om);
       auto hsh =
           MolHash::MolHash(m.get(), MolHash::HashFunction::MurckoScaffold);
       CHECK(hsh == "c1cc(C2CCCCC2)ccn1");
     }
     {
-      std::unique_ptr<RWMol> m(new RWMol(*om));
+      auto m = std::make_unique<RWMol>(*om);
       auto hsh =
           MolHash::MolHash(m.get(), MolHash::HashFunction::ExtendedMurcko);
       CHECK(hsh == "*c1cc(C2CCCCC2*)ccn1");
     }
     {
-      std::unique_ptr<RWMol> m(new RWMol(*om));
+      auto m = std::make_unique<RWMol>(*om);
       auto hsh = MolHash::MolHash(m.get(), MolHash::HashFunction::MolFormula);
       CHECK(hsh == "C12H17NO2");
     }
     {
-      std::unique_ptr<RWMol> m(new RWMol(*om));
+      auto m = std::make_unique<RWMol>(*om);
       auto hsh =
           MolHash::MolHash(m.get(), MolHash::HashFunction::AtomBondCounts);
       CHECK(hsh == "15,16");
     }
     {
-      std::unique_ptr<RWMol> m(new RWMol(*om));
+      auto m = std::make_unique<RWMol>(*om);
       auto hsh = MolHash::MolHash(m.get(), MolHash::HashFunction::DegreeVector);
       CHECK(hsh == "0,4,9,2");
     }
     {
-      std::unique_ptr<RWMol> m(new RWMol(*om));
+      auto m = std::make_unique<RWMol>(*om);
       auto hsh = MolHash::MolHash(m.get(), MolHash::HashFunction::Mesomer);
       CHECK(hsh == "CO[C]1[CH][C](C2CCCCC2O)[CH][CH][N]1_0");
     }
     {
-      std::unique_ptr<RWMol> m(new RWMol(*om));
+      auto m = std::make_unique<RWMol>(*om);
       auto hsh = MolHash::MolHash(m.get(), MolHash::HashFunction::Regioisomer);
       CHECK(hsh == "*O.*O*.C.C1CCCCC1.c1ccncc1");
     }
     {
-      std::unique_ptr<RWMol> m(new RWMol(*om));
+      auto m = std::make_unique<RWMol>(*om);
       auto hsh = MolHash::MolHash(m.get(), MolHash::HashFunction::NetCharge);
       CHECK(hsh == "0");
     }
     {
-      std::unique_ptr<RWMol> m(new RWMol(*om));
+      auto m = std::make_unique<RWMol>(*om);
       auto hsh =
           MolHash::MolHash(m.get(), MolHash::HashFunction::SmallWorldIndexBR);
       CHECK(hsh == "B16R2");
     }
     {
-      std::unique_ptr<RWMol> m(new RWMol(*om));
+      auto m = std::make_unique<RWMol>(*om);
       auto hsh =
           MolHash::MolHash(m.get(), MolHash::HashFunction::SmallWorldIndexBRL);
       CHECK(hsh == "B16R2L9");
     }
     {
-      std::unique_ptr<RWMol> m(new RWMol(*om));
+      auto m = std::make_unique<RWMol>(*om);
       auto hsh = MolHash::MolHash(
           m.get(), MolHash::HashFunction::ArthorSubstructureOrder);
       CHECK(hsh == "000f001001000c000300005f000000");
@@ -106,13 +106,13 @@ TEST_CASE("Basic MolHash", "[molhash]") {
     auto om = "C(CC1=NNC=C1)C1=CNC=N1"_smiles;
     REQUIRE(om);
     {
-      std::unique_ptr<RWMol> m(new RWMol(*om));
+      auto m = std::make_unique<RWMol>(*om);
       auto hsh =
           MolHash::MolHash(m.get(), MolHash::HashFunction::HetAtomTautomer);
       CHECK(hsh == "[CH]1[CH][C](CC[C]2[CH][N][CH][N]2)[N][N]1_2_0");
     }
     {
-      std::unique_ptr<RWMol> m(new RWMol(*om));
+      auto m = std::make_unique<RWMol>(*om);
       auto hsh =
           MolHash::MolHash(m.get(), MolHash::HashFunction::HetAtomProtomer);
       CHECK(hsh == "[CH]1[CH][C](CC[C]2[CH][N][CH][N]2)[N][N]1_2");
@@ -151,10 +151,10 @@ TEST_CASE("Basic MolHash", "[molhash]") {
         "CCC(=Cc1[se]c2ccc(C)cc2[n+]1CC)C=C1Sc2cc(C)c(C)cc2N1CC(O)CS(=O)(=O)O"_smiles;
     REQUIRE(m2);
 
-    std::unique_ptr<RWMol> t1(new RWMol(*m1));
+    auto t1 = std::make_unique<RWMol>(*m1);
     auto hsh1 =
         MolHash::MolHash(t1.get(), MolHash::HashFunction::HetAtomTautomer);
-    std::unique_ptr<RWMol> t2(new RWMol(*m2));
+    auto t2 = std::make_unique<RWMol>(*m2);
     auto hsh2 =
         MolHash::MolHash(t2.get(), MolHash::HashFunction::HetAtomTautomer);
     CHECK(hsh1 == hsh2);
@@ -170,10 +170,10 @@ TEST_CASE("Basic MolHash", "[molhash]") {
         "N/C(=N\\CCCCCCCC(=O)NC(CC(=O)OCc1ccccc1)C(=O)NCCCC/N=C(\\N)N[N+](=O)[O-])N[N+](=O)[O-]"_smiles;
     REQUIRE(m2);
 
-    std::unique_ptr<RWMol> t1(new RWMol(*m1));
+    auto t1 = std::make_unique<RWMol>(*m1);
     auto hsh1 =
         MolHash::MolHash(t1.get(), MolHash::HashFunction::HetAtomTautomer);
-    std::unique_ptr<RWMol> t2(new RWMol(*m2));
+    auto t2 = std::make_unique<RWMol>(*m2);
     auto hsh2 =
         MolHash::MolHash(t2.get(), MolHash::HashFunction::HetAtomTautomer);
     CHECK(hsh1 == hsh2);
@@ -189,19 +189,19 @@ TEST_CASE("Tautomers and chirality", "[molhash]") {
     REQUIRE(om);
 
     {
-      std::unique_ptr<RWMol> m(new RWMol(*om));
+      auto m = std::make_unique<RWMol>(*om);
       auto hsh =
           MolHash::MolHash(m.get(), MolHash::HashFunction::CanonicalSmiles);
       CHECK(hsh == "C[C@@H](C(=O)[O-])C(=O)O");
     }
     {
-      std::unique_ptr<RWMol> m(new RWMol(*om));
+      auto m = std::make_unique<RWMol>(*om);
       auto hsh =
           MolHash::MolHash(m.get(), MolHash::HashFunction::HetAtomTautomer);
       CHECK(hsh == "CC([C]([O])[O])[C]([O])[O]_1_-1");
     }
     {
-      std::unique_ptr<RWMol> m(new RWMol(*om));
+      auto m = std::make_unique<RWMol>(*om);
       auto hsh =
           MolHash::MolHash(m.get(), MolHash::HashFunction::HetAtomProtomer);
       CHECK(hsh == "CC([C]([O])[O])[C]([O])[O]_2");

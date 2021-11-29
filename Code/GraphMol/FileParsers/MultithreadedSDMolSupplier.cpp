@@ -44,12 +44,12 @@ void MultithreadedSDMolSupplier::initFromSettings(
   d_params = params;
   d_parseParams = parseParams;
   d_params.numWriterThreads = getNumThreadsToUse(params.numWriterThreads);
-  d_inputQueue.reset(
-      new ConcurrentQueue<std::tuple<std::string, unsigned int, unsigned int>>(
-          d_params.sizeInputQueue));
-  d_outputQueue.reset(
-      new ConcurrentQueue<std::tuple<RWMol *, std::string, unsigned int>>(
-          d_params.sizeOutputQueue));
+  d_inputQueue = std::make_unique<
+      ConcurrentQueue<std::tuple<std::string, unsigned int, unsigned int>>>(
+      d_params.sizeInputQueue);
+  d_outputQueue = std::make_unique<
+      ConcurrentQueue<std::tuple<RWMol *, std::string, unsigned int>>>(
+      d_params.sizeOutputQueue);
 
   df_end = false;
   d_line = 0;
