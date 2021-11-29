@@ -61,9 +61,6 @@ class LinkedPopLinearSel {
 
   static constexpr double SELECT_START = 5000.0;
 
-  LinkedPopLinearSel(const LinkedPopLinearSel& other);
-  LinkedPopLinearSel& operator=(const LinkedPopLinearSel& other);
-
   bool addToPopulation(std::shared_ptr<Chromosome>& chromosome);
   bool addToPopulation(std::multimap<double, std::shared_ptr<Chromosome>>& pop,
                        std::shared_ptr<Chromosome>& chromosome);
@@ -76,6 +73,8 @@ class LinkedPopLinearSel {
 
  public:
   LinkedPopLinearSel(PopulationPolicy& populationPolicy_);
+  LinkedPopLinearSel(const LinkedPopLinearSel& other) = delete;
+  LinkedPopLinearSel& operator=(const LinkedPopLinearSel& other) = delete;
 
   virtual ~LinkedPopLinearSel(){};
   void create();

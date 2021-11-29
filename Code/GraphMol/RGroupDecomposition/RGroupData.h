@@ -36,6 +36,7 @@ struct RDKIT_RGROUPDECOMPOSITION_EXPORT RGroupData {
 
  public:
   RGroupData() {}
+  RGroupData(const RGroupData &rhs) = delete;
 
   void add(boost::shared_ptr<ROMol> newMol,
            const std::vector<int> &rlabel_attachments);

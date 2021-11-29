@@ -74,6 +74,8 @@ class Vector {
 
   ~Vector() = default;
 
+  Vector<TYPE> &operator=(const Vector<TYPE> &other) = delete;
+
   //! return the size (dimension) of the vector
   unsigned int size() const { return d_size; }
 
@@ -290,7 +292,6 @@ class Vector {
  private:
   unsigned int d_size;  //!< our length
   DATA_SPTR d_data;
-  Vector<TYPE> &operator=(const Vector<TYPE> &other);
 };
 
 typedef Vector<double> DoubleVector;

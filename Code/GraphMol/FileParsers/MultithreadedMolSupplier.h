@@ -34,6 +34,15 @@ class RDKIT_FILEPARSERS_EXPORT MultithreadedMolSupplier : public MolSupplier {
  public:
   MultithreadedMolSupplier() {}
   ~MultithreadedMolSupplier() override;
+
+  //! disable automatic copy constructors and assignment operators
+  //! for this class and its subclasses.  They will likely be
+  //! carrying around stream pointers and copying those is a recipe
+  //! for disaster.
+  MultithreadedMolSupplier(const MultithreadedMolSupplier &) = delete;
+  MultithreadedMolSupplier &operator=(const MultithreadedMolSupplier &) =
+      delete;
+
   //! pop elements from the output queue
   ROMol *next() override;
   //! returns true when all records have been read from the supplier
@@ -62,12 +71,6 @@ class RDKIT_FILEPARSERS_EXPORT MultithreadedMolSupplier : public MolSupplier {
   void writer();
   //! finalizes the reader and writer threads
   void endThreads();
-  //! disable automatic copy constructors and assignment operators
-  //! for this class and its subclasses.  They will likely be
-  //! carrying around stream pointers and copying those is a recipe
-  //! for disaster.
-  MultithreadedMolSupplier(const MultithreadedMolSupplier &);
-  MultithreadedMolSupplier &operator=(const MultithreadedMolSupplier &);
   //! not yet implemented
   void reset() override;
   void init() override = 0;
