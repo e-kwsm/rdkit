@@ -230,7 +230,7 @@ inline ROMol *addHs(const ROMol &mol, bool explicitOnly = false,
                     const UINT_VECT *onlyOnAtoms = nullptr,
                     bool addResidueInfo = false) {
   AddHsParameters ps{explicitOnly, addCoords, addResidueInfo};
-  std::unique_ptr<RWMol> res{new RWMol(mol)};
+  auto res = std::make_unique<RWMol>(mol);
   addHs(*res, ps, onlyOnAtoms);
   return static_cast<ROMol *>(res.release());
 }

@@ -311,7 +311,7 @@ boost::flyweight<std::unique_ptr<Patterns>, boost::flyweights::no_tracking>
     gpats;
 void GenerateFP(const RDKit::ROMol &mol, ExplicitBitVect &fp) {
   if (!gpats.get()) {
-    gpats = std::unique_ptr<Patterns>(new Patterns());
+    gpats = std::make_unique<Patterns>();
   }
   const Patterns &pats = *(gpats.get());
   PRECONDITION(fp.size() == 167, "bad fingerprint");
@@ -939,7 +939,7 @@ void GenerateFP(const RDKit::ROMol &mol, ExplicitBitVect &fp) {
 namespace RDKit {
 namespace MACCSFingerprints {
 ExplicitBitVect *getFingerprintAsBitVect(const ROMol &mol) {
-  std::unique_ptr<ExplicitBitVect> fp(new ExplicitBitVect(167));
+  auto fp = std::make_unique<ExplicitBitVect>(167);
   GenerateFP(mol, *fp);
   return fp.release();
 }

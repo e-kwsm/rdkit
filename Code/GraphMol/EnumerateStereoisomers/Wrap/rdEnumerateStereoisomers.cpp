@@ -27,9 +27,9 @@ class LocalStereoEnumerator {
           RDKit::EnumerateStereoisomers::StereoEnumerationOptions>(py_options);
     }
     RDKit::ROMol mol = python::extract<RDKit::ROMol>(py_mol);
-    dp_enumerator.reset(
-        new RDKit::EnumerateStereoisomers::StereoisomerEnumerator(mol, opts,
-                                                                  verbose));
+    dp_enumerator =
+        std::make_unique<RDKit::EnumerateStereoisomers::StereoisomerEnumerator>(
+            mol, opts, verbose);
   }
   LocalStereoEnumerator(const LocalStereoEnumerator &other) = delete;
   LocalStereoEnumerator(LocalStereoEnumerator &&other) = delete;

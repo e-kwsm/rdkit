@@ -22,8 +22,7 @@ ScaffoldNetwork::ScaffoldNetwork *createNetworkHelper(
     python::object pmols,
     const ScaffoldNetwork::ScaffoldNetworkParams &params) {
   auto mols = pythonObjectToVect<ROMOL_SPTR>(pmols);
-  std::unique_ptr<ScaffoldNetwork::ScaffoldNetwork> res(
-      new ScaffoldNetwork::ScaffoldNetwork);
+  auto res = std::make_unique<ScaffoldNetwork::ScaffoldNetwork>();
   if (mols) {
     NOGIL gil;
 
