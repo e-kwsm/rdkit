@@ -157,7 +157,7 @@ void testCollisions() {
   for (tokenizer::iterator token = tokens.begin(); token != tokens.end();
        ++token) {
     std::string smi = *token;
-    RWMol *m = SmilesToMol(smi, 0, 1);
+    RWMol *m = SmilesToMol(smi, 0, true);
     TEST_ASSERT(m);
     unsigned int confId = RDDepict::compute2DCoords(*m);
     // check that there are no collisions in the molecules
@@ -180,7 +180,7 @@ void testCollisions() {
 void testAddHs() {
   // test for issue 193
   std::string smi = "F[C@H](Cl)Br";
-  RWMol *m = SmilesToMol(smi, 0, 1);
+  RWMol *m = SmilesToMol(smi, 0, true);
   MolOps::addHs(*m);
   RDDepict::compute2DCoords(*m);
   delete m;
@@ -188,7 +188,7 @@ void testAddHs() {
 
 void testIssue198() {
   std::string smi = "Cl.C[N+](C)(C)CCO";
-  RWMol *m = SmilesToMol(smi, 0, 1);
+  RWMol *m = SmilesToMol(smi, 0, true);
   unsigned int confId = RDDepict::compute2DCoords(*m);
   RDKit::ROMol::AtomIterator ai;
   const Conformer &conf = m->getConformer(confId);
@@ -211,7 +211,7 @@ void test2() {
       rdbase + "/Code/GraphMol/Depictor/test_data/first_200.out.sdf";
   SDWriter writer(ofile);
   ROMol *mol;
-  while (1) {
+  while (true) {
     try {
       mol = smiSup.next();
       std::string mname;
@@ -235,7 +235,7 @@ void test3() {
       rdbase + "/Code/GraphMol/Depictor/test_data/cis_trans_cpp.out.sdf";
   SDWriter writer(ofile);
   ROMol *mol;
-  while (1) {
+  while (true) {
     try {
       mol = smiSup.next();
       std::string mname;
@@ -262,9 +262,9 @@ void test4() {
 
   // self check
   std::string smi = "Cl\\C=C1/SCCC1";
-  RWMol *m1 = SmilesToMol(smi, 0, 1);
+  RWMol *m1 = SmilesToMol(smi, 0, true);
   unsigned int cid1 = RDDepict::compute2DCoords(*m1, &crdMap, false);
-  RWMol *mref = SmilesToMol(smi, 0, 1);
+  RWMol *mref = SmilesToMol(smi, 0, true);
   unsigned int cid2 = RDDepict::compute2DCoords(*mref);
   MolToMolFile(*mref, "junk.mol");
   //_compareCoords(m1, mref);
@@ -274,7 +274,7 @@ void test4() {
   // now lets remove some of the coordinates
   crdMap.erase(crdMap.find(3));
   crdMap.erase(crdMap.find(4));
-  m1 = SmilesToMol(smi, 0, 1);
+  m1 = SmilesToMol(smi, 0, true);
   cid1 = RDDepict::compute2DCoords(*m1, &crdMap, false);
   // MolToMolFile(m1, "junk.mol");
   //_compareCoords(m1, mref);
@@ -282,11 +282,11 @@ void test4() {
 
   // little bit more complicated
   smi = "Cl\\C=C1/SCCC1(CC1CC1)";
-  m1 = SmilesToMol(smi, 0, 1);
+  m1 = SmilesToMol(smi, 0, true);
   cid1 = RDDepict::compute2DCoords(*m1, &crdMap, false);
   // MolToMolFile(m1, "junk1.mol");
   delete mref;
-  mref = SmilesToMol(smi, 0, 1);
+  mref = SmilesToMol(smi, 0, true);
   RDDepict::compute2DCoords(*mref, nullptr, false);
   _compareCoords(m1, cid1, mref, cid2);
   delete m1;
@@ -296,7 +296,7 @@ void test4() {
   crdMap[7] = RDGeom::Point2D(0.85, -2.64);
   crdMap[8] = RDGeom::Point2D(-0.15, -3.75);
   crdMap[9] = RDGeom::Point2D(-0.46, -5.22);
-  m1 = SmilesToMol(smi, 0, 1);
+  m1 = SmilesToMol(smi, 0, true);
   cid1 = RDDepict::compute2DCoords(*m1, &crdMap, false);
   // MolToMolFile(m1, "junk1.mol");
   // MolToMolFile(mref, "junk2.mol");
@@ -320,12 +320,12 @@ void test4() {
   crdMap[11] = RDGeom::Point2D(-0.38, 1.69);
 
   delete mref;
-  mref = SmilesToMol(smi, 0, 1);
+  mref = SmilesToMol(smi, 0, true);
   cid2 = RDDepict::compute2DCoords(*mref, nullptr, false);
   crdMap.erase(crdMap.find(5));
   // MolToMolFile(mref, "junk1.mol");
   // std::cerr << MolToXYZBlock(*mref) << std::endl;
-  m1 = SmilesToMol(smi, 0, 1);
+  m1 = SmilesToMol(smi, 0, true);
   cid1 = RDDepict::compute2DCoords(*m1, &crdMap, false);
   _compareCoords(m1, cid1, mref, cid2);
   delete m1;
@@ -383,7 +383,7 @@ void testIssue248() {
   for (tokenizer::iterator token = tokens.begin(); token != tokens.end();
        ++token) {
     std::string smi = *token;
-    RWMol *m = SmilesToMol(smi, 0, 1);
+    RWMol *m = SmilesToMol(smi, 0, true);
     unsigned int confId = RDDepict::compute2DCoords(*m);
     // check that there are no collisions in the molecules
     int natms = m->getNumAtoms();

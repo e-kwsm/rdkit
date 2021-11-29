@@ -1275,7 +1275,7 @@ void embedHelper_(int threadId, int numThreads, EmbedArgs *eargs,
         }
       }
     } else {
-      (*eargs->confsOk)[ci] = 0;
+      (*eargs->confsOk)[ci] = false;
     }
   }
 }

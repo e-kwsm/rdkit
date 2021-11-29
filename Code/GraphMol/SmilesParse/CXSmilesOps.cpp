@@ -120,7 +120,7 @@ bool read_int(Iterator &first, Iterator last, unsigned int &res) {
 template <typename Iterator>
 bool read_int_list(Iterator &first, Iterator last,
                    std::vector<unsigned int> &res, char sep = ',') {
-  while (1) {
+  while (true) {
     std::string num = "";
     while (first <= last && *first >= '0' && *first <= '9') {
       num += *first;
@@ -787,7 +787,7 @@ bool parse_sgroup_hierarchy(Iterator &first, Iterator last, RDKit::RWMol &mol) {
   }
   first += 4;
   auto &sgs = getSubstanceGroups(mol);
-  while (1) {
+  while (true) {
     unsigned int parentId;
     if (!read_int(first, last, parentId)) {
       return false;

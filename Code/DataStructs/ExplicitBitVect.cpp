@@ -74,7 +74,7 @@ bool ExplicitBitVect::setBit(const unsigned int which) {
   if ((bool)(*dp_bits)[which]) {
     return true;
   } else {
-    (*dp_bits)[which] = 1;
+    (*dp_bits)[which] = true;
     ++d_numOnBits;
     return false;
   }
@@ -84,7 +84,7 @@ bool ExplicitBitVect::unsetBit(const unsigned int which) {
     throw IndexErrorException(which);
   }
   if ((bool)(*dp_bits)[which]) {
-    (*dp_bits)[which] = 0;
+    (*dp_bits)[which] = false;
     --d_numOnBits;
     return true;
   } else {

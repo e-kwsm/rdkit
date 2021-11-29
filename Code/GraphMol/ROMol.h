@@ -440,7 +440,7 @@ class RDKIT_GRAPHMOL_EXPORT ROMol : public RDProps {
   //! @{
 
   //! returns our number of Bonds
-  unsigned int getNumBonds(bool onlyHeavy = 1) const;
+  unsigned int getNumBonds(bool onlyHeavy = true) const;
   //! returns a pointer to a particular Bond
   Bond *getBondWithIdx(unsigned int idx);
   //! \overload

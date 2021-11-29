@@ -1647,7 +1647,7 @@ void testGitHubIssue92() {
 
   {
     RWMol *mol;
-    mol = SmilesToMol("c1cccn1[H]", 0, 0);
+    mol = SmilesToMol("c1cccn1[H]", 0, false);
     TEST_ASSERT(mol);
     MolOps::sanitizeMol(*mol);
     TEST_ASSERT(mol->getNumAtoms() == 6);

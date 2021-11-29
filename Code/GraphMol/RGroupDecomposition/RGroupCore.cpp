@@ -720,7 +720,7 @@ std::vector<MatchVectType> RCore::matchTerminalUserRGroups(
           duplicateBonds = true;
           break;
         }
-        targetBondsPresent[targetBondIdx] = 1;
+        targetBondsPresent[targetBondIdx] = true;
       }
     }
     // use MolMatchFinalCheckFunctor to check this match works with chirality

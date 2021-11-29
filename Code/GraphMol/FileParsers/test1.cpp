@@ -4664,7 +4664,7 @@ void testParseCHG() {
   // Shouldn't seg fault, throw exception or have a null mol
   std::unique_ptr<RWMol> m(MolBlockToMol(molblock_chg));
   size_t i = 0;
-  while (1) {
+  while (true) {
     if (charges[i] == 0) {
       break;
     }

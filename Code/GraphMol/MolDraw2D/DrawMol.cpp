@@ -3449,11 +3449,11 @@ void prepareStereoGroups(RWMol &mol) {
     for (const auto atom : mol.atoms()) {
       if (atom->getChiralTag() > Atom::ChiralType::CHI_UNSPECIFIED &&
           atom->getChiralTag() < Atom::ChiralType::CHI_OTHER) {
-        chiralAts.set(atom->getIdx(), 1);
+        chiralAts.set(atom->getIdx(), true);
       }
     }
     for (const auto atm : sgs[0].getAtoms()) {
-      chiralAts.set(atm->getIdx(), 0);
+      chiralAts.set(atm->getIdx(), false);
     }
     if (chiralAts.none()) {
       // all specified chiral centers are accounted for by this StereoGroup.

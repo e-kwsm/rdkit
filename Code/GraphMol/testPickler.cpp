@@ -39,7 +39,7 @@
 
 using namespace RDKit;
 
-void test1(bool doLong = 0) {
+void test1(bool doLong = false) {
   std::string fName = getenv("RDBASE");
   fName += "/Code/GraphMol/test_data/canonSmiles.smi";
 
@@ -103,7 +103,7 @@ void _createPickleFile() {
   BOOST_LOG(rdErrorLog) << "\tdone" << std::endl;
 }
 
-void test2(bool doLong = 0) {
+void test2(bool doLong = false) {
   std::string smiName = getenv("RDBASE");
   smiName += "/Code/GraphMol/test_data/canonSmiles.smi";
   std::string pklName = getenv("RDBASE");
@@ -139,7 +139,7 @@ void test2(bool doLong = 0) {
   BOOST_LOG(rdErrorLog) << "\tdone" << std::endl;
 }
 
-void test3(bool doLong = 0) {
+void test3(bool doLong = false) {
   std::string smiName = getenv("RDBASE");
   smiName += "/Code/GraphMol/test_data/canonSmiles.smi";
   std::string pklName = getenv("RDBASE");
@@ -158,8 +158,8 @@ void test3(bool doLong = 0) {
     ROMol m2;
     MolPickler::molFromPickle(inStream, m2);
 
-    std::string smi1 = MolToSmiles(*m1, 1);
-    std::string smi2 = MolToSmiles(m2, 1);
+    std::string smi1 = MolToSmiles(*m1, true);
+    std::string smi2 = MolToSmiles(m2, true);
 
     if (smi1 != smi2) {
       BOOST_LOG(rdInfoLog) << "Line: " << count << "\n  " << smi1
@@ -175,7 +175,7 @@ void test3(bool doLong = 0) {
   BOOST_LOG(rdErrorLog) << "\tdone" << std::endl;
 }
 
-void timeTest(bool doLong = 0) {
+void timeTest(bool doLong = false) {
   time_t t1, t2;
   std::string smiName = getenv("RDBASE");
   smiName += "/Code/GraphMol/test_data/canonSmiles.smi";
@@ -736,7 +736,7 @@ void testRadicals() {
   BOOST_LOG(rdErrorLog) << "\tdone" << std::endl;
 }
 
-void testIssue2788233(bool doLong = 0) {
+void testIssue2788233(bool doLong = false) {
   (void)doLong;
   BOOST_LOG(rdErrorLog) << "-------------------------------------" << std::endl;
   BOOST_LOG(rdErrorLog) << "Testing sf.net issue 2788233." << std::endl;
@@ -867,7 +867,7 @@ void testIssue3496759() {
   {
     ROMol *m1 = SmartsToMol("c1ncncn1");
     TEST_ASSERT(m1);
-    std::string smi1 = MolToSmiles(*m1, 1);
+    std::string smi1 = MolToSmiles(*m1, true);
     TEST_ASSERT(smi1 == "c1ncncn1");
 
     std::string pickle;
@@ -875,7 +875,7 @@ void testIssue3496759() {
     RWMol *m2 = new RWMol(pickle);
     TEST_ASSERT(m2);
 
-    std::string smi2 = MolToSmiles(*m2, 1);
+    std::string smi2 = MolToSmiles(*m2, true);
     TEST_ASSERT(smi2 == "c1ncncn1");
 
     delete m1;
@@ -897,7 +897,7 @@ void testIssue3496759() {
       // std::cerr << "smarts: " << tokens[0] << std::endl;
       ROMol *m1 = SmartsToMol(tokens[0]);
       TEST_ASSERT(m1);
-      std::string smi1 = MolToSmiles(*m1, 1);
+      std::string smi1 = MolToSmiles(*m1, true);
       std::string sma1 = MolToSmarts(*m1);
 
       std::string pickle;
@@ -905,7 +905,7 @@ void testIssue3496759() {
       RWMol *m2 = new RWMol(pickle);
       TEST_ASSERT(m2);
 
-      std::string smi2 = MolToSmiles(*m2, 1);
+      std::string smi2 = MolToSmiles(*m2, true);
       std::string sma2 = MolToSmarts(*m2);
 
       std::cerr << "smi match: " << smi1 << " " << smi2 << std::endl;
@@ -1040,7 +1040,7 @@ void testGithub149() {
       << "Testing Github issue 149: cannot pickle unsanitized molecules"
       << std::endl;
   {
-    ROMol *m = SmilesToMol("CCO", 0, 0);
+    ROMol *m = SmilesToMol("CCO", 0, false);
     TEST_ASSERT(m);
     TEST_ASSERT(m->getNumAtoms() == 3);
 

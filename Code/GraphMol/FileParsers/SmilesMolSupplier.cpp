@@ -117,7 +117,7 @@ void SmilesMolSupplier::reset() {
   PRECONDITION(dp_inStream, "no stream");
   dp_inStream->clear();
 
-  df_end = 0;
+  df_end = false;
   if (d_molpos.size() > 0) {
     dp_inStream->seekg(d_molpos.front());
     d_next = 0;

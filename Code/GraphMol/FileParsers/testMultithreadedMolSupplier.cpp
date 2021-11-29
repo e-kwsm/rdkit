@@ -57,7 +57,7 @@ void testSmiConcurrent(std::istream *strm, bool takeOwnership,
     ROMol *mol = sup.next();
     if (mol) {
       unsigned int id = sup.getLastRecordId();
-      bitVector[id - 1] = 1;
+      bitVector[id - 1] = true;
       if (extras) {
         std::unique_ptr<ExplicitBitVect> fp(
             MorganFingerprints::getFingerprintAsBitVect(*mol, 2, 2048));
@@ -187,7 +187,7 @@ void testSDConcurrent(std::istream *strm, bool takeOwnership, bool sanitize,
     ROMol *mol = sup.next();
     if (mol) {
       unsigned int id = sup.getLastRecordId();
-      bitVector[id - 1] = 1;
+      bitVector[id - 1] = true;
       ++nMols;
       if (extras) {
         std::unique_ptr<ExplicitBitVect> fp(

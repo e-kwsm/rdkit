@@ -76,7 +76,7 @@ void RegisterVectorConverter(const char *name, bool noproxy = false) {
   }
   if (noproxy) {
     python::class_<std::vector<T>>(name).def(
-        python::vector_indexing_suite<std::vector<T>, 1>());
+        python::vector_indexing_suite<std::vector<T>, true>());
   } else {
     python::class_<std::vector<T>>(name).def(
         python::vector_indexing_suite<std::vector<T>>());
@@ -105,7 +105,7 @@ void RegisterListConverter(bool noproxy = false) {
 
   if (noproxy) {
     python::class_<std::list<T>>(name.c_str())
-        .def(python::list_indexing_suite<std::list<T>, 1>());
+        .def(python::list_indexing_suite<std::list<T>, true>());
   } else {
     python::class_<std::list<T>>(name.c_str())
         .def(python::list_indexing_suite<std::list<T>>());

@@ -144,7 +144,7 @@ int RGroupDecomposition::add(const ROMol &inmol) {
       bool passes_filter = data->params.onlyMatchAtRGroups;
       boost::dynamic_bitset<> target_match_indices(mol.getNumAtoms());
       for (const auto &match : mv) {
-        target_match_indices[match.second] = 1;
+        target_match_indices[match.second] = true;
       }
 
       // target atoms that map to user defined R-groups

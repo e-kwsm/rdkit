@@ -193,7 +193,7 @@ void updatePatternFingerprint(const ROMol &mol, ExplicitBitVect &fp,
   std::vector<const ROMol *> patts;
   patts.reserve(10);
   unsigned int idx = 0;
-  while (1) {
+  while (true) {
     std::string pq = pqs[idx];
     if (pq == "") {
       break;

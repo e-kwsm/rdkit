@@ -295,7 +295,7 @@ extern "C" bool isValidSmiles(char *data) {
       // Pass the test - No-Structure input is allowed. No cleanup necessary.
       return true;
     }
-    mol = SmilesToMol(str, 0, 0);
+    mol = SmilesToMol(str, 0, false);
     if (mol) {
       MolOps::cleanUp(*mol);
       mol->updatePropertyCache();
@@ -1192,7 +1192,7 @@ extern "C" double calcSparseStringDiceSml(const char *a, unsigned int,
   nElem2--;
   v2Sum += v2;
 
-  while (1) {
+  while (true) {
     while (nElem2 && idx2 < idx1) {
       idx2 = *(reinterpret_cast<const std::uint32_t *>(t2));
       t2 += sizeof(std::uint32_t);

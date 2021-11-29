@@ -1891,15 +1891,15 @@ TEST_CASE("github #4122: segfaults in commitBatchEdit()", "[editing]][bug]") {
   SECTION("after add atom") {
     auto m = "CC"_smiles;
     m->beginBatchEdit();
-    m->addAtom(6);
+    m->addAtom(true);
     m->removeAtom(0u);
-    m->addAtom(6);
+    m->addAtom(true);
     m->commitBatchEdit();
   }
   SECTION("remove a just-added atom") {
     auto m = "CC"_smiles;
     m->beginBatchEdit();
-    m->addAtom(6);
+    m->addAtom(true);
     m->removeAtom(2);
     m->commitBatchEdit();
   }

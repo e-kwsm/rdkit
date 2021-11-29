@@ -222,7 +222,7 @@ bool MolMatchFinalCheckFunctor::operator()(const std::uint32_t q_c[],
     std::fill(match.begin(), match.end(), 0);
 #endif
     for (unsigned int i = 0; i < d_query.getNumAtoms(); ++i) {
-      match[m_c[i]] = 1;
+      match[m_c[i]] = true;
     }
     if (matchesSeen.find(match) != matchesSeen.end()) {
       return false;

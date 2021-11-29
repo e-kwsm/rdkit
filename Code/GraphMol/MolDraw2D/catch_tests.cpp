@@ -3835,7 +3835,7 @@ M  END
 )CTAB"_ctab;
   // SDD record has format
   // M  SDD sss xxxxx.xxxxyyyyy.yyyy eeefgh i jjjkkk ll m noo
-  MolDraw2DSVG drawer(350, 300, -1, -1, 1);
+  MolDraw2DSVG drawer(350, 300, -1, -1, true);
   drawer.drawMolecule(*mol);
   drawer.finishDrawing();
   auto text = drawer.getDrawingText();
@@ -3999,7 +3999,7 @@ TEST_CASE("changing baseFontSize") {
   REQUIRE(mol2);
   MolDraw2DUtils::prepareMolForDrawing(*mol2);
   SECTION("basics-large") {
-    MolDraw2DSVG drawer(350, 300, -1, -1, 1);
+    MolDraw2DSVG drawer(350, 300, -1, -1, true);
     drawer.drawMolecule(*mol1);
     drawer.finishDrawing();
     CHECK(drawer.fontSize() == Approx(6.0).margin(0.1));
@@ -4012,7 +4012,7 @@ TEST_CASE("changing baseFontSize") {
   SECTION("increase size - large") {
     // here we change the base font size, but it doesn't matter since the
     // structure is big enough we end up stuck with the minimum font size.
-    MolDraw2DSVG drawer(350, 300, -1, -1, 1);
+    MolDraw2DSVG drawer(350, 300, -1, -1, true);
     drawer.drawOptions().baseFontSize = 0.9;
     drawer.drawMolecule(*mol1);
     drawer.finishDrawing();
@@ -4024,7 +4024,7 @@ TEST_CASE("changing baseFontSize") {
     check_file_hash("testBaseFontSize.1b.svg");
   }
   SECTION("basics-small") {
-    MolDraw2DSVG drawer(350, 300, -1, -1, 1);
+    MolDraw2DSVG drawer(350, 300, -1, -1, true);
     drawer.drawMolecule(*mol2);
     drawer.finishDrawing();
     CHECK(drawer.fontSize() == Approx(14.0).margin(0.1));
@@ -4035,7 +4035,7 @@ TEST_CASE("changing baseFontSize") {
     check_file_hash("testBaseFontSize.2a.svg");
   }
   SECTION("increase size - smaller") {
-    MolDraw2DSVG drawer(350, 300, -1, -1, 1);
+    MolDraw2DSVG drawer(350, 300, -1, -1, true);
     drawer.drawOptions().baseFontSize = 0.9;
     drawer.drawMolecule(*mol2);
     drawer.finishDrawing();

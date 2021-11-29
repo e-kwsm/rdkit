@@ -234,9 +234,9 @@ void Bond::initBond() {
   dp_mol = nullptr;
   d_beginAtomIdx = 0;
   d_endAtomIdx = 0;
-  df_isAromatic = 0;
+  df_isAromatic = false;
   d_index = 0;
-  df_isConjugated = 0;
+  df_isConjugated = false;
   dp_stereoAtoms = nullptr;
 };
 

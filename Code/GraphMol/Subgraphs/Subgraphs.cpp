@@ -99,7 +99,7 @@ void recurseWalk(
     // cands.erase(remove(cands.begin(), cands.end(), next), cands.end());
     if (!forbidden[next]) {
       // this bond should not appear in the later subgraphs
-      forbidden[next] = 1;
+      forbidden[next] = true;
 
       // update a local stack before the next recursive call
       INT_VECT tstack = cands;
@@ -158,7 +158,7 @@ void recurseWalkRange(
     // cands.erase(remove(cands.begin(), cands.end(), next), cands.end());
     if (!forbidden[next]) {
       // this bond should not appear in the later subgraphs
-      forbidden[next] = 1;
+      forbidden[next] = true;
 
       // update a local stack before the next recursive call
       INT_VECT tstack = cands;
@@ -325,7 +325,7 @@ PATH_LIST findAllSubgraphsOfLengthN(const ROMol &mol, unsigned int targetLen,
     if (forbidden[i]) {
       continue;
     }
-    forbidden[i] = 1;
+    forbidden[i] = true;
 
     // start the recursive path building with the current bond
     PATH_TYPE spath;
@@ -380,7 +380,7 @@ INT_PATH_LIST_MAP findAllSubgraphsOfLengthsMtoN(const ROMol &mol,
     if (forbidden[i]) {
       continue;
     }
-    forbidden[i] = 1;
+    forbidden[i] = true;
 
     // start the recursive path building with the current bond
     PATH_TYPE spath;

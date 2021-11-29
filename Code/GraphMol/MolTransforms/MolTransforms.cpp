@@ -430,8 +430,8 @@ void _toBeMovedIdxList(const ROMol &mol, unsigned int iAtomId,
   boost::dynamic_bitset<> visitedIdx(nAtoms);
   std::stack<unsigned int> stack;
   stack.push(jAtomId);
-  visitedIdx[iAtomId] = 1;
-  visitedIdx[jAtomId] = 1;
+  visitedIdx[iAtomId] = true;
+  visitedIdx[jAtomId] = true;
   unsigned int tIdx;
   unsigned int wIdx;
   ROMol::ADJ_ITER nbrIdx;
@@ -446,7 +446,7 @@ void _toBeMovedIdxList(const ROMol &mol, unsigned int iAtomId,
     for (eIdx = 0; nbrIdx != endNbrs; ++nbrIdx, ++eIdx) {
       wIdx = (mol[*nbrIdx])->getIdx();
       if (!visitedIdx[wIdx]) {
-        visitedIdx[wIdx] = 1;
+        visitedIdx[wIdx] = true;
         stack.push(wIdx);
         doMainLoop = true;
         break;
@@ -455,7 +455,7 @@ void _toBeMovedIdxList(const ROMol &mol, unsigned int iAtomId,
     if (doMainLoop) {
       continue;
     }
-    visitedIdx[tIdx] = 1;
+    visitedIdx[tIdx] = true;
     stack.pop();
   }
   alist.clear();

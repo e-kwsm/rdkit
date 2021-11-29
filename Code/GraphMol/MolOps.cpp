@@ -72,7 +72,7 @@ void nitrogenCleanup(RWMol &mol, Atom *atom) {
   // explicit valence code modifies its results for aromatic
   // atoms.
   aromHolder = atom->getIsAromatic();
-  atom->setIsAromatic(0);
+  atom->setIsAromatic(false);
   // NOTE that we are calling calcExplicitValence() here, we do
   // this because we cannot be sure that it has already been
   // called on the atom (cleanUp() gets called pretty early in
@@ -626,7 +626,7 @@ std::vector<ROMOL_SPTR> getMolFrags(const ROMol &mol, bool sanitizeFrags,
     for (unsigned int idx = 0; idx < mol.getNumAtoms(); ++idx) {
       const Atom *oAtm = mol.getAtomWithIdx(idx);
       ids[idx] = res[(*mapping)[idx]]->addAtom(oAtm->copy(), false, true);
-      copiedAtoms[idx] = 1;
+      copiedAtoms[idx] = true;
       if (fragsMolAtomMapping) {
         if (comMap.find((*mapping)[idx]) == comMap.end()) {
           INT_VECT comp;
@@ -639,7 +639,7 @@ std::vector<ROMOL_SPTR> getMolFrags(const ROMol &mol, bool sanitizeFrags,
       for (const auto nbr : mol.atomNeighbors(oAtm)) {
         if (copiedAtoms[nbr->getIdx()]) {
           copiedBonds[mol.getBondBetweenAtoms(idx, nbr->getIdx())->getIdx()] =
-              1;
+              true;
         }
       }
     }

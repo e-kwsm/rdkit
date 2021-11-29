@@ -335,8 +335,8 @@ const std::string GetMolFileZBOInfo(const RWMol &mol) {
         nEntries = 0;
         ss.str("");
       }
-      atomsAffected[(*bondIt)->getBeginAtomIdx()] = 1;
-      atomsAffected[(*bondIt)->getEndAtomIdx()] = 1;
+      atomsAffected[(*bondIt)->getBeginAtomIdx()] = true;
+      atomsAffected[(*bondIt)->getEndAtomIdx()] = true;
     }
   }
   if (nEntries) {

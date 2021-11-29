@@ -51,10 +51,10 @@ void backTrack(RWMol &mol, INT_INT_DEQ_MAP &, int lastOpt, INT_VECT &done,
           (std::find(tdone.begin(), tdone.end(), aid2) == tdone.end())) {
         // otherwise strip the double bond and set it back to single
         // and add the atoms to candidate for double bonds
-        dBndAdds[bi] = 0;
+        dBndAdds[bi] = false;
         bnd->setBondType(Bond::SINGLE);
-        dBndCands[aid1] = 1;
-        dBndCands[aid2] = 1;
+        dBndCands[aid1] = true;
+        dBndCands[aid2] = true;
       }
     }
   }
@@ -146,7 +146,7 @@ void markDbondCands(RWMol &mol, const INT_VECT &allAtms,
     if (!at->getAtomicNum() && nonArNonDummyNbr < numAtomRings &&
         numNonCandRings < numAtomRings) {
       // dummies always start as candidates to have a double bond:
-      dBndCands[allAtm] = 1;
+      dBndCands[allAtm] = true;
       // but they don't have to have one, so mark them as questionable:
       questions.push_back(allAtm);
     } else {
@@ -204,11 +204,11 @@ void markDbondCands(RWMol &mol, const INT_VECT &allAtms,
       // matches the valence state
       // (including nRadicals here was SF.net issue 3349243)
       if (dv == (sbo + 1 + nRadicals)) {
-        dBndCands[allAtm] = 1;
+        dBndCands[allAtm] = true;
       } else if (!nRadicals && at->getNoImplicit() && dv == (sbo + 2)) {
         // special case: there is currently no radical on the atom, but if
         // if we allow one then this is a candidate:
-        dBndCands[allAtm] = 1;
+        dBndCands[allAtm] = true;
       }
     }
   }  // loop over all atoms in the fused system
@@ -319,12 +319,12 @@ bool kekulizeWorker(RWMol &mol, const INT_VECT &allAtms,
         bnd->setBondType(Bond::DOUBLE);
 
         // remove current and the neighbor from the dBndCands list
-        dBndCands[curr] = 0;
-        dBndCands[ncnd] = 0;
+        dBndCands[curr] = false;
+        dBndCands[ncnd] = false;
 
         // add them to the list of bonds to which have been made double
-        dBndAdds[bnd->getIdx()] = 1;
-        localBondsAdded[bnd->getIdx()] = 1;
+        dBndAdds[bnd->getIdx()] = true;
+        localBondsAdded[bnd->getIdx()] = true;
 
         // if this is an atom we previously visted and picked we
         // simply tried a different option now, overwrite the options
@@ -410,7 +410,7 @@ bool permuteDummiesAndKekulize(RWMol &mol, const INT_VECT &allAtms,
                                unsigned int maxBackTracks) {
   boost::dynamic_bitset<> atomsInPlay(mol.getNumAtoms());
   for (int allAtm : allAtms) {
-    atomsInPlay[allAtm] = 1;
+    atomsInPlay[allAtm] = true;
   }
   bool kekulized = false;
   QuestionEnumerator qEnum(questions);
@@ -434,7 +434,7 @@ bool permuteDummiesAndKekulize(RWMol &mol, const INT_VECT &allAtms,
     }
     auto tCands = dBndCands;
     for (int it : switchOff) {
-      tCands[it] = 0;
+      tCands[it] = false;
     }
 #if 0
         std::cerr<<"permute: ";
@@ -522,7 +522,7 @@ void KekulizeFragment(RWMol &mol, const boost::dynamic_bitset<> &atomsToUse,
     if (bondsToUse[bond->getIdx()]) {
       if (QueryOps::hasBondTypeQuery(*bond)) {
         // we don't kekulize bonds with bond type queries
-        bondsToUse[bond->getIdx()] = 0;
+        bondsToUse[bond->getIdx()] = false;
       } else if (bond->getIsAromatic()) {
         foundAromatic = true;
       }
@@ -546,7 +546,7 @@ void KekulizeFragment(RWMol &mol, const boost::dynamic_bitset<> &atomsToUse,
       foundAromatic = true;
     }
     if (!atom->getAtomicNum()) {
-      dummyAts[atom->getIdx()] = 1;
+      dummyAts[atom->getIdx()] = true;
     }
   }
   if (!foundAromatic) {

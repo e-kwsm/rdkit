@@ -40,11 +40,11 @@ void testDeleteSubstruct() {
   sma = "C=O";
   matcher1 = SmartsToMol(sma);
   TEST_ASSERT(matcher1);
-  mol2 = deleteSubstructs(*mol1, *matcher1, 0);
+  mol2 = deleteSubstructs(*mol1, *matcher1, false);
   delete mol1;
   TEST_ASSERT(mol2);
   TEST_ASSERT(mol2->getNumAtoms() == 2)
-  mol1 = deleteSubstructs(*mol2, *matcher1, 0);
+  mol1 = deleteSubstructs(*mol2, *matcher1, false);
   TEST_ASSERT(mol2);
   TEST_ASSERT(mol2->getNumAtoms() == 2)
   delete matcher1;
@@ -1096,7 +1096,7 @@ void testMurckoDecomp() {
       {"CCC", ""},
       {"EOS", "EOS"}};
   unsigned int i = 0;
-  while (1) {
+  while (true) {
     std::string smi = testMolecules[i][0];
     std::string tgt = testMolecules[i][1];
     ++i;

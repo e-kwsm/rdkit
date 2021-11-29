@@ -381,15 +381,15 @@ unsigned int RWMol::addBond(unsigned int atomIdx1, unsigned int atomIdx2,
   auto *b = new Bond(bondType);
   b->setOwningMol(this);
   if (bondType == Bond::AROMATIC) {
-    b->setIsAromatic(1);
+    b->setIsAromatic(true);
     //
     // assume that aromatic bonds connect aromatic atoms
     //   This is relevant for file formats like MOL, where there
     //   is no such thing as an aromatic atom, but bonds can be
     //   marked aromatic.
     //
-    getAtomWithIdx(atomIdx1)->setIsAromatic(1);
-    getAtomWithIdx(atomIdx2)->setIsAromatic(1);
+    getAtomWithIdx(atomIdx1)->setIsAromatic(true);
+    getAtomWithIdx(atomIdx2)->setIsAromatic(true);
   }
   bool ok;
   MolGraph::edge_descriptor which;

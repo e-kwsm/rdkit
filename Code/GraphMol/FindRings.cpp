@@ -121,7 +121,7 @@ void markUselessD2s(unsigned int root, const ROMol &tMol,
     }
     unsigned int oIdx = bond->getOtherAtomIdx(root);
     if (!forb[oIdx] && atomDegrees[oIdx] == 2) {
-      forb[oIdx] = 1;
+      forb[oIdx] = true;
       markUselessD2s(oIdx, tMol, forb, atomDegrees, activeBonds);
     }
   }
@@ -134,13 +134,13 @@ void pickD2Nodes(const ROMol &tMol, INT_VECT &d2nodes, const INT_VECT &currFrag,
 
   // forb contains all d2 nodes, not just the ones we want to keep
   boost::dynamic_bitset<> forb(tMol.getNumAtoms());
-  while (1) {
+  while (true) {
     int root = -1;
     for (int axci : currFrag) {
       if (atomDegrees[axci] == 2 && !forb[axci]) {
         root = axci;
         d2nodes.push_back(axci);
-        forb[axci] = 1;
+        forb[axci] = true;
         break;
       }
     }
@@ -250,7 +250,7 @@ void removeExtraRings(VECT_INT_VECT &res, unsigned int, const ROMol &mol) {
   for (unsigned int i = 0; i < res.size(); ++i) {
     // skip this ring if we've already seen all of its bonds
     if (bitBrings[i].is_subset_of(munion)) {
-      availRings.set(i, 0);
+      availRings.set(i, false);
     }
     if (!availRings[i]) {
       continue;
@@ -289,12 +289,12 @@ void removeExtraRings(VECT_INT_VECT &res, unsigned int, const ROMol &mol) {
           bestJ = j;
         }
       }
-      consider.set(bestJ, 0);
+      consider.set(bestJ, false);
       if (bitBrings[bestJ].is_subset_of(munion)) {
-        availRings.set(bestJ, 0);
+        availRings.set(bestJ, false);
       } else {
         keepRings.set(bestJ);
-        availRings.set(bestJ, 0);
+        availRings.set(bestJ, false);
         munion |= bitBrings[bestJ];
       }
     }
@@ -625,7 +625,7 @@ void trimBonds(unsigned int cand, const ROMol &tMol, INT_SET &changed,
     if (atomDegrees[oIdx] <= 2) {
       changed.insert(oIdx);
     }
-    activeBonds[bond->getIdx()] = 0;
+    activeBonds[bond->getIdx()] = false;
     atomDegrees[oIdx] -= 1;
     atomDegrees[cand] -= 1;
   }
@@ -888,7 +888,7 @@ int findSSSR(const ROMol &mol, VECT_INT_VECT &res, bool includeDativeBonds) {
     const Bond *bond = mol[*firstB];
     if (bond->getBondType() == Bond::ZERO ||
         (!includeDativeBonds && bondIsDative(*bond))) {
-      activeBonds[bond->getIdx()] = 0;
+      activeBonds[bond->getIdx()] = false;
     }
     ++firstB;
   }
@@ -1065,7 +1065,7 @@ int findSSSR(const ROMol &mol, VECT_INT_VECT &res, bool includeDativeBonds) {
         bool ringFound = FindRings::findRingConnectingAtoms(
             mol, possibleBonds[0], fragRes, invars, ringBonds, ringAtoms);
         if (!ringFound) {
-          deadBonds.set(possibleBonds[0]->getIdx(), 1);
+          deadBonds.set(possibleBonds[0]->getIdx(), true);
         }
         possibleBonds.clear();
         // check if we need to repeat the process:

@@ -61,7 +61,7 @@ void test1() {
     }
     std::cerr << "\n\n\n\n\n\n\n\n\n-------------------" << std::endl;
     ExplicitBitVect *fp1 =
-        RDKFingerprintMol(*m1, 1, 5, 1024, 1, 0, -1, 0, 1, 1, &vs1);
+        RDKFingerprintMol(*m1, 1, 5, 1024, 1, false, -1, 0, true, true, &vs1);
     smi = "c1ccoc1";
     RWMol *m2 = SmilesToMol(smi);
     std::vector<std::uint32_t> vs2(m2->getNumAtoms());
@@ -70,7 +70,7 @@ void test1() {
     }
     std::cerr << "\n\n\n\n\n\n\n\n\n-------------------" << std::endl;
     ExplicitBitVect *fp2 =
-        RDKFingerprintMol(*m2, 1, 5, 1024, 1, 0, -1, 0, 1, 1, &vs2);
+        RDKFingerprintMol(*m2, 1, 5, 1024, 1, false, -1, 0, true, true, &vs2);
 
     TEST_ASSERT(((*fp1) & (*fp2)) == (*fp2));
     delete m1;
@@ -89,7 +89,7 @@ void test1() {
     m1->debugMol(std::cerr);
     std::cerr << "\n\n\n\n\n\n\n\n\n-------------------" << std::endl;
     ExplicitBitVect *fp1 =
-        RDKFingerprintMol(*m1, 4, 4, 1024, 1, 0, -1, 0, 1, 1, &vs1);
+        RDKFingerprintMol(*m1, 4, 4, 1024, 1, false, -1, 0, true, true, &vs1);
 
     for (unsigned int i = 0; i < m1->getNumAtoms(); ++i) {
       smi = MolToSmiles(*m1, false, false, i, false);
@@ -102,7 +102,7 @@ void test1() {
       m2->debugMol(std::cerr);
       std::cerr << "\n\n\n\n\n\n\n\n\n-------------------" << std::endl;
       ExplicitBitVect *fp2 =
-          RDKFingerprintMol(*m2, 4, 4, 1024, 1, 0, -1, 0, 1, 1, &vs2);
+          RDKFingerprintMol(*m2, 4, 4, 1024, 1, false, -1, 0, true, true, &vs2);
       IntVect iv;
       ((*fp2) ^ (*fp1)).getOnBits(iv);
       std::copy(iv.begin(), iv.end(),
@@ -125,7 +125,7 @@ void test1() {
     }
     std::cerr << "\n\n\n\n\n\n\n\n\n-------------------" << std::endl;
     ExplicitBitVect *fp1 =
-        RDKFingerprintMol(*m1, 1, 5, 1024, 1, 0, -1, 0, 1, 1, &vs1);
+        RDKFingerprintMol(*m1, 1, 5, 1024, 1, false, -1, 0, true, true, &vs1);
     smi = "c1ccncc1";
     RWMol *m2 = SmilesToMol(smi);
     std::vector<std::uint32_t> vs2(m2->getNumAtoms());
@@ -134,7 +134,7 @@ void test1() {
     }
     std::cerr << "\n\n\n\n\n\n\n\n\n-------------------" << std::endl;
     ExplicitBitVect *fp2 =
-        RDKFingerprintMol(*m2, 1, 5, 1024, 1, 0, -1, 0, 1, 1, &vs2);
+        RDKFingerprintMol(*m2, 1, 5, 1024, 1, false, -1, 0, true, true, &vs2);
 
     IntVect iv;
     ((*fp2) ^ ((*fp1) & (*fp2))).getOnBits(iv);

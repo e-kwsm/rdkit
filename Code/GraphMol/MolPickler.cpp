@@ -1721,12 +1721,12 @@ Atom *MolPickler::_addAtomFromPickle(std::istream &ss, ROMol *mol,
   atom->setIsAromatic(flags & 0x1 << 6);
   atom->setNoImplicit(flags & 0x1 << 5);
 
-  bool hasAtomMap = 0, hasDummyLabel = 0;
+  bool hasAtomMap = false, hasDummyLabel = false;
   if (version >= 6020) {
     hasAtomMap = flags & 0x1 << 3;
     hasDummyLabel = flags & 0x1 << 2;
   }
-  bool hasMonomerInfo = 0;
+  bool hasMonomerInfo = false;
   if (version >= 7020) {
     hasMonomerInfo = flags & 0x1 << 1;
   }
