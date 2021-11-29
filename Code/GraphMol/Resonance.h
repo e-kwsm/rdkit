@@ -44,8 +44,8 @@ class RDKIT_GRAPHMOL_EXPORT ResonanceMolSupplierCallback {
   friend class ResonanceMolSupplier;
 
  public:
-  ResonanceMolSupplierCallback() {}
-  virtual ~ResonanceMolSupplierCallback() {}
+  ResonanceMolSupplierCallback() = default;
+  virtual ~ResonanceMolSupplierCallback() = default;
   /*! Get the number of conjugated groups this molecule has. */
   unsigned int getNumConjGrps() const { return d_progress.size(); }
   /*! Get the maximum number of resonance structures the supplier
