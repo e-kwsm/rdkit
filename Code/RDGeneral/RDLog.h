@@ -46,6 +46,10 @@ class RDKIT_RDGENERAL_EXPORT rdLogger {
         tee(nullptr),
         teestream(nullptr) {}
 
+  // disable copy ctor and assignment
+  rdLogger(const rdLogger &) = delete;
+  rdLogger &operator=(const rdLogger &) = delete;
+
   //! Sets a stream to tee the output to.
   void SetTee(std::ostream &stream) {
     if (dp_dest) {
@@ -91,11 +95,6 @@ class RDKIT_RDGENERAL_EXPORT rdLogger {
       dp_dest = nullptr;
     }
   }
-
- private:
-  // disable copy ctor and assignment
-  rdLogger(const rdLogger &);
-  rdLogger &operator=(const rdLogger &);
 };
 RDKIT_RDGENERAL_EXPORT void enable_logs(const char *arg);
 RDKIT_RDGENERAL_EXPORT void enable_logs(const std::string &arg);
