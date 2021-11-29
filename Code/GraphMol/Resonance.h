@@ -127,6 +127,9 @@ class RDKIT_GRAPHMOL_EXPORT ResonanceMolSupplier {
   ResonanceMolSupplier(ROMol &mol, unsigned int flags = 0,
                        unsigned int maxStructs = 1000);
   ~ResonanceMolSupplier();
+  // disable copy constructor and assignment operator
+  ResonanceMolSupplier(const ResonanceMolSupplier &) = delete;
+  ResonanceMolSupplier &operator=(const ResonanceMolSupplier &) = delete;
   /*! Returns a reference to the Kekulized form of the ROMol the
    *  ResonanceMolSupplier was initialized with */
   const ROMol &mol() const { return *d_mol; }
@@ -215,9 +218,6 @@ class RDKIT_GRAPHMOL_EXPORT ResonanceMolSupplier {
   std::vector<int> d_atomConjGrpIdx;
   std::vector<size_t> d_enumIdx;
   std::unique_ptr<ResonanceMolSupplierCallback> d_callback;
-  // disable copy constructor and assignment operator
-  ResonanceMolSupplier(const ResonanceMolSupplier &);
-  ResonanceMolSupplier &operator=(const ResonanceMolSupplier &);
   void mainLoop(unsigned int ti, unsigned int nt);
   void assignConjGrpIdx();
   void resizeCeVect();

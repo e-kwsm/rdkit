@@ -84,6 +84,13 @@ class RDKIT_DATASTRUCTS_EXPORT MultiFPBReader {
     }
   }
 
+  // disable automatic copy constructors and assignment operators
+  // for this class and its subclasses.  They will likely be
+  // carrying around stream pointers and copying those is a recipe
+  // for disaster.
+  MultiFPBReader(const MultiFPBReader &) = delete;
+  MultiFPBReader &operator=(const MultiFPBReader &) = delete;
+
   //! Read the data from the file and initialize internal data structures
   /*!
   This must be called before most of the other methods of this class.
@@ -201,13 +208,6 @@ class RDKIT_DATASTRUCTS_EXPORT MultiFPBReader {
  private:
   std::vector<FPBReader *> d_readers;
   bool df_init{false}, df_initOnSearch{false}, df_takeOwnership{false};
-
-  // disable automatic copy constructors and assignment operators
-  // for this class and its subclasses.  They will likely be
-  // carrying around stream pointers and copying those is a recipe
-  // for disaster.
-  MultiFPBReader(const MultiFPBReader &);
-  MultiFPBReader &operator=(const MultiFPBReader &);
 };
 }  // namespace RDKit
 #endif

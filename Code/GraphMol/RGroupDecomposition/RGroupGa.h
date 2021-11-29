@@ -45,6 +45,10 @@ typedef enum {
 class RGroupDecompositionChromosome : public IntegerStringChromosome {
  public:
   RGroupDecompositionChromosome(RGroupGa &rGroupGa);
+  RGroupDecompositionChromosome(const RGroupDecompositionChromosome &other) =
+      delete;
+  RGroupDecompositionChromosome &operator=(
+      const RGroupDecompositionChromosome &other) = delete;
 
   double getFitness() const { return fitness; }
 
@@ -75,10 +79,6 @@ class RGroupDecompositionChromosome : public IntegerStringChromosome {
   const RGroupGa &getRGroupGA() const { return rGroupGa; }
 
  private:
-  RGroupDecompositionChromosome(const RGroupDecompositionChromosome &other) =
-      delete;
-  RGroupDecompositionChromosome &operator=(
-      const RGroupDecompositionChromosome &other) = delete;
   double fitness;
   FingerprintVarianceScoreData fingerprintVarianceScoreData;
   OperationName operationName = Create;
@@ -104,6 +104,8 @@ class RDKIT_RGROUPDECOMPOSITION_EXPORT RGroupGa : public GaBase {
  public:
   RGroupGa(const RGroupDecompData &rGroupData,
            const chrono::steady_clock::time_point *const t0 = nullptr);
+  RGroupGa(const RGroupGa &other) = delete;
+  RGroupGa &operator=(const RGroupGa &other) = delete;
 
   IntegerStringChromosomePolicy &getChromosomePolicy() {
     return chromosomePolicy;
@@ -127,8 +129,6 @@ class RDKIT_RGROUPDECOMPOSITION_EXPORT RGroupGa : public GaBase {
   unsigned int numberPermutations() const { return numPermutations; }
 
  private:
-  RGroupGa(const RGroupGa &other) = delete;
-  RGroupGa &operator=(const RGroupGa &other) = delete;
   const RGroupDecompData &rGroupData;
 
   IntegerStringChromosomePolicy chromosomePolicy;

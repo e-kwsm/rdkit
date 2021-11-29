@@ -64,6 +64,8 @@ class SymmMatrix {
 
   ~SymmMatrix() = default;
 
+  SymmMatrix<TYPE> &operator=(const SymmMatrix<TYPE> &other) = delete;
+
   //! returns the number of rows
   inline unsigned int numRows() const { return d_size; }
 
@@ -237,9 +239,6 @@ class SymmMatrix {
   unsigned int d_size{0};
   unsigned int d_dataSize{0};
   DATA_SPTR d_data;
-
- private:
-  SymmMatrix<TYPE> &operator=(const SymmMatrix<TYPE> &other);
 };
 
 //! SymmMatrix-SymmMatrix multiplication

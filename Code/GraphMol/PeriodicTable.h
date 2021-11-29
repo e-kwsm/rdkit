@@ -49,6 +49,8 @@ class RDKIT_GRAPHMOL_EXPORT PeriodicTable {
     byname.clear();
   }
 
+  PeriodicTable &operator=(const PeriodicTable &) = delete;
+
   //! returns the atomic weight
   double getAtomicWeight(UINT atomicNumber) const {
     PRECONDITION(atomicNumber < byanum.size(), "Atomic number not found");
@@ -336,7 +338,6 @@ class RDKIT_GRAPHMOL_EXPORT PeriodicTable {
 
  private:
   PeriodicTable();
-  PeriodicTable &operator=(const PeriodicTable &);
   static void initInstance();
 
   static class std::unique_ptr<PeriodicTable> ds_instance;

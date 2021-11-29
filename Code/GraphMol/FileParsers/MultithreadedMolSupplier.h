@@ -42,8 +42,14 @@ class RDKIT_FILEPARSERS_EXPORT MultithreadedMolSupplier : public MolSupplier {
   };
 
   MultithreadedMolSupplier() {}
+  //! disable automatic copy constructors and assignment operators
+  //! for this class and its subclasses.  They will likely be
+  //! carrying around stream pointers and copying those is a recipe
+  //! for disaster.
+  MultithreadedMolSupplier(const MultithreadedMolSupplier &) = delete;
+  MultithreadedMolSupplier &operator=(const MultithreadedMolSupplier &) =
+      delete;
 
-  
   // Derived classes MUST have a destructor that calls close
   //  to properly end threads while the instance is alive
   virtual ~MultithreadedMolSupplier() {close();}
@@ -116,12 +122,6 @@ class RDKIT_FILEPARSERS_EXPORT MultithreadedMolSupplier : public MolSupplier {
   //! parses lines from the input queue converting them to RWMol objects
   //! populating the output queue
   void writer();
-  //! disable automatic copy constructors and assignment operators
-  //! for this class and its subclasses.  They will likely be
-  //! carrying around stream pointers and copying those is a recipe
-  //! for disaster.
-  MultithreadedMolSupplier(const MultithreadedMolSupplier &);
-  MultithreadedMolSupplier &operator=(const MultithreadedMolSupplier &);
   //! not yet implemented
   void reset() override;
   void init() override = 0;
