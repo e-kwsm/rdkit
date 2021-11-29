@@ -20,7 +20,7 @@ class RDProps {
 
  public:
   RDProps() : d_props() {}
-  RDProps(const RDProps &rhs) : d_props(rhs.d_props) {}
+  RDProps(const RDProps &rhs) = default;
   RDProps &operator=(const RDProps &rhs) {
     if (this == &rhs) {
       return *this;

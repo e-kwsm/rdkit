@@ -19,7 +19,7 @@ class AtomicParams;
 //! The bond-stretch term for the Universal Force Field
 class RDKIT_FORCEFIELD_EXPORT BondStretchContrib : public ForceFieldContrib {
  public:
-  BondStretchContrib() {}
+  BondStretchContrib() = default;
   //! Constructor
   /*!
     \param owner       pointer to the owning ForceField

@@ -35,7 +35,7 @@ static int defaultConfId = -1;
 
 class RDKIT_FILEPARSERS_EXPORT MolWriter : private boost::noncopyable {
  public:
-  virtual ~MolWriter() {}
+  virtual ~MolWriter() = default;
   virtual void write(const ROMol &mol, int confId = defaultConfId) = 0;
   virtual void flush() = 0;
   virtual void close() = 0;

@@ -21,7 +21,7 @@ class MMFFVdW;
 //! combined vdW and charge terms for MMFF
 class RDKIT_FORCEFIELD_EXPORT NonbondedContrib : public ForceFieldContrib {
  public:
-  NonbondedContrib() {}
+  NonbondedContrib() = default;
   NonbondedContrib(ForceField *owner);
   //! Track a new VdW pair
   void addTerm(unsigned int idx1, unsigned int idx2,
@@ -54,7 +54,7 @@ class RDKIT_FORCEFIELD_EXPORT NonbondedContrib : public ForceFieldContrib {
 //! the van der Waals term for MMFF
 class RDKIT_FORCEFIELD_EXPORT VdWContrib : public ForceFieldContrib {
  public:
-  VdWContrib() {}
+  VdWContrib() = default;
   VdWContrib(ForceField *owner);
   //! Track a new VdW pair
   void addTerm(unsigned int idx1, unsigned int idx2,
@@ -74,7 +74,7 @@ class RDKIT_FORCEFIELD_EXPORT VdWContrib : public ForceFieldContrib {
 //! the electrostatic term for MMFF
 class RDKIT_FORCEFIELD_EXPORT EleContrib : public ForceFieldContrib {
  public:
-  EleContrib() {}
+  EleContrib() = default;
 
   //! Constructor
   /*!

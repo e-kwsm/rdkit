@@ -202,7 +202,7 @@ void ExplicitBitVect::_initForSize(unsigned int size) {
   d_numOnBits = 0;
 }
 
-ExplicitBitVect::~ExplicitBitVect() {}
+ExplicitBitVect::~ExplicitBitVect() = default;
 
 std::string ExplicitBitVect::toString() const {
   // This Function replaces the older version (version 16) of writing the onbits

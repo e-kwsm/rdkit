@@ -118,7 +118,7 @@ class RDKIT_FINGERPRINTS_EXPORT FingerprintArguments {
    */
   std::string commonArgumentsString() const;
 
-  virtual ~FingerprintArguments() {}
+  virtual ~FingerprintArguments() = default;
   FingerprintArguments() = default;
 };
 
@@ -150,7 +150,7 @@ class RDKIT_FINGERPRINTS_EXPORT AtomEnvironment : private boost::noncopyable {
   virtual void updateAdditionalOutput(AdditionalOutput *AdditionalOutput,
                                       size_t bitId) const = 0;
 
-  virtual ~AtomEnvironment() {}
+  virtual ~AtomEnvironment() = default;
 };
 
 /*!
@@ -216,7 +216,7 @@ class RDKIT_FINGERPRINTS_EXPORT AtomEnvironmentGenerator
 
   const FingerprintArguments *dp_fingerprintArguments;
 
-  virtual ~AtomEnvironmentGenerator() {}
+  virtual ~AtomEnvironmentGenerator() = default;
 };
 
 /*!
@@ -247,7 +247,7 @@ class RDKIT_FINGERPRINTS_EXPORT AtomInvariantsGenerator
   virtual void toJSON(boost::property_tree::ptree &) const {};
   virtual void fromJSON(const boost::property_tree::ptree &) {};
 
-  virtual ~AtomInvariantsGenerator() {}
+  virtual ~AtomInvariantsGenerator() = default;
   virtual AtomInvariantsGenerator *clone() const = 0;
 };
 
@@ -279,7 +279,7 @@ class RDKIT_FINGERPRINTS_EXPORT BondInvariantsGenerator
   virtual void toJSON(boost::property_tree::ptree &) const {};
   virtual void fromJSON(const boost::property_tree::ptree &) {};
 
-  virtual ~BondInvariantsGenerator() {}
+  virtual ~BondInvariantsGenerator() = default;
   virtual BondInvariantsGenerator *clone() const = 0;
 };  // namespace RDKit
 
