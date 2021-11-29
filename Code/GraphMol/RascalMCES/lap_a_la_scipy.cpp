@@ -196,7 +196,7 @@ int lapMaximize(const std::vector<std::vector<int>> &costsMat,
 
     // augment previous solution
     size_t j = sink;
-    while (1) {
+    while (true) {
       size_t i = path[j];
       row4col[j] = i;
       std::swap(col4row[i], j);
