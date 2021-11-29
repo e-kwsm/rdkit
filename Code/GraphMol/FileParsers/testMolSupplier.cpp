@@ -437,7 +437,7 @@ TEST_CASE("testSmilesSup") {
   smiSup.reset();
   int i = 0;
   mol = smiSup.next();
-  while (1) {
+  while (true) {
     std::string mname;
     mol->getProp(common_properties::_Name, mname);
     i++;
@@ -965,11 +965,11 @@ TEST_CASE("testStereoRound") {
 
     std::string mname;
     mol->getProp(common_properties::_Name, mname);
-    nameSmi[mname] = MolToSmiles(*mol, 1);
+    nameSmi[mname] = MolToSmiles(*mol, true);
 
     ROMol *nmol = SmilesToMol(nameSmi[mname]);
 
-    std::string nsmi = MolToSmiles(*nmol, 1);
+    std::string nsmi = MolToSmiles(*nmol, true);
     CHECK(nameSmi[mname] == nsmi);
 
     RDDepict::compute2DCoords(*mol);
@@ -989,7 +989,7 @@ TEST_CASE("testStereoRound") {
   while (!reader->atEnd()) {
     ROMol *mol = reader->next();
 
-    std::string smiles = MolToSmiles(*mol, 1);
+    std::string smiles = MolToSmiles(*mol, true);
     std::string mname;
     mol->getProp(common_properties::_Name, mname);
     CHECK(nameSmi[mname] == smiles);
@@ -1932,7 +1932,7 @@ TEST_CASE("testGetItemText") {
 
     mol1 = smisup[0];
     REQUIRE(mol1);
-    smiles = MolToSmiles(*mol1, 1);
+    smiles = MolToSmiles(*mol1, true);
     REQUIRE(smiles == "CC1=CC(=O)C=CC1=O");
     REQUIRE(mol1->getNumAtoms() == 9);
     delete mol1;
@@ -1997,7 +1997,7 @@ TEST_CASE("testGetItemText") {
 
     mol1 = tdtsup[0];
     REQUIRE(mol1);
-    smiles = MolToSmiles(*mol1, 1);
+    smiles = MolToSmiles(*mol1, true);
     REQUIRE(smiles == "Cc1nnc(N)nc1C");
     REQUIRE(mol1->getNumAtoms() == 9);
     delete mol1;
@@ -2007,7 +2007,7 @@ TEST_CASE("testGetItemText") {
     mol1 = tdtsup.next();
     REQUIRE(mol1);
     REQUIRE(mol1->getNumAtoms() == 9);
-    smiles = MolToSmiles(*mol1, 1);
+    smiles = MolToSmiles(*mol1, true);
     REQUIRE(smiles == "Cc1n[nH]c(=O)nc1N");
     delete mol1;
 
