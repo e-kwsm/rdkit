@@ -36,8 +36,8 @@ inline namespace v1 {
 class RDKIT_FILEPARSERS_EXPORT MolSupplier {
   // this is an abstract base class to supply molecules one at a time
  public:
-  MolSupplier() {}
-  virtual ~MolSupplier() {}
+  MolSupplier() = default;
+  virtual ~MolSupplier() = default;
   void init() {
     if (dp_supplier) {
       dp_supplier->init();
@@ -87,7 +87,7 @@ class RDKIT_FILEPARSERS_EXPORT ForwardSDMolSupplier : public MolSupplier {
    ***********************************************************************************/
  public:
   using ContainedType = v2::FileParsers::ForwardSDMolSupplier;
-  ForwardSDMolSupplier() {}
+  ForwardSDMolSupplier() = default;
 
   explicit ForwardSDMolSupplier(std::istream *inStream,
                                 bool takeOwnership = true, bool sanitize = true,
@@ -101,7 +101,7 @@ class RDKIT_FILEPARSERS_EXPORT ForwardSDMolSupplier : public MolSupplier {
         inStream, takeOwnership, params));
   };
 
-  ~ForwardSDMolSupplier() override {}
+  ~ForwardSDMolSupplier() override = default;
 
   void setProcessPropertyLists(bool val) {
     PRECONDITION(dp_supplier, "no supplier");

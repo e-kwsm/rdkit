@@ -25,7 +25,7 @@ class MMFFProp;
 //! The angle-bend term for MMFF
 class RDKIT_FORCEFIELD_EXPORT AngleBendContrib : public ForceFieldContrib {
  public:
-  AngleBendContrib() {}
+  AngleBendContrib() = default;
   //! Constructor
   /*!
     The angle is between atom1 - atom2 - atom3

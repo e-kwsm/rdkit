@@ -68,7 +68,7 @@ struct RDKIT_SUBSTRUCTMATCH_EXPORT SubstructMatchParameters {
   unsigned int maxRecursiveMatches =
       1000;  //!< maximum number of matches that the recursive substructure
              //!< matching should return
-  SubstructMatchParameters() {}
+  SubstructMatchParameters() = default;
 };
 
 RDKIT_SUBSTRUCTMATCH_EXPORT void updateSubstructMatchParamsFromJSON(

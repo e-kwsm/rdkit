@@ -23,7 +23,7 @@ class MMFFOop;
 //! the out-of-plane term for MMFF
 class RDKIT_FORCEFIELD_EXPORT OopBendContrib : public ForceFieldContrib {
  public:
-  OopBendContrib() {}
+  OopBendContrib() = default;
   //! Constructor
   /*!
     The Wilson angle is between the vector formed by atom2-atom4
