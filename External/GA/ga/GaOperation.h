@@ -11,6 +11,7 @@
 #ifndef GAOPERATION_H_
 #define GAOPERATION_H_
 
+#include <memory>
 #include <vector>
 
 namespace GapeGa {
@@ -22,8 +23,6 @@ class GaOperation {
   const double weight;
   void (*opfunction)(const std::vector<std::shared_ptr<Chromosome>>& parents,
                      std::vector<std::shared_ptr<Chromosome>>& children);
-  GaOperation(const GaOperation&) = delete;
-  GaOperation& operator=(const GaOperation& other) = delete;
 
  public:
   GaOperation(int nParents_, int nChildren_, double weight_,
@@ -34,7 +33,9 @@ class GaOperation {
         nChildren(nChildren_),
         weight(weight_),
         opfunction(opfunction_) {}
+  GaOperation(const GaOperation&) = delete;
   virtual ~GaOperation() {}
+  GaOperation& operator=(const GaOperation& other) = delete;
 
   size_t getnChildren() const { return nChildren; }
 

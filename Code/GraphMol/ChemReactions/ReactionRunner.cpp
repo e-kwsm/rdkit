@@ -96,10 +96,6 @@ class StereoBondEndCap {
   unsigned m_anchor;
   const Atom *mp_nonAnchor = nullptr;
 
-  StereoBondEndCap() = delete;
-  StereoBondEndCap(const StereoBondEndCap &) = delete;
-  StereoBondEndCap &operator=(const StereoBondEndCap &) = delete;
-
  public:
   StereoBondEndCap(const ROMol &mol, const Atom *atom,
                    const Atom *otherDblBndAtom, const unsigned stereoAtomIdx)
@@ -123,6 +119,9 @@ class StereoBondEndCap {
     }
   }
 
+  StereoBondEndCap() = delete;
+  StereoBondEndCap(const StereoBondEndCap &) = delete;
+  StereoBondEndCap &operator=(const StereoBondEndCap &) = delete;
   StereoBondEndCap(StereoBondEndCap &&) = default;
   StereoBondEndCap &operator=(StereoBondEndCap &&) = default;
 
