@@ -33,12 +33,7 @@ AtomIterator_<Atom_, Mol_>::AtomIterator_(
 }
 template <class Atom_, class Mol_>
 AtomIterator_<Atom_, Mol_> &AtomIterator_<Atom_, Mol_>::operator=(
-    const AtomIterator_<Atom_, Mol_> &other) {
-  _mol = other._mol;
-  _pos = other._pos;
-  _max = other._max;
-  return *this;
-}
+    const AtomIterator_<Atom_, Mol_> &other) = default;
 
 template <class Atom_, class Mol_>
 AtomIterator_<Atom_, Mol_> &AtomIterator_<Atom_, Mol_>::operator+=(int val) {
@@ -289,7 +284,7 @@ AromaticAtomIterator_<Atom_, Mol_>::AromaticAtomIterator_(Mol_ *mol, int pos) {
 };
 
 template <class Atom_, class Mol_>
-AromaticAtomIterator_<Atom_, Mol_>::~AromaticAtomIterator_() {}
+AromaticAtomIterator_<Atom_, Mol_>::~AromaticAtomIterator_() = default;
 
 template <class Atom_, class Mol_>
 AromaticAtomIterator_<Atom_, Mol_>::AromaticAtomIterator_(
@@ -301,12 +296,7 @@ AromaticAtomIterator_<Atom_, Mol_>::AromaticAtomIterator_(
 
 template <class Atom_, class Mol_>
 AromaticAtomIterator_<Atom_, Mol_> &
-AromaticAtomIterator_<Atom_, Mol_>::operator=(const ThisType &other) {
-  _mol = other._mol;
-  _end = other._end;
-  _pos = other._pos;
-  return *this;
-}
+AromaticAtomIterator_<Atom_, Mol_>::operator=(const ThisType &other) = default;
 
 template <class Atom_, class Mol_>
 bool AromaticAtomIterator_<Atom_, Mol_>::operator==(
@@ -530,7 +520,7 @@ MatchingAtomIterator_<Atom_, Mol_>::MatchingAtomIterator_(Mol_ *mol, int pos) {
 };
 
 template <class Atom_, class Mol_>
-MatchingAtomIterator_<Atom_, Mol_>::~MatchingAtomIterator_() {}
+MatchingAtomIterator_<Atom_, Mol_>::~MatchingAtomIterator_() = default;
 
 template <class Atom_, class Mol_>
 MatchingAtomIterator_<Atom_, Mol_>::MatchingAtomIterator_(

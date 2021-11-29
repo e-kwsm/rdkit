@@ -134,7 +134,7 @@ struct RDKIT_FMCS_EXPORT MCSProgressData {
   unsigned int SeedProcessed{0};
 
  public:
-  MCSProgressData() {}
+  MCSProgressData() = default;
 };
 
 typedef bool (*MCSProgressCallback)(const MCSProgressData &stat,
@@ -145,7 +145,7 @@ RDKIT_FMCS_EXPORT bool MCSProgressCallbackTimeout(const MCSProgressData &stat,
                                                   void *userData);
 
 struct RDKIT_FMCS_EXPORT MCSParameters {
-  MCSParameters() {}
+  MCSParameters() = default;
   MCSParameters(const MCSParameters *other) : MCSParameters() {
     if (other) {
       *this = *other;
@@ -153,7 +153,7 @@ struct RDKIT_FMCS_EXPORT MCSParameters {
   }
   MCSParameters(const MCSParameters &other) = default;
   MCSParameters &operator=(const MCSParameters &other) = default;
-  virtual ~MCSParameters() {}
+  virtual ~MCSParameters() = default;
   bool StoreAll = false;
   bool MaximizeBonds = true;
   double Threshold = 1.0;    // match all molecules
@@ -184,8 +184,8 @@ struct RDKIT_FMCS_EXPORT MCSParameters {
 
 namespace detail {
 struct MCSParametersInternal : public MCSParameters {
-  MCSParametersInternal() {}
-  ~MCSParametersInternal() override {}
+  MCSParametersInternal() = default;
+  ~MCSParametersInternal() override = default;
   MCSParametersInternal(const MCSParameters *params);
   MCSFinalMatchCheckFunction UserFinalMatchChecker = nullptr;
 };
@@ -201,7 +201,7 @@ struct RDKIT_FMCS_EXPORT MCSResult {
   std::map<std::string, ROMOL_SPTR> DegenerateSmartsQueryMolDict;
 
  public:
-  MCSResult() {}
+  MCSResult() = default;
   bool isCompleted() const { return !Canceled; }
 };
 
