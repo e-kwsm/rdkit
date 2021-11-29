@@ -25,8 +25,8 @@ struct PyMCSWrapper : public boost::python::wrapper<PyMCSWrapper> {
   PyMCSWrapper() {}
   PyMCSWrapper(PyObject *obj) {
     PRECONDITION(obj, "PyObject* must not be NULL");
-    d_pyObject.reset(
-        new python::object(python::handle<>(python::borrowed(obj))));
+    d_pyObject = std::make_unique<python::object>(
+        python::handle<>(python::borrowed(obj)));
   }
   virtual ~PyMCSWrapper() {}
   virtual const char *subclassName() const {
@@ -73,7 +73,8 @@ struct PyMCSWrapper : public boost::python::wrapper<PyMCSWrapper> {
     return PyCallable_Check(obj.ptr());
   }
   void extractPyMCSWrapper() {
-    d_pyObjectExtractor.reset(new python::extract<PyMCSWrapper *>(*d_pyObject));
+    d_pyObjectExtractor =
+        std::make_unique<python::extract<PyMCSWrapper *>>(*d_pyObject);
     if (d_pyObjectExtractor->check()) {
       PyObject *callable =
           PyObject_GetAttrString(d_pyObject->ptr(), CALLBACK_FUNC_NAME);

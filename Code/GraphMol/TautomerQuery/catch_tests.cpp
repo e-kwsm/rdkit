@@ -322,7 +322,7 @@ TEST_CASE("github #3821 TAUTOMERQUERY_COPY_CONSTRUCTOR") {
   auto tautomerQuery =
       std::unique_ptr<TautomerQuery>(TautomerQuery::fromMol(*mol));
   auto tautomerQueryCopyConstructed =
-      std::unique_ptr<TautomerQuery>(new TautomerQuery(*tautomerQuery));
+      std::make_unique<TautomerQuery>(*tautomerQuery);
   CHECK(&(tautomerQuery->getTemplateMolecule()) !=
         &tautomerQueryCopyConstructed->getTemplateMolecule());
 }

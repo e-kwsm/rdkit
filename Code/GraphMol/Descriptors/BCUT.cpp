@@ -27,8 +27,7 @@ constexpr int NUM_BCUTS = 8;
 namespace {
 std::unique_ptr<Eigen::MatrixXd> make_burden(const ROMol &m) {
   auto num_atoms = m.getNumAtoms();
-  std::unique_ptr<Eigen::MatrixXd> burden(
-      new Eigen::MatrixXd(num_atoms, num_atoms));
+  auto burden = std::make_unique<Eigen::MatrixXd>(num_atoms, num_atoms);
 
   for (unsigned int i = 0; i < num_atoms; ++i) {
     for (unsigned int j = 0; j < num_atoms; ++j) {

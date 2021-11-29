@@ -83,8 +83,8 @@ class RDKIT_FILEPARSERS_EXPORT MultithreadedSDMolSupplier : public MolSupplier {
     parseParams.removeHs = removeHs;
     parseParams.strictParsing = strictParsing;
 
-    dp_supplier.reset(new v2::FileParsers::MultithreadedSDMolSupplier(
-        fileName, params, parseParams));
+    dp_supplier = std::make_unique<v2::FileParsers::MultithreadedSDMolSupplier>(
+        fileName, params, parseParams);
   }
 
   explicit MultithreadedSDMolSupplier(
@@ -101,8 +101,8 @@ class RDKIT_FILEPARSERS_EXPORT MultithreadedSDMolSupplier : public MolSupplier {
     parseParams.removeHs = removeHs;
     parseParams.strictParsing = strictParsing;
 
-    dp_supplier.reset(new v2::FileParsers::MultithreadedSDMolSupplier(
-        inStream, takeOwnership, params, parseParams));
+    dp_supplier = std::make_unique<v2::FileParsers::MultithreadedSDMolSupplier>(
+        inStream, takeOwnership, params, parseParams);
   }
 
   //! included for the interface, always returns false

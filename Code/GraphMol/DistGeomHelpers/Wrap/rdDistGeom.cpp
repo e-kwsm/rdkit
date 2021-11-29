@@ -35,7 +35,7 @@ struct PyEmbedParameters
   void setCoordMap(const python::dict &cmap) {
     // the EmbedParameters object doesn't own the memory for the coordMap, so we
     // have to take ownership here.
-    d_coordMap.reset(new std::map<int, RDGeom::Point3D>());
+    d_coordMap = std::make_unique<std::map<int, RDGeom::Point3D>>();
     const auto items = cmap.items();
     for (unsigned int i = 0; i < python::len(items); ++i) {
       const auto item = items[i];

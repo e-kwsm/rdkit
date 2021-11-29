@@ -171,7 +171,7 @@ void DrawMol::finishCreateDrawObjects() {
 
 // ****************************************************************************
 void DrawMol::initDrawMolecule(const ROMol &mol) {
-  drawMol_.reset(new RWMol(mol));
+  drawMol_ = std::make_unique<RWMol>(mol);
   if (drawOptions_.centreMoleculesBeforeDrawing) {
     if (drawMol_->getNumConformers()) {
       centerMolForDrawing(*drawMol_, confId_);
@@ -4039,7 +4039,7 @@ DrawColour DrawMol::getColour(int atom_idx) const {
                                            highlightBondMap_, highlightAtoms_,
                                            highlightAtomMap_);
           if (!highCol) {
-            highCol.reset(new DrawColour(hc));
+            highCol = std::make_unique<DrawColour>(hc);
           } else {
             if (!(hc == *highCol)) {
               numHighBonds = 0;
@@ -4238,7 +4238,7 @@ void adjustBondEndForString(
 
     // if it's a wide label, such as C:7, the bond can intersect
     // more than 1 side of the rectangle, so check them all.
-    std::unique_ptr<Point2D> ip(new Point2D);
+    auto ip = std::make_unique<Point2D>();
     if (doLinesIntersect(moveEnd, end2, tl, tr, ip.get())) {
       moveEnd = *ip;
     }

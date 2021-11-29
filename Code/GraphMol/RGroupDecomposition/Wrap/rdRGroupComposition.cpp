@@ -61,7 +61,7 @@ class RGroupDecompositionHelper {
                                 RGroupDecompositionParameters()) {
     python::extract<ROMol> isROMol(cores);
     if (isROMol.check()) {
-      decomp.reset(new RGroupDecomposition(isROMol(), params));
+      decomp = std::make_unique<RGroupDecomposition>(isROMol(), params);
     } else {
       MOL_SPTR_VECT coreMols;
       python::stl_input_iterator<ROMOL_SPTR> iter(cores), end;
@@ -72,7 +72,7 @@ class RGroupDecompositionHelper {
         coreMols.push_back(*iter);
         ++iter;
       }
-      decomp.reset(new RGroupDecomposition(coreMols, params));
+      decomp = std::make_unique<RGroupDecomposition>(coreMols, params);
     }
   }
 
