@@ -60,7 +60,7 @@ MetalDisconnector::MetalDisconnector(const MetalDisconnector &other)
       dp_metalDummy(other.dp_metalDummy),
       d_options(other.d_options) {};
 
-MetalDisconnector::~MetalDisconnector() {};
+MetalDisconnector::~MetalDisconnector() = default;
 
 ROMol *MetalDisconnector::getMetalNof() { return dp_metal_nof.get(); }
 
