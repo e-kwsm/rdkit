@@ -747,9 +747,9 @@ bool removeQueryAtoms(RWMol &mol) {
         atom->getQuery()->getDescription() != "AtomType") {
       std::unique_ptr<QueryAtom> qat;
       if (atom->getAtomicNum()) {
-        qat.reset(new QueryAtom(atom->getAtomicNum()));
+        qat = std::make_unique<QueryAtom>(atom->getAtomicNum());
       } else {
-        qat.reset(new QueryAtom());
+        qat = std::make_unique<QueryAtom>();
         qat->setQuery(makeAAtomQuery());
       }
       mol.replaceAtom(atom->getIdx(), qat.get());
@@ -779,7 +779,7 @@ std::unique_ptr<ROMol> buildConnRegion(const ROMol &mol) {
     return std::unique_ptr<RWMol>();
   }
 
-  std::unique_ptr<RWMol> molCp(new RWMol(mol));
+  auto molCp = std::make_unique<RWMol>(mol);
   molCp->beginBatchEdit();
   for (const auto aCp : molCp->atoms()) {
     if (!inFrag[aCp->getIdx()]) {

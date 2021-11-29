@@ -271,7 +271,7 @@ python::dict parseQueryDefFileHelper(python::object &input, bool standardize,
     parseQueryDefFile(get_filename(), queryDefs, standardize, delimiter,
                       comment, nameColumn, smartsColumn);
   } else {
-    std::unique_ptr<streambuf> sb(new streambuf(input));
+    auto sb = std::make_unique<streambuf>(input);
     std::unique_ptr<std::istream> istr(new streambuf::istream(*sb));
     parseQueryDefFile(istr.get(), queryDefs, standardize, delimiter, comment,
                       nameColumn, smartsColumn);
@@ -639,7 +639,7 @@ ExplicitBitVect *wrapLayeredFingerprint(
       pythonObjectToVect(fromAtoms, mol.getNumAtoms());
   std::unique_ptr<std::vector<unsigned int>> atomCountsV;
   if (atomCounts) {
-    atomCountsV.reset(new std::vector<unsigned int>);
+    atomCountsV = std::make_unique<std::vector<unsigned int>>();
     unsigned int nAts = python::len(atomCounts);
     if (nAts < mol.getNumAtoms()) {
       throw_value_error("atomCounts shorter than the number of atoms");
@@ -916,7 +916,7 @@ python::tuple detectChemistryProblemsHelper(const ROMol &mol,
 ROMol *canonicalizeStereoGroupsHelper(
     ROMol &mol, RDKit::StereoGroupAbsOptions stereoGroupAbsOptions,
     unsigned int maxStereoGroups) {
-  auto mol_uptr = std::unique_ptr<ROMol>(new ROMol(mol));
+  auto mol_uptr = std::make_unique<ROMol>(mol);
 
   RDKit::canonicalizeStereoGroups(mol_uptr, stereoGroupAbsOptions,
                                   maxStereoGroups);

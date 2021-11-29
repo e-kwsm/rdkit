@@ -875,10 +875,10 @@ bool embedPoints(RDGeom::PointPtrVect *positions, detail::EmbedArgs eargs,
   CHECK_INVARIANT(seed >= -1,
                   "random seed must either be positive, zero, or negative one");
   if (seed > -1) {
-    generator.reset(new RDKit::rng_type(42u));
+    generator = std::make_unique<RDKit::rng_type>(42u);
     generator->seed(seed);
-    distrib.reset(new RDKit::uniform_double(0.0, 1.0));
-    rngMgr.reset(new RDKit::double_source_type(*generator, *distrib));
+    distrib = std::make_unique<RDKit::uniform_double>(0.0, 1.0);
+    rngMgr = std::make_unique<RDKit::double_source_type>(*generator, *distrib);
     rng = rngMgr.get();
   } else {
     rng = &RDKit::getDoubleRandomSource();
@@ -1457,7 +1457,7 @@ std::vector<std::vector<unsigned int>> getMolSelfMatches(
 
     std::unique_ptr<RWMol> prbMolSymm;
     if (params.symmetrizeConjugatedTerminalGroupsForPruning) {
-      prbMolSymm.reset(new RWMol(tmol));
+      prbMolSymm = std::make_unique<RWMol>(tmol);
       MolAlign::details::symmetrizeTerminalAtoms(*prbMolSymm);
     }
     const auto &prbMolForMatch = prbMolSymm ? *prbMolSymm : tmol;

@@ -1527,7 +1527,7 @@ void testOrganometallics() {
     //    std::cout << test_file.first << " got : " << MolToSmiles(*dm)
     //              << " expected : " << test_file.second << std::endl;
     TEST_ASSERT(MolToSmiles(*dm) == test_file.second);
-    std::unique_ptr<RWMol> em(new RWMol(*m));
+    auto em = std::make_unique<RWMol>(*m);
     MolStandardize::disconnectOrganometallics(*em);
     TEST_ASSERT(MolToSmiles(*em) == test_file.second);
   }

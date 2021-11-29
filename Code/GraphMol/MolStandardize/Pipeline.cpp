@@ -312,10 +312,11 @@ RWMOL_SPTR standardize(RWMOL_SPTR mol, PipelineResult &result,
   try {
     std::unique_ptr<Normalizer> normalizer{};
     if (options.normalizerData.empty()) {
-      normalizer.reset(new Normalizer);
+      normalizer = std::make_unique<Normalizer>();
     } else {
       std::istringstream sstr(options.normalizerData);
-      normalizer.reset(new Normalizer(sstr, options.normalizerMaxRestarts));
+      normalizer =
+          std::make_unique<Normalizer>(sstr, options.normalizerMaxRestarts);
     }
     // normalizeInPlace() may return an ill-formed molecule if
     // the sanitization of a transformed structure failed

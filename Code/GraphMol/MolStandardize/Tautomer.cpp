@@ -350,9 +350,11 @@ TautomerEnumerator::TautomerEnumerator(const CleanupParameters &params)
       d_reassignStereo(params.tautomerReassignStereo) {
   std::unique_ptr<TautomerCatalogParams> tautParams;
   if (params.tautomerTransformData.empty()) {
-    tautParams.reset(new TautomerCatalogParams(params.tautomerTransforms));
+    tautParams =
+        std::make_unique<TautomerCatalogParams>(params.tautomerTransforms);
   } else {
-    tautParams.reset(new TautomerCatalogParams(params.tautomerTransformData));
+    tautParams =
+        std::make_unique<TautomerCatalogParams>(params.tautomerTransformData);
   }
   dp_catalog.reset(new TautomerCatalog(tautParams.get()));
 }

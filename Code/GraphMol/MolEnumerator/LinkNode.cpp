@@ -168,7 +168,7 @@ std::unique_ptr<ROMol> LinkNodeOp::operator()(
       }
     }
   }
-  return std::unique_ptr<ROMol>(new ROMol(*res));
+  return std::make_unique<ROMol>(*res);
 }
 
 }  // namespace MolEnumerator

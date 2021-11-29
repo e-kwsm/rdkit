@@ -479,7 +479,7 @@ TEST_CASE("MDL five-rings") {
     {
       std::unique_ptr<RWMol> qry{SmilesToMol("*1:c:c:c:c:1", smiles_ps)};
       REQUIRE(qry);
-      std::unique_ptr<QueryAtom> qat(new QueryAtom(0));
+      auto qat = std::make_unique<QueryAtom>(0);
       qat->setQuery(makeAAtomQuery());
       qat->setIsAromatic(true);
       qry->replaceAtom(0, qat.get());
@@ -489,7 +489,7 @@ TEST_CASE("MDL five-rings") {
     {  // ring not fully aromatic
       std::unique_ptr<RWMol> qry{SmilesToMol("*1:c:C-c:c:1", smiles_ps)};
       REQUIRE(qry);
-      std::unique_ptr<QueryAtom> qat(new QueryAtom(0));
+      auto qat = std::make_unique<QueryAtom>(0);
       qat->setQuery(makeAAtomQuery());
       qat->setIsAromatic(true);
       qry->replaceAtom(0, qat.get());
@@ -499,7 +499,7 @@ TEST_CASE("MDL five-rings") {
     {  // ring has additional dummy
       std::unique_ptr<RWMol> qry{SmilesToMol("*1:c:*:c:c:1", smiles_ps)};
       REQUIRE(qry);
-      std::unique_ptr<QueryAtom> qat(new QueryAtom(0));
+      auto qat = std::make_unique<QueryAtom>(0);
       qat->setQuery(makeAAtomQuery());
       qat->setIsAromatic(true);
       qry->replaceAtom(0, qat.get());
@@ -509,11 +509,11 @@ TEST_CASE("MDL five-rings") {
     {  // query bond in ring
       std::unique_ptr<RWMol> qry{SmilesToMol("*1:c:c:c:c:1", smiles_ps)};
       REQUIRE(qry);
-      std::unique_ptr<QueryAtom> qat(new QueryAtom(0));
+      auto qat = std::make_unique<QueryAtom>(0);
       qat->setQuery(makeAAtomQuery());
       qat->setIsAromatic(true);
       qry->replaceAtom(0, qat.get());
-      std::unique_ptr<QueryBond> qbnd(new QueryBond());
+      auto qbnd = std::make_unique<QueryBond>();
       qbnd->setBondType(Bond::BondType::SINGLE);
       qbnd->setQuery(makeBondOrderEqualsQuery(Bond::BondType::SINGLE));
       qry->replaceBond(0, qbnd.get());

@@ -46,7 +46,7 @@ ExplicitBitVect::ExplicitBitVect(const char *data, const unsigned int dataLen) {
 ExplicitBitVect::ExplicitBitVect(const ExplicitBitVect &other)
     : BitVect(other) {
   d_size = other.d_size;
-  dp_bits.reset(new boost::dynamic_bitset<>(*(other.dp_bits)));
+  dp_bits = std::make_unique<boost::dynamic_bitset<>>(*(other.dp_bits));
   d_numOnBits = other.d_numOnBits;
 }
 
@@ -60,7 +60,7 @@ ExplicitBitVect &ExplicitBitVect::operator=(const ExplicitBitVect &other) {
     return *this;
   }
   d_size = other.d_size;
-  dp_bits.reset(new boost::dynamic_bitset<>(*(other.dp_bits)));
+  dp_bits = std::make_unique<boost::dynamic_bitset<>>(*(other.dp_bits));
   d_numOnBits = other.d_numOnBits;
   return *this;
 }
@@ -198,7 +198,7 @@ void ExplicitBitVect::getOnBits(IntVect &v) const {
 
 void ExplicitBitVect::_initForSize(unsigned int size) {
   d_size = size;
-  dp_bits.reset(new boost::dynamic_bitset<>(size));
+  dp_bits = std::make_unique<boost::dynamic_bitset<>>(size);
   d_numOnBits = 0;
 }
 

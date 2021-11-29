@@ -519,7 +519,7 @@ void testEmptyMol() {
                           "does not crash on an empty mol"
                        << std::endl;
   Normalizer nn;
-  std::unique_ptr<ROMol> emptyMol(new ROMol());
+  auto emptyMol = std::make_unique<ROMol>();
   std::unique_ptr<ROMol> normalized(nn.normalize(*emptyMol));
   TEST_ASSERT(!normalized->getNumAtoms());
 }

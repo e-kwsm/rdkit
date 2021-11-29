@@ -57,9 +57,9 @@ StereoisomerEnumerator::StereoisomerEnumerator(
     d_numToReturn = getStereoisomerCount();
   }
   if (d_options.randomSeed == -1) {
-    d_randGen.reset(new std::mt19937(std::random_device()()));
+    d_randGen = std::make_unique<std::mt19937>(std::random_device()());
   } else {
-    d_randGen.reset(new std::mt19937(d_options.randomSeed));
+    d_randGen = std::make_unique<std::mt19937>(d_options.randomSeed);
   }
 }
 
@@ -94,14 +94,13 @@ void StereoisomerEnumerator::buildFlippers() {
       d_flippers.push_back(std::unique_ptr<details::Flipper>(
           new details::AtomFlipper(d_mol, si)));
     } else if (si.type == Chirality::StereoType::Bond_Double) {
-      std::unique_ptr<details::BondFlipper> newFlipper(
-          new details::BondFlipper(d_mol, si));
+      auto newFlipper = std::make_unique<details::BondFlipper>(d_mol, si);
       if (newFlipper->dp_bond) {
         d_flippers.push_back(std::move(newFlipper));
       }
     } else if (si.type == Chirality::StereoType::Bond_Atropisomer) {
-      std::unique_ptr<details::AtropisomerFlipper> newFlipper(
-          new details::AtropisomerFlipper(d_mol, si));
+      auto newFlipper =
+          std::make_unique<details::AtropisomerFlipper>(d_mol, si);
       d_flippers.push_back(std::move(newFlipper));
     }
   }
@@ -132,10 +131,10 @@ std::unique_ptr<ROMol> StereoisomerEnumerator::generateRandomIsomer() {
       // We don't need StereoGroups any more so remove them.
       std::unique_ptr<ROMol> isomer;
       if (!d_mol.getStereoGroups().empty()) {
-        isomer.reset(new RWMol(d_mol));
+        isomer = std::make_unique<RWMol>(d_mol);
         isomer->setStereoGroups(std::vector<StereoGroup>());
       } else {
-        isomer.reset(new ROMol(d_mol));
+        isomer = std::make_unique<ROMol>(d_mol);
       }
       MolOps::setDoubleBondNeighborDirections(*isomer);
       isomer->clearComputedProps(false);

@@ -386,7 +386,7 @@ void extractRings(const ROMol &mol,
                   std::vector<std::string> &molRingSmiles) {
   const auto &molBondRings = mol.getRingInfo()->bondRings();
   for (size_t i = 0u; i < molBondRings.size(); ++i) {
-    std::unique_ptr<RWMol> ringMol(new RWMol(mol));
+    auto ringMol = std::make_unique<RWMol>(mol);
     const auto &molAtomRings = mol.getRingInfo()->atomRings();
     boost::dynamic_bitset<> atomsInRing(mol.getNumAtoms());
     for (auto a : molAtomRings[i]) {
@@ -1041,12 +1041,12 @@ RascalStartPoint makeInitialPartitionSet(const ROMol *mol1, const ROMol *mol2,
   RascalStartPoint starter;
   if (mol1->getNumAtoms() <= mol2->getNumAtoms()) {
     starter.d_swapped = false;
-    starter.d_mol1.reset(new ROMol(*mol1));
-    starter.d_mol2.reset(new ROMol(*mol2));
+    starter.d_mol1 = std::make_unique<ROMol>(*mol1);
+    starter.d_mol2 = std::make_unique<ROMol>(*mol2);
   } else {
     starter.d_swapped = true;
-    starter.d_mol1.reset(new ROMol(*mol2));
-    starter.d_mol2.reset(new ROMol(*mol1));
+    starter.d_mol1 = std::make_unique<ROMol>(*mol2);
+    starter.d_mol2 = std::make_unique<ROMol>(*mol1);
   }
   assignEquivalentAtoms(*starter.d_mol1, opts.equivalentAtoms);
   assignEquivalentAtoms(*starter.d_mol2, opts.equivalentAtoms);
