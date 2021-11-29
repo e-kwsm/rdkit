@@ -186,8 +186,8 @@ class RDKIT_MOLSTANDARDIZE_EXPORT TautomerEnumeratorResult {
 
 class RDKIT_MOLSTANDARDIZE_EXPORT TautomerEnumeratorCallback {
  public:
-  TautomerEnumeratorCallback() {}
-  virtual ~TautomerEnumeratorCallback() {}
+  TautomerEnumeratorCallback() = default;
+  virtual ~TautomerEnumeratorCallback() = default;
   virtual bool operator()(const ROMol &, const TautomerEnumeratorResult &) = 0;
 };
 
@@ -202,15 +202,7 @@ class RDKIT_MOLSTANDARDIZE_EXPORT TautomerEnumerator {
         d_removeIsotopicHs(true),
         d_reassignStereo(true) {}
   TautomerEnumerator(const CleanupParameters &params = CleanupParameters());
-  TautomerEnumerator(const TautomerEnumerator &other)
-      : dp_catalog(other.dp_catalog),
-        d_callback(other.d_callback),
-        d_maxTautomers(other.d_maxTautomers),
-        d_maxTransforms(other.d_maxTransforms),
-        d_removeSp3Stereo(other.d_removeSp3Stereo),
-        d_removeBondStereo(other.d_removeBondStereo),
-        d_removeIsotopicHs(other.d_removeIsotopicHs),
-        d_reassignStereo(other.d_reassignStereo) {}
+  TautomerEnumerator(const TautomerEnumerator &other) = default;
   TautomerEnumerator &operator=(const TautomerEnumerator &other) {
     if (this == &other) {
       return *this;

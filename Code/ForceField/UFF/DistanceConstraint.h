@@ -22,7 +22,7 @@ namespace UFF {
 class RDKIT_FORCEFIELD_EXPORT DistanceConstraintContrib
     : public ForceFieldContrib {
  public:
-  DistanceConstraintContrib() {}
+  DistanceConstraintContrib() = default;
   //! Constructor
   /*!
     \param owner       pointer to the owning ForceField
@@ -40,10 +40,10 @@ class RDKIT_FORCEFIELD_EXPORT DistanceConstraintContrib
                             unsigned int idx2, bool relative, double minLen,
                             double maxLen, double forceConst);
 
-  ~DistanceConstraintContrib() override {
+  ~DistanceConstraintContrib() override = default; /* {
     // std::cerr << " ==== Destroy constraint " << d_end1Idx << " " << d_end2Idx
     // << std::endl;
-  }
+  } */
   double getEnergy(double *pos) const override;
 
   void getGrad(double *pos, double *grad) const override;

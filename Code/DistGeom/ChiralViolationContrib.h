@@ -17,7 +17,7 @@ class ChiralSet;
 class RDKIT_DISTGEOMETRY_EXPORT ChiralViolationContrib
     : public ForceFields::ForceFieldContrib {
  public:
-  ChiralViolationContrib() {}
+  ChiralViolationContrib() = default;
 
   //! Constructor
   /*!

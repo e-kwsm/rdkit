@@ -97,7 +97,7 @@ double Data3Ddescriptors::rcov[110] = {
     0,      0,      0,      0,      0,      0,      0,      0,      0,
     0,      0};
 
-Data3Ddescriptors::Data3Ddescriptors() {}
+Data3Ddescriptors::Data3Ddescriptors() = default;
 
 double* Data3Ddescriptors::getMW() { return mw; }
 
