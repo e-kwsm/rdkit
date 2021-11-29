@@ -25,12 +25,12 @@ class GA_EXPORT Chromosome {
   static int idCounter;
   int chromosomeId;
   double fitness;
-  Chromosome(const Chromosome &other) = delete;
-  Chromosome &operator=(const Chromosome &other) = delete;
 
  public:
   Chromosome();
+  Chromosome(const Chromosome &other) = delete;
   virtual ~Chromosome();
+  Chromosome &operator=(const Chromosome &other) = delete;
 
   virtual Chromosome &create() = 0;
 

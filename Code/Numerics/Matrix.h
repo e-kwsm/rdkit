@@ -74,6 +74,8 @@ class Matrix {
 
   virtual ~Matrix() {}
 
+  Matrix<TYPE> &operator=(const Matrix<TYPE> &other) = delete;
+
   //! returns the number of rows
   inline unsigned int numRows() const { return d_nRows; }
 
@@ -246,9 +248,6 @@ class Matrix {
   unsigned int d_nCols{0};
   unsigned int d_dataSize{0};
   DATA_SPTR d_data;
-
- private:
-  Matrix<TYPE> &operator=(const Matrix<TYPE> &other);
 };
 
 //! Matrix multiplication

@@ -30,12 +30,12 @@ class GA_EXPORT GaBase {
   GarethUtil::RandomUtil &rng = RandomUtil::getInstance();
   size_t popsize = 100;
   double selectionPressure = 1.1;
-  GaBase(const GaBase &other) = delete;
-  GaBase &operator=(const GaBase &other) = delete;
 
  public:
   GaBase() {};
+  GaBase(const GaBase &other) = delete;
   virtual ~GaBase() {};
+  GaBase &operator=(const GaBase &other) = delete;
 
   double getSelectionPressure() const { return selectionPressure; }
 
