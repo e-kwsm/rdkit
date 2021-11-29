@@ -289,7 +289,7 @@ AromaticAtomIterator_<Atom_, Mol_>::AromaticAtomIterator_(Mol_ *mol, int pos) {
 };
 
 template <class Atom_, class Mol_>
-AromaticAtomIterator_<Atom_, Mol_>::~AromaticAtomIterator_() {}
+AromaticAtomIterator_<Atom_, Mol_>::~AromaticAtomIterator_() = default;
 
 template <class Atom_, class Mol_>
 AromaticAtomIterator_<Atom_, Mol_>::AromaticAtomIterator_(
@@ -530,7 +530,7 @@ MatchingAtomIterator_<Atom_, Mol_>::MatchingAtomIterator_(Mol_ *mol, int pos) {
 };
 
 template <class Atom_, class Mol_>
-MatchingAtomIterator_<Atom_, Mol_>::~MatchingAtomIterator_() {}
+MatchingAtomIterator_<Atom_, Mol_>::~MatchingAtomIterator_() = default;
 
 template <class Atom_, class Mol_>
 MatchingAtomIterator_<Atom_, Mol_>::MatchingAtomIterator_(
