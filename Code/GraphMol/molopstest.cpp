@@ -301,7 +301,7 @@ TEST_CASE("test3") {
   // smi = "C17C5C4C3C2C1C6C2C3C4C5C67";
   // we cannot use the sanitization code, because that finds *symmetric*
   // rings, which will break this case:
-  m = SmilesToMol(smi, 0, 0);
+  m = SmilesToMol(smi, 0, false);
   int bfs = MolOps::findSSSR(*m);
   REQUIRE(bfs == 5);
   BOOST_LOG(rdInfoLog) << "BFSR: " << bfs << "\n";
@@ -332,7 +332,7 @@ TEST_CASE("test3") {
   // Figueras figure 4:
   //  * The third ring is bigger, and shouldn't be accessed in symmetrizeSSSR
   smi = "C12CC(CC2)CC1";
-  m = SmilesToMol(smi, 0, 0);
+  m = SmilesToMol(smi, 0, false);
   bfs = MolOps::findSSSR(*m);
   REQUIRE(bfs == 2);
   bfrs.resize(0);
@@ -345,7 +345,7 @@ TEST_CASE("test3") {
   //    fail after finding one ring. Naive modified Figueras finds a 6 membered
   //    ring, which is wrong.
   smi = "C123C4C5C6(C3)C7C1C8C2C4C5C6C78";
-  m = SmilesToMol(smi, 0, 0);
+  m = SmilesToMol(smi, 0, false);
   bfs = MolOps::findSSSR(*m);
   REQUIRE(bfs == 7);
   bfrs.resize(0);
@@ -368,7 +368,7 @@ TEST_CASE("test3") {
 
   smi = "C12=C3C=CC=C1C=CC2=CC=C3";
   BOOST_LOG(rdInfoLog) << "\n" << smi << "\n";
-  m = SmilesToMol(smi, 0, 0);
+  m = SmilesToMol(smi, 0, false);
   REQUIRE(m);
   count = MolOps::findSSSR(*m, sssr);
   REQUIRE(count == 3);
@@ -379,7 +379,7 @@ TEST_CASE("test3") {
   delete m;
 
   smi = "C1(O)C(O)C(O)C1O";
-  m = SmilesToMol(smi, 0, 0);
+  m = SmilesToMol(smi, 0, false);
   REQUIRE(m);
   count = MolOps::findSSSR(*m, sssr);
   REQUIRE(count == 1);
@@ -398,7 +398,7 @@ TEST_CASE("test3") {
   // this molecule is from issue 134
   // it should come up with three rings
   smi = "SC(C3C1CC(C3)CC(C2S)(O)C1)2S";
-  m = SmilesToMol(smi, 0, 0);
+  m = SmilesToMol(smi, 0, false);
   REQUIRE(m);
   count = MolOps::findSSSR(*m, sssr);
   REQUIRE(count == 3);
@@ -409,7 +409,7 @@ TEST_CASE("test3") {
 
   // this yet another painful case
   smi = "CC1=CC=C(C=C1)S(=O)(=O)O[CH]2[CH]3CO[CH](O3)[CH]4OC(C)(C)O[CH]24";
-  m = SmilesToMol(smi, 0, 0);
+  m = SmilesToMol(smi, 0, false);
   REQUIRE(m);
   count = MolOps::findSSSR(*m, sssr);
   REQUIRE(count == 4);
@@ -420,7 +420,7 @@ TEST_CASE("test3") {
   delete m;
 
   smi = "C1CC2C1C2";
-  m = SmilesToMol(smi, 0, 0);
+  m = SmilesToMol(smi, 0, false);
   REQUIRE(m);
   count = MolOps::findSSSR(*m, sssr);
   REQUIRE(count == 2);
@@ -469,7 +469,7 @@ TEST_CASE("test3") {
 
   // This is a test of Issue 217
   smi = "C=C1C2CC1C2";
-  m = SmilesToMol(smi, 0, 0);
+  m = SmilesToMol(smi, 0, false);
   REQUIRE(m);
   count = MolOps::findSSSR(*m, sssr);
   REQUIRE(count == 2);
@@ -524,7 +524,7 @@ TEST_CASE("test5") {
 
   int count;
   smi = "C1C4C5C3C(=O)C2C5C1C2C34";
-  m = SmilesToMol(smi, 0, 0);
+  m = SmilesToMol(smi, 0, false);
   count = MolOps::findSSSR(*m, sssr);
   BOOST_LOG(rdInfoLog) << "Count: " << count << "\n";
   REQUIRE(count == 5);
@@ -636,7 +636,7 @@ TEST_CASE("Testing Hydrogen Ops") {
   REQUIRE(m);
   REQUIRE(m->getNumAtoms() == 5);
 
-  m2 = MolOps::removeHs(*m, 0, false);
+  m2 = MolOps::removeHs(*m, false, false);
   REQUIRE(m2->getNumAtoms() == 1);
   delete m;
   delete m2;
@@ -652,7 +652,7 @@ TEST_CASE("Testing Hydrogen Ops") {
   REQUIRE(m);
   REQUIRE(m->getNumAtoms() == 2);
 
-  m2 = MolOps::removeHs(*m, 0, false);
+  m2 = MolOps::removeHs(*m, false, false);
   REQUIRE(m2->getNumAtoms() == 2);
   delete m;
   delete m2;
@@ -1546,10 +1546,10 @@ TEST_CASE("Testing double bond stereochemistry") {
       REQUIRE(m2->getBondWithIdx(3)->getStereoAtoms()[0] == 2);
       REQUIRE(m2->getBondWithIdx(3)->getStereoAtoms()[1] == 5);
     }
-    auto refSmi = MolToSmiles(*m2, 1);
+    auto refSmi = MolToSmiles(*m2, true);
     m.reset(SmilesToMol(refSmi));
     REQUIRE(m);
-    smi = MolToSmiles(*m, 1);
+    smi = MolToSmiles(*m, true);
     REQUIRE(refSmi == smi);
   }
 }
@@ -1569,11 +1569,11 @@ TEST_CASE("Testing Issue 183") {
   REQUIRE(m2->getBondWithIdx(5)->getStereo() == Bond::STEREOE);
   REQUIRE(m2->getBondWithIdx(10)->getStereo() == Bond::STEREOZ);
 
-  refSmi = MolToSmiles(*m2, 1);
+  refSmi = MolToSmiles(*m2, true);
   BOOST_LOG(rdInfoLog) << "ref: " << refSmi << std::endl;
   m = SmilesToMol(refSmi);
   REQUIRE(m);
-  smi = MolToSmiles(*m, 1);
+  smi = MolToSmiles(*m, true);
   BOOST_LOG(rdInfoLog) << "smi: " << smi << std::endl;
   REQUIRE(refSmi == smi);
 
@@ -1656,7 +1656,7 @@ TEST_CASE("Testing Issue 189: BondDirs not getting properly cleared") {
   }
   REQUIRE(count == 2);
 
-  refSmi = MolToSmiles(*m, 1);
+  refSmi = MolToSmiles(*m, true);
   count = 0;
   for (unsigned int i = 0; i < m->getNumBonds(); i++) {
     if (m->getBondWithIdx(i)->getBondDir() != Bond::NONE) {
@@ -1675,7 +1675,7 @@ TEST_CASE("Testing Issue 189: BondDirs not getting properly cleared") {
     }
   }
   REQUIRE(count == 2);
-  smi = MolToSmiles(*m, 1);
+  smi = MolToSmiles(*m, true);
   count = 0;
   for (unsigned int i = 0; i < m->getNumBonds(); i++) {
     if (m->getBondWithIdx(i)->getBondDir() != Bond::NONE) {
@@ -1700,7 +1700,7 @@ TEST_CASE("Testing Issue 190: BondDirs incorrectly cleared") {
   REQUIRE(m->getBondWithIdx(1)->getStereo() == Bond::STEREOE);
   REQUIRE(m->getBondWithIdx(5)->getBondType() == Bond::DOUBLE);
   REQUIRE(m->getBondWithIdx(5)->getStereo() == Bond::STEREOZ);
-  refSmi = MolToSmiles(*m, 1);
+  refSmi = MolToSmiles(*m, true);
 
   count = 0;
   for (unsigned int i = 0; i < m->getNumBonds(); i++) {
@@ -1720,7 +1720,7 @@ TEST_CASE("Testing Issue 190: BondDirs incorrectly cleared") {
     }
   }
   REQUIRE(count == 4);
-  smi = MolToSmiles(*m, 1);
+  smi = MolToSmiles(*m, true);
   count = 0;
   for (unsigned int i = 0; i < m->getNumBonds(); i++) {
     if (m->getBondWithIdx(i)->getBondDir() != Bond::NONE) {
@@ -1738,7 +1738,7 @@ TEST_CASE("Testing Issue 190: BondDirs incorrectly cleared") {
   REQUIRE(m->getBondWithIdx(1)->getStereo() == Bond::STEREOE);
   REQUIRE(m->getBondWithIdx(5)->getBondType() == Bond::DOUBLE);
   REQUIRE(m->getBondWithIdx(5)->getStereo() == Bond::STEREOZ);
-  refSmi = MolToSmiles(*m, 1);
+  refSmi = MolToSmiles(*m, true);
 
   count = 0;
   for (unsigned int i = 0; i < m->getNumBonds(); i++) {
@@ -1757,7 +1757,7 @@ TEST_CASE("Testing Issue 190: BondDirs incorrectly cleared") {
     }
   }
   REQUIRE(count == 4);
-  smi = MolToSmiles(*m, 1);
+  smi = MolToSmiles(*m, true);
   count = 0;
   for (unsigned int i = 0; i < m->getNumBonds(); i++) {
     if (m->getBondWithIdx(i)->getBondDir() != Bond::NONE) {
@@ -1775,7 +1775,7 @@ TEST_CASE("Testing Issue 190: BondDirs incorrectly cleared") {
   REQUIRE(m->getBondWithIdx(1)->getStereo() == Bond::STEREOE);
   REQUIRE(m->getBondWithIdx(6)->getBondType() == Bond::DOUBLE);
   REQUIRE(m->getBondWithIdx(6)->getStereo() == Bond::STEREOZ);
-  refSmi = MolToSmiles(*m, 1);
+  refSmi = MolToSmiles(*m, true);
 
   count = 0;
   for (unsigned int i = 0; i < m->getNumBonds(); i++) {
@@ -1794,7 +1794,7 @@ TEST_CASE("Testing Issue 190: BondDirs incorrectly cleared") {
     }
   }
   REQUIRE(count == 4);
-  smi = MolToSmiles(*m, 1);
+  smi = MolToSmiles(*m, true);
   count = 0;
   for (unsigned int i = 0; i < m->getNumBonds(); i++) {
     if (m->getBondWithIdx(i)->getBondDir() != Bond::NONE) {
@@ -2918,7 +2918,7 @@ TEST_CASE("Testing some aromaticity edge cases") {
   delete m;
 
   smi = "[H]n1cccc1";
-  m = SmilesToMol(smi, 0, 0);
+  m = SmilesToMol(smi, 0, false);
   REQUIRE(m);
   MolOps::sanitizeMol(*m);
   REQUIRE(m->getAtomWithIdx(1)->getIsAromatic());
@@ -2928,7 +2928,7 @@ TEST_CASE("Testing some aromaticity edge cases") {
   delete m;
 
   smi = "[H]";
-  m = SmilesToMol(smi, 0, 0);
+  m = SmilesToMol(smi, 0, false);
   REQUIRE(m);
   MolOps::sanitizeMol(*m);
   REQUIRE(m->getAtomWithIdx(0)->getNumRadicalElectrons() == 1);
@@ -3686,7 +3686,7 @@ TEST_CASE("Testing Issue 3349243") {
 TEST_CASE("Testing fast find rings") {
   {
     constexpr const char *smi = "CCC";
-    RWMol *m = SmilesToMol(smi, 0, 0);
+    RWMol *m = SmilesToMol(smi, 0, false);
     REQUIRE(m);
     MolOps::fastFindRings(*m);
     REQUIRE(m->getRingInfo());
@@ -3696,7 +3696,7 @@ TEST_CASE("Testing fast find rings") {
   }
   {
     constexpr const char *smi = "C1CC1";
-    RWMol *m = SmilesToMol(smi, 0, 0);
+    RWMol *m = SmilesToMol(smi, 0, false);
     REQUIRE(m);
     MolOps::fastFindRings(*m);
     REQUIRE(m->getRingInfo());
@@ -3707,7 +3707,7 @@ TEST_CASE("Testing fast find rings") {
 
   {
     constexpr const char *smi = "CC1CC1";
-    RWMol *m = SmilesToMol(smi, 0, 0);
+    RWMol *m = SmilesToMol(smi, 0, false);
     REQUIRE(m);
     MolOps::fastFindRings(*m);
     REQUIRE(m->getRingInfo());
@@ -3718,7 +3718,7 @@ TEST_CASE("Testing fast find rings") {
 
   {
     constexpr const char *smi = "C1CC1.C1CC1";
-    RWMol *m = SmilesToMol(smi, 0, 0);
+    RWMol *m = SmilesToMol(smi, 0, false);
     REQUIRE(m);
     MolOps::fastFindRings(*m);
     REQUIRE(m->getRingInfo());
@@ -3728,7 +3728,7 @@ TEST_CASE("Testing fast find rings") {
   }
   {
     constexpr const char *smi = "C1C(C)C1";
-    RWMol *m = SmilesToMol(smi, 0, 0);
+    RWMol *m = SmilesToMol(smi, 0, false);
     REQUIRE(m);
     MolOps::fastFindRings(*m);
     REQUIRE(m->getRingInfo());
@@ -3738,7 +3738,7 @@ TEST_CASE("Testing fast find rings") {
   }
   {
     constexpr const char *smi = "c1c(=O)nc2[nH]cnn2c1O";
-    RWMol *m = SmilesToMol(smi, 0, 0);
+    RWMol *m = SmilesToMol(smi, 0, false);
     REQUIRE(m);
     MolOps::fastFindRings(*m);
     REQUIRE(m->getRingInfo());
@@ -4378,7 +4378,7 @@ TEST_CASE("Testing sf.net issue 249: finding rings consumes all memory") {
         "Cc1cc2cc(c1)C(=O)NCc1cc-3cc(CNC(=O)c4cc(C)cc(c4)C(=O)NCc4cc(cc(CNC2=O)"
         "c4O)-c2cc4CNC(=O)c5cc(C)cc(c5)C(=O)NCc5cc-3cc(CNC(=O)c3cc(C)cc(c3)C(="
         "O)NCc(c2)c4O)c5O)c1O";
-    ROMol *m = SmilesToMol(smi, 0, 0);
+    ROMol *m = SmilesToMol(smi, 0, false);
     REQUIRE(m);
     REQUIRE(m->getNumAtoms() == 88);
     m->updatePropertyCache(false);
@@ -4396,7 +4396,7 @@ TEST_CASE("Testing sf.net issue 249: finding rings consumes all memory") {
         "cc(c4)C(=O)NC(COCCC(=O)O)(COCCC(=O)O)COCCC(=O)O)c6OCCC)C(=O)NC(COCCC(="
         "O)O)(COCCC(=O)O)COCCC(=O)O)cc(c5)C(=O)NC(COCCC(=O)O)(COCCC(=O)O)COCCC("
         "=O)O)c3OCCC)C(=O)NC(COCCC(=O)O)(COCCC(=O)O)COCCC(=O)O";
-    ROMol *m = SmilesToMol(smi, 0, 0);
+    ROMol *m = SmilesToMol(smi, 0, false);
     REQUIRE(m);
     REQUIRE(m->getNumAtoms() == 196);
     m->updatePropertyCache(false);
@@ -4415,7 +4415,7 @@ TEST_CASE("Testing sf.net issue 249: finding rings consumes all memory") {
         "12C9C(C8CC%10)CC5)C(CC3C2C(C(C1C%14CC%13C(=NCc1nnn(c1)CC)O)C(=O)O)C(="
         "O)O)C(=NCc1nnn(c1)CC)O)C(=O)O)C(=O)O)CC1C(C4C(CC71)C(=NCc1nnn(c1)CC)O)"
         "C(=O)O)O";
-    ROMol *m = SmilesToMol(smi, 0, 0);
+    ROMol *m = SmilesToMol(smi, 0, false);
     REQUIRE(m);
     REQUIRE(m->getNumAtoms() == 167);
     m->updatePropertyCache(false);
@@ -4436,7 +4436,7 @@ TEST_CASE("Testing sf.net issue 249: finding rings consumes all memory") {
         "cc2)c2cc(c9ccc(N=Cc%10ccc(c%11cc(c%12ccc(C=Nc%13ccc(c(c6)c5)cc%13)cc%"
         "12)cc(c%11)c5ccc(cc5)C)cc%10)cc9)cc(c2)c2ccc(cc2)/N=C/C)c2ccc(cc2)/"
         "N=C/C)cc8)cc7)cc4)cc3)cc(c1)c1ccc(cc1)C";
-    RWMol *m = SmilesToMol(smi, 0, 0);
+    RWMol *m = SmilesToMol(smi, 0, false);
     REQUIRE(m);
     REQUIRE(m->getNumAtoms() == 278);
     std::cerr << smi << std::endl;
@@ -4454,7 +4454,7 @@ TEST_CASE("Testing sf.net issue 249: finding rings consumes all memory") {
         "cc2OC)C)c(OC)c%11)cc%10OC)c(=O)n(c9=O)c2ccc(cc2OC)C)c(OC)c8)cc7OC)c(="
         "O)n(c6=O)c2ccc(cc2OC)C)c(c5)OC)c(=O)n(c4=O)c2ccc(cc2OC)C)c(=O)n(c3=O)"
         "c2ccc(cc2OC)C)c(=O)n(c1=O)c1ccc(cc1OC)C";
-    RWMol *m = SmilesToMol(smi, 0, 0);
+    RWMol *m = SmilesToMol(smi, 0, false);
     REQUIRE(m);
     REQUIRE(m->getNumAtoms() == 204);
     std::cerr << "starting sanitization" << std::endl;
@@ -4467,7 +4467,7 @@ TEST_CASE("Testing sf.net issue 249: finding rings consumes all memory") {
 TEST_CASE("Testing sf.net issue 256: bad atom counts") {
   {
     constexpr const char *smi = "*CC[H]";
-    ROMol *m = SmilesToMol(smi, 0, 0);
+    ROMol *m = SmilesToMol(smi, 0, false);
     REQUIRE(m);
     m->updatePropertyCache(false);
     REQUIRE(m->getNumAtoms() == 4);

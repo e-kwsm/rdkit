@@ -128,7 +128,7 @@ bool TDTMolSupplier::advanceToNextRecord() {
   PRECONDITION(dp_inStream, "no stream");
   std::streampos pos;
   bool res = false;
-  while (1) {
+  while (true) {
     if (dp_inStream->eof() || dp_inStream->bad()) {
       return false;
     }

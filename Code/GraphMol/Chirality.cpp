@@ -170,7 +170,7 @@ void updateDoubleBondNeighbors(ROMol &mol, Bond *dblBond, const Conformer *conf,
   if (!needsDir[dblBond->getIdx()]) {
     return;
   }
-  needsDir.set(dblBond->getIdx(), 0);
+  needsDir.set(dblBond->getIdx(), false);
 
   std::vector<Bond *> followupBonds;
 
@@ -360,17 +360,17 @@ void updateDoubleBondNeighbors(ROMol &mol, Bond *dblBond, const Conformer *conf,
     setBondDirRelativeToAtom(bond2, atom2, Bond::ENDDOWNRIGHT, reverseBondDir,
                              needsDir);
   }
-  needsDir[bond1->getIdx()] = 0;
-  needsDir[bond2->getIdx()] = 0;
+  needsDir[bond1->getIdx()] = false;
+  needsDir[bond2->getIdx()] = false;
   if (obond1 && needsDir[obond1->getIdx()]) {
     setBondDirRelativeToAtom(obond1, atom1, bond1->getBondDir(),
                              bond1->getBeginAtom() == atom1, needsDir);
-    needsDir[obond1->getIdx()] = 0;
+    needsDir[obond1->getIdx()] = false;
   }
   if (obond2 && needsDir[obond2->getIdx()]) {
     setBondDirRelativeToAtom(obond2, atom2, bond2->getBondDir(),
                              bond2->getBeginAtom() == atom2, needsDir);
-    needsDir[obond2->getIdx()] = 0;
+    needsDir[obond2->getIdx()] = false;
   }
   for (Bond *oDblBond : followupBonds) {
     updateDoubleBondNeighbors(mol, oDblBond, conf, needsDir, singleBondCounts,
@@ -1340,7 +1340,7 @@ void assignAtomCIPRanks(const ROMol &mol, UINT_VECT &ranks) {
 
   // copy the ranks onto the atoms:
   for (unsigned int i = 0; i < numAtoms; ++i) {
-    mol[i]->setProp(common_properties::_CIPRank, ranks[i], 1);
+    mol[i]->setProp(common_properties::_CIPRank, ranks[i], true);
   }
 }
 
@@ -1511,7 +1511,7 @@ bool atomIsCandidateForRingStereochem(
       }
     }
     // std::cerr<<"    candidate? "<<res<<std::endl;
-    atom->setProp(common_properties::_ringStereochemCand, res, 1);
+    atom->setProp(common_properties::_ringStereochemCand, res, true);
   }
   return res;
 }
@@ -1728,7 +1728,7 @@ std::pair<bool, bool> isAtomPotentialChiralCenter(
           hasDupes = true;
           break;
         }
-        codesSeen[ranks[otherIdx]] = 1;
+        codesSeen[ranks[otherIdx]] = true;
       }
     }
   }
@@ -1915,18 +1915,18 @@ std::pair<bool, bool> assignBondStereoCodes(ROMol &mol, UINT_VECT &ranks) {
               if (conflictingBegin) {
                 bondsToClear[mol.getBondBetweenAtoms(begAtomNeighbors[0].first,
                                                      begAtom->getIdx())
-                                 ->getIdx()] = 1;
+                                 ->getIdx()] = true;
                 bondsToClear[mol.getBondBetweenAtoms(begAtomNeighbors[1].first,
                                                      begAtom->getIdx())
-                                 ->getIdx()] = 1;
+                                 ->getIdx()] = true;
               }
               if (conflictingEnd) {
                 bondsToClear[mol.getBondBetweenAtoms(endAtomNeighbors[0].first,
                                                      endAtom->getIdx())
-                                 ->getIdx()] = 1;
+                                 ->getIdx()] = true;
                 bondsToClear[mol.getBondBetweenAtoms(endAtomNeighbors[1].first,
                                                      endAtom->getIdx())
-                                 ->getIdx()] = 1;
+                                 ->getIdx()] = true;
               }
             } else {
               dblBond->getStereoAtoms().push_back(begNbrAid);
@@ -3395,18 +3395,18 @@ void assignChiralTypesFrom3D(ROMol &mol, int confId, bool replaceExistingTags) {
   auto allowNontetrahedralStereo = Chirality::getAllowNontetrahedralChirality();
 
   boost::dynamic_bitset<> explicitAtoms;
-  explicitAtoms.resize(mol.getNumAtoms(), 0);
+  explicitAtoms.resize(mol.getNumAtoms(), false);
   for (auto bond : mol.bonds()) {
     auto bondDir = bond->getBondDir();
     if (bondDir == Bond::BondDir::BEGINWEDGE ||
         bondDir == Bond::BondDir::BEGINDASH) {
-      explicitAtoms[bond->getBeginAtom()->getIdx()] = 1;
+      explicitAtoms[bond->getBeginAtom()->getIdx()] = true;
     }
   }
 
   for (auto atom : mol.atoms()) {
     if (atom->getChiralTag() != Atom::ChiralType::CHI_UNSPECIFIED) {
-      explicitAtoms[atom->getIdx()] = 1;
+      explicitAtoms[atom->getIdx()] = true;
     }
   }
 
@@ -3599,11 +3599,11 @@ void setDoubleBondNeighborDirections(ROMol &mol, const Conformer *conf) {
               // candidate for stereo
               isCandidate = false;
             } else {
-              needsDir[bond->getIdx()] = 1;
+              needsDir[bond->getIdx()] = true;
               if (nbrDir == Bond::BondDir::NONE ||
                   nbrDir == Bond::BondDir::ENDDOWNRIGHT ||
                   nbrDir == Bond::BondDir::ENDUPRIGHT) {
-                needsDir[nbrBond->getIdx()] = 1;
+                needsDir[nbrBond->getIdx()] = true;
                 dblBondNbrs[bond->getIdx()].push_back(nbrBond->getIdx());
                 // the search may seem inefficient, but these vectors are
                 // going to be at most 2 long (with very few exceptions). It's
@@ -3848,11 +3848,11 @@ void simplifyEnhancedStereo(ROMol &mol, bool removeAffectedStereoGroups) {
     for (const auto atom : mol.atoms()) {
       if (atom->getChiralTag() > Atom::ChiralType::CHI_UNSPECIFIED &&
           atom->getChiralTag() < Atom::ChiralType::CHI_OTHER) {
-        chiralAts.set(atom->getIdx(), 1);
+        chiralAts.set(atom->getIdx(), true);
       }
     }
     for (const auto atm : sgs[0].getAtoms()) {
-      chiralAts.set(atm->getIdx(), 0);
+      chiralAts.set(atm->getIdx(), false);
     }
     if (chiralAts.none()) {
       // all specified chiral centers are accounted for by this StereoGroup.
@@ -3884,7 +3884,7 @@ std::vector<std::pair<unsigned int, unsigned int>> findMesoCenters(
   for (const auto atom : mol.atoms()) {
     atom->clearProp(common_properties::_mesoOtherAtom);
     if (atom->getChiralTag() > Atom::ChiralType::CHI_UNSPECIFIED) {
-      specifiedChiralAts.set(atom->getIdx(), 1);
+      specifiedChiralAts.set(atom->getIdx(), true);
     }
     int otherIdx = -1;
     if (atom->getPropIfPresent(common_properties::_ringStereoOtherAtom,

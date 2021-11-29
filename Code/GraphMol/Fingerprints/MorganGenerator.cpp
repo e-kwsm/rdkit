@@ -304,7 +304,7 @@ MorganEnvGenerator<OutputType>::getEnvironments(
   boost::dynamic_bitset<> includeAtoms(nAtoms);
   if (fromAtoms) {
     for (auto idx : *fromAtoms) {
-      includeAtoms.set(idx, 1);
+      includeAtoms.set(idx, true);
     }
   } else {
     includeAtoms.set();
@@ -368,7 +368,7 @@ MorganEnvGenerator<OutputType>::getEnvironments(
       if (!deadAtoms[atomIdx]) {
         const Atom *tAtom = mol.getAtomWithIdx(atomIdx);
         if (!tAtom->getDegree()) {
-          deadAtoms.set(atomIdx, 1);
+          deadAtoms.set(atomIdx, true);
           continue;
         }
 
@@ -382,7 +382,7 @@ MorganEnvGenerator<OutputType>::getEnvironments(
 
         while (beg != end) {
           const Bond *bond = mol[*beg];
-          roundAtomNeighborhoods[atomIdx][bond->getIdx()] = 1;
+          roundAtomNeighborhoods[atomIdx][bond->getIdx()] = true;
 
           unsigned int oIdx = bond->getOtherAtomIdx(atomIdx);
           roundAtomNeighborhoods[atomIdx] |= atomNeighborhoods[oIdx];
@@ -420,7 +420,7 @@ MorganEnvGenerator<OutputType>::getEnvironments(
         }
 
         if (morganArguments->df_includeChirality && looksChiral) {
-          chiralAtoms[atomIdx] = 1;
+          chiralAtoms[atomIdx] = true;
           // add an extra value to the invariant to reflect chirality:
           std::string cip = "";
           tAtom->getPropIfPresent(common_properties::_CIPCode, cip);
@@ -465,7 +465,7 @@ MorganEnvGenerator<OutputType>::getEnvironments(
       } else {
         // we have seen this exact environment before, this atom
         // is now out of consideration:
-        deadAtoms[std::get<2>(*iter)] = 1;
+        deadAtoms[std::get<2>(*iter)] = true;
       }
     }
 

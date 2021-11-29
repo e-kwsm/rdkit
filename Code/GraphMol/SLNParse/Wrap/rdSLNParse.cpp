@@ -49,12 +49,12 @@ void rdSLNParseExceptionTranslator(RDKit::SLNParseException const &x) {
 }
 
 namespace RDKit {
-ROMol *MolFromSLN(std::string sln, bool sanitize = 1,
+ROMol *MolFromSLN(std::string sln, bool sanitize = true,
                   bool debugParser = false) {
   RWMol *newM = SLNToMol(sln, sanitize, debugParser);
   return static_cast<ROMol *>(newM);
 }
-ROMol *MolFromQuerySLN(std::string sln, bool mergeHs = 1,
+ROMol *MolFromQuerySLN(std::string sln, bool mergeHs = true,
                        bool debugParser = false) {
   RWMol *newM = SLNQueryToMol(sln, mergeHs, debugParser);
   return static_cast<ROMol *>(newM);
