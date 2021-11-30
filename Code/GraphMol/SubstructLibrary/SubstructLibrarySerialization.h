@@ -136,8 +136,8 @@ void load(Archive &ar, RDKit::FPHolderBase &fpholder,
   std::vector<ExplicitBitVect *> &fps = fpholder.getFingerprints();
 
   ar &pickles;
-  for (size_t i = 0; i < fps.size(); ++i) {
-    delete fps[i];
+  for (auto &fp : fps) {
+    delete fp;
   }
   fps.clear();
 

@@ -1440,9 +1440,8 @@ std::pair<bool, bool> assignAtomChiralCodes(ROMol &mol, UINT_VECT &ranks,
 
         // collect the list of neighbor indices:
         std::list<int> nbrIndices;
-        for (Chirality::INT_PAIR_VECT_CI nbrIt = nbrs.begin();
-             nbrIt != nbrs.end(); ++nbrIt) {
-          nbrIndices.push_back((*nbrIt).second);
+        for (const auto &nbr : nbrs) {
+          nbrIndices.push_back(nbr.second);
         }
         // ask the atom how many swaps we have to make:
         int nSwaps = atom->getPerturbationOrder(nbrIndices);

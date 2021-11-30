@@ -611,13 +611,11 @@ void testSubstructMatchDMAP() {
 }
 
 void setResidueFormalCharge(RWMol *mol, std::vector<RWMol *> &res, int fc) {
-  for (std::vector<RWMol *>::const_iterator it = res.begin(); it != res.end();
-       ++it) {
+  for (auto re : res) {
     std::vector<MatchVectType> matchVect;
-    SubstructMatch(*mol, *(*it), matchVect);
-    for (std::vector<MatchVectType>::const_iterator it = matchVect.begin();
-         it != matchVect.end(); ++it) {
-      mol->getAtomWithIdx((*it).back().second)->setFormalCharge(fc);
+    SubstructMatch(*mol, *re, matchVect);
+    for (const auto &it : matchVect) {
+      mol->getAtomWithIdx(it.back().second)->setFormalCharge(fc);
     }
   }
 }
@@ -670,9 +668,8 @@ void testCrambin() {
   TEST_ASSERT(query);
   res.push_back(query);
   setResidueFormalCharge(crambin, res, 1);
-  for (std::vector<RWMol *>::const_iterator it = res.begin(); it != res.end();
-       ++it) {
-    delete *it;
+  for (auto re : res) {
+    delete re;
   }
   res.clear();
   // deprotonate COOH
@@ -680,9 +677,8 @@ void testCrambin() {
   TEST_ASSERT(query);
   res.push_back(query);
   setResidueFormalCharge(crambin, res, -1);
-  for (std::vector<RWMol *>::const_iterator it = res.begin(); it != res.end();
-       ++it) {
-    delete *it;
+  for (auto re : res) {
+    delete re;
   }
   auto *resMolSupplST = new ResonanceMolSupplier((ROMol &)*crambin);
   TEST_ASSERT(resMolSupplST);

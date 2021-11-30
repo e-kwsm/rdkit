@@ -158,15 +158,15 @@ bool AllProbeBitsMatch(const T1& probe, const std::string& pkl) {
 
   // for(int i=0;i<probe.getNumBits();i++){
   //  if(probe.getBit(i)){
-  for (std::vector<int>::const_iterator i = obl.begin(); i != obl.end(); i++) {
-    while (currBit < *i && nOn > 0) {
+  for (auto b : obl) {
+    while (currBit < b && nOn > 0) {
       if (format == 2) {
         currBit++;
       }
       currBit = getBitId(text, format, size, currBit);
       nOn--;
     }
-    if (currBit != *i) {
+    if (currBit != b) {
       return false;
     }
     //}

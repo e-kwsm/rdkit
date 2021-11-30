@@ -332,26 +332,24 @@ MorganEnvGenerator<OutputType>::getEnvironments(
 
     std::sort(allNeighborhoodsThisRound.begin(),
               allNeighborhoodsThisRound.end());
-    for (std::vector<AccumTuple>::const_iterator iter =
-             allNeighborhoodsThisRound.begin();
-         iter != allNeighborhoodsThisRound.end(); ++iter) {
+    for (const auto &iter : allNeighborhoodsThisRound) {
       // if we haven't seen this exact environment before, add it to the
       // result
       if (morganArguments->df_includeRedundantEnvironments ||
           std::find(neighborhoods.begin(), neighborhoods.end(),
-                    std::get<0>(*iter)) == neighborhoods.end()) {
+                    std::get<0>(iter)) == neighborhoods.end()) {
         if (!morganArguments->df_onlyNonzeroInvariants ||
-            (*atomInvariants)[std::get<2>(*iter)]) {
-          if (includeAtoms[std::get<2>(*iter)]) {
+            (*atomInvariants)[std::get<2>(iter)]) {
+          if (includeAtoms[std::get<2>(iter)]) {
             result.push_back(new MorganAtomEnv<OutputType>(
-                std::get<1>(*iter), std::get<2>(*iter), layer + 1));
-            neighborhoods.push_back(std::get<0>(*iter));
+                std::get<1>(iter), std::get<2>(iter), layer + 1));
+            neighborhoods.push_back(std::get<0>(iter));
           }
         }
       } else {
         // we have seen this exact environment before, this atom
         // is now out of consideration:
-        deadAtoms[std::get<2>(*iter)] = 1;
+        deadAtoms[std::get<2>(iter)] = 1;
       }
     }
 

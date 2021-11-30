@@ -3427,10 +3427,10 @@ void testRDKFPBitInfo() {
 #if 1
     for (iter2 = bitInfo.begin(); iter2 != bitInfo.end(); ++iter2) {
       std::cerr << "   " << iter2->first << ": ";
-      for (unsigned i = 0; i < iter2->second.size(); i++) {
+      for (const auto &i : iter2->second) {
         std::cerr << " [ ";
-        for (unsigned j = 0; j < iter2->second.at(i).size(); j++) {
-          std::cerr << iter2->second.at(i).at(j) << " ";
+        for (int j : i) {
+          std::cerr << j << " ";
         }
         std::cerr << "], ";
       }

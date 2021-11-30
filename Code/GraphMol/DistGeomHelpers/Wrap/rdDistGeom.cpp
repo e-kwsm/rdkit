@@ -187,8 +187,8 @@ void setCPCI(DGeomHelpers::EmbedParameters *self, python::dict &CPCIdict) {
 
 python::tuple getFailureCounts(DGeomHelpers::EmbedParameters *self) {
   python::list lst;
-  for (auto i = 0u; i < self->failures.size(); i++) {
-    lst.append(self->failures[i]);
+  for (unsigned int &failure : self->failures) {
+    lst.append(failure);
   }
   return python::tuple(lst);
 }

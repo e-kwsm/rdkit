@@ -2957,14 +2957,14 @@ TEST_CASE("molecules with single bond to metal atom use dative instead") {
        "C=CC1=C(C)C2=Cc3c(C=C)c(C)c4n3[Fe-2]35n6c(c(C)c(CCC(=O)O)c6=CC6=[N+]3C(=C4)C(C)=C6CCC(=O)O)=CC1=[N+]25"},
       {"CCC1=[O+][Cu]2([O+]=C(CC)C1)[O+]=C(CC)CC(CC)=[O+]2",
        "CCC1=[O+][Cu]2([O+]=C(CC)C1)[O+]=C(CC)CC(CC)=[O+]2"}};
-  for (size_t i = 0; i < test_vals.size(); ++i) {
+  for (auto &test_val : test_vals) {
     SmilesParserParams ps;
     ps.sanitize = false;
-    RWMOL_SPTR m(RDKit::SmilesToMol(test_vals[i].first, ps));
+    RWMOL_SPTR m(RDKit::SmilesToMol(test_val.first, ps));
     // MolOps::cleanUp(*m);
     MolOps::cleanUpOrganometallics(*m);
     MolOps::sanitizeMol(*m);
-    TEST_ASSERT(MolToSmiles(*m) == test_vals[i].second);
+    TEST_ASSERT(MolToSmiles(*m) == test_val.second);
   }
 }
 
@@ -2977,9 +2977,9 @@ TEST_CASE(
 
   SmilesParserParams ps;
   ps.sanitize = false;
-  for (size_t j = 0; j < test_vals.size(); ++j) {
-    std::string &smi = test_vals[j].first;
-    std::string &canon_smi = test_vals[j].second;
+  for (auto &test_val : test_vals) {
+    std::string &smi = test_val.first;
+    std::string &canon_smi = test_val.second;
     RWMOL_SPTR m(RDKit::SmilesToMol(smi, ps));
     MolOps::cleanUpOrganometallics(*m);
     MolOps::sanitizeMol(*m);

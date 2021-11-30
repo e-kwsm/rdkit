@@ -551,8 +551,8 @@ python::tuple GetMolFragsWithMapping(
 
     for (auto &i : fragsVec) {
       python::list tpl;
-      for (unsigned int j = 0; j < i.size(); ++j) {
-        tpl.append(i[j]);
+      for (int &j : i) {
+        tpl.append(j);
       }
       res.append(python::tuple(tpl));
     }
@@ -579,8 +579,8 @@ python::tuple GetMolFragsWithMapping(
     if (hasFragsMolAtomMapping) {
       for (auto &i : fragsMolAtomMappingVec) {
         python::list perFragMolAtomMappingTpl;
-        for (unsigned int j = 0; j < i.size(); ++j) {
-          perFragMolAtomMappingTpl.append(i[j]);
+        for (int &j : i) {
+          perFragMolAtomMappingTpl.append(j);
         }
         fragsMolAtomMappingList.append(python::tuple(perFragMolAtomMappingTpl));
       }

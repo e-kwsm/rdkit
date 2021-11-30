@@ -1033,9 +1033,9 @@ void MolDraw2D::calcReactionOffsets(
 
   // And finally work out where to put all the pieces, centring them.
   int xOffset = (width() - totWidth) / 2;
-  for (size_t i = 0; i < reagents.size(); ++i) {
-    offsets.emplace_back(xOffset, (height() - reagents[i]->height_) / 2);
-    xOffset += reagents[i]->width_ + plusWidth;
+  for (auto &reagent : reagents) {
+    offsets.emplace_back(xOffset, (height() - reagent->height_) / 2);
+    xOffset += reagent->width_ + plusWidth;
   }
   if (reagents.empty()) {
     xOffset += plusWidth / 2;
@@ -1049,17 +1049,17 @@ void MolDraw2D::calcReactionOffsets(
     arrowEnd = Point2D(arrowBeg.x + arrowMult * plusWidth, height() / 2);
   } else {
     xOffset += plusWidth / 2;
-    for (size_t i = 0; i < agents.size(); ++i) {
-      offsets.emplace_back(xOffset, 0.45 * height() - agents[i]->height_);
-      xOffset += agents[i]->width_ + plusWidth / 2;
+    for (auto &agent : agents) {
+      offsets.emplace_back(xOffset, 0.45 * height() - agent->height_);
+      xOffset += agent->width_ + plusWidth / 2;
     }
     // the overlap at the end of the arrow has already been added in the loop
     arrowEnd = Point2D(xOffset, height() / 2);
   }
   xOffset = arrowEnd.x + plusWidth / 2;
-  for (size_t i = 0; i < products.size(); ++i) {
-    offsets.emplace_back(xOffset, (height() - products[i]->height_) / 2);
-    xOffset += products[i]->width_ + plusWidth;
+  for (auto &product : products) {
+    offsets.emplace_back(xOffset, (height() - product->height_) / 2);
+    xOffset += product->width_ + plusWidth;
   }
 }
 

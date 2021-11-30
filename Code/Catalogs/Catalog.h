@@ -213,9 +213,8 @@ class HierarchCatalog : public Catalog<entryType, paramType> {
       RDKit::INT_VECT children = this->getDownEntryList(i);
       tmpUInt = static_cast<unsigned int>(children.size());
       RDKit::streamWrite(ss, tmpUInt);
-      for (RDKit::INT_VECT::const_iterator ivci = children.begin();
-           ivci != children.end(); ivci++) {
-        RDKit::streamWrite(ss, *ivci);
+      for (auto ivci : children) {
+        RDKit::streamWrite(ss, ivci);
       }
     }
   }

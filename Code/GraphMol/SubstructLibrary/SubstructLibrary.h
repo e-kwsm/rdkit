@@ -257,8 +257,8 @@ class RDKIT_SUBSTRUCTLIBRARY_EXPORT FPHolderBase {
 
  public:
   virtual ~FPHolderBase() {
-    for (size_t i = 0; i < fps.size(); ++i) {
-      delete fps[i];
+    for (auto &fp : fps) {
+      delete fp;
     }
   }
 

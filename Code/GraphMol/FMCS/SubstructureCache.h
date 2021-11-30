@@ -165,9 +165,8 @@ class RDKIT_FMCS_EXPORT SubstructureCache {
 
   size_t fullsize() const {  // for statistics only
     size_t n = 0;
-    for (std::vector<TIndexEntry>::const_iterator e = ValueStorage.begin();
-         e != ValueStorage.end(); e++) {
-      n += e->size();
+    for (const auto& e : ValueStorage) {
+      n += e.size();
     }
     return n;
   }
