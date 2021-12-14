@@ -279,7 +279,7 @@ struct State {
   }
 
   void generateElemPoints(ElemStruct *elem, double rad, double probeRadius,
-                          int dotDensity) {
+                          int dotDensity) const {
     double x, y, z, p, q, xy;
     unsigned int vert;
 
