@@ -196,7 +196,7 @@ std::vector<ROMOL_SPTR> replaceSubstructs(
   // if we didn't find any matches, there's nothing to be done here
   // simply return a list with a copy of the starting molecule
   if (fgpMatches.size() == 0) {
-    res.push_back(ROMOL_SPTR(new ROMol(mol, false)));
+    res.push_back(boost::make_shared<ROMol>(mol, false));
     res[0]->clearComputedProps(false);
     return res;
   }
@@ -214,7 +214,7 @@ std::vector<ROMOL_SPTR> replaceSubstructs(
     std::sort(sortMatch.begin(), sortMatch.end());
 
     if (!replaceAll || !res.size()) {
-      res.push_back(ROMOL_SPTR(new ROMol(mol, false)));
+      res.push_back(boost::make_shared<ROMol>(mol, false));
     }
     RWMol *newMol = static_cast<RWMol *>(res.rbegin()->get());
 

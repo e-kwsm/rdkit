@@ -784,7 +784,7 @@ class RDKIT_GRAPHMOL_EXPORT RecursiveStructureQuery
   //! returns a copy of this query
   Queries::Query<int, Atom const *, true> *copy() const override {
     RecursiveStructureQuery *res = new RecursiveStructureQuery();
-    res->dp_queryMol.reset(new ROMol(*dp_queryMol, true));
+    res->dp_queryMol = boost::make_shared<ROMol>(*dp_queryMol, true);
 
     std::set<int>::const_iterator i;
     for (i = d_set.begin(); i != d_set.end(); i++) {

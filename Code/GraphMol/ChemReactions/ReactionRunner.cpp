@@ -1935,7 +1935,7 @@ std::vector<MOL_SPTR_VECT> run_Reactant(const ChemicalReaction &rxn,
     if (i == reactantIdx) {
       reactants[i] = reactant;
     } else {
-      reactants[i] = ROMOL_SPTR(new ROMol);
+      reactants[i] = boost::make_shared<ROMol>();
     }
   }
 

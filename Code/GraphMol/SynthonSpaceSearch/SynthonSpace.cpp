@@ -715,7 +715,7 @@ std::shared_ptr<SynthonSet> SynthonSpace::addReactionToPool(
       it != d_reactions.end() && it->first == reactionName) {
     return it->second;
   } else {
-    tmp.second.reset(new SynthonSet(reactionName));
+    tmp.second = std::make_shared<SynthonSet>(reactionName);
     d_reactions.insert(it, tmp);
     return tmp.second;
   }
