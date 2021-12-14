@@ -85,7 +85,8 @@ unsigned int Trajectory::removeSnapshot(unsigned int snapshotNum) {
           d_snapshotVect->begin());
 }
 
-unsigned int Trajectory::addConformersToMol(ROMol &mol, int from, int to) {
+unsigned int Trajectory::addConformersToMol(ROMol &mol, int from,
+                                            int to) const {
   PRECONDITION(d_numPoints == mol.getNumAtoms(),
                "Number of atom mismatch between ROMol and Trajectory");
   PRECONDITION(from < static_cast<int>(size()), "from must be < size()");

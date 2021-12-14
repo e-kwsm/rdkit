@@ -123,7 +123,7 @@ PyObject *ForceFieldGetExtraPointLoc(PyForceField *self, unsigned int idx) {
   return res;
 }
 
-double PyForceField::calcEnergyWithPos(const python::object &pos) {
+double PyForceField::calcEnergyWithPos(const python::object &pos) const {
   PRECONDITION(this->field, "no force field");
   if (pos != python::object()) {
     size_t s = this->field->dimension() * this->field->numPoints();
@@ -143,7 +143,7 @@ double PyForceField::calcEnergyWithPos(const python::object &pos) {
   }
 }
 
-PyObject *PyForceField::positions() {
+PyObject *PyForceField::positions() const {
   PRECONDITION(this->field, "no force field");
   size_t s = this->field->dimension() * this->field->numPoints();
   PyObject *coordTuple = PyTuple_New(s);
@@ -159,7 +159,7 @@ PyObject *PyForceField::positions() {
   return coordTuple;
 }
 
-PyObject *PyForceField::calcGradWithPos(const python::object &pos) {
+PyObject *PyForceField::calcGradWithPos(const python::object &pos) const {
   PRECONDITION(this->field, "no force field");
   size_t s = this->field->dimension() * this->field->numPoints();
   std::vector<double> g(s, 0.0);
@@ -188,7 +188,7 @@ PyObject *PyForceField::calcGradWithPos(const python::object &pos) {
 
 python::tuple PyForceField::minimizeTrajectory(unsigned int snapshotFreq,
                                                int maxIts, double forceTol,
-                                               double energyTol) {
+                                               double energyTol) const {
   PRECONDITION(this->field, "no force field");
   RDKit::SnapshotVect snapshotVect;
   int resInt = this->field->minimize(snapshotFreq, &snapshotVect, maxIts,
