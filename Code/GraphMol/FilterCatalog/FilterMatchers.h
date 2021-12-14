@@ -359,7 +359,7 @@ class RDKIT_FILTERCATALOG_EXPORT SmartsMatcher : public FilterMatcherBase {
     RDUNUSED_PARAM(version);
     std::string res;
     ar & res;
-    d_pattern = boost::shared_ptr<ROMol>(new ROMol(res));
+    d_pattern = boost::make_shared<ROMol>(res);
     ar & d_min_count;
     ar & d_max_count;
   }
@@ -516,8 +516,7 @@ class RDKIT_FILTERCATALOG_EXPORT FilterHierarchyMatcher
     PRECONDITION(hierarchy.d_matcher.get() && hierarchy.d_matcher->isValid(),
                  "Only one root node is allowed in a FilterHierarchyMatcher");
 
-    d_children.push_back(boost::shared_ptr<FilterHierarchyMatcher>(
-        new FilterHierarchyMatcher(hierarchy)));
+    d_children.push_back(boost::make_shared<FilterHierarchyMatcher>(hierarchy));
     return d_children.back();
   }
 

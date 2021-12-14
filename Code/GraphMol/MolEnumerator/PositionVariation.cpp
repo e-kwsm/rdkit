@@ -15,7 +15,7 @@ namespace RDKit {
 namespace MolEnumerator {
 
 void PositionVariationOp::initFromMol(const ROMol &mol) {
-  dp_mol.reset(new ROMol(mol));
+  dp_mol = std::make_shared<ROMol>(mol);
   initFromMol();
 }
 void PositionVariationOp::initFromMol() {

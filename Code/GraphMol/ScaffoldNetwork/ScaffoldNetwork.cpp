@@ -134,7 +134,7 @@ std::vector<std::pair<std::string, ROMOL_SPTR>> getMolFragments(
     const ROMol &mol, const ScaffoldNetworkParams &params) {
   std::vector<std::pair<std::string, ROMOL_SPTR>> res;
   std::deque<ROMOL_SPTR> stack;
-  stack.push_back(ROMOL_SPTR(new ROMol(mol)));
+  stack.push_back(boost::make_shared<ROMol>(mol));
   std::vector<std::string> seen;
   while (!stack.empty()) {
     auto wmol = stack.front();
