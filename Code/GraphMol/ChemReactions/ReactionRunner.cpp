@@ -130,7 +130,7 @@ class StereoBondEndCap {
   unsigned getNonAnchorIdx() const { return mp_nonAnchor->getIdx(); }
 
   std::pair<UINT_VECT, bool> getProductAnchorCandidates(
-      ReactantProductAtomMapping *mapping) {
+      ReactantProductAtomMapping *mapping) const {
     auto &react2Prod = mapping->reactProdAtomMap;
 
     bool swapStereo = false;

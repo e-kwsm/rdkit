@@ -71,7 +71,7 @@ void RGroupDecompData::prepareCores() {
   }
 }
 
-void RGroupDecompData::setRlabel(Atom *atom, int rlabel) {
+void RGroupDecompData::setRlabel(Atom *atom, int rlabel) const {
   PRECONDITION(rlabel > 0, "RLabels must be >0");
   if (params.rgroupLabelling & AtomMap) {
     atom->setAtomMapNum(rlabel);
@@ -294,7 +294,7 @@ void RGroupDecompData::addAtoms(
 bool RGroupDecompData::replaceHydrogenCoreDummy(const RGroupMatch &match,
                                                 RWMol &core, const Atom &atom,
                                                 const int currentLabel,
-                                                const int rLabel) {
+                                                const int rLabel) const {
   // if the R group is just a hydrogen then the attachment point should
   // replace an existing hydrogen neighbor since all hydrogen neighbors
   // are copied from the input molecule to the extracted core.

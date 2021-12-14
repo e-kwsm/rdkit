@@ -105,9 +105,9 @@ struct AtomInfo {
     //    std::endl;
   }
 
-  bool NeedsRLabel() { return atom->getAtomicNum() == 0 && rlabel == 0; }
+  bool NeedsRLabel() const { return atom->getAtomicNum() == 0 && rlabel == 0; }
 
-  unsigned int bestGuessRLabel() {
+  unsigned int bestGuessRLabel() const {
     if (rlabel) {
       return rlabel;
     }
@@ -145,7 +145,7 @@ struct AtomInfo {
     atom = mol.getAtomWithIdx(idx);
   }
 
-  void setAtomMap(int map) {
+  void setAtomMap(int map) const {
     atom->setProp(common_properties::molAtomMapNumber, map);
   }
 };
