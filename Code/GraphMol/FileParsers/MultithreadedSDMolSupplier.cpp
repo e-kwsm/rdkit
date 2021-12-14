@@ -147,8 +147,8 @@ bool MultithreadedSDMolSupplier::extractNextRecord(std::string &record,
   return true;
 }
 
-void MultithreadedSDMolSupplier::readMolProps(ROMol *mol,
-                                              std::istringstream &inStream) {
+void MultithreadedSDMolSupplier::readMolProps(
+    ROMol *mol, std::istringstream &inStream) const {
   PRECONDITION(inStream, "no stream");
   PRECONDITION(mol, "no molecule");
   bool hasProp = false;

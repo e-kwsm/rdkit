@@ -42,7 +42,7 @@ class RDKIT_FILEPARSERS_EXPORT MultithreadedSDMolSupplier
   //! reads next record and returns whether or not EOF was hit
   bool extractNextRecord(std::string &record, unsigned int &lineNum,
                          unsigned int &index) override;
-  void readMolProps(ROMol *mol, std::istringstream &inStream);
+  void readMolProps(ROMol *mol, std::istringstream &inStream) const;
   //! parses the record and returns the resulting molecule
   ROMol *processMoleculeRecord(const std::string &record,
                                unsigned int lineNum) override;

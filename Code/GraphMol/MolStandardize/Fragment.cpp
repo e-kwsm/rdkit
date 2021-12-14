@@ -170,7 +170,7 @@ LargestFragmentChooser::LargestFragmentChooser(
   countHeavyAtomsOnly = other.countHeavyAtomsOnly;
 }
 
-ROMol *LargestFragmentChooser::choose(const ROMol &mol) {
+ROMol *LargestFragmentChooser::choose(const ROMol &mol) const {
   BOOST_LOG(rdInfoLog) << "Running LargestFragmentChooser\n";
 
   if (!mol.getNumAtoms()) {

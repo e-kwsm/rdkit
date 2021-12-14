@@ -321,7 +321,7 @@ struct WeightedBond {
       Weight += 1;
     }
   }
-  bool operator<(const WeightedBond& r) {
+  bool operator<(const WeightedBond& r) const {
     return Weight >= r.Weight;  // sort in Z-A order (Rings first)
   }
 };

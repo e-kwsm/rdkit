@@ -88,7 +88,7 @@ struct PyLogStream : std::ostream, std::streambuf {
     return 0;
   }
 
-  void write(char c) {
+  void write(char c) const {
     if (logfn == nullptr) {
       return;
     }
