@@ -24,13 +24,13 @@ std::shared_ptr<MolEnumerator::MolEnumeratorOp> opFromName(
   std::shared_ptr<MolEnumerator::MolEnumeratorOp> res;
   switch (typ) {
     case EnumeratorTypes::LinkNode:
-      res.reset(new MolEnumerator::LinkNodeOp());
+      res = std::make_shared<MolEnumerator::LinkNodeOp>();
       break;
     case EnumeratorTypes::PositionVariation:
-      res.reset(new MolEnumerator::PositionVariationOp());
+      res = std::make_shared<MolEnumerator::PositionVariationOp>();
       break;
     case EnumeratorTypes::RepeatUnit:
-      res.reset(new MolEnumerator::RepeatUnitOp());
+      res = std::make_shared<MolEnumerator::RepeatUnitOp>();
       break;
     default:
       throw ValueErrorException("unrecognized operator type");
