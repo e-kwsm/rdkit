@@ -582,7 +582,7 @@ class MarvinMol : public MarvinMolBase {
   std::string toString() const override;
   ptree toPtree() const override;
 
-  std::string generateMolString();
+  std::string generateMolString() const;
   ptree toMolPtree() const;
 };
 

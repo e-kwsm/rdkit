@@ -44,7 +44,7 @@ class DrawShape {
   DrawShape &operator=(const DrawShape &) = delete;
   DrawShape &operator=(DrawShape &&) = delete;
 
-  void draw(MolDraw2D &drawer);
+  void draw(MolDraw2D &drawer) const;
   virtual void myDraw(MolDraw2D &drawer) const = 0;
   virtual void findExtremes(double &xmin, double &xmax, double &ymin,
                             double &ymax) const;
