@@ -69,7 +69,8 @@ bool hasAttachedLabels(const ROMol &mol, const Atom *atom,
 
 }  // namespace
 
-unsigned int RGroupDecompositionParameters::autoGetLabels(const RWMol &core) {
+unsigned int RGroupDecompositionParameters::autoGetLabels(
+    const RWMol &core) const {
   unsigned int autoLabels = 0;
   if (!onlyMatchAtRGroups) {
     autoLabels = AtomIndexLabels;
