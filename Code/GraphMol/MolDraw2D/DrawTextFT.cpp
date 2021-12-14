@@ -13,6 +13,7 @@
 
 #include <cstdio>
 #include <iostream>
+#include <memory>
 
 #include <GraphMol/MolDraw2D/MolDraw2D.h>
 #include <GraphMol/MolDraw2D/DrawTextFT.h>
@@ -184,8 +185,8 @@ void DrawTextFT::getStringRects(const std::string &text,
     double height = p_y_max - p_y_min;
     Point2D offset(p_x_min + width / 2.0, p_y_max / 2.0);
     Point2D g_centre(offset.x, p_y_max - height / 2.0);
-    rects.push_back(std::shared_ptr<StringRect>(
-        new StringRect(offset, g_centre, width, height)));
+    rects.push_back(
+        std::make_shared<StringRect>(offset, g_centre, width, height));
     draw_modes.push_back(draw_mode);
     max_y = std::max(max_y, p_y_max);
   }
