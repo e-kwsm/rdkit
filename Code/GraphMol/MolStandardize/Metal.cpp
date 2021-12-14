@@ -67,11 +67,11 @@ ROMol *MetalDisconnector::getMetalNof() { return dp_metal_nof.get(); }
 ROMol *MetalDisconnector::getMetalNon() { return dp_metal_non.get(); }
 
 void MetalDisconnector::setMetalNof(const ROMol &mol) {
-  this->dp_metal_nof.reset(new ROMol(mol));
+  this->dp_metal_nof = boost::make_shared<ROMol>(mol);
 }
 
 void MetalDisconnector::setMetalNon(const ROMol &mol) {
-  this->dp_metal_non.reset(new ROMol(mol));
+  this->dp_metal_non = boost::make_shared<ROMol>(mol);
 }
 
 ROMol *MetalDisconnector::disconnect(const ROMol &mol) {
