@@ -172,7 +172,7 @@ class RDKIT_GRAPHMOL_EXPORT ResonanceMolSupplier {
   void enumerate();
   /*! Returns true if resonance structure enumeration has already
    *  happened */
-  bool getIsEnumerated() { return d_isEnumerated; }
+  bool getIsEnumerated() const { return d_isEnumerated; }
   /*! Returns the number of resonance structures in the
    *  ResonanceMolSupplier */
   unsigned int length();
