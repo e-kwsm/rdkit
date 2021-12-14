@@ -58,7 +58,7 @@ ClusNode calcMolMolSimilarity(
       res.front().largestFragsOnly(clusOpts->maxNumFrags);
       cn.d_sim = res.front().getSimilarity();
       if (cn.d_sim >= opts->similarityThreshold) {
-        cn.d_res = std::shared_ptr<RascalResult>(new RascalResult(res.front()));
+        cn.d_res = std::make_shared<RascalResult>(res.front());
       }
     }
   }
