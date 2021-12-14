@@ -1548,7 +1548,7 @@ void EmbedMultipleConfs(ROMol &mol, INT_VECT &res, unsigned int numConfs,
   if (params.embedFragmentsSeparately) {
     molFrags = MolOps::getMolFrags(mol, true, &fragMapping);
   } else {
-    molFrags.push_back(ROMOL_SPTR(new ROMol(mol)));
+    molFrags.push_back(boost::make_shared<ROMol>(mol));
     fragMapping.resize(mol.getNumAtoms());
     std::fill(fragMapping.begin(), fragMapping.end(), 0);
   }
@@ -1591,7 +1591,7 @@ void EmbedMultipleConfs(ROMol &mol, INT_VECT &res, unsigned int numConfs,
     if (params.boundsMat == nullptr || molFrags.size() > 1) {
       // The user didn't provide one, so create and initialize the distance
       // bounds matrix
-      mmat.reset(new DistGeom::BoundsMatrix(nAtoms));
+      mmat = boost::make_shared<DistGeom::BoundsMatrix>(nAtoms);
       initBoundsMat(mmat);
       if (!EmbeddingOps::setupInitialBoundsMatrix(piece.get(), mmat, coordMap,
                                                   params, etkdgDetails)) {
@@ -1609,7 +1609,7 @@ void EmbedMultipleConfs(ROMol &mol, INT_VECT &res, unsigned int numConfs,
       }
       collectBondsAndAngles((*piece.get()), etkdgDetails.bonds,
                             etkdgDetails.angles);
-      mmat.reset(new DistGeom::BoundsMatrix(*params.boundsMat));
+      mmat = boost::make_shared<DistGeom::BoundsMatrix>(*params.boundsMat);
     }
 
     // find all the chiral centers in the molecule

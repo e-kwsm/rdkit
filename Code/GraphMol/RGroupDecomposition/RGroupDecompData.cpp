@@ -67,7 +67,7 @@ void RGroupDecompData::prepareCores() {
     CHECK_INVARIANT(params.prepareCore(*core.second.core, alignCore),
                     "Could not prepare at least one core");
     core.second.init();
-    core.second.labelledCore.reset(new RWMol(*core.second.core));
+    core.second.labelledCore = boost::make_shared<RWMol>(*core.second.core);
   }
 }
 
@@ -565,7 +565,7 @@ void RGroupDecompData::relabel() {
 
   // find user labels that are not present in the decomposition
   for (auto &core : cores) {
-    core.second.labelledCore.reset(new RWMol(*core.second.core));
+    core.second.labelledCore = boost::make_shared<RWMol>(*core.second.core);
     addCoreUserLabels(*core.second.labelledCore, userLabels);
   }
 
