@@ -206,7 +206,7 @@ bool SparseBitVect::setBit(const unsigned int which) {
 //  Returns the original state of the bit
 //
 // """ -------------------------------------------------------
-bool SparseBitVect::setBit(const IntSetIter which) {
+bool SparseBitVect::setBit(const IntSetIter which) const {
   if (!dp_bits) {
     throw ValueErrorException("BitVect not properly initialized.");
   }
