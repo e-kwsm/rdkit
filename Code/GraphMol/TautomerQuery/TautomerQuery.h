@@ -85,7 +85,7 @@ class RDKIT_TAUTOMERQUERY_EXPORT TautomerQuery {
 
   // SubstructureMatch
   bool isSubstructOf(const ROMol &mol, const SubstructMatchParameters &params =
-                                           SubstructMatchParameters());
+                                           SubstructMatchParameters()) const;
 
   // Query fingerprint
   ExplicitBitVect *patternFingerprintTemplate(
