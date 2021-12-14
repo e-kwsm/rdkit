@@ -123,7 +123,7 @@ PyObject *ForceFieldGetExtraPointLoc(PyForceField *self, unsigned int idx) {
   return res;
 }
 
-double PyForceField::calcEnergyWithPos(const python::object &pos) {
+double PyForceField::calcEnergyWithPos(const python::object &pos) const {
   PRECONDITION(this->field, "no force field");
   if (pos != python::object()) {
     size_t s = this->field->dimension() * this->field->numPoints();
@@ -143,7 +143,7 @@ double PyForceField::calcEnergyWithPos(const python::object &pos) {
   }
 }
 
-PyObject *PyForceField::positions() {
+PyObject *PyForceField::positions() const {
   PRECONDITION(this->field, "no force field");
   size_t s = this->field->dimension() * this->field->numPoints();
   PyObject *coordTuple = PyTuple_New(s);
@@ -159,7 +159,7 @@ PyObject *PyForceField::positions() {
   return coordTuple;
 }
 
-PyObject *PyForceField::calcGradWithPos(const python::object &pos) {
+PyObject *PyForceField::calcGradWithPos(const python::object &pos) const {
   PRECONDITION(this->field, "no force field");
   size_t s = this->field->dimension() * this->field->numPoints();
   std::vector<double> g(s, 0.0);
@@ -188,7 +188,7 @@ PyObject *PyForceField::calcGradWithPos(const python::object &pos) {
 
 python::tuple PyForceField::minimizeTrajectory(unsigned int snapshotFreq,
                                                int maxIts, double forceTol,
-                                               double energyTol) {
+                                               double energyTol) const {
   PRECONDITION(this->field, "no force field");
   RDKit::SnapshotVect snapshotVect;
   int resInt = this->field->minimize(snapshotFreq, &snapshotVect, maxIts,
@@ -204,7 +204,8 @@ python::tuple PyForceField::minimizeTrajectory(unsigned int snapshotFreq,
 }
 
 PyObject *PyMMFFMolProperties::getMMFFBondStretchParams(
-    const RDKit::ROMol &mol, const unsigned int idx1, const unsigned int idx2) {
+    const RDKit::ROMol &mol, const unsigned int idx1,
+    const unsigned int idx2) const {
   PyObject *res = nullptr;
   unsigned int bondType;
   ForceFields::MMFF::MMFFBond mmffBondStretchParams;
@@ -218,10 +219,9 @@ PyObject *PyMMFFMolProperties::getMMFFBondStretchParams(
   return res;
 };
 
-PyObject *PyMMFFMolProperties::getMMFFAngleBendParams(const RDKit::ROMol &mol,
-                                                      const unsigned int idx1,
-                                                      const unsigned int idx2,
-                                                      const unsigned int idx3) {
+PyObject *PyMMFFMolProperties::getMMFFAngleBendParams(
+    const RDKit::ROMol &mol, const unsigned int idx1, const unsigned int idx2,
+    const unsigned int idx3) const {
   PyObject *res = nullptr;
   unsigned int angleType;
   ForceFields::MMFF::MMFFAngle mmffAngleBendParams;
@@ -237,7 +237,7 @@ PyObject *PyMMFFMolProperties::getMMFFAngleBendParams(const RDKit::ROMol &mol,
 
 PyObject *PyMMFFMolProperties::getMMFFStretchBendParams(
     const RDKit::ROMol &mol, const unsigned int idx1, const unsigned int idx2,
-    const unsigned int idx3) {
+    const unsigned int idx3) const {
   PyObject *res = nullptr;
   unsigned int stretchBendType;
   ForceFields::MMFF::MMFFStbn mmffStretchBendParams;
@@ -254,11 +254,9 @@ PyObject *PyMMFFMolProperties::getMMFFStretchBendParams(
   return res;
 };
 
-PyObject *PyMMFFMolProperties::getMMFFTorsionParams(const RDKit::ROMol &mol,
-                                                    const unsigned int idx1,
-                                                    const unsigned int idx2,
-                                                    const unsigned int idx3,
-                                                    const unsigned int idx4) {
+PyObject *PyMMFFMolProperties::getMMFFTorsionParams(
+    const RDKit::ROMol &mol, const unsigned int idx1, const unsigned int idx2,
+    const unsigned int idx3, const unsigned int idx4) const {
   PyObject *res = nullptr;
   unsigned int torType;
   ForceFields::MMFF::MMFFTor mmffTorsionParams;
@@ -273,11 +271,9 @@ PyObject *PyMMFFMolProperties::getMMFFTorsionParams(const RDKit::ROMol &mol,
   return res;
 };
 
-PyObject *PyMMFFMolProperties::getMMFFOopBendParams(const RDKit::ROMol &mol,
-                                                    const unsigned int idx1,
-                                                    const unsigned int idx2,
-                                                    const unsigned int idx3,
-                                                    const unsigned int idx4) {
+PyObject *PyMMFFMolProperties::getMMFFOopBendParams(
+    const RDKit::ROMol &mol, const unsigned int idx1, const unsigned int idx2,
+    const unsigned int idx3, const unsigned int idx4) const {
   PyObject *res = nullptr;
   ForceFields::MMFF::MMFFOop mmffOopBendParams;
   if (mmffMolProperties->getMMFFOopBendParams(mol, idx1, idx2, idx3, idx4,
@@ -288,7 +284,7 @@ PyObject *PyMMFFMolProperties::getMMFFOopBendParams(const RDKit::ROMol &mol,
 };
 
 PyObject *PyMMFFMolProperties::getMMFFVdWParams(const unsigned int idx1,
-                                                const unsigned int idx2) {
+                                                const unsigned int idx2) const {
   PyObject *res = nullptr;
   ForceFields::MMFF::MMFFVdWRijstarEps mmffVdWParams;
   if (mmffMolProperties->getMMFFVdWParams(idx1, idx2, mmffVdWParams)) {

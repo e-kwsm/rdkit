@@ -279,8 +279,8 @@ std::vector<MatchVectType> TautomerQuery::substructOf(
   return matches;
 }
 
-bool TautomerQuery::isSubstructOf(const ROMol &mol,
-                                  const SubstructMatchParameters &params) {
+bool TautomerQuery::isSubstructOf(
+    const ROMol &mol, const SubstructMatchParameters &params) const {
   SubstructMatchParameters params2(params);
   params2.maxMatches = 1;
   auto matches = substructOf(mol, params2);

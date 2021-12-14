@@ -4037,7 +4037,7 @@ ptree MarvinMol::toPtree() const {
   return out;
 }
 
-std::string MarvinMol::generateMolString() {
+std::string MarvinMol::generateMolString() const {
   std::ostringstream out;
 
   out << "<cml xmlns=\"http://www.chemaxon.com\"  xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" "

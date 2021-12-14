@@ -47,33 +47,34 @@ class PyForceField {
     return idx;
   }
 
-  double calcEnergyWithPos(const python::object &pos = python::object());
+  double calcEnergyWithPos(const python::object &pos = python::object()) const;
 
-  double calcEnergy() { return calcEnergyWithPos(); }
+  double calcEnergy() const { return calcEnergyWithPos(); }
 
-  PyObject *calcGradWithPos(const python::object &pos = python::object());
+  PyObject *calcGradWithPos(const python::object &pos = python::object()) const;
 
-  PyObject *positions();
+  PyObject *positions() const;
 
-  int minimize(int maxIts, double forceTol, double energyTol) {
+  int minimize(int maxIts, double forceTol, double energyTol) const {
     PRECONDITION(this->field, "no force field");
     return this->field->minimize(maxIts, forceTol, energyTol);
   }
 
   boost::python::tuple minimizeTrajectory(unsigned int snapshotFreq, int maxIts,
-                                          double forceTol, double energyTol);
+                                          double forceTol,
+                                          double energyTol) const;
 
-  void initialize() {
+  void initialize() const {
     PRECONDITION(this->field, "no force field");
     this->field->initialize();
   }
 
-  unsigned int dimension() {
+  unsigned int dimension() const {
     PRECONDITION(this->field, "no force field");
     return this->field->dimension();
   }
 
-  unsigned int numPoints() {
+  unsigned int numPoints() const {
     PRECONDITION(this->field, "no force field");
     return this->field->numPoints();
   }
@@ -89,68 +90,69 @@ class PyMMFFMolProperties {
       : mmffMolProperties(mp) {}
   ~PyMMFFMolProperties() = default;
 
-  unsigned int getMMFFAtomType(unsigned int idx) {
+  unsigned int getMMFFAtomType(unsigned int idx) const {
     return (unsigned int)(mmffMolProperties->getMMFFAtomType(idx));
   }
-  double getMMFFFormalCharge(unsigned int idx) {
+  double getMMFFFormalCharge(unsigned int idx) const {
     return mmffMolProperties->getMMFFFormalCharge(idx);
   }
-  double getMMFFPartialCharge(unsigned int idx) {
+  double getMMFFPartialCharge(unsigned int idx) const {
     return mmffMolProperties->getMMFFPartialCharge(idx);
   }
   PyObject *getMMFFBondStretchParams(const RDKit::ROMol &mol,
                                      const unsigned int idx1,
-                                     const unsigned int idx2);
+                                     const unsigned int idx2) const;
   PyObject *getMMFFAngleBendParams(const RDKit::ROMol &mol,
                                    const unsigned int idx1,
                                    const unsigned int idx2,
-                                   const unsigned int idx3);
+                                   const unsigned int idx3) const;
   PyObject *getMMFFStretchBendParams(const RDKit::ROMol &mol,
                                      const unsigned int idx1,
                                      const unsigned int idx2,
-                                     const unsigned int idx3);
+                                     const unsigned int idx3) const;
   PyObject *getMMFFTorsionParams(const RDKit::ROMol &mol,
                                  const unsigned int idx1,
                                  const unsigned int idx2,
                                  const unsigned int idx3,
-                                 const unsigned int idx4);
+                                 const unsigned int idx4) const;
   PyObject *getMMFFOopBendParams(const RDKit::ROMol &mol,
                                  const unsigned int idx1,
                                  const unsigned int idx2,
                                  const unsigned int idx3,
-                                 const unsigned int idx4);
-  PyObject *getMMFFVdWParams(const unsigned int idx1, const unsigned int idx2);
-  void setMMFFDielectricModel(std::uint8_t dielModel) {
+                                 const unsigned int idx4) const;
+  PyObject *getMMFFVdWParams(const unsigned int idx1,
+                             const unsigned int idx2) const;
+  void setMMFFDielectricModel(std::uint8_t dielModel) const {
     mmffMolProperties->setMMFFDielectricModel(dielModel);
   }
-  void setMMFFDielectricConstant(double dielConst) {
+  void setMMFFDielectricConstant(double dielConst) const {
     mmffMolProperties->setMMFFDielectricConstant(dielConst);
   }
-  void setMMFFBondTerm(bool state) {
+  void setMMFFBondTerm(bool state) const {
     mmffMolProperties->setMMFFBondTerm(state);
   }
-  void setMMFFAngleTerm(const bool state) {
+  void setMMFFAngleTerm(const bool state) const {
     mmffMolProperties->setMMFFAngleTerm(state);
   }
-  void setMMFFStretchBendTerm(const bool state) {
+  void setMMFFStretchBendTerm(const bool state) const {
     mmffMolProperties->setMMFFStretchBendTerm(state);
   }
-  void setMMFFOopTerm(const bool state) {
+  void setMMFFOopTerm(const bool state) const {
     mmffMolProperties->setMMFFOopTerm(state);
   }
-  void setMMFFTorsionTerm(const bool state) {
+  void setMMFFTorsionTerm(const bool state) const {
     mmffMolProperties->setMMFFTorsionTerm(state);
   }
-  void setMMFFVdWTerm(const bool state) {
+  void setMMFFVdWTerm(const bool state) const {
     mmffMolProperties->setMMFFVdWTerm(state);
   }
-  void setMMFFEleTerm(const bool state) {
+  void setMMFFEleTerm(const bool state) const {
     mmffMolProperties->setMMFFEleTerm(state);
   }
-  void setMMFFVariant(const std::string &mmffVariant) {
+  void setMMFFVariant(const std::string &mmffVariant) const {
     mmffMolProperties->setMMFFVariant(mmffVariant);
   }
-  void setMMFFVerbosity(unsigned int verbosity) {
+  void setMMFFVerbosity(unsigned int verbosity) const {
     mmffMolProperties->setMMFFVerbosity(verbosity);
   }
   boost::shared_ptr<RDKit::MMFF::MMFFMolProperties> mmffMolProperties;

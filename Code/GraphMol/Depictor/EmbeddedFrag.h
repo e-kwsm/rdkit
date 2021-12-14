@@ -255,13 +255,13 @@ class RDKIT_DEPICTOR_EXPORT EmbeddedFrag {
   void markDone() { d_done = true; }
 
   //! If this fragment done for the final embedding
-  bool isDone() { return d_done; }
+  bool isDone() const { return d_done; }
 
   //! Get the molecule that this embedded fragment belongs to
   const RDKit::ROMol *getMol() const { return dp_mol; }
 
   //! Find the common atom ids between this fragment and a second one
-  RDKit::INT_VECT findCommonAtoms(const EmbeddedFrag &efrag2);
+  RDKit::INT_VECT findCommonAtoms(const EmbeddedFrag &efrag2) const;
 
   //! Find a neighbor to a non-ring atom among the already embedded atoms
   /*!
@@ -361,10 +361,10 @@ class RDKIT_DEPICTOR_EXPORT EmbeddedFrag {
   //!  within a specified distant of a point
   int findNumNeigh(const RDGeom::Point2D &pt, double radius);
 
-  inline double getBoxPx() { return d_px; }
-  inline double getBoxNx() { return d_nx; }
-  inline double getBoxPy() { return d_py; }
-  inline double getBoxNy() { return d_ny; }
+  inline double getBoxPx() const { return d_px; }
+  inline double getBoxNx() const { return d_nx; }
+  inline double getBoxPy() const { return d_py; }
+  inline double getBoxNy() const { return d_ny; }
 
   void canonicalizeOrientation();
 
