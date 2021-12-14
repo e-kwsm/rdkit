@@ -51,12 +51,12 @@ RascalResult::RascalResult(const RDKit::ROMol &mol1, const RDKit::ROMol &mol2,
       d_ignoreBondOrders(ignoreBondOrders) {
   const std::vector<std::vector<int>> *mol1AdjMatrix;
   if (swapped) {
-    d_mol1.reset(new RDKit::ROMol(mol2));
-    d_mol2.reset(new RDKit::ROMol(mol1));
+    d_mol1 = std::make_shared<RDKit::ROMol>(mol2);
+    d_mol2 = std::make_shared<RDKit::ROMol>(mol1);
     mol1AdjMatrix = &adjMatrix2;
   } else {
-    d_mol1.reset(new RDKit::ROMol(mol1));
-    d_mol2.reset(new RDKit::ROMol(mol2));
+    d_mol1 = std::make_shared<RDKit::ROMol>(mol1);
+    d_mol2 = std::make_shared<RDKit::ROMol>(mol2);
     mol1AdjMatrix = &adjMatrix1;
   }
 
@@ -88,13 +88,13 @@ RascalResult::RascalResult(const RascalResult &other)
       d_maxDeltaAtomAtomDist(other.d_maxDeltaAtomAtomDist),
       d_largestFragSize(other.d_largestFragSize) {
   if (other.d_mol1) {
-    d_mol1.reset(new ROMol(*other.d_mol1));
+    d_mol1 = std::make_shared<ROMol>(*other.d_mol1);
   }
   if (other.d_mol2) {
-    d_mol2.reset(new ROMol(*other.d_mol2));
+    d_mol2 = std::make_shared<ROMol>(*other.d_mol2);
   }
   if (other.d_mcesMol) {
-    d_mcesMol.reset(new ROMol(*other.d_mcesMol));
+    d_mcesMol = std::make_shared<ROMol>(*other.d_mcesMol);
   }
 }
 
@@ -113,13 +113,13 @@ RascalResult &RascalResult::operator=(const RascalResult &other) {
   d_maxDeltaAtomAtomDist = other.d_maxDeltaAtomAtomDist;
   d_largestFragSize = other.d_largestFragSize;
   if (other.d_mol1) {
-    d_mol1.reset(new ROMol(*other.d_mol1));
+    d_mol1 = std::make_shared<ROMol>(*other.d_mol1);
   }
   if (other.d_mol2) {
-    d_mol2.reset(new ROMol(*other.d_mol2));
+    d_mol2 = std::make_shared<ROMol>(*other.d_mol2);
   }
   if (other.d_mcesMol) {
-    d_mcesMol.reset(new ROMol(*other.d_mcesMol));
+    d_mcesMol = std::make_shared<ROMol>(*other.d_mcesMol);
   }
   return *this;
 }

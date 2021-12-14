@@ -69,7 +69,7 @@ void tagAtoms(std::shared_ptr<ROMol> mol, const Bond *bond,
 const size_t RepeatUnitOp::DEFAULT_REPEAT_COUNT = 4;
 
 void RepeatUnitOp::initFromMol(const ROMol &mol) {
-  dp_mol.reset(new ROMol(mol));
+  dp_mol = std::make_shared<ROMol>(mol);
   initFromMol();
 }
 
@@ -220,7 +220,7 @@ void RepeatUnitOp::initFromMol() {
 
   // copy the molecule over as the frame. We'll remove atoms in SRUs from this
   // below
-  dp_frame.reset(new RWMol(*dp_mol));
+  dp_frame = std::make_shared<RWMol>(*dp_mol);
   dp_frame->beginBatchEdit();
 
   // now set up the repeat units for each of the SRUs
