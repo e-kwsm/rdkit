@@ -76,7 +76,7 @@ class MolAtropTest {
   };
 
   void generateNewExpectedFilesIfSoSpecified(std::string filename,
-                                             std::string dataToWrite) {
+                                             std::string dataToWrite) const {
     if (generateExpectedFiles) {
       std::ofstream out;
       out.open(filename);
