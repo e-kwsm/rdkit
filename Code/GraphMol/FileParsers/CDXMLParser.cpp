@@ -51,7 +51,7 @@ struct BondInfo {
   int end = -1;
   Bond::BondType order;
   std::string display;
-  Bond::BondType getBondType() { return order; }
+  Bond::BondType getBondType() const { return order; }
   bool validate(const std::map<unsigned int, Atom *> &ids,
                 unsigned int num_atoms) const {
     auto s = ids.find(start);

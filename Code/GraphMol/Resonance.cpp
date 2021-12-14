@@ -119,7 +119,7 @@ class ConjElectrons {
   unsigned int sumMultipleBondIdxs() const {
     return d_ceMetrics.d_sumMultipleBondIdxs;
   }
-  std::size_t hash() { return d_ceMetrics.d_hash; }
+  std::size_t hash() const { return d_ceMetrics.d_hash; }
   int wtdFormalCharges() const { return d_ceMetrics.d_wtdFormalCharges; };
   void enumerateNonBonded(CEMap &ceMap, CEDegCount &ceDegCount,
                           CEStats &ceStats);
@@ -163,7 +163,7 @@ class ConjElectrons {
 class CEVect2Store {
  public:
   CEVect2Store(CEVect &ceVect);
-  unsigned int ceCount() { return d_ceCount; }
+  unsigned int ceCount() const { return d_ceCount; }
   ConjElectrons *getCE(unsigned int i, unsigned int j);
 
  private:
