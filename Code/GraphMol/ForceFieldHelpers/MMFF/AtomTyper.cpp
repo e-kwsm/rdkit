@@ -2366,8 +2366,7 @@ MMFFMolProperties::MMFFMolProperties(ROMol &mol, const std::string &mmffVariant,
     mol.setProp(common_properties::_MMFFSanitized, 1, true);
   }
   for (unsigned int i = 0; i < mol.getNumAtoms(); ++i) {
-    d_MMFFAtomPropertiesPtrVect[i] =
-        MMFFAtomPropertiesPtr(new MMFFAtomProperties());
+    d_MMFFAtomPropertiesPtrVect[i] = boost::make_shared<MMFFAtomProperties>();
   }
   MolOps::setMMFFAromaticity((RWMol &)mol);
   RingMembershipSize rmSize(mol);

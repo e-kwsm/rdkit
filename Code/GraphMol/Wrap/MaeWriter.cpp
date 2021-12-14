@@ -32,11 +32,11 @@ class LocalMaeWriter : public MaeWriter {
  public:
   LocalMaeWriter(python::object &fileobj)
       : dp_streambuf(new streambuf(fileobj, 't')) {
-    dp_ostream.reset(new streambuf::ostream(*dp_streambuf));
+    dp_ostream = std::make_shared<streambuf::ostream>(*dp_streambuf);
   }
 
   LocalMaeWriter(streambuf &output) {
-    dp_ostream.reset(new streambuf::ostream(output));
+    dp_ostream = std::make_shared<streambuf::ostream>(output);
   }
 
   LocalMaeWriter(const std::string &fname) : RDKit::MaeWriter(fname) {}

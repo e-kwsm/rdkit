@@ -20,7 +20,7 @@ namespace RDKit {
 void RGroupData::mergeIntoCombinedMol(const ROMOL_SPTR &mol) {
   CHECK_INVARIANT(mol, "mol must not be null");
   if (!combinedMol) {
-    combinedMol = RWMOL_SPTR(new RWMol(*mol));
+    combinedMol = boost::make_shared<RWMol>(*mol);
   } else {
     combinedMol.reset(static_cast<RWMol *>(combineMols(*combinedMol, *mol)));
     single_fragment = false;

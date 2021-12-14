@@ -137,7 +137,7 @@ ExtendedQueryMol createExtendedQueryMol(const RWMol &mol, bool doEnumeration,
   }
   if (bndl.empty()) {
     // nothing enumerated, just add the input molecule
-    bndl.addMol(boost::shared_ptr<ROMol>(new ROMol(mol)));
+    bndl.addMol(boost::make_shared<ROMol>(mol));
   }
 
   if (bndl.size() == 1) {

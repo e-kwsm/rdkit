@@ -53,9 +53,8 @@ struct PyEmbedParameters
   }
   void setCPCI(const python::dict &CPCIdict) {
     // CPCI has the atom pair tuple as key and charge product as value
-    CPCI = std::shared_ptr<
-        std::map<std::pair<unsigned int, unsigned int>, double>>(
-        new std::map<std::pair<unsigned int, unsigned int>, double>);
+    CPCI = std::make_shared<
+        std::map<std::pair<unsigned int, unsigned int>, double>>();
 
     python::list ks = CPCIdict.keys();
     unsigned int nKeys = python::len(ks);
