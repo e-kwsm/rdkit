@@ -45,7 +45,7 @@ struct FingerprintVarianceScoreData {
   std::map<int, std::shared_ptr<VarianceDataForLabel>> labelsToVarianceData;
 
   // calculates fingerprint variance score from rgroup bit counts
-  double fingerprintVarianceGroupScore();
+  double fingerprintVarianceGroupScore() const;
 
   // Adds a molecule match to the rgroup fingerprint bit counts
   // vectors
