@@ -50,9 +50,9 @@ class RDKIT_MOLALIGN_EXPORT O3AConstraint {
   friend class O3AConstraintVect;
 
  public:
-  double getPrbIdx() { return d_prbIdx; }
-  double getRefIdx() { return d_refIdx; }
-  double getWeight() { return d_weight; }
+  double getPrbIdx() const { return d_prbIdx; }
+  double getRefIdx() const { return d_refIdx; }
+  double getWeight() const { return d_weight; }
 
  private:
   unsigned int d_idx;
@@ -303,7 +303,7 @@ class RDKIT_MOLALIGN_EXPORT O3A {
   }
   double align();
   double trans(RDGeom::Transform3D &trans);
-  double score() { return d_o3aScore; }
+  double score() const { return d_o3aScore; }
   const RDKit::MatchVectType *matches() { return d_o3aMatchVect; }
   const RDNumeric::DoubleVector *weights() { return d_o3aWeights; }
 

@@ -77,7 +77,7 @@ class RDKIT_TRAJECTORY_EXPORT Trajectory {
     to -1 (first available) \param to - the last Snapshot that will be added as
     a Conformer; defaults to -1 (all) \return the number of conformations added
   */
-  unsigned int addConformersToMol(ROMol &mol, int from = -1, int to = -1);
+  unsigned int addConformersToMol(ROMol &mol, int from = -1, int to = -1) const;
 
  private:
   // dimensionality of this Trajectory's coordinates;

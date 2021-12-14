@@ -494,7 +494,7 @@ class RDKIT_RDGEOMETRYLIB_EXPORT PointND : public Point {
     return *this;
   }
 
-  PointND directionVector(const PointND &other) {
+  PointND directionVector(const PointND &other) const {
     PRECONDITION(this->dimension() == other.dimension(),
                  "Point dimensions do not match");
     PointND np(other);

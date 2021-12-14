@@ -212,10 +212,10 @@ class UsingCoordGen : public boost::noncopyable {
       : m_initial_state{getPreferCoordGen()}, m_temp_state(temp_state) {}
   ~UsingCoordGen() = default;
 
-  void enter() { setPreferCoordGen(m_temp_state); }
+  void enter() const { setPreferCoordGen(m_temp_state); }
 
   void exit(python::object exc_type, python::object exc_val,
-            python::object traceback) {
+            python::object traceback) const {
     RDUNUSED_PARAM(exc_type);
     RDUNUSED_PARAM(exc_val);
     RDUNUSED_PARAM(traceback);
