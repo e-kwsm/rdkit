@@ -239,7 +239,7 @@ void testAllowedAtomsValidation() {
   std::vector<shared_ptr<Atom>> atomList;
 
   for (auto &atom : atoms) {
-    shared_ptr<Atom> a(new Atom(atom));
+    auto a = std::make_shared<Atom>(atom);
     atomList.push_back(a);
   }
 
@@ -267,7 +267,7 @@ void testDisallowedAtomsValidation() {
   std::vector<shared_ptr<Atom>> atomList;
 
   for (auto &atom : atoms) {
-    shared_ptr<Atom> a(new Atom(atom));
+    auto a = std::make_shared<Atom>(atom);
     atomList.push_back(a);
   }
 

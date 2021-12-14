@@ -149,7 +149,7 @@ class MolBundle : public RDProps {
     ar >> pkls;
     d_mols.clear();
     for (const auto &pkl : pkls) {
-      d_mols.push_back(ROMOL_SPTR(new ROMol(pkl)));
+      d_mols.push_back(boost::make_shared<ROMol>(pkl));
     }
   }
   BOOST_SERIALIZATION_SPLIT_MEMBER()
