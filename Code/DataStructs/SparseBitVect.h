@@ -67,7 +67,7 @@ class RDKIT_DATASTRUCTS_EXPORT SparseBitVect : public BitVect {
 
   unsigned int getNumBits() const override { return d_size; }
   bool setBit(const unsigned int which) override;
-  bool setBit(const IntSetIter which);
+  bool setBit(const IntSetIter which) const;
   bool unsetBit(const unsigned int which) override;
   bool getBit(const unsigned int which) const override;
   bool getBit(const IntVectIter which) const;

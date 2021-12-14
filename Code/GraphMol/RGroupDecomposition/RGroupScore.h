@@ -51,7 +51,7 @@ struct CartesianProduct {
     return v;
   }
 
-  size_t value() { return value(permutation); }
+  size_t value() const { return value(permutation); }
 
   bool increment(size_t rowToIncrement) {
     if (permutationCount > maxPermutations) {
