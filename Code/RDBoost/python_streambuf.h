@@ -234,11 +234,7 @@ class streambuf : public std::basic_streambuf<char> {
   }
 
   /// Mundane destructor freeing the allocated resources
-  ~streambuf() override {
-    if (write_buffer) {
-      delete[] write_buffer;
-    }
-  }
+  ~streambuf() override { delete[] write_buffer; }
 
   /// C.f. C++ standard section 27.5.2.4.3
   /** It is essential to override this virtual function for the stream

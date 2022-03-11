@@ -375,9 +375,7 @@ class RDKIT_GRAPHMOL_EXPORT ROMol : public RDProps {
     d_graph = std::move(o.d_graph);
     d_atomBookmarks = std::move(o.d_atomBookmarks);
     d_bondBookmarks = std::move(o.d_bondBookmarks);
-    if (dp_ringInfo) {
-      delete dp_ringInfo;
-    }
+    delete dp_ringInfo;
     dp_ringInfo = std::exchange(o.dp_ringInfo, nullptr);
 
     d_confs = std::move(o.d_confs);
