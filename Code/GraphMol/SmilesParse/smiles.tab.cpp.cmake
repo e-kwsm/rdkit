@@ -236,19 +236,19 @@ typedef enum yysymbol_kind_t yysymbol_kind_t;
    helps avoid bugs in integer arithmetic.  */
 
 #ifdef __INT_LEAST8_MAX__
-using yytype_int8 = __INT_LEAST8_TYPE__;
+typedef __INT_LEAST8_TYPE__ yytype_int8;
 #elif defined YY_STDINT_H
-using yytype_int8 = int_least8_t;
+typedef int_least8_t yytype_int8;
 #else
-using yytype_int8 = signed char;
+typedef signed char yytype_int8;
 #endif
 
 #ifdef __INT_LEAST16_MAX__
-using yytype_int16 = __INT_LEAST16_TYPE__;
+typedef __INT_LEAST16_TYPE__ yytype_int16;
 #elif defined YY_STDINT_H
-using yytype_int16 = int_least16_t;
+typedef int_least16_t yytype_int16;
 #else
-using yytype_int16 = short;
+typedef short yytype_int16;
 #endif
 
 /* Work around bug in HP-UX 11.23, which defines these macros
@@ -269,20 +269,32 @@ using yytype_uint8 =  __UINT_LEAST8_TYPE__;
        && UINT_LEAST8_MAX <= INT_MAX)
 using yytype_uint8 = uint_least8_t;
 #elif !defined __UINT_LEAST8_MAX__ && UCHAR_MAX <= INT_MAX
-using yytype_uint8 = unsigned char;
+typedef unsigned char yytype_uint8;
 #else
-using yytype_uint8 = short;
+typedef short yytype_uint8;
 #endif
 
 #if defined __UINT_LEAST16_MAX__ && __UINT_LEAST16_MAX__ <= __INT_MAX__
+<<<<<<< HEAD
 using yytype_uint16 = __UINT_LEAST16_TYPE__;
 #elif (!defined __UINT_LEAST16_MAX__ && defined YY_STDINT_H \
        && UINT_LEAST16_MAX <= INT_MAX)
 using yytype_uint16 = uint_least16_t;
+||||||| parent of 169cd5c65e06 (todo)
+using yytype_uint16 = __UINT_LEAST16_TYPE__;
+#elif (!defined __UINT_LEAST16_MAX__ && defined YY_STDINT_H && \
+       UINT_LEAST16_MAX <= INT_MAX)
+using yytype_uint16 = uint_least16_t;
+=======
+typedef __UINT_LEAST16_TYPE__ yytype_uint16;
+#elif (!defined __UINT_LEAST16_MAX__ && defined YY_STDINT_H && \
+       UINT_LEAST16_MAX <= INT_MAX)
+typedef uint_least16_t yytype_uint16;
+>>>>>>> 169cd5c65e06 (todo)
 #elif !defined __UINT_LEAST16_MAX__ && USHRT_MAX <= INT_MAX
-using yytype_uint16 = unsigned short;
+typedef unsigned short yytype_uint16;
 #else
-using yytype_uint16 = int;
+typedef int yytype_uint16;
 #endif
 
 #ifndef YYPTRDIFF_T
@@ -324,10 +336,10 @@ using yytype_uint16 = int;
 
 
 /* Stored state numbers (used for stacks). */
-using yy_state_t = yytype_int8;
+typedef yytype_int8 yy_state_t;
 
 /* State numbers in computations.  */
-using yy_state_fast_t = int;
+typedef int yy_state_fast_t;
 
 #ifndef YY_
 # if defined YYENABLE_NLS && YYENABLE_NLS
