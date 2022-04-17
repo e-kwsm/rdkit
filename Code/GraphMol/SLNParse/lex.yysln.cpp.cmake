@@ -41,20 +41,20 @@
 #endif
 
 #include <cinttypes>
-using flex_int8_t = int8_t;
-using flex_uint8_t = uint8_t;
-using flex_int16_t = int16_t;
-using flex_uint16_t = uint16_t;
-using flex_int32_t = int32_t;
-using flex_uint32_t = uint32_t;
-using flex_uint64_t = uint64_t;
+typedef int8_t flex_int8_t;
+typedef uint8_t flex_uint8_t;
+typedef int16_t flex_int16_t;
+typedef uint16_t flex_uint16_t;
+typedef int32_t flex_int32_t;
+typedef uint32_t flex_uint32_t;
+typedef uint64_t flex_uint64_t;
 #else
-using flex_int8_t = signed char;
-using flex_int16_t = short int;
-using flex_int32_t = int;
-using flex_uint8_t = unsigned char;
-using flex_uint16_t = unsigned short int;
-using flex_uint32_t = unsigned int;
+typedef signed char flex_int8_t;
+typedef short int flex_int16_t;
+typedef int flex_int32_t;
+typedef unsigned char flex_uint8_t; 
+typedef unsigned short int flex_uint16_t;
+typedef unsigned int flex_uint32_t;
 #endif /* ! C99 */
 
 /* Limits of integral types. */
@@ -122,7 +122,7 @@ using flex_uint32_t = unsigned int;
 /* An opaque pointer. */
 #ifndef YY_TYPEDEF_YY_SCANNER_T
 #define YY_TYPEDEF_YY_SCANNER_T
-using yyscan_t = void *;
+typedef void* yyscan_t;
 #endif
 
 /* For convenience, these vars (plus the bison vars far below)
@@ -168,12 +168,12 @@ using yyscan_t = void *;
 
 #ifndef YY_TYPEDEF_YY_BUFFER_STATE
 #define YY_TYPEDEF_YY_BUFFER_STATE
-using YY_BUFFER_STATE = struct yy_buffer_state *;
+typedef struct yy_buffer_state *YY_BUFFER_STATE;
 #endif
 
 #ifndef YY_TYPEDEF_YY_SIZE_T
 #define YY_TYPEDEF_YY_SIZE_T
-using yy_size_t = size_t;
+typedef size_t yy_size_t;
 #endif
 
 #define EOB_ACT_CONTINUE_SCAN 0
@@ -329,9 +329,9 @@ void yysln_free (void * ,yyscan_t yyscanner );
 #define yysln_wrap(n) 1
 #define YY_SKIP_YYWRAP
 
-using YY_CHAR = unsigned char;
+typedef unsigned char YY_CHAR;
 
-using yy_state_type = int;
+typedef int yy_state_type;
 
 #define yytext_ptr yytext_r
 
