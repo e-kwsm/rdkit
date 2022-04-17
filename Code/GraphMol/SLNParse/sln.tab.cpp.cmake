@@ -257,27 +257,27 @@ int yysln_parse(const char *input, std::vector<RDKit::RWMol *> *molList,
 #endif
 
 #ifdef YYTYPE_UINT8
-using yytype_uint8 = YYTYPE_UINT8;
+typedef YYTYPE_UINT8 yytype_uint8;
 #else
-using yytype_uint8 = unsigned char;
+typedef unsigned char yytype_uint8;
 #endif
 
 #ifdef YYTYPE_INT8
-using yytype_int8 = YYTYPE_INT8;
+typedef YYTYPE_INT8 yytype_int8;
 #else
-using yytype_int8 = signed char;
+typedef signed char yytype_int8;
 #endif
 
 #ifdef YYTYPE_UINT16
-using yytype_uint16 = YYTYPE_UINT16;
+typedef YYTYPE_UINT16 yytype_uint16;
 #else
-using yytype_uint16 = unsigned short;
+typedef unsigned short yytype_uint16;
 #endif
 
 #ifdef YYTYPE_INT16
-using yytype_int16 = YYTYPE_INT16;
+typedef YYTYPE_INT16 yytype_int16;
 #else
-using yytype_int16 = short;
+typedef short yytype_int16;
 #endif
 
 #ifndef YYSIZE_T
