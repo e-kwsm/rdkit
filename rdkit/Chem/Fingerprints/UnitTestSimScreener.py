@@ -20,7 +20,7 @@ class TestCase(unittest.TestCase):
     probe = fingerprinter(Chem.MolFromSmiles('C1OCCCC1'))
 
     screener = SimilarityScreener.SimilarityScreener()
-    self.assertEqual(screener.probe, None)
+    self.assertIsNone(screener.probe)
     screener.SetProbe(probe)
     self.assertEqual(screener.probe, probe)
 
