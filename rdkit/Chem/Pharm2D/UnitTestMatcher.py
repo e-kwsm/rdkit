@@ -59,7 +59,7 @@ class TestCase(unittest.TestCase):
     onBits = sig.GetOnBits()
     for bit in onBits:
       atoms = Matcher.GetAtomsMatchingBit(factory, bit, mol, justOne=1)
-      self.assertTrue(len(atoms))
+      self.assertTrue(atoms)
 
   def test3Roundtrip(self):
     # longer-running Bug 28 test

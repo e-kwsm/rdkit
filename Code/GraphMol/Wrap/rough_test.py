@@ -650,7 +650,7 @@ class TestCase(unittest.TestCase):
   def test18Paths(self):
 
     m = Chem.MolFromSmiles("C1CC2C1CC2")
-    #self.assertEqual(len(Chem.FindAllPathsOfLengthN(m,1,useBonds=1)), 7)
+    #self.assertEqual(len(Chem.FindAllPathsOfLengthN(m, 1, useBonds=1)), 7)
     #print(Chem.FindAllPathsOfLengthN(m,3,useBonds=0))
     self.assertEqual(
       len(Chem.FindAllPathsOfLengthN(m, 2, useBonds=1)), 10,
@@ -775,7 +775,7 @@ class TestCase(unittest.TestCase):
     self.assertEqual(len(Chem.FindAllSubgraphsOfLengthN(m, 1)), 6)
     self.assertEqual(len(Chem.FindAllSubgraphsOfLengthN(m, 2)), 6)
     self.assertEqual(len(Chem.FindAllSubgraphsOfLengthN(m, 3)), 6)
-    #self.assertEqual(len(Chem.FindUniqueSubgraphsOfLengthN(m,1)), 1)
+    #self.assertEqual(len(Chem.FindUniqueSubgraphsOfLengthN(m, 1)), 1)
     self.assertEqual(len(Chem.FindUniqueSubgraphsOfLengthN(m, 2)), 1)
     self.assertEqual(len(Chem.FindUniqueSubgraphsOfLengthN(m, 3)), 1)
 
@@ -4012,7 +4012,7 @@ CAS<~>
     inf = gzip.open(fileN)
     suppl = Chem.ForwardSDMolSupplier(inf)
     m0 = next(suppl)
-    self.assertIsNot(m0, None)
+    self.assertIsNotNone(m0)
     inf.close()
     del suppl
 
@@ -5087,11 +5087,8 @@ M  END
   def testGithub1461(self):
     # this is simple, it should throw a precondition and not seg fault
     m = Chem.RWMol()
-    try:
+    with self.assertRaises(RuntimeError):
       m.AddBond(0, 1, Chem.BondType.SINGLE)
-      self.assertFalse(True)  # shouldn't get here
-    except RuntimeError:
-      pass
 
   def testMolBundles1(self):
     b = Chem.MolBundle()
@@ -5298,18 +5295,18 @@ M  END"""
     b = Chem.BondFromSmiles("=")
     self.assertEqual(b.GetBondType(), Chem.BondType.DOUBLE)
     a = Chem.AtomFromSmiles("error")
-    self.assertIs(a, None)
+    self.assertIsNone(a)
     b = Chem.BondFromSmiles("d")
-    self.assertIs(b, None)
+    self.assertIsNone(b)
 
     a = Chem.AtomFromSmarts("C")
     self.assertEqual(a.GetAtomicNum(), 6)
     b = Chem.BondFromSmarts("=")
     self.assertEqual(b.GetBondType(), Chem.BondType.DOUBLE)
     a = Chem.AtomFromSmarts("error")
-    self.assertIs(a, None)
+    self.assertIsNone(a)
     b = Chem.BondFromSmarts("d")
-    self.assertIs(b, None)
+    self.assertIsNone(b)
 
   def testSVGParsing(self):
     svg = """<?xml version='1.0' encoding='iso-8859-1'?>
@@ -6170,14 +6167,14 @@ H      0.635000    0.635000    0.635000
     except Chem.AtomValenceException as exc:
       self.assertEqual(exc.cause.GetAtomIdx(), 1)
     else:
-      self.assertFalse(True)
+      self.fail()
 
     try:
       Chem.SanitizeMol(Chem.MolFromSmiles('c1cc1', sanitize=False))
     except Chem.KekulizeException as exc:
       self.assertEqual(exc.cause.GetAtomIndices(), (0, 1, 2))
     else:
-      self.assertFalse(True)
+      self.fail()
 
   def testSanitizationExceptionHierarchy(self):
     with self.assertRaises(Chem.AtomValenceException):
@@ -6581,8 +6578,7 @@ M  END
         for match in Chem.SortMatchesByDegreeOfCoreSubstitution(mol, core, matches)
       ]
       self.assertEqual(len(ctrlCounts), len(sortedCounts))
-      for ctrl, expected in zip(ctrlCounts, sortedCounts):
-        self.assertEqual(ctrl, expected)
+      self.assertEqual(ctrlCounts, sortedCounts)
     with self.assertRaises(ValueError):
       Chem.GetMostSubstitutedCoreMatch(orthoMeta, core, [])
     with self.assertRaises(ValueError):
@@ -8048,8 +8044,8 @@ M  END
     ps.canonical = True
 
     smi = Chem.MolToCXSmiles(m, ps, flags, Chem.RestoreBondDirOption.RestoreBondDirOptionTrue)
-    self.assertTrue(
-      smi ==
+    self.assertEqual(
+      smi,
       'CC1=C(n2cccc2[C@H](C)Cl)C(C)CCC1 |(2.679,0.4142,;1.3509,1.181,;0.0229,0.4141,;0.0229,-1.1195,;1.2645,-2.0302,;0.7901,-3.4813,;-0.7446,-3.4813,;-1.219,-2.0302,;-2.679,-1.5609,;-3.0039,-0.0556,;-3.8202,-2.595,;-1.3054,1.1809,;-2.6335,0.4141,;-1.3054,2.7145,;0.0229,3.4813,;1.3509,2.7146,),wD:2.11,wU:8.10,&1:8|'
     )
 
