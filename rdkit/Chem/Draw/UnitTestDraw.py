@@ -106,7 +106,7 @@ class TestCase(unittest.TestCase):
   def _testMolToImage(self, mol=None, kekulize=True, options=None, showImage=False, **kwargs):
     mol = mol or self.mol
     img = Draw.MolToImage(mol, size=(300, 300), kekulize=kekulize, options=options, **kwargs)
-    self.assertTrue(img)
+    self.assertIsNotNone(img)
     self.assertEqual(img.size[0], 300)
     self.assertEqual(img.size[1], 300)
     if self.showAllImages or showImage:
@@ -148,7 +148,7 @@ class TestCase(unittest.TestCase):
 
     rdDepictor.Compute2DCoords(mol)
     img = Draw.MolToImage(mol, kekulize=False)
-    self.assertTrue(img)
+    self.assertIsNotNone(img)
     # img.show()
     for b in mol.GetBonds():
       self.assertEqual(b.GetBondDir(), Chem.BondDir.NONE)
@@ -157,7 +157,7 @@ class TestCase(unittest.TestCase):
     obds = [x.GetBondDir() for x in mol.GetBonds()]
     self.assertEqual(obds.count(Chem.BondDir.NONE), 2)
     img = Draw.MolToImage(mol, kekulize=False)
-    self.assertTrue(img)
+    self.assertIsNotNone(img)
     # img.show()
     nbds = [x.GetBondDir() for x in mol.GetBonds()]
     self.assertEqual(obds, nbds)
