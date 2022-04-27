@@ -163,12 +163,14 @@ class TestCase(unittest.TestCase):
     d = DbUtils.GetData(self.dbName, 'ten_elements_dups', forceList=0, randomAccess=0,
                         whereString='id<4')
     self.assertEqual(len(list(d)), 4)
-    self.assertTrue(all(x[0] < 4 for x in d))
+    for x in d:
+      self.assertLess(x[0], 4)
 
     d = DbUtils.GetData(self.dbName, 'ten_elements_dups', forceList=0, randomAccess=0,
                         whereString='id<10')
     self.assertEqual(len(list(d)), 10)
-    self.assertTrue(all(x[0] < 10 for x in d))
+    for x in d:
+      self.assertLess(x[0], 10)
 
     d = DbUtils.GetData(self.dbName, 'ten_elements_dups', removeDups=1, forceList=True)
     self.assertEqual(len(list(d)), 10)
