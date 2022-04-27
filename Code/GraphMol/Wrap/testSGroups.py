@@ -111,7 +111,7 @@ M  END
     self.m2 = Chem.MolFromMolBlock(mb3000)
 
   def testBasics(self):
-    self.assertTrue(self.m1 is not None)
+    self.assertIsNotNone(self.m1)
     sgs = Chem.GetMolSubstanceGroups(self.m1)
     self.assertEqual(len(sgs), 2)
     self.assertTrue(sgs[0].HasProp("TYPE"))
@@ -125,9 +125,9 @@ M  END
     self.assertEqual(sorted(sgs[0].GetPropNames()),
                      ['DATAFIELDS', 'FIELDDISP', 'FIELDNAME', 'ID', 'TYPE', 'index'])
     dd = sgs[0].GetPropsAsDict()
-    self.assertTrue("TYPE" in dd)
+    self.assertIn("TYPE", dd)
     self.assertEqual(dd["TYPE"], "DAT")
-    self.assertTrue("FIELDNAME" in dd)
+    self.assertIn("FIELDNAME", dd)
     self.assertEqual(dd["FIELDNAME"], "pH")
 
     sgs[0].ClearProp("FIELDNAME")
@@ -141,7 +141,7 @@ M  END
     self.assertEqual(len(Chem.GetMolSubstanceGroups(self.m1)), 0)
 
   def testBasics3000(self):
-    self.assertTrue(self.m2 is not None)
+    self.assertIsNotNone(self.m2)
     sgs = Chem.GetMolSubstanceGroups(self.m2)
     self.assertEqual(len(sgs), 2)
     self.assertTrue(sgs[0].HasProp("TYPE"))
@@ -155,16 +155,16 @@ M  END
     self.assertEqual(sorted(sgs[0].GetPropNames()),
                      ['DATAFIELDS', 'FIELDDISP', 'FIELDNAME', 'TYPE', 'index'])
     dd = sgs[0].GetPropsAsDict()
-    self.assertTrue("TYPE" in dd)
+    self.assertIn("TYPE", dd)
     self.assertEqual(dd["TYPE"], "DAT")
-    self.assertTrue("FIELDNAME" in dd)
+    self.assertIn("FIELDNAME", dd)
     self.assertEqual(dd["FIELDNAME"], "pH")
 
     Chem.ClearMolSubstanceGroups(self.m2)
     self.assertEqual(len(Chem.GetMolSubstanceGroups(self.m2)), 0)
 
   def testLifetime(self):
-    self.assertTrue(self.m1 is not None)
+    self.assertIsNotNone(self.m1)
     mcpy = Chem.Mol(self.m1)
     smi = Chem.MolToSmiles(mcpy)
     sgs = Chem.GetMolSubstanceGroups(mcpy)
@@ -178,13 +178,13 @@ M  END
     self.assertEqual(smi, Chem.MolToSmiles(parent))
 
   def testSetProp(self):
-    self.assertTrue(self.m1 is not None)
+    self.assertIsNotNone(self.m1)
     mcpy = Chem.Mol(self.m1)
     sg = Chem.GetMolSubstanceGroupWithIdx(mcpy, 0)
     sg.SetProp("foo", "bar")
     sgs2 = Chem.GetMolSubstanceGroups(mcpy)
     pd = sgs2[0].GetPropsAsDict()
-    self.assertTrue('foo' in pd)
+    self.assertIn('foo', pd)
     self.assertEqual(pd['foo'], 'bar')
 
   def testCreateSGroup(self):
@@ -207,7 +207,7 @@ M  V30 3 1 3 4
 M  V30 END BOND
 M  V30 END CTAB
 M  END''')
-    self.assertTrue(mol is not None)
+    self.assertIsNotNone(mol)
     mcpy = Chem.Mol(mol)
     sg = Chem.CreateMolSubstanceGroup(mcpy, "SRU")
     self.assertEqual(sg.GetProp("TYPE"), "SRU")
@@ -404,7 +404,7 @@ M  END
     self.assertEqual(len(sgs), 1)
     sg0 = sgs[0]
     pd = sg0.GetPropsAsDict()
-    self.assertTrue('TYPE' in pd)
+    self.assertIn('TYPE', pd)
     self.assertEqual(pd['TYPE'], 'SUP')
     cstates = sg0.GetCStates()
     self.assertEqual(len(cstates), 1)
@@ -445,7 +445,7 @@ M  END''')
     self.assertEqual(len(sgs), 1)
     sg0 = sgs[0]
     pd = sg0.GetPropsAsDict()
-    self.assertTrue('TYPE' in pd)
+    self.assertIn('TYPE', pd)
     self.assertEqual(pd['TYPE'], 'MON')
     brackets = sg0.GetBrackets()
     self.assertEqual(len(brackets), 2)
@@ -494,7 +494,7 @@ M  END''')
     self.assertEqual(len(sgs), 1)
     sg0 = sgs[0]
     pd = sg0.GetPropsAsDict()
-    self.assertTrue('TYPE' in pd)
+    self.assertIn('TYPE', pd)
     self.assertEqual(pd['TYPE'], 'SUP')
     aps = sg0.GetAttachPoints()
     self.assertEqual(len(aps), 1)

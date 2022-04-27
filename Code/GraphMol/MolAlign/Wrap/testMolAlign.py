@@ -44,7 +44,7 @@ class TestCase(unittest.TestCase):
     mol2 = Chem.MolFromMolFile(file2)
 
     rmsd = rdMolAlign.AlignMol(mol2, mol1)
-    self.assertTrue(feq(rmsd, 0.6578))
+    self.assertAlmostEqual(rmsd, 0.6578, delta=1e-4)
 
     file3 = os.path.join(RDConfig.RDBaseDir, 'Code', 'GraphMol', 'MolAlign', 'test_data',
                          '1oir_trans.mol')
@@ -117,7 +117,7 @@ class TestCase(unittest.TestCase):
     # now test that we can get a list of RMS values
     rmsvals = []
     rdMolAlign.AlignMolConformers(mol, aids, RMSlist=rmsvals)
-    self.assertTrue((len(rmsvals) == mol.GetNumConformers() - 1))
+    self.assertEqual(len(rmsvals), mol.GetNumConformers() - 1)
 
     # make sure something sensible happens if we provide a stupid
     # argument:
@@ -562,7 +562,8 @@ class TestCase(unittest.TestCase):
     rmsdCopy, bestTrans, bestMatch = rdMolAlign.GetBestAlignmentTransform(prbCopy, ref, params)
     self.assertAlmostEqual(refRmsd, rmsdCopy, 3)
     self.assertEqual(len(bestMatch), ref.GetNumAtoms())
-    self.assertTrue(all(len(tup) == 2 for tup in bestMatch))
+    for tup in bestMatch:
+      self.assertEqual(len(tup), 2)
 
   def test18GetBestRMSAndConjugatedGroups(self):
     mol = Chem.MolFromSmiles(

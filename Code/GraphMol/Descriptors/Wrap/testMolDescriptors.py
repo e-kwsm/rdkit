@@ -23,32 +23,24 @@ class TestCase(unittest.TestCase):
   def testAtomPairTypes(self):
     params = rdMD.AtomPairsParameters
     mol = Chem.MolFromSmiles("C=C")
-    self.assertTrue(
-      rdMD.GetAtomPairAtomCode(mol.GetAtomWithIdx(0)) == rdMD.GetAtomPairAtomCode(
-        mol.GetAtomWithIdx(1)))
-    self.assertTrue(
-      rdMD.GetAtomPairAtomCode(mol.GetAtomWithIdx(0)) == 1
-      | (1 | 1 << params.numPiBits) << params.numBranchBits)
+    self.assertEqual(rdMD.GetAtomPairAtomCode(mol.GetAtomWithIdx(0)),
+                     rdMD.GetAtomPairAtomCode(mol.GetAtomWithIdx(1)))
+    self.assertEqual(rdMD.GetAtomPairAtomCode(mol.GetAtomWithIdx(0)),
+                     1 | (1 | 1 << params.numPiBits) << params.numBranchBits)
 
     mol = Chem.MolFromSmiles("C#CO")
-    self.assertTrue(
-      rdMD.GetAtomPairAtomCode(mol.GetAtomWithIdx(0)) != rdMD.GetAtomPairAtomCode(
-        mol.GetAtomWithIdx(1)))
-    self.assertTrue(
-      rdMD.GetAtomPairAtomCode(mol.GetAtomWithIdx(0)) == 1
-      | (2 | 1 << params.numPiBits) << params.numBranchBits)
-    self.assertTrue(
-      rdMD.GetAtomPairAtomCode(mol.GetAtomWithIdx(1)) == 2
-      | (2 | 1 << params.numPiBits) << params.numBranchBits)
-    self.assertTrue(
-      rdMD.GetAtomPairAtomCode(mol.GetAtomWithIdx(2)) == 1
-      | (0 | 3 << params.numPiBits) << params.numBranchBits)
-    self.assertTrue(
-      rdMD.GetAtomPairAtomCode(mol.GetAtomWithIdx(1), 1) == 1
-      | (2 | 1 << params.numPiBits) << params.numBranchBits)
-    self.assertTrue(
-      rdMD.GetAtomPairAtomCode(mol.GetAtomWithIdx(1), 2) == 0
-      | (2 | 1 << params.numPiBits) << params.numBranchBits)
+    self.assertNotEqual(rdMD.GetAtomPairAtomCode(mol.GetAtomWithIdx(0)),
+                        rdMD.GetAtomPairAtomCode(mol.GetAtomWithIdx(1)))
+    self.assertEqual(rdMD.GetAtomPairAtomCode(mol.GetAtomWithIdx(0)),
+                     1 | (2 | 1 << params.numPiBits) << params.numBranchBits)
+    self.assertEqual(rdMD.GetAtomPairAtomCode(mol.GetAtomWithIdx(1)),
+                     2 | (2 | 1 << params.numPiBits) << params.numBranchBits)
+    self.assertEqual(rdMD.GetAtomPairAtomCode(mol.GetAtomWithIdx(2)),
+                     1 | (0 | 3 << params.numPiBits) << params.numBranchBits)
+    self.assertEqual(rdMD.GetAtomPairAtomCode(mol.GetAtomWithIdx(1), 1),
+                     1 | (2 | 1 << params.numPiBits) << params.numBranchBits)
+    self.assertEqual(rdMD.GetAtomPairAtomCode(mol.GetAtomWithIdx(1), 2),
+                     0 | (2 | 1 << params.numPiBits) << params.numBranchBits)
 
   def testAtomPairTypesChirality(self):
     mols = [Chem.MolFromSmiles(x) for x in ("CC(F)Cl", "C[C@@H](F)Cl", "C[C@H](F)Cl")]
@@ -70,13 +62,13 @@ class TestCase(unittest.TestCase):
     for mol, fp, cfp in zip(mols, fps, chiralFps):
       ac0 = rdMD.GetAtomPairAtomCode(mol.GetAtomWithIdx(0))
       ac1 = rdMD.GetAtomPairAtomCode(mol.GetAtomWithIdx(1))
-      self.assertTrue(rdMD.GetAtomPairCode(ac0, ac1, 1) in fp.GetNonzeroElements())
+      self.assertIn(rdMD.GetAtomPairCode(ac0, ac1, 1), fp.GetNonzeroElements())
       ac0 = rdMD.GetAtomPairAtomCode(mol.GetAtomWithIdx(0), includeChirality=True)
       ac1 = rdMD.GetAtomPairAtomCode(mol.GetAtomWithIdx(1), includeChirality=True)
-      self.assertFalse(
-        rdMD.GetAtomPairCode(ac0, ac1, 1, includeChirality=True) in fp.GetNonzeroElements())
-      self.assertTrue(
-        rdMD.GetAtomPairCode(ac0, ac1, 1, includeChirality=True) in cfp.GetNonzeroElements())
+      self.assertNotIn(rdMD.GetAtomPairCode(ac0, ac1, 1, includeChirality=True),
+                       fp.GetNonzeroElements())
+      self.assertIn(rdMD.GetAtomPairCode(ac0, ac1, 1, includeChirality=True),
+                    cfp.GetNonzeroElements())
 
   def testAtomPairs(self):
     m = Chem.MolFromSmiles('CCC')
@@ -95,22 +87,25 @@ class TestCase(unittest.TestCase):
     m = Chem.MolFromSmiles('c1ccccc1')
     fp1 = rdMD.GetHashedAtomPairFingerprint(m, 2048)
     fp2 = rdMD.GetHashedAtomPairFingerprint(m, 2048, 1, 3)
-    self.assertTrue(fp1 == fp2)
+    self.assertEqual(fp1, fp2)
     fp2 = rdMD.GetHashedAtomPairFingerprint(m, 2048, 1, 2)
     sim = DataStructs.DiceSimilarity(fp1, fp2)
-    self.assertTrue(sim > 0.0 and sim < 1.0)
+    self.assertGreater(sim, 0.0)
+    self.assertLess(sim, 1.0)
 
     m = Chem.MolFromSmiles('c1ccccn1')
     fp2 = rdMD.GetHashedAtomPairFingerprint(m, 2048)
     sim = DataStructs.DiceSimilarity(fp1, fp2)
-    self.assertTrue(sim > 0.0 and sim < 1.0)
+    self.assertGreater(sim, 0.0)
+    self.assertLess(sim, 1.0)
 
     m = Chem.MolFromSmiles('c1ccccc1')
     fp1 = rdMD.GetHashedAtomPairFingerprintAsBitVect(m, 2048)
     m = Chem.MolFromSmiles('c1ccccn1')
     fp2 = rdMD.GetHashedAtomPairFingerprintAsBitVect(m, 2048)
     sim = DataStructs.DiceSimilarity(fp1, fp2)
-    self.assertTrue(sim > 0.0 and sim < 1.0)
+    self.assertGreater(sim, 0.0)
+    self.assertLess(sim, 1.0)
 
   def testRootedAtomPairs(self):
     m = Chem.MolFromSmiles('Oc1ccccc1')
@@ -119,24 +114,24 @@ class TestCase(unittest.TestCase):
     nz1 = fp1.GetNonzeroElements()
     nz2 = fp2.GetNonzeroElements()
     for k, v in nz2.items():
-      self.assertTrue(v <= nz1[k])
+      self.assertLessEqual(v, nz1[k])
 
   def testTopologicalTorsions(self):
     mol = Chem.MolFromSmiles("CC")
     fp = rdMD.GetTopologicalTorsionFingerprint(mol)
-    self.assertTrue(fp.GetTotalVal() == 0)
+    self.assertEqual(fp.GetTotalVal(), 0)
 
     mol = Chem.MolFromSmiles("CCCC")
     fp = rdMD.GetTopologicalTorsionFingerprint(mol)
-    self.assertTrue(fp.GetTotalVal() == 1)
+    self.assertEqual(fp.GetTotalVal(), 1)
     fp = rdMD.GetTopologicalTorsionFingerprint(mol, 3)
-    self.assertTrue(fp.GetTotalVal() == 2)
+    self.assertEqual(fp.GetTotalVal(), 2)
 
     mol = Chem.MolFromSmiles("CCCO")
     fp = rdMD.GetTopologicalTorsionFingerprint(mol)
-    self.assertTrue(fp.GetTotalVal() == 1)
+    self.assertEqual(fp.GetTotalVal(), 1)
     fp = rdMD.GetTopologicalTorsionFingerprint(mol, 3)
-    self.assertTrue(fp.GetTotalVal() == 2)
+    self.assertEqual(fp.GetTotalVal(), 2)
 
     mol = Chem.MolFromSmiles("CCCCCCCCCCC")
     fp = rdMD.GetTopologicalTorsionFingerprint(mol, 7)
@@ -156,7 +151,7 @@ class TestCase(unittest.TestCase):
     nz1 = fp1.GetNonzeroElements()
     nz2 = fp2.GetNonzeroElements()
     for k, v in nz2.items():
-      self.assertTrue(v <= nz1[k])
+      self.assertLessEqual(v, nz1[k])
 
     m = Chem.MolFromSmiles('COCC')
     fp1 = rdMD.GetTopologicalTorsionFingerprint(m)
@@ -169,43 +164,43 @@ class TestCase(unittest.TestCase):
   def testMorganFingerprints(self):
     mol = Chem.MolFromSmiles('CC(F)(Cl)C(F)(Cl)C')
     fp = rdMD.GetMorganFingerprint(mol, 0)
-    self.assertTrue(len(fp.GetNonzeroElements()) == 4)
+    self.assertEqual(len(fp.GetNonzeroElements()), 4)
 
     mol = Chem.MolFromSmiles('CC')
     fp = rdMD.GetMorganFingerprint(mol, 0)
-    self.assertTrue(len(fp.GetNonzeroElements()) == 1)
-    self.assertTrue(list(fp.GetNonzeroElements().values())[0] == 2)
+    self.assertEqual(len(fp.GetNonzeroElements()), 1)
+    self.assertEqual(list(fp.GetNonzeroElements().values())[0], 2)
     fp = rdMD.GetMorganFingerprint(mol, 0, useCounts=False)
-    self.assertTrue(len(fp.GetNonzeroElements()) == 1)
-    self.assertTrue(list(fp.GetNonzeroElements().values())[0] == 1)
+    self.assertEqual(len(fp.GetNonzeroElements()), 1)
+    self.assertEqual(list(fp.GetNonzeroElements().values())[0], 1)
 
     mol = Chem.MolFromSmiles('CC(F)(Cl)C(F)(Cl)C')
     fp = rdMD.GetHashedMorganFingerprint(mol, 0)
-    self.assertTrue(len(fp.GetNonzeroElements()) == 4)
+    self.assertEqual(len(fp.GetNonzeroElements()), 4)
     fp = rdMD.GetMorganFingerprint(mol, 1)
-    self.assertTrue(len(fp.GetNonzeroElements()) == 8)
+    self.assertEqual(len(fp.GetNonzeroElements()), 8)
     fp = rdMD.GetHashedMorganFingerprint(mol, 1)
-    self.assertTrue(len(fp.GetNonzeroElements()) == 8)
+    self.assertEqual(len(fp.GetNonzeroElements()), 8)
     fp = rdMD.GetMorganFingerprint(mol, 2)
-    self.assertTrue(len(fp.GetNonzeroElements()) == 9)
+    self.assertEqual(len(fp.GetNonzeroElements()), 9)
 
     mol = Chem.MolFromSmiles('CC(F)(Cl)[C@](F)(Cl)C')
     fp = rdMD.GetMorganFingerprint(mol, 0)
-    self.assertTrue(len(fp.GetNonzeroElements()) == 4)
+    self.assertEqual(len(fp.GetNonzeroElements()), 4)
     fp = rdMD.GetMorganFingerprint(mol, 1)
-    self.assertTrue(len(fp.GetNonzeroElements()) == 8)
+    self.assertEqual(len(fp.GetNonzeroElements()), 8)
     fp = rdMD.GetMorganFingerprint(mol, 2)
-    self.assertTrue(len(fp.GetNonzeroElements()) == 9)
+    self.assertEqual(len(fp.GetNonzeroElements()), 9)
     fp = rdMD.GetMorganFingerprint(mol, 0, useChirality=True)
-    self.assertTrue(len(fp.GetNonzeroElements()) == 4)
+    self.assertEqual(len(fp.GetNonzeroElements()), 4)
     fp = rdMD.GetMorganFingerprint(mol, 1, useChirality=True)
-    self.assertTrue(len(fp.GetNonzeroElements()) == 9)
+    self.assertEqual(len(fp.GetNonzeroElements()), 9)
     fp = rdMD.GetMorganFingerprint(mol, 2, useChirality=True)
-    self.assertTrue(len(fp.GetNonzeroElements()) == 10)
+    self.assertEqual(len(fp.GetNonzeroElements()), 10)
 
     mol = Chem.MolFromSmiles('CCCCC')
     fp = rdMD.GetMorganFingerprint(mol, 0, fromAtoms=(0, ))
-    self.assertTrue(len(fp.GetNonzeroElements()) == 1)
+    self.assertEqual(len(fp.GetNonzeroElements()), 1)
 
     mol = Chem.MolFromSmiles('CC1CC1')
     vs1 = rdMD.GetConnectivityInvariants(mol)
@@ -330,18 +325,18 @@ class TestCase(unittest.TestCase):
   def testMolWt(self):
     mol = Chem.MolFromSmiles("C")
     amw = rdMD._CalcMolWt(mol)
-    self.assertTrue(feq(amw, 16.043, .001))
+    self.assertAlmostEqual(amw, 16.043, delta=.001)
     amw = rdMD._CalcMolWt(mol, True)
-    self.assertTrue(feq(amw, 12.011, .001))
+    self.assertAlmostEqual(amw, 12.011, delta=.001)
     mol2 = Chem.AddHs(mol)
     amw = rdMD._CalcMolWt(mol2)
-    self.assertTrue(feq(amw, 16.043, .001))
+    self.assertAlmostEqual(amw, 16.043, delta=.001)
     amw = rdMD._CalcMolWt(mol2, True)
-    self.assertTrue(feq(amw, 12.011, .001))
+    self.assertAlmostEqual(amw, 12.011, delta=.001)
 
     mol = Chem.MolFromSmiles("C")
     amw = rdMD.CalcExactMolWt(mol)
-    self.assertTrue(feq(amw, 16.031, .001))
+    self.assertAlmostEqual(amw, 16.031, delta=.001)
 
   def testPairValues(self):
     import base64
@@ -536,11 +531,11 @@ class TestCase(unittest.TestCase):
     props = rdMD.Properties(["CustomNumAtoms"])
     self.assertEqual(1, props.ComputeProperties(Chem.MolFromSmiles("C"))[0])
 
-    self.assertTrue("CustomNumAtoms" in rdMD.Properties.GetAvailableProperties())
+    self.assertIn("CustomNumAtoms", rdMD.Properties.GetAvailableProperties())
     # check memory
     del numAtoms
     self.assertEqual(1, props.ComputeProperties(Chem.MolFromSmiles("C"))[0])
-    self.assertTrue("CustomNumAtoms" in rdMD.Properties.GetAvailableProperties())
+    self.assertIn("CustomNumAtoms", rdMD.Properties.GetAvailableProperties())
 
     m = Chem.MolFromSmiles("c1ccccc1")
     properties = rdMD.Properties()
@@ -601,7 +596,7 @@ class TestCase(unittest.TestCase):
     bins = [-.3, -.25, -.20, -.15, -.10, -.05, 0, .05, .10, .15, .20, .25, .30]
     custom_vsa = rdMD.CustomProp_VSA_(mol, customPropName='_GasteigerCharge', bins=bins)
     for p, c in zip(peoe_vsa, custom_vsa):
-      self.assertTrue(feq(p, c, .001))
+      self.assertAlmostEqual(p, c, delta=.001)
 
   def testGithub1973(self):
 
@@ -691,15 +686,17 @@ class TestCase(unittest.TestCase):
     props.append(0.0)
     try:
       bcut2 = rdMD.BCUT2D(m, props)
-      self.assertTrue(0, "Failed to handle bad prop size")
     except RuntimeError as e:
-      self.assertTrue("tom_props.size() == num_atoms" in str(e))
+      self.assertIn("tom_props.size() == num_atoms", str(e))
+    else:
+      self.fail("Failed to handle bad prop size")
 
     try:
       bcut2 = rdMD.BCUT2D(m, "property not existing on the atom")
-      self.assertTrue(0, "Failed to handle not existing properties")
     except KeyError as e:
       self.assertEqual(e.args, ("property not existing on the atom", ))
+    else:
+      self.fail("Failed to handle not existing properties")
 
     for atom in m.GetAtoms():
       atom.SetProp("bad_prop", "not a double")
@@ -707,7 +704,6 @@ class TestCase(unittest.TestCase):
 
     try:
       bcut2 = rdMD.BCUT2D(m, "bad_prop")
-      self.assertTrue(0, "Failed to handle bad prop (not a double)")
     except RuntimeError as e:
       self.assertTrue(re.search(r"[B,b]ad any[\ ,_]cast", str(e)))
 
@@ -734,39 +730,39 @@ class TestCase(unittest.TestCase):
     # test default params
     default = rdMD.DoubleCubicLatticeVolume(mol1, radii1, isProtein=True, includeLigand=False)
 
-    self.assertTrue(abs(default.GetSurfaceArea() - 8306.62) < 0.05)
-    self.assertTrue(abs(default.GetPolarSurfaceArea() - 4652.19) < 0.05)
-    self.assertTrue(abs(default.GetPolarSurfaceArea(includeSandP=True) - 4673.9) < 0.05)
-    self.assertTrue(abs(default.GetVolume() - 29952.3) < 0.05)
-    self.assertTrue(abs(default.GetVDWVolume() - 13541.5) < 0.05)
-    self.assertTrue(abs(default.GetPolarVolume() - 17096) < 0.05)
-    self.assertTrue(abs(default.GetCompactness() - 1.78096) < 0.05)
-    self.assertTrue(abs(default.GetPackingDensity() - 0.452103) < 0.05)
+    self.assertLess(abs(default.GetSurfaceArea() - 8306.62), 0.05)
+    self.assertLess(abs(default.GetPolarSurfaceArea() - 4652.19), 0.05)
+    self.assertLess(abs(default.GetPolarSurfaceArea(includeSandP=True) - 4673.9), 0.05)
+    self.assertLess(abs(default.GetVolume() - 29952.3), 0.05)
+    self.assertLess(abs(default.GetVDWVolume() - 13541.5), 0.05)
+    self.assertLess(abs(default.GetPolarVolume() - 17096), 0.05)
+    self.assertLess(abs(default.GetCompactness() - 1.78096), 0.05)
+    self.assertLess(abs(default.GetPackingDensity() - 0.452103), 0.05)
 
     # test set depth and radius
     depthrad = rdMD.DoubleCubicLatticeVolume(mol1, radii1, isProtein=True, includeLigand=False,
                                              probeRadius=1.6)
 
-    self.assertTrue(abs(depthrad.GetSurfaceArea() - 8112.42) < 0.05)
-    self.assertTrue(abs(depthrad.GetPolarSurfaceArea() - 4656.8) < 0.05)
-    self.assertTrue(abs(depthrad.GetPolarSurfaceArea(includeSandP=True) - 4674.96) < 0.05)
-    self.assertTrue(abs(depthrad.GetVolume() - 31591) < 0.05)
-    self.assertTrue(abs(depthrad.GetVDWVolume() - 13541.5) < 0.05)
-    self.assertTrue(abs(depthrad.GetPolarVolume() - 18402.8) < 0.05)
-    self.assertTrue(abs(depthrad.GetCompactness() - 1.67864) < 0.05)
-    self.assertTrue(abs(depthrad.GetPackingDensity() - 0.428652) < 0.05)
+    self.assertLess(abs(depthrad.GetSurfaceArea() - 8112.42), 0.05)
+    self.assertLess(abs(depthrad.GetPolarSurfaceArea() - 4656.8), 0.05)
+    self.assertLess(abs(depthrad.GetPolarSurfaceArea(includeSandP=True) - 4674.96), 0.05)
+    self.assertLess(abs(depthrad.GetVolume() - 31591), 0.05)
+    self.assertLess(abs(depthrad.GetVDWVolume() - 13541.5), 0.05)
+    self.assertLess(abs(depthrad.GetPolarVolume() - 18402.8), 0.05)
+    self.assertLess(abs(depthrad.GetCompactness() - 1.67864), 0.05)
+    self.assertLess(abs(depthrad.GetPackingDensity() - 0.428652), 0.05)
 
     # test include ligand
     withlig = rdMD.DoubleCubicLatticeVolume(mol1, radii1, isProtein=True, includeLigand=True)
 
-    self.assertTrue(abs(withlig.GetSurfaceArea() - 8206.1) < 0.05)
-    self.assertTrue(abs(withlig.GetPolarSurfaceArea() - 4467.92) < 0.05)
-    self.assertTrue(abs(withlig.GetPolarSurfaceArea(includeSandP=True) - 4481.19) < 0.05)
-    self.assertTrue(abs(withlig.GetVolume() - 30340.1) < 0.05)
-    self.assertTrue(abs(withlig.GetVDWVolume() - 13789.7) < 0.05)
-    self.assertTrue(abs(withlig.GetPolarVolume() - 16507) < 0.05)
-    self.assertTrue(abs(withlig.GetCompactness() - 1.74438) < 0.05)
-    self.assertTrue(abs(withlig.GetPackingDensity() - 0.454504) < 0.05)
+    self.assertLess(abs(withlig.GetSurfaceArea() - 8206.1), 0.05)
+    self.assertLess(abs(withlig.GetPolarSurfaceArea() - 4467.92), 0.05)
+    self.assertLess(abs(withlig.GetPolarSurfaceArea(includeSandP=True) - 4481.19), 0.05)
+    self.assertLess(abs(withlig.GetVolume() - 30340.1), 0.05)
+    self.assertLess(abs(withlig.GetVDWVolume() - 13789.7), 0.05)
+    self.assertLess(abs(withlig.GetPolarVolume() - 16507), 0.05)
+    self.assertLess(abs(withlig.GetCompactness() - 1.74438), 0.05)
+    self.assertLess(abs(withlig.GetPackingDensity() - 0.454504), 0.05)
 
     fname2 = str(Path(rdbase) / 'Code' / 'GraphMol' / 'Descriptors' / 'test_data' / 'TZL_model.sdf')
     suppl = Chem.SDMolSupplier(fname2)
@@ -778,12 +774,12 @@ class TestCase(unittest.TestCase):
     for sdf in (rdMD.DoubleCubicLatticeVolume(mol2, radii2, isProtein=False),
                 rdMD.DoubleCubicLatticeVolume(mol2, isProtein=False)):
 
-      self.assertTrue(abs(sdf.GetSurfaceArea() - 304.239) < 0.05)
-      self.assertTrue(abs(sdf.GetPolarSurfaceArea() - 18.7319) < 0.05)
-      self.assertTrue(abs(sdf.GetPolarSurfaceArea(includeSandP=True) - 64.9764) < 0.05)
-      self.assertTrue(abs(sdf.GetVolume() - 431.35) < 0.05)
-      self.assertTrue(abs(sdf.GetVDWVolume() - 119.296) < 0.05)
-      self.assertTrue(abs(sdf.GetPolarVolume() - 21.35) < 0.05)
+      self.assertLess(abs(sdf.GetSurfaceArea() - 304.239), 0.05)
+      self.assertLess(abs(sdf.GetPolarSurfaceArea() - 18.7319), 0.05)
+      self.assertLess(abs(sdf.GetPolarSurfaceArea(includeSandP=True) - 64.9764), 0.05)
+      self.assertLess(abs(sdf.GetVolume() - 431.35), 0.05)
+      self.assertLess(abs(sdf.GetVDWVolume() - 119.296), 0.05)
+      self.assertLess(abs(sdf.GetPolarVolume() - 21.35), 0.05)
 
 
 if __name__ == '__main__':
