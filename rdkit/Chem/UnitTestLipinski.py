@@ -90,15 +90,15 @@ class TestCase(unittest.TestCase):
 
   def testIssue2183420(self):
     " testing a problem with the acceptor definition "
-    self.assertTrue(Lipinski.NumHAcceptors(Chem.MolFromSmiles('NC')) == 1)
-    self.assertTrue(Lipinski.NumHAcceptors(Chem.MolFromSmiles('CNC')) == 1)
-    self.assertTrue(Lipinski.NumHAcceptors(Chem.MolFromSmiles('CN(C)C')) == 1)
-    self.assertTrue(Lipinski.NumHAcceptors(Chem.MolFromSmiles('NC(=O)')) == 1)
-    self.assertTrue(Lipinski.NumHAcceptors(Chem.MolFromSmiles('NC(=O)C')) == 1)
-    self.assertTrue(Lipinski.NumHAcceptors(Chem.MolFromSmiles('CNC(=O)')) == 1)
-    self.assertTrue(Lipinski.NumHAcceptors(Chem.MolFromSmiles('CNC(=O)C')) == 1)
-    self.assertTrue(Lipinski.NumHAcceptors(Chem.MolFromSmiles('O=CNC(=O)C')) == 2)
-    self.assertTrue(Lipinski.NumHAcceptors(Chem.MolFromSmiles('O=C(C)NC(=O)C')) == 2)
+    self.assertEqual(Lipinski.NumHAcceptors(Chem.MolFromSmiles('NC')), 1)
+    self.assertEqual(Lipinski.NumHAcceptors(Chem.MolFromSmiles('CNC')), 1)
+    self.assertEqual(Lipinski.NumHAcceptors(Chem.MolFromSmiles('CN(C)C')), 1)
+    self.assertEqual(Lipinski.NumHAcceptors(Chem.MolFromSmiles('NC(=O)')), 1)
+    self.assertEqual(Lipinski.NumHAcceptors(Chem.MolFromSmiles('NC(=O)C')), 1)
+    self.assertEqual(Lipinski.NumHAcceptors(Chem.MolFromSmiles('CNC(=O)')), 1)
+    self.assertEqual(Lipinski.NumHAcceptors(Chem.MolFromSmiles('CNC(=O)C')), 1)
+    self.assertEqual(Lipinski.NumHAcceptors(Chem.MolFromSmiles('O=CNC(=O)C')), 2)
+    self.assertEqual(Lipinski.NumHAcceptors(Chem.MolFromSmiles('O=C(C)NC(=O)C')), 2)
 
 
 class TestCase_Regression(unittest.TestCase):
