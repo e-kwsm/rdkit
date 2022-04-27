@@ -29,11 +29,11 @@ class TestCase(unittest.TestCase):
     for i in range(1000):
       assert bv1.GetBit(i) == bv2.GetBit(i)
 
-    self.assertTrue(bv1 == bv2)
+    self.assertEqual(bv1, bv2)
     bv2.SetBit(1)
-    self.assertTrue(bv1 != bv2)
+    self.assertNotEqual(bv1, bv2)
     bv2.UnSetBit(1)
-    self.assertTrue(bv1 == bv2)
+    self.assertEqual(bv1, bv2)
 
     bv2.UnSetBitsFromList(obits)
     for i in range(1000):
@@ -107,8 +107,8 @@ class TestCase(unittest.TestCase):
   def test5FromBitString(self):
     s1 = '1010'
     bv = DataStructs.CreateFromBitString(s1)
-    self.assertTrue(len(bv) == 4)
-    self.assertTrue(list(bv.GetOnBits()) == [0, 2])
+    self.assertEqual(len(bv), 4)
+    self.assertEqual(list(bv.GetOnBits()), [0, 2])
 
   def _bulkTest(self, bvs):
     for metric in 'Tanimoto', 'Dice', 'AllBit', 'OnBit', 'RogotGoldberg':

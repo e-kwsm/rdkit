@@ -106,7 +106,7 @@ class TestCase(unittest.TestCase):
   def _testMolToImage(self, mol=None, kekulize=True, options=None, showImage=False, **kwargs):
     mol = mol or self.mol
     img = Draw.MolToImage(mol, size=(300, 300), kekulize=kekulize, options=options, **kwargs)
-    self.assertTrue(img)
+    self.assertIsNotNone(img)
     self.assertEqual(img.size[0], 300)
     self.assertEqual(img.size[1], 300)
     if self.showAllImages or showImage:
@@ -148,7 +148,7 @@ class TestCase(unittest.TestCase):
 
     rdDepictor.Compute2DCoords(mol)
     img = Draw.MolToImage(mol, kekulize=False)
-    self.assertTrue(img)
+    self.assertIsNotNone(img)
     # img.show()
     for b in mol.GetBonds():
       self.assertEqual(b.GetBondDir(), Chem.BondDir.NONE)
@@ -157,7 +157,7 @@ class TestCase(unittest.TestCase):
     obds = [x.GetBondDir() for x in mol.GetBonds()]
     self.assertEqual(obds.count(Chem.BondDir.NONE), 2)
     img = Draw.MolToImage(mol, kekulize=False)
-    self.assertTrue(img)
+    self.assertIsNotNone(img)
     # img.show()
     nbds = [x.GetBondDir() for x in mol.GetBonds()]
     self.assertEqual(obds, nbds)
@@ -194,9 +194,9 @@ class TestCase(unittest.TestCase):
         for c, item in enumerate(row):
           linearIndex = (r * molsPerRow) + c
           # Test that items in 2D list are in correct position in 1D list
-          self.assertTrue(mols[linearIndex] == item)
+          self.assertEqual(mols[linearIndex], item)
           # Test that 1D list items are not lists
-          self.assertFalse(isinstance(item, list))
+          self.assertNotIsInstance(item, list)
 
       # Other three matrices (legends; atom and bond highlighting) need not be supplied;
       #   only test each if it's supplied
@@ -205,32 +205,32 @@ class TestCase(unittest.TestCase):
           for c, item in enumerate(row):
             linearIndex = (r * molsPerRow) + c
             # Test that items in 2D list are in correct position in 1D list
-            self.assertTrue(legends[linearIndex] == item)
+            self.assertEqual(legends[linearIndex], item)
             # Test that 1D list items are not lists
-            self.assertFalse(isinstance(item, list))
+            self.assertNotIsInstance(item, list)
 
       if highlightAtomListsMatrix is not None:
         for r, row in enumerate(highlightAtomListsMatrix):
           for c, item in enumerate(row):
             linearIndex = (r * molsPerRow) + c
             # Test that items in 2D list are in correct position in 1D list
-            self.assertTrue(highlightAtomLists[linearIndex] == item)
+            self.assertEqual(highlightAtomLists[linearIndex], item)
             # For highlight parameters, entries are lists, so check that sub-items are not lists
             for subitem in item:
-              self.assertFalse(isinstance(subitem, list))
+              self.assertNotIsInstance(subitem, list)
 
       if highlightBondListsMatrix is not None:
         for r, row in enumerate(highlightBondListsMatrix):
           for c, item in enumerate(row):
             linearIndex = (r * molsPerRow) + c
             # Test that items in 2D list are in correct position in 1D list
-            self.assertTrue(highlightBondLists[linearIndex] == item)
+            self.assertEqual(highlightBondLists[linearIndex], item)
             # For highlight parameters, entries are lists, so check that sub-items are not lists
             for subitem in item:
-              self.assertFalse(isinstance(subitem, list))
+              self.assertNotIsInstance(subitem, list)
 
       # Test that 1D list has the correct length
-      self.assertTrue(len(mols) == nrows * molsPerRow)
+      self.assertEqual(len(mols), nrows * molsPerRow)
 
     # Parametrize tests: In addition to supplying molsMatrix, supply 0-3 other matrices
     for paramSet in self.paramSets:
@@ -335,23 +335,23 @@ class TestCase(unittest.TestCase):
     m = Chem.MolFromSmiles('c1ccccc1CC1CC1')
     bi = {}
     _ = rdMolDescriptors.GetMorganFingerprintAsBitVect(m, radius=2, bitInfo=bi)
-    self.assertTrue(872 in bi)
+    self.assertIn(872, bi)
 
     svg1 = Draw.DrawMorganBit(m, 872, bi)
     aid, r = bi[872][0]
     svg2 = Draw.DrawMorganEnv(m, aid, r)
     self.assertEqual(svg1, svg2)
-    self.assertTrue("style='fill:#CCCCCC;" in svg1)
-    self.assertTrue("style='fill:#E5E533;" in svg1)
-    self.assertTrue("style='fill:#9999E5;" in svg1)
+    self.assertIn("style='fill:#CCCCCC;", svg1)
+    self.assertIn("style='fill:#E5E533;", svg1)
+    self.assertIn("style='fill:#9999E5;", svg1)
 
     svg1 = Draw.DrawMorganBit(m, 872, bi, centerColor=None)
     aid, r = bi[872][0]
     svg2 = Draw.DrawMorganEnv(m, aid, r, centerColor=None)
     self.assertEqual(svg1, svg2)
-    self.assertTrue("style='fill:#CCCCCC;" in svg1)
-    self.assertTrue("style='fill:#E5E533;" in svg1)
-    self.assertFalse("style='fill:#9999E5;" in svg1)
+    self.assertIn("style='fill:#CCCCCC;", svg1)
+    self.assertIn("style='fill:#E5E533;", svg1)
+    self.assertNotIn("style='fill:#9999E5;", svg1)
     with self.assertRaises(KeyError):
       Draw.DrawMorganBit(m, 32, bi)
 
@@ -365,14 +365,14 @@ class TestCase(unittest.TestCase):
     m = Chem.MolFromSmiles('c1ccccc1CC1CC1')
     bi = {}
     _ = Chem.RDKFingerprint(m, maxPath=5, bitInfo=bi)
-    self.assertTrue(1553 in bi)
+    self.assertIn(1553, bi)
     svg1 = Draw.DrawRDKitBit(m, 1553, bi)
     path = bi[1553][0]
     svg2 = Draw.DrawRDKitEnv(m, path)
     self.assertEqual(svg1, svg2)
-    self.assertTrue("style='fill:#E5E533;" in svg1)
-    self.assertFalse("style='fill:#CCCCCC;" in svg1)
-    self.assertFalse("style='fill:#9999E5;" in svg1)
+    self.assertIn("style='fill:#E5E533;", svg1)
+    self.assertNotIn("style='fill:#CCCCCC;", svg1)
+    self.assertNotIn("style='fill:#9999E5;", svg1)
     with self.assertRaises(KeyError):
       Draw.DrawRDKitBit(m, 32, bi)
 
