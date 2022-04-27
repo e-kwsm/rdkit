@@ -315,10 +315,11 @@ class TestTimeout(MCSTestCase):
     t1 = time.time()
     result = rdFMCS.FindMCS(lengthy_mols, timeout=1)
     self.assert_result(result, canceled=True)
-    self.assertTrue(result.numAtoms > 1)
-    self.assertTrue(result.numBonds >= result.numAtoms - 1, (result.numAtoms, result.numBonds))
+    self.assertGreater(result.numAtoms, 1)
+    self.assertGreaterEqual(result.numBonds, result.numAtoms - 1,
+                            (result.numAtoms, result.numBonds))
     t2 = time.time()
-    self.assertTrue(t2 - t1 < 2, t2 - t1)
+    self.assertLess(t2 - t1, 2, t2 - t1)
 
   # Check for non-negative values
   def test_timeout_negative(self):

@@ -215,7 +215,7 @@ C1CCO[C@@](S)(P)1
     params.onlyMatchAtRGroups = True
     rg = RGroupDecomposition(core1, params)
     for smi, m in zip(smiles, mols):
-      self.assertTrue(rg.Add(m) != -1, smi)
+      self.assertNotEqual(rg.Add(m), -1, smi)
 
   def test_incorrect_multiple_rlabels(self):
     mols = [Chem.MolFromSmiles(smi) for smi in (

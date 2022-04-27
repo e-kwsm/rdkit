@@ -12,10 +12,6 @@ from rdkit import DataStructs as ds
 from rdkit import RDConfig
 
 
-def feq(v1, v2, tol=1e-4):
-  return abs(v1 - v2) < tol
-
-
 class TestCase(unittest.TestCase):
 
   def setUp(self):
@@ -30,19 +26,19 @@ class TestCase(unittest.TestCase):
     v1[0] = 1
     v1[2] = 2
     v1[3] = 3
-    self.assertTrue(v1 == v1)
-    self.assertTrue(v1.GetLength() == 5)
+    self.assertEqual(v1, v1)
+    self.assertEqual(v1.GetLength(), 5)
 
     v2 = ds.IntSparseIntVect(5)
-    self.assertTrue(v1 != v2)
+    self.assertNotEqual(v1, v2)
     v2 |= v1
-    self.assertTrue(v2 == v1)
+    self.assertEqual(v2, v1)
 
     v3 = v2 | v1
-    self.assertTrue(v3 == v1)
+    self.assertEqual(v3, v1)
 
     onVs = v1.GetNonzeroElements()
-    self.assertTrue(onVs == {0: 1, 2: 2, 3: 3})
+    self.assertEqual(onVs, {0: 1, 2: 2, 3: 3})
 
   def test2Long(self):
     """
@@ -54,19 +50,19 @@ class TestCase(unittest.TestCase):
     v1[0] = 1
     v1[2] = 2
     v1[1 << 35] = 3
-    self.assertTrue(v1 == v1)
-    self.assertTrue(v1.GetLength() == l)
+    self.assertEqual(v1, v1)
+    self.assertEqual(v1.GetLength(), l)
 
     v2 = ds.LongSparseIntVect(l)
-    self.assertTrue(v1 != v2)
+    self.assertNotEqual(v1, v2)
     v2 |= v1
-    self.assertTrue(v2 == v1)
+    self.assertEqual(v2, v1)
 
     v3 = v2 | v1
-    self.assertTrue(v3 == v1)
+    self.assertEqual(v3, v1)
 
     onVs = v1.GetNonzeroElements()
-    self.assertTrue(onVs == {0: 1, 2: 2, 1 << 35: 3})
+    self.assertEqual(onVs, {0: 1, 2: 2, 1 << 35: 3})
 
   def testPickle1(self):
     pkl = b'\x80\x04\x95\x80\x00\x00\x00\x00\x00\x00\x00\x8c\x1erdkit.DataStructs.cDataStructs\x94\x8c\x11LongSparseIntVect\x94\x93\x94C<\x01\x00\x00\x00\x08\x00\x00\x00\x00\x00\x00\x00\x00\x04\x00\x00\x03\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01\x00\x00\x00\x02\x00\x00\x00\x00\x00\x00\x00\x02\x00\x00\x00\x00\x00\x00\x00\x08\x00\x00\x00\x03\x00\x00\x00\x94\x85\x94R\x94}\x94\x85\x94b.'
@@ -92,14 +88,14 @@ class TestCase(unittest.TestCase):
     v1[0] = 1
     v1[2] = 2
     v1[1 << 35] = 3
-    self.assertTrue(v1 == v1)
+    self.assertEqual(v1, v1)
 
     v2 = pickle.loads(pickle.dumps(v1))
-    self.assertTrue(v2 == v1)
+    self.assertEqual(v2, v1)
 
     v3 = ds.LongSparseIntVect(v2.ToBinary())
-    self.assertTrue(v2 == v3)
-    self.assertTrue(v1 == v3)
+    self.assertEqual(v2, v3)
+    self.assertEqual(v1, v3)
 
     #pickle.dump(v1,file('lsiv.pkl','wb+'))
     with open(os.path.join(RDConfig.RDBaseDir, 'Code/DataStructs/Wrap/testData/lsiv.pkl'),
@@ -108,7 +104,7 @@ class TestCase(unittest.TestCase):
       tf.close()
     with io.BytesIO(buf) as f:
       v3 = pickle.load(f)
-      self.assertTrue(v3 == v1)
+      self.assertEqual(v3, v1)
 
   def test3LegacyPickle2(self):
     """
@@ -120,14 +116,14 @@ class TestCase(unittest.TestCase):
     v1[0] = 1
     v1[2] = 2
     v1[1 << 12] = 3
-    self.assertTrue(v1 == v1)
+    self.assertEqual(v1, v1)
 
     v2 = pickle.loads(pickle.dumps(v1))
-    self.assertTrue(v2 == v1)
+    self.assertEqual(v2, v1)
 
     v3 = ds.IntSparseIntVect(v2.ToBinary())
-    self.assertTrue(v2 == v3)
-    self.assertTrue(v1 == v3)
+    self.assertEqual(v2, v3)
+    self.assertEqual(v1, v3)
 
     #pickle.dump(v1,file('isiv.pkl','wb+'))
     with open(os.path.join(RDConfig.RDBaseDir, 'Code/DataStructs/Wrap/testData/isiv.pkl'),
@@ -136,7 +132,7 @@ class TestCase(unittest.TestCase):
       tf.close()
     with io.BytesIO(buf) as f:
       v3 = pickle.load(f)
-      self.assertTrue(v3 == v1)
+      self.assertEqual(v3, v1)
 
   def test4Update(self):
     """
@@ -147,11 +143,11 @@ class TestCase(unittest.TestCase):
     v1[0] = 1
     v1[2] = 2
     v1[3] = 3
-    self.assertTrue(v1 == v1)
+    self.assertEqual(v1, v1)
 
     v2 = ds.IntSparseIntVect(5)
     v2.UpdateFromSequence((0, 2, 3, 3, 2, 3))
-    self.assertTrue(v1 == v2)
+    self.assertEqual(v1, v2)
 
   def test5Dice(self):
     """
@@ -161,7 +157,7 @@ class TestCase(unittest.TestCase):
     v1[4] = 4
     v1[0] = 2
     v1[3] = 1
-    self.assertTrue(feq(ds.DiceSimilarity(v1, v1), 1.0))
+    self.assertAlmostEqual(ds.DiceSimilarity(v1, v1), 1.0, delta=1e-4)
 
     v1 = ds.IntSparseIntVect(5)
     v1[0] = 2
@@ -173,8 +169,8 @@ class TestCase(unittest.TestCase):
     v2[2] = 3
     v2[3] = 4
     v2[4] = 4
-    self.assertTrue(feq(ds.DiceSimilarity(v1, v2), 18.0 / 26.))
-    self.assertTrue(feq(ds.DiceSimilarity(v2, v1), 18.0 / 26.))
+    self.assertAlmostEqual(ds.DiceSimilarity(v1, v2), 18.0 / 26., delta=1e-4)
+    self.assertAlmostEqual(ds.DiceSimilarity(v2, v1), 18.0 / 26., delta=1e-4)
 
   def test6BulkDice(self):
     """
@@ -194,7 +190,7 @@ class TestCase(unittest.TestCase):
     baseDs = [ds.DiceSimilarity(vs[0], vs[x]) for x in range(1, nVs)]
     bulkDs = ds.BulkDiceSimilarity(vs[0], vs[1:])
     for bbaseDs, bbulkDs in zip(baseDs, bulkDs):
-      self.assertTrue(feq(bbaseDs, bbulkDs))
+      self.assertAlmostEqual(bbaseDs, bbulkDs, delta=1e-4)
 
   def test6BulkTversky(self):
     """
@@ -215,17 +211,17 @@ class TestCase(unittest.TestCase):
     bulkDs = ds.BulkTverskySimilarity(vs[0], vs[1:], 0.5, 0.5)
     diceDs = [ds.DiceSimilarity(vs[0], vs[x]) for x in range(1, nVs)]
     for bbaseDs, bbulkDs, ddiceDs in zip(baseDs, bulkDs, diceDs):
-      self.assertTrue(feq(bbaseDs, bbulkDs))
-      self.assertTrue(feq(bbaseDs, ddiceDs))
-      self.assertTrue(feq(bbulkDs, ddiceDs))
+      self.assertAlmostEqual(bbaseDs, bbulkDs, delta=1e-4)
+      self.assertAlmostEqual(bbaseDs, ddiceDs, delta=1e-4)
+      self.assertAlmostEqual(bbulkDs, ddiceDs, delta=1e-4)
 
     bulkDs = ds.BulkTverskySimilarity(vs[0], vs[1:], 1.0, 1.0)
     taniDs = [ds.TanimotoSimilarity(vs[0], vs[x]) for x in range(1, nVs)]
     for bbulkDs, ttaniDs in zip(bulkDs, taniDs):
-      self.assertTrue(feq(bbulkDs, ttaniDs))
+      self.assertAlmostEqual(bbulkDs, ttaniDs, delta=1e-4)
     taniDs = ds.BulkTanimotoSimilarity(vs[0], vs[1:])
     for bbulkDs, ttaniDs in zip(bulkDs, taniDs):
-      self.assertTrue(feq(bbulkDs, ttaniDs))
+      self.assertAlmostEqual(bbulkDs, ttaniDs, delta=1e-4)
 
   def test7ToList(self):
     l = [0] * 2048
