@@ -55,7 +55,7 @@ class TestCase(unittest.TestCase):
     #changing conf should not change conf2 - related to issue 217
     conf.SetAtomPosition(1, Point3D(2.0, 0.0, 0.0))
     pt2 = conf2.GetAtomPosition(1)
-    self.assertTrue(feq(pt2[0], 1.0))
+    self.assertAlmostEq(pt2[0], 1.0, delta=1e-4)
 
     conf = Chem.Conformer(2)
     conf.SetAtomPosition(0, Point3D(-0.5, 0.0, 0.0))
