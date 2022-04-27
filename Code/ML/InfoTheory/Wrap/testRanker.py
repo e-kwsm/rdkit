@@ -9,10 +9,6 @@ from rdkit import DataStructs, RDConfig, RDRandom
 from rdkit.ML.InfoTheory import rdInfoTheory as rdit
 
 
-def feq(a, b, tol=1e-4):
-  return abs(a - b) < tol
-
-
 class TestCase(unittest.TestCase):
 
   def setUp(self):
@@ -20,33 +16,33 @@ class TestCase(unittest.TestCase):
 
   def test0GainFuns(self):
     arr = numpy.array([9, 5],float)
-    self.assertTrue(feq(rdit.InfoEntropy(arr), 0.9403))
+    self.assertAlmostEqual(rdit.InfoEntropy(arr), 0.9403, delta=1e-4)
     arr = numpy.array([9, 9],float)
-    self.assertTrue(feq(rdit.InfoEntropy(arr), 1.0000))
+    self.assertAlmostEqual(rdit.InfoEntropy(arr), 1.0000, delta=1e-4)
     arr = numpy.array([5, 5],float)
-    self.assertTrue(feq(rdit.InfoEntropy(arr), 1.0000))
+    self.assertAlmostEqual(rdit.InfoEntropy(arr), 1.0000, delta=1e-4)
     arr = numpy.array([5, 0],float)
-    self.assertTrue(feq(rdit.InfoEntropy(arr), 0.0000))
+    self.assertAlmostEqual(rdit.InfoEntropy(arr), 0.0000, delta=1e-4)
     arr = numpy.array([5, 5, 5],float)
-    self.assertTrue(feq(rdit.InfoEntropy(arr), 1.5850))
+    self.assertAlmostEqual(rdit.InfoEntropy(arr), 1.5850, delta=1e-4)
     arr = numpy.array([2, 5, 5],float)
-    self.assertTrue(feq(rdit.InfoEntropy(arr), 1.4834))
+    self.assertAlmostEqual(rdit.InfoEntropy(arr), 1.4834, delta=1e-4)
 
     mat2 = numpy.array([[6, 2], [3, 3]],float)
-    self.assertTrue(feq(rdit.InfoGain(mat2), 0.0481))
-    self.assertTrue(feq(rdit.ChiSquare(mat2), 0.9333))
+    self.assertAlmostEqual(rdit.InfoGain(mat2), 0.0481, delta=1e-4)
+    self.assertAlmostEqual(rdit.ChiSquare(mat2), 0.9333, delta=1e-4)
 
     mat3 = numpy.array([[1, 1], [2, 1]],float)
-    self.assertTrue(feq(rdit.InfoGain(mat3), 0.0200))
+    self.assertAlmostEqual(rdit.InfoGain(mat3), 0.0200, delta=1e-4)
 
     mat4 = numpy.array([[2, 0], [1, 2]],float)
-    self.assertTrue(feq(rdit.InfoGain(mat4), 0.4200))
+    self.assertAlmostEqual(rdit.InfoGain(mat4), 0.4200, delta=1e-4)
 
     mat5 = numpy.array([[0, 0], [0, 0]],float)
-    self.assertTrue(feq(rdit.InfoGain(mat5), 0.0000))
+    self.assertAlmostEqual(rdit.InfoGain(mat5), 0.0000, delta=1e-4)
 
     mat6 = numpy.array([[1, 0], [1, 0]],float)
-    self.assertTrue(feq(rdit.InfoGain(mat6), 0.0000))
+    self.assertAlmostEqual(rdit.InfoGain(mat6), 0.0000, delta=1e-4)
 
   def test1ranker(self):
     nbits = 100
@@ -90,7 +86,7 @@ class TestCase(unittest.TestCase):
     for i in range(50):
       fan = res3[i, 2] / na
       fin = res3[i, 3] / ni
-      self.assertTrue(fan > fin)
+      self.assertGreater(fan, fin)
 
   def test2ranker(self):
     nbits = 100
@@ -119,7 +115,7 @@ class TestCase(unittest.TestCase):
     res = rn.GetTopN(5)
     ids = [int(x[0]) for x in res]
     ids.sort()
-    self.assertTrue(ids == [10, 15, 25, 63, 70])
+    self.assertEqual(ids, [10, 15, 25, 63, 70])
     with self.assertRaisesRegex(Exception, ""):
       res = rn.GetTopN(10)
 
@@ -137,7 +133,7 @@ class TestCase(unittest.TestCase):
       res = rn.GetTopN(1)
     except Exception:
       res = None
-    self.assertTrue(res is not None)
+    self.assertIsNotNone(res)
 
   def test4Issue237(self):
     with open(
@@ -153,7 +149,7 @@ class TestCase(unittest.TestCase):
       ranker.AccumulateVotes(ex[1], ex[-1])
     # this dumps core on linux if the bug isn't fixed:
     v = ranker.GetTopN(1)
-    self.assertTrue(int(v[0][0]) == 12)
+    self.assertEqual(int(v[0][0]), 12)
 
 
 if __name__ == '__main__':

@@ -17,10 +17,6 @@ from rdkit.Chem.FeatMaps import FeatMaps
 from rdkit.Geometry import Point3D
 
 
-def feq(n1, n2, tol=1e-5):
-  return abs(n1 - n2) <= tol
-
-
 def load_tests(loader, tests, ignore):
   """ Add the Doctests from the module """
   tests.addTests(doctest.DocTestSuite(FeatMaps, optionflags=doctest.ELLIPSIS))
@@ -48,21 +44,21 @@ class TestCase(unittest.TestCase):
     fmap.AddFeature(fs[2], 2.0)
     fmap.AddFeature(fs[2], 2.0)
 
-    self.assertTrue(fmap.GetNumFeatures() == 4)
-    self.assertTrue(len(fmap.GetFeatures()) == 4)
+    self.assertEqual(fmap.GetNumFeatures(), 4)
+    self.assertEqual(len(fmap.GetFeatures()), 4)
     fmap.DropFeature(3)
-    self.assertTrue(fmap.GetNumFeatures() == 3)
-    self.assertTrue(len(fmap.GetFeatures()) == 3)
+    self.assertEqual(fmap.GetNumFeatures(), 3)
+    self.assertEqual(len(fmap.GetFeatures()), 3)
 
     f = fmap.GetFeature(0)
-    self.assertTrue(f.GetFamily() == 'Aromatic')
-    self.assertTrue(feq(f.weight, 1.0))
+    self.assertEqual(f.GetFamily(), 'Aromatic')
+    self.assertAlmostEqual(f.weight, 1.0, delta=1e-5)
     f = fmap.GetFeature(1)
-    self.assertTrue(f.GetFamily() == 'Acceptor')
-    self.assertTrue(feq(f.weight, 1.0))
+    self.assertEqual(f.GetFamily(), 'Acceptor')
+    self.assertAlmostEqual(f.weight, 1.0, delta=1e-5)
     f = fmap.GetFeature(2)
-    self.assertTrue(f.GetFamily() == 'Acceptor')
-    self.assertTrue(feq(f.weight, 2.0))
+    self.assertEqual(f.GetFamily(), 'Acceptor')
+    self.assertAlmostEqual(f.weight, 2.0, delta=1e-5)
 
   def test2FeatFeatScoreGauss(self):
     aFmp = FeatMaps.FeatMapParams()
@@ -72,28 +68,28 @@ class TestCase(unittest.TestCase):
 
     fs = [FreeChemicalFeature('Aromatic', 'Foo', Point3D(0, 0, 0))]
     fmap.AddFeature(fs[0], 1.0)
-    self.assertTrue(len(fmap.GetFeatures()) == 1)
+    self.assertEqual(len(fmap.GetFeatures()), 1)
 
     sc = fmap.GetFeatFeatScore(fmap.GetFeature(0),
                                FreeChemicalFeature('Aromatic', '', Point3D(1, 0, 0)))
-    self.assertTrue(feq(sc, math.exp(-1)))
+    self.assertAlmostEqual(sc, math.exp(-1), delta=1e-5)
     sc = fmap.GetFeatFeatScore(fmap.GetFeature(0),
                                FreeChemicalFeature('Aromatic', '', Point3D(1.5, 0, 0)))
-    self.assertTrue(feq(sc, math.exp(-2.25)))
+    self.assertAlmostEqual(sc, math.exp(-2.25), delta=1e-5)
     sc = fmap.GetFeatFeatScore(fmap.GetFeature(0),
                                FreeChemicalFeature('Aromatic', '', Point3D(0, 0, 0)))
-    self.assertTrue(feq(sc, 1.0))
+    self.assertAlmostEqual(sc, 1.0, delta=1e-5)
     sc = fmap.GetFeatFeatScore(fmap.GetFeature(0),
                                FreeChemicalFeature('Aromatic', '', Point3D(2.1, 0, 0)))
-    self.assertTrue(feq(sc, 0))
+    self.assertAlmostEqual(sc, 0, delta=1e-5)
 
     sc = fmap.GetFeatFeatScore(fmap.GetFeature(0),
                                FreeChemicalFeature('Acceptor', '', Point3D(1, 0, 0)))
-    self.assertTrue(feq(sc, 0))
+    self.assertAlmostEqual(sc, 0, delta=1e-5)
     sc = fmap.GetFeatFeatScore(fmap.GetFeature(0),
                                FreeChemicalFeature('Acceptor', '', Point3D(1, 0, 0)),
                                typeMatch=False)
-    self.assertTrue(feq(sc, math.exp(-1)))
+    self.assertAlmostEqual(sc, math.exp(-1), delta=1e-5)
 
     self.assertRaises(
       IndexError, lambda: fmap.GetFeatFeatScore(
@@ -109,20 +105,20 @@ class TestCase(unittest.TestCase):
 
     fs = [FreeChemicalFeature('Aromatic', 'Foo', Point3D(0, 0, 0))]
     fmap.AddFeature(fs[0], 1.0)
-    self.assertTrue(len(fmap.GetFeatures()) == 1)
+    self.assertEqual(len(fmap.GetFeatures()), 1)
 
     sc = fmap.GetFeatFeatScore(fmap.GetFeature(0),
                                FreeChemicalFeature('Aromatic', '', Point3D(1, 0, 0)))
-    self.assertTrue(feq(sc, 0.5))
+    self.assertAlmostEqual(sc, 0.5, delta=1e-5)
     sc = fmap.GetFeatFeatScore(fmap.GetFeature(0),
                                FreeChemicalFeature('Aromatic', '', Point3D(1.5, 0, 0)))
-    self.assertTrue(feq(sc, 0.25))
+    self.assertAlmostEqual(sc, 0.25, delta=1e-5)
     sc = fmap.GetFeatFeatScore(fmap.GetFeature(0),
                                FreeChemicalFeature('Aromatic', '', Point3D(0, 0, 0)))
-    self.assertTrue(feq(sc, 1.0))
+    self.assertAlmostEqual(sc, 1.0, delta=1e-5)
     sc = fmap.GetFeatFeatScore(fmap.GetFeature(0),
                                FreeChemicalFeature('Aromatic', '', Point3D(2.1, 0, 0)))
-    self.assertTrue(feq(sc, 0))
+    self.assertAlmostEqual(sc, 0, delta=1e-5)
 
   def test4FeatFeatScoreBox(self):
     aFmp = FeatMaps.FeatMapParams()
@@ -133,20 +129,20 @@ class TestCase(unittest.TestCase):
 
     fs = [FreeChemicalFeature('Aromatic', 'Foo', Point3D(0, 0, 0))]
     fmap.AddFeature(fs[0], 1.1)
-    self.assertTrue(len(fmap.GetFeatures()) == 1)
+    self.assertEqual(len(fmap.GetFeatures()), 1)
 
     sc = fmap.GetFeatFeatScore(fmap.GetFeature(0),
                                FreeChemicalFeature('Aromatic', '', Point3D(1, 0, 0)))
-    self.assertTrue(feq(sc, 1.1))
+    self.assertAlmostEqual(sc, 1.1, delta=1e-5)
     sc = fmap.GetFeatFeatScore(fmap.GetFeature(0),
                                FreeChemicalFeature('Aromatic', '', Point3D(1.5, 0, 0)))
-    self.assertTrue(feq(sc, 1.1))
+    self.assertAlmostEqual(sc, 1.1, delta=1e-5)
     sc = fmap.GetFeatFeatScore(fmap.GetFeature(0),
                                FreeChemicalFeature('Aromatic', '', Point3D(0, 0, 0)))
-    self.assertTrue(feq(sc, 1.1))
+    self.assertAlmostEqual(sc, 1.1, delta=1e-5)
     sc = fmap.GetFeatFeatScore(fmap.GetFeature(0),
                                FreeChemicalFeature('Aromatic', '', Point3D(2.1, 0, 0)))
-    self.assertTrue(feq(sc, 0))
+    self.assertAlmostEqual(sc, 0, delta=1e-5)
 
   def test5ScoreFeats(self):
     aFmp = FeatMaps.FeatMapParams()
@@ -165,17 +161,17 @@ class TestCase(unittest.TestCase):
 
     l1 = fmap._loopOverMatchingFeats(FreeChemicalFeature('Aromatic', '', Point3D(0, 0, 0)))
     l1 = list(l1)
-    self.assertTrue(len(l1) == 1)
-    self.assertTrue(l1[0][0] == 0)
-    self.assertTrue(l1[0][1].GetFamily() == 'Aromatic')
+    self.assertEqual(len(l1), 1)
+    self.assertEqual(l1[0][0], 0)
+    self.assertEqual(l1[0][1].GetFamily(), 'Aromatic')
 
     l1 = fmap._loopOverMatchingFeats(FreeChemicalFeature('Acceptor', '', Point3D(0, 0, 0)))
     l1 = list(l1)
-    self.assertTrue(len(l1) == 2)
-    self.assertTrue(l1[0][0] == 1)
-    self.assertTrue(l1[0][1].GetFamily() == 'Acceptor')
-    self.assertTrue(l1[1][0] == 2)
-    self.assertTrue(l1[1][1].GetFamily() == 'Acceptor')
+    self.assertEqual(len(l1), 2)
+    self.assertEqual(l1[0][0], 1)
+    self.assertEqual(l1[0][1].GetFamily(), 'Acceptor')
+    self.assertEqual(l1[1][0], 2)
+    self.assertEqual(l1[1][1].GetFamily(), 'Acceptor')
 
   def test6ScoreFeats(self):
     aFmp = FeatMaps.FeatMapParams()
@@ -207,37 +203,37 @@ class TestCase(unittest.TestCase):
     ]
 
     sc = fmap.ScoreFeats(fs)
-    self.assertTrue(feq(sc, 4.3))
+    self.assertAlmostEqual(sc, 4.3, delta=1e-5)
 
     msv = [-1] * 3
     fsv = [-1] * 2
     fsfmi = [None] * 2
     sc = fmap.ScoreFeats(fs, mapScoreVect=msv, featsScoreVect=fsv, featsToFeatMapIdx=fsfmi)
-    self.assertTrue(feq(sc, 4.3))
-    self.assertTrue(feq(sum(msv), sc))
-    self.assertTrue(feq(sum(fsv), sc))
-    self.assertTrue(fsfmi == [[0], [1, 2]])
+    self.assertAlmostEqual(sc, 4.3, delta=1e-5)
+    self.assertAlmostEqual(sum(msv), sc, delta=1e-5)
+    self.assertAlmostEqual(sum(fsv), sc, delta=1e-5)
+    self.assertEqual(fsfmi, [[0], [1, 2]])
 
     # make sure we reset the vectors internally:
     sc = fmap.ScoreFeats(fs, mapScoreVect=msv, featsScoreVect=fsv, featsToFeatMapIdx=fsfmi)
-    self.assertTrue(feq(sc, 4.3))
-    self.assertTrue(feq(sum(msv), sc))
-    self.assertTrue(feq(sum(fsv), sc))
-    self.assertTrue(fsfmi == [[0], [1, 2]])
+    self.assertAlmostEqual(sc, 4.3, delta=1e-5)
+    self.assertAlmostEqual(sum(msv), sc, delta=1e-5)
+    self.assertAlmostEqual(sum(fsv), sc, delta=1e-5)
+    self.assertEqual(fsfmi, [[0], [1, 2]])
 
     fmap.scoreMode = FeatMaps.FeatMapScoreMode.Closest
     sc = fmap.ScoreFeats(fs, mapScoreVect=msv, featsScoreVect=fsv, featsToFeatMapIdx=fsfmi)
-    self.assertTrue(feq(sc, 2.1))
-    self.assertTrue(feq(sum(msv), sc))
-    self.assertTrue(feq(sum(fsv), sc))
-    self.assertTrue(fsfmi == [[0], [1]])
+    self.assertAlmostEqual(sc, 2.1, delta=1e-5)
+    self.assertAlmostEqual(sum(msv), sc, delta=1e-5)
+    self.assertAlmostEqual(sum(fsv), sc, delta=1e-5)
+    self.assertEqual(fsfmi, [[0], [1]])
 
     fmap.scoreMode = FeatMaps.FeatMapScoreMode.Best
     sc = fmap.ScoreFeats(fs, mapScoreVect=msv, featsScoreVect=fsv, featsToFeatMapIdx=fsfmi)
-    self.assertTrue(feq(sc, 3.2))
-    self.assertTrue(feq(sum(msv), sc))
-    self.assertTrue(feq(sum(fsv), sc))
-    self.assertTrue(fsfmi == [[0], [2]])
+    self.assertAlmostEqual(sc, 3.2, delta=1e-5)
+    self.assertAlmostEqual(sum(msv), sc, delta=1e-5)
+    self.assertAlmostEqual(sum(fsv), sc, delta=1e-5)
+    self.assertEqual(fsfmi, [[0], [2]])
 
   def test7ScoreFeats(self):
     aFmp = FeatMaps.FeatMapParams()
@@ -261,30 +257,30 @@ class TestCase(unittest.TestCase):
     ]
 
     sc = fmap.ScoreFeats(fs)
-    self.assertTrue(feq(sc, 1.1))
+    self.assertAlmostEqual(sc, 1.1, delta=1e-5)
 
     msv = [-1] * 1
     fsv = [-1] * 2
     fsfmi = [-1] * 2
     sc = fmap.ScoreFeats(fs, mapScoreVect=msv, featsScoreVect=fsv, featsToFeatMapIdx=fsfmi)
-    self.assertTrue(feq(sc, 1.1))
-    self.assertTrue(feq(sum(msv), sc))
-    self.assertTrue(feq(sum(fsv), sc))
-    self.assertTrue(fsfmi == [[0], []])
+    self.assertAlmostEqual(sc, 1.1, delta=1e-5)
+    self.assertAlmostEqual(sum(msv), sc, delta=1e-5)
+    self.assertAlmostEqual(sum(fsv), sc, delta=1e-5)
+    self.assertEqual(fsfmi, [[0], []])
 
     fmap.scoreMode = FeatMaps.FeatMapScoreMode.Closest
     sc = fmap.ScoreFeats(fs, mapScoreVect=msv, featsScoreVect=fsv, featsToFeatMapIdx=fsfmi)
-    self.assertTrue(feq(sc, 1.1))
-    self.assertTrue(feq(sum(msv), sc))
-    self.assertTrue(feq(sum(fsv), sc))
-    self.assertTrue(fsfmi == [[0], []])
+    self.assertAlmostEqual(sc, 1.1, delta=1e-5)
+    self.assertAlmostEqual(sum(msv), sc, delta=1e-5)
+    self.assertAlmostEqual(sum(fsv), sc, delta=1e-5)
+    self.assertEqual(fsfmi, [[0], []])
 
     fmap.scoreMode = FeatMaps.FeatMapScoreMode.Best
     sc = fmap.ScoreFeats(fs, mapScoreVect=msv, featsScoreVect=fsv, featsToFeatMapIdx=fsfmi)
-    self.assertTrue(feq(sc, 1.1))
-    self.assertTrue(feq(sum(msv), sc))
-    self.assertTrue(feq(sum(fsv), sc))
-    self.assertTrue(fsfmi == [[0], []])
+    self.assertAlmostEqual(sc, 1.1, delta=1e-5)
+    self.assertAlmostEqual(sum(msv), sc, delta=1e-5)
+    self.assertAlmostEqual(sum(fsv), sc, delta=1e-5)
+    self.assertEqual(fsfmi, [[0], []])
 
   def test8ScoreFeatDirs(self):
     aFmp = FeatMaps.FeatMapParams()
@@ -307,24 +303,24 @@ class TestCase(unittest.TestCase):
     fs[0].featDirs = [Point3D(0, 1, 0)]
 
     sc = fmap.ScoreFeats(fs)
-    self.assertTrue(feq(sc, 1.1))
+    self.assertAlmostEqual(sc, 1.1, delta=1e-5)
 
     fs[0].featDirs = [Point3D(0, -1, 0)]
     sc = fmap.ScoreFeats(fs)
-    self.assertTrue(feq(sc, -1.1))
+    self.assertAlmostEqual(sc, -1.1, delta=1e-5)
 
     fs[0].featDirs = [Point3D(0, 0, 1)]
     sc = fmap.ScoreFeats(fs)
-    self.assertTrue(feq(sc, 0.0))
+    self.assertAlmostEqual(sc, 0.0, delta=1e-5)
 
     fmap.dirScoreMode = FeatMaps.FeatDirScoreMode.DotPosRange
     fs[0].featDirs = [Point3D(0, -1, 0)]
     sc = fmap.ScoreFeats(fs)
-    self.assertTrue(feq(sc, 0))
+    self.assertAlmostEqual(sc, 0, delta=1e-5)
 
     fs[0].featDirs = [Point3D(0, 1, 0)]
     sc = fmap.ScoreFeats(fs)
-    self.assertTrue(feq(sc, 1.1))
+    self.assertAlmostEqual(sc, 1.1, delta=1e-5)
 
 
 if __name__ == '__main__':  # pragma: nocover
