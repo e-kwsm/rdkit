@@ -165,17 +165,17 @@ class TestCase(unittest.TestCase):
     # writer.write(mol)
 
     d1 = computeDist(conf.GetAtomPosition(0), conf.GetAtomPosition(1))
-    self.assertTrue(feq(d1, 1.31, 0.01))
+    self.assertAlmostEqual(d1, 1.31, delta=0.01)
     d2 = computeDist(conf.GetAtomPosition(0), conf.GetAtomPosition(2))
-    self.assertTrue(feq(d2, 2.59, 0.05))
+    self.assertAlmostEqual(d2, 2.59, delta=0.05)
     d3 = computeDist(conf.GetAtomPosition(0), conf.GetAtomPosition(3))
-    self.assertTrue(feq(d3, 3.84, 0.1))
+    self.assertAlmostEqual(d3, 3.84, delta=0.1)
     d4 = computeDist(conf.GetAtomPosition(1), conf.GetAtomPosition(2))
-    self.assertTrue(feq(d4, 1.29, 0.01))
+    self.assertAlmostEqual(d4, 1.29, delta=0.01)
     d5 = computeDist(conf.GetAtomPosition(1), conf.GetAtomPosition(3))
-    self.assertTrue(feq(d5, 2.54, 0.1))
+    self.assertAlmostEqual(d5, 2.54, delta=0.1)
     d6 = computeDist(conf.GetAtomPosition(2), conf.GetAtomPosition(3))
-    self.assertTrue(feq(d6, 1.31, 0.01))
+    self.assertAlmostEqual(d6, 1.31, delta=0.01)
 
   def test1Small(self):
     # single double and tripple atoms cases should not fail
@@ -711,9 +711,8 @@ class TestCase(unittest.TestCase):
 
       conf1 = m1.GetConformer()
       conf2 = m2.GetConformer()
-      self.assertTrue((conf2.GetAtomPosition(3) -
-                       conf2.GetAtomPosition(0)).Length() > (conf1.GetAtomPosition(3) -
-                                                             conf1.GetAtomPosition(0)).Length())
+      self.assertGreater((conf2.GetAtomPosition(3) - conf2.GetAtomPosition(0)).Length(),
+                         (conf1.GetAtomPosition(3) - conf1.GetAtomPosition(0)).Length())
 
   def testScaleBoundsMatForce(self):
     """
@@ -746,9 +745,9 @@ class TestCase(unittest.TestCase):
 
       conf1 = m1.GetConformer()
       conf2 = m2.GetConformer()
-      self.assertTrue(
+      self.assertLessEqual(
         abs((conf2.GetAtomPosition(4) - conf2.GetAtomPosition(0)).Length() -
-            target) <= abs((conf1.GetAtomPosition(4) - conf1.GetAtomPosition(0)).Length() - target)) # both end up in same position
+            target), abs((conf1.GetAtomPosition(4) - conf1.GetAtomPosition(0)).Length() - target)) # both end up in same position
 
   def testETKDGv3amide(self):
     """
