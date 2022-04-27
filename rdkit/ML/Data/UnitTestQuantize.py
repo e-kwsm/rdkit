@@ -19,7 +19,7 @@ class TestCase(unittest.TestCase):
     nPossibleRes = 2
     res = Quantize.FindVarQuantBound(varValues, resCodes, nPossibleRes)
     target = (1.8, 0.97095)
-    self.assertEqual([Quantize.feq(x, y, 1e-4) for x, y in zip(res, target)], [1, 1],
+    self.assertEqual([Quantize.feq(x, y, 1e-4) for x, y in zip(res, target)], [True, True],
                      'result comparison failed: %s != %s' % (res, target))
 
   def testOneSplit2_noise(self):
@@ -30,7 +30,7 @@ class TestCase(unittest.TestCase):
     nPossibleRes = 2
     res = Quantize.FindVarQuantBound(varValues, resCodes, nPossibleRes)
     target = (1.8, 0.60999)
-    self.assertEqual([Quantize.feq(x, y, 1e-4) for x, y in zip(res, target)], [1, 1],
+    self.assertEqual([Quantize.feq(x, y, 1e-4) for x, y in zip(res, target)], [True, True],
                      'result comparison failed: %s != %s' % (res, target))
 
   def testOneSplit3(self):
@@ -41,7 +41,7 @@ class TestCase(unittest.TestCase):
     nPossibleRes = 3
     res = Quantize.FindVarQuantBound(varValues, resCodes, nPossibleRes)
     target = (1.3, 0.88129)
-    self.assertEqual([Quantize.feq(x, y, 1e-4) for x, y in zip(res, target)], [1, 1],
+    self.assertEqual([Quantize.feq(x, y, 1e-4) for x, y in zip(res, target)], [True, True],
                      'result comparison failed: %s != %s' % (res, target))
 
   def testOneSplit4_duplicates(self):
@@ -52,7 +52,7 @@ class TestCase(unittest.TestCase):
     nPossibleRes = 2
     res = Quantize.FindVarQuantBound(varValues, resCodes, nPossibleRes)
     target = (1.8, 0.68939)
-    self.assertEqual([Quantize.feq(x, y, 1e-4) for x, y in zip(res, target)], [1, 1],
+    self.assertEqual([Quantize.feq(x, y, 1e-4) for x, y in zip(res, target)], [True, True],
                      'result comparison failed: %s != %s' % (res, target))
 
   def testOneSplit5_outOfOrder(self):
@@ -63,7 +63,7 @@ class TestCase(unittest.TestCase):
     nPossibleRes = 2
     res = Quantize.FindVarQuantBound(varValues, resCodes, nPossibleRes)
     target = (1.8, 0.97095)
-    self.assertEqual([Quantize.feq(x, y, 1e-4) for x, y in zip(res, target)], [1, 1],
+    self.assertEqual([Quantize.feq(x, y, 1e-4) for x, y in zip(res, target)], [True, True],
                      'result comparison failed: %s != %s' % (res, target))
 
   def testMultSplit1_simple_dual(self):
@@ -74,10 +74,11 @@ class TestCase(unittest.TestCase):
     nPossibleRes = 3
     res = Quantize.FindVarMultQuantBounds(varValues, 2, resCodes, nPossibleRes)
     target = ([1.3, 2.05], 1.55458)
-    self.assertEqual(min([Quantize.feq(x, y, 1e-4) for x, y in zip(res[0], target[0])]), 1,
-                     'split bound comparison failed: %s != %s' % (res[0], target[0]))
-    self.assertTrue(Quantize.feq(res[1], target[1], 1e-4),
-                    'InfoGain comparison failed: %s != %s' % (res[1], target[1]))
+    for x, y in zip(res[0], target[0]):
+      self.assertAlmostEqual(x, y, delta=1e-4,
+                             msg='split bound comparison failed: %s != %s' % (res[0], target[0]))
+    self.assertAlmostEqual(res[1], target[1], delta=1e-4,
+                           msg='InfoGain comparison failed: %s != %s' % (res[1], target[1]))
 
   def testMultSplit2_outOfOrder(self):
     # """ same test as testMultSplit1, but out of order """
@@ -87,10 +88,11 @@ class TestCase(unittest.TestCase):
     nPossibleRes = 3
     res = Quantize.FindVarMultQuantBounds(varValues, 2, resCodes, nPossibleRes)
     target = ([1.3, 2.05], 1.55458)
-    self.assertTrue(Quantize.feq(res[1], target[1], 1e-4),
-                    'InfoGain comparison failed: %s != %s' % (res[1], target[1]))
-    self.assertEqual(min([Quantize.feq(x, y, 1e-4) for x, y in zip(res[0], target[0])]), 1,
-                     'split bound comparison failed: %s != %s' % (res[0], target[0]))
+    self.assertAlmostEqual(res[1], target[1], delta=1e-4,
+                           msg='InfoGain comparison failed: %s != %s' % (res[1], target[1]))
+    for x, y in zip(res[0], target[0]):
+      self.assertAlmostEqual(x, y, delta=1e-4,
+                             msg='split bound comparison failed: %s != %s' % (res[0], target[0]))
 
   def testMultSplit3_4results(self):
     # """  4 possible results """
@@ -100,10 +102,11 @@ class TestCase(unittest.TestCase):
     nPossibleRes = 4
     res = Quantize.FindVarMultQuantBounds(varValues, 3, resCodes, nPossibleRes)
     target = ([1.30, 2.05, 2.65], 1.97722)
-    self.assertTrue(Quantize.feq(res[1], target[1], 1e-4),
-                    'InfoGain comparison failed: %s != %s' % (res[1], target[1]))
-    self.assertEqual(min([Quantize.feq(x, y, 1e-4) for x, y in zip(res[0], target[0])]), 1,
-                     'split bound comparison failed: %s != %s' % (res[0], target[0]))
+    self.assertAlmostEqual(res[1], target[1], delta=1e-4,
+                           msg='InfoGain comparison failed: %s != %s' % (res[1], target[1]))
+    for x, y in zip(res[0], target[0]):
+      self.assertAlmostEqual(x, y, delta=1e-4,
+                             msg='split bound comparison failed: %s != %s' % (res[0], target[0]))
 
   def testMultSplit4_dualValued_island(self):
     # """ dual valued, with an island """
@@ -113,10 +116,11 @@ class TestCase(unittest.TestCase):
     nPossibleRes = 2
     res = Quantize.FindVarMultQuantBounds(varValues, 2, resCodes, nPossibleRes)
     target = ([1.3, 2.05], .91830)
-    self.assertTrue(Quantize.feq(res[1], target[1], 1e-4),
-                    'InfoGain comparison failed: %s != %s' % (res[1], target[1]))
-    self.assertEqual(min([Quantize.feq(x, y, 1e-4) for x, y in zip(res[0], target[0])]), 1,
-                     'split bound comparison failed: %s != %s' % (res[0], target[0]))
+    self.assertAlmostEqual(res[1], target[1], delta=1e-4,
+                           msg='InfoGain comparison failed: %s != %s' % (res[1], target[1]))
+    for x, y in zip(res[0], target[0]):
+      self.assertAlmostEqual(x, y, delta=1e-4,
+                             msg='split bound comparison failed: %s != %s' % (res[0], target[0]))
 
   def testMultSplit5_dualValued_island_noisy(self):
     # """ dual valued, with an island, a bit noisy """
@@ -126,10 +130,11 @@ class TestCase(unittest.TestCase):
     nPossibleRes = 2
     res = Quantize.FindVarMultQuantBounds(varValues, 2, resCodes, nPossibleRes)
     target = ([1.3, 2.05], .34707)
-    self.assertTrue(Quantize.feq(res[1], target[1], 1e-4),
-                    'InfoGain comparison failed: %s != %s' % (res[1], target[1]))
-    self.assertEqual(min([Quantize.feq(x, y, 1e-4) for x, y in zip(res[0], target[0])]), 1,
-                     'split bound comparison failed: %s != %s' % (res[0], target[0]))
+    self.assertAlmostEqual(res[1], target[1], delta=1e-4,
+                           msg='InfoGain comparison failed: %s != %s' % (res[1], target[1]))
+    for x, y in zip(res[0], target[0]):
+      self.assertAlmostEqual(x, y, delta=1e-4,
+                             msg='split bound comparison failed: %s != %s' % (res[0], target[0]))
 
   def test9NewSplits(self):
     d = [
@@ -139,9 +144,9 @@ class TestCase(unittest.TestCase):
     ]
     varValues, resCodes = zip(*d)
     res = Quantize._NewPyFindStartPoints(varValues, resCodes, len(d))
-    self.assertTrue(res == [1, 2], str(res))
+    self.assertEqual(res, [1, 2], str(res))
     res = Quantize._FindStartPoints(varValues, resCodes, len(d))
-    self.assertTrue(res == [1, 2], str(res))
+    self.assertEqual(res, [1, 2], str(res))
 
     d = [
       (0, 1),
@@ -150,9 +155,9 @@ class TestCase(unittest.TestCase):
     ]
     varValues, resCodes = zip(*d)
     res = Quantize._NewPyFindStartPoints(varValues, resCodes, len(d))
-    self.assertTrue(res == [1, 2], str(res))
+    self.assertEqual(res, [1, 2], str(res))
     res = Quantize._FindStartPoints(varValues, resCodes, len(d))
-    self.assertTrue(res == [1, 2], str(res))
+    self.assertEqual(res, [1, 2], str(res))
 
     d = [
       (0, 0),
@@ -164,83 +169,83 @@ class TestCase(unittest.TestCase):
     ]
     varValues, resCodes = zip(*d)
     res = Quantize._NewPyFindStartPoints(varValues, resCodes, len(d))
-    self.assertTrue(res == [2, 4], str(res))
+    self.assertEqual(res, [2, 4], str(res))
     res = Quantize._FindStartPoints(varValues, resCodes, len(d))
-    self.assertTrue(res == [2, 4], str(res))
-
-    d = [
-      (0, 0),
-      (0, 1),
-      (1, 1),
-      (1, 1),
-      (2, 0),
-      (2, 1),
-    ]
-    varValues, resCodes = zip(*d)
-    res = Quantize._NewPyFindStartPoints(varValues, resCodes, len(d))
-    self.assertTrue(res == [2, 4], str(res))
-    res = Quantize._FindStartPoints(varValues, resCodes, len(d))
-    self.assertTrue(res == [2, 4], str(res))
-
-    d = [
-      (0, 0),
-      (0, 0),
-      (1, 0),
-      (1, 1),
-      (2, 0),
-      (2, 1),
-    ]
-    varValues, resCodes = zip(*d)
-    res = Quantize._NewPyFindStartPoints(varValues, resCodes, len(d))
-    self.assertTrue(res == [2, 4], str(res))
-    res = Quantize._FindStartPoints(varValues, resCodes, len(d))
-    self.assertTrue(res == [2, 4], str(res))
-
-    d = [
-      (0, 0),
-      (0, 0),
-      (1, 0),
-      (1, 0),
-      (2, 1),
-      (2, 1),
-    ]
-    varValues, resCodes = zip(*d)
-    res = Quantize._NewPyFindStartPoints(varValues, resCodes, len(d))
-    self.assertTrue(res == [4], str(res))
-    res = Quantize._FindStartPoints(varValues, resCodes, len(d))
-    self.assertTrue(res == [4], str(res))
-
-    d = [
-      (0, 0),
-      (0, 0),
-      (1, 1),
-      (1, 1),
-      (2, 1),
-      (2, 1),
-    ]
-    varValues, resCodes = zip(*d)
-    res = Quantize._NewPyFindStartPoints(varValues, resCodes, len(d))
-    self.assertTrue(res == [2], str(res))
-    res = Quantize._FindStartPoints(varValues, resCodes, len(d))
-    self.assertTrue(res == [2], str(res))
-
-    d = [
-      (0, 0),
-      (0, 0),
-      (1, 0),
-      (1, 0),
-      (2, 0),
-      (2, 0),
-    ]
-    varValues, resCodes = zip(*d)
-    res = Quantize._NewPyFindStartPoints(varValues, resCodes, len(d))
-    self.assertTrue(res == [], str(res))
-    res = Quantize._FindStartPoints(varValues, resCodes, len(d))
-    self.assertTrue(res == [], str(res))
+    self.assertEqual(res, [2, 4], str(res))
 
     d = [
       (0, 0),
       (0, 1),
+      (1, 1),
+      (1, 1),
+      (2, 0),
+      (2, 1),
+    ]
+    varValues, resCodes = zip(*d)
+    res = Quantize._NewPyFindStartPoints(varValues, resCodes, len(d))
+    self.assertEqual(res, [2, 4], str(res))
+    res = Quantize._FindStartPoints(varValues, resCodes, len(d))
+    self.assertEqual(res, [2, 4], str(res))
+
+    d = [
+      (0, 0),
+      (0, 0),
+      (1, 0),
+      (1, 1),
+      (2, 0),
+      (2, 1),
+    ]
+    varValues, resCodes = zip(*d)
+    res = Quantize._NewPyFindStartPoints(varValues, resCodes, len(d))
+    self.assertEqual(res, [2, 4], str(res))
+    res = Quantize._FindStartPoints(varValues, resCodes, len(d))
+    self.assertEqual(res, [2, 4], str(res))
+
+    d = [
+      (0, 0),
+      (0, 0),
+      (1, 0),
+      (1, 0),
+      (2, 1),
+      (2, 1),
+    ]
+    varValues, resCodes = zip(*d)
+    res = Quantize._NewPyFindStartPoints(varValues, resCodes, len(d))
+    self.assertEqual(res, [4], str(res))
+    res = Quantize._FindStartPoints(varValues, resCodes, len(d))
+    self.assertEqual(res, [4], str(res))
+
+    d = [
+      (0, 0),
+      (0, 0),
+      (1, 1),
+      (1, 1),
+      (2, 1),
+      (2, 1),
+    ]
+    varValues, resCodes = zip(*d)
+    res = Quantize._NewPyFindStartPoints(varValues, resCodes, len(d))
+    self.assertEqual(res, [2], str(res))
+    res = Quantize._FindStartPoints(varValues, resCodes, len(d))
+    self.assertEqual(res, [2], str(res))
+
+    d = [
+      (0, 0),
+      (0, 0),
+      (1, 0),
+      (1, 0),
+      (2, 0),
+      (2, 0),
+    ]
+    varValues, resCodes = zip(*d)
+    res = Quantize._NewPyFindStartPoints(varValues, resCodes, len(d))
+    self.assertEqual(res, [], str(res))
+    res = Quantize._FindStartPoints(varValues, resCodes, len(d))
+    self.assertEqual(res, [], str(res))
+
+    d = [
+      (0, 0),
+      (0, 1),
       (1, 0),
       (1, 1),
       (2, 0),
@@ -248,9 +253,9 @@ class TestCase(unittest.TestCase):
     ]
     varValues, resCodes = zip(*d)
     res = Quantize._NewPyFindStartPoints(varValues, resCodes, len(d))
-    self.assertTrue(res == [2, 4], str(res))
+    self.assertEqual(res, [2, 4], str(res))
     res = Quantize._FindStartPoints(varValues, resCodes, len(d))
-    self.assertTrue(res == [2, 4], str(res))
+    self.assertEqual(res, [2, 4], str(res))
 
     d = [
       (1, 0),
@@ -265,9 +270,9 @@ class TestCase(unittest.TestCase):
     ]
     varValues, resCodes = zip(*d)
     res = Quantize._NewPyFindStartPoints(varValues, resCodes, len(d))
-    self.assertTrue(res == [1, 6], str(res))
+    self.assertEqual(res, [1, 6], str(res))
     res = Quantize._FindStartPoints(varValues, resCodes, len(d))
-    self.assertTrue(res == [1, 6], str(res))
+    self.assertEqual(res, [1, 6], str(res))
 
     d = [(1, 1.65175902843, 0), (2, 1.89935600758, 0), (3, 1.89935600758, 1), (4, 1.89935600758, 1),
          (5, 2.7561609745, 1), (6, 2.7561609745, 1), (7, 2.7561609745, 1), (8, 2.7561609745, 1),
@@ -276,9 +281,9 @@ class TestCase(unittest.TestCase):
 
     _, varValues, resCodes = zip(*d)
     res = Quantize._NewPyFindStartPoints(varValues, resCodes, len(d))
-    self.assertTrue(res == [1, 4], str(res))
+    self.assertEqual(res, [1, 4], str(res))
     res = Quantize._FindStartPoints(varValues, resCodes, len(d))
-    self.assertTrue(res == [1, 4], str(res))
+    self.assertEqual(res, [1, 4], str(res))
 
   def testGithubIssue18(self):
     d = [0, 1, 2, 3, 4]

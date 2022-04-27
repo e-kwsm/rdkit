@@ -42,7 +42,7 @@ class TestCase(unittest.TestCase):
     trans2 = rdmt.ComputeCanonicalTransform(m.GetConformer())
     for i in range(4):
       for j in range(4):
-        self.assertTrue(feq(trans[i, j], trans2[i, j]))
+        self.assertAlmostEqual(trans[i, j], trans2[i, j], delta=1e-4)
     rdmt.TransformConformer(m.GetConformer(), trans2)
     m2 = Chem.MolFromMolFile(fileN)
     rdmt.CanonicalizeConformer(m2.GetConformer())
@@ -52,9 +52,9 @@ class TestCase(unittest.TestCase):
     for i in range(nats):
       p1 = list(cnf1.GetAtomPosition(i))
       p2 = list(cnf2.GetAtomPosition(i))
-      self.assertTrue(feq(p1[0], p2[0]))
-      self.assertTrue(feq(p1[1], p2[1]))
-      self.assertTrue(feq(p1[2], p2[2]))
+      self.assertAlmostEqual(p1[0], p2[0], delta=1e-4)
+      self.assertAlmostEqual(p1[1], p2[1], delta=1e-4)
+      self.assertAlmostEqual(p1[2], p2[2], delta=1e-4)
 
     m3 = Chem.MolFromMolFile(fileN)
     rdmt.CanonicalizeMol(m3)
@@ -63,9 +63,9 @@ class TestCase(unittest.TestCase):
     for i in range(nats):
       p1 = list(cnf1.GetAtomPosition(i))
       p2 = list(cnf2.GetAtomPosition(i))
-      self.assertTrue(feq(p1[0], p2[0]))
-      self.assertTrue(feq(p1[1], p2[1]))
-      self.assertTrue(feq(p1[2], p2[2]))
+      self.assertAlmostEqual(p1[0], p2[0], delta=1e-4)
+      self.assertAlmostEqual(p1[1], p2[1], delta=1e-4)
+      self.assertAlmostEqual(p1[2], p2[2], delta=1e-4)
 
   def testComputePrincipalAxesAndMoments(self):
     if (not hasattr(rdmt, 'ComputePrincipalAxesAndMoments')):
@@ -94,12 +94,10 @@ M  END
       for x in range(3):
         self.assertAlmostEqual(axes[y][x], axesRef[y][x], 3)
       self.assertAlmostEqual(moments[y], momentsRef[y], 3)
-    failed = False
     try:
       axes, moments = rdmt.ComputePrincipalAxesAndMoments(m.GetConformer(), weights=(0.5, 0.5))
     except Exception:
-      failed = True
-    self.assertTrue(failed)
+      self.fail()
     axesWeightedRef = ((-0.9998, -0.0114, -0.0189), (-0.0153, 0.9744, 0.2245), (0.0158, 0.2247,
                                                                                 -0.9743))
     momentsWeightedRef = (0.5496, 1.5559, 1.9361)
@@ -139,13 +137,11 @@ M  END
       for x in range(3):
         self.assertAlmostEqual(axes[y][x], axesRef[y][x], 3)
       self.assertAlmostEqual(moments[y], momentsRef[y], 3)
-    failed = False
     try:
       axes, moments = rdmt.ComputePrincipalAxesAndMomentsFromGyrationMatrix(
         m.GetConformer(), weights=(0.5, 0.5))
     except Exception:
-      failed = True
-    self.assertTrue(failed)
+      self.fail()
     axesWeightedRef = ((0.0189, -0.0114, 0.9998), (-0.2245, 0.9744, 0.0153), (0.9743, 0.2247,
                                                                               -0.0158))
     momentsWeightedRef = (0.0847, 0.4649, 1.4712)
@@ -230,12 +226,10 @@ M  END
     self.assertAlmostEqual(dihedral, 180.0, 1)
     dist3 = rdmt.GetBondLength(conf, 6, 9)
     self.assertNotAlmostEqual(dist, dist3, 1)
-    exceptionRaised = False
     try:
       rdmt.SetDihedralDeg(conf, 6, 0, 3, 9, 0.0)
     except ValueError:
-      exceptionRaised = True
-    self.assertTrue(exceptionRaised)
+      self.fail()
 
   def testEigen3CanonicalTransformAgainstNumpy(self):
 
