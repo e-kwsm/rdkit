@@ -609,8 +609,8 @@ chlorine	[Cl]
         self._start_time = datetime.now()
 
       def __call__(self, mol, res):
-        self._parent.assertTrue(isinstance(mol, Chem.Mol))
-        self._parent.assertTrue(isinstance(res, rdMolStandardize.TautomerEnumeratorResult))
+        self._parent.assertIsInstance(mol, Chem.Mol)
+        self._parent.assertIsInstance(res, rdMolStandardize.TautomerEnumeratorResult)
         return (datetime.now() - self._start_time < self._timeout)
 
     class MyBrokenCallback(rdMolStandardize.TautomerEnumeratorCallback):
@@ -677,7 +677,7 @@ chlorine	[Cl]
     enumerator_copy = rdMolStandardize.TautomerEnumerator(enumerator)
     res68 = enumerator.Enumerate(m68)
     res68_copy = enumerator_copy.Enumerate(m68)
-    self.assertTrue(res68.status == res68_copy.status)
+    self.assertEqual(res68.status, res68_copy.status)
 
   def test17PickCanonicalCIPChangeOnChiralCenter(self):
 

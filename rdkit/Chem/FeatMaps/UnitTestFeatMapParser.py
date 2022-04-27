@@ -43,21 +43,21 @@ EndPoints
     p = FeatMapParser.FeatMapParser()
     p.SetData(self.data)
     fm = p.Parse()
-    self.assertTrue(fm.scoreMode == FeatMaps.FeatMapScoreMode.Best)
-    self.assertTrue(fm.dirScoreMode == FeatMaps.FeatDirScoreMode.DotFullRange)
-    self.assertTrue(fm.GetNumFeatures() == 3)
+    self.assertEqual(fm.scoreMode, FeatMaps.FeatMapScoreMode.Best)
+    self.assertEqual(fm.dirScoreMode, FeatMaps.FeatDirScoreMode.DotFullRange)
+    self.assertEqual(fm.GetNumFeatures(), 3)
 
     feats = fm.GetFeatures()
     self.assertTrue(feq(feats[0].weight, 1.25))
     self.assertTrue(feq(feats[1].weight, 2.0))
     self.assertTrue(feq(feats[2].weight, 1.25))
 
-    self.assertTrue(len(feats[0].featDirs) == 1)
-    self.assertTrue(len(feats[1].featDirs) == 2)
-    self.assertTrue(len(feats[2].featDirs) == 0)
+    self.assertEqual(len(feats[0].featDirs), 1)
+    self.assertEqual(len(feats[1].featDirs), 2)
+    self.assertEqual(len(feats[2].featDirs), 0)
 
     fams = [x.GetFamily() for x in feats]
-    self.assertTrue(fams == ['Acceptor', 'Aromatic', 'Acceptor'])
+    self.assertEqual(fams, ['Acceptor', 'Aromatic', 'Acceptor'])
 
   def test_FeatMapParser(self):
     # We can use a string

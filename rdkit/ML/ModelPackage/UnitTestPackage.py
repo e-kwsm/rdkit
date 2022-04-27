@@ -46,7 +46,7 @@ class TestCase(unittest.TestCase):
   def _verify(self, pkg, testD):
     for smi, pred, conf in testD:
       m = Chem.MolFromSmiles(smi)
-      self.assertTrue(m is not None, 'SMILES: %s failed\n' % (smi))
+      self.assertIsNotNone(m, 'SMILES: %s failed\n' % (smi))
       p, c = pkg.Classify(m)
       assert p == pred, 'bad prediction (%d) for smiles %s' % (p, smi)
       assert feq(c, conf), 'bad confidence (%f) for smiles %s' % (c, smi)
@@ -54,7 +54,7 @@ class TestCase(unittest.TestCase):
   def _verify2(self, pkg, testD):
     for smi, pred, conf in testD:
       m = Chem.MolFromSmiles(smi)
-      self.assertTrue(m is not None, 'SMILES: %s failed\n' % (smi))
+      self.assertIsNotNone(m, 'SMILES: %s failed\n' % (smi))
       p, c = pkg.Classify(m)
       assert p == pred, 'bad prediction (%d) for smiles %s' % (p, smi)
       assert feq(c, conf), 'bad confidence (%f) for smiles %s' % (c, smi)
@@ -123,15 +123,15 @@ class TestCase(unittest.TestCase):
   def test_ModelPackage(self):
     pkg = self._loadPackage()
 
-    self.assertTrue(isinstance(pkg.GetCalculator(), MolecularDescriptorCalculator))
+    self.assertIsInstance(pkg.GetCalculator(), MolecularDescriptorCalculator)
     pkg.SetCalculator('calculator')
     self.assertEqual(pkg.GetCalculator(), 'calculator')
 
-    self.assertTrue(isinstance(pkg.GetModel(), Composite.Composite))
+    self.assertIsInstance(pkg.GetModel(), Composite.Composite)
     pkg.SetModel('model')
     self.assertEqual(pkg.GetModel(), 'model')
 
-    self.assertEqual(pkg.GetDataset(), None)
+    self.assertIsNone(pkg.GetDataset())
     pkg.SetDataset('dataset')
     self.assertEqual(pkg.GetDataset(), 'dataset')
 

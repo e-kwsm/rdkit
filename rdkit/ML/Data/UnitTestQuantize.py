@@ -139,9 +139,9 @@ class TestCase(unittest.TestCase):
     ]
     varValues, resCodes = zip(*d)
     res = Quantize._NewPyFindStartPoints(varValues, resCodes, len(d))
-    self.assertTrue(res == [1, 2], str(res))
+    self.assertEqual(res, [1, 2], str(res))
     res = Quantize._FindStartPoints(varValues, resCodes, len(d))
-    self.assertTrue(res == [1, 2], str(res))
+    self.assertEqual(res, [1, 2], str(res))
 
     d = [
       (0, 1),
@@ -150,9 +150,9 @@ class TestCase(unittest.TestCase):
     ]
     varValues, resCodes = zip(*d)
     res = Quantize._NewPyFindStartPoints(varValues, resCodes, len(d))
-    self.assertTrue(res == [1, 2], str(res))
+    self.assertEqual(res, [1, 2], str(res))
     res = Quantize._FindStartPoints(varValues, resCodes, len(d))
-    self.assertTrue(res == [1, 2], str(res))
+    self.assertEqual(res, [1, 2], str(res))
 
     d = [
       (0, 0),
@@ -164,83 +164,83 @@ class TestCase(unittest.TestCase):
     ]
     varValues, resCodes = zip(*d)
     res = Quantize._NewPyFindStartPoints(varValues, resCodes, len(d))
-    self.assertTrue(res == [2, 4], str(res))
+    self.assertEqual(res, [2, 4], str(res))
     res = Quantize._FindStartPoints(varValues, resCodes, len(d))
-    self.assertTrue(res == [2, 4], str(res))
-
-    d = [
-      (0, 0),
-      (0, 1),
-      (1, 1),
-      (1, 1),
-      (2, 0),
-      (2, 1),
-    ]
-    varValues, resCodes = zip(*d)
-    res = Quantize._NewPyFindStartPoints(varValues, resCodes, len(d))
-    self.assertTrue(res == [2, 4], str(res))
-    res = Quantize._FindStartPoints(varValues, resCodes, len(d))
-    self.assertTrue(res == [2, 4], str(res))
-
-    d = [
-      (0, 0),
-      (0, 0),
-      (1, 0),
-      (1, 1),
-      (2, 0),
-      (2, 1),
-    ]
-    varValues, resCodes = zip(*d)
-    res = Quantize._NewPyFindStartPoints(varValues, resCodes, len(d))
-    self.assertTrue(res == [2, 4], str(res))
-    res = Quantize._FindStartPoints(varValues, resCodes, len(d))
-    self.assertTrue(res == [2, 4], str(res))
-
-    d = [
-      (0, 0),
-      (0, 0),
-      (1, 0),
-      (1, 0),
-      (2, 1),
-      (2, 1),
-    ]
-    varValues, resCodes = zip(*d)
-    res = Quantize._NewPyFindStartPoints(varValues, resCodes, len(d))
-    self.assertTrue(res == [4], str(res))
-    res = Quantize._FindStartPoints(varValues, resCodes, len(d))
-    self.assertTrue(res == [4], str(res))
-
-    d = [
-      (0, 0),
-      (0, 0),
-      (1, 1),
-      (1, 1),
-      (2, 1),
-      (2, 1),
-    ]
-    varValues, resCodes = zip(*d)
-    res = Quantize._NewPyFindStartPoints(varValues, resCodes, len(d))
-    self.assertTrue(res == [2], str(res))
-    res = Quantize._FindStartPoints(varValues, resCodes, len(d))
-    self.assertTrue(res == [2], str(res))
-
-    d = [
-      (0, 0),
-      (0, 0),
-      (1, 0),
-      (1, 0),
-      (2, 0),
-      (2, 0),
-    ]
-    varValues, resCodes = zip(*d)
-    res = Quantize._NewPyFindStartPoints(varValues, resCodes, len(d))
-    self.assertTrue(res == [], str(res))
-    res = Quantize._FindStartPoints(varValues, resCodes, len(d))
-    self.assertTrue(res == [], str(res))
+    self.assertEqual(res, [2, 4], str(res))
 
     d = [
       (0, 0),
       (0, 1),
+      (1, 1),
+      (1, 1),
+      (2, 0),
+      (2, 1),
+    ]
+    varValues, resCodes = zip(*d)
+    res = Quantize._NewPyFindStartPoints(varValues, resCodes, len(d))
+    self.assertEqual(res, [2, 4], str(res))
+    res = Quantize._FindStartPoints(varValues, resCodes, len(d))
+    self.assertEqual(res, [2, 4], str(res))
+
+    d = [
+      (0, 0),
+      (0, 0),
+      (1, 0),
+      (1, 1),
+      (2, 0),
+      (2, 1),
+    ]
+    varValues, resCodes = zip(*d)
+    res = Quantize._NewPyFindStartPoints(varValues, resCodes, len(d))
+    self.assertEqual(res, [2, 4], str(res))
+    res = Quantize._FindStartPoints(varValues, resCodes, len(d))
+    self.assertEqual(res, [2, 4], str(res))
+
+    d = [
+      (0, 0),
+      (0, 0),
+      (1, 0),
+      (1, 0),
+      (2, 1),
+      (2, 1),
+    ]
+    varValues, resCodes = zip(*d)
+    res = Quantize._NewPyFindStartPoints(varValues, resCodes, len(d))
+    self.assertEqual(res, [4], str(res))
+    res = Quantize._FindStartPoints(varValues, resCodes, len(d))
+    self.assertEqual(res, [4], str(res))
+
+    d = [
+      (0, 0),
+      (0, 0),
+      (1, 1),
+      (1, 1),
+      (2, 1),
+      (2, 1),
+    ]
+    varValues, resCodes = zip(*d)
+    res = Quantize._NewPyFindStartPoints(varValues, resCodes, len(d))
+    self.assertEqual(res, [2], str(res))
+    res = Quantize._FindStartPoints(varValues, resCodes, len(d))
+    self.assertEqual(res, [2], str(res))
+
+    d = [
+      (0, 0),
+      (0, 0),
+      (1, 0),
+      (1, 0),
+      (2, 0),
+      (2, 0),
+    ]
+    varValues, resCodes = zip(*d)
+    res = Quantize._NewPyFindStartPoints(varValues, resCodes, len(d))
+    self.assertEqual(res, [], str(res))
+    res = Quantize._FindStartPoints(varValues, resCodes, len(d))
+    self.assertEqual(res, [], str(res))
+
+    d = [
+      (0, 0),
+      (0, 1),
       (1, 0),
       (1, 1),
       (2, 0),
@@ -248,9 +248,9 @@ class TestCase(unittest.TestCase):
     ]
     varValues, resCodes = zip(*d)
     res = Quantize._NewPyFindStartPoints(varValues, resCodes, len(d))
-    self.assertTrue(res == [2, 4], str(res))
+    self.assertEqual(res, [2, 4], str(res))
     res = Quantize._FindStartPoints(varValues, resCodes, len(d))
-    self.assertTrue(res == [2, 4], str(res))
+    self.assertEqual(res, [2, 4], str(res))
 
     d = [
       (1, 0),
@@ -265,9 +265,9 @@ class TestCase(unittest.TestCase):
     ]
     varValues, resCodes = zip(*d)
     res = Quantize._NewPyFindStartPoints(varValues, resCodes, len(d))
-    self.assertTrue(res == [1, 6], str(res))
+    self.assertEqual(res, [1, 6], str(res))
     res = Quantize._FindStartPoints(varValues, resCodes, len(d))
-    self.assertTrue(res == [1, 6], str(res))
+    self.assertEqual(res, [1, 6], str(res))
 
     d = [(1, 1.65175902843, 0), (2, 1.89935600758, 0), (3, 1.89935600758, 1), (4, 1.89935600758, 1),
          (5, 2.7561609745, 1), (6, 2.7561609745, 1), (7, 2.7561609745, 1), (8, 2.7561609745, 1),
@@ -276,9 +276,9 @@ class TestCase(unittest.TestCase):
 
     _, varValues, resCodes = zip(*d)
     res = Quantize._NewPyFindStartPoints(varValues, resCodes, len(d))
-    self.assertTrue(res == [1, 4], str(res))
+    self.assertEqual(res, [1, 4], str(res))
     res = Quantize._FindStartPoints(varValues, resCodes, len(d))
-    self.assertTrue(res == [1, 4], str(res))
+    self.assertEqual(res, [1, 4], str(res))
 
   def testGithubIssue18(self):
     d = [0, 1, 2, 3, 4]

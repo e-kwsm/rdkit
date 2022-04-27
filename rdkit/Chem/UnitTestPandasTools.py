@@ -303,7 +303,7 @@ class TestWriteSDF(unittest.TestCase):
     sio = StringIO()
     PandasTools.WriteSDF(self.df, sio, allNumeric=True)
     s = sio.getvalue()
-    self.assertFalse(">" in s, s)
+    self.assertNotIn(">", s, s)
     self.assertNotIn("7\n\n", s)  # double-check that the numeric tests don't pass by accident
     self.assertNotIn("8\n\n", s)
 

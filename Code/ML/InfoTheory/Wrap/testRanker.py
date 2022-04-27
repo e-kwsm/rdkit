@@ -90,7 +90,7 @@ class TestCase(unittest.TestCase):
     for i in range(50):
       fan = res3[i, 2] / na
       fin = res3[i, 3] / ni
-      self.assertTrue(fan > fin)
+      self.assertGreater(fan, fin)
 
   def test2ranker(self):
     nbits = 100
@@ -119,7 +119,7 @@ class TestCase(unittest.TestCase):
     res = rn.GetTopN(5)
     ids = [int(x[0]) for x in res]
     ids.sort()
-    self.assertTrue(ids == [10, 15, 25, 63, 70])
+    self.assertEqual(ids, [10, 15, 25, 63, 70])
     with self.assertRaisesRegex(Exception, ""):
       res = rn.GetTopN(10)
 
@@ -137,7 +137,7 @@ class TestCase(unittest.TestCase):
       res = rn.GetTopN(1)
     except Exception:
       res = None
-    self.assertTrue(res is not None)
+    self.assertIsNotNone(res)
 
   def test4Issue237(self):
     with open(
@@ -153,7 +153,7 @@ class TestCase(unittest.TestCase):
       ranker.AccumulateVotes(ex[1], ex[-1])
     # this dumps core on linux if the bug isn't fixed:
     v = ranker.GetTopN(1)
-    self.assertTrue(int(v[0][0]) == 12)
+    self.assertEqual(int(v[0][0]), 12)
 
 
 if __name__ == '__main__':

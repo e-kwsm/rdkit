@@ -5,6 +5,7 @@ from rdkit.Chem.Features.FeatDirUtilsRD import GetDonor2FeatVects
 from rdkit.Geometry.rdGeometry import Point3D
 
 
+
 class TestCase(unittest.TestCase):
 
   def assertListAlmostEqual(self, list1, list2, msg, tol=7):
@@ -58,10 +59,10 @@ class TestCase(unittest.TestCase):
 
     self.assertListAlmostEqual(vec_1.CrossProduct(vec_h1), Point3D(0, 0, 0),
                                'Incorrect direction of vector 1')
-    self.assertTrue(vec_1.DotProduct(vec_h1) > 0, 'Incorrect direction of vector 1')
+    self.assertGreater(vec_1.DotProduct(vec_h1), 0, 'Incorrect direction of vector 1')
     self.assertListAlmostEqual(vec_2.CrossProduct(vec_h2), Point3D(0, 0, 0),
                                'Incorrect direction of vector 2')
-    self.assertTrue(vec_2.DotProduct(vec_h2) > 0, 'Incorrect direction of vector 2')
+    self.assertGreater(vec_2.DotProduct(vec_h2), 0, 'Incorrect direction of vector 2')
 
     #Check length of the vectors
     self.assertAlmostEqual(vec_1.Length(), 1.5, msg='Incorrect length of vector 1')
@@ -87,7 +88,7 @@ class TestCase(unittest.TestCase):
     vec = case21[0][0][1] - case21[0][0][0]
     self.assertListAlmostEqual(vec.CrossProduct(vec_h), Point3D(0, 0, 0),
                                'Incorrect direction of vector')
-    self.assertTrue(vec.DotProduct(vec_h) > 0, 'Incorrect direction of vector')
+    self.assertGreater(vec.DotProduct(vec_h), 0, 'Incorrect direction of vector')
 
     #Check length of the vector
     self.assertAlmostEqual(vec.Length(), 1.5, msg='Incorrect length of vector')
@@ -121,10 +122,10 @@ class TestCase(unittest.TestCase):
 
     self.assertListAlmostEqual(vec_1.CrossProduct(vec_h), Point3D(0, 0, 0),
                                'Incorrect direction of vector 1')
-    self.assertTrue(vec_1.DotProduct(vec_h) > 0, 'Incorrect direction of vector 1')
+    self.assertGreater(vec_1.DotProduct(vec_h), 0, 'Incorrect direction of vector 1')
     self.assertListAlmostEqual(vec_2.CrossProduct(avg_vec), Point3D(0, 0, 0),
                                'Incorrect direction of vector 2')
-    self.assertTrue(vec_2.DotProduct(avg_vec) < 0, 'Incorrect direction of vector 2')
+    self.assertLess(vec_2.DotProduct(avg_vec), 0, 'Incorrect direction of vector 2')
 
     #Check length of the vectors
     self.assertAlmostEqual(vec_1.Length(), 1.5, msg='Incorrect length of vector 1')
@@ -152,7 +153,7 @@ class TestCase(unittest.TestCase):
     vec = case3[0][0][1] - case3[0][0][0]
     self.assertListAlmostEqual(vec.CrossProduct(avg_vec), Point3D(0, 0, 0),
                                'Incorrect direction of vector')
-    self.assertTrue(vec.DotProduct(avg_vec) < 0, 'Incorrect direction of vector')
+    self.assertLess(vec.DotProduct(avg_vec), 0, 'Incorrect direction of vector')
 
     #Check length of the vector
     self.assertAlmostEqual(vec.Length(), 1.5, msg='Incorrect length of vector')

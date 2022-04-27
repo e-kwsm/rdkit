@@ -39,14 +39,14 @@ class TestCase(unittest.TestCase):
 
     IPythonConsole.ipython_useSVG = False
     res = Draw.MolsToGridImage((m, m))
-    self.assertFalse(isinstance(res, SVG))
+    self.assertNotIsInstance(res, SVG)
 
     res = Draw.MolsToGridImage((m, m), useSVG=True)
-    self.assertTrue(isinstance(res, SVG))
+    self.assertIsInstance(res, SVG)
 
     IPythonConsole.ipython_useSVG = True
     res = Draw.MolsToGridImage((m, m))
-    self.assertTrue(isinstance(res, SVG))
+    self.assertIsInstance(res, SVG)
 
   @unittest.skipIf(IPythonConsole is None, 'IPython not available')
   def testGithub3101(self):

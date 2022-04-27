@@ -24,10 +24,10 @@ class TreeTestCase(unittest.TestCase):
     tree = Tree.TreeNode(None, 'root', label=0)
     self.assertEqual(tree.GetLevel(), 0)
     self.assertEqual(tree.GetName(), 'root')
-    self.assertEqual(tree.GetData(), None)
-    self.assertEqual(tree.GetTerminal(), False)
+    self.assertIsNone(tree.GetData())
+    self.assertFalse(tree.GetTerminal())
     self.assertEqual(tree.GetLabel(), 0)
-    self.assertEqual(tree.GetParent(), None)
+    self.assertIsNone(tree.GetParent())
     self.assertEqual(tree.GetChildren(), [])
 
     for i in range(3):
@@ -88,7 +88,7 @@ class TreeTestCase(unittest.TestCase):
     assert tTree != self.baseTree, 'Inequality test 1 failed. (bad Tree.__cmp__)'
     assert self.baseTree != tTree, 'Inequality test 2 failed. (bad Tree.__cmp__)'
 
-    self.assertTrue(tTree > self.baseTree, msg='Larger tree is greater')
+    self.assertGreater(tTree, self.baseTree, msg='Larger tree is greater')
     self.assertEqual(tTree.__cmp__(self.baseTree), 1)
 
   def test6PickleEquals(self):

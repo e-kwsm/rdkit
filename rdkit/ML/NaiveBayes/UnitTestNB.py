@@ -74,7 +74,7 @@ class TestCase(unittest.TestCase):
     qBounds = [0] + [2] * nvars + [0]
     mod, err = CrossValidate.CrossValidationDriver(examples, attrs, npvals, qBounds,
                                                    mEstimateVal=20.0, silent=True)
-    self.assertTrue(isinstance(mod, NaiveBayesClassifier))
+    self.assertIsInstance(mod, NaiveBayesClassifier)
     self.assertAlmostEqual(err, 0.1818, 4)
 
     self.assertEqual(mod.GetName(), '')

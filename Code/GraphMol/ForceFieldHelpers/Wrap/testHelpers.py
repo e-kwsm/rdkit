@@ -41,17 +41,17 @@ class TestCase(unittest.TestCase):
     self.assertTrue(ff)
     e1 = ff.CalcEnergy()
     r = ff.Minimize()
-    self.assertTrue(r == 0)
+    self.assertEqual(r, 0)
     e2 = ff.CalcEnergy()
-    self.assertTrue(e2 < e1)
+    self.assertLess(e2, e1)
 
     # test keyword args:
     r = ff.Minimize(forceTol=1e-8)
-    self.assertTrue(r == 0)
+    self.assertEqual(r, 0)
 
     # test keyword args:
     r = ff.Minimize(energyTol=1e-3)
-    self.assertTrue(r == 0)
+    self.assertEqual(r, 0)
 
   def test3(self):
     molB = """
@@ -73,9 +73,9 @@ M  END"""
     self.assertTrue(ff)
     e1 = ff.CalcEnergy()
     r = ff.Minimize()
-    self.assertTrue(r == 0)
+    self.assertEqual(r, 0)
     e2 = ff.CalcEnergy()
-    self.assertTrue(e2 < e1)
+    self.assertLess(e2, e1)
 
   def test4(self):
     m = Chem.MolFromSmiles('[Cu](C)(C)(C)(C)C')
@@ -109,17 +109,17 @@ M  END"""
     self.assertTrue(ff)
     e1 = ff.CalcEnergy()
     r = ff.Minimize()
-    self.assertTrue(r == 0)
+    self.assertEqual(r, 0)
     e2 = ff.CalcEnergy()
-    self.assertTrue(e2 < e1)
+    self.assertLess(e2, e1)
 
     # test keyword args:
     r = ff.Minimize(forceTol=1.0e-8)
-    self.assertTrue(r == 0)
+    self.assertEqual(r, 0)
 
     # test keyword args:
     r = ff.Minimize(energyTol=1.0e-3)
-    self.assertTrue(r == 0)
+    self.assertEqual(r, 0)
 
   def test7(self):
     molB = """
@@ -142,9 +142,9 @@ M  END"""
     self.assertTrue(ff)
     e1 = ff.CalcEnergy()
     r = ff.Minimize()
-    self.assertTrue(r == 0)
+    self.assertEqual(r, 0)
     e2 = ff.CalcEnergy()
-    self.assertTrue(e2 < e1)
+    self.assertLess(e2, e1)
 
   def test8(self):
     m = Chem.MolFromSmiles('[Cu](C)(C)(C)(C)C')
@@ -187,11 +187,11 @@ M  END"""
     self.assertFalse(mmffTorsionParams)
     mmffOopBendParams = mp.GetMMFFOopBendParams(m, 6, 5, 4, 0)
     self.assertTrue(mmffOopBendParams)
-    self.assertTrue(int(round(mmffOopBendParams * 1000)) == 40)
+    self.assertEqual(int(round(mmffOopBendParams * 1000)), 40)
     mmffOopBendParams = mp.GetMMFFOopBendParams(m, 6, 5, 4, 1)
     self.assertFalse(mmffOopBendParams)
     sub1 = m.GetSubstructMatch(Chem.MolFromSmarts('NN[H]'))
-    self.assertTrue(len(sub1) == 3)
+    self.assertEqual(len(sub1), 3)
     nIdx = sub1[0]
     hIdx = sub1[2]
     mmffVdWParams = mp.GetMMFFVdWParams(nIdx, hIdx)
@@ -218,12 +218,12 @@ M  END"""
     self.assertFalse(uffAngleBendParams)
     uffTorsionParams = ChemicalForceFields.GetUFFTorsionParams(m, 6, 7, 8, 9)
     self.assertTrue(uffTorsionParams)
-    self.assertTrue((int(round(uffTorsionParams * 1000) == 976)))
+    self.assertEqual(int(round(uffTorsionParams * 1000)), 976)
     uffTorsionParams = ChemicalForceFields.GetUFFTorsionParams(m, 0, 7, 8, 9)
     self.assertFalse(uffTorsionParams)
     uffInversionParams = ChemicalForceFields.GetUFFInversionParams(m, 6, 5, 4, 0)
     self.assertTrue(uffInversionParams)
-    self.assertTrue(int(round(uffInversionParams * 1000)) == 2000)
+    self.assertEqual(int(round(uffInversionParams * 1000)), 2000)
     uffInversionParams = ChemicalForceFields.GetUFFInversionParams(m, 6, 5, 4, 1)
     self.assertFalse(uffInversionParams)
     uffVdWParams = ChemicalForceFields.GetUFFVdWParams(m, 0, 9)
@@ -250,7 +250,7 @@ M  END"""
         res = not res
       self.assertTrue(res)
       pyrroleNIdx = m.GetSubstructMatch(query)[-1]
-      self.assertTrue(m.GetAtomWithIdx(pyrroleNIdx).GetTotalDegree() == 3)
+      self.assertEqual(m.GetAtomWithIdx(pyrroleNIdx).GetTotalDegree(), 3)
 
   def test12(self):
     self.dirName = os.path.join(RDConfig.RDBaseDir, 'Code', 'GraphMol', 'ForceFieldHelpers', 'UFF',
@@ -265,7 +265,7 @@ M  END"""
     e1 = ff.CalcEnergy()
     ff.Minimize(10000, 1.0e-6, 1.0e-3)
     e2 = ff.CalcEnergy()
-    self.assertTrue(e2 < e1)
+    self.assertLess(e2, e1)
     e3 = ff.CalcEnergy(savedPos)
     self.assertAlmostEqual(e3, e1, 2)
     savedPos = tuple(positions)
@@ -289,7 +289,7 @@ M  END"""
     e1 = ff.CalcEnergy()
     ff.Minimize(10000, 1.0e-6, 1.0e-3)
     e2 = ff.CalcEnergy()
-    self.assertTrue(e2 < e1)
+    self.assertLess(e2, e1)
     e3 = ff.CalcEnergy(savedPos)
     self.assertAlmostEqual(e3, e1, 2)
 
@@ -375,8 +375,11 @@ M  END"""
     res, after = tuple(zip(*ChemicalForceFields.OptimizeMoleculeConfs(m, ff, maxIters=200)))
     self.assertEqual(len(res), 10)
     self.assertEqual(len(before), len(after))
-    self.assertTrue(all(map(lambda i: i == 0, res)))
-    self.assertTrue(all(after[i] < b for i, b in enumerate(before)))
+    for i in res:
+      self.assertEqual(i, 0)
+    for a, b in zip(after, before):
+      self.assertLess(a, b)
+
 
 
 if __name__ == '__main__':

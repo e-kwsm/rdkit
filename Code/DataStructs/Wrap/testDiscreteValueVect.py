@@ -23,11 +23,11 @@ class TestCase(unittest.TestCase):
     for i in range(15):
       v1[2 * i] = 1
 
-    self.assertTrue(len(v1) == 30)
-    self.assertTrue(v1.GetTotalVal() == 15)
+    self.assertEqual(len(v1), 30)
+    self.assertEqual(v1.GetTotalVal(), 15)
 
     for i in range(len(v1)):
-      self.assertTrue(v1[i] == (i + 1) % 2)
+      self.assertEqual(v1[i], (i + 1) % 2)
 
     self.assertRaises(ValueError, lambda: v1.__setitem__(5, 2))
 
@@ -35,9 +35,9 @@ class TestCase(unittest.TestCase):
     for i in range(len(v1)):
       v1[i] = i % 4
 
-    self.assertTrue(len(v1) == 30)
+    self.assertEqual(len(v1), 30)
     for i in range(len(v1)):
-      self.assertTrue(v1[i] == i % 4)
+      self.assertEqual(v1[i], i % 4)
 
     self.assertRaises(ValueError, lambda: v1.__setitem__(10, 6))
 
@@ -45,10 +45,10 @@ class TestCase(unittest.TestCase):
     for i in range(len(v1)):
       v1[i] = i % 16
 
-    self.assertTrue(len(v1) == 30)
-    self.assertTrue(v1.GetTotalVal() == 211)
+    self.assertEqual(len(v1), 30)
+    self.assertEqual(v1.GetTotalVal(), 211)
     for i in range(len(v1)):
-      self.assertTrue(v1[i] == i % 16)
+      self.assertEqual(v1[i], i % 16)
 
     self.assertRaises(ValueError, lambda: v1.__setitem__(10, 16))
 
@@ -56,10 +56,10 @@ class TestCase(unittest.TestCase):
     for i in range(len(v1)):
       v1[i] = i % 256
 
-    self.assertTrue(len(v1) == 32)
-    self.assertTrue(v1.GetTotalVal() == 496)
+    self.assertEqual(len(v1), 32)
+    self.assertEqual(v1.GetTotalVal(), 496)
     for i in range(len(v1)):
-      self.assertTrue(v1[i] == i % 256)
+      self.assertEqual(v1[i], i % 256)
 
     self.assertRaises(ValueError, lambda: v1.__setitem__(10, 256))
 
@@ -67,8 +67,8 @@ class TestCase(unittest.TestCase):
     for i in range(len(v1)):
       v1[i] = i % 300
 
-    self.assertTrue(len(v1) == 300)
-    self.assertTrue(v1.GetTotalVal() == 44850)
+    self.assertEqual(len(v1), 300)
+    self.assertEqual(v1.GetTotalVal(), 44850)
     self.assertRaises(ValueError, lambda: v1.__setitem__(10, 65536))
 
   def test2VectDistances(self):
@@ -77,13 +77,13 @@ class TestCase(unittest.TestCase):
     for i in range(15):
       v1[2 * i] = 1
       v2[2 * i] = 1
-    self.assertTrue(ds.ComputeL1Norm(v1, v2) == 0)
+    self.assertEqual(ds.ComputeL1Norm(v1, v2), 0)
     for i in range(30):
       if (i % 3 == 0):
         v2[i] = 1
       else:
         v2[i] = 0
-    self.assertTrue(ds.ComputeL1Norm(v1, v2) == 15)
+    self.assertEqual(ds.ComputeL1Norm(v1, v2), 15)
 
     v1 = ds.DiscreteValueVect(ds.DiscreteValueType.TWOBITVALUE, 30)
     v2 = ds.DiscreteValueVect(ds.DiscreteValueType.TWOBITVALUE, 30)
@@ -92,14 +92,14 @@ class TestCase(unittest.TestCase):
       v1[i] = i % 4
       v2[i] = (i + 1) % 4
 
-    self.assertTrue(ds.ComputeL1Norm(v1, v2) == 44)
+    self.assertEqual(ds.ComputeL1Norm(v1, v2), 44)
 
     v1 = ds.DiscreteValueVect(ds.DiscreteValueType.FOURBITVALUE, 16)
     v2 = ds.DiscreteValueVect(ds.DiscreteValueType.FOURBITVALUE, 16)
     for i in range(16):
       v1[i] = i % 16
       v2[i] = i % 5
-    self.assertTrue(ds.ComputeL1Norm(v1, v2) == 90)
+    self.assertEqual(ds.ComputeL1Norm(v1, v2), 90)
 
     v1 = ds.DiscreteValueVect(ds.DiscreteValueType.EIGHTBITVALUE, 5)
     v2 = ds.DiscreteValueVect(ds.DiscreteValueType.EIGHTBITVALUE, 5)
@@ -114,7 +114,7 @@ class TestCase(unittest.TestCase):
     v2[2] = 103
     v2[3] = 6
     v2[4] = 228
-    self.assertTrue(ds.ComputeL1Norm(v1, v2) == 370)
+    self.assertEqual(ds.ComputeL1Norm(v1, v2), 370)
 
     v1 = ds.DiscreteValueVect(ds.DiscreteValueType.SIXTEENBITVALUE, 3)
     v2 = ds.DiscreteValueVect(ds.DiscreteValueType.SIXTEENBITVALUE, 3)
@@ -125,7 +125,7 @@ class TestCase(unittest.TestCase):
     v2[0] = 1345
     v2[1] = 54578
     v2[2] = 10034
-    self.assertTrue(ds.ComputeL1Norm(v1, v2) == 21000)
+    self.assertEqual(ds.ComputeL1Norm(v1, v2), 21000)
 
   def test3Pickles(self):
     #outF = file('dvvs.pkl','wb+')
@@ -141,31 +141,31 @@ class TestCase(unittest.TestCase):
       self.assertTrue(ds.ComputeL1Norm(v1, v2) == 0)
       # pickle.dump(v1,outF)
       v2 = pickle.load(inF, encoding='bytes')
-      self.assertTrue(ds.ComputeL1Norm(v1, v2) == 0)
-      self.assertTrue(v1.GetTotalVal() == v2.GetTotalVal())
-      self.assertTrue(v2.GetTotalVal() != 0)
+      self.assertEqual(ds.ComputeL1Norm(v1, v2), 0)
+      self.assertEqual(v1.GetTotalVal(), v2.GetTotalVal())
+      self.assertNotEqual(v2.GetTotalVal(), 0)
 
       v1 = ds.DiscreteValueVect(ds.DiscreteValueType.TWOBITVALUE, 30)
       for i in range(30):
         v1[i] = i % 4
       v2 = pickle.loads(pickle.dumps(v1))
-      self.assertTrue(ds.ComputeL1Norm(v1, v2) == 0)
+      self.assertEqual(ds.ComputeL1Norm(v1, v2), 0)
       # pickle.dump(v1,outF)
       v2 = pickle.load(inF, encoding='bytes')
-      self.assertTrue(ds.ComputeL1Norm(v1, v2) == 0)
-      self.assertTrue(v1.GetTotalVal() == v2.GetTotalVal())
-      self.assertTrue(v2.GetTotalVal() != 0)
+      self.assertEqual(ds.ComputeL1Norm(v1, v2), 0)
+      self.assertEqual(v1.GetTotalVal(), v2.GetTotalVal())
+      self.assertNotEqual(v2.GetTotalVal(), 0)
 
       v1 = ds.DiscreteValueVect(ds.DiscreteValueType.FOURBITVALUE, 16)
       for i in range(16):
         v1[i] = i % 16
       v2 = pickle.loads(pickle.dumps(v1))
-      self.assertTrue(ds.ComputeL1Norm(v1, v2) == 0)
+      self.assertEqual(ds.ComputeL1Norm(v1, v2), 0)
       # pickle.dump(v1,outF)
       v2 = pickle.load(inF, encoding='bytes')
-      self.assertTrue(ds.ComputeL1Norm(v1, v2) == 0)
-      self.assertTrue(v1.GetTotalVal() == v2.GetTotalVal())
-      self.assertTrue(v2.GetTotalVal() != 0)
+      self.assertEqual(ds.ComputeL1Norm(v1, v2), 0)
+      self.assertEqual(v1.GetTotalVal(), v2.GetTotalVal())
+      self.assertNotEqual(v2.GetTotalVal(), 0)
 
       v1 = ds.DiscreteValueVect(ds.DiscreteValueType.EIGHTBITVALUE, 5)
       v1[0] = 34
@@ -174,58 +174,58 @@ class TestCase(unittest.TestCase):
       v1[3] = 56
       v1[4] = 128
       v2 = pickle.loads(pickle.dumps(v1))
-      self.assertTrue(ds.ComputeL1Norm(v1, v2) == 0)
+      self.assertEqual(ds.ComputeL1Norm(v1, v2), 0)
       # pickle.dump(v1,outF)
       v2 = pickle.load(inF, encoding='bytes')
-      self.assertTrue(ds.ComputeL1Norm(v1, v2) == 0)
-      self.assertTrue(v1.GetTotalVal() == v2.GetTotalVal())
-      self.assertTrue(v2.GetTotalVal() != 0)
+      self.assertEqual(ds.ComputeL1Norm(v1, v2), 0)
+      self.assertEqual(v1.GetTotalVal(), v2.GetTotalVal())
+      self.assertNotEqual(v2.GetTotalVal(), 0)
 
       v1 = ds.DiscreteValueVect(ds.DiscreteValueType.SIXTEENBITVALUE, 3)
       v1[0] = 2345
       v1[1] = 64578
       v1[2] = 34
       v2 = pickle.loads(pickle.dumps(v1))
-      self.assertTrue(ds.ComputeL1Norm(v1, v2) == 0)
+      self.assertEqual(ds.ComputeL1Norm(v1, v2), 0)
       # pickle.dump(v1,outF)
       v2 = pickle.load(inF, encoding='bytes')
-      self.assertTrue(ds.ComputeL1Norm(v1, v2) == 0)
-      self.assertTrue(v1.GetTotalVal() == v2.GetTotalVal())
-      self.assertTrue(v2.GetTotalVal() != 0)
+      self.assertEqual(ds.ComputeL1Norm(v1, v2), 0)
+      self.assertEqual(v1.GetTotalVal(), v2.GetTotalVal())
+      self.assertNotEqual(v2.GetTotalVal(), 0)
 
   def test4DiscreteVectOps(self):
     v1 = ds.DiscreteValueVect(ds.DiscreteValueType.TWOBITVALUE, 8)
     for i in range(4):
       v1[2 * i] = 2
-    self.assertTrue(v1.GetTotalVal() == 8)
+    self.assertEqual(v1.GetTotalVal(), 8)
     v2 = ds.DiscreteValueVect(ds.DiscreteValueType.TWOBITVALUE, 8)
     for i in range(4):
       v2[2 * i + 1] = 2
       v2[2 * i] = 1
-    self.assertTrue(v2.GetTotalVal() == 12)
+    self.assertEqual(v2.GetTotalVal(), 12)
 
     v3 = v1 | v2
-    self.assertTrue(len(v3) == len(v2))
-    self.assertTrue(v3.GetTotalVal() == 16)
+    self.assertEqual(len(v3), len(v2))
+    self.assertEqual(v3.GetTotalVal(), 16)
 
     v3 = v1 & v2
-    self.assertTrue(len(v3) == len(v2))
-    self.assertTrue(v3.GetTotalVal() == 4)
+    self.assertEqual(len(v3), len(v2))
+    self.assertEqual(v3.GetTotalVal(), 4)
 
     v4 = v1 + v2
-    self.assertTrue(len(v4) == len(v2))
-    self.assertTrue(v4.GetTotalVal() == 20)
+    self.assertEqual(len(v4), len(v2))
+    self.assertEqual(v4.GetTotalVal(), 20)
 
     v4 = v1 - v2
-    self.assertTrue(v4.GetTotalVal() == 4)
+    self.assertEqual(v4.GetTotalVal(), 4)
     v4 = v2 - v1
-    self.assertTrue(v4.GetTotalVal() == 8)
+    self.assertEqual(v4.GetTotalVal(), 8)
 
     v4 = v2
     v4 -= v1
-    self.assertTrue(v4.GetTotalVal() == 8)
+    self.assertEqual(v4.GetTotalVal(), 8)
     v4 -= v4
-    self.assertTrue(v4.GetTotalVal() == 0)
+    self.assertEqual(v4.GetTotalVal(), 0)
 
   def testIterator(self):
     """
@@ -236,9 +236,9 @@ class TestCase(unittest.TestCase):
     for i in range(15):
       v1[2 * i] = 1
     l1 = list(v1)
-    self.assertTrue(len(l1) == len(v1))
+    self.assertEqual(len(l1), len(v1))
     for i, v in enumerate(v1):
-      self.assertTrue(l1[i] == v)
+      self.assertEqual(l1[i], v)
     self.assertRaises(IndexError, lambda: v1[40])
 
   def test9ToNumpy(self):

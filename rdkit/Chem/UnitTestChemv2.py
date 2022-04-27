@@ -175,10 +175,10 @@ class TestCase(unittest.TestCase):
     m = Chem.MolFromSmiles('C[C@H]1CO1')
     AllChem.Compute2DCoords(m)
     Chem.WedgeMolBonds(m, m.GetConformer())
-    self.assertTrue(m.GetBondWithIdx(0).GetBondDir() == Chem.rdchem.BondDir.BEGINDASH)
-    self.assertTrue(m.GetBondWithIdx(1).GetBondDir() == Chem.rdchem.BondDir.NONE)
-    self.assertTrue(m.GetBondWithIdx(2).GetBondDir() == Chem.rdchem.BondDir.NONE)
-    self.assertTrue(m.GetBondWithIdx(3).GetBondDir() == Chem.rdchem.BondDir.NONE)
+    self.assertEqual(m.GetBondWithIdx(0).GetBondDir(), Chem.rdchem.BondDir.BEGINDASH)
+    self.assertEqual(m.GetBondWithIdx(1).GetBondDir(), Chem.rdchem.BondDir.NONE)
+    self.assertEqual(m.GetBondWithIdx(2).GetBondDir(), Chem.rdchem.BondDir.NONE)
+    self.assertEqual(m.GetBondWithIdx(3).GetBondDir(), Chem.rdchem.BondDir.NONE)
 
 
 if __name__ == '__main__':
