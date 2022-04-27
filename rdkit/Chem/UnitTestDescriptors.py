@@ -34,7 +34,7 @@ class TestCase(unittest.TestCase):
     smis = ('CCC', )
     for smi in smis:
       m = Chem.MolFromSmiles(smi)
-      self.assertTrue(m)
+      self.assertIsNotNone(m)
       for nm, fn in Descriptors._descList:
         try:
           _ = fn(m)
@@ -47,7 +47,7 @@ class TestCase(unittest.TestCase):
     smis = ('CC[Pu]', 'CC[*]')
     for smi in smis:
       m = Chem.MolFromSmiles(smi)
-      self.assertTrue(m)
+      self.assertIsNotNone(m)
       for nm, fn in Descriptors._descList:
         try:
           v = fn(m)
