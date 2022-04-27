@@ -18,18 +18,18 @@ class TestCase(unittest.TestCase):
     mol = Chem.MolFromSmiles('O')
     mol = Chem.AddHs(mol)
     ids = rdConformerParser.AddConformersFromAmberTrajectory(mol, fileN)
-    self.assertTrue(mol.GetNumConformers() == 1)
-    self.assertTrue(len(ids) == 1)
-    self.assertTrue(ids[0] == 0)
+    self.assertEqual(mol.GetNumConformers(), 1)
+    self.assertEqual(len(ids), 1)
+    self.assertEqual(ids[0], 0)
 
     fileN = os.path.join(RDConfig.RDBaseDir, 'Code', 'GraphMol', 'test_data', 'water_coords2.trx')
     ids = rdConformerParser.AddConformersFromAmberTrajectory(mol, fileN, clearConfs=True)
-    self.assertTrue(mol.GetNumConformers() == 2)
+    self.assertEqual(mol.GetNumConformers(), 2)
     ids = rdConformerParser.AddConformersFromAmberTrajectory(mol, fileN, clearConfs=False)
-    self.assertTrue(mol.GetNumConformers() == 4)
+    self.assertEqual(mol.GetNumConformers(), 4)
     ids = rdConformerParser.AddConformersFromAmberTrajectory(mol, fileN, numConfs=1,
                                                              clearConfs=True)
-    self.assertTrue(mol.GetNumConformers() == 1)
+    self.assertEqual(mol.GetNumConformers(), 1)
 
 
 if __name__ == '__main__':

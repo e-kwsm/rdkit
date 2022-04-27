@@ -42,10 +42,10 @@ EndPoints
     self.p.SetData(txt)
     fm1 = self.p.Parse()
 
-    self.assertTrue(fm1.GetNumFeatures() == 3)
+    self.assertEqual(fm1.GetNumFeatures(), 3)
     self.assertFalse(FeatMapUtils.MergeFeatPoints(fm1))
     self.assertTrue(FeatMapUtils.MergeFeatPoints(fm1, FeatMapUtils.MergeMetric.Distance))
-    self.assertTrue(fm1.GetNumFeatures() == 2)
+    self.assertEqual(fm1.GetNumFeatures(), 2)
     self.assertTrue(pteq(fm1.GetFeature(0).GetPos(), Point3D(1.05, 0, 0)))
     self.assertTrue(pteq(fm1.GetFeature(1).GetPos(), Point3D(3.0, 0, 0)))
 
@@ -60,9 +60,9 @@ EndPoints
     self.p.SetData(txt)
     fm1 = self.p.Parse()
 
-    self.assertTrue(fm1.GetNumFeatures() == 4)
+    self.assertEqual(fm1.GetNumFeatures(), 4)
     self.assertTrue(FeatMapUtils.MergeFeatPoints(fm1, FeatMapUtils.MergeMetric.Distance))
-    self.assertTrue(fm1.GetNumFeatures() == 2)
+    self.assertEqual(fm1.GetNumFeatures(), 2)
     self.assertTrue(pteq(fm1.GetFeature(0).GetPos(), Point3D(1.05, 0, 0)))
     self.assertTrue(pteq(fm1.GetFeature(1).GetPos(), Point3D(3.5, 0, 0)))
 
@@ -77,9 +77,9 @@ EndPoints
     self.p.SetData(txt)
     fm1 = self.p.Parse()
 
-    self.assertTrue(fm1.GetNumFeatures() == 4)
+    self.assertEqual(fm1.GetNumFeatures(), 4)
     self.assertTrue(FeatMapUtils.MergeFeatPoints(fm1, FeatMapUtils.MergeMetric.Distance))
-    self.assertTrue(fm1.GetNumFeatures() == 3)
+    self.assertEqual(fm1.GetNumFeatures(), 3)
     self.assertTrue(pteq(fm1.GetFeature(0).GetPos(), Point3D(1.00, 0, 0)))
     self.assertTrue(pteq(fm1.GetFeature(1).GetPos(), Point3D(1.25, 0, 0)))
     self.assertTrue(pteq(fm1.GetFeature(2).GetPos(), Point3D(4.0, 0, 0)))
@@ -95,33 +95,33 @@ EndPoints
     self.p.SetData(txt)
     fm1 = self.p.Parse()
 
-    self.assertTrue(fm1.GetNumFeatures() == 4)
+    self.assertEqual(fm1.GetNumFeatures(), 4)
     self.assertTrue(
       FeatMapUtils.MergeFeatPoints(fm1, FeatMapUtils.MergeMetric.Distance,
                                    mergeMethod=FeatMapUtils.MergeMethod.Average))
-    self.assertTrue(fm1.GetNumFeatures() == 3)
+    self.assertEqual(fm1.GetNumFeatures(), 3)
     self.assertTrue(pteq(fm1.GetFeature(0).GetPos(), Point3D(1.00, 0, 0)))
     self.assertTrue(pteq(fm1.GetFeature(1).GetPos(), Point3D(1.25, 0, 0)))
     self.assertTrue(pteq(fm1.GetFeature(2).GetPos(), Point3D(4.0, 0, 0)))
 
     self.p.SetData(txt)
     fm1 = self.p.Parse()
-    self.assertTrue(fm1.GetNumFeatures() == 4)
+    self.assertEqual(fm1.GetNumFeatures(), 4)
     self.assertTrue(
       FeatMapUtils.MergeFeatPoints(fm1, FeatMapUtils.MergeMetric.Distance,
                                    mergeMethod=FeatMapUtils.MergeMethod.WeightedAverage))
-    self.assertTrue(fm1.GetNumFeatures() == 3)
+    self.assertEqual(fm1.GetNumFeatures(), 3)
     self.assertTrue(pteq(fm1.GetFeature(0).GetPos(), Point3D(1.00, 0, 0)))
     self.assertTrue(pteq(fm1.GetFeature(1).GetPos(), Point3D(1.225, 0, 0)))
     self.assertTrue(pteq(fm1.GetFeature(2).GetPos(), Point3D(4.0, 0, 0)))
 
     self.p.SetData(txt)
     fm1 = self.p.Parse()
-    self.assertTrue(fm1.GetNumFeatures() == 4)
+    self.assertEqual(fm1.GetNumFeatures(), 4)
     self.assertTrue(
       FeatMapUtils.MergeFeatPoints(fm1, FeatMapUtils.MergeMetric.Distance,
                                    mergeMethod=FeatMapUtils.MergeMethod.UseLarger))
-    self.assertTrue(fm1.GetNumFeatures() == 3)
+    self.assertEqual(fm1.GetNumFeatures(), 3)
     self.assertTrue(pteq(fm1.GetFeature(0).GetPos(), Point3D(1.00, 0, 0)))
     self.assertTrue(pteq(fm1.GetFeature(1).GetPos(), Point3D(1.2, 0, 0)))
     self.assertTrue(pteq(fm1.GetFeature(2).GetPos(), Point3D(4.0, 0, 0)))
@@ -137,11 +137,11 @@ EndPoints
     """
     self.p.SetData(txt)
     fm1 = self.p.Parse()
-    self.assertTrue(fm1.GetNumFeatures() == 4)
+    self.assertEqual(fm1.GetNumFeatures(), 4)
     self.assertTrue(
       FeatMapUtils.MergeFeatPoints(fm1, FeatMapUtils.MergeMetric.Distance,
                                    mergeMethod=FeatMapUtils.MergeMethod.UseLarger))
-    self.assertTrue(fm1.GetNumFeatures() == 3)
+    self.assertEqual(fm1.GetNumFeatures(), 3)
     self.assertTrue(pteq(fm1.GetFeature(0).GetPos(), Point3D(1.00, 0, 0)))
     self.assertTrue(pteq(fm1.GetFeature(1).GetPos(), Point3D(1.2, 0, 0)))
     self.assertTrue(pteq(fm1.GetFeature(2).GetPos(), Point3D(4.0, 0, 0)))
@@ -162,22 +162,22 @@ EndPoints
     self.p.SetData(txt)
     fm1 = self.p.Parse()
 
-    self.assertTrue(fm1.GetNumFeatures() == 5)
+    self.assertEqual(fm1.GetNumFeatures(), 5)
     self.assertTrue(FeatMapUtils.MergeFeatPoints(fm1, FeatMapUtils.MergeMetric.Distance))
-    self.assertTrue(fm1.GetNumFeatures() == 4)
+    self.assertEqual(fm1.GetNumFeatures(), 4)
     self.assertTrue(pteq(fm1.GetFeature(0).GetPos(), Point3D(0.7, 0, 0)))
     self.assertTrue(pteq(fm1.GetFeature(1).GetPos(), Point3D(1.0, 0, 0)))
     self.assertTrue(pteq(fm1.GetFeature(2).GetPos(), Point3D(1.25, 0, 0)))
     self.assertTrue(pteq(fm1.GetFeature(3).GetPos(), Point3D(4.0, 0, 0)))
 
     self.assertTrue(FeatMapUtils.MergeFeatPoints(fm1, FeatMapUtils.MergeMetric.Distance))
-    self.assertTrue(fm1.GetNumFeatures() == 3)
+    self.assertEqual(fm1.GetNumFeatures(), 3)
     self.assertTrue(pteq(fm1.GetFeature(0).GetPos(), Point3D(0.7, 0, 0)))
     self.assertTrue(pteq(fm1.GetFeature(1).GetPos(), Point3D(1.125, 0, 0)))
     self.assertTrue(pteq(fm1.GetFeature(2).GetPos(), Point3D(4.0, 0, 0)))
 
     self.assertTrue(FeatMapUtils.MergeFeatPoints(fm1, FeatMapUtils.MergeMetric.Distance))
-    self.assertTrue(fm1.GetNumFeatures() == 2)
+    self.assertEqual(fm1.GetNumFeatures(), 2)
     self.assertTrue(pteq(fm1.GetFeature(0).GetPos(), Point3D(0.9125, 0, 0)))
     self.assertTrue(pteq(fm1.GetFeature(1).GetPos(), Point3D(4.0, 0, 0)))
 
@@ -192,11 +192,11 @@ EndPoints
     self.p.SetData(txt)
     fm1 = self.p.Parse()
 
-    self.assertTrue(fm1.GetNumFeatures() == 3)
+    self.assertEqual(fm1.GetNumFeatures(), 3)
     self.assertTrue(
       FeatMapUtils.MergeFeatPoints(fm1, FeatMapUtils.MergeMetric.Overlap,
                                    mergeMethod=FeatMapUtils.MergeMethod.Average))
-    self.assertTrue(fm1.GetNumFeatures() == 2)
+    self.assertEqual(fm1.GetNumFeatures(), 2)
     self.assertTrue(pteq(fm1.GetFeature(0).GetPos(), Point3D(1.1, 0, 0)))
     self.assertTrue(pteq(fm1.GetFeature(1).GetPos(), Point3D(4.0, 0, 0)))
 
@@ -211,11 +211,11 @@ EndPoints
     self.p.SetData(txt)
     fm1 = self.p.Parse()
 
-    self.assertTrue(fm1.GetNumFeatures() == 4)
+    self.assertEqual(fm1.GetNumFeatures(), 4)
     self.assertTrue(
       FeatMapUtils.MergeFeatPoints(fm1, FeatMapUtils.MergeMetric.Overlap,
                                    mergeMethod=FeatMapUtils.MergeMethod.Average))
-    self.assertTrue(fm1.GetNumFeatures() == 3)
+    self.assertEqual(fm1.GetNumFeatures(), 3)
     self.assertTrue(pteq(fm1.GetFeature(0).GetPos(), Point3D(1.15, 0, 0)))
     self.assertTrue(pteq(fm1.GetFeature(1).GetPos(), Point3D(1.1, 0, 0)))
     self.assertTrue(pteq(fm1.GetFeature(2).GetPos(), Point3D(4.0, 0, 0)))
@@ -231,11 +231,11 @@ EndPoints
     self.p.SetData(txt)
     fm1 = self.p.Parse()
 
-    self.assertTrue(fm1.GetNumFeatures() == 4)
+    self.assertEqual(fm1.GetNumFeatures(), 4)
     self.assertTrue(
       FeatMapUtils.MergeFeatPoints(fm1, FeatMapUtils.MergeMetric.Overlap,
                                    mergeMethod=FeatMapUtils.MergeMethod.Average))
-    self.assertTrue(fm1.GetNumFeatures() == 3)
+    self.assertEqual(fm1.GetNumFeatures(), 3)
     self.assertTrue(pteq(fm1.GetFeature(0).GetPos(), Point3D(1.0, 0, 0)))
     self.assertTrue(pteq(fm1.GetFeature(1).GetPos(), Point3D(1.4, 0, 0)))
     self.assertTrue(pteq(fm1.GetFeature(2).GetPos(), Point3D(4.0, 0, 0)))

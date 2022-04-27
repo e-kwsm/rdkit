@@ -15,10 +15,6 @@ from rdkit.Chem import AllChem, ChemicalFeatures
 from rdkit.Chem.Pharm3D import Pharmacophore
 
 
-def feq(n1, n2, tol=1e-5):
-  return abs(n1 - n2) <= tol
-
-
 class TestCase(unittest.TestCase):
 
   def setUp(self):
@@ -49,7 +45,7 @@ class TestCase(unittest.TestCase):
 
   def test1Basics(self):
     pcophore = self.pcophore
-    self.assertTrue(len(pcophore.getFeatures()) == 3)
+    self.assertEqual(len(pcophore.getFeatures()), 3)
     self.assertTrue(pcophore.getFeature(0))
     self.assertTrue(pcophore.getFeature(1))
     self.assertTrue(pcophore.getFeature(2))
@@ -62,11 +58,11 @@ class TestCase(unittest.TestCase):
     pcophore = self.pcophore
 
     pcophore.setUpperBound(0, 1, 3.0)
-    self.assertTrue(feq(pcophore.getUpperBound(0, 1), 3.0))
-    self.assertTrue(feq(pcophore.getUpperBound(1, 0), 3.0))
+    self.assertAlmostEqual(pcophore.getUpperBound(0, 1), 3.0, delta=1e-5)
+    self.assertAlmostEqual(pcophore.getUpperBound(1, 0), 3.0, delta=1e-5)
     pcophore.setUpperBound(1, 0, 5.0)
-    self.assertTrue(feq(pcophore.getUpperBound(0, 1), 5.0))
-    self.assertTrue(feq(pcophore.getUpperBound(1, 0), 5.0))
+    self.assertAlmostEqual(pcophore.getUpperBound(0, 1), 5.0, delta=1e-5)
+    self.assertAlmostEqual(pcophore.getUpperBound(1, 0), 5.0, delta=1e-5)
     self.assertRaises(IndexError, pcophore.setUpperBound, 0, 3, 2.0)
     self.assertRaises(ValueError, pcophore.setUpperBound, 0, 3, 2.0, checkBounds=True)
     self.assertRaises(IndexError, pcophore.setUpperBound, 3, 0, 2.0)
@@ -83,11 +79,11 @@ class TestCase(unittest.TestCase):
     self.assertRaises(ValueError, pcophore._checkBounds, 0, nfeatures)
 
     pcophore.setLowerBound(0, 1, 2.0)
-    self.assertTrue(feq(pcophore.getLowerBound(0, 1), 2.0))
-    self.assertTrue(feq(pcophore.getLowerBound(1, 0), 2.0))
+    self.assertAlmostEqual(pcophore.getLowerBound(0, 1), 2.0, delta=1e-5)
+    self.assertAlmostEqual(pcophore.getLowerBound(1, 0), 2.0, delta=1e-5)
     pcophore.setLowerBound(1, 0, 3.0)
-    self.assertTrue(feq(pcophore.getLowerBound(0, 1), 3.0))
-    self.assertTrue(feq(pcophore.getLowerBound(1, 0), 3.0))
+    self.assertAlmostEqual(pcophore.getLowerBound(0, 1), 3.0, delta=1e-5)
+    self.assertAlmostEqual(pcophore.getLowerBound(1, 0), 3.0, delta=1e-5)
     self.assertRaises(IndexError, pcophore.setLowerBound, 0, 3, 2.0)
     self.assertRaises(ValueError, pcophore.setLowerBound, 0, 3, 2.0, checkBounds=True)
     self.assertRaises(IndexError, pcophore.setLowerBound, 3, 0, 2.0)
@@ -97,22 +93,22 @@ class TestCase(unittest.TestCase):
     pcophore = self.pcophore
 
     pcophore.setUpperBound2D(0, 1, 3)
-    self.assertTrue(pcophore.getUpperBound2D(0, 1) == 3)
-    self.assertTrue(pcophore.getUpperBound2D(1, 0) == 3)
+    self.assertEqual(pcophore.getUpperBound2D(0, 1), 3)
+    self.assertEqual(pcophore.getUpperBound2D(1, 0), 3)
     pcophore.setUpperBound2D(1, 0, 5)
-    self.assertTrue(pcophore.getUpperBound2D(0, 1) == 5)
-    self.assertTrue(pcophore.getUpperBound2D(1, 0) == 5)
+    self.assertEqual(pcophore.getUpperBound2D(0, 1), 5)
+    self.assertEqual(pcophore.getUpperBound2D(1, 0), 5)
     self.assertRaises(IndexError, pcophore.setUpperBound2D, 0, 3, 2)
     self.assertRaises(ValueError, pcophore.setUpperBound2D, 0, 3, 2, checkBounds=True)
     self.assertRaises(IndexError, pcophore.setUpperBound2D, 3, 0, 2)
     self.assertRaises(ValueError, pcophore.setUpperBound2D, 3, 0, 2, checkBounds=True)
 
     pcophore.setLowerBound2D(0, 1, 3)
-    self.assertTrue(pcophore.getLowerBound2D(0, 1) == 3)
-    self.assertTrue(pcophore.getLowerBound2D(1, 0) == 3)
+    self.assertEqual(pcophore.getLowerBound2D(0, 1), 3)
+    self.assertEqual(pcophore.getLowerBound2D(1, 0), 3)
     pcophore.setLowerBound2D(1, 0, 5)
-    self.assertTrue(pcophore.getLowerBound2D(0, 1) == 5)
-    self.assertTrue(pcophore.getLowerBound2D(1, 0) == 5)
+    self.assertEqual(pcophore.getLowerBound2D(0, 1), 5)
+    self.assertEqual(pcophore.getLowerBound2D(1, 0), 5)
     self.assertRaises(IndexError, pcophore.setLowerBound2D, 0, 3, 2)
     self.assertRaises(ValueError, pcophore.setLowerBound2D, 0, 3, 2, checkBounds=True)
     self.assertRaises(IndexError, pcophore.setLowerBound2D, 3, 0, 2)
