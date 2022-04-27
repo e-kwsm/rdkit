@@ -311,19 +311,19 @@ class TestCase(unittest.TestCase):
     # test was for a seg fault
     groups = rxn.RunReactants([Chem.MolFromSmiles("c1ccccc1")])
     print(groups)
-    self.assertFalse(len(groups))
+    self.assertFalse(groups)
 
     # check normal sanitization
     rdChemReactions.SanitizeRxn(rxn)
     groups = rxn.RunReactants([Chem.MolFromSmiles("c1ccccc1")])
-    self.assertTrue(len(groups[0]))
+    self.assertTrue(groups[0])
 
     # now check adjustparams with ONLY aromatize if possible
     rxn = AllChem.ReactionFromRxnBlock(kekule_rxn)
     rdChemReactions.SanitizeRxn(rxn)
 
     groups = rxn.RunReactants([Chem.MolFromSmiles("c1ccccc1")])
-    self.assertTrue(len(groups[0]))
+    self.assertTrue(groups[0])
 
   def test_github_4162(self):
     rxn = rdChemReactions.ReactionFromSmarts("[C:1](=[O:2])-[OD1].[N!H0:3]>>[C:1](=[O:2])[N:3]")
