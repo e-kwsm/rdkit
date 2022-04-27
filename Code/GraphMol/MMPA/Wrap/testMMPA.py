@@ -20,12 +20,12 @@ class TestCase(unittest.TestCase):
     for frag in frags:
       self.assertEqual(len(frag), 2)
     frags = sorted(frags, key=natoms)
-    self.assertEqual(frags[0][0], None)
-    self.assertEqual(frags[1][0], None)
-    self.assertNotEqual(frags[2][0], None)
-    self.assertNotEqual(frags[0][1], None)
-    self.assertNotEqual(frags[1][1], None)
-    self.assertNotEqual(frags[2][1], None)
+    self.assertIsNone(frags[0][0])
+    self.assertIsNone(frags[1][0])
+    self.assertIsNotNone(frags[2][0])
+    self.assertIsNotNone(frags[0][1])
+    self.assertIsNotNone(frags[1][1])
+    self.assertIsNotNone(frags[2][1])
 
     self.assertEqual(frags[0][1].GetNumAtoms(), m.GetNumAtoms() + 2)
     self.assertEqual(frags[1][1].GetNumAtoms(), m.GetNumAtoms() + 2)
@@ -85,9 +85,9 @@ class TestCase(unittest.TestCase):
     #for frag in sorted(frags):
     #    print(frag)
     cores = set(x[0] for x in frags)
-    self.assertTrue('C([*:1])([*:2])[*:3]' in cores)
+    self.assertIn('C([*:1])([*:2])[*:3]', cores)
     # FIX: this needs to be investigated, it's not currently passing
-    #self.assertTrue('O=C(N[*:3])C([*:1])[*:2]' in cores)
+    #self.assertIn('O=C(N[*:3])C([*:1])[*:2]', cores)
     self.assertEqual(len(frags), 18)
     for frag in frags:
       self.assertEqual(len(frag), 2)
@@ -147,16 +147,18 @@ class TestCase(unittest.TestCase):
     try:
 
       frags1 = rdMMPA.FragmentMol(m, minCuts=1, maxCuts=0, maxCutBonds=21, resultsAsMols=False)
-      self.assertTrue(False)  # should not get here
     except ValueError as e:
       self.assertEqual(str(e), "supplied maxCuts is less than minCuts")
+    else:
+      self.fail()  # should not get here
 
     try:
 
       frags1 = rdMMPA.FragmentMol(m, minCuts=0, maxCuts=0, maxCutBonds=21, resultsAsMols=False)
-      self.assertTrue(False)  # should not get here
     except ValueError as e:
       self.assertEqual(str(e), "minCuts must be greater than 0")
+    else:
+      self.fail()  # should not get here
 
 
 if __name__ == "__main__":

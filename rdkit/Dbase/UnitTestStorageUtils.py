@@ -43,7 +43,7 @@ class TestCase(unittest.TestCase):
     self.assertFalse(failed)
 
   def test_ValidateRDId(self):
-    self.assertEqual(StorageUtils.ValidateRDId('RDCmpd-bogus-000-9'), False)
+    self.assertFalse(StorageUtils.ValidateRDId('RDCmpd-bogus-000-9'))
 
 
 if __name__ == '__main__':  # pragma: nocover

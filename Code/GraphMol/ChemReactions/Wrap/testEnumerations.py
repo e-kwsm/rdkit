@@ -193,9 +193,15 @@ class TestCase(unittest.TestCase):
       count += 1
 
     # each pair should be used roughly 10 times
-    self.assertTrue(9 <= np.median(list(pairs01.values())) <= 11)
-    self.assertTrue(9 <= np.median(list(pairs02.values())) <= 11)
-    self.assertTrue(9 <= np.median(list(pairs12.values())) <= 11)
+    m01 = np.median(list(pairs01.values()))
+    m02 = np.median(list(pairs02.values()))
+    m12 = np.median(list(pairs12.values()))
+    self.assertLessEqual(9, m01)
+    self.assertLessEqual(m01, 11)
+    self.assertLessEqual(9, m02)
+    self.assertLessEqual(m02, 11)
+    self.assertLessEqual(9, m12)
+    self.assertLessEqual(m12, 11)
 
     # now try 500
     pairs01 = {}
@@ -215,11 +221,17 @@ class TestCase(unittest.TestCase):
       count += 1
 
     # each pair should be used roughly 5 times
-    self.assertTrue(4 <= np.median(list(pairs01.values())) <= 6)
-    self.assertTrue(4 <= np.median(list(pairs02.values())) <= 6)
-    self.assertTrue(4 <= np.median(list(pairs12.values())) <= 6)
+    m01 = np.median(list(pairs01.values()))
+    m02 = np.median(list(pairs02.values()))
+    m12 = np.median(list(pairs12.values()))
+    self.assertLessEqual(4, m01)
+    self.assertLessEqual(m01, 6)
+    self.assertLessEqual(4, m02)
+    self.assertLessEqual(m02, 6)
+    self.assertLessEqual(4, m12)
+    self.assertLessEqual(m12, 6)
 
-    self.assertTrue("PAIRSTAT" in strategy.Stats())
+    self.assertIn("PAIRSTAT", strategy.Stats())
 
   def testEnumerateLibrary(self):
     log("testEnumerateLibrary")
@@ -243,7 +255,7 @@ class TestCase(unittest.TestCase):
     bbs = enumerator.GetReagents()
     for i in range(len(bbs)):
       for j in range(len(bbs[i])):
-        self.assertTrue(Chem.MolToSmiles(reagents[i][j]) == Chem.MolToSmiles(bbs[i][j]))
+        self.assertEqual(Chem.MolToSmiles(reagents[i][j]), Chem.MolToSmiles(bbs[i][j]))
 
     smiresults = [
       'C=CCNC(=S)NCc1ncc(Cl)cc1Br', 'CC=CCNC(=S)NCc1ncc(Cl)cc1Br', 'C=CCNC(=S)NCCc1ncc(Cl)cc1Br',
@@ -601,9 +613,9 @@ class TestCase(unittest.TestCase):
         self.assertTrue(bb.HasSubstructMatch(reagent))
 
     en = rdChemReactions.EnumerateLibrary(rxn, bbs)
-    self.assertTrue(len(en.GetReagents()[0]) == 2)
-    self.assertTrue(len(en.GetReagents()[1]) == 2)
-    self.assertTrue(len(en.GetReagents()[2]) == 2)
+    self.assertEqual(len(en.GetReagents()[0]), 2)
+    self.assertEqual(len(en.GetReagents()[1]), 2)
+    self.assertEqual(len(en.GetReagents()[2]), 2)
 
     #####################################################################################
     # Match only at rgroups (ChemDraw style)
@@ -616,9 +628,9 @@ class TestCase(unittest.TestCase):
 
     # Now try EnumerateLibrary
     en = rdChemReactions.EnumerateLibrary(rxn, bbs)
-    self.assertTrue(len(en.GetReagents()[0]) == 1)
-    self.assertTrue(len(en.GetReagents()[1]) == 2)
-    self.assertTrue(len(en.GetReagents()[2]) == 1)
+    self.assertEqual(len(en.GetReagents()[0]), 1)
+    self.assertEqual(len(en.GetReagents()[1]), 2)
+    self.assertEqual(len(en.GetReagents()[2]), 1)
 
     #####################################################################################
     # now set the removal options ot only make one product per reagent set
@@ -628,9 +640,9 @@ class TestCase(unittest.TestCase):
     opts = rdChemReactions.EnumerationParams()
     opts.reagentMaxMatchCount = 1
     en = rdChemReactions.EnumerateLibrary(rxn, bbs, params=opts)
-    self.assertTrue(len(en.GetReagents()[0]) == 1)
-    self.assertTrue(len(en.GetReagents()[1]) == 1)
-    self.assertTrue(len(en.GetReagents()[2]) == 1)
+    self.assertEqual(len(en.GetReagents()[0]), 1)
+    self.assertEqual(len(en.GetReagents()[1]), 1)
+    self.assertEqual(len(en.GetReagents()[2]), 1)
 
     #####################################################################################
     # now set the removal options ot only make one product per reagent set
@@ -641,9 +653,9 @@ class TestCase(unittest.TestCase):
     opts = rdChemReactions.EnumerationParams()
     opts.reagentMaxMatchCount = 1
     en = rdChemReactions.EnumerateLibrary(rxn, bbs, params=opts)
-    self.assertTrue(len(en.GetReagents()[0]) == 1)
-    self.assertTrue(len(en.GetReagents()[1]) == 1)
-    self.assertTrue(len(en.GetReagents()[2]) == 1)
+    self.assertEqual(len(en.GetReagents()[0]), 1)
+    self.assertEqual(len(en.GetReagents()[1]), 1)
+    self.assertEqual(len(en.GetReagents()[2]), 1)
 
 if __name__ == '__main__':
   unittest.main()

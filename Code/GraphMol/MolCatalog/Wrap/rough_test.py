@@ -22,22 +22,22 @@ class TestCase(unittest.TestCase):
       entry.SetMol(m)
       self.assertTrue(entry.GetMol())
       eSmi = Chem.MolToSmiles(entry.GetMol())
-      self.assertTrue(eSmi == Chem.MolToSmiles(m))
+      self.assertEqual(eSmi, Chem.MolToSmiles(m))
       entry.SetDescription(smi)
-      self.assertTrue(entry.GetDescription() == smi)
+      self.assertEqual(entry.GetDescription(), smi)
       es.append(entry)
 
     v = cat.AddEntry(es[0])
-    self.assertTrue(v == 0)
-    self.assertTrue(cat.GetNumEntries() == 1)
+    self.assertEqual(v, 0)
+    self.assertEqual(cat.GetNumEntries(), 1)
 
     v = cat.AddEntry(es[1])
-    self.assertTrue(v == 1)
-    self.assertTrue(cat.GetNumEntries() == 2)
+    self.assertEqual(v, 1)
+    self.assertEqual(cat.GetNumEntries(), 2)
 
     v = cat.AddEntry(es[2])
-    self.assertTrue(v == 2)
-    self.assertTrue(cat.GetNumEntries() == 3)
+    self.assertEqual(v, 2)
+    self.assertEqual(cat.GetNumEntries(), 3)
 
     cat.AddEdge(0, 1)
     cat.AddEdge(0, 2)
@@ -49,7 +49,7 @@ class TestCase(unittest.TestCase):
     cat = None
 
     cat = pickle.loads(d)
-    self.assertTrue(cat.GetNumEntries() == 3)
+    self.assertEqual(cat.GetNumEntries(), 3)
     cat = None
 
 

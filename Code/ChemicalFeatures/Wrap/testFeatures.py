@@ -43,35 +43,35 @@ class TestCase(unittest.TestCase):
     ffeat = ChemicalFeatures.FreeChemicalFeature()
     ffeat.SetId(123)
     pos = ffeat.GetId()
-    self.assertTrue(pos == 123)
+    self.assertEqual(pos, 123)
     ffeat.SetFamily("HBondDonor")
-    self.assertTrue(ffeat.GetFamily() == "HBondDonor")
+    self.assertEqual(ffeat.GetFamily(), "HBondDonor")
     ffeat.SetPos(geom.Point3D(1.0, 2.0, 3.0))
     pos = ffeat.GetPos()
     self.assertTrue(ptFeq(pos, geom.Point3D(1.0, 2.0, 3.0)))
     ffeat.SetType("HBondDonor1")
-    self.assertTrue(ffeat.GetType() == "HBondDonor1")
+    self.assertEqual(ffeat.GetType(), "HBondDonor1")
 
     ffeat = ChemicalFeatures.FreeChemicalFeature("HBondDonor", "HBondDonor1",
                                                  geom.Point3D(1.0, 2.0, 3.0))
-    self.assertTrue(ffeat.GetId() == -1)
-    self.assertTrue(ffeat.GetFamily() == "HBondDonor")
-    self.assertTrue(ffeat.GetType() == "HBondDonor1")
+    self.assertEqual(ffeat.GetId(), -1)
+    self.assertEqual(ffeat.GetFamily(), "HBondDonor")
+    self.assertEqual(ffeat.GetType(), "HBondDonor1")
 
     ffeat = ChemicalFeatures.FreeChemicalFeature("HBondDonor", "HBondDonor1",
                                                  geom.Point3D(1.0, 2.0, 3.0), id=123)
-    self.assertTrue(ffeat.GetId() == 123)
-    self.assertTrue(ffeat.GetFamily() == "HBondDonor")
-    self.assertTrue(ffeat.GetType() == "HBondDonor1")
+    self.assertEqual(ffeat.GetId(), 123)
+    self.assertEqual(ffeat.GetFamily(), "HBondDonor")
+    self.assertEqual(ffeat.GetType(), "HBondDonor1")
 
     pos = ffeat.GetPos()
     self.assertTrue(ptFeq(pos, geom.Point3D(1.0, 2.0, 3.0)))
 
     ffeat = ChemicalFeatures.FreeChemicalFeature(id=123, type="HBondDonor1", family="HBondDonor",
                                                  loc=geom.Point3D(1.0, 2.0, 3.0))
-    self.assertTrue(ffeat.GetId() == 123)
-    self.assertTrue(ffeat.GetFamily() == "HBondDonor")
-    self.assertTrue(ffeat.GetType() == "HBondDonor1")
+    self.assertEqual(ffeat.GetId(), 123)
+    self.assertEqual(ffeat.GetFamily(), "HBondDonor")
+    self.assertEqual(ffeat.GetType(), "HBondDonor1")
     pos = ffeat.GetPos()
     self.assertTrue(ptFeq(pos, geom.Point3D(1.0, 2.0, 3.0)))
 
@@ -80,9 +80,9 @@ class TestCase(unittest.TestCase):
                                                  geom.Point3D(1.0, 2.0, 3.0), 123)
     pkl = pickle.dumps(ffeat)
     ffeat2 = pickle.loads(pkl, encoding='bytes')
-    self.assertTrue(ffeat2.GetId() == ffeat.GetId())
-    self.assertTrue(ffeat2.GetFamily() == ffeat.GetFamily())
-    self.assertTrue(ffeat2.GetType() == ffeat.GetType())
+    self.assertEqual(ffeat2.GetId(), ffeat.GetId())
+    self.assertEqual(ffeat2.GetFamily(), ffeat.GetFamily())
+    self.assertEqual(ffeat2.GetType(), ffeat.GetType())
     self.assertTrue(ptFeq(ffeat2.GetPos(), ffeat.GetPos()))
 
     # Check that the old pickled versions have not been broken
@@ -93,8 +93,8 @@ class TestCase(unittest.TestCase):
     inF = io.BytesIO(buf)
     ffeat2 = pickle.load(inF, encoding='bytes')
     # this version (1.0) does not have an id in the byte stream
-    self.assertTrue(ffeat2.GetFamily() == ffeat.GetFamily())
-    self.assertTrue(ffeat2.GetType() == ffeat.GetType())
+    self.assertEqual(ffeat2.GetFamily(), ffeat.GetFamily())
+    self.assertEqual(ffeat2.GetType(), ffeat.GetType())
     self.assertTrue(ptFeq(ffeat2.GetPos(), ffeat.GetPos()))
 
     # Test the new version also has the id and works as expected
@@ -108,9 +108,9 @@ class TestCase(unittest.TestCase):
     inTF.close()
     inF = io.BytesIO(buf)
     ffeat2 = pickle.load(inF, encoding='bytes')
-    self.assertTrue(ffeat2.GetId() == ffeat.GetId())
-    self.assertTrue(ffeat2.GetFamily() == ffeat.GetFamily())
-    self.assertTrue(ffeat2.GetType() == ffeat.GetType())
+    self.assertEqual(ffeat2.GetId(), ffeat.GetId())
+    self.assertEqual(ffeat2.GetFamily(), ffeat.GetFamily())
+    self.assertEqual(ffeat2.GetType(), ffeat.GetType())
     self.assertTrue(ptFeq(ffeat2.GetPos(), ffeat.GetPos()))
 
 

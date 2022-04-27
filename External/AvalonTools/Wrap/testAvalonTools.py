@@ -193,9 +193,9 @@ class TestCase(unittest.TestCase):
   def test1(self):
     m1 = Chem.MolFromSmiles('c1cccnc1')
     smi = pyAvalonTools.GetCanonSmiles(m1)
-    self.assertTrue(smi == 'c1ccncc1')
+    self.assertEqual(smi, 'c1ccncc1')
     smi = pyAvalonTools.GetCanonSmiles('c1cccnc1', True)
-    self.assertTrue(smi == 'c1ccncc1')
+    self.assertEqual(smi, 'c1ccncc1')
 
   def test2(self):
     tgts = [
@@ -209,9 +209,9 @@ class TestCase(unittest.TestCase):
       d = f.read()
     mbs = d.split('$$$$\n')[:10]
     smis = [pyAvalonTools.GetCanonSmiles(mb, False) for mb in mbs]
-    self.assertTrue(smis == tgts)
+    self.assertEqual(smis, tgts)
     smis = [pyAvalonTools.GetCanonSmiles(smi, True) for smi in smis]
-    self.assertTrue(smis == tgts)
+    self.assertEqual(smis, tgts)
 
   def test3(self):
     bv = pyAvalonTools.GetAvalonFP(Chem.MolFromSmiles('c1ccccn1'))
@@ -226,7 +226,7 @@ class TestCase(unittest.TestCase):
 
     bv = pyAvalonTools.GetAvalonFP(Chem.MolFromSmiles('c1ncncc1'), nBits=1024)
     self.assertEqual(len(bv), 1024)
-    self.assertTrue(bv.GetNumOnBits() > 27)
+    self.assertGreater(bv.GetNumOnBits(), 27)
 
   def test4(self):
     bv = pyAvalonTools.GetAvalonFP('c1ccccn1', True)
@@ -239,7 +239,7 @@ class TestCase(unittest.TestCase):
     self.assertEqual(bv.GetNumOnBits(), 27)
     bv = pyAvalonTools.GetAvalonFP('c1ncncc1', True, nBits=1024)
     self.assertEqual(len(bv), 1024)
-    self.assertTrue(bv.GetNumOnBits() > 27)
+    self.assertGreater(bv.GetNumOnBits(), 27)
 
     bv = pyAvalonTools.GetAvalonFP(Chem.MolToMolBlock(Chem.MolFromSmiles('c1ccccn1')), False)
     self.assertEqual(len(bv), 512)
@@ -311,7 +311,7 @@ class TestCase(unittest.TestCase):
     (err, fixed_mol) = pyAvalonTools.CheckMoleculeString(smi_good, True)
     self.assertEqual(err, 0)
     self.assertNotEqual(fixed_mol, "")
-    self.assertTrue(fixed_mol.find('M  END') > 0)
+    self.assertGreater(fixed_mol.find('M  END'), 0)
 
     (err, fixed_mol) = pyAvalonTools.CheckMolecule(smi_bad, False)
     self.assertNotEqual(err, 0)
@@ -327,7 +327,7 @@ class TestCase(unittest.TestCase):
     try:
       (err, fixed_mol) = pyAvalonTools.CheckMoleculeString(atom_clash, False)
       log = pyAvalonTools.GetCheckMolLog()
-      self.assertTrue("of average bond length from bond" in log)
+      self.assertIn("of average bond length from bond", log)
 
       # make sure that the log is cleared for the next molecule
       (err, fixed_mol) = pyAvalonTools.CheckMoleculeString("c1ccccc1", True)

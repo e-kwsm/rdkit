@@ -30,7 +30,7 @@ class TestCase(unittest.TestCase):
       self.assertEqual(len(line), 5)
       id_ = int(line[0])
       m = Chem.MolFromSmiles(line[2])
-      self.assertTrue(m is not None)
+      self.assertIsNotNone(m)
       self.assertTrue(m.HasSubstructMatch(self.matchers[id_]))
       self.assertTrue(Chem.AddHs(m).HasSubstructMatch(self.matchers[id_]))
 

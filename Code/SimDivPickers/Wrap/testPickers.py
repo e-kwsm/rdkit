@@ -274,7 +274,7 @@ class TestCase(unittest.TestCase):
 
     ids, threshold = mmp.LazyBitVectorPickWithThreshold(fps, len(fps), 20, 0.91, seed=42)
     self.assertEqual(list(ids), [374, 720, 690, 339, 875, 842, 404, 725, 120, 385, 115, 868, 630])
-    self.assertTrue(threshold >= 0.91)
+    self.assertGreaterEqual(threshold, 0.91)
 
   def testBitVectorLeader1(self):
     # threshold tests
