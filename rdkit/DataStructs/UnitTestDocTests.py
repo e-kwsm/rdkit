@@ -36,7 +36,7 @@ class TestCaseAdditional(unittest.TestCase):
     bv2.SetBitsFromList((6, 8))
 
     vc = VectCollection.VectCollection()
-    self.assertEqual(vc.GetOrVect(), None)
+    self.assertIsNone(vc.GetOrVect())
     vc.AddVect(1, bv1)
     vc.AddVect(2, bv2)
 
@@ -47,7 +47,7 @@ class TestCaseAdditional(unittest.TestCase):
     self.assertEqual(onBits, set(vc.GetOnBits()))
 
     vc = VectCollection.VectCollection()
-    self.assertEqual(vc.GetOrVect(), None)
+    self.assertIsNone(vc.GetOrVect())
     vc.AddVect(1, bv1)
     vc.AddVect(2, bv2)
     for i in onBits:

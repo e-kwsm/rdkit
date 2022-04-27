@@ -50,7 +50,7 @@ class TestCase(unittest.TestCase):
                 '*c1cc(OC)c2ccccc2c1OC.*c1cncc(C)c1')
     expected = [_of(s) for s in expected]
     for smi in frags:
-      self.assertTrue(_of(smi) in expected)
+      self.assertIn(_of(smi), expected)
 
     # Test case for fragments that contain a cyclic and acyclic component
     mol = Chem.MolFromSmiles('c12c(CCC)cccc2cccc1')
@@ -60,7 +60,7 @@ class TestCase(unittest.TestCase):
     ]
     expected = [_of(s) for s in expected]
     for smi in frags:
-      self.assertTrue(_of(smi) in expected)
+      self.assertIn(_of(smi), expected)
 
   def testFragmentation2(self):
     mol = Chem.MolFromSmiles('COc1cc(CN2CCC(NC(=O)c3ccccc3)CC2)c(OC)c2ccccc12')
@@ -122,10 +122,10 @@ class TestCase(unittest.TestCase):
 
   def test_isValidRingCut(self):
     rdBase.DisableLog('rdApp.error')
-    self.assertEqual(FraggleSim.isValidRingCut(Chem.MolFromSmiles('*CCC*')), False)
-    self.assertEqual(FraggleSim.isValidRingCut(Chem.MolFromSmiles('*C1CC1*')), True)
-    self.assertEqual(FraggleSim.isValidRingCut(Chem.MolFromSmiles('*c1ccccc1*')), True)
-    self.assertEqual(FraggleSim.isValidRingCut(Chem.MolFromSmiles('*cccc*', sanitize=False)), False)
+    self.assertFalse(FraggleSim.isValidRingCut(Chem.MolFromSmiles('*CCC*')))
+    self.assertTrue(FraggleSim.isValidRingCut(Chem.MolFromSmiles('*C1CC1*')))
+    self.assertTrue(FraggleSim.isValidRingCut(Chem.MolFromSmiles('*c1ccccc1*')))
+    self.assertFalse(FraggleSim.isValidRingCut(Chem.MolFromSmiles('*cccc*', sanitize=False)))
     rdBase.EnableLog('rdApp.error')
 
   def test_GetFraggleSimilarity(self):

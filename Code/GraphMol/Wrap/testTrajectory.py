@@ -19,19 +19,11 @@ class TestCase(unittest.TestCase):
 
   def testSnapshot(self):
     s = Snapshot([])
-    e = False
-    try:
+    with self.assertRaises(Exception):
       s.GetPoint2D(12)
-    except Exception:
-      e = True
-    self.assertTrue(e)
     s = Snapshot([0.0, 0.0, 0.0])
-    e = False
-    try:
+    with self.assertRaises(Exception):
       s.GetPoint2D(0)
-    except Exception:
-      e = True
-    self.assertTrue(e)
 
   def testTrajectory2D(self):
     dim = 2
@@ -46,27 +38,14 @@ class TestCase(unittest.TestCase):
     for i in range(ns):
       traj.AddSnapshot(Snapshot(c, float(i)))
     self.assertEqual(len(traj), ns)
-    e = False
-    try:
+    with self.assertRaises(Exception):
       traj.GetSnapshot(ns)
-    except Exception:
-      e = True
-    self.assertTrue(e)
-    e = False
-    try:
+    with self.assertRaises(Exception):
       traj.GetSnapshot(0).GetPoint2D(np)
-    except Exception:
-      e = True
-    self.assertTrue(e)
     for i in range(np):
       self.assertAlmostEqual(traj.GetSnapshot(0).GetPoint2D(i).x, float(i * dim))
       self.assertAlmostEqual(traj.GetSnapshot(0).GetPoint2D(i).y, float(i * dim + 1))
-      e = False
-      try:
-        self.assertAlmostEqual(traj.GetSnapshot(0).GetPoint3D(i).z, 0.0)
-      except Exception:
-        e = True
-      self.assertFalse(e)
+      self.assertNotAlmostEqual(traj.GetSnapshot(0).GetPoint3D(i).z, 0.0)
     for i in range(ns):
       self.assertAlmostEqual(traj.GetSnapshot(i).GetEnergy(), float(i))
     traj.RemoveSnapshot(0)
@@ -97,29 +76,17 @@ class TestCase(unittest.TestCase):
     for i in range(ns):
       traj.AddSnapshot(Snapshot(c, float(i)))
     self.assertEqual(len(traj), ns)
-    e = False
-    try:
+    with self.assertRaises(Exception):
       traj.GetSnapshot(ns)
-    except Exception:
-      e = True
-    self.assertTrue(e)
-    e = False
-    try:
+    with self.assertRaises(Exception):
       traj.GetSnapshot(0).GetPoint2D(np)
-    except Exception:
-      e = True
-    self.assertTrue(e)
     for i in range(np):
       self.assertAlmostEqual(traj.GetSnapshot(0).GetPoint3D(i).x, float(i * dim))
       self.assertAlmostEqual(traj.GetSnapshot(0).GetPoint3D(i).y, float(i * dim + 1))
       self.assertAlmostEqual(traj.GetSnapshot(0).GetPoint3D(i).z, float(i * dim + 2))
       if (not i):
-        e = False
-        try:
+        with self.assertRaises(Exception):
           traj.GetSnapshot(0).GetPoint2D(i)
-        except Exception:
-          e = True
-        self.assertTrue(e)
     for i in range(ns):
       self.assertAlmostEqual(traj.GetSnapshot(i).GetEnergy(), float(i))
     traj.RemoveSnapshot(0)
@@ -141,27 +108,15 @@ class TestCase(unittest.TestCase):
     rdbase = os.environ['RDBASE']
     fName = os.path.join(rdbase, 'Code', 'GraphMol', 'test_data', 'water_coords_bad.trx')
     traj = Trajectory(2, 0)
-    ok = False
-    try:
+    with self.assertRaises(Exception):
       ReadAmberTrajectory(fName, traj)
-    except Exception:
-      ok = True
-    self.assertTrue(ok)
     traj = Trajectory(3, 3)
-    ok = False
-    try:
+    with self.assertRaises(Exception):
       ReadAmberTrajectory(fName, traj)
-    except Exception:
-      ok = True
-    self.assertTrue(ok)
     fName = os.path.join(rdbase, 'Code', 'GraphMol', 'test_data', 'water_coords_bad2.trx')
-    ok = False
-    try:
+    with self.assertRaises(Exception):
       traj = Trajectory(3, 3)
       ReadAmberTrajectory(fName, traj)
-    except Exception:
-      ok = True
-    self.assertTrue(ok)
     fName = os.path.join(rdbase, 'Code', 'GraphMol', 'test_data', 'water_coords.trx')
     traj = Trajectory(3, 3)
     ReadAmberTrajectory(fName, traj)
@@ -223,27 +178,15 @@ class TestCase(unittest.TestCase):
     rdbase = os.environ['RDBASE']
     fName = os.path.join(rdbase, 'Code', 'GraphMol', 'test_data', 'water_coords_bad.trc')
     traj = Trajectory(2, 0)
-    ok = False
-    try:
+    with self.assertRaises(Exception):
       ReadGromosTrajectory(fName, traj)
-    except Exception:
-      ok = True
-    self.assertTrue(ok)
     traj = Trajectory(3, 3)
-    ok = False
-    try:
+    with self.assertRaises(Exception):
       ReadGromosTrajectory(fName, traj)
-    except Exception:
-      ok = True
-    self.assertTrue(ok)
     fName = os.path.join(rdbase, 'Code', 'GraphMol', 'test_data', 'water_coords_bad2.trc')
-    ok = False
-    try:
+    with self.assertRaises(Exception):
       traj = Trajectory(3, 3)
       ReadGromosTrajectory(fName, traj)
-    except Exception:
-      ok = True
-    self.assertTrue(ok)
     fName = os.path.join(rdbase, 'Code', 'GraphMol', 'test_data', 'water_coords.trc')
     traj = Trajectory(3, 3)
     ReadGromosTrajectory(fName, traj)
@@ -431,12 +374,8 @@ class TestCase(unittest.TestCase):
     n2 = mol.GetNumConformers()
     self.assertEqual(n1, n2)
     # GetSnapshot should raise exception after Clear()
-    e = False
-    try:
+    with self.assertRaises(Exception):
       traj.GetSnapshot(0)
-    except Exception:
-      e = True
-    self.assertTrue(e)
 
   def testAddConformersFromAmberTrajectory(self):
     mol = Chem.MolFromSmiles('CCC')
@@ -452,12 +391,8 @@ class TestCase(unittest.TestCase):
       self.assertAlmostEqual(mol.GetConformer(i).GetAtomPosition(0).x, 0.1941767)
       self.assertAlmostEqual(mol.GetConformer(i).GetAtomPosition(2).z, -0.4088006)
     mol.RemoveAllConformers()
-    e = False
-    try:
+    with self.assertRaises(Exception):
       traj.AddConformersToMol(mol, 1)
-    except Exception:
-      e = True
-    self.assertTrue(e)
     self.assertEqual(mol.GetNumConformers(), 0)
     fName = os.path.join(rdbase, 'Code', 'GraphMol', 'test_data', 'water_coords2.trx')
     traj = Trajectory(3, mol.GetNumAtoms())
@@ -485,12 +420,8 @@ class TestCase(unittest.TestCase):
       self.assertAlmostEqual(mol.GetConformer(i).GetAtomPosition(0).x, 1.941767)
       self.assertAlmostEqual(mol.GetConformer(i).GetAtomPosition(2).z, -4.088006)
     mol.RemoveAllConformers()
-    e = False
-    try:
+    with self.assertRaises(Exception):
       traj.AddConformersToMol(mol, 1)
-    except Exception:
-      e = True
-    self.assertTrue(e)
     self.assertEqual(mol.GetNumConformers(), 0)
     fName = os.path.join(rdbase, 'Code', 'GraphMol', 'test_data', 'water_coords2.trc')
     traj = Trajectory(3, mol.GetNumAtoms())

@@ -19,7 +19,7 @@ class TestCase(unittest.TestCase):
       mol = next(smiSup)
       if (mol):
         i += 1
-    self.assertTrue(i == 200)
+    self.assertEqual(i, 200)
     fileN = os.path.join(RDConfig.RDBaseDir, 'Code', 'GraphMol', 'FileParsers', 'test_data',
                          'fewSmi.csv')
     # fileN = "../FileParsers/test_data/fewSmi.csv"
@@ -41,9 +41,9 @@ class TestCase(unittest.TestCase):
         confusedProps.append(prop)
         confusedNames.append(name)
         i += 1
-    self.assertTrue(i == 10)
-    self.assertTrue(sorted(confusedNames) == sorted(names))
-    self.assertTrue(sorted(confusedProps) == sorted(props))
+    self.assertEqual(i, 10)
+    self.assertEqual(sorted(confusedNames), sorted(names))
+    self.assertEqual(sorted(confusedProps), sorted(props))
 
     # context manager
     confusedNames = []
@@ -60,9 +60,9 @@ class TestCase(unittest.TestCase):
           confusedProps.append(prop)
           confusedNames.append(name)
           i += 1
-      self.assertTrue(i == 10)
-      self.assertTrue(sorted(confusedNames) == sorted(names))
-      self.assertTrue(sorted(confusedProps) == sorted(props))
+      self.assertEqual(i, 10)
+      self.assertEqual(sorted(confusedNames), sorted(names))
+      self.assertEqual(sorted(confusedProps), sorted(props))
 
   def testMultiSDMolSupplier(self):
     fileN = os.path.join(RDConfig.RDBaseDir, 'Code', 'GraphMol', 'FileParsers', 'test_data',
@@ -79,8 +79,8 @@ class TestCase(unittest.TestCase):
       if mol is not None:
         confusedMolNames.append(mol.GetProp("_Name"))
         i += 1
-    self.assertTrue(len(molNames) == i)
-    self.assertTrue(sorted(confusedMolNames) == sorted(molNames))
+    self.assertEqual(len(molNames), i)
+    self.assertEqual(sorted(confusedMolNames), sorted(molNames))
 
     # context manager
     confusedMolNames = []
@@ -90,8 +90,8 @@ class TestCase(unittest.TestCase):
         if mol is not None:
           confusedMolNames.append(mol.GetProp("_Name"))
           i += 1
-    self.assertTrue(len(molNames) == i)
-    self.assertTrue(sorted(confusedMolNames) == sorted(molNames))
+    self.assertEqual(len(molNames), i)
+    self.assertEqual(sorted(confusedMolNames), sorted(molNames))
 
   # NOTE these are disabled until we rewrite the code to construct a
   #      MultithreadedSDMolSupplier from a python stream
@@ -114,8 +114,8 @@ class TestCase(unittest.TestCase):
         if (mol):
           confusedMolNames.append(mol.GetProp("_Name"))
           i += 1
-      self.assertTrue(len(molNames) == i)
-      self.assertTrue(sorted(confusedMolNames) == sorted(molNames))
+      self.assertEqual(len(molNames), i)
+      self.assertEqual(sorted(confusedMolNames), sorted(molNames))
     #   print("done!",file=sys.stderr);sys.stderr.flush()
     # try opening with streambuf
     fileN = os.path.join(RDConfig.RDBaseDir, 'Code', 'GraphMol', 'FileParsers', 'test_data',
@@ -131,8 +131,8 @@ class TestCase(unittest.TestCase):
         if (mol):
           confusedMolNames.append(mol.GetProp("_Name"))
           i += 1
-      self.assertTrue(len(molNames) == i)
-      self.assertTrue(sorted(confusedMolNames) == sorted(molNames))
+      self.assertEqual(len(molNames), i)
+      self.assertEqual(sorted(confusedMolNames), sorted(molNames))
 
   def testMultiSmiMolSupplierThrow(self):
     fileN = os.path.join(RDConfig.RDBaseDir, 'Code', 'GraphMol', 'FileParsers', 'test_data',

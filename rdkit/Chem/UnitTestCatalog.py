@@ -206,7 +206,7 @@ class TestCase(unittest.TestCase):
     entry = bitInfo[1]
     assert int(entry[0]) in (2, 6)
     txt = cat.GetBitDescription(int(entry[0]))
-    self.assertTrue(txt in ('C<-O>CC', 'C<-O>=C'), txt)
+    self.assertIn(txt, ('C<-O>CC', 'C<-O>=C'), txt)
     assert feq(entry[1], 0.1611)
 
     entry = bitInfo[6]
