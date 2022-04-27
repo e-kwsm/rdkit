@@ -50,7 +50,7 @@ class TestCase(unittest.TestCase):
     prbPts[1, 1] = 3.0
 
     res = rdAlg.GetAlignmentTransform(refPts, prbPts)
-    self.assertTrue(feq(res[0], 0.0))
+    self.assertAlmostEqual(res[0], 0.0, delta=1e-4)
     refLst = list(refPts)
     cnt = 0
     for item in list(prbPts):
@@ -61,18 +61,18 @@ class TestCase(unittest.TestCase):
     refPts = ((0.0, 0.0, 0.0), (1.0, 0.0, 0.0))
     prbPts = ((2.0, 2.0, 0.0), (2.0, 3.0, 0.0))
     res = rdAlg.GetAlignmentTransform(refPts, prbPts)
-    self.assertTrue(feq(res[0], 0.0))
+    self.assertAlmostEqual(res[0], 0.0, delta=1e-4)
 
     refPts = [[0.0, 0.0, 0.0], [1.0, 0.0, 0.0]]
     prbPts = [[2.0, 2.0, 0.0], [2.0, 3.0, 0.0]]
     res = rdAlg.GetAlignmentTransform(refPts, prbPts)
-    self.assertTrue(feq(res[0], 0.0))
+    self.assertAlmostEqual(res[0], 0.0, delta=1e-4)
 
     # mix it up
     refPts = np.zeros((2, 3), float)
     refPts[1, 0] = 1.0
     res = rdAlg.GetAlignmentTransform(refPts, prbPts)
-    self.assertTrue(feq(res[0], 0.0))
+    self.assertAlmostEqual(res[0], 0.0, delta=1e-4)
 
   def test2Weights(self):
     refPts = np.array([[-math.cos(math.pi / 6), -math.sin(math.pi / 6), 0.0],
@@ -82,7 +82,7 @@ class TestCase(unittest.TestCase):
       [[-2 * math.sin(math.pi / 6) + 3.0, 2 * math.cos(math.pi / 6), 4.0],
        [-2 * math.sin(math.pi / 6) + 3.0, -2 * math.cos(math.pi / 6), 4.0], [5.0, 0.0, 4.0]], float)
     res = rdAlg.GetAlignmentTransform(refPts, prbPts)
-    self.assertTrue(feq(res[0], 3.0))
+    self.assertAlmostEqual(res[0], 3.0, delta=1e-4)
     target = [[-1.732, -1., 0.], [1.732, -1., 0.], [0., 2., 0.]]
     cnt = 0
     for item in list(prbPts):
@@ -91,7 +91,7 @@ class TestCase(unittest.TestCase):
 
     weights = np.array([1.0, 1.0, 2.0], float)
     res = rdAlg.GetAlignmentTransform(refPts, prbPts, weights)
-    self.assertTrue(feq(res[0], 3.75))
+    self.assertAlmostEqual(res[0], 3.75, delta=1e-4)
     cnt = 0
     target = [[-1.732, -1.25, 0.], [1.732, -1.25, 0.], [0., 1.75, 0.]]
     for item in list(prbPts):
@@ -99,11 +99,11 @@ class TestCase(unittest.TestCase):
       cnt += 1
     weights = [1.0, 1.0, 2.0]
     res = rdAlg.GetAlignmentTransform(refPts, prbPts, weights)
-    self.assertTrue(feq(res[0], 3.75))
+    self.assertAlmostEqual(res[0], 3.75, delta=1e-4)
 
     weights = [1.0, 2.0, 2.0]
     res = rdAlg.GetAlignmentTransform(refPts, prbPts, weights)
-    self.assertTrue(feq(res[0], 4.8))
+    self.assertAlmostEqual(res[0], 4.8, delta=1e-4)
 
   def test3tetra(self):
     refPts = np.array([[0.0, 0.0, 0.0], [1.0, 0.0, 0.0], [0.0, 1.0, 0.0], [0.0, 0.0, 1.0]], float)
@@ -112,22 +112,22 @@ class TestCase(unittest.TestCase):
 
     prbPts = np.array([[2.0, 2.0, 3.0], [3.0, 2.0, 3.0], [2.0, 3.0, 3.0], [2.0, 2.0, 4.0]], float)
     res = rdAlg.GetAlignmentTransform(refPts, prbPts)
-    self.assertTrue(feq(res[0], 0.0))
+    self.assertAlmostEqual(res[0], 0.0, delta=1e-4)
 
     wts = [1.0, 1.0, 1.0]
     self.assertRaises(ValueError, lambda: rdAlg.GetAlignmentTransform(refPts, prbPts, wts))
 
     wts = [1.0, 1.0, 1.0, 1.0]
     res = rdAlg.GetAlignmentTransform(refPts, prbPts, wts)
-    self.assertTrue(feq(res[0], 0.0))
+    self.assertAlmostEqual(res[0], 0.0, delta=1e-4)
 
     # test reflection
     prbPts = np.array([[2.0, 2.0, 3.0], [3.0, 2.0, 3.0], [2.0, 2.0, 4.0], [2.0, 3.0, 3.0]], float)
     res = rdAlg.GetAlignmentTransform(refPts, prbPts, wts)
-    self.assertTrue(feq(res[0], 1.0))
+    self.assertAlmostEqual(res[0], 1.0, delta=1e-4)
 
     res = rdAlg.GetAlignmentTransform(refPts, prbPts, wts, 1)
-    self.assertTrue(feq(res[0], 0.0))
+    self.assertAlmostEqual(res[0], 0.0, delta=1e-4)
     cnt = 0
     refLst = list(refPts)
     for item in list(prbPts):
@@ -149,7 +149,7 @@ class TestCase(unittest.TestCase):
     )
 
     res = rdAlg.GetAlignmentTransform(refPts, prbPts)
-    self.assertTrue(feq(res[0], 0.0))
+    self.assertAlmostEqual(res[0], 0.0, delta=1e-4)
 
   def test5errorHandling(self):
     refPts = (
