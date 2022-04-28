@@ -7,8 +7,8 @@ from rdkit.Chem.EState import EStateIndices
 from rdkit.Chem.EState import AtomTypes 
    
 import time
-print rdBase.rdkitVersion
-print rdBase.boostVersion
+print(rdBase.rdkitVersion)
+print(rdBase.boostVersion)
 
 def getEState(mol):
 
@@ -26,7 +26,7 @@ def make3D(mol, steps = 50):
     if success == -1: # Failed
         success = AllChem.EmbedMolecule(mol, useRandomCoords = True)
         if success == -1:
-            raise Error, "Embedding failed!"
+            raise Exception("Embedding failed!")
     mol = localopt(mol, steps)
     return mol
 
@@ -52,7 +52,7 @@ def generateALL():
         thefile.write("\n")
 
     end = time.time()
-    print end - start
+    print(end - start)
 
 thefile = open('testSMWHIM.txt', 'w')
 writer = Chem.SDWriter('3Dsmallmol.sdf')
@@ -61,14 +61,14 @@ for smi in A:
     m = Chem.MolFromSmiles(smi)
     m=localopt(m,100)
     #r=get3D(m,True)
-    print smi
-    print "---------"
+    print(smi)
+    print("---------")
     r=rdMD.CalcWHIM(m)
-    print "Ei:"+str(r[0])+ "," + str(r[1]) + "," + str(r[2])+ "\n"
-    print "Gi:"+str(r[5])+ "," + str(r[6]) + "," + str(r[7])+ "\n"
-    print "SI:"+str(rdMD.CalcSpherocityIndex(m))
-    print "AS:"+str(rdMD.CalcAsphericity(m))
-    print "EX:"+str(rdMD.CalcEccentricity(m))
+    print("Ei:"+str(r[0])+ "," + str(r[1]) + "," + str(r[2])+ "\n")
+    print("Gi:"+str(r[5])+ "," + str(r[6]) + "," + str(r[7])+ "\n")
+    print("SI:"+str(rdMD.CalcSpherocityIndex(m)))
+    print("AS:"+str(rdMD.CalcAsphericity(m)))
+    print("EX:"+str(rdMD.CalcEccentricity(m)))
     for item in r:
         thefile.write("%.3f," % item)
     thefile.write("\n")
@@ -93,4 +93,4 @@ for smi in B:
 
 
 A="G1w,G2w,G3w,Gw"
-print dir(rdMD)
+print(dir(rdMD))
