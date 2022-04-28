@@ -1629,9 +1629,9 @@ class VerboseCachingTargetsMatcher(object):
     return True
 
   def report(self):
-    print >> sys.stderr, "%d tests of %d unique SMARTS, cache: %d True %d False, search: %d True %d False (%d substructure tests)" % (
+    print("%d tests of %d unique SMARTS, cache: %d True %d False, search: %d True %d False (%d substructure tests)" % (
       self.num_lookups, len(self.cache), self.num_cached_true, self.num_cached_false,
-      self.num_search_true, self.num_search_false, self.num_matches)
+      self.num_search_true, self.num_search_false, self.num_matches), file=sys.stderr)
 
 
   ##### Different maximization algorithms ######
@@ -1712,7 +1712,7 @@ class MCSResult(object):
     self.smarts = smarts
     self.completed = completed
 
-  def __nonzero__(self):
+  def __bool__(self):
     return self.smarts is not None
 
 
@@ -2085,8 +2085,8 @@ class VerboseHeapOps(object):
     self.report()
 
   def report(self):
-    print >> sys.stderr, "  %d subgraphs enumerated, %d processed" % (self.num_seeds_added,
-                                                                      self.num_seeds_processed)
+    print("  %d subgraphs enumerated, %d processed" % (self.num_seeds_added,
+                                                                      self.num_seeds_processed), file=sys.stderr)
 
 
 def compute_mcs(fragmented_mols, typed_mols, minNumAtoms, threshold_count=None,
@@ -2722,7 +2722,7 @@ def main(args=None):
     if not any(molno in range_ for range_ in args.select):
       continue
     if mol is None:
-      print >> sys.stderr, "Skipping unreadable structure #%d" % (molno + 1, )
+      print("Skipping unreadable structure #%d" % (molno + 1, ), file=sys.stderr)
       continue
     if atom_class_tag is not None:
       try:
@@ -2741,7 +2741,7 @@ def main(args=None):
   times = {"load": time.perf_counter() - t1}
 
   if args.verbosity:
-    print >> sys.stderr, "Loaded", len(structures), "structures from", filename, "    "
+    print("Loaded", len(structures), "structures from", filename, "    ", file=sys.stderr)
 
   if len(structures) < 2:
     raise SystemExit("Input file %r must contain at least two structures" % (filename, ))
@@ -2816,7 +2816,7 @@ def main(args=None):
     outfile.close()
 
   if args.times or args.verbosity:
-    print >> sys.stderr, msg_format % times
+    print(msg_format % times, file=sys.stderr)
 
 
 if __name__ == "__main__":
