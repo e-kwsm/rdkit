@@ -91,8 +91,9 @@ class RDKIT_MOLALIGN_EXPORT O3AConstraintVect {
  private:
   unsigned int d_count{0};
   std::vector<boost::shared_ptr<O3AConstraint>> d_o3aConstraintVect;
-  static bool d_compareO3AConstraint(boost::shared_ptr<O3AConstraint> a,
-                                     boost::shared_ptr<O3AConstraint> b) {
+  static bool d_compareO3AConstraint(
+      const boost::shared_ptr<O3AConstraint> &a,
+      const boost::shared_ptr<O3AConstraint> &b) {
     return (
         (a->d_prbIdx != b->d_prbIdx)
             ? (a->d_prbIdx < b->d_prbIdx)
@@ -249,8 +250,8 @@ class RDKIT_MOLALIGN_EXPORT SDM {
   const Conformer *d_refConf;
   O3AConstraintVect *d_o3aConstraintVect;
   std::vector<boost::shared_ptr<SDMElement>> d_SDMPtrVect;
-  static bool compareSDMScore(boost::shared_ptr<SDMElement> a,
-                              boost::shared_ptr<SDMElement> b) {
+  static bool compareSDMScore(const boost::shared_ptr<SDMElement> &a,
+                              const boost::shared_ptr<SDMElement> &b) {
     return ((a->score != b->score)
                 ? (a->score < b->score)
                 : ((a->cost != b->cost)
@@ -258,8 +259,8 @@ class RDKIT_MOLALIGN_EXPORT SDM {
                        : ((a->idx[0] != b->idx[0]) ? (a->idx[0] < b->idx[0])
                                                    : (a->idx[1] < b->idx[1]))));
   }
-  static bool compareSDMDist(boost::shared_ptr<SDMElement> a,
-                             boost::shared_ptr<SDMElement> b) {
+  static bool compareSDMDist(const boost::shared_ptr<SDMElement> &a,
+                             const boost::shared_ptr<SDMElement> &b) {
     double aWeight = (a->o3aConstraint ? a->o3aConstraint->getWeight() : 0.0);
     double bWeight = (b->o3aConstraint ? b->o3aConstraint->getWeight() : 0.0);
     return ((aWeight != bWeight)

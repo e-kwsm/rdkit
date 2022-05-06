@@ -34,12 +34,12 @@ class TautomerCatalogParams;
 // typedef std::vector<ROMol*, std::string, std::string> tautomerTransform;
 
 RDKIT_MOLSTANDARDIZE_EXPORT std::vector<Bond::BondType> stringToBondType(
-    std::string bond_str);
+    const std::string &bond_str);
 RDKIT_MOLSTANDARDIZE_EXPORT std::vector<int> stringToCharge(
-    std::string charge_str);
+    const std::string &charge_str);
 
 RDKIT_MOLSTANDARDIZE_EXPORT std::vector<TautomerTransform> readTautomers(
-    std::string fileName);
+    const std::string &fileName);
 RDKIT_MOLSTANDARDIZE_EXPORT std::vector<TautomerTransform> readTautomers(
     std::istream &inStream, int nToRead = -1);
 RDKIT_MOLSTANDARDIZE_EXPORT std::vector<TautomerTransform> readTautomers(

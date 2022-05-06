@@ -3324,7 +3324,7 @@ TEST_CASE(
   }
 }
 
-void testStereoValidationFromMol(std::string molBlock,
+void testStereoValidationFromMol(const std::string &molBlock,
                                  std::string expectedSmiles, bool legacyFlag,
                                  bool canonicalFlag = false) {
   UseLegacyStereoPerceptionFixture reset_stereo_perception(legacyFlag);

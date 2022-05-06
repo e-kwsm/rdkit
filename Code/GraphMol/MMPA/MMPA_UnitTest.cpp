@@ -145,7 +145,7 @@ std::string createCanonicalFromSmiles(const char *smiles) {
   return res;
 }
 
-std::string createCanonicalFromSmiles(std::string smiles) {
+std::string createCanonicalFromSmiles(const std::string &smiles) {
   return createCanonicalFromSmiles(smiles.c_str());
 }
 
