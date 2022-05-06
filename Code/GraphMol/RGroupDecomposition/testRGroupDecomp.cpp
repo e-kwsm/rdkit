@@ -944,7 +944,7 @@ TEST_CASE("testRowColumnAlignmentProblem", "[RGroupDecomp]") {
   std::vector<std::string> csmiles = {"c1c([*:1])cncn1", "c1c([*:1])cccn1"};
   std::vector<ROMOL_SPTR> cores;
   cores.reserve(csmiles.size());
-  for (auto smi : csmiles) {
+  for (const auto &smi : csmiles) {
     cores.emplace_back(SmilesToMol(smi));
   }
 
@@ -952,7 +952,7 @@ TEST_CASE("testRowColumnAlignmentProblem", "[RGroupDecomp]") {
                                       "c1c(Cl)cccn1"};
   std::vector<std::unique_ptr<RWMol>> mols;
   mols.reserve(msmiles.size());
-  for (auto smi : msmiles) {
+  for (const auto &smi : msmiles) {
     mols.emplace_back(SmilesToMol(smi));
   }
 
@@ -1220,7 +1220,7 @@ Cn1cnc2cc(Oc3cc(N4CCN(Cc5ccccc5-c5ccc(Cl)cc5)CC4)ccc3C(=O)NS(=O)(=O)c3ccc(NCCCN4
     bool ok = false;
     int ndone = -1;
     try {
-      for (auto m : ms) {
+      for (const auto &m : ms) {
         decomp.add(*m);
         ++ndone;
       }
