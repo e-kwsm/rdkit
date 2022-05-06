@@ -915,7 +915,7 @@ class MarvinCMLWriter {
       MarvinRectangle molRect(mol->atoms);
       bool foundRow = false;
       for (std::vector<MarvinRectangle> &row : rowsOfRectangles) {
-        for (MarvinRectangle rect : row) {
+        for (const MarvinRectangle &rect : row) {
           if (molRect.overlapsVertically(rect)) {
             foundRow = true;
             row.push_back(molRect);

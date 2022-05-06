@@ -295,10 +295,10 @@ void getBondLabels(const ROMol &mol1, const ROMol &mol2,
   // This results in loss of information, but that information is not currently
   // used anywhere.
   std::set<std::string> allLabels;
-  for (auto bl : tmpBondLabels1) {
+  for (const auto &bl : tmpBondLabels1) {
     allLabels.insert(bl);
   }
-  for (auto bl : tmpBondLabels2) {
+  for (const auto &bl : tmpBondLabels2) {
     allLabels.insert(bl);
   }
   auto recodeBondLabels = [&](std::vector<std::string> &strBondLabels,
