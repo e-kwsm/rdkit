@@ -419,7 +419,7 @@ bool isMoleculeAgentOfReaction(const ChemicalReaction &rxn, const ROMol &mol,
         "initReactantMatchers() must be called first");
   }
   which = 0;
-  for (auto templ : rxn.getAgents()) {
+  for (const auto &templ : rxn.getAgents()) {
     if (templ->getNumHeavyAtoms() != mol.getNumHeavyAtoms()) {
       ++which;
       continue;
