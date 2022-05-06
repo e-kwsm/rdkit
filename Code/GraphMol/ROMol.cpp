@@ -141,12 +141,12 @@ void ROMol::initFromOther(const ROMol &other, bool quickCopy, int confId) {
     d_props = other.d_props;
 
     // Bookmarks should be copied as well:
-    for (auto abmI : other.d_atomBookmarks) {
+    for (const auto &abmI : other.d_atomBookmarks) {
       for (const auto *aptr : abmI.second) {
         setAtomBookmark(getAtomWithIdx(aptr->getIdx()), abmI.first);
       }
     }
-    for (auto bbmI : other.d_bondBookmarks) {
+    for (const auto &bbmI : other.d_bondBookmarks) {
       for (const auto *bptr : bbmI.second) {
         setBondBookmark(getBondWithIdx(bptr->getIdx()), bbmI.first);
       }
@@ -637,7 +637,7 @@ const Conformer &ROMol::getConformer(int id) const {
     return *(d_confs.front());
   }
   auto cid = (unsigned int)id;
-  for (auto conf : d_confs) {
+  for (const auto &conf : d_confs) {
     if (conf->getId() == cid) {
       return *conf;
     }
@@ -668,7 +668,7 @@ unsigned int ROMol::addConformer(Conformer *conf, bool assignId) {
                "Number of atom mismatch");
   if (assignId) {
     int maxId = -1;
-    for (auto cptr : d_confs) {
+    for (const auto &cptr : d_confs) {
       maxId = std::max((int)(cptr->getId()), maxId);
     }
     maxId++;
