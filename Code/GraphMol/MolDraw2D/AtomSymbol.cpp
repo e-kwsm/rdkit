@@ -42,7 +42,7 @@ AtomSymbol::AtomSymbol(const std::string &symbol, int atIdx, OrientType orient,
 void AtomSymbol::findExtremes(double &xmin, double &xmax, double &ymin,
                               double &ymax) const {
   Point2D bl, br, tl, tr, origTrans;
-  for (auto rect : rects_) {
+  for (const auto &rect : rects_) {
     origTrans = rect->trans_;
     rect->trans_ += cds_;
     rect->calcCorners(tl, tr, br, bl, 0.0);
