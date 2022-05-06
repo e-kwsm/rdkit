@@ -8608,7 +8608,7 @@ M  END)CTAB"_ctab;
       update_colour_map(hit_atoms, colours[i], ha_map);
     }
     std::map<int, double> h_rads;
-    for (auto [idx, val] : ha_map) {
+    for (const auto &[idx, val] : ha_map) {
       h_rads[idx] = 0.4;
     }
     MolDraw2DSVG drawer(500, 500);
@@ -8711,7 +8711,7 @@ M  END)CTAB"_ctab;
       update_colour_map(hit_atoms, colours[i], ha_map);
     }
     std::map<int, double> h_rads;
-    for (auto [idx, val] : ha_map) {
+    for (const auto &[idx, val] : ha_map) {
       h_rads[idx] = 0.3;
     }
     h_rads[13] = 0.4;
