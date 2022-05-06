@@ -4938,7 +4938,7 @@ M  END)CTAB";
     };
     auto pos = molb.find(ptrn);
     REQUIRE(pos != std::string::npos);
-    for (auto alternative : alternatives) {
+    for (const auto &alternative : alternatives) {
       auto mb2 = molb.replace(pos, ptrn.size(), alternative);
       std::unique_ptr<RWMol> m(MolBlockToMol(mb2));
       REQUIRE(m);
@@ -7382,7 +7382,7 @@ void testFragmentation(const FragTest &fragTest) {
 
   unsigned int largestFragSize = 0;
   ROMol *largestFrag = nullptr;
-  for (auto frag : frags) {
+  for (const auto &frag : frags) {
     if (frag->getNumAtoms() > largestFragSize) {
       largestFragSize = frag->getNumAtoms();
       largestFrag = frag.get();
@@ -7434,7 +7434,7 @@ TEST_CASE("FragmentSgroupTest", "[bug][reader]") {
         FragTest("Sgroup_MUL_ParentInMiddle.sdf", true, true, 1, 1),
         FragTest("modification_sgroup.sdf", true, true, 2, 1),
     };
-    for (auto test : tests) {
+    for (const auto &test : tests) {
       testFragmentation(test);
     }
   };
