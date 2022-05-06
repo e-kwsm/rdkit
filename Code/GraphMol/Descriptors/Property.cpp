@@ -128,7 +128,7 @@ std::vector<std::string> Properties::getAvailableProperties() {
   registerDescriptors();
   std::vector<std::string> names;
   names.reserve(Properties::registry.size());
-  for (auto prop : Properties::registry) {
+  for (const auto &prop : Properties::registry) {
     names.push_back(prop->getName());
   }
   return names;
@@ -147,7 +147,7 @@ boost::shared_ptr<PropertyFunctor> Properties::getProperty(
 
 Properties::Properties() : m_properties() {
   registerDescriptors();
-  for (auto prop : Properties::registry) {
+  for (const auto &prop : Properties::registry) {
     m_properties.push_back(prop);
   }
 }
@@ -162,7 +162,7 @@ Properties::Properties(const std::vector<std::string> &propNames) {
 std::vector<std::string> Properties::getPropertyNames() const {
   std::vector<std::string> names;
   names.reserve(m_properties.size());
-  for (auto prop : m_properties) {
+  for (const auto &prop : m_properties) {
     names.push_back(prop->getName());
   }
   return names;
@@ -172,7 +172,7 @@ std::vector<double> Properties::computeProperties(const RDKit::ROMol &mol,
                                                   bool annotate) const {
   std::vector<double> res;
   res.reserve(m_properties.size());
-  for (auto prop : m_properties) {
+  for (const auto &prop : m_properties) {
     res.push_back((*prop)(mol));
     if (annotate) {
       mol.setProp<double>(prop->getName(), (*prop)(mol));
@@ -182,7 +182,7 @@ std::vector<double> Properties::computeProperties(const RDKit::ROMol &mol,
 }
 
 void Properties::annotateProperties(RDKit::ROMol &mol) const {
-  for (auto prop : m_properties) {
+  for (const auto &prop : m_properties) {
     mol.setProp<double>(prop->getName(), (*prop)(mol));
   }
 }
