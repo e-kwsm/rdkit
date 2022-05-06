@@ -29,7 +29,7 @@ namespace python = boost::python;
 namespace RDPickers {
 
 // REVIEW: the poolSize can be pulled from the numeric array
-RDKit::INT_VECT MaxMinPicks(MaxMinPicker *picker, python::object distMat,
+RDKit::INT_VECT MaxMinPicks(MaxMinPicker *picker, const python::object &distMat,
                             int poolSize, int pickSize,
                             python::object firstPicks, int seed) {
   if (pickSize >= poolSize) {
@@ -77,32 +77,32 @@ void LazyMaxMinHelper(MaxMinPicker *picker, T functor, unsigned int poolSize,
 RDKit::INT_VECT LazyMaxMinPicks(MaxMinPicker *picker, python::object distFunc,
                                 int poolSize, int pickSize,
                                 python::object firstPicks, int seed,
-                                python::object useCache) {
+                                const python::object &useCache) {
   if (useCache != python::object()) {
     BOOST_LOG(rdWarningLog)
         << "the useCache argument is deprecated and ignored" << std::endl;
   }
-  pyobjFunctor functor(distFunc);
+  pyobjFunctor functor(std::move(distFunc));
   RDKit::INT_VECT res;
   double threshold = -1.;
-  LazyMaxMinHelper(picker, functor, poolSize, pickSize, firstPicks, seed, res,
-                   threshold);
+  LazyMaxMinHelper(picker, functor, poolSize, pickSize, std::move(firstPicks),
+                   seed, res, threshold);
   return res;
 }
 python::tuple LazyMaxMinPicksWithThreshold(
     MaxMinPicker *picker, python::object distFunc, int poolSize, int pickSize,
     double threshold, python::object firstPicks, int seed) {
-  pyobjFunctor functor(distFunc);
+  pyobjFunctor functor(std::move(distFunc));
   RDKit::INT_VECT res;
-  LazyMaxMinHelper(picker, functor, poolSize, pickSize, firstPicks, seed, res,
-                   threshold);
+  LazyMaxMinHelper(picker, functor, poolSize, pickSize, std::move(firstPicks),
+                   seed, res, threshold);
   return python::make_tuple(res, threshold);
 }
 
 RDKit::INT_VECT LazyVectorMaxMinPicks(MaxMinPicker *picker, python::object objs,
                                       int poolSize, int pickSize,
                                       python::object firstPicks, int seed,
-                                      python::object useCache) {
+                                      const python::object &useCache) {
   if (useCache != python::object()) {
     BOOST_LOG(rdWarningLog)
         << "the useCache argument is deprecated and ignored" << std::endl;
@@ -115,8 +115,8 @@ RDKit::INT_VECT LazyVectorMaxMinPicks(MaxMinPicker *picker, python::object objs,
 
   RDKit::INT_VECT res;
   double threshold = -1.;
-  LazyMaxMinHelper(picker, functor, poolSize, pickSize, firstPicks, seed, res,
-                   threshold);
+  LazyMaxMinHelper(picker, functor, poolSize, pickSize, std::move(firstPicks),
+                   seed, res, threshold);
   return res;
 }
 
@@ -130,8 +130,8 @@ python::tuple LazyVectorMaxMinPicksWithThreshold(
   pyBVFunctor<ExplicitBitVect> functor(bvs, TANIMOTO);
 
   RDKit::INT_VECT res;
-  LazyMaxMinHelper(picker, functor, poolSize, pickSize, firstPicks, seed, res,
-                   threshold);
+  LazyMaxMinHelper(picker, functor, poolSize, pickSize, std::move(firstPicks),
+                   seed, res, threshold);
   return python::make_tuple(res, threshold);
 }
 

@@ -36,6 +36,7 @@
 #include <GraphMol/ChemReactions/Enumerate/EvenSamplePairs.h>
 #include <GraphMol/ChemReactions/Enumerate/Enumerate.h>
 #include <cstdint>
+#include <utility>
 
 namespace python = boost::python;
 
@@ -107,26 +108,28 @@ class EnumerateLibraryWrap : public RDKit::EnumerateLibrary {
   EnumerateLibraryWrap() : RDKit::EnumerateLibrary() {}
   EnumerateLibraryWrap(const RDKit::ChemicalReaction &rxn, python::list ob,
                        const EnumerationParams &params = EnumerationParams())
-      : RDKit::EnumerateLibrary(rxn, ConvertToVect(ob), params) {}
+      : RDKit::EnumerateLibrary(rxn, ConvertToVect(std::move(ob)), params) {}
 
   EnumerateLibraryWrap(const RDKit::ChemicalReaction &rxn, python::tuple ob,
                        const EnumerationParams &params = EnumerationParams())
-      : RDKit::EnumerateLibrary(rxn, ConvertToVect(ob), params) {}
+      : RDKit::EnumerateLibrary(rxn, ConvertToVect(std::move(ob)), params) {}
 
   EnumerateLibraryWrap(const RDKit::ChemicalReaction &rxn, python::list ob,
                        const EnumerationStrategyBase &enumerator,
                        const EnumerationParams &params = EnumerationParams())
-      : RDKit::EnumerateLibrary(rxn, ConvertToVect(ob), enumerator, params) {}
+      : RDKit::EnumerateLibrary(rxn, ConvertToVect(std::move(ob)), enumerator,
+                                params) {}
 
   EnumerateLibraryWrap(const RDKit::ChemicalReaction &rxn, python::tuple ob,
                        const EnumerationStrategyBase &enumerator,
                        const EnumerationParams &params = EnumerationParams())
-      : RDKit::EnumerateLibrary(rxn, ConvertToVect(ob), enumerator, params) {}
+      : RDKit::EnumerateLibrary(rxn, ConvertToVect(std::move(ob)), enumerator,
+                                params) {}
 };
 
 void ToBBS(EnumerationStrategyBase &rgroup, ChemicalReaction &rxn,
            python::list ob) {
-  rgroup.initialize(rxn, ConvertToVect(ob));
+  rgroup.initialize(rxn, ConvertToVect(std::move(ob)));
 }
 
 struct enumeration_wrapper {

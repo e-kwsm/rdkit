@@ -1812,7 +1812,7 @@ void collectBondsAndAngles(const ROMol &mol,
   }
 }
 
-void setTopolBounds(const ROMol &mol, DistGeom::BoundsMatPtr mmat,
+void setTopolBounds(const ROMol &mol, const DistGeom::BoundsMatPtr &mmat,
                     std::vector<std::pair<int, int>> &bonds,
                     std::vector<std::vector<int>> &angles,
                     const EmbedParameters &params, bool scaleVDW,
