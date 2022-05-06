@@ -575,7 +575,7 @@ std::vector<MatchVectType> RCore::matchTerminalUserRGroups(
     // now sort
     bool foundAll = false;
     std::sort(cp.begin(), cp.end(),
-              [&foundAll](const std::vector<int> a, std::vector<int> b) {
+              [&foundAll](const std::vector<int> &a, std::vector<int> b) {
                 auto isNegative = [](int v) -> bool { return v < 0; };
                 // firstly to minimize number of unmapped dummies
                 const int numUnmappedA =

@@ -24,8 +24,8 @@
 namespace python = boost::python;
 
 namespace {
-RDKit::ROMol *GenerateMolExtendedReducedGraphHelper(const RDKit::ROMol &mol,
-                                                    python::object atomTypes) {
+RDKit::ROMol *GenerateMolExtendedReducedGraphHelper(
+    const RDKit::ROMol &mol, const python::object &atomTypes) {
   if (atomTypes) {
     throw_value_error("specification of atom types not yet supported");
   }
@@ -33,11 +33,9 @@ RDKit::ROMol *GenerateMolExtendedReducedGraphHelper(const RDKit::ROMol &mol,
       RDKit::ReducedGraphs::generateMolExtendedReducedGraph(mol);
   return res;
 }
-PyObject *GenerateErGFingerprintForReducedGraphHelper(const RDKit::ROMol &mol,
-                                                      python::object atomTypes,
-                                                      double fuzzIncrement,
-                                                      int minPath,
-                                                      int maxPath) {
+PyObject *GenerateErGFingerprintForReducedGraphHelper(
+    const RDKit::ROMol &mol, const python::object &atomTypes,
+    double fuzzIncrement, int minPath, int maxPath) {
   if (atomTypes) {
     throw_value_error("specification of atom types not yet supported");
   }
@@ -52,7 +50,7 @@ PyObject *GenerateErGFingerprintForReducedGraphHelper(const RDKit::ROMol &mol,
   return PyArray_Return(res);
 }
 PyObject *GetErGFingerprintHelper(const RDKit::ROMol &mol,
-                                  python::object atomTypes,
+                                  const python::object &atomTypes,
                                   double fuzzIncrement, int minPath,
                                   int maxPath) {
   if (atomTypes) {

@@ -19,6 +19,7 @@
 #include <boost/dynamic_bitset.hpp>
 #include <boost/iostreams/device/file.hpp>
 #include <boost/iostreams/filtering_stream.hpp>
+#include <utility>
 
 #include "MultithreadedSDMolSupplier.h"
 #include "MultithreadedSmilesMolSupplier.h"
@@ -79,9 +80,9 @@ void testSmiConcurrent(std::string path, std::string delimiter,
   std::string rdbase = getenv("RDBASE");
   std::string fname = rdbase + path;
   std::istream *strm = new std::ifstream(fname.c_str());
-  testSmiConcurrent(strm, true, delimiter, smilesColumn, nameColumn, titleLine,
-                    sanitize, numWriterThreads, sizeInputQueue, sizeOutputQueue,
-                    expectedResult, extras);
+  testSmiConcurrent(strm, true, std::move(delimiter), smilesColumn, nameColumn,
+                    titleLine, sanitize, numWriterThreads, sizeInputQueue,
+                    sizeOutputQueue, expectedResult, extras);
 }
 
 void testSmiOld(std::string path, std::string delimiter, int smilesColumn,

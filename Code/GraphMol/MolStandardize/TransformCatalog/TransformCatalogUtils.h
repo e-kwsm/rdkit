@@ -23,7 +23,7 @@ namespace MolStandardize {
 class TransformCatalogParams;
 
 RDKIT_MOLSTANDARDIZE_EXPORT std::vector<std::shared_ptr<ChemicalReaction>>
-readTransformations(std::string fileName);
+readTransformations(const std::string &fileName);
 RDKIT_MOLSTANDARDIZE_EXPORT std::vector<std::shared_ptr<ChemicalReaction>>
 readTransformations(std::istream &inStream, int nToRead = -1);
 RDKIT_MOLSTANDARDIZE_EXPORT std::vector<std::shared_ptr<ChemicalReaction>>

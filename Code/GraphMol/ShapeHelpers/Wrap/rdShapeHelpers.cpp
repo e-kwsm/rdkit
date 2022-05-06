@@ -43,9 +43,9 @@ void _copyTransform(const PyArrayObject *transMat, RDGeom::Transform3D &trans) {
          dSize * sizeof(double));
 }
 
-python::tuple getConformerDimsAndOffset(const Conformer &conf,
-                                        python::object trans = python::object(),
-                                        double padding = 2.5) {
+python::tuple getConformerDimsAndOffset(
+    const Conformer &conf, const python::object &trans = python::object(),
+    double padding = 2.5) {
   RDGeom::Point3D dims, offSet;
   PyObject *transObj = trans.ptr();
   if (PyArray_Check(transObj)) {
@@ -62,7 +62,7 @@ python::tuple getConformerDimsAndOffset(const Conformer &conf,
 }
 
 python::tuple getConfBox(const Conformer &conf,
-                         python::object trans = python::object(),
+                         const python::object &trans = python::object(),
                          double padding = 2.5) {
   RDGeom::Point3D lowerCorner, upperCorner;
   PyObject *transObj = trans.ptr();
@@ -100,7 +100,7 @@ python::tuple getUnionOfTwoBox(python::tuple box1, python::tuple box2) {
 
 void EncodeMolShape(
     const ROMol &mol, RDGeom::UniformGrid3D &grid, int confId = -1,
-    python::object trans = python::object(),  // PyObject *trans=0,
+    const python::object &trans = python::object(),  // PyObject *trans=0,
     double vdwScale = 0.8, double stepSize = 0.25, int maxLayers = -1,
     bool ignoreHs = true) {
   PyObject *transObj = trans.ptr();

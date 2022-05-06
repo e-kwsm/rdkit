@@ -16,6 +16,7 @@
 #include <regex>
 #include <sstream>
 #include <string>
+#include <utility>
 #include <vector>
 
 #include <maeparser/MaeBlock.hpp>
@@ -368,8 +369,9 @@ void mapAtom(
   }
 
   // Custom properties
-  copyProperties(atom, propNames, idx, boolSetter, intSetter, realSetter,
-                 stringSetter);
+  copyProperties(atom, propNames, idx, std::move(boolSetter),
+                 std::move(intSetter), std::move(realSetter),
+                 std::move(stringSetter));
 }
 
 void mapAtoms(const ROMol &mol, const STR_VECT &propNames, int confId,
@@ -442,8 +444,9 @@ void mapBond(
   }
 
   // Custom properties
-  copyProperties(bond, propNames, idx, boolSetter, intSetter, realSetter,
-                 stringSetter);
+  copyProperties(bond, propNames, idx, std::move(boolSetter),
+                 std::move(intSetter), std::move(realSetter),
+                 std::move(stringSetter));
 }
 
 void mapBonds(const ROMol &mol, const STR_VECT &propNames,

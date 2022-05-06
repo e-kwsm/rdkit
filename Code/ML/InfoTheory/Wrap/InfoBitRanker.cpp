@@ -19,6 +19,8 @@
 #include <DataStructs/BitVects.h>
 #include <RDBoost/PySequenceHolder.h>
 
+#include <utility>
+
 namespace python = boost::python;
 
 namespace RDInfoTheory {
@@ -52,7 +54,7 @@ void AccumulateVotes(InfoBitRanker *ranker, python::object bitVect, int label) {
 
 void SetBiasList(InfoBitRanker *ranker, python::object classList) {
   RDKit::INT_VECT cList;
-  PySequenceHolder<int> bList(classList);
+  PySequenceHolder<int> bList(std::move(classList));
   cList.reserve(bList.size());
   for (unsigned int i = 0; i < bList.size(); i++) {
     cList.push_back(bList[i]);
@@ -62,7 +64,7 @@ void SetBiasList(InfoBitRanker *ranker, python::object classList) {
 
 void SetMaskBits(InfoBitRanker *ranker, python::object maskBits) {
   RDKit::INT_VECT cList;
-  PySequenceHolder<int> bList(maskBits);
+  PySequenceHolder<int> bList(std::move(maskBits));
   cList.reserve(bList.size());
   for (unsigned int i = 0; i < bList.size(); i++) {
     cList.push_back(bList[i]);

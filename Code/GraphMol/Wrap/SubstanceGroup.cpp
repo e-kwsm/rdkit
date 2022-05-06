@@ -11,6 +11,7 @@
 #define NO_IMPORT_ARRAY
 #include <boost/python.hpp>
 #include <string>
+#include <utility>
 
 // ours
 #include <GraphMol/RDKitBase.h>
@@ -40,7 +41,7 @@ void clearMolSubstanceGroups(ROMol &mol) {
   sgs.clear();
 }
 
-SubstanceGroup *createMolSubstanceGroup(ROMol &mol, std::string type) {
+SubstanceGroup *createMolSubstanceGroup(ROMol &mol, const std::string &type) {
   SubstanceGroup sg(&mol, type);
   addSubstanceGroup(mol, sg);
   return &(getSubstanceGroups(mol).back());
@@ -49,8 +50,8 @@ SubstanceGroup *createMolSubstanceGroup(ROMol &mol, std::string type) {
 SubstanceGroup *createMolDataSubstanceGroup(ROMol &mol, std::string fieldName,
                                             std::string value) {
   SubstanceGroup sg(&mol, "DAT");
-  sg.setProp("FIELDNAME", fieldName);
-  STR_VECT dataFields{value};
+  sg.setProp("FIELDNAME", std::move(fieldName));
+  STR_VECT dataFields{std::move(value)};
   sg.setProp("DATAFIELDS", dataFields);
   addSubstanceGroup(mol, sg);
   return &(getSubstanceGroups(mol).back());
@@ -61,7 +62,7 @@ SubstanceGroup *addMolSubstanceGroup(ROMol &mol, const SubstanceGroup &sgroup) {
   return &(getSubstanceGroups(mol).back());
 }
 
-void addBracketHelper(SubstanceGroup &self, python::object pts) {
+void addBracketHelper(SubstanceGroup &self, const python::object &pts) {
   unsigned int sz = boost::python::len(pts);
   if (sz != 2 && sz != 3) {
     throw_value_error("pts object have a length of 2 or 3");

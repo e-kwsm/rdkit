@@ -12,6 +12,7 @@
 #include "MarvinDefs.h"
 #include <RDGeneral/BoostStartInclude.h>
 #include <boost/algorithm/string.hpp>
+#include <utility>
 #include <RDGeneral/BoostEndInclude.h>
 
 namespace RDKit {
@@ -773,7 +774,7 @@ MarvinAtom::MarvinAtom()
 {}
 
 MarvinAtom::MarvinAtom(const MarvinAtom &atomToCopy, std::string newId)
-    : id(newId),
+    : id(std::move(newId)),
       elementType(atomToCopy.elementType),
       x2(atomToCopy.x2),
       y2(atomToCopy.y2),
@@ -936,13 +937,13 @@ ptree MarvinAtom::toPtree(unsigned int coordinatePrecision) const {
 
 MarvinBond::MarvinBond(const MarvinBond &bondToCopy, std::string newId,
                        std::string atomRef1, std::string atomRef2)
-    : id(newId),
+    : id(std::move(newId)),
       order(bondToCopy.order),
       bondStereo(bondToCopy.bondStereo),
       queryType(bondToCopy.queryType),
       convention(bondToCopy.convention) {
-  atomRefs2[0] = atomRef1;
-  atomRefs2[1] = atomRef2;
+  atomRefs2[0] = std::move(atomRef1);
+  atomRefs2[1] = std::move(atomRef2);
 }
 
 const std::string MarvinBond::getBondType() const {
@@ -1300,7 +1301,7 @@ MarvinSruCoModSgroup::MarvinSruCoModSgroup(MarvinMolBase *parentInit,
     throw FileParseException("Expected a molID in MRV file");
   }
 
-  this->roleName = roleNameInit;
+  this->roleName = std::move(roleNameInit);
   std::string atomRefsStr = molTree.get<std::string>("<xmlattr>.atomRefs", "");
   if (atomRefsStr == "") {
     throw FileParseException(

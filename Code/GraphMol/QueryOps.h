@@ -379,7 +379,7 @@ T *makeAtomSimpleQuery(int what, std::function<int(Atom const *)> func,
                        const std::string &description = "Atom Simple") {
   T *res = new T;
   res->setVal(what);
-  res->setDataFunc(func);
+  res->setDataFunc(std::move(func));
   res->setDescription(description);
   return res;
 }
@@ -389,7 +389,7 @@ static inline ATOM_RANGE_QUERY *makeAtomRangeQuery(
     std::function<int(Atom const *)> func,
     const std::string &description = "Atom Range") {
   ATOM_RANGE_QUERY *res = new ATOM_RANGE_QUERY(lower, upper);
-  res->setDataFunc(func);
+  res->setDataFunc(std::move(func));
   res->setDescription(description);
   res->setEndsOpen(lowerOpen, upperOpen);
   return res;
