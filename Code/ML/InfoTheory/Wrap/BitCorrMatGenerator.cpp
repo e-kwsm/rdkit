@@ -44,7 +44,7 @@ void setBitList(BitCorrMatGenerator *cmGen, python::object bitList) {
   cmGen->setBitIdList(res);
 }
 
-void CollectVotes(BitCorrMatGenerator *cmGen, python::object bitVect) {
+void CollectVotes(BitCorrMatGenerator *cmGen, const python::object &bitVect) {
   python::extract<ExplicitBitVect> ebvWorks(bitVect);
   python::extract<SparseBitVect> sbvWorks(bitVect);
   if (ebvWorks.check()) {

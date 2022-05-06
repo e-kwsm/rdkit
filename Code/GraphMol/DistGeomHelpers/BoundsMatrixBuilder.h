@@ -77,7 +77,7 @@ inline void setTopolBounds(const ROMol &mol, DistGeom::BoundsMatPtr mmat,
 
 /* ! \overload */
 RDKIT_DISTGEOMHELPERS_EXPORT void setTopolBounds(
-    const ROMol &mol, DistGeom::BoundsMatPtr mmat,
+    const ROMol &mol, const DistGeom::BoundsMatPtr &mmat,
     std::vector<std::pair<int, int>> &bonds,
     std::vector<std::vector<int>> &angles, const EmbedParameters &params,
     bool scaleVDW = false, bool set15bounds = true, bool set14bounds = true,
@@ -86,7 +86,7 @@ RDKIT_DISTGEOMHELPERS_EXPORT void setTopolBounds(
     InternalCoordinates *internalCoords = nullptr);
 /*! \overload for experimental torsion angle preferences
  */
-inline void setTopolBounds(const ROMol &mol, DistGeom::BoundsMatPtr mmat,
+inline void setTopolBounds(const ROMol &mol, const DistGeom::BoundsMatPtr &mmat,
                            std::vector<std::pair<int, int>> &bonds,
                            std::vector<std::vector<int>> &angles,
                            bool set15bounds = true, bool scaleVDW = false,

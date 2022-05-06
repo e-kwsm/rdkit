@@ -38,7 +38,7 @@ inline void TXTMSG(const char *__a__, T __b__) {
 }
 
 template <typename T>
-void Test(T arg) {
+void Test(const T &arg) {
   (void)arg;
   T t1(20);
   TXTMSG("Set 10:", t1.setBit(10));
