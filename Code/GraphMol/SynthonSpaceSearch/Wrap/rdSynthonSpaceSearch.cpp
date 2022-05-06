@@ -9,6 +9,7 @@
 //
 
 #include <csignal>
+#include <utility>
 
 #include <RDBoost/python.h>
 #include <RDBoost/Wrap.h>
@@ -124,7 +125,7 @@ static void substructureSearch_helper3(SynthonSpaceSearch::SynthonSpace &self,
     params = python::extract<SynthonSpaceSearch::SynthonSpaceSearchParams>(
         py_params);
   }
-  CallbackAdapter callback{py_callable};
+  CallbackAdapter callback{std::move(py_callable)};
   self.substructureSearch(query, callback, smParams, params);
 }
 
@@ -164,7 +165,7 @@ static void fingerprintSearch_helper_2(
       python::extract<FingerprintGenerator<std::uint64_t> *>(
           fingerprintGenerator);
 
-  CallbackAdapter callback{py_callable};
+  CallbackAdapter callback{std::move(py_callable)};
   self.fingerprintSearch(query, *fpGen, callback, params);
 }
 
@@ -196,7 +197,7 @@ static void rascalSearch_helper_2(SynthonSpaceSearch::SynthonSpace &self,
     params = python::extract<SynthonSpaceSearch::SynthonSpaceSearchParams>(
         py_params);
   }
-  CallbackAdapter callback{py_callable};
+  CallbackAdapter callback{std::move(py_callable)};
   self.rascalSearch(query, rascalOptions, callback, params);
 }
 
@@ -206,7 +207,7 @@ void summariseHelper(SynthonSpaceSearch::SynthonSpace &self) {
 
 void convertTextToDBFile_helper(const std::string &inFilename,
                                 const std::string &outFilename,
-                                python::object fpGen) {
+                                const python::object &fpGen) {
   const FingerprintGenerator<std::uint64_t> *fpGenCpp = nullptr;
   if (fpGen) {
     fpGenCpp = python::extract<FingerprintGenerator<std::uint64_t> *>(fpGen);

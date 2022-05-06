@@ -446,7 +446,7 @@ void testTarget_no_10188_49064() {
 }
 
 #define MCSTESTREPEATS 0  // To run MCS repeatedly to measure performance
-MCSResult checkMCS(const std::vector<ROMOL_SPTR> mols, const MCSParameters p,
+MCSResult checkMCS(const std::vector<ROMOL_SPTR> &mols, const MCSParameters p,
                    unsigned int expectedAtoms, unsigned int expectedBonds) {
   t0 = nanoClock();
   MCSResult res = findMCS(mols, &p);
