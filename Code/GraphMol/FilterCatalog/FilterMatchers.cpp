@@ -138,7 +138,7 @@ bool FilterHierarchyMatcher::getMatches(const ROMol &mol,
   if (result) {
     std::vector<FilterMatch> children;
 
-    for (auto matcher : d_children) {
+    for (const auto &matcher : d_children) {
       matcher->getMatches(mol, children);
     }
 
