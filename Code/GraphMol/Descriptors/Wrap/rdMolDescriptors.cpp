@@ -36,6 +36,7 @@
 #include <GraphMol/Descriptors/MolDescriptors3D.h>
 #endif
 
+#include <utility>
 #include <vector>
 
 namespace python = boost::python;
@@ -484,17 +485,19 @@ RDKit::SparseIntVect<std::uint32_t> *GetMorganFingerprint(
     bool useFeatures, bool useCounts, python::object bitInfo,
     bool includeRedundantEnvironments) {
   return MorganFingerprintHelper(
-      mol, radius, -1, invariants, fromAtoms, useChirality, useBondTypes,
-      useFeatures, useCounts, bitInfo, includeRedundantEnvironments);
+      mol, radius, -1, std::move(invariants), std::move(fromAtoms),
+      useChirality, useBondTypes, useFeatures, useCounts, std::move(bitInfo),
+      includeRedundantEnvironments);
 }
 RDKit::SparseIntVect<std::uint32_t> *GetHashedMorganFingerprint(
     const RDKit::ROMol &mol, unsigned int radius, unsigned int nBits,
     python::object invariants, python::object fromAtoms, bool useChirality,
     bool useBondTypes, bool useFeatures, python::object bitInfo,
     bool includeRedundantEnvironments) {
-  return MorganFingerprintHelper(mol, radius, nBits, invariants, fromAtoms,
-                                 useChirality, useBondTypes, useFeatures, true,
-                                 bitInfo, includeRedundantEnvironments);
+  return MorganFingerprintHelper(
+      mol, radius, nBits, std::move(invariants), std::move(fromAtoms),
+      useChirality, useBondTypes, useFeatures, true, std::move(bitInfo),
+      includeRedundantEnvironments);
 }
 
 [[deprecated("please use MorganGenerator")]] ExplicitBitVect *

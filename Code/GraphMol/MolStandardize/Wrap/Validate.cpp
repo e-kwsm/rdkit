@@ -44,7 +44,7 @@ python::list pythonValidateMethod(const MolStandardize::ValidationMethod &self,
 }
 
 MolStandardize::MolVSValidation *getMolVSValidation(
-    python::object validations) {
+    const python::object &validations) {
   std::vector<std::shared_ptr<MolStandardize::ValidationMethod>> vs;
 
   auto pvect =
@@ -60,7 +60,7 @@ MolStandardize::MolVSValidation *getMolVSValidation(
 }
 
 MolStandardize::AllowedAtomsValidation *getAllowedAtomsValidation(
-    python::object atoms) {
+    const python::object &atoms) {
   auto p_atomList = pythonObjectToVect<Atom *>(atoms);
   if (!p_atomList) {
     throw_value_error("allowedAtoms argument must be non-empty");
@@ -73,7 +73,7 @@ MolStandardize::AllowedAtomsValidation *getAllowedAtomsValidation(
 }
 
 MolStandardize::DisallowedAtomsValidation *getDisallowedAtomsValidation(
-    python::object atoms) {
+    const python::object &atoms) {
   auto p_atomList = pythonObjectToVect<Atom *>(atoms);
   if (!p_atomList) {
     throw_value_error("disallowedAtoms must be non-empty");

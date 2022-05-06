@@ -71,7 +71,8 @@ std::pair<ROMol *, ROMol *> *getPair(std::string tmpStr) {
 
 namespace MolStandardize {
 
-std::vector<std::pair<ROMOL_SPTR, ROMOL_SPTR>> readPairs(std::string fileName) {
+std::vector<std::pair<ROMOL_SPTR, ROMOL_SPTR>> readPairs(
+    const std::string &fileName) {
   std::ifstream inStream(fileName.c_str());
   if ((!inStream) || (inStream.bad())) {
     std::ostringstream errout;
