@@ -47,12 +47,12 @@
 namespace RDKit {
 
 std::vector<MOL_SPTR_VECT> ChemicalReaction::runReactants(
-    const MOL_SPTR_VECT reactants, unsigned int maxProducts) const {
+    const MOL_SPTR_VECT &reactants, unsigned int maxProducts) const {
   return run_Reactants(*this, reactants, maxProducts);
 }
 
 std::vector<MOL_SPTR_VECT> ChemicalReaction::runReactant(
-    const ROMOL_SPTR reactant, unsigned int reactionTemplateIdx) const {
+    const ROMOL_SPTR &reactant, unsigned int reactionTemplateIdx) const {
   return run_Reactant(*this, reactant, reactionTemplateIdx);
 }
 

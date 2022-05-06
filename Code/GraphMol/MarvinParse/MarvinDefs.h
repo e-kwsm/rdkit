@@ -54,7 +54,7 @@ enum IsSgroupInAtomSetResult {
 
 class MarvinWriterException : public std::runtime_error {
  public:
-  explicit MarvinWriterException(std::string message)
+  explicit MarvinWriterException(const std::string &message)
       : std::runtime_error(message) {};
 };
 
@@ -266,8 +266,8 @@ class MarvinMolBase {
 
   virtual ~MarvinMolBase();
 
-  int getAtomIndex(std::string id) const;
-  int getBondIndex(std::string id) const;
+  int getAtomIndex(const std::string &id) const;
+  int getBondIndex(const std::string &id) const;
 
   const std::vector<std::string> getBondList() const;
   const std::vector<std::string> getAtomList() const;
@@ -322,8 +322,8 @@ class MarvinMolBase {
   static bool atomRefInAtoms(MarvinAtom *a, std::string b);
   static bool bondRefInBonds(MarvinBond *a, std::string b);
   static bool molIDInSgroups(std::string a, std::string b);
-  MarvinAtom *findAtomByRef(std::string atomId);
-  MarvinBond *findBondByRef(std::string atomId);
+  MarvinAtom *findAtomByRef(const std::string &atomId);
+  MarvinBond *findBondByRef(const std::string &atomId);
 
   void prepSgroupsForRDKit();
   void processSgroupsFromRDKit();
@@ -351,7 +351,7 @@ class MarvinSruCoModSgroup : public MarvinMolBase {
                          // MarvinModificationSgroup
  public:
   MarvinMolBase *copyMol(const std::string &idAppend) const override;
-  MarvinSruCoModSgroup(std::string type, MarvinMolBase *parent);
+  MarvinSruCoModSgroup(const std::string &type, MarvinMolBase *parent);
   MarvinSruCoModSgroup(MarvinMolBase *parent, std::string role, ptree &molTree);
 
   std::string title;
@@ -436,7 +436,7 @@ class MarvinMultipleSgroup : public MarvinMolBase {
 
   void expandOneMultipleSgroup();
   void contractOneMultipleSgroup();
-  int getMatchedOrphanBondIndex(std::string atomIdToCheck,
+  int getMatchedOrphanBondIndex(const std::string &atomIdToCheck,
                                 std::vector<MarvinBond *> &bondsToTry,
                                 std::vector<MarvinBond *> &orphanedBonds) const;
 
@@ -614,7 +614,7 @@ class MarvinStereoGroup {
 };
 
 template <typename T>
-bool getCleanNumber(std::string strToParse, T &outInt);
+bool getCleanNumber(const std::string &strToParse, T &outInt);
 }  // namespace RDKit
 
 #endif  // RD_MARVINDEFS_H

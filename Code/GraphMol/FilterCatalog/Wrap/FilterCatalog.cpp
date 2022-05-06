@@ -62,7 +62,7 @@ void python_to_vector(boost::python::object o, std::vector<T> &v) {
   v.insert(v.end(), begin, end);
 }
 
-void SetOffPatterns(ExclusionList &fc, boost::python::object list) {
+void SetOffPatterns(ExclusionList &fc, const boost::python::object &list) {
   std::vector<FilterMatcherBase *> vect;
   // python_to_vector<FilterMatcherBase*>(list, vect);
   python::stl_input_iterator<FilterMatcherBase *> begin(list);

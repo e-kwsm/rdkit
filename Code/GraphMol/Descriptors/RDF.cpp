@@ -152,7 +152,8 @@ void GetRDF(double *dist3D, const ROMol &mol, const Conformer &conf,
 }
 
 void GetRDFone(double *dist3D, const ROMol &mol, const Conformer &conf,
-               std::vector<double> &res, const std::string customAtomPropName) {
+               std::vector<double> &res,
+               const std::string &customAtomPropName) {
   getRDFDescCustom(dist3D, mol, conf, res, customAtomPropName);
 }
 

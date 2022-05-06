@@ -79,7 +79,7 @@ double round_to_n_digits_(double x, int n) {
   return atof(buff);
 }
 
-int countZeros(std::string ta) {
+int countZeros(const std::string &ta) {
   int nbzero = 0;
   for (char i : ta) {
     if (i != '0') {
@@ -1103,7 +1103,7 @@ void GetGETAWAYone(double *dist3D, double *AdjMat, std::vector<double> Vpoints,
 
 void GetGETAWAY(double *dist3D, double *AdjMat, std::vector<double> Vpoints,
                 const ROMol &mol, const Conformer &conf,
-                std::vector<int> Heavylist, std::vector<double> &res,
+                const std::vector<int> &Heavylist, std::vector<double> &res,
                 unsigned int precision) {
   PRECONDITION(dist3D != nullptr, "no distance matrix");
   PRECONDITION(AdjMat != nullptr, "no adjacency matrix");
