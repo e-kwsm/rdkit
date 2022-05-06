@@ -3627,7 +3627,7 @@ TEST_CASE("Testing the random Generator for SMILES") {
       "c1(C)c(OC)ccnc1CC",   "Cc1c(OC)ccnc1CC",
   };
 
-  for (auto bz : benzenes) {
+  for (const auto &bz : benzenes) {
     ROMol *m = SmilesToMol(bz);
     REQUIRE(m);
     REQUIRE(m->getNumAtoms() == 11);
@@ -3751,7 +3751,7 @@ TEST_CASE("Testing github issue #3139: Partial bond mem leak") {
 TEST_CASE("Failures/problems detected by OSS Fuzz") {
   // examples that should produce no molecule
   std::vector<std::string> failing_examples = {"C)"};
-  for (auto smi : failing_examples) {
+  for (const auto &smi : failing_examples) {
     const auto mol = std::unique_ptr<ROMol>(SmilesToMol(smi));
     // output which molecule is failing
     REQUIRE(!mol);

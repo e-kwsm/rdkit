@@ -351,7 +351,7 @@ TEST_CASE("test3") {
   bfrs.resize(0);
   bfs = MolOps::symmetrizeSSSR(*m, bfrs);
   REQUIRE(bfs == 8);
-  for (auto bring : bfrs) {
+  for (const auto &bring : bfrs) {
     REQUIRE(bring.size() < 6);
   }
   delete m;

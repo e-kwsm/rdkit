@@ -40,7 +40,7 @@ inline std::vector<LinkNode> getMolLinkNodes(
 
   boost::char_separator<char> pipesep("|");
   boost::char_separator<char> spacesep(" ");
-  for (auto linknodetext : tokenizer(pval, pipesep)) {
+  for (const auto &linknodetext : tokenizer(pval, pipesep)) {
     LinkNode node;
     tokenizer tokens(linknodetext, spacesep);
     std::vector<unsigned int> data;

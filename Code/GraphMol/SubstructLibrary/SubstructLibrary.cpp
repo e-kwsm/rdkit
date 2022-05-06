@@ -104,7 +104,7 @@ struct Bits {
         auto &bndl = std::get<ExtendedQueryMol::MolBundle_T>(xqm.xqmol);
         auto tqb = new ExplicitBitVect(ph->getNumBits());
         queryBits = tqb;
-        for (auto mol : bndl->getMols()) {
+        for (const auto &mol : bndl->getMols()) {
           auto tfp = fps->makeFingerprint(*mol);
           *tqb &= *tfp;
           delete tfp;

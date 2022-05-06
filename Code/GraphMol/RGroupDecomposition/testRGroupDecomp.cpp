@@ -943,14 +943,14 @@ $$$$)CTAB";
 TEST_CASE("testRowColumnAlignmentProblem", "[RGroupDecomp]") {
   std::vector<std::string> csmiles = {"c1c([*:1])cncn1", "c1c([*:1])cccn1"};
   std::vector<ROMOL_SPTR> cores;
-  for (auto smi : csmiles) {
+  for (const auto &smi : csmiles) {
     cores.emplace_back(SmilesToMol(smi));
   }
 
   std::vector<std::string> msmiles = {"c1c(F)cccn1", "c1c(F)cncn1",
                                       "c1c(Cl)cccn1"};
   std::vector<std::unique_ptr<RWMol>> mols;
-  for (auto smi : msmiles) {
+  for (const auto &smi : msmiles) {
     mols.emplace_back(SmilesToMol(smi));
   }
 
@@ -1218,7 +1218,7 @@ Cn1cnc2cc(Oc3cc(N4CCN(Cc5ccccc5-c5ccc(Cl)cc5)CC4)ccc3C(=O)NS(=O)(=O)c3ccc(NCCCN4
     bool ok = false;
     int ndone = -1;
     try {
-      for (auto m : ms) {
+      for (const auto &m : ms) {
         decomp.add(*m);
         ++ndone;
       }
@@ -2925,7 +2925,7 @@ TEST_CASE("testMultipleGroupsToUnlabelledCoreAtom", "[RGroupDecomp]") {
     params.matchingStrategy = Exhaustive;
     params.scoreMethod = FingerprintVariance;
     RGroupDecomposition decomp(*core, params);
-    for (auto smiles : smilesVec) {
+    for (const auto &smiles : smilesVec) {
       auto mol = SmilesToMol(smiles);
       auto result = decomp.add(*mol);
       REQUIRE(result > -1);
@@ -2986,7 +2986,7 @@ TEST_CASE("testMultipleGroupsToUnlabelledCoreAtom", "[RGroupDecomp]") {
     params.matchingStrategy = Exhaustive;
     params.scoreMethod = FingerprintVariance;
     RGroupDecomposition decomp(*core, params);
-    for (auto smiles : smilesVec) {
+    for (const auto &smiles : smilesVec) {
       auto mol = SmilesToMol(smiles);
       auto result = decomp.add(*mol);
       REQUIRE(result > -1);

@@ -40,7 +40,7 @@ void RGroupDecompData::addInputCore(const ROMol &inputCore) {
   if (params.doEnumeration) {
     if (const auto bundle = MolEnumerator::enumerate(inputCore);
         !bundle.empty()) {
-      for (auto c : bundle.getMols()) {
+      for (const auto &c : bundle.getMols()) {
         addCore(*c);
       }
     } else {

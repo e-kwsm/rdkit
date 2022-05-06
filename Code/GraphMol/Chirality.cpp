@@ -2180,7 +2180,7 @@ INT_VECT findStereoAtoms(const Bond *bond) {
 }
 void cleanupStereoGroups(ROMol &mol) {
   std::vector<StereoGroup> newsgs;
-  for (auto sg : mol.getStereoGroups()) {
+  for (const auto &sg : mol.getStereoGroups()) {
     std::vector<Atom *> okatoms;
     std::vector<Bond *> okbonds;
     bool keep = true;

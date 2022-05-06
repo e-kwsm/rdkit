@@ -454,7 +454,7 @@ class MolAtropTest {
           MolTest("macrocycle-5-ortho-broken-hash.sdf", true, 20, 21),
       };
 
-      for (auto sdfTest : sdfTests) {
+      for (const auto &sdfTest : sdfTests) {
         BOOST_LOG(rdInfoLog) << "Test: " << sdfTest.fileName << std::endl;
 
         testMolFiles(&sdfTest);
@@ -468,7 +468,7 @@ class MolAtropTest {
           MolTest("BMS-986142_3d.sdf", true, 72, 77),
       };
 
-      for (auto sdfTest : sdfTests) {
+      for (const auto &sdfTest : sdfTests) {
         BOOST_LOG(rdInfoLog) << "Test: " << sdfTest.fileName << std::endl;
 
         testAromAtropMolFile(&sdfTest);
@@ -489,7 +489,7 @@ class MolAtropTest {
               true, 29, 32),
       };
 
-      for (auto kekuleTest : kekuleTests) {
+      for (const auto &kekuleTest : kekuleTests) {
         BOOST_LOG(rdInfoLog) << "Test: " << kekuleTest.smiles << std::endl;
 
         testKekuleWedgeErrorSmiles(&kekuleTest);
@@ -502,7 +502,7 @@ class MolAtropTest {
           MolTest("atropWedgeError.mol", true, 29, 32),
       };
 
-      for (auto kekuleTest : kekuleTests) {
+      for (const auto &kekuleTest : kekuleTests) {
         BOOST_LOG(rdInfoLog) << "Test: " << kekuleTest.fileName << std::endl;
 
         testKekuleWedgeErrorMol(&kekuleTest);

@@ -335,7 +335,7 @@ TEST_CASE("scsiTests", "scsiTests") {
                               0),
     };
     ScsiMolTest scsiMolTest;
-    for (auto scsiTest : scsiTests) {
+    for (const auto &scsiTest : scsiTests) {
       BOOST_LOG(rdInfoLog) << "Test: " << scsiTest.fileName << std::endl;
 
       scsiMolTest.testScsiFiles(&scsiTest);
@@ -399,7 +399,7 @@ TEST_CASE("threeLetterCodeTest", "threeLetterCodeTest") {
     };
     ScsiMolTest scsiMolTest;
 
-    for (auto scsiTest : scsiTests) {
+    for (const auto &scsiTest : scsiTests) {
       BOOST_LOG(rdInfoLog) << "Test: " << scsiTest.fileName << std::endl;
 
       scsiMolTest.threeLetterCodeTest(&scsiTest);
