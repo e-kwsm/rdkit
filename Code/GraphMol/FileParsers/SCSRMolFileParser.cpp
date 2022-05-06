@@ -104,7 +104,7 @@ std::string getQuotedToken(const char *&linePtr) {
   return res;
 }
 
-void parseTemplateLine(RWMol *templateMol, std::string lineStr,
+void parseTemplateLine(RWMol *templateMol, const std::string &lineStr,
                        unsigned int &line) {
   PRECONDITION(templateMol, "bad template molecule");
 
@@ -360,7 +360,7 @@ static std::unique_ptr<SCSRMol> SCSRMolFromSCSRDataStream(
             for (const auto &attachOrd : attchOrds) {
               auto supAttachPoints = mainSUP->getAttachPoints();
               if (std::find_if(supAttachPoints.begin(), supAttachPoints.end(),
-                               [&attachOrd](auto a) {
+                               [&attachOrd](const auto &a) {
                                  return a.id == attachOrd.second;
                                }) == supAttachPoints.end()) {
                 templateFound = false;

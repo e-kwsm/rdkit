@@ -242,7 +242,7 @@ class Vector {
   }
 
   //! returns the dot product between two Vectors
-  TYPE dotProduct(const Vector<TYPE> other) const {
+  TYPE dotProduct(const Vector<TYPE> &other) const {
     PRECONDITION(d_size == other.size(),
                  "Size mismatch in vector doct product");
     const TYPE *oData = other.getData();

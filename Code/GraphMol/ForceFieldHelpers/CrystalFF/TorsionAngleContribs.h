@@ -12,6 +12,7 @@
 #ifndef RD_TORSIONANGLECONTRIBS_H
 #define RD_TORSIONANGLECONTRIBS_H
 #include <ForceField/Contrib.h>
+#include <utility>
 #include <vector>
 
 namespace RDGeom {

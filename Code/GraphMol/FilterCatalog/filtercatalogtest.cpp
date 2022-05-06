@@ -47,7 +47,7 @@ struct IntPair {
 };
 
 template <class T>
-void dump(std::string name, const T &v) {
+void dump(const std::string &name, const T &v) {
   std::cerr << name << " = { " << std::endl;
   for (size_t i = 0; i < v.size(); ++i) {
     std::cerr << "\t" << v[i].first << "," << v[i].second << "}," << std::endl;

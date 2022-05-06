@@ -76,7 +76,7 @@ OutputType AtomPairEnvGenerator<OutputType>::getResultSize() const {
 AtomPairArguments::AtomPairArguments(
     const bool countSimulation, const bool includeChirality, const bool use2D,
     const unsigned int minDistance, const unsigned int maxDistance,
-    const std::vector<std::uint32_t> countBounds, const std::uint32_t fpSize)
+    const std::vector<std::uint32_t> &countBounds, const std::uint32_t fpSize)
     : FingerprintArguments(countSimulation, countBounds, fpSize, 1,
                            includeChirality),
       df_use2D(use2D),
@@ -268,7 +268,7 @@ FingerprintGenerator<OutputType> *getAtomPairGenerator(
     const bool includeChirality, const bool use2D,
     AtomInvariantsGenerator *atomInvariantsGenerator,
     const bool useCountSimulation, const std::uint32_t fpSize,
-    const std::vector<std::uint32_t> countBounds, const bool ownsAtomInvGen) {
+    const std::vector<std::uint32_t> &countBounds, const bool ownsAtomInvGen) {
   AtomPair::AtomPairArguments arguments(useCountSimulation, includeChirality,
                                         use2D, minDistance, maxDistance,
                                         countBounds, fpSize);
@@ -290,7 +290,7 @@ getAtomPairGenerator(const unsigned int minDistance,
                      const bool includeChirality, const bool use2D,
                      AtomInvariantsGenerator *atomInvariantsGenerator,
                      const bool useCountSimulation, const std::uint32_t fpSize,
-                     const std::vector<std::uint32_t> countBounds,
+                     const std::vector<std::uint32_t> &countBounds,
                      const bool ownsAtomInvGen);
 
 template RDKIT_FINGERPRINTS_EXPORT FingerprintGenerator<std::uint64_t> *
@@ -299,7 +299,7 @@ getAtomPairGenerator(const unsigned int minDistance,
                      const bool includeChirality, const bool use2D,
                      AtomInvariantsGenerator *atomInvariantsGenerator,
                      const bool useCountSimulation, const std::uint32_t fpSize,
-                     const std::vector<std::uint32_t> countBounds,
+                     const std::vector<std::uint32_t> &countBounds,
                      const bool ownsAtomInvGen);
 }  // namespace AtomPair
 }  // namespace RDKit
