@@ -577,7 +577,7 @@ TEST_CASE("Implicit Hs on aromatic atoms with attachments",
                                  ScaffoldNetwork::EdgeType::RemoveAttachment;
                         }) == 2);
     CHECK(std::count(net.counts.begin(), net.counts.end(), 1) == 5);
-    for (auto nd : net.nodes) {
+    for (const auto &nd : net.nodes) {
       std::unique_ptr<ROMol> m(SmilesToMol(nd));
       CHECK(m);
     }
@@ -605,7 +605,7 @@ TEST_CASE("scaffold with attachment when attachments are disabled",
 
     CHECK(std::count(net.counts.begin(), net.counts.end(), 1) == 3);
     CHECK(std::count(net.counts.begin(), net.counts.end(), 2) == 3);
-    for (auto nd : net.nodes) {
+    for (const auto &nd : net.nodes) {
       CHECK(nd.find("*") == std::string::npos);
       std::unique_ptr<ROMol> m(SmilesToMol(nd));
       CHECK(m);
