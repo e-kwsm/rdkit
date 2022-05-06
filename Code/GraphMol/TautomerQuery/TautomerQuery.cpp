@@ -106,7 +106,7 @@ class TautomerQueryMatcher {
     std::cout << "Checking template match" << std::endl;
 #endif
 
-    for (auto tautomer : d_tautomerQuery.getTautomers()) {
+    for (const auto &tautomer : d_tautomerQuery.getTautomers()) {
 #ifdef VERBOSE
       std::cout << "Checking Tautomer " << MolToSmiles(*tautomer) << std::endl;
 #endif
