@@ -326,7 +326,7 @@ static std::unique_ptr<SCSRMol> SCSRMolFromSCSRDataStream(
         auto templateMol = res->getTemplate(templateIdx);
         if (templateMol->getProp<std::string>(
                 common_properties::molAtomClass) == atomClass) {
-          for (auto templateName :
+          for (const auto &templateName :
                templateMol->getProp<std::vector<std::string>>(
                    common_properties::templateNames)) {
             if (templateFound) {
@@ -1116,7 +1116,7 @@ class MolFromSCSRMolConverter {
           attachMap[OriginAtomConnection(atomIdx, lbl)] =
               std::vector<unsigned int>();
           auto &attachAtoms = attachMap[OriginAtomConnection(atomIdx, lbl)];
-          for (auto attachPoint : sgroup->getAttachPoints()) {
+          for (const auto &attachPoint : sgroup->getAttachPoints()) {
             if (attachPoint.id == lbl) {
               attachAtoms.push_back(attachPoint.aIdx);
             }
@@ -1132,12 +1132,12 @@ class MolFromSCSRMolConverter {
         // attach point and add its atoms the molecule
 
         if (molFromSCSRParams.includeLeavingGroups) {
-          for (auto attachPoint : sgroup->getAttachPoints()) {
+          for (const auto &attachPoint : sgroup->getAttachPoints()) {
             if (attachMap.find(OriginAtomConnection(atomIdx, attachPoint.id)) ==
                 attachMap.end()) {
               bool foundLgSgroup = false;
 
-              for (auto lgSgroup : getSubstanceGroups(*templateMol)) {
+              for (const auto &lgSgroup : getSubstanceGroups(*templateMol)) {
                 std::string lgSup;
                 std::string lgSgroupAtomClass;
                 if (lgSgroup.getPropIfPresent<std::string>("TYPE", lgSup) &&
