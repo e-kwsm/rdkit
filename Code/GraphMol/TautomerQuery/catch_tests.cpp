@@ -35,7 +35,7 @@ TEST_CASE("TEMPLATE_ERROR") {
       std::unique_ptr<TautomerQuery>(TautomerQuery::fromMol(*mol));
   auto match = false;
   MatchVectType matchVect;
-  for (auto taut : tautomerQuery->getTautomers()) {
+  for (const auto& taut : tautomerQuery->getTautomers()) {
     auto test = SubstructMatch(*target, *taut, matchVect);
 #ifdef VERBOSE
     std::cout << "Tautomer " << MolToSmiles(*taut) << " match " << test
@@ -92,7 +92,7 @@ TEST_CASE("DIFFERENT_TO_ENUMERATED") {
   auto target = "NC1=NCCO1"_smiles;
   auto enumMatch = false;
   MatchVectType matchVect;
-  for (auto t : tautomers) {
+  for (const auto& t : tautomers) {
     if (SubstructMatch(*target, *t, matchVect)) {
       enumMatch = true;
       break;
@@ -185,7 +185,7 @@ TEST_CASE("TEST_COMPLEX") {
   REQUIRE(queryFingerprint);
   std::vector<std::string> targetSmis{"CCc1nc2[nH]c(=N)nc(O)c2[nH]1",
                                       "CN1C2=NC=NC2=C(O)N=C1N"};
-  for (auto targetSmiles : targetSmis) {
+  for (const auto& targetSmiles : targetSmis) {
     auto target = SmilesToMol(targetSmiles);
     REQUIRE(target);
     CHECK(tautomerQuery->isSubstructOf(*target));
@@ -354,7 +354,7 @@ TEST_CASE("Serialization") {
     REQUIRE(queryFingerprint);
     std::vector<std::string> targetSmis{"CCc1nc2[nH]c(=N)nc(O)c2[nH]1",
                                         "CN1C2=NC=NC2=C(O)N=C1N"};
-    for (auto targetSmiles : targetSmis) {
+    for (const auto& targetSmiles : targetSmis) {
       auto target = SmilesToMol(targetSmiles);
       REQUIRE(target);
       CHECK(serialized.isSubstructOf(*target));

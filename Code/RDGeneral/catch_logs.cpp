@@ -15,7 +15,7 @@
 TEST_CASE("LogStateSetter") {
   RDLog::RDLoggerList allLogs({rdErrorLog, rdWarningLog, rdInfoLog});
   SECTION("disable all") {
-    for (auto strm : allLogs) {
+    for (const auto& strm : allLogs) {
       // explicitly enable the stream so that we know something is happening
       std::stringstream ostrm;
       strm->df_enabled = true;
@@ -33,12 +33,12 @@ TEST_CASE("LogStateSetter") {
     }
   }
   SECTION("enable one") {
-    for (auto strm : allLogs) {
+    for (const auto& strm : allLogs) {
       strm->df_enabled = true;
       RDLog::LogStateSetter disabler;
       {
         RDLog::LogStateSetter justone(RDLog::RDLoggerList({strm}));
-        for (auto strm2 : allLogs) {
+        for (const auto& strm2 : allLogs) {
           std::stringstream ostrm;
           strm2->SetTee(ostrm);
           BOOST_LOG(strm2) << "should not be silent" << std::endl;

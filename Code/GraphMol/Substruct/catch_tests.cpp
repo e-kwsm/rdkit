@@ -128,7 +128,7 @@ TEST_CASE("substructure parameters", "[substruct]") {
     auto mol2 = "C=O"_smiles;
     REQUIRE(mol1);
     REQUIRE(mol2);
-    for (auto match : SubstructMatch(*mol1, *mol2)) {
+    for (const auto &match : SubstructMatch(*mol1, *mol2)) {
       CHECK(match.size() == 2);
     }
   }

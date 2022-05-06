@@ -242,7 +242,7 @@ TEST_CASE(
     "[bug][molops]") {
   SECTION("the original report") {
     std::vector<std::string> smiles = {"C=n1ccnc1", "C#n1ccnc1"};
-    for (auto smi : smiles) {
+    for (const auto &smi : smiles) {
       CHECK_THROWS_AS(SmilesToMol(smi), MolSanitizeException);
     }
   }
@@ -252,7 +252,7 @@ TEST_CASE("github #908: AddHs() using 3D coordinates with 2D conformations",
           "[bug][molops]") {
   SECTION("basics: single atom mols") {
     std::vector<std::string> smiles = {"Cl", "O", "N", "C"};
-    for (auto smi : smiles) {
+    for (const auto &smi : smiles) {
       // std::cerr << smi << std::endl;
       std::unique_ptr<RWMol> mol(SmilesToMol(smi));
       REQUIRE(mol);
@@ -357,7 +357,7 @@ TEST_CASE("Specialized exceptions for sanitization errors", "[molops]") {
   SECTION("AtomValenceException") {
     std::vector<std::pair<std::string, unsigned int>> smiles = {
         {"C=n1ccnc1", 1}, {"CCO(C)C", 2}};
-    for (auto pr : smiles) {
+    for (const auto &pr : smiles) {
       CHECK_THROWS_AS(SmilesToMol(pr.first), AtomValenceException);
       try {
         auto m = SmilesToMol(pr.first);
@@ -372,7 +372,7 @@ TEST_CASE("Specialized exceptions for sanitization errors", "[molops]") {
     std::vector<std::pair<std::string, unsigned int>> smiles = {
         {"CCcc", 2},
     };
-    for (auto pr : smiles) {
+    for (const auto &pr : smiles) {
       CHECK_THROWS_AS(SmilesToMol(pr.first), AtomKekulizeException);
       try {
         auto m = SmilesToMol(pr.first);
@@ -388,7 +388,7 @@ TEST_CASE("Specialized exceptions for sanitization errors", "[molops]") {
         {"c1cccc1", {0, 1, 2, 3, 4}},
         {"Cc1cc1", {1, 2, 3}},
         {"C1:c:CC1", {0, 1, 2}}};
-    for (auto pr : smiles) {
+    for (const auto &pr : smiles) {
       CHECK_THROWS_AS(SmilesToMol(pr.first), KekulizeException);
       try {
         auto m = SmilesToMol(pr.first);

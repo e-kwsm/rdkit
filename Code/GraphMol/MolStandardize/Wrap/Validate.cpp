@@ -39,7 +39,7 @@ MolStandardize::MolVSValidation *getMolVSValidation(
   if (!pvect) {
     throw_value_error("validations argument must be non-empty");
   }
-  for (auto v : *pvect) {
+  for (const auto &v : *pvect) {
     vs.push_back(v->copy());
   }
   return new MolStandardize::MolVSValidation(vs);

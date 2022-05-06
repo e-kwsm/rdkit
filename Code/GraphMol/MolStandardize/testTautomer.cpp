@@ -1301,7 +1301,7 @@ void testTautomerEnumeratorResult_const_iterator() {
   it--;
   TEST_ASSERT(*it == res[0]);
   std::ptrdiff_t i = 0;
-  for (auto t : res) {
+  for (const auto &t : res) {
     TEST_ASSERT(t == res[i++]);
   }
   i = 0;
@@ -1346,7 +1346,7 @@ void testGithub3430() {
   std::vector<ROMOL_SPTR> mols{"Cc1ccc(NC(=O)N=c2[nH]c(C)cn2C)nc1"_smiles,
                                "CCCCC(=O)N=c1nc(C)c2ncn(C)c2[nH]1"_smiles,
                                "c12ccccc1[nH]c(=N)[nH]2"_smiles};
-  for (auto mol : mols) {
+  for (const auto &mol : mols) {
     TEST_ASSERT(mol);
     TautomerEnumerator te;
     auto res = te.enumerate(*mol);

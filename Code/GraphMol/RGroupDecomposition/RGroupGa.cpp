@@ -104,7 +104,7 @@ RGroupGa::RGroupGa(const RGroupDecompData& rGroupData,
   const auto& matches = rGroupData.matches;
   numPermutations = 1L;
   auto pos = 0;
-  for (auto m : matches) {
+  for (const auto& m : matches) {
     if (m.size() == 1) {
       continue;
     }

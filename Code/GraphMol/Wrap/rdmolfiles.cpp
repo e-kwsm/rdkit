@@ -428,7 +428,7 @@ python::list MolToRandomSmilesHelper(const ROMol &mol, unsigned int numSmiles,
   auto res = MolToRandomSmilesVect(mol, numSmiles, randomSeed, doIsomericSmiles,
                                    doKekule, allBondsExplicit, allHsExplicit);
   python::list pyres;
-  for (auto smi : res) {
+  for (const auto &smi : res) {
     pyres.append(smi);
   }
   return pyres;

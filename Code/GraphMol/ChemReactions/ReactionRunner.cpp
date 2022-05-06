@@ -1495,7 +1495,7 @@ std::vector<MOL_SPTR_VECT> run_Reactants(const ChemicalReaction &rxn,
         "Number of reactants provided does not match number of reactant "
         "templates.");
   }
-  for (auto msptr : reactants) {
+  for (const auto &msptr : reactants) {
     CHECK_INVARIANT(msptr, "bad molecule in reactants");
     msptr->clearAllAtomBookmarks();  // we use this as scratch space
   }

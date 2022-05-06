@@ -157,7 +157,7 @@ void DrawText::drawStringRects(const std::string &label, OrientType orient,
 
   size_t i = 0;
   getStringRects(label, orient, rects, draw_modes, draw_chars, false, talign);
-  for (auto r : rects) {
+  for (const auto &r : rects) {
     r->trans_.x += cds.x;
     r->trans_.y += cds.y;
     Point2D tl, tr, br, bl;
@@ -199,7 +199,7 @@ bool DrawText::doesRectIntersect(const std::string &label, OrientType orient,
 bool DrawText::doesRectIntersect(
     const std::vector<std::shared_ptr<StringRect>> &rects, const Point2D &cds,
     const StringRect &rect) const {
-  for (auto r : rects) {
+  for (const auto &r : rects) {
     StringRect nr(*r);
     nr.trans_ += cds;
     if (nr.doesItIntersect(rect)) {
@@ -226,7 +226,7 @@ bool DrawText::doesLineIntersect(const std::string &label, OrientType orient,
 bool DrawText::doesLineIntersect(
     const std::vector<std::shared_ptr<StringRect>> &rects, const Point2D &cds,
     const Point2D &end1, const Point2D &end2, double padding) const {
-  for (auto r : rects) {
+  for (const auto &r : rects) {
     StringRect nr(*r);
     nr.trans_ += cds;
 
@@ -278,10 +278,10 @@ bool DrawText::doesStringIntersect(
   std::vector<char> draw_chars2;
   getStringRects(label2, orient2, rects2, draw_modes2, draw_chars2);
 
-  for (auto r1 : rects) {
+  for (const auto &r1 : rects) {
     StringRect nr1(*r1);
     nr1.trans_ += cds1;
-    for (auto r2 : rects2) {
+    for (const auto &r2 : rects2) {
       StringRect nr2(*r2);
       nr2.trans_ += cds2;
       if (nr1.doesItIntersect(nr2)) {
@@ -311,7 +311,7 @@ void DrawText::getStringExtremes(const std::string &label, OrientType orient,
   getStringRects(label, orient, rects, draw_modes, to_draw, dontSplit);
 
   int i = 0;
-  for (auto r : rects) {
+  for (const auto &r : rects) {
     Point2D tl, tr, br, bl;
     r->calcCorners(tl, tr, br, bl, 0.0);
     // sometimes the rect is in a coordinate frame where +ve y is down,
@@ -389,7 +389,7 @@ void DrawText::alignString(
     align_trans.y = 0.0;
   }
 
-  for (auto r : rects) {
+  for (const auto &r : rects) {
     r->trans_ += align_trans;
   }
 }
@@ -539,7 +539,7 @@ void DrawText::getStringRects(const std::string &text, OrientType orient,
       getStringRects(tb, t_rects, t_draw_modes, t_draw_chars);
       alignString(ta, t_draw_modes, t_rects);
       double max_height = std::numeric_limits<double>::lowest();
-      for (auto r : t_rects) {
+      for (const auto &r : t_rects) {
         max_height = std::max(r->height_, max_height);
         r->y_shift_ = running_y;
       }

@@ -1005,14 +1005,14 @@ void testRowColumnAlignmentProblem() {
                        << std::endl;
   std::vector<std::string> csmiles = {"c1c([*:1])cncn1", "c1c([*:1])cccn1"};
   std::vector<ROMOL_SPTR> cores;
-  for (auto smi : csmiles) {
+  for (const auto &smi : csmiles) {
     cores.emplace_back(SmilesToMol(smi));
   }
 
   std::vector<std::string> msmiles = {"c1c(F)cccn1", "c1c(F)cncn1",
                                       "c1c(Cl)cccn1"};
   std::vector<std::unique_ptr<RWMol>> mols;
-  for (auto smi : msmiles) {
+  for (const auto &smi : msmiles) {
     mols.emplace_back(SmilesToMol(smi));
   }
 
@@ -1287,7 +1287,7 @@ Cn1cnc2cc(Oc3cc(N4CCN(Cc5ccccc5-c5ccc(Cl)cc5)CC4)ccc3C(=O)NS(=O)(=O)c3ccc(NCCCN4
     bool ok = false;
     int ndone = -1;
     try {
-      for (auto m : ms) {
+      for (const auto &m : ms) {
         decomp.add(*m);
         ++ndone;
       }
@@ -2858,7 +2858,7 @@ M  END
   RGroupDecompositionParameters params;
   params.matchingStrategy = GreedyChunks;
   RGroupDecomposition decomp(*core, params);
-  for (const auto smiles : smiArray) {
+  for (const auto &smiles : smiArray) {
     ROMol *mol = SmilesToMol(smiles);
     int res = decomp.add(*mol);
     TEST_ASSERT(res >= 0);
@@ -2869,7 +2869,7 @@ M  END
   std::cerr << "Best mapping" << std::endl;
   RGroupRows rows = decomp.getRGroupsAsRows();
   TEST_ASSERT(rows.size() == 11);
-  for (const auto row : rows) {
+  for (const auto &row : rows) {
     TEST_ASSERT(row.size() == 2);
     TEST_ASSERT(row.count("Core") == 1);
     TEST_ASSERT(row.count("R1") == 1);

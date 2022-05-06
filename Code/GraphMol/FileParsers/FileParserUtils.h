@@ -115,7 +115,7 @@ void applyMolListPropToAtoms(ROMol &mol, const std::string &pn,
 template <typename T>
 void applyMolListPropsToAtoms(ROMol &mol, const std::string &prefix,
                               const std::string missingValueMarker = "n/a") {
-  for (auto pn : mol.getPropList()) {
+  for (const auto &pn : mol.getPropList()) {
     if (pn.find(prefix) == 0 && pn.length() > prefix.length()) {
       applyMolListPropToAtoms<T>(mol, pn, prefix, missingValueMarker);
     }
@@ -154,7 +154,7 @@ inline void processMolPropertyList(
 //! atom property lists to the atoms
 inline void processMolPropertyLists(
     ROMol &mol, const std::string &missingValueMarker = "n/a") {
-  for (auto pn : mol.getPropList()) {
+  for (const auto &pn : mol.getPropList()) {
     processMolPropertyList(mol, pn, missingValueMarker);
   }
 }

@@ -810,7 +810,7 @@ void EmbeddedFrag::addAtomToAtomWithNoAng(unsigned int aid,
 RDKit::INT_VECT EmbeddedFrag::findCommonAtoms(const EmbeddedFrag &efrag2) {
   RDKit::INT_VECT res;
   for (auto eri1 : this->GetEmbeddedAtoms()) {
-    for (auto eri2 : efrag2.GetEmbeddedAtoms()) {
+    for (const auto &eri2 : efrag2.GetEmbeddedAtoms()) {
       if (eri1.first == eri2.first) {
         res.push_back(eri1.first);
       }

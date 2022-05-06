@@ -434,7 +434,7 @@ std::vector<std::string> RGroupDecomposition::getRGroupLabels() const {
   // this is a bit of a cheat
   RGroupColumns cols = getRGroupsAsColumns();
   std::vector<std::string> labels;
-  for (auto it : cols) {
+  for (const auto &it : cols) {
     labels.push_back(it.first);
   }
   std::sort(labels.begin(), labels.end());

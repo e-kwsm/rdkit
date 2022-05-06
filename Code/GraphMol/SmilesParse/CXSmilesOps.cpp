@@ -1000,7 +1000,7 @@ bool parse_variable_attachments(Iterator &first, Iterator last,
     }
     if (VALID_ATIDX(at1idx)) {
       std::string endPts = (boost::format("(%d") % others.size()).str();
-      for (auto idx : others) {
+      for (const auto &idx : others) {
         endPts += " " + idx;
       }
       endPts += ")";

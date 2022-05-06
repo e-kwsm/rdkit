@@ -94,7 +94,7 @@ class RGroupDecompositionHelper {
   python::list GetRGroupLabels() {
     python::list result;
     std::vector<std::string> labels = decomp->getRGroupLabels();
-    for (auto label : labels) {
+    for (const auto &label : labels) {
       result.append(label);
     }
     return result;

@@ -75,7 +75,7 @@ TEST_CASE("alkyl", "[substructure][generics]") {
     auto query = "O=C*"_smarts;
     REQUIRE(query);
     std::vector<std::string> labels = {"Alkyl", "ALK"};
-    for (auto label : labels) {
+    for (const auto &label : labels) {
       query->getAtomWithIdx(2)->setProp(
           common_properties::_QueryAtomGenericLabel, label);
       std::vector<std::pair<std::string, unsigned>> tests = {
@@ -99,7 +99,7 @@ TEST_CASE("alkoxy", "[substructure][generics]") {
     auto query = "O=C*"_smarts;
     REQUIRE(query);
     std::vector<std::string> labels = {"Alkoxy", "AOX"};
-    for (auto label : labels) {
+    for (const auto &label : labels) {
       query->getAtomWithIdx(2)->setProp(
           common_properties::_QueryAtomGenericLabel, label);
       std::vector<std::pair<std::string, unsigned>> tests = {
@@ -122,7 +122,7 @@ TEST_CASE("alkenyl", "[substructure][generics]") {
     auto query = "O=C*"_smarts;
     REQUIRE(query);
     std::vector<std::string> labels = {"Alkenyl", "AEL"};
-    for (auto label : labels) {
+    for (const auto &label : labels) {
       query->getAtomWithIdx(2)->setProp(
           common_properties::_QueryAtomGenericLabel, label);
       std::vector<std::pair<std::string, unsigned>> tests = {
@@ -145,7 +145,7 @@ TEST_CASE("alkynyl", "[substructure][generics]") {
     auto query = "O=C*"_smarts;
     REQUIRE(query);
     std::vector<std::string> labels = {"Alkynyl", "AYL"};
-    for (auto label : labels) {
+    for (const auto &label : labels) {
       query->getAtomWithIdx(2)->setProp(
           common_properties::_QueryAtomGenericLabel, label);
       REQUIRE(query);
@@ -170,7 +170,7 @@ TEST_CASE("cycloalkyl", "[substructure][generics]") {
     auto query = "O=C*"_smarts;
     REQUIRE(query);
     std::vector<std::string> labels = {"Carbocycloalkyl", "CAL"};
-    for (auto label : labels) {
+    for (const auto &label : labels) {
       query->getAtomWithIdx(2)->setProp(
           common_properties::_QueryAtomGenericLabel, label);
       std::vector<std::pair<std::string, unsigned>> tests = {
@@ -196,7 +196,7 @@ TEST_CASE("cycloalkenyl", "[substructure][generics]") {
     auto query = "O=C*"_smarts;
     REQUIRE(query);
     std::vector<std::string> labels = {"Carbocycloalkenyl", "CEL"};
-    for (auto label : labels) {
+    for (const auto &label : labels) {
       query->getAtomWithIdx(2)->setProp(
           common_properties::_QueryAtomGenericLabel, label);
       std::vector<std::pair<std::string, unsigned>> tests = {
@@ -226,7 +226,7 @@ TEST_CASE("carboaryl", "[substructure][generics]") {
     auto query = "O=C*"_smarts;
     REQUIRE(query);
     std::vector<std::string> labels = {"Carboaryl", "ARY"};
-    for (auto label : labels) {
+    for (const auto &label : labels) {
       query->getAtomWithIdx(2)->setProp(
           common_properties::_QueryAtomGenericLabel, label);
       std::vector<std::pair<std::string, unsigned>> tests = {
@@ -251,7 +251,7 @@ TEST_CASE("carbocyclic", "[substructure][generics]") {
     auto query = "O=C*"_smarts;
     REQUIRE(query);
     std::vector<std::string> labels = {"Carbocyclic", "CBC"};
-    for (auto label : labels) {
+    for (const auto &label : labels) {
       query->getAtomWithIdx(2)->setProp(
           common_properties::_QueryAtomGenericLabel, label);
       std::vector<std::pair<std::string, unsigned>> tests = {
@@ -276,7 +276,7 @@ TEST_CASE("cyclic", "[substructure][generics]") {
     auto query = "O=C*"_smarts;
     REQUIRE(query);
     std::vector<std::string> labels = {"Cyclic", "CYC"};
-    for (auto label : labels) {
+    for (const auto &label : labels) {
       query->getAtomWithIdx(2)->setProp(
           common_properties::_QueryAtomGenericLabel, label);
       std::vector<std::pair<std::string, unsigned>> tests = {
@@ -303,7 +303,7 @@ TEST_CASE("acyclic", "[substructure][generics]") {
     auto query = "O=C*"_smarts;
     REQUIRE(query);
     std::vector<std::string> labels = {"Acyclic", "ACY"};
-    for (auto label : labels) {
+    for (const auto &label : labels) {
       query->getAtomWithIdx(2)->setProp(
           common_properties::_QueryAtomGenericLabel, label);
       std::vector<std::pair<std::string, unsigned>> tests = {
@@ -331,7 +331,7 @@ TEST_CASE("carboacyclic", "[substructure][generics]") {
     auto query = "O=C*"_smarts;
     REQUIRE(query);
     std::vector<std::string> labels = {"Carboacyclic", "ABC"};
-    for (auto label : labels) {
+    for (const auto &label : labels) {
       query->getAtomWithIdx(2)->setProp(
           common_properties::_QueryAtomGenericLabel, label);
       std::vector<std::pair<std::string, unsigned>> tests = {
@@ -359,7 +359,7 @@ TEST_CASE("heteroacyclic", "[substructure][generics]") {
     auto query = "O=C*"_smarts;
     REQUIRE(query);
     std::vector<std::string> labels = {"Heteroacyclic", "AHC"};
-    for (auto label : labels) {
+    for (const auto &label : labels) {
       query->getAtomWithIdx(2)->setProp(
           common_properties::_QueryAtomGenericLabel, label);
       std::vector<std::pair<std::string, unsigned>> tests = {
@@ -387,7 +387,7 @@ TEST_CASE("heterocyclic", "[substructure][generics]") {
     auto query = "O=C*"_smarts;
     REQUIRE(query);
     std::vector<std::string> labels = {"Heterocyclic", "CHC"};
-    for (auto label : labels) {
+    for (const auto &label : labels) {
       query->getAtomWithIdx(2)->setProp(
           common_properties::_QueryAtomGenericLabel, label);
       std::vector<std::pair<std::string, unsigned>> tests = {
@@ -413,7 +413,7 @@ TEST_CASE("heteroaryl", "[substructure][generics]") {
     auto query = "O=C*"_smarts;
     REQUIRE(query);
     std::vector<std::string> labels = {"Heteroaryl", "HAR"};
-    for (auto label : labels) {
+    for (const auto &label : labels) {
       query->getAtomWithIdx(2)->setProp(
           common_properties::_QueryAtomGenericLabel, label);
       std::vector<std::pair<std::string, unsigned>> tests = {
@@ -439,7 +439,7 @@ TEST_CASE("no carbon ring", "[substructure][generics]") {
     auto query = "O=C*"_smarts;
     REQUIRE(query);
     std::vector<std::string> labels = {"NoCarbonRing", "CXX"};
-    for (auto label : labels) {
+    for (const auto &label : labels) {
       query->getAtomWithIdx(2)->setProp(
           common_properties::_QueryAtomGenericLabel, label);
       std::vector<std::pair<std::string, unsigned>> tests = {
@@ -580,7 +580,7 @@ TEST_CASE("generics are compatible with extraFinalChecks",
     auto query = "O=C*"_smarts;
     REQUIRE(query);
     std::vector<std::string> labels = {"Heteroaryl", "HAR"};
-    for (auto label : labels) {
+    for (const auto &label : labels) {
       query->getAtomWithIdx(2)->setProp(
           common_properties::_QueryAtomGenericLabel, label);
       std::vector<std::pair<std::string, unsigned>> tests = {

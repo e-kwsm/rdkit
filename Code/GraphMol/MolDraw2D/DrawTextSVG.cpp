@@ -123,7 +123,7 @@ void DrawTextSVG::getStringRects(
       running_x += char_width * 1.15;
     }
   }
-  for (auto r : rects) {
+  for (const auto &r : rects) {
     r->g_centre_.y = act_font_size - r->g_centre_.y;
     r->offset_.y = act_font_size / 2.0;
   }

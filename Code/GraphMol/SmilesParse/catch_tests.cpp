@@ -343,7 +343,7 @@ TEST_CASE("Github #2148", "[bug][Smiles][Smarts]") {
     {
       std::vector<std::string> smis = {"C1=C/C.C/1", "C/1=C/C.C1",
                                        "C-1=C/C.C/1", "C/1=C/C.C-1"};
-      for (auto smi : smis) {
+      for (const auto &smi : smis) {
         std::unique_ptr<RWMol> mol(SmilesToMol(smi));
         REQUIRE(mol);
         CHECK(mol->getBondBetweenAtoms(0, 3)->getBondType() == Bond::SINGLE);

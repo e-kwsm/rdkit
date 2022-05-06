@@ -4585,7 +4585,7 @@ M  END)CTAB";
     };
     auto pos = molb.find(ptrn);
     REQUIRE(pos != std::string::npos);
-    for (auto alternative : alternatives) {
+    for (const auto &alternative : alternatives) {
       auto mb2 = molb.replace(pos, ptrn.size(), alternative);
       std::unique_ptr<RWMol> m(MolBlockToMol(mb2));
       REQUIRE(m);

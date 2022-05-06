@@ -47,7 +47,7 @@ double RGroupScorer::matchScore(
   restoreInitialState();
   std::map<int, int> num_rgroups;
   for (size_t m = 0; m < permutation.size(); ++m) {  // for each molecule
-    for (auto l : matches[m + offset].at(permutation[m]).rgroups) {
+    for (const auto &l : matches[m + offset].at(permutation[m]).rgroups) {
       d_current.N = std::max(d_current.N, ++num_rgroups[l.first]);
     }
   }

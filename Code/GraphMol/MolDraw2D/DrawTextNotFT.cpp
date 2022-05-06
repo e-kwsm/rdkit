@@ -78,7 +78,7 @@ void DrawTextNotFT::alignString(
     align_offset /= num_norm;
   }
 
-  for (auto r : rects) {
+  for (const auto &r : rects) {
     r->trans_ -= align_trans;
     r->offset_ = align_offset;
   }

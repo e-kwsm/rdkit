@@ -67,7 +67,7 @@ void AtomFeatVector(const RDKit::Atom* atom, const ROMol* mol,
   std::string s = atom->getSymbol();
   bool inlist = false;
   int indx = 0;
-  for (auto ind : Symbols) {
+  for (const auto& ind : Symbols) {
     if (ind == s) {
       feats[indx] = 1;
       inlist = true;

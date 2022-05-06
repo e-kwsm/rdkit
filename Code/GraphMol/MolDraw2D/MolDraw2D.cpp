@@ -722,7 +722,7 @@ void MolDraw2D::getLabelSize(const string &label,
     vector<string> sym_bits =
         MolDraw2D_detail::atomLabelToPieces(label, orient);
     double height, width;
-    for (auto bit : sym_bits) {
+    for (const auto &bit : sym_bits) {
       getStringSize(bit, width, height);
       if (width > label_width) {
         label_width = width;

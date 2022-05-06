@@ -102,7 +102,7 @@ MolBundle enumerate(const ROMol &mol,
   if (!variationsFound) {
     return MolBundle();
   }
-  for (auto rmol : accum->getMols()) {
+  for (const auto &rmol : accum->getMols()) {
     detail::removeOrigIndices(*rmol);
   }
   return *accum;

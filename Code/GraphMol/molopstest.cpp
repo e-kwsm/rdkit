@@ -319,7 +319,7 @@ void test3() {
   bfrs.resize(0);
   bfs = MolOps::symmetrizeSSSR(*m, bfrs);
   TEST_ASSERT(bfs == 8);
-  for (auto bring : bfrs) {
+  for (const auto &bring : bfrs) {
     TEST_ASSERT(bring.size() < 6);
   }
   delete m;

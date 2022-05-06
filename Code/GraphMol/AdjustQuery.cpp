@@ -77,7 +77,7 @@ void adjustConjugatedFiveRings(RWMol &mol) {
   if (!mol.getRingInfo()->isInitialized()) {
     MolOps::symmetrizeSSSR(mol);
   }
-  for (auto ring : mol.getRingInfo()->bondRings()) {
+  for (const auto &ring : mol.getRingInfo()->bondRings()) {
     // only consider 5-rings with at least 3 conjugated bonds
     if (ring.size() != 5) {
       continue;
