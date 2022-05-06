@@ -90,7 +90,7 @@ struct RDKIT_FINGERPRINTS_EXPORT AdditionalOutput {
 class RDKIT_FINGERPRINTS_EXPORT FingerprintArguments {
  public:
   FingerprintArguments(bool countSimulation,
-                       const std::vector<std::uint32_t> countBounds,
+                       const std::vector<std::uint32_t> &countBounds,
                        std::uint32_t fpSize,
                        std::uint32_t numBitsPerFeature = 1,
                        bool includeChirality = false);
@@ -521,16 +521,17 @@ RDKIT_FINGERPRINTS_EXPORT ExplicitBitVect *getFP(const ROMol &mol,
                                                  FPType fPType);
 
 RDKIT_FINGERPRINTS_EXPORT std::vector<SparseIntVect<std::uint64_t> *> *
-getSparseCountFPBulk(const std::vector<const ROMol *> molVector, FPType fPType);
+getSparseCountFPBulk(const std::vector<const ROMol *> &molVector,
+                     FPType fPType);
 
 RDKIT_FINGERPRINTS_EXPORT std::vector<SparseBitVect *> *getSparseFPBulk(
-    const std::vector<const ROMol *> molVector, FPType fPType);
+    const std::vector<const ROMol *> &molVector, FPType fPType);
 
 RDKIT_FINGERPRINTS_EXPORT std::vector<SparseIntVect<std::uint32_t> *> *
-getCountFPBulk(const std::vector<const ROMol *> molVector, FPType fPType);
+getCountFPBulk(const std::vector<const ROMol *> &molVector, FPType fPType);
 
 RDKIT_FINGERPRINTS_EXPORT std::vector<ExplicitBitVect *> *getFPBulk(
-    const std::vector<const ROMol *> molVector, FPType fPType);
+    const std::vector<const ROMol *> &molVector, FPType fPType);
 
 }  // namespace RDKit
 

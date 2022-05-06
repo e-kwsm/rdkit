@@ -795,7 +795,7 @@ bool _complexQueryHelper(Atom::QUERYATOM_QUERY const *query, bool &hasAtNum) {
 }
 
 template <typename T>
-bool _atomListQueryHelper(const T query, bool ignoreNegation) {
+bool _atomListQueryHelper(const T &query, bool ignoreNegation) {
   PRECONDITION(query, "no query");
   if (!ignoreNegation && query->getNegation()) {
     return false;

@@ -2502,7 +2502,7 @@ void test11DrawMolGrid() {
 void test12DrawMols() {
   std::cout << " ----------------- Testing drawMolecules" << std::endl;
 
-  auto setup_mol = [](const std::string &smi, const std::string leg,
+  auto setup_mol = [](const std::string &smi, const std::string &leg,
                       std::vector<ROMol *> &mols,
                       std::vector<std::string> &legends) {
     mols.push_back(SmilesToMol(smi));

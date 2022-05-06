@@ -50,7 +50,7 @@ Reionizer::Reionizer() {
   this->d_ccs = CHARGE_CORRECTIONS;
 }
 
-Reionizer::Reionizer(const std::string acidbaseFile) {
+Reionizer::Reionizer(const std::string &acidbaseFile) {
   const AcidBaseCatalogParams *abparams =
       &(param_filename_flyweight(acidbaseFile).get());
   this->d_abcat = new AcidBaseCatalog(abparams);
@@ -67,14 +67,14 @@ Reionizer::Reionizer(
 
 Reionizer::Reionizer(
     const std::vector<std::tuple<std::string, std::string, std::string>> &data,
-    const std::vector<ChargeCorrection> ccs) {
+    const std::vector<ChargeCorrection> &ccs) {
   const AcidBaseCatalogParams *abparams = &(param_data_flyweight(data).get());
   this->d_abcat = new AcidBaseCatalog(abparams);
   this->d_ccs = ccs;
 }
 
-Reionizer::Reionizer(const std::string acidbaseFile,
-                     const std::vector<ChargeCorrection> ccs) {
+Reionizer::Reionizer(const std::string &acidbaseFile,
+                     const std::vector<ChargeCorrection> &ccs) {
   const AcidBaseCatalogParams *abparams =
       &(param_filename_flyweight(acidbaseFile).get());
   this->d_abcat = new AcidBaseCatalog(abparams);
@@ -82,7 +82,7 @@ Reionizer::Reionizer(const std::string acidbaseFile,
 }
 
 Reionizer::Reionizer(std::istream &acidbaseStream,
-                     const std::vector<ChargeCorrection> ccs) {
+                     const std::vector<ChargeCorrection> &ccs) {
   AcidBaseCatalogParams abparams(acidbaseStream);
   this->d_abcat = new AcidBaseCatalog(&abparams);
   this->d_ccs = ccs;

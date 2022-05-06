@@ -48,7 +48,7 @@ class RDKIT_MOLSTANDARDIZE_EXPORT Normalizer {
  public:
   Normalizer();
   //! Construct a Normalizer with a particular normalizeFile and maxRestarts
-  Normalizer(const std::string normalizeFile, const unsigned int maxRestarts);
+  Normalizer(const std::string &normalizeFile, const unsigned int maxRestarts);
   //! Construct a Normalizer with a particular stream (with parameters) and
   //! maxRestarts
   Normalizer(std::istream &normalizeStream, const unsigned int maxRestarts);

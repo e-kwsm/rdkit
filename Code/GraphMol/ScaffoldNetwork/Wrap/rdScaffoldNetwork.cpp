@@ -19,7 +19,7 @@ using namespace RDKit;
 
 namespace {
 ScaffoldNetwork::ScaffoldNetwork *createNetworkHelper(
-    python::object pmols,
+    const python::object &pmols,
     const ScaffoldNetwork::ScaffoldNetworkParams &params) {
   auto mols = pythonObjectToVect<ROMOL_SPTR>(pmols);
   std::unique_ptr<ScaffoldNetwork::ScaffoldNetwork> res(
@@ -31,7 +31,7 @@ ScaffoldNetwork::ScaffoldNetwork *createNetworkHelper(
   }
   return res.release();
 }
-void updateNetworkHelper(python::object pmols,
+void updateNetworkHelper(const python::object &pmols,
                          ScaffoldNetwork::ScaffoldNetwork &net,
                          const ScaffoldNetwork::ScaffoldNetworkParams &params) {
   auto mols = pythonObjectToVect<ROMOL_SPTR>(pmols);

@@ -15,6 +15,7 @@
 #include "Vector.h"
 #include <iomanip>
 #include <cstring>
+#include <utility>
 #include <boost/smart_ptr.hpp>
 
 // #ifndef INVARIANT_SILENT_METHOD
@@ -55,7 +56,7 @@ class Matrix {
   */
   Matrix(unsigned int nRows, unsigned int nCols, DATA_SPTR data)
       : d_nRows(nRows), d_nCols(nCols), d_dataSize(nRows * nCols) {
-    d_data = data;
+    d_data = std::move(data);
   }
 
   //! copy constructor

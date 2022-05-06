@@ -88,7 +88,7 @@ std::unique_ptr<MolStandardize::TautomerTransform> getTautomer(
 
 namespace MolStandardize {
 
-std::vector<Bond::BondType> stringToBondType(std::string bond_str) {
+std::vector<Bond::BondType> stringToBondType(const std::string &bond_str) {
   std::vector<Bond::BondType> bonds;
   for (const auto &c : bond_str) {
     switch (c) {
@@ -109,7 +109,7 @@ std::vector<Bond::BondType> stringToBondType(std::string bond_str) {
   return bonds;
 }
 
-std::vector<int> stringToCharge(std::string charge_str) {
+std::vector<int> stringToCharge(const std::string &charge_str) {
   std::vector<int> charges;
   for (const auto &c : charge_str) {
     switch (c) {
@@ -129,7 +129,7 @@ std::vector<int> stringToCharge(std::string charge_str) {
   return charges;
 }
 
-std::vector<TautomerTransform> readTautomers(std::string fileName) {
+std::vector<TautomerTransform> readTautomers(const std::string &fileName) {
   std::ifstream inStream(fileName.c_str());
   if ((!inStream) || (inStream.bad())) {
     std::ostringstream errout;

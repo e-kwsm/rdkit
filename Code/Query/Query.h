@@ -15,6 +15,7 @@
 #pragma warning(disable : 4800)  // warning: converting things to bool
 #endif
 
+#include <utility>
 #include <vector>
 #include <string>
 #include <functional>
@@ -89,7 +90,7 @@ class RDKIT_QUERY_EXPORT Query {
 
   //! sets our match function
   void setMatchFunc(std::function<bool(MatchFuncArgType)> what) {
-    this->d_matchFunc = what;
+    this->d_matchFunc = std::move(what);
   }
   //! returns our match function:
   std::function<bool(MatchFuncArgType)> getMatchFunc() const {
@@ -97,7 +98,7 @@ class RDKIT_QUERY_EXPORT Query {
   }
   //! sets our data function
   void setDataFunc(std::function<MatchFuncArgType(DataFuncArgType)> what) {
-    this->d_dataFunc = what;
+    this->d_dataFunc = std::move(what);
   }
   //! returns our data function:
   std::function<MatchFuncArgType(DataFuncArgType)> getDataFunc() const {
@@ -105,7 +106,7 @@ class RDKIT_QUERY_EXPORT Query {
   }
 
   //! adds a child to our list of children
-  void addChild(CHILD_TYPE child) { this->d_children.push_back(child); }
+  void addChild(const CHILD_TYPE &child) { this->d_children.push_back(child); }
   //! returns an iterator for the beginning of our child vector
   CHILD_VECT_CI beginChildren() const { return this->d_children.begin(); }
   //! returns an iterator for the end of our child vector

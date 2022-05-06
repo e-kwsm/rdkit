@@ -17,7 +17,7 @@ namespace python = boost::python;
 
 namespace {
 python::tuple JSONToMols(const std::string &jsonBlock,
-                         python::object pyparams) {
+                         const python::object &pyparams) {
   RDKit::MolInterchange::JSONParseParameters params;
   if (pyparams) {
     params =
@@ -34,7 +34,7 @@ python::tuple JSONToMols(const std::string &jsonBlock,
 }
 
 std::string MolsToJSON(const python::object &mols,
-                       const python::object pyparams) {
+                       const python::object &pyparams) {
   auto pymols = pythonObjectToVect<const RDKit::ROMol *>(mols);
   if (!pymols) {
     return "";
@@ -47,7 +47,7 @@ std::string MolsToJSON(const python::object &mols,
   }
   return RDKit::MolInterchange::MolsToJSONData(*pymols, params);
 }
-std::string MolToJSON(const RDKit::ROMol &mol, const python::object pyparams) {
+std::string MolToJSON(const RDKit::ROMol &mol, const python::object &pyparams) {
   RDKit::MolInterchange::JSONWriteParameters params =
       RDKit::MolInterchange::defaultJSONWriteParameters;
   if (pyparams) {

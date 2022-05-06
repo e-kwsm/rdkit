@@ -28,7 +28,8 @@ std::string stereoGroupClassDoc =
     "is a mix\nof diastereomers.\n";
 
 StereoGroup *createStereoGroup(StereoGroupType typ, ROMol &mol,
-                               python::object atomIds, python::object bondIds, unsigned readId) {
+                               const python::object &atomIds,
+                               const python::object &bondIds, unsigned readId) {
   std::vector<Atom *> cppAtoms;
   std::vector<Bond *> cppBonds;
   python::stl_input_iterator<unsigned int> beg(atomIds), end;

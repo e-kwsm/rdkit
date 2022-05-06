@@ -87,8 +87,9 @@ class RDKIT_GRAPHMOL_EXPORT AtomPDBResidueInfo : public AtomMonomerInfo {
                      unsigned int secondaryStructure = 0,
                      unsigned int segmentNumber = 0,
                      std::string monomerClass = "")
-      : AtomMonomerInfo(PDBRESIDUE, atomName, residueName, residueNumber, chainId,
-                        monomerClass),
+      : AtomMonomerInfo(PDBRESIDUE, atomName, std::move(residueName),
+                        residueNumber, std::move(chainId),
+                        std::move(monomerClass)),
         d_serialNumber(serialNumber),
         d_altLoc(std::move(altLoc)),
         d_insertionCode(std::move(insertionCode)),

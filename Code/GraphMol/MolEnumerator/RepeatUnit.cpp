@@ -34,7 +34,7 @@ const std::string headheadmarker = "_headhead";
 const unsigned ladderoffset = 100000;
 
 namespace {
-void tagAtoms(std::shared_ptr<ROMol> mol, const Bond *bond,
+void tagAtoms(const std::shared_ptr<ROMol> &mol, const Bond *bond,
               const boost::dynamic_bitset<> &sgatoms, unsigned int index,
               const std::string &marker, const std::string &framemarker,
               const std::string &connect) {

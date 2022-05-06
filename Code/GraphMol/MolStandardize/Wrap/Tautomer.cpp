@@ -228,7 +228,7 @@ ROMol *canonicalizeHelper(const MolStandardize::TautomerEnumerator &self,
 }
 
 ROMol *canonicalizeHelper2(const MolStandardize::TautomerEnumerator &self,
-                           const ROMol &mol, python::object scoreFunc) {
+                           const ROMol &mol, const python::object &scoreFunc) {
   pyobjFunctor ftor(scoreFunc);
   return self.canonicalize(mol, ftor);
 }
@@ -254,7 +254,8 @@ ROMol *pickCanonicalHelper(const MolStandardize::TautomerEnumerator &self,
 }
 
 ROMol *pickCanonicalHelper2(const MolStandardize::TautomerEnumerator &self,
-                            const python::object &o, python::object scoreFunc) {
+                            const python::object &o,
+                            const python::object &scoreFunc) {
   pyobjFunctor ftor(scoreFunc);
   python::extract<PyTautomerEnumeratorResult *> e(o);
   if (e.check()) {

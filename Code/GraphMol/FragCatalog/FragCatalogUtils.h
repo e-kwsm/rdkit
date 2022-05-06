@@ -21,7 +21,8 @@ namespace RDKit {
 // get the functional groups from file or stream
 // each functional groups is read in as a molecule with queryatoms and
 // querybonds
-RDKIT_FRAGCATALOG_EXPORT MOL_SPTR_VECT readFuncGroups(std::string fileName);
+RDKIT_FRAGCATALOG_EXPORT MOL_SPTR_VECT
+readFuncGroups(const std::string &fileName);
 RDKIT_FRAGCATALOG_EXPORT MOL_SPTR_VECT readFuncGroups(std::istream &inStream,
                                                       int nToRead = -1);
 

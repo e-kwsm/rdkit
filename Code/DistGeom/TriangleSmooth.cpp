@@ -11,7 +11,7 @@
 #include "TriangleSmooth.h"
 
 namespace DistGeom {
-bool triangleSmoothBounds(BoundsMatPtr boundsMat, double tol) {
+bool triangleSmoothBounds(const BoundsMatPtr &boundsMat, double tol) {
   return triangleSmoothBounds(boundsMat.get(), tol);
 }
 bool triangleSmoothBounds(BoundsMatrix *boundsMat, double tol) {
