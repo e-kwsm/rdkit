@@ -11,6 +11,7 @@
 #define NO_IMPORT_ARRAY
 #include <RDBoost/python.h>
 #include <string>
+#include <utility>
 
 // ours
 #include <GraphMol/FileParsers/MolSupplier.h>
@@ -29,7 +30,7 @@ void setDataHelper(SDMolSupplier &self, const std::string &text, bool sanitize,
 }
 void setStreamIndices(SDMolSupplier &self, python::object arg) {
   std::vector<std::streampos> loc;
-  PySequenceHolder<int> seq(arg);
+  PySequenceHolder<int> seq(std::move(arg));
   loc.reserve(seq.size());
   for (unsigned int i = 0; i < seq.size(); ++i) {
     loc.push_back(static_cast<std::streampos>(seq[i]));

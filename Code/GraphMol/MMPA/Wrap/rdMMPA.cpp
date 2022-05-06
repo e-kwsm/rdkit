@@ -76,9 +76,9 @@ python::tuple fragmentMolHelper2(const RDKit::ROMol &mol, unsigned int minCuts,
   return python::tuple(pyres);
 }
 
-python::tuple fragmentMolHelper3(const RDKit::ROMol &mol, python::object ob,
-                                 unsigned int minCuts, unsigned int maxCuts,
-                                 bool resultsAsMols) {
+python::tuple fragmentMolHelper3(const RDKit::ROMol &mol,
+                                 const python::object &ob, unsigned int minCuts,
+                                 unsigned int maxCuts, bool resultsAsMols) {
   std::vector<std::pair<RDKit::ROMOL_SPTR, RDKit::ROMOL_SPTR>> tres;
   std::unique_ptr<std::vector<unsigned int>> v =
       pythonObjectToVect<unsigned int>(ob);

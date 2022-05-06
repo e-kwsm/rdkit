@@ -62,7 +62,7 @@ unsigned int Compute2DCoords(RDKit::ROMol &mol, bool canonOrient,
 }
 
 unsigned int Compute2DCoordsMimicDistmat(
-    RDKit::ROMol &mol, python::object distMat, bool canonOrient,
+    RDKit::ROMol &mol, const python::object &distMat, bool canonOrient,
     bool clearConfs, double weightDistMat, unsigned int nFlipsPerSample,
     unsigned int nSamples, int sampleSeed, bool permuteDeg4Nodes,
     double bondLength = -1.0, bool forceRDKit = false) {
@@ -172,7 +172,7 @@ void GenerateDepictionMatching2DStructureAtomMap(RDKit::ROMol &mol,
 
 void GenerateDepictionMatching3DStructure(RDKit::ROMol &mol,
                                           RDKit::ROMol &reference, int confId,
-                                          python::object refPatt,
+                                          const python::object &refPatt,
                                           bool acceptFailure,
                                           bool forceRDKit = false) {
   RDKit::ROMol *referencePattern = nullptr;
@@ -214,8 +214,8 @@ class UsingCoordGen : public boost::noncopyable {
 
   void enter() { setPreferCoordGen(m_temp_state); }
 
-  void exit(python::object exc_type, python::object exc_val,
-            python::object traceback) {
+  void exit(const python::object &exc_type, const python::object &exc_val,
+            const python::object &traceback) {
     RDUNUSED_PARAM(exc_type);
     RDUNUSED_PARAM(exc_val);
     RDUNUSED_PARAM(traceback);

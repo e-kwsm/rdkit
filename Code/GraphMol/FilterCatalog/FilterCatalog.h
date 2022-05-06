@@ -182,7 +182,7 @@ class RDKIT_FILTERCATALOG_EXPORT FilterCatalog : public FCatalog {
            first.
   */
   bool removeEntry(unsigned int idx);
-  bool removeEntry(CONST_SENTRY entry);
+  bool removeEntry(const CONST_SENTRY &entry);
 
   //------------------------------------
   //! returns a particular FilterCatalogEntry in the Catalog
@@ -198,7 +198,7 @@ class RDKIT_FILTERCATALOG_EXPORT FilterCatalog : public FCatalog {
   //! returns the idx of the given entry, UINT_MAX if not found.
 
   unsigned int getIdxForEntry(const FilterCatalogEntry *entry) const;
-  unsigned int getIdxForEntry(CONST_SENTRY entry) const;
+  unsigned int getIdxForEntry(const CONST_SENTRY &entry) const;
 
   //------------------------------------
   //! returns the number of entries in the catalog

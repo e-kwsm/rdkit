@@ -57,7 +57,7 @@ std::vector<std::string> SynthonSpace::getReactionNames() const {
 }
 
 const std::shared_ptr<SynthonSet> SynthonSpace::getReaction(
-    std::string reactionName) {
+    const std::string &reactionName) {
   std::pair<std::string, std::shared_ptr<SynthonSet>> tmp =
       std::make_pair(reactionName, std::shared_ptr<SynthonSet>());
   if (const auto &it = std::lower_bound(

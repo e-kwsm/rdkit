@@ -68,8 +68,9 @@ std::vector<std::unique_ptr<T>> mtWorker(
 #endif
 
 template <typename T>
-std::vector<std::unique_ptr<T>> worker(v2::FileParsers::MolSupplier *suppl,
-                                       std::function<T *(RWMol &)> func) {
+std::vector<std::unique_ptr<T>> worker(
+    v2::FileParsers::MolSupplier *suppl,
+    const std::function<T *(RWMol &)> &func) {
   PRECONDITION(suppl, "no supplier");
   // if we are using a multi-threaded supplier then we can register a write
   // callback to do our processing multi-threaded too

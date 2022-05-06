@@ -806,7 +806,8 @@ M  END
 #endif
 }
 
-void testOneAtropIsomerMandP(std::string inputText, const std::string &expected,
+void testOneAtropIsomerMandP(const std::string &inputText,
+                             const std::string &expected,
                              bool isSmiles = true) {
   std::unique_ptr<RWMol> mol;
 

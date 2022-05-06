@@ -101,9 +101,9 @@ struct multiSmiMolSup_wrap {
                  MolIOEnter,
              python::return_internal_reference<>())
         .def("__exit__",
-             (bool (*)(MultithreadedSmilesMolSupplier *, python::object,
-                       python::object, python::object)) &
-                 MolIOExit)
+             (bool (*)(MultithreadedSmilesMolSupplier *, const python::object &,
+                       const python::object &,
+                       const python::object &))&MolIOExit)
         .def("__next__",
              (ROMol * (*)(MultithreadedSmilesMolSupplier *)) &
                  MolForwardSupplNext,
