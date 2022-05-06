@@ -249,7 +249,7 @@ void DrawMol::extractAtomCoords() {
   RDGeom::Transform2D trans;
   trans.SetTransform(Point2D(0.0, 0.0), rot);
   atCds_.clear();
-  for (auto pt3 : locs) {
+  for (const auto &pt3 : locs) {
     Point2D pt{pt3.x, -pt3.y};
     if (rot != 0.0) {
       trans.TransformPoint(pt);
@@ -1871,7 +1871,7 @@ void DrawMol::extractLegend() {
 
   Point2D loc(drawWidth_ / 2 + xOffset_ + width_ * marginPadding_,
               marginPadding_ * height_ + drawHeight_ + yOffset_);
-  for (auto bit : legend_bits) {
+  for (const auto &bit : legend_bits) {
     DrawAnnotation *da =
         new DrawAnnotation(bit, TextAlignType::MIDDLE, "legend", relFontScale,
                            loc, drawOptions_.legendColour, textDrawer_);
@@ -3965,7 +3965,7 @@ void adjustBondEndForString(
     const Point2D &end2, double padding,
     const std::vector<std::shared_ptr<StringRect>> &rects, Point2D &moveEnd) {
   Point2D labelPos = moveEnd;
-  for (auto r : rects) {
+  for (const auto &r : rects) {
     Point2D origTrans = r->trans_;
     r->trans_ += labelPos;
 
