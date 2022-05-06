@@ -220,7 +220,7 @@ double FingerprintVarianceScoreData::fingerprintVarianceGroupScore() {
   auto sum = std::accumulate(
       labelsToVarianceData.cbegin(), labelsToVarianceData.cend(), 0.0,
       [](double sum,
-         std::pair<int, std::shared_ptr<VarianceDataForLabel>> pair) {
+         const std::pair<int, std::shared_ptr<VarianceDataForLabel>> &pair) {
         auto variance = pair.second->variance();
 #ifdef DEBUG
         std::cerr << variance << ',';

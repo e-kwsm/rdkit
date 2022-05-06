@@ -23,9 +23,12 @@ namespace python = boost::python;
 
 namespace RDKit {
 
-SmilesMolSupplier *SmilesSupplierFromText(
-    std::string text, std::string delimiter = " ", int smilesColumn = 0,
-    int nameColumn = 1, bool titleLine = true, bool sanitize = true) {
+SmilesMolSupplier *SmilesSupplierFromText(const std::string &text,
+                                          const std::string &delimiter = " ",
+                                          int smilesColumn = 0,
+                                          int nameColumn = 1,
+                                          bool titleLine = true,
+                                          bool sanitize = true) {
   auto *res = new SmilesMolSupplier();
   res->setData(text, delimiter, smilesColumn, nameColumn, titleLine, sanitize);
   return res;

@@ -56,7 +56,7 @@ ChemicalReaction *getReaction(const std::string &tmpStr) {
 namespace MolStandardize {
 
 std::vector<std::shared_ptr<ChemicalReaction>> readTransformations(
-    std::string fileName) {
+    const std::string &fileName) {
   std::ifstream inStream(fileName.c_str());
   if ((!inStream) || (inStream.bad())) {
     std::ostringstream errout;

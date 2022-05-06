@@ -17,6 +17,8 @@
 #include <ML/InfoTheory/CorrMatGenerator.h>
 #include <RDGeneral/types.h>
 
+#include <utility>
+
 namespace python = boost::python;
 
 namespace RDInfoTheory {
@@ -32,7 +34,7 @@ PyObject *getCorrMatrix(BitCorrMatGenerator *cmGen) {
 }
 
 void setBitList(BitCorrMatGenerator *cmGen, python::object bitList) {
-  PySequenceHolder<int> blist(bitList);
+  PySequenceHolder<int> blist(std::move(bitList));
   unsigned int nb = blist.size();
   RDKit::INT_VECT res;
   res.reserve(nb);

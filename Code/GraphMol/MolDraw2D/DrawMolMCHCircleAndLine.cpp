@@ -193,7 +193,8 @@ void DrawMolMCHCircleAndLine::makeAtomHighlights(
 }
 
 // ****************************************************************************
-void DrawMolMCHCircleAndLine::adjustLineEndForHighlight(int at_idx, Point2D p1,
+void DrawMolMCHCircleAndLine::adjustLineEndForHighlight(int at_idx,
+                                                        const Point2D &p1,
                                                         Point2D &p2) const {
   // this code is transliterated from
   // http://csharphelper.com/blog/2017/08/calculate-where-a-line-segment-and-an-ellipse-intersect-in-c/
