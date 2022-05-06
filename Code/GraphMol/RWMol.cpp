@@ -394,7 +394,7 @@ void RWMol::removeAtom(Atom *atom, bool clearProps) {
   }
 
   // do the same with the coordinates in the conformations
-  for (auto conf : d_confs) {
+  for (const auto &conf : d_confs) {
     RDGeom::POINT3D_VECT &positions = conf->getPositions();
     auto pi = positions.begin();
     for (unsigned int i = 0; i < getNumAtoms() - 1; i++) {
