@@ -74,7 +74,7 @@ void ReportParseError(const char *message, bool throwIt) {
 void CleanupAfterParseError(RWMol *mol) {
   PRECONDITION(mol, "no molecule");
   // blow out any partial bonds:
-  for (const auto &markI : *mol->getBondBookmarks()) {
+  for (auto &markI : *mol->getBondBookmarks()) {
     RWMol::BOND_PTR_LIST &bonds = markI.second;
     for (auto &bond : bonds) {
       delete bond;
