@@ -28,8 +28,8 @@ double calcAngleRestValue(const MMFFAngle *mmffAngleParams) {
   return mmffAngleParams->theta0;
 }
 
-double calcCosTheta(RDGeom::Point3D p1, RDGeom::Point3D p2, RDGeom::Point3D p3,
-                    double dist1, double dist2) {
+double calcCosTheta(const RDGeom::Point3D &p1, const RDGeom::Point3D &p2,
+                    const RDGeom::Point3D &p3, double dist1, double dist2) {
   RDGeom::Point3D p12 = p1 - p2;
   RDGeom::Point3D p32 = p3 - p2;
   double cosTheta = p12.dotProduct(p32) / (dist1 * dist2);
