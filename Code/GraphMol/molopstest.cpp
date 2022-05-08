@@ -4061,8 +4061,8 @@ void testSFNetIssue3480481() {
   BOOST_LOG(rdInfoLog) << "\tdone" << std::endl;
 }
 
-void aamatchtest(std::string smi1, std::string smi2, bool shouldMatch, int idx1,
-                 int idx2) {
+void aamatchtest(const std::string &smi1, const std::string &smi2,
+                 bool shouldMatch, int idx1, int idx2) {
   RWMol *m1 = SmilesToMol(smi1);
   RWMol *m2 = SmilesToMol(smi2);
   TEST_ASSERT(m1);
