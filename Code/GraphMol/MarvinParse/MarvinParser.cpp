@@ -90,7 +90,7 @@ class MarvinCMLReader {
 
   std::unique_ptr<ChemicalReaction> parseReaction(
       boost::property_tree::ptree rxnTree,
-      boost::property_tree::ptree documentTree, bool sanitize = false,
+      const boost::property_tree::ptree &documentTree, bool sanitize = false,
       bool removeHs = false) {
     std::unique_ptr<ChemicalReaction> rxn{new ChemicalReaction()};
     rxnTree = rxnTree.get_child("cml.MDocument.MChemicalStruct.reaction");
@@ -754,7 +754,7 @@ class MarvinCMLReader {
 
   MarvinReaction *parseMarvinReaction(
       boost::property_tree::ptree rxnTree,
-      boost::property_tree::ptree documentTree,
+      const boost::property_tree::ptree &documentTree,
       bool parseArrowPlusesAndConditions =
           false)  // Arrows etc are not used in RDKIT) {
   {

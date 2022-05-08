@@ -1344,8 +1344,8 @@ void ParseRGroupLabels(RWMol *mol, const std::string &text, unsigned int line) {
   }
 }
 
-void ParseAtomAlias(RWMol *mol, std::string text, const std::string &nextLine,
-                    unsigned int line) {
+void ParseAtomAlias(RWMol *mol, const std::string &text,
+                    const std::string &nextLine, unsigned int line) {
   PRECONDITION(mol, "bad mol");
   PRECONDITION(text.substr(0, 2) == std::string("A "), "bad atom alias line");
 
@@ -1364,7 +1364,7 @@ void ParseAtomAlias(RWMol *mol, std::string text, const std::string &nextLine,
   at->setProp(common_properties::molFileAlias, nextLine);
 }
 
-void ParseAtomValue(RWMol *mol, std::string text, unsigned int line) {
+void ParseAtomValue(RWMol *mol, const std::string &text, unsigned int line) {
   PRECONDITION(mol, "bad mol");
   PRECONDITION(text.substr(0, 2) == std::string("V "), "bad atom value line");
 
