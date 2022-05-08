@@ -70,12 +70,11 @@ std::string RDKitFPArguments::infoString() const {
          " useBondOrder=" + std::to_string(df_useBondOrder);
 }
 
-RDKitFPArguments::RDKitFPArguments(unsigned int minPath, unsigned int maxPath,
-                                   bool useHs, bool branchedPaths,
-                                   bool useBondOrder, bool countSimulation,
-                                   const std::vector<std::uint32_t> countBounds,
-                                   std::uint32_t fpSize,
-                                   std::uint32_t numBitsPerFeature)
+RDKitFPArguments::RDKitFPArguments(
+    unsigned int minPath, unsigned int maxPath, bool useHs, bool branchedPaths,
+    bool useBondOrder, bool countSimulation,
+    const std::vector<std::uint32_t> &countBounds, std::uint32_t fpSize,
+    std::uint32_t numBitsPerFeature)
     : FingerprintArguments(countSimulation, countBounds, fpSize,
                            numBitsPerFeature),
       d_minPath(minPath),
