@@ -16,6 +16,8 @@
 #include <RDBoost/Wrap.h>
 #include <DataStructs/base64.h>
 
+#include <utility>
+
 namespace python = boost::python;
 
 template <typename T>
@@ -35,7 +37,7 @@ std::string ToBase64(T& self) {
 
 template <typename T>
 void SetBitsFromList(T* bv, python::object onBitList) {
-  PySequenceHolder<int> bitL(onBitList);
+  PySequenceHolder<int> bitL(std::move(onBitList));
   for (unsigned int i = 0; i < bitL.size(); i++) {
     bv->setBit(bitL[i]);
   }
@@ -43,7 +45,7 @@ void SetBitsFromList(T* bv, python::object onBitList) {
 
 template <typename T>
 void UnSetBitsFromList(T* bv, python::object offBitList) {
-  PySequenceHolder<int> bitL(offBitList);
+  PySequenceHolder<int> bitL(std::move(offBitList));
   for (unsigned int i = 0; i < bitL.size(); i++) {
     bv->unsetBit(bitL[i]);
   }
