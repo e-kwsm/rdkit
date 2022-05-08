@@ -11,6 +11,7 @@
 #include <RDBoost/Wrap.h>
 #include <iostream>
 #include <string>
+#include <utility>
 #include <boost/python.hpp>
 #include <RDBoost/boost_numpy.h>
 #include <numpy/npy_common.h>
@@ -108,9 +109,9 @@ SparseIntVect<OutputType> *getSparseCountFingerprint(
   std::vector<std::uint32_t> *customAtomInvariants = nullptr;
   std::vector<std::uint32_t> *customBondInvariants = nullptr;
 
-  convertPyArguments(py_fromAtoms, py_ignoreAtoms, py_atomInvs, py_bondInvs,
-                     fromAtoms, ignoreAtoms, customAtomInvariants,
-                     customBondInvariants);
+  convertPyArguments(std::move(py_fromAtoms), std::move(py_ignoreAtoms),
+                     std::move(py_atomInvs), std::move(py_bondInvs), fromAtoms,
+                     ignoreAtoms, customAtomInvariants, customBondInvariants);
   AdditionalOutput *additionalOutput = nullptr;
   if (!py_additionalOutput.is_none()) {
     additionalOutput = python::extract<AdditionalOutput *>(py_additionalOutput);
@@ -137,9 +138,9 @@ SparseBitVect *getSparseFingerprint(
   std::vector<std::uint32_t> *ignoreAtoms = nullptr;
   std::vector<std::uint32_t> *customAtomInvariants = nullptr;
   std::vector<std::uint32_t> *customBondInvariants = nullptr;
-  convertPyArguments(py_fromAtoms, py_ignoreAtoms, py_atomInvs, py_bondInvs,
-                     fromAtoms, ignoreAtoms, customAtomInvariants,
-                     customBondInvariants);
+  convertPyArguments(std::move(py_fromAtoms), std::move(py_ignoreAtoms),
+                     std::move(py_atomInvs), std::move(py_bondInvs), fromAtoms,
+                     ignoreAtoms, customAtomInvariants, customBondInvariants);
   AdditionalOutput *additionalOutput = nullptr;
   if (!py_additionalOutput.is_none()) {
     additionalOutput = python::extract<AdditionalOutput *>(py_additionalOutput);
@@ -166,9 +167,9 @@ SparseIntVect<std::uint32_t> *getCountFingerprint(
   std::vector<std::uint32_t> *ignoreAtoms = nullptr;
   std::vector<std::uint32_t> *customAtomInvariants = nullptr;
   std::vector<std::uint32_t> *customBondInvariants = nullptr;
-  convertPyArguments(py_fromAtoms, py_ignoreAtoms, py_atomInvs, py_bondInvs,
-                     fromAtoms, ignoreAtoms, customAtomInvariants,
-                     customBondInvariants);
+  convertPyArguments(std::move(py_fromAtoms), std::move(py_ignoreAtoms),
+                     std::move(py_atomInvs), std::move(py_bondInvs), fromAtoms,
+                     ignoreAtoms, customAtomInvariants, customBondInvariants);
   AdditionalOutput *additionalOutput = nullptr;
   if (!py_additionalOutput.is_none()) {
     additionalOutput = python::extract<AdditionalOutput *>(py_additionalOutput);
@@ -196,9 +197,9 @@ ExplicitBitVect *getFingerprint(const FingerprintGenerator<OutputType> *fpGen,
   std::vector<std::uint32_t> *ignoreAtoms = nullptr;
   std::vector<std::uint32_t> *customAtomInvariants = nullptr;
   std::vector<std::uint32_t> *customBondInvariants = nullptr;
-  convertPyArguments(py_fromAtoms, py_ignoreAtoms, py_atomInvs, py_bondInvs,
-                     fromAtoms, ignoreAtoms, customAtomInvariants,
-                     customBondInvariants);
+  convertPyArguments(std::move(py_fromAtoms), std::move(py_ignoreAtoms),
+                     std::move(py_atomInvs), std::move(py_bondInvs), fromAtoms,
+                     ignoreAtoms, customAtomInvariants, customBondInvariants);
   AdditionalOutput *additionalOutput = nullptr;
   if (!py_additionalOutput.is_none()) {
     additionalOutput = python::extract<AdditionalOutput *>(py_additionalOutput);
@@ -663,7 +664,8 @@ void wrapGenerator(const std::string &nm) {
            python::args("self"), "return the fingerprint options object");
 }
 
-void setCountBoundsHelper(FingerprintArguments &opts, python::object bounds) {
+void setCountBoundsHelper(FingerprintArguments &opts,
+                          const python::object &bounds) {
   pythonObjectToVect(bounds, opts.d_countBounds);
 }
 }  // namespace
