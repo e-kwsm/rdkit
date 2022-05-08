@@ -58,7 +58,7 @@ struct PyLogStream : std::ostream, std::streambuf {
   static thread_local std::string buffer;
   PyObject *logfn = nullptr;
 
-  PyLogStream(std::string level) : std::ostream(this) {
+  PyLogStream(const std::string &level) : std::ostream(this) {
     PyObject *module = PyImport_ImportModule("logging");
     PyObject *logger = nullptr;
 
@@ -148,13 +148,14 @@ void WrapLogs() {
   rdErrorLog->SetTee(error);
 }
 
-void EnableLog(std::string spec) { logging::enable_logs(spec); }
+void EnableLog(const std::string &spec) { logging::enable_logs(spec); }
 
-void DisableLog(std::string spec) { logging::disable_logs(spec); }
+void DisableLog(const std::string &spec) { logging::disable_logs(spec); }
 
 std::string LogStatus() { return logging::log_status(); }
 
-void AttachFileToLog(std::string spec, std::string filename, int delay = 100) {
+void AttachFileToLog(const std::string &spec, const std::string &filename,
+                     int delay = 100) {
   (void)spec;
   (void)filename;
   (void)delay;
@@ -191,7 +192,7 @@ void LogErrorMsg(const std::string &msg) {
   BOOST_LOG(rdErrorLog) << msg << std::endl;
 }
 
-void LogMessage(std::string spec, std::string msg) {
+void LogMessage(const std::string &spec, const std::string &msg) {
   if (spec == "rdApp.error") {
     LogErrorMsg(msg);
   } else if (spec == "rdApp.warning") {
@@ -210,8 +211,8 @@ class BlockLogs : public boost::noncopyable {
 
   BlockLogs *enter() { return this; }
 
-  void exit(python::object exc_type, python::object exc_val,
-            python::object traceback) {
+  void exit(const python::object &exc_type, const python::object &exc_val,
+            const python::object &traceback) {
     RDUNUSED_PARAM(exc_type);
     RDUNUSED_PARAM(exc_val);
     RDUNUSED_PARAM(traceback);
