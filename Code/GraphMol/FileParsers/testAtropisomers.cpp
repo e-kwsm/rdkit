@@ -31,6 +31,7 @@
 #include <vector>
 #include <boost/lexical_cast.hpp>
 #include <filesystem>
+#include <utility>
 using namespace RDKit;
 
 class MolAtropTest {
@@ -56,7 +57,7 @@ class MolAtropTest {
             int atomCountInit, int bondCountInit)
         : atomCount(atomCountInit),
           bondCount(bondCountInit),
-          fileName(fileNameInit),
+          fileName(std::move(fileNameInit)),
           expectedResult(expectedResultInit) {};
   };
 
@@ -68,7 +69,7 @@ class MolAtropTest {
     std::string expectedOutput;
     bool expectedResult;
 
-    KekuleTest(std::string smilesInit, std::string nameInit,
+    KekuleTest(const std::string &smilesInit, const std::string &nameInit,
                bool expectedResultInit, int atomCountInit, int bondCountInit)
         : atomCount(atomCountInit),
           bondCount(bondCountInit),
@@ -86,7 +87,7 @@ class MolAtropTest {
     }
   }
 
-  std::string GetExpectedValue(std::string expectedFileName) {
+  std::string GetExpectedValue(const std::string &expectedFileName) {
     std::stringstream expectedMolStr;
     std::ifstream in;
     in.open(expectedFileName);
@@ -511,7 +512,7 @@ class MolAtropTest {
   }
 };
 
-void testLookForAtropisomersInSDdfFiles(std::string fileName,
+void testLookForAtropisomersInSDdfFiles(const std::string &fileName,
                                         unsigned int expectedHits,
                                         unsigned int expectedMisses) {
   BOOST_LOG(rdInfoLog) << "Looking for atropisomers in " << fileName

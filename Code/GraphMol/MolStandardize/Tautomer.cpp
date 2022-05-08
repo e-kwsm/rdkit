@@ -599,7 +599,7 @@ TautomerEnumeratorResult TautomerEnumerator::enumerate(const ROMol &mol) const {
 // pickCanonical non-templated overload that avoids recomputing SMILES
 ROMol *TautomerEnumerator::pickCanonical(
     const TautomerEnumeratorResult &tautRes,
-    boost::function<int(const ROMol &mol)> scoreFunc) const {
+    const boost::function<int(const ROMol &mol)> &scoreFunc) const {
   ROMOL_SPTR bestMol;
   if (tautRes.d_tautomers.size() == 1) {
     bestMol = tautRes.d_tautomers.begin()->second.tautomer;
@@ -633,7 +633,8 @@ ROMol *TautomerEnumerator::pickCanonical(
 }
 
 ROMol *TautomerEnumerator::canonicalize(
-    const ROMol &mol, boost::function<int(const ROMol &mol)> scoreFunc) const {
+    const ROMol &mol,
+    const boost::function<int(const ROMol &mol)> &scoreFunc) const {
   auto thisCopy = TautomerEnumerator(*this);
   thisCopy.setReassignStereo(false);
   auto res = thisCopy.enumerate(mol);
@@ -642,11 +643,11 @@ ROMol *TautomerEnumerator::canonicalize(
         << "no tautomers found, returning input molecule" << std::endl;
     return new ROMol(mol);
   }
-  return pickCanonical(res, scoreFunc);
+  return pickCanonical(res, std::move(scoreFunc));
 }
 
 void TautomerEnumerator::canonicalizeInPlace(
-    RWMol &mol, boost::function<int(const ROMol &mol)> scoreFunc) const {
+    RWMol &mol, const boost::function<int(const ROMol &mol)> &scoreFunc) const {
   auto thisCopy = TautomerEnumerator(*this);
   thisCopy.setReassignStereo(false);
   auto res = thisCopy.enumerate(mol);
@@ -655,7 +656,7 @@ void TautomerEnumerator::canonicalizeInPlace(
         << "no tautomers found, molecule unchanged" << std::endl;
     return;
   }
-  std::unique_ptr<ROMol> tmp{pickCanonical(res, scoreFunc)};
+  std::unique_ptr<ROMol> tmp{pickCanonical(res, std::move(scoreFunc))};
 
   TEST_ASSERT(tmp->getNumAtoms() == mol.getNumAtoms());
   TEST_ASSERT(tmp->getNumBonds() == mol.getNumBonds());

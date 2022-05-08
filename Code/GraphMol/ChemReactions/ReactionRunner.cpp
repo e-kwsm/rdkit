@@ -233,7 +233,7 @@ bool getReactantMatches(const MOL_SPTR_VECT &reactants,
 bool recurseOverReactantCombinations(
     const VectVectMatchVectType &matchesByReactant,
     VectVectMatchVectType &matchesPerProduct, unsigned int level,
-    VectMatchVectType combination, unsigned int maxProducts) {
+    const VectMatchVectType &combination, unsigned int maxProducts) {
   unsigned int nReactants = matchesByReactant.size();
   URANGE_CHECK(level, nReactants);
   PRECONDITION(combination.size() == nReactants, "bad combination size");
@@ -330,7 +330,7 @@ bool updatePropsFromImplicitProps(Atom *templateAtom, Atom *atom) {
   return res;
 }
 
-RWMOL_SPTR convertTemplateToMol(const ROMOL_SPTR prodTemplateSptr) {
+RWMOL_SPTR convertTemplateToMol(const ROMOL_SPTR &prodTemplateSptr) {
   const ROMol *prodTemplate = prodTemplateSptr.get();
   auto *res = new RWMol();
 
@@ -432,7 +432,7 @@ RWMOL_SPTR convertTemplateToMol(const ROMOL_SPTR prodTemplateSptr) {
 
 ReactantProductAtomMapping *getAtomMappingsReactantProduct(
     const MatchVectType &match, const ROMol &reactantTemplate,
-    RWMOL_SPTR product, unsigned numReactAtoms) {
+    const RWMOL_SPTR &product, unsigned numReactAtoms) {
   auto *mapping = new ReactantProductAtomMapping(numReactAtoms);
 
   // keep track of which mapped atoms in the reactant template are bonded to
@@ -668,7 +668,7 @@ void translateProductStereoBondDirections(Bond *pBond, const Bond *start,
  * see if the reactant's stereochemistry is preserved.
  * 4- in any other case, keep the STEREONONE label.
  */
-void updateStereoBonds(RWMOL_SPTR product, const ROMol &reactant,
+void updateStereoBonds(const RWMOL_SPTR &product, const ROMol &reactant,
                        ReactantProductAtomMapping *mapping) {
   for (Bond *pBond : product->bonds()) {
     // We are only interested in double bonds
@@ -726,7 +726,7 @@ void updateStereoBonds(RWMOL_SPTR product, const ROMol &reactant,
 }
 }  // namespace
 
-void setReactantBondPropertiesToProduct(RWMOL_SPTR product,
+void setReactantBondPropertiesToProduct(const RWMOL_SPTR &product,
                                         const ROMol &reactant,
                                         ReactantProductAtomMapping *mapping) {
   for (unsigned int bidx = 0; bidx < product->getNumBonds(); ++bidx) {
@@ -889,7 +889,7 @@ Bond *addBondToProduct(const Bond &origB, RWMol &product,
   }
 }
 
-void addMissingProductBonds(const Bond &origB, RWMOL_SPTR product,
+void addMissingProductBonds(const Bond &origB, const RWMOL_SPTR &product,
                             ReactantProductAtomMapping *mapping) {
   unsigned int begIdx = origB.getBeginAtomIdx();
   unsigned int endIdx = origB.getEndAtomIdx();
@@ -904,7 +904,7 @@ void addMissingProductBonds(const Bond &origB, RWMOL_SPTR product,
 }
 
 void addMissingProductAtom(const Atom &reactAtom, unsigned reactNeighborIdx,
-                           unsigned prodNeighborIdx, RWMOL_SPTR product,
+                           unsigned prodNeighborIdx, const RWMOL_SPTR &product,
                            const ROMol &reactant,
                            ReactantProductAtomMapping *mapping, unsigned int reactantId) {
   Atom *newAtom = nullptr;
@@ -939,7 +939,7 @@ void addMissingProductAtom(const Atom &reactAtom, unsigned reactNeighborIdx,
 }
 
 void addReactantNeighborsToProduct(
-    const ROMol &reactant, const Atom &reactantAtom, RWMOL_SPTR product,
+    const ROMol &reactant, const Atom &reactantAtom, const RWMOL_SPTR &product,
     boost::dynamic_bitset<> &visitedAtoms,
     std::vector<const Atom *> &chiralAtomsToCheck,
     ReactantProductAtomMapping *mapping, unsigned int reactantId) {
@@ -1068,7 +1068,7 @@ void addReactantNeighborsToProduct(
 
 void checkAndCorrectChiralityOfMatchingAtomsInProduct(
     const ROMol &reactant, unsigned reactantAtomIdx, const Atom &reactantAtom,
-    RWMOL_SPTR product, ReactantProductAtomMapping *mapping) {
+    const RWMOL_SPTR &product, ReactantProductAtomMapping *mapping) {
   for (unsigned i = 0; i < mapping->reactProdAtomMap[reactantAtomIdx].size();
        i++) {
     unsigned productAtomIdx = mapping->reactProdAtomMap[reactantAtomIdx][i];
@@ -1190,8 +1190,8 @@ void checkAndCorrectChiralityOfMatchingAtomsInProduct(
 
 // Check the chirality of atoms not directly involved in the reaction
 void checkAndCorrectChiralityOfProduct(
-    const std::vector<const Atom *> &chiralAtomsToCheck, RWMOL_SPTR product,
-    ReactantProductAtomMapping *mapping) {
+    const std::vector<const Atom *> &chiralAtomsToCheck,
+    const RWMOL_SPTR &product, ReactantProductAtomMapping *mapping) {
   for (auto reactantAtom : chiralAtomsToCheck) {
     CHECK_INVARIANT(reactantAtom->getChiralTag() != Atom::CHI_UNSPECIFIED,
                     "missing atom chirality.");
@@ -1252,7 +1252,7 @@ void checkAndCorrectChiralityOfProduct(
 // Copy enhanced stereo groups from one reactant to the product
 // stereo groups are copied if any atoms are in the product with
 // the stereochemical information from the reactant preserved.
-void copyEnhancedStereoGroups(const ROMol &reactant, RWMOL_SPTR product,
+void copyEnhancedStereoGroups(const ROMol &reactant, const RWMOL_SPTR &product,
                               const ReactantProductAtomMapping &mapping) {
   std::vector<StereoGroup> new_stereo_groups;
   for (const auto &sg : reactant.getStereoGroups()) {
@@ -1322,8 +1322,9 @@ void generateProductConformers(Conformer *productConf, const ROMol &reactant,
   }
 }
 
-void addReactantAtomsAndBonds(const ChemicalReaction &rxn, RWMOL_SPTR product,
-                              const ROMOL_SPTR reactantSptr,
+void addReactantAtomsAndBonds(const ChemicalReaction &rxn,
+                              const RWMOL_SPTR &product,
+                              const ROMOL_SPTR &reactantSptr,
                               const MatchVectType &match,
                               const ROMOL_SPTR reactantTemplate,
                               Conformer *productConf,
@@ -1653,8 +1654,8 @@ std::vector<MOL_SPTR_VECT> run_Reactants(const ChemicalReaction &rxn,
 
 namespace {
 bool updateAtomsModifiedByReaction(
-    RWMol &reactant, const ROMOL_SPTR reactantTemplate,
-    const ROMOL_SPTR productTemplate,
+    RWMol &reactant, const ROMOL_SPTR &reactantTemplate,
+    const ROMOL_SPTR &productTemplate,
     const std::map<unsigned int, unsigned int> &productAtomMap,
     const std::map<unsigned int, unsigned int> &reactantProductMap,
     const MatchVectType &match) {
@@ -1741,8 +1742,8 @@ bool updateAtomsModifiedByReaction(
 }
 
 bool updateBondsModifiedByReaction(
-    RWMol &reactant, const ROMOL_SPTR reactantTemplate,
-    const ROMOL_SPTR productTemplate,
+    RWMol &reactant, const ROMOL_SPTR &reactantTemplate,
+    const ROMOL_SPTR &productTemplate,
     const std::map<unsigned int, unsigned int> &productAtomMap,
     const std::map<unsigned int, unsigned int> &reactantProductMap,
     const MatchVectType &match) {
