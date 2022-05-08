@@ -9,6 +9,7 @@
 //
 
 #include <RDGeneral/RDLog.h>
+#include <utility>
 #include "MarvinDefs.h"
 
 namespace RDKit {
@@ -768,7 +769,7 @@ MarvinAtom::MarvinAtom()
 {}
 
 MarvinAtom::MarvinAtom(const MarvinAtom &atomToCopy, std::string newId)
-    : id(newId),
+    : id(std::move(newId)),
       elementType(atomToCopy.elementType),
       x2(atomToCopy.x2),
       y2(atomToCopy.y2),
@@ -931,13 +932,13 @@ ptree MarvinAtom::toPtree(unsigned int coordinatePrecision) const {
 
 MarvinBond::MarvinBond(const MarvinBond &bondToCopy, std::string newId,
                        std::string atomRef1, std::string atomRef2)
-    : id(newId),
+    : id(std::move(newId)),
       order(bondToCopy.order),
       bondStereo(bondToCopy.bondStereo),
       queryType(bondToCopy.queryType),
       convention(bondToCopy.convention) {
-  atomRefs2[0] = atomRef1;
-  atomRefs2[1] = atomRef2;
+  atomRefs2[0] = std::move(atomRef1);
+  atomRefs2[1] = std::move(atomRef2);
 }
 
 const std::string MarvinBond::getBondType() const {
@@ -1064,7 +1065,7 @@ ptree MarvinBond::toPtree() const {
 
 MarvinMolBase::~MarvinMolBase() {}
 
-int MarvinMolBase::getAtomIndex(std::string id) const {
+int MarvinMolBase::getAtomIndex(const std::string &id) const {
   auto atomIter =
       find_if(atoms.begin(), atoms.end(),
               [id](const MarvinAtom *arg) { return arg->id == id; });
@@ -1097,7 +1098,7 @@ void MarvinMolBase::removeOwnedBond(MarvinBond *bond) {
   this->parent->removeOwnedBond(bond);
 }
 
-int MarvinMolBase::getBondIndex(std::string id) const {
+int MarvinMolBase::getBondIndex(const std::string &id) const {
   auto bondIter =
       find_if(bonds.begin(), bonds.end(),
               [id](const MarvinBond *arg) { return arg->id == id; });
@@ -1108,7 +1109,7 @@ int MarvinMolBase::getBondIndex(std::string id) const {
   }
 }
 
-MarvinAtom *MarvinMolBase::findAtomByRef(std::string atomId) {
+MarvinAtom *MarvinMolBase::findAtomByRef(const std::string &atomId) {
   auto atomIter =
       find_if(this->atoms.begin(), this->atoms.end(),
               [atomId](const MarvinAtom *arg) { return arg->id == atomId; });
@@ -1125,7 +1126,7 @@ MarvinAtom *MarvinMolBase::findAtomByRef(std::string atomId) {
   return nullptr;
 }
 
-MarvinBond *MarvinMolBase::findBondByRef(std::string bondId) {
+MarvinBond *MarvinMolBase::findBondByRef(const std::string &bondId) {
   auto bondIter =
       find_if(this->bonds.begin(), this->bonds.end(),
               [bondId](const MarvinBond *arg) { return arg->id == bondId; });
@@ -1253,7 +1254,7 @@ int MarvinMolBase::getExplicitValence(const MarvinAtom &marvinAtom) const {
   return resTimes10 / 10;
 }
 
-MarvinSruCoModSgroup::MarvinSruCoModSgroup(std::string roleNameInit,
+MarvinSruCoModSgroup::MarvinSruCoModSgroup(const std::string &roleNameInit,
                                            MarvinMolBase *parentInit) {
   PRECONDITION(parentInit != nullptr, "parentInit cannot be null");
 
@@ -1291,7 +1292,7 @@ MarvinSruCoModSgroup::MarvinSruCoModSgroup(MarvinMolBase *parentInit,
     throw FileParseException("Expected a molID in MRV file");
   }
 
-  this->roleName = roleNameInit;
+  this->roleName = std::move(roleNameInit);
   std::string atomRefsStr = molTree.get<std::string>("<xmlattr>.atomRefs", "");
   if (atomRefsStr == "") {
     throw FileParseException(
@@ -2345,16 +2346,16 @@ void MarvinMol::removeOwnedBond(MarvinBond *bond) {
   eraseUniquePtr<MarvinBond>(ownedBonds, bond);
 }
 
-bool MarvinMolBase::atomRefInAtoms(MarvinAtom *a, std::string b) {
+bool MarvinMolBase::atomRefInAtoms(MarvinAtom *a, const std::string &b) {
   PRECONDITION(a != nullptr, "a cannot be null");
   return a->id == b;
 }
 
-bool MarvinMolBase::molIDInSgroups(std::string a, std::string b) {
+bool MarvinMolBase::molIDInSgroups(const std::string &a, const std::string &b) {
   return a == b;
 }
 
-bool MarvinMolBase::bondRefInBonds(MarvinBond *a, std::string b) {
+bool MarvinMolBase::bondRefInBonds(MarvinBond *a, const std::string &b) {
   PRECONDITION(a != nullptr, "a cannot be null");
   return a->id == b;
 }
@@ -3591,7 +3592,7 @@ MarvinMolBase *MarvinSuperatomSgroupExpanded::convertToOneSuperAtom() {
 }
 
 int MarvinMultipleSgroup::getMatchedOrphanBondIndex(
-    std::string atomIdToCheck, std::vector<MarvinBond *> &bondsToTry,
+    const std::string &atomIdToCheck, std::vector<MarvinBond *> &bondsToTry,
     std::vector<MarvinBond *> &orphanedBonds) const {
   for (auto testBond = bondsToTry.begin(); testBond != bondsToTry.end();
        ++testBond) {

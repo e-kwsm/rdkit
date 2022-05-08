@@ -33,7 +33,7 @@
 namespace python = boost::python;
 
 namespace RDKit {
-bool doTriangleSmoothing(python::object boundsMatArg, double tol) {
+bool doTriangleSmoothing(const python::object &boundsMatArg, double tol) {
   PyObject *boundsMatObj = boundsMatArg.ptr();
   if (!PyArray_Check(boundsMatObj)) {
     throw_value_error("Argument isn't an array");
@@ -67,10 +67,10 @@ bool doTriangleSmoothing(python::object boundsMatArg, double tol) {
   return res;
 }
 
-PyObject *embedBoundsMatrix(python::object boundsMatArg, int maxIters = 10,
-                            bool randomizeOnFailure = false,
+PyObject *embedBoundsMatrix(const python::object &boundsMatArg,
+                            int maxIters = 10, bool randomizeOnFailure = false,
                             int numZeroFail = 2,
-                            python::list weights = python::list(),
+                            const python::list &weights = python::list(),
                             int randomSeed = -1) {
   PyObject *boundsMatObj = boundsMatArg.ptr();
   if (!PyArray_Check(boundsMatObj)) {
