@@ -45,12 +45,12 @@ namespace GarethUtil {
  * @param prefix
  * @return true id str starts with prefix
  */
-    GA_EXPORT bool startsWith(string str, string prefix);
+    GA_EXPORT bool startsWith(const string &str, const string &prefix);
 
-/**
- *
- * @return current user name
- */
+    /**
+     *
+     * @return current user name
+     */
     GA_EXPORT string getUserName();
 
 /**
