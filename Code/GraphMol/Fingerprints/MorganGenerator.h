@@ -14,6 +14,7 @@
 
 #include <GraphMol/Fingerprints/FingerprintGenerator.h>
 #include <cstdint>
+#include <utility>
 
 namespace RDKit {
 
