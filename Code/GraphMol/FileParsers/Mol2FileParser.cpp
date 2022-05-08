@@ -525,7 +525,7 @@ bool cleanUpMol2Substructures(RWMol *res) {
   return true;
 }
 
-Atom *ParseMol2FileAtomLine(const std::string atomLine, RDGeom::Point3D &pos) {
+Atom *ParseMol2FileAtomLine(const std::string &atomLine, RDGeom::Point3D &pos) {
   typedef boost::tokenizer<boost::char_separator<char>> tokenizer;
   boost::char_separator<char> sep(" \t\n");
   std::string tAN, tAT;
@@ -643,7 +643,7 @@ Atom *ParseMol2FileAtomLine(const std::string atomLine, RDGeom::Point3D &pos) {
   return res;
 }
 
-Bond *ParseMol2FileBondLine(const std::string bondLine,
+Bond *ParseMol2FileBondLine(const std::string &bondLine,
                             const INT_VECT &idxCorresp) {
   unsigned int idx1, idx2;
 
