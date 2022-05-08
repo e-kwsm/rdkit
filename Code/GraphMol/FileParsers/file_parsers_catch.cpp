@@ -12,6 +12,7 @@
 #include <string>
 #include <sstream>
 #include <streambuf>
+#include <utility>
 
 #include "RDGeneral/test.h"
 #include <GraphMol/test_fixtures.h>

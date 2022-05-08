@@ -86,7 +86,7 @@ MOL_SPTR_VECT readFuncGroups(std::istream &inStream, int nToRead) {
   return funcGroups;
 }
 
-MOL_SPTR_VECT readFuncGroups(std::string fileName) {
+MOL_SPTR_VECT readFuncGroups(const std::string &fileName) {
   std::ifstream inStream(fileName.c_str());
   if ((!inStream) || (inStream.bad())) {
     std::ostringstream errout;

@@ -47,7 +47,7 @@ class RDKIT_MOLCHEMICALFEATURES_EXPORT MolChemicalFeatureFactory {
 
   //! appends a feature definition to the collection of features defs.
   void addFeatureDef(
-      MolChemicalFeatureDef::CollectionType::value_type featDef) {
+      const MolChemicalFeatureDef::CollectionType::value_type &featDef) {
     d_featDefs.push_back(featDef);
   }
 

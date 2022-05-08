@@ -2806,9 +2806,11 @@ void removeNonExplicit3DChirality(ROMol &mol) {
   }
 }
 
-void addStereoAnnotations(ROMol &mol, std::string absLabel, std::string orLabel,
-                          std::string andLabel, std::string cipLabel,
-                          std::string bondLabel) {
+void addStereoAnnotations(ROMol &mol, const std::string &absLabel,
+                          const std::string &orLabel,
+                          const std::string &andLabel,
+                          const std::string &cipLabel,
+                          const std::string &bondLabel) {
   auto sgs = mol.getStereoGroups();
   assignStereoGroupIds(sgs);
   boost::dynamic_bitset<> doneAts(mol.getNumAtoms());

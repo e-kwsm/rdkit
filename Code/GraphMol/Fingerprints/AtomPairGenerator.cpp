@@ -77,7 +77,7 @@ OutputType AtomPairEnvGenerator<OutputType>::getResultSize() const {
 AtomPairArguments::AtomPairArguments(
     const bool countSimulation, const bool includeChirality, const bool use2D,
     const unsigned int minDistance, const unsigned int maxDistance,
-    const std::vector<std::uint32_t> countBounds, const std::uint32_t fpSize)
+    const std::vector<std::uint32_t> &countBounds, const std::uint32_t fpSize)
     : FingerprintArguments(countSimulation, countBounds, fpSize, 1,
                            includeChirality),
       df_use2D(use2D),

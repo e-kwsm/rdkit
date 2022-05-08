@@ -35,6 +35,7 @@ const double VDW_SCALE_15 = 0.7;
 const double MAX_UPPER = 1000.0;
 static const double minMacrocycleRingSize = 9;
 #include <map>
+#include <utility>
 
 namespace RDKit {
 namespace DGeomHelpers {
@@ -97,7 +98,7 @@ class ComputedData {
   \param accumData    Used to store the data that have been calculated so far
                       about the molecule
 */
-void set12Bounds(const ROMol &mol, DistGeom::BoundsMatPtr mmat,
+void set12Bounds(const ROMol &mol, const DistGeom::BoundsMatPtr &mmat,
                  ComputedData &accumData);
 
 //! Set 1-3 distance bounds for atoms in a molecule
@@ -119,7 +120,7 @@ void set12Bounds(const ROMol &mol, DistGeom::BoundsMatPtr mmat,
   atom in
   between differently from those that have a non-ring atom in between.
  */
-void set13Bounds(const ROMol &mol, DistGeom::BoundsMatPtr mmat,
+void set13Bounds(const ROMol &mol, const DistGeom::BoundsMatPtr &mmat,
                  ComputedData &accumData);
 
 //! Set 1-4 distance bounds for atoms in a molecule
@@ -151,7 +152,7 @@ void set14Bounds(const ROMol &mol, DistGeom::BoundsMatPtr mmat,
   \param accumData    Used to store the data that have been calculated so far
                       about the molecule
 */
-void set15Bounds(const ROMol &mol, DistGeom::BoundsMatPtr mmat,
+void set15Bounds(const ROMol &mol, const DistGeom::BoundsMatPtr &mmat,
                  ComputedData &accumData, double *distMatrix);
 
 //! Set lower distance bounds based on VDW radii for atoms that are not covered
@@ -174,7 +175,7 @@ void setLowerBoundVDW(const ROMol &mol, DistGeom::BoundsMatPtr mmat,
 namespace RDKit {
 namespace DGeomHelpers {
 void _checkAndSetBounds(unsigned int i, unsigned int j, double lb, double ub,
-                        DistGeom::BoundsMatPtr mmat) {
+                        const DistGeom::BoundsMatPtr &mmat) {
   // get the existing bounds
   double clb = mmat->getLowerBound(i, j);
   double cub = mmat->getUpperBound(i, j);
@@ -199,7 +200,7 @@ void _checkAndSetBounds(unsigned int i, unsigned int j, double lb, double ub,
   }
 }
 
-void set12Bounds(const ROMol &mol, DistGeom::BoundsMatPtr mmat,
+void set12Bounds(const ROMol &mol, const DistGeom::BoundsMatPtr &mmat,
                  ComputedData &accumData) {
   unsigned int npt = mmat->numRows();
   CHECK_INVARIANT(npt == mol.getNumAtoms(), "Wrong size metric matrix");
@@ -254,8 +255,8 @@ void set12Bounds(const ROMol &mol, DistGeom::BoundsMatPtr mmat,
   }
 }
 
-void setLowerBoundVDW(const ROMol &mol, DistGeom::BoundsMatPtr mmat, bool,
-                      double *dmat) {
+void setLowerBoundVDW(const ROMol &mol, const DistGeom::BoundsMatPtr &mmat,
+                      bool, double *dmat) {
   unsigned int npt = mmat->numRows();
   PRECONDITION(npt == mol.getNumAtoms(), "Wrong size metric matrix");
 
@@ -296,7 +297,7 @@ bool isLargerSP2Atom(const Atom *atom) {
 }  // namespace
 void _set13BoundsHelper(unsigned int aid1, unsigned int aid, unsigned int aid3,
                         double angle, const ComputedData &accumData,
-                        DistGeom::BoundsMatPtr mmat, const ROMol &mol) {
+                        const DistGeom::BoundsMatPtr &mmat, const ROMol &mol) {
   auto bid1 = mol.getBondBetweenAtoms(aid1, aid)->getIdx();
   auto bid2 = mol.getBondBetweenAtoms(aid, aid3)->getIdx();
   auto dl = RDGeom::compute13Dist(accumData.bondLengths[bid1],
@@ -315,7 +316,7 @@ void _set13BoundsHelper(unsigned int aid1, unsigned int aid, unsigned int aid3,
   }
   auto du = dl + distTol;
   dl -= distTol;
-  _checkAndSetBounds(aid1, aid3, dl, du, mmat);
+  _checkAndSetBounds(aid1, aid3, dl, du, std::move(mmat));
 }
 
 void _setRingAngle(Atom::HybridizationType aHyb, unsigned int ringSize,
@@ -347,7 +348,7 @@ auto lessVector = [](const auto &v1, const auto &v2) {
   return v1.size() < v2.size();
 };
 
-void set13Bounds(const ROMol &mol, DistGeom::BoundsMatPtr mmat,
+void set13Bounds(const ROMol &mol, const DistGeom::BoundsMatPtr &mmat,
                  ComputedData &accumData) {
   auto npt = mmat->numRows();
   CHECK_INVARIANT(npt == mol.getNumAtoms(), "Wrong size metric matrix");
@@ -592,7 +593,7 @@ Bond::BondStereo _getAtomStereo(const Bond *bnd, unsigned int aid1,
 
 void _setInRing14Bounds(const ROMol &mol, const Bond *bnd1, const Bond *bnd2,
                         const Bond *bnd3, ComputedData &accumData,
-                        DistGeom::BoundsMatPtr mmat, double *dmat,
+                        const DistGeom::BoundsMatPtr &mmat, double *dmat,
                         int ringSize) {
   PRECONDITION(bnd1, "");
   PRECONDITION(bnd2, "");
@@ -708,7 +709,8 @@ void _setInRing14Bounds(const ROMol &mol, const Bond *bnd1, const Bond *bnd2,
 void _setTwoInSameRing14Bounds(const ROMol &mol, const Bond *bnd1,
                                const Bond *bnd2, const Bond *bnd3,
                                ComputedData &accumData,
-                               DistGeom::BoundsMatPtr mmat, double *dmat) {
+                               const DistGeom::BoundsMatPtr &mmat,
+                               double *dmat) {
   PRECONDITION(bnd1, "");
   PRECONDITION(bnd2, "");
   PRECONDITION(bnd3, "");
@@ -797,21 +799,25 @@ void _setTwoInSameRing14Bounds(const ROMol &mol, const Bond *bnd1,
 void _setTwoInDiffRing14Bounds(const ROMol &mol, const Bond *bnd1,
                                const Bond *bnd2, const Bond *bnd3,
                                ComputedData &accumData,
-                               DistGeom::BoundsMatPtr mmat, double *dmat) {
+                               const DistGeom::BoundsMatPtr &mmat,
+                               double *dmat) {
   // this turns out to be very similar to all bonds in the same ring
   // situation.
   // There is probably some fine tuning that can be done when the atoms a2
   // and a3 are not sp2 hybridized, but we will not worry about that now;
   // simple use 0-180 deg for non-sp2 cases.
-  _setInRing14Bounds(mol, bnd1, bnd2, bnd3, accumData, mmat, dmat, 0);
+  _setInRing14Bounds(mol, bnd1, bnd2, bnd3, accumData, std::move(mmat), dmat,
+                     0);
 }
 
 void _setShareRingBond14Bounds(const ROMol &mol, const Bond *bnd1,
                                const Bond *bnd2, const Bond *bnd3,
                                ComputedData &accumData,
-                               DistGeom::BoundsMatPtr mmat, double *dmat) {
+                               const DistGeom::BoundsMatPtr &mmat,
+                               double *dmat) {
   // once this turns out to be similar to bonds in the same ring
-  _setInRing14Bounds(mol, bnd1, bnd2, bnd3, accumData, mmat, dmat, 0);
+  _setInRing14Bounds(mol, bnd1, bnd2, bnd3, accumData, std::move(mmat), dmat,
+                     0);
 }
 
 bool _checkH2NX3H1OX2(const Atom *atm) {
@@ -966,7 +972,7 @@ bool _checkAmideEster15(const ROMol &mol, const Bond *bnd1, const Bond *bnd3,
 
 void _setChain14Bounds(const ROMol &mol, const Bond *bnd1, const Bond *bnd2,
                        const Bond *bnd3, ComputedData &accumData,
-                       DistGeom::BoundsMatPtr mmat, double *,
+                       const DistGeom::BoundsMatPtr &mmat, double *,
                        bool forceTransAmides) {
   PRECONDITION(bnd1, "");
   PRECONDITION(bnd2, "");
@@ -1184,7 +1190,7 @@ void _setChain14Bounds(const ROMol &mol, const Bond *bnd1, const Bond *bnd2,
       dl -= GEN_DIST_TOL;
       du += GEN_DIST_TOL;
     }
-    _checkAndSetBounds(aid1, aid4, dl, du, mmat);
+    _checkAndSetBounds(aid1, aid4, dl, du, std::move(mmat));
     accumData.paths14.push_back(path14);
   }
 }
@@ -1245,7 +1251,7 @@ bool _checkMacrocycleTwoInSameRingAmideEster14(
 void _setMacrocycleTwoInSameRing14Bounds(const ROMol &mol, const Bond *bnd1,
                                          const Bond *bnd2, const Bond *bnd3,
                                          ComputedData &accumData,
-                                         DistGeom::BoundsMatPtr mmat,
+                                         const DistGeom::BoundsMatPtr &mmat,
                                          double *dmat) {
   PRECONDITION(bnd1, "");
   PRECONDITION(bnd2, "");
@@ -1334,7 +1340,7 @@ void _setMacrocycleTwoInSameRing14Bounds(const ROMol &mol, const Bond *bnd1,
 void _setMacrocycleAllInSameRing14Bounds(const ROMol &mol, const Bond *bnd1,
                                          const Bond *bnd2, const Bond *bnd3,
                                          ComputedData &accumData,
-                                         DistGeom::BoundsMatPtr mmat,
+                                         const DistGeom::BoundsMatPtr &mmat,
                                          double *) {
   // This is adapted from `_setChain14Bounds`, with changes on how trans amide
   // is handled
@@ -1509,12 +1515,12 @@ void _setMacrocycleAllInSameRing14Bounds(const ROMol &mol, const Bond *bnd1,
       du += GEN_DIST_TOL;
     }
     // std::cerr<<"2: "<<aid1<<"-"<<aid4<<std::endl;
-    _checkAndSetBounds(aid1, aid4, dl, du, mmat);
+    _checkAndSetBounds(aid1, aid4, dl, du, std::move(mmat));
     accumData.paths14.push_back(path14);
   }
 }
 
-void set14Bounds(const ROMol &mol, DistGeom::BoundsMatPtr mmat,
+void set14Bounds(const ROMol &mol, const DistGeom::BoundsMatPtr &mmat,
                  ComputedData &accumData, double *distMatrix,
                  bool useMacrocycle14config, bool forceTransAmides) {
   unsigned int npt = mmat->numRows();
@@ -1653,12 +1659,12 @@ void initBoundsMat(DistGeom::BoundsMatrix *mmat, double defaultMin,
     }
   }
 }
-void initBoundsMat(DistGeom::BoundsMatPtr mmat, double defaultMin,
+void initBoundsMat(const DistGeom::BoundsMatPtr &mmat, double defaultMin,
                    double defaultMax) {
   initBoundsMat(mmat.get(), defaultMin, defaultMax);
 };
 
-void setTopolBounds(const ROMol &mol, DistGeom::BoundsMatPtr mmat,
+void setTopolBounds(const ROMol &mol, const DistGeom::BoundsMatPtr &mmat,
                     bool set15bounds, bool scaleVDW, bool useMacrocycle14config,
                     bool forceTransAmides) {
   PRECONDITION(mmat.get(), "bad pointer");
@@ -1749,7 +1755,7 @@ void collectBondsAndAngles(const ROMol &mol,
   }
 }
 
-void setTopolBounds(const ROMol &mol, DistGeom::BoundsMatPtr mmat,
+void setTopolBounds(const ROMol &mol, const DistGeom::BoundsMatPtr &mmat,
                     std::vector<std::pair<int, int>> &bonds,
                     std::vector<std::vector<int>> &angles, bool set15bounds,
                     bool scaleVDW, bool useMacrocycle14config,
@@ -1948,8 +1954,8 @@ double _compute15DistsTransCis(double d1, double d2, double d3, double d4,
 
 void _set15BoundsHelper(const ROMol &mol, unsigned int bid1, unsigned int bid2,
                         unsigned int bid3, unsigned int type,
-                        ComputedData &accumData, DistGeom::BoundsMatPtr mmat,
-                        double *dmat) {
+                        ComputedData &accumData,
+                        const DistGeom::BoundsMatPtr &mmat, double *dmat) {
   unsigned int i, aid1, aid2, aid3, aid4, aid5;
   double d1, d2, d3, d4, ang12, ang23, ang34, du, dl, vw1, vw5;
   unsigned int nb = mol.getNumBonds();
@@ -2066,7 +2072,7 @@ void _set15BoundsHelper(const ROMol &mol, unsigned int bid1, unsigned int bid2,
 }
 
 // set the 15 distance bounds
-void set15Bounds(const ROMol &mol, DistGeom::BoundsMatPtr mmat,
+void set15Bounds(const ROMol &mol, const DistGeom::BoundsMatPtr &mmat,
                  ComputedData &accumData, double *distMatrix) {
   PATH14_VECT_CI pti;
   unsigned int bid1, bid2, bid3, type;

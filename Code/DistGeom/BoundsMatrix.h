@@ -14,6 +14,7 @@
 #include <RDGeneral/Invariant.h>
 #include <boost/smart_ptr.hpp>
 #include <iomanip>
+#include <utility>
 #include <Numerics/SquareMatrix.h>
 
 namespace DistGeom {
@@ -31,7 +32,7 @@ class RDKIT_DISTGEOMETRY_EXPORT BoundsMatrix
   explicit BoundsMatrix(unsigned int N)
       : RDNumeric::SquareMatrix<double>(N, 0.0) {}
   BoundsMatrix(unsigned int N, DATA_SPTR data)
-      : RDNumeric::SquareMatrix<double>(N, data) {}
+      : RDNumeric::SquareMatrix<double>(N, std::move(data)) {}
 
   //! Get the upper bound between points i and j
   inline double getUpperBound(unsigned int i, unsigned int j) const {

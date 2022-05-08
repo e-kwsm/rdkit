@@ -98,7 +98,7 @@ bool IsClose(double a, double b, int n) {
   return (fabs(a - b) <= pow(0.1, n) * 1.1);
 }
 
-int countZeros(std::string ta) {
+int countZeros(const std::string &ta) {
   int nbzero = 0;
   for (char i : ta) {
     if (i != '0') {
