@@ -41,7 +41,7 @@ FromArray(MHFPEncoder *mhfpEnc, python::list &vec) {
 }
 
 STR_VECT
-CreateShinglingFromSmiles(MHFPEncoder *mhfpEnc, std::string smiles,
+CreateShinglingFromSmiles(MHFPEncoder *mhfpEnc, const std::string &smiles,
                           unsigned char radius = 3, bool rings = true,
                           bool isomeric = false, bool kekulize = true,
                           unsigned char min_radius = 1) {
@@ -50,7 +50,7 @@ CreateShinglingFromSmiles(MHFPEncoder *mhfpEnc, std::string smiles,
 }
 
 STR_VECT
-CreateShinglingFromMol(MHFPEncoder *mhfpEnc, ROMol mol,
+CreateShinglingFromMol(MHFPEncoder *mhfpEnc, const ROMol &mol,
                        unsigned char radius = 3, bool rings = true,
                        bool isomeric = false, bool kekulize = true,
                        unsigned char min_radius = 1) {

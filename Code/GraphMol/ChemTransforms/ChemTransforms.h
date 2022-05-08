@@ -204,7 +204,7 @@ RDKIT_CHEMTRANSFORMS_EXPORT ROMol *MurckoDecompose(const ROMol &mol);
 */
 RDKIT_CHEMTRANSFORMS_EXPORT ROMol *combineMols(
     const ROMol &mol1, const ROMol &mol2,
-    RDGeom::Point3D offset = RDGeom::Point3D(0, 0, 0));
+    const RDGeom::Point3D &offset = RDGeom::Point3D(0, 0, 0));
 
 //! \brief Adds named recursive queries to a molecule's atoms based on atom
 /// labels

@@ -299,7 +299,7 @@ GaResult RGroupGa::run(int runNumber) {
   vector<vector<size_t>> permutations;
   permutations.reserve(ties.size());
   std::transform(ties.cbegin(), ties.cend(), back_inserter(permutations),
-                 [](const shared_ptr<RGroupDecompositionChromosome> c) {
+                 [](const shared_ptr<RGroupDecompositionChromosome> &c) {
                    return c->getPermutation();
                  });
   BOOST_LOG(rdInfoLog) << "Run " << runNumber << " Execution "

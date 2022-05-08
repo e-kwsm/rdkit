@@ -61,7 +61,8 @@ ROMol *getMol(std::string &&tmpStr) {
 
 namespace MolStandardize {
 
-std::vector<std::shared_ptr<ROMol>> readFuncGroups(std::string fileName) {
+std::vector<std::shared_ptr<ROMol>> readFuncGroups(
+    const std::string &fileName) {
   std::ifstream inStream(fileName.c_str());
   if ((!inStream) || (inStream.bad())) {
     std::ostringstream errout;

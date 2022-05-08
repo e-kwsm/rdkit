@@ -421,7 +421,7 @@ class QuestionEnumerator {
 };
 
 bool permuteDummiesAndKekulize(RWMol &mol, const INT_VECT &allAtms,
-                               boost::dynamic_bitset<> dBndCands,
+                               const boost::dynamic_bitset<> &dBndCands,
                                INT_VECT &questions,
                                unsigned int maxBackTracks) {
   boost::dynamic_bitset<> atomsInPlay(mol.getNumAtoms());
