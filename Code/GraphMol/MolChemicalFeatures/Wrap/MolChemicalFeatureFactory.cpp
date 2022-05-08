@@ -38,14 +38,15 @@ namespace RDKit {
 // ----------------------------------------------------------------------------
 
 int getNumMolFeatures(const MolChemicalFeatureFactory &factory,
-                      const ROMol &mol, std::string includeOnly = "") {
+                      const ROMol &mol, const std::string &includeOnly = "") {
   FeatSPtrList feats = factory.getFeaturesForMol(mol, includeOnly.c_str());
   return feats.size();
 }
 
 FeatSPtr getMolFeature(const MolChemicalFeatureFactory &factory,
-                       const ROMol &mol, int idx, std::string includeOnly,
-                       bool recompute, int confId) {
+                       const ROMol &mol, int idx,
+                       const std::string &includeOnly, bool recompute,
+                       int confId) {
   static FeatSPtrList feats;
   if (recompute) {
     feats = factory.getFeaturesForMol(mol, includeOnly.c_str(), confId);

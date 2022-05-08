@@ -27,9 +27,9 @@ RDKIT_DISTGEOMHELPERS_EXPORT void initBoundsMat(DistGeom::BoundsMatrix *mmat,
                                                 double defaultMax = 1000.0);
 /*! \overload
  */
-RDKIT_DISTGEOMHELPERS_EXPORT void initBoundsMat(DistGeom::BoundsMatPtr mmat,
-                                                double defaultMin = 0.0,
-                                                double defaultMax = 1000.0);
+RDKIT_DISTGEOMHELPERS_EXPORT void initBoundsMat(
+    const DistGeom::BoundsMatPtr &mmat, double defaultMin = 0.0,
+    double defaultMax = 1000.0);
 
 //! Set upper and lower distance bounds between atoms in a molecule based on
 /// topology
@@ -54,14 +54,14 @@ RDKIT_DISTGEOMHELPERS_EXPORT void initBoundsMat(DistGeom::BoundsMatPtr mmat,
   bounds and with vdW scaling.
 */
 RDKIT_DISTGEOMHELPERS_EXPORT void setTopolBounds(
-    const ROMol &mol, DistGeom::BoundsMatPtr mmat, bool set15bounds = true,
-    bool scaleVDW = false, bool useMacrocycle14config = false,
-    bool forceTransAmides = true);
+    const ROMol &mol, const DistGeom::BoundsMatPtr &mmat,
+    bool set15bounds = true, bool scaleVDW = false,
+    bool useMacrocycle14config = false, bool forceTransAmides = true);
 
 /*! \overload for experimental torsion angle preferences
  */
 RDKIT_DISTGEOMHELPERS_EXPORT void setTopolBounds(
-    const ROMol &mol, DistGeom::BoundsMatPtr mmat,
+    const ROMol &mol, const DistGeom::BoundsMatPtr &mmat,
     std::vector<std::pair<int, int>> &bonds,
     std::vector<std::vector<int>> &angles, bool set15bounds = true,
     bool scaleVDW = false, bool useMacrocycle14config = false,
