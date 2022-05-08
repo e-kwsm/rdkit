@@ -22,12 +22,12 @@
 using namespace RDGeom;
 using namespace std;
 
-bool ptEq(const Point3D pt1, const Point3D pt2, double val = 1.e-8) {
+bool ptEq(const Point3D& pt1, const Point3D& pt2, double val = 1.e-8) {
   return ((fabs(pt1.x - pt2.x) < val) && (fabs(pt1.y - pt2.y) < val) &&
           (fabs(pt1.z - pt2.z) < val));
 }
 
-bool ptEq(const Point2D pt1, const Point2D pt2, double val = 1.e-8) {
+bool ptEq(const Point2D& pt1, const Point2D& pt2, double val = 1.e-8) {
   return ((fabs(pt1.x - pt2.x) < val) && (fabs(pt1.y - pt2.y) < val));
 }
 
