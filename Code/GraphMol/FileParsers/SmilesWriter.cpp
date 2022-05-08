@@ -47,8 +47,9 @@ SmilesWriter::SmilesWriter(const std::string &fileName,
              kekuleSmiles);
 }
 
-SmilesWriter::SmilesWriter(std::ostream *outStream, std::string delimiter,
-                           std::string nameHeader, bool includeHeader,
+SmilesWriter::SmilesWriter(std::ostream *outStream,
+                           const std::string &delimiter,
+                           const std::string &nameHeader, bool includeHeader,
                            bool takeOwnership, bool isomericSmiles,
                            bool kekuleSmiles) {
   PRECONDITION(outStream, "null stream");

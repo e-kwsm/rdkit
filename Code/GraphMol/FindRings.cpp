@@ -28,7 +28,7 @@ const size_t MAX_BFSQ_SIZE = 200000;  // arbitrary huge value
 
 using namespace RDKit;
 
-RINGINVAR computeRingInvariant(INT_VECT ring, unsigned int numAtoms) {
+RINGINVAR computeRingInvariant(const INT_VECT &ring, unsigned int numAtoms) {
   boost::dynamic_bitset<> res(numAtoms);
   for (auto idx : ring) {
     res.set(idx);
@@ -146,10 +146,10 @@ void pickD2Nodes(const ROMol &tMol, INT_VECT &d2nodes, const INT_VECT &currFrag,
 using RINGINVAR_INT_VECT_MAP = std::map<RINGINVAR, INT_VECT>;
 
 void findSSSRforDupCands(const ROMol &mol, VECT_INT_VECT &res,
-                         RINGINVAR_SET &invars, const INT_INT_VECT_MAP dupMap,
+                         RINGINVAR_SET &invars, const INT_INT_VECT_MAP &dupMap,
                          const RINGINVAR_INT_VECT_MAP &dupD2Cands,
                          INT_VECT &atomDegrees,
-                         boost::dynamic_bitset<> activeBonds) {
+                         const boost::dynamic_bitset<> &activeBonds) {
   BFSWorkspace bfs_workspace;
   for (const auto &dupD2Cand : dupD2Cands) {
     const INT_VECT &dupCands = dupD2Cand.second;

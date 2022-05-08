@@ -28,20 +28,20 @@
 #include <fstream>
 #include <sstream>
 #include <string>
-#include "testMMFFForceField.h"
 #include <utility>
+#include "testMMFFForceField.h"
 
 #define FCON_TOLERANCE 0.05
 #define ENERGY_TOLERANCE 0.025
 
 using namespace RDKit;
 
-bool fexist(std::string filename) {
+bool fexist(const std::string &filename) {
   std::ifstream ifStream(filename.c_str());
   return !ifStream.fail();
 }
 
-bool fgrep(std::fstream &fStream, std::string key, std::string &line) {
+bool fgrep(std::fstream &fStream, const std::string &key, std::string &line) {
   bool found = false;
   std::streampos current = fStream.tellg();
   while ((!found) &&
@@ -55,10 +55,10 @@ bool fgrep(std::fstream &fStream, std::string key, std::string &line) {
   return found;
 }
 
-bool fgrep(std::fstream &rdkFStream, std::string key) {
+bool fgrep(std::fstream &rdkFStream, const std::string &key) {
   std::string line;
 
-  return fgrep(rdkFStream, key, line);
+  return fgrep(rdkFStream, std::move(key), line);
 }
 
 bool getLineByNum(std::fstream &stream, std::streampos startPos, unsigned int n,
