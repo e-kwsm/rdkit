@@ -66,7 +66,8 @@ class DrawMolMCHCircleAndLine : public DrawMolMCH {
       std::vector<std::unique_ptr<DrawShape>> &atomHighlights);
   // adjust p2 so that the line from p1 to p2 stops where it intersects
   // the label ellipse for at_idx.
-  void adjustLineEndForHighlight(int at_idx, Point2D p1, Point2D &p2) const;
+  void adjustLineEndForHighlight(int at_idx, const Point2D &p1,
+                                 Point2D &p2) const;
   void calcSymbolEllipse(unsigned int atomIdx, Point2D &centre, double &xradius,
                          double &yradius) const;
   void fixHighlightJoinProblems(
