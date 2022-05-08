@@ -22,7 +22,7 @@ void wrap_factory();
 void wrap_ChemicalFeatureUtils();
 
 namespace RDKit {
-MolChemicalFeatureFactory *buildFeatFactory(std::string fileName) {
+MolChemicalFeatureFactory *buildFeatFactory(const std::string &fileName) {
   std::ifstream inStream(fileName.c_str());
   if (!inStream.is_open()) {
     std::string errorstring = "File: " + fileName + " could not be opened.";
@@ -33,7 +33,8 @@ MolChemicalFeatureFactory *buildFeatFactory(std::string fileName) {
   return buildFeatureFactory(instrm);
 }
 
-MolChemicalFeatureFactory *buildFeatFactoryFromString(std::string fdefString) {
+MolChemicalFeatureFactory *buildFeatFactoryFromString(
+    const std::string &fdefString) {
   std::istringstream inStream(fdefString);
   auto &instrm = static_cast<std::istream &>(inStream);
   return buildFeatureFactory(instrm);

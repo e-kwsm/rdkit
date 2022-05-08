@@ -34,7 +34,7 @@
 namespace RDKit {
 
 FingerprintArguments::FingerprintArguments(
-    const bool countSimulation, const std::vector<std::uint32_t> countBounds,
+    const bool countSimulation, const std::vector<std::uint32_t> &countBounds,
     std::uint32_t fpSize, std::uint32_t numBitsPerFeature,
     bool includeChirality)
     : df_countSimulation(countSimulation),
@@ -845,7 +845,7 @@ ExplicitBitVect *getFP(const ROMol &mol, FPType fPType) {
 }
 
 std::vector<SparseIntVect<std::uint64_t> *> *getSparseCountFPBulk(
-    const std::vector<const ROMol *> molVector, FPType fPType) {
+    const std::vector<const ROMol *> &molVector, FPType fPType) {
   FingerprintGenerator<std::uint64_t> *generator = nullptr;
   switch (fPType) {
     case FPType::AtomPairFP: {
@@ -881,7 +881,7 @@ std::vector<SparseIntVect<std::uint64_t> *> *getSparseCountFPBulk(
 }
 
 std::vector<SparseBitVect *> *getSparseFPBulk(
-    const std::vector<const ROMol *> molVector, FPType fPType) {
+    const std::vector<const ROMol *> &molVector, FPType fPType) {
   FingerprintGenerator<std::uint64_t> *generator = nullptr;
   switch (fPType) {
     case FPType::AtomPairFP: {
@@ -917,7 +917,7 @@ std::vector<SparseBitVect *> *getSparseFPBulk(
 }
 
 std::vector<SparseIntVect<std::uint32_t> *> *getCountFPBulk(
-    const std::vector<const ROMol *> molVector, FPType fPType) {
+    const std::vector<const ROMol *> &molVector, FPType fPType) {
   FingerprintGenerator<std::uint64_t> *generator = nullptr;
   switch (fPType) {
     case FPType::AtomPairFP: {
@@ -953,7 +953,7 @@ std::vector<SparseIntVect<std::uint32_t> *> *getCountFPBulk(
 }
 
 std::vector<ExplicitBitVect *> *getFPBulk(
-    const std::vector<const ROMol *> molVector, FPType fPType) {
+    const std::vector<const ROMol *> &molVector, FPType fPType) {
   FingerprintGenerator<std::uint64_t> *generator = nullptr;
   switch (fPType) {
     case FPType::AtomPairFP: {

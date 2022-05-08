@@ -124,7 +124,7 @@ std::string FormatV3000ParentBlock(const SubstanceGroup &sgroup);
 std::string FormatV3000CompNoBlock(const SubstanceGroup &sgroup);
 
 std::string FormatV3000BracketBlock(
-    const std::vector<SubstanceGroup::Bracket> brackets);
+    const std::vector<SubstanceGroup::Bracket> &brackets);
 
 std::string FormatV3000CStateBlock(
     const std::vector<SubstanceGroup::CState> &cstates);
