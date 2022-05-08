@@ -35,6 +35,7 @@
 #include <GraphMol/MonomerInfo.h>
 #include <RDGeneral/FileParseException.h>
 #include <boost/algorithm/string.hpp>
+#include <utility>
 
 using namespace RDKit;
 

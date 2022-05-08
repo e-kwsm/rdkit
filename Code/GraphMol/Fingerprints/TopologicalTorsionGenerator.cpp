@@ -13,6 +13,8 @@
 #include <GraphMol/Fingerprints/AtomPairGenerator.h>
 #include <utility>
 
+#include <utility>
+
 namespace RDKit {
 namespace TopologicalTorsion {
 

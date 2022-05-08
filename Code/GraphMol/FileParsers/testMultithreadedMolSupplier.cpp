@@ -20,6 +20,7 @@
 #include <boost/dynamic_bitset.hpp>
 #include <boost/iostreams/device/file.hpp>
 #include <boost/iostreams/filtering_stream.hpp>
+#include <utility>
 
 #include "MultithreadedSDMolSupplier.h"
 #include "MultithreadedSmilesMolSupplier.h"
