@@ -501,7 +501,7 @@ bool parse_fragment(RWMol &mol, ptree &frag,
 }
 
 void set_reaction_data(
-    std::string type, std::string prop, SchemeInfo &scheme,
+    const std::string &type, const std::string &prop, SchemeInfo &scheme,
     const std::vector<unsigned int> &frag_ids,
     const std::map<unsigned int, size_t> &fragments,
     std::map<unsigned int, std::vector<int>> &grouped_fragments,
