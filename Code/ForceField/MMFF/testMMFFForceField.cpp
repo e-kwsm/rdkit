@@ -57,7 +57,7 @@ bool fgrep(std::fstream &fStream, const std::string &key, std::string &line) {
   return found;
 }
 
-bool fgrep(std::fstream &rdkFStream, std::string key) {
+bool fgrep(std::fstream &rdkFStream, const std::string &key) {
   std::string line;
 
   return fgrep(rdkFStream, std::move(key), line);
