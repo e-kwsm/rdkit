@@ -11,6 +11,7 @@
 #include <GraphMol/Fingerprints/TopologicalTorsionGenerator.h>
 #include <GraphMol/Fingerprints/FingerprintUtil.h>
 #include <GraphMol/Fingerprints/AtomPairGenerator.h>
+#include <utility>
 
 #include <utility>
 
