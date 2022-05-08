@@ -9,6 +9,7 @@
 #include <Catalogs/CatalogEntry.h>
 #include <fstream>
 #include <string>
+#include <utility>
 
 namespace RDKit {
 class ROMol;
@@ -37,7 +38,7 @@ class RDKIT_MOLCATALOG_EXPORT MolCatalogEntry : public RDCatalog::CatalogEntry {
 
   std::string getDescription() const override { return d_descrip; }
 
-  void setDescription(std::string val) { d_descrip = val; }
+  void setDescription(std::string val) { d_descrip = std::move(val); }
 
   unsigned int getOrder() const { return d_order; }
   void setOrder(unsigned int order) { d_order = order; }
