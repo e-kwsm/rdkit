@@ -555,7 +555,7 @@ std::string FormatV3000CompNoBlock(const SubstanceGroup &sgroup) {
 }
 
 std::string FormatV3000BracketBlock(
-    const std::vector<SubstanceGroup::Bracket> brackets) {
+    const std::vector<SubstanceGroup::Bracket> &brackets) {
   std::ostringstream ret;
 
   for (const auto &bracket : brackets) {
@@ -626,7 +626,7 @@ std::string FormatV3000AttachPointBlock(
 }
 
 namespace {
-void addBlockToSGroupString(std::string block, std::string &currentLine,
+void addBlockToSGroupString(const std::string &block, std::string &currentLine,
                             std::ostringstream &os) {
   if (block.empty()) {
     return;
