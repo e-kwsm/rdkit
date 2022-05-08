@@ -33,7 +33,7 @@ void wrap_sparseIntVect();
 void wrap_FPB();
 
 template <typename T>
-void convertToNumpyArray(const T &v, python::object destArray) {
+void convertToNumpyArray(const T &v, const python::object &destArray) {
   if (!PyArray_Check(destArray.ptr())) {
     throw_value_error("Expecting a Numeric array object");
   }
@@ -76,28 +76,28 @@ BOOST_PYTHON_MODULE(cDataStructs) {
   wrap_sparseIntVect();
   wrap_FPB();
 
-  python::def(
-      "ConvertToNumpyArray",
-      (void (*)(const ExplicitBitVect &, python::object))convertToNumpyArray,
-      (python::arg("bv"), python::arg("destArray")));
+  python::def("ConvertToNumpyArray",
+              (void (*)(const ExplicitBitVect &,
+                        const python::object &))convertToNumpyArray,
+              (python::arg("bv"), python::arg("destArray")));
   python::def("ConvertToNumpyArray",
               (void (*)(const RDKit::DiscreteValueVect &,
-                        python::object))convertToNumpyArray,
+                        const python::object &))convertToNumpyArray,
               (python::arg("bv"), python::arg("destArray")));
   python::def("ConvertToNumpyArray",
               (void (*)(const RDKit::SparseIntVect<std::int32_t> &,
-                        python::object))convertToNumpyArray,
+                        const python::object &))convertToNumpyArray,
               (python::arg("bv"), python::arg("destArray")));
   python::def("ConvertToNumpyArray",
               (void (*)(const RDKit::SparseIntVect<boost::int64_t> &,
-                        python::object))convertToNumpyArray,
+                        const python::object &))convertToNumpyArray,
               (python::arg("bv"), python::arg("destArray")));
   python::def("ConvertToNumpyArray",
               (void (*)(const RDKit::SparseIntVect<std::uint32_t> &,
-                        python::object))convertToNumpyArray,
+                        const python::object &))convertToNumpyArray,
               (python::arg("bv"), python::arg("destArray")));
   python::def("ConvertToNumpyArray",
               (void (*)(const RDKit::SparseIntVect<boost::uint64_t> &,
-                        python::object))convertToNumpyArray,
+                        const python::object &))convertToNumpyArray,
               (python::arg("bv"), python::arg("destArray")));
 }
