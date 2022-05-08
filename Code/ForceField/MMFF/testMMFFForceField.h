@@ -61,9 +61,9 @@ class TorsionInstance {
   double V3;
 };
 
-bool fexist(std::string filename);
+bool fexist(const std::string &filename);
 bool fgrep(std::fstream &fStream, std::string key);
-bool fgrep(std::fstream &fStream, std::string key, std::string &line);
+bool fgrep(std::fstream &fStream, const std::string &key, std::string &line);
 void skipLines(std::istream &stream, unsigned int nLines);
 bool sortAngleBendInstanceVec(AngleBendInstance *a, AngleBendInstance *b);
 bool sortBondStretchInstanceVec(BondStretchInstance *a, BondStretchInstance *b);
