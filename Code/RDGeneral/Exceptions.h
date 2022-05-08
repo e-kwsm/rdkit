@@ -55,7 +55,7 @@ class RDKIT_RDGENERAL_EXPORT ValueErrorException : public std::runtime_error {
 //!
 class RDKIT_RDGENERAL_EXPORT KeyErrorException : public std::runtime_error {
  public:
-  KeyErrorException(std::string key)
+  KeyErrorException(const std::string& key)
       : std::runtime_error("KeyErrorException"),
         _key(key),
         _msg("Key Error: " + key) {}
