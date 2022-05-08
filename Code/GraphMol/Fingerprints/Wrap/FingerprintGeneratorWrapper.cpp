@@ -29,6 +29,7 @@
 #ifdef RDK_BUILD_THREADSAFE_SSS
 #include <thread>
 #include <future>
+#include <utility>
 #endif
 
 namespace python = boost::python;
