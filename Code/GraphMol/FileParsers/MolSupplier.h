@@ -301,7 +301,7 @@ class RDKIT_FILEPARSERS_EXPORT SmilesMolSupplier : public MolSupplier {
   unsigned int length();
 
  private:
-  std::unique_ptr<RWMol> processLine(std::string inLine);
+  std::unique_ptr<RWMol> processLine(const std::string &inLine);
   void processTitleLine();
   std::string nextLine();
   long int skipComments();
@@ -414,7 +414,7 @@ class RDKIT_FILEPARSERS_EXPORT MaeMolSupplier : public MolSupplier {
   MaeMolSupplier() {}
 
   explicit MaeMolSupplier(
-      std::shared_ptr<std::istream> inStream,
+      const std::shared_ptr<std::istream> &inStream,
       const MaeMolSupplierParams &params = MaeMolSupplierParams());
 
   explicit MaeMolSupplier(
