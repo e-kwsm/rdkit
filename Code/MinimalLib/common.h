@@ -66,6 +66,7 @@
 #ifdef RDK_BUILD_THREADSAFE_SSS
 #include <mutex>
 #include <atomic>
+#include <utility>
 #endif
 
 #define GET_JSON_VALUE(doc, drawingDetails, key, type)                     \
@@ -1226,8 +1227,8 @@ std::mutex &getLoggerMutex() {
 class LoggerState {
  public:
   // this runs only once under mutex lock
-  LoggerState(const std::string &logName, RDLogger &logger)
-      : d_logName(logName), d_logger(logger), d_lock(false) {
+  LoggerState(std::string logName, RDLogger &logger)
+      : d_logName(std::move(logName)), d_logger(logger), d_lock(false) {
     CHECK_INVARIANT(d_logger, "d_logger must not be null");
     // store original logger stream
     d_prevDest = d_logger->dp_dest;
@@ -1373,8 +1374,8 @@ class LogHandle {
   }
 
  private:
-  LogHandle(const std::string &logName, bool isTee)
-      : d_logName(logName), d_isTee(isTee) {
+  LogHandle(std::string logName, bool isTee)
+      : d_logName(std::move(logName)), d_isTee(isTee) {
     open();
   }
   void open() {

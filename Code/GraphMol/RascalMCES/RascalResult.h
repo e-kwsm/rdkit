@@ -35,8 +35,7 @@ class RDKIT_RASCALMCES_EXPORT RascalResult {
                bool swapped, double tier1Sim, double tier2Sim,
                bool ringMatchesRingOnly, bool singleLargestFrag, int minFragSep,
                bool exactConnectionsMatch = false,
-               const std::string &equivalentAtoms = "",
-               bool ignoreBondOrders = false);
+               std::string equivalentAtoms = "", bool ignoreBondOrders = false);
   // For when the tier[12]Sim didn't hit the threshold, but it
   // might be of interest what the estimates of similarity were.
   RascalResult(double tier1Sim, double tier2Sim);

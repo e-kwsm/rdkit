@@ -13,6 +13,7 @@
 
 #include <iosfwd>
 #include <string>
+#include <utility>
 #include <vector>
 
 #include <boost/dynamic_bitset.hpp>
@@ -36,7 +37,7 @@ struct SynthonSpaceSearchParams;
 class RDKIT_SYNTHONSPACESEARCH_EXPORT SynthonSet {
  public:
   SynthonSet() = default;
-  explicit SynthonSet(const std::string &id) : d_id(id) {}
+  explicit SynthonSet(std::string id) : d_id(std::move(id)) {}
   SynthonSet(const SynthonSet &rhs) = delete;
   SynthonSet(SynthonSet &&rhs) = delete;
 
