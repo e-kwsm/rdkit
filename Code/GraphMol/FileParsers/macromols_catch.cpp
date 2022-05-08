@@ -26,6 +26,7 @@
 #include <boost/lexical_cast.hpp>
 #include <RDGeneral/BoostEndInclude.h>
 #include <filesystem>
+#include <utility>
 using namespace RDKit;
 using namespace v2::FileParsers;
 
@@ -62,7 +63,7 @@ class ScsiMolTest {
                  chiralChecksInit = {},
              std::vector<std::pair<unsigned int, Atom::ChiralType>>
                  chiralChecksQueryInit = {})
-        : fileName(fileNameInit),
+        : fileName(std::move(fileNameInit)),
           totalAtomCount(totalAtomCountInit),
           totalBondCount(totalBondCountInit),
           sgroupCount(sgroupCountInit),
@@ -71,8 +72,8 @@ class ScsiMolTest {
           querySgroupCount(querySgroupCountInit),
           scsrExpandResult(scsrExpandResult),
           scsrBaseHbondOptions(scsrBaseHbondOptions),
-          chiralChecks(chiralChecksInit),
-          chiralChecksQuery(chiralChecksQueryInit) {};
+          chiralChecks(std::move(chiralChecksInit)),
+          chiralChecksQuery(std::move(chiralChecksQueryInit)) {};
   };
 
   void testScsiFiles(const ScsiTest *scsiTest) {

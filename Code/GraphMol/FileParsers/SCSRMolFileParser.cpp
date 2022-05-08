@@ -17,6 +17,8 @@
 #include <RDGeneral/FileParseException.h>
 #include <RDGeneral/BadFileException.h>
 
+#include <utility>
+
 using namespace RDKit::SGroupParsing;
 
 namespace RDKit {
@@ -438,7 +440,7 @@ class MolFromSCSRMolConverter {
   class OriginAtomConnection {
    public:
     OriginAtomConnection(unsigned int mainAtomIdx, std::string attachLabel)
-        : mainAtomIdx(mainAtomIdx), attachLabel(attachLabel) {}
+        : mainAtomIdx(mainAtomIdx), attachLabel(std::move(attachLabel)) {}
 
    private:
     unsigned int mainAtomIdx;
@@ -469,11 +471,11 @@ class MolFromSCSRMolConverter {
     std::string d_name;
     std::vector<HydrogenBondConnection> d_hBondConnections;
     std::shared_ptr<ROMol> dp_mol;
-    HbondQueryData(const std::string &smarts, const std::string &name,
+    HbondQueryData(const std::string &smarts, std::string name,
                    std::vector<HydrogenBondConnection> hBondConnections)
         : d_smarts(smarts),
-          d_name(name),
-          d_hBondConnections(hBondConnections),
+          d_name(std::move(name)),
+          d_hBondConnections(std::move(hBondConnections)),
           dp_mol{SmartsToMol(smarts)} {}
   };
 

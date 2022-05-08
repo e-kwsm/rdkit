@@ -12,6 +12,7 @@
 #include <RDGeneral/export.h>
 #include <exception>
 #include <string>
+#include <utility>
 
 // RDKIT_JAVAWRAPPERS_EXPORT does not get defined in RDGeneral/export.h,
 // and we only use it here for non-windows builds, so just define it based
@@ -26,7 +27,7 @@ namespace RDKit {
 
 class RDKIT_JAVAWRAPPERS_EXPORT GenericRDKitException : public std::exception {
  public:
-  GenericRDKitException(const std::string &i) : _value(i) {}
+  GenericRDKitException(std::string i) : _value(std::move(i)) {}
   GenericRDKitException(const char *msg) : _value(msg) {}
   const char *what() const noexcept override { return _value.c_str(); }
   ~GenericRDKitException() noexcept = default;
