@@ -57,7 +57,7 @@ class RDKIT_MOLENUMERATOR_EXPORT MolEnumeratorOp {
 class RDKIT_MOLENUMERATOR_EXPORT PositionVariationOp : public MolEnumeratorOp {
  public:
   PositionVariationOp() {}
-  PositionVariationOp(const std::shared_ptr<ROMol> mol) : dp_mol(mol) {
+  PositionVariationOp(const std::shared_ptr<ROMol> &mol) : dp_mol(mol) {
     PRECONDITION(mol, "bad molecule");
     initFromMol();
   }
@@ -103,7 +103,7 @@ class RDKIT_MOLENUMERATOR_EXPORT PositionVariationOp : public MolEnumeratorOp {
 class RDKIT_MOLENUMERATOR_EXPORT LinkNodeOp : public MolEnumeratorOp {
  public:
   LinkNodeOp() {}
-  LinkNodeOp(const std::shared_ptr<ROMol> mol) : dp_mol(mol) {
+  LinkNodeOp(const std::shared_ptr<ROMol> &mol) : dp_mol(mol) {
     PRECONDITION(mol, "bad molecule");
     initFromMol();
   }
@@ -171,7 +171,7 @@ class RDKIT_MOLENUMERATOR_EXPORT LinkNodeOp : public MolEnumeratorOp {
 class RDKIT_MOLENUMERATOR_EXPORT RepeatUnitOp : public MolEnumeratorOp {
  public:
   RepeatUnitOp() {};
-  RepeatUnitOp(const std::shared_ptr<ROMol> mol) : dp_mol(mol) {
+  RepeatUnitOp(const std::shared_ptr<ROMol> &mol) : dp_mol(mol) {
     PRECONDITION(mol, "bad molecule");
     initFromMol();
   };
