@@ -12,6 +12,7 @@
 #include <string>
 #include <sstream>
 #include <streambuf>
+#include <utility>
 
 #include "RDGeneral/test.h"
 #include <GraphMol/test_fixtures.h>
@@ -7357,7 +7358,7 @@ class FragTest {
   FragTest(std::string fileNameInit, bool expectedResultInit,
            bool reapplyMolBlockWedgingInit, unsigned int origSgroupCountInit,
            unsigned int newSgroupCountInit)
-      : fileName(fileNameInit),
+      : fileName(std::move(fileNameInit)),
         expectedResult(expectedResultInit),
         reapplyMolBlockWedging(reapplyMolBlockWedgingInit),
         origSgroupCount(origSgroupCountInit),

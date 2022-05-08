@@ -105,7 +105,7 @@ PyObject *computePrincAxesMomentsFromGyrationMatrix(
 }
 #endif
 
-void transConformer(Conformer &conf, python::object trans) {
+void transConformer(Conformer &conf, const python::object &trans) {
   PyObject *transObj = trans.ptr();
   if (!PyArray_Check(transObj)) {
     throw_value_error("Expecting a numeric array for transformation");

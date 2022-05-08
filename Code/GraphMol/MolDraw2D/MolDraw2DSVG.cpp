@@ -392,7 +392,7 @@ void MolDraw2DSVG::addMoleculeMetadata(const ROMol &mol, int confId) const {
 
 // ****************************************************************************
 void MolDraw2DSVG::addMoleculeMetadata(const std::vector<ROMol *> &mols,
-                                       const std::vector<int> confIds) {
+                                       const std::vector<int> &confIds) {
   for (unsigned int i = 0; i < mols.size(); ++i) {
     int confId = -1;
     if (confIds.size() == mols.size()) {
