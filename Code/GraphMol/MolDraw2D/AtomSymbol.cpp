@@ -10,6 +10,7 @@
 // Original author: David Cosgrove (CozChemIx Limited)
 //
 
+#include <utility>
 #include <RDGeneral/BoostStartInclude.h>
 #include <boost/format.hpp>
 #include <boost/algorithm/string.hpp>
@@ -23,10 +24,10 @@ namespace RDKit {
 namespace MolDraw2D_detail {
 
 // ****************************************************************************
-AtomSymbol::AtomSymbol(const std::string &symbol, int atIdx, OrientType orient,
+AtomSymbol::AtomSymbol(std::string symbol, int atIdx, OrientType orient,
                        const Point2D &cds, const DrawColour &colour,
                        DrawText &textDrawer)
-    : symbol_(symbol),
+    : symbol_(std::move(symbol)),
       atIdx_(atIdx),
       orient_(orient),
       cds_(cds),
