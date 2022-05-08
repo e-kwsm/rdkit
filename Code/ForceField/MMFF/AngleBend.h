@@ -59,10 +59,10 @@ RDKIT_FORCEFIELD_EXPORT double calcAngleRestValue(
 RDKIT_FORCEFIELD_EXPORT double calcAngleForceConstant(
     const MMFFAngle *mmffAngleParams);
 //! calculates and returns the cosine of the angle between points p1, p2, p3
-RDKIT_FORCEFIELD_EXPORT double calcCosTheta(RDGeom::Point3D p1,
-                                            RDGeom::Point3D p2,
-                                            RDGeom::Point3D p3, double dist1,
-                                            double dist2);
+RDKIT_FORCEFIELD_EXPORT double calcCosTheta(const RDGeom::Point3D &p1,
+                                            const RDGeom::Point3D &p2,
+                                            const RDGeom::Point3D &p3,
+                                            double dist1, double dist2);
 //! calculates and returns the angle bending MMFF energy
 RDKIT_FORCEFIELD_EXPORT double calcAngleBendEnergy(const double theta0,
                                                    const double ka,
