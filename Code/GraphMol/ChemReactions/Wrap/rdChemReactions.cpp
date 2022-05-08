@@ -34,6 +34,7 @@
 #include <utility>
 #include <GraphMol/MolPickler.h>
 #include <GraphMol/Wrap/props.hpp>
+#include <utility>
 #include <RDBoost/python.h>
 #include <GraphMol/ChemReactions/Reaction.h>
 #include <GraphMol/ChemReactions/ReactionPickler.h>

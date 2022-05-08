@@ -37,6 +37,7 @@
 #include <GraphMol/test_fixtures.h>
 #include <RDGeneral/FileParseException.h>
 #include <boost/algorithm/string.hpp>
+#include <utility>
 
 using namespace RDKit;
 
