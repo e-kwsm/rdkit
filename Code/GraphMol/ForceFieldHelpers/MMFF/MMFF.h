@@ -43,7 +43,7 @@ namespace MMFF {
      second: the energy
 */
 inline std::pair<int, double> MMFFOptimizeMolecule(
-    ROMol &mol, int maxIters = 1000, std::string mmffVariant = "MMFF94",
+    ROMol &mol, int maxIters = 1000, const std::string &mmffVariant = "MMFF94",
     double nonBondedThresh = 10.0, int confId = -1,
     bool ignoreInterfragInteractions = true) {
   std::pair<int, double> res = std::make_pair(-1, -1);
@@ -81,7 +81,7 @@ inline std::pair<int, double> MMFFOptimizeMolecule(
 inline void MMFFOptimizeMoleculeConfs(ROMol &mol,
                                       std::vector<std::pair<int, double>> &res,
                                       int numThreads = 1, int maxIters = 1000,
-                                      std::string mmffVariant = "MMFF94",
+                                      const std::string &mmffVariant = "MMFF94",
                                       double nonBondedThresh = 10.0,
                                       bool ignoreInterfragInteractions = true) {
   MMFF::MMFFMolProperties mmffMolProperties(mol, mmffVariant);
