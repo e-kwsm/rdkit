@@ -28,8 +28,9 @@
 namespace python = boost::python;
 
 namespace RDKit {
-void alignMolConfs(ROMol &mol, python::object atomIds, python::object confIds,
-                   python::object weights, bool reflect, unsigned int maxIters,
+void alignMolConfs(ROMol &mol, const python::object &atomIds,
+                   const python::object &confIds, const python::object &weights,
+                   bool reflect, unsigned int maxIters,
                    python::object RMSlist) {
   std::unique_ptr<RDNumeric::DoubleVector> wtsVec(translateDoubleSeq(weights));
   std::unique_ptr<std::vector<unsigned int>> aIds(translateIntSeq(atomIds));
@@ -84,8 +85,8 @@ PyObject *generateRmsdTransMatchPyTuple(double rmsd,
 
 PyObject *getMolAlignTransform(const ROMol &prbMol, const ROMol &refMol,
                                int prbCid = -1, int refCid = -1,
-                               python::object atomMap = python::list(),
-                               python::object weights = python::list(),
+                               const python::object &atomMap = python::list(),
+                               const python::object &weights = python::list(),
                                bool reflect = false,
                                unsigned int maxIters = 50) {
   std::unique_ptr<MatchVectType> aMap(translateAtomMap(atomMap));
@@ -115,9 +116,9 @@ PyObject *getMolAlignTransform(const ROMol &prbMol, const ROMol &refMol,
 
 PyObject *getBestMolAlignTransform(
     const ROMol &prbMol, const ROMol &refMol, int prbCid = -1, int refCid = -1,
-    python::object map = python::list(), int maxMatches = 1000000,
+    const python::object &map = python::list(), int maxMatches = 1000000,
     bool symmetrizeTerminalGroups = true,
-    python::object weights = python::list(), bool reflect = false,
+    const python::object &weights = python::list(), bool reflect = false,
     unsigned int maxIters = 50, int numThreads = 1) {
   std::vector<MatchVectType> aMapVec;
   unsigned int nAtms = 0;
@@ -148,8 +149,9 @@ PyObject *getBestMolAlignTransform(
 }
 
 double AlignMolecule(ROMol &prbMol, const ROMol &refMol, int prbCid = -1,
-                     int refCid = -1, python::object atomMap = python::list(),
-                     python::object weights = python::list(),
+                     int refCid = -1,
+                     const python::object &atomMap = python::list(),
+                     const python::object &weights = python::list(),
                      bool reflect = false, unsigned int maxIters = 50) {
   std::unique_ptr<MatchVectType> aMap(translateAtomMap(atomMap));
   unsigned int nAtms;
@@ -175,9 +177,10 @@ double AlignMolecule(ROMol &prbMol, const ROMol &refMol, int prbCid = -1,
 }
 
 double GetBestRMS(ROMol &prbMol, ROMol &refMol, int prbId, int refId,
-                  python::object map, int maxMatches,
+                  const python::object &map, int maxMatches,
                   bool symmetrizeTerminalGroups,
-                  python::object weights = python::list(), int numThreads = 1) {
+                  const python::object &weights = python::list(),
+                  int numThreads = 1) {
   std::vector<MatchVectType> aMapVec;
   if (map != python::object()) {
     aMapVec = translateAtomMapSeq(map);
@@ -193,10 +196,10 @@ double GetBestRMS(ROMol &prbMol, ROMol &refMol, int prbId, int refId,
   return rmsd;
 }
 
-python::tuple GetAllConformerBestRMS(ROMol &mol, int numThreads,
-                                     python::object map, int maxMatches,
-                                     bool symmetrizeTerminalGroups,
-                                     python::object weights = python::list()) {
+python::tuple GetAllConformerBestRMS(
+    ROMol &mol, int numThreads, const python::object &map, int maxMatches,
+    bool symmetrizeTerminalGroups,
+    const python::object &weights = python::list()) {
   std::vector<MatchVectType> aMapVec;
   if (map != python::object()) {
     aMapVec = translateAtomMapSeq(map);
@@ -217,9 +220,9 @@ python::tuple GetAllConformerBestRMS(ROMol &mol, int numThreads,
 }
 
 double CalcRMS(ROMol &prbMol, ROMol &refMol, int prbCid, int refCid,
-               python::object map, int maxMatches,
+               const python::object &map, int maxMatches,
                bool symmetrizeTerminalGroups,
-               python::object weights = python::list()) {
+               const python::object &weights = python::list()) {
   std::vector<MatchVectType> aMapVec;
   if (map != python::object()) {
     aMapVec = translateAtomMapSeq(map);
@@ -272,12 +275,12 @@ class PyO3A {
   };
   boost::shared_ptr<O3A> o3a;
 };
-PyO3A *getMMFFO3A(ROMol &prbMol, ROMol &refMol, python::object prbProps,
-                  python::object refProps, int prbCid = -1, int refCid = -1,
-                  bool reflect = false, unsigned int maxIters = 50,
-                  unsigned int options = 0,
-                  python::list constraintMap = python::list(),
-                  python::list constraintWeights = python::list()) {
+PyO3A *getMMFFO3A(ROMol &prbMol, ROMol &refMol, const python::object &prbProps,
+                  const python::object &refProps, int prbCid = -1,
+                  int refCid = -1, bool reflect = false,
+                  unsigned int maxIters = 50, unsigned int options = 0,
+                  const python::list &constraintMap = python::list(),
+                  const python::list &constraintWeights = python::list()) {
   std::unique_ptr<MatchVectType> cMap;
   if (python::len(constraintMap)) {
     cMap.reset(translateAtomMap(constraintMap));
@@ -341,11 +344,12 @@ PyO3A *getMMFFO3A(ROMol &prbMol, ROMol &refMol, python::object prbProps,
 }
 
 python::tuple getMMFFO3AForConfs(
-    ROMol &prbMol, ROMol &refMol, int numThreads, python::object prbProps,
-    python::object refProps, int refCid = -1, bool reflect = false,
-    unsigned int maxIters = 50, unsigned int options = 0,
-    python::list constraintMap = python::list(),
-    python::list constraintWeights = python::list()) {
+    ROMol &prbMol, ROMol &refMol, int numThreads,
+    const python::object &prbProps, const python::object &refProps,
+    int refCid = -1, bool reflect = false, unsigned int maxIters = 50,
+    unsigned int options = 0,
+    const python::list &constraintMap = python::list(),
+    const python::list &constraintWeights = python::list()) {
   std::unique_ptr<MatchVectType> cMap;
   if (python::len(constraintMap)) {
     cMap.reset(translateAtomMap(constraintMap));
@@ -418,8 +422,8 @@ PyO3A *getCrippenO3A(ROMol &prbMol, ROMol &refMol,
                      python::list refCrippenContribs, int prbCid = -1,
                      int refCid = -1, bool reflect = false,
                      unsigned int maxIters = 50, unsigned int options = 0,
-                     python::list constraintMap = python::list(),
-                     python::list constraintWeights = python::list()) {
+                     const python::list &constraintMap = python::list(),
+                     const python::list &constraintWeights = python::list()) {
   std::unique_ptr<MatchVectType> cMap;
   if (python::len(constraintMap)) {
     cMap.reset(translateAtomMap(constraintMap));
@@ -494,8 +498,9 @@ python::tuple getCrippenO3AForConfs(
     ROMol &prbMol, ROMol &refMol, int numThreads,
     python::list prbCrippenContribs, python::list refCrippenContribs,
     int refCid = -1, bool reflect = false, unsigned int maxIters = 50,
-    unsigned int options = 0, python::list constraintMap = python::list(),
-    python::list constraintWeights = python::list()) {
+    unsigned int options = 0,
+    const python::list &constraintMap = python::list(),
+    const python::list &constraintWeights = python::list()) {
   std::unique_ptr<MatchVectType> cMap;
   if (python::len(constraintMap)) {
     cMap.reset(translateAtomMap(constraintMap));

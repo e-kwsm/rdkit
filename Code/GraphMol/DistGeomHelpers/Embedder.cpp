@@ -803,8 +803,9 @@ bool finalChiralChecks(RDGeom::PointPtrVect *positions,
   return true;
 }
 
-bool embedPoints(RDGeom::PointPtrVect *positions, detail::EmbedArgs eargs,
-                 EmbedParameters &embedParams, int seed) {
+bool embedPoints(RDGeom::PointPtrVect *positions,
+                 const detail::EmbedArgs &eargs, EmbedParameters &embedParams,
+                 int seed) {
   PRECONDITION(positions, "bogus positions");
   if (embedParams.maxIterations == 0) {
     embedParams.maxIterations = 10 * positions->size();
@@ -1147,7 +1148,7 @@ void findChiralSets(const ROMol &mol, DistGeom::VECT_CHIRALSET &chiralCenters,
 }
 
 void adjustBoundsMatFromCoordMap(
-    DistGeom::BoundsMatPtr mmat, unsigned int,
+    const DistGeom::BoundsMatPtr &mmat, unsigned int,
     const std::map<int, RDGeom::Point3D> *coordMap) {
   for (auto iIt = coordMap->begin(); iIt != coordMap->end(); ++iIt) {
     unsigned int iIdx = iIt->first;
@@ -1181,7 +1182,7 @@ void initETKDG(ROMol *mol, const EmbedParameters &params,
 }
 
 bool setupInitialBoundsMatrix(
-    ROMol *mol, DistGeom::BoundsMatPtr mmat,
+    ROMol *mol, const DistGeom::BoundsMatPtr &mmat,
     const std::map<int, RDGeom::Point3D> *coordMap,
     const EmbedParameters &params,
     ForceFields::CrystalFF::CrystalFFDetails &etkdgDetails) {
