@@ -9,6 +9,7 @@
 //
 
 #include <RDGeneral/RDLog.h>
+#include <utility>
 #include "MarvinDefs.h"
 
 namespace RDKit {
@@ -773,7 +774,7 @@ MarvinAtom::MarvinAtom()
 {}
 
 MarvinAtom::MarvinAtom(const MarvinAtom &atomToCopy, std::string newId)
-    : id(newId),
+    : id(std::move(newId)),
       elementType(atomToCopy.elementType),
       x2(atomToCopy.x2),
       y2(atomToCopy.y2),
@@ -936,7 +937,7 @@ ptree MarvinAtom::toPtree(unsigned int coordinatePrecision) const {
 
 MarvinBond::MarvinBond(const MarvinBond &bondToCopy, std::string newId,
                        std::string atomRef1, std::string atomRef2)
-    : id(newId),
+    : id(std::move(newId)),
       order(bondToCopy.order),
       bondStereo(bondToCopy.bondStereo),
       queryType(bondToCopy.queryType),
