@@ -10,6 +10,8 @@
 // Original author: David Cosgrove (CozChemIx Limited)
 //
 
+#include <utility>
+
 #include <GraphMol/RWMol.h>
 #include <GraphMol/MolDraw2D/MolDraw2DDetails.h>
 #include <GraphMol/MolDraw2D/DrawMolMCH.h>
@@ -21,13 +23,13 @@ namespace MolDraw2D_detail {
 DrawMolMCH::DrawMolMCH(
     const ROMol &mol, const std::string &legend, int width, int height,
     MolDrawOptions &drawOptions, DrawText &textDrawer,
-    const std::map<int, std::vector<DrawColour>> &highlight_atom_map,
+    std::map<int, std::vector<DrawColour>> highlight_atom_map,
     const std::map<int, std::vector<DrawColour>> &highlight_bond_map,
     const std::map<int, double> &highlight_radii,
     const std::map<int, int> &highlight_linewidth_multipliers, int confId)
     : DrawMol(mol, legend, width, height, drawOptions, textDrawer, nullptr,
               nullptr, nullptr, nullptr, nullptr, &highlight_radii, confId),
-      mcHighlightAtomMap_(highlight_atom_map),
+      mcHighlightAtomMap_(std::move(highlight_atom_map)),
       mcHighlightBondMap_(highlight_bond_map),
       highlightLinewidthMultipliers_(highlight_linewidth_multipliers) {}
 

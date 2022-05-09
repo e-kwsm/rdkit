@@ -373,8 +373,8 @@ class RDKIT_SUBSTRUCTLIBRARY_EXPORT KeyFromPropHolder : public KeyHolderBase {
   const std::string empty_string = {};
 
  public:
-  KeyFromPropHolder(const std::string &propname = "_Name")
-      : propname(propname) {}
+  KeyFromPropHolder(std::string propname = "_Name")
+      : propname(std::move(propname)) {}
 
   std::string &getPropName() { return propname; }
   const std::string &getPropName() const { return propname; }

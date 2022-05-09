@@ -37,6 +37,7 @@
 #include <future>
 #endif
 
+#include <utility>
 #include <GraphMol/Substruct/SubstructMatch.h>
 #include <boost/dynamic_bitset.hpp>
 
@@ -56,8 +57,8 @@ struct Bits {
   SubstructMatchParameters params;
 
   Bits(const FPHolderBase *fps, const ROMol &m,
-       const SubstructMatchParameters &ssparams)
-      : fps(fps), params(ssparams) {
+       SubstructMatchParameters ssparams)
+      : fps(fps), params(std::move(ssparams)) {
     if (fps) {
       queryBits = fps->makeFingerprint(m);
     } else {
@@ -66,8 +67,8 @@ struct Bits {
   }
 
   Bits(const FPHolderBase *fingerprints, const TautomerQuery &m,
-       const SubstructMatchParameters &ssparams)
-      : fps(nullptr), params(ssparams) {
+       SubstructMatchParameters ssparams)
+      : fps(nullptr), params(std::move(ssparams)) {
     if (fingerprints) {
       const TautomerPatternHolder *tp =
           dynamic_cast<const TautomerPatternHolder *>(fingerprints);
