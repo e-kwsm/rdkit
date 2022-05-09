@@ -22,6 +22,8 @@
 #include <GraphMol/SmilesParse/SmartsWrite.h>
 #include <GraphMol/SmilesParse/SmilesWrite.h>
 
+#include <utility>
+
 namespace RDKit::SynthonSpaceSearch {
 
 Synthon::Synthon(const std::string &smi) : d_smiles(smi) {
