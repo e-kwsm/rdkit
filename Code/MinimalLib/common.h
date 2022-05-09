@@ -59,6 +59,7 @@
 #include <RDGeneral/BoostStartInclude.h>
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/json_parser.hpp>
+#include <utility>
 #include <RDGeneral/BoostEndInclude.h>
 #ifdef RDK_BUILD_THREADSAFE_SSS
 #include <atomic>
@@ -1149,7 +1150,7 @@ std::string parse_inchi_options(const char *details_json) {
 
 struct LogHandle {
  public:
-  LogHandle(const std::string &logName) : d_logName(logName) {
+  LogHandle(std::string logName) : d_logName(std::move(logName)) {
     d_logNameToLoggers = std::map<std::string, LoggerStateVector>{
         {"rdApp.debug", {LoggerState(rdDebugLog)}},
         {"rdApp.info", {LoggerState(rdInfoLog)}},
