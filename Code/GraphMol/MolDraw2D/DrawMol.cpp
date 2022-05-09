@@ -13,6 +13,7 @@
 #include <algorithm>
 #include <iostream>
 #include <limits>
+#include <utility>
 
 #include <Geometry/Transform2D.h>
 #include <Geometry/Transform3D.h>
@@ -41,7 +42,7 @@ namespace MolDraw2D_detail {
 
 // ****************************************************************************
 DrawMol::DrawMol(
-    const ROMol &mol, const std::string &legend, int width, int height,
+    const ROMol &mol, std::string legend, int width, int height,
     const MolDrawOptions &drawOptions, DrawText &textDrawer,
     const std::vector<int> *highlight_atoms,
     const std::vector<int> *highlight_bonds,
@@ -55,7 +56,7 @@ DrawMol::DrawMol(
       marginPadding_(drawOptions.padding),
       includeAnnotations_(includeAnnotations),
       isReactionMol_(isReactionMol),
-      legend_(legend),
+      legend_(std::move(legend)),
       confId_(confId),
       width_(width),
       height_(height),
