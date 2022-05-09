@@ -28,6 +28,7 @@
 #include <fstream>
 #include <boost/lexical_cast.hpp>
 #include <filesystem>
+#include <utility>
 using namespace RDKit;
 
 class MolAtropTest {
@@ -53,8 +54,8 @@ class MolAtropTest {
             int atomCountInit, int bondCountInit)
         : atomCount(atomCountInit),
           bondCount(bondCountInit),
-          fileName(fileNameInit),
-          expectedResult(expectedResultInit) {};
+          fileName(std::move(fileNameInit)),
+          expectedResult(expectedResultInit) {}
   };
 
   void generateNewExpectedFilesIfSoSpecified(std::string filename,
