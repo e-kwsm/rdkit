@@ -33,6 +33,7 @@
 #include <GraphMol/MonomerInfo.h>
 #include <RDGeneral/FileParseException.h>
 #include <boost/algorithm/string.hpp>
+#include <utility>
 
 using namespace RDKit;
 
@@ -7151,7 +7152,7 @@ class FragTest {
   FragTest(std::string fileNameInit, bool expectedResultInit,
            bool reapplyMolBlockWedgingInit, unsigned int origSgroupCountInit,
            unsigned int newSgroupCountInit)
-      : fileName(fileNameInit),
+      : fileName(std::move(fileNameInit)),
         expectedResult(expectedResultInit),
         reapplyMolBlockWedging(reapplyMolBlockWedgingInit),
         origSgroupCount(origSgroupCountInit),
