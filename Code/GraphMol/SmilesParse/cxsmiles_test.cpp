@@ -10,6 +10,7 @@
 #include <catch2/catch_all.hpp>
 #include <RDGeneral/test.h>
 #include <string>
+#include <utility>
 #include <vector>
 #include <GraphMol/RDKitBase.h>
 #include <GraphMol/test_fixtures.h>
@@ -672,7 +673,7 @@ class SmilesTest {
 
   SmilesTest(std::string fileNameInit, bool expectedResultInit,
              int atomCountInit, int bondCountInit)
-      : fileName(fileNameInit),
+      : fileName(std::move(fileNameInit)),
         expectedResult(expectedResultInit),
         atomCount(atomCountInit),
         bondCount(bondCountInit) {};
