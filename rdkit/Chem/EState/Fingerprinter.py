@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 # # Automatically adapted for numpy.oldnumeric Jun 27, 2008 by -c
 
 #  Copyright (C) 2002-2006  greg Landrum and Rational Discovery LLC

@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """piddletest.py
 
 This module puts the various PIDDLE backends through their paces.

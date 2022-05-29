@@ -635,7 +635,7 @@ N個の分子の間でRMSDを計算
 
 .. code:: python
 
-   #!/usr/bin/python
+   #!/usr/bin/env python
    '''
    ファイルの中の全ての構造間のRMSDの差を計算
 
