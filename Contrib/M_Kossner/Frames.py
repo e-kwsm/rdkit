@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 # encoding: utf-8
 
 #	Jan 2011	(markus kossner)	Cleaned up the code, added some documentation

@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 # lots to do:
 #   __ native drawLines
 #   __ add native drawCurve method

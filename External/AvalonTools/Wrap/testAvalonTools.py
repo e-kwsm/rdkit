@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 # Created by Greg Landrum, July 2008
 #
 
