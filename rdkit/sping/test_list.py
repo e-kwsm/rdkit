@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 tests = [
   ("python", "test_list.py", {
     'dir': 'tests'

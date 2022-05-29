@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 tests = [
   ("testExecs/test1.exe", "", {}),
   ("python", "test_list.py", {

@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 #
 #  Copyright (c) 2013, Novartis Institutes for BioMedical Research Inc.
 #  Copyright (c) 2021, Greg Landrum

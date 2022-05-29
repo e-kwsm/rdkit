@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 tests = [
   ("python", "UnitTestEState.py", {}),
   ("python", "UnitTestFingerprints.py", {}),

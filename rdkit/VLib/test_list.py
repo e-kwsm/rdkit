@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 tests = [
   ("python", "UnitTestVLib.py", {}),
   ("python", "test_list.py", {

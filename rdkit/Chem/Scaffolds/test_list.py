@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
   Run unit tests and doctests for MurckoScaffolds
 """

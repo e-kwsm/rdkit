@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 tests = [
   ("python", "UnitTestStorageUtils.py", {}),
   ("python", "UnitTestDbConnect.py", {}),

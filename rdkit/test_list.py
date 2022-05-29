@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 tests = [
   # Only local unit tests go in here!
   # Subdirectories get their own entries in ./CMakeLists.txt

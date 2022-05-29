@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 # copyright 2000 greg landrum
 """ Generic file manipulation stuff
 

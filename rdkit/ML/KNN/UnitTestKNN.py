@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 #
 #  Copyright (C) 2003  Rational Discovery LLC
 #   All Rights Reserved

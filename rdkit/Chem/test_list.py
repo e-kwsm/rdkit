@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 tests = [("python", "UnitTestChem.py", {}), ("python", "UnitTestChemv2.py", {}),
          ("python", "UnitTestChemAtom.py", {}), ("python", "UnitTestChemBond.py", {}),
          ("python", "UnitTestChemSmarts.py", {}), ("python", "UnitTestFragmentDescriptors.py", {}),
