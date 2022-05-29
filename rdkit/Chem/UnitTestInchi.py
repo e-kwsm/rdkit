@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 #
 #  Copyright (c) 2011-2025, Novartis Institutes for BioMedical Research Inc.
 #   and other RDKit contributors
