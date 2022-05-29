@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 #
 #  Copyright (c) 2007, Novartis Institutes for BioMedical Research Inc.
 #  All rights reserved.

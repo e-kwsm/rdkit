@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 # This work was funded by Roche and generously donated to the free
 # and open source cheminformatics community.
 import warnings
