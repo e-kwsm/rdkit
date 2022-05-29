@@ -1,4 +1,4 @@
-#! /usr/bin/python
+#!/usr/bin/env python
 # parse_doxy_html.py
 """"Parse Doxygen-generated html files to get out stuff we want for Javadocs
 

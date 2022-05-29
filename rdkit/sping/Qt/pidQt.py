@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 # Copyright (C) 2002  Greg Landrum and Rational Discovery LLC
 #
 # This library is free software; you can redistribute it and/or

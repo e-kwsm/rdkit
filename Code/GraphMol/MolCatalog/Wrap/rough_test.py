@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 # $Id$
 #
 #  Copyright (C) 2006  Greg Landrum

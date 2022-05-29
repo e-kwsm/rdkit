@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 from Chem import rdmol
 from Chem.rdmol import Atom, Bond, Mol
 

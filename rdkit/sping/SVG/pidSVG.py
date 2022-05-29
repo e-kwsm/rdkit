@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 # Copyright (C) 2000  Greg Landrum
 #
 # This library is free software; you can redistribute it and/or
