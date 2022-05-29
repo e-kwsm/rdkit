@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 #
 #  Copyright (C) 2001-2026  greg Landrum and other RDKit contributors
 #

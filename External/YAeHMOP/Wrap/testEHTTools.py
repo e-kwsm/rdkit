@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 #  Copyright (c) 2019 Greg Landrum
 #  All rights reserved.
 #

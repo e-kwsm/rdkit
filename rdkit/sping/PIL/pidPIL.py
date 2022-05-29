@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 # piddlePIL.py -- a Python Imaging Library backend for PIDDLE
 # Copyright (C) 1999  Joseph J. Strout
 #

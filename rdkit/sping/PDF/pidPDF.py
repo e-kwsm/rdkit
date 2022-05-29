@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 # piddlePDF.py - a PDF backend for PIDDLE
 """This is the PIDDLE back end for PDF.  It acts as a wrapper
 over the pdfgen.Canvas class, and translates between the
