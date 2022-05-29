@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import doctest
 import os.path
 import unittest

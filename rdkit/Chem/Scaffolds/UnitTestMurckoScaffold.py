@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 # $Id: test_MurckoScaffold.py 3672 2010-06-14 17:10:00Z landrgr1 $
 #
 # Created by Peter Gedeck, June 2008

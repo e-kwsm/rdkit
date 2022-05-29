@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """unit testing code for 3D stuff
 
 """
