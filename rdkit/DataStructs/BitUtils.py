@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 # $Id$
 #
 #  Copyright (C) 2005-2006  greg Landrum and Rational Discovery LLC
