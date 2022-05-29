@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 # Copyright (C) 2001 greg Landrum and Rational Discovery LLC
 """basic unit testing code for the substructure matching
 

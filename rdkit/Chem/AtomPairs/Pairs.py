@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 #
 #  Copyright (C) 2004-2017 Greg Landrum and Rational Discovery LLC
 #

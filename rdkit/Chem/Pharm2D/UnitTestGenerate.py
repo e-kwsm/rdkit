@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 unit testing code rdkit.Chem.Pharm2D.Generate
 
