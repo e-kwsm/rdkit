@@ -117,6 +117,7 @@ void test2FPBReaderTanimoto() {
     FPBReader fps(filename);
     fps.init();
     TEST_ASSERT(fps.length() == 100)
+
     {
       boost::shared_array<std::uint8_t> bytes = fps.getBytes(0);
       TEST_ASSERT(bytes)
@@ -146,6 +147,7 @@ void test3FPBReaderTanimotoNeighbors() {
     FPBReader fps(filename);
     fps.init();
     TEST_ASSERT(fps.length() == 100)
+
     {
       boost::shared_array<std::uint8_t> bytes = fps.getBytes(0);
       TEST_ASSERT(bytes)
@@ -272,6 +274,7 @@ void test5LazyFPBReaderTanimoto() {
     FPBReader fps(filename, true);
     fps.init();
     TEST_ASSERT(fps.length() == 100)
+
     {
       boost::shared_array<std::uint8_t> bytes = fps.getBytes(0);
       TEST_ASSERT(bytes)
@@ -307,6 +310,7 @@ void test6LazyFPBReaderTanimotoNeighbors() {
     FPBReader fps(filename, true);
     fps.init();
     TEST_ASSERT(fps.length() == 100)
+
     {
       boost::shared_array<std::uint8_t> bytes = fps.getBytes(0);
       TEST_ASSERT(bytes)
@@ -374,6 +378,7 @@ void test7BitsetDetails() {
     FPBReader fps(filename, true);
     fps.init();
     TEST_ASSERT(fps.length() == 100)
+
     {
       boost::shared_array<std::uint8_t> bytes = fps.getBytes(0);
       TEST_ASSERT(bytes)
@@ -418,6 +423,7 @@ void test8FPBReaderContains() {
     FPBReader fps(filename);
     fps.init();
     TEST_ASSERT(fps.length() == 100)
+
     {
       boost::shared_array<std::uint8_t> bytes = fps.getBytes(0);
       TEST_ASSERT(bytes)
@@ -477,6 +483,7 @@ void test9FPBReaderTversky() {
     FPBReader fps(filename);
     fps.init();
     TEST_ASSERT(fps.length() == 100)
+
     {
       boost::shared_array<std::uint8_t> bytes = fps.getBytes(0);
       TEST_ASSERT(bytes)
@@ -506,6 +513,7 @@ void test10FPBReaderTverskyNeighbors() {
     FPBReader fps(filename);
     fps.init();
     TEST_ASSERT(fps.length() == 100)
+
     {
       boost::shared_array<std::uint8_t> bytes = fps.getBytes(0);
       TEST_ASSERT(bytes)
