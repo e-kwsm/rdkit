@@ -198,6 +198,7 @@ void test4MultiFPBReaderContains() {
     MultiFPBReader mfps(rdrs);
     mfps.init();
     TEST_ASSERT(mfps.length() == 2)
+
     {
       boost::shared_array<std::uint8_t> bytes = mfps.getReader(0)->getBytes(0);
       TEST_ASSERT(bytes)
