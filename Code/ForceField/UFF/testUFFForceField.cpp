@@ -1565,8 +1565,7 @@ void testUFFCopy() {
     }
     cfield->initialize();
     cfield->minimize();
-    TEST_ASSERT(MolTransforms::getBondLength(cmol->getConformer(), 1, 3) >
-                1.99)
+    TEST_ASSERT(MolTransforms::getBondLength(cmol->getConformer(), 1, 3) > 1.99)
     TEST_ASSERT(RDKit::feq(field->calcEnergy(), cfield->calcEnergy()))
 
     const RDKit::Conformer &conf = mol->getConformer();
