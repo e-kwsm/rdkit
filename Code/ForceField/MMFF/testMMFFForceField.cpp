@@ -1672,8 +1672,7 @@ M  END
     field->minimize();
     e.push_back(field->calcEnergy());
     TEST_ASSERT(RDKit::feq(
-        MolTransforms::getDihedralDeg(mol->getConformer(), 0, 3, 6, 9), d,
-        0.5))
+        MolTransforms::getDihedralDeg(mol->getConformer(), 0, 3, 6, 9), d, 0.5))
     delete field;
   }
   TEST_ASSERT(RDKit::feq(e[0], e[1], 0.5))
@@ -1754,8 +1753,7 @@ void testMMFFCopy() {
     }
     cfield->initialize();
     cfield->minimize();
-    TEST_ASSERT(MolTransforms::getBondLength(cmol->getConformer(), 1, 3) >
-                1.99)
+    TEST_ASSERT(MolTransforms::getBondLength(cmol->getConformer(), 1, 3) > 1.99)
     TEST_ASSERT(RDKit::feq(field->calcEnergy(), cfield->calcEnergy()))
 
     const RDKit::Conformer &conf = mol->getConformer();
