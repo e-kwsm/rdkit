@@ -583,7 +583,6 @@ void testDifferenceFingerprintsReaction() {
         DifferenceFingerprintChemReaction(*rxn2);
 
     TEST_ASSERT(TanimotoSimilarity(*rxn1FP, *rxn2FP) == 0.0)
-    ;
 
     delete rxn1;
     delete rxn2;
