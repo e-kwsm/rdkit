@@ -882,8 +882,7 @@ void canonicalDFSTraversal(ROMol &mol, int atomIdx, int inBondIdx,
   PRECONDITION(ranks.size() >= mol.getNumAtoms(), "vector too small")
   PRECONDITION(atomOrders.size() >= mol.getNumAtoms(), "vector too small")
   PRECONDITION(bondVisitOrders.size() >= mol.getNumBonds(), "vector too small")
-  PRECONDITION(atomRingClosures.size() >= mol.getNumAtoms(),
-               "vector too small")
+  PRECONDITION(atomRingClosures.size() >= mol.getNumAtoms(), "vector too small")
   PRECONDITION(atomTraversalBondOrder.size() >= mol.getNumAtoms(),
                "vector too small")
   PRECONDITION(!bondsInPlay || bondsInPlay->size() >= mol.getNumBonds(),

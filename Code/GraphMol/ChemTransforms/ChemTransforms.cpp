@@ -499,8 +499,7 @@ ROMol *replaceCore(const ROMol &mol, const ROMol &core,
         if (molNeighborIdx > -1) {
           auto connectingBond =
               mol.getBondBetweenAtoms(mappingInfo.molIndex, molNeighborIdx);
-          CHECK_INVARIANT(connectingBond,
-                          "expected bond in molecule not found")
+          CHECK_INVARIANT(connectingBond, "expected bond in molecule not found")
           multipleOwnedBonds.set(connectingBond->getIdx());
         }
       }
