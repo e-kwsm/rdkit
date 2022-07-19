@@ -542,6 +542,7 @@ M  END
     TEST_ASSERT(m1->getNumConformers() == 1)
     CoordGen::addCoords(*m1);
     TEST_ASSERT(m1->getNumConformers() == 1)
+
     {
       std::unique_ptr<ROMol> nm{MolBlockToMol(MolToMolBlock(*m1))};
       TEST_ASSERT(nm)
