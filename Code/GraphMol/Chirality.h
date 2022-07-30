@@ -192,7 +192,7 @@ RDKIT_GRAPHMOL_EXPORT Atom *getChiralAcrossAtom(const Atom *center,
                                                 const Bond *qry);
 RDKIT_GRAPHMOL_EXPORT Atom *getChiralAcrossAtom(const Atom *center,
                                                 const Atom *qry);
-//! \param which: if this is -1 then the second axial bond will be returned,
+//! \param which if this is -1 then the second axial bond will be returned,
 //! otherwise the first
 RDKIT_GRAPHMOL_EXPORT Bond *getTrigonalBipyramidalAxialBond(const Atom *center,
                                                             int which = 0);
