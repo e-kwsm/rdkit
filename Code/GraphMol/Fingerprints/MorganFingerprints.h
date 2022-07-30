@@ -74,8 +74,8 @@ const std::string morganFingerprintVersion = "1.0.0";
   and an unpublished technical report:
   http://www.ics.uci.edu/~welling/teaching/ICS274Bspring06/David%20Rogers%20-%20ECFP%20Manuscript.doc
 
-  \param mol:    the molecule to be fingerprinted
-  \param radius: the number of iterations to grow the fingerprint
+  \param mol     the molecule to be fingerprinted
+  \param radius  the number of iterations to grow the fingerprint
   \param invariants : optional pointer to a set of atom invariants to
         be used. By default ECFP-type invariants are used
         (calculated by getConnectivityInvariants())
@@ -127,8 +127,8 @@ RDKIT_FINGERPRINTS_EXPORT SparseIntVect<std::uint32_t> *getFingerprint(
   and an unpublished technical report:
   http://www.ics.uci.edu/~welling/teaching/ICS274Bspring06/David%20Rogers%20-%20ECFP%20Manuscript.doc
 
-  \param mol:    the molecule to be fingerprinted
-  \param radius: the number of iterations to grow the fingerprint
+  \param mol     the molecule to be fingerprinted
+  \param radius  the number of iterations to grow the fingerprint
   \param invariants : optional pointer to a set of atom invariants to
         be used. By default ECFP-type invariants are used
         (calculated by getConnectivityInvariants())
@@ -168,9 +168,9 @@ RDKIT_FINGERPRINTS_EXPORT SparseIntVect<std::uint32_t> *getHashedFingerprint(
 /*!
   see documentation for getFingerprint() for theory/references
 
-  \param mol:    the molecule to be fingerprinted
-  \param radius: the number of iterations to grow the fingerprint
-  \param nBits:  the number of bits in the final fingerprint
+  \param mol     the molecule to be fingerprinted
+  \param radius  the number of iterations to grow the fingerprint
+  \param nBits   the number of bits in the final fingerprint
   \param invariants : optional pointer to a set of atom invariants to
         be used. By default ECFP-type invariants are used
         (calculated by getConnectivityInvariants())
