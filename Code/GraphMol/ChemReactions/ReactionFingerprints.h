@@ -54,7 +54,11 @@ enum FingerprintType {
    Different parameters can be chosen to influence the generation
    of chemical reaction fingerprints. Generally different setting
    should be used for structural or difference fingerprints.
+ */
+struct RDKIT_CHEMREACTIONS_EXPORT ReactionFingerprintParams {
+  ReactionFingerprintParams() {}
 
+  /*!
    \param includeAgents        include the agents of a reaction for fingerprint
    generation
    \param bitRatioAgents       in structural fingerprints it determines the
@@ -71,10 +75,7 @@ enum FingerprintType {
    aware that only AtompairFP,
                                TopologicalTorsion and MorganFP were supported in
    the difference fingerprint.
- */
-struct RDKIT_CHEMREACTIONS_EXPORT ReactionFingerprintParams {
-  ReactionFingerprintParams() {}
-
+   */
   ReactionFingerprintParams(bool includeAgents, double bitRatioAgents,
                             unsigned int nonAgentWeight, int agentWeight,
                             unsigned int fpSize, FingerprintType fpType)
@@ -108,8 +109,8 @@ RDKIT_CHEMREACTIONS_EXPORT extern const ReactionFingerprintParams
    using a PatternFP for reactants and products and tentatively agents which
    were finally  concatenated
 
-  \param rxn:          the reaction to be fingerprinted
-  \param params:       specific settings to manipulate fingerprint generation
+  \param rxn          the reaction to be fingerprinted
+  \param params       specific settings to manipulate fingerprint generation
 
   \return the reaction fingerprint, as an ExplicitBitVect
 
@@ -130,8 +131,8 @@ RDKIT_CHEMREACTIONS_EXPORT ExplicitBitVect *StructuralFingerprintChemReaction(
   AtompairFP
    and tentatively the agent AtompairFP is added
 
-  \param rxn:          the reaction to be fingerprinted
-  \param params:       specific settings to manipulate fingerprint generation
+  \param rxn          the reaction to be fingerprinted
+  \param params       specific settings to manipulate fingerprint generation
 
   \return the reaction fingerprint, as an SparseIntVec
 
