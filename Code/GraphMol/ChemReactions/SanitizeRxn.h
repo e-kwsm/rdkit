@@ -132,11 +132,11 @@ typedef enum {
 
    \param rxn : the ChemicalReaction to be cleaned
 
-   \param operationThatFailed : the first (if any) sanitization operation that
+   \param operationsThatFailed : the first (if any) sanitization operation that
    fails is set here.
-                                The values are taken from the \c SanitizeFlags
+                                 The values are taken from the \c SanitizeFlags
    enum.
-                                On success, the value is  \c
+                                 On success, the value is  \c
    SanitizeFlags::SANITIZE_NONE
 
    \param sanitizeOps : the bits here are used to set which sanitization
