@@ -23,7 +23,7 @@ namespace ReducedGraphs {
 //! \brief Generates a reduced graph representation of a molecule
 /*!
 
-  \param mol:          the molecule to be fingerprinted
+  \param mol           the molecule to be fingerprinted
 
   \return a new molecule
 
@@ -38,13 +38,13 @@ RDKIT_REDUCEDGRAPHS_EXPORT ROMol *generateMolExtendedReducedGraph(
 /// reduced graph
 /*!
 
-  \param mol:           the molecule to be fingerprinted
-  \param atomTypes:     [optional] contains bit vectors indicating whether each
+  \param mol            the molecule to be fingerprinted
+  \param atomTypes      [optional] contains bit vectors indicating whether each
   atom in
                         the molecule matches each type.
-  \param fuzzIncrement: amount to be added to neighboring bins
-  \param minPath:       minimum distance (in bonds) to be considered
-  \param maxPath:       maximum distance (in bonds) to be considered
+  \param fuzzIncrement  amount to be added to neighboring bins
+  \param minPath        minimum distance (in bonds) to be considered
+  \param maxPath        maximum distance (in bonds) to be considered
 
   \return the fingerprint, as a DoubleVector
 
@@ -61,13 +61,13 @@ generateErGFingerprintForReducedGraph(
 //! \brief Generates a ErG fingerprint vector for a molecule
 /*!
 
-  \param mol:           the molecule to be fingerprinted
-  \param atomTypes:     [optional] contains bit vectors indicating whether each
+  \param mol            the molecule to be fingerprinted
+  \param atomTypes      [optional] contains bit vectors indicating whether each
   atom in
                         the molecule matches each type.
-  \param fuzzIncrement: amount to be added to neighboring bins
-  \param minPath:       minimum distance (in bonds) to be considered
-  \param maxPath:       maximum distance (in bonds) to be considered
+  \param fuzzIncrement  amount to be added to neighboring bins
+  \param minPath        minimum distance (in bonds) to be considered
+  \param maxPath        maximum distance (in bonds) to be considered
 
   \return the fingerprint, as a DoubleVector
 
