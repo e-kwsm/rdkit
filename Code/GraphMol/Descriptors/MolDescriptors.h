@@ -22,6 +22,7 @@
 namespace RDKit {
 class ROMol;
 namespace Descriptors {
+RDKIT_DESCRIPTORS_EXPORT extern const std::string amwVersion;
 /*!
   Calculates a molecule's average molecular weight
 
@@ -31,9 +32,9 @@ namespace Descriptors {
 
   \return the AMW
 */
-RDKIT_DESCRIPTORS_EXPORT extern const std::string amwVersion;
 RDKIT_DESCRIPTORS_EXPORT double calcAMW(const ROMol &mol,
                                         bool onlyHeavy = false);
+RDKIT_DESCRIPTORS_EXPORT extern const std::string NumHeavyAtomsVersion;
 /*!
   Calculates a molecule's number of heavy (non-hydrogen) atoms
 
@@ -41,8 +42,8 @@ RDKIT_DESCRIPTORS_EXPORT double calcAMW(const ROMol &mol,
 
   \return the number of heavy atoms
 */
-RDKIT_DESCRIPTORS_EXPORT extern const std::string NumHeavyAtomsVersion;
 RDKIT_DESCRIPTORS_EXPORT unsigned int calcNumHeavyAtoms(const ROMol &mol);
+RDKIT_DESCRIPTORS_EXPORT extern const std::string NumAtomsVersion;
 /*!
   Calculates a molecule's number of atoms
 
@@ -50,8 +51,8 @@ RDKIT_DESCRIPTORS_EXPORT unsigned int calcNumHeavyAtoms(const ROMol &mol);
 
   \return the number of atoms
 */
-RDKIT_DESCRIPTORS_EXPORT extern const std::string NumAtomsVersion;
 RDKIT_DESCRIPTORS_EXPORT unsigned int calcNumAtoms(const ROMol &mol);
+RDKIT_DESCRIPTORS_EXPORT extern const std::string exactmwVersion;
 /*!
   Calculates a molecule's exact molecular weight
 
@@ -61,7 +62,6 @@ RDKIT_DESCRIPTORS_EXPORT unsigned int calcNumAtoms(const ROMol &mol);
 
   \return the exact MW
 */
-RDKIT_DESCRIPTORS_EXPORT extern const std::string exactmwVersion;
 RDKIT_DESCRIPTORS_EXPORT double calcExactMW(const ROMol &mol,
                                             bool onlyHeavy = false);
 /*!
