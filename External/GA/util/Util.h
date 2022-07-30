@@ -59,7 +59,6 @@ namespace GarethUtil {
  * @param str
  * @param ok optional boolean reference to indicate success or failure
  * @param start optional start position
- * @param end optional end position
  * @return
  */
     template<typename T>
