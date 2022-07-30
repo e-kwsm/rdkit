@@ -51,7 +51,7 @@ std::pair<double, double> BCUT2D(const ROMol &mol,
 //!  Diagonal elements are (currently) atomic mass, gasteiger charge,
 //!  crippen logP and crippen MR
 /*!
-  \param mol           the molecule of interest
+  \param m             the molecule of interest
 
   \return              The bcut vector (mass high eval, mass low eval,
                                         gasteiger charge high eval, gasteiger
