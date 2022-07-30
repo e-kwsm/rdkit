@@ -862,9 +862,7 @@ class RDKIT_GRAPHMOL_EXPORT ROMol : public RDProps {
 
   //! adds a Bond to our collection
   /*!
-    \param bond          pointer to the Bond to add
-
-    \return the new number of bonds
+    \param other         pointer to the Bond to add
 
     <b>Note:</b> since this is using a smart pointer, we don't need to worry
     about
