@@ -241,8 +241,8 @@ class RDKIT_MOLENUMERATOR_EXPORT RepeatUnitOp : public MolEnumeratorOp {
 struct RDKIT_MOLENUMERATOR_EXPORT MolEnumeratorParams {
   bool sanitize = false;
   size_t maxToEnumerate = 1000;
-  bool doRandom = false;  //< not yet implemented
-  int randomSeed = -1;    //< not yet implemented
+  bool doRandom = false;  ///< not yet implemented
+  int randomSeed = -1;    ///< not yet implemented
   std::shared_ptr<MolEnumeratorOp> dp_operation;
 };
 
@@ -260,7 +260,7 @@ enumerate(const ROMol &mol, const std::vector<MolEnumeratorParams> &paramsList);
 //! Returns a MolBundle containing the molecules resulting from applying the
 //! enumerable operators contained in \c mol.
 /*!
-\param maxPerOperation: the maximum number of molecules which an individual
+\param maxPerOperation the maximum number of molecules which an individual
 operation is allowed to generate
 
 NOTE: the current implementation does not support molecules which include
