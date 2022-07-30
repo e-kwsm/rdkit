@@ -28,7 +28,6 @@ class RDKIT_FORCEFIELD_EXPORT PositionConstraintContrib
   /*!
     \param owner       pointer to the owning ForceField
     \param idx         index of the atom in the ForceField's positions
-    \param minDispl    minimum displacement
     \param maxDispl    maximum displacement
     \param forceConst  force constant
 
