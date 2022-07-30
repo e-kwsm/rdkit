@@ -183,11 +183,11 @@ RDKIT_FILEPARSERS_EXPORT void MolToXYZFile(const ROMol &mol,
 
 //! \brief translate TPL data (BioCad format) into a multi-conf molecule
 /*!
-  \param inStream:      the stream from which to read
-  \param line:          used to track the line number of errors
-  \param sanitize:      toggles sanitization and stereochemistry
+  \param inStream       the stream from which to read
+  \param line           used to track the line number of errors
+  \param sanitize       toggles sanitization and stereochemistry
                         perception of the molecule
-  \param skipFirstConf: according to the TPL format description, the atomic
+  \param skipFirstConf  according to the TPL format description, the atomic
                         coords in the atom-information block describe the first
                         conformation and the first conf block describes second
                         conformation. The CombiCode, on the other hand, writes
@@ -204,10 +204,10 @@ RDKIT_FILEPARSERS_EXPORT RWMol *TPLDataStreamToMol(std::istream *inStream,
 
 //! \brief construct a multi-conf molecule from a TPL (BioCad format) file
 /*!
-  \param fName:         the name of the file from which to read
-  \param sanitize:      toggles sanitization and stereochemistry
+  \param fName          the name of the file from which to read
+  \param sanitize       toggles sanitization and stereochemistry
                         perception of the molecule
-  \param skipFirstConf: according to the TPL format description, the atomic
+  \param skipFirstConf  according to the TPL format description, the atomic
                         coords in the atom-information block describe the first
                         conformation and the first conf block describes second
                         conformation. The CombiCode, on the other hand, writes
@@ -339,7 +339,7 @@ RDKIT_FILEPARSERS_EXPORT std::string MolToPDBBlock(const ROMol &mol,
 // \brief Writes a molecule to an MDL mol file
 /*!
  *   \param mol           - the molecule in question
- *   \param fName         - the name of the file to use
+ *   \param fname         - the name of the file to use
  *   \param confId        - selects the conformer to be used
  *   \param flavor        - controls what gets written:
  *         flavor & 1 : Write MODEL/ENDMDL lines around each record
