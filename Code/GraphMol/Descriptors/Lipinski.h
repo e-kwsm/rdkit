@@ -43,7 +43,8 @@ RDKIT_DESCRIPTORS_EXPORT extern const std::string NumRotatableBondsVersion;
 //! calculates the number of rotatable bonds
 /*!
   \param mol           the molecule of interest
-  \param strict        if Strict, a stricter definition of rotable bonds is used
+  \param useStrictDefinition
+                       if Strict, a stricter definition of rotable bonds is used
                            this excludes amides, esters, etc.
                        if StrictLinkages, a much stricter definition that
                            handles rotatable bonds between rings as well.
