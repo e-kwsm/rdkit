@@ -165,7 +165,6 @@ class PairList {
    * bit (64-bit integer).
    *
    * @param descriptor the descriptor to add an pair
-   * @return whether the descriptor was added
    */
   void addAndPair(Descriptor descriptor) {
     // if this isn't the first descriptor - check the pairing
