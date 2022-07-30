@@ -28,7 +28,6 @@ class RDKIT_FORCEFIELD_EXPORT BondStretchContrib : public ForceFieldContrib {
     \param owner       pointer to the owning ForceField
     \param idx1        index of end1 in the ForceField's positions
     \param idx2        index of end2 in the ForceField's positions
-    \param mmffBondParams
 
   */
   BondStretchContrib(ForceField *owner, const unsigned int idx1,
