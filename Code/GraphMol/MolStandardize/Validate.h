@@ -57,7 +57,7 @@ class RDKIT_MOLSTANDARDIZE_EXPORT CompositeValidation
  public:
   CompositeValidation(
       const std::vector<std::shared_ptr<ValidationMethod>> &validations)
-      : validations(validations){};
+      : validations(validations){}
 
   std::vector<ValidationErrorInfo> validate(
       const ROMol &mol, bool reportAllFailures) const override;
