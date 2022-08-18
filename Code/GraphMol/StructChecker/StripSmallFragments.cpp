@@ -14,7 +14,6 @@
 #include "../SmilesParse/SmilesWrite.h"
 #include "../FileParsers/MolFileStereochem.h"
 
-
 // define snprintf for msvc
 #if _MSC_VER
 #if _MSC_VER < 1900

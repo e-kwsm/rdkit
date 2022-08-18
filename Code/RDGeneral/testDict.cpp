@@ -60,7 +60,9 @@ void testGithub940() {
 
 void testRDAny() {
   std::cerr << "Testing RDValue" << std::endl;
-  { RDAny v(-2147450880); }
+  {
+    RDAny v(-2147450880);
+  }
 
   {
     int vi = 0;
