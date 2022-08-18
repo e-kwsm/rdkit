@@ -1,6 +1,6 @@
 steps:
 - bash: |
-    sudo apt-get install g++ wget make libgl1-mesa-dev mesa-common-dev
+    sudo apt-get install clang-format g++ wget make libgl1-mesa-dev mesa-common-dev
     source ${CONDA}/etc/profile.d/conda.sh
     sudo chown -R ${USER} ${CONDA}
     conda config --set always_yes yes --set changeps1 no
@@ -14,6 +14,11 @@ steps:
     conda activate rdkit_build
     conda install -c conda-forge nbval ipykernel>=6.0
   displayName: Setup build environment
+- bash: |
+    # XXX exclude Code/{ML,PgSQL}
+    git ls-files Code | grep -P '^(?!Code/(ML|PgSQL)/).+\.(h|hpp|c|cc|cpp)$' | xargs -r clang-format -i
+    git diff --exit-code
+  displayName: clang-tidy
 - bash: |
     source ${CONDA}/etc/profile.d/conda.sh
     conda activate rdkit_build
