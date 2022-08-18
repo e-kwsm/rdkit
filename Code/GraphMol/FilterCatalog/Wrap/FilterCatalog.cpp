@@ -333,9 +333,9 @@ struct filtercat_wrapper {
 
     RegisterVectorConverter<FilterMatch>("VectFilterMatch");
 
-    python::class_<FilterMatcherBase,
-                   boost::shared_ptr<FilterMatcherBase>, boost::noncopyable>(
-        "FilterMatcherBase", FilterMatcherBaseDoc, python::no_init)
+    python::class_<FilterMatcherBase, boost::shared_ptr<FilterMatcherBase>,
+                   boost::noncopyable>("FilterMatcherBase",
+                                       FilterMatcherBaseDoc, python::no_init)
         .def("IsValid", &FilterMatcherBase::isValid, python::args("self"),
              "Return True if the filter matcher is valid, False otherwise")
         .def("HasMatch", &FilterMatcherBase::hasMatch,
@@ -350,8 +350,7 @@ struct filtercat_wrapper {
 
     python::register_ptr_to_python<boost::shared_ptr<FilterMatcherBase>>();
 
-    python::class_<SmartsMatcher,
-                   python::bases<FilterMatcherBase>>(
+    python::class_<SmartsMatcher, python::bases<FilterMatcherBase>>(
         "SmartsMatcher", SmartsMatcherDoc,
         python::init<const std::string &>(python::args("self", "name")))
         .def(python::init<const ROMol &>(python::args("self", "rhs"),
@@ -400,8 +399,7 @@ struct filtercat_wrapper {
             ((python::arg("self"), python::arg("count"))),
             "Set the maximum times pattern can appear for the filter to match");
 
-    python::class_<ExclusionList,
-                   python::bases<FilterMatcherBase>>(
+    python::class_<ExclusionList, python::bases<FilterMatcherBase>>(
         "ExclusionList", python::init<>(python::args("self")))
         .def("SetExclusionPatterns", &SetOffPatterns,
              python::args("self", "list"),
@@ -592,18 +590,15 @@ struct filtercat_wrapper {
     python::scope().attr("FilterMatchOps") = nested_module;
     python::scope parent = nested_module;
 
-    python::class_<FilterMatchOps::And,
-                   python::bases<FilterMatcherBase>>(
+    python::class_<FilterMatchOps::And, python::bases<FilterMatcherBase>>(
         "And", python::init<FilterMatcherBase &, FilterMatcherBase &>(
                    python::args("self", "arg1", "arg2")));
 
-    python::class_<FilterMatchOps::Or,
-                   python::bases<FilterMatcherBase>>(
+    python::class_<FilterMatchOps::Or, python::bases<FilterMatcherBase>>(
         "Or", python::init<FilterMatcherBase &, FilterMatcherBase &>(
                   python::args("self", "arg1", "arg2")));
 
-    python::class_<FilterMatchOps::Not,
-                   python::bases<FilterMatcherBase>>(
+    python::class_<FilterMatchOps::Not, python::bases<FilterMatcherBase>>(
         "Not", python::init<FilterMatcherBase &>(python::args("self", "arg1")));
   };
 };
