@@ -32,8 +32,7 @@ class RDKIT_FORCEFIELD_EXPORT BondStretchContrib : public ForceFieldContrib {
     \param end2Params  pointer to the parameters for end2
 
   */
-  void addTerm(const unsigned int idx1,
-               const unsigned int idx2,
+  void addTerm(const unsigned int idx1, const unsigned int idx2,
                const MMFFBond *mmffBondParams);
 
   double getEnergy(double *pos) const override;

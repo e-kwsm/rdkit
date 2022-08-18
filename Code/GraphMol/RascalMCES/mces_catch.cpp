@@ -712,7 +712,6 @@ TEST_CASE("complete smallest rings") {
   }
 }
 
-
 TEST_CASE("multiple cliques returned") {
   std::vector<std::tuple<std::string, std::string, unsigned int, unsigned int,
                          std::vector<std::pair<int, int>>>>
