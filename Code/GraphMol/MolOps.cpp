@@ -1182,7 +1182,7 @@ std::vector<int> hapticBondEndpoints(const Bond *bond) {
   }
   return oats;
 }
-}  // end of namespace details
+}  // namespace details
 
 namespace details {
 unsigned int addExplicitAttachmentPoint(RWMol &mol, unsigned int atomIdx,
@@ -1325,5 +1325,5 @@ void collapseAttachmentPoints(RWMol &mol, bool markedOnly) {
     mol.commitBatchEdit();
   }
 }
-}  // end of namespace MolOps
-}  // end of namespace RDKit
+}  // namespace MolOps
+}  // namespace RDKit
