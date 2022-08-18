@@ -578,7 +578,7 @@ bool mmpaFragmentMol(const ROMol &mol, std::vector<RDKit::ROMOL_SPTR> &cores,
   }
   return true;
 }
-}  // end of anonymous namespace
+}  // namespace
 
 std::pair<JSMolList *, JSMolList *> JSMolBase::get_mmpa_frags(
     unsigned int minCuts, unsigned int maxCuts,

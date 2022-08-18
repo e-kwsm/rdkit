@@ -664,7 +664,7 @@ void addInversions(const ROMol &mol, const AtomicParamVect &params,
     }
   }
 }
-}  // end of namespace Tools
+}  // namespace Tools
 
 // ------------------------------------------------------------------------
 //
