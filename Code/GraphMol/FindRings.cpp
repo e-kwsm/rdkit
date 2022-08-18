@@ -65,7 +65,7 @@ void convertToBonds(const VECT_INT_VECT &res, VECT_INT_VECT &brings,
   }
 }
 
-}  // end of namespace RingUtils
+}  // namespace RingUtils
 
 namespace FindRings {
 using namespace RDKit;
@@ -1213,7 +1213,7 @@ void _DFS(const ROMol &mol, const Atom *atom, INT_VECT &atomColors,
   traversalOrder.pop_back();
   // std::cerr<<"  done "<<atom->getIdx()<<std::endl;
 }
-}  // end of anonymous namespace
+}  // namespace
 void fastFindRings(const ROMol &mol) {
   if (mol.getRingInfo()->isInitialized()) {
     mol.getRingInfo()->reset();

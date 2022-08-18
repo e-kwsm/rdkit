@@ -417,7 +417,7 @@ void readBondStereo(Bond *bnd, const bj::value &bondVal,
         "Bad Format: bond stereo provided without stereoAtoms");
   }
   bnd->setStereo(stereoBondlookup.find(stereo)->second);
-}  // namespace
+}
 
 void readConformer(Conformer *conf, const bj::value &confVal) {
   PRECONDITION(conf, "no conformer");
@@ -1031,4 +1031,4 @@ std::vector<boost::shared_ptr<ROMol>> JSONDataToMols(
 }
 
 }  // namespace MolInterchange
-}  // end of namespace RDKit
+}  // namespace RDKit

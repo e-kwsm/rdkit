@@ -68,7 +68,7 @@ int parseIntAttribVal(std::string attribName, std::string attribVal,
   }
   return iVal;
 }
-}  // end of anonymous namespace
+}  // namespace
 
 QueryAtom::QUERYATOM_QUERY *makeQueryFromOp(const std::string &op, int val,
                                             int (*func)(Atom const *at),

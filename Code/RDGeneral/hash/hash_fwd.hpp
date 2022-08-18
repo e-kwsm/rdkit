@@ -29,22 +29,22 @@ struct hash;
 
 #if BOOST_WORKAROUND(BOOST_MSVC, < 1300)
 template <class T>
-void hash_combine(std::hash_result_t& seed, T& v);
+void hash_combine(std::hash_result_t &seed, T &v);
 #else
 template <class T>
-void hash_combine(std::hash_result_t& seed, T const& v);
+void hash_combine(std::hash_result_t &seed, T const &v);
 #endif
 
 template <class It>
 std::hash_result_t hash_range(It, It);
 template <class It>
-void hash_range(std::hash_result_t&, It, It);
+void hash_range(std::hash_result_t &, It, It);
 
 #if BOOST_WORKAROUND(__BORLANDC__, BOOST_TESTED_AT(0x551))
 template <class T>
-inline std::hash_result_t hash_range(T*, T*);
+inline std::hash_result_t hash_range(T *, T *);
 template <class T>
-inline void hash_range(std::hash_result_t&, T*, T*);
+inline void hash_range(std::hash_result_t &, T *, T *);
 #endif
 }  // namespace gboost
 

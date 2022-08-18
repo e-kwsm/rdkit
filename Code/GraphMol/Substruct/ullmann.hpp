@@ -49,10 +49,10 @@ namespace detail {
 
 template <class Graph, class UblasMatrix, class BackInsertionSequence,
           class EdgeLabeling>
-bool forward_checking(const Graph& g1, const Graph& g2, UblasMatrix& M,
-                      size_t count, BackInsertionSequence& F,
+bool forward_checking(const Graph &g1, const Graph &g2, UblasMatrix &M,
+                      size_t count, BackInsertionSequence &F,
                       size_t num_vert_g1, size_t num_vert_g2,
-                      EdgeLabeling& edge_labeling) {
+                      EdgeLabeling &edge_labeling) {
   typedef std::pair<typename graph_traits<Graph>::edge_descriptor, bool>
       edge_presence;
   typename BackInsertionSequence::iterator fi, fi_end = F.end();
@@ -114,10 +114,10 @@ bool forward_checking(const Graph& g1, const Graph& g2, UblasMatrix& M,
 
 template <class Graph, class EdgeLabeling, class UblasMatrix,
           class BackInsertionSequence>
-bool backtrack(const Graph& g1, const Graph& g2, size_t count,
-               const UblasMatrix& M, BackInsertionSequence& F,
+bool backtrack(const Graph &g1, const Graph &g2, size_t count,
+               const UblasMatrix &M, BackInsertionSequence &F,
                const size_t num_vert_g1, const size_t num_vert_g2,
-               EdgeLabeling& edge_labeling) {
+               EdgeLabeling &edge_labeling) {
   if (count == num_vert_g1) return true;
   for (size_t i = 0; i < num_vert_g2; ++i) {
     if (M(count, i)) {
@@ -143,10 +143,10 @@ bool backtrack(const Graph& g1, const Graph& g2, size_t count,
 
 template <class Graph, class EdgeLabeling, class UblasMatrix,
           class DoubleBackInsertionSequence>
-void backtrack_all(const Graph& g1, const Graph& g2, size_t count,
-                   const UblasMatrix& M, DoubleBackInsertionSequence& FF,
+void backtrack_all(const Graph &g1, const Graph &g2, size_t count,
+                   const UblasMatrix &M, DoubleBackInsertionSequence &FF,
                    const size_t num_vert_g1, const size_t num_vert_g2,
-                   EdgeLabeling& edge_labeling) {
+                   EdgeLabeling &edge_labeling) {
   if (count == num_vert_g1) return;
   DoubleBackInsertionSequence holdFF;
   holdFF.insert(holdFF.begin(), FF.begin(), FF.end());
@@ -195,8 +195,8 @@ void backtrack_all(const Graph& g1, const Graph& g2, size_t count,
 template <class Graph, class VertexLabeling  // binary predicate
           ,
           class UblasMatrix>
-void prepareM(const Graph& g1, const Graph& g2, VertexLabeling& vertex_labeling,
-              UblasMatrix& M) {
+void prepareM(const Graph &g1, const Graph &g2, VertexLabeling &vertex_labeling,
+              UblasMatrix &M) {
   size_t rows(num_vertices(g1));
   size_t cols(num_vertices(g2));
   M.resize(rows, cols);
@@ -226,8 +226,8 @@ template <
     BackInsertionSequence  // contains
                            // std::pair<vertex_descriptor,vertex_descriptor>
     >
-bool ullmann(const Graph& g1, const Graph& g2, VertexLabeling& vertex_labeling,
-             EdgeLabeling& edge_labeling, BackInsertionSequence& F) {
+bool ullmann(const Graph &g1, const Graph &g2, VertexLabeling &vertex_labeling,
+             EdgeLabeling &edge_labeling, BackInsertionSequence &F) {
   typedef ::boost::numeric::ublas::matrix<int> matrix_t;
   size_t rows(num_vertices(g1));
   size_t cols(num_vertices(g2));
@@ -246,9 +246,9 @@ template <class Graph, class VertexLabeling  // binary predicate
           class DoubleBackInsertionSequence  // contains a back insertion
                                              // sequence
           >
-bool ullmann_all(const Graph& g1, const Graph& g2,
-                 VertexLabeling& vertex_labeling, EdgeLabeling& edge_labeling,
-                 DoubleBackInsertionSequence& F) {
+bool ullmann_all(const Graph &g1, const Graph &g2,
+                 VertexLabeling &vertex_labeling, EdgeLabeling &edge_labeling,
+                 DoubleBackInsertionSequence &F) {
   typedef ::boost::numeric::ublas::matrix<int> matrix_t;
   size_t rows(num_vertices(g1));
   size_t cols(num_vertices(g2));

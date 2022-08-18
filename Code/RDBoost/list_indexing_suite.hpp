@@ -59,12 +59,12 @@ class list_indexing_suite
   typedef typename Container::size_type size_type;
   typedef typename Container::iterator iterator_type;
 
-  static typename mpl::if_<is_class<data_type>, data_type&, data_type>::type
-  get_item(Container& container, index_type i) {
+  static typename mpl::if_<is_class<data_type>, data_type &, data_type>::type
+  get_item(Container &container, index_type i) {
     iterator_type pos = moveToPos(container, i);
     return *pos;
   }
-  static object get_slice(Container& container, index_type from,
+  static object get_slice(Container &container, index_type from,
                           index_type to) {
     Container res;
     iterator_type beg = moveToPos(container, from);
@@ -72,13 +72,13 @@ class list_indexing_suite
     std::copy(beg, end, res.begin());
     return object(res);
   }
-  static void set_item(Container& container, index_type i, data_type const& v) {
+  static void set_item(Container &container, index_type i, data_type const &v) {
     iterator_type pos = moveToPos(container, i);
     *pos = v;
   }
 
-  static void set_slice(Container& container, index_type from, index_type to,
-                        data_type const& v) {
+  static void set_slice(Container &container, index_type from, index_type to,
+                        data_type const &v) {
     iterator_type beg = moveToPos(container, from);
     iterator_type end = moveToPos(container, to);
     container.erase(beg, end);
@@ -86,7 +86,7 @@ class list_indexing_suite
     container.insert(beg, v);
   }
   template <class Iter>
-  static void set_slice(Container& container, index_type from, index_type to,
+  static void set_slice(Container &container, index_type from, index_type to,
                         Iter first, Iter last) {
     iterator_type beg = moveToPos(container, from);
     iterator_type end = moveToPos(container, to);
@@ -95,48 +95,48 @@ class list_indexing_suite
     container.insert(beg, first, last);
   }
 
-  static void delete_item(Container& container, index_type i) {
+  static void delete_item(Container &container, index_type i) {
     iterator_type pos = moveToPos(container, i);
     container.erase(pos);
   }
 
-  static void delete_slice(Container& container, index_type from,
+  static void delete_slice(Container &container, index_type from,
                            index_type to) {
     iterator_type beg = moveToPos(container, from);
     iterator_type end = moveToPos(container, to);
     container.erase(beg, end);
   }
 
-  static size_t size(Container& container) { return container.size(); }
+  static size_t size(Container &container) { return container.size(); }
 
-  static bool contains(Container& container, key_type const& key) {
+  static bool contains(Container &container, key_type const &key) {
     return std::find(container.begin(), container.end(), key) !=
            container.end();
   }
 
-  static index_type get_min_index(Container& container) {
+  static index_type get_min_index(Container &container) {
     (void)container;
     return 0;
   }
 
-  static index_type get_max_index(Container& container) {
+  static index_type get_max_index(Container &container) {
     return container.size();
   }
 
-  static bool compare_index(Container& container, index_type a, index_type b) {
+  static bool compare_index(Container &container, index_type a, index_type b) {
     (void)container;
     return a < b;
   }
 
-  static void append(Container& container, data_type const& v) {
+  static void append(Container &container, data_type const &v) {
     container.push_back(v);
   }
   template <class Iter>
-  static void extend(Container& container, Iter first, Iter last) {
+  static void extend(Container &container, Iter first, Iter last) {
     container.insert(container.end(), first, last);
   }
 
-  static index_type convert_index(Container& container, PyObject* i_) {
+  static index_type convert_index(Container &container, PyObject *i_) {
     extract<long> i(i_);
     if (i.check()) {
       long index = i();

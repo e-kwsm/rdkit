@@ -79,7 +79,7 @@ void calcAngleBendGrad(RDGeom::Point3D *r, double *dist, double **g,
   g[2][1] += dE_dTheta * dCos_dS[4] / (-sinTheta);
   g[2][2] += dE_dTheta * dCos_dS[5] / (-sinTheta);
 }
-}  // end of namespace Utils
+}  // namespace Utils
 
 AngleBendContrib::AngleBendContrib(ForceField *owner) {
   PRECONDITION(owner, "bad owner");
