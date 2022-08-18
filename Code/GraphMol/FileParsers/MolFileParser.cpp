@@ -1813,7 +1813,7 @@ Bond *ParseMolFileBondLine(const std::string_view text, unsigned int line) {
     }
   }
   return res;
-}  // namespace
+}
 
 void ParseMolBlockAtoms(std::istream *inStream, unsigned int &line,
                         unsigned int nAtoms, RWMol *mol, Conformer *conf,
