@@ -1264,7 +1264,6 @@ void test10() {
   BOOST_LOG(rdInfoLog) << "\tdone" << std::endl;
 }
 
-
 void test12() {
   RDKit::RWMol *patt, *mol;
   std::vector<RDKit::MatchVectType> mV;
@@ -1883,9 +1882,9 @@ int main(int argc, char *argv[]) {
   (void)argv;
   RDLog::InitLogs();
 
-// FIX: need a test for handling Hs in the SLN itself. This should be done for
-// both normal and query SLNs and must be done after the SLN parser handles
-// that case (errr, duh)
+  // FIX: need a test for handling Hs in the SLN itself. This should be done for
+  // both normal and query SLNs and must be done after the SLN parser handles
+  // that case (errr, duh)
   test1();
   test2();
   test3();

@@ -275,8 +275,8 @@ void addAngles(const ROMol &mol, MMFFMolProperties *mmffMolProperties,
         if (mmffMolProperties->getMMFFAngleBendParams(
                 mol, idx[0], idx[1], idx[2], angleType, mmffAngleParams)) {
           hasContrib = true;
-          contrib->addTerm(idx[0], idx[1], idx[2],
-                           &mmffAngleParams, mmffPropParamsCentralAtom);
+          contrib->addTerm(idx[0], idx[1], idx[2], &mmffAngleParams,
+                           mmffPropParamsCentralAtom);
           if (mmffMolProperties->getMMFFVerbosity()) {
             unsigned int iAtomType = mmffMolProperties->getMMFFAtomType(idx[0]);
             unsigned int kAtomType = mmffMolProperties->getMMFFAtomType(idx[2]);
@@ -563,7 +563,8 @@ void addOop(const ROMol &mol, MMFFMolProperties *mmffMolProperties,
           n[3] = 0;
           break;
       }
-      contrib->addTerm(idx[n[0]], idx[n[1]], idx[n[2]], idx[n[3]], &mmffOopParams);
+      contrib->addTerm(idx[n[0]], idx[n[1]], idx[n[2]], idx[n[3]],
+                       &mmffOopParams);
       hasContrib = true;
       if (mmffMolProperties->getMMFFVerbosity()) {
         const RDGeom::Point3D p1((*(points[idx[n[0]]]))[0],
@@ -975,7 +976,7 @@ void addEle(const ROMol &mol, int confId, MMFFMolProperties *mmffMolProperties,
   }
 }
 
-}  // end of namespace Tools
+}  // namespace Tools
 
 // ------------------------------------------------------------------------
 //
