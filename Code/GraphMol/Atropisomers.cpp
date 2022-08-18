@@ -320,7 +320,6 @@ bool DetectAtropisomerChiralityOneBond(Bond *bond, ROMol &mol,
     }
   }
 
-
   // the convention is that in the absence of coords, the coordiates are choosen
   // with the lowest numbered atom of the atrop bond down, and the other atom
   // straight up.
