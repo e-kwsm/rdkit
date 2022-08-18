@@ -607,7 +607,7 @@ int calculateImplicitValence(const Atom &atom, bool strict, bool checkIt) {
   return res;
 }
 
-}  // unnamed namespace
+}  // namespace
 
 int Atom::calcExplicitValence(bool strict) {
   bool checkIt = false;
@@ -628,7 +628,7 @@ void Atom::setMonomerInfo(AtomMonomerInfo *info) {
   delete dp_monomerInfo;
   dp_monomerInfo = info;
 }
-  
+
 void Atom::setIsotope(unsigned int what) { d_isotope = what; }
 
 double Atom::getMass() const {
