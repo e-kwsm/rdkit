@@ -77,6 +77,6 @@ inline void UFFOptimizeMoleculeConfs(ROMol &mol,
   ForceFieldsHelper::OptimizeMoleculeConfs(mol, *ff, res, numThreads, maxIters);
   delete ff;
 }
-}  // end of namespace UFF
-}  // end of namespace RDKit
+}  // namespace UFF
+}  // namespace RDKit
 #endif
