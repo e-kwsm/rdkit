@@ -1419,7 +1419,7 @@ std::vector<std::vector<unsigned int>> getMolSelfMatches(
   return res;
 }
 
-}  // end of namespace detail
+}  // namespace detail
 
 void EmbedMultipleConfs(ROMol &mol, INT_VECT &res, unsigned int numConfs,
                         EmbedParameters &params) {
@@ -1590,5 +1590,5 @@ void EmbedMultipleConfs(ROMol &mol, INT_VECT &res, unsigned int numConfs,
   }
 }
 
-}  // end of namespace DGeomHelpers
-}  // end of namespace RDKit
+}  // namespace DGeomHelpers
+}  // namespace RDKit

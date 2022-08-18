@@ -191,19 +191,19 @@ ROMol *renumberAtomsHelper(const ROMol &mol, python::object &pyNewOrder) {
 namespace {
 std::string getResidue(const ROMol &, const Atom *at) {
   auto monomerInfo = at->getMonomerInfo();
-  if (!monomerInfo || monomerInfo->getMonomerType() != AtomMonomerInfo::PDBRESIDUE) {
+  if (!monomerInfo ||
+      monomerInfo->getMonomerType() != AtomMonomerInfo::PDBRESIDUE) {
     return "";
   }
-  return static_cast<const AtomPDBResidueInfo *>(monomerInfo)
-      ->getResidueName();
+  return static_cast<const AtomPDBResidueInfo *>(monomerInfo)->getResidueName();
 }
 std::string getChainId(const ROMol &, const Atom *at) {
-auto monomerInfo = at->getMonomerInfo();
-  if (!monomerInfo || monomerInfo->getMonomerType() != AtomMonomerInfo::PDBRESIDUE) {
+  auto monomerInfo = at->getMonomerInfo();
+  if (!monomerInfo ||
+      monomerInfo->getMonomerType() != AtomMonomerInfo::PDBRESIDUE) {
     return "";
   }
-  return static_cast<const AtomPDBResidueInfo *>(monomerInfo)
-      ->getChainId();
+  return static_cast<const AtomPDBResidueInfo *>(monomerInfo)->getChainId();
 }
 }  // namespace
 python::dict splitMolByPDBResidues(const ROMol &mol, python::object pyWhiteList,

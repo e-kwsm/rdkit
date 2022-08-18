@@ -618,7 +618,7 @@ class RingBondCountVect {
   std::vector<BondCount> d_ringBondCountVect;
   boost::dynamic_bitset<> d_isMCSBond;
 };
-}  // end of anonymous namespace
+}  // namespace
 
 inline bool ringFusionCheck(const std::uint32_t c1[], const std::uint32_t c2[],
                             const ROMol &mol1, const FMCS::Graph &query,
@@ -1012,6 +1012,6 @@ MCSParametersInternal::MCSParametersInternal(const MCSParameters *params)
   UserFinalMatchChecker = FinalMatchChecker;
   FinalMatchChecker = FinalMatchCheckFunction;
 }
-}  // end namespace detail
+}  // namespace detail
 
 }  // namespace RDKit
