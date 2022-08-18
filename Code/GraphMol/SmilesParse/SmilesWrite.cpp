@@ -453,7 +453,7 @@ std::string FragmentSmilesConstruct(
   return res.str();
 }
 
-}  // end of namespace SmilesWrite
+}  // namespace SmilesWrite
 
 static bool SortBasedOnFirstElement(
     const std::pair<std::string, std::vector<unsigned int>> &a,
