@@ -1021,7 +1021,7 @@ BOOST_PYTHON_MODULE(rdMolDraw2D) {
           "standardColoursForHighlightedAtoms",
           &RDKit::MolDrawOptions::standardColoursForHighlightedAtoms,
           "If true, highlighted hetero atoms are drawn in standard colours"
-              " rather than black.  Default=False")
+          " rather than black.  Default=False")
       .def("getVariableAttachmentColour", &RDKit::getVariableAttachmentColour,
            python::args("self"),
            "method for getting the colour of variable attachment points")
@@ -1193,14 +1193,13 @@ BOOST_PYTHON_MODULE(rdMolDraw2D) {
            "(=MIDDLE), 1 (=START), or 2 (=END)")
       .def("GetDrawCoords",
            (RDGeom::Point2D(RDKit::MolDraw2D::*)(const RDGeom::Point2D &)
-                const) &
-               RDKit::MolDraw2D::getDrawCoords,
+                const)&RDKit::MolDraw2D::getDrawCoords,
            (python::arg("self"), python::arg("point")),
            "get the coordinates in drawing space for a particular point in "
            "molecule space")
       .def("GetDrawCoords",
-           (RDGeom::Point2D(RDKit::MolDraw2D::*)(int) const) &
-               RDKit::MolDraw2D::getDrawCoords,
+           (RDGeom::Point2D(RDKit::MolDraw2D::*)(int)
+                const)&RDKit::MolDraw2D::getDrawCoords,
            (python::arg("self"), python::arg("atomIndex")),
            "get the coordinates in drawing space for a particular atom")
       .def("ClearDrawing", &RDKit::MolDraw2D::clearDrawing,

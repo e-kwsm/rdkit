@@ -34,8 +34,8 @@ class RDKIT_FORCEFIELD_EXPORT AngleBendContrib : public ForceFieldContrib {
   \param angleType   MMFF type of the angle (as an unsigned int)
 
   */
-  void addTerm(unsigned int idx1, unsigned int idx2,
-               unsigned int idx3, const MMFFAngle *mmffAngleParams,
+  void addTerm(unsigned int idx1, unsigned int idx2, unsigned int idx3,
+               const MMFFAngle *mmffAngleParams,
                const MMFFProp *mmffPropParamsCentralAtom);
 
   double getEnergy(double *pos) const override;

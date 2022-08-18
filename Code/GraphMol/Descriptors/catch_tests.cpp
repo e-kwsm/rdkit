@@ -28,8 +28,10 @@ TEST_CASE("Kier kappa2", "[2D]") {
   SECTION("values from https://doi.org/10.1002/qsar.19860050103") {
     std::vector<std::pair<std::string, double>> data = {
         // Table 5 from the paper
-        {"c1ccccc15.Cl5", 1.987},        {"c1ccccc15.F5", 1.735},
-        {"c1ccccc15.[N+]5(=O)O", 2.259}, {"c1ccccc15.C5(=O)C", 2.444},
+        {"c1ccccc15.Cl5", 1.987},
+        {"c1ccccc15.F5", 1.735},
+        {"c1ccccc15.[N+]5(=O)O", 2.259},
+        {"c1ccccc15.C5(=O)C", 2.444},
         /* expected values from paper (differences are due to hybridization
            mismatches)
           {"c1ccccc15.N5(C)C", 2.646},
@@ -38,8 +40,10 @@ TEST_CASE("Kier kappa2", "[2D]") {
           {"c1ccccc15.S5(=O)(=O)C", 2.617},
           {"c1ccccc15.O5", 1.756},
         */
-        {"c1ccccc15.N5(C)C", 2.53},      {"c1ccccc15.C5(=O)N", 2.31},
-        {"c1ccccc15.C5(=O)O", 2.31},     {"c1ccccc15.S5(=O)(=O)C", 2.42},
+        {"c1ccccc15.N5(C)C", 2.53},
+        {"c1ccccc15.C5(=O)N", 2.31},
+        {"c1ccccc15.C5(=O)O", 2.31},
+        {"c1ccccc15.S5(=O)(=O)C", 2.42},
         {"c1ccccc15.O5", 1.65},
     };
     for (const auto &pr : data) {
