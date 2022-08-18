@@ -730,5 +730,5 @@ void MatchSubqueries(const ROMol &mol, QueryAtom::QUERYATOM_QUERY *query,
   // std::cout << "<<- back " << (int)query << std::endl;
 }
 
-}  // end of namespace detail
+}  // namespace detail
 }  // namespace RDKit
