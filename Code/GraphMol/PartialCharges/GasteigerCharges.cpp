@@ -61,7 +61,7 @@ void splitChargeConjugated(const ROMol &mol, DOUBLE_VECT &charges) {
     }
   }
 }
-}  // end of namespace Gasteiger
+}  // namespace Gasteiger
 
 namespace RDKit {
 void computeGasteigerCharges(const ROMol *mol, int nIter,

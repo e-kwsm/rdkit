@@ -266,5 +266,5 @@ ROMol *generateMolExtendedReducedGraph(
   }
   return res;
 }
-}  // end of namespace ReducedGraphs
-}  // end of namespace RDKit
+}  // namespace ReducedGraphs
+}  // namespace RDKit
