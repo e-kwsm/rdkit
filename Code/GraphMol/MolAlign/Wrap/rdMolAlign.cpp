@@ -580,8 +580,8 @@ python::tuple getCrippenO3AForConfs(
 
   return python::tuple(pyres);
 }
-}  // end of namespace MolAlign
-}  // end of namespace RDKit
+}  // namespace MolAlign
+}  // namespace RDKit
 
 BOOST_PYTHON_MODULE(rdMolAlign) {
   rdkit_import_array();

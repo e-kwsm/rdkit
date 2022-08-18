@@ -80,20 +80,20 @@ struct table_wrapper {
                  PeriodicTable::getAtomicNumber,
              python::args("self", "elementSymbol"))
         .def("GetElementSymbol",
-             (std::string(PeriodicTable::*)(UINT) const) &
-                 PeriodicTable::getElementSymbol,
+             (std::string(PeriodicTable::*)(UINT)
+                  const)&PeriodicTable::getElementSymbol,
              python::args("self", "atomicNumber"))
         .def("GetElementName",
-             (std::string(PeriodicTable::*)(UINT) const) &
-                 PeriodicTable::getElementName,
+             (std::string(PeriodicTable::*)(UINT)
+                  const)&PeriodicTable::getElementName,
              python::args("self", "atomicNumber"))
+        .def(
+            "GetRow",
+            (unsigned int (PeriodicTable::*)(UINT) const)&PeriodicTable::getRow,
+            python::args("self", "atomicNumber"))
         .def("GetRow",
-             (unsigned int (PeriodicTable::*)(UINT) const) &
-                 PeriodicTable::getRow,
-             python::args("self", "atomicNumber"))
-        .def("GetRow",
-             (unsigned int (PeriodicTable::*)(const std::string &) const) &
-                 PeriodicTable::getRow,
+             (unsigned int (PeriodicTable::*)(const std::string &)
+                  const)&PeriodicTable::getRow,
              python::args("self", "elementSymbol"))
         .def("GetRvdw",
              (double(PeriodicTable::*)(UINT) const) & PeriodicTable::getRvdw,

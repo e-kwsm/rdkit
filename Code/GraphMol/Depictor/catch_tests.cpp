@@ -2273,7 +2273,8 @@ M  END
   CHECK(match == expected);
 }
 
-TEST_CASE("Normalize should always center in centroid, irrespective of canonicalize parameter") {
+TEST_CASE(
+    "Normalize should always center in centroid, irrespective of canonicalize parameter") {
   auto m = R"CTAB(
      RDKit          2D
 

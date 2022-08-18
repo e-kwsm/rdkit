@@ -91,7 +91,8 @@ VdWContrib::VdWContrib(ForceField *owner) {
   dp_forceField = owner;
 }
 
-void VdWContrib::addTerm(unsigned int idx1, unsigned int idx2, const MMFFVdWRijstarEps *mmffVdWConstants) {
+void VdWContrib::addTerm(unsigned int idx1, unsigned int idx2,
+                         const MMFFVdWRijstarEps *mmffVdWConstants) {
   PRECONDITION(mmffVdWConstants, "bad MMFFVdW parameters");
   URANGE_CHECK(idx1, dp_forceField->positions().size());
   URANGE_CHECK(idx2, dp_forceField->positions().size());
@@ -127,7 +128,6 @@ void VdWContrib::getGrad(double *pos, double *grad) const {
   double const vdw2 = 1.12;
   double const vdw2m1 = vdw2 - 1.0;
   double const vdw2t7 = vdw2 * 7.0;
-
 
   const int numPairs = d_at1Idxs.size();
   for (int pairIdx = 0; pairIdx < numPairs; ++pairIdx) {
@@ -167,7 +167,8 @@ EleContrib::EleContrib(ForceField *owner) {
   dp_forceField = owner;
 }
 void EleContrib::addTerm(unsigned int idx1, unsigned int idx2,
-             double chargeTerm, std::uint8_t dielModel, bool is1_4) {
+                         double chargeTerm, std::uint8_t dielModel,
+                         bool is1_4) {
   URANGE_CHECK(idx1, dp_forceField->positions().size());
   URANGE_CHECK(idx2, dp_forceField->positions().size());
   d_at1Idxs.push_back(idx1);
@@ -190,12 +191,9 @@ double EleContrib::getEnergy(double *pos) const {
     std::uint8_t d_dielModel = d_dielModels[i];
     bool d_is1_4 = d_is_1_4s[i];
 
-    res += Utils::calcEleEnergy(d_at1Idx,
-                                d_at2Idx,
-                                dp_forceField->distance(d_at1Idx, d_at2Idx, pos),
-                                d_chargeTerm,
-                                d_dielModel,
-                                d_is1_4);
+    res += Utils::calcEleEnergy(
+        d_at1Idx, d_at2Idx, dp_forceField->distance(d_at1Idx, d_at2Idx, pos),
+        d_chargeTerm, d_dielModel, d_is1_4);
   }
   return res;
 }
