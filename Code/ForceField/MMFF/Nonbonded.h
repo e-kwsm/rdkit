@@ -23,7 +23,8 @@ class RDKIT_FORCEFIELD_EXPORT VdWContrib : public ForceFieldContrib {
   VdWContrib() {}
   VdWContrib(ForceField *owner);
   //! Track a new VdW pair
-  void addTerm(unsigned int idx1, unsigned int idx2, const MMFFVdWRijstarEps *mmffVdWConstants);
+  void addTerm(unsigned int idx1, unsigned int idx2,
+               const MMFFVdWRijstarEps *mmffVdWConstants);
   double getEnergy(double *pos) const override;
   void getGrad(double *pos, double *grad) const override;
   VdWContrib *copy() const override { return new VdWContrib(*this); }
@@ -31,8 +32,9 @@ class RDKIT_FORCEFIELD_EXPORT VdWContrib : public ForceFieldContrib {
  private:
   std::vector<int16_t> d_at1Idxs;
   std::vector<int16_t> d_at2Idxs;
-  std::vector<double> d_R_ij_stars; //!< the preferred length of the contact
-  std::vector<double> d_wellDepths; //!< the vdW well depth (strength of the interaction)
+  std::vector<double> d_R_ij_stars;  //!< the preferred length of the contact
+  std::vector<double>
+      d_wellDepths;  //!< the vdW well depth (strength of the interaction)
 };
 
 //! the electrostatic term for MMFF
@@ -48,8 +50,8 @@ class RDKIT_FORCEFIELD_EXPORT EleContrib : public ForceFieldContrib {
 
   */
   EleContrib(ForceField *owner);
-  void addTerm(unsigned int idx1, unsigned int idx2,
-               double chargeTerm, std::uint8_t dielModel, bool is1_4);
+  void addTerm(unsigned int idx1, unsigned int idx2, double chargeTerm,
+               std::uint8_t dielModel, bool is1_4);
   double getEnergy(double *pos) const override;
   void getGrad(double *pos, double *grad) const override;
 

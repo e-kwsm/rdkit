@@ -1165,4 +1165,4 @@ std::unique_ptr<ROMol> molzip(const std::map<std::string, ROMOL_SPTR> &row,
   return molzip(mols, params);
 }
 
-}  // end of namespace RDKit
+}  // namespace RDKit

@@ -1610,10 +1610,10 @@ void testMolFileGithub8265() {
   auto m = "C"_smiles;
   auto conf = new Conformer(1);
   m->addConformer(conf);
-  
-  for( int i=0; i<2; ++i) {
+
+  for (int i = 0; i < 2; ++i) {
     RDGeom::Point3D pos{0., 0., 0.};
-   
+
     // Make sure se switch to V3000 then coords are out of bounds
     //  and that we stay with V2K otherwise.
     {
@@ -1625,12 +1625,14 @@ void testMolFileGithub8265() {
       try {
         MolToV2KMolBlock(*m);
         TEST_ASSERT(0);
-      } catch(ValueErrorException &e) {
-        TEST_ASSERT(std::string("V2000 format does not support atom positions <= -10000 or >= 100000")
-                    == e.what());
+      } catch (ValueErrorException &e) {
+        TEST_ASSERT(
+            std::string(
+                "V2000 format does not support atom positions <= -10000 or >= 100000") ==
+            e.what());
       }
     }
-    
+
     {
       pos[i] = 99999.;
       conf->setAtomPos(0, pos);
@@ -1648,9 +1650,11 @@ void testMolFileGithub8265() {
       try {
         MolToV2KMolBlock(*m);
         TEST_ASSERT(0);
-      } catch(ValueErrorException &e) {
-        TEST_ASSERT(std::string("V2000 format does not support atom positions <= -10000 or >= 100000")
-                    == e.what());
+      } catch (ValueErrorException &e) {
+        TEST_ASSERT(
+            std::string(
+                "V2000 format does not support atom positions <= -10000 or >= 100000") ==
+            e.what());
       }
     }
 
@@ -1820,6 +1824,6 @@ int main() {
   BOOST_LOG(rdInfoLog) << "-----------------------------------------\n";
   testRGPMolFileWriterV2KV3K();
   BOOST_LOG(rdInfoLog) << "-----------------------------------------\n\n";
-  
+
   testMolFileGithub8265();
 }

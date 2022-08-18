@@ -132,6 +132,6 @@ RDKIT_DATASTRUCTS_EXPORT RealValueVect operator|(const RealValueVect &p1,
 RDKIT_DATASTRUCTS_EXPORT RealValueVect operator&(const RealValueVect &p1,
                                                  const RealValueVect &p2);
 
-}  // end of namespace RDKit
+}  // namespace RDKit
 
 #endif

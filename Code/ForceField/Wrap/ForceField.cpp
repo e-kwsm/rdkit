@@ -323,10 +323,10 @@ BOOST_PYTHON_MODULE(rdForceField) {
            "Returns a tuple filled with the coordinates of the\n"
            "points the ForceField is handling")
       .def("Dimension",
-           (unsigned int (PyForceField::*)() const) & PyForceField::dimension,
+           (unsigned int (PyForceField::*)() const)&PyForceField::dimension,
            python::args("self"), "Returns the dimension of the ForceField")
       .def("NumPoints",
-           (unsigned int (PyForceField::*)() const) & PyForceField::numPoints,
+           (unsigned int (PyForceField::*)() const)&PyForceField::numPoints,
            python::args("self"),
            "Returns the number of points the ForceField is handling")
       .def("Minimize", &PyForceField::minimize,

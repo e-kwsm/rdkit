@@ -455,8 +455,8 @@ struct filtercat_wrapper {
                  FilterCatalogEntry::setProp<std::string>,
              python::args("self", "key", "val"))
         .def("GetProp",
-             (std::string(FilterCatalogEntry::*)(const std::string &) const) &
-                 FilterCatalogEntry::getProp<std::string>,
+             (std::string(FilterCatalogEntry::*)(const std::string &)
+                  const)&FilterCatalogEntry::getProp<std::string>,
              python::args("self", "key"))
         .def("ClearProp",
              (void(FilterCatalogEntry::*)(const std::string &)) &

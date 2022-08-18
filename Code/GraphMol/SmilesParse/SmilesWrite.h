@@ -54,23 +54,13 @@ struct RDKIT_SMILESPARSE_EXPORT SmilesWriteParams {
 
 namespace SmilesWrite {
 
-BETTER_ENUM(CXSmilesFields, uint32_t,
-  CX_NONE = 0,
-  CX_ATOM_LABELS = 1 << 0,
-  CX_MOLFILE_VALUES = 1 << 1,
-  CX_COORDS = 1 << 2,
-  CX_RADICALS = 1 << 3,
-  CX_ATOM_PROPS = 1 << 4,
-  CX_LINKNODES = 1 << 5,
-  CX_ENHANCEDSTEREO = 1 << 6,
-  CX_SGROUPS = 1 << 7,
-  CX_POLYMER = 1 << 8,
-  CX_BOND_CFG = 1 << 9,
-  CX_BOND_ATROPISOMER = 1 << 10,
-  CX_COORDINATE_BONDS = 1 << 11,
-  CX_ALL = 0x7fffffff,
-  CX_ALL_BUT_COORDS = CX_ALL ^ CX_COORDS
-);
+BETTER_ENUM(CXSmilesFields, uint32_t, CX_NONE = 0, CX_ATOM_LABELS = 1 << 0,
+            CX_MOLFILE_VALUES = 1 << 1, CX_COORDS = 1 << 2,
+            CX_RADICALS = 1 << 3, CX_ATOM_PROPS = 1 << 4, CX_LINKNODES = 1 << 5,
+            CX_ENHANCEDSTEREO = 1 << 6, CX_SGROUPS = 1 << 7,
+            CX_POLYMER = 1 << 8, CX_BOND_CFG = 1 << 9,
+            CX_BOND_ATROPISOMER = 1 << 10, CX_COORDINATE_BONDS = 1 << 11,
+            CX_ALL = 0x7fffffff, CX_ALL_BUT_COORDS = CX_ALL ^ CX_COORDS);
 
 //! \brief returns the cxsmiles data for a molecule
 RDKIT_SMILESPARSE_EXPORT std::string getCXExtensions(
@@ -78,8 +68,8 @@ RDKIT_SMILESPARSE_EXPORT std::string getCXExtensions(
 
 //! \brief returns the cxsmiles data for a vector of molecules
 RDKIT_SMILESPARSE_EXPORT std::string getCXExtensions(
-  const std::vector<ROMol *> &mols, std::uint32_t flags);
-  
+    const std::vector<ROMol *> &mols, std::uint32_t flags);
+
 //! \brief returns true if the atom number is in the SMILES organic subset
 RDKIT_SMILESPARSE_EXPORT bool inOrganicSubset(int atomicNumber);
 
@@ -264,8 +254,8 @@ inline std::string MolFragmentToSmiles(
 }
 
 BETTER_ENUM(RestoreBondDirOption, unsigned int,
-  RestoreBondDirOptionTrue = 0,  //<!DO restore bond dirs
-  RestoreBondDirOptionClear = 1  //<!clear all bond dir information
+            RestoreBondDirOptionTrue = 0,  //<!DO restore bond dirs
+            RestoreBondDirOptionClear = 1  //<!clear all bond dir information
 );
 
 //! \brief returns canonical CXSMILES for a molecule

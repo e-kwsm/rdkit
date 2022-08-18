@@ -263,8 +263,8 @@ struct sgroup_wrap {
              python::args("self", "key"),
              "returns the value of a particular property")
         .def("GetUnsignedProp",
-             (unsigned int (RDProps::*)(const std::string &) const) &
-                 SubstanceGroup::getProp<unsigned int>,
+             (unsigned int (RDProps::*)(const std::string &)
+                  const)&SubstanceGroup::getProp<unsigned int>,
              python::args("self", "key"),
              "returns the value of a particular property")
         .def("GetDoubleProp",

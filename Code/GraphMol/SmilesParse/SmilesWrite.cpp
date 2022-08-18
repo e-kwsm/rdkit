@@ -453,7 +453,7 @@ std::string FragmentSmilesConstruct(
   return res.str();
 }
 
-}  // end of namespace SmilesWrite
+}  // namespace SmilesWrite
 
 static bool SortBasedOnFirstElement(
     const std::pair<std::string, std::vector<unsigned int>> &a,
@@ -582,11 +582,8 @@ std::string MolToSmiles(const ROMol &mol, const SmilesWriteParams &params,
       const bool breakTies = true;
       const bool includeChiralPresence = false;
       const bool includeIsotopes = params.doIsomericSmiles;
-      ;
       const bool includeChirality = params.doIsomericSmiles;
-      ;
       const bool includeStereoGroups = params.doIsomericSmiles;
-      ;
       const bool useNonStereoRanks = false;
       const bool includeAtomMaps = true;
 
