@@ -451,7 +451,12 @@ FingerprintGenerator<std::uint64_t>::getSparseCountFingerprint(
     const std::vector<std::uint32_t> *,
     const std::vector<std::uint32_t> *) const;
 
-enum class FPType { AtomPairFP, MorganFP, RDKitFP, TopologicalTorsionFP };
+enum class FPType {
+  AtomPairFP,
+  MorganFP,
+  RDKitFP,
+  TopologicalTorsionFP
+};
 
 //! used to indicate errors for unimplemented fp types in convenience
 //! functions
