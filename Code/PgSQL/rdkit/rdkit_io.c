@@ -283,7 +283,7 @@ Datum mol_to_smarts(PG_FUNCTION_ARGS) {
   fcinfo->flinfo->fn_extra =
       searchMolCache(fcinfo->flinfo->fn_extra, fcinfo->flinfo->fn_mcxt,
                      PG_GETARG_DATUM(0), NULL, &mol, NULL);
-  bool dummy = false; // arg is ignored by makeMolText for smarts output
+  bool dummy = false;  // arg is ignored by makeMolText for smarts output
   str = makeMolText(mol, &len, true, false, dummy);
 
   PG_RETURN_CSTRING(pnstrdup(str, len));
@@ -299,7 +299,7 @@ Datum mol_to_cxsmarts(PG_FUNCTION_ARGS) {
   fcinfo->flinfo->fn_extra =
       searchMolCache(fcinfo->flinfo->fn_extra, fcinfo->flinfo->fn_mcxt,
                      PG_GETARG_DATUM(0), NULL, &mol, NULL);
-  bool dummy = true; // arg is ignored by makeMolText for cxsmarts output
+  bool dummy = true;  // arg is ignored by makeMolText for cxsmarts output
   str = makeMolText(mol, &len, true, true, dummy);
 
   PG_RETURN_CSTRING(pnstrdup(str, len));
@@ -405,12 +405,11 @@ Datum qmol_out(PG_FUNCTION_ARGS) {
   fcinfo->flinfo->fn_extra =
       searchMolCache(fcinfo->flinfo->fn_extra, fcinfo->flinfo->fn_mcxt,
                      PG_GETARG_DATUM(0), NULL, &mol, NULL);
-  bool dummy = false; // arg is ignored by makeMolText for smarts output
+  bool dummy = false;  // arg is ignored by makeMolText for smarts output
   str = makeMolText(mol, &len, true, false, dummy);
 
   PG_RETURN_CSTRING(pnstrdup(str, len));
 }
-
 
 /* xqmols */
 PGDLLEXPORT Datum xqmol_in(PG_FUNCTION_ARGS);
@@ -456,7 +455,7 @@ Datum xqmol_out(PG_FUNCTION_ARGS) {
 
   fcinfo->flinfo->fn_extra =
       searchXQMolCache(fcinfo->flinfo->fn_extra, fcinfo->flinfo->fn_mcxt,
-                     PG_GETARG_DATUM(0), NULL, &mol, NULL);
+                       PG_GETARG_DATUM(0), NULL, &mol, NULL);
   str = makeXQMolText(mol, &len);
 
   PG_RETURN_CSTRING(pnstrdup(str, len));
@@ -472,15 +471,13 @@ Datum xqmol_send(PG_FUNCTION_ARGS) {
 
   fcinfo->flinfo->fn_extra =
       searchXQMolCache(fcinfo->flinfo->fn_extra, fcinfo->flinfo->fn_mcxt,
-                     PG_GETARG_DATUM(0), NULL, &mol, NULL);
+                       PG_GETARG_DATUM(0), NULL, &mol, NULL);
   str = makeXQMolBlob(mol, &len);
   res = (bytea *)palloc(len + VARHDRSZ);
   SET_VARSIZE(res, len + VARHDRSZ);
   memcpy(VARDATA(res), str, len);
   PG_RETURN_BYTEA_P(res);
 }
-
-
 
 PGDLLEXPORT Datum bfp_in(PG_FUNCTION_ARGS);
 PG_FUNCTION_INFO_V1(bfp_in);
