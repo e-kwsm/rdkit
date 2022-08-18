@@ -10182,13 +10182,15 @@ TEST_CASE("Atom abbreviations clash") {
   check_file_hash("testAtomAbbreviationsClash.svg");
 }
 
-TEST_CASE("DrawMol::getColour should not throw if the palette has no carbon color and no default color") {
+TEST_CASE(
+    "DrawMol::getColour should not throw if the palette has no carbon color and no default color") {
   auto m = "c1ccc(C2CN2)cc1"_smiles;
   MolDraw2DSVG drawer(300, 300, -1, -1, NO_FREETYPE);
   drawer.drawOptions().atomColourPalette = ColourPalette();
   std::vector<int> highlightAtoms{0, 1, 2, 3, 4, 5, 6, 7, 8};
   std::vector<int> highlightBonds;
-  REQUIRE_NOTHROW(drawer.drawMolecule(*m, "", &highlightAtoms, &highlightBonds));
+  REQUIRE_NOTHROW(
+      drawer.drawMolecule(*m, "", &highlightAtoms, &highlightBonds));
   drawer.finishDrawing();
   std::string text = drawer.getDrawingText();
   std::ofstream outs("testBlackAtomsUnderHighlight.svg");
@@ -10217,4 +10219,3 @@ TEST_CASE("DrawMol::getColour should not throw if the palette has no carbon colo
   }
   check_file_hash("testBlackAtomsUnderHighlight.svg");
 }
-

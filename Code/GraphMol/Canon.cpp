@@ -220,8 +220,8 @@ void canonicalizeDoubleBond(Bond *dblBond, UINT_VECT &bondVisitOrders,
 
   // Make sure we found everything we need to find.
   //   This really shouldn't be a problem, but molecules can end up in odd
-  //   states; for example, allenes can end up here. Instead of checking for them
-  //   explicitly, exit early in any such possible state.
+  //   states; for example, allenes can end up here. Instead of checking for
+  //   them explicitly, exit early in any such possible state.
   if (!firstFromAtom1 || !firstFromAtom2) {
     return;
   }
@@ -670,7 +670,7 @@ void dfsFindCycles(ROMol &mol, int atomIdx, int inBondIdx,
     }
   }
   colors[atomIdx] = BLACK_NODE;
-}  // namespace Canon
+}
 
 void dfsBuildStack(ROMol &mol, int atomIdx, int inBondIdx,
                    std::vector<AtomColors> &colors, VECT_INT_VECT &cycles,
@@ -680,7 +680,6 @@ void dfsBuildStack(ROMol &mol, int atomIdx, int inBondIdx,
                    std::vector<INT_LIST> &atomTraversalBondOrder,
                    const boost::dynamic_bitset<> *bondsInPlay,
                    const std::vector<std::string> *bondSymbols, bool doRandom) {
-
   Atom *atom = mol.getAtomWithIdx(atomIdx);
   INT_LIST directTravList, cycleEndList;
   boost::dynamic_bitset<> seenFromHere(mol.getNumAtoms());

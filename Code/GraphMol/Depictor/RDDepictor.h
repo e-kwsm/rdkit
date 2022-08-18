@@ -90,7 +90,6 @@ struct RDKIT_DEPICTOR_EXPORT Compute2DCoordParameters {
                                   //!< preferCoordGen is set to true
   bool useRingTemplates = false;  //!< whether to use ring system templates for
                                   //!< generating initial coordinates
-
 };
 
 //! \brief Generate 2D coordinates (a depiction) for a molecule

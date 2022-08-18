@@ -121,7 +121,7 @@ void makeRingNeighborMap(const VECT_INT_VECT &brings,
 #endif
 }
 
-}  // end of namespace RingUtils
+}  // namespace RingUtils
 
 // local utility namespace
 namespace {
@@ -937,7 +937,7 @@ int aromaticityHelper(RWMol &mol, const VECT_INT_VECT &srings,
   return narom;
 }
 
-}  // end of anonymous namespace
+}  // namespace
 
 // sets the aromaticity flags according to MMFF
 void setMMFFAromaticity(RWMol &mol) {
@@ -1153,5 +1153,5 @@ int setAromaticity(RWMol &mol, AromaticityModel model, int (*func)(RWMol &)) {
   return res;
 }
 
-};  // end of namespace MolOps
-};  // end of namespace RDKit
+};  // namespace MolOps
+};  // namespace RDKit

@@ -4105,7 +4105,9 @@ M  END
   }
 }
 
-TEST_CASE("Github Issue #7782: insertMol should not create an empty STEREO_ABSOLUTE group", "[RWMol]") {
+TEST_CASE(
+    "Github Issue #7782: insertMol should not create an empty STEREO_ABSOLUTE group",
+    "[RWMol]") {
   {
     auto mol = "C1CC1"_smiles;
     REQUIRE(mol);
@@ -4704,13 +4706,10 @@ TEST_CASE("Valences on Al, Si, P, As, Sb, Bi") {
 TEST_CASE("Github #7873: monomer info segfaults and mem leaks", "[PDB]") {
   SECTION("basics") {
     class FakeAtomMonomerInfo : public AtomMonomerInfo {
-    public:
+     public:
       bool *deleted;
-      FakeAtomMonomerInfo(bool *was_deleted) : deleted(was_deleted) {
-      }
-      virtual ~FakeAtomMonomerInfo() {
-	*deleted = true;
-      }
+      FakeAtomMonomerInfo(bool *was_deleted) : deleted(was_deleted) {}
+      virtual ~FakeAtomMonomerInfo() { *deleted = true; }
     };
 
     bool sanitize = true;
@@ -4727,7 +4726,5 @@ TEST_CASE("Github #7873: monomer info segfaults and mem leaks", "[PDB]") {
     mol->getAtomWithIdx(0)->setMonomerInfo(res);
     mol->getAtomWithIdx(0)->setMonomerInfo(nullptr);
     CHECK(was_deleted == true);
-
   }
 }
-

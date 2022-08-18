@@ -40,7 +40,6 @@
 #include <vector>
 #include <chrono>  // for time-related functions
 
-
 #ifdef RDK_BUILD_THREADSAFE_SSS
 #include <future>
 #include <mutex>
@@ -576,7 +575,7 @@ bool checkChiralCenters(const RDGeom::PointPtrVect *positions,
 bool minimizeFourthDimension(RDGeom::PointPtrVect *positions,
                              const detail::EmbedArgs &eargs,
                              EmbedParameters &embedParams,
-                             TimePoint* end_time) {
+                             TimePoint *end_time) {
   // now redo the minimization if we have a chiral center
   // or have started from random coords. This
   // time removing the chiral constraints and
@@ -820,7 +819,7 @@ bool finalChiralChecks(RDGeom::PointPtrVect *positions,
 }
 
 bool embedPoints(RDGeom::PointPtrVect *positions, detail::EmbedArgs eargs,
-                 EmbedParameters &embedParams, int seed, TimePoint* end_time) {
+                 EmbedParameters &embedParams, int seed, TimePoint *end_time) {
   PRECONDITION(positions, "bogus positions");
   if (embedParams.maxIterations == 0) {
     embedParams.maxIterations = 10 * positions->size();
@@ -919,8 +918,7 @@ bool embedPoints(RDGeom::PointPtrVect *positions, detail::EmbedArgs eargs,
             std::lock_guard<std::mutex> lock(GetFailMutex());
 #endif
             if (end_time != nullptr && Clock::now() > *end_time) {
-              embedParams
-                .failures[EmbedFailureCauses::EXCEEDED_TIMEOUT]++;
+              embedParams.failures[EmbedFailureCauses::EXCEEDED_TIMEOUT]++;
             }
             embedParams
                 .failures[EmbedFailureCauses::MINIMIZE_FOURTH_DIMENSION]++;
@@ -1306,7 +1304,7 @@ bool multiplication_overflows_(T a, T b) {
 }
 
 void embedHelper_(int threadId, int numThreads, EmbedArgs *eargs,
-                  EmbedParameters *params, TimePoint* end_time) {
+                  EmbedParameters *params, TimePoint *end_time) {
   PRECONDITION(eargs, "bogus eargs");
   PRECONDITION(params, "bogus params");
   unsigned int nAtoms = eargs->mmat->numRows();
@@ -1375,9 +1373,8 @@ void embedHelper_(int threadId, int numThreads, EmbedArgs *eargs,
     }
     CHECK_INVARIANT(new_seed >= -1,
                     "Something went wrong calculating a new seed");
-    bool gotCoords =
-        EmbeddingOps::embedPoints(&positions, *eargs, *params, new_seed,
-                                  end_time);
+    bool gotCoords = EmbeddingOps::embedPoints(&positions, *eargs, *params,
+                                               new_seed, end_time);
 
     // copy the coordinates into the correct conformer
     if (gotCoords) {
@@ -1448,14 +1445,14 @@ std::vector<std::vector<unsigned int>> getMolSelfMatches(
   return res;
 }
 
-}  // end of namespace detail
+}  // namespace detail
 
 void EmbedMultipleConfs(ROMol &mol, INT_VECT &res, unsigned int numConfs,
                         EmbedParameters &params) {
-  TimePoint* end_time = nullptr;
-  TimePoint end_time_storage; 
+  TimePoint *end_time = nullptr;
+  TimePoint end_time_storage;
   if (params.timeout > 0) {
-    end_time_storage =  Clock::now() + std::chrono::seconds(params.timeout);
+    end_time_storage = Clock::now() + std::chrono::seconds(params.timeout);
     end_time = &end_time_storage;
   }
 
@@ -1639,5 +1636,5 @@ void EmbedMultipleConfs(ROMol &mol, INT_VECT &res, unsigned int numConfs,
   }
 }
 
-}  // end of namespace DGeomHelpers
-}  // end of namespace RDKit
+}  // namespace DGeomHelpers
+}  // namespace RDKit

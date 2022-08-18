@@ -2914,9 +2914,9 @@ void findPotentialStereoBonds(ROMol &mol, bool cleanIt) {
             if (begAtomNeighbors.size() > 0 && endAtomNeighbors.size() > 0) {
               if ((begAtomNeighbors.size() == 2) &&
                   (endAtomNeighbors.size() == 2)) {
-// if both of the atoms have 2 neighbors (other than the one
-// connected
-// by the double bond) and ....
+                // if both of the atoms have 2 neighbors (other than the one
+                // connected
+                // by the double bond) and ....
                 if ((ranks[begAtomNeighbors[0]] !=
                      ranks[begAtomNeighbors[1]]) &&
                     (ranks[endAtomNeighbors[0]] !=
