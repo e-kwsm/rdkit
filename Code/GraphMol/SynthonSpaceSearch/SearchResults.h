@@ -22,8 +22,8 @@ namespace RDKit::SynthonSpaceSearch {
 class RDKIT_SYNTHONSPACESEARCH_EXPORT SearchResults {
  public:
   explicit SearchResults() : d_maxNumResults(0) {}
-  SearchResults(std::vector<std::unique_ptr<ROMol>> &&mols, std::uint64_t maxNumRes,
-                bool timedOut, bool cancelled);
+  SearchResults(std::vector<std::unique_ptr<ROMol>> &&mols,
+                std::uint64_t maxNumRes, bool timedOut, bool cancelled);
   SearchResults(const SearchResults &other);
   SearchResults(SearchResults &&other) = default;
   ~SearchResults() = default;

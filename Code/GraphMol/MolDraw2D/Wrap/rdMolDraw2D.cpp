@@ -1194,14 +1194,13 @@ BOOST_PYTHON_MODULE(rdMolDraw2D) {
            "(=MIDDLE), 1 (=START), or 2 (=END)")
       .def("GetDrawCoords",
            (RDGeom::Point2D(RDKit::MolDraw2D::*)(const RDGeom::Point2D &)
-                const) &
-               RDKit::MolDraw2D::getDrawCoords,
+                const)&RDKit::MolDraw2D::getDrawCoords,
            (python::arg("self"), python::arg("point")),
            "get the coordinates in drawing space for a particular point in "
            "molecule space")
       .def("GetDrawCoords",
-           (RDGeom::Point2D(RDKit::MolDraw2D::*)(int) const) &
-               RDKit::MolDraw2D::getDrawCoords,
+           (RDGeom::Point2D(RDKit::MolDraw2D::*)(int)
+                const)&RDKit::MolDraw2D::getDrawCoords,
            (python::arg("self"), python::arg("atomIndex")),
            "get the coordinates in drawing space for a particular atom")
       .def("ClearDrawing", &RDKit::MolDraw2D::clearDrawing,
