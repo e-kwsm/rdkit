@@ -975,7 +975,7 @@ void addEle(const ROMol &mol, int confId, MMFFMolProperties *mmffMolProperties,
   }
 }
 
-}  // end of namespace Tools
+}  // namespace Tools
 
 // ------------------------------------------------------------------------
 //
