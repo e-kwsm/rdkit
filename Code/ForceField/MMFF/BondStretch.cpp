@@ -40,7 +40,7 @@ double calcBondStretchEnergy(const double r0, const double kb,
   return (0.5 * c1 * kb * distTerm2 *
           (1.0 + cs * distTerm + c3 * cs * cs * distTerm2));
 }
-}  // end of namespace Utils
+}  // namespace Utils
 
 BondStretchContrib::BondStretchContrib(ForceField *owner) {
   PRECONDITION(owner, "bad owner");
