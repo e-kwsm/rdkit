@@ -641,7 +641,8 @@ M  END)CTAB"_ctab;
     auto results1 = synthonspace.substructureSearch(xrq, mparams, params);
     CHECK(results1.getHitMolecules().size() == 5);
 #else
-    CHECK_THROWS_AS(synthonspace.substructureSearch(xrq, mparams, params), Invar::Invariant);
+    CHECK_THROWS_AS(synthonspace.substructureSearch(xrq, mparams, params),
+                    Invar::Invariant);
 #endif
   }
 
@@ -697,7 +698,8 @@ M  END)CTAB"_ctab;
     auto results1 = synthonspace.substructureSearch(xrq, mparams);
     CHECK(results1.getHitMolecules().size() == 2);
 #else
-    CHECK_THROWS_AS(synthonspace.substructureSearch(xrq, mparams), Invar::Invariant);
+    CHECK_THROWS_AS(synthonspace.substructureSearch(xrq, mparams),
+                    Invar::Invariant);
 #endif
   }
 }

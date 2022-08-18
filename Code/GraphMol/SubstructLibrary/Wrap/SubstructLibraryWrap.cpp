@@ -680,8 +680,8 @@ struct substructlibrary_wrapper {
              "Adds a molecule to the fingerprint database, returns the index "
              "of the new pattern")
         .def("AddFingerprint",
-             (unsigned int (FPHolderBase::*)(const ExplicitBitVect &)) &
-                 FPHolderBase::addFingerprint,
+             (unsigned int (FPHolderBase::*)(
+                 const ExplicitBitVect &))&FPHolderBase::addFingerprint,
              python::args("self", "v"),
              "Adds a raw bit vector to the fingerprint database, returns the "
              "index of the supplied pattern")
@@ -840,7 +840,7 @@ struct substructlibrary_wrapper {
                 "(requires boost serialization");
 
     python::def("AddPatterns",
-                (void (*)(SubstructLibraryWrap &, int)) & addPatternsHelper,
+                (void (*)(SubstructLibraryWrap &, int))&addPatternsHelper,
                 "Add pattern fingerprints to the given library, use "
                 "numThreads=-1 to use all available cores",
                 (python::arg("sslib"), python::arg("numThreads") = 1));
@@ -848,8 +848,7 @@ struct substructlibrary_wrapper {
     python::def(
         "AddPatterns",
         (void (*)(SubstructLibraryWrap &, boost::shared_ptr<FPHolderBase>,
-                  int)) &
-            addPatternsHelper,
+                  int))&addPatternsHelper,
         "Add pattern fingerprints to the given library, use numThreads=-1 to "
         "use all available cores",
         (python::arg("sslib"), python::arg("patterns"),

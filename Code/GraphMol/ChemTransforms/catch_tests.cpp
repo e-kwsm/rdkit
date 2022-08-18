@@ -611,7 +611,8 @@ TEST_CASE(
 }
 
 TEST_CASE(
-  "Github #8288: molzip add linker bond functionality (fixes memory issue)", "[feature,bug]") {
+    "Github #8288: molzip add linker bond functionality (fixes memory issue)",
+    "[feature,bug]") {
   auto m = "[*:1][*:2].C[*:1].S[*:2]"_smiles;
   auto res = molzip(*m);
   CHECK(MolToSmiles(*res) == "CS");

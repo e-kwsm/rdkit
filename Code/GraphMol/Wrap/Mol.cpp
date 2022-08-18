@@ -172,9 +172,9 @@ void setSubstructMatchFinalCheck(SubstructMatchParameters &ps,
 
 class ReadWriteMol : public RWMol {
  public:
-  ReadWriteMol(){};
+  ReadWriteMol() {}
   ReadWriteMol(const ROMol &m, bool quickCopy = false, int confId = -1)
-      : RWMol(m, quickCopy, confId){};
+      : RWMol(m, quickCopy, confId) {}
 
   void RemoveAtom(unsigned int idx) { removeAtom(idx); };
   void RemoveBond(unsigned int idx1, unsigned int idx2) {
@@ -803,14 +803,15 @@ struct mol_wrapper {
              python::args("self"),
              "Returns a read-only sequence containing all of the molecule's "
              "aromatic Atoms.\n")
-        .def("GetAtomsMatchingQuery", MolGetQueryAtoms,
-             python::return_value_policy<
-                 python::manage_new_object,
-                 python::with_custodian_and_ward_postcall<0, 1>>(),
-             python::args("self", "qa"),
-             "Returns a read-only sequence containing all of the atoms in a "
-             "molecule that match the query atom. "
-             "Atom query options are defined in the rdkit.Chem.rdqueries module.\n")
+        .def(
+            "GetAtomsMatchingQuery", MolGetQueryAtoms,
+            python::return_value_policy<
+                python::manage_new_object,
+                python::with_custodian_and_ward_postcall<0, 1>>(),
+            python::args("self", "qa"),
+            "Returns a read-only sequence containing all of the atoms in a "
+            "molecule that match the query atom. "
+            "Atom query options are defined in the rdkit.Chem.rdqueries module.\n")
 
         // enable pickle support
         .def_pickle(mol_pickle_suite())
