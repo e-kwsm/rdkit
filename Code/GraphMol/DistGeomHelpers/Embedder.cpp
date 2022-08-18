@@ -1496,7 +1496,7 @@ std::vector<std::vector<unsigned int>> getMolSelfMatches(
   return res;
 }
 
-}  // end of namespace detail
+}  // namespace detail
 
 void EmbedMultipleConfs(ROMol &mol, INT_VECT &res, unsigned int numConfs,
                         EmbedParameters &params) {
