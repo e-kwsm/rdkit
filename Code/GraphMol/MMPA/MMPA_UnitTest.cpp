@@ -246,7 +246,7 @@ void test1() {
 
       "Cc1c(C(=O)NCCO)[n+](=O)c2ccccc2n1[O-],ZINC21984717,,[*:1]CCO.[*:1]NC(=O)"
       "c1c(C)n([O-])c2ccccc2[n+]1=O",
-      //#10
+      // #10
       "Cc1c(C(=O)NCCO)[n+](=O)c2ccccc2n1[O-],ZINC21984717,,[*:1]CO.[*:1]CNC(=O)"
       "c1c(C)n([O-])c2ccccc2[n+]1=O",
       "Cc1c(C(=O)NCCO)[n+](=O)c2ccccc2n1[O-],ZINC21984717,,[*:1]O.[*:1]CCNC(=O)"

@@ -53,8 +53,8 @@ TransformCatalogParams::TransformCatalogParams(
 
 TransformCatalogParams::~TransformCatalogParams() {}
 
-const std::vector<std::shared_ptr<ChemicalReaction>>
-    &TransformCatalogParams::getTransformations() const {
+const std::vector<std::shared_ptr<ChemicalReaction>> &
+TransformCatalogParams::getTransformations() const {
   return d_transformations;
 }
 

@@ -502,7 +502,8 @@ void drawMolACS1996(MolDraw2D &drawer, const ROMol &mol,
 // ****************************************************************************
 void setACS1996Options(MolDrawOptions &opts, double meanBondLen) {
   if (meanBondLen <= 0.0) {
-    throw ValueErrorException("ACS1996Options requires mean bond length > 0.0.");
+    throw ValueErrorException(
+        "ACS1996Options requires mean bond length > 0.0.");
   }
   opts.bondLineWidth = 0.6;
   opts.scaleBondWidth = false;

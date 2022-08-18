@@ -248,10 +248,10 @@ void Reionizer::reionizeInPlace(RWMol &mol) {
   }  // while loop
 }
 
-std::pair<unsigned int, std::vector<unsigned int>>
-    *Reionizer::strongestProtonated(
-        const ROMol &mol,
-        const std::vector<std::pair<ROMOL_SPTR, ROMOL_SPTR>> &abpairs) {
+std::pair<unsigned int, std::vector<unsigned int>> *
+Reionizer::strongestProtonated(
+    const ROMol &mol,
+    const std::vector<std::pair<ROMOL_SPTR, ROMOL_SPTR>> &abpairs) {
   // position is the position in the acid list.
   unsigned int position = 0;
   for (const auto &abpair : abpairs) {

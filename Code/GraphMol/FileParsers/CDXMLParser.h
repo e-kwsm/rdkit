@@ -65,4 +65,4 @@ RDKIT_FILEPARSERS_EXPORT std::vector<std::unique_ptr<RWMol>> CDXMLToMols(
     const std::string &cdxml, bool sanitize = true, bool removeHs = true);
 
 }  // namespace RDKit
-#endif  // _RD_CDXML_FILEPARSERS_H
+#endif  //  _RD_CDXML_FILEPARSERS_H

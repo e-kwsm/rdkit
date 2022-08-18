@@ -1108,7 +1108,7 @@ TEST_CASE("Github #6887: and1 or1 in same mol") {
     std::stringstream iss(cdxml1);
     auto mols = CDXMLDataStreamToMols(iss);
     mols[0]->clearConformers();
-    CHECK(MolToCXSmiles(*mols[0]) == "CO[C@H](C)C[C@H](Cl)C[C@H](C)Br |o1:5,o2:8,&1:2|");
+    CHECK(MolToCXSmiles(*mols[0]) ==
+          "CO[C@H](C)C[C@H](Cl)C[C@H](C)Br |o1:5,o2:8,&1:2|");
   }
-
 }

@@ -4912,7 +4912,7 @@ void testMolFileDativeBonds() {
 
   {
     std::string fName = rdbase + "DativeBond2000.mol";
-    RWMol *m = MolFileToMol(fName,false);
+    RWMol *m = MolFileToMol(fName, false);
     TEST_ASSERT(m);
     TEST_ASSERT(m->getNumBonds() == 5);
     TEST_ASSERT(m->getBondWithIdx(4)->getBondType() == Bond::DATIVE);

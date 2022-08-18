@@ -563,8 +563,7 @@ EMSCRIPTEN_BINDINGS(RDKit_minimal) {
                                      &JSMol::get_num_atoms))
       .function("get_num_atoms",
                 select_overload<unsigned int() const>(&JSMol::get_num_atoms))
-      .function("get_num_bonds", &JSMol::get_num_bonds)
-  ;
+      .function("get_num_bonds", &JSMol::get_num_bonds);
 
   class_<JSMolList>("MolList")
       .constructor<>()

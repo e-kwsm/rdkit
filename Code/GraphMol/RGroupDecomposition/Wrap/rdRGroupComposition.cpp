@@ -341,11 +341,9 @@ struct rgroupdecomp_wrapper {
                        &RDKit::RGroupDecompositionParameters::
                            allowMultipleRGroupsOnUnlabelled)
         .def_readwrite("doTautomers",
-                       &RDKit::RGroupDecompositionParameters::
-                           doTautomers)
+                       &RDKit::RGroupDecompositionParameters::doTautomers)
         .def_readwrite("doEnumeration",
-                       &RDKit::RGroupDecompositionParameters::
-                           doEnumeration)
+                       &RDKit::RGroupDecompositionParameters::doEnumeration)
         .def_readonly(
             "substructMatchParams",
             &RDKit::RGroupDecompositionParameters::substructmatchParams);
