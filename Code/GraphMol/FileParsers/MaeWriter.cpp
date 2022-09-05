@@ -567,7 +567,7 @@ MaeWriter::MaeWriter(std::shared_ptr<std::ostream> outStream)
   }
 }
 
-MaeWriter::~MaeWriter() { close(); };
+MaeWriter::~MaeWriter() { close(); }
 
 void MaeWriter::open() { dp_writer.reset(new mae::Writer(dp_ostream)); }
 
