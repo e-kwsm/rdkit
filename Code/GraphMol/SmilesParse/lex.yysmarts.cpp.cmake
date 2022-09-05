@@ -1,3 +1,8 @@
+#ifdef __clang__
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wextra-semi-stmt"
+#endif
+
 #line 1 "/home/glandrum/RDKit_git/Code/GraphMol/SmilesParse/lex.yysmarts.cpp"
 
 #line 3 "/home/glandrum/RDKit_git/Code/GraphMol/SmilesParse/lex.yysmarts.cpp"
@@ -3166,3 +3171,6 @@ void yyfree (void * ptr , yyscan_t yyscanner)
 #undef yysmarts_wrap
 int yysmarts_wrap( void ) { return 1; }
 
+#ifdef __clang__
+#pragma clang diagnostic pop
+#endif
