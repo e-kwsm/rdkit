@@ -1105,7 +1105,7 @@ void testIssue1914154() {
   TEST_ASSERT(mol)
   sma = MolToSmarts(*mol);
   BOOST_LOG(rdInfoLog) << sma << std::endl;
-  TEST_ASSERT(sma == "[$(C=O),$(C-O)$(C-N)]");
+  TEST_ASSERT(sma == "[$(C=O),$(C-O)$(C-N)]")
   delete mol;
 
   sma = "[$(C-N);$(C=O),$(C-O)]";
@@ -1113,7 +1113,7 @@ void testIssue1914154() {
   TEST_ASSERT(mol)
   sma = MolToSmarts(*mol);
   BOOST_LOG(rdInfoLog) << sma << std::endl;
-  TEST_ASSERT(sma == "[$(C-N)$(C=O),$(C-O)]");
+  TEST_ASSERT(sma == "[$(C-N)$(C=O),$(C-O)]")
   delete mol;
 
   sma = "[$(C-N)&$(C=O),$(C-O)]";
@@ -2598,7 +2598,7 @@ void testGithub2142() {
     std::unique_ptr<ROMol> m1(SmartsToMol(smarts));
     TEST_ASSERT(m1)
     auto csma1 = MolToSmarts(*m1);
-    TEST_ASSERT(csma1 == "[CH1&$(C([#6])[#6]),H2&$(C[#6])]");
+    TEST_ASSERT(csma1 == "[CH1&$(C([#6])[#6]),H2&$(C[#6])]")
   }
 
   {  // a second one from the issue
@@ -2606,7 +2606,7 @@ void testGithub2142() {
     std::unique_ptr<ROMol> m1(SmartsToMol(smarts));
     TEST_ASSERT(m1)
     auto csma1 = MolToSmarts(*m1);
-    TEST_ASSERT(csma1 == "[N$(NC),H2&$(NC[C,N])]");
+    TEST_ASSERT(csma1 == "[N$(NC),H2&$(NC[C,N])]")
   }
 
   BOOST_LOG(rdInfoLog) << "done" << std::endl;
