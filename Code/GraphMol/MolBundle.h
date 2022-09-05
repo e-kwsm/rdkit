@@ -49,7 +49,7 @@ inline bool MolBundleCanSerialize() {
 #else
   return false;
 #endif
-};
+}
 
 //! MolBundle contains a collection of related ROMols
 /*!
