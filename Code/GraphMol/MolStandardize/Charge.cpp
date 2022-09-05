@@ -306,7 +306,7 @@ Uncharger::Uncharger()
           // hali(a)te, perhalate
           "$([O-][Cl,Br,I;+,+2,+3][O-]),"
           // tetrazole
-          "$([n-]1nnnc1),$([n-]1ncnn1)]")) {};
+          "$([n-]1nnnc1),$([n-]1ncnn1)]")) {}
 
 namespace {
 void removeCharge(Atom *atom, int charge, int hDelta) {
