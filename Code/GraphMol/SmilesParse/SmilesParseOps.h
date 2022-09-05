@@ -50,7 +50,7 @@ inline void parseCXExtensions(RDKit::RWMol &mol, const std::string &extText,
                               unsigned int startBondIdx) {
   auto iter = extText.begin();
   parseCXExtensions(mol, extText, iter, startAtomIdx, startBondIdx);
-};
+}
 //! removes formal charge, isotope, etc. Primarily useful for QueryAtoms
 RDKIT_SMILESPARSE_EXPORT void ClearAtomChemicalProps(RDKit::Atom *atom);
 

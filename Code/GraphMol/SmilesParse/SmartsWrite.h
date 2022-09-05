@@ -29,7 +29,7 @@ RDKIT_SMILESPARSE_EXPORT std::string GetAtomSmarts(
 inline std::string GetAtomSmarts(const Atom *qatom) {
   SmilesWriteParams params;
   return GetAtomSmarts(qatom, params);
-};
+}
 
 //! returns the SMARTS for a Bond
 RDKIT_SMILESPARSE_EXPORT std::string GetBondSmarts(
@@ -39,7 +39,7 @@ inline std::string GetBondSmarts(const Bond *qbond, int atomToLeftIdx = -1) {
   SmilesWriteParams params;
   params.doIsomericSmiles = false;
   return GetBondSmarts(qbond, params, atomToLeftIdx);
-};
+}
 }  // namespace SmartsWrite
 RDKIT_SMILESPARSE_EXPORT std::string MolToSmarts(
     const ROMol &mol, const SmilesWriteParams &params);
@@ -51,7 +51,7 @@ inline std::string MolToSmarts(const ROMol &mol, bool doIsomericSmarts = true,
   params.doIsomericSmiles = doIsomericSmarts;
   params.rootedAtAtom = rootedAtAtom;
   return MolToSmarts(mol, params);
-};
+}
 
 RDKIT_SMILESPARSE_EXPORT std::string MolFragmentToSmarts(
     const ROMol &mol, const SmilesWriteParams &params,

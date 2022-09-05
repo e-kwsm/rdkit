@@ -662,7 +662,7 @@ extern "C" void prefer_coordgen(short val) {
 #ifdef RDK_BUILD_COORDGEN_SUPPORT
   RDDepict::preferCoordGen = val;
 #endif
-};
+}
 
 extern "C" short has_coords(const char *mol_pkl, size_t mol_pkl_sz) {
   short res = 0;
@@ -714,7 +714,7 @@ extern "C" short set_2d_coords_aligned(char **mol_pkl, size_t *mol_pkl_sz,
     }
     return 1;
   }
-};
+}
 
 extern "C" short set_3d_coords(char **mol_pkl, size_t *mol_pkl_sz,
                                const char *params_json) {
@@ -809,37 +809,37 @@ extern "C" short cleanup(char **mol_pkl, size_t *mol_pkl_sz,
                          const char *details_json) {
   return standardize_func(mol_pkl, mol_pkl_sz, details_json,
                           MinimalLib::do_cleanup);
-};
+}
 extern "C" short normalize(char **mol_pkl, size_t *mol_pkl_sz,
                            const char *details_json) {
   return standardize_func(mol_pkl, mol_pkl_sz, details_json,
                           MinimalLib::do_normalize);
-};
+}
 extern "C" short canonical_tautomer(char **mol_pkl, size_t *mol_pkl_sz,
                                     const char *details_json) {
   return standardize_func(mol_pkl, mol_pkl_sz, details_json,
                           MinimalLib::do_canonical_tautomer);
-};
+}
 extern "C" short charge_parent(char **mol_pkl, size_t *mol_pkl_sz,
                                const char *details_json) {
   return standardize_func(mol_pkl, mol_pkl_sz, details_json,
                           MinimalLib::do_charge_parent);
-};
+}
 extern "C" short reionize(char **mol_pkl, size_t *mol_pkl_sz,
                           const char *details_json) {
   return standardize_func(mol_pkl, mol_pkl_sz, details_json,
                           MinimalLib::do_reionize);
-};
+}
 extern "C" short neutralize(char **mol_pkl, size_t *mol_pkl_sz,
                             const char *details_json) {
   return standardize_func(mol_pkl, mol_pkl_sz, details_json,
                           MinimalLib::do_neutralize);
-};
+}
 extern "C" short fragment_parent(char **mol_pkl, size_t *mol_pkl_sz,
                                  const char *details_json) {
   return standardize_func(mol_pkl, mol_pkl_sz, details_json,
                           MinimalLib::do_fragment_parent);
-};
+}
 
 // chirality
 extern "C" short use_legacy_stereo_perception(short value) {
