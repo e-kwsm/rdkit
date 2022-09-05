@@ -57,7 +57,7 @@ void ForwardSDMolSupplier::init() {
 }
 
 void ForwardSDMolSupplier::reset() {
-  UNDER_CONSTRUCTION("reset() not supported for ForwardSDMolSuppliers()");
+  UNDER_CONSTRUCTION("reset() not supported for ForwardSDMolSuppliers()")
 }
 
 void ForwardSDMolSupplier::readMolProps(ROMol *mol) {
