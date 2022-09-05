@@ -92,13 +92,13 @@ inline RWMol *MolDataStreamToMol(std::istream *inStream, unsigned int &line,
   ps.removeHs = removeHs;
   ps.strictParsing = strictParsing;
   return v2::FileParsers::MolFromMolDataStream(*inStream, line, ps).release();
-};
+}
 // \overload
 inline RWMol *MolDataStreamToMol(std::istream &inStream, unsigned int &line,
                                  bool sanitize = true, bool removeHs = true,
                                  bool strictParsing = true) {
   return MolDataStreamToMol(&inStream, line, sanitize, removeHs, strictParsing);
-};
+}
 // \brief construct a molecule from an MDL mol block
 /*!
  *   \param molBlock - string containing the mol block
@@ -116,7 +116,7 @@ inline RWMol *MolBlockToMol(const std::string &molBlock, bool sanitize = true,
   ps.removeHs = removeHs;
   ps.strictParsing = strictParsing;
   return v2::FileParsers::MolFromMolBlock(molBlock, ps).release();
-};
+}
 
 // \brief construct a molecule from an MDL mol file
 /*!
@@ -135,7 +135,7 @@ inline RWMol *MolFileToMol(const std::string &fName, bool sanitize = true,
   ps.removeHs = removeHs;
   ps.strictParsing = strictParsing;
   return v2::FileParsers::MolFromMolFile(fName, ps).release();
-};
+}
 }  // namespace v1
 
 //-----
