@@ -2094,7 +2094,7 @@ void testGithub3206() {
     TEST_ASSERT(!mol1->getAtomWithIdx(1)->hasQuery())
 
     auto sma = MolToSmarts(*mol1);
-    TEST_ASSERT(sma == "[#6$([#6]-[#8]),$([#6]-[#7]),$([#6]-[#9])]-[#6]");
+    TEST_ASSERT(sma == "[#6$([#6]-[#8]),$([#6]-[#7]),$([#6]-[#9])]-[#6]")
   }
   BOOST_LOG(rdInfoLog) << "\tdone" << std::endl;
 }
