@@ -268,7 +268,7 @@ int numDativeBonds(const Atom *atom) {
 bool noDative(const Atom *a) {
   static const std::set<int> noD{1, 2, 9, 10};
   return (noD.find(a->getAtomicNum()) != noD.end());
-};
+}
 
 void metalBondCleanup(RWMol &mol, Atom *atom,
                       const std::vector<unsigned int> &ranks) {
