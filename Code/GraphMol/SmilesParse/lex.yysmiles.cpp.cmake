@@ -1,3 +1,7 @@
+#ifdef __clang__
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wextra-semi-stmt"
+#endif
 
 #define  YY_INT_ALIGNED short int
 
@@ -3183,3 +3187,7 @@ void yyfree (void * ptr , yyscan_t yyscanner)
 #undef yysmiles_wrap
 int yysmiles_wrap( void ) { return 1; }
 
+
+#ifdef __clang__
+#pragma clang diagnostic pop
+#endif
