@@ -107,7 +107,7 @@ inline std::string GetAtomSmiles(const Atom *atom, bool doKekule = false,
   ps.doKekule = doKekule;
   ps.allHsExplicit = allHsExplicit;
   return GetAtomSmiles(atom, ps);
-};
+}
 
 //! \brief returns the SMILES for a bond
 /*!
@@ -136,7 +136,7 @@ inline std::string GetBondSmiles(const Bond *bond, int atomToLeftIdx = -1,
   ps.allBondsExplicit = allBondsExplicit;
   ps.doIsomericSmiles = false;
   return GetBondSmiles(bond, ps, atomToLeftIdx);
-};
+}
 
 namespace detail {
 RDKIT_SMILESPARSE_EXPORT std::string MolToSmiles(
