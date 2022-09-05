@@ -683,7 +683,7 @@ void testIssue265() {
     TDTWriter writer(&sstream);
     writer.write(*m1);
     std::string otext = sstream.str();
-    TEST_ASSERT(otext == "$SMI<C1NO1>\n3D<0,0,0,0,1,0,1,0,0>\n");
+    TEST_ASSERT(otext == "$SMI<C1NO1>\n3D<0,0,0,0,1,0,1,0,0>\n")
     writer.close();
     delete m1;
   }

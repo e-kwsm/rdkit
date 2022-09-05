@@ -5141,13 +5141,13 @@ void testMarvinSMATag() {
     TEST_ASSERT(m)
     TEST_ASSERT(m->getNumAtoms() == 4)
     TEST_ASSERT(m->getAtomWithIdx(0)->getProp<std::string>(
-                    common_properties::MRV_SMA) == "[#6r6]");
+                    common_properties::MRV_SMA) == "[#6r6]")
     TEST_ASSERT(m->getAtomWithIdx(1)->getProp<std::string>(
-                    common_properties::MRV_SMA) == "[#16H1]");
+                    common_properties::MRV_SMA) == "[#16H1]")
     TEST_ASSERT(m->getAtomWithIdx(2)->getProp<std::string>(
-                    common_properties::MRV_SMA) == "[#6r6]");
+                    common_properties::MRV_SMA) == "[#6r6]")
     TEST_ASSERT(m->getAtomWithIdx(3)->getProp<std::string>(
-                    common_properties::MRV_SMA) == "[#7H2A]");
+                    common_properties::MRV_SMA) == "[#7H2A]")
     // this should be similar to [#7;AH2:4][c;r6:3]:[c;r6:1]-[#16H1:2]
     //  RDKit makes these recursive smarts, not "ANDED" smarts which are a
     //  simpler case
