@@ -1285,7 +1285,7 @@ M  END
     AtomFormalCharge -1 = val
   AtomExplicitDegree 1 = val
 )MOL")
-    TEST_ASSERT(SmartsWrite::GetAtomSmarts(qa) == "[#8,#16-;D1:2]");
+    TEST_ASSERT(SmartsWrite::GetAtomSmarts(qa) == "[#8,#16-;D1:2]")
   }
 }
 
