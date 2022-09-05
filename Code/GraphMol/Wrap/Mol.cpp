@@ -67,7 +67,7 @@ python::object MolToBinaryWithProps(const ROMol &self, unsigned int props) {
 struct mol_pickle_suite : rdkit_pickle_suite {
   static python::tuple getinitargs(const ROMol &self) {
     return python::make_tuple(MolToBinary(self));
-  };
+  }
 };
 
 bool HasSubstructMatchStr(std::string pkl, const ROMol &query,
@@ -174,32 +174,32 @@ void setExtraBondCheckFunc(SubstructMatchParameters &ps, python::object func) {
 
 class ReadWriteMol : public RWMol {
  public:
-  ReadWriteMol() {};
+  ReadWriteMol() {}
   ReadWriteMol(const ROMol &m, bool quickCopy = false, int confId = -1)
-      : RWMol(m, quickCopy, confId) {};
+      : RWMol(m, quickCopy, confId) {}
 
-  void RemoveAtom(unsigned int idx) { removeAtom(idx); };
+  void RemoveAtom(unsigned int idx) { removeAtom(idx); }
   void RemoveBond(unsigned int idx1, unsigned int idx2) {
     removeBond(idx1, idx2);
-  };
+  }
   int AddBond(unsigned int begAtomIdx, unsigned int endAtomIdx,
               Bond::BondType order = Bond::UNSPECIFIED) {
     return addBond(begAtomIdx, endAtomIdx, order);
-  };
+  }
   int AddAtom(Atom *atom) {
     PRECONDITION(atom, "bad atom")
     return addAtom(atom, true, false);
-  };
+  }
   void ReplaceAtom(unsigned int idx, Atom *atom, bool updateLabel,
                    bool preserveProps) {
     PRECONDITION(atom, "bad atom")
     replaceAtom(idx, atom, updateLabel, preserveProps);
-  };
+  }
   void ReplaceBond(unsigned int idx, Bond *bond, bool preserveProps,
                    bool keepSGroups) {
     PRECONDITION(bond, "bad bond")
     replaceBond(idx, bond, preserveProps, keepSGroups);
-  };
+  }
   void SetStereoGroups(python::list &stereo_groups) {
     std::vector<StereoGroup> groups;
     pythonObjectToVect<StereoGroup>(stereo_groups, groups);
@@ -975,7 +975,7 @@ struct mol_wrapper {
 
         // enable pickle support
         .def_pickle(mol_pickle_suite());
-  };
+  }
 };
 
 }  // namespace RDKit

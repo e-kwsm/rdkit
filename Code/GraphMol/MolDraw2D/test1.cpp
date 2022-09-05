@@ -3821,11 +3821,11 @@ void testGithub2931() {
 #ifdef RDK_BUILD_FREETYPE_SUPPORT
 #if DO_TEST_ASSERT
       TEST_ASSERT(text.find("stroke:#FF8C00;stroke-width:8.0px") !=
-                  std::string::npos);
+                  std::string::npos)
       TEST_ASSERT(
           text.find("<ellipse cx='246.7' cy='341.6' rx='11.6' ry='11.6'"
                     " class='atom-6'  style='fill:none;stroke:#00FF00;") !=
-          std::string::npos);
+          std::string::npos)
 #endif
 #else
       TEST_ASSERT(text.find("stroke:#FF8C00;stroke-width:8.0px") !=
@@ -4610,7 +4610,7 @@ void test23JSONAtomColourPalette() {
     auto match_count(
         std::distance(std::sregex_iterator(text.begin(), text.end(), regex),
                       std::sregex_iterator()));
-    TEST_ASSERT(match_count == 3);
+    TEST_ASSERT(match_count == 3)
 #endif
     check_file_hash("test23_1.svg");
   }
