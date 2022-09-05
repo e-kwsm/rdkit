@@ -1233,7 +1233,7 @@ std::string ChemicalReactionToMrvBlock(const ChemicalReaction &rxn,
   }
   delete marvinRxn;
   return out.str();
-};
+}
 
 void ChemicalReactionToMrvFile(const ChemicalReaction &rxn,
                                const std::string &fName, bool prettyPrint) {
@@ -1247,5 +1247,5 @@ void ChemicalReactionToMrvFile(const ChemicalReaction &rxn,
   std::string outString = ChemicalReactionToMrvBlock(rxn, prettyPrint);
   *outStream << outString;
   delete outStream;
-};
+}
 }  // namespace RDKit
