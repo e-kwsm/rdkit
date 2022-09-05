@@ -219,14 +219,14 @@ Atom *ROMol::getAtomWithBookmark(int mark) {
   PRECONDITION((lu != d_atomBookmarks.end() && !lu->second.empty()),
                "atom bookmark not found");
   return lu->second.front();
-};
+}
 
 // returns all atoms with the given bookmark
 ROMol::ATOM_PTR_LIST &ROMol::getAllAtomsWithBookmark(int mark) {
   auto lu = d_atomBookmarks.find(mark);
   PRECONDITION(lu != d_atomBookmarks.end(), "atom bookmark not found");
   return lu->second;
-};
+}
 
 // returns the unique atom with the given bookmark
 Atom *ROMol::getUniqueAtomWithBookmark(int mark) {

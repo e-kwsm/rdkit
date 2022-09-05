@@ -2509,7 +2509,7 @@ void MarvinMolBase::parseMoleculeSpecific(RDKit::RWMol *mol,
                                           int) {
   PRECONDITION(mol != nullptr, "mol cannot be null");
   // default is nothing - most derived classes override this
-};
+}
 
 void MarvinSuperatomSgroupExpanded::parseMoleculeSpecific(
     RDKit::RWMol *mol, std::unique_ptr<SubstanceGroup> &sgroup,
