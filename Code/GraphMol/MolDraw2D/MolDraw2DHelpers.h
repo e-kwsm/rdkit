@@ -89,7 +89,7 @@ inline void assignDefaultPalette(ColourPalette &palette) {
   palette[35] = DrawColour(0.5, 0.3, 0.1);
   palette[53] = DrawColour(0.63, 0.12, 0.94);
   palette[201] = DrawColour(0.68, 0.85, 0.90);
-};
+}
 
 //! use the color palette from the Avalon renderer
 // 201 is for hydrogens when atom symbols are not being drawn.
@@ -107,7 +107,7 @@ inline void assignAvalonPalette(ColourPalette &palette) {
   palette[35] = DrawColour(0.0, 0.498, 0.0);
   palette[53] = DrawColour(0.247, 0.0, 0.498);
   palette[201] = DrawColour(0.68, 0.85, 0.90);
-};
+}
 
 //! use (part of) the CDK color palette
 /*!
@@ -130,7 +130,7 @@ inline void assignCDKPalette(ColourPalette &palette) {
   palette[53] = DrawColour(0.580, 0.0, 0.580);
   palette[5] = DrawColour(1.000, 0.710, 0.710);
   palette[201] = DrawColour(0.68, 0.85, 0.90);
-};
+}
 
 // 201 is for hydrogens when atom symbols are not being drawn.
 inline void assignDarkModePalette(ColourPalette &palette) {
@@ -147,12 +147,12 @@ inline void assignDarkModePalette(ColourPalette &palette) {
   palette[35] = DrawColour(0.71, 0.4, 0.07);
   palette[53] = DrawColour(0.89, 0.004, 1);
   palette[201] = DrawColour(0.68, 0.85, 0.90);
-};
+}
 
 inline void assignBWPalette(ColourPalette &palette) {
   palette.clear();
   palette[-1] = DrawColour(0, 0, 0);
-};
+}
 
 enum class MultiColourHighlightStyle {
   CIRCLEANDLINE,
