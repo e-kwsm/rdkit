@@ -3844,7 +3844,7 @@ const Atom *otherNeighbor(const Atom *firstAtom, const Atom *secondAtom,
     }
   }
   return nullptr;
-};
+}
 
 }  // namespace MolDraw2D_detail
 }  // namespace RDKit
