@@ -107,7 +107,7 @@ void prepareAndDrawMolecule(MolDraw2D &drawer, const ROMol &mol,
 void updateMolDrawOptionsFromJSON(MolDrawOptions &opts, const char *json) {
   PRECONDITION(json, "no parameter string");
   updateMolDrawOptionsFromJSON(opts, std::string(json));
-};
+}
 
 RDKIT_MOLDRAW2D_EXPORT void updateDrawerParamsFromJSON(MolDraw2D &drawer,
                                                        const char *json) {
