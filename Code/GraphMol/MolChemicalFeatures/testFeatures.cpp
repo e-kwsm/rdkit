@@ -56,15 +56,15 @@ void test1() {
   Local::parseAtomType(inLine, atomTypeDefs, 0);
   TEST_ASSERT(atomTypeDefs.count("{donor}"))
   TEST_ASSERT(!atomTypeDefs.count("{unsaturatedDonor}"))
-  TEST_ASSERT(atomTypeDefs["{donor}"] == "$([!$([NH0])N,O,$([S])])");
+  TEST_ASSERT(atomTypeDefs["{donor}"] == "$([!$([NH0])N,O,$([S])])")
 
   inLine = "AtomType unsaturatedDonor [$([{donor}]!-[*])]";
   Local::parseAtomType(inLine, atomTypeDefs, 0);
   TEST_ASSERT(atomTypeDefs.count("{donor}"))
   TEST_ASSERT(atomTypeDefs.count("{unsaturatedDonor}"))
-  TEST_ASSERT(atomTypeDefs["{donor}"] == "$([!$([NH0])N,O,$([S])])");
+  TEST_ASSERT(atomTypeDefs["{donor}"] == "$([!$([NH0])N,O,$([S])])")
   TEST_ASSERT(atomTypeDefs["{unsaturatedDonor}"] ==
-              "$([$([$([!$([NH0])N,O,$([S])])]!-[*])])");
+              "$([$([$([!$([NH0])N,O,$([S])])]!-[*])])")
 
   ok = false;
   try {
@@ -238,7 +238,7 @@ void test3() {
   res = parseFeatureData(inText, featureDefs);
   TEST_ASSERT(!res)
   TEST_ASSERT(featureDefs.size() == 1)
-  TEST_ASSERT((*featureDefs.begin())->getSmarts() == "[$([!$([H0])N,O])]");
+  TEST_ASSERT((*featureDefs.begin())->getSmarts() == "[$([!$([H0])N,O])]")
 
   BOOST_LOG(rdErrorLog) << "  done" << std::endl;
 }
@@ -269,7 +269,7 @@ void test4() {
   TEST_ASSERT(featureDefs.size() == 2)
   featDefIt = featureDefs.begin();
   featDef = *featDefIt;
-  TEST_ASSERT(featDef->getSmarts() == "[N,O!H0]");
+  TEST_ASSERT(featDef->getSmarts() == "[N,O!H0]")
   TEST_ASSERT(featDef->getPattern())
   TEST_ASSERT(featDef->getPattern()->getNumAtoms() == 1)
   TEST_ASSERT(featDef->getNumWeights() == 1)
@@ -609,7 +609,7 @@ void testIssue225() {
   TEST_ASSERT(featureDefs.size() == 2)
   featDefIt = featureDefs.begin();
   featDef = *featDefIt;
-  TEST_ASSERT(featDef->getSmarts() == "[N,O!H0]");
+  TEST_ASSERT(featDef->getSmarts() == "[N,O!H0]")
   TEST_ASSERT(featDef->getPattern())
   TEST_ASSERT(featDef->getPattern()->getNumAtoms() == 1)
   TEST_ASSERT(featDef->getNumWeights() == 1)
