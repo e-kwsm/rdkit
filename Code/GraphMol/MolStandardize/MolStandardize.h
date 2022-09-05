@@ -266,7 +266,7 @@ inline void disconnectOrganometallicsInPlace(
     RWMol &mol, RDKit::MolStandardize::MetalDisconnectorOptions mdo = {
                     true, true, false, true}) {
   disconnectOrganometallics(mol, mdo);
-};
+}
 
 //! TODO
 RDKIT_MOLSTANDARDIZE_EXPORT std::vector<std::string> enumerateTautomerSmiles(
