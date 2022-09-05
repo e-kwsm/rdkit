@@ -105,7 +105,7 @@ RDKIT_RDINCHILIB_EXPORT std::string InchiToInchiKey(const std::string &inchi);
 inline std::string MolToInchiKey(const ROMol &mol, const char *options = NULL) {
   ExtraInchiReturnValues rv;
   return InchiToInchiKey(MolToInchi(mol, rv, options));
-};
+}
 
 }  // namespace RDKit
 #endif
