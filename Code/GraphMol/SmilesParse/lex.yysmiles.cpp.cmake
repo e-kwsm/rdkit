@@ -2634,8 +2634,9 @@ static void yy_load_buffer_state  (yyscan_t yyscanner)
 void yypush_buffer_state (YY_BUFFER_STATE new_buffer , yyscan_t yyscanner)
 {
     auto * yyg = (struct yyguts_t*)yyscanner;
-	if (new_buffer == nullptr)
+	if (new_buffer == nullptr) {
 		return;
+	}
 
 	yyensure_buffer_stack(yyscanner);
 
