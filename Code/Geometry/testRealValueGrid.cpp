@@ -20,7 +20,7 @@
 #include <sstream>
 #include <fstream>
 #include <ios>
-#include <stdlib.h>
+#include <cstdlib>
 
 using namespace RDGeom;
 using namespace RDKit;
