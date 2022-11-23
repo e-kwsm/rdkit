@@ -35,7 +35,7 @@
 #include <RDGeneral/Exceptions.h>
 #include <RDGeneral/BadFileException.h>
 #include <GraphMol/SanitException.h>
-#include <string.h>
+#include <cstring>
 
 namespace python = boost::python;
 using namespace RDKit;

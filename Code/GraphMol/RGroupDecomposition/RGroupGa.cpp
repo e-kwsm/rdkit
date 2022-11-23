@@ -13,7 +13,7 @@
 #ifdef RDK_BUILD_THREADSAFE_SSS
 #include <future>
 #endif
-#include <assert.h>
+#include <cassert>
 #include "RGroupGa.h"
 #include "RGroupDecompData.h"
 #include "RGroupDecomp.h"
