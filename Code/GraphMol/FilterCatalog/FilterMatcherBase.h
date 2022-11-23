@@ -52,11 +52,11 @@ class FilterMatcherBase;  // Forward declaration
 
 //! Holds the atomPairs matched by the underlying matcher
 struct RDKIT_FILTERCATALOG_EXPORT FilterMatch {
-  boost::shared_ptr<FilterMatcherBase> filterMatch;
+  std::shared_ptr<FilterMatcherBase> filterMatch;
   MatchVectType atomPairs;
 
   FilterMatch() : filterMatch(), atomPairs() {}
-  FilterMatch(boost::shared_ptr<FilterMatcherBase> filter,
+  FilterMatch(std::shared_ptr<FilterMatcherBase> filter,
               MatchVectType atomPairs)
       : filterMatch(std::move(filter)), atomPairs(std::move(atomPairs)) {}
 
@@ -121,7 +121,7 @@ class RDKIT_FILTERCATALOG_EXPORT FilterMatcherBase
   //! Clone - deprecated
   /// Clones the current FilterMatcherBase into one that
   ///  can be passed around safely.
-  virtual boost::shared_ptr<FilterMatcherBase> Clone() const {
+  virtual std::shared_ptr<FilterMatcherBase> Clone() const {
     BOOST_LOG(rdWarningLog)
         << "FilterMatcherBase::Clone is deprecated, use copy instead"
         << std::endl;
@@ -132,7 +132,7 @@ class RDKIT_FILTERCATALOG_EXPORT FilterMatcherBase
   //! copy
   /// copies the current FilterMatcherBase into one that
   ///  can be passed around safely.
-  virtual boost::shared_ptr<FilterMatcherBase> copy() const = 0;
+  virtual std::shared_ptr<FilterMatcherBase> copy() const = 0;
 
  private:
 #ifdef RDK_USE_BOOST_SERIALIZATION

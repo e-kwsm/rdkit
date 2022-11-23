@@ -10,7 +10,7 @@
 #include "ScaffoldNetwork.h"
 #include "detail.h"
 
-#include <boost/shared_ptr.hpp>
+#include <memory>
 #include <RDGeneral/types.h>
 #include <RDGeneral/Invariant.h>
 #include <GraphMol/RDKitBase.h>
@@ -200,9 +200,9 @@ size_t addEntryIfMissing(T &vect, const V &e,
 void addMolToNetwork(const ROMol &mol, ScaffoldNetwork &network,
                      const ScaffoldNetworkParams &params) {
   auto ismi = MolToSmiles(mol);
-  boost::shared_ptr<ROMol> fmol(flattenMol(mol, params));
+  std::shared_ptr<ROMol> fmol(flattenMol(mol, params));
   if (params.pruneBeforeFragmenting) {
-    boost::shared_ptr<ROMol> pmol(pruneMol(*fmol, params));
+    std::shared_ptr<ROMol> pmol(pruneMol(*fmol, params));
     fmol.swap(pmol);
   }
   std::set<size_t> entriesFromMol;

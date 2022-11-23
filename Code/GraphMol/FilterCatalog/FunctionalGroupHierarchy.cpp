@@ -33,9 +33,9 @@
 #include "FunctionalGroupHierarchy.h"
 #include "FilterMatchers.h"
 #include "FilterCatalog.h"
+#include <memory>
 #include <GraphMol/SmilesParse/SmilesParse.h>
 #include <RDGeneral/BoostStartInclude.h>
-#include <boost/shared_ptr.hpp>
 #include <boost/algorithm/string.hpp>
 #include <RDGeneral/BoostEndInclude.h>
 #ifdef RDK_BUILD_THREADSAFE_SSS
@@ -221,7 +221,7 @@ void hierarchy_create() {
           std::string(
               "Invalid Depth in Built in Functional Group Hierarchy: ") +
               fd.name);
-      boost::shared_ptr<FilterHierarchyMatcher> real_node =
+      std::shared_ptr<FilterHierarchyMatcher> real_node =
           stack[fd.level - 1]->addChild(node);
 
       stack[fd.level] = real_node.get();
@@ -232,7 +232,7 @@ void hierarchy_create() {
   //  to the filter catalog
   for (auto &fd : toplevel) {
     fgroupHierarchy.addEntry(new FilterCatalogEntry(
-        fd->getName(), boost::shared_ptr<FilterMatcherBase>(fd)));
+        fd->getName(), std::shared_ptr<FilterMatcherBase>(fd)));
   }
 }
 }  // namespace

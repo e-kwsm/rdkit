@@ -14,8 +14,8 @@
 #include <map>
 #include <vector>
 #ifdef RDK_USE_URF
+#include <memory>
 #include <RDGeneral/BoostStartInclude.h>
-#include <boost/shared_ptr.hpp>
 #include <RDGeneral/BoostEndInclude.h>
 #include <RingDecomposerLib.h>
 #endif
@@ -266,7 +266,7 @@ class RDKIT_GRAPHMOL_EXPORT RingInfo {
 
 #ifdef RDK_USE_URF
  public:
-  boost::shared_ptr<RDL_data> dp_urfData;
+  std::shared_ptr<RDL_data> dp_urfData;
 #endif
 };
 }  // namespace RDKit

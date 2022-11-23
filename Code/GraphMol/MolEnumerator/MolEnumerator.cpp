@@ -82,7 +82,7 @@ MolBundle enumerate(const ROMol &mol,
     return MolBundle();
   }
   std::unique_ptr<MolBundle> accum{new MolBundle()};
-  boost::shared_ptr<ROMol> molCpy{new ROMol(mol)};
+  std::shared_ptr<ROMol> molCpy{new ROMol(mol)};
   detail::preserveOrigIndices(*molCpy);
   accum->addMol(molCpy);
   bool variationsFound = false;

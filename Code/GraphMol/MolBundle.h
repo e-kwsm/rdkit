@@ -47,12 +47,12 @@ class MolBundle : public RDProps {
   virtual ~MolBundle() {}
 
   //! returns our molecules
-  virtual const std::vector<boost::shared_ptr<ROMol>> &getMols() const {
+  virtual const std::vector<std::shared_ptr<ROMol>> &getMols() const {
     return d_mols;
   }
 
   //! adds a new molecule and returns the total number of molecules
-  virtual size_t addMol(boost::shared_ptr<ROMol> nmol) {
+  virtual size_t addMol(std::shared_ptr<ROMol> nmol) {
     PRECONDITION(nmol.get(), "bad mol pointer");
     d_mols.push_back(nmol);
     return (d_mols.size());
@@ -60,19 +60,19 @@ class MolBundle : public RDProps {
   //! returns the number of molecules from the bundle
   virtual size_t size() const { return d_mols.size(); }
   //! returns a particular molecule in the bundle
-  virtual const boost::shared_ptr<ROMol> getMol(size_t idx) const {
+  virtual const std::shared_ptr<ROMol> getMol(size_t idx) const {
     if (idx >= d_mols.size()) {
       throw IndexErrorException(static_cast<int>(idx));
     }
     return d_mols[idx];
   }
   //! returns a particular molecule from the bundle
-  virtual const boost::shared_ptr<ROMol> operator[](size_t idx) const {
+  virtual const std::shared_ptr<ROMol> operator[](size_t idx) const {
     return getMol(idx);
   }
 
  protected:
-  std::vector<boost::shared_ptr<ROMol>> d_mols;
+  std::vector<std::shared_ptr<ROMol>> d_mols;
 };
 
 //! FixedMolSizeMolBundle contains a collection of ROMols with the same
@@ -99,7 +99,7 @@ class FixedMolSizeMolBundle : public MolBundle {
   //! adds a new molecule and returns the total number of molecules
   //!  enforces that the new molecule has the same number of atoms and bonds
   //!  as the molecules that are already there.
-  size_t addMol(boost::shared_ptr<ROMol> nmol) override {
+  size_t addMol(std::shared_ptr<ROMol> nmol) override {
     PRECONDITION(nmol.get(), "bad mol pointer");
     if (d_mols.size()) {
       if (nmol->getNumAtoms() != d_mols[0]->getNumAtoms()) {

@@ -33,7 +33,7 @@ TEST_CASE("querying with a molbundle") {
     std::vector<std::string> qSmiles = {"CCC", "COC", "CNC"};
     MolBundle bundle;
     for (const auto &smi : qSmiles) {
-      boost::shared_ptr<ROMol> mol(SmilesToMol(smi));
+      std::shared_ptr<ROMol> mol(SmilesToMol(smi));
       REQUIRE(mol);
       bundle.addMol(mol);
     }
@@ -50,7 +50,7 @@ TEST_CASE("querying with a molbundle") {
     std::vector<std::string> qSmiles = {"CCC", "CSC", "CNC"};
     MolBundle bundle;
     for (const auto &smi : qSmiles) {
-      boost::shared_ptr<ROMol> mol(SmilesToMol(smi));
+      std::shared_ptr<ROMol> mol(SmilesToMol(smi));
       REQUIRE(mol);
       bundle.addMol(mol);
     }
@@ -67,7 +67,7 @@ TEST_CASE("querying with a molbundle") {
     std::vector<std::string> qSmiles = {"CCC", "CNC", "CC"};
     MolBundle bundle;
     for (const auto &smi : qSmiles) {
-      boost::shared_ptr<ROMol> mol(SmilesToMol(smi));
+      std::shared_ptr<ROMol> mol(SmilesToMol(smi));
       REQUIRE(mol);
       bundle.addMol(mol);
     }
@@ -118,8 +118,8 @@ TEST_CASE("using modified query parameters") {
 TEST_CASE("searchOrder") {
   std::vector<std::string> libSmiles = {"CCCOC", "CCCCOCC", "CCOC", "COC",
                                         "CCCCCOC"};
-  boost::shared_ptr<MolHolder> mholder(new MolHolder());
-  boost::shared_ptr<PatternHolder> fpholder(new PatternHolder());
+  std::shared_ptr<MolHolder> mholder(new MolHolder());
+  std::shared_ptr<PatternHolder> fpholder(new PatternHolder());
 
   SubstructLibrary ssslib(mholder, fpholder);
 
@@ -215,8 +215,8 @@ void setSearchSmallestFirst(SubstructLibrary &ssslib) {
 TEST_CASE("searchOrderFunctionDemo") {
   std::vector<std::string> libSmiles = {"CCCOC", "CCCCOCC", "CCOC", "COC",
                                         "CCCCCOC"};
-  boost::shared_ptr<MolHolder> mholder(new MolHolder());
-  boost::shared_ptr<PatternHolder> fpholder(new PatternHolder());
+  std::shared_ptr<MolHolder> mholder(new MolHolder());
+  std::shared_ptr<PatternHolder> fpholder(new PatternHolder());
 
   SubstructLibrary ssslib(mholder, fpholder);
 
