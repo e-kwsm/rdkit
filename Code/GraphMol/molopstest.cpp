@@ -9,8 +9,8 @@
 //
 #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
 #include <algorithm>
+#include <cmath>
 #include <map>
-#include <math.h>
 #include <random>
 
 #include <RDGeneral/test.h>
