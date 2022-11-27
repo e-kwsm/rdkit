@@ -34,7 +34,7 @@ struct StringRect;
 
 class DrawShape {
  public:
-  DrawShape(const std::vector<Point2D> &points, double lineWidth = 2.0,
+  DrawShape(std::vector<Point2D> points, double lineWidth = 2.0,
             bool scaleLineWidth = false,
             DrawColour lineColour = DrawColour(0, 0, 0), bool fill = false,
             int atom1 = -1, int atom2 = -1, int bond = -1);
