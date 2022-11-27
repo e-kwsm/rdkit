@@ -708,7 +708,7 @@ std::vector<std::unique_ptr<RWMol>> MolsFromCDXMLDataStream(
     auto xml = dynamic_cast<boost::property_tree::file_parser_error *>(&e);
     if (xml != nullptr) {
       auto msg = std::string(xml->message()) +
-                 " at line: " + boost::lexical_cast<std::string>(xml->line());
+                 " at line: " + std::to_string(xml->line());
       throw FileParseException(msg);
     }
 
@@ -742,7 +742,7 @@ std::vector<std::unique_ptr<RWMol>> MolsFromCDXMLDataStream(
         auto idx = mol->getProp<unsigned int>(CDXML_FRAG_ID);
         fragments[idx] = mol_idx++;
         for (auto &atom : mol->atoms()) {
-          unsigned int idx = atom->getProp<unsigned int>(CDX_ATOM_ID);
+          auto idx = atom->getProp<unsigned int>(CDX_ATOM_ID);
           atoms[idx] = atom;
         }
       }
