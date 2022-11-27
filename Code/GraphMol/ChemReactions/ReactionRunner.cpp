@@ -1307,16 +1307,15 @@ void generateProductConformers(Conformer *productConf, const ROMol &reactant,
   if (reactConf.is3D()) {
     productConf->set3D(true);
   }
-  for (auto pr = mapping->reactProdAtomMap.begin();
-       pr != mapping->reactProdAtomMap.end(); ++pr) {
-    std::vector<unsigned> prodIdxs = pr->second;
+  for (auto &pr : mapping->reactProdAtomMap) {
+    std::vector<unsigned> prodIdxs = pr.second;
     if (prodIdxs.size() > 1) {
       BOOST_LOG(rdWarningLog) << "reactant atom match more than one product "
                                  "atom, coordinates need to be revised\n";
     }
     // is this reliable when multiple product atom mapping occurs????
     for (unsigned int prodIdx : prodIdxs) {
-      productConf->setAtomPos(prodIdx, reactConf.getAtomPos(pr->first));
+      productConf->setAtomPos(prodIdx, reactConf.getAtomPos(pr.first));
     }
   }
 }
@@ -1965,10 +1964,10 @@ std::vector<MOL_SPTR_VECT> run_Reactant(const ChemicalReaction &rxn,
 namespace {
 int getAtomMapNo(ROMol::ATOM_BOOKMARK_MAP *map, Atom *atom) {
   if (map) {
-    for (auto it = map->begin(); it != map->end(); ++it) {
-      for (auto ait = it->second.begin(); ait != it->second.end(); ++ait) {
+    for (auto &it : *map) {
+      for (auto ait = it.second.begin(); ait != it.second.end(); ++ait) {
         if (*ait == atom) {
-          return it->first;
+          return it.first;
         }
       }
     }
