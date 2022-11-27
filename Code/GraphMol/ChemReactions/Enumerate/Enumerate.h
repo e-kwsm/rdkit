@@ -172,7 +172,7 @@ class RDKIT_CHEMREACTIONS_EXPORT EnumerateLibrary
         ar & pickle;
         auto *mol = new RWMol();
         MolPickler::molFromPickle(pickle, *mol);
-        m_bbs[i][j].reset(mol);
+        j.reset(mol);
       }
     }
   }

@@ -820,8 +820,8 @@ void testIssue285() {
   TEST_ASSERT(cids.size() == tgtNumber);
 
   std::vector<std::string> molBlocks;
-  for (auto cid = cids.begin(); cid != cids.end(); ++cid) {
-    molBlocks.push_back(MolToMolBlock(*m, true, *cid));
+  for (int cid : cids) {
+    molBlocks.push_back(MolToMolBlock(*m, true, cid));
   }
   for (auto mbI = molBlocks.begin(); mbI != molBlocks.end(); ++mbI) {
     for (auto mbJ = mbI + 1; mbJ != molBlocks.end(); ++mbJ) {

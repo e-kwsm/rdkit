@@ -139,9 +139,8 @@ void testFilterCatalog() {
         // get the substructure atoms for visualization
         std::vector<FilterMatch> matches;
         if (entry->getFilterMatches(*mol, matches)) {
-          for (auto it = matches.begin(); it != matches.end(); ++it) {
+          for (const auto &fm : matches) {
             // Get the FilterMatcherBase that matched
-            const FilterMatch &fm = (*it);
             boost::shared_ptr<FilterMatcherBase> matchingFilter =
                 fm.filterMatch;
 

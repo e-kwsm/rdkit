@@ -13,6 +13,7 @@
 #include <algorithm>
 #include <iostream>
 #include <limits>
+#include <utility>
 
 #include <Geometry/Transform2D.h>
 #include <Geometry/Transform3D.h>
@@ -40,7 +41,7 @@ namespace MolDraw2D_detail {
 
 // ****************************************************************************
 DrawMol::DrawMol(
-    const ROMol &mol, const std::string &legend, int width, int height,
+    const ROMol &mol, std::string legend, int width, int height,
     const MolDrawOptions &drawOptions, DrawText &textDrawer,
     const std::vector<int> *highlight_atoms,
     const std::vector<int> *highlight_bonds,
@@ -54,7 +55,7 @@ DrawMol::DrawMol(
       marginPadding_(drawOptions.padding),
       includeAnnotations_(includeAnnotations),
       isReactionMol_(isReactionMol),
-      legend_(legend),
+      legend_(std::move(legend)),
       confId_(confId),
       width_(width),
       height_(height),
@@ -2771,10 +2772,10 @@ OrientType DrawMol::calcRadicalRect(const Atom *atom,
   }
   OrientType all_ors[4] = {OrientType::N, OrientType::E, OrientType::S,
                            OrientType::W};
-  for (int io = 0; io < 4; ++io) {
-    if (orient != all_ors[io]) {
-      if (try_rads(all_ors[io])) {
-        return all_ors[io];
+  for (auto &all_or : all_ors) {
+    if (orient != all_or) {
+      if (try_rads(all_or)) {
+        return all_or;
       }
     }
   }
@@ -3099,8 +3100,8 @@ void DrawMol::bondInsideRing(const Bond &bond, double offset, Point2D &l2s,
     // the aromatic ring.  This is important for morphine, for example,
     // where there are fused aromatic and aliphatic rings.
     // morphine: CN1CC[C@]23c4c5ccc(O)c4O[C@H]2[C@@H](O)C=C[C@H]3[C@H]1C5
-    for (size_t i = 0; i < bond_in_rings.size(); ++i) {
-      ringToUse = &bond_rings[bond_in_rings[i]];
+    for (unsigned long bond_in_ring : bond_in_rings) {
+      ringToUse = &bond_rings[bond_in_ring];
       bool ring_ok = true;
       for (auto bond_idx : *ringToUse) {
         const Bond *bond2 = drawMol_->getBondWithIdx(bond_idx);

@@ -352,10 +352,10 @@ void copyVarianceData(const FingerprintVarianceScoreData &fromData,
   auto &from = fromData.labelsToVarianceData;
   auto &to = toData.labelsToVarianceData;
 
-  for (auto it = from.cbegin(); it != from.end(); ++it) {
-    auto df = to.find(it->first);
+  for (const auto& it : from) {
+    auto df = to.find(it.first);
     if (df == to.end()) {
-      to.emplace(it->first, make_shared<VarianceDataForLabel>(*it->second));
+      to.emplace(it.first, make_shared<VarianceDataForLabel>(*it.second));
     } else {
       auto &fromData = it->second;
       auto &toData = df->second;
