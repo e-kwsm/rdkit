@@ -141,7 +141,6 @@ TopologicalTorsionEnvGenerator<OutputType>::getEnvironments(
       keepIt = false;
     }
     std::vector<std::uint32_t> pathCodes;
-    const PATH_TYPE &path = *pathIt;
     if (fromAtomsBV) {
       if (fromAtomsBV->test(static_cast<std::uint32_t>(path.front())) ||
           fromAtomsBV->test(static_cast<std::uint32_t>(path.back()))) {

@@ -195,7 +195,7 @@ inline bool rdvalue_tostring(RDValue_cast_t val, std::string &res) {
       res = rdvalue_cast<std::string>(val);
       break;
     case RDTypeTag::IntTag:
-      res = boost::lexical_cast<std::string>(rdvalue_cast<int>(val));
+      res = std::to_string(rdvalue_cast<int>(val));
       break;
     case RDTypeTag::DoubleTag: {
       Utils::LocaleSwitcher ls;  // for lexical cast...
@@ -203,7 +203,7 @@ inline bool rdvalue_tostring(RDValue_cast_t val, std::string &res) {
       break;
     }
     case RDTypeTag::UnsignedIntTag:
-      res = boost::lexical_cast<std::string>(rdvalue_cast<unsigned int>(val));
+      res = std::to_string(rdvalue_cast<unsigned int>(val));
       break;
 #ifdef RDVALUE_HASBOOL
     case RDTypeTag::BoolTag:
