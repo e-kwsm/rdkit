@@ -270,7 +270,7 @@ class streambuf : public std::basic_streambuf<char> {
           "The method 'read' of the Python file object "
           "did not return a string.");
     }
-    off_type n_read = (off_type)py_n_read;
+    auto n_read = (off_type)py_n_read;
     pos_of_read_buffer_end_in_py_file += n_read;
     setg(read_buffer_data, read_buffer_data, read_buffer_data + n_read);
     // ^^^27.5.2.3.1 (4)
@@ -287,7 +287,7 @@ class streambuf : public std::basic_streambuf<char> {
           "That Python file object has no 'write' attribute");
     }
     farthest_pptr = std::max(farthest_pptr, pptr());
-    off_type n_written = (off_type)(farthest_pptr - pbase());
+    auto n_written = (off_type)(farthest_pptr - pbase());
     off_type orig_n_written = n_written;
     const unsigned int STD_ASCII = 0x7F;
     if (df_isTextMode && static_cast<unsigned int>(c) > STD_ASCII) {

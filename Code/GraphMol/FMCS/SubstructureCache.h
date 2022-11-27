@@ -127,8 +127,7 @@ class RDKIT_FMCS_EXPORT SubstructureCache {
                     const std::vector<unsigned>& queryBondLabels,
                     TKey& key) {  // compute key and find entry
     key.computeKey(seed, queryAtomLabels, queryBondLabels);
-    std::map<KeyNumericMetrics::TValue, size_t>::const_iterator entryit =
-        NumericIndex.find(key.NumericMetrics.Value);
+    auto entryit = NumericIndex.find(key.NumericMetrics.Value);
     if (NumericIndex.end() != entryit) {
       return &ValueStorage[entryit->second];
     }
@@ -165,9 +164,8 @@ class RDKIT_FMCS_EXPORT SubstructureCache {
 
   size_t fullsize() const {  // for statistics only
     size_t n = 0;
-    for (std::vector<TIndexEntry>::const_iterator e = ValueStorage.begin();
-         e != ValueStorage.end(); e++) {
-      n += e->size();
+    for (const auto& e : ValueStorage) {
+      n += e.size();
     }
     return n;
   }

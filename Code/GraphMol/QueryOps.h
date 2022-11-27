@@ -351,7 +351,7 @@ T *makeAtomSimpleQuery(int what, int func(Atom const *),
 static inline ATOM_RANGE_QUERY *makeAtomRangeQuery(
     int lower, int upper, bool lowerOpen, bool upperOpen,
     int func(Atom const *), const std::string &description = "Atom Range") {
-  ATOM_RANGE_QUERY *res = new ATOM_RANGE_QUERY(lower, upper);
+  auto *res = new ATOM_RANGE_QUERY(lower, upper);
   res->setDataFunc(func);
   res->setDescription(description);
   res->setEndsOpen(lowerOpen, upperOpen);
@@ -729,7 +729,7 @@ class RDKIT_GRAPHMOL_EXPORT AtomRingQuery
 
   //! returns a copy of this query
   Queries::Query<int, ConstAtomPtr, true> *copy() const override {
-    AtomRingQuery *res = new AtomRingQuery(this->d_val);
+    auto *res = new AtomRingQuery(this->d_val);
     res->setNegation(getNegation());
     res->setTol(this->getTol());
     res->d_description = this->d_description;
@@ -775,7 +775,7 @@ class RDKIT_GRAPHMOL_EXPORT RecursiveStructureQuery
 
   //! returns a copy of this query
   Queries::Query<int, Atom const *, true> *copy() const override {
-    RecursiveStructureQuery *res = new RecursiveStructureQuery();
+    auto *res = new RecursiveStructureQuery();
     res->dp_queryMol.reset(new ROMol(*dp_queryMol, true));
 
     std::set<int>::const_iterator i;
@@ -836,7 +836,7 @@ class HasPropQuery : public Queries::EqualityQuery<int, TargetPtr, true> {
 
   //! returns a copy of this query
   Queries::Query<int, TargetPtr, true> *copy() const override {
-    HasPropQuery *res = new HasPropQuery(this->propname);
+    auto *res = new HasPropQuery(this->propname);
     res->setNegation(this->getNegation());
     res->d_description = this->d_description;
     return res;
@@ -913,7 +913,7 @@ class HasPropWithValueQuery
 
   //! returns a copy of this query
   Queries::Query<int, TargetPtr, true> *copy() const override {
-    HasPropWithValueQuery *res =
+    auto *res =
         new HasPropWithValueQuery(this->propname, this->val, this->tolerance);
     res->setNegation(this->getNegation());
     res->d_description = this->d_description;
@@ -949,7 +949,7 @@ class HasPropWithValueQuery<TargetPtr, std::string>
     bool res = what->hasProp(propname);
     if (res) {
       try {
-        std::string atom_val = what->template getProp<std::string>(propname);
+        auto atom_val = what->template getProp<std::string>(propname);
         res = atom_val == this->val;
       } catch (KeyErrorException &) {
         res = false;
@@ -979,9 +979,8 @@ class HasPropWithValueQuery<TargetPtr, std::string>
 
   //! returns a copy of this query
   Queries::Query<int, TargetPtr, true> *copy() const override {
-    HasPropWithValueQuery<TargetPtr, std::string> *res =
-        new HasPropWithValueQuery<TargetPtr, std::string>(this->propname,
-                                                          this->val);
+    auto *res = new HasPropWithValueQuery<TargetPtr, std::string>(
+        this->propname, this->val);
     res->setNegation(this->getNegation());
     res->d_description = this->d_description;
     return res;
@@ -1048,9 +1047,8 @@ class HasPropWithValueQuery<TargetPtr, ExplicitBitVect>
 
   //! returns a copy of this query
   Queries::Query<int, TargetPtr, true> *copy() const override {
-    HasPropWithValueQuery<TargetPtr, ExplicitBitVect> *res =
-        new HasPropWithValueQuery<TargetPtr, ExplicitBitVect>(
-            this->propname, this->val, this->tol);
+    auto *res = new HasPropWithValueQuery<TargetPtr, ExplicitBitVect>(
+        this->propname, this->val, this->tol);
     res->setNegation(this->getNegation());
     res->d_description = this->d_description;
     return res;

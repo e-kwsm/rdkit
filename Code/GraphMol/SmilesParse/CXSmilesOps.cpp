@@ -1966,7 +1966,7 @@ std::string get_atom_props_block(const ROMol &mol,
     bool includePrivate = false, includeComputed = false;
     for (const auto &pn : atom->getPropList(includePrivate, includeComputed)) {
       if (std::find(skip.begin(), skip.end(), pn) == skip.end()) {
-        std::string pv = atom->getProp<std::string>(pn);
+        auto pv = atom->getProp<std::string>(pn);
         if (pn == "dummyLabel" &&
             std::find(SmilesParseOps::pseudoatoms.begin(),
                       SmilesParseOps::pseudoatoms.end(),

@@ -31,6 +31,7 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 #include "SubstructLibrary.h"
+#include <utility>
 #include <RDGeneral/RDThreads.h>
 #ifdef RDK_BUILD_THREADSAFE_SSS
 #include <thread>
@@ -56,8 +57,8 @@ struct Bits {
   SubstructMatchParameters params;
 
   Bits(const FPHolderBase *fps, const ROMol &m,
-       const SubstructMatchParameters &ssparams)
-      : fps(fps), params(ssparams) {
+       SubstructMatchParameters ssparams)
+      : fps(fps), params(std::move(ssparams)) {
     if (fps) {
       queryBits = fps->makeFingerprint(m);
     } else {
@@ -66,10 +67,10 @@ struct Bits {
   }
 
   Bits(const FPHolderBase *fingerprints, const TautomerQuery &m,
-       const SubstructMatchParameters &ssparams)
-      : fps(nullptr), params(ssparams) {
+       SubstructMatchParameters ssparams)
+      : fps(nullptr), params(std::move(ssparams)) {
     if (fingerprints) {
-      const TautomerPatternHolder *tp =
+      const auto *tp =
           dynamic_cast<const TautomerPatternHolder *>(fingerprints);
       if (!tp) {
         BOOST_LOG(rdWarningLog) << "Pattern fingerprints for tautomersearch "
