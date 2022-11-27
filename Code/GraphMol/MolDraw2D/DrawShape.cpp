@@ -11,6 +11,7 @@
 //
 
 #include <cmath>
+#include <utility>
 
 #include <GraphMol/MolDraw2D/MolDraw2DDetails.h>
 #include <GraphMol/MolDraw2D/DrawShape.h>
@@ -22,10 +23,10 @@ namespace RDKit {
 namespace MolDraw2D_detail {
 
 // ****************************************************************************
-DrawShape::DrawShape(const std::vector<Point2D> &points, double lineWidth,
+DrawShape::DrawShape(std::vector<Point2D> points, double lineWidth,
                      bool scaleLineWidth, DrawColour lineColour, bool fill,
                      int atom1, int atom2, int bond)
-    : points_(points),
+    : points_(std::move(points)),
       lineWidth_(lineWidth),
       scaleLineWidth_(scaleLineWidth),
       lineColour_(lineColour),
@@ -206,7 +207,7 @@ DrawShapeSimpleLine::DrawShapeSimpleLine(const std::vector<Point2D> &points,
                                          DashPattern dashPattern)
     : DrawShape(points, lineWidth, scaleLineWidth, lineColour, false, atom1,
                 atom2, bond),
-      dashPattern_(dashPattern) {
+      dashPattern_(std::move(dashPattern)) {
   PRECONDITION(points_.size() == 2, "simple line wrong number of points");
 }
 
@@ -250,7 +251,7 @@ DrawShapePolyLine::DrawShapePolyLine(const std::vector<Point2D> &points,
                                      DashPattern dashPattern)
     : DrawShape(points, lineWidth, scaleLineWidth, lineColour, fill, atom1,
                 atom2, bond),
-      dashPattern_(dashPattern) {
+      dashPattern_(std::move(dashPattern)) {
   PRECONDITION(points_.size() > 2, "polyline not enough points");
 }
 
