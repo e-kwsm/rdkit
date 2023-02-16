@@ -28,12 +28,12 @@ namespace RDKit {
 /*!
 
  */
-typedef enum {
+enum FIND_RING_TYPE {
   FIND_RING_TYPE_FAST,
   FIND_RING_TYPE_SSSR,
   FIND_RING_TYPE_SYMM_SSSR,
   FIND_RING_TYPE_OTHER_OR_UNKNOWN
-} FIND_RING_TYPE;
+};
 
 class RDKIT_GRAPHMOL_EXPORT RingInfo {
   friend class MolPickler;
