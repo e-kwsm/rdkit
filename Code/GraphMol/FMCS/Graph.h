@@ -19,9 +19,8 @@ namespace RDKit {
 namespace FMCS {
 using AtomIdx_t = unsigned int;
 using BondIdx_t = unsigned int;
-typedef boost::adjacency_list<boost::vecS, boost::vecS, boost::undirectedS,
-                              AtomIdx_t, BondIdx_t>
-    Graph_t;
+using Graph_t = boost::adjacency_list<boost::vecS, boost::vecS,
+                                      boost::undirectedS, AtomIdx_t, BondIdx_t>;
 
 class RDKIT_FMCS_EXPORT Graph : public Graph_t {
  public:
