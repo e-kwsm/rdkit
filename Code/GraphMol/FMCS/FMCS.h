@@ -19,24 +19,24 @@ namespace RDKit {
 
 struct MCSParameters;
 
-enum AtomComparator {
+typedef enum {
   AtomCompareAny,
   AtomCompareElements,
   AtomCompareIsotopes,
   AtomCompareAnyHeavyAtom
-};
+} AtomComparator;
 
-enum BondComparator {
+typedef enum {
   BondCompareAny,
   BondCompareOrder,
-  BondCompareOrderExact,
-};
+  BondCompareOrderExact
+} BondComparator;
 
-enum RingComparator {
+typedef enum {
   IgnoreRingFusion,
   PermissiveRingFusion,
   StrictRingFusion
-};
+} RingComparator;
 
 struct RDKIT_FMCS_EXPORT MCSAtomCompareParameters {
   bool MatchValences = false;
@@ -137,9 +137,9 @@ struct RDKIT_FMCS_EXPORT MCSProgressData {
   MCSProgressData() {}
 };
 
-using MCSProgressCallback = bool (*)(const MCSProgressData &stat,
-                                     const MCSParameters &params,
-                                     void *userData);
+typedef bool (*MCSProgressCallback)(const MCSProgressData &stat,
+                                    const MCSParameters &params,
+                                    void *userData);
 RDKIT_FMCS_EXPORT bool MCSProgressCallbackTimeout(const MCSProgressData &stat,
                                                   const MCSParameters &params,
                                                   void *userData);

@@ -18,12 +18,12 @@ using namespace RDKit;
 using namespace RDGeom;
 using namespace RDFeatures;
 
-typedef enum {
+enum TypeMarker {
   fooType,
   barType,
   bazType,
   grnType,
-} TypeMarker;
+};
 
 TEST_CASE("Basics for ExplicitFeatures") {
   ExplicitFeature<TypeMarker> f1;
