@@ -17,7 +17,7 @@
 
 namespace RDKit {
 
-typedef enum {
+enum RGroupLabels {
   IsotopeLabels = 0x01,
   AtomMapLabels = 0x02,
   AtomIndexLabels = 0x04,
@@ -25,33 +25,33 @@ typedef enum {
   MDLRGroupLabels = 0x10,
   DummyAtomLabels = 0x20,  // These are rgroups but will get relabelled
   AutoDetect = 0xFF,
-} RGroupLabels;
+};
 
-typedef enum {
+enum RGroupMatching {
   Greedy = 0x01,
   GreedyChunks = 0x02,
   Exhaustive = 0x04,  // not really useful for large sets
   NoSymmetrization = 0x08,
   GA = 0x10,
-} RGroupMatching;
+};
 
-typedef enum {
+enum RGroupLabelling {
   AtomMap = 0x01,
   Isotope = 0x02,
   MDLRGroup = 0x04,
-} RGroupLabelling;
+};
 
-typedef enum {
+enum RGroupCoreAlignment {
   // DEPRECATED, remove the following line in release 2021.03
   None = 0x0,
   NoAlignment = 0x0,
   MCS = 0x01,
-} RGroupCoreAlignment;
+};
 
-typedef enum {
+enum RGroupScore {
   Match = 0x1,
   FingerprintVariance = 0x4,
-} RGroupScore;
+};
 
 struct RDKIT_RGROUPDECOMPOSITION_EXPORT RGroupDecompositionParameters {
   unsigned int labels = AutoDetect;
