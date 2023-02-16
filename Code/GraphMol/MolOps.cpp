@@ -917,9 +917,9 @@ getMolFragsWithQuery(const ROMol &mol,
 
       // FIX: this is a hack due to problems with MSVC++
 #if 1
-      typedef boost::graph_traits<MolGraph>::vertices_size_type size_type;
-      typedef boost::graph_traits<MolGraph>::vertex_descriptor vertex_t;
-      typedef boost::property_map<MolGraph,boost::vertex_index_t>::type index_map_t;
+      using size_type = boost::graph_traits<MolGraph>::vertices_size_type;
+      using vertex_t = boost::graph_traits<MolGraph>::vertex_descriptor;
+      using index_map_t = boost::property_map<MolGraph, boost::vertex_index_t>::type;
       boost::graph_traits<MolGraph>::vertices_size_type
         n = boost::num_vertices(*molGraph);
       std::vector<size_type> rank_map(n);

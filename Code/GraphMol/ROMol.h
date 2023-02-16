@@ -204,31 +204,31 @@ class RDKIT_GRAPHMOL_EXPORT ROMol : public RDProps {
 
   //! \name typedefs
   //! @{
-  typedef MolGraph::vertex_descriptor vertex_descriptor;
-  typedef MolGraph::edge_descriptor edge_descriptor;
+  using vertex_descriptor = MolGraph::vertex_descriptor;
+  using edge_descriptor = MolGraph::edge_descriptor;
 
-  typedef MolGraph::edge_iterator EDGE_ITER;
-  typedef MolGraph::out_edge_iterator OEDGE_ITER;
-  typedef MolGraph::vertex_iterator VERTEX_ITER;
-  typedef MolGraph::adjacency_iterator ADJ_ITER;
-  typedef std::pair<EDGE_ITER, EDGE_ITER> BOND_ITER_PAIR;
-  typedef std::pair<OEDGE_ITER, OEDGE_ITER> OBOND_ITER_PAIR;
-  typedef std::pair<VERTEX_ITER, VERTEX_ITER> ATOM_ITER_PAIR;
-  typedef std::pair<ADJ_ITER, ADJ_ITER> ADJ_ITER_PAIR;
+  using EDGE_ITER = MolGraph::edge_iterator;
+  using OEDGE_ITER = MolGraph::out_edge_iterator;
+  using VERTEX_ITER = MolGraph::vertex_iterator;
+  using ADJ_ITER = MolGraph::adjacency_iterator;
+  using BOND_ITER_PAIR = std::pair<EDGE_ITER, EDGE_ITER>;
+  using OBOND_ITER_PAIR = std::pair<OEDGE_ITER, OEDGE_ITER>;
+  using ATOM_ITER_PAIR = std::pair<VERTEX_ITER, VERTEX_ITER>;
+  using ADJ_ITER_PAIR = std::pair<ADJ_ITER, ADJ_ITER>;
 
-  typedef std::vector<Atom *> ATOM_PTR_VECT;
-  typedef ATOM_PTR_VECT::iterator ATOM_PTR_VECT_I;
-  typedef ATOM_PTR_VECT::const_iterator ATOM_PTR_VECT_CI;
-  typedef std::vector<Bond *> BOND_PTR_VECT;
-  typedef BOND_PTR_VECT::iterator BOND_PTR_VECT_I;
-  typedef BOND_PTR_VECT::const_iterator BOND_PTR_VECT_CI;
+  using ATOM_PTR_VECT = std::vector<Atom *>;
+  using ATOM_PTR_VECT_I = ATOM_PTR_VECT::iterator;
+  using ATOM_PTR_VECT_CI = ATOM_PTR_VECT::const_iterator;
+  using BOND_PTR_VECT = std::vector<Bond *>;
+  using BOND_PTR_VECT_I = BOND_PTR_VECT::iterator;
+  using BOND_PTR_VECT_CI = BOND_PTR_VECT::const_iterator;
 
-  typedef std::list<Atom *> ATOM_PTR_LIST;
-  typedef ATOM_PTR_LIST::iterator ATOM_PTR_LIST_I;
-  typedef ATOM_PTR_LIST::const_iterator ATOM_PTR_LIST_CI;
-  typedef std::list<Bond *> BOND_PTR_LIST;
-  typedef BOND_PTR_LIST::iterator BOND_PTR_LIST_I;
-  typedef BOND_PTR_LIST::const_iterator BOND_PTR_LIST_CI;
+  using ATOM_PTR_LIST = std::list<Atom *>;
+  using ATOM_PTR_LIST_I = ATOM_PTR_LIST::iterator;
+  using ATOM_PTR_LIST_CI = ATOM_PTR_LIST::const_iterator;
+  using BOND_PTR_LIST = std::list<Bond *>;
+  using BOND_PTR_LIST_I = BOND_PTR_LIST::iterator;
+  using BOND_PTR_LIST_CI = BOND_PTR_LIST::const_iterator;
 
   // list of conformations
   using CONF_SPTR_LIST = std::list<CONFORMER_SPTR>;
