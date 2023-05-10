@@ -10,8 +10,6 @@
 #pragma clang diagnostic ignored "-Wpedantic"  // FIXME
 #endif                                         // FIXME
 
-#include "./FileParsers.h"  // FIXME
-
 #include <GraphMol/FileParsers/FileParsers.h>
 
 #pragma GCC diagnostic pop    // FIXME

@@ -1,14 +1,15 @@
+CXXFLAGS := -std=c++17 -Wall -Wextra -Wpedantic -g -fPIC
 ifneq ($(shell which clang++ 2> /dev/null),)
 	CXX := clang++
+	CXXFLAGS += -Weverything
 else
 	CXX := g++
 endif
 
-Boost_DIR := ${HOME}/opt/boost/latest
+Boost_DIR := /usr
 
-CXXFLAGS := -std=c++17 -Wall -Wextra -Wpedantic -g -fPIC
 CPPFLAGS := \
-	-isystem $(shell python3 -c 'import sysconfig;print(sysconfig.get_config_var("INCLUDEPY"))') \
+	-isystem $(shell python3 -c 'import sysconfig; print(sysconfig.get_config_var("INCLUDEPY"))') \
 	-isystem $(Boost_DIR)/include \
 	-isystem ../Code \
 	-isystem ../build/Code \
@@ -27,16 +28,16 @@ CMAKE_CXX_CLANG_TIDY := clang-tidy --fix --header-filter=! \
 .PHONY: all
 all: a.out file_parsers_catch.out rdmolfiles.so
 a.out: main.o CMLReader.o
-	$(CXX) -o$@ $^ $(LDFLAGS) $(LDLIBS)
+	$(CXX) -o $@ $^ $(LDFLAGS) $(LDLIBS)
 
 file_parsers_catch.out: file_parsers_catch.o CMLReader.o
-	$(CXX) -o$@ $^ $(LDFLAGS) $(LDLIBS)
+	$(CXX) -o $@ $^ $(LDFLAGS) $(LDLIBS)
 
 rdmolfiles.so: rdmolfiles.o CMLReader.o
-	$(CXX) -shared -fPIC -o$@ $^ $(LDFLAGS) $(LDLIBS)
+	$(CXX) -shared -fPIC -o $@ $^ $(LDFLAGS) $(LDLIBS)
 
 %.o: %.cpp
-	$(CXX) $(CXXFLAGS) $(CPPFLAGS) -o$@ -c $^
+	$(CXX) $(CXXFLAGS) $(CPPFLAGS) -o $@ -c $^
 
 .PHONY: clang-format
 clang-format:

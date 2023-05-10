@@ -27,8 +27,6 @@
 #pragma clang diagnostic ignored "-Wpedantic"  // FIXME
 #endif                                         // FIXME
 
-#include "./FileParsers.h"  // FIXME
-
 #include <regex>
 
 #include <boost/exception/diagnostic_information.hpp>
