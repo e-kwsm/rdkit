@@ -1,7 +1,7 @@
 CXXFLAGS := -std=c++17 -Wall -Wextra -Wpedantic -g -fPIC
 ifneq ($(shell which clang++ 2> /dev/null),)
 	CXX := clang++
-	CXXFLAGS += -Weverything
+	CXXFLAGS += -Weverything -Wno-c++98-compat
 else
 	CXX := g++
 endif
@@ -10,7 +10,7 @@ Boost_DIR := /usr
 
 CPPFLAGS := \
 	-isystem $(shell python3 -c 'import sysconfig; print(sysconfig.get_config_var("INCLUDEPY"))') \
-	-isystem $(Boost_DIR)/include \
+	-I $(Boost_DIR)/include \
 	-isystem ../Code \
 	-isystem ../build/Code \
 	-isystem ../External/catch/catch/single_include/catch2

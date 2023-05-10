@@ -18,7 +18,7 @@
 
 #include "catch.hpp"
 
-#include "./FileParsers.h"  // FIXME
+#include <GraphMol/FileParsers/FileParsers.h>
 
 #include <boost/format.hpp>
 
