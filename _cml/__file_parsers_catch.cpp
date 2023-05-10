@@ -17,7 +17,6 @@
 #include <catch2/catch_all.hpp>
 #include <GraphMol/FileParsers/FileParsers.h>
 
-#include <sstream>
 #include <boost/format.hpp>
 
 #ifndef __clang__version__    // FIXME
