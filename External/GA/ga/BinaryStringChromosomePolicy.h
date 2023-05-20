@@ -27,9 +27,10 @@ class GA_EXPORT BinaryStringChromosomePolicy {
 
  private:
   GarethUtil::RandomUtil& rng;
-  BinaryStringChromosomePolicy(const BinaryStringChromosomePolicy& orig);
+  BinaryStringChromosomePolicy(const BinaryStringChromosomePolicy& orig) =
+      delete;
   BinaryStringChromosomePolicy& operator=(
-      const BinaryStringChromosomePolicy& other);
+      const BinaryStringChromosomePolicy& other) = delete;
 };
 
 }  // namespace GapeGa
