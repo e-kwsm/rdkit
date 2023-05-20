@@ -585,7 +585,7 @@ std::vector<std::unique_ptr<RWMol>> CDXMLDataStreamToMols(
 
                 if (atm->hasProp(CDX_ATOM_POS)) {
                   hasConf = true;
-                  const std::vector<double> coord =
+                  const auto coord =
                       atm->getProp<std::vector<double>>(CDX_ATOM_POS);
 
                   if (coord.size() == 2) {
@@ -677,7 +677,7 @@ std::vector<std::unique_ptr<RWMol>> CDXMLDataStreamToMols(
         auto idx = mol->getProp<unsigned int>(CDXML_FRAG_ID);
         fragments[idx] = mol_idx++;
         for (auto &atom : mol->atoms()) {
-          unsigned int idx = atom->getProp<unsigned int>(CDX_ATOM_ID);
+          auto idx = atom->getProp<unsigned int>(CDX_ATOM_ID);
           atoms[idx] = atom;
         }
       }

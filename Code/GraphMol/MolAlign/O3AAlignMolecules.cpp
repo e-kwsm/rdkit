@@ -1662,8 +1662,8 @@ void O3AHelper_(ROMol *prbMol, const ROMol *refMol, void *prbProp,
                 unsigned int threadIdx, int numThreads,
                 const O3AHelperArgs_ *args) {
   unsigned int i = 0;
-  for (ROMol::ConstConformerIterator cit = prbMol->beginConformers();
-       cit != prbMol->endConformers(); ++cit, ++i) {
+  for (auto cit = prbMol->beginConformers(); cit != prbMol->endConformers();
+       ++cit, ++i) {
     if (i % numThreads != threadIdx) {
       continue;
     }
@@ -1690,8 +1690,8 @@ void getO3AForProbeConfs(ROMol &prbMol, const ROMol &refMol, void *prbProp,
   res.resize(prbMol.getNumConformers());
   if (numThreads == 1) {
     unsigned int i = 0;
-    for (ROMol::ConstConformerIterator cit = prbMol.beginConformers();
-         cit != prbMol.endConformers(); ++cit, ++i) {
+    for (auto cit = prbMol.beginConformers(); cit != prbMol.endConformers();
+         ++cit, ++i) {
       auto *lres = new O3A(prbMol, refMol, prbProp, refProp, atomTypes,
                            (*cit)->getId(), refCid, reflect, maxIters, options,
                            constraintMap, constraintWeights);

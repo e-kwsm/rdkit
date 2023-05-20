@@ -229,8 +229,7 @@ void getFeatureInvariants(const ROMol &mol, std::vector<uint32_t> &invars,
   std::vector<const ROMol *> featureMatchers;
   if (!patterns) {
     featureMatchers.reserve(defaultFeatureSmarts.size());
-    for (std::vector<std::string>::const_iterator smaIt =
-             defaultFeatureSmarts.begin();
+    for (auto smaIt = defaultFeatureSmarts.begin();
          smaIt != defaultFeatureSmarts.end(); ++smaIt) {
       const ROMol *matcher = pattern_flyweight(*smaIt).get().getMatcher();
       CHECK_INVARIANT(matcher, "bad smarts");
@@ -245,8 +244,7 @@ void getFeatureInvariants(const ROMol &mol, std::vector<uint32_t> &invars,
     // to maintain thread safety, we have to copy the pattern
     // molecules:
     SubstructMatch(mol, ROMol(*(*patterns)[i], true), matchVect);
-    for (std::vector<MatchVectType>::const_iterator mvIt = matchVect.begin();
-         mvIt != matchVect.end(); ++mvIt) {
+    for (auto mvIt = matchVect.begin(); mvIt != matchVect.end(); ++mvIt) {
       for (const auto &mIt : *mvIt) {
         invars[mIt.second] |= mask;
       }
@@ -315,8 +313,7 @@ void enumerateAllPaths(const ROMol &mol, INT_PATH_LIST_MAP &allPaths,
         tPaths =
             findAllPathsOfLengthsMtoN(mol, minPath, maxPath, true, useHs, aidx);
       }
-      for (INT_PATH_LIST_MAP::const_iterator tpit = tPaths.begin();
-           tpit != tPaths.end(); ++tpit) {
+      for (auto tpit = tPaths.begin(); tpit != tPaths.end(); ++tpit) {
 #ifdef VERBOSE_FINGERPRINTING
         std::cerr << "paths from " << aidx << " size: " << tpit->first
                   << std::endl;

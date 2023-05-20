@@ -111,7 +111,7 @@ void testFilterCatalog() {
     int count = 0;
     while (!suppl.atEnd()) {
       mol.reset(suppl.next());
-      std::string name = mol->getProp<std::string>(common_properties::_Name);
+      auto name = mol->getProp<std::string>(common_properties::_Name);
 
       TEST_ASSERT(mol.get());
       if (catalog.hasMatch(*mol)) {
@@ -139,8 +139,7 @@ void testFilterCatalog() {
         // get the substructure atoms for visualization
         std::vector<FilterMatch> matches;
         if (entry->getFilterMatches(*mol, matches)) {
-          for (std::vector<FilterMatch>::const_iterator it = matches.begin();
-               it != matches.end(); ++it) {
+          for (auto it = matches.begin(); it != matches.end(); ++it) {
             // Get the FilterMatcherBase that matched
             const FilterMatch &fm = (*it);
             boost::shared_ptr<FilterMatcherBase> matchingFilter =

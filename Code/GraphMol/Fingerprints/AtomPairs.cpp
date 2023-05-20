@@ -252,8 +252,7 @@ SparseIntVect<boost::int64_t> *getTopologicalTorsionFingerprint(
   }
   boost::dynamic_bitset<> pAtoms(lmol->getNumAtoms());
   PATH_LIST paths = findAllPathsOfLengthN(*lmol, targetSize, false);
-  for (PATH_LIST::const_iterator pathIt = paths.begin(); pathIt != paths.end();
-       ++pathIt) {
+  for (auto pathIt = paths.begin(); pathIt != paths.end(); ++pathIt) {
     bool keepIt = true;
     if (fromAtomsBV) {
       keepIt = false;

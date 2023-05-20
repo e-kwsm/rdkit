@@ -121,7 +121,8 @@ class RDKIT_FMCS_EXPORT RingMatchTableSet {
     QueryBondRingsIndeces->resize(query->getNumBonds());
     size_t ri = 0;
     for (auto r = rings.begin(); r != rings.end(); r++, ri++) {
-      for (auto bi = r->begin(); bi != r->end(); bi++) {  // all bonds in the ring
+      for (auto bi = r->begin(); bi != r->end();
+           bi++) {  // all bonds in the ring
         (*QueryBondRingsIndeces)[*bi].push_back(ri);
       }
     }
@@ -133,7 +134,8 @@ class RDKIT_FMCS_EXPORT RingMatchTableSet {
     size_t ri = 0;
     const RingInfo::VECT_INT_VECT& rings = mol2->getRingInfo()->bondRings();
     for (auto r = rings.begin(); r != rings.end(); r++, ri++) {
-      for (auto bi = r->begin(); bi != r->end(); bi++) {  // all bonds in the ring
+      for (auto bi = r->begin(); bi != r->end();
+           bi++) {  // all bonds in the ring
         m[*bi].push_back(ri);
       }
     }
@@ -155,18 +157,8 @@ class RDKIT_FMCS_EXPORT RingMatchTableSet {
                     query);  // for each query ring bond ADD all atoms and bonds
 
       // for each TARGET ring
-<<<<<<< HEAD
-      for (RingInfo::VECT_INT_VECT::const_iterator r2 = rings2.begin();
-           r2 != rings2.end(); r2++) {
-        if (r1->size() != r2->size()) {  // rings are different
-||||||| parent of e74f0647ba9a (modernize-use-auto)
-      for (RingInfo::VECT_INT_VECT::const_iterator r2 = rings2.begin();
-           r2 != rings2.end(); r2++) {
-        if (r1->size() != r2->size())  // rings are different
-=======
       for (auto r2 = rings2.begin(); r2 != rings2.end(); r2++) {
-        if (r1->size() != r2->size())  // rings are different
->>>>>>> e74f0647ba9a (modernize-use-auto)
+        if (r1->size() != r2->size()) {  // rings are different
           continue;
         }
         FMCS::Graph graph2;
@@ -232,37 +224,17 @@ class RDKIT_FMCS_EXPORT RingMatchTableSet {
   }
 
   inline unsigned getQueryRingIndex(const INT_VECT* r1) const {
-<<<<<<< HEAD
-    std::map<const INT_VECT*, unsigned>::const_iterator i =
-        QueryRingIndex.find(r1);
+    auto i = QueryRingIndex.find(r1);
     if (QueryRingIndex.end() == i) {
       throw -1;  // never
     }
-||||||| parent of e74f0647ba9a (modernize-use-auto)
-    std::map<const INT_VECT*, unsigned>::const_iterator i =
-        QueryRingIndex.find(r1);
-    if (QueryRingIndex.end() == i) throw -1;  // never
-=======
-    auto i = QueryRingIndex.find(r1);
-    if (QueryRingIndex.end() == i) throw -1;  // never
->>>>>>> e74f0647ba9a (modernize-use-auto)
     return i->second;
   }
   inline const RingMatchTable& getTargetMatchMatrix(const ROMol* mol2) const {
-<<<<<<< HEAD
-    std::map<const ROMol*, RingMatchTable>::const_iterator mi =
-        MatchMatrixSet.find(mol2);
+    auto mi = MatchMatrixSet.find(mol2);
     if (MatchMatrixSet.end() == mi) {
       throw -1;  // never
     }
-||||||| parent of e74f0647ba9a (modernize-use-auto)
-    std::map<const ROMol*, RingMatchTable>::const_iterator mi =
-        MatchMatrixSet.find(mol2);
-    if (MatchMatrixSet.end() == mi) throw -1;  // never
-=======
-    auto mi = MatchMatrixSet.find(mol2);
-    if (MatchMatrixSet.end() == mi) throw -1;  // never
->>>>>>> e74f0647ba9a (modernize-use-auto)
     return mi->second;
   }
 

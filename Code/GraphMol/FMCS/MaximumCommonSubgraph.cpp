@@ -343,9 +343,8 @@ void MaximumCommonSubgraph::makeInitialSeeds() {
     std::vector<MatchVectType> matching_substructs;
     SubstructMatch(*QueryMolecule, *initialSeedMolecule, matching_substructs);
     // loop throw all fragments of Query matched to initial seed
-    for (std::vector<MatchVectType>::const_iterator ms =
-             matching_substructs.begin();
-         ms != matching_substructs.end(); ms++) {
+    for (auto ms = matching_substructs.begin(); ms != matching_substructs.end();
+         ms++) {
       Seed seed;
       seed.ExcludedBonds = excludedBonds;
       seed.MatchResult.resize(Targets.size());
@@ -411,8 +410,7 @@ void MaximumCommonSubgraph::makeInitialSeeds() {
       wb.emplace_back(*bi, r);
     }
 
-    for (std::vector<WeightedBond>::const_iterator bi = wb.begin();
-         bi != wb.end(); bi++) {
+    for (auto bi = wb.begin(); bi != wb.end(); bi++) {
       // R1 additional performance OPTIMISATION
       // if(excludedBonds[(*bi)->getIdx()])
       //    continue;
@@ -457,8 +455,7 @@ void MaximumCommonSubgraph::makeInitialSeeds() {
     const Atom* queryMolAtom = QueryMolecule->getAtomWithIdx(i);
     bool isQueryMolAtomInRing = queryIsAtomInRing(queryMolAtom);
     unsigned matched = 0;
-    for (std::vector<Target>::const_iterator tag = Targets.begin();
-         tag != Targets.end(); tag++) {
+    for (auto tag = Targets.begin(); tag != Targets.end(); tag++) {
       size_t nt = tag->Molecule->getNumAtoms();
       for (size_t aj = 0; aj < nt; aj++) {
         if (tag->AtomMatchTable.at(i, aj)) {
@@ -731,8 +728,7 @@ MaximumCommonSubgraph::generateResultSMARTSAndQueryMol(
         continue;
       }
       atomMatchResult[itarget].resize(seed.getNumAtoms());
-      for (match_V_t::const_iterator mit = match.begin(); mit != match.end();
-           mit++) {
+      for (auto mit = match.begin(); mit != match.end(); mit++) {
         unsigned ai = mit->first;  // SeedAtomIdx
         atomMatchResult[itarget][ai].QueryAtomIdx = seed.Topology[mit->first];
         atomMatchResult[itarget][ai].TargetAtomIdx = tag->Topology[mit->second];
@@ -777,9 +773,8 @@ MaximumCommonSubgraph::generateResultSMARTSAndQueryMol(
       a.setQuery(makeAtomNumQuery((*atom)->getAtomicNum()));
       // for all atomMatchSet[ai] items add atom query to template like
       // [#6,#17,#9, ... ]
-      for (std::map<unsigned, const Atom*>::const_iterator am =
-               atomMatchSet[ai].begin();
-           am != atomMatchSet[ai].end(); am++) {
+      for (auto am = atomMatchSet[ai].begin(); am != atomMatchSet[ai].end();
+           am++) {
         a.expandQuery(makeAtomNumQuery(am->second->getAtomicNum()),
                       Queries::COMPOSITE_OR);
         if (Parameters.AtomCompareParameters.MatchChiralTag &&
@@ -806,9 +801,8 @@ MaximumCommonSubgraph::generateResultSMARTSAndQueryMol(
     b.setEndAtomIdx(endAtomIdx);
     b.setQuery(makeBondOrderEqualsQuery((*bond)->getBondType()));
     // add OR template if need
-    for (std::map<unsigned, const Bond*>::const_iterator bm =
-             bondMatchSet[bi].begin();
-         bm != bondMatchSet[bi].end(); bm++) {
+    for (auto bm = bondMatchSet[bi].begin(); bm != bondMatchSet[bi].end();
+         bm++) {
       b.expandQuery(makeBondOrderEqualsQuery(bm->second->getBondType()),
                     Queries::COMPOSITE_OR);
       if (Parameters.BondCompareParameters.MatchStereo &&
@@ -874,12 +868,10 @@ bool MaximumCommonSubgraph::createSeedFromMCS(size_t newQueryTarget,
   mcs.ExcludedBonds.resize(McsIdx.QueryMolecule->getNumBonds(), false);
   std::vector<unsigned> mcsAtomIdxMap(McsIdx.QueryMolecule->getNumAtoms());
 
-  for (std::vector<const Atom*>::const_iterator atom = McsIdx.Atoms.begin();
-       atom != McsIdx.Atoms.end(); atom++) {
+  for (auto atom = McsIdx.Atoms.begin(); atom != McsIdx.Atoms.end(); atom++) {
     mcsAtomIdxMap[(*atom)->getIdx()] = mcs.addAtom((*atom));
   }
-  for (std::vector<const Bond*>::const_iterator bond = McsIdx.Bonds.begin();
-       bond != McsIdx.Bonds.end(); bond++) {
+  for (auto bond = McsIdx.Bonds.begin(); bond != McsIdx.Bonds.end(); bond++) {
     mcs.addBond((*bond));
   }
 
@@ -898,8 +890,7 @@ bool MaximumCommonSubgraph::createSeedFromMCS(size_t newQueryTarget,
 
   newSeed.ExcludedBonds.resize(newQuery.Molecule->getNumBonds(), false);
 
-  for (match_V_t::const_iterator mit = match.begin(); mit != match.end();
-       mit++) {
+  for (auto mit = match.begin(); mit != match.end(); mit++) {
     unsigned ai = mit->first;  // SeedAtomIdx in mcs seed
     atomMatchResult[ai].QueryAtomIdx = mcs.Topology[mit->first];
     atomMatchResult[ai].TargetAtomIdx = newQuery.Topology[mit->second];
@@ -908,8 +899,7 @@ bool MaximumCommonSubgraph::createSeedFromMCS(size_t newQueryTarget,
     newSeed.addAtom(ta);
   }
 
-  for (std::vector<const Bond*>::const_iterator bond = McsIdx.Bonds.begin();
-       bond != McsIdx.Bonds.end(); bond++) {
+  for (auto bond = McsIdx.Bonds.begin(); bond != McsIdx.Bonds.end(); bond++) {
     unsigned i = mcsAtomIdxMap[(*bond)->getBeginAtomIdx()];
     unsigned j = mcsAtomIdxMap[(*bond)->getEndAtomIdx()];
     unsigned ti = atomMatchResult[i].TargetAtomIdx;
@@ -1058,8 +1048,8 @@ MCSResult MaximumCommonSubgraph::find(const std::vector<ROMOL_SPTR>& src_mols) {
 #ifdef VERBOSE_STATISTICS_ON
   if (Parameters.Verbose) {
     unsigned itarget = 0;
-    for (std::vector<Target>::const_iterator tag = Targets.begin();
-         res.NumAtoms > 0 && tag != Targets.end(); tag++, itarget++) {
+    for (auto tag = Targets.begin(); res.NumAtoms > 0 && tag != Targets.end();
+         tag++, itarget++) {
       MatchVectType match;
 
       bool target_matched =
@@ -1183,8 +1173,7 @@ bool MaximumCommonSubgraph::checkIfMatchAndAppend(Seed& seed) {
         ++VerboseStatistics.HashKeyFoundInCache;
 #endif
         // check hash collisions (time +3%):
-        for (SubstructureCache::TIndexEntry::const_iterator g =
-                 cacheEntry->begin();
+        for (auto g = cacheEntry->begin();
              !foundInCache && g != cacheEntry->end(); g++) {
           if (g->m_vertices.size() != seed.getNumAtoms() ||
               g->m_edges.size() != seed.getNumBonds()) {
@@ -1260,8 +1249,7 @@ bool MaximumCommonSubgraph::match(Seed& seed) {
   unsigned passed = 0;
   unsigned itarget = 0;
 
-  for (std::vector<Target>::const_iterator tag = Targets.begin();
-       tag != Targets.end(); tag++, itarget++) {
+  for (auto tag = Targets.begin(); tag != Targets.end(); tag++, itarget++) {
 #ifdef VERBOSE_STATISTICS_ON
     { ++VerboseStatistics.MatchCall; }
 #endif

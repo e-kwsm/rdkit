@@ -384,9 +384,7 @@ void testRootedAtomPairs() {
   TEST_ASSERT(nz2.size() > 0);
   TEST_ASSERT(nz2.size() < nz1.size());
 
-  for (SparseIntVect<std::uint32_t>::StorageType::const_iterator bIt =
-           nz2.begin();
-       bIt != nz2.end(); ++bIt) {
+  for (auto bIt = nz2.begin(); bIt != nz2.end(); ++bIt) {
     TEST_ASSERT(bIt->second <= fp2->getVal(bIt->first));
   }
 
@@ -422,9 +420,7 @@ void testIgnoreAtomPairs() {
     SparseIntVect<std::uint32_t>::StorageType nz2 = fp2->getNonzeroElements();
     TEST_ASSERT(nz2.size() == nz1.size() - 5);
 
-    for (SparseIntVect<std::uint32_t>::StorageType::const_iterator bIt =
-             nz2.begin();
-         bIt != nz2.end(); ++bIt) {
+    for (auto bIt = nz2.begin(); bIt != nz2.end(); ++bIt) {
       TEST_ASSERT(bIt->second <= fp2->getVal(bIt->first));
     }
 
@@ -462,9 +458,7 @@ void testIgnoreAtomPairs() {
     SparseIntVect<std::uint32_t>::StorageType nz2 = fp2->getNonzeroElements();
     TEST_ASSERT(nz2.size() < nz1.size());
 
-    for (SparseIntVect<std::uint32_t>::StorageType::const_iterator bIt =
-             nz2.begin();
-         bIt != nz2.end(); ++bIt) {
+    for (auto bIt = nz2.begin(); bIt != nz2.end(); ++bIt) {
       TEST_ASSERT(bIt->second <= fp2->getVal(bIt->first));
     }
 
@@ -1741,9 +1735,7 @@ void testRootedTorsions() {
   TEST_ASSERT(nz2.size() > 0);
   TEST_ASSERT(nz2.size() < nz1.size());
 
-  for (SparseIntVect<std::uint64_t>::StorageType::const_iterator bIt =
-           nz2.begin();
-       bIt != nz2.end(); ++bIt) {
+  for (auto bIt = nz2.begin(); bIt != nz2.end(); ++bIt) {
     TEST_ASSERT(bIt->second <= fp2->getVal(bIt->first));
   }
 
@@ -1777,9 +1769,7 @@ void testIgnoreTorsions() {
     SparseIntVect<std::uint64_t>::StorageType nz2 = fp2->getNonzeroElements();
     TEST_ASSERT(nz2.size() == 1);
 
-    for (SparseIntVect<std::uint64_t>::StorageType::const_iterator bIt =
-             nz2.begin();
-         bIt != nz2.end(); ++bIt) {
+    for (auto bIt = nz2.begin(); bIt != nz2.end(); ++bIt) {
       TEST_ASSERT(bIt->second <= fp2->getVal(bIt->first));
     }
 

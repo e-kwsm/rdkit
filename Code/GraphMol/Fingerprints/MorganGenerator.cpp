@@ -279,8 +279,7 @@ MorganEnvGenerator<OutputType>::getEnvironments(
         std::uint32_t invar = layer;
         gboost::hash_combine(invar, currentInvariants[atomIdx]);
         bool looksChiral = (tAtom->getChiralTag() != Atom::CHI_UNSPECIFIED);
-        for (std::vector<std::pair<int32_t, uint32_t>>::const_iterator it =
-                 neighborhoodInvariants.begin();
+        for (auto it = neighborhoodInvariants.begin();
              it != neighborhoodInvariants.end(); ++it) {
           // add the contribution to the new invariant:
           gboost::hash_combine(invar, *it);
@@ -331,8 +330,7 @@ MorganEnvGenerator<OutputType>::getEnvironments(
 
     std::sort(allNeighborhoodsThisRound.begin(),
               allNeighborhoodsThisRound.end());
-    for (std::vector<AccumTuple>::const_iterator iter =
-             allNeighborhoodsThisRound.begin();
+    for (auto iter = allNeighborhoodsThisRound.begin();
          iter != allNeighborhoodsThisRound.end(); ++iter) {
       // if we haven't seen this exact environment before, add it to the
       // result

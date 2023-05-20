@@ -515,8 +515,7 @@ std::vector<MatchVectType> SubstructMatch(
   if (found) {
     unsigned int nQueryAtoms = query.getNumAtoms();
     matches.reserve(pms.size());
-    for (std::list<detail::ssPairType>::const_iterator iter1 = pms.begin();
-         iter1 != pms.end(); ++iter1) {
+    for (auto iter1 = pms.begin(); iter1 != pms.end(); ++iter1) {
       MatchVectType matchVect;
       matchVect.resize(nQueryAtoms);
       for (const auto &iter2 : *iter1) {
@@ -648,8 +647,7 @@ unsigned int RecursiveMatcher(const ROMol &mol, const ROMol &query,
   unsigned int res = 0;
   if (found) {
     matches.reserve(pms.size());
-    for (std::list<detail::ssPairType>::const_iterator iter1 = pms.begin();
-         iter1 != pms.end(); ++iter1) {
+    for (auto iter1 = pms.begin(); iter1 != pms.end(); ++iter1) {
       if (!query.hasProp(common_properties::_queryRootAtom)) {
         matches.push_back(iter1->begin()->second);
       } else {

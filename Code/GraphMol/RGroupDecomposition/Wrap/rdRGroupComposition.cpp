@@ -122,8 +122,7 @@ class RGroupDecompositionHelper {
 
     RGroupColumns groups = decomp->getRGroupsAsColumns();
 
-    for (RGroupColumns::const_iterator it = groups.begin(); it != groups.end();
-         ++it) {
+    for (auto it = groups.begin(); it != groups.end(); ++it) {
       python::list col;
 
       for (const auto &cit : it->second) {

@@ -110,8 +110,7 @@ void Seed::grow(MaximumCommonSubgraph& mcs) const {
     Seed seed;
     seed.createFromParent(this);
 
-    for (std::vector<NewBond>::const_iterator nbi = NewBonds.begin();
-         nbi != NewBonds.end(); nbi++) {
+    for (auto nbi = NewBonds.begin(); nbi != NewBonds.end(); nbi++) {
       unsigned aIdx = nbi->EndAtomIdx;
       if (NotSet == aIdx) {  // new atom
         // check if new bonds simultaneously close a ring
@@ -200,8 +199,7 @@ void Seed::grow(MaximumCommonSubgraph& mcs) const {
     std::vector<NewBond> dirtyNewBonds;
     dirtyNewBonds.reserve(NewBonds.size());
     dirtyNewBonds.swap(NewBonds);
-    for (std::vector<NewBond>::const_iterator nbi = dirtyNewBonds.begin();
-         nbi != dirtyNewBonds.end(); nbi++) {
+    for (auto nbi = dirtyNewBonds.begin(); nbi != dirtyNewBonds.end(); nbi++) {
       if (NotSet != nbi->BondIdx) {
         NewBonds.push_back(*nbi);
       }
@@ -317,8 +315,7 @@ void Seed::computeRemainingSize(const ROMol& qmol) {
   for (auto&& visitedAtom : visitedAtoms) {
     visitedAtom = false;
   }
-  for (std::vector<unsigned>::const_iterator it =
-           MoleculeFragment.AtomsIdx.begin();
+  for (auto it = MoleculeFragment.AtomsIdx.begin();
        it != MoleculeFragment.AtomsIdx.end(); it++) {
     visitedAtoms[*it] = true;
   }

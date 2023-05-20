@@ -196,8 +196,7 @@ std::vector<ROMOL_SPTR> replaceSubstructs(
   INT_VECT delList;
 
   // now loop over the list of matches and replace them:
-  for (std::vector<MatchVectType>::const_iterator mati = fgpMatches.begin();
-       mati != fgpMatches.end(); mati++) {
+  for (auto mati = fgpMatches.begin(); mati != fgpMatches.end(); mati++) {
     INT_VECT match;  // each match onto the molecule - list of atoms ids
     for (const auto &mi : *mati) {
       match.push_back(mi.second);
@@ -290,16 +289,14 @@ ROMol *replaceSidechains(const ROMol &mol, const ROMol &coreQuery,
   }
 
   boost::dynamic_bitset<> matchingIndices(mol.getNumAtoms());
-  for (MatchVectType::const_iterator mvit = matchV.begin();
-       mvit != matchV.end(); ++mvit) {
+  for (auto mvit = matchV.begin(); mvit != matchV.end(); ++mvit) {
     matchingIndices[mvit->second] = 1;
   }
 
   auto *newMol = new RWMol(mol);
   boost::dynamic_bitset<> keepSet(newMol->getNumAtoms());
   std::vector<unsigned int> dummyIndices;
-  for (MatchVectType::const_iterator mvit = matchV.begin();
-       mvit != matchV.end(); ++mvit) {
+  for (auto mvit = matchV.begin(); mvit != matchV.end(); ++mvit) {
     keepSet.set(mvit->second);
     // if the atom in the molecule has higher degree than the atom in the
     // core, we have an attachment point:
@@ -554,8 +551,7 @@ ROMol *replaceCore(const ROMol &mol, const ROMol &core,
       }
       unsigned int whichNbr = 0;
       std::list<Bond *> newBonds;
-      for (std::list<unsigned int>::const_iterator lIter = nbrList.begin();
-           lIter != nbrList.end(); ++lIter) {
+      for (auto lIter = nbrList.begin(); lIter != nbrList.end(); ++lIter) {
         unsigned int nbrIdx = *lIter;
         Bond *connectingBond =
             newMol->getBondBetweenAtoms(mappingInfo.molIndex, nbrIdx);

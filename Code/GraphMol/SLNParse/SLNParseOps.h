@@ -219,8 +219,7 @@ int addBranchToMol(std::vector<RWMol *> &molList, unsigned int molIdx,
   mp->insertMol(*branch);
 
   // copy in any atom bookmarks from the branch:
-  for (ROMol::ATOM_BOOKMARK_MAP::const_iterator bmIt =
-           branch->getAtomBookmarks()->begin();
+  for (auto bmIt = branch->getAtomBookmarks()->begin();
        bmIt != branch->getAtomBookmarks()->end(); ++bmIt) {
     if (bmIt->first < 0) {
       continue;
@@ -245,8 +244,7 @@ int addBranchToMol(std::vector<RWMol *> &molList, unsigned int molIdx,
   }
 
   // loop over bond bookmarks in the branch and close the corresponding rings
-  for (ROMol::BOND_BOOKMARK_MAP::const_iterator bmIt =
-           branch->getBondBookmarks()->begin();
+  for (auto bmIt = branch->getBondBookmarks()->begin();
        bmIt != branch->getBondBookmarks()->end(); ++bmIt) {
     CHECK_INVARIANT(bmIt->second.size() >= 1,
                     "bad bond bookmark list on branch");
@@ -319,7 +317,7 @@ int addFragToMol(std::vector<RWMol *> &molList, unsigned int molIdx,
 //! convenience function to convert the argument to a string
 template <typename T>
 std::string convertToString(T val) {
-  std::string res = boost::lexical_cast<std::string>(val);
+  auto res = boost::lexical_cast<std::string>(val);
   return res;
 }
 
