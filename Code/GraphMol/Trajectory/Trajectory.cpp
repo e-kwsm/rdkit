@@ -57,8 +57,9 @@ Trajectory::Trajectory(const Trajectory &other)
     : d_dimension(other.d_dimension),
       d_numPoints(other.d_numPoints),
       d_snapshotVect(new SnapshotVect) {
-  for (const auto &vectIt : *other.d_snapshotVect) {
-    addSnapshot(vectIt);
+  for (SnapshotVect::const_iterator vectIt = other.d_snapshotVect->begin();
+       vectIt != other.d_snapshotVect->end(); ++vectIt) {
+    addSnapshot(*vectIt);
   }
 }
 

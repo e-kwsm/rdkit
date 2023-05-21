@@ -347,7 +347,7 @@ std::unique_ptr<ChemicalReaction> ReactionFromRxnDataStream(
     throw e;
   }
   // convert atoms to queries:
-  for (auto iter = res->beginReactantTemplates();
+  for (MOL_SPTR_VECT::const_iterator iter = res->beginReactantTemplates();
        iter != res->endReactantTemplates(); ++iter) {
     // to write the mol block, we need ring information:
     for (ROMol::AtomIterator atomIt = (*iter)->beginAtoms();
@@ -355,7 +355,7 @@ std::unique_ptr<ChemicalReaction> ReactionFromRxnDataStream(
       QueryOps::replaceAtomWithQueryAtom((RWMol *)iter->get(), (*atomIt));
     }
   }
-  for (auto iter = res->beginProductTemplates();
+  for (MOL_SPTR_VECT::const_iterator iter = res->beginProductTemplates();
        iter != res->endProductTemplates(); ++iter) {
     // to write the mol block, we need ring information:
     for (ROMol::AtomIterator atomIt = (*iter)->beginAtoms();

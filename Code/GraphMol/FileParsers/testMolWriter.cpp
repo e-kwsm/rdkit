@@ -29,13 +29,13 @@ void testSmilesWriter() {
   std::string rdbase = getenv("RDBASE");
   std::string fname =
       rdbase + "/Code/GraphMol/FileParsers/test_data/fewSmi.csv";
-  auto *nSup = new SmilesMolSupplier(fname, ",", 1, 0, false);
+  SmilesMolSupplier *nSup = new SmilesMolSupplier(fname, ",", 1, 0, false);
   std::string oname =
       rdbase + "/Code/GraphMol/FileParsers/test_data/outSmiles.csv";
 
   STR_VECT propNames;
   propNames.push_back(std::string("Column_2"));
-  auto *writer = new SmilesWriter(oname, " ");
+  SmilesWriter *writer = new SmilesWriter(oname, " ");
   writer->setProps(propNames);
 
   STR_VECT names;
@@ -84,8 +84,8 @@ void testSmilesWriter2() {
   {
     std::stringstream ss;
     bool takeOwnership = false, includeHeader = false, isomericSmiles = false;
-    auto *writer = new SmilesWriter(&ss, " ", "Name", takeOwnership,
-                                    includeHeader, isomericSmiles);
+    SmilesWriter *writer = new SmilesWriter(&ss, " ", "Name", takeOwnership,
+                                            includeHeader, isomericSmiles);
     RWMol *mol;
 
     mol = SmilesToMol("c1ccccc1");
@@ -103,8 +103,8 @@ void testSmilesWriter2() {
   {
     std::stringstream ss;
     bool takeOwnership = false, includeHeader = false, isomericSmiles = true;
-    auto *writer = new SmilesWriter(&ss, " ", "Name", takeOwnership,
-                                    includeHeader, isomericSmiles);
+    SmilesWriter *writer = new SmilesWriter(&ss, " ", "Name", takeOwnership,
+                                            includeHeader, isomericSmiles);
     RWMol *mol;
 
     mol = SmilesToMol("c1ccccc1");
@@ -125,13 +125,13 @@ void testSmilesWriterNoNames() {
   std::string rdbase = getenv("RDBASE");
   std::string fname =
       rdbase + "/Code/GraphMol/FileParsers/test_data/fewSmi.csv";
-  auto *nSup = new SmilesMolSupplier(fname, ",", 1, 0, false);
+  SmilesMolSupplier *nSup = new SmilesMolSupplier(fname, ",", 1, 0, false);
   std::string oname =
       rdbase + "/Code/GraphMol/FileParsers/test_data/outSmiles_molwriter.csv";
 
   STR_VECT propNames;
   propNames.push_back(std::string("Column_2"));
-  auto *writer = new SmilesWriter(oname, " ", "");
+  SmilesWriter *writer = new SmilesWriter(oname, " ", "");
   writer->setProps(propNames);
 
   STR_VECT props;
@@ -180,13 +180,13 @@ void testSmilesWriterClose() {
   std::string rdbase = getenv("RDBASE");
   std::string fname =
       rdbase + "/Code/GraphMol/FileParsers/test_data/fewSmi.csv";
-  auto *nSup = new SmilesMolSupplier(fname, ",", 1, 0, false);
+  SmilesMolSupplier *nSup = new SmilesMolSupplier(fname, ",", 1, 0, false);
   std::string oname =
       rdbase + "/Code/GraphMol/FileParsers/test_data/outSmiles_molwriter.csv";
 
   STR_VECT propNames;
   propNames.push_back(std::string("Column_2"));
-  auto *writer = new SmilesWriter(oname, " ", "");
+  SmilesWriter *writer = new SmilesWriter(oname, " ", "");
   writer->setProps(propNames);
 
   STR_VECT props;
@@ -333,14 +333,14 @@ void testSmilesWriterStrm() {
   std::string rdbase = getenv("RDBASE");
   std::string fname =
       rdbase + "/Code/GraphMol/FileParsers/test_data/fewSmi.csv";
-  auto *nSup = new SmilesMolSupplier(fname, ",", 1, 0, false);
+  SmilesMolSupplier *nSup = new SmilesMolSupplier(fname, ",", 1, 0, false);
   std::string oname =
       rdbase + "/Code/GraphMol/FileParsers/test_data/outSmiles_molwriter.csv";
   auto *oStream = new std::ofstream(oname.c_str());
 
   STR_VECT propNames;
   propNames.push_back(std::string("Column_2"));
-  auto *writer = new SmilesWriter(oStream, " ");
+  SmilesWriter *writer = new SmilesWriter(oStream, " ");
   writer->setProps(propNames);
 
   STR_VECT names;

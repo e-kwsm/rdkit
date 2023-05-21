@@ -100,7 +100,7 @@ std::mutex &GetPropMutex() {
 void write_sstream_to_stream(std::ostream &outStream,
                              const std::stringstream &toWrite) {
   auto ts = toWrite.str();
-  auto tmpInt = static_cast<int32_t>(ts.size());
+  int32_t tmpInt = static_cast<int32_t>(ts.size());
   streamWrite(outStream, tmpInt);
   outStream.write(ts.c_str(), sizeof(char) * tmpInt);
 }

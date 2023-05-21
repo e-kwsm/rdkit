@@ -213,8 +213,9 @@ class HierarchCatalog : public Catalog<entryType, paramType> {
       RDKit::INT_VECT children = this->getDownEntryList(i);
       tmpUInt = static_cast<unsigned int>(children.size());
       RDKit::streamWrite(ss, tmpUInt);
-      for (int ivci : children) {
-        RDKit::streamWrite(ss, ivci);
+      for (RDKit::INT_VECT::const_iterator ivci = children.begin();
+           ivci != children.end(); ivci++) {
+        RDKit::streamWrite(ss, *ivci);
       }
     }
   }
@@ -249,7 +250,7 @@ class HierarchCatalog : public Catalog<entryType, paramType> {
     // std::endl;
 
     // grab the params:
-    auto *params = new paramType();
+    paramType *params = new paramType();
     params->initFromStream(ss);
     this->setCatalogParams(params);
     delete params;
@@ -261,7 +262,7 @@ class HierarchCatalog : public Catalog<entryType, paramType> {
 
     // now all of the entries:
     for (unsigned int i = 0; i < numEntries; i++) {
-      auto *entry = new entryType();
+      entryType *entry = new entryType();
       entry->initFromStream(ss);
       this->addEntry(entry, false);
     }
@@ -310,7 +311,7 @@ class HierarchCatalog : public Catalog<entryType, paramType> {
       fpl++;
       this->setFPLength(fpl);
     }
-    auto eid = static_cast<unsigned int>(
+    unsigned int eid = static_cast<unsigned int>(
         boost::add_vertex(EntryProperty(entry), d_graph));
     orderType etype = entry->getOrder();
     // REVIEW: this initialization is not required: the STL map, in

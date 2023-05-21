@@ -27,7 +27,8 @@ using namespace RDKit;
 void transformAtom(Atom *atom, RDGeom::Transform3D &tform) {
   PRECONDITION(atom, "no atom");
   ROMol &mol = atom->getOwningMol();
-  for (auto ci = mol.beginConformers(); ci != mol.endConformers(); ci++) {
+  for (ROMol::ConstConformerIterator ci = mol.beginConformers();
+       ci != mol.endConformers(); ci++) {
     RDGeom::Point3D &pos = (*ci)->getAtomPos(atom->getIdx());
     tform.TransformPoint(pos);
   }

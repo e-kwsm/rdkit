@@ -1646,7 +1646,9 @@ void testRootedAtomPairs() {
   TEST_ASSERT(nz2.size() > 0);
   TEST_ASSERT(nz2.size() < nz1.size());
 
-  for (auto bIt = nz2.begin(); bIt != nz2.end(); ++bIt) {
+  for (SparseIntVect<std::int32_t>::StorageType::const_iterator bIt =
+           nz2.begin();
+       bIt != nz2.end(); ++bIt) {
     TEST_ASSERT(bIt->second <= fp2->getVal(bIt->first));
   }
 
@@ -1677,7 +1679,9 @@ void testIgnoreAtomPairs() {
     SparseIntVect<std::int32_t>::StorageType nz2 = fp2->getNonzeroElements();
     TEST_ASSERT(nz2.size() == nz1.size() - 5);
 
-    for (auto bIt = nz2.begin(); bIt != nz2.end(); ++bIt) {
+    for (SparseIntVect<std::int32_t>::StorageType::const_iterator bIt =
+             nz2.begin();
+         bIt != nz2.end(); ++bIt) {
       TEST_ASSERT(bIt->second <= fp2->getVal(bIt->first));
     }
 
@@ -1716,7 +1720,9 @@ void testIgnoreAtomPairs() {
     SparseIntVect<std::int32_t>::StorageType nz2 = fp2->getNonzeroElements();
     TEST_ASSERT(nz2.size() < nz1.size());
 
-    for (auto bIt = nz2.begin(); bIt != nz2.end(); ++bIt) {
+    for (SparseIntVect<std::int32_t>::StorageType::const_iterator bIt =
+             nz2.begin();
+         bIt != nz2.end(); ++bIt) {
       TEST_ASSERT(bIt->second <= fp2->getVal(bIt->first));
     }
 
@@ -1748,7 +1754,9 @@ void testRootedTorsions() {
   TEST_ASSERT(nz2.size() > 0);
   TEST_ASSERT(nz2.size() < nz1.size());
 
-  for (auto bIt = nz2.begin(); bIt != nz2.end(); ++bIt) {
+  for (SparseIntVect<boost::int64_t>::StorageType::const_iterator bIt =
+           nz2.begin();
+       bIt != nz2.end(); ++bIt) {
     TEST_ASSERT(bIt->second <= fp2->getVal(bIt->first));
   }
 
@@ -1779,7 +1787,9 @@ void testIgnoreTorsions() {
     SparseIntVect<boost::int64_t>::StorageType nz2 = fp2->getNonzeroElements();
     TEST_ASSERT(nz2.size() == 1);
 
-    for (auto bIt = nz2.begin(); bIt != nz2.end(); ++bIt) {
+    for (SparseIntVect<boost::int64_t>::StorageType::const_iterator bIt =
+             nz2.begin();
+         bIt != nz2.end(); ++bIt) {
       TEST_ASSERT(bIt->second <= fp2->getVal(bIt->first));
     }
 
@@ -1839,10 +1849,13 @@ void testMorganAtomInfo() {
     nze = fp->getNonzeroElements();
     TEST_ASSERT(nze.size() == 2);
     TEST_ASSERT(bitInfo.size() == 2);
-    for (auto iter = nze.begin(); iter != nze.end(); ++iter) {
+    for (SparseIntVect<std::uint32_t>::StorageType::const_iterator iter =
+             nze.begin();
+         iter != nze.end(); ++iter) {
       TEST_ASSERT(iter->second == rdcast<int>(bitInfo[iter->first].size()));
     }
-    for (auto iter = bitInfo.begin(); iter != bitInfo.end(); ++iter) {
+    for (MorganFingerprints::BitInfoMap::const_iterator iter = bitInfo.begin();
+         iter != bitInfo.end(); ++iter) {
       TEST_ASSERT(iter->second.begin()->second == 0);
     }
 
@@ -1852,10 +1865,13 @@ void testMorganAtomInfo() {
     fp = MorganFingerprints::getFingerprint(*mol, 1, nullptr, nullptr, false,
                                             true, true, false, &bitInfo);
     TEST_ASSERT(fp->getNonzeroElements().size() == 5);
-    for (auto iter = nze.begin(); iter != nze.end(); ++iter) {
+    for (SparseIntVect<std::uint32_t>::StorageType::const_iterator iter =
+             nze.begin();
+         iter != nze.end(); ++iter) {
       TEST_ASSERT(iter->second == rdcast<int>(bitInfo[iter->first].size()));
     }
-    for (auto iter = bitInfo.begin(); iter != bitInfo.end(); ++iter) {
+    for (MorganFingerprints::BitInfoMap::const_iterator iter = bitInfo.begin();
+         iter != bitInfo.end(); ++iter) {
       TEST_ASSERT(iter->second.begin()->second == 0 ||
                   iter->second.begin()->second == 1);
     }
@@ -1874,11 +1890,13 @@ void testMorganAtomInfo() {
         *mol, 0, 2048, nullptr, nullptr, false, true, false, &bitInfo);
     TEST_ASSERT(fp->getNumOnBits() == 2);
     TEST_ASSERT(bitInfo.size() == 2);
-    for (auto iter = bitInfo.begin(); iter != bitInfo.end(); ++iter) {
+    for (MorganFingerprints::BitInfoMap::const_iterator iter = bitInfo.begin();
+         iter != bitInfo.end(); ++iter) {
       TEST_ASSERT(iter->first < 2048);
       TEST_ASSERT(fp->getBit(iter->first));
     }
-    for (auto iter = bitInfo.begin(); iter != bitInfo.end(); ++iter) {
+    for (MorganFingerprints::BitInfoMap::const_iterator iter = bitInfo.begin();
+         iter != bitInfo.end(); ++iter) {
       TEST_ASSERT(iter->second.begin()->second == 0);
     }
 
@@ -1888,11 +1906,13 @@ void testMorganAtomInfo() {
         *mol, 1, 2048, nullptr, nullptr, false, true, false, &bitInfo);
     TEST_ASSERT(fp->getNumOnBits() == 5);
     TEST_ASSERT(bitInfo.size() == 5);
-    for (auto iter = bitInfo.begin(); iter != bitInfo.end(); ++iter) {
+    for (MorganFingerprints::BitInfoMap::const_iterator iter = bitInfo.begin();
+         iter != bitInfo.end(); ++iter) {
       TEST_ASSERT(iter->first < 2048);
       TEST_ASSERT(fp->getBit(iter->first));
     }
-    for (auto iter = bitInfo.begin(); iter != bitInfo.end(); ++iter) {
+    for (MorganFingerprints::BitInfoMap::const_iterator iter = bitInfo.begin();
+         iter != bitInfo.end(); ++iter) {
       TEST_ASSERT(iter->second.begin()->second == 0 ||
                   iter->second.begin()->second == 1);
     }
@@ -1920,7 +1940,9 @@ void testMorganAtomInfo() {
 
     TEST_ASSERT(bitInfo1.size() == bitInfo2.size());
 
-    for (auto iter1 = bitInfo1.begin(); iter1 != bitInfo1.end(); ++iter1) {
+    for (MorganFingerprints::BitInfoMap::const_iterator iter1 =
+             bitInfo1.begin();
+         iter1 != bitInfo1.end(); ++iter1) {
       TEST_ASSERT(iter1->first < 2048);
       TEST_ASSERT(bitInfo2.find(iter1->first) != bitInfo2.end());
     }

@@ -74,8 +74,8 @@ class RDKIT_CHEMREACTIONS_EXPORT RandomSampleStrategy
 
         m_rng(),
         m_distributions() {
-    for (unsigned long i : m_permutation) {
-      m_distributions.emplace_back(0, i - 1);
+    for (size_t i = 0; i < m_permutation.size(); ++i) {
+      m_distributions.emplace_back(0, m_permutation[i] - 1);
     }
   }
 
@@ -84,8 +84,8 @@ class RDKIT_CHEMREACTIONS_EXPORT RandomSampleStrategy
   void initializeStrategy(const ChemicalReaction &,
                           const EnumerationTypes::BBS &) override {
     m_distributions.clear();
-    for (unsigned long m_permutationSize : m_permutationSizes) {
-      m_distributions.emplace_back(0, m_permutationSize - 1);
+    for (size_t i = 0; i < m_permutationSizes.size(); ++i) {
+      m_distributions.emplace_back(0, m_permutationSizes[i] - 1);
     }
 
     m_numPermutationsProcessed = 0;
@@ -143,8 +143,8 @@ class RDKIT_CHEMREACTIONS_EXPORT RandomSampleStrategy
 
     // reset the uniform distributions
     m_distributions.clear();
-    for (unsigned long m_permutationSize : m_permutationSizes) {
-      m_distributions.emplace_back(0, m_permutationSize - 1);
+    for (size_t i = 0; i < m_permutationSizes.size(); ++i) {
+      m_distributions.emplace_back(0, m_permutationSizes[i] - 1);
     }
   }
 

@@ -146,11 +146,11 @@ class RDKIT_CHEMREACTIONS_EXPORT EnumerateLibrary
     ar &sz;
 
     std::string pickle;
-    for (const auto &m_bb : m_bbs) {
-      sz = m_bb.size();
+    for (size_t i = 0; i < m_bbs.size(); ++i) {
+      sz = m_bbs[i].size();
       ar &sz;
-      for (const auto &j : m_bb) {
-        MolPickler::pickleMol(*j, pickle);
+      for (size_t j = 0; j < m_bbs[i].size(); ++j) {
+        MolPickler::pickleMol(*m_bbs[i][j], pickle);
         ar &pickle;
       }
     }
@@ -164,15 +164,15 @@ class RDKIT_CHEMREACTIONS_EXPORT EnumerateLibrary
 
     m_bbs.resize(sz);
 
-    for (auto &m_bb : m_bbs) {
+    for (size_t i = 0; i < m_bbs.size(); ++i) {
       ar &sz;
-      m_bb.resize(sz);
+      m_bbs[i].resize(sz);
       std::string pickle;
-      for (auto &j : m_bb) {
+      for (size_t j = 0; j < m_bbs[i].size(); ++j) {
         ar &pickle;
-        auto *mol = new RWMol();
+        RWMol *mol = new RWMol();
         MolPickler::molFromPickle(pickle, *mol);
-        j.reset(mol);
+        m_bbs[i][j].reset(mol);
       }
     }
   }
