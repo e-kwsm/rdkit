@@ -667,8 +667,8 @@ void Atom::updatePropertyCache(bool strict) {
 }
 
 bool Atom::needsUpdatePropertyCache() const {
-  return !(this->d_explicitValence >= 0 &&
-           (this->df_noImplicit || this->d_implicitValence >= 0));
+  return this->d_explicitValence < 0 ||
+         (!this->df_noImplicit && this->d_implicitValence < 0);
 }
 
 // returns the number of swaps required to convert the ordering
