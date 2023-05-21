@@ -697,8 +697,8 @@ std::vector<ROMOL_SPTR> getMolFrags(const ROMol &mol, bool sanitizeFrags,
           aids.push_back(ids[j]);
         }
         INT_VECT bids;
-        INT_VECT_CI lastRai = aids.begin();
-        for (INT_VECT_CI rai = aids.begin() + 1; rai != aids.end(); ++rai) {
+        auto lastRai = aids.begin();
+        for (auto rai = aids.begin() + 1; rai != aids.end(); ++rai) {
           const Bond *bnd = tmp->getBondBetweenAtoms(*rai, *lastRai);
           if (!bnd) {
             throw ValueErrorException("expected bond not found");
@@ -738,8 +738,7 @@ std::vector<ROMOL_SPTR> getMolFrags(const ROMol &mol, bool sanitizeFrags,
     }
 
     if (fragsMolAtomMapping) {
-      for (INT_INT_VECT_MAP_CI mci = comMap.begin(); mci != comMap.end();
-           mci++) {
+      for (auto mci = comMap.begin(); mci != comMap.end(); mci++) {
         (*fragsMolAtomMapping).push_back((*mci).second);
       }
     }
@@ -800,7 +799,7 @@ unsigned int getMolFrags(const ROMol &mol, VECT_INT_VECT &frags) {
     comMap[mi].push_back(i);
   }
 
-  for (INT_INT_VECT_MAP_CI mci = comMap.begin(); mci != comMap.end(); mci++) {
+  for (auto mci = comMap.begin(); mci != comMap.end(); mci++) {
     frags.push_back((*mci).second);
   }
   return rdcast<unsigned int>(frags.size());
@@ -1023,12 +1022,12 @@ std::vector<std::vector<unsigned int>> contiguousAtoms(
   for (auto a : allAts) {
     inAllAts[a] = 1;
   }
-  for (size_t i = 0; i < allAts.size(); ++i) {
-    if (doneAts[allAts[i]]) {
+  for (unsigned int allAt : allAts) {
+    if (doneAts[allAt]) {
       continue;
     }
     contigAts.push_back(std::vector<unsigned int>());
-    std::list<const Atom *> toDo{mol.getAtomWithIdx(allAts[i])};
+    std::list<const Atom *> toDo{mol.getAtomWithIdx(allAt)};
     while (!toDo.empty()) {
       auto nextAt = toDo.front();
       toDo.pop_front();
