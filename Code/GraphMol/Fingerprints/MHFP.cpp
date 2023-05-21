@@ -68,8 +68,8 @@ std::vector<uint32_t> MHFPEncoder::FromStringArray(
     const std::vector<std::string>& vec) {
   std::vector<uint32_t> mh(n_permutations_, max_hash_);
 
-  for (uint32_t i = 0; i < vec.size(); i++) {
-    auto hashi = FNV::hash(vec[i]);
+  for (const auto& i : vec) {
+    auto hashi = FNV::hash(i);
     for (size_t j = 0; j < n_permutations_; j++) {
       uint32_t tmp =
           (FastMod((perms_a_[j] * hashi + perms_b_[j]), prime_)) & max_hash_;
@@ -83,10 +83,10 @@ std::vector<uint32_t> MHFPEncoder::FromStringArray(
 std::vector<uint32_t> MHFPEncoder::FromArray(const std::vector<uint32_t>& vec) {
   std::vector<uint32_t> mh(n_permutations_, max_hash_);
 
-  for (uint32_t i = 0; i < vec.size(); i++) {
+  for (unsigned int i : vec) {
     for (size_t j = 0; j < n_permutations_; j++) {
       uint32_t tmp =
-          (FastMod((perms_a_[j] * vec[i] + perms_b_[j]), prime_)) & max_hash_;
+          (FastMod((perms_a_[j] * i + perms_b_[j]), prime_)) & max_hash_;
       mh[j] = std::min(tmp, mh[j]);
     }
   }
@@ -107,8 +107,8 @@ std::vector<std::string> MHFPEncoder::CreateShingling(
   if (rings) {
     const VECT_INT_VECT bonds_vect = tmol.getRingInfo()->bondRings();
 
-    for (size_t i = 0; i < bonds_vect.size(); i++) {
-      std::unique_ptr<ROMol> m(Subgraphs::pathToSubmol(tmol, bonds_vect[i]));
+    for (const auto& i : bonds_vect) {
+      std::unique_ptr<ROMol> m(Subgraphs::pathToSubmol(tmol, i));
       shingling.emplace_back(MolToSmiles(*m));
     }
   }
