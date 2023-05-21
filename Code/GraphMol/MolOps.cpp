@@ -821,8 +821,8 @@ unsigned int getMolFrags(const ROMol &mol, VECT_INT_VECT &frags) {
     comMap[mi].push_back(i);
   }
 
-  for (INT_INT_VECT_MAP_CI mci = comMap.begin(); mci != comMap.end(); mci++) {
-    frags.push_back((*mci).second);
+  for (auto &mci : comMap) {
+    frags.push_back(mci.second);
   }
   return rdcast<unsigned int>(frags.size());
 }
@@ -1044,12 +1044,12 @@ std::vector<std::vector<unsigned int>> contiguousAtoms(
   for (auto a : allAts) {
     inAllAts[a] = 1;
   }
-  for (size_t i = 0; i < allAts.size(); ++i) {
-    if (doneAts[allAts[i]]) {
+  for (unsigned int allAt : allAts) {
+    if (doneAts[allAt]) {
       continue;
     }
     contigAts.push_back(std::vector<unsigned int>());
-    std::list<const Atom *> toDo{mol.getAtomWithIdx(allAts[i])};
+    std::list<const Atom *> toDo{mol.getAtomWithIdx(allAt)};
     while (!toDo.empty()) {
       auto nextAt = toDo.front();
       toDo.pop_front();

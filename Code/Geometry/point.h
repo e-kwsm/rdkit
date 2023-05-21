@@ -409,13 +409,12 @@ class RDKIT_RDGEOMETRYLIB_EXPORT PointND : public Point {
   typedef boost::shared_ptr<RDNumeric::Vector<double>> VECT_SH_PTR;
 
   PointND(unsigned int dim) {
-    RDNumeric::Vector<double> *nvec = new RDNumeric::Vector<double>(dim, 0.0);
+    auto *nvec = new RDNumeric::Vector<double>(dim, 0.0);
     dp_storage.reset(nvec);
   }
 
   PointND(const PointND &other) : Point(other) {
-    RDNumeric::Vector<double> *nvec =
-        new RDNumeric::Vector<double>(*other.getStorage());
+    auto *nvec = new RDNumeric::Vector<double>(*other.getStorage());
     dp_storage.reset(nvec);
   }
 
@@ -462,8 +461,7 @@ class RDKIT_RDGEOMETRYLIB_EXPORT PointND : public Point {
       return *this;
     }
 
-    RDNumeric::Vector<double> *nvec =
-        new RDNumeric::Vector<double>(*other.getStorage());
+    auto *nvec = new RDNumeric::Vector<double>(*other.getStorage());
     dp_storage.reset(nvec);
     return *this;
   }

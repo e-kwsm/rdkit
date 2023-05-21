@@ -449,9 +449,16 @@ class PyMCSParameters : public boost::noncopyable {
                                    const ROMol &mol2, unsigned int atom2,
                                    void *userData) {
     PRECONDITION(userData, "userData must not be NULL");
+<<<<<<< HEAD
     PyCompareFunctionUserData *cfud =
         static_cast<PyCompareFunctionUserData *>(userData);
     CHECK_INVARIANT(cfud, "");
+||||||| parent of 001fcaa13d92 (Code/GraphMol/FMCS/Wrap/rdFMCS.cpp)
+    PyCompareFunctionUserData *cfud =
+        static_cast<PyCompareFunctionUserData *>(userData);
+=======
+    auto *cfud = static_cast<PyCompareFunctionUserData *>(userData);
+>>>>>>> 001fcaa13d92 (Code/GraphMol/FMCS/Wrap/rdFMCS.cpp)
     bool res = false;
     {
       PyGILStateHolder h;
@@ -466,9 +473,16 @@ class PyMCSParameters : public boost::noncopyable {
                                    const ROMol &mol2, unsigned int bond2,
                                    void *userData) {
     PRECONDITION(userData, "userData must not be NULL");
+<<<<<<< HEAD
     PyCompareFunctionUserData *cfud =
         static_cast<PyCompareFunctionUserData *>(userData);
     CHECK_INVARIANT(cfud, "");
+||||||| parent of 001fcaa13d92 (Code/GraphMol/FMCS/Wrap/rdFMCS.cpp)
+    PyCompareFunctionUserData *cfud =
+        static_cast<PyCompareFunctionUserData *>(userData);
+=======
+    auto *cfud = static_cast<PyCompareFunctionUserData *>(userData);
+>>>>>>> 001fcaa13d92 (Code/GraphMol/FMCS/Wrap/rdFMCS.cpp)
     bool res = false;
     {
       PyGILStateHolder h;
@@ -482,8 +496,7 @@ class PyMCSParameters : public boost::noncopyable {
                                         const MCSParameters &params,
                                         void *userData) {
     PRECONDITION(userData, "userData must not be NULL");
-    PyProgressCallbackUserData *pcud =
-        static_cast<PyProgressCallbackUserData *>(userData);
+    auto *pcud = static_cast<PyProgressCallbackUserData *>(userData);
     bool res = false;
     CHECK_INVARIANT(pcud, "");
     MCSParameters paramsCopy(params);

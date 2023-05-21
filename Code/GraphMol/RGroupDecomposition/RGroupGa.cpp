@@ -38,8 +38,7 @@ std::string RGroupDecompositionChromosome::info() const {
 
 double RGroupDecompositionChromosome::score() {
   auto& rGroupData = rGroupGa.getRGroupData();
-  RGroupScore scoreMethod =
-      static_cast<RGroupScore>(rGroupData.params.scoreMethod);
+  auto scoreMethod = static_cast<RGroupScore>(rGroupData.params.scoreMethod);
   if (operationName != RgroupMutate) {
     decode();
   }
@@ -352,12 +351,12 @@ void copyVarianceData(const FingerprintVarianceScoreData& fromData,
   auto& from = fromData.labelsToVarianceData;
   auto& to = toData.labelsToVarianceData;
 
-  for (auto it = from.cbegin(); it != from.end(); ++it) {
-    auto df = to.find(it->first);
+  for (const auto& it : from) {
+    auto df = to.find(it.first);
     if (df == to.end()) {
-      to.emplace(it->first, make_shared<VarianceDataForLabel>(*it->second));
+      to.emplace(it.first, make_shared<VarianceDataForLabel>(*it.second));
     } else {
-      auto& fromData = it->second;
+      auto& fromData = it.second;
       auto& toData = df->second;
       toData->numberFingerprints = fromData->numberFingerprints;
       toData->bitCounts.assign(fromData->bitCounts.cbegin(),
@@ -372,8 +371,8 @@ void copyVarianceData(const FingerprintVarianceScoreData& fromData,
 void clearVarianceData(
     FingerprintVarianceScoreData& fingerprintVarianceScoreData) {
   auto& data = fingerprintVarianceScoreData.labelsToVarianceData;
-  for (auto it = data.begin(); it != data.end(); ++it) {
-    auto d = it->second;
+  for (auto& it : data) {
+    auto d = it.second;
     d->numberFingerprints = 0;
     d->bitCounts.assign(d->bitCounts.size(), 0.0);
   }

@@ -159,9 +159,8 @@ RDKitFPEnvGenerator<OutputType>::getEnvironments(
   RDKitFPUtils::identifyQueryBonds(mol, bondCache, isQueryBond);
 
   boost::dynamic_bitset<> atomsInPath(mol.getNumAtoms());
-  for (INT_PATH_LIST_MAP_CI paths = allPaths.begin(); paths != allPaths.end();
-       paths++) {
-    for (const auto &path : paths->second) {
+  for (auto &allPath : allPaths) {
+    for (const auto &path : allPath.second) {
       // the bond hashes of the path
       std::vector<std::uint32_t> bondHashes = RDKitFPUtils::generateBondHashes(
           mol, atomsInPath, bondCache, isQueryBond, path,
