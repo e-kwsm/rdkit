@@ -92,7 +92,7 @@ void AssignHsResidueInfo(RWMol &mol) {
           h_label = "H" + h_label;
           // wrap around id to '3H12'
           h_label = h_label.substr(3, 1) + h_label.substr(0, 3);
-          AtomPDBResidueInfo *newInfo = new AtomPDBResidueInfo(
+          auto *newInfo = new AtomPDBResidueInfo(
               h_label, max_serial, "", info->getResidueName(),
               info->getResidueNumber(), info->getChainId(), "", 1.0, 0.0,
               info->getIsHeteroAtom());
@@ -526,7 +526,7 @@ void addHs(RWMol &mol, bool explicitOnly, bool addCoords,
     if (newAt->getPropIfPresent(common_properties::_isotopicHs, isoHs)) {
       newAt->clearProp(common_properties::_isotopicHs);
     }
-    std::vector<unsigned int>::const_iterator isoH = isoHs.begin();
+    auto isoH = isoHs.begin();
     unsigned int newIdx;
     newAt->clearComputedProps();
     // always convert explicit Hs
@@ -1206,7 +1206,7 @@ void mergeQueryHs(RWMol &mol, bool mergeUnmappedOnly, bool mergeIsotopes) {
         if (atom->getQuery()->getDescription() == "RecursiveStructure") {
           auto *rsq = dynamic_cast<RecursiveStructureQuery *>(atom->getQuery());
           CHECK_INVARIANT(rsq, "could not convert recursive structure query");
-          RWMol *rqm = new RWMol(*rsq->getQueryMol());
+          auto *rqm = new RWMol(*rsq->getQueryMol());
           mergeQueryHs(*rqm, mergeUnmappedOnly, mergeIsotopes);
           rsq->setQueryMol(rqm);
         }
@@ -1220,7 +1220,7 @@ void mergeQueryHs(RWMol &mol, bool mergeUnmappedOnly, bool mergeIsotopes) {
           if (qry->getDescription() == "RecursiveStructure") {
             auto *rsq = dynamic_cast<RecursiveStructureQuery *>(qry.get());
             CHECK_INVARIANT(rsq, "could not convert recursive structure query");
-            RWMol *rqm = new RWMol(*rsq->getQueryMol());
+            auto *rqm = new RWMol(*rsq->getQueryMol());
             mergeQueryHs(*rqm, mergeUnmappedOnly, mergeIsotopes);
             rsq->setQueryMol(rqm);
           } else if (qry->beginChildren() != qry->endChildren()) {
