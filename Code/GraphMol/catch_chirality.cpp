@@ -1944,7 +1944,8 @@ TEST_CASE("StereoGroup Testing") {
     CHECK(cp != mol->getStereoGroups()[1]);
 
     std::vector<Atom *> toRemove{mol->getAtomWithIdx(1)};
-    auto &sgs = const_cast<std::vector<StereoGroup> &>(mol->getStereoGroups());
+    std::vector<StereoGroup> &sgs =
+        const_cast<std::vector<StereoGroup> &>(mol->getStereoGroups());
     removeGroupsWithAtoms(toRemove, sgs);
     CHECK(mol->getStereoGroups().size() == 1);
   }

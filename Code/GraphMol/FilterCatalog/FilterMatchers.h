@@ -401,16 +401,16 @@ class RDKIT_FILTERCATALOG_EXPORT ExclusionList : public FilterMatcherBase {
   std::string getName() const override {
     std::string res;
     res = "(" + FilterMatcherBase::getName();
-    for (const auto &d_offPattern : d_offPatterns) {
-      res += " " + d_offPattern->getName();
+    for (size_t i = 0; i < d_offPatterns.size(); ++i) {
+      res += " " + d_offPatterns[i]->getName();
     }
     res += ")";
     return res;
   }
 
   bool isValid() const override {
-    for (const auto &d_offPattern : d_offPatterns) {
-      if (!d_offPattern->isValid()) {
+    for (size_t i = 0; i < d_offPatterns.size(); ++i) {
+      if (!d_offPatterns[i]->isValid()) {
         return false;
       }
     }

@@ -79,7 +79,7 @@ class SparseIntVect {
       throw IndexErrorException(static_cast<int>(idx));
     }
     int res = 0;
-    auto iter = d_data.find(idx);
+    typename StorageType::const_iterator iter = d_data.find(idx);
     if (iter != d_data.end()) {
       res = iter->second;
     }
@@ -137,8 +137,8 @@ class SparseIntVect {
       throw ValueErrorException("SparseIntVect size mismatch");
     }
 
-    auto iter = d_data.begin();
-    auto oIter = other.d_data.begin();
+    typename StorageType::iterator iter = d_data.begin();
+    typename StorageType::const_iterator oIter = other.d_data.begin();
     while (iter != d_data.end()) {
       // we're relying on the fact that the maps are sorted:
       while (oIter != other.d_data.end() && oIter->first < iter->first) {
@@ -154,7 +154,7 @@ class SparseIntVect {
       } else {
         // not there; our value is zero, which means
         // we should remove this value:
-        auto tmpIter = iter;
+        typename StorageType::iterator tmpIter = iter;
         ++tmpIter;
         d_data.erase(iter);
         iter = tmpIter;
@@ -176,8 +176,8 @@ class SparseIntVect {
       throw ValueErrorException("SparseIntVect size mismatch");
     }
 
-    auto iter = d_data.begin();
-    auto oIter = other.d_data.begin();
+    typename StorageType::iterator iter = d_data.begin();
+    typename StorageType::const_iterator oIter = other.d_data.begin();
     while (iter != d_data.end()) {
       // we're relying on the fact that the maps are sorted:
       while (oIter != other.d_data.end() && oIter->first < iter->first) {
@@ -210,8 +210,8 @@ class SparseIntVect {
     if (other.d_length != d_length) {
       throw ValueErrorException("SparseIntVect size mismatch");
     }
-    auto iter = d_data.begin();
-    auto oIter = other.d_data.begin();
+    typename StorageType::iterator iter = d_data.begin();
+    typename StorageType::const_iterator oIter = other.d_data.begin();
     while (oIter != other.d_data.end()) {
       while (iter != d_data.end() && iter->first < oIter->first) {
         ++iter;
@@ -220,7 +220,7 @@ class SparseIntVect {
         // found it:
         iter->second += oIter->second;
         if (!iter->second) {
-          auto tIter = iter;
+          typename StorageType::iterator tIter = iter;
           ++tIter;
           d_data.erase(iter);
           iter = tIter;
@@ -244,8 +244,8 @@ class SparseIntVect {
     if (other.d_length != d_length) {
       throw ValueErrorException("SparseIntVect size mismatch");
     }
-    auto iter = d_data.begin();
-    auto oIter = other.d_data.begin();
+    typename StorageType::iterator iter = d_data.begin();
+    typename StorageType::const_iterator oIter = other.d_data.begin();
     while (oIter != other.d_data.end()) {
       while (iter != d_data.end() && iter->first < oIter->first) {
         ++iter;
@@ -254,7 +254,7 @@ class SparseIntVect {
         // found it:
         iter->second -= oIter->second;
         if (!iter->second) {
-          auto tIter = iter;
+          typename StorageType::iterator tIter = iter;
           ++tIter;
           d_data.erase(iter);
           iter = tIter;
@@ -274,7 +274,7 @@ class SparseIntVect {
     return res -= other;
   }
   SparseIntVect<IndexType> &operator*=(int v) {
-    auto iter = d_data.begin();
+    typename StorageType::iterator iter = d_data.begin();
     while (iter != d_data.end()) {
       iter->second *= v;
       ++iter;
@@ -286,7 +286,7 @@ class SparseIntVect {
     return res *= v;
   }
   SparseIntVect<IndexType> &operator/=(int v) {
-    auto iter = d_data.begin();
+    typename StorageType::iterator iter = d_data.begin();
     while (iter != d_data.end()) {
       iter->second /= v;
       ++iter;
@@ -298,7 +298,7 @@ class SparseIntVect {
     return res /= v;
   }
   SparseIntVect<IndexType> &operator+=(int v) {
-    auto iter = d_data.begin();
+    typename StorageType::iterator iter = d_data.begin();
     while (iter != d_data.end()) {
       iter->second += v;
       ++iter;
@@ -310,7 +310,7 @@ class SparseIntVect {
     return res += v;
   }
   SparseIntVect<IndexType> &operator-=(int v) {
-    auto iter = d_data.begin();
+    typename StorageType::iterator iter = d_data.begin();
     while (iter != d_data.end()) {
       iter->second -= v;
       ++iter;
@@ -345,7 +345,7 @@ class SparseIntVect {
     IndexType nEntries = d_data.size();
     streamWrite(ss, nEntries);
 
-    auto iter = d_data.begin();
+    typename StorageType::const_iterator iter = d_data.begin();
     while (iter != d_data.end()) {
       streamWrite(ss, iter->first);
       std::int32_t tInt = iter->second;

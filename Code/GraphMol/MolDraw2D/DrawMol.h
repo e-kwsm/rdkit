@@ -64,7 +64,7 @@ class DrawMol {
     \param confId          : (optional) conformer ID to be used for atomic
     coordinates
   */
-  DrawMol(const ROMol &mol, std::string legend, int width, int height,
+  DrawMol(const ROMol &mol, const std::string &legend, int width, int height,
           const MolDrawOptions &drawOptions, DrawText &textDrawer,
           const std::vector<int> *highlightAtoms = nullptr,
           const std::vector<int> *highlightBonds = nullptr,

@@ -164,12 +164,17 @@ std::string calcMolFormula(const ROMol &mol, bool separateIsotopes,
     }
   }
   std::list<std::pair<unsigned int, std::string>> ks;
-  for (auto &count : counts) {
-    ks.push_back(count.first);
+  for (std::map<std::pair<unsigned int, std::string>,
+                unsigned int>::const_iterator countIt = counts.begin();
+       countIt != counts.end(); ++countIt) {
+    ks.push_back(countIt->first);
   }
   ks.sort(HillCompare);
 
-  for (auto &key : ks) {
+  for (std::list<std::pair<unsigned int, std::string>>::const_iterator kIter =
+           ks.begin();
+       kIter != ks.end(); ++kIter) {
+    const std::pair<unsigned int, std::string> &key = *kIter;
     if (key.first > 0) {
       res << "[" << key.first << key.second << "]";
     } else {
