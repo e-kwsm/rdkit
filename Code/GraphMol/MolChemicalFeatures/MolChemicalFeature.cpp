@@ -41,7 +41,7 @@ RDGeom::Point3D MolChemicalFeature::getPos(int confId) const {
 
   // -------------
   // Check to see if we've got the value cached:
-  auto cacheIt = d_locs.find(confId);
+  PointCacheType::const_iterator cacheIt = d_locs.find(confId);
   if (cacheIt != d_locs.end()) {
     return cacheIt->second;
   }

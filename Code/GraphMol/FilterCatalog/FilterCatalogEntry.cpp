@@ -92,7 +92,7 @@ FilterCatalogEntry *MakeFilterCatalogEntry(const FilterData_t &data,
   //  is triggered.
   // Hence pattern.minCount == filter.maxCount + 1
   const unsigned int minCount = data.max ? data.max + 1 : 1;
-  auto *entry = new FilterCatalogEntry(
+  FilterCatalogEntry *entry = new FilterCatalogEntry(
       data.name, boost::shared_ptr<FilterMatcherBase>(
                      new SmartsMatcher(data.name, pattern, minCount)));
 

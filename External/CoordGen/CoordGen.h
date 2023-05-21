@@ -53,9 +53,7 @@ static CoordGenParams defaultParams;
 */
 template <typename T>
 unsigned int addCoords(T& mol, const CoordGenParams* params = nullptr) {
-  if (!params) {
-    params = &defaultParams;
-  }
+  if (!params) params = &defaultParams;
   // FIX: the default value of this should be handled once in a threadsafe way
   std::string templateFileDir;
   if (params->templateFileDir != "") {
@@ -156,9 +154,8 @@ unsigned int addCoords(T& mol, const CoordGenParams* params = nullptr) {
     auto obnd = *bndit;
     if (obnd->getBondType() != Bond::DOUBLE ||
         obnd->getStereo() <= Bond::STEREOANY ||
-        obnd->getStereo() > Bond::STEREOTRANS) {
+        obnd->getStereo() > Bond::STEREOTRANS)
       continue;
-    }
 
     sketcherMinimizerBondStereoInfo sinfo;
     sinfo.atom1 = ats[obnd->getStereoAtoms()[0]];

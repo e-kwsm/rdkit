@@ -337,8 +337,9 @@ void docTest() {
     SubstructLibrary lib;
     lib.addMol(mol);
     std::vector<unsigned int> results = lib.getMatches(query);
-    for (unsigned int result : results) {
-      boost::shared_ptr<ROMol> match = lib.getMol(result);
+    for (std::vector<unsigned int>::const_iterator matchIndex = results.begin();
+         matchIndex != results.end(); ++matchIndex) {
+      boost::shared_ptr<ROMol> match = lib.getMol(*matchIndex);
     }
   }
 

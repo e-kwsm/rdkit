@@ -41,7 +41,7 @@ class RDKIT_QUERY_EXPORT OrQuery
 
   Query<MatchFuncArgType, DataFuncArgType, needsConversion> *copy()
       const override {
-    auto *res =
+    OrQuery<MatchFuncArgType, DataFuncArgType, needsConversion> *res =
         new OrQuery<MatchFuncArgType, DataFuncArgType, needsConversion>();
 
     typename BASE::CHILD_VECT_CI i;

@@ -239,7 +239,7 @@ python::object generic__deepcopy__(python::object copyable, python::dict memo) {
   // HACK: copyableId shall be the same as the result of id(copyable) in Python
   // -
   // please tell me that there is a better way! (and which ;-p)
-  auto copyableId = (size_t)(copyable.ptr());
+  size_t copyableId = (size_t)(copyable.ptr());
   memo[copyableId] = result;
 
   python::extract<python::dict>(result.attr("__dict__"))().update(deepcopy(
