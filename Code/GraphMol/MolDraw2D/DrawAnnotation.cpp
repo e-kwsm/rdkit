@@ -15,6 +15,8 @@
 #include <GraphMol/MolDraw2D/DrawText.h>
 #include <GraphMol/MolDraw2D/MolDraw2D.h>
 
+#include <utility>
+
 namespace RDKit {
 namespace MolDraw2D_detail {
 
