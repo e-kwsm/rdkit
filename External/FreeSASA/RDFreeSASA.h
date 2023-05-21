@@ -105,11 +105,9 @@ RDKIT_FREESASALIB_EXPORT bool classifyAtoms(
   \param opts     SASAOpts class specifying options.
   \return the requested solvent accessible surface area
 */
-RDKIT_FREESASALIB_EXPORT double calcSASA(const RDKit::ROMol &mol,
-                                         const std::vector<double> &radii,
-                                         int confIdx = -1,
-                                         const RDKit::QueryAtom *query = NULL,
-                                         const SASAOpts &opts = SASAOpts());
+RDKIT_FREESASALIB_EXPORT double calcSASA(
+    const RDKit::ROMol &mol, const std::vector<double> &radii, int confIdx = -1,
+    const RDKit::QueryAtom *query = nullptr, const SASAOpts &opts = SASAOpts());
 
 //! Make a query atom returning the FreeSASA supplied apolar atom classification
 /*!

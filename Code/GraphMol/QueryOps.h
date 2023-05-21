@@ -949,7 +949,7 @@ class HasPropWithValueQuery<TargetPtr, std::string>
     bool res = what->hasProp(propname);
     if (res) {
       try {
-        std::string atom_val = what->template getProp<std::string>(propname);
+        auto atom_val = what->template getProp<std::string>(propname);
         res = atom_val == this->val;
       } catch (KeyErrorException &) {
         res = false;
