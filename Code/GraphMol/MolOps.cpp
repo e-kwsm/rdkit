@@ -738,8 +738,8 @@ std::vector<ROMOL_SPTR> getMolFrags(const ROMol &mol, bool sanitizeFrags,
     }
 
     if (fragsMolAtomMapping) {
-      for (auto mci = comMap.begin(); mci != comMap.end(); mci++) {
-        (*fragsMolAtomMapping).push_back((*mci).second);
+      for (auto &mci : comMap) {
+        (*fragsMolAtomMapping).push_back(mci.second);
       }
     }
     // copy stereoGroups (if present)
@@ -799,8 +799,8 @@ unsigned int getMolFrags(const ROMol &mol, VECT_INT_VECT &frags) {
     comMap[mi].push_back(i);
   }
 
-  for (auto mci = comMap.begin(); mci != comMap.end(); mci++) {
-    frags.push_back((*mci).second);
+  for (auto &mci : comMap) {
+    frags.push_back(mci.second);
   }
   return rdcast<unsigned int>(frags.size());
 }
