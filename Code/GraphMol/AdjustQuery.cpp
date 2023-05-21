@@ -234,7 +234,7 @@ void setMDLAromaticity(RWMol &mol) {
 
       QueryBond qbSingleAromatic;
       {
-        BOND_OR_QUERY *q = new BOND_OR_QUERY;
+        auto *q = new BOND_OR_QUERY;
         q->addChild(QueryBond::QUERYBOND_QUERY::CHILD_TYPE(
             makeBondOrderEqualsQuery(Bond::SINGLE)));
         q->addChild(QueryBond::QUERYBOND_QUERY::CHILD_TYPE(
@@ -244,7 +244,7 @@ void setMDLAromaticity(RWMol &mol) {
       }
       QueryBond qbDoubleAromatic;
       {
-        BOND_OR_QUERY *q = new BOND_OR_QUERY;
+        auto *q = new BOND_OR_QUERY;
         q->addChild(QueryBond::QUERYBOND_QUERY::CHILD_TYPE(
             makeBondOrderEqualsQuery(Bond::DOUBLE)));
         q->addChild(QueryBond::QUERYBOND_QUERY::CHILD_TYPE(
@@ -363,8 +363,8 @@ void adjustQueryProperties(RWMol &mol, const AdjustQueryParameters *inParams) {
 
   if (params.makeAtomsGeneric) {
     for (unsigned int i = 0; i < mol.getNumAtoms(); ++i) {
-      if (!((params.makeAtomsGenericFlags & ADJUST_IGNORECHAINS) &&
-            !ringInfo->numAtomRings(i)) &&
+      if ((!(params.makeAtomsGenericFlags & ADJUST_IGNORECHAINS) ||
+           ringInfo->numAtomRings(i)) &&
           !((params.makeAtomsGenericFlags & ADJUST_IGNORERINGS) &&
             ringInfo->numAtomRings(i)) &&
           !((params.makeAtomsGenericFlags & ADJUST_IGNOREMAPPED) &&
@@ -378,8 +378,8 @@ void adjustQueryProperties(RWMol &mol, const AdjustQueryParameters *inParams) {
   }  // end of makeAtomsGeneric
   if (params.makeBondsGeneric) {
     for (unsigned int i = 0; i < mol.getNumBonds(); ++i) {
-      if (!((params.makeBondsGenericFlags & ADJUST_IGNORECHAINS) &&
-            !ringInfo->numBondRings(i)) &&
+      if ((!(params.makeBondsGenericFlags & ADJUST_IGNORECHAINS) ||
+           ringInfo->numBondRings(i)) &&
           !((params.makeBondsGenericFlags & ADJUST_IGNORERINGS) &&
             ringInfo->numBondRings(i))) {
         qbTmpl.setQuery(makeBondNullQuery());
@@ -403,9 +403,9 @@ void adjustQueryProperties(RWMol &mol, const AdjustQueryParameters *inParams) {
       at = mol.getAtomWithIdx(i);
     }  // end of makeDummiesQueries
     if (params.adjustDegree &&
-        !((params.adjustDegreeFlags & ADJUST_IGNORECHAINS) && !nRings) &&
+        (!(params.adjustDegreeFlags & ADJUST_IGNORECHAINS) || nRings) &&
         !((params.adjustDegreeFlags & ADJUST_IGNORERINGS) && nRings) &&
-        !((params.adjustDegreeFlags & ADJUST_IGNOREDUMMIES) && !atomicNum) &&
+        (!(params.adjustDegreeFlags & ADJUST_IGNOREDUMMIES) || atomicNum) &&
         !((params.adjustDegreeFlags & ADJUST_IGNORENONDUMMIES) && atomicNum) &&
         !((params.adjustDegreeFlags & ADJUST_IGNOREMAPPED) && isMapped(at))) {
       QueryAtom *qa;
@@ -422,10 +422,10 @@ void adjustQueryProperties(RWMol &mol, const AdjustQueryParameters *inParams) {
       qa->expandQuery(makeAtomExplicitDegreeQuery(qa->getDegree()));
     }  // end of adjust degree
     if (params.adjustHeavyDegree &&
-        !((params.adjustHeavyDegreeFlags & ADJUST_IGNORECHAINS) && !nRings) &&
+        (!(params.adjustHeavyDegreeFlags & ADJUST_IGNORECHAINS) || nRings) &&
         !((params.adjustHeavyDegreeFlags & ADJUST_IGNORERINGS) && nRings) &&
-        !((params.adjustHeavyDegreeFlags & ADJUST_IGNOREDUMMIES) &&
-          !atomicNum) &&
+        (!(params.adjustHeavyDegreeFlags & ADJUST_IGNOREDUMMIES) ||
+         atomicNum) &&
         !((params.adjustHeavyDegreeFlags & ADJUST_IGNORENONDUMMIES) &&
           atomicNum) &&
         !((params.adjustHeavyDegreeFlags & ADJUST_IGNOREMAPPED) &&
@@ -445,9 +445,9 @@ void adjustQueryProperties(RWMol &mol, const AdjustQueryParameters *inParams) {
                                                    qa->getTotalNumHs(true)));
     }  // end of adjust heavy degree
     if (params.adjustRingCount &&
-        !((params.adjustRingCountFlags & ADJUST_IGNORECHAINS) && !nRings) &&
+        (!(params.adjustRingCountFlags & ADJUST_IGNORECHAINS) || nRings) &&
         !((params.adjustRingCountFlags & ADJUST_IGNORERINGS) && nRings) &&
-        !((params.adjustRingCountFlags & ADJUST_IGNOREDUMMIES) && !atomicNum) &&
+        (!(params.adjustRingCountFlags & ADJUST_IGNOREDUMMIES) || atomicNum) &&
         !((params.adjustRingCountFlags & ADJUST_IGNORENONDUMMIES) &&
           atomicNum) &&
         !((params.adjustRingCountFlags & ADJUST_IGNOREMAPPED) &&
@@ -466,9 +466,9 @@ void adjustQueryProperties(RWMol &mol, const AdjustQueryParameters *inParams) {
       qa->expandQuery(makeAtomInNRingsQuery(nRings));
     }  // end of adjust ring count
     if (params.adjustRingChain &&
-        !((params.adjustRingChainFlags & ADJUST_IGNORECHAINS) && !nRings) &&
+        (!(params.adjustRingChainFlags & ADJUST_IGNORECHAINS) || nRings) &&
         !((params.adjustRingChainFlags & ADJUST_IGNORERINGS) && nRings) &&
-        !((params.adjustRingChainFlags & ADJUST_IGNOREDUMMIES) && !atomicNum) &&
+        (!(params.adjustRingChainFlags & ADJUST_IGNOREDUMMIES) || atomicNum) &&
         !((params.adjustRingChainFlags & ADJUST_IGNORENONDUMMIES) &&
           atomicNum) &&
         !((params.adjustRingChainFlags & ADJUST_IGNOREMAPPED) &&
