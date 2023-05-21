@@ -13,6 +13,7 @@
 #include <utility>
 #include <boost/format.hpp>
 #include <boost/algorithm/string.hpp>
+#include <utility>
 
 #include <GraphMol/MolDraw2D/AtomSymbol.h>
 #include <GraphMol/MolDraw2D/DrawText.h>

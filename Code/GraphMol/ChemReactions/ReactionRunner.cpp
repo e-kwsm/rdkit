@@ -878,7 +878,7 @@ Bond *addBondToProduct(const Bond &origB, RWMol &product,
     auto idx = product.addBond(begAtomIdx, endAtomIdx, origB.getBondType());
     return product.getBondWithIdx(idx - 1);
   } else {
-    QueryBond *qbond = new QueryBond(origB.getBondType());
+    auto *qbond = new QueryBond(origB.getBondType());
     qbond->setBeginAtomIdx(begAtomIdx);
     qbond->setEndAtomIdx(endAtomIdx);
     qbond->setQuery(origB.getQuery()->copy());
