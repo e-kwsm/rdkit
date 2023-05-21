@@ -111,7 +111,7 @@ void testFilterCatalog() {
     int count = 0;
     while (!suppl.atEnd()) {
       mol.reset(suppl.next());
-      auto name = mol->getProp<std::string>(common_properties::_Name);
+      std::string name = mol->getProp<std::string>(common_properties::_Name);
 
       TEST_ASSERT(mol.get());
       if (catalog.hasMatch(*mol)) {
@@ -139,8 +139,10 @@ void testFilterCatalog() {
         // get the substructure atoms for visualization
         std::vector<FilterMatch> matches;
         if (entry->getFilterMatches(*mol, matches)) {
-          for (const auto &fm : matches) {
+          for (std::vector<FilterMatch>::const_iterator it = matches.begin();
+               it != matches.end(); ++it) {
             // Get the FilterMatcherBase that matched
+            const FilterMatch &fm = (*it);
             boost::shared_ptr<FilterMatcherBase> matchingFilter =
                 fm.filterMatch;
 
@@ -169,7 +171,7 @@ void testFilterCatalog() {
 }
 
 void testFilterCatalogEntry() {
-  auto *sm = new SmartsMatcher("Aromatic carbon chain");
+  SmartsMatcher *sm = new SmartsMatcher("Aromatic carbon chain");
   boost::shared_ptr<FilterMatcherBase> matcher(sm);
   TEST_ASSERT(!matcher->isValid());
   const int debugParse = 0;

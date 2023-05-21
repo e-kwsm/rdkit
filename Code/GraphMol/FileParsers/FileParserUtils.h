@@ -99,7 +99,7 @@ void applyMolListPropToAtoms(ROMol &mol, const std::string &pn,
                              const std::string &prefix,
                              const std::string &missingValueMarker = "n/a") {
   std::string atompn = pn.substr(prefix.size());
-  auto strVect = mol.getProp<std::string>(pn);
+  std::string strVect = mol.getProp<std::string>(pn);
   std::vector<std::string> tokens;
   boost::split(tokens, strVect, boost::is_any_of(" \t\n"),
                boost::token_compress_on);

@@ -591,7 +591,7 @@ void DrawMol::extractVariableBonds() {
         Point2D offset{drawOptions_.variableAtomRadius,
                        drawOptions_.variableAtomRadius};
         std::vector<Point2D> points{center, offset};
-        auto *ell = new DrawShapeEllipse(
+        DrawShapeEllipse *ell = new DrawShapeEllipse(
             points, 1, true, drawOptions_.variableAttachmentColour, true, oat);
         preShapes_.emplace_back(ell);
       }
@@ -1955,7 +1955,7 @@ void DrawMol::makeDativeBond(Bond *bond, double offset,
   // Adjust the fraction of the line length that will be arrowhead so that
   // it is a consistent number of pixels.
   auto frac = 2.0 * offset / (end2 - end1).length();
-  auto *a = new DrawShapeArrow(
+  DrawShapeArrow *a = new DrawShapeArrow(
       pts, drawOptions_.bondLineWidth, false, cols.second, true,
       at1->getIdx() + activeAtmIdxOffset_, atid2 + activeAtmIdxOffset_,
       bond->getIdx() + activeBndIdxOffset_, frac, M_PI / 12);

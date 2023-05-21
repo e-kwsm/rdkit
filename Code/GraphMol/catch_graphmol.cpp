@@ -2315,7 +2315,7 @@ TEST_CASE("getValenceContrib()") {
 TEST_CASE("conformer details") {
   const auto m = "CC"_smiles;
   REQUIRE(m);
-  auto *conf = new Conformer(m->getNumAtoms());
+  Conformer *conf = new Conformer(m->getNumAtoms());
   CHECK(!conf->hasOwningMol());
   m->addConformer(conf);
   CHECK(conf->hasOwningMol());

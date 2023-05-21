@@ -77,7 +77,7 @@ struct PyLogStream : std::ostream, std::streambuf {
     }
   }
 
-  ~PyLogStream() override {
+  ~PyLogStream() {
     if (!_Py_IsFinalizing()) {
       Py_XDECREF(logfn);
     }

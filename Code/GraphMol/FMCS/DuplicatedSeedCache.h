@@ -27,11 +27,13 @@ class DuplicatedSeedCache {
     size_t getNumBonds() const { return BondIdx.size(); }
 
     void addAtom(unsigned i) {
-      auto it = std::lower_bound(AtomIdx.begin(), AtomIdx.end(), i);
+      std::vector<unsigned>::iterator it =
+          std::lower_bound(AtomIdx.begin(), AtomIdx.end(), i);
       AtomIdx.insert(it, i);
     }
     void addBond(unsigned i) {
-      auto it = std::lower_bound(BondIdx.begin(), BondIdx.end(), i);
+      std::vector<unsigned>::iterator it =
+          std::lower_bound(BondIdx.begin(), BondIdx.end(), i);
       BondIdx.insert(it, i);
     }
 
@@ -90,7 +92,7 @@ class DuplicatedSeedCache {
       return false;  // fast check if key greater then max key in the cache
     }
 
-    auto entryit = Index.find(key);
+    std::map<TKey, TValue>::const_iterator entryit = Index.find(key);
     if (Index.end() != entryit) {
       value = entryit->second;
     }

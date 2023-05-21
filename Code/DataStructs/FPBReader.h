@@ -262,7 +262,7 @@ class RDKIT_DATASTRUCTS_EXPORT FPBReader {
   FPBReader &operator=(const FPBReader &);
   void destroy();
   void _initFromFilename(const char *fname, bool lazyRead) {
-    auto *tmpStream = static_cast<std::istream *>(
+    std::istream *tmpStream = static_cast<std::istream *>(
         new std::ifstream(fname, std::ios_base::binary));
     if (!(*tmpStream) || (tmpStream->bad())) {
       std::ostringstream errout;

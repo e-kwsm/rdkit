@@ -308,7 +308,9 @@ bool LinkedPopLinearSel<Chromosome, PopulationPolicy>::addToPopulation(
     freeChromosomes.push_back(chromosome);
     return false;
   }
-  const auto match = findExactMatch(*chromosome);
+  const typename std::multimap<
+      double, std::shared_ptr<Chromosome>>::const_iterator match =
+      findExactMatch(*chromosome);
   // don't add if we have an exact match
   if (match != population.end()) {
 #ifdef INCLUDE_REPORTER

@@ -73,10 +73,11 @@ void testStructuralFingerprintsReaction() {
     TEST_ASSERT(rxnq->getNumReactantTemplates() == 1);
     TEST_ASSERT(rxnq->getNumProductTemplates() == 1);
 
-    auto reacts_iter = rxn->beginReactantTemplates();
-    auto reacts_iterq = rxnq->beginReactantTemplates();
-    auto products_iter = rxn->beginProductTemplates();
-    auto products_iterq = rxnq->beginProductTemplates();
+    MOL_SPTR_VECT::const_iterator reacts_iter = rxn->beginReactantTemplates();
+    MOL_SPTR_VECT::const_iterator reacts_iterq = rxnq->beginReactantTemplates();
+    MOL_SPTR_VECT::const_iterator products_iter = rxn->beginProductTemplates();
+    MOL_SPTR_VECT::const_iterator products_iterq =
+        rxnq->beginProductTemplates();
 
     MatchVectType mv;
     TEST_ASSERT(SubstructMatch(*reacts_iter->get(), *reacts_iterq->get(), mv))
@@ -114,10 +115,11 @@ void testStructuralFingerprintsReaction() {
     TEST_ASSERT(rxnq->getNumReactantTemplates() == 1);
     TEST_ASSERT(rxnq->getNumProductTemplates() == 1);
 
-    auto reacts_iter = rxn->beginReactantTemplates();
-    auto reacts_iterq = rxnq->beginReactantTemplates();
-    auto products_iter = rxn->beginProductTemplates();
-    auto products_iterq = rxnq->beginProductTemplates();
+    MOL_SPTR_VECT::const_iterator reacts_iter = rxn->beginReactantTemplates();
+    MOL_SPTR_VECT::const_iterator reacts_iterq = rxnq->beginReactantTemplates();
+    MOL_SPTR_VECT::const_iterator products_iter = rxn->beginProductTemplates();
+    MOL_SPTR_VECT::const_iterator products_iterq =
+        rxnq->beginProductTemplates();
 
     MatchVectType mv;
     TEST_ASSERT(SubstructMatch(*reacts_iter->get(), *reacts_iterq->get(), mv))
@@ -162,9 +164,11 @@ void testStructuralFingerprintsReaction() {
     TEST_ASSERT(rxnq2->getNumReactantTemplates() == 0);
     TEST_ASSERT(rxnq2->getNumProductTemplates() == 1);
 
-    auto products_iter = rxn->beginProductTemplates();
-    auto products_iterq = rxnq->beginProductTemplates();
-    auto products_iterq2 = rxnq2->beginProductTemplates();
+    MOL_SPTR_VECT::const_iterator products_iter = rxn->beginProductTemplates();
+    MOL_SPTR_VECT::const_iterator products_iterq =
+        rxnq->beginProductTemplates();
+    MOL_SPTR_VECT::const_iterator products_iterq2 =
+        rxnq2->beginProductTemplates();
 
     MatchVectType mv;
     TEST_ASSERT(
@@ -213,9 +217,10 @@ void testStructuralFingerprintsReaction() {
     TEST_ASSERT(rxnq2->getNumReactantTemplates() == 1);
     TEST_ASSERT(rxnq2->getNumProductTemplates() == 0);
 
-    auto react_iter = rxn->beginReactantTemplates();
-    auto react_iterq = rxnq->beginReactantTemplates();
-    auto react_iterq2 = rxnq2->beginReactantTemplates();
+    MOL_SPTR_VECT::const_iterator react_iter = rxn->beginReactantTemplates();
+    MOL_SPTR_VECT::const_iterator react_iterq = rxnq->beginReactantTemplates();
+    MOL_SPTR_VECT::const_iterator react_iterq2 =
+        rxnq2->beginReactantTemplates();
 
     MatchVectType mv;
     TEST_ASSERT(SubstructMatch(*react_iter->get(), *react_iterq->get(), mv))
@@ -262,12 +267,15 @@ void testStructuralFingerprintsReaction() {
     TEST_ASSERT(rxnq2->getNumReactantTemplates() == 1);
     TEST_ASSERT(rxnq2->getNumProductTemplates() == 1);
 
-    auto react_iter = rxn->beginReactantTemplates();
-    auto react_iterq = rxnq->beginReactantTemplates();
-    auto react_iterq2 = rxnq2->beginReactantTemplates();
-    auto products_iter = rxn->beginProductTemplates();
-    auto products_iterq = rxnq->beginProductTemplates();
-    auto products_iterq2 = rxnq2->beginProductTemplates();
+    MOL_SPTR_VECT::const_iterator react_iter = rxn->beginReactantTemplates();
+    MOL_SPTR_VECT::const_iterator react_iterq = rxnq->beginReactantTemplates();
+    MOL_SPTR_VECT::const_iterator react_iterq2 =
+        rxnq2->beginReactantTemplates();
+    MOL_SPTR_VECT::const_iterator products_iter = rxn->beginProductTemplates();
+    MOL_SPTR_VECT::const_iterator products_iterq =
+        rxnq->beginProductTemplates();
+    MOL_SPTR_VECT::const_iterator products_iterq2 =
+        rxnq2->beginProductTemplates();
 
     MatchVectType mv;
     TEST_ASSERT(SubstructMatch(*react_iter->get(), *react_iterq->get(), mv))

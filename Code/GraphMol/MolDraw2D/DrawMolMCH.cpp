@@ -13,7 +13,6 @@
 #include <GraphMol/RWMol.h>
 #include <GraphMol/MolDraw2D/MolDraw2DDetails.h>
 #include <GraphMol/MolDraw2D/DrawMolMCH.h>
-#include <utility>
 
 namespace RDKit {
 namespace MolDraw2D_detail {
@@ -22,13 +21,13 @@ namespace MolDraw2D_detail {
 DrawMolMCH::DrawMolMCH(
     const ROMol &mol, const std::string &legend, int width, int height,
     MolDrawOptions &drawOptions, DrawText &textDrawer,
-    std::map<int, std::vector<DrawColour>> highlight_atom_map,
+    const std::map<int, std::vector<DrawColour>> &highlight_atom_map,
     const std::map<int, std::vector<DrawColour>> &highlight_bond_map,
     const std::map<int, double> &highlight_radii,
     const std::map<int, int> &highlight_linewidth_multipliers, int confId)
     : DrawMol(mol, legend, width, height, drawOptions, textDrawer, nullptr,
               nullptr, nullptr, nullptr, nullptr, &highlight_radii, confId),
-      mcHighlightAtomMap_(std::move(highlight_atom_map)),
+      mcHighlightAtomMap_(highlight_atom_map),
       mcHighlightBondMap_(highlight_bond_map),
       highlightLinewidthMultipliers_(highlight_linewidth_multipliers) {}
 
@@ -112,15 +111,15 @@ void DrawMolMCH::makeBondHighlights(
         auto p1 = at1_cds - perp * rad;
         auto p2 = at2_cds - perp * rad;
         std::vector<Point2D> line_pts;
-        for (auto &i : hb.second) {
+        for (size_t i = 0; i < hb.second.size(); ++i) {
           line_pts.clear();
           line_pts.push_back(p1);
           line_pts.push_back(p1 + perp * col_rad);
           line_pts.push_back(p2 + perp * col_rad);
           line_pts.push_back(p2);
           DrawShape *pl = new DrawShapePolyLine(
-              line_pts, lineWidth, drawOptions_.scaleBondWidth, i, true,
-              at1_idx, at2_idx, bond->getIdx(), noDash);
+              line_pts, lineWidth, drawOptions_.scaleBondWidth, hb.second[i],
+              true, at1_idx, at2_idx, bond->getIdx(), noDash);
           bondHighlights.emplace_back(pl);
           p1 += perp * col_rad;
           p2 += perp * col_rad;
@@ -269,9 +268,9 @@ void DrawMolMCH::fixHighlightJoinProblems(
   std::sort(fettledAtoms.begin(), fettledAtoms.end());
   fettledAtoms.erase(std::unique(fettledAtoms.begin(), fettledAtoms.end()),
                      fettledAtoms.end());
-  for (unsigned int fettledAtom : fettledAtoms) {
+  for (unsigned int i = 0; i < fettledAtoms.size(); ++i) {
     // now adjust all the other bond highlights that end on this atom
-    auto &atomHL = atomHighlights[fettledAtom];
+    auto &atomHL = atomHighlights[fettledAtoms[i]];
     for (auto &bondHL : bondHighlights) {
       if (atomHL->atom1_ == bondHL->atom1_ ||
           atomHL->atom1_ == bondHL->atom2_) {

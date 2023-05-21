@@ -157,7 +157,7 @@ void test1() {
   BOOST_LOG(rdInfoLog) << "---- Done" << std::endl;
 
   // and the pickle ctor:
-  auto *fcat3 = new FragCatalog(fcat.Serialize());
+  FragCatalog *fcat3 = new FragCatalog(fcat.Serialize());
   TEST_ASSERT(fcat3->getNumEntries() == fcat.getNumEntries());
   BOOST_LOG(rdInfoLog) << "----- Test 3" << std::endl;
   testMols(mols, fpGen, *fcat3);

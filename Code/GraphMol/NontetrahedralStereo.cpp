@@ -253,9 +253,7 @@ int isTrigonalBipyramidalAxialBond(const Atom *cen, const Bond *qry) {
   }
   unsigned int perm = 0;
   cen->getPropIfPresent(RDKit::common_properties::_chiralPermutation, perm);
-  if (perm == 0 || perm > 20) {
-    return 0;
-  }
+  if (perm == 0 || perm > 20) return 0;
 
   unsigned int count = 0;
   for (const auto bnd : cen->getOwningMol().atomBonds(cen)) {
@@ -433,24 +431,19 @@ Bond *getTrigonalBipyramidalAxialBond(const Atom *cen, int axial) {
   PRECONDITION(cen, "bad center pointer");
   PRECONDITION(cen->hasOwningMol(), "no owning mol");
   if (cen->getChiralTag() != RDKit::Atom::ChiralType::CHI_TRIGONALBIPYRAMIDAL ||
-      cen->getDegree() > 5) {
+      cen->getDegree() > 5)
     return nullptr;
-  }
 
   unsigned int perm = 0;
   cen->getPropIfPresent(RDKit::common_properties::_chiralPermutation, perm);
-  if (perm == 0 || perm > 20) {
-    return nullptr;
-  }
+  if (perm == 0 || perm > 20) return 0;
 
   unsigned int idx = (axial != -1) ? trigonalbipyramidal_axial[perm][0]
                                    : trigonalbipyramidal_axial[perm][1];
 
   unsigned int count = 0;
   for (const auto bnd : cen->getOwningMol().atomBonds(cen)) {
-    if (count == idx) {
-      return bnd;
-    }
+    if (count == idx) return bnd;
     count++;
   }
   return nullptr;

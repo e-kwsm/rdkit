@@ -274,7 +274,9 @@ void testFileMCSB(const char* test, unsigned timeout = 30,
   fprintf(f, "#software RDKit C++ FMCS \n#options  timeout=%u threshold=%g\n",
           p.Timeout, p.Threshold);
   std::cout << "Perform test cases ... \n";
-  for (auto tc = testCase.begin(); tc != testCase.end(); tc++, n++) {
+  for (std::list<std::vector<std::string>>::const_iterator tc =
+           testCase.begin();
+       tc != testCase.end(); tc++, n++) {
     if (!test_N.empty() &&
         test_N.end() == std::find(test_N.begin(), test_N.end(), n + 1)) {
       continue;
@@ -291,7 +293,7 @@ void testFileMCSB(const char* test, unsigned timeout = 30,
       fprintf(fs, "\n//TEST %u\n", n + 1);
     }
     for (const auto& mid : *tc) {
-      auto id = molIdMap.find(mid);
+      std::map<std::string, size_t>::const_iterator id = molIdMap.find(mid);
       if (molIdMap.end() == id) {
         continue;
       }

@@ -46,8 +46,9 @@ class RDKIT_QUERY_EXPORT GreaterEqualQuery
   }
   Query<MatchFuncArgType, DataFuncArgType, needsConversion> *copy()
       const override {
-    auto *res = new GreaterEqualQuery<MatchFuncArgType, DataFuncArgType,
-                                      needsConversion>();
+    GreaterEqualQuery<MatchFuncArgType, DataFuncArgType, needsConversion> *res =
+        new GreaterEqualQuery<MatchFuncArgType, DataFuncArgType,
+                              needsConversion>();
     res->setVal(this->d_val);
     res->setTol(this->d_tol);
     res->setNegation(this->getNegation());

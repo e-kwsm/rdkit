@@ -906,7 +906,8 @@ struct ZipBond {
     if (!chiral_atom->getChiralTag()) {
       return;
     }
-    auto mark = chiral_atom->getProp<std::string>("__molzip_chiral_mark");
+    std::string mark =
+        chiral_atom->getProp<std::string>("__molzip_chiral_mark");
     // std::vector<unsigned int> orders1;
     std::vector<unsigned int> orders2;
     auto &m = chiral_atom->getOwningMol();

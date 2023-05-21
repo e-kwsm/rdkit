@@ -36,7 +36,7 @@ void test1Vector() {
   data[1] = 2.0;
   data[2] = 3.0;
   Vector<double>::DATA_SPTR sdata(data);
-  auto *v2 = new Vector<double>(3, sdata);
+  Vector<double> *v2 = new Vector<double>(3, sdata);
   CHECK_INVARIANT(RDKit::feq(v2->normL1(), 6.0), "");
   Vector<double> v3(v1);
   unsigned int i;
@@ -81,7 +81,7 @@ void test2Matrix() {
   CHECK_INVARIANT(RDKit::feq(v2.getVal(1), 11.5), "");
 
   data = new double[6];
-  auto *B = new Matrix<double>(2, 3, Matrix<double>::DATA_SPTR(data));
+  Matrix<double> *B = new Matrix<double>(2, 3, Matrix<double>::DATA_SPTR(data));
   Matrix<double> E(A);  //(*B) = A;
   multiply(E, v1, v2);
   CHECK_INVARIANT(RDKit::feq(v2.getVal(0), 11.0), "");
@@ -160,7 +160,8 @@ void test3SquareMatrix() {
   data[1] = 2.0;
   data[2] = 3.0;
   data[3] = 4.0;
-  auto *D = new SquareMatrix<double>(2, Matrix<double>::DATA_SPTR(data));
+  SquareMatrix<double> *D =
+      new SquareMatrix<double>(2, Matrix<double>::DATA_SPTR(data));
   SquareMatrix<double> E(*D);
   multiply((*D), E, A);
 

@@ -85,7 +85,7 @@ class RDKIT_QUERY_EXPORT RangeQuery
 
   Query<MatchFuncArgType, DataFuncArgType, needsConversion> *copy()
       const override {
-    auto *res =
+    RangeQuery<MatchFuncArgType, DataFuncArgType, needsConversion> *res =
         new RangeQuery<MatchFuncArgType, DataFuncArgType, needsConversion>();
     res->setUpper(this->d_upper);
     res->setLower(this->d_lower);

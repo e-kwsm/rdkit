@@ -47,7 +47,7 @@ class RDKIT_QUERY_EXPORT SetQuery
 
   Query<MatchFuncArgType, DataFuncArgType, needsConversion> *copy()
       const override {
-    auto *res =
+    SetQuery<MatchFuncArgType, DataFuncArgType, needsConversion> *res =
         new SetQuery<MatchFuncArgType, DataFuncArgType, needsConversion>();
     res->setDataFunc(this->d_dataFunc);
     typename std::set<MatchFuncArgType>::const_iterator i;

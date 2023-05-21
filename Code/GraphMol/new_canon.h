@@ -526,14 +526,14 @@ class RDKIT_GRAPHMOL_EXPORT AtomCompareFunctor {
 const unsigned int ATNUM_CLASS_OFFSET = 10000;
 class RDKIT_GRAPHMOL_EXPORT ChiralAtomCompareFunctor {
   void getAtomNeighborhood(std::vector<bondholder> &nbrs) const {
-    for (auto &j : nbrs) {
-      unsigned int nbrIdx = j.nbrIdx;
+    for (unsigned j = 0; j < nbrs.size(); ++j) {
+      unsigned int nbrIdx = nbrs[j].nbrIdx;
       if (nbrIdx == ATNUM_CLASS_OFFSET) {
         // Ignore the Hs
         continue;
       }
       const Atom *nbr = dp_atoms[nbrIdx].atom;
-      j.nbrSymClass =
+      nbrs[j].nbrSymClass =
           nbr->getAtomicNum() * ATNUM_CLASS_OFFSET + dp_atoms[nbrIdx].index + 1;
     }
     std::sort(nbrs.begin(), nbrs.end(), bondholder::greater);

@@ -222,7 +222,7 @@ TEST_CASE("createAtomPropertyLists", "[atom_list_properties]") {
     m->getAtomWithIdx(2)->setProp<std::string>("foo1", std::string(80, 'c'));
     FileParserUtils::createAtomStringPropertyList(*m, "foo1");
     REQUIRE(m->hasProp("atom.prop.foo1"));
-    auto ps = m->getProp<std::string>("atom.prop.foo1");
+    std::string ps = m->getProp<std::string>("atom.prop.foo1");
     CHECK(ps.length() > 240);
     CHECK(ps.find("\n") != std::string::npos);
     for (auto &atom : m->atoms()) {

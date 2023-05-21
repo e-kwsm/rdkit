@@ -139,7 +139,8 @@ inline std::string qhelper(Atom::QUERYATOM_QUERY *q, unsigned int depth) {
       res += "  ";
     }
     res += q->getFullDescription() + "\n";
-    for (auto ci = q->beginChildren(); ci != q->endChildren(); ++ci) {
+    for (Atom::QUERYATOM_QUERY::CHILD_VECT_CI ci = q->beginChildren();
+         ci != q->endChildren(); ++ci) {
       res += qhelper((*ci).get(), depth + 1);
     }
   }

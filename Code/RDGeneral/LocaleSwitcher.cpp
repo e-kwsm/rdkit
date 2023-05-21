@@ -123,7 +123,7 @@ class LocaleSwitcherImpl {
     // set locale for this thread
 
     if (!recurseLocale(CurrentState)) {
-      auto loc = newlocale(LC_ALL_MASK, "C", (locale_t) nullptr);
+      auto loc = newlocale(LC_ALL_MASK, "C", (locale_t)0);
       old_loc = uselocale(loc);
       recurseLocale(SwitchLocale);
       switched = true;

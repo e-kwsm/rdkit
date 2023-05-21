@@ -60,7 +60,7 @@ CDXMLDataStreamToChemicalReactions(std::istream &inStream, bool sanitize,
   }
   for (const auto &scheme : schemes) {
     // convert atoms to queries:
-    auto *res = new ChemicalReaction;
+    ChemicalReaction *res = new ChemicalReaction;
     result.push_back(std::unique_ptr<ChemicalReaction>(res));
     for (auto idx : scheme.second) {
       CHECK_INVARIANT(

@@ -28,8 +28,8 @@ inline void OptimizeMoleculeConfsHelper_(ForceFields::ForceField ff, ROMol *mol,
                "res->size() must be >= mol->getNumConformers()");
   unsigned int i = 0;
   ff.positions().resize(mol->getNumAtoms());
-  for (auto cit = mol->beginConformers(); cit != mol->endConformers();
-       ++cit, ++i) {
+  for (ROMol::ConformerIterator cit = mol->beginConformers();
+       cit != mol->endConformers(); ++cit, ++i) {
     if (i % numThreads != threadIdx) {
       continue;
     }
@@ -65,8 +65,8 @@ inline void OptimizeMoleculeConfsST(ROMol &mol, ForceFields::ForceField &ff,
   PRECONDITION(res.size() >= mol.getNumConformers(),
                "res.size() must be >= mol.getNumConformers()");
   unsigned int i = 0;
-  for (auto cit = mol.beginConformers(); cit != mol.endConformers();
-       ++cit, ++i) {
+  for (ROMol::ConformerIterator cit = mol.beginConformers();
+       cit != mol.endConformers(); ++cit, ++i) {
     for (unsigned int aidx = 0; aidx < mol.getNumAtoms(); ++aidx) {
       ff.positions()[aidx] = &(*cit)->getAtomPos(aidx);
     }

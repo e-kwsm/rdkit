@@ -41,7 +41,11 @@ bool shouldDetectDoubleBondStereo(const Bond *bond) {
 bool getValFromEnvironment(const char *var, bool defVal) {
   auto evar = std::getenv(var);
   if (evar != nullptr) {
-    return strcmp(evar, "0") != 0;
+    if (!strcmp(evar, "0")) {
+      return false;
+    } else {
+      return true;
+    }
   }
   return defVal;
 }
@@ -683,10 +687,13 @@ bool bondAffectsAtomChirality(const Bond *bond, const Atom *atom) {
   // FIX consider how to handle organometallics
   PRECONDITION(bond, "bad bond pointer");
   PRECONDITION(atom, "bad atom pointer");
-  return !(bond->getBondType() == Bond::BondType::UNSPECIFIED ||
-           bond->getBondType() == Bond::BondType::ZERO ||
-           (bond->getBondType() == Bond::BondType::DATIVE &&
-            bond->getBeginAtomIdx() == atom->getIdx()));
+  if (bond->getBondType() == Bond::BondType::UNSPECIFIED ||
+      bond->getBondType() == Bond::BondType::ZERO ||
+      (bond->getBondType() == Bond::BondType::DATIVE &&
+       bond->getBeginAtomIdx() == atom->getIdx())) {
+    return false;
+  }
+  return true;
 }
 unsigned int getAtomNonzeroDegree(const Atom *atom) {
   PRECONDITION(atom, "bad pointer");
@@ -1262,8 +1269,8 @@ void findChiralAtomSpecialCases(ROMol &mol,
             ringAtomEntry < 0 ? -ringAtomEntry - 1 : ringAtomEntry - 1;
         same[ringAtomIdx] = ringAtomEntry;
       }
-      for (auto rae = ringStereoAtoms.begin(); rae != ringStereoAtoms.end();
-           ++rae) {
+      for (INT_VECT_CI rae = ringStereoAtoms.begin();
+           rae != ringStereoAtoms.end(); ++rae) {
         int ringAtomEntry = *rae;
         int ringAtomIdx =
             ringAtomEntry < 0 ? -ringAtomEntry - 1 : ringAtomEntry - 1;
@@ -1433,8 +1440,9 @@ std::pair<bool, bool> assignAtomChiralCodes(ROMol &mol, UINT_VECT &ranks,
 
         // collect the list of neighbor indices:
         std::list<int> nbrIndices;
-        for (const auto &nbr : nbrs) {
-          nbrIndices.push_back(nbr.second);
+        for (Chirality::INT_PAIR_VECT_CI nbrIt = nbrs.begin();
+             nbrIt != nbrs.end(); ++nbrIt) {
+          nbrIndices.push_back((*nbrIt).second);
         }
         // ask the atom how many swaps we have to make:
         int nSwaps = atom->getPerturbationOrder(nbrIndices);
@@ -2477,12 +2485,15 @@ static unsigned int OctahedralPermFrom3D(unsigned char *pair,
 
 bool isWigglyBond(const Bond *bond, const Atom *atom) {
   int hasWigglyBond = 0;
-  return bond->getBeginAtomIdx() == atom->getIdx() &&
-         bond->getBondType() == Bond::BondType::SINGLE &&
-         (bond->getBondDir() == Bond::BondDir::UNKNOWN ||
-          (bond->getPropIfPresent<int>(common_properties::_UnknownStereo,
-                                       hasWigglyBond) &&
-           hasWigglyBond));
+  if (bond->getBeginAtomIdx() == atom->getIdx() &&
+      bond->getBondType() == Bond::BondType::SINGLE &&
+      (bond->getBondDir() == Bond::BondDir::UNKNOWN ||
+       (bond->getPropIfPresent<int>(common_properties::_UnknownStereo,
+                                    hasWigglyBond) &&
+        hasWigglyBond))) {
+    return true;
+  }
+  return false;
 }
 // The tolerance here is pretty high in order to accomodate things coming from
 // the dgeom code As we get more experience with real-world structures and/or

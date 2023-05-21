@@ -515,10 +515,11 @@ std::vector<MatchVectType> SubstructMatch(
   if (found) {
     unsigned int nQueryAtoms = query.getNumAtoms();
     matches.reserve(pms.size());
-    for (auto &pm : pms) {
+    for (std::list<detail::ssPairType>::const_iterator iter1 = pms.begin();
+         iter1 != pms.end(); ++iter1) {
       MatchVectType matchVect;
       matchVect.resize(nQueryAtoms);
-      for (const auto &iter2 : pm) {
+      for (const auto &iter2 : *iter1) {
         matchVect[iter2.first] = std::pair<int, int>(iter2.first, iter2.second);
       }
       matches.push_back(matchVect);
@@ -647,14 +648,15 @@ unsigned int RecursiveMatcher(const ROMol &mol, const ROMol &query,
   unsigned int res = 0;
   if (found) {
     matches.reserve(pms.size());
-    for (auto &pm : pms) {
+    for (std::list<detail::ssPairType>::const_iterator iter1 = pms.begin();
+         iter1 != pms.end(); ++iter1) {
       if (!query.hasProp(common_properties::_queryRootAtom)) {
-        matches.push_back(pm.begin()->second);
+        matches.push_back(iter1->begin()->second);
       } else {
         int rootIdx;
         query.getProp(common_properties::_queryRootAtom, rootIdx);
         bool found = false;
-        for (const auto &pairIter : pm) {
+        for (const auto &pairIter : *iter1) {
           if (pairIter.first == static_cast<unsigned int>(rootIdx)) {
             matches.push_back(pairIter.second);
             found = true;

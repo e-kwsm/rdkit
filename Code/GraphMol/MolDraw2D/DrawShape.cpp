@@ -11,7 +11,6 @@
 //
 
 #include <cmath>
-#include <utility>
 
 #include <GraphMol/MolDraw2D/MolDraw2DDetails.h>
 #include <GraphMol/MolDraw2D/DrawShape.h>
@@ -23,10 +22,10 @@ namespace RDKit {
 namespace MolDraw2D_detail {
 
 // ****************************************************************************
-DrawShape::DrawShape(std::vector<Point2D> points, double lineWidth,
+DrawShape::DrawShape(const std::vector<Point2D> &points, double lineWidth,
                      bool scaleLineWidth, DrawColour lineColour, bool fill,
                      int atom1, int atom2, int bond)
-    : points_(std::move(points)),
+    : points_(points),
       lineWidth_(lineWidth),
       scaleLineWidth_(scaleLineWidth),
       lineColour_(lineColour),
@@ -207,7 +206,7 @@ DrawShapeSimpleLine::DrawShapeSimpleLine(const std::vector<Point2D> &points,
                                          DashPattern dashPattern)
     : DrawShape(points, lineWidth, scaleLineWidth, lineColour, false, atom1,
                 atom2, bond),
-      dashPattern_(std::move(dashPattern)) {
+      dashPattern_(dashPattern) {
   PRECONDITION(points_.size() == 2, "simple line wrong number of points");
 }
 
@@ -251,7 +250,7 @@ DrawShapePolyLine::DrawShapePolyLine(const std::vector<Point2D> &points,
                                      DashPattern dashPattern)
     : DrawShape(points, lineWidth, scaleLineWidth, lineColour, fill, atom1,
                 atom2, bond),
-      dashPattern_(std::move(dashPattern)) {
+      dashPattern_(dashPattern) {
   PRECONDITION(points_.size() > 2, "polyline not enough points");
 }
 
@@ -524,7 +523,7 @@ void DrawShapeDashedWedge::buildLines() {
   // between will contribute half a width.
   double dashSep = 2.5 + lineWidth_;
   double centralLen = (at1Cds_ - midend).length();
-  auto nDashes = rdcast<unsigned int>(std::round(centralLen / dashSep));
+  unsigned int nDashes = rdcast<unsigned int>(std::round(centralLen / dashSep));
   // There should be at least 3 dashes so we can see which way the wedge
   // is going (Github6041b).
   unsigned int numDashesNeeded = oneLessDash_ ? 4 : 3;

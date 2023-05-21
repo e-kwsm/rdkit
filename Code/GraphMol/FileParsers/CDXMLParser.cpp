@@ -523,7 +523,7 @@ std::vector<std::unique_ptr<RWMol>> CDXMLDataStreamToMols(
     auto xml = dynamic_cast<boost::property_tree::file_parser_error *>(&e);
     if (xml != nullptr) {
       auto msg = std::string(xml->message()) +
-                 " at line: " + std::to_string(xml->line());
+                 " at line: " + boost::lexical_cast<std::string>(xml->line());
       throw FileParseException(msg);
     }
 
@@ -580,7 +580,7 @@ std::vector<std::unique_ptr<RWMol>> CDXMLDataStreamToMols(
 
                 if (atm->hasProp(CDX_ATOM_POS)) {
                   hasConf = true;
-                  const auto coord =
+                  const std::vector<double> coord =
                       atm->getProp<std::vector<double>>(CDX_ATOM_POS);
 
                   if (coord.size() == 2) {
@@ -672,7 +672,7 @@ std::vector<std::unique_ptr<RWMol>> CDXMLDataStreamToMols(
         auto idx = mol->getProp<unsigned int>(CDXML_FRAG_ID);
         fragments[idx] = mol_idx++;
         for (auto &atom : mol->atoms()) {
-          auto idx = atom->getProp<unsigned int>(CDX_ATOM_ID);
+          unsigned int idx = atom->getProp<unsigned int>(CDX_ATOM_ID);
           atoms[idx] = atom;
         }
       }

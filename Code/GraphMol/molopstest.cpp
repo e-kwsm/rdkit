@@ -1864,7 +1864,7 @@ void testShortestPath() {
 
     INT_LIST path = MolOps::getShortestPath(*m, 1, 20);
     CHECK_INVARIANT(path.size() == 7, "");
-    auto pi = path.begin();
+    INT_LIST_CI pi = path.begin();
     CHECK_INVARIANT((*pi) == 1, "");
     pi++;
     CHECK_INVARIANT((*pi) == 2, "");
@@ -1889,7 +1889,7 @@ void testShortestPath() {
     INT_LIST path = MolOps::getShortestPath(*m, 0, 1);
     std::cerr << "path: " << path.size() << std::endl;
     CHECK_INVARIANT(path.size() == 2, "");
-    auto pi = path.begin();
+    INT_LIST_CI pi = path.begin();
     CHECK_INVARIANT((*pi) == 0, "");
     pi++;
     CHECK_INVARIANT((*pi) == 1, "");
@@ -1908,7 +1908,7 @@ void testShortestPath() {
 
     INT_LIST path = MolOps::getShortestPath(*m, 8, 11);
     CHECK_INVARIANT(path.size() == 7, "");
-    auto pi = path.begin();
+    INT_LIST_CI pi = path.begin();
     CHECK_INVARIANT((*pi) == 8, "");
     pi++;
     CHECK_INVARIANT((*pi) == 7, "");
@@ -4182,8 +4182,9 @@ void testBasicCanon() {
     MatchVectType mv;
     TEST_ASSERT(SubstructMatch(*m, *m2, mv));
     std::map<int, int> mmap;
-    for (const auto &mvit : mv) {
-      mmap[mvit.second] = mvit.first;
+    for (MatchVectType::const_iterator mvit = mv.begin(); mvit != mv.end();
+         ++mvit) {
+      mmap[mvit->second] = mvit->first;
     }
     TEST_ASSERT(m2->getBondBetweenAtoms(mmap[2], mmap[3])->getBondType() ==
                 Bond::DOUBLE);
@@ -4218,8 +4219,9 @@ void testBasicCanon() {
     MatchVectType mv;
     TEST_ASSERT(SubstructMatch(*m, *m2, mv));
     std::map<int, int> mmap;
-    for (const auto &mvit : mv) {
-      mmap[mvit.second] = mvit.first;
+    for (MatchVectType::const_iterator mvit = mv.begin(); mvit != mv.end();
+         ++mvit) {
+      mmap[mvit->second] = mvit->first;
     }
     TEST_ASSERT(m2->getBondBetweenAtoms(mmap[10], mmap[11])->getBondType() ==
                 Bond::DOUBLE);
@@ -4347,8 +4349,9 @@ void testBasicCanon() {
     MatchVectType mv;
     TEST_ASSERT(SubstructMatch(*m, *m2, mv));
     std::map<int, int> mmap;
-    for (const auto &mvit : mv) {
-      mmap[mvit.second] = mvit.first;
+    for (MatchVectType::const_iterator mvit = mv.begin(); mvit != mv.end();
+         ++mvit) {
+      mmap[mvit->second] = mvit->first;
     }
     TEST_ASSERT(m2->getBondBetweenAtoms(mmap[1], mmap[2])->getBondType() ==
                 Bond::DOUBLE);
@@ -4375,8 +4378,9 @@ void testBasicCanon() {
     MatchVectType mv;
     TEST_ASSERT(SubstructMatch(*m, *m2, mv));
     std::map<int, int> mmap;
-    for (const auto &mvit : mv) {
-      mmap[mvit.second] = mvit.first;
+    for (MatchVectType::const_iterator mvit = mv.begin(); mvit != mv.end();
+         ++mvit) {
+      mmap[mvit->second] = mvit->first;
     }
     TEST_ASSERT(m2->getBondBetweenAtoms(mmap[4], mmap[5])->getBondType() ==
                 Bond::DOUBLE);
@@ -4422,8 +4426,9 @@ void testBasicCanon() {
     MatchVectType mv;
     TEST_ASSERT(SubstructMatch(*m, *m2, mv));
     std::map<int, int> mmap;
-    for (const auto &mvit : mv) {
-      mmap[mvit.second] = mvit.first;
+    for (MatchVectType::const_iterator mvit = mv.begin(); mvit != mv.end();
+         ++mvit) {
+      mmap[mvit->second] = mvit->first;
     }
 
     TEST_ASSERT(m2->getBondBetweenAtoms(mmap[1], mmap[2])->getBondType() ==
@@ -4493,8 +4498,9 @@ void testBasicCanon() {
     MatchVectType mv;
     TEST_ASSERT(SubstructMatch(*m, *m2, mv));
     std::map<int, int> mmap;
-    for (const auto &mvit : mv) {
-      mmap[mvit.second] = mvit.first;
+    for (MatchVectType::const_iterator mvit = mv.begin(); mvit != mv.end();
+         ++mvit) {
+      mmap[mvit->second] = mvit->first;
     }
 
     TEST_ASSERT(m2->getBondBetweenAtoms(mmap[21], mmap[13])->getBondType() ==
@@ -4518,8 +4524,9 @@ void testBasicCanon() {
     m2 = SmilesToMol(tsmi);
     TEST_ASSERT(SubstructMatch(*m, *m2, mv));
     mmap.clear();
-    for (const auto &mvit : mv) {
-      mmap[mvit.second] = mvit.first;
+    for (MatchVectType::const_iterator mvit = mv.begin(); mvit != mv.end();
+         ++mvit) {
+      mmap[mvit->second] = mvit->first;
     }
     TEST_ASSERT(m2->getBondBetweenAtoms(mmap[21], mmap[13])->getBondType() ==
                 Bond::DOUBLE);
@@ -4556,8 +4563,9 @@ void testBasicCanon() {
     TEST_ASSERT(SubstructMatch(*m, *m2, mv));
     std::map<int, int> mmap;
     mmap.clear();
-    for (const auto &mvit : mv) {
-      mmap[mvit.second] = mvit.first;
+    for (MatchVectType::const_iterator mvit = mv.begin(); mvit != mv.end();
+         ++mvit) {
+      mmap[mvit->second] = mvit->first;
     }
     TEST_ASSERT(m2->getBondBetweenAtoms(mmap[1], mmap[2])->getBondType() ==
                 Bond::DOUBLE);
@@ -5603,8 +5611,9 @@ void testGithubIssue539() {
     smilesVec.emplace_back("C1=CC=C[CH+]C=C1");
     smilesVec.emplace_back("c1c[cH+]1");
     smilesVec.emplace_back("c1ccc[cH+]cc1");
-    for (const auto &smiles : smilesVec) {
-      RWMol *m = SmilesToMol(smiles);
+    for (std::vector<std::string>::const_iterator smiles = smilesVec.begin();
+         smiles != smilesVec.end(); ++smiles) {
+      RWMol *m = SmilesToMol(*smiles);
       TEST_ASSERT(m);
       bool allConjugated = true;
       for (unsigned int i = 0; allConjugated && i < m->getNumBonds(); ++i) {

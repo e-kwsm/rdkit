@@ -30,7 +30,7 @@ void ptreeToMol(RWMol *mol, const pt::ptree &molE) {
   bool is3D = false;
   for (const auto &atE : molE) {
     if (atE.first == "rdkit:atom") {
-      auto asmi = atE.second.get<std::string>("<xmlattr>.atom-smiles");
+      std::string asmi = atE.second.get<std::string>("<xmlattr>.atom-smiles");
       Atom *atom = SmilesToAtom(asmi);
       if (!atom) {
         BOOST_LOG(rdWarningLog) << " Could not convert SMILES '" << asmi
@@ -51,7 +51,7 @@ void ptreeToMol(RWMol *mol, const pt::ptree &molE) {
   }
   for (const auto &atE : molE) {
     if (atE.first == "rdkit:bond") {
-      auto asmi = atE.second.get<std::string>("<xmlattr>.bond-smiles");
+      std::string asmi = atE.second.get<std::string>("<xmlattr>.bond-smiles");
       Bond *bond = SmilesToBond(asmi);
       if (!bond) {
         BOOST_LOG(rdWarningLog) << " Could not convert SMILES '" << asmi

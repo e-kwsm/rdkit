@@ -347,7 +347,7 @@ int mmffValidationSuite(int argc, char *argv[]) {
           }
           smiSupplier.reset();
         }
-        auto *sdfWriter =
+        SDWriter *sdfWriter =
             new SDWriter(molFileIt.substr(0, molFileIt.length() - 4) + "_min" +
                          ((molTypeIt == "smi") ? "_from_SMILES" : "") + ".sdf");
         ROMol *mol;
@@ -1748,7 +1748,8 @@ void testMMFFCopy() {
     auto *cmol = new RDKit::RWMol(*mol);
     TEST_ASSERT(cmol);
 
-    auto *mmffMolProperties = new MMFF::MMFFMolProperties(*mol);
+    MMFF::MMFFMolProperties *mmffMolProperties =
+        new MMFF::MMFFMolProperties(*mol);
     TEST_ASSERT(mmffMolProperties);
     TEST_ASSERT(mmffMolProperties->isValid());
     ForceFields::ForceField *field =

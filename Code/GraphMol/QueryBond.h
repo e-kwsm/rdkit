@@ -125,7 +125,8 @@ inline std::string qhelper(Bond::QUERYBOND_QUERY *q, unsigned int depth) {
       res += "  ";
     }
     res += q->getFullDescription() + "\n";
-    for (auto ci = q->beginChildren(); ci != q->endChildren(); ++ci) {
+    for (Bond::QUERYBOND_QUERY::CHILD_VECT_CI ci = q->beginChildren();
+         ci != q->endChildren(); ++ci) {
       res += qhelper((*ci).get(), depth + 1);
     }
   }
