@@ -14,18 +14,19 @@
 #include <GraphMol/MolDraw2D/DrawText.h>
 #include <GraphMol/MolDraw2D/MolDraw2D.h>
 
+#include <utility>
+
 namespace RDKit {
 namespace MolDraw2D_detail {
 
 // ****************************************************************************
-DrawAnnotation::DrawAnnotation(const std::string &note,
-                               const TextAlignType &align,
-                               const std::string &cls, double relFontScale,
+DrawAnnotation::DrawAnnotation(std::string note, const TextAlignType &align,
+                               std::string cls, double relFontScale,
                                const Point2D &pos, const DrawColour &colour,
                                DrawText &textDrawer)
-    : text_(note),
+    : text_(std::move(note)),
       align_(align),
-      class_(cls),
+      class_(std::move(cls)),
       textDrawer_(textDrawer),
       pos_(pos),
       colour_(colour) {
