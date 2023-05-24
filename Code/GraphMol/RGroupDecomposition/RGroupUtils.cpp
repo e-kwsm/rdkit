@@ -111,12 +111,9 @@ bool isDummyRGroupAttachment(const Atom &atom) {
     return true;
   }
   bool unlabeled_core_attachment = false;
-  if (atom.getPropIfPresent(UNLABELED_CORE_ATTACHMENT,
-                            unlabeled_core_attachment) &&
-      unlabeled_core_attachment) {
-    return true;
-  }
-  return false;
+  return atom.getPropIfPresent(UNLABELED_CORE_ATTACHMENT,
+                               unlabeled_core_attachment) &&
+         unlabeled_core_attachment;
 }
 
 bool isAtomWithMultipleNeighborsOrNotDummyRGroupAttachment(const Atom &atom) {

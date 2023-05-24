@@ -763,7 +763,7 @@ bool RCore::checkAllBondsToAttachmentPointPresent(
         auto coreAtom = core->getAtomWithIdx(match->first);
         // don't need to match a non terminal user R group
         // if (!(coreAtom->getDegree() > 1 && isUserRLabel(*coreAtom))) {
-        if (!(coreAtom->getAtomicNum() == 0 && isUserRLabel(*coreAtom))) {
+        if (coreAtom->getAtomicNum() != 0 || !isUserRLabel(*coreAtom)) {
           coreNeighbors.insert(match->first);
         }
       }
