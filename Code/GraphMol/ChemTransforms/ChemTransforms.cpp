@@ -551,8 +551,7 @@ ROMol *replaceCore(const ROMol &mol, const ROMol &core,
       }
       unsigned int whichNbr = 0;
       std::list<Bond *> newBonds;
-      for (auto lIter = nbrList.begin(); lIter != nbrList.end(); ++lIter) {
-        unsigned int nbrIdx = *lIter;
+      for (unsigned int nbrIdx : nbrList) {
         Bond *connectingBond =
             newMol->getBondBetweenAtoms(mappingInfo.molIndex, nbrIdx);
         bool bondToCore = matchingIndices[nbrIdx] > -1;
