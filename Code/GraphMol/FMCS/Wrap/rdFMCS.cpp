@@ -488,8 +488,7 @@ class PyMCSParameters {
                                    const ROMol &mol2, unsigned int atom2,
                                    void *userData) {
     PRECONDITION(userData, "userData must not be NULL");
-    PyCompareFunctionUserData *cfud =
-        static_cast<PyCompareFunctionUserData *>(userData);
+    auto *cfud = static_cast<PyCompareFunctionUserData *>(userData);
     bool res = false;
     {
       PyGILStateHolder h;
@@ -505,8 +504,7 @@ class PyMCSParameters {
                                    const ROMol &mol2, unsigned int bond2,
                                    void *userData) {
     PRECONDITION(userData, "userData must not be NULL");
-    PyCompareFunctionUserData *cfud =
-        static_cast<PyCompareFunctionUserData *>(userData);
+    auto *cfud = static_cast<PyCompareFunctionUserData *>(userData);
     bool res = false;
     if ((p.RingMatchesRingOnly ||
          cfud->mcsParameters->AtomCompareParameters.RingMatchesRingOnly) &&
@@ -529,8 +527,7 @@ class PyMCSParameters {
                                         const MCSParameters &params,
                                         void *userData) {
     PRECONDITION(userData, "userData must not be NULL");
-    PyProgressCallbackUserData *pcud =
-        static_cast<PyProgressCallbackUserData *>(userData);
+    auto *pcud = static_cast<PyProgressCallbackUserData *>(userData);
     bool res = false;
     {
       MCSParameters paramsCopy(params);
