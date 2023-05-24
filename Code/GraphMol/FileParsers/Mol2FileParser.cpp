@@ -665,7 +665,7 @@ Bond *ParseMol2FileBondLine(const std::string bondLine,
   idx2--;
 
   // if either of both ends of the bond is not an atom in the mol - return NULL
-  if (!(idx1 < idxCorresp.size() || idx2 < idxCorresp.size())) {
+  if (idx1 >= idxCorresp.size() && idx2 >= idxCorresp.size()) {
     throw FileParseException("index mismatch");
   }
 
@@ -749,7 +749,7 @@ void ParseMol2AtomBlock(std::istream *inStream, RWMol *res, unsigned int nAtoms,
   }
   // create conformer based on 3DPoints and add to RWMol
   auto *conf = new Conformer(nAtoms - nLP);
-  std::vector<RDGeom::Point3D>::const_iterator threeDPsIt = threeDPs.begin();
+  auto threeDPsIt = threeDPs.begin();
   for (unsigned int i = 0; i < threeDPs.size(); ++i) {
     conf->setAtomPos(i, *threeDPsIt);
     ++threeDPsIt;
