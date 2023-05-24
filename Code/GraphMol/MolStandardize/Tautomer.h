@@ -372,7 +372,7 @@ class RDKIT_MOLSTANDARDIZE_EXPORT TautomerEnumerator {
         }
       }
     }
-    ROMol *res = new ROMol(*bestMol);
+    auto *res = new ROMol(*bestMol);
     static const bool cleanIt = true;
     static const bool force = true;
     MolOps::assignStereochemistry(*res, cleanIt, force);
