@@ -415,11 +415,7 @@ bool isPossibleStartingBond(const Bond *bptr) {
                   queryAtomUnsaturated(bptr->getEndAtom());
 
   // at least one has to be unsaturated:
-  if (!unsatBeg && !unsatEnd) {
-    return false;
-  }
-
-  return true;
+  return !(!unsatBeg && !unsatEnd);
 }
 
 // is one of the atom's bonds in the startBonds set?
