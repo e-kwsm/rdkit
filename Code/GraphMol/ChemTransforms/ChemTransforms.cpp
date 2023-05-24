@@ -196,10 +196,9 @@ std::vector<ROMOL_SPTR> replaceSubstructs(
   INT_VECT delList;
 
   // now loop over the list of matches and replace them:
-  for (std::vector<MatchVectType>::const_iterator mati = fgpMatches.begin();
-       mati != fgpMatches.end(); mati++) {
+  for (const auto &fgpMatche : fgpMatches) {
     INT_VECT match;  // each match onto the molecule - list of atoms ids
-    for (const auto &mi : *mati) {
+    for (const auto &mi : fgpMatche) {
       match.push_back(mi.second);
     }
 
@@ -290,24 +289,22 @@ ROMol *replaceSidechains(const ROMol &mol, const ROMol &coreQuery,
   }
 
   boost::dynamic_bitset<> matchingIndices(mol.getNumAtoms());
-  for (MatchVectType::const_iterator mvit = matchV.begin();
-       mvit != matchV.end(); ++mvit) {
-    matchingIndices[mvit->second] = 1;
+  for (const auto &mvit : matchV) {
+    matchingIndices[mvit.second] = 1;
   }
 
   auto *newMol = new RWMol(mol);
   boost::dynamic_bitset<> keepSet(newMol->getNumAtoms());
   std::vector<unsigned int> dummyIndices;
-  for (MatchVectType::const_iterator mvit = matchV.begin();
-       mvit != matchV.end(); ++mvit) {
-    keepSet.set(mvit->second);
+  for (const auto &mvit : matchV) {
+    keepSet.set(mvit.second);
     // if the atom in the molecule has higher degree than the atom in the
     // core, we have an attachment point:
-    if (newMol->getAtomWithIdx(mvit->second)->getDegree() >
-        coreQuery.getAtomWithIdx(mvit->first)->getDegree()) {
+    if (newMol->getAtomWithIdx(mvit.second)->getDegree() >
+        coreQuery.getAtomWithIdx(mvit.first)->getDegree()) {
       ROMol::ADJ_ITER nbrIdx, endNbrs;
       boost::tie(nbrIdx, endNbrs) =
-          newMol->getAtomNeighbors(newMol->getAtomWithIdx(mvit->second));
+          newMol->getAtomNeighbors(newMol->getAtomWithIdx(mvit.second));
       while (nbrIdx != endNbrs) {
         if (!matchingIndices[*nbrIdx]) {
           // this neighbor isn't in the match, convert it to a dummy atom and
@@ -315,7 +312,7 @@ ROMol *replaceSidechains(const ROMol &mol, const ROMol &coreQuery,
           keepSet.set(*nbrIdx);
           dummyIndices.push_back(*nbrIdx);
           Atom *at = newMol->getAtomWithIdx(*nbrIdx);
-          Bond *b = newMol->getBondBetweenAtoms(mvit->second, *nbrIdx);
+          Bond *b = newMol->getBondBetweenAtoms(mvit.second, *nbrIdx);
           if (b) {
             b->setIsAromatic(false);
             b->setBondType(Bond::SINGLE);
@@ -554,8 +551,7 @@ ROMol *replaceCore(const ROMol &mol, const ROMol &core,
       }
       unsigned int whichNbr = 0;
       std::list<Bond *> newBonds;
-      for (std::list<unsigned int>::const_iterator lIter = nbrList.begin();
-           lIter != nbrList.end(); ++lIter) {
+      for (auto lIter = nbrList.begin(); lIter != nbrList.end(); ++lIter) {
         unsigned int nbrIdx = *lIter;
         Bond *connectingBond =
             newMol->getBondBetweenAtoms(mappingInfo.molIndex, nbrIdx);
@@ -731,9 +727,9 @@ ROMol *replaceCore(const ROMol &mol, const ROMol &core,
   for (auto citer = mol.beginConformers(); citer != mol.endConformers();
        ++citer) {
     Conformer &newConf = newMol->getConformer((*citer)->getId());
-    for (auto iter = dummyAtomMap.begin(); iter != dummyAtomMap.end(); ++iter) {
-      newConf.setAtomPos(iter->first->getIdx(),
-                         (*citer)->getAtomPos(iter->second));
+    for (auto &iter : dummyAtomMap) {
+      newConf.setAtomPos(iter.first->getIdx(),
+                         (*citer)->getAtomPos(iter.second));
     }
   }
 
