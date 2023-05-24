@@ -257,8 +257,8 @@ class RDKIT_SUBSTRUCTLIBRARY_EXPORT FPHolderBase {
 
  public:
   virtual ~FPHolderBase() {
-    for (size_t i = 0; i < fps.size(); ++i) {
-      delete fps[i];
+    for (auto &fp : fps) {
+      delete fp;
     }
   }
 
@@ -373,8 +373,8 @@ class RDKIT_SUBSTRUCTLIBRARY_EXPORT KeyFromPropHolder : public KeyHolderBase {
   const std::string empty_string = {};
 
  public:
-  KeyFromPropHolder(const std::string &propname = "_Name")
-      : propname(propname) {}
+  KeyFromPropHolder(std::string propname = "_Name")
+      : propname(std::move(propname)) {}
 
   std::string &getPropName() { return propname; }
   const std::string &getPropName() const { return propname; }
@@ -391,7 +391,7 @@ class RDKIT_SUBSTRUCTLIBRARY_EXPORT KeyFromPropHolder : public KeyHolderBase {
       // string repr of the
       //  numeric index?
       const static std::string prefix("LIBIDX-");
-      keys.emplace_back(prefix + boost::lexical_cast<std::string>(keys.size()));
+      keys.emplace_back(prefix + std::to_string(keys.size()));
     }
     return keys.size() - 1u;
   };
