@@ -136,7 +136,7 @@ node_id *SortNodesByFrequency(const Graph *g) {
   }
   std::sort(vect.begin(), vect.end(), nodeInfoComp2);
 
-  node_id *nodes = new node_id[vect.size()];
+  auto *nodes = new node_id[vect.size()];
   for (unsigned int i = 0; i < vect.size(); ++i) {
     nodes[i] = vect[i].id;
   }
@@ -633,8 +633,8 @@ bool vf2(const Graph &g1, const Graph &g2, VertexLabeling &vertex_labeling,
          BackInsertionSequence &F) {
   detail::VF2SubState<const Graph, VertexLabeling, EdgeLabeling, MatchChecking>
       s0(&g1, &g2, vertex_labeling, edge_labeling, match_checking, false);
-  detail::node_id *ni1 = new detail::node_id[num_vertices(g1)];
-  detail::node_id *ni2 = new detail::node_id[num_vertices(g2)];
+  auto *ni1 = new detail::node_id[num_vertices(g1)];
+  auto *ni2 = new detail::node_id[num_vertices(g2)];
   int n = 0;
 
   F.clear();
@@ -663,8 +663,8 @@ bool vf2_all(const Graph &g1, const Graph &g2, VertexLabeling &vertex_labeling,
              DoubleBackInsertionSequence &F, unsigned int max_results = 1000) {
   detail::VF2SubState<const Graph, VertexLabeling, EdgeLabeling, MatchChecking>
       s0(&g1, &g2, vertex_labeling, edge_labeling, match_checking, false);
-  detail::node_id *ni1 = new detail::node_id[num_vertices(g1)];
-  detail::node_id *ni2 = new detail::node_id[num_vertices(g2)];
+  auto *ni1 = new detail::node_id[num_vertices(g1)];
+  auto *ni2 = new detail::node_id[num_vertices(g2)];
 
   F.clear();
   F.resize(0);
