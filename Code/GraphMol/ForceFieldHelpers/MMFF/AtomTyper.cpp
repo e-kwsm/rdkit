@@ -200,8 +200,7 @@ bool RingMembershipSize::areAtomsInSameAromaticRing(const Atom *atom1,
                             it2->second.getRingIdxSet().begin(),
                             it2->second.getRingIdxSet().end(),
                             std::back_inserter(intersectVect));
-      for (std::vector<std::uint32_t>::const_iterator ivIt =
-               intersectVect.begin();
+      for (auto ivIt = intersectVect.begin();
            !areInSameAromaticRing && (ivIt != intersectVect.end()); ++ivIt) {
         areInSameAromaticRing = *ivIt & IS_AROMATIC_BIT;
       }
@@ -548,9 +547,9 @@ void setMMFFAromaticity(RWMol &mol) {
           atom = mol.getAtomWithIdx(atomRings[i][j]);
           // if not, move on
           if ((atom->getAtomicNum() != 6) &&
-              (!((atom->getAtomicNum() == 7) &&
-                 ((atom->getExplicitValence() + atom->getNumImplicitHs()) ==
-                  4)))) {
+              ((atom->getAtomicNum() != 7) ||
+               ((atom->getExplicitValence() + atom->getNumImplicitHs()) !=
+                4))) {
             continue;
           }
           // loop over neighbors
@@ -1208,8 +1207,8 @@ void MMFFMolProperties::setMMFFHeavyAtomType(const RingMembershipSize &rmSize,
                     if (nbr2Atom->getIdx() == atom->getIdx()) {
                       continue;
                     }
-                    doubleBondedCN = (!((nbr2Atom->getAtomicNum() == 7) &&
-                                        (nbr2Atom->getTotalDegree() == 3)));
+                    doubleBondedCN = ((nbr2Atom->getAtomicNum() != 7) ||
+                                      (nbr2Atom->getTotalDegree() != 3));
                   }
                 }
               }
