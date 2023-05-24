@@ -162,9 +162,9 @@ bool isReactionTemplateMoleculeAgent(const ROMol &mol, double agentThreshold) {
   unsigned numMappedAtoms = MolOps::getNumAtomsWithDistinctProperty(
       mol, common_properties::molAtomMapNumber);
   unsigned numAtoms = mol.getNumHeavyAtoms();
-  return !(numAtoms > 0u && static_cast<double>(numMappedAtoms) /
-                                    static_cast<double>(numAtoms) >=
-                                agentThreshold);
+  return numAtoms <= 0u ||
+         static_cast<double>(numMappedAtoms) / static_cast<double>(numAtoms) <
+             agentThreshold;
 }
 
 namespace {
@@ -268,7 +268,7 @@ int countSwapsBetweenReactantAndProduct(const Atom *reactAtom,
 void updateProductsStereochem(ChemicalReaction *rxn) {
   std::map<int, Atom *> reactantMapping;
   getMappingNumAtomIdxMapReactants(*rxn, reactantMapping);
-  for (MOL_SPTR_VECT::const_iterator prodIt = rxn->beginProductTemplates();
+  for (auto prodIt = rxn->beginProductTemplates();
        prodIt != rxn->endProductTemplates(); ++prodIt) {
     for (auto prodAtom : (*prodIt)->atoms()) {
       if (prodAtom->hasProp(common_properties::molInversionFlag)) {
