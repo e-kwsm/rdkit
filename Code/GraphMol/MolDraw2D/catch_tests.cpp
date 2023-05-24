@@ -4704,8 +4704,8 @@ TEST_CASE("Github 5269 - bad index positions with highlights") {
       std::vector<MatchVectType> hits_vect;
       SubstructMatch(*m1, *q1, hits_vect);
       for (auto &i : hits_vect) {
-        for (size_t j = 0; j < i.size(); ++j) {
-          hit_atoms.push_back(i[j].second);
+        for (auto &j : i) {
+          hit_atoms.push_back(j.second);
         }
       }
       std::vector<int> hit_bonds;
