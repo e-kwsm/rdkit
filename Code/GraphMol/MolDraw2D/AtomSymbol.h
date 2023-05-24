@@ -40,7 +40,7 @@ class AtomSymbol {
    * @param textDrawer : instance of DrawText to get the character sizes
    * etc.
    */
-  AtomSymbol(const std::string &symbol, int atIdx, OrientType orient,
+  AtomSymbol(std::string symbol, int atIdx, OrientType orient,
              const Point2D &cds, const DrawColour &colour,
              DrawText &textDrawer);
 
