@@ -772,14 +772,13 @@ MaximumCommonSubgraph::generateResultSMARTSAndQueryMol(
       a.setQuery(makeAtomNumQuery((*atom)->getAtomicNum()));
       // for all atomMatchSet[ai] items add atom query to template like
       // [#6,#17,#9, ... ]
-      for (auto am = atomMatchSet[ai].begin(); am != atomMatchSet[ai].end();
-           am++) {
-        a.expandQuery(makeAtomNumQuery(am->second->getAtomicNum()),
+      for (auto& am : atomMatchSet[ai]) {
+        a.expandQuery(makeAtomNumQuery(am.second->getAtomicNum()),
                       Queries::COMPOSITE_OR);
         if (Parameters.AtomCompareParameters.MatchChiralTag &&
-            (am->second->getChiralTag() == Atom::CHI_TETRAHEDRAL_CW ||
-             am->second->getChiralTag() == Atom::CHI_TETRAHEDRAL_CCW)) {
-          a.setChiralTag(am->second->getChiralTag());
+            (am.second->getChiralTag() == Atom::CHI_TETRAHEDRAL_CW ||
+             am.second->getChiralTag() == Atom::CHI_TETRAHEDRAL_CCW)) {
+          a.setChiralTag(am.second->getChiralTag());
         }
       }
     }
@@ -800,13 +799,12 @@ MaximumCommonSubgraph::generateResultSMARTSAndQueryMol(
     b.setEndAtomIdx(endAtomIdx);
     b.setQuery(makeBondOrderEqualsQuery((*bond)->getBondType()));
     // add OR template if need
-    for (auto bm = bondMatchSet[bi].begin(); bm != bondMatchSet[bi].end();
-         bm++) {
-      b.expandQuery(makeBondOrderEqualsQuery(bm->second->getBondType()),
+    for (auto& bm : bondMatchSet[bi]) {
+      b.expandQuery(makeBondOrderEqualsQuery(bm.second->getBondType()),
                     Queries::COMPOSITE_OR);
       if (Parameters.BondCompareParameters.MatchStereo &&
-          bm->second->getStereo() > Bond::STEREOANY) {
-        b.setStereo(bm->second->getStereo());
+          bm.second->getStereo() > Bond::STEREOANY) {
+        b.setStereo(bm.second->getStereo());
       }
     }
     if (Parameters.BondCompareParameters.RingMatchesRingOnly) {
