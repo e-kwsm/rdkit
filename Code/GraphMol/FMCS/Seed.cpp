@@ -110,18 +110,17 @@ void Seed::grow(MaximumCommonSubgraph& mcs) const {
     Seed seed;
     seed.createFromParent(this);
 
-    for (std::vector<NewBond>::const_iterator nbi = NewBonds.begin();
-         nbi != NewBonds.end(); nbi++) {
-      unsigned aIdx = nbi->EndAtomIdx;
+    for (const auto& nbi : NewBonds) {
+      unsigned aIdx = nbi.EndAtomIdx;
       if (NotSet == aIdx) {  // new atom
         // check if new bonds simultaneously close a ring
-        if (newAtomsSet.find(nbi->NewAtomIdx) == newAtomsSet.end()) {
-          const Atom* end_atom = nbi->NewAtom;
+        if (newAtomsSet.find(nbi.NewAtomIdx) == newAtomsSet.end()) {
+          const Atom* end_atom = nbi.NewAtom;
           aIdx = seed.addAtom(end_atom);
-          newAtomsSet.insert(nbi->NewAtomIdx);
+          newAtomsSet.insert(nbi.NewAtomIdx);
         }
       }
-      const Bond* src_bond = qmol.getBondWithIdx(nbi->BondIdx);
+      const Bond* src_bond = qmol.getBondWithIdx(nbi.BondIdx);
       seed.addBond(src_bond);
     }
 #ifdef VERBOSE_STATISTICS_ON
@@ -200,10 +199,9 @@ void Seed::grow(MaximumCommonSubgraph& mcs) const {
     std::vector<NewBond> dirtyNewBonds;
     dirtyNewBonds.reserve(NewBonds.size());
     dirtyNewBonds.swap(NewBonds);
-    for (std::vector<NewBond>::const_iterator nbi = dirtyNewBonds.begin();
-         nbi != dirtyNewBonds.end(); nbi++) {
-      if (NotSet != nbi->BondIdx) {
-        NewBonds.push_back(*nbi);
+    for (const auto& dirtyNewBond : dirtyNewBonds) {
+      if (NotSet != dirtyNewBond.BondIdx) {
+        NewBonds.push_back(dirtyNewBond);
       }
     }
   }
@@ -317,10 +315,8 @@ void Seed::computeRemainingSize(const ROMol& qmol) {
   for (auto&& visitedAtom : visitedAtoms) {
     visitedAtom = false;
   }
-  for (std::vector<unsigned>::const_iterator it =
-           MoleculeFragment.AtomsIdx.begin();
-       it != MoleculeFragment.AtomsIdx.end(); it++) {
-    visitedAtoms[*it] = true;
+  for (unsigned int it : MoleculeFragment.AtomsIdx) {
+    visitedAtoms[it] = true;
   }
 
   // SDF all paths
