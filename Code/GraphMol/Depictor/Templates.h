@@ -37,10 +37,7 @@ class RDKIT_DEPICTOR_EXPORT CoordinateTemplates {
   }
 
   bool hasTemplateOfSize(unsigned int atomCount) {
-    if (m_templates.find(atomCount) != m_templates.end()) {
-      return true;
-    }
-    return false;
+    return m_templates.find(atomCount) != m_templates.end();
   }
 
   const std::vector<std::shared_ptr<RDKit::ROMol>>& getMatchingTemplates(
