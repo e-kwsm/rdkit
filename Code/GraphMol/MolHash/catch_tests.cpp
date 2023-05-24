@@ -472,9 +472,9 @@ TEST_CASE("tautomer v2") {
             MolHash::MolHash(&cp, MolHash::HashFunction::HetAtomTautomerv2);
         CHECK(hsh == ref);
       }
-      for (auto i = 0u; i < diff.size(); ++i) {
-        INFO(same[0] + "->" + diff[i]);
-        std::unique_ptr<RWMol> m2{SmilesToMol(diff[i])};
+      for (const auto &i : diff) {
+        INFO(same[0] + "->" + i);
+        std::unique_ptr<RWMol> m2{SmilesToMol(i)};
         REQUIRE(m2);
         RWMol cp(*m2);
         auto hsh =
