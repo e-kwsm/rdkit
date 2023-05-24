@@ -3407,8 +3407,8 @@ void testRDKFPBitInfo() {
       std::cerr << "   " << iter2->first << ": ";
       for (const auto &i : iter2->second) {
         std::cerr << " [ ";
-        for (unsigned j = 0; j < i.size(); j++) {
-          std::cerr << i.at(j) << " ";
+        for (int j : i) {
+          std::cerr << j << " ";
         }
         std::cerr << "], ";
       }
