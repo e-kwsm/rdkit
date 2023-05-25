@@ -132,8 +132,8 @@ void MetalDisconnector::disconnect(RWMol &mol) {
 void MetalDisconnector::adjust_charges(RDKit::RWMol &mol,
                                        std::map<int, NonMetal> &nonMetals,
                                        std::map<int, int> &metalChargeExcess) {
-  for (auto it = nonMetals.begin(); it != nonMetals.end(); ++it) {
-    auto a = mol.getAtomWithIdx(it->first);
+  for (auto &nonMetal : nonMetals) {
+    auto a = mol.getAtomWithIdx(nonMetal.first);
     // do not blindly trust the original formal charge as it is often wrong
     // instead, find out the most appropriate formal charge based
     // on the allowed element valences and on its current valence/lone electrons
@@ -141,14 +141,15 @@ void MetalDisconnector::adjust_charges(RDKit::RWMol &mol,
     // valence was correct and the non-metal element was neutral
     int valenceBeforeCut = a->getTotalValence();
     int radBeforeCut = a->getNumRadicalElectrons();
-    int fcAfterCut = -it->second.cutBonds;
+    int fcAfterCut = -nonMetal.second.cutBonds;
     int valenceAfterCut = 0;
     int loneElectrons = 0;
     const auto &valens =
         PeriodicTable::getTable()->getValenceList(a->getAtomicNum());
     if (!valens.empty() && valens.front() != -1) {
       for (auto v = valens.begin(); v != valens.end(); ++v) {
-        valenceAfterCut = valenceBeforeCut + radBeforeCut - it->second.cutBonds;
+        valenceAfterCut =
+            valenceBeforeCut + radBeforeCut - nonMetal.second.cutBonds;
         if (valenceAfterCut > *v) {
           if (v + 1 != valens.end()) {
             continue;
@@ -177,21 +178,21 @@ void MetalDisconnector::adjust_charges(RDKit::RWMol &mol,
       fcAfterCut = 0;
     }
     a->setFormalCharge(fcAfterCut);
-    if (!it->second.cutBonds ||
+    if (!nonMetal.second.cutBonds ||
         (fcAfterCut == -1 && a->getAtomicNum() == 6 &&
          valenceAfterCut == static_cast<int>(a->getTotalDegree()) + 2)) {
       // do not take electrons from the metal if it was a dative bond
       // (e.g., [C-]#[O+] coordinated to metal)
       fcAfterCut = 0;
     }
-    std::sort(it->second.boundMetalIndices.begin(),
-              it->second.boundMetalIndices.end(),
+    std::sort(nonMetal.second.boundMetalIndices.begin(),
+              nonMetal.second.boundMetalIndices.end(),
               [&metalChargeExcess](int a, int b) {
                 return (metalChargeExcess.at(a) < metalChargeExcess.at(b));
               });
     fcAfterCut += loneElectrons;
     while (fcAfterCut < 0) {
-      for (auto i : it->second.boundMetalIndices) {
+      for (auto i : nonMetal.second.boundMetalIndices) {
         // if the bond was not dative, the non-metal stole electrons
         // from the metal(s), so we need to take electrons from
         // once-bonded metal(s)
@@ -204,9 +205,8 @@ void MetalDisconnector::adjust_charges(RDKit::RWMol &mol,
     a->updatePropertyCache();
   }
   // adjust formal charges of metal atoms
-  for (auto it = metalChargeExcess.begin(); it != metalChargeExcess.end();
-       ++it) {
-    auto a = mol.getAtomWithIdx(it->first);
+  for (auto &metalChargeExces : metalChargeExcess) {
+    auto a = mol.getAtomWithIdx(metalChargeExces.first);
     auto currentFc = a->getFormalCharge();
     const auto &valens =
         PeriodicTable::getTable()->getValenceList(a->getAtomicNum());
@@ -217,7 +217,7 @@ void MetalDisconnector::adjust_charges(RDKit::RWMol &mol,
     if (max_valence != -1 && currentFc >= max_valence) {
       continue;
     }
-    int fcAfterCut = it->second;
+    int fcAfterCut = metalChargeExces.second;
     if (currentFc > 0) {
       // if the original formal charge on the metal was positive, we trust it
       // and add it to the charge excess
