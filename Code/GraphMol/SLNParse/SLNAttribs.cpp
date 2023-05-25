@@ -134,12 +134,11 @@ QueryAtom::QUERYATOM_QUERY *makeQueryFromOp(const std::string &op, int val,
 void parseAtomAttribs(Atom *atom, AttribListType attribs, bool doingQuery) {
   QueryAtom::QUERYATOM_QUERY *atomQuery = nullptr;
   bool lastWasLowPriAnd = false;
-  for (AttribListType::const_iterator it = attribs.begin(); it != attribs.end();
-       ++it) {
+  for (const auto &attrib : attribs) {
     QueryAtom::QUERYATOM_QUERY *query = nullptr;
-    AttribCombineOp how = it->first;
+    AttribCombineOp how = attrib.first;
 
-    boost::shared_ptr<AttribType> attribPtr = it->second;
+    boost::shared_ptr<AttribType> attribPtr = attrib.second;
     std::string attribName = attribPtr->first;
     boost::to_lower(attribName);
     std::string attribVal = attribPtr->second;
@@ -380,10 +379,9 @@ void parseFinalAtomAttribs(Atom *atom, bool doingQuery) {
 void parseBondAttribs(Bond *bond, AttribListType attribs, bool doingQuery) {
   // FIX: need to do the same query tree reordering here as we did above.
   bool seenTypeQuery = false;
-  for (AttribListType::const_iterator it = attribs.begin(); it != attribs.end();
-       ++it) {
+  for (const auto &attrib : attribs) {
     Queries::CompositeQueryType how;
-    switch (it->first) {
+    switch (attrib.first) {
       case AttribAnd:
         how = Queries::COMPOSITE_AND;
         break;
@@ -397,7 +395,7 @@ void parseBondAttribs(Bond *bond, AttribListType attribs, bool doingQuery) {
         throw SLNParseException("unrecognized query composition operator");
     }
 
-    boost::shared_ptr<AttribType> attribPtr = it->second;
+    boost::shared_ptr<AttribType> attribPtr = attrib.second;
     std::string attribName = attribPtr->first;
     boost::to_lower(attribName);
     std::string attribVal = attribPtr->second;
@@ -456,8 +454,7 @@ void parseBondAttribs(Bond *bond, AttribListType attribs, bool doingQuery) {
 }
 
 void parseMolAttribs(ROMol *mol, AttribListType attribs) {
-  for (AttribListType::const_iterator it = attribs.begin(); it != attribs.end();
-       ++it) {
+  for (auto it = attribs.begin(); it != attribs.end(); ++it) {
     CHECK_INVARIANT(it->first == AttribAnd, "bad attrib type");
 
     boost::shared_ptr<AttribType> attribPtr = it->second;
@@ -510,9 +507,7 @@ void adjustAtomChiralities(RWMol *mol) {
       neighbors.sort();
       // figure out the bond ordering:
       std::list<int> bondOrdering;
-      for (std::list<std::pair<int, int>>::const_iterator nbrIt =
-               neighbors.begin();
-           nbrIt != neighbors.end(); ++nbrIt) {
+      for (auto nbrIt = neighbors.begin(); nbrIt != neighbors.end(); ++nbrIt) {
         bondOrdering.push_back(nbrIt->second);
         // std::cerr << " " << nbrIt->second;
       }
