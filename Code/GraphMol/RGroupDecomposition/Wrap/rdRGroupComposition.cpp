@@ -122,17 +122,17 @@ class RGroupDecompositionHelper {
 
     RGroupColumns groups = decomp->getRGroupsAsColumns();
 
-    for (auto it = groups.begin(); it != groups.end(); ++it) {
+    for (auto &group : groups) {
       python::list col;
 
-      for (const auto &cit : it->second) {
+      for (const auto &cit : group.second) {
         if (asSmiles) {
           col.append(MolToSmiles(*cit, true));
         } else {
           col.append(cit);
         }
       }
-      result[it->first] = col;
+      result[group.first] = col;
     }
     return result;
   }
