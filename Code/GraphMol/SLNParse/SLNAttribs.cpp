@@ -507,8 +507,8 @@ void adjustAtomChiralities(RWMol *mol) {
       neighbors.sort();
       // figure out the bond ordering:
       std::list<int> bondOrdering;
-      for (auto nbrIt = neighbors.begin(); nbrIt != neighbors.end(); ++nbrIt) {
-        bondOrdering.push_back(nbrIt->second);
+      for (auto &neighbor : neighbors) {
+        bondOrdering.push_back(neighbor.second);
         // std::cerr << " " << nbrIt->second;
       }
 
