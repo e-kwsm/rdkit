@@ -24,7 +24,7 @@ TEST_CASE("Determine Connectivity") {
           "test" + std::to_string(i) + ".xyz";
       std::unique_ptr<RWMol> mol(XYZFileToMol(fName));
       REQUIRE(mol);
-      std::string smiles = mol->getProp<std::string>("_FileComments");
+      auto smiles = mol->getProp<std::string>("_FileComments");
       std::unique_ptr<RWMol> orig(SmilesToMol(smiles));
       REQUIRE(orig);
 
@@ -57,7 +57,7 @@ TEST_CASE("Determine Connectivity") {
           "test" + std::to_string(i) + ".xyz";
       std::unique_ptr<RWMol> mol(XYZFileToMol(fName));
       REQUIRE(mol);
-      std::string smiles = mol->getProp<std::string>("_FileComments");
+      auto smiles = mol->getProp<std::string>("_FileComments");
       std::unique_ptr<RWMol> orig(SmilesToMol(smiles));
       REQUIRE(orig);
       int charge = MolOps::getFormalCharge(*orig);
@@ -92,7 +92,7 @@ TEST_CASE("Determine Connectivity") {
           "test" + std::to_string(i) + ".xyz";
       std::unique_ptr<RWMol> mol(XYZFileToMol(fName));
       REQUIRE(mol);
-      std::string smiles = mol->getProp<std::string>("_FileComments");
+      auto smiles = mol->getProp<std::string>("_FileComments");
       std::unique_ptr<RWMol> orig(SmilesToMol(smiles));
       REQUIRE(orig);
       SmilesWriteParams params = {false, false, true, false, false, false, -1};
@@ -136,7 +136,7 @@ TEST_CASE("Determine Connectivity") {
                           "test" + std::to_string(i) + ".xyz";
       std::unique_ptr<RWMol> mol(XYZFileToMol(fName));
       REQUIRE(mol);
-      std::string smiles = mol->getProp<std::string>("_FileComments");
+      auto smiles = mol->getProp<std::string>("_FileComments");
       std::unique_ptr<RWMol> orig(SmilesToMol(smiles));
       REQUIRE(orig);
       SmilesWriteParams params = {false, false, true, false, false, false, -1};
