@@ -53,7 +53,7 @@ namespace detail {
 void updateMolProps(RWMol &mol) { MolOps::sanitizeMol(mol); }
 
 ROMol *makeScaffoldGeneric(const ROMol &mol, bool doAtoms, bool doBonds) {
-  RWMol *res = new RWMol(mol);
+  auto *res = new RWMol(mol);
   if (doAtoms) {
     for (auto atom : res->atoms()) {
       atom->setAtomicNum(0);
@@ -71,7 +71,7 @@ ROMol *makeScaffoldGeneric(const ROMol &mol, bool doAtoms, bool doBonds) {
   return static_cast<ROMol *>(res);
 }
 ROMol *removeAttachmentPoints(const ROMol &mol, const ScaffoldNetworkParams &) {
-  RWMol *res = new RWMol(mol);
+  auto *res = new RWMol(mol);
   res->beginBatchEdit();
   for (const auto atom : res->atoms()) {
     if (!atom->getAtomicNum() && atom->getDegree() == 1) {
