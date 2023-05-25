@@ -1015,7 +1015,7 @@ class HasPropWithValueQuery<TargetPtr, ExplicitBitVect>
     bool res = what->hasProp(propname);
     if (res) {
       try {
-        const ExplicitBitVect &bv =
+        const auto &bv =
             what->template getProp<const ExplicitBitVect &>(propname);
         const double tani = TanimotoSimilarity(val, bv);
         res = (1.0 - tani) <= tol;
