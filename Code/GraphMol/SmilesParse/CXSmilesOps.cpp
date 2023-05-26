@@ -2082,9 +2082,10 @@ std::string get_bond_config_block(
               }
 
               for (const auto &atomAndBondVec : atomAndBondVecs) {
-                if (atomAndBondVec.first == firstAtom)
+                if (atomAndBondVec.first == firstAtom) {
                   continue;  // swapped atoms on the side where the wedge bond
                              // is does NOT change the wedge bond
+                }
                 if (atomAndBondVec.second.size() == 2) {
                   unsigned int firstOtherAtomIdx =
                       atomAndBondVec.second[0]
