@@ -839,16 +839,17 @@ size_t setup_smarts_string(const std::string &text,yyscan_t yyscanner){
   /* Get memory for full buffer, including space for trailing EOB's. */
   n = _yybytes_len + 2;
   buf = (char *) yysmarts_alloc(n ,yyscanner );
-  if ( ! buf )
+  if ( ! buf ) {
     smarts_lexer_error( "out of dynamic memory in yysmarts__scan_bytes()" );
+  }
 
   // ltrim
 
   for(start = 0 ; start < _yybytes_len; ++start) {
-    if (yybytes[start] > 32) break;
+    if (yybytes[start] > 32) { break; }
   }
   for(end = _yybytes_len ; end > start; --end) {
-    if (yybytes[end] > 32) break;
+    if (yybytes[end] > 32) { break; }
   }
 
   _yybytes_len = end-start+1;
@@ -859,8 +860,9 @@ size_t setup_smarts_string(const std::string &text,yyscan_t yyscanner){
   buf[_yybytes_len] = buf[_yybytes_len+1] = YY_END_OF_BUFFER_CHAR;
 
   b = yysmarts__scan_buffer(buf,n ,yyscanner);
-  if ( ! b )
+  if ( ! b ) {
     smarts_lexer_error( "bad buffer in yysmarts__scan_bytes()" );
+  }
 
   /* It's okay to grow etc. this buffer, and we should throw it
    * away when we're done.
@@ -1139,14 +1141,17 @@ YY_DECL
 		YY_USER_INIT;
 #endif
 
-		if ( ! yyg->yy_start )
+		if ( ! yyg->yy_start ) {
 			yyg->yy_start = 1;	/* first start state */
+		}
 
-		if ( ! yyin )
+		if ( ! yyin ) {
 			yyin = stdin;
+		}
 
-		if ( ! yyout )
+		if ( ! yyout ) {
 			yyout = stdout;
+		}
 
 		if ( ! YY_CURRENT_BUFFER ) {
 			yyensure_buffer_stack (yyscanner);
@@ -1198,8 +1203,9 @@ yy_match:
 			while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
 				{
 				yy_current_state = (int) yy_def[yy_current_state];
-				if ( yy_current_state >= 221 )
+				if ( yy_current_state >= 221 ) {
 					yy_c = yy_meta[yy_c];
+				}
 				}
 			yy_current_state = yy_nxt[yy_base[yy_current_state] + yy_c];
 			++yy_cp;
@@ -2033,8 +2039,9 @@ YY_FATAL_ERROR( "flex scanner jammed" );
 
 				else
 					{
-					if ( ! yyg->yy_did_buffer_switch_on_eof )
+					if ( ! yyg->yy_did_buffer_switch_on_eof ) {
 						YY_NEW_FILE;
+					}
 					}
 				break;
 				}
@@ -2085,9 +2092,10 @@ static int yy_get_next_buffer (yyscan_t yyscanner)
 	int number_to_move, i;
 	int ret_val;
 
-	if ( yyg->yy_c_buf_p > &YY_CURRENT_BUFFER_LVALUE->yy_ch_buf[yyg->yy_n_chars + 1] )
+	if ( yyg->yy_c_buf_p > &YY_CURRENT_BUFFER_LVALUE->yy_ch_buf[yyg->yy_n_chars + 1] ) {
 		YY_FATAL_ERROR(
 		"fatal flex scanner internal error--end of buffer missed" );
+	}
 
 	if ( YY_CURRENT_BUFFER_LVALUE->yy_fill_buffer == 0 )
 		{ /* Don't try to fill the buffer, so this is an EOF. */
@@ -2113,15 +2121,16 @@ static int yy_get_next_buffer (yyscan_t yyscanner)
 	/* First move last chars to start of buffer. */
 	number_to_move = (int) (yyg->yy_c_buf_p - yyg->yytext_ptr - 1);
 
-	for ( i = 0; i < number_to_move; ++i )
+	for ( i = 0; i < number_to_move; ++i ) {
 		*(dest++) = *(source++);
+	}
 
-	if ( YY_CURRENT_BUFFER_LVALUE->yy_buffer_status == YY_BUFFER_EOF_PENDING )
+	if ( YY_CURRENT_BUFFER_LVALUE->yy_buffer_status == YY_BUFFER_EOF_PENDING ) {
 		/* don't do the read, it's not guaranteed to return an EOF,
 		 * just force an EOF
 		 */
 		YY_CURRENT_BUFFER_LVALUE->yy_n_chars = yyg->yy_n_chars = 0;
-
+	}
 	else
 		{
 			int num_to_read =
@@ -2140,23 +2149,26 @@ static int yy_get_next_buffer (yyscan_t yyscanner)
 				{
 				int new_size = b->yy_buf_size * 2;
 
-				if ( new_size <= 0 )
+				if ( new_size <= 0 ) {
 					b->yy_buf_size += b->yy_buf_size / 8;
-				else
+				} else {
 					b->yy_buf_size *= 2;
+				}
 
 				b->yy_ch_buf = (char *)
 					/* Include room in for 2 EOB chars. */
 					yyrealloc( (void *) b->yy_ch_buf,
 							 (yy_size_t) (b->yy_buf_size + 2) , yyscanner );
 				}
-			else
+			else {
 				/* Can't grow it, we don't own it. */
 				b->yy_ch_buf = NULL;
+			}
 
-			if ( ! b->yy_ch_buf )
+			if ( ! b->yy_ch_buf ) {
 				YY_FATAL_ERROR(
 				"fatal error - scanner input buffer overflow" );
+			}
 
 			yyg->yy_c_buf_p = &b->yy_ch_buf[yy_c_buf_p_offset];
 
@@ -2165,8 +2177,9 @@ static int yy_get_next_buffer (yyscan_t yyscanner)
 
 			}
 
-		if ( num_to_read > YY_READ_BUF_SIZE )
+		if ( num_to_read > YY_READ_BUF_SIZE ) {
 			num_to_read = YY_READ_BUF_SIZE;
+		}
 
 		/* Read in more data. */
 		YY_INPUT( (&YY_CURRENT_BUFFER_LVALUE->yy_ch_buf[number_to_move]),
