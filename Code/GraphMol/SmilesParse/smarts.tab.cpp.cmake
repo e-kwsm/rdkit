@@ -556,8 +556,9 @@ union yyalloc
       do                                        \
         {                                       \
           YYPTRDIFF_T yyi;                      \
-          for (yyi = 0; yyi < (Count); yyi++)   \
+          for (yyi = 0; yyi < (Count); yyi++) { \
             (Dst)[yyi] = (Src)[yyi];            \
+          }                                     \
         }                                       \
       while (0)
 #  endif
@@ -996,8 +997,9 @@ enum { YYENOMEM = -2 };
 
 # define YYDPRINTF(Args)                        \
 do {                                            \
-  if (yydebug)                                  \
+  if (yydebug) {                                \
     YYFPRINTF Args;                             \
+  }                                             \
 } while (0)
 
 
@@ -1035,8 +1037,9 @@ yy_symbol_value_print (FILE *yyo,
   YY_USE (scanner);
   YY_USE (start_token);
   YY_USE (current_token_position);
-  if (!yyvaluep)
+  if (!yyvaluep) {
     return;
+  }
   YY_IGNORE_MAYBE_UNINITIALIZED_BEGIN
   YY_USE (yykind);
   YY_IGNORE_MAYBE_UNINITIALIZED_END
@@ -1077,8 +1080,9 @@ yy_stack_print (yy_state_t *yybottom, yy_state_t *yytop)
 
 # define YY_STACK_PRINT(Bottom, Top)                            \
 do {                                                            \
-  if (yydebug)                                                  \
+  if (yydebug) {                                                \
     yy_stack_print ((Bottom), (Top));                           \
+  }                                                             \
 } while (0)
 
 
@@ -1108,8 +1112,9 @@ yy_reduce_print (yy_state_t *yyssp, YYSTYPE *yyvsp,
 
 # define YY_REDUCE_PRINT(Rule)          \
 do {                                    \
-  if (yydebug)                          \
+  if (yydebug) {                        \
     yy_reduce_print (yyssp, yyvsp, Rule, input, molList, lastAtom, lastBond, numAtomsParsed, numBondsParsed, branchPoints, scanner, start_token, current_token_position); \
+  }                                     \
 } while (0)
 
 /* Nonzero means print parse trace.  It is left uninitialized so that
@@ -1163,8 +1168,9 @@ yydestruct (const char *yymsg,
   YY_USE (scanner);
   YY_USE (start_token);
   YY_USE (current_token_position);
-  if (!yymsg)
+  if (!yymsg) {
     yymsg = "Deleting";
+  }
   YY_SYMBOL_PRINT (yymsg, yykind, yyvaluep, yylocationp);
 
   YY_IGNORE_MAYBE_UNINITIALIZED_BEGIN
@@ -1382,24 +1388,28 @@ yysetstate:
       }
 # else /* defined YYSTACK_RELOCATE */
       /* Extend the stack our own way.  */
-      if (YYMAXDEPTH <= yystacksize)
+      if (YYMAXDEPTH <= yystacksize) {
         YYNOMEM;
+      }
       yystacksize *= 2;
-      if (YYMAXDEPTH < yystacksize)
+      if (YYMAXDEPTH < yystacksize) {
         yystacksize = YYMAXDEPTH;
+      }
 
       {
         yy_state_t *yyss1 = yyss;
         union yyalloc *yyptr =
           YY_CAST (union yyalloc *,
                    YYSTACK_ALLOC (YY_CAST (YYSIZE_T, YYSTACK_BYTES (yystacksize))));
-        if (! yyptr)
+        if (! yyptr) {
           YYNOMEM;
+        }
         YYSTACK_RELOCATE (yyss_alloc, yyss);
         YYSTACK_RELOCATE (yyvs_alloc, yyvs);
 #  undef YYSTACK_RELOCATE
-        if (yyss1 != yyssa)
+        if (yyss1 != yyssa) {
           YYSTACK_FREE (yyss1);
+        }
       }
 # endif
 
@@ -1411,14 +1421,16 @@ yysetstate:
                   YY_CAST (long, yystacksize)));
       YY_IGNORE_USELESS_CAST_END
 
-      if (yyss + yystacksize - 1 <= yyssp)
+      if (yyss + yystacksize - 1 <= yyssp) {
         YYABORT;
+      }
     }
 #endif /* !defined yyoverflow && !defined YYSTACK_RELOCATE */
 
 
-  if (yystate == YYFINAL)
+  if (yystate == YYFINAL) {
     YYACCEPT;
+  }
 
   goto yybackup;
 
@@ -1432,8 +1444,9 @@ yybackup:
 
   /* First try to decide what to do without reference to lookahead token.  */
   yyn = yypact[yystate];
-  if (yypact_value_is_default (yyn))
+  if (yypact_value_is_default (yyn)) {
     goto yydefault;
+  }
 
   /* Not known => get a lookahead token if don't already have one.  */
 
@@ -1469,21 +1482,24 @@ yybackup:
   /* If the proper action on seeing token YYTOKEN is to reduce or to
      detect an error, take that action.  */
   yyn += yytoken;
-  if (yyn < 0 || YYLAST < yyn || yycheck[yyn] != yytoken)
+  if (yyn < 0 || YYLAST < yyn || yycheck[yyn] != yytoken) {
     goto yydefault;
+  }
   yyn = yytable[yyn];
   if (yyn <= 0)
     {
-      if (yytable_value_is_error (yyn))
+      if (yytable_value_is_error (yyn)) {
         goto yyerrlab;
+      }
       yyn = -yyn;
       goto yyreduce;
     }
 
   /* Count tokens shifted since error; after three, turn off error
      status.  */
-  if (yyerrstatus)
+  if (yyerrstatus) {
     yyerrstatus--;
+  }
 
   /* Shift the lookahead token.  */
   YY_SYMBOL_PRINT ("Shifting", yytoken, &yylval, &yylloc);
@@ -1502,8 +1518,9 @@ yybackup:
 `-----------------------------------------------------------*/
 yydefault:
   yyn = yydefact[yystate];
-  if (yyn == 0)
+  if (yyn == 0) {
     goto yyerrlab;
+  }
   goto yyreduce;
 
 
@@ -1867,7 +1884,7 @@ yyreduce:
   case 38: /* atom_expr: atom_expr AND_TOKEN atom_expr  */
                                          {
   (yyvsp[-2].atom)->expandQuery((yyvsp[0].atom)->getQuery()->copy(),Queries::COMPOSITE_AND,true);
-  if((yyvsp[-2].atom)->getChiralTag()==Atom::CHI_UNSPECIFIED) (yyvsp[-2].atom)->setChiralTag((yyvsp[0].atom)->getChiralTag());
+  if((yyvsp[-2].atom)->getChiralTag()==Atom::CHI_UNSPECIFIED) { (yyvsp[-2].atom)->setChiralTag((yyvsp[0].atom)->getChiralTag()); }
   SmilesParseOps::ClearAtomChemicalProps((yyvsp[-2].atom));
   delete (yyvsp[0].atom);
 }
@@ -1876,7 +1893,7 @@ yyreduce:
   case 39: /* atom_expr: atom_expr OR_TOKEN atom_expr  */
                                {
   (yyvsp[-2].atom)->expandQuery((yyvsp[0].atom)->getQuery()->copy(),Queries::COMPOSITE_OR,true);
-  if((yyvsp[-2].atom)->getChiralTag()==Atom::CHI_UNSPECIFIED) (yyvsp[-2].atom)->setChiralTag((yyvsp[0].atom)->getChiralTag());
+  if((yyvsp[-2].atom)->getChiralTag()==Atom::CHI_UNSPECIFIED) { (yyvsp[-2].atom)->setChiralTag((yyvsp[0].atom)->getChiralTag()); }
   SmilesParseOps::ClearAtomChemicalProps((yyvsp[-2].atom));
   (yyvsp[-2].atom)->setAtomicNum(0);
   delete (yyvsp[0].atom);
@@ -1886,7 +1903,7 @@ yyreduce:
   case 40: /* atom_expr: atom_expr SEMI_TOKEN atom_expr  */
                                  {
   (yyvsp[-2].atom)->expandQuery((yyvsp[0].atom)->getQuery()->copy(),Queries::COMPOSITE_AND,true);
-  if((yyvsp[-2].atom)->getChiralTag()==Atom::CHI_UNSPECIFIED) (yyvsp[-2].atom)->setChiralTag((yyvsp[0].atom)->getChiralTag());
+  if((yyvsp[-2].atom)->getChiralTag()==Atom::CHI_UNSPECIFIED) { (yyvsp[-2].atom)->setChiralTag((yyvsp[0].atom)->getChiralTag()); }
   SmilesParseOps::ClearAtomChemicalProps((yyvsp[-2].atom));
   delete (yyvsp[0].atom);
 }
@@ -1895,7 +1912,7 @@ yyreduce:
   case 41: /* atom_expr: atom_expr point_query  */
                         {
   (yyvsp[-1].atom)->expandQuery((yyvsp[0].atom)->getQuery()->copy(),Queries::COMPOSITE_AND,true);
-  if((yyvsp[-1].atom)->getChiralTag()==Atom::CHI_UNSPECIFIED) (yyvsp[-1].atom)->setChiralTag((yyvsp[0].atom)->getChiralTag());
+  if((yyvsp[-1].atom)->getChiralTag()==Atom::CHI_UNSPECIFIED) { (yyvsp[-1].atom)->setChiralTag((yyvsp[0].atom)->getChiralTag()); }
   if((yyvsp[0].atom)->getNumExplicitHs()){
     if(!(yyvsp[-1].atom)->getNumExplicitHs()){
       (yyvsp[-1].atom)->setNumExplicitHs((yyvsp[0].atom)->getNumExplicitHs());
@@ -2417,8 +2434,9 @@ yyerrlab:
       if (yychar <= YYEOF)
         {
           /* Return failure if at end of input.  */
-          if (yychar == YYEOF)
+          if (yychar == YYEOF) {
             YYABORT;
+          }
         }
       else
         {
@@ -2439,8 +2457,9 @@ yyerrlab:
 yyerrorlab:
   /* Pacify compilers when the user code never invokes YYERROR and the
      label yyerrorlab therefore never appears in user code.  */
-  if (0)
+  if (0) {
     YYERROR;
+  }
   ++yynerrs;
 
   /* Do not reclaim the symbols of the rule whose action triggered
@@ -2468,14 +2487,16 @@ yyerrlab1:
           if (0 <= yyn && yyn <= YYLAST && yycheck[yyn] == YYSYMBOL_YYerror)
             {
               yyn = yytable[yyn];
-              if (0 < yyn)
+              if (0 < yyn) {
                 break;
+              }
             }
         }
 
       /* Pop the current state because it cannot handle the error token.  */
-      if (yyssp == yyss)
+      if (yyssp == yyss) {
         YYABORT;
+      }
 
 
       yydestruct ("Error: popping",
@@ -2545,8 +2566,9 @@ yyreturnlab:
       YYPOPSTACK (1);
     }
 #ifndef yyoverflow
-  if (yyss != yyssa)
+  if (yyss != yyssa) {
     YYSTACK_FREE (yyss);
+  }
 #endif
 
   return yyresult;
