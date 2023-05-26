@@ -416,10 +416,7 @@ bool haveEnoughHits(const std::vector<std::unique_ptr<ROMol>> &results,
   // If there's a limit on the number of hits, we still need to keep the
   // first hitStart hits and remove them later.  They had to be built
   // to see if they passed verifyHit.
-  if (maxHits != -1 && numHits >= maxHits + hitStart) {
-    return true;
-  }
-  return false;
+  return maxHits != -1 && numHits >= maxHits + hitStart;
 }
 
 }  // namespace
