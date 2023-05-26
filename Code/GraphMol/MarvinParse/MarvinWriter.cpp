@@ -842,9 +842,8 @@ class MarvinCMLWriter {
       MarvinRectangle molRect(mol->atoms);
       bool foundOverlap = false;
       for (MarvinRectangle rectangle : rectangleList) {
-        if ((verticalFlag == true && molRect.overlapsVertically(rectangle)) ||
-            (verticalFlag == false &&
-             molRect.overlapsVHorizontally(rectangle))) {
+        if ((verticalFlag && molRect.overlapsVertically(rectangle)) ||
+            (!verticalFlag && molRect.overlapsVHorizontally(rectangle))) {
           rectangle.extend(molRect);
           foundOverlap = true;
           break;
