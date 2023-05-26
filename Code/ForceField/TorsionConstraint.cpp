@@ -38,9 +38,9 @@ inline void checkPrecondition(const ForceField *owner, unsigned int idx1,
 
 double TorsionConstraintContrib::computeDihedralTerm(double dihedral) const {
   double dihedralTarget = dihedral;
-  if (!(dihedral > d_minDihedralDeg && dihedral < d_maxDihedralDeg) &&
-      !(dihedral > d_minDihedralDeg && d_minDihedralDeg > d_maxDihedralDeg) &&
-      !(dihedral < d_maxDihedralDeg && d_minDihedralDeg > d_maxDihedralDeg)) {
+  if ((dihedral <= d_minDihedralDeg || dihedral >= d_maxDihedralDeg) &&
+      (dihedral <= d_minDihedralDeg || d_minDihedralDeg <= d_maxDihedralDeg) &&
+      (dihedral >= d_maxDihedralDeg || d_minDihedralDeg <= d_maxDihedralDeg)) {
     double dihedralMinTarget = dihedral - d_minDihedralDeg;
     RDKit::ForceFieldsHelper::normalizeAngleDeg(dihedralMinTarget);
     double dihedralMaxTarget = dihedral - d_maxDihedralDeg;
