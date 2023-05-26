@@ -2449,13 +2449,9 @@ void checkCXFeatures(const ROMol &mol) {
         << std::endl;
   }
   const auto &sgs = getSubstanceGroups(mol);
-  auto parent_check =
-      std::any_of(sgs.cbegin(), sgs.cend(), [&](const SubstanceGroup &sg) {
-        if (sg.hasProp("PARENT")) {
-          return true;
-        }
-        return false;
-      });
+  auto parent_check = std::any_of(
+      sgs.cbegin(), sgs.cend(),
+      [&](const SubstanceGroup &sg) { return sg.hasProp("PARENT"); });
   if (parent_check) {
     BOOST_LOG(rdWarningLog)
         << "CX Extensions: Substance group hierarchy is not always preserved."

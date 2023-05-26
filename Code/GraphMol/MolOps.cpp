@@ -241,12 +241,8 @@ bool isHypervalentNonMetal(Atom *atom) {
   const auto &otherValens =
       PeriodicTable::getTable()->getValenceList(effAtomicNum);
   auto maxV = otherValens.back();
-  if (maxV > 0 && (ev > maxV || (ev == maxV && atom->getIsAromatic() &&
-                                 atom->getTotalDegree() == 4))) {
-    return true;
-  }
-
-  return false;
+  return maxV > 0 && (ev > maxV || (ev == maxV && atom->getIsAromatic() &&
+                                    atom->getTotalDegree() == 4));
 }
 
 int numDativeBonds(const Atom *atom) {

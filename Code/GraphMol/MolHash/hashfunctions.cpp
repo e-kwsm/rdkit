@@ -485,11 +485,7 @@ bool isPossibleStartingBond(const Bond *bptr,
 
   // both we need a heteroatom on one side and an unsaturated atom on the
   // other:
-  if (!((heteroBeg && unsatEnd) || (heteroEnd && unsatBeg))) {
-    return false;
-  }
-
-  return true;
+  return (heteroBeg && unsatEnd) || (heteroEnd && unsatBeg);
 }
 
 // is one of the atom's bonds in the startBonds set?

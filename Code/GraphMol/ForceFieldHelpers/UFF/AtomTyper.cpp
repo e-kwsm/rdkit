@@ -682,18 +682,16 @@ bool getUFFInversionParams(const ROMol &mol, unsigned int idx1,
       if (res) {
         // if the central atom is not carbon, nitrogen, oxygen,
         // phosphorous, arsenic, antimonium or bismuth, skip it
-        res = (!(((at2AtomicNum != 6) && (at2AtomicNum != 7) &&
-                  (at2AtomicNum != 8) && (at2AtomicNum != 15) &&
-                  (at2AtomicNum != 33) && (at2AtomicNum != 51) &&
-                  (at2AtomicNum != 83)) ||
-                 (atom->getDegree() != 3)));
+        res = (at2AtomicNum == 6 || at2AtomicNum == 7 || at2AtomicNum == 8 ||
+               at2AtomicNum == 15 || at2AtomicNum == 33 || at2AtomicNum == 51 ||
+               at2AtomicNum == 83) &&
+              atom->getDegree() == 3;
       }
       if (res) {
         // if the central atom is carbon, nitrogen or oxygen
         // but hybridization is not sp2, skip it
-        res = (!(((at2AtomicNum == 6) || (at2AtomicNum == 7) ||
-                  (at2AtomicNum == 8)) &&
-                 (atom->getHybridization() != Atom::SP2)));
+        res = (at2AtomicNum != 6 && at2AtomicNum != 7 && at2AtomicNum != 8) ||
+              atom->getHybridization() == Atom::SP2;
       }
     } else if ((atom->getAtomicNum() == 8) &&
                (atom->getHybridization() == Atom::SP2)) {

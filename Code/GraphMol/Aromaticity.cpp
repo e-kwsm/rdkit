@@ -964,9 +964,9 @@ void setMMFFAromaticity(RWMol &mol) {
           atom = mol.getAtomWithIdx(atomRings[i][j]);
           // if not, move on
           if ((atom->getAtomicNum() != 6) &&
-              (!((atom->getAtomicNum() == 7) &&
-                 ((atom->getValence(Atom::ValenceType::EXPLICIT) +
-                   atom->getNumImplicitHs()) == 4)))) {
+              ((atom->getAtomicNum() != 7) ||
+               ((atom->getValence(Atom::ValenceType::EXPLICIT) +
+                 atom->getNumImplicitHs()) != 4))) {
             continue;
           }
           // loop over neighbors

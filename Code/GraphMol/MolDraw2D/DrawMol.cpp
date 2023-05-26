@@ -1138,8 +1138,7 @@ void DrawMol::resolveAtomSymbolClashes() {
               atomLabels_[atIdx2]->rects_.size()) {
             std::swap(idxs[0], idxs[1]);
           }
-          if (!(idxs[0] != -1 &&
-                orientAtomLabel(idxs[0], atomLabels_, bonds_))) {
+          if (idxs[0] == -1 || !orientAtomLabel(idxs[0], atomLabels_, bonds_)) {
             if (idxs[1] != -1) {
               orientAtomLabel(idxs[1], atomLabels_, bonds_);
             }
