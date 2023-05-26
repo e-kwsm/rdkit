@@ -173,8 +173,8 @@ void addAngles(const ROMol &mol, const AtomicParamVect &params,
           continue;
         }
         // skip special cases:
-        if (!(atomJ->getHybridization() == Atom::SP3D &&
-              atomJ->getDegree() == 5)) {
+        if (atomJ->getHybridization() != Atom::SP3D ||
+            atomJ->getDegree() != 5) {
           const Bond *b1 = mol.getBondBetweenAtoms(i, j);
           const Bond *b2 = mol.getBondBetweenAtoms(k, j);
           // FIX: recognize amide bonds here.

@@ -470,11 +470,7 @@ bool isSpiroCenter(unsigned int aid, const RDKit::ROMol *mol) {
     }
   }
 
-  if (ring1_neighbors != 2 || ring2_neighbors != 2) {
-    return false;
-  }
-
-  return true;
+  return ring1_neighbors == 2 && ring2_neighbors == 2;
 }
 
 RDKit::INT_VECT getSpiroCenters(const RDKit::ROMol &mol, unsigned int aid1,
