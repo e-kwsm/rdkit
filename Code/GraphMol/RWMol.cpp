@@ -682,7 +682,7 @@ void RWMol::batchRemoveBonds() {
     if (!delBonds[i - 1]) {
       continue;
     }
-    unsigned int idx = rdcast<unsigned int>(i - 1);
+    auto idx = rdcast<unsigned int>(i - 1);
     Bond *bnd = getBondWithIdx(idx);
     if (!bnd) {
       continue;
