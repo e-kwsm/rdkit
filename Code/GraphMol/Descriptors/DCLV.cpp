@@ -292,7 +292,9 @@ struct State {
       std::vector<DotStruct> dots(count);
 
       unsigned int equat = sqrt(M_PI * count);
-      if (!(vert = equat >> 1)) vert = 1;
+      if (!(vert = equat >> 1)) {
+        vert = 1;
+      }
 
       unsigned int i = 0;
       for (unsigned int j = 0; (i < count) && (j < vert); j++) {
@@ -379,7 +381,7 @@ struct State {
     if (typeFlag) { /* Only Recognise Backbone Atoms! */
       if ((name[1] == 'C') && (name[2] == 'A')) {
         return &elemA;
-      } else if (name[2] == ' ')
+      } else if (name[2] == ' ') {
         switch (name[1]) {
           case 'C':
             return &elemC;
@@ -388,6 +390,7 @@ struct State {
           case 'O':
             return &elemO;
         }
+      }
     } else { /* RasMol */
       switch (name[1]) {
         case 'C':
@@ -532,9 +535,10 @@ struct State {
     standardDots.count = 0;
 
     standardArea = 0.0;
-    for (unsigned int i = 0; i < 20; i++)
+    for (unsigned int i = 0; i < 20; i++) {
       tesselate(Vertices[Faces[i][0]], Vertices[Faces[i][1]],
                 Vertices[Faces[i][2]], depth);
+    }
   }
 
   void generateSurfacePoints(int depth, bool typeFlag, double probeRadius,
@@ -604,7 +608,9 @@ struct State {
       }
     }
 
-    if (!init) return;
+    if (!init) {
+      return;
+    }
 
     voxX = VOXORDER / ((maxx - minx) + 0.1);
     voxU = minx;
