@@ -2,7 +2,7 @@
 #include <map>
 #include <boost/any.hpp>
 #include <boost/lexical_cast.hpp>
-#include <boost/smart_ptr.hpp>
+#include <memory>
 #include <string>
 #include <iostream>
 #include <Invariant/Invariant.h>
@@ -148,7 +148,7 @@ void test2() {
   // shared pointers with containers
   std::cout << "----------- TEST2 -----------" << std::endl;
 
-  typedef boost::shared_ptr<Contained> CONT_SPTR;
+  typedef std::shared_ptr<Contained> CONT_SPTR;
   CONT_SPTR s_d(new Contained());
   TEST_ASSERT(s_d.use_count() == 1);
   CONT_SPTR s_e = s_d;
@@ -223,7 +223,7 @@ void test4() {
 void test5() {
   // dict containing sptrs to Contained objects
   std::cout << "----------- TEST5 -----------" << std::endl;
-  typedef boost::shared_ptr<Contained> CONT_SPTR;
+  typedef std::shared_ptr<Contained> CONT_SPTR;
 
   Dict dict;
   TEST_ASSERT(!dict.hasVal("foo"));
