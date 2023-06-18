@@ -310,7 +310,7 @@ void RGroupDecompositionParameters::checkNonTerminal(const Atom &atom) const {
 }
 
 void RGroupDecompositionParameters::addDummyAtomsToUnlabelledCoreAtoms(
-    RWMol &core) {
+    RWMol &core) const {
   if (!allowMultipleRGroupsOnUnlabelled) {
     return;
   }
