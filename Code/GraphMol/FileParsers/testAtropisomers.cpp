@@ -147,7 +147,7 @@ class MolAtropTest {
 
       BOOST_LOG(rdInfoLog) << "done" << std::endl;
     } catch (const std::exception &e) {
-      if (molFileTest->expectedResult != false) {
+      if (molFileTest->expectedResult) {
         throw;
       }
       return;
