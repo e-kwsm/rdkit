@@ -547,10 +547,9 @@ void setMMFFAromaticity(RWMol &mol) {
         else {
           atom = mol.getAtomWithIdx(atomRings[i][j]);
           // if not, move on
-          if ((atom->getAtomicNum() != 6) &&
-              (!((atom->getAtomicNum() == 7) &&
-                 ((atom->getExplicitValence() + atom->getNumImplicitHs()) ==
-                  4)))) {
+          if (atom->getAtomicNum() != 6 &&
+              (atom->getAtomicNum() != 7 ||
+               (atom->getExplicitValence() + atom->getNumImplicitHs()) != 4)) {
             continue;
           }
           // loop over neighbors
@@ -1208,8 +1207,8 @@ void MMFFMolProperties::setMMFFHeavyAtomType(const RingMembershipSize &rmSize,
                     if (nbr2Atom->getIdx() == atom->getIdx()) {
                       continue;
                     }
-                    doubleBondedCN = (!((nbr2Atom->getAtomicNum() == 7) &&
-                                        (nbr2Atom->getTotalDegree() == 3)));
+                    doubleBondedCN = ((nbr2Atom->getAtomicNum() != 7) ||
+                                      (nbr2Atom->getTotalDegree() != 3));
                   }
                 }
               }
