@@ -47,33 +47,34 @@ class PyForceField {
     return idx;
   }
 
-  double calcEnergyWithPos(const python::object &pos = python::object());
+  double calcEnergyWithPos(const python::object &pos = python::object()) const;
 
   double calcEnergy() { return calcEnergyWithPos(); }
 
-  PyObject *calcGradWithPos(const python::object &pos = python::object());
+  PyObject *calcGradWithPos(const python::object &pos = python::object()) const;
 
-  PyObject *positions();
+  PyObject *positions() const;
 
-  int minimize(int maxIts, double forceTol, double energyTol) {
+  int minimize(int maxIts, double forceTol, double energyTol) const {
     PRECONDITION(this->field, "no force field");
     return this->field->minimize(maxIts, forceTol, energyTol);
   }
 
   boost::python::tuple minimizeTrajectory(unsigned int snapshotFreq, int maxIts,
-                                          double forceTol, double energyTol);
+                                          double forceTol,
+                                          double energyTol) const;
 
-  void initialize() {
+  void initialize() const {
     PRECONDITION(this->field, "no force field");
     this->field->initialize();
   }
 
-  unsigned int dimension() {
+  unsigned int dimension() const {
     PRECONDITION(this->field, "no force field");
     return this->field->dimension();
   }
 
-  unsigned int numPoints() {
+  unsigned int numPoints() const {
     PRECONDITION(this->field, "no force field");
     return this->field->numPoints();
   }
