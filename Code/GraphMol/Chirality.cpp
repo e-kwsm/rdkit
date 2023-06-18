@@ -45,11 +45,7 @@ bool shouldDetectDoubleBondStereo(const Bond *bond) {
 bool getValFromEnvironment(const char *var, bool defVal) {
   auto evar = std::getenv(var);
   if (evar != nullptr) {
-    if (!strcmp(evar, "0")) {
-      return false;
-    } else {
-      return true;
-    }
+    return strcmp(evar, "0") != 0;
   }
   return defVal;
 }
@@ -617,10 +613,7 @@ std::optional<Atom::ChiralType> atomChiralTypeFromBondDirPseudo3D(
                                 const RDGeom::Point3D &cp02, double dp01,
                                 double dp02) -> bool {
       if (fabs(dp01) - 1 > -zeroTol) {
-        if (cp02.z < 0) {
-          return true;
-        }
-        return false;
+        return cp02.z < 0;
       }
       if (fabs(dp02) - 1 > -zeroTol) {
         if (cp01.z < 0) {
@@ -629,16 +622,10 @@ std::optional<Atom::ChiralType> atomChiralTypeFromBondDirPseudo3D(
       }
 
       if ((cp01.z * cp02.z) < -zeroTol) {
-        if (cp01.z < cp02.z) {
-          return true;
-        }
-        return false;
+        return cp01.z < cp02.z;
       }
       if (dp01 * dp02 < -zeroTol) {
-        if (dp01 < dp02) {
-          return true;
-        }
-        return false;
+        return dp01 < dp02;
       }
       return fabs(dp01) > fabs(dp02);
     };
@@ -885,13 +872,10 @@ bool bondAffectsAtomChirality(const Bond *bond, const Atom *atom) {
   // FIX consider how to handle organometallics
   PRECONDITION(bond, "bad bond pointer");
   PRECONDITION(atom, "bad atom pointer");
-  if (bond->getBondType() == Bond::BondType::UNSPECIFIED ||
-      bond->getBondType() == Bond::BondType::ZERO ||
-      (bond->getBondType() == Bond::BondType::DATIVE &&
-       bond->getBeginAtomIdx() == atom->getIdx())) {
-    return false;
-  }
-  return true;
+  return bond->getBondType() != Bond::BondType::UNSPECIFIED &&
+         bond->getBondType() != Bond::BondType::ZERO &&
+         (bond->getBondType() != Bond::BondType::DATIVE ||
+          bond->getBeginAtomIdx() != atom->getIdx());
 }
 unsigned int getAtomNonzeroDegree(const Atom *atom) {
   PRECONDITION(atom, "bad pointer");
@@ -3170,15 +3154,12 @@ static unsigned int OctahedralPermFrom3D(unsigned char *pair,
 
 bool isWigglyBond(const Bond *bond, const Atom *atom) {
   int hasWigglyBond = 0;
-  if (bond->getBeginAtomIdx() == atom->getIdx() &&
-      bond->getBondType() == Bond::BondType::SINGLE &&
-      (bond->getBondDir() == Bond::BondDir::UNKNOWN ||
-       (bond->getPropIfPresent<int>(common_properties::_UnknownStereo,
-                                    hasWigglyBond) &&
-        hasWigglyBond))) {
-    return true;
-  }
-  return false;
+  return bond->getBeginAtomIdx() == atom->getIdx() &&
+         bond->getBondType() == Bond::BondType::SINGLE &&
+         (bond->getBondDir() == Bond::BondDir::UNKNOWN ||
+          (bond->getPropIfPresent<int>(common_properties::_UnknownStereo,
+                                       hasWigglyBond) &&
+           hasWigglyBond));
 }
 // The tolerance here is pretty high in order to accomodate things coming from
 // the dgeom code As we get more experience with real-world structures and/or
@@ -3692,7 +3673,7 @@ void clearDirFlags(ROMol &mol, bool onlyWedgeTypeBondDirs) {
       bond->setProp(common_properties::_UnknownStereo, 1);
     }
 
-    if (onlyWedgeTypeBondDirs == false ||
+    if (!onlyWedgeTypeBondDirs ||
         (bond->getBondDir() != Bond::BondDir::ENDDOWNRIGHT &&
          bond->getBondDir() != Bond::BondDir::ENDUPRIGHT)) {
       bond->setBondDir(Bond::NONE);

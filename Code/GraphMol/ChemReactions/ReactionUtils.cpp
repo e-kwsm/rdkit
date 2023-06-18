@@ -161,9 +161,9 @@ bool isReactionTemplateMoleculeAgent(const ROMol &mol, double agentThreshold) {
   unsigned numMappedAtoms = MolOps::getNumAtomsWithDistinctProperty(
       mol, common_properties::molAtomMapNumber);
   unsigned numAtoms = mol.getNumHeavyAtoms();
-  return !(numAtoms > 0u && static_cast<double>(numMappedAtoms) /
-                                    static_cast<double>(numAtoms) >=
-                                agentThreshold);
+  return numAtoms <= 0u ||
+         static_cast<double>(numMappedAtoms) / static_cast<double>(numAtoms) <
+             agentThreshold;
 }
 
 namespace {

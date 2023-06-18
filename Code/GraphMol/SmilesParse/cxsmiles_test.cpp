@@ -842,7 +842,7 @@ void testOneAtropisomers(const SmilesTest *smilesTest) {
     }
     BOOST_LOG(rdInfoLog) << "done" << std::endl;
   } catch (const std::exception &e) {
-    if (smilesTest->expectedResult != false) {
+    if (smilesTest->expectedResult) {
       throw;
     }
     return;
@@ -933,7 +933,7 @@ void testOneAtropisomersCanon(const SmilesTest *smilesTest) {
 
     BOOST_LOG(rdInfoLog) << "done" << std::endl;
   } catch (const std::exception &e) {
-    if (smilesTest->expectedResult != false) {
+    if (smilesTest->expectedResult) {
       throw;
     }
     return;
@@ -1018,7 +1018,7 @@ void testOne3dChiral(const SmilesTest *smilesTest) {
 
     BOOST_LOG(rdInfoLog) << "done" << std::endl;
   } catch (const std::exception &e) {
-    if (smilesTest->expectedResult != false) {
+    if (smilesTest->expectedResult) {
       throw;
     }
     return;

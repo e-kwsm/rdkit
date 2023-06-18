@@ -3953,7 +3953,7 @@ void MarvinMolBase::processSgroupsFromRDKit() {
       molToProcess =
           ((MarvinSuperatomSgroupExpanded *)this)->convertToOneSuperAtom();
     } else if (thisSgroupRole == "MultipleSgroup" &&
-               ((MarvinMultipleSgroup *)this)->isExpanded == true) {
+               ((MarvinMultipleSgroup *)this)->isExpanded) {
       try {
         ((MarvinMultipleSgroup *)this)->contractOneMultipleSgroup();
       } catch (FileParseException &e) {
@@ -4251,20 +4251,14 @@ RDGeom::Point3D &MarvinRectangle::getCenter() {
 
 bool MarvinRectangle::overlapsVertically(
     const MarvinRectangle &otherRectangle) const {
-  if (otherRectangle.upperLeft.y < lowerRight.y ||
-      otherRectangle.lowerRight.y > upperLeft.y) {
-    return false;
-  }
-  return true;
+  return otherRectangle.upperLeft.y >= lowerRight.y &&
+      otherRectangle.lowerRight.y <= upperLeft.y;
 }
 
 bool MarvinRectangle::overlapsVHorizontally(
     const MarvinRectangle &otherRectangle) const {
-  if (otherRectangle.upperLeft.x > lowerRight.x ||
-      otherRectangle.lowerRight.x < upperLeft.x) {
-    return false;
-  }
-  return true;
+  return otherRectangle.upperLeft.x <= lowerRight.x &&
+      otherRectangle.lowerRight.x >= upperLeft.x;
 }
 
 bool MarvinRectangle::compareRectanglesByX(MarvinRectangle &r1,
