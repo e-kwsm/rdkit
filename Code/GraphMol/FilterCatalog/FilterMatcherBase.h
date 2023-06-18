@@ -66,8 +66,8 @@ struct RDKIT_FILTERCATALOG_EXPORT FilterMatch {
   }
 
   bool operator!=(const FilterMatch &rhs) const {
-    return !(filterMatch.get() == rhs.filterMatch.get() &&
-             atomPairs == rhs.atomPairs);
+    return filterMatch.get() != rhs.filterMatch.get() ||
+           atomPairs != rhs.atomPairs;
   }
 };
 
