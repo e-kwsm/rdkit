@@ -1035,8 +1035,8 @@ void MMFFMolProperties::setMMFFHeavyAtomType(const RingMembershipSize &rmSize,
                     if (nbr2Atom->getIdx() == atom->getIdx()) {
                       continue;
                     }
-                    doubleBondedCN = (!((nbr2Atom->getAtomicNum() == 7) &&
-                                        (nbr2Atom->getTotalDegree() == 3)));
+                    doubleBondedCN = ((nbr2Atom->getAtomicNum() != 7) ||
+                                      (nbr2Atom->getTotalDegree() != 3));
                   }
                 }
               }
