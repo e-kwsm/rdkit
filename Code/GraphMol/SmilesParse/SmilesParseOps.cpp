@@ -404,12 +404,9 @@ static const std::map<int, int> permutationLimits = {
     {RDKit::Atom::ChiralType::CHI_TRIGONALBIPYRAMIDAL, 20}};
 
 bool checkChiralPermutation(int chiralTag, int permutation) {
-  if (chiralTag > RDKit::Atom::ChiralType::CHI_OTHER &&
-      permutationLimits.find(chiralTag) != permutationLimits.end() &&
-      (permutation < 0 || permutation > permutationLimits.at(chiralTag))) {
-    return false;
-  }
-  return true;
+  return chiralTag <= RDKit::Atom::ChiralType::CHI_OTHER ||
+         permutationLimits.find(chiralTag) == permutationLimits.end() ||
+         (permutation >= 0 && permutation <= permutationLimits.at(chiralTag));
 }
 
 void CheckChiralitySpecifications(RDKit::RWMol *mol, bool strict) {
