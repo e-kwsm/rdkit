@@ -800,10 +800,10 @@ bool bondAffectsAtomChirality(const Bond *bond, const Atom *atom) {
   // FIX consider how to handle organometallics
   PRECONDITION(bond, "bad bond pointer");
   PRECONDITION(atom, "bad atom pointer");
-  return !(bond->getBondType() == Bond::BondType::UNSPECIFIED ||
-           bond->getBondType() == Bond::BondType::ZERO ||
-           (bond->getBondType() == Bond::BondType::DATIVE &&
-            bond->getBeginAtomIdx() == atom->getIdx()));
+  return bond->getBondType() != Bond::BondType::UNSPECIFIED &&
+         bond->getBondType() != Bond::BondType::ZERO &&
+         (bond->getBondType() != Bond::BondType::DATIVE ||
+          bond->getBeginAtomIdx() != atom->getIdx());
 }
 unsigned int getAtomNonzeroDegree(const Atom *atom) {
   PRECONDITION(atom, "bad pointer");
