@@ -261,7 +261,7 @@ class MrvTests {
         BOOST_LOG(rdInfoLog) << "done" << std::endl;
       }
     } catch (const std::exception &) {
-      if (smilesTest->expectedResult != false) {
+      if (smilesTest->expectedResult) {
         throw;
       }
       return;
@@ -356,7 +356,7 @@ class MrvTests {
         BOOST_LOG(rdInfoLog) << "done" << std::endl;
       }
     } catch (const std::exception &) {
-      if (molTest->expectedResult != false) {
+      if (molTest->expectedResult) {
         throw;
       }
       return;
@@ -450,7 +450,7 @@ class MrvTests {
 
       BOOST_LOG(rdInfoLog) << "done" << std::endl;
     } catch (const std::exception &) {
-      if (rxnTest->expectedResult != false) {
+      if (rxnTest->expectedResult) {
         throw;
       }
       return;
@@ -493,7 +493,7 @@ class MrvTests {
       BOOST_LOG(rdInfoLog) << "done" << std::endl;
       BOOST_LOG(rdInfoLog) << "done" << std::endl;
     } catch (const std::exception &) {
-      if (rxnTest->expectedResult != false) {
+      if (rxnTest->expectedResult) {
         throw;
       }
       return;
@@ -571,7 +571,7 @@ class MrvTests {
         BOOST_LOG(rdInfoLog) << "done" << std::endl;
       }
     } catch (const std::exception &) {
-      if (molTest->expectedResult != false) {
+      if (molTest->expectedResult) {
         throw;
       }
       return;
@@ -639,7 +639,7 @@ class MrvTests {
 
       BOOST_LOG(rdInfoLog) << "done" << std::endl;
     } catch (const std::exception &) {
-      if (molTest->expectedResult != false) {
+      if (molTest->expectedResult) {
         throw;
       }
 
@@ -744,7 +744,7 @@ class MrvTests {
 
       BOOST_LOG(rdInfoLog) << "done" << std::endl;
     } catch (const std::exception &) {
-      if (molFileTest->expectedResult != false) {
+      if (molFileTest->expectedResult) {
         throw;
       }
       return;
@@ -823,7 +823,7 @@ class MrvTests {
       }
       BOOST_LOG(rdInfoLog) << "done" << std::endl;
     } catch (const std::exception &) {
-      if (rxnTest->expectedResult != false) {
+      if (rxnTest->expectedResult) {
         throw;
       }
       return;
