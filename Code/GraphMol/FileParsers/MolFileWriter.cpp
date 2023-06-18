@@ -491,8 +491,7 @@ namespace {
 unsigned int getAtomParityFlag(const Atom *atom, const Conformer *conf) {
   PRECONDITION(atom, "bad atom");
   PRECONDITION(conf, "bad conformer");
-  if (!conf->is3D() ||
-      !(atom->getDegree() >= 3 && atom->getTotalDegree() == 4)) {
+  if (!conf->is3D() || atom->getDegree() < 3 || atom->getTotalDegree() != 4) {
     return 0;
   }
 
