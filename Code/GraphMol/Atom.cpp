@@ -686,11 +686,8 @@ bool Atom::hasValenceViolation() const {
 
   bool strict = false;
   bool checkIt = true;
-  if (calculateExplicitValence(*this, strict, checkIt) == -1 ||
-      calculateImplicitValence(*this, strict, checkIt) == -1) {
-    return true;
-  }
-  return false;
+  return calculateExplicitValence(*this, strict, checkIt) == -1 ||
+         calculateImplicitValence(*this, strict, checkIt) == -1;
 }
 
 void Atom::setQuery(Atom::QUERYATOM_QUERY *) {
@@ -739,8 +736,8 @@ void Atom::updatePropertyCache(bool strict) {
 }
 
 bool Atom::needsUpdatePropertyCache() const {
-  return !(this->d_explicitValence >= 0 &&
-           (this->df_noImplicit || this->d_implicitValence >= 0));
+  return this->d_explicitValence < 0 ||
+         (!this->df_noImplicit && this->d_implicitValence < 0);
 }
 
 void Atom::clearPropertyCache() {

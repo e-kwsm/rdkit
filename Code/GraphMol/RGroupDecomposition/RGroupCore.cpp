@@ -779,7 +779,7 @@ bool RCore::checkAllBondsToRGroupPresent(
       const auto coreAtom = core->getAtomWithIdx(coreAtomIdx);
       // don't need to match a non terminal user R group
       // if (!(coreAtom->getDegree() > 1 && isUserRLabel(*coreAtom))) {
-      if (!(coreAtom->getAtomicNum() == 0 && isUserRLabel(*coreAtom))) {
+      if (coreAtom->getAtomicNum() != 0 || !isUserRLabel(*coreAtom)) {
         coreNeighborIndices.insert(coreAtomIdx);
       }
     }
