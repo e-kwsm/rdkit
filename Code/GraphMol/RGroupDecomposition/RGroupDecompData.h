@@ -59,7 +59,7 @@ struct RGroupDecompData {
 
   void prepareCores();
 
-  void setRlabel(Atom *atom, int rlabel);
+  void setRlabel(Atom *atom, int rlabel) const;
 
   int getRlabel(Atom *atom) const;
 
@@ -88,7 +88,7 @@ struct RGroupDecompData {
 
   bool replaceHydrogenCoreDummy(const RGroupMatch &match, RWMol &core,
                                 const Atom &atom, const int currentLabel,
-                                const int rLabel);
+                                const int rLabel) const;
 
   void relabelCore(RWMol &core, std::map<int, int> &mappings,
                    UsedLabels &used_labels, const std::set<int> &indexLabels,

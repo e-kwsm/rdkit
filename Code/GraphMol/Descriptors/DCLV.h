@@ -56,26 +56,26 @@ class RDKIT_DESCRIPTORS_EXPORT DoubleCubicLatticeVolume {
   //! Vol. 16, No. 3, pp. 273-284, 1995.
 
   // value returns
-  double getSurfaceArea() {
+  double getSurfaceArea() const {
     /*! \return Solvent Accessible Surface Area */
     return surfaceArea;
   }
 
-  double getVolume() {
+  double getVolume() const {
     /*! \return Volume bound by probe sphere */
     return totalVolume;
   }
 
-  double getVDWVolume() { /*! \return van der Waals Volume */
+  double getVDWVolume() const { /*! \return van der Waals Volume */
     return vdwVolume;
   }
 
-  double getCompactness() {
+  double getCompactness() const {
     /*! \return Compactness of the protein */
     return compactness;
   }
 
-  double getPackingDensity() {
+  double getPackingDensity() const {
     /*! \return Packing Density of the protein */
     return packingDensity;
   }
