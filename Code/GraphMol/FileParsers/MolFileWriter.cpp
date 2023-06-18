@@ -499,8 +499,7 @@ namespace {
 unsigned int getAtomParityFlag(const Atom *atom, const Conformer *conf) {
   PRECONDITION(atom, "bad atom");
   PRECONDITION(conf, "bad conformer");
-  if (!conf->is3D() ||
-      !(atom->getDegree() >= 3 && atom->getTotalDegree() == 4)) {
+  if (!conf->is3D() || atom->getDegree() < 3 || atom->getTotalDegree() != 4) {
     return 0;
   }
 
@@ -953,18 +952,16 @@ int BondStereoCodeV2000ToV3000(int dirCode) {
 
 namespace {
 void createSMARTSQSubstanceGroups(ROMol &mol) {
-  auto isRedundantQuery = [](const auto query) {
-    if (query->getDescription() == "AtomAnd" &&
-        (query->endChildren() - query->beginChildren() == 2) &&
-        (*query->beginChildren())->getDescription() == "AtomAtomicNum" &&
-        !(*query->beginChildren())->getNegation() &&
-        !(*(query->beginChildren() + 1))->getNegation() &&
-        ((*(query->beginChildren() + 1))->getDescription() == "AtomIsotope" ||
-         (*(query->beginChildren() + 1))->getDescription() ==
-             "AtomFormalCharge")) {
-      return true;
-    }
-    return false;
+  auto isRedundantQuery = [](const auto query) -> bool {
+    return query->getDescription() == "AtomAnd" &&
+           (query->endChildren() - query->beginChildren() == 2) &&
+           (*query->beginChildren())->getDescription() == "AtomAtomicNum" &&
+           !(*query->beginChildren())->getNegation() &&
+           !(*(query->beginChildren() + 1))->getNegation() &&
+           ((*(query->beginChildren() + 1))->getDescription() ==
+                "AtomIsotope" ||
+            (*(query->beginChildren() + 1))->getDescription() ==
+                "AtomFormalCharge");
   };
   for (const auto atom : mol.atoms()) {
     if (atom->hasQuery()) {

@@ -404,8 +404,8 @@ std::uint8_t AtomElectrons::canAddBondWithOrder(unsigned int bo) {
       // - the neighbor is charged, and triple-bonded to
       //   this atom, which is left of N (e.g., isonitrile)
       bool isnc = isNbrCharged(bo);
-      fcInc = (((!isnc && !(!d_parent->allowedChgLeftOfN() &&
-                            d_parent->totalFormalCharge())) ||
+      fcInc = (((!isnc && (d_parent->allowedChgLeftOfN() ||
+                           !d_parent->totalFormalCharge())) ||
                 (isnc && (bo == 3) && (oe() < 5)))
                    ? 1
                    : 0);
@@ -778,8 +778,8 @@ bool ConjElectrons::checkChargesAndBondOrders() {
     }
     if (areAcceptable) {
       // charged neighboring atoms left of N are not acceptable
-      areAcceptable = !((ae[0]->oe() < 5) && ae[0]->fc() && (ae[1]->oe() < 5) &&
-                        ae[1]->fc());
+      areAcceptable = (ae[0]->oe() >= 5) || !ae[0]->fc() ||
+                      (ae[1]->oe() >= 5) || !ae[1]->fc();
     }
   }
   return areAcceptable;
@@ -1629,8 +1629,8 @@ void ResonanceMolSupplier::buildCEMap(CEMap &ceMap, unsigned int conjGrpIdx) {
         // of N and both need a charge to accept this bond type,
         // then this bond type is feasible
         if ((ce->currElectrons() >= (bo * 2)) && (allowedBonds & orderMask) &&
-            !((allowedBonds & chgMask) &&
-              ((ae[BEGIN_POS]->oe() < 5) || (ae[END_POS]->oe() < 5)))) {
+            (!(allowedBonds & chgMask) ||
+             ((ae[BEGIN_POS]->oe() >= 5) && (ae[END_POS]->oe() >= 5)))) {
           isAnyBondAllowed = true;
           // if another bond type will be possible, then we'll
           // need to save that to ceStack and keep on with the current
