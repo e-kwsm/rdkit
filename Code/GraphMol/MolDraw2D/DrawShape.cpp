@@ -35,7 +35,7 @@ DrawShape::DrawShape(const std::vector<Point2D> &points, double lineWidth,
       bond_(bond) {}
 
 // ****************************************************************************
-void DrawShape::draw(MolDraw2D &drawer) {
+void DrawShape::draw(MolDraw2D &drawer) const {
   // the various myDraw functions may over-ride these.
   const auto ocolour = drawer.colour();
   drawer.setColour(lineColour_);
