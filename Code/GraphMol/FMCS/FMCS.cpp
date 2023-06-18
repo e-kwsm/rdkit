@@ -717,12 +717,10 @@ bool FinalChiralityCheckFunction(const std::uint32_t c1[],
     // (see test for issue 481)
     if (a1->getDegree() <
             3 ||  // #688: doesn't deal with "explicit" Hs properly
-        !(ac1 == Atom::CHI_TETRAHEDRAL_CW ||
-          ac1 == Atom::CHI_TETRAHEDRAL_CCW)) {
+        (ac1 != Atom::CHI_TETRAHEDRAL_CW && ac1 != Atom::CHI_TETRAHEDRAL_CCW)) {
       continue;  // skip non chiral center QUERY atoms
     }
-    if (!(ac2 == Atom::CHI_TETRAHEDRAL_CW ||
-          ac2 == Atom::CHI_TETRAHEDRAL_CCW)) {
+    if (ac2 != Atom::CHI_TETRAHEDRAL_CW && ac2 != Atom::CHI_TETRAHEDRAL_CCW) {
       return false;
     }
     //--------------------
@@ -892,14 +890,12 @@ bool FinalChiralityCheckFunction_1(const short unsigned int c1[],
   for (unsigned int i = 0; i < qna; ++i) {
     const auto a1 = mol1.getAtomWithIdx(query[c1[i]]);
     const auto ac1 = a1->getChiralTag();
-    if (!(ac1 == Atom::CHI_TETRAHEDRAL_CW ||
-          ac1 == Atom::CHI_TETRAHEDRAL_CCW)) {
+    if (ac1 != Atom::CHI_TETRAHEDRAL_CW && ac1 != Atom::CHI_TETRAHEDRAL_CCW) {
       continue;  // skip non chiral center query atoms
     }
     const auto a2 = mol2.getAtomWithIdx(target[c2[i]]);
     const auto ac2 = a2->getChiralTag();
-    if (!(ac2 == Atom::CHI_TETRAHEDRAL_CW ||
-          ac2 == Atom::CHI_TETRAHEDRAL_CCW)) {
+    if (ac2 != Atom::CHI_TETRAHEDRAL_CW && ac2 != Atom::CHI_TETRAHEDRAL_CCW) {
       continue;  // skip non chiral center TARGET atoms even if query atom is
     }
     // chiral
