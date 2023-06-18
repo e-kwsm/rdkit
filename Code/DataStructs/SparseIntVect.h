@@ -411,11 +411,9 @@ class SparseIntVect {
     }
   }
   bool checkIndex(IndexType idx) const {
-    if (idx < 0 || idx > d_length ||
-        (idx == d_length && d_length < std::numeric_limits<IndexType>::max())) {
-      return false;
-    }
-    return true;
+    return !(
+        idx < 0 || idx > d_length ||
+        (idx == d_length && d_length < std::numeric_limits<IndexType>::max()));
   }
 };
 
