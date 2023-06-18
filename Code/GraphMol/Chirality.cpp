@@ -40,11 +40,7 @@ bool shouldDetectDoubleBondStereo(const Bond *bond) {
 bool getValFromEnvironment(const char *var, bool defVal) {
   auto evar = std::getenv(var);
   if (evar != nullptr) {
-    if (!strcmp(evar, "0")) {
-      return false;
-    } else {
-      return true;
-    }
+    return strcmp(evar, "0") != 0;
   }
   return defVal;
 }
@@ -804,13 +800,10 @@ bool bondAffectsAtomChirality(const Bond *bond, const Atom *atom) {
   // FIX consider how to handle organometallics
   PRECONDITION(bond, "bad bond pointer");
   PRECONDITION(atom, "bad atom pointer");
-  if (bond->getBondType() == Bond::BondType::UNSPECIFIED ||
-      bond->getBondType() == Bond::BondType::ZERO ||
-      (bond->getBondType() == Bond::BondType::DATIVE &&
-       bond->getBeginAtomIdx() == atom->getIdx())) {
-    return false;
-  }
-  return true;
+  return !(bond->getBondType() == Bond::BondType::UNSPECIFIED ||
+           bond->getBondType() == Bond::BondType::ZERO ||
+           (bond->getBondType() == Bond::BondType::DATIVE &&
+            bond->getBeginAtomIdx() == atom->getIdx()));
 }
 unsigned int getAtomNonzeroDegree(const Atom *atom) {
   PRECONDITION(atom, "bad pointer");
@@ -2602,15 +2595,12 @@ static unsigned int OctahedralPermFrom3D(unsigned char *pair,
 
 bool isWigglyBond(const Bond *bond, const Atom *atom) {
   int hasWigglyBond = 0;
-  if (bond->getBeginAtomIdx() == atom->getIdx() &&
-      bond->getBondType() == Bond::BondType::SINGLE &&
-      (bond->getBondDir() == Bond::BondDir::UNKNOWN ||
-       (bond->getPropIfPresent<int>(common_properties::_UnknownStereo,
-                                    hasWigglyBond) &&
-        hasWigglyBond))) {
-    return true;
-  }
-  return false;
+  return bond->getBeginAtomIdx() == atom->getIdx() &&
+         bond->getBondType() == Bond::BondType::SINGLE &&
+         (bond->getBondDir() == Bond::BondDir::UNKNOWN ||
+          (bond->getPropIfPresent<int>(common_properties::_UnknownStereo,
+                                       hasWigglyBond) &&
+           hasWigglyBond));
 }
 // The tolerance here is pretty high in order to accomodate things coming from
 // the dgeom code As we get more experience with real-world structures and/or
