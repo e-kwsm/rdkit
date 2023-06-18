@@ -59,7 +59,7 @@ struct RGroupDecompData {
 
   void prepareCores();
 
-  void setRlabel(Atom *atom, int rlabel);
+  void setRlabel(Atom *atom, int rlabel) const;
 
   int getRlabel(Atom *atom) const;
 

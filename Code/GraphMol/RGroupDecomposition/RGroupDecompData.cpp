@@ -55,7 +55,7 @@ void RGroupDecompData::prepareCores() {
   }
 }
 
-void RGroupDecompData::setRlabel(Atom *atom, int rlabel) {
+void RGroupDecompData::setRlabel(Atom *atom, int rlabel) const {
   PRECONDITION(rlabel > 0, "RLabels must be >0");
   if (params.rgroupLabelling & AtomMap) {
     atom->setAtomMapNum(rlabel);
