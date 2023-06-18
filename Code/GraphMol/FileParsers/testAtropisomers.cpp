@@ -167,7 +167,7 @@ class MolAtropTest {
 
       BOOST_LOG(rdInfoLog) << "done" << std::endl;
     } catch (const std::exception &e) {
-      if (molFileTest->expectedResult != false) {
+      if (molFileTest->expectedResult) {
         throw;
       }
       return;
@@ -247,7 +247,7 @@ class MolAtropTest {
 
       BOOST_LOG(rdInfoLog) << "done" << std::endl;
     } catch (const std::exception &e) {
-      if (expectedResult != false) {
+      if (expectedResult) {
         throw;
       }
       return;
@@ -284,7 +284,7 @@ class MolAtropTest {
       TEST_ASSERT(expectedSmi == smilesOut);
 
     } catch (const std::exception &e) {
-      if (expectedResult != false) {
+      if (expectedResult) {
         throw;
       }
       return;
