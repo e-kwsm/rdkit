@@ -996,9 +996,9 @@ MCSResult MaximumCommonSubgraph::find(const std::vector<ROMOL_SPTR> &src_mols) {
       if (!areSeedsEmpty) {
         const Seed &fs = Seeds.front();
         if ((1 == getMaxNumberBonds() ||
-             !(Parameters.BondCompareParameters.CompleteRingsOnly &&
-               fs.MoleculeFragment.Bonds.size() == 1 &&
-               queryIsBondInRing(fs.MoleculeFragment.Bonds.front()))) &&
+             !Parameters.BondCompareParameters.CompleteRingsOnly ||
+             fs.MoleculeFragment.Bonds.size() != 1 ||
+             !queryIsBondInRing(fs.MoleculeFragment.Bonds.front())) &&
             checkIfShouldAcceptMCS(fs.MoleculeFragment, *QueryMolecule, Targets,
                                    Parameters)) {
           McsIdx.QueryMolecule = QueryMolecule;
