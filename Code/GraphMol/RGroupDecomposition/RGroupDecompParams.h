@@ -78,7 +78,7 @@ struct RDKIT_RGROUPDECOMPOSITION_EXPORT RGroupDecompositionParameters {
   double timeout = -1.0;  ///< timeout in seconds. <=0 indicates no timeout
 
   // Determine how to assign the rgroup labels from the given core
-  unsigned int autoGetLabels(const RWMol &);
+  unsigned int autoGetLabels(const RWMol &) const;
 
   // Prepare the core for substructure searching and rgroup assignment
   bool prepareCore(RWMol &, const RWMol *alignCore);
