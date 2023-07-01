@@ -546,7 +546,7 @@ std::vector<std::unique_ptr<RWMol>> CDXMLDataStreamToMols(
   int missing_frag_id = -1;
   for (auto &cdxml : pt) {
     if (cdxml.first == "CDXML") {
-      double bondLength = cdxml.second.get<double>("<xmlattr>.BondLength");
+      auto bondLength = cdxml.second.get<double>("<xmlattr>.BondLength");
       for (auto &node : cdxml.second) {
         if (node.first == "page") {
           for (auto &frag : node.second) {
