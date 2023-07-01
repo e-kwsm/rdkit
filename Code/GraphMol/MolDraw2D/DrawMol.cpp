@@ -400,7 +400,7 @@ void DrawMol::extractMolNotes() {
     for (int i = 0; i < 3; ++i) {
       locs[i].x += xOffset_;
       locs[i].y += yOffset_;
-      DrawAnnotation *annot =
+      auto *annot =
           new DrawAnnotation(note, TextAlignType::START, "note", 1.0, locs[i],
                              drawOptions_.annotationColour, textDrawer_);
       // Put it into the legends_, because it's already in draw coords, so
@@ -413,7 +413,7 @@ void DrawMol::extractMolNotes() {
     }
     if (!didIt) {
       // There was nowhere to put it that didn't clash, so live with it.
-      DrawAnnotation *annot =
+      auto *annot =
           new DrawAnnotation(note, TextAlignType::START, "note", 1.0, locs[0],
                              drawOptions_.annotationColour, textDrawer_);
       legends_.emplace_back(annot);
