@@ -35,8 +35,11 @@ ROMol* MolFromCMLBlock(const std::string& block, bool sanitize = true,
                        bool removeHs = true) {
   RDLog::InitLogs();  // FIXME
   std::unique_ptr<RWMol> mol;
+  v2::FileParsers::CMLFileParserParams params{};
+  params.sanitize = sanitize;
+  params.removeHs = removeHs;
   try {
-    mol = v2::FileParsers::MolFromCMLBlock(block);
+    mol = v2::FileParsers::MolFromCMLBlock(block, params);
   } catch (const RDKit::FileParseException& e) {
     BOOST_LOG(rdWarningLog) << e.what() << std::endl;
   } catch (...) {
@@ -48,8 +51,11 @@ ROMol* MolFromCMLFile(const std::string& filename, bool sanitize = true,
                       bool removeHs = true) {
   RDLog::InitLogs();  // FIXME
   std::unique_ptr<RWMol> mol;
+  v2::FileParsers::CMLFileParserParams params{};
+  params.sanitize = sanitize;
+  params.removeHs = removeHs;
   try {
-    mol = v2::FileParsers::MolFromCMLFile(filename);
+    mol = v2::FileParsers::MolFromCMLFile(filename, params);
   } catch (const RDKit::BadFileException& e) {
     PyErr_SetString(PyExc_IOError, e.what());
     throw boost::python::error_already_set();
