@@ -91,7 +91,8 @@ class CMLMoleculeParser {
             molecule_node, "spinMultiplicity", xpath())} {}
   ~CMLMoleculeParser() = default;
 
-  std::unique_ptr<RWMol> parse(bool sanitize, bool removeHs);
+  std::unique_ptr<RWMol> parse(
+      const v2::FileParsers::CMLFileParserParams& params);
 
  private:
   void check_molecule();
@@ -193,7 +194,7 @@ void CMLMoleculeParser::check_molecule() {
 }
 
 std::unique_ptr<RWMol> CMLMoleculeParser::parse(
-    const CMLFileParserParams& params) {
+    const v2::FileParsers::CMLFileParserParams& params) {
   check_molecule();
 
   // http://www.xml-cml.org/convention/molecular#molecule-name
@@ -618,7 +619,7 @@ void CMLMoleculeParser::check_hydrogenCount() {
 
 std::unique_ptr<RWMol> PTreeToMol(
     const boost::property_tree::ptree& pt,
-    const CMLFileParserParams& params) noexcept(false) {
+    const v2::FileParsers::CMLFileParserParams& params) noexcept(false) {
   if (pt.size() > 1u) {
     throw RDKit::FileParseException{"XML MUST NOT have multiple roots"};
   }
