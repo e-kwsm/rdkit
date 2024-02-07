@@ -192,7 +192,8 @@ void CMLMoleculeParser::check_molecule() {
   }
 }
 
-std::unique_ptr<RWMol> CMLMoleculeParser::parse(bool sanitize, bool removeHs) {
+std::unique_ptr<RWMol> CMLMoleculeParser::parse(
+    const CMLFileParserParams& params) {
   check_molecule();
 
   // http://www.xml-cml.org/convention/molecular#molecule-name
@@ -240,8 +241,8 @@ std::unique_ptr<RWMol> CMLMoleculeParser::parse(bool sanitize, bool removeHs) {
   }
 
   check_hydrogenCount();
-  if (sanitize) {
-    if (removeHs) {
+  if (params.sanitize) {
+    if (params.removeHs) {
       MolOps::RemoveHsParameters ps;
       MolOps::removeHs(*molecule, ps, true);
     } else {
@@ -615,9 +616,9 @@ void CMLMoleculeParser::check_hydrogenCount() {
   }
 }
 
-std::unique_ptr<RWMol> PTreeToMol(const boost::property_tree::ptree& pt,
-                                  bool sanitize,
-                                  bool removeHs) noexcept(false) {
+std::unique_ptr<RWMol> PTreeToMol(
+    const boost::property_tree::ptree& pt,
+    const CMLFileParserParams& params) noexcept(false) {
   if (pt.size() > 1u) {
     throw RDKit::FileParseException{"XML MUST NOT have multiple roots"};
   }
@@ -689,7 +690,7 @@ std::unique_ptr<RWMol> PTreeToMol(const boost::property_tree::ptree& pt,
     p = std::make_unique<CMLMoleculeParser>("/" + root.first + "/" + m->first,
                                             m->second);
   }
-  return p->parse(sanitize, removeHs);
+  return p->parse(params);
 }
 }  // namespace
 
@@ -702,7 +703,7 @@ std::unique_ptr<RWMol> MolFromCMLDataStream(
   } catch (const boost::property_tree::xml_parser_error& e) {
     throw FileParseException{boost::diagnostic_information(e)};
   }
-  return PTreeToMol(pt, params.sanitize, params.removeHs);
+  return PTreeToMol(pt, params);
 }
 
 std::unique_ptr<RWMol> MolFromCMLBlock(
