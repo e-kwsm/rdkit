@@ -10,8 +10,6 @@
 #pragma clang diagnostic ignored "-Wpedantic"  // FIXME
 #endif                                         // FIXME
 
-#include <GraphMol/FileParsers/FileParsers.h>
-
 #include <RDBoost/python.h>
 #include <GraphMol/FileParsers/FileParsers.h>
 #include <RDGeneral/BadFileException.h>
