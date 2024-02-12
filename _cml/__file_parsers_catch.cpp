@@ -64,7 +64,7 @@ struct MoleculeNode {
   std::optional<std::string> formalCharge{"0"};
   std::optional<std::string> spinMultiplicity{"1"};
 
-  std::string str(const std::string& body = "") const {
+  [[nodiscard]] std::string str(const std::string& body = "") const {
     boost::format fmt{" %1%='%2%'"};
     std::ostringstream ss;
     ss << "<molecule";
@@ -104,7 +104,7 @@ struct AtomNode {
   std::optional<std::string> hydrogenCount{"0"};
   std::optional<std::string> x3{"0.0"}, y3{"0.0"}, z3{"0.0"};
 
-  auto str() const {
+  [[nodiscard]] auto str() const {
     std::ostringstream ss;
     ss << "<atom";
     ss << put_attribute_unless_none("elementType", elementType);
@@ -139,7 +139,7 @@ struct BondNode {
   // TODO
   // std::optional<std::string> bondStereo{std::nullopt};
 
-  auto str() const {
+  [[nodiscard]] auto str() const {
     std::ostringstream ss;
     ss << "<bond";
     ss << put_attribute_unless_none("id", id);
