@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+  <molecule id="acrylonitrile" formalCharge="0" spinMultiplicity="1">
+    <atomArray>
+      <atom id="a0" elementType="C" formalCharge="0" spinMultiplicity="1" x3="-0.699200" y3="-1.140500" z3="0.000000"/>
+      <atom id="a1" elementType="C" formalCharge="0" spinMultiplicity="1" x3="0.000000" y3="0.000000" z3="0.000000"/>
+      <atom id="a2" elementType="C" formalCharge="0" spinMultiplicity="1" x3="1.521000" y3="0.000000" z3="0.000000"/>
+      <atom id="a3" elementType="N" formalCharge="0" spinMultiplicity="1" x3="2.782000" y3="0.000000" z3="0.000000"/>
+      <atom id="a4" elementType="H" formalCharge="0" spinMultiplicity="1" x3="-1.784500" y3="-1.125500" z3="0.000000"/>
+      <atom id="a5" elementType="H" formalCharge="0" spinMultiplicity="1" x3="-0.210300" y3="-2.110900" z3="0.000000"/>
+      <atom id="a6" elementType="H" formalCharge="0" isotopeNumber="2" spinMultiplicity="1" x3="-0.477300" y3="0.973000" z3="0.000000"/>
+    </atomArray>
+    <bondArray>
+      <bond atomRefs2="a0 a1" id="b0" order="2"/>
+      <bond atomRefs2="a0 a4" id="b1" order="1"/>
+      <bond atomRefs2="a0 a5" id="b2" order="1"/>
+      <bond atomRefs2="a1 a2" id="b3" order="1"/>
+      <bond atomRefs2="a1 a6" id="b4" order="1"/>
+      <bond atomRefs2="a2 a3" id="b5" order="3"/>
+    </bondArray>
+  </molecule>
