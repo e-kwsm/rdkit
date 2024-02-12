@@ -149,6 +149,11 @@ struct BondNode {
     return ss.str();
   }
 };
+
+struct Hoge {
+  std::vector<AtomNode> atom_node;
+  std::vector<BondNode> bond_node;
+};
 }  // namespace
 
 SCENARIO("CML Reader", "[CML][reader]") {
