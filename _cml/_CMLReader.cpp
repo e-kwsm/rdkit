@@ -617,7 +617,7 @@ void CMLMoleculeParser::check_hydrogenCount() {
   }
 }
 
-static std::unique_ptr<RWMol> PTreeToMol(
+std::unique_ptr<RWMol> PTreeToMol(
     const boost::property_tree::ptree& pt,
     const v2::FileParsers::CMLFileParserParams& params) noexcept(false) {
   if (pt.size() > 1u) {
