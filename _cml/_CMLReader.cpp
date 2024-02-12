@@ -60,7 +60,8 @@ class LexicalTranslator {
   static_assert(std::is_arithmetic<T>::value);
 
   LexicalTranslator(std::string path) : path{std::move(path)} {}
-  external_type get_value(const internal_type& s) const noexcept(false) {
+  [[nodiscard]] external_type get_value(const internal_type& s) const
+      noexcept(false) {
     try {
       return boost::lexical_cast<external_type>(s);
     } catch (const boost::bad_lexical_cast&) {
