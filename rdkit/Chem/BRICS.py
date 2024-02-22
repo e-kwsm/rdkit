@@ -29,13 +29,13 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 # Created by Greg Landrum, Nov 2008
-import copy
-
 """ Implementation of the BRICS algorithm from Degen et al. ChemMedChem *3* 1503-7 (2008)
 
 """
+import copy
 import re
 import sys
+from typing import Iterable, Iterator, Optional, Set, Tuple, Union, ValuesView
 
 from rdkit import Chem
 from rdkit import RDRandom as random
@@ -235,8 +235,10 @@ for i, rxnSet in enumerate(smartsGps):
     rxn._matchers = [Chem.MolFromSmiles('[%s*]' % x) for x in labels]
     reverseReactions.append(rxn)
 
+T = Tuple[Tuple[int, int], Tuple[str, str]]
 
-def FindBRICSBonds(mol, randomizeOrder=False, silent=True):
+
+def FindBRICSBonds(mol: Chem.Mol, randomizeOrder: bool = False, silent: bool = True) -> Iterator[T]:
   """ returns the bonds in a molecule that BRICS would cleave
 
     >>> from rdkit import Chem
@@ -313,7 +315,8 @@ def FindBRICSBonds(mol, randomizeOrder=False, silent=True):
           yield (((match[0], match[1]), (i1, i2)))
 
 
-def BreakBRICSBonds(mol, bonds=None, sanitize=True, silent=True):
+def BreakBRICSBonds(mol: Chem.Mol, bonds: Optional[Iterator[T]] = None, sanitize: bool = True,
+                    silent: bool = True) -> Chem.Mol:
   """ breaks the BRICS bonds in a molecule and returns the results
 
     >>> from rdkit import Chem
@@ -393,8 +396,10 @@ def BreakBRICSBonds(mol, bonds=None, sanitize=True, silent=True):
   return res
 
 
-def BRICSDecompose(mol, allNodes=None, minFragmentSize=1, onlyUseReactions=None, silent=True,
-                   keepNonLeafNodes=False, singlePass=False, returnMols=False):
+def BRICSDecompose(mol: Chem.Mol, allNodes: Optional[Set[str]] = None, minFragmentSize: int = 1,
+                   onlyUseReactions: None = None, silent: bool = True,
+                   keepNonLeafNodes: bool = False, singlePass: bool = False,
+                   returnMols: bool = False) -> Union[Set[str], ValuesView[Chem.Mol]]:
   """ returns the BRICS decomposition for a molecule
 
     >>> from rdkit import Chem
@@ -529,8 +534,9 @@ def BRICSDecompose(mol, allNodes=None, minFragmentSize=1, onlyUseReactions=None,
 dummyPattern = Chem.MolFromSmiles('[*]')
 
 
-def BRICSBuild(fragments, onlyCompleteMols=True, seeds=None, uniquify=True, scrambleReagents=True,
-               maxDepth=3):
+def BRICSBuild(fragments, onlyCompleteMols: bool = True, seeds=None,
+               uniquify: bool = True, scrambleReagents: bool = True,
+               maxDepth: int = 3) -> Iterator[Chem.Mol]:
   """ Build new molecules from BRICS fragments.
   
   
