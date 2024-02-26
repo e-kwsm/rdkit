@@ -226,10 +226,10 @@ def EnumerateLibraryFromReaction(reaction, sidechainSets, returnReactants=False)
 
     >>> from rdkit import Chem
     >>> from rdkit.Chem import AllChem
-    >>> s1=[Chem.MolFromSmiles(x) for x in ('NC','NCC')]
-    >>> s2=[Chem.MolFromSmiles(x) for x in ('OC=O','OC(=O)C')]
+    >>> s1 = [Chem.MolFromSmiles(x) for x in ('NC', 'NCC')]
+    >>> s2 = [Chem.MolFromSmiles(x) for x in ('OC=O', 'OC(=O)C')]
     >>> rxn = AllChem.ReactionFromSmarts('[O:2]=[C:1][OH].[N:3]>>[O:2]=[C:1][N:3]')
-    >>> r = AllChem.EnumerateLibraryFromReaction(rxn,[s2,s1])
+    >>> r = AllChem.EnumerateLibraryFromReaction(rxn, [s2, s1])
     >>> [Chem.MolToSmiles(x[0]) for x in list(r)]
     ['CNC=O', 'CCNC=O', 'CNC(C)=O', 'CCNC(C)=O']
 
@@ -238,15 +238,15 @@ def EnumerateLibraryFromReaction(reaction, sidechainSets, returnReactants=False)
 
     Define a set of 10000 amines:
 
-    >>> amines = (Chem.MolFromSmiles('N'+'C'*x) for x in range(10000))
+    >>> amines = (Chem.MolFromSmiles('N' + 'C' * x) for x in range(10000))
 
     ... a set of 10000 acids
 
-    >>> acids = (Chem.MolFromSmiles('OC(=O)'+'C'*x) for x in range(10000))
+    >>> acids = (Chem.MolFromSmiles('OC(=O)' + 'C' * x) for x in range(10000))
 
     ... now the virtual library (1e8 compounds in principle):
 
-    >>> r = AllChem.EnumerateLibraryFromReaction(rxn,[acids,amines])
+    >>> r = AllChem.EnumerateLibraryFromReaction(rxn, [acids, amines])
 
     ... look at the first 4 compounds:
 
@@ -330,11 +330,11 @@ def ConstrainedEmbed(mol, core, useTethers=True, coreConfId=-1, randomseed=2342,
     >>> import math
     >>> molp = mol.GetConformer().GetAtomPosition(0)
     >>> templatep = template.GetConformer().GetAtomPosition(0)
-    >>> all(math.isclose(v, 0.0, abs_tol=0.01) for v in molp-templatep)
+    >>> all(math.isclose(v, 0.0, abs_tol=0.01) for v in molp - templatep)
     True
     >>> molp = mol.GetConformer().GetAtomPosition(1)
     >>> templatep = template.GetConformer().GetAtomPosition(1)
-    >>> all(math.isclose(v, 0.0, abs_tol=0.01) for v in molp-templatep)
+    >>> all(math.isclose(v, 0.0, abs_tol=0.01) for v in molp - templatep)
     True
 
     """
