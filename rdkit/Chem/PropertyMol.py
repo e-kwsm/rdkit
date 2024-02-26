@@ -26,7 +26,7 @@ class PropertyMol(Chem.Mol):
      >>> pm = PropertyMol(m)
      >>> pm.GetProp('_Name')
      'benzene.mol'
-     >>> pm.SetProp('MyProp','foo')
+     >>> pm.SetProp('MyProp', 'foo')
      >>> pm.HasProp('MyProp')
      1
 
@@ -45,7 +45,7 @@ class PropertyMol(Chem.Mol):
      Property mols are a bit more permissive about the types
      of property values:
 
-     >>> pm.SetProp('IntVal',1)
+     >>> pm.SetProp('IntVal', 1)
 
      That wouldn't work with a standard mol
 
@@ -56,12 +56,13 @@ class PropertyMol(Chem.Mol):
 
      This is a test for sf.net issue 2880943: make sure properties end up in SD files:
 
-     >>> import tempfile, os
+     >>> import tempfile
+     >>> import os
      >>> fn = tempfile.NamedTemporaryFile(suffix='.sdf', delete=False).name
      >>> w = Chem.SDWriter(fn)
      >>> w.write(pm)
-     >>> w=None
-     >>> with open(fn,'r') as inf:
+     >>> w = None
+     >>> with open(fn, 'r') as inf:
      ...   txt = inf.read()
      >>> '<IntVal>' in txt
      True
@@ -77,8 +78,8 @@ class PropertyMol(Chem.Mol):
      >>> w = Chem.SDWriter(fn)
      >>> pm = pickle.loads(pickle.dumps(pm))
      >>> w.write(pm)
-     >>> w=None
-     >>> with open(fn,'r') as inf:
+     >>> w = None
+     >>> with open(fn, 'r') as inf:
      ...   txt = inf.read()
      >>> '<IntVal>' in txt
      True
