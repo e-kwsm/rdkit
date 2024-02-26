@@ -64,7 +64,7 @@ def GetScaffoldForMol(mol):
   """ Return molecule object containing scaffold of mol
 
   >>> m = Chem.MolFromSmiles('Cc1ccccc1')
-  >>> GetScaffoldForMol(m)
+  >>> GetScaffoldForMol(m)  # doctest: +ELLIPSIS
   <rdkit.Chem.rdchem.Mol object at 0x...>
   >>> Chem.MolToSmiles(GetScaffoldForMol(m))
   'c1ccccc1'
