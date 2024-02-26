@@ -262,7 +262,7 @@ def FindBRICSBonds(mol, randomizeOrder=False, silent=True):
     Note that this is a generator function :
 
     >>> res = FindBRICSBonds(m)
-    >>> res
+    >>> res  # doctest: +ELLIPSIS
     <generator object ...>
     >>> next(res)
     ((3, 2), ('3', '4'))
@@ -404,7 +404,7 @@ def BRICSDecompose(mol, allNodes=None, minFragmentSize=1, onlyUseReactions=None,
     ['[14*]c1ccccn1', '[16*]c1cccc([16*])c1', '[3*]O[3*]', '[4*]CCC', '[4*]C[8*]']
 
     >>> res = list(BRICSDecompose(m,returnMols=True))
-    >>> res[0]
+    >>> res[0]  # doctest: +ELLIPSIS
     <rdkit.Chem.rdchem.Mol object ...>
     >>> smis = [Chem.MolToSmiles(x,True) for x in res]
     >>> sorted(smis)
