@@ -78,7 +78,7 @@ MolWt.__doc__ = """The average molecular weight of the molecule
 
   >>> MolWt(Chem.MolFromSmiles('CC'))
   30.07
-  >>> MolWt(Chem.MolFromSmiles('[NH4+].[Cl-]'))
+  >>> MolWt(Chem.MolFromSmiles('[NH4+].[Cl-]'))  # doctest: +ELLIPSIS
   53.49...
 
 """
@@ -90,7 +90,7 @@ def HeavyAtomMolWt(x):
 
 HeavyAtomMolWt.__doc__ = """The average molecular weight of the molecule ignoring hydrogens
 
-  >>> HeavyAtomMolWt(Chem.MolFromSmiles('CC'))
+  >>> HeavyAtomMolWt(Chem.MolFromSmiles('CC'))  # doctest: +ELLIPSIS
   24.02...
   >>> HeavyAtomMolWt(Chem.MolFromSmiles('[NH4+].[Cl-]'))
   49.46
@@ -102,9 +102,9 @@ ExactMolWt = lambda *x, **y: _rdMolDescriptors.CalcExactMolWt(*x, **y)
 ExactMolWt.version = _rdMolDescriptors._CalcExactMolWt_version
 ExactMolWt.__doc__ = """The exact molecular weight of the molecule
 
-  >>> ExactMolWt(Chem.MolFromSmiles('CC'))
+  >>> ExactMolWt(Chem.MolFromSmiles('CC'))  # doctest: +ELLIPSIS
   30.04...
-  >>> ExactMolWt(Chem.MolFromSmiles('[13CH3]C'))
+  >>> ExactMolWt(Chem.MolFromSmiles('[13CH3]C'))  # doctest: +ELLIPSIS
   31.05...
 
 """
