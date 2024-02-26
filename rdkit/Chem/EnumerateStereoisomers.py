@@ -182,7 +182,6 @@ def EnumerateStereoisomers(m, options=StereoEnumerationOptions(), verbose=False)
     16
     >>> for smi in sorted(Chem.MolToSmiles(x, isomericSmiles=True) for x in isomers):
     ...     print(smi)
-    ...
     F[C@@]12C[C@@]1(Cl)C[C@@H](/C=C/Br)O2
     F[C@@]12C[C@@]1(Cl)C[C@@H](/C=C\Br)O2
     F[C@@]12C[C@@]1(Cl)C[C@H](/C=C/Br)O2
@@ -207,9 +206,8 @@ def EnumerateStereoisomers(m, options=StereoEnumerationOptions(), verbose=False)
     >>> isomers = tuple(EnumerateStereoisomers(m, options=opts))
     >>> len(isomers)
     8
-    >>> for smi in sorted(Chem.MolToSmiles(x,isomericSmiles=True) for x in isomers):
+    >>> for smi in sorted(Chem.MolToSmiles(x, isomericSmiles=True) for x in isomers):
     ...     print(smi)
-    ...
     F[C@@]12C[C@]1(Cl)C[C@@H](/C=C/Br)O2
     F[C@@]12C[C@]1(Cl)C[C@@H](/C=C\Br)O2
     F[C@@]12C[C@]1(Cl)C[C@H](/C=C/Br)O2
@@ -226,9 +224,8 @@ def EnumerateStereoisomers(m, options=StereoEnumerationOptions(), verbose=False)
     >>> isomers = tuple(EnumerateStereoisomers(m, options=opts))
     >>> len(isomers)
     10
-    >>> for smi in sorted(Chem.MolToSmiles(x,isomericSmiles=True) for x in isomers):
+    >>> for smi in sorted(Chem.MolToSmiles(x, isomericSmiles=True) for x in isomers):
     ...     print(smi)
-    ...
     F[C@@H](Cl)/C=C/C=C/[C@@H](F)Cl
     F[C@@H](Cl)/C=C\C=C/[C@@H](F)Cl
     F[C@@H](Cl)/C=C\C=C\[C@@H](F)Cl
@@ -246,9 +243,8 @@ def EnumerateStereoisomers(m, options=StereoEnumerationOptions(), verbose=False)
     >>> isomers = tuple(EnumerateStereoisomers(m))
     >>> len(isomers)
     8
-    >>> for smi in sorted(Chem.MolToSmiles(x,isomericSmiles=True) for x in isomers):
+    >>> for smi in sorted(Chem.MolToSmiles(x, isomericSmiles=True) for x in isomers):
     ...     print(smi)
-    ...
     F[C@@]12C[C@@]1(Cl)C[C@@H](/C=C/Br)O2
     F[C@@]12C[C@@]1(Cl)C[C@@H](/C=C\Br)O2
     F[C@@]12C[C@]1(Cl)C[C@@H](/C=C/Br)O2
@@ -272,7 +268,7 @@ def EnumerateStereoisomers(m, options=StereoEnumerationOptions(), verbose=False)
     >>> opts = StereoEnumerationOptions(maxIsomers=0)
     >>> isomers = EnumerateStereoisomers(m, options=opts)
     >>> for x in range(5):
-    ...   print(Chem.MolToSmiles(next(isomers),isomericSmiles=True))
+    ...   print(Chem.MolToSmiles(next(isomers), isomericSmiles=True))
     F[C@@H](Cl)[C@@H](Cl)[C@@H](Cl)[C@@H](Cl)[C@@H](Cl)[C@@H](Cl)[C@@H](Cl)[C@@H](Cl)[C@@H](Cl)[C@@H](Cl)[C@@H](Cl)[C@@H](Cl)[C@@H](Cl)[C@@H](Cl)[C@@H](Cl)[C@@H](Cl)[C@@H](Cl)[C@@H](Cl)[C@@H](Cl)[C@@H](Cl)Br
     F[C@@H](Cl)[C@@H](Cl)[C@@H](Cl)[C@@H](Cl)[C@@H](Cl)[C@@H](Cl)[C@@H](Cl)[C@@H](Cl)[C@@H](Cl)[C@@H](Cl)[C@@H](Cl)[C@@H](Cl)[C@@H](Cl)[C@@H](Cl)[C@@H](Cl)[C@@H](Cl)[C@@H](Cl)[C@@H](Cl)[C@@H](Cl)[C@H](Cl)Br
     F[C@@H](Cl)[C@@H](Cl)[C@@H](Cl)[C@@H](Cl)[C@@H](Cl)[C@@H](Cl)[C@@H](Cl)[C@@H](Cl)[C@@H](Cl)[C@@H](Cl)[C@@H](Cl)[C@@H](Cl)[C@@H](Cl)[C@@H](Cl)[C@@H](Cl)[C@@H](Cl)[C@@H](Cl)[C@@H](Cl)[C@H](Cl)[C@@H](Cl)Br
@@ -283,9 +279,9 @@ def EnumerateStereoisomers(m, options=StereoEnumerationOptions(), verbose=False)
     across python versions we need to provide a random number seed:
 
     >>> m = Chem.MolFromSmiles('Br' + '[CH](Cl)' * 20 + 'F')
-    >>> opts = StereoEnumerationOptions(maxIsomers=3,rand=0xf00d)
+    >>> opts = StereoEnumerationOptions(maxIsomers=3, rand=0xf00d)
     >>> isomers = EnumerateStereoisomers(m, options=opts)
-    >>> for smi in isomers: #sorted(Chem.MolToSmiles(x, isomericSmiles=True) for x in isomers):
+    >>> for smi in isomers:  #sorted(Chem.MolToSmiles(x, isomericSmiles=True) for x in isomers):
     ...     print(Chem.MolToSmiles(smi))
     F[C@@H](Cl)[C@H](Cl)[C@H](Cl)[C@H](Cl)[C@@H](Cl)[C@H](Cl)[C@H](Cl)[C@@H](Cl)[C@H](Cl)[C@@H](Cl)[C@@H](Cl)[C@@H](Cl)[C@H](Cl)[C@H](Cl)[C@@H](Cl)[C@@H](Cl)[C@H](Cl)[C@H](Cl)[C@H](Cl)[C@@H](Cl)Br
     F[C@H](Cl)[C@H](Cl)[C@H](Cl)[C@@H](Cl)[C@H](Cl)[C@H](Cl)[C@@H](Cl)[C@@H](Cl)[C@@H](Cl)[C@H](Cl)[C@@H](Cl)[C@H](Cl)[C@H](Cl)[C@H](Cl)[C@@H](Cl)[C@@H](Cl)[C@H](Cl)[C@H](Cl)[C@@H](Cl)[C@@H](Cl)Br
