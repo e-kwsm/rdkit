@@ -376,6 +376,11 @@ void CMLMoleculeParser::parse_atom(std::string xpath_to_atom,
     }
     if (*spinMultiplicity <= 2u) {
       atom->setNumRadicalElectrons(*spinMultiplicity - 1u);
+    } else {
+      // TODO
+      auto msg = boost::format{"%1%/@spinMultiplicity (= %2%) is ignored"} %
+                 xpath_to_atom % *spinMultiplicity;
+      BOOST_LOG(rdWarningLog) << msg;
     }
   }
 
@@ -408,11 +413,14 @@ void CMLMoleculeParser::parse_atom(std::string xpath_to_atom,
     BOOST_LOG(rdDebugLog) << xpath_to_atom << ' ' << r << std::endl;
     conformer->setAtomPos(idx, r);
   } else {
-    // Ignore x2 and y2 since they are used for displaying the object in 2
-    // dimensions
+    // Ignore x2 and y2
     // http://www.xml-cml.org/convention/molecular#atom-x2
+    // > An atom MAY have an x2 attribute, the value of which is used for
+    // > displaying the object in 2 dimensions. This is unrelated to the 3-D
+    // > coordinates for the object.
     BOOST_LOG(rdInfoLog)
-        << boost::format{"%1% does not have geometrical info"} % xpath_to_atom
+        << boost::format{"%1% does not have geometrical info (x2 and y2 are ignored if exist)"} %
+               xpath_to_atom
         << std::endl;
   }
 
@@ -521,7 +529,7 @@ void CMLMoleculeParser::parse_bond(
     throw RDKit::FileParseException{msg.str()};
   }
   std::istringstream iss{*atomRefs2};
-  std::string id_bgn, id_end, extra;
+  std::string id_bgn, id_end;
   if (!(iss >> id_bgn >> id_end)) {
     auto msg =
         boost::format{
@@ -529,7 +537,7 @@ void CMLMoleculeParser::parse_bond(
             "separated by space"} %
         xpath_to_bond % *atomRefs2;
     throw RDKit::FileParseException{msg.str()};
-  } else if (iss >> extra) {
+  } else if (std::string extra; iss >> extra) {
     auto msg =
         boost::format{"%1%/@atomRefs2 (= \"%2%\") has three or more ids"} %
         xpath_to_bond % *atomRefs2;
