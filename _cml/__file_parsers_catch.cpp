@@ -246,6 +246,13 @@ SCENARIO("CML Reader", "[CML][reader]") {
       REQUIRE_THROWS_WITH(MolFromCMLBlock(cml),
                           Matches(".+/atom[^/]*/@elementType is missing"));
     }
+    AND_WHEN("is invalid") {
+      AtomNode a;
+      a.elementType = "ABC";
+      auto cml = cml_root(MoleculeNode{}.str(cml_atomArray(a.str())));
+      REQUIRE_THROWS_WITH(MolFromCMLBlock(cml),
+                          Matches(".+/atom[^/]*/@elementType is missing"));
+    }
   }
 
   WHEN("//molecule/atomArray/atom/@formalCharge") {
