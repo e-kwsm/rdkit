@@ -6,6 +6,7 @@
 #  of the RDKit source tree.
 #
 import collections
+from typing import Optional
 
 from rdkit import Chem
 from rdkit.Chem import AllChem
@@ -313,7 +314,7 @@ def GetHeterocycleReactions():
   return REACTION_CACHE
 
 
-def EnumerateHeterocycles(inputmol, depth=None):
+def EnumerateHeterocycles(inputmol: Chem.Mol, depth: Optional[int] = None):
   """
     Enumerate possible relevant heterocycles on the given input
     molecule.
