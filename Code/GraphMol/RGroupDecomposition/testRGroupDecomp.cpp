@@ -4125,7 +4125,7 @@ void testRgroupDecompZipping() {
   decomp.process();
   RGroupRows rows = decomp.getRGroupsAsRows();
   TEST_ASSERT(rows.size() == 1);
-  RGroupRows::const_iterator it = rows.begin();
+  auto it = rows.cbegin();
   std::vector<ROMOL_SPTR> mols;
   for (auto rgroups = it->begin(); rgroups != it->end(); ++rgroups) {
     mols.push_back(rgroups->second);
