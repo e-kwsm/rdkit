@@ -705,7 +705,7 @@ class TestCase(unittest.TestCase):
     try:
       bcut2 = rdMD.BCUT2D(m, "bad_prop")
     except RuntimeError as e:
-      self.assertTrue(re.search(r"[B,b]ad any[\ ,_]cast",str(e)))
+      self.assertIsNotNone(re.search(r"[B,b]ad any[\ ,_]cast", str(e)))
     else:
       self.fail("Failed to handle bad prop (not a double)")
 

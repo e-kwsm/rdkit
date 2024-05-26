@@ -193,9 +193,15 @@ class TestCase(unittest.TestCase):
       count += 1
 
     # each pair should be used roughly 10 times
-    self.assertTrue(9 <= np.median(list(pairs01.values())) <= 11)
-    self.assertTrue(9 <= np.median(list(pairs02.values())) <= 11)
-    self.assertTrue(9 <= np.median(list(pairs12.values())) <= 11)
+    m01 = np.median(list(pairs01.values()))
+    m02 = np.median(list(pairs02.values()))
+    m12 = np.median(list(pairs12.values()))
+    self.assertLessEqual(9, m01)
+    self.assertLessEqual(m01, 11)
+    self.assertLessEqual(9, m02)
+    self.assertLessEqual(m02, 11)
+    self.assertLessEqual(9, m12)
+    self.assertLessEqual(m12, 11)
 
     # now try 500
     pairs01 = {}
@@ -215,9 +221,15 @@ class TestCase(unittest.TestCase):
       count += 1
 
     # each pair should be used roughly 5 times
-    self.assertTrue(4 <= np.median(list(pairs01.values())) <= 6)
-    self.assertTrue(4 <= np.median(list(pairs02.values())) <= 6)
-    self.assertTrue(4 <= np.median(list(pairs12.values())) <= 6)
+    m01 = np.median(list(pairs01.values()))
+    m02 = np.median(list(pairs02.values()))
+    m12 = np.median(list(pairs12.values()))
+    self.assertLessEqual(4, m01)
+    self.assertLessEqual(m01, 6)
+    self.assertLessEqual(4, m02)
+    self.assertLessEqual(m02, 6)
+    self.assertLessEqual(4, m12)
+    self.assertLessEqual(m12, 6)
 
     self.assertIn("PAIRSTAT", strategy.Stats())
 
