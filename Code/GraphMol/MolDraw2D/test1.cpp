@@ -1541,10 +1541,10 @@ void testGithub781() {
 #if DO_TEST_ASSERT
     // the start of the C
     TEST_ASSERT(txt.find("<path class='atom-0' d='M 88.1 97.6") !=
-                std::string::npos)
+                std::string::npos);
     // the start of the H
     TEST_ASSERT(txt.find("<path class='atom-0' d='M 97.1 92.6") !=
-                std::string::npos)
+                std::string::npos);
 #endif
 #else
     TEST_ASSERT(txt.find(">C</text>") != std::string::npos);
