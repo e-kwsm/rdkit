@@ -22,7 +22,7 @@ Sp2Bond::Sp2Bond(const CIPMol &mol, Bond *bond, Atom *startAtom, Atom *endAtom,
     : Configuration(mol, {startAtom, endAtom}), dp_bond{bond}, d_cfg{cfg} {
   CHECK_INVARIANT(startAtom && endAtom, "bad foci");
   CHECK_INVARIANT(d_cfg == Bond::STEREOTRANS || d_cfg == Bond::STEREOCIS,
-                  "bad config")
+                  "bad config");
 
   auto stereo_atoms = Chirality::findStereoAtoms(bond);
   CHECK_INVARIANT(stereo_atoms.size() == 2, "incorrect number of stereo atoms");
