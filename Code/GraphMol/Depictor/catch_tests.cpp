@@ -227,7 +227,7 @@ TEST_CASE("use ring system templates") {
   RDDepict::compute2DCoords(*mol, params);
   diff =
       mol->getConformer().getAtomPos(10) - mol->getConformer().getAtomPos(11);
-  TEST_ASSERT(RDKit::feq(diff.length(), 1.0, .1))
+  TEST_ASSERT(RDKit::feq(diff.length(), 1.0, .1));
 }
 
 TEST_CASE("find core rings") {

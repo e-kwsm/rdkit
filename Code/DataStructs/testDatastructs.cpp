@@ -955,10 +955,10 @@ void test7SparseIntVectPickles() {
     pkl = iV1.toString();
     iV2.fromString(pkl);
     TEST_ASSERT(iV2.getLength() == iV1.getLength());
-    TEST_ASSERT(iV2[0] == 2)
-    TEST_ASSERT(iV2[1] == 0)
-    TEST_ASSERT(iV2[2] == 1)
-    TEST_ASSERT(iV2[3] == 4)
+    TEST_ASSERT(iV2[0] == 2);
+    TEST_ASSERT(iV2[1] == 0);
+    TEST_ASSERT(iV2[2] == 1);
+    TEST_ASSERT(iV2[3] == 4);
   }
 
   {
