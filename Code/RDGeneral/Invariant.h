@@ -185,7 +185,7 @@ RDKIT_RDGENERAL_EXPORT std::ostream& operator<<(std::ostream& s,
 #elif INVARIANT_SILENT_METHOD
 
 #define CHECK_INVARIANT(expr, mess)
-#define PRECONDITION(expr, mess)
+#define PRECONDITION(expr, mess);
 #define POSTCONDITION(expr, mess)
 #define UNDER_CONSTRUCTION(fn)
 #define RANGE_CHECK(lo, x, hi)
