@@ -559,7 +559,7 @@ MaeMolSupplier::MaeMolSupplier(const std::string &fileName,
 }
 
 void MaeMolSupplier::init() {
-  PRECONDITION(dp_sInStream, "no input stream")
+  PRECONDITION(dp_sInStream, "no input stream");
   d_reader.reset(new mae::Reader(dp_sInStream));
   CHECK_INVARIANT(streamIsGoodOrExhausted(dp_inStream), "bad instream");
 

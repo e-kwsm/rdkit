@@ -23,9 +23,9 @@ AtropisomerBond::AtropisomerBond(const CIPMol &mol, Bond *bond, Atom *startAtom,
     : Configuration(mol, {startAtom, endAtom}, true),
       dp_bond{bond},
       d_cfg{cfg} {
-  CHECK_INVARIANT(startAtom && endAtom, "bad foci")
+  CHECK_INVARIANT(startAtom && endAtom, "bad foci");
   CHECK_INVARIANT(d_cfg == Bond::STEREOATROPCW || d_cfg == Bond::STEREOATROPCCW,
-                  "bad config")
+                  "bad config");
 
   Atropisomers::AtropAtomAndBondVec atomAndBondVecs[2];
   if (!Atropisomers::getAtropisomerAtomsAndBonds(bond, atomAndBondVecs,
