@@ -22,7 +22,7 @@ CIPMol::CIPMol(ROMol &mol) : d_mol{mol} {
 }
 
 boost::rational<int> CIPMol::getFractionalAtomicNum(Atom *atom) const {
-  PRECONDITION(atom, "bad atom")
+  PRECONDITION(atom, "bad atom");
   if (d_atomnums.empty()) {
     const_cast<CIPMol *>(this)->d_atomnums = calcFracAtomNums(*this);
   }
@@ -42,17 +42,17 @@ CXXAtomIterator<MolGraph, Atom *> CIPMol::atoms() const {
 Bond *CIPMol::getBond(int idx) const { return d_bonds[idx]; };
 
 CIPMolSpan<Bond *, ROMol::OEDGE_ITER> CIPMol::getBonds(Atom *atom) const {
-  PRECONDITION(atom, "bad atom")
+  PRECONDITION(atom, "bad atom");
   return {d_mol, d_mol.getAtomBonds(atom)};
 }
 
 CIPMolSpan<Atom *, ROMol::ADJ_ITER> CIPMol::getNeighbors(Atom *atom) const {
-  PRECONDITION(atom, "bad atom")
+  PRECONDITION(atom, "bad atom");
   return {d_mol, d_mol.getAtomNeighbors(atom)};
 }
 
 bool CIPMol::isInRing(Bond *bond) const {
-  PRECONDITION(bond, "bad bond")
+  PRECONDITION(bond, "bad bond");
   const auto rings = d_mol.getRingInfo();
 
   if (!rings->isFindFastOrBetter()) {
@@ -63,7 +63,7 @@ bool CIPMol::isInRing(Bond *bond) const {
 };
 
 int CIPMol::getBondOrder(Bond *bond) const {
-  PRECONDITION(bond, "bad bond")
+  PRECONDITION(bond, "bad bond");
   if (d_kekulized_bonds.empty()) {
     RWMol tmp{d_mol};
     try {
