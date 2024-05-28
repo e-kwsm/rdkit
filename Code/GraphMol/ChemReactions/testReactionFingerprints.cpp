@@ -80,9 +80,9 @@ void testStructuralFingerprintsReaction() {
         rxnq->beginProductTemplates();
 
     MatchVectType mv;
-    TEST_ASSERT(SubstructMatch(*reacts_iter->get(), *reacts_iterq->get(), mv))
+    TEST_ASSERT(SubstructMatch(*reacts_iter->get(), *reacts_iterq->get(), mv));
     TEST_ASSERT(
-        SubstructMatch(*products_iter->get(), *products_iterq->get(), mv))
+        SubstructMatch(*products_iter->get(), *products_iterq->get(), mv));
 
     delete rxn;
     delete rxnq;
@@ -122,9 +122,9 @@ void testStructuralFingerprintsReaction() {
         rxnq->beginProductTemplates();
 
     MatchVectType mv;
-    TEST_ASSERT(SubstructMatch(*reacts_iter->get(), *reacts_iterq->get(), mv))
+    TEST_ASSERT(SubstructMatch(*reacts_iter->get(), *reacts_iterq->get(), mv));
     TEST_ASSERT(
-        !SubstructMatch(*products_iter->get(), *products_iterq->get(), mv))
+        !SubstructMatch(*products_iter->get(), *products_iterq->get(), mv));
 
     delete rxn;
     delete rxnq;
@@ -172,9 +172,9 @@ void testStructuralFingerprintsReaction() {
 
     MatchVectType mv;
     TEST_ASSERT(
-        SubstructMatch(*products_iter->get(), *products_iterq->get(), mv))
+        SubstructMatch(*products_iter->get(), *products_iterq->get(), mv));
     TEST_ASSERT(
-        !SubstructMatch(*products_iter->get(), *products_iterq2->get(), mv))
+        !SubstructMatch(*products_iter->get(), *products_iterq2->get(), mv));
 
     delete rxn;
     delete rxnq;
@@ -223,8 +223,8 @@ void testStructuralFingerprintsReaction() {
         rxnq2->beginReactantTemplates();
 
     MatchVectType mv;
-    TEST_ASSERT(SubstructMatch(*react_iter->get(), *react_iterq->get(), mv))
-    TEST_ASSERT(!SubstructMatch(*react_iter->get(), *react_iterq2->get(), mv))
+    TEST_ASSERT(SubstructMatch(*react_iter->get(), *react_iterq->get(), mv));
+    TEST_ASSERT(!SubstructMatch(*react_iter->get(), *react_iterq2->get(), mv));
 
     delete rxn;
     delete rxnq;
@@ -278,12 +278,12 @@ void testStructuralFingerprintsReaction() {
         rxnq2->beginProductTemplates();
 
     MatchVectType mv;
-    TEST_ASSERT(SubstructMatch(*react_iter->get(), *react_iterq->get(), mv))
-    TEST_ASSERT(SubstructMatch(*react_iter->get(), *react_iterq2->get(), mv))
+    TEST_ASSERT(SubstructMatch(*react_iter->get(), *react_iterq->get(), mv));
+    TEST_ASSERT(SubstructMatch(*react_iter->get(), *react_iterq2->get(), mv));
     TEST_ASSERT(
-        SubstructMatch(*products_iter->get(), *products_iterq->get(), mv))
+        SubstructMatch(*products_iter->get(), *products_iterq->get(), mv));
     TEST_ASSERT(
-        SubstructMatch(*products_iter->get(), *products_iterq2->get(), mv))
+        SubstructMatch(*products_iter->get(), *products_iterq2->get(), mv));
 
     delete rxn;
     delete rxnq;

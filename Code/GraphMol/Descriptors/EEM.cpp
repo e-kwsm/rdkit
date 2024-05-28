@@ -105,7 +105,7 @@ const float B3[] =
 // bond type of an atom potential improvement : in the original publication they
 // don't have access to "Aromatic type" like in RDKit
 unsigned int getAtomtype(const ROMol &mol, const RDKit::Atom *atom) {
-  PRECONDITION(atom != nullptr, "bad atom argument")
+  PRECONDITION(atom != nullptr, "bad atom argument");
   unsigned int t = 1;
   RDKit::ROMol::OEDGE_ITER beg, end;
   boost::tie(beg, end) = mol.getAtomBonds(atom);
@@ -123,7 +123,7 @@ unsigned int getAtomtype(const ROMol &mol, const RDKit::Atom *atom) {
 
 std::unique_ptr<double[]> getEEMMatrix(double *dist3D, unsigned int n,
                                        const EEM_arrays &EEMatoms) {
-  PRECONDITION(dist3D != nullptr, "bad dist3D argument")
+  PRECONDITION(dist3D != nullptr, "bad dist3D argument");
   int sizeArray = (n + 1) * (n + 1);
   auto *EEM =
       new double[sizeArray]();  // declaration to set all elements to zeros!
@@ -232,7 +232,7 @@ void getEEMs(const ROMol &mol, std::vector<double> &result,
 }  // end of anonymous namespace
 
 void EEM(ROMol &mol, std::vector<double> &res, int confId) {
-  PRECONDITION(mol.getNumConformers() >= 1, "molecule has no conformers")
+  PRECONDITION(mol.getNumConformers() >= 1, "molecule has no conformers");
   unsigned int numAtoms = mol.getNumAtoms();
 
   res.clear();
