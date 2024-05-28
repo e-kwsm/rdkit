@@ -109,8 +109,8 @@ class MolAtropTest {
       RDKit::Chirality::removeNonExplicit3DChirality(*mol);
 
       TEST_ASSERT(mol != nullptr);
-      TEST_ASSERT(mol->getNumAtoms() == molFileTest->atomCount)
-      TEST_ASSERT(mol->getNumBonds() == molFileTest->bondCount)
+      TEST_ASSERT(mol->getNumAtoms() == molFileTest->atomCount);
+      TEST_ASSERT(mol->getNumBonds() == molFileTest->bondCount);
 
       {
         MolOps::Kekulize(*mol);

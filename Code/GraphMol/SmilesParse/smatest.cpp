@@ -723,10 +723,10 @@ void testSmartsWrite() {
     TEST_ASSERT(nmol);
     for (dsmi = diffSmi.begin(); dsmi != diffSmi.end(); dsmi++) {
       ROMol *m1 = SmartsToMol(*dsmi);
-      TEST_ASSERT(m1)
+      TEST_ASSERT(m1);
       std::string wsma = MolToSmarts(*m1);
       ROMol *m2 = SmartsToMol(wsma);
-      TEST_ASSERT(m2)
+      TEST_ASSERT(m2);
 
       mts1 = SubstructMatch(*nmol, *m1, mV1);
       mts2 = SubstructMatch(*nmol, *m2, mV2);
@@ -1831,13 +1831,13 @@ void testGithub893() {
     p = SmartsToMol(sma);
     TEST_ASSERT(p);
     std::string nsma = MolToSmarts(*p);
-    TEST_ASSERT(nsma == "[#6&!a]")
+    TEST_ASSERT(nsma == "[#6&!a]");
     delete p;
     sma = "[!a&#6]";
     p = SmartsToMol(sma);
     TEST_ASSERT(p);
     nsma = MolToSmarts(*p);
-    TEST_ASSERT(nsma == "[!a&#6]")
+    TEST_ASSERT(nsma == "[!a&#6]");
     delete p;
   }
   {
@@ -1846,13 +1846,13 @@ void testGithub893() {
     p = SmartsToMol(sma);
     TEST_ASSERT(p);
     std::string nsma = MolToSmarts(*p);
-    TEST_ASSERT(nsma == "[#6&!A]")
+    TEST_ASSERT(nsma == "[#6&!A]");
     delete p;
     sma = "[!A&#6]";
     p = SmartsToMol(sma);
     TEST_ASSERT(p);
     nsma = MolToSmarts(*p);
-    TEST_ASSERT(nsma == "[!A&#6]")
+    TEST_ASSERT(nsma == "[!A&#6]");
     delete p;
   }
   {
@@ -1861,7 +1861,7 @@ void testGithub893() {
     p = SmartsToMol(sma);
     TEST_ASSERT(p);
     std::string nsma = MolToSmarts(*p);
-    TEST_ASSERT(nsma == "[!#6&!a]")
+    TEST_ASSERT(nsma == "[!#6&!a]");
     delete p;
   }
   {
@@ -1870,13 +1870,13 @@ void testGithub893() {
     p = SmartsToMol(sma);
     TEST_ASSERT(p);
     std::string nsma = MolToSmarts(*p);
-    TEST_ASSERT(nsma == "[!#6&a]")
+    TEST_ASSERT(nsma == "[!#6&a]");
     delete p;
     sma = "[!#6;a]";
     p = SmartsToMol(sma);
     TEST_ASSERT(p);
     nsma = MolToSmarts(*p);
-    TEST_ASSERT(nsma == "[!#6&a]")
+    TEST_ASSERT(nsma == "[!#6&a]");
     delete p;
   }
   BOOST_LOG(rdInfoLog) << "done" << std::endl;
