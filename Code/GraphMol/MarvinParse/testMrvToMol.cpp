@@ -313,8 +313,8 @@ class MrvTests {
         // below handle that
         std::unique_ptr<RWMol> mol2(GetMolv1(molTest));
         TEST_ASSERT(mol2 != nullptr);
-        TEST_ASSERT(mol2->getNumAtoms() == molTest->atomCount)
-        TEST_ASSERT(mol2->getNumBonds() == molTest->bondCount)
+        TEST_ASSERT(mol2->getNumAtoms() == molTest->atomCount);
+        TEST_ASSERT(mol2->getNumBonds() == molTest->bondCount);
       }
 
       auto mol = GetMolv2(molTest);
@@ -604,8 +604,8 @@ class MrvTests {
 
       Chirality::reapplyMolBlockWedging(*mol);
 
-      TEST_ASSERT(mol->getNumAtoms() == molTest->atomCount)
-      TEST_ASSERT(mol->getNumBonds() == molTest->bondCount)
+      TEST_ASSERT(mol->getNumAtoms() == molTest->atomCount);
+      TEST_ASSERT(mol->getNumBonds() == molTest->bondCount);
 
       {
         std::string expectedMrvName = fName + ".expected.sdf";
@@ -676,8 +676,8 @@ class MrvTests {
       TEST_ASSERT(mol != nullptr);
       RDKit::Chirality::removeNonExplicit3DChirality(*mol);
 
-      TEST_ASSERT(mol->getNumAtoms() == molTest->atomCount)
-      TEST_ASSERT(mol->getNumBonds() == molTest->bondCount)
+      TEST_ASSERT(mol->getNumAtoms() == molTest->atomCount);
+      TEST_ASSERT(mol->getNumBonds() == molTest->bondCount);
 
       MolOps::Kekulize(*mol);
       if (molTest->reapplyMolBlockWedging) {
@@ -745,8 +745,8 @@ class MrvTests {
       }
 
       TEST_ASSERT(mol != nullptr);
-      TEST_ASSERT(mol->getNumAtoms() == molFileTest->atomCount)
-      TEST_ASSERT(mol->getNumBonds() == molFileTest->bondCount)
+      TEST_ASSERT(mol->getNumAtoms() == molFileTest->atomCount);
+      TEST_ASSERT(mol->getNumBonds() == molFileTest->bondCount);
 
       {
         std::string expectedMrvName =

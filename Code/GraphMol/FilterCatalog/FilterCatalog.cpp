@@ -90,7 +90,7 @@ void FilterCatalogParams::fillCatalog(FilterCatalog &catalog) const {
 
 void FilterCatalogParams::toStream(std::ostream &ss) const {
 #ifndef RDK_USE_BOOST_SERIALIZATION
-  PRECONDITION(0, "Boost SERIALIZATION is not enabled")
+  PRECONDITION(0, "Boost SERIALIZATION is not enabled");
 #else
   boost::archive::text_oarchive ar(ss);
   ar << *this;
@@ -105,7 +105,7 @@ std::string FilterCatalogParams::Serialize() const {
 
 void FilterCatalogParams::initFromStream(std::istream &ss) {
 #ifndef RDK_USE_BOOST_SERIALIZATION
-  PRECONDITION(0, "Boost SERIALIZATION is not enabled")
+  PRECONDITION(0, "Boost SERIALIZATION is not enabled");
 #else
   boost::archive::text_iarchive ar(ss);
   ar >> *this;
@@ -124,7 +124,7 @@ void FilterCatalog::Clear() { d_entries.clear(); }
 FilterCatalog::FilterCatalog(const std::string &binStr)
     : FCatalog(), d_entries() {
 #ifndef RDK_USE_BOOST_SERIALIZATION
-  PRECONDITION(0, "Boost SERIALIZATION is not enabled")
+  PRECONDITION(0, "Boost SERIALIZATION is not enabled");
 #else
   std::stringstream ss(binStr);
   boost::archive::text_iarchive ar(ss);
@@ -134,7 +134,7 @@ FilterCatalog::FilterCatalog(const std::string &binStr)
 
 std::string FilterCatalog::Serialize() const {
 #ifndef RDK_USE_BOOST_SERIALIZATION
-  PRECONDITION(0, "Boost SERIALIZATION is not enabled")
+  PRECONDITION(0, "Boost SERIALIZATION is not enabled");
 #else
 
   std::stringstream ss;

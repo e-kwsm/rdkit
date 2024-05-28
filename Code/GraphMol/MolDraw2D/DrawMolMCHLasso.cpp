@@ -159,7 +159,7 @@ void DrawMolMCHLasso::drawLasso(size_t lassoNum, const RDKit::DrawColour &col,
 
 namespace {
 double getLassoWidth(const DrawMolMCH *dm, int atNum, int lassoNum) {
-  PRECONDITION(dm, "Needs valid DrawMolMCH")
+  PRECONDITION(dm, "Needs valid DrawMolMCH");
   double xrad, yrad;
   dm->getAtomRadius(atNum, xrad, yrad);
   // Double the area of the circles for successive lassos.

@@ -112,7 +112,7 @@ bool getBestFitPlane(const Conformer &conf,
 }  // end of anonymous namespace
 
 double PBF(const ROMol &mol, int confId) {
-  PRECONDITION(mol.getNumConformers() >= 1, "molecule has no conformers")
+  PRECONDITION(mol.getNumConformers() >= 1, "molecule has no conformers");
   unsigned int numAtoms = mol.getNumAtoms();
   if (numAtoms < 4) {
     return 0;

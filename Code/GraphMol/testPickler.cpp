@@ -1390,7 +1390,7 @@ void testNegativeMaps() {
   MolPickler::pickleMol(*m1, pickle);
   {
     std::unique_ptr<ROMol> m2(new ROMol(pickle));
-    TEST_ASSERT(m2)
+    TEST_ASSERT(m2);
   }
 
   BOOST_LOG(rdErrorLog) << "\tdone" << std::endl;

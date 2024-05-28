@@ -41,7 +41,7 @@ int calcOxidationNumberByEN(const Atom *atom) {
       {94, 1.28}, {95, 1.3},  {96, 1.3},  {97, 1.3},  {98, 1.3},  {99, 1.3},
       {100, 1.3}, {101, 1.3}, {102, 1.39}};
   PRECONDITION(atom != nullptr, "must have an atom");
-  PRECONDITION(atom->hasOwningMol(), "atom must have owning molecule")
+  PRECONDITION(atom->hasOwningMol(), "atom must have owning molecule");
   auto get_en = [&](int atomicNum) -> float {
     auto res = pauling_en_map.find(atomicNum);
     return res == pauling_en_map.end() ? 0.0 : res->second;
