@@ -22,7 +22,7 @@ Edge::Edge(Node *beg, Node *end, Bond *bond)
     : dp_beg{beg}, dp_end{end}, dp_bond{bond} {}
 
 Node *Edge::getOther(const Node *node) const {
-  PRECONDITION(node, "bad node")
+  PRECONDITION(node, "bad node");
 
   if (isBeg(node)) {
     return getEnd();

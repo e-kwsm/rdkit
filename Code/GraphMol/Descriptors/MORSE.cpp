@@ -169,7 +169,7 @@ void GetMORSEone(double *dist3D, const ROMol &mol, const Conformer &conf,
 
 void MORSE(const ROMol &mol, std::vector<double> &res, int confId,
            const std::string &customAtomPropName) {
-  PRECONDITION(mol.getNumConformers() >= 1, "molecule has no conformers")
+  PRECONDITION(mol.getNumConformers() >= 1, "molecule has no conformers");
 
   // Mor01u Mor02u  Mor03u  Mor04u  Mor05u  Mor06u  Mor07u  Mor08u  Mor09u
   // Mor10u  Mor11u  Mor12u  Mor13u  Mor14u  Mor15u  Mor16u  Mor17u  Mor18u
