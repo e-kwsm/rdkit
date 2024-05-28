@@ -306,7 +306,7 @@ std::vector<MatchVectType> SubstructMatch(
 
 void TautomerQuery::toStream(std::ostream &ss) const {
 #ifndef RDK_USE_BOOST_SERIALIZATION
-  PRECONDITION(0, "Boost SERIALIZATION is not enabled")
+  PRECONDITION(0, "Boost SERIALIZATION is not enabled");
 #else
   boost::archive::text_oarchive ar(ss);
   ar << *this;
@@ -321,7 +321,7 @@ std::string TautomerQuery::serialize() const {
 
 void TautomerQuery::initFromStream(std::istream &ss) {
 #ifndef RDK_USE_BOOST_SERIALIZATION
-  PRECONDITION(0, "Boost SERIALIZATION is not enabled")
+  PRECONDITION(0, "Boost SERIALIZATION is not enabled");
 #else
   boost::archive::text_iarchive ar(ss);
   ar >> *this;
