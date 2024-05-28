@@ -126,7 +126,7 @@ void test1() {
        ++token) {
     std::string smi = *token;
     std::unique_ptr<RWMol> m{SmilesToMol(smi)};
-    TEST_ASSERT(m)
+    TEST_ASSERT(m);
     RDDepict::compute2DCoords(*m);
     writer.write(*m);
     std::unique_ptr<ROMol> ref{suppl.next()};
@@ -694,7 +694,7 @@ void testIssue3487469() {
     RDGeom::Point3D v1 = p0 - p1, v2 = p2 - p1;
     v1.normalize();
     v2.normalize();
-    TEST_ASSERT(feq(v1.dotProduct(v2), -0.5, .01))
+    TEST_ASSERT(feq(v1.dotProduct(v2), -0.5, .01));
     delete m1;
   }
 }
