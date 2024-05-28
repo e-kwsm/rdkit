@@ -3509,7 +3509,8 @@ M  END
   TEST_ASSERT(result == 1);
   decomp.process();
   RGroupRows rows = decomp.getRGroupsAsRows();
-  TEST_ASSERT(rows.size() == 2) {
+  TEST_ASSERT(rows.size() == 2);
+  {
     auto coreRgd = rows[0]["Core"];
     auto match = std::find_if(
         coreRgd->atoms().begin(), coreRgd->atoms().end(), [](Atom *a) {
