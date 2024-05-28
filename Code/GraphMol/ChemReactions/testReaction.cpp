@@ -3008,7 +3008,7 @@ void test29RxnWriter() {
     TEST_ASSERT(nError == 0);
 
     smi = ChemicalReactionToRxnSmarts(*rxn);
-    TEST_ASSERT(smi == "[#6:2](-[#8])=[#8:1].[#7:3]>>[#7:3]-[#6:2]=[#8:1]")
+    TEST_ASSERT(smi == "[#6:2](-[#8])=[#8:1].[#7:3]>>[#7:3]-[#6:2]=[#8:1]");
 
     std::string mb;
     mb = ChemicalReactionToRxnBlock(*rxn);
@@ -4207,7 +4207,7 @@ void test45SmilesWriter() {
     }
 
     smi = ChemicalReactionToRxnSmiles(*rxn);
-    TEST_ASSERT(smi == res)
+    TEST_ASSERT(smi == res);
     TEST_ASSERT(smi == "[C:1]=[O:2].[N:3]>>[C:1](=[O:2])~[N:3]");
     delete rxn;
 
@@ -4247,7 +4247,7 @@ void test45SmilesWriter() {
     }
 
     smi = ChemicalReactionToRxnSmiles(*rxn);
-    TEST_ASSERT(smi == res)
+    TEST_ASSERT(smi == res);
     TEST_ASSERT(smi == "C=O.N>>N~C=O");
 
     delete rxn;
@@ -4283,7 +4283,7 @@ void test45SmilesWriter() {
     }
 
     smi = ChemicalReactionToRxnSmiles(*rxn, false);
-    TEST_ASSERT(smi == res)
+    TEST_ASSERT(smi == res);
     TEST_ASSERT(smi != "C=O.N>>N~C=O");
     TEST_ASSERT(smi == "*=O.N>>N~*=O");
 
@@ -4505,13 +4505,13 @@ void test47TestReactionMoleculeConversion() {
     std::string smi1 = MolToSmiles(*m);
     std::string smi2 = MolToSmiles(*mol);
 
-    TEST_ASSERT(smi1 == smi2)
+    TEST_ASSERT(smi1 == smi2);
 
     std::string smi3 = ChemicalReactionToRxnSmiles(*rxn);
     ChemicalReaction *rxn2 = RxnMolToChemicalReaction(*mol);
     std::string smi4 = ChemicalReactionToRxnSmiles(*rxn2);
 
-    TEST_ASSERT(smi3 == smi4)
+    TEST_ASSERT(smi3 == smi4);
 
     delete rxn;
     delete rxn2;
@@ -5844,7 +5844,7 @@ void test60RunSingleReactant() {
     }
 
     prods = rxn->runReactant(reag2, 0);
-    TEST_ASSERT(prods.size() == 0)
+    TEST_ASSERT(prods.size() == 0);
   }
 
   {
@@ -5870,7 +5870,7 @@ void test60RunSingleReactant() {
     }
 
     prods = rxn->runReactant(reag1, 1);
-    TEST_ASSERT(prods.size() == 0)
+    TEST_ASSERT(prods.size() == 0);
   }
 
   delete rxn;
