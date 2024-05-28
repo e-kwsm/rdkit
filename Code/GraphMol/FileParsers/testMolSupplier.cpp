@@ -392,7 +392,7 @@ void testSmilesSup() {
     SmilesMolSupplier nSup2(fname, ",", 1, 0, true);
 
     mol = nSup2[3];
-    TEST_ASSERT(!nSup2.atEnd())
+    TEST_ASSERT(!nSup2.atEnd());
     TEST_ASSERT(nSup2.length() == 10);
 
     mol->getProp(common_properties::_Name, mname);
@@ -1065,7 +1065,7 @@ void testStereoRound() {
   } catch (FileParseException &) {
     smiSup = nullptr;
   }
-  TEST_ASSERT(smiSup)
+  TEST_ASSERT(smiSup);
   std::map<std::string, std::string> nameSmi;
   std::string ofile =
       rdbase +
