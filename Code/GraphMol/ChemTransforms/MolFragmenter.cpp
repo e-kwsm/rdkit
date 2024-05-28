@@ -635,7 +635,7 @@ namespace {
 const unsigned int NOLABEL = std::numeric_limits<unsigned int>::max();
 // Get the atom label - this might be useful as a util class
 unsigned int get_label(const Atom *a, const MolzipParams &p) {
-  PRECONDITION(a, "bad atom in MolZip::get_label")
+  PRECONDITION(a, "bad atom in MolZip::get_label");
   unsigned int idx = NOLABEL;
   switch (p.label) {
     case MolzipLabel::AtomMapNumber:
@@ -699,7 +699,7 @@ int num_swaps_to_interconvert(std::vector<unsigned int> &orders) {
         j = orders[j];
         CHECK_INVARIANT(
             j < orders.size(),
-            "molzip: bond index outside of number of bonds for atom")
+            "molzip: bond index outside of number of bonds for atom");
         seen[j] = true;
         nswaps++;
       }
@@ -750,7 +750,7 @@ struct ZipBond {
       auto bnd = newmol.getBondBetweenAtoms(a->getIdx(), a_dummy->getIdx());
       CHECK_INVARIANT(bnd != nullptr,
                       "molzip: begin atom and specified dummy atom connection "
-                      "are not bonded.")
+                      "are not bonded.");
       auto bond_type_a = bnd->getBondType();
       auto bond_dir_a = bnd->getBondDir();
       auto a_is_start = bnd->getBeginAtom() == a;
@@ -758,7 +758,7 @@ struct ZipBond {
       bnd = newmol.getBondBetweenAtoms(b->getIdx(), b_dummy->getIdx());
       CHECK_INVARIANT(bnd != nullptr,
                       "molzip: end atom and specified dummy connection atom "
-                      "are not bonded.")
+                      "are not bonded.");
       auto bond_type_b = bnd->getBondType();
 
       auto bond_dir_b = bnd->getBondDir();
