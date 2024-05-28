@@ -134,7 +134,7 @@ void testPass() {
       smi = MolToSmiles(*mol);
       // BOOST_LOG(rdInfoLog)<< "  > " << smi << std::endl;
       mol2 = SmilesToMol(smi);
-      CHECK_INVARIANT(mol2->getNumAtoms() == nAts, smi.c_str())
+      CHECK_INVARIANT(mol2->getNumAtoms() == nAts, smi.c_str());
       delete mol;
       delete mol2;
     }
