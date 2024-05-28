@@ -221,7 +221,7 @@ void getExperimentalTorsions(
         aid3 = match[param.idx[2]].second;
         aid4 = match[param.idx[3]].second;
         const auto bnd = mol.getBondBetweenAtoms(aid2, aid3);
-        CHECK_INVARIANT(bnd, "bond between central atoms not found")
+        CHECK_INVARIANT(bnd, "bond between central atoms not found");
         bid2 = bnd->getIdx();
 
         // check that a bond is part of maximum one ring

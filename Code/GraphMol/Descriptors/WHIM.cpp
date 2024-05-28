@@ -379,7 +379,7 @@ void getWHIMone(const ROMol &mol, std::vector<double> &res, int confId,
 
 void WHIM(const ROMol &mol, std::vector<double> &res, int confId, double th,
           const std::string &customAtomPropName) {
-  PRECONDITION(mol.getNumConformers() >= 1, "molecule has no conformers")
+  PRECONDITION(mol.getNumConformers() >= 1, "molecule has no conformers");
   // Dragon final list is: L1u L2u L3u P1u P2u G1u G2u G3u E1u E2u E3u
   // Tu   Au    Gu   Ku    Du   Vu
   if (customAtomPropName != "") {
