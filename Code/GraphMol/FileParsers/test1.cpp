@@ -521,7 +521,7 @@ void test7() {
   TEST_ASSERT(smi == "C[C@](F)(Cl)Br");
   molBlock = MolToMolBlock(*m);
   m2 = MolBlockToMol(molBlock);
-  TEST_ASSERT(m2)
+  TEST_ASSERT(m2);
   smi2 = MolToSmiles(*m2, true);
   TEST_ASSERT(smi == smi2);
   delete m;
@@ -535,7 +535,7 @@ void test7() {
   TEST_ASSERT(smi == "C[C@@](F)(Cl)Br");
   molBlock = MolToMolBlock(*m);
   m2 = MolBlockToMol(molBlock);
-  TEST_ASSERT(m2)
+  TEST_ASSERT(m2);
   smi2 = MolToSmiles(*m2, true);
   TEST_ASSERT(smi == smi2);
   delete m;
@@ -553,7 +553,7 @@ void test7() {
   TEST_ASSERT(smi == "C[C@H](F)Cl");
   molBlock = MolToMolBlock(*m);
   m2 = MolBlockToMol(molBlock);
-  TEST_ASSERT(m2)
+  TEST_ASSERT(m2);
   MolOps::assignStereochemistry(*m2);
   TEST_ASSERT(m2->getAtomWithIdx(0)->hasProp(common_properties::_CIPCode));
   m2->getAtomWithIdx(0)->getProp(common_properties::_CIPCode, cip);
@@ -578,7 +578,7 @@ void test7() {
   molBlock = MolToMolBlock(*m);
   // BOOST_LOG(rdInfoLog) << molBlock << std::endl;
   m2 = MolBlockToMol(molBlock);
-  TEST_ASSERT(m2)
+  TEST_ASSERT(m2);
   MolOps::assignStereochemistry(*m2);
   TEST_ASSERT(m2->getAtomWithIdx(0)->hasProp(common_properties::_CIPCode));
   m2->getAtomWithIdx(0)->getProp(common_properties::_CIPCode, cip);
@@ -612,7 +612,7 @@ void test7() {
   std::cout << "***************************************" << std::endl;
   BOOST_LOG(rdInfoLog) << molBlock << std::endl;
   m2 = MolBlockToMol(molBlock);
-  TEST_ASSERT(m2)
+  TEST_ASSERT(m2);
   smi2 = MolToSmiles(*m2, true);
   if (smi != smi2) {
     BOOST_LOG(rdInfoLog) << "\n " << smi << "\n !=\n " << smi2 << std::endl;
@@ -654,7 +654,7 @@ void test7() {
   molBlock = MolToMolBlock(*m);
   // BOOST_LOG(rdInfoLog) << molBlock << std::endl;
   m2 = MolBlockToMol(molBlock);
-  TEST_ASSERT(m2)
+  TEST_ASSERT(m2);
   smi2 = MolToSmiles(*m2, true);
   if (smi != smi2) {
     BOOST_LOG(rdInfoLog) << "\n " << smi << "\n !=\n " << smi2 << std::endl;
@@ -681,7 +681,7 @@ void test7() {
   molBlock = MolToMolBlock(*m);
   // BOOST_LOG(rdInfoLog) << molBlock << std::endl;
   m2 = MolBlockToMol(molBlock);
-  TEST_ASSERT(m2)
+  TEST_ASSERT(m2);
   smi2 = MolToSmiles(*m2, true);
   if (smi != smi2) {
     BOOST_LOG(rdInfoLog) << "\n " << smi << "\n !=\n " << smi2 << std::endl;
@@ -750,7 +750,7 @@ void testIssue145() {
 
   molBlock = MolToMolBlock(*m);
   m2 = MolBlockToMol(molBlock);
-  TEST_ASSERT(m2)
+  TEST_ASSERT(m2);
   smi2 = MolToSmiles(*m2, true);
   if (smi != smi2) {
     BOOST_LOG(rdInfoLog) << "\n " << smi << "\n !=\n " << smi2 << std::endl;

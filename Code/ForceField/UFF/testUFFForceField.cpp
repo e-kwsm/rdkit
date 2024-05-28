@@ -1302,8 +1302,8 @@ void testUFFDistanceConstraints() {
   ff.minimize(10, 1e-8);
   d = *(RDGeom::Point3D *)ff.positions()[0] -
       *(RDGeom::Point3D *)ff.positions()[1];
-  TEST_ASSERT(d.length() >= 1.35)
-  TEST_ASSERT(d.length() <= 1.55)
+  TEST_ASSERT(d.length() >= 1.35);
+  TEST_ASSERT(d.length() <= 1.55);
 
   ff.initialize();
   (*ff.positions()[1])[2] = 0.0;
@@ -1311,8 +1311,8 @@ void testUFFDistanceConstraints() {
   ff.minimize(10, 1e-8);
   d = *(RDGeom::Point3D *)ff.positions()[0] -
       *(RDGeom::Point3D *)ff.positions()[1];
-  TEST_ASSERT(d.length() >= 1.35)
-  TEST_ASSERT(d.length() <= 1.55)
+  TEST_ASSERT(d.length() >= 1.35);
+  TEST_ASSERT(d.length() <= 1.55);
 
   delete[] p;
   delete[] g;

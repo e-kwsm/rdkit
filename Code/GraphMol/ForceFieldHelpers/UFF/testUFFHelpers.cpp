@@ -853,9 +853,9 @@ void testIssue242() {
   //TEST_ASSERT(feq(e2,e1,0.1));
 
   needMore = field->minimize(600,1e-4);
-  TEST_ASSERT(!needMore)
+  TEST_ASSERT(!needMore);
   needMore = field2->minimize(600,1e-4);
-  TEST_ASSERT(!needMore)
+  TEST_ASSERT(!needMore);
   e1 = field->calcEnergy();
   e2 = field2->calcEnergy();
   BOOST_LOG(rdInfoLog) << "E1: " << e1 << std::endl;
@@ -863,9 +863,9 @@ void testIssue242() {
   TEST_ASSERT(feq(e2,e1,1.0));
 
   needMore = field->minimize(600,1e-4);
-  TEST_ASSERT(!needMore)
+  TEST_ASSERT(!needMore);
   needMore = field2->minimize(600,1e-4);
-  TEST_ASSERT(!needMore)
+  TEST_ASSERT(!needMore);
   e1 = field->calcEnergy();
   e2 = field2->calcEnergy();
   BOOST_LOG(rdInfoLog) << "rE1: " << e1 << std::endl;
