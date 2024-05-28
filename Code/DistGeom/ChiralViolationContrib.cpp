@@ -12,7 +12,7 @@ ChiralViolationContrib::ChiralViolationContrib(ForceFields::ForceField *owner,
                                                const ChiralSet *cset,
                                                double weight) {
   PRECONDITION(owner, "bad owner");
-  PRECONDITION(cset, "bad chiral set")
+  PRECONDITION(cset, "bad chiral set");
 
   URANGE_CHECK(cset->d_idx1, owner->positions().size());
   URANGE_CHECK(cset->d_idx2, owner->positions().size());
