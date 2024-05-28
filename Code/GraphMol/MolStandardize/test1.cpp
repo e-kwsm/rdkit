@@ -51,14 +51,14 @@ void testCleanup() {
   {
     RWMOL_SPTR m = "CCC(=O)O[Hg]"_smiles;
     RWMOL_SPTR res(MolStandardize::cleanup(*m, params));
-    TEST_ASSERT(MolToSmiles(*res) == "CCC(=O)[O-].[Hg+]")
+    TEST_ASSERT(MolToSmiles(*res) == "CCC(=O)[O-].[Hg+]");
   }
 
   // Test dimethylmercury is not disconnected during standardize.
   {
     RWMOL_SPTR m = "C[Hg]C"_smiles;
     RWMOL_SPTR res(MolStandardize::cleanup(*m, params));
-    TEST_ASSERT(MolToSmiles(*res) == "[CH3][Hg][CH3]")
+    TEST_ASSERT(MolToSmiles(*res) == "[CH3][Hg][CH3]");
   }
   BOOST_LOG(rdDebugLog) << "Finished" << std::endl;
 }

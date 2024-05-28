@@ -320,7 +320,7 @@ class RDKIT_FILEPARSERS_EXPORT SmilesMolSupplier : public MolSupplier {
     return static_cast<ContainedType *>(dp_supplier.get())->getItemText(idx);
   }
   unsigned int length() {
-    PRECONDITION(dp_supplier, "no supplier")
+    PRECONDITION(dp_supplier, "no supplier");
     return static_cast<ContainedType *>(dp_supplier.get())->length();
   }
 };
