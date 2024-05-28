@@ -1887,7 +1887,7 @@ void testIssue3009911() {
     MolOps::assignStereochemistry(*m, true);
     for (unsigned int i = 0; i < m->getNumAtoms(); ++i) {
       unsigned int rank;
-      TEST_ASSERT(m->getAtomWithIdx(i)->hasProp(common_properties::_CIPRank))
+      TEST_ASSERT(m->getAtomWithIdx(i)->hasProp(common_properties::_CIPRank));
       m->getAtomWithIdx(i)->getProp(common_properties::_CIPRank, rank);
       ranks[i] = rank;
     }
@@ -1915,7 +1915,7 @@ void testIssue3009911() {
     MolOps::assignStereochemistry(*m, true);
     for (unsigned int i = 0; i < m->getNumAtoms(); ++i) {
       unsigned int rank;
-      TEST_ASSERT(m->getAtomWithIdx(i)->hasProp(common_properties::_CIPRank))
+      TEST_ASSERT(m->getAtomWithIdx(i)->hasProp(common_properties::_CIPRank));
       m->getAtomWithIdx(i)->getProp(common_properties::_CIPRank, rank);
       ranks[i] = rank;
     }
@@ -2518,7 +2518,7 @@ namespace {
 void stereochemTester(RWMol *m, std::string expectedCIP,
                       Bond::BondStereo expectedStereo) {
   TEST_ASSERT(m);
-  TEST_ASSERT(m->getNumAtoms() == 9)
+  TEST_ASSERT(m->getNumAtoms() == 9);
   MolOps::sanitizeMol(*m);
   TEST_ASSERT(!m->getAtomWithIdx(1)->hasProp(common_properties::_CIPCode));
   TEST_ASSERT(m->getBondWithIdx(3)->getStereo() == Bond::STEREONONE);
@@ -2656,7 +2656,7 @@ void testStereoGroupUpdating() {
   TEST_ASSERT(m->getStereoGroups().size() == 2);
   TEST_ASSERT(m->getStereoGroups()[1].getGroupType() ==
               RDKit::StereoGroupType::STEREO_OR);
-  TEST_ASSERT(m->getStereoGroups()[1].getAtoms().size() == 1)
+  TEST_ASSERT(m->getStereoGroups()[1].getAtoms().size() == 1);
 
   m->removeAtom(m->getAtomWithIdx(0));
   TEST_ASSERT(m->getStereoGroups().size() == 1);
