@@ -544,7 +544,7 @@ void test7() {
   TEST_ASSERT(smi == "C[C@](F)(Cl)Br");
   molBlock = MolToMolBlock(*m);
   m2 = MolBlockToMol(molBlock);
-  TEST_ASSERT(m2)
+  TEST_ASSERT(m2);
   smi2 = MolToSmiles(*m2, true);
   TEST_ASSERT(smi == smi2);
   delete m;
@@ -558,7 +558,7 @@ void test7() {
   TEST_ASSERT(smi == "C[C@@](F)(Cl)Br");
   molBlock = MolToMolBlock(*m);
   m2 = MolBlockToMol(molBlock);
-  TEST_ASSERT(m2)
+  TEST_ASSERT(m2);
   smi2 = MolToSmiles(*m2, true);
   TEST_ASSERT(smi == smi2);
   delete m;
@@ -576,7 +576,7 @@ void test7() {
   TEST_ASSERT(smi == "C[C@H](F)Cl");
   molBlock = MolToMolBlock(*m);
   m2 = MolBlockToMol(molBlock);
-  TEST_ASSERT(m2)
+  TEST_ASSERT(m2);
   MolOps::assignStereochemistry(*m2);
   TEST_ASSERT(m2->getAtomWithIdx(0)->hasProp(common_properties::_CIPCode));
   m2->getAtomWithIdx(0)->getProp(common_properties::_CIPCode, cip);
@@ -601,7 +601,7 @@ void test7() {
   molBlock = MolToMolBlock(*m);
   // BOOST_LOG(rdInfoLog) << molBlock << std::endl;
   m2 = MolBlockToMol(molBlock);
-  TEST_ASSERT(m2)
+  TEST_ASSERT(m2);
   MolOps::assignStereochemistry(*m2);
   TEST_ASSERT(m2->getAtomWithIdx(0)->hasProp(common_properties::_CIPCode));
   m2->getAtomWithIdx(0)->getProp(common_properties::_CIPCode, cip);
@@ -635,7 +635,7 @@ void test7() {
   std::cout << "***************************************" << std::endl;
   BOOST_LOG(rdInfoLog) << molBlock << std::endl;
   m2 = MolBlockToMol(molBlock);
-  TEST_ASSERT(m2)
+  TEST_ASSERT(m2);
   smi2 = MolToSmiles(*m2, true);
   if (smi != smi2) {
     BOOST_LOG(rdInfoLog) << "\n " << smi << "\n !=\n " << smi2 << std::endl;
@@ -677,7 +677,7 @@ void test7() {
   molBlock = MolToMolBlock(*m);
   // BOOST_LOG(rdInfoLog) << molBlock << std::endl;
   m2 = MolBlockToMol(molBlock);
-  TEST_ASSERT(m2)
+  TEST_ASSERT(m2);
   smi2 = MolToSmiles(*m2, true);
   if (smi != smi2) {
     BOOST_LOG(rdInfoLog) << "\n " << smi << "\n !=\n " << smi2 << std::endl;
@@ -704,7 +704,7 @@ void test7() {
   molBlock = MolToMolBlock(*m);
   // BOOST_LOG(rdInfoLog) << molBlock << std::endl;
   m2 = MolBlockToMol(molBlock);
-  TEST_ASSERT(m2)
+  TEST_ASSERT(m2);
   smi2 = MolToSmiles(*m2, true);
   if (smi != smi2) {
     BOOST_LOG(rdInfoLog) << "\n " << smi << "\n !=\n " << smi2 << std::endl;
@@ -773,7 +773,7 @@ void testIssue145() {
 
   molBlock = MolToMolBlock(*m);
   m2 = MolBlockToMol(molBlock);
-  TEST_ASSERT(m2)
+  TEST_ASSERT(m2);
   smi2 = MolToSmiles(*m2, true);
   if (smi != smi2) {
     BOOST_LOG(rdInfoLog) << "\n " << smi << "\n !=\n " << smi2 << std::endl;
@@ -1600,35 +1600,35 @@ void testMolFileQueryToSmarts() {
   m = MolFileToMol(fName);
   TEST_ASSERT(m);
   sma = MolToSmarts(*m, true);
-  TEST_ASSERT(sma == "[#6&x2]-[#6]")
+  TEST_ASSERT(sma == "[#6&x2]-[#6]");
 
   delete m;
   fName = rdbase + "/Code/GraphMol/FileParsers/test_data/ringcount_3.mol";
   m = MolFileToMol(fName);
   TEST_ASSERT(m);
   sma = MolToSmarts(*m, true);
-  TEST_ASSERT(sma == "[#6&x3]-[#6]")
+  TEST_ASSERT(sma == "[#6&x3]-[#6]");
 
   delete m;
   fName = rdbase + "/Code/GraphMol/FileParsers/test_data/ringcount_0.mol";
   m = MolFileToMol(fName);
   TEST_ASSERT(m);
   sma = MolToSmarts(*m, true);
-  TEST_ASSERT(sma == "[#6&x0]-[#6]")
+  TEST_ASSERT(sma == "[#6&x0]-[#6]");
 
   delete m;
   fName = rdbase + "/Code/GraphMol/FileParsers/test_data/ringcount_4.mol";
   m = MolFileToMol(fName);
   TEST_ASSERT(m);
   sma = MolToSmarts(*m, true);
-  TEST_ASSERT(sma == "[#16&x4]-[#6]")
+  TEST_ASSERT(sma == "[#16&x4]-[#6]");
 
   delete m;
   fName = rdbase + "/Code/GraphMol/FileParsers/test_data/ringcount_star.mol";
   m = MolFileToMol(fName);
   TEST_ASSERT(m);
   sma = MolToSmarts(*m, true);
-  TEST_ASSERT(sma == "[#6&x0]-[#6]")
+  TEST_ASSERT(sma == "[#6&x0]-[#6]");
 
   delete m;
   fName = rdbase + "/Code/GraphMol/FileParsers/test_data/ringcount_star2.mol";
@@ -1642,7 +1642,7 @@ void testMolFileQueryToSmarts() {
   m = MolFileToMol(fName);
   TEST_ASSERT(m);
   sma = MolToSmarts(*m, true);
-  TEST_ASSERT(sma == "[#6&$(*=,:,#*)]~[#8]")
+  TEST_ASSERT(sma == "[#6&$(*=,:,#*)]~[#8]");
 
   delete m;
   BOOST_LOG(rdInfoLog) << "done" << std::endl;
@@ -1989,7 +1989,7 @@ void testMolFileAtomValues() {
     TEST_ASSERT(m->getAtomWithIdx(1)->hasProp(common_properties::molFileValue));
     m->getAtomWithIdx(1)->getProp(common_properties::molFileValue, val);
     TEST_ASSERT(val == "acidchloride");
-    TEST_ASSERT(getAtomValue(m->getAtomWithIdx(1)) == "acidchloride")
+    TEST_ASSERT(getAtomValue(m->getAtomWithIdx(1)) == "acidchloride");
 
     TEST_ASSERT(
         m->getAtomWithIdx(0)->hasProp(common_properties::molAtomMapNumber));
@@ -4049,7 +4049,7 @@ void testSequences() {
       TEST_ASSERT(lseq == seq);
 
       ROMol *m2 = HELMToMol(seq);
-      TEST_ASSERT(m2)
+      TEST_ASSERT(m2);
       lseq = MolToSequence(*m2);
       TEST_ASSERT(lseq == "CGCGAATTACCGCG");
       lseq = MolToHELM(*m2);
@@ -4093,7 +4093,7 @@ void testSequences() {
       TEST_ASSERT(lseq == seq);
 
       ROMol *m2 = HELMToMol(seq);
-      TEST_ASSERT(m2)
+      TEST_ASSERT(m2);
       lseq = MolToSequence(*m2);
       TEST_ASSERT(lseq == "CGCGAAUUACCGCG");
       lseq = MolToHELM(*m2);
@@ -4792,7 +4792,7 @@ void testGithub1034() {
     TEST_ASSERT(
         m->getBondWithIdx(2)->getPropIfPresent<int>(
             common_properties::_UnknownStereo, explicit_unknown_stereo) &&
-        explicit_unknown_stereo)
+        explicit_unknown_stereo);
 
     TEST_ASSERT(m->getBondWithIdx(0)->getBondType() == Bond::DOUBLE);
     TEST_ASSERT(m->getBondWithIdx(0)->getStereo() ==
@@ -4837,7 +4837,7 @@ void testGithub1034() {
     TEST_ASSERT(
         m->getBondWithIdx(3)->getPropIfPresent<int>(
             common_properties::_UnknownStereo, explicit_unknown_stereo) &&
-        explicit_unknown_stereo)
+        explicit_unknown_stereo);
     MolOps::sanitizeMol(*m);
     TEST_ASSERT(m->getBondWithIdx(3)->getBondType() == Bond::SINGLE);
     TEST_ASSERT(m->getBondWithIdx(3)->getBondDir() != Bond::UNKNOWN);

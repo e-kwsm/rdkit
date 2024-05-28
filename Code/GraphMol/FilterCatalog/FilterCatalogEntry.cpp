@@ -48,7 +48,7 @@ void FilterCatalogEntry::setDescription(const std::string &desc) {
 
 void FilterCatalogEntry::toStream(std::ostream &ss) const {
 #ifndef RDK_USE_BOOST_SERIALIZATION
-  PRECONDITION(0, "Boost SERIALIZATION is not enabled")
+  PRECONDITION(0, "Boost SERIALIZATION is not enabled");
 #else
   boost::archive::text_oarchive ar(ss);
   ar << *this;
@@ -63,7 +63,7 @@ std::string FilterCatalogEntry::Serialize() const {
 
 void FilterCatalogEntry::initFromStream(std::istream &ss) {
 #ifndef RDK_USE_BOOST_SERIALIZATION
-  PRECONDITION(0, "Boost SERIALIZATION is not enabled")
+  PRECONDITION(0, "Boost SERIALIZATION is not enabled");
 #else
   boost::archive::text_iarchive ar(ss);
   ar >> *this;
