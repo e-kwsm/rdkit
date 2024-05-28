@@ -628,7 +628,7 @@ namespace {
 const unsigned int NOLABEL = std::numeric_limits<unsigned int>::max();
 // Get the atom label - this might be useful as a util class
 unsigned int get_label(const Atom *a, const MolzipParams &p) {
-  PRECONDITION(a, "bad atom in MolZip::get_label")
+  PRECONDITION(a, "bad atom in MolZip::get_label");
   unsigned int idx = NOLABEL;
   switch (p.label) {
     case MolzipLabel::AtomMapNumber:
@@ -692,7 +692,7 @@ int num_swaps_to_interconvert(std::vector<unsigned int> &orders) {
         j = orders[j];
         CHECK_INVARIANT(
             j < orders.size(),
-            "molzip: bond index outside of number of bonds for atom")
+            "molzip: bond index outside of number of bonds for atom");
         seen[j] = true;
         nswaps++;
       }
