@@ -300,7 +300,7 @@ void testValidateSmiles() {
   } catch (const ValueErrorException &e) {
     std::string msg = e.what();
     TEST_ASSERT(msg ==
-                "SMILES Parse Error: syntax error for input: 3478q439g98h")
+                "SMILES Parse Error: syntax error for input: 3478q439g98h");
   };
 
   vector<ValidationErrorInfo> errout2 = validateSmiles("");

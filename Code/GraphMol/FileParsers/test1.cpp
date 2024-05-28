@@ -4768,7 +4768,7 @@ void testGithub1034() {
     TEST_ASSERT(
         m->getBondWithIdx(2)->getPropIfPresent<int>(
             common_properties::_UnknownStereo, explicit_unknown_stereo) &&
-        explicit_unknown_stereo)
+        explicit_unknown_stereo);
 
     TEST_ASSERT(m->getBondWithIdx(0)->getBondType() == Bond::DOUBLE);
     TEST_ASSERT(m->getBondWithIdx(0)->getStereo() ==
@@ -4813,7 +4813,7 @@ void testGithub1034() {
     TEST_ASSERT(
         m->getBondWithIdx(3)->getPropIfPresent<int>(
             common_properties::_UnknownStereo, explicit_unknown_stereo) &&
-        explicit_unknown_stereo)
+        explicit_unknown_stereo);
     MolOps::sanitizeMol(*m);
     TEST_ASSERT(m->getBondWithIdx(3)->getBondType() == Bond::SINGLE);
     TEST_ASSERT(m->getBondWithIdx(3)->getBondDir() != Bond::UNKNOWN);
