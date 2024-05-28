@@ -1060,7 +1060,7 @@ M  END
   errmsg = errout[0];
   TEST_ASSERT(
       errmsg ==
-      "ERROR: [StereoValidation] Atom 1 has opposing stereo bonds with different up/down orientation")
+      "ERROR: [StereoValidation] Atom 1 has opposing stereo bonds with different up/down orientation");
 
   // 4 ligands - potentially ambiguous umbrella configuration
   mblock = R"(
@@ -1093,7 +1093,7 @@ M  END
   errmsg = errout[0];
   TEST_ASSERT(
       errmsg ==
-      "ERROR: [StereoValidation] Atom 1 has a potentially ambiguous representation: all non-stereo bonds opposite to the only stereo bond")
+      "ERROR: [StereoValidation] Atom 1 has a potentially ambiguous representation: all non-stereo bonds opposite to the only stereo bond");
 
   // 4 ligands - colinearity / triangle rule violation
   mblock = R"(
@@ -1126,7 +1126,7 @@ M  END
   errmsg = errout[0];
   TEST_ASSERT(
       errmsg ==
-      "ERROR: [StereoValidation] Colinearity or triangle rule violation of non-stereo bonds at atom 1")
+      "ERROR: [StereoValidation] Colinearity or triangle rule violation of non-stereo bonds at atom 1");
 
   // 4 ligands - wavy bond is allowed
   mblock = R"(
@@ -1229,7 +1229,7 @@ M  END
   errmsg = errout[0];
   TEST_ASSERT(
       errmsg ==
-      "ERROR: [StereoValidation] Atom 1 has 3 explicit substituents and multiple stereo bonds")
+      "ERROR: [StereoValidation] Atom 1 has 3 explicit substituents and multiple stereo bonds");
 
   // 3 Ligands - colinearity violation
   mblock = R"(
@@ -1620,7 +1620,7 @@ void testValidateSmiles() {
   } catch (const ValueErrorException &e) {
     std::string msg = e.what();
     TEST_ASSERT(msg ==
-                "SMILES Parse Error: syntax error for input: 3478q439g98h")
+                "SMILES Parse Error: syntax error for input: 3478q439g98h");
   };
 
   vector<ValidationErrorInfo> errout2 = validateSmiles("");
