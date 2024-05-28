@@ -18,10 +18,10 @@ namespace CIPLabeler {
 
 Tetrahedral::Tetrahedral(const CIPMol &mol, Atom *focus)
     : Configuration(mol, focus) {
-  CHECK_INVARIANT(focus, "bad atom")
+  CHECK_INVARIANT(focus, "bad atom");
   CHECK_INVARIANT(focus->getChiralTag() == Atom::CHI_TETRAHEDRAL_CCW ||
                       focus->getChiralTag() == Atom::CHI_TETRAHEDRAL_CW,
-                  "bad config")
+                  "bad config");
 
   std::vector<Atom *> carriers;
   carriers.reserve(4);
