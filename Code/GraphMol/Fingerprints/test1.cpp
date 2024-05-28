@@ -3538,7 +3538,7 @@ void testGitHubIssue1496() {
     TEST_ASSERT(m2->getNumAtoms() == 1);
     ExplicitBitVect *bv2 = PatternFingerprintMol(*m2, 2048);
     TEST_ASSERT(bv2);
-    TEST_ASSERT(bv1->getNumOnBits() >= bv2->getNumOnBits())
+    TEST_ASSERT(bv1->getNumOnBits() >= bv2->getNumOnBits());
     TEST_ASSERT(AllProbeBitsMatch(*bv2, *bv1));
 
     delete m1;
@@ -3560,7 +3560,7 @@ void testGitHubIssue1496() {
     TEST_ASSERT(m2->getNumAtoms() == 1);
     ExplicitBitVect *bv2 = PatternFingerprintMol(*m2, 2048);
     TEST_ASSERT(bv2);
-    TEST_ASSERT(bv1->getNumOnBits() > bv2->getNumOnBits())
+    TEST_ASSERT(bv1->getNumOnBits() > bv2->getNumOnBits());
     TEST_ASSERT(AllProbeBitsMatch(*bv2, *bv1));
 
     delete m1;
