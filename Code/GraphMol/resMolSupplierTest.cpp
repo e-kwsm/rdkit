@@ -58,7 +58,7 @@ void testBaseFunctionality() {
   mol = SmilesToMol("CC");
   resMolSuppl = new ResonanceMolSupplier((ROMol &)*mol);
   TEST_ASSERT((resMolSuppl->getAtomConjGrpIdx(0) == -1) &&
-              (resMolSuppl->getAtomConjGrpIdx(1) == -1))
+              (resMolSuppl->getAtomConjGrpIdx(1) == -1));
   delete resMolSuppl;
   resMolSuppl = new ResonanceMolSupplier((ROMol &)*mol);
   TEST_ASSERT(resMolSuppl->getNumConjGrps() == 0);
