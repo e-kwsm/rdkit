@@ -189,7 +189,7 @@ void RDF(const ROMol &mol, std::vector<double> &res, int confId,
   // RDF100s RDF105s RDF110s RDF115s RDF120s RDF125s RDF130s RDF135s RDF140s
   // RDF145s RDF150s RDF155s
 
-  PRECONDITION(mol.getNumConformers() >= 1, "molecule has no conformers")
+  PRECONDITION(mol.getNumConformers() >= 1, "molecule has no conformers");
   // int numAtoms = mol.getNumAtoms();
   // if (numAtoms < 4) return reserror;
 
