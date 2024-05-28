@@ -326,7 +326,7 @@ class RDKIT_GRAPHMOL_EXPORT Bond : public RDProps {
     PRECONDITION(((what != STEREOCIS && what != STEREOTRANS) ||
                   getStereoAtoms().size() == 2),
                  "Stereo atoms should be specified before specifying CIS/TRANS "
-                 "bond stereochemistry")
+                 "bond stereochemistry");
     d_stereo = what;
   }
   //! returns our stereo code
