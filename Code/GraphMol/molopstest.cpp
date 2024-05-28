@@ -74,16 +74,16 @@ void test1() {
   TEST_ASSERT(frags[0]->getNumAtoms() == 6);
   TEST_ASSERT(frags[1]->getNumAtoms() == 1);
   TEST_ASSERT(iv.size() == 7);
-  TEST_ASSERT(iv[0] == 0)
-  TEST_ASSERT(iv[6] == 1)
+  TEST_ASSERT(iv[0] == 0);
+  TEST_ASSERT(iv[6] == 1);
   count = MolOps::getMolFrags(*m, otherFrags, true, &iv);
   CHECK_INVARIANT(count == 2, "bad frag count");
   CHECK_INVARIANT(otherFrags.size() == 2, "bad frag count");
   TEST_ASSERT(frags[0]->getNumAtoms() == 6);
   TEST_ASSERT(frags[1]->getNumAtoms() == 1);
   TEST_ASSERT(iv.size() == 7);
-  TEST_ASSERT(iv[0] == 0)
-  TEST_ASSERT(iv[6] == 1)
+  TEST_ASSERT(iv[0] == 0);
+  TEST_ASSERT(iv[6] == 1);
   delete m;
 
   smi = "CCCC(=O)[O-].[Na+].[NH4+].[Cl-]";
@@ -273,7 +273,7 @@ void test3() {
   m = SmilesToMol(smi);
   TEST_ASSERT(m);
   count = MolOps::findSSSR(*m, sssr);
-  TEST_ASSERT(count == 2)
+  TEST_ASSERT(count == 2);
   TEST_ASSERT(sssr[0].size() == 5);
   TEST_ASSERT(sssr[1].size() == 5);
   TEST_ASSERT(!m->getRingInfo()->isAtomInRingOfSize(0, 5));
@@ -5092,9 +5092,9 @@ void testGithubIssue141() {
     TEST_ASSERT(m);
     MolOps::Kekulize(*m, true);
     m->updatePropertyCache(true);
-    TEST_ASSERT(!m->getAtomWithIdx(0)->getIsAromatic())
-    TEST_ASSERT(m->getAtomWithIdx(0)->getNumImplicitHs() == 1)
-    TEST_ASSERT(m->getAtomWithIdx(0)->getNumExplicitHs() == 0)
+    TEST_ASSERT(!m->getAtomWithIdx(0)->getIsAromatic());
+    TEST_ASSERT(m->getAtomWithIdx(0)->getNumImplicitHs() == 1);
+    TEST_ASSERT(m->getAtomWithIdx(0)->getNumExplicitHs() == 0);
 
     delete m;
   }
@@ -5513,7 +5513,7 @@ void testGetMolFrags() {
     std::vector<ROMOL_SPTR> frags =
         MolOps::getMolFrags(*m, false, &fragsMapping, &fragsMolAtomMapping);
 
-    TEST_ASSERT(frags.size() == 3)
+    TEST_ASSERT(frags.size() == 3);
     TEST_ASSERT(fragsMapping.size() == m->getNumAtoms());
 
     TEST_ASSERT(fragsMapping[2] == 0);
@@ -5544,7 +5544,7 @@ void testGetMolFrags() {
     std::vector<ROMOL_SPTR> frags = MolOps::getMolFrags(
         *m, false, &fragsMapping, &fragsMolAtomMapping, true);
 
-    TEST_ASSERT(frags.size() == 2)
+    TEST_ASSERT(frags.size() == 2);
     TEST_ASSERT(fragsMapping.size() == m->getNumAtoms());
     TEST_ASSERT(fragsMapping[2] == 0);
     TEST_ASSERT(fragsMapping[24] == 1);
@@ -7578,7 +7578,7 @@ void testGithub1622() {
           MolOps::SANITIZE_ALL ^ MolOps::SANITIZE_SETAROMATICITY;
       MolOps::sanitizeMol(*mol, whatFailed, sanitFlags);
       MolOps::setAromaticity(*mol, MolOps::AROMATICITY_MDL);
-      TEST_ASSERT(mol->getAtomWithIdx(0)->getIsAromatic())
+      TEST_ASSERT(mol->getAtomWithIdx(0)->getIsAromatic());
       delete mol;
       ++i;
     }
@@ -7625,7 +7625,7 @@ void testGithub1622() {
           MolOps::SANITIZE_ALL ^ MolOps::SANITIZE_SETAROMATICITY;
       MolOps::sanitizeMol(*mol, whatFailed, sanitFlags);
       MolOps::setAromaticity(*mol, MolOps::AROMATICITY_MDL);
-      TEST_ASSERT(!(mol->getAtomWithIdx(0)->getIsAromatic()))
+      TEST_ASSERT(!(mol->getAtomWithIdx(0)->getIsAromatic()));
       delete mol;
       ++i;
     }
@@ -7651,9 +7651,9 @@ void testGithub1622() {
           MolOps::SANITIZE_ALL ^ MolOps::SANITIZE_SETAROMATICITY;
       MolOps::sanitizeMol(*mol, whatFailed, sanitFlags);
       MolOps::setAromaticity(*mol, MolOps::AROMATICITY_MDL);
-      TEST_ASSERT(!(mol->getAtomWithIdx(0)->getIsAromatic()))
+      TEST_ASSERT(!(mol->getAtomWithIdx(0)->getIsAromatic()));
       TEST_ASSERT(
-          (mol->getAtomWithIdx(mol->getNumAtoms() - 1)->getIsAromatic()))
+          (mol->getAtomWithIdx(mol->getNumAtoms() - 1)->getIsAromatic()));
       delete mol;
       ++i;
     }
@@ -8501,7 +8501,7 @@ M  END)CTAB"_ctab;
   TEST_ASSERT(dm[8] == 0.0);
   // this will use a cached version:
   double *dm2 = MolOps::get3DDistanceMat(*mol);
-  TEST_ASSERT(dm == dm2)
+  TEST_ASSERT(dm == dm2);
 
   int confId = -1;
   bool useAtomWts = true;
