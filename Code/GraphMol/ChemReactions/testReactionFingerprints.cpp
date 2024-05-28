@@ -283,7 +283,7 @@ void testStructuralFingerprintsReaction() {
     TEST_ASSERT(
         SubstructMatch(*products_iter->get(), *products_iterq->get(), mv));
     TEST_ASSERT(
-        SubstructMatch(*products_iter->get(), *products_iterq2->get(), mv))
+        SubstructMatch(*products_iter->get(), *products_iterq2->get(), mv));
 
     delete rxn;
     delete rxnq;
