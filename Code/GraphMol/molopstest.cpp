@@ -8391,7 +8391,7 @@ M  END)CTAB"_ctab;
   TEST_ASSERT(dm[8] == 0.0);
   // this will use a cached version:
   double *dm2 = MolOps::get3DDistanceMat(*mol);
-  TEST_ASSERT(dm == dm2)
+  TEST_ASSERT(dm == dm2);
 
   int confId = -1;
   bool useAtomWts = true;
