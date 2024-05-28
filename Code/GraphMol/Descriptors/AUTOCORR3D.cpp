@@ -230,7 +230,7 @@ void Get3Dautoone(double *dist3D, double *topologicaldistance, int numAtoms,
 
 void AUTOCORR3D(const ROMol &mol, std::vector<double> &res, int confId,
                 const std::string &customAtomPropName) {
-  PRECONDITION(mol.getNumConformers() >= 1, "molecule has no conformers")
+  PRECONDITION(mol.getNumConformers() >= 1, "molecule has no conformers");
   int numAtoms = mol.getNumAtoms();
 
   double *topologicaldistance =

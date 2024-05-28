@@ -41,14 +41,14 @@ void test1() {
   TEST_ASSERT(propVal == "conf 1");
 
   conf = m->getConformer(0);
-  TEST_ASSERT(feq(conf.getAtomPos(0).x, -1.02))
-  TEST_ASSERT(feq(conf.getAtomPos(0).y, 0.96))
-  TEST_ASSERT(feq(conf.getAtomPos(0).z, -0.04))
+  TEST_ASSERT(feq(conf.getAtomPos(0).x, -1.02));
+  TEST_ASSERT(feq(conf.getAtomPos(0).y, 0.96));
+  TEST_ASSERT(feq(conf.getAtomPos(0).z, -0.04));
 
   conf = m->getConformer(1);
-  TEST_ASSERT(feq(conf.getAtomPos(0).x, -2.02))
-  TEST_ASSERT(feq(conf.getAtomPos(0).y, 0.96))
-  TEST_ASSERT(feq(conf.getAtomPos(0).z, -0.04))
+  TEST_ASSERT(feq(conf.getAtomPos(0).x, -2.02));
+  TEST_ASSERT(feq(conf.getAtomPos(0).y, 0.96));
+  TEST_ASSERT(feq(conf.getAtomPos(0).z, -0.04));
 
   delete m;
   m = TPLFileToMol(fName, true, true);
@@ -57,9 +57,9 @@ void test1() {
   TEST_ASSERT(m->getNumBonds() == 12);
   TEST_ASSERT(m->getNumConformers() == 1);
   conf = m->getConformer(0);
-  TEST_ASSERT(feq(conf.getAtomPos(0).x, -1.02))
-  TEST_ASSERT(feq(conf.getAtomPos(0).y, 0.96))
-  TEST_ASSERT(feq(conf.getAtomPos(0).z, -0.04))
+  TEST_ASSERT(feq(conf.getAtomPos(0).x, -1.02));
+  TEST_ASSERT(feq(conf.getAtomPos(0).y, 0.96));
+  TEST_ASSERT(feq(conf.getAtomPos(0).z, -0.04));
 
   delete m;
   BOOST_LOG(rdInfoLog) << "done" << std::endl;

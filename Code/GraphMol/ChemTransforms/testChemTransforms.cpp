@@ -35,17 +35,17 @@ void testDeleteSubstruct() {
   smi = "CCC(=O).C=O";
   mol1 = SmilesToMol(smi);
   TEST_ASSERT(mol1);
-  TEST_ASSERT(mol1->getNumAtoms() == 6)
+  TEST_ASSERT(mol1->getNumAtoms() == 6);
   sma = "C=O";
   matcher1 = SmartsToMol(sma);
   TEST_ASSERT(matcher1);
   mol2 = deleteSubstructs(*mol1, *matcher1, 0);
   delete mol1;
   TEST_ASSERT(mol2);
-  TEST_ASSERT(mol2->getNumAtoms() == 2)
+  TEST_ASSERT(mol2->getNumAtoms() == 2);
   mol1 = deleteSubstructs(*mol2, *matcher1, 0);
   TEST_ASSERT(mol2);
-  TEST_ASSERT(mol2->getNumAtoms() == 2)
+  TEST_ASSERT(mol2->getNumAtoms() == 2);
   delete matcher1;
   delete mol1;
   delete mol2;
@@ -1954,7 +1954,7 @@ void testGithubIssue511() {
     std::string smi = "CO[C@](CC)(C)N";
     RWMol *mol = SmilesToMol(smi);
     TEST_ASSERT(mol);
-    TEST_ASSERT(mol->getNumAtoms() == 7)
+    TEST_ASSERT(mol->getNumAtoms() == 7);
     std::vector<unsigned int> bindices;
     bindices.push_back(1);
     ROMol *frags = MolFragmenter::fragmentOnBonds(*mol, bindices, true);
@@ -1976,7 +1976,7 @@ void testGithubIssue511() {
     std::string smi = "CO[C@]1(C)NCC1";
     RWMol *mol = SmilesToMol(smi);
     TEST_ASSERT(mol);
-    TEST_ASSERT(mol->getNumAtoms() == 7)
+    TEST_ASSERT(mol->getNumAtoms() == 7);
     std::vector<unsigned int> bindices;
     bindices.push_back(1);
     ROMol *frags = MolFragmenter::fragmentOnBonds(*mol, bindices, true);
@@ -1996,7 +1996,7 @@ void testGithubIssue511() {
     std::string smi = "C[C@](O)(F)[C@@]1(C)CCN1";
     RWMol *mol = SmilesToMol(smi);
     TEST_ASSERT(mol);
-    TEST_ASSERT(mol->getNumAtoms() == 9)
+    TEST_ASSERT(mol->getNumAtoms() == 9);
     std::vector<unsigned int> bindices;
     bindices.push_back(3);
     ROMol *frags = MolFragmenter::fragmentOnBonds(*mol, bindices, true);
@@ -2026,7 +2026,7 @@ void testGithub1734() {
     std::string smi = "c1ccccc1[C@]([I])(C)NC";
     RWMol *mol = SmilesToMol(smi);
     TEST_ASSERT(mol);
-    TEST_ASSERT(mol->getNumAtoms() == 11)
+    TEST_ASSERT(mol->getNumAtoms() == 11);
     ROMol *nmol = MolFragmenter::fragmentOnBRICSBonds(*mol);
     TEST_ASSERT(nmol);
     TEST_ASSERT(nmol->getNumAtoms() == 15);
@@ -2039,7 +2039,7 @@ void testGithub1734() {
     std::string smi = "c1ccccc1[C@H](C)NC";
     RWMol *mol = SmilesToMol(smi);
     TEST_ASSERT(mol);
-    TEST_ASSERT(mol->getNumAtoms() == 10)
+    TEST_ASSERT(mol->getNumAtoms() == 10);
     ROMol *nmol = MolFragmenter::fragmentOnBRICSBonds(*mol);
     TEST_ASSERT(nmol);
     TEST_ASSERT(nmol->getNumAtoms() == 14);
