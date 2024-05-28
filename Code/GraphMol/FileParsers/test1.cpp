@@ -1577,35 +1577,35 @@ void testMolFileQueryToSmarts() {
   m = MolFileToMol(fName);
   TEST_ASSERT(m);
   sma = MolToSmarts(*m, true);
-  TEST_ASSERT(sma == "[#6&x2]-[#6]")
+  TEST_ASSERT(sma == "[#6&x2]-[#6]");
 
   delete m;
   fName = rdbase + "/Code/GraphMol/FileParsers/test_data/ringcount_3.mol";
   m = MolFileToMol(fName);
   TEST_ASSERT(m);
   sma = MolToSmarts(*m, true);
-  TEST_ASSERT(sma == "[#6&x3]-[#6]")
+  TEST_ASSERT(sma == "[#6&x3]-[#6]");
 
   delete m;
   fName = rdbase + "/Code/GraphMol/FileParsers/test_data/ringcount_0.mol";
   m = MolFileToMol(fName);
   TEST_ASSERT(m);
   sma = MolToSmarts(*m, true);
-  TEST_ASSERT(sma == "[#6&x0]-[#6]")
+  TEST_ASSERT(sma == "[#6&x0]-[#6]");
 
   delete m;
   fName = rdbase + "/Code/GraphMol/FileParsers/test_data/ringcount_4.mol";
   m = MolFileToMol(fName);
   TEST_ASSERT(m);
   sma = MolToSmarts(*m, true);
-  TEST_ASSERT(sma == "[#16&x4]-[#6]")
+  TEST_ASSERT(sma == "[#16&x4]-[#6]");
 
   delete m;
   fName = rdbase + "/Code/GraphMol/FileParsers/test_data/ringcount_star.mol";
   m = MolFileToMol(fName);
   TEST_ASSERT(m);
   sma = MolToSmarts(*m, true);
-  TEST_ASSERT(sma == "[#6&x0]-[#6]")
+  TEST_ASSERT(sma == "[#6&x0]-[#6]");
 
   delete m;
   fName = rdbase + "/Code/GraphMol/FileParsers/test_data/ringcount_star2.mol";
@@ -1619,7 +1619,7 @@ void testMolFileQueryToSmarts() {
   m = MolFileToMol(fName);
   TEST_ASSERT(m);
   sma = MolToSmarts(*m, true);
-  TEST_ASSERT(sma == "[#6&$(*=,:,#*)]~[#8]")
+  TEST_ASSERT(sma == "[#6&$(*=,:,#*)]~[#8]");
 
   delete m;
   BOOST_LOG(rdInfoLog) << "done" << std::endl;
@@ -1966,7 +1966,7 @@ void testMolFileAtomValues() {
     TEST_ASSERT(m->getAtomWithIdx(1)->hasProp(common_properties::molFileValue));
     m->getAtomWithIdx(1)->getProp(common_properties::molFileValue, val);
     TEST_ASSERT(val == "acidchloride");
-    TEST_ASSERT(getAtomValue(m->getAtomWithIdx(1)) == "acidchloride")
+    TEST_ASSERT(getAtomValue(m->getAtomWithIdx(1)) == "acidchloride");
 
     TEST_ASSERT(
         m->getAtomWithIdx(0)->hasProp(common_properties::molAtomMapNumber));
@@ -4026,7 +4026,7 @@ void testSequences() {
       TEST_ASSERT(lseq == seq);
 
       ROMol *m2 = HELMToMol(seq);
-      TEST_ASSERT(m2)
+      TEST_ASSERT(m2);
       lseq = MolToSequence(*m2);
       TEST_ASSERT(lseq == "CGCGAATTACCGCG");
       lseq = MolToHELM(*m2);
@@ -4070,7 +4070,7 @@ void testSequences() {
       TEST_ASSERT(lseq == seq);
 
       ROMol *m2 = HELMToMol(seq);
-      TEST_ASSERT(m2)
+      TEST_ASSERT(m2);
       lseq = MolToSequence(*m2);
       TEST_ASSERT(lseq == "CGCGAAUUACCGCG");
       lseq = MolToHELM(*m2);

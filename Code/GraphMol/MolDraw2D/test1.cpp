@@ -1259,7 +1259,7 @@ void test8PrepareMolForDrawing() {
     TEST_ASSERT(m);
     {
       RWMol nm(*m);
-      TEST_ASSERT(nm.getNumAtoms() == 9)
+      TEST_ASSERT(nm.getNumAtoms() == 9);
       MolDraw2DUtils::prepareMolForDrawing(nm);
       TEST_ASSERT(nm.getNumAtoms() == 9);  // this is a test for github #982
       TEST_ASSERT(nm.getNumConformers() == 1);
@@ -1281,7 +1281,7 @@ void test8PrepareMolForDrawing() {
     }
     {
       RWMol nm(*m);
-      TEST_ASSERT(nm.getNumAtoms() == 9)
+      TEST_ASSERT(nm.getNumAtoms() == 9);
       MolDraw2DUtils::prepareMolForDrawing(nm, false);
       TEST_ASSERT(nm.getNumAtoms() == 9);
       TEST_ASSERT(nm.getNumConformers() == 1);
@@ -1291,7 +1291,7 @@ void test8PrepareMolForDrawing() {
     }
     {
       RWMol nm(*m);
-      TEST_ASSERT(nm.getNumAtoms() == 9)
+      TEST_ASSERT(nm.getNumAtoms() == 9);
       MolDraw2DUtils::prepareMolForDrawing(nm, false, false);
       TEST_ASSERT(nm.getNumAtoms() == 9);
       TEST_ASSERT(nm.getNumConformers() == 1);
@@ -1301,7 +1301,7 @@ void test8PrepareMolForDrawing() {
     }
     {
       RWMol nm(*m);
-      TEST_ASSERT(nm.getNumAtoms() == 9)
+      TEST_ASSERT(nm.getNumAtoms() == 9);
       MolDraw2DUtils::prepareMolForDrawing(nm, false, true);
       TEST_ASSERT(nm.getNumAtoms() == 9);
       TEST_ASSERT(nm.getNumConformers() == 1);
@@ -1312,7 +1312,7 @@ void test8PrepareMolForDrawing() {
 
     {
       RWMol nm(*m);
-      TEST_ASSERT(nm.getNumAtoms() == 9)
+      TEST_ASSERT(nm.getNumAtoms() == 9);
       MolDraw2DUtils::prepareMolForDrawing(nm, true, true, false);
       TEST_ASSERT(nm.getNumAtoms() == 9);
       TEST_ASSERT(nm.getNumConformers() == 1);
@@ -1328,7 +1328,7 @@ void test8PrepareMolForDrawing() {
       RWMol nm(*m);
       RDDepict::compute2DCoords(nm);
       nm.getConformer().set3D(true);  // it's not really, we're cheating
-      TEST_ASSERT(nm.getNumAtoms() == 9)
+      TEST_ASSERT(nm.getNumAtoms() == 9);
       MolDraw2DUtils::prepareMolForDrawing(nm);
       TEST_ASSERT(nm.getNumAtoms() == 9);
       TEST_ASSERT(nm.getNumConformers() == 1);  // we have a conformer anyway
@@ -1347,7 +1347,7 @@ void test8PrepareMolForDrawing() {
     TEST_ASSERT(m);
     {
       RWMol nm(*m);
-      TEST_ASSERT(nm.getNumAtoms() == 10)
+      TEST_ASSERT(nm.getNumAtoms() == 10);
       MolDraw2DUtils::prepareMolForDrawing(nm);
       TEST_ASSERT(nm.getNumAtoms() == 11);
       TEST_ASSERT(nm.getNumConformers() == 1);
@@ -1366,7 +1366,7 @@ void test8PrepareMolForDrawing() {
     }
     {
       RWMol nm(*m);
-      TEST_ASSERT(nm.getNumAtoms() == 10)
+      TEST_ASSERT(nm.getNumAtoms() == 10);
       MolDraw2DUtils::prepareMolForDrawing(nm, false, false);
       TEST_ASSERT(nm.getNumAtoms() == 10);
       TEST_ASSERT(nm.getNumConformers() == 1);

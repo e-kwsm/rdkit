@@ -714,9 +714,9 @@ void testStereochem() {
   mol->getAtomWithIdx(0)->getProp(common_properties::_CIPCode, cip);
   TEST_ASSERT(cip == "S");
   smi = MolToSmiles(*mol, true);
-  TEST_ASSERT(smi == "C[C@@H](O)F")
+  TEST_ASSERT(smi == "C[C@@H](O)F");
   smi = MolToSmiles(*mol, true, false, 0);
-  TEST_ASSERT(smi == "[C@H](C)(O)F")
+  TEST_ASSERT(smi == "[C@H](C)(O)F");
 
   delete mol;
   smi = "[C@@H]1(F)OC1";
@@ -727,9 +727,9 @@ void testStereochem() {
   mol->getAtomWithIdx(0)->getProp(common_properties::_CIPCode, cip);
   TEST_ASSERT(cip == "S");
   smi = MolToSmiles(*mol, true);
-  TEST_ASSERT(smi == "F[C@H]1CO1")
+  TEST_ASSERT(smi == "F[C@H]1CO1");
   smi = MolToSmiles(*mol, true, false, 0);
-  TEST_ASSERT(smi == "[C@H]1(F)CO1")
+  TEST_ASSERT(smi == "[C@H]1(F)CO1");
 
   delete mol;
   smi = "C1O[C@H]1F";
@@ -1610,10 +1610,10 @@ void testIssue256() {
     auto mol = v2::SmilesParse::MolFromSmiles(smi, ps);
     TEST_ASSERT(mol);
     auto bond = mol->getBondBetweenAtoms(3, 0);
-    TEST_ASSERT(bond)
+    TEST_ASSERT(bond);
     TEST_ASSERT(bond->getBondType() == Bond::SINGLE);
     bond = mol->getBondBetweenAtoms(3, 6);
-    TEST_ASSERT(bond)
+    TEST_ASSERT(bond);
     TEST_ASSERT(bond->getBondType() == Bond::DOUBLE);
   }
 
@@ -1622,10 +1622,10 @@ void testIssue256() {
     auto mol = v2::SmilesParse::MolFromSmiles(smi, ps);
     TEST_ASSERT(mol);
     auto bond = mol->getBondBetweenAtoms(3, 0);
-    TEST_ASSERT(bond)
+    TEST_ASSERT(bond);
     TEST_ASSERT(bond->getBondType() == Bond::DOUBLE);
     bond = mol->getBondBetweenAtoms(3, 6);
-    TEST_ASSERT(bond)
+    TEST_ASSERT(bond);
     TEST_ASSERT(bond->getBondType() == Bond::SINGLE);
   }
 
@@ -4121,7 +4121,7 @@ void testIsomericSmilesIsDefault() {
   {
     std::string smi = "C[C@H](Cl)Br";
     auto m = SmilesToMol(smi);
-    TEST_ASSERT(m)
+    TEST_ASSERT(m);
     auto csmi = MolToSmiles(*m);
     TEST_ASSERT(csmi.find("@") != std::string::npos);
     delete m;
