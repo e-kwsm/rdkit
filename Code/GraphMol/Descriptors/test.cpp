@@ -2210,7 +2210,7 @@ void testGithub2948() {
   {
     ROMol m;
     auto asa = calcLabuteASA(m);
-    TEST_ASSERT(feq(asa, 0, 0.0001))
+    TEST_ASSERT(feq(asa, 0, 0.0001));
   }
   BOOST_LOG(rdErrorLog) << "  done" << std::endl;
 }

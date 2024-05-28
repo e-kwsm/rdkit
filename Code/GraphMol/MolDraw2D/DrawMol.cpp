@@ -1285,7 +1285,7 @@ void DrawMol::changeToDrawCoords() {
 // ****************************************************************************
 void DrawMol::draw(MolDraw2D &drawer) const {
   PRECONDITION(drawingInitialised_,
-               "you must call createDrawingObjects before calling draw")
+               "you must call createDrawingObjects before calling draw");
   if (atCds_.empty()) {
     return;
   }

@@ -425,7 +425,7 @@ bondholder makeBondHolder(const Bond *bond, unsigned int otherIdx,
       Atropisomers::AtropAtomAndBondVec atropAtomAndBondVecs[2];
       CHECK_INVARIANT(Atropisomers::getAtropisomerAtomsAndBonds(
                           bond, atropAtomAndBondVecs, bond->getOwningMol()),
-                      "Could not find atropisomer controlling atoms")
+                      "Could not find atropisomer controlling atoms");
 
       res.controllingAtoms[0] =
           &atoms[atropAtomAndBondVecs[0]

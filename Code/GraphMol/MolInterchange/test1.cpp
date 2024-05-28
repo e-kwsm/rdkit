@@ -137,7 +137,7 @@ void test1() {
     TEST_ASSERT(mols.size() == 1);
     auto m = mols[0].get();
     TEST_ASSERT(m);
-    TEST_ASSERT(m->getNumAtoms() == 2)
+    TEST_ASSERT(m->getNumAtoms() == 2);
     TEST_ASSERT(m->getBondBetweenAtoms(0, 1));
   }
 

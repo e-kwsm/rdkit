@@ -50,7 +50,7 @@ void Digraph::addEdge(Node *beg, Bond *bond, Node *end) {
 
 Digraph::Digraph(const CIPMol &mol, Atom *atom, bool atropisomerMode)
     : d_mol{mol} {
-  PRECONDITION(atom, "cannot init digraph on a nullptr")
+  PRECONDITION(atom, "cannot init digraph on a nullptr");
 
   auto visit = std::vector<char>(d_mol.getNumAtoms());
   visit[atom->getIdx()] = 1;

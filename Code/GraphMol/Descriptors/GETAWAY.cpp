@@ -1222,7 +1222,7 @@ void GetGETAWAY(double *dist3D, double *AdjMat, std::vector<double> Vpoints,
 
 void GETAWAY(const ROMol &mol, std::vector<double> &res, int confId,
              unsigned int precision, const std::string &customAtomPropName) {
-  PRECONDITION(mol.getNumConformers() >= 1, "molecule has no conformers")
+  PRECONDITION(mol.getNumConformers() >= 1, "molecule has no conformers");
 
   int numAtoms = mol.getNumAtoms();
 
