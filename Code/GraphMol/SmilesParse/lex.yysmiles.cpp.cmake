@@ -2278,7 +2278,7 @@ YY_FATAL_ERROR( "flex scanner jammed" );
 				}
 			}
 
-		else switch ( yy_get_next_buffer( yyscanner ) )
+		else { switch ( yy_get_next_buffer( yyscanner ) )
 			{
 			case EOB_ACT_END_OF_FILE:
 				{
@@ -2330,6 +2330,7 @@ YY_FATAL_ERROR( "flex scanner jammed" );
 				yy_bp = yyg->yytext_ptr + YY_MORE_ADJ;
 				goto yy_find_action;
 			}
+		}
 		break;
 		}
 
