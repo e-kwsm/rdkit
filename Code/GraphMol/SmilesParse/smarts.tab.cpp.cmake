@@ -541,7 +541,7 @@ union yyalloc
       do                                        \
         {                                       \
           YYPTRDIFF_T yyi;                      \
-          for (yyi = 0; yyi < (Count); yyi++){  \
+          for (yyi = 0; yyi < (Count); yyi++) { \
             (Dst)[yyi] = (Src)[yyi];            \
           }                                     \
         }                                       \
