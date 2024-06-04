@@ -92,10 +92,11 @@ mol: general_atom {
   Mol::GRAPH_NODE_TYPE a1 = mp->getActiveAtom();
   int atomIdx1=a1->getIdx();
   int atomIdx2=mp->addAtom($2);
-  if(a1->getIsAromatic() && $2->getIsAromatic())
+  if(a1->getIsAromatic() && $2->getIsAromatic()) {
     mp->addBond(atomIdx1,atomIdx2,Bond::AROMATIC);
-  else
+  } else {
     mp->addBond(atomIdx1,atomIdx2,Bond::SINGLE);
+  }
   delete $2;
 }
 
