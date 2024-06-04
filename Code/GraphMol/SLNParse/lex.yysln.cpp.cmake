@@ -1934,7 +1934,7 @@ static int yy_get_next_buffer (yyscan_t yyscanner)
 		YY_CURRENT_BUFFER_LVALUE->yy_n_chars = yyg->yy_n_chars = 0;
 	}
 
-	else
+	} else
 		{
 			yy_size_t num_to_read =
 			YY_CURRENT_BUFFER_LVALUE->yy_buf_size - number_to_move - 1;
@@ -2153,7 +2153,7 @@ static int yy_get_next_buffer (yyscan_t yyscanner)
 			*yyg->yy_c_buf_p = '\0';
 		}
 
-		else
+		} else
 			{ /* need more input */
 			yy_size_t offset = yyg->yy_c_buf_p - yyg->yytext_ptr;
 			++yyg->yy_c_buf_p;
@@ -2691,7 +2691,12 @@ int yysln_get_column  (yyscan_t yyscanner)
     
         if (! YY_CURRENT_BUFFER) {
             return 0;
+<<<<<<< HEAD
         }
+||||||| parent of 760a731c53c9 (Code/GraphMol/SLNParse/lex.yysln.cpp.cmake)
+=======
+	}
+>>>>>>> 760a731c53c9 (Code/GraphMol/SLNParse/lex.yysln.cpp.cmake)
     
     return yycolumn;
 }
@@ -2754,7 +2759,12 @@ void yysln_set_lineno (int  line_number , yyscan_t yyscanner)
         /* lineno is only valid if an input buffer exists. */
         if (! YY_CURRENT_BUFFER ) {
            yy_fatal_error( "yysln_set_lineno called with no buffer" , yyscanner); 
+<<<<<<< HEAD
         }
+||||||| parent of 760a731c53c9 (Code/GraphMol/SLNParse/lex.yysln.cpp.cmake)
+=======
+	}
+>>>>>>> 760a731c53c9 (Code/GraphMol/SLNParse/lex.yysln.cpp.cmake)
     
     yylineno = line_number;
 }
@@ -2770,7 +2780,12 @@ void yysln_set_column (int  column_no , yyscan_t yyscanner)
         /* column is only valid if an input buffer exists. */
         if (! YY_CURRENT_BUFFER ) {
            yy_fatal_error( "yysln_set_column called with no buffer" , yyscanner); 
+<<<<<<< HEAD
         }
+||||||| parent of 760a731c53c9 (Code/GraphMol/SLNParse/lex.yysln.cpp.cmake)
+=======
+	}
+>>>>>>> 760a731c53c9 (Code/GraphMol/SLNParse/lex.yysln.cpp.cmake)
     
     yycolumn = column_no;
 }
