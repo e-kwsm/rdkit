@@ -4134,8 +4134,8 @@ void testRgroupDecompZipping() {
   TEST_ASSERT(rows.size() == 1);
   RGroupRows::const_iterator it = rows.begin();
   std::vector<ROMOL_SPTR> mols;
-  for (auto rgroups = it->begin(); rgroups != it->end(); ++rgroups) {
-    mols.push_back(rgroups->second);
+  for (const auto &rgroups : *it) {
+    mols.push_back(rgroups.second);
   }
   auto res = molzip(mols);
   TEST_ASSERT(MolToSmiles(*res) == "C1CC2ONC12")
