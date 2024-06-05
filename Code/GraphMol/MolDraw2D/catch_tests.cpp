@@ -8262,9 +8262,9 @@ TEST_CASE("Lasso highlights") {
     RWMol *query = SmartsToMol(smt);
     std::vector<MatchVectType> hits_vect;
     SubstructMatch(mol, *query, hits_vect);
-    for (size_t i = 0; i < hits_vect.size(); ++i) {
-      for (size_t j = 0; j < hits_vect[i].size(); ++j) {
-        hit_atoms.push_back(hits_vect[i][j].second);
+    for (const auto &i : hits_vect) {
+      for (const auto &j : i) {
+        hit_atoms.push_back(j.second);
       }
     }
     delete query;
