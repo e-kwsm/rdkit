@@ -3787,7 +3787,7 @@ std::vector<std::pair<unsigned int, unsigned int>> findMesoCenters(
   for (const auto atom : mol.atoms()) {
     atom->clearProp(common_properties::_mesoOtherAtom);
     if (atom->getChiralTag() > Atom::ChiralType::CHI_UNSPECIFIED) {
-      specifiedChiralAts.set(atom->getIdx(), 1);
+      specifiedChiralAts.set(atom->getIdx(), true);
     }
     int otherIdx = -1;
     if (atom->getPropIfPresent(common_properties::_ringStereoOtherAtom,

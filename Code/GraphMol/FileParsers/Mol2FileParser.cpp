@@ -317,7 +317,7 @@ bool cleanUpMol2Substructures(RWMol *res) {
         b->setBondType(Bond::DOUBLE);
         b->setIsAromatic(false);
         at->setIsAromatic(false);
-        isFixed[idx] = 1;
+        isFixed[idx] = true;
         for (auto onbr : res->atomNeighbors(nbr)) {
           if (onbr->getAtomicNum() == 8 && !isFixed[onbr->getIdx()] &&
               onbr->getProp<std::string>(common_properties::_TriposAtomType) ==
@@ -327,11 +327,11 @@ bool cleanUpMol2Substructures(RWMol *res) {
             ob->setIsAromatic(false);
             onbr->setFormalCharge(-1);
             onbr->setIsAromatic(false);
-            isFixed[onbr->getIdx()] = 1;
+            isFixed[onbr->getIdx()] = true;
           }
         }
         nbr->setIsAromatic(false);
-        isFixed[nbr->getIdx()] = 1;
+        isFixed[nbr->getIdx()] = true;
 
       } else if (tATT == "C.2" || tATT == "S.o2") {
         // carboxylates and sulfonates
@@ -344,8 +344,8 @@ bool cleanUpMol2Substructures(RWMol *res) {
           at->setFormalCharge(-1);
           at->setIsAromatic(false);
           nbr->setIsAromatic(false);
-          isFixed[idx] = 1;
-          isFixed[nbr->getIdx()] = 1;
+          isFixed[idx] = true;
+          isFixed[nbr->getIdx()] = true;
         } else {
           // the other occurrences are not charged and have a double bond
           b->setBondType(Bond::DOUBLE);

@@ -298,7 +298,7 @@ void addImproperTorsionTerms(ForceFields::ForceField *ff,
           improperAtom[n[3]], improperAtom[4],
           static_cast<bool>(improperAtom[5]), forceScalingFactor);
       ff->contribs().emplace_back(contrib);
-      isImproperConstrained[improperAtom[n[1]]] = 1;
+      isImproperConstrained[improperAtom[n[1]]] = true;
     }
   }
 }
@@ -325,9 +325,9 @@ void addExperimentalTorsionTerms(
     int k = etkdgDetails.expTorsionAtoms[t][2];
     int l = etkdgDetails.expTorsionAtoms[t][3];
     if (i < l) {
-      atomPairs[i * numAtoms + l] = 1;
+      atomPairs[i * numAtoms + l] = true;
     } else {
-      atomPairs[l * numAtoms + i] = 1;
+      atomPairs[l * numAtoms + i] = true;
     }
     auto *contrib = new ForceFields::CrystalFF::TorsionAngleContribM6(
         ff, i, j, k, l, etkdgDetails.expTorsionAngles[t].second,
@@ -359,9 +359,9 @@ void add12Terms(ForceFields::ForceField *ff,
     unsigned int i = bond.first;
     unsigned int j = bond.second;
     if (i < j) {
-      atomPairs[i * numAtoms + j] = 1;
+      atomPairs[i * numAtoms + j] = true;
     } else {
-      atomPairs[j * numAtoms + i] = 1;
+      atomPairs[j * numAtoms + i] = true;
     }
     double d = ((*positions[i]) - (*positions[j])).length();
     auto *contrib = new ForceFields::UFF::DistanceConstraintContrib(
@@ -399,9 +399,9 @@ void add13Terms(ForceFields::ForceField *ff,
     unsigned int k = angle[2];
 
     if (i < k) {
-      atomPairs[i * numAtoms + k] = 1;
+      atomPairs[i * numAtoms + k] = true;
     } else {
-      atomPairs[k * numAtoms + i] = 1;
+      atomPairs[k * numAtoms + i] = true;
     }
     // check for triple bonds
     if (useBasicKnowledge && angle[3]) {
