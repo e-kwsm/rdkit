@@ -861,9 +861,9 @@ extern "C" char *get_log_buffer(void *log_handle) {
 extern "C" bool clear_log_buffer(void *log_handle) {
   if (log_handle) {
     reinterpret_cast<MinimalLib::LogHandle *>(log_handle)->clearBuffer();
-    return 1;
+    return true;
   }
-  return 0;
+  return false;
 }
 
 #if (defined(__GNUC__) || defined(__GNUG__))
