@@ -1036,7 +1036,7 @@ void setMMFFAromaticity(RWMol &mol) {
       // loop again over all ring atoms
       for (j = 0, canBeAromatic = true; j < atomRings[i].size(); ++j) {
         // set aromaticity as perceived
-        aromBitVect[atomRings[i][j]] = 1;
+        aromBitVect[atomRings[i][j]] = true;
         atom = mol.getAtomWithIdx(atomRings[i][j]);
         // if this is is a non-sp2 carbon or nitrogen
         // then this ring can't be aromatic
@@ -1057,7 +1057,7 @@ void setMMFFAromaticity(RWMol &mol) {
       // if this ring satisfies the 4n+2 rule,
       // then mark its atoms as aromatic
       if ((pi_e > 2) && (!((pi_e - 2) % 4))) {
-        aromRingBitVect[i] = 1;
+        aromRingBitVect[i] = true;
         for (j = 0; j < atomRings[i].size(); ++j) {
           atom = mol.getAtomWithIdx(atomRings[i][j]);
           atom->setIsAromatic(true);
