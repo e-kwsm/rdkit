@@ -1127,7 +1127,7 @@ YY_DECL
 	yy_state_type yy_current_state;
 	char *yy_cp, *yy_bp;
 	int yy_act;
-    struct yyguts_t * yyg = (struct yyguts_t*)yyscanner;
+    auto * yyg = (struct yyguts_t*)yyscanner;
 
     yylval = yylval_param;
 
@@ -2081,7 +2081,7 @@ YY_FATAL_ERROR( "flex scanner jammed" );
  */
 static int yy_get_next_buffer (yyscan_t yyscanner)
 {
-    struct yyguts_t * yyg = (struct yyguts_t*)yyscanner;
+    auto * yyg = (struct yyguts_t*)yyscanner;
 	char *dest = YY_CURRENT_BUFFER_LVALUE->yy_ch_buf;
 	char *source = yyg->yytext_ptr;
 	int number_to_move, i;
@@ -2222,7 +2222,7 @@ static int yy_get_next_buffer (yyscan_t yyscanner)
 {
 	yy_state_type yy_current_state;
 	char *yy_cp;
-    struct yyguts_t * yyg = (struct yyguts_t*)yyscanner;
+    auto * yyg = (struct yyguts_t*)yyscanner;
 
 	yy_current_state = yyg->yy_start;
 
@@ -2254,7 +2254,7 @@ static int yy_get_next_buffer (yyscan_t yyscanner)
     static yy_state_type yy_try_NUL_trans  (yy_state_type yy_current_state , yyscan_t yyscanner)
 {
 	int yy_is_jam;
-    struct yyguts_t * yyg = (struct yyguts_t*)yyscanner; /* This var may be unused depending upon options. */
+    auto * yyg = (struct yyguts_t*)yyscanner; /* This var may be unused depending upon options. */
 	char *yy_cp = yyg->yy_c_buf_p;
 
 	YY_CHAR yy_c = 1;
@@ -2281,7 +2281,7 @@ static int yy_get_next_buffer (yyscan_t yyscanner)
     static void yyunput (int c, char * yy_bp , yyscan_t yyscanner)
 {
 	char *yy_cp;
-    struct yyguts_t * yyg = (struct yyguts_t*)yyscanner;
+    auto * yyg = (struct yyguts_t*)yyscanner;
 
     yy_cp = yyg->yy_c_buf_p;
 
@@ -2327,7 +2327,7 @@ static int yy_get_next_buffer (yyscan_t yyscanner)
 
 {
 	int c;
-    struct yyguts_t * yyg = (struct yyguts_t*)yyscanner;
+    auto * yyg = (struct yyguts_t*)yyscanner;
 
 	*yyg->yy_c_buf_p = yyg->yy_hold_char;
 
@@ -2400,7 +2400,7 @@ static int yy_get_next_buffer (yyscan_t yyscanner)
  */
     void yyrestart  (FILE * input_file , yyscan_t yyscanner)
 {
-    struct yyguts_t * yyg = (struct yyguts_t*)yyscanner;
+    auto * yyg = (struct yyguts_t*)yyscanner;
 
 	if ( ! YY_CURRENT_BUFFER ){
         yyensure_buffer_stack (yyscanner);
@@ -2418,7 +2418,7 @@ static int yy_get_next_buffer (yyscan_t yyscanner)
  */
     void yy_switch_to_buffer  (YY_BUFFER_STATE  new_buffer , yyscan_t yyscanner)
 {
-    struct yyguts_t * yyg = (struct yyguts_t*)yyscanner;
+    auto * yyg = (struct yyguts_t*)yyscanner;
 
 	/* TODO. We should be able to replace this entire function body
 	 * with
@@ -2450,7 +2450,7 @@ static int yy_get_next_buffer (yyscan_t yyscanner)
 
 static void yy_load_buffer_state  (yyscan_t yyscanner)
 {
-    struct yyguts_t * yyg = (struct yyguts_t*)yyscanner;
+    auto * yyg = (struct yyguts_t*)yyscanner;
 	yyg->yy_n_chars = YY_CURRENT_BUFFER_LVALUE->yy_n_chars;
 	yyg->yytext_ptr = yyg->yy_c_buf_p = YY_CURRENT_BUFFER_LVALUE->yy_buf_pos;
 	yyin = YY_CURRENT_BUFFER_LVALUE->yy_input_file;
@@ -2493,7 +2493,7 @@ static void yy_load_buffer_state  (yyscan_t yyscanner)
  */
     void yy_delete_buffer (YY_BUFFER_STATE  b , yyscan_t yyscanner)
 {
-    struct yyguts_t * yyg = (struct yyguts_t*)yyscanner;
+    auto * yyg = (struct yyguts_t*)yyscanner;
 
 	if ( ! b )
 		return;
@@ -2515,7 +2515,7 @@ static void yy_load_buffer_state  (yyscan_t yyscanner)
 
 {
 	int oerrno = errno;
-    struct yyguts_t * yyg = (struct yyguts_t*)yyscanner;
+    auto * yyg = (struct yyguts_t*)yyscanner;
 
 	yy_flush_buffer( b , yyscanner);
 
@@ -2542,7 +2542,7 @@ static void yy_load_buffer_state  (yyscan_t yyscanner)
  */
     void yy_flush_buffer (YY_BUFFER_STATE  b , yyscan_t yyscanner)
 {
-    struct yyguts_t * yyg = (struct yyguts_t*)yyscanner;
+    auto * yyg = (struct yyguts_t*)yyscanner;
 	if ( ! b )
 		return;
 
@@ -2572,7 +2572,7 @@ static void yy_load_buffer_state  (yyscan_t yyscanner)
  */
 void yypush_buffer_state (YY_BUFFER_STATE new_buffer , yyscan_t yyscanner)
 {
-    struct yyguts_t * yyg = (struct yyguts_t*)yyscanner;
+    auto * yyg = (struct yyguts_t*)yyscanner;
 	if (new_buffer == nullptr)
 		return;
 
@@ -2603,7 +2603,7 @@ void yypush_buffer_state (YY_BUFFER_STATE new_buffer , yyscan_t yyscanner)
  */
 void yypop_buffer_state (yyscan_t yyscanner)
 {
-    struct yyguts_t * yyg = (struct yyguts_t*)yyscanner;
+    auto * yyg = (struct yyguts_t*)yyscanner;
 	if (!YY_CURRENT_BUFFER)
 		return;
 
@@ -2624,7 +2624,7 @@ void yypop_buffer_state (yyscan_t yyscanner)
 static void yyensure_buffer_stack (yyscan_t yyscanner)
 {
 	yy_size_t num_to_alloc;
-    struct yyguts_t * yyg = (struct yyguts_t*)yyscanner;
+    auto * yyg = (struct yyguts_t*)yyscanner;
 
 	if (!yyg->yy_buffer_stack) {
 
@@ -2753,7 +2753,7 @@ YY_BUFFER_STATE yy_scan_bytes  (const char * yybytes, int  _yybytes_len , yyscan
 
     static void yy_push_state (int  _new_state , yyscan_t yyscanner)
 {
-    struct yyguts_t * yyg = (struct yyguts_t*)yyscanner;
+    auto * yyg = (struct yyguts_t*)yyscanner;
 	if ( yyg->yy_start_stack_ptr >= yyg->yy_start_stack_depth )
 		{
 		yy_size_t new_size;
@@ -2779,7 +2779,7 @@ YY_BUFFER_STATE yy_scan_bytes  (const char * yybytes, int  _yybytes_len , yyscan
 
     static void yy_pop_state  (yyscan_t yyscanner)
 {
-    struct yyguts_t * yyg = (struct yyguts_t*)yyscanner;
+    auto * yyg = (struct yyguts_t*)yyscanner;
 	if ( --yyg->yy_start_stack_ptr < 0 )
 		YY_FATAL_ERROR( "start-condition stack underflow" );
 
@@ -2788,7 +2788,7 @@ YY_BUFFER_STATE yy_scan_bytes  (const char * yybytes, int  _yybytes_len , yyscan
 
     static int yy_top_state  (yyscan_t yyscanner)
 {
-    struct yyguts_t * yyg = (struct yyguts_t*)yyscanner;
+    auto * yyg = (struct yyguts_t*)yyscanner;
 	return yyg->yy_start_stack[yyg->yy_start_stack_ptr - 1];
 }
 
@@ -2798,7 +2798,7 @@ YY_BUFFER_STATE yy_scan_bytes  (const char * yybytes, int  _yybytes_len , yyscan
 
 static void yynoreturn yy_fatal_error (const char* msg , yyscan_t yyscanner)
 {
-	struct yyguts_t * yyg = (struct yyguts_t*)yyscanner;
+	auto * yyg = (struct yyguts_t*)yyscanner;
 	(void)yyg;
 	fprintf( stderr, "%s\n", msg );
 	exit( YY_EXIT_FAILURE );
@@ -2828,7 +2828,7 @@ static void yynoreturn yy_fatal_error (const char* msg , yyscan_t yyscanner)
  */
 YY_EXTRA_TYPE yyget_extra  (yyscan_t yyscanner)
 {
-    struct yyguts_t * yyg = (struct yyguts_t*)yyscanner;
+    auto * yyg = (struct yyguts_t*)yyscanner;
     return yyextra;
 }
 
@@ -2837,7 +2837,7 @@ YY_EXTRA_TYPE yyget_extra  (yyscan_t yyscanner)
  */
 int yyget_lineno  (yyscan_t yyscanner)
 {
-    struct yyguts_t * yyg = (struct yyguts_t*)yyscanner;
+    auto * yyg = (struct yyguts_t*)yyscanner;
 
         if (! YY_CURRENT_BUFFER)
             return 0;
@@ -2850,7 +2850,7 @@ int yyget_lineno  (yyscan_t yyscanner)
  */
 int yyget_column  (yyscan_t yyscanner)
 {
-    struct yyguts_t * yyg = (struct yyguts_t*)yyscanner;
+    auto * yyg = (struct yyguts_t*)yyscanner;
 
         if (! YY_CURRENT_BUFFER)
             return 0;
@@ -2863,7 +2863,7 @@ int yyget_column  (yyscan_t yyscanner)
  */
 FILE *yyget_in  (yyscan_t yyscanner)
 {
-    struct yyguts_t * yyg = (struct yyguts_t*)yyscanner;
+    auto * yyg = (struct yyguts_t*)yyscanner;
     return yyin;
 }
 
@@ -2872,7 +2872,7 @@ FILE *yyget_in  (yyscan_t yyscanner)
  */
 FILE *yyget_out  (yyscan_t yyscanner)
 {
-    struct yyguts_t * yyg = (struct yyguts_t*)yyscanner;
+    auto * yyg = (struct yyguts_t*)yyscanner;
     return yyout;
 }
 
@@ -2881,7 +2881,7 @@ FILE *yyget_out  (yyscan_t yyscanner)
  */
 int yyget_leng  (yyscan_t yyscanner)
 {
-    struct yyguts_t * yyg = (struct yyguts_t*)yyscanner;
+    auto * yyg = (struct yyguts_t*)yyscanner;
     return yyleng;
 }
 
@@ -2891,7 +2891,7 @@ int yyget_leng  (yyscan_t yyscanner)
 
 char *yyget_text  (yyscan_t yyscanner)
 {
-    struct yyguts_t * yyg = (struct yyguts_t*)yyscanner;
+    auto * yyg = (struct yyguts_t*)yyscanner;
     return yytext;
 }
 
@@ -2901,7 +2901,7 @@ char *yyget_text  (yyscan_t yyscanner)
  */
 void yyset_extra (YY_EXTRA_TYPE  user_defined , yyscan_t yyscanner)
 {
-    struct yyguts_t * yyg = (struct yyguts_t*)yyscanner;
+    auto * yyg = (struct yyguts_t*)yyscanner;
     yyextra = user_defined ;
 }
 
@@ -2911,7 +2911,7 @@ void yyset_extra (YY_EXTRA_TYPE  user_defined , yyscan_t yyscanner)
  */
 void yyset_lineno (int  _line_number , yyscan_t yyscanner)
 {
-    struct yyguts_t * yyg = (struct yyguts_t*)yyscanner;
+    auto * yyg = (struct yyguts_t*)yyscanner;
 
         /* lineno is only valid if an input buffer exists. */
         if (! YY_CURRENT_BUFFER )
@@ -2926,7 +2926,7 @@ void yyset_lineno (int  _line_number , yyscan_t yyscanner)
  */
 void yyset_column (int  _column_no , yyscan_t yyscanner)
 {
-    struct yyguts_t * yyg = (struct yyguts_t*)yyscanner;
+    auto * yyg = (struct yyguts_t*)yyscanner;
 
         /* column is only valid if an input buffer exists. */
         if (! YY_CURRENT_BUFFER )
@@ -2943,7 +2943,7 @@ void yyset_column (int  _column_no , yyscan_t yyscanner)
  */
 void yyset_in (FILE *  _in_str , yyscan_t yyscanner)
 {
-    struct yyguts_t * yyg = (struct yyguts_t*)yyscanner;
+    auto * yyg = (struct yyguts_t*)yyscanner;
     yyin = _in_str ;
 }
 
