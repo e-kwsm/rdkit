@@ -102,7 +102,7 @@ extern int yysmiles_lex(YYSTYPE *,void *,int &, unsigned int&);
 using namespace RDKit;
 namespace {
  void yyErrorCleanup(std::vector<RDKit::RWMol *> *molList){
-  for(std::vector<RDKit::RWMol *>::iterator iter=molList->begin();
+  for(auto iter=molList->begin();
       iter != molList->end(); ++iter){
       SmilesParseOps::CleanupAfterParseError(*iter);
       delete *iter;
@@ -1180,7 +1180,7 @@ yysetstate:
 
       {
         yy_state_t *yyss1 = yyss;
-        union yyalloc *yyptr =
+        auto *yyptr =
           YY_CAST (union yyalloc *,
                    YYSTACK_ALLOC (YY_CAST (YYSIZE_T, YYSTACK_BYTES (yystacksize))));
         if (! yyptr)
