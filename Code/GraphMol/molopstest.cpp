@@ -7124,7 +7124,7 @@ void testGithubIssue868() {
     sstrm.str("");
     TEST_ASSERT(sstrm.str() == "");
     RWMol m;
-    QueryAtom *qa = new QueryAtom();
+    auto *qa = new QueryAtom();
     qa->setQuery(makeAtomTypeQuery(1, aromatic));
     qa->expandQuery(makeAtomNumQuery(6), Queries::CompositeQueryType::COMPOSITE_OR);
     m.addAtom(qa, true, true);
