@@ -99,8 +99,7 @@ extern int yysmarts_lex(YYSTYPE *,void *, int &);
 using namespace RDKit;
 namespace {
  void yyErrorCleanup(std::vector<RDKit::RWMol *> *molList){
-  for(std::vector<RDKit::RWMol *>::iterator iter=molList->begin();
-      iter != molList->end(); ++iter){
+  for (auto iter=molList->begin(); iter != molList->end(); ++iter){
      SmilesParseOps::CleanupAfterParseError(*iter);
      delete *iter;
   }
@@ -1413,7 +1412,7 @@ yysetstate:
 
       {
         yy_state_t *yyss1 = yyss;
-        union yyalloc *yyptr =
+        auto *yyptr =
           YY_CAST (union yyalloc *,
                    YYSTACK_ALLOC (YY_CAST (YYSIZE_T, YYSTACK_BYTES (yystacksize))));
         if (! yyptr)
@@ -1866,7 +1865,7 @@ yyreduce:
   case 31: /* hydrogen_atom: ATOM_OPEN_TOKEN number H_TOKEN ATOM_CLOSE_TOKEN  */
 #line 362 "smarts.yy"
                                                   {
-  QueryAtom *newQ = new QueryAtom(1);
+  auto *newQ = new QueryAtom(1);
   newQ->setIsotope((yyvsp[-2].ival));
   newQ->expandQuery(makeAtomIsotopeQuery((yyvsp[-2].ival)),Queries::COMPOSITE_AND,true);
   (yyval.atom)=newQ;
@@ -1877,7 +1876,7 @@ yyreduce:
   case 32: /* hydrogen_atom: ATOM_OPEN_TOKEN number H_TOKEN COLON_TOKEN number ATOM_CLOSE_TOKEN  */
 #line 368 "smarts.yy"
                                                                      {
-  QueryAtom *newQ = new QueryAtom(1);
+  auto *newQ = new QueryAtom(1);
   newQ->setIsotope((yyvsp[-4].ival));
   newQ->expandQuery(makeAtomIsotopeQuery((yyvsp[-4].ival)),Queries::COMPOSITE_AND,true);
   newQ->setProp(RDKit::common_properties::molAtomMapNumber,(yyvsp[-1].ival));
@@ -1890,7 +1889,7 @@ yyreduce:
   case 33: /* hydrogen_atom: ATOM_OPEN_TOKEN H_TOKEN charge_spec ATOM_CLOSE_TOKEN  */
 #line 377 "smarts.yy"
                                                        {
-  QueryAtom *newQ = new QueryAtom(1);
+  auto *newQ = new QueryAtom(1);
   newQ->setFormalCharge((yyvsp[-1].ival));
   newQ->expandQuery(makeAtomFormalChargeQuery((yyvsp[-1].ival)),Queries::COMPOSITE_AND,true);
   (yyval.atom)=newQ;
@@ -1901,7 +1900,7 @@ yyreduce:
   case 34: /* hydrogen_atom: ATOM_OPEN_TOKEN H_TOKEN charge_spec COLON_TOKEN number ATOM_CLOSE_TOKEN  */
 #line 383 "smarts.yy"
                                                                           {
-  QueryAtom *newQ = new QueryAtom(1);
+  auto *newQ = new QueryAtom(1);
   newQ->setFormalCharge((yyvsp[-3].ival));
   newQ->expandQuery(makeAtomFormalChargeQuery((yyvsp[-3].ival)),Queries::COMPOSITE_AND,true);
   newQ->setProp(RDKit::common_properties::molAtomMapNumber,(yyvsp[-1].ival));
@@ -1914,7 +1913,7 @@ yyreduce:
   case 35: /* hydrogen_atom: ATOM_OPEN_TOKEN number H_TOKEN charge_spec ATOM_CLOSE_TOKEN  */
 #line 391 "smarts.yy"
                                                               {
-  QueryAtom *newQ = new QueryAtom(1);
+  auto *newQ = new QueryAtom(1);
   newQ->setIsotope((yyvsp[-3].ival));
   newQ->setFormalCharge((yyvsp[-1].ival));
   newQ->expandQuery(makeAtomIsotopeQuery((yyvsp[-3].ival)),Queries::COMPOSITE_AND,true);
@@ -1927,7 +1926,7 @@ yyreduce:
   case 36: /* hydrogen_atom: ATOM_OPEN_TOKEN number H_TOKEN charge_spec COLON_TOKEN number ATOM_CLOSE_TOKEN  */
 #line 399 "smarts.yy"
                                                                                  {
-  QueryAtom *newQ = new QueryAtom(1);
+  auto *newQ = new QueryAtom(1);
   newQ->setIsotope((yyvsp[-5].ival));
   newQ->setFormalCharge((yyvsp[-3].ival));
   newQ->expandQuery(makeAtomIsotopeQuery((yyvsp[-5].ival)),Queries::COMPOSITE_AND,true);
@@ -2016,7 +2015,7 @@ yyreduce:
 #line 468 "smarts.yy"
                                                {
   // this is a recursive SMARTS expression
-  QueryAtom *qA = new QueryAtom();
+  auto *qA = new QueryAtom();
   //  FIX: there's maybe a leak here
   RWMol *molP = (*molList)[(yyvsp[-1].moli)];
   // close any rings in the molecule:
@@ -2042,7 +2041,7 @@ yyreduce:
   // please don't write your own SMARTS that include this extension:
   // the RDKit smarts parsing code will automatically insert serial
   // numbers for recursive smarts patterns.
-  QueryAtom *qA = new QueryAtom();
+  auto *qA = new QueryAtom();
   //  FIX: there's maybe a leak here
   RWMol *molP = (*molList)[(yyvsp[-3].moli)];
   // close any rings in the molecule:
@@ -2147,8 +2146,8 @@ yyreduce:
   case 65: /* atom_query: possible_range_query RANGE_OPEN_TOKEN MINUS_TOKEN number RANGE_CLOSE_TOKEN  */
 #line 551 "smarts.yy"
                                                                              {
-  ATOM_EQUALS_QUERY *oq = static_cast<ATOM_EQUALS_QUERY *>((yyvsp[-4].atom)->getQuery());
-  ATOM_GREATEREQUAL_QUERY *nq = makeAtomSimpleQuery<ATOM_GREATEREQUAL_QUERY>((yyvsp[-1].ival),oq->getDataFunc(),
+  auto *oq = static_cast<ATOM_EQUALS_QUERY *>((yyvsp[-4].atom)->getQuery());
+  auto *nq = makeAtomSimpleQuery<ATOM_GREATEREQUAL_QUERY>((yyvsp[-1].ival),oq->getDataFunc(),
     std::string("greater_")+oq->getDescription());
   (yyvsp[-4].atom)->setQuery(nq);
 }
@@ -2158,8 +2157,8 @@ yyreduce:
   case 66: /* atom_query: possible_range_query RANGE_OPEN_TOKEN number MINUS_TOKEN RANGE_CLOSE_TOKEN  */
 #line 557 "smarts.yy"
                                                                              {
-  ATOM_EQUALS_QUERY *oq = static_cast<ATOM_EQUALS_QUERY *>((yyvsp[-4].atom)->getQuery());
-  ATOM_LESSEQUAL_QUERY *nq = makeAtomSimpleQuery<ATOM_LESSEQUAL_QUERY>((yyvsp[-2].ival),oq->getDataFunc(),
+  auto *oq = static_cast<ATOM_EQUALS_QUERY *>((yyvsp[-4].atom)->getQuery());
+  auto *nq = makeAtomSimpleQuery<ATOM_LESSEQUAL_QUERY>((yyvsp[-2].ival),oq->getDataFunc(),
     std::string("less_")+oq->getDescription());
   (yyvsp[-4].atom)->setQuery(nq);
 }
@@ -2169,7 +2168,7 @@ yyreduce:
   case 67: /* atom_query: possible_range_query RANGE_OPEN_TOKEN number MINUS_TOKEN number RANGE_CLOSE_TOKEN  */
 #line 563 "smarts.yy"
                                                                                     {
-  ATOM_EQUALS_QUERY *oq = static_cast<ATOM_EQUALS_QUERY *>((yyvsp[-5].atom)->getQuery());
+  auto *oq = static_cast<ATOM_EQUALS_QUERY *>((yyvsp[-5].atom)->getQuery());
   ATOM_RANGE_QUERY *nq = makeAtomRangeQuery((yyvsp[-3].ival),(yyvsp[-1].ival),false,false,
     oq->getDataFunc(),
     std::string("range_")+oq->getDescription());
@@ -2181,7 +2180,7 @@ yyreduce:
   case 68: /* atom_query: number H_TOKEN  */
 #line 570 "smarts.yy"
                  {
-  QueryAtom *newQ = new QueryAtom();
+  auto *newQ = new QueryAtom();
   newQ->setQuery(makeAtomIsotopeQuery((yyvsp[-1].ival)));
   newQ->setIsotope((yyvsp[-1].ival));
   newQ->expandQuery(makeAtomHCountQuery(1),Queries::COMPOSITE_AND,true);
@@ -2194,7 +2193,7 @@ yyreduce:
   case 69: /* atom_query: number H_TOKEN number  */
 #line 578 "smarts.yy"
                         {
-  QueryAtom *newQ = new QueryAtom();
+  auto *newQ = new QueryAtom();
   newQ->setQuery(makeAtomIsotopeQuery((yyvsp[-2].ival)));
   newQ->setIsotope((yyvsp[-2].ival));
   newQ->expandQuery(makeAtomHCountQuery((yyvsp[0].ival)),Queries::COMPOSITE_AND,true);
@@ -2207,7 +2206,7 @@ yyreduce:
   case 70: /* atom_query: H_TOKEN number  */
 #line 586 "smarts.yy"
                  {
-  QueryAtom *newQ = new QueryAtom();
+  auto *newQ = new QueryAtom();
   newQ->setQuery(makeAtomHCountQuery((yyvsp[0].ival)));
   newQ->setNumExplicitHs((yyvsp[0].ival));
   (yyval.atom)=newQ;
@@ -2218,7 +2217,7 @@ yyreduce:
   case 71: /* atom_query: H_TOKEN  */
 #line 592 "smarts.yy"
           {
-  QueryAtom *newQ = new QueryAtom();
+  auto *newQ = new QueryAtom();
   newQ->setQuery(makeAtomHCountQuery(1));
   newQ->setNumExplicitHs(1);
   (yyval.atom)=newQ;
@@ -2229,7 +2228,7 @@ yyreduce:
   case 72: /* atom_query: charge_spec  */
 #line 598 "smarts.yy"
               {
-  QueryAtom *newQ = new QueryAtom();
+  auto *newQ = new QueryAtom();
   newQ->setQuery(makeAtomFormalChargeQuery((yyvsp[0].ival)));
   newQ->setFormalCharge((yyvsp[0].ival));
   (yyval.atom)=newQ;
@@ -2240,7 +2239,7 @@ yyreduce:
   case 73: /* atom_query: AT_TOKEN AT_TOKEN  */
 #line 604 "smarts.yy"
                     {
-  QueryAtom *newQ = new QueryAtom();
+  auto *newQ = new QueryAtom();
   newQ->setQuery(makeAtomNullQuery());
   newQ->setChiralTag(Atom::CHI_TETRAHEDRAL_CW);
   (yyval.atom)=newQ;
@@ -2251,7 +2250,7 @@ yyreduce:
   case 74: /* atom_query: AT_TOKEN  */
 #line 610 "smarts.yy"
            {
-  QueryAtom *newQ = new QueryAtom();
+  auto *newQ = new QueryAtom();
   newQ->setQuery(makeAtomNullQuery());
   newQ->setChiralTag(Atom::CHI_TETRAHEDRAL_CCW);
   (yyval.atom)=newQ;
@@ -2262,7 +2261,7 @@ yyreduce:
   case 75: /* atom_query: CHI_CLASS_TOKEN  */
 #line 616 "smarts.yy"
                   {
-  QueryAtom *newQ = new QueryAtom();
+  auto *newQ = new QueryAtom();
   newQ->setQuery(makeAtomNullQuery());
   newQ->setChiralTag((yyvsp[0].chiraltype));
   newQ->setProp(common_properties::_chiralPermutation,0);
@@ -2274,7 +2273,7 @@ yyreduce:
   case 76: /* atom_query: CHI_CLASS_TOKEN number  */
 #line 623 "smarts.yy"
                          {
-  QueryAtom *newQ = new QueryAtom();
+  auto *newQ = new QueryAtom();
   newQ->setQuery(makeAtomNullQuery());
   newQ->setChiralTag((yyvsp[-1].chiraltype));
   newQ->setProp(common_properties::_chiralPermutation,(yyvsp[0].ival));
@@ -2286,7 +2285,7 @@ yyreduce:
   case 78: /* atom_query: number  */
 #line 631 "smarts.yy"
          {
-  QueryAtom *newQ = new QueryAtom();
+  auto *newQ = new QueryAtom();
   newQ->setQuery(makeAtomIsotopeQuery((yyvsp[0].ival)));
   (yyval.atom)=newQ;
 }
@@ -2336,7 +2335,7 @@ yyreduce:
   case 85: /* possible_range_query: PLUS_TOKEN  */
 #line 654 "smarts.yy"
              {
-  QueryAtom *newQ = new QueryAtom();
+  auto *newQ = new QueryAtom();
   newQ->setQuery(makeAtomFormalChargeQuery(0));
   (yyval.atom) = newQ;
 }
@@ -2346,7 +2345,7 @@ yyreduce:
   case 86: /* possible_range_query: MINUS_TOKEN  */
 #line 659 "smarts.yy"
               {
-  QueryAtom *newQ = new QueryAtom();
+  auto *newQ = new QueryAtom();
   newQ->setQuery(makeAtomNegativeFormalChargeQuery(0));
   (yyval.atom) = newQ;
 }
@@ -2419,7 +2418,7 @@ yyreduce:
   case 97: /* bondd: MINUS_TOKEN  */
 #line 713 "smarts.yy"
               {
-  QueryBond *newB= new QueryBond();
+  auto *newB= new QueryBond();
   newB->setBondType(Bond::SINGLE);
   newB->setQuery(makeBondOrderEqualsQuery(Bond::SINGLE));
   (yyval.bond) = newB;
@@ -2430,7 +2429,7 @@ yyreduce:
   case 98: /* bondd: HASH_TOKEN  */
 #line 719 "smarts.yy"
              {
-  QueryBond *newB= new QueryBond();
+  auto *newB= new QueryBond();
   newB->setBondType(Bond::TRIPLE);
   newB->setQuery(makeBondOrderEqualsQuery(Bond::TRIPLE));
   (yyval.bond) = newB;
@@ -2441,7 +2440,7 @@ yyreduce:
   case 99: /* bondd: COLON_TOKEN  */
 #line 725 "smarts.yy"
               {
-  QueryBond *newB= new QueryBond();
+  auto *newB= new QueryBond();
   newB->setBondType(Bond::AROMATIC);
   newB->setQuery(makeBondOrderEqualsQuery(Bond::AROMATIC));
   (yyval.bond) = newB;
@@ -2452,7 +2451,7 @@ yyreduce:
   case 100: /* bondd: AT_TOKEN  */
 #line 731 "smarts.yy"
            {
-  QueryBond *newB= new QueryBond();
+  auto *newB= new QueryBond();
   newB->setQuery(makeBondIsInRingQuery());
   (yyval.bond) = newB;
 }
