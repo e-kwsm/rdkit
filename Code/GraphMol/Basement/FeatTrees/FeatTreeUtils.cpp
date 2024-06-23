@@ -34,11 +34,11 @@ namespace {
    fused rings that form a cycle in the feature tree with
    a single node. This is, in essence, a merge operation.
 
-   \param featGraph: the graph to be modified
-   \param featGraphCopy: a copy of the modified graph
-   \param components: a property map from edge->component id,
+   \param featGraph the graph to be modified
+   \param featGraphCopy a copy of the modified graph
+   \param components a property map from edge->component id,
           this property map refers to featGraphCopy
-   \param componentIdx: component id to be replaced
+   \param componentIdx component id to be replaced
 
 */
 void mergeRingCycle(FeatTreeGraph &featGraph, FeatTreeGraph &featGraphCopy,
