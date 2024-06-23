@@ -56,7 +56,7 @@ class RDKIT_DATASTRUCTS_EXPORT MultiFPBReader {
   MultiFPBReader() {}
 
   /*!
-    \param initOnSearch: if this is true, the \c init() method on child readers
+    \param initOnSearch if this is true, the \c init() method on child readers
     will not be called until the first search is done. This is useful with large
     FPB readers.
   */
@@ -65,9 +65,9 @@ class RDKIT_DATASTRUCTS_EXPORT MultiFPBReader {
         df_initOnSearch(initOnSearch),
         df_takeOwnership(false) {}
   /*!
-    \param readers: the set of FPBReader objects to use.
-    \param takeOwnership: if true, we own the memory for the FPBReaders
-    \param initOnSearch: if this is true, the \c init() method on child readers
+    \param readers the set of FPBReader objects to use.
+    \param takeOwnership if true, we own the memory for the FPBReaders
+    \param initOnSearch if this is true, the \c init() method on child readers
     will not be called until the first search is done. This is useful with large
     FPB readers.
   */
@@ -101,7 +101,7 @@ class RDKIT_DATASTRUCTS_EXPORT MultiFPBReader {
   //! returns a particular reader
   /*!
 
-    \param which: the reader to return
+    \param which the reader to return
 
   */
   FPBReader *getReader(unsigned int which);
@@ -113,7 +113,7 @@ class RDKIT_DATASTRUCTS_EXPORT MultiFPBReader {
 
     If \c takeOwnership is \c true then we will take ownership of the memory.
 
-    \param rdr: the reader to add. If we have already been initialized, the
+    \param rdr the reader to add. If we have already been initialized, the
     reader's \c init() method will be called
 
     \returns a count of the current number of readers
