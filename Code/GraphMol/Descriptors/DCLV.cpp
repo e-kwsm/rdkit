@@ -218,6 +218,16 @@ struct State {
 };
 
 // constructor definition
+/*!
+  \param mol input molecule or protein
+  \param radii radii for atoms of input mol
+  \param isProtein flag to calculate burried surface area of a protein ligand
+  complex [default=false, free ligand]
+  \param includeLigand flag to trigger inclusion of bound ligand in surface area
+  and volume calculations where molecule is a protein [default=true]
+  \param probeRadius radius of the sphere representing the probe solvent atom
+  \param confId conformer ID to consider [default=-1]
+*/
 DoubleCubicLatticeVolume::DoubleCubicLatticeVolume(
     const ROMol &mol, std::vector<double> radii, bool isProtein,
     bool includeLigand, double probeRadius, int confId)
@@ -235,22 +245,6 @@ DoubleCubicLatticeVolume::DoubleCubicLatticeVolume(
   //! to Numerical Integration of Surface Area and Volume and to Dot Surface
   //! Contouring of Molecular Assemblies", Journal of Computational Chemistry,
   //! Vol. 16, No. 3, pp. 273-284, 1995.
-
-  /*!
-
-    \param mol: input molecule or protein
-    \param radii: radii for atoms of input mol
-    \param isProtein: flag to calculate burried surface area of a protein ligand
-    complex [default=false, free ligand]
-    \param includeLigand: flag to trigger
-    inclusion of bound ligand in surface area and volume calculations where
-    molecule is a protein [default=true]
-    \param probeRadius: radius of the
-    sphere representing the probe solvent atom
-    \param confId: conformer ID to consider [default=-1]
-    \return class
-    object
-  */
 
   if (radii_.empty()) {
     const auto *tbl = PeriodicTable::getTable();

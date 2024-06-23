@@ -91,8 +91,8 @@ RDKIT_FILEPARSERS_EXPORT void markUnspecifiedStereoAsUnknown(ROMol &mol,
 //! generate enhanced stereo groups based on the status of the chiral flag
 /// property
 /*
- \param mol: molecule to be modified
- \param zeroFlagGroupType: how to handle non-grouped stereo centers when the
+ \param mol molecule to be modified
+ \param zeroFlagGroupType how to handle non-grouped stereo centers when the
         chiral flag is set to zero
 
   If the chiral flag is set to a value of 1 then all specified tetrahedral

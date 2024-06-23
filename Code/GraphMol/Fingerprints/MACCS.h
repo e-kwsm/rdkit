@@ -18,7 +18,7 @@ const std::string maccsFingerprintVersion = "2.0.0";
   to maintain consistency with other software packages they are
   numbered from 1.
 
-  \param mol:    the molecule to be fingerprinted
+  \param mol     the molecule to be fingerprinted
 
   \return a pointer to the fingerprint. The client is
   responsible for calling delete on this.

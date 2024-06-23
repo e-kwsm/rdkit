@@ -1438,7 +1438,7 @@ namespace details {
  * @param atomIdx the index of the atom to which the attachment point should
  * be added
  * @param val the attachment point value. Should be 1 or 2
- * @param addAsQueries if true, the dummy atoms will be added as null queries
+ * @param addAsQuery if true, the dummy atoms will be added as null queries
  *       (i.e. they will match any atom in a substructure search)
  * @param addCoords if true and the molecule has one or more conformers,
  *    positions for the attachment points will be added to the conformer(s).
