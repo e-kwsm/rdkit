@@ -104,7 +104,7 @@ RDKIT_SMILESPARSE_EXPORT std::string GetAtomSmiles(const Atom *atom,
   \param isomericSmiles : if true, isomeric SMILES will be generated
 */
 inline std::string GetAtomSmiles(const Atom *atom, bool doKekule = false,
-                                 const Bond * = nullptr,
+                                 const Bond *bondIn = nullptr,
                                  bool allHsExplicit = false,
                                  bool isomericSmiles = true) {
   // RDUNUSED_PARAM(bondIn);
@@ -223,25 +223,20 @@ RDKIT_SMILESPARSE_EXPORT std::string MolFragmentToSmiles(
 
 //! \brief returns canonical SMILES for part of a molecule
 /*!
-  \param mol : the molecule in question.
-  \param atomsToUse : indices of the atoms in the fragment
-  \param bondsToUse : indices of the bonds in the fragment. If this is not
-  provided,
-                      all bonds between the atoms in atomsToUse will be included
-  \param atomSymbols : symbols to use for the atoms in the output SMILES
-  \param bondSymbols : symbols to use for the bonds in the output SMILES
-  \param doIsomericSmiles : include stereochemistry and isotope information
-      in the SMILES
-  \param doKekule : do Kekule smiles (i.e. don't use aromatic bonds)
-  \param rootedAtAtom : make sure the SMILES starts at the specified atom.
-      The resulting SMILES is not, of course, canonical.
-  \param canonical : if false, no attempt will be made to canonicalize the
-  SMILES
-  \param allBondsExplicit : if true, symbols will be included for all bonds.
-  \param allHsExplicit : if true, hydrogen counts will be provided for every
-  atom.
-  \param doRandom : generate a randomized smiles string by randomly choosing
-                    the priority to follow in the DFS traversal. [default false]
+  \param mol the molecule in question.
+  \param atomsToUse indices of the atoms in the fragment
+  \param bondsToUse indices of the bonds in the fragment. If this is not
+      provided, all bonds between the atoms in atomsToUse will be included
+  \param atomSymbols symbols to use for the atoms in the output SMILES
+  \param bondSymbols symbols to use for the bonds in the output SMILES
+  \param doIsomericSmiles include stereochemistry and isotope information in the
+      SMILES
+  \param doKekule do Kekule smiles (i.e. don't use aromatic bonds)
+  \param rootedAtAtom make sure the SMILES starts at the specified atom. The
+      resulting SMILES is not, of course, canonical.
+  \param canonical if false, no attempt will be made to canonicalize the SMILES
+  \param allBondsExplicit if true, symbols will be included for all bonds.
+  \param allHsExplicit if true, hydrogen counts will be provided for every atom.
 
   \b NOTE: the bondSymbols are *not* currently used in the canonicalization.
 
