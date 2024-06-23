@@ -1,0 +1,19 @@
+name: clang-format
+on: [push, pull_request]
+
+jobs:
+  run_clang_format:
+    runs-on: ubuntu-latest
+    steps:
+      - name: apt install
+        run: sudo apt-get -qq install clang-format
+      - uses: actions/checkout@v4
+      - name: run clang-format
+        run: |
+          git remote add origin https://github.com/rdkit/rdkit.git
+          git fetch origin master
+          git diff --name-only origin/master |
+            grep -E '\.(c|cc|cpp|cxx|h|hpp)\b' |
+            xargs -r clang-format -i
+          git diff --exit-code
+
