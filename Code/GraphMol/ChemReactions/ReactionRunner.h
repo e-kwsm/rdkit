@@ -42,13 +42,13 @@
 namespace RDKit {
 //! Runs the reaction on a set of reactants
 /*!
-  \param rxn:       the template reaction we are interested
-  \param reactants: the reactants to be used. The length of this must be equal
-  to
+  \param rxn        the template reaction we are interested
+  \param reactants  the reactants to be used. The length of this must be equal
+                    to
                     rxn->getNumReactantTemplates()
                     Caution: The order of the reactant templates determines the
   order of the reactants!
-  \param maxProducts:  if non zero, the maximum number of products to generate
+  \param maxProducts   if non zero, the maximum number of products to generate
                        before stopping.  If hit a warning will be generated.
   \return a vector of vectors of products. Each subvector will be
           rxn->getNumProductTemplates() long.

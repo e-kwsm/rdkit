@@ -260,7 +260,7 @@ enumerate(const ROMol &mol, const std::vector<MolEnumeratorParams> &paramsList);
 //! Returns a MolBundle containing the molecules resulting from applying the
 //! enumerable operators contained in \c mol.
 /*!
-\param maxPerOperation: the maximum number of molecules which an individual
+\param maxPerOperation the maximum number of molecules which an individual
 operation is allowed to generate
 
 NOTE: the current implementation does not support molecules which include

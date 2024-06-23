@@ -51,26 +51,26 @@ const std::string atomPairsVersion = "1.1.0";
   and Applications" JCICS 25, 64-73 (1985).
 
 
-  \param mol:   the molecule to be fingerprinted
-  \param minLength:   minimum distance between atoms to be
+  \param mol    the molecule to be fingerprinted
+  \param minLength    minimum distance between atoms to be
                       considered in a pair. Default is 1 bond.
-  \param maxLength:   maximum distance between atoms to be
+  \param maxLength    maximum distance between atoms to be
                       considered in a pair.
                       Default is maxPathLen-1 bonds.
-  \param fromAtoms:   if provided, only atom pairs that involve
+  \param fromAtoms    if provided, only atom pairs that involve
                       the specified atoms will be included in the
                       fingerprint
-  \param ignoreAtoms: if provided, any atom pairs that include
+  \param ignoreAtoms  if provided, any atom pairs that include
                       the specified atoms will not be included in the
                       fingerprint
-  \param atomInvariants: a list of invariants to use for the atom hashes
+  \param atomInvariants  a list of invariants to use for the atom hashes
                          note: only the first \c codeSize bits of each
                          invariant are used.
-  \param includeChirality: if set, chirality will be used in the atom invariants
+  \param includeChirality  if set, chirality will be used in the atom invariants
                            (note: this is ignored if atomInvariants are
   provided)
-  \param use2D:       if set, the 2D (topological) distance matrix is used.
-  \param confId:      the conformation to use if 3D distances are being used
+  \param use2D        if set, the 2D (topological) distance matrix is used.
+  \param confId       the conformation to use if 3D distances are being used
 
 
   \return a pointer to the fingerprint. The client is
@@ -94,26 +94,26 @@ RDKIT_FINGERPRINTS_EXPORT SparseIntVect<std::int32_t> *getAtomPairFingerprint(
 
 //! returns the hashed atom-pair fingerprint for a molecule
 /*!
-  \param mol:   the molecule to be fingerprinted
-  \param nBits:   the length of the fingerprint to generate
-  \param minLength:   minimum distance between atoms to be
+  \param mol    the molecule to be fingerprinted
+  \param nBits    the length of the fingerprint to generate
+  \param minLength    minimum distance between atoms to be
                       considered in a pair. Default is 1 bond.
-  \param maxLength:   maximum distance between atoms to be
+  \param maxLength    maximum distance between atoms to be
                       considered in a pair.
                       Default is maxPathLen-1 bonds.
-  \param fromAtoms:   if provided, only atom pairs that involve
+  \param fromAtoms    if provided, only atom pairs that involve
                       the specified atoms will be included in the
                       fingerprint
-  \param ignoreAtoms: if provided, any atom pairs that include
+  \param ignoreAtoms  if provided, any atom pairs that include
                       the specified atoms will not be included in the
                       fingerprint
-  \param atomInvariants: a list of invariants to use for the atom hashes
+  \param atomInvariants  a list of invariants to use for the atom hashes
                          note: only the first \c codeSize bits of each
                          invariant are used.
-  \param includeChirality: if set, chirality will be used in the atom invariants
+  \param includeChirality  if set, chirality will be used in the atom invariants
                            (note: this is ignored if atomInvariants are
   provided)
-  \param use2D:       if set, the 2D (topological) distance matrix is used.
+  \param use2D        if set, the 2D (topological) distance matrix is used.
 
   \return a pointer to the fingerprint. The client is
   responsible for calling delete on this.
@@ -130,28 +130,28 @@ getHashedAtomPairFingerprint(
     bool includeChirality = false, bool use2D = true, int confId = -1);
 //! returns the hashed atom-pair fingerprint for a molecule as a bit vector
 /*!
-  \param mol:   the molecule to be fingerprinted
-  \param nBits:   the length of the fingerprint to generate
-  \param minLength:   minimum distance between atoms to be
+  \param mol    the molecule to be fingerprinted
+  \param nBits    the length of the fingerprint to generate
+  \param minLength    minimum distance between atoms to be
                       considered in a pair. Default is 1 bond.
-  \param maxLength:   maximum distance between atoms to be
+  \param maxLength    maximum distance between atoms to be
                       considered in a pair.
                       Default is maxPathLen-1 bonds.
-  \param fromAtoms:   if provided, only atom pairs that involve
+  \param fromAtoms    if provided, only atom pairs that involve
                       the specified atoms will be included in the
                       fingerprint
-  \param ignoreAtoms: if provided, any atom pairs that include
+  \param ignoreAtoms  if provided, any atom pairs that include
                       the specified atoms will not be included in the
                       fingerprint
-  \param atomInvariants: a list of invariants to use for the atom hashes
+  \param atomInvariants  a list of invariants to use for the atom hashes
                          note: only the first \c codeSize bits of each
                          invariant are used.
-  \param nBitsPerEntry: number of bits to use in simulating counts
-  \param includeChirality: if set, chirality will be used in the atom invariants
+  \param nBitsPerEntry  number of bits to use in simulating counts
+  \param includeChirality  if set, chirality will be used in the atom invariants
                            (note: this is ignored if atomInvariants are
   provided)
-  \param use2D:       if set, the 2D (topological) distance matrix is used.
-  \param confId:      the conformation to use if 3D distances are being used
+  \param use2D        if set, the 2D (topological) distance matrix is used.
+  \param confId       the conformation to use if 3D distances are being used
 
   \return a pointer to the fingerprint. The client is
   responsible for calling delete on this.
@@ -175,18 +175,18 @@ getHashedAtomPairFingerprintAsBitVect(
   "Topological Torsion: A New Molecular Descriptor for SAR Applications.
   Comparison with Other Descriptors" JCICS 27, 82-85 (1987).
 
-  \param mol:         the molecule to be fingerprinted
-  \param targetSize:  the number of atoms to include in the "torsions"
-  \param fromAtoms:   if provided, only torsions that start or end at
+  \param mol          the molecule to be fingerprinted
+  \param targetSize   the number of atoms to include in the "torsions"
+  \param fromAtoms    if provided, only torsions that start or end at
                       the specified atoms will be included in the
                       fingerprint
-  \param ignoreAtoms: if provided, any torsions that include
+  \param ignoreAtoms  if provided, any torsions that include
                       the specified atoms will not be included in the
                       fingerprint
-  \param atomInvariants: a list of invariants to use for the atom hashes
+  \param atomInvariants  a list of invariants to use for the atom hashes
                          note: only the first \c codeSize bits of each
                          invariant are used.
-  \param includeChirality: if set, chirality will be used in the atom invariants
+  \param includeChirality  if set, chirality will be used in the atom invariants
                            (note: this is ignored if atomInvariants are
   provided)
 
@@ -209,19 +209,19 @@ getTopologicalTorsionFingerprint(
   "Topological Torsion: A New Molecular Descriptor for SAR Applications.
   Comparison with Other Descriptors" JCICS 27, 82-85 (1987).
 
-  \param mol:         the molecule to be fingerprinted
-  \param nBits:       number of bits to include in the fingerprint
-  \param targetSize:  the number of atoms to include in the "torsions"
-  \param fromAtoms:   if provided, only torsions that start or end at
+  \param mol          the molecule to be fingerprinted
+  \param nBits        number of bits to include in the fingerprint
+  \param targetSize   the number of atoms to include in the "torsions"
+  \param fromAtoms    if provided, only torsions that start or end at
                       the specified atoms will be included in the
                       fingerprint
-  \param ignoreAtoms: if provided, any torsions that include
+  \param ignoreAtoms  if provided, any torsions that include
                       the specified atoms will not be included in the
                       fingerprint
-  \param atomInvariants: a list of invariants to use for the atom hashes
+  \param atomInvariants  a list of invariants to use for the atom hashes
                          note: only the first \c codeSize bits of each
                          invariant are used.
-  \param includeChirality: if set, chirality will be used in the atom invariants
+  \param includeChirality  if set, chirality will be used in the atom invariants
                            (note: this is ignored if atomInvariants are
   provided)
 
@@ -240,20 +240,20 @@ getHashedTopologicalTorsionFingerprint(
 //! returns a hashed topological-torsion fingerprint for a molecule as a bit
 /// vector
 /*!
-  \param mol:         the molecule to be fingerprinted
-  \param nBits:       number of bits to include in the fingerprint
-  \param targetSize:  the number of atoms to include in the "torsions"
-  \param fromAtoms:   if provided, only torsions that start or end at
+  \param mol          the molecule to be fingerprinted
+  \param nBits        number of bits to include in the fingerprint
+  \param targetSize   the number of atoms to include in the "torsions"
+  \param fromAtoms    if provided, only torsions that start or end at
                       the specified atoms will be included in the
                       fingerprint
-  \param ignoreAtoms: if provided, any torsions that include
+  \param ignoreAtoms  if provided, any torsions that include
                       the specified atoms will not be included in the
                       fingerprint
-  \param atomInvariants: a list of invariants to use for the atom hashes
+  \param atomInvariants  a list of invariants to use for the atom hashes
                          note: only the first \c codeSize bits of each
                          invariant are used.
-  \param nBitsPerEntry: number of bits to use in simulating counts
-  \param includeChirality: if set, chirality will be used in the atom invariants
+  \param nBitsPerEntry  number of bits to use in simulating counts
+  \param includeChirality  if set, chirality will be used in the atom invariants
                            (note: this is ignored if atomInvariants are
   provided)
 
