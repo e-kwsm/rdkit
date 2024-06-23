@@ -108,8 +108,8 @@ RDKIT_CHEMREACTIONS_EXPORT extern const ReactionFingerprintParams
    using a PatternFP for reactants and products and tentatively agents which
    were finally  concatenated
 
-  \param rxn:          the reaction to be fingerprinted
-  \param params:       specific settings to manipulate fingerprint generation
+  \param rxn           the reaction to be fingerprinted
+  \param params        specific settings to manipulate fingerprint generation
 
   \return the reaction fingerprint, as an ExplicitBitVect
 
@@ -130,8 +130,8 @@ RDKIT_CHEMREACTIONS_EXPORT ExplicitBitVect *StructuralFingerprintChemReaction(
   AtompairFP
    and tentatively the agent AtompairFP is added
 
-  \param rxn:          the reaction to be fingerprinted
-  \param params:       specific settings to manipulate fingerprint generation
+  \param rxn           the reaction to be fingerprinted
+  \param params        specific settings to manipulate fingerprint generation
 
   \return the reaction fingerprint, as an SparseIntVec
 
