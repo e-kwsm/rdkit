@@ -44,7 +44,7 @@ static bool checkExcludedAtoms(const Atom *atm, bool includeLigand) {
 
     switch (resName[0]) {
       case 'D':
-        if (resName == "DOD" || resName == "D20"){
+        if (resName == "DOD" || resName == "D20") {
           return true;
         }
         break;
@@ -56,7 +56,7 @@ static bool checkExcludedAtoms(const Atom *atm, bool includeLigand) {
       case 'S':
         if (resName == "SOL" || resName == "SO4" || resName == "SUL") {
           return true;
-       }
+        }
         break;
       case 'W':
         if (resName == "WAT") {
@@ -78,14 +78,14 @@ static bool checkExcludedAtoms(const Atom *atm, bool includeLigand) {
     if (!includeLigand &&
         static_cast<const AtomPDBResidueInfo *>(info)->getIsHeteroAtom()) {
       return true;
-    } 
+    }
   }
 
   return false;
 }
 
-static bool includeAsPolar(const Atom *atm, const ROMol &mol,
-                         bool includeSandP, bool includeHs) {
+static bool includeAsPolar(const Atom *atm, const ROMol &mol, bool includeSandP,
+                           bool includeHs) {
   // using Peter Ertl definition, polar atoms = O, N, P, S and attached Hs
 
   switch (atm->getAtomicNum()) {
@@ -105,8 +105,7 @@ static bool includeAsPolar(const Atom *atm, const ROMol &mol,
     case 1: {
       if (!includeHs) {
         return false;
-      } 
-      else {
+      } else {
         for (const auto nbr : mol.atomNeighbors(atm)) {
           if (includeAsPolar(nbr, mol, includeSandP, includeHs)) {
             return true;
@@ -130,7 +129,7 @@ struct State {
   double voxU = 0.0;
   double voxV = 0.0;
   double voxW = 0.0;
-  
+
   std::vector<unsigned int> grid[VOXORDER][VOXORDER][VOXORDER];
 
   void createVoxelGrid(const Point3D &minXYZ, const Point3D &maxXYZ,
@@ -205,11 +204,11 @@ struct State {
             for (auto idx : grid[x][y][z]) {
               if (idx != atm_idx) {
                 auto dist = range + radii_[idx];
-                if ((pos - positions[idx]).lengthSq() < (dist * dist)){
+                if ((pos - positions[idx]).lengthSq() < (dist * dist)) {
                   atomNeighbours.push_back(idx);
                 }
               }
-            }                           
+            }
           }
         }
       }
@@ -220,12 +219,24 @@ struct State {
 };
 
 // constructor definition
-DoubleCubicLatticeVolume::DoubleCubicLatticeVolume(const ROMol &mol,
-                                                   std::vector<double> radii,
-                                                   bool isProtein,
-                                                   bool includeLigand,
-                                                   double probeRadius,
-                                                   int confId)
+/*!
+
+  \param mol: input molecule or protein
+  \param radii: radii for atoms of input mol
+  \param isProtein: flag to calculate burried surface area of a protein ligand
+  complex [default=false, free ligand]
+  \param includeLigand: flag to trigger
+  inclusion of bound ligand in surface area and volume calculations where
+  molecule is a protein [default=true]
+  \param probeRadius: radius of the
+  sphere representing the probe solvent atom
+  \param confId: conformer ID to consider [default=-1]
+  \return class
+  object
+*/
+DoubleCubicLatticeVolume::DoubleCubicLatticeVolume(
+    const ROMol &mol, std::vector<double> radii, bool isProtein,
+    bool includeLigand, double probeRadius, int confId)
     : mol(mol),
       radii_(std::move(radii)),
       isProtein(isProtein),
@@ -240,22 +251,6 @@ DoubleCubicLatticeVolume::DoubleCubicLatticeVolume(const ROMol &mol,
   //! to Numerical Integration of Surface Area and Volume and to Dot Surface
   //! Contouring of Molecular Assemblies", Journal of Computational Chemistry,
   //! Vol. 16, No. 3, pp. 273-284, 1995.
-
-  /*!
-
-    \param mol: input molecule or protein
-    \param radii: radii for atoms of input mol
-    \param isProtein: flag to calculate burried surface area of a protein ligand
-    complex [default=false, free ligand]
-    \param includeLigand: flag to trigger
-    inclusion of bound ligand in surface area and volume calculations where
-    molecule is a protein [default=true]
-    \param probeRadius: radius of the
-    sphere representing the probe solvent atom
-    \param confId: conformer ID to consider [default=-1]
-    \return class
-    object
-  */
 
   positions = mol.getConformer(confId).getPositions();
   maxRadius = *std::max_element(radii_.begin(), radii_.end());
@@ -356,7 +351,6 @@ bool DoubleCubicLatticeVolume::testPoint(
 }
 
 double DoubleCubicLatticeVolume::getAtomSurfaceArea(unsigned int atomIdx) {
-
   // surface area for single atom
 
   const auto rad = radii_[atomIdx];
@@ -420,7 +414,8 @@ double DoubleCubicLatticeVolume::getPartialSurfaceArea(
   return area;
 }
 
-double DoubleCubicLatticeVolume::getPolarSurfaceArea(bool includeSandP, bool includeHs) {
+double DoubleCubicLatticeVolume::getPolarSurfaceArea(bool includeSandP,
+                                                     bool includeHs) {
   boost::dynamic_bitset<> polarAtoms(mol.getNumAtoms());
   for (const auto atom : mol.atoms()) {
     if (includeAsPolar(atom, mol, includeSandP, includeHs)) {
@@ -430,7 +425,8 @@ double DoubleCubicLatticeVolume::getPolarSurfaceArea(bool includeSandP, bool inc
   return getPartialSurfaceArea(polarAtoms);
 }
 
-std::map<unsigned int, std::vector<RDGeom::Point3D>> &DoubleCubicLatticeVolume::getSurfacePoints() {
+std::map<unsigned int, std::vector<RDGeom::Point3D>> &
+DoubleCubicLatticeVolume::getSurfacePoints() {
   if (!surfacePoints.empty()) {
     return surfacePoints;
   }
@@ -540,7 +536,8 @@ double DoubleCubicLatticeVolume::getPartialVolume(
   return vol;
 }
 
-double DoubleCubicLatticeVolume::getPolarVolume(bool includeSandP, bool includeHs) {
+double DoubleCubicLatticeVolume::getPolarVolume(bool includeSandP,
+                                                bool includeHs) {
   boost::dynamic_bitset<> polarAtoms(mol.getNumAtoms());
   for (const auto atom : mol.atoms()) {
     if (includeAsPolar(atom, mol, includeSandP, includeHs)) {
