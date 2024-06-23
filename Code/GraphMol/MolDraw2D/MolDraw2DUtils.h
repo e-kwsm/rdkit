@@ -47,20 +47,20 @@ RDKIT_MOLDRAW2D_EXPORT void prepareMolForDrawing(
 
 //! prepare a molecule for drawing and draw it
 /*
-  \param mol: the molecule to draw
-  \param legend: (optional) the legend (to be drawn under the molecule)
-  \param highlight_atoms: (optional) vector of atom ids to highlight
-  \param highlight_atoms: (optional) vector of bond ids to highlight
-  \param highlight_atom_map: (optional) map from atomId -> DrawColour
+  \param mol the molecule to draw
+  \param legend (optional) the legend (to be drawn under the molecule)
+  \param highlight_atoms (optional) vector of atom ids to highlight
+  \param highlight_atoms (optional) vector of bond ids to highlight
+  \param highlight_atom_map (optional) map from atomId -> DrawColour
             providing the highlight colors. If not provided the default
             highlight colour from \c drawOptions() will be used.
-  \param highlight_bond_map: (optional) map from bondId -> DrawColour
+  \param highlight_bond_map (optional) map from bondId -> DrawColour
             providing the highlight colors. If not provided the default
             highlight colour from \c drawOptions() will be used.
-  \param highlight_radii: (optional) map from atomId -> radius (in molecule
+  \param highlight_radii (optional) map from atomId -> radius (in molecule
             coordinates) for the radii of atomic highlights. If not provided
             the default value from \c drawOptions() will be used.
-  \param confId: (optional) conformer ID to be used for atomic coordinates
+  \param confId (optional) conformer ID to be used for atomic coordinates
 
 */
 RDKIT_MOLDRAW2D_EXPORT void prepareAndDrawMolecule(
@@ -112,14 +112,14 @@ struct ContourParams {
 
 //! Generates and draws contours for data on a grid
 /*
-  \param drawer: the MolDraw2D object to use
-  \param grid: the data to be contoured
-  \param xcoords: x positions of the grid points
-  \param ycoords: y positions of the grid points
-  \param nContours: the number of contours to draw
-  \param levels: the contours to use
-  \param ps: additional parameters controlling the contouring.
-  \param mol: molecule to be used to adjust the scale of the drawing.
+  \param drawer the MolDraw2D object to use
+  \param grid the data to be contoured
+  \param xcoords x positions of the grid points
+  \param ycoords y positions of the grid points
+  \param nContours the number of contours to draw
+  \param levels the contours to use
+  \param ps additional parameters controlling the contouring.
+  \param mol molecule to be used to adjust the scale of the drawing.
   If the \c levels argument is empty, the contour levels will be determined
   automatically from the max and min values on the grid and \c levels will
   be updated to include the contour levels.
@@ -149,14 +149,14 @@ RDKIT_MOLDRAW2D_EXPORT inline void contourAndDrawGrid(
 
 //! Generates and draws contours for a set of gaussians
 /*
-  \param drawer: the MolDraw2D object to use
-  \param locs: locations of the gaussians
-  \param heights: the heights (or weights) of the gaussians
-  \param widths: the standard deviations of the gaussians
-  \param nContours: the number of contours to draw
-  \param levels: the contours to use
-  \param ps: additional parameters controlling the contouring.
-  \param mol: molecule to be used to adjust the scale of the drawing.
+  \param drawer the MolDraw2D object to use
+  \param locs locations of the gaussians
+  \param heights the heights (or weights) of the gaussians
+  \param widths the standard deviations of the gaussians
+  \param nContours the number of contours to draw
+  \param levels the contours to use
+  \param ps additional parameters controlling the contouring.
+  \param mol molecule to be used to adjust the scale of the drawing.
 
   The values are calculated on a grid with spacing \c ps.gridResolution.
   If \c ps.setScale  is set, the grid size will be calculated based on the
