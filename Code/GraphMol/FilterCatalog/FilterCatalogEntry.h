@@ -166,7 +166,7 @@ class RDKIT_FILTERCATALOG_EXPORT FilterCatalogEntry
   //! Returns the matching filters for this catalog entry
   /*
     \param mol The molecule to match against
-    \param std::vector<FilterMatch> the resulting FilterMatches
+    \param matchVect the resulting FilterMatches
    */
   bool getFilterMatches(const ROMol &mol,
                         std::vector<FilterMatch> &matchVect) const {

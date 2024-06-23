@@ -219,7 +219,7 @@ class RDKIT_CHEMREACTIONS_EXPORT ChemicalReaction : public RDProps {
 
     \param reactants  the reactants to be used. The length of this must be equal
     to this->getNumReactantTemplates()
-    \param maxProducts:  if non zero, the maximum number of products to generate
+    \param maxProducts  if non zero, the maximum number of products to generate
     before stopping.  If hit a warning will be generated.
 
     \return a vector of vectors of products. Each subvector will be
@@ -316,7 +316,7 @@ class RDKIT_CHEMREACTIONS_EXPORT ChemicalReaction : public RDProps {
       This must be called after adding reactants and before calling
       runReactants.
 
-      \param silent: If this bool is true, no messages will be logged during the
+      \param silent If this bool is true, no messages will be logged during the
       validation. By default, validation problems are reported to the warning
       and error logs depending on their severity.
   */
@@ -333,7 +333,7 @@ class RDKIT_CHEMREACTIONS_EXPORT ChemicalReaction : public RDProps {
       \param numWarnings used to return the number of validation warnings
       \param numErrors   used to return the number of validation errors
 
-      \param silent: If this bool is true, no messages will be logged during the
+      \param silent If this bool is true, no messages will be logged during the
       validation. By default, validation problems are reported to the warning
       and error logs depending on their severity.
 
