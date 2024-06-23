@@ -28,12 +28,12 @@ The operations include: kekulization, addition of chiral Hs (so that we can draw
 wedges to them), wedging of bonds at chiral centers, and generation of a 2D
 conformation if the molecule does not already have a conformation
 
-\param mol: the molecule to be modified
-\param kekulize: toggles kekulization (this can fail, see below)
-\param addChiralHs: adds Hs to the graph on chiral atoms
-\param wedgeBonds: calls WedgeMolBonds()
-\param forceCoords: generates a 2D conformation even if one is present already
-\param wavyBonds: calls addWavyBondsForStereoAny() and clears other markers that
+\param mol the molecule to be modified
+\param kekulize toggles kekulization (this can fail, see below)
+\param addChiralHs adds Hs to the graph on chiral atoms
+\param wedgeBonds calls WedgeMolBonds()
+\param forceCoords generates a 2D conformation even if one is present already
+\param wavyBonds calls addWavyBondsForStereoAny() and clears other markers that
    double bond stereo is unknown
 
 NOTE: the kekulization step can fail, throwing a MolSanitizeExecption. If this
