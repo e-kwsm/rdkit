@@ -243,9 +243,8 @@ RDKIT_GRAPHMOL_EXPORT void setTerminalAtomCoords(ROMol &mol, unsigned int idx,
     \param updateExplicitCount  (optional) If this is \c true, when explicit Hs
    are removed
          from the graph, the heavy atom to which they are bound will have its
-   counter of
-         explicit Hs increased.
-    \param sanitize:  (optional) If this is \c true, the final molecule will be
+         counter of explicit Hs increased.
+    \param sanitize   (optional) If this is \c true, the final molecule will be
    sanitized
 
     \return the new molecule
