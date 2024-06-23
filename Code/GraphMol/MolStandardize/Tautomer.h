@@ -358,7 +358,7 @@ class RDKIT_MOLSTANDARDIZE_EXPORT TautomerEnumerator {
     M. Sitzmann et al., “Tautomerism in Large Databases.”, JCAMD 24:521 (2010)
     https://doi.org/10.1007/s10822-010-9346-4
 
-    \param mol: the molecule to be enumerated
+    \param mol the molecule to be enumerated
 
     Note: the definitions used here are that the atoms modified during
     tautomerization are the atoms at the beginning and end of each tautomer

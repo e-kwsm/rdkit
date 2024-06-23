@@ -192,7 +192,7 @@ RDKIT_GRAPHMOL_EXPORT Atom *getChiralAcrossAtom(const Atom *center,
                                                 const Bond *qry);
 RDKIT_GRAPHMOL_EXPORT Atom *getChiralAcrossAtom(const Atom *center,
                                                 const Atom *qry);
-//! \param which: if this is -1 then the second axial bond will be returned,
+//! \param which if this is -1 then the second axial bond will be returned,
 //! otherwise the first
 RDKIT_GRAPHMOL_EXPORT Bond *getTrigonalBipyramidalAxialBond(const Atom *center,
                                                             int which = 0);
@@ -337,26 +337,26 @@ RDKIT_GRAPHMOL_EXPORT bool shouldBeACrossedBond(const Bond *bond);
 
 //! Clears existing bond wedging and forces use of atom wedging from MolBlock.
 /*!
- \param mol: molecule to have its wedges altered
- \param allBondTypes: reapply the wedging also on bonds other than single and
+ \param mol molecule to have its wedges altered
+ \param allBondTypes reapply the wedging also on bonds other than single and
  aromatic ones
  */
 RDKIT_GRAPHMOL_EXPORT void reapplyMolBlockWedging(ROMol &mol,
                                                   bool allBondTypes = true);
 //! Remove MolBlock bond wedging information from molecule.
 /*!
- \param mol: molecule to modify
+ \param mol molecule to modify
  */
 RDKIT_GRAPHMOL_EXPORT void clearMolBlockWedgingInfo(ROMol &mol);
 //! Invert bond wedging information read from a mol block (if present).
 /*!
- \param mol: molecule to modify
+ \param mol molecule to modify
  */
 RDKIT_GRAPHMOL_EXPORT void invertMolBlockWedgingInfo(ROMol &mol);
 
 //! gets stereo info for a bond
 /*!
- \param bond: bond to check
+ \param bond  bond to check
  \param wedgeBonds - the list of bonds to have wedges
  \param conf -  Conformer to use
  \param dirCode - receives the dircode for the bond
@@ -378,12 +378,12 @@ RDKIT_GRAPHMOL_EXPORT void GetMolFileBondStereoInfo(
 
 //! add R/S, relative stereo, and E/Z annotations to atoms and bonds
 /*!
- \param mol: molecule to modify
- \param absLabel: label for atoms in an ABS stereo group
- \param orLabel: label for atoms in an OR stereo group
- \param andLabel: label for atoms in an AND stereo group
- \param cipLabel: label for chiral atoms that aren't in a stereo group.
- \param bondLabel: label for CIP stereochemistry on bonds
+ \param mol molecule to modify
+ \param absLabel label for atoms in an ABS stereo group
+ \param orLabel label for atoms in an OR stereo group
+ \param andLabel label for atoms in an AND stereo group
+ \param cipLabel label for chiral atoms that aren't in a stereo group.
+ \param bondLabel label for CIP stereochemistry on bonds
 
  If any label is empty, the corresponding annotations will not be added.
 
@@ -403,8 +403,8 @@ RDKIT_GRAPHMOL_EXPORT void addStereoAnnotations(
 //! simplifies the stereochemical representation of a molecule where all
 //! specified stereocenters are in the same StereoGroup
 /*!
- \param mol: molecule to modify
- \param removeAffectedStereoGroups: if set then the affected StereoGroups will
+ \param mol molecule to modify
+ \param removeAffectedStereoGroups if set then the affected StereoGroups will
  be removed
 
 If all specified stereocenters are in the same AND or OR stereogroup, a

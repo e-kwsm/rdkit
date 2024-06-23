@@ -21,14 +21,14 @@ class RDKIT_RDGEOMETRYLIB_EXPORT UniformGrid3D
  public:
   //! \brief ctor
   /*
-      \param dimX:    the x dimension of the grid, in Angstroms
-      \param dimY:    the y dimension of the grid, in Angstroms
-      \param dimZ:    the z dimension of the grid, in Angstroms
-      \param spacing: the grid spacing, in Angstroms
-      \param valType: the data type of the grid (determines the number of bits
+      \param dimX     the x dimension of the grid, in Angstroms
+      \param dimY     the y dimension of the grid, in Angstroms
+      \param dimZ     the z dimension of the grid, in Angstroms
+      \param spacing  the grid spacing, in Angstroms
+      \param valType  the data type of the grid (determines the number of bits
                       per point)
-      \param offset:  OPTIONAL: the offset of the grid from (0,0,0), in
-    Angstroms.
+      \param offset   OPTIONAL: the offset of the grid from (0,0,0), in
+                      Angstroms.
 
     \b Note: the values of arguments such as \c dimX and \c spacing
     don't actually need to be in Angstroms, but they should be internally
@@ -173,14 +173,14 @@ class RDKIT_RDGEOMETRYLIB_EXPORT UniformGrid3D
  private:
   //! \brief internal initialization code
   /*
-      \param dimX:    the x dimension of the grid, in Angstroms
-      \param dimY:    the y dimension of the grid, in Angstroms
-      \param dimZ:    the z dimension of the grid, in Angstroms
-      \param spacing: the grid spacing, in Angstroms
-      \param valType: the data type of the grid (determines the number of bits
-                      per point)
-      \param offset:  the offset of the grid from (0,0,0), in Angstroms.
-      \param data:    (optional) a pointer to a DiscreteValueVect to use, we
+      \param dimX the x dimension of the grid, in Angstroms
+      \param dimY the y dimension of the grid, in Angstroms
+      \param dimZ the z dimension of the grid, in Angstroms
+      \param spacing the grid spacing, in Angstroms
+      \param valType the data type of the grid (determines the number of bits
+                     per point)
+      \param offset the offset of the grid from (0,0,0), in Angstroms.
+      \param data (optional) a pointer to a DiscreteValueVect to use, we
      take
                       ownership of the pointer.
   */

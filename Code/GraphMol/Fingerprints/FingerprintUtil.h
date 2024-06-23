@@ -116,9 +116,9 @@ const std::string morganConnectivityInvariantVersion = "1.0.0";
 //! returns the feature invariants for a molecule
 /*!
 
-  \param mol:    the molecule to be considered
-  \param invars : used to return the results
-  \param patterns: if provided should contain the queries used to assign
+  \param mol     the molecule to be considered
+  \param invars  used to return the results
+  \param patterns  if provided should contain the queries used to assign
   atom-types.
                    if not provided, feature definitions adapted from reference:
                    Gobbi and Poppinger, Biotech. Bioeng. _61_ 47-54 (1998)

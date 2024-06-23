@@ -24,25 +24,24 @@ class MolBundle;
 //!        using an alternate (faster) hashing algorithm
 /*!
 
-  \param mol:          the molecule to be fingerprinted
-  \param minPath:      the minimum path length (in bonds) to be included
-  \param maxPath:      the minimum path length (in bonds) to be included
-  \param fpSize:       the size of the fingerprint
-  \param nBitsPerHash: the number of bits to be set by each path
-  \param useHs:        toggles inclusion of Hs in paths (if the molecule has
+  \param mol           the molecule to be fingerprinted
+  \param minPath       the minimum path length (in bonds) to be included
+  \param maxPath       the minimum path length (in bonds) to be included
+  \param fpSize        the size of the fingerprint
+  \param nBitsPerHash  the number of bits to be set by each path
+  \param useHs         toggles inclusion of Hs in paths (if the molecule has
   explicit Hs)
-  \param tgtDensity:   if the generated fingerprint is below this density, it
-  will
-                       be folded until the density is reached.
-  \param minSize:      the minimum size to which the fingerprint will be
+  \param tgtDensity    if the generated fingerprint is below this density, it
+  will be folded until the density is reached.
+  \param minSize       the minimum size to which the fingerprint will be
                        folded
-  \param branchedPaths: toggles generation of branched subgraphs, not just
+  \param branchedPaths  toggles generation of branched subgraphs, not just
   linear paths
-  \param useBondOrders: toggles inclusion of bond orders in the path hashes
-  \param atomInvariants: a vector of atom invariants to use while hashing the
+  \param useBondOrders  toggles inclusion of bond orders in the path hashes
+  \param atomInvariants a vector of atom invariants to use while hashing the
   paths
-  \param fromAtoms:    only paths starting at these atoms will be included
-  \param atomBits:     used to return the bits that each atom is involved in
+  \param fromAtoms     only paths starting at these atoms will be included
+  \param atomBits      used to return the bits that each atom is involved in
                        (should be at least \c mol.numAtoms long)
 
   \return the molecular fingerprint, as an ExplicitBitVect
@@ -70,24 +69,24 @@ const std::string RDKFingerprintMolVersion = "2.0.0";
   change from
   release to release.
 
-  \param mol:          the molecule to be fingerprinted
-  \param layerFlags:   the layers to be included (see below)
-  \param minPath:      the minimum path length (in bonds) to be included
-  \param maxPath:      the minimum path length (in bonds) to be included
-  \param fpSize:       the size of the fingerprint
-  \param atomCounts:   if provided, this will be used to provide the count of
+  \param mol           the molecule to be fingerprinted
+  \param layerFlags    the layers to be included (see below)
+  \param minPath       the minimum path length (in bonds) to be included
+  \param maxPath       the minimum path length (in bonds) to be included
+  \param fpSize        the size of the fingerprint
+  \param atomCounts    if provided, this will be used to provide the count of
   the number
                        of paths that set bits each atom is involved in. The
   vector should
                        have at least as many entries as the molecule has atoms
   and is not
                        zeroed out here.
-  \param setOnlyBits:  if provided, only bits that are set in this bit vector
+  \param setOnlyBits   if provided, only bits that are set in this bit vector
   will be set
                        in the result. This is essentially the same as doing:
                           (*res) &= (*setOnlyBits);
                        but also has an impact on the atomCounts (if being used)
-  \param branchedPaths: toggles generation of branched subgraphs, not just
+  \param branchedPaths  toggles generation of branched subgraphs, not just
   linear paths
 
   \return the molecular fingerprint, as an ExplicitBitVect
@@ -121,16 +120,16 @@ const unsigned int substructLayers = 0x07;
   change from
   release to release.
 
-  \param mol:          the molecule to be fingerprinted
-  \param fpSize:       the size of the fingerprint
-  \param atomCounts:   if provided, this will be used to provide the count of
+  \param mol           the molecule to be fingerprinted
+  \param fpSize        the size of the fingerprint
+  \param atomCounts    if provided, this will be used to provide the count of
   the number
                        of paths that set bits each atom is involved in. The
   vector should
                        have at least as many entries as the molecule has atoms
   and is not
                        zeroed out here.
-  \param setOnlyBits:  if provided, only bits that are set in this bit vector
+  \param setOnlyBits   if provided, only bits that are set in this bit vector
   will be set
                        in the result. This is essentially the same as doing:
                           (*res) &= (*setOnlyBits);
