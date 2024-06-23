@@ -691,7 +691,7 @@ unsigned int compute2DCoords(RDKit::ROMol &mol,
   \param nFlipsPerSample - the number of rotatable bonds that are
                            randomly flipped for each sample
 
-  \param nSample - the number of samples
+  \param nSamples - the number of samples
 
   \param sampleSeed - seed for the random sampling process
 */
