@@ -807,17 +807,15 @@ DoubleCubicLatticeVolume::DoubleCubicLatticeVolume(const ROMol &mol,
 
   /*!
 
-    \param mol: input molecule or protein
-    \param isProtein: flag to calculate burried surface area of a protein ligand
+    \param mol input molecule or protein
+    \param isProtein flag to calculate burried surface area of a protein ligand
     complex [default=false, free ligand]
-    \param includeLigand: flag to trigger
+    \param includeLigand flag to trigger
     inclusion of bound ligand in surface area and volume calculations where
     molecule is a protein [default=true]
-    \param probeRadius: radius of the
-    sphere representing the probe solvent atom
-    \param depth: controls the number
-    of dots per atom
-    \param dotDensity: controls density of dots per atom
+    \param probeRadius radius of the sphere representing the probe solvent atom
+    \param depth controls the number of dots per atom
+    \param dotDensity controls density of dots per atom
     \return class
     object
   */
