@@ -36,9 +36,10 @@ std::pair<double, double> BCUT2D(const ROMol &mol,
 //! 1999
 /*!
    \param mol         the molecule of interest
-   \param atom_props  An atom property holding a double value on the atom
-                      If atom_propname does not exist on the atom, raises
-                      If atom_propname cannot be coerced into a double, raises
+   \param atom_propname  An atom property holding a double value on the atom
+                         If atom_propname does not exist on the atom, raises
+                         If atom_propname cannot be coerced into a double,
+                         raises
    \return            std::pair<double,double> pair.first is the high eval,
                       pair.second the lowest
 */
@@ -51,7 +52,7 @@ std::pair<double, double> BCUT2D(const ROMol &mol,
 //!  Diagonal elements are (currently) atomic mass, gasteiger charge,
 //!  crippen logP and crippen MR
 /*!
-  \param mol           the molecule of interest
+  \param m             the molecule of interest
 
   \return              The bcut vector (mass high eval, mass low eval,
                                         gasteiger charge high eval, gasteiger
