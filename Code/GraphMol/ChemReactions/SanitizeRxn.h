@@ -55,13 +55,12 @@ class RDKIT_CHEMREACTIONS_EXPORT RxnSanitizeException : public std::exception {
 
 namespace RxnOps {
 //! Any dummy atom with a map but no RGroup label, should be an RGroup
-//!  in RDKit's view of a reaction.
-//!  See if these atoms can be salvaged into RGroups.
+//! in RDKit's view of a reaction.
+//! See if these atoms can be salvaged into RGroups.
 RDKIT_CHEMREACTIONS_EXPORT void fixRGroups(ChemicalReaction &rxn);
 
 //! If atom maps are not defined on rgroups, attempt to deduce them from the
-//! RGroup
-//!  labels, or add new ones if possible.
+//! RGroup labels, or add new ones if possible.
 RDKIT_CHEMREACTIONS_EXPORT void fixAtomMaps(ChemicalReaction &rxn);
 
 //! Adjusts the reactant templates to properly match reagents
@@ -123,8 +122,7 @@ typedef enum {
 } SanitizeRxnFlags;
 
 //! \brief carries out a collection of tasks for cleaning up a reaction and
-/// ensuring
-//! that it makes "chemical sense" in the context of RDKit reacitons
+//! ensuring that it makes "chemical sense" in the context of RDKit reacitons
 /*!
    This functions calls the following in sequence
      -# RxnOps::fixRGroups()
@@ -134,22 +132,19 @@ typedef enum {
 
    \param rxn : the ChemicalReaction to be cleaned
 
-   \param operationThatFailed : the first (if any) sanitization operation that
-   fails is set here.
-                                The values are taken from the \c SanitizeFlags
-   enum.
-                                On success, the value is  \c
-   SanitizeFlags::SANITIZE_NONE
+   \param operationsThatFailed : the first (if any) sanitization operation that
+                                fails is set here. The values are taken from the
+                                \c SanitizeFlags enum. On success, the value is
+                                \c SanitizeFlags::SANITIZE_NONE
 
    \param sanitizeOps : the bits here are used to set which sanitization
-   operations are carried
-                        out. The elements of the \c SanitizeFlags enum define
-   the operations.
+                        operations are carried out. The elements of the \c
+                        SanitizeFlags enum define the operations.
 
    <b>Notes:</b>
     - This attempts to fix known issues with certain reaction drawers.
-       HOWEVER, if any flag is returned in operationsPerformed,
-       the reaction may still be suspect to its validity.
+      HOWEVER, if any flag is returned in operationsPerformed,
+      the reaction may still be suspect to its validity.
     - Aromaticity can be tricky when starting with Kekule structures that
       have query features, aromaticity works well for non-query rings, however
       certain structures (substitutions on Kekule rings that should really be
@@ -166,7 +161,7 @@ RDKIT_CHEMREACTIONS_EXPORT void sanitizeRxn(
     const MolOps::AdjustQueryParameters &params = DefaultRxnAdjustParams());
 
 //! Does the usual molecular sanitization on each reactant, agent, and product
-///  of the reaction
+//! of the reaction
 RDKIT_CHEMREACTIONS_EXPORT void sanitizeRxnAsMols(
     ChemicalReaction &rxn,
     unsigned int sanitizeOps = MolOps::SanitizeFlags::SANITIZE_ALL);
