@@ -11,8 +11,8 @@
 #ifndef RD_MOL_FILE_STEREOCHEM_H
 #define RD_MOL_FILE_STEREOCHEM_H
 
-#include <GraphMol/RDKitBase.h>
 #include <GraphMol/Chirality.h>
+#include <GraphMol/RDKitBase.h>
 
 namespace RDKit {
 //! deprecated, please use MolOps::assignChiralTypesFromBondDirs instead
@@ -83,14 +83,13 @@ RDKIT_FILEPARSERS_EXPORT void clearMolBlockWedgingInfo(ROMol &mol);
 RDKIT_FILEPARSERS_EXPORT void invertMolBlockWedgingInfo(ROMol &mol);
 
 //! Set double bonds with unspecified stereo to STEREOANY and add wavy bonds
-//! to
-///  potential stereocenters with unspecified chirality
+//! to potential stereocenters with unspecified chirality
 RDKIT_FILEPARSERS_EXPORT void markUnspecifiedStereoAsUnknown(ROMol &mol,
                                                              int confId = -1);
 
 //! generate enhanced stereo groups based on the status of the chiral flag
-/// property
-/*
+//! property
+/*!
  \param mol molecule to be modified
  \param zeroFlagGroupType how to handle non-grouped stereo centers when the
         chiral flag is set to zero
