@@ -502,7 +502,6 @@ class RDKIT_DEPICTOR_EXPORT EmbeddedFrag {
     \param  aid     ID of the atom to be added
     \param  toAid   ID of the atom that is already in this object to which this
     atom is added
-    \param  mol     the molecule we are dealing with
   */
   void addAtomToAtomWithNoAng(
       unsigned int aid,

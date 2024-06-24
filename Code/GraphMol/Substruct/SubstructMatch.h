@@ -98,7 +98,7 @@ RDKIT_SUBSTRUCTMATCH_EXPORT std::string substructMatchParamsToJSON(
 /*!
     \param mol         The ROMol to be searched
     \param query       The query ROMol
-    \param matchParams Parameters controlling the matching
+    \param params      Parameters controlling the matching
 
     \return The matches, if any
 
@@ -111,7 +111,7 @@ RDKIT_SUBSTRUCTMATCH_EXPORT std::vector<MatchVectType> SubstructMatch(
 /*!
     \param resMolSuppl The ResonanceMolSupplier object to be searched
     \param query       The query ROMol
-    \param matchParams Parameters controlling the matching
+    \param params      Parameters controlling the matching
 
     \return The matches, if any
 
