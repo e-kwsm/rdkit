@@ -116,13 +116,6 @@ class RDKIT_GRAPHMOL_EXPORT ResonanceMolSupplier {
    *                       resonance structures
    *   \param maxStructs - maximum number of complete resonance
    *                       structures generated
-   *   \param numThreads - the number of threads used to carry out the
-   *                       resonance structure enumeration (defaults
-   *                       to 1; 0 selects the number of concurrent
-   *                       threads supported by the hardware; negative
-   *                       values are added to the number of
-   *                       concurrent threads supported by the
-   *                       hardware)
    */
   ResonanceMolSupplier(ROMol &mol, unsigned int flags = 0,
                        unsigned int maxStructs = 1000);
