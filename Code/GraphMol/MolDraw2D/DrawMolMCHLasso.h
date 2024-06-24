@@ -57,8 +57,9 @@ class DrawMolMCHLasso : public DrawMolMCH {
                              taken from the atoms.
  \param highlightRadii : ignored in this molecule representation.
  \param highlight_linewidth_multipliers : ignored in this molecule
- representation. \param confId         : (optional) conformer ID to be used for
- atomic coordinates
+ representation.
+ \param confId         : (optional) conformer ID to be used for atomic
+ coordinates
  */
   DrawMolMCHLasso(
       const ROMol &mol, const std::string &legend, int width, int height,
