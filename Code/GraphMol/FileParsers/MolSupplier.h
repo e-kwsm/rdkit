@@ -173,12 +173,6 @@ class RDKIT_FILEPARSERS_EXPORT SDMolSupplier : public ForwardSDMolSupplier {
 
   /*!
    *   \param fileName - the name of the SD file
-   *   \param sanitize - if true sanitize the molecule before returning it
-   *   \param removeHs - if true remove Hs from the molecule before returning it
-   *                     (triggers sanitization)
-   *   \param strictParsing - if set to false, the parser is more lax about
-   * correctness
-   *                          of the contents.
    */
   explicit SDMolSupplier(
       const std::string &fileName,
@@ -206,15 +200,13 @@ class RDKIT_FILEPARSERS_EXPORT SDMolSupplier : public ForwardSDMolSupplier {
 
   /*! Resets our internal state and sets the indices of molecules in the stream.
    *  The client should be *very* careful about calling this method, as it's
-   *trivial
-   *  to end up with a completely useless supplier.
+   *  trivial to end up with a completely useless supplier.
    *
    *   \param locs - the vector of stream positions.
    *
    *  Note that this can be used not only to make reading selected molecules
-   *from a
-   *  large SD file much faster, but it can also allow subsetting an SD file or
-   *  rearranging the order of the molecules.
+   *  from a large SD file much faster, but it can also allow subsetting an SD
+   *  file or rearranging the order of the molecules.
    */
   void setStreamIndices(const std::vector<std::streampos> &locs);
 
@@ -260,23 +252,6 @@ class RDKIT_FILEPARSERS_EXPORT SmilesMolSupplier : public MolSupplier {
  public:
   /*!
    *   \param fileName - the name of smiles table file
-   *   \param delimiter - delimiting characters between records on a each
-   *     line NOTE that this is not a string, the tokenizer looks for
-   *     the individual characters in delimiter, not the full string
-   *     itself.  So the default delimiter: " \t", means " " or "\t".
-   *   \param smilesColumn - column number for the SMILES string (defaults
-   *     to the first column)
-   *   \param nameColumn - column number for the molecule name (defaults to
-   *     the second column) If set to -1 we assume that no name is
-   *     available for the molecule and the name is defaulted to the
-   *     smiles string
-   *   \param titleLine - if true, the first line is assumed to list the
-   *     names of properties in order separated by 'delimiter'. It is
-   *     also assume that the 'SMILES' column and the 'name' column
-   *     are not specified here if false - no title line is assumed
-   *     and the properties are recorded as the "columnX" where "X" is
-   *     the column number
-   *   \param sanitize - if true sanitize the molecule before returning it
    */
   explicit SmilesMolSupplier(
       const std::string &fileName,
@@ -352,15 +327,6 @@ class RDKIT_FILEPARSERS_EXPORT TDTMolSupplier : public MolSupplier {
  public:
   /*!
    *   \param fileName - the name of the TDT file
-   *   \param nameRecord - property name for the molecule name.
-   *     If empty (the default), the name defaults to be empty
-   *   \param confId2D - if >=0 and 2D coordinates are provided, the 2D
-   *                   structure (depiction) in the input will be read into the
-   *                   corresponding conformer id.
-   *   \param confId3D - if >=0 and 3D coordinates are provided, the 3D
-   *                   structure (depiction) in the input will be read into the
-   *                   corresponding conformer id.
-   *   \param sanitize - if true sanitize the molecule before returning it
    */
   explicit TDTMolSupplier(
       const std::string &fileName,
