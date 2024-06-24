@@ -20,9 +20,9 @@ class RWMol;
 /*!
  *   \param seq      - the string to be processed
  *   \param sanitize - toggles sanitization and stereochemistry perception of
- *the molecule
+ * the molecule
  *   \param lowerD   - if set, lower case letters will be parsed as the d form
- *of the corresponding amino acid
+ * of the corresponding amino acid
  *
  */
 RDKIT_FILEPARSERS_EXPORT RWMol *SequenceToMol(const char *seq, bool sanitize,
@@ -35,7 +35,7 @@ RDKIT_FILEPARSERS_EXPORT RWMol *SequenceToMol(const std::string &seq,
 /*!
  *   \param seq      - the string to be processed
  *   \param sanitize - toggles sanitization and stereochemistry perception of
- *the molecule
+ * the molecule
  *   \param flavor   -
  *      0 Protein, L amino acids (default)
  *      1 Protein, D amino acids
@@ -62,9 +62,9 @@ RDKIT_FILEPARSERS_EXPORT RWMol *SequenceToMol(const std::string &seq,
 /*!
  *   \param seq      - the string to be processed
  *   \param sanitize - toggles sanitization and stereochemistry perception of
- *the molecule
+ * the molecule
  *   \param lowerD   - if set, lower case letters will be parsed as the d form
- *of the corresponding amino acid
+ * of the corresponding amino acid
  *
  */
 RDKIT_FILEPARSERS_EXPORT RWMol *FASTAToMol(const char *seq, bool sanitize,
@@ -77,7 +77,7 @@ RDKIT_FILEPARSERS_EXPORT RWMol *FASTAToMol(const std::string &seq,
 /*!
  *   \param seq      - the string to be processed
  *   \param sanitize - toggles sanitization and stereochemistry perception of
- *the molecule
+ * the molecule
  *   \param flavor   -
  *      0 Protein, L amino acids (default)
  *      1 Protein, D amino acids
@@ -102,9 +102,9 @@ RDKIT_FILEPARSERS_EXPORT RWMol *FASTAToMol(const std::string &seq,
 // \brief construct a molecule from a HELM string (currently only supports
 // peptides)
 /*!
- *   \param seq      - the string to be processed
+ *   \param helm     - the string to be processed
  *   \param sanitize - toggles sanitization and stereochemistry perception of
- *the molecule
+ * the molecule
  *
  */
 RDKIT_FILEPARSERS_EXPORT RWMol *HELMToMol(const char *helm,
