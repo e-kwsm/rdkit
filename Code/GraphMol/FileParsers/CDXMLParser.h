@@ -62,7 +62,7 @@ MolsFromCDXMLDataStream(std::istream &inStream,
 //!   support full functionality, just the base ones required for molecule and
 //!   reaction parsing.
 /*!
- *   \param fileName - cdxml fileName
+ *   \param filename - cdxml fileName
  *   \param params - parameters controlling the parsing and post-processing
  */
 RDKIT_FILEPARSERS_EXPORT std::vector<std::unique_ptr<RWMol>> MolsFromCDXMLFile(
@@ -93,17 +93,17 @@ inline namespace v1 {
 
 //! \brief construct molecules from a CDXML file
 //! Note that the CDXML format is large and complex, the RDKit doesn't support
-//!  full functionality, just the base ones required for molecule and
-//!  reaction parsing.
+//! full functionality, just the base ones required for molecule and
+//! reaction parsing.
 //! Note: If the ChemDraw extensions are available, this auto detects between
-//!  CDXML and CDX
+//! CDXML and CDX
 /*!
  *   \param inStream - string containing the mol block
  *   \param sanitize - toggles sanitization and stereochemistry
  *                     perception of the molecule
  *   \param removeHs - toggles removal of Hs from the molecule. H removal
  *                     is only done if the molecule is sanitized
- * correctness of the contents.
+ *                     correctness of the contents.
  */
 inline std::vector<std::unique_ptr<RWMol>> CDXMLDataStreamToMols(
     std::istream &inStream, bool sanitize = true, bool removeHs = true) {
@@ -114,18 +114,18 @@ inline std::vector<std::unique_ptr<RWMol>> CDXMLDataStreamToMols(
 
 //! \brief construct molecules from a CDXML file
 //! Note that the CDXML format is large and complex, the RDKit doesn't support
-//!  full functionality, just the base ones required for molecule and
-//!  reaction parsing.
+//! full functionality, just the base ones required for molecule and
+//! reaction parsing.
 //! Note: If the ChemDraw extensions are available,
 //!   This function uses the file extension to determine the file type, .cdx or
 //!   .cdxml If not, it defaults to CDXML
 /*!
- *   \param fileName - cdxml fileName
+ *   \param filename - cdxml fileName
  *   \param sanitize - toggles sanitization and stereochemistry
  *                     perception of the molecule
  *   \param removeHs - toggles removal of Hs from the molecule. H removal
  *                     is only done if the molecule is sanitized
- * correctness of the contents.
+ *                     correctness of the contents.
  */
 inline std::vector<std::unique_ptr<RWMol>> CDXMLFileToMols(
     const std::string &filename, bool sanitize = true, bool removeHs = true) {
@@ -138,8 +138,8 @@ inline std::vector<std::unique_ptr<RWMol>> CDXMLFileToMols(
 
 //! \brief construct molecules from a CDXML block
 //! Note that the CDXML format is large and complex, the RDKit doesn't support
-//!  full functionality, just the base ones required for molecule and
-//!  reaction parsing.
+//! full functionality, just the base ones required for molecule and
+//! reaction parsing.
 //! Note: to parse CDX files see the CDXParserParams variant of this function
 /*!
  *   \param cdxml - string containing the mol block
@@ -147,7 +147,7 @@ inline std::vector<std::unique_ptr<RWMol>> CDXMLFileToMols(
  *                     perception of the molecule
  *   \param removeHs - toggles removal of Hs from the molecule. H removal
  *                     is only done if the molecule is sanitized
- * correctness of the contents.
+ *                     correctness of the contents.
  */
 inline std::vector<std::unique_ptr<RWMol>> CDXMLToMols(const std::string &cdxml,
                                                        bool sanitize = true,
