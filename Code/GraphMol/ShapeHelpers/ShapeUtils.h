@@ -68,27 +68,22 @@ RDKIT_SHAPEHELPERS_EXPORT std::vector<double> getConfDimensions(
 /*!
   \param mol1         The first molecule of interest
   \param mol2         The second molecule of interest
-  \param alpha
-  \param beta
   \param confId1      Conformer in the first molecule (defaults to first
   conformer)
   \param confId2      Conformer in the second molecule (defaults to first
   conformer)
   \param gridSpacing  resolution of the grid used to encode the molecular shapes
   \param bitsPerPoint number of bit used to encode the occupancy at each grid
-  point
-                      defaults to two bits per grid point
+                      point defaults to two bits per grid point
   \param vdwScale     Scaling factor for the radius of the atoms to determine
-  the base radius
-                      used in the encoding - grid points inside this sphere
-  carry the maximum occupancy
+                      the base radius used in the encoding - grid points inside
+                      this sphere carry the maximum occupancy
   \param stepSize     thickness of the each layer outside the base radius, the
-  occupancy value is decreased
-                      from layer to layer from the maximum value
+                      occupancy value is decreased from layer to layer from the
+                      maximum value
   \param maxLayers    the maximum number of layers - defaults to the number
-  allowed the number of bits
-                      use per grid point - e.g. two bits per grid point will
-  allow 3 layers
+                      allowed the number of bits use per grid point - e.g. two
+                      bits per grid point will allow 3 layers
   \param ignoreHs     if true, ignore the hydrogen atoms in the shape encoding
   process
  */
@@ -107,24 +102,20 @@ RDKIT_SHAPEHELPERS_EXPORT double tverskyIndex(
 /*!
   \param conf1        The first conformer of interest
   \param conf2        The second conformer of interest
-  \param alpha
-  \param beta
- \param gridSpacing  resolution of the grid used to encode the molecular shapes
+  \param gridSpacing  resolution of the grid used to encode the molecular shapes
   \param bitsPerPoint number of bit used to encode the occupancy at each grid
   point
   \param vdwScale     Scaling factor for the radius of the atoms to determine
-  the base radius
-                      used in the encoding - grid points inside this sphere
-  carry the maximum occupancy
+                      the base radius used in the encoding - grid points inside
+                      this sphere carry the maximum occupancy
   \param stepSize     thickness of the each layer outside the base radius, the
-  occupancy value is decreased
-                      from layer to layer from the maximum value
+                      occupancy value is decreased from layer to layer from the
+                      maximum value
   \param maxLayers    the maximum number of layers - defaults to the number
-  allowed the number of bits
-                      use per grid point - e.g. two bits per grid point will
-  allow 3 layers
+                      allowed the number of bits use per grid point - e.g. two
+                      bits per grid point will allow 3 layers
   \param ignoreHs     if true, ignore the hydrogen atoms in the shape encoding
-  process
+                      process
  */
 
 RDKIT_SHAPEHELPERS_EXPORT double tverskyIndex(
@@ -146,21 +137,18 @@ RDKIT_SHAPEHELPERS_EXPORT double tverskyIndex(
   conformer)
   \param gridSpacing  resolution of the grid used to encode the molecular shapes
   \param bitsPerPoint number of bit used to encode the occupancy at each grid
-  point
-                      defaults to two bits per grid point
+                      point defaults to two bits per grid point
   \param vdwScale     Scaling factor for the radius of the atoms to determine
-  the base radius
-                      used in the encoding - grid points inside this sphere
-  carry the maximum occupancy
+                      the base radius used in the encoding - grid points inside
+                      this sphere carry the maximum occupancy
   \param stepSize     thickness of the each layer outside the base radius, the
-  occupancy value is decreased
-                      from layer to layer from the maximum value
+                      occupancy value is decreased from layer to layer from the
+                      maximum value
   \param maxLayers    the maximum number of layers - defaults to the number
-  allowed the number of bits
-                      use per grid point - e.g. two bits per grid point will
-  allow 3 layers
+                      allowed the number of bits use per grid point - e.g. two
+                      bits per grid point will allow 3 layers
   \param ignoreHs     if true, ignore the hydrogen atoms in the shape encoding
-  process
+                      process
  */
 
 RDKIT_SHAPEHELPERS_EXPORT double tanimotoDistance(
@@ -180,18 +168,16 @@ RDKIT_SHAPEHELPERS_EXPORT double tanimotoDistance(
   \param bitsPerPoint number of bit used to encode the occupancy at each grid
   point
   \param vdwScale     Scaling factor for the radius of the atoms to determine
-  the base radius
-                      used in the encoding - grid points inside this sphere
-  carry the maximum occupancy
+                      the base radius used in the encoding - grid points inside
+                      this sphere carry the maximum occupancy
   \param stepSize     thickness of the each layer outside the base radius, the
-  occupancy value is decreased
-                      from layer to layer from the maximum value
+                      occupancy value is decreased from layer to layer from the
+                      maximum value
   \param maxLayers    the maximum number of layers - defaults to the number
-  allowed the number of bits
-                      use per grid point - e.g. two bits per grid point will
-  allow 3 layers
+                      allowed the number of bits use per grid point - e.g. two
+                      bits per grid point will allow 3 layers
   \param ignoreHs     if true, ignore the hydrogen atoms in the shape encoding
-  process
+                      process
  */
 
 RDKIT_SHAPEHELPERS_EXPORT double tanimotoDistance(
@@ -212,25 +198,21 @@ RDKIT_SHAPEHELPERS_EXPORT double tanimotoDistance(
   conformer)
   \param gridSpacing  resolution of the grid used to encode the molecular shapes
   \param bitsPerPoint number of bit used to encode the occupancy at each grid
-  point
-                      defaults to two bits per grid point
+                      point defaults to two bits per grid point
   \param vdwScale     Scaling factor for the radius of the atoms to determine
-  the base radius
-                      used in the encoding - grid points inside this sphere
-  carry the maximum occupancy
+                      the base radius used in the encoding - grid points inside
+                      this sphere carry the maximum occupancy
   \param stepSize     thickness of the each layer outside the base radius, the
-  occupancy value is decreased
-                      from layer to layer from the maximum value
+                      occupancy value is decreased from layer to layer from the
+                      maximum value
   \param maxLayers    the maximum number of layers - defaults to the number
-  allowed the number of bits
-                      use per grid point - e.g. two bits per grid point will
-  allow 3 layers
+                      allowed the number of bits use per grid point - e.g. two
+                      bits per grid point will allow 3 layers
   \param ignoreHs     if true, ignore the hydrogen atoms in the shape encoding
-  process
+                      process
   \param allowReordering  if set the order will be automatically updated so that
-  the value calculated
-                          is the protrusion of the smaller shape from the larger
-  one.
+                          the value calculated is the protrusion of the smaller
+                          shape from the larger one.
  */
 
 RDKIT_SHAPEHELPERS_EXPORT double protrudeDistance(
@@ -250,22 +232,19 @@ RDKIT_SHAPEHELPERS_EXPORT double protrudeDistance(
   \param bitsPerPoint number of bit used to encode the occupancy at each grid
   point
   \param vdwScale     Scaling factor for the radius of the atoms to determine
-  the base radius
-                      used in the encoding - grid points inside this sphere
-  carry the maximum occupancy
+                      the base radius used in the encoding - grid points inside
+                      this sphere carry the maximum occupancy
   \param stepSize     thickness of the each layer outside the base radius, the
-  occupancy value is decreased
-                      from layer to layer from the maximum value
+                      occupancy value is decreased from layer to layer from the
+                      maximum value
   \param maxLayers    the maximum number of layers - defaults to the number
-  allowed the number of bits
-                      use per grid point - e.g. two bits per grid point will
-  allow 3 layers
+                      allowed the number of bits use per grid point - e.g. two
+                      bits per grid point will allow 3 layers
   \param ignoreHs     if true, ignore the hydrogen atoms in the shape encoding
-  process
+                      process
   \param allowReordering  if set the order will be automatically updated so that
-  the value calculated
-                          is the protrusion of the smaller shape from the larger
-  one.
+                          the value calculated is the protrusion of the smaller
+                          shape from the larger one.
  */
 
 RDKIT_SHAPEHELPERS_EXPORT double protrudeDistance(
