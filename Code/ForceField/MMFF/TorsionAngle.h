@@ -41,7 +41,6 @@ class RDKIT_FORCEFIELD_EXPORT TorsionAngleContrib : public ForceFieldContrib {
     \param idx2        index of atom2 in the ForceField's positions
     \param idx3        index of atom3 in the ForceField's positions
     \param idx4        index of atom4 in the ForceField's positions
-    \param torsionType MMFF type of the torsional bond between atoms 2 and 3
   */
   void addTerm(unsigned int idx1, unsigned int idx2, unsigned int idx3,
                unsigned int idx4, const MMFFTor *mmffTorParams);
