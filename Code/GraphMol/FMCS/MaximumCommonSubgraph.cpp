@@ -1081,7 +1081,7 @@ MCSResult MaximumCommonSubgraph::find(const std::vector<ROMOL_SPTR> &src_mols) {
 #endif
     std::cout << "MatchCheck Seeds     = " << VerboseStatistics.SeedCheck
               << "\n";
-    std::cout  //<< "\n"
+    std::cout  // << "\n"
         << "     MatchCalls = " << VerboseStatistics.MatchCall << "\n"
         << "     MatchFound = " << VerboseStatistics.MatchCallTrue << "\n";
     std::cout << " fastMatchCalls = " << VerboseStatistics.FastMatchCall << "\n"
