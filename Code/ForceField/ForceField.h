@@ -159,12 +159,6 @@ class RDKIT_FORCEFIELD_EXPORT ForceField {
     \param maxIts            the maximum number of iterations to try
     \param forceTol          the convergence criterion for forces
     \param energyTol         the convergence criterion for energies
-    \param snapshotFreq      a snapshot of the minimization trajectory
-                             will be stored after as many steps as indicated
-                             through this parameter; defaults to 0 (no
-                             trajectory stored)
-    \param snapshotVect      a pointer to a std::vector<Snapshot> where
-                             coordinates and energies will be stored
 
     \return an integer value indicating whether or not the convergence
             criteria were achieved:
