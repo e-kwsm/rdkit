@@ -40,7 +40,7 @@ class DrawMolMCH : public DrawMol {
    highlight atoms.  Not all atoms need to be mentioned.
    \param highlight_bond_map : indexed on bond idx, the colours to be used to
    highlight bonds.  Not all bonds need to be mentioned.
-   \param highlightRadii : map from atomId -> radius (in molecule coordinates)
+   \param highlight_radii : map from atomId -> radius (in molecule coordinates)
    for the radii of atomic highlights. If not provided for an atom, the default
    value from \c drawOptions() will be used.
    \param highlight_linewidth_multipliers : map from bondId -> int, to change
