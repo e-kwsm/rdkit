@@ -55,7 +55,7 @@ class DrawMolMCHLasso : public DrawMolMCH {
                              highlight_bond_map will be NOT used for the lines
                              between the atoms - the lasso will be one colour,
                              taken from the atoms.
- \param highlightRadii : ignored in this molecule representation.
+ \param highlight_radii : ignored in this molecule representation.
  \param highlight_linewidth_multipliers : ignored in this molecule
  representation.
  \param confId         : (optional) conformer ID to be used for atomic
