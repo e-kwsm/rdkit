@@ -58,7 +58,7 @@ class DrawMol {
     \param highlightBondMap   : (optional) map from bondId -> DrawColour
     providing the highlight colors. If not provided the default highlight colour
     from \c drawOptions() will be used.
-    \param highlightRadii : (optional) map from atomId -> radius (in molecule
+    \param highlight_radii : (optional) map from atomId -> radius (in molecule
     coordinates) for the radii of atomic highlights. If not provided the default
     value from \c drawOptions() will be used.
     \param confId          : (optional) conformer ID to be used for atomic
