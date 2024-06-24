@@ -71,7 +71,6 @@ class RDKIT_MOLDRAW2D_EXPORT MolDraw2D {
     \param mol             : the molecule to draw
     \param legend          : the legend (to be drawn under the molecule)
     \param highlight_atoms : (optional) vector of atom ids to highlight
-    \param highlight_atoms : (optional) vector of bond ids to highlight
     \param highlight_atom_map   : (optional) map from atomId -> DrawColour
     providing the highlight colors. If not provided the default highlight colour
     from \c drawOptions() will be used.
@@ -150,17 +149,13 @@ class RDKIT_MOLDRAW2D_EXPORT MolDraw2D {
     \param legends          : (optional) the legends (to be drawn under the
     molecules)
     \param highlight_atoms  : (optional) vectors of atom ids to highlight
-    \param highlight_atoms  : (optional) vectors of bond ids to highlight
-    \param highlight_atom_map   : (optional) maps from atomId -> DrawColour
-    providing the highlight colors. If not provided the default highlight colour
-    from \c drawOptions() will be used.
-    \param highlight_bond_map   : (optional) maps from bondId -> DrawColour
+    \param highlight_atom_maps  : (optional) maps from atomId -> DrawColour
     providing the highlight colors. If not provided the default highlight colour
     from \c drawOptions() will be used.
     \param highlight_radii  : (optional) maps from atomId -> radius (in molecule
     coordinates) for the radii of atomic highlights. If not provided the default
     value from \c drawOptions() will be used.
-    \param confId           : (optional) conformer IDs to be used for atomic
+    \param confIds          : (optional) conformer IDs to be used for atomic
     coordinates
 
     The \c panelWidth and \c panelHeight values will be used to determine the
@@ -189,8 +184,7 @@ class RDKIT_MOLDRAW2D_EXPORT MolDraw2D {
     be highlighted based on which reactant they come from. Atom map numbers
     will not be shown.
     \param highlightColorsReactants : (optional) provide a vector of colors for
-    the
-    reactant highlighting.
+    the reactant highlighting.
     \param confIds   : (optional) vector of confIds to use for rendering. These
     are numbered by reactants, then agents, then products.
   */
