@@ -1182,7 +1182,7 @@ std::string getV3000CTAB(const ROMol &tmol,
 
   std::string res = "M  V30 BEGIN CTAB\n";
   std::stringstream ss;
-  int num3DConstraints = 0;  //< not implemented
+  int num3DConstraints = 0;  // not implemented
   ss << "M  V30 COUNTS " << nAtoms << " " << nBonds << " " << nSGroups << " "
      << num3DConstraints << " " << chiralFlag << "\n";
 
