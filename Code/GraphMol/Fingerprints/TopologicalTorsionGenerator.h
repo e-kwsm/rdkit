@@ -33,8 +33,8 @@ class RDKIT_FINGERPRINTS_EXPORT TopologicalTorsionArguments
 
    \param includeChirality if set, chirality will be used in sparse result
    \param torsionAtomCount the number of atoms to include in the "torsions"
-   \param useCountSimulation         if set, use count simulation while
-   generating the fingerprint
+   \param countSimulation if set, use count simulation while generating the
+   fingerprint
    \param countBounds  boundaries for count simulation, corresponding bit will
    be set if the count is higher than the number provided for that spot
    \param fpSize size of the generated fingerprint, does not affect the sparse
@@ -102,8 +102,8 @@ class RDKIT_FINGERPRINTS_EXPORT TopologicalTorsionEnvGenerator
  invariants generator and the fingerprint arguments
  \param torsionAtomCount the number of atoms to include in the "torsions"
  \param atomInvariantsGenerator custom atom invariants generator to use
- \param useCountSimulation         if set, use count simulation while
- generating the fingerprint
+ \param countSimulation if set, use count simulation while generating the
+ fingerprint
  \param countBounds  boundaries for count simulation, corresponding bit will
  be set if the count is higher than the number provided for that spot
  \param fpSize size of the generated fingerprint, does not affect the sparse
