@@ -47,7 +47,7 @@ namespace RDKit {
                     to
                     rxn->getNumReactantTemplates()
                     Caution: The order of the reactant templates determines the
-  order of the reactants!
+                    order of the reactants!
   \param maxProducts   if non zero, the maximum number of products to generate
                        before stopping.  If hit a warning will be generated.
   \return a vector of vectors of products. Each subvector will be
@@ -65,7 +65,7 @@ RDKIT_CHEMREACTIONS_EXPORT std::vector<MOL_SPTR_VECT> run_Reactants(
 /*!
   \param reactant The single reactant to use
 
-  \param reactantTemplateIdx the reactant template to target in the reaction
+  \param reactantIdx the reactant template to target in the reaction
 
   \return a vector of vectors of products. Each subvector will be
           rxn->getNumProductTemplates() long.
