@@ -401,7 +401,7 @@ RDKIT_DEPICTOR_EXPORT RDKit::MatchVectType generateDepictionMatching2DStructure(
                      By default this should be the same as mol, but with
                      3D coordinates
   \param confId - (optional) the id of the reference conformation to use
-  \param refPattern - (optional) a query molecule to map a subset of
+  \param referencePattern - (optional) a query molecule to map a subset of
                       the reference onto the mol, so that only some of the
                       atoms are aligned.
   \param acceptFailure - (optional) if true, standard depictions will be
