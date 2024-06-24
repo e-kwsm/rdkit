@@ -191,9 +191,8 @@ class RDKIT_CHEMREACTIONS_EXPORT ChemicalReaction : public RDProps {
   //! Removes the reactant templates from a reaction if atom mapping ratio is
   /// below a given threshold
   /*! By default the removed reactant templates were attached to the agent
-     templates.
-      An alternative will be to provide a pointer to a molecule vector where
-     these reactants should be saved.
+      templates. An alternative will be to provide a pointer to a molecule
+      vector where these reactants should be saved.
   */
   void removeUnmappedReactantTemplates(double thresholdUnmappedAtoms = 0.2,
                                        bool moveToAgentTemplates = true,
@@ -202,9 +201,8 @@ class RDKIT_CHEMREACTIONS_EXPORT ChemicalReaction : public RDProps {
   //! Removes the product templates from a reaction if its atom mapping ratio is
   /// below a given threshold
   /*! By default the removed products templates were attached to the agent
-     templates.
-      An alternative will be to provide a pointer to a molecule vector where
-     these products should be saved.
+      templates. An alternative will be to provide a pointer to a molecule
+      vector where these products should be saved.
   */
   void removeUnmappedProductTemplates(double thresholdUnmappedAtoms = 0.2,
                                       bool moveToAgentTemplates = true,
@@ -219,7 +217,7 @@ class RDKIT_CHEMREACTIONS_EXPORT ChemicalReaction : public RDProps {
 
     \param reactants  the reactants to be used. The length of this must be equal
     to this->getNumReactantTemplates()
-    \param maxProducts  if non zero, the maximum number of products to generate
+    \param numProducts  if non zero, the maximum number of products to generate
     before stopping.  If hit a warning will be generated.
 
     \return a vector of vectors of products. Each subvector will be
