@@ -98,7 +98,7 @@ class RDKIT_FILTERCATALOG_EXPORT FilterMatcherBase
     Match the filter against a molecule
 
     \param mol readonly const molecule being searched
-    \param matches  output vector of atom index matches found in the molecule
+    \param matchVect  output vector of atom index matches found in the molecule
   */
 
   virtual bool getMatches(const ROMol &mol,
