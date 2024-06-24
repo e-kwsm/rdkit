@@ -32,10 +32,10 @@ struct RDKIT_FILEPARSERS_EXPORT MolWriterParams {
 
 // \brief generates an MDL mol block for a molecule
 /*!
- *   \param mol             - the molecule in question
- *   \param MolWriterParams - parmeter struct with write options
- *   \param confId          - selects the conformer to be used
- *                            (default=-1 - find first in mol)
+ *   \param mol    - the molecule in question
+ *   \param params - parmeter struct with write options
+ *   \param confId - selects the conformer to be used
+ *                   (default=-1 - find first in mol)
  */
 RDKIT_FILEPARSERS_EXPORT std::string MolToMolBlock(
     const ROMol &mol, const MolWriterParams &params, int confId = -1);
@@ -62,10 +62,10 @@ inline std::string MolToMolBlock(const ROMol &mol, bool includeStereo = true,
 
 // \brief generates an MDL v3000 mol block for a molecule
 /*!
- *   \param mol             - the molecule in question
- *   \param MolWriterParams - parameter struct with write options
- *   \param confId          - selects the conformer to be used
- *                            (default=-1 - find first in mol)
+ *   \param mol    - the molecule in question
+ *   \param params - parameter struct with write options
+ *   \param confId - selects the conformer to be used
+ *                 (default=-1 - find first in mol)
  */
 inline std::string MolToV3KMolBlock(const ROMol &mol,
                                     const MolWriterParams &params,
@@ -93,10 +93,10 @@ inline std::string MolToV3KMolBlock(const ROMol &mol, bool includeStereo = true,
 
 // \brief generates an MDL v2000 mol block for a molecule
 /*!
- *   \param mol             - the molecule in question
- *   \param MolWriterParams - parameter struct with write options
- *   \param confId          - selects the conformer to be used
- *                            (default=-1 - find first in mol)
+ *   \param mol    - the molecule in question
+ *   \param params - parameter struct with write options
+ *   \param confId - selects the conformer to be used
+ *                   (default=-1 - find first in mol)
  *
  *  \note This function will throw a ValueError exception if the molecule has
  *   more than 999 atoms, bonds, or SGroups.
@@ -107,10 +107,10 @@ RDKIT_FILEPARSERS_EXPORT std::string MolToV2KMolBlock(
 
 // \brief Writes a molecule to an MDL mol file
 /*!
- *   \param mol             - the molecule in question
- *   \param fName           - the name of the file to use
- *   \param MolWriterParams - parameter struct with write options
- *   \param confId          - selects the conformer to be used
+ *   \param mol    - the molecule in question
+ *   \param fName  - the name of the file to use
+ *   \param params - parameter struct with write options
+ *   \param confId - selects the conformer to be used
  */
 RDKIT_FILEPARSERS_EXPORT void MolToMolFile(const ROMol &mol,
                                            const std::string &fName,
@@ -124,10 +124,9 @@ RDKIT_FILEPARSERS_EXPORT void MolToMolFile(const ROMol &mol,
  *   \param includeStereo - toggles inclusion of stereochemistry information
  *   \param confId        - selects the conformer to be used
  *   \param kekulize      - triggers kekulization of the molecule before it is
- * written
+ *                          written
  *   \param forceV3000    - force generation a V3000 mol block (happens
- * automatically with
- *                          more than 999 atoms or bonds)
+ *                          automatically with more than 999 atoms or bonds)
  */
 inline void MolToMolFile(const ROMol &mol, const std::string &fName,
                          bool includeStereo = true, int confId = -1,
@@ -138,10 +137,10 @@ inline void MolToMolFile(const ROMol &mol, const std::string &fName,
 
 // \brief Writes a molecule to an MDL V3000 mol file
 /*!
- *   \param mol             - the molecule in question
- *   \param fName           - the name of the file to use
- *   \param MolWriterParams - parameter struct with write options
- *   \param confId          - selects the conformer to be used
+ *   \param mol    - the molecule in question
+ *   \param fName  - the name of the file to use
+ *   \param params - parameter struct with write options
+ *   \param confId - selects the conformer to be used
  */
 inline void MolToV3KMolFile(const ROMol &mol, const std::string &fName,
                             const MolWriterParams &params, int confId = -1) {
@@ -224,7 +223,7 @@ RDKIT_FILEPARSERS_EXPORT std::string MolToPDBBlock(const ROMol &mol,
 // \brief Writes a molecule to an MDL mol file
 /*!
  *   \param mol           - the molecule in question
- *   \param fName         - the name of the file to use
+ *   \param fname         - the name of the file to use
  *   \param confId        - selects the conformer to be used
  *   \param flavor        - controls what gets written:
  *         flavor & 1 : Write MODEL/ENDMDL lines around each record
