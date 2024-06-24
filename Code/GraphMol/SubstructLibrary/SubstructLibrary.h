@@ -870,10 +870,11 @@ class RDKIT_SUBSTRUCTLIBRARY_EXPORT SubstructLibrary {
     \param startIdx    Start index of the search
     \param endIdx      Ending idx (inclusive) of the search.
     \param recursionPossible  flags whether or not recursive matches are
-    allowed [default true] \param useChirality  use atomic CIP codes as part
-    of the comparison [default true] \param useQueryQueryMatches  if set, the
-    contents of atom and bond queries will be used as part of the matching
-                                 [default false]
+    allowed [default true]
+    \param useChirality  use atomic CIP codes as part of the comparison [default
+    true]
+    \param useQueryQueryMatches  if set, the contents of atom and bond queries
+    will be used as part of the matching [default false]
     \param numThreads  If -1 use all available processors [default -1]
   */
   template <class Query>

@@ -27,9 +27,6 @@ class RDKIT_FORCEFIELD_EXPORT BondStretchContrib : public ForceFieldContrib {
   /*! Adds a bond stretch to the contrib
     \param idx1        index of end1 in the ForceField's positions
     \param idx2        index of end2 in the ForceField's positions
-    \param bondType    MMFF94 type of the bond (as an unsigned int)
-    \param end1Params  pointer to the parameters for end1
-    \param end2Params  pointer to the parameters for end2
 
   */
   void addTerm(const unsigned int idx1,

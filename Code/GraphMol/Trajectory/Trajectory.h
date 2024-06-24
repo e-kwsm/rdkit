@@ -23,10 +23,12 @@ class RDKIT_TRAJECTORY_EXPORT Trajectory {
   /*! \brief Constructor
       \param dimension represents the dimensionality of this Trajectory's
      coordinate tuples; this is normally 2 (2D coordinates) or 3 (3D
-     coordinates) \param numPoints is the number of coordinate tuples associated
-     to each Snapshot \param snapshotVect (optional, defaults to NULL) is a
-     pointer to a SnapshotVect used to initialize the Trajectory; if not NULL,
-     the Trajectory takes ownership of the SnapshotVect
+     coordinates)
+      \param numPoints is the number of coordinate tuples associated to each
+     Snapshot
+      \param snapshotVect (optional, defaults to NULL) is a pointer to a
+     SnapshotVect used to initialize the Trajectory; if not NULL, the Trajectory
+     takes ownership of the SnapshotVect
    */
   Trajectory(unsigned int dimension, unsigned int numPoints,
              SnapshotVect *snapshotVect = nullptr);
@@ -74,8 +76,10 @@ class RDKIT_TRAJECTORY_EXPORT Trajectory {
     \param mol - ROMol to which Conformers with coordinates from the Trajectory
     will be added; the Trajectory must have numPoints() == mol.getNumAtoms()
     \param from - the first Snapshot that will be added as a Conformer; defaults
-    to -1 (first available) \param to - the last Snapshot that will be added as
-    a Conformer; defaults to -1 (all) \return the number of conformations added
+    to -1 (first available)
+    \param to - the last Snapshot that will be added as a Conformer; defaults to
+    -1 (all)
+    \return the number of conformations added
   */
   unsigned int addConformersToMol(ROMol &mol, int from = -1, int to = -1);
 

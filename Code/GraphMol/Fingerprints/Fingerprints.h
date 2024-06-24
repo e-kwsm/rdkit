@@ -37,7 +37,6 @@ class MolBundle;
                        folded
   \param branchedPaths  toggles generation of branched subgraphs, not just
   linear paths
-  \param useBondOrders  toggles inclusion of bond orders in the path hashes
   \param atomInvariants a vector of atom invariants to use while hashing the
   paths
   \param fromAtoms     only paths starting at these atoms will be included
@@ -75,15 +74,12 @@ const std::string RDKFingerprintMolVersion = "2.0.0";
   \param maxPath       the minimum path length (in bonds) to be included
   \param fpSize        the size of the fingerprint
   \param atomCounts    if provided, this will be used to provide the count of
-  the number
-                       of paths that set bits each atom is involved in. The
-  vector should
-                       have at least as many entries as the molecule has atoms
-  and is not
-                       zeroed out here.
+                       the number of paths that set bits each atom is involved
+                       in. The vector should have at least as many entries as
+                       the molecule has atoms and is not zeroed out here.
   \param setOnlyBits   if provided, only bits that are set in this bit vector
-  will be set
-                       in the result. This is essentially the same as doing:
+                       will be set in the result. This is essentially the same
+                       as doing:
                           (*res) &= (*setOnlyBits);
                        but also has an impact on the atomCounts (if being used)
   \param branchedPaths  toggles generation of branched subgraphs, not just
@@ -123,15 +119,12 @@ const unsigned int substructLayers = 0x07;
   \param mol           the molecule to be fingerprinted
   \param fpSize        the size of the fingerprint
   \param atomCounts    if provided, this will be used to provide the count of
-  the number
-                       of paths that set bits each atom is involved in. The
-  vector should
-                       have at least as many entries as the molecule has atoms
-  and is not
-                       zeroed out here.
+                       the number of paths that set bits each atom is involved
+                       in. The vector should have at least as many entries as
+                       the molecule has atoms and is not zeroed out here.
   \param setOnlyBits   if provided, only bits that are set in this bit vector
-  will be set
-                       in the result. This is essentially the same as doing:
+                       will be set in the result. This is essentially the same
+                       as doing:
                           (*res) &= (*setOnlyBits);
                        but also has an impact on the atomCounts (if being used)
 
