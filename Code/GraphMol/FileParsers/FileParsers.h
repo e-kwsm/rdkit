@@ -123,9 +123,8 @@ using RDKit::v2::FileParsers::MolFileUnhandledFeatureException;
  *                     perception of the molecule
  *   \param removeHs - toggles removal of Hs from the molecule. H removal
  *                     is only done if the molecule is sanitized
- *   \param line     - current line number (used for error reporting)
  *   \param strictParsing - if set to false, the parser is more lax about
- * correctness of the contents.
+ *                          correctness of the contents.
  *
  */
 inline RWMol *MolDataStreamToMol(std::istream *inStream, unsigned int &line,
@@ -151,7 +150,7 @@ inline RWMol *MolDataStreamToMol(std::istream &inStream, unsigned int &line,
  *   \param removeHs - toggles removal of Hs from the molecule. H removal
  *                     is only done if the molecule is sanitized
  *   \param strictParsing - if set to false, the parser is more lax about
- * correctness of the contents.
+ *                          correctness of the contents.
  */
 inline RWMol *MolBlockToMol(const std::string &molBlock, bool sanitize = true,
                             bool removeHs = true, bool strictParsing = true) {
@@ -170,7 +169,7 @@ inline RWMol *MolBlockToMol(const std::string &molBlock, bool sanitize = true,
  *   \param removeHs - toggles removal of Hs from the molecule. H removal
  *                     is only done if the molecule is sanitized
  *   \param strictParsing - if set to false, the parser is more lax about
- * correctness of the contents.
+ *                          correctness of the contents.
  */
 inline RWMol *MolFileToMol(const std::string &fName, bool sanitize = true,
                            bool removeHs = true, bool strictParsing = true) {
@@ -217,8 +216,7 @@ inline namespace v1 {
                         the first conformation data both to the atom-information
                         block and to the first conf block. We want to be able to
                         read CombiCode-style tpls, so we'll allow this
-  mis-feature
-                        to be parsed when this flag is set.
+                        mis-feature to be parsed when this flag is set.
 */
 inline RWMol *TPLDataStreamToMol(std::istream *inStream, unsigned int &line,
                                  bool sanitize = true,
@@ -241,8 +239,7 @@ inline RWMol *TPLDataStreamToMol(std::istream *inStream, unsigned int &line,
                         the first conformation data both to the atom-information
                         block and to the first conf block. We want to be able to
                         read CombiCode-style tpls, so we'll allow this
-  mis-feature
-                        to be parsed when this flag is set.
+                        mis-feature to be parsed when this flag is set.
 */
 inline RWMol *TPLFileToMol(const std::string &fName, bool sanitize = true,
                            bool skipFirstConf = false) {
