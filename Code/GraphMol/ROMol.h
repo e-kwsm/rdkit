@@ -860,16 +860,6 @@ class RDKIT_GRAPHMOL_EXPORT ROMol : public RDProps {
   */
   unsigned int addBond(Bond *bond, bool takeOwnership = false);
 
-  //! adds a Bond to our collection
-  /*!
-    \param bond          pointer to the Bond to add
-
-    \return the new number of bonds
-
-    <b>Note:</b> since this is using a smart pointer, we don't need to worry
-    about
-    issues of ownership.
-  */
   void initFromOther(const ROMol &other, bool quickCopy, int confId);
 };
 
