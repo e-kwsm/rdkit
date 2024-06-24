@@ -80,8 +80,7 @@ struct RDKIT_MOLALIGN_EXPORT BestAlignmentParams {
   \param reflect   if true reflect the conformation of the probe molecule
   \param maxIters  maximum number of iterations used in minimizing the RMSD
 
-  <b>Returns</b>
-  RMSD value
+  \return RMSD value
 */
 RDKIT_MOLALIGN_EXPORT double getAlignmentTransform(
     const ROMol &prbMol, const ROMol &refMol, RDGeom::Transform3D &trans,
@@ -111,8 +110,7 @@ RDKIT_MOLALIGN_EXPORT double getAlignmentTransform(
   \param reflect   if true reflect the conformation of the probe molecule
   \param maxIters  maximum number of iterations used in minimizing the RMSD
 
-  <b>Returns</b>
-  RMSD value
+  \return RMSD value
 */
 RDKIT_MOLALIGN_EXPORT double alignMol(
     ROMol &prbMol, const ROMol &refMol, int prbCid = -1, int refCid = -1,
@@ -181,8 +179,7 @@ RDKIT_MOLALIGN_EXPORT double getBestAlignmentTransform(
   \param maxIters   maximum number of iterations used in minimizing the RMSD
   \param numThreads (optional) number of threads to use during the calculation
 
-  <b>Returns</b>
-  Best RMSD value found
+  \return Best RMSD value found
 */
 inline double getBestAlignmentTransform(
     const ROMol &prbMol, const ROMol &refMol, RDGeom::Transform3D &bestTrans,
@@ -248,8 +245,7 @@ RDKIT_MOLALIGN_EXPORT double getBestRMS(ROMol &prbMol, const ROMol &refMol,
   \param weights    (optional) weights for each pair of atoms.
   \param numThreads (optional) number of threads to use during the calculation
 
-  <b>Returns</b>
-  Best RMSD value found
+  \return Best RMSD value found
 */
 inline double getBestRMS(
     ROMol &prbMol, const ROMol &refMol, int prbCid = -1, int refCid = -1,
@@ -304,8 +300,7 @@ RDKIT_MOLALIGN_EXPORT std::vector<double> getAllConformerBestRMS(
                     will be considered symmetrically
   \param weights    (optional) weights for each pair of atoms.
 
-  <b>Returns</b>
-  a vector with the RMSD values stored in the order:
+  \return a vector with the RMSD values stored in the order:
     [(1,0), (2,0), (2,1), (3,0), (3, 2), (3,1), ...]
 */
 inline std::vector<double> getAllConformerBestRMS(
@@ -341,10 +336,10 @@ inline std::vector<double> getAllConformerBestRMS(
                     matches found in a SubstructMatch().
   \param symmetrizeConjugatedTerminalGroups (optional) if set, conjugated
                     terminal functional groups (like nitro or carboxylate)
-  will be considered symmetrically \param weights    (optional) weights for
-  each pair of atoms.
+                    will be considered symmetrically
+  \param weights    (optional) weights for each pair of atoms.
 
-  <b>Returns</b>
+  \return
   Best RMSD value found
 */
 RDKIT_MOLALIGN_EXPORT double CalcRMS(
@@ -375,8 +370,7 @@ RDKIT_MOLALIGN_EXPORT double CalcRMS(
                     matches found in a SubstructMatch().
   \param weights    (optional) weights for each pair of atoms.
 
-  <b>Returns</b>
-  Best RMSD value found
+  \return Best RMSD value found
 */
 RDKIT_MOLALIGN_EXPORT double CalcRMS(ROMol &prbMol, const ROMol &refMol,
                                      int prbCid, int refCid,
