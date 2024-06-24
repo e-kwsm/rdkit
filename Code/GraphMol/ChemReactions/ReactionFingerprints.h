@@ -50,31 +50,29 @@ enum class FingerprintType {
 
 //! A struct for storing parameters to manipulate
 //! the calculation of fingerprints of chemical reactions
-/*!
-   Different parameters can be chosen to influence the generation
-   of chemical reaction fingerprints. Generally different setting
-   should be used for structural or difference fingerprints.
-
-   \param includeAgents        include the agents of a reaction for fingerprint
-   generation
-   \param bitRatioAgents       in structural fingerprints it determines the
-   ratio of bits of
-                               the agents in the fingerprint
-   \param nonAgentWeight       in difference fingerprints weight factor for
-   reactants and products
-                               compared to agents
-   \param agentWeight          if agents are included, agents could be weighted
-   compared to reactants
-                               and products in difference fingerprints
-   \param fpSize               number of bits of the fingerprint
-   \param fpType               kind of fingerprint used, e.g AtompairFP. Be
-   aware that only AtompairFP,
-                               TopologicalTorsion and MorganFP were supported in
-   the difference fingerprint.
- */
 struct RDKIT_CHEMREACTIONS_EXPORT ReactionFingerprintParams {
   ReactionFingerprintParams() {}
 
+  /*!
+     Different parameters can be chosen to influence the generation
+     of chemical reaction fingerprints. Generally different setting
+     should be used for structural or difference fingerprints.
+
+     \param includeAgents        include the agents of a reaction for
+                                 fingerprint generation
+     \param bitRatioAgents       in structural fingerprints it determines the
+                                 ratio of bits of the agents in the fingerprint
+     \param nonAgentWeight       in difference fingerprints weight factor for
+                                 reactants and products compared to agents
+     \param agentWeight          if agents are included, agents could be
+                                 weighted compared to reactants and products in
+                                 difference fingerprints
+     \param fpSize               number of bits of the fingerprint
+     \param fpType               kind of fingerprint used, e.g AtompairFP. Be
+                                 aware that only AtompairFP, TopologicalTorsion
+                                 and MorganFP were supported in the difference
+                                 fingerprint.
+   */
   ReactionFingerprintParams(bool includeAgents, double bitRatioAgents,
                             unsigned int nonAgentWeight, int agentWeight,
                             unsigned int fpSize, FingerprintType fpType)
@@ -102,11 +100,9 @@ RDKIT_CHEMREACTIONS_EXPORT extern const ReactionFingerprintParams
 //! to use in screening
 /*!
    A structural fingerprint is generated as an ExplicitBitVect to use for
-  searching
-   e.g. substructure in reactions. By default the fingerprint is generated as
-  4096 BitVect
-   using a PatternFP for reactants and products and tentatively agents which
-   were finally  concatenated
+   searching e.g. substructure in reactions. By default the fingerprint is
+   generated as 4096 BitVect using a PatternFP for reactants and products and
+   tentatively agents which were finally concatenated
 
   \param rxn           the reaction to be fingerprinted
   \param params        specific settings to manipulate fingerprint generation
@@ -125,10 +121,8 @@ RDKIT_CHEMREACTIONS_EXPORT ExplicitBitVect *StructuralFingerprintChemReaction(
 /*!
    A difference fingerprint is generated as a SparseIntVect to use for
    similarity search of reactions. By default the fingerprint is generated as
-  2048 bit
-   hashed fingerprint subtracting AtompairFP of the reactants from the products'
-  AtompairFP
-   and tentatively the agent AtompairFP is added
+   2048 bit hashed fingerprint subtracting AtompairFP of the reactants from the
+   products' AtompairFP and tentatively the agent AtompairFP is added
 
   \param rxn           the reaction to be fingerprinted
   \param params        specific settings to manipulate fingerprint generation
