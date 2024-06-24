@@ -28,6 +28,15 @@ namespace Descriptors {
 
 class RDKIT_DESCRIPTORS_EXPORT DoubleCubicLatticeVolume {
  public:
+  // default params assume a small molecule and default conformer
+  const ROMol &mol;
+  std::vector<double> radii_;
+  bool isProtein = false;
+  bool includeLigand = true;
+  double probeRadius = 1.4;
+  int confId = -1;
+  double maxRadius = 1.7;  // treat default max radius as Carbon
+
   /*!
 
     \param mol: input molecule or protein
@@ -42,15 +51,6 @@ class RDKIT_DESCRIPTORS_EXPORT DoubleCubicLatticeVolume {
     \param confId: conformer ID to consider [default=-1]
 
   */
-
-  // default params assume a small molecule and default conformer
-  const ROMol &mol;
-  std::vector<double> radii_;
-  bool isProtein = false;
-  bool includeLigand = true;
-  double probeRadius = 1.4;
-  int confId = -1;
-  double maxRadius = 1.7;  // treat default max radius as Carbon
 
   DoubleCubicLatticeVolume(const ROMol &mol, std::vector<double> radii,
                            bool isProtein = false, bool includeLigand = true,

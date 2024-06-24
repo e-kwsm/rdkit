@@ -129,7 +129,7 @@ class RDKIT_FILTERCATALOG_EXPORT FilterMatcherBase
   //------------------------------------
   //! copy
   /// copies the current FilterMatcherBase into one that
-  ///  can be passed around safely.
+  /// can be passed around safely.
   virtual boost::shared_ptr<FilterMatcherBase> copy() const = 0;
 
  private:
