@@ -735,7 +735,7 @@ class RDKIT_GRAPHMOL_EXPORT AtomRingQuery
   }
 
   //! returns a copy of this query
-  Queries::Query<int, ConstAtomPtr, true> *copy() const override {
+  [[nodiscard]] Queries::Query<int, ConstAtomPtr, true> *copy() const override {
     AtomRingQuery *res = new AtomRingQuery(this->d_val);
     res->setNegation(getNegation());
     res->setTol(this->getTol());
@@ -778,10 +778,10 @@ class RDKIT_GRAPHMOL_EXPORT RecursiveStructureQuery
   */
   void setQueryMol(ROMol const *query) { dp_queryMol.reset(query); }
   //! returns a pointer to our query molecule
-  ROMol const *getQueryMol() const { return dp_queryMol.get(); }
+  [[nodiscard]] ROMol const *getQueryMol() const { return dp_queryMol.get(); }
 
   //! returns a copy of this query
-  Queries::Query<int, Atom const *, true> *copy() const override {
+  [[nodiscard]] Queries::Query<int, Atom const *, true> *copy() const override {
     RecursiveStructureQuery *res = new RecursiveStructureQuery();
     res->dp_queryMol.reset(new ROMol(*dp_queryMol, true));
 
@@ -794,7 +794,7 @@ class RDKIT_GRAPHMOL_EXPORT RecursiveStructureQuery
     res->d_serialNumber = d_serialNumber;
     return res;
   }
-  unsigned int getSerialNumber() const { return d_serialNumber; }
+  [[nodiscard]] unsigned int getSerialNumber() const { return d_serialNumber; }
 
 #ifdef RDK_BUILD_THREADSAFE_SSS
   std::mutex d_mutex;

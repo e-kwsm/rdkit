@@ -59,7 +59,7 @@ class RDKIT_QUERY_EXPORT LessEqualQuery
     return res;
   }
 
-  std::string getFullDescription() const override {
+  [[nodiscard]] std::string getFullDescription() const override {
     std::ostringstream res;
     res << this->getDescription();
     res << " " << this->d_val;

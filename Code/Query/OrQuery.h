@@ -39,8 +39,8 @@ class RDKIT_QUERY_EXPORT OrQuery
     return res;
   }
 
-  Query<MatchFuncArgType, DataFuncArgType, needsConversion> *copy()
-      const override {
+  [[nodiscard]] Query<MatchFuncArgType, DataFuncArgType, needsConversion> *
+  copy() const override {
     OrQuery<MatchFuncArgType, DataFuncArgType, needsConversion> *res =
         new OrQuery<MatchFuncArgType, DataFuncArgType, needsConversion>();
 

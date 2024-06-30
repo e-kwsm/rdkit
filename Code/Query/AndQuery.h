@@ -39,8 +39,8 @@ class RDKIT_QUERY_EXPORT AndQuery
     }
     return res;
   }
-  Query<MatchFuncArgType, DataFuncArgType, needsConversion> *copy()
-      const override {
+  [[nodiscard]] Query<MatchFuncArgType, DataFuncArgType, needsConversion> *
+  copy() const override {
     AndQuery<MatchFuncArgType, DataFuncArgType, needsConversion> *res =
         new AndQuery<MatchFuncArgType, DataFuncArgType, needsConversion>();
     typename BASE::CHILD_VECT_CI i;
