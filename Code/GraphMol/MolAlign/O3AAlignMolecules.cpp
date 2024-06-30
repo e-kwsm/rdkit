@@ -943,7 +943,7 @@ void SDM::fillFromLAP(LAP &lap) {
     sdmElement->idx[0] = i;
     sdmElement->idx[1] = lap.getRowSol(i);
     sdmElement->cost = lap.getCost(i, lap.getRowSol(i));
-    d_SDMPtrVect.push_back(boost::shared_ptr<SDMElement>(sdmElement));
+    d_SDMPtrVect.emplace_back(sdmElement);
     ++n_equiv;
   }
   boost::multi_array<double, 2> diff(boost::extents[n_equiv][n_equiv]);
@@ -1067,7 +1067,7 @@ void SDM::fillFromDist(double threshold,
             ++mapIdx;
           }
         }
-        d_SDMPtrVect.push_back(boost::shared_ptr<SDMElement>(sdmElement));
+        d_SDMPtrVect.emplace_back(sdmElement);
         ++n;
       }
     }

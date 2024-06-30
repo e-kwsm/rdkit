@@ -304,7 +304,7 @@ void SynthonSet::addSynthon(const int synthonSetNum, Synthon *newSynthon,
   if (std::cmp_greater_equal(synthonSetNum, d_synthons.size())) {
     d_synthons.resize(synthonSetNum + 1);
   }
-  d_synthons[synthonSetNum].push_back(std::make_pair(synthonId, newSynthon));
+  d_synthons[synthonSetNum].emplace_back(synthonId, newSynthon);
 }
 
 std::vector<std::unique_ptr<ROMol>> SynthonSet::buildSampleMolecules(

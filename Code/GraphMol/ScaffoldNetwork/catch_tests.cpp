@@ -154,7 +154,7 @@ TEST_CASE("getMolFragments", "[unittest][scaffolds]") {
     std::vector<std::pair<std::string, std::string>> res;
     res.reserve(frags.size());
     for (const auto &frag : frags) {
-      res.push_back(std::make_pair(frag.first, MolToSmiles(*frag.second)));
+      res.emplace_back(frag.first, MolToSmiles(*frag.second));
     }
     std::sort(res.begin(), res.end());
     CHECK(res[0].first == "*CC1CCCC(=O)N1");
@@ -292,7 +292,7 @@ TEST_CASE("Network defaults", "[scaffolds]") {
   for (const auto smi : smis) {
     auto m = SmilesToMol(smi);
     REQUIRE(m);
-    ms.push_back(ROMOL_SPTR(m));
+    ms.emplace_back(m);
   }
   SECTION("basics") {
     ScaffoldNetwork::ScaffoldNetworkParams ps;
@@ -360,7 +360,7 @@ TEST_CASE("ostream integration", "[scaffolds]") {
   for (const auto smi : smis) {
     auto m = SmilesToMol(smi);
     REQUIRE(m);
-    ms.push_back(ROMOL_SPTR(m));
+    ms.emplace_back(m);
   }
   SECTION("edges") {
     ScaffoldNetwork::ScaffoldNetworkParams ps;
@@ -786,7 +786,7 @@ TEST_CASE("GitHub #3153: Kekulization error in molecules with aromatic C+",
     for (const auto smi : smis) {
       auto m = SmilesToMol(smi);
       REQUIRE(m);
-      ms.push_back(ROMOL_SPTR(m));
+      ms.emplace_back(m);
     }
     ScaffoldNetwork::ScaffoldNetworkParams ps;
     ScaffoldNetwork::ScaffoldNetwork net =
@@ -803,7 +803,7 @@ TEST_CASE("GitHub #3153: Kekulization error in molecules with aromatic C+",
     for (const auto smi : smis) {
       auto m = SmilesToMol(smi);
       REQUIRE(m);
-      ms.push_back(ROMOL_SPTR(m));
+      ms.emplace_back(m);
     }
     ScaffoldNetwork::ScaffoldNetworkParams ps;
     ScaffoldNetwork::ScaffoldNetwork net =
@@ -821,7 +821,7 @@ TEST_CASE("GitHub #3153: Kekulization error in molecules with aromatic C+",
     for (const auto smi : smis) {
       auto m = SmilesToMol(smi);
       REQUIRE(m);
-      ms.push_back(ROMOL_SPTR(m));
+      ms.emplace_back(m);
     }
     ScaffoldNetwork::ScaffoldNetworkParams ps;
     ScaffoldNetwork::ScaffoldNetwork net =
@@ -842,7 +842,7 @@ TEST_CASE("Serialization", "[serialization]") {
   for (const auto smi : smis) {
     auto m = SmilesToMol(smi);
     REQUIRE(m);
-    ms.push_back(ROMOL_SPTR(m));
+    ms.emplace_back(m);
   }
   SECTION("basics") {
     // start by building the network
@@ -891,7 +891,7 @@ TEST_CASE("molCounts", "[scaffolds]") {
     for (const auto smi : smis) {
       auto m = SmilesToMol(smi);
       REQUIRE(m);
-      ms.push_back(ROMOL_SPTR(m));
+      ms.emplace_back(m);
     }
     ScaffoldNetwork::ScaffoldNetworkParams ps;
     ps.includeGenericScaffolds = false;

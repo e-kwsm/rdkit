@@ -46,7 +46,7 @@ TEST_CASE("Test empty force field") {
     auto params = ForceFields::MMFF::MMFFBond{6.0, 100.0};
     auto *contrib = new ForceFields::MMFF::BondStretchContrib(forceField.get());
     contrib->addTerm(0, 1, &params);
-    forceField->contribs().push_back(ForceFields::ContribPtr(contrib));
+    forceField->contribs().emplace_back(contrib);
     CHECK(forceField->minimize() == 0);
     CHECK(std::round(forceField->distance(0, 1)) == 100);
     auto pos1 = mol->getConformer().getAtomPos(0);

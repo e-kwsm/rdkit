@@ -299,7 +299,7 @@ RDKIT_ABBREVIATIONS_EXPORT void condenseAbbreviationSubstanceGroups(
 
       // create a match record:
       for (unsigned int i = 0; i < ats.size(); ++i) {
-        abbrevMatch.match.push_back({i, ats[i]});
+        abbrevMatch.match.emplace_back(i, ats[i]);
       }
       abbrevMatches.push_back(abbrevMatch);
     }
