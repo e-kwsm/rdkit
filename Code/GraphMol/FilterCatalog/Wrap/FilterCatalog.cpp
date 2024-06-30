@@ -89,7 +89,7 @@ std::vector<FilterMatch> FilterMatcherBaseGetMatches(FilterMatcherBase &fm,
   if (fm.getMatches(mol, matches)) {
     return matches;
   }
-  return std::vector<FilterMatch>();
+  return {};
 }
 
 std::vector<FilterMatch> FilterCatalogEntryGetMatches(FilterCatalogEntry &fm,
@@ -98,7 +98,7 @@ std::vector<FilterMatch> FilterCatalogEntryGetMatches(FilterCatalogEntry &fm,
   if (fm.getFilterMatches(mol, matches)) {
     return matches;
   }
-  return std::vector<FilterMatch>();
+  return {};
 }
 /*
 std::vector<MatchVectType> GetFilterMatchAtomPairs(FilterMatch &fm) {
