@@ -474,7 +474,7 @@ void testEnumeratorParams() {
       }
     }
   }
-  ROMOL_SPTR zEnol = "C/C=C\\O"_smiles;
+  ROMOL_SPTR zEnol = R"(C/C=C\O)"_smiles;
   TEST_ASSERT(zEnol->getBondWithIdx(1)->getStereo() == Bond::STEREOZ);
   {
     // test remove enol Z stereochemistry
@@ -549,7 +549,7 @@ void testEnumeratorParams() {
     }
   }
   ROMOL_SPTR chembl2024142 =
-      "[2H]C1=C(C(=C2C(=C1[2H])C(=O)C(=C(C2=O)C([2H])([2H])[2H])C/C=C(\\C)/CC([2H])([2H])/C=C(/CC/C=C(\\C)/CCC=C(C)C)\\C([2H])([2H])[2H])[2H])[2H]"_smiles;
+      R"([2H]C1=C(C(=C2C(=C1[2H])C(=O)C(=C(C2=O)C([2H])([2H])[2H])C/C=C(\C)/CC([2H])([2H])/C=C(/CC/C=C(\C)/CCC=C(C)C)\C([2H])([2H])[2H])[2H])[2H])"_smiles;
   MolOps::RemoveHsParameters hparams;
   hparams.removeAndTrackIsotopes = true;
   chembl2024142.reset(MolOps::removeHs(*chembl2024142, hparams));
@@ -1101,7 +1101,7 @@ void testPickCanonicalCIPChangeOnChiralCenter() {
     }
   };
 
-  auto mol = "CC\\C=C(/O)[C@@H](C)C(C)=O"_smiles;
+  auto mol = R"(CC\C=C(/O)[C@@H](C)C(C)=O)"_smiles;
   TEST_ASSERT(mol.get());
   TEST_ASSERT(mol->getAtomWithIdx(5)->getChiralTag() ==
               Atom::CHI_TETRAHEDRAL_CW);
@@ -1206,7 +1206,7 @@ void testPickCanonicalCIPChangeOnChiralCenter() {
     TEST_ASSERT(MolToSmiles(*bestTaut) == "CCCC(=O)[C@@H](C)C(C)=O");
   }
 
-  mol = "CC\\C=C(/O)[C@@](CC)(C)C(C)=O"_smiles;
+  mol = R"(CC\C=C(/O)[C@@](CC)(C)C(C)=O)"_smiles;
   TEST_ASSERT(mol.get());
   TEST_ASSERT(mol->getAtomWithIdx(5)->getChiralTag() ==
               Atom::CHI_TETRAHEDRAL_CW);
