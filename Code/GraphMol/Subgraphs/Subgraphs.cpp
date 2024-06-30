@@ -93,7 +93,7 @@ void recurseWalk(
 
   // we have the candidates that can be used to add to the existing path
   // try extending the subgraphs
-  while (cands.size() != 0) {
+  while (!cands.empty()) {
     int next = cands.back();  // start with the last one in the candidate list
     cands.pop_back();
     // cands.erase(remove(cands.begin(), cands.end(), next), cands.end());
@@ -152,7 +152,7 @@ void recurseWalkRange(
 
   // we have the candidates that can be used to add to the existing path
   // try extending the subgraphs
-  while (cands.size() != 0) {
+  while (!cands.empty()) {
     int next = cands.back();  // start with the last one in the candidate list
     cands.pop_back();
     // cands.erase(remove(cands.begin(), cands.end(), next), cands.end());

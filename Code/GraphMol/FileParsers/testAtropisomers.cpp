@@ -336,7 +336,7 @@ class MolAtropTest {
   void RunTests() {
     // the molecule tests
 
-    if (testToRun == "" || testToRun == "sdfTests") {
+    if (testToRun.empty() || testToRun == "sdfTests") {
       std::list<MolTest> sdfTests{
           MolTest("atropWedgeTest.sdf", true, 16, 16),
           MolTest("AtropTest.sdf", true, 38, 41),
@@ -494,7 +494,7 @@ class MolAtropTest {
       }
     }
 
-    if (testToRun == "" || testToRun == "KekuleWedgeErrorMol") {
+    if (testToRun.empty() || testToRun == "KekuleWedgeErrorMol") {
       std::list<MolTest> kekuleTests{
           MolTest("atropWedgeError2.mol", true, 16, 17),
           MolTest("atropWedgeError.mol", true, 29, 32),
