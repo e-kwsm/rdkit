@@ -371,11 +371,11 @@ const unsigned char EndTag = 0xFF;
 class CustomPropHandler {
  public:
   virtual ~CustomPropHandler() {}
-  virtual const char *getPropName() const = 0;
-  virtual bool canSerialize(const RDValue &value) const = 0;
+  [[nodiscard]] virtual const char *getPropName() const = 0;
+  [[nodiscard]] virtual bool canSerialize(const RDValue &value) const = 0;
   virtual bool read(std::istream &ss, RDValue &value) const = 0;
   virtual bool write(std::ostream &ss, const RDValue &value) const = 0;
-  virtual CustomPropHandler *clone() const = 0;
+  [[nodiscard]] virtual CustomPropHandler *clone() const = 0;
 };
 
 typedef std::vector<std::shared_ptr<const CustomPropHandler>>
