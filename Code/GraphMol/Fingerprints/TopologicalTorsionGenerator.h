@@ -24,7 +24,7 @@ class RDKIT_FINGERPRINTS_EXPORT TopologicalTorsionArguments
   uint32_t d_torsionAtomCount = 4;
   bool df_onlyShortestPaths = false;
 
-  std::string infoString() const override;
+  [[nodiscard]] std::string infoString() const override;
 
   /**
    \brief Construct a new Topological Torsion Arguments object
@@ -84,7 +84,7 @@ class RDKIT_FINGERPRINTS_EXPORT TopologicalTorsionEnvGenerator
       const std::vector<std::uint32_t> *bondInvariants,
       const bool hashResults = false) const override;
 
-  std::string infoString() const override;
+  [[nodiscard]] std::string infoString() const override;
   OutputType getResultSize() const override;
 };
 

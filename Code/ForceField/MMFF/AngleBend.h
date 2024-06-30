@@ -42,7 +42,7 @@ class RDKIT_FORCEFIELD_EXPORT AngleBendContrib : public ForceFieldContrib {
                    const MMFFProp *mmffPropParamsCentralAtom);
   double getEnergy(double *pos) const override;
   void getGrad(double *pos, double *grad) const override;
-  AngleBendContrib *copy() const override {
+  [[nodiscard]] AngleBendContrib *copy() const override {
     return new AngleBendContrib(*this);
   }
 
