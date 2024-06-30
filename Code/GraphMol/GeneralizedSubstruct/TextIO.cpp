@@ -253,7 +253,7 @@ template <>
 ExtendedQueryMol::TautomerQuery_T from_pt(bpt::ptree &pt) {
   std::vector<ROMOL_SPTR> tautomers;
   for (auto &child : pt.get_child("tautomers")) {
-    tautomers.push_back(ROMOL_SPTR(pt_to_mol(child.second)));
+    tautomers.emplace_back(pt_to_mol(child.second));
   }
 
   ROMol *templ = pt_to_mol(pt.get_child("template"));
