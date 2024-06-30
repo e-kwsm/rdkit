@@ -45,7 +45,9 @@ class RDKIT_FRAGCATALOG_EXPORT FragCatalogEntry
     }
   }
 
-  std::string getDescription() const override { return d_descrip; }
+  [[nodiscard]] std::string getDescription() const override {
+    return d_descrip;
+  }
 
   void setDescription(const std::string &val) { d_descrip = val; }
 
@@ -56,11 +58,13 @@ class RDKIT_FRAGCATALOG_EXPORT FragCatalogEntry
 
   bool match(const FragCatalogEntry *other, double tol) const;
 
-  Subgraphs::DiscrimTuple getDiscrims() const;
+  [[nodiscard]] Subgraphs::DiscrimTuple getDiscrims() const;
 
-  unsigned int getOrder() const { return dp_mol->getNumBonds(); }
+  [[nodiscard]] unsigned int getOrder() const { return dp_mol->getNumBonds(); }
 
-  const INT_INT_VECT_MAP &getFuncGroupMap() const { return d_aToFmap; }
+  [[nodiscard]] const INT_INT_VECT_MAP &getFuncGroupMap() const {
+    return d_aToFmap;
+  }
 
   // REVIEW: this should be removed?
   std::string getSmarts() { return ""; }
@@ -107,14 +111,16 @@ class RDKIT_FRAGCATALOG_EXPORT FragCatalogEntry
     }
     return dp_props->hasVal(key);
   }
-  bool hasProp(const std::string &key) const { return hasProp(key.c_str()); }
+  [[nodiscard]] bool hasProp(const std::string &key) const {
+    return hasProp(key.c_str());
+  }
 
   void clearProp(const char *key) const { dp_props->clearVal(key); }
 
   void clearProp(const std::string &key) const { clearProp(key.c_str()); }
 
   void toStream(std::ostream &ss) const override;
-  std::string Serialize() const override;
+  [[nodiscard]] std::string Serialize() const override;
   void initFromStream(std::istream &ss) override;
   void initFromString(const std::string &text) override;
 
