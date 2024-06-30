@@ -155,7 +155,7 @@ void MultithreadedSDMolSupplier::readMolProps(RWMol &mol,
   while (!inStream.eof() && !inStream.fail() &&
          (tempStr[0] != '$' || tempStr.substr(0, 4) != "$$$$")) {
     tempStr = strip(tempStr);
-    if (tempStr != "") {
+    if (!tempStr.empty()) {
       if (tempStr[0] == '>') {  // data header line: start of a data item
         // ignore all other crap and seek for for a data label enclosed
         // by '<' and '>'
@@ -175,7 +175,7 @@ void MultithreadedSDMolSupplier::readMolProps(RWMol &mol,
           // i.e. until we hit a blank line
           std::getline(inStream, tempStr);
           std::string stmp = strip(tempStr);
-          while (stmp.length() != 0) {
+          while (!stmp.empty()) {
             std::getline(inStream, tempStr);
             if (inStream.eof()) {
               throw FileParseException("End of data field name not found");
@@ -190,8 +190,7 @@ void MultithreadedSDMolSupplier::readMolProps(RWMol &mol,
           std::string prop = "";
           std::string stmp = strip(tempStr);
           int nplines = 0;  // number of lines for this property
-          while (stmp.length() != 0 || tempStr[0] == ' ' ||
-                 tempStr[0] == '\t') {
+          while (!stmp.empty() || tempStr[0] == ' ' || tempStr[0] == '\t') {
             nplines++;
             if (nplines > 1) {
               prop += "\n";

@@ -308,7 +308,7 @@ void testBasicCanon() {
   delete mol;
   mol = new ROMol();
   smi = MolToSmiles(*mol);
-  TEST_ASSERT(smi == "");
+  TEST_ASSERT(smi.empty());
 
   delete mol;
   BOOST_LOG(rdInfoLog) << "\tdone" << std::endl;
@@ -1651,9 +1651,9 @@ void testRootedAt() {
     RWMol mol;
     std::string smi;
     smi = MolToSmiles(mol);
-    TEST_ASSERT(smi == "");
+    TEST_ASSERT(smi.empty());
     smi = MolToSmiles(mol, false, false, 0);
-    TEST_ASSERT(smi == "");
+    TEST_ASSERT(smi.empty());
   }
 
   BOOST_LOG(rdInfoLog) << "\tdone" << std::endl;
@@ -3521,7 +3521,7 @@ void testGithub298() {
     MolOps::fastFindRings(*m);
 
     std::string csmiles = MolToSmiles(*m);
-    TEST_ASSERT(csmiles != "");
+    TEST_ASSERT(!csmiles.empty());
     TEST_ASSERT(csmiles.find("%100") == std::string::npos);
 
     delete m;
@@ -3581,7 +3581,7 @@ void testGithub389() {
     TEST_ASSERT(m);
 
     std::string csmiles = MolToSmiles(*m, true, false, -1, true, false, true);
-    TEST_ASSERT(csmiles != "");
+    TEST_ASSERT(!csmiles.empty());
     TEST_ASSERT(csmiles.find("[CH3]") != std::string::npos);
     TEST_ASSERT(csmiles.find("[CH2]") != std::string::npos);
     TEST_ASSERT(csmiles.find("[OH]") != std::string::npos);
@@ -3603,7 +3603,7 @@ void testEmptyStrings() {
     TEST_ASSERT(m->getNumAtoms() == 0);
 
     std::string csmiles = MolToSmiles(*m);
-    TEST_ASSERT(csmiles == "");
+    TEST_ASSERT(csmiles.empty());
     delete m;
   }
   {
@@ -3614,7 +3614,7 @@ void testEmptyStrings() {
     TEST_ASSERT(m->getNumAtoms() == 0);
 
     std::string csmiles = MolToSmarts(*m);
-    TEST_ASSERT(csmiles == "");
+    TEST_ASSERT(csmiles.empty());
     delete m;
   }
   BOOST_LOG(rdInfoLog) << "done" << std::endl;

@@ -78,8 +78,9 @@ TEST_CASE("Github #2029", "[SMILES][bug]") {
     REQUIRE(m1);
     m1->getBondWithIdx(1)->setBondDir(Bond::BEGINWEDGE);
     bool doKekule = false, allBondsExplicit = false;
-    CHECK("" == SmilesWrite::GetBondSmiles(m1->getBondWithIdx(1), -1, doKekule,
-                                           allBondsExplicit));
+    CHECK(SmilesWrite::GetBondSmiles(m1->getBondWithIdx(1), -1, doKekule,
+                                     allBondsExplicit)
+              .empty());
     allBondsExplicit = true;
     CHECK("-" == SmilesWrite::GetBondSmiles(m1->getBondWithIdx(1), -1, doKekule,
                                             allBondsExplicit));
@@ -88,10 +89,12 @@ TEST_CASE("Github #2029", "[SMILES][bug]") {
     std::unique_ptr<ROMol> m1(SmilesToMol("C/C=C/C"));
     REQUIRE(m1);
     bool doKekule = false, allBondsExplicit = false;
-    CHECK("" == SmilesWrite::GetBondSmiles(m1->getBondWithIdx(0), -1, doKekule,
-                                           allBondsExplicit));
-    CHECK("" == SmilesWrite::GetBondSmiles(m1->getBondWithIdx(2), -1, doKekule,
-                                           allBondsExplicit));
+    CHECK(SmilesWrite::GetBondSmiles(m1->getBondWithIdx(0), -1, doKekule,
+                                     allBondsExplicit)
+              .empty());
+    CHECK(SmilesWrite::GetBondSmiles(m1->getBondWithIdx(2), -1, doKekule,
+                                     allBondsExplicit)
+              .empty());
     allBondsExplicit = true;
     CHECK("/" == SmilesWrite::GetBondSmiles(m1->getBondWithIdx(0), -1, doKekule,
                                             allBondsExplicit));
@@ -104,10 +107,12 @@ TEST_CASE("Github #2029", "[SMILES][bug]") {
     bool markAtomsBonds = false;
     MolOps::Kekulize(*m1, markAtomsBonds);
     bool doKekule = false, allBondsExplicit = false;
-    CHECK("" == SmilesWrite::GetBondSmiles(m1->getBondWithIdx(0), -1, doKekule,
-                                           allBondsExplicit));
-    CHECK("" == SmilesWrite::GetBondSmiles(m1->getBondWithIdx(1), -1, doKekule,
-                                           allBondsExplicit));
+    CHECK(SmilesWrite::GetBondSmiles(m1->getBondWithIdx(0), -1, doKekule,
+                                     allBondsExplicit)
+              .empty());
+    CHECK(SmilesWrite::GetBondSmiles(m1->getBondWithIdx(1), -1, doKekule,
+                                     allBondsExplicit)
+              .empty());
     allBondsExplicit = true;
     CHECK("=" == SmilesWrite::GetBondSmiles(m1->getBondWithIdx(0), -1, doKekule,
                                             allBondsExplicit));
@@ -516,7 +521,7 @@ TEST_CASE("github #2667: MolToCXSmiles generates error for empty molecule",
     auto mol = ""_smiles;
     REQUIRE(mol);
     auto smi = MolToCXSmiles(*mol);
-    CHECK(smi == "");
+    CHECK(smi.empty());
   }
 }
 

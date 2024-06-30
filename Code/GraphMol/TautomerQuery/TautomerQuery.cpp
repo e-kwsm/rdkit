@@ -284,7 +284,7 @@ bool TautomerQuery::isSubstructOf(const ROMol &mol,
   SubstructMatchParameters params2(params);
   params2.maxMatches = 1;
   auto matches = substructOf(mol, params2);
-  return matches.size() > 0;
+  return !matches.empty();
 }
 
 ExplicitBitVect *TautomerQuery::patternFingerprintTemplate(
