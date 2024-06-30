@@ -286,7 +286,7 @@ connectLineSegments(const std::vector<ConrecSegment> &segments,
       segId = segs.front();
       currKey = endPtKey;
     }
-    res.push_back(std::make_pair(contour, currVal));
+    res.emplace_back(contour, currVal);
     singlePoint = std::find_if(singlePoint, endPointHashes.end(), isCandidate);
   }
   return res;

@@ -174,9 +174,9 @@ std::vector<std::pair<std::string, std::string>> readPossHitsLines(
       continue;
     }
     if (lineBits.size() == 1) {
-      lineBits.push_back("");
+      lineBits.emplace_back("");
     }
-    retLines.push_back(std::make_pair(lineBits[0], lineBits[1]));
+    retLines.emplace_back(lineBits[0], lineBits[1]);
   }
   return retLines;
 }
@@ -390,10 +390,10 @@ std::vector<std::unique_ptr<SynthonSpaceHitSet>> searchReaction(
     std::vector<std::thread> threads;
     for (unsigned int i = 0u;
          i < std::min(static_cast<size_t>(numThreads), fragments.size()); ++i) {
-      threads.push_back(std::thread(searchReactionPart, std::ref(fragments),
-                                    endTime, std::ref(mostRecentFrag), searcher,
-                                    std::ref(reaction), std::ref(allSetHits),
-                                    std::ref(pbar)));
+      threads.emplace_back(searchReactionPart, std::ref(fragments), endTime,
+                           std::ref(mostRecentFrag), searcher,
+                           std::ref(reaction), std::ref(allSetHits),
+                           std::ref(pbar));
     }
     for (auto &t : threads) {
       t.join();
@@ -500,10 +500,10 @@ SynthonSpaceSearcher::doTheSearch(
       for (unsigned int i = 0u;
            i < std::min(static_cast<size_t>(numThreads), reactionNames.size());
            ++i) {
-        threads.push_back(std::thread(
-            processReactions, this, std::ref(reactionNames), std::ref(fragSets),
-            endTime, std::ref(mostRecentReaction), lastReaction,
-            std::ref(reactionHits), std::ref(pbar)));
+        threads.emplace_back(processReactions, this, std::ref(reactionNames),
+                             std::ref(fragSets), endTime,
+                             std::ref(mostRecentReaction), lastReaction,
+                             std::ref(reactionHits), std::ref(pbar));
       }
       for (auto &t : threads) {
         t.join();
@@ -834,10 +834,10 @@ void SynthonSpaceSearcher::makeHitsFromToTry(
         numThreads > 1) {
       std::vector<std::thread> threads;
       for (unsigned int i = 0U; i < numThreads; ++i) {
-        threads.push_back(
-            std::thread(processPartHitsFromDetails, std::ref(toTry), endTime,
-                        std::ref(results), this, std::ref(mostRecentTry),
-                        lastTry, std::ref(pbar), std::ref(numHitsFound)));
+        threads.emplace_back(processPartHitsFromDetails, std::ref(toTry),
+                             endTime, std::ref(results), this,
+                             std::ref(mostRecentTry), lastTry, std::ref(pbar),
+                             std::ref(numHitsFound));
       }
       for (auto &t : threads) {
         t.join();

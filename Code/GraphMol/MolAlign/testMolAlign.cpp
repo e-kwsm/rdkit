@@ -204,12 +204,12 @@ void test2AtomMap() {
       rdbase + "/Code/GraphMol/MolAlign/test_data/1oir_conf.mol";
   ROMol *m2 = MolFileToMol(fname2);
   MatchVectType atomMap;
-  atomMap.push_back(std::pair<int, int>(18, 27));
-  atomMap.push_back(std::pair<int, int>(13, 23));
-  atomMap.push_back(std::pair<int, int>(21, 14));
-  atomMap.push_back(std::pair<int, int>(24, 7));
-  atomMap.push_back(std::pair<int, int>(9, 19));
-  atomMap.push_back(std::pair<int, int>(16, 30));
+  atomMap.emplace_back(18, 27);
+  atomMap.emplace_back(13, 23);
+  atomMap.emplace_back(21, 14);
+  atomMap.emplace_back(24, 7);
+  atomMap.emplace_back(9, 19);
+  atomMap.emplace_back(16, 30);
   double rmsd = MolAlign::alignMol(*m2, *m1, 0, 0, &atomMap);
   TEST_ASSERT(RDKit::feq(rmsd, 0.8525));
   delete m1;
@@ -224,12 +224,12 @@ void test3Weights() {
       rdbase + "/Code/GraphMol/MolAlign/test_data/1oir_conf.mol";
   ROMol *m2 = MolFileToMol(fname2);
   MatchVectType atomMap;
-  atomMap.push_back(std::pair<int, int>(18, 27));
-  atomMap.push_back(std::pair<int, int>(13, 23));
-  atomMap.push_back(std::pair<int, int>(21, 14));
-  atomMap.push_back(std::pair<int, int>(24, 7));
-  atomMap.push_back(std::pair<int, int>(9, 19));
-  atomMap.push_back(std::pair<int, int>(16, 30));
+  atomMap.emplace_back(18, 27);
+  atomMap.emplace_back(13, 23);
+  atomMap.emplace_back(21, 14);
+  atomMap.emplace_back(24, 7);
+  atomMap.emplace_back(9, 19);
+  atomMap.emplace_back(16, 30);
 
   RDNumeric::DoubleVector wts(6);
   wts.setVal(0, 1.0);

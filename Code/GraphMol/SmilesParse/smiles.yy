@@ -317,7 +317,7 @@ mol: atomd {
   mp->addBond(atomIdx1,atomIdx2,
 	      SmilesParseOps::GetUnspecifiedBondType(mp,a1,mp->getAtomWithIdx(atomIdx2)));
   ++numBondsParsed;
-  branchPoints.push_back({atomIdx1, $2});
+  branchPoints.emplace_back(atomIdx1, $2);
 }
 | mol branch_open_token BOND_TOKEN atomd  {
   RWMol *mp = (*molList)[$$];
@@ -338,7 +338,7 @@ mol: atomd {
   ++numBondsParsed;
   mp->addBond($3,true);
 
-  branchPoints.push_back({atomIdx1, $2});
+  branchPoints.emplace_back(atomIdx1, $2);
 }
 | mol branch_open_token MINUS_TOKEN atomd {
   RWMol *mp = (*molList)[$$];
@@ -346,7 +346,7 @@ mol: atomd {
   int atomIdx2 = mp->addAtom($4,true,true);
   mp->addBond(atomIdx1,atomIdx2,Bond::SINGLE);
   ++numBondsParsed;
-  branchPoints.push_back({atomIdx1, $2});
+  branchPoints.emplace_back(atomIdx1, $2);
 }
 | mol GROUP_CLOSE_TOKEN {
   if(branchPoints.empty()){

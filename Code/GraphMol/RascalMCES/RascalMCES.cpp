@@ -108,8 +108,7 @@ void sortedDegreeSeqs(
     const ROMol &mol,
     std::map<int, std::vector<std::pair<int, int>>> &degSeqs) {
   for (const auto &a : mol.atoms()) {
-    degSeqs[a->getAtomicNum()].push_back(
-        std::make_pair(a->getDegree(), a->getIdx()));
+    degSeqs[a->getAtomicNum()].emplace_back(a->getDegree(), a->getIdx());
   }
   for (auto &it : degSeqs) {
     std::sort(it.second.begin(), it.second.end(),
@@ -467,7 +466,7 @@ void buildPairs(const ROMol &mol1, const std::vector<unsigned int> &vtxLabels1,
             !checkRingMatchesRing(mol1, i, mol2, j)) {
           continue;
         }
-        vtxPairs.push_back(std::make_pair(i, j));
+        vtxPairs.emplace_back(i, j);
       }
     }
   }
@@ -641,8 +640,7 @@ bool deltaYInClique(const std::vector<unsigned int> &clique, const ROMol &mol1,
   // if no delta-y exchange has occurred.
   std::vector<std::pair<int, int>> bondMatches;
   for (auto mem : clique) {
-    bondMatches.push_back(
-        std::make_pair(vtxPairs[mem].first, vtxPairs[mem].second));
+    bondMatches.emplace_back(vtxPairs[mem].first, vtxPairs[mem].second);
   }
   std::vector<int> cliqueDegs1(mol1.getNumAtoms(), 0);
   std::vector<int> cliqueDegs2(mol2.getNumAtoms(), 0);
@@ -1125,13 +1123,13 @@ std::vector<RascalResult> findMCES(RascalStartPoint &starter,
   }
   std::vector<RascalResult> results;
   for (const auto &c : maxCliques) {
-    results.push_back(
-        RascalResult(*starter.d_mol1, *starter.d_mol2, starter.d_adjMatrix1,
-                     starter.d_adjMatrix2, c, starter.d_vtxPairs, timedOut,
-                     starter.d_swapped, starter.d_tier1Sim, starter.d_tier2Sim,
-                     opts.ringMatchesRingOnly, opts.singleLargestFrag,
-                     opts.maxFragSeparation, opts.exactConnectionsMatch,
-                     opts.equivalentAtoms, opts.ignoreBondOrders));
+    results.emplace_back(*starter.d_mol1, *starter.d_mol2, starter.d_adjMatrix1,
+                         starter.d_adjMatrix2, c, starter.d_vtxPairs, timedOut,
+                         starter.d_swapped, starter.d_tier1Sim,
+                         starter.d_tier2Sim, opts.ringMatchesRingOnly,
+                         opts.singleLargestFrag, opts.maxFragSeparation,
+                         opts.exactConnectionsMatch, opts.equivalentAtoms,
+                         opts.ignoreBondOrders);
   }
   if (opts.singleLargestFrag) {
     std::sort(

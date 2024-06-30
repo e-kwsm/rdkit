@@ -250,10 +250,20 @@ M  END
   ff->initialize();
   TEST_ASSERT(ff);
 
+<<<<<<< HEAD
   auto c =
       std::make_unique<ForceFields::CrystalFF::PlanarityContribs>(ff.get());
   c->addContrib(1, 0, 2, 3, 1.0);
   ff->contribs().push_back(std::move(c));
+||||||| parent of 63ae3933a (fixup! modernize-use-emplace)
+  auto c = std::make_unique<ForceFields::CrystalFF::PlanarityContribs>(ff.get());
+  c->addContrib(1,0,2,3,1.0);
+  ff->contribs().push_back(std::move(c));
+=======
+  auto c = std::make_unique<ForceFields::CrystalFF::PlanarityContribs>(ff.get());
+  c->addContrib(1,0,2,3,1.0);
+  ff->contribs().emplace_back(std::move(c));
+>>>>>>> 63ae3933a (fixup! modernize-use-emplace)
 
   TEST_ASSERT(ff->calcEnergy() > 1.0);
   const double delta = ForceFields::calcFiniteDifference(*ff);

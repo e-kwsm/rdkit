@@ -643,8 +643,8 @@ TEST_CASE("CDXML") {
           "[#6]1:[#6]:[#6]:[#6]:[#6]:[#6]:1-*",
       };
       if (hasChemDrawCDXSupport()) {
-        expected.push_back("*c1cccnc1");
-        expected_smarts.push_back("[#6]1:[#6]:[#6]:[#7]:[#6]:[#6]:1-[!#1]");
+        expected.emplace_back("*c1cccnc1");
+        expected_smarts.emplace_back("[#6]1:[#6]:[#6]:[#7]:[#6]:[#6]:1-[!#1]");
       }
       auto mols = MolsFromCDXMLFile(fname);
       REQUIRE(mols.size() == expected.size());

@@ -408,10 +408,9 @@ bool SynthonSpaceShapeSearcher::extraSearchSetup(
     size_t start = 0;
     std::vector<std::thread> threads;
     for (unsigned int i = 0U; i < numThreads; ++i, start += eachThread) {
-      threads.push_back(std::thread(generateSomeShapes, std::ref(fragsForShape),
-                                    start, start + eachThread,
-                                    std::ref(*queryCp), allFeatures, endTime,
-                                    std::ref(d_fragShapesPool)));
+      threads.emplace_back(generateSomeShapes, std::ref(fragsForShape), start,
+                           start + eachThread, std::ref(*queryCp), allFeatures,
+                           endTime, std::ref(d_fragShapesPool));
     }
     for (auto &t : threads) {
       t.join();
@@ -784,7 +783,7 @@ bool SynthonSpaceShapeSearcher::computeFragSynthonSims(
       // than the largest SynthonSet the synthon is in, we won't ever
       // need to know the similarity between them, so skip.
       if (mfss <= synthon.second->getMaxSynthonSetSize()) {
-        toDo.push_back(std::make_pair(fragShape.get(), synthon.second.get()));
+        toDo.emplace_back(fragShape.get(), synthon.second.get());
       }
       if (toDo.size() == 2500000) {
         processShapeSynthonList(toDo, threshold, endTime, d_fragSynthonSims,
@@ -1248,7 +1247,7 @@ void SynthonSpaceShapeSearcher::processToTrySet(
     auto sim = approxSimilarity(tt.first, tt.second);
     if (sim >=
         getParams().similarityCutoff - getParams().approxSimilarityAdjuster) {
-      approxSims.push_back(std::make_pair(i, sim));
+      approxSims.emplace_back(i, sim);
     }
   }
   if (approxSims.empty()) {

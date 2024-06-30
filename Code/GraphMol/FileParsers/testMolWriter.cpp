@@ -35,7 +35,7 @@ void testSmilesWriter() {
       rdbase + "/Code/GraphMol/FileParsers/test_data/outSmiles.csv";
 
   STR_VECT propNames;
-  propNames.push_back(std::string("Column_2"));
+  propNames.emplace_back("Column_2");
   SmilesWriter *writer = new SmilesWriter(oname, " ");
   writer->setProps(propNames);
 
@@ -131,7 +131,7 @@ void testSmilesWriterNoNames() {
       rdbase + "/Code/GraphMol/FileParsers/test_data/outSmiles_molwriter.csv";
 
   STR_VECT propNames;
-  propNames.push_back(std::string("Column_2"));
+  propNames.emplace_back("Column_2");
   SmilesWriter *writer = new SmilesWriter(oname, " ", "");
   writer->setProps(propNames);
 
@@ -186,7 +186,7 @@ void testSmilesWriterClose() {
       rdbase + "/Code/GraphMol/FileParsers/test_data/outSmiles_molwriter.csv";
 
   STR_VECT propNames;
-  propNames.push_back(std::string("Column_2"));
+  propNames.emplace_back("Column_2");
   SmilesWriter *writer = new SmilesWriter(oname, " ", "");
   writer->setProps(propNames);
 
@@ -340,7 +340,7 @@ void testSmilesWriterStrm() {
   auto *oStream = new std::ofstream(oname.c_str());
 
   STR_VECT propNames;
-  propNames.push_back(std::string("Column_2"));
+  propNames.emplace_back("Column_2");
   SmilesWriter *writer = new SmilesWriter(oStream, " ");
   writer->setProps(propNames);
 

@@ -2652,7 +2652,7 @@ TEST_CASE("write metadata to PNG", "[writer][PNG]") {
         rdbase +
         "/Code/GraphMol/FileParsers/test_data/colchicine.no_metadata.png";
     std::vector<std::pair<std::string, std::string>> metadata;
-    metadata.push_back(std::make_pair(
+    metadata.emplace_back(
         PNGData::smilesTag,
         std::string(
             "COc1cc2c(-c3ccc(OC)c(=O)cc3[C@@H](NC(C)=O)CC2)c(OC)c1OC "
@@ -2664,7 +2664,7 @@ TEST_CASE("write metadata to PNG", "[writer][PNG]") {
             "1.97333,;-4.02577,3.3802,;-5.50431,3.63304,;-3.06754,4.53423,;-1."
             "15762,2.9429,;0.340111,3.02541,;2.23963,-0.530891,;1.98679,-2."
             "00943,;3.14082,-2.96766,;3.6465,-0.0105878,;4.80053,-0.968822,;4."
-            "54769,-2.44736,)|")));
+            "54769,-2.44736,)|"));
     auto pngData = addMetadataToPNGFile(fname, metadata);
     std::ofstream ofs("write_metadata.png");
     ofs.write(pngData.c_str(), pngData.size());
@@ -2981,7 +2981,7 @@ TEST_CASE("multiple molecules in the PNG", "[writer][PNG]") {
     for (const auto &mol : mols) {
       std::string pkl;
       MolPickler::pickleMol(*mol, pkl);
-      metadata.push_back(std::make_pair(PNGData::pklTag, pkl));
+      metadata.emplace_back(PNGData::pklTag, pkl);
     }
     // for the purposes of this test we'll add the metadata to an unrelated
     // PNG
@@ -3002,8 +3002,8 @@ TEST_CASE("multiple molecules in the PNG", "[writer][PNG]") {
     for (const auto &mol : mols) {
       std::string pkl = "BOGUS";
       // add bogus pickle data so we know that's not being read
-      metadata.push_back(std::make_pair(PNGData::pklTag, pkl));
-      metadata.push_back(std::make_pair(PNGData::smilesTag, MolToSmiles(*mol)));
+      metadata.emplace_back(PNGData::pklTag, pkl);
+      metadata.emplace_back(PNGData::smilesTag, MolToSmiles(*mol));
     }
     // for the purposes of this test we'll add the metadata to an unrelated
     // PNG
@@ -3046,8 +3046,8 @@ TEST_CASE("multiple molecules in the PNG, second example", "[writer][PNG]") {
     for (const auto &mol : mols) {
       std::string pkl = "BOGUS";
       // add bogus pickle data so we know that's not being read
-      metadata.push_back(std::make_pair(PNGData::pklTag, pkl));
-      metadata.push_back(std::make_pair(PNGData::smilesTag, MolToSmiles(*mol)));
+      metadata.emplace_back(PNGData::pklTag, pkl);
+      metadata.emplace_back(PNGData::smilesTag, MolToSmiles(*mol));
     }
     // for the purposes of this test we'll add the metadata to an unrelated
     // PNG

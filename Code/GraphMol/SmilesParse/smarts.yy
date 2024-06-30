@@ -353,7 +353,7 @@ mol: atomd {
   mp->addBond(newB);
   delete newB;
 
-  branchPoints.push_back({atomIdx1, $2});
+  branchPoints.emplace_back(atomIdx1, $2);
 }
 
 | mol branch_open_token bond_expr atomd  {
@@ -374,7 +374,7 @@ mol: atomd {
   }
   $3->setProp("_cxsmilesBondIdx",numBondsParsed++);
   mp->addBond($3,true);
-  branchPoints.push_back({atomIdx1, $2});
+  branchPoints.emplace_back(atomIdx1, $2);
 
 }
 
