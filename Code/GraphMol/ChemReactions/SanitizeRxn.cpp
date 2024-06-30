@@ -33,8 +33,7 @@
 #include <GraphMol/RDKitBase.h>
 #include <GraphMol/QueryAtom.h>
 
-namespace RDKit {
-namespace RxnOps {
+namespace RDKit::RxnOps {
 
 // molAtomMapNumber ==> int
 // molFileRLabel ==> unsigned int
@@ -430,5 +429,4 @@ void sanitizeRxnAsMols(ChemicalReaction &rxn, unsigned int sanitizeOps) {
   }
 }
 
-}  // namespace RxnOps
-}  // namespace RDKit
+}  // namespace RDKit::RxnOps

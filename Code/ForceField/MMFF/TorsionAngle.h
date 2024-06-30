@@ -20,8 +20,7 @@ namespace RDGeom {
 class Point3D;
 }
 
-namespace ForceFields {
-namespace MMFF {
+namespace ForceFields::MMFF {
 class MMFFTor;
 
 //! the torsion term for MMFF
@@ -80,6 +79,6 @@ RDKIT_FORCEFIELD_EXPORT void calcTorsionGrad(RDGeom::Point3D *r,
                                              double **g, double &sinTerm,
                                              double &cosPhi);
 }  // namespace Utils
-}  // namespace MMFF
-}  // namespace ForceFields
+}  // namespace ForceFields::MMFF
+
 #endif

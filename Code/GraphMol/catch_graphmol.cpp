@@ -2365,15 +2365,15 @@ TEST_CASE("conformer details") {
 }
 
 #if !defined(_WIN32) || !defined(RDKIT_DYN_LINK)
-namespace RDKit {
-namespace Canon {
+
+namespace RDKit::Canon {
 namespace details {
 bool atomHasFourthValence(const Atom *atom);
 bool hasSingleHQuery(const Atom::QUERYATOM_QUERY *q);
 }  // namespace details
 void switchBondDir(Bond *bond);
-}  // namespace Canon
-}  // namespace RDKit
+}  // namespace RDKit::Canon
+
 TEST_CASE("canon details") {
   SECTION("h queries") {
     std::vector<std::pair<std::string, bool>> examples{

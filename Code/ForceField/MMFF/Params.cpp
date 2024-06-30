@@ -24,8 +24,7 @@
 
 typedef boost::tokenizer<boost::char_separator<char>> tokenizer;
 
-namespace ForceFields {
-namespace MMFF {
+namespace ForceFields::MMFF {
 
 const std::vector<std::uint8_t> defaultMMFFArom = {
     37, 38, 39, 44, 58, 59, 63, 64, 65, 66, 69, 76, 78, 79, 80, 81, 82};
@@ -8411,5 +8410,4 @@ const std::string defaultMMFFVdW =
     "97	0.35	6.0	4.0	1.4	-	CU+1	X94\n"
     "98	0.40	6.0	4.0	1.4	-	CU+2	X94\n"
     "99	0.35	3.5	4.0	1.3	-	MG+2	X94\n";
-}  // end of namespace MMFF
-}  // end of namespace ForceFields
+}  // namespace ForceFields::MMFF

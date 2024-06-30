@@ -18,8 +18,7 @@
 #include <cassert>
 // #define VERBOSE_CANON 1
 
-namespace RDKit {
-namespace Canon {
+namespace RDKit::Canon {
 
 namespace {
 void flipIfNeeded(Bond::BondStereo &st1,
@@ -872,5 +871,4 @@ void chiralRankMolAtoms(const ROMol &mol, std::vector<unsigned int> &res) {
     mol.getRingInfo()->reset();
   }
 }
-}  // namespace Canon
-}  // namespace RDKit
+}  // namespace RDKit::Canon

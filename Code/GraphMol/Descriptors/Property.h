@@ -42,8 +42,7 @@
 #include <Query/Query.h>
 #include <RDGeneral/Exceptions.h>
 
-namespace RDKit {
-namespace Descriptors {
+namespace RDKit::Descriptors {
 struct RDKIT_DESCRIPTORS_EXPORT PropertyFunctor {
   // Registry of property functions
   //  See REGISTER_DESCRIPTOR
@@ -121,6 +120,6 @@ T *makePropertyQuery(const std::string &name, double what) {
 RDKIT_DESCRIPTORS_EXPORT PROP_RANGE_QUERY *makePropertyRangeQuery(
     const std::string &name, double min, double max);
 
-}  // namespace Descriptors
-}  // namespace RDKit
+}  // namespace RDKit::Descriptors
+
 #endif

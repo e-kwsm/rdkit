@@ -23,8 +23,7 @@
 #include <RDGeneral/export.h>
 #include <boost/dynamic_bitset.hpp>
 
-namespace RDKit {
-namespace Descriptors {
+namespace RDKit::Descriptors {
 
 //! Class for calculation of the Shrake and Rupley surface area and volume
 //! using the Double Cubic Lattice Method.
@@ -125,6 +124,6 @@ class RDKIT_DESCRIPTORS_EXPORT DoubleCubicLatticeVolume {
   bool testPoint(const RDGeom::Point3D &vect, double solvrad,
                  const std::vector<unsigned int> &nbrs);
 };
-}  // namespace Descriptors
-}  // namespace RDKit
+}  // namespace RDKit::Descriptors
+
 #endif
