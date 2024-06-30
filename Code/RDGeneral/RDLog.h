@@ -150,7 +150,7 @@ class RDKIT_RDGENERAL_EXPORT LogStateSetter : public boost::noncopyable {
 };
 
 inline void deprecationWarning(const std::string& message) {
-  BOOST_LOG(rdWarningLog) << "DEPRECATION WARNING: " << message << '\n';
+  BOOST_LOG(rdWarningLog) << "DEPRECATION WARNING: " << message << std::endl;
 }
 
 }  // namespace RDLog
