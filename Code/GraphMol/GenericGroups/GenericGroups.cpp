@@ -456,14 +456,14 @@ bool FusedRingMatch(const ROMol &mol, const Atom &atom,
 }  // namespace
 
 bool CarbocycloalkylAtomMatcher(const ROMol &mol, const Atom &atom,
-                                boost::dynamic_bitset<> ignore) {
+                                const boost::dynamic_bitset<> &ignore) {
   auto atomMatcher = [](const Atom &at) -> bool {
     return !at.getIsAromatic() && at.getAtomicNum() == 6;
   };
   auto bondMatcher = [](const Bond &bnd) -> bool {
     return !bnd.getIsAromatic() && bnd.getBondType() == Bond::BondType::SINGLE;
   };
-  return FusedRingMatch(mol, atom, std::move(ignore), atomMatcher, bondMatcher);
+  return FusedRingMatch(mol, atom, ignore, atomMatcher, bondMatcher);
 }
 
 bool CarbocycloalkylHAtomMatcher(const ROMol &mol, const Atom &atom,
@@ -476,7 +476,7 @@ bool CarbocycloalkylHAtomMatcher(const ROMol &mol, const Atom &atom,
 }
 
 bool CarbocycloalkenylAtomMatcher(const ROMol &mol, const Atom &atom,
-                                  boost::dynamic_bitset<> ignore) {
+                                  const boost::dynamic_bitset<> &ignore) {
   auto atomMatcher = [](const Atom &at) -> bool {
     return at.getAtomicNum() == 6;
   };
@@ -486,8 +486,8 @@ bool CarbocycloalkenylAtomMatcher(const ROMol &mol, const Atom &atom,
   };
   AtomMatcherFunc atLeastOne = nullptr;
   BondMatcherFunc bondMatcher = nullptr;
-  return FusedRingMatch(mol, atom, std::move(ignore), atomMatcher, bondMatcher,
-                        atLeastOne, atLeastOneBond);
+  return FusedRingMatch(mol, atom, ignore, atomMatcher, bondMatcher, atLeastOne,
+                        atLeastOneBond);
 }
 
 bool CarbocycloalkenylHAtomMatcher(const ROMol &mol, const Atom &atom,
@@ -500,14 +500,14 @@ bool CarbocycloalkenylHAtomMatcher(const ROMol &mol, const Atom &atom,
 }
 
 bool CarboarylAtomMatcher(const ROMol &mol, const Atom &atom,
-                          boost::dynamic_bitset<> ignore) {
+                          const boost::dynamic_bitset<> &ignore) {
   auto atomMatcher = [](const Atom &at) -> bool {
     return at.getIsAromatic() && at.getAtomicNum() == 6;
   };
   auto bondMatcher = [](const Bond &bnd) -> bool {
     return bnd.getIsAromatic() || bnd.getBondType() == Bond::BondType::AROMATIC;
   };
-  return FusedRingMatch(mol, atom, std::move(ignore), atomMatcher, bondMatcher);
+  return FusedRingMatch(mol, atom, ignore, atomMatcher, bondMatcher);
 }
 
 bool CarboarylHAtomMatcher(const ROMol &mol, const Atom &atom,
@@ -520,11 +520,11 @@ bool CarboarylHAtomMatcher(const ROMol &mol, const Atom &atom,
 }
 
 bool CarbocyclicAtomMatcher(const ROMol &mol, const Atom &atom,
-                            boost::dynamic_bitset<> ignore) {
+                            const boost::dynamic_bitset<> &ignore) {
   auto atomMatcher = [](const Atom &at) -> bool {
     return at.getAtomicNum() == 6;
   };
-  return FusedRingMatch(mol, atom, std::move(ignore), atomMatcher);
+  return FusedRingMatch(mol, atom, ignore, atomMatcher);
 }
 
 bool CarbocyclicHAtomMatcher(const ROMol &mol, const Atom &atom,
@@ -537,11 +537,11 @@ bool CarbocyclicHAtomMatcher(const ROMol &mol, const Atom &atom,
 }
 
 bool NoCarbonRingAtomMatcher(const ROMol &mol, const Atom &atom,
-                             boost::dynamic_bitset<> ignore) {
+                             const boost::dynamic_bitset<> &ignore) {
   auto atomMatcher = [](const Atom &at) -> bool {
     return at.getAtomicNum() != 6;
   };
-  return FusedRingMatch(mol, atom, std::move(ignore), atomMatcher);
+  return FusedRingMatch(mol, atom, ignore, atomMatcher);
 }
 
 bool NoCarbonRingHAtomMatcher(const ROMol &mol, const Atom &atom,
@@ -554,7 +554,7 @@ bool NoCarbonRingHAtomMatcher(const ROMol &mol, const Atom &atom,
 }
 
 bool HeterocyclicAtomMatcher(const ROMol &mol, const Atom &atom,
-                             boost::dynamic_bitset<> ignore) {
+                             const boost::dynamic_bitset<> &ignore) {
   auto atLeastOne = [](const Atom &at) -> bool {
     return at.getAtomicNum() != 6 && at.getAtomicNum() != 1;
   };
@@ -562,7 +562,7 @@ bool HeterocyclicAtomMatcher(const ROMol &mol, const Atom &atom,
   AtomMatcherFunc oneAtomPerRing = nullptr;
   BondMatcherFunc bondMatcher = nullptr;
   BondMatcherFunc oneBondPerRing = nullptr;
-  return FusedRingMatch(mol, atom, std::move(ignore), atomMatcher, bondMatcher,
+  return FusedRingMatch(mol, atom, ignore, atomMatcher, bondMatcher,
                         oneAtomPerRing, oneBondPerRing, atLeastOne);
 }
 
@@ -576,7 +576,7 @@ bool HeterocyclicHAtomMatcher(const ROMol &mol, const Atom &atom,
 }
 
 bool HeteroarylAtomMatcher(const ROMol &mol, const Atom &atom,
-                           boost::dynamic_bitset<> ignore) {
+                           const boost::dynamic_bitset<> &ignore) {
   auto atomMatcher = [](const Atom &at) -> bool { return at.getIsAromatic(); };
   auto bondMatcher = [](const Bond &bnd) -> bool {
     return bnd.getIsAromatic() || bnd.getBondType() == Bond::BondType::AROMATIC;
@@ -586,7 +586,7 @@ bool HeteroarylAtomMatcher(const ROMol &mol, const Atom &atom,
   };
   AtomMatcherFunc oneAtomPerRing = nullptr;
   BondMatcherFunc oneBondPerRing = nullptr;
-  return FusedRingMatch(mol, atom, std::move(ignore), atomMatcher, bondMatcher,
+  return FusedRingMatch(mol, atom, ignore, atomMatcher, bondMatcher,
                         oneAtomPerRing, oneBondPerRing, atLeastOne);
 }
 
@@ -600,14 +600,14 @@ bool HeteroarylHAtomMatcher(const ROMol &mol, const Atom &atom,
 }
 
 bool CyclicAtomMatcher(const ROMol &mol, const Atom &atom,
-                       boost::dynamic_bitset<> ignore) {
+                       const boost::dynamic_bitset<> &ignore) {
   if (!mol.getRingInfo() || !mol.getRingInfo()->isFindFastOrBetter()) {
     MolOps::fastFindRings(mol);
   }
   auto atomMatcher = [](const Atom &at) -> bool {
     return at.getOwningMol().getRingInfo()->numAtomRings(at.getIdx()) > 0;
   };
-  return FusedRingMatch(mol, atom, std::move(ignore), atomMatcher);
+  return FusedRingMatch(mol, atom, ignore, atomMatcher);
 }
 
 bool CyclicHAtomMatcher(const ROMol &mol, const Atom &atom,
@@ -658,8 +658,8 @@ bool PolAtomMatcher(const ROMol &, const Atom &atom,
 }
 
 bool RAtomMatcher(const ROMol &mol, const Atom &atom,
-                  boost::dynamic_bitset<> ignore) {
-  return GroupHAtomMatcher(mol, atom, std::move(ignore));
+                  const boost::dynamic_bitset<> &ignore) {
+  return GroupHAtomMatcher(mol, atom, ignore);
 }
 
 }  // namespace Matchers
