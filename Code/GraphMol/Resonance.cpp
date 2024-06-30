@@ -67,15 +67,11 @@ class CEMetrics {
 };
 
 struct CEStats {
-  CEStats()
-      : d_init(false),
-        d_haveNoCationsRightOfN(false),
-        d_haveNoChargeSeparation(false),
-        d_minNbMissing(0) {}
-  bool d_init;
-  bool d_haveNoCationsRightOfN;
-  bool d_haveNoChargeSeparation;
-  unsigned int d_minNbMissing;
+  CEStats() {}
+  bool d_init{false};
+  bool d_haveNoCationsRightOfN{false};
+  bool d_haveNoChargeSeparation{false};
+  unsigned int d_minNbMissing{0};
 };
 
 class ConjElectrons {
@@ -141,12 +137,12 @@ class ConjElectrons {
 
  private:
   unsigned int d_groupIdx;
-  unsigned int d_totalElectrons;
+  unsigned int d_totalElectrons{0};
   unsigned int d_currElectrons;
-  unsigned int d_numFormalCharges;
-  int d_totalFormalCharge;
+  unsigned int d_numFormalCharges{0};
+  int d_totalFormalCharge{0};
   int d_allowedChgLeftOfN;
-  std::uint8_t d_flags;
+  std::uint8_t d_flags{0};
   CEMetrics d_ceMetrics;
   ConjBondMap d_conjBondMap;
   ConjAtomMap d_conjAtomMap;
@@ -514,12 +510,7 @@ void BondElectrons::setOrder(unsigned int bo) {
 // object constructor
 ConjElectrons::ConjElectrons(ResonanceMolSupplier *parent,
                              unsigned int groupIdx)
-    : d_groupIdx(groupIdx),
-      d_totalElectrons(0),
-      d_numFormalCharges(0),
-      d_totalFormalCharge(0),
-      d_flags(0),
-      d_parent(parent) {
+    : d_groupIdx(groupIdx), d_parent(parent) {
   const ROMol &mol = d_parent->mol();
   unsigned int nb = mol.getNumBonds();
   unsigned int na = mol.getNumAtoms();
@@ -1347,12 +1338,7 @@ void ResonanceMolSupplier::prepEnumIdxVect() {
 // object constructor
 ResonanceMolSupplier::ResonanceMolSupplier(ROMol &mol, unsigned int flags,
                                            unsigned int maxStructs)
-    : d_nConjGrp(0),
-      d_flags(flags),
-      d_idx(0),
-      d_numThreads(1),
-      d_isEnumerated(false),
-      d_wasCanceled(false) {
+    : d_flags(flags) {
   const unsigned int MAX_STRUCTS = 1000000;
   if (d_flags & UNCONSTRAINED_CATIONS) {
     d_flags |= (ALLOW_CHARGE_SEPARATION | ALLOW_INCOMPLETE_OCTETS);

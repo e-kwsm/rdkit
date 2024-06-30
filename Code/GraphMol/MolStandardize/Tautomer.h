@@ -166,7 +166,7 @@ class RDKIT_MOLSTANDARDIZE_EXPORT TautomerEnumeratorResult {
    private:
     SmilesTautomerMap::const_iterator d_it;
   };
-  TautomerEnumeratorResult() : d_status(TautomerEnumeratorStatus::Completed) {}
+  TautomerEnumeratorResult() {}
   TautomerEnumeratorResult(const TautomerEnumeratorResult &other)
       : d_tautomers(other.d_tautomers),
         d_status(other.d_status),
@@ -224,7 +224,7 @@ class RDKIT_MOLSTANDARDIZE_EXPORT TautomerEnumeratorResult {
   std::vector<SmilesTautomerMap::const_iterator> d_tautomersItVec;
   // status of the enumeration: did it complete? did it hit a limit?
   // was it canceled?
-  TautomerEnumeratorStatus d_status;
+  TautomerEnumeratorStatus d_status{TautomerEnumeratorStatus::Completed};
   // bit vector: flags atoms modified by the transforms
   boost::dynamic_bitset<> d_modifiedAtoms;
   // bit vector: flags bonds modified by the transforms

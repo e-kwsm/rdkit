@@ -31,19 +31,14 @@ class RDKIT_RDGENERAL_EXPORT rdLogger {
  public:
   std::ostream *dp_dest;
   bool df_owner;
-  bool df_enabled;
+  bool df_enabled{true};
 
-  std::ofstream *dp_teeHelperStream;
-  RDTee *tee;
-  RDTeeStream *teestream;
+  std::ofstream *dp_teeHelperStream{nullptr};
+  RDTee *tee{nullptr};
+  RDTeeStream *teestream{nullptr};
 
   rdLogger(std::ostream *dest, bool owner = false)
-      : dp_dest(dest),
-        df_owner(owner),
-        df_enabled(true),
-        dp_teeHelperStream(nullptr),
-        tee(nullptr),
-        teestream(nullptr) {}
+      : dp_dest(dest), df_owner(owner) {}
 
   //! Sets a stream to tee the output to.
   void SetTee(std::ostream &stream) {
