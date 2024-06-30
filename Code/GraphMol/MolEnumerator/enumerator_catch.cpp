@@ -383,7 +383,7 @@ M  END)CTAB"_ctab;
     MolEnumerator::LinkNodeOp op;
     op.initFromMol(*mol);
     auto vcnts = op.getVariationCounts();
-    REQUIRE(vcnts.size() == 0);
+    REQUIRE(vcnts.empty());
   }
 
   SECTION("enumeration basics 1") {
@@ -430,7 +430,7 @@ M  END)CTAB"_ctab;
     ps.dp_operation = std::shared_ptr<MolEnumerator::MolEnumeratorOp>(
         new MolEnumerator::LinkNodeOp());
     auto bundle = MolEnumerator::enumerate(*mol, ps);
-    CHECK(bundle.size() == 0);
+    CHECK(bundle.empty());
   }
 }
 
@@ -510,7 +510,7 @@ M  END
   SECTION("edges1") {
     std::vector<MolEnumerator::MolEnumeratorParams> paramsList;
     auto bundle = MolEnumerator::enumerate(*mol1, paramsList);
-    CHECK(bundle.size() == 0);
+    CHECK(bundle.empty());
   }
   SECTION("edges2") {
     std::vector<MolEnumerator::MolEnumeratorParams> paramsList;
@@ -525,7 +525,7 @@ M  END
     paramsList.push_back(linkParams);
     auto mol = "c1ccccc1"_smiles;
     auto bundle = MolEnumerator::enumerate(*mol, paramsList);
-    CHECK(bundle.size() == 0);
+    CHECK(bundle.empty());
   }
 }
 
