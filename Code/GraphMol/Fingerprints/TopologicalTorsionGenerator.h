@@ -38,11 +38,10 @@ class RDKIT_FINGERPRINTS_EXPORT TopologicalTorsionArguments
    \param fpSize size of the generated fingerprint, does not affect the sparse
    versions
    */
-  TopologicalTorsionArguments(const bool includeChirality,
-                              const uint32_t torsionAtomCount,
-                              const bool countSimulation,
-                              const std::vector<std::uint32_t> countBounds,
-                              const std::uint32_t fpSize);
+  TopologicalTorsionArguments(bool includeChirality, uint32_t torsionAtomCount,
+                              bool countSimulation,
+                              std::vector<std::uint32_t> countBounds,
+                              std::uint32_t fpSize);
 };
 
 template <typename OutputType>
@@ -57,8 +56,8 @@ class RDKIT_FINGERPRINTS_EXPORT TopologicalTorsionAtomEnv
       const std::vector<std::uint32_t> *atomInvariants,  // unused
       const std::vector<std::uint32_t> *bondInvariants,  // unused
       AdditionalOutput *additionalOutput,                // unused
-      const bool hashResults = false,                    // unused
-      const std::uint64_t fpSize = 0                     // unused
+      bool hashResults = false,                          // unused
+      std::uint64_t fpSize = 0                           // unused
   ) const override;
   void updateAdditionalOutput(AdditionalOutput *output,
                               size_t bitId) const override;
@@ -78,11 +77,11 @@ class RDKIT_FINGERPRINTS_EXPORT TopologicalTorsionEnvGenerator
   std::vector<AtomEnvironment<OutputType> *> getEnvironments(
       const ROMol &mol, FingerprintArguments *arguments,
       const std::vector<std::uint32_t> *fromAtoms,
-      const std::vector<std::uint32_t> *ignoreAtoms, const int confId,
+      const std::vector<std::uint32_t> *ignoreAtoms, int confId,
       const AdditionalOutput *additionalOutput,
       const std::vector<std::uint32_t> *atomInvariants,
       const std::vector<std::uint32_t> *bondInvariants,
-      const bool hashResults = false) const override;
+      bool hashResults = false) const override;
 
   std::string infoString() const override;
   OutputType getResultSize() const override;

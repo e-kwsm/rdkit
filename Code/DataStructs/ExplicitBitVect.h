@@ -40,7 +40,7 @@ class RDKIT_DATASTRUCTS_EXPORT ExplicitBitVect : public BitVect {
   //! construct from a string pickle
   ExplicitBitVect(const std::string &pkl);
   //! construct from a text pickle
-  ExplicitBitVect(const char *, const unsigned int);
+  ExplicitBitVect(const char *, unsigned int);
   //! construct directly from a dynamic_bitset pointer
   /// takes ownership of the pointer
   ExplicitBitVect(boost::dynamic_bitset<> *bits)
@@ -51,10 +51,10 @@ class RDKIT_DATASTRUCTS_EXPORT ExplicitBitVect : public BitVect {
   ~ExplicitBitVect() override;
 
   ExplicitBitVect &operator=(const ExplicitBitVect &other);
-  bool operator[](const unsigned int which) const override;
-  bool setBit(const unsigned int which) override;
-  bool unsetBit(const unsigned int which) override;
-  bool getBit(const unsigned int which) const override;
+  bool operator[](unsigned int which) const override;
+  bool setBit(unsigned int which) override;
+  bool unsetBit(unsigned int which) override;
+  bool getBit(unsigned int which) const override;
 
   ExplicitBitVect operator^(const ExplicitBitVect &other) const;
   ExplicitBitVect operator&(const ExplicitBitVect &other) const;
@@ -90,7 +90,7 @@ class RDKIT_DATASTRUCTS_EXPORT ExplicitBitVect : public BitVect {
  private:
   unsigned int d_size{0};
   unsigned int d_numOnBits{0};
-  void _initForSize(const unsigned int size) override;
+  void _initForSize(unsigned int size) override;
 };
 
 #endif
