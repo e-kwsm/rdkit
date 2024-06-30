@@ -57,6 +57,7 @@ void testRDKitValidation() {
       "greater than permitted",
       "INFO: [ValenceValidation] Explicit valence for atom # 5 N, 5, is "
       "greater than permitted"};
+  msgs1.reserve(errout3.size());
   for (const auto &msg : errout3) {
     msgs1.push_back(msg);
   }
@@ -71,6 +72,7 @@ void testRDKitValidation() {
   std::vector<string> ans2 = {
       "INFO: [ValenceValidation] Explicit valence for atom # 1 O, 3, is "
       "greater than permitted"};
+  msgs2.reserve(errout4.size());
   for (const auto &msg : errout4) {
     msgs2.push_back(msg);
   }
@@ -364,7 +366,7 @@ M  END
   mol.reset(MolBlockToMol(mblock, false, false));
   errout = features.validate(*mol, true);
   TEST_ASSERT(errout.size() == 1);
-  for (auto msg : errout) {
+  for (const auto &msg : errout) {
     cerr << msg << endl;
   }
   errmsg = errout[0];
@@ -398,7 +400,7 @@ M  END
   mol->getAtomWithIdx(0)->setAtomicNum(0);
   errout = features.validate(*mol, true);
   TEST_ASSERT(errout.size() == 1);
-  for (auto msg : errout) {
+  for (const auto &msg : errout) {
     cerr << msg << endl;
   }
   errmsg = errout[0];
@@ -431,7 +433,7 @@ M  END
   mol.reset(MolBlockToMol(mblock, false, false));
   errout = features.validate(*mol, true);
   TEST_ASSERT(errout.size() == 1);
-  for (auto msg : errout) {
+  for (const auto &msg : errout) {
     cerr << msg << endl;
   }
   errmsg = errout[0];
@@ -475,7 +477,7 @@ M  END
   mol.reset(MolBlockToMol(mblock, false, false));
   errout = features.validate(*mol, true);
   TEST_ASSERT(errout.size() == 6);
-  for (auto msg : errout) {
+  for (const auto &msg : errout) {
     cerr << msg << endl;
   }
   errmsg = errout[0];
@@ -515,7 +517,7 @@ M  END
   mol.reset(MolBlockToMol(mblock, false, false));
   errout = features.validate(*mol, true);
   TEST_ASSERT(errout.size() == 2);
-  for (auto msg : errout) {
+  for (const auto &msg : errout) {
     cerr << msg << endl;
   }
   errmsg = errout[0];
@@ -546,7 +548,7 @@ M  END
   mol.reset(MolBlockToMol(mblock, false, false));
   errout = features.validate(*mol, true);
   TEST_ASSERT(errout.size() == 1);
-  for (auto msg : errout) {
+  for (const auto &msg : errout) {
     cerr << msg << endl;
   }
   errmsg = errout[0];
@@ -587,7 +589,7 @@ M  END
   mol.reset(MolBlockToMol(mblock, false, false));
   errout = features.validate(*mol, true);
   TEST_ASSERT(errout.size() == 1);
-  for (auto msg : errout) {
+  for (const auto &msg : errout) {
     cerr << msg << endl;
   }
   errmsg = errout[0];
@@ -1328,7 +1330,7 @@ M  END
   mol.reset(MolBlockToMol(mblock, false, false));
   Chirality::reapplyMolBlockWedging(*mol);
   errout = stereo.validate(*mol, true);
-  for (auto msg : errout) {
+  for (const auto &msg : errout) {
     cerr << msg << endl;
   }
   TEST_ASSERT(errout.size() == 0);
@@ -1365,7 +1367,7 @@ M  END
   mol.reset(MolBlockToMol(mblock, false, false));
   Chirality::reapplyMolBlockWedging(*mol);
   errout = stereo.validate(*mol, true);
-  for (auto msg : errout) {
+  for (const auto &msg : errout) {
     cerr << msg << endl;
   }
   TEST_ASSERT(errout.size() == 1);
@@ -1403,7 +1405,7 @@ M  END
   Chirality::reapplyMolBlockWedging(*mol);
   errout = stereo.validate(*mol, true);
   cerr << "here" << endl;
-  for (auto msg : errout) {
+  for (const auto &msg : errout) {
     cerr << msg << endl;
   }
   cerr << "there" << endl;
@@ -1448,7 +1450,7 @@ M  END
   mol.reset(MolBlockToMol(mblock, false, false));
   Chirality::reapplyMolBlockWedging(*mol);
   errout = stereo.validate(*mol, true);
-  for (auto msg : errout) {
+  for (const auto &msg : errout) {
     cerr << msg << endl;
   }
   TEST_ASSERT(errout.size() == 1);
@@ -1554,7 +1556,7 @@ M  END
   Chirality::reapplyMolBlockWedging(*mol);
   errout = stereo.validate(*mol, true);
 
-  for (auto msg : errout) {
+  for (const auto &msg : errout) {
     cerr << msg << endl;
   }
 
@@ -1603,7 +1605,7 @@ M  END
   Chirality::reapplyMolBlockWedging(*mol);
   errout = stereo.validate(*mol, true);
 
-  for (auto msg : errout) {
+  for (const auto &msg : errout) {
     cerr << msg << endl;
   }
 

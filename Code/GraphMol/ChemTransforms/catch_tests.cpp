@@ -542,8 +542,8 @@ TEST_CASE("Molzip with 2D coordinates", "[molzip]") {
     const auto zippedMatches = SubstructMatch(*zippedMol, *query);
     REQUIRE(molMatches.size() == 1);
     REQUIRE(zippedMatches.size() == 1);
-    const auto molMatch = molMatches[0];
-    const auto zippedMatch = zippedMatches[0];
+    const auto &molMatch = molMatches[0];
+    const auto &zippedMatch = zippedMatches[0];
     for (size_t j = 0; j < molMatch.size(); j++) {
       const auto &position1 = molConformer.getAtomPos(molMatch[i].second);
       const auto &position2 = zippedConformer.getAtomPos(zippedMatch[i].second);
@@ -559,7 +559,8 @@ TEST_CASE("Molzip with split rings from rgroup", "[molzip]") {
   std::vector<std::string> frags = {"[*:1]CC[*:2]", "[*:1]NN[*:2]",
                                     "[*:1]NN[*:2]"};
   std::vector<ROMOL_SPTR> mols;
-  for (auto smi : frags) {
+  mols.reserve(frags.size());
+  for (const auto &smi : frags) {
     mols.push_back(ROMOL_SPTR(SmilesToMol(smi)));
   }
   const auto zippedMol = molzip(mols);

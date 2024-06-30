@@ -18,6 +18,8 @@
 #include <ML/InfoTheory/CorrMatGenerator.h>
 #include <RDGeneral/types.h>
 
+#include <utility>
+
 namespace python = boost::python;
 
 namespace RDInfoTheory {
@@ -33,7 +35,7 @@ PyObject *getCorrMatrix(BitCorrMatGenerator *cmGen) {
 }
 
 void setBitList(BitCorrMatGenerator *cmGen, python::object bitList) {
-  PySequenceHolder<int> blist(bitList);
+  PySequenceHolder<int> blist(std::move(bitList));
   unsigned int nb = blist.size();
   RDKit::INT_VECT res;
   res.reserve(nb);
@@ -43,7 +45,7 @@ void setBitList(BitCorrMatGenerator *cmGen, python::object bitList) {
   cmGen->setBitIdList(res);
 }
 
-void CollectVotes(BitCorrMatGenerator *cmGen, python::object bitVect) {
+void CollectVotes(BitCorrMatGenerator *cmGen, const python::object &bitVect) {
   python::extract<ExplicitBitVect> ebvWorks(bitVect);
   python::extract<SparseBitVect> sbvWorks(bitVect);
   if (ebvWorks.check()) {

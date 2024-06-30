@@ -60,6 +60,7 @@ void testCoresLabelledProperly() {
                                       "C1([*:1])CCC([*:2])CC1"};
 
   std::vector<ROMOL_SPTR> cores;
+  cores.reserve(coreSmi.size());
   for (const auto &s : coreSmi) {
     cores.emplace_back(SmartsToMol(s));
   }
@@ -86,7 +87,8 @@ void testCoresLabelledProperly() {
   }
 }
 
-std::pair<int, RData> makeRData(int attachment, std::vector<int> attachments,
+std::pair<int, RData> makeRData(int attachment,
+                                const std::vector<int> &attachments,
                                 const std::string &smiles) {
   auto rData = boost::make_shared<RGroupData>();
   auto mol = SmilesToMol(smiles);

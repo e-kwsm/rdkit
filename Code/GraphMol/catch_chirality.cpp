@@ -3281,7 +3281,7 @@ TEST_CASE(
   }
 }
 
-void testStereoValidationFromMol(std::string molBlock,
+void testStereoValidationFromMol(const std::string &molBlock,
                                  std::string expectedSmiles, bool legacyFlag,
                                  bool canonicalFlag = false) {
   RDKit::Chirality::setUseLegacyStereoPerception(legacyFlag);

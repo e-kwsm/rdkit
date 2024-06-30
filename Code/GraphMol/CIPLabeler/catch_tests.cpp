@@ -721,8 +721,8 @@ M  END
   }
 }
 
-void testOneAtropIomerMandP(std::string inputText, const std::string &expected,
-                            bool isSmiles = true) {
+void testOneAtropIomerMandP(const std::string &inputText,
+                            const std::string &expected, bool isSmiles = true) {
   std::unique_ptr<RWMol> mol;
 
   if (isSmiles) {
@@ -863,7 +863,7 @@ TEST_CASE("atropisomers", "[basic]") {
         "Sotorasib_atrop2.sdf",  "ZM374979_atrop1.sdf",
         "ZM374979_atrop2.sdf"};
 
-    for (auto file : files) {
+    for (const auto &file : files) {
       auto fName =
           rdbase + "/Code/GraphMol/FileParsers/test_data/atropisomers/" + file;
 

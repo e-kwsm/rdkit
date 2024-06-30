@@ -114,13 +114,13 @@ class MarvinCMLReader {
     }
 
     // convert atoms to queries:
-    for (auto mol : rxn->getReactants()) {
+    for (const auto &mol : rxn->getReactants()) {
       for (auto atom : mol->atoms()) {
         QueryOps::replaceAtomWithQueryAtom(static_cast<RWMol *>(mol.get()),
                                            atom);
       }
     }
-    for (auto mol : rxn->getProducts()) {
+    for (const auto &mol : rxn->getProducts()) {
       for (auto atom : mol->atoms()) {
         QueryOps::replaceAtomWithQueryAtom(static_cast<RWMol *>(mol.get()),
                                            atom);
@@ -558,6 +558,7 @@ class MarvinCMLReader {
       for (auto groupPtr : stereoGroups) {
         std::vector<Atom *> atoms;
         std::vector<Bond *> bonds;
+        atoms.reserve(groupPtr->atoms.size());
         for (auto atomPtr : groupPtr->atoms) {
           atoms.push_back(mol->getAtomWithIdx(atomPtr));
         }

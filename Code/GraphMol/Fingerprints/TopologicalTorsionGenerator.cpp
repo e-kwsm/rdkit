@@ -189,8 +189,7 @@ FingerprintGenerator<OutputType> *getTopologicalTorsionGenerator(
   auto *envGenerator = new TopologicalTorsionEnvGenerator<OutputType>();
 
   auto *arguments = new TopologicalTorsionArguments(
-      includeChirality, torsionAtomCount, countSimulation,
-      std::move(countBounds), fpSize);
+      includeChirality, torsionAtomCount, countSimulation, countBounds, fpSize);
 
   bool ownsAtomInvGenerator = ownsAtomInvGen;
   if (!atomInvariantsGenerator) {

@@ -1085,7 +1085,7 @@ void MarvinMolBase::pushOwnedAtom(MarvinAtom *atom) {
 void MarvinMolBase::pushOwnedBond(MarvinBond *bond) {
   PRECONDITION(bond, "bad bond");
   PRECONDITION(this->parent, "only sgroups should call the base class version");
-  this->parent->pushOwnedBond(std::move(bond));
+  this->parent->pushOwnedBond(bond);
 }
 
 void MarvinMolBase::removeOwnedAtom(MarvinAtom *atom) {
@@ -1145,6 +1145,7 @@ MarvinBond *MarvinMolBase::findBondByRef(const std::string &bondId) {
 
 const std::vector<std::string> MarvinMolBase::getBondList() const {
   std::vector<std::string> bondList;
+  bondList.reserve(bonds.size());
   for (auto bond : bonds) {
     bondList.push_back(bond->id);
   }
@@ -1154,6 +1155,7 @@ const std::vector<std::string> MarvinMolBase::getBondList() const {
 
 const std::vector<std::string> MarvinMolBase::getAtomList() const {
   std::vector<std::string> atomList;
+  atomList.reserve(atoms.size());
   for (auto atom : atoms) {
     atomList.push_back(atom->id);
   }
@@ -4209,7 +4211,7 @@ MarvinRectangle::MarvinRectangle(const std::vector<MarvinRectangle> &rects) {
   lowerRight.x = -DBL_MAX;
   lowerRight.y = DBL_MAX;
 
-  for (auto rect : rects) {
+  for (const auto &rect : rects) {
     this->extend(rect);
   }
 }

@@ -102,8 +102,8 @@ void compareConfs(const ROMol *m, const ROMol *expected, int molConfId = -1,
     TEST_ASSERT(m->getAtomWithIdx(i)->getAtomicNum() ==
                 expected->getAtomWithIdx(i)->getAtomicNum());
 
-    RDGeom::Point3D pt1i = conf1.getAtomPos(i);
-    RDGeom::Point3D pt2i = conf2.getAtomPos(i);
+    const RDGeom::Point3D &pt1i = conf1.getAtomPos(i);
+    const RDGeom::Point3D &pt2i = conf2.getAtomPos(i);
     TEST_ASSERT((pt1i - pt2i).length() < 0.05);
   }
 }
@@ -748,8 +748,8 @@ TEST_CASE("Macrocycle bounds matrix") {
     auto cid = DGeomHelpers::EmbedMolecule(*mol, ps);
     CHECK(cid >= 0);
     const auto conf = mol->getConformer(cid);
-    RDGeom::Point3D pos_1 = conf.getAtomPos(1);
-    RDGeom::Point3D pos_4 = conf.getAtomPos(4);
+    const RDGeom::Point3D &pos_1 = conf.getAtomPos(1);
+    const RDGeom::Point3D &pos_4 = conf.getAtomPos(4);
     CHECK((pos_1 - pos_4).length() < 3.6);
     CHECK((pos_1 - pos_4).length() > 3.5);
   }
@@ -775,10 +775,10 @@ TEST_CASE("atropisomers and embedding") {
       Atropisomers::AtropAtomAndBondVec abvs[2];
       REQUIRE(Atropisomers::getAtropisomerAtomsAndBonds(mol->getBondWithIdx(7),
                                                         abvs, *mol));
-      auto pos_1 = conf.getAtomPos(7);
-      auto pos_2 = conf.getAtomPos(8);
-      auto pos_3 = conf.getAtomPos(1);
-      auto pos_4 = conf.getAtomPos(9);
+      const auto &pos_1 = conf.getAtomPos(7);
+      const auto &pos_2 = conf.getAtomPos(8);
+      const auto &pos_3 = conf.getAtomPos(1);
+      const auto &pos_4 = conf.getAtomPos(9);
       auto v2 = pos_2 - pos_1;
       auto v3 = pos_3 - pos_1;
       auto v4 = pos_4 - pos_1;
@@ -796,10 +796,10 @@ TEST_CASE("atropisomers and embedding") {
       Atropisomers::AtropAtomAndBondVec abvs[2];
       REQUIRE(Atropisomers::getAtropisomerAtomsAndBonds(mol2.getBondWithIdx(7),
                                                         abvs, mol2));
-      auto pos_1 = conf.getAtomPos(7);
-      auto pos_2 = conf.getAtomPos(8);
-      auto pos_3 = conf.getAtomPos(1);
-      auto pos_4 = conf.getAtomPos(9);
+      const auto &pos_1 = conf.getAtomPos(7);
+      const auto &pos_2 = conf.getAtomPos(8);
+      const auto &pos_3 = conf.getAtomPos(1);
+      const auto &pos_4 = conf.getAtomPos(9);
       auto v2 = pos_2 - pos_1;
       auto v3 = pos_3 - pos_1;
       auto v4 = pos_4 - pos_1;
@@ -844,6 +844,7 @@ TEST_CASE("atropisomers bulk") {
       for (auto cid : cids) {
         const auto conf = mol->getConformer(cid);
         std::vector<RDGeom::Point3D> pts;
+        pts.reserve(atropAtoms.size());
         for (auto idx : atropAtoms) {
           pts.push_back(conf.getAtomPos(idx));
         }
@@ -867,6 +868,7 @@ TEST_CASE("atropisomers bulk") {
       for (auto cid : cids) {
         const auto conf = mol->getConformer(cid);
         std::vector<RDGeom::Point3D> pts;
+        pts.reserve(atropAtoms.size());
         for (auto idx : atropAtoms) {
           pts.push_back(conf.getAtomPos(idx));
         }

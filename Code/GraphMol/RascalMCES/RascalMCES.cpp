@@ -302,10 +302,10 @@ void getBondLabels(const ROMol &mol1, const ROMol &mol2,
   // This results in loss of information, but that information is not currently
   // used anywhere.
   std::set<std::string> allLabels;
-  for (auto bl : tmpBondLabels1) {
+  for (const auto &bl : tmpBondLabels1) {
     allLabels.insert(bl);
   }
-  for (auto bl : tmpBondLabels2) {
+  for (const auto &bl : tmpBondLabels2) {
     allLabels.insert(bl);
   }
   auto recodeBondLabels = [&](std::vector<std::string> &strBondLabels,
@@ -600,6 +600,7 @@ bool deltaYInClique(const std::vector<unsigned int> &clique, const ROMol &mol1,
   // if they are involved in the clique.  When sorted, they will be the same
   // if no delta-y exchange has occurred.
   std::vector<std::pair<int, int>> bondMatches;
+  bondMatches.reserve(clique.size());
   for (auto mem : clique) {
     bondMatches.push_back(
         std::make_pair(vtxPairs[mem].first, vtxPairs[mem].second));
@@ -1113,6 +1114,7 @@ std::vector<RascalResult> findMCES(RascalStartPoint &starter,
     timedOut = true;
   }
   std::vector<RascalResult> results;
+  results.reserve(maxCliques.size());
   for (const auto &c : maxCliques) {
     results.push_back(
         RascalResult(*starter.d_mol1, *starter.d_mol2, starter.d_adjMatrix1,

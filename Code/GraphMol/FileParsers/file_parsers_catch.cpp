@@ -2758,6 +2758,7 @@ TEST_CASE("multiple molecules in the PNG", "[writer][PNG]") {
 
   std::vector<std::string> smiles = {"c1ccccc1", "CCCOC", "c1ncccc1"};
   std::vector<std::unique_ptr<ROMol>> mols;
+  mols.reserve(smiles.size());
   for (const auto &smi : smiles) {
     mols.emplace_back(SmilesToMol(smi));
   }
@@ -2811,6 +2812,7 @@ TEST_CASE("multiple molecules in the PNG, second example", "[writer][PNG]") {
 
   std::vector<std::string> smiles = {"c1ccccc1", "CCO", "CC(=O)O", "c1ccccn1"};
   std::vector<std::unique_ptr<ROMol>> mols;
+  mols.reserve(smiles.size());
   for (const auto &smi : smiles) {
     mols.emplace_back(SmilesToMol(smi));
   }
@@ -4724,7 +4726,7 @@ M  END)CTAB";
     };
     auto pos = molb.find(ptrn);
     REQUIRE(pos != std::string::npos);
-    for (auto alternative : alternatives) {
+    for (const auto &alternative : alternatives) {
       auto mb2 = molb.replace(pos, ptrn.size(), alternative);
       std::unique_ptr<RWMol> m(MolBlockToMol(mb2));
       REQUIRE(m);
@@ -7179,7 +7181,7 @@ void testFragmentation(const FragTest &fragTest) {
 
   unsigned int largestFragSize = 0;
   ROMol *largestFrag = nullptr;
-  for (auto frag : frags) {
+  for (const auto &frag : frags) {
     if (frag->getNumAtoms() > largestFragSize) {
       largestFragSize = frag->getNumAtoms();
       largestFrag = frag.get();
@@ -7231,7 +7233,7 @@ TEST_CASE("FragmentSgroupTest", "[bug][reader]") {
         FragTest("Sgroup_MUL_ParentInMiddle.sdf", true, true, 1, 1),
         FragTest("modification_sgroup.sdf", true, true, 2, 1),
     };
-    for (auto test : tests) {
+    for (const auto &test : tests) {
       testFragmentation(test);
     }
   };
