@@ -70,11 +70,11 @@ class RDKIT_DISTGEOMETRY_EXPORT FourthDimContribs
       grad[pid] += contrib.weight * pos[pid];
     }
   }
-  FourthDimContribs *copy() const override {
+  [[nodiscard]] FourthDimContribs *copy() const override {
     return new FourthDimContribs(*this);
   }
-  bool empty() const { return d_contribs.empty(); }
-  unsigned int size() const { return d_contribs.size(); }
+  [[nodiscard]] bool empty() const { return d_contribs.empty(); }
+  [[nodiscard]] unsigned int size() const { return d_contribs.size(); }
 
  private:
   std::vector<FourthDimContribsParams> d_contribs;

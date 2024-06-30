@@ -43,7 +43,7 @@ struct CartesianProduct {
     return increment(0);
   }
 
-  size_t value(const std::vector<size_t> &p) const {
+  [[nodiscard]] size_t value(const std::vector<size_t> &p) const {
     size_t v = 0;
     for (size_t i = 0; i < p.size(); ++i) {
       v += bases[i] * p[i];
@@ -80,7 +80,7 @@ class RDKIT_RGROUPDECOMPOSITION_EXPORT RGroupScorer {
   //! set the passed permutation and score as the best one
   void setBestPermutation(const std::vector<size_t> &permutation, double score);
   //! return the best permutation found so far
-  const std::vector<size_t> &getBestPermutation() const {
+  [[nodiscard]] const std::vector<size_t> &getBestPermutation() const {
     return d_saved.permutation;
   }
   //! called when process() starts to initialize State
@@ -96,9 +96,9 @@ class RDKIT_RGROUPDECOMPOSITION_EXPORT RGroupScorer {
   //! clear all stored tied permutations
   void clearTieStore();
   //! number of stored tied permutations
-  size_t tieStoreSize() const { return d_store.size(); }
+  [[nodiscard]] size_t tieStoreSize() const { return d_store.size(); }
   //! return the best score found so far
-  double getBestScore() const { return d_bestScore; }
+  [[nodiscard]] double getBestScore() const { return d_bestScore; }
 
  private:
   void restoreInitialState() { d_current = d_initial; }

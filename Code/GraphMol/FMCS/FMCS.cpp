@@ -366,7 +366,7 @@ class BondMatchOrderMatrix {
           MatchMatrix[Bond::FIVEANDAHALF][Bond::QUINTUPLE] = true;
     }
   }
-  inline bool isEqual(unsigned int i, unsigned int j) const {
+  [[nodiscard]] inline bool isEqual(unsigned int i, unsigned int j) const {
     return MatchMatrix[i][j];
   }
 };

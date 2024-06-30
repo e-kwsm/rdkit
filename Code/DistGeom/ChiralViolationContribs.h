@@ -75,11 +75,11 @@ class RDKIT_DISTGEOMETRY_EXPORT ChiralViolationContribs
   //! calculate the contribution of this contrib to the gradient at a given
   /// state
   void getGrad(double *pos, double *grad) const override;
-  ChiralViolationContribs *copy() const override {
+  [[nodiscard]] ChiralViolationContribs *copy() const override {
     return new ChiralViolationContribs(*this);
   }
-  bool empty() const { return d_contribs.empty(); }
-  unsigned int size() const { return d_contribs.size(); }
+  [[nodiscard]] bool empty() const { return d_contribs.empty(); }
+  [[nodiscard]] unsigned int size() const { return d_contribs.size(); }
 
  private:
   std::vector<ChiralViolationContribsParams> d_contribs;

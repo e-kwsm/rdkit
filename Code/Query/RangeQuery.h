@@ -37,11 +37,15 @@ class RDKIT_QUERY_EXPORT RangeQuery
   //! sets our upper bound
   void setUpper(MatchFuncArgType what) { this->d_upper = what; }
   //! returns our upper bound
-  const MatchFuncArgType getUpper() const { return this->d_upper; }
+  [[nodiscard]] const MatchFuncArgType getUpper() const {
+    return this->d_upper;
+  }
   //! sets our lower bound
   void setLower(MatchFuncArgType what) { this->d_lower = what; }
   //! returns our lower bound
-  const MatchFuncArgType getLower() const { return this->d_lower; }
+  [[nodiscard]] const MatchFuncArgType getLower() const {
+    return this->d_lower;
+  }
 
   //! sets whether or not the ends of the range are open
   void setEndsOpen(bool lower, bool upper) {
@@ -49,16 +53,16 @@ class RDKIT_QUERY_EXPORT RangeQuery
     this->df_upperOpen = upper;
   }
   //! returns the state of our ends (open or not)
-  std::pair<bool, bool> getEndsOpen() const {
+  [[nodiscard]] std::pair<bool, bool> getEndsOpen() const {
     return std::make_pair(this->df_lowerOpen, this->df_upperOpen);
   }
 
   //! sets our tolerance
   void setTol(MatchFuncArgType what) { this->d_tol = what; }
   //! returns our tolerance
-  const MatchFuncArgType getTol() const { return this->d_tol; }
+  [[nodiscard]] const MatchFuncArgType getTol() const { return this->d_tol; }
 
-  bool Match(const DataFuncArgType what) const override {
+  [[nodiscard]] bool Match(const DataFuncArgType what) const override {
     MatchFuncArgType mfArg =
         this->TypeConvert(what, Int2Type<needsConversion>());
     int lCmp = queryCmp(this->d_lower, mfArg, this->d_tol);
@@ -83,8 +87,8 @@ class RDKIT_QUERY_EXPORT RangeQuery
     }
   }
 
-  Query<MatchFuncArgType, DataFuncArgType, needsConversion> *copy()
-      const override {
+  [[nodiscard]] Query<MatchFuncArgType, DataFuncArgType, needsConversion> *
+  copy() const override {
     RangeQuery<MatchFuncArgType, DataFuncArgType, needsConversion> *res =
         new RangeQuery<MatchFuncArgType, DataFuncArgType, needsConversion>();
     res->setUpper(this->d_upper);
@@ -98,7 +102,7 @@ class RDKIT_QUERY_EXPORT RangeQuery
     return res;
   }
 
-  std::string getFullDescription() const override {
+  [[nodiscard]] std::string getFullDescription() const override {
     std::ostringstream res;
     res << this->getDescription();
     if (this->getNegation()) {

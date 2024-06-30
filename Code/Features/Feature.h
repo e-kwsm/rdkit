@@ -26,16 +26,16 @@ class ExplicitFeature {
                   const LOCTYPE &loc)
       : d_family(f), d_type(t), d_loc(loc) {}
 
-  const FAMILYMARKER &getFamily() const { return d_family; }
+  [[nodiscard]] const FAMILYMARKER &getFamily() const { return d_family; }
   void setFamily(const FAMILYMARKER &f) { d_family = f; }
 
-  const TYPEMARKER &getType() const { return d_type; }
+  [[nodiscard]] const TYPEMARKER &getType() const { return d_type; }
   void setType(const TYPEMARKER &t) { d_type = t; }
 
-  const LOCTYPE &getLoc() const { return d_loc; }
+  [[nodiscard]] const LOCTYPE &getLoc() const { return d_loc; }
   void setLoc(const LOCTYPE &loc) { d_loc = loc; }
 
-  const std::vector<LOCTYPE> &getDirs() const { return d_dirs; }
+  [[nodiscard]] const std::vector<LOCTYPE> &getDirs() const { return d_dirs; }
   std::vector<LOCTYPE> &getDirs() { return d_dirs; }
 
  private:
@@ -53,13 +53,13 @@ class ImplicitFeature {
   explicit ImplicitFeature(const FAMILYMARKER &f, const TYPEMARKER &t)
       : d_weightSum(0.0), d_family(f), d_type(t) {}
 
-  const FAMILYMARKER &getFamily() const { return d_family; }
+  [[nodiscard]] const FAMILYMARKER &getFamily() const { return d_family; }
   void setFamily(const FAMILYMARKER &f) { d_family = f; }
 
-  const TYPEMARKER &getType() const { return d_type; }
+  [[nodiscard]] const TYPEMARKER &getType() const { return d_type; }
   void setType(const TYPEMARKER &t) { d_type = t; }
 
-  LOCTYPE getLoc() const {
+  [[nodiscard]] LOCTYPE getLoc() const {
     PRECONDITION(d_weights.size() == d_locs.size(), "weight/locs mismatch");
     LOCTYPE accum;
     for (unsigned int i = 0; i < d_weights.size(); i++) {
@@ -80,7 +80,7 @@ class ImplicitFeature {
     d_weightSum = 0.0;
   }
 
-  const std::vector<LOCTYPE> &getDirs() const { return d_dirs; }
+  [[nodiscard]] const std::vector<LOCTYPE> &getDirs() const { return d_dirs; }
   std::vector<LOCTYPE> &getDirs() { return d_dirs; }
 
  private:

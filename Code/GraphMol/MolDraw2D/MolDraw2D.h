@@ -306,36 +306,38 @@ class RDKIT_MOLDRAW2D_EXPORT MolDraw2D {
   //! coordinate system.
   //! Prefers globalDrawTrans_ if it exists, otherwise
   //! uses drawMols_[activeMolIdx_].
-  virtual Point2D getDrawCoords(const Point2D &mol_cds) const;
+  [[nodiscard]] virtual Point2D getDrawCoords(const Point2D &mol_cds) const;
   //! returns the drawing coordinates of a particular atom
-  virtual Point2D getDrawCoords(int at_num) const;
+  [[nodiscard]] virtual Point2D getDrawCoords(int at_num) const;
   //! Prefers globalDrawTrans_ if it exists, otherwise
   //! uses drawMols_[activeMolIdx_].
-  virtual Point2D getAtomCoords(const std::pair<int, int> &screen_cds) const;
+  [[nodiscard]] virtual Point2D getAtomCoords(
+      const std::pair<int, int> &screen_cds) const;
   //! transform a point from drawing coordinates to the molecule coordinate
   //! system. Prefers globalDrawTrans_ if it exists, otherwise
   //! uses drawMols_[activeMolIdx_].
-  virtual Point2D getAtomCoords(
+  [[nodiscard]] virtual Point2D getAtomCoords(
       const std::pair<double, double> &screen_cds) const;
   //! returns the molecular coordinates of a particular atom.  at_num refers
   //! to the atom in activeMolIdx_.
-  virtual Point2D getAtomCoords(int at_num) const;
+  [[nodiscard]] virtual Point2D getAtomCoords(int at_num) const;
   //! @}
   //! returns the coordinates of the atoms of the activeMolIdx_ molecule in
   //! molecular coordinates.
-  const std::vector<Point2D> &atomCoords() const;
+  [[nodiscard]] const std::vector<Point2D> &atomCoords() const;
   //! returns the atomic symbols of the activeMolIdx_ molecule
-  const std::vector<std::pair<std::string, MolDraw2D_detail::OrientType>> &
+  [[nodiscard]] const std::vector<
+      std::pair<std::string, MolDraw2D_detail::OrientType>> &
   atomSyms() const;
 
   //! return the width of the drawing area.
-  int width() const { return width_; }
+  [[nodiscard]] int width() const { return width_; }
   //! return the height of the drawing area.
-  int height() const { return height_; }
+  [[nodiscard]] int height() const { return height_; }
   //! return the width of the drawing panels.
-  int panelWidth() const { return panel_width_; }
+  [[nodiscard]] int panelWidth() const { return panel_width_; }
   //! return the height of the drawing panels.
-  int panelHeight() const { return panel_height_; }
+  [[nodiscard]] int panelHeight() const { return panel_height_; }
 
   //! when FlexiMode is set, molecules will always be drawn
   //! with the default values for bond length, font size, etc.
@@ -346,15 +348,17 @@ class RDKIT_MOLDRAW2D_EXPORT MolDraw2D {
       panel_height_ = -1;
     }
   }
-  bool flexiMode() const { return flexiMode_; }
+  [[nodiscard]] bool flexiMode() const { return flexiMode_; }
 
-  int drawHeight() const { return panel_height_ - legend_height_; }
+  [[nodiscard]] int drawHeight() const {
+    return panel_height_ - legend_height_;
+  }
   // returns the width to draw a line in draw coords.
-  double getDrawLineWidth() const;
+  [[nodiscard]] double getDrawLineWidth() const;
 
   //! returns the drawing scale (conversion from molecular coords -> drawing
   /// coords)
-  double scale() const;
+  [[nodiscard]] double scale() const;
   //! explicitly sets the scaling factors for the drawing
   void setScale(double newScale);
   void setScale(int width, int height, const Point2D &minv, const Point2D &maxv,
@@ -365,32 +369,34 @@ class RDKIT_MOLDRAW2D_EXPORT MolDraw2D {
     y_offset_ = y;
   }
   //! returns the drawing offset (in drawing coords)
-  Point2D offset() const { return Point2D(x_offset_, y_offset_); }
+  [[nodiscard]] Point2D offset() const { return Point2D(x_offset_, y_offset_); }
 
   //! returns the minimum point of the drawing (in molecular coords)
-  Point2D minPt() const;
+  [[nodiscard]] Point2D minPt() const;
   //! returns the width and height of the grid (in molecular coords)
-  Point2D range() const;
+  [[nodiscard]] Point2D range() const;
 
   //! font size in drawing coordinate units. That's probably pixels.
-  virtual double fontSize() const;
+  [[nodiscard]] virtual double fontSize() const;
   virtual void setFontSize(double new_size);
 
   //! sets the current draw color
   virtual void setColour(const DrawColour &col) { curr_colour_ = col; }
   //! returns the current draw color
-  virtual DrawColour colour() const { return curr_colour_; }
+  [[nodiscard]] virtual DrawColour colour() const { return curr_colour_; }
   //! sets the current dash pattern
   virtual void setDash(const DashPattern &patt) { curr_dash_ = patt; }
   //! returns the current dash pattern
-  virtual const DashPattern &dash() const { return curr_dash_; }
+  [[nodiscard]] virtual const DashPattern &dash() const { return curr_dash_; }
 
   //! sets the current line width
   virtual void setLineWidth(double width) {
     drawOptions().bondLineWidth = width;
   }
   //! returns the current line width
-  virtual double lineWidth() const { return drawOptions().bondLineWidth; }
+  [[nodiscard]] virtual double lineWidth() const {
+    return drawOptions().bondLineWidth;
+  }
 
   //! using the current scale, work out the size of the label in molecule
   //! coordinates.
@@ -416,31 +422,31 @@ class RDKIT_MOLDRAW2D_EXPORT MolDraw2D {
   //! sense for all renderers.
   virtual void tagAtoms(const ROMol &mol) { RDUNUSED_PARAM(mol); }
   //! set whether or not polygons are being filled
-  virtual bool fillPolys() const { return fill_polys_; }
+  [[nodiscard]] virtual bool fillPolys() const { return fill_polys_; }
   //! returns either or not polygons should be filled
   virtual void setFillPolys(bool val) { fill_polys_ = val; }
 
   //! returns our current drawing options
   MolDrawOptions &drawOptions() { return options_; }
   //! \overload
-  const MolDrawOptions &drawOptions() const { return options_; }
+  [[nodiscard]] const MolDrawOptions &drawOptions() const { return options_; }
 
-  virtual bool supportsAnnotations() const { return true; }
+  [[nodiscard]] virtual bool supportsAnnotations() const { return true; }
 
   void setActiveMolIdx(int newIdx);
-  bool hasActiveAtmIdx() const { return activeAtmIdx1_ >= 0; }
-  int getActiveAtmIdx1() const { return activeAtmIdx1_; }
-  int getActiveAtmIdx2() const { return activeAtmIdx2_; }
+  [[nodiscard]] bool hasActiveAtmIdx() const { return activeAtmIdx1_ >= 0; }
+  [[nodiscard]] int getActiveAtmIdx1() const { return activeAtmIdx1_; }
+  [[nodiscard]] int getActiveAtmIdx2() const { return activeAtmIdx2_; }
   void setActiveAtmIdx(int at_idx1 = -1, int at_idx2 = -1);
-  bool hasActiveBndIdx() const { return activeBndIdx_ >= 0; }
-  int getActiveBndIdx() const { return activeBndIdx_; }
+  [[nodiscard]] bool hasActiveBndIdx() const { return activeBndIdx_ >= 0; }
+  [[nodiscard]] int getActiveBndIdx() const { return activeBndIdx_; }
   void setActiveBndIdx(int bnd_idx = -1) {
     activeBndIdx_ = (bnd_idx < 0 ? -1 : bnd_idx);
   }
   void setActiveClass(std::string actClass = std::string("")) {
     d_activeClass = actClass;
   }
-  std::string getActiveClass() const { return d_activeClass; }
+  [[nodiscard]] std::string getActiveClass() const { return d_activeClass; }
 
  protected:
   std::unique_ptr<MolDraw2D_detail::DrawText> text_drawer_;

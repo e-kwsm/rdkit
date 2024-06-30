@@ -217,7 +217,7 @@ struct PyCaptureErrorLog : boost::noncopyable {
       m_capturer.reset();
     }
   }
-  std::string messages() const {
+  [[nodiscard]] std::string messages() const {
     return m_capturer ? m_capturer->messages() : m_messages;
   }
 

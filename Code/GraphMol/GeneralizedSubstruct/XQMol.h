@@ -66,11 +66,11 @@ struct RDKIT_GENERALIZEDSUBSTRUCT_EXPORT ExtendedQueryMol {
   void initFromOther(const ExtendedQueryMol &other);
 
   ContainedType xqmol;
-  std::string toBinary() const;
-  std::string toJSON() const;
+  [[nodiscard]] std::string toBinary() const;
+  [[nodiscard]] std::string toJSON() const;
 
   // Query fingerprint
-  std::unique_ptr<ExplicitBitVect> patternFingerprintQuery(
+  [[nodiscard]] std::unique_ptr<ExplicitBitVect> patternFingerprintQuery(
       unsigned int fpSize = 2048U) const;
 };
 

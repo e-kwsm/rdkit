@@ -86,8 +86,10 @@ class ChiralAtomItem {
     }
   }
 
-  unsigned int getAtomId() const { return atomId; }
-  RDKit::Atom::ChiralType getChiralType() const { return chiralType; }
+  [[nodiscard]] unsigned int getAtomId() const { return atomId; }
+  [[nodiscard]] RDKit::Atom::ChiralType getChiralType() const {
+    return chiralType;
+  }
 
   bool operator<(const ChiralAtomItem &other) const {
     if (atomId < other.atomId) {
@@ -128,11 +130,13 @@ class ChiralBondItem {
   unsigned int atomId2;
 
  public:
-  unsigned int getBondId() const { return bondId; }
-  unsigned int getAtomId1() const { return atomId1; }
-  unsigned int getAtomId2() const { return atomId2; }
+  [[nodiscard]] unsigned int getBondId() const { return bondId; }
+  [[nodiscard]] unsigned int getAtomId1() const { return atomId1; }
+  [[nodiscard]] unsigned int getAtomId2() const { return atomId2; }
 
-  RDKit::Bond::BondStereo getStereoType() const { return stereoType; }
+  [[nodiscard]] RDKit::Bond::BondStereo getStereoType() const {
+    return stereoType;
+  }
 
   ChiralBondItem() = delete;
   ChiralBondItem(const RDKit::Bond *bondInit)

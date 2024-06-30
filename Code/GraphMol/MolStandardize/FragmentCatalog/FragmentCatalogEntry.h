@@ -40,10 +40,10 @@ class RDKIT_MOLSTANDARDIZE_EXPORT FragmentCatalogEntry
 
   // std::string getDescription() const override { return d_descrip; }
 
-  unsigned int getOrder() const { return dp_mol->getNumBonds(); }
+  [[nodiscard]] unsigned int getOrder() const { return dp_mol->getNumBonds(); }
 
   void toStream(std::ostream &ss) const override;
-  std::string Serialize() const override;
+  [[nodiscard]] std::string Serialize() const override;
   void initFromStream(std::istream &ss) override;
   void initFromString(const std::string &text) override;
 

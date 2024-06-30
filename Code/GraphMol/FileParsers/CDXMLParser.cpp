@@ -64,8 +64,8 @@ struct BondInfo {
   QueryType queryType = QueryType::None;
   TopologyType topology = TopologyType::None;
   Bond::BondType getBondType() { return order; }
-  bool validate(const std::map<unsigned int, Atom *> &ids,
-                unsigned int num_atoms) const {
+  [[nodiscard]] bool validate(const std::map<unsigned int, Atom *> &ids,
+                              unsigned int num_atoms) const {
     auto s = ids.find(start);
     auto e = ids.find(end);
     if (s == ids.end() || e == ids.end()) {

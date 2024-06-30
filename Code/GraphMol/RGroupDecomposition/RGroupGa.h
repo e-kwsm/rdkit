@@ -46,15 +46,15 @@ class RGroupDecompositionChromosome : public IntegerStringChromosome {
  public:
   RGroupDecompositionChromosome(RGroupGa &rGroupGa);
 
-  double getFitness() const { return fitness; }
+  [[nodiscard]] double getFitness() const { return fitness; }
 
-  OperationName getOperationName() const { return operationName; }
+  [[nodiscard]] OperationName getOperationName() const { return operationName; }
 
   void setOperationName(OperationName operationName) {
     this->operationName = operationName;
   }
 
-  std::string info() const;
+  [[nodiscard]] std::string info() const;
 
   double score();
 
@@ -70,9 +70,11 @@ class RGroupDecompositionChromosome : public IntegerStringChromosome {
     return fingerprintVarianceScoreData;
   }
 
-  const vector<size_t> &getPermutation() const { return permutation; }
+  [[nodiscard]] const vector<size_t> &getPermutation() const {
+    return permutation;
+  }
 
-  const RGroupGa &getRGroupGA() const { return rGroupGa; }
+  [[nodiscard]] const RGroupGa &getRGroupGA() const { return rGroupGa; }
 
  private:
   RGroupDecompositionChromosome(const RGroupDecompositionChromosome &other) =
@@ -109,9 +111,9 @@ class RDKIT_RGROUPDECOMPOSITION_EXPORT RGroupGa : public GaBase {
     return chromosomePolicy;
   }
 
-  int chromosomeLength() const { return chromLength; }
+  [[nodiscard]] int chromosomeLength() const { return chromLength; }
 
-  int numberDecompositions() const { return numberDecomps; }
+  [[nodiscard]] int numberDecompositions() const { return numberDecomps; }
 
   GaResult run(int runNumber = 1);
 
@@ -119,12 +121,17 @@ class RDKIT_RGROUPDECOMPOSITION_EXPORT RGroupGa : public GaBase {
 
   shared_ptr<RGroupDecompositionChromosome> createChromosome();
 
-  const RGroupDecompData &getRGroupData() const { return rGroupData; }
+  [[nodiscard]] const RGroupDecompData &getRGroupData() const {
+    return rGroupData;
+  }
 
-  const vector<shared_ptr<GaOperation<RGroupDecompositionChromosome>>>
+  [[nodiscard]] const vector<
+      shared_ptr<GaOperation<RGroupDecompositionChromosome>>>
   getOperations() const;
 
-  unsigned int numberPermutations() const { return numPermutations; }
+  [[nodiscard]] unsigned int numberPermutations() const {
+    return numPermutations;
+  }
 
  private:
   RGroupGa(const RGroupGa &other) = delete;

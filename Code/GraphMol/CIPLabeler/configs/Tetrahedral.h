@@ -23,7 +23,7 @@ class Tetrahedral : public Configuration {
 
   void setPrimaryLabel(Descriptor desc) override;
 
-  bool hasPrimaryLabel() const override;
+  [[nodiscard]] bool hasPrimaryLabel() const override;
 
   Descriptor label(const Rules &comp) override;
 

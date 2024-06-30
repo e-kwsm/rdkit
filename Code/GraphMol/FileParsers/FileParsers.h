@@ -37,7 +37,9 @@ class RDKIT_FILEPARSERS_EXPORT MolFileUnhandledFeatureException
   explicit MolFileUnhandledFeatureException(const std::string msg)
       : _msg(msg) {}
   //! get the error message
-  const char *what() const noexcept override { return _msg.c_str(); }
+  [[nodiscard]] const char *what() const noexcept override {
+    return _msg.c_str();
+  }
   ~MolFileUnhandledFeatureException() noexcept override = default;
 
  private:
