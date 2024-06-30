@@ -199,7 +199,7 @@ void RDF(const ROMol &mol, std::vector<double> &res, int confId,
   double *dist3D =
       MolOps::get3DDistanceMat(mol, confId, false, true);  // 3D distance matrix
 
-  if (customAtomPropName != "") {
+  if (!customAtomPropName.empty()) {
     // std::cout << " Using CustomAtomPropertie\n";
     // do something
     res.clear();

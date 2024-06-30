@@ -436,7 +436,7 @@ TEST_CASE("detectChemistryProblems", "[molops]") {
     auto m = std::unique_ptr<ROMol>(SmilesToMol("c1ccccc1", ps));
     REQUIRE(m);
     auto res = MolOps::detectChemistryProblems(*m);
-    REQUIRE(res.size() == 0);
+    REQUIRE(res.empty());
   }
 }
 
