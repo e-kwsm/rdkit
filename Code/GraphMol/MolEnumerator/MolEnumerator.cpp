@@ -112,7 +112,7 @@ MolBundle enumerate(const ROMol &mol,
     accum.swap(thisRound);
   }
   if (!variationsFound) {
-    return MolBundle();
+    return {};
   }
   for (auto rmol : accum->getMols()) {
     detail::removeOrigIndices(*rmol);
