@@ -197,7 +197,7 @@ python::object autoConvertString(const RDOb *ob, const std::string &key) {
   else if (ob->getPropIfPresent(key, svalue))
     return python::object(svalue);
 
-  return python::object();
+  return {};
 }
 template <class RDOb>
 python::object GetPyProp(const RDOb *obj, const std::string &key,
@@ -256,7 +256,7 @@ python::object GetPyProp(const RDOb *obj, const std::string &key,
                   from_rdvalue<std::vector<std::string>>(rdvalue.val));
               break;
             case RDTypeTag::EmptyTag:
-              return boost::python::object();
+              return {};
               break;
             default:
               std::string message =
@@ -264,7 +264,7 @@ python::object GetPyProp(const RDOb *obj, const std::string &key,
                       "Unhandled property type encountered for property: ") +
                   rdvalue.key;
               UNDER_CONSTRUCTION(message.c_str());
-              return boost::python::object();
+              return {};
           }
         } catch (std::bad_any_cast &) {
           // C++ datatypes can really be anything, this just captures
@@ -273,7 +273,7 @@ python::object GetPyProp(const RDOb *obj, const std::string &key,
               std::string("Unhandled type conversion occured for property: ") +
               rdvalue.key;
           UNDER_CONSTRUCTION(message.c_str());
-          return boost::python::object();
+          return {};
         }
       }
     }

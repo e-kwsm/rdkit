@@ -414,7 +414,7 @@ class PyMCSParameters : public boost::noncopyable {
     if (!pcud.pyMCSProgress.is_none()) {
       return pcud.pyMCSProgress;
     }
-    return python::object();
+    return {};
   }
   void setFinalMatchCheck(PyObject *finalMatchCheck) {
     PyMCSFinalMatchCheck pyMCSFinalMatchCheck(finalMatchCheck);
@@ -427,7 +427,7 @@ class PyMCSParameters : public boost::noncopyable {
     if (!fmud.pyMCSFinalMatchCheck.is_none()) {
       return fmud.pyMCSFinalMatchCheck;
     }
-    return python::object();
+    return {};
   }
   void setShouldAcceptMCS(PyObject *mcsAcceptance) {
     PyMCSAcceptance pyMCSAcceptance(mcsAcceptance);
@@ -440,7 +440,7 @@ class PyMCSParameters : public boost::noncopyable {
     if (!afud.pyMCSAcceptance.is_none()) {
       return afud.pyMCSAcceptance;
     }
-    return python::object();
+    return {};
   }
 
  private:
