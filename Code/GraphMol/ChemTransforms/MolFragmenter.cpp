@@ -62,7 +62,7 @@ void constructFragmenterAtomTypes(
   while (!inStream->eof() && !inStream->fail()) {
     ++line;
     std::string tempStr = getLine(inStream);
-    if (tempStr == "" || tempStr.find(comment) == 0) {
+    if (tempStr.empty() || tempStr.find(comment) == 0) {
       continue;
     }
     std::vector<std::string> tokens;
@@ -153,7 +153,7 @@ void constructFragmenterBondTypes(
   while (!inStream->eof() && !inStream->fail()) {
     ++line;
     std::string tempStr = getLine(inStream);
-    if (tempStr == "" || tempStr.find(comment) == 0) {
+    if (tempStr.empty() || tempStr.find(comment) == 0) {
       continue;
     }
     std::vector<std::string> tokens;
@@ -325,7 +325,7 @@ void fragmentOnSomeBonds(
   if (bondIndices.size() > 63) {
     throw ValueErrorException("currently can only fragment on up to 63 bonds");
   }
-  if (!maxToCut || !mol.getNumAtoms() || !bondIndices.size()) {
+  if (!maxToCut || !mol.getNumAtoms() || bondIndices.empty()) {
     return;
   }
 
@@ -616,7 +616,7 @@ boost::flyweight<std::map<unsigned int, ROMOL_SPTR>,
                  boost::flyweights::no_tracking>
     atomEnvs;
 ROMol *fragmentOnBRICSBonds(const ROMol &mol) {
-  if (bondPatterns.get().size() == 0) {
+  if (bondPatterns.get().empty()) {
     std::map<unsigned int, std::string> adefs;
     std::map<unsigned int, ROMOL_SPTR> aenvs;
     constructBRICSAtomTypes(adefs, &aenvs);
