@@ -14,8 +14,7 @@
 #include <string>
 #include <vector>
 
-namespace RDKit {
-namespace MinimalLib {
+namespace RDKit::MinimalLib {
 
 struct DrawingDetails {
   int width = -1;
@@ -172,5 +171,4 @@ class DrawerFromDetails {
   std::string d_details;
 };
 
-}  // namespace MinimalLib
-}  // namespace RDKit
+}  // namespace RDKit::MinimalLib

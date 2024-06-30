@@ -13,8 +13,7 @@
 #include <ForceField/ForceField.h>
 #include <RDGeneral/Invariant.h>
 
-namespace ForceFields {
-namespace MMFF {
+namespace ForceFields::MMFF {
 namespace Utils {
 double calcTorsionCosPhi(const RDGeom::Point3D &iPoint,
                          const RDGeom::Point3D &jPoint,
@@ -163,5 +162,4 @@ void TorsionAngleContrib::getGrad(double *pos, double *grad) const {
 
   Utils::calcTorsionGrad(r, t, d, g, sinTerm, cosPhi);
 }
-}  // namespace MMFF
-}  // namespace ForceFields
+}  // namespace ForceFields::MMFF

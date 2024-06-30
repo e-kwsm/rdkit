@@ -41,8 +41,7 @@
 // data checked using book Todeschini R., Consonni V. - Molecular Descriptors
 // for Chemoinformatics 2009 atomic properties page 21/22
 
-namespace RDKit {
-namespace Descriptors {
+namespace RDKit::Descriptors {
 namespace {
 
 MolData3Ddescriptors moldata3D;
@@ -216,5 +215,4 @@ void MORSE(const ROMol &mol, std::vector<double> &res, int confId,
   }
 }
 
-}  // namespace Descriptors
-}  // namespace RDKit
+}  // namespace RDKit::Descriptors

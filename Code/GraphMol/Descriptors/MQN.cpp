@@ -15,8 +15,7 @@
 #include <vector>
 #include <algorithm>
 
-namespace RDKit {
-namespace Descriptors {
+namespace RDKit::Descriptors {
 std::vector<unsigned int> calcMQNs(const ROMol &mol, bool) {
   // FIX: use force value to enable caching
   std::vector<unsigned int> res(42, 0);
@@ -199,5 +198,4 @@ std::vector<unsigned int> calcMQNs(const ROMol &mol, bool) {
 
   return res;
 }
-}  // end of namespace Descriptors
-}  // end of namespace RDKit
+}  // namespace RDKit::Descriptors

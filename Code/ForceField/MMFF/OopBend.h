@@ -16,8 +16,7 @@
 #include <ForceField/Contrib.h>
 #include <Geometry/point.h>
 
-namespace ForceFields {
-namespace MMFF {
+namespace ForceFields::MMFF {
 class MMFFOop;
 
 //! the out-of-plane term for MMFF
@@ -60,6 +59,5 @@ RDKIT_FORCEFIELD_EXPORT double calcOopBendForceConstant(
 RDKIT_FORCEFIELD_EXPORT double calcOopBendEnergy(const double chi,
                                                  const double koop);
 }  // namespace Utils
-}  // namespace MMFF
-}  // namespace ForceFields
+}  // namespace ForceFields::MMFF
 #endif

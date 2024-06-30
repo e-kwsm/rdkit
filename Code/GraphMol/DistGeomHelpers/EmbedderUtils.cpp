@@ -15,8 +15,7 @@
 #include <boost/property_tree/json_parser.hpp>
 #include <RDGeneral/BoostEndInclude.h>
 
-namespace RDKit {
-namespace DGeomHelpers {
+namespace RDKit::DGeomHelpers {
 
 #define PT_OPT_GET(opt) params.opt = pt.get(#opt, params.opt)
 
@@ -74,5 +73,4 @@ void updateEmbedParametersFromJSON(EmbedParameters &params,
     params.coordMap = cmap;
   }
 }
-}  // namespace DGeomHelpers
-}  // namespace RDKit
+}  // namespace RDKit::DGeomHelpers

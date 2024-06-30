@@ -34,9 +34,7 @@
 #include <cmath>
 #include <vector>
 
-namespace RDKit {
-
-namespace Descriptors {
+namespace RDKit::Descriptors {
 
 namespace {
 
@@ -156,5 +154,4 @@ void AtomFeatVect(const ROMol &mol, std::vector<double> &res, int atomid,
   AtomFeatVector(mol.getAtomWithIdx(atomid), &mol, res, addchiral);
 }
 
-}  // namespace Descriptors
-}  // namespace RDKit
+}  // namespace RDKit::Descriptors

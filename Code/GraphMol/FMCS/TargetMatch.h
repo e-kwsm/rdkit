@@ -14,8 +14,7 @@
 #include "FMCS.h"
 #include "MatchTable.h"
 
-namespace RDKit {
-namespace FMCS {
+namespace RDKit::FMCS {
 struct TargetMatch {
   bool Empty{true};
   size_t MatchedAtomSize{0};
@@ -82,5 +81,4 @@ struct TargetMatch {
     Empty = false;
   }
 };
-}  // namespace FMCS
-}  // namespace RDKit
+}  // namespace RDKit::FMCS

@@ -16,8 +16,7 @@
 #include <RDGeneral/Invariant.h>
 #include <RDGeneral/utils.h>
 
-namespace ForceFields {
-namespace UFF {
+namespace ForceFields::UFF {
 
 namespace Utils {
 double calcAngleForceConstant(double theta0, double bondOrder12,
@@ -250,5 +249,4 @@ double AngleBendContrib::getThetaDeriv(double cosTheta, double sinTheta) const {
   }
   return dE_dTheta;
 }
-}  // namespace UFF
-}  // namespace ForceFields
+}  // namespace ForceFields::UFF

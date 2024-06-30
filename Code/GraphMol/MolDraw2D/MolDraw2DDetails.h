@@ -24,8 +24,7 @@
 // ****************************************************************************
 using RDGeom::Point2D;
 
-namespace RDKit {
-namespace MolDraw2D_detail {
+namespace RDKit::MolDraw2D_detail {
 struct StringRect;
 
 // data taken from the helvetica font info in
@@ -162,7 +161,6 @@ RDKIT_MOLDRAW2D_EXPORT void adjustLineEndForEllipse(const Point2D &centre,
                                                     double yradius, Point2D p1,
                                                     Point2D &p2);
 
-}  // namespace MolDraw2D_detail
-}  // namespace RDKit
+}  // namespace RDKit::MolDraw2D_detail
 
 #endif

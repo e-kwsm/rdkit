@@ -14,8 +14,7 @@
 #include <RDGeneral/Invariant.h>
 #include <Numerics/Optimizer/BFGSOpt.h>
 
-namespace RDKit {
-namespace ForceFieldsHelper {
+namespace RDKit::ForceFieldsHelper {
 void normalizeAngleDeg(double &angleDeg) {
   angleDeg = fmod(angleDeg, 360.0);
   if (angleDeg < -180.0) {
@@ -90,8 +89,7 @@ void computeDihedral(const RDGeom::Point3D *p1, const RDGeom::Point3D *p2,
     *dihedral = -atan2(m.dotProduct(t[1]) / mLength, *cosPhi);
   }
 }
-}  // namespace ForceFieldsHelper
-}  // namespace RDKit
+}  // namespace RDKit::ForceFieldsHelper
 
 namespace ForceFieldsHelper {
 class calcEnergy {

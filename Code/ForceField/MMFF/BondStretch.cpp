@@ -18,8 +18,7 @@
 #include <RDGeneral/Invariant.h>
 #include <RDGeneral/utils.h>
 
-namespace ForceFields {
-namespace MMFF {
+namespace ForceFields::MMFF {
 namespace Utils {
 
 double calcBondRestLength(const MMFFBond *mmffBondParams) {
@@ -96,5 +95,4 @@ void BondStretchContrib::getGrad(double *pos, double *grad) const {
     g2[i] -= dGrad;
   }
 }
-}  // namespace MMFF
-}  // namespace ForceFields
+}  // namespace ForceFields::MMFF

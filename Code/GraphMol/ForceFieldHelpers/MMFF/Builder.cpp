@@ -21,8 +21,7 @@
 #include "AtomTyper.h"
 #include "Builder.h"
 
-namespace RDKit {
-namespace MMFF {
+namespace RDKit::MMFF {
 using namespace ForceFields::MMFF;
 
 namespace Tools {
@@ -1015,5 +1014,4 @@ ForceFields::ForceField *constructForceField(
 
   return res.release();
 }
-}  // namespace MMFF
-}  // namespace RDKit
+}  // namespace RDKit::MMFF

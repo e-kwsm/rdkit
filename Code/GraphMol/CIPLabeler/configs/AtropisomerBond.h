@@ -12,8 +12,7 @@
 
 #include "Configuration.h"
 
-namespace RDKit {
-namespace CIPLabeler {
+namespace RDKit::CIPLabeler {
 
 class AtropisomerBond : public Configuration {
  public:
@@ -37,5 +36,4 @@ class AtropisomerBond : public Configuration {
 
 };  // namespace CIPLabeler
 
-}  // namespace CIPLabeler
-}  // namespace RDKit
+}  // namespace RDKit::CIPLabeler

@@ -20,8 +20,8 @@
 
 #include "AtomTyper.h"
 #include "Builder.h"
-namespace RDKit {
-namespace UFF {
+
+namespace RDKit::UFF {
 using namespace ForceFields::UFF;
 
 namespace Tools {
@@ -719,5 +719,4 @@ ForceFields::ForceField *constructForceField(ROMol &mol, double vdwThresh,
   return constructForceField(mol, params, vdwThresh, confId,
                              ignoreInterfragInteractions);
 }
-}  // namespace UFF
-}  // namespace RDKit
+}  // namespace RDKit::UFF

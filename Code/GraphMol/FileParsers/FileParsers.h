@@ -27,8 +27,7 @@ namespace RDKit {
 
 RDKIT_FILEPARSERS_EXPORT std::string strip(const std::string &orig);
 
-namespace v2 {
-namespace FileParsers {
+namespace v2::FileParsers {
 class RDKIT_FILEPARSERS_EXPORT MolFileUnhandledFeatureException
     : public std::exception {
  public:
@@ -63,8 +62,7 @@ RDKIT_FILEPARSERS_EXPORT std::unique_ptr<RWMol> MolFromMolFile(
     const std::string &fName,
     const MolFileParserParams &params = MolFileParserParams());
 
-}  // namespace FileParsers
-}  // namespace v2
+}  // namespace v2::FileParsers
 
 inline namespace v1 {
 using RDKit::v2::FileParsers::MolFileUnhandledFeatureException;
@@ -142,8 +140,7 @@ inline RWMol *MolFileToMol(const std::string &fName, bool sanitize = true,
 //  TPL handling:
 //-----
 
-namespace v2 {
-namespace FileParsers {
+namespace v2::FileParsers {
 struct RDKIT_FILEPARSERS_EXPORT TPLParserParams {
   bool sanitize = true; /**< sanitize the molecule after building it */
   bool skipFirstConf =
@@ -156,8 +153,7 @@ RDKIT_FILEPARSERS_EXPORT std::unique_ptr<RWMol> MolFromTPLFile(
     const std::string &fName,
     const TPLParserParams &params = TPLParserParams());
 
-}  // namespace FileParsers
-}  // namespace v2
+}  // namespace v2::FileParsers
 
 inline namespace v1 {
 //! \brief translate TPL data (BioCad format) into a multi-conf molecule
@@ -209,8 +205,7 @@ inline RWMol *TPLFileToMol(const std::string &fName, bool sanitize = true,
 }
 }  // namespace v1
 
-namespace v2 {
-namespace FileParsers {
+namespace v2::FileParsers {
 
 //-----
 //  MOL2 handling
@@ -238,8 +233,7 @@ RDKIT_FILEPARSERS_EXPORT std::unique_ptr<RWMol> MolFromMol2File(
     const std::string &fName,
     const Mol2ParserParams &params = Mol2ParserParams());
 
-}  // namespace FileParsers
-}  // namespace v2
+}  // namespace v2::FileParsers
 
 inline namespace v1 {
 using RDKit::v2::FileParsers::Mol2Type;
@@ -320,8 +314,7 @@ inline RWMol *Mol2BlockToMol(const std::string &molBlock, bool sanitize = true,
 }
 }  // namespace v1
 
-namespace v2 {
-namespace FileParsers {
+namespace v2::FileParsers {
 
 RDKIT_FILEPARSERS_EXPORT std::unique_ptr<RWMol> MolFromXYZDataStream(
     std::istream &inStream);
@@ -337,8 +330,8 @@ RDKIT_FILEPARSERS_EXPORT std::unique_ptr<RWMol> MolFromXYZBlock(
  */
 RDKIT_FILEPARSERS_EXPORT std::unique_ptr<RWMol> MolFromXYZFile(
     const std::string &fName);
-}  // namespace FileParsers
-}  // namespace v2
+}  // namespace v2::FileParsers
+
 inline namespace v1 {
 inline RWMol *XYZDataStreamToMol(std::istream &inStream) {
   return v2::FileParsers::MolFromXYZDataStream(inStream).release();
@@ -360,8 +353,7 @@ inline RWMol *XYZFileToMol(const std::string &fName) {
 
 }  // namespace v1
 
-namespace v2 {
-namespace FileParsers {
+namespace v2::FileParsers {
 struct RDKIT_FILEPARSERS_EXPORT PDBParserParams {
   bool sanitize = true; /**< sanitize the molecule after building it */
   bool removeHs = true; /**< remove Hs after constructing the molecule */
@@ -377,8 +369,7 @@ RDKIT_FILEPARSERS_EXPORT std::unique_ptr<RWMol> MolFromPDBFile(
     const PDBParserParams &params = PDBParserParams());
 RDKIT_FILEPARSERS_EXPORT std::unique_ptr<RWMol> MolFromPDBBlock(
     const std::string &str, const PDBParserParams &params = PDBParserParams());
-}  // namespace FileParsers
-}  // namespace v2
+}  // namespace v2::FileParsers
 
 inline namespace v1 {
 using RDKit::v2::FileParsers::PDBParserParams;

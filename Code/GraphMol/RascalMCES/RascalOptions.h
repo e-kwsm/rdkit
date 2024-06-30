@@ -13,9 +13,7 @@
 #ifndef RASCALOPTIONS_H
 #define RASCALOPTIONS_H
 
-namespace RDKit {
-
-namespace RascalMCES {
+namespace RDKit::RascalMCES {
 
 struct RDKIT_RASCALMCES_EXPORT RascalOptions {
   double similarityThreshold =
@@ -59,7 +57,6 @@ struct RDKIT_RASCALMCES_EXPORT RascalOptions {
                                         atomic number; if false, will treat
                                         aromatic and aliphatic as different. */
 };
-}  // namespace RascalMCES
-}  // namespace RDKit
+}  // namespace RDKit::RascalMCES
 
 #endif  // RASCALOPTIONS_H

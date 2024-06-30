@@ -34,9 +34,7 @@
 
 namespace rj = rapidjson;
 
-namespace RDKit {
-
-namespace MolInterchange {
+namespace RDKit::MolInterchange {
 
 namespace {
 constexpr int MAX_DECIMAL_PLACES = 4;
@@ -716,5 +714,4 @@ template RDKIT_MOLINTERCHANGE_EXPORT std::string MolsToJSONData<const ROMol *>(
 template RDKIT_MOLINTERCHANGE_EXPORT std::string MolsToJSONData<const RWMol *>(
     const std::vector<const RWMol *> &, const JSONWriteParameters &);
 
-}  // end of namespace MolInterchange
-}  // end of namespace RDKit
+}  // namespace RDKit::MolInterchange

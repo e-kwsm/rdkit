@@ -16,8 +16,7 @@
 using namespace RDKit;
 namespace python = boost::python;
 
-namespace RDKit {
-namespace MorganWrapper {
+namespace RDKit::MorganWrapper {
 template <typename OutputType>
 FingerprintGenerator<OutputType> *getMorganGenerator(
     unsigned int radius, bool countSimulation, bool includeChirality,
@@ -159,6 +158,4 @@ void exportMorgan() {
 
   return;
 }
-}  // namespace MorganWrapper
-
-}  // namespace RDKit
+}  // namespace RDKit::MorganWrapper
