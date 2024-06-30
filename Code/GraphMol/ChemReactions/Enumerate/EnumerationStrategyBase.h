@@ -59,7 +59,9 @@ class RDKIT_CHEMREACTIONS_EXPORT EnumerationStrategyException
  public:
   EnumerationStrategyException(const char *msg) : _msg(msg) {}
   EnumerationStrategyException(std::string msg) : _msg(std::move(msg)) {}
-  const char *what() const noexcept override { return _msg.c_str(); }
+  [[nodiscard]] const char *what() const noexcept override {
+    return _msg.c_str();
+  }
   ~EnumerationStrategyException() noexcept override = default;
 
  private:
@@ -135,7 +137,9 @@ class RDKIT_CHEMREACTIONS_EXPORT EnumerationStrategyBase {
 
   virtual ~EnumerationStrategyBase() {}
 
-  virtual const char *type() const { return "EnumerationStrategyBase"; }
+  [[nodiscard]] virtual const char *type() const {
+    return "EnumerationStrategyBase";
+  }
 
   //! Initialize the enumerator based on the reaction and the
   //! supplied building blocks
@@ -174,18 +178,22 @@ class RDKIT_CHEMREACTIONS_EXPORT EnumerationStrategyBase {
   virtual const EnumerationTypes::RGROUPS &next() = 0;
 
   //! copy the enumeration strategy complete with current state
-  virtual EnumerationStrategyBase *copy() const = 0;
+  [[nodiscard]] virtual EnumerationStrategyBase *copy() const = 0;
 
   //! The current position in the enumeration
-  const EnumerationTypes::RGROUPS &getPosition() const { return m_permutation; }
+  [[nodiscard]] const EnumerationTypes::RGROUPS &getPosition() const {
+    return m_permutation;
+  }
 
   //! a result of EnumerationOverflow indicates that the number of
   //!  permutations is not computable with the current
   //!  rdlonglong size.
-  boost::uint64_t getNumPermutations() const { return m_numPermutations; }
+  [[nodiscard]] boost::uint64_t getNumPermutations() const {
+    return m_numPermutations;
+  }
 
   //! Returns how many permutations have been processed by this strategy
-  virtual boost::uint64_t getPermutationIdx() const = 0;
+  [[nodiscard]] virtual boost::uint64_t getPermutationIdx() const = 0;
 
   //! Skip the specified number of permutations (useful for
   //!  resetting state to a known position)

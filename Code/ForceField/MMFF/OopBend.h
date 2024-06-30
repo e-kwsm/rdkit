@@ -39,7 +39,9 @@ class RDKIT_FORCEFIELD_EXPORT OopBendContrib : public ForceFieldContrib {
 
   double getEnergy(double *pos) const override;
   void getGrad(double *pos, double *grad) const override;
-  OopBendContrib *copy() const override { return new OopBendContrib(*this); }
+  [[nodiscard]] OopBendContrib *copy() const override {
+    return new OopBendContrib(*this);
+  }
 
   void getSingleGrad(double* pos, double* grad, unsigned int termIdx) const;
 
