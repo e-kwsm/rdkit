@@ -10,8 +10,8 @@
 //
 
 #include <RDGeneral/export.h>
-#ifndef __RD_INVARIANT_H__
-#define __RD_INVARIANT_H__
+#ifndef RD_INVARIANT_H__
+#define RD_INVARIANT_H_
 
 #include <cassert>
 #include <string>
@@ -131,7 +131,7 @@ RDKIT_RDGENERAL_EXPORT std::ostream &operator<<(std::ostream &s,
 #define RANGE_CHECK(lo, x, hi)                                              \
   if ((lo) > (hi) || (x) < (lo) || (x) > (hi)) {                            \
     std::stringstream errstr;                                               \
-    errstr << lo << " <= " << x << " <= " << hi;                            \
+    errstr << (lo) << " <= " << (x) << " <= " << (hi);                      \
     Invar::Invariant inv("Range Error", #x, errstr.str().c_str(), __FILE__, \
                          __LINE__);                                         \
     BOOST_LOG(rdErrorLog) << "\n\n****\n" << inv << "****\n" << std::endl;  \
@@ -139,9 +139,9 @@ RDKIT_RDGENERAL_EXPORT std::ostream &operator<<(std::ostream &s,
   }
 
 #define URANGE_CHECK(x, hi)                                                 \
-  if (x >= (hi)) {                                                          \
+  if ((x) >= (hi)) {                                                        \
     std::stringstream errstr;                                               \
-    errstr << x << " < " << hi;                                             \
+    errstr << (x) << " < " << (hi);                                         \
     Invar::Invariant inv("Range Error", #x, errstr.str().c_str(), __FILE__, \
                          __LINE__);                                         \
     BOOST_LOG(rdErrorLog) << "\n\n****\n" << inv << "****\n" << std::endl;  \
@@ -193,6 +193,6 @@ RDKIT_RDGENERAL_EXPORT std::ostream &operator<<(std::ostream &s,
 
 // Silence warnings for unused params while
 //   still indicating that they are unused
-#define RDUNUSED_PARAM(x) (void)x;
+#define RDUNUSED_PARAM(x) (void)(x);
 
 #endif
