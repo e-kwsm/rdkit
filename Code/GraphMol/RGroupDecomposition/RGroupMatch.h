@@ -30,7 +30,7 @@ struct RGroupMatch {
         rgroups(std::move(input_rgroups)),
         matchedCore(std::move(matchedCore)) {}
 
-  std::string toString() const {
+  [[nodiscard]] std::string toString() const {
     auto rGroupsString = std::accumulate(
         rgroups.cbegin(), rgroups.cend(), std::string(),
         [](std::string s, const std::pair<int, RData> &rgroup) {

@@ -24,7 +24,7 @@ class RDKIT_QUERY_EXPORT XOrQuery
   typedef Query<MatchFuncArgType, DataFuncArgType, needsConversion> BASE;
   XOrQuery() { this->df_negate = false; }
 
-  bool Match(const DataFuncArgType what) const override {
+  [[nodiscard]] bool Match(const DataFuncArgType what) const override {
     bool res = false;
     typename BASE::CHILD_VECT_CI it1;
     for (it1 = this->beginChildren(); it1 != this->endChildren(); ++it1) {
@@ -44,8 +44,8 @@ class RDKIT_QUERY_EXPORT XOrQuery
     return res;
   }
 
-  Query<MatchFuncArgType, DataFuncArgType, needsConversion> *copy()
-      const override {
+  [[nodiscard]] Query<MatchFuncArgType, DataFuncArgType, needsConversion> *
+  copy() const override {
     XOrQuery<MatchFuncArgType, DataFuncArgType, needsConversion> *res =
         new XOrQuery<MatchFuncArgType, DataFuncArgType, needsConversion>();
 

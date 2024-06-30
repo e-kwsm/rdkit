@@ -41,10 +41,16 @@ class UsedLabelMap {
       d_map[rl.second] = std::make_pair(false, (rl.first > 0));
     }
   }
-  bool has(int label) const { return d_map.find(label) != d_map.end(); }
-  bool getIsUsed(int label) const { return d_map.at(label).first; }
+  [[nodiscard]] bool has(int label) const {
+    return d_map.find(label) != d_map.end();
+  }
+  [[nodiscard]] bool getIsUsed(int label) const {
+    return d_map.at(label).first;
+  }
   void setIsUsed(int label) { d_map[label].first = true; }
-  bool isUserDefined(int label) const { return d_map.at(label).second; }
+  [[nodiscard]] bool isUserDefined(int label) const {
+    return d_map.at(label).second;
+  }
 
  private:
   std::map<int, std::pair<bool, bool>> d_map;
@@ -58,8 +64,8 @@ class RDKIT_RGROUPDECOMPOSITION_EXPORT RGroupDecomposition {
   RGroupDecomposition(const RGroupDecomposition &);  // no copy construct
   RGroupDecomposition &operator=(
       const RGroupDecomposition &);  // Prevent assignment
-  RWMOL_SPTR outputCoreMolecule(const RGroupMatch &match,
-                                const UsedLabelMap &usedRGroupMap) const;
+  [[nodiscard]] RWMOL_SPTR outputCoreMolecule(
+      const RGroupMatch &match, const UsedLabelMap &usedRGroupMap) const;
   int getMatchingCoreInternal(RWMol &mol, const RCore *&rcore,
                               std::vector<MatchVectType> &matches);
   static void labelAtomBondIndices(RWMol &mol);
@@ -100,14 +106,14 @@ class RDKIT_RGROUPDECOMPOSITION_EXPORT RGroupDecomposition {
   RGroupDecompositionProcessResult processAndScore();
   bool process();
 
-  const RGroupDecompositionParameters &params() const;
+  [[nodiscard]] const RGroupDecompositionParameters &params() const;
   //! return the current group labels
-  std::vector<std::string> getRGroupLabels() const;
+  [[nodiscard]] std::vector<std::string> getRGroupLabels() const;
 
   //! return rgroups in row order group[row][attachment_point] = ROMol
-  RGroupRows getRGroupsAsRows() const;
+  [[nodiscard]] RGroupRows getRGroupsAsRows() const;
   //! return rgroups in column order group[attachment_point][row] = ROMol
-  RGroupColumns getRGroupsAsColumns() const;
+  [[nodiscard]] RGroupColumns getRGroupsAsColumns() const;
 };
 
 RDKIT_RGROUPDECOMPOSITION_EXPORT unsigned int RGroupDecompose(

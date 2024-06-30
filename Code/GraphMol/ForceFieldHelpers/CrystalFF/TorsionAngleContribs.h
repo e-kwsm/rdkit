@@ -84,15 +84,15 @@ class RDKIT_FORCEFIELDHELPERS_EXPORT TorsionAngleContribs
   */
   void getGrad(double *pos, double *grad) const override;
   //! Copy constructor
-  TorsionAngleContribs *copy() const override {
+  [[nodiscard]] TorsionAngleContribs *copy() const override {
     return new TorsionAngleContribs(*this);
   }
 
   //! Return true if there are no contributions in this contrib
-  bool empty() const { return d_contribs.empty(); }
+  [[nodiscard]] bool empty() const { return d_contribs.empty(); }
 
   //! Get number of contributions in this contrib
-  unsigned int size() const { return d_contribs.size(); }
+  [[nodiscard]] unsigned int size() const { return d_contribs.size(); }
 
  private:
   std::vector<TorsionAngleContribsParams> d_contribs;

@@ -40,17 +40,18 @@ class RDKIT_MOLSTANDARDIZE_EXPORT TransformCatalogParams
 
   ~TransformCatalogParams() override;
 
-  unsigned int getNumTransformations() const {
+  [[nodiscard]] unsigned int getNumTransformations() const {
     return static_cast<unsigned int>(d_transformations.size());
   }
 
-  const std::vector<std::shared_ptr<ChemicalReaction>> &getTransformations()
-      const;
+  [[nodiscard]] const std::vector<std::shared_ptr<ChemicalReaction>> &
+  getTransformations() const;
 
-  const ChemicalReaction *getTransformation(unsigned int fid) const;
+  [[nodiscard]] const ChemicalReaction *getTransformation(
+      unsigned int fid) const;
 
   void toStream(std::ostream &) const override;
-  std::string Serialize() const override;
+  [[nodiscard]] std::string Serialize() const override;
   void initFromStream(std::istream &ss) override;
   void initFromString(const std::string &text) override;
 

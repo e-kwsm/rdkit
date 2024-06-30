@@ -36,7 +36,7 @@ struct VarianceDataForLabel {
   // remove an rgroup structure to a bit counts array
   void removeRgroupData(RGroupData *rgroupData);
   // calculate the mean variance for a bit counts array
-  double variance() const;
+  [[nodiscard]] double variance() const;
 };
 
 struct FingerprintVarianceScoreData {

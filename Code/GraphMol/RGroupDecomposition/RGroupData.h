@@ -40,9 +40,9 @@ struct RDKIT_RGROUPDECOMPOSITION_EXPORT RGroupData {
   void add(const ROMOL_SPTR &newMol,
            const std::vector<int> &rlabel_attachments);
 
-  std::map<int, int> getNumBondsToRlabels() const;
+  [[nodiscard]] std::map<int, int> getNumBondsToRlabels() const;
 
-  std::string toString() const;
+  [[nodiscard]] std::string toString() const;
   static std::string getRGroupLabel(int rlabel);
   static const std::string &getCoreLabel();
   static const std::string &getMolLabel();
@@ -53,7 +53,7 @@ struct RDKIT_RGROUPDECOMPOSITION_EXPORT RGroupData {
 
   //! compute the canonical smiles for the attachments (bug: removes dupes since
   //! we are using a set...)
-  std::string getSmiles() const;
+  [[nodiscard]] std::string getSmiles() const;
   //! merge mol into combinedMol, including atom and bond highlights if present
   void mergeIntoCombinedMol(const ROMOL_SPTR &mol);
   std::map<int, std::vector<int>> rlabelAtomIndicesMap;

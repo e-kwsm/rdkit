@@ -73,10 +73,10 @@ class RDKIT_SUBSTRUCTLIBRARY_EXPORT MolHolderBase {
   virtual unsigned int addMol(const ROMol &m) = 0;
 
   // implementations should throw IndexError on out of range
-  virtual boost::shared_ptr<ROMol> getMol(unsigned int) const = 0;
+  [[nodiscard]] virtual boost::shared_ptr<ROMol> getMol(unsigned int) const = 0;
 
   //! Get the current library size
-  virtual unsigned int size() const = 0;
+  [[nodiscard]] virtual unsigned int size() const = 0;
 };
 
 //! Concrete class that holds molecules in memory
@@ -95,19 +95,22 @@ class RDKIT_SUBSTRUCTLIBRARY_EXPORT MolHolder : public MolHolderBase {
     return size() - 1;
   }
 
-  boost::shared_ptr<ROMol> getMol(unsigned int idx) const override {
+  [[nodiscard]] boost::shared_ptr<ROMol> getMol(
+      unsigned int idx) const override {
     if (idx >= mols.size()) {
       throw IndexErrorException(idx);
     }
     return mols[idx];
   }
 
-  unsigned int size() const override {
+  [[nodiscard]] unsigned int size() const override {
     return rdcast<unsigned int>(mols.size());
   }
 
   std::vector<boost::shared_ptr<ROMol>> &getMols() { return mols; }
-  const std::vector<boost::shared_ptr<ROMol>> &getMols() const { return mols; }
+  [[nodiscard]] const std::vector<boost::shared_ptr<ROMol>> &getMols() const {
+    return mols;
+  }
 };
 
 //! Concrete class that holds binary cached molecules in memory
@@ -137,7 +140,8 @@ class RDKIT_SUBSTRUCTLIBRARY_EXPORT CachedMolHolder : public MolHolderBase {
     return size() - 1;
   }
 
-  boost::shared_ptr<ROMol> getMol(unsigned int idx) const override {
+  [[nodiscard]] boost::shared_ptr<ROMol> getMol(
+      unsigned int idx) const override {
     if (idx >= mols.size()) {
       throw IndexErrorException(idx);
     }
@@ -146,12 +150,12 @@ class RDKIT_SUBSTRUCTLIBRARY_EXPORT CachedMolHolder : public MolHolderBase {
     return mol;
   }
 
-  unsigned int size() const override {
+  [[nodiscard]] unsigned int size() const override {
     return rdcast<unsigned int>(mols.size());
   }
 
   std::vector<std::string> &getMols() { return mols; }
-  const std::vector<std::string> &getMols() const { return mols; }
+  [[nodiscard]] const std::vector<std::string> &getMols() const { return mols; }
 };
 
 //! Concrete class that holds smiles strings in memory
@@ -183,7 +187,8 @@ class RDKIT_SUBSTRUCTLIBRARY_EXPORT CachedSmilesMolHolder
     return size() - 1;
   }
 
-  boost::shared_ptr<ROMol> getMol(unsigned int idx) const override {
+  [[nodiscard]] boost::shared_ptr<ROMol> getMol(
+      unsigned int idx) const override {
     if (idx >= mols.size()) {
       throw IndexErrorException(idx);
     }
@@ -192,12 +197,12 @@ class RDKIT_SUBSTRUCTLIBRARY_EXPORT CachedSmilesMolHolder
     return mol;
   }
 
-  unsigned int size() const override {
+  [[nodiscard]] unsigned int size() const override {
     return rdcast<unsigned int>(mols.size());
   }
 
   std::vector<std::string> &getMols() { return mols; }
-  const std::vector<std::string> &getMols() const { return mols; }
+  [[nodiscard]] const std::vector<std::string> &getMols() const { return mols; }
 };
 
 //! Concrete class that holds trusted smiles strings in memory
@@ -234,7 +239,8 @@ class RDKIT_SUBSTRUCTLIBRARY_EXPORT CachedTrustedSmilesMolHolder
     return size() - 1;
   }
 
-  boost::shared_ptr<ROMol> getMol(unsigned int idx) const override {
+  [[nodiscard]] boost::shared_ptr<ROMol> getMol(
+      unsigned int idx) const override {
     if (idx >= mols.size()) {
       throw IndexErrorException(idx);
     }
@@ -246,12 +252,12 @@ class RDKIT_SUBSTRUCTLIBRARY_EXPORT CachedTrustedSmilesMolHolder
     return boost::shared_ptr<ROMol>(m);
   }
 
-  unsigned int size() const override {
+  [[nodiscard]] unsigned int size() const override {
     return rdcast<unsigned int>(mols.size());
   }
 
   std::vector<std::string> &getMols() { return mols; }
-  const std::vector<std::string> &getMols() const { return mols; }
+  [[nodiscard]] const std::vector<std::string> &getMols() const { return mols; }
 };
 
 //! Base FPI for the fingerprinter used to rule out impossible matches
@@ -265,7 +271,9 @@ class RDKIT_SUBSTRUCTLIBRARY_EXPORT FPHolderBase {
     }
   }
 
-  virtual unsigned int size() const { return rdcast<unsigned int>(fps.size()); }
+  [[nodiscard]] virtual unsigned int size() const {
+    return rdcast<unsigned int>(fps.size());
+  }
 
   //! Adds a molecule to the fingerprinter
   unsigned int addMol(const ROMol &m) {
@@ -289,7 +297,8 @@ class RDKIT_SUBSTRUCTLIBRARY_EXPORT FPHolderBase {
   }
 
   //! Return false if a substructure search can never match the molecule
-  bool passesFilter(unsigned int idx, const ExplicitBitVect &query) const {
+  [[nodiscard]] bool passesFilter(unsigned int idx,
+                                  const ExplicitBitVect &query) const {
     if (idx >= fps.size()) {
       throw IndexErrorException(idx);
     }
@@ -299,7 +308,7 @@ class RDKIT_SUBSTRUCTLIBRARY_EXPORT FPHolderBase {
 
   //! Get the bit vector at the specified index (throws IndexError if out of
   //! range)
-  const ExplicitBitVect &getFingerprint(unsigned int idx) const {
+  [[nodiscard]] const ExplicitBitVect &getFingerprint(unsigned int idx) const {
     if (idx >= fps.size()) {
       throw IndexErrorException(idx);
     }
@@ -308,10 +317,13 @@ class RDKIT_SUBSTRUCTLIBRARY_EXPORT FPHolderBase {
 
   //! make the query vector
   //!  Caller owns the vector!
-  virtual ExplicitBitVect *makeFingerprint(const ROMol &m) const = 0;
+  [[nodiscard]] virtual ExplicitBitVect *makeFingerprint(
+      const ROMol &m) const = 0;
 
   std::vector<ExplicitBitVect *> &getFingerprints() { return fps; }
-  const std::vector<ExplicitBitVect *> &getFingerprints() const { return fps; }
+  [[nodiscard]] const std::vector<ExplicitBitVect *> &getFingerprints() const {
+    return fps;
+  }
 };
 
 //! Uses the pattern fingerprinter with a user-defined number of bits (default:
@@ -323,10 +335,11 @@ class RDKIT_SUBSTRUCTLIBRARY_EXPORT PatternHolder : public FPHolderBase {
   PatternHolder() : FPHolderBase(), numBits(defaultNumBits()) {}
   PatternHolder(unsigned int numBits) : FPHolderBase(), numBits(numBits) {}
   //! Caller owns the vector!
-  ExplicitBitVect *makeFingerprint(const ROMol &m) const override {
+  [[nodiscard]] ExplicitBitVect *makeFingerprint(
+      const ROMol &m) const override {
     return PatternFingerprintMol(m, numBits);
   }
-  const unsigned int &getNumBits() const { return numBits; };
+  [[nodiscard]] const unsigned int &getNumBits() const { return numBits; };
   unsigned int &getNumBits() { return numBits; };
   static unsigned int defaultNumBits() {
     static const unsigned int DEFAULT_NUM_BITS = 2048;
@@ -339,7 +352,8 @@ class RDKIT_SUBSTRUCTLIBRARY_EXPORT TautomerPatternHolder
  public:
   TautomerPatternHolder() : PatternHolder() {}
   TautomerPatternHolder(unsigned int numBits) : PatternHolder(numBits) {}
-  ExplicitBitVect *makeFingerprint(const ROMol &m) const override {
+  [[nodiscard]] ExplicitBitVect *makeFingerprint(
+      const ROMol &m) const override {
     std::vector<unsigned int> *atomCounts = nullptr;
     ExplicitBitVect *setOnlyBits = nullptr;
     const bool tautomericFingerprint = true;
@@ -361,13 +375,13 @@ class RDKIT_SUBSTRUCTLIBRARY_EXPORT KeyHolderBase {
 
   // !get the key at the requested index
   // implementations should throw IndexError on out of range
-  virtual const std::string &getKey(unsigned int) const = 0;
+  [[nodiscard]] virtual const std::string &getKey(unsigned int) const = 0;
 
   // !get keys from a bunch of indices
-  virtual std::vector<std::string> getKeys(
+  [[nodiscard]] virtual std::vector<std::string> getKeys(
       const std::vector<unsigned int> &indices) const = 0;
   //! Get the current keeyholder size
-  virtual unsigned int size() const = 0;
+  [[nodiscard]] virtual unsigned int size() const = 0;
 };
 
 class RDKIT_SUBSTRUCTLIBRARY_EXPORT KeyFromPropHolder : public KeyHolderBase {
@@ -380,10 +394,10 @@ class RDKIT_SUBSTRUCTLIBRARY_EXPORT KeyFromPropHolder : public KeyHolderBase {
       : propname(propname) {}
 
   std::string &getPropName() { return propname; }
-  const std::string &getPropName() const { return propname; }
+  [[nodiscard]] const std::string &getPropName() const { return propname; }
 
   std::vector<std::string> &getKeys() { return keys; }
-  const std::vector<std::string> &getKeys() const { return keys; }
+  [[nodiscard]] const std::vector<std::string> &getKeys() const { return keys; }
 
   unsigned int addMol(const ROMol &m) override {
     std::string key;
@@ -404,21 +418,21 @@ class RDKIT_SUBSTRUCTLIBRARY_EXPORT KeyFromPropHolder : public KeyHolderBase {
     return keys.size() - 1u;
   }
 
-  const std::string &getKey(unsigned int idx) const override {
+  [[nodiscard]] const std::string &getKey(unsigned int idx) const override {
     if (idx >= keys.size()) {
       throw IndexErrorException(idx);
     }
     return keys[idx];
   }
 
-  std::vector<std::string> getKeys(
+  [[nodiscard]] std::vector<std::string> getKeys(
       const std::vector<unsigned int> &indices) const override {
     std::vector<std::string> res;
     std::transform(indices.begin(), indices.end(), std::back_inserter(res),
                    [=](unsigned idx) { return keys.at(idx); });
     return res;
   }
-  unsigned int size() const override { return keys.size(); }
+  [[nodiscard]] unsigned int size() const override { return keys.size(); }
 };
 
 //! Substructure Search a library of molecules
@@ -595,7 +609,7 @@ class RDKIT_SUBSTRUCTLIBRARY_EXPORT SubstructLibrary {
   //! Get the underlying molecule holder implementation
   boost::shared_ptr<MolHolderBase> &getMolHolder() { return molholder; }
 
-  const boost::shared_ptr<MolHolderBase> &getMolHolder() const {
+  [[nodiscard]] const boost::shared_ptr<MolHolderBase> &getMolHolder() const {
     return molholder;
   }
 
@@ -603,7 +617,7 @@ class RDKIT_SUBSTRUCTLIBRARY_EXPORT SubstructLibrary {
   boost::shared_ptr<FPHolderBase> &getFpHolder() { return fpholder; }
 
   //! Get the underlying molecule holder implementation
-  const boost::shared_ptr<FPHolderBase> &getFpHolder() const {
+  [[nodiscard]] const boost::shared_ptr<FPHolderBase> &getFpHolder() const {
     return fpholder;
   }
 
@@ -611,11 +625,11 @@ class RDKIT_SUBSTRUCTLIBRARY_EXPORT SubstructLibrary {
   boost::shared_ptr<KeyHolderBase> &getKeyHolder() { return keyholder; }
 
   //! Get the underlying molecule holder implementation
-  const boost::shared_ptr<KeyHolderBase> &getKeyHolder() const {
+  [[nodiscard]] const boost::shared_ptr<KeyHolderBase> &getKeyHolder() const {
     return keyholder;
   }
 
-  const MolHolderBase &getMolecules() const {
+  [[nodiscard]] const MolHolderBase &getMolecules() const {
     PRECONDITION(mols, "Molecule holder NULL in SubstructLibrary");
     return *mols;
   }
@@ -629,7 +643,7 @@ class RDKIT_SUBSTRUCTLIBRARY_EXPORT SubstructLibrary {
     return *fps;
   }
 
-  const FPHolderBase &getFingerprints() const {
+  [[nodiscard]] const FPHolderBase &getFingerprints() const {
     if (!fps) {
       throw ValueErrorException("Substruct Library does not have fingerprints");
     }
@@ -647,7 +661,7 @@ class RDKIT_SUBSTRUCTLIBRARY_EXPORT SubstructLibrary {
 
   //! Get the underlying key holder implementation.
   /*! Throws a value error if no keyholder have been set */
-  const KeyHolderBase &getKeys() const {
+  [[nodiscard]] const KeyHolderBase &getKeys() const {
     if (!keyholder.get()) {
       throw ValueErrorException("Substruct Library does not have fingerprints");
     }
@@ -677,12 +691,10 @@ class RDKIT_SUBSTRUCTLIBRARY_EXPORT SubstructLibrary {
                        [default -1]
   */
   template <class Query>
-  std::vector<unsigned int> getMatches(const Query &query,
-                                       bool recursionPossible = true,
-                                       bool useChirality = true,
-                                       bool useQueryQueryMatches = false,
-                                       int numThreads = -1,
-                                       int maxResults = -1) const {
+  [[nodiscard]] [[nodiscard]] [[nodiscard]] std::vector<unsigned int>
+  getMatches(const Query &query, bool recursionPossible = true,
+             bool useChirality = true, bool useQueryQueryMatches = false,
+             int numThreads = -1, int maxResults = -1) const {
     SubstructMatchParameters params;
     params.recursionPossible = recursionPossible;
     params.useChirality = useChirality;
@@ -691,10 +703,9 @@ class RDKIT_SUBSTRUCTLIBRARY_EXPORT SubstructLibrary {
   }
   //! overload
   template <class Query>
-  std::vector<unsigned int> getMatches(const Query &query,
-                                       const SubstructMatchParameters &params,
-                                       int numThreads = -1,
-                                       int maxResults = -1) const {
+  [[nodiscard]] std::vector<unsigned int> getMatches(
+      const Query &query, const SubstructMatchParameters &params,
+      int numThreads = -1, int maxResults = -1) const {
     return getMatches(query, 0, size(), params, numThreads, maxResults);
   }
   //! Get the matching indices for the query between the given indices
@@ -714,7 +725,7 @@ class RDKIT_SUBSTRUCTLIBRARY_EXPORT SubstructLibrary {
                        [default -1]
   */
   template <class Query>
-  std::vector<unsigned int> getMatches(
+  [[nodiscard]] std::vector<unsigned int> getMatches(
       const Query &query, unsigned int startIdx, unsigned int endIdx,
       bool recursionPossible = true, bool useChirality = true,
       bool useQueryQueryMatches = false, int numThreads = -1,
@@ -726,33 +737,25 @@ class RDKIT_SUBSTRUCTLIBRARY_EXPORT SubstructLibrary {
     return getMatches(query, startIdx, endIdx, params, numThreads, maxResults);
   };
   //! overload
-  std::vector<unsigned int> getMatches(const ROMol &query,
-                                       unsigned int startIdx,
-                                       unsigned int endIdx,
-                                       const SubstructMatchParameters &params,
-                                       int numThreads = -1,
-                                       int maxResults = -1) const;
+  [[nodiscard]] std::vector<unsigned int> getMatches(
+      const ROMol &query, unsigned int startIdx, unsigned int endIdx,
+      const SubstructMatchParameters &params, int numThreads = -1,
+      int maxResults = -1) const;
   //! overload
-  std::vector<unsigned int> getMatches(const MolBundle &query,
-                                       unsigned int startIdx,
-                                       unsigned int endIdx,
-                                       const SubstructMatchParameters &params,
-                                       int numThreads = -1,
-                                       int maxResults = -1) const;
+  [[nodiscard]] std::vector<unsigned int> getMatches(
+      const MolBundle &query, unsigned int startIdx, unsigned int endIdx,
+      const SubstructMatchParameters &params, int numThreads = -1,
+      int maxResults = -1) const;
   //! overload
-  std::vector<unsigned int> getMatches(const TautomerQuery &query,
-                                       unsigned int startIdx,
-                                       unsigned int endIdx,
-                                       const SubstructMatchParameters &params,
-                                       int numThreads = -1,
-                                       int maxResults = -1) const;
+  [[nodiscard]] std::vector<unsigned int> getMatches(
+      const TautomerQuery &query, unsigned int startIdx, unsigned int endIdx,
+      const SubstructMatchParameters &params, int numThreads = -1,
+      int maxResults = -1) const;
   //! overload
-  std::vector<unsigned int> getMatches(const ExtendedQueryMol &query,
-                                       unsigned int startIdx,
-                                       unsigned int endIdx,
-                                       const SubstructMatchParameters &params,
-                                       int numThreads = -1,
-                                       int maxResults = -1) const;
+  [[nodiscard]] std::vector<unsigned int> getMatches(
+      const ExtendedQueryMol &query, unsigned int startIdx, unsigned int endIdx,
+      const SubstructMatchParameters &params, int numThreads = -1,
+      int maxResults = -1) const;
 
   //! Return the number of matches for the query
   /*!
@@ -767,10 +770,11 @@ class RDKIT_SUBSTRUCTLIBRARY_EXPORT SubstructLibrary {
     \param numThreads  If -1 use all available processors [default -1]
   */
   template <class Query>
-  unsigned int countMatches(const Query &query, bool recursionPossible = true,
-                            bool useChirality = true,
-                            bool useQueryQueryMatches = false,
-                            int numThreads = -1) const {
+  [[nodiscard]] unsigned int countMatches(const Query &query,
+                                          bool recursionPossible = true,
+                                          bool useChirality = true,
+                                          bool useQueryQueryMatches = false,
+                                          int numThreads = -1) const {
     SubstructMatchParameters params;
     params.recursionPossible = recursionPossible;
     params.useChirality = useChirality;
@@ -779,9 +783,9 @@ class RDKIT_SUBSTRUCTLIBRARY_EXPORT SubstructLibrary {
   }
   //! overload
   template <class Query>
-  unsigned int countMatches(const Query &query,
-                            const SubstructMatchParameters &params,
-                            int numThreads = -1) const {
+  [[nodiscard]] unsigned int countMatches(
+      const Query &query, const SubstructMatchParameters &params,
+      int numThreads = -1) const {
     return countMatches(query, 0, size(), params, numThreads);
   }
 
@@ -802,11 +806,10 @@ class RDKIT_SUBSTRUCTLIBRARY_EXPORT SubstructLibrary {
     \param numThreads  If -1 use all available processors [default -1]
   */
   template <class Query>
-  unsigned int countMatches(const Query &query, unsigned int startIdx,
-                            unsigned int endIdx, bool recursionPossible = true,
-                            bool useChirality = true,
-                            bool useQueryQueryMatches = false,
-                            int numThreads = -1) const {
+  [[nodiscard]] [[nodiscard]] [[nodiscard]] [[nodiscard]] unsigned int
+  countMatches(const Query &query, unsigned int startIdx, unsigned int endIdx,
+               bool recursionPossible = true, bool useChirality = true,
+               bool useQueryQueryMatches = false, int numThreads = -1) const {
     SubstructMatchParameters params;
     params.recursionPossible = recursionPossible;
     params.useChirality = useChirality;
@@ -815,25 +818,21 @@ class RDKIT_SUBSTRUCTLIBRARY_EXPORT SubstructLibrary {
   };
 
   //! overload
-  unsigned int countMatches(const ROMol &query, unsigned int startIdx,
-                            unsigned int endIdx,
-                            const SubstructMatchParameters &params,
-                            int numThreads = -1) const;
+  [[nodiscard]] unsigned int countMatches(
+      const ROMol &query, unsigned int startIdx, unsigned int endIdx,
+      const SubstructMatchParameters &params, int numThreads = -1) const;
   //! overload
-  unsigned int countMatches(const TautomerQuery &query, unsigned int startIdx,
-                            unsigned int endIdx,
-                            const SubstructMatchParameters &params,
-                            int numThreads = -1) const;
+  [[nodiscard]] unsigned int countMatches(
+      const TautomerQuery &query, unsigned int startIdx, unsigned int endIdx,
+      const SubstructMatchParameters &params, int numThreads = -1) const;
   //! overload
-  unsigned int countMatches(const MolBundle &query, unsigned int startIdx,
-                            unsigned int endIdx,
-                            const SubstructMatchParameters &params,
-                            int numThreads = -1) const;
+  [[nodiscard]] unsigned int countMatches(
+      const MolBundle &query, unsigned int startIdx, unsigned int endIdx,
+      const SubstructMatchParameters &params, int numThreads = -1) const;
   //! overload
-  unsigned int countMatches(const ExtendedQueryMol &query,
-                            unsigned int startIdx, unsigned int endIdx,
-                            const SubstructMatchParameters &params,
-                            int numThreads = -1) const;
+  [[nodiscard]] unsigned int countMatches(
+      const ExtendedQueryMol &query, unsigned int startIdx, unsigned int endIdx,
+      const SubstructMatchParameters &params, int numThreads = -1) const;
 
   //! Returns true if any match exists for the query
   /*!
@@ -848,9 +847,10 @@ class RDKIT_SUBSTRUCTLIBRARY_EXPORT SubstructLibrary {
     \param numThreads  If -1 use all available processors [default -1]
   */
   template <class Query>
-  bool hasMatch(const Query &query, bool recursionPossible = true,
-                bool useChirality = true, bool useQueryQueryMatches = false,
-                int numThreads = -1) const {
+  [[nodiscard]] bool hasMatch(const Query &query, bool recursionPossible = true,
+                              bool useChirality = true,
+                              bool useQueryQueryMatches = false,
+                              int numThreads = -1) const {
     SubstructMatchParameters params;
     params.recursionPossible = recursionPossible;
     params.useChirality = useChirality;
@@ -859,8 +859,9 @@ class RDKIT_SUBSTRUCTLIBRARY_EXPORT SubstructLibrary {
   }
   //! overload
   template <class Query>
-  bool hasMatch(const Query &query, const SubstructMatchParameters &params,
-                int numThreads = -1) const {
+  [[nodiscard]] bool hasMatch(const Query &query,
+                              const SubstructMatchParameters &params,
+                              int numThreads = -1) const {
     return hasMatch(query, 0, size(), params, numThreads);
   }
   //! Returns true if any match exists for the query between the specified
@@ -877,9 +878,10 @@ class RDKIT_SUBSTRUCTLIBRARY_EXPORT SubstructLibrary {
     \param numThreads  If -1 use all available processors [default -1]
   */
   template <class Query>
-  bool hasMatch(const Query &query, unsigned int startIdx, unsigned int endIdx,
-                bool recursionPossible = true, bool useChirality = true,
-                bool useQueryQueryMatches = false, int numThreads = -1) const {
+  [[nodiscard]] [[nodiscard]] [[nodiscard]] [[nodiscard]] bool hasMatch(
+      const Query &query, unsigned int startIdx, unsigned int endIdx,
+      bool recursionPossible = true, bool useChirality = true,
+      bool useQueryQueryMatches = false, int numThreads = -1) const {
     SubstructMatchParameters params;
     params.recursionPossible = recursionPossible;
     params.useChirality = useChirality;
@@ -887,27 +889,31 @@ class RDKIT_SUBSTRUCTLIBRARY_EXPORT SubstructLibrary {
     return hasMatch(query, startIdx, endIdx, params, numThreads);
   };
   //! overload
-  bool hasMatch(const ROMol &query, unsigned int startIdx, unsigned int endIdx,
-                const SubstructMatchParameters &params,
-                int numThreads = -1) const;
+  [[nodiscard]] bool hasMatch(const ROMol &query, unsigned int startIdx,
+                              unsigned int endIdx,
+                              const SubstructMatchParameters &params,
+                              int numThreads = -1) const;
   //! overload
-  bool hasMatch(const TautomerQuery &query, unsigned int startIdx,
-                unsigned int endIdx, const SubstructMatchParameters &params,
-                int numThreads = -1) const;
+  [[nodiscard]] bool hasMatch(const TautomerQuery &query, unsigned int startIdx,
+                              unsigned int endIdx,
+                              const SubstructMatchParameters &params,
+                              int numThreads = -1) const;
   //! overload
-  bool hasMatch(const MolBundle &query, unsigned int startIdx,
-                unsigned int endIdx, const SubstructMatchParameters &params,
-                int numThreads = -1) const;
+  [[nodiscard]] bool hasMatch(const MolBundle &query, unsigned int startIdx,
+                              unsigned int endIdx,
+                              const SubstructMatchParameters &params,
+                              int numThreads = -1) const;
   //! overload
-  bool hasMatch(const ExtendedQueryMol &query, unsigned int startIdx,
-                unsigned int endIdx, const SubstructMatchParameters &params,
-                int numThreads = -1) const;
+  [[nodiscard]] bool hasMatch(const ExtendedQueryMol &query,
+                              unsigned int startIdx, unsigned int endIdx,
+                              const SubstructMatchParameters &params,
+                              int numThreads = -1) const;
   //! Returns the molecule at the given index
   /*!
     \param idx       Index of the molecule in the library (n.b. could contain
     null)
   */
-  boost::shared_ptr<ROMol> getMol(unsigned int idx) const {
+  [[nodiscard]] boost::shared_ptr<ROMol> getMol(unsigned int idx) const {
     // expects implementation to throw IndexError if out of range
     PRECONDITION(mols, "molholder is null in SubstructLibrary");
     return mols->getMol(idx);
@@ -925,7 +931,7 @@ class RDKIT_SUBSTRUCTLIBRARY_EXPORT SubstructLibrary {
   }
 
   //! return the number of molecules in the library
-  unsigned int size() const {
+  [[nodiscard]] unsigned int size() const {
     PRECONDITION(mols, "molholder is null in SubstructLibrary");
     return rdcast<unsigned int>(molholder->size());
   }
@@ -940,7 +946,7 @@ class RDKIT_SUBSTRUCTLIBRARY_EXPORT SubstructLibrary {
     searchOrder = order;
   }
 
-  const std::vector<unsigned int> &getSearchOrder() const {
+  [[nodiscard]] const std::vector<unsigned int> &getSearchOrder() const {
     return searchOrder;
   }
 
@@ -958,7 +964,7 @@ class RDKIT_SUBSTRUCTLIBRARY_EXPORT SubstructLibrary {
   //! serializes (pickles) to a stream
   void toStream(std::ostream &ss) const;
   //! returns a string with a serialized (pickled) representation
-  std::string Serialize() const;
+  [[nodiscard]] std::string Serialize() const;
   //! initializes from a stream pickle
   void initFromStream(std::istream &ss);
   //! initializes from a string pickle

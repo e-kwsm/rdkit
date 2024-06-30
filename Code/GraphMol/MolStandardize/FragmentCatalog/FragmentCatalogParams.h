@@ -38,16 +38,17 @@ class RDKIT_MOLSTANDARDIZE_EXPORT FragmentCatalogParams
 
   ~FragmentCatalogParams() override;
 
-  unsigned int getNumFuncGroups() const {
+  [[nodiscard]] unsigned int getNumFuncGroups() const {
     return static_cast<unsigned int>(d_funcGroups.size());
   }
 
-  const std::vector<std::shared_ptr<ROMol>> &getFuncGroups() const;
+  [[nodiscard]] const std::vector<std::shared_ptr<ROMol>> &getFuncGroups()
+      const;
 
-  const ROMol *getFuncGroup(unsigned int fid) const;
+  [[nodiscard]] const ROMol *getFuncGroup(unsigned int fid) const;
 
   void toStream(std::ostream &) const override;
-  std::string Serialize() const override;
+  [[nodiscard]] std::string Serialize() const override;
   void initFromStream(std::istream &ss) override;
   void initFromString(const std::string &text) override;
 

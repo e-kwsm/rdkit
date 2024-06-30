@@ -64,9 +64,9 @@ struct RDKIT_DESCRIPTORS_EXPORT PropertyFunctor {
   }
 
   //! Return the name of the property
-  const std::string getName() const { return propName; }
+  [[nodiscard]] const std::string getName() const { return propName; }
   //! Return the properties version
-  const std::string getVersion() const { return propVersion; }
+  [[nodiscard]] const std::string getVersion() const { return propVersion; }
 };
 
 //! Holds a collection of properties for computation purposes
@@ -78,9 +78,9 @@ class RDKIT_DESCRIPTORS_EXPORT Properties {
   Properties();
   Properties(const std::vector<std::string> &propNames);
 
-  std::vector<std::string> getPropertyNames() const;
-  std::vector<double> computeProperties(const RDKit::ROMol &mol,
-                                        bool annotate = false) const;
+  [[nodiscard]] std::vector<std::string> getPropertyNames() const;
+  [[nodiscard]] std::vector<double> computeProperties(
+      const RDKit::ROMol &mol, bool annotate = false) const;
   void annotateProperties(RDKit::ROMol &mol) const;
 
   //! Register a property function - takes ownership

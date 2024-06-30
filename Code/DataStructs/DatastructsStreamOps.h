@@ -38,8 +38,10 @@
 namespace RDKit {
 class DataStructsExplicitBitVecPropHandler : public CustomPropHandler {
  public:
-  const char *getPropName() const override { return "ExplicitBVProp"; }
-  bool canSerialize(const RDValue &value) const override {
+  [[nodiscard]] const char *getPropName() const override {
+    return "ExplicitBVProp";
+  }
+  [[nodiscard]] bool canSerialize(const RDValue &value) const override {
     return rdvalue_is<ExplicitBitVect>(value);
   }
 
@@ -63,7 +65,7 @@ class DataStructsExplicitBitVecPropHandler : public CustomPropHandler {
     }
   }
 
-  CustomPropHandler *clone() const override {
+  [[nodiscard]] CustomPropHandler *clone() const override {
     return new DataStructsExplicitBitVecPropHandler;
   }
 };

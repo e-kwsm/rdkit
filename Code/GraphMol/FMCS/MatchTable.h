@@ -25,9 +25,9 @@ class RDKIT_FMCS_EXPORT
  public:
   inline TArray2D(size_t cy = 0, size_t cx = 0)
       : XSize(cx), YSize(cy), Data(cx * cy) {}
-  inline size_t getXSize() const { return XSize; }
-  inline size_t getYSize() const { return YSize; }
-  inline bool empty() const { return Data.empty(); }
+  [[nodiscard]] inline size_t getXSize() const { return XSize; }
+  [[nodiscard]] inline size_t getYSize() const { return YSize; }
+  [[nodiscard]] inline bool empty() const { return Data.empty(); }
   inline void clear() {
     Data.clear();
     XSize = 0;
@@ -42,7 +42,9 @@ class RDKIT_FMCS_EXPORT
     Data[row * XSize + col] = val;
   }
   inline T at(size_t row, size_t col) { return Data[row * XSize + col]; }
-  inline T at(size_t row, size_t col) const { return Data[row * XSize + col]; }
+  [[nodiscard]] inline T at(size_t row, size_t col) const {
+    return Data[row * XSize + col];
+  }
 };
 
 typedef TArray2D<bool> MatchTable;  // row is index in QueryMolecule

@@ -42,13 +42,13 @@ class Rule4b : public SequenceRule {
 
   std::vector<std::vector<const Node *>> initialLevel(const Node *node) const;
 
-  std::vector<std::vector<const Node *>> getNextLevel(
+  [[nodiscard]] std::vector<std::vector<const Node *>> getNextLevel(
       const std::vector<std::vector<const Node *>> &prevLevel) const;
 
-  std::vector<const Node *> toNodeList(
+  [[nodiscard]] std::vector<const Node *> toNodeList(
       const std::vector<Edge *> &eqEdges) const;
 
-  std::vector<PairList> newPairLists(
+  [[nodiscard]] std::vector<PairList> newPairLists(
       const std::vector<Descriptor> &descriptors) const;
 
   void fillPairs(const Node *beg, PairList &plist) const;

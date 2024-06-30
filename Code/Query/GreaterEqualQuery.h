@@ -35,7 +35,7 @@ class RDKIT_QUERY_EXPORT GreaterEqualQuery
     this->df_negate = false;
   }
 
-  bool Match(const DataFuncArgType what) const override {
+  [[nodiscard]] bool Match(const DataFuncArgType what) const override {
     MatchFuncArgType mfArg =
         this->TypeConvert(what, Int2Type<needsConversion>());
     if (queryCmp(this->d_val, mfArg, this->d_tol) >= 0) {
@@ -44,8 +44,8 @@ class RDKIT_QUERY_EXPORT GreaterEqualQuery
       return this->getNegation();
     }
   }
-  Query<MatchFuncArgType, DataFuncArgType, needsConversion> *copy()
-      const override {
+  [[nodiscard]] Query<MatchFuncArgType, DataFuncArgType, needsConversion> *
+  copy() const override {
     GreaterEqualQuery<MatchFuncArgType, DataFuncArgType, needsConversion> *res =
         new GreaterEqualQuery<MatchFuncArgType, DataFuncArgType,
                               needsConversion>();
@@ -58,7 +58,7 @@ class RDKIT_QUERY_EXPORT GreaterEqualQuery
     return res;
   }
 
-  std::string getFullDescription() const override {
+  [[nodiscard]] std::string getFullDescription() const override {
     std::ostringstream res;
     res << this->getDescription();
     res << " " << this->d_val;

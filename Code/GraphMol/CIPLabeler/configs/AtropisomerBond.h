@@ -24,7 +24,7 @@ class AtropisomerBond : public Configuration {
 
   void setPrimaryLabel(Descriptor desc) override;
 
-  bool hasPrimaryLabel() const override;
+  [[nodiscard]] bool hasPrimaryLabel() const override;
 
   void resetPrimaryLabel() const override;
 

@@ -35,13 +35,13 @@ class RDKIT_TRAJECTORY_EXPORT Trajectory {
   Trajectory(const Trajectory &other);
   /*! \return the dimensionality of this Trajectory's coordinate tuples
    */
-  unsigned int dimension() const { return d_dimension; }
+  [[nodiscard]] unsigned int dimension() const { return d_dimension; }
   /*! \return the number of coordinate tuples associated to each Snapshot
    */
-  unsigned int numPoints() const { return d_numPoints; }
+  [[nodiscard]] unsigned int numPoints() const { return d_numPoints; }
   /*! \return the number of Snapshots associated to this Trajectory
    */
-  size_t size() const { return d_snapshotVect->size(); }
+  [[nodiscard]] size_t size() const { return d_snapshotVect->size(); }
   /*! \brief Appends a Snapshot to this Trajectory
       \param s is the Snapshot to be added; the Trajectory
              takes ownership of the snapshot coordinates
@@ -51,7 +51,7 @@ class RDKIT_TRAJECTORY_EXPORT Trajectory {
   /*! \param snapshotNum is the zero-based index of the retrieved Snapshot
       \return a const reference to the relevant Snapshot in the Trajectory
    */
-  const Snapshot &getSnapshot(unsigned int snapshotNum) const;
+  [[nodiscard]] const Snapshot &getSnapshot(unsigned int snapshotNum) const;
   /*! \brief Inserts a Snapshot into this Trajectory
       \param snapshotNum is the zero-based index of the Trajectory's Snapshot
              before which the Snapshot s will be inserted
