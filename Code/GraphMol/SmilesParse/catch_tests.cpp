@@ -722,8 +722,8 @@ TEST_CASE(
     CHECK(osmi == "*C |$M_p;$|");
     auto smi = MolToCXSmiles(cpy);
     CHECK(smi == osmi);
-    auto *oa1 = static_cast<QueryAtom *>(m->getAtomWithIdx(1));
-    auto *a1 = static_cast<QueryAtom *>(m->getAtomWithIdx(1));
+    QueryAtom *oa1 = static_cast<QueryAtom *>(m->getAtomWithIdx(1));
+    QueryAtom *a1 = static_cast<QueryAtom *>(m->getAtomWithIdx(1));
     REQUIRE(oa1->hasQuery());
     REQUIRE(a1->hasQuery());
     size_t osz =
