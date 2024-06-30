@@ -164,13 +164,13 @@ class RDKIT_MOLALIGN_EXPORT LAP {
     PRECONDITION(i < d_rowSol.size(), "Invalid index on LAP.rowSol");
     return d_rowSol[i];
   }
-  void computeMinCostPath(const int dim);
+  void computeMinCostPath(int dim);
   void computeCostMatrix(const ROMol &prbMol, const MolHistogram &prbHist,
                          const ROMol &refMol, const MolHistogram &refHist,
                          O3AConstraintVect *o3aConstraintVect,
                          int (*costFunc)(const unsigned int, const unsigned int,
                                          double, void *),
-                         void *data, const unsigned int n_bins = O3_MAX_H_BINS);
+                         void *data, unsigned int n_bins = O3_MAX_H_BINS);
 
  private:
   std::vector<int> d_rowSol;
@@ -276,20 +276,19 @@ class RDKIT_MOLALIGN_EXPORT O3A {
   //! pre-defined atom typing schemes
   typedef enum { MMFF94 = 0, CRIPPEN } AtomTypeScheme;
   O3A(ROMol &prbMol, const ROMol &refMol, void *prbProp, void *refProp,
-      AtomTypeScheme atomTypes = MMFF94, const int prbCid = -1,
-      const int refCid = -1, const bool reflect = false,
-      const unsigned int maxIters = 50, unsigned int options = 0,
-      const MatchVectType *constraintMap = nullptr,
+      AtomTypeScheme atomTypes = MMFF94, int prbCid = -1, int refCid = -1,
+      bool reflect = false, unsigned int maxIters = 50,
+      unsigned int options = 0, const MatchVectType *constraintMap = nullptr,
       const RDNumeric::DoubleVector *constraintWeights = nullptr,
       LAP *extLAP = nullptr, MolHistogram *extPrbHist = nullptr,
       MolHistogram *extRefHist = nullptr);
   O3A(int (*costFunc)(const unsigned int, const unsigned int, double, void *),
       double (*weightFunc)(const unsigned int, const unsigned int, void *),
       double (*scoringFunc)(const unsigned int, const unsigned int, void *),
-      void *data, ROMol &prbMol, const ROMol &refMol, const int prbCid,
-      const int refCid, const boost::dynamic_bitset<> &prbHvyAtoms,
-      const boost::dynamic_bitset<> &refHvyAtoms, const bool reflect = false,
-      const unsigned int maxIters = 50, unsigned int options = 0,
+      void *data, ROMol &prbMol, const ROMol &refMol, int prbCid, int refCid,
+      const boost::dynamic_bitset<> &prbHvyAtoms,
+      const boost::dynamic_bitset<> &refHvyAtoms, bool reflect = false,
+      unsigned int maxIters = 50, unsigned int options = 0,
       O3AConstraintVect *o3aConstraintVect = nullptr,
       ROMol *extWorkPrbMol = nullptr, LAP *extLAP = nullptr,
       MolHistogram *extPrbHist = nullptr, MolHistogram *extRefHist = nullptr);
@@ -319,35 +318,34 @@ class RDKIT_MOLALIGN_EXPORT O3A {
   double d_o3aScore;
 };
 
-RDKIT_MOLALIGN_EXPORT void randomTransform(ROMol &mol, const int cid = -1,
-                                           const int seed = -1);
+RDKIT_MOLALIGN_EXPORT void randomTransform(ROMol &mol, int cid = -1,
+                                           int seed = -1);
 RDKIT_MOLALIGN_EXPORT const RDGeom::POINT3D_VECT *reflect(
     const Conformer &conf);
-RDKIT_MOLALIGN_EXPORT int o3aMMFFCostFunc(const unsigned int prbIdx,
-                                          const unsigned int refIdx,
-                                          double hSum, void *data);
-RDKIT_MOLALIGN_EXPORT double o3aMMFFWeightFunc(const unsigned int prbIdx,
-                                               const unsigned int refIdx,
-                                               void *data);
-RDKIT_MOLALIGN_EXPORT double o3aMMFFScoringFunc(const unsigned int prbIdx,
-                                                const unsigned int refIdx,
+RDKIT_MOLALIGN_EXPORT int o3aMMFFCostFunc(unsigned int prbIdx,
+                                          unsigned int refIdx, double hSum,
+                                          void *data);
+RDKIT_MOLALIGN_EXPORT double o3aMMFFWeightFunc(unsigned int prbIdx,
+                                               unsigned int refIdx, void *data);
+RDKIT_MOLALIGN_EXPORT double o3aMMFFScoringFunc(unsigned int prbIdx,
+                                                unsigned int refIdx,
                                                 void *data);
-RDKIT_MOLALIGN_EXPORT int o3aCrippenCostFunc(const unsigned int prbIdx,
-                                             const unsigned int refIdx,
-                                             double hSum, void *data);
-RDKIT_MOLALIGN_EXPORT double o3aCrippenWeightFunc(const unsigned int prbIdx,
-                                                  const unsigned int refIdx,
+RDKIT_MOLALIGN_EXPORT int o3aCrippenCostFunc(unsigned int prbIdx,
+                                             unsigned int refIdx, double hSum,
+                                             void *data);
+RDKIT_MOLALIGN_EXPORT double o3aCrippenWeightFunc(unsigned int prbIdx,
+                                                  unsigned int refIdx,
                                                   void *data);
-RDKIT_MOLALIGN_EXPORT double o3aCrippenScoringFunc(const unsigned int prbIdx,
-                                                   const unsigned int refIdx,
+RDKIT_MOLALIGN_EXPORT double o3aCrippenScoringFunc(unsigned int prbIdx,
+                                                   unsigned int refIdx,
                                                    void *data);
 
 RDKIT_MOLALIGN_EXPORT void getO3AForProbeConfs(
     ROMol &prbMol, const ROMol &refMol, void *prbProp, void *refProp,
     std::vector<boost::shared_ptr<O3A>> &res, int numThreads = 1,
-    O3A::AtomTypeScheme atomTypes = O3A::MMFF94, const int refCid = -1,
-    const bool reflect = false, const unsigned int maxIters = 50,
-    unsigned int options = 0, const MatchVectType *constraintMap = nullptr,
+    O3A::AtomTypeScheme atomTypes = O3A::MMFF94, int refCid = -1,
+    bool reflect = false, unsigned int maxIters = 50, unsigned int options = 0,
+    const MatchVectType *constraintMap = nullptr,
     const RDNumeric::DoubleVector *constraintWeights = nullptr);
 }  // namespace MolAlign
 }  // namespace RDKit
