@@ -365,7 +365,7 @@ TEST_CASE("chiralRandomTest") {
 
         auto outSmi1 = MolToCXSmiles(*nmol);
 
-        if (smiExpected == "") {
+        if (smiExpected.empty()) {
           smiExpected = outSmi1;
         } else {
           CHECK(outSmi1 == smiExpected);

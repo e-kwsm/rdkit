@@ -285,7 +285,7 @@ const CustomPropHandlerVec &MolPickler::getCustomPropHandlers() {
 #ifdef RDK_BUILD_THREADSAFE_SSS
   std::lock_guard<std::mutex> lock(GetPropMutex());
 #endif
-  if (defaultPropHandlers.size() == 0) {
+  if (defaultPropHandlers.empty()) {
     // initialize handlers
     defaultPropHandlers.push_back(
         std::make_shared<DataStructsExplicitBitVecPropHandler>());
@@ -297,7 +297,7 @@ void MolPickler::addCustomPropHandler(const CustomPropHandler &handler) {
 #ifdef RDK_BUILD_THREADSAFE_SSS
   std::lock_guard<std::mutex> lock(GetPropMutex());
 #endif
-  if (defaultPropHandlers.size() == 0) {
+  if (defaultPropHandlers.empty()) {
     // initialize handlers
     defaultPropHandlers.push_back(
         std::make_shared<DataStructsExplicitBitVecPropHandler>());
@@ -797,10 +797,10 @@ void pickleAtomPDBResidueInfo(std::ostream &ss,
     streamWrite(ss, MolPickler::ATOM_PDB_RESIDUE_SERIALNUMBER,
                 info->getSerialNumber());
   }
-  if (info->getAltLoc() != "") {
+  if (!info->getAltLoc().empty()) {
     streamWrite(ss, MolPickler::ATOM_PDB_RESIDUE_ALTLOC, info->getAltLoc());
   }
-  if (info->getResidueName() != "") {
+  if (!info->getResidueName().empty()) {
     streamWrite(ss, MolPickler::ATOM_PDB_RESIDUE_RESIDUENAME,
                 info->getResidueName());
   }
@@ -808,10 +808,10 @@ void pickleAtomPDBResidueInfo(std::ostream &ss,
     streamWrite(ss, MolPickler::ATOM_PDB_RESIDUE_RESIDUENUMBER,
                 info->getResidueNumber());
   }
-  if (info->getChainId() != "") {
+  if (!info->getChainId().empty()) {
     streamWrite(ss, MolPickler::ATOM_PDB_RESIDUE_CHAINID, info->getChainId());
   }
-  if (info->getInsertionCode() != "") {
+  if (!info->getInsertionCode().empty()) {
     streamWrite(ss, MolPickler::ATOM_PDB_RESIDUE_INSERTIONCODE,
                 info->getInsertionCode());
   }
@@ -1217,7 +1217,7 @@ void MolPickler::_pickle(const ROMol *mol, std::ostream &ss,
   // Write Stereo Groups
   {
     auto &stereo_groups = mol->getStereoGroups();
-    if (stereo_groups.size() > 0u) {
+    if (!stereo_groups.empty()) {
       streamWrite(ss, BEGINSTEREOGROUP);
       _pickleStereo<T>(ss, stereo_groups, atomIdxMap, bondIdxMap);
     }

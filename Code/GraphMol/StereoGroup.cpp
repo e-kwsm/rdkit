@@ -182,7 +182,7 @@ std::ostream &operator<<(std::ostream &target, const RDKit::StereoGroup &stg) {
   for (auto atom : stg.getAtoms()) {
     target << atom->getIdx() << ' ';
   }
-  if (stg.getBonds().size() > 0) {
+  if (!stg.getBonds().empty()) {
     target << " Bonds: { ";
     for (auto bond : stg.getBonds()) {
       target << bond->getIdx() << ' ';
