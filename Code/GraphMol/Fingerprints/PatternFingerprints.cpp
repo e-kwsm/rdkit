@@ -46,7 +46,9 @@ class ss_matcher {
   };
 
   // const RDKit::ROMOL_SPTR &getMatcher() const { return m_matcher; };
-  const RDKit::ROMol *getMatcher() const { return m_matcher.get(); };
+  [[nodiscard]] const RDKit::ROMol *getMatcher() const {
+    return m_matcher.get();
+  };
 
  private:
   RDKit::ROMOL_SPTR m_matcher;
