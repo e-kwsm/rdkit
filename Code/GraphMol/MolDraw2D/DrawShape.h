@@ -50,7 +50,8 @@ class DrawShape {
                             double &ymax) const;
   virtual void scale(const Point2D &scale_factor);
   virtual void move(const Point2D &trans);
-  virtual bool doesRectClash(const StringRect &rect, double padding) const;
+  [[nodiscard]] virtual bool doesRectClash(const StringRect &rect,
+                                           double padding) const;
 
   std::vector<Point2D> points_;
   double lineWidth_;
@@ -101,7 +102,8 @@ class DrawShapeEllipse : public DrawShape {
   void findExtremes(double &xmin, double &xmax, double &ymin,
                     double &ymax) const override;
   void move(const Point2D &trans) override;
-  bool doesRectClash(const StringRect &rect, double padding) const override;
+  [[nodiscard]] bool doesRectClash(const StringRect &rect,
+                                   double padding) const override;
 };
 
 class DrawShapeSimpleLine : public DrawShape {
@@ -117,7 +119,8 @@ class DrawShapeSimpleLine : public DrawShape {
   DrawShapeSimpleLine &operator=(const DrawShapeSimpleLine &) = delete;
   DrawShapeSimpleLine &operator=(DrawShapeSimpleLine &&) = delete;
   void myDraw(MolDraw2D &drawer) const override;
-  bool doesRectClash(const StringRect &rect, double padding) const override;
+  [[nodiscard]] bool doesRectClash(const StringRect &rect,
+                                   double padding) const override;
 
   DashPattern dashPattern_;
 };
@@ -135,7 +138,8 @@ class DrawShapePolyLine : public DrawShape {
   DrawShapePolyLine &operator=(const DrawShapePolyLine &) = delete;
   DrawShapePolyLine &operator=(DrawShapePolyLine &&) = delete;
   void myDraw(MolDraw2D &drawer) const override;
-  bool doesRectClash(const StringRect &rect, double padding) const override;
+  [[nodiscard]] bool doesRectClash(const StringRect &rect,
+                                   double padding) const override;
 
   DashPattern dashPattern_;
 };
@@ -156,7 +160,8 @@ class DrawShapeSolidWedge : public DrawShape {
   void buildSingleColorTriangles();
   void buildTwoColorTriangles();
   void myDraw(MolDraw2D &drawer) const override;
-  bool doesRectClash(const StringRect &rect, double padding) const override;
+  [[nodiscard]] bool doesRectClash(const StringRect &rect,
+                                   double padding) const override;
   // if otherBondVecs_.size() > 2, then we only want the two vecs with the
   // widest angle between them.
   void trimOtherBondVecs();
@@ -192,7 +197,8 @@ class DrawShapeDashedWedge : public DrawShape {
   void move(const Point2D &trans) override;
   void findExtremes(double &xmin, double &xmax, double &ymin,
                     double &ymax) const override;
-  bool doesRectClash(const StringRect &rect, double padding) const override;
+  [[nodiscard]] bool doesRectClash(const StringRect &rect,
+                                   double padding) const override;
 
   DrawColour col2_;
   bool oneLessDash_;
@@ -217,7 +223,8 @@ class DrawShapeWavyLine : public DrawShape {
   DrawShapeWavyLine &operator=(DrawShapeWavyLine &&) = delete;
   void myDraw(MolDraw2D &drawer) const override;
   void scale(const Point2D &scaleFactor) override;
-  bool doesRectClash(const StringRect &rect, double padding) const override;
+  [[nodiscard]] bool doesRectClash(const StringRect &rect,
+                                   double padding) const override;
 
   DrawColour col2_;
   double offset_;
@@ -247,7 +254,8 @@ class DrawShapeArc : public DrawShape {
   void findExtremes(double &xmin, double &xmax, double &ymin,
                     double &ymax) const override;
   void move(const Point2D &trans) override;
-  bool doesRectClash(const StringRect &rect, double padding) const override;
+  [[nodiscard]] bool doesRectClash(const StringRect &rect,
+                                   double padding) const override;
 
   double ang1_, ang2_;
 };
