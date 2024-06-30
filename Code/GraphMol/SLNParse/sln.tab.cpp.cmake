@@ -1943,9 +1943,9 @@ yyreduce:
 #line 457 "sln.yy" /* yacc.c:1651  */
     {
       (yyval.attriblist_T)
-          ->push_back(std::make_pair(
+          ->emplace_back(
               SLNParse::AttribAnd,
-              boost::shared_ptr<SLNParse::AttribType>((yyvsp[0].attrib_T))));
+              boost::shared_ptr<SLNParse::AttribType>((yyvsp[0].attrib_T)));
     }
 #line 2029 "/home/rodrigue/Documents/code/rdkit_builder/rdkit/Code/GraphMol/SLNParse/sln.tab.cpp" /* yacc.c:1651  */
     break;
@@ -1954,9 +1954,9 @@ yyreduce:
 #line 461 "sln.yy" /* yacc.c:1651  */
     {
       (yyval.attriblist_T)
-          ->push_back(std::make_pair(
+          ->emplace_back(
               SLNParse::AttribOr,
-              boost::shared_ptr<SLNParse::AttribType>((yyvsp[0].attrib_T))));
+              boost::shared_ptr<SLNParse::AttribType>((yyvsp[0].attrib_T)));
     }
 #line 2038 "/home/rodrigue/Documents/code/rdkit_builder/rdkit/Code/GraphMol/SLNParse/sln.tab.cpp" /* yacc.c:1651  */
     break;
@@ -1965,9 +1965,9 @@ yyreduce:
 #line 465 "sln.yy" /* yacc.c:1651  */
     {
       (yyval.attriblist_T)
-          ->push_back(std::make_pair(
+          ->emplace_back(
               SLNParse::AttribLowPriAnd,
-              boost::shared_ptr<SLNParse::AttribType>((yyvsp[0].attrib_T))));
+              boost::shared_ptr<SLNParse::AttribType>((yyvsp[0].attrib_T)));
     }
 #line 2047 "/home/rodrigue/Documents/code/rdkit_builder/rdkit/Code/GraphMol/SLNParse/sln.tab.cpp" /* yacc.c:1651  */
     break;
@@ -1977,9 +1977,9 @@ yyreduce:
     {
       (yyval.attriblist_T) = new SLNParse::AttribListType();
       (yyval.attriblist_T)
-          ->push_back(std::make_pair(
+          ->emplace_back(
               SLNParse::AttribLowPriAnd,
-              boost::shared_ptr<SLNParse::AttribType>((yyvsp[0].attrib_T))));
+              boost::shared_ptr<SLNParse::AttribType>((yyvsp[0].attrib_T)));
     }
 #line 2057 "/home/rodrigue/Documents/code/rdkit_builder/rdkit/Code/GraphMol/SLNParse/sln.tab.cpp" /* yacc.c:1651  */
     break;
@@ -1989,9 +1989,9 @@ yyreduce:
     {
       (yyval.attriblist_T) = new SLNParse::AttribListType();
       (yyval.attriblist_T)
-          ->push_back(std::make_pair(
+          ->emplace_back(
               SLNParse::AttribAnd,
-              boost::shared_ptr<SLNParse::AttribType>((yyvsp[0].attrib_T))));
+              boost::shared_ptr<SLNParse::AttribType>((yyvsp[0].attrib_T)));
     }
 #line 2067 "/home/rodrigue/Documents/code/rdkit_builder/rdkit/Code/GraphMol/SLNParse/sln.tab.cpp" /* yacc.c:1651  */
     break;
@@ -2000,9 +2000,9 @@ yyreduce:
 #line 481 "sln.yy" /* yacc.c:1651  */
     {
       (yyval.attriblist_T)
-          ->push_back(std::make_pair(
+          ->emplace_back(
               SLNParse::AttribAnd,
-              boost::shared_ptr<SLNParse::AttribType>((yyvsp[0].attrib_T))));
+              boost::shared_ptr<SLNParse::AttribType>((yyvsp[0].attrib_T)));
     }
 #line 2076 "/home/rodrigue/Documents/code/rdkit_builder/rdkit/Code/GraphMol/SLNParse/sln.tab.cpp" /* yacc.c:1651  */
     break;
