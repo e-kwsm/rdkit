@@ -65,7 +65,9 @@ class PairList {
     addAll(tail.d_descriptors);
   }
 
-  Descriptor getRefDescriptor() const { return ref(d_descriptors[0]); }
+  [[nodiscard]] Descriptor getRefDescriptor() const {
+    return ref(d_descriptors[0]);
+  }
 
   /**
    * Adds a descriptor to the descriptor list. If the provided descriptor is
@@ -111,9 +113,9 @@ class PairList {
    *
    * @return an integer representing the descriptor pairings
    */
-  std::uint32_t getPairing() const { return d_pairing; }
+  [[nodiscard]] std::uint32_t getPairing() const { return d_pairing; }
 
-  int compareTo(const PairList &that) const {
+  [[nodiscard]] int compareTo(const PairList &that) const {
     if (d_descriptors.size() != that.d_descriptors.size()) {
       throw std::runtime_error("Descriptor lists should be the same length!");
     }
@@ -132,7 +134,7 @@ class PairList {
 
   bool operator<(const PairList &that) const { return compareTo(that) == -1; }
 
-  std::string toString() const {
+  [[nodiscard]] std::string toString() const {
     // handles cases that would break the toString method
     if (d_descriptors.empty() || d_descriptors[0] == Descriptor::NONE) {
       return "";

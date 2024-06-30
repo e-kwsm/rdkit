@@ -25,7 +25,7 @@ class RDKIT_FINGERPRINTS_EXPORT RDKitFPArguments : public FingerprintArguments {
   bool df_branchedPaths;
   bool df_useBondOrder;
 
-  std::string infoString() const override;
+  [[nodiscard]] std::string infoString() const override;
 
   /**
    \brief Construct a new RDKitFPArguments object
@@ -56,11 +56,11 @@ class RDKIT_FINGERPRINTS_EXPORT RDKitFPArguments : public FingerprintArguments {
 class RDKIT_FINGERPRINTS_EXPORT RDKitFPAtomInvGenerator
     : public AtomInvariantsGenerator {
  public:
-  std::vector<std::uint32_t> *getAtomInvariants(
+  [[nodiscard]] std::vector<std::uint32_t> *getAtomInvariants(
       const ROMol &mol) const override;
 
-  std::string infoString() const override;
-  RDKitFPAtomInvGenerator *clone() const override;
+  [[nodiscard]] std::string infoString() const override;
+  [[nodiscard]] RDKitFPAtomInvGenerator *clone() const override;
 };
 
 template <typename OutputType>
@@ -110,7 +110,7 @@ class RDKIT_FINGERPRINTS_EXPORT RDKitFPEnvGenerator
       const std::vector<std::uint32_t> *bondInvariants,
       bool hashResults = false) const override;
 
-  std::string infoString() const override;
+  [[nodiscard]] std::string infoString() const override;
   OutputType getResultSize() const override;
 
 };  // namespace RDKitFP

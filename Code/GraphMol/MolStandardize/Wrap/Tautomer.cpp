@@ -39,30 +39,35 @@ class PyTautomerEnumeratorResult {
     d_atTuple = python::tuple(atList);
     d_bndTuple = python::tuple(bndList);
   }
-  inline const std::vector<ROMOL_SPTR> *tautomers() const {
+  [[nodiscard]] inline const std::vector<ROMOL_SPTR> *tautomers() const {
     return new std::vector<ROMOL_SPTR>(d_tr->tautomers());
   }
-  inline const std::vector<std::string> *smiles() const {
+  [[nodiscard]] inline const std::vector<std::string> *smiles() const {
     return new std::vector<std::string>(d_tr->smiles());
   }
-  inline const MolStandardize::SmilesTautomerMap &smilesTautomerMap() const {
+  [[nodiscard]] inline const MolStandardize::SmilesTautomerMap &
+  smilesTautomerMap() const {
     return d_tr->smilesTautomerMap();
   }
-  inline MolStandardize::TautomerEnumeratorStatus status() const {
+  [[nodiscard]] inline MolStandardize::TautomerEnumeratorStatus status() const {
     return d_tr->status();
   }
-  inline python::tuple modifiedAtoms() const { return d_atTuple; }
-  inline python::tuple modifiedBonds() const { return d_bndTuple; }
-  inline const MolStandardize::TautomerEnumeratorResult::const_iterator begin()
-      const {
+  [[nodiscard]] inline python::tuple modifiedAtoms() const { return d_atTuple; }
+  [[nodiscard]] inline python::tuple modifiedBonds() const {
+    return d_bndTuple;
+  }
+  [[nodiscard]] inline const MolStandardize::TautomerEnumeratorResult::
+      const_iterator
+      begin() const {
     return d_tr->begin();
   }
-  inline const MolStandardize::TautomerEnumeratorResult::const_iterator end()
-      const {
+  [[nodiscard]] inline const MolStandardize::TautomerEnumeratorResult::
+      const_iterator
+      end() const {
     return d_tr->end();
   }
-  inline int size() const { return d_tr->size(); }
-  RDKit::ROMol *at(int pos) const {
+  [[nodiscard]] inline int size() const { return d_tr->size(); }
+  [[nodiscard]] RDKit::ROMol *at(int pos) const {
     if (pos < 0) {
       pos += size();
     }
@@ -93,7 +98,7 @@ class PyTautomerEnumeratorCallback
     d_pyCallbackObject = pyCallbackObject;
     pyCallback->d_cppCallback = this;
   }
-  inline python::object getCallbackOverride() const {
+  [[nodiscard]] inline python::object getCallbackOverride() const {
     return get_override("__call__");
   }
   bool operator()(

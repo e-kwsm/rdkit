@@ -25,7 +25,9 @@ class RDKIT_RDGENERAL_EXPORT FileParseException : public std::runtime_error {
   explicit FileParseException(const std::string msg)
       : std::runtime_error("FileParseException"), _msg(msg) {}
   //! get the error message
-  const char *what() const noexcept override { return _msg.c_str(); }
+  [[nodiscard]] const char *what() const noexcept override {
+    return _msg.c_str();
+  }
   ~FileParseException() noexcept override = default;
 
  private:
