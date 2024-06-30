@@ -703,7 +703,7 @@ RGroupRows RGroupDecomposition::getRGroupsAsRows() const {
   for (auto it = permutation.begin(); it != permutation.end(); ++it) {
     auto Rs_seen(usedLabelMap);
     // make a new rgroup entry
-    groups.push_back(RGroupRow());
+    groups.emplace_back();
     RGroupRow &out_rgroups = groups.back();
     if (data->params.includeTargetMolInResults) {
       out_rgroups.emplace(RGroupData::getMolLabel(),
@@ -765,7 +765,7 @@ RGroupColumns RGroupDecomposition::getRGroupsAsColumns() const {
       if (molidx && col.size() < molidx - 1) {
         col.resize(molidx - 1);
       }
-      col.push_back(rgroup.second->combinedMol);
+      col.emplace_back(rgroup.second->combinedMol);
       rGroupWithRealMol.insert(r);
     }
     groups[RGroupData::getCoreLabel()].push_back(
