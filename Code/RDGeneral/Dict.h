@@ -139,14 +139,14 @@ class RDKIT_RDGENERAL_EXPORT Dict {
 
   //----------------------------------------------------------
   //! \brief Access to the underlying data.
-  const DataType &getData() const { return _data; }
+  [[nodiscard]] const DataType &getData() const { return _data; }
   DataType &getData() { return _data; }
 
   //----------------------------------------------------------
 
   //! \brief Returns whether or not the dictionary contains a particular
   //!        key.
-  bool hasVal(const std::string &what) const {
+  [[nodiscard]] bool hasVal(const std::string &what) const {
     for (const auto &data : _data) {
       if (data.key == what) {
         return true;
@@ -160,7 +160,7 @@ class RDKIT_RDGENERAL_EXPORT Dict {
   /*!
      \return  a \c STR_VECT
   */
-  STR_VECT keys() const {
+  [[nodiscard]] STR_VECT keys() const {
     STR_VECT res;
     res.reserve(_data.size());
     for (const auto &item : _data) {
@@ -189,7 +189,7 @@ class RDKIT_RDGENERAL_EXPORT Dict {
 
   //! \overload
   template <typename T>
-  T getVal(const std::string &what) const {
+  [[nodiscard]] T getVal(const std::string &what) const {
     for (auto &data : _data) {
       if (data.key == what) {
         return from_rdvalue<T>(data.val);
