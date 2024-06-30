@@ -97,7 +97,7 @@ void addStringVal(rj::Value &dest, const rj::Value &defaults, const char *tag,
   const auto &miter = defaults.FindMember(srt);
   if (miter != defaults.MemberEnd()) {
     std::string dval = miter->value.GetString();
-    if (val.size() && dval != val) {
+    if (!val.empty() && dval != val) {
       dest.AddMember(srt, nmv, doc.GetAllocator());
     }
   } else {
@@ -326,7 +326,7 @@ void addSubstanceGroup(const SubstanceGroup &sg, rj::Value &rjSG,
                        rj::Document &doc) {
   bool includePrivate = false, includeComputed = false;
   auto propNames = sg.getPropList(includePrivate, includeComputed);
-  if (propNames.size()) {
+  if (!propNames.empty()) {
     rj::Value properties(rj::kObjectType);
     addProperties(sg, propNames, properties, doc);
     rjSG.AddMember("properties", properties, doc.GetAllocator());
@@ -519,7 +519,7 @@ void addMol(const T &imol, rj::Value &rjMol, rj::Document &doc,
 
   bool includePrivate = false, includeComputed = false;
   auto propNames = mol.getPropList(includePrivate, includeComputed);
-  if (propNames.size()) {
+  if (!propNames.empty()) {
     rj::Value properties(rj::kObjectType);
     addProperties(mol, propNames, properties, doc);
     rjMol.AddMember("properties", properties, doc.GetAllocator());
