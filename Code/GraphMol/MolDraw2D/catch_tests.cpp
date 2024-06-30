@@ -808,7 +808,7 @@ TEST_CASE("dative bonds", "[drawing][organometallics]") {
     check_file_hash("testDativeBonds_1.svg");
 
     std::regex d1(
-        "<path class='bond-0 atom-0 atom-1' d='M (\\d+\\.\\d+),(\\d+\\.\\d+) L (\\d+\\.\\d+),(\\d+\\.\\d+)' style='fill:none;fill-rule:evenodd;stroke:#0000FF");
+        R"(<path class='bond-0 atom-0 atom-1' d='M (\d+\.\d+),(\d+\.\d+) L (\d+\.\d+),(\d+\.\d+)' style='fill:none;fill-rule:evenodd;stroke:#0000FF)");
     auto dat1 = *std::sregex_iterator(text.begin(), text.end(), d1);
     CHECK_THAT(stod(dat1[1]), Catch::Matchers::WithinAbs(78.2, 0.1));
     CHECK_THAT(stod(dat1[2]), Catch::Matchers::WithinAbs(88.0, 0.1));
@@ -829,7 +829,7 @@ TEST_CASE("dative bonds", "[drawing][organometallics]") {
     check_file_hash("testDativeBonds_2.svg");
 
     std::regex d1(
-        "<path class='bond-7 atom-7 atom-8' d='M (\\d+\\.\\d+),(\\d+\\.\\d+) L (\\d+\\.\\d+),(\\d+\\.\\d+)' style='fill:none;fill-rule:evenodd;stroke:#0000FF");
+        R"(<path class='bond-7 atom-7 atom-8' d='M (\d+\.\d+),(\d+\.\d+) L (\d+\.\d+),(\d+\.\d+)' style='fill:none;fill-rule:evenodd;stroke:#0000FF)");
     auto dat1 = *std::sregex_iterator(text.begin(), text.end(), d1);
     CHECK_THAT(stod(dat1[1]), Catch::Matchers::WithinAbs(100.9, 0.1));
     CHECK_THAT(stod(dat1[2]), Catch::Matchers::WithinAbs(77.5, 0.1));
@@ -852,7 +852,7 @@ TEST_CASE("dative bonds", "[drawing][organometallics]") {
     check_file_hash("testDativeBonds_3.svg");
 
     std::regex d1(
-        "<path class='bond-2 atom-3 atom-4' d='M (\\d+\\.\\d+),(\\d+\\.\\d+) L (\\d+\\.\\d+),(\\d+\\.\\d+)' style='fill:none;fill-rule:evenodd;stroke:#0000FF");
+        R"(<path class='bond-2 atom-3 atom-4' d='M (\d+\.\d+),(\d+\.\d+) L (\d+\.\d+),(\d+\.\d+)' style='fill:none;fill-rule:evenodd;stroke:#0000FF)");
     auto dat1 = *std::sregex_iterator(text.begin(), text.end(), d1);
     CHECK_THAT(stod(dat1[1]), Catch::Matchers::WithinAbs(53.5, 0.1));
     CHECK_THAT(stod(dat1[2]), Catch::Matchers::WithinAbs(140.2, 0.1));
@@ -3054,8 +3054,7 @@ M  END)CTAB"));
     CHECK(bond0.size() == 2);
     CHECK(bond2.size() == 2);
     std::regex regex(
-        "^.*d='M\\s+(\\d+\\.\\d+),(\\d+\\.\\d+)\\s+L\\s+(\\d+\\.\\d+),(\\d+\\."
-        "\\d+)'.*$");
+        R"(^.*d='M\s+(\d+\.\d+),(\d+\.\d+)\s+L\s+(\d+\.\d+),(\d+\.\d+)'.*$)");
     std::smatch bond0OuterMatch;
     CHECK(std::regex_match(bond0[0], bond0OuterMatch, regex));
     CHECK(bond0OuterMatch.size() == 5);
@@ -3445,21 +3444,21 @@ M  END
     // the reaction is drawn with some bonds vertical, make sure they remain
     // vertical
     {
-      std::regex regex("class='bond-0.*? d='M (\\d+\\.\\d+).* L (\\d+\\.\\d+)");
+      std::regex regex(R"(class='bond-0.*? d='M (\d+\.\d+).* L (\d+\.\d+))");
       std::smatch bondMatch;
       CHECK(std::regex_search(txt, bondMatch, regex));
       CHECK(bondMatch.size() == 3);  // match both halves of the bond
       CHECK(bondMatch[1].str() == bondMatch[2].str());
     }
     {
-      std::regex regex("class='bond-2.*? d='M (\\d+\\.\\d+).* L (\\d+\\.\\d+)");
+      std::regex regex(R"(class='bond-2.*? d='M (\d+\.\d+).* L (\d+\.\d+))");
       std::smatch bondMatch;
       CHECK(std::regex_search(txt, bondMatch, regex));
       CHECK(bondMatch.size() == 3);  // match both halves of the bond
       CHECK(bondMatch[1].str() == bondMatch[2].str());
     }
     {
-      std::regex regex("class='bond-4.*? d='M (\\d+\\.\\d+).* L (\\d+\\.\\d+)");
+      std::regex regex(R"(class='bond-4.*? d='M (\d+\.\d+).* L (\d+\.\d+))");
       std::smatch bondMatch;
       CHECK(std::regex_search(txt, bondMatch, regex));
       CHECK(bondMatch.size() == 3);  // match both halves of the bond
@@ -6329,7 +6328,7 @@ TEST_CASE("Github5947: Ellipse extremes not calculated correctly.") {
   outs << text;
   outs.flush();
   outs.close();
-  std::regex r1("<ellipse cx=.*rx='(\\d+\\.\\d+)' ry='(\\d+\\.\\d+)'");
+  std::regex r1(R"(<ellipse cx=.*rx='(\d+\.\d+)' ry='(\d+\.\d+)')");
   std::ptrdiff_t const match_count(
       std::distance(std::sregex_iterator(text.begin(), text.end(), r1),
                     std::sregex_iterator()));
@@ -6344,7 +6343,7 @@ TEST_CASE("Github5947: Ellipse extremes not calculated correctly.") {
   }
 
   // check that the first ellipse is in the right place
-  std::regex r2("<ellipse cx='(\\d+\\.\\d+)' cy='(\\d+\\.\\d+)'");
+  std::regex r2(R"(<ellipse cx='(\d+\.\d+)' cy='(\d+\.\d+)')");
   auto ell1 = *std::sregex_iterator(text.begin(), text.end(), r2);
   CHECK_THAT(stod(ell1[1]), Catch::Matchers::WithinAbs(308.0, 0.1));
   CHECK_THAT(stod(ell1[2]), Catch::Matchers::WithinAbs(200.0, 0.1));
@@ -6405,7 +6404,7 @@ M  END
     outs << text;
     outs.flush();
     outs.close();
-    std::regex r("<ellipse cx=.*rx='(\\d+\\.\\d+)' ry='(\\d+\\.\\d+)'");
+    std::regex r(R"(<ellipse cx=.*rx='(\d+\.\d+)' ry='(\d+\.\d+)')");
     std::ptrdiff_t const match_count(
         std::distance(std::sregex_iterator(text.begin(), text.end(), r),
                       std::sregex_iterator()));
@@ -7790,7 +7789,7 @@ M  END
 
 TEST_CASE("Github 6397 - chiral tag overlapping atom label") {
   const static std::regex absA(
-      "<text x='(\\d+\\.\\d+)' y='(\\d+\\.\\d+)' class='note'.*>A</text>");
+      R"(<text x='(\d+\.\d+)' y='(\d+\.\d+)' class='note'.*>A</text>)");
   auto checkABS = [](const std::string &text, int expCount, double expX,
                      double expY) {
     std::ptrdiff_t const match_count(
@@ -8232,7 +8231,7 @@ TEST_CASE("Lasso highlights") {
     outs.close();
     // atom 16 should have 1 red arc
     std::regex a16(
-        "<path class='atom-16' d='M (\\d+\\.\\d+),(\\d+\\.\\d+) L (\\d+\\.\\d+),(\\d+\\.\\d+).*stroke:#FF0000;");
+        R"(<path class='atom-16' d='M (\d+\.\d+),(\d+\.\d+) L (\d+\.\d+),(\d+\.\d+).*stroke:#FF0000;)");
     std::ptrdiff_t const match_count(
         std::distance(std::sregex_iterator(text.begin(), text.end(), a16),
                       std::sregex_iterator()));
@@ -8285,7 +8284,7 @@ TEST_CASE("Lasso highlights") {
 #ifdef RDK_BUILD_FREETYPE_SUPPORT
     // atom 0 should have 1 green arc
     std::regex a0(
-        "<path class='atom-0' d='M (\\d+\\.\\d+),(\\d+\\.\\d+) L (\\d+\\.\\d+),(\\d+\\.\\d+).*stroke:#00FF00;");
+        R"(<path class='atom-0' d='M (\d+\.\d+),(\d+\.\d+) L (\d+\.\d+),(\d+\.\d+).*stroke:#00FF00;)");
     std::ptrdiff_t const match_count(
         std::distance(std::sregex_iterator(text.begin(), text.end(), a0),
                       std::sregex_iterator()));
@@ -8334,7 +8333,7 @@ TEST_CASE("Lasso highlights") {
 #ifdef RDK_BUILD_FREETYPE_SUPPORT
     // atom 0 should have 4 arcs
     std::regex a0(
-        "<path class='atom-0' d='M (\\d+\\.\\d+),(\\d+\\.\\d+) L (\\d+\\.\\d+),(\\d+\\.\\d+)");
+        R"(<path class='atom-0' d='M (\d+\.\d+),(\d+\.\d+) L (\d+\.\d+),(\d+\.\d+))");
     std::ptrdiff_t const match_count(
         std::distance(std::sregex_iterator(text.begin(), text.end(), a0),
                       std::sregex_iterator()));
@@ -8383,7 +8382,7 @@ TEST_CASE("Lasso highlights") {
       // All the atoms should have 2 arcs except 5 and 6.  Check those for
       // atom 5.
       std::regex a5(
-          "<path class='atom-5' d='M (\\d+\\.\\d+),(\\d+\\.\\d+) L (\\d+\\.\\d+),(\\d+\\.\\d+)");
+          R"(<path class='atom-5' d='M (\d+\.\d+),(\d+\.\d+) L (\d+\.\d+),(\d+\.\d+))");
       std::ptrdiff_t const match_count(
           std::distance(std::sregex_iterator(text.begin(), text.end(), a5),
                         std::sregex_iterator()));
@@ -8442,7 +8441,7 @@ TEST_CASE("Lasso highlights") {
       // All the atoms should have 2 arcs except 5 and 6.  Check those for
       // atom 11.
       std::regex a11(
-          "<path class='atom-11' d='M (\\d+\\.\\d+),(\\d+\\.\\d+) L (\\d+\\.\\d+),(\\d+\\.\\d+)");
+          R"(<path class='atom-11' d='M (\d+\.\d+),(\d+\.\d+) L (\d+\.\d+),(\d+\.\d+))");
       std::ptrdiff_t const match_count(
           std::distance(std::sregex_iterator(text.begin(), text.end(), a11),
                         std::sregex_iterator()));
@@ -8553,7 +8552,7 @@ M  END)CTAB"_ctab;
 #ifdef RDK_BUILD_FREETYPE_SUPPORT
     // The arcs on 13 have been a hassle in the past.  There should be 6 of them
     std::regex a13(
-        "<path class='atom-13' d='M (\\d+\\.\\d+),(\\d+\\.\\d+) L (\\d+\\.\\d+),(\\d+\\.\\d+)");
+        R"(<path class='atom-13' d='M (\d+\.\d+),(\d+\.\d+) L (\d+\.\d+),(\d+\.\d+))");
     std::ptrdiff_t const match_count(
         std::distance(std::sregex_iterator(text.begin(), text.end(), a13),
                       std::sregex_iterator()));
@@ -8657,7 +8656,7 @@ M  END)CTAB"_ctab;
 #ifdef RDK_BUILD_FREETYPE_SUPPORT
     // The arcs on 13 have been a hassle in the past.  There should be 6 of them
     std::regex a13(
-        "<path class='atom-13' d='M (\\d+\\.\\d+),(\\d+\\.\\d+) L (\\d+\\.\\d+),(\\d+\\.\\d+)");
+        R"(<path class='atom-13' d='M (\d+\.\d+),(\d+\.\d+) L (\d+\.\d+),(\d+\.\d+))");
     std::ptrdiff_t const match_count(
         std::distance(std::sregex_iterator(text.begin(), text.end(), a13),
                       std::sregex_iterator()));
@@ -8726,7 +8725,7 @@ M  END)CTAB"_ctab;
     // Check one of the arcs starts in the right place.  There was a time
     // when they didn't on Windows machines.
     std::regex a0(
-        "<path class='atom-0' d='M (\\d+\\.\\d+),(\\d+\\.\\d+) L (\\d+\\.\\d+),(\\d+\\.\\d+)");
+        R"(<path class='atom-0' d='M (\d+\.\d+),(\d+\.\d+) L (\d+\.\d+),(\d+\.\d+))");
     auto dat1 = *std::sregex_iterator(text.begin(), text.end(), a0);
     CHECK_THAT(stod(dat1[1]), Catch::Matchers::WithinAbs(87.6, 0.1));
     CHECK_THAT(stod(dat1[2]), Catch::Matchers::WithinAbs(318.1, 0.1));
@@ -8734,7 +8733,7 @@ M  END)CTAB"_ctab;
     CHECK_THAT(stod(dat1[4]), Catch::Matchers::WithinAbs(320.7, 0.1));
     // There should be no arc for atom 1.
     std::regex a1(
-        "<path class='atom-1' d='M (\\d+\\.\\d+),(\\d+\\.\\d+) L (\\d+\\.\\d+),(\\d+\\.\\d+)");
+        R"(<path class='atom-1' d='M (\d+\.\d+),(\d+\.\d+) L (\d+\.\d+),(\d+\.\d+))");
     std::ptrdiff_t const match_count(
         std::distance(std::sregex_iterator(text.begin(), text.end(), a1),
                       std::sregex_iterator()));
@@ -8882,9 +8881,9 @@ TEST_CASE("Github 6685 - flexicanvas cuts off bottom of reaction") {
     auto width = stod((*match_begin)[1]);
     auto height = stod((*match_begin)[2]);
     std::regex bond(
-        "<path class='bond-\\d+ atom-\\d+ atom-\\d+' d='M (-?\\d+.\\d+),(-?\\d+.\\d+) L (-?\\d+.\\d+),(-?\\d+.\\d+)' style=");
+        R"(<path class='bond-\d+ atom-\d+ atom-\d+' d='M (-?\d+.\d+),(-?\d+.\d+) L (-?\d+.\d+),(-?\d+.\d+)' style=)");
     std::regex character(
-        "Q (-?\\d+.\\d+) (-?\\d+.\\d+), (-?\\d+.\\d+) (-?\\d+.\\d+)");
+        R"(Q (-?\d+.\d+) (-?\d+.\d+), (-?\d+.\d+) (-?\d+.\d+))");
     for (const auto &reg : {bond, character}) {
       match_begin = std::sregex_iterator(text.begin(), text.end(), reg);
       auto match_end = std::sregex_iterator();
