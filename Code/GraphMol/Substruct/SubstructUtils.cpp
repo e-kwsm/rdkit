@@ -34,12 +34,7 @@ class ScoreMatchesByDegreeOfCoreSubstitution {
   ScoreMatchesByDegreeOfCoreSubstitution(
       const RDKit::ROMol &mol, const RDKit::ROMol &query,
       const std::vector<RDKit::MatchVectType> &matches)
-      : d_mol(mol),
-        d_query(query),
-        d_matches(matches),
-        d_sumIndices(0.0),
-        d_minIdx(-1),
-        d_isSorted(false) {
+      : d_mol(mol), d_query(query), d_matches(matches) {
     PRECONDITION(!matches.empty(), "matches must not be empty");
     auto na = d_mol.getNumAtoms();
     d_sumIndices = static_cast<double>(na * (na + 1) / 2);
@@ -96,9 +91,9 @@ class ScoreMatchesByDegreeOfCoreSubstitution {
   const RDKit::ROMol &d_query;
   const std::vector<RDKit::MatchVectType> &d_matches;
   std::vector<IdxScorePair> d_matchIdxVsScore;
-  double d_sumIndices;
-  int d_minIdx;
-  bool d_isSorted;
+  double d_sumIndices{0.0};
+  int d_minIdx{-1};
+  bool d_isSorted{false};
 };
 }  // namespace detail
 
