@@ -122,11 +122,11 @@ TEST_CASE("get haptic bond end points") {
   // dative but not haptic
   bond = mol->getBondWithIdx(49);
   endPts = MolOps::details::hapticBondEndpoints(bond);
-  CHECK(std::vector<int>{} == endPts);
+  CHECK(endPts.empty());
   // not dative
   bond = mol->getBondWithIdx(1);
   endPts = MolOps::details::hapticBondEndpoints(bond);
-  CHECK(std::vector<int>{} == endPts);
+  CHECK(endPts.empty());
 }
 
 TEST_CASE("Rings and dative bonds") {

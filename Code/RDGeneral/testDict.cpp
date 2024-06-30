@@ -452,7 +452,7 @@ TEST_CASE("testConstReturns") {
 
     std::string tgt = rdany_cast<std::string>(anyv);
     const std::string &ctgt = rdany_cast<std::string>(anyv);
-    REQUIRE(ctgt != "");
+    REQUIRE(!ctgt.empty());
   }
 
   {

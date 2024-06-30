@@ -117,7 +117,7 @@ struct AtomInfo {
     if (atomMap) {
       return atomMap;
     }
-    if (dummyLabel.size()) {
+    if (!dummyLabel.empty()) {
       try {
         return boost::lexical_cast<unsigned int>(
             dummyLabel.substr(1, dummyLabel.size() - 1));
@@ -188,7 +188,7 @@ void fixRGroups(ChemicalReaction &rxn) {
     }
   }
 
-  if (!reactantAtomsToFix.size() && !productAtomsToFix.size()) {
+  if (reactantAtomsToFix.empty() && productAtomsToFix.empty()) {
     return;
   }
 
@@ -264,7 +264,7 @@ void fixAtomMaps(ChemicalReaction &rxn) {
     }
   }
 
-  if (!potential_mappings.size()) {
+  if (potential_mappings.empty()) {
     return;  // everything is ok!
   }
 

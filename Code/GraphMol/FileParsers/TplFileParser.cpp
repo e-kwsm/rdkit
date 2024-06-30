@@ -262,7 +262,7 @@ std::unique_ptr<RWMol> MolFromTPLDataStream(std::istream &inStream,
     line++;
     tempStr = getLine(inStream);
     boost::trim(tempStr);
-    if (!inStream.eof() && tempStr != "") {
+    if (!inStream.eof() && !tempStr.empty()) {
       throw FileParseException("Found a non-blank line between conformers.");
     }
   }

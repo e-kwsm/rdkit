@@ -786,7 +786,7 @@ bool RCore::checkAllBondsToRGroupPresent(
   }
 
   CHECK_INVARIANT(
-      coreNeighborIndices.size() >= 1,
+      !coreNeighborIndices.empty(),
       "Unable to find target atom(s) matching core for attachment point");
   if (coreNeighborIndices.size() == 1) {
     // currently this routine is only called when we know the attachment to

@@ -58,7 +58,7 @@ unsigned int addCoords(T &mol, const CoordGenParams *params = nullptr) {
   }
   // FIX: the default value of this should be handled once in a threadsafe way
   std::string templateFileDir;
-  if (params->templateFileDir != "") {
+  if (!params->templateFileDir.empty()) {
     templateFileDir = params->templateFileDir;
   } else {
     auto rdbase = std::getenv("RDBASE");
@@ -78,7 +78,7 @@ unsigned int addCoords(T &mol, const CoordGenParams *params = nullptr) {
 
   // FIX: only do this check once.
   // std::cerr << "  TEMPLATES: " << templateFileDir << std::endl;
-  if (templateFileDir != "") {
+  if (!templateFileDir.empty()) {
     minimizer.setTemplateFileDir(templateFileDir);
   }
   bool hasTemplateMatch = false;

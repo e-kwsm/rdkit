@@ -2892,7 +2892,7 @@ void testGitHub6578() {
     auto mcs = findMCS(mols, &p);
     TEST_ASSERT(mcs.NumAtoms == 0);
     TEST_ASSERT(mcs.NumBonds == 0);
-    TEST_ASSERT(mcs.SmartsString == "");
+    TEST_ASSERT(mcs.SmartsString.empty());
   }
 }
 
