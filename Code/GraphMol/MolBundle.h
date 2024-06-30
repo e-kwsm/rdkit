@@ -185,7 +185,7 @@ class FixedMolSizeMolBundle : public MolBundle {
   //!  as the molecules that are already there.
   size_t addMol(boost::shared_ptr<ROMol> nmol) override {
     PRECONDITION(nmol.get(), "bad mol pointer");
-    if (d_mols.size()) {
+    if (!d_mols.empty()) {
       if (nmol->getNumAtoms() != d_mols[0]->getNumAtoms()) {
         throw ValueErrorException(
             "all molecules in a bundle must have the same number of atoms");

@@ -1109,7 +1109,7 @@ HydrogenType isQueryH(const Atom *atom) {
         atom->getQuery()->beginChildren(), atom->getQuery()->endChildren());
     // the logic gets too complicated if there's an OR in the children, so
     // just punt on those (with a warning)
-    while (!(hasHQuery && hasOr) && childStack.size()) {
+    while (!(hasHQuery && hasOr) && !childStack.empty()) {
       QueryAtom::QUERYATOM_QUERY::CHILD_TYPE query = childStack.front();
       childStack.pop_front();
       if (query->getDescription() == "AtomOr") {
@@ -1229,7 +1229,7 @@ void mergeQueryHs(RWMol &mol, bool mergeUnmappedOnly, bool mergeIsotopes) {
         // FIX: shouldn't be repeating this code here
         std::list<QueryAtom::QUERYATOM_QUERY::CHILD_TYPE> childStack(
             atom->getQuery()->beginChildren(), atom->getQuery()->endChildren());
-        while (childStack.size()) {
+        while (!childStack.empty()) {
           QueryAtom::QUERYATOM_QUERY::CHILD_TYPE qry = childStack.front();
           childStack.pop_front();
           if (qry->getDescription() == "RecursiveStructure") {
