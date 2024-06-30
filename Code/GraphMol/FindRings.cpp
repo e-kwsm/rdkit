@@ -823,8 +823,7 @@ bool findRingConnectingAtoms(const ROMol &tMol, const Bond *bond,
 
 }  // namespace FindRings
 
-namespace RDKit {
-namespace MolOps {
+namespace RDKit::MolOps {
 int findSSSR(const ROMol &mol, VECT_INT_VECT *res, bool includeDativeBonds) {
   if (!res) {
     VECT_INT_VECT rings;
@@ -1294,6 +1293,4 @@ void findRingFamilies(const ROMol &mol) {
       << "This version of the RDKit was built without URF support" << std::endl;
 }
 #endif
-}  // namespace MolOps
-
-}  // namespace RDKit
+}  // namespace RDKit::MolOps
