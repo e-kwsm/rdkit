@@ -58,8 +58,7 @@ RDKIT_FORCEFIELD_EXPORT double calcOopChi(const RDGeom::Point3D &iPoint,
 RDKIT_FORCEFIELD_EXPORT double calcOopBendForceConstant(
     const MMFFOop *mmffOopParams);
 //! calculates and returns the out-of-plane MMFF energy
-RDKIT_FORCEFIELD_EXPORT double calcOopBendEnergy(const double chi,
-                                                 const double koop);
+RDKIT_FORCEFIELD_EXPORT double calcOopBendEnergy(double chi, double koop);
 }  // namespace Utils
 }  // namespace MMFF
 }  // namespace ForceFields

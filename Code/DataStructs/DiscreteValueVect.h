@@ -131,7 +131,7 @@ class RDKIT_DATASTRUCTS_EXPORT DiscreteValueVect {
   unsigned int d_mask;
   DATA_SPTR d_data;
 
-  void initFromText(const char *pkl, const unsigned int len);
+  void initFromText(const char *pkl, unsigned int len);
 };
 
 RDKIT_DATASTRUCTS_EXPORT unsigned int computeL1Norm(
