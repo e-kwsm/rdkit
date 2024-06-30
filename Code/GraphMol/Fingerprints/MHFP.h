@@ -29,8 +29,8 @@ const uint32_t prime = 0x01000193;
 const uint32_t seed = 0x811C9DC5;
 
 //! A simple implementation of the Fowler–Noll–Vo hash function.
-inline uint32_t hash(const std::string& str, uint32_t hash = seed) {
-  const auto* ptr = (const unsigned char*)str.c_str();
+inline uint32_t hash(const std::string &str, uint32_t hash = seed) {
+  const auto *ptr = (const unsigned char *)str.c_str();
   size_t len = str.length();
 
   while (len--) {
