@@ -605,7 +605,7 @@ RGroupRows RGroupDecomposition::getRGroupsAsRows() const {
   for (auto it = permutation.begin(); it != permutation.end(); ++it) {
     auto Rs_seen(usedLabelMap);
     // make a new rgroup entry
-    groups.push_back(RGroupRow());
+    groups.emplace_back();
     RGroupRow &out_rgroups = groups.back();
 
     const R_DECOMP &in_rgroups = it->rgroups;
@@ -653,16 +653,16 @@ RGroupColumns RGroupDecomposition::getRGroupsAsColumns() const {
       if (molidx && col.size() < molidx - 1) {
         col.resize(molidx - 1);
       }
-      col.push_back(rgroup.second->combinedMol);
+      col.emplace_back(rgroup.second->combinedMol);
       rGroupWithRealMol.insert(r);
     }
-    groups[CORE].push_back(outputCoreMolecule(*it, Rs_seen));
+    groups[CORE].emplace_back(outputCoreMolecule(*it, Rs_seen));
 
     // add empty entries to columns where this molecule didn't appear
     for (const auto &realLabel : data->finalRlabelMapping) {
       if (!Rs_seen.getIsUsed(realLabel.second)) {
         std::string r = RPREFIX + std::to_string(realLabel.second);
-        groups[r].push_back(boost::make_shared<RWMol>());
+        groups[r].emplace_back(boost::make_shared<RWMol>());
       }
     }
   }

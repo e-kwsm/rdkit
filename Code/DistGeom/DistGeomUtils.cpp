@@ -213,7 +213,7 @@ ForceFields::ForceField *constructForceField(
       }
       if (includeIt) {
         auto *contrib = new DistViolationContrib(field, i, j, u, l, w);
-        field->contribs().push_back(ForceFields::ContribPtr(contrib));
+        field->contribs().emplace_back(contrib);
       }
     }
   }
@@ -223,7 +223,7 @@ ForceFields::ForceField *constructForceField(
     for (const auto &cset : csets) {
       auto *contrib =
           new ChiralViolationContrib(field, cset.get(), weightChiral);
-      field->contribs().push_back(ForceFields::ContribPtr(contrib));
+      field->contribs().emplace_back(contrib);
     }
   }
 
@@ -231,7 +231,7 @@ ForceFields::ForceField *constructForceField(
   if ((field->dimension() == 4) && (weightFourthDim > 1.e-8)) {
     for (unsigned int i = 0; i < N; i++) {
       auto *contrib = new FourthDimContrib(field, i, weightFourthDim);
-      field->contribs().push_back(ForceFields::ContribPtr(contrib));
+      field->contribs().emplace_back(contrib);
     }
   }
   return field;
@@ -268,7 +268,7 @@ ForceFields::ForceField *construct3DForceField(
     auto *contrib = new ForceFields::CrystalFF::TorsionAngleContribM6(
         field, i, j, k, l, etkdgDetails.expTorsionAngles[t].second,
         etkdgDetails.expTorsionAngles[t].first);
-    field->contribs().push_back(ForceFields::ContribPtr(contrib));
+    field->contribs().emplace_back(contrib);
   }  // torsion constraints
 
   // improper torsions / out-of-plane bend / inversion
@@ -300,7 +300,7 @@ ForceFields::ForceField *construct3DForceField(
           field, improperAtom[n[0]], improperAtom[n[1]], improperAtom[n[2]],
           improperAtom[n[3]], improperAtom[4],
           static_cast<bool>(improperAtom[5]), oobForceScalingFactor);
-      field->contribs().push_back(ForceFields::ContribPtr(contrib));
+      field->contribs().emplace_back(contrib);
     }
   }
 
@@ -320,7 +320,7 @@ ForceFields::ForceField *construct3DForceField(
     double u = d + 0.01;
     auto *contrib = new ForceFields::UFF::DistanceConstraintContrib(
         field, i, j, l, u, fdist);
-    field->contribs().push_back(ForceFields::ContribPtr(contrib));
+    field->contribs().emplace_back(contrib);
   }
 
   // 1,3 distance constraints
@@ -337,14 +337,14 @@ ForceFields::ForceField *construct3DForceField(
     if (angle[3]) {
       auto *contrib = new ForceFields::UFF::AngleConstraintContrib(
           field, i, j, k, 179.0, 180.0, fdist);
-      field->contribs().push_back(ForceFields::ContribPtr(contrib));
+      field->contribs().emplace_back(contrib);
     } else {
       double d = ((*positions[i]) - (*positions[k])).length();
       double l = d - 0.01;
       double u = d + 0.01;
       auto *contrib = new ForceFields::UFF::DistanceConstraintContrib(
           field, i, k, l, u, fdist);
-      field->contribs().push_back(ForceFields::ContribPtr(contrib));
+      field->contribs().emplace_back(contrib);
     }
   }
 
@@ -367,7 +367,7 @@ ForceFields::ForceField *construct3DForceField(
         }
         auto *contrib = new ForceFields::UFF::DistanceConstraintContrib(
             field, i, j, l, u, fdist);
-        field->contribs().push_back(ForceFields::ContribPtr(contrib));
+        field->contribs().emplace_back(contrib);
       }
     }
   }
@@ -388,7 +388,7 @@ ForceFields::ForceField *construct3DForceField(
     auto *contrib = new ForceFields::MMFF::EleContrib(
         field, charge.first.first, charge.first.second, charge.second,
         dielModel, is1_4);
-    field->contribs().push_back(ForceFields::ContribPtr(contrib));
+    field->contribs().emplace_back(contrib);
   }
 
   return field;
@@ -425,7 +425,7 @@ ForceFields::ForceField *constructPlain3DForceField(
     auto *contrib = new ForceFields::CrystalFF::TorsionAngleContribM6(
         field, i, j, k, l, etkdgDetails.expTorsionAngles[t].second,
         etkdgDetails.expTorsionAngles[t].first);
-    field->contribs().push_back(ForceFields::ContribPtr(contrib));
+    field->contribs().emplace_back(contrib);
   }  // torsion constraints
 
   double fdist = 100.0;  // force constant
@@ -443,7 +443,7 @@ ForceFields::ForceField *constructPlain3DForceField(
     double u = d + 0.01;
     auto *contrib = new ForceFields::UFF::DistanceConstraintContrib(
         field, i, j, l, u, fdist);
-    field->contribs().push_back(ForceFields::ContribPtr(contrib));
+    field->contribs().emplace_back(contrib);
   }
 
   // 1,3 distance constraints
@@ -460,7 +460,7 @@ ForceFields::ForceField *constructPlain3DForceField(
     double u = d + 0.01;
     auto *contrib = new ForceFields::UFF::DistanceConstraintContrib(
         field, i, j, l, u, fdist);
-    field->contribs().push_back(ForceFields::ContribPtr(contrib));
+    field->contribs().emplace_back(contrib);
   }
 
   // minimum distance for all other atom pairs
@@ -472,7 +472,7 @@ ForceFields::ForceField *constructPlain3DForceField(
         double u = mmat.getUpperBound(i, j);
         auto *contrib = new ForceFields::UFF::DistanceConstraintContrib(
             field, i, j, l, u, fdist);
-        field->contribs().push_back(ForceFields::ContribPtr(contrib));
+        field->contribs().emplace_back(contrib);
       }
     }
   }
@@ -521,7 +521,7 @@ ForceFields::ForceField *construct3DImproperForceField(
           field, improperAtom[n[0]], improperAtom[n[1]], improperAtom[n[2]],
           improperAtom[n[3]], improperAtom[4],
           static_cast<bool>(improperAtom[5]), oobForceScalingFactor);
-      field->contribs().push_back(ForceFields::ContribPtr(contrib));
+      field->contribs().emplace_back(contrib);
     }
   }
 
