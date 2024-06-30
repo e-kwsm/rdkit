@@ -237,7 +237,7 @@ void AUTOCORR3D(const ROMol &mol, std::vector<double> &res, int confId,
       MolOps::getDistanceMat(mol, false);  // topological matrix
   double *dist3D =
       MolOps::get3DDistanceMat(mol, confId, false, true);  // 3D distance matrix
-  if (customAtomPropName != "") {
+  if (!customAtomPropName.empty()) {
     res.clear();
     res.resize(10);
     Get3Dautoone(dist3D, topologicaldistance, numAtoms, mol, res,

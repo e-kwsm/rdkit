@@ -129,7 +129,7 @@ bool helpHasSubstructMatch(T1 &mol, T2 &query,
   ps.maxMatches = 1;
   std::vector<MatchVectType> matches;
   pySubstructHelper(mol, query, params, matches);
-  return matches.size() != 0;
+  return !matches.empty();
 }
 
 template <typename T1, typename T2>
@@ -140,7 +140,7 @@ PyObject *helpGetSubstructMatch(T1 &mol, T2 &query,
   std::vector<MatchVectType> matches;
   pySubstructHelper(mol, query, params, matches);
   MatchVectType match;
-  if (matches.size()) {
+  if (!matches.empty()) {
     match = matches[0];
   }
   return convertMatches(match);

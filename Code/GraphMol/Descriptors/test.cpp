@@ -320,7 +320,7 @@ void testTPSA() {
   while (!inf.eof()) {
     std::string inl = getLine(inf);
     boost::trim(inl);
-    if (inl.size() == 0 || inl[0] == '#') {
+    if (inl.empty() || inl[0] == '#') {
       continue;
     }
     std::vector<std::string> tokens;

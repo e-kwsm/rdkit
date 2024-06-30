@@ -227,7 +227,7 @@ FPBReader *MultiFPBReader::getReader(unsigned int which) {
   return d_readers[which];
 }
 unsigned int MultiFPBReader::nBits() const {
-  PRECONDITION(d_readers.size(), "no readers");
+  PRECONDITION(!d_readers.empty(), "no readers");
   PRECONDITION(df_init, "not initialized");
   return d_readers[0]->nBits();
 }

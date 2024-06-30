@@ -74,7 +74,7 @@ void test2() {
   // Last match should be removed.
   FragmentRemover fr_noleavelast(defaultCleanupParameters.fragmentFile, false);
   std::shared_ptr<ROMol> remove7(fr_noleavelast.remove(*m6));
-  TEST_ASSERT(MolToSmiles(*remove7) == "");
+  TEST_ASSERT(MolToSmiles(*remove7).empty());
 
   // Multiple identical last fragments should all be left.
   smi8 = "Cl.Cl";

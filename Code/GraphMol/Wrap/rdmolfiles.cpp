@@ -427,7 +427,7 @@ std::string MolFragmentToSmilesHelper1(const ROMol &mol,
                                        python::object bondSymbols) {
   auto avect =
       pythonObjectToVect(atomsToUse, static_cast<int>(mol.getNumAtoms()));
-  if (!avect.get() || !(avect->size())) {
+  if (!avect.get() || avect->empty()) {
     throw_value_error("atomsToUse must not be empty");
   }
   auto bvect =
@@ -485,7 +485,7 @@ std::vector<int> CanonicalRankAtomsInFragment(
     bool includeAtomMaps = true, bool includeChiralPresence = false) {
   std::unique_ptr<std::vector<int>> avect =
       pythonObjectToVect(atomsToUse, static_cast<int>(mol.getNumAtoms()));
-  if (!avect.get() || !(avect->size())) {
+  if (!avect.get() || avect->empty()) {
     throw_value_error("atomsToUse must not be empty");
   }
   std::unique_ptr<std::vector<int>> bvect =

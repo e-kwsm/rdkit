@@ -71,7 +71,7 @@ void testMolFiles(const MolTest *molFileTest) {
       } catch (...) {
         throw;  // re-trhow the error if not a kekule error
       }
-      if (outMolStr == "") {
+      if (outMolStr.empty()) {
         outMolStr = MolToMolBlock(*mol, true, 0, false,
                                   true);  // try without kekule'ing
       }
