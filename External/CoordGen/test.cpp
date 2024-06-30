@@ -151,8 +151,8 @@ bool compareConfs(const ROMol* m, ROMol* templ, const MatchVectType& mv,
     TEST_ASSERT(m->getAtomWithIdx(mv[i].second)->getAtomicNum() ==
                 templ->getAtomWithIdx(mv[i].first)->getAtomicNum());
 
-    const RDGeom::Point3D& pt1i = conf1.getAtomPos(mv[i].second);
-    const RDGeom::Point3D& pt2i = conf2.getAtomPos(mv[i].first);
+    RDGeom::Point3D pt1i = conf1.getAtomPos(mv[i].second);
+    RDGeom::Point3D pt2i = conf2.getAtomPos(mv[i].first);
     if ((pt1i - pt2i).length() >= postol) {
       return false;
     }

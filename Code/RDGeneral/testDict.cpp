@@ -152,8 +152,7 @@ void testRDAny() {
 
   {
     std::vector<int> v;
-    v.reserve(4);
-for (int i = 0; i < 4; ++i) {
+    for (int i = 0; i < 4; ++i) {
       v.push_back(i);
     }
 
@@ -648,7 +647,7 @@ void testUpdate() {
     }
 
     {
-      const Dict& d2(d);
+      Dict d2(d);
       TEST_ASSERT(d.getVal<double>("foo2") == d2.getVal<double>("foo2"));
       TEST_ASSERT(d.getVal<std::vector<int>>("foo3") ==
                   d2.getVal<std::vector<int>>("foo3"));
