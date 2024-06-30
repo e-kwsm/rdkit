@@ -1066,12 +1066,12 @@ void test2MorganFPsFromAtoms() {
     mol = SmilesToMol("CCCCC");
     fp = MorganFingerprints::getFingerprint(
         *mol, 0, (std::vector<std::uint32_t> *)nullptr, &atoms);
-    TEST_ASSERT(fp->getNonzeroElements().size() == 0);
+    TEST_ASSERT(fp->getNonzeroElements().empty());
     delete fp;
 
     fp = MorganFingerprints::getFingerprint(
         *mol, 1, (std::vector<std::uint32_t> *)nullptr, &atoms);
-    TEST_ASSERT(fp->getNonzeroElements().size() == 0);
+    TEST_ASSERT(fp->getNonzeroElements().empty());
     delete fp;
 
     delete mol;
@@ -1630,12 +1630,12 @@ void testRootedAtomPairs() {
   mol = SmilesToMol("OCCCCC");
   fp1 = AtomPairs::getAtomPairFingerprint(*mol);
   SparseIntVect<std::int32_t>::StorageType nz1 = fp1->getNonzeroElements();
-  TEST_ASSERT(nz1.size() > 0);
+  TEST_ASSERT(!nz1.empty());
 
   roots.push_back(0);
   fp2 = AtomPairs::getAtomPairFingerprint(*mol, &roots);
   SparseIntVect<std::int32_t>::StorageType nz2 = fp2->getNonzeroElements();
-  TEST_ASSERT(nz2.size() > 0);
+  TEST_ASSERT(!nz2.empty());
   TEST_ASSERT(nz2.size() < nz1.size());
 
   for (SparseIntVect<std::int32_t>::StorageType::const_iterator bIt =
@@ -1664,7 +1664,7 @@ void testIgnoreAtomPairs() {
     mol = SmilesToMol("OCCCCC");
     fp1 = AtomPairs::getAtomPairFingerprint(*mol, 1, 5);
     SparseIntVect<std::int32_t>::StorageType nz1 = fp1->getNonzeroElements();
-    TEST_ASSERT(nz1.size() > 0);
+    TEST_ASSERT(!nz1.empty());
 
     roots.push_back(0);
     fp2 = AtomPairs::getAtomPairFingerprint(*mol, 1, 5, nullptr, &roots);
@@ -1690,7 +1690,7 @@ void testIgnoreAtomPairs() {
     roots.push_back(0);
     fp2 = AtomPairs::getAtomPairFingerprint(*mol, 1, 5, &roots, &roots);
     SparseIntVect<std::int32_t>::StorageType nz2 = fp2->getNonzeroElements();
-    TEST_ASSERT(nz2.size() == 0);
+    TEST_ASSERT(nz2.empty());
 
     delete mol;
     delete fp2;
@@ -1704,7 +1704,7 @@ void testIgnoreAtomPairs() {
     mol = SmilesToMol("OCCCCC");
     fp1 = AtomPairs::getHashedAtomPairFingerprint(*mol, 4096, 1, 5);
     SparseIntVect<std::int32_t>::StorageType nz1 = fp1->getNonzeroElements();
-    TEST_ASSERT(nz1.size() > 0);
+    TEST_ASSERT(!nz1.empty());
 
     roots.push_back(0);
     fp2 = AtomPairs::getHashedAtomPairFingerprint(*mol, 4096, 1, 5, nullptr,
@@ -1739,11 +1739,11 @@ void testRootedTorsions() {
 
   fp1 = AtomPairs::getTopologicalTorsionFingerprint(*mol);
   SparseIntVect<boost::int64_t>::StorageType nz1 = fp1->getNonzeroElements();
-  TEST_ASSERT(nz1.size() > 0);
+  TEST_ASSERT(!nz1.empty());
 
   fp2 = AtomPairs::getTopologicalTorsionFingerprint(*mol, 4, &roots);
   SparseIntVect<boost::int64_t>::StorageType nz2 = fp2->getNonzeroElements();
-  TEST_ASSERT(nz2.size() > 0);
+  TEST_ASSERT(!nz2.empty());
   TEST_ASSERT(nz2.size() < nz1.size());
 
   for (SparseIntVect<boost::int64_t>::StorageType::const_iterator bIt =
@@ -1799,7 +1799,7 @@ void testIgnoreTorsions() {
 
     fp2 = AtomPairs::getTopologicalTorsionFingerprint(*mol, 4, nullptr, &roots);
     SparseIntVect<boost::int64_t>::StorageType nz2 = fp2->getNonzeroElements();
-    TEST_ASSERT(nz2.size() == 0);
+    TEST_ASSERT(nz2.empty());
 
     delete mol;
     delete fp2;
@@ -1815,7 +1815,7 @@ void testIgnoreTorsions() {
 
     fp2 = AtomPairs::getTopologicalTorsionFingerprint(*mol, 4, &roots, &roots);
     SparseIntVect<boost::int64_t>::StorageType nz2 = fp2->getNonzeroElements();
-    TEST_ASSERT(nz2.size() == 0);
+    TEST_ASSERT(nz2.empty());
 
     delete mol;
     delete fp2;
@@ -2974,7 +2974,7 @@ void runblock(const std::vector<ROMol *> &mols, unsigned int count,
       }
       ROMol *mol = mols[i];
       ExplicitBitVect *lbv = PatternFingerprintMol(*mol, 2048);
-      if (referenceData.size() && referenceData[i]) {
+      if (!referenceData.empty() && referenceData[i]) {
         TEST_ASSERT((*lbv) == (*referenceData[i]));
       }
       delete lbv;
@@ -3296,7 +3296,7 @@ void testRDKFPUnfolded() {
 
     fp1 = getUnfoldedRDKFingerprintMol(*m1);
     TEST_ASSERT(fp1);
-    TEST_ASSERT(fp1->getNonzeroElements().size() == 0);
+    TEST_ASSERT(fp1->getNonzeroElements().empty());
     delete fp1;
     delete m1;
   }
