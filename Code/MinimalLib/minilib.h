@@ -205,9 +205,9 @@ class JSReaction {
  public:
   JSReaction() : d_rxn(new RDKit::ChemicalReaction()) {}
   JSReaction(RDKit::ChemicalReaction *rxn) : d_rxn(rxn) { assert(d_rxn); }
-  [
-      [deprecated("please check the get_rxn return value for non-nullness "
-                  "instead")]] bool
+  [[deprecated(
+      "please check the get_rxn return value for non-nullness "
+      "instead")]] bool
   is_valid() const;
 
   std::vector<JSMolList *> run_reactants(const JSMolList &reactants,
