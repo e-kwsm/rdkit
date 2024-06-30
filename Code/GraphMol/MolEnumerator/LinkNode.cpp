@@ -22,8 +22,7 @@
 
 typedef boost::tokenizer<boost::char_separator<char>> tokenizer;
 
-namespace RDKit {
-namespace MolEnumerator {
+namespace RDKit::MolEnumerator {
 
 void LinkNodeOp::initFromMol(const ROMol &mol) {
   dp_mol.reset(new ROMol(mol));
@@ -171,6 +170,4 @@ std::unique_ptr<ROMol> LinkNodeOp::operator()(
   return std::unique_ptr<ROMol>(new ROMol(*res));
 }
 
-}  // namespace MolEnumerator
-
-}  // namespace RDKit
+}  // namespace RDKit::MolEnumerator

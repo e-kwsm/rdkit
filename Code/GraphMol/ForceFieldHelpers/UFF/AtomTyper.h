@@ -15,11 +15,10 @@
 #include <string>
 #include <ForceField/UFF/Params.h>
 
-namespace ForceFields {
-namespace UFF {
+namespace ForceFields::UFF {
 class AtomicParams;
 }
-}  // namespace ForceFields
+
 namespace RDKit {
 class ROMol;
 class Atom;

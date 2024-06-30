@@ -18,8 +18,7 @@
 #include "TransformCatalogParams.h"
 #include <GraphMol/RDKitBase.h>
 
-namespace RDKit {
-namespace MolStandardize {
+namespace RDKit::MolStandardize {
 
 class RDKIT_MOLSTANDARDIZE_EXPORT TransformCatalogEntry
     : public RDCatalog::CatalogEntry {
@@ -51,7 +50,6 @@ class RDKIT_MOLSTANDARDIZE_EXPORT TransformCatalogEntry
 
 };  // class TransformCatalogEntry
 
-}  // namespace MolStandardize
-}  // namespace RDKit
+}  // namespace RDKit::MolStandardize
 
 #endif

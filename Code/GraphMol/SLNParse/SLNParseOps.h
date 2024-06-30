@@ -44,8 +44,7 @@
 #include <boost/lexical_cast.hpp>
 #include <RDGeneral/BoostEndInclude.h>
 
-namespace RDKit {
-namespace SLNParse {
+namespace RDKit::SLNParse {
 namespace {
 //!  set a bookmark in the molecule if the atom has an associated ID:
 void bookmarkAtomID(RWMol *mp, Atom *atom) {
@@ -323,6 +322,5 @@ std::string convertToString(T val) {
   return res;
 }
 
-}  // end of namespace SLNParse
-}  // end of namespace RDKit
+}  // namespace RDKit::SLNParse
 #endif

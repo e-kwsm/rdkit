@@ -100,8 +100,7 @@ static inline unsigned long long nanoClock(
   return t.tv_usec + t.tv_sec * 1000000ULL;
 }
 
-namespace RDKit {
-namespace FMCS {
+namespace RDKit::FMCS {
 
 #ifdef VERBOSE_STATISTICS_ON
 
@@ -128,5 +127,4 @@ struct ExecStatistics {
   ExecStatistics() : MCSFoundTime(nanoClock()) {}
 };
 #endif
-}  // namespace FMCS
-}  // namespace RDKit
+}  // namespace RDKit::FMCS

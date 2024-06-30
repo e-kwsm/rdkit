@@ -12,8 +12,7 @@
 #include <GraphMol/RDKitBase.h>
 #include <sstream>
 
-namespace RDKit {
-namespace MolStandardize {
+namespace RDKit::MolStandardize {
 
 #include "tautomerTransforms.in"
 #include "tautomerTransforms.v1.in"
@@ -74,5 +73,4 @@ void TautomerCatalogParams::initFromString(const std::string &) {
   UNDER_CONSTRUCTION("not implemented");
 }
 
-}  // namespace MolStandardize
-}  // namespace RDKit
+}  // namespace RDKit::MolStandardize

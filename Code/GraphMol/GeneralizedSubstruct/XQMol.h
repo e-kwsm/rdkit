@@ -26,8 +26,7 @@
 #include <GraphMol/TautomerQuery/TautomerQuery.h>
 #include <GraphMol/Substruct/SubstructMatch.h>
 
-namespace RDKit {
-namespace GeneralizedSubstruct {
+namespace RDKit::GeneralizedSubstruct {
 struct RDKIT_GENERALIZEDSUBSTRUCT_EXPORT ExtendedQueryMol {
   enum ExtendedQueryMolTypes : unsigned char {
     XQM_MOL = 1,
@@ -118,6 +117,6 @@ inline bool hasSubstructMatch(
   lparams.maxMatches = 1;
   return !SubstructMatch(mol, query, lparams).empty();
 }
-}  // namespace GeneralizedSubstruct
-}  // namespace RDKit
+}  // namespace RDKit::GeneralizedSubstruct
+
 #endif

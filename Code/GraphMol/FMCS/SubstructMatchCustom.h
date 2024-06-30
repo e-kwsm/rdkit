@@ -15,8 +15,7 @@
 #include "Graph.h"
 #include "MatchTable.h"
 
-namespace RDKit {
-namespace FMCS {
+namespace RDKit::FMCS {
 typedef std::vector<
     std::pair<FMCS::Graph::vertex_descriptor, FMCS::Graph::vertex_descriptor>>
     match_V_t;
@@ -40,5 +39,4 @@ RDKIT_FMCS_EXPORT bool SubstructMatchCustom(
     MCSFinalMatchCheckFunction finalCompare,
     const MCSAtomCompareParameters &acp, const MCSBondCompareParameters &bcp,
     void *user_data, match_V_t *match = nullptr);
-}  // namespace FMCS
-}  // namespace RDKit
+}  // namespace RDKit::FMCS

@@ -16,8 +16,7 @@
 
 #include "../Substruct/vf2.hpp"
 
-namespace RDKit {
-namespace FMCS {
+namespace RDKit::FMCS {
 
 class MolMatchFinalCheckFunctor {
   const FMCS::Graph &QueryTopology;
@@ -192,5 +191,4 @@ bool SubstructMatchCustom(
   return boost::vf2(query, target, atomLabeler, bondLabeler, matchChecker,
                     *match);
 }
-}  // namespace FMCS
-}  // namespace RDKit
+}  // namespace RDKit::FMCS

@@ -21,8 +21,7 @@
 #include "../Sort.h"
 #include "Pairlist.h"
 
-namespace RDKit {
-namespace CIPLabeler {
+namespace RDKit::CIPLabeler {
 
 class CIPMol;
 
@@ -64,5 +63,4 @@ class SequenceRule {
   bool areUpEdges(Node *aNode, Node *bNode, Edge *aEdge, Edge *bEdge) const;
 };
 
-}  // namespace CIPLabeler
-}  // namespace RDKit
+}  // namespace RDKit::CIPLabeler

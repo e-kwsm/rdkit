@@ -15,8 +15,7 @@
 #include "Node.h"
 #include "CIPMol.h"
 
-namespace RDKit {
-namespace CIPLabeler {
+namespace RDKit::CIPLabeler {
 
 Node *Node::newTerminalChild(int idx, Atom *atom, int flags) const {
   int new_dist = flags & DUPLICATE ? d_visit[idx] : d_dist + 1;
@@ -164,5 +163,4 @@ std::vector<Edge *> Node::getNonTerminalOutEdges() const {
   return edges;
 }
 
-}  // namespace CIPLabeler
-}  // namespace RDKit
+}  // namespace RDKit::CIPLabeler

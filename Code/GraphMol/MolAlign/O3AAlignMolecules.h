@@ -25,8 +25,7 @@
 #include <boost/multi_array.hpp>
 #include <boost/dynamic_bitset.hpp>
 
-namespace RDKit {
-namespace MolAlign {
+namespace RDKit::MolAlign {
 struct RDKIT_MOLALIGN_EXPORT O3AFuncData {
   const Conformer *prbConf;
   const Conformer *refConf;
@@ -349,6 +348,5 @@ RDKIT_MOLALIGN_EXPORT void getO3AForProbeConfs(
     const bool reflect = false, const unsigned int maxIters = 50,
     unsigned int options = 0, const MatchVectType *constraintMap = nullptr,
     const RDNumeric::DoubleVector *constraintWeights = nullptr);
-}  // namespace MolAlign
-}  // namespace RDKit
+}  // namespace RDKit::MolAlign
 #endif

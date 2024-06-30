@@ -16,8 +16,7 @@
 #include "Rule5.h"
 #include "SequenceRule.h"
 
-namespace RDKit {
-namespace CIPLabeler {
+namespace RDKit::CIPLabeler {
 
 class Rules : public SequenceRule {
  public:
@@ -86,5 +85,4 @@ class Rules : public SequenceRule {
   std::vector<const SequenceRule *> d_rules;
 };
 
-}  // namespace CIPLabeler
-}  // namespace RDKit
+}  // namespace RDKit::CIPLabeler

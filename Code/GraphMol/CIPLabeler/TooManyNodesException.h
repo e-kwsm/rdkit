@@ -15,8 +15,7 @@
 
 #include <RDGeneral/export.h>
 
-namespace RDKit {
-namespace CIPLabeler {
+namespace RDKit::CIPLabeler {
 
 class RDKIT_CIPLABELER_EXPORT TooManyNodesException
     : public std::runtime_error {
@@ -24,5 +23,4 @@ class RDKIT_CIPLABELER_EXPORT TooManyNodesException
   TooManyNodesException(const std::string &msg) : std::runtime_error(msg) {}
 };
 
-}  // namespace CIPLabeler
-}  // namespace RDKit
+}  // namespace RDKit::CIPLabeler

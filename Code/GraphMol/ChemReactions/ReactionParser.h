@@ -68,8 +68,7 @@ class RDKIT_CHEMREACTIONS_EXPORT ChemicalReactionParserException
   std::string _msg;
 };
 
-namespace v2 {
-namespace ReactionParser {
+namespace v2::ReactionParser {
 struct RDKIT_CHEMREACTIONS_EXPORT ReactionSmartsParserParams {
   bool sanitize = false; /**< sanitize the molecules after building them */
   std::map<std::string, std::string>
@@ -85,8 +84,7 @@ RDKIT_CHEMREACTIONS_EXPORT std::unique_ptr<ChemicalReaction> ReactionFromSmarts(
 RDKIT_CHEMREACTIONS_EXPORT std::unique_ptr<ChemicalReaction> ReactionFromSmiles(
     const std::string &smarts,
     const ReactionSmartsParserParams &params = ReactionSmartsParserParams());
-}  // namespace ReactionParser
-}  // namespace v2
+}  // namespace v2::ReactionParser
 
 inline namespace v1 {
 //---------------------------------------------------------------------------
@@ -195,8 +193,8 @@ RDKIT_CHEMREACTIONS_EXPORT ROMol *ChemicalReactionToRxnMol(
 //---------------------------------------------------------------------------
 //! \name MDL rxn Support
 //! @{
-namespace v2 {
-namespace ReactionParser {
+
+namespace v2::ReactionParser {
 
 RDKIT_CHEMREACTIONS_EXPORT std::unique_ptr<ChemicalReaction>
 ReactionFromRxnBlock(const std::string &rxnBlock,
@@ -211,8 +209,8 @@ ReactionFromRxnDataStream(std::istream &rxnStream, unsigned int &line,
                           const FileParsers::MolFileParserParams &params =
                               FileParsers::MolFileParserParams());
 
-}  // namespace ReactionParser
-}  // namespace v2
+}  // namespace v2::ReactionParser
+
 inline namespace v1 {
 //! Parse a text block in MDL rxn format into a ChemicalReaction
 inline ChemicalReaction *RxnBlockToChemicalReaction(const std::string &rxnBlock,
@@ -287,8 +285,7 @@ RDKIT_CHEMREACTIONS_EXPORT extern const std::string rxnRxnTag;
 RDKIT_CHEMREACTIONS_EXPORT extern const std::string rxnPklTag;
 }  // namespace PNGData
 
-namespace v2 {
-namespace ReactionParser {
+namespace v2::ReactionParser {
 
 //! \brief constructs a ChemicalReaction from the metadata in a PNG stream
 /*!
@@ -318,8 +315,7 @@ inline std::unique_ptr<ChemicalReaction> ReactionFromPNGFile(
   }
   return ReactionFromPNGStream(inStream);
 };
-}  // namespace ReactionParser
-}  // namespace v2
+}  // namespace v2::ReactionParser
 
 inline namespace v1 {
 //! \brief constructs a ChemicalReaction from the metadata in a PNG stream

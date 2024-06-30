@@ -21,8 +21,7 @@
 #include <vector>
 #include <cstdint>
 
-namespace boost {
-namespace logging {
+namespace boost::logging {
 
 typedef boost::iostreams::tee_device<std::ostream, std::ostream> RDTee;
 typedef boost::iostreams::stream<RDTee> RDTeeStream;
@@ -101,8 +100,8 @@ RDKIT_RDGENERAL_EXPORT void enable_logs(const std::string &arg);
 RDKIT_RDGENERAL_EXPORT void disable_logs(const char *arg);
 RDKIT_RDGENERAL_EXPORT void disable_logs(const std::string &arg);
 RDKIT_RDGENERAL_EXPORT std::string log_status();
-}  // namespace logging
-}  // namespace boost
+}  // namespace boost::logging
+
 namespace RDLog {
 RDKIT_RDGENERAL_EXPORT std::ostream &toStream(std::ostream &);
 }

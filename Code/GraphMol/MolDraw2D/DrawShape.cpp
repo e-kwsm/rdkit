@@ -18,8 +18,7 @@
 #include <GraphMol/MolDraw2D/MolDraw2D.h>
 #include <GraphMol/MolDraw2D/StringRect.h>
 
-namespace RDKit {
-namespace MolDraw2D_detail {
+namespace RDKit::MolDraw2D_detail {
 
 // ****************************************************************************
 DrawShape::DrawShape(const std::vector<Point2D> &points, double lineWidth,
@@ -775,5 +774,4 @@ bool DrawShapeArc::doesRectClash(const StringRect &rect, double padding) const {
   return false;
 }
 
-}  // namespace MolDraw2D_detail
-}  // namespace RDKit
+}  // namespace RDKit::MolDraw2D_detail

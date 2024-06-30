@@ -17,8 +17,8 @@
 
 #include "MultithreadedMolSupplier.h"
 namespace RDKit {
-namespace v2 {
-namespace FileParsers {
+
+namespace v2::FileParsers {
 
 //! This class is still a bit experimental and the public API may change
 //! in future releases.
@@ -62,8 +62,7 @@ class RDKIT_FILEPARSERS_EXPORT MultithreadedSDMolSupplier final
   bool df_eofHitOnRead = false;
   MolFileParserParams d_parseParams;
 };
-}  // namespace FileParsers
-}  // namespace v2
+}  // namespace v2::FileParsers
 
 inline namespace v1 {
 class RDKIT_FILEPARSERS_EXPORT MultithreadedSDMolSupplier : public MolSupplier {

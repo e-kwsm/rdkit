@@ -32,8 +32,7 @@
 #include <cmath>
 #include "CoulombMat.h"
 
-namespace RDKit {
-namespace Descriptors {
+namespace RDKit::Descriptors {
 
 void CoulombMat(const ROMol &mol, std::vector<std::vector<double>> &res,
                 int confId) {
@@ -58,5 +57,4 @@ void CoulombMat(const ROMol &mol, std::vector<std::vector<double>> &res,
     }
   }
 }
-}  // namespace Descriptors
-}  // namespace RDKit
+}  // namespace RDKit::Descriptors

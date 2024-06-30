@@ -11,9 +11,7 @@
 #include "Utils.h"
 #include <cmath>
 
-namespace ForceFields {
-namespace UFF {
-namespace Utils {
+namespace ForceFields::UFF::Utils {
 
 double calculateCosY(const RDGeom::Point3D &iPoint,
                      const RDGeom::Point3D &jPoint,
@@ -85,6 +83,4 @@ calcInversionCoefficientsAndForceConstant(int at2AtomicNum, bool isCBoundToO) {
   return std::make_tuple(res, C0, C1, C2);
 }
 
-}  // end of namespace Utils
-}  // namespace UFF
-}  // namespace ForceFields
+}  // namespace ForceFields::UFF::Utils

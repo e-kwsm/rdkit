@@ -22,8 +22,7 @@ namespace RDKit {
 class ROMol;
 }  // namespace RDKit
 
-namespace ForceFields {
-namespace CrystalFF {
+namespace ForceFields::CrystalFF {
 
 //! A structure used to the experimental torsion patterns
 struct RDKIT_FORCEFIELDHELPERS_EXPORT ExpTorsionAngle {
@@ -89,7 +88,6 @@ RDKIT_FORCEFIELDHELPERS_EXPORT void getExperimentalTorsions(
     bool useMacrocycleTorsions = false, bool useBasicKnowledge = false,
     unsigned int version = 2, bool verbose = false);
 
-}  // namespace CrystalFF
-}  // namespace ForceFields
+}  // namespace ForceFields::CrystalFF
 
 #endif

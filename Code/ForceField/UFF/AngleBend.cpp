@@ -15,8 +15,7 @@
 #include <RDGeneral/Invariant.h>
 #include <RDGeneral/utils.h>
 
-namespace ForceFields {
-namespace UFF {
+namespace ForceFields::UFF {
 
 namespace {
 constexpr double ANGLE_CORRECTION_THRESHOLD = 0.8660;
@@ -278,5 +277,4 @@ double AngleBendContrib::getThetaDeriv(double cosTheta, double sinTheta) const {
   }
   return dE_dTheta;
 }
-}  // namespace UFF
-}  // namespace ForceFields
+}  // namespace ForceFields::UFF
