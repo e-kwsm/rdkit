@@ -19,6 +19,8 @@
 #include <RDGeneral/Invariant.h>
 #include <utility>
 
+#include <utility>
+
 namespace python = boost::python;
 
 //! \brief Class to hold sequences (lists, tuples, arrays, etc.)
@@ -32,7 +34,7 @@ namespace python = boost::python;
 template <typename T>
 class PySequenceHolder {
  public:
-  PySequenceHolder(python::object seq) { d_seq = seq; }
+  PySequenceHolder(python::object seq) { d_seq = std::move(seq); }
 
   // --------------------------------------------------
   //! \brief Returns the size of the contained sequence.

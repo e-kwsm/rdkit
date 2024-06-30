@@ -41,7 +41,7 @@ void arcPoints(const Point2D &cds1, const Point2D &cds2,
   float step = M_PI * extent / (180 * steps);
   float angle = M_PI * startAng / 180;
   for (int i = 0; i <= steps; ++i) {
-    Point2D point(x + xScale * cos(angle), y - yScale * sin(angle));
+    Point2D point(x + xScale * std::cos(angle), y - yScale * std::sin(angle));
     res.emplace_back(point);
     angle += step;
   }

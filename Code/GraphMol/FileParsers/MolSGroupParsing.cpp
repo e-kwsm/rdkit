@@ -1308,8 +1308,7 @@ std::string ParseV3000SGroupsBlock(std::istream *inStream, unsigned int &line,
       }
 
       std::getline(lineStream, label, '=');
-      if (std::find(parsedLabels.begin(), parsedLabels.end(), label) ==
-          parsedLabels.end()) {
+      if (parsedLabels.find(label) == parsedLabels.end()) {
         ParseV3000ParseLabel(label, lineStream, dataFields, defaultLineNum,
                              sgroup, nSgroups, mol, strictParsing);
       } else {
