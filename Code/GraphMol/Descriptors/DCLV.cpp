@@ -367,11 +367,11 @@ struct State {
   }
 
   void freeGrid() {
-    for (unsigned int x = 0; x < VOXORDER; x++) {
-      for (unsigned int y = 0; y < VOXORDER; y++) {
+    for (auto& x : grid) {
+      for (auto& y : x) {
         for (unsigned int z = 0; z < VOXORDER; z++) {
-          freeAtomList(grid[x][y][z]);
-          grid[x][y][z] = nullptr;
+          freeAtomList(y[z]);
+          y[z] = nullptr;
         }
       }
     }
@@ -537,9 +537,8 @@ struct State {
     standardDots.count = 0;
 
     standardArea = 0.0;
-    for (unsigned int i = 0; i < 20; i++) {
-      tesselate(Vertices[Faces[i][0]], Vertices[Faces[i][1]],
-                Vertices[Faces[i][2]], depth);
+    for (auto Face : Faces) {
+      tesselate(Vertices[Face[0]], Vertices[Face[1]], Vertices[Face[2]], depth);
     }
   }
 
@@ -572,10 +571,10 @@ struct State {
     maxx = maxy = maxz = -std::numeric_limits<double>::infinity();
 
     freeList = nullptr;
-    for (unsigned int x = 0; x < VOXORDER; x++) {
-      for (unsigned int y = 0; y < VOXORDER; y++) {
+    for (auto& x : grid) {
+      for (auto& y : x) {
         for (unsigned int z = 0; z < VOXORDER; z++) {
-          grid[x][y][z] = nullptr;
+          y[z] = nullptr;
         }
       }
     }

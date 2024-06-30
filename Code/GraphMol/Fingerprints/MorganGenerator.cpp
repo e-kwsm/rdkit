@@ -336,15 +336,14 @@ MorganEnvGenerator<OutputType>::getEnvironments(
 
     std::sort(allNeighborhoodsThisRound.begin(),
               allNeighborhoodsThisRound.end());
-    for (auto iter = allNeighborhoodsThisRound.begin();
-         iter != allNeighborhoodsThisRound.end(); ++iter) {
+    for (const auto &iter : allNeighborhoodsThisRound) {
       // if we haven't seen this exact environment before, add it to the
       // result
       if (morganArguments->df_includeRedundantEnvironments ||
           neighborhoods.count(std::get<0>(*iter)) == 0) {
         if (!morganArguments->df_onlyNonzeroInvariants ||
-            (*atomInvariants)[std::get<2>(*iter)]) {
-          if (includeAtoms[std::get<2>(*iter)]) {
+            (*atomInvariants)[std::get<2>(iter)]) {
+          if (includeAtoms[std::get<2>(iter)]) {
             result.push_back(new MorganAtomEnv<OutputType>(
                 std::get<1>(*iter), std::get<2>(*iter), layer + 1));
             neighborhoods.insert(std::get<0>(*iter));
@@ -353,7 +352,7 @@ MorganEnvGenerator<OutputType>::getEnvironments(
       } else {
         // we have seen this exact environment before, this atom
         // is now out of consideration:
-        deadAtoms[std::get<2>(*iter)] = 1;
+        deadAtoms[std::get<2>(iter)] = 1;
       }
     }
 
