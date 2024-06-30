@@ -13,8 +13,7 @@
 #include "FileParsers.h"
 #include "MolSGroupWriting.h"
 
-namespace RDKit {
-namespace SGroupWriting {
+namespace RDKit::SGroupWriting {
 
 /* ------------------ V2000 Utils  ------------------ */
 
@@ -721,5 +720,4 @@ const std::string GetV3000MolFileSGroupLines(const unsigned int idx,
   return res;
 }
 
-}  // namespace SGroupWriting
-}  // namespace RDKit
+}  // namespace RDKit::SGroupWriting
