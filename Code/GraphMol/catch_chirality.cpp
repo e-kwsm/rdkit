@@ -457,7 +457,7 @@ TEST_CASE("possible stereochemistry on atoms", "[chirality]") {
     REQUIRE(mol);
     mol->getBondBetweenAtoms(0, 1)->setBondDir(Bond::BondDir::UNKNOWN);
     auto stereoInfo = Chirality::findPotentialStereo(*mol);
-    CHECK(stereoInfo.size() == 0);
+    CHECK(stereoInfo.empty());
   }
   SECTION("Isotopes") {
     {
@@ -491,13 +491,13 @@ TEST_CASE("possible stereochemistry on bonds", "[chirality]") {
       auto mol = "CC=C(C)C"_smiles;
       REQUIRE(mol);
       auto stereoInfo = Chirality::findPotentialStereo(*mol);
-      CHECK(stereoInfo.size() == 0);
+      CHECK(stereoInfo.empty());
     }
     {
       auto mol = "CC=C"_smiles;
       REQUIRE(mol);
       auto stereoInfo = Chirality::findPotentialStereo(*mol);
-      CHECK(stereoInfo.size() == 0);
+      CHECK(stereoInfo.empty());
     }
     {
       auto mol = "CC(F)=C(Cl)C"_smiles;
@@ -535,7 +535,7 @@ TEST_CASE("possible stereochemistry on bonds", "[chirality]") {
     REQUIRE(mol);
     mol->getBondWithIdx(1)->setStereo(Bond::BondStereo::STEREOANY);
     auto stereoInfo = Chirality::findPotentialStereo(*mol);
-    CHECK(stereoInfo.size() == 0);
+    CHECK(stereoInfo.empty());
   }
 }
 
@@ -814,14 +814,14 @@ TEST_CASE("cleaning chirality", "[chirality]") {
       // by default we don't clean up, so the chiral center survives even though
       // we don't get any results:
       auto stereoInfo = Chirality::findPotentialStereo(*mol);
-      CHECK(stereoInfo.size() == 0);
+      CHECK(stereoInfo.empty());
       CHECK(mol->getAtomWithIdx(1)->getChiralTag() ==
             Atom::ChiralType::CHI_TETRAHEDRAL_CW);
     }
     {
       bool cleanIt = true;
       auto stereoInfo = Chirality::findPotentialStereo(*mol, cleanIt);
-      CHECK(stereoInfo.size() == 0);
+      CHECK(stereoInfo.empty());
       CHECK(mol->getAtomWithIdx(1)->getChiralTag() ==
             Atom::ChiralType::CHI_UNSPECIFIED);
     }
@@ -835,13 +835,13 @@ TEST_CASE("cleaning chirality", "[chirality]") {
       // by default we don't clean up, so the stereo bond survives even though
       // we don't get any results:
       auto stereoInfo = Chirality::findPotentialStereo(*mol);
-      CHECK(stereoInfo.size() == 0);
+      CHECK(stereoInfo.empty());
       CHECK(mol->getBondWithIdx(1)->getStereo() == Bond::BondStereo::STEREOCIS);
     }
     {
       bool cleanIt = true;
       auto stereoInfo = Chirality::findPotentialStereo(*mol, cleanIt);
-      CHECK(stereoInfo.size() == 0);
+      CHECK(stereoInfo.empty());
       CHECK(mol->getBondWithIdx(1)->getStereo() ==
             Bond::BondStereo::STEREONONE);
     }
@@ -1004,7 +1004,7 @@ TEST_CASE("ring stereo finding is overly aggressive", "[chirality][bug]") {
     bool flagPossible = true;
     auto stereoInfo =
         Chirality::findPotentialStereo(*mol, cleanIt, flagPossible);
-    CHECK(stereoInfo.size() == 0);
+    CHECK(stereoInfo.empty());
   }
   SECTION("Finding too much 1b") {
     auto mol = "CC1CCC(C)CC1"_smiles;
@@ -1031,7 +1031,7 @@ TEST_CASE("ring stereo finding is overly aggressive", "[chirality][bug]") {
     bool flagPossible = true;
     auto stereoInfo =
         Chirality::findPotentialStereo(*mol, cleanIt, flagPossible);
-    CHECK(stereoInfo.size() == 0);
+    CHECK(stereoInfo.empty());
   }
   SECTION("Finding too much 1e") {
     auto mol = "CC1(C)CCC(C)CC1"_smiles;
@@ -1040,7 +1040,7 @@ TEST_CASE("ring stereo finding is overly aggressive", "[chirality][bug]") {
     bool flagPossible = true;
     auto stereoInfo =
         Chirality::findPotentialStereo(*mol, cleanIt, flagPossible);
-    CHECK(stereoInfo.size() == 0);
+    CHECK(stereoInfo.empty());
   }
   SECTION("Finding too much 1f") {
     auto mol = "C2CC2C1(C2CC2)CCCCC1"_smiles;
@@ -1049,7 +1049,7 @@ TEST_CASE("ring stereo finding is overly aggressive", "[chirality][bug]") {
     bool flagPossible = true;
     auto stereoInfo =
         Chirality::findPotentialStereo(*mol, cleanIt, flagPossible);
-    CHECK(stereoInfo.size() == 0);
+    CHECK(stereoInfo.empty());
   }
   SECTION("Finding too much 1g") {
     auto mol = "CC1CC2(CCC2)C1"_smiles;
@@ -1058,7 +1058,7 @@ TEST_CASE("ring stereo finding is overly aggressive", "[chirality][bug]") {
     bool flagPossible = true;
     auto stereoInfo =
         Chirality::findPotentialStereo(*mol, cleanIt, flagPossible);
-    CHECK(stereoInfo.size() == 0);
+    CHECK(stereoInfo.empty());
   }
   SECTION("Finding too much 1h") {
     auto mol = "CC1CC2(CC(C)C2)C1"_smiles;
@@ -1077,7 +1077,7 @@ TEST_CASE("ring stereo finding is overly aggressive", "[chirality][bug]") {
     bool flagPossible = true;
     auto stereoInfo =
         Chirality::findPotentialStereo(*mol, cleanIt, flagPossible);
-    CHECK(stereoInfo.size() == 0);
+    CHECK(stereoInfo.empty());
   }
   SECTION("Finding too much 2b") {
     auto mol = "CC1CCN(C)CC1"_smiles;  // 3-coordinate N is not stereogenic
@@ -1086,7 +1086,7 @@ TEST_CASE("ring stereo finding is overly aggressive", "[chirality][bug]") {
     bool flagPossible = true;
     auto stereoInfo =
         Chirality::findPotentialStereo(*mol, cleanIt, flagPossible);
-    CHECK(stereoInfo.size() == 0);
+    CHECK(stereoInfo.empty());
   }
   SECTION("Finding too much 3a") {
     auto mol = "CC1CCC1"_smiles;
@@ -1095,7 +1095,7 @@ TEST_CASE("ring stereo finding is overly aggressive", "[chirality][bug]") {
     bool flagPossible = true;
     auto stereoInfo =
         Chirality::findPotentialStereo(*mol, cleanIt, flagPossible);
-    CHECK(stereoInfo.size() == 0);
+    CHECK(stereoInfo.empty());
   }
 
   SECTION("Finding too much 3b") {
@@ -1297,7 +1297,7 @@ TEST_CASE(
       RWMol mol2(*mol);
       auto stereoInfo =
           Chirality::findPotentialStereo(mol2, cleanIt, flagPossible);
-      CHECK(stereoInfo.size() == 0);
+      CHECK(stereoInfo.empty());
     }
     {
       RWMol mol2(*mol);
@@ -1324,7 +1324,7 @@ TEST_CASE(
       RWMol mol2(*mol);
       auto stereoInfo =
           Chirality::findPotentialStereo(mol2, cleanIt, flagPossible);
-      CHECK(stereoInfo.size() == 0);
+      CHECK(stereoInfo.empty());
     }
     {
       RWMol mol2(*mol);
@@ -3969,7 +3969,7 @@ TEST_CASE(
   REQUIRE(m->getNumAtoms() == 5);
 
   auto stereoInfo = Chirality::findPotentialStereo(*m);
-  CHECK(stereoInfo.size() == 0);
+  CHECK(stereoInfo.empty());
 
   auto at = m->getAtomWithIdx(1);
 
@@ -4006,7 +4006,7 @@ TEST_CASE(
   CHECK(!Chirality::detail::isAtomPotentialTetrahedralCenter(at));
 
   auto stereoInfo = Chirality::findPotentialStereo(*m);
-  CHECK(stereoInfo.size() == 0);
+  CHECK(stereoInfo.empty());
 
   auto sinfo = Chirality::detail::getStereoInfo(at);
   CHECK(sinfo.type == Chirality::StereoType::Atom_Tetrahedral);
