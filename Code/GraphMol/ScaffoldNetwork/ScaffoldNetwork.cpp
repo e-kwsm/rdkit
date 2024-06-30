@@ -155,7 +155,7 @@ std::vector<std::pair<std::string, ROMOL_SPTR>> getMolFragments(
           stack.push_back(p[0]);
           seen.push_back(tsmi0);
         }
-        res.push_back(std::make_pair(parentSmi, p[0]));
+        res.emplace_back(parentSmi, p[0]);
         if (!params.keepOnlyFirstFragment) {
           if (!params.includeScaffoldsWithAttachments) {
             // we're only including scaffolds without attachments, so
@@ -168,7 +168,7 @@ std::vector<std::pair<std::string, ROMOL_SPTR>> getMolFragments(
             stack.push_back(p[1]);
             seen.push_back(tsmi1);
           }
-          res.push_back(std::make_pair(parentSmi, p[1]));
+          res.emplace_back(parentSmi, p[1]);
         }
       }
     }
