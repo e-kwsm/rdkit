@@ -1598,7 +1598,7 @@ void testIssue183() {
   std::string smi;
   std::string refSmi;
 
-  smi = "Cl\\C(C)=C(\\C(F)=C(/F)C)/C(C)=C(\\F)C";
+  smi = R"(Cl\C(C)=C(\C(F)=C(/F)C)/C(C)=C(\F)C)";
   m2 = SmilesToMol(smi);
   TEST_ASSERT(m2);
   TEST_ASSERT(m2->getBondWithIdx(2)->getStereo() == Bond::STEREOE);
@@ -1743,7 +1743,7 @@ void testIssue190() {
   std::string smi, refSmi;
   int count;
 
-  smi = "O\\N=C\\NC(\\C)=N/OC";
+  smi = R"(O\N=C\NC(\C)=N/OC)";
   m = SmilesToMol(smi);
   TEST_ASSERT(m);
   TEST_ASSERT(m->getBondWithIdx(1)->getBondType() == Bond::DOUBLE);
@@ -1781,7 +1781,7 @@ void testIssue190() {
   TEST_ASSERT(smi == refSmi);
 
   delete m;
-  smi = "O\\N=C\\CC(\\C)=N/OC";
+  smi = R"(O\N=C\CC(\C)=N/OC)";
   m = SmilesToMol(smi);
   TEST_ASSERT(m);
   TEST_ASSERT(m->getBondWithIdx(1)->getBondType() == Bond::DOUBLE);
@@ -1818,7 +1818,7 @@ void testIssue190() {
   TEST_ASSERT(smi == refSmi);
 
   delete m;
-  smi = "O\\N=C\\C(=O)C(\\C)=N/OC";
+  smi = R"(O\N=C\C(=O)C(\C)=N/OC)";
   m = SmilesToMol(smi);
   TEST_ASSERT(m);
   TEST_ASSERT(m->getBondWithIdx(1)->getBondType() == Bond::DOUBLE);
@@ -8031,7 +8031,7 @@ void testRemoveAndTrackIsotopes() {
   };
   // CHEMBL2024142
   auto m =
-      "[2H]C1=C(C(=C2C(=C1[2H])C(=O)C(=C(C2=O)C([2H])([2H])[2H])C/C=C(\\C)/CC([2H])([2H])/C=C(/CC/C=C(\\C)/CCC=C(C)C)\\C([2H])([2H])[2H])[2H])[2H]"_smiles;
+      R"([2H]C1=C(C(=C2C(=C1[2H])C(=O)C(=C(C2=O)C([2H])([2H])[2H])C/C=C(\C)/CC([2H])([2H])/C=C(/CC/C=C(\C)/CCC=C(C)C)\C([2H])([2H])[2H])[2H])[2H])"_smiles;
   TEST_ASSERT(m.get());
   std::unique_ptr<IsotopicHsCount> m_isotopicHsPerHeavy(
       new IsotopicHsCount(*m));
