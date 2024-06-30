@@ -12,8 +12,7 @@
 #define __RD_BONDSTRETCH_H__
 #include <ForceField/Contrib.h>
 
-namespace ForceFields {
-namespace UFF {
+namespace ForceFields::UFF {
 class AtomicParams;
 
 //! The bond-stretch term for the Universal Force Field
@@ -78,6 +77,6 @@ RDKIT_FORCEFIELD_EXPORT double calcBondForceConstant(
     double restLength, const AtomicParams *end1Params,
     const AtomicParams *end2Params);
 }  // namespace Utils
-}  // namespace UFF
-}  // namespace ForceFields
+}  // namespace ForceFields::UFF
+
 #endif

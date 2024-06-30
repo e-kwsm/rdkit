@@ -21,9 +21,7 @@
 
 #include <GraphMol/ROMol.h>
 
-namespace RDKit {
-
-namespace RascalMCES {
+namespace RDKit::RascalMCES {
 
 class RDKIT_RASCALMCES_EXPORT RascalResult {
  public:
@@ -152,7 +150,6 @@ class RDKIT_RASCALMCES_EXPORT RascalResult {
   int calcMaxDeltaAtomAtomDistScore() const;
 };
 
-}  // namespace RascalMCES
-}  // namespace RDKit
+}  // namespace RDKit::RascalMCES
 
 #endif  // RASCALRESULT_H

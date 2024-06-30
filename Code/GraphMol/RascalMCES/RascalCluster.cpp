@@ -30,8 +30,7 @@
 #include <GraphMol/RascalMCES/RascalMCES.h>
 #include <GraphMol/RascalMCES/RascalResult.h>
 
-namespace RDKit {
-namespace RascalMCES {
+namespace RDKit::RascalMCES {
 namespace details {
 ClusNode calcMolMolSimilarity(
     const std::tuple<
@@ -378,5 +377,4 @@ std::vector<std::vector<unsigned int>> rascalCluster(
   return clusters;
 }
 
-}  // namespace RascalMCES
-}  // namespace RDKit
+}  // namespace RDKit::RascalMCES

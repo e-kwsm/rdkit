@@ -57,8 +57,8 @@ LogStateSetter::~LogStateSetter() {
   }
 }
 }  // namespace RDLog
-namespace boost {
-namespace logging {
+
+namespace boost::logging {
 
 void enable_logs(const char *arg) { enable_logs(std::string(arg)); };
 void enable_logs(const std::string &arg) {
@@ -136,8 +136,7 @@ std::string log_status() {
   return ss.str();
 }
 
-}  // namespace logging
-}  // namespace boost
+}  // namespace boost::logging
 
 namespace RDLog {
 void InitLogs() {

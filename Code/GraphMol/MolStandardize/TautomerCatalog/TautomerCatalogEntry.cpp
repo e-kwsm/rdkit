@@ -15,8 +15,7 @@
 #include <RDGeneral/StreamOps.h>
 #include <fstream>
 
-namespace RDKit {
-namespace MolStandardize {
+namespace RDKit::MolStandardize {
 
 void TautomerCatalogEntry::toStream(std::ostream &ss) const {
   //  ReactionPickler::pickleReaction(*dp_transform, ss);
@@ -66,5 +65,4 @@ void TautomerCatalogEntry::initFromString(const std::string &text) {
   initFromStream(ss);
 }
 
-}  // namespace MolStandardize
-}  // namespace RDKit
+}  // namespace RDKit::MolStandardize

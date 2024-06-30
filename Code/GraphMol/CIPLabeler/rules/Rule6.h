@@ -12,8 +12,7 @@
 
 #include "SequenceRule.h"
 
-namespace RDKit {
-namespace CIPLabeler {
+namespace RDKit::CIPLabeler {
 
 /**
  * <b>Sequence Rule 6 (proposed)</b>
@@ -25,5 +24,4 @@ class Rule6 : public SequenceRule {
   int compare(const Edge *a, const Edge *b) const override;
 };
 
-}  // namespace CIPLabeler
-}  // namespace RDKit
+}  // namespace RDKit::CIPLabeler

@@ -12,8 +12,7 @@
 
 #include "Configuration.h"
 
-namespace RDKit {
-namespace CIPLabeler {
+namespace RDKit::CIPLabeler {
 
 class Sp2Bond : public Configuration {
  public:
@@ -40,5 +39,4 @@ class Sp2Bond : public Configuration {
   std::vector<unsigned int> d_ranked_anchors;
 };
 
-}  // namespace CIPLabeler
-}  // namespace RDKit
+}  // namespace RDKit::CIPLabeler

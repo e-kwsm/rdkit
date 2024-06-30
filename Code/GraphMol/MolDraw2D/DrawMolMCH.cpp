@@ -14,8 +14,7 @@
 #include <GraphMol/MolDraw2D/MolDraw2DDetails.h>
 #include <GraphMol/MolDraw2D/DrawMolMCH.h>
 
-namespace RDKit {
-namespace MolDraw2D_detail {
+namespace RDKit::MolDraw2D_detail {
 
 // ****************************************************************************
 DrawMolMCH::DrawMolMCH(
@@ -47,5 +46,4 @@ void DrawMolMCH::getAtomRadius(unsigned int atomIdx, double &xradius,
     yradius = xradius;
   }
 }
-}  // namespace MolDraw2D_detail
-}  // namespace RDKit
+}  // namespace RDKit::MolDraw2D_detail

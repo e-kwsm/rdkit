@@ -16,8 +16,7 @@
 #include <RDGeneral/Invariant.h>
 #include <RDGeneral/utils.h>
 
-namespace ForceFields {
-namespace UFF {
+namespace ForceFields::UFF {
 
 InversionContrib::InversionContrib(ForceField *owner, unsigned int idx1,
                                    unsigned int idx2, unsigned int idx3,
@@ -132,5 +131,4 @@ void InversionContrib::getGrad(double *pos, double *grad) const {
     g4[i] += dE_dW * tg4[i];
   }
 }
-}  // namespace UFF
-}  // namespace ForceFields
+}  // namespace ForceFields::UFF

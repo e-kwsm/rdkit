@@ -58,8 +58,7 @@
 #include <cfloat>
 #endif
 
-namespace gboost {
-namespace hash_detail {
+namespace gboost::hash_detail {
 template <class T>
 struct limits : std::numeric_limits<T> {};
 
@@ -169,8 +168,7 @@ inline std::hash_result_t float_hash_value(T v) {
   return v == 0 ? 0 : float_hash_impl(v);
 #endif
 }
-}  // namespace hash_detail
-}  // namespace gboost
+}  // namespace gboost::hash_detail
 
 #if defined(BOOST_MSVC)
 #pragma warning(pop)

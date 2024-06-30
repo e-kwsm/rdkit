@@ -31,8 +31,7 @@
 
 #include "MHFP.h"
 
-namespace RDKit {
-namespace MHFPFingerprints {
+namespace RDKit::MHFPFingerprints {
 
 MHFPEncoder::MHFPEncoder(unsigned int n_permutations, unsigned int seed)
     : n_permutations_(n_permutations),
@@ -260,5 +259,4 @@ std::vector<ExplicitBitVect> MHFPEncoder::EncodeSECFP(
   return results;
 }
 
-}  // namespace MHFPFingerprints
-}  // namespace RDKit
+}  // namespace RDKit::MHFPFingerprints

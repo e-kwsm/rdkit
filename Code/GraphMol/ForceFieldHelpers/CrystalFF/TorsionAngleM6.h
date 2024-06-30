@@ -24,8 +24,7 @@ class ForceField;
 class ForceFieldContrib;
 }  // namespace ForceFields
 
-namespace ForceFields {
-namespace CrystalFF {
+namespace ForceFields::CrystalFF {
 
 //! the torsion term for multiplicity m = 1 - 6
 class RDKIT_FORCEFIELDHELPERS_EXPORT TorsionAngleContribM6
@@ -65,6 +64,6 @@ class RDKIT_FORCEFIELDHELPERS_EXPORT TorsionAngleContribM6
 RDKIT_FORCEFIELDHELPERS_EXPORT double calcTorsionEnergyM6(
     const std::vector<double> &V, const std::vector<int> &signs,
     const double cosPhi);
-}  // namespace CrystalFF
-}  // namespace ForceFields
+}  // namespace ForceFields::CrystalFF
+
 #endif

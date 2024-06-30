@@ -16,8 +16,7 @@
 #include <Geometry/point.h>
 #include <GraphMol/Trajectory/Snapshot.h>
 
-namespace RDKit {
-namespace ForceFieldsHelper {
+namespace RDKit::ForceFieldsHelper {
 void RDKIT_FORCEFIELD_EXPORT normalizeAngleDeg(double &angleDeg);
 void RDKIT_FORCEFIELD_EXPORT computeDihedral(
     const RDGeom::PointPtrVect &pos, unsigned int idx1, unsigned int idx2,
@@ -35,8 +34,7 @@ computeDihedral(const RDGeom::Point3D *p1, const RDGeom::Point3D *p2,
                 double *dihedral = nullptr, double *cosPhi = nullptr,
                 RDGeom::Point3D r[4] = nullptr, RDGeom::Point3D t[2] = nullptr,
                 double d[2] = nullptr);
-}  // namespace ForceFieldsHelper
-}  // namespace RDKit
+}  // namespace RDKit::ForceFieldsHelper
 
 namespace ForceFields {
 class ForceFieldContrib;

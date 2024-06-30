@@ -14,8 +14,7 @@
 #include <ForceField/Contrib.h>
 #include <Geometry/point.h>
 
-namespace ForceFields {
-namespace UFF {
+namespace ForceFields::UFF {
 class AtomicParams;
 
 //! The angle-bend term for the Universal Force Field
@@ -87,6 +86,6 @@ RDKIT_FORCEFIELD_EXPORT void calcAngleBendGrad(RDGeom::Point3D *r, double *dist,
                                                double &cosTheta,
                                                double &sinTheta);
 }  // namespace Utils
-}  // namespace UFF
-}  // namespace ForceFields
+}  // namespace ForceFields::UFF
+
 #endif

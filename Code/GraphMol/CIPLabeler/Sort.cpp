@@ -12,8 +12,7 @@
 #include "Sort.h"
 #include "rules/SequenceRule.h"
 
-namespace RDKit {
-namespace CIPLabeler {
+namespace RDKit::CIPLabeler {
 
 Sort::Sort(const SequenceRule *comparator) : d_rules{comparator} {}
 
@@ -90,5 +89,4 @@ std::vector<std::vector<Edge *>> Sort::getGroups(
   return groups;
 }
 
-}  // namespace CIPLabeler
-}  // namespace RDKit
+}  // namespace RDKit::CIPLabeler

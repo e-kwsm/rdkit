@@ -13,9 +13,7 @@
 #ifndef RASCALOPTIONS_H
 #define RASCALOPTIONS_H
 
-namespace RDKit {
-
-namespace RascalMCES {
+namespace RDKit::RascalMCES {
 
 struct RDKIT_RASCALMCES_EXPORT RascalOptions {
   double similarityThreshold =
@@ -82,7 +80,6 @@ struct RDKIT_RASCALMCES_EXPORT RascalOptions {
                                         Note that this refers to the minimum
                                         number of BONDS in the MCES. */
 };
-}  // namespace RascalMCES
-}  // namespace RDKit
+}  // namespace RDKit::RascalMCES
 
 #endif  // RASCALOPTIONS_H
