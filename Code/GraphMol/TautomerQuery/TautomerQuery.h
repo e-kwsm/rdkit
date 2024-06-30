@@ -51,7 +51,7 @@ class RDKIT_TAUTOMERQUERY_EXPORT TautomerQuery {
 
  public:
   TautomerQuery(std::vector<ROMOL_SPTR> tautomers,
-                const ROMol *const templateMolecule,
+                const ROMol *templateMolecule,
                 std::vector<size_t> modifiedAtoms,
                 std::vector<size_t> modifiedBonds);
 
