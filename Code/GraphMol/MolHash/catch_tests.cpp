@@ -164,10 +164,10 @@ TEST_CASE("Basic MolHash", "[molhash]") {
   }
   SECTION("tautomers bug found in testing2") {
     auto m1 =
-        "N/C(=N\\[N+](=O)[O-])NCCCCCCCC(=O)NC(CC(=O)OCc1ccccc1)C(=O)NCCCCN/C(N)=N/[N+](=O)[O-]"_smiles;
+        R"(N/C(=N\[N+](=O)[O-])NCCCCCCCC(=O)NC(CC(=O)OCc1ccccc1)C(=O)NCCCCN/C(N)=N/[N+](=O)[O-])"_smiles;
     REQUIRE(m1);
     auto m2 =
-        "N/C(=N\\CCCCCCCC(=O)NC(CC(=O)OCc1ccccc1)C(=O)NCCCC/N=C(\\N)N[N+](=O)[O-])N[N+](=O)[O-]"_smiles;
+        R"(N/C(=N\CCCCCCCC(=O)NC(CC(=O)OCc1ccccc1)C(=O)NCCCC/N=C(\N)N[N+](=O)[O-])N[N+](=O)[O-])"_smiles;
     REQUIRE(m2);
 
     std::unique_ptr<RWMol> t1(new RWMol(*m1));

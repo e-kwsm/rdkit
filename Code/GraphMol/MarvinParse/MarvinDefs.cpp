@@ -543,7 +543,7 @@ void MarvinMolBase::parseAtomsAndBonds(ptree &molTree) {
           mrvBond->bondStereo.value = "";  // cis and trans are ignored
         } else {
           throw FileParseException(
-              "The value for bondStereo must be \"H\", \"W\", \"C\" or \"T\" in MRV file (\"C\" and \"T\" are ignored)");
+              R"(The value for bondStereo must be "H", "W", "C" or "T" in MRV file ("C" and "T" are ignored))");
         }
       }
 
@@ -675,8 +675,8 @@ ptree MarvinPlus::toPtree() const {
 std::string MarvinCondition::toString() const {
   std::ostringstream out;
 
-  out << "<MTextBox id=\"" << id << "\" toption=\"NOROT\" halign=\"" << halign
-      << "\" valign=\"" << valign << "\" autoSize=\"true\"";
+  out << "<MTextBox id=\"" << id << R"(" toption="NOROT" halign=")" << halign
+      << "\" valign=\"" << valign << R"(" autoSize="true")";
   if (fontScale > 0) {
     out << " fontScale=\"" << fontScale << "\"";
   }
@@ -1269,7 +1269,7 @@ MarvinSruCoModSgroup::MarvinSruCoModSgroup(std::string roleNameInit,
   if (roleNameInit != "SruSgroup" && roleNameInit != "CopolymerSgroup" &&
       roleNameInit != "ModificationSgroup") {
     throw FileParseException(
-        "A MarvinSruCoModSgroup type must be one of \"SruSgroup\". \"CopolymerSgroup\", and \"ModificationSgroup\"");
+        R"(A MarvinSruCoModSgroup type must be one of "SruSgroup". "CopolymerSgroup", and "ModificationSgroup")");
   }
 
   this->roleName = roleNameInit;
@@ -1495,7 +1495,7 @@ MarvinDataSgroup::MarvinDataSgroup(MarvinMolBase *parentInit, ptree &molTree) {
   if (unitsDisplayed != "unit displayed" &&
       unitsDisplayed != "unit not displayed") {
     throw FileParseException(
-        "Expected unitsDisplayed to be either \"Unit displayed\" or \"Unit not displayed\" for a DataSgroup definition in MRV file");
+        R"(Expected unitsDisplayed to be either "Unit displayed" or "Unit not displayed" for a DataSgroup definition in MRV file)");
   }
 
   this->queryType = molTree.get<std::string>("<xmlattr>.queryType", "");
@@ -1563,7 +1563,7 @@ std::string MarvinDataSgroup::toString() const {
   std::ostringstream out;
 
   out << "<molecule molID=\"" << molID << "\" id=\"" << id
-      << "\" role=\"DataSgroup\" atomRefs=\""
+      << R"(" role="DataSgroup" atomRefs=")"
       << boost::algorithm::join(getAtomList(), " ") << "\" context=\""
       << context << "\" fieldName=\"" << fieldName << "\" placement=\""
       << placement << "\" unitsDisplayed=\"" << unitsDisplayed
@@ -1720,7 +1720,7 @@ std::string MarvinMultipleSgroup::toString() const {
   std::ostringstream out;
 
   out << "<molecule molID=\"" << molID << "\" id=\"" << id
-      << "\" role=\"MultipleSgroup\" atomRefs=\""
+      << R"(" role="MultipleSgroup" atomRefs=")"
       << boost::algorithm::join(getAtomList(), " ") << "\" title=\"" << title
       << "\">";
 
@@ -1836,7 +1836,7 @@ std::string MarvinMulticenterSgroup::toString() const {
   std::ostringstream out;
 
   out << "<molecule molID=\"" << molID << "\" id=\"" << id
-      << "\" role=\"MulticenterSgroup\" atomRefs=\""
+      << R"(" role="MulticenterSgroup" atomRefs=")"
       << boost::algorithm::join(getAtomList(), " ") << "\" center=\""
       << center->id << "\"/>";
 
@@ -1931,7 +1931,7 @@ std::string MarvinGenericSgroup::toString() const {
   std::ostringstream out;
 
   out << "<molecule molID=\"" << molID << "\" id=\"" << id
-      << "\" role=\"GenericSgroup\" atomRefs=\""
+      << R"(" role="GenericSgroup" atomRefs=")"
       << boost::algorithm::join(getAtomList(), " ") << "\"/>";
 
   return out.str();
@@ -2033,7 +2033,7 @@ std::string MarvinMonomerSgroup::toString() const {
   std::ostringstream out;
 
   out << "<molecule molID=\"" << molID << "\" id=\"" << id
-      << "\" role=\"MonomerSgroup\" atomRefs=\""
+      << R"(" role="MonomerSgroup" atomRefs=")"
       << boost::algorithm::join(getAtomList(), " ") << "\" title=\"" << title
       << "\" charge=\"" << charge << "\">"
       << "</molecule>";
@@ -2145,7 +2145,7 @@ std::string MarvinSuperatomSgroupExpanded::toString() const {
   std::ostringstream out;
 
   out << "<molecule molID=\"" << molID << "\" id=\"" << id
-      << "\" role=\"SuperatomSgroup\" atomRefs=\""
+      << R"(" role="SuperatomSgroup" atomRefs=")"
       << boost::algorithm::join(getAtomList(), " ") << "\" title=\"" << title
       << "\"/>";
 
@@ -2267,7 +2267,7 @@ std::string MarvinSuperatomSgroup::toString() const {
   std::ostringstream out;
 
   out << "<molecule molID=\"" << molID << "\" id=\"" << id
-      << "\" role=\"SuperatomSgroup\" title=\"" << title << "\">";
+      << R"(" role="SuperatomSgroup" title=")" << title << "\">";
 
   out << "<atomArray>";
   for (auto atom : atoms) {

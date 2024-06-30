@@ -2598,7 +2598,7 @@ void testGithub1423() {
   {  // from the question that prompted this
     std::stringstream warns;
     rdWarningLog->SetTee(warns);
-    std::string smi = "CCCO\\C(=C/c1ccccc1)/C(\\OCC)=C\\c1ccccc1";
+    std::string smi = R"(CCCO\C(=C/c1ccccc1)/C(\OCC)=C\c1ccccc1)";
     ROMol *m = SmilesToMol(smi);
     TEST_ASSERT(m);
     TEST_ASSERT(m->getBondWithIdx(4)->getBondType() == Bond::DOUBLE);
