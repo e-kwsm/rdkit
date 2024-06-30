@@ -659,7 +659,7 @@ bool PolAtomMatcher(const ROMol &, const Atom &atom,
 
 bool RAtomMatcher(const ROMol &mol, const Atom &atom,
                   const boost::dynamic_bitset<> &ignore) {
-  return GroupHAtomMatcher(mol, atom, std::move(ignore));
+  return GroupHAtomMatcher(mol, atom, ignore);
 }
 
 }  // namespace Matchers
