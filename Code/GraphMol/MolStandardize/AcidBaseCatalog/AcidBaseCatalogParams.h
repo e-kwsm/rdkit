@@ -46,7 +46,7 @@ class RDKIT_MOLSTANDARDIZE_EXPORT AcidBaseCatalogParams
 
   const std::vector<std::pair<ROMOL_SPTR, ROMOL_SPTR>> &getPairs() const;
 
-  const std::pair<ROMOL_SPTR, ROMOL_SPTR> getPair(unsigned int fid) const;
+  std::pair<ROMOL_SPTR, ROMOL_SPTR> getPair(unsigned int fid) const;
 
   void toStream(std::ostream &) const override;
   std::string Serialize() const override;

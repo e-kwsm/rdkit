@@ -174,10 +174,8 @@ class RDKIT_MOLSTANDARDIZE_EXPORT TautomerEnumeratorResult {
         d_modifiedBonds(other.d_modifiedBonds) {
     fillTautomersItVec();
   }
-  const const_iterator begin() const {
-    return const_iterator(d_tautomers.begin());
-  }
-  const const_iterator end() const { return const_iterator(d_tautomers.end()); }
+  const_iterator begin() const { return const_iterator(d_tautomers.begin()); }
+  const_iterator end() const { return const_iterator(d_tautomers.end()); }
   size_t size() const { return d_tautomers.size(); }
   bool empty() const { return d_tautomers.empty(); }
   const ROMOL_SPTR &at(size_t pos) const {

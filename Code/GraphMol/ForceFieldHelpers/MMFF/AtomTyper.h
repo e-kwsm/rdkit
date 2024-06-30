@@ -83,7 +83,7 @@ class RDKIT_FORCEFIELDHELPERS_EXPORT MMFFMolProperties {
   unsigned int getMMFFAngleType(const ROMol &mol, const unsigned int idx1,
                                 const unsigned int idx2,
                                 const unsigned int idx3);
-  const std::pair<unsigned int, unsigned int> getMMFFTorsionType(
+  std::pair<unsigned int, unsigned int> getMMFFTorsionType(
       const ROMol &mol, const unsigned int idx1, const unsigned int idx2,
       const unsigned int idx3, const unsigned int idx4);
   void computeMMFFCharges(const ROMol &mol);
@@ -128,7 +128,7 @@ class RDKIT_FORCEFIELDHELPERS_EXPORT MMFFMolProperties {
 
     this->d_mmffs = mmffVariant == "MMFF94s";
   }
-  const std::string getMMFFVariant() {
+  std::string getMMFFVariant() {
     return (this->d_mmffs ? "MMFF94s" : "MMFF94");
   }
   void setMMFFDielectricConstant(const double dielConst) {

@@ -324,7 +324,7 @@ FingerprintArguments *getOptions(FingerprintGenerator<OutputType> *fpGen) {
   return fpGen->getOptions();
 }
 
-const std::vector<const ROMol *> convertPyArgumentsForBulk(
+std::vector<const ROMol *> convertPyArgumentsForBulk(
     const python::list &py_molVect) {
   std::vector<const ROMol *> molVect;
   if (!py_molVect.is_none()) {

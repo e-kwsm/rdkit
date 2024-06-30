@@ -174,7 +174,7 @@ class MarvinBond {
 
   bool operator==(const MarvinAtom &rhs) const;
 
-  const std::string getBondType() const;
+  std::string getBondType() const;
 
   std::string toString() const;
   ptree toPtree() const;
@@ -269,8 +269,8 @@ class MarvinMolBase {
   int getAtomIndex(std::string id) const;
   int getBondIndex(std::string id) const;
 
-  const std::vector<std::string> getBondList() const;
-  const std::vector<std::string> getAtomList() const;
+  std::vector<std::string> getBondList() const;
+  std::vector<std::string> getAtomList() const;
   bool AnyOverLappingAtoms(const MarvinMolBase *otherMol) const;
 
   void cleanUpNumbering(

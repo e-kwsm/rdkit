@@ -99,11 +99,11 @@ class RDKIT_TAUTOMERQUERY_EXPORT TautomerQuery {
   // pointer is owned by TautomerQuery
   const ROMol &getTemplateMolecule() const { return *d_templateMolecule; }
 
-  const std::vector<ROMOL_SPTR> getTautomers() const { return d_tautomers; }
+  std::vector<ROMOL_SPTR> getTautomers() const { return d_tautomers; }
 
-  const std::vector<size_t> getModifiedAtoms() const { return d_modifiedAtoms; }
+  std::vector<size_t> getModifiedAtoms() const { return d_modifiedAtoms; }
 
-  const std::vector<size_t> getModifiedBonds() const { return d_modifiedBonds; }
+  std::vector<size_t> getModifiedBonds() const { return d_modifiedBonds; }
 
   //! serializes (pickles) to a stream
   void toStream(std::ostream &ss) const;
