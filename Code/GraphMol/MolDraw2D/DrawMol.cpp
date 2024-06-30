@@ -3937,7 +3937,7 @@ Point2D calcPerpendicular(const Point2D &cds1, const Point2D &cds2) {
   perp[0] /= perp_len;
   perp[1] /= perp_len;
 
-  return Point2D(perp[0], perp[1]);
+  return {perp[0], perp[1]};
 }
 
 // ****************************************************************************

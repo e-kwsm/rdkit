@@ -425,7 +425,7 @@ python::object AddRecursiveQueriesToReaction(ChemicalReaction &self,
     return python::tuple(reactantLabels);
   } else {
     addRecursiveQueriesToReaction(self, queries, propName);
-    return python::object();  // this is None
+    return {};  // this is None
   }
 }
 

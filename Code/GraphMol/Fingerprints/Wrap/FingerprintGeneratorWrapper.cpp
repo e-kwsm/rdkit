@@ -393,7 +393,7 @@ python::list getFPBulkPy(python::list &py_molVect, FPType fPType) {
 
 python::object getAtomCountsHelper(const AdditionalOutput &ao) {
   if (!ao.atomCounts) {
-    return python::object();
+    return {};
   }
   python::list res;
   for (const auto v : *ao.atomCounts) {
@@ -403,7 +403,7 @@ python::object getAtomCountsHelper(const AdditionalOutput &ao) {
 }
 python::object getAtomToBitsHelper(const AdditionalOutput &ao) {
   if (!ao.atomToBits) {
-    return python::object();
+    return {};
   }
   python::list res;
   for (const auto &lst : *ao.atomToBits) {
@@ -417,7 +417,7 @@ python::object getAtomToBitsHelper(const AdditionalOutput &ao) {
 }
 python::object getBitPathsHelper(const AdditionalOutput &ao) {
   if (!ao.bitPaths) {
-    return python::object();
+    return {};
   }
   python::dict res;
   for (const auto &pr : *ao.bitPaths) {
@@ -435,7 +435,7 @@ python::object getBitPathsHelper(const AdditionalOutput &ao) {
 }
 python::object getBitInfoMapHelper(const AdditionalOutput &ao) {
   if (!ao.bitInfoMap) {
-    return python::object();
+    return {};
   }
   python::dict res;
   for (const auto &pr : *ao.bitInfoMap) {

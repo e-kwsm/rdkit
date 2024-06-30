@@ -989,7 +989,7 @@ std::unique_ptr<ROMol> molzip(
           BOOST_LOG(rdErrorLog)
               << "Cannot find atom to bond using FragmentOnBond labelling"
               << std::endl;
-          return std::unique_ptr<ROMol>();
+          return {};
         }
         mappings_by_atom[atom].push_back(&bond);
         deletions.push_back(atom);
