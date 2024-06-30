@@ -56,25 +56,25 @@ class RDKIT_MOLDRAW2D_EXPORT DrawText {
   DrawText &operator=(const DrawText &) = delete;
   DrawText &operator=(DrawText &&) = delete;
 
-  DrawColour const &colour() const;
+  [[nodiscard]] DrawColour const &colour() const;
   void setColour(const DrawColour &col);
 
   // size in "pixels" i.e scale() * base_font_size_.
-  double fontSize() const;
+  [[nodiscard]] double fontSize() const;
   void setFontSize(double new_size);
-  double baseFontSize() const;
+  [[nodiscard]] double baseFontSize() const;
   void setBaseFontSize(double new_size);
-  double maxFontSize() const;
+  [[nodiscard]] double maxFontSize() const;
   void setMaxFontSize(double new_max);
-  double minFontSize() const;
+  [[nodiscard]] double minFontSize() const;
   void setMinFontSize(double new_max);
-  double fontScale() const;
+  [[nodiscard]] double fontScale() const;
   // returns false if min or max font size is hit, true otherwise.
   // ignoreLimits ignores minFontSize and maxFontSize.
   bool setFontScale(double new_scale, bool ignoreLimits = false);
 
   // these are only relevant for the FreeType DrawText classes.
-  virtual std::string getFontFile() const { return ""; }
+  [[nodiscard]] virtual std::string getFontFile() const { return ""; }
   virtual void setFontFile(const std::string &font_file) {
     RDUNUSED_PARAM(font_file);
   }
@@ -131,25 +131,28 @@ class RDKIT_MOLDRAW2D_EXPORT DrawText {
 
   // cds in draw coords
   // does the label at cds intersect the given StringRect.
-  bool doesRectIntersect(const std::string &label, OrientType orient,
-                         const Point2D &cds, const StringRect &rect) const;
+  [[nodiscard]] bool doesRectIntersect(const std::string &label,
+                                       OrientType orient, const Point2D &cds,
+                                       const StringRect &rect) const;
   // does the vector of StringRects, each translated by cds, intersect the
   // given StringRect.
-  bool doesRectIntersect(const std::vector<std::shared_ptr<StringRect>> &rects,
-                         const Point2D &cds, const StringRect &rect) const;
-  bool doesLineIntersect(const std::string &label, OrientType orient,
-                         const Point2D &cds, const Point2D &end1,
-                         const Point2D &end2, double padding) const;
-  bool doesLineIntersect(const std::vector<std::shared_ptr<StringRect>> &rects,
-                         const Point2D &cds, const Point2D &end1,
-                         const Point2D &end2, double padding) const;
-  bool doesStringIntersect(
+  [[nodiscard]] bool doesRectIntersect(
+      const std::vector<std::shared_ptr<StringRect>> &rects, const Point2D &cds,
+      const StringRect &rect) const;
+  [[nodiscard]] bool doesLineIntersect(const std::string &label,
+                                       OrientType orient, const Point2D &cds,
+                                       const Point2D &end1, const Point2D &end2,
+                                       double padding) const;
+  [[nodiscard]] bool doesLineIntersect(
+      const std::vector<std::shared_ptr<StringRect>> &rects, const Point2D &cds,
+      const Point2D &end1, const Point2D &end2, double padding) const;
+  [[nodiscard]] bool doesStringIntersect(
       const std::vector<std::shared_ptr<StringRect>> &rects,
       const Point2D &cds1, const std::string &label2, OrientType orient2,
       const Point2D &cds2) const;
-  bool doesStringIntersect(const std::string &label1, OrientType orient1,
-                           const Point2D &cds1, const std::string &label2,
-                           OrientType orient2, const Point2D &cds2) const;
+  [[nodiscard]] bool doesStringIntersect(
+      const std::string &label1, OrientType orient1, const Point2D &cds1,
+      const std::string &label2, OrientType orient2, const Point2D &cds2) const;
 
   virtual void alignString(
       TextAlignType align, const std::vector<TextDrawType> &draw_modes,
@@ -160,7 +163,7 @@ class RDKIT_MOLDRAW2D_EXPORT DrawText {
       std::vector<std::shared_ptr<StringRect>> &rects) const;
   // return a scale factor appropriate for the character and draw type
   // (normal or super- or subscript)
-  double selectScaleFactor(char c, TextDrawType draw_type) const;
+  [[nodiscard]] double selectScaleFactor(char c, TextDrawType draw_type) const;
 
   // amount to scale subscripts and superscripts by
   constexpr static double SUBS_SCALE = 0.66;

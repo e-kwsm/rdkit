@@ -95,7 +95,7 @@ class RDKIT_FINGERPRINTS_EXPORT FingerprintArguments {
 
    \return std::string information string
    */
-  virtual std::string infoString() const = 0;
+  [[nodiscard]] virtual std::string infoString() const = 0;
 
   /**
    \brief method that returns information string about common fingerprinting
@@ -103,7 +103,7 @@ class RDKIT_FINGERPRINTS_EXPORT FingerprintArguments {
 
    \return std::string information string
    */
-  std::string commonArgumentsString() const;
+  [[nodiscard]] std::string commonArgumentsString() const;
 
   virtual ~FingerprintArguments() {}
   FingerprintArguments() = default;
@@ -190,13 +190,13 @@ class RDKIT_FINGERPRINTS_EXPORT AtomEnvironmentGenerator
 
    \return std::string information string
    */
-  virtual std::string infoString() const = 0;
+  [[nodiscard]] virtual std::string infoString() const = 0;
   /*!
     \brief Returns the size of the fingerprint based on arguments
 
     \return OutputType size of the fingerprint
    */
-  virtual OutputType getResultSize() const = 0;
+  [[nodiscard]] virtual OutputType getResultSize() const = 0;
 
   const FingerprintArguments *dp_fingerprintArguments;
 
@@ -218,7 +218,7 @@ class RDKIT_FINGERPRINTS_EXPORT AtomInvariantsGenerator
     \return std::vector<std::uint32_t> atom invariants generated for the given
     molecule
    */
-  virtual std::vector<std::uint32_t> *getAtomInvariants(
+  [[nodiscard]] virtual std::vector<std::uint32_t> *getAtomInvariants(
       const ROMol &mol) const = 0;
 
   /**
@@ -227,10 +227,10 @@ class RDKIT_FINGERPRINTS_EXPORT AtomInvariantsGenerator
 
    \return std::string information string
    */
-  virtual std::string infoString() const = 0;
+  [[nodiscard]] virtual std::string infoString() const = 0;
 
   virtual ~AtomInvariantsGenerator() {}
-  virtual AtomInvariantsGenerator *clone() const = 0;
+  [[nodiscard]] virtual AtomInvariantsGenerator *clone() const = 0;
 };
 
 /*!
@@ -248,7 +248,7 @@ class RDKIT_FINGERPRINTS_EXPORT BondInvariantsGenerator
     \return std::vector<std::uint32_t> bond invariants generated for the given
     molecule
    */
-  virtual std::vector<std::uint32_t> *getBondInvariants(
+  [[nodiscard]] virtual std::vector<std::uint32_t> *getBondInvariants(
       const ROMol &mol) const = 0;
 
   /**
@@ -257,10 +257,10 @@ class RDKIT_FINGERPRINTS_EXPORT BondInvariantsGenerator
 
  \return std::string information string
  */
-  virtual std::string infoString() const = 0;
+  [[nodiscard]] virtual std::string infoString() const = 0;
 
   virtual ~BondInvariantsGenerator() {}
-  virtual BondInvariantsGenerator *clone() const = 0;
+  [[nodiscard]] virtual BondInvariantsGenerator *clone() const = 0;
 };  // namespace RDKit
 
 /*!
@@ -321,7 +321,7 @@ class RDKIT_FINGERPRINTS_EXPORT FingerprintGenerator
   ~FingerprintGenerator();
 
   FingerprintArguments *getOptions() { return dp_fingerprintArguments; };
-  const FingerprintArguments *getOptions() const {
+  [[nodiscard]] const FingerprintArguments *getOptions() const {
     return dp_fingerprintArguments;
   };
 
@@ -337,17 +337,18 @@ class RDKIT_FINGERPRINTS_EXPORT FingerprintGenerator
   std::unique_ptr<ExplicitBitVect> getFingerprint(
       const ROMol &mol, FingerprintFuncArguments &args) const;
 
-  std::vector<std::unique_ptr<ExplicitBitVect>> getFingerprints(
+  [[nodiscard]] std::vector<std::unique_ptr<ExplicitBitVect>> getFingerprints(
       const std::vector<const ROMol *> &mols, int numThreads = 1) const;
 
-  std::vector<std::unique_ptr<SparseBitVect>> getSparseFingerprints(
-      const std::vector<const ROMol *> &mols, int numThreads = 1) const;
+  [[nodiscard]] std::vector<std::unique_ptr<SparseBitVect>>
+  getSparseFingerprints(const std::vector<const ROMol *> &mols,
+                        int numThreads = 1) const;
 
-  std::vector<std::unique_ptr<SparseIntVect<std::uint32_t>>>
+  [[nodiscard]] std::vector<std::unique_ptr<SparseIntVect<std::uint32_t>>>
   getCountFingerprints(const std::vector<const ROMol *> &mols,
                        int numThreads = 1) const;
 
-  std::vector<std::unique_ptr<SparseIntVect<OutputType>>>
+  [[nodiscard]] std::vector<std::unique_ptr<SparseIntVect<OutputType>>>
   getSparseCountFingerprints(const std::vector<const ROMol *> &mols,
                              int numThreads = 1) const;
 
@@ -399,7 +400,7 @@ class RDKIT_FINGERPRINTS_EXPORT FingerprintGenerator
     return getFingerprint(mol, ffa).release();
   };
 
-  std::string infoString() const;
+  [[nodiscard]] std::string infoString() const;
 };
 
 template RDKIT_FINGERPRINTS_EXPORT ExplicitBitVect *
@@ -463,7 +464,9 @@ class RDKIT_FINGERPRINTS_EXPORT UnimplementedFPException
   //! construct with an error message
   UnimplementedFPException(std::string msg) : _msg(std::move(msg)) {}
   //! get the error message
-  const char *what() const noexcept override { return _msg.c_str(); }
+  [[nodiscard]] const char *what() const noexcept override {
+    return _msg.c_str();
+  }
   ~UnimplementedFPException() noexcept override = default;
 
  private:
