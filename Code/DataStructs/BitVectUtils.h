@@ -8,8 +8,8 @@
 //  of the RDKit source tree.
 //
 #include <RDGeneral/export.h>
-#ifndef __RD_BITVECTS_UTILS_H__
-#define __RD_BITVECTS_UTILS_H__
+#ifndef RD_BITVECTS_UTILS_H__
+#define RD_BITVECTS_UTILS_H_
 
 #include "BitVects.h"
 #include <string>
