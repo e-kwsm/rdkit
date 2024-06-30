@@ -66,7 +66,7 @@ void test1() {
   // sanitize it, which will aromatize the bonds... we will not match:
   MolOps::sanitizeMol(*m2);
   TEST_ASSERT(!SubstructMatch(*m2, *m, mv));
-  TEST_ASSERT(mv.size() == 0);
+  TEST_ASSERT(mv.empty());
 
   delete m2;
   smi = "N1=CC=CC=C1";
@@ -77,7 +77,7 @@ void test1() {
   smi = "S1=CC=CC=C1";
   m2 = SmilesToMol(smi, false, false);
   TEST_ASSERT(!SubstructMatch(*m2, *m, mv));
-  TEST_ASSERT(mv.size() == 0);
+  TEST_ASSERT(mv.empty());
   delete m2;
   smi = "P1=CC=CC=C1";
   m2 = SmilesToMol(smi, false, false);
@@ -183,7 +183,7 @@ void test2() {
   // sanitize it (making bonds aromatic) ... we will not match:
   MolOps::sanitizeMol(*m2);
   TEST_ASSERT(!SubstructMatch(*m2, *m, mv));
-  TEST_ASSERT(mv.size() == 0);
+  TEST_ASSERT(mv.empty());
 
   delete m2;
   smi = "C=CC=CC=C";
@@ -1364,7 +1364,7 @@ void testMolFileRBCQueries() {
   smi = "CC";
   m2 = SmilesToMol(smi);
   TEST_ASSERT(!SubstructMatch(*m2, *m, mv));
-  TEST_ASSERT(mv.size() == 0);
+  TEST_ASSERT(mv.empty());
   delete m2;
   smi = "C1CCC1";
   m2 = SmilesToMol(smi);
@@ -1374,7 +1374,7 @@ void testMolFileRBCQueries() {
   smi = "C12C3C4C1C5C2C3C45";
   m2 = SmilesToMol(smi);
   TEST_ASSERT(!SubstructMatch(*m2, *m, mv));
-  TEST_ASSERT(mv.size() == 0);
+  TEST_ASSERT(mv.empty());
   delete m2;
 
   delete m;
@@ -1385,12 +1385,12 @@ void testMolFileRBCQueries() {
   smi = "CC";
   m2 = SmilesToMol(smi);
   TEST_ASSERT(!SubstructMatch(*m2, *m, mv));
-  TEST_ASSERT(mv.size() == 0);
+  TEST_ASSERT(mv.empty());
   delete m2;
   smi = "C1CCC1";
   m2 = SmilesToMol(smi);
   TEST_ASSERT(!SubstructMatch(*m2, *m, mv));
-  TEST_ASSERT(mv.size() == 0);
+  TEST_ASSERT(mv.empty());
   delete m2;
   smi = "C12C3C4C1C5C2C3C45";
   m2 = SmilesToMol(smi);
@@ -1411,7 +1411,7 @@ void testMolFileRBCQueries() {
   smi = "C1CCC1";
   m2 = SmilesToMol(smi);
   TEST_ASSERT(!SubstructMatch(*m2, *m, mv));
-  TEST_ASSERT(mv.size() == 0);
+  TEST_ASSERT(mv.empty());
   delete m2;
 
   delete m;
@@ -1421,17 +1421,17 @@ void testMolFileRBCQueries() {
   smi = "CC";
   m2 = SmilesToMol(smi);
   TEST_ASSERT(!SubstructMatch(*m2, *m, mv));
-  TEST_ASSERT(mv.size() == 0);
+  TEST_ASSERT(mv.empty());
   delete m2;
   smi = "C1CCC1";
   m2 = SmilesToMol(smi);
   TEST_ASSERT(!SubstructMatch(*m2, *m, mv));
-  TEST_ASSERT(mv.size() == 0);
+  TEST_ASSERT(mv.empty());
   delete m2;
   smi = "C12C3C4C1C5C2C3C45";
   m2 = SmilesToMol(smi);
   TEST_ASSERT(!SubstructMatch(*m2, *m, mv));
-  TEST_ASSERT(mv.size() == 0);
+  TEST_ASSERT(mv.empty());
   delete m2;
 
   smi = "C1CS234C5CC2CC13CC4C5";
@@ -1458,7 +1458,7 @@ void testMolFileRBCQueries() {
   smi = "C1CCC1";
   m2 = SmilesToMol(smi);
   TEST_ASSERT(!SubstructMatch(*m2, *m, mv));
-  TEST_ASSERT(mv.size() == 0);
+  TEST_ASSERT(mv.empty());
   delete m2;
 
   delete m;
@@ -1469,7 +1469,7 @@ void testMolFileRBCQueries() {
   smi = "CC";
   m2 = SmilesToMol(smi);
   TEST_ASSERT(!SubstructMatch(*m2, *m, mv));
-  TEST_ASSERT(mv.size() == 0);
+  TEST_ASSERT(mv.empty());
   delete m2;
   smi = "C1CCC1";
   m2 = SmilesToMol(smi);
@@ -1484,7 +1484,7 @@ void testMolFileRBCQueries() {
   smi = "C12C3C4C1C5C2C3C45";
   m2 = SmilesToMol(smi);
   TEST_ASSERT(!SubstructMatch(*m2, *m, mv));
-  TEST_ASSERT(mv.size() == 0);
+  TEST_ASSERT(mv.empty());
   delete m2;
 
   delete m;
@@ -1495,7 +1495,7 @@ void testMolFileRBCQueries() {
   smi = "CC";
   m2 = SmilesToMol(smi);
   TEST_ASSERT(!SubstructMatch(*m2, *m, mv));
-  TEST_ASSERT(mv.size() == 0);
+  TEST_ASSERT(mv.empty());
   delete m2;
   smi = "C1CCC1";
   m2 = SmilesToMol(smi);
@@ -1505,12 +1505,12 @@ void testMolFileRBCQueries() {
   smi = "C1CC2C1CC2";
   m2 = SmilesToMol(smi);
   TEST_ASSERT(!SubstructMatch(*m2, *m, mv));
-  TEST_ASSERT(mv.size() == 0);
+  TEST_ASSERT(mv.empty());
   delete m2;
   smi = "C12C3C4C1C5C2C3C45";
   m2 = SmilesToMol(smi);
   TEST_ASSERT(!SubstructMatch(*m2, *m, mv));
-  TEST_ASSERT(mv.size() == 0);
+  TEST_ASSERT(mv.empty());
   delete m2;
 
   delete m;
@@ -1534,7 +1534,7 @@ void testMolFileUnsaturationQueries() {
   smi = "CO";
   m2 = SmilesToMol(smi);
   TEST_ASSERT(!SubstructMatch(*m2, *m, mv));
-  TEST_ASSERT(mv.size() == 0);
+  TEST_ASSERT(mv.empty());
   delete m2;
 
   smi = "C=O";
@@ -1546,7 +1546,7 @@ void testMolFileUnsaturationQueries() {
   smi = "CCO";
   m2 = SmilesToMol(smi);
   TEST_ASSERT(!SubstructMatch(*m2, *m, mv));
-  TEST_ASSERT(mv.size() == 0);
+  TEST_ASSERT(mv.empty());
   delete m2;
 
   smi = "C=CO";
@@ -5334,19 +5334,19 @@ void testAtomQueries() {
 
     MatchVectType mv;
     SubstructMatch(*testMol, *testQuery, mv);
-    TEST_ASSERT(mv.size() > 0);
+    TEST_ASSERT(!mv.empty());
 
     testMol.reset(SmilesToMol("[H]CC1=CN=C(C=C)C(C2CCCCC2)=C1C"));
     TEST_ASSERT(testMol);
 
     SubstructMatch(*testMol, *testQuery, mv);
-    TEST_ASSERT(mv.size() > 0);
+    TEST_ASSERT(!mv.empty());
 
     testMol.reset(SmilesToMol("CCC1=CN=C(C=C)C(C2CCCCC2)=C1C"));
     TEST_ASSERT(testMol);
 
     SubstructMatch(*testMol, *testQuery, mv);
-    TEST_ASSERT(mv.size() == 0);  // search fails
+    TEST_ASSERT(mv.empty());  // search fails
   }
   {
     std::string pathName = getenv("RDBASE");
@@ -5360,13 +5360,13 @@ void testAtomQueries() {
 
     MatchVectType mv;
     SubstructMatch(*testMol, *testQuery, mv);
-    TEST_ASSERT(mv.size() > 0);
+    TEST_ASSERT(!mv.empty());
 
     testMol.reset(SmilesToMol("C1(C)C(C)=CN=C(C)C=1C12CCC(CC1)CC2"));
     TEST_ASSERT(testMol);
 
     SubstructMatch(*testMol, *testQuery, mv);
-    TEST_ASSERT(mv.size() == 0);  // search fails
+    TEST_ASSERT(mv.empty());  // search fails
   }
   {
     std::string pathName = getenv("RDBASE");
@@ -5381,19 +5381,19 @@ void testAtomQueries() {
 
     MatchVectType mv;
     SubstructMatch(*testMol, *testQuery, mv);
-    TEST_ASSERT(mv.size() > 0);
+    TEST_ASSERT(!mv.empty());
 
     testMol.reset(SmilesToMol("CCC1=CN=C(C3=CC=CC=C3)C(C2CCCCC2)=C1C"));
     TEST_ASSERT(testMol);
 
     SubstructMatch(*testMol, *testQuery, mv);
-    TEST_ASSERT(mv.size() > 0);
+    TEST_ASSERT(!mv.empty());
 
     testMol.reset(SmilesToMol("CCC1=CN=C(C3CCCCC3)C(C2CCCCC2)=C1C"));
     TEST_ASSERT(testMol);
 
     SubstructMatch(*testMol, *testQuery, mv);
-    TEST_ASSERT(mv.size() == 0);
+    TEST_ASSERT(mv.empty());
   }
 
   BOOST_LOG(rdInfoLog) << "Finished" << std::endl;

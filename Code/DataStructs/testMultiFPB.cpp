@@ -553,12 +553,12 @@ void test7MultiFPBReaderEdges() {
     {
       std::vector<std::pair<unsigned int, unsigned int>> nbrs =
           mfps.getContainingNeighbors(qbv);
-      TEST_ASSERT(nbrs.size() == 0);
+      TEST_ASSERT(nbrs.empty());
     }
     {
       std::vector<MultiFPBReader::ResultTuple> nbrs =
           mfps.getTanimotoNeighbors(qbv, 0.01);
-      TEST_ASSERT(nbrs.size() == 0);
+      TEST_ASSERT(nbrs.empty());
     }
   }
   BOOST_LOG(rdInfoLog) << "Finished" << std::endl;
