@@ -71,7 +71,7 @@ void updateCleanupParamsFromJSON(CleanupParameters &params,
               << " empty transformation name or SMARTS" << std::endl;
           continue;
         }
-        params.normalizationData.push_back(std::make_pair(nm, smarts));
+        params.normalizationData.emplace_back(nm, smarts);
       }
     }
   }
@@ -86,7 +86,7 @@ void updateCleanupParamsFromJSON(CleanupParameters &params,
               << " empty transformation name or SMARTS" << std::endl;
           continue;
         }
-        params.fragmentData.push_back(std::make_pair(nm, smarts));
+        params.fragmentData.emplace_back(nm, smarts);
       }
     }
   }
@@ -102,7 +102,7 @@ void updateCleanupParamsFromJSON(CleanupParameters &params,
               << " empty component in acidbaseData" << std::endl;
           continue;
         }
-        params.acidbaseData.push_back(std::make_tuple(nm, acid, base));
+        params.acidbaseData.emplace_back(nm, acid, base);
       }
     }
   }
@@ -119,8 +119,7 @@ void updateCleanupParamsFromJSON(CleanupParameters &params,
               << " empty component in tautomerTransformData" << std::endl;
           continue;
         }
-        params.tautomerTransformData.push_back(
-            std::make_tuple(nm, smarts, bonds, charges));
+        params.tautomerTransformData.emplace_back(nm, smarts, bonds, charges);
       }
     }
   }

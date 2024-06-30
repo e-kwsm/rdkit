@@ -56,7 +56,7 @@ void buildTree(int atomIndexToAdd, const ROMol *mol,
   nbrRanks.reserve(mol->getAtomDegree(atomToAdd));
 
   for (const auto nbr : mol->atomNeighbors(atomToAdd)) {
-    nbrRanks.push_back(std::make_pair(ranks[nbr->getIdx()], nbr->getIdx()));
+    nbrRanks.emplace_back(ranks[nbr->getIdx()], nbr->getIdx());
   }
   std::sort(nbrRanks.begin(), nbrRanks.end());
   for (const auto &pr : nbrRanks) {
