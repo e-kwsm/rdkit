@@ -41,7 +41,7 @@ std::pair<ROMol *, ROMol *> *getPair(std::string tmpStr) {
   // Remove whitespace
   boost::trim(tmpStr);
 
-  if (tmpStr.length() == 0 || tmpStr.substr(0, 2) == "//") {
+  if (tmpStr.empty() || tmpStr.substr(0, 2) == "//") {
     // empty or comment line
     return nullptr;
   }
