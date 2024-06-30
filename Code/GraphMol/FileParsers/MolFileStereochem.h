@@ -16,17 +16,21 @@
 
 namespace RDKit {
 //! deprecated, please use MolOps::assignChiralTypesFromBondDirs instead
-RDKIT_FILEPARSERS_EXPORT void DetectAtomStereoChemistry(RWMol &mol,
-                                                        const Conformer *conf);
+[[deprecated(
+    "please use MolOps::assignChiralTypesFromBondDirs instead")]] RDKIT_FILEPARSERS_EXPORT void
+DetectAtomStereoChemistry(RWMol &mol, const Conformer *conf);
 //! deprecated, please use MolOps::detectBondStereoChemistry instead
-RDKIT_FILEPARSERS_EXPORT void DetectBondStereoChemistry(ROMol &mol,
-                                                        const Conformer *conf);
+[[deprecated(
+    "please use MolOps::detectBondStereoChemistry instead")]] RDKIT_FILEPARSERS_EXPORT void
+DetectBondStereoChemistry(ROMol &mol, const Conformer *conf);
 
 //! \deprecated use Chirality::wedgeMolBonds instead
-RDKIT_FILEPARSERS_EXPORT void WedgeMolBonds(ROMol &mol, const Conformer *conf);
+[[deprecated(
+    "use Chirality::wedgeMolBonds instead")]] RDKIT_FILEPARSERS_EXPORT void
+WedgeMolBonds(ROMol &mol, const Conformer *conf);
 //! \deprecated use Chirality::wedgeBond instead
-RDKIT_FILEPARSERS_EXPORT void WedgeBond(Bond *bond, unsigned int fromAtomIdx,
-                                        const Conformer *conf);
+[[deprecated("use Chirality::wedgeBond instead")]] RDKIT_FILEPARSERS_EXPORT void
+WedgeBond(Bond *bond, unsigned int fromAtomIdx, const Conformer *conf);
 
 struct RDKIT_FILEPARSERS_EXPORT StereoBondThresholds {
   const static unsigned DBL_BOND_NO_STEREO =
@@ -54,23 +58,37 @@ RDKIT_FILEPARSERS_EXPORT void addWavyBondsForStereoAny(
     unsigned addWhenImpossible = StereoBondThresholds::DBL_BOND_NO_STEREO);
 
 //! \deprecated, please use MolOps::clearSingleBondDirFlags instead
-RDKIT_FILEPARSERS_EXPORT void ClearSingleBondDirFlags(ROMol &mol);
+[[deprecated,
+  ("please use MolOps::clearSingleBondDirFlags instead")]] RDKIT_FILEPARSERS_EXPORT void
+ClearSingleBondDirFlags(ROMol &mol);
 //! \deprecated use Chirality::detail::determineBondWedgeState instead
-RDKIT_FILEPARSERS_EXPORT Bond::BondDir DetermineBondWedgeState(
-    const Bond *bond, unsigned int fromAtomIdx, const Conformer *conf);
+[[deprecated(
+    "use Chirality::detail::determineBondWedgeState instead")]] RDKIT_FILEPARSERS_EXPORT
+    Bond::BondDir
+    DetermineBondWedgeState(const Bond *bond, unsigned int fromAtomIdx,
+                            const Conformer *conf);
 //! \deprecated use Chirality::detail::determineBondWedgeState instead
-RDKIT_FILEPARSERS_EXPORT Bond::BondDir DetermineBondWedgeState(
-    const Bond *bond,
-    const std::map<int, std::unique_ptr<RDKit::Chirality::WedgeInfoBase>>
-        &wedgeBonds,
-    const Conformer *conf);
+[[deprecated(
+    "use Chirality::detail::determineBondWedgeState instead")]] RDKIT_FILEPARSERS_EXPORT
+    Bond::BondDir
+    DetermineBondWedgeState(
+        const Bond *bond,
+        const std::map<int, std::unique_ptr<RDKit::Chirality::WedgeInfoBase>>
+            &wedgeBonds,
+        const Conformer *conf);
 
 //! \deprecated use Chirality::reapplyMolBlockWedging instead
-RDKIT_FILEPARSERS_EXPORT void reapplyMolBlockWedging(ROMol &mol);
+[[deprecated(
+    "use Chirality::reapplyMolBlockWedging instead")]] RDKIT_FILEPARSERS_EXPORT void
+reapplyMolBlockWedging(ROMol &mol);
 //! \deprecated use Chirality::clearMolBlockWedgingInfo instead
-RDKIT_FILEPARSERS_EXPORT void clearMolBlockWedgingInfo(ROMol &mol);
+[[deprecated(
+    "use Chirality::clearMolBlockWedgingInfo instead")]] RDKIT_FILEPARSERS_EXPORT void
+clearMolBlockWedgingInfo(ROMol &mol);
 //! \deprecated use Chirality::invertMolBlockWedgingInfo instead
-RDKIT_FILEPARSERS_EXPORT void invertMolBlockWedgingInfo(ROMol &mol);
+[[deprecated(
+    "use Chirality::invertMolBlockWedgingInfo instead")]] RDKIT_FILEPARSERS_EXPORT void
+invertMolBlockWedgingInfo(ROMol &mol);
 
 //! Set double bonds with unspecified stereo to STEREOANY and add wavy bonds
 //! to
