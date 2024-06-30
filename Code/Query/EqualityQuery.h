@@ -46,7 +46,7 @@ class RDKIT_QUERY_EXPORT EqualityQuery
   //! sets our tolerance
   void setTol(MatchFuncArgType what) { this->d_tol = what; }
   //! returns out tolerance
-  const MatchFuncArgType getTol() const { return this->d_tol; }
+  MatchFuncArgType getTol() const { return this->d_tol; }
 
   bool Match(const DataFuncArgType what) const override {
     MatchFuncArgType mfArg =
