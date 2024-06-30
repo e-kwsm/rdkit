@@ -109,9 +109,10 @@ void disable_logs(const std::string &arg) {
   }
 };
 
-bool is_log_enabled(RDLogger log) { return log && log->df_enabled; }
+bool is_log_enabled(const RDLogger &log) { return log && log->df_enabled; }
 
-void get_log_status(std::ostream &ss, const std::string &name, RDLogger log) {
+void get_log_status(std::ostream &ss, const std::string &name,
+                    const RDLogger &log) {
   ss << name << ":";
   if (log) {
     if (log->df_enabled) {
@@ -127,11 +128,11 @@ void get_log_status(std::ostream &ss, const std::string &name, RDLogger log) {
 std::string log_status() {
   std::stringstream ss;
   get_log_status(ss, "rdApp.debug", rdDebugLog);
-  ss << std::endl;
+  ss << '\n';
   get_log_status(ss, "rdApp.info", rdInfoLog);
-  ss << std::endl;
+  ss << '\n';
   get_log_status(ss, "rdApp.warning", rdWarningLog);
-  ss << std::endl;
+  ss << '\n';
   get_log_status(ss, "rdApp.error", rdErrorLog);
   return ss.str();
 }
