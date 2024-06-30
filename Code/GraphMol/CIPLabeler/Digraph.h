@@ -51,13 +51,13 @@ class Digraph {
 
   Digraph(const CIPMol &mol, Atom *atom, bool atropsomerMode = false);
 
-  const CIPMol &getMol() const;
+  [[nodiscard]] const CIPMol &getMol() const;
 
-  Node *getOriginalRoot() const;
+  [[nodiscard]] Node *getOriginalRoot() const;
 
-  Node *getCurrentRoot() const;
+  [[nodiscard]] Node *getCurrentRoot() const;
 
-  int getNumNodes() const;
+  [[nodiscard]] int getNumNodes() const;
 
   /**
    * Get all nodes which refer to `atom` in order of
@@ -68,7 +68,7 @@ class Digraph {
   /**
    * Access the reference atom for Rule 6 (if one is set).
    */
-  Atom *getRule6Ref() const;
+  [[nodiscard]] Atom *getRule6Ref() const;
 
   /**
    * Used exclusively for Rule 6, we set one atom as the reference.

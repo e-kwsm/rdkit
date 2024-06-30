@@ -21,7 +21,9 @@ class RDKIT_DATASTRUCTS_EXPORT DatastructsException : public std::exception {
   //! construct with an error message
   DatastructsException(std::string msg) : _msg(std::move(msg)) {}
   //! get the error message
-  const char *what() const noexcept override { return _msg.c_str(); }
+  [[nodiscard]] const char *what() const noexcept override {
+    return _msg.c_str();
+  }
   ~DatastructsException() noexcept override = default;
 
  private:

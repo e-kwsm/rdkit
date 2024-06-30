@@ -47,7 +47,7 @@ class RDKIT_FORCEFIELD_EXPORT StretchBendContrib : public ForceFieldContrib {
 
   double getEnergy(double *pos) const override;
   void getGrad(double *pos, double *grad) const override;
-  StretchBendContrib *copy() const override {
+  [[nodiscard]] StretchBendContrib *copy() const override {
     return new StretchBendContrib(*this);
   }
 

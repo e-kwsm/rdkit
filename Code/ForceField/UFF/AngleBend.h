@@ -50,7 +50,7 @@ class RDKIT_FORCEFIELD_EXPORT AngleBendContrib : public ForceFieldContrib {
   double getEnergy(double *pos) const override;
   void getGrad(double *pos, double *grad) const override;
 
-  AngleBendContrib *copy() const override {
+  [[nodiscard]] AngleBendContrib *copy() const override {
     return new AngleBendContrib(*this);
   }
 
@@ -61,8 +61,8 @@ class RDKIT_FORCEFIELD_EXPORT AngleBendContrib : public ForceFieldContrib {
   unsigned int d_order{0};
   double d_forceConstant, d_C0, d_C1, d_C2;
 
-  double getEnergyTerm(double cosTheta, double sinThetaSq) const;
-  double getThetaDeriv(double cosTheta, double sinTheta) const;
+  [[nodiscard]] double getEnergyTerm(double cosTheta, double sinThetaSq) const;
+  [[nodiscard]] double getThetaDeriv(double cosTheta, double sinTheta) const;
 };
 
 namespace Utils {

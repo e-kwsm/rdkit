@@ -40,7 +40,9 @@ and the angle formed by atom1-atom2-atom3
                  const MMFFOop *mmffOopParams);
   double getEnergy(double *pos) const override;
   void getGrad(double *pos, double *grad) const override;
-  OopBendContrib *copy() const override { return new OopBendContrib(*this); }
+  [[nodiscard]] OopBendContrib *copy() const override {
+    return new OopBendContrib(*this);
+  }
 
  private:
   int d_at1Idx{-1}, d_at2Idx{-1}, d_at3Idx{-1}, d_at4Idx{-1};
