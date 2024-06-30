@@ -39,9 +39,9 @@ class DuplicatedSeedCache {
     bool operator==(const TKey &right) const {  // opt.
       return AtomIdx.size() == right.AtomIdx.size() &&
              BondIdx.size() == right.BondIdx.size() &&
-             0 == std::memcmp(&AtomIdx[0], &right.AtomIdx[0],
+             0 == std::memcmp(AtomIdx.data(), right.AtomIdx.data(),
                               AtomIdx.size() * sizeof(unsigned int)) &&
-             0 == std::memcmp(&BondIdx[0], &right.BondIdx[0],
+             0 == std::memcmp(BondIdx.data(), right.BondIdx.data(),
                               BondIdx.size() * sizeof(unsigned int));
     }
 
@@ -62,7 +62,7 @@ class DuplicatedSeedCache {
 
       // everything is equal -> perform straight comparison
       int diff;
-      diff = std::memcmp(&AtomIdx[0], &right.AtomIdx[0],
+      diff = std::memcmp(AtomIdx.data(), right.AtomIdx.data(),
                          AtomIdx.size() * sizeof(unsigned int));
       if (diff < 0) {
         return true;
@@ -70,7 +70,7 @@ class DuplicatedSeedCache {
       if (diff > 0) {
         return false;
       }
-      return std::memcmp(&BondIdx[0], &right.BondIdx[0],
+      return std::memcmp(BondIdx.data(), right.BondIdx.data(),
                          BondIdx.size() * sizeof(unsigned int)) < 0;
     }
   };
