@@ -49,8 +49,8 @@ class RDKIT_FINGERPRINTS_EXPORT RDKitFPArguments : public FingerprintArguments {
    */
   RDKitFPArguments(unsigned int minPath, unsigned int maxPath, bool useHs,
                    bool branchedPaths, bool useBondOrder, bool countSimulation,
-                   const std::vector<std::uint32_t> countBounds,
-                   std::uint32_t fpSize, std::uint32_t numBitsPerFeature);
+                   std::vector<std::uint32_t> countBounds, std::uint32_t fpSize,
+                   std::uint32_t numBitsPerFeature);
 };
 
 class RDKIT_FINGERPRINTS_EXPORT RDKitFPAtomInvGenerator
@@ -77,7 +77,7 @@ class RDKIT_FINGERPRINTS_EXPORT RDKitFPAtomEnv
       const std::vector<std::uint32_t> *bondInvariants,  // unused
       AdditionalOutput *additionalOutput,                // unused
       bool hashResults = false,                          // unused
-      const std::uint64_t fpSize = 0                     // unused
+      std::uint64_t fpSize = 0                           // unused
   ) const override;
   void updateAdditionalOutput(AdditionalOutput *output,
                               size_t bitId) const override;
@@ -154,7 +154,7 @@ RDKIT_FINGERPRINTS_EXPORT FingerprintGenerator<OutputType> *getRDKitFPGenerator(
     bool branchedPaths = true, bool useBondOrder = true,
     AtomInvariantsGenerator *atomInvariantsGenerator = nullptr,
     bool countSimulation = false,
-    const std::vector<std::uint32_t> countBounds = {1, 2, 4, 8},
+    std::vector<std::uint32_t> countBounds = {1, 2, 4, 8},
     std::uint32_t fpSize = 2048, std::uint32_t numBitsPerFeature = 2,
     bool ownsAtomInvGen = false);
 
