@@ -12,8 +12,7 @@
 
 #include <GraphMol/MolDraw2D/DrawMolMCH.h>
 
-namespace RDKit {
-namespace MolDraw2D_detail {
+namespace RDKit::MolDraw2D_detail {
 
 // Struct to hold a pair of lines that make up part of the
 // lasso.  Each atom in the lasso will have one for each
@@ -105,7 +104,6 @@ class DrawMolMCHLasso : public DrawMolMCH {
   // are moving round in an anti-clockwise direction.
   void orderAtomLines(std::vector<std::vector<LinePair>> &atomLines) const;
 };
-}  // namespace MolDraw2D_detail
-}  // namespace RDKit
+}  // namespace RDKit::MolDraw2D_detail
 
 #endif  // DRAWMOLMCHLASSO_H

@@ -33,8 +33,7 @@
 #include <sys/stat.h>
 #include <Numerics/Conrec.h>
 
-namespace RDKit {
-namespace MolDraw2DUtils {
+namespace RDKit::MolDraw2DUtils {
 
 namespace {
 bool isAtomCandForChiralH(const RWMol &mol, const Atom *atom) {
@@ -593,5 +592,4 @@ double meanBondLength(const ROMol &mol, int confId) {
   return bondLen;
 }
 
-}  // namespace MolDraw2DUtils
-}  // namespace RDKit
+}  // namespace RDKit::MolDraw2DUtils
