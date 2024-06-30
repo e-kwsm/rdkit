@@ -59,7 +59,7 @@ PyObject *getSubstructHelper(const ROMol &mol, const ExtendedQueryMol &query,
     matches = SubstructMatch(mol, query, params);
   }
   if (matches.empty()) {
-    matches.push_back(MatchVectType());
+    matches.emplace_back();
   }
   return convertMatches(matches[0]);
 }

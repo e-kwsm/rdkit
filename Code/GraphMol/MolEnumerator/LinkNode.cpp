@@ -70,7 +70,7 @@ void LinkNodeOp::initFromMol() {
     }
     std::string productSmarts = "";
     d_countAtEachPoint.push_back(node.maxRep - node.minRep + 1);
-    d_pointRanges.push_back(std::make_pair(node.minRep, node.maxRep));
+    d_pointRanges.emplace_back(node.minRep, node.maxRep);
     auto varAtom = dp_frame->getAtomWithIdx(node.bondAtoms[0].first);
     auto attach1 = dp_frame->getAtomWithIdx(node.bondAtoms[0].second);
     auto attach2 = dp_frame->getAtomWithIdx(node.bondAtoms[1].second);
@@ -93,10 +93,9 @@ void LinkNodeOp::initFromMol() {
     varAtom->setIsotope(1000 * (node.bondAtoms[0].first + 1));
     attach1->setIsotope(1000 * (node.bondAtoms[0].second + 1));
     attach2->setIsotope(1000 * (node.bondAtoms[1].second + 1));
-    d_variations.push_back(
-        std::make_tuple(1000 * (node.bondAtoms[0].first + 1),
-                        1000 * (node.bondAtoms[0].second + 1),
-                        1000 * (node.bondAtoms[1].second + 1)));
+    d_variations.emplace_back(1000 * (node.bondAtoms[0].first + 1),
+                              1000 * (node.bondAtoms[0].second + 1),
+                              1000 * (node.bondAtoms[1].second + 1));
   }
 }
 
