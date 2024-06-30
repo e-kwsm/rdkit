@@ -109,7 +109,7 @@ RDKIT_CHEMREACTIONS_EXPORT MOL_SPTR_VECT generateOneProductSet(
     const std::vector<MatchVectType> &reactantsMatch);
 
 RDKIT_CHEMREACTIONS_EXPORT RWMOL_SPTR
-convertTemplateToMol(const ROMOL_SPTR prodTemplateSptr);
+convertTemplateToMol(ROMOL_SPTR prodTemplateSptr);
 }  // namespace ReactionRunnerUtils
 
 }  // namespace RDKit
