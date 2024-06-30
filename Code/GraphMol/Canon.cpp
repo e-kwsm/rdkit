@@ -19,8 +19,7 @@
 #include <RDGeneral/utils.h>
 #include <algorithm>
 
-namespace RDKit {
-namespace Canon {
+namespace RDKit::Canon {
 namespace details {
 bool isUnsaturated(const Atom *atom, const ROMol &mol) {
   for (const auto &bndItr :
@@ -1423,6 +1422,4 @@ void clearStereoGroups(ROMol &mol) {
   mol.setStereoGroups(sgs);
 }
 
-};  // namespace Canon
-
-}  // namespace RDKit
+}  // namespace RDKit::Canon

@@ -27,8 +27,7 @@
 
 using RDGeom::Point3D;
 
-namespace RDKit {
-namespace Descriptors {
+namespace RDKit::Descriptors {
 
 constexpr int VOXORDER = 16;
 constexpr int CHECKMAX = 20;
@@ -885,5 +884,4 @@ DoubleCubicLatticeVolume::DoubleCubicLatticeVolume(const ROMol &mol,
   s.freeGrid();
 }
 
-}  // namespace Descriptors
-}  // namespace RDKit
+}  // namespace RDKit::Descriptors
