@@ -205,7 +205,7 @@ python::object autoConvertString(const RDOb *ob, const std::string &key) {
   else if (ob->getPropIfPresent(key, svalue))
     return python::object(svalue);
 
-  return python::object();
+  return {};
 }
 
 
