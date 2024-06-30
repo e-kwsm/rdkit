@@ -1381,7 +1381,7 @@ void test13Issue1748846() {
 
   rxn->initReactantMatchers();
   prods = rxn->runReactants(reacts);
-  TEST_ASSERT(prods.size() > 0);
+  TEST_ASSERT(!prods.empty());
   BOOST_LOG(rdInfoLog) << prods[0].size() << std::endl;
   TEST_ASSERT(prods[0].size() == 1);
   TEST_ASSERT(prods[0][0]->getNumAtoms() == 9);
@@ -1413,7 +1413,7 @@ void test13Issue1748846() {
 
   rxn->initReactantMatchers();
   prods = rxn->runReactants(reacts);
-  TEST_ASSERT(prods.size() > 0);
+  TEST_ASSERT(!prods.empty());
   TEST_ASSERT(prods[0].size() == 1);
   TEST_ASSERT(prods[0][0]->getNumAtoms() == 9);
   smi = MolToSmiles(*prods[0][0], true);
@@ -1965,7 +1965,7 @@ void test18PropertyTransfer() {
   mol = SmilesToMol(smi);
   reacts.push_back(ROMOL_SPTR(mol));
   prods = rxn->runReactants(reacts);
-  TEST_ASSERT(prods.size() == 0);
+  TEST_ASSERT(prods.empty());
 
   delete rxn;
   smi = "[13C:1]>>[12C:1]";
@@ -1995,7 +1995,7 @@ void test18PropertyTransfer() {
   mol = SmilesToMol(smi);
   reacts.push_back(ROMOL_SPTR(mol));
   prods = rxn->runReactants(reacts);
-  TEST_ASSERT(prods.size() == 0);
+  TEST_ASSERT(prods.empty());
 
   delete rxn;
   smi = "[C:1]>>[12C:1]";
@@ -3219,7 +3219,7 @@ void test33ReactingAtoms1() {
 
     VECT_INT_VECT ratoms = getReactingAtoms(*rxn);
     TEST_ASSERT(ratoms.size() == 1);
-    TEST_ASSERT(ratoms[0].size() == 0);
+    TEST_ASSERT(ratoms[0].empty());
     delete rxn;
   }
   {  // make sure atomic number queries work:
@@ -3231,7 +3231,7 @@ void test33ReactingAtoms1() {
 
     VECT_INT_VECT ratoms = getReactingAtoms(*rxn);
     TEST_ASSERT(ratoms.size() == 1);
-    TEST_ASSERT(ratoms[0].size() == 0);
+    TEST_ASSERT(ratoms[0].empty());
     delete rxn;
   }
   {  // query in the reactants, dummy in product
@@ -3243,7 +3243,7 @@ void test33ReactingAtoms1() {
 
     VECT_INT_VECT ratoms = getReactingAtoms(*rxn);
     TEST_ASSERT(ratoms.size() == 1);
-    TEST_ASSERT(ratoms[0].size() == 0);
+    TEST_ASSERT(ratoms[0].empty());
     delete rxn;
   }
   {  // recursive query in the reactants without an atomic number query
@@ -3267,7 +3267,7 @@ void test33ReactingAtoms1() {
 
     VECT_INT_VECT ratoms = getReactingAtoms(*rxn);
     TEST_ASSERT(ratoms.size() == 1);
-    TEST_ASSERT(ratoms[0].size() == 0);
+    TEST_ASSERT(ratoms[0].empty());
     delete rxn;
   }
   {  // recursive query with atomic number query, alternate ordering
@@ -3293,7 +3293,7 @@ void test33ReactingAtoms1() {
 
     VECT_INT_VECT ratoms = getReactingAtoms(*rxn);
     TEST_ASSERT(ratoms.size() == 1);
-    TEST_ASSERT(ratoms[0].size() == 0);
+    TEST_ASSERT(ratoms[0].empty());
     delete rxn;
   }
   {  // query with degree/H info in the reactants:
@@ -3305,7 +3305,7 @@ void test33ReactingAtoms1() {
 
     VECT_INT_VECT ratoms = getReactingAtoms(*rxn);
     TEST_ASSERT(ratoms.size() == 1);
-    TEST_ASSERT(ratoms[0].size() == 0);
+    TEST_ASSERT(ratoms[0].empty());
     delete rxn;
   }
   {  // dummy in the reactants, dummy in products
@@ -3317,7 +3317,7 @@ void test33ReactingAtoms1() {
 
     VECT_INT_VECT ratoms = getReactingAtoms(*rxn);
     TEST_ASSERT(ratoms.size() == 1);
-    TEST_ASSERT(ratoms[0].size() == 0);
+    TEST_ASSERT(ratoms[0].empty());
     delete rxn;
   }
   {  // two reactants, one changes
@@ -3330,7 +3330,7 @@ void test33ReactingAtoms1() {
     VECT_INT_VECT ratoms = getReactingAtoms(*rxn);
     TEST_ASSERT(ratoms.size() == 2);
     TEST_ASSERT(ratoms[0].size() == 1);
-    TEST_ASSERT(ratoms[1].size() == 0);
+    TEST_ASSERT(ratoms[1].empty());
     delete rxn;
   }
   {  // two reactants, one changes, reordered
@@ -3343,7 +3343,7 @@ void test33ReactingAtoms1() {
     VECT_INT_VECT ratoms = getReactingAtoms(*rxn);
     TEST_ASSERT(ratoms.size() == 2);
     TEST_ASSERT(ratoms[0].size() == 1);
-    TEST_ASSERT(ratoms[1].size() == 0);
+    TEST_ASSERT(ratoms[1].empty());
     delete rxn;
   }
   {  // dummies for duplicating atom properties
@@ -3356,7 +3356,7 @@ void test33ReactingAtoms1() {
     VECT_INT_VECT ratoms = getReactingAtoms(*rxn);
     TEST_ASSERT(ratoms.size() == 2);
     TEST_ASSERT(ratoms[0].size() == 1);
-    TEST_ASSERT(ratoms[1].size() == 0);
+    TEST_ASSERT(ratoms[1].empty());
     delete rxn;
   }
   {  // query in the reactants, dummy in products
@@ -3368,7 +3368,7 @@ void test33ReactingAtoms1() {
 
     VECT_INT_VECT ratoms = getReactingAtoms(*rxn);
     TEST_ASSERT(ratoms.size() == 1);
-    TEST_ASSERT(ratoms[0].size() == 0);
+    TEST_ASSERT(ratoms[0].empty());
     delete rxn;
   }
   {  // changed degree
@@ -3417,7 +3417,7 @@ void test33ReactingAtoms1() {
 
     VECT_INT_VECT ratoms = getReactingAtoms(*rxn);
     TEST_ASSERT(ratoms.size() == 1);
-    TEST_ASSERT(ratoms[0].size() == 0);
+    TEST_ASSERT(ratoms[0].empty());
     delete rxn;
   }
   {  // changing bond order
@@ -3453,7 +3453,7 @@ void test33ReactingAtoms1() {
 
     VECT_INT_VECT ratoms = getReactingAtoms(*rxn);
     TEST_ASSERT(ratoms.size() == 1);
-    TEST_ASSERT(ratoms[0].size() == 0);
+    TEST_ASSERT(ratoms[0].empty());
     delete rxn;
   }
   {  // changing connectivity
@@ -5834,7 +5834,7 @@ void test60RunSingleReactant() {
         MolToSmiles(*expected_sidechain_result, isomericSmiles);
 
     prods = rxn->runReactant(reag1, 0);
-    TEST_ASSERT(prods.size() > 0);
+    TEST_ASSERT(!prods.empty());
 
     for (auto &prod : prods) {
       for (size_t prodidx = 0; prodidx < prod.size(); prodidx++) {
@@ -5848,7 +5848,7 @@ void test60RunSingleReactant() {
     }
 
     prods = rxn->runReactant(reag2, 0);
-    TEST_ASSERT(prods.size() == 0)
+    TEST_ASSERT(prods.empty())
   }
 
   {
@@ -5860,7 +5860,7 @@ void test60RunSingleReactant() {
         MolToSmiles(*expected_sidechain_result, isomericSmiles);
 
     prods = rxn->runReactant(reag2, 1);
-    TEST_ASSERT(prods.size() > 0);
+    TEST_ASSERT(!prods.empty());
 
     for (auto &prod : prods) {
       for (size_t prodidx = 0; prodidx < prod.size(); prodidx++) {
@@ -5874,7 +5874,7 @@ void test60RunSingleReactant() {
     }
 
     prods = rxn->runReactant(reag1, 1);
-    TEST_ASSERT(prods.size() == 0)
+    TEST_ASSERT(prods.empty())
   }
 
   delete rxn;
@@ -6180,12 +6180,12 @@ void test65SanitizeUnmappedHs() {
 
   // test with and without AddHs
   prods = rxn->runReactants(reacts1);
-  TEST_ASSERT(prods.size() == 0);
+  TEST_ASSERT(prods.empty());
   prods = rxn->runReactants(hreacts1);
   TEST_ASSERT(prods.size() == 768);
 
   prods = rxn->runReactants(reacts2);
-  TEST_ASSERT(prods.size() == 0);
+  TEST_ASSERT(prods.empty());
 
   prods = rxn->runReactants(hreacts2);
   TEST_ASSERT(prods.size() == 128);
@@ -6288,12 +6288,12 @@ void test66SanitizeMappedHs() {
 
   // test with and without AddHs
   prods = rxn->runReactants(reacts1);
-  TEST_ASSERT(prods.size() == 0);
+  TEST_ASSERT(prods.empty());
   prods = rxn->runReactants(hreacts1);
   TEST_ASSERT(prods.size() == 768);
 
   prods = rxn->runReactants(reacts2);
-  TEST_ASSERT(prods.size() == 0);
+  TEST_ASSERT(prods.empty());
 
   prods = rxn->runReactants(hreacts2);
   TEST_ASSERT(prods.size() == 128);
@@ -6417,12 +6417,12 @@ void test67SanitizeMappedHsInReactantAndProd() {
 
   // test with and without AddHs
   prods = rxn->runReactants(reacts1);
-  TEST_ASSERT(prods.size() == 0);
+  TEST_ASSERT(prods.empty());
   prods = rxn->runReactants(hreacts1);
   TEST_ASSERT(prods.size() == 768);
 
   prods = rxn->runReactants(reacts2);
-  TEST_ASSERT(prods.size() == 0);
+  TEST_ASSERT(prods.empty());
 
   prods = rxn->runReactants(hreacts2);
   TEST_ASSERT(prods.size() == 128);
@@ -6480,7 +6480,7 @@ void test68MappedHToHeavy() {
 
   // test with and without AddHs
   prods = rxn->runReactants(reacts1);
-  TEST_ASSERT(prods.size() == 0);
+  TEST_ASSERT(prods.empty());
 
   prods = rxn->runReactants(hreacts1);
   TEST_ASSERT(prods.size() == 6);
@@ -7294,7 +7294,7 @@ void testGithub2547() {
   rxn->initReactantMatchers();
   std::vector<ROMOL_SPTR> v{mol};
   auto prods = rxn->runReactants(v);
-  TEST_ASSERT(prods.size() == 0);
+  TEST_ASSERT(prods.empty());
 
   RxnOps::sanitizeRxn(*rxn);
 
@@ -7410,7 +7410,7 @@ void testGithub3097() {
   std::vector<ROMOL_SPTR> v{mol1, mol2};
   auto prods = rxn->runReactants(v);
   // if products are not empty this is already a success
-  TEST_ASSERT(prods.size() > 0);
+  TEST_ASSERT(!prods.empty());
 }
 
 void testRxnBlockRemoveHs() {
@@ -7488,7 +7488,7 @@ M  END
     // if the explicit hydrogen is not removed and the reactant template
     // is not sanitized, the reactant template is not aromatic and our
     // aromatic reactant won't match
-    TEST_ASSERT(prods.size() == 0);
+    TEST_ASSERT(prods.empty());
   }
   {
     std::unique_ptr<ChemicalReaction> rxn(

@@ -533,7 +533,7 @@ std::vector<MatchVectType> SubstructMatch(
     const MolBundle &bundle, const ROMol &query,
     const SubstructMatchParameters &params) {
   std::vector<MatchVectType> res;
-  for (unsigned int i = 0; i < bundle.size() && !res.size(); ++i) {
+  for (unsigned int i = 0; i < bundle.size() && res.empty(); ++i) {
     res = SubstructMatch(*bundle[i], query, params);
   }
   return res;
@@ -543,7 +543,7 @@ std::vector<MatchVectType> SubstructMatch(
     const ROMol &mol, const MolBundle &query,
     const SubstructMatchParameters &params) {
   std::vector<MatchVectType> res;
-  for (unsigned int i = 0; i < query.size() && !res.size(); ++i) {
+  for (unsigned int i = 0; i < query.size() && res.empty(); ++i) {
     res = SubstructMatch(mol, *query[i], params);
   }
   return res;
@@ -553,8 +553,8 @@ std::vector<MatchVectType> SubstructMatch(
     const MolBundle &mol, const MolBundle &query,
     const SubstructMatchParameters &params) {
   std::vector<MatchVectType> res;
-  for (unsigned int i = 0; i < mol.size() && !res.size(); ++i) {
-    for (unsigned int j = 0; j < query.size() && !res.size(); ++j) {
+  for (unsigned int i = 0; i < mol.size() && res.empty(); ++i) {
+    for (unsigned int j = 0; j < query.size() && res.empty(); ++j) {
       res = SubstructMatch(*mol[i], *query[j], params);
     }
   }

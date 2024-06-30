@@ -1322,9 +1322,9 @@ void iterateCIPRanks(const ROMol &mol, const DOUBLE_VECT &invars,
 }
 // Figure out the CIP ranks for the atoms of a molecule
 void assignAtomCIPRanks(const ROMol &mol, UINT_VECT &ranks) {
-  PRECONDITION((!ranks.size() || ranks.size() >= mol.getNumAtoms()),
+  PRECONDITION((ranks.empty() || ranks.size() >= mol.getNumAtoms()),
                "bad ranks size");
-  if (!ranks.size()) {
+  if (ranks.empty()) {
     ranks.resize(mol.getNumAtoms());
   }
   unsigned int numAtoms = mol.getNumAtoms();
@@ -1592,7 +1592,7 @@ void findChiralAtomSpecialCases(ROMol &mol,
         }
       }
     }  // end of BFS
-    if (ringStereoAtoms.size() != 0) {
+    if (!ringStereoAtoms.empty()) {
       atom->setProp(common_properties::_ringStereoAtoms, ringStereoAtoms, true);
       // because we're only going to hit each ring atom once, the first atom we
       // encounter in a ring is going to end up with all the other atoms set as
@@ -1614,7 +1614,7 @@ void findChiralAtomSpecialCases(ROMol &mol,
         INT_VECT lringatoms(0);
         mol.getAtomWithIdx(ringAtomIdx)
             ->getPropIfPresent(common_properties::_ringStereoAtoms, lringatoms);
-        CHECK_INVARIANT(lringatoms.size() > 0, "no other ring atoms found.");
+        CHECK_INVARIANT(!lringatoms.empty(), "no other ring atoms found.");
         for (auto orae = rae + 1; orae != ringStereoAtoms.end(); ++orae) {
           int oringAtomEntry = *orae;
           int oringAtomIdx =
@@ -1626,7 +1626,7 @@ void findChiralAtomSpecialCases(ROMol &mol,
           mol.getAtomWithIdx(oringAtomIdx)
               ->getPropIfPresent(common_properties::_ringStereoAtoms,
                                  olringatoms);
-          CHECK_INVARIANT(olringatoms.size() > 0, "no other ring atoms found.");
+          CHECK_INVARIANT(!olringatoms.empty(), "no other ring atoms found.");
           olringatoms.push_back(theseDifferent ? -(ringAtomIdx + 1)
                                                : (ringAtomIdx + 1));
           mol.getAtomWithIdx(oringAtomIdx)
@@ -1735,7 +1735,7 @@ std::pair<bool, bool> isAtomPotentialChiralCenter(
 //   2) did we assign any?
 std::pair<bool, bool> assignAtomChiralCodes(ROMol &mol, UINT_VECT &ranks,
                                             bool flagPossibleStereoCenters) {
-  PRECONDITION((!ranks.size() || ranks.size() == mol.getNumAtoms()),
+  PRECONDITION((ranks.empty() || ranks.size() == mol.getNumAtoms()),
                "bad rank vector size");
   bool atomChanged = false;
   unsigned int unassignedAtoms = 0;
@@ -1754,7 +1754,7 @@ std::pair<bool, bool> assignAtomChiralCodes(ROMol &mol, UINT_VECT &ranks,
         continue;
       }
 
-      if (!ranks.size()) {
+      if (ranks.empty()) {
         //  if we need to, get the "CIP" ranking of each atom:
         assignAtomCIPRanks(mol, ranks);
       }
@@ -1819,7 +1819,7 @@ std::pair<bool, bool> assignAtomChiralCodes(ROMol &mol, UINT_VECT &ranks,
 //   1) are there unassigned stereo bonds?
 //   2) did we assign any?
 std::pair<bool, bool> assignBondStereoCodes(ROMol &mol, UINT_VECT &ranks) {
-  PRECONDITION((!ranks.size() || ranks.size() == mol.getNumAtoms()),
+  PRECONDITION((ranks.empty() || ranks.size() == mol.getNumAtoms()),
                "bad rank vector size");
   bool assignedABond = false;
   unsigned int unassignedBonds = 0;
@@ -1830,7 +1830,7 @@ std::pair<bool, bool> assignBondStereoCodes(ROMol &mol, UINT_VECT &ranks) {
       if (dblBond->getStereo() != Bond::BondStereo::STEREONONE) {
         continue;
       }
-      if (!ranks.size()) {
+      if (ranks.empty()) {
         assignAtomCIPRanks(mol, ranks);
       }
       dblBond->getStereoAtoms().clear();
@@ -1867,7 +1867,7 @@ std::pair<bool, bool> assignBondStereoCodes(ROMol &mol, UINT_VECT &ranks) {
                                                endAtomNeighbors,
                                                hasExplicitUnknownStereo);
 
-          if (begAtomNeighbors.size() && endAtomNeighbors.size()) {
+          if (!begAtomNeighbors.empty() && !endAtomNeighbors.empty()) {
             // Each atom has at least one neighboring bond with marked
             // directionality.  Find the highest-ranked directionality
             // on each side:
@@ -2920,7 +2920,7 @@ void findPotentialStereoBonds(ROMol &mol, bool cleanIt) {
             Chirality::findAtomNeighborsHelper(mol, endAtom, dblBond,
                                                endAtomNeighbors, checkDir,
                                                includeAromatic);
-            if (begAtomNeighbors.size() > 0 && endAtomNeighbors.size() > 0) {
+            if (!begAtomNeighbors.empty() && !endAtomNeighbors.empty()) {
               if ((begAtomNeighbors.size() == 2) &&
                   (endAtomNeighbors.size() == 2)) {
                 // if both of the atoms have 2 neighbors (other than the one
@@ -3588,7 +3588,7 @@ void setDoubleBondNeighborDirections(ROMol &mol, const Conformer *conf) {
     }
   }
 
-  if (!bondsInPlay.size()) {
+  if (bondsInPlay.empty()) {
     return;
   }
 

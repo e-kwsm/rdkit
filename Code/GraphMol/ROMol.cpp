@@ -606,7 +606,7 @@ bool ROMol::needsUpdatePropertyCache() const {
 
 const Conformer &ROMol::getConformer(int id) const {
   // make sure we have more than one conformation
-  if (d_confs.size() == 0) {
+  if (d_confs.empty()) {
     throw ConformerException("No conformations available on the molecule");
   }
 
