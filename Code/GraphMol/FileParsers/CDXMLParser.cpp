@@ -594,8 +594,7 @@ void visit_children(T &node, std::map<unsigned int, Atom *> &ids,
 
         if (atm->hasProp(CDX_ATOM_POS)) {
           hasConf = true;
-          const std::vector<double> coord =
-              atm->getProp<std::vector<double>>(CDX_ATOM_POS);
+          const auto coord = atm->getProp<std::vector<double>>(CDX_ATOM_POS);
 
           if (coord.size() == 2) {
             p.x = coord[0];
@@ -723,7 +722,7 @@ std::vector<std::unique_ptr<RWMol>> MolsFromCDXMLDataStream(
   int missing_frag_id = -1;
   for (auto &cdxml : pt) {
     if (cdxml.first == "CDXML") {
-      double bondLength = cdxml.second.get<double>("<xmlattr>.BondLength");
+      auto bondLength = cdxml.second.get<double>("<xmlattr>.BondLength");
       for (auto &node : cdxml.second) {
         if (node.first == "page") {
           visit_children(node, ids, mols, fragment_lookup, grouped_fragments,
