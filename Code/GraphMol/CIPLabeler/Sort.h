@@ -31,12 +31,12 @@ class Sort {
 
   Sort(std::vector<const SequenceRule *> comparators);
 
-  const std::vector<const SequenceRule *> &getRules() const;
+  [[nodiscard]] const std::vector<const SequenceRule *> &getRules() const;
 
   Priority prioritize(const Node *node, std::vector<Edge *> &edges,
                       bool deep = true) const;
 
-  std::vector<std::vector<Edge *>> getGroups(
+  [[nodiscard]] std::vector<std::vector<Edge *>> getGroups(
       const std::vector<Edge *> &sorted) const;
 
  private:

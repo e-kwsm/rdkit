@@ -46,8 +46,8 @@ struct DrawColour {
     return r == other.r && g == other.g && b == other.b && a == other.a;
   }
   bool operator!=(const DrawColour &other) const { return !(*this == other); }
-  bool feq(const DrawColour &other, double tol = 0.001,
-           bool ignoreAlpha = true) const {
+  [[nodiscard]] bool feq(const DrawColour &other, double tol = 0.001,
+                         bool ignoreAlpha = true) const {
     return fabs(r - other.r) <= tol && fabs(g - other.g) <= tol &&
            fabs(b - other.b) <= tol &&
            (ignoreAlpha || fabs(a - other.a) <= tol);

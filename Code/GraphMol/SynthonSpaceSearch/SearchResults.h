@@ -57,7 +57,8 @@ class RDKIT_SYNTHONSPACESEARCH_EXPORT SearchResults {
    *
    * @return const std::vector<std::unique_ptr<ROMol>> &
    */
-  const std::vector<std::unique_ptr<ROMol>> &getHitMolecules() const {
+  [[nodiscard]] const std::vector<std::unique_ptr<ROMol>> &getHitMolecules()
+      const {
     return d_hitMolecules;
   }
 
@@ -76,12 +77,12 @@ class RDKIT_SYNTHONSPACESEARCH_EXPORT SearchResults {
    * Returns whether the search timed out or not,
    * @return bool
    */
-  bool getTimedOut() const { return d_timedOut; }
+  [[nodiscard]] bool getTimedOut() const { return d_timedOut; }
   /*!
    * Returns whether the search was cancelled or not,
    * @return bool
    */
-  bool getCancelled() const { return d_cancelled; }
+  [[nodiscard]] bool getCancelled() const { return d_cancelled; }
 
   // Merge other into this, keeping only molecules with unique
   // names and destroying contents of other on exit.  If an

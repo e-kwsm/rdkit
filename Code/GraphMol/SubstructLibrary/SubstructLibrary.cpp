@@ -147,7 +147,7 @@ struct Bits {
     }
   }
 
-  bool check(unsigned int idx) const {
+  [[nodiscard]] bool check(unsigned int idx) const {
     if (fps) {
       return fps->passesFilter(idx, *queryBits);
     }

@@ -157,11 +157,11 @@ class RDKIT_FMCS_EXPORT SubstructureCache {
     }
   }
 
-  size_t keyssize() const {  // for statistics only
+  [[nodiscard]] size_t keyssize() const {  // for statistics only
     return ValueStorage.size();
   }
 
-  size_t fullsize() const {  // for statistics only
+  [[nodiscard]] size_t fullsize() const {  // for statistics only
     return std::accumulate(
         ValueStorage.begin(), ValueStorage.end(), 0,
         [](const auto &acc, const auto &v) { return acc + v.size(); });

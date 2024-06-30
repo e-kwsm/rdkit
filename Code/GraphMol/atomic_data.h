@@ -34,33 +34,37 @@ class RDKIT_GRAPHMOL_EXPORT atomicData {
   atomicData(const std::string &dataLine);
   ~atomicData() = default;
 
-  int AtomicNum() const { return anum; }
+  [[nodiscard]] int AtomicNum() const { return anum; }
 
-  int DefaultValence() const { return valence.front(); }
+  [[nodiscard]] int DefaultValence() const { return valence.front(); }
 
-  int NumValence() const { return static_cast<int>(valence.size()); }
+  [[nodiscard]] int NumValence() const {
+    return static_cast<int>(valence.size());
+  }
 
-  const INT_VECT &ValenceList() const { return valence; }
+  [[nodiscard]] const INT_VECT &ValenceList() const { return valence; }
 
-  double Mass() const { return mass; }
+  [[nodiscard]] double Mass() const { return mass; }
 
-  std::string Symbol() const { return symb; }
+  [[nodiscard]] std::string Symbol() const { return symb; }
 
-  std::string Name() const { return name; }
+  [[nodiscard]] std::string Name() const { return name; }
 
-  double Rcov() const { return rCov; }
+  [[nodiscard]] double Rcov() const { return rCov; }
 
-  double Rb0() const { return rB0; }
+  [[nodiscard]] double Rb0() const { return rB0; }
 
-  double Rvdw() const { return rVdw; }
+  [[nodiscard]] double Rvdw() const { return rVdw; }
 
-  int NumOuterShellElec() const { return nVal; }
+  [[nodiscard]] int NumOuterShellElec() const { return nVal; }
 
-  int MostCommonIsotope() const { return commonIsotope; }
+  [[nodiscard]] int MostCommonIsotope() const { return commonIsotope; }
 
-  double MostCommonIsotopeMass() const { return commonIsotopeMass; }
+  [[nodiscard]] double MostCommonIsotopeMass() const {
+    return commonIsotopeMass;
+  }
 
-  unsigned int Row() const { return row; }
+  [[nodiscard]] unsigned int Row() const { return row; }
   // maps isotope number -> mass
   std::map<unsigned int, std::pair<double, double>>
       d_isotopeInfoMap;  // available isotopes

@@ -30,7 +30,7 @@ class RDKIT_FORCEFIELD_EXPORT ForceFieldContrib {
   virtual void getGrad(double *pos, double *grad) const = 0;
 
   //! return a copy
-  virtual ForceFieldContrib *copy() const = 0;
+  [[nodiscard]] virtual ForceFieldContrib *copy() const = 0;
 
  protected:
   ForceField *dp_forceField{nullptr};  //!< our owning ForceField

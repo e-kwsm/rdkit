@@ -57,17 +57,18 @@ class RDKIT_RDGEOMETRYLIB_EXPORT UniformRealValueGrid3D
   //! \brief Get the index of the grid point closest to point
   //!
   //! \return the integer index, -1 if the specified point is outside the grid
-  int getGridPointIndex(const RDGeom::Point3D &point) const override;
+  [[nodiscard]] int getGridPointIndex(
+      const RDGeom::Point3D &point) const override;
 
   //! \brief Get the value at the grid point closest to the specified point
   //!
   //! \return the double value, -1 if the specified index is outside the grid
-  double getVal(const RDGeom::Point3D &point) const override;
+  [[nodiscard]] double getVal(const RDGeom::Point3D &point) const override;
 
   //! \brief Get the value at a specified grid point
   //!
   //! \return the double value
-  double getVal(unsigned int pointId) const override;
+  [[nodiscard]] double getVal(unsigned int pointId) const override;
 
   //! \brief Set the value at the grid point closest to the specified point
   //!
@@ -75,18 +76,22 @@ class RDKIT_RDGEOMETRYLIB_EXPORT UniformRealValueGrid3D
   void setVal(const RDGeom::Point3D &point, double val) override;
 
   //! \brief get the location of the specified grid point
-  RDGeom::Point3D getGridPointLoc(unsigned int pointId) const override;
+  [[nodiscard]] RDGeom::Point3D getGridPointLoc(
+      unsigned int pointId) const override;
 
   //! \brief Set the value at the specified grid point
   void setVal(unsigned int pointId, double val) override;
 
   //! \brief get the size of the grid (number of grid points)
-  unsigned int getSize() const override { return d_numX * d_numY * d_numZ; };
+  [[nodiscard]] unsigned int getSize() const override {
+    return d_numX * d_numY * d_numZ;
+  };
 
   //! \brief get the index of the grid point given the x, y, z indices
   //!
   //! \return the integer value, -1 if the indices are outside the grid
-  int getGridIndex(unsigned int xi, unsigned int yi, unsigned int zi) const;
+  [[nodiscard]] int getGridIndex(unsigned int xi, unsigned int yi,
+                                 unsigned int zi) const;
 
   //! \brief get the x, y, and z indices of a grid-point index
   //!
@@ -94,40 +99,42 @@ class RDKIT_RDGEOMETRYLIB_EXPORT UniformRealValueGrid3D
                       unsigned int &zi) const;
 
   //! \brief get the number of grid points along x-axis
-  unsigned int getNumX() const { return d_numX; };
+  [[nodiscard]] unsigned int getNumX() const { return d_numX; };
 
   //! \brief get the number of grid points along y-axis
-  unsigned int getNumY() const { return d_numY; };
+  [[nodiscard]] unsigned int getNumY() const { return d_numY; };
 
   //! \brief get the number of grid points along z-axis
-  unsigned int getNumZ() const { return d_numZ; };
+  [[nodiscard]] unsigned int getNumZ() const { return d_numZ; };
 
   //! \brief get the grid's offset
-  const RDGeom::Point3D &getOffset() const { return d_offSet; };
+  [[nodiscard]] const RDGeom::Point3D &getOffset() const { return d_offSet; };
 
   //! \brief get the grid's spacing
-  double getSpacing() const { return d_spacing; };
+  [[nodiscard]] double getSpacing() const { return d_spacing; };
 
   //! \brief return a \b const pointer to our occupancy vector
-  const RDKit::RealValueVect *getOccupancyVect() const override {
+  [[nodiscard]] const RDKit::RealValueVect *getOccupancyVect() const override {
     return &d_storage;
   };
 
   //! brief returns raw vector
-  const std::vector<double> &getData() const { return d_storage.getData(); }
+  [[nodiscard]] const std::vector<double> &getData() const {
+    return d_storage.getData();
+  }
   std::vector<double> &getData() { return d_storage.getData(); }
 
   //! \brief returns true if the grid \c other has parameters
   //!        compatible with ours.
-  bool compareParams(const UniformRealValueGrid3D &other) const;
+  [[nodiscard]] bool compareParams(const UniformRealValueGrid3D &other) const;
 
   //! \brief returns true if the grid \c other has the same values
   //!        as ours.
-  bool compareVectors(const UniformRealValueGrid3D &other) const;
+  [[nodiscard]] bool compareVectors(const UniformRealValueGrid3D &other) const;
 
   //! \brief returns true if the grid \c other has the same parameters and
   //!        values as ours.
-  bool compareGrids(const UniformRealValueGrid3D &other) const;
+  [[nodiscard]] bool compareGrids(const UniformRealValueGrid3D &other) const;
 
   //! \brief calculates the union between the data on this grid and
   //!  that on \c other.
@@ -151,7 +158,7 @@ class RDKIT_RDGEOMETRYLIB_EXPORT UniformRealValueGrid3D
   UniformRealValueGrid3D &operator-=(const UniformRealValueGrid3D &other);
 
   //! \brief create and return a pickle
-  std::string toString() const;
+  [[nodiscard]] std::string toString() const;
 
   /*
   UniformRealValueGrid3D operator& (const UniformRealValueGrid3D &other) const{

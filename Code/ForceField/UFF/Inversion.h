@@ -41,7 +41,7 @@ class RDKIT_FORCEFIELD_EXPORT InversionContrib : public ForceFieldContrib {
   double getEnergy(double *pos) const override;
 
   void getGrad(double *pos, double *grad) const override;
-  InversionContrib *copy() const override {
+  [[nodiscard]] InversionContrib *copy() const override {
     return new InversionContrib(*this);
   }
 

@@ -59,17 +59,17 @@ class RDKIT_RDGEOMETRYLIB_EXPORT UniformGrid3D
   //! \brief Get the index of the grid point closest to point
   //!
   //! \return the integer index, -1 if the specified point is outside the grid
-  int getGridPointIndex(const Point3D &point) const override;
+  [[nodiscard]] int getGridPointIndex(const Point3D &point) const override;
 
   //! \brief Get the value at the grid point closest to the specified point
   //!
   //! \return the integer value, -1 if the specified index is outside the grid
-  int getVal(const Point3D &point) const override;
+  [[nodiscard]] int getVal(const Point3D &point) const override;
 
   //! \brief Get the value at a specified grid point
   //!
   //! \return the unsigned integer value
-  unsigned int getVal(unsigned int pointId) const override;
+  [[nodiscard]] unsigned int getVal(unsigned int pointId) const override;
 
   //! \brief Set the value at the grid point closest to the specified point
   //!
@@ -77,13 +77,15 @@ class RDKIT_RDGEOMETRYLIB_EXPORT UniformGrid3D
   void setVal(const Point3D &point, unsigned int val) override;
 
   //! \brief get the location of the specified grid point
-  Point3D getGridPointLoc(unsigned int pointId) const override;
+  [[nodiscard]] Point3D getGridPointLoc(unsigned int pointId) const override;
 
   //! \brief Set the value at the specified grid point
   void setVal(unsigned int pointId, unsigned int val) override;
 
   //! \brief get the size of the grid (number of grid points)
-  unsigned int getSize() const override { return d_numX * d_numY * d_numZ; }
+  [[nodiscard]] unsigned int getSize() const override {
+    return d_numX * d_numY * d_numZ;
+  }
 
   //! \brief set the occupancy for a multi-layered sphere
   /*!
@@ -107,7 +109,8 @@ class RDKIT_RDGEOMETRYLIB_EXPORT UniformGrid3D
   //! \brief get the index of the grid point given the x, y, z indices
   //!
   //! \return the integer value, -1 if the indices are outside the grid
-  int getGridIndex(unsigned int xi, unsigned int yi, unsigned int zi) const;
+  [[nodiscard]] int getGridIndex(unsigned int xi, unsigned int yi,
+                                 unsigned int zi) const;
 
   //! \brief get the x, y, and z indices of a grid-point index
   //!
@@ -115,28 +118,29 @@ class RDKIT_RDGEOMETRYLIB_EXPORT UniformGrid3D
                       unsigned int &zi) const;
 
   //! \brief get the number of grid points along x-axis
-  unsigned int getNumX() const { return d_numX; }
+  [[nodiscard]] unsigned int getNumX() const { return d_numX; }
 
   //! \brief get the number of grid points along y-axis
-  unsigned int getNumY() const { return d_numY; }
+  [[nodiscard]] unsigned int getNumY() const { return d_numY; }
 
   //! \brief get the number of grid points along z-axis
-  unsigned int getNumZ() const { return d_numZ; }
+  [[nodiscard]] unsigned int getNumZ() const { return d_numZ; }
 
   //! \brief get the grid's offset
-  const Point3D &getOffset() const { return d_offSet; }
+  [[nodiscard]] const Point3D &getOffset() const { return d_offSet; }
 
   //! \brief get the grid's spacing
-  double getSpacing() const { return d_spacing; }
+  [[nodiscard]] double getSpacing() const { return d_spacing; }
 
   //! \brief return a \b const pointer to our occupancy vector
-  const RDKit::DiscreteValueVect *getOccupancyVect() const override {
+  [[nodiscard]] const RDKit::DiscreteValueVect *getOccupancyVect()
+      const override {
     return dp_storage;
   }
 
   //! \brief returns true if the grid \c other has parameters
   //!        compatible with ours.
-  virtual bool compareParams(const UniformGrid3D &other) const;
+  [[nodiscard]] virtual bool compareParams(const UniformGrid3D &other) const;
   //! \brief calculates the union between the data on this grid and
   //!  that on \c other.
   //!  This grid is modified.
@@ -159,7 +163,7 @@ class RDKIT_RDGEOMETRYLIB_EXPORT UniformGrid3D
   UniformGrid3D &operator-=(const UniformGrid3D &other);
 
   //! \brief create and return a pickle
-  std::string toString() const;
+  [[nodiscard]] std::string toString() const;
 
   UniformGrid3D operator&(const UniformGrid3D &other) const {
     PRECONDITION(dp_storage, "bad storage");

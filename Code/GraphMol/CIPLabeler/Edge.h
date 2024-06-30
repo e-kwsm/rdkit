@@ -30,13 +30,13 @@ class Edge {
 
   Node *getOther(const Node *node) const;
 
-  Node *getBeg() const;
+  [[nodiscard]] Node *getBeg() const;
 
-  Node *getEnd() const;
+  [[nodiscard]] Node *getEnd() const;
 
-  Bond *getBond() const;
+  [[nodiscard]] Bond *getBond() const;
 
-  Descriptor getAux() const;
+  [[nodiscard]] Descriptor getAux() const;
 
   bool isBeg(const Node *node) const;
 

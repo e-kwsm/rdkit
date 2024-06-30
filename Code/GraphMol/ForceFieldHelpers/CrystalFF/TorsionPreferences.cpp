@@ -56,8 +56,12 @@ class ExpTorsionAngleCollection {
   static const ExpTorsionAngleCollection *getParams(
       unsigned int version, bool useSmallRingTorsions,
       bool useMacrocycleTorsions, const std::string &paramData = "");
-  ParamsVect::const_iterator begin() const { return d_params.begin(); };
-  ParamsVect::const_iterator end() const { return d_params.end(); };
+  [[nodiscard]] ParamsVect::const_iterator begin() const {
+    return d_params.begin();
+  };
+  [[nodiscard]] ParamsVect::const_iterator end() const {
+    return d_params.end();
+  };
   ExpTorsionAngleCollection(const std::string &paramData);
 
  private:

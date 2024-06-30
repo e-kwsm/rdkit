@@ -27,7 +27,9 @@ class RDKIT_SMILESPARSE_EXPORT SmilesParseException : public std::exception {
  public:
   SmilesParseException(const char *msg) : _msg(msg) {}
   SmilesParseException(const std::string msg) : _msg(msg) {}
-  const char *what() const noexcept override { return _msg.c_str(); }
+  [[nodiscard]] const char *what() const noexcept override {
+    return _msg.c_str();
+  }
   ~SmilesParseException() noexcept override = default;
 
  private:

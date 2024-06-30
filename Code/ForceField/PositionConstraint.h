@@ -36,7 +36,7 @@ class RDKIT_FORCEFIELD_EXPORT PositionConstraintContrib
   double getEnergy(double *pos) const override;
 
   void getGrad(double *pos, double *grad) const override;
-  PositionConstraintContrib *copy() const override {
+  [[nodiscard]] PositionConstraintContrib *copy() const override {
     return new PositionConstraintContrib(*this);
   }
 

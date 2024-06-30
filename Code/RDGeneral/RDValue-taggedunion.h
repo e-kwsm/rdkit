@@ -250,11 +250,12 @@ struct RDValue {
   inline RDValue(const std::vector<std::string> &v)
       : value(new std::vector<std::string>(v)), type(RDTypeTag::VecStringTag) {}
 
-  short getTag() const { return type; }
+  [[nodiscard]] short getTag() const { return type; }
 
   // ptrCast - unsafe, use rdvalue_cast instead.
   template <class T>
-  inline T *ptrCast() const {
+  [[nodiscard]] [[nodiscard]] [[nodiscard]] [[nodiscard]] [[nodiscard]] [[nodiscard]] [[nodiscard]] inline T *
+  ptrCast() const {
     return RDTypeTag::detail::valuePtrCast<T>(value);
   }
 
@@ -262,7 +263,7 @@ struct RDValue {
   //  be wrapped in a container.
   // The idea is that POD types don't need to be destroyed
   //  and this allows the container optimization possibilities.
-  bool needsCleanup() const {
+  [[nodiscard]] bool needsCleanup() const {
     switch (type) {
       case RDTypeTag::StringTag:
       case RDTypeTag::AnyTag:
