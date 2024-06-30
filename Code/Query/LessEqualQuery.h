@@ -45,8 +45,8 @@ class RDKIT_QUERY_EXPORT LessEqualQuery
     }
   }
 
-  Query<MatchFuncArgType, DataFuncArgType, needsConversion> *copy()
-      const override {
+  [[nodiscard]] Query<MatchFuncArgType, DataFuncArgType, needsConversion> *
+  copy() const override {
     LessEqualQuery<MatchFuncArgType, DataFuncArgType, needsConversion> *res =
         new LessEqualQuery<MatchFuncArgType, DataFuncArgType,
                            needsConversion>();

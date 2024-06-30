@@ -45,8 +45,8 @@ class RDKIT_QUERY_EXPORT GreaterQuery
     }
   }
 
-  Query<MatchFuncArgType, DataFuncArgType, needsConversion> *copy()
-      const override {
+  [[nodiscard]] Query<MatchFuncArgType, DataFuncArgType, needsConversion> *
+  copy() const override {
     GreaterQuery<MatchFuncArgType, DataFuncArgType, needsConversion> *res =
         new GreaterQuery<MatchFuncArgType, DataFuncArgType, needsConversion>();
     res->setVal(this->d_val);
