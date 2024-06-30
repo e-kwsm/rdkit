@@ -187,7 +187,7 @@ void testMolProps() {
   m2.clearComputedProps();
   CHECK_INVARIANT(!m2.hasProp("cprop2"), "");
   m2.getProp(RDKit::detail::computedPropName, cplst);
-  CHECK_INVARIANT(cplst.size() == 0, "");
+  CHECK_INVARIANT(cplst.empty(), "");
 
   BOOST_LOG(rdInfoLog) << "Finished" << std::endl;
 }
@@ -303,7 +303,7 @@ void testAtomProps() {
   a1->clearComputedProps();
   CHECK_INVARIANT(!a1->hasProp("cprop2"), "");
   a1->getProp(RDKit::detail::computedPropName, cplst);
-  CHECK_INVARIANT(cplst.size() == 0, "");
+  CHECK_INVARIANT(cplst.empty(), "");
 
   BOOST_LOG(rdInfoLog) << "Finished" << std::endl;
 }
@@ -358,7 +358,7 @@ void testBondProps() {
   b1->clearComputedProps();
   CHECK_INVARIANT(!b1->hasProp("cprop2"), "");
   b1->getProp(RDKit::detail::computedPropName, cplst);
-  CHECK_INVARIANT(cplst.size() == 0, "");
+  CHECK_INVARIANT(cplst.empty(), "");
 
   BOOST_LOG(rdInfoLog) << "Finished" << std::endl;
 }

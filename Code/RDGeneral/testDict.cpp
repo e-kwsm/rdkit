@@ -478,7 +478,7 @@ void testConstReturns() {
 
     std::string tgt = rdany_cast<std::string>(anyv);
     const std::string &ctgt = rdany_cast<std::string>(anyv);
-    TEST_ASSERT(ctgt != "");
+    TEST_ASSERT(!ctgt.empty());
   }
 
   {

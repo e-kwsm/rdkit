@@ -159,7 +159,7 @@ RWMol *toMol(std::string inp, bool doQueries, int debugParse) {
   std::vector<RDKit::RWMol *> molVect;
   try {
     sln_parse(inp, doQueries, molVect);
-    if (molVect.size() > 0) {
+    if (!molVect.empty()) {
       res = molVect[0];
 
       for (ROMol::BOND_BOOKMARK_MAP::const_iterator bmIt =

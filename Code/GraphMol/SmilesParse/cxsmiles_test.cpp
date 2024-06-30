@@ -810,7 +810,7 @@ void testOneAtropisomers(const SmilesTest *smilesTest) {
       } catch (...) {
         throw;  // re-throw the error if not a kekule error
       }
-      if (outMolStr == "") {
+      if (outMolStr.empty()) {
         outMolStr = MolToMolBlock(*smilesMol, true, 0, false,
                                   true);  // try without kekule'ing
       }
@@ -831,7 +831,7 @@ void testOneAtropisomers(const SmilesTest *smilesTest) {
       } catch (...) {
         throw;  // re-throw the error if not a kekule error
       }
-      if (outMolStr == "") {
+      if (outMolStr.empty()) {
         RDKit::Chirality::reapplyMolBlockWedging(*smilesMol);
         outMolStr = MolToMrvBlock(*smilesMol, true, -1, false,
                                   false);  // try without kekule'ing
@@ -1150,7 +1150,7 @@ void testOneSmilesCanonicalization(std::string smiles,
 
   std::string smilesOut = MolToSmiles(*randMol, ps);
 
-  if (expectedStr == "") {
+  if (expectedStr.empty()) {
     expectedStr = smilesOut;  // if not supplied, use the first one
   }
   CHECK(expectedStr == smilesOut);
@@ -1217,7 +1217,7 @@ void testMolCanonicalization(std::string fileName1, std::string fileName2,
 }
 
 std::vector<std::string> splitOnString(std::string s, const std::string delim) {
-  CHECK(s.size() > 0);
+  CHECK(!s.empty());
   auto delimSize = delim.size();
   CHECK(delimSize > 0);
 
@@ -1233,7 +1233,7 @@ std::vector<std::string> splitOnString(std::string s, const std::string delim) {
   }
 
   // if anything is left, add it to the vector
-  if (s.size() > 0) {
+  if (!s.empty()) {
     res.push_back(s);
   }
 

@@ -1067,7 +1067,7 @@ void testRowColumnAlignmentProblem() {
       TEST_ASSERT(rg->getNumAtoms());
     }
     auto &R2 = cols["R2"];
-    TEST_ASSERT(R2.size() == 0);
+    TEST_ASSERT(R2.empty());
   }
 }
 

@@ -251,7 +251,7 @@ SparseIntVect<boost::int64_t> *getTopologicalTorsionFingerprint(
         }
         pathCodes.push_back(code);
       }
-      if (pathCodes.size()) {
+      if (!pathCodes.empty()) {
         boost::int64_t code =
             getTopologicalTorsionCode(pathCodes, includeChirality);
         updateElement(*res, code);
