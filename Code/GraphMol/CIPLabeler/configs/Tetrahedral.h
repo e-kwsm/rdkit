@@ -12,8 +12,7 @@
 
 #include "Configuration.h"
 
-namespace RDKit {
-namespace CIPLabeler {
+namespace RDKit::CIPLabeler {
 
 class Tetrahedral : public Configuration {
  public:
@@ -37,5 +36,4 @@ class Tetrahedral : public Configuration {
   std::vector<unsigned int> d_ranked_anchors;
 };
 
-}  // namespace CIPLabeler
-}  // namespace RDKit
+}  // namespace RDKit::CIPLabeler

@@ -15,9 +15,7 @@
 
 constexpr double TOLERANCE = 1.e-6;
 
-namespace RDNumeric {
-
-namespace Alignments {
+namespace RDNumeric::Alignments {
 
 RDGeom::Point3D _weightedSumOfPoints(const RDGeom::Point3DConstPtrVect &points,
                                      const DoubleVector *weights) {
@@ -338,5 +336,4 @@ double AlignPoints(const RDGeom::Point3DConstPtrVect &refPoints,
   trans.SetTranslation(move);
   return ssr;
 }
-}  // namespace Alignments
-}  // namespace RDNumeric
+}  // namespace RDNumeric::Alignments

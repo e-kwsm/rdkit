@@ -26,9 +26,7 @@
 #include <GraphMol/RascalMCES/RascalDetails.h>
 #include <GraphMol/RascalMCES/RascalResult.h>
 
-namespace RDKit {
-
-namespace RascalMCES {
+namespace RDKit::RascalMCES {
 
 RascalResult::RascalResult(const RDKit::ROMol &mol1, const RDKit::ROMol &mol2,
                            const std::vector<std::vector<int>> &adjMatrix1,
@@ -866,5 +864,4 @@ double johnsonSimilarity(const std::vector<std::pair<int, int>> &bondMatches,
 }
 }  // namespace details
 
-}  // namespace RascalMCES
-}  // namespace RDKit
+}  // namespace RDKit::RascalMCES

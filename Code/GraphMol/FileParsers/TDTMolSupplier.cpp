@@ -68,8 +68,7 @@ void ParseNumberList(std::string inLine, std::vector<T> &res,
 
 }  // end of namespace TDTParseUtils
 
-namespace v2 {
-namespace FileParsers {
+namespace v2::FileParsers {
 TDTMolSupplier::TDTMolSupplier() { init(); }
 
 TDTMolSupplier::TDTMolSupplier(const std::string &fileName,
@@ -404,6 +403,6 @@ bool TDTMolSupplier::atEnd() {
   PRECONDITION(dp_inStream, "no stream");
   return df_end;
 }
-}  // namespace FileParsers
-}  // namespace v2
+}  // namespace v2::FileParsers
+
 }  // namespace RDKit
