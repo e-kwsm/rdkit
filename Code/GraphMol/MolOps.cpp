@@ -712,7 +712,7 @@ std::vector<ROMOL_SPTR> getMolFrags(const ROMol &mol, bool sanitizeFrags,
             }
           }
         }
-        for (auto sgroup : getSubstanceGroups(mol)) {
+        for (const auto &sgroup : getSubstanceGroups(mol)) {
           for (auto aid : sgroup.getAtoms()) {
             if (atomsInFrag[aid]) {
               return true;
@@ -727,7 +727,7 @@ std::vector<ROMOL_SPTR> getMolFrags(const ROMol &mol, bool sanitizeFrags,
         // doesn't seem like this should be necessary, but in case
         // we ever need stereogroups where the atoms aren't marked
         // with stereo...
-        for (auto stereoGroup : mol.getStereoGroups()) {
+        for (const auto &stereoGroup : mol.getStereoGroups()) {
           for (auto atom : stereoGroup.getAtoms()) {
             if (atomsInFrag[atom->getIdx()]) {
               return true;
@@ -981,7 +981,8 @@ int getFormalCharge(const ROMol &mol) {
   return accum;
 };
 
-unsigned getNumAtomsWithDistinctProperty(const ROMol &mol, std::string prop) {
+unsigned getNumAtomsWithDistinctProperty(const ROMol &mol,
+                                         const std::string &prop) {
   unsigned numPropAtoms = 0;
   for (const auto atom : mol.atoms()) {
     if (atom->hasProp(prop)) {
@@ -1078,7 +1079,7 @@ std::vector<std::vector<unsigned int>> contiguousAtoms(
 // add to the molecule a dummy atom centred on the
 // atoms passed in, with a dative bond from it to the metal atom.
 void addHapticBond(RWMol &mol, unsigned int metalIdx,
-                   std::vector<unsigned int> hapticAtoms) {
+                   const std::vector<unsigned int> &hapticAtoms) {
   // So there is a * in the V3000 file as the symbol for the atom.
   auto dummyAt = new QueryAtom(0);
   dummyAt->setQuery(makeAtomNullQuery());
