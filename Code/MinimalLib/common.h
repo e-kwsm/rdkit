@@ -92,8 +92,7 @@
 
 namespace rj = rapidjson;
 
-namespace RDKit {
-namespace MinimalLib {
+namespace RDKit::MinimalLib {
 
 static constexpr int d_defaultWidth = 250;
 static constexpr int d_defaultHeight = 200;
@@ -1291,7 +1290,7 @@ struct LogHandle {
   static LoggingFlag d_loggingNeedsInit;
 };
 
-}  // namespace MinimalLib
-}  // namespace RDKit
+}  // namespace RDKit::MinimalLib
+
 #undef LPT_OPT_GET
 #undef LPT_OPT_GET2

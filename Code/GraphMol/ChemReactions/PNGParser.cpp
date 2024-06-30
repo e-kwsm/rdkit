@@ -51,8 +51,7 @@ std::string addChemicalReactionToPNGStream(const ChemicalReaction &rxn,
   return addMetadataToPNGStream(iStream, metadata);
 };
 
-namespace v2 {
-namespace ReactionParser {
+namespace v2::ReactionParser {
 std::unique_ptr<ChemicalReaction> ReactionFromPNGStream(
     std::istream &inStream) {
   std::unique_ptr<ChemicalReaction> res;
@@ -81,6 +80,6 @@ std::unique_ptr<ChemicalReaction> ReactionFromPNGStream(
   }
   return res;
 }
-}  // namespace ReactionParser
-}  // namespace v2
+}  // namespace v2::ReactionParser
+
 }  // namespace RDKit
