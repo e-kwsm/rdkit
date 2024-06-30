@@ -89,38 +89,48 @@ class ConjElectrons {
   ConjElectrons(ResonanceMolSupplier *parent, unsigned int groupIdx);
   ConjElectrons(const ConjElectrons &ce);
   ~ConjElectrons();
-  unsigned int groupIdx() const { return d_groupIdx; };
-  unsigned int currElectrons() const { return d_currElectrons; };
-  unsigned int totalElectrons() const { return d_totalElectrons; };
+  [[nodiscard]] unsigned int groupIdx() const { return d_groupIdx; };
+  [[nodiscard]] unsigned int currElectrons() const { return d_currElectrons; };
+  [[nodiscard]] unsigned int totalElectrons() const {
+    return d_totalElectrons;
+  };
   void decrCurrElectrons(unsigned int d);
   AtomElectrons *getAtomElectronsWithIdx(unsigned int ai);
   BondElectrons *getBondElectronsWithIdx(unsigned int bi);
   void pushToBeginStack(unsigned int ai);
   bool popFromBeginStack(unsigned int &ai);
   bool isBeginStackEmpty() { return d_beginAIStack.empty(); };
-  int allowedChgLeftOfN() const { return d_allowedChgLeftOfN; };
+  [[nodiscard]] int allowedChgLeftOfN() const { return d_allowedChgLeftOfN; };
   void decrAllowedChgLeftOfN(int d) { d_allowedChgLeftOfN -= d; };
-  int totalFormalCharge() const { return d_totalFormalCharge; };
-  bool hasCationRightOfN() const {
+  [[nodiscard]] int totalFormalCharge() const { return d_totalFormalCharge; };
+  [[nodiscard]] bool hasCationRightOfN() const {
     return static_cast<bool>(d_flags & HAVE_CATION_RIGHT_OF_N);
   };
-  bool hasChargeSeparation() const {
+  [[nodiscard]] bool hasChargeSeparation() const {
     return static_cast<bool>((d_flags & HAVE_CATION) && (d_flags & HAVE_ANION));
   };
-  unsigned int absFormalCharges() const {
+  [[nodiscard]] unsigned int absFormalCharges() const {
     return d_ceMetrics.d_absFormalCharges;
   };
-  unsigned int fcSameSignDist() const { return d_ceMetrics.d_fcSameSignDist; };
-  unsigned int fcOppSignDist() const { return d_ceMetrics.d_fcOppSignDist; };
-  unsigned int nbMissing() const { return d_ceMetrics.d_nbMissing; }
-  unsigned int sumFormalChargeIdxs() const {
+  [[nodiscard]] unsigned int fcSameSignDist() const {
+    return d_ceMetrics.d_fcSameSignDist;
+  };
+  [[nodiscard]] unsigned int fcOppSignDist() const {
+    return d_ceMetrics.d_fcOppSignDist;
+  };
+  [[nodiscard]] unsigned int nbMissing() const {
+    return d_ceMetrics.d_nbMissing;
+  }
+  [[nodiscard]] unsigned int sumFormalChargeIdxs() const {
     return d_ceMetrics.d_sumFormalChargeIdxs;
   }
-  unsigned int sumMultipleBondIdxs() const {
+  [[nodiscard]] unsigned int sumMultipleBondIdxs() const {
     return d_ceMetrics.d_sumMultipleBondIdxs;
   }
   std::size_t hash() { return d_ceMetrics.d_hash; }
-  int wtdFormalCharges() const { return d_ceMetrics.d_wtdFormalCharges; };
+  [[nodiscard]] int wtdFormalCharges() const {
+    return d_ceMetrics.d_wtdFormalCharges;
+  };
   void enumerateNonBonded(CEMap &ceMap, CEDegCount &ceDegCount,
                           CEStats &ceStats);
   void initCeFromMol();
@@ -137,7 +147,7 @@ class ConjElectrons {
   std::size_t computeFP(unsigned int flags);
   inline bool haveFP(CESet &ceSet, unsigned int flags);
   inline bool storeFP(CEMap &ceMap, unsigned int flags);
-  ResonanceMolSupplier *parent() const { return d_parent; };
+  [[nodiscard]] ResonanceMolSupplier *parent() const { return d_parent; };
 
  private:
   unsigned int d_groupIdx;
@@ -184,28 +194,32 @@ class AtomElectrons {
   AtomElectrons(ConjElectrons *parent, const AtomElectrons &ae);
   ~AtomElectrons() = default;
   std::uint8_t findAllowedBonds(unsigned int bi);
-  bool hasOctet() const { return ((d_nb + d_tv * 2) == 8); };
-  bool isLastBond() const { return (d_flags & LAST_BOND); };
+  [[nodiscard]] bool hasOctet() const { return ((d_nb + d_tv * 2) == 8); };
+  [[nodiscard]] bool isLastBond() const { return (d_flags & LAST_BOND); };
   void setLastBond() { d_flags |= LAST_BOND; };
-  bool isDefinitive() const { return (d_flags & DEFINITIVE); };
+  [[nodiscard]] bool isDefinitive() const { return (d_flags & DEFINITIVE); };
   void setDefinitive() { d_flags |= DEFINITIVE; };
-  bool hasMultipleBond() const { return (d_flags & HAS_MULTIPLE_BOND); };
+  [[nodiscard]] bool hasMultipleBond() const {
+    return (d_flags & HAS_MULTIPLE_BOND);
+  };
   void setHasMultipleBond() { d_flags |= HAS_MULTIPLE_BOND; };
-  bool isStacked() const { return (d_flags & STACKED); };
+  [[nodiscard]] bool isStacked() const { return (d_flags & STACKED); };
   void setStacked() { d_flags |= STACKED; };
   void clearStacked() { d_flags &= ~STACKED; };
-  int conjGrpIdx() const {
+  [[nodiscard]] int conjGrpIdx() const {
     return d_parent->parent()->getAtomConjGrpIdx(d_atom->getIdx());
   };
   void finalizeAtom();
-  unsigned int nb() const { return d_nb; };
-  unsigned int tv() const { return d_tv; };
-  unsigned int oe() const {
+  [[nodiscard]] unsigned int nb() const { return d_nb; };
+  [[nodiscard]] unsigned int tv() const { return d_tv; };
+  [[nodiscard]] unsigned int oe() const {
     return PeriodicTable::getTable()->getNouterElecs(d_atom->getAtomicNum());
   };
-  int fc() const { return d_fc; };
+  [[nodiscard]] int fc() const { return d_fc; };
   void tvIncr(unsigned int i) { d_tv += i; };
-  unsigned int neededNbForOctet() const { return (8 - (2 * d_tv + d_nb)); }
+  [[nodiscard]] unsigned int neededNbForOctet() const {
+    return (8 - (2 * d_tv + d_nb));
+  }
   const Atom *atom() { return d_atom; }
   void initTvNbFcFromAtom();
   void assignNonBonded(unsigned int nb) { d_nb = nb; }
@@ -231,13 +245,13 @@ class BondElectrons {
   BondElectrons(ConjElectrons *parent, const Bond *b);
   BondElectrons(ConjElectrons *parent, const BondElectrons &be);
   ~BondElectrons() = default;
-  bool isDefinitive() const { return (d_flags & DEFINITIVE); };
+  [[nodiscard]] bool isDefinitive() const { return (d_flags & DEFINITIVE); };
   void setDefinitive() { d_flags |= DEFINITIVE; };
-  int conjGrpIdx() const {
+  [[nodiscard]] int conjGrpIdx() const {
     return d_parent->parent()->getBondConjGrpIdx(d_bond->getIdx());
   };
   void setOrder(unsigned int bo);
-  unsigned int order() const { return d_bo; };
+  [[nodiscard]] unsigned int order() const { return d_bo; };
   unsigned int orderFromBond();
   void initOrderFromBond() { d_bo = orderFromBond(); };
   const Bond *bond() { return d_bond; };

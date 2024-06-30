@@ -32,7 +32,7 @@ class RDKIT_FILEPARSERS_EXPORT MultithreadedSmilesMolSupplier
 
   void init() override {}
   //! returns df_end
-  bool getEnd() const override;
+  [[nodiscard]] bool getEnd() const override;
   //! reads and processes the title line
   void processTitleLine();
   //! reads next record and returns whether or not EOF was hit
@@ -110,7 +110,7 @@ class RDKIT_FILEPARSERS_EXPORT MultithreadedSmilesMolSupplier
   }
 
   //! included for the interface, always returns false
-  bool getEOFHitOnRead() const {
+  [[nodiscard]] bool getEOFHitOnRead() const {
     if (dp_supplier) {
       return static_cast<ContainedType *>(dp_supplier.get())->getEOFHitOnRead();
     }
@@ -121,12 +121,12 @@ class RDKIT_FILEPARSERS_EXPORT MultithreadedSmilesMolSupplier
   //! Note: d_LastRecordId = 0, initially therefore the value 0 is returned
   //! if and only if the function is called before extracting the first
   //! record
-  unsigned int getLastRecordId() const {
+  [[nodiscard]] unsigned int getLastRecordId() const {
     PRECONDITION(dp_supplier, "no supplier");
     return static_cast<ContainedType *>(dp_supplier.get())->getLastRecordId();
   }
   //! returns the text block for the last extracted item
-  std::string getLastItemText() const {
+  [[nodiscard]] std::string getLastItemText() const {
     PRECONDITION(dp_supplier, "no supplier");
     return static_cast<ContainedType *>(dp_supplier.get())->getLastItemText();
   }

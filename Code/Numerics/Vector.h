@@ -76,10 +76,10 @@ class Vector {
   ~Vector() = default;
 
   //! return the size (dimension) of the vector
-  unsigned int size() const { return d_size; }
+  [[nodiscard]] unsigned int size() const { return d_size; }
 
   //! returns the value at a particular index
-  inline TYPE getVal(unsigned int i) const {
+  [[nodiscard]] inline TYPE getVal(unsigned int i) const {
     PRECONDITION(i < d_size, "bad index");
     return d_data[i];
   }
@@ -104,7 +104,7 @@ class Vector {
   inline TYPE *getData() { return d_data.get(); }
 
   //! returns a const pointer to our data array
-  inline const TYPE *getData() const {
+  [[nodiscard]] inline const TYPE *getData() const {
     // return dp_data;
     return d_data.get();
   }
@@ -164,7 +164,7 @@ class Vector {
   }
 
   //! L2 norm squared
-  inline TYPE normL2Sq() const {
+  [[nodiscard]] inline TYPE normL2Sq() const {
     TYPE res = (TYPE)0.0;
     unsigned int i;
     TYPE *data = d_data.get();
@@ -175,10 +175,10 @@ class Vector {
   }
 
   //! L2 norm
-  inline TYPE normL2() const { return sqrt(this->normL2Sq()); }
+  [[nodiscard]] inline TYPE normL2() const { return sqrt(this->normL2Sq()); }
 
   //! L1 norm
-  inline TYPE normL1() const {
+  [[nodiscard]] inline TYPE normL1() const {
     TYPE res = (TYPE)0.0;
     unsigned int i;
     TYPE *data = d_data.get();
@@ -189,7 +189,7 @@ class Vector {
   }
 
   //! L-infinity norm
-  inline TYPE normLinfinity() const {
+  [[nodiscard]] inline TYPE normLinfinity() const {
     TYPE res = (TYPE)(-1.0);
     unsigned int i;
     TYPE *data = d_data.get();
@@ -203,7 +203,7 @@ class Vector {
 
   //! \brief Gets the ID of the entry that has the largest absolute value
   //! i.e. the entry being used for the L-infinity norm
-  inline unsigned int largestAbsValId() const {
+  [[nodiscard]] inline unsigned int largestAbsValId() const {
     TYPE res = (TYPE)(-1.0);
     unsigned int i, id = d_size;
     TYPE *data = d_data.get();
@@ -217,7 +217,7 @@ class Vector {
   }
 
   //! \brief Gets the ID of the entry that has the largest value
-  inline unsigned int largestValId() const {
+  [[nodiscard]] inline unsigned int largestValId() const {
     TYPE res = (TYPE)(-1.e8);
     unsigned int i, id = d_size;
     TYPE *data = d_data.get();
@@ -231,7 +231,7 @@ class Vector {
   }
 
   //! \brief Gets the ID of the entry that has the smallest value
-  inline unsigned int smallestValId() const {
+  [[nodiscard]] inline unsigned int smallestValId() const {
     TYPE res = (TYPE)(1.e8);
     unsigned int i, id = d_size;
     TYPE *data = d_data.get();
@@ -245,7 +245,7 @@ class Vector {
   }
 
   //! returns the dot product between two Vectors
-  inline TYPE dotProduct(const Vector<TYPE> other) const {
+  [[nodiscard]] inline TYPE dotProduct(const Vector<TYPE> other) const {
     PRECONDITION(d_size == other.size(),
                  "Size mismatch in vector doct product");
     const TYPE *oData = other.getData();
