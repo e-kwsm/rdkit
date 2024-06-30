@@ -79,7 +79,7 @@ MOL_SPTR_VECT readFuncGroups(std::istream &inStream, int nToRead) {
     // parse the molecule on this line (if there is one)
     ROMol *mol = getSmarts(std::move(tmpstr));
     if (mol) {
-      funcGroups.push_back(ROMOL_SPTR(mol));
+      funcGroups.emplace_back(mol);
       nRead++;
     }
   }
@@ -164,7 +164,7 @@ MatchVectType findFuncGroupsOnMol(const ROMol &mol, const FragCatParams *params,
       if (!allDone) {
         // this functional group mapping onto mol is not part of a larger func
         // group mapping so record it
-        aidFgrps.push_back(std::pair<int, int>(aid, fid));
+        aidFgrps.emplace_back(aid, fid);
       }
     }
     fid++;
@@ -204,7 +204,7 @@ ROMol *prepareMol(const ROMol &mol, const FragCatParams *fparams,
   int newID;
   for (mati = aidToFid.begin(); mati != aidToFid.end(); mati++) {
     newID = aIdxMap[mati->first];
-    aToFmap.push_back(std::pair<int, int>(newID, mati->second));
+    aToFmap.emplace_back(newID, mati->second);
   }
 
   return coreMol;
