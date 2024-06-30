@@ -45,8 +45,8 @@
 #include <Eigen/SVD>
 
 using namespace Eigen;
-namespace RDKit {
-namespace Descriptors {
+
+namespace RDKit::Descriptors {
 
 namespace {
 
@@ -249,5 +249,4 @@ void AUTOCORR3D(const ROMol &mol, std::vector<double> &res, int confId,
     Get3Dauto(dist3D, topologicaldistance, numAtoms, mol, res);
   }
 }
-}  // namespace Descriptors
-}  // namespace RDKit
+}  // namespace RDKit::Descriptors
