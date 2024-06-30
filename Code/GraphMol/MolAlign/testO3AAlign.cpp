@@ -229,7 +229,7 @@ void testMMFFO3AConstraints() {
           .length();
   TEST_ASSERT(feq(d, 0.0, 1));
   MatchVectType constraintMap;
-  constraintMap.push_back(std::make_pair(cIdx, nIdx));
+  constraintMap.emplace_back(cIdx, nIdx);
   o3a = new MolAlign::O3A(m3, *m1, &mp, &mp, MolAlign::O3A::MMFF94, -1, -1,
                           false, 50, 0, &constraintMap);
   TEST_ASSERT(o3a);
@@ -284,7 +284,7 @@ void testCrippenO3AConstraints() {
           .length();
   TEST_ASSERT(feq(d, 0.0, 1));
   MatchVectType constraintMap;
-  constraintMap.push_back(std::make_pair(cIdx, nIdx));
+  constraintMap.emplace_back(cIdx, nIdx);
   o3a = new MolAlign::O3A(m3, *m1, &prbLogpContribs, &prbLogpContribs,
                           MolAlign::O3A::CRIPPEN, -1, -1, false, 50, 0,
                           &constraintMap);
@@ -337,7 +337,7 @@ void testMMFFO3AConstraintsAndLocalOnly() {
   weights[1] = 100.0;
   for (unsigned int i = 0; i < 2; ++i) {
     MatchVectType constraintMap;
-    constraintMap.push_back(std::make_pair(prbOIdx, refSIdx));
+    constraintMap.emplace_back(prbOIdx, refSIdx);
     RDNumeric::DoubleVector constraintWeights(1);
     constraintWeights[0] = weights[i];
     auto *o3a =
@@ -392,7 +392,7 @@ void testCrippenO3AConstraintsAndLocalOnly() {
   weights[1] = 100.0;
   for (unsigned int i = 0; i < 2; ++i) {
     MatchVectType constraintMap;
-    constraintMap.push_back(std::make_pair(prbOIdx, refSIdx));
+    constraintMap.emplace_back(prbOIdx, refSIdx);
     RDNumeric::DoubleVector constraintWeights(1);
     constraintWeights[0] = weights[i];
     auto *o3a = new MolAlign::O3A(*prbMol, *refMol, &prbMP, &refMP,
@@ -640,7 +640,7 @@ void testGetO3AForProbeConfs() {
                       i);
     double rmsd = o3a.align();
     double score = o3a.score();
-    oscores.push_back(std::make_pair(rmsd, score));
+    oscores.emplace_back(rmsd, score);
   }
 
   {
@@ -720,7 +720,7 @@ void testO3AMultiThreadBug() {
                           MolAlign::O3A::MMFF94, i);
         double rmsd = o3a.align();
         double score = o3a.score();
-        oscores.push_back(std::make_pair(rmsd, score));
+        oscores.emplace_back(rmsd, score);
       }
 
       ROMol prbMol2 = *mol;

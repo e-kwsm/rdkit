@@ -300,7 +300,7 @@ int parseFeatureData(std::istream &inStream,
         MolChemicalFeatureDef *fDef =
             Local::parseFeatureDef(inStream, inLine, lineNo, atomTypeDefs);
         if (fDef) {
-          res.push_back(boost::shared_ptr<MolChemicalFeatureDef>(fDef));
+          res.emplace_back(fDef);
         }
       } else {
         throw FeatureFileParseException(lineNo, inLine,

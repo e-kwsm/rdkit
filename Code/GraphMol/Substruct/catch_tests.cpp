@@ -109,12 +109,10 @@ TEST_CASE("substructure parameters", "[substruct]") {
 
   SECTION("conjugated matching aromaticity bulk") {
     std::vector<matchCase> examples;
-    examples.push_back(
-        std::make_tuple(std::string("c1ccccc1"), std::string("C1CCCCC1"), 0));
-    examples.push_back(
-        std::make_tuple(std::string("C1CCCCC1"), std::string("c1ccccc1"), 0));
-    examples.push_back(std::make_tuple(std::string("O=C1C=CC(=O)C=C1"),
-                                       std::string("c1ccccc1"), 1));
+    examples.emplace_back(std::string("c1ccccc1"), std::string("C1CCCCC1"), 0);
+    examples.emplace_back(std::string("C1CCCCC1"), std::string("c1ccccc1"), 0);
+    examples.emplace_back(std::string("O=C1C=CC(=O)C=C1"),
+                          std::string("c1ccccc1"), 1);
     SubstructMatchParameters ps;
     ps.aromaticMatchesConjugated = true;
     for (const auto &example : examples) {
@@ -138,20 +136,15 @@ TEST_CASE("substructure parameters", "[substruct]") {
 
   SECTION("atom properties") {
     std::vector<matchCase> examples;
-    examples.push_back(
-        std::make_tuple(std::string("CCCCCCCCC"), std::string("CCC"), 7));
-    examples.push_back(
-        std::make_tuple(std::string("CCCCCCCCC |atomProp:0.test_prop.1|"),
-                        std::string("CCC |atomProp:0.test_prop.1|"), 1));
-    examples.push_back(
-        std::make_tuple(std::string("CCCCCCCCC |atomProp:0.test_prop.1|"),
-                        std::string("CCC"), 6));
-    examples.push_back(
-        std::make_tuple(std::string("CCCCCCCCC"),
-                        std::string("CCC |atomProp:0.test_prop.1|"), 0));
-    examples.push_back(
-        std::make_tuple(std::string("CCCCCCCCC |atomProp:0.test_prop.1|"),
-                        std::string("CCC |atomProp:0.test_prop.2|"), 0));
+    examples.emplace_back(std::string("CCCCCCCCC"), std::string("CCC"), 7);
+    examples.emplace_back(std::string("CCCCCCCCC |atomProp:0.test_prop.1|"),
+                          std::string("CCC |atomProp:0.test_prop.1|"), 1);
+    examples.emplace_back(std::string("CCCCCCCCC |atomProp:0.test_prop.1|"),
+                          std::string("CCC"), 6);
+    examples.emplace_back(std::string("CCCCCCCCC"),
+                          std::string("CCC |atomProp:0.test_prop.1|"), 0);
+    examples.emplace_back(std::string("CCCCCCCCC |atomProp:0.test_prop.1|"),
+                          std::string("CCC |atomProp:0.test_prop.2|"), 0);
     SubstructMatchParameters ps;
     ps.atomProperties = {"test_prop"};
     for (const auto &example : examples) {

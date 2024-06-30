@@ -186,9 +186,9 @@ static void copySelectedStereoGroups(RWMol &extracted_mol,
       }
     }
 
-    extracted_stereo_groups.push_back({stereo_group.getGroupType(),
-                                       std::move(atoms), std::move(bonds),
-                                       stereo_group.getReadId()});
+    extracted_stereo_groups.emplace_back(stereo_group.getGroupType(),
+                                         std::move(atoms), std::move(bonds),
+                                         stereo_group.getReadId());
     extracted_stereo_groups.back().setWriteId(stereo_group.getWriteId());
   }
 

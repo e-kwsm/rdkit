@@ -289,7 +289,7 @@ TEST_CASE("reaction data in PNGs 1", "[Reaction][PNG]") {
       "cH:3][cH:4][cH:5][c:6]1-[#6:7]";
   SECTION("add/read metadata") {
     std::vector<std::pair<std::string, std::string>> metadata;
-    metadata.push_back(std::make_pair(PNGData::rxnSmartsTag, sma));
+    metadata.emplace_back(PNGData::rxnSmartsTag, sma);
     std::string fname = pathName + "reaction1.no_metadata.png";
     bool compressed = false;
     auto pngData = addMetadataToPNGFile(fname, metadata, compressed);

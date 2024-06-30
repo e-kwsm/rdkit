@@ -106,7 +106,7 @@ std::vector<std::pair<int, int>> *translateAtomMap(
         res = nullptr;
         throw_value_error("Incorrect format for an atomMap");
       }
-      res->push_back(std::pair<int, int>(item[0], item[1]));
+      res->emplace_back(item[0], item[1]);
     }
   }
   return res;

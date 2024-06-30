@@ -83,12 +83,12 @@ void test1Basics() {
   smi = "C(=O)O";
   mol = SmilesToMol(smi);
   TEST_ASSERT(mol);
-  reacts.push_back(ROMOL_SPTR(mol));
+  reacts.emplace_back(mol);
 
   smi = "CN";
   mol = SmilesToMol(smi);
   TEST_ASSERT(mol);
-  reacts.push_back(ROMOL_SPTR(mol));
+  reacts.emplace_back(mol);
 
   rxn.initReactantMatchers();
   prods = rxn.runReactants(reacts);
@@ -98,12 +98,12 @@ void test1Basics() {
   smi = "CC(C(=O)O)C(=O)O";
   mol = SmilesToMol(smi);
   TEST_ASSERT(mol);
-  reacts.push_back(ROMOL_SPTR(mol));
+  reacts.emplace_back(mol);
 
   smi = "CN";
   mol = SmilesToMol(smi);
   TEST_ASSERT(mol);
-  reacts.push_back(ROMOL_SPTR(mol));
+  reacts.emplace_back(mol);
 
   prods = rxn.runReactants(reacts);
   TEST_ASSERT(prods.size() == 2);
@@ -112,12 +112,12 @@ void test1Basics() {
   smi = "CC(C(=O)O)C(=O)O";
   mol = SmilesToMol(smi);
   TEST_ASSERT(mol);
-  reacts.push_back(ROMOL_SPTR(mol));
+  reacts.emplace_back(mol);
 
   smi = "NCN";
   mol = SmilesToMol(smi);
   TEST_ASSERT(mol);
-  reacts.push_back(ROMOL_SPTR(mol));
+  reacts.emplace_back(mol);
 
   prods = rxn.runReactants(reacts);
   TEST_ASSERT(prods.size() == 4);
@@ -156,12 +156,12 @@ void test2SimpleReactions() {
   smi = "C(=O)O";
   mol = SmilesToMol(smi);
   TEST_ASSERT(mol);
-  reacts.push_back(ROMOL_SPTR(mol));
+  reacts.emplace_back(mol);
 
   smi = "CN";
   mol = SmilesToMol(smi);
   TEST_ASSERT(mol);
-  reacts.push_back(ROMOL_SPTR(mol));
+  reacts.emplace_back(mol);
 
   rxn.initReactantMatchers();
   prods = rxn.runReactants(reacts);
@@ -174,12 +174,12 @@ void test2SimpleReactions() {
   smi = "CC(=O)O";
   mol = SmilesToMol(smi);
   TEST_ASSERT(mol);
-  reacts.push_back(ROMOL_SPTR(mol));
+  reacts.emplace_back(mol);
 
   smi = "CN";
   mol = SmilesToMol(smi);
   TEST_ASSERT(mol);
-  reacts.push_back(ROMOL_SPTR(mol));
+  reacts.emplace_back(mol);
 
   prods = rxn.runReactants(reacts);
   TEST_ASSERT(prods.size() == 1);
@@ -191,12 +191,12 @@ void test2SimpleReactions() {
   smi = "CC(C(=O)O)C(=O)O";
   mol = SmilesToMol(smi);
   TEST_ASSERT(mol);
-  reacts.push_back(ROMOL_SPTR(mol));
+  reacts.emplace_back(mol);
 
   smi = "CN";
   mol = SmilesToMol(smi);
   TEST_ASSERT(mol);
-  reacts.push_back(ROMOL_SPTR(mol));
+  reacts.emplace_back(mol);
 
   prods = rxn.runReactants(reacts);
   TEST_ASSERT(prods.size() == 2);
@@ -210,12 +210,12 @@ void test2SimpleReactions() {
   smi = "CC(C(=O)O)C(=O)O";
   mol = SmilesToMol(smi);
   TEST_ASSERT(mol);
-  reacts.push_back(ROMOL_SPTR(mol));
+  reacts.emplace_back(mol);
 
   smi = "NCN";
   mol = SmilesToMol(smi);
   TEST_ASSERT(mol);
-  reacts.push_back(ROMOL_SPTR(mol));
+  reacts.emplace_back(mol);
   prods = rxn.runReactants(reacts);
   TEST_ASSERT(prods.size() == 4);
   TEST_ASSERT(prods[0].size() == 1);
@@ -264,12 +264,12 @@ void test3RingFormation() {
   smi = "C=C";
   mol = SmilesToMol(smi);
   TEST_ASSERT(mol);
-  reacts.push_back(ROMOL_SPTR(mol));
+  reacts.emplace_back(mol);
 
   smi = "C=CC=C";
   mol = SmilesToMol(smi);
   TEST_ASSERT(mol);
-  reacts.push_back(ROMOL_SPTR(mol));
+  reacts.emplace_back(mol);
 
   rxn.initReactantMatchers();
   prods = rxn.runReactants(reacts);
@@ -285,12 +285,12 @@ void test3RingFormation() {
   smi = "CC=C";
   mol = SmilesToMol(smi);
   TEST_ASSERT(mol);
-  reacts.push_back(ROMOL_SPTR(mol));
+  reacts.emplace_back(mol);
 
   smi = "C=CC=C";
   mol = SmilesToMol(smi);
   TEST_ASSERT(mol);
-  reacts.push_back(ROMOL_SPTR(mol));
+  reacts.emplace_back(mol);
 
   prods = rxn.runReactants(reacts);
   TEST_ASSERT(prods.size() == 4);
@@ -304,12 +304,12 @@ void test3RingFormation() {
   smi = "CC=C[Cl]";
   mol = SmilesToMol(smi);
   TEST_ASSERT(mol);
-  reacts.push_back(ROMOL_SPTR(mol));
+  reacts.emplace_back(mol);
 
   smi = "[F]C=CC=C[Br]";
   mol = SmilesToMol(smi);
   TEST_ASSERT(mol);
-  reacts.push_back(ROMOL_SPTR(mol));
+  reacts.emplace_back(mol);
 
   prods = rxn.runReactants(reacts);
   TEST_ASSERT(prods.size() == 4);
@@ -329,12 +329,12 @@ void test3RingFormation() {
   smi = "C1C=CCCC1";
   mol = SmilesToMol(smi);
   TEST_ASSERT(mol);
-  reacts.push_back(ROMOL_SPTR(mol));
+  reacts.emplace_back(mol);
 
   smi = "C=CC=C";
   mol = SmilesToMol(smi);
   TEST_ASSERT(mol);
-  reacts.push_back(ROMOL_SPTR(mol));
+  reacts.emplace_back(mol);
 
   prods = rxn.runReactants(reacts);
   TEST_ASSERT(prods.size() == 4);
@@ -386,12 +386,12 @@ void test4MultipleProducts() {
   smi = "OC(=O)CN";
   mol = SmilesToMol(smi);
   TEST_ASSERT(mol);
-  reacts.push_back(ROMOL_SPTR(mol));
+  reacts.emplace_back(mol);
 
   smi = "OC(=O)CN";
   mol = SmilesToMol(smi);
   TEST_ASSERT(mol);
-  reacts.push_back(ROMOL_SPTR(mol));
+  reacts.emplace_back(mol);
 
   rxn.initReactantMatchers();
   prods = rxn.runReactants(reacts);
@@ -408,12 +408,12 @@ void test4MultipleProducts() {
   smi = "COC(=O)CN";
   mol = SmilesToMol(smi);
   TEST_ASSERT(mol);
-  reacts.push_back(ROMOL_SPTR(mol));
+  reacts.emplace_back(mol);
 
   smi = "COC(=O)CN";
   mol = SmilesToMol(smi);
   TEST_ASSERT(mol);
-  reacts.push_back(ROMOL_SPTR(mol));
+  reacts.emplace_back(mol);
 
   prods = rxn.runReactants(reacts);
   TEST_ASSERT(prods.size() == 1);
@@ -461,12 +461,12 @@ void test5Salts() {
   smi = "C(=O)O.[ClH]";
   mol = SmilesToMol(smi);
   TEST_ASSERT(mol);
-  reacts.push_back(ROMOL_SPTR(mol));
+  reacts.emplace_back(mol);
 
   smi = "CN.C";
   mol = SmilesToMol(smi);
   TEST_ASSERT(mol);
-  reacts.push_back(ROMOL_SPTR(mol));
+  reacts.emplace_back(mol);
 
   rxn.initReactantMatchers();
   prods = rxn.runReactants(reacts);
@@ -497,12 +497,12 @@ void test6DaylightParser() {
   smi = "C(=O)O";
   mol = SmilesToMol(smi);
   TEST_ASSERT(mol);
-  reacts.push_back(ROMOL_SPTR(mol));
+  reacts.emplace_back(mol);
 
   smi = "CN";
   mol = SmilesToMol(smi);
   TEST_ASSERT(mol);
-  reacts.push_back(ROMOL_SPTR(mol));
+  reacts.emplace_back(mol);
 
   rxn->initReactantMatchers();
   prods = rxn->runReactants(reacts);
@@ -525,12 +525,12 @@ void test6DaylightParser() {
   smi = "OC(=O)CN";
   mol = SmilesToMol(smi);
   TEST_ASSERT(mol);
-  reacts.push_back(ROMOL_SPTR(mol));
+  reacts.emplace_back(mol);
 
   smi = "OC(=O)CN";
   mol = SmilesToMol(smi);
   TEST_ASSERT(mol);
-  reacts.push_back(ROMOL_SPTR(mol));
+  reacts.emplace_back(mol);
 
   rxn->initReactantMatchers();
   prods = rxn->runReactants(reacts);
@@ -593,12 +593,12 @@ void test7MDLParser() {
   smi = "C(=O)O";
   mol = SmilesToMol(smi);
   TEST_ASSERT(mol);
-  reacts.push_back(ROMOL_SPTR(mol));
+  reacts.emplace_back(mol);
 
   smi = "CN";
   mol = SmilesToMol(smi);
   TEST_ASSERT(mol);
-  reacts.push_back(ROMOL_SPTR(mol));
+  reacts.emplace_back(mol);
 
   rxn->initReactantMatchers();
   prods = rxn->runReactants(reacts);
@@ -618,12 +618,12 @@ void test7MDLParser() {
   smi = "OC(=O)CN";
   mol = SmilesToMol(smi);
   TEST_ASSERT(mol);
-  reacts.push_back(ROMOL_SPTR(mol));
+  reacts.emplace_back(mol);
 
   smi = "OC(=O)CN";
   mol = SmilesToMol(smi);
   TEST_ASSERT(mol);
-  reacts.push_back(ROMOL_SPTR(mol));
+  reacts.emplace_back(mol);
 
   rxn->initReactantMatchers();
   prods = rxn->runReactants(reacts);
@@ -644,12 +644,12 @@ void test7MDLParser() {
   smi = "OC(=O)CN";
   mol = SmilesToMol(smi);
   TEST_ASSERT(mol);
-  reacts.push_back(ROMOL_SPTR(mol));
+  reacts.emplace_back(mol);
 
   smi = "OC(=O)CN";
   mol = SmilesToMol(smi);
   TEST_ASSERT(mol);
-  reacts.push_back(ROMOL_SPTR(mol));
+  reacts.emplace_back(mol);
 
   rxn->initReactantMatchers();
   prods = rxn->runReactants(reacts);
@@ -669,12 +669,12 @@ void test7MDLParser() {
   smi = "CC=C";
   mol = SmilesToMol(smi);
   TEST_ASSERT(mol);
-  reacts.push_back(ROMOL_SPTR(mol));
+  reacts.emplace_back(mol);
 
   smi = "C=CC=C";
   mol = SmilesToMol(smi);
   TEST_ASSERT(mol);
-  reacts.push_back(ROMOL_SPTR(mol));
+  reacts.emplace_back(mol);
 
   rxn->initReactantMatchers();
   prods = rxn->runReactants(reacts);
@@ -689,12 +689,12 @@ void test7MDLParser() {
   smi = "CC=C[Cl]";
   mol = SmilesToMol(smi);
   TEST_ASSERT(mol);
-  reacts.push_back(ROMOL_SPTR(mol));
+  reacts.emplace_back(mol);
 
   smi = "[F]C=CC=C[Br]";
   mol = SmilesToMol(smi);
   TEST_ASSERT(mol);
-  reacts.push_back(ROMOL_SPTR(mol));
+  reacts.emplace_back(mol);
 
   prods = rxn->runReactants(reacts);
   TEST_ASSERT(prods.size() == 4);
@@ -714,12 +714,12 @@ void test7MDLParser() {
   smi = "C1C=CCCC1";
   mol = SmilesToMol(smi);
   TEST_ASSERT(mol);
-  reacts.push_back(ROMOL_SPTR(mol));
+  reacts.emplace_back(mol);
 
   smi = "C=CC=C";
   mol = SmilesToMol(smi);
   TEST_ASSERT(mol);
-  reacts.push_back(ROMOL_SPTR(mol));
+  reacts.emplace_back(mol);
 
   prods = rxn->runReactants(reacts);
   TEST_ASSERT(prods.size() == 4);
@@ -803,12 +803,12 @@ void test9ProductQueries() {
   smi = "C(=O)O";
   mol = SmilesToMol(smi);
   TEST_ASSERT(mol);
-  reacts.push_back(ROMOL_SPTR(mol));
+  reacts.emplace_back(mol);
 
   smi = "CN";
   mol = SmilesToMol(smi);
   TEST_ASSERT(mol);
-  reacts.push_back(ROMOL_SPTR(mol));
+  reacts.emplace_back(mol);
 
   rxn->initReactantMatchers();
   prods = rxn->runReactants(reacts);
@@ -861,7 +861,7 @@ void test9ProductQueries() {
   smi = "c1ccccc1";
   mol = SmilesToMol(smi);
   TEST_ASSERT(mol);
-  reacts.push_back(ROMOL_SPTR(mol));
+  reacts.emplace_back(mol);
 
   rxn->initReactantMatchers();
   prods = rxn->runReactants(reacts);
@@ -896,7 +896,7 @@ void test10ChiralityDaylight() {
     smi = "F[C@](Cl)(Br)I";
     ROMol *mol = SmilesToMol(smi);
     TEST_ASSERT(mol);
-    reacts.push_back(ROMOL_SPTR(mol));
+    reacts.emplace_back(mol);
     std::vector<MOL_SPTR_VECT> prods = rxn->runReactants(reacts);
     TEST_ASSERT(prods.size() == 1);
     TEST_ASSERT(prods[0].size() == 1);
@@ -908,7 +908,7 @@ void test10ChiralityDaylight() {
     smi = "F[C@@](Cl)(Br)I";
     mol = SmilesToMol(smi);
     TEST_ASSERT(mol);
-    reacts.push_back(ROMOL_SPTR(mol));
+    reacts.emplace_back(mol);
     prods = rxn->runReactants(reacts);
     TEST_ASSERT(prods.size() == 1);
     TEST_ASSERT(prods[0].size() == 1);
@@ -921,7 +921,7 @@ void test10ChiralityDaylight() {
     smi = "FC(Cl)(Br)I";
     mol = SmilesToMol(smi);
     TEST_ASSERT(mol);
-    reacts.push_back(ROMOL_SPTR(mol));
+    reacts.emplace_back(mol);
     prods = rxn->runReactants(reacts);
     TEST_ASSERT(prods.size() == 1);
     TEST_ASSERT(prods[0].size() == 1);
@@ -947,7 +947,7 @@ void test10ChiralityDaylight() {
     smi = "F[C@](Cl)(Br)I";
     ROMol *mol = SmilesToMol(smi);
     TEST_ASSERT(mol);
-    reacts.push_back(ROMOL_SPTR(mol));
+    reacts.emplace_back(mol);
     std::vector<MOL_SPTR_VECT> prods = rxn->runReactants(reacts);
     TEST_ASSERT(prods.size() == 1);
     TEST_ASSERT(prods[0].size() == 1);
@@ -959,7 +959,7 @@ void test10ChiralityDaylight() {
     smi = "F[C@@](Cl)(Br)I";
     mol = SmilesToMol(smi);
     TEST_ASSERT(mol);
-    reacts.push_back(ROMOL_SPTR(mol));
+    reacts.emplace_back(mol);
     prods = rxn->runReactants(reacts);
     TEST_ASSERT(prods.size() == 1);
     TEST_ASSERT(prods[0].size() == 1);
@@ -972,7 +972,7 @@ void test10ChiralityDaylight() {
     smi = "FC(Cl)(Br)I";
     mol = SmilesToMol(smi);
     TEST_ASSERT(mol);
-    reacts.push_back(ROMOL_SPTR(mol));
+    reacts.emplace_back(mol);
     prods = rxn->runReactants(reacts);
     TEST_ASSERT(prods.size() == 1);
     TEST_ASSERT(prods[0].size() == 1);
@@ -997,7 +997,7 @@ void test10ChiralityDaylight() {
     smi = "F[C@](Cl)(Br)I";
     ROMol *mol = SmilesToMol(smi);
     TEST_ASSERT(mol);
-    reacts.push_back(ROMOL_SPTR(mol));
+    reacts.emplace_back(mol);
     std::vector<MOL_SPTR_VECT> prods = rxn->runReactants(reacts);
     TEST_ASSERT(prods.size() == 1);
     TEST_ASSERT(prods[0].size() == 1);
@@ -1009,7 +1009,7 @@ void test10ChiralityDaylight() {
     smi = "F[C@@](Cl)(Br)I";
     mol = SmilesToMol(smi);
     TEST_ASSERT(mol);
-    reacts.push_back(ROMOL_SPTR(mol));
+    reacts.emplace_back(mol);
     prods = rxn->runReactants(reacts);
     TEST_ASSERT(prods.size() == 1);
     TEST_ASSERT(prods[0].size() == 1);
@@ -1022,7 +1022,7 @@ void test10ChiralityDaylight() {
     smi = "FC(Cl)(Br)I";
     mol = SmilesToMol(smi);
     TEST_ASSERT(mol);
-    reacts.push_back(ROMOL_SPTR(mol));
+    reacts.emplace_back(mol);
     prods = rxn->runReactants(reacts);
     TEST_ASSERT(prods.size() == 1);
     TEST_ASSERT(prods[0].size() == 1);
@@ -1048,7 +1048,7 @@ void test10ChiralityDaylight() {
     smi = "F[C@](Cl)(Br)I";
     ROMol *mol = SmilesToMol(smi);
     TEST_ASSERT(mol);
-    reacts.push_back(ROMOL_SPTR(mol));
+    reacts.emplace_back(mol);
     std::vector<MOL_SPTR_VECT> prods = rxn->runReactants(reacts);
     TEST_ASSERT(prods.size() == 1);
     TEST_ASSERT(prods[0].size() == 1);
@@ -1061,7 +1061,7 @@ void test10ChiralityDaylight() {
     smi = "F[C@@](Cl)(Br)I";
     mol = SmilesToMol(smi);
     TEST_ASSERT(mol);
-    reacts.push_back(ROMOL_SPTR(mol));
+    reacts.emplace_back(mol);
     prods = rxn->runReactants(reacts);
     TEST_ASSERT(prods.size() == 1);
     TEST_ASSERT(prods[0].size() == 1);
@@ -1074,7 +1074,7 @@ void test10ChiralityDaylight() {
     smi = "FC(Cl)(Br)I";
     mol = SmilesToMol(smi);
     TEST_ASSERT(mol);
-    reacts.push_back(ROMOL_SPTR(mol));
+    reacts.emplace_back(mol);
     prods = rxn->runReactants(reacts);
     TEST_ASSERT(prods.size() == 1);
     TEST_ASSERT(prods[0].size() == 1);
@@ -1099,7 +1099,7 @@ void test10ChiralityDaylight() {
     smi = "F[C@](Cl)(Br)I";
     ROMol *mol = SmilesToMol(smi);
     TEST_ASSERT(mol);
-    reacts.push_back(ROMOL_SPTR(mol));
+    reacts.emplace_back(mol);
     std::vector<MOL_SPTR_VECT> prods = rxn->runReactants(reacts);
     TEST_ASSERT(prods.size() == 1);
     TEST_ASSERT(prods[0].size() == 1);
@@ -1111,7 +1111,7 @@ void test10ChiralityDaylight() {
     smi = "F[C@@](Cl)(Br)I";
     mol = SmilesToMol(smi);
     TEST_ASSERT(mol);
-    reacts.push_back(ROMOL_SPTR(mol));
+    reacts.emplace_back(mol);
     prods = rxn->runReactants(reacts);
     TEST_ASSERT(prods.size() == 1);
     TEST_ASSERT(prods[0].size() == 1);
@@ -1124,7 +1124,7 @@ void test10ChiralityDaylight() {
     smi = "FC(Cl)(Br)I";
     mol = SmilesToMol(smi);
     TEST_ASSERT(mol);
-    reacts.push_back(ROMOL_SPTR(mol));
+    reacts.emplace_back(mol);
     prods = rxn->runReactants(reacts);
     TEST_ASSERT(prods.size() == 1);
     TEST_ASSERT(prods[0].size() == 1);
@@ -1149,7 +1149,7 @@ void test10ChiralityDaylight() {
     smi = "F[C@](Cl)(Br)I";
     ROMol *mol = SmilesToMol(smi);
     TEST_ASSERT(mol);
-    reacts.push_back(ROMOL_SPTR(mol));
+    reacts.emplace_back(mol);
     std::vector<MOL_SPTR_VECT> prods = rxn->runReactants(reacts);
     TEST_ASSERT(prods.size() == 1);
     TEST_ASSERT(prods[0].size() == 1);
@@ -1161,7 +1161,7 @@ void test10ChiralityDaylight() {
     smi = "F[C@@](Cl)(Br)I";
     mol = SmilesToMol(smi);
     TEST_ASSERT(mol);
-    reacts.push_back(ROMOL_SPTR(mol));
+    reacts.emplace_back(mol);
     prods = rxn->runReactants(reacts);
     TEST_ASSERT(prods.size() == 1);
     TEST_ASSERT(prods[0].size() == 1);
@@ -1174,7 +1174,7 @@ void test10ChiralityDaylight() {
     smi = "FC(Cl)(Br)I";
     mol = SmilesToMol(smi);
     TEST_ASSERT(mol);
-    reacts.push_back(ROMOL_SPTR(mol));
+    reacts.emplace_back(mol);
     prods = rxn->runReactants(reacts);
     TEST_ASSERT(prods.size() == 1);
     TEST_ASSERT(prods[0].size() == 1);
@@ -1213,11 +1213,11 @@ void test11ChiralityRxn() {
   smi = "F[C@@](Cl)(Br)I";
   mol = SmilesToMol(smi);
   TEST_ASSERT(mol);
-  reacts.push_back(ROMOL_SPTR(mol));
+  reacts.emplace_back(mol);
   smi = "[OH-]";
   mol = SmilesToMol(smi);
   TEST_ASSERT(mol);
-  reacts.push_back(ROMOL_SPTR(mol));
+  reacts.emplace_back(mol);
 
   rxn->initReactantMatchers();
   prods = rxn->runReactants(reacts);
@@ -1294,7 +1294,7 @@ void test12DoubleBondStereochem() {
     smi = "COC(=O)/C=C/Cl";
     mol = SmilesToMol(smi);
     TEST_ASSERT(mol);
-    reacts.push_back(ROMOL_SPTR(mol));
+    reacts.emplace_back(mol);
     MolOps::assignStereochemistry(*mol);
 
     rxn->initReactantMatchers();
@@ -1333,7 +1333,7 @@ void test12DoubleBondStereochem() {
     smi = "Cl\\C=C/C";
     mol = SmilesToMol(smi);
     TEST_ASSERT(mol);
-    reacts.push_back(ROMOL_SPTR(mol));
+    reacts.emplace_back(mol);
     MolOps::assignStereochemistry(*mol);
 
     rxn->initReactantMatchers();
@@ -1383,12 +1383,12 @@ void test13Issue1748846() {
   smi = "c1ccccc1C";
   mol = SmilesToMol(smi);
   TEST_ASSERT(mol);
-  reacts.push_back(ROMOL_SPTR(mol));
+  reacts.emplace_back(mol);
 
   smi = "[At]OC";
   mol = SmilesToMol(smi);
   TEST_ASSERT(mol);
-  reacts.push_back(ROMOL_SPTR(mol));
+  reacts.emplace_back(mol);
 
   rxn->initReactantMatchers();
   prods = rxn->runReactants(reacts);
@@ -1415,12 +1415,12 @@ void test13Issue1748846() {
   smi = "c1ccccc1C";
   mol = SmilesToMol(smi);
   TEST_ASSERT(mol);
-  reacts.push_back(ROMOL_SPTR(mol));
+  reacts.emplace_back(mol);
 
   smi = "[At]OC";
   mol = SmilesToMol(smi);
   TEST_ASSERT(mol);
-  reacts.push_back(ROMOL_SPTR(mol));
+  reacts.emplace_back(mol);
 
   rxn->initReactantMatchers();
   prods = rxn->runReactants(reacts);
@@ -1463,7 +1463,7 @@ void test14Issue1804420() {
   smi = "C1CCN1CCC";
   mol = SmilesToMol(smi);
   TEST_ASSERT(mol);
-  reacts.push_back(ROMOL_SPTR(mol));
+  reacts.emplace_back(mol);
 
   rxn->initReactantMatchers();
   prods = rxn->runReactants(reacts);
@@ -1516,7 +1516,7 @@ void test15Issue1882749() {
   smi = "C1CCN1CCC";
   mol = SmilesToMol(smi);
   TEST_ASSERT(mol);
-  reacts.push_back(ROMOL_SPTR(mol));
+  reacts.emplace_back(mol);
 
   rxn->initReactantMatchers();
   prods = rxn->runReactants(reacts);
@@ -1583,7 +1583,7 @@ void test15Issue1882749() {
   smi = "CS(=O)C";
   mol = SmilesToMol(smi);
   TEST_ASSERT(mol);
-  reacts.push_back(ROMOL_SPTR(mol));
+  reacts.emplace_back(mol);
 
   delete rxn;
   smi = "[S:1]=[O:2]>>[S;+2:1]-[O;-:2]";
@@ -1606,7 +1606,7 @@ void test15Issue1882749() {
   smi = "CO";
   mol = SmilesToMol(smi);
   TEST_ASSERT(mol);
-  reacts.push_back(ROMOL_SPTR(mol));
+  reacts.emplace_back(mol);
 
   delete rxn;
   smi = "[O:1]>>[O:1][13C]";
@@ -1629,7 +1629,7 @@ void test15Issue1882749() {
   smi = "CO";
   mol = SmilesToMol(smi);
   TEST_ASSERT(mol);
-  reacts.push_back(ROMOL_SPTR(mol));
+  reacts.emplace_back(mol);
 
   delete rxn;
   smi = "[O:1]>>[O:1][3#0]";
@@ -1736,7 +1736,7 @@ void test17Issue1920627() {
   mol->getAtomWithIdx(1)->getProp(common_properties::_CIPCode, cip);
   TEST_ASSERT(cip == "R");
 
-  reacts.push_back(ROMOL_SPTR(mol));
+  reacts.emplace_back(mol);
   rxn->initReactantMatchers();
   prods = rxn->runReactants(reacts);
   TEST_ASSERT(prods.size() == 1);
@@ -1758,7 +1758,7 @@ void test17Issue1920627() {
   mol->getAtomWithIdx(1)->getProp(common_properties::_CIPCode, cip);
   TEST_ASSERT(cip == "S");
 
-  reacts.push_back(ROMOL_SPTR(mol));
+  reacts.emplace_back(mol);
   prods = rxn->runReactants(reacts);
   TEST_ASSERT(prods.size() == 1);
   TEST_ASSERT(prods[0].size() == 1);
@@ -1780,7 +1780,7 @@ void test17Issue1920627() {
   mol->getAtomWithIdx(1)->getProp(common_properties::_CIPCode, cip);
   TEST_ASSERT(cip == "S");
 
-  reacts.push_back(ROMOL_SPTR(mol));
+  reacts.emplace_back(mol);
   prods = rxn->runReactants(reacts);
   TEST_ASSERT(prods.size() == 1);
   TEST_ASSERT(prods[0].size() == 1);
@@ -1800,7 +1800,7 @@ void test17Issue1920627() {
   TEST_ASSERT(mol->getAtomWithIdx(1)->hasProp(common_properties::_CIPCode));
   mol->getAtomWithIdx(1)->getProp(common_properties::_CIPCode, cip);
   TEST_ASSERT(cip == "R");
-  reacts.push_back(ROMOL_SPTR(mol));
+  reacts.emplace_back(mol);
   prods = rxn->runReactants(reacts);
   TEST_ASSERT(prods.size() == 1);
   TEST_ASSERT(prods[0].size() == 1);
@@ -1822,7 +1822,7 @@ void test17Issue1920627() {
   mol->getAtomWithIdx(0)->getProp(common_properties::_CIPCode, cip);
   TEST_ASSERT(cip == "S");
 
-  reacts.push_back(ROMOL_SPTR(mol));
+  reacts.emplace_back(mol);
   prods = rxn->runReactants(reacts);
   TEST_ASSERT(prods.size() == 1);
   TEST_ASSERT(prods[0].size() == 1);
@@ -1843,7 +1843,7 @@ void test17Issue1920627() {
   mol->getAtomWithIdx(0)->getProp(common_properties::_CIPCode, cip);
   TEST_ASSERT(cip == "R");
 
-  reacts.push_back(ROMOL_SPTR(mol));
+  reacts.emplace_back(mol);
   prods = rxn->runReactants(reacts);
   TEST_ASSERT(prods.size() == 1);
   TEST_ASSERT(prods[0].size() == 1);
@@ -1864,7 +1864,7 @@ void test17Issue1920627() {
   mol->getAtomWithIdx(3)->getProp(common_properties::_CIPCode, cip);
   TEST_ASSERT(cip == "R");
 
-  reacts.push_back(ROMOL_SPTR(mol));
+  reacts.emplace_back(mol);
   prods = rxn->runReactants(reacts);
   TEST_ASSERT(prods.size() == 1);
   TEST_ASSERT(prods[0].size() == 1);
@@ -1885,7 +1885,7 @@ void test17Issue1920627() {
   mol->getAtomWithIdx(3)->getProp(common_properties::_CIPCode, cip);
   TEST_ASSERT(cip == "R");
 
-  reacts.push_back(ROMOL_SPTR(mol));
+  reacts.emplace_back(mol);
   prods = rxn->runReactants(reacts);
   TEST_ASSERT(prods.size() == 1);
   TEST_ASSERT(prods[0].size() == 1);
@@ -1928,7 +1928,7 @@ void test18PropertyTransfer() {
   reacts.clear();
   smi = "C";
   mol = SmilesToMol(smi);
-  reacts.push_back(ROMOL_SPTR(mol));
+  reacts.emplace_back(mol);
   rxn->initReactantMatchers();
   prods = rxn->runReactants(reacts);
   TEST_ASSERT(prods.size() == 1);
@@ -1940,7 +1940,7 @@ void test18PropertyTransfer() {
   reacts.clear();
   smi = "[13CH4]";
   mol = SmilesToMol(smi);
-  reacts.push_back(ROMOL_SPTR(mol));
+  reacts.emplace_back(mol);
   prods = rxn->runReactants(reacts);
   TEST_ASSERT(prods.size() == 1);
   TEST_ASSERT(prods[0].size() == 1);
@@ -1961,7 +1961,7 @@ void test18PropertyTransfer() {
   reacts.clear();
   smi = "[12CH4]";
   mol = SmilesToMol(smi);
-  reacts.push_back(ROMOL_SPTR(mol));
+  reacts.emplace_back(mol);
   rxn->initReactantMatchers();
   prods = rxn->runReactants(reacts);
   TEST_ASSERT(prods.size() == 1);
@@ -1974,7 +1974,7 @@ void test18PropertyTransfer() {
   reacts.clear();
   smi = "[13CH4]";
   mol = SmilesToMol(smi);
-  reacts.push_back(ROMOL_SPTR(mol));
+  reacts.emplace_back(mol);
   prods = rxn->runReactants(reacts);
   TEST_ASSERT(prods.size() == 0);
 
@@ -1991,7 +1991,7 @@ void test18PropertyTransfer() {
   reacts.clear();
   smi = "[13CH4]";
   mol = SmilesToMol(smi);
-  reacts.push_back(ROMOL_SPTR(mol));
+  reacts.emplace_back(mol);
   rxn->initReactantMatchers();
   prods = rxn->runReactants(reacts);
   TEST_ASSERT(prods.size() == 1);
@@ -2004,7 +2004,7 @@ void test18PropertyTransfer() {
   reacts.clear();
   smi = "C";
   mol = SmilesToMol(smi);
-  reacts.push_back(ROMOL_SPTR(mol));
+  reacts.emplace_back(mol);
   prods = rxn->runReactants(reacts);
   TEST_ASSERT(prods.size() == 0);
 
@@ -2021,7 +2021,7 @@ void test18PropertyTransfer() {
   reacts.clear();
   smi = "C";
   mol = SmilesToMol(smi);
-  reacts.push_back(ROMOL_SPTR(mol));
+  reacts.emplace_back(mol);
   rxn->initReactantMatchers();
   prods = rxn->runReactants(reacts);
   TEST_ASSERT(prods.size() == 1);
@@ -2034,7 +2034,7 @@ void test18PropertyTransfer() {
   reacts.clear();
   smi = "[13CH4]";
   mol = SmilesToMol(smi);
-  reacts.push_back(ROMOL_SPTR(mol));
+  reacts.emplace_back(mol);
   prods = rxn->runReactants(reacts);
   TEST_ASSERT(prods.size() == 1);
   TEST_ASSERT(prods[0].size() == 1);
@@ -2056,7 +2056,7 @@ void test18PropertyTransfer() {
   reacts.clear();
   smi = "C=O";
   mol = SmilesToMol(smi);
-  reacts.push_back(ROMOL_SPTR(mol));
+  reacts.emplace_back(mol);
   rxn->initReactantMatchers();
   prods = rxn->runReactants(reacts);
   TEST_ASSERT(prods.size() == 1);
@@ -2081,7 +2081,7 @@ void test18PropertyTransfer() {
   reacts.clear();
   smi = "c1ccccn1";
   mol = SmilesToMol(smi);
-  reacts.push_back(ROMOL_SPTR(mol));
+  reacts.emplace_back(mol);
   rxn->initReactantMatchers();
   prods = rxn->runReactants(reacts);
   TEST_ASSERT(prods.size() == 2);
@@ -2095,7 +2095,7 @@ void test18PropertyTransfer() {
   reacts.clear();
   smi = "c1ccc[nH]1";
   mol = SmilesToMol(smi);
-  reacts.push_back(ROMOL_SPTR(mol));
+  reacts.emplace_back(mol);
   prods = rxn->runReactants(reacts);
   TEST_ASSERT(prods.size() == 2);
   TEST_ASSERT(prods[0].size() == 1);
@@ -2134,7 +2134,7 @@ void test19Issue2050085() {
   TEST_ASSERT(mol);
   MolOps::assignStereochemistry(*mol);
 
-  reacts.push_back(ROMOL_SPTR(mol));
+  reacts.emplace_back(mol);
   rxn->initReactantMatchers();
   prods = rxn->runReactants(reacts);
   TEST_ASSERT(prods.size() == 2);
@@ -2173,7 +2173,7 @@ void test20BondQueriesInProduct() {
   mol = SmilesToMol(smi);
   TEST_ASSERT(mol);
 
-  reacts.push_back(ROMOL_SPTR(mol));
+  reacts.emplace_back(mol);
   rxn->initReactantMatchers();
   prods = rxn->runReactants(reacts);
   TEST_ASSERT(prods.size() == 1);
@@ -2189,7 +2189,7 @@ void test20BondQueriesInProduct() {
   mol = SmilesToMol(smi);
   TEST_ASSERT(mol);
 
-  reacts.push_back(ROMOL_SPTR(mol));
+  reacts.emplace_back(mol);
   prods = rxn->runReactants(reacts);
   TEST_ASSERT(prods.size() == 1);
   TEST_ASSERT(prods[0].size() == 1);
@@ -2211,7 +2211,7 @@ void test20BondQueriesInProduct() {
   mol = SmilesToMol(smi);
   TEST_ASSERT(mol);
 
-  reacts.push_back(ROMOL_SPTR(mol));
+  reacts.emplace_back(mol);
   rxn->initReactantMatchers();
   prods = rxn->runReactants(reacts);
   TEST_ASSERT(prods.size() == 1);
@@ -2227,7 +2227,7 @@ void test20BondQueriesInProduct() {
   mol = SmilesToMol(smi);
   TEST_ASSERT(mol);
 
-  reacts.push_back(ROMOL_SPTR(mol));
+  reacts.emplace_back(mol);
   prods = rxn->runReactants(reacts);
   TEST_ASSERT(prods.size() == 1);
   TEST_ASSERT(prods[0].size() == 1);
@@ -2259,7 +2259,7 @@ void test21Issue2540021() {
     smi = "C1=CNC=C1";
     ROMol *mol = SmilesToMol(smi);
     TEST_ASSERT(mol);
-    reacts.push_back(ROMOL_SPTR(mol));
+    reacts.emplace_back(mol);
     rxn->initReactantMatchers();
 
     std::vector<MOL_SPTR_VECT> prods;
@@ -2293,7 +2293,7 @@ void test21Issue2540021() {
     smi = "C1=CNC=N1";
     ROMol *mol = SmilesToMol(smi);
     TEST_ASSERT(mol);
-    reacts.push_back(ROMOL_SPTR(mol));
+    reacts.emplace_back(mol);
     rxn->initReactantMatchers();
 
     std::vector<MOL_SPTR_VECT> prods;
@@ -2339,7 +2339,7 @@ void test22DotsToRemoveBonds() {
     smi = "C1ON1";
     ROMol *mol = SmilesToMol(smi);
     TEST_ASSERT(mol);
-    reacts.push_back(ROMOL_SPTR(mol));
+    reacts.emplace_back(mol);
 
     std::vector<MOL_SPTR_VECT> prods;
     prods = rxn->runReactants(reacts);
@@ -2395,7 +2395,7 @@ void test23Pickling() {
     smi = "C1ON1";
     ROMol *mol = SmilesToMol(smi);
     TEST_ASSERT(mol);
-    reacts.push_back(ROMOL_SPTR(mol));
+    reacts.emplace_back(mol);
 
     prods = rxn->runReactants(reacts);
     TEST_ASSERT(prods.size() == 1);
@@ -2464,12 +2464,12 @@ void test23Pickling() {
     smi = "OC(=O)CN";
     ROMol *mol = SmilesToMol(smi);
     TEST_ASSERT(mol);
-    reacts.push_back(ROMOL_SPTR(mol));
+    reacts.emplace_back(mol);
 
     smi = "OC(=O)CN";
     mol = SmilesToMol(smi);
     TEST_ASSERT(mol);
-    reacts.push_back(ROMOL_SPTR(mol));
+    reacts.emplace_back(mol);
 
     rxn->initReactantMatchers();
     prods = rxn->runReactants(reacts);
@@ -2554,7 +2554,7 @@ void test25Conformers() {
     conf->setAtomPos(1, RDGeom::Point3D(1, 1, 0));
     conf->setAtomPos(2, RDGeom::Point3D(1, 0, 1));
     mol->addConformer(conf, true);
-    reacts.push_back(ROMOL_SPTR(mol));
+    reacts.emplace_back(mol);
 
     smi = "CN";
     mol = SmilesToMol(smi);
@@ -2563,7 +2563,7 @@ void test25Conformers() {
     conf->setAtomPos(0, RDGeom::Point3D(-1, 0, 0));
     conf->setAtomPos(1, RDGeom::Point3D(-1, 1, 0));
     mol->addConformer(conf, true);
-    reacts.push_back(ROMOL_SPTR(mol));
+    reacts.emplace_back(mol);
 
     prods = rxn->runReactants(reacts);
     TEST_ASSERT(prods.size() == 1);
@@ -2596,12 +2596,12 @@ void test25Conformers() {
     conf->setAtomPos(1, RDGeom::Point3D(1, 1, 0));
     conf->setAtomPos(2, RDGeom::Point3D(1, 0, 1));
     mol->addConformer(conf, true);
-    reacts.push_back(ROMOL_SPTR(mol));
+    reacts.emplace_back(mol);
 
     smi = "CN";
     mol = SmilesToMol(smi);
     TEST_ASSERT(mol);
-    reacts.push_back(ROMOL_SPTR(mol));
+    reacts.emplace_back(mol);
 
     prods = rxn->runReactants(reacts);
     TEST_ASSERT(prods.size() == 1);
@@ -2629,7 +2629,7 @@ void test25Conformers() {
     smi = "C(=O)C";
     mol = SmilesToMol(smi);
     TEST_ASSERT(mol);
-    reacts.push_back(ROMOL_SPTR(mol));
+    reacts.emplace_back(mol);
 
     smi = "CN";
     mol = SmilesToMol(smi);
@@ -2638,7 +2638,7 @@ void test25Conformers() {
     conf->setAtomPos(0, RDGeom::Point3D(-1, 0, 0));
     conf->setAtomPos(1, RDGeom::Point3D(-1, 1, 0));
     mol->addConformer(conf, true);
-    reacts.push_back(ROMOL_SPTR(mol));
+    reacts.emplace_back(mol);
 
     prods = rxn->runReactants(reacts);
     TEST_ASSERT(prods.size() == 1);
@@ -2666,12 +2666,12 @@ void test25Conformers() {
     smi = "C(=O)C";
     mol = SmilesToMol(smi);
     TEST_ASSERT(mol);
-    reacts.push_back(ROMOL_SPTR(mol));
+    reacts.emplace_back(mol);
 
     smi = "CN";
     mol = SmilesToMol(smi);
     TEST_ASSERT(mol);
-    reacts.push_back(ROMOL_SPTR(mol));
+    reacts.emplace_back(mol);
 
     prods = rxn->runReactants(reacts);
     TEST_ASSERT(prods.size() == 1);
@@ -2708,12 +2708,12 @@ void test26V3000MDLParser() {
   smi = "C(=O)O";
   mol = SmilesToMol(smi);
   TEST_ASSERT(mol);
-  reacts.push_back(ROMOL_SPTR(mol));
+  reacts.emplace_back(mol);
 
   smi = "CN";
   mol = SmilesToMol(smi);
   TEST_ASSERT(mol);
-  reacts.push_back(ROMOL_SPTR(mol));
+  reacts.emplace_back(mol);
 
   rxn->initReactantMatchers();
   prods = rxn->runReactants(reacts);
@@ -2733,12 +2733,12 @@ void test26V3000MDLParser() {
   smi = "OC(=O)CN";
   mol = SmilesToMol(smi);
   TEST_ASSERT(mol);
-  reacts.push_back(ROMOL_SPTR(mol));
+  reacts.emplace_back(mol);
 
   smi = "OC(=O)CN";
   mol = SmilesToMol(smi);
   TEST_ASSERT(mol);
-  reacts.push_back(ROMOL_SPTR(mol));
+  reacts.emplace_back(mol);
 
   rxn->initReactantMatchers();
   prods = rxn->runReactants(reacts);
@@ -2758,12 +2758,12 @@ void test26V3000MDLParser() {
   smi = "OC(=O)CN";
   mol = SmilesToMol(smi);
   TEST_ASSERT(mol);
-  reacts.push_back(ROMOL_SPTR(mol));
+  reacts.emplace_back(mol);
 
   smi = "OC(=O)CN";
   mol = SmilesToMol(smi);
   TEST_ASSERT(mol);
-  reacts.push_back(ROMOL_SPTR(mol));
+  reacts.emplace_back(mol);
 
   rxn->initReactantMatchers();
   prods = rxn->runReactants(reacts);
@@ -2783,12 +2783,12 @@ void test26V3000MDLParser() {
   smi = "CC=C";
   mol = SmilesToMol(smi);
   TEST_ASSERT(mol);
-  reacts.push_back(ROMOL_SPTR(mol));
+  reacts.emplace_back(mol);
 
   smi = "C=CC=C";
   mol = SmilesToMol(smi);
   TEST_ASSERT(mol);
-  reacts.push_back(ROMOL_SPTR(mol));
+  reacts.emplace_back(mol);
 
   rxn->initReactantMatchers();
   prods = rxn->runReactants(reacts);
@@ -2803,12 +2803,12 @@ void test26V3000MDLParser() {
   smi = "CC=C[Cl]";
   mol = SmilesToMol(smi);
   TEST_ASSERT(mol);
-  reacts.push_back(ROMOL_SPTR(mol));
+  reacts.emplace_back(mol);
 
   smi = "[F]C=CC=C[Br]";
   mol = SmilesToMol(smi);
   TEST_ASSERT(mol);
-  reacts.push_back(ROMOL_SPTR(mol));
+  reacts.emplace_back(mol);
 
   prods = rxn->runReactants(reacts);
   TEST_ASSERT(prods.size() == 4);
@@ -2828,12 +2828,12 @@ void test26V3000MDLParser() {
   smi = "C1C=CCCC1";
   mol = SmilesToMol(smi);
   TEST_ASSERT(mol);
-  reacts.push_back(ROMOL_SPTR(mol));
+  reacts.emplace_back(mol);
 
   smi = "C=CC=C";
   mol = SmilesToMol(smi);
   TEST_ASSERT(mol);
-  reacts.push_back(ROMOL_SPTR(mol));
+  reacts.emplace_back(mol);
 
   prods = rxn->runReactants(reacts);
   TEST_ASSERT(prods.size() == 4);
@@ -2948,12 +2948,12 @@ void test28RxnDepictor() {
     smi = "OC(=O)CN";
     ROMol *mol = SmilesToMol(smi);
     TEST_ASSERT(mol);
-    reacts.push_back(ROMOL_SPTR(mol));
+    reacts.emplace_back(mol);
 
     smi = "OC(=O)CN";
     mol = SmilesToMol(smi);
     TEST_ASSERT(mol);
-    reacts.push_back(ROMOL_SPTR(mol));
+    reacts.emplace_back(mol);
 
     rxn->initReactantMatchers();
     prods = rxn->runReactants(reacts);
@@ -2975,7 +2975,7 @@ void test28RxnDepictor() {
     smi = "C1=CNC=C1";
     ROMol *mol = SmilesToMol(smi);
     TEST_ASSERT(mol);
-    reacts.push_back(ROMOL_SPTR(mol));
+    reacts.emplace_back(mol);
     RDDepict::compute2DCoordsForReaction(*rxn);
 
     rxn->initReactantMatchers();
@@ -3156,7 +3156,7 @@ void test31Issue3140490() {
     smi = "OC";
     ROMol *mol = SmilesToMol(smi);
     TEST_ASSERT(mol);
-    reacts.push_back(ROMOL_SPTR(mol));
+    reacts.emplace_back(mol);
     std::vector<MOL_SPTR_VECT> prods;
     prods = rxn->runReactants(reacts);
     TEST_ASSERT(prods.size() == 1);
@@ -3194,7 +3194,7 @@ void test32Replacements() {
     smi = "CCN";
     ROMol *mol = SmilesToMol(smi);
     TEST_ASSERT(mol);
-    reacts.push_back(ROMOL_SPTR(mol));
+    reacts.emplace_back(mol);
     std::vector<MOL_SPTR_VECT> prods;
     prods = rxn->runReactants(reacts);
     TEST_ASSERT(prods.size() == 1);
@@ -3649,7 +3649,7 @@ void test36ParensInReactants2() {
     smi = "CNO";
     ROMol *mol = SmilesToMol(smi);
     TEST_ASSERT(mol);
-    reacts.push_back(ROMOL_SPTR(mol));
+    reacts.emplace_back(mol);
     std::vector<MOL_SPTR_VECT> prods;
     prods = rxn->runReactants(reacts);
     TEST_ASSERT(prods.size() == 1);
@@ -3685,7 +3685,7 @@ void test37ProtectOption() {
     smi = "OCO";
     ROMol *mol = SmilesToMol(smi);
     TEST_ASSERT(mol);
-    reacts.push_back(ROMOL_SPTR(mol));
+    reacts.emplace_back(mol);
     std::vector<MOL_SPTR_VECT> prods;
     prods = rxn->runReactants(reacts);
     TEST_ASSERT(prods.size() == 2);
@@ -3853,7 +3853,7 @@ void test39InnocentChiralityLoss() {
       std::string smi = "Cl[C@H](F)C=O";
       ROMol *mol = SmilesToMol(smi);
       MOL_SPTR_VECT reacts;
-      reacts.push_back(ROMOL_SPTR(mol));
+      reacts.emplace_back(mol);
       std::vector<MOL_SPTR_VECT> prods;
       prods = rxn->runReactants(reacts);
       TEST_ASSERT(prods.size() == 1);
@@ -3867,7 +3867,7 @@ void test39InnocentChiralityLoss() {
       std::string smi = "O=C[C@@H](F)Cl";
       ROMol *mol = SmilesToMol(smi);
       MOL_SPTR_VECT reacts;
-      reacts.push_back(ROMOL_SPTR(mol));
+      reacts.emplace_back(mol);
       std::vector<MOL_SPTR_VECT> prods;
       prods = rxn->runReactants(reacts);
       TEST_ASSERT(prods.size() == 1);
@@ -3881,7 +3881,7 @@ void test39InnocentChiralityLoss() {
       std::string smi = "F[C@H](C=O)Cl";
       ROMol *mol = SmilesToMol(smi);
       MOL_SPTR_VECT reacts;
-      reacts.push_back(ROMOL_SPTR(mol));
+      reacts.emplace_back(mol);
       std::vector<MOL_SPTR_VECT> prods;
       prods = rxn->runReactants(reacts);
       TEST_ASSERT(prods.size() == 1);
@@ -3909,7 +3909,7 @@ void test39InnocentChiralityLoss() {
       std::string smi = "Cl[C@H](F)O";
       ROMol *mol = SmilesToMol(smi);
       MOL_SPTR_VECT reacts;
-      reacts.push_back(ROMOL_SPTR(mol));
+      reacts.emplace_back(mol);
       std::vector<MOL_SPTR_VECT> prods;
       prods = rxn->runReactants(reacts);
       TEST_ASSERT(prods.size() == 1);
@@ -3934,7 +3934,7 @@ void test39InnocentChiralityLoss() {
       std::string smi = "Cl[C@H](F)O";
       ROMol *mol = SmilesToMol(smi);
       MOL_SPTR_VECT reacts;
-      reacts.push_back(ROMOL_SPTR(mol));
+      reacts.emplace_back(mol);
       std::vector<MOL_SPTR_VECT> prods;
       prods = rxn->runReactants(reacts);
       TEST_ASSERT(prods.size() == 1);
@@ -3961,7 +3961,7 @@ void test39InnocentChiralityLoss() {
       std::string smi = "CC(O)[C@](N)(F)C(C)=O";
       ROMol *mol = SmilesToMol(smi);
       MOL_SPTR_VECT reacts;
-      reacts.push_back(ROMOL_SPTR(mol));
+      reacts.emplace_back(mol);
       std::vector<MOL_SPTR_VECT> prods;
       prods = rxn->runReactants(reacts);
       TEST_ASSERT(prods.size() == 1);
@@ -4016,7 +4016,7 @@ void test41Github233() {
     smi = "FC(C)I";
     ROMol *mol = SmilesToMol(smi);
     MOL_SPTR_VECT reacts;
-    reacts.push_back(ROMOL_SPTR(mol));
+    reacts.emplace_back(mol);
     std::vector<MOL_SPTR_VECT> prods;
     prods = rxn->runReactants(reacts);
     TEST_ASSERT(prods.size() == 1);
@@ -4049,12 +4049,12 @@ void test42ReactionSmiles() {
   smi = "C(=O)O";
   mol = SmilesToMol(smi);
   TEST_ASSERT(mol);
-  reacts.push_back(ROMOL_SPTR(mol));
+  reacts.emplace_back(mol);
 
   smi = "CN";
   mol = SmilesToMol(smi);
   TEST_ASSERT(mol);
-  reacts.push_back(ROMOL_SPTR(mol));
+  reacts.emplace_back(mol);
 
   rxn->initReactantMatchers();
   prods = rxn->runReactants(reacts);
@@ -4077,12 +4077,12 @@ void test42ReactionSmiles() {
   smi = "OC(=O)CN";
   mol = SmilesToMol(smi);
   TEST_ASSERT(mol);
-  reacts.push_back(ROMOL_SPTR(mol));
+  reacts.emplace_back(mol);
 
   smi = "OC(=O)CN";
   mol = SmilesToMol(smi);
   TEST_ASSERT(mol);
-  reacts.push_back(ROMOL_SPTR(mol));
+  reacts.emplace_back(mol);
 
   rxn->initReactantMatchers();
   prods = rxn->runReactants(reacts);
@@ -4139,7 +4139,7 @@ void test43Github243() {
     std::string smi = "CCCN";
     ROMol *mol = SmilesToMol(smi);
     TEST_ASSERT(mol);
-    reacts.push_back(ROMOL_SPTR(mol));
+    reacts.emplace_back(mol);
     std::vector<MOL_SPTR_VECT> prods;
     prods = rxn->runReactants(reacts);
     TEST_ASSERT(prods.size() == 1);
@@ -4771,7 +4771,7 @@ void test49ParensInProducts2() {
     smi = "C1NO1";
     ROMol *mol = SmilesToMol(smi);
     TEST_ASSERT(mol);
-    reacts.push_back(ROMOL_SPTR(mol));
+    reacts.emplace_back(mol);
     std::vector<MOL_SPTR_VECT> prods;
     prods = rxn->runReactants(reacts);
     TEST_ASSERT(prods.size() == 1);
@@ -4793,7 +4793,7 @@ void test49ParensInProducts2() {
     smi = "Nn1ccc(O)c1";
     ROMol *mol = SmilesToMol(smi);
     TEST_ASSERT(mol);
-    reacts.push_back(ROMOL_SPTR(mol));
+    reacts.emplace_back(mol);
     TEST_ASSERT(reacts.size() == 1);
     TEST_ASSERT(reacts[0]->getNumAtoms() == 7);
     TEST_ASSERT(reacts[0]->getNumBonds() == 7);
@@ -4913,7 +4913,7 @@ void test52RedundantProductMappingNumbersAndRunReactants() {
     smi = "N[13CH2]O";
     ROMol *mol = SmilesToMol(smi);
     TEST_ASSERT(mol);
-    reacts.push_back(ROMOL_SPTR(mol));
+    reacts.emplace_back(mol);
     TEST_ASSERT(reacts.size() == 1);
     std::vector<MOL_SPTR_VECT> prods;
     prods = rxn->runReactants(reacts);
@@ -4939,7 +4939,7 @@ void test52RedundantProductMappingNumbersAndRunReactants() {
     smi = "[13CH3]O";
     ROMol *mol = SmilesToMol(smi);
     TEST_ASSERT(mol);
-    reacts.push_back(ROMOL_SPTR(mol));
+    reacts.emplace_back(mol);
     TEST_ASSERT(reacts.size() == 1);
     std::vector<MOL_SPTR_VECT> prods;
     prods = rxn->runReactants(reacts);
@@ -4967,7 +4967,7 @@ void test52RedundantProductMappingNumbersAndRunReactants() {
     smi = "[13C]1OCN1";
     ROMol *mol = SmilesToMol(smi);
     TEST_ASSERT(mol);
-    reacts.push_back(ROMOL_SPTR(mol));
+    reacts.emplace_back(mol);
     TEST_ASSERT(reacts.size() == 1);
     std::vector<MOL_SPTR_VECT> prods;
     prods = rxn->runReactants(reacts);
@@ -5116,7 +5116,7 @@ void test54RedundantProductMappingNumbersAndRSChirality() {
     mol->getAtomWithIdx(1)->getProp(common_properties::_CIPCode, cip);
     TEST_ASSERT(cip == "S");
 
-    reacts.push_back(ROMOL_SPTR(mol));
+    reacts.emplace_back(mol);
     TEST_ASSERT(reacts.size() == 1);
     std::vector<MOL_SPTR_VECT> prods;
     prods = rxn->runReactants(reacts);
@@ -5159,7 +5159,7 @@ void test54RedundantProductMappingNumbersAndRSChirality() {
     mol->getAtomWithIdx(1)->getProp(common_properties::_CIPCode, cip);
     TEST_ASSERT(cip == "S");
     TEST_ASSERT(mol);
-    reacts.push_back(ROMOL_SPTR(mol));
+    reacts.emplace_back(mol);
     TEST_ASSERT(reacts.size() == 1);
     std::vector<MOL_SPTR_VECT> prods;
     prods = rxn->runReactants(reacts);
@@ -5206,7 +5206,7 @@ void test54RedundantProductMappingNumbersAndRSChirality() {
     mol->getAtomWithIdx(1)->getProp(common_properties::_CIPCode, cip);
     TEST_ASSERT(cip == "S");
 
-    reacts.push_back(ROMOL_SPTR(mol));
+    reacts.emplace_back(mol);
     TEST_ASSERT(reacts.size() == 1);
     std::vector<MOL_SPTR_VECT> prods;
     prods = rxn->runReactants(reacts);
@@ -5252,7 +5252,7 @@ void test54RedundantProductMappingNumbersAndRSChirality() {
     mol->getAtomWithIdx(1)->getProp(common_properties::_CIPCode, cip);
     TEST_ASSERT(cip == "S");
 
-    reacts.push_back(ROMOL_SPTR(mol));
+    reacts.emplace_back(mol);
     TEST_ASSERT(reacts.size() == 1);
     std::vector<MOL_SPTR_VECT> prods;
     prods = rxn->runReactants(reacts);
@@ -5298,7 +5298,7 @@ void test54RedundantProductMappingNumbersAndRSChirality() {
     mol->getAtomWithIdx(1)->getProp(common_properties::_CIPCode, cip);
     TEST_ASSERT(cip == "S");
 
-    reacts.push_back(ROMOL_SPTR(mol));
+    reacts.emplace_back(mol);
     TEST_ASSERT(reacts.size() == 1);
     std::vector<MOL_SPTR_VECT> prods;
     prods = rxn->runReactants(reacts);
@@ -5344,7 +5344,7 @@ void test54RedundantProductMappingNumbersAndRSChirality() {
     mol->getAtomWithIdx(1)->getProp(common_properties::_CIPCode, cip);
     TEST_ASSERT(cip == "S");
 
-    reacts.push_back(ROMOL_SPTR(mol));
+    reacts.emplace_back(mol);
     TEST_ASSERT(reacts.size() == 1);
     std::vector<MOL_SPTR_VECT> prods;
     prods = rxn->runReactants(reacts);
@@ -5398,7 +5398,7 @@ void test55RedundantProductMappingNumbersAndEZStereochemistry() {
     TEST_ASSERT(mol);
     MolOps::assignStereochemistry(*mol);
     TEST_ASSERT(mol->getBondWithIdx(1)->getStereo() == Bond::STEREOE);
-    reacts.push_back(ROMOL_SPTR(mol));
+    reacts.emplace_back(mol);
     TEST_ASSERT(reacts.size() == 1);
     std::vector<MOL_SPTR_VECT> prods;
     prods = rxn->runReactants(reacts);
@@ -5458,7 +5458,7 @@ void test55RedundantProductMappingNumbersAndEZStereochemistry() {
     TEST_ASSERT(mol);
     MolOps::assignStereochemistry(*mol);
     TEST_ASSERT(mol->getBondWithIdx(1)->getStereo() == Bond::STEREOE);
-    reacts.push_back(ROMOL_SPTR(mol));
+    reacts.emplace_back(mol);
     TEST_ASSERT(reacts.size() == 1);
     std::vector<MOL_SPTR_VECT> prods;
     prods = rxn->runReactants(reacts);
@@ -5519,7 +5519,7 @@ void test55RedundantProductMappingNumbersAndEZStereochemistry() {
     TEST_ASSERT(mol);
     MolOps::assignStereochemistry(*mol);
     TEST_ASSERT(mol->getBondWithIdx(1)->getStereo() == Bond::STEREOE);
-    reacts.push_back(ROMOL_SPTR(mol));
+    reacts.emplace_back(mol);
     TEST_ASSERT(reacts.size() == 1);
     std::vector<MOL_SPTR_VECT> prods;
     prods = rxn->runReactants(reacts);
@@ -5610,7 +5610,7 @@ void test57IntroductionOfNewChiralCenters() {
     smi = "FC(Cl)(Br)I";
     ROMol *mol = SmilesToMol(smi);
     TEST_ASSERT(mol);
-    reacts.push_back(ROMOL_SPTR(mol));
+    reacts.emplace_back(mol);
     std::vector<MOL_SPTR_VECT> prods = rxn->runReactants(reacts);
     TEST_ASSERT(prods.size() == 1);
     TEST_ASSERT(prods[0].size() == 1);
@@ -5639,7 +5639,7 @@ void test57IntroductionOfNewChiralCenters() {
         rdbase + "/Code/GraphMol/ChemReactions/testData/testRXNChirality1.sdf";
     ROMol *mol = MolFileToMol(fName);
     TEST_ASSERT(mol);
-    reacts.push_back(ROMOL_SPTR(mol));
+    reacts.emplace_back(mol);
     std::vector<MOL_SPTR_VECT> prods = rxn->runReactants(reacts);
     TEST_ASSERT(prods.size() == 1);
     TEST_ASSERT(prods[0].size() == 1);
@@ -5675,7 +5675,7 @@ void test57IntroductionOfNewChiralCenters() {
         rdbase + "/Code/GraphMol/ChemReactions/testData/testRXNChirality1.sdf";
     mol = MolFileToMol(fName);
     TEST_ASSERT(mol);
-    reacts.push_back(ROMOL_SPTR(mol));
+    reacts.emplace_back(mol);
     std::vector<MOL_SPTR_VECT> prods = rxn->runReactants(reacts);
     TEST_ASSERT(prods.size() == 1);
     TEST_ASSERT(prods[0].size() == 1);
@@ -5915,7 +5915,7 @@ void test61Github685() {
       smi = "CCC(O)(N)Cl";
       RWMol *mol = SmilesToMol(smi);
       TEST_ASSERT(mol);
-      reacts.push_back(ROMOL_SPTR(mol));
+      reacts.emplace_back(mol);
       std::vector<MOL_SPTR_VECT> prods = rxn->runReactants(reacts);
       TEST_ASSERT(prods.size() == 1);
       TEST_ASSERT(prods[0].size() == 2);
@@ -5928,7 +5928,7 @@ void test61Github685() {
       smi = "CC[C@](O)(N)Cl";
       RWMol *mol = SmilesToMol(smi);
       TEST_ASSERT(mol);
-      reacts.push_back(ROMOL_SPTR(mol));
+      reacts.emplace_back(mol);
       std::vector<MOL_SPTR_VECT> prods = rxn->runReactants(reacts);
       TEST_ASSERT(prods.size() == 1);
       TEST_ASSERT(prods[0].size() == 2);
@@ -5959,7 +5959,7 @@ void test61Github685() {
       RWMol *mol = SmilesToMol(smi);
       TEST_ASSERT(mol);
       MolOps::addHs(*mol);
-      reacts.push_back(ROMOL_SPTR(mol));
+      reacts.emplace_back(mol);
       std::vector<MOL_SPTR_VECT> prods = rxn->runReactants(reacts);
       TEST_ASSERT(prods.size() == 1);
       TEST_ASSERT(prods[0].size() == 2);
@@ -5974,7 +5974,7 @@ void test61Github685() {
       RWMol *mol = SmilesToMol(smi);
       TEST_ASSERT(mol);
       MolOps::addHs(*mol);
-      reacts.push_back(ROMOL_SPTR(mol));
+      reacts.emplace_back(mol);
       std::vector<MOL_SPTR_VECT> prods = rxn->runReactants(reacts);
       TEST_ASSERT(prods.size() == 1);
       TEST_ASSERT(prods[0].size() == 2);
@@ -6097,7 +6097,7 @@ void test64Github1266() {
       smi = "C[13CH3]";
       RWMol *mol = SmilesToMol(smi);
       TEST_ASSERT(mol);
-      reacts.push_back(ROMOL_SPTR(mol));
+      reacts.emplace_back(mol);
       std::vector<MOL_SPTR_VECT> prods = rxn->runReactants(reacts);
       TEST_ASSERT(prods.size() == 1);
       TEST_ASSERT(prods[0].size() == 1);
@@ -6183,11 +6183,11 @@ void test65SanitizeUnmappedHs() {
   MOL_SPTR_VECT reacts1, hreacts1, reacts2, hreacts2;
   std::vector<MOL_SPTR_VECT> prods;
 
-  reacts1.push_back(ROMOL_SPTR(SmilesToMol("C1CCCCC1")));
-  hreacts1.push_back(ROMOL_SPTR(MolOps::addHs(*reacts1[0].get())));
+  reacts1.emplace_back(SmilesToMol("C1CCCCC1"));
+  hreacts1.emplace_back(MolOps::addHs(*reacts1[0].get()));
 
-  reacts2.push_back(ROMOL_SPTR(SmilesToMol("C1CCCCC1Cl")));
-  hreacts2.push_back(ROMOL_SPTR(MolOps::addHs(*reacts2[0].get())));
+  reacts2.emplace_back(SmilesToMol("C1CCCCC1Cl"));
+  hreacts2.emplace_back(MolOps::addHs(*reacts2[0].get()));
 
   // test with and without AddHs
   prods = rxn->runReactants(reacts1);
@@ -6291,11 +6291,11 @@ void test66SanitizeMappedHs() {
   MOL_SPTR_VECT reacts1, hreacts1, reacts2, hreacts2;
   std::vector<MOL_SPTR_VECT> prods;
 
-  reacts1.push_back(ROMOL_SPTR(SmilesToMol("C1CCCCC1")));
-  hreacts1.push_back(ROMOL_SPTR(MolOps::addHs(*reacts1[0].get())));
+  reacts1.emplace_back(SmilesToMol("C1CCCCC1"));
+  hreacts1.emplace_back(MolOps::addHs(*reacts1[0].get()));
 
-  reacts2.push_back(ROMOL_SPTR(SmilesToMol("C1CCCCC1Cl")));
-  hreacts2.push_back(ROMOL_SPTR(MolOps::addHs(*reacts2[0].get())));
+  reacts2.emplace_back(SmilesToMol("C1CCCCC1Cl"));
+  hreacts2.emplace_back(MolOps::addHs(*reacts2[0].get()));
 
   // test with and without AddHs
   prods = rxn->runReactants(reacts1);
@@ -6420,11 +6420,11 @@ void test67SanitizeMappedHsInReactantAndProd() {
   MOL_SPTR_VECT reacts1, hreacts1, reacts2, hreacts2;
   std::vector<MOL_SPTR_VECT> prods;
 
-  reacts1.push_back(ROMOL_SPTR(SmilesToMol("C1CCCCC1")));
-  hreacts1.push_back(ROMOL_SPTR(MolOps::addHs(*reacts1[0].get())));
+  reacts1.emplace_back(SmilesToMol("C1CCCCC1"));
+  hreacts1.emplace_back(MolOps::addHs(*reacts1[0].get()));
 
-  reacts2.push_back(ROMOL_SPTR(SmilesToMol("C1CCCCC1Cl")));
-  hreacts2.push_back(ROMOL_SPTR(MolOps::addHs(*reacts2[0].get())));
+  reacts2.emplace_back(SmilesToMol("C1CCCCC1Cl"));
+  hreacts2.emplace_back(MolOps::addHs(*reacts2[0].get()));
 
   // test with and without AddHs
   prods = rxn->runReactants(reacts1);
@@ -6486,8 +6486,8 @@ void test68MappedHToHeavy() {
   MOL_SPTR_VECT reacts1, hreacts1, reacts2, hreacts2;
   std::vector<MOL_SPTR_VECT> prods;
 
-  reacts1.push_back(ROMOL_SPTR(SmilesToMol("CC")));
-  hreacts1.push_back(ROMOL_SPTR(MolOps::addHs(*reacts1[0].get())));
+  reacts1.emplace_back(SmilesToMol("CC"));
+  hreacts1.emplace_back(MolOps::addHs(*reacts1[0].get()));
 
   // test with and without AddHs
   prods = rxn->runReactants(reacts1);
@@ -6525,7 +6525,7 @@ void test69Github1387() {
     {  // this always worked
       MOL_SPTR_VECT reacts;
       std::vector<MOL_SPTR_VECT> prods;
-      reacts.push_back(ROMOL_SPTR(SmilesToMol("COCCCOC")));
+      reacts.emplace_back(SmilesToMol("COCCCOC"));
       prods = rxn->runReactants(reacts);
       TEST_ASSERT(prods.size() == 2);
       TEST_ASSERT(prods[0].size() == 1);
@@ -6537,7 +6537,7 @@ void test69Github1387() {
     {  // the bug:
       MOL_SPTR_VECT reacts;
       std::vector<MOL_SPTR_VECT> prods;
-      reacts.push_back(ROMOL_SPTR(SmilesToMol("COCCOC")));
+      reacts.emplace_back(SmilesToMol("COCCOC"));
       prods = rxn->runReactants(reacts);
       TEST_ASSERT(prods.size() == 2);
       TEST_ASSERT(prods[0].size() == 1);
@@ -6549,7 +6549,7 @@ void test69Github1387() {
     {  // the bug, plus a ring closure:
       MOL_SPTR_VECT reacts;
       std::vector<MOL_SPTR_VECT> prods;
-      reacts.push_back(ROMOL_SPTR(SmilesToMol("COC1CCC1OC")));
+      reacts.emplace_back(SmilesToMol("COC1CCC1OC"));
       prods = rxn->runReactants(reacts);
       TEST_ASSERT(prods.size() == 2);
       TEST_ASSERT(prods[0].size() == 1);
@@ -6571,7 +6571,7 @@ void test69Github1387() {
     {  // this always worked
       MOL_SPTR_VECT reacts;
       std::vector<MOL_SPTR_VECT> prods;
-      reacts.push_back(ROMOL_SPTR(SmilesToMol("COCCCOC")));
+      reacts.emplace_back(SmilesToMol("COCCCOC"));
       prods = rxn->runReactants(reacts);
       TEST_ASSERT(prods.size() == 2);
       TEST_ASSERT(prods[0].size() == 1);
@@ -6583,7 +6583,7 @@ void test69Github1387() {
     {  // the bug:
       MOL_SPTR_VECT reacts;
       std::vector<MOL_SPTR_VECT> prods;
-      reacts.push_back(ROMOL_SPTR(SmilesToMol("COCCOC")));
+      reacts.emplace_back(SmilesToMol("COCCOC"));
       prods = rxn->runReactants(reacts);
       TEST_ASSERT(prods.size() == 2);
       TEST_ASSERT(prods[0].size() == 1);
@@ -6595,7 +6595,7 @@ void test69Github1387() {
     {  // the bug, plus a ring closure:
       MOL_SPTR_VECT reacts;
       std::vector<MOL_SPTR_VECT> prods;
-      reacts.push_back(ROMOL_SPTR(SmilesToMol("COC1CCC1OC")));
+      reacts.emplace_back(SmilesToMol("COC1CCC1OC"));
       prods = rxn->runReactants(reacts);
       TEST_ASSERT(prods.size() == 2);
       TEST_ASSERT(prods[0].size() == 1);
@@ -6624,7 +6624,7 @@ void test70Github1544() {
     {
       MOL_SPTR_VECT reacts;
       std::vector<MOL_SPTR_VECT> prods;
-      reacts.push_back(ROMOL_SPTR(SmilesToMol("Cc1ccccc1")));
+      reacts.emplace_back(SmilesToMol("Cc1ccccc1"));
       prods = rxn->runReactants(reacts);
       TEST_ASSERT(prods.size() == 1);
       TEST_ASSERT(prods[0].size() == 1);
@@ -6642,7 +6642,7 @@ void test70Github1544() {
     {
       MOL_SPTR_VECT reacts;
       std::vector<MOL_SPTR_VECT> prods;
-      reacts.push_back(ROMOL_SPTR(SmilesToMol("Cc1ccccc1")));
+      reacts.emplace_back(SmilesToMol("Cc1ccccc1"));
       prods = rxn->runReactants(reacts);
       TEST_ASSERT(prods.size() == 1);
       TEST_ASSERT(prods[0].size() == 2);
@@ -6746,12 +6746,12 @@ void testGithub1950() {
     std::string smi = "c1ccccc1Cl";
     auto mol = SmilesToMol(smi);
     TEST_ASSERT(mol);
-    reacts.push_back(ROMOL_SPTR(mol));
+    reacts.emplace_back(mol);
 
     smi = "CCO";
     mol = SmilesToMol(smi);
     TEST_ASSERT(mol);
-    reacts.push_back(ROMOL_SPTR(mol));
+    reacts.emplace_back(mol);
 
     rxn->initReactantMatchers();
     auto prods = rxn->runReactants(reacts);
@@ -6775,12 +6775,12 @@ void testGithub1950() {
     std::string smi = "c1ccccc1Cl";
     auto mol = SmilesToMol(smi);
     TEST_ASSERT(mol);
-    reacts.push_back(ROMOL_SPTR(mol));
+    reacts.emplace_back(mol);
 
     smi = "CCO";
     mol = SmilesToMol(smi);
     TEST_ASSERT(mol);
-    reacts.push_back(ROMOL_SPTR(mol));
+    reacts.emplace_back(mol);
 
     rxn->initReactantMatchers();
     auto prods = rxn->runReactants(reacts);
@@ -6806,12 +6806,12 @@ void testGithub1950() {
     std::string smi = "c1ccccc1Cl";
     auto mol = SmilesToMol(smi);
     TEST_ASSERT(mol);
-    reacts.push_back(ROMOL_SPTR(mol));
+    reacts.emplace_back(mol);
 
     smi = "CCO";
     mol = SmilesToMol(smi);
     TEST_ASSERT(mol);
-    reacts.push_back(ROMOL_SPTR(mol));
+    reacts.emplace_back(mol);
 
     rxn->initReactantMatchers();
     auto prods = rxn->runReactants(reacts);
@@ -6904,7 +6904,7 @@ void testGithub1269() {
     std::string smi = "NC";
     auto mol = SmilesToMol(smi);
     TEST_ASSERT(mol);
-    reacts.push_back(ROMOL_SPTR(mol));
+    reacts.emplace_back(mol);
 
     auto prods = rxn->runReactants(reacts);
     TEST_ASSERT(prods.size() == 1);

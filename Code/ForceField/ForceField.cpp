@@ -165,7 +165,7 @@ ForceField::ForceField(const ForceField &other)
   for (const auto &contrib : other.d_contribs) {
     ForceFieldContrib *ncontrib = contrib->copy();
     ncontrib->dp_forceField = this;
-    d_contribs.push_back(ContribPtr(ncontrib));
+    d_contribs.emplace_back(ncontrib);
   }
 };
 

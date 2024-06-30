@@ -214,7 +214,7 @@ class RDKIT_MOLSTANDARDIZE_EXPORT TautomerEnumeratorResult {
  private:
   void fillTautomersItVec() {
     for (auto it = d_tautomers.begin(); it != d_tautomers.end(); ++it) {
-      d_tautomersItVec.push_back(it);
+      d_tautomersItVec.emplace_back(it);
     }
   }
   // the enumerated tautomers

@@ -339,22 +339,16 @@ struct RDKIT_MOLDRAW2D_EXPORT MolDrawOptions {
               // rather than black.
 
   MolDrawOptions() {
-    highlightColourPalette.emplace_back(
-        DrawColour(1., 1., .67));  // popcorn yellow
-    highlightColourPalette.emplace_back(DrawColour(1., .8, .6));  // sand
-    highlightColourPalette.emplace_back(
-        DrawColour(1., .71, .76));  // light pink
-    highlightColourPalette.emplace_back(
-        DrawColour(.8, 1., .8));  // offwhitegreen
-    highlightColourPalette.emplace_back(DrawColour(.87, .63, .87));  // plum
-    highlightColourPalette.emplace_back(
-        DrawColour(.76, .94, .96));  // pastel blue
-    highlightColourPalette.emplace_back(
-        DrawColour(.67, .67, 1.));  // periwinkle
-    highlightColourPalette.emplace_back(DrawColour(.64, .76, .34));  // avocado
-    highlightColourPalette.emplace_back(
-        DrawColour(.56, .93, .56));  // light green
-    highlightColourPalette.emplace_back(DrawColour(.20, .63, .79));  // peacock
+    highlightColourPalette.emplace_back(1., 1., .67);    // popcorn yellow
+    highlightColourPalette.emplace_back(1., .8, .6);     // sand
+    highlightColourPalette.emplace_back(1., .71, .76);   // light pink
+    highlightColourPalette.emplace_back(.8, 1., .8);     // offwhitegreen
+    highlightColourPalette.emplace_back(.87, .63, .87);  // plum
+    highlightColourPalette.emplace_back(.76, .94, .96);  // pastel blue
+    highlightColourPalette.emplace_back(.67, .67, 1.);   // periwinkle
+    highlightColourPalette.emplace_back(.64, .76, .34);  // avocado
+    highlightColourPalette.emplace_back(.56, .93, .56);  // light green
+    highlightColourPalette.emplace_back(.20, .63, .79);  // peacock
     assignDefaultPalette(atomColourPalette);
   }
 };

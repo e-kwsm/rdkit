@@ -267,10 +267,10 @@ SynthonSpaceSearcher::doTheSearch(
     for (unsigned int i = 0U;
          i < std::min(static_cast<size_t>(numThreads), reactionNames.size());
          ++i) {
-      threads.push_back(std::thread(processReactions, this,
-                                    std::ref(reactionNames), std::ref(fragSets),
-                                    endTime, std::ref(mostRecentReaction),
-                                    lastReaction, std::ref(reactionHits)));
+      threads.emplace_back(processReactions, this, std::ref(reactionNames),
+                           std::ref(fragSets), endTime,
+                           std::ref(mostRecentReaction), lastReaction,
+                           std::ref(reactionHits));
     }
     for (auto &t : threads) {
       t.join();
@@ -586,9 +586,9 @@ void SynthonSpaceSearcher::makeHitsFromToTry(
     size_t start = 0;
     std::vector<std::thread> threads;
     for (unsigned int i = 0U; i < numThreads; ++i, start += eachThread) {
-      threads.push_back(std::thread(processPartHitsFromDetails, std::ref(toTry),
-                                    endTime, std::ref(results), this,
-                                    std::ref(mostRecentTry), lastTry));
+      threads.emplace_back(processPartHitsFromDetails, std::ref(toTry), endTime,
+                           std::ref(results), this, std::ref(mostRecentTry),
+                           lastTry);
     }
     for (auto &t : threads) {
       t.join();
