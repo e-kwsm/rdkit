@@ -12,8 +12,7 @@
 #include <vector>
 #include <stdexcept>
 
-namespace RDKit {
-namespace FMCS {
+namespace RDKit::FMCS {
 template <typename T>
 class RDKIT_FMCS_EXPORT
     TArray2D {  // for scalar value types ! including bool with special STL
@@ -46,5 +45,4 @@ class RDKIT_FMCS_EXPORT
 };
 
 typedef TArray2D<bool> MatchTable;  // row is index in QueryMolecule
-}  // namespace FMCS
-}  // namespace RDKit
+}  // namespace RDKit::FMCS

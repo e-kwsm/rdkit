@@ -14,8 +14,7 @@
 
 #include "../CIPMol.h"
 
-namespace RDKit {
-namespace CIPLabeler {
+namespace RDKit::CIPLabeler {
 
 SequenceRule::SequenceRule() : dp_sorter{new Sort(this)} {}
 
@@ -151,5 +150,4 @@ bool SequenceRule::areUpEdges(Node *aNode, Node *bNode, Edge *aEdge,
   return false;
 }
 
-}  // namespace CIPLabeler
-}  // namespace RDKit
+}  // namespace RDKit::CIPLabeler

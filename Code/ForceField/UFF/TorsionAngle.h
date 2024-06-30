@@ -21,8 +21,7 @@ namespace RDGeom {
 class Point3D;
 }
 
-namespace ForceFields {
-namespace UFF {
+namespace ForceFields::UFF {
 class AtomicParams;
 
 //! the torsion term for the Universal Force Field
@@ -110,6 +109,6 @@ RDKIT_FORCEFIELD_EXPORT double equation17(double bondOrder23,
                                           const AtomicParams *at3Params);
 RDKIT_FORCEFIELD_EXPORT bool isInGroup6(int num);
 }  // namespace Utils
-}  // namespace UFF
-}  // namespace ForceFields
+}  // namespace ForceFields::UFF
+
 #endif

@@ -16,8 +16,7 @@
 using namespace RDKit;
 namespace python = boost::python;
 
-namespace RDKit {
-namespace TopologicalTorsionWrapper {
+namespace RDKit::TopologicalTorsionWrapper {
 template <typename OutputType>
 FingerprintGenerator<OutputType> *getTopologicalTorsionFPGenerator(
     const bool includeChirality, const uint32_t torsionAtomCount,
@@ -90,6 +89,4 @@ void exportTopologicalTorsion() {
 
   return;
 }
-}  // namespace TopologicalTorsionWrapper
-
-}  // namespace RDKit
+}  // namespace RDKit::TopologicalTorsionWrapper

@@ -36,8 +36,7 @@ class RDKIT_SMILESPARSE_EXPORT SmilesParseException : public std::exception {
 
 }  // namespace SmilesParse
 
-namespace v2 {
-namespace SmilesParse {
+namespace v2::SmilesParse {
 using RDKit::SmilesParse::SmilesParseException;
 
 struct RDKIT_SMILESPARSE_EXPORT SmilesParserParams {
@@ -83,8 +82,7 @@ RDKIT_SMILESPARSE_EXPORT std::unique_ptr<RDKit::Atom> AtomFromSmarts(
 RDKIT_SMILESPARSE_EXPORT std::unique_ptr<RDKit::Bond> BondFromSmarts(
     const std::string &sma);
 
-}  // namespace SmilesParse
-}  // namespace v2
+}  // namespace v2::SmilesParse
 
 inline namespace v1 {
 using RDKit::SmilesParse::SmilesParseException;

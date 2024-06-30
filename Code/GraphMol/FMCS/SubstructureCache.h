@@ -18,8 +18,7 @@
 #include "Seed.h"
 #include "DebugTrace.h"  // algorithm filter definitions
 
-namespace RDKit {
-namespace FMCS {
+namespace RDKit::FMCS {
 class RDKIT_FMCS_EXPORT SubstructureCache {
  public:
 #pragma pack(push, 1)
@@ -167,5 +166,4 @@ class RDKIT_FMCS_EXPORT SubstructureCache {
         [](const auto &acc, const auto &v) { return acc + v.size(); });
   }
 };
-}  // namespace FMCS
-}  // namespace RDKit
+}  // namespace RDKit::FMCS

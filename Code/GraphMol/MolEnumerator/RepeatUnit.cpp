@@ -22,8 +22,7 @@
 
 typedef boost::tokenizer<boost::char_separator<char>> tokenizer;
 
-namespace RDKit {
-namespace MolEnumerator {
+namespace RDKit::MolEnumerator {
 
 const std::string polymarker = "_polymeratom";
 const std::string headmarker = "_headatom";
@@ -459,6 +458,4 @@ std::unique_ptr<ROMol> RepeatUnitOp::operator()(
   return std::unique_ptr<ROMol>(new ROMol(*res));
 }
 
-}  // namespace MolEnumerator
-
-}  // namespace RDKit
+}  // namespace RDKit::MolEnumerator

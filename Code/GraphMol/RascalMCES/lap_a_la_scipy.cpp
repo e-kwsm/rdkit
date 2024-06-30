@@ -53,8 +53,7 @@ Author: PM Larsen
 #include <numeric>
 #include <vector>
 
-namespace RDKit {
-namespace RascalMCES {
+namespace RDKit::RascalMCES {
 template <typename T>
 std::vector<size_t> argsortIter(const std::vector<T> &v) {
   std::vector<size_t> index(v.size());
@@ -222,5 +221,4 @@ int lapMaximize(const std::vector<std::vector<int>> &costsMat,
 
   return 0;
 }
-}  // namespace RascalMCES
-}  // namespace RDKit
+}  // namespace RDKit::RascalMCES

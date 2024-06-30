@@ -23,8 +23,7 @@
 #include <GraphMol/ChemTransforms/ChemTransforms.h>
 #include <RDGeneral/Exceptions.h>
 
-namespace RDKit {
-namespace ScaffoldNetwork {
+namespace RDKit::ScaffoldNetwork {
 
 ScaffoldNetworkParams::ScaffoldNetworkParams(
     const std::vector<std::string> &bondBreakersSmarts) {
@@ -494,5 +493,4 @@ ScaffoldNetworkParams getBRICSNetworkParams() {
 
 // const ScaffoldNetworkParams BRICSNetworkParams;
 
-}  // namespace ScaffoldNetwork
-}  // namespace RDKit
+}  // namespace RDKit::ScaffoldNetwork

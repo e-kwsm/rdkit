@@ -14,9 +14,7 @@
 #include <RDGeneral/FileParseException.h>
 #include <sstream>
 
-namespace RDKit {
-
-namespace SGroupParsing {
+namespace RDKit::SGroupParsing {
 typedef std::map<int, SubstanceGroup> IDX_TO_SGROUP_MAP;
 typedef std::map<int, STR_VECT> IDX_TO_STR_VECT_MAP;
 
@@ -158,5 +156,4 @@ std::string ParseV3000SGroupsBlock(std::istream *inStream, unsigned int &line,
                                    unsigned int nSgroups, RWMol *mol,
                                    bool strictParsing);
 
-}  // namespace SGroupParsing
-}  // namespace RDKit
+}  // namespace RDKit::SGroupParsing

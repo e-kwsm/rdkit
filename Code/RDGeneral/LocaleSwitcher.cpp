@@ -48,8 +48,7 @@
 #include <thread>
 #endif
 
-namespace RDKit {
-namespace Utils {
+namespace RDKit::Utils {
 namespace detail {
 // Implementation of LocaleSwitcher
 //  The locale switcher has state to indicate how many times
@@ -150,5 +149,4 @@ class LocaleSwitcherImpl {
 
 LocaleSwitcher::LocaleSwitcher() : impl(new detail::LocaleSwitcherImpl) {}
 LocaleSwitcher::~LocaleSwitcher() { delete impl; }
-}  // namespace Utils
-}  // namespace RDKit
+}  // namespace RDKit::Utils

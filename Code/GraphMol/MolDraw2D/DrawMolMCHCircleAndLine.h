@@ -15,8 +15,7 @@
 
 #include <GraphMol/MolDraw2D/DrawMolMCH.h>
 
-namespace RDKit {
-namespace MolDraw2D_detail {
+namespace RDKit::MolDraw2D_detail {
 
 class DrawMolMCHCircleAndLine : public DrawMolMCH {
  public:
@@ -73,6 +72,5 @@ class DrawMolMCHCircleAndLine : public DrawMolMCH {
       std::vector<std::unique_ptr<DrawShape>> &atomHighlights,
       std::vector<std::unique_ptr<DrawShape>> &bondHighlights);
 };
-}  // namespace MolDraw2D_detail
-}  // namespace RDKit
+}  // namespace RDKit::MolDraw2D_detail
 #endif  // DRAWMOLMCHCIRCLEANDLINE_H

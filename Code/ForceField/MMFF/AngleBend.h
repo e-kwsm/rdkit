@@ -13,8 +13,7 @@
 #include <ForceField/ForceField.h>
 #include <ForceField/Contrib.h>
 
-namespace ForceFields {
-namespace MMFF {
+namespace ForceFields::MMFF {
 class MMFFBond;
 class MMFFAngle;
 class MMFFProp;
@@ -71,6 +70,5 @@ RDKIT_FORCEFIELD_EXPORT void calcAngleBendGrad(RDGeom::Point3D *r, double *dist,
                                                double &cosTheta,
                                                double &sinTheta);
 }  // namespace Utils
-}  // namespace MMFF
-}  // namespace ForceFields
+}  // namespace ForceFields::MMFF
 #endif

@@ -22,9 +22,7 @@
 #include <GraphMol/RascalMCES/RascalClusterOptions.h>
 #include <GraphMol/RascalMCES/RascalDetails.h>
 
-namespace RDKit {
-
-namespace RascalMCES {
+namespace RDKit::RascalMCES {
 namespace details {
 std::vector<std::vector<unsigned int>> buildNborLists(
     const std::vector<std::vector<ClusNode>> &proxGraph) {
@@ -114,5 +112,4 @@ std::vector<std::vector<unsigned int>> rascalButinaCluster(
   auto clusters = details::formClusters(nborLists);
   return clusters;
 }
-}  // namespace RascalMCES
-}  // namespace RDKit
+}  // namespace RDKit::RascalMCES

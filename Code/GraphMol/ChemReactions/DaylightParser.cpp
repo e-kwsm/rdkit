@@ -42,9 +42,7 @@
 #include <string>
 #include "ReactionUtils.h"
 
-namespace RDKit {
-namespace v2 {
-namespace ReactionParser {
+namespace RDKit::v2::ReactionParser {
 
 namespace DaylightParserUtils {
 std::vector<std::string> splitSmartsIntoComponents(
@@ -315,6 +313,4 @@ std::unique_ptr<ChemicalReaction> ReactionFromSmiles(
     const std::string &origText, const ReactionSmartsParserParams &options) {
   return parseReaction(origText, options, true);
 }
-}  // namespace ReactionParser
-}  // namespace v2
-}  // namespace RDKit
+}  // namespace RDKit::v2::ReactionParser
