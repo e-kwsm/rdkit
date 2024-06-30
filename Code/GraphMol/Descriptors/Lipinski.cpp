@@ -71,8 +71,7 @@ typedef boost::flyweight<boost::flyweights::key_value<std::string, ss_matcher>,
   }                                                \
   extern int no_such_variable
 
-namespace RDKit {
-namespace Descriptors {
+namespace RDKit::Descriptors {
 
 unsigned int calcLipinskiHBA(const ROMol &mol) {
   unsigned int res = 0;
@@ -551,5 +550,4 @@ unsigned int numUnspecifiedAtomStereoCenters(const ROMol &mol) {
   return res;
 }
 
-}  // end of namespace Descriptors
-}  // end of namespace RDKit
+}  // namespace RDKit::Descriptors

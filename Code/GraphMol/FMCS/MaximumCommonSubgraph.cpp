@@ -23,8 +23,7 @@
 #include <boost/dynamic_bitset.hpp>
 #include <RDGeneral/BoostEndInclude.h>
 
-namespace RDKit {
-namespace FMCS {
+namespace RDKit::FMCS {
 
 struct LabelDefinition {
   unsigned int ItemIndex;  // item with this label value
@@ -1455,5 +1454,4 @@ bool MaximumCommonSubgraph::matchIncrementalFast(Seed &seed,
 #endif
   return matched;
 }
-}  // namespace FMCS
-}  // namespace RDKit
+}  // namespace RDKit::FMCS

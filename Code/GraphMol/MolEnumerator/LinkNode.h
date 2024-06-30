@@ -17,8 +17,7 @@
 
 typedef boost::tokenizer<boost::char_separator<char>> tokenizer;
 
-namespace RDKit {
-namespace MolEnumerator {
+namespace RDKit::MolEnumerator {
 
 struct LinkNode {
   unsigned int minRep = 0;
@@ -154,6 +153,4 @@ inline std::vector<LinkNode> getMolLinkNodes(
 }
 
 }  // namespace utils
-}  // namespace MolEnumerator
-
-}  // namespace RDKit
+}  // namespace RDKit::MolEnumerator

@@ -21,10 +21,7 @@ typedef boost::tokenizer<boost::char_separator<char>> tokenizer;
 #include <string>
 #include <cstdlib>
 
-namespace RDKit {
-
-namespace v2 {
-namespace FileParsers {
+namespace RDKit::v2::FileParsers {
 
 SmilesMolSupplier::SmilesMolSupplier() { init(); }
 
@@ -504,6 +501,4 @@ unsigned int SmilesMolSupplier::length() {
 }
 
 bool SmilesMolSupplier::atEnd() { return df_end; }
-}  // namespace FileParsers
-}  // namespace v2
-}  // namespace RDKit
+}  // namespace RDKit::v2::FileParsers
