@@ -43,9 +43,9 @@ class Rules : public SequenceRule {
     rule->setSorter(new Sort(d_rules));
   }
 
-  int getNumSubRules() const { return d_rules.size(); }
+  [[nodiscard]] int getNumSubRules() const { return d_rules.size(); }
 
-  const Sort *getSorter() const override {
+  [[nodiscard]] const Sort *getSorter() const override {
     if (dp_sorter == nullptr) {
       const_cast<Rules *>(this)->setSorter(new Sort(this));
     }

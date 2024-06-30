@@ -48,7 +48,9 @@ class RDKIT_FORCEFIELD_EXPORT vdWContrib : public ForceFieldContrib {
              double threshMultiplier = 10.0);
   double getEnergy(double *pos) const override;
   void getGrad(double *pos, double *grad) const override;
-  vdWContrib *copy() const override { return new vdWContrib(*this); }
+  [[nodiscard]] vdWContrib *copy() const override {
+    return new vdWContrib(*this);
+  }
 
  private:
   int d_at1Idx{-1};

@@ -179,11 +179,13 @@ class RDKIT_FORCEFIELD_EXPORT ForceField {
 
   //! returns a reference to our points (a PointPtrVect)
   RDGeom::PointPtrVect &positions() { return d_positions; }
-  const RDGeom::PointPtrVect &positions() const { return d_positions; }
+  [[nodiscard]] const RDGeom::PointPtrVect &positions() const {
+    return d_positions;
+  }
 
   //! returns a reference to our contribs (a ContribPtrVect)
   ContribPtrVect &contribs() { return d_contribs; }
-  const ContribPtrVect &contribs() const { return d_contribs; }
+  [[nodiscard]] const ContribPtrVect &contribs() const { return d_contribs; }
 
   //! returns the distance between two points
   /*!
@@ -232,13 +234,13 @@ class RDKIT_FORCEFIELD_EXPORT ForceField {
   double distance2(unsigned int i, unsigned int j, double *pos = nullptr) const;
 
   //! returns the dimension of the forcefield
-  unsigned int dimension() const { return d_dimension; }
+  [[nodiscard]] unsigned int dimension() const { return d_dimension; }
 
   //! returns the number of points the ForceField is handling
-  unsigned int numPoints() const { return d_numPoints; }
+  [[nodiscard]] unsigned int numPoints() const { return d_numPoints; }
 
   INT_VECT &fixedPoints() { return d_fixedPoints; }
-  const INT_VECT &fixedPoints() const { return d_fixedPoints; }
+  [[nodiscard]] const INT_VECT &fixedPoints() const { return d_fixedPoints; }
 
  protected:
   unsigned int d_dimension;

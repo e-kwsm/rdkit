@@ -108,7 +108,7 @@ class RDKIT_FILEPARSERS_EXPORT ForwardSDMolSupplier : public MolSupplier {
     static_cast<ContainedType *>(dp_supplier.get())
         ->setProcessPropertyLists(val);
   }
-  bool getProcessPropertyLists() const {
+  [[nodiscard]] bool getProcessPropertyLists() const {
     if (dp_supplier) {
       return static_cast<ContainedType *>(dp_supplier.get())
           ->getProcessPropertyLists();
@@ -116,7 +116,7 @@ class RDKIT_FILEPARSERS_EXPORT ForwardSDMolSupplier : public MolSupplier {
     return false;
   }
 
-  bool getEOFHitOnRead() const {
+  [[nodiscard]] bool getEOFHitOnRead() const {
     if (dp_supplier) {
       return static_cast<ContainedType *>(dp_supplier.get())->getEOFHitOnRead();
     }

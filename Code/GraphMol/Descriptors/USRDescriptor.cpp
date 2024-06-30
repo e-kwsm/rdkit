@@ -139,7 +139,9 @@ class ss_matcher {
     TEST_ASSERT(p);
     m_matcher.reset(p);
   };
-  const RDKit::ROMol *getMatcher() const { return m_matcher.get(); };
+  [[nodiscard]] const RDKit::ROMol *getMatcher() const {
+    return m_matcher.get();
+  };
 
  private:
   RDKit::ROMOL_SPTR m_matcher;
