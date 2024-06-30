@@ -23,8 +23,7 @@
 #include <GraphMol/RDKitBase.h>
 #include <RDGeneral/export.h>
 
-namespace RDKit {
-namespace Descriptors {
+namespace RDKit::Descriptors {
 
 class RDKIT_DESCRIPTORS_EXPORT DoubleCubicLatticeVolume {
  public:
@@ -88,6 +87,6 @@ class RDKIT_DESCRIPTORS_EXPORT DoubleCubicLatticeVolume {
   double compactness;
   double packingDensity;
 };
-}  // namespace Descriptors
-}  // namespace RDKit
+}  // namespace RDKit::Descriptors
+
 #endif

@@ -9,10 +9,8 @@
 //  of the RDKit source tree.
 //
 #include "MultithreadedMolSupplier.h"
-namespace RDKit {
 
-namespace v2 {
-namespace FileParsers {
+namespace RDKit::v2::FileParsers {
 
 MultithreadedMolSupplier::~MultithreadedMolSupplier() {
   endThreads();
@@ -107,7 +105,6 @@ std::string MultithreadedMolSupplier::getLastItemText() const {
 void MultithreadedMolSupplier::reset() {
   UNDER_CONSTRUCTION("reset() not supported for MultithreadedMolSupplier();");
 }
-}  // namespace FileParsers
-}  // namespace v2
-}  // namespace RDKit
+}  // namespace RDKit::v2::FileParsers
+
 #endif

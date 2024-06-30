@@ -15,8 +15,7 @@
 #include <iostream>
 #include <ForceField/Contrib.h>
 
-namespace ForceFields {
-namespace MMFF {
+namespace ForceFields::MMFF {
 
 //! An angle range constraint modelled after a AngleBendContrib
 class RDKIT_FORCEFIELD_EXPORT AngleConstraintContrib
@@ -59,6 +58,6 @@ class RDKIT_FORCEFIELD_EXPORT AngleConstraintContrib
   double d_minAngleDeg, d_maxAngleDeg;  //!< rest amplitudes of the angle
   double d_forceConstant;  //!< force constant of the angle constraint
 };
-}  // namespace MMFF
-}  // namespace ForceFields
+}  // namespace ForceFields::MMFF
+
 #endif

@@ -16,8 +16,7 @@
 #include <iostream>
 #include <fstream>
 
-namespace RDKit {
-namespace MolStandardize {
+namespace RDKit::MolStandardize {
 
 void AcidBaseCatalogEntry::toStream(std::ostream &ss) const {
   //  ReactionPickler::pickleReaction(*dp_transform, ss);
@@ -65,5 +64,4 @@ void AcidBaseCatalogEntry::initFromString(const std::string &text) {
   initFromStream(ss);
 }
 
-}  // namespace MolStandardize
-}  // namespace RDKit
+}  // namespace RDKit::MolStandardize

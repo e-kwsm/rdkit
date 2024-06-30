@@ -14,8 +14,7 @@
 #include <tuple>
 #include <Geometry/point.h>
 
-namespace ForceFields {
-namespace UFF {
+namespace ForceFields::UFF {
 class AtomicParams;
 
 //! The inversion term for the Universal Force Field
@@ -74,6 +73,6 @@ RDKIT_FORCEFIELD_EXPORT double calculateCosY(const RDGeom::Point3D &iPoint,
 RDKIT_FORCEFIELD_EXPORT std::tuple<double, double, double, double>
 calcInversionCoefficientsAndForceConstant(int at2AtomicNum, bool isCBoundToO);
 }  // namespace Utils
-}  // namespace UFF
-}  // namespace ForceFields
+}  // namespace ForceFields::UFF
+
 #endif

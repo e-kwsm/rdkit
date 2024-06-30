@@ -16,8 +16,7 @@
 #include <ForceField/ForceField.h>
 #include <RDGeneral/Invariant.h>
 
-namespace ForceFields {
-namespace UFF {
+namespace ForceFields::UFF {
 AngleConstraintContrib::AngleConstraintContrib(
     ForceField *owner, unsigned int idx1, unsigned int idx2, unsigned int idx3,
     double minAngleDeg, double maxAngleDeg, double forceConst) {
@@ -147,5 +146,4 @@ void AngleConstraintContrib::getGrad(double *pos, double *grad) const {
     g[i][2] += dedp[i].z;
   }
 }
-}  // namespace UFF
-}  // namespace ForceFields
+}  // namespace ForceFields::UFF

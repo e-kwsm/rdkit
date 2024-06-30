@@ -521,8 +521,7 @@ static bool SortBasedOnFirstElement(
   return a.first < b.first;
 }
 
-namespace SmilesWrite {
-namespace detail {
+namespace SmilesWrite::detail {
 std::string MolToSmiles(const ROMol &mol, const SmilesWriteParams &params,
                         bool doingCXSmiles) {
   if (!mol.getNumAtoms()) {
@@ -748,8 +747,8 @@ std::string MolToSmiles(const ROMol &mol, const SmilesWriteParams &params,
               true);
   return result;
 }
-}  // namespace detail
-}  // namespace SmilesWrite
+}  // namespace SmilesWrite::detail
+
 std::string MolToSmiles(const ROMol &mol, const SmilesWriteParams &params) {
   bool doingCXSmiles = false;
   return SmilesWrite::detail::MolToSmiles(mol, params, doingCXSmiles);

@@ -15,8 +15,7 @@
 #include <ForceField/ForceField.h>
 #include <RDGeneral/Invariant.h>
 
-namespace ForceFields {
-namespace MMFF {
+namespace ForceFields::MMFF {
 DistanceConstraintContrib::DistanceConstraintContrib(
     ForceField *owner, unsigned int idx1, unsigned int idx2, double minLen,
     double maxLen, double forceConst) {
@@ -98,5 +97,4 @@ void DistanceConstraintContrib::getGrad(double *pos, double *grad) const {
     grad[3 * d_end2Idx + i] -= dGrad;
   }
 }
-}  // namespace MMFF
-}  // namespace ForceFields
+}  // namespace ForceFields::MMFF

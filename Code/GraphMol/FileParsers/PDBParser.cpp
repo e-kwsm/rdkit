@@ -668,8 +668,7 @@ void parsePdbBlock(RWMol *&mol, const char *str, bool sanitize, bool removeHs,
 }
 }  // namespace
 
-namespace v2 {
-namespace FileParsers {
+namespace v2::FileParsers {
 
 std::unique_ptr<RWMol> MolFromPDBBlock(const std::string &str,
                                        const PDBParserParams &params) {
@@ -712,6 +711,6 @@ std::unique_ptr<RWMol> MolFromPDBFile(const std::string &fileName,
   }
   return MolFromPDBDataStream(ifs, params);
 }
-}  // namespace FileParsers
-}  // namespace v2
+}  // namespace v2::FileParsers
+
 }  // namespace RDKit

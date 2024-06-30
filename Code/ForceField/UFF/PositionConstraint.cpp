@@ -16,8 +16,7 @@
 #include <ForceField/ForceField.h>
 #include <RDGeneral/Invariant.h>
 
-namespace ForceFields {
-namespace UFF {
+namespace ForceFields::UFF {
 PositionConstraintContrib::PositionConstraintContrib(ForceField *owner,
                                                      unsigned int idx,
                                                      double maxDispl,
@@ -68,5 +67,4 @@ void PositionConstraintContrib::getGrad(double *pos, double *grad) const {
     grad[3 * d_atIdx + i] += dGrad;
   }
 }
-}  // namespace UFF
-}  // namespace ForceFields
+}  // namespace ForceFields::UFF
