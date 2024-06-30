@@ -82,31 +82,31 @@ class SubstructLibraryWrap {
   unsigned int addMol(const ROMol &mol) { return ss.addMol(mol); }
 
   template <class Query>
-  std::vector<unsigned int> getMatches(const Query &query,
-                                       bool recursionPossible = true,
-                                       bool useChirality = true,
-                                       bool useQueryQueryMatches = false,
-                                       int numThreads = -1,
-                                       int maxResults = -1) const {
+  [[nodiscard]] [[nodiscard]] [[nodiscard]] [[nodiscard]] std::vector<
+      unsigned int>
+  getMatches(const Query &query, bool recursionPossible = true,
+             bool useChirality = true, bool useQueryQueryMatches = false,
+             int numThreads = -1, int maxResults = -1) const {
     NOGIL h;
     return ss.getMatches(query, recursionPossible, useChirality,
                          useQueryQueryMatches, numThreads, maxResults);
   }
   template <class Query>
-  std::vector<unsigned int> getMatches(const Query &query,
-                                       const SubstructMatchParameters &params,
-                                       int numThreads = -1,
-                                       int maxResults = -1) const {
+  [[nodiscard]] [[nodiscard]] [[nodiscard]] [[nodiscard]] std::vector<
+      unsigned int>
+  getMatches(const Query &query, const SubstructMatchParameters &params,
+             int numThreads = -1, int maxResults = -1) const {
     NOGIL h;
     return ss.getMatches(query, 0, size(), params, numThreads, maxResults);
   }
 
   template <class Query>
-  std::vector<unsigned int> getMatches(
-      const Query &query, unsigned int startIdx, unsigned int endIdx,
-      bool recursionPossible = true, bool useChirality = true,
-      bool useQueryQueryMatches = false, int numThreads = -1,
-      int maxResults = -1) const {
+  [[nodiscard]] [[nodiscard]] [[nodiscard]] [[nodiscard]] std::vector<
+      unsigned int>
+  getMatches(const Query &query, unsigned int startIdx, unsigned int endIdx,
+             bool recursionPossible = true, bool useChirality = true,
+             bool useQueryQueryMatches = false, int numThreads = -1,
+             int maxResults = -1) const {
     NOGIL h;
     return ss.getMatches(query, startIdx, endIdx, recursionPossible,
                          useChirality, useQueryQueryMatches, numThreads,
@@ -114,91 +114,92 @@ class SubstructLibraryWrap {
   };
 
   template <class Query>
-  std::vector<unsigned int> getMatches(const Query &query,
-                                       unsigned int startIdx,
-                                       unsigned int endIdx,
-                                       const SubstructMatchParameters &params,
-                                       int numThreads = -1,
-                                       int maxResults = -1) const {
+  [[nodiscard]] [[nodiscard]] [[nodiscard]] [[nodiscard]] std::vector<
+      unsigned int>
+  getMatches(const Query &query, unsigned int startIdx, unsigned int endIdx,
+             const SubstructMatchParameters &params, int numThreads = -1,
+             int maxResults = -1) const {
     NOGIL h;
     return ss.getMatches(query, startIdx, endIdx, params, numThreads,
                          maxResults);
   }
 
   template <class Query>
-  unsigned int countMatches(const Query &query, bool recursionPossible = true,
-                            bool useChirality = true,
-                            bool useQueryQueryMatches = false,
-                            int numThreads = -1) const {
+  [[nodiscard]] [[nodiscard]] [[nodiscard]] [[nodiscard]] unsigned int
+  countMatches(const Query &query, bool recursionPossible = true,
+               bool useChirality = true, bool useQueryQueryMatches = false,
+               int numThreads = -1) const {
     NOGIL h;
     return ss.countMatches(query, 0, size(), recursionPossible, useChirality,
                            useQueryQueryMatches, numThreads);
   }
 
   template <class Query>
-  unsigned int countMatches(const Query &query,
-                            const SubstructMatchParameters &params,
-                            int numThreads = -1) const {
+  [[nodiscard]] [[nodiscard]] [[nodiscard]] [[nodiscard]] unsigned int
+  countMatches(const Query &query, const SubstructMatchParameters &params,
+               int numThreads = -1) const {
     NOGIL h;
     return ss.countMatches(query, 0, size(), params, numThreads);
   }
 
   template <class Query>
-  unsigned int countMatches(const Query &query, unsigned int startIdx,
-                            unsigned int endIdx, bool recursionPossible = true,
-                            bool useChirality = true,
-                            bool useQueryQueryMatches = false,
-                            int numThreads = -1) const {
+  [[nodiscard]] [[nodiscard]] [[nodiscard]] [[nodiscard]] unsigned int
+  countMatches(const Query &query, unsigned int startIdx, unsigned int endIdx,
+               bool recursionPossible = true, bool useChirality = true,
+               bool useQueryQueryMatches = false, int numThreads = -1) const {
     NOGIL h;
     return ss.countMatches(query, startIdx, endIdx, recursionPossible,
                            useChirality, useQueryQueryMatches, numThreads);
   };
 
   template <class Query>
-  unsigned int countMatches(const Query &query, unsigned int startIdx,
-                            unsigned int endIdx,
-                            const SubstructMatchParameters &params,
-                            int numThreads = -1) const {
+  [[nodiscard]] [[nodiscard]] [[nodiscard]] [[nodiscard]] unsigned int
+  countMatches(const Query &query, unsigned int startIdx, unsigned int endIdx,
+               const SubstructMatchParameters &params,
+               int numThreads = -1) const {
     NOGIL h;
     return ss.countMatches(query, startIdx, endIdx, params, numThreads);
   }
 
   template <class Query>
-  bool hasMatch(const Query &query, bool recursionPossible = true,
-                bool useChirality = true, bool useQueryQueryMatches = false,
-                int numThreads = -1) const {
+  [[nodiscard]] [[nodiscard]] [[nodiscard]] [[nodiscard]] bool hasMatch(
+      const Query &query, bool recursionPossible = true,
+      bool useChirality = true, bool useQueryQueryMatches = false,
+      int numThreads = -1) const {
     NOGIL h;
     return ss.hasMatch(query, 0, size(), recursionPossible, useChirality,
                        useQueryQueryMatches, numThreads);
   }
 
   template <class Query>
-  bool hasMatch(const Query &query, const SubstructMatchParameters &params,
-                int numThreads = -1) const {
+  [[nodiscard]] [[nodiscard]] [[nodiscard]] [[nodiscard]] bool hasMatch(
+      const Query &query, const SubstructMatchParameters &params,
+      int numThreads = -1) const {
     NOGIL h;
     return ss.hasMatch(query, 0, size(), params, numThreads);
   }
   template <class Query>
-  bool hasMatch(const Query &query, unsigned int startIdx, unsigned int endIdx,
-                bool recursionPossible = true, bool useChirality = true,
-                bool useQueryQueryMatches = false, int numThreads = -1) const {
+  [[nodiscard]] [[nodiscard]] [[nodiscard]] [[nodiscard]] bool hasMatch(
+      const Query &query, unsigned int startIdx, unsigned int endIdx,
+      bool recursionPossible = true, bool useChirality = true,
+      bool useQueryQueryMatches = false, int numThreads = -1) const {
     NOGIL h;
     return ss.hasMatch(query, startIdx, endIdx, recursionPossible, useChirality,
                        useQueryQueryMatches, numThreads);
   };
 
   template <class Query>
-  bool hasMatch(const Query &query, unsigned int startIdx, unsigned int endIdx,
-                const SubstructMatchParameters &params,
-                int numThreads = -1) const {
+  [[nodiscard]] [[nodiscard]] [[nodiscard]] [[nodiscard]] bool hasMatch(
+      const Query &query, unsigned int startIdx, unsigned int endIdx,
+      const SubstructMatchParameters &params, int numThreads = -1) const {
     NOGIL h;
     return ss.hasMatch(query, startIdx, endIdx, params, numThreads);
   }
 
-  boost::shared_ptr<ROMol> getMol(unsigned int idx) const {
+  [[nodiscard]] boost::shared_ptr<ROMol> getMol(unsigned int idx) const {
     return ss.getMol(idx);
   }
-  unsigned int size() const { return ss.size(); }
+  [[nodiscard]] unsigned int size() const { return ss.size(); }
 };
 
 const char *MolHolderBaseDoc =

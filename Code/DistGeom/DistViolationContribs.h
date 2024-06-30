@@ -44,7 +44,7 @@ class RDKIT_DISTGEOMETRY_EXPORT DistViolationContribs
   double getEnergy(double *pos) const override;
 
   void getGrad(double *pos, double *grad) const override;
-  DistViolationContribs *copy() const override {
+  [[nodiscard]] DistViolationContribs *copy() const override {
     return new DistViolationContribs(*this);
   }
 
@@ -52,8 +52,8 @@ class RDKIT_DISTGEOMETRY_EXPORT DistViolationContribs
                   double weight = 1.0) {
     d_contribs.emplace_back(idx1, idx2, ub, lb, weight);
   }
-  bool empty() const { return d_contribs.empty(); }
-  unsigned int size() const { return d_contribs.size(); }
+  [[nodiscard]] bool empty() const { return d_contribs.empty(); }
+  [[nodiscard]] unsigned int size() const { return d_contribs.size(); }
 
  private:
   std::vector<DistViolationContribsParams> d_contribs;

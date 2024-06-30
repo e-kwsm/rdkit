@@ -72,10 +72,10 @@ class Vector {
   constexpr ~Vector() = default;
 
   //! return the size (dimension) of the vector
-  constexpr unsigned int size() const { return d_size; }
+  [[nodiscard]] constexpr unsigned int size() const { return d_size; }
 
   //! returns the value at a particular index
-  TYPE getVal(unsigned int i) const {
+  [[nodiscard]] TYPE getVal(unsigned int i) const {
     PRECONDITION(i < d_size, "bad index");
     return d_data[i];
   }
@@ -100,7 +100,7 @@ class Vector {
   constexpr TYPE *getData() { return d_data.get(); }
 
   //! returns a const pointer to our data array
-  constexpr const TYPE *getData() const {
+  [[nodiscard]] constexpr const TYPE *getData() const {
     // return dp_data;
     return d_data.get();
   }
@@ -160,7 +160,7 @@ class Vector {
   }
 
   //! L2 norm squared
-  constexpr inline TYPE normL2Sq() const {
+  [[nodiscard]] constexpr inline TYPE normL2Sq() const {
     TYPE res = (TYPE)0.0;
     unsigned int i;
     TYPE *data = d_data.get();
@@ -171,10 +171,10 @@ class Vector {
   }
 
   //! L2 norm
-  constexpr TYPE normL2() const { return sqrt(this->normL2Sq()); }
+  [[nodiscard]] constexpr TYPE normL2() const { return sqrt(this->normL2Sq()); }
 
   //! L1 norm
-  constexpr TYPE normL1() const {
+  [[nodiscard]] constexpr TYPE normL1() const {
     TYPE res = (TYPE)0.0;
     unsigned int i;
     TYPE *data = d_data.get();
@@ -185,7 +185,7 @@ class Vector {
   }
 
   //! L-infinity norm
-  constexpr TYPE normLinfinity() const {
+  [[nodiscard]] constexpr TYPE normLinfinity() const {
     TYPE res = (TYPE)(-1.0);
     unsigned int i;
     TYPE *data = d_data.get();
@@ -199,7 +199,7 @@ class Vector {
 
   //! \brief Gets the ID of the entry that has the largest absolute value
   //! i.e. the entry being used for the L-infinity norm
-  constexpr unsigned int largestAbsValId() const {
+  [[nodiscard]] constexpr unsigned int largestAbsValId() const {
     TYPE res = (TYPE)(-1.0);
     unsigned int i, id = d_size;
     TYPE *data = d_data.get();
@@ -213,7 +213,7 @@ class Vector {
   }
 
   //! \brief Gets the ID of the entry that has the largest value
-  constexpr unsigned int largestValId() const {
+  [[nodiscard]] constexpr unsigned int largestValId() const {
     TYPE res = (TYPE)(-1.e8);
     unsigned int i, id = d_size;
     TYPE *data = d_data.get();
@@ -227,7 +227,7 @@ class Vector {
   }
 
   //! \brief Gets the ID of the entry that has the smallest value
-  constexpr unsigned int smallestValId() const {
+  [[nodiscard]] constexpr unsigned int smallestValId() const {
     TYPE res = (TYPE)(1.e8);
     unsigned int i, id = d_size;
     TYPE *data = d_data.get();
@@ -241,7 +241,7 @@ class Vector {
   }
 
   //! returns the dot product between two Vectors
-  TYPE dotProduct(const Vector<TYPE> other) const {
+  [[nodiscard]] TYPE dotProduct(const Vector<TYPE> other) const {
     PRECONDITION(d_size == other.size(),
                  "Size mismatch in vector doct product");
     const TYPE *oData = other.getData();

@@ -30,14 +30,14 @@ class RDKIT_MOLCHEMICALFEATURES_EXPORT MolChemicalFeatureDef {
   MolChemicalFeatureDef(const std::string &smarts, std::string family,
                         std::string type);
 
-  unsigned int getNumWeights() const { return d_weights.size(); }
+  [[nodiscard]] unsigned int getNumWeights() const { return d_weights.size(); }
   std::vector<double>::iterator beginWeights() { return d_weights.begin(); }
   std::vector<double>::iterator endWeights() { return d_weights.end(); }
 
-  std::vector<double>::const_iterator beginWeights() const {
+  [[nodiscard]] std::vector<double>::const_iterator beginWeights() const {
     return d_weights.begin();
   }
-  std::vector<double>::const_iterator endWeights() const {
+  [[nodiscard]] std::vector<double>::const_iterator endWeights() const {
     return d_weights.end();
   }
 
@@ -49,13 +49,13 @@ class RDKIT_MOLCHEMICALFEATURES_EXPORT MolChemicalFeatureDef {
     }
   }
 
-  const std::string &getFamily() const { return d_family; }
-  const std::string &getType() const { return d_type; }
-  const std::string &getSmarts() const { return d_smarts; }
+  [[nodiscard]] const std::string &getFamily() const { return d_family; }
+  [[nodiscard]] const std::string &getType() const { return d_type; }
+  [[nodiscard]] const std::string &getSmarts() const { return d_smarts; }
 
   void normalizeWeights();
 
-  const ROMol *getPattern() const { return dp_pattern.get(); }
+  [[nodiscard]] const ROMol *getPattern() const { return dp_pattern.get(); }
 
  private:
   std::string d_family;

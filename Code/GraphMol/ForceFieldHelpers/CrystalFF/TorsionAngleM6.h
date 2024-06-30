@@ -51,7 +51,7 @@ class RDKIT_FORCEFIELDHELPERS_EXPORT TorsionAngleContribM6
                         std::vector<double> V, std::vector<int> signs);
   double getEnergy(double *pos) const override;
   void getGrad(double *pos, double *grad) const override;
-  TorsionAngleContribM6 *copy() const override {
+  [[nodiscard]] TorsionAngleContribM6 *copy() const override {
     return new TorsionAngleContribM6(*this);
   }
 

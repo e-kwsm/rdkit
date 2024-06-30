@@ -20,7 +20,7 @@ class RDKIT_CATALOGS_EXPORT CatalogParams {
   virtual ~CatalogParams() = 0;
 
   //! returns our type string
-  std::string getTypeStr() const { return d_typeStr; }
+  [[nodiscard]] std::string getTypeStr() const { return d_typeStr; }
 
   //! sets our type string
   void setTypeStr(const std::string &typeStr) { d_typeStr = typeStr; }
@@ -28,7 +28,7 @@ class RDKIT_CATALOGS_EXPORT CatalogParams {
   //! serializes (pickles) to a stream
   virtual void toStream(std::ostream &) const = 0;
   //! returns a string with a serialized (pickled) representation
-  virtual std::string Serialize() const = 0;
+  [[nodiscard]] virtual std::string Serialize() const = 0;
   //! initializes from a stream pickle
   virtual void initFromStream(std::istream &ss) = 0;
   //! initializes from a string pickle

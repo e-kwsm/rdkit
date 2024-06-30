@@ -34,9 +34,9 @@ class PartitionSet {
                const std::vector<unsigned int> &vtx2Labels,
                unsigned int lowerBound);
 
-  bool isEmpty() const { return d_parts.empty(); }
+  [[nodiscard]] bool isEmpty() const { return d_parts.empty(); }
 
-  size_t numParts() const { return d_parts.size(); }
+  [[nodiscard]] size_t numParts() const { return d_parts.size(); }
 
   // Compute the upper bound on the clique that can be extracted from
   // the current partition.

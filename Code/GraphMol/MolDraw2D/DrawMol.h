@@ -139,10 +139,11 @@ class DrawMol {
   void shrinkToFit(bool withPadding = true);
 
   // adds LaTeX-like annotation for super- and sub-script.
-  std::pair<std::string, OrientType> getAtomSymbolAndOrientation(
+  [[nodiscard]] std::pair<std::string, OrientType> getAtomSymbolAndOrientation(
       const Atom &atom) const;
-  std::string getAtomSymbol(const Atom &atom, OrientType orientation) const;
-  OrientType getAtomOrientation(const Atom &atom) const;
+  [[nodiscard]] std::string getAtomSymbol(const Atom &atom,
+                                          OrientType orientation) const;
+  [[nodiscard]] OrientType getAtomOrientation(const Atom &atom) const;
 
   // if there's a legend, partition the height_ to accommodate it
   void partitionForLegend();
@@ -183,23 +184,24 @@ class DrawMol {
   double getNoteStartAngle(const Atom *atom) const;
   // see if the note will clash with anything else drawn on the molecule.
   // Returns 0 if no clash, 1-4 if there is a clash, denoting what clashed.
-  int doesNoteClash(const DrawAnnotation &annot) const;
-  int doesRectClash(const StringRect &rect, double padding) const;
+  [[nodiscard]] int doesNoteClash(const DrawAnnotation &annot) const;
+  [[nodiscard]] int doesRectClash(const StringRect &rect, double padding) const;
   OrientType calcRadicalRect(const Atom *atom, StringRect &rad_rect) const;
   void getDrawTransformers(Point2D &trans, Point2D &scale,
                            Point2D &toCentre) const;
   // Given some coords in molecule space (angstrom, probably) return the
   // screen coords.
-  Point2D getDrawCoords(const Point2D &atCds, const Point2D &trans,
-                        const Point2D &scaleFactor,
-                        const Point2D &toCentre) const;
-  Point2D getDrawCoords(const Point2D &atCds) const;
-  Point2D getDrawCoords(int atnum) const;
+  [[nodiscard]] Point2D getDrawCoords(const Point2D &atCds,
+                                      const Point2D &trans,
+                                      const Point2D &scaleFactor,
+                                      const Point2D &toCentre) const;
+  [[nodiscard]] Point2D getDrawCoords(const Point2D &atCds) const;
+  [[nodiscard]] Point2D getDrawCoords(int atnum) const;
   // and the other way.
-  Point2D getAtomCoords(const Point2D &screenCds) const;
-  Point2D getAtomCoords(int atnum) const;
-  double getScale() const { return scale_; }
-  double getFontScale() const { return fontScale_; }
+  [[nodiscard]] Point2D getAtomCoords(const Point2D &screenCds) const;
+  [[nodiscard]] Point2D getAtomCoords(int atnum) const;
+  [[nodiscard]] double getScale() const { return scale_; }
+  [[nodiscard]] double getFontScale() const { return fontScale_; }
   // More often than not, newScale and newFontScale will be the same,
   // but not if minFontScale or maxFontScale have become involved.
   // The newFontScale will be used without checking the min and max.
@@ -237,8 +239,9 @@ class DrawMol {
   // to at3, find the position of the at2 end of a double bond between at2
   // and at3.  If trunc, it'll be along the vector that bisects the two bonds
   // on the inside, otherwise it's perpendicular to the bond from at1 to at2.
-  Point2D doubleBondEnd(unsigned int at1, unsigned int at2, unsigned int at3,
-                        double offset, bool trunc) const;
+  [[nodiscard]] Point2D doubleBondEnd(unsigned int at1, unsigned int at2,
+                                      unsigned int at3, double offset,
+                                      bool trunc) const;
   void calcTripleBondLines(double offset, const Bond &bond, Point2D &l1s,
                            Point2D &l1f, Point2D &l2s, Point2D &l2f);
   // find the vectors of any atoms singly bonded to atom that aren't
@@ -254,7 +257,7 @@ class DrawMol {
   void makeHighlightEnd(const Atom *end1, const Atom *end2, double lineWidth,
                         const std::vector<Atom *> &end1HighNbrs,
                         std::vector<Point2D> &points);
-  DrawColour getColour(int atom_idx) const;
+  [[nodiscard]] DrawColour getColour(int atom_idx) const;
 
   const MolDrawOptions &drawOptions_;
   DrawText &textDrawer_;

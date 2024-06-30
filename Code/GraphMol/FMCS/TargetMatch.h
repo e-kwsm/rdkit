@@ -43,7 +43,7 @@ struct TargetMatch {
     }
     return *this;
   }
-  bool empty() const { return Empty; }
+  [[nodiscard]] bool empty() const { return Empty; }
   void clear() {
     Empty = true;
 

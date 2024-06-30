@@ -202,7 +202,7 @@ struct RDKIT_FMCS_EXPORT MCSResult {
 
  public:
   MCSResult() {}
-  bool isCompleted() const { return !Canceled; }
+  [[nodiscard]] bool isCompleted() const { return !Canceled; }
 };
 
 RDKIT_FMCS_EXPORT void parseMCSParametersJSON(const char *json,

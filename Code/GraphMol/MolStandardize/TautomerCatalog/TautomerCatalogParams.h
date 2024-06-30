@@ -76,12 +76,12 @@ class RDKIT_MOLSTANDARDIZE_EXPORT TautomerCatalogParams
 
   ~TautomerCatalogParams() override;
 
-  const std::vector<TautomerTransform> &getTransforms() const;
+  [[nodiscard]] const std::vector<TautomerTransform> &getTransforms() const;
 
-  const TautomerTransform getTransform(unsigned int fid) const;
+  [[nodiscard]] const TautomerTransform getTransform(unsigned int fid) const;
 
   void toStream(std::ostream &) const override;
-  std::string Serialize() const override;
+  [[nodiscard]] std::string Serialize() const override;
   void initFromStream(std::istream &ss) override;
   void initFromString(const std::string &text) override;
 

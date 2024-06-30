@@ -91,7 +91,9 @@ class RDKIT_CHEMREACTIONS_EXPORT RandomSampleStrategy
     m_numPermutationsProcessed = 0;
   }
 
-  const char *type() const override { return "RandomSampleStrategy"; }
+  [[nodiscard]] const char *type() const override {
+    return "RandomSampleStrategy";
+  }
 
   //! The current permutation {r1, r2, ...}
   const EnumerationTypes::RGROUPS &next() override {
@@ -104,13 +106,13 @@ class RDKIT_CHEMREACTIONS_EXPORT RandomSampleStrategy
     return m_permutation;
   }
 
-  boost::uint64_t getPermutationIdx() const override {
+  [[nodiscard]] boost::uint64_t getPermutationIdx() const override {
     return m_numPermutationsProcessed;
   }
 
   operator bool() const override { return true; }
 
-  EnumerationStrategyBase *copy() const override {
+  [[nodiscard]] EnumerationStrategyBase *copy() const override {
     return new RandomSampleStrategy(*this);
   }
 

@@ -23,7 +23,7 @@ class Composition2N {  // generator of 2^N-1 possible bit combinations
     value = 1uLL << power;
   }
 
-  BitSet getBitSet() const {
+  [[nodiscard]] BitSet getBitSet() const {
     return InverseBits;  // inverse to generate biggest seed first and then
                          // decrease number of external bonds
   }
@@ -36,7 +36,7 @@ class Composition2N {  // generator of 2^N-1 possible bit combinations
       return false;
     }
   }
-  bool is2Power() const {  // one bit is set only
+  [[nodiscard]] bool is2Power() const {  // one bit is set only
     BitSet bits = getBitSet();
     unsigned int n = 0;
     while (0 == (bits & 1uLL) &&
@@ -49,7 +49,7 @@ class Composition2N {  // generator of 2^N-1 possible bit combinations
     return 0 == bits;  // remained bits except lowest 1
   }
   // unused:        bool nonZero() {return 0!=getBitSet();}
-  bool isSet(unsigned int bit) const {
+  [[nodiscard]] bool isSet(unsigned int bit) const {
     return 0 != (getBitSet() & (1uLL << bit));
   }
 };

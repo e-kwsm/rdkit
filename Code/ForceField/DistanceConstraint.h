@@ -40,7 +40,7 @@ class RDKIT_FORCEFIELD_EXPORT DistanceConstraintContrib
   double getEnergy(double *pos) const override;
 
   void getGrad(double *pos, double *grad) const override;
-  DistanceConstraintContrib *copy() const override {
+  [[nodiscard]] DistanceConstraintContrib *copy() const override {
     return new DistanceConstraintContrib(*this);
   }
 

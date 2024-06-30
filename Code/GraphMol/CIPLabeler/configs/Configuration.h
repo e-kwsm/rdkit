@@ -170,11 +170,11 @@ class Configuration {
 
   virtual ~Configuration();
 
-  Atom *getFocus() const;
+  [[nodiscard]] Atom *getFocus() const;
 
-  const std::vector<Atom *> &getFoci() const;
+  [[nodiscard]] const std::vector<Atom *> &getFoci() const;
 
-  const std::vector<Atom *> &getCarriers() const;
+  [[nodiscard]] const std::vector<Atom *> &getCarriers() const;
 
   Digraph &getDigraph();
 
@@ -184,7 +184,7 @@ class Configuration {
 
   virtual void setPrimaryLabel(Descriptor desc) = 0;
 
-  virtual bool hasPrimaryLabel() const = 0;
+  [[nodiscard]] virtual bool hasPrimaryLabel() const = 0;
 
   virtual void resetPrimaryLabel() const = 0;
 

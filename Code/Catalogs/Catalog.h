@@ -50,7 +50,7 @@ class Catalog {
 
   //------------------------------------
   //! return a serialized form of the Catalog as an std::string
-  virtual std::string Serialize() const = 0;
+  [[nodiscard]] virtual std::string Serialize() const = 0;
 
   //------------------------------------
   //! adds an entry to the catalog
@@ -66,15 +66,16 @@ class Catalog {
 
   //------------------------------------
   //! returns a particular entry in the Catalog
-  virtual const entryType *getEntryWithIdx(unsigned int idx) const = 0;
+  [[nodiscard]] virtual const entryType *getEntryWithIdx(
+      unsigned int idx) const = 0;
 
   //------------------------------------
   //! returns the number of entries
-  virtual unsigned int getNumEntries() const = 0;
+  [[nodiscard]] virtual unsigned int getNumEntries() const = 0;
 
   //------------------------------------
   //! returns the length of our fingerprint
-  unsigned int getFPLength() const { return d_fpLength; }
+  [[nodiscard]] unsigned int getFPLength() const { return d_fpLength; }
 
   //------------------------------------
   //! sets our fingerprint length
@@ -98,7 +99,7 @@ class Catalog {
 
   //------------------------------------
   //! returns a pointer to our parameters
-  const paramType *getCatalogParams() const { return dp_cParams; }
+  [[nodiscard]] const paramType *getCatalogParams() const { return dp_cParams; }
 
  protected:
   // this is the ID that will be assigned to the next entry
@@ -222,7 +223,7 @@ class HierarchCatalog : public Catalog<entryType, paramType> {
 
   //------------------------------------
   //! serializes this object and returns the resulting \c pickle
-  std::string Serialize() const override {
+  [[nodiscard]] std::string Serialize() const override {
     std::stringstream ss(std::ios_base::binary | std::ios_base::out |
                          std::ios_base::in);
     this->toStream(ss);
@@ -279,7 +280,7 @@ class HierarchCatalog : public Catalog<entryType, paramType> {
   }
 
   //------------------------------------
-  unsigned int getNumEntries() const override {
+  [[nodiscard]] unsigned int getNumEntries() const override {
     return static_cast<unsigned int>(boost::num_vertices(d_graph));
   }
 
@@ -354,7 +355,8 @@ class HierarchCatalog : public Catalog<entryType, paramType> {
 
   //------------------------------------
   //! returns a pointer to our entry with a particular index
-  const entryType *getEntryWithIdx(unsigned int idx) const override {
+  [[nodiscard]] const entryType *getEntryWithIdx(
+      unsigned int idx) const override {
     URANGE_CHECK(idx, getNumEntries());
     int vd = static_cast<int>(boost::vertex(idx, d_graph));
     typename boost::property_map<CatalogGraph, vertex_entry_t>::const_type
@@ -364,7 +366,7 @@ class HierarchCatalog : public Catalog<entryType, paramType> {
 
   //------------------------------------
   //! returns a pointer to our entry with a particular bit ID
-  const entryType *getEntryWithBitId(unsigned int idx) const {
+  [[nodiscard]] const entryType *getEntryWithBitId(unsigned int idx) const {
     URANGE_CHECK(idx, this->getFPLength());
     typename boost::property_map<CatalogGraph, vertex_entry_t>::const_type
         pMap = boost::get(vertex_entry_t(), d_graph);
@@ -381,7 +383,7 @@ class HierarchCatalog : public Catalog<entryType, paramType> {
 
   //------------------------------------
   //! returns the index of the entry with a particular bit ID
-  int getIdOfEntryWithBitId(unsigned int idx) const {
+  [[nodiscard]] int getIdOfEntryWithBitId(unsigned int idx) const {
     URANGE_CHECK(idx, this->getFPLength());
     typename boost::property_map<CatalogGraph, vertex_entry_t>::const_type
         pMap = boost::get(vertex_entry_t(), d_graph);
@@ -398,7 +400,7 @@ class HierarchCatalog : public Catalog<entryType, paramType> {
 
   //------------------------------------
   //! returns a list of the indices of entries below the one passed in
-  RDKit::INT_VECT getDownEntryList(unsigned int idx) const {
+  [[nodiscard]] RDKit::INT_VECT getDownEntryList(unsigned int idx) const {
     RDKit::INT_VECT res;
     DOWN_ENT_ITER nbrIdx, endIdx;
     boost::tie(nbrIdx, endIdx) = boost::adjacent_vertices(idx, d_graph);
@@ -421,7 +423,7 @@ class HierarchCatalog : public Catalog<entryType, paramType> {
   /*!
     \overload
   */
-  const RDKit::INT_VECT &getEntriesOfOrder(orderType ord) const {
+  [[nodiscard]] const RDKit::INT_VECT &getEntriesOfOrder(orderType ord) const {
     typename std::map<orderType, RDKit::INT_VECT>::const_iterator elem;
     elem = d_orderMap.find(ord);
     CHECK_INVARIANT(

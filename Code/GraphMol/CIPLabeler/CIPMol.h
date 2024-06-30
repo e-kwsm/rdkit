@@ -73,15 +73,15 @@ class CIPMol {
   // aromatic ring with this one.
   boost::rational<int> getFractionalAtomicNum(Atom *atom) const;
 
-  unsigned getNumAtoms() const;
+  [[nodiscard]] unsigned getNumAtoms() const;
 
-  unsigned getNumBonds() const;
+  [[nodiscard]] unsigned getNumBonds() const;
 
-  Atom *getAtom(int idx) const;
+  [[nodiscard]] Atom *getAtom(int idx) const;
 
-  CXXAtomIterator<MolGraph, Atom *> atoms() const;
+  [[nodiscard]] CXXAtomIterator<MolGraph, Atom *> atoms() const;
 
-  Bond *getBond(int idx) const;
+  [[nodiscard]] Bond *getBond(int idx) const;
 
   CIPMolSpan<Bond *, ROMol::OEDGE_ITER> getBonds(Atom *atom) const;
 
