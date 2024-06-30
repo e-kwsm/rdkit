@@ -41,7 +41,7 @@ class RDKIT_DATASTRUCTS_EXPORT ExplicitBitVect : public BitVect {
   //! construct from a string pickle
   ExplicitBitVect(const std::string &pkl);
   //! construct from a text pickle
-  ExplicitBitVect(const char *, const unsigned int);
+  ExplicitBitVect(const char *, unsigned int);
   //! construct directly from a dynamic_bitset pointer
   /// takes ownership of the pointer
   ExplicitBitVect(boost::dynamic_bitset<> *bits)
@@ -93,7 +93,7 @@ class RDKIT_DATASTRUCTS_EXPORT ExplicitBitVect : public BitVect {
  private:
   unsigned int d_size{0};
   unsigned int d_numOnBits{0};
-  void _initForSize(const unsigned int size) override;
+  void _initForSize(unsigned int size) override;
 };
 
 #endif
