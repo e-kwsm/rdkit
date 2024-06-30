@@ -494,41 +494,33 @@ void ROMol::debugMol(std::ostream &str) const {
 //  Iterators
 //
 // --------------------------------------------
-ROMol::AtomIterator ROMol::beginAtoms() { return AtomIterator(this); }
-ROMol::ConstAtomIterator ROMol::beginAtoms() const {
-  return ConstAtomIterator(this);
-}
+ROMol::AtomIterator ROMol::beginAtoms() { return {this}; }
+ROMol::ConstAtomIterator ROMol::beginAtoms() const { return {this}; }
 ROMol::AtomIterator ROMol::endAtoms() {
-  return AtomIterator(this, getNumAtoms());
+  return {this, static_cast<int>(getNumAtoms())};
 }
 ROMol::ConstAtomIterator ROMol::endAtoms() const {
-  return ConstAtomIterator(this, getNumAtoms());
+  return {this, static_cast<int>(getNumAtoms())};
 }
 
-ROMol::AromaticAtomIterator ROMol::beginAromaticAtoms() {
-  return AromaticAtomIterator(this);
-}
+ROMol::AromaticAtomIterator ROMol::beginAromaticAtoms() { return {this}; }
 ROMol::ConstAromaticAtomIterator ROMol::beginAromaticAtoms() const {
-  return ConstAromaticAtomIterator(this);
+  return {this};
 }
 ROMol::AromaticAtomIterator ROMol::endAromaticAtoms() {
-  return AromaticAtomIterator(this, getNumAtoms());
+  return {this, static_cast<int>(getNumAtoms())};
 }
 ROMol::ConstAromaticAtomIterator ROMol::endAromaticAtoms() const {
-  return ConstAromaticAtomIterator(this, getNumAtoms());
+  return {this, static_cast<int>(getNumAtoms())};
 }
 
-ROMol::HeteroatomIterator ROMol::beginHeteros() {
-  return HeteroatomIterator(this);
-}
-ROMol::ConstHeteroatomIterator ROMol::beginHeteros() const {
-  return ConstHeteroatomIterator(this);
-}
+ROMol::HeteroatomIterator ROMol::beginHeteros() { return {this}; }
+ROMol::ConstHeteroatomIterator ROMol::beginHeteros() const { return {this}; }
 ROMol::HeteroatomIterator ROMol::endHeteros() {
-  return HeteroatomIterator(this, getNumAtoms());
+  return {this, static_cast<int>(getNumAtoms())};
 }
 ROMol::ConstHeteroatomIterator ROMol::endHeteros() const {
-  return ConstHeteroatomIterator(this, getNumAtoms());
+  return {this, static_cast<int>(getNumAtoms())};
 }
 
 bool ROMol::hasQuery() const {
@@ -546,43 +538,41 @@ bool ROMol::hasQuery() const {
 }
 
 ROMol::QueryAtomIterator ROMol::beginQueryAtoms(QueryAtom const *what) {
-  return QueryAtomIterator(this, what);
+  return {this, what};
 }
 ROMol::ConstQueryAtomIterator ROMol::beginQueryAtoms(
     QueryAtom const *what) const {
-  return ConstQueryAtomIterator(this, what);
+  return {this, what};
 }
 ROMol::QueryAtomIterator ROMol::endQueryAtoms() {
-  return QueryAtomIterator(this, getNumAtoms());
+  return {this, static_cast<int>(getNumAtoms())};
 }
 ROMol::ConstQueryAtomIterator ROMol::endQueryAtoms() const {
-  return ConstQueryAtomIterator(this, getNumAtoms());
+  return {this, static_cast<int>(getNumAtoms())};
 }
 ROMol::MatchingAtomIterator ROMol::beginMatchingAtoms(bool (*what)(Atom *)) {
-  return MatchingAtomIterator(this, what);
+  return {this, what};
 }
 ROMol::ConstMatchingAtomIterator ROMol::beginMatchingAtoms(
     bool (*what)(const Atom *)) const {
-  return ConstMatchingAtomIterator(this, what);
+  return {this, what};
 }
 ROMol::MatchingAtomIterator ROMol::endMatchingAtoms() {
-  return MatchingAtomIterator(this, getNumAtoms());
+  return {this, static_cast<int>(getNumAtoms())};
 }
 ROMol::ConstMatchingAtomIterator ROMol::endMatchingAtoms() const {
-  return ConstMatchingAtomIterator(this, getNumAtoms());
+  return {this, static_cast<int>(getNumAtoms())};
 }
 
-ROMol::BondIterator ROMol::beginBonds() { return BondIterator(this); }
-ROMol::ConstBondIterator ROMol::beginBonds() const {
-  return ConstBondIterator(this);
-}
+ROMol::BondIterator ROMol::beginBonds() { return {this}; }
+ROMol::ConstBondIterator ROMol::beginBonds() const { return {this}; }
 ROMol::BondIterator ROMol::endBonds() {
   auto [beg, end] = getEdges();
-  return BondIterator(this, end);
+  return {this, end};
 }
 ROMol::ConstBondIterator ROMol::endBonds() const {
   auto [beg, end] = getEdges();
-  return ConstBondIterator(this, end);
+  return {this, end};
 }
 
 void ROMol::clearComputedProps(bool includeRings) const {

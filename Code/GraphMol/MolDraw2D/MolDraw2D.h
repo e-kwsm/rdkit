@@ -365,7 +365,9 @@ class RDKIT_MOLDRAW2D_EXPORT MolDraw2D {
     y_offset_ = y;
   }
   //! returns the drawing offset (in drawing coords)
-  Point2D offset() const { return Point2D(x_offset_, y_offset_); }
+  Point2D offset() const {
+    return {static_cast<double>(x_offset_), static_cast<double>(y_offset_)};
+  }
 
   //! returns the minimum point of the drawing (in molecular coords)
   Point2D minPt() const;

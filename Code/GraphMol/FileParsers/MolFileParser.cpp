@@ -3770,7 +3770,7 @@ std::unique_ptr<RWMol> MolFromMolFile(const std::string &fName,
     unsigned int line = 0;
     return MolFromMolDataStream(inStream, line, params);
   } else {
-    return std::unique_ptr<RWMol>();
+    return {};
   }
 }
 }  // namespace FileParsers
