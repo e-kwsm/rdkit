@@ -424,21 +424,21 @@ M  END)CTAB"_ctab;
     REQUIRE(sgs.size() == 1);
     CHECK(sgs[0].getBrackets().size() == 1);
     sgs[0].clearBrackets();
-    CHECK(sgs[0].getBrackets().size() == 0);
+    CHECK(sgs[0].getBrackets().empty());
   }
   SECTION("cstates") {
     auto &sgs = getSubstanceGroups(*m1);
     REQUIRE(sgs.size() == 1);
     CHECK(sgs[0].getCStates().size() == 1);
     sgs[0].clearCStates();
-    CHECK(sgs[0].getCStates().size() == 0);
+    CHECK(sgs[0].getCStates().empty());
   }
   SECTION("attachpts") {
     auto &sgs = getSubstanceGroups(*m1);
     REQUIRE(sgs.size() == 1);
     CHECK(sgs[0].getAttachPoints().size() == 1);
     sgs[0].clearAttachPoints();
-    CHECK(sgs[0].getAttachPoints().size() == 0);
+    CHECK(sgs[0].getAttachPoints().empty());
   }
 }
 
@@ -548,7 +548,7 @@ M  END)CTAB"_ctab;
   const auto &sg = sgs[0];
   REQUIRE(sg.getProp<std::string>("TYPE") == "DAT");
   REQUIRE(sg.getAtoms() == std::vector<unsigned int>{0});
-  CHECK(sg.getProp<std::string>("FIELDNAME") == "");
+  CHECK(sg.getProp<std::string>("FIELDNAME").empty());
   CHECK(sg.getProp<std::string>("FIELDDISP") ==
         "    3.8241   -7.7842    DA    ALL  1       5");
   CHECK(sg.getProp<std::string>("index") == "2");

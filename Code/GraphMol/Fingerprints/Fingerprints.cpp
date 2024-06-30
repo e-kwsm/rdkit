@@ -476,7 +476,7 @@ ExplicitBitVect *LayeredFingerprintMol(
       bool flaggedPath = false;
       for (auto layerIt = hashLayers.begin(); layerIt != hashLayers.end();
            ++layerIt, ++l) {
-        if (!layerIt->size()) {
+        if (layerIt->empty()) {
           continue;
         }
         // ----

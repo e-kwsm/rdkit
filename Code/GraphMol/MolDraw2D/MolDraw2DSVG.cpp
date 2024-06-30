@@ -215,7 +215,7 @@ void MolDraw2DSVG::drawWavyLine(const Point2D &cds1, const Point2D &cds2,
 namespace {
 std::string getDashString(const DashPattern &dashes) {
   std::string res;
-  if (dashes.size()) {
+  if (!dashes.empty()) {
     std::stringstream dss;
     dss << ";stroke-dasharray:";
     std::copy(dashes.begin(), dashes.end() - 1,

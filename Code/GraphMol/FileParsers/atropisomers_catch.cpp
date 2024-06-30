@@ -23,7 +23,7 @@ using namespace RDKit;
 TEST_CASE("explicit tests") {
   // making some of the other atropisomer tests explicitly test what we expect
   std::string rdbase = getenv("RDBASE");
-  REQUIRE(rdbase != "");
+  REQUIRE(!rdbase.empty());
   SECTION("basics") {
     std::string file =
         rdbase +
@@ -43,7 +43,7 @@ TEST_CASE("explicit tests") {
           Bond::BondStereo::STEREOATROPCW);
   }
   SECTION("with stereo groups and other chiral centers") {
-    REQUIRE(rdbase != "");
+    REQUIRE(!rdbase.empty());
     std::string file =
         rdbase +
         "/Code/GraphMol/FileParsers/test_data/atropisomers/AtropManyChiralsEnhanced.sdf";
@@ -71,7 +71,7 @@ TEST_CASE("explicit tests") {
     {
       const auto &sg = mol->getStereoGroups()[1];
       CHECK(sg.getAtoms().size() == 2);
-      CHECK(sg.getBonds().size() == 0);
+      CHECK(sg.getBonds().empty());
     }
   }
 }

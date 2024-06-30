@@ -83,7 +83,7 @@ TEST_CASE("Atom Environments") {
     REQUIRE(pth[0] == 0);
 
     pth = findAtomEnvironmentOfRadiusN(*mol, 4, 0);
-    REQUIRE(pth.size() == 0);
+    REQUIRE(pth.empty());
 
     pth = findAtomEnvironmentOfRadiusN(*mol, 1, 1);
     REQUIRE(pth.size() == 3);
@@ -92,7 +92,7 @@ TEST_CASE("Atom Environments") {
     REQUIRE(pth.size() == 4);
 
     pth = findAtomEnvironmentOfRadiusN(*mol, 3, 1);
-    REQUIRE(pth.size() == 0);
+    REQUIRE(pth.empty());
 
     delete mol;
   }
@@ -146,7 +146,7 @@ TEST_CASE("Atom Environments (Extension)") {
     REQUIRE(pth.size() == 5);
 
     pth = findAtomEnvironmentOfRadiusN(*mH, 3, rootedAtAtom, false, true);
-    REQUIRE(pth.size() == 0);
+    REQUIRE(pth.empty());
     pth = findAtomEnvironmentOfRadiusN(*mH, 3, rootedAtAtom, true, true);
     REQUIRE(pth.size() == 7);
     pth = findAtomEnvironmentOfRadiusN(*mH, 3, rootedAtAtom, true, false);
@@ -155,9 +155,9 @@ TEST_CASE("Atom Environments (Extension)") {
     REQUIRE(pth.size() == 2);
 
     pth = findAtomEnvironmentOfRadiusN(*mH, 4, rootedAtAtom, false, true);
-    REQUIRE(pth.size() == 0);
+    REQUIRE(pth.empty());
     pth = findAtomEnvironmentOfRadiusN(*mH, 4, rootedAtAtom, true, true);
-    REQUIRE(pth.size() == 0);
+    REQUIRE(pth.empty());
     pth = findAtomEnvironmentOfRadiusN(*mH, 4, rootedAtAtom, true, false);
     REQUIRE(pth.size() == 7);
     pth = findAtomEnvironmentOfRadiusN(*mH, 4, rootedAtAtom, false, false);
@@ -212,13 +212,13 @@ TEST_CASE("Atom Environments (Extension)") {
 
     pth = findAtomEnvironmentOfRadiusN(*mH, 4, rootedAtAtom, false, true,
                                        &cAtomMap);
-    REQUIRE(pth.size() == 0);
-    REQUIRE(cAtomMap.size() == 0);
+    REQUIRE(pth.empty());
+    REQUIRE(cAtomMap.empty());
 
     pth = findAtomEnvironmentOfRadiusN(*mH, 4, rootedAtAtom, true, true,
                                        &cAtomMap);
-    REQUIRE(pth.size() == 0);
-    REQUIRE(cAtomMap.size() == 0);
+    REQUIRE(pth.empty());
+    REQUIRE(cAtomMap.empty());
 
     pth = findAtomEnvironmentOfRadiusN(*mH, 4, rootedAtAtom, false, false,
                                        &cAtomMap);

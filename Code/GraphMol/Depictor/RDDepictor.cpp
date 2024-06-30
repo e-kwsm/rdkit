@@ -438,7 +438,7 @@ void computeInitialCoords(RDKit::ROMol &mol,
     preSpec = true;
   }
 
-  if (arings.size() > 0) {
+  if (!arings.empty()) {
     // first deal with the fused rings
     DepictorLocal::embedFusedSystems(mol, arings, efrags, coordMap,
                                      useRingTemplates);
@@ -462,7 +462,7 @@ void computeInitialCoords(RDKit::ROMol &mol,
     mri = DepictorLocal::_findLargestFrag(efrags);
   }
 
-  while ((mri != efrags.end()) || (nratms.size() > 0)) {
+  while ((mri != efrags.end()) || (!nratms.empty())) {
     if (mri == efrags.end()) {
       // we are out of embedded fragments, if there are any
       // non embedded atoms use them to start a fragment
@@ -619,8 +619,8 @@ unsigned int compute2DCoords(RDKit::ROMol &mol,
     eri.removeCollisionsOpenAngles();
     eri.removeCollisionsShortenBonds();
   }
-  if (!params.coordMap || !params.coordMap->size()) {
-    if (params.canonOrient && efrags.size()) {
+  if (!params.coordMap || params.coordMap->empty()) {
+    if (params.canonOrient && !efrags.empty()) {
       // if we do not have any prespecified coordinates - canonicalize
       // the orientation of the fragment so that the longest axes fall
       // along the x-axis etc.
@@ -710,7 +710,7 @@ unsigned int compute2DCoordsMimicDistMat(
     eri.randomSampleFlipsAndPermutations(nFlipsPerSample, nSamples, sampleSeed,
                                          dmat, weightDistMat, permuteDeg4Nodes);
   }
-  if (canonOrient && efrags.size()) {
+  if (canonOrient && !efrags.empty()) {
     // canonicalize the orientation of the fragment so that the
     // longest axes fall along the x-axis etc.
     for (auto &eri : efrags) {

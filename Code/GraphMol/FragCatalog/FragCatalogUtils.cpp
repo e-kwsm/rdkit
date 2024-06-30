@@ -30,7 +30,7 @@ ROMol *getSmarts(std::string &&tmpStr) {
   // Remove whitespace
   boost::trim(tmpStr);
 
-  if (tmpStr.length() == 0) {
+  if (tmpStr.empty()) {
     // empty line
     return mol;
   }

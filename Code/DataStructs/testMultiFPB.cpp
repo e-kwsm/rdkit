@@ -527,12 +527,12 @@ TEST_CASE("MultiFPBReader edge cases") {
     {
       std::vector<std::pair<unsigned int, unsigned int>> nbrs =
           mfps.getContainingNeighbors(qbv);
-      REQUIRE(nbrs.size() == 0);
+      REQUIRE(nbrs.empty());
     }
     {
       std::vector<MultiFPBReader::ResultTuple> nbrs =
           mfps.getTanimotoNeighbors(qbv, 0.01);
-      REQUIRE(nbrs.size() == 0);
+      REQUIRE(nbrs.empty());
     }
   }
   BOOST_LOG(rdInfoLog) << "Finished" << std::endl;
