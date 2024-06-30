@@ -107,7 +107,7 @@ class RDKIT_FORCEFIELDHELPERS_EXPORT TorsionAngleContribs
 */
 RDKIT_FORCEFIELDHELPERS_EXPORT double calcTorsionEnergy(
     const std::vector<double> &forceConstants, const std::vector<int> &signs,
-    const double cosPhi);
+    double cosPhi);
 
 }  // namespace CrystalFF
 }  // namespace ForceFields
