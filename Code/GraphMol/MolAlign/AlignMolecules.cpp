@@ -148,7 +148,7 @@ double getBestRMSInternal(const ROMol &prbMol, const ROMol &refMol, int prbCid,
   double msdBest = std::numeric_limits<double>::max();
   const Conformer &prbCnf = prbMol.getConformer(prbCid);
   const Conformer &refCnf = refMol.getConformer(refCid);
-  const MatchVectType *bestMatchPtr = &matches[0];
+  const MatchVectType *bestMatchPtr = matches.data();
 
   if (numThreads == 1) {
     for (const auto &matche : matches) {

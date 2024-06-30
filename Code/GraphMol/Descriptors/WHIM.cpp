@@ -69,7 +69,7 @@ JacobiSVD<MatrixXd> *getSVD(MatrixXd &Mat) {
 
 std::vector<double> getWhimD(std::vector<double> weightvector,
                              MatrixXd MatOrigin, int numAtoms, double th) {
-  double *weightarray = &weightvector[0];
+  double *weightarray = weightvector.data();
 
   Map<VectorXd> Weight(weightarray, numAtoms);
   // std::cerr << "Weight:\n" << Weight << "\n";

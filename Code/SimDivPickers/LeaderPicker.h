@@ -183,11 +183,11 @@ struct LeaderPickerState {
       bcount = (count + (bsize - 1)) / bsize;
     }
     blocks.resize(bcount);
-    head_block = &blocks[0];
+    head_block = blocks.data();
     tick = 0;
 
     if (bcount > 1) {
-      int *ptr = &v[0];
+      int *ptr = v.data();
       unsigned int len = count;
       for (unsigned int i = 0; i < bcount; i++) {
         LeaderPickerBlock *block = &blocks[i];
@@ -210,7 +210,7 @@ struct LeaderPickerState {
       head_block->len = count;
       head_block->next[0] = 0;
       head_block->next[1] = 0;
-      head_block->ptr = &v[0];
+      head_block->ptr = v.data();
     }
 
     // InitializeThreads
