@@ -33,7 +33,8 @@ class RDKIT_DISTGEOMETRY_EXPORT BoundsMatrix
       : RDNumeric::SquareMatrix<double>(N, data) {}
 
   //! Get the upper bound between points i and j
-  inline double getUpperBound(unsigned int i, unsigned int j) const {
+  [[nodiscard]] inline double getUpperBound(unsigned int i,
+                                            unsigned int j) const {
     if (i < j) {
       return getVal(i, j);
     } else {
@@ -80,7 +81,8 @@ class RDKIT_DISTGEOMETRY_EXPORT BoundsMatrix
   }
 
   //! Get the lower bound between points i and j
-  inline double getLowerBound(unsigned int i, unsigned int j) const {
+  [[nodiscard]] inline double getLowerBound(unsigned int i,
+                                            unsigned int j) const {
     if (i < j) {
       return getVal(j, i);
     } else {
@@ -90,7 +92,7 @@ class RDKIT_DISTGEOMETRY_EXPORT BoundsMatrix
 
   //! Do a simple check of the current bounds - i.e. all lower bounds are
   //! smaller than the existing upper bounds
-  inline bool checkValid() const {
+  [[nodiscard]] inline bool checkValid() const {
     unsigned int i, j;
     for (i = 1; i < d_nRows; i++) {
       for (j = 0; j < i; j++) {

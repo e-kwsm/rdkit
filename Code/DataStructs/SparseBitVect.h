@@ -63,24 +63,24 @@ class RDKIT_DATASTRUCTS_EXPORT SparseBitVect : public BitVect {
   SparseBitVect operator~() const;
 
   //! returns a (const) pointer to our raw storage
-  const IntSet *getBitSet() const { return dp_bits; }
+  [[nodiscard]] const IntSet *getBitSet() const { return dp_bits; }
 
-  unsigned int getNumBits() const override { return d_size; }
+  [[nodiscard]] unsigned int getNumBits() const override { return d_size; }
   bool setBit(const unsigned int which) override;
   bool setBit(const IntSetIter which);
   bool unsetBit(const unsigned int which) override;
-  bool getBit(const unsigned int which) const override;
-  bool getBit(const IntVectIter which) const;
-  bool getBit(const IntSetIter which) const;
+  [[nodiscard]] bool getBit(const unsigned int which) const override;
+  [[nodiscard]] bool getBit(const IntVectIter which) const;
+  [[nodiscard]] bool getBit(const IntSetIter which) const;
 
-  unsigned int getNumOnBits() const override {
+  [[nodiscard]] unsigned int getNumOnBits() const override {
     return static_cast<unsigned int>(dp_bits->size());
   }
-  unsigned int getNumOffBits() const override {
+  [[nodiscard]] unsigned int getNumOffBits() const override {
     return d_size - static_cast<unsigned int>(dp_bits->size());
   }
 
-  std::string toString() const override;
+  [[nodiscard]] std::string toString() const override;
 
   void getOnBits(IntVect &v) const override;
   void clearBits() override { dp_bits->clear(); }
@@ -97,12 +97,13 @@ class RDKIT_DATASTRUCTS_EXPORT SparseBitVect : public BitVect {
  private:
   unsigned int d_size{0};
   void _initForSize(const unsigned int size) override;
-  bool checkIndex(const unsigned int idx) const {
+  [[nodiscard]] bool checkIndex(const unsigned int idx) const {
     return idx < d_size || (idx == d_size &&
                             d_size == std::numeric_limits<unsigned int>::max());
   }
   template <typename T>
-  bool checkIndex(const T which) const {
+  [[nodiscard]] [[nodiscard]] [[nodiscard]] bool checkIndex(
+      const T which) const {
     return *which >= 0 && static_cast<unsigned int>(*which) < d_size;
   }
 };

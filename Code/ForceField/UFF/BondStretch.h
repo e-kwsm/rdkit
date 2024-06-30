@@ -38,7 +38,7 @@ class RDKIT_FORCEFIELD_EXPORT BondStretchContrib : public ForceFieldContrib {
 
   void getGrad(double *pos, double *grad) const override;
 
-  BondStretchContrib *copy() const override {
+  [[nodiscard]] BondStretchContrib *copy() const override {
     return new BondStretchContrib(*this);
   }
 

@@ -68,7 +68,7 @@ class EditableMol : boost::noncopyable {
     dp_mol->commitBatchEdit();
   };
 
-  ROMol *GetMol() const {
+  [[nodiscard]] ROMol *GetMol() const {
     PRECONDITION(dp_mol, "no molecule");
     auto *res = new ROMol(*dp_mol);
     return res;

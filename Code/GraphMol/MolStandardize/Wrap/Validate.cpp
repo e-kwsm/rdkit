@@ -20,12 +20,13 @@ namespace {
 struct ValidationMethodWrap
     : MolStandardize::ValidationMethod,
       python::wrapper<MolStandardize::ValidationMethod> {
-  std::vector<MolStandardize::ValidationErrorInfo> validate(
+  [[nodiscard]] std::vector<MolStandardize::ValidationErrorInfo> validate(
       const ROMol &mol, bool reportAllFailures) const override {
     return this->get_override("validate")(mol, reportAllFailures);
   }
 
-  std::shared_ptr<MolStandardize::ValidationMethod> copy() const override {
+  [[nodiscard]] std::shared_ptr<MolStandardize::ValidationMethod> copy()
+      const override {
     return this->get_override("copy")();
   }
 };

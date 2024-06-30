@@ -30,7 +30,7 @@ class Priority {
    *
    * @return whether the substituents were unique
    */
-  bool isUnique() const { return d_unique; }
+  [[nodiscard]] bool isUnique() const { return d_unique; }
 
   /**
    * Indicates the descriptor type used to. This allows methods that represent
@@ -39,7 +39,7 @@ class Priority {
    *
    * @return The type of the descriptor that should be assigned
    */
-  bool isPseudoAsymetric() const { return d_pseudoAsym; }
+  [[nodiscard]] bool isPseudoAsymetric() const { return d_pseudoAsym; }
 
  private:
   bool d_unique;
