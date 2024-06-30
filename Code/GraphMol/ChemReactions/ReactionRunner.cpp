@@ -125,9 +125,11 @@ class StereoBondEndCap {
   StereoBondEndCap(StereoBondEndCap &&) = default;
   StereoBondEndCap &operator=(StereoBondEndCap &&) = default;
 
-  bool hasNonAnchor() const { return mp_nonAnchor != nullptr; }
-  unsigned getAnchorIdx() const { return m_anchor; }
-  unsigned getNonAnchorIdx() const { return mp_nonAnchor->getIdx(); }
+  [[nodiscard]] bool hasNonAnchor() const { return mp_nonAnchor != nullptr; }
+  [[nodiscard]] unsigned getAnchorIdx() const { return m_anchor; }
+  [[nodiscard]] unsigned getNonAnchorIdx() const {
+    return mp_nonAnchor->getIdx();
+  }
 
   std::pair<UINT_VECT, bool> getProductAnchorCandidates(
       ReactantProductAtomMapping *mapping) {
