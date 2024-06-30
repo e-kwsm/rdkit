@@ -241,16 +241,16 @@ inline bool rdvalue_tostring(RDValue_cast_t val, std::string &res) {
       } catch (const std::bad_any_cast &) {
         auto &rdtype = rdvalue_cast<std::any &>(val).type();
         if (rdtype == typeid(long)) {
-          res = boost::lexical_cast<std::string>(
+          res = std::to_string(
               std::any_cast<long>(rdvalue_cast<std::any &>(val)));
         } else if (rdtype == typeid(int64_t)) {
-          res = boost::lexical_cast<std::string>(
+          res = std::to_string(
               std::any_cast<int64_t>(rdvalue_cast<std::any &>(val)));
         } else if (rdtype == typeid(uint64_t)) {
-          res = boost::lexical_cast<std::string>(
+          res = std::to_string(
               std::any_cast<uint64_t>(rdvalue_cast<std::any &>(val)));
         } else if (rdtype == typeid(unsigned long)) {
-          res = boost::lexical_cast<std::string>(
+          res = std::to_string(
               std::any_cast<unsigned long>(rdvalue_cast<std::any &>(val)));
         } else {
           throw;
