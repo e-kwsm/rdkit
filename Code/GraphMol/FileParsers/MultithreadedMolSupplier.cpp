@@ -168,8 +168,7 @@ void MultithreadedMolSupplier::startThreads() {
   d_readerThread = std::thread(&MultithreadedMolSupplier::reader, this);
   // run the writer function in seperate threads
   for (unsigned int i = 0; i < d_params.numWriterThreads; i++) {
-    d_writerThreads.emplace_back(
-        std::thread(&MultithreadedMolSupplier::writer, this));
+    d_writerThreads.emplace_back(&MultithreadedMolSupplier::writer, this);
   }
 }
 

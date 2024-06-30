@@ -2827,9 +2827,9 @@ class TestAssignChiralTypesFromMolParity {
   }
   void fillBondDefVect() {
     for (const auto bond : d_rwMol->bonds()) {
-      d_bondDefVect.emplace_back(BondDef((bond)->getBeginAtomIdx(),
-                                         (bond)->getEndAtomIdx(),
-                                         (bond)->getBondType()));
+      d_bondDefVect.emplace_back((bond)->getBeginAtomIdx(),
+                                 (bond)->getEndAtomIdx(),
+                                 (bond)->getBondType());
     }
   }
   void stripBonds() {
