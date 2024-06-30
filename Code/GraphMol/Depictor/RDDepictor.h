@@ -48,8 +48,7 @@ class RDKIT_DEPICTOR_EXPORT DepictException : public std::exception {
 
   \throws DepictException if any of the templates are invalid
 */
-void RDKIT_DEPICTOR_EXPORT
-setRingSystemTemplates(const std::string templatePath);
+void RDKIT_DEPICTOR_EXPORT setRingSystemTemplates(std::string templatePath);
 
 //! \brief Add ring system templates to be used in 2D coordinate generation.
 /// If there are duplicates, the most recently added template will be used.
@@ -61,8 +60,7 @@ setRingSystemTemplates(const std::string templatePath);
 
   \throws DepictException if any of the templates are invalid
 */
-void RDKIT_DEPICTOR_EXPORT
-addRingSystemTemplates(const std::string templatePath);
+void RDKIT_DEPICTOR_EXPORT addRingSystemTemplates(std::string templatePath);
 
 //! \brief Load default ring system templates to be used in 2D coordinate
 //! generation

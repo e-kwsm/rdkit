@@ -209,7 +209,7 @@ RDKIT_GRAPHMOL_EXPORT double getIdealAngleBetweenLigands(const Atom *center,
                                                          const Atom *lig1,
                                                          const Atom *lig2);
 
-RDKIT_GRAPHMOL_EXPORT unsigned int getMaxNbors(const Atom::ChiralType tag);
+RDKIT_GRAPHMOL_EXPORT unsigned int getMaxNbors(Atom::ChiralType tag);
 
 //
 // Get the chiral permutation from the storage order of bonds on an atom
