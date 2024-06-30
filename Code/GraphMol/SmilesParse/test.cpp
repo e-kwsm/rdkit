@@ -90,7 +90,7 @@ void testPass() {
     // test zeros as ring indices, issue 2690982:
     "C0CC0",
     // test canonization error, issue 3018558:
-    "C/C(/C=C2\\Sc1ccc(cc1N\\2C))=C5\\SC4=NccN4C\\5=O",
+    R"(C/C(/C=C2\Sc1ccc(cc1N\2C))=C5\SC4=NccN4C\5=O)",
     // "the most common molecule in the universe",
     // expressed in an ugly way:
     "[HH]",
@@ -1329,7 +1329,7 @@ void testIssue159() {
   TEST_ASSERT(mol->getBondWithIdx(6)->getStereo() == Bond::STEREOE);
 
   delete mol;
-  smi = "C(/C=C/C)(\\C=C\\Br)=C\\Cl";
+  smi = R"(C(/C=C/C)(\C=C\Br)=C\Cl)";
   mol = SmilesToMol(smi);
   TEST_ASSERT(mol);
   TEST_ASSERT(mol->getBondWithIdx(1)->getStereo() == Bond::STEREOE);
@@ -1345,7 +1345,7 @@ void testIssue159() {
   TEST_ASSERT(mol->getBondWithIdx(6)->getStereo() == Bond::STEREOZ);
 
   delete mol;
-  smi = "Cl/C=C(/C=C/C=C\\F)\\C=C\\Br";
+  smi = R"(Cl/C=C(/C=C/C=C\F)\C=C\Br)";
   mol = SmilesToMol(smi);
   TEST_ASSERT(mol);
   TEST_ASSERT(mol->getBondWithIdx(1)->getStereo() == Bond::STEREOZ);
@@ -4366,7 +4366,7 @@ void testGithub3967() {
                        << std::endl;
 
   {
-    auto mol = "C=c1s/c2n(c1=O)CCCCCCC\\N=2"_smiles;
+    auto mol = R"(C=c1s/c2n(c1=O)CCCCCCC\N=2)"_smiles;
     TEST_ASSERT(mol);
     auto smi = MolToSmiles(*mol);
     std::cerr << smi << std::endl;
