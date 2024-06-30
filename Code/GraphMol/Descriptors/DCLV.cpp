@@ -172,10 +172,10 @@ class AtomRecord {
 
 struct AtomList {
   const AtomRecord *ptr[ATOMPOOL];
-  AtomList *next;
+  AtomList *next{nullptr};
   unsigned int count;
 
-  AtomList() : next(nullptr) {}
+  AtomList() {}
 };
 
 static void normalise(double *v) {
