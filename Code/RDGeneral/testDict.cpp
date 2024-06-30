@@ -38,7 +38,7 @@ TEST_CASE("testGithub940") {
     STR_VECT computed;
     auto *d = new Dict();
     d->setVal(RDKit::detail::computedPropName, computed);
-    computed.push_back("foo");
+    computed.emplace_back("foo");
     d->setVal(RDKit::detail::computedPropName, computed);
     delete d;
   }
@@ -46,7 +46,7 @@ TEST_CASE("testGithub940") {
     STR_VECT computed;
     auto *d = new Dict();
     d->setVal(RDKit::detail::computedPropName, computed);
-    computed.push_back("foo");
+    computed.emplace_back("foo");
     d->setVal(RDKit::detail::computedPropName, computed);
     d->clearVal(RDKit::detail::computedPropName);
     delete d;
@@ -106,7 +106,7 @@ TEST_CASE("testRDValue") {
     STR_VECT computed;
     Dict d;
     d.setVal(RDKit::detail::computedPropName, computed);
-    computed.push_back("foo");
+    computed.emplace_back("foo");
     d.setVal(RDKit::detail::computedPropName, computed);
     STR_VECT computed2 = d.getVal<STR_VECT>(RDKit::detail::computedPropName);
     REQUIRE(computed2[0] == "foo");

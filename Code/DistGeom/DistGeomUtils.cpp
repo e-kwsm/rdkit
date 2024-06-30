@@ -768,7 +768,7 @@ void addAngleTerms(ForceFields::ForceField *ff,
     }
   }
   if (!angleContribs->empty()) {
-    ff->contribs().push_back(std::move(angleContribs));
+    ff->contribs().emplace_back(std::move(angleContribs));
   }
 }
 
@@ -809,10 +809,10 @@ void addDistanceTerms(
     }
   }
   if (!distContribs->empty()) {
-    ff->contribs().push_back(std::move(distContribs));
+    ff->contribs().emplace_back(std::move(distContribs));
   }
   if (!harmonicDistContribs->empty()) {
-    ff->contribs().push_back(std::move(harmonicDistContribs));
+    ff->contribs().emplace_back(std::move(harmonicDistContribs));
   }
 }
 
@@ -830,10 +830,10 @@ void addChiralityTerms(ForceFields::ForceField *ff, const VECT_CHIRALSET *csets,
   }
 
   if (!chiralContribs->empty()) {
-    ff->contribs().push_back(std::move(chiralContribs));
+    ff->contribs().emplace_back(std::move(chiralContribs));
   }
   if (!fourdContribs->empty()) {
-    ff->contribs().push_back(std::move(fourdContribs));
+    ff->contribs().emplace_back(std::move(fourdContribs));
   }
 }
 
@@ -852,7 +852,7 @@ void addPlanarityTerms(ForceFields::ForceField *ff, const double forceConst,
     }
   }
   if (!inversionContribs->empty()) {
-    ff->contribs().push_back(std::move(inversionContribs));
+    ff->contribs().emplace_back(std::move(inversionContribs));
   }
 }
 

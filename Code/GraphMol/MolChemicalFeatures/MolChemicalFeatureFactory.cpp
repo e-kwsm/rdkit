@@ -66,7 +66,7 @@ FeatSPtrList MolChemicalFeatureFactory::getFeaturesForMol(
           }
         }
         if (unique) {
-          matchSets.push_back(std::make_pair(featDef->getFamily(), matchSet));
+          matchSets.emplace_back(featDef->getFamily(), matchSet);
 
           // Set up the feature:
           auto *newFeat =
@@ -83,7 +83,7 @@ FeatSPtrList MolChemicalFeatureFactory::getFeaturesForMol(
           }
 
           // finally, add this to our result:
-          res.push_back(FeatSPtrList::value_type(newFeat));
+          res.emplace_back(newFeat);
         }
       }
     }

@@ -313,8 +313,8 @@ void findBondPairsThatFragment(
     if (ok) {
       for (size_t i = 0; i < ringBlock.size() - 1; ++i) {
         for (size_t j = i + 1; j < ringBlock.size(); ++j) {
-          ringBondPairs.emplace_back(
-              std::make_pair(ringBlock[i]->getIdx(), ringBlock[j]->getIdx()));
+          ringBondPairs.emplace_back(ringBlock[i]->getIdx(),
+                                     ringBlock[j]->getIdx());
         }
       }
     } else {
@@ -323,8 +323,8 @@ void findBondPairsThatFragment(
       for (size_t i = 0; i < ringBlock.size() - 1; ++i) {
         for (size_t j = i + 1; j < ringBlock.size(); ++j) {
           if (bondPairFragmentsBlock(i, j, numAtoms, ringBlock, ringAdjTable)) {
-            ringBondPairs.emplace_back(
-                std::make_pair(ringBlock[i]->getIdx(), ringBlock[j]->getIdx()));
+            ringBondPairs.emplace_back(ringBlock[i]->getIdx(),
+                                       ringBlock[j]->getIdx());
           }
         }
       }
@@ -410,11 +410,11 @@ void doInitialFragmentation(
          i <
          std::min(static_cast<std::int64_t>(numThreadsToUse), lastRingBond + 1);
          ++i) {
-      threads.push_back(std::thread(doPartInitialFragmentation, std::ref(mol),
-                                    std::ref(splitBonds), maxNumFrags,
-                                    std::ref(ringBonds), endTime,
-                                    std::ref(mostRecentRingBond), lastRingBond,
-                                    std::ref(dummyLabels), std::ref(tmpFrags)));
+      threads.emplace_back(doPartInitialFragmentation, std::ref(mol),
+                           std::ref(splitBonds), maxNumFrags,
+                           std::ref(ringBonds), endTime,
+                           std::ref(mostRecentRingBond), lastRingBond,
+                           std::ref(dummyLabels), std::ref(tmpFrags));
     }
     for (auto &t : threads) {
       t.join();
@@ -473,9 +473,9 @@ void doFinalFragmentation(
     for (unsigned int i = 0U;
          i < std::min(static_cast<std::int64_t>(numThreadsToUse), lastFrag + 1);
          ++i) {
-      threads.push_back(std::thread(
-          doPartFinalFragmentation, std::ref(tmpFrags), maxNumFrags, endTime,
-          std::ref(mostRecentFrag), lastFrag, std::ref(fragments)));
+      threads.emplace_back(doPartFinalFragmentation, std::ref(tmpFrags),
+                           maxNumFrags, endTime, std::ref(mostRecentFrag),
+                           lastFrag, std::ref(fragments));
     }
     for (auto &t : threads) {
       t.join();
@@ -613,7 +613,7 @@ std::vector<std::vector<std::shared_ptr<ROMol>>> splitMolecule(
   for (const auto b : query.bonds()) {
     if (!ringBonds[b->getIdx()] && b->getBeginAtom()->getAtomicNum() != 1 &&
         b->getEndAtom()->getAtomicNum() != 1) {
-      bondPairs.push_back({b->getIdx(), b->getIdx()});
+      bondPairs.emplace_back(b->getIdx(), b->getIdx());
     }
   }
 

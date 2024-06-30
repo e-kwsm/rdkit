@@ -83,7 +83,7 @@ std::vector<std::vector<ClusNode>> buildProximityGraph(
   opts.similarityThreshold = clusOpts.similarityCutoff;
   for (size_t i = 0; i < mols.size() - 1; ++i) {
     for (size_t j = i + 1; j < mols.size(); ++j) {
-      toDo.push_back({i, j, &mols, &opts, &clusOpts});
+      toDo.emplace_back(i, j, &mols, &opts, &clusOpts);
     }
   }
 
@@ -110,9 +110,8 @@ std::vector<std::vector<ClusNode>> buildProximityGraph(
     size_t start = 0;
     std::vector<std::thread> threads;
     for (unsigned int i = 0U; i < numThreads; ++i, start += eachThread) {
-      threads.push_back(std::thread(buildProxGraphPart, std::ref(toDo),
-                                    std::ref(molSims), start,
-                                    start + eachThread));
+      threads.emplace_back(buildProxGraphPart, std::ref(toDo),
+                           std::ref(molSims), start, start + eachThread);
     }
     for (auto &t : threads) {
       t.join();
@@ -159,7 +158,7 @@ std::vector<std::vector<unsigned int>> disconnectProximityGraphs(
       }
     }
     nodes.sort();
-    subGraphs.push_back(std::vector(nodes.begin(), nodes.end()));
+    subGraphs.emplace_back(nodes.begin(), nodes.end());
     nextStart = std::find(done.begin(), done.end(), false);
   }
   return subGraphs;
@@ -313,7 +312,7 @@ void sortClusterMembersByMeanSim(
           totSim += proxGraph[clus[i]][clus[j]].d_sim;
         }
       }
-      clusSims.push_back({clus[i], totSim / (clus.size() - 1)});
+      clusSims.emplace_back(clus[i], totSim / (clus.size() - 1));
     }
     std::sort(clusSims.begin(), clusSims.end(),
               [](const std::pair<unsigned int, double> &p1,

@@ -287,12 +287,12 @@ TEST_CASE("Issue 3231") {
     for (auto &si : Chirality::findPotentialStereo(mol, true, true)) {
       if (si.type == Chirality::StereoType::Atom_Tetrahedral) {
         if (si.specified == Chirality::StereoSpecified::Unspecified) {
-          result.push_back(std::make_pair(si.centeredOn, "?"));
+          result.emplace_back(si.centeredOn, "?");
         } else {
           auto atom = mol.getAtomWithIdx(si.centeredOn);
           auto cipLabel =
               atom->getProp<std::string>(common_properties::_CIPCode);
-          result.push_back(std::make_pair(si.centeredOn, cipLabel));
+          result.emplace_back(si.centeredOn, cipLabel);
         }
       }
     }
