@@ -425,7 +425,7 @@ TEST_CASE(
     CHECK(matches.size() == 4);
   }
   SECTION("interaction with chirality") {
-    auto m = "C/C=C/C=C/C=C\\C=C/C=C/C"_smiles;
+    auto m = R"(C/C=C/C=C/C=C\C=C/C=C/C)"_smiles;
     auto q = "C/C=C/C"_smarts;
     REQUIRE(m);
     REQUIRE(q);
