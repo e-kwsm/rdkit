@@ -340,7 +340,7 @@ TEST_CASE("github #2257: writing cxsmiles", "[smiles][cxsmiles]") {
 
 TEST_CASE("Github #2148", "[bug][Smiles][Smarts]") {
   SECTION("SMILES") {
-    auto mol = "C(=C\\F)\\4.O=C1C=4CCc2ccccc21"_smiles;
+    auto mol = R"(C(=C\F)\4.O=C1C=4CCc2ccccc21)"_smiles;
     REQUIRE(mol);
     REQUIRE(mol->getBondBetweenAtoms(0, 5));
     CHECK(mol->getBondBetweenAtoms(0, 5)->getBondType() == Bond::DOUBLE);
@@ -1782,7 +1782,7 @@ M  END)CTAB"_ctab;
   }
   SECTION("github #3967 part 1") {
     // duplicating a test from elsewhere
-    auto mol = "C=c1s/c2n(c1=O)CCCCCCC\\N=2"_smiles;
+    auto mol = R"(C=c1s/c2n(c1=O)CCCCCCC\N=2)"_smiles;
     REQUIRE(mol);
     auto smi = MolToSmiles(*mol);
     CHECK(smi == "C=c1s/c2n(c1=O)CCCCCCC\\N=2");

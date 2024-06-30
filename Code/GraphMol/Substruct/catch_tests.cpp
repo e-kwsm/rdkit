@@ -426,7 +426,7 @@ TEST_CASE(
     CHECK(matches.size() == 4);
   }
   SECTION("interaction with chirality") {
-    auto m = "C/C=C/C=C/C=C\\C=C/C=C/C"_smiles;
+    auto m = R"(C/C=C/C=C/C=C\C=C/C=C/C)"_smiles;
     auto q = "C/C=C/C"_smarts;
     REQUIRE(m);
     REQUIRE(q);
@@ -768,7 +768,7 @@ TEST_CASE("specified query matches unspecified atom") {
     REQUIRE(m1);
     auto m2 = "FC=CBr"_smiles;
     REQUIRE(m2);
-    auto m3 = "F/C=C\\Br"_smiles;
+    auto m3 = R"(F/C=C\Br)"_smiles;
     REQUIRE(m3);
 
     SubstructMatchParameters ps;

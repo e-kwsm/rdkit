@@ -265,7 +265,7 @@ TEST_CASE(
     }
   }
   SECTION("basics 2") {
-    auto m1 = "C1C/C=C\\CCCCCCCC1"_smiles;
+    auto m1 = R"(C1C/C=C\CCCCCCCC1)"_smiles;
     REQUIRE(m1);
     if (useLegacy) {
       CHECK(m1->getBondBetweenAtoms(2, 3)->getStereo() ==
@@ -621,7 +621,7 @@ TEST_CASE("double bond stereo not honored in conformer generator") {
   }
 
   SECTION("github #5913") {
-    auto m = "[H]/C(F)=C([H])\\C([H])=C(/[H])Br"_smiles;
+    auto m = R"([H]/C(F)=C([H])\C([H])=C(/[H])Br)"_smiles;
     REQUIRE(m);
 
     RWMol cp(*m);
@@ -647,7 +647,7 @@ TEST_CASE("double bond stereo not honored in conformer generator") {
   SECTION("github #5283") {
     UseLegacyStereoPerceptionFixture useLegacy(false);
     auto m =
-        "Cc3nn(CC(=O)N2CCN(c1ccccc1)CC2)c(C)c3/N=N\\c6ccc(CNC(=O)CCC(=O)Nc4cccc5C(=O)NCc45)cc6"_smiles;
+        R"(Cc3nn(CC(=O)N2CCN(c1ccccc1)CC2)c(C)c3/N=N\c6ccc(CNC(=O)CCC(=O)Nc4cccc5C(=O)NCc45)cc6)"_smiles;
     REQUIRE(m);
     RWMol cp(*m);
     MolOps::addHs(cp);

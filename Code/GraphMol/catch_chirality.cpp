@@ -114,7 +114,7 @@ TEST_CASE("bond StereoInfo", "[unittest]") {
       CHECK(sinfo.descriptor == Chirality::StereoDescriptor::Bond_Trans);
     }
     {
-      auto mol = "C/C=C(\\C#C)C"_smiles;
+      auto mol = R"(C/C=C(\C#C)C)"_smiles;
       REQUIRE(mol);
 
       CHECK(mol->getBondWithIdx(1)->getStereoAtoms().size() == 2);
@@ -2897,7 +2897,7 @@ TEST_CASE("assignStereochemistry sets bond stereo with new stereo perception") {
       CHECK(m->getBondWithIdx(1)->getStereoAtoms() == std::vector<int>{0, 3});
     }
     {
-      auto m = "C/C=C\\C"_smiles;
+      auto m = R"(C/C=C\C)"_smiles;
       REQUIRE(m);
       CHECK(m->getBondWithIdx(1)->getStereo() == Bond::BondStereo::STEREOCIS);
       CHECK(m->getBondWithIdx(1)->getStereoAtoms() == std::vector<int>{0, 3});
@@ -2961,7 +2961,7 @@ TEST_CASE("chiral duplicates") {
     CHECK(mol->getBondWithIdx(2)->getStereo() == Bond::BondStereo::STEREONONE);
   }
   SECTION("double bonds and double bonds 2") {
-    auto mol = "C/C(O)=C(/C=C/C)/C=C\\C"_smiles;
+    auto mol = R"(C/C(O)=C(/C=C/C)/C=C\C)"_smiles;
     REQUIRE(mol);
     CHECK(mol->getBondWithIdx(4)->getStereo() == Bond::BondStereo::STEREOTRANS);
     CHECK(mol->getBondWithIdx(7)->getStereo() == Bond::BondStereo::STEREOCIS);
@@ -2999,7 +2999,7 @@ TEST_CASE("more findPotential") {
   }
   SECTION("double bond impact on atoms") {
     {
-      auto m = "C[CH](/C=C/C)/C=C\\C"_smiles;
+      auto m = R"(C[CH](/C=C/C)/C=C\C)"_smiles;
       REQUIRE(m);
       auto si = Chirality::findPotentialStereo(*m, true, true);
       CHECK(si.size() == 3);

@@ -96,7 +96,7 @@ void RGroupData::add(const ROMOL_SPTR &newMol,
             std::inserter(attachments, attachments.end()));
 
   mols.push_back(newMol);
-  static const std::regex remove_isotopes_regex("\\[\\d*\\*\\]");
+  static const std::regex remove_isotopes_regex(R"(\[\d*\*\])");
   // remove the isotope labels from the SMILES string to avoid
   // that identical R-group are perceived as different when
   // MCS alignment is not used (NoAlign flag)
