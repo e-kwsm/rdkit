@@ -310,8 +310,8 @@ TEST_CASE("TEST_NOT_TAUTOMER") {
   auto tautomerQuery =
       std::unique_ptr<TautomerQuery>(TautomerQuery::fromMol(*mol));
   CHECK(1 == tautomerQuery->getTautomers().size());
-  CHECK(0 == tautomerQuery->getModifiedAtoms().size());
-  CHECK(0 == tautomerQuery->getModifiedBonds().size());
+  CHECK(tautomerQuery->getModifiedAtoms().empty());
+  CHECK(tautomerQuery->getModifiedBonds().empty());
   auto target = "CC1=NC2=CC=CC=C2O1"_smiles;
   REQUIRE(target);
   CHECK(tautomerQuery->isSubstructOf(*target));

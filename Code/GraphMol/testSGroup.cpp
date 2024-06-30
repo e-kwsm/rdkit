@@ -467,7 +467,7 @@ void testModifyMol() {
     auto tmol = mol;
     TEST_ASSERT(getSubstanceGroups(tmol).size() == 3);
     tmol.clear();
-    TEST_ASSERT(getSubstanceGroups(tmol).size() == 0);
+    TEST_ASSERT(getSubstanceGroups(tmol).empty());
   }
 
   auto mol_copy = mol;
@@ -863,7 +863,7 @@ void testSubstanceGroupsAndRemoveAtoms(const std::string &rdbase) {
     TEST_ASSERT(mol->getNumAtoms() == 11);
     {
       auto &sgroups = getSubstanceGroups(*mol);
-      TEST_ASSERT(sgroups.size() == 0);
+      TEST_ASSERT(sgroups.empty());
     }
   }
 
@@ -899,7 +899,7 @@ void testSubstanceGroupsAndRemoveAtoms(const std::string &rdbase) {
       TEST_ASSERT(sgroups[1].getBonds().size() == 2);
       tgt = {1, 8};
       TEST_ASSERT(sgroups[1].getBonds() == tgt);
-      TEST_ASSERT(sgroups[1].getParentAtoms().size() == 0);
+      TEST_ASSERT(sgroups[1].getParentAtoms().empty());
     }
   }
   {  // copolymer example with PARENT
@@ -964,7 +964,7 @@ void testSubstanceGroupsAndRemoveAtoms(const std::string &rdbase) {
     TEST_ASSERT(mol->getNumAtoms() == 7);
     {
       auto &sgroups = getSubstanceGroups(*mol);
-      TEST_ASSERT(sgroups.size() == 0);
+      TEST_ASSERT(sgroups.empty());
     }
   }
   {  // copolymer example 2 with PARENT, same as the previous but with a
