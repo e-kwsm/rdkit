@@ -96,7 +96,7 @@ void addBonds(const ROMol &mol, MMFFMolProperties *mmffMolProperties,
             << std::endl;
   }
   if (hasContrib) {
-    field->contribs().push_back(ForceFields::ContribPtr(contrib.release()));
+    field->contribs().emplace_back(contrib.release());
   }
 }
 
@@ -271,7 +271,7 @@ void addAngles(const ROMol &mol, MMFFMolProperties *mmffMolProperties,
             << std::endl;
   }
   if (hasContrib) {
-    field->contribs().push_back(ForceFields::ContribPtr(contrib.release()));
+    field->contribs().emplace_back(contrib.release());
   }
 }
 
@@ -427,7 +427,7 @@ void addStretchBend(const ROMol &mol, MMFFMolProperties *mmffMolProperties,
             << std::endl;
   }
   if (contribAdded) {
-    field->contribs().push_back(ForceFields::ContribPtr(contrib.release()));
+    field->contribs().emplace_back(contrib.release());
   }
 }
 
@@ -554,7 +554,7 @@ void addOop(const ROMol &mol, MMFFMolProperties *mmffMolProperties,
             << std::endl;
   }
   if (hasContrib) {
-    field->contribs().push_back(ForceFields::ContribPtr(contrib.release()));
+    field->contribs().emplace_back(contrib.release());
   }
 }
 
@@ -733,7 +733,7 @@ void addTorsions(const ROMol &mol, MMFFMolProperties *mmffMolProperties,
             << std::endl;
   }
   if (contribAdded) {
-    field->contribs().push_back(ForceFields::ContribPtr(contrib.release()));
+    field->contribs().emplace_back(contrib.release());
   }
 }
 
@@ -823,7 +823,7 @@ void addVdW(const ROMol &mol, int confId, MMFFMolProperties *mmffMolProperties,
             << std::endl;
   }
   if (hasContrib) {
-    field->contribs().push_back(ForceFields::ContribPtr(contrib.release()));
+    field->contribs().emplace_back(contrib.release());
   }
 }
 
@@ -917,7 +917,7 @@ void addEle(const ROMol &mol, int confId, MMFFMolProperties *mmffMolProperties,
             << std::endl;
   }
   if (hasContrib) {
-    field->contribs().push_back(ForceFields::ContribPtr(contrib.release()));
+    field->contribs().emplace_back(contrib.release());
   }
 }
 
@@ -1061,7 +1061,7 @@ void addNonbonded(const ROMol &mol, int confId,
     }
   }
   if (hasContrib) {
-    field->contribs().push_back(ForceFields::ContribPtr(contrib.release()));
+    field->contribs().emplace_back(contrib.release());
   }
 
   if (mmffMolProperties->getMMFFVerbosity()) {

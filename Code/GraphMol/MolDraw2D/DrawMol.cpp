@@ -836,13 +836,13 @@ void DrawMol::extractBrackets() {
       const auto bnd = drawMol_->getBondWithIdx(bndIdx);
       if (std::find(sg.getAtoms().begin(), sg.getAtoms().end(),
                     bnd->getBeginAtomIdx()) != sg.getAtoms().end()) {
-        sgBondSegments.push_back(std::make_pair(atCds_[bnd->getBeginAtomIdx()],
-                                                atCds_[bnd->getEndAtomIdx()]));
+        sgBondSegments.emplace_back(atCds_[bnd->getBeginAtomIdx()],
+                                    atCds_[bnd->getEndAtomIdx()]);
 
       } else if (std::find(sg.getAtoms().begin(), sg.getAtoms().end(),
                            bnd->getEndAtomIdx()) != sg.getAtoms().end()) {
-        sgBondSegments.push_back(std::make_pair(
-            atCds_[bnd->getEndAtomIdx()], atCds_[bnd->getBeginAtomIdx()]));
+        sgBondSegments.emplace_back(atCds_[bnd->getEndAtomIdx()],
+                                    atCds_[bnd->getBeginAtomIdx()]);
       }
     }
     int numBrackets = 0;
@@ -3712,7 +3712,7 @@ void DrawMol::makeHighlightEnd(const Atom *end1, const Atom *end2,
     for (unsigned i = 0; i < end1HighNbrs.size(); ++i) {
       auto ovec = end1Cds.directionVector(atCds_[end1HighNbrs[i]->getIdx()]);
       auto ang = bvec.signedAngleTo(ovec);
-      angs.push_back(std::make_pair(i, ang));
+      angs.emplace_back(i, ang);
     }
     std::sort(angs.begin(), angs.end(),
               [](const std::pair<int, double> &a1,
