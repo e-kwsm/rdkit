@@ -931,12 +931,12 @@ TEST_CASE("CDXML") {
     {
       auto fname = cdxmlbase + "bad-id.cdxml";
       auto mols = MolsFromCDXMLFile(fname);
-      CHECK(mols.size() == 0);
+      CHECK(mols.empty());
     }
     {
       auto fname = cdxmlbase + "bad-coords.cdxml";
       auto mols = MolsFromCDXMLFile(fname);
-      CHECK(mols.size() == 0);
+      CHECK(mols.empty());
     }
     {
       auto fname = cdxmlbase + "bad-bondorder.cdxml";
@@ -950,7 +950,7 @@ TEST_CASE("CDXML") {
     {
       auto fname = cdxmlbase + "bad-bondorder2.cdxml";
       auto mols = MolsFromCDXMLFile(fname);
-      CHECK(mols.size() == 0);
+      CHECK(mols.empty());
     }
   }
 }
