@@ -154,7 +154,7 @@ TopologicalTorsionEnvGenerator<OutputType>::getEnvironments(
         }
         pathCodes.push_back(code);
       }
-      if (pathCodes.size()) {
+      if (!pathCodes.empty()) {
         OutputType code;
         if (hashResults) {
           code = getTopologicalTorsionHash(pathCodes);
