@@ -805,9 +805,9 @@ class RDKIT_GRAPHMOL_EXPORT ROMol : public RDProps {
   //! \name boost::serialization support
   //! @{
   template <class Archive>
-  void save(Archive &ar, const unsigned int version) const;
+  void save(Archive &ar, unsigned int version) const;
   template <class Archive>
-  void load(Archive &ar, const unsigned int version);
+  void load(Archive &ar, unsigned int version);
   BOOST_SERIALIZATION_SPLIT_MEMBER()
   //! @}
 #endif
