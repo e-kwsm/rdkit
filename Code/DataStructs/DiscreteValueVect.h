@@ -63,7 +63,7 @@ class RDKIT_DATASTRUCTS_EXPORT DiscreteValueVect {
   ~DiscreteValueVect() = default;
 
   //! return the value at an index
-  unsigned int getVal(unsigned int i) const;
+  [[nodiscard]] unsigned int getVal(unsigned int i) const;
 
   //! support indexing using []
   int operator[](unsigned int idx) const { return getVal(idx); }
@@ -76,24 +76,24 @@ class RDKIT_DATASTRUCTS_EXPORT DiscreteValueVect {
   void setVal(unsigned int i, unsigned int val);
 
   //! returns the sum of all the elements in the vect
-  unsigned int getTotalVal() const;
+  [[nodiscard]] unsigned int getTotalVal() const;
 
   //! returns the length
-  unsigned int getLength() const;
+  [[nodiscard]] unsigned int getLength() const;
   //! returns the length
-  unsigned int size() const { return getLength(); }
+  [[nodiscard]] unsigned int size() const { return getLength(); }
 
   //! return a pointer to our raw data storage
-  const std::uint32_t *getData() const;
+  [[nodiscard]] const std::uint32_t *getData() const;
 
   //! return the number of bits used to store each value
-  unsigned int getNumBitsPerVal() const { return d_bitsPerVal; }
+  [[nodiscard]] unsigned int getNumBitsPerVal() const { return d_bitsPerVal; }
 
   //! return the type of value being stored
-  DiscreteValueType getValueType() const { return d_type; }
+  [[nodiscard]] DiscreteValueType getValueType() const { return d_type; }
 
   //! returns the size of our storage
-  unsigned int getNumInts() const { return d_numInts; }
+  [[nodiscard]] unsigned int getNumInts() const { return d_numInts; }
 
   //! support dvv3 = dvv1&dvv2
   /*!
@@ -120,7 +120,7 @@ class RDKIT_DATASTRUCTS_EXPORT DiscreteValueVect {
   DiscreteValueVect &operator-=(const DiscreteValueVect &other);
 
   //! returns a binary string representation (pickle)
-  std::string toString() const;
+  [[nodiscard]] std::string toString() const;
 
  private:
   DiscreteValueType d_type;
