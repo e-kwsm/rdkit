@@ -19,9 +19,9 @@ template <typename E>
 class ConcurrentQueue {
  private:
   unsigned int d_capacity;
-  bool d_done;
+  bool d_done{false};
   std::vector<E> d_elements;
-  unsigned int d_head, d_tail;
+  unsigned int d_head{0}, d_tail{0};
   mutable std::mutex d_lock;
   std::condition_variable d_notEmpty, d_notFull;
 
@@ -30,8 +30,7 @@ class ConcurrentQueue {
   ConcurrentQueue &operator=(const ConcurrentQueue<E> &);
 
  public:
-  ConcurrentQueue(unsigned int capacity)
-      : d_capacity(capacity), d_done(false), d_head(0), d_tail(0) {
+  ConcurrentQueue(unsigned int capacity) : d_capacity(capacity) {
     std::vector<E> elements(capacity);
     d_elements = elements;
   }

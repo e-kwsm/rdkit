@@ -1175,7 +1175,7 @@ struct HELMMonomer {
   Atom *oxt{nullptr};
 
   HELMMonomer() {}
-  HELMMonomer(Atom *x, Atom *y, Atom *z) : r1(x), r2(y), r3(z), oxt(nullptr) {}
+  HELMMonomer(Atom *x, Atom *y, Atom *z) : r1(x), r2(y), r3(z) {}
 };
 
 static const char *GetHELMOneLetterCode(char ch) {

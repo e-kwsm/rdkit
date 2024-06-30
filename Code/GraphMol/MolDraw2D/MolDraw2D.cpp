@@ -58,17 +58,7 @@ MolDraw2D::MolDraw2D(int width, int height, int panelWidth, int panelHeight)
     : width_(width),
       height_(height),
       panel_width_(panelWidth > 0 ? panelWidth : width),
-      panel_height_(panelHeight > 0 ? panelHeight : height),
-      legend_height_(0),
-      scale_(1.0),
-      fontScale_(1.0),
-      x_offset_(0),
-      y_offset_(0),
-      fill_polys_(true),
-      activeMolIdx_(-1),
-      activeAtmIdx1_(-1),
-      activeAtmIdx2_(-1),
-      activeBndIdx_(-1) {}
+      panel_height_(panelHeight > 0 ? panelHeight : height) {}
 
 // ****************************************************************************
 MolDraw2D::~MolDraw2D() {}
