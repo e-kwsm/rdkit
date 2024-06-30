@@ -594,8 +594,7 @@ void visit_children(T &node, std::map<unsigned int, Atom *> &ids,
 
         if (atm->hasProp(CDX_ATOM_POS)) {
           hasConf = true;
-          const std::vector<double> coord =
-              atm->getProp<std::vector<double>>(CDX_ATOM_POS);
+          const auto coord = atm->getProp<std::vector<double>>(CDX_ATOM_POS);
 
           if (coord.size() == 2) {
             p.x = coord[0];
