@@ -136,14 +136,14 @@ class RDKIT_RDGENERAL_EXPORT Dict {
 
   //----------------------------------------------------------
   //! \brief Returns the number of entries in the dictionary
-  std::size_t size() const { return _data.size(); }
+  [[nodiscard]] std::size_t size() const { return _data.size(); }
 
   //! \brief Returns whether the dictionary is empty
-  bool empty() const { return _data.empty(); }
+  [[nodiscard]] bool empty() const { return _data.empty(); }
 
   using const_iterator = DataType::const_iterator;
-  const_iterator begin() const { return _data.begin(); }
-  const_iterator end() const { return _data.end(); }
+  [[nodiscard]] const_iterator begin() const { return _data.begin(); }
+  [[nodiscard]] const_iterator end() const { return _data.end(); }
 
   //! \brief Appends a populated Pair to the dictionary.
   void insert(Pair &&pair) {
@@ -162,7 +162,7 @@ class RDKIT_RDGENERAL_EXPORT Dict {
 
   //! \brief Returns a const reference to the RDValue for a key.
   //! Throws KeyErrorException if the key is not found.
-  const RDValue &getRDValue(const std::string_view what) const {
+  [[nodiscard]] const RDValue &getRDValue(const std::string_view what) const {
     for (const auto &data : _data) {
       if (data.key == what) {
         return data.val;
@@ -175,7 +175,7 @@ class RDKIT_RDGENERAL_EXPORT Dict {
 
   //! \brief Returns whether or not the dictionary contains a particular
   //!        key.
-  bool hasVal(const std::string_view what) const {
+  [[nodiscard]] bool hasVal(const std::string_view what) const {
     for (const auto &data : _data) {
       if (data.key == what) {
         return true;
@@ -189,7 +189,7 @@ class RDKIT_RDGENERAL_EXPORT Dict {
   /*!
      \return  a \c STR_VECT
   */
-  STR_VECT keys() const {
+  [[nodiscard]] STR_VECT keys() const {
     STR_VECT res;
     res.reserve(_data.size());
     for (const auto &item : _data) {
@@ -218,7 +218,7 @@ class RDKIT_RDGENERAL_EXPORT Dict {
 
   //! \overload
   template <typename T>
-  T getVal(const std::string_view what) const {
+  [[nodiscard]] T getVal(const std::string_view what) const {
     for (auto &data : _data) {
       if (data.key == what) {
         return from_rdvalue<T>(data.val);

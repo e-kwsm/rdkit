@@ -140,9 +140,11 @@ class RDKIT_FILEPARSERS_EXPORT ForwardSDMolSupplier : public MolSupplier {
   bool atEnd() override;
 
   void setProcessPropertyLists(bool val) { df_processPropertyLists = val; }
-  bool getProcessPropertyLists() const { return df_processPropertyLists; }
+  [[nodiscard]] bool getProcessPropertyLists() const {
+    return df_processPropertyLists;
+  }
 
-  bool getEOFHitOnRead() const { return df_eofHitOnRead; }
+  [[nodiscard]] bool getEOFHitOnRead() const { return df_eofHitOnRead; }
 
  protected:
   virtual void checkForEnd();

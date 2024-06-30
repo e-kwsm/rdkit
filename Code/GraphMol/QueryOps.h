@@ -779,7 +779,7 @@ class RDKIT_GRAPHMOL_EXPORT AtomRingQuery
   }
 
   //! returns a copy of this query
-  Queries::Query<int, ConstAtomPtr, true> *copy() const override {
+  [[nodiscard]] Queries::Query<int, ConstAtomPtr, true> *copy() const override {
     AtomRingQuery *res = new AtomRingQuery(this->d_val);
     res->setNegation(getNegation());
     res->setTol(this->getTol());
@@ -822,10 +822,10 @@ class RDKIT_GRAPHMOL_EXPORT RecursiveStructureQuery
   */
   void setQueryMol(ROMol const *query) { dp_queryMol.reset(query); }
   //! returns a pointer to our query molecule
-  ROMol const *getQueryMol() const { return dp_queryMol.get(); }
+  [[nodiscard]] ROMol const *getQueryMol() const { return dp_queryMol.get(); }
 
   //! returns a copy of this query
-  Queries::Query<int, Atom const *, true> *copy() const override {
+  [[nodiscard]] Queries::Query<int, Atom const *, true> *copy() const override {
     RecursiveStructureQuery *res = new RecursiveStructureQuery();
     res->dp_queryMol.reset(new ROMol(*dp_queryMol, true));
 
@@ -838,7 +838,7 @@ class RDKIT_GRAPHMOL_EXPORT RecursiveStructureQuery
     res->d_serialNumber = d_serialNumber;
     return res;
   }
-  unsigned int getSerialNumber() const { return d_serialNumber; }
+  [[nodiscard]] unsigned int getSerialNumber() const { return d_serialNumber; }
 
 #ifdef RDK_BUILD_THREADSAFE_SSS
   std::mutex d_mutex;
@@ -884,14 +884,14 @@ class HasPropQuery : public Queries::EqualityQuery<int, TargetPtr, true> {
   }
 
   //! returns a copy of this query
-  Queries::Query<int, TargetPtr, true> *copy() const override {
+  [[nodiscard]] Queries::Query<int, TargetPtr, true> *copy() const override {
     HasPropQuery *res = new HasPropQuery(this->propname);
     res->setNegation(this->getNegation());
     res->d_description = this->d_description;
     return res;
   }
 
-  const std::string &getPropName() const { return propname; }
+  [[nodiscard]] const std::string &getPropName() const { return propname; }
 };
 
 typedef Queries::EqualityQuery<int, Atom const *, true> ATOM_PROP_QUERY;
@@ -909,8 +909,8 @@ class HasPropWithValueQueryBase {
  public:
   HasPropWithValueQueryBase() = default;
   virtual ~HasPropWithValueQueryBase() = default;
-  virtual PairHolder getPair() const = 0;
-  virtual double getTolerance() const = 0;
+  [[nodiscard]] virtual PairHolder getPair() const = 0;
+  [[nodiscard]] virtual double getTolerance() const = 0;
 };
 
 template <class TargetPtr, class T>
@@ -929,11 +929,11 @@ class HasPropWithValueQuery
     this->setDataFunc(0);
   }
 
-  PairHolder getPair() const override {
+  [[nodiscard]] PairHolder getPair() const override {
     return PairHolder(Dict::Pair(propname, val));
   }
 
-  double getTolerance() const override { return tolerance; }
+  [[nodiscard]] double getTolerance() const override { return tolerance; }
 
   explicit HasPropWithValueQuery(std::string prop, const T &v,
                                  const T &tol = 0.0)
@@ -980,7 +980,7 @@ class HasPropWithValueQuery
   }
 
   //! returns a copy of this query
-  Queries::Query<int, TargetPtr, true> *copy() const override {
+  [[nodiscard]] Queries::Query<int, TargetPtr, true> *copy() const override {
     HasPropWithValueQuery *res =
         new HasPropWithValueQuery(this->propname, this->val, this->tolerance);
     res->setNegation(this->getNegation());
@@ -1013,11 +1013,11 @@ class HasPropWithValueQuery<TargetPtr, std::string>
     this->setDataFunc(nullptr);
   }
 
-  PairHolder getPair() const override {
+  [[nodiscard]] PairHolder getPair() const override {
     return PairHolder(Dict::Pair(propname, val));
   }
 
-  double getTolerance() const override { return 0.0; }
+  [[nodiscard]] double getTolerance() const override { return 0.0; }
 
   bool Match(const TargetPtr what) const override {
     bool res = what->hasProp(propname);
@@ -1052,7 +1052,7 @@ class HasPropWithValueQuery<TargetPtr, std::string>
   }
 
   //! returns a copy of this query
-  Queries::Query<int, TargetPtr, true> *copy() const override {
+  [[nodiscard]] Queries::Query<int, TargetPtr, true> *copy() const override {
     HasPropWithValueQuery<TargetPtr, std::string> *res =
         new HasPropWithValueQuery<TargetPtr, std::string>(this->propname,
                                                           this->val);
@@ -1087,11 +1087,11 @@ class HasPropWithValueQuery<TargetPtr, ExplicitBitVect>
     this->setDataFunc(nullptr);
   }
 
-  PairHolder getPair() const override {
+  [[nodiscard]] PairHolder getPair() const override {
     return PairHolder(Dict::Pair(propname, val));
   }
 
-  double getTolerance() const override { return tol; }
+  [[nodiscard]] double getTolerance() const override { return tol; }
 
   bool Match(const TargetPtr what) const override {
     bool res = what->hasProp(propname);
@@ -1128,7 +1128,7 @@ class HasPropWithValueQuery<TargetPtr, ExplicitBitVect>
   }
 
   //! returns a copy of this query
-  Queries::Query<int, TargetPtr, true> *copy() const override {
+  [[nodiscard]] Queries::Query<int, TargetPtr, true> *copy() const override {
     HasPropWithValueQuery<TargetPtr, ExplicitBitVect> *res =
         new HasPropWithValueQuery<TargetPtr, ExplicitBitVect>(
             this->propname, this->val, this->tol);

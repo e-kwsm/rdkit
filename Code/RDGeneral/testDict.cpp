@@ -599,8 +599,8 @@ TEST_CASE("testUpdate") {
 
 class FooHandler : public CustomPropHandler {
  public:
-  const char *getPropName() const override { return "Foo"; }
-  bool canSerialize(const RDValue &value) const override {
+  [[nodiscard]] const char *getPropName() const override { return "Foo"; }
+  [[nodiscard]] bool canSerialize(const RDValue &value) const override {
     return rdvalue_is<Foo>(value);
   }
   bool read(std::istream &ss, RDValue &value) const override {
@@ -626,7 +626,9 @@ class FooHandler : public CustomPropHandler {
     return true;
   }
 
-  CustomPropHandler *clone() const override { return new FooHandler; }
+  [[nodiscard]] CustomPropHandler *clone() const override {
+    return new FooHandler;
+  }
 };
 
 TEST_CASE("testCustomProps") {

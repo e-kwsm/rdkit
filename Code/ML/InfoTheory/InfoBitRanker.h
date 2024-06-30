@@ -160,12 +160,12 @@ class RDKIT_INFOTHEORY_EXPORT InfoBitRanker {
    *seen so far
    *
    */
-  unsigned int getNumInstances() const { return d_nInst; }
+  [[nodiscard]] unsigned int getNumInstances() const { return d_nInst; }
 
   /*! \brief return the number of classes
    *
    */
-  unsigned int getNumClasses() const { return d_classes; }
+  [[nodiscard]] unsigned int getNumClasses() const { return d_classes; }
 
   /*! \brief Set the classes to which the entropy calculation should be biased
    *

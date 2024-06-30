@@ -24,15 +24,15 @@ class RDKIT_CATALOGS_EXPORT CatalogEntry {
   void setBitId(int bid) { d_bitId = bid; }
 
   //! returns our bit Id
-  int getBitId() const { return d_bitId; }
+  [[nodiscard]] int getBitId() const { return d_bitId; }
 
   //! returns a text description of this entry
-  virtual std::string getDescription() const = 0;
+  [[nodiscard]] virtual std::string getDescription() const = 0;
 
   //! serializes (pickles) to a stream
   virtual void toStream(std::ostream &ss) const = 0;
   //! returns a string with a serialized (pickled) representation
-  virtual std::string Serialize() const = 0;
+  [[nodiscard]] virtual std::string Serialize() const = 0;
   //! initializes from a stream pickle
   virtual void initFromStream(std::istream &ss) = 0;
   //! initializes from a string pickle

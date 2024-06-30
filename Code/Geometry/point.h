@@ -34,9 +34,9 @@ class RDKIT_RDGEOMETRYLIB_EXPORT Point {
   virtual double &operator[](unsigned int i) = 0;
 
   virtual void normalize() = 0;
-  virtual double length() const = 0;
-  virtual double lengthSq() const = 0;
-  virtual unsigned int dimension() const = 0;
+  [[nodiscard]] virtual double length() const = 0;
+  [[nodiscard]] virtual double lengthSq() const = 0;
+  [[nodiscard]] virtual unsigned int dimension() const = 0;
 
   [[nodiscard]] virtual Point *copy() const = 0;
 };
@@ -68,7 +68,7 @@ class RDKIT_RDGEOMETRYLIB_EXPORT Point3D : public Point {
     return new Point3D(*this);
   }
 
-  constexpr unsigned int dimension() const override { return 3; }
+  [[nodiscard]] constexpr unsigned int dimension() const override { return 3; }
 
   constexpr double operator[](unsigned int i) const override {
     switch (i) {
@@ -155,18 +155,18 @@ class RDKIT_RDGEOMETRYLIB_EXPORT Point3D : public Point {
     z /= l;
   }
 
-  double length() const override {
+  [[nodiscard]] double length() const override {
     double res = x * x + y * y + z * z;
     return sqrt(res);
   }
 
-  constexpr double lengthSq() const override {
+  [[nodiscard]] constexpr double lengthSq() const override {
     // double res = pow(x,2) + pow(y,2) + pow(z,2);
     double res = x * x + y * y + z * z;
     return res;
   }
 
-  constexpr double dotProduct(const Point3D &other) const {
+  [[nodiscard]] constexpr double dotProduct(const Point3D &other) const {
     double res = x * (other.x) + y * (other.y) + z * (other.z);
     return res;
   }
@@ -177,7 +177,7 @@ class RDKIT_RDGEOMETRYLIB_EXPORT Point3D : public Point {
    *  The angle is unsigned: the results of this call will always
    *   be between 0 and M_PI
    */
-  double angleTo(const Point3D &other) const {
+  [[nodiscard]] double angleTo(const Point3D &other) const {
     double lsq = lengthSq() * other.lengthSq();
     double dotProd = dotProduct(other);
     dotProd /= sqrt(lsq);
@@ -198,7 +198,7 @@ class RDKIT_RDGEOMETRYLIB_EXPORT Point3D : public Point {
    *
    *  The results of this call will be between 0 and M_2_PI
    */
-  double signedAngleTo(const Point3D &other) const {
+  [[nodiscard]] double signedAngleTo(const Point3D &other) const {
     double res = this->angleTo(other);
     // check the sign of the z component of the cross product:
     if ((this->x * other.y - this->y * other.x) < -zero_tolerance) {
@@ -211,7 +211,7 @@ class RDKIT_RDGEOMETRYLIB_EXPORT Point3D : public Point {
    *   point to another.
    *
    */
-  Point3D directionVector(const Point3D &other) const {
+  [[nodiscard]] Point3D directionVector(const Point3D &other) const {
     Point3D res;
     res.x = other.x - x;
     res.y = other.y - y;
@@ -225,7 +225,7 @@ class RDKIT_RDGEOMETRYLIB_EXPORT Point3D : public Point {
    * The order is important here
    *  The result is "this" cross with "other" not (other x this)
    */
-  constexpr Point3D crossProduct(const Point3D &other) const {
+  [[nodiscard]] constexpr Point3D crossProduct(const Point3D &other) const {
     Point3D res;
     res.x = y * (other.z) - z * (other.y);
     res.y = -x * (other.z) + z * (other.x);
@@ -236,7 +236,7 @@ class RDKIT_RDGEOMETRYLIB_EXPORT Point3D : public Point {
   /*! \brief Get a unit perpendicular from this point (treating it as a vector):
    *
    */
-  Point3D getPerpendicular() const {
+  [[nodiscard]] Point3D getPerpendicular() const {
     Point3D res(0.0, 0.0, 0.0);
     if (x) {
       if (y) {
@@ -299,7 +299,7 @@ class RDKIT_RDGEOMETRYLIB_EXPORT Point2D : public Point {
     return new Point2D(*this);
   }
 
-  constexpr unsigned int dimension() const override { return 2; }
+  [[nodiscard]] constexpr unsigned int dimension() const override { return 2; }
 
   constexpr double operator[](unsigned int i) const override {
     switch (i) {
@@ -378,23 +378,23 @@ class RDKIT_RDGEOMETRYLIB_EXPORT Point2D : public Point {
     y = temp;
   }
 
-  double length() const override {
+  [[nodiscard]] double length() const override {
     // double res = pow(x,2) + pow(y,2);
     double res = x * x + y * y;
     return sqrt(res);
   }
 
-  constexpr double lengthSq() const override {
+  [[nodiscard]] constexpr double lengthSq() const override {
     double res = x * x + y * y;
     return res;
   }
 
-  constexpr double dotProduct(const Point2D &other) const {
+  [[nodiscard]] constexpr double dotProduct(const Point2D &other) const {
     double res = x * (other.x) + y * (other.y);
     return res;
   }
 
-  double angleTo(const Point2D &other) const {
+  [[nodiscard]] double angleTo(const Point2D &other) const {
     auto t1 = *this;
     auto t2 = other;
     t1.normalize();
@@ -409,7 +409,7 @@ class RDKIT_RDGEOMETRYLIB_EXPORT Point2D : public Point {
     return acos(dotProd);
   }
 
-  double signedAngleTo(const Point2D &other) const {
+  [[nodiscard]] double signedAngleTo(const Point2D &other) const {
     double res = this->angleTo(other);
     if ((this->x * other.y - this->y * other.x) < -zero_tolerance) {
       res = 2.0 * M_PI - res;
@@ -417,7 +417,7 @@ class RDKIT_RDGEOMETRYLIB_EXPORT Point2D : public Point {
     return res;
   }
 
-  Point2D directionVector(const Point2D &other) const {
+  [[nodiscard]] Point2D directionVector(const Point2D &other) const {
     Point2D res;
     res.x = other.x - x;
     res.y = other.y - y;
@@ -441,7 +441,7 @@ class RDKIT_RDGEOMETRYLIB_EXPORT PointND : public Point {
     dp_storage.reset(nvec);
   }
 
-  Point *copy() const override { return new PointND(*this); }
+  [[nodiscard]] Point *copy() const override { return new PointND(*this); }
 
   ~PointND() override = default;
 
@@ -455,13 +455,17 @@ class RDKIT_RDGEOMETRYLIB_EXPORT PointND : public Point {
 
   inline void normalize() override { dp_storage.get()->normalize(); }
 
-  inline double length() const override { return dp_storage.get()->normL2(); }
+  [[nodiscard]] inline double length() const override {
+    return dp_storage.get()->normL2();
+  }
 
-  inline double lengthSq() const override {
+  [[nodiscard]] inline double lengthSq() const override {
     return dp_storage.get()->normL2Sq();
   }
 
-  unsigned int dimension() const override { return dp_storage.get()->size(); }
+  [[nodiscard]] unsigned int dimension() const override {
+    return dp_storage.get()->size();
+  }
 
   PointND &operator=(const PointND &other) {
     if (this == &other) {
@@ -503,11 +507,11 @@ class RDKIT_RDGEOMETRYLIB_EXPORT PointND : public Point {
     return np;
   }
 
-  double dotProduct(const PointND &other) const {
+  [[nodiscard]] double dotProduct(const PointND &other) const {
     return dp_storage.get()->dotProduct(*other.getStorage());
   }
 
-  double angleTo(const PointND &other) const {
+  [[nodiscard]] double angleTo(const PointND &other) const {
     double dp = this->dotProduct(other);
     double n1 = this->length();
     double n2 = other.length();
@@ -524,7 +528,7 @@ class RDKIT_RDGEOMETRYLIB_EXPORT PointND : public Point {
 
  private:
   VECT_SH_PTR dp_storage;
-  inline const RDNumeric::Vector<double> *getStorage() const {
+  [[nodiscard]] inline const RDNumeric::Vector<double> *getStorage() const {
     return dp_storage.get();
   }
 };

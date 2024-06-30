@@ -67,16 +67,19 @@ class RDKIT_RDGENERAL_EXPORT Invariant : public std::runtime_error {
         line_d(line) {}
   ~Invariant() noexcept override = default;
 
-  const char *what() const noexcept override { return mess_d.c_str(); }
+  [[nodiscard]] const char *what() const noexcept override {
+    return mess_d.c_str();
+  }
 
-  const char *getFile() const { return file_dp; }
+  [[nodiscard]] const char *getFile() const { return file_dp; }
 
-  std::string getExpression() const { return expr_d; }
+  [[nodiscard]] std::string getExpression() const { return expr_d; }
 
-  int getLine() const { return line_d; }
+  [[nodiscard]] int getLine() const { return line_d; }
 
-  std::string toString() const;
-  std::string toUserString() const;  // strips build info, adds version
+  [[nodiscard]] std::string toString() const;
+  [[nodiscard]] std::string toUserString()
+      const;  // strips build info, adds version
 
  private:
   std::string mess_d, expr_d, prefix_d;

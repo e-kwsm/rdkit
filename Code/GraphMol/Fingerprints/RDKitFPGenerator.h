@@ -25,7 +25,7 @@ class RDKIT_FINGERPRINTS_EXPORT RDKitFPArguments : public FingerprintArguments {
   bool df_branchedPaths = true;
   bool df_useBondOrder = true;
 
-  std::string infoString() const override;
+  [[nodiscard]] std::string infoString() const override;
   void toJSON(boost::property_tree::ptree &pt) const override;
   void fromJSON(const boost::property_tree::ptree &pt) override;
 
@@ -60,14 +60,14 @@ class RDKIT_FINGERPRINTS_EXPORT RDKitFPArguments : public FingerprintArguments {
 class RDKIT_FINGERPRINTS_EXPORT RDKitFPAtomInvGenerator
     : public AtomInvariantsGenerator {
  public:
-  std::vector<std::uint32_t> *getAtomInvariants(
+  [[nodiscard]] std::vector<std::uint32_t> *getAtomInvariants(
       const ROMol &mol) const override;
 
-  std::string infoString() const override;
+  [[nodiscard]] std::string infoString() const override;
   void toJSON(boost::property_tree::ptree &pt) const override;
   void fromJSON(const boost::property_tree::ptree &pt) override;
 
-  RDKitFPAtomInvGenerator *clone() const override;
+  [[nodiscard]] RDKitFPAtomInvGenerator *clone() const override;
 };
 
 template <typename OutputType>
@@ -117,11 +117,11 @@ class RDKIT_FINGERPRINTS_EXPORT RDKitFPEnvGenerator
       const std::vector<std::uint32_t> *bondInvariants,
       bool hashResults = false) const override;
 
-  std::string infoString() const override;
+  [[nodiscard]] std::string infoString() const override;
   void toJSON(boost::property_tree::ptree &pt) const override;
   void fromJSON(const boost::property_tree::ptree &pt) override;
 
-  OutputType getResultSize() const override;
+  [[nodiscard]] OutputType getResultSize() const override;
 
 };  // namespace RDKitFP
 

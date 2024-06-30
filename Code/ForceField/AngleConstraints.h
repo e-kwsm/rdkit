@@ -87,20 +87,20 @@ class RDKIT_FORCEFIELD_EXPORT AngleConstraintContribs
   void getGrad(double *pos, double *grad) const override;
   //! Copy constructor
 
-  AngleConstraintContribs *copy() const override {
+  [[nodiscard]] AngleConstraintContribs *copy() const override {
     return new AngleConstraintContribs(*this);
   }
 
   //! Return true if there are no contributions in this contrib
-  bool empty() const { return d_contribs.empty(); }
+  [[nodiscard]] bool empty() const { return d_contribs.empty(); }
 
   //! Get number of contributions in this contrib
-  unsigned int size() const { return d_contribs.size(); }
+  [[nodiscard]] unsigned int size() const { return d_contribs.size(); }
 
  private:
   std::vector<AngleConstraintContribsParams> d_contribs;
-  double computeAngleTerm(const double &angle,
-                          const AngleConstraintContribsParams &contrib) const;
+  [[nodiscard]] double computeAngleTerm(
+      const double &angle, const AngleConstraintContribsParams &contrib) const;
 };
 }  // namespace ForceFields
 #endif
