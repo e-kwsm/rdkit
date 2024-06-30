@@ -2432,7 +2432,8 @@ void testBondStereo() {
   BOOST_LOG(rdInfoLog) << "-------------------------------------" << std::endl;
   BOOST_LOG(rdInfoLog) << "FindMCS should check bond stereo" << std::endl;
   {
-    std::vector<ROMOL_SPTR> mols = {"CC\\C=C/CC"_smiles, "CC\\C=C\\CC"_smiles};
+    std::vector<ROMOL_SPTR> mols = {R"(CC\C=C/CC)"_smiles,
+                                    R"(CC\C=C\CC)"_smiles};
 
     MCSParameters p;
     p.BondCompareParameters.MatchStereo = false;
@@ -2453,7 +2454,7 @@ void testBondStereo() {
     TEST_ASSERT(mcs_resf.SmartsString != mcs_rest.SmartsString);
   }
   {
-    std::vector<ROMOL_SPTR> mols = {"CC\\C=C/CC"_smiles, "CCC=CCC"_smiles};
+    std::vector<ROMOL_SPTR> mols = {R"(CC\C=C/CC)"_smiles, "CCC=CCC"_smiles};
     MCSParameters p;
     p.BondCompareParameters.MatchStereo = false;
     MCSResult mcs_resf = findMCS(mols, &p);

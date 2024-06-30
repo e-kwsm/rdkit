@@ -1169,7 +1169,7 @@ void testSmartsStereochem() {
   // directional bonds are set to be a direction \ /
   //  and a query - SingleOrAromatic, make sure that this
   //  is their current representation
-  auto m1 = "C/C=C\\C"_smarts;
+  auto m1 = R"(C/C=C\C)"_smarts;
   TEST_ASSERT(m1->getBondWithIdx(0)->hasQuery());
   TEST_ASSERT(m1->getBondWithIdx(0)->getQuery()->getDescription() ==
               "SingleOrAromaticBond");
