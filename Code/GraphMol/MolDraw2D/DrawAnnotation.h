@@ -49,7 +49,8 @@ class DrawAnnotation {
   void drawRects(MolDraw2D &molDrawer) const;
   void scale(const Point2D &scaleFactor);
   void move(const Point2D &trans);
-  bool doesRectClash(const StringRect &rect, double padding) const;
+  [[nodiscard]] bool doesRectClash(const StringRect &rect,
+                                   double padding) const;
 
   std::string text_;
   TextAlignType align_;

@@ -46,7 +46,7 @@ class RDKIT_DATASTRUCTS_EXPORT RealValueVect {
   RealValueVect(const char *pkl, unsigned int len) { initFromText(pkl, len); };
 
   //! return the value at an index
-  double getVal(unsigned int i) const;
+  [[nodiscard]] double getVal(unsigned int i) const;
 
   //! support indexing using []
   double operator[](unsigned int idx) const { return getVal(idx); };
@@ -55,16 +55,16 @@ class RDKIT_DATASTRUCTS_EXPORT RealValueVect {
   void setVal(unsigned int i, double val);
 
   //! returns the sum of all the elements in the vect
-  double getTotalVal() const;
+  [[nodiscard]] double getTotalVal() const;
 
   //! returns the length
-  unsigned int getLength() const { return d_length; };
+  [[nodiscard]] unsigned int getLength() const { return d_length; };
 
   //! returns the length
-  unsigned int size() const { return getLength(); };
+  [[nodiscard]] unsigned int size() const { return getLength(); };
 
   //! compares 2 vectors and returns false if different
-  bool compareVectors(const RealValueVect &other) const;
+  [[nodiscard]] bool compareVectors(const RealValueVect &other) const;
 
   //! in-place operator&
   RealValueVect &operator&=(const RealValueVect &other);
@@ -79,7 +79,7 @@ class RDKIT_DATASTRUCTS_EXPORT RealValueVect {
   RealValueVect &operator-=(const RealValueVect &other);
 
   //! returns a binary string representation (pickle)
-  std::string toString() const;
+  [[nodiscard]] std::string toString() const;
 
   void setLength(unsigned int sz) {
     d_length = sz;
@@ -87,7 +87,7 @@ class RDKIT_DATASTRUCTS_EXPORT RealValueVect {
   }
   void setToVal(double val) { std::fill(d_data.begin(), d_data.end(), val); }
 
-  const std::vector<double> &getData() const { return d_data; }
+  [[nodiscard]] const std::vector<double> &getData() const { return d_data; }
   std::vector<double> &getData() { return d_data; }
 
  private:

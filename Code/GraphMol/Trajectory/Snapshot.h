@@ -37,20 +37,20 @@ class RDKIT_TRAJECTORY_EXPORT Snapshot {
       : d_trajectory(nullptr), d_energy(energy), d_pos(std::move(pos)) {}
   /*! \return a const pointer to the parent Trajectory
    */
-  const Trajectory *trajectory() const { return d_trajectory; }
+  [[nodiscard]] const Trajectory *trajectory() const { return d_trajectory; }
   /*! \param pointNum is the atom number whose coordinates will be retrieved
       \return the coordinates at pointNum as a Point2D object;
       requires the Trajectory dimension to be == 2
    */
-  RDGeom::Point2D getPoint2D(unsigned int pointNum) const;
+  [[nodiscard]] RDGeom::Point2D getPoint2D(unsigned int pointNum) const;
   /*! \param pointNum is the atom number whose coordinates will be retrieved
       \return the coordinates at pointNum as a Point3D object;
       requires the Trajectory dimension to be >= 2
    */
-  RDGeom::Point3D getPoint3D(unsigned int pointNum) const;
+  [[nodiscard]] RDGeom::Point3D getPoint3D(unsigned int pointNum) const;
   /*! \return the energy for this Snapshot
    */
-  double getEnergy() const { return d_energy; }
+  [[nodiscard]] double getEnergy() const { return d_energy; }
   /*! \brief Sets the energy for this Snapshot
       \param energy the energy value assigned to this Snapshot
    */

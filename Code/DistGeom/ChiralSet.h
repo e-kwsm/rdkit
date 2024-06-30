@@ -54,9 +54,13 @@ class RDKIT_DISTGEOMETRY_EXPORT ChiralSet {
     d_volumeUpperBound = upperVolBound;
   }
 
-  inline double getUpperVolumeBound() const { return d_volumeUpperBound; }
+  [[nodiscard]] inline double getUpperVolumeBound() const {
+    return d_volumeUpperBound;
+  }
 
-  inline double getLowerVolumeBound() const { return d_volumeLowerBound; }
+  [[nodiscard]] inline double getLowerVolumeBound() const {
+    return d_volumeLowerBound;
+  }
 };
 
 typedef boost::shared_ptr<ChiralSet> ChiralSetPtr;
