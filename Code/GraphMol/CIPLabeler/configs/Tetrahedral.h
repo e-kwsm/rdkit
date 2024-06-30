@@ -12,8 +12,7 @@
 
 #include "Configuration.h"
 
-namespace RDKit {
-namespace CIPLabeler {
+namespace RDKit::CIPLabeler {
 
 class Tetrahedral : public Configuration {
  public:
@@ -31,5 +30,4 @@ class Tetrahedral : public Configuration {
   Descriptor label(Node *node, const Rules &comp) const;
 };
 
-}  // namespace CIPLabeler
-}  // namespace RDKit
+}  // namespace RDKit::CIPLabeler

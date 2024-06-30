@@ -11,8 +11,7 @@
 
 #include "Rule1b.h"
 
-namespace RDKit {
-namespace CIPLabeler {
+namespace RDKit::CIPLabeler {
 
 Rule1b::Rule1b() = default;
 
@@ -39,5 +38,4 @@ int Rule1b::compare(const Edge *a, const Edge *b) const {
   }
 }
 
-}  // namespace CIPLabeler
-}  // namespace RDKit
+}  // namespace RDKit::CIPLabeler
