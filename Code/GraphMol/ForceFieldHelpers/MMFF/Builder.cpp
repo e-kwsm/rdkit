@@ -63,7 +63,7 @@ void addBonds(const ROMol &mol, MMFFMolProperties *mmffMolProperties,
                                                     mmffBondParams)) {
       auto *contrib =
           new BondStretchContrib(field, idx1, idx2, &mmffBondParams);
-      field->contribs().push_back(ForceFields::ContribPtr(contrib));
+      field->contribs().emplace_back(contrib);
       if (mmffMolProperties->getMMFFVerbosity()) {
         unsigned int iAtomType = mmffMolProperties->getMMFFAtomType(idx1);
         unsigned int jAtomType = mmffMolProperties->getMMFFAtomType(idx2);
@@ -396,7 +396,7 @@ void addStretchBend(const ROMol &mol, MMFFMolProperties *mmffMolProperties,
           auto *contrib = new StretchBendContrib(
               field, idx[0], idx[1], idx[2], &mmffStbnParams, &mmffAngleParams,
               &mmffBondParams[0], &mmffBondParams[1]);
-          field->contribs().push_back(ForceFields::ContribPtr(contrib));
+          field->contribs().emplace_back(contrib);
           if (mmffMolProperties->getMMFFVerbosity()) {
             unsigned int iAtomType = mmffMolProperties->getMMFFAtomType(idx[0]);
             unsigned int jAtomType = mmffMolProperties->getMMFFAtomType(idx[1]);
@@ -551,7 +551,7 @@ void addOop(const ROMol &mol, MMFFMolProperties *mmffMolProperties,
       }
       auto *contrib = new OopBendContrib(field, idx[n[0]], idx[n[1]], idx[n[2]],
                                          idx[n[3]], &mmffOopParams);
-      field->contribs().push_back(ForceFields::ContribPtr(contrib));
+      field->contribs().emplace_back(contrib);
       if (mmffMolProperties->getMMFFVerbosity()) {
         const RDGeom::Point3D p1((*(points[idx[n[0]]]))[0],
                                  (*(points[idx[n[0]]]))[1],
@@ -700,7 +700,7 @@ void addTorsions(const ROMol &mol, MMFFMolProperties *mmffMolProperties,
                         mol, idx1, idx2, idx3, idx4, torType, mmffTorParams)) {
                   auto *contrib = new TorsionAngleContrib(
                       field, idx1, idx2, idx3, idx4, &mmffTorParams);
-                  field->contribs().push_back(ForceFields::ContribPtr(contrib));
+                  field->contribs().emplace_back(contrib);
                   if (mmffMolProperties->getMMFFVerbosity()) {
                     const Atom *iAtom = mol.getAtomWithIdx(idx1);
                     const Atom *lAtom = mol.getAtomWithIdx(idx4);
@@ -821,7 +821,7 @@ void addVdW(const ROMol &mol, int confId, MMFFMolProperties *mmffMolProperties,
         MMFFVdWRijstarEps mmffVdWConstants;
         if (mmffMolProperties->getMMFFVdWParams(i, j, mmffVdWConstants)) {
           auto *contrib = new VdWContrib(field, i, j, &mmffVdWConstants);
-          field->contribs().push_back(ForceFields::ContribPtr(contrib));
+          field->contribs().emplace_back(contrib);
           if (mmffMolProperties->getMMFFVerbosity()) {
             const Atom *iAtom = mol.getAtomWithIdx(i);
             const Atom *jAtom = mol.getAtomWithIdx(j);
@@ -912,7 +912,7 @@ void addEle(const ROMol &mol, int confId, MMFFMolProperties *mmffMolProperties,
                             dielConst;
         auto *contrib =
             new EleContrib(field, i, j, chargeTerm, dielModel, is1_4);
-        field->contribs().push_back(ForceFields::ContribPtr(contrib));
+        field->contribs().emplace_back(contrib);
         if (mmffMolProperties->getMMFFVerbosity()) {
           const unsigned int iAtomType = mmffMolProperties->getMMFFAtomType(i);
           const unsigned int jAtomType = mmffMolProperties->getMMFFAtomType(j);

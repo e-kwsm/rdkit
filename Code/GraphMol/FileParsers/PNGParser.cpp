@@ -142,7 +142,7 @@ std::vector<std::pair<std::string, std::string>> PNGStreamToMetadata(
         CHECK_INVARIANT(0, "impossible value");
       }
       if (!value.empty()) {
-        res.push_back(std::make_pair(key, value));
+        res.emplace_back(key, value);
       }
     }
     inStream.seekg(beginBlock);
@@ -253,18 +253,18 @@ std::string addMolToPNGStream(const ROMol &mol, std::istream &iStream,
   if (includePkl) {
     std::string pkl;
     MolPickler::pickleMol(mol, pkl);
-    metadata.push_back(std::make_pair(augmentTagName(PNGData::pklTag), pkl));
+    metadata.emplace_back(augmentTagName(PNGData::pklTag), pkl);
   }
   if (includeSmiles) {
     std::string smi = MolToCXSmiles(mol);
-    metadata.push_back(std::make_pair(augmentTagName(PNGData::smilesTag), smi));
+    metadata.emplace_back(augmentTagName(PNGData::smilesTag), smi);
   }
   if (includeMol) {
     bool includeStereo = true;
     int confId = -1;
     bool kekulize = false;
     std::string mb = MolToMolBlock(mol, includeStereo, confId, kekulize);
-    metadata.push_back(std::make_pair(augmentTagName(PNGData::molTag), mb));
+    metadata.emplace_back(augmentTagName(PNGData::molTag), mb);
   }
   return addMetadataToPNGStream(iStream, metadata);
 };
