@@ -505,7 +505,7 @@ TEST_CASE("Molzip with split rings from rgroup", "[molzip]") {
                                     "[*:1]NN[*:2]"};
   std::vector<ROMOL_SPTR> mols;
   for (auto smi : frags) {
-    mols.push_back(ROMOL_SPTR(SmilesToMol(smi)));
+    mols.emplace_back(SmilesToMol(smi));
   }
   const auto zippedMol = molzip(mols);
   CHECK(MolToSmiles(*zippedMol) == "C1CNN1");

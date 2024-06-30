@@ -282,9 +282,9 @@ int mmffValidationSuite(int argc, char *argv[]) {
     ffVariant = ((molFile.substr(0, 7) == "MMFF94s") ? "MMFF94s" : "MMFF94");
   }
   if (ffVariant == "") {
-    ffVec.push_back("MMFF94");
+    ffVec.emplace_back("MMFF94");
     if (fullTest) {
-      ffVec.push_back("MMFF94s");
+      ffVec.emplace_back("MMFF94s");
     }
   } else {
     ffVec.push_back(ffVariant);
@@ -296,8 +296,8 @@ int mmffValidationSuite(int argc, char *argv[]) {
   }
   bool firstTest = true;
   if (molType == "") {
-    molTypeVec.push_back("sdf");
-    molTypeVec.push_back("smi");
+    molTypeVec.emplace_back("sdf");
+    molTypeVec.emplace_back("smi");
   } else {
     molTypeVec.push_back(molType);
   }
@@ -1526,7 +1526,7 @@ void testMMFFAllConstraints() {
   field->initialize();
   tc = new ForceFields::MMFF::TorsionConstraintContrib(field, 1, 3, 6, 8, 10.0,
                                                        10.0, 100.0);
-  field->contribs().push_back(ForceFields::ContribPtr(tc));
+  field->contribs().emplace_back(tc);
   field->minimize();
   std::cerr << MolTransforms::getDihedralDeg(mol->getConformer(), 1, 3, 6, 8)
             << std::endl;
@@ -1543,7 +1543,7 @@ void testMMFFAllConstraints() {
   field->initialize();
   tc = new ForceFields::MMFF::TorsionConstraintContrib(field, 1, 3, 6, 8, true,
                                                        -1.0, 1.0, 100.0);
-  field->contribs().push_back(ForceFields::ContribPtr(tc));
+  field->contribs().emplace_back(tc);
   field->minimize();
   TEST_ASSERT(
       RDKit::feq(MolTransforms::getDihedralDeg(mol->getConformer(), 1, 3, 6, 8),
@@ -1558,7 +1558,7 @@ void testMMFFAllConstraints() {
   field->initialize();
   tc = new ForceFields::MMFF::TorsionConstraintContrib(field, 1, 3, 6, 8, false,
                                                        -10.0, -8.0, 100.0);
-  field->contribs().push_back(ForceFields::ContribPtr(tc));
+  field->contribs().emplace_back(tc);
   field->minimize(500);
   TEST_ASSERT(
       RDKit::feq(MolTransforms::getDihedralDeg(mol->getConformer(), 1, 3, 6, 8),
@@ -1579,7 +1579,7 @@ void testMMFFAllConstraints() {
   field->initialize();
   RDGeom::Point3D p = mol->getConformer().getAtomPos(1);
   pc = new ForceFields::MMFF::PositionConstraintContrib(field, 1, 0.3, 1.0e5);
-  field->contribs().push_back(ForceFields::ContribPtr(pc));
+  field->contribs().emplace_back(pc);
   field->minimize();
   RDGeom::Point3D q = mol->getConformer().getAtomPos(1);
   TEST_ASSERT((p - q).length() < 0.3);
@@ -1652,7 +1652,7 @@ M  END
     field->initialize();
     auto *tc = new ForceFields::MMFF::TorsionConstraintContrib(field, 0, 3, 6,
                                                                9, d, d, 1.0e6);
-    field->contribs().push_back(ForceFields::ContribPtr(tc));
+    field->contribs().emplace_back(tc);
     field->minimize();
     e.push_back(field->calcEnergy());
     TEST_ASSERT(RDKit::feq(
@@ -1847,7 +1847,7 @@ M  END
     auto *tc = new ForceFields::MMFF::TorsionConstraintContrib(
         localFF.get(), 0, 1, 2, 3, static_cast<double>(diheIn) - 0.1,
         static_cast<double>(diheIn) + 0.1, 100.0);
-    localFF->contribs().push_back(ForceFields::ContribPtr(tc));
+    localFF->contribs().emplace_back(tc);
     TEST_ASSERT(localFF->minimize(10000) == 0);
     std::vector<double> pos(3 * localFF->numPoints());
     TEST_ASSERT(localFF->numPoints() == globalFF->numPoints());
