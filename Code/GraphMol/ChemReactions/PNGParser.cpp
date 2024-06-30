@@ -32,21 +32,19 @@ std::string addChemicalReactionToPNGStream(const ChemicalReaction &rxn,
   if (includePkl) {
     std::string pkl;
     ReactionPickler::pickleReaction(rxn, pkl);
-    metadata.push_back(std::make_pair(augmentTagName(PNGData::rxnPklTag), pkl));
+    metadata.emplace_back(augmentTagName(PNGData::rxnPklTag), pkl);
   }
   if (includeSmiles) {
     std::string smi = ChemicalReactionToRxnSmiles(rxn);
-    metadata.push_back(
-        std::make_pair(augmentTagName(PNGData::rxnSmilesTag), smi));
+    metadata.emplace_back(augmentTagName(PNGData::rxnSmilesTag), smi);
   }
   if (includeSmarts) {
     std::string smi = ChemicalReactionToRxnSmarts(rxn);
-    metadata.push_back(
-        std::make_pair(augmentTagName(PNGData::rxnSmartsTag), smi));
+    metadata.emplace_back(augmentTagName(PNGData::rxnSmartsTag), smi);
   }
   if (includeRxn) {
     std::string mb = ChemicalReactionToRxnBlock(rxn);
-    metadata.push_back(std::make_pair(augmentTagName(PNGData::rxnRxnTag), mb));
+    metadata.emplace_back(augmentTagName(PNGData::rxnRxnTag), mb);
   }
   return addMetadataToPNGStream(iStream, metadata);
 };
