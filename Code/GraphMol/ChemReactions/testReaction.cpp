@@ -1323,7 +1323,7 @@ void test12DoubleBondStereochem() {
     // since the stereochem querying stuff doesn't match C/C=C\Cl when C\C=C/Cl
     // is provided as a query.
     delete rxn;
-    smi = "[Cl:3]\\[C:1]=[C:2]/[C:4]>>[Cl:3]\\[C:1]=[C:2]\\[C:4]";
+    smi = R"([Cl:3]\[C:1]=[C:2]/[C:4]>>[Cl:3]\[C:1]=[C:2]\[C:4])";
     rxn = RxnSmartsToChemicalReaction(smi);
     TEST_ASSERT(rxn);
     TEST_ASSERT(rxn->getNumReactantTemplates() == 1);
