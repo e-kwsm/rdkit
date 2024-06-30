@@ -8,7 +8,7 @@
 //  of the RDKit source tree.
 //
 #include <RDGeneral/export.h>
-#ifndef __RD_SPARSEBITVECTS_H__
+#ifndef RD_SPARSEBITVECTS_H__
 #define RD_SPARSEBITVECTS_H_
 
 #include "BitVect.h"

@@ -8,7 +8,7 @@
 //  of the RDKit source tree.
 //
 #include <RDGeneral/export.h>
-#ifndef __RD_DISCRETE_VALUE_VECT_20050124__
+#ifndef RD_DISCRETE_VALUE_VECT_20050124__
 #define RD_DISCRETE_VALUE_VECT_20050124_
 
 #include <boost/smart_ptr.hpp>
