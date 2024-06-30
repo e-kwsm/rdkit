@@ -36,11 +36,11 @@ class RDKIT_FINGERPRINTS_EXPORT AtomPairAtomInvGenerator
   AtomPairAtomInvGenerator(bool includeChirality = false,
                            bool topologicalTorsionCorrection = false);
 
-  std::vector<std::uint32_t> *getAtomInvariants(
+  [[nodiscard]] std::vector<std::uint32_t> *getAtomInvariants(
       const ROMol &mol) const override;
 
-  std::string infoString() const override;
-  AtomPairAtomInvGenerator *clone() const override;
+  [[nodiscard]] std::string infoString() const override;
+  [[nodiscard]] AtomPairAtomInvGenerator *clone() const override;
 };
 
 /*!
@@ -54,7 +54,7 @@ class RDKIT_FINGERPRINTS_EXPORT AtomPairArguments
   unsigned int d_minDistance = 1;
   unsigned int d_maxDistance = maxPathLen - 1;
 
-  std::string infoString() const override;
+  [[nodiscard]] std::string infoString() const override;
 
   /*!
     \brief construct a new AtomPairArguments object
@@ -136,7 +136,7 @@ class RDKIT_FINGERPRINTS_EXPORT AtomPairEnvGenerator
       const std::vector<std::uint32_t> *bondInvariants,
       const bool hashResults = false) const override;
 
-  std::string infoString() const override;
+  [[nodiscard]] std::string infoString() const override;
   OutputType getResultSize() const override;
 };
 

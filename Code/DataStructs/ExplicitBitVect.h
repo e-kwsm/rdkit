@@ -56,7 +56,7 @@ class RDKIT_DATASTRUCTS_EXPORT ExplicitBitVect : public BitVect {
   bool operator[](const unsigned int which) const override;
   bool setBit(const unsigned int which) override;
   bool unsetBit(const unsigned int which) override;
-  bool getBit(const unsigned int which) const override;
+  [[nodiscard]] bool getBit(const unsigned int which) const override;
 
   ExplicitBitVect operator^(const ExplicitBitVect &other) const;
   ExplicitBitVect operator&(const ExplicitBitVect &other) const;
@@ -71,14 +71,14 @@ class RDKIT_DATASTRUCTS_EXPORT ExplicitBitVect : public BitVect {
   /* concatenate two ExplicitBitVects */
   ExplicitBitVect &operator+=(const ExplicitBitVect &other);
 
-  unsigned int getNumBits() const override;
-  unsigned int getNumOnBits() const override;
-  unsigned int getNumOffBits() const override;
+  [[nodiscard]] unsigned int getNumBits() const override;
+  [[nodiscard]] unsigned int getNumOnBits() const override;
+  [[nodiscard]] unsigned int getNumOffBits() const override;
 
   void getOnBits(IntVect &v) const override;
 
   void clearBits() override { dp_bits->reset(); }
-  std::string toString() const override;
+  [[nodiscard]] std::string toString() const override;
 
   std::unique_ptr<boost::dynamic_bitset<>> dp_bits{
       nullptr};  //!< our raw storage
