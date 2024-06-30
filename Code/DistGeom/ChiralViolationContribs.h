@@ -19,11 +19,11 @@ namespace DistGeom {
 class ChiralSet;
 
 RDKIT_DISTGEOMETRY_EXPORT double calcChiralVolume(
-    const unsigned int idx1, const unsigned int idx2, const unsigned int idx3,
-    const unsigned int idx4, const double *pos, const unsigned int dim);
+    unsigned int idx1, unsigned int idx2, unsigned int idx3, unsigned int idx4,
+    const double *pos, unsigned int dim);
 RDKIT_DISTGEOMETRY_EXPORT double calcChiralVolume(
-    const unsigned int idx1, const unsigned int idx2, const unsigned int idx3,
-    const unsigned int idx4, const RDGeom::PointPtrVect &pts);
+    unsigned int idx1, unsigned int idx2, unsigned int idx3, unsigned int idx4,
+    const RDGeom::PointPtrVect &pts);
 
 struct ChiralViolationContribsParams {
   unsigned int idx1{0}, idx2{0}, idx3{0}, idx4{0};

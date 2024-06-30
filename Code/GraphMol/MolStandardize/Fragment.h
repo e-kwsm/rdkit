@@ -31,7 +31,7 @@ typedef RDCatalog::HierarchCatalog<FragmentCatalogEntry, FragmentCatalogParams,
 class RDKIT_MOLSTANDARDIZE_EXPORT FragmentRemover {
  public:
   FragmentRemover();
-  FragmentRemover(const std::string fragmentFile, bool leave_last,
+  FragmentRemover(std::string fragmentFile, bool leave_last,
                   bool skip_if_all_match = false);
   FragmentRemover(std::istream &fragmentStream, bool leave_last,
                   bool skip_if_all_match = false);

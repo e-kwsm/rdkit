@@ -199,7 +199,7 @@ bool contains(std::vector<T> vector, T value) {
  * @param ulp machine precision (units in the last place)
  * @return
  */
-GA_EXPORT bool equals(const double d1, const double d2, const int ulp);
+GA_EXPORT bool equals(double d1, double d2, int ulp);
 
 /**
  * Returns true if the two numbers are within epsilon of each other
@@ -209,7 +209,7 @@ GA_EXPORT bool equals(const double d1, const double d2, const int ulp);
  * @param epsilon
  * @return
  */
-GA_EXPORT bool equals(const double d1, const double d2, const double epsilon);
+GA_EXPORT bool equals(double d1, double d2, double epsilon);
 
 /**
  * Determines if two double numbers are within one unit of the last place.
@@ -218,7 +218,7 @@ GA_EXPORT bool equals(const double d1, const double d2, const double epsilon);
  * @param d2
  * @return
  */
-GA_EXPORT bool equals(const double d1, const double d2);
+GA_EXPORT bool equals(double d1, double d2);
 
 /**
  * Finds the first occurrence of an matching item in a list
