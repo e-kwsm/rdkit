@@ -25,9 +25,7 @@
 #include <GraphMol/SmilesParse/SmartsWrite.h>
 #endif
 
-namespace RDKit {
-
-namespace MolStandardize {
+namespace RDKit::MolStandardize {
 
 namespace TautomerScoringFunctions {
 int scoreRings(const ROMol &mol) {
@@ -619,5 +617,4 @@ void TautomerEnumerator::canonicalizeInPlace(
   mol.updatePropertyCache(false);
 }
 
-}  // namespace MolStandardize
-}  // namespace RDKit
+}  // namespace RDKit::MolStandardize

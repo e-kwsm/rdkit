@@ -18,8 +18,7 @@
 #include <GraphMol/MolDraw2D/MolDraw2DDetails.h>
 #include <GraphMol/MolDraw2D/DrawMolMCHLasso.h>
 
-namespace RDKit {
-namespace MolDraw2D_detail {
+namespace RDKit::MolDraw2D_detail {
 
 // an empirically derived lineWidth.
 int LINE_WIDTH = 3;
@@ -727,5 +726,4 @@ std::pair<Point2D, Point2D> getArcEnds(const DrawShapeArc &arc) {
 }
 
 }  // namespace
-}  // namespace MolDraw2D_detail
-}  // namespace RDKit
+}  // namespace RDKit::MolDraw2D_detail

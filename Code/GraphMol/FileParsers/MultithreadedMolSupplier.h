@@ -29,8 +29,8 @@
 typedef boost::tokenizer<boost::char_separator<char>> tokenizer;
 
 namespace RDKit {
-namespace v2 {
-namespace FileParsers {
+
+namespace v2::FileParsers {
 class RDKIT_FILEPARSERS_EXPORT MultithreadedMolSupplier : public MolSupplier {
   //! this is an abstract base class to concurrently supply molecules one at a
   //! time
@@ -148,8 +148,7 @@ class RDKIT_FILEPARSERS_EXPORT MultithreadedMolSupplier : public MolSupplier {
   std::function<std::string(const std::string &, unsigned int)> readCallback =
       nullptr;
 };
-}  // namespace FileParsers
-}  // namespace v2
+}  // namespace v2::FileParsers
 
 inline namespace v1 {
 class RDKIT_FILEPARSERS_EXPORT MultithreadedMolSupplier : public MolSupplier {

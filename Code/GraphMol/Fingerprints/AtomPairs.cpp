@@ -21,8 +21,7 @@
 #include <GraphMol/Fingerprints/AtomPairGenerator.h>
 #include <GraphMol/Fingerprints/TopologicalTorsionGenerator.h>
 
-namespace RDKit {
-namespace AtomPairs {
+namespace RDKit::AtomPairs {
 
 template <typename T1, typename T2>
 void updateElement(SparseIntVect<T1> &v, T2 elem) {
@@ -345,5 +344,4 @@ ExplicitBitVect *getHashedTopologicalTorsionFingerprintAsBitVect(
   delete sres;
   return res;
 }
-}  // end of namespace AtomPairs
-}  // end of namespace RDKit
+}  // namespace RDKit::AtomPairs

@@ -88,8 +88,7 @@
 #define BOOST_HASH_USE_OVERLOAD_FLOAT_FUNCS
 #endif
 
-namespace gboost {
-namespace hash_detail {
+namespace gboost::hash_detail {
 
 inline float call_ldexp(float v, int exp) {
   using namespace std;
@@ -138,8 +137,7 @@ inline long double call_frexp(long double v, int* exp) {
   return frexpl(v, exp);
 #endif
 }
-}  // namespace hash_detail
-}  // namespace gboost
+}  // namespace gboost::hash_detail
 
 #if defined(BOOST_HASH_USE_C99_FLOAT_FUNCS)
 #undef BOOST_HASH_USE_C99_FLOAT_FUNCS

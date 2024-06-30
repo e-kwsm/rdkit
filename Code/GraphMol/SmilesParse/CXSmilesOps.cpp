@@ -1546,8 +1546,7 @@ void parseCXExtensions(RDKit::RWMol &mol, const std::string &extText,
 }
 }  // end of namespace SmilesParseOps
 
-namespace RDKit {
-namespace SmilesWrite {
+namespace RDKit::SmilesWrite {
 namespace {
 
 std::vector<unsigned> getSortedMappedIndexes(
@@ -2629,5 +2628,4 @@ std::string getCXExtensions(const ROMol &mol, std::uint32_t flags) {
   }
   return res;
 }
-}  // namespace SmilesWrite
-}  // namespace RDKit
+}  // namespace RDKit::SmilesWrite

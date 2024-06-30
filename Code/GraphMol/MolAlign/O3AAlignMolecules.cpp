@@ -28,8 +28,7 @@
 
 double square(double x) { return x * x; }
 
-namespace RDKit {
-namespace MolAlign {
+namespace RDKit::MolAlign {
 static std::uint8_t mmffSimMatrix[99][99] = {
     {1,  3,  4, 3, 0, 4, 6,  7,  5,  6,  7,  4,  5,  7,  3,  5,  6,  7,  3, 2,
      0,  2,  0, 0, 6, 7, 0,  0,  0,  3,  0,  10, 0,  10, 10, 0,  3,  6,  7, 6,
@@ -1716,5 +1715,4 @@ void getO3AForProbeConfs(ROMol &prbMol, const ROMol &refMol, void *prbProp,
 #endif
 }
 
-}  // end of namespace MolAlign
-}  // end of namespace RDKit
+}  // namespace RDKit::MolAlign

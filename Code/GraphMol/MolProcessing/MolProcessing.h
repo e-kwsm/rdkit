@@ -24,8 +24,7 @@
 #include <mutex>
 #endif
 
-namespace RDKit {
-namespace MolProcessing {
+namespace RDKit::MolProcessing {
 namespace details {
 RDKIT_MOLPROCESSING_EXPORT extern GeneralMolSupplier::SupplierOptions
     defaultSupplierOptions;
@@ -37,6 +36,6 @@ std::vector<std::unique_ptr<ExplicitBitVect>> getFingerprintsForMolsInFile(
         details::defaultSupplierOptions,
     FingerprintGenerator<OutputType> *generator = nullptr);
 
-}  // namespace MolProcessing
-}  // namespace RDKit
+}  // namespace RDKit::MolProcessing
+
 #endif

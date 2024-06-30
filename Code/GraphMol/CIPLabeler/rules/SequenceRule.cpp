@@ -13,8 +13,7 @@
 
 #include "../CIPMol.h"
 
-namespace RDKit {
-namespace CIPLabeler {
+namespace RDKit::CIPLabeler {
 
 SequenceRule::SequenceRule() = default;
 
@@ -152,5 +151,4 @@ bool SequenceRule::areUpEdges(Node *aNode, Node *bNode, Edge *aEdge,
   return false;
 }
 
-}  // namespace CIPLabeler
-}  // namespace RDKit
+}  // namespace RDKit::CIPLabeler
