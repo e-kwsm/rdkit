@@ -2333,17 +2333,7 @@ unsigned int sanitizeMMFFMol(RWMol &mol) {
 MMFFMolProperties::MMFFMolProperties(ROMol &mol, const std::string &mmffVariant,
                                      std::uint8_t verbosity,
                                      std::ostream &oStream)
-    : d_valid(true),
-      d_mmffs(mmffVariant == "MMFF94s"),
-      d_bondTerm(true),
-      d_angleTerm(true),
-      d_stretchBendTerm(true),
-      d_oopTerm(true),
-      d_torsionTerm(true),
-      d_vdWTerm(true),
-      d_eleTerm(true),
-      d_dielConst(1.0),
-      d_dielModel(CONSTANT),
+    : d_mmffs(mmffVariant == "MMFF94s"),
       d_verbosity(verbosity),
       d_oStream(&oStream),
       d_MMFFAtomPropertiesPtrVect(mol.getNumAtoms()) {
