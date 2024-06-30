@@ -58,7 +58,7 @@ class RDKIT_QUERY_EXPORT Query {
   //! sets whether or not we are negated
   void setNegation(bool what) { this->df_negate = what; }
   //! returns whether or not we are negated
-  bool getNegation() const { return this->df_negate; }
+  [[nodiscard]] bool getNegation() const { return this->df_negate; }
 
   //! sets our text description
   void setDescription(const std::string &descr) { this->d_description = descr; }
@@ -67,9 +67,11 @@ class RDKIT_QUERY_EXPORT Query {
     this->d_description = std::string(descr);
   }
   //! returns our text description
-  const std::string &getDescription() const { return this->d_description; }
+  [[nodiscard]] const std::string &getDescription() const {
+    return this->d_description;
+  }
   //! returns a fuller text description
-  virtual std::string getFullDescription() const {
+  [[nodiscard]] virtual std::string getFullDescription() const {
     if (!getNegation()) {
       return getDescription();
     } else {
@@ -82,32 +84,40 @@ class RDKIT_QUERY_EXPORT Query {
   //! \overload
   void setTypeLabel(const char *typ) { this->d_queryType = std::string(typ); }
   //! returns our text label.
-  const std::string &getTypeLabel() const { return this->d_queryType; }
+  [[nodiscard]] const std::string &getTypeLabel() const {
+    return this->d_queryType;
+  }
 
   //! sets our match function
   void setMatchFunc(bool (*what)(MatchFuncArgType)) {
     this->d_matchFunc = what;
   }
   //! returns our match function:
-  bool (*getMatchFunc() const)(MatchFuncArgType) { return this->d_matchFunc; }
+  [[nodiscard]] bool (*getMatchFunc() const)(MatchFuncArgType) {
+    return this->d_matchFunc;
+  }
   //! sets our data function
   void setDataFunc(MatchFuncArgType (*what)(DataFuncArgType)) {
     this->d_dataFunc = what;
   }
   //! returns our data function:
-  MatchFuncArgType (*getDataFunc() const)(DataFuncArgType) {
+  [[nodiscard]] MatchFuncArgType (*getDataFunc() const)(DataFuncArgType) {
     return this->d_dataFunc;
   }
 
   //! adds a child to our list of children
   void addChild(CHILD_TYPE child) { this->d_children.push_back(child); }
   //! returns an iterator for the beginning of our child vector
-  CHILD_VECT_CI beginChildren() const { return this->d_children.begin(); }
+  [[nodiscard]] CHILD_VECT_CI beginChildren() const {
+    return this->d_children.begin();
+  }
   //! returns an iterator for the end of our child vector
-  CHILD_VECT_CI endChildren() const { return this->d_children.end(); }
+  [[nodiscard]] CHILD_VECT_CI endChildren() const {
+    return this->d_children.end();
+  }
 
   //! returns whether or not we match the argument
-  virtual bool Match(const DataFuncArgType arg) const {
+  [[nodiscard]] virtual bool Match(const DataFuncArgType arg) const {
     MatchFuncArgType mfArg = TypeConvert(arg, Int2Type<needsConversion>());
     bool tRes;
     if (this->d_matchFunc) {
@@ -128,8 +138,9 @@ class RDKIT_QUERY_EXPORT Query {
      <b>Notes:</b>
        - the caller is responsible for <tt>delete</tt>ing the result
    */
-  virtual Query<MatchFuncArgType, DataFuncArgType, needsConversion> *copy()
-      const {
+  [[nodiscard]] virtual Query<MatchFuncArgType, DataFuncArgType,
+                              needsConversion> *
+  copy() const {
     Query<MatchFuncArgType, DataFuncArgType, needsConversion> *res =
         new Query<MatchFuncArgType, DataFuncArgType, needsConversion>();
     for (auto iter = this->beginChildren(); iter != this->endChildren();
@@ -166,8 +177,8 @@ class RDKIT_QUERY_EXPORT Query {
   };
   //! \brief calls our \c dataFunc (if it's set) on \c what and returns
   //! the result, otherwise returns \c what
-  MatchFuncArgType TypeConvert(MatchFuncArgType what,
-                               Int2Type<false> /*d*/) const {
+  [[nodiscard]] MatchFuncArgType TypeConvert(MatchFuncArgType what,
+                                             Int2Type<false> /*d*/) const {
     MatchFuncArgType mfArg;
     if (this->d_dataFuncSameType != nullptr &&
         std::is_same<MatchFuncArgType, DataFuncArgType>::value) {
@@ -179,8 +190,8 @@ class RDKIT_QUERY_EXPORT Query {
   }
   //! calls our \c dataFunc (which must be set) on \c what and returns the
   /// result
-  MatchFuncArgType TypeConvert(DataFuncArgType what,
-                               Int2Type<true> /*d*/) const {
+  [[nodiscard]] MatchFuncArgType TypeConvert(DataFuncArgType what,
+                                             Int2Type<true> /*d*/) const {
     PRECONDITION(this->d_dataFunc, "no data function");
     MatchFuncArgType mfArg;
     mfArg = this->d_dataFunc(what);
