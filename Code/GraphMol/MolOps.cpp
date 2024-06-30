@@ -842,7 +842,7 @@ std::vector<ROMOL_SPTR> getMolFrags(const ROMol &mol, bool sanitizeFrags,
 unsigned int getMolFrags(const ROMol &mol, INT_VECT &mapping) {
   unsigned int natms = mol.getNumAtoms();
   mapping.resize(natms);
-  return natms ? boost::connected_components(mol.getTopology(), &mapping[0])
+  return natms ? boost::connected_components(mol.getTopology(), mapping.data())
                : 0;
 };
 

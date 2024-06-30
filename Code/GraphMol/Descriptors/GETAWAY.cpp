@@ -78,7 +78,7 @@ double *retreiveVect(VectorXd matrix) {
 }
 
 VectorXd getEigenVect(std::vector<double> v) {
-  double *varray_ptr = &v[0];
+  double *varray_ptr = v.data();
   Map<VectorXd> V(varray_ptr, v.size());
   return V;
 }
@@ -1174,7 +1174,7 @@ void GetGETAWAYone(double *dist3D, double *AdjMat, std::vector<double> Vpoints,
 
   Map<MatrixXd> DM(dist3D, numAtoms, numAtoms);
 
-  double *vpoints = &Vpoints[0];
+  double *vpoints = Vpoints.data();
 
   Map<MatrixXd> matorigin(vpoints, 3, numAtoms);
 
@@ -1203,7 +1203,7 @@ void GetGETAWAY(double *dist3D, double *AdjMat, std::vector<double> Vpoints,
 
   Map<MatrixXd> DM(dist3D, numAtoms, numAtoms);
 
-  double *vpoints = &Vpoints[0];
+  double *vpoints = Vpoints.data();
 
   Map<MatrixXd> matorigin(vpoints, 3, numAtoms);
 
