@@ -63,8 +63,7 @@ class RDKIT_FORCEFIELDHELPERS_EXPORT TorsionAngleContribM6
 
 //! calculates and returns the torsional energy
 RDKIT_FORCEFIELDHELPERS_EXPORT double calcTorsionEnergyM6(
-    const std::vector<double> &V, const std::vector<int> &signs,
-    const double cosPhi);
+    const std::vector<double> &V, const std::vector<int> &signs, double cosPhi);
 }  // namespace CrystalFF
 }  // namespace ForceFields
 #endif

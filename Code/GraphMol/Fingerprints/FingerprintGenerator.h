@@ -90,7 +90,7 @@ struct RDKIT_FINGERPRINTS_EXPORT AdditionalOutput {
 class RDKIT_FINGERPRINTS_EXPORT FingerprintArguments {
  public:
   FingerprintArguments(bool countSimulation,
-                       const std::vector<std::uint32_t> countBounds,
+                       std::vector<std::uint32_t> countBounds,
                        std::uint32_t fpSize,
                        std::uint32_t numBitsPerFeature = 1,
                        bool includeChirality = false);
@@ -145,8 +145,8 @@ class RDKIT_FINGERPRINTS_EXPORT AtomEnvironment : private boost::noncopyable {
                               const std::vector<std::uint32_t> *atomInvariants,
                               const std::vector<std::uint32_t> *bondInvariants,
                               AdditionalOutput *AdditionalOutput,
-                              const bool hashResults = false,
-                              const std::uint64_t fpSize = 0) const = 0;
+                              bool hashResults = false,
+                              std::uint64_t fpSize = 0) const = 0;
   virtual void updateAdditionalOutput(AdditionalOutput *AdditionalOutput,
                                       size_t bitId) const = 0;
 
@@ -191,11 +191,11 @@ class RDKIT_FINGERPRINTS_EXPORT AtomEnvironmentGenerator
   virtual std::vector<AtomEnvironment<OutputType> *> getEnvironments(
       const ROMol &mol, FingerprintArguments *arguments,
       const std::vector<std::uint32_t> *fromAtoms = nullptr,
-      const std::vector<std::uint32_t> *ignoreAtoms = nullptr,
-      const int confId = -1, const AdditionalOutput *additionalOutput = nullptr,
+      const std::vector<std::uint32_t> *ignoreAtoms = nullptr, int confId = -1,
+      const AdditionalOutput *additionalOutput = nullptr,
       const std::vector<std::uint32_t> *atomInvariants = nullptr,
       const std::vector<std::uint32_t> *bondInvariants = nullptr,
-      const bool hashResults = false) const = 0;
+      bool hashResults = false) const = 0;
 
   /**
    \brief method that returns information about this /c AtomEnvironmentGenerator
@@ -328,7 +328,7 @@ class RDKIT_FINGERPRINTS_EXPORT FingerprintGenerator
 
   std::unique_ptr<SparseIntVect<OutputType>> getFingerprintHelper(
       const ROMol &mol, FingerprintFuncArguments &args,
-      const std::uint64_t fpSize = 0) const;
+      std::uint64_t fpSize = 0) const;
 
  public:
   FingerprintGenerator(
@@ -521,16 +521,16 @@ RDKIT_FINGERPRINTS_EXPORT ExplicitBitVect *getFP(const ROMol &mol,
                                                  FPType fPType);
 
 RDKIT_FINGERPRINTS_EXPORT std::vector<SparseIntVect<std::uint64_t> *> *
-getSparseCountFPBulk(const std::vector<const ROMol *> molVector, FPType fPType);
+getSparseCountFPBulk(std::vector<const ROMol *> molVector, FPType fPType);
 
 RDKIT_FINGERPRINTS_EXPORT std::vector<SparseBitVect *> *getSparseFPBulk(
-    const std::vector<const ROMol *> molVector, FPType fPType);
+    std::vector<const ROMol *> molVector, FPType fPType);
 
 RDKIT_FINGERPRINTS_EXPORT std::vector<SparseIntVect<std::uint32_t> *> *
-getCountFPBulk(const std::vector<const ROMol *> molVector, FPType fPType);
+getCountFPBulk(std::vector<const ROMol *> molVector, FPType fPType);
 
 RDKIT_FINGERPRINTS_EXPORT std::vector<ExplicitBitVect *> *getFPBulk(
-    const std::vector<const ROMol *> molVector, FPType fPType);
+    std::vector<const ROMol *> molVector, FPType fPType);
 
 }  // namespace RDKit
 
