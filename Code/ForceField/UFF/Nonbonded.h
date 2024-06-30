@@ -12,8 +12,7 @@
 #define __RD_NONBONDED_H__
 #include <ForceField/Contrib.h>
 
-namespace ForceFields {
-namespace UFF {
+namespace ForceFields::UFF {
 class AtomicParams;
 
 //! the van der Waals term for the Universal Force Field
@@ -82,6 +81,6 @@ RDKIT_FORCEFIELD_EXPORT double calcNonbondedMinimum(
 RDKIT_FORCEFIELD_EXPORT double calcNonbondedDepth(
     const AtomicParams *at1Params, const AtomicParams *at2Params);
 }  // namespace Utils
-}  // namespace UFF
-}  // namespace ForceFields
+}  // namespace ForceFields::UFF
+
 #endif

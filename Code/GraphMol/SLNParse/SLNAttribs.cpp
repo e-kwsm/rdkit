@@ -43,8 +43,7 @@
 #include <boost/algorithm/string.hpp>
 #include <boost/lexical_cast.hpp>
 
-namespace RDKit {
-namespace SLNParse {
+namespace RDKit::SLNParse {
 namespace {
 int parseIntAttribVal(std::string attribName, std::string attribVal,
                       int (*defaultFunc)(Atom const *at) = nullptr,
@@ -523,5 +522,4 @@ void adjustAtomChiralities(RWMol *mol) {
     }
   }
 }
-}  // namespace SLNParse
-}  // namespace RDKit
+}  // namespace RDKit::SLNParse

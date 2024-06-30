@@ -12,8 +12,7 @@
 
 #include "SequenceRule.h"
 
-namespace RDKit {
-namespace CIPLabeler {
+namespace RDKit::CIPLabeler {
 
 // CIP Rule 1a: Higher atomic number precedes lower.
 class Rule1a : public SequenceRule {
@@ -23,5 +22,4 @@ class Rule1a : public SequenceRule {
   int compare(const Edge *a, const Edge *b) const override;
 };
 
-}  // namespace CIPLabeler
-}  // namespace RDKit
+}  // namespace RDKit::CIPLabeler

@@ -33,8 +33,7 @@
 
 #include <GraphMol/Fingerprints/FingerprintUtil.h>
 
-namespace RDKit {
-namespace RDKitFP {
+namespace RDKit::RDKitFP {
 
 std::vector<std::uint32_t> *RDKitFPAtomInvGenerator::getAtomInvariants(
     const ROMol &mol) const {
@@ -245,6 +244,4 @@ getRDKitFPGenerator(const RDKitFPArguments &, AtomInvariantsGenerator *, bool);
 template RDKIT_FINGERPRINTS_EXPORT FingerprintGenerator<std::uint64_t> *
 getRDKitFPGenerator(const RDKitFPArguments &, AtomInvariantsGenerator *, bool);
 
-}  // namespace RDKitFP
-
-}  // namespace RDKit
+}  // namespace RDKit::RDKitFP
