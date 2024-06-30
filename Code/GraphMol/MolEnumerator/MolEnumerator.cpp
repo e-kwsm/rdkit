@@ -10,8 +10,7 @@
 #include "MolEnumerator.h"
 #include <RDGeneral/Exceptions.h>
 
-namespace RDKit {
-namespace MolEnumerator {
+namespace RDKit::MolEnumerator {
 namespace {
 
 //! recursively builds the variations
@@ -159,6 +158,4 @@ MolBundle enumerate(const ROMol &mol, size_t maxPerOperation) {
   return enumerate(mol, paramsList);
 }
 
-}  // namespace MolEnumerator
-
-}  // namespace RDKit
+}  // namespace RDKit::MolEnumerator

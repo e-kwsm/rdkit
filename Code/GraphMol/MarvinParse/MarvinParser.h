@@ -19,8 +19,8 @@
 #include <string>
 
 namespace RDKit {
-namespace v2 {
-namespace MarvinParser {
+
+namespace v2::MarvinParser {
 RDKIT_MARVINPARSER_EXPORT bool MrvFileIsReaction(const std::string &fname);
 RDKIT_MARVINPARSER_EXPORT bool MrvDataStreamIsReaction(std::istream &inStream);
 RDKIT_MARVINPARSER_EXPORT bool MrvBlockIsReaction(
@@ -49,8 +49,7 @@ ReactionFromMrvBlock(const std::string &molmrvText,
 RDKIT_MARVINPARSER_EXPORT std::unique_ptr<ChemicalReaction> ReactionFromMrvFile(
     const std::string &fName,
     const MrvParserParams &params = MrvParserParams());
-}  // namespace MarvinParser
-}  // namespace v2
+}  // namespace v2::MarvinParser
 
 inline namespace v1 {
 inline bool MrvFileIsReaction(const std::string &fname) {

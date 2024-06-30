@@ -16,8 +16,7 @@
 #include <GraphMol/ChemReactions/ReactionPickler.h>
 #include <fstream>
 
-namespace RDKit {
-namespace MolStandardize {
+namespace RDKit::MolStandardize {
 
 void TransformCatalogEntry::toStream(std::ostream &ss) const {
   ReactionPickler::pickleReaction(*dp_transform, ss);
@@ -66,5 +65,4 @@ void TransformCatalogEntry::initFromString(const std::string &text) {
   initFromStream(ss);
 }
 
-}  // namespace MolStandardize
-}  // namespace RDKit
+}  // namespace RDKit::MolStandardize

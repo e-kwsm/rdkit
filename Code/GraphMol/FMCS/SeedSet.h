@@ -13,8 +13,7 @@
 #include <algorithm>
 #include "Seed.h"
 
-namespace RDKit {
-namespace FMCS {
+namespace RDKit::FMCS {
 class RDKIT_FMCS_EXPORT SeedSet {  // sorted by amount of bonds
   typedef std::list<Seed> ValueSet;
   ValueSet Seeds;
@@ -58,5 +57,4 @@ class RDKIT_FMCS_EXPORT SeedSet {  // sorted by amount of bonds
     return val;
   }
 };
-}  // namespace FMCS
-}  // namespace RDKit
+}  // namespace RDKit::FMCS

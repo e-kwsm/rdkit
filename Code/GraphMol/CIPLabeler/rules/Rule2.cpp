@@ -15,9 +15,7 @@
 
 #include "../CIPMol.h"
 
-namespace RDKit {
-
-namespace CIPLabeler {
+namespace RDKit::CIPLabeler {
 
 Rule2::Rule2() = default;
 
@@ -47,5 +45,4 @@ int Rule2::compare(const Edge *a, const Edge *b) const {
   return three_way_comparison(aweight, bweight);
 }
 
-}  // namespace CIPLabeler
-}  // namespace RDKit
+}  // namespace RDKit::CIPLabeler

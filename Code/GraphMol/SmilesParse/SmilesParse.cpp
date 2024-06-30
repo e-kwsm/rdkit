@@ -58,9 +58,8 @@ int yysmarts_lex_init(void **);
 int yysmarts_lex_destroy(void *);
 size_t setup_smarts_string(const std::string &text, void *);
 extern int yysmarts_debug;
-namespace RDKit {
-namespace v2 {
-namespace SmilesParse {
+
+namespace RDKit::v2::SmilesParse {
 namespace {
 
 template<int(*lex_init)(void**),
@@ -574,6 +573,4 @@ std::unique_ptr<RWMol> MolFromSmarts(const std::string &smarts,
   }
   return res;
 };
-}  // namespace SmilesParse
-}  // namespace v2
-}  // namespace RDKit
+}  // namespace RDKit::v2::SmilesParse

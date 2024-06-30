@@ -38,8 +38,7 @@
 
 using namespace Eigen;
 
-namespace RDKit {
-namespace Descriptors {
+namespace RDKit::Descriptors {
 namespace {
 
 // Those Parameters change to adapted to the molecule dataset using the
@@ -246,5 +245,4 @@ void EEM(ROMol &mol, std::vector<double> &res, int confId) {
 
   getEEMs(wmol, res, numAtoms, confId);
 }
-}  // namespace Descriptors
-}  // namespace RDKit
+}  // namespace RDKit::Descriptors

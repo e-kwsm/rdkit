@@ -13,8 +13,8 @@
 #include <GraphMol/Atom.h>
 #include <GraphMol/Bond.h>
 #include <GraphMol/StereoGroup.h>
-namespace RDKit {
-namespace MolInterchange {
+
+namespace RDKit::MolInterchange {
 constexpr int currentMolJSONVersion = 10;
 constexpr int currentRDKitJSONVersion = 12;
 constexpr int currentRDKitRepresentationVersion = 2;
@@ -58,6 +58,6 @@ static const std::map<StereoGroupType, std::string> inv_stereoGrouplookup = {
     {StereoGroupType::STEREO_AND, "and"},
     {StereoGroupType::STEREO_OR, "or"}};
 
-}  // namespace MolInterchange
-}  // namespace RDKit
+}  // namespace RDKit::MolInterchange
+
 #endif
