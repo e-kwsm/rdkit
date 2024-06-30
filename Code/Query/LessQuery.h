@@ -45,8 +45,8 @@ class RDKIT_QUERY_EXPORT LessQuery
     }
   }
 
-  Query<MatchFuncArgType, DataFuncArgType, needsConversion> *copy()
-      const override {
+  [[nodiscard]] Query<MatchFuncArgType, DataFuncArgType, needsConversion> *
+  copy() const override {
     LessQuery<MatchFuncArgType, DataFuncArgType, needsConversion> *res =
         new LessQuery<MatchFuncArgType, DataFuncArgType, needsConversion>();
     res->setNegation(this->getNegation());
