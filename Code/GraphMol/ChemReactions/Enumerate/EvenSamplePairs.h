@@ -97,7 +97,9 @@ class RDKIT_CHEMREACTIONS_EXPORT EvenSamplePairsStrategy
         rejected_slack_condition(rhs.rejected_slack_condition),
         rejected_bb_sampling_condition(rhs.rejected_bb_sampling_condition) {}
 
-  const char *type() const override { return "EvenSamplePairsStrategy"; }
+  [[nodiscard]] const char *type() const override {
+    return "EvenSamplePairsStrategy";
+  }
 
   //! This is a class for enumerating RGroups using Cartesian Products of
   //! reagents.
@@ -126,17 +128,17 @@ class RDKIT_CHEMREACTIONS_EXPORT EvenSamplePairsStrategy
   //! The current permutation {r1, r2, ...}
   const EnumerationTypes::RGROUPS &next() override;
 
-  boost::uint64_t getPermutationIdx() const override {
+  [[nodiscard]] boost::uint64_t getPermutationIdx() const override {
     return m_numPermutationsProcessed;
   }
 
   operator bool() const override { return true; }
 
-  EnumerationStrategyBase *copy() const override {
+  [[nodiscard]] EnumerationStrategyBase *copy() const override {
     return new EvenSamplePairsStrategy(*this);
   }
 
-  std::string stats() const;
+  [[nodiscard]] std::string stats() const;
 
  private:
   friend class boost::serialization::access;
