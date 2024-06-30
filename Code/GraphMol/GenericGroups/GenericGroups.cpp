@@ -463,7 +463,7 @@ bool CarbocycloalkylAtomMatcher(const ROMol &mol, const Atom &atom,
   auto bondMatcher = [](const Bond &bnd) -> bool {
     return !bnd.getIsAromatic() && bnd.getBondType() == Bond::BondType::SINGLE;
   };
-  return FusedRingMatch(mol, atom, std::move(ignore), atomMatcher, bondMatcher);
+  return FusedRingMatch(mol, atom, ignore, atomMatcher, bondMatcher);
 }
 
 bool CarbocycloalkylHAtomMatcher(const ROMol &mol, const Atom &atom,
@@ -486,8 +486,8 @@ bool CarbocycloalkenylAtomMatcher(const ROMol &mol, const Atom &atom,
   };
   AtomMatcherFunc atLeastOne = nullptr;
   BondMatcherFunc bondMatcher = nullptr;
-  return FusedRingMatch(mol, atom, std::move(ignore), atomMatcher, bondMatcher,
-                        atLeastOne, atLeastOneBond);
+  return FusedRingMatch(mol, atom, ignore, atomMatcher, bondMatcher, atLeastOne,
+                        atLeastOneBond);
 }
 
 bool CarbocycloalkenylHAtomMatcher(const ROMol &mol, const Atom &atom,
@@ -507,7 +507,7 @@ bool CarboarylAtomMatcher(const ROMol &mol, const Atom &atom,
   auto bondMatcher = [](const Bond &bnd) -> bool {
     return bnd.getIsAromatic() || bnd.getBondType() == Bond::BondType::AROMATIC;
   };
-  return FusedRingMatch(mol, atom, std::move(ignore), atomMatcher, bondMatcher);
+  return FusedRingMatch(mol, atom, ignore, atomMatcher, bondMatcher);
 }
 
 bool CarboarylHAtomMatcher(const ROMol &mol, const Atom &atom,
@@ -524,7 +524,7 @@ bool CarbocyclicAtomMatcher(const ROMol &mol, const Atom &atom,
   auto atomMatcher = [](const Atom &at) -> bool {
     return at.getAtomicNum() == 6;
   };
-  return FusedRingMatch(mol, atom, std::move(ignore), atomMatcher);
+  return FusedRingMatch(mol, atom, ignore, atomMatcher);
 }
 
 bool CarbocyclicHAtomMatcher(const ROMol &mol, const Atom &atom,
@@ -541,7 +541,7 @@ bool NoCarbonRingAtomMatcher(const ROMol &mol, const Atom &atom,
   auto atomMatcher = [](const Atom &at) -> bool {
     return at.getAtomicNum() != 6;
   };
-  return FusedRingMatch(mol, atom, std::move(ignore), atomMatcher);
+  return FusedRingMatch(mol, atom, ignore, atomMatcher);
 }
 
 bool NoCarbonRingHAtomMatcher(const ROMol &mol, const Atom &atom,
@@ -562,7 +562,7 @@ bool HeterocyclicAtomMatcher(const ROMol &mol, const Atom &atom,
   AtomMatcherFunc oneAtomPerRing = nullptr;
   BondMatcherFunc bondMatcher = nullptr;
   BondMatcherFunc oneBondPerRing = nullptr;
-  return FusedRingMatch(mol, atom, std::move(ignore), atomMatcher, bondMatcher,
+  return FusedRingMatch(mol, atom, ignore, atomMatcher, bondMatcher,
                         oneAtomPerRing, oneBondPerRing, atLeastOne);
 }
 
@@ -586,7 +586,7 @@ bool HeteroarylAtomMatcher(const ROMol &mol, const Atom &atom,
   };
   AtomMatcherFunc oneAtomPerRing = nullptr;
   BondMatcherFunc oneBondPerRing = nullptr;
-  return FusedRingMatch(mol, atom, std::move(ignore), atomMatcher, bondMatcher,
+  return FusedRingMatch(mol, atom, ignore, atomMatcher, bondMatcher,
                         oneAtomPerRing, oneBondPerRing, atLeastOne);
 }
 
@@ -607,7 +607,7 @@ bool CyclicAtomMatcher(const ROMol &mol, const Atom &atom,
   auto atomMatcher = [](const Atom &at) -> bool {
     return at.getOwningMol().getRingInfo()->numAtomRings(at.getIdx()) > 0;
   };
-  return FusedRingMatch(mol, atom, std::move(ignore), atomMatcher);
+  return FusedRingMatch(mol, atom, ignore, atomMatcher);
 }
 
 bool CyclicHAtomMatcher(const ROMol &mol, const Atom &atom,
