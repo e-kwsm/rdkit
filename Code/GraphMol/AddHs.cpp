@@ -1291,7 +1291,7 @@ void mergeQueryHs(RWMol &mol, bool mergeUnmappedOnly, bool mergeIsotopes) {
         // FIX: shouldn't be repeating this code here
         std::list<QueryAtom::QUERYATOM_QUERY::CHILD_TYPE> childStack(
             atom->getQuery()->beginChildren(), atom->getQuery()->endChildren());
-        while (childStack.size()) {
+        while (!childStack.empty()) {
           QueryAtom::QUERYATOM_QUERY::CHILD_TYPE qry = childStack.front();
           childStack.pop_front();
           if (qry->getDescription() == "RecursiveStructure") {

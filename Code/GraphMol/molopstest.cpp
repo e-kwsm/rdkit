@@ -1898,10 +1898,10 @@ void testShortestPath() {
     CHECK_INVARIANT((*pi) == 1, "");
 
     path = MolOps::getShortestPath(*m, 1, 2);
-    CHECK_INVARIANT(path.size() == 0, "");
+    CHECK_INVARIANT(path.empty(), "");
 
     path = MolOps::getShortestPath(*m, 0, 2);
-    CHECK_INVARIANT(path.size() == 0, "");
+    CHECK_INVARIANT(path.empty(), "");
     delete m;
   }
   // fused ring test
@@ -2957,7 +2957,7 @@ void testSFIssue1894348() {
   TEST_ASSERT(m->getBondWithIdx(2)->getStereoAtoms()[0] == 0);
   TEST_ASSERT(m->getBondWithIdx(2)->getStereoAtoms()[1] == 4);
   // at first the stereoatoms are gone:
-  TEST_ASSERT(m2->getBondWithIdx(2)->getStereoAtoms().size() == 0);
+  TEST_ASSERT(m2->getBondWithIdx(2)->getStereoAtoms().empty());
   // but they can be re-perceived:
   MolOps::assignStereochemistry(*m2, true, true);
   TEST_ASSERT(m2->getBondWithIdx(1)->getStereoAtoms().size() == 2);
@@ -2971,10 +2971,10 @@ void testSFIssue1894348() {
   m = SmilesToMol(smi, false, false);
   TEST_ASSERT(m);
   MolOps::sanitizeMol(*m);
-  TEST_ASSERT(m->getBondWithIdx(2)->getStereoAtoms().size() == 0);
+  TEST_ASSERT(m->getBondWithIdx(2)->getStereoAtoms().empty());
   m2 = static_cast<RWMol *>(MolOps::removeHs(static_cast<const ROMol &>(*m)));
   // if we don't assign stereocodes in the original we shouldn't have them here:
-  TEST_ASSERT(m2->getBondWithIdx(1)->getStereoAtoms().size() == 0);
+  TEST_ASSERT(m2->getBondWithIdx(1)->getStereoAtoms().empty());
   delete m;
   delete m2;
 
@@ -4863,7 +4863,7 @@ void testGitHubIssue8() {
     MolOps::assignStereochemistry(*m);
     TEST_ASSERT(m->getBondWithIdx(1)->getStereoAtoms().size() == 2);
     m->removeAtom((unsigned int)0);
-    TEST_ASSERT(m->getBondWithIdx(1)->getStereoAtoms().size() == 0);
+    TEST_ASSERT(m->getBondWithIdx(1)->getStereoAtoms().empty());
     delete m;
   }
   {
@@ -7117,7 +7117,7 @@ void testKekulizeErrorReporting() {
     std::string smi = "c1ccccc1";
     ROMol *m = SmilesToMol(smi);
     TEST_ASSERT(m);
-    TEST_ASSERT(sstrm.str() == "");
+    TEST_ASSERT(sstrm.str().empty());
     delete m;
   }
   {
@@ -7218,7 +7218,7 @@ void testGithubIssue868() {
   // test atom type query merging
   for (int aromatic = 0; aromatic < 2; ++aromatic) {
     sstrm.str("");
-    TEST_ASSERT(sstrm.str() == "");
+    TEST_ASSERT(sstrm.str().empty());
     RWMol m;
     QueryAtom *qa = new QueryAtom();
     qa->setQuery(makeAtomTypeQuery(1, aromatic));
@@ -7234,7 +7234,7 @@ void testGithubIssue868() {
 
   {
     sstrm.str("");
-    TEST_ASSERT(sstrm.str() == "");
+    TEST_ASSERT(sstrm.str().empty());
     // github 7687 - merge with more than one option in or
     std::string sma = "[#6]-[#1,#6,#7]";
     RWMol *m = SmartsToMol(sma);

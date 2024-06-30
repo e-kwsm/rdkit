@@ -88,7 +88,7 @@ void test2() {
     TEST_ASSERT(pth[0] == 0);
 
     pth = findAtomEnvironmentOfRadiusN(*mol, 4, 0);
-    TEST_ASSERT(pth.size() == 0);
+    TEST_ASSERT(pth.empty());
 
     pth = findAtomEnvironmentOfRadiusN(*mol, 1, 1);
     TEST_ASSERT(pth.size() == 3);
@@ -97,7 +97,7 @@ void test2() {
     TEST_ASSERT(pth.size() == 4);
 
     pth = findAtomEnvironmentOfRadiusN(*mol, 3, 1);
-    TEST_ASSERT(pth.size() == 0);
+    TEST_ASSERT(pth.empty());
 
     delete mol;
   }
@@ -156,7 +156,7 @@ void test3() {
     TEST_ASSERT(pth.size() == 5);
 
     pth = findAtomEnvironmentOfRadiusN(*mH, 3, rootedAtAtom, false, true);
-    TEST_ASSERT(pth.size() == 0);
+    TEST_ASSERT(pth.empty());
     pth = findAtomEnvironmentOfRadiusN(*mH, 3, rootedAtAtom, true, true);
     TEST_ASSERT(pth.size() == 7);
     pth = findAtomEnvironmentOfRadiusN(*mH, 3, rootedAtAtom, true, false);
@@ -165,9 +165,9 @@ void test3() {
     TEST_ASSERT(pth.size() == 2);
 
     pth = findAtomEnvironmentOfRadiusN(*mH, 4, rootedAtAtom, false, true);
-    TEST_ASSERT(pth.size() == 0);
+    TEST_ASSERT(pth.empty());
     pth = findAtomEnvironmentOfRadiusN(*mH, 4, rootedAtAtom, true, true);
-    TEST_ASSERT(pth.size() == 0);
+    TEST_ASSERT(pth.empty());
     pth = findAtomEnvironmentOfRadiusN(*mH, 4, rootedAtAtom, true, false);
     TEST_ASSERT(pth.size() == 7);
     pth = findAtomEnvironmentOfRadiusN(*mH, 4, rootedAtAtom, false, false);
@@ -222,13 +222,13 @@ void test3() {
 
     pth = findAtomEnvironmentOfRadiusN(*mH, 4, rootedAtAtom, false, true,
                                        &cAtomMap);
-    TEST_ASSERT(pth.size() == 0);
-    TEST_ASSERT(cAtomMap.size() == 0);
+    TEST_ASSERT(pth.empty());
+    TEST_ASSERT(cAtomMap.empty());
 
     pth = findAtomEnvironmentOfRadiusN(*mH, 4, rootedAtAtom, true, true,
                                        &cAtomMap);
-    TEST_ASSERT(pth.size() == 0);
-    TEST_ASSERT(cAtomMap.size() == 0);
+    TEST_ASSERT(pth.empty());
+    TEST_ASSERT(cAtomMap.empty());
 
     pth = findAtomEnvironmentOfRadiusN(*mH, 4, rootedAtAtom, false, false,
                                        &cAtomMap);
