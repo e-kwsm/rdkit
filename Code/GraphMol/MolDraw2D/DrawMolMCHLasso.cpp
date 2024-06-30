@@ -69,9 +69,8 @@ void DrawMolMCHLasso::extractAtomColourLists(
       auto cpos = std::find(colours.begin(), colours.end(), col);
       if (cpos == colours.end()) {
         colours.push_back(col);
-        colourAtoms.push_back(std::vector<int>(1, cm.first));
-        inColourAtoms.push_back(
-            boost::dynamic_bitset<>(drawMol_->getNumAtoms()));
+        colourAtoms.emplace_back(1, cm.first);
+        inColourAtoms.emplace_back(drawMol_->getNumAtoms());
         inColourAtoms.back().set(cm.first);
       } else {
         auto ln = std::distance(colours.begin(), cpos);
@@ -84,7 +83,7 @@ void DrawMolMCHLasso::extractAtomColourLists(
     }
   }
   for (size_t i = 0U; i < colourAtoms.size(); ++i) {
-    colourLists.push_back(std::vector<int>(1, i));
+    colourLists.emplace_back(1, i);
   }
   if (colourLists.size() < 2) {
     return;
@@ -400,11 +399,10 @@ void addExistingArcs(size_t i,
       arcAngs.push_back(arc->ang2_);
       arcAngs.push_back(arc->ang1_);
       if (arc->ang2_ < arc->ang1_) {
-        bangs.push_back(
-            std::make_pair((arc->ang2_ + arc->ang1_) / 2.0, bangs.size()));
+        bangs.emplace_back((arc->ang2_ + arc->ang1_) / 2.0, bangs.size());
       } else {
         double bang = -360.0 + (arc->ang2_ + arc->ang1_ + 360.0) / 2.0;
-        bangs.push_back(std::make_pair(bang, bangs.size()));
+        bangs.emplace_back(bang, bangs.size());
       }
       arc.reset();
     }
@@ -445,7 +443,7 @@ void DrawMolMCHLasso::makeIntersectingArcs(
                                   radJ, ang1, ang2, bang);
         arcAngs.push_back(ang1);
         arcAngs.push_back(ang2);
-        bangs.push_back(std::make_pair(bang, bangs.size()));
+        bangs.emplace_back(bang, bangs.size());
       }
       std::sort(bangs.begin(), bangs.end());
       std::vector<double> sortedArcAngs;
@@ -691,7 +689,7 @@ void DrawMolMCHLasso::orderAtomLines(
                           atomLines[i][j].line2->points_[pt], atCds_[i],
                           atCds_[oatom], atomLines[i][j].angle1,
                           atomLines[i][j].angle2, bang, swapped);
-      bondAngles.push_back(std::pair(bang, j));
+      bondAngles.emplace_back(bang, j);
       if (bang < minBondAngle) {
         minBondAngle = bang;
       }

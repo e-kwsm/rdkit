@@ -68,7 +68,7 @@ void PositionVariationOp::initFromMol() {
           attachAtom->setNumExplicitHs(0);
         }
       }
-      d_variationPoints.push_back(std::make_pair(atom->getIdx(), oats));
+      d_variationPoints.emplace_back(atom->getIdx(), oats);
     }
   }
 }
