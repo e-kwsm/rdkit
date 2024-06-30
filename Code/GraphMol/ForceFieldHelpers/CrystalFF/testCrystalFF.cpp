@@ -164,14 +164,14 @@ void testTorsionPrefsSmallRings() {
   // small ring torsion turned off
   ForceFields::CrystalFF::getExperimentalTorsions(*mol, details, true, false,
                                                   false, false, 1, false);
-  TEST_ASSERT(details.expTorsionAtoms.size() == 0);
-  TEST_ASSERT(details.expTorsionAngles.size() == 0);
+  TEST_ASSERT(details.expTorsionAtoms.empty());
+  TEST_ASSERT(details.expTorsionAngles.empty());
 
   // small ring torsion turned on
   ForceFields::CrystalFF::getExperimentalTorsions(*mol, details, true, true,
                                                   false, false, 1, false);
-  TEST_ASSERT(details.expTorsionAtoms.size() > 0);
-  TEST_ASSERT(details.expTorsionAngles.size() > 0);
+  TEST_ASSERT(!details.expTorsionAtoms.empty());
+  TEST_ASSERT(!details.expTorsionAngles.empty());
   delete mol;
 }
 
@@ -186,8 +186,8 @@ void testTorsionPrefsBridgedSmallRings() {
   // small ring torsion turned off
   ForceFields::CrystalFF::getExperimentalTorsions(*mol, details, true, true,
                                                   false, false, 1, false);
-  TEST_ASSERT(details.expTorsionAtoms.size() == 0);
-  TEST_ASSERT(details.expTorsionAngles.size() == 0);
+  TEST_ASSERT(details.expTorsionAtoms.empty());
+  TEST_ASSERT(details.expTorsionAngles.empty());
   delete mol;
 }
 
@@ -200,14 +200,14 @@ void testTorsionPrefsMacrocycles() {
   // macrocycle ring torsion turned off
   ForceFields::CrystalFF::getExperimentalTorsions(*mol, details, true, false,
                                                   false, false, 1, false);
-  TEST_ASSERT(details.expTorsionAtoms.size() == 0);
-  TEST_ASSERT(details.expTorsionAngles.size() == 0);
+  TEST_ASSERT(details.expTorsionAtoms.empty());
+  TEST_ASSERT(details.expTorsionAngles.empty());
 
   // macrocycle ring torsion turned on
   ForceFields::CrystalFF::getExperimentalTorsions(*mol, details, true, false,
                                                   true, false, 1, false);
-  TEST_ASSERT(details.expTorsionAtoms.size() > 0);
-  TEST_ASSERT(details.expTorsionAngles.size() > 0);
+  TEST_ASSERT(!details.expTorsionAtoms.empty());
+  TEST_ASSERT(!details.expTorsionAngles.empty());
   delete mol;
 }
 

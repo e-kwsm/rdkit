@@ -97,7 +97,7 @@ void ForwardSDMolSupplier::readMolProps(ROMol &mol) {
           std::getline(*dp_inStream, inl);
           tempStr = inl;
           auto stmp = FileParserUtils::strip(tempStr);
-          while (stmp.length() != 0) {
+          while (!stmp.empty()) {
             d_line++;
             std::getline(*dp_inStream, inl);
             tempStr = inl;

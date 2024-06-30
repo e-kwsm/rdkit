@@ -881,7 +881,7 @@ void RWMol::batchRemoveAtoms() {
     bond->setEndAtomIdx(end->getIdx());
     INT_VECT stereoAtoms;
     INT_VECT &oldStereoAtoms = bond->getStereoAtoms();
-    if (oldStereoAtoms.size()) {
+    if (!oldStereoAtoms.empty()) {
       for (auto &idx : oldStereoAtoms) {
         if (oldIndices[idx]) {
           stereoAtoms.push_back(oldIndices[idx]->getIdx());
