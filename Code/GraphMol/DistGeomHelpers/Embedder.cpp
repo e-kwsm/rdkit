@@ -86,8 +86,7 @@ std::mutex &GetFailMutex() {
 }  // namespace
 #endif
 
-namespace RDKit {
-namespace DGeomHelpers {
+namespace RDKit::DGeomHelpers {
 
 //! Parameters corresponding to Sereina Riniker's KDG approach
 const EmbedParameters KDG(0,        // maxIterations
@@ -1590,5 +1589,4 @@ void EmbedMultipleConfs(ROMol &mol, INT_VECT &res, unsigned int numConfs,
   }
 }
 
-}  // end of namespace DGeomHelpers
-}  // end of namespace RDKit
+}  // namespace RDKit::DGeomHelpers

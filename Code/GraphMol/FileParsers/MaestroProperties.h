@@ -9,9 +9,7 @@
 //
 #include <string>
 
-namespace RDKit {
-namespace FileParsers {
-namespace schrodinger {
+namespace RDKit::FileParsers::schrodinger {
 
 static const std::string MAE_ATOM_TYPE = "i_m_mmod_type";
 static const std::string MAE_BOND_DATIVE_MARK = "b_sPrivate_dative_bond";
@@ -28,6 +26,4 @@ static const std::string PDB_RESIDUE_NAME = "s_m_pdb_residue_name";
 static const std::string PDB_RESIDUE_NUMBER = "i_m_residue_number";
 static const std::string PDB_TFACTOR = "r_m_pdb_tfactor";
 
-}  // namespace schrodinger
-}  // namespace FileParsers
-}  // namespace RDKit
+}  // namespace RDKit::FileParsers::schrodinger

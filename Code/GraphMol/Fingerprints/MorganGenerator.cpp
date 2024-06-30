@@ -22,8 +22,7 @@
 
 #include <GraphMol/Fingerprints/FingerprintUtil.h>
 
-namespace RDKit {
-namespace MorganFingerprint {
+namespace RDKit::MorganFingerprint {
 
 using namespace MorganFingerprints;
 
@@ -430,5 +429,4 @@ getMorganGenerator(unsigned int radius, bool countSimulation,
                    std::uint32_t fpSize, std::vector<std::uint32_t> countBounds,
                    bool ownsAtomInvGen, bool ownsBondInvGen);
 
-}  // namespace MorganFingerprint
-}  // namespace RDKit
+}  // namespace RDKit::MorganFingerprint
