@@ -943,7 +943,7 @@ MarvinBond::MarvinBond(const MarvinBond &bondToCopy, std::string newId,
   atomRefs2[1] = atomRef2;
 }
 
-const std::string MarvinBond::getBondType() const {
+std::string MarvinBond::getBondType() const {
   std::string tempQueryType = boost::algorithm::to_upper_copy(queryType);
   std::string tempOrder = boost::algorithm::to_upper_copy(order);
   std::string tempConvention = boost::algorithm::to_upper_copy(convention);
@@ -1147,7 +1147,7 @@ MarvinBond *MarvinMolBase::findBondByRef(std::string bondId) {
   return nullptr;
 }
 
-const std::vector<std::string> MarvinMolBase::getBondList() const {
+std::vector<std::string> MarvinMolBase::getBondList() const {
   std::vector<std::string> bondList;
   for (auto bond : bonds) {
     bondList.push_back(bond->id);
@@ -1156,7 +1156,7 @@ const std::vector<std::string> MarvinMolBase::getBondList() const {
   return bondList;
 }
 
-const std::vector<std::string> MarvinMolBase::getAtomList() const {
+std::vector<std::string> MarvinMolBase::getAtomList() const {
   std::vector<std::string> atomList;
   for (auto atom : atoms) {
     atomList.push_back(atom->id);

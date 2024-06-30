@@ -93,7 +93,7 @@ class RDKIT_RASCALMCES_EXPORT RascalResult {
   unsigned int getLargestFragSize() const;
 
   std::string getSmarts() const;
-  const std::shared_ptr<ROMol> getMcesMol() const;
+  std::shared_ptr<ROMol> getMcesMol() const;
   bool getTimedOut() const { return d_timedOut; };
 
   double getTier1Sim() const { return d_tier1Sim; }
