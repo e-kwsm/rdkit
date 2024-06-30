@@ -154,7 +154,7 @@ class RDKIT_FORCEFIELD_EXPORT MMFFAromCollection {
   /*!
     \return a pointer to the MMFFArom object, NULL on failure.
   */
-  bool isMMFFAromatic(const unsigned int atomType) const {
+  [[nodiscard]] bool isMMFFAromatic(const unsigned int atomType) const {
     return std::find(d_params.begin(), d_params.end(), atomType) !=
            d_params.end();
   }
@@ -249,7 +249,7 @@ class RDKIT_FORCEFIELD_EXPORT MMFFChgCollection {
   /*!
     \return a pointer to the MMFFChg object, NULL on failure.
   */
-  const std::pair<int, const MMFFChg *> getMMFFChgParams(
+  [[nodiscard]] const std::pair<int, const MMFFChg *> getMMFFChgParams(
       const unsigned int bondType, const unsigned int iAtomType,
       const unsigned int jAtomType) const {
     int sign = -1;
@@ -605,7 +605,7 @@ class RDKIT_FORCEFIELD_EXPORT MMFFStbnCollection {
   /*!
     \return a pointer to the MMFFStbn object, NULL on failure.
   */
-  const std::pair<bool, const MMFFStbn *> getMMFFStbnParams(
+  [[nodiscard]] const std::pair<bool, const MMFFStbn *> getMMFFStbnParams(
       const unsigned int stretchBendType, const unsigned int bondType1,
       const unsigned int bondType2, const unsigned int iAtomType,
       const unsigned int jAtomType, const unsigned int kAtomType) const {
@@ -688,7 +688,7 @@ class RDKIT_FORCEFIELD_EXPORT MMFFDfsbCollection {
   /*!
     \return a pointer to the MMFFStbn object, NULL on failure.
   */
-  const std::pair<bool, const MMFFStbn *> getMMFFDfsbParams(
+  [[nodiscard]] const std::pair<bool, const MMFFStbn *> getMMFFDfsbParams(
       const unsigned int periodicTableRow1,
       const unsigned int periodicTableRow2,
       const unsigned int periodicTableRow3) const {

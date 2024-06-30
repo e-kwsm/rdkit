@@ -72,8 +72,8 @@ class MarvinArrow {
   double x2;
   double y2;
 
-  std::string toString() const;
-  ptree toPtree() const;
+  [[nodiscard]] std::string toString() const;
+  [[nodiscard]] ptree toPtree() const;
 };
 
 class MarvinPlus {
@@ -84,8 +84,8 @@ class MarvinPlus {
   double x2;
   double y2;
 
-  std::string toString() const;
-  ptree toPtree() const;
+  [[nodiscard]] std::string toString() const;
+  [[nodiscard]] ptree toPtree() const;
 };
 
 class MarvinCondition {
@@ -99,8 +99,8 @@ class MarvinCondition {
   std::string halign;
   std::string valign;
 
-  std::string toString() const;
-  ptree toPtree() const;
+  [[nodiscard]] std::string toString() const;
+  [[nodiscard]] ptree toPtree() const;
 };
 
 class MarvinAttachmentPoint {
@@ -110,8 +110,8 @@ class MarvinAttachmentPoint {
   std::string bond;
   std::string order;
 
-  std::string toString() const;
-  ptree toPtree() const;
+  [[nodiscard]] std::string toString() const;
+  [[nodiscard]] ptree toPtree() const;
 };
 
 class MarvinAtom {
@@ -145,10 +145,10 @@ class MarvinAtom {
 
   bool operator==(const MarvinAtom *rhs) const;
 
-  bool isElement() const;
+  [[nodiscard]] bool isElement() const;
 
-  std::string toString() const;
-  ptree toPtree(unsigned int coordinatePrecision = 6) const;
+  [[nodiscard]] std::string toString() const;
+  [[nodiscard]] ptree toPtree(unsigned int coordinatePrecision = 6) const;
 };
 
 class MarvinBondStereo {
@@ -158,8 +158,8 @@ class MarvinBondStereo {
   std::string conventionValue;
   std::string dictRef;
 
-  std::string toString() const;
-  ptree toPtree() const;
+  [[nodiscard]] std::string toString() const;
+  [[nodiscard]] ptree toPtree() const;
 };
 
 class MarvinBond {
@@ -176,14 +176,14 @@ class MarvinBond {
   MarvinBond(const MarvinBond &bondToCopy, std::string newId,
              std::string atomRef1, std::string atomRef2);
 
-  bool isEqual(const MarvinAtom &other) const;
+  [[nodiscard]] bool isEqual(const MarvinAtom &other) const;
 
   bool operator==(const MarvinAtom &rhs) const;
 
-  const std::string getBondType() const;
+  [[nodiscard]] const std::string getBondType() const;
 
-  std::string toString() const;
-  ptree toPtree() const;
+  [[nodiscard]] std::string toString() const;
+  [[nodiscard]] ptree toPtree() const;
 };
 
 class MarvinRectangle {
@@ -205,9 +205,11 @@ class MarvinRectangle {
 
   RDGeom::Point3D &getCenter();
 
-  bool overlapsVertically(const MarvinRectangle &otherRectangle) const;
+  [[nodiscard]] bool overlapsVertically(
+      const MarvinRectangle &otherRectangle) const;
 
-  bool overlapsVHorizontally(const MarvinRectangle &otherRectangle) const;
+  [[nodiscard]] bool overlapsVHorizontally(
+      const MarvinRectangle &otherRectangle) const;
 
   static bool compareRectanglesByX(MarvinRectangle &r1, MarvinRectangle &r2);
 
@@ -251,13 +253,14 @@ class MarvinMolBase {
   std::vector<std::unique_ptr<MarvinMolBase>> sgroups;
   MarvinMolBase *parent;
 
-  virtual std::string role() const = 0;
-  virtual bool hasAtomBondBlocks() const = 0;
-  virtual std::string toString() const = 0;
-  virtual ptree toPtree() const;
+  [[nodiscard]] virtual std::string role() const = 0;
+  [[nodiscard]] virtual bool hasAtomBondBlocks() const = 0;
+  [[nodiscard]] virtual std::string toString() const = 0;
+  [[nodiscard]] virtual ptree toPtree() const;
   void addSgroupsToPtree(ptree &pt) const;
 
-  virtual MarvinMolBase *copyMol(const std::string &idAppend) const = 0;
+  [[nodiscard]] virtual MarvinMolBase *copyMol(
+      const std::string &idAppend) const = 0;
   virtual void pushOwnedAtom(MarvinAtom *atom);
   virtual void pushOwnedBond(MarvinBond *bond);
 
@@ -266,17 +269,17 @@ class MarvinMolBase {
 
   void setPrecision(unsigned int precision);
 
-  int getExplicitValence(const MarvinAtom &marvinAtom) const;
+  [[nodiscard]] int getExplicitValence(const MarvinAtom &marvinAtom) const;
 
   MarvinMolBase() {}
 
   virtual ~MarvinMolBase();
 
-  int getAtomIndex(std::string id) const;
-  int getBondIndex(std::string id) const;
+  [[nodiscard]] int getAtomIndex(std::string id) const;
+  [[nodiscard]] int getBondIndex(std::string id) const;
 
-  const std::vector<std::string> getBondList() const;
-  const std::vector<std::string> getAtomList() const;
+  [[nodiscard]] const std::vector<std::string> getBondList() const;
+  [[nodiscard]] const std::vector<std::string> getAtomList() const;
   bool AnyOverLappingAtoms(const MarvinMolBase *otherMol) const;
 
   void cleanUpNumbering(
@@ -321,7 +324,7 @@ class MarvinMolBase {
   // the following is virtual because some derived classes need to do more than
   // just call the base class.  Currently, only MarvinSuperatomSgroup does this
 
-  virtual IsSgroupInAtomSetResult isSgroupInSetOfAtoms(
+  [[nodiscard]] virtual IsSgroupInAtomSetResult isSgroupInSetOfAtoms(
       const std::vector<MarvinAtom *> &setOfAtoms) const;
 
  public:
@@ -334,18 +337,18 @@ class MarvinMolBase {
   void prepSgroupsForRDKit();
   void processSgroupsFromRDKit();
 
-  virtual bool isPassiveRoleForExpansion() const;
-  virtual bool isPassiveRoleForContraction() const;
+  [[nodiscard]] virtual bool isPassiveRoleForExpansion() const;
+  [[nodiscard]] virtual bool isPassiveRoleForContraction() const;
   virtual void processSpecialSgroups();
   virtual void parseMoleculeSpecific(RDKit::RWMol *mol,
                                      std::unique_ptr<SubstanceGroup> &sgroup,
                                      int sequenceId);
 
-  bool has2dCoords() const;
-  bool has3dCoords() const;
-  bool hasAny3dCoords() const;
-  bool hasAny2dCoords() const;
-  bool hasCoords() const;
+  [[nodiscard]] bool has2dCoords() const;
+  [[nodiscard]] bool has3dCoords() const;
+  [[nodiscard]] bool hasAny3dCoords() const;
+  [[nodiscard]] bool hasAny2dCoords() const;
+  [[nodiscard]] bool hasCoords() const;
   void removeCoords();
 
   void parseAtomsAndBonds(ptree &molTree);
@@ -356,7 +359,8 @@ class MarvinSruCoModSgroup : public MarvinMolBase {
   std::string roleName;  // could be MarvinSruSgroup, MarvinCopolymerSgroup or
                          // MarvinModificationSgroup
  public:
-  MarvinMolBase *copyMol(const std::string &idAppend) const override;
+  [[nodiscard]] MarvinMolBase *copyMol(
+      const std::string &idAppend) const override;
   MarvinSruCoModSgroup(std::string type, MarvinMolBase *parent);
   MarvinSruCoModSgroup(MarvinMolBase *parent, std::string role, ptree &molTree);
 
@@ -364,11 +368,11 @@ class MarvinSruCoModSgroup : public MarvinMolBase {
   std::string connect;
   std::string correspondence;
 
-  std::string toString() const override;
-  ptree toPtree() const override;
+  [[nodiscard]] std::string toString() const override;
+  [[nodiscard]] ptree toPtree() const override;
 
-  std::string role() const override;
-  bool hasAtomBondBlocks() const override;
+  [[nodiscard]] std::string role() const override;
+  [[nodiscard]] bool hasAtomBondBlocks() const override;
   void parseMoleculeSpecific(RDKit::RWMol *mol,
                              std::unique_ptr<SubstanceGroup> &sgroup,
                              int sequenceId) override;
@@ -379,7 +383,8 @@ class MarvinDataSgroup : public MarvinMolBase {
   MarvinDataSgroup(MarvinMolBase *parent);
   MarvinDataSgroup(MarvinMolBase *parent, ptree &molTree);
 
-  MarvinMolBase *copyMol(const std::string &idAppend) const override;
+  [[nodiscard]] MarvinMolBase *copyMol(
+      const std::string &idAppend) const override;
 
   std::string context;
   std::string fieldName;
@@ -392,11 +397,11 @@ class MarvinDataSgroup : public MarvinMolBase {
   double x;
   double y;
 
-  std::string toString() const override;
-  ptree toPtree() const override;
+  [[nodiscard]] std::string toString() const override;
+  [[nodiscard]] ptree toPtree() const override;
 
-  std::string role() const override;
-  bool hasAtomBondBlocks() const override;
+  [[nodiscard]] std::string role() const override;
+  [[nodiscard]] bool hasAtomBondBlocks() const override;
   void parseMoleculeSpecific(RDKit::RWMol *mol,
                              std::unique_ptr<SubstanceGroup> &sgroup,
                              int sequenceId) override;
@@ -409,18 +414,19 @@ class MarvinSuperatomSgroupExpanded : public MarvinMolBase {
   MarvinSuperatomSgroupExpanded(MarvinMolBase *parent);
   MarvinSuperatomSgroupExpanded(MarvinMolBase *parent, ptree &molTree);
 
-  MarvinMolBase *copyMol(const std::string &idAppend) const override;
+  [[nodiscard]] MarvinMolBase *copyMol(
+      const std::string &idAppend) const override;
 
   ~MarvinSuperatomSgroupExpanded() override;
 
   MarvinMolBase *convertToOneSuperAtom();
 
-  std::string toString() const override;
-  ptree toPtree() const override;
+  [[nodiscard]] std::string toString() const override;
+  [[nodiscard]] ptree toPtree() const override;
 
-  std::string role() const override;
-  bool hasAtomBondBlocks() const override;
-  bool isPassiveRoleForContraction() const override;
+  [[nodiscard]] std::string role() const override;
+  [[nodiscard]] bool hasAtomBondBlocks() const override;
+  [[nodiscard]] bool isPassiveRoleForContraction() const override;
 
   void parseMoleculeSpecific(RDKit::RWMol *mol,
                              std::unique_ptr<SubstanceGroup> &sgroup,
@@ -432,7 +438,8 @@ class MarvinMultipleSgroup : public MarvinMolBase {
   MarvinMultipleSgroup(MarvinMolBase *parent);
   MarvinMultipleSgroup(MarvinMolBase *parent, ptree &molTree);
 
-  MarvinMolBase *copyMol(const std::string &idAppend) const override;
+  [[nodiscard]] MarvinMolBase *copyMol(
+      const std::string &idAppend) const override;
 
   std::string title;
   bool isExpanded = false;
@@ -446,13 +453,13 @@ class MarvinMultipleSgroup : public MarvinMolBase {
                                 std::vector<MarvinBond *> &bondsToTry,
                                 std::vector<MarvinBond *> &orphanedBonds) const;
 
-  std::string toString() const override;
-  ptree toPtree() const override;
+  [[nodiscard]] std::string toString() const override;
+  [[nodiscard]] ptree toPtree() const override;
 
-  std::string role() const override;
-  bool hasAtomBondBlocks() const override;
-  bool isPassiveRoleForExpansion() const override;
-  bool isPassiveRoleForContraction() const override;
+  [[nodiscard]] std::string role() const override;
+  [[nodiscard]] bool hasAtomBondBlocks() const override;
+  [[nodiscard]] bool isPassiveRoleForExpansion() const override;
+  [[nodiscard]] bool isPassiveRoleForContraction() const override;
   void processSpecialSgroups() override;
 
   void parseMoleculeSpecific(RDKit::RWMol *mol,
@@ -467,16 +474,17 @@ class MarvinMulticenterSgroup : public MarvinMolBase {
   MarvinMulticenterSgroup(MarvinMolBase *parent);
   MarvinMulticenterSgroup(MarvinMolBase *parent, ptree &molTree);
 
-  MarvinMolBase *copyMol(const std::string &idAppend) const override;
+  [[nodiscard]] MarvinMolBase *copyMol(
+      const std::string &idAppend) const override;
 
   void processOneMulticenterSgroup();
 
-  std::string toString() const override;
-  ptree toPtree() const override;
+  [[nodiscard]] std::string toString() const override;
+  [[nodiscard]] ptree toPtree() const override;
 
   MarvinAtom *center;
-  std::string role() const override;
-  bool hasAtomBondBlocks() const override;
+  [[nodiscard]] std::string role() const override;
+  [[nodiscard]] bool hasAtomBondBlocks() const override;
   void processSpecialSgroups() override;
   void parseMoleculeSpecific(RDKit::RWMol *mol,
                              std::unique_ptr<SubstanceGroup> &sgroup,
@@ -490,14 +498,15 @@ class MarvinGenericSgroup : public MarvinMolBase {
   MarvinGenericSgroup(MarvinMolBase *parent);
   MarvinGenericSgroup(MarvinMolBase *parent, ptree &molTree);
 
-  MarvinMolBase *copyMol(const std::string &idAppend) const override;
+  [[nodiscard]] MarvinMolBase *copyMol(
+      const std::string &idAppend) const override;
 
   std::string charge;  // onAtoms or onBrackets
-  std::string toString() const override;
-  ptree toPtree() const override;
+  [[nodiscard]] std::string toString() const override;
+  [[nodiscard]] ptree toPtree() const override;
 
-  std::string role() const override;
-  bool hasAtomBondBlocks() const override;
+  [[nodiscard]] std::string role() const override;
+  [[nodiscard]] bool hasAtomBondBlocks() const override;
   void parseMoleculeSpecific(RDKit::RWMol *mol,
                              std::unique_ptr<SubstanceGroup> &sgroup,
                              int sequenceId) override;
@@ -511,15 +520,16 @@ class MarvinMonomerSgroup : public MarvinMolBase {
   MarvinMonomerSgroup(MarvinMolBase *parent);
   MarvinMonomerSgroup(MarvinMolBase *parent, ptree &molTree);
 
-  MarvinMolBase *copyMol(const std::string &idAppend) const override;
+  [[nodiscard]] MarvinMolBase *copyMol(
+      const std::string &idAppend) const override;
 
   std::string title;
   std::string charge;  // onAtoms or onBrackets
-  std::string toString() const override;
-  ptree toPtree() const override;
+  [[nodiscard]] std::string toString() const override;
+  [[nodiscard]] ptree toPtree() const override;
 
-  std::string role() const override;
-  bool hasAtomBondBlocks() const override;
+  [[nodiscard]] std::string role() const override;
+  [[nodiscard]] bool hasAtomBondBlocks() const override;
   void parseMoleculeSpecific(RDKit::RWMol *mol,
                              std::unique_ptr<SubstanceGroup> &sgroup,
                              int sequenceId) override;
@@ -533,18 +543,19 @@ class MarvinSuperatomSgroup : public MarvinMolBase {
   MarvinSuperatomSgroup(MarvinMolBase *parent);
   MarvinSuperatomSgroup(MarvinMolBase *parent, ptree &molTree);
 
-  MarvinMolBase *copyMol(const std::string &idAppend) const override;
+  [[nodiscard]] MarvinMolBase *copyMol(
+      const std::string &idAppend) const override;
 
   ~MarvinSuperatomSgroup() override;
 
   void convertFromOneSuperAtom();
 
-  std::string role() const override;
-  bool hasAtomBondBlocks() const override;
-  bool isPassiveRoleForExpansion() const override;
+  [[nodiscard]] std::string role() const override;
+  [[nodiscard]] bool hasAtomBondBlocks() const override;
+  [[nodiscard]] bool isPassiveRoleForExpansion() const override;
 
-  std::string toString() const override;
-  ptree toPtree() const override;
+  [[nodiscard]] std::string toString() const override;
+  [[nodiscard]] ptree toPtree() const override;
 
   void cleanUpNumberingMolsAtomsBonds(
       int &molCount,  // this is the starting mol count, and receives the ending
@@ -557,7 +568,7 @@ class MarvinSuperatomSgroup : public MarvinMolBase {
       std::map<std::string, std::string> &atomMap,
       std::map<std::string, std::string> &bondMap) override;
 
-  IsSgroupInAtomSetResult isSgroupInSetOfAtoms(
+  [[nodiscard]] IsSgroupInAtomSetResult isSgroupInSetOfAtoms(
       const std::vector<MarvinAtom *> &setOfAtoms) const override;
 
   void processSpecialSgroups() override;
@@ -568,7 +579,8 @@ class MarvinMol : public MarvinMolBase {
   MarvinMol();
   MarvinMol(ptree &molTree);
 
-  MarvinMolBase *copyMol(const std::string &idAppend) const override;
+  [[nodiscard]] MarvinMolBase *copyMol(
+      const std::string &idAppend) const override;
 
   ~MarvinMol() override;
 
@@ -581,15 +593,15 @@ class MarvinMol : public MarvinMolBase {
   void removeOwnedAtom(MarvinAtom *atom) override;
   void removeOwnedBond(MarvinBond *bond) override;
 
-  std::string role() const override;
-  bool hasAtomBondBlocks() const override;
-  bool isPassiveRoleForContraction() const override;
+  [[nodiscard]] std::string role() const override;
+  [[nodiscard]] bool hasAtomBondBlocks() const override;
+  [[nodiscard]] bool isPassiveRoleForContraction() const override;
 
-  std::string toString() const override;
-  ptree toPtree() const override;
+  [[nodiscard]] std::string toString() const override;
+  [[nodiscard]] ptree toPtree() const override;
 
   std::string generateMolString();
-  ptree toMolPtree() const;
+  [[nodiscard]] ptree toMolPtree() const;
 };
 
 class MarvinReaction {
@@ -607,7 +619,7 @@ class MarvinReaction {
   void prepSgroupsForRDKit();
 
   std::string toString();
-  ptree toPtree() const;
+  [[nodiscard]] ptree toPtree() const;
 };
 
 class MarvinStereoGroup {

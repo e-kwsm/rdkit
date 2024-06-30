@@ -27,7 +27,9 @@ class RDKIT_RDGEOMETRYLIB_EXPORT GridException : public std::exception {
   //! construct with an error message
   GridException(std::string msg) : _msg(std::move(msg)) {}
   //! get the error message
-  const char *what() const noexcept override { return _msg.c_str(); }
+  [[nodiscard]] const char *what() const noexcept override {
+    return _msg.c_str();
+  }
   ~GridException() noexcept override = default;
 
  private:
@@ -38,17 +40,18 @@ class RDKIT_RDGEOMETRYLIB_EXPORT GridException : public std::exception {
 class RDKIT_RDGEOMETRYLIB_EXPORT Grid3D {
  public:
   virtual ~Grid3D() {}
-  virtual int getGridPointIndex(const Point3D &point) const = 0;
-  virtual int getVal(const Point3D &point) const = 0;
+  [[nodiscard]] virtual int getGridPointIndex(const Point3D &point) const = 0;
+  [[nodiscard]] virtual int getVal(const Point3D &point) const = 0;
   virtual void setVal(const Point3D &point, unsigned int val) = 0;
 
-  virtual Point3D getGridPointLoc(unsigned int pointId) const = 0;
-  virtual unsigned int getVal(unsigned int pointId) const = 0;
+  [[nodiscard]] virtual Point3D getGridPointLoc(unsigned int pointId) const = 0;
+  [[nodiscard]] virtual unsigned int getVal(unsigned int pointId) const = 0;
   virtual void setVal(unsigned int pointId, unsigned int val) = 0;
 
-  virtual unsigned int getSize() const = 0;
+  [[nodiscard]] virtual unsigned int getSize() const = 0;
 
-  virtual const RDKit::DiscreteValueVect *getOccupancyVect() const = 0;
+  [[nodiscard]] virtual const RDKit::DiscreteValueVect *getOccupancyVect()
+      const = 0;
 };
 }  // namespace RDGeom
 

@@ -53,7 +53,7 @@ class RDKIT_DISTGEOMETRY_EXPORT FourthDimContrib
     unsigned int pid = d_idx * dp_forceField->dimension() + 3;
     grad[pid] += d_weight * pos[pid];
   }
-  FourthDimContrib *copy() const override {
+  [[nodiscard]] FourthDimContrib *copy() const override {
     return new FourthDimContrib(*this);
   }
 

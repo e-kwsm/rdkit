@@ -92,14 +92,16 @@ class RDKIT_FILTERCATALOG_EXPORT FilterCatalogParams
 
   //------------------------------------
   //! Returns the existing list of FilterCatalogs to be used.
-  const std::vector<FilterCatalogs> &getCatalogs() const { return d_catalogs; }
+  [[nodiscard]] const std::vector<FilterCatalogs> &getCatalogs() const {
+    return d_catalogs;
+  }
   //! Fill a catalog with the appropriate entries
   virtual void fillCatalog(FilterCatalog &catalog) const;
 
   //! serializes (pickles) to a stream
   void toStream(std::ostream &ss) const override;
   //! returns a string with a serialized (pickled) representation
-  std::string Serialize() const override;
+  [[nodiscard]] std::string Serialize() const override;
   //! initializes from a stream pickle
   void initFromStream(std::istream &ss) override;
   //! initializes from a string pickle
@@ -147,7 +149,7 @@ class RDKIT_FILTERCATALOG_EXPORT FilterCatalog : public FCatalog {
 
   ~FilterCatalog() override;
 
-  std::string Serialize() const override;
+  [[nodiscard]] std::string Serialize() const override;
 
   // Adds a new FilterCatalogEntry to the catalog
   /*!
@@ -187,22 +189,23 @@ class RDKIT_FILTERCATALOG_EXPORT FilterCatalog : public FCatalog {
   //------------------------------------
   //! returns a particular FilterCatalogEntry in the Catalog
   //!  required by Catalog.h API
-  const FilterCatalogEntry *getEntryWithIdx(unsigned int idx) const override;
+  [[nodiscard]] const FilterCatalogEntry *getEntryWithIdx(
+      unsigned int idx) const override;
 
   //------------------------------------
   //! returns a particular FilterCatalogEntry in the Catalog
   //!  memory safe version of getEntryWithIdx
-  CONST_SENTRY getEntry(unsigned int idx) const;
+  [[nodiscard]] CONST_SENTRY getEntry(unsigned int idx) const;
 
   //------------------------------------
   //! returns the idx of the given entry, UINT_MAX if not found.
 
   unsigned int getIdxForEntry(const FilterCatalogEntry *entry) const;
-  unsigned int getIdxForEntry(CONST_SENTRY entry) const;
+  [[nodiscard]] unsigned int getIdxForEntry(CONST_SENTRY entry) const;
 
   //------------------------------------
   //! returns the number of entries in the catalog
-  unsigned int getNumEntries() const override {
+  [[nodiscard]] unsigned int getNumEntries() const override {
     return static_cast<unsigned int>(d_entries.size());
   }
 
@@ -219,28 +222,30 @@ class RDKIT_FILTERCATALOG_EXPORT FilterCatalog : public FCatalog {
   /*
     \param mol  ROMol to match against the catalog
   */
-  bool hasMatch(const ROMol &mol) const;
+  [[nodiscard]] bool hasMatch(const ROMol &mol) const;
 
   //------------------------------------
   //! Returns the first match against the catalog
   /*
     \param mol  ROMol to match against the catalog
   */
-  CONST_SENTRY getFirstMatch(const ROMol &mol) const;
+  [[nodiscard]] CONST_SENTRY getFirstMatch(const ROMol &mol) const;
 
   //-------------------------------------------
   //! Returns all entry matches to the molecule
   /*
     \param mol  ROMol to match against the catalog
   */
-  const std::vector<CONST_SENTRY> getMatches(const ROMol &mol) const;
+  [[nodiscard]] const std::vector<CONST_SENTRY> getMatches(
+      const ROMol &mol) const;
 
   //--------------------------------------------
   //! Returns all FilterMatches for the molecule
   /*
     \param mol  ROMol to match against the catalog
   */
-  const std::vector<FilterMatch> getFilterMatches(const ROMol &mol) const;
+  [[nodiscard]] const std::vector<FilterMatch> getFilterMatches(
+      const ROMol &mol) const;
 
  private:
   void Clear();
