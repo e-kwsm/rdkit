@@ -388,7 +388,7 @@ unsigned int isAngleInRingOfSize3or4(const ROMol &mol, const unsigned int idx1,
       }
       std::set_intersection(s1.begin(), s1.end(), s2.begin(), s2.end(),
                             std::back_inserter(intersect));
-      if (intersect.size()) {
+      if (!intersect.empty()) {
         ringSize = 4;
       }
     }
@@ -437,7 +437,7 @@ unsigned int isTorsionInRingOfSize4or5(const ROMol &mol,
       }
       std::set_intersection(s1.begin(), s1.end(), s2.begin(), s2.end(),
                             std::back_inserter(intersect));
-      if (intersect.size()) {
+      if (!intersect.empty()) {
         ringSize = 5;
       }
     }
@@ -584,7 +584,7 @@ void MMFFMolProperties::setMMFFHeavyAtomType(const RingMembershipSize &rmSize,
           isBetaOS = ((betaHet[i]->getAtomicNum() == 8) ||
                       (betaHet[i]->getAtomicNum() == 16));
         }
-        if (alphaHet.size() && betaHet.size()) {
+        if (!alphaHet.empty() && !betaHet.empty()) {
           // do alpha and beta heteroatoms belong to the same ring?
           for (i = 0; (!alphaOrBetaInSameRing) && (i < alphaHet.size()); ++i) {
             for (j = 0; (!alphaOrBetaInSameRing) && (j < betaHet.size()); ++j) {
@@ -599,7 +599,7 @@ void MMFFMolProperties::setMMFFHeavyAtomType(const RingMembershipSize &rmSize,
         // Carbon
         case 6:
           // if there are no beta heteroatoms
-          if (!(betaHet.size())) {
+          if (betaHet.empty()) {
             // count how many 3-neighbor nitrogens we have
             // to be CIM+, there must be at least two such nitrogens,
             // one of which in a 5-membered aromatic ring and none
@@ -663,9 +663,9 @@ void MMFFMolProperties::setMMFFHeavyAtomType(const RingMembershipSize &rmSize,
             // atoms but they belong to different rings, or if
             // there are alpha and beta heteroatoms but no alpha
             // oxygen or sulfur, then it's C5
-            if (((!(alphaHet.size())) && (!(betaHet.size())) &&
+            if (((alphaHet.empty()) && (betaHet.empty()) &&
                  (!surroundedByBenzeneC) && surroundedByArom) ||
-                (alphaHet.size() && betaHet.size() &&
+                (!alphaHet.empty() && !betaHet.empty() &&
                  ((!alphaOrBetaInSameRing) || ((!isAlphaOS) && (!isBetaOS))))) {
               // C5
               // General carbon in 5-membered heteroaromatic ring
@@ -673,13 +673,13 @@ void MMFFMolProperties::setMMFFHeavyAtomType(const RingMembershipSize &rmSize,
               break;
             }
           }
-          if (alphaHet.size() && ((!(betaHet.size())) || isAlphaOS)) {
+          if (!alphaHet.empty() && ((betaHet.empty()) || isAlphaOS)) {
             // C5A
             // Aromatic 5-ring C, alpha to N:, O: or S:
             atomType = 63;
             break;
           }
-          if (betaHet.size() && ((!(alphaHet.size())) || isBetaOS)) {
+          if (!betaHet.empty() && ((alphaHet.empty()) || isBetaOS)) {
             // C5B
             // Aromatic 5-ring C, alpha to N:, O: or S:
             atomType = 64;
@@ -700,7 +700,7 @@ void MMFFMolProperties::setMMFFHeavyAtomType(const RingMembershipSize &rmSize,
             break;
           }
           // if there are neither alpha nor beta heteroatoms
-          if ((!(alphaHet.size())) && (!(betaHet.size()))) {
+          if ((alphaHet.empty()) && (betaHet.empty())) {
             // if it is nitrogen
             // if valence is 3, it's pyrrole nitrogen
             if (atom->getTotalDegree() == 3) {
@@ -730,7 +730,7 @@ void MMFFMolProperties::setMMFFHeavyAtomType(const RingMembershipSize &rmSize,
           }
           // if there are alpha heteroatoms and either no beta heteroatoms
           // or no alpha oxygen/sulfur
-          if (alphaHet.size() && ((!(betaHet.size())) || isAlphaOS)) {
+          if (!alphaHet.empty() && ((betaHet.empty()) || isAlphaOS)) {
             // N5A
             // Aromatic 5-ring N, alpha to N:, O: or S:
             atomType = 65;
@@ -738,14 +738,14 @@ void MMFFMolProperties::setMMFFHeavyAtomType(const RingMembershipSize &rmSize,
           }
           // if there are beta heteroatoms and either no alpha heteroatoms
           // or no beta oxygen/sulfur
-          if (betaHet.size() && ((!(alphaHet.size())) || isBetaOS)) {
+          if (!betaHet.empty() && ((alphaHet.empty()) || isBetaOS)) {
             // N5B
             // Aromatic 5-ring N, beta to N:, O: or S:
             atomType = 66;
             break;
           }
           // if there are both alpha and beta heteroatoms
-          if (alphaHet.size() && betaHet.size()) {
+          if (!alphaHet.empty() && !betaHet.empty()) {
             // N5
             // General nitrogen in 5-memebered heteroaromatic ring
             atomType = 79;

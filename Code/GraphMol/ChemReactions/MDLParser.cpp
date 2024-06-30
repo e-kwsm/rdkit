@@ -88,7 +88,7 @@ void ParseV2000RxnBlock(std::istream &inStream, unsigned int &line,
     ;
     if (tempStr.size() > 6) {
       std::string trimmed = boost::trim_copy(tempStr.substr(spos, 3));
-      if (trimmed.size() > 0) {
+      if (!trimmed.empty()) {
         nAgents = FileParserUtils::stripSpacesAndCast<unsigned int>(
             tempStr.substr(spos, 3));
         spos = 9;

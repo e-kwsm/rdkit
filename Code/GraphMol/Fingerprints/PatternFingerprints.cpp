@@ -174,7 +174,7 @@ void updatePatternFingerprint(const ROMol &mol, ExplicitBitVect &fp,
   unsigned int idx = 0;
   while (1) {
     std::string pq = pqs[idx];
-    if (pq == "") {
+    if (pq.empty()) {
       break;
     }
     ++idx;

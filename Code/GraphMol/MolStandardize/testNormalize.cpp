@@ -458,7 +458,7 @@ Alkaline oxide to ions	[Li,Na,K;+0:1]-[O+0:2]>>([*+1:1].[O-:2])
   auto p = "[Na]-O"_smarts;
   TEST_ASSERT(p);
   TEST_ASSERT(SubstructMatch(*imol, *p).size() == 9);
-  TEST_ASSERT(SubstructMatch(*m2, *p).size() == 0);
+  TEST_ASSERT(SubstructMatch(*m2, *p).empty());
   BOOST_LOG(rdInfoLog) << "Finished" << std::endl;
 }
 

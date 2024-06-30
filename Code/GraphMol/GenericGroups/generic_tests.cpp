@@ -879,12 +879,12 @@ M  END)CTAB"_ctab;
   m = new RWMol(*query);
   GenericGroups::adjustQueryPropertiesWithGenericGroups(*m, &params);
   matchVect = SubstructMatch(*t, *m, params_match);
-  TEST_ASSERT(matchVect.size() == 0);
+  TEST_ASSERT(matchVect.empty());
   delete m;
 
   m = new RWMol(*query);
   GenericGroups::adjustQueryPropertiesWithGenericGroups(*m);
   matchVect = SubstructMatch(*t, *m, params_match);
-  TEST_ASSERT(matchVect.size() == 0);
+  TEST_ASSERT(matchVect.empty());
   delete m;
 }

@@ -1104,7 +1104,7 @@ void testMurckoDecomp() {
     ROMol *nMol = MurckoDecompose(*mol);
     TEST_ASSERT(nMol);
     delete mol;
-    if (tgt != "") {
+    if (!tgt.empty()) {
       TEST_ASSERT(nMol->getNumAtoms());
       MolOps::sanitizeMol(static_cast<RWMol &>(*nMol));
       smi = MolToSmiles(*nMol, true);
@@ -1922,7 +1922,7 @@ void testGithubIssue430() {
     std::vector<unsigned int> bindices;
     std::vector<ROMOL_SPTR> frags;
     MolFragmenter::fragmentOnSomeBonds(*mol, bindices, frags, 1, false);
-    TEST_ASSERT(frags.size() == 0);
+    TEST_ASSERT(frags.empty());
     delete mol;
   }
 
@@ -1936,7 +1936,7 @@ void testGithubIssue430() {
         indices, indices + (sizeof(indices) / sizeof(indices[0])));
     std::vector<ROMOL_SPTR> frags;
     MolFragmenter::fragmentOnSomeBonds(*mol, bindices, frags, 0, false);
-    TEST_ASSERT(frags.size() == 0);
+    TEST_ASSERT(frags.empty());
     delete mol;
   }
 

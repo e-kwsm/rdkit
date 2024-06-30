@@ -43,11 +43,11 @@ void testDetermineFormat() {
 
   determineFormat(fname2, fileFormat, compressionFormat);
   TEST_ASSERT(fileFormat == "csv");
-  TEST_ASSERT(compressionFormat == "");
+  TEST_ASSERT(compressionFormat.empty());
 
   determineFormat(fname3, fileFormat, compressionFormat);
   TEST_ASSERT(fileFormat == "sdf");
-  TEST_ASSERT(compressionFormat == "");
+  TEST_ASSERT(compressionFormat.empty());
 
   determineFormat(fname4, fileFormat, compressionFormat);
   TEST_ASSERT(fileFormat == "sdf");
@@ -55,7 +55,7 @@ void testDetermineFormat() {
 
   determineFormat(fname5, fileFormat, compressionFormat);
   TEST_ASSERT(fileFormat == "mae");
-  TEST_ASSERT(compressionFormat == "");
+  TEST_ASSERT(compressionFormat.empty());
 
   determineFormat(fname6, fileFormat, compressionFormat);
   TEST_ASSERT(fileFormat == "sdf");

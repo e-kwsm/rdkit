@@ -426,7 +426,7 @@ void alignMolConformers(ROMol &mol, const std::vector<unsigned int> *atomIds,
 
   RDGeom::Point3DConstPtrVect refPoints, prbPoints;
   int cid = -1;
-  if ((confIds != nullptr) && (confIds->size() > 0)) {
+  if ((confIds != nullptr) && (!confIds->empty())) {
     cid = confIds->front();
   }
   const Conformer &refCnf = mol.getConformer(cid);

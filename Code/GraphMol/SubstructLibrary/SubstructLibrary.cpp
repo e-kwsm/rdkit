@@ -534,8 +534,8 @@ bool SubstructLibrary::hasMatch(const ROMol &query, unsigned int startIdx,
                                 const SubstructMatchParameters &params,
                                 int numThreads) const {
   const int maxResults = 1;
-  return getMatches(query, startIdx, endIdx, params, numThreads, maxResults)
-             .size() > 0;
+  return !getMatches(query, startIdx, endIdx, params, numThreads, maxResults)
+              .empty();
 }
 
 bool SubstructLibrary::hasMatch(const TautomerQuery &query,
@@ -543,24 +543,24 @@ bool SubstructLibrary::hasMatch(const TautomerQuery &query,
                                 const SubstructMatchParameters &params,
                                 int numThreads) const {
   const int maxResults = 1;
-  return getMatches(query, startIdx, endIdx, params, numThreads, maxResults)
-             .size() > 0;
+  return !getMatches(query, startIdx, endIdx, params, numThreads, maxResults)
+              .empty();
 }
 bool SubstructLibrary::hasMatch(const MolBundle &query, unsigned int startIdx,
                                 unsigned int endIdx,
                                 const SubstructMatchParameters &params,
                                 int numThreads) const {
   const int maxResults = 1;
-  return getMatches(query, startIdx, endIdx, params, numThreads, maxResults)
-             .size() > 0;
+  return !getMatches(query, startIdx, endIdx, params, numThreads, maxResults)
+              .empty();
 }
 bool SubstructLibrary::hasMatch(const ExtendedQueryMol &query,
                                 unsigned int startIdx, unsigned int endIdx,
                                 const SubstructMatchParameters &params,
                                 int numThreads) const {
   const int maxResults = 1;
-  return getMatches(query, startIdx, endIdx, params, numThreads, maxResults)
-             .size() > 0;
+  return !getMatches(query, startIdx, endIdx, params, numThreads, maxResults)
+              .empty();
 }
 
 void SubstructLibrary::toStream(std::ostream &ss) const {

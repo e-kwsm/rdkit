@@ -44,7 +44,7 @@ double RGroupDecompositionChromosome::score() {
     decode();
   }
   if (scoreMethod == FingerprintVariance &&
-      fingerprintVarianceScoreData.labelsToVarianceData.size() > 0 &&
+      !fingerprintVarianceScoreData.labelsToVarianceData.empty() &&
       operationName == RgroupMutate) {
     fitness = fingerprintVarianceScoreData.fingerprintVarianceGroupScore();
     // Uncomment the following line to check that the
@@ -171,7 +171,7 @@ void RGroupGa::rGroupMutateOperation(
   child->decode();
 
   auto &fingerprintVarianceScoreData = child->getFingerprintVarianceScoreData();
-  if (fingerprintVarianceScoreData.labelsToVarianceData.size() == 0) {
+  if (fingerprintVarianceScoreData.labelsToVarianceData.empty()) {
     return;
   }
 #ifdef DEBUG

@@ -338,7 +338,7 @@ TEST_CASE("Testing basic SMILES canonicalization") {
   delete mol;
   mol = new ROMol();
   smi = MolToSmiles(*mol);
-  REQUIRE(smi == "");
+  REQUIRE(smi.empty());
 
   delete mol;
 }
@@ -1497,9 +1497,9 @@ TEST_CASE("Testing rootedAtAtom functionality") {
     RWMol mol;
     std::string smi;
     smi = MolToSmiles(mol);
-    REQUIRE(smi == "");
+    REQUIRE(smi.empty());
     smi = MolToSmiles(mol, false, false, 0);
-    REQUIRE(smi == "");
+    REQUIRE(smi.empty());
   }
 }
 
@@ -3106,7 +3106,7 @@ TEST_CASE("Testing Github 298: cannot generate smiles for ChEBI_50252") {
   MolOps::fastFindRings(*m);
 
   std::string csmiles = MolToSmiles(*m);
-  REQUIRE(csmiles != "");
+  REQUIRE(!csmiles.empty());
   REQUIRE(csmiles.find("%100") == std::string::npos);
 
   delete m;
@@ -3155,7 +3155,7 @@ TEST_CASE(
   REQUIRE(m);
 
   std::string csmiles = MolToSmiles(*m, true, false, -1, true, false, true);
-  REQUIRE(csmiles != "");
+  REQUIRE(!csmiles.empty());
   REQUIRE(csmiles.find("[CH3]") != std::string::npos);
   REQUIRE(csmiles.find("[CH2]") != std::string::npos);
   REQUIRE(csmiles.find("[OH]") != std::string::npos);
@@ -3172,7 +3172,7 @@ TEST_CASE("Testing handling of empty SMILES/SMARTS strings") {
     REQUIRE(m->getNumAtoms() == 0);
 
     std::string csmiles = MolToSmiles(*m);
-    REQUIRE(csmiles == "");
+    REQUIRE(csmiles.empty());
     delete m;
   }
   {
@@ -3183,7 +3183,7 @@ TEST_CASE("Testing handling of empty SMILES/SMARTS strings") {
     REQUIRE(m->getNumAtoms() == 0);
 
     std::string csmiles = MolToSmarts(*m);
-    REQUIRE(csmiles == "");
+    REQUIRE(csmiles.empty());
     delete m;
   }
 }

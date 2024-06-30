@@ -219,7 +219,7 @@ void RemoveUnmappedReactantTemplates(ChemicalReaction *self,
     self->removeUnmappedReactantTemplates(thresholdUnmappedAtoms,
                                           moveToAgentTemplates, &tmp);
     python::list molList = python::extract<python::list>(targetList);
-    if (tmp.size() > 0) {
+    if (!tmp.empty()) {
       for (auto &i : tmp) {
         molList.append(i);
       }
@@ -239,7 +239,7 @@ void RemoveUnmappedProductTemplates(ChemicalReaction *self,
     self->removeUnmappedProductTemplates(thresholdUnmappedAtoms,
                                          moveToAgentTemplates, &tmp);
     python::list molList = python::extract<python::list>(targetList);
-    if (tmp.size() > 0) {
+    if (!tmp.empty()) {
       for (auto &i : tmp) {
         molList.append(i);
       }
@@ -254,7 +254,7 @@ void RemoveAgentTemplates(ChemicalReaction &self, python::object targetList) {
     MOL_SPTR_VECT tmp;
     self.removeAgentTemplates(&tmp);
     python::list molList = python::extract<python::list>(targetList);
-    if (tmp.size() > 0) {
+    if (!tmp.empty()) {
       for (auto &i : tmp) {
         molList.append(i);
       }

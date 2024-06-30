@@ -246,7 +246,7 @@ std::unique_ptr<ChemicalReaction> parseReaction(
   updateProductsStereochem(rxn.get());
 
   // allow a reaction template to have no agent specified
-  if (agentText.size() != 0) {
+  if (!agentText.empty()) {
     auto agentMol = DaylightParserUtils::constructMolFromString(
         agentText, params, useSmiles);
     if (!agentMol) {

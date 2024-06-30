@@ -338,7 +338,7 @@ class MolAtropTest {
   void RunTests() {
     // the molecule tests
 
-    if (testToRun == "" || testToRun == "sdfTests") {
+    if (testToRun.empty() || testToRun == "sdfTests") {
       std::list<MolTest> sdfTests{
           MolTest("atropWedgeTest.sdf", true, 16, 16),
           MolTest("AtropTest.sdf", true, 38, 41),
@@ -461,7 +461,7 @@ class MolAtropTest {
       }
     }
 
-    if (testToRun == "" || testToRun == "AromAtropMol") {
+    if (testToRun.empty() || testToRun == "AromAtropMol") {
       std::list<MolTest> sdfTests{
           MolTest("BMS-986142_atrop1.sdf", true, 42, 47),
           MolTest("BMS-986142_3d_chiral.sdf", true, 72, 77),
@@ -475,7 +475,7 @@ class MolAtropTest {
       }
     }
 
-    if (testToRun == "" || testToRun == "KekuleWedgeError") {
+    if (testToRun.empty() || testToRun == "KekuleWedgeError") {
       std::list<KekuleTest> kekuleTests{
           KekuleTest(
               "CC1C(C2C(Cl)=CC=CC=2C)=C(Cl)C=CC=1 |wU:3.3,(17.57,-4.18,;17.57,-5.18,;16.71,-5.67,;15.84,-5.18,;15.84,-4.18,;16.71,-3.67,;14.98,-3.67,;14.11,-4.18,;14.11,-5.18,;14.98,-5.67,;14.98,-6.67,;16.71,-6.67,;15.84,-7.18,;17.57,-7.18,;18.44,-6.67,;18.44,-5.67,)|",
@@ -496,7 +496,7 @@ class MolAtropTest {
       }
     }
 
-    if (testToRun == "" || testToRun == "KekuleWedgeErrorMol") {
+    if (testToRun.empty() || testToRun == "KekuleWedgeErrorMol") {
       std::list<MolTest> kekuleTests{
           MolTest("atropWedgeError2.mol", true, 16, 17),
           MolTest("atropWedgeError.mol", true, 29, 32),
