@@ -123,8 +123,12 @@ class RDKIT_DESCRIPTORS_EXPORT CrippenParamCollection {
   typedef std::vector<CrippenParams> ParamsVect;
   static const CrippenParamCollection *getParams(
       const std::string &paramData = "");
-  ParamsVect::const_iterator begin() const { return d_params.begin(); }
-  ParamsVect::const_iterator end() const { return d_params.end(); }
+  [[nodiscard]] ParamsVect::const_iterator begin() const {
+    return d_params.begin();
+  }
+  [[nodiscard]] ParamsVect::const_iterator end() const {
+    return d_params.end();
+  }
 
   CrippenParamCollection(const std::string &paramData);
 

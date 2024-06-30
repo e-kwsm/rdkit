@@ -44,9 +44,10 @@ class RDKIT_TAUTOMERQUERY_EXPORT TautomerQuery {
   std::vector<size_t> d_modifiedBonds;
 
   // tests if a match to the template matches a specific tautomer
-  bool matchTautomer(const ROMol &mol, const ROMol &tautomer,
-                     const std::vector<unsigned int> &match,
-                     const SubstructMatchParameters &params) const;
+  [[nodiscard]] bool matchTautomer(
+      const ROMol &mol, const ROMol &tautomer,
+      const std::vector<unsigned int> &match,
+      const SubstructMatchParameters &params) const;
 
  public:
   TautomerQuery(std::vector<ROMOL_SPTR> tautomers,
@@ -87,7 +88,7 @@ class RDKIT_TAUTOMERQUERY_EXPORT TautomerQuery {
                                            SubstructMatchParameters());
 
   // Query fingerprint
-  ExplicitBitVect *patternFingerprintTemplate(
+  [[nodiscard]] ExplicitBitVect *patternFingerprintTemplate(
       unsigned int fpSize = 2048U) const;
   // Static method to Fingerprint a target
   static ExplicitBitVect *patternFingerprintTarget(const ROMol &target,
@@ -96,18 +97,26 @@ class RDKIT_TAUTOMERQUERY_EXPORT TautomerQuery {
   // accessors
 
   // pointer is owned by TautomerQuery
-  const ROMol &getTemplateMolecule() const { return *d_templateMolecule; }
+  [[nodiscard]] const ROMol &getTemplateMolecule() const {
+    return *d_templateMolecule;
+  }
 
-  const std::vector<ROMOL_SPTR> getTautomers() const { return d_tautomers; }
+  [[nodiscard]] const std::vector<ROMOL_SPTR> getTautomers() const {
+    return d_tautomers;
+  }
 
-  const std::vector<size_t> getModifiedAtoms() const { return d_modifiedAtoms; }
+  [[nodiscard]] const std::vector<size_t> getModifiedAtoms() const {
+    return d_modifiedAtoms;
+  }
 
-  const std::vector<size_t> getModifiedBonds() const { return d_modifiedBonds; }
+  [[nodiscard]] const std::vector<size_t> getModifiedBonds() const {
+    return d_modifiedBonds;
+  }
 
   //! serializes (pickles) to a stream
   void toStream(std::ostream &ss) const;
   //! returns a string with a serialized (pickled) representation
-  std::string serialize() const;
+  [[nodiscard]] std::string serialize() const;
   //! initializes from a stream pickle
   void initFromStream(std::istream &ss);
   //! initializes from a string pickle
