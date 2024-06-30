@@ -35,7 +35,7 @@ void CatalogSearcher(
     if (mol.get()) {
       results[idx] = fc.getMatches(*mol);
     } else {
-      results[idx].push_back(makeBadSmilesEntry());
+      results[idx].emplace_back(makeBadSmilesEntry());
     }
   }
 }
