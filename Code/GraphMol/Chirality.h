@@ -249,7 +249,7 @@ class WedgeInfoBase {
 class WedgeInfoChiral : public WedgeInfoBase {
  public:
   WedgeInfoChiral(int atomId) : WedgeInfoBase(atomId){};
-  ~WedgeInfoChiral(){};
+  ~WedgeInfoChiral() override {}
 
   WedgeInfoType getType() const override {
     return Chirality::WedgeInfoType::WedgeInfoTypeChiral;
@@ -266,7 +266,7 @@ class WedgeInfoAtropisomer : public WedgeInfoBase {
       : WedgeInfoBase(bondId) {
     dir = dirInit;
   };
-  ~WedgeInfoAtropisomer(){};
+  ~WedgeInfoAtropisomer() override {}
 
   RDKit::Bond::BondDir dir = RDKit::Bond::BondDir::NONE;
 
