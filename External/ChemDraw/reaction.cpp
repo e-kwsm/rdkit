@@ -124,7 +124,7 @@ ReactionInfo::ReactionInfo(CDXReactionScheme &scheme)
     if (type_id == kCDXObj_ReactionStep) {
       auto &step = (CDXReactionStep &)(*rxnNode.second);
       auto step_id = step.GetObjectID();
-      steps.emplace_back(ReactionStepInfo());
+      steps.emplace_back();
       ReactionStepInfo &scheme = steps.back();
       scheme.scheme_id = scheme_id;
       scheme.step_id = step_id;

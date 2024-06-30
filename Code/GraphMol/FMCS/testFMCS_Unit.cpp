@@ -2930,7 +2930,7 @@ void testGitHub6773() {
           "[#6;r6,!R1]1-&@[#6;r6,!R1]-&@[#6;r6,!R1]-&@[#6]2-&@[#6](-&@[#6;r6,!R1]-&@1)-&@[#6;r6,!R1]-&@[#6;r6,!R1]-&@[#6;r6,!R1]-&@[#6;r6,!R1]-&@2");
     }
     // this is 1-hydroxyperhydroazulene
-    mols.push_back("OC1CCC2CCCCCC12"_smiles);
+    mols.emplace_back("OC1CCC2CCCCCC12"_smiles);
     {
       MCSParameters p;
       p.BondCompareParameters.RingMatchesRingOnly = true;

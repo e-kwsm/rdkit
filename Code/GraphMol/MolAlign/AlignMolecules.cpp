@@ -183,7 +183,7 @@ double getBestRMSInternal(const ROMol &prbMol, const ROMol &refMol, int prbCid,
           rmsds[tidx].emplace_back(msd, midx, tmpTrans);
         }
       };
-      tg.emplace_back(std::thread(func, ti));
+      tg.emplace_back(func, ti);
     }
     for (auto &thread : tg) {
       if (thread.joinable()) {
@@ -354,7 +354,7 @@ std::vector<double> getAllConformerBestRMS(const ROMol &mol,
     };
     std::vector<std::thread> tg;
     for (auto ti = 0u; ti < numThreads; ++ti) {
-      tg.emplace_back(std::thread(func, ti));
+      tg.emplace_back(func, ti);
     }
     for (auto &thread : tg) {
       if (thread.joinable()) {

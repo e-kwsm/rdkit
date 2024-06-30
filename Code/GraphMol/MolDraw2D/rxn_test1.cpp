@@ -308,10 +308,10 @@ void test3() {
         RxnSmartsToChemicalReaction(smiles, nullptr, useSmiles);
     TEST_ASSERT(rxn);
     std::vector<DrawColour> highlight_colors;
-    highlight_colors.push_back(DrawColour(1., 1., .67));
-    highlight_colors.push_back(DrawColour(1., .71, .76));
-    highlight_colors.push_back(DrawColour(.8, 1., .8));
-    highlight_colors.push_back(DrawColour(.67, .67, 1.));
+    highlight_colors.emplace_back(1., 1., .67);
+    highlight_colors.emplace_back(1., .71, .76);
+    highlight_colors.emplace_back(.8, 1., .8);
+    highlight_colors.emplace_back(.67, .67, 1.);
     drawit(rxn, nameBase, true, &highlight_colors);
     delete rxn;
   }
