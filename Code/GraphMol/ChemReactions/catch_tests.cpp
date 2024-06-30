@@ -1727,7 +1727,7 @@ TEST_CASE("Github #6211: substructmatchparams for chemical reactions") {
         MOL_SPTR_VECT reacts = {ROMOL_SPTR(SmilesToMol(inSmi))};
         REQUIRE(reacts[0]);
         auto prods = rxn->runReactants(reacts);
-        if (outSmi != "") {
+        if (!outSmi.empty()) {
           REQUIRE(prods.size() == 1);
           CHECK(MolToSmiles(*prods[0][0]) == outSmi);
           CHECK(isMoleculeReactantOfReaction(*rxn, *reacts.front()));
@@ -1752,7 +1752,7 @@ TEST_CASE("Github #6211: substructmatchparams for chemical reactions") {
         MOL_SPTR_VECT reacts = {ROMOL_SPTR(SmilesToMol(inSmi))};
         REQUIRE(reacts[0]);
         auto prods = rxn->runReactants(reacts);
-        if (outSmi != "") {
+        if (!outSmi.empty()) {
           REQUIRE(prods.size() == 1);
           CHECK(MolToSmiles(*prods[0][0]) == outSmi);
           CHECK(isMoleculeReactantOfReaction(*rxn, *reacts.front()));
@@ -1771,7 +1771,7 @@ TEST_CASE("Github #6211: substructmatchparams for chemical reactions") {
         MOL_SPTR_VECT reacts = {ROMOL_SPTR(SmilesToMol(inSmi))};
         REQUIRE(reacts[0]);
         auto prods = cpy.runReactants(reacts);
-        if (outSmi != "") {
+        if (!outSmi.empty()) {
           REQUIRE(prods.size() == 1);
           CHECK(MolToSmiles(*prods[0][0]) == outSmi);
         } else {

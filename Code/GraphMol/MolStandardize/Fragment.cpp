@@ -112,7 +112,7 @@ void FragmentRemover::removeInPlace(RWMol &mol) {
                                             unsigned int> &frag) -> bool {
                       return fgci->getNumAtoms() == frag.first->getNumAtoms() &&
                              fgci->getNumBonds() == frag.first->getNumBonds() &&
-                             SubstructMatch(*frag.first, *fgci).size() > 0;
+                             !SubstructMatch(*frag.first, *fgci).empty();
                     }),
                 frags.end());
     if (this->LEAVE_LAST && !this->SKIP_IF_ALL_MATCH && frags.empty()) {
