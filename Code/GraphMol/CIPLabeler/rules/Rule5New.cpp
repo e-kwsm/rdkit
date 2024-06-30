@@ -16,8 +16,7 @@
 
 #include "../Digraph.h"
 
-namespace RDKit {
-namespace CIPLabeler {
+namespace RDKit::CIPLabeler {
 
 Rule5New::Rule5New() = default;
 
@@ -104,5 +103,4 @@ Sort Rule5New::getRefSorter(const SequenceRule *replacement_rule) const {
   return {new_rules};
 }
 
-}  // namespace CIPLabeler
-}  // namespace RDKit
+}  // namespace RDKit::CIPLabeler

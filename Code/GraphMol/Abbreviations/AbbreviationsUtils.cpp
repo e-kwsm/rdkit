@@ -15,9 +15,7 @@
 
 using tokenizer = boost::tokenizer<boost::char_separator<char>>;
 
-namespace RDKit {
-
-namespace Abbreviations {
+namespace RDKit::Abbreviations {
 
 namespace common_properties {
 const std::string numDummies = "_numDummies";
@@ -224,5 +222,4 @@ std::vector<AbbreviationDefinition> getDefaultLinkers() {
 }
 }  // namespace Utils
 
-}  // namespace Abbreviations
-}  // namespace RDKit
+}  // namespace RDKit::Abbreviations

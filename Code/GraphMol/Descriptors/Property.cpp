@@ -42,8 +42,7 @@
 #include <mutex>
 #endif
 
-namespace RDKit {
-namespace Descriptors {
+namespace RDKit::Descriptors {
 
 namespace {
 void _registerDescriptors() {
@@ -191,5 +190,4 @@ PROP_RANGE_QUERY *makePropertyRangeQuery(const std::string &name, double min,
   filter->setDataFunc(Properties::getProperty(name)->d_dataFunc);
   return filter;
 }
-}  // namespace Descriptors
-}  // namespace RDKit
+}  // namespace RDKit::Descriptors

@@ -11,8 +11,7 @@
 
 #include "Rule4a.h"
 
-namespace RDKit {
-namespace CIPLabeler {
+namespace RDKit::CIPLabeler {
 
 namespace {
 int ord(Descriptor lab) {
@@ -55,5 +54,4 @@ int Rule4a::compare(const Edge *a, const Edge *b) const {
   return three_way_comparison(aOrdinal, bOrdinal);
 }
 
-}  // namespace CIPLabeler
-}  // namespace RDKit
+}  // namespace RDKit::CIPLabeler

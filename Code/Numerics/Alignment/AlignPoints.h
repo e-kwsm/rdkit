@@ -15,9 +15,7 @@
 #include <Geometry/Transform3D.h>
 #include <Numerics/Vector.h>
 
-namespace RDNumeric {
-
-namespace Alignments {
+namespace RDNumeric::Alignments {
 
 //! \brief Compute an optimal alignment (minimum sum of squared distance)
 /// between two sets of points in 3D using the quaternion method
@@ -42,7 +40,6 @@ AlignPoints(const RDGeom::Point3DConstPtrVect &refPoints,
             const RDGeom::Point3DConstPtrVect &probePoints,
             RDGeom::Transform3D &trans, const DoubleVector *weights = nullptr,
             bool reflect = false, unsigned int maxIterations = 50);
-}  // namespace Alignments
-}  // namespace RDNumeric
+}  // namespace RDNumeric::Alignments
 
 #endif

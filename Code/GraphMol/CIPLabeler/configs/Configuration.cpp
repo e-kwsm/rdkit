@@ -14,8 +14,7 @@
 #include "../Priority.h"
 #include "../rules/Rules.h"
 
-namespace RDKit {
-namespace CIPLabeler {
+namespace RDKit::CIPLabeler {
 
 Edge *Configuration::findInternalEdge(const std::vector<Edge *> &edges,
                                       Atom *f1, Atom *f2) {
@@ -98,5 +97,4 @@ Descriptor Configuration::label(Node *node, Digraph &digraph,
   return Descriptor::UNKNOWN;
 }
 
-}  // namespace CIPLabeler
-}  // namespace RDKit
+}  // namespace RDKit::CIPLabeler

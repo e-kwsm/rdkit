@@ -16,8 +16,7 @@
 using namespace RDKit;
 namespace python = boost::python;
 
-namespace RDKit {
-namespace RDKitFPWrapper {
+namespace RDKit::RDKitFPWrapper {
 template <typename OutputType>
 FingerprintGenerator<OutputType> *getRDKitFPGenerator(
     unsigned int minPath, unsigned int maxPath, bool useHs, bool branchedPaths,
@@ -109,6 +108,4 @@ void exportRDKit() {
 
   return;
 }
-}  // namespace RDKitFPWrapper
-
-}  // namespace RDKit
+}  // namespace RDKit::RDKitFPWrapper

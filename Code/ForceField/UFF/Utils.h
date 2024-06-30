@@ -13,9 +13,7 @@
 #include <tuple>
 #include <Geometry/point.h>
 
-namespace ForceFields {
-namespace UFF {
-namespace Utils {
+namespace ForceFields::UFF::Utils {
 //! calculates and returns the cosine of the Y angle in an improper torsion
 //! (see UFF paper, equation 19)
 RDKIT_FORCEFIELD_EXPORT double calculateCosY(const RDGeom::Point3D &iPoint,
@@ -35,8 +33,6 @@ RDKIT_FORCEFIELD_EXPORT double calculateCosY(const RDGeom::Point3D &iPoint,
 */
 RDKIT_FORCEFIELD_EXPORT std::tuple<double, double, double, double>
 calcInversionCoefficientsAndForceConstant(int at2AtomicNum, bool isCBoundToO);
-}  // namespace Utils
-}  // namespace UFF
-}  // namespace ForceFields
+}  // namespace ForceFields::UFF::Utils
 
 #endif

@@ -12,8 +12,7 @@
 #include <GraphMol/RDKitBase.h>
 #include <sstream>
 
-namespace RDKit {
-namespace MolStandardize {
+namespace RDKit::MolStandardize {
 
 #include "fragmentPatterns.in"
 
@@ -88,5 +87,4 @@ void FragmentCatalogParams::initFromString(const std::string &) {
   UNDER_CONSTRUCTION("not implemented");
 }
 
-}  // namespace MolStandardize
-}  // namespace RDKit
+}  // namespace RDKit::MolStandardize
