@@ -363,7 +363,7 @@ std::vector<std::vector<MatchVectType>> splitNonUniqueMatches(
     if (std::find(atomSets.begin(), atomSets.end(), atomSet) ==
         atomSets.end()) {
       atomSets.push_back(atomSet);
-      outMatches.push_back(std::vector<MatchVectType>(1, match));
+      outMatches.emplace_back(1, match);
     } else {
       for (size_t i = 0; i < atomSets.size(); ++i) {
         if (atomSet == atomSets[i]) {
@@ -744,7 +744,7 @@ RGroupRows RGroupDecomposition::getRGroupsAsRows() const {
   for (auto it = permutation.begin(); it != permutation.end(); ++it) {
     auto Rs_seen(usedLabelMap);
     // make a new rgroup entry
-    groups.push_back(RGroupRow());
+    groups.emplace_back();
     RGroupRow &out_rgroups = groups.back();
     if (data->params.includeTargetMolInResults) {
       out_rgroups.emplace(RGroupData::getMolLabel(),
@@ -786,7 +786,7 @@ RGroupColumns RGroupDecomposition::getRGroupsAsColumns() const {
     auto Rs_seen(usedLabelMap);
     const R_DECOMP &in_rgroups = it->rgroups;
     if (data->params.includeTargetMolInResults) {
-      groups[RGroupData::getMolLabel()].push_back(
+      groups[RGroupData::getMolLabel()].emplace_back(
           it->getTargetMoleculeForHighlights(
               data->params.removeHydrogensPostMatch));
     }
@@ -806,17 +806,17 @@ RGroupColumns RGroupDecomposition::getRGroupsAsColumns() const {
       if (molidx && col.size() < molidx - 1) {
         col.resize(molidx - 1);
       }
-      col.push_back(rgroup.second->combinedMol);
+      col.emplace_back(rgroup.second->combinedMol);
       rGroupWithRealMol.insert(r);
     }
-    groups[RGroupData::getCoreLabel()].push_back(
+    groups[RGroupData::getCoreLabel()].emplace_back(
         outputCoreMolecule(*it, Rs_seen));
 
     // add empty entries to columns where this molecule didn't appear
     for (const auto &realLabel : data->finalRlabelMapping) {
       if (!Rs_seen.getIsUsed(realLabel.second)) {
         auto r = RGroupData::getRGroupLabel(realLabel.second);
-        groups[r].push_back(boost::make_shared<RWMol>());
+        groups[r].emplace_back(boost::make_shared<RWMol>());
       }
     }
   }

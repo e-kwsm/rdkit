@@ -37,7 +37,7 @@ PartitionSet::PartitionSet(const std::vector<boost::dynamic_bitset<>> &modProd,
   for (size_t i = 0; i < vtxPairs.size(); ++i) {
     auto &vp = vtxPairs[i];
     if (vp.first != firstVtx) {
-      d_parts.push_back(std::vector<unsigned int>());
+      d_parts.emplace_back();
       d_parts.back().push_back(i);
       firstVtx = vp.first;
     } else {

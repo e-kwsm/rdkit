@@ -958,7 +958,7 @@ ROMol *replaceCoreHelper(const ROMol &mol, const ROMol &core,
             "Input not a vector of (core_atom_idx,molecule_atom_idx) or "
             "(molecule_atom_idx,...) entries");
     }
-    matchVect.push_back(std::make_pair(v1, v2));
+    matchVect.emplace_back(v1, v2);
   }
 
   return replaceCore(mol, core, matchVect, replaceDummies, labelByIndex,
@@ -1058,8 +1058,8 @@ void _testSetProps(RDProps &props, const std::string &prefix) {
   props.setProp<std::vector<double>>(prefix + "svdouble", svdouble);
 
   std::vector<std::string> svstring;
-  svstring.push_back("The");
-  svstring.push_back("RDKit");
+  svstring.emplace_back("The");
+  svstring.emplace_back("RDKit");
 
   props.setProp<std::vector<std::string>>(prefix + "svstring", svstring);
 }
