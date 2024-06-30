@@ -345,7 +345,7 @@ class RDKIT_GRAPHMOL_EXPORT ROMol : public RDProps {
 
   ROMol(ROMol &&o) noexcept
       : RDProps(std::move(o)),
-        d_graph(std::move(o.d_graph)),
+        d_graph(o.d_graph),
         d_atomBookmarks(std::move(o.d_atomBookmarks)),
         d_bondBookmarks(std::move(o.d_bondBookmarks)),
         d_confs(std::move(o.d_confs)),
@@ -358,7 +358,7 @@ class RDKIT_GRAPHMOL_EXPORT ROMol : public RDProps {
     for (auto bond : bonds()) {
       bond->setOwningMol(this);
     }
-    for (auto conf : d_confs) {
+    for (const auto &conf : d_confs) {
       conf->setOwningMol(this);
     }
     for (auto &sg : d_sgroups) {
@@ -375,7 +375,7 @@ class RDKIT_GRAPHMOL_EXPORT ROMol : public RDProps {
       return *this;
     }
     RDProps::operator=(std::move(o));
-    d_graph = std::move(o.d_graph);
+    d_graph = o.d_graph;
     d_atomBookmarks = std::move(o.d_atomBookmarks);
     d_bondBookmarks = std::move(o.d_bondBookmarks);
     if (dp_ringInfo) {
@@ -397,7 +397,7 @@ class RDKIT_GRAPHMOL_EXPORT ROMol : public RDProps {
     for (auto bond : bonds()) {
       bond->setOwningMol(this);
     }
-    for (auto conf : d_confs) {
+    for (const auto &conf : d_confs) {
       conf->setOwningMol(this);
     }
     for (auto &sg : d_sgroups) {
