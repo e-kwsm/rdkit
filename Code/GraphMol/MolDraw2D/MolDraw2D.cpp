@@ -607,10 +607,9 @@ Point2D MolDraw2D::minPt() const {
   PRECONDITION(globalDrawTrans_ || activeMolIdx_ >= 0, "bad active mol");
   // the ys are inverted in the DrawMol.
   if (globalDrawTrans_) {
-    return Point2D(globalDrawTrans_->xMin_, -globalDrawTrans_->yMax_);
+    return {globalDrawTrans_->xMin_, -globalDrawTrans_->yMax_};
   } else {
-    return Point2D(drawMols_[activeMolIdx_]->xMin_,
-                   -drawMols_[activeMolIdx_]->yMax_);
+    return {drawMols_[activeMolIdx_]->xMin_, -drawMols_[activeMolIdx_]->yMax_};
   }
 }
 // ****************************************************************************
@@ -618,10 +617,10 @@ Point2D MolDraw2D::range() const {
   // Prefers globalDrawTrans_ if it exists.
   PRECONDITION(globalDrawTrans_ || activeMolIdx_ >= 0, "bad active mol");
   if (globalDrawTrans_) {
-    return Point2D(globalDrawTrans_->xRange_, globalDrawTrans_->yRange_);
+    return {globalDrawTrans_->xRange_, globalDrawTrans_->yRange_};
   } else {
-    return Point2D(drawMols_[activeMolIdx_]->xRange_,
-                   drawMols_[activeMolIdx_]->yRange_);
+    return {drawMols_[activeMolIdx_]->xRange_,
+            drawMols_[activeMolIdx_]->yRange_};
   }
 }
 
