@@ -250,7 +250,7 @@ bool kekulizeWorker(RWMol &mol, const INT_VECT &allAtms,
   unsigned int numBT = 0;  // number of back tracks so far
   while ((done.size() < allAtms.size()) || !astack.empty()) {
     // pick a curr atom to work with
-    if (astack.size() > 0) {
+    if (!astack.empty()) {
       curr = astack.front();
       astack.pop_front();
     } else {
@@ -275,7 +275,7 @@ bool kekulizeWorker(RWMol &mol, const INT_VECT &allAtms,
     // if we are here because of backtracking
     if (options.find(curr) != options.end()) {
       opts = options[curr];
-      CHECK_INVARIANT(opts.size() > 0, "");
+      CHECK_INVARIANT(!opts.empty(), "");
     } else {
       INT_DEQUE lstack;
       INT_DEQUE wedgedOpts;
@@ -346,10 +346,10 @@ bool kekulizeWorker(RWMol &mol, const INT_VECT &allAtms,
         // simply tried a different option now, overwrite the options
         // stored for this atoms
         if (options.find(curr) != options.end()) {
-          if (opts.size() == 0) {
+          if (opts.empty()) {
             options.erase(curr);
             btmoves.pop_back();
-            if (btmoves.size() > 0) {
+            if (!btmoves.empty()) {
               lastOpt = btmoves.back();
             } else {
               lastOpt = -1;
@@ -362,7 +362,7 @@ bool kekulizeWorker(RWMol &mol, const INT_VECT &allAtms,
           // neighbors as options to add double bond store this to
           // the options stack, we may have made a mistake in
           // which one we chose and have to return here
-          if (opts.size() > 0) {
+          if (!opts.empty()) {
             lastOpt = curr;
             btmoves.push_back(lastOpt);
             options[curr] = opts;
@@ -430,7 +430,7 @@ bool permuteDummiesAndKekulize(RWMol &mol, const INT_VECT &allAtms,
   }
   bool kekulized = false;
   QuestionEnumerator qEnum(questions);
-  while (!kekulized && questions.size()) {
+  while (!kekulized && !questions.empty()) {
     boost::dynamic_bitset<> dBndAdds(mol.getNumBonds());
     INT_VECT done;
     // reset the state: all aromatic bonds are remarked to single:
@@ -443,7 +443,7 @@ bool permuteDummiesAndKekulize(RWMol &mol, const INT_VECT &allAtms,
     }
     // pick a new permutation of the questionable atoms:
     const auto &switchOff = qEnum.next();
-    if (!switchOff.size()) {
+    if (switchOff.empty()) {
       break;
     }
     auto tCands = dBndCands;
@@ -476,7 +476,7 @@ void kekulizeFused(RWMol &mol, const VECT_INT_VECT &arings,
 
   auto kekulized =
       kekulizeWorker(mol, allAtms, dBndCands, dBndAdds, done, maxBackTracks);
-  if (!kekulized && questions.size()) {
+  if (!kekulized && !questions.empty()) {
     // we failed, but there are some dummy atoms we can try permuting.
     kekulized = permuteDummiesAndKekulize(mol, allAtms, dBndCands, questions,
                                           maxBackTracks);
