@@ -40,11 +40,12 @@ class RDKIT_FINGERPRINTS_EXPORT TopologicalTorsionArguments
    \param fpSize size of the generated fingerprint, does not affect the sparse
    versions
    */
-  TopologicalTorsionArguments(
-      const bool includeChirality = false, const uint32_t torsionAtomCount = 4,
-      const bool countSimulation = true,
-      const std::vector<std::uint32_t> countBounds = {1, 2, 4, 8},
-      const std::uint32_t fpSize = 2048);
+  TopologicalTorsionArguments(bool includeChirality = false,
+                              uint32_t torsionAtomCount = 4,
+                              bool countSimulation = true,
+                              std::vector<std::uint32_t> countBounds = {1, 2, 4,
+                                                                        8},
+                              std::uint32_t fpSize = 2048);
 };
 
 template <typename OutputType>
@@ -59,8 +60,8 @@ class RDKIT_FINGERPRINTS_EXPORT TopologicalTorsionAtomEnv
       const std::vector<std::uint32_t> *atomInvariants,  // unused
       const std::vector<std::uint32_t> *bondInvariants,  // unused
       AdditionalOutput *additionalOutput,                // unused
-      const bool hashResults = false,                    // unused
-      const std::uint64_t fpSize = 0                     // unused
+      bool hashResults = false,                          // unused
+      std::uint64_t fpSize = 0                           // unused
   ) const override;
   void updateAdditionalOutput(AdditionalOutput *output,
                               size_t bitId) const override;
@@ -80,11 +81,11 @@ class RDKIT_FINGERPRINTS_EXPORT TopologicalTorsionEnvGenerator
   std::vector<AtomEnvironment<OutputType> *> getEnvironments(
       const ROMol &mol, FingerprintArguments *arguments,
       const std::vector<std::uint32_t> *fromAtoms,
-      const std::vector<std::uint32_t> *ignoreAtoms, const int confId,
+      const std::vector<std::uint32_t> *ignoreAtoms, int confId,
       const AdditionalOutput *additionalOutput,
       const std::vector<std::uint32_t> *atomInvariants,
       const std::vector<std::uint32_t> *bondInvariants,
-      const bool hashResults = false) const override;
+      bool hashResults = false) const override;
 
   std::string infoString() const override;
   void toJSON(boost::property_tree::ptree &pt) const override;
@@ -133,7 +134,7 @@ template <typename OutputType>
 FingerprintGenerator<OutputType> *getTopologicalTorsionGenerator(
     const TopologicalTorsionArguments &args,
     AtomInvariantsGenerator *atomInvariantsGenerator = nullptr,
-    const bool ownsAtomInvGen = false);
+    bool ownsAtomInvGen = false);
 }  // namespace TopologicalTorsion
 }  // namespace RDKit
 

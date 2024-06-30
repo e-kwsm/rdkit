@@ -45,9 +45,9 @@ getMMFFStbn();
 RDKIT_FORCEFIELDHELPERS_EXPORT const ForceFields::MMFF::MMFFDfsbCollection *
 getMMFFDfsb();
 RDKIT_FORCEFIELDHELPERS_EXPORT const ForceFields::MMFF::MMFFTorCollection *
-getMMFFTor(const bool isMMFFs);
+getMMFFTor(bool isMMFFs);
 RDKIT_FORCEFIELDHELPERS_EXPORT const ForceFields::MMFF::MMFFOopCollection *
-getMMFFOop(const bool isMMFFs);
+getMMFFOop(bool isMMFFs);
 RDKIT_FORCEFIELDHELPERS_EXPORT const ForceFields::MMFF::MMFFVdWCollection *
 getMMFFVdW();
 }  // namespace DefaultParameters
@@ -80,12 +80,11 @@ class RDKIT_FORCEFIELDHELPERS_EXPORT MMFFMolProperties {
                     std::ostream &oStream = std::cout);
   ~MMFFMolProperties() = default;
   unsigned int getMMFFBondType(const Bond *bond);
-  unsigned int getMMFFAngleType(const ROMol &mol, const unsigned int idx1,
-                                const unsigned int idx2,
-                                const unsigned int idx3);
+  unsigned int getMMFFAngleType(const ROMol &mol, unsigned int idx1,
+                                unsigned int idx2, unsigned int idx3);
   const std::pair<unsigned int, unsigned int> getMMFFTorsionType(
-      const ROMol &mol, const unsigned int idx1, const unsigned int idx2,
-      const unsigned int idx3, const unsigned int idx4);
+      const ROMol &mol, unsigned int idx1, unsigned int idx2, unsigned int idx3,
+      unsigned int idx4);
   void computeMMFFCharges(const ROMol &mol);
   const ForceFields::MMFF::MMFFTor *getMMFFTorsionEmpiricalRuleParams(
       const ROMol &mol, unsigned int idx2, unsigned int idx3);
@@ -148,29 +147,27 @@ class RDKIT_FORCEFIELDHELPERS_EXPORT MMFFMolProperties {
   void setMMFFOStream(std::ostream *oStream) { this->d_oStream = oStream; }
   std::ostream &getMMFFOStream() { return *(this->d_oStream); }
   bool isValid() { return d_valid; }
-  bool getMMFFBondStretchParams(const ROMol &mol, const unsigned int idx1,
-                                const unsigned int idx2, unsigned int &bondType,
+  bool getMMFFBondStretchParams(const ROMol &mol, unsigned int idx1,
+                                unsigned int idx2, unsigned int &bondType,
                                 MMFFBond &mmffBondStretchParams);
-  bool getMMFFAngleBendParams(const ROMol &mol, const unsigned int idx1,
-                              const unsigned int idx2, const unsigned int idx3,
+  bool getMMFFAngleBendParams(const ROMol &mol, unsigned int idx1,
+                              unsigned int idx2, unsigned int idx3,
                               unsigned int &angleType,
                               MMFFAngle &mmffAngleBendParams);
-  bool getMMFFStretchBendParams(const ROMol &mol, const unsigned int idx1,
-                                const unsigned int idx2,
-                                const unsigned int idx3,
+  bool getMMFFStretchBendParams(const ROMol &mol, unsigned int idx1,
+                                unsigned int idx2, unsigned int idx3,
                                 unsigned int &stretchBendType,
                                 MMFFStbn &mmffStretchBendParams,
                                 MMFFBond mmffBondStretchParams[2],
                                 MMFFAngle &mmffAngleBendParams);
-  bool getMMFFTorsionParams(const ROMol &mol, const unsigned int idx1,
-                            const unsigned int idx2, const unsigned int idx3,
-                            const unsigned int idx4, unsigned int &torsionType,
+  bool getMMFFTorsionParams(const ROMol &mol, unsigned int idx1,
+                            unsigned int idx2, unsigned int idx3,
+                            unsigned int idx4, unsigned int &torsionType,
                             MMFFTor &mmffTorsionParams);
-  bool getMMFFOopBendParams(const ROMol &mol, const unsigned int idx1,
-                            const unsigned int idx2, const unsigned int idx3,
-                            const unsigned int idx4,
-                            MMFFOop &mmffOopBendParams);
-  bool getMMFFVdWParams(const unsigned int idx1, const unsigned int idx2,
+  bool getMMFFOopBendParams(const ROMol &mol, unsigned int idx1,
+                            unsigned int idx2, unsigned int idx3,
+                            unsigned int idx4, MMFFOop &mmffOopBendParams);
+  bool getMMFFVdWParams(unsigned int idx1, unsigned int idx2,
                         MMFFVdWRijstarEps &mmffVdWParams);
 
  private:
@@ -203,27 +200,23 @@ class RDKIT_FORCEFIELDHELPERS_EXPORT MMFFMolProperties {
   std::vector<MMFFAtomPropertiesPtr> d_MMFFAtomPropertiesPtrVect;
 };
 RDKIT_FORCEFIELDHELPERS_EXPORT unsigned int isAngleInRingOfSize3or4(
-    const ROMol &mol, const unsigned int idx1, const unsigned int idx2,
-    const unsigned int idx3);
+    const ROMol &mol, unsigned int idx1, unsigned int idx2, unsigned int idx3);
 RDKIT_FORCEFIELDHELPERS_EXPORT unsigned int isTorsionInRingOfSize4or5(
-    const ROMol &mol, const unsigned int idx1, const unsigned int idx2,
-    const unsigned int idx3, const unsigned int idx4);
+    const ROMol &mol, unsigned int idx1, unsigned int idx2, unsigned int idx3,
+    unsigned int idx4);
 RDKIT_FORCEFIELDHELPERS_EXPORT bool isRingAromatic(
     const ROMol &mol, const INT_VECT &ringIndxVect);
 RDKIT_FORCEFIELDHELPERS_EXPORT bool isAtomInAromaticRingOfSize(
-    const Atom *atom, const unsigned int ringSize);
+    const Atom *atom, unsigned int ringSize);
 RDKIT_FORCEFIELDHELPERS_EXPORT bool isAtomNOxide(const Atom *atom);
 RDKIT_FORCEFIELDHELPERS_EXPORT bool areAtomsInSameAromaticRing(
-    const ROMol &mol, const unsigned int idx1, const unsigned int idx2);
+    const ROMol &mol, unsigned int idx1, unsigned int idx2);
 RDKIT_FORCEFIELDHELPERS_EXPORT bool areAtomsInSameRingOfSize(
-    const ROMol &mol, const unsigned int ringSize, const unsigned int numAtoms,
-    ...);
+    const ROMol &mol, unsigned int ringSize, unsigned int numAtoms, ...);
 RDKIT_FORCEFIELDHELPERS_EXPORT unsigned int sanitizeMMFFMol(RWMol &mol);
 RDKIT_FORCEFIELDHELPERS_EXPORT unsigned int getMMFFStretchBendType(
-    const unsigned int angleType, const unsigned int bondType1,
-    const unsigned int bondType2);
-RDKIT_FORCEFIELDHELPERS_EXPORT unsigned int getPeriodicTableRow(
-    const int atomicNum);
+    unsigned int angleType, unsigned int bondType1, unsigned int bondType2);
+RDKIT_FORCEFIELDHELPERS_EXPORT unsigned int getPeriodicTableRow(int atomicNum);
 RDKIT_FORCEFIELDHELPERS_EXPORT const ForceFields::MMFF::MMFFAngle *
 getMMFFAngleBendEmpiricalRuleParams(
     const ROMol &mol, const ForceFields::MMFF::MMFFAngle *oldMMFFAngleParams,

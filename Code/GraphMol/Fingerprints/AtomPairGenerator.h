@@ -78,12 +78,11 @@ class RDKIT_FINGERPRINTS_EXPORT AtomPairArguments
     generated fingerprint, does not affect the sparse versions
 
    */
-  AtomPairArguments(const bool countSimulation = true,
-                    const bool includeChirality = false,
-                    const bool use2D = true, const unsigned int minDistance = 1,
-                    const unsigned int maxDistance = (maxPathLen - 1),
-                    const std::vector<std::uint32_t> countBounds = {1, 2, 4, 8},
-                    const std::uint32_t fpSize = 2048);
+  AtomPairArguments(bool countSimulation = true, bool includeChirality = false,
+                    bool use2D = true, unsigned int minDistance = 1,
+                    unsigned int maxDistance = (maxPathLen - 1),
+                    std::vector<std::uint32_t> countBounds = {1, 2, 4, 8},
+                    std::uint32_t fpSize = 2048);
 };
 
 /*!
@@ -104,8 +103,8 @@ class RDKIT_FINGERPRINTS_EXPORT AtomPairAtomEnv
       const std::vector<std::uint32_t> *atomInvariants,
       const std::vector<std::uint32_t> *bondInvariants,  // unused
       AdditionalOutput *additionalOutput,                // unused
-      const bool hashResults = false,
-      const std::uint64_t fpSize = 0  // unused
+      bool hashResults = false,
+      std::uint64_t fpSize = 0  // unused
   ) const override;
   void updateAdditionalOutput(AdditionalOutput *output,
                               size_t bitId) const override;
@@ -117,8 +116,8 @@ class RDKIT_FINGERPRINTS_EXPORT AtomPairAtomEnv
     \param atomIdSecond     id of the second atom of the atom-pair
     \param distance         distance between the atoms
    */
-  AtomPairAtomEnv(const unsigned int atomIdFirst,
-                  const unsigned int atomIdSecond, const unsigned int distance);
+  AtomPairAtomEnv(unsigned int atomIdFirst, unsigned int atomIdSecond,
+                  unsigned int distance);
 };
 
 /*!
@@ -132,11 +131,11 @@ class RDKIT_FINGERPRINTS_EXPORT AtomPairEnvGenerator
   std::vector<AtomEnvironment<OutputType> *> getEnvironments(
       const ROMol &mol, FingerprintArguments *arguments,
       const std::vector<std::uint32_t> *fromAtoms,
-      const std::vector<std::uint32_t> *ignoreAtoms, const int confId,
+      const std::vector<std::uint32_t> *ignoreAtoms, int confId,
       const AdditionalOutput *additionalOutput,
       const std::vector<std::uint32_t> *atomInvariants,
       const std::vector<std::uint32_t> *bondInvariants,
-      const bool hashResults = false) const override;
+      bool hashResults = false) const override;
 
   std::string infoString() const override;
   void toJSON(boost::property_tree::ptree &pt) const override;
@@ -177,21 +176,21 @@ class RDKIT_FINGERPRINTS_EXPORT AtomPairEnvGenerator
  */
 template <typename OutputType>
 RDKIT_FINGERPRINTS_EXPORT FingerprintGenerator<OutputType> *
-getAtomPairGenerator(
-    const unsigned int minDistance = 1,
-    const unsigned int maxDistance = maxPathLen - 1,
-    const bool includeChirality = false, const bool use2D = true,
-    AtomInvariantsGenerator *atomInvariantsGenerator = nullptr,
-    const bool useCountSimulation = true, const std::uint32_t fpSize = 2048,
-    const std::vector<std::uint32_t> countBounds = {1, 2, 4, 8},
-    const bool ownsAtomInvGen = false);
+getAtomPairGenerator(unsigned int minDistance = 1,
+                     unsigned int maxDistance = maxPathLen - 1,
+                     bool includeChirality = false, bool use2D = true,
+                     AtomInvariantsGenerator *atomInvariantsGenerator = nullptr,
+                     bool useCountSimulation = true,
+                     std::uint32_t fpSize = 2048,
+                     std::vector<std::uint32_t> countBounds = {1, 2, 4, 8},
+                     bool ownsAtomInvGen = false);
 
 //! overload
 template <typename OutputType>
 FingerprintGenerator<OutputType> *getAtomPairGenerator(
     const AtomPairArguments &args,
     AtomInvariantsGenerator *atomInvariantsGenerator = nullptr,
-    const bool ownsAtomInvGen = false);
+    bool ownsAtomInvGen = false);
 }  // namespace AtomPair
 }  // namespace RDKit
 

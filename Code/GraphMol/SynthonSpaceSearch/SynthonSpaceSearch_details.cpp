@@ -533,9 +533,8 @@ void buildSplitBonds(
 }  // namespace
 
 std::vector<std::vector<std::unique_ptr<ROMol>>> splitMolecule(
-    const ROMol &query, unsigned int maxNumFrags,
-    const std::uint64_t maxNumFragSets, const TimePoint *endTime,
-    const int numThreads, bool &timedOut) {
+    const ROMol &query, unsigned int maxNumFrags, std::uint64_t maxNumFragSets,
+    const TimePoint *endTime, int numThreads, bool &timedOut) {
   if (maxNumFrags < 1) {
     maxNumFrags = 1;
   }
