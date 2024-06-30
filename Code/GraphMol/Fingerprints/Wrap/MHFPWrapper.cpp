@@ -16,8 +16,7 @@
 namespace python = boost::python;
 using RDKit::MHFPFingerprints::MHFPEncoder;
 
-namespace RDKit {
-namespace MHFPWrapper {
+namespace RDKit::MHFPWrapper {
 
 typedef std::vector<std::vector<uint32_t>> VectMinHashVect;
 typedef std::vector<ExplicitBitVect> VectExplicitBitVect;
@@ -264,5 +263,4 @@ BOOST_PYTHON_MODULE(rdMHFPFingerprint) {
       .staticmethod("Distance");
 }
 
-}  // namespace MHFPWrapper
-}  // namespace RDKit
+}  // namespace RDKit::MHFPWrapper

@@ -14,8 +14,7 @@
 #include <GraphMol/MolDraw2D/DrawTextNotFT.h>
 #include <GraphMol/MolDraw2D/MolDraw2DHelpers.h>
 
-namespace RDKit {
-namespace MolDraw2D_detail {
+namespace RDKit::MolDraw2D_detail {
 // ****************************************************************************
 DrawTextNotFT::DrawTextNotFT(double max_fnt_sz, double min_fnt_sz)
     : DrawText(max_fnt_sz, min_fnt_sz) {}
@@ -84,5 +83,4 @@ void DrawTextNotFT::alignString(
   }
 }
 
-}  // namespace MolDraw2D_detail
-}  // namespace RDKit
+}  // namespace RDKit::MolDraw2D_detail

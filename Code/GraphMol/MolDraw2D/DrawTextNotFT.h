@@ -19,8 +19,7 @@
 #include <RDGeneral/export.h>
 #include <GraphMol/MolDraw2D/DrawText.h>
 
-namespace RDKit {
-namespace MolDraw2D_detail {
+namespace RDKit::MolDraw2D_detail {
 
 class RDKIT_MOLDRAW2D_EXPORT DrawTextNotFT : public DrawText {
  public:
@@ -32,7 +31,6 @@ class RDKIT_MOLDRAW2D_EXPORT DrawTextNotFT : public DrawText {
       std::vector<std::shared_ptr<StringRect>> &rects) const override;
 };
 
-}  // namespace MolDraw2D_detail
-}  // namespace RDKit
+}  // namespace RDKit::MolDraw2D_detail
 
 #endif  // RDKIT_DRAWTEXTNOTFT_H

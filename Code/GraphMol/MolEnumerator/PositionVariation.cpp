@@ -11,8 +11,7 @@
 #include <RDGeneral/Exceptions.h>
 #include <GraphMol/FileParsers/MolSGroupParsing.h>
 
-namespace RDKit {
-namespace MolEnumerator {
+namespace RDKit::MolEnumerator {
 
 void PositionVariationOp::initFromMol(const ROMol &mol) {
   dp_mol.reset(new ROMol(mol));
@@ -113,6 +112,4 @@ std::unique_ptr<ROMol> PositionVariationOp::operator()(
   return std::unique_ptr<ROMol>(static_cast<ROMol *>(res));
 }
 
-}  // namespace MolEnumerator
-
-}  // namespace RDKit
+}  // namespace RDKit::MolEnumerator

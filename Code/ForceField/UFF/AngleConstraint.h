@@ -12,9 +12,7 @@
 #define RD_UFFANGLECONSTRAINT_H
 #include <ForceField/AngleConstraint.h>
 
-namespace ForceFields {
-namespace UFF {
+namespace ForceFields::UFF {
 using AngleConstraintContrib = ForceFields::AngleConstraintContrib;
-}  // namespace UFF
-}  // namespace ForceFields
+}  // namespace ForceFields::UFF
 #endif

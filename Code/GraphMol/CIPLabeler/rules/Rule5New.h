@@ -12,8 +12,7 @@
 
 #include "SequenceRule.h"
 
-namespace RDKit {
-namespace CIPLabeler {
+namespace RDKit::CIPLabeler {
 
 /**
  * A descriptor pair rule. This rule defines that like descriptor pairs have
@@ -36,5 +35,4 @@ class Rule5New : public SequenceRule {
   Sort getRefSorter(const SequenceRule *replacement_rule) const;
 };
 
-}  // namespace CIPLabeler
-}  // namespace RDKit
+}  // namespace RDKit::CIPLabeler

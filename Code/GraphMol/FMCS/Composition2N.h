@@ -9,8 +9,8 @@
 //
 #include <RDGeneral/export.h>
 #pragma once
-namespace RDKit {
-namespace FMCS {
+
+namespace RDKit::FMCS {
 typedef unsigned long long BitSet;
 class Composition2N {  // generator of 2^N-1 possible bit combinations
   BitSet Bits, InverseBits;
@@ -53,5 +53,4 @@ class Composition2N {  // generator of 2^N-1 possible bit combinations
     return 0 != (getBitSet() & (1uLL << bit));
   }
 };
-}  // namespace FMCS
-}  // namespace RDKit
+}  // namespace RDKit::FMCS

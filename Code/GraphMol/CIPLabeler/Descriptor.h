@@ -14,8 +14,7 @@
 #include <string>
 #include <stdexcept>
 
-namespace RDKit {
-namespace CIPLabeler {
+namespace RDKit::CIPLabeler {
 
 /**
  * Defines a descriptor which can be assigned to an atom to indicate the type of
@@ -94,5 +93,4 @@ static std::string to_string(const Descriptor &desc) {
   throw std::runtime_error("Unknown descriptor");
 }
 
-}  // namespace CIPLabeler
-}  // namespace RDKit
+}  // namespace RDKit::CIPLabeler

@@ -12,9 +12,7 @@
 #define RD_MMFFANGLECONSTRAINT_H
 #include <ForceField/AngleConstraint.h>
 
-namespace ForceFields {
-namespace MMFF {
+namespace ForceFields::MMFF {
 using AngleConstraintContrib = ForceFields::AngleConstraintContrib;
-}  // namespace MMFF
-}  // namespace ForceFields
+}  // namespace ForceFields::MMFF
 #endif

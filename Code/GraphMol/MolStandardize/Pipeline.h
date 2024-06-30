@@ -16,9 +16,7 @@
 #include <utility>
 #include <vector>
 
-namespace RDKit {
-
-namespace MolStandardize {
+namespace RDKit::MolStandardize {
 
 struct RDKIT_MOLSTANDARDIZE_EXPORT PipelineOptions {
   // parsing
@@ -228,7 +226,6 @@ class RDKIT_MOLSTANDARDIZE_EXPORT Pipeline {
  private:
 };
 
-}  // namespace MolStandardize
-}  // namespace RDKit
+}  // namespace RDKit::MolStandardize
 
 #endif

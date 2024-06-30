@@ -37,9 +37,7 @@
 #endif
 
 namespace RDKit {
-namespace Fingerprints {
-namespace detail {}  // namespace detail
-}  // namespace Fingerprints
+
 namespace {
 /*
 std::uint32_t hashBond(const Bond *bnd,const std::vector<std::uint32_t>

@@ -12,15 +12,13 @@
 #include <GraphMol/RDKitBase.h>
 #include <GraphMol/MolStandardize/Pipeline.h>
 
-namespace RDKit {
-namespace MolStandardize {
+namespace RDKit::MolStandardize {
 
 bool operator==(const PipelineLogEntry &lhs, const PipelineLogEntry &rhs) {
   return (lhs.status == rhs.status) && (lhs.detail == rhs.detail);
 }
 
-}  // namespace MolStandardize
-}  // namespace RDKit
+}  // namespace RDKit::MolStandardize
 
 namespace python = boost::python;
 using namespace RDKit;

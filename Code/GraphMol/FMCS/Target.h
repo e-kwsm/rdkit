@@ -16,13 +16,11 @@
 #include "MatchTable.h"
 #include "DebugTrace.h"  // algorithm filter definitions
 
-namespace RDKit {
-namespace FMCS {
+namespace RDKit::FMCS {
 struct Target {
   const ROMol *Molecule;
   Graph Topology;
   MatchTable AtomMatchTable;
   MatchTable BondMatchTable;
 };
-}  // namespace FMCS
-}  // namespace RDKit
+}  // namespace RDKit::FMCS

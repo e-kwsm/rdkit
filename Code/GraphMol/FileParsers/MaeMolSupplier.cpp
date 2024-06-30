@@ -31,10 +31,7 @@ using namespace schrodinger;
 using namespace RDKit::FileParsers::schrodinger;
 using RDKit::MolInterchange::bolookup;
 
-namespace RDKit {
-
-namespace v2 {
-namespace FileParsers {
+namespace RDKit::v2::FileParsers {
 namespace {
 
 // Flag for parsing chirality labels
@@ -684,6 +681,4 @@ std::unique_ptr<RWMol> MaeMolSupplier::operator[](unsigned int idx) {
   return next();
 }
 
-}  // namespace FileParsers
-}  // namespace v2
-}  // namespace RDKit
+}  // namespace RDKit::v2::FileParsers

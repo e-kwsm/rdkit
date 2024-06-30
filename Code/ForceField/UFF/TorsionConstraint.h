@@ -12,9 +12,7 @@
 #define RD_UFFTORSIONCONSTRAINT_H
 #include <ForceField/TorsionConstraint.h>
 
-namespace ForceFields {
-namespace UFF {
+namespace ForceFields::UFF {
 using TorsionConstraintContrib = ForceFields::TorsionConstraintContrib;
-}  // namespace UFF
-}  // namespace ForceFields
+}  // namespace ForceFields::UFF
 #endif

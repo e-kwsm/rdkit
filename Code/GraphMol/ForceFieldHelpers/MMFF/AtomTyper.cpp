@@ -20,8 +20,7 @@
 #include "AtomTyper.h"
 #include <cstdarg>
 
-namespace RDKit {
-namespace MMFF {
+namespace RDKit::MMFF {
 using namespace ForceFields::MMFF;
 namespace DefaultParameters {
 
@@ -3723,5 +3722,4 @@ bool MMFFMolProperties::getMMFFVdWParams(const unsigned int idx1,
   }
   return res;
 }
-}  // namespace MMFF
-}  // namespace RDKit
+}  // namespace RDKit::MMFF

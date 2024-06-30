@@ -14,8 +14,7 @@
 #include <Geometry/point.h>
 #include <vector>
 
-namespace ForceFields {
-namespace UFF {
+namespace ForceFields::UFF {
 class AtomicParams;
 
 struct RDKIT_FORCEFIELD_EXPORT InversionContribsParams {
@@ -107,7 +106,6 @@ class RDKIT_FORCEFIELD_EXPORT InversionContribs : public ForceFieldContrib {
   std::vector<InversionContribsParams> d_contribs;
 };
 
-}  // namespace UFF
-}  // namespace ForceFields
+}  // namespace ForceFields::UFF
 
 #endif
