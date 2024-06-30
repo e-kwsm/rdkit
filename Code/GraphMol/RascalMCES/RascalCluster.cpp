@@ -69,7 +69,7 @@ std::vector<std::vector<ClusNode>> buildProximityGraph(
     const std::vector<std::shared_ptr<ROMol>> &mols,
     const RascalClusterOptions &clusOpts) {
   if (mols.size() < 2) {
-    return std::vector<std::vector<ClusNode>>();
+    return {};
   }
   std::vector<std::vector<ClusNode>> proxGraph =
       std::vector<std::vector<ClusNode>>(
