@@ -371,9 +371,8 @@ void mapAtom(
   }
 
   // Custom properties
-  copyProperties(atom, propNames, idx, std::move(boolSetter),
-                 std::move(intSetter), std::move(realSetter),
-                 std::move(stringSetter));
+  copyProperties(atom, propNames, idx, boolSetter, intSetter, realSetter,
+                 stringSetter);
 }
 
 void mapAtoms(const ROMol &mol, const STR_VECT &propNames, int confId,
@@ -447,9 +446,8 @@ void mapBond(
   }
 
   // Custom properties
-  copyProperties(bond, propNames, idx, std::move(boolSetter),
-                 std::move(intSetter), std::move(realSetter),
-                 std::move(stringSetter));
+  copyProperties(bond, propNames, idx, boolSetter, intSetter, realSetter,
+                 stringSetter);
 }
 
 void mapBonds(const ROMol &mol, const STR_VECT &propNames,
