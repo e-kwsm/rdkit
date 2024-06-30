@@ -16,8 +16,7 @@
 #include <ForceField/ForceField.h>
 #include <RDGeneral/Invariant.h>
 
-namespace ForceFields {
-namespace MMFF {
+namespace ForceFields::MMFF {
 namespace Utils {
 double calcOopChi(const RDGeom::Point3D &iPoint, const RDGeom::Point3D &jPoint,
                   const RDGeom::Point3D &kPoint,
@@ -153,5 +152,4 @@ void OopBendContrib::getGrad(double *pos, double *grad) const {
     g4[i] += dE_dChi * tg4[i];
   }
 }
-}  // namespace MMFF
-}  // namespace ForceFields
+}  // namespace ForceFields::MMFF

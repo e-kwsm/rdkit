@@ -17,8 +17,7 @@
 #include <GraphMol/MolDraw2D/DrawText.h>
 #include <GraphMol/MolDraw2D/MolDraw2D.h>
 
-namespace RDKit {
-namespace MolDraw2D_detail {
+namespace RDKit::MolDraw2D_detail {
 
 // ****************************************************************************
 AtomSymbol::AtomSymbol(const std::string &symbol, int atIdx, OrientType orient,
@@ -159,5 +158,4 @@ void AtomSymbol::drawRects(MolDraw2D &molDrawer) const {
   }
 }
 
-}  // namespace MolDraw2D_detail
-}  // namespace RDKit
+}  // namespace RDKit::MolDraw2D_detail

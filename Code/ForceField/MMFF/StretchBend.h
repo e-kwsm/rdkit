@@ -16,8 +16,7 @@
 #include <utility>
 #include <ForceField/Contrib.h>
 
-namespace ForceFields {
-namespace MMFF {
+namespace ForceFields::MMFF {
 class MMFFBond;
 class MMFFAngle;
 class MMFFStbn;
@@ -65,6 +64,6 @@ RDKIT_FORCEFIELD_EXPORT std::pair<double, double> calcStretchBendEnergy(
     const double deltaDist1, const double deltaDist2, const double deltaTheta,
     const std::pair<double, double> forceConstants);
 }  // namespace Utils
-}  // namespace MMFF
-}  // namespace ForceFields
+}  // namespace ForceFields::MMFF
+
 #endif

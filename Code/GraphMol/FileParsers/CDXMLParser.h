@@ -19,8 +19,7 @@
 namespace RDKit {
 class RWMol;
 
-namespace v2 {
-namespace CDXMLParser {
+namespace v2::CDXMLParser {
 struct RDKIT_FILEPARSERS_EXPORT CDXMLParserParams {
   bool sanitize = true;
   bool removeHs = true;
@@ -62,8 +61,7 @@ RDKIT_FILEPARSERS_EXPORT std::vector<std::unique_ptr<RWMol>> MolsFromCDXMLFile(
 RDKIT_FILEPARSERS_EXPORT std::vector<std::unique_ptr<RWMol>> MolsFromCDXML(
     const std::string &cdxml,
     const CDXMLParserParams &params = CDXMLParserParams());
-}  // namespace CDXMLParser
-}  // namespace v2
+}  // namespace v2::CDXMLParser
 
 inline namespace v1 {
 
