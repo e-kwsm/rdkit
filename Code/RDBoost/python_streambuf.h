@@ -30,8 +30,7 @@
 #include <streambuf>
 #include <iostream>
 
-namespace boost_adaptbx {
-namespace python {
+namespace boost_adaptbx::python {
 
 namespace bp = boost::python;
 
@@ -566,7 +565,6 @@ struct ostream : private streambuf_capsule, streambuf::ostream {
     }
   }
 };
-}  // namespace python
-}  // namespace boost_adaptbx
+}  // namespace boost_adaptbx::python
 
 #endif  // GUARD

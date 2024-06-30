@@ -19,8 +19,7 @@
 #ifndef RASCALCLUSTEROPTIONS_H
 #define RASCALCLUSTEROPTIONS_H
 
-namespace RDKit {
-namespace RascalMCES {
+namespace RDKit::RascalMCES {
 
 struct RDKIT_RASCALMCES_EXPORT RascalClusterOptions {
   double similarityCutoff = 0.7; /* Similarity cutoff for clustering.  Initial
@@ -48,6 +47,6 @@ struct RDKIT_RASCALMCES_EXPORT RascalClusterOptions {
                           hardware threads is 8, and numThreads is -1, it will
                           use 7 threads. */
 };
-}  // namespace RascalMCES
-}  // namespace RDKit
+}  // namespace RDKit::RascalMCES
+
 #endif  // RASCALCLUSTEROPTIONS_H

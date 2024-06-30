@@ -161,8 +161,7 @@ Conformer *ParseConfData(std::istream &inStream, unsigned int &line, RWMol *mol,
   return conf;
 }
 
-namespace v2 {
-namespace FileParsers {
+namespace v2::FileParsers {
 
 //*************************************
 //
@@ -293,8 +292,8 @@ std::unique_ptr<RWMol> MolFromTPLFile(const std::string &fName,
     return nullptr;
   }
 }
-}  // namespace FileParsers
-}  // namespace v2
+}  // namespace v2::FileParsers
+
 #if 0  
 
   RWMol *MolDataStreamToMol(std::istream &inStream, unsigned int &line,
