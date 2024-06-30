@@ -36,8 +36,7 @@
 #include <GraphMol/StereoGroup.h>
 #include <GraphMol/Atropisomers.h>
 
-namespace RDKit {
-namespace MolDraw2D_detail {
+namespace RDKit::MolDraw2D_detail {
 
 // ****************************************************************************
 DrawMol::DrawMol(
@@ -4057,5 +4056,4 @@ const Atom *otherNeighbor(const Atom *firstAtom, const Atom *secondAtom,
   return nullptr;
 };
 
-}  // namespace MolDraw2D_detail
-}  // namespace RDKit
+}  // namespace RDKit::MolDraw2D_detail
