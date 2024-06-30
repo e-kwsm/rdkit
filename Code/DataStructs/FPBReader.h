@@ -85,11 +85,7 @@ class RDKIT_DATASTRUCTS_EXPORT FPBReader {
   */
   FPBReader(std::istream *inStream, bool takeOwnership = true,
             bool lazyRead = false)
-      : dp_istrm(inStream),
-        dp_impl(nullptr),
-        df_owner(takeOwnership),
-        df_init(false),
-        df_lazyRead(lazyRead) {}
+      : dp_istrm(inStream), df_owner(takeOwnership), df_lazyRead(lazyRead) {}
   ~FPBReader() {
     destroy();
     if (df_owner) {
