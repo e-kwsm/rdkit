@@ -82,7 +82,7 @@ static inline void convertMatchingToBondVect(
     // assume pattern is only one bond pattern
     auto a1 = (unsigned)matching_atom[0].second;  // mol atom 1 index
     auto a2 = (unsigned)matching_atom[1].second;  // mol atom 2 index
-    mb.push_back(std::pair<unsigned, unsigned>(a1, a2));
+    mb.emplace_back(a1, a2);
   }
 }
 
@@ -528,7 +528,7 @@ bool fragmentMol(const ROMol &mol,
     BondVector_t bonds;
     unsigned int a1 = bond->getBeginAtomIdx();
     unsigned int a2 = bond->getEndAtomIdx();
-    bonds.push_back(std::make_pair(a1, a2));
+    bonds.emplace_back(a1, a2);
     matching_bonds.push_back(bonds);
   }
 

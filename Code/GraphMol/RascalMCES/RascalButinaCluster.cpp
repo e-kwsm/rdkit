@@ -34,9 +34,9 @@ std::vector<std::vector<unsigned int>> buildNborLists(
     for (const auto &cn : proxGraph[i]) {
       if (cn.d_res) {
         if (i == cn.d_mol1Num) {
-          tmpList.push_back({cn.d_mol2Num, cn.d_sim});
+          tmpList.emplace_back(cn.d_mol2Num, cn.d_sim);
         } else {
-          tmpList.push_back({cn.d_mol1Num, cn.d_sim});
+          tmpList.emplace_back(cn.d_mol1Num, cn.d_sim);
         }
       }
     }

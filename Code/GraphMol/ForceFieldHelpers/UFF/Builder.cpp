@@ -47,7 +47,7 @@ void addBonds(const ROMol &mol, const AtomicParamVect &params,
       contrib = new BondStretchContrib(field, idx1, idx2,
                                        (*bi)->getBondTypeAsDouble(),
                                        params[idx1], params[idx2]);
-      field->contribs().push_back(ForceFields::ContribPtr(contrib));
+      field->contribs().emplace_back(contrib);
     }
   }
 }
@@ -234,7 +234,7 @@ void addAngles(const ROMol &mol, const AtomicParamVect &params,
               new AngleBendContrib(field, i, j, k, b1->getBondTypeAsDouble(),
                                    b2->getBondTypeAsDouble(), params[i],
                                    params[j], params[k], order);
-          field->contribs().push_back(ForceFields::ContribPtr(contrib));
+          field->contribs().emplace_back(contrib);
         }
       }
     }
@@ -326,7 +326,7 @@ void addTrigonalBipyramidAngles(const Atom *atom, const ROMol &mol, int confId,
     contrib = new AngleBendContrib(
         field, i, atomIdx, j, ax1->getBondTypeAsDouble(),
         ax2->getBondTypeAsDouble(), params[i], params[atomIdx], params[j], 2);
-    field->contribs().push_back(ForceFields::ContribPtr(contrib));
+    field->contribs().emplace_back(contrib);
   }
   // Equatorial-Equatorial
   i = eq1->getOtherAtomIdx(atomIdx);
@@ -335,7 +335,7 @@ void addTrigonalBipyramidAngles(const Atom *atom, const ROMol &mol, int confId,
     contrib = new AngleBendContrib(
         field, i, atomIdx, j, eq1->getBondTypeAsDouble(),
         eq2->getBondTypeAsDouble(), params[i], params[atomIdx], params[j], 3);
-    field->contribs().push_back(ForceFields::ContribPtr(contrib));
+    field->contribs().emplace_back(contrib);
   }
   i = eq1->getOtherAtomIdx(atomIdx);
   j = eq3->getOtherAtomIdx(atomIdx);
@@ -343,7 +343,7 @@ void addTrigonalBipyramidAngles(const Atom *atom, const ROMol &mol, int confId,
     contrib = new AngleBendContrib(
         field, i, atomIdx, j, eq1->getBondTypeAsDouble(),
         eq3->getBondTypeAsDouble(), params[i], params[atomIdx], params[j], 3);
-    field->contribs().push_back(ForceFields::ContribPtr(contrib));
+    field->contribs().emplace_back(contrib);
   }
   i = eq2->getOtherAtomIdx(atomIdx);
   j = eq3->getOtherAtomIdx(atomIdx);
@@ -351,7 +351,7 @@ void addTrigonalBipyramidAngles(const Atom *atom, const ROMol &mol, int confId,
     contrib = new AngleBendContrib(
         field, i, atomIdx, j, eq2->getBondTypeAsDouble(),
         eq3->getBondTypeAsDouble(), params[i], params[atomIdx], params[j], 3);
-    field->contribs().push_back(ForceFields::ContribPtr(contrib));
+    field->contribs().emplace_back(contrib);
   }
 
   // Axial-Equatorial
@@ -361,7 +361,7 @@ void addTrigonalBipyramidAngles(const Atom *atom, const ROMol &mol, int confId,
     contrib = new AngleBendContrib(
         field, i, atomIdx, j, ax1->getBondTypeAsDouble(),
         eq1->getBondTypeAsDouble(), params[i], params[atomIdx], params[j]);
-    field->contribs().push_back(ForceFields::ContribPtr(contrib));
+    field->contribs().emplace_back(contrib);
   }
   i = ax1->getOtherAtomIdx(atomIdx);
   j = eq2->getOtherAtomIdx(atomIdx);
@@ -369,7 +369,7 @@ void addTrigonalBipyramidAngles(const Atom *atom, const ROMol &mol, int confId,
     contrib = new AngleBendContrib(
         field, i, atomIdx, j, ax1->getBondTypeAsDouble(),
         eq2->getBondTypeAsDouble(), params[i], params[atomIdx], params[j]);
-    field->contribs().push_back(ForceFields::ContribPtr(contrib));
+    field->contribs().emplace_back(contrib);
   }
   i = ax1->getOtherAtomIdx(atomIdx);
   j = eq3->getOtherAtomIdx(atomIdx);
@@ -377,7 +377,7 @@ void addTrigonalBipyramidAngles(const Atom *atom, const ROMol &mol, int confId,
     contrib = new AngleBendContrib(
         field, i, atomIdx, j, ax1->getBondTypeAsDouble(),
         eq3->getBondTypeAsDouble(), params[i], params[atomIdx], params[j]);
-    field->contribs().push_back(ForceFields::ContribPtr(contrib));
+    field->contribs().emplace_back(contrib);
   }
   i = ax2->getOtherAtomIdx(atomIdx);
   j = eq1->getOtherAtomIdx(atomIdx);
@@ -385,7 +385,7 @@ void addTrigonalBipyramidAngles(const Atom *atom, const ROMol &mol, int confId,
     contrib = new AngleBendContrib(
         field, i, atomIdx, j, ax2->getBondTypeAsDouble(),
         eq1->getBondTypeAsDouble(), params[i], params[atomIdx], params[j]);
-    field->contribs().push_back(ForceFields::ContribPtr(contrib));
+    field->contribs().emplace_back(contrib);
   }
   i = ax2->getOtherAtomIdx(atomIdx);
   j = eq2->getOtherAtomIdx(atomIdx);
@@ -393,7 +393,7 @@ void addTrigonalBipyramidAngles(const Atom *atom, const ROMol &mol, int confId,
     contrib = new AngleBendContrib(
         field, i, atomIdx, j, ax2->getBondTypeAsDouble(),
         eq2->getBondTypeAsDouble(), params[i], params[atomIdx], params[j]);
-    field->contribs().push_back(ForceFields::ContribPtr(contrib));
+    field->contribs().emplace_back(contrib);
   }
   i = ax2->getOtherAtomIdx(atomIdx);
   j = eq3->getOtherAtomIdx(atomIdx);
@@ -401,7 +401,7 @@ void addTrigonalBipyramidAngles(const Atom *atom, const ROMol &mol, int confId,
     contrib = new AngleBendContrib(
         field, i, atomIdx, j, ax2->getBondTypeAsDouble(),
         eq3->getBondTypeAsDouble(), params[i], params[atomIdx], params[j]);
-    field->contribs().push_back(ForceFields::ContribPtr(contrib));
+    field->contribs().emplace_back(contrib);
   }
 }
 
@@ -462,7 +462,7 @@ void addNonbonded(const ROMol &mol, int confId, const AtomicParamVect &params,
                        UFF::Utils::calcNonbondedMinimum(params[i], params[j])) {
           vdWContrib *contrib;
           contrib = new vdWContrib(field, i, j, params[i], params[j]);
-          field->contribs().push_back(ForceFields::ContribPtr(contrib));
+          field->contribs().emplace_back(contrib);
         }
       }
     }
@@ -588,7 +588,7 @@ void addTorsions(const ROMol &mol, const AtomicParamVect &params,
                     atom1->getAtomicNum(), atom2->getAtomicNum(),
                     atom1->getHybridization(), atom2->getHybridization(),
                     params[idx1], params[idx2], hasSP2);
-                field->contribs().push_back(ForceFields::ContribPtr(contrib));
+                field->contribs().emplace_back(contrib);
                 contribsHere.push_back(contrib);
                 //}
               }
@@ -682,7 +682,7 @@ void addInversions(const ROMol &mol, const AtomicParamVect &params,
       InversionContrib *contrib;
       contrib = new InversionContrib(field, idx[n[0]], idx[n[1]], idx[n[2]],
                                      idx[n[3]], at2AtomicNum, isBoundToSP2O);
-      field->contribs().push_back(ForceFields::ContribPtr(contrib));
+      field->contribs().emplace_back(contrib);
     }
   }
 }
