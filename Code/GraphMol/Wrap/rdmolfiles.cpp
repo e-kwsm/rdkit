@@ -575,7 +575,7 @@ python::object addMetadataToPNGFileHelper(python::dict pymetadata,
        ++i) {
     std::string key = python::extract<std::string>(pymetadata.keys()[i]);
     std::string val = python::extract<std::string>(pymetadata.values()[i]);
-    metadata.push_back(std::make_pair(key, val));
+    metadata.emplace_back(key, val);
   }
 
   auto res = addMetadataToPNGFile(cstr, metadata);
@@ -595,7 +595,7 @@ python::object addMetadataToPNGStringHelper(python::dict pymetadata,
        ++i) {
     std::string key = python::extract<std::string>(pymetadata.keys()[i]);
     std::string val = python::extract<std::string>(pymetadata.values()[i]);
-    metadata.push_back(std::make_pair(key, val));
+    metadata.emplace_back(key, val);
   }
 
   auto res = addMetadataToPNGString(cstr, metadata);
