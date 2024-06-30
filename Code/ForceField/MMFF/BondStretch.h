@@ -13,8 +13,7 @@
 
 #include <vector>
 
-namespace ForceFields {
-namespace MMFF {
+namespace ForceFields::MMFF {
 class MMFFBond;
 class MMFFBondStretchEmpiricalRule;
 
@@ -62,6 +61,5 @@ RDKIT_FORCEFIELD_EXPORT double calcBondStretchEnergy(const double r0,
                                                      const double kb,
                                                      const double distance);
 }  // namespace Utils
-}  // namespace MMFF
-}  // namespace ForceFields
+}  // namespace ForceFields::MMFF
 #endif

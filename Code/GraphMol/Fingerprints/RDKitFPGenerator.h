@@ -14,8 +14,7 @@
 
 #include <GraphMol/Fingerprints/FingerprintGenerator.h>
 
-namespace RDKit {
-namespace RDKitFP {
+namespace RDKit::RDKitFP {
 
 class RDKIT_FINGERPRINTS_EXPORT RDKitFPArguments : public FingerprintArguments {
  public:
@@ -174,7 +173,6 @@ RDKIT_FINGERPRINTS_EXPORT FingerprintGenerator<OutputType> *getRDKitFPGenerator(
     AtomInvariantsGenerator *atomInvariantsGenerator = nullptr,
     bool ownsAtomInvGen = false);
 
-}  // namespace RDKitFP
-}  // namespace RDKit
+}  // namespace RDKit::RDKitFP
 
 #endif

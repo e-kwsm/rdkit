@@ -21,8 +21,7 @@
 #define M_PI 3.14159265358979323846
 #endif
 
-namespace ForceFields {
-namespace UFF {
+namespace ForceFields::UFF {
 
 constexpr double DEG2RAD = M_PI / 180.0;
 constexpr double RAD2DEG = 180.0 / M_PI;
@@ -143,6 +142,6 @@ class RDKIT_FORCEFIELD_EXPORT ParamCollection {
  private:
   std::map<std::string, AtomicParams> d_params;  //!< the parameter map
 };
-}  // namespace UFF
-}  // namespace ForceFields
+}  // namespace ForceFields::UFF
+
 #endif

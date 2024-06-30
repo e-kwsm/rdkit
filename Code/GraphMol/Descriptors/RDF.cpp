@@ -38,8 +38,7 @@
 
 #include <cmath>
 
-namespace RDKit {
-namespace Descriptors {
+namespace RDKit::Descriptors {
 namespace {
 MolData3Ddescriptors moldata3D;
 
@@ -211,5 +210,4 @@ void RDF(const ROMol &mol, std::vector<double> &res, int confId,
     GetRDF(dist3D, mol, conf, res);
   }
 }
-}  // namespace Descriptors
-}  // namespace RDKit
+}  // namespace RDKit::Descriptors

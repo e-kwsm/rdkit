@@ -16,8 +16,7 @@
 #include <GraphMol/MolPickler.h>
 #include <fstream>
 
-namespace RDKit {
-namespace MolStandardize {
+namespace RDKit::MolStandardize {
 
 // FragmentCatalogEntry::FragmentCatalogEntry(const ROMol *omol, const PATH_TYPE
 // &path) { 	PRECONDITION(omol, "bad mol");
@@ -75,5 +74,4 @@ void FragmentCatalogEntry::initFromString(const std::string &text) {
   initFromStream(ss);
 }
 
-}  // namespace MolStandardize
-}  // namespace RDKit
+}  // namespace RDKit::MolStandardize

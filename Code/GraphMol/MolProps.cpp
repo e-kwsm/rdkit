@@ -12,8 +12,7 @@
 #include <string>
 #include <strstream>
 
-namespace RDKit {
-namespace MolOps {
+namespace RDKit::MolOps {
 double getAvgMolWt(const ROMol &mol, bool onlyHeavy) {
   double res = 0.0;
   const PeriodicTable *table = PeriodicTable::getTable();
@@ -162,5 +161,4 @@ std::string getMolFormula(const ROMol &mol, bool separateIsotopes,
   return res.str();
 }
 
-}  // namespace MolOps
-}  // namespace RDKit
+}  // namespace RDKit::MolOps

@@ -18,8 +18,7 @@
 #include "TautomerCatalogParams.h"
 #include <GraphMol/RDKitBase.h>
 
-namespace RDKit {
-namespace MolStandardize {
+namespace RDKit::MolStandardize {
 
 class RDKIT_MOLSTANDARDIZE_EXPORT TautomerCatalogEntry
     : public RDCatalog::CatalogEntry {
@@ -53,7 +52,6 @@ class RDKIT_MOLSTANDARDIZE_EXPORT TautomerCatalogEntry
 
 };  // class TautomerCatalogEntry
 
-}  // namespace MolStandardize
-}  // namespace RDKit
+}  // namespace RDKit::MolStandardize
 
 #endif

@@ -18,8 +18,7 @@
 #include "coordgen/sketcherMinimizer.h"
 #include "coordgen/CoordgenFragmenter.h"
 
-namespace RDKit {
-namespace CoordGen {
+namespace RDKit::CoordGen {
 
 struct CoordGenParams {
   const float sketcherCoarsePrecision = 0.01f;
@@ -195,5 +194,4 @@ unsigned int addCoords(T &mol, const CoordGenParams *params = nullptr) {
   }
   return res;
 }
-}  // end of namespace CoordGen
-}  // namespace RDKit
+}  // namespace RDKit::CoordGen

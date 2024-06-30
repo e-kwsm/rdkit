@@ -12,9 +12,8 @@
 #include <GraphMol/ScaffoldNetwork/ScaffoldNetwork.h>
 
 // declarations of stuff we want to test that isn't in the public API
-namespace RDKit {
-namespace ScaffoldNetwork {
-namespace detail {
+
+namespace RDKit::ScaffoldNetwork::detail {
 RDKIT_SCAFFOLDNETWORK_EXPORT std::vector<std::pair<std::string, ROMOL_SPTR>>
 getMolFragments(const ROMol &mol, const ScaffoldNetworkParams &params);
 RDKIT_SCAFFOLDNETWORK_EXPORT ROMol *makeScaffoldGeneric(const ROMol &mol,
@@ -29,6 +28,4 @@ RDKIT_SCAFFOLDNETWORK_EXPORT ROMol *flattenMol(
 RDKIT_SCAFFOLDNETWORK_EXPORT void addMolToNetwork(
     const ROMol &mol, ScaffoldNetwork &network,
     const ScaffoldNetworkParams &params);
-}  // namespace detail
-}  // namespace ScaffoldNetwork
-}  // namespace RDKit
+}  // namespace RDKit::ScaffoldNetwork::detail

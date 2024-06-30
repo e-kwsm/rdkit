@@ -13,8 +13,7 @@
 #include "Tetrahedral.h"
 #include "../rules/Rules.h"
 
-namespace RDKit {
-namespace CIPLabeler {
+namespace RDKit::CIPLabeler {
 
 Tetrahedral::Tetrahedral(const CIPMol &mol, Atom *focus)
     : Configuration(mol, focus) {
@@ -204,5 +203,4 @@ Descriptor Tetrahedral::label(Node *node, const Rules &comp) {
   return Descriptor::UNKNOWN;
 }
 
-}  // namespace CIPLabeler
-}  // namespace RDKit
+}  // namespace RDKit::CIPLabeler

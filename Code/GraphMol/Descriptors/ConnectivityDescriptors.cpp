@@ -15,8 +15,7 @@
 #include "MolDescriptors.h"
 #include "ConnectivityDescriptors.h"
 
-namespace RDKit {
-namespace Descriptors {
+namespace RDKit::Descriptors {
 namespace detail {
 void hkDeltas(const ROMol &mol, std::vector<double> &deltas, bool force) {
   PRECONDITION(deltas.size() >= mol.getNumAtoms(), "bad vector size");
@@ -359,5 +358,4 @@ double calcPhi(const ROMol &mol) {
   auto Phi = kappa1 * kappa2 / A;
   return Phi;
 }
-}  // end of namespace Descriptors
-}  // namespace RDKit
+}  // namespace RDKit::Descriptors

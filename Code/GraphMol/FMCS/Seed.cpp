@@ -16,8 +16,7 @@
 
 #include <set>
 
-namespace RDKit {
-namespace FMCS {
+namespace RDKit::FMCS {
 
 unsigned int Seed::addAtom(const Atom *atom) {
   unsigned int i = MoleculeFragment.Atoms.size();
@@ -426,5 +425,4 @@ void Seed::computeRemainingSize(const ROMol &qmol) {
     }
   }
 }
-}  // namespace FMCS
-}  // namespace RDKit
+}  // namespace RDKit::FMCS

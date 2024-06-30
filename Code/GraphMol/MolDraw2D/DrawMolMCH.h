@@ -19,8 +19,7 @@
 #include <GraphMol/MolDraw2D/AtomSymbol.h>
 #include <GraphMol/MolDraw2D/DrawMol.h>
 
-namespace RDKit {
-namespace MolDraw2D_detail {
+namespace RDKit::MolDraw2D_detail {
 
 class DrawMolMCH : public DrawMol {
  public:
@@ -70,7 +69,6 @@ class DrawMolMCH : public DrawMol {
   const std::map<int, int> &highlightLinewidthMultipliers_;
 };
 
-}  // namespace MolDraw2D_detail
-}  // namespace RDKit
+}  // namespace RDKit::MolDraw2D_detail
 
 #endif  // RDKIT_DRAWMOLMCH_H

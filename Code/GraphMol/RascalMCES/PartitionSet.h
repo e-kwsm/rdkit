@@ -18,9 +18,7 @@
 #include <boost/dynamic_bitset.hpp>
 #include <RDGeneral/BoostEndInclude.h>
 
-namespace RDKit {
-
-namespace RascalMCES {
+namespace RDKit::RascalMCES {
 
 class PartitionSet {
  public:
@@ -69,7 +67,6 @@ class PartitionSet {
 
   void decrementVertexCounts(int vtxNum);
 };
-}  // namespace RascalMCES
-}  // namespace RDKit
+}  // namespace RDKit::RascalMCES
 
 #endif  // RASCALMCES_PARTITION_SET_H

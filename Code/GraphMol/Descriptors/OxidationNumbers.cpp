@@ -18,8 +18,7 @@
 #include <GraphMol/RDKitBase.h>
 #include <GraphMol/Descriptors/OxidationNumbers.h>
 
-namespace RDKit {
-namespace Descriptors {
+namespace RDKit::Descriptors {
 
 namespace {
 int calcOxidationNumberByEN(const Atom *atom) {
@@ -98,5 +97,4 @@ void calcOxidationNumbers(const ROMol &mol) {
   }
 }
 
-}  // end of namespace Descriptors
-}  // end of namespace RDKit
+}  // namespace RDKit::Descriptors

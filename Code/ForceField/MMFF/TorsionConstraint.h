@@ -12,9 +12,7 @@
 #define RD_MMFFTORSIONCONSTRAINT_H
 #include <ForceField/TorsionConstraint.h>
 
-namespace ForceFields {
-namespace MMFF {
+namespace ForceFields::MMFF {
 using TorsionConstraintContrib = ForceFields::TorsionConstraintContrib;
-}  // namespace MMFF
-}  // namespace ForceFields
+}  // namespace ForceFields::MMFF
 #endif

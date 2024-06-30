@@ -39,8 +39,7 @@
 #include <GraphMol/Fingerprints/FingerprintGenerator.h>
 #include <GraphMol/Fingerprints/MorganGenerator.h>
 
-namespace RDKit {
-namespace MorganFingerprints {
+namespace RDKit::MorganFingerprints {
 
 SparseIntVect<uint32_t> *getFingerprint(
     const ROMol &mol, unsigned int radius, std::vector<uint32_t> *invariants,
@@ -154,5 +153,4 @@ ExplicitBitVect *getFingerprintAsBitVect(
   return res;
 }
 
-}  // end of namespace MorganFingerprints
-}  // end of namespace RDKit
+}  // namespace RDKit::MorganFingerprints

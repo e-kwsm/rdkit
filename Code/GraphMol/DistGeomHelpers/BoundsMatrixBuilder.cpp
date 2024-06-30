@@ -37,8 +37,7 @@ constexpr double H_BOND_LENGTH = 1.8;
 const double MAX_UPPER = 1000.0;
 static const double minMacrocycleRingSize = 9;
 
-namespace RDKit {
-namespace DGeomHelpers {
+namespace RDKit::DGeomHelpers {
 // forward declarations:
 typedef boost::shared_ptr<RDNumeric::IntSymmMatrix> SymmIntMatPtr;
 typedef boost::shared_ptr<RDNumeric::DoubleSymmMatrix> SymmDoubleMatPtr;
@@ -208,11 +207,9 @@ void set15Bounds(const ROMol &mol, DistGeom::BoundsMatPtr mmat,
 */
 void setLowerBoundVDW(const ROMol &mol, DistGeom::BoundsMatPtr mmat,
                       bool useTopolScaling = true);
-}  // namespace DGeomHelpers
-}  // namespace RDKit
+}  // namespace RDKit::DGeomHelpers
 
-namespace RDKit {
-namespace DGeomHelpers {
+namespace RDKit::DGeomHelpers {
 void _checkAndSetBounds(unsigned int i, unsigned int j, double lb, double ub,
                         DistGeom::BoundsMatPtr mmat, bool setIfBetter = false) {
   // get the existing bounds
@@ -1912,5 +1909,4 @@ void set15Bounds(const ROMol &mol, DistGeom::BoundsMatPtr mmat,
                        distMatrix);
   }
 }
-}  // namespace DGeomHelpers
-}  // namespace RDKit
+}  // namespace RDKit::DGeomHelpers

@@ -12,8 +12,7 @@
 
 #include "Configuration.h"
 
-namespace RDKit {
-namespace CIPLabeler {
+namespace RDKit::CIPLabeler {
 
 class AtropisomerBond : public Configuration {
  public:
@@ -42,5 +41,4 @@ class AtropisomerBond : public Configuration {
   std::vector<unsigned int> d_ranked_anchors;
 };
 
-}  // namespace CIPLabeler
-}  // namespace RDKit
+}  // namespace RDKit::CIPLabeler

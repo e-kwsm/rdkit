@@ -10,8 +10,7 @@
 //
 #pragma once
 
-namespace RDKit {
-namespace CIPLabeler {
+namespace RDKit::CIPLabeler {
 
 /**
  * Holds some properties that are determined when sorting/prioritising
@@ -46,5 +45,4 @@ class Priority {
   bool d_pseudoAsym;
 };
 
-}  // namespace CIPLabeler
-}  // namespace RDKit
+}  // namespace RDKit::CIPLabeler
