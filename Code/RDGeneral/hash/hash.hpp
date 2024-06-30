@@ -54,10 +54,10 @@ std::hash_result_t hash_value(boost::ulong_long_type);
 
 #if !BOOST_WORKAROUND(__DMC__, <= 0x848)
 template <class T>
-std::hash_result_t hash_value(T* const&);
+std::hash_result_t hash_value(T *const &);
 #else
 template <class T>
-std::hash_result_t hash_value(T*);
+std::hash_result_t hash_value(T *);
 #endif
 
 #if !defined(BOOST_NO_FUNCTION_TEMPLATE_ORDERING)
@@ -73,24 +73,24 @@ std::hash_result_t hash_value(double v);
 std::hash_result_t hash_value(long double v);
 
 template <class A, class B>
-std::hash_result_t hash_value(std::pair<A, B> const&);
+std::hash_result_t hash_value(std::pair<A, B> const &);
 template <class T, class A>
-std::hash_result_t hash_value(std::vector<T, A> const&);
+std::hash_result_t hash_value(std::vector<T, A> const &);
 template <class T, class A>
-std::hash_result_t hash_value(std::list<T, A> const& v);
+std::hash_result_t hash_value(std::list<T, A> const &v);
 template <class T, class A>
-std::hash_result_t hash_value(std::deque<T, A> const& v);
+std::hash_result_t hash_value(std::deque<T, A> const &v);
 template <class K, class C, class A>
-std::hash_result_t hash_value(std::set<K, C, A> const& v);
+std::hash_result_t hash_value(std::set<K, C, A> const &v);
 template <class K, class C, class A>
-std::hash_result_t hash_value(std::multiset<K, C, A> const& v);
+std::hash_result_t hash_value(std::multiset<K, C, A> const &v);
 template <class K, class T, class C, class A>
-std::hash_result_t hash_value(std::map<K, T, C, A> const& v);
+std::hash_result_t hash_value(std::map<K, T, C, A> const &v);
 template <class K, class T, class C, class A>
-std::hash_result_t hash_value(std::multimap<K, T, C, A> const& v);
+std::hash_result_t hash_value(std::multimap<K, T, C, A> const &v);
 
 template <class T>
-std::hash_result_t hash_value(std::complex<T> const&);
+std::hash_result_t hash_value(std::complex<T> const &);
 
 // Implementation
 
@@ -194,10 +194,10 @@ inline std::hash_result_t hash_value(boost::ulong_long_type v) {
 // Implementation by Alberto Barbati and Dave Harris.
 #if !BOOST_WORKAROUND(__DMC__, <= 0x848)
 template <class T>
-std::hash_result_t hash_value(T* const& v)
+std::hash_result_t hash_value(T *const &v)
 #else
 template <class T>
-std::hash_result_t hash_value(T* v)
+std::hash_result_t hash_value(T *v)
 #endif
 {
   auto x = static_cast<std::hash_result_t>(reinterpret_cast<std::ptrdiff_t>(v));
@@ -207,10 +207,10 @@ std::hash_result_t hash_value(T* v)
 
 #if BOOST_WORKAROUND(BOOST_MSVC, < 1300)
 template <class T>
-inline void hash_combine(std::hash_result_t& seed, T& v)
+inline void hash_combine(std::hash_result_t &seed, T &v)
 #else
 template <class T>
-inline void hash_combine(std::hash_result_t& seed, T const& v)
+inline void hash_combine(std::hash_result_t &seed, T const &v)
 #endif
 {
   gboost::hash<T> hasher;
@@ -229,7 +229,7 @@ inline std::hash_result_t hash_range(It first, It last) {
 }
 
 template <class It>
-inline void hash_range(std::hash_result_t& seed, It first, It last) {
+inline void hash_range(std::hash_result_t &seed, It first, It last) {
   for (; first != last; ++first) {
     hash_combine(seed, *first);
   }
@@ -237,7 +237,7 @@ inline void hash_range(std::hash_result_t& seed, It first, It last) {
 
 #if BOOST_WORKAROUND(__BORLANDC__, BOOST_TESTED_AT(0x551))
 template <class T>
-inline std::hash_result_t hash_range(T* first, T* last) {
+inline std::hash_result_t hash_range(T *first, T *last) {
   std::hash_result_t seed = 0;
 
   for (; first != last; ++first) {
@@ -249,7 +249,7 @@ inline std::hash_result_t hash_range(T* first, T* last) {
 }
 
 template <class T>
-inline void hash_range(std::hash_result_t& seed, T* first, T* last) {
+inline void hash_range(std::hash_result_t &seed, T *first, T *last) {
   for (; first != last; ++first) {
     gboost::hash<T> hasher;
     seed ^= hasher(*first) + 0x9e3779b9 + (seed << 6) + (seed >> 2);
@@ -282,7 +282,7 @@ inline std::hash_result_t hash_value(long double v) {
 }
 
 template <class A, class B>
-std::hash_result_t hash_value(std::pair<A, B> const& v) {
+std::hash_result_t hash_value(std::pair<A, B> const &v) {
   std::hash_result_t seed = 0;
   hash_combine(seed, v.first);
   hash_combine(seed, v.second);
@@ -290,42 +290,42 @@ std::hash_result_t hash_value(std::pair<A, B> const& v) {
 }
 
 template <class T, class A>
-std::hash_result_t hash_value(std::vector<T, A> const& v) {
+std::hash_result_t hash_value(std::vector<T, A> const &v) {
   return hash_range(v.begin(), v.end());
 }
 
 template <class T, class A>
-std::hash_result_t hash_value(std::list<T, A> const& v) {
+std::hash_result_t hash_value(std::list<T, A> const &v) {
   return hash_range(v.begin(), v.end());
 }
 
 template <class T, class A>
-std::hash_result_t hash_value(std::deque<T, A> const& v) {
+std::hash_result_t hash_value(std::deque<T, A> const &v) {
   return hash_range(v.begin(), v.end());
 }
 
 template <class K, class C, class A>
-std::hash_result_t hash_value(std::set<K, C, A> const& v) {
+std::hash_result_t hash_value(std::set<K, C, A> const &v) {
   return hash_range(v.begin(), v.end());
 }
 
 template <class K, class C, class A>
-std::hash_result_t hash_value(std::multiset<K, C, A> const& v) {
+std::hash_result_t hash_value(std::multiset<K, C, A> const &v) {
   return hash_range(v.begin(), v.end());
 }
 
 template <class K, class T, class C, class A>
-std::hash_result_t hash_value(std::map<K, T, C, A> const& v) {
+std::hash_result_t hash_value(std::map<K, T, C, A> const &v) {
   return hash_range(v.begin(), v.end());
 }
 
 template <class K, class T, class C, class A>
-std::hash_result_t hash_value(std::multimap<K, T, C, A> const& v) {
+std::hash_result_t hash_value(std::multimap<K, T, C, A> const &v) {
   return hash_range(v.begin(), v.end());
 }
 
 template <class T>
-std::hash_result_t hash_value(std::complex<T> const& v) {
+std::hash_result_t hash_value(std::complex<T> const &v) {
   gboost::hash<T> hasher;
   std::hash_result_t seed = hasher(v.imag());
   seed ^= hasher(v.real()) + (seed << 6) + (seed >> 2);
@@ -352,7 +352,7 @@ std::hash_result_t hash_value(std::complex<T> const& v) {
   struct hash<type>                                                            \
       : public boost::functional::detail::unary_function<type,                 \
                                                          std::hash_result_t> { \
-    std::hash_result_t operator()(type const& v) const {                       \
+    std::hash_result_t operator()(type const &v) const {                       \
       return gboost::hash_value(v);                                            \
     }                                                                          \
   };
@@ -381,7 +381,7 @@ std::hash_result_t hash_value(std::complex<T> const& v) {
   struct hash<type>                                                            \
       : public boost::functional::detail::unary_function<type,                 \
                                                          std::hash_result_t> { \
-    std::hash_result_t operator()(type const& v) const {                       \
+    std::hash_result_t operator()(type const &v) const {                       \
       return gboost::hash_value(v);                                            \
     }                                                                          \
   };                                                                           \
@@ -390,7 +390,7 @@ std::hash_result_t hash_value(std::complex<T> const& v) {
   struct hash<const type>                                                      \
       : public boost::functional::detail::unary_function<const type,           \
                                                          std::hash_result_t> { \
-    std::hash_result_t operator()(type const& v) const {                       \
+    std::hash_result_t operator()(type const &v) const {                       \
       return gboost::hash_value(v);                                            \
     }                                                                          \
   };
@@ -419,9 +419,10 @@ BOOST_HASH_SPECIALIZE(long double)
 
 #if !defined(BOOST_NO_TEMPLATE_PARTIAL_SPECIALIZATION)
 template <class T>
-struct hash<T*>
-    : public boost::functional::detail::unary_function<T*, std::hash_result_t> {
-  std::hash_result_t operator()(T* v) const {
+struct hash<T *>
+    : public boost::functional::detail::unary_function<T *,
+                                                       std::hash_result_t> {
+  std::hash_result_t operator()(T *v) const {
 #if !BOOST_WORKAROUND(__SUNPRO_CC, <= 0x590)
     return gboost::hash_value(v);
 #else

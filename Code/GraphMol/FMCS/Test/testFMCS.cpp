@@ -289,7 +289,7 @@ void testFileMCSB(const char *test, unsigned int timeout = 30,
     if (fs) {
       fprintf(fs, "\n//TEST %u\n", n + 1);
     }
-    for (const auto& mid : *tc) {
+    for (const auto &mid : *tc) {
       auto id = molIdMap.find(mid);
       if (molIdMap.end() == id) {
         continue;

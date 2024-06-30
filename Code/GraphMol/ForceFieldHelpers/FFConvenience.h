@@ -28,7 +28,8 @@ inline void OptimizeMoleculeConfsHelper_(
                "res->size() must be >= mol->getNumConformers()");
   unsigned int i = 0;
   ff.positions().resize(mol->getNumAtoms());
-  for (auto cit = mol->beginConformers(); cit != mol->endConformers(); ++cit, ++i) {
+  for (auto cit = mol->beginConformers(); cit != mol->endConformers();
+       ++cit, ++i) {
     if (i % numThreads != threadIdx) {
       continue;
     }
