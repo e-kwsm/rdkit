@@ -90,7 +90,7 @@ class RDKIT_RDGENERAL_EXPORT Dict {
 
         if (!target) {
           // need to create blank entry and copy
-          _data.push_back(Pair(opair.key));
+          _data.emplace_back(opair.key);
           copy_rdvalue(_data.back().val, opair.val);
         } else {
           // just copy

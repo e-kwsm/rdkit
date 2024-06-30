@@ -4310,10 +4310,10 @@ void testGithub3305() {
       auto match_begin = std::sregex_iterator(text.begin(), text.end(), regex);
       std::vector<Point2D> actual;
       std::smatch match = *match_begin;
-      actual.push_back(Point2D(std::stod(match[1]), std::stod(match[2])));
-      actual.push_back(Point2D(std::stod(match[3]), std::stod(match[4])));
-      actual.push_back(Point2D(std::stod(match[5]), std::stod(match[6])));
-      actual.push_back(Point2D(std::stod(match[7]), std::stod(match[8])));
+      actual.emplace_back(std::stod(match[1]), std::stod(match[2]));
+      actual.emplace_back(std::stod(match[3]), std::stod(match[4]));
+      actual.emplace_back(std::stod(match[5]), std::stod(match[6]));
+      actual.emplace_back(std::stod(match[7]), std::stod(match[8]));
 
       int num_matched = 0;
       for (const auto &e : expected) {

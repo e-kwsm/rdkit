@@ -360,7 +360,7 @@ void cleanUpOrganometallics(RWMol &mol) {
   RDKit::Canon::rankMolAtoms(mol, ranks);
   std::vector<std::pair<int, int>> atom_ranks;
   for (size_t i = 0; i < ranks.size(); ++i) {
-    atom_ranks.push_back(std::make_pair(i, ranks[i]));
+    atom_ranks.emplace_back(i, ranks[i]);
   }
   std::sort(atom_ranks.begin(), atom_ranks.end(),
             [](const std::pair<int, int> &p1, std::pair<int, int> &p2) -> bool {
@@ -1091,7 +1091,7 @@ std::vector<std::vector<unsigned int>> contiguousAtoms(
     if (doneAts[allAts[i]]) {
       continue;
     }
-    contigAts.push_back(std::vector<unsigned int>());
+    contigAts.emplace_back();
     std::list<const Atom *> toDo{mol.getAtomWithIdx(allAts[i])};
     while (!toDo.empty()) {
       auto nextAt = toDo.front();

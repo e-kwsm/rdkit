@@ -1383,7 +1383,7 @@ void findAtomNeighborDirHelper(const ROMol &mol, const Atom *atom,
         }
       }
       Atom *nbrAtom = bond->getOtherAtom(atom);
-      neighbors.push_back(std::make_pair(nbrAtom->getIdx(), dir));
+      neighbors.emplace_back(nbrAtom->getIdx(), dir);
     }
   }
   if (!seenDir) {
@@ -1715,7 +1715,7 @@ std::pair<bool, bool> isAtomPotentialChiralCenter(
       boost::dynamic_bitset<> codesSeen(mol.getNumAtoms());
       for (const auto bond : mol.atomBonds(atom)) {
         unsigned int otherIdx = bond->getOtherAtom(atom)->getIdx();
-        nbrs.push_back(std::make_pair(ranks[otherIdx], bond->getIdx()));
+        nbrs.emplace_back(ranks[otherIdx], bond->getIdx());
         if (!Chirality::detail::bondAffectsAtomChirality(bond, atom)) {
           continue;
         }
@@ -3647,7 +3647,7 @@ void setDoubleBondNeighborDirections(ROMol &mol, const Conformer *conf) {
     if (!(mol.getRingInfo()->numBondRings(dblBond->getIdx()))) {
       countHere *= 10;
     }
-    orderedBondsInPlay.push_back(std::make_pair(countHere, dblBond));
+    orderedBondsInPlay.emplace_back(countHere, dblBond);
   }
   std::sort(orderedBondsInPlay.begin(), orderedBondsInPlay.end());
 

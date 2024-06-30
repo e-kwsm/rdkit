@@ -69,12 +69,12 @@ TEST_CASE("Compare", "[shapehelpers]") {
 
   m2 = v2::FileParsers::MolFromMolFile(fname2);
   MatchVectType atomMap;
-  atomMap.push_back(std::pair<int, int>(18, 27));
-  atomMap.push_back(std::pair<int, int>(13, 23));
-  atomMap.push_back(std::pair<int, int>(21, 14));
-  atomMap.push_back(std::pair<int, int>(24, 7));
-  atomMap.push_back(std::pair<int, int>(9, 19));
-  atomMap.push_back(std::pair<int, int>(16, 30));
+  atomMap.emplace_back(18, 27);
+  atomMap.emplace_back(13, 23);
+  atomMap.emplace_back(21, 14);
+  atomMap.emplace_back(24, 7);
+  atomMap.emplace_back(9, 19);
+  atomMap.emplace_back(16, 30);
   rmsd = MolAlign::alignMol(*m2, *m, 0, 0, &atomMap);
   dist = MolShapes::tanimotoDistance(*m, *m2);
 

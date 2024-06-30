@@ -353,7 +353,7 @@ void fragmentOnSomeBonds(
     }
     std::vector<unsigned int> *lCutsPerAtom = nullptr;
     if (nCutsPerAtom) {
-      nCutsPerAtom->push_back(std::vector<unsigned int>(mol.getNumAtoms()));
+      nCutsPerAtom->emplace_back(mol.getNumAtoms());
       lCutsPerAtom = &(nCutsPerAtom->back());
     }
     ROMol *nm = fragmentOnBonds(mol, fragmentHere, addDummies, dummyLabelsHere,
