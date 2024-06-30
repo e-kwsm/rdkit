@@ -53,7 +53,7 @@ class RDKIT_FMCS_EXPORT SeedSet {  // sorted by amount of bonds
       }
     }
     auto it = Seeds.insert(where, EmptySeed);
-    Value& val = *it;
+    Value &val = *it;
     val.setMoleculeFragment(seed);
 
     return val;
