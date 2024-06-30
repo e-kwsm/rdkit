@@ -14,6 +14,7 @@
 #include <GraphMol/SmilesParse/SmilesParse.h>
 #include <GraphMol/FileParsers/MolSupplier.h>
 #include <RDGeneral/RDLog.h>
+#include <cmath>
 #include <vector>
 
 #include <GraphMol/Descriptors/BCUT.h>
@@ -21,7 +22,9 @@ using namespace RDKit;
 
 // from knuth.
 bool feq(float a, float b, float epsilon = 1e-6) {
-  return fabs(a - b) <= ((fabs(a) < fabs(b) ? fabs(b) : fabs(a)) * epsilon);
+  return std::fabs(a - b) <=
+         ((std::fabs(a) < std::fabs(b) ? std::fabs(b) : std::fabs(a)) *
+          epsilon);
 }
 
 void test1() {
