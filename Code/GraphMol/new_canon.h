@@ -26,8 +26,7 @@
 
 // #define VERBOSE_CANON 1
 
-namespace RDKit {
-namespace Canon {
+namespace RDKit::Canon {
 struct canon_atom;
 
 struct RDKIT_GRAPHMOL_EXPORT bondholder {
@@ -908,5 +907,4 @@ void rankWithFunctor(T &ftor, bool breakTies, int *order,
 
 }  // namespace detail
 
-}  // namespace Canon
-}  // namespace RDKit
+}  // namespace RDKit::Canon
