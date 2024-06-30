@@ -273,7 +273,7 @@ RDKit::INT_VECT findNextRingToEmbed(const RDKit::INT_VECT &doneRings,
   // these are most likely bridged systems, which are screwed up anyway, might
   // as well screw them up later if we do not have a system with two rings in
   // common then we will return the ring with max, common atoms
-  PRECONDITION(doneRings.size() > 0, "");
+  PRECONDITION(!doneRings.empty(), "");
   PRECONDITION(fusedRings.size() > 1, "");
 
   RDKit::INT_VECT commonAtoms, res, doneAtoms, notDone;
@@ -353,7 +353,7 @@ RDKit::INT_VECT findNextRingToEmbed(const RDKit::INT_VECT &doneRings,
     }
   }
 
-  POSTCONDITION(res.size() > 0, "");
+  POSTCONDITION(!res.empty(), "");
   return res;
 }
 

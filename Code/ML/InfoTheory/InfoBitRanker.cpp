@@ -55,7 +55,7 @@ void InfoBitRanker::setMaskBits(RDKit::INT_VECT &maskBits) {
 
 bool InfoBitRanker::BiasCheckBit(RDKit::USHORT *resMat) const {
   PRECONDITION(resMat, "bad results pointer");
-  if ((d_biasList.size() == 0) || (d_biasList.size() == d_classes)) {
+  if (d_biasList.empty() || (d_biasList.size() == d_classes)) {
     // we will accept the bit
     return true;
   }
@@ -234,7 +234,7 @@ double *InfoBitRanker::getTopN(unsigned int num) {
 
   for (int i = num - 1; i >= 0; i--) {
     offset = i * ncols;
-    if (topN.size() == 0) {
+    if (topN.empty()) {
       if (dp_maskBits) {
         bid = maskBits[i];
       } else {

@@ -154,12 +154,12 @@ bool SubstructMatch(T1 &mol, const T2 &query, MatchVectType &matchVect,
   params.useQueryQueryMatches = useQueryQueryMatches;
   params.maxMatches = 1;
   std::vector<MatchVectType> matchVects = SubstructMatch(mol, query, params);
-  if (matchVects.size()) {
+  if (!matchVects.empty()) {
     matchVect = matchVects.front();
   } else {
     matchVect.clear();
   }
-  return matchVect.size() != 0;
+  return !matchVect.empty();
 };
 
 //! Find all substructure matches for a query
@@ -219,12 +219,12 @@ inline bool SubstructMatch(ResonanceMolSupplier &resMolSupplier,
   params.maxMatches = 1;
   std::vector<MatchVectType> matchVects =
       SubstructMatch(resMolSupplier, query, params);
-  if (matchVects.size()) {
+  if (!matchVects.empty()) {
     matchVect = matchVects.front();
   } else {
     matchVect.clear();
   }
-  return matchVect.size() != 0;
+  return !matchVect.empty();
 }
 
 template <>

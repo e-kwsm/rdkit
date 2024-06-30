@@ -145,7 +145,7 @@ const CrippenParamCollection *CrippenParamCollection::getParams(
 CrippenParamCollection::CrippenParamCollection(const std::string &paramData) {
   std::string params;
   boost::char_separator<char> tabSep("\t", "", boost::keep_empty_tokens);
-  if (paramData == "") {
+  if (paramData.empty()) {
     params = defaultParamData;
   } else {
     params = paramData;
@@ -165,13 +165,13 @@ CrippenParamCollection::CrippenParamCollection(const std::string &paramData) {
       ++token;
       paramObj.smarts = *token;
       ++token;
-      if (*token != "") {
+      if (!(*token).empty()) {
         paramObj.logp = boost::lexical_cast<double>(*token);
       } else {
         paramObj.logp = 0.0;
       }
       ++token;
-      if (*token != "") {
+      if (!(*token).empty()) {
         try {
           paramObj.mr = boost::lexical_cast<double>(*token);
         } catch (boost::bad_lexical_cast &) {

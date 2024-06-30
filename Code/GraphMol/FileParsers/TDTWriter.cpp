@@ -126,7 +126,7 @@ void TDTWriter::write(const ROMol &mol, int confId) {
   }
   // now write the properties
   STR_VECT_CI pi;
-  if (d_props.size() > 0) {
+  if (!d_props.empty()) {
     // check if we have any properties the user specified to write out
     // in which loop over them and write them out
     for (pi = d_props.begin(); pi != d_props.end(); pi++) {

@@ -45,7 +45,7 @@ bool getAtropisomerAtomsAndBonds(const Bond *bond,
       }
       atomsAndBondVects[bondAtomIndex].second.push_back(nbrBond);
     }
-    if (atomsAndBondVects[bondAtomIndex].second.size() == 0) {
+    if (atomsAndBondVects[bondAtomIndex].second.empty()) {
       return false;  // no neighbor bonds found
     }
 
@@ -199,7 +199,7 @@ bool getAtropIsomerEndVect(const AtropAtomAndBondVec &atomAndBondVec,
                            const RDGeom::Point3D &zAxis, const Conformer *conf,
                            RDGeom::Point3D &bondVec) {
   PRECONDITION(
-      atomAndBondVec.second.size() > 0 && atomAndBondVec.second.size() < 3,
+      !atomAndBondVec.second.empty() && atomAndBondVec.second.size() < 3,
       "bad bond size");
   PRECONDITION(atomAndBondVec.second[0], "bad first bond");
   PRECONDITION(atomAndBondVec.second.size() == 1 || atomAndBondVec.second[1],
@@ -1066,7 +1066,7 @@ bool WedgeBondFromAtropisomerOneBond3d(
   // based on their bond dir PRESENCE, but this endures that the values are
   // correct.
 
-  if (useBonds.size() > 0) {
+  if (!useBonds.empty()) {
     for (auto useBond : useBonds) {
       useBond->setBondDir(getBondDirForAtropisomer3d(useBond, conf));
     }

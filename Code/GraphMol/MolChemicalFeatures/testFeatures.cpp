@@ -373,7 +373,7 @@ void test5() {
 
   featSPtrs = factory->getFeaturesForMol(*testMol, "NotPresent");
   BOOST_LOG(rdErrorLog) << "6" << std::endl;
-  TEST_ASSERT(featSPtrs.size() == 0);
+  TEST_ASSERT(featSPtrs.empty());
 
   delete testMol;
   delete factory;

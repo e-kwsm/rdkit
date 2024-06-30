@@ -337,7 +337,7 @@ void checkChemDrawTetrahedralGeometries(RWMol &mol) {
     std::string cipcode;
     if (cipatom.second->getPropIfPresent<std::string>(
             common_properties::_CIPCode, cipcode)) {
-      if (cipcode.size() && cipcode[0] != cipatom.first) {
+      if (!cipcode.empty() && cipcode[0] != cipatom.first) {
         // need to swap
         if (cipatom.second->getChiralTag() ==
             Atom::ChiralType::CHI_TETRAHEDRAL_CW) {

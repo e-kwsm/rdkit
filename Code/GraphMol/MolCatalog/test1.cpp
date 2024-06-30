@@ -76,24 +76,24 @@ void test1() {
   TEST_ASSERT(mcat->getEntryWithBitId(1)->getMol()->getNumAtoms() == 1);
   TEST_ASSERT(mcat->getEntryWithBitId(2)->getMol()->getNumAtoms() == 3);
 
-  TEST_ASSERT(mcat->getDownEntryList(0).size() == 0);
-  TEST_ASSERT(mcat->getDownEntryList(1).size() == 0);
-  TEST_ASSERT(mcat->getDownEntryList(2).size() == 0);
+  TEST_ASSERT(mcat->getDownEntryList(0).empty());
+  TEST_ASSERT(mcat->getDownEntryList(1).empty());
+  TEST_ASSERT(mcat->getDownEntryList(2).empty());
 
   TEST_ASSERT(mcat->getEntriesOfOrder(0).size() == 1);
   TEST_ASSERT(mcat->getEntriesOfOrder(1).size() == 2);
-  TEST_ASSERT(mcat->getEntriesOfOrder(2).size() == 0);
+  TEST_ASSERT(mcat->getEntriesOfOrder(2).empty());
 
   mcat->addEdge(0, 1);
   mcat->addEdge(0, 2);
 
   TEST_ASSERT(mcat->getDownEntryList(0).size() == 2);
-  TEST_ASSERT(mcat->getDownEntryList(1).size() == 0);
-  TEST_ASSERT(mcat->getDownEntryList(2).size() == 0);
+  TEST_ASSERT(mcat->getDownEntryList(1).empty());
+  TEST_ASSERT(mcat->getDownEntryList(2).empty());
 
   TEST_ASSERT(mcat->getEntriesOfOrder(0).size() == 1);
   TEST_ASSERT(mcat->getEntriesOfOrder(1).size() == 2);
-  TEST_ASSERT(mcat->getEntriesOfOrder(2).size() == 0);
+  TEST_ASSERT(mcat->getEntriesOfOrder(2).empty());
 
   pkl = mcat->Serialize();
   delete mcat;
@@ -102,12 +102,12 @@ void test1() {
   TEST_ASSERT(mcat->getNumEntries() == 3);
   TEST_ASSERT(mcat->getFPLength() == 3);
   TEST_ASSERT(mcat->getDownEntryList(0).size() == 2);
-  TEST_ASSERT(mcat->getDownEntryList(1).size() == 0);
-  TEST_ASSERT(mcat->getDownEntryList(2).size() == 0);
+  TEST_ASSERT(mcat->getDownEntryList(1).empty());
+  TEST_ASSERT(mcat->getDownEntryList(2).empty());
 
   TEST_ASSERT(mcat->getEntriesOfOrder(0).size() == 1);
   TEST_ASSERT(mcat->getEntriesOfOrder(1).size() == 2);
-  TEST_ASSERT(mcat->getEntriesOfOrder(2).size() == 0);
+  TEST_ASSERT(mcat->getEntriesOfOrder(2).empty());
 
   TEST_ASSERT(mcat->getEntryWithBitId(0)->getMol()->getNumAtoms() == 10);
   TEST_ASSERT(mcat->getEntryWithBitId(1)->getMol()->getNumAtoms() == 1);

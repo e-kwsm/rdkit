@@ -89,11 +89,11 @@ void SmilesWriter::dumpHeader() const {
   CHECK_INVARIANT(dp_ostream, "no output stream");
   if (df_includeHeader) {
     (*dp_ostream) << "SMILES" << d_delim;
-    if (d_nameHeader != "") {
+    if (!d_nameHeader.empty()) {
       (*dp_ostream) << d_nameHeader << d_delim;
     }
 
-    if (d_props.size() > 0) {
+    if (!d_props.empty()) {
       auto pi = d_props.begin();
       (*dp_ostream) << (*pi);
       pi++;
@@ -122,9 +122,8 @@ void SmilesWriter::write(const ROMol &mol, int) {
   std::string name = "";
   std::string smi = MolToSmiles(mol, df_isomericSmiles, df_kekuleSmiles);
   (*dp_ostream) << smi;
-  if (d_nameHeader != "") {
-    if (!mol.getPropIfPresent(common_properties::_Name, name) ||
-        name.size() == 0) {
+  if (!d_nameHeader.empty()) {
+    if (!mol.getPropIfPresent(common_properties::_Name, name) || name.empty()) {
       std::stringstream tstream;
       tstream << d_molid;
       name = tstream.str();

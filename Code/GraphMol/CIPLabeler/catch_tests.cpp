@@ -888,7 +888,7 @@ TEST_CASE("upsertTest", "[basic]") {
     smilesWriteParams.canonical = true;
     auto smilesOut =
         MolToCXSmiles(*m, smilesWriteParams, flags, RestoreBondDirOptionClear);
-    CHECK(smilesOut != "");
+    CHECK(!smilesOut.empty());
   }
 }
 

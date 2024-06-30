@@ -278,10 +278,10 @@ int mmffValidationSuite(int argc, char *argv[]) {
   std::cerr << "Official MMFF validation suite." << std::endl;
   std::string pathName = getenv("RDBASE");
   pathName += "/Code/ForceField/MMFF/test_data/";
-  if (molFile != "") {
+  if (!molFile.empty()) {
     ffVariant = ((molFile.substr(0, 7) == "MMFF94s") ? "MMFF94s" : "MMFF94");
   }
-  if (ffVariant == "") {
+  if (ffVariant.empty()) {
     ffVec.push_back("MMFF94");
     if (fullTest) {
       ffVec.push_back("MMFF94s");
@@ -291,11 +291,11 @@ int mmffValidationSuite(int argc, char *argv[]) {
   }
   std::fstream rdkFStream;
   std::fstream refFStream;
-  if (rdk == "") {
+  if (rdk.empty()) {
     rdk = pathName + "testMMFFForceField.log";
   }
   bool firstTest = true;
-  if (molType == "") {
+  if (molType.empty()) {
     molTypeVec.push_back("sdf");
     molTypeVec.push_back("smi");
   } else {
@@ -307,7 +307,7 @@ int mmffValidationSuite(int argc, char *argv[]) {
     for (auto &ffIt : ffVec) {
       ref = pathName + ffIt + "_reference.log";
       molFileVec.clear();
-      if (molFile == "") {
+      if (molFile.empty()) {
         molFileVec.push_back(pathName + ffIt + "_dative." + molTypeIt);
         molFileVec.push_back(pathName + ffIt + "_hypervalent." + molTypeIt);
       } else {
@@ -509,7 +509,7 @@ int mmffValidationSuite(int argc, char *argv[]) {
             n = 0;
             while ((!found) && (!(std::getline(rdkFStream, rdkLine).rdstate() &
                                   std::ifstream::failbit))) {
-              found = (!(rdkLine.length()));
+              found = rdkLine.empty();
               if (found) {
                 break;
               }
@@ -557,7 +557,7 @@ int mmffValidationSuite(int argc, char *argv[]) {
             n = 0;
             while ((!found) && (!(std::getline(refFStream, refLine).rdstate() &
                                   std::ifstream::failbit))) {
-              found = (!(refLine.length()));
+              found = refLine.empty();
               if (found) {
                 break;
               }
@@ -667,7 +667,7 @@ int mmffValidationSuite(int argc, char *argv[]) {
             n = 0;
             while ((!found) && (!(std::getline(rdkFStream, rdkLine).rdstate() &
                                   std::ifstream::failbit))) {
-              found = (!(rdkLine.length()));
+              found = rdkLine.empty();
               if (found) {
                 break;
               }
@@ -713,7 +713,7 @@ int mmffValidationSuite(int argc, char *argv[]) {
             n = 0;
             while ((!found) && (!(std::getline(refFStream, refLine).rdstate() &
                                   std::ifstream::failbit))) {
-              found = (!(refLine.length()));
+              found = refLine.empty();
               if (found) {
                 break;
               }
@@ -823,7 +823,7 @@ int mmffValidationSuite(int argc, char *argv[]) {
             n = 0;
             while ((!found) && (!(std::getline(rdkFStream, rdkLine).rdstate() &
                                   std::ifstream::failbit))) {
-              found = (!(rdkLine.length()));
+              found = rdkLine.empty();
               if (found) {
                 break;
               }
@@ -871,7 +871,7 @@ int mmffValidationSuite(int argc, char *argv[]) {
             n = 0;
             while ((!found) && (!(std::getline(refFStream, refLine).rdstate() &
                                   std::ifstream::failbit))) {
-              found = (!(refLine.length()));
+              found = refLine.empty();
               if (found) {
                 break;
               }
@@ -985,7 +985,7 @@ int mmffValidationSuite(int argc, char *argv[]) {
             n = 0;
             while ((!found) && (!(std::getline(rdkFStream, rdkLine).rdstate() &
                                   std::ifstream::failbit))) {
-              found = (!(rdkLine.length()));
+              found = rdkLine.empty();
               if (found) {
                 break;
               }
@@ -1033,7 +1033,7 @@ int mmffValidationSuite(int argc, char *argv[]) {
             n = 0;
             while ((!found) && (!(std::getline(refFStream, refLine).rdstate() &
                                   std::ifstream::failbit))) {
-              found = (!(refLine.length()));
+              found = refLine.empty();
               if (found) {
                 break;
               }
@@ -1141,7 +1141,7 @@ int mmffValidationSuite(int argc, char *argv[]) {
             n = 0;
             while ((!found) && (!(std::getline(rdkFStream, rdkLine).rdstate() &
                                   std::ifstream::failbit))) {
-              found = (!(rdkLine.length()));
+              found = rdkLine.empty();
               if (found) {
                 break;
               }
@@ -1188,7 +1188,7 @@ int mmffValidationSuite(int argc, char *argv[]) {
             double refTorsionEnergy;
             while ((!found) && (!(std::getline(refFStream, refLine).rdstate() &
                                   std::ifstream::failbit))) {
-              found = (!(refLine.length()));
+              found = refLine.empty();
               if (found) {
                 break;
               }

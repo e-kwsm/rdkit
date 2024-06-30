@@ -933,18 +933,18 @@ TEST_CASE("CDXML") {
     {
       auto fname = cdxmlbase + "bad-id.cdxml";
       auto mols = MolsFromCDXMLFile(fname);
-      CHECK(mols.size() == 0);
+      CHECK(mols.empty());
     }
     {
       auto fname = cdxmlbase + "bad-coords.cdxml";
       auto mols = MolsFromCDXMLFile(fname);
-      CHECK(mols.size() == 0);
+      CHECK(mols.empty());
     }
     {
       auto fname = cdxmlbase + "bad-bondorder.cdxml";
       auto mols = MolsFromCDXMLFile(fname);
 #ifndef RDK_BUILD_CHEMDRAW_SUPPORT      
-      CHECK(mols.size() == 0);
+      CHECK(mols.empty());
 #else      
       CHECK(mols.size() == 1); // The original chemdraw reader makes unknowns single bonds
 #endif
@@ -952,7 +952,7 @@ TEST_CASE("CDXML") {
     {
       auto fname = cdxmlbase + "bad-bondorder2.cdxml";
       auto mols = MolsFromCDXMLFile(fname);
-      CHECK(mols.size() == 0);
+      CHECK(mols.empty());
     }
   }
 }
@@ -1407,11 +1407,13 @@ TEST_CASE("CDX and Formats") {
 	  bool hasmols = false;
 	  bool exception = false;
 	  try {
-	    auto mols = MolsFromCDXMLFile(check.filename, CDXMLParserParams(true, true, format));	    
-	    hasmols = mols.size() > 0;
-	    //	    std::cerr << check.filename << " not stream " << (unsigned)format << " hasmols: " << hasmols << std::endl;
+            auto mols = MolsFromCDXMLFile(
+                check.filename, CDXMLParserParams(true, true, format));
+            hasmols = !mols.empty();
+            //	    std::cerr << check.filename << " not stream " <<
+            //(unsigned)format << " hasmols: " << hasmols << std::endl;
 
-	  } catch (...) {
+          } catch (...) {
 	    exception = true;
 	    //	    std::cerr << check.filename << " not stream " << (unsigned)format << " exception" << std::endl;
 	  }

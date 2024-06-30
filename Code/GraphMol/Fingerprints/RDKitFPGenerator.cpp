@@ -215,7 +215,7 @@ RDKitFPEnvGenerator<OutputType>::getEnvironments(
       std::vector<std::uint32_t> bondHashes = RDKitFPUtils::generateBondHashes(
           mol, atomsInPath, bondCache, isQueryBond, path,
           fpArguments->df_useBondOrder, atomInvariants);
-      if (!bondHashes.size()) {
+      if (bondHashes.empty()) {
         continue;
       }
 

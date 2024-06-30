@@ -47,7 +47,7 @@ void ParseNumberList(std::string inLine, std::vector<T> &res,
       std::string number = *commaTokIt;
       bool atEnd = number.find(";>") != std::string::npos;
       boost::trim_if(number, boost::is_any_of(" \r\n\t;>"));
-      if (number != "" && !atEnd) {
+      if (!number.empty() && !atEnd) {
         res.push_back(boost::lexical_cast<T>(number));
       } else if (atEnd) {
         // that's it, we're done:
@@ -162,7 +162,7 @@ void TDTMolSupplier::checkForEnd() {
 
   boost::trim_left_if(tempStr, boost::is_any_of(std::string(" \t\r\n")));
 
-  if (tempStr.length() == 0) {
+  if (tempStr.empty()) {
     df_end = true;
     // the -1 here is because by the time we get here we've already pushed on
     // the
