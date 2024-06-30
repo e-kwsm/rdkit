@@ -47,19 +47,21 @@ class RDKIT_GRAPHMOL_EXPORT ResonanceMolSupplierCallback {
   ResonanceMolSupplierCallback() {}
   virtual ~ResonanceMolSupplierCallback() {}
   /*! Get the number of conjugated groups this molecule has. */
-  unsigned int getNumConjGrps() const { return d_progress.size(); }
+  [[nodiscard]] unsigned int getNumConjGrps() const {
+    return d_progress.size();
+  }
   /*! Get the maximum number of resonance structures the supplier
       is allowed to generate.
       \return The number of structures.
    */
-  size_t getMaxStructures() const { return d_maxStructs; }
+  [[nodiscard]] size_t getMaxStructures() const { return d_maxStructs; }
   /*! Get the number of resonance structures generated so far
       for a certain conjugated group.
       \param conjGrpIdx the conjugated group index.
       \return the number of resonance structures generated so far
               for this group.
    */
-  size_t getNumStructures(unsigned int conjGrpIdx) const;
+  [[nodiscard]] size_t getNumStructures(unsigned int conjGrpIdx) const;
   /*! Get the number of resonance structures with a different score
       (i.e., non-degenerate) generated so far for a certain conjugated
       group.
@@ -67,7 +69,7 @@ class RDKIT_GRAPHMOL_EXPORT ResonanceMolSupplierCallback {
       \return the number of non-degenrate resonance structures generated
               so far for this group.
    */
-  size_t getNumDiverseStructures(unsigned int conjGrpIdx) const;
+  [[nodiscard]] size_t getNumDiverseStructures(unsigned int conjGrpIdx) const;
   /*! Pure virtual; this must be implemented in the derived class.
       \return true if the resonance structure generation should continue;
               false if the resonance structure generation should stop.
@@ -129,19 +131,19 @@ class RDKIT_GRAPHMOL_EXPORT ResonanceMolSupplier {
   ~ResonanceMolSupplier();
   /*! Returns a reference to the Kekulized form of the ROMol the
    *  ResonanceMolSupplier was initialized with */
-  const ROMol &mol() const { return *d_mol; }
+  [[nodiscard]] const ROMol &mol() const { return *d_mol; }
   /*! Returns the flags the ResonanceMolSupplier was initialized with
    */
-  unsigned int flags() const { return d_flags; }
+  [[nodiscard]] unsigned int flags() const { return d_flags; }
   /*! Returns the number of individual conjugated groups
       in the molecule */
-  unsigned int getNumConjGrps() const { return d_nConjGrp; }
+  [[nodiscard]] unsigned int getNumConjGrps() const { return d_nConjGrp; }
   /*! Given a bond index, it returns the index of the conjugated
    *  group the bond belongs to, or -1 if it is not conjugated */
-  int getBondConjGrpIdx(unsigned int bi) const;
+  [[nodiscard]] int getBondConjGrpIdx(unsigned int bi) const;
   /*! Given an atom index, it returns the index of the conjugated
    *  group the atom belongs to, or -1 if it is not conjugated */
-  int getAtomConjGrpIdx(unsigned int ai) const;
+  [[nodiscard]] int getAtomConjGrpIdx(unsigned int ai) const;
   /*! Sets the number of threads to be used to enumerate resonance
    *  structures (defaults to 1; 0 selects the number of concurrent
    *  threads supported by the hardware; negative values are added
@@ -158,14 +160,14 @@ class RDKIT_GRAPHMOL_EXPORT ResonanceMolSupplier {
    *  instance (do not delete it, has the ResonanceMolSupplier takes
    *  ownership of the pointer), or nullptr if none was set.
    */
-  ResonanceMolSupplierCallback *getProgressCallback() const {
+  [[nodiscard]] ResonanceMolSupplierCallback *getProgressCallback() const {
     return d_callback.get();
   }
   /*! Returns true if the resonance structure generation was canceled
    *  before completion due to the ResMolSupplierProgressCallback
    *  having returned false.
    */
-  bool wasCanceled() const { return d_wasCanceled; }
+  [[nodiscard]] bool wasCanceled() const { return d_wasCanceled; }
   /*! Ask ResonanceMolSupplier to enumerate resonance structures
    *  (automatically done as soon as any attempt to access them is
    *  made) */

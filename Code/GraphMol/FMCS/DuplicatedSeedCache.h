@@ -23,8 +23,8 @@ class DuplicatedSeedCache {
     std::vector<unsigned int> AtomIdx;  // sorted
     std::vector<unsigned int> BondIdx;  // sorted
    public:
-    size_t getNumAtoms() const { return AtomIdx.size(); }
-    size_t getNumBonds() const { return BondIdx.size(); }
+    [[nodiscard]] size_t getNumAtoms() const { return AtomIdx.size(); }
+    [[nodiscard]] size_t getNumBonds() const { return BondIdx.size(); }
 
     void addAtom(unsigned int i) {
       auto it = std::lower_bound(AtomIdx.begin(), AtomIdx.end(), i);
@@ -105,7 +105,7 @@ class DuplicatedSeedCache {
     Index.insert(std::pair<TKey, bool>(key, found));
   }
 
-  size_t size() const {
+  [[nodiscard]] size_t size() const {
     return Index.size();  // for statistics only
   }
 };

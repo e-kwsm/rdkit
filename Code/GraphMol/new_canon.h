@@ -57,7 +57,7 @@ struct RDKIT_GRAPHMOL_EXPORT bondholder {
         nbrIdx(ni),
         bondIdx(bidx) {}
 
-  int compareStereo(const bondholder &o) const;
+  [[nodiscard]] int compareStereo(const bondholder &o) const;
 
   bool operator<(const bondholder &o) const { return compare(*this, o) < 0; }
   static bool greater(const bondholder &lhs, const bondholder &rhs) {
@@ -283,7 +283,7 @@ unsigned int getChiralRank(const ROMol *dp_mol, canon_atom *dp_atoms,
 }
 }  // namespace
 class RDKIT_GRAPHMOL_EXPORT AtomCompareFunctor {
-  unsigned int getAtomRingNbrCode(unsigned int i) const {
+  [[nodiscard]] unsigned int getAtomRingNbrCode(unsigned int i) const {
     if (!dp_atoms[i].hasRingNbr) {
       return 0;
     }
@@ -298,7 +298,7 @@ class RDKIT_GRAPHMOL_EXPORT AtomCompareFunctor {
     return code;
   }
 
-  int basecomp(int i, int j) const {
+  [[nodiscard]] int basecomp(int i, int j) const {
     unsigned int ivi, ivj;
 
     // always start with the current class:
@@ -583,7 +583,7 @@ class RDKIT_GRAPHMOL_EXPORT ChiralAtomCompareFunctor {
     // FIX: don't want to be doing this long-term
   }
 
-  int basecomp(int i, int j) const {
+  [[nodiscard]] int basecomp(int i, int j) const {
     PRECONDITION(dp_atoms, "no atoms");
     unsigned int ivi, ivj;
 

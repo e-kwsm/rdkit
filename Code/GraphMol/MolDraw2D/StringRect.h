@@ -67,7 +67,8 @@ struct StringRect {
     c = trans_ + g_centre_ - offset_;
     c.y -= y_shift_;
   }
-  bool isPointInside(const Point2D &pt, double padding = 0.0) const {
+  [[nodiscard]] bool isPointInside(const Point2D &pt,
+                                   double padding = 0.0) const {
     Point2D tl, tr, br, bl;
     calcCorners(tl, tr, br, bl, padding);
     // is +ve y up or down?
@@ -77,7 +78,8 @@ struct StringRect {
     }
     return pt.x >= tl.x && pt.x <= br.x && pt.y >= br.y && pt.y <= tl.y;
   }
-  bool doesItIntersect(const StringRect &other, double padding = 0.0) const {
+  [[nodiscard]] bool doesItIntersect(const StringRect &other,
+                                     double padding = 0.0) const {
     Point2D ttl, ttr, tbr, tbl;
     calcCorners(ttl, ttr, tbr, tbl, padding);
     // is +ve y up or down?

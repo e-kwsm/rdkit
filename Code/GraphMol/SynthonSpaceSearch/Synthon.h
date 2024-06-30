@@ -36,21 +36,26 @@ class RDKIT_SYNTHONSPACESEARCH_EXPORT Synthon {
   Synthon &operator=(const Synthon &other);
   Synthon &operator=(Synthon &&other) = default;
 
-  const std::string &getSmiles() const { return d_smiles; }
-  const std::unique_ptr<ROMol> &getOrigMol() const;
-  const std::unique_ptr<ROMol> &getSearchMol() const;
-  const std::unique_ptr<ExplicitBitVect> &getPattFP() const;
-  const std::unique_ptr<ExplicitBitVect> &getFP() const;
-  const std::vector<std::shared_ptr<ROMol>> &getConnRegions() const;
+  [[nodiscard]] const std::string &getSmiles() const { return d_smiles; }
+  [[nodiscard]] const std::unique_ptr<ROMol> &getOrigMol() const;
+  [[nodiscard]] const std::unique_ptr<ROMol> &getSearchMol() const;
+  [[nodiscard]] const std::unique_ptr<ExplicitBitVect> &getPattFP() const;
+  [[nodiscard]] const std::unique_ptr<ExplicitBitVect> &getFP() const;
+  [[nodiscard]] const std::vector<std::shared_ptr<ROMol>> &getConnRegions()
+      const;
   void setSearchMol(std::unique_ptr<ROMol> mol);
   void setFP(std::unique_ptr<ExplicitBitVect> fp);
-  unsigned int getNumDummies() const { return d_numDummies; }
-  unsigned int getNumHeavyAtoms() const { return d_numHeavyAtoms; }
-  unsigned int getNumChiralAtoms() const { return d_numChiralAtoms; }
-  unsigned int getNumChiralAtomsExcDummies() const {
+  [[nodiscard]] unsigned int getNumDummies() const { return d_numDummies; }
+  [[nodiscard]] unsigned int getNumHeavyAtoms() const {
+    return d_numHeavyAtoms;
+  }
+  [[nodiscard]] unsigned int getNumChiralAtoms() const {
+    return d_numChiralAtoms;
+  }
+  [[nodiscard]] unsigned int getNumChiralAtomsExcDummies() const {
     return d_numChiralAtomsExcDummies;
   }
-  double getMolWt() const { return d_molWt; }
+  [[nodiscard]] double getMolWt() const { return d_molWt; }
 
   // Writes to/reads from a binary stream.
   void writeToDBStream(std::ostream &os) const;

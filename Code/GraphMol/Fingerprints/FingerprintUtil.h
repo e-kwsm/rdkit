@@ -90,7 +90,7 @@ class RDKIT_FINGERPRINTS_EXPORT ss_matcher {
   ss_matcher(const std::string &pattern);
 
   // const RDKit::ROMOL_SPTR &getMatcher() const { return m_matcher; }
-  const RDKit::ROMol *getMatcher() const;
+  [[nodiscard]] const RDKit::ROMol *getMatcher() const;
 
  private:
   RDKit::ROMOL_SPTR m_matcher;

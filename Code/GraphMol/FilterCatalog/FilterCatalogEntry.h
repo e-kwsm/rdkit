@@ -84,11 +84,13 @@ class RDKIT_FILTERCATALOG_EXPORT FilterCatalogEntry
   //------------------------------------
   //! Returns true if the Filters stored in this catalog entry are valid
 
-  bool isValid() const { return d_matcher.get() && d_matcher->isValid(); }
+  [[nodiscard]] bool isValid() const {
+    return d_matcher.get() && d_matcher->isValid();
+  }
 
   //------------------------------------
   //! Returns the description of the catalog entry
-  std::string getDescription() const override;
+  [[nodiscard]] std::string getDescription() const override;
 
   //------------------------------------
   //! Sets the description of the catalog entry
@@ -101,7 +103,7 @@ class RDKIT_FILTERCATALOG_EXPORT FilterCatalogEntry
   //! @{
 
   //! returns a list with the names of our \c properties
-  STR_VECT getPropList() const { return d_props.keys(); }
+  [[nodiscard]] STR_VECT getPropList() const { return d_props.keys(); }
 
   //! sets a \c property value
   /*!
@@ -137,7 +139,7 @@ class RDKIT_FILTERCATALOG_EXPORT FilterCatalogEntry
   }
   //! \overload
   template <typename T>
-  T getProp(const std::string_view key) const {
+  [[nodiscard]] T getProp(const std::string_view key) const {
     return d_props.getVal<T>(key);
   }
 
@@ -149,7 +151,9 @@ class RDKIT_FILTERCATALOG_EXPORT FilterCatalogEntry
   }
 
   //! returns whether or not we have a \c property with name \c key
-  bool hasProp(const std::string_view key) const { return d_props.hasVal(key); }
+  [[nodiscard]] bool hasProp(const std::string_view key) const {
+    return d_props.hasVal(key);
+  }
 
   //! clears the value of a \c property
   void clearProp(const std::string_view key) { d_props.clearVal(key); }
@@ -159,7 +163,7 @@ class RDKIT_FILTERCATALOG_EXPORT FilterCatalogEntry
   //!  for the catalog entry.
 
   Dict &getProps() { return d_props; }
-  const Dict &getProps() const { return d_props; }
+  [[nodiscard]] const Dict &getProps() const { return d_props; }
   void setProps(const Dict &props) { d_props = props; }
 
   //------------------------------------
@@ -179,14 +183,14 @@ class RDKIT_FILTERCATALOG_EXPORT FilterCatalogEntry
     \param mol The molecule to match against
    */
 
-  bool hasFilterMatch(const ROMol &mol) const {
+  [[nodiscard]] bool hasFilterMatch(const ROMol &mol) const {
     return this->isValid() && d_matcher->hasMatch(mol);
   }
 
   //! serializes (pickles) to a stream
   void toStream(std::ostream &ss) const override;
   //! returns a string with a serialized (pickled) representation
-  std::string Serialize() const override;
+  [[nodiscard]] std::string Serialize() const override;
   //! initializes from a stream pickle
   void initFromStream(std::istream &ss) override;
   //! initializes from a string pickle
