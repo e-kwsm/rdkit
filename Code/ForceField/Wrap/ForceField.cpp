@@ -33,7 +33,7 @@ void ForceFieldAddDistanceConstraint(PyForceField *self, unsigned int idx1,
   UFF::DistanceConstraintContrib *constraint;
   constraint = new UFF::DistanceConstraintContrib(
       self->field.get(), idx1, idx2, minLen, maxLen, forceConstant);
-  self->field->contribs().push_back(ForceFields::ContribPtr(constraint));
+  self->field->contribs().emplace_back(constraint);
 }
 
 void ForceFieldAddFixedPoint(PyForceField *self, unsigned int idx) {
@@ -45,7 +45,7 @@ void UFFAddDistanceConstraint(PyForceField *self, unsigned int idx1,
                               double maxLen, double forceConstant) {
   auto *constraint = new UFF::DistanceConstraintContrib(
       self->field.get(), idx1, idx2, relative, minLen, maxLen, forceConstant);
-  self->field->contribs().push_back(ForceFields::ContribPtr(constraint));
+  self->field->contribs().emplace_back(constraint);
 }
 
 void UFFAddAngleConstraint(PyForceField *self, unsigned int idx1,
@@ -55,7 +55,7 @@ void UFFAddAngleConstraint(PyForceField *self, unsigned int idx1,
   auto *constraint = new UFF::AngleConstraintContrib(
       self->field.get(), idx1, idx2, idx3, relative, minAngleDeg, maxAngleDeg,
       forceConstant);
-  self->field->contribs().push_back(ForceFields::ContribPtr(constraint));
+  self->field->contribs().emplace_back(constraint);
 }
 
 void UFFAddTorsionConstraint(PyForceField *self, unsigned int idx1,
@@ -66,14 +66,14 @@ void UFFAddTorsionConstraint(PyForceField *self, unsigned int idx1,
   auto *constraint = new UFF::TorsionConstraintContrib(
       self->field.get(), idx1, idx2, idx3, idx4, relative, minDihedralDeg,
       maxDihedralDeg, forceConstant);
-  self->field->contribs().push_back(ForceFields::ContribPtr(constraint));
+  self->field->contribs().emplace_back(constraint);
 }
 
 void UFFAddPositionConstraint(PyForceField *self, unsigned int idx,
                               double maxDispl, double forceConstant) {
   auto *constraint = new UFF::PositionConstraintContrib(
       self->field.get(), idx, maxDispl, forceConstant);
-  self->field->contribs().push_back(ForceFields::ContribPtr(constraint));
+  self->field->contribs().emplace_back(constraint);
 }
 
 void MMFFAddDistanceConstraint(PyForceField *self, unsigned int idx1,
@@ -81,7 +81,7 @@ void MMFFAddDistanceConstraint(PyForceField *self, unsigned int idx1,
                                double maxLen, double forceConstant) {
   auto *constraint = new MMFF::DistanceConstraintContrib(
       self->field.get(), idx1, idx2, relative, minLen, maxLen, forceConstant);
-  self->field->contribs().push_back(ForceFields::ContribPtr(constraint));
+  self->field->contribs().emplace_back(constraint);
 }
 
 void MMFFAddAngleConstraint(PyForceField *self, unsigned int idx1,
@@ -91,7 +91,7 @@ void MMFFAddAngleConstraint(PyForceField *self, unsigned int idx1,
   auto *constraint = new MMFF::AngleConstraintContrib(
       self->field.get(), idx1, idx2, idx3, relative, minAngleDeg, maxAngleDeg,
       forceConstant);
-  self->field->contribs().push_back(ForceFields::ContribPtr(constraint));
+  self->field->contribs().emplace_back(constraint);
 }
 
 void MMFFAddTorsionConstraint(PyForceField *self, unsigned int idx1,
@@ -102,14 +102,14 @@ void MMFFAddTorsionConstraint(PyForceField *self, unsigned int idx1,
   auto *constraint = new MMFF::TorsionConstraintContrib(
       self->field.get(), idx1, idx2, idx3, idx4, relative, minDihedralDeg,
       maxDihedralDeg, forceConstant);
-  self->field->contribs().push_back(ForceFields::ContribPtr(constraint));
+  self->field->contribs().emplace_back(constraint);
 }
 
 void MMFFAddPositionConstraint(PyForceField *self, unsigned int idx,
                                double maxDispl, double forceConstant) {
   auto *constraint = new MMFF::PositionConstraintContrib(
       self->field.get(), idx, maxDispl, forceConstant);
-  self->field->contribs().push_back(ForceFields::ContribPtr(constraint));
+  self->field->contribs().emplace_back(constraint);
 }
 
 PyObject *ForceFieldGetExtraPointLoc(PyForceField *self, unsigned int idx) {
