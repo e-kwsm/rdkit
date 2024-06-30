@@ -12,8 +12,7 @@
 
 #include "SequenceRule.h"
 
-namespace RDKit {
-namespace CIPLabeler {
+namespace RDKit::CIPLabeler {
 
 /**
  * <b>Sequence Rule 1b</b>
@@ -37,5 +36,4 @@ class Rule1b : public SequenceRule {
   static const bool IUPAC_2013 = false;
 };
 
-}  // namespace CIPLabeler
-}  // namespace RDKit
+}  // namespace RDKit::CIPLabeler

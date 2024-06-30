@@ -19,8 +19,7 @@
 #include <RDGeneral/RDLog.h>
 #include "AtomTyper.h"
 
-namespace RDKit {
-namespace UFF {
+namespace RDKit::UFF {
 using namespace ForceFields::UFF;
 
 namespace Tools {
@@ -732,5 +731,4 @@ bool getUFFVdWParams(const ROMol &mol, unsigned int idx1, unsigned int idx2,
   }
   return res;
 }
-}  // namespace UFF
-}  // namespace RDKit
+}  // namespace RDKit::UFF

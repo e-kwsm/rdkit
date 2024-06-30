@@ -15,9 +15,7 @@
 #include <boost/dynamic_bitset.hpp>
 #include <iostream>
 
-namespace RDKit {
-
-namespace Abbreviations {
+namespace RDKit::Abbreviations {
 
 void applyMatches(RWMol &mol, const std::vector<AbbreviationMatch> &matches) {
   boost::dynamic_bitset<> atomsToRemove(mol.getNumAtoms());
@@ -305,5 +303,4 @@ RDKIT_ABBREVIATIONS_EXPORT void condenseAbbreviationSubstanceGroups(
   }
 };  // namespace Abbreviations
 
-}  // namespace Abbreviations
-}  // namespace RDKit
+}  // namespace RDKit::Abbreviations

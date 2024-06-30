@@ -52,9 +52,7 @@ using namespace Queries;
 #endif
 namespace rj = rapidjson;
 
-namespace RDKit {
-
-namespace MolInterchange {
+namespace RDKit::MolInterchange {
 
 namespace {
 struct DefaultValueCache {
@@ -1008,5 +1006,4 @@ std::vector<boost::shared_ptr<ROMol>> JSONDataToMols(
   return DocToMols(doc, params);
 }
 
-}  // namespace MolInterchange
-}  // end of namespace RDKit
+}  // namespace RDKit::MolInterchange

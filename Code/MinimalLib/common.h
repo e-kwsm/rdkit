@@ -93,8 +93,7 @@
 
 namespace rj = rapidjson;
 
-namespace RDKit {
-namespace MinimalLib {
+namespace RDKit::MinimalLib {
 
 static constexpr int d_defaultWidth = 250;
 static constexpr int d_defaultHeight = 200;
@@ -1361,7 +1360,7 @@ class LogHandle {
   std::stringstream d_stream;
 };
 
-}  // namespace MinimalLib
-}  // namespace RDKit
+}  // namespace RDKit::MinimalLib
+
 #undef LPT_OPT_GET
 #undef LPT_OPT_GET2

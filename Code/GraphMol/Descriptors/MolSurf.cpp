@@ -19,8 +19,7 @@
 #define M_PI 3.14159265358979323846
 #endif
 
-namespace RDKit {
-namespace Descriptors {
+namespace RDKit::Descriptors {
 
 double getLabuteAtomContribs(const ROMol &mol, std::vector<double> &Vi,
                              double &hContrib, bool includeHs, bool force) {
@@ -475,5 +474,4 @@ std::vector<double> calcCustomProp_VSA(const ROMol &mol,
 
   return res;
 }
-}  // end of namespace Descriptors
-}  // namespace RDKit
+}  // namespace RDKit::Descriptors

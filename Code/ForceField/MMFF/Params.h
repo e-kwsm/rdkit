@@ -33,8 +33,7 @@
 
 // #define RDKIT_MMFF_PARAMS_USE_STD_MAP 1
 
-namespace ForceFields {
-namespace MMFF {
+namespace ForceFields::MMFF {
 
 constexpr double DEG2RAD = M_PI / 180.0;
 constexpr double RAD2DEG = 180.0 / M_PI;
@@ -991,7 +990,6 @@ class RDKIT_FORCEFIELD_EXPORT MMFFVdWCollection {
   std::vector<std::uint8_t> d_atomType;  //!< atom type vector
 #endif
 };
-}  // namespace MMFF
-}  // namespace ForceFields
+}  // namespace ForceFields::MMFF
 
 #endif

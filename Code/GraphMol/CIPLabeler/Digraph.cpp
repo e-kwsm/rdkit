@@ -17,8 +17,7 @@
 #include "Node.h"
 #include "Edge.h"
 
-namespace RDKit {
-namespace CIPLabeler {
+namespace RDKit::CIPLabeler {
 
 namespace {
 
@@ -198,5 +197,4 @@ void Digraph::expand(Node *beg) {
   }
 }
 
-}  // namespace CIPLabeler
-}  // namespace RDKit
+}  // namespace RDKit::CIPLabeler
