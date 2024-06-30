@@ -25,9 +25,7 @@
 #include <boost/rational.hpp>
 #include <RDGeneral/BoostEndInclude.h>
 
-namespace RDKit {
-
-namespace CIPLabeler {
+namespace RDKit::CIPLabeler {
 
 class CIPMol;
 
@@ -50,5 +48,4 @@ enum class Type {
  */
 std::vector<boost::rational<int>> calcFracAtomNums(const CIPMol &mol);
 
-}  // namespace CIPLabeler
-}  // namespace RDKit
+}  // namespace RDKit::CIPLabeler

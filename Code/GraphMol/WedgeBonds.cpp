@@ -23,9 +23,7 @@
 
 #include <cstdlib>
 
-namespace RDKit {
-
-namespace Chirality {
+namespace RDKit::Chirality {
 
 const BondWedgingParameters defaultWedgingParams;
 
@@ -641,5 +639,4 @@ void invertMolBlockWedgingInfo(ROMol &mol) {
   }
 }
 
-}  // namespace Chirality
-}  // namespace RDKit
+}  // namespace RDKit::Chirality

@@ -17,8 +17,7 @@
 #include "FragmentCatalogParams.h"
 #include <GraphMol/RDKitBase.h>
 
-namespace RDKit {
-namespace MolStandardize {
+namespace RDKit::MolStandardize {
 
 class RDKIT_MOLSTANDARDIZE_EXPORT FragmentCatalogEntry
     : public RDCatalog::CatalogEntry {
@@ -54,7 +53,6 @@ class RDKIT_MOLSTANDARDIZE_EXPORT FragmentCatalogEntry
 
 };  // class FragmentCatalogEntry
 
-}  // namespace MolStandardize
-}  // namespace RDKit
+}  // namespace RDKit::MolStandardize
 
 #endif

@@ -17,9 +17,7 @@
 #include "Descriptor.h"
 #include "Mancude.h"
 
-namespace RDKit {
-
-namespace CIPLabeler {
+namespace RDKit::CIPLabeler {
 
 template <typename T, typename U>
 class CIPMolSpan {
@@ -99,5 +97,4 @@ class CIPMol {
   std::vector<boost::rational<int>> d_atomnums;
 };
 
-}  // namespace CIPLabeler
-}  // namespace RDKit
+}  // namespace RDKit::CIPLabeler

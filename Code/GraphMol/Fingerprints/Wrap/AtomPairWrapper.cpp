@@ -17,8 +17,7 @@ using namespace RDKit;
 using namespace RDKit::AtomPair;
 namespace python = boost::python;
 
-namespace RDKit {
-namespace AtomPairWrapper {
+namespace RDKit::AtomPairWrapper {
 template <typename OutputType>
 FingerprintGenerator<OutputType> *getAtomPairGenerator(
     unsigned int minDistance, unsigned int maxDistance, bool includeChirality,
@@ -103,6 +102,4 @@ void exportAtompair() {
 
   return;
 }
-}  // namespace AtomPairWrapper
-
-}  // namespace RDKit
+}  // namespace RDKit::AtomPairWrapper

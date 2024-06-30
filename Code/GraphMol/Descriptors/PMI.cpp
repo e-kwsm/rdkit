@@ -15,8 +15,7 @@
 
 #include <Eigen/Dense>
 
-namespace RDKit {
-namespace Descriptors {
+namespace RDKit::Descriptors {
 namespace {
 
 bool getMoments(const ROMol &mol, int confId, bool useAtomicMasses, double &pm1,
@@ -239,5 +238,4 @@ double spherocityIndex(const ROMol &mol, int confId, bool force) {
   }
 }
 
-}  // namespace Descriptors
-}  // namespace RDKit
+}  // namespace RDKit::Descriptors

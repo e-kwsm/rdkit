@@ -13,8 +13,7 @@
 
 #include "CIPMol.h"
 
-namespace RDKit {
-namespace CIPLabeler {
+namespace RDKit::CIPLabeler {
 
 CIPMol::CIPMol(ROMol &mol) : d_mol{mol} {}
 
@@ -107,5 +106,4 @@ int CIPMol::getBondOrder(Bond *bond) const {
   }
 };
 
-}  // namespace CIPLabeler
-}  // namespace RDKit
+}  // namespace RDKit::CIPLabeler

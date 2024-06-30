@@ -16,8 +16,7 @@
 #include <algorithm>
 #include <sstream>
 
-namespace RDKit {
-namespace Descriptors {
+namespace RDKit::Descriptors {
 
 const std::string amwVersion = "1.0.0";
 double calcAMW(const ROMol &mol, bool onlyHeavy) {
@@ -46,5 +45,4 @@ std::string calcMolFormula(const ROMol &mol, bool separateIsotopes,
   return MolOps::getMolFormula(mol, separateIsotopes, abbreviateHIsotopes);
 }
 
-}  // end of namespace Descriptors
-}  // end of namespace RDKit
+}  // namespace RDKit::Descriptors

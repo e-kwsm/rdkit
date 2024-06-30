@@ -20,8 +20,7 @@
 
 namespace python = boost::python;
 
-namespace RDNumeric {
-namespace Alignments {
+namespace RDNumeric::Alignments {
 
 class PointVectManager {
  public:
@@ -170,8 +169,7 @@ PyObject *AlignPointPairs(python::object refPoints, python::object probePoints,
   PyTuple_SetItem(resTup, 1, PyArray_Return(res));
   return resTup;
 }
-}  // namespace Alignments
-}  // namespace RDNumeric
+}  // namespace RDNumeric::Alignments
 
 BOOST_PYTHON_MODULE(rdAlignment) {
   rdkit_import_array();

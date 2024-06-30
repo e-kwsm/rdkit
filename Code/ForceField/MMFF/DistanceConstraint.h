@@ -12,9 +12,7 @@
 #define RD_MMFFDISTANCECONSTRAINT_H
 #include <ForceField/DistanceConstraint.h>
 
-namespace ForceFields {
-namespace MMFF {
+namespace ForceFields::MMFF {
 using DistanceConstraintContrib = ForceFields::DistanceConstraintContrib;
-}  // namespace MMFF
-}  // namespace ForceFields
+}  // namespace ForceFields::MMFF
 #endif

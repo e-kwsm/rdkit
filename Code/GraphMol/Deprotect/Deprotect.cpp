@@ -16,8 +16,7 @@
 #include <boost/smart_ptr.hpp>
 #include <utility>
 
-namespace RDKit {
-namespace Deprotect {
+namespace RDKit::Deprotect {
 DeprotectData::DeprotectData(std::string deprotection_class,
                              const std::string &reaction_smarts,
                              std::string abbreviation, std::string full_name,
@@ -186,5 +185,4 @@ bool deprotectInPlace(RWMol &mol,
   return modified;
 };
 
-}  // namespace Deprotect
-}  // namespace RDKit
+}  // namespace RDKit::Deprotect

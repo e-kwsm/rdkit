@@ -107,8 +107,7 @@ Atom *ParseXYZFileAtomLine(const std::string &atomLine, RDGeom::Point3D &pos,
   return atom;
 }
 
-namespace v2 {
-namespace FileParsers {
+namespace v2::FileParsers {
 
 std::unique_ptr<RWMol> MolFromXYZDataStream(std::istream &inStream) {
   unsigned int numAtoms = 0;
@@ -178,6 +177,6 @@ std::unique_ptr<RWMol> MolFromXYZFile(const std::string &fName) {
     return nullptr;
   }
 }
-}  // namespace FileParsers
-}  // namespace v2
+}  // namespace v2::FileParsers
+
 }  // namespace RDKit

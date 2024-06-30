@@ -311,8 +311,7 @@ void ParseV3000RxnBlock(std::istream &inStream, unsigned int &line,
 }
 }  // namespace
 
-namespace v2 {
-namespace ReactionParser {
+namespace v2::ReactionParser {
 
 //! Parse a text stream in MDL rxn format into a ChemicalReaction
 std::unique_ptr<ChemicalReaction> ReactionFromRxnDataStream(
@@ -386,6 +385,6 @@ std::unique_ptr<ChemicalReaction> ReactionFromRxnFile(
   unsigned int line = 0;
   return ReactionFromRxnDataStream(inStream, line, params);
 };
-}  // namespace ReactionParser
-}  // namespace v2
+}  // namespace v2::ReactionParser
+
 }  // namespace RDKit

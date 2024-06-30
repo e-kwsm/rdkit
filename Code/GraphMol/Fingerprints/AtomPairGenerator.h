@@ -15,8 +15,7 @@
 #include <GraphMol/Fingerprints/FingerprintGenerator.h>
 #include <GraphMol/Fingerprints/FingerprintUtil.h>
 
-namespace RDKit {
-namespace AtomPair {
+namespace RDKit::AtomPair {
 using namespace AtomPairs;
 
 class RDKIT_FINGERPRINTS_EXPORT AtomPairAtomInvGenerator
@@ -192,7 +191,6 @@ FingerprintGenerator<OutputType> *getAtomPairGenerator(
     const AtomPairArguments &args,
     AtomInvariantsGenerator *atomInvariantsGenerator = nullptr,
     const bool ownsAtomInvGen = false);
-}  // namespace AtomPair
-}  // namespace RDKit
+}  // namespace RDKit::AtomPair
 
 #endif

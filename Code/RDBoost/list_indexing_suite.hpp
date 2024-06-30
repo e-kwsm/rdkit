@@ -16,8 +16,7 @@
 
 #include "pyint_api.h"
 
-namespace boost {
-namespace python {
+namespace boost::python {
 
 // Forward declaration
 template <class Container, bool NoProxy, class DerivedPolicies>
@@ -172,7 +171,6 @@ class list_indexing_suite
   }
 };
 
-}  // namespace python
-}  // namespace boost
+}  // namespace boost::python
 
 #endif

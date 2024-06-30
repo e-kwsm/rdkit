@@ -16,8 +16,8 @@
 #include <Geometry/UniformGrid3D.h>
 #include <GraphMol/Conformer.h>
 #include <GraphMol/RDKitBase.h>
-namespace RDKit {
-namespace MolShapes {
+
+namespace RDKit::MolShapes {
 void EncodeShape(const ROMol &mol, RDGeom::UniformGrid3D &grid, int confId,
                  const RDGeom::Transform3D *trans, double vdwScale,
                  double stepSize, int maxLayers, bool ignoreHs) {
@@ -42,5 +42,4 @@ void EncodeShape(const Conformer &conf, RDGeom::UniformGrid3D &grid,
     grid.setSphereOccupancy(loc, vdwScale * rad, stepSize, maxLayers);
   }
 }
-}  // namespace MolShapes
-}  // namespace RDKit
+}  // namespace RDKit::MolShapes

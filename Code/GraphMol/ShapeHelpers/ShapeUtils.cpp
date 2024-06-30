@@ -15,8 +15,7 @@
 #include <GraphMol/MolTransforms/MolTransforms.h>
 #include <Geometry/GridUtils.h>
 
-namespace RDKit {
-namespace MolShapes {
+namespace RDKit::MolShapes {
 
 void computeConfBox(const Conformer &conf, RDGeom::Point3D &leftBottom,
                     RDGeom::Point3D &rightTop, const RDGeom::Transform3D *trans,
@@ -204,5 +203,4 @@ double protrudeDistance(const Conformer &conf1, const Conformer &conf2,
   }
   return res;
 }
-}  // namespace MolShapes
-}  // namespace RDKit
+}  // namespace RDKit::MolShapes

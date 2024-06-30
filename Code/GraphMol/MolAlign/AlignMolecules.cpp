@@ -22,8 +22,7 @@
 #include <algorithm>
 #include <boost/format.hpp>
 
-namespace RDKit {
-namespace MolAlign {
+namespace RDKit::MolAlign {
 
 namespace details {
 void symmetrizeTerminalAtoms(RWMol &mol) {
@@ -474,5 +473,4 @@ void alignMolConformers(ROMol &mol, const std::vector<unsigned int> *atomIds,
     }
   }
 }
-}  // namespace MolAlign
-}  // namespace RDKit
+}  // namespace RDKit::MolAlign

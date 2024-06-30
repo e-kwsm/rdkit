@@ -17,8 +17,7 @@
 
 #include <Geometry/point.h>
 
-namespace RDKit {
-namespace MolDraw2D_detail {
+namespace RDKit::MolDraw2D_detail {
 
 // for holding dimensions of the rectangle round a string.
 struct StringRect {
@@ -117,7 +116,6 @@ struct StringRect {
   }
 };
 
-}  // namespace MolDraw2D_detail
-}  // namespace RDKit
+}  // namespace RDKit::MolDraw2D_detail
 
 #endif  // RDKIT_STRINGRECT_H

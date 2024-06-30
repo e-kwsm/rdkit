@@ -15,8 +15,7 @@
 #include <boost/graph/adjacency_list.hpp>
 #include <RDGeneral/BoostEndInclude.h>
 
-namespace RDKit {
-namespace FMCS {
+namespace RDKit::FMCS {
 typedef unsigned int AtomIdx_t;
 typedef unsigned int BondIdx_t;
 typedef boost::adjacency_list<boost::vecS, boost::vecS, boost::undirectedS,
@@ -40,5 +39,4 @@ class RDKIT_FMCS_EXPORT Graph : public Graph_t {
     (*this)[which] = bond;
   }
 };
-}  // namespace FMCS
-}  // namespace RDKit
+}  // namespace RDKit::FMCS

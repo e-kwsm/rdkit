@@ -37,8 +37,7 @@
 #include "MolData3Ddescriptors.h"
 #include <cmath>
 
-namespace RDKit {
-namespace Descriptors {
+namespace RDKit::Descriptors {
 
 namespace {
 
@@ -239,5 +238,4 @@ void AUTOCORR2D(const ROMol &mol, std::vector<double> &result,
     Get2Dauto(dist, numAtoms, mol, result);
   }
 }
-}  // namespace Descriptors
-}  // namespace RDKit
+}  // namespace RDKit::Descriptors

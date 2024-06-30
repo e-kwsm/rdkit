@@ -10,9 +10,7 @@
 //
 #include "MultithreadedSmilesMolSupplier.h"
 
-namespace RDKit {
-namespace v2 {
-namespace FileParsers {
+namespace RDKit::v2::FileParsers {
 MultithreadedSmilesMolSupplier::MultithreadedSmilesMolSupplier(
     const std::string &fileName, const Parameters &params,
     const SmilesMolSupplierParams &parseParams) {
@@ -197,7 +195,6 @@ RWMol *MultithreadedSmilesMolSupplier::processMoleculeRecord(
   return res.release();
 }
 
-}  // namespace FileParsers
-}  // namespace v2
-}  // namespace RDKit
+}  // namespace RDKit::v2::FileParsers
+
 #endif

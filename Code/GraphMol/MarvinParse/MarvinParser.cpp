@@ -43,10 +43,7 @@
 #include <boost/algorithm/string.hpp>
 #include <RDGeneral/BoostEndInclude.h>
 
-namespace RDKit {
-
-namespace v2 {
-namespace MarvinParser {
+namespace RDKit::v2::MarvinParser {
 
 /*
       Imports the Marvin-specific dialect of CML (Chemical Markup Language) and
@@ -1084,6 +1081,4 @@ std::unique_ptr<ChemicalReaction> ReactionFromMrvFile(
   }
   return ReactionFromMrvDataStream(inStream, params);
 }
-}  // namespace MarvinParser
-}  // namespace v2
-}  // namespace RDKit
+}  // namespace RDKit::v2::MarvinParser

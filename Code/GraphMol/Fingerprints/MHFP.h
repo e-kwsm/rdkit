@@ -20,8 +20,8 @@
 #include <DataStructs/ExplicitBitVect.h>
 
 class SparseBitVect;
-namespace RDKit {
-namespace MHFPFingerprints {
+
+namespace RDKit::MHFPFingerprints {
 const std::string mhfpFingerprintVersion = "1.0.0";
 
 namespace FNV {
@@ -279,7 +279,6 @@ class RDKIT_FINGERPRINTS_EXPORT MHFPEncoder {
   std::vector<uint32_t> perms_b_;
 };
 
-}  // namespace MHFPFingerprints
-}  // namespace RDKit
+}  // namespace RDKit::MHFPFingerprints
 
 #endif

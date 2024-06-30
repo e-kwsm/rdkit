@@ -15,8 +15,7 @@
 #include <RDGeneral/Invariant.h>
 #include <ctime>
 
-namespace RDNumeric {
-namespace EigenSolvers {
+namespace RDNumeric::EigenSolvers {
 bool powerEigenSolver(unsigned int numEig, DoubleSymmMatrix &mat,
                       DoubleVector &eigenValues, DoubleMatrix *eigenVectors,
                       int seed) {
@@ -99,5 +98,4 @@ bool powerEigenSolver(unsigned int numEig, DoubleSymmMatrix &mat,
   }
   return converged;
 }
-}  // namespace EigenSolvers
-}  // namespace RDNumeric
+}  // namespace RDNumeric::EigenSolvers

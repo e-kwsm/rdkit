@@ -19,8 +19,7 @@
 
 // ****************************************************************************
 
-namespace RDKit {
-namespace MolDraw2D_detail {
+namespace RDKit::MolDraw2D_detail {
 // implementation from $RDBASE/rdkit/sping/pid.py
 void arcPoints(const Point2D &cds1, const Point2D &cds2,
                std::vector<Point2D> &res, float startAng, float extent) {
@@ -426,5 +425,4 @@ void adjustLineEndForEllipse(const Point2D &centre, double xradius,
   }
 }
 
-}  // namespace MolDraw2D_detail
-}  // namespace RDKit
+}  // namespace RDKit::MolDraw2D_detail

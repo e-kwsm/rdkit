@@ -16,8 +16,7 @@
 #include "../Sort.h"
 #include "../rules/Rules.h"
 
-namespace RDKit {
-namespace CIPLabeler {
+namespace RDKit::CIPLabeler {
 AtropisomerBond::AtropisomerBond(const CIPMol &mol, Bond *bond, Atom *startAtom,
                                  Atom *endAtom, Bond::BondStereo cfg)
     : Configuration(mol, {startAtom, endAtom}, true),
@@ -183,5 +182,4 @@ Descriptor AtropisomerBond::label(Node *root1, Digraph &digraph,
   return Descriptor::UNKNOWN;
 }
 
-}  // namespace CIPLabeler
-}  // namespace RDKit
+}  // namespace RDKit::CIPLabeler

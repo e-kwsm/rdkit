@@ -17,8 +17,7 @@
 #include <ForceField/MMFF/Params.h>
 #include <ForceField/MMFF/TorsionAngle.h>
 
-namespace ForceFields {
-namespace CrystalFF {
+namespace ForceFields::CrystalFF {
 namespace {
 double calcTorsionEnergyM6(const std::vector<double> &forceConstants,
                            const std::vector<int> &signs, const double cosPhi) {
@@ -150,5 +149,4 @@ void TorsionAngleContribs::getGrad(double *pos, double *grad) const {
   }
 }
 
-}  // namespace CrystalFF
-}  // namespace ForceFields
+}  // namespace ForceFields::CrystalFF

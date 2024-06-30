@@ -11,8 +11,7 @@
 
 #include "Rule3.h"
 
-namespace RDKit {
-namespace CIPLabeler {
+namespace RDKit::CIPLabeler {
 
 namespace {
 int ord(Descriptor lab) {
@@ -34,5 +33,4 @@ int Rule3::compare(const Edge *a, const Edge *b) const {
                               ord(b->getEnd()->getAux()));
 }
 
-}  // namespace CIPLabeler
-}  // namespace RDKit
+}  // namespace RDKit::CIPLabeler

@@ -58,8 +58,7 @@
 
 #include <Eigen/Dense>
 
-namespace RDKit {
-namespace Descriptors {
+namespace RDKit::Descriptors {
 namespace {
 
 double distanceFromAPlane(const RDGeom::Point3D &pt,
@@ -151,5 +150,4 @@ double PBF(const ROMol &mol, int confId) {
   return res;
 }
 
-}  // namespace Descriptors
-}  // namespace RDKit
+}  // namespace RDKit::Descriptors

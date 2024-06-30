@@ -12,8 +12,7 @@
 #include <GraphMol/RDKitBase.h>
 #include <sstream>
 
-namespace RDKit {
-namespace MolStandardize {
+namespace RDKit::MolStandardize {
 
 #include "normalizations.in"
 
@@ -92,5 +91,4 @@ void TransformCatalogParams::initFromString(const std::string &) {
   UNDER_CONSTRUCTION("not implemented");
 }
 
-}  // namespace MolStandardize
-}  // namespace RDKit
+}  // namespace RDKit::MolStandardize

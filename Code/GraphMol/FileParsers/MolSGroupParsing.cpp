@@ -12,8 +12,7 @@
 #include "FileParserUtils.h"
 #include "MolSGroupParsing.h"
 
-namespace RDKit {
-namespace SGroupParsing {
+namespace RDKit::SGroupParsing {
 
 /* ------------------ V2000 Utils  ------------------ */
 
@@ -1374,5 +1373,4 @@ std::string ParseV3000SGroupsBlock(std::istream *inStream, unsigned int &line,
   return tempStr;
 }
 
-}  // namespace SGroupParsing
-}  // namespace RDKit
+}  // namespace RDKit::SGroupParsing

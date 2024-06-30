@@ -19,8 +19,7 @@
 #include "../Digraph.h"
 #include "Pairlist.h"
 
-namespace RDKit {
-namespace CIPLabeler {
+namespace RDKit::CIPLabeler {
 
 Rule4b::Rule4b() = default;
 
@@ -295,5 +294,4 @@ Sort Rule4b::getRefSorter(const SequenceRule *replacement_rule) const {
   return {new_rules};
 }
 
-}  // namespace CIPLabeler
-}  // namespace RDKit
+}  // namespace RDKit::CIPLabeler

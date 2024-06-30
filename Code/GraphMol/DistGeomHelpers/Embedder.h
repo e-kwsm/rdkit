@@ -19,8 +19,7 @@
 #include <boost/shared_ptr.hpp>
 #include <DistGeom/BoundsMatrix.h>
 
-namespace RDKit {
-namespace DGeomHelpers {
+namespace RDKit::DGeomHelpers {
 
 enum EmbedFailureCauses {
   INITIAL_COORDS = 0,
@@ -468,7 +467,6 @@ RDKIT_DISTGEOMHELPERS_EXPORT extern const EmbedParameters ETKDGv3;
 //! Parameters corresponding improved ETKDG by Wang, Witek, Landrum and Riniker
 //! (10.1021/acs.jcim.0c00025) - the small ring part
 RDKIT_DISTGEOMHELPERS_EXPORT extern const EmbedParameters srETKDGv3;
-}  // namespace DGeomHelpers
-}  // namespace RDKit
+}  // namespace RDKit::DGeomHelpers
 
 #endif

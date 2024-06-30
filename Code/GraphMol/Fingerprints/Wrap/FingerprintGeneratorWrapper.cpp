@@ -32,8 +32,7 @@
 namespace python = boost::python;
 namespace np = boost::python::numpy;
 
-namespace RDKit {
-namespace FingerprintWrapper {
+namespace RDKit::FingerprintWrapper {
 
 FingerprintGenerator<std::uint64_t> *generatorFromJSONHelper(
     const std::string &jsonStr) {
@@ -777,5 +776,4 @@ BOOST_PYTHON_MODULE(rdFingerprintGenerator) {
   TopologicalTorsionWrapper::exportTopologicalTorsion();
 }
 
-}  // namespace FingerprintWrapper
-}  // namespace RDKit
+}  // namespace RDKit::FingerprintWrapper

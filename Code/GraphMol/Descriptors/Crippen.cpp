@@ -28,8 +28,7 @@ typedef boost::tokenizer<boost::char_separator<char>> tokenizer;
 #include <boost/flyweight/no_tracking.hpp>
 #include <RDGeneral/BoostEndInclude.h>
 
-namespace RDKit {
-namespace Descriptors {
+namespace RDKit::Descriptors {
 extern const std::string defaultParamData;
 
 void getCrippenAtomContribs(const ROMol &mol, std::vector<double> &logpContribs,
@@ -318,5 +317,4 @@ const std::string defaultParamData =
     "\n"
     "Me2	[#72,#73,#74,#75,#76,#77,#78,#79,#80]	-0.0025		\n";
 
-}  // end of namespace Descriptors
-}  // namespace RDKit
+}  // namespace RDKit::Descriptors

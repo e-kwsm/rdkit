@@ -43,9 +43,7 @@ using namespace Queries;
 #include <RDGeneral/BoostEndInclude.h>
 namespace bj = boost::json;
 
-namespace RDKit {
-
-namespace MolInterchange {
+namespace RDKit::MolInterchange {
 
 namespace {
 struct DefaultValueCache {
@@ -1032,5 +1030,4 @@ std::vector<boost::shared_ptr<ROMol>> JSONDataToMols(
   return DocToMols(doc, params);
 }
 
-}  // namespace MolInterchange
-}  // end of namespace RDKit
+}  // namespace RDKit::MolInterchange

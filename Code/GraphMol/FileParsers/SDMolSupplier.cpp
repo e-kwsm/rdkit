@@ -21,9 +21,7 @@
 #include <sstream>
 #include <string>
 
-namespace RDKit {
-namespace v2 {
-namespace FileParsers {
+namespace RDKit::v2::FileParsers {
 
 SDMolSupplier::SDMolSupplier(const std::string &fileName,
                              const MolFileParserParams &params) {
@@ -386,6 +384,4 @@ void SDMolSupplier::setStreamIndices(const std::vector<std::streampos> &locs) {
   this->reset();
   d_len = rdcast<int>(d_molpos.size());
 }
-}  // namespace FileParsers
-}  // namespace v2
-}  // namespace RDKit
+}  // namespace RDKit::v2::FileParsers

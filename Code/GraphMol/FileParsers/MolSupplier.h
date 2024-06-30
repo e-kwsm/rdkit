@@ -25,19 +25,18 @@
 #include <GraphMol/SmilesParse/SmilesParse.h>
 
 #ifdef RDK_BUILD_MAEPARSER_SUPPORT
-namespace schrodinger {
-namespace mae {
+
+namespace schrodinger::mae {
 class Reader;
 class Block;
-}  // namespace mae
-}  // namespace schrodinger
+}  // namespace schrodinger::mae
+
 #endif  // RDK_BUILD_MAEPARSER_SUPPORT
 
 namespace RDKit {
 RDKIT_FILEPARSERS_EXPORT std::string strip(const std::string &orig);
 
-namespace v2 {
-namespace FileParsers {
+namespace v2::FileParsers {
 /*!
 //
 //  Here are a couple of ways one can interact with MolSuppliers:
@@ -456,8 +455,8 @@ class RDKIT_FILEPARSERS_EXPORT MaeMolSupplier : public MolSupplier {
 };
 #endif  // RDK_BUILD_MAEPARSER_SUPPORT
 
-}  // namespace FileParsers
-}  // namespace v2
+}  // namespace v2::FileParsers
+
 }  // namespace RDKit
 
 #include "MolSupplier.v1API.h"

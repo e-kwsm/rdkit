@@ -13,8 +13,7 @@
 
 #include "../Digraph.h"
 
-namespace RDKit {
-namespace CIPLabeler {
+namespace RDKit::CIPLabeler {
 
 Rule6::Rule6() = default;
 
@@ -34,5 +33,4 @@ int Rule6::compare(const Edge *a, const Edge *b) const {
   return 0;
 }
 
-}  // namespace CIPLabeler
-}  // namespace RDKit
+}  // namespace RDKit::CIPLabeler

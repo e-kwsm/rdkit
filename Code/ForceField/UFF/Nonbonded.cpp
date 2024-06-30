@@ -15,8 +15,7 @@
 #include <RDGeneral/Invariant.h>
 #include <RDGeneral/utils.h>
 
-namespace ForceFields {
-namespace UFF {
+namespace ForceFields::UFF {
 namespace Utils {
 double calcNonbondedMinimum(const AtomicParams *at1Params,
                             const AtomicParams *at2Params) {
@@ -101,5 +100,4 @@ void vdWContrib::getGrad(double *pos, double *grad) const {
     grad[3 * d_at2Idx + i] -= dGrad;
   }
 }
-}  // namespace UFF
-}  // namespace ForceFields
+}  // namespace ForceFields::UFF

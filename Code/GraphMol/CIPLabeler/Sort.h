@@ -13,8 +13,7 @@
 #include <vector>
 #include "Priority.h"
 
-namespace RDKit {
-namespace CIPLabeler {
+namespace RDKit::CIPLabeler {
 
 class SequenceRule;
 class Edge;
@@ -46,5 +45,4 @@ class Sort {
                           bool deep) const;
 };  // namespace CIPLabeler
 
-}  // namespace CIPLabeler
-}  // namespace RDKit
+}  // namespace RDKit::CIPLabeler

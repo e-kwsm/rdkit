@@ -25,8 +25,7 @@
 
 constexpr double REALLY_SMALL_BOND_LEN = 0.0000001;
 
-namespace RDKit {
-namespace Atropisomers {
+namespace RDKit::Atropisomers {
 
 bool getAtropisomerAtomsAndBonds(const Bond *bond,
                                  AtropAtomAndBondVec atomsAndBondVects[2],
@@ -1244,5 +1243,4 @@ bool doesMolHaveAtropisomers(const ROMol &mol) {
   }
   return false;
 }
-}  // namespace Atropisomers
-}  // namespace RDKit
+}  // namespace RDKit::Atropisomers

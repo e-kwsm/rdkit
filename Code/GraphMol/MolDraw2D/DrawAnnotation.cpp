@@ -14,8 +14,7 @@
 #include <GraphMol/MolDraw2D/DrawText.h>
 #include <GraphMol/MolDraw2D/MolDraw2D.h>
 
-namespace RDKit {
-namespace MolDraw2D_detail {
+namespace RDKit::MolDraw2D_detail {
 
 // ****************************************************************************
 DrawAnnotation::DrawAnnotation(const std::string &note,
@@ -155,5 +154,4 @@ bool DrawAnnotation::doesRectClash(const StringRect &rect,
   return false;
 }
 
-}  // namespace MolDraw2D_detail
-}  // namespace RDKit
+}  // namespace RDKit::MolDraw2D_detail
