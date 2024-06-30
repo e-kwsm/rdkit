@@ -15,8 +15,7 @@
 #include <iostream>
 #include <ForceField/Contrib.h>
 
-namespace ForceFields {
-namespace UFF {
+namespace ForceFields::UFF {
 
 //! A distance range constraint modelled after a BondStretchContrib
 class RDKIT_FORCEFIELD_EXPORT DistanceConstraintContrib
@@ -57,6 +56,6 @@ class RDKIT_FORCEFIELD_EXPORT DistanceConstraintContrib
   double d_minLen, d_maxLen;  //!< rest length of the bond
   double d_forceConstant;     //!< force constant of the bond
 };
-}  // namespace UFF
-}  // namespace ForceFields
+}  // namespace ForceFields::UFF
+
 #endif

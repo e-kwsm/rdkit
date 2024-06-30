@@ -16,8 +16,7 @@
 #include <ForceField/Contrib.h>
 #include <Geometry/point.h>
 
-namespace ForceFields {
-namespace MMFF {
+namespace ForceFields::MMFF {
 
 //! A position constraint of the type 0.5k * deltaX^2
 class RDKIT_FORCEFIELD_EXPORT PositionConstraintContrib
@@ -50,6 +49,6 @@ class RDKIT_FORCEFIELD_EXPORT PositionConstraintContrib
   RDGeom::Point3D d_pos0;  //!< reference position
   double d_forceConstant;  //!< force constant of the bond
 };
-}  // namespace MMFF
-}  // namespace ForceFields
+}  // namespace ForceFields::MMFF
+
 #endif

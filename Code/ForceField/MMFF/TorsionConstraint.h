@@ -15,8 +15,7 @@
 #include <iostream>
 #include <ForceField/Contrib.h>
 
-namespace ForceFields {
-namespace MMFF {
+namespace ForceFields::MMFF {
 
 //! A dihedral angle range constraint modelled after a TorsionContrib
 class RDKIT_FORCEFIELD_EXPORT TorsionConstraintContrib
@@ -65,6 +64,6 @@ class RDKIT_FORCEFIELD_EXPORT TorsionConstraintContrib
       d_maxDihedralDeg;    //!< rest amplitudes of the dihedral angle
   double d_forceConstant;  //!< force constant of the angle constraint
 };
-}  // namespace MMFF
-}  // namespace ForceFields
+}  // namespace ForceFields::MMFF
+
 #endif

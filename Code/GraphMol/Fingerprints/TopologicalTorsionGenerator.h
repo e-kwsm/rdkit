@@ -15,8 +15,7 @@
 #include <GraphMol/Fingerprints/FingerprintGenerator.h>
 #include <GraphMol/Fingerprints/FingerprintUtil.h>
 
-namespace RDKit {
-namespace TopologicalTorsion {
+namespace RDKit::TopologicalTorsion {
 
 class RDKIT_FINGERPRINTS_EXPORT TopologicalTorsionArguments
     : public FingerprintArguments {
@@ -123,7 +122,6 @@ RDKIT_FINGERPRINTS_EXPORT FingerprintGenerator<OutputType>
         bool countSimulation = true, std::uint32_t fpSize = 2048,
         std::vector<std::uint32_t> countBounds = {1, 2, 4, 8},
         bool ownsAtomInvGen = false);
-}  // namespace TopologicalTorsion
-}  // namespace RDKit
+}  // namespace RDKit::TopologicalTorsion
 
 #endif

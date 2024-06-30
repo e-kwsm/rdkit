@@ -15,8 +15,7 @@
 #include <RDGeneral/Invariant.h>
 #include <RDGeneral/utils.h>
 
-namespace ForceFields {
-namespace UFF {
+namespace ForceFields::UFF {
 namespace Utils {
 double calculateCosY(const RDGeom::Point3D &iPoint,
                      const RDGeom::Point3D &jPoint,
@@ -196,5 +195,4 @@ void InversionContrib::getGrad(double *pos, double *grad) const {
     g4[i] += dE_dW * tg4[i];
   }
 }
-}  // namespace UFF
-}  // namespace ForceFields
+}  // namespace ForceFields::UFF

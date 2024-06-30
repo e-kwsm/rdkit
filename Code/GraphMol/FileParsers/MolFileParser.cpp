@@ -3386,8 +3386,7 @@ void finishMolProcessing(
 }
 }  // namespace FileParserUtils
 
-namespace v2 {
-namespace FileParsers {
+namespace v2::FileParsers {
 //------------------------------------------------
 //
 //  Read a molecule from a stream
@@ -3626,6 +3625,6 @@ std::unique_ptr<RWMol> MolFromMolFile(const std::string &fName,
     return std::unique_ptr<RWMol>();
   }
 }
-}  // namespace FileParsers
-}  // namespace v2
+}  // namespace v2::FileParsers
+
 }  // namespace RDKit
