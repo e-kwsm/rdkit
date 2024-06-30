@@ -433,7 +433,7 @@ class RDKIT_MOLSTANDARDIZE_EXPORT TautomerEnumerator {
   */
   TautomerEnumeratorResult enumerate(const ROMol &mol) const;
 
-  //! Deprecated, please use the form returning a \c TautomerEnumeratorResult
+  //! \deprecated please use the form returning a \c TautomerEnumeratorResult
   //! instead
   [[deprecated(
       "please use the form returning a TautomerEnumeratorResult "
