@@ -26,7 +26,7 @@ RDGeom::Point2D Snapshot::getPoint2D(unsigned int pointNum) const {
   PRECONDITION(d_trajectory->numPoints(), "d_numPoints must be > 0");
   URANGE_CHECK(pointNum, d_trajectory->numPoints());
   unsigned int i = pointNum * d_trajectory->dimension();
-  return RDGeom::Point2D(d_pos[i], d_pos[i + 1]);
+  return {d_pos[i], d_pos[i + 1]};
 }
 
 RDGeom::Point3D Snapshot::getPoint3D(unsigned int pointNum) const {
@@ -36,9 +36,8 @@ RDGeom::Point3D Snapshot::getPoint3D(unsigned int pointNum) const {
   PRECONDITION(d_trajectory->numPoints(), "d_numPoints must be > 0");
   URANGE_CHECK(pointNum, d_trajectory->numPoints());
   unsigned int i = pointNum * d_trajectory->dimension();
-  return (
-      RDGeom::Point3D(d_pos[i], d_pos[i + 1],
-                      (d_trajectory->dimension() == 3) ? d_pos[i + 2] : 0.0));
+  return {d_pos[i], d_pos[i + 1],
+          (d_trajectory->dimension() == 3) ? d_pos[i + 2] : 0.0};
 }
 
 Trajectory::Trajectory(unsigned int dimension, unsigned int numPoints,

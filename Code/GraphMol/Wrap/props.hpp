@@ -251,7 +251,7 @@ python::object autoConvertString(const RDOb *ob, const std::string &key) {
     return python::object(svalue);
   }
 
-  return python::object();
+  return {};
 }
 
 // nullptr = raise KeyError; non-null = return *default_val_ptr as fallback
