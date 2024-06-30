@@ -143,7 +143,7 @@ std::string GetAtomSmiles(const Atom *atom, const SmilesWriteParams &params) {
     if (fc || nonStandard ||
         atom->hasProp(common_properties::molAtomMapNumber)) {
       needsBracket = true;
-    } else if (params.doIsomericSmiles && (isotope || atString != "")) {
+    } else if (params.doIsomericSmiles && (isotope || !atString.empty())) {
       needsBracket = true;
     }
   } else {
@@ -794,7 +794,7 @@ std::string MolFragmentToSmiles(const ROMol &mol,
                                 const std::vector<int> *bondsToUse,
                                 const std::vector<std::string> *atomSymbols,
                                 const std::vector<std::string> *bondSymbols) {
-  PRECONDITION(atomsToUse.size(), "no atoms provided");
+  PRECONDITION(!atomsToUse.empty(), "no atoms provided");
   PRECONDITION(
       params.rootedAtAtom < 0 ||
           static_cast<unsigned int>(params.rootedAtAtom) < mol.getNumAtoms(),

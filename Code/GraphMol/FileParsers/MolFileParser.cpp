@@ -1227,7 +1227,7 @@ void ParseV3000RGroups(RWMol *mol, Atom *&atom, std::string_view text,
   std::vector<std::string> splitToken;
   std::string resid = std::string(text.substr(1, text.size() - 2));
   boost::split(splitToken, resid, boost::is_any_of(std::string(" ")));
-  if (splitToken.size() < 1) {
+  if (splitToken.empty()) {
     std::ostringstream errout;
     errout << "Bad RGROUPS specification '" << text << "' on line " << line
            << ". Missing values.";
@@ -1911,7 +1911,7 @@ bool ParseMolBlockProperties(std::istream *inStream, unsigned int &line,
   // there is apparently some software out there that puts a
   // blank line in mol blocks before the "M  END". If we aren't
   // doing strict parsing, deal with that here.
-  if (!tempStr.size()) {
+  if (tempStr.empty()) {
     if (!strictParsing) {
       tempStr = getLine(inStream);
       ++line;

@@ -41,14 +41,14 @@ void getNextLine(std::istream &inStream, std::string &line,
     std::getline(inStream, tmpLine);
     lineNo++;
     // std::cerr << ">> " << lineNo << " " << tmpLine << std::endl;
-    if (tmpLine == "") {
+    if (tmpLine.empty()) {
       continue;
     }
     if (tmpLine[0] != '#') {
       // strip space at the end to check for a continuation line:
       std::string stripLine =
           boost::trim_right_copy_if(tmpLine, boost::is_any_of(" \t\r\n"));
-      if (stripLine == "") {
+      if (stripLine.empty()) {
         continue;
       }
       if (stripLine[stripLine.size() - 1] != '\\') {
@@ -209,9 +209,9 @@ MolChemicalFeatureDef *parseFeatureDef(
   bool foundEnd = false;
   Local::getNextLine(inStream, nextLine, lineNo);
   // std::getline(inStream,nextLine);
-  while (nextLine != "") {
+  while (!nextLine.empty()) {
     boost::trim_if(nextLine, boost::is_any_of(" \t\r\n"));
-    if (nextLine != "" && nextLine[0] != '#') {
+    if (!nextLine.empty() && nextLine[0] != '#') {
       tok.assign(nextLine, sep);
       tokIt = tok.begin();
       std::string token = boost::to_upper_copy(*tokIt);
@@ -255,7 +255,7 @@ MolChemicalFeatureDef *parseFeatureDef(
     std::string msg = "could not find EndFeature line for feature: " + subType;
     throw FeatureFileParseException(lineNo, inLine, msg);
   }
-  if (family == "") {
+  if (family.empty()) {
     std::string msg = "did not find Family definition for feature: " + subType;
     throw FeatureFileParseException(lineNo, inLine, msg);
   }
@@ -264,7 +264,7 @@ MolChemicalFeatureDef *parseFeatureDef(
   // Build the feature definition
   //
   res = new MolChemicalFeatureDef(pattern, family, subType);
-  if (weights.size()) {
+  if (!weights.empty()) {
     res->setWeights(weights);
     res->normalizeWeights();
   }

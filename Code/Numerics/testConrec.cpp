@@ -142,7 +142,7 @@ width='300px' height='300px' >
 )SVG";
     for (const auto &pr : contours) {
       auto [contour, val] = pr;
-      REQUIRE(contour.size());
+      REQUIRE(!contour.empty());
       outs << "<path d='M " << 40 * contour[0].x + 150 << ","
            << 40 * contour[0].y + 150;
       for (auto i = 1u; i < contour.size(); ++i) {
