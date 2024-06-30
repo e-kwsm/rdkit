@@ -84,15 +84,15 @@ class RDKIT_FORCEFIELD_EXPORT InversionContribs : public ForceFieldContrib {
   void getGrad(double *pos, double *grad) const override;
 
   //! Copy constructor
-  InversionContribs *copy() const override {
+  [[nodiscard]] InversionContribs *copy() const override {
     return new InversionContribs(*this);
   }
 
   //! Return true if there are no contributions in this contrib
-  bool empty() const { return d_contribs.empty(); }
+  [[nodiscard]] bool empty() const { return d_contribs.empty(); }
 
   //! Get number of contributions in this contrib
-  unsigned int size() const { return d_contribs.size(); }
+  [[nodiscard]] unsigned int size() const { return d_contribs.size(); }
 
  private:
   std::vector<InversionContribsParams> d_contribs;

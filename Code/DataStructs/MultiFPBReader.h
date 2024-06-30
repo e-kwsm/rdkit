@@ -93,10 +93,10 @@ class RDKIT_DATASTRUCTS_EXPORT MultiFPBReader {
   void init();
 
   //! returns the number of readers
-  unsigned int length() const { return d_readers.size(); }
+  [[nodiscard]] unsigned int length() const { return d_readers.size(); }
   //! returns the number of bits in our fingerprints (all readers are expected
   //! to have the same length)
-  unsigned int nBits() const;
+  [[nodiscard]] unsigned int nBits() const;
 
   //! returns a particular reader
   /*!
@@ -143,15 +143,15 @@ class RDKIT_DATASTRUCTS_EXPORT MultiFPBReader {
                                                 double threshold = 0.7,
                                                 int numThreads = 1) const;
   //! \overload
-  std::vector<ResultTuple> getTanimotoNeighbors(
+  [[nodiscard]] std::vector<ResultTuple> getTanimotoNeighbors(
       boost::shared_array<std::uint8_t> bv, double threshold = 0.7,
       int numThreads = 1) const {
     return getTanimotoNeighbors(bv.get(), threshold, numThreads);
   }
   //! \overload
-  std::vector<ResultTuple> getTanimotoNeighbors(const ExplicitBitVect &ebv,
-                                                double threshold = 0.7,
-                                                int numThreads = 1) const;
+  [[nodiscard]] std::vector<ResultTuple> getTanimotoNeighbors(
+      const ExplicitBitVect &ebv, double threshold = 0.7,
+      int numThreads = 1) const;
 
   //! returns Tversky neighbors that are within a similarity threshold
   /*!
@@ -172,16 +172,15 @@ class RDKIT_DATASTRUCTS_EXPORT MultiFPBReader {
                                                double threshold = 0.7,
                                                int numThreads = 1) const;
   //! \overload
-  std::vector<ResultTuple> getTverskyNeighbors(
+  [[nodiscard]] std::vector<ResultTuple> getTverskyNeighbors(
       boost::shared_array<std::uint8_t> bv, double ca, double cb,
       double threshold = 0.7, int numThreads = 1) const {
     return getTverskyNeighbors(bv.get(), ca, cb, threshold, numThreads);
   }
   //! \overload
-  std::vector<ResultTuple> getTverskyNeighbors(const ExplicitBitVect &ebv,
-                                               double ca, double cb,
-                                               double threshold = 0.7,
-                                               int numThreads = 1) const;
+  [[nodiscard]] std::vector<ResultTuple> getTverskyNeighbors(
+      const ExplicitBitVect &ebv, double ca, double cb, double threshold = 0.7,
+      int numThreads = 1) const;
 
   //! returns indices of all fingerprints that completely contain this one
   /*! (i.e. where all the bits set in the query are also set in the db
@@ -190,13 +189,14 @@ class RDKIT_DATASTRUCTS_EXPORT MultiFPBReader {
   std::vector<std::pair<unsigned int, unsigned int>> getContainingNeighbors(
       const std::uint8_t *bv, int numThreads = 1) const;
   //! \overload
-  std::vector<std::pair<unsigned int, unsigned int>> getContainingNeighbors(
-      boost::shared_array<std::uint8_t> bv, int numThreads = 1) const {
+  [[nodiscard]] std::vector<std::pair<unsigned int, unsigned int>>
+  getContainingNeighbors(boost::shared_array<std::uint8_t> bv,
+                         int numThreads = 1) const {
     return getContainingNeighbors(bv.get(), numThreads);
   }
   //! \overload
-  std::vector<std::pair<unsigned int, unsigned int>> getContainingNeighbors(
-      const ExplicitBitVect &ebv, int numThreads = 1) const;
+  [[nodiscard]] std::vector<std::pair<unsigned int, unsigned int>>
+  getContainingNeighbors(const ExplicitBitVect &ebv, int numThreads = 1) const;
 
  private:
   std::vector<FPBReader *> d_readers;

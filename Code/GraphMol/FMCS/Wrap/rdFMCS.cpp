@@ -29,12 +29,12 @@ struct PyMCSWrapper : public boost::python::wrapper<PyMCSWrapper> {
         new python::object(python::handle<>(python::borrowed(obj))));
   }
   virtual ~PyMCSWrapper() {}
-  virtual const char *subclassName() const {
+  [[nodiscard]] virtual const char *subclassName() const {
     throw std::invalid_argument(
         "subclassName() must be overridden in the "
         "derived class");
   }
-  const python::object &pyObject() const { return *d_pyObject; }
+  [[nodiscard]] const python::object &pyObject() const { return *d_pyObject; }
 
  protected:
   void failedToExtractPyObject() const {
@@ -94,7 +94,9 @@ struct PyMCSWrapper : public boost::python::wrapper<PyMCSWrapper> {
       python::throw_error_already_set();
     }
   }
-  PyMCSWrapper *pyObjectExtract() const { return (*d_pyObjectExtractor)(); }
+  [[nodiscard]] PyMCSWrapper *pyObjectExtract() const {
+    return (*d_pyObjectExtractor)();
+  }
 
  private:
   std::unique_ptr<python::object> d_pyObject;
@@ -117,26 +119,28 @@ struct PyMCSAtomCompare : public PyMCSWrapper {
     }
     return res;
   }
-  PyMCSAtomCompare *extractPyObject() const {
+  [[nodiscard]] PyMCSAtomCompare *extractPyObject() const {
     auto res = dynamic_cast<PyMCSAtomCompare *>(pyObjectExtract());
     if (!res) {
       failedToExtractPyObject();
     }
     return res;
   }
-  inline bool checkAtomRingMatch(const MCSAtomCompareParameters &p,
-                                 const ROMol &mol1, unsigned int atom1,
-                                 const ROMol &mol2, unsigned int atom2) const {
+  [[nodiscard]] inline bool checkAtomRingMatch(
+      const MCSAtomCompareParameters &p, const ROMol &mol1, unsigned int atom1,
+      const ROMol &mol2, unsigned int atom2) const {
     return RDKit::checkAtomRingMatch(p, mol1, atom1, mol2, atom2);
   }
-  inline bool checkAtomCharge(const MCSAtomCompareParameters &p,
-                              const ROMol &mol1, unsigned int atom1,
-                              const ROMol &mol2, unsigned int atom2) const {
+  [[nodiscard]] inline bool checkAtomCharge(const MCSAtomCompareParameters &p,
+                                            const ROMol &mol1,
+                                            unsigned int atom1,
+                                            const ROMol &mol2,
+                                            unsigned int atom2) const {
     return RDKit::checkAtomCharge(p, mol1, atom1, mol2, atom2);
   }
-  inline bool checkAtomChirality(const MCSAtomCompareParameters &p,
-                                 const ROMol &mol1, unsigned int atom1,
-                                 const ROMol &mol2, unsigned int atom2) const {
+  [[nodiscard]] inline bool checkAtomChirality(
+      const MCSAtomCompareParameters &p, const ROMol &mol1, unsigned int atom1,
+      const ROMol &mol2, unsigned int atom2) const {
     return RDKit::checkAtomChirality(p, mol1, atom1, mol2, atom2);
   }
   inline const char *subclassName() const override { return "MCSAtomCompare"; }
@@ -162,16 +166,18 @@ struct PyMCSBondCompare : public PyMCSWrapper {
     }
     return res;
   }
-  PyMCSBondCompare *extractPyObject() const {
+  [[nodiscard]] PyMCSBondCompare *extractPyObject() const {
     auto res = dynamic_cast<PyMCSBondCompare *>(pyObjectExtract());
     if (!res) {
       failedToExtractPyObject();
     }
     return res;
   }
-  inline bool checkBondStereo(const MCSBondCompareParameters &p,
-                              const ROMol &mol1, unsigned int bond1,
-                              const ROMol &mol2, unsigned int bond2) const {
+  [[nodiscard]] inline bool checkBondStereo(const MCSBondCompareParameters &p,
+                                            const ROMol &mol1,
+                                            unsigned int bond1,
+                                            const ROMol &mol2,
+                                            unsigned int bond2) const {
     return RDKit::checkBondStereo(p, mol1, bond1, mol2, bond2);
   }
   inline bool checkBondRingMatch(const MCSBondCompareParameters &p,
@@ -243,9 +249,11 @@ class PyMCSProgressData {
   PyMCSProgressData(const MCSProgressData &other) : PyMCSProgressData() {
     *pd = other;
   }
-  unsigned int getNumAtoms() const { return pd->NumAtoms; }
-  unsigned int getNumBonds() const { return pd->NumBonds; }
-  unsigned int getSeedProcessed() const { return pd->SeedProcessed; }
+  [[nodiscard]] unsigned int getNumAtoms() const { return pd->NumAtoms; }
+  [[nodiscard]] unsigned int getNumBonds() const { return pd->NumBonds; }
+  [[nodiscard]] unsigned int getSeedProcessed() const {
+    return pd->SeedProcessed;
+  }
 
  private:
   std::unique_ptr<MCSProgressData> pd;
@@ -318,30 +326,32 @@ class PyMCSParameters : public boost::noncopyable {
     afud.pyMCSAcceptance = afudOther.pyMCSAcceptance;
     cfud.pyAtomBondCompData = afudOther.pyAtomBondCompData;
   }
-  const MCSParameters *get() const { return p.get(); }
-  bool getMaximizeBonds() const { return p->MaximizeBonds; }
+  [[nodiscard]] const MCSParameters *get() const { return p.get(); }
+  [[nodiscard]] bool getMaximizeBonds() const { return p->MaximizeBonds; }
   void setMaximizeBonds(bool value) { p->MaximizeBonds = value; }
-  double getThreshold() const { return p->Threshold; }
+  [[nodiscard]] double getThreshold() const { return p->Threshold; }
   void setThreshold(double value) { p->Threshold = value; }
-  unsigned int getTimeout() const { return p->Timeout; }
+  [[nodiscard]] unsigned int getTimeout() const { return p->Timeout; }
   void setTimeout(unsigned int value) { p->Timeout = value; }
-  bool getVerbose() const { return p->Verbose; }
+  [[nodiscard]] bool getVerbose() const { return p->Verbose; }
   void setVerbose(bool value) { p->Verbose = value; }
-  const MCSAtomCompareParameters &getAtomCompareParameters() const {
+  [[nodiscard]] const MCSAtomCompareParameters &getAtomCompareParameters()
+      const {
     return p->AtomCompareParameters;
   }
   void setAtomCompareParameters(const MCSAtomCompareParameters &value) {
     p->AtomCompareParameters = value;
   }
-  const MCSBondCompareParameters &getBondCompareParameters() const {
+  [[nodiscard]] const MCSBondCompareParameters &getBondCompareParameters()
+      const {
     return p->BondCompareParameters;
   }
   void setBondCompareParameters(const MCSBondCompareParameters &value) {
     p->BondCompareParameters = value;
   }
-  std::string getInitialSeed() const { return p->InitialSeed; }
+  [[nodiscard]] std::string getInitialSeed() const { return p->InitialSeed; }
   void setInitialSeed(const std::string &value) { p->InitialSeed = value; }
-  bool getStoreAll() const { return p->StoreAll; }
+  [[nodiscard]] bool getStoreAll() const { return p->StoreAll; }
   void setStoreAll(bool value) { p->StoreAll = value; }
   void setMCSAtomTyper(PyObject *atomComp) {
     PyMCSAtomCompare pyMCSAtomCompare(atomComp);
@@ -355,7 +365,7 @@ class PyMCSParameters : public boost::noncopyable {
       cfud.mcsParameters = p.get();
     }
   }
-  python::object getMCSAtomTyper() const {
+  [[nodiscard]] python::object getMCSAtomTyper() const {
     static const std::map<RDKit::MCSAtomCompareFunction, RDKit::AtomComparator>
         atomTyperToComp = {
             {MCSAtomCompareAny, AtomCompareAny},
@@ -388,7 +398,7 @@ class PyMCSParameters : public boost::noncopyable {
       cfud.mcsParameters = p.get();
     }
   }
-  python::object getMCSBondTyper() const {
+  [[nodiscard]] python::object getMCSBondTyper() const {
     static const std::map<RDKit::MCSBondCompareFunction, RDKit::BondComparator>
         bondTyperToComp = {{MCSBondCompareAny, BondCompareAny},
                            {MCSBondCompareOrder, BondCompareOrder},
@@ -425,7 +435,7 @@ class PyMCSParameters : public boost::noncopyable {
     fmud.pyMCSFinalMatchCheck = pyMCSFinalMatchCheck.pyObject();
     fmud.pyAtomBondCompData = cfud.pyAtomBondCompData;
   }
-  python::object getFinalMatchCheck() const {
+  [[nodiscard]] python::object getFinalMatchCheck() const {
     if (!fmud.pyMCSFinalMatchCheck.is_none()) {
       return fmud.pyMCSFinalMatchCheck;
     }
@@ -438,7 +448,7 @@ class PyMCSParameters : public boost::noncopyable {
     afud.pyMCSAcceptance = pyMCSAcceptance.pyObject();
     afud.pyAtomBondCompData = cfud.pyAtomBondCompData;
   }
-  python::object getShouldAcceptMCS() const {
+  [[nodiscard]] python::object getShouldAcceptMCS() const {
     if (!afud.pyMCSAcceptance.is_none()) {
       return afud.pyMCSAcceptance;
     }

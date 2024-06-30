@@ -132,7 +132,8 @@ class RDKIT_MOLALIGN_EXPORT MolHistogram {
  public:
   MolHistogram(const ROMol &mol, const double *dmat, bool cleanupDmat = false);
   ~MolHistogram() = default;
-  inline int get(const unsigned int y, const unsigned int x) const {
+  [[nodiscard]] inline int get(const unsigned int y,
+                               const unsigned int x) const {
     PRECONDITION(y < d_h.shape()[0], "Invalid index on MolHistogram");
     PRECONDITION(x < d_h.shape()[1], "Invalid index on MolHistogram");
     return d_h[y][x];
