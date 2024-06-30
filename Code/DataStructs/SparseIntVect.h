@@ -74,7 +74,7 @@ class SparseIntVect {
 #pragma GCC diagnostic ignored "-Wtype-limits"
 #endif
   //! return the value at an index
-  int getVal(IndexType idx) const {
+  [[nodiscard]] int getVal(IndexType idx) const {
     if (!checkIndex(idx)) {
       throw IndexErrorException(static_cast<int>(idx));
     }
@@ -107,11 +107,11 @@ class SparseIntVect {
   int operator[](IndexType idx) const { return getVal(idx); }
 
   //! returns the length
-  IndexType getLength() const { return d_length; }
+  [[nodiscard]] IndexType getLength() const { return d_length; }
 
   //! returns the sum of all the elements in the vect
   //! the doAbs argument toggles summing the absolute values of the elements
-  int getTotalVal(bool doAbs = false) const {
+  [[nodiscard]] int getTotalVal(bool doAbs = false) const {
     int res = 0;
     typename StorageType::const_iterator iter;
     for (iter = d_data.begin(); iter != d_data.end(); ++iter) {
@@ -124,10 +124,10 @@ class SparseIntVect {
     return res;
   }
   //! returns the length
-  unsigned int size() const { return getLength(); }
+  [[nodiscard]] unsigned int size() const { return getLength(); }
 
   //! returns our nonzero elements as a map(IndexType->int)
-  const StorageType &getNonzeroElements() const { return d_data; }
+  [[nodiscard]] const StorageType &getNonzeroElements() const { return d_data; }
 
   //! this is a "fuzzy" intesection, the final value
   //! of each element is equal to the minimum from
@@ -333,7 +333,7 @@ class SparseIntVect {
   }
 
   //! returns a binary string representation (pickle)
-  std::string toString() const {
+  [[nodiscard]] std::string toString() const {
     std::stringstream ss(std::ios_base::binary | std::ios_base::out |
                          std::ios_base::in);
     std::uint32_t tInt;
@@ -410,7 +410,7 @@ class SparseIntVect {
       d_data[tVal] = val;
     }
   }
-  bool checkIndex(IndexType idx) const {
+  [[nodiscard]] bool checkIndex(IndexType idx) const {
     if (idx < 0 || idx > d_length ||
         (idx == d_length && d_length < std::numeric_limits<IndexType>::max())) {
       return false;
