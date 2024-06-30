@@ -1286,7 +1286,7 @@ Cn1cnc2cc(Oc3cc(N4CCN(Cc5ccccc5-c5ccc(Cl)cc5)CC4)ccc3C(=O)NS(=O)(=O)c3ccc(NCCCN4
     std::string smi = *token;
     RWMol *m = SmilesToMol(smi);
     TEST_ASSERT(m);
-    ms.push_back(ROMOL_SPTR(m));
+    ms.emplace_back(m);
   }
   auto core = "O=C(NS(=O)(=O)c1ccccc1)c1ccccc1Oc1ccccc1"_smiles;
 
@@ -2872,7 +2872,7 @@ M  ALS   6  2 F C   N
 M  END
 )CTAB"_ctab;
   std::vector<std::string> smiArray(10, "COc1ccccc1");
-  smiArray.push_back("COc1ccncn1");
+  smiArray.emplace_back("COc1ccncn1");
   RGroupDecompositionParameters params;
   params.matchingStrategy = GreedyChunks;
   RGroupDecomposition decomp(*core, params);

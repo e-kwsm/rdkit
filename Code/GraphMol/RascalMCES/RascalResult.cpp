@@ -378,7 +378,7 @@ void RascalResult::matchCliqueAtoms(
   }
   for (size_t i = 0u; i < d_mol1->getNumAtoms(); ++i) {
     if (mol1Matches[i] >= 0) {
-      d_atomMatches.push_back(std::make_pair(i, mol1Matches[i]));
+      d_atomMatches.emplace_back(i, mol1Matches[i]);
     }
   }
 }

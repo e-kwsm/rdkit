@@ -421,9 +421,9 @@ void threadedReadReactions(
   size_t start = 0;
   std::vector<std::thread> threads;
   for (unsigned int i = 0U; i < numThreads; ++i, start += eachThread) {
-    threads.push_back(std::thread(
-        readReactions, start, start + eachThread, fileMap,
-        std::ref(reactionPos), std::ref(space), version, std::ref(reactions)));
+    threads.emplace_back(readReactions, start, start + eachThread, fileMap,
+                         std::ref(reactionPos), std::ref(space), version,
+                         std::ref(reactions));
   }
   for (auto &t : threads) {
     t.join();
