@@ -349,7 +349,7 @@ INT_LIST getShortestPath(const ROMol &mol, int aid1, int aid2) {
   bfsQ.push_back(aid1);
   bool done = false;
   ROMol::ADJ_ITER nbrIdx, endNbrs;
-  while ((!done) && (bfsQ.size() > 0)) {
+  while ((!done) && (!bfsQ.empty())) {
     int curAid = bfsQ.front();
     boost::tie(nbrIdx, endNbrs) =
         mol.getAtomNeighbors(mol.getAtomWithIdx(curAid));
@@ -399,7 +399,7 @@ double *get3DDistanceMat(const ROMol &mol, int confId, bool useAtomWts,
   } else {
     propName = "_";
   }
-  if (propName != "") {
+  if (!propName.empty()) {
     propName += "3DDistanceMatrix_Conf" + std::to_string(conf.getId());
     if (useAtomWts) {
       propName += "_AtomWeights";
@@ -426,7 +426,7 @@ double *get3DDistanceMat(const ROMol &mol, int confId, bool useAtomWts,
     }
   }
 
-  if (propName != "") {
+  if (!propName.empty()) {
     sptr.reset(dMat);
     mol.setProp(propName, sptr, true);
   }

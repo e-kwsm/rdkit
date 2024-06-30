@@ -62,7 +62,7 @@ void prepareMolForDrawing(RWMol &mol, bool kekulize, bool addChiralHs,
         chiralAts.push_back(atom->getIdx());
       }
     }
-    if (chiralAts.size()) {
+    if (!chiralAts.empty()) {
       bool addCoords = false;
       if (!forceCoords && mol.getNumConformers()) {
         addCoords = true;
@@ -198,7 +198,7 @@ void get_highlight_style_option(const boost::property_tree::ptree &pt,
 
 void updateMolDrawOptionsFromJSON(MolDrawOptions &opts,
                                   const std::string &json) {
-  if (json == "") {
+  if (json.empty()) {
     return;
   }
   std::istringstream ss;
@@ -300,14 +300,14 @@ void contourAndDrawGrid(MolDraw2D &drawer, const double *grid,
   size_t nY = ycoords.size();
   double minV = std::numeric_limits<double>::max();
   double maxV = std::numeric_limits<double>::lowest();
-  if (!levels.size() || params.fillGrid) {
+  if (levels.empty() || params.fillGrid) {
     for (size_t i = 0; i < nX; ++i) {
       for (size_t j = 0; j < nY; ++j) {
         minV = std::min(minV, grid[i * nY + j]);
         maxV = std::max(maxV, grid[i * nY + j]);
       }
     }
-    if (!levels.size()) {
+    if (levels.empty()) {
       levels.resize(nContours);
       for (size_t i = 0; i < nContours; ++i) {
         levels[i] = minV + i * (maxV - minV) / (nContours - 1);
