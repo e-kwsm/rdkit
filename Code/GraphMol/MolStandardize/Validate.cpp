@@ -59,7 +59,7 @@ std::vector<ValidationErrorInfo> RDKitValidation::validate(
   // loop over atoms
   for (size_t i = 0; i < na; ++i) {
     if (!reportAllFailures) {
-      if (errors.size() >= 1) {
+      if (!errors.empty()) {
         break;
       }
     }
@@ -103,7 +103,7 @@ std::vector<ValidationErrorInfo> FragmentValidation::validate(
     std::vector<RDKit::MatchVectType> res;
     unsigned int matches = SubstructMatch(mol, *fgrp, res);
     //		std::cout << fname << " matches " << matches << std::endl;
-    if (matches != 0 && frags.size() != 0) {
+    if (matches != 0 && !frags.empty()) {
       VECT_INT_VECT substructmap;  // store idxs of frag from substructmatch
       for (const auto &match : res) {
         std::vector<int> vec;
@@ -212,7 +212,7 @@ std::vector<ValidationErrorInfo> AllowedAtomsValidation::validate(
 
   for (size_t i = 0; i < na; ++i) {
     if (!reportAllFailures) {
-      if (errors.size() >= 1) {
+      if (!errors.empty()) {
         break;
       }
     }
@@ -242,7 +242,7 @@ std::vector<ValidationErrorInfo> DisallowedAtomsValidation::validate(
 
   for (size_t i = 0; i < na; ++i) {
     if (!reportAllFailures) {
-      if (errors.size() >= 1) {
+      if (!errors.empty()) {
         break;
       }
     }
@@ -367,7 +367,7 @@ std::vector<ValidationErrorInfo> FeaturesValidation::validate(
   }
 
   // Optionally disallow using the enahanced stereochemistry
-  if (!allowEnhancedStereo && mol.getStereoGroups().size()) {
+  if (!allowEnhancedStereo && !mol.getStereoGroups().empty()) {
     errors.emplace_back(
         "ERROR: [FeaturesValidation] Enhanced stereochemistry features are not allowed");
   }

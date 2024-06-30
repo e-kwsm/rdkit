@@ -28,7 +28,7 @@ void testBaseFunctionality() {
 
   {
     MolBundle bundle;
-    TEST_ASSERT(bundle.size() == 0);
+    TEST_ASSERT(bundle.empty());
     TEST_ASSERT(bundle.addMol(mol) == 1);
     TEST_ASSERT(bundle.size() == 1);
     TEST_ASSERT(bundle.addMol(ROMOL_SPTR(SmilesToMol("CC[C@@H](C)F"))) == 2);
@@ -43,7 +43,7 @@ void testBaseFunctionality() {
 
   {
     FixedMolSizeMolBundle bundle;
-    TEST_ASSERT(bundle.size() == 0);
+    TEST_ASSERT(bundle.empty());
     TEST_ASSERT(bundle.addMol(mol) == 1);
     TEST_ASSERT(bundle.size() == 1);
     TEST_ASSERT(bundle.addMol(ROMOL_SPTR(SmilesToMol("CC[C@@H](C)F"))) == 2);
@@ -126,7 +126,7 @@ void testExceptions() {
   {
     // FixedMolSizeMolBundle requires all molecules to have the same size
     FixedMolSizeMolBundle bundle;
-    TEST_ASSERT(bundle.size() == 0);
+    TEST_ASSERT(bundle.empty());
     TEST_ASSERT(bundle.addMol(mol) == 1);
     TEST_ASSERT(bundle.size() == 1);
     {
@@ -169,7 +169,7 @@ void testExceptions() {
   {
     // MolBundle requires supports different size molecules
     MolBundle bundle;
-    TEST_ASSERT(bundle.size() == 0);
+    TEST_ASSERT(bundle.empty());
     TEST_ASSERT(bundle.addMol(mol) == 1);
     TEST_ASSERT(bundle.size() == 1);
     bundle.addMol(ROMOL_SPTR(SmilesToMol("C1CC1")));

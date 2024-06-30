@@ -532,7 +532,7 @@ PyObject *get3DDistanceMatrix(ROMol &mol, int confId = -1,
   memcpy(PyArray_DATA(res), static_cast<void *>(distMat),
          nats * nats * sizeof(double));
 
-  if (prefix == nullptr || std::string(prefix) == "") {
+  if (prefix == nullptr || std::string(prefix).empty()) {
     delete[] distMat;
   }
   return PyArray_Return(res);

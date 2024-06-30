@@ -167,7 +167,7 @@ class MarvinCMLReader {
                        marvinAtom->rgroupRef);
         std::string dLabel = "R" + std::to_string(marvinAtom->rgroupRef);
         query->setProp(common_properties::dummyLabel, dLabel);
-        if (marvinAtom->mrvAlias != "") {
+        if (!marvinAtom->mrvAlias.empty()) {
           query->setProp(common_properties::molFileAlias, marvinAtom->mrvAlias);
         }
         query->setQuery(makeAtomNullQuery());
@@ -233,7 +233,7 @@ class MarvinCMLReader {
         }
       }
 
-      if (marvinAtom->radical != "") {
+      if (!marvinAtom->radical.empty()) {
         res->setNumRadicalElectrons(
             marvinRadicalToRadicalElectrons.at(marvinAtom->radical));
       }
@@ -324,7 +324,7 @@ class MarvinCMLReader {
 
       std::string temp =
           boost::algorithm::to_lower_copy(marvinBond->bondStereo.value);
-      if (temp != "") {
+      if (!temp.empty()) {
         if (temp == "w") {
           bondDir = Bond::BEGINWEDGE;
         } else if (temp == "h") {
@@ -335,7 +335,7 @@ class MarvinCMLReader {
               << marvinBond->bondStereo.value;
           throw FileParseException(err.str());
         }
-      } else if (marvinBond->bondStereo.convention != "") {
+      } else if (!marvinBond->bondStereo.convention.empty()) {
         if (marvinBond->bondStereo.convention != "MDL") {
           std::ostringstream err;
           err << "unrecognized bond stereo conventrion"
@@ -365,7 +365,7 @@ class MarvinCMLReader {
             throw FileParseException(
                 "MDL Convention Value must be one of: 1, 3, 4, 6");
         }
-      } else if (marvinBond->bondStereo.dictRef != "") {
+      } else if (!marvinBond->bondStereo.dictRef.empty()) {
         if (marvinBond->bondStereo.dictRef == "cml:W") {
           bondDir = Bond::BEGINWEDGE;
         } else if (marvinBond->bondStereo.dictRef == "cml:H") {
@@ -494,7 +494,7 @@ class MarvinCMLReader {
 
         // also collect the stereo groups here
 
-        if (atomPtr->mrvStereoGroup != "") {
+        if (!atomPtr->mrvStereoGroup.empty()) {
           RDKit::StereoGroupType groupType;
           int groupNumber;
 
@@ -693,7 +693,7 @@ class MarvinCMLReader {
       } else  // is is a sub-mol - used for sGroups
       {
         role = molTree.get<std::string>("<xmlattr>.role", "");
-        if (role == "") {
+        if (role.empty()) {
           throw FileParseException(
               "Expected a role for a sub-molecule in MRV file");
         }
@@ -706,7 +706,7 @@ class MarvinCMLReader {
               molTree.get<std::string>("<xmlattr>.atomRefs", "");
           auto atomArray = molTree.get_child_optional("atomArray");
 
-          if (atomRefs == "" &&
+          if (atomRefs.empty() &&
               atomArray)  // no atomRefs means regular superatom
                           // - the atoms are in this superatom
           {
@@ -896,7 +896,7 @@ class MarvinCMLReader {
           double fontScale;
           std::string fontScaleStr =
               v.second.get<std::string>("<xmlattr>.fontScale", "");
-          if (fontScaleStr != "") {
+          if (!fontScaleStr.empty()) {
             if (!getCleanNumber(fontScaleStr, fontScale)) {
               throw FileParseException(
                   "Condition font scale must be a positive integer in MRV file");

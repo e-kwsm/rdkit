@@ -129,7 +129,7 @@ void Digraph::expand(Node *beg) {
   const auto &atom = beg->getAtom();
   const auto &edges = beg->getEdges();
   const auto &prev =
-      edges.size() > 0 && !edges[0]->isBeg(beg) ? edges[0]->getBond() : nullptr;
+      !edges.empty() && !edges[0]->isBeg(beg) ? edges[0]->getBond() : nullptr;
 
   if (MAX_NODE_DIST > 0 && beg->getDistance() > MAX_NODE_DIST) {
     return;

@@ -656,7 +656,7 @@ void dfsBuildStack(ROMol &mol, int atomIdx, int inBondIdx,
   //  Add any ring closures
   //
   // ---------------------
-  if (atomRingClosures[atomIdx].size()) {
+  if (!atomRingClosures[atomIdx].empty()) {
     std::vector<unsigned int> ringsClosed;
     for (auto bIdx : atomRingClosures[atomIdx]) {
       travList.push_back(bIdx);
@@ -1244,9 +1244,9 @@ void canonicalizeEnhancedStereo(ROMol &mol,
     // find the reference (lowest-ranked) atom (or lowest-ranked bond)
 
     Atom::ChiralType foundRefState = Atom::ChiralType::CHI_TETRAHEDRAL_CCW;
-    if (sgAtoms.size() > 0) {
+    if (!sgAtoms.empty()) {
       foundRefState = sgAtoms.front()->getChiralTag();
-    } else if (sgBonds.size() > 0) {
+    } else if (!sgBonds.empty()) {
       if (sgBonds.front()->getStereo() == Bond::BondStereo::STEREOATROPCCW) {
         foundRefState =
             Atom::ChiralType::CHI_TETRAHEDRAL_CCW;  // convert atropisomer CCW
@@ -1277,7 +1277,7 @@ void canonicalizeEnhancedStereo(ROMol &mol,
 
     // note that we do not forward the Group Ids: this is intentional, so that
     // the Ids are reassigned based on the canonicalized order.
-    if (sgAtoms.size() > 0) {
+    if (!sgAtoms.empty()) {
       sgAtoms.front()->setProp("_stereoGroup", newSgs.size() - 1, true);
     }
   }

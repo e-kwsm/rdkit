@@ -89,11 +89,11 @@ void test1() {
   q1->addBond(2, 3, Bond::SINGLE);
 
   TEST_ASSERT(!SubstructMatch(*m, *q1, matchV));
-  TEST_ASSERT(matchV.size() == 0);
+  TEST_ASSERT(matchV.empty());
 
   n = SubstructMatch(*m, *q1, matches, false);
   TEST_ASSERT(n == 0);
-  TEST_ASSERT(matches.size() == 0);
+  TEST_ASSERT(matches.empty());
 
   delete m;
   delete q1;

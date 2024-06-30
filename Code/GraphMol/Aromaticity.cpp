@@ -99,7 +99,7 @@ void makeRingNeighborMap(const VECT_INT_VECT &brings,
       }
       INT_VECT inter;
       Intersect(ring1, brings[j], inter);
-      if (inter.size() > 0 &&
+      if (!inter.empty() &&
           (!maxOverlapSize || inter.size() <= maxOverlapSize)) {
         neighMap[i].push_back(j);
         neighMap[j].push_back(i);
@@ -373,7 +373,7 @@ void applyHuckelToFused(
                    [&fused](const int i) { return fused[i]; });
 
     // check if the picked subsystem is fused
-    if (ringNeighs.size() && !RingUtils::checkFused(curRs, ringNeighs)) {
+    if (!ringNeighs.empty() && !RingUtils::checkFused(curRs, ringNeighs)) {
       continue;
     }
 
@@ -938,7 +938,8 @@ void setMMFFAromaticity(RWMol &mol) {
   boost::dynamic_bitset<> aromBitVect(mol.getNumAtoms());
   boost::dynamic_bitset<> aromRingBitVect(atomRings.size());
 
-  while ((!aromRingsAllSet) && atomRings.size() && (nAromSet > old_nAromSet)) {
+  while ((!aromRingsAllSet) && !atomRings.empty() &&
+         (nAromSet > old_nAromSet)) {
     // loop over all rings
     for (i = 0; i < atomRings.size(); ++i) {
       // add 2 pi electrons for each double bond in the ring

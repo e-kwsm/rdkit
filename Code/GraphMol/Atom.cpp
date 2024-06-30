@@ -885,7 +885,7 @@ int getAtomRLabel(const Atom *atom) {
 
 void setAtomAlias(Atom *atom, const std::string &alias) {
   PRECONDITION(atom, "bad atom");
-  if (alias != "") {
+  if (!alias.empty()) {
     atom->setProp(common_properties::molFileAlias, alias);
   } else {
     atom->clearProp(common_properties::molFileAlias);
@@ -901,7 +901,7 @@ std::string getAtomAlias(const Atom *atom) {
 
 void setAtomValue(Atom *atom, const std::string &value) {
   PRECONDITION(atom, "bad atom");
-  if (value != "") {
+  if (!value.empty()) {
     atom->setProp(common_properties::molFileValue, value);
   } else {
     atom->clearProp(common_properties::molFileValue);
@@ -917,7 +917,7 @@ std::string getAtomValue(const Atom *atom) {
 
 void setSupplementalSmilesLabel(Atom *atom, const std::string &label) {
   PRECONDITION(atom, "bad atom");
-  if (label != "") {
+  if (!label.empty()) {
     atom->setProp(common_properties::_supplementalSmilesLabel, label);
   } else {
     atom->clearProp(common_properties::_supplementalSmilesLabel);

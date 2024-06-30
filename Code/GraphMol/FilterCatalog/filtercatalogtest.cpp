@@ -226,7 +226,7 @@ void testFilterCatalogThreadedRunner() {
   TEST_ASSERT(results.size() == smiles.size());
   count = 0;
   for (auto &entries : results) {
-    TEST_ASSERT(entries.size() > 0);
+    TEST_ASSERT(!entries.empty());
     switch (count) {
       case 0:
         TEST_ASSERT(entries[0]->getDescription() == "hzone_phenol_A(479)");
@@ -312,7 +312,7 @@ void testFilterCatalogCHEMBL() {
       std::unique_ptr<RWMol> mol(SmilesToMol(test.first));
       std::string matches;
       for (auto &match : catalog.getMatches(*mol)) {
-        if (matches.size()) matches += "|";
+        if (!matches.empty()) matches += "|";
         matches += match->getDescription();
       }
 
@@ -333,7 +333,7 @@ void testFilterCatalogCHEMBL() {
       std::unique_ptr<RWMol> mol(SmilesToMol(test.first));
       std::string matches;
       for (auto &match : catalog.getMatches(*mol)) {
-        if (matches.size()) matches += "|";
+        if (!matches.empty()) matches += "|";
         matches += match->getDescription();
       }
       TEST_ASSERT(matches == test.second);

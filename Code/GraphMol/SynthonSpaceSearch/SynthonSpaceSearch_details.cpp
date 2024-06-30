@@ -802,7 +802,7 @@ std::string buildProductName(const std::string &reactionId,
                              const std::vector<std::string> &fragIds) {
   std::string prodName = "";
   for (const auto &fragId : fragIds) {
-    if (prodName != "") {
+    if (!prodName.empty()) {
       prodName += ";";
     }
     prodName += fragId;
@@ -816,7 +816,7 @@ std::string buildProductName(
     const std::vector<size_t> &fragNums) {
   std::string prodName = "";
   for (size_t i = 0; i < fragNums.size(); ++i) {
-    if (prodName != "") {
+    if (!prodName.empty()) {
       prodName += ";";
     }
     prodName += hitset->synthonsToUse[i][fragNums[i]].first;

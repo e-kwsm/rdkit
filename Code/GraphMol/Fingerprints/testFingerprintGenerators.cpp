@@ -377,12 +377,12 @@ void testRootedAtomPairs() {
   mol = SmilesToMol("OCCCCC");
   fp1 = generator->getSparseCountFingerprint(*mol);
   SparseIntVect<std::uint32_t>::StorageType nz1 = fp1->getNonzeroElements();
-  TEST_ASSERT(nz1.size() > 0);
+  TEST_ASSERT(!nz1.empty());
 
   roots.push_back(0);
   fp2 = generator->getSparseCountFingerprint(*mol, &roots);
   SparseIntVect<std::uint32_t>::StorageType nz2 = fp2->getNonzeroElements();
-  TEST_ASSERT(nz2.size() > 0);
+  TEST_ASSERT(!nz2.empty());
   TEST_ASSERT(nz2.size() < nz1.size());
 
   for (SparseIntVect<std::uint32_t>::StorageType::const_iterator bIt =
@@ -416,7 +416,7 @@ void testIgnoreAtomPairs() {
     mol = SmilesToMol("OCCCCC");
     fp1 = generator->getSparseCountFingerprint(*mol);
     SparseIntVect<std::uint32_t>::StorageType nz1 = fp1->getNonzeroElements();
-    TEST_ASSERT(nz1.size() > 0);
+    TEST_ASSERT(!nz1.empty());
 
     roots.push_back(0);
     fp2 = generator->getSparseCountFingerprint(*mol, nullptr, &roots);
@@ -442,7 +442,7 @@ void testIgnoreAtomPairs() {
     roots.push_back(0);
     fp2 = generator->getSparseCountFingerprint(*mol, &roots, &roots);
     SparseIntVect<std::uint32_t>::StorageType nz2 = fp2->getNonzeroElements();
-    TEST_ASSERT(nz2.size() == 0);
+    TEST_ASSERT(nz2.empty());
 
     delete mol;
     delete fp2;
@@ -456,7 +456,7 @@ void testIgnoreAtomPairs() {
     mol = SmilesToMol("OCCCCC");
     fp1 = generator->getCountFingerprint(*mol);
     SparseIntVect<std::uint32_t>::StorageType nz1 = fp1->getNonzeroElements();
-    TEST_ASSERT(nz1.size() > 0);
+    TEST_ASSERT(!nz1.empty());
 
     roots.push_back(0);
     fp2 = generator->getCountFingerprint(*mol, nullptr, &roots);
@@ -860,11 +860,11 @@ void testMorganFPFromAtoms() {
 
     mol = SmilesToMol("CCCCC");
     fp = radius0Generator->getSparseCountFingerprint(*mol, &atoms);
-    TEST_ASSERT(fp->getNonzeroElements().size() == 0);
+    TEST_ASSERT(fp->getNonzeroElements().empty());
     delete fp;
 
     fp = radius1Generator->getSparseCountFingerprint(*mol, &atoms);
-    TEST_ASSERT(fp->getNonzeroElements().size() == 0);
+    TEST_ASSERT(fp->getNonzeroElements().empty());
     delete fp;
 
     delete mol;
@@ -1514,7 +1514,7 @@ void testRDKFPUnfolded() {
 
     fp1 = generator->getSparseCountFingerprint(*m1);
     TEST_ASSERT(fp1);
-    TEST_ASSERT(fp1->getNonzeroElements().size() == 0);
+    TEST_ASSERT(fp1->getNonzeroElements().empty());
 
     delete m1;
     delete fp1;
@@ -1735,11 +1735,11 @@ void testRootedTorsions() {
 
   fp1 = generator->getSparseCountFingerprint(*mol);
   SparseIntVect<std::uint64_t>::StorageType nz1 = fp1->getNonzeroElements();
-  TEST_ASSERT(nz1.size() > 0);
+  TEST_ASSERT(!nz1.empty());
 
   fp2 = generator->getSparseCountFingerprint(*mol, &roots);
   SparseIntVect<std::uint64_t>::StorageType nz2 = fp2->getNonzeroElements();
-  TEST_ASSERT(nz2.size() > 0);
+  TEST_ASSERT(!nz2.empty());
   TEST_ASSERT(nz2.size() < nz1.size());
 
   for (SparseIntVect<std::uint64_t>::StorageType::const_iterator bIt =
@@ -1798,7 +1798,7 @@ void testIgnoreTorsions() {
 
     fp2 = generator->getSparseCountFingerprint(*mol, nullptr, &roots);
     SparseIntVect<std::uint64_t>::StorageType nz2 = fp2->getNonzeroElements();
-    TEST_ASSERT(nz2.size() == 0);
+    TEST_ASSERT(nz2.empty());
 
     delete mol;
     delete fp2;
@@ -1814,7 +1814,7 @@ void testIgnoreTorsions() {
 
     fp2 = generator->getSparseCountFingerprint(*mol, &roots, &roots);
     SparseIntVect<std::uint64_t>::StorageType nz2 = fp2->getNonzeroElements();
-    TEST_ASSERT(nz2.size() == 0);
+    TEST_ASSERT(nz2.empty());
 
     delete mol;
     delete fp2;

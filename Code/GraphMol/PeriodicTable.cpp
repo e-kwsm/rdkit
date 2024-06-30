@@ -52,7 +52,7 @@ PeriodicTable::PeriodicTable() {
   unsigned int lidx = 0;
   std::istringstream istr;
   istr.imbue(std::locale("C"));
-  while (isotopesAtomData[lidx] != "" && isotopesAtomData[lidx] != "EOS") {
+  while (!isotopesAtomData[lidx].empty() && isotopesAtomData[lidx] != "EOS") {
     tokenizer lines(isotopesAtomData[lidx++], eolSep);
     boost::char_separator<char> spaceSep(" \t");
     for (tokenizer::iterator line = lines.begin(); line != lines.end();

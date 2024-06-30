@@ -2038,13 +2038,13 @@ ROMol *reduceProductToSideChains(const ROMOL_SPTR &product,
       // C-C:12 >> C:12 # will probably work
       //  C-C:12-C >>  C:12  # probably won't
       int mapno = -1;
-      if (bonds_to_product.size()) {
+      if (!bonds_to_product.empty()) {
         mapno = getAtomMapNo(mol->getAtomBookmarks(), scaffold_atom);
       }
 
       atomsToRemove.push_back(rdcast<unsigned int>(scaffold_atom_idx));
 
-      if (bonds_to_product.size()) {
+      if (!bonds_to_product.empty()) {
         if (addDummyAtoms) {
           // add dummy atom where the reaction scaffold would have been
           unsigned int idx = mol->addAtom();

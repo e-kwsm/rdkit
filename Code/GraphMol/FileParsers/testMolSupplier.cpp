@@ -1990,7 +1990,7 @@ TEST_CASE("testGetItemText") {
     // supplier:
     // (this was sf.net issue 2632960)
     molB = tdtsup.getItemText(0);
-    REQUIRE(molB != "");
+    REQUIRE(!molB.empty());
   }
 
   {
@@ -1999,7 +1999,7 @@ TEST_CASE("testGetItemText") {
     REQUIRE(tdtsup.length() == 10);
 
     molB = tdtsup.getItemText(0);
-    REQUIRE(molB != "");
+    REQUIRE(!molB.empty());
 
     mol1 = tdtsup[0];
     REQUIRE(mol1);
@@ -2020,7 +2020,7 @@ TEST_CASE("testGetItemText") {
     // make sure getItemText() works on the last molecule
     // (this was sf.net issue 1874882
     molB = tdtsup.getItemText(9);
-    REQUIRE(molB != "");
+    REQUIRE(!molB.empty());
     REQUIRE(molB.substr(0, 12) == "$SMI<Cc1n[nH");
   }
 

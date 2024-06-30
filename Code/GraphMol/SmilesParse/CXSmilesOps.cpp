@@ -54,7 +54,7 @@ void addquery(Q *qry, std::string symbol, RDKit::RWMol &mol, unsigned int idx) {
   bool updateLabel = false;
   bool preserveProps = true;
   mol.replaceAtom(idx, qa, updateLabel, preserveProps);
-  if (symbol != "") {
+  if (!symbol.empty()) {
     mol.getAtomWithIdx(idx)->setProp(RDKit::common_properties::atomLabel,
                                      symbol);
   }
@@ -340,7 +340,7 @@ bool parse_atom_values(Iterator &first, Iterator last, RDKit::RWMol &mol,
   unsigned int atIdx = 0;
   while (first <= last && *first != '$') {
     std::string tkn = read_text_to(first, last, ";$");
-    if (tkn != "" && VALID_ATIDX(atIdx)) {
+    if (!tkn.empty() && VALID_ATIDX(atIdx)) {
       mol.getAtomWithIdx(atIdx)->setProp(RDKit::common_properties::molFileValue,
                                          tkn);
     }
@@ -440,13 +440,13 @@ bool parse_coords(Iterator &first, Iterator last, RDKit::RWMol &mol,
       if (!tkn.empty()) {
         std::vector<std::string> tokens;
         boost::split(tokens, tkn, boost::is_any_of(std::string(",")));
-        if (tokens.size() >= 1 && tokens[0].size()) {
+        if (!tokens.empty() && !tokens[0].empty()) {
           pt.x = boost::lexical_cast<double>(tokens[0]);
         }
-        if (tokens.size() >= 2 && tokens[1].size()) {
+        if (tokens.size() >= 2 && !tokens[1].empty()) {
           pt.y = boost::lexical_cast<double>(tokens[1]);
         }
-        if (tokens.size() >= 3 && tokens[2].size()) {
+        if (tokens.size() >= 3 && !tokens[2].empty()) {
           pt.z = boost::lexical_cast<double>(tokens[2]);
           is3D = true;
         }
@@ -1972,7 +1972,7 @@ std::string get_radical_block(const ROMol &mol,
       rads[nrad].push_back(i);
     }
   }
-  if (rads.size()) {
+  if (!rads.empty()) {
     for (const auto &pr : rads) {
       switch (pr.first) {
         case 1:
@@ -2242,7 +2242,7 @@ std::string get_bond_config_block(
       }
     }
 
-    if (wType != "") {
+    if (!wType.empty()) {
       if (wParts.find(wType) == wParts.end()) {
         wParts[wType] = std::vector<std::string>();
       }
@@ -2253,7 +2253,7 @@ std::string get_bond_config_block(
   std::string res = "";
 
   for (auto wPart : wParts) {
-    if (res != "") {
+    if (!res.empty()) {
       res += ",";
     }
     res += wPart.first + ":" + boost::algorithm::join(wPart.second, ",");
@@ -2553,7 +2553,7 @@ std::string getCXExtensions(const ROMol &mol, std::uint32_t flags) {
            "$";
   }
   auto radblock = get_radical_block(mol, atomOrder);
-  if ((flags & SmilesWrite::CXSmilesFields::CX_RADICALS) && radblock.size()) {
+  if ((flags & SmilesWrite::CXSmilesFields::CX_RADICALS) && !radblock.empty()) {
     if (res.size() > 1) {
       res += ",";
     }

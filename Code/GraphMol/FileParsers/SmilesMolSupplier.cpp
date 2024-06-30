@@ -101,7 +101,7 @@ void SmilesMolSupplier::reset() {
   dp_inStream->clear();
 
   df_end = 0;
-  if (d_molpos.size() > 0) {
+  if (!d_molpos.empty()) {
     dp_inStream->seekg(d_molpos.front());
     d_next = 0;
     d_line = 0;
@@ -227,7 +227,7 @@ std::string SmilesMolSupplier::nextLine() {
   }
   std::string tempStr = getLine(dp_inStream);
 
-  if (tempStr == "") {
+  if (tempStr.empty()) {
     // got an empty string, check to see if we hit EOF:
     if (dp_inStream->eof() || dp_inStream->bad()) {
       // yes, set our flag:
@@ -263,7 +263,7 @@ long int SmilesMolSupplier::skipComments() {
   std::string tempStr = this->nextLine();
   if (!df_end) {
     // if we didn't immediately hit EOF, loop until we get a valid line:
-    while ((tempStr[0] == '#') || (strip(tempStr).size() == 0)) {
+    while ((tempStr[0] == '#') || (strip(tempStr).empty())) {
       prev = dp_inStream->tellg();
       tempStr = this->nextLine();
       if (this->atEnd()) {
@@ -272,7 +272,7 @@ long int SmilesMolSupplier::skipComments() {
     }
   }
   // if we hit EOF without getting a proper line, return -1:
-  if (tempStr.empty() || (tempStr[0] == '#') || (strip(tempStr).size() == 0)) {
+  if (tempStr.empty() || (tempStr[0] == '#') || (strip(tempStr).empty())) {
     return -1;
   }
   return static_cast<long int>(prev);
@@ -479,7 +479,7 @@ unsigned int SmilesMolSupplier::length() {
     return d_len;
   } else {
     std::streampos oPos = dp_inStream->tellg();
-    if (d_molpos.size()) {
+    if (!d_molpos.empty()) {
       // we've already read some molecules, go to the last
       // one and read it in to initialize our location:
       dp_inStream->seekg(d_molpos.back());

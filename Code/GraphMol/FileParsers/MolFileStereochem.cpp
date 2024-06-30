@@ -244,7 +244,7 @@ void markUnspecifiedStereoAsUnknown(ROMol &mol, int confId) {
   }
   static int noNbrs = 100;
   auto si = Chirality::findPotentialStereo(mol);
-  if (si.size()) {
+  if (!si.empty()) {
     std::pair<bool, INT_VECT> retVal =
         Chirality::detail::countChiralNbrs(mol, noNbrs);
     INT_VECT nChiralNbrs = retVal.second;

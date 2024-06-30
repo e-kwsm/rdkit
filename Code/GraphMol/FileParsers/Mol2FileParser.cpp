@@ -129,7 +129,7 @@ void readFormalChargesFromAttr(std::istream *inStream, RWMol *res) {
       readNextAtomAttribs = false;
     } else {
       tempStr = getLine(inStream);
-      if (tempStr == "" || tempStr[0] == '@' || tempStr[0] == '#') {
+      if (tempStr.empty() || tempStr[0] == '@' || tempStr[0] == '#') {
         readNextAtomAttribs = false;
       }
     }
@@ -835,7 +835,7 @@ std::unique_ptr<RWMol> MolFromMol2DataStream(std::istream &inStream,
       break;
     }
 
-    if (tempStr != "" && tempStr[0] == '@') {
+    if (!tempStr.empty() && tempStr[0] == '@') {
       tokenizer tokens(tempStr, sep);
       std::string firstToken = *tokens.begin();
       if (firstToken == "@<TRIPOS>MOLECULE") {

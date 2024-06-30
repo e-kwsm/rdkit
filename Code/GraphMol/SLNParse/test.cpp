@@ -297,7 +297,7 @@ void test3() {
   TEST_ASSERT(mol->getNumAtoms() == 1);
   TEST_ASSERT(mol->getAtomWithIdx(0)->hasProp("foo"));
   mol->getAtomWithIdx(0)->getProp("foo", pval);
-  TEST_ASSERT(pval == "");
+  TEST_ASSERT(pval.empty());
   TEST_ASSERT(mol->getAtomWithIdx(0)->hasProp("bar"));
   mol->getAtomWithIdx(0)->getProp("bar", pval);
   TEST_ASSERT(pval == "baz");

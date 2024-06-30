@@ -167,7 +167,7 @@ void parseAtomAttribs(Atom *atom, AttribListType attribs, bool doingQuery) {
                                 "AtomIsotope");
       }
     } else if (attribName == "r") {
-      if (attribVal != "") {
+      if (!attribVal.empty()) {
         BOOST_LOG(rdWarningLog)
             << "Query value '" << attribVal << "' ignored for r query\n";
       }
@@ -216,37 +216,37 @@ void parseAtomAttribs(Atom *atom, AttribListType attribs, bool doingQuery) {
         val = -666;
       }
       if (attribName == "rbc") {
-        if (fTag == "") {
+        if (fTag.empty()) {
           val = parseIntAttribVal(attribName, attribVal);
         }
         query = makeQueryFromOp(attribPtr->op, val, queryAtomRingBondCount,
                                 fTag + "AtomRingBondCount");
       } else if (attribName == "tbo") {
-        if (fTag == "") {
+        if (fTag.empty()) {
           val = parseIntAttribVal(attribName, attribVal);
         }
         query = makeQueryFromOp(attribPtr->op, val, queryAtomTotalValence,
                                 fTag + "AtomTotalValence");
       } else if (attribName == "tac") {
-        if (fTag == "") {
+        if (fTag.empty()) {
           val = parseIntAttribVal(attribName, attribVal);
         }
         query = makeQueryFromOp(attribPtr->op, val, queryAtomTotalDegree,
                                 fTag + "AtomTotalDegree");
       } else if (attribName == "hc") {
-        if (fTag == "") {
+        if (fTag.empty()) {
           val = parseIntAttribVal(attribName, attribVal);
         }
         query = makeQueryFromOp(attribPtr->op, val, queryAtomHCount,
                                 fTag + "AtomHCount");
       } else if (attribName == "hac") {
-        if (fTag == "") {
+        if (fTag.empty()) {
           val = parseIntAttribVal(attribName, attribVal);
         }
         query = makeQueryFromOp(attribPtr->op, val, queryAtomNonHydrogenDegree,
                                 fTag + "AtomHeavyAtomDegree");
       } else if (attribName == "f") {
-        if (fTag == "") {
+        if (fTag.empty()) {
           val = parseIntAttribVal(attribName, attribVal);
         }
         query = makeQueryFromOp(
@@ -426,7 +426,7 @@ void parseBondAttribs(Bond *bond, AttribListType attribs, bool doingQuery) {
         seenTypeQuery = true;
       }
     } else if (attribName == "r") {
-      if (attribVal != "") {
+      if (!attribVal.empty()) {
         BOOST_LOG(rdWarningLog)
             << "Query value '" << attribVal << "' ignored for r query\n";
       }
