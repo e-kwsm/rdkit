@@ -303,7 +303,7 @@ void SDMolSupplier::buildIndexTo(unsigned int targetIdx) {
     // check if the stream is "honest" (binary or text mode with 1 byte newlines
     // (like UNIX), meaning read bytes map 1:1 to disk bytes)
     bool isBinaryLike = (bytesRead == (chunkEndPos - chunkStartPos));
-    char *bufStart = &buffer[0];
+    char *bufStart = buffer.data();
     char *bufEnd = bufStart + OVERLAP + bytesRead;
     char *ptr = bufStart + 1;
     bool needEOL = false;
@@ -388,7 +388,7 @@ void SDMolSupplier::buildIndexTo(unsigned int targetIdx) {
     }
 
     if (bytesRead >= static_cast<std::streamsize>(OVERLAP)) {
-      std::memcpy(&buffer[0], bufEnd - OVERLAP, OVERLAP);
+      std::memcpy(buffer.data(), bufEnd - OVERLAP, OVERLAP);
     }
     currentStreamPos = chunkEndPos;
   }

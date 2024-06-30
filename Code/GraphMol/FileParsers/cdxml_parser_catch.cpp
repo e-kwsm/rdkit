@@ -1365,8 +1365,8 @@ TEST_CASE("CDX and Formats") {
       auto size = std::filesystem::file_size(fname);
       std::string content(size, '\0');
       std::ifstream in(fname, std::ios::binary);
-      in.read(&content[0], size);
-      
+      in.read(content.data(), size);
+
       auto m2 = MolsFromCDXML(content);
       CHECK(MolToSmiles(*m2[0]) == test.second);
     }
@@ -1379,13 +1379,13 @@ TEST_CASE("CDX and Formats") {
     auto size = std::filesystem::file_size(cdxfname);
     std::string content(size, '\0');
     std::ifstream in(cdxfname, std::ios::binary);
-    in.read(&content[0], size);
+    in.read(content.data(), size);
     auto mols1 = MolsFromCDXML(content);
 
     auto size2 = std::filesystem::file_size(cdxmlfname);
     std::string content2(size2, ' ');
     std::ifstream in2(cdxmlfname, std::ios::binary);
-    in2.read(&content2[0], size2);
+    in2.read(content2.data(), size2);
     auto mols2 = MolsFromCDXML(content2);
     CHECK(MolToSmiles(*mols1[0]) == MolToSmiles(*mols2[0]));
   }
