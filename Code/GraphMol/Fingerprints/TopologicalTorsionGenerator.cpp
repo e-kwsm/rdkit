@@ -12,8 +12,7 @@
 #include <GraphMol/Fingerprints/FingerprintUtil.h>
 #include <GraphMol/Fingerprints/AtomPairGenerator.h>
 
-namespace RDKit {
-namespace TopologicalTorsion {
+namespace RDKit::TopologicalTorsion {
 
 using namespace AtomPairs;
 
@@ -221,5 +220,4 @@ template RDKIT_FINGERPRINTS_EXPORT FingerprintGenerator<std::uint64_t> *
 getTopologicalTorsionGenerator(const TopologicalTorsionArguments &,
                                AtomInvariantsGenerator *, const bool);
 
-}  // namespace TopologicalTorsion
-}  // namespace RDKit
+}  // namespace RDKit::TopologicalTorsion

@@ -12,9 +12,7 @@
 #define RD_MMFFPOSITIONCONSTRAINT_H
 #include <ForceField/PositionConstraint.h>
 
-namespace ForceFields {
-namespace MMFF {
+namespace ForceFields::MMFF {
 using PositionConstraintContrib = ForceFields::PositionConstraintContrib;
-}  // namespace MMFF
-}  // namespace ForceFields
+}  // namespace ForceFields::MMFF
 #endif

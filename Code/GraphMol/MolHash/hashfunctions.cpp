@@ -129,8 +129,7 @@ void NMRDKitSanitizeHydrogens(RDKit::RWMol *mol) {
 
 }  // namespace
 
-namespace RDKit {
-namespace MolHash {
+namespace RDKit::MolHash {
 
 namespace {
 unsigned int NMDetermineComponents(RWMol *mol, unsigned int *parts,
@@ -1466,5 +1465,4 @@ std::string MolHash(RWMol *mol, HashFunction func, bool useCXSmiles,
   }
   return result;
 }
-}  // namespace MolHash
-}  // namespace RDKit
+}  // namespace RDKit::MolHash

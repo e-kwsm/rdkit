@@ -16,8 +16,7 @@
 #include <RDGeneral/Invariant.h>
 #include <RDGeneral/utils.h>
 
-namespace ForceFields {
-namespace UFF {
+namespace ForceFields::UFF {
 
 InversionContribs::InversionContribs(ForceField *owner) {
   PRECONDITION(owner, "bad owner");
@@ -133,5 +132,4 @@ void InversionContribs::getGrad(double *pos, double *grad) const {
     }
   }
 }
-}  // namespace UFF
-}  // namespace ForceFields
+}  // namespace ForceFields::UFF
