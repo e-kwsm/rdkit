@@ -125,10 +125,9 @@ struct CXXAtomIterator {
 
     Graph *graph;
     Iterator pos;
-    Atom *current;
+    Atom *current{nullptr};
 
-    CXXAtomIter(Graph *graph, Iterator pos)
-        : graph(graph), pos(pos), current(nullptr) {}
+    CXXAtomIter(Graph *graph, Iterator pos) : graph(graph), pos(pos) {}
 
     reference operator*() {
       current = (*graph)[*pos];
@@ -168,10 +167,9 @@ struct CXXBondIterator {
 
     Graph *graph;
     Iterator pos;
-    Bond *current;
+    Bond *current{nullptr};
 
-    CXXBondIter(Graph *graph, Iterator pos)
-        : graph(graph), pos(pos), current(nullptr) {}
+    CXXBondIter(Graph *graph, Iterator pos) : graph(graph), pos(pos) {}
 
     reference operator*() {
       current = (*graph)[*pos];
