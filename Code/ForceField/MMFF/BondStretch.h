@@ -33,8 +33,8 @@ class RDKIT_FORCEFIELD_EXPORT BondStretchContrib : public ForceFieldContrib {
     \param end2Params  pointer to the parameters for end2
 
   */
-  BondStretchContrib(ForceField *owner, const unsigned int idx1,
-                     const unsigned int idx2, const MMFFBond *mmffBondParams);
+  BondStretchContrib(ForceField *owner, unsigned int idx1, unsigned int idx2,
+                     const MMFFBond *mmffBondParams);
 
   double getEnergy(double *pos) const override;
 
@@ -58,9 +58,8 @@ RDKIT_FORCEFIELD_EXPORT double calcBondRestLength(
 RDKIT_FORCEFIELD_EXPORT double calcBondForceConstant(
     const MMFFBond *mmffBondParams);
 //! calculates and returns the bond stretching MMFF energy
-RDKIT_FORCEFIELD_EXPORT double calcBondStretchEnergy(const double r0,
-                                                     const double kb,
-                                                     const double distance);
+RDKIT_FORCEFIELD_EXPORT double calcBondStretchEnergy(double r0, double kb,
+                                                     double distance);
 }  // namespace Utils
 }  // namespace MMFF
 }  // namespace ForceFields
