@@ -905,7 +905,7 @@ void canonicalizeStereoGroups(std::unique_ptr<ROMol> &mol,
     const auto &sg = mol->getStereoGroups()[0];
     const auto &sgats = sg.getAtoms();
     const auto &sgBonds = sg.getBonds();
-    if (sgats.size() <= 2 && sgBonds.size() == 0) {
+    if (sgats.size() <= 2 && sgBonds.empty()) {
       bool isSimple = true;
 
       for (auto &atom : mol->atoms()) {

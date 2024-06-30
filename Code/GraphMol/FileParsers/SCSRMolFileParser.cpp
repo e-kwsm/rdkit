@@ -121,7 +121,7 @@ static std::unique_ptr<SCSRMol> SCSRMolFromSCSRDataStream(
 
     std::vector<std::string> templateNames;
     for (unsigned int i = 1; i < tokens.size(); ++i) {
-      if (tokens[i] != "") {
+      if (!tokens[i].empty()) {
         templateNames.push_back(tokens[i]);
       }
     }
@@ -218,7 +218,7 @@ static std::unique_ptr<SCSRMol> SCSRMolFromSCSRDataStream(
     if (atom->hasProp(common_properties::molAttachOrderTemplate)) {
       atom->getProp(common_properties::molAttachOrderTemplate, attchOrds);
     }
-    if (dummyLabel != "" && atomClass != "") {
+    if (!dummyLabel.empty() && !atomClass.empty()) {
       // find the template that matches the class and label
 
       bool templateFound = false;
@@ -908,7 +908,7 @@ class MolFromSCSRMolConverter {
 
       if (!atom->getPropIfPresent(common_properties::dummyLabel, dummyLabel) ||
           !atom->getPropIfPresent(common_properties::molAtomClass, atomClass) ||
-          dummyLabel == "" || atomClass == "") {
+          dummyLabel.empty() || atomClass.empty()) {
         // NOT a template atom - just copy it
         auto newAtom = new Atom(*atom);
         resMol->addAtom(newAtom, true, true);
@@ -1018,7 +1018,7 @@ class MolFromSCSRMolConverter {
               attachAtoms.push_back(attachPoint.aIdx);
             }
           }
-          if (attachAtoms.size() == 0) {
+          if (attachAtoms.empty()) {
             throw FileParseException("Attachment point not found");
           }
         }
@@ -1184,7 +1184,7 @@ class MolFromSCSRMolConverter {
             break;
           }
         }
-        if (newAtoms.size() > 0) {
+        if (!newAtoms.empty()) {
           const std::string type = "SUP";
           newSgroups.emplace_back(new SubstanceGroup(resMol.get(), type));
           auto newSg = newSgroups.back().get();
@@ -1213,7 +1213,7 @@ class MolFromSCSRMolConverter {
       }
     }
 
-    if (newSgroups.size() > 0) {
+    if (!newSgroups.empty()) {
       for (auto &sg : newSgroups) {
         addSubstanceGroup(*resMol, *sg.get());
       }
@@ -1273,7 +1273,7 @@ class MolFromSCSRMolConverter {
                                    absoluteAtoms, absoluteBonds);
     }
 
-    if (newStereoGroups.size() > 0) {
+    if (!newStereoGroups.empty()) {
       resMol->setStereoGroups(newStereoGroups);
     }
 
