@@ -13,8 +13,7 @@
 #include <GraphMol/RDKitBase.h>
 #include <GraphMol/ForceFieldHelpers/MMFF/AtomTyper.h>
 
-namespace ForceFields {
-namespace MMFF {
+namespace ForceFields::MMFF {
 class MMFFVdWCollection;
 class MMFFVdW;
 
@@ -129,6 +128,5 @@ RDKIT_FORCEFIELD_EXPORT double calcEleEnergy(unsigned int idx1,
                                              std::uint8_t dielModel,
                                              bool is1_4);
 }  // namespace Utils
-}  // namespace MMFF
-}  // namespace ForceFields
+}  // namespace ForceFields::MMFF
 #endif

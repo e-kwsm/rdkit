@@ -705,8 +705,7 @@ void visit_children(
 }
 }  // namespace
 
-namespace v2 {
-namespace CDXMLParser {
+namespace v2::CDXMLParser {
 
 std::vector<std::unique_ptr<RWMol>> MolsFromCDXMLDataStream(
     std::istream &inStream, const CDXMLParserParams &params) {
@@ -833,8 +832,8 @@ std::vector<std::unique_ptr<RWMol>> MolsFromCDXML(
   std::stringstream iss(cdxml);
   return MolsFromCDXMLDataStream(iss, params);
 }
-}  // namespace CDXMLParser
-}  // namespace v2
+}  // namespace v2::CDXMLParser
+
 }  // namespace RDKit
 #else
 #include <ChemDraw/chemdraw.h>
