@@ -151,7 +151,7 @@ void testUFF2() {
   // C_3 - C_3, r0=1.514, k01=699.5918
   ForceFields::ForceFieldContrib *bs;
   bs = new ForceFields::UFF::BondStretchContrib(&ff, 0, 1, 1, &param1, &param1);
-  ff.contribs().push_back(ForceFields::ContribPtr(bs));
+  ff.contribs().emplace_back(bs);
   ff.initialize();
 
   double *p, *g;
@@ -310,13 +310,13 @@ void testUFF4() {
   ForceFields::ForceFieldContrib *contrib;
   contrib =
       new ForceFields::UFF::BondStretchContrib(&ff, 0, 1, 1, &param1, &param1);
-  ff.contribs().push_back(ForceFields::ContribPtr(contrib));
+  ff.contribs().emplace_back(contrib);
   contrib =
       new ForceFields::UFF::BondStretchContrib(&ff, 1, 2, 1, &param1, &param1);
-  ff.contribs().push_back(ForceFields::ContribPtr(contrib));
+  ff.contribs().emplace_back(contrib);
   contrib = new ForceFields::UFF::AngleBendContrib(&ff, 0, 1, 2, 1, 1, &param1,
                                                    &param1, &param1);
-  ff.contribs().push_back(ForceFields::ContribPtr(contrib));
+  ff.contribs().emplace_back(contrib);
 
   RDGeom::Point3D d, v1, v2;
   double theta;
@@ -365,7 +365,7 @@ void testUFF4() {
   ff.contribs().pop_back();
   contrib = new ForceFields::UFF::AngleBendContrib(&ff, 0, 1, 2, 1, 1, &param1,
                                                    &param1, &param1);
-  ff.contribs().push_back(ForceFields::ContribPtr(contrib));
+  ff.contribs().emplace_back(contrib);
 
   p1.x = 1.3;
   p1.y = 0.1;
@@ -403,7 +403,7 @@ void testUFF4() {
   ff.contribs().pop_back();
   contrib = new ForceFields::UFF::AngleBendContrib(&ff, 0, 1, 2, 1, 1, &param1,
                                                    &param1, &param1, 2);
-  ff.contribs().push_back(ForceFields::ContribPtr(contrib));
+  ff.contribs().emplace_back(contrib);
 
   p1.x = 1.3;
   p1.y = 0.1;
@@ -437,7 +437,7 @@ void testUFF4() {
   ff.contribs().pop_back();
   contrib = new ForceFields::UFF::AngleBendContrib(&ff, 0, 1, 2, 1, 1, &param1,
                                                    &param1, &param1, 3);
-  ff.contribs().push_back(ForceFields::ContribPtr(contrib));
+  ff.contribs().emplace_back(contrib);
 
   p1.x = 1.3;
   p1.y = 0.1;
@@ -473,7 +473,7 @@ void testUFF4() {
   ff.contribs().pop_back();
   contrib = new ForceFields::UFF::AngleBendContrib(&ff, 0, 1, 2, 1, 1, &param1,
                                                    &param1, &param1, 4);
-  ff.contribs().push_back(ForceFields::ContribPtr(contrib));
+  ff.contribs().emplace_back(contrib);
 
   p1.x = 1.3;
   p1.y = 0.1;
@@ -532,39 +532,39 @@ void testUFF5() {
   // build ethylene:
   contrib =
       new ForceFields::UFF::BondStretchContrib(&ff, 0, 1, 2, &param1, &param1);
-  ff.contribs().push_back(ForceFields::ContribPtr(contrib));
+  ff.contribs().emplace_back(contrib);
   contrib =
       new ForceFields::UFF::BondStretchContrib(&ff, 0, 2, 1, &param1, &param2);
-  ff.contribs().push_back(ForceFields::ContribPtr(contrib));
+  ff.contribs().emplace_back(contrib);
   contrib =
       new ForceFields::UFF::BondStretchContrib(&ff, 0, 3, 1, &param1, &param2);
-  ff.contribs().push_back(ForceFields::ContribPtr(contrib));
+  ff.contribs().emplace_back(contrib);
   contrib =
       new ForceFields::UFF::BondStretchContrib(&ff, 1, 4, 1, &param1, &param2);
-  ff.contribs().push_back(ForceFields::ContribPtr(contrib));
+  ff.contribs().emplace_back(contrib);
   contrib =
       new ForceFields::UFF::BondStretchContrib(&ff, 1, 5, 1, &param1, &param2);
-  ff.contribs().push_back(ForceFields::ContribPtr(contrib));
+  ff.contribs().emplace_back(contrib);
 
   contrib = new ForceFields::UFF::AngleBendContrib(&ff, 1, 0, 2, 2, 1, &param1,
                                                    &param1, &param2, 3);
-  ff.contribs().push_back(ForceFields::ContribPtr(contrib));
+  ff.contribs().emplace_back(contrib);
   contrib = new ForceFields::UFF::AngleBendContrib(&ff, 1, 0, 3, 2, 1, &param1,
                                                    &param1, &param2, 3);
-  ff.contribs().push_back(ForceFields::ContribPtr(contrib));
+  ff.contribs().emplace_back(contrib);
   contrib = new ForceFields::UFF::AngleBendContrib(&ff, 2, 0, 3, 1, 1, &param2,
                                                    &param1, &param2, 3);
-  ff.contribs().push_back(ForceFields::ContribPtr(contrib));
+  ff.contribs().emplace_back(contrib);
 
   contrib = new ForceFields::UFF::AngleBendContrib(&ff, 0, 1, 4, 2, 1, &param1,
                                                    &param1, &param2, 3);
-  ff.contribs().push_back(ForceFields::ContribPtr(contrib));
+  ff.contribs().emplace_back(contrib);
   contrib = new ForceFields::UFF::AngleBendContrib(&ff, 0, 1, 5, 2, 1, &param1,
                                                    &param1, &param2, 3);
-  ff.contribs().push_back(ForceFields::ContribPtr(contrib));
+  ff.contribs().emplace_back(contrib);
   contrib = new ForceFields::UFF::AngleBendContrib(&ff, 4, 1, 5, 1, 1, &param2,
                                                    &param1, &param2, 3);
-  ff.contribs().push_back(ForceFields::ContribPtr(contrib));
+  ff.contribs().emplace_back(contrib);
 
   // dodge the fact that we're not using torsions yet by putting
   // everything in the z=0 plane:
@@ -647,7 +647,7 @@ void testUFF6() {
   ff.initialize();
   ForceFields::ForceFieldContrib *contrib;
   contrib = new ForceFields::UFF::vdWContrib(&ff, 0, 1, &param1, &param1);
-  ff.contribs().push_back(ForceFields::ContribPtr(contrib));
+  ff.contribs().emplace_back(contrib);
 
   // try a bit of minimization
   RDGeom::Point3D d;
@@ -746,7 +746,7 @@ void testUFF7() {
   contrib = new ForceFields::UFF::TorsionAngleContrib(
       &ff, 0, 1, 2, 3, 1, 6, 6, RDKit::Atom::SP2, RDKit::Atom::SP2, &param1,
       &param1);
-  ff.contribs().push_back(ForceFields::ContribPtr(contrib));
+  ff.contribs().emplace_back(contrib);
   p1.x = 0;
   p1.y = 1.5;
   p1.z = 0.1;
@@ -779,7 +779,7 @@ void testUFF7() {
   contrib = new ForceFields::UFF::TorsionAngleContrib(
       &ff, 0, 1, 2, 3, 1, 6, 6, RDKit::Atom::SP2, RDKit::Atom::SP3, &param1,
       &param1);
-  ff.contribs().push_back(ForceFields::ContribPtr(contrib));
+  ff.contribs().emplace_back(contrib);
   p1.x = 0;
   p1.y = 1.5;
   p1.z = 0.1;
@@ -812,7 +812,7 @@ void testUFF7() {
   contrib = new ForceFields::UFF::TorsionAngleContrib(
       &ff, 0, 1, 2, 3, 1, 8, 8, RDKit::Atom::SP3, RDKit::Atom::SP3, &param1,
       &param1);
-  ff.contribs().push_back(ForceFields::ContribPtr(contrib));
+  ff.contribs().emplace_back(contrib);
   p1.x = 0;
   p1.y = 1.5;
   p1.z = 0.1;
@@ -845,7 +845,7 @@ void testUFF7() {
   contrib = new ForceFields::UFF::TorsionAngleContrib(
       &ff, 0, 1, 2, 3, 1, 8, 6, RDKit::Atom::SP3, RDKit::Atom::SP2, &param1,
       &param1);
-  ff.contribs().push_back(ForceFields::ContribPtr(contrib));
+  ff.contribs().emplace_back(contrib);
   p1.x = 0;
   p1.y = 1.5;
   p1.z = 0.1;
@@ -878,7 +878,7 @@ void testUFF7() {
   contrib = new ForceFields::UFF::TorsionAngleContrib(
       &ff, 0, 1, 2, 3, 1, 6, 6, RDKit::Atom::SP2, RDKit::Atom::SP3, &param1,
       &param1, true);
-  ff.contribs().push_back(ForceFields::ContribPtr(contrib));
+  ff.contribs().emplace_back(contrib);
   p1.x = 0;
   p1.y = 1.5;
   p1.z = 0.1;
@@ -964,57 +964,57 @@ void testUFF8() {
   // BONDS:
   contrib =
       new ForceFields::UFF::BondStretchContrib(&ff, 0, 1, 2, param1, param1);
-  ff.contribs().push_back(ForceFields::ContribPtr(contrib));
+  ff.contribs().emplace_back(contrib);
   contrib =
       new ForceFields::UFF::BondStretchContrib(&ff, 0, 2, 1, param1, param2);
-  ff.contribs().push_back(ForceFields::ContribPtr(contrib));
+  ff.contribs().emplace_back(contrib);
   contrib =
       new ForceFields::UFF::BondStretchContrib(&ff, 0, 3, 1, param1, param2);
-  ff.contribs().push_back(ForceFields::ContribPtr(contrib));
+  ff.contribs().emplace_back(contrib);
   contrib =
       new ForceFields::UFF::BondStretchContrib(&ff, 1, 4, 1, param1, param2);
-  ff.contribs().push_back(ForceFields::ContribPtr(contrib));
+  ff.contribs().emplace_back(contrib);
   contrib =
       new ForceFields::UFF::BondStretchContrib(&ff, 1, 5, 1, param1, param2);
-  ff.contribs().push_back(ForceFields::ContribPtr(contrib));
+  ff.contribs().emplace_back(contrib);
 
   // ANGLES:
   contrib = new ForceFields::UFF::AngleBendContrib(&ff, 1, 0, 2, 2, 1, param1,
                                                    param1, param2, 3);
-  ff.contribs().push_back(ForceFields::ContribPtr(contrib));
+  ff.contribs().emplace_back(contrib);
   contrib = new ForceFields::UFF::AngleBendContrib(&ff, 1, 0, 3, 2, 1, param1,
                                                    param1, param2, 3);
-  ff.contribs().push_back(ForceFields::ContribPtr(contrib));
+  ff.contribs().emplace_back(contrib);
   contrib = new ForceFields::UFF::AngleBendContrib(&ff, 2, 0, 3, 1, 1, param2,
                                                    param1, param2, 3);
-  ff.contribs().push_back(ForceFields::ContribPtr(contrib));
+  ff.contribs().emplace_back(contrib);
   contrib = new ForceFields::UFF::AngleBendContrib(&ff, 0, 1, 4, 2, 1, param1,
                                                    param1, param2, 3);
-  ff.contribs().push_back(ForceFields::ContribPtr(contrib));
+  ff.contribs().emplace_back(contrib);
   contrib = new ForceFields::UFF::AngleBendContrib(&ff, 0, 1, 5, 2, 1, param1,
                                                    param1, param2, 3);
-  ff.contribs().push_back(ForceFields::ContribPtr(contrib));
+  ff.contribs().emplace_back(contrib);
   contrib = new ForceFields::UFF::AngleBendContrib(&ff, 4, 1, 5, 1, 1, param2,
                                                    param1, param2, 3);
-  ff.contribs().push_back(ForceFields::ContribPtr(contrib));
+  ff.contribs().emplace_back(contrib);
 
   // DIHEDRALS:
   contrib = new ForceFields::UFF::TorsionAngleContrib(
       &ff, 2, 0, 1, 4, 2, 6, 6, RDKit::Atom::SP3, RDKit::Atom::SP3, param1,
       param1);
-  ff.contribs().push_back(ForceFields::ContribPtr(contrib));
+  ff.contribs().emplace_back(contrib);
   contrib = new ForceFields::UFF::TorsionAngleContrib(
       &ff, 2, 0, 1, 5, 2, 6, 6, RDKit::Atom::SP3, RDKit::Atom::SP3, param1,
       param1);
-  ff.contribs().push_back(ForceFields::ContribPtr(contrib));
+  ff.contribs().emplace_back(contrib);
   contrib = new ForceFields::UFF::TorsionAngleContrib(
       &ff, 3, 0, 1, 4, 2, 6, 6, RDKit::Atom::SP3, RDKit::Atom::SP3, param1,
       param1);
-  ff.contribs().push_back(ForceFields::ContribPtr(contrib));
+  ff.contribs().emplace_back(contrib);
   contrib = new ForceFields::UFF::TorsionAngleContrib(
       &ff, 3, 0, 1, 5, 2, 6, 6, RDKit::Atom::SP3, RDKit::Atom::SP3, param1,
       param1);
-  ff.contribs().push_back(ForceFields::ContribPtr(contrib));
+  ff.contribs().emplace_back(contrib);
 
   p1.x = -0.58;
   p1.y = -0.33;
@@ -1107,39 +1107,39 @@ void testUFFTorsionConflict() {
   // BONDS:
   contrib =
       new ForceFields::UFF::BondStretchContrib(&ff, 0, 1, 2, param1, param1);
-  ff.contribs().push_back(ForceFields::ContribPtr(contrib));
+  ff.contribs().emplace_back(contrib);
   contrib =
       new ForceFields::UFF::BondStretchContrib(&ff, 1, 2, 1, param1, param3);
-  ff.contribs().push_back(ForceFields::ContribPtr(contrib));
+  ff.contribs().emplace_back(contrib);
   contrib =
       new ForceFields::UFF::BondStretchContrib(&ff, 1, 3, 1, param1, param2);
-  ff.contribs().push_back(ForceFields::ContribPtr(contrib));
+  ff.contribs().emplace_back(contrib);
   contrib =
       new ForceFields::UFF::BondStretchContrib(&ff, 2, 4, 1, param1, param2);
-  ff.contribs().push_back(ForceFields::ContribPtr(contrib));
+  ff.contribs().emplace_back(contrib);
   contrib =
       new ForceFields::UFF::BondStretchContrib(&ff, 2, 5, 1, param1, param2);
-  ff.contribs().push_back(ForceFields::ContribPtr(contrib));
+  ff.contribs().emplace_back(contrib);
   contrib =
       new ForceFields::UFF::BondStretchContrib(&ff, 2, 6, 1, param1, param2);
-  ff.contribs().push_back(ForceFields::ContribPtr(contrib));
+  ff.contribs().emplace_back(contrib);
 
   // ANGLES:
   contrib = new ForceFields::UFF::AngleBendContrib(&ff, 0, 1, 2, 2.0, 1.0,
                                                    param1, param1, param3);
-  ff.contribs().push_back(ForceFields::ContribPtr(contrib));
+  ff.contribs().emplace_back(contrib);
   contrib = new ForceFields::UFF::AngleBendContrib(&ff, 0, 1, 3, 2.0, 1.0,
                                                    param1, param1, param2);
-  ff.contribs().push_back(ForceFields::ContribPtr(contrib));
+  ff.contribs().emplace_back(contrib);
   contrib = new ForceFields::UFF::AngleBendContrib(&ff, 1, 2, 4, 1.0, 1.0,
                                                    param1, param3, param2);
-  ff.contribs().push_back(ForceFields::ContribPtr(contrib));
+  ff.contribs().emplace_back(contrib);
   contrib = new ForceFields::UFF::AngleBendContrib(&ff, 1, 2, 5, 1.0, 1.0,
                                                    param1, param3, param2);
-  ff.contribs().push_back(ForceFields::ContribPtr(contrib));
+  ff.contribs().emplace_back(contrib);
   contrib = new ForceFields::UFF::AngleBendContrib(&ff, 1, 2, 6, 1.0, 1.0,
                                                    param1, param3, param2);
-  ff.contribs().push_back(ForceFields::ContribPtr(contrib));
+  ff.contribs().emplace_back(contrib);
   contrib = new ForceFields::UFF::AngleBendContrib(&ff, 2, 1, 3, 1.0, 1.0,
                                                    param3, param1, param2);
   ff.contribs().push_back(ForceFields::ContribPtr(contrib));
@@ -1148,29 +1148,29 @@ void testUFFTorsionConflict() {
   contrib = new ForceFields::UFF::TorsionAngleContrib(
       &ff, 0, 1, 2, 4, 1.0, 6, 6, RDKit::Atom::SP2, RDKit::Atom::SP3, param1,
       param3, true);
-  ff.contribs().push_back(ForceFields::ContribPtr(contrib));
+  ff.contribs().emplace_back(contrib);
   contrib = new ForceFields::UFF::TorsionAngleContrib(
       &ff, 3, 1, 2, 4, 1.0, 6, 6, RDKit::Atom::SP2, RDKit::Atom::SP3, param1,
       param3, false);
-  ff.contribs().push_back(ForceFields::ContribPtr(contrib));
+  ff.contribs().emplace_back(contrib);
 
   contrib = new ForceFields::UFF::TorsionAngleContrib(
       &ff, 0, 1, 2, 5, 1.0, 6, 6, RDKit::Atom::SP2, RDKit::Atom::SP3, param1,
       param3, true);
-  ff.contribs().push_back(ForceFields::ContribPtr(contrib));
+  ff.contribs().emplace_back(contrib);
   contrib = new ForceFields::UFF::TorsionAngleContrib(
       &ff, 3, 1, 2, 5, 1.0, 6, 6, RDKit::Atom::SP2, RDKit::Atom::SP3, param1,
       param3, false);
-  ff.contribs().push_back(ForceFields::ContribPtr(contrib));
+  ff.contribs().emplace_back(contrib);
 
   contrib = new ForceFields::UFF::TorsionAngleContrib(
       &ff, 0, 1, 2, 6, 1.0, 6, 6, RDKit::Atom::SP2, RDKit::Atom::SP3, param1,
       param3, true);
-  ff.contribs().push_back(ForceFields::ContribPtr(contrib));
+  ff.contribs().emplace_back(contrib);
   contrib = new ForceFields::UFF::TorsionAngleContrib(
       &ff, 3, 1, 2, 6, 1.0, 6, 6, RDKit::Atom::SP2, RDKit::Atom::SP3, param1,
       param3, false);
-  ff.contribs().push_back(ForceFields::ContribPtr(contrib));
+  ff.contribs().emplace_back(contrib);
 
   p1.x = 0.5411;
   p1.y = -0.7741;
@@ -1397,7 +1397,7 @@ void testUFFAllConstraints() {
   field->initialize();
   tc = new ForceFields::UFF::TorsionConstraintContrib(field, 1, 3, 6, 8, 10.0,
                                                       10.0, 100.0);
-  field->contribs().push_back(ForceFields::ContribPtr(tc));
+  field->contribs().emplace_back(tc);
   field->minimize();
   TEST_ASSERT(
       RDKit::feq(MolTransforms::getDihedralDeg(mol->getConformer(), 1, 3, 6, 8),
@@ -1408,7 +1408,7 @@ void testUFFAllConstraints() {
   field->initialize();
   tc = new ForceFields::UFF::TorsionConstraintContrib(field, 1, 3, 6, 8, true,
                                                       -1.0, 1.0, 100.0);
-  field->contribs().push_back(ForceFields::ContribPtr(tc));
+  field->contribs().emplace_back(tc);
   field->minimize();
   TEST_ASSERT(
       RDKit::feq(MolTransforms::getDihedralDeg(mol->getConformer(), 1, 3, 6, 8),
@@ -1419,7 +1419,7 @@ void testUFFAllConstraints() {
   field->initialize();
   tc = new ForceFields::UFF::TorsionConstraintContrib(field, 1, 3, 6, 8, false,
                                                       -10.0, 8.0, 100.0);
-  field->contribs().push_back(ForceFields::ContribPtr(tc));
+  field->contribs().emplace_back(tc);
   field->minimize(500);
   TEST_ASSERT(
       RDKit::feq(MolTransforms::getDihedralDeg(mol->getConformer(), 1, 3, 6, 8),
@@ -1436,7 +1436,7 @@ void testUFFAllConstraints() {
   field->initialize();
   RDGeom::Point3D p = mol->getConformer().getAtomPos(1);
   pc = new ForceFields::UFF::PositionConstraintContrib(field, 1, 0.3, 1.0e5);
-  field->contribs().push_back(ForceFields::ContribPtr(pc));
+  field->contribs().emplace_back(pc);
   field->minimize();
   RDGeom::Point3D q = mol->getConformer().getAtomPos(1);
   TEST_ASSERT((p - q).length() < 0.3);
@@ -1632,7 +1632,7 @@ M  END
     auto *tc = new ForceFields::UFF::TorsionConstraintContrib(
         localFF.get(), 0, 1, 2, 3, static_cast<double>(diheIn) - 0.1,
         static_cast<double>(diheIn) + 0.1, 100.0);
-    localFF->contribs().push_back(ForceFields::ContribPtr(tc));
+    localFF->contribs().emplace_back(tc);
     TEST_ASSERT(localFF->minimize(10000) == 0);
     std::vector<double> pos(3 * localFF->numPoints());
     TEST_ASSERT(localFF->numPoints() == globalFF->numPoints());
