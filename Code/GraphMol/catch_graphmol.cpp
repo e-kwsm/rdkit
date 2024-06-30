@@ -4726,7 +4726,7 @@ TEST_CASE("Valences on Al, Si, P, As, Sb, Bi") {
         "[P-](F)(F)(F)(F)(F)F",         "F[As-](F)(F)(F)(F)F",
         "F[Sb-](F)(F)(F)(F)F",          "[Bi-](F)(F)(F)(F)(F)F",
     };
-    for (auto smi : smiles) {
+    for (const auto &smi : smiles) {
       ROMOL_SPTR m(SmilesToMol(smi));
       CHECK(m);
     }
