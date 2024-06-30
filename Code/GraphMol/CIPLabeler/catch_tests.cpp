@@ -439,7 +439,7 @@ TEST_CASE("assign specific atoms and bonds", "[accurateCIP]") {
 TEST_CASE("para-stereochemistry", "[accurateCIP]") {
   SECTION("example 1") {
     // slightly simplified complex example from Salome Rieder
-    auto mol = "C\\C=C/[C@@H](\\C=C\\O)[C@H](C)[C@H](\\C=C/C)\\C=C\\O"_smiles;
+    auto mol = R"(C\C=C/[C@@H](\C=C\O)[C@H](C)[C@H](\C=C/C)\C=C\O)"_smiles;
     REQUIRE(mol);
     CIPLabeler::assignCIPLabels(*mol);
 
@@ -456,7 +456,7 @@ TEST_CASE("para-stereochemistry", "[accurateCIP]") {
   }
   SECTION("example 2") {
     // lovely complex example from Salome Rieder
-    auto mol = "C\\C=C/[C@@H](\\C=C\\C)[C@H](C)[C@H](\\C=C/C)\\C=C\\C"_smiles;
+    auto mol = R"(C\C=C/[C@@H](\C=C\C)[C@H](C)[C@H](\C=C/C)\C=C\C)"_smiles;
     REQUIRE(mol);
     CIPLabeler::assignCIPLabels(*mol);
 

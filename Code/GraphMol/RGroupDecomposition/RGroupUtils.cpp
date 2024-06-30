@@ -164,7 +164,7 @@ std::string MolToText(const ROMol &mol) {
 std::string toJSON(const RGroupRow &rgr, const std::string &prefix) {
   std::string res = prefix + "{\n";
   for (const auto &elem : rgr) {
-    auto fmt = boost::format{"  \"%1%\":\"%2%\""} % (elem.first) %
+    auto fmt = boost::format{R"(  "%1%":"%2%")"} % (elem.first) %
                (MolToText(*elem.second));
     res += prefix + fmt.str() + ",\n";
   }
