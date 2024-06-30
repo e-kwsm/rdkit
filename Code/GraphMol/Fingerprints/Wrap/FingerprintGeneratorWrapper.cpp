@@ -33,8 +33,7 @@
 namespace python = boost::python;
 namespace np = boost::python::numpy;
 
-namespace RDKit {
-namespace FingerprintWrapper {
+namespace RDKit::FingerprintWrapper {
 
 void convertPyArguments(
     python::object py_fromAtoms, python::object py_ignoreAtoms,
@@ -747,5 +746,4 @@ BOOST_PYTHON_MODULE(rdFingerprintGenerator) {
   TopologicalTorsionWrapper::exportTopologicalTorsion();
 }
 
-}  // namespace FingerprintWrapper
-}  // namespace RDKit
+}  // namespace RDKit::FingerprintWrapper

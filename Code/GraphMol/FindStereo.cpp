@@ -19,8 +19,7 @@
 #include "Chirality.h"
 #include <GraphMol/QueryOps.h>
 
-namespace RDKit {
-namespace Chirality {
+namespace RDKit::Chirality {
 #ifndef _MSC_VER
 const unsigned StereoInfo::NOATOM = std::numeric_limits<unsigned>::max();
 #endif
@@ -1257,5 +1256,4 @@ std::vector<StereoInfo> findPotentialStereo(const ROMol &mol) {
   return findPotentialStereo(const_cast<ROMol &>(mol), cleanIt);
 }
 
-}  // namespace Chirality
-}  // namespace RDKit
+}  // namespace RDKit::Chirality
