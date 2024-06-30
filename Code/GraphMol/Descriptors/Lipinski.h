@@ -53,13 +53,14 @@ RDKIT_DESCRIPTORS_EXPORT unsigned int calcNumRotatableBonds(
     const ROMol &mol, NumRotatableBondsOptions useStrictDefinition = Default);
 
 //! calculates the number of rotatable bonds ( backwards compatibility function,
-//!  deprecated, please use calcNumRotatableBonds(const ROMol&, int)
+//! \deprecated please use calcNumRotatableBonds(const ROMol&, int)
 /*!
   \param mol           the molecule of interest
   \param strict        if Strict == true, uses NumRotatableBondsOptions::Strict
 */
-RDKIT_DESCRIPTORS_EXPORT unsigned int calcNumRotatableBonds(const ROMol &mol,
-                                                            bool strict);
+[[deprecated(
+    "please use calcNumRotatableBonds(const ROMol&, int)")]] RDKIT_DESCRIPTORS_EXPORT unsigned int
+calcNumRotatableBonds(const ROMol &mol, bool strict);
 
 RDKIT_DESCRIPTORS_EXPORT extern const std::string NumHBDVersion;
 //! calculates the number of H-bond donors
