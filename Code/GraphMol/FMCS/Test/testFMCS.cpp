@@ -211,7 +211,7 @@ void testFileMCSB(const char *test, unsigned int timeout = 30,
         while ('\0' != *(str + len) &&
                1 == sscanf(str + len, "%s%n", name, &nn)) {
           len += nn;
-          testCase.back().push_back(std::string(name));
+          testCase.back().emplace_back(name);
         }
       }
     }

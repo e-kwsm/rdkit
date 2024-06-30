@@ -36,7 +36,7 @@ class PyForceField {
   int addExtraPoint(double x, double y, double z, bool fixed = true) {
     PRECONDITION(this->field, "no force field");
     RDGeom::Point3D *pt = new RDGeom::Point3D(x, y, z);
-    this->extraPoints.push_back(boost::shared_ptr<RDGeom::Point3D>(pt));
+    this->extraPoints.emplace_back(pt);
     unsigned int ptIdx = this->extraPoints.size() - 1;
     RDGeom::Point3D *ptr = this->extraPoints[ptIdx].get();
     this->field->positions().push_back(ptr);

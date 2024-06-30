@@ -321,14 +321,14 @@ TEST_CASE("testRandMolSup") {
   REQUIRE(sdsup.length() == 16);
 
   STR_VECT names;
-  names.push_back(std::string("48"));
-  names.push_back(std::string("128"));
-  names.push_back(std::string("164"));
-  names.push_back(std::string("180"));
-  names.push_back(std::string("192"));
-  names.push_back(std::string("210"));
-  names.push_back(std::string("213"));
-  names.push_back(std::string("229"));
+  names.emplace_back("48");
+  names.emplace_back("128");
+  names.emplace_back("164");
+  names.emplace_back("180");
+  names.emplace_back("192");
+  names.emplace_back("210");
+  names.emplace_back("213");
+  names.emplace_back("229");
 
   int i;
   for (i = 0; i < 8; i++) {
@@ -766,7 +766,7 @@ TEST_CASE("testSmilesWriter") {
       rdbase + "/Code/GraphMol/FileParsers/test_data/outSmiles_molsupplier.csv";
 
   STR_VECT propNames;
-  propNames.push_back(std::string("Column_2"));
+  propNames.emplace_back("Column_2");
   SmilesWriter *writer = new SmilesWriter(oname, " ");
   writer->setProps(propNames);
 
