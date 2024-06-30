@@ -247,7 +247,7 @@ class MrvTests {
         } catch (const RDKit::KekulizeException &) {
           outMolStr = "";
 
-          if (outMolStr == "") {
+          if (outMolStr.empty()) {
             outMolStr = MolToMrvBlock(*smilesMol, true, -1, false,
                                       false);  // try without kekule'ing
           }
@@ -315,7 +315,7 @@ class MrvTests {
         } catch (const RDKit::KekulizeException &) {
           outMolStr = "";
         }
-        if (outMolStr == "") {
+        if (outMolStr.empty()) {
           outMolStr = MolToMolBlock(*mol, true, 0, false,
                                     true);  // try without kekule'ing
         }
@@ -341,7 +341,7 @@ class MrvTests {
         } catch (const RDKit::KekulizeException &) {
           outMolStr = "";
         }
-        if (outMolStr == "") {
+        if (outMolStr.empty()) {
           outMolStr = MolToMrvBlock(*mol, true, -1, false,
                                     false);  // try without kekule'ing
         }
@@ -537,7 +537,7 @@ class MrvTests {
         } catch (...) {
           throw;  // re-trhow the error if not a kekule error
         }
-        if (outMolStr == "") {
+        if (outMolStr.empty()) {
           outMolStr = MolToMolBlock(*mol, true, 0, false,
                                     true);  // try without kekule'ing
         }
@@ -560,7 +560,7 @@ class MrvTests {
         } catch (...) {
           throw;  // re-throw the error if not a kekule error
         }
-        if (outMolStr == "") {
+        if (outMolStr.empty()) {
           outMolStr = MolToMrvBlock(*mol, true, -1, false,
                                     false);  // try without kekule'ing
         }
@@ -678,7 +678,7 @@ class MrvTests {
         } catch (const RDKit::KekulizeException &) {
           outMolStr = "";
         }
-        if (outMolStr == "") {
+        if (outMolStr.empty()) {
           outMolStr = MolToMolBlock(*mol, true, 0, false,
                                     true);  // try without kekule'ing
         }
@@ -701,7 +701,7 @@ class MrvTests {
         } catch (const RDKit::KekulizeException &) {
           outMolStr = "";
         }
-        if (outMolStr == "") {
+        if (outMolStr.empty()) {
           // try without kekule'ing
           outMolStr = MolToMrvBlock(*mol, true, -1, false, false);
         }
@@ -878,7 +878,7 @@ class MrvTests {
 
     // rxn test returning a single mol
 
-    if (testToRun == "" || testToRun == "rxnMolTests") {
+    if (testToRun.empty() || testToRun == "rxnMolTests") {
       std::list<RxnTest> rxnMolTests{
           RxnTest("rxnStereoMarkedCrossed.mrv", true, 1, 0, 1, 2, 0),
       };
@@ -892,7 +892,7 @@ class MrvTests {
     }
 
     // the molecule tests - starting with molfiles/sdf
-    if (testToRun == "" || testToRun == "sdfTests") {
+    if (testToRun.empty() || testToRun == "sdfTests") {
       std::list<MolTest> sdfTests{
           MolTest("145323811.mol", true, 172, 176, true, false),
           MolTest("NewChiralTest.sdf", true, 13, 14, true,
@@ -932,7 +932,7 @@ class MrvTests {
 
     // now the RXN reactions
 
-    if (testToRun == "" || testToRun == "rxnFileTests") {
+    if (testToRun.empty() || testToRun == "rxnFileTests") {
       std::list<RxnTest> rxnFileTests{
           RxnTest("BadRxn.rxn", true, 2, 0, 1, 3, 0),
       };
@@ -943,7 +943,7 @@ class MrvTests {
       }
     }
 
-    if (testToRun == "" || testToRun == "molFileTests") {
+    if (testToRun.empty() || testToRun == "molFileTests") {
       std::list<MolTest> molFileTests{
           MolTest("FalseChiral.mrv", true, 4, 3, sanitizeOff,
                   reapplyWedgesOff),  // not sanitized, wedges NOT reapplied
@@ -1067,7 +1067,7 @@ class MrvTests {
       }
     }
 
-    if (testToRun == "" || testToRun == "chiral3dFileTests") {
+    if (testToRun.empty() || testToRun == "chiral3dFileTests") {
       std::list<MolTest> chiral3dFileTests{
           MolTest("Cubane.mrv", true, 16, 20),
       };
@@ -1081,7 +1081,7 @@ class MrvTests {
     }
 
     // atropisomer tests
-    if (testToRun == "" || testToRun == "atropisomerTests") {
+    if (testToRun.empty() || testToRun == "atropisomerTests") {
       std::vector<MolTest> atropisomerTests{
           // first the tests with sanitize off,
           // and reapplyMolBlockWedging on
@@ -1305,7 +1305,7 @@ class MrvTests {
     }
     // now the reactions
 
-    if (testToRun == "" || testToRun == "mrvRxnFileTests") {
+    if (testToRun.empty() || testToRun == "mrvRxnFileTests") {
       std::list<RxnTest> mrvRxnFileTests{
           RxnTest("AlexRxn.mrv", true, 1, 0, 1, 2, 0),
           RxnTest("BadReactionSign.mrv", true, 2, 0, 1, 3, 0),
@@ -1330,7 +1330,7 @@ class MrvTests {
       }
     }
     // now smiles tests
-    if (testToRun == "" || testToRun == "smiTests") {
+    if (testToRun.empty() || testToRun == "smiTests") {
       std::list<SmilesTest> smiTests{
           SmilesTest("NewChiralTest", R"(C[C@H]1CC[C@@]2(CC[C@H](Cl)CC2)CC1)",
                      true, 13, 14, true),
@@ -1384,7 +1384,7 @@ class MrvTests {
         testSmilesToMarvin(&smiTest);
       }
     }
-    if (testToRun == "" || testToRun == "precision") {
+    if (testToRun.empty() || testToRun == "precision") {
       testPrecision();
     }
   }

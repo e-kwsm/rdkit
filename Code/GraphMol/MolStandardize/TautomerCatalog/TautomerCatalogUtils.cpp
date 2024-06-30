@@ -39,7 +39,7 @@ std::unique_ptr<MolStandardize::TautomerTransform> getTautomer(
 
 std::unique_ptr<MolStandardize::TautomerTransform> getTautomer(
     const std::string &tmpStr) {
-  if (tmpStr.length() == 0 || tmpStr.substr(0, 2) == "//") {
+  if (tmpStr.empty() || tmpStr.substr(0, 2) == "//") {
     // empty or comment line
     return nullptr;
   }

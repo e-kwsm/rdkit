@@ -148,7 +148,7 @@ void testMolVSValidation() {
   std::string smi7 = "COc1cccc(C=N[N-]C(N)=O)c1[O-].O.O.O.O=[U+2]=O";
   unique_ptr<ROMol> m7(SmilesToMol(smi7, 0, false));
   vector<ValidationErrorInfo> errout7 = vm.validate(*m7, true);
-  TEST_ASSERT(errout7.size() != 0);
+  TEST_ASSERT(!errout7.empty());
   for (const auto &msg : errout7) {
     TEST_ASSERT(msg == "INFO: [FragmentValidation] water/hydroxide is present");
   }
@@ -156,7 +156,7 @@ void testMolVSValidation() {
   std::string smi8 = "CC(=O)O.NCC(=O)NCCCCCCCCCCNC(=O)CN";
   unique_ptr<ROMol> m8(SmilesToMol(smi8, 0, false));
   vector<ValidationErrorInfo> errout8 = vm.validate(*m8, true);
-  TEST_ASSERT(errout8.size() != 0);
+  TEST_ASSERT(!errout8.empty());
   for (const auto &msg : errout8) {
     TEST_ASSERT(msg ==
                 "INFO: [FragmentValidation] acetate/acetic acid is present");
@@ -943,7 +943,7 @@ M  END
 
   mol.reset(MolBlockToMol(mblock, false, false));
   errout = layout2D.validate(*mol, true);
-  TEST_ASSERT(errout.size() == 0);
+  TEST_ASSERT(errout.empty());
 
   Layout2DValidation customLayout2D(0.15, 10.0, false);
   errout = customLayout2D.validate(*mol, true);
@@ -991,7 +991,7 @@ M  END
 
   mol.reset(MolBlockToMol(mblock, false, false));
   errout = stereo.validate(*mol, true);
-  TEST_ASSERT(errout.size() == 0);
+  TEST_ASSERT(errout.empty());
 
   // 4 ligands - too many stereo bonds with the same wedge/dash direction
   mblock = R"(
@@ -1173,7 +1173,7 @@ M  END
   mol.reset(MolBlockToMol(mblock, false, false));
   Chirality::reapplyMolBlockWedging(*mol);
   errout = stereo.validate(*mol, true);
-  TEST_ASSERT(errout.size() == 0);
+  TEST_ASSERT(errout.empty());
 
   // 3 Ligands - No issues
   mblock = R"(
@@ -1200,7 +1200,7 @@ M  END
   mol.reset(MolBlockToMol(mblock, false, false));
   Chirality::reapplyMolBlockWedging(*mol);
   errout = stereo.validate(*mol, true);
-  TEST_ASSERT(errout.size() == 0);
+  TEST_ASSERT(errout.empty());
 
   // 3 Ligands - multiple stereo bonds
   mblock = R"(
@@ -1294,7 +1294,7 @@ M  END
   mol.reset(MolBlockToMol(mblock, false, false));
   Chirality::reapplyMolBlockWedging(*mol);
   errout = stereo.validate(*mol, true);
-  TEST_ASSERT(errout.size() == 0);
+  TEST_ASSERT(errout.empty());
 
   // Double bond w/ 2 incident wavy bonds
   mblock = R"(
@@ -1331,7 +1331,7 @@ M  END
   for (auto msg : errout) {
     cerr << msg << endl;
   }
-  TEST_ASSERT(errout.size() == 0);
+  TEST_ASSERT(errout.empty());
 
   // Mixed wavy and wedged bonds
   mblock = R"(
@@ -1484,7 +1484,7 @@ M  END
   mol.reset(MolBlockToMol(mblock, false, false));
   Chirality::reapplyMolBlockWedging(*mol);
   errout = stereo.validate(*mol, true);
-  TEST_ASSERT(errout.size() == 0);
+  TEST_ASSERT(errout.empty());
 
   // stereo bonds in phenyl rings validate w/out errors
   mblock = R"(
@@ -1518,7 +1518,7 @@ M  END
   mol.reset(MolBlockToMol(mblock, false, false));
   Chirality::reapplyMolBlockWedging(*mol);
   errout = stereo.validate(*mol, true);
-  TEST_ASSERT(errout.size() == 0);
+  TEST_ASSERT(errout.empty());
 
   // adjacent double bonds do not interfere with the validation of a
   // center's stereochemistry
@@ -1558,7 +1558,7 @@ M  END
     cerr << msg << endl;
   }
 
-  TEST_ASSERT(errout.size() == 0);
+  TEST_ASSERT(errout.empty());
 
   // stereo bonds between stereocenters do not interfere with the validation
   // of each individual center.
@@ -1607,7 +1607,7 @@ M  END
     cerr << msg << endl;
   }
 
-  TEST_ASSERT(errout.size() == 0);
+  TEST_ASSERT(errout.empty());
 
   BOOST_LOG(rdInfoLog) << "Finished" << std::endl;
 }
