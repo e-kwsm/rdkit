@@ -50,33 +50,37 @@ class RDKIT_FRAGCATALOG_EXPORT FragCatParams : public RDCatalog::CatalogParams {
   ~FragCatParams() override;
 
   //! returns our lower fragment length
-  unsigned int getLowerFragLength() const { return d_lowerFragLen; }
+  [[nodiscard]] unsigned int getLowerFragLength() const {
+    return d_lowerFragLen;
+  }
   //! sets our lower fragment length
   void setLowerFragLength(unsigned int lFrLen) { d_lowerFragLen = lFrLen; }
 
   //! returns our upper fragment length
-  unsigned int getUpperFragLength() const { return d_upperFragLen; }
+  [[nodiscard]] unsigned int getUpperFragLength() const {
+    return d_upperFragLen;
+  }
   //! sets our upper fragment length
   void setUpperFragLength(unsigned int uFrLen) { d_upperFragLen = uFrLen; }
 
   //! returns our fragment-comparison tolerance
-  double getTolerance() const { return d_tolerance; }
+  [[nodiscard]] double getTolerance() const { return d_tolerance; }
   //! sets our fragment-comparison tolerance
   void setTolerance(double val) { d_tolerance = val; }
 
   //! returns our number of functional groups
-  unsigned int getNumFuncGroups() const {
+  [[nodiscard]] unsigned int getNumFuncGroups() const {
     return static_cast<unsigned int>(d_funcGroups.size());
   }
 
   //! returns our std::vector of functional groups
-  const MOL_SPTR_VECT &getFuncGroups() const;
+  [[nodiscard]] const MOL_SPTR_VECT &getFuncGroups() const;
 
   //! returns a pointer to a specific functional group
-  const ROMol *getFuncGroup(unsigned int fid) const;
+  [[nodiscard]] const ROMol *getFuncGroup(unsigned int fid) const;
 
   void toStream(std::ostream &) const override;
-  std::string Serialize() const override;
+  [[nodiscard]] std::string Serialize() const override;
   void initFromStream(std::istream &ss) override;
   void initFromString(const std::string &text) override;
 

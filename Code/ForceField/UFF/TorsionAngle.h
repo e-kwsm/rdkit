@@ -69,7 +69,7 @@ class RDKIT_FORCEFIELD_EXPORT TorsionAngleContrib : public ForceFieldContrib {
   void scaleForceConstant(unsigned int count) {
     this->d_forceConstant /= static_cast<double>(count);
   }
-  TorsionAngleContrib *copy() const override {
+  [[nodiscard]] TorsionAngleContrib *copy() const override {
     return new TorsionAngleContrib(*this);
   }
 
@@ -82,7 +82,7 @@ class RDKIT_FORCEFIELD_EXPORT TorsionAngleContrib : public ForceFieldContrib {
   double d_forceConstant, d_cosTerm;
 
   //! returns dE/dTheta
-  double getThetaDeriv(double cosTheta, double sinTheta) const;
+  [[nodiscard]] double getThetaDeriv(double cosTheta, double sinTheta) const;
 
   //! calculate default values of the torsion parameters.
   /*!

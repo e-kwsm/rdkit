@@ -64,12 +64,12 @@ class RDKIT_GRAPHMOL_EXPORT StereoGroup {
   StereoGroup(StereoGroup &&other) = default;
   StereoGroup &operator=(StereoGroup &&other) = default;
 
-  StereoGroupType getGroupType() const;
-  const std::vector<Atom *> &getAtoms() const;
-  const std::vector<Bond *> &getBonds() const;
+  [[nodiscard]] StereoGroupType getGroupType() const;
+  [[nodiscard]] const std::vector<Atom *> &getAtoms() const;
+  [[nodiscard]] const std::vector<Bond *> &getBonds() const;
 
-  unsigned getReadId() const { return d_readId; }
-  unsigned getWriteId() const { return d_writeId; }
+  [[nodiscard]] unsigned getReadId() const { return d_readId; }
+  [[nodiscard]] unsigned getWriteId() const { return d_writeId; }
   void setWriteId(unsigned id) { d_writeId = id; }
 
   // Seems odd to have to define these, but otherwise the SWIG wrappers

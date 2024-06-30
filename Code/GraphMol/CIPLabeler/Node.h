@@ -69,35 +69,35 @@ class Node {
   Node(Digraph *g, std::vector<char> &&visit, Atom *atom,
        boost::rational<int> &&frac, int dist, int flags);
 
-  Digraph *getDigraph() const;
+  [[nodiscard]] Digraph *getDigraph() const;
 
-  Atom *getAtom() const;
+  [[nodiscard]] Atom *getAtom() const;
 
   unsigned int getAtomIdx() const;
 
   int getDistance() const;
 
-  boost::rational<int> getAtomicNumFraction() const;
+  [[nodiscard]] boost::rational<int> getAtomicNumFraction() const;
 
-  int getAtomicNum() const;
+  [[nodiscard]] int getAtomicNum() const;
 
-  unsigned getMassNum() const;
+  [[nodiscard]] unsigned getMassNum() const;
 
-  double getAtomicMass() const;
+  [[nodiscard]] double getAtomicMass() const;
 
-  Descriptor getAux() const;
+  [[nodiscard]] Descriptor getAux() const;
 
-  bool isSet(int mask) const;
+  [[nodiscard]] bool isSet(int mask) const;
 
-  bool isDuplicate() const;
+  [[nodiscard]] bool isDuplicate() const;
 
-  bool isDuplicateOrH() const;
+  [[nodiscard]] bool isDuplicateOrH() const;
 
-  bool isTerminal() const;
+  [[nodiscard]] bool isTerminal() const;
 
-  bool isExpanded() const;
+  [[nodiscard]] bool isExpanded() const;
 
-  bool isVisited(int idx) const;
+  [[nodiscard]] bool isVisited(int idx) const;
 
   Node *newChild(int idx, Atom *atom) const;
 
@@ -105,17 +105,17 @@ class Node {
 
   Node *newRingDuplicateChild(int idx, Atom *atom) const;
 
-  Node *newImplicitHydrogenChild() const;
+  [[nodiscard]] Node *newImplicitHydrogenChild() const;
 
   void add(Edge *e);
 
   void setAux(Descriptor desc);
 
-  const std::vector<Edge *> &getEdges() const;
+  [[nodiscard]] const std::vector<Edge *> &getEdges() const;
 
   std::vector<Edge *> getEdges(Atom *end) const;
 
-  std::vector<Edge *> getNonTerminalOutEdges() const;
+  [[nodiscard]] std::vector<Edge *> getNonTerminalOutEdges() const;
 
  private:
   Digraph *dp_g;

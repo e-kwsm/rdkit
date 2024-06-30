@@ -258,7 +258,7 @@ class RDKIT_DEPICTOR_EXPORT EmbeddedFrag {
   bool isDone() { return d_done; }
 
   //! Get the molecule that this embedded fragment belongs to
-  const RDKit::ROMol *getMol() const { return dp_mol; }
+  [[nodiscard]] const RDKit::ROMol *getMol() const { return dp_mol; }
 
   //! Find the common atom ids between this fragment and a second one
   RDKit::INT_VECT findCommonAtoms(const EmbeddedFrag &efrag2);
@@ -286,7 +286,9 @@ class RDKIT_DEPICTOR_EXPORT EmbeddedFrag {
 
   void Reflect(const RDGeom::Point2D &loc1, const RDGeom::Point2D &loc2);
 
-  const INT_EATOM_MAP &GetEmbeddedAtoms() const { return d_eatoms; }
+  [[nodiscard]] const INT_EATOM_MAP &GetEmbeddedAtoms() const {
+    return d_eatoms;
+  }
 
   void Translate(const RDGeom::Point2D &shift) {
     INT_EATOM_MAP_I eari;
@@ -295,7 +297,7 @@ class RDKIT_DEPICTOR_EXPORT EmbeddedFrag {
     }
   }
 
-  EmbeddedAtom GetEmbeddedAtom(unsigned int aid) const {
+  [[nodiscard]] EmbeddedAtom GetEmbeddedAtom(unsigned int aid) const {
     INT_EATOM_MAP_CI posi = d_eatoms.find(aid);
     if (posi == d_eatoms.end()) {
       PRECONDITION(0, "Embedded atom does not contain embedded atom specified");
@@ -304,7 +306,7 @@ class RDKIT_DEPICTOR_EXPORT EmbeddedFrag {
   }
 
   //! the number of atoms in the embedded system
-  int Size() const { return d_eatoms.size(); }
+  [[nodiscard]] int Size() const { return d_eatoms.size(); }
 
   //! \brief compute a box that encloses the fragment
   void computeBox();

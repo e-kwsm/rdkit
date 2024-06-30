@@ -83,7 +83,7 @@ class RDKIT_MOLSTANDARDIZE_EXPORT Normalizer {
   const TransformCatalog *d_tcat;
   unsigned int MAX_RESTARTS;
 
-  ROMOL_SPTR normalizeFragment(
+  [[nodiscard]] ROMOL_SPTR normalizeFragment(
       const ROMol &mol,
       const std::vector<std::shared_ptr<ChemicalReaction>> &transforms) const;
   SmilesMolPair applyTransform(const ROMOL_SPTR &mol,

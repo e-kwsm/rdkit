@@ -75,15 +75,16 @@ class Matrix {
   virtual ~Matrix() {}
 
   //! returns the number of rows
-  inline unsigned int numRows() const { return d_nRows; }
+  [[nodiscard]] inline unsigned int numRows() const { return d_nRows; }
 
   //! returns the number of columns
-  inline unsigned int numCols() const { return d_nCols; }
+  [[nodiscard]] inline unsigned int numCols() const { return d_nCols; }
 
-  inline unsigned int getDataSize() const { return d_dataSize; }
+  [[nodiscard]] inline unsigned int getDataSize() const { return d_dataSize; }
 
   //! returns a particular element of the matrix
-  inline virtual TYPE getVal(unsigned int i, unsigned int j) const {
+  [[nodiscard]] inline virtual TYPE getVal(unsigned int i,
+                                           unsigned int j) const {
     PRECONDITION(i < d_nRows, "bad index");
     PRECONDITION(j < d_nCols, "bad index");
     unsigned int id = i * d_nCols + j;
@@ -140,7 +141,7 @@ class Matrix {
   inline TYPE *getData() { return d_data.get(); }
 
   //! returns a const pointer to our data array
-  inline const TYPE *getData() const { return d_data.get(); }
+  [[nodiscard]] inline const TYPE *getData() const { return d_data.get(); }
 
   //! Copy operator.
   /*! We make a copy of the other Matrix's data.

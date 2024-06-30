@@ -28,7 +28,7 @@ class RDKIT_MOLCATALOG_EXPORT MolCatalogParams
   //! serializes to the stream
   void toStream(std::ostream &) const override;
   //! returns a serialized (pickled) form
-  std::string Serialize() const override;
+  [[nodiscard]] std::string Serialize() const override;
   //! initialize from a stream containing a pickle
   void initFromStream(std::istream &ss) override;
   //! initialize from a string containing a pickle

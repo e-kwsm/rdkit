@@ -170,11 +170,11 @@ class Configuration {
 
   virtual ~Configuration();
 
-  Atom *getFocus() const;
+  [[nodiscard]] Atom *getFocus() const;
 
-  const std::vector<Atom *> &getFoci() const;
+  [[nodiscard]] const std::vector<Atom *> &getFoci() const;
 
-  const std::vector<Atom *> &getCarriers() const;
+  [[nodiscard]] const std::vector<Atom *> &getCarriers() const;
 
   Digraph &getDigraph();
 

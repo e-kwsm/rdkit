@@ -40,16 +40,18 @@ class RDKIT_MOLSTANDARDIZE_EXPORT AcidBaseCatalogParams
 
   ~AcidBaseCatalogParams() override;
 
-  unsigned int getNumPairs() const {
+  [[nodiscard]] unsigned int getNumPairs() const {
     return static_cast<unsigned int>(d_pairs.size());
   }
 
-  const std::vector<std::pair<ROMOL_SPTR, ROMOL_SPTR>> &getPairs() const;
+  [[nodiscard]] const std::vector<std::pair<ROMOL_SPTR, ROMOL_SPTR>> &getPairs()
+      const;
 
-  const std::pair<ROMOL_SPTR, ROMOL_SPTR> getPair(unsigned int fid) const;
+  [[nodiscard]] const std::pair<ROMOL_SPTR, ROMOL_SPTR> getPair(
+      unsigned int fid) const;
 
   void toStream(std::ostream &) const override;
-  std::string Serialize() const override;
+  [[nodiscard]] std::string Serialize() const override;
   void initFromStream(std::istream &ss) override;
   void initFromString(const std::string &text) override;
 

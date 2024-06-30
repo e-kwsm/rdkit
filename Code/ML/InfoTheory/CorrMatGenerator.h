@@ -69,11 +69,11 @@ class BitCorrMatGenerator {
 
   //! \brief get the number of examples we used so far to compute the
   /// correlation matrix
-  int getNumExamples() const { return d_nExamples; }
+  [[nodiscard]] int getNumExamples() const { return d_nExamples; }
 
   //! \brief Get the list of bits ID that are used to generate the correlation
   /// matrix
-  RDKit::INT_VECT getCorrBitList() const { return d_descs; }
+  [[nodiscard]] RDKit::INT_VECT getCorrBitList() const { return d_descs; }
 
   //! \brief Gets a pointer to the correlation matrix
   double *getCorrMat() { return dp_corrMat; }

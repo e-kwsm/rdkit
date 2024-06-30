@@ -81,7 +81,9 @@ class RDKIT_CHEMREACTIONS_EXPORT CartesianProductStrategy
     m_numPermutationsProcessed = 0;
   }
 
-  const char *type() const override { return "CartesianProductStrategy"; }
+  [[nodiscard]] const char *type() const override {
+    return "CartesianProductStrategy";
+  }
 
   //! The current permutation {r1, r2, ...}
   const EnumerationTypes::RGROUPS &next() override {
@@ -94,13 +96,13 @@ class RDKIT_CHEMREACTIONS_EXPORT CartesianProductStrategy
     return m_permutation;
   }
 
-  boost::uint64_t getPermutationIdx() const override {
+  [[nodiscard]] boost::uint64_t getPermutationIdx() const override {
     return m_numPermutationsProcessed;
   }
 
   operator bool() const override { return hasNext(); }
 
-  EnumerationStrategyBase *copy() const override {
+  [[nodiscard]] EnumerationStrategyBase *copy() const override {
     return new CartesianProductStrategy(*this);
   }
 
@@ -110,7 +112,7 @@ class RDKIT_CHEMREACTIONS_EXPORT CartesianProductStrategy
     ++m_numPermutationsProcessed;
   }
 
-  bool hasNext() const {
+  [[nodiscard]] bool hasNext() const {
     // Fix me -> use multiprecision int here???
     return m_numPermutations == EnumerationStrategyBase::EnumerationOverflow ||
            m_numPermutationsProcessed < rdcast<size_t>(m_numPermutations);

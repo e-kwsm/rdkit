@@ -83,15 +83,15 @@ class RDKIT_FORCEFIELD_EXPORT DistanceConstraintContribs
   void getGrad(double *pos, double *grad) const override;
 
   //! Copy constructor
-  DistanceConstraintContribs *copy() const override {
+  [[nodiscard]] DistanceConstraintContribs *copy() const override {
     return new DistanceConstraintContribs(*this);
   }
 
   //! Return true if there are no contributions in this contrib
-  bool empty() const { return d_contribs.empty(); }
+  [[nodiscard]] bool empty() const { return d_contribs.empty(); }
 
   //! Get number of contributions in this contrib
-  unsigned int size() const { return d_contribs.size(); }
+  [[nodiscard]] unsigned int size() const { return d_contribs.size(); }
 
  private:
   std::vector<DistanceConstraintContribsParams> d_contribs;

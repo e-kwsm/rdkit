@@ -45,7 +45,7 @@ class SequenceRule {
 
   virtual int getComparision(const Edge *a, const Edge *b, bool deep) const;
 
-  virtual const Sort *getSorter() const;
+  [[nodiscard]] virtual const Sort *getSorter() const;
 
   int recursiveCompare(const Edge *a, const Edge *b) const;
 

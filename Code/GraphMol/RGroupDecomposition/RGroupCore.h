@@ -37,7 +37,7 @@ struct RCore {
 
   void init();
 
-  inline bool isCoreAtomUserLabelled(int idx) const {
+  [[nodiscard]] inline bool isCoreAtomUserLabelled(int idx) const {
     return core_atoms_with_user_labels.test(idx);
   }
 
@@ -53,22 +53,22 @@ struct RCore {
   // the respective matching atom in mol, while other atoms have
   // their aromatic flag and formal charge copied from
   // the respective matching atom in mol
-  ROMOL_SPTR replaceCoreAtomsWithMolMatches(const ROMol &mol,
-                                            const MatchVectType &match) const;
+  [[nodiscard]] ROMOL_SPTR replaceCoreAtomsWithMolMatches(
+      const ROMol &mol, const MatchVectType &match) const;
 
   // Final core returned to user, created by extracting core from target
   // molecule
-  RWMOL_SPTR extractCoreFromMolMatch(
+  [[nodiscard]] RWMOL_SPTR extractCoreFromMolMatch(
       const ROMol &mol, const MatchVectType &match,
       const RGroupDecompositionParameters &params) const;
 
-  std::vector<MatchVectType> matchTerminalUserRGroups(
+  [[nodiscard]] std::vector<MatchVectType> matchTerminalUserRGroups(
       const RWMol &target, MatchVectType match,
       const SubstructMatchParameters &sssParams) const;
 
   std::shared_ptr<TautomerQuery> getMatchingTautomerQuery();
 
-  inline bool isTerminalRGroupWithUserLabel(const int idx) const {
+  [[nodiscard]] inline bool isTerminalRGroupWithUserLabel(const int idx) const {
     return terminalRGroupAtomToNeighbor.find(idx) !=
            terminalRGroupAtomToNeighbor.end();
   }
@@ -78,17 +78,17 @@ struct RCore {
    * attachment points. Including when two user defined attachment points can
    * match the same target atom.
    */
-  [[deprecated("please use checkAllBondsToRGroupPresent")]]
-  bool checkAllBondsToAttachmentPointPresent(
-      const ROMol &mol, const int attachmentIdx,
-      const MatchVectType &mapping) const;
+  [[deprecated("please use checkAllBondsToRGroupPresent")]] [[nodiscard]] bool
+  checkAllBondsToAttachmentPointPresent(const ROMol &mol,
+                                        const int attachmentIdx,
+                                        const MatchVectType &mapping) const;
 
   /*
    * For when onlyMatchAtRGroups = true.  Checks the query core can satisfy all
    * attachment points. Including when two user defined attachment points can
    * match the same target atom.
    */
-  bool checkAllBondsToRGroupPresent(
+  [[nodiscard]] bool checkAllBondsToRGroupPresent(
       const ROMol &mol, const int attachmentIdx,
       const std::vector<std::vector<int>> &targetToCoreIndices) const;
 
@@ -105,7 +105,7 @@ struct RCore {
   void replaceCoreAtom(RWMol &mol, Atom &atom, const Atom &other) const;
 
   // Convert a matching molecule index to a core index
-  int matchingIndexToCoreIndex(int matchingIndex) const;
+  [[nodiscard]] int matchingIndexToCoreIndex(int matchingIndex) const;
 
   // Build the matching molecule (core minus user R groups)
   void buildMatchingMol();

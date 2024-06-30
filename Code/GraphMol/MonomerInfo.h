@@ -34,12 +34,14 @@ class RDKIT_GRAPHMOL_EXPORT AtomMonomerInfo {
       : d_monomerType(typ), d_name(std::move(nm)) {}
   AtomMonomerInfo(const AtomMonomerInfo &other) = default;
 
-  const std::string &getName() const { return d_name; }
+  [[nodiscard]] const std::string &getName() const { return d_name; }
   void setName(const std::string &nm) { d_name = nm; }
-  AtomMonomerType getMonomerType() const { return d_monomerType; }
+  [[nodiscard]] AtomMonomerType getMonomerType() const { return d_monomerType; }
   void setMonomerType(AtomMonomerType typ) { d_monomerType = typ; }
 
-  virtual AtomMonomerInfo *copy() const { return new AtomMonomerInfo(*this); }
+  [[nodiscard]] virtual AtomMonomerInfo *copy() const {
+    return new AtomMonomerInfo(*this);
+  }
 
  private:
   AtomMonomerType d_monomerType{UNKNOWN};
@@ -72,30 +74,38 @@ class RDKIT_GRAPHMOL_EXPORT AtomPDBResidueInfo : public AtomMonomerInfo {
         d_secondaryStructure(secondaryStructure),
         d_segmentNumber(segmentNumber) {}
 
-  int getSerialNumber() const { return d_serialNumber; }
+  [[nodiscard]] int getSerialNumber() const { return d_serialNumber; }
   void setSerialNumber(int val) { d_serialNumber = val; }
-  const std::string &getAltLoc() const { return d_altLoc; }
+  [[nodiscard]] const std::string &getAltLoc() const { return d_altLoc; }
   void setAltLoc(const std::string &val) { d_altLoc = val; }
-  const std::string &getResidueName() const { return d_residueName; }
+  [[nodiscard]] const std::string &getResidueName() const {
+    return d_residueName;
+  }
   void setResidueName(const std::string &val) { d_residueName = val; }
-  int getResidueNumber() const { return d_residueNumber; }
+  [[nodiscard]] int getResidueNumber() const { return d_residueNumber; }
   void setResidueNumber(int val) { d_residueNumber = val; }
-  const std::string &getChainId() const { return d_chainId; }
+  [[nodiscard]] const std::string &getChainId() const { return d_chainId; }
   void setChainId(const std::string &val) { d_chainId = val; }
-  const std::string &getInsertionCode() const { return d_insertionCode; }
+  [[nodiscard]] const std::string &getInsertionCode() const {
+    return d_insertionCode;
+  }
   void setInsertionCode(const std::string &val) { d_insertionCode = val; }
-  double getOccupancy() const { return d_occupancy; }
+  [[nodiscard]] double getOccupancy() const { return d_occupancy; }
   void setOccupancy(double val) { d_occupancy = val; }
-  double getTempFactor() const { return d_tempFactor; }
+  [[nodiscard]] double getTempFactor() const { return d_tempFactor; }
   void setTempFactor(double val) { d_tempFactor = val; }
-  bool getIsHeteroAtom() const { return df_heteroAtom; }
+  [[nodiscard]] bool getIsHeteroAtom() const { return df_heteroAtom; }
   void setIsHeteroAtom(bool val) { df_heteroAtom = val; }
-  unsigned int getSecondaryStructure() const { return d_secondaryStructure; }
+  [[nodiscard]] unsigned int getSecondaryStructure() const {
+    return d_secondaryStructure;
+  }
   void setSecondaryStructure(unsigned int val) { d_secondaryStructure = val; }
-  unsigned int getSegmentNumber() const { return d_segmentNumber; }
+  [[nodiscard]] unsigned int getSegmentNumber() const {
+    return d_segmentNumber;
+  }
   void setSegmentNumber(unsigned int val) { d_segmentNumber = val; }
 
-  AtomMonomerInfo *copy() const override {
+  [[nodiscard]] AtomMonomerInfo *copy() const override {
     return static_cast<AtomMonomerInfo *>(new AtomPDBResidueInfo(*this));
   }
 

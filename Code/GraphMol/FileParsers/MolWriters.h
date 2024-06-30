@@ -40,7 +40,7 @@ class RDKIT_FILEPARSERS_EXPORT MolWriter : private boost::noncopyable {
   virtual void flush() = 0;
   virtual void close() = 0;
   virtual void setProps(const STR_VECT &propNames) = 0;
-  virtual unsigned int numMols() const = 0;
+  [[nodiscard]] virtual unsigned int numMols() const = 0;
 };
 
 //! The SmilesWriter is for writing molecules and properties to
@@ -114,7 +114,7 @@ class RDKIT_FILEPARSERS_EXPORT SmilesWriter : public MolWriter {
   }
 
   //! \brief get the number of molecules written so far
-  unsigned int numMols() const override { return d_molid; }
+  [[nodiscard]] unsigned int numMols() const override { return d_molid; }
 
  private:
   // local initialization
@@ -194,13 +194,13 @@ class RDKIT_FILEPARSERS_EXPORT SDWriter : public MolWriter {
   }
 
   //! \brief get the number of molecules written so far
-  unsigned int numMols() const override { return d_molid; }
+  [[nodiscard]] unsigned int numMols() const override { return d_molid; }
 
   void setForceV3000(bool val) { df_forceV3000 = val; }
-  bool getForceV3000() const { return df_forceV3000; }
+  [[nodiscard]] bool getForceV3000() const { return df_forceV3000; }
 
   void setKekulize(bool val) { df_kekulize = val; }
-  bool getKekulize() const { return df_kekulize; }
+  [[nodiscard]] bool getKekulize() const { return df_kekulize; }
 
  private:
   void writeProperty(const ROMol &mol, const std::string &name);
@@ -271,16 +271,16 @@ class RDKIT_FILEPARSERS_EXPORT TDTWriter : public MolWriter {
   }
 
   //! \brief get the number of molecules written so far
-  unsigned int numMols() const override { return d_molid; }
+  [[nodiscard]] unsigned int numMols() const override { return d_molid; }
 
   void setWrite2D(bool state = true) { df_write2D = state; }
-  bool getWrite2D() const { return df_write2D; }
+  [[nodiscard]] bool getWrite2D() const { return df_write2D; }
 
   void setWriteNames(bool state = true) { df_writeNames = state; }
-  bool getWriteNames() const { return df_writeNames; }
+  [[nodiscard]] bool getWriteNames() const { return df_writeNames; }
 
   void setNumDigits(unsigned int numDigits) { d_numDigits = numDigits; }
-  unsigned int getNumDigits() const { return d_numDigits; }
+  [[nodiscard]] unsigned int getNumDigits() const { return d_numDigits; }
 
  private:
   void writeProperty(const ROMol &mol, const std::string &name);
@@ -337,7 +337,7 @@ class RDKIT_FILEPARSERS_EXPORT PDBWriter : public MolWriter {
   }
 
   //! \brief get the number of molecules written so far
-  unsigned int numMols() const override { return d_count; }
+  [[nodiscard]] unsigned int numMols() const override { return d_count; }
 
  private:
   std::ostream *dp_ostream;
@@ -402,7 +402,7 @@ class RDKIT_FILEPARSERS_EXPORT MaeWriter : public MolWriter {
   void close() override;
 
   //! \brief get the number of molecules written so far
-  unsigned int numMols() const override { return d_molid; }
+  [[nodiscard]] unsigned int numMols() const override { return d_molid; }
 
  protected:
   MaeWriter() = default;  // used in the Python wrapper

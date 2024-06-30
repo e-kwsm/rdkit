@@ -106,11 +106,13 @@ const MMFFVdWCollection *getMMFFVdW() {
 class RingMembership {
  public:
   RingMembership() {};
-  bool getIsInAromaticRing() const { return d_isInAromaticRing; }
+  [[nodiscard]] bool getIsInAromaticRing() const { return d_isInAromaticRing; }
   void setIsInAromaticRing(bool isInAromaticRing) {
     d_isInAromaticRing = isInAromaticRing;
   }
-  const std::set<std::uint32_t> &getRingIdxSet() const { return d_ringIdxSet; }
+  [[nodiscard]] const std::set<std::uint32_t> &getRingIdxSet() const {
+    return d_ringIdxSet;
+  }
   std::set<std::uint32_t> &getRingIdxSet() { return d_ringIdxSet; }
 
  private:

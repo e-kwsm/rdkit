@@ -345,7 +345,7 @@ void test3() {
 class atomcomparefunctor3 {
   Canon::canon_atom *dp_atoms{nullptr};
   const ROMol *dp_mol{nullptr};
-  unsigned int getAtomNeighborhood(unsigned int i) const {
+  [[nodiscard]] unsigned int getAtomNeighborhood(unsigned int i) const {
     unsigned int res = 0;
     const Atom *at = dp_mol->getAtomWithIdx(i);
     std::vector<unsigned int> nbrs(at->getDegree());
@@ -366,7 +366,7 @@ class atomcomparefunctor3 {
     }
     return res;
   }
-  int basecomp(int i, int j) const {
+  [[nodiscard]] int basecomp(int i, int j) const {
     PRECONDITION(dp_atoms, "no atoms");
     unsigned int ivi, ivj;
 

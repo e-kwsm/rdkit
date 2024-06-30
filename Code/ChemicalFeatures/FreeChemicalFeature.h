@@ -53,16 +53,18 @@ class RDKIT_CHEMICALFEATURES_EXPORT FreeChemicalFeature
   ~FreeChemicalFeature() override = default;
 
   //! return our id
-  int getId() const override { return d_id; }
+  [[nodiscard]] int getId() const override { return d_id; }
 
   //! return our family
-  const std::string &getFamily() const override { return d_family; }
+  [[nodiscard]] const std::string &getFamily() const override {
+    return d_family;
+  }
 
   //! return our type
-  const std::string &getType() const override { return d_type; }
+  [[nodiscard]] const std::string &getType() const override { return d_type; }
 
   //! return our position
-  RDGeom::Point3D getPos() const override { return d_position; }
+  [[nodiscard]] RDGeom::Point3D getPos() const override { return d_position; }
 
   //! set our id
   void setId(const int id) { d_id = id; }
@@ -82,7 +84,7 @@ class RDKIT_CHEMICALFEATURES_EXPORT FreeChemicalFeature
   }
 
   //! returns a serialized form of the feature (a pickle)
-  std::string toString() const;
+  [[nodiscard]] std::string toString() const;
   //! initialize from a pickle string
   void initFromString(const std::string &pickle);
 

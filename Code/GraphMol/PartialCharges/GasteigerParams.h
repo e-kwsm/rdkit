@@ -44,8 +44,8 @@ class RDKIT_PARTIALCHARGES_EXPORT GasteigerParams {
 
   ~GasteigerParams() { d_paramMap.clear(); }
 
-  DOUBLE_VECT getParams(std::string elem, std::string mode,
-                        bool throwOnFailure = false) const {
+  [[nodiscard]] DOUBLE_VECT getParams(std::string elem, std::string mode,
+                                      bool throwOnFailure = false) const {
     std::pair<std::string, std::string> query(elem, mode);
     std::map<std::pair<std::string, std::string>, DOUBLE_VECT>::const_iterator
         iter;

@@ -247,10 +247,10 @@ class WedgeInfoBase {
   WedgeInfoBase(int idxInit) : idx(idxInit){};
   virtual ~WedgeInfoBase(){};
 
-  virtual WedgeInfoType getType() const = 0;
-  virtual Bond::BondDir getDir() const = 0;
+  [[nodiscard]] virtual WedgeInfoType getType() const = 0;
+  [[nodiscard]] virtual Bond::BondDir getDir() const = 0;
 
-  int getIdx() const { return idx; }
+  [[nodiscard]] int getIdx() const { return idx; }
 
  private:
   int idx = -1;
@@ -261,10 +261,10 @@ class WedgeInfoChiral : public WedgeInfoBase {
   WedgeInfoChiral(int atomId) : WedgeInfoBase(atomId){};
   ~WedgeInfoChiral() override {}
 
-  WedgeInfoType getType() const override {
+  [[nodiscard]] WedgeInfoType getType() const override {
     return Chirality::WedgeInfoType::WedgeInfoTypeChiral;
   }
-  Bond::BondDir getDir() const override {
+  [[nodiscard]] Bond::BondDir getDir() const override {
     throw std::runtime_error(
         "BondDir is not stored/used in Chiral type WedgInfos");
   }
@@ -280,11 +280,11 @@ class WedgeInfoAtropisomer : public WedgeInfoBase {
 
   RDKit::Bond::BondDir dir = RDKit::Bond::BondDir::NONE;
 
-  WedgeInfoType getType() const override {
+  [[nodiscard]] WedgeInfoType getType() const override {
     return Chirality::WedgeInfoType::WedgeInfoTypeAtropisomer;
   }
 
-  Bond::BondDir getDir() const override { return dir; }
+  [[nodiscard]] Bond::BondDir getDir() const override { return dir; }
 };
 
 namespace detail {

@@ -38,7 +38,7 @@ class PySequenceHolder {
   //!
   //! NOTE: the sequence must have a \c __len__ attribute, otherwise
   //!       a \c ValueError will be raised.
-  unsigned int size() const {
+  [[nodiscard]] unsigned int size() const {
     unsigned int res = 0;
     try {
       res = boost::python::len(d_seq);

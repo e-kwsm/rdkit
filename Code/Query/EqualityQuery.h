@@ -41,14 +41,14 @@ class RDKIT_QUERY_EXPORT EqualityQuery
   //! sets our target value
   void setVal(MatchFuncArgType what) { this->d_val = what; }
   //! returns our target value
-  const MatchFuncArgType getVal() const { return this->d_val; }
+  [[nodiscard]] const MatchFuncArgType getVal() const { return this->d_val; }
 
   //! sets our tolerance
   void setTol(MatchFuncArgType what) { this->d_tol = what; }
   //! returns out tolerance
-  const MatchFuncArgType getTol() const { return this->d_tol; }
+  [[nodiscard]] const MatchFuncArgType getTol() const { return this->d_tol; }
 
-  bool Match(const DataFuncArgType what) const override {
+  [[nodiscard]] bool Match(const DataFuncArgType what) const override {
     MatchFuncArgType mfArg =
         this->TypeConvert(what, Int2Type<needsConversion>());
     if (queryCmp(this->d_val, mfArg, this->d_tol) == 0) {
@@ -58,8 +58,8 @@ class RDKIT_QUERY_EXPORT EqualityQuery
     }
   }
 
-  Query<MatchFuncArgType, DataFuncArgType, needsConversion> *copy()
-      const override {
+  [[nodiscard]] Query<MatchFuncArgType, DataFuncArgType, needsConversion> *
+  copy() const override {
     EqualityQuery<MatchFuncArgType, DataFuncArgType, needsConversion> *res =
         new EqualityQuery<MatchFuncArgType, DataFuncArgType, needsConversion>();
     res->setNegation(this->getNegation());
@@ -71,7 +71,7 @@ class RDKIT_QUERY_EXPORT EqualityQuery
     return res;
   }
 
-  std::string getFullDescription() const override {
+  [[nodiscard]] std::string getFullDescription() const override {
     std::ostringstream res;
     res << this->getDescription();
     res << " " << this->d_val;

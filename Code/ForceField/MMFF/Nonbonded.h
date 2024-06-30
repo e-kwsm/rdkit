@@ -61,7 +61,9 @@ class RDKIT_FORCEFIELD_EXPORT VdWContrib : public ForceFieldContrib {
                const MMFFVdWRijstarEps *mmffVdWConstants);
   double getEnergy(double *pos) const override;
   void getGrad(double *pos, double *grad) const override;
-  VdWContrib *copy() const override { return new VdWContrib(*this); }
+  [[nodiscard]] VdWContrib *copy() const override {
+    return new VdWContrib(*this);
+  }
 
  private:
   std::vector<int16_t> d_at1Idxs;
@@ -89,7 +91,9 @@ class RDKIT_FORCEFIELD_EXPORT EleContrib : public ForceFieldContrib {
   double getEnergy(double *pos) const override;
   void getGrad(double *pos, double *grad) const override;
 
-  EleContrib *copy() const override { return new EleContrib(*this); }
+  [[nodiscard]] EleContrib *copy() const override {
+    return new EleContrib(*this);
+  }
 
  private:
   std::vector<int16_t> d_at1Idxs;

@@ -37,10 +37,12 @@ class RDKIT_MOLSTANDARDIZE_EXPORT TransformCatalogEntry
   }
 
   // TODO Catalog.h requires a getOrder function
-  unsigned int getOrder() const { return 0; }  // dp_mol->getNumBonds(); }
+  [[nodiscard]] unsigned int getOrder() const {
+    return 0;
+  }  // dp_mol->getNumBonds(); }
 
   void toStream(std::ostream &ss) const override;
-  std::string Serialize() const override;
+  [[nodiscard]] std::string Serialize() const override;
   void initFromStream(std::istream &ss) override;
   void initFromString(const std::string &text) override;
 
