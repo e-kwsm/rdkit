@@ -14,8 +14,7 @@
 #include <stdexcept>
 #include <algorithm>
 
-namespace RDKit {
-namespace FMCS {
+namespace RDKit::FMCS {
 class DuplicatedSeedCache {
  public:
   typedef bool TValue;
@@ -109,5 +108,4 @@ class DuplicatedSeedCache {
     return Index.size();  // for statistics only
   }
 };
-}  // namespace FMCS
-}  // namespace RDKit
+}  // namespace RDKit::FMCS
