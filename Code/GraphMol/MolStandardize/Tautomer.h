@@ -174,25 +174,27 @@ class RDKIT_MOLSTANDARDIZE_EXPORT TautomerEnumeratorResult {
         d_modifiedBonds(other.d_modifiedBonds) {
     fillTautomersItVec();
   }
-  const const_iterator begin() const {
+  [[nodiscard]] const const_iterator begin() const {
     return const_iterator(d_tautomers.begin());
   }
-  const const_iterator end() const { return const_iterator(d_tautomers.end()); }
-  size_t size() const { return d_tautomers.size(); }
-  bool empty() const { return d_tautomers.empty(); }
-  const ROMOL_SPTR &at(size_t pos) const {
+  [[nodiscard]] const const_iterator end() const {
+    return const_iterator(d_tautomers.end());
+  }
+  [[nodiscard]] size_t size() const { return d_tautomers.size(); }
+  [[nodiscard]] bool empty() const { return d_tautomers.empty(); }
+  [[nodiscard]] const ROMOL_SPTR &at(size_t pos) const {
     PRECONDITION(pos < d_tautomers.size(), "index out of bounds");
     return d_tautomersItVec.at(pos)->second.tautomer;
   }
   const ROMOL_SPTR &operator[](size_t pos) const { return at(pos); }
-  const boost::dynamic_bitset<> &modifiedAtoms() const {
+  [[nodiscard]] const boost::dynamic_bitset<> &modifiedAtoms() const {
     return d_modifiedAtoms;
   }
-  const boost::dynamic_bitset<> &modifiedBonds() const {
+  [[nodiscard]] const boost::dynamic_bitset<> &modifiedBonds() const {
     return d_modifiedBonds;
   }
-  TautomerEnumeratorStatus status() const { return d_status; }
-  std::vector<ROMOL_SPTR> tautomers() const {
+  [[nodiscard]] TautomerEnumeratorStatus status() const { return d_status; }
+  [[nodiscard]] std::vector<ROMOL_SPTR> tautomers() const {
     std::vector<ROMOL_SPTR> tautomerVec;
     tautomerVec.reserve(d_tautomers.size());
     std::transform(
@@ -201,7 +203,7 @@ class RDKIT_MOLSTANDARDIZE_EXPORT TautomerEnumeratorResult {
     return tautomerVec;
   }
   std::vector<ROMOL_SPTR> operator()() const { return tautomers(); }
-  std::vector<std::string> smiles() const {
+  [[nodiscard]] std::vector<std::string> smiles() const {
     std::vector<std::string> smilesVec;
     smilesVec.reserve(d_tautomers.size());
     std::transform(d_tautomers.begin(), d_tautomers.end(),
@@ -209,7 +211,9 @@ class RDKIT_MOLSTANDARDIZE_EXPORT TautomerEnumeratorResult {
                    [](const SmilesTautomerPair &t) { return t.first; });
     return smilesVec;
   }
-  const SmilesTautomerMap &smilesTautomerMap() const { return d_tautomers; }
+  [[nodiscard]] const SmilesTautomerMap &smilesTautomerMap() const {
+    return d_tautomers;
+  }
 
  private:
   void fillTautomersItVec() {
@@ -350,7 +354,9 @@ class RDKIT_MOLSTANDARDIZE_EXPORT TautomerEnumerator {
       DO NOT delete the instance as ownership of the pointer is transferred
       to the TautomerEnumerator
    */
-  TautomerEnumeratorCallback *getCallback() const { return d_callback.get(); }
+  [[nodiscard]] TautomerEnumeratorCallback *getCallback() const {
+    return d_callback.get();
+  }
 
   //! returns a \c TautomerEnumeratorResult structure for the input molecule
   /*!
@@ -368,7 +374,7 @@ class RDKIT_MOLSTANDARDIZE_EXPORT TautomerEnumerator {
     "acceptor")
 
   */
-  TautomerEnumeratorResult enumerate(const ROMol &mol) const;
+  [[nodiscard]] TautomerEnumeratorResult enumerate(const ROMol &mol) const;
 
   //! Deprecated, please use the form returning a \c TautomerEnumeratorResult
   //! instead

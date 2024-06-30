@@ -34,9 +34,9 @@ class RDKIT_RDGEOMETRYLIB_EXPORT Point {
   virtual double &operator[](unsigned int i) = 0;
 
   virtual void normalize() = 0;
-  virtual double length() const = 0;
-  virtual double lengthSq() const = 0;
-  virtual unsigned int dimension() const = 0;
+  [[nodiscard]] virtual double length() const = 0;
+  [[nodiscard]] virtual double lengthSq() const = 0;
+  [[nodiscard]] virtual unsigned int dimension() const = 0;
 
   [[nodiscard]] virtual Point *copy() const = 0;
 };
@@ -155,7 +155,7 @@ class RDKIT_RDGEOMETRYLIB_EXPORT Point3D : public Point {
     z /= l;
   }
 
-  double length() const override {
+  [[nodiscard]] double length() const override {
     double res = x * x + y * y + z * z;
     return sqrt(res);
   }
