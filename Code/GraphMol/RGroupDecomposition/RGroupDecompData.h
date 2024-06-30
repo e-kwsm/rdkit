@@ -84,13 +84,12 @@ struct RGroupDecompData {
                 const std::vector<std::pair<Atom *, Atom *>> &atomsToAdd);
 
   bool replaceHydrogenCoreDummy(const RGroupMatch &match, RWMol &core,
-                                const Atom &atom, const int currentLabel,
-                                const int rLabel);
+                                const Atom &atom, int currentLabel, int rLabel);
 
   void relabelCore(RWMol &core, std::map<int, int> &mappings,
                    UsedLabels &used_labels, const std::set<int> &indexLabels,
                    const std::map<int, std::vector<int>> &extraAtomRLabels,
-                   const RGroupMatch *const match = nullptr);
+                   const RGroupMatch *match = nullptr);
 
   void relabelRGroup(RGroupData &rgroup, const std::map<int, int> &mappings);
 

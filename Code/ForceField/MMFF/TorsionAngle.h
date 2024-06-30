@@ -71,10 +71,8 @@ RDKIT_FORCEFIELD_EXPORT double calcTorsionCosPhi(const RDGeom::Point3D &iPoint,
 RDKIT_FORCEFIELD_EXPORT std::tuple<double, double, double>
 calcTorsionForceConstant(const MMFFTor *mmffTorParams);
 //! calculates and returns the torsional MMFF energy
-RDKIT_FORCEFIELD_EXPORT double calcTorsionEnergy(const double V1,
-                                                 const double V2,
-                                                 const double V3,
-                                                 const double cosPhi);
+RDKIT_FORCEFIELD_EXPORT double calcTorsionEnergy(double V1, double V2,
+                                                 double V3, double cosPhi);
 RDKIT_FORCEFIELD_EXPORT void calcTorsionGrad(RDGeom::Point3D *r,
                                              RDGeom::Point3D *t, double *d,
                                              double **g, double &sinTerm,

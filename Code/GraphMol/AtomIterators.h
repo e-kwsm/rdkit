@@ -47,7 +47,7 @@ class RDKIT_GRAPHMOL_EXPORT AtomIterator_ {
   // dereference
   Atom_ *operator*() const;
   // random access
-  Atom_ *operator[](const int which) const;
+  Atom_ *operator[](int which) const;
   bool operator==(const ThisType &other) const;
   bool operator!=(const ThisType &other) const;
   bool operator<(const ThisType &other) const;

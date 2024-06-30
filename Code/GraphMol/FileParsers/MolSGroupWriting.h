@@ -62,11 +62,11 @@ inline std::string FormatV3000DoubleField(double value) {
 
 std::string BuildV2000STYLines(const ROMol &mol);
 
-std::string BuildV2000StringPropLines(const unsigned int entriesPerLine,
+std::string BuildV2000StringPropLines(unsigned int entriesPerLine,
                                       const ROMol &mol,
                                       const std::string &propName,
                                       const std::string &propCode,
-                                      const unsigned int fieldWitdh);
+                                      unsigned int fieldWitdh);
 
 std::string BuildV2000SLBLines(const ROMol &mol);
 
@@ -79,26 +79,26 @@ std::string BuildV2000SNCLines(const ROMol &mol);
 std::string BuildV2000SBTLines(const ROMol &mol);
 
 template <class T>
-std::string BuildV2000IdxVectorDataLines(const unsigned int entriesPerLine,
-                                         const unsigned int sGroupId,
+std::string BuildV2000IdxVectorDataLines(unsigned int entriesPerLine,
+                                         unsigned int sGroupId,
                                          const std::string &code,
                                          const T &dataVector);
 
-std::string BuildV2000SMTLine(const int idx, const SubstanceGroup *sgroup);
+std::string BuildV2000SMTLine(int idx, const SubstanceGroup *sgroup);
 
-std::string BuildV2000SDILine(const int idx, const SubstanceGroup *sgroup);
+std::string BuildV2000SDILine(int idx, const SubstanceGroup *sgroup);
 
-std::string BuildV2000SBVLine(const int idx, const SubstanceGroup *sgroup);
+std::string BuildV2000SBVLine(int idx, const SubstanceGroup *sgroup);
 
-std::string BuildV2000SDTLine(const int idx, const SubstanceGroup *sgroup);
+std::string BuildV2000SDTLine(int idx, const SubstanceGroup *sgroup);
 
-std::string BuildV2000SDDLine(const int idx, const SubstanceGroup *sgroup);
+std::string BuildV2000SDDLine(int idx, const SubstanceGroup *sgroup);
 
-std::string BuildV2000SCDSEDLines(const int idx, const SubstanceGroup *sgroup);
+std::string BuildV2000SCDSEDLines(int idx, const SubstanceGroup *sgroup);
 
-std::string BuildV2000SAPLines(const int idx, const SubstanceGroup *sgroup);
+std::string BuildV2000SAPLines(int idx, const SubstanceGroup *sgroup);
 
-std::string BuildV2000SCLLine(const int idx, const SubstanceGroup *sgroup);
+std::string BuildV2000SCLLine(int idx, const SubstanceGroup *sgroup);
 const std::string GetMolFileSGroupInfo(const RWMol &mol);
 
 /* ------------------ V3000 Utils  ------------------ */
@@ -124,12 +124,12 @@ std::string FormatV3000ParentBlock(const SubstanceGroup &sgroup);
 std::string FormatV3000CompNoBlock(const SubstanceGroup &sgroup);
 
 std::string FormatV3000BracketBlock(
-    const std::vector<SubstanceGroup::Bracket> brackets);
+    std::vector<SubstanceGroup::Bracket> brackets);
 
 std::string FormatV3000CStateBlock(
     const std::vector<SubstanceGroup::CState> &cstates);
 
-const std::string GetV3000MolFileSGroupLines(const unsigned int idx,
+const std::string GetV3000MolFileSGroupLines(unsigned int idx,
                                              const SubstanceGroup &sgroup);
 }  // namespace SGroupWriting
 }  // namespace RDKit
