@@ -332,7 +332,7 @@ std::array<double, 3> alignShape(ShapeInput &refShape, ShapeInput &fitShape,
           overlayOpts.optParam, overlayOpts.useDistCutoff,
           overlayOpts.distCutoff, overlayOpts.shapeConvergenceCriterion,
           overlayOpts.nSteps));
-      bestScoreForStart.push_back({score, k});
+      bestScoreForStart.emplace_back(score, k);
     }
   }
 
