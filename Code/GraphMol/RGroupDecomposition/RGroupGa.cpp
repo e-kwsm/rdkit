@@ -37,7 +37,7 @@ std::string RGroupDecompositionChromosome::info() const {
 }
 
 double RGroupDecompositionChromosome::score() {
-  auto& rGroupData = rGroupGa.getRGroupData();
+  auto &rGroupData = rGroupGa.getRGroupData();
   auto scoreMethod = static_cast<RGroupScore>(rGroupData.params.scoreMethod);
   if (operationName != RgroupMutate) {
     decode();
