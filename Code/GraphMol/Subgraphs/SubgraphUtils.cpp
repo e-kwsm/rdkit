@@ -19,8 +19,7 @@
 #include <map>
 #include <RDGeneral/hash/hash.hpp>
 
-namespace RDKit {
-namespace Subgraphs {
+namespace RDKit::Subgraphs {
 ROMol *pathToSubmol(const ROMol &mol, const PATH_TYPE &path, bool useQuery) {
   INT_MAP_INT aIdxMap;
   return pathToSubmol(mol, path, useQuery, aIdxMap);
@@ -238,5 +237,4 @@ PATH_LIST uniquifyPaths(const ROMol &mol, const PATH_LIST &allPaths,
   }
   return res;
 }
-}  // end of namespace Subgraphs
-}  // end of namespace RDKit
+}  // namespace RDKit::Subgraphs
