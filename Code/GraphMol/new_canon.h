@@ -642,7 +642,7 @@ class RDKIT_GRAPHMOL_EXPORT ChiralAtomCompareFunctor {
   bool df_useNbrs{false};
   ChiralAtomCompareFunctor() {}
   ChiralAtomCompareFunctor(Canon::canon_atom *atoms, const ROMol &m)
-      : dp_atoms(atoms), dp_mol(&m), df_useNbrs(false) {}
+      : dp_atoms(atoms), dp_mol(&m) {}
   int operator()(int i, int j) const {
     PRECONDITION(dp_atoms, "no atoms");
     PRECONDITION(dp_mol, "no molecule");
