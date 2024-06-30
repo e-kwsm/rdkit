@@ -1886,6 +1886,7 @@ void testMultipleCoreRelabellingIssues() {
   std::vector<RGroupScore> matchtypes{Match, FingerprintVariance};
   for (auto match : matchtypes) {
     std::vector<ROMOL_SPTR> cores;
+    cores.reserve(smi.size());
     for (const auto &s : smi) {
       cores.emplace_back(SmartsToMol(s));
     }
@@ -1931,6 +1932,7 @@ void testUnprocessedMapping() {
   std::vector<RGroupScore> matchtypes{Match, FingerprintVariance};
   for (auto match : matchtypes) {
     std::vector<ROMOL_SPTR> cores;
+    cores.reserve(coreSmi.size());
     for (const auto &s : coreSmi) {
       cores.emplace_back(SmartsToMol(s));
     }

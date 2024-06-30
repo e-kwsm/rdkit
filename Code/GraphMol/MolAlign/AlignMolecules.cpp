@@ -328,6 +328,7 @@ std::vector<double> getAllConformerBestRMS(
       }
     };
     std::vector<std::thread> tg;
+    tg.reserve(numThreads);
     for (auto ti = 0; ti < numThreads; ++ti) {
       tg.emplace_back(std::thread(func, ti));
     }
