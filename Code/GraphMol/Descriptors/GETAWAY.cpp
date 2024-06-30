@@ -56,9 +56,7 @@
 
 using namespace Eigen;
 
-namespace RDKit {
-
-namespace Descriptors {
+namespace RDKit::Descriptors {
 
 namespace {
 
@@ -1258,5 +1256,4 @@ void GETAWAY(const ROMol &mol, std::vector<double> &res, int confId,
   }
 }
 
-}  // namespace Descriptors
-}  // namespace RDKit
+}  // namespace RDKit::Descriptors

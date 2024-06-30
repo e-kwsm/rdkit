@@ -10,8 +10,7 @@
 
 #include "MolProcessing.h"
 
-namespace RDKit {
-namespace MolProcessing {
+namespace RDKit::MolProcessing {
 
 namespace details {
 GeneralMolSupplier::SupplierOptions defaultSupplierOptions;
@@ -142,5 +141,4 @@ template RDKIT_MOLPROCESSING_EXPORT
         const GeneralMolSupplier::SupplierOptions &options,
         FingerprintGenerator<std::uint64_t> *generator);
 
-}  // namespace MolProcessing
-}  // namespace RDKit
+}  // namespace RDKit::MolProcessing

@@ -17,8 +17,7 @@ typedef boost::tokenizer<boost::char_separator<char>> tokenizer;
 #include <GraphMol/Substruct/SubstructMatch.h>
 #include <RDGeneral/types.h>
 
-namespace RDKit {
-namespace MolStandardize {
+namespace RDKit::MolStandardize {
 
 // constructor
 FragmentRemover::FragmentRemover() {
@@ -293,5 +292,4 @@ LargestFragmentChooser::Largest::Largest(std::string &smiles,
       Weight(weight),
       Organic(organic) {}
 
-}  // namespace MolStandardize
-}  // namespace RDKit
+}  // namespace RDKit::MolStandardize

@@ -356,13 +356,12 @@ void test6LazyFPBReaderTanimotoNeighbors() {
 // need forward declarations of some of the detail functions (doesn't make sense
 // to include these in a public interface and there aren't enough of them to
 // make it worth adding a detail header)
-namespace RDKit {
-namespace detail {
+namespace RDKit::detail {
 boost::dynamic_bitset<> *bytesToBitset(const std::uint8_t *fpData,
                                        std::uint32_t nBits);
 std::uint8_t *bitsetToBytes(const boost::dynamic_bitset<> &bitset);
-}  // namespace detail
-}  // namespace RDKit
+}  // namespace RDKit::detail
+
 void test7BitsetDetails() {
   BOOST_LOG(rdInfoLog)
       << "-----------------------\n Testing some internal bitset details"

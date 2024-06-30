@@ -35,8 +35,7 @@ std::string strip(const std::string &orig) {
   return res;
 }
 
-namespace v2 {
-namespace FileParsers {
+namespace v2::FileParsers {
 
 ForwardSDMolSupplier::ForwardSDMolSupplier(std::istream *inStream,
                                            bool takeOwnership,
@@ -333,6 +332,6 @@ bool ForwardSDMolSupplier::atEnd() {
   PRECONDITION(dp_inStream, "no stream");
   return df_end;
 }
-}  // namespace FileParsers
-}  // namespace v2
+}  // namespace v2::FileParsers
+
 }  // namespace RDKit

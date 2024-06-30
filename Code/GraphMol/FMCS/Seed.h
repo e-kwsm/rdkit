@@ -19,8 +19,7 @@
 #include "SubstructMatchCustom.h"
 #include "TargetMatch.h"
 
-namespace RDKit {
-namespace FMCS {
+namespace RDKit::FMCS {
 class MaximumCommonSubgraph;
 struct TargetMatch;
 
@@ -154,5 +153,4 @@ class RDKIT_FMCS_EXPORT Seed {
                     MaximumCommonSubgraph *mcs = nullptr) const;
   void setStoreAllDegenerateMCS(bool value) { StoreAllDegenerateMCS = value; }
 };
-}  // namespace FMCS
-}  // namespace RDKit
+}  // namespace RDKit::FMCS

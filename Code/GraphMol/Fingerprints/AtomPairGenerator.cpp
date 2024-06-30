@@ -14,8 +14,7 @@
 #include <GraphMol/Fingerprints/FingerprintUtil.h>
 #include <RDGeneral/hash/hash.hpp>
 
-namespace RDKit {
-namespace AtomPair {
+namespace RDKit::AtomPair {
 using namespace AtomPairs;
 
 AtomPairAtomInvGenerator::AtomPairAtomInvGenerator(
@@ -264,5 +263,4 @@ getAtomPairGenerator(const unsigned int minDistance,
                      const bool useCountSimulation, const std::uint32_t fpSize,
                      const std::vector<std::uint32_t> countBounds,
                      const bool ownsAtomInvGen);
-}  // namespace AtomPair
-}  // namespace RDKit
+}  // namespace RDKit::AtomPair

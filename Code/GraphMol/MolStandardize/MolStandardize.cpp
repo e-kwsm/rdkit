@@ -32,8 +32,8 @@
 #include <RDGeneral/BoostEndInclude.h>
 
 using namespace std;
-namespace RDKit {
-namespace MolStandardize {
+
+namespace RDKit::MolStandardize {
 const CleanupParameters defaultCleanupParameters;
 
 #define PT_OPT_GET(opt) params.opt = pt.get(#opt, params.opt)
@@ -470,5 +470,4 @@ ROMol *disconnectOrganometallics(
   return md.disconnect(mol);
 }
 
-}  // namespace MolStandardize
-}  // namespace RDKit
+}  // namespace RDKit::MolStandardize

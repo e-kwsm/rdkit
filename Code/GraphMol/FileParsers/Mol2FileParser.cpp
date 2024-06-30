@@ -809,8 +809,7 @@ void ParseMol2BondBlock(std::istream *inStream, RWMol *res, unsigned int nBonds,
 
 };  // end of anonymous namespace
 
-namespace v2 {
-namespace FileParsers {
+namespace v2::FileParsers {
 
 //------------------------------------------------
 //
@@ -1025,6 +1024,6 @@ std::unique_ptr<RWMol> MolFromMol2File(const std::string &fName,
     return nullptr;
   }
 }
-}  // namespace FileParsers
-}  // namespace v2
+}  // namespace v2::FileParsers
+
 }  // namespace RDKit
