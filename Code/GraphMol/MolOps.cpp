@@ -45,8 +45,7 @@
 
 const int ci_LOCAL_INF = static_cast<int>(1e8);
 
-namespace RDKit {
-namespace MolOps {
+namespace RDKit::MolOps {
 namespace {
 void nitrogensCleanup(RWMol &mol) {
   // conversions here:
@@ -1346,5 +1345,4 @@ void collapseAttachmentPoints(RWMol &mol, bool markedOnly) {
     mol.commitBatchEdit();
   }
 }
-}  // end of namespace MolOps
-}  // end of namespace RDKit
+}  // namespace RDKit::MolOps

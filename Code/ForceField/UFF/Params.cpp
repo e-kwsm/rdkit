@@ -27,8 +27,7 @@ typedef boost::tokenizer<boost::char_separator<char>> tokenizer;
 #include <boost/flyweight/no_tracking.hpp>
 #include <RDGeneral/BoostEndInclude.h>
 
-namespace ForceFields {
-namespace UFF {
+namespace ForceFields::UFF {
 
 extern const std::string defaultParamData;
 
@@ -350,5 +349,4 @@ const std::string defaultParamData =
     "3.5	3.2	1.9\n";
 // clang-format on
 
-}  // end of namespace UFF
-}  // end of namespace ForceFields
+}  // namespace ForceFields::UFF

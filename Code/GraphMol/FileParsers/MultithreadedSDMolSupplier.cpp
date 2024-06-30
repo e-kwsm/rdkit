@@ -12,9 +12,7 @@
 
 #include "FileParserUtils.h"
 
-namespace RDKit {
-namespace v2 {
-namespace FileParsers {
+namespace RDKit::v2::FileParsers {
 MultithreadedSDMolSupplier::MultithreadedSDMolSupplier(
     const std::string &fileName, const Parameters &params,
     const MolFileParserParams &parseParams) {
@@ -255,7 +253,6 @@ RWMol *MultithreadedSDMolSupplier::processMoleculeRecord(
   }
   return nullptr;
 }
-}  // namespace FileParsers
-}  // namespace v2
-}  // namespace RDKit
+}  // namespace RDKit::v2::FileParsers
+
 #endif

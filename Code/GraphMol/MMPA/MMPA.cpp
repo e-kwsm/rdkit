@@ -22,8 +22,7 @@
 
 // #define MMPA_DEBUG // enable debug info output
 
-namespace RDKit {
-namespace MMPA {
+namespace RDKit::MMPA {
 
 typedef std::vector<std::pair<unsigned, unsigned>>
     BondVector_t;  // pair of BeginAtomIdx, EndAtomIdx
@@ -525,5 +524,4 @@ bool fragmentMol(const ROMol &mol,
   processCuts(0, minCuts, maxCuts, bonds_selected, matching_bonds, mol, res);
   return true;
 }
-}  // namespace MMPA
-}  // namespace RDKit
+}  // namespace RDKit::MMPA

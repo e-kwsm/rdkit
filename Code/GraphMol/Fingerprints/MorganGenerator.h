@@ -15,9 +15,7 @@
 #include <GraphMol/Fingerprints/FingerprintGenerator.h>
 #include <cstdint>
 
-namespace RDKit {
-
-namespace MorganFingerprint {
+namespace RDKit::MorganFingerprint {
 
 /**
  \brief Default atom invariants generator for Morgan fingerprint, generates
@@ -342,7 +340,6 @@ FingerprintGenerator<OutputType> *getMorganGenerator(
       ownsBondInvGen);
 };
 
-}  // namespace MorganFingerprint
-}  // namespace RDKit
+}  // namespace RDKit::MorganFingerprint
 
 #endif
