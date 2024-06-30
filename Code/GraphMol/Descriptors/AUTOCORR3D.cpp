@@ -52,7 +52,7 @@ namespace {
 MolData3Ddescriptors moldata3D;
 
 VectorXd getEigenVect(std::vector<double> v) {
-  double *varray_ptr = &v[0];
+  double *varray_ptr = v.data();
   Map<VectorXd> V(varray_ptr, v.size());
   return V;
 }
