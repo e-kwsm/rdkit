@@ -35,7 +35,7 @@ class RDKIT_FINGERPRINTS_EXPORT MorganAtomInvGenerator
    \param includeRingMembership : if set, whether or not the atom is in a ring
    will be used in the invariant list.
    */
-  MorganAtomInvGenerator(const bool includeRingMembership = true);
+  MorganAtomInvGenerator(bool includeRingMembership = true);
 
   std::vector<std::uint32_t> *getAtomInvariants(
       const ROMol &mol) const override;
@@ -89,8 +89,7 @@ class RDKIT_FINGERPRINTS_EXPORT MorganBondInvGenerator
    \param useChirality : if set, chirality information will be included as a
    part of the bond invariants
    */
-  MorganBondInvGenerator(const bool useBondTypes = true,
-                         const bool useChirality = false);
+  MorganBondInvGenerator(bool useBondTypes = true, bool useChirality = false);
 
   std::vector<std::uint32_t> *getBondInvariants(
       const ROMol &mol) const override;
@@ -164,8 +163,8 @@ class RDKIT_FINGERPRINTS_EXPORT MorganAtomEnv
       const std::vector<std::uint32_t> *atomInvariants,  // unused
       const std::vector<std::uint32_t> *bondInvariants,  // unused
       AdditionalOutput *additionalOutput,                // unused
-      const bool hashResults = false,                    // unused
-      const std::uint64_t fpSize = 0                     // unused
+      bool hashResults = false,                          // unused
+      std::uint64_t fpSize = 0                           // unused
   ) const override;
   void updateAdditionalOutput(AdditionalOutput *output,
                               size_t bitId) const override;
@@ -177,8 +176,7 @@ class RDKIT_FINGERPRINTS_EXPORT MorganAtomEnv
    \param atomId atom id of the atom at the center of this environment
    \param layer radius of this environment
    */
-  MorganAtomEnv(const std::uint32_t code, const unsigned int atomId,
-                const unsigned int layer);
+  MorganAtomEnv(std::uint32_t code, unsigned int atomId, unsigned int layer);
 };
 
 /**
@@ -192,11 +190,11 @@ class RDKIT_FINGERPRINTS_EXPORT MorganEnvGenerator
   std::vector<AtomEnvironment<OutputType> *> getEnvironments(
       const ROMol &mol, FingerprintArguments *arguments,
       const std::vector<std::uint32_t> *fromAtoms,
-      const std::vector<std::uint32_t> *ignoreAtoms, const int confId,
+      const std::vector<std::uint32_t> *ignoreAtoms, int confId,
       const AdditionalOutput *additionalOutput,
       const std::vector<std::uint32_t> *atomInvariants,
       const std::vector<std::uint32_t> *bondInvariants,
-      const bool hashResults = false) const override;
+      bool hashResults = false) const override;
 
   std::string infoString() const override;
   OutputType getResultSize() const override;

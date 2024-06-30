@@ -38,9 +38,8 @@ class RDKIT_FORCEFIELD_EXPORT StretchBendContrib : public ForceFieldContrib {
     \param angleType   MMFF type of the angle (as an unsigned int)
 
   */
-  StretchBendContrib(ForceField *owner, const unsigned int idx1,
-                     const unsigned int idx2, const unsigned int idx3,
-                     const MMFFStbn *mmffStbnParams,
+  StretchBendContrib(ForceField *owner, unsigned int idx1, unsigned int idx2,
+                     unsigned int idx3, const MMFFStbn *mmffStbnParams,
                      const MMFFAngle *mmffAngleParams,
                      const MMFFBond *mmffBondParams1,
                      const MMFFBond *mmffBondParams2);
@@ -62,8 +61,8 @@ RDKIT_FORCEFIELD_EXPORT std::pair<double, double> calcStbnForceConstants(
     const MMFFStbn *mmffStbnParams);
 //! calculates and returns the stretch-bending MMFF energy
 RDKIT_FORCEFIELD_EXPORT std::pair<double, double> calcStretchBendEnergy(
-    const double deltaDist1, const double deltaDist2, const double deltaTheta,
-    const std::pair<double, double> forceConstants);
+    double deltaDist1, double deltaDist2, double deltaTheta,
+    std::pair<double, double> forceConstants);
 }  // namespace Utils
 }  // namespace MMFF
 }  // namespace ForceFields
