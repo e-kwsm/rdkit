@@ -208,7 +208,7 @@ void SynthonSet::addSynthon(const int synthonSetNum, Synthon *newSynthon,
   if (static_cast<size_t>(synthonSetNum) >= d_synthons.size()) {
     d_synthons.resize(synthonSetNum + 1);
   }
-  d_synthons[synthonSetNum].push_back(std::make_pair(synthonId, newSynthon));
+  d_synthons[synthonSetNum].emplace_back(synthonId, newSynthon);
 }
 
 namespace {

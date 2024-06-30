@@ -687,7 +687,7 @@ void dfsBuildStack(ROMol &mol, int atomIdx, int inBondIdx,
         ++lowestRingIdx;
         bond->setProp(common_properties::_TraversalRingClosureBond,
                       lowestRingIdx);
-        molStack.push_back(MolStackElem(lowestRingIdx));
+        molStack.emplace_back(lowestRingIdx);
       }
     }
     for (auto ringIdx : ringsClosed) {
@@ -782,16 +782,14 @@ void dfsBuildStack(ROMol &mol, int atomIdx, int inBondIdx,
     travList.push_back(bond->getIdx());
     if (possiblesIt + 1 != possibles.end()) {
       // we're branching
-      molStack.push_back(
-          MolStackElem("(", rdcast<int>(possiblesIt - possibles.begin())));
+      molStack.emplace_back("(", rdcast<int>(possiblesIt - possibles.begin()));
     }
     molStack.push_back(MolStackElem(bond, atomIdx));
     dfsBuildStack(mol, possibleIdx, bond->getIdx(), colors, cycles, ranks,
                   cyclesAvailable, molStack, atomRingClosures,
                   atomTraversalBondOrder, bondsInPlay, bondSymbols, doRandom);
     if (possiblesIt + 1 != possibles.end()) {
-      molStack.push_back(
-          MolStackElem(")", rdcast<int>(possiblesIt - possibles.begin())));
+      molStack.emplace_back(")", rdcast<int>(possiblesIt - possibles.begin()));
     }
   }
 
@@ -1272,8 +1270,8 @@ void canonicalizeEnhancedStereo(ROMol &mol,
         bond->invertChirality();
       }
     }
-    newSgs.emplace_back(
-        StereoGroup(sg.getGroupType(), std::move(sgAtoms), std::move(sgBonds)));
+    newSgs.emplace_back(sg.getGroupType(), std::move(sgAtoms),
+                        std::move(sgBonds));
 
     // note that we do not forward the Group Ids: this is intentional, so that
     // the Ids are reassigned based on the canonicalized order.

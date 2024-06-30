@@ -1011,7 +1011,7 @@ void testReplaceCoreMatchVect() {
 
   {
     MatchVectType fake;
-    fake.push_back(std::make_pair(1, 100));
+    fake.emplace_back(1, 100);
     try {
       ROMOL_SPTR res(
           replaceCore(*mol.get(), *query.get(), fake, replaceDummies));
@@ -1023,7 +1023,7 @@ void testReplaceCoreMatchVect() {
 
   {
     MatchVectType fake;
-    fake.push_back(std::make_pair(100, 1));
+    fake.emplace_back(100, 1);
     try {
       ROMOL_SPTR res(
           replaceCore(*mol.get(), *query.get(), fake, replaceDummies));
@@ -1035,7 +1035,7 @@ void testReplaceCoreMatchVect() {
 
   {
     MatchVectType fake;
-    fake.push_back(std::make_pair(1, -10));
+    fake.emplace_back(1, -10);
     try {
       ROMOL_SPTR res(
           replaceCore(*mol.get(), *query.get(), fake, replaceDummies));
@@ -1047,7 +1047,7 @@ void testReplaceCoreMatchVect() {
 
   {
     MatchVectType fake;
-    fake.push_back(std::make_pair(-10, 1));
+    fake.emplace_back(-10, 1);
     try {
       ROMOL_SPTR res(
           replaceCore(*mol.get(), *query.get(), fake, replaceDummies));

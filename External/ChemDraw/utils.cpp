@@ -228,7 +228,7 @@ Atom::ChiralType getChirality(ROMol &mol, Atom *center_atom, Conformer &conf) {
           }
           auto pos = conf.getAtomPos(atom->getIdx()) - center;
           double angle = atan2(pos.x, pos.y);
-          angles.push_back(std::make_pair(angle, bond->getIdx()));
+          angles.emplace_back(angle, bond->getIdx());
         }
       }
     }
@@ -296,25 +296,25 @@ void checkChemDrawTetrahedralGeometries(RWMol &mol) {
           if (!chiralityChanged) {
             atom->setChiralTag(Atom::ChiralType::CHI_TETRAHEDRAL_CW);
           }
-          unsetTetrahedralAtoms.push_back(std::make_pair('R', atom));
+          unsetTetrahedralAtoms.emplace_back('R', atom);
           break;
         case kCDXCIPAtom_r:
           if (!chiralityChanged) {
             atom->setChiralTag(Atom::ChiralType::CHI_TETRAHEDRAL_CW);
           }
-          unsetTetrahedralAtoms.push_back(std::make_pair('r', atom));
+          unsetTetrahedralAtoms.emplace_back('r', atom);
           break;
         case kCDXCIPAtom_S:
           if (!chiralityChanged) {
             atom->setChiralTag(Atom::ChiralType::CHI_TETRAHEDRAL_CW);
           }
-          unsetTetrahedralAtoms.push_back(std::make_pair('S', atom));
+          unsetTetrahedralAtoms.emplace_back('S', atom);
           break;
         case kCDXCIPAtom_s:
           if (!chiralityChanged) {
             atom->setChiralTag(Atom::ChiralType::CHI_TETRAHEDRAL_CCW);
           }
-          unsetTetrahedralAtoms.push_back(std::make_pair('s', atom));
+          unsetTetrahedralAtoms.emplace_back('s', atom);
           break;
         default:
           break;

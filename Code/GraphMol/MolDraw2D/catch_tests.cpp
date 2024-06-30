@@ -5655,8 +5655,8 @@ M  END
       std::vector<Point2D> ends;
       for (std::sregex_iterator i = match_begin; i != match_end; ++i) {
         std::smatch match = *i;
-        ends.push_back(Point2D(std::stod(match[1]), std::stod(match[2])));
-        ends.push_back(Point2D(std::stod(match[3]), std::stod(match[4])));
+        ends.emplace_back(std::stod(match[1]), std::stod(match[2]));
+        ends.emplace_back(std::stod(match[3]), std::stod(match[4]));
       }
       return (ends[0] - ends[1]).length();
     };
@@ -5961,10 +5961,10 @@ TEST_CASE("Bond Highlights", "") {
       // match[1] is the 1st float (the x coord of the M), match[2]
       // is the 2nd float, etc.
       std::smatch match = *i;
-      ends.push_back(Point2D(std::stod(match[1]), std::stod(match[2])));
-      ends.push_back(Point2D(std::stod(match[3]), std::stod(match[4])));
-      ends.push_back(Point2D(std::stod(match[5]), std::stod(match[6])));
-      ends.push_back(Point2D(std::stod(match[7]), std::stod(match[8])));
+      ends.emplace_back(std::stod(match[1]), std::stod(match[2]));
+      ends.emplace_back(std::stod(match[3]), std::stod(match[4]));
+      ends.emplace_back(std::stod(match[5]), std::stod(match[6]));
+      ends.emplace_back(std::stod(match[7]), std::stod(match[8]));
     }
     CHECK(ends.size() == 12);
     // When this had a bug in it, it drew a butterfly-type motif, because
@@ -6046,8 +6046,8 @@ M  END)CTAB"_ctab;
         std::vector<Point2D> ends;
         for (std::sregex_iterator i = match_begin; i != match_end; ++i) {
           std::smatch match = *i;
-          ends.push_back(Point2D(std::stod(match[1]), std::stod(match[2])));
-          ends.push_back(Point2D(std::stod(match[3]), std::stod(match[4])));
+          ends.emplace_back(std::stod(match[1]), std::stod(match[2]));
+          ends.emplace_back(std::stod(match[3]), std::stod(match[4]));
         }
         CHECK(ends.size() == 4);
         CHECK(!MolDraw2D_detail::doLinesIntersect(ends[0], ends[1], ends[2],
@@ -6562,9 +6562,9 @@ M  END
       auto match_end = std::sregex_iterator();
       for (std::sregex_iterator i = match_begin; i != match_end; ++i) {
         std::smatch match = *i;
-        ends.push_back(Point2D(std::stod(match[1]), std::stod(match[2])));
-        ends.push_back(Point2D(std::stod(match[3]), std::stod(match[4])));
-        ends.push_back(Point2D(std::stod(match[5]), std::stod(match[6])));
+        ends.emplace_back(std::stod(match[1]), std::stod(match[2]));
+        ends.emplace_back(std::stod(match[3]), std::stod(match[4]));
+        ends.emplace_back(std::stod(match[5]), std::stod(match[6]));
       }
     };
     std::regex head1(
@@ -6893,8 +6893,8 @@ M  END
     std::vector<Point2D> points;
     for (std::sregex_iterator i = match_begin; i != match_end; ++i) {
       std::smatch match = *i;
-      points.push_back(Point2D(stod(match[4]), stod(match[2])));
-      points.push_back(Point2D(stod(match[3]), stod(match[4])));
+      points.emplace_back(stod(match[4]), stod(match[2]));
+      points.emplace_back(stod(match[3]), stod(match[4]));
     }
     auto vec1 = points[0].directionVector(points[1]);
     auto vec2 = points[2].directionVector(points[3]);
@@ -7456,8 +7456,8 @@ TEST_CASE("Bad double bond - Github 6160") {
     std::vector<Point2D> points;
     for (std::sregex_iterator i = match_begin; i != match_end; ++i) {
       std::smatch match = *i;
-      points.push_back(Point2D(stod(match[1]), stod(match[2])));
-      points.push_back(Point2D(stod(match[3]), stod(match[4])));
+      points.emplace_back(stod(match[1]), stod(match[2]));
+      points.emplace_back(stod(match[3]), stod(match[4]));
     }
     auto vec1 = points[0].directionVector(points[1]);
     auto vec2 = points[2].directionVector(points[3]);
@@ -7501,8 +7501,8 @@ M  END
     std::vector<Point2D> points;
     for (std::sregex_iterator i = match_begin; i != match_end; ++i) {
       std::smatch match = *i;
-      points.push_back(Point2D(stod(match[1]), stod(match[2])));
-      points.push_back(Point2D(stod(match[3]), stod(match[4])));
+      points.emplace_back(stod(match[1]), stod(match[2]));
+      points.emplace_back(stod(match[3]), stod(match[4]));
     }
     CHECK(MolDraw2D_detail::doLinesIntersect(points[0], points[1], points[2],
                                              points[3], nullptr));
@@ -8146,8 +8146,8 @@ M  END
     std::vector<Point2D> points;
     for (std::sregex_iterator i = match_begin; i != match_end; ++i) {
       std::smatch match = *i;
-      points.push_back(Point2D(stod(match[1]), stod(match[2])));
-      points.push_back(Point2D(stod(match[3]), stod(match[4])));
+      points.emplace_back(stod(match[1]), stod(match[2]));
+      points.emplace_back(stod(match[3]), stod(match[4]));
     }
     auto d1 = (points[0] - points[4]).length();
     auto d2 = (points[3] - points[7]).length();
@@ -9491,7 +9491,7 @@ TEST_CASE("Github6968 - bad bond highlights with triple bonds") {
         std::smatch match = *i;
         std::vector<Point2D> pts;
         for (int j = 4; j < 12; j += 2) {
-          pts.push_back(Point2D(stod(match[j]), stod(match[j + 1])));
+          pts.emplace_back(stod(match[j]), stod(match[j + 1]));
         }
         // None of the points should be on top of each other
         for (size_t j = 0; j < 3; ++j) {
@@ -9545,12 +9545,12 @@ TEST_CASE("Github7036 - triple bond to wedge not right") {
     auto match_begin = std::sregex_iterator(text.begin(), text.end(), bond);
     std::smatch match = *match_begin;
     std::vector<Point2D> pts;
-    pts.push_back(Point2D(stod(match[1]), stod(match[2])));
-    pts.push_back(Point2D(stod(match[3]), stod(match[4])));
+    pts.emplace_back(stod(match[1]), stod(match[2]));
+    pts.emplace_back(stod(match[3]), stod(match[4]));
     ++match_begin;
     match = *match_begin;
-    pts.push_back(Point2D(stod(match[1]), stod(match[2])));
-    pts.push_back(Point2D(stod(match[3]), stod(match[4])));
+    pts.emplace_back(stod(match[1]), stod(match[2]));
+    pts.emplace_back(stod(match[3]), stod(match[4]));
     double dot = pts[0].directionVector(pts[1]).dotProduct(
         pts[2].directionVector(pts[3]));
     CHECK_THAT(fabs(dot), Catch::Matchers::WithinAbs(1.0, 0.001));
@@ -9612,8 +9612,8 @@ M  END)CTAB"_ctab;
   std::vector<Point2D> pts3;
   for (std::sregex_iterator i = match3_begin; i != match3_end; ++i) {
     std::smatch match = *i;
-    pts3.push_back(Point2D(stod(match[1]), stod(match[2])));
-    pts3.push_back(Point2D(stod(match[3]), stod(match[4])));
+    pts3.emplace_back(stod(match[1]), stod(match[2]));
+    pts3.emplace_back(stod(match[3]), stod(match[4]));
   }
 
   std::regex bond8(
@@ -9622,8 +9622,8 @@ M  END)CTAB"_ctab;
   auto match_begin8 = std::sregex_iterator(text.begin(), text.end(), bond8);
   std::smatch match8 = *match_begin8;
   std::vector<Point2D> pts8;
-  pts8.push_back(Point2D(stod(match8[1]), stod(match8[2])));
-  pts8.push_back(Point2D(stod(match8[3]), stod(match8[4])));
+  pts8.emplace_back(stod(match8[1]), stod(match8[2]));
+  pts8.emplace_back(stod(match8[3]), stod(match8[4]));
 
   // pts3[3] and pts3[7] are the atom 10 ends of bond3, pts8[1] is
   // the atom 10 end of bond 8.  They should be close to each other.
