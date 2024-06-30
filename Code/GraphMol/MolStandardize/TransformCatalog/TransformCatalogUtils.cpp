@@ -31,7 +31,7 @@ ChemicalReaction *getReaction(const std::string &name,
 }
 
 ChemicalReaction *getReaction(const std::string &tmpStr) {
-  if (tmpStr.length() == 0 || tmpStr.substr(0, 2) == "//") {
+  if (tmpStr.empty() || tmpStr.substr(0, 2) == "//") {
     // empty line or comment
     return nullptr;
   }

@@ -665,7 +665,7 @@ M  END)CTAB"_ctab;
       UFF::UFFOptimizeMolecule(*mol);
 
       auto match = SubstructMatch(*mol, *patt);
-      REQUIRE(match.size() >= 1);
+      REQUIRE(!match.empty());
 
       const auto conf = mol->getConformer();
       std::map<int, RDGeom::Point3D> cmap;
@@ -698,7 +698,7 @@ M  END)CTAB"_ctab;
       UFF::UFFOptimizeMolecule(*mol);
 
       auto match = SubstructMatch(*mol, *patt);
-      REQUIRE(match.size() >= 1);
+      REQUIRE(!match.empty());
 
       const auto conf = mol->getConformer();
       std::map<int, RDGeom::Point3D> cmap;

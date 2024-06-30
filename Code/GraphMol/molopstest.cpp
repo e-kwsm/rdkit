@@ -1946,10 +1946,10 @@ TEST_CASE("Testing shortest path code") {
     REQUIRE((*pi) == 1);
 
     path = MolOps::getShortestPath(*m, 1, 2);
-    REQUIRE(path.size() == 0);
+    REQUIRE(path.empty());
 
     path = MolOps::getShortestPath(*m, 0, 2);
-    REQUIRE(path.size() == 0);
+    REQUIRE(path.empty());
     delete m;
   }
   // fused ring test
@@ -2913,7 +2913,7 @@ TEST_CASE("Testing SFIssue1894348 (impact of removeHs on bond stereo atoms)") {
   REQUIRE(m->getBondWithIdx(2)->getStereoAtoms()[0] == 0);
   REQUIRE(m->getBondWithIdx(2)->getStereoAtoms()[1] == 4);
   // at first the stereoatoms are gone:
-  REQUIRE(m2->getBondWithIdx(2)->getStereoAtoms().size() == 0);
+  REQUIRE(m2->getBondWithIdx(2)->getStereoAtoms().empty());
   // but they can be re-perceived:
   MolOps::assignStereochemistry(*m2, true, true);
   REQUIRE(m2->getBondWithIdx(1)->getStereoAtoms().size() == 2);
@@ -2927,10 +2927,10 @@ TEST_CASE("Testing SFIssue1894348 (impact of removeHs on bond stereo atoms)") {
   m = SmilesToMol(smi, false, false);
   REQUIRE(m);
   MolOps::sanitizeMol(*m);
-  REQUIRE(m->getBondWithIdx(2)->getStereoAtoms().size() == 0);
+  REQUIRE(m->getBondWithIdx(2)->getStereoAtoms().empty());
   m2 = static_cast<RWMol *>(MolOps::removeHs(static_cast<const ROMol &>(*m)));
   // if we don't assign stereocodes in the original we shouldn't have them here:
-  REQUIRE(m2->getBondWithIdx(1)->getStereoAtoms().size() == 0);
+  REQUIRE(m2->getBondWithIdx(1)->getStereoAtoms().empty());
   delete m;
   delete m2;
 }
@@ -4621,7 +4621,7 @@ TEST_CASE(
     MolOps::assignStereochemistry(*m);
     REQUIRE(m->getBondWithIdx(1)->getStereoAtoms().size() == 2);
     m->removeAtom((unsigned int)0);
-    REQUIRE(m->getBondWithIdx(1)->getStereoAtoms().size() == 0);
+    REQUIRE(m->getBondWithIdx(1)->getStereoAtoms().empty());
     delete m;
   }
   {
@@ -6720,7 +6720,7 @@ TEST_CASE("Testing error reporting for kekulization") {
     constexpr const char *smi = "c1ccccc1";
     ROMol *m = SmilesToMol(smi);
     REQUIRE(m);
-    REQUIRE(sstrm.str() == "");
+    REQUIRE(sstrm.str().empty());
     delete m;
   }
   {
@@ -6793,7 +6793,7 @@ TEST_CASE(
   // test atom type query merging
   for (int aromatic = 0; aromatic < 2; ++aromatic) {
     sstrm.str("");
-    REQUIRE(sstrm.str() == "");
+    REQUIRE(sstrm.str().empty());
     RWMol m;
     auto qa = new QueryAtom();
     qa->setQuery(makeAtomTypeQuery(1, aromatic));
@@ -6809,7 +6809,7 @@ TEST_CASE(
 
   {
     sstrm.str("");
-    REQUIRE(sstrm.str() == "");
+    REQUIRE(sstrm.str().empty());
     // github 7687 - merge with more than one option in or
     constexpr const char *sma = "[#6]-[#1,#6,#7]";
     RWMol *m = SmartsToMol(sma);

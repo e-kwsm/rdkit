@@ -478,7 +478,7 @@ void _toBeMovedIdxList(const ROMol &mol, unsigned int iAtomId,
   unsigned int tIdx;
   unsigned int wIdx;
   bool doMainLoop;
-  while (stack.size()) {
+  while (!stack.empty()) {
     doMainLoop = false;
     tIdx = stack.top();
     const Atom *tAtom = mol.getAtomWithIdx(tIdx);

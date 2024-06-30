@@ -142,7 +142,7 @@ bool FilterHierarchyMatcher::getMatches(const ROMol &mol,
       matcher->getMatches(mol, children);
     }
 
-    if (children.size()) {
+    if (!children.empty()) {
       m.insert(m.end(), children.begin(), children.end());
     } else {
       m.insert(m.end(), temp.begin(), temp.end());

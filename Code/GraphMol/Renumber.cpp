@@ -113,7 +113,7 @@ ROMol *renumberAtoms(const ROMol &mol,
     nRings->addRings(newAtomRings, newBondRings);
   }
 
-  if (mol.getStereoGroups().size()) {
+  if (!mol.getStereoGroups().empty()) {
     std::vector<StereoGroup> nsgs;
     nsgs.reserve(mol.getStereoGroups().size());
     for (const auto &osg : mol.getStereoGroups()) {
