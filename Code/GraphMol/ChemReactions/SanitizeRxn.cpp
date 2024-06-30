@@ -84,15 +84,13 @@ T getMaxProp(ChemicalReaction &rxn, const std::string_view &prop) {
 struct AtomInfo {
   Atom *atom;
   unsigned int templateIdx;
-  unsigned int rlabel;
-  int atomMap;
+  unsigned int rlabel{0};
+  int atomMap{0};
   int isotope;
   std::string dummyLabel;
   AtomInfo(Atom *at, unsigned int templateIdx)
       : atom(at),
         templateIdx(templateIdx),
-        rlabel(0),
-        atomMap(0),
         isotope(at->getIsotope()),
         dummyLabel() {
     atom->getPropIfPresent(common_properties::_MolFileRLabel, rlabel);

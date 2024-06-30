@@ -19,7 +19,6 @@ namespace MolDraw2D_detail {
 // ****************************************************************************
 DrawText::DrawText(double max_fnt_sz, double min_fnt_sz)
     : colour_(DrawColour(0.0, 0.0, 0.0)),
-      font_scale_(1.0),
       max_font_size_(max_fnt_sz),
       min_font_size_(min_fnt_sz) {}
 

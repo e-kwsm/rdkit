@@ -34,16 +34,7 @@ class RDKIT_DEPICTOR_EXPORT EmbeddedAtom {
 
   EmbeddedAtom(const EmbeddedAtom &other) = default;
 
-  EmbeddedAtom(unsigned int aid, const RDGeom::Point2D &pos)
-      : aid(aid),
-        angle(-1.0),
-        nbr1(-1),
-        nbr2(-1),
-        CisTransNbr(-1),
-        ccw(true),
-        rotDir(0),
-        d_density(-1.0),
-        df_fixed(false) {
+  EmbeddedAtom(unsigned int aid, const RDGeom::Point2D &pos) : aid(aid) {
     loc = pos;
   }
 

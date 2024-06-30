@@ -186,17 +186,18 @@ class RDKIT_FORCEFIELDHELPERS_EXPORT MMFFMolProperties {
 
     this->d_MMFFAtomPropertiesPtrVect[idx]->mmffPartialCharge = pChg;
   }
-  bool d_valid;
+  bool d_valid{true};
   bool d_mmffs;
-  bool d_bondTerm;
-  bool d_angleTerm;
-  bool d_stretchBendTerm;
-  bool d_oopTerm;
-  bool d_torsionTerm;
-  bool d_vdWTerm;
-  bool d_eleTerm;
-  double d_dielConst;        //!< the dielectric constant
-  std::uint8_t d_dielModel;  //!< the dielectric model (1 = constant, 2 =
+  bool d_bondTerm{true};
+  bool d_angleTerm{true};
+  bool d_stretchBendTerm{true};
+  bool d_oopTerm{true};
+  bool d_torsionTerm{true};
+  bool d_vdWTerm{true};
+  bool d_eleTerm{true};
+  double d_dielConst{1.0};  //!< the dielectric constant
+  std::uint8_t d_dielModel{
+      CONSTANT};  //!< the dielectric model (1 = constant, 2 =
   // distance-dependent)
   std::uint8_t d_verbosity;
   std::ostream *d_oStream;
