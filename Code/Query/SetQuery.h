@@ -45,8 +45,8 @@ class RDKIT_QUERY_EXPORT SetQuery
     return (this->d_set.find(mfArg) != this->d_set.end()) ^ this->getNegation();
   }
 
-  Query<MatchFuncArgType, DataFuncArgType, needsConversion> *copy()
-      const override {
+  [[nodiscard]] Query<MatchFuncArgType, DataFuncArgType, needsConversion> *
+  copy() const override {
     SetQuery<MatchFuncArgType, DataFuncArgType, needsConversion> *res =
         new SetQuery<MatchFuncArgType, DataFuncArgType, needsConversion>();
     res->setDataFunc(this->d_dataFunc);
@@ -60,13 +60,17 @@ class RDKIT_QUERY_EXPORT SetQuery
     return res;
   }
 
-  typename CONTAINER_TYPE::const_iterator beginSet() const {
+  [[nodiscard]] typename CONTAINER_TYPE::const_iterator beginSet() const {
     return d_set.begin();
   }
-  typename CONTAINER_TYPE::const_iterator endSet() const { return d_set.end(); }
-  unsigned int size() const { return rdcast<unsigned int>(d_set.size()); }
+  [[nodiscard]] typename CONTAINER_TYPE::const_iterator endSet() const {
+    return d_set.end();
+  }
+  [[nodiscard]] unsigned int size() const {
+    return rdcast<unsigned int>(d_set.size());
+  }
 
-  std::string getFullDescription() const override {
+  [[nodiscard]] std::string getFullDescription() const override {
     std::ostringstream res;
     res << this->getDescription() << " val";
     if (this->getNegation()) {

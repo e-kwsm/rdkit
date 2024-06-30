@@ -44,8 +44,8 @@ class RDKIT_QUERY_EXPORT XOrQuery
     return res;
   }
 
-  Query<MatchFuncArgType, DataFuncArgType, needsConversion> *copy()
-      const override {
+  [[nodiscard]] Query<MatchFuncArgType, DataFuncArgType, needsConversion> *
+  copy() const override {
     XOrQuery<MatchFuncArgType, DataFuncArgType, needsConversion> *res =
         new XOrQuery<MatchFuncArgType, DataFuncArgType, needsConversion>();
 
