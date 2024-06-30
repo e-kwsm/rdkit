@@ -30,10 +30,7 @@ class RDKIT_DATASTRUCTS_EXPORT ExplicitBitVect : public BitVect {
  public:
   ExplicitBitVect() {}
   //! initialize with a particular size;
-  explicit ExplicitBitVect(unsigned int size)
-      : dp_bits(nullptr), d_size(0), d_numOnBits(0) {
-    _initForSize(size);
-  }
+  explicit ExplicitBitVect(unsigned int size) { _initForSize(size); }
   //! initialize with a particular size and all bits set
   ExplicitBitVect(unsigned int size, bool bitsSet);
   ExplicitBitVect(const ExplicitBitVect &other);
