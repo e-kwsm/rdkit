@@ -53,12 +53,11 @@ class PyTautomerEnumeratorResult {
   }
   inline python::tuple modifiedAtoms() const { return d_atTuple; }
   inline python::tuple modifiedBonds() const { return d_bndTuple; }
-  inline const MolStandardize::TautomerEnumeratorResult::const_iterator begin()
+  inline MolStandardize::TautomerEnumeratorResult::const_iterator begin()
       const {
     return d_tr->begin();
   }
-  inline const MolStandardize::TautomerEnumeratorResult::const_iterator end()
-      const {
+  inline MolStandardize::TautomerEnumeratorResult::const_iterator end() const {
     return d_tr->end();
   }
   inline int size() const { return d_tr->size(); }

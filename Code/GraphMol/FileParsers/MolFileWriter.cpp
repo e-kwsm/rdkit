@@ -148,7 +148,7 @@ bool isAtomRGroup(const Atom &atom) {
 }
 }  // namespace
 
-const std::string GetMolFileChargeInfo(const RWMol &mol) {
+std::string GetMolFileChargeInfo(const RWMol &mol) {
   std::stringstream res;
   std::stringstream chgss;
   std::stringstream radss;
@@ -234,8 +234,8 @@ bool hasComplexQuery(const Atom *atom) {
   return res;
 }
 
-const std::string GetMolFileQueryInfo(
-    const RWMol &mol, const boost::dynamic_bitset<> &queryListAtoms) {
+std::string GetMolFileQueryInfo(const RWMol &mol,
+                                const boost::dynamic_bitset<> &queryListAtoms) {
   std::stringstream ss;
   boost::dynamic_bitset<> listQs(mol.getNumAtoms());
   for (const auto atom : mol.atoms()) {
@@ -280,7 +280,7 @@ const std::string GetMolFileQueryInfo(
   return ss.str();
 }
 
-const std::string GetMolFileRGroupInfo(const RWMol &mol) {
+std::string GetMolFileRGroupInfo(const RWMol &mol) {
   std::stringstream ss;
   unsigned int nEntries = 0;
   for (const auto atom : mol.atoms()) {
@@ -298,7 +298,7 @@ const std::string GetMolFileRGroupInfo(const RWMol &mol) {
   return ss2.str();
 }
 
-const std::string GetMolFileAliasInfo(const RWMol &mol) {
+std::string GetMolFileAliasInfo(const RWMol &mol) {
   std::stringstream ss;
   for (const auto atom : mol.atoms()) {
     std::string lbl;
@@ -312,7 +312,7 @@ const std::string GetMolFileAliasInfo(const RWMol &mol) {
   return ss.str();
 }
 
-const std::string GetMolFilePXAInfo(const RWMol &mol) {
+std::string GetMolFilePXAInfo(const RWMol &mol) {
   std::string res;
   for (const auto atom : mol.atoms()) {
     if (atom->hasProp("_MolFile_PXA")) {
@@ -323,7 +323,7 @@ const std::string GetMolFilePXAInfo(const RWMol &mol) {
   }
   return res;
 }
-const std::string GetMolFileZBOInfo(const RWMol &mol) {
+std::string GetMolFileZBOInfo(const RWMol &mol) {
   std::stringstream res;
   std::stringstream ss;
   unsigned int nEntries = 0;
@@ -384,9 +384,8 @@ const std::string GetMolFileZBOInfo(const RWMol &mol) {
   return res.str();
 }
 
-const std::string AtomGetMolFileSymbol(
-    const Atom *atom, bool padWithSpaces,
-    boost::dynamic_bitset<> &queryListAtoms) {
+std::string AtomGetMolFileSymbol(const Atom *atom, bool padWithSpaces,
+                                 boost::dynamic_bitset<> &queryListAtoms) {
   PRECONDITION(atom, "");
 
   std::string res;
@@ -595,8 +594,8 @@ void GetMolFileAtomProperties(const Atom *atom, const Conformer *conf,
   }
 }
 
-const std::string GetMolFileAtomLine(const Atom *atom, const Conformer *conf,
-                                     boost::dynamic_bitset<> &queryListAtoms) {
+std::string GetMolFileAtomLine(const Atom *atom, const Conformer *conf,
+                               boost::dynamic_bitset<> &queryListAtoms) {
   PRECONDITION(atom, "");
   std::string res;
   int totValence, atomMapNumber;
@@ -698,7 +697,7 @@ int BondGetMolFileSymbol(const Bond *bond) {
   // return res.c_str();
 }
 
-const std::string GetMolFileBondLine(
+std::string GetMolFileBondLine(
     const Bond *bond,
     const std::map<int, std::unique_ptr<Chirality::WedgeInfoBase>> &wedgeBonds,
     const Conformer *conf, bool wasAromatic) {
@@ -736,9 +735,9 @@ const std::string GetMolFileBondLine(
   return ss.str();
 }
 
-const std::string GetV3000MolFileAtomLine(
-    const Atom *atom, const Conformer *conf,
-    boost::dynamic_bitset<> &queryListAtoms, unsigned int precision) {
+std::string GetV3000MolFileAtomLine(const Atom *atom, const Conformer *conf,
+                                    boost::dynamic_bitset<> &queryListAtoms,
+                                    unsigned int precision) {
   PRECONDITION(atom, "");
   int totValence, atomMapNumber;
   unsigned int parityFlag;
@@ -1048,7 +1047,7 @@ void moveAdditionalPropertiesToSGroups(RWMol &mol) {
   createZBOSubstanceGroups(mol);
 }
 }  // namespace FileParserUtils
-const std::string GetV3000MolFileBondLine(
+std::string GetV3000MolFileBondLine(
     const Bond *bond,
     const std::map<int, std::unique_ptr<Chirality::WedgeInfoBase>> &wedgeBonds,
     const Conformer *conf, bool wasAromatic) {
