@@ -25,11 +25,11 @@ class RDKIT_DATASTRUCTS_EXPORT BitVect {
  public:
   virtual ~BitVect() = 0;
   //! sets a particular bit and returns its original value
-  virtual bool setBit(const unsigned int which) = 0;
+  virtual bool setBit(unsigned int which) = 0;
   //! unsets a particular bit and returns its original value
-  virtual bool unsetBit(const unsigned int which) = 0;
+  virtual bool unsetBit(unsigned int which) = 0;
   //! returns the value of a particular bit
-  virtual bool getBit(const unsigned int which) const = 0;
+  virtual bool getBit(unsigned int which) const = 0;
   //! returns the number of bits (the length of the BitVect)
   virtual unsigned int getNumBits() const = 0;
   //! returns the number of on bits
@@ -52,17 +52,17 @@ class RDKIT_DATASTRUCTS_EXPORT BitVect {
          amount of error checking and it is strongly suggested that it not
          be used in client code.
    */
-  void initFromText(const char *data, const unsigned int dataLen,
+  void initFromText(const char *data, unsigned int dataLen,
                     bool isBase64 = false, bool allowOldFormat = false);
 
   //! returns a serialized (pickled) version of this BitVect
   virtual std::string toString() const = 0;
 
-  virtual bool operator[](const unsigned int which) const = 0;
+  virtual bool operator[](unsigned int which) const = 0;
   unsigned int size() const { return getNumBits(); }
 
  private:
-  virtual void _initForSize(const unsigned int size) = 0;
+  virtual void _initForSize(unsigned int size) = 0;
 };
 
 #endif

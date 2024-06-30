@@ -43,8 +43,8 @@ permMFromN(unsigned int m, unsigned int n);
 // by a simple atom query.
 RDKIT_SYNTHONSPACESEARCH_EXPORT std::vector<std::vector<std::unique_ptr<ROMol>>>
 splitMolecule(const ROMol &query, unsigned int maxNumFrags,
-              const std::uint64_t maxNumFragSets, const TimePoint *endTime,
-              const int numThreads, bool &timedOut);
+              std::uint64_t maxNumFragSets, const TimePoint *endTime,
+              int numThreads, bool &timedOut);
 // Counts the number of [1*], [2*]...[4*] in the string.
 RDKIT_SYNTHONSPACESEARCH_EXPORT int countConnections(const ROMol &mol);
 

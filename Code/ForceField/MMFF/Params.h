@@ -796,7 +796,7 @@ class RDKIT_FORCEFIELD_EXPORT MMFFOopCollection {
     return mmffOopParams;
   }
 
-  MMFFOopCollection(const bool isMMFFs, std::string mmffOop = "");
+  MMFFOopCollection(bool isMMFFs, std::string mmffOop = "");
 
 #ifdef RDKIT_MMFF_PARAMS_USE_STD_MAP
   std::map<const unsigned int,
@@ -936,7 +936,7 @@ class RDKIT_FORCEFIELD_EXPORT MMFFTorCollection {
     return std::make_pair(canTorType, mmffTorParams);
   }
 
-  MMFFTorCollection(const bool isMMFFs, std::string mmffTor = "");
+  MMFFTorCollection(bool isMMFFs, std::string mmffTor = "");
 #ifdef RDKIT_MMFF_PARAMS_USE_STD_MAP
   std::map<
       const unsigned int,

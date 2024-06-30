@@ -126,10 +126,10 @@ class RingMembershipSize {
   static const std::uint32_t IS_AROMATIC_BIT;
   RingMembershipSize(const ROMol &mol);
   bool isAtomInAromaticRingOfSize(const Atom *atom,
-                                  const unsigned int ringSize) const;
+                                  unsigned int ringSize) const;
   bool areAtomsInSameAromaticRing(const Atom *atom1, const Atom *atom2) const;
-  bool areAtomsInSameRingOfSize(const unsigned int ringSize,
-                                const unsigned int numAtoms, ...) const;
+  bool areAtomsInSameRingOfSize(unsigned int ringSize, unsigned int numAtoms,
+                                ...) const;
 
  private:
   RingSizeMembershipMap d_ringSizeMembershipMap;

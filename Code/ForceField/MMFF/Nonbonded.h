@@ -118,9 +118,8 @@ RDKIT_FORCEFIELD_EXPORT void scaleVdWParams(double &R_star_ij,
                                             const MMFFVdW *mmffVdWParamsIAtom,
                                             const MMFFVdW *mmffVdWParamsJAtom);
 //! calculates and returns the Van der Waals MMFF energy
-RDKIT_FORCEFIELD_EXPORT double calcVdWEnergy(const double dist,
-                                             const double R_star_ij,
-                                             const double wellDepth);
+RDKIT_FORCEFIELD_EXPORT double calcVdWEnergy(double dist, double R_star_ij,
+                                             double wellDepth);
 //! calculates and returns the electrostatic MMFF energy
 // FIX: idx1 and idx2 are not used
 RDKIT_FORCEFIELD_EXPORT double calcEleEnergy(unsigned int idx1,

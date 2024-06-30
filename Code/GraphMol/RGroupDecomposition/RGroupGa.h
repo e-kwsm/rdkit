@@ -103,7 +103,7 @@ struct GaResult {
 class RDKIT_RGROUPDECOMPOSITION_EXPORT RGroupGa : public GaBase {
  public:
   RGroupGa(const RGroupDecompData &rGroupData,
-           const chrono::steady_clock::time_point *const t0 = nullptr);
+           const chrono::steady_clock::time_point *t0 = nullptr);
 
   IntegerStringChromosomePolicy &getChromosomePolicy() {
     return chromosomePolicy;

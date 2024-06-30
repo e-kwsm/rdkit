@@ -185,7 +185,7 @@ class RDKIT_RDGEOMETRYLIB_EXPORT UniformRealValueGrid3D
   RDKit::RealValueVect d_storage;  //! storage for values at each grid point
 
   //! \brief construct from a pickle
-  void initFromText(const char *pkl, const unsigned int length);
+  void initFromText(const char *pkl, unsigned int length);
 };
 
 RDKIT_RDGEOMETRYLIB_EXPORT UniformRealValueGrid3D operator|(

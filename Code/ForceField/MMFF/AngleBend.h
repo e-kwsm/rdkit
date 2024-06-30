@@ -62,10 +62,9 @@ RDKIT_FORCEFIELD_EXPORT double calcCosTheta(RDGeom::Point3D p1,
                                             RDGeom::Point3D p3, double dist1,
                                             double dist2);
 //! calculates and returns the angle bending MMFF energy
-RDKIT_FORCEFIELD_EXPORT double calcAngleBendEnergy(const double theta0,
-                                                   const double ka,
+RDKIT_FORCEFIELD_EXPORT double calcAngleBendEnergy(double theta0, double ka,
                                                    bool isLinear,
-                                                   const double cosTheta);
+                                                   double cosTheta);
 RDKIT_FORCEFIELD_EXPORT void calcAngleBendGrad(RDGeom::Point3D *r, double *dist,
                                                double **g, double &dE_dTheta,
                                                double &cosTheta,
