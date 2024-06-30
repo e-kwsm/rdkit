@@ -18,8 +18,7 @@
 #include <RDGeneral/utils.h>
 #include <GraphMol/ForceFieldHelpers/MMFF/AtomTyper.h>
 
-namespace ForceFields {
-namespace MMFF {
+namespace ForceFields::MMFF {
 namespace Utils {
 double calcUnscaledVdWMinimum(const MMFFVdWCollection *mmffVdW,
                               const MMFFVdW *mmffVdWParamsIAtom,
@@ -193,5 +192,4 @@ void EleContrib::getGrad(double *pos, double *grad) const {
     g2[i] -= dGrad;
   }
 }
-}  // namespace MMFF
-}  // namespace ForceFields
+}  // namespace ForceFields::MMFF

@@ -35,8 +35,7 @@
 
 #include "EnumerationStrategyBase.h"
 
-namespace RDKit {
-namespace EnumerationStrategyPickler {
+namespace RDKit::EnumerationStrategyPickler {
 //! pickles a EnumerationStrategy and adds the results to a stream \c ss
 RDKIT_CHEMREACTIONS_EXPORT void pickle(
     const boost::shared_ptr<EnumerationStrategyBase> &enumerator,
@@ -54,7 +53,6 @@ fromPickle(std::istream &pickle);
 //!  a pointer to the EnumerationStrategyBase
 RDKIT_CHEMREACTIONS_EXPORT boost::shared_ptr<EnumerationStrategyBase>
 fromPickle(const std::string &pickle);
-}  // namespace EnumerationStrategyPickler
-}  // namespace RDKit
+}  // namespace RDKit::EnumerationStrategyPickler
 
 #endif
