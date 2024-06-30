@@ -632,9 +632,9 @@ Point2D *adjustLineEnd(const DrawShapeArc &arc, DrawShapeSimpleLine &line) {
   if ((arc.points_[0] - line.points_[0]).lengthSq() >
       (arc.points_[0] - line.points_[1]).lengthSq()) {
     adjEnd = &line.points_[1];
-    fixEnd = &line.points_[0];
+    fixEnd = line.points_.data();
   } else {
-    adjEnd = &line.points_[0];
+    adjEnd = line.points_.data();
     fixEnd = &line.points_[1];
   }
   if (fabs((arc.points_[0] - *adjEnd).lengthSq() -
