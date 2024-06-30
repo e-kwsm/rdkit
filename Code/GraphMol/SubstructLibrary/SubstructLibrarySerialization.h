@@ -44,8 +44,7 @@
 BOOST_SERIALIZATION_ASSUME_ABSTRACT(RDKit::MolHolderBase)
 BOOST_SERIALIZATION_ASSUME_ABSTRACT(RDKit::FPHolderBase)
 
-namespace boost {
-namespace serialization {
+namespace boost::serialization {
 
 template <class Archive>
 void serialize(Archive &, RDKit::MolHolderBase &, const unsigned int) {}
@@ -218,8 +217,7 @@ void load(Archive &ar, RDKit::SubstructLibrary &slib,
   slib.resetHolders();
 }
 
-}  // end namespace serialization
-}  // end namespace boost
+}  // namespace boost::serialization
 
 BOOST_CLASS_VERSION(RDKit::MolHolder, 2);
 BOOST_CLASS_VERSION(RDKit::CachedMolHolder, 1);

@@ -14,8 +14,7 @@
 #include <tuple>
 #include <Geometry/point.h>
 
-namespace ForceFields {
-namespace UFF {
+namespace ForceFields::UFF {
 class AtomicParams;
 
 //! The inversion term for the Universal Force Field
@@ -52,6 +51,5 @@ class RDKIT_FORCEFIELD_EXPORT InversionContrib : public ForceFieldContrib {
   int d_at4Idx{-1};
   double d_forceConstant, d_C0, d_C1, d_C2;
 };
-}  // namespace UFF
-}  // namespace ForceFields
+}  // namespace ForceFields::UFF
 #endif

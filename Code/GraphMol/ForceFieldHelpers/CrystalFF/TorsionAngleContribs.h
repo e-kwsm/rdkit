@@ -23,8 +23,7 @@ class ForceField;
 class ForceFieldContrib;
 }  // namespace ForceFields
 
-namespace ForceFields {
-namespace CrystalFF {
+namespace ForceFields::CrystalFF {
 
 //! A term to capture all torsion constraint potentials.
 //!
@@ -109,7 +108,6 @@ RDKIT_FORCEFIELDHELPERS_EXPORT double calcTorsionEnergy(
     const std::vector<double> &forceConstants, const std::vector<int> &signs,
     const double cosPhi);
 
-}  // namespace CrystalFF
-}  // namespace ForceFields
+}  // namespace ForceFields::CrystalFF
 
 #endif

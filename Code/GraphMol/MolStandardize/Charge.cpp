@@ -21,8 +21,7 @@
 #include <boost/flyweight/no_tracking.hpp>
 #include <RDGeneral/BoostEndInclude.h>
 
-namespace RDKit {
-namespace MolStandardize {
+namespace RDKit::MolStandardize {
 
 // The default list of ChargeCorrections.
 std::vector<ChargeCorrection> CHARGE_CORRECTIONS = {
@@ -535,5 +534,4 @@ void Uncharger::unchargeInPlace(RWMol &mol) {
   }
 }
 
-}  // namespace MolStandardize
-}  // namespace RDKit
+}  // namespace RDKit::MolStandardize

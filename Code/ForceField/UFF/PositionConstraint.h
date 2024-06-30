@@ -12,9 +12,7 @@
 #define RD_UFFPOSITIONCONSTRAINT_H
 #include <ForceField/PositionConstraint.h>
 
-namespace ForceFields {
-namespace UFF {
+namespace ForceFields::UFF {
 using PositionConstraintContrib = ForceFields::PositionConstraintContrib;
-}  // namespace UFF
-}  // namespace ForceFields
+}  // namespace ForceFields::UFF
 #endif

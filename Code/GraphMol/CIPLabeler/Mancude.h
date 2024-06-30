@@ -25,9 +25,7 @@
 #include <boost/rational.hpp>
 #include <RDGeneral/BoostEndInclude.h>
 
-namespace RDKit {
-
-namespace CIPLabeler {
+namespace RDKit::CIPLabeler {
 
 class CIPMol;
 
@@ -61,5 +59,4 @@ class FractionalAtomicNum {
  */
 std::vector<FractionalAtomicNum> calcFracAtomNums(const CIPMol &mol);
 
-}  // namespace CIPLabeler
-}  // namespace RDKit
+}  // namespace RDKit::CIPLabeler

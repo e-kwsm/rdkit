@@ -16,8 +16,7 @@
 #include <GraphMol/MolDraw2D/MolDraw2DDetails.h>
 #include <GraphMol/MolDraw2D/DrawMolMCHCircleAndLine.h>
 
-namespace RDKit {
-namespace MolDraw2D_detail {
+namespace RDKit::MolDraw2D_detail {
 
 // ****************************************************************************
 DrawMolMCHCircleAndLine::DrawMolMCHCircleAndLine(
@@ -307,5 +306,4 @@ void DrawMolMCHCircleAndLine::fixHighlightJoinProblems(
   }
 }
 
-}  // namespace MolDraw2D_detail
-}  // namespace RDKit
+}  // namespace RDKit::MolDraw2D_detail

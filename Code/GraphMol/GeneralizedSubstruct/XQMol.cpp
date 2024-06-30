@@ -21,8 +21,7 @@
 
 #include "GraphMol/Fingerprints/Fingerprints.h"
 
-namespace RDKit {
-namespace GeneralizedSubstruct {
+namespace RDKit::GeneralizedSubstruct {
 
 ExtendedQueryMol::ExtendedQueryMol(const std::string &text, bool isJSON) {
   if (!isJSON) {
@@ -200,5 +199,4 @@ std::unique_ptr<ExplicitBitVect> patternFingerprintTargetMol(const ROMol &mol,
   std::unique_ptr<ExplicitBitVect> ptr(raw);
   return ptr;
 }
-}  // namespace GeneralizedSubstruct
-}  // namespace RDKit
+}  // namespace RDKit::GeneralizedSubstruct

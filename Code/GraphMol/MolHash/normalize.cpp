@@ -12,8 +12,7 @@
 #include <GraphMol/SmilesParse/SmilesWrite.h>
 #include "nmmolhash.h"
 
-namespace RDKit {
-namespace MolHash {
+namespace RDKit::MolHash {
 void Strip(RWMol *mol, unsigned int striptype) {
   // The order of these operations is significant to some degree
   // - Hydrogens should be at the end as that is the common
@@ -57,5 +56,4 @@ void SplitMolecule(RWMol *mol, std::vector<RWMol *> &molv) {
     molv.push_back(new RWMol(*wrappedmol));  // ...and make a copy
   }
 }
-}  // namespace MolHash
-}  // namespace RDKit
+}  // namespace RDKit::MolHash

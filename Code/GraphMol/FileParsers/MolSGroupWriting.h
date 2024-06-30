@@ -16,8 +16,7 @@
 #include <RDGeneral/BoostEndInclude.h>
 #include <GraphMol/SubstanceGroup.h>
 
-namespace RDKit {
-namespace SGroupWriting {
+namespace RDKit::SGroupWriting {
 typedef std::unordered_map<int, SubstanceGroup> IDX_TO_SGROUP_MAP;
 
 /* ------------------ Inlined Formatters ------------------ */
@@ -131,5 +130,4 @@ std::string FormatV3000CStateBlock(
 
 const std::string GetV3000MolFileSGroupLines(const unsigned int idx,
                                              const SubstanceGroup &sgroup);
-}  // namespace SGroupWriting
-}  // namespace RDKit
+}  // namespace RDKit::SGroupWriting

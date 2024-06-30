@@ -15,9 +15,7 @@
 
 #include "PartitionSet.h"
 
-namespace RDKit {
-
-namespace RascalMCES {
+namespace RDKit::RascalMCES {
 PartitionSet::PartitionSet(const std::vector<boost::dynamic_bitset<>> &modProd,
                            const std::vector<std::pair<int, int>> &vtxPairs,
                            const std::vector<unsigned int> &vtx1Labels,
@@ -215,5 +213,4 @@ std::ostream &operator<<(std::ostream &os, const PartitionSet &pt) {
   return os;
 }
 
-}  // namespace RascalMCES
-}  // namespace RDKit
+}  // namespace RDKit::RascalMCES

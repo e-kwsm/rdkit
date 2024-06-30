@@ -13,8 +13,7 @@
 #include <ForceField/ForceField.h>
 #include <RDGeneral/Invariant.h>
 
-namespace ForceFields {
-namespace UFF {
+namespace ForceFields::UFF {
 namespace Utils {
 double calculateCosTorsion(const RDGeom::Point3D &p1, const RDGeom::Point3D &p2,
                            const RDGeom::Point3D &p3,
@@ -267,5 +266,4 @@ double TorsionAngleContrib::getThetaDeriv(double cosTheta,
 
   return res;
 }
-}  // namespace UFF
-}  // namespace ForceFields
+}  // namespace ForceFields::UFF
