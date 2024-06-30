@@ -42,8 +42,7 @@
 
 using namespace Eigen;
 
-namespace RDKit {
-namespace Descriptors {
+namespace RDKit::Descriptors {
 namespace {
 
 MolData3Ddescriptors moldata3D;
@@ -392,5 +391,4 @@ void WHIM(const ROMol &mol, std::vector<double> &res, int confId, double th,
     getWHIM(mol, res, confId, th);
   }
 }
-}  // namespace Descriptors
-}  // namespace RDKit
+}  // namespace RDKit::Descriptors

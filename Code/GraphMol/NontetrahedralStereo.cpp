@@ -14,9 +14,7 @@
 
 #include "Chirality.h"
 
-namespace RDKit {
-
-namespace Chirality {
+namespace RDKit::Chirality {
 
 constexpr unsigned char swap_squareplanar_table[4][6] = {
     // 0  0  0  1  1  2
@@ -551,5 +549,4 @@ unsigned int getChiralPermutation(const Atom *cen, const INT_LIST &probe,
   return perm;
 }
 
-}  // namespace Chirality
-}  // namespace RDKit
+}  // namespace RDKit::Chirality

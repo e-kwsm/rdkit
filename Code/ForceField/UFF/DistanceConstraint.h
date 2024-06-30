@@ -12,9 +12,7 @@
 #define RD_UFFDISTANCECONSTRAINT_H
 #include <ForceField/DistanceConstraint.h>
 
-namespace ForceFields {
-namespace UFF {
+namespace ForceFields::UFF {
 using DistanceConstraintContrib = ForceFields::DistanceConstraintContrib;
-}  // namespace UFF
-}  // namespace ForceFields
+}  // namespace ForceFields::UFF
 #endif
