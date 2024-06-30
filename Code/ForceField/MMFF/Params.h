@@ -248,7 +248,7 @@ class RDKIT_FORCEFIELD_EXPORT MMFFChgCollection {
   /*!
     \return a pointer to the MMFFChg object, NULL on failure.
   */
-  const std::pair<int, const MMFFChg *> getMMFFChgParams(
+  std::pair<int, const MMFFChg *> getMMFFChgParams(
       const unsigned int bondType, const unsigned int iAtomType,
       const unsigned int jAtomType) const {
     int sign = -1;
@@ -604,7 +604,7 @@ class RDKIT_FORCEFIELD_EXPORT MMFFStbnCollection {
   /*!
     \return a pointer to the MMFFStbn object, NULL on failure.
   */
-  const std::pair<bool, const MMFFStbn *> getMMFFStbnParams(
+  std::pair<bool, const MMFFStbn *> getMMFFStbnParams(
       const unsigned int stretchBendType, const unsigned int bondType1,
       const unsigned int bondType2, const unsigned int iAtomType,
       const unsigned int jAtomType, const unsigned int kAtomType) const {
@@ -687,7 +687,7 @@ class RDKIT_FORCEFIELD_EXPORT MMFFDfsbCollection {
   /*!
     \return a pointer to the MMFFStbn object, NULL on failure.
   */
-  const std::pair<bool, const MMFFStbn *> getMMFFDfsbParams(
+  std::pair<bool, const MMFFStbn *> getMMFFDfsbParams(
       const unsigned int periodicTableRow1,
       const unsigned int periodicTableRow2,
       const unsigned int periodicTableRow3) const {
@@ -819,7 +819,7 @@ class RDKIT_FORCEFIELD_EXPORT MMFFTorCollection {
   /*!
     \return a pointer to the MMFFTor object, NULL on failure.
   */
-  const std::pair<const unsigned int, const MMFFTor *> getMMFFTorParams(
+  std::pair<const unsigned int, const MMFFTor *> getMMFFTorParams(
       const MMFFDefCollection *mmffDef,
       const std::pair<unsigned int, unsigned int> torType,
       const unsigned int iAtomType, const unsigned int jAtomType,

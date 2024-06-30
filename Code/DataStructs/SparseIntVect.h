@@ -162,7 +162,7 @@ class SparseIntVect {
     }
     return *this;
   }
-  const SparseIntVect<IndexType> operator&(
+  SparseIntVect<IndexType> operator&(
       const SparseIntVect<IndexType> &other) const {
     SparseIntVect<IndexType> res(*this);
     return res &= other;
@@ -200,7 +200,7 @@ class SparseIntVect {
     }
     return *this;
   }
-  const SparseIntVect<IndexType> operator|(
+  SparseIntVect<IndexType> operator|(
       const SparseIntVect<IndexType> &other) const {
     SparseIntVect<IndexType> res(*this);
     return res |= other;
@@ -234,7 +234,7 @@ class SparseIntVect {
     }
     return *this;
   }
-  const SparseIntVect<IndexType> operator+(
+  SparseIntVect<IndexType> operator+(
       const SparseIntVect<IndexType> &other) const {
     SparseIntVect<IndexType> res(*this);
     return res += other;
@@ -268,7 +268,7 @@ class SparseIntVect {
     }
     return *this;
   }
-  const SparseIntVect<IndexType> operator-(
+  SparseIntVect<IndexType> operator-(
       const SparseIntVect<IndexType> &other) const {
     SparseIntVect<IndexType> res(*this);
     return res -= other;

@@ -121,8 +121,8 @@ class RDKIT_RGROUPDECOMPOSITION_EXPORT RGroupGa : public GaBase {
 
   const RGroupDecompData &getRGroupData() const { return rGroupData; }
 
-  const vector<shared_ptr<GaOperation<RGroupDecompositionChromosome>>>
-  getOperations() const;
+  vector<shared_ptr<GaOperation<RGroupDecompositionChromosome>>> getOperations()
+      const;
 
   unsigned int numberPermutations() const { return numPermutations; }
 

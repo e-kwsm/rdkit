@@ -73,7 +73,7 @@ RDKIT_CHEMREACTIONS_EXPORT void adjustTemplates(
 RDKIT_CHEMREACTIONS_EXPORT void fixHs(ChemicalReaction &rxn);
 
 // Default adjustment parameters for matching reagents
-inline const MolOps::AdjustQueryParameters DefaultRxnAdjustParams() {
+inline MolOps::AdjustQueryParameters DefaultRxnAdjustParams() {
   MolOps::AdjustQueryParameters params;
   params.adjustDegree = false;
   params.adjustDegreeFlags = MolOps::ADJUST_IGNOREALL;
@@ -87,7 +87,7 @@ inline const MolOps::AdjustQueryParameters DefaultRxnAdjustParams() {
 // Default adjustment parameters for ChemDraw style matching of reagents
 //  -- deprecated - renamed MatchOnlyAtRgroupsAdjustParams
 //  -- this doesn't match sciquest style searching
-inline const MolOps::AdjustQueryParameters ChemDrawRxnAdjustParams() {
+inline MolOps::AdjustQueryParameters ChemDrawRxnAdjustParams() {
   BOOST_LOG(rdWarningLog)
       << " deprecated -- please use MatchOnlyAtRgroupsAdjustParams instead"
       << std::endl;
@@ -101,7 +101,7 @@ inline const MolOps::AdjustQueryParameters ChemDrawRxnAdjustParams() {
   return params;
 }
 
-inline const MolOps::AdjustQueryParameters MatchOnlyAtRgroupsAdjustParams() {
+inline MolOps::AdjustQueryParameters MatchOnlyAtRgroupsAdjustParams() {
   MolOps::AdjustQueryParameters params;
   params.adjustDegree = true;
   params.adjustDegreeFlags = MolOps::ADJUST_IGNOREDUMMIES;
