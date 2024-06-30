@@ -134,8 +134,8 @@ inline std::vector<LinkNode> getMolLinkNodes(
         --data[i];
       }
     }
-    node.bondAtoms.push_back(std::make_pair(data[3], data[4]));
-    node.bondAtoms.push_back(std::make_pair(data[5], data[6]));
+    node.bondAtoms.emplace_back(data[3], data[4]);
+    node.bondAtoms.emplace_back(data[5], data[6]);
     if (!mol.getBondBetweenAtoms(data[4], data[3]) ||
         !mol.getBondBetweenAtoms(data[6], data[5])) {
       std::ostringstream errout;
