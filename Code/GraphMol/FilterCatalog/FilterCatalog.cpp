@@ -221,7 +221,7 @@ FilterCatalog::CONST_SENTRY FilterCatalog::getFirstMatch(
       return d_entry;
     }
   }
-  return CONST_SENTRY();
+  return {};
 }
 
 const std::vector<FilterCatalog::CONST_SENTRY> FilterCatalog::getMatches(
