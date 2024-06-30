@@ -142,7 +142,7 @@ class RDKIT_RDGENERAL_EXPORT Dict {
 
   //----------------------------------------------------------
   //! \brief Access to the underlying data.
-  const DataType &getData() const { return _data; }
+  [[nodiscard]] const DataType &getData() const { return _data; }
   DataType &getData() { return _data; }
 
   //----------------------------------------------------------
@@ -163,7 +163,7 @@ class RDKIT_RDGENERAL_EXPORT Dict {
   /*!
      \return  a \c STR_VECT
   */
-  STR_VECT keys() const {
+  [[nodiscard]] STR_VECT keys() const {
     STR_VECT res;
     res.reserve(_data.size());
     for (const auto &item : _data) {
