@@ -1533,7 +1533,7 @@ yyreduce:
   mp->addBond(atomIdx1,atomIdx2,
 	      SmilesParseOps::GetUnspecifiedBondType(mp,a1,mp->getAtomWithIdx(atomIdx2)));
   mp->getBondBetweenAtoms(atomIdx1,atomIdx2)->setProp("_cxsmilesBondIdx",numBondsParsed++);
-  branchPoints.push_back({atomIdx1, (yyvsp[-1].ival)});
+  branchPoints.emplace_back(atomIdx1, (yyvsp[-1].ival));
 }
     break;
 
@@ -1557,7 +1557,7 @@ yyreduce:
   (yyvsp[-1].bond)->setProp("_cxsmilesBondIdx",numBondsParsed++);
   mp->addBond((yyvsp[-1].bond),true);
 
-  branchPoints.push_back({atomIdx1, (yyvsp[-2].ival)});
+  branchPoints.emplace_back(atomIdx1, (yyvsp[-2].ival));
 }
     break;
 
@@ -1568,7 +1568,7 @@ yyreduce:
   int atomIdx2 = mp->addAtom((yyvsp[0].atom),true,true);
   mp->addBond(atomIdx1,atomIdx2,Bond::SINGLE);
   mp->getBondBetweenAtoms(atomIdx1,atomIdx2)->setProp("_cxsmilesBondIdx",numBondsParsed++);
-  branchPoints.push_back({atomIdx1, (yyvsp[-2].ival)});
+  branchPoints.emplace_back(atomIdx1, (yyvsp[-2].ival));
 }
     break;
 
