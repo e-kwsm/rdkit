@@ -91,7 +91,7 @@ class RDKIT_DATASTRUCTS_EXPORT RealValueVect {
   std::vector<double> &getData() { return d_data; }
 
  private:
-  void initFromText(const char *pkl, const unsigned int len);
+  void initFromText(const char *pkl, unsigned int len);
   unsigned int d_length = 0;
   std::vector<double> d_data;
 

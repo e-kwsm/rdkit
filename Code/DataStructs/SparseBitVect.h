@@ -51,12 +51,12 @@ class RDKIT_DATASTRUCTS_EXPORT SparseBitVect : public BitVect {
   //! construct from a string pickle
   SparseBitVect(const std::string &pkl);
   //! construct from a text pickle
-  SparseBitVect(const char *data, const unsigned int dataLen);
+  SparseBitVect(const char *data, unsigned int dataLen);
 
   SparseBitVect &operator=(const SparseBitVect &);
   ~SparseBitVect() override { delete dp_bits; }
 
-  bool operator[](const unsigned int which) const override;
+  bool operator[](unsigned int which) const override;
   SparseBitVect operator|(const SparseBitVect &) const;
   SparseBitVect operator&(const SparseBitVect &) const;
   SparseBitVect operator^(const SparseBitVect &) const;
@@ -66,12 +66,12 @@ class RDKIT_DATASTRUCTS_EXPORT SparseBitVect : public BitVect {
   const IntSet *getBitSet() const { return dp_bits; }
 
   unsigned int getNumBits() const override { return d_size; }
-  bool setBit(const unsigned int which) override;
-  bool setBit(const IntSetIter which);
-  bool unsetBit(const unsigned int which) override;
-  bool getBit(const unsigned int which) const override;
-  bool getBit(const IntVectIter which) const;
-  bool getBit(const IntSetIter which) const;
+  bool setBit(unsigned int which) override;
+  bool setBit(IntSetIter which);
+  bool unsetBit(unsigned int which) override;
+  bool getBit(unsigned int which) const override;
+  bool getBit(IntVectIter which) const;
+  bool getBit(IntSetIter which) const;
 
   unsigned int getNumOnBits() const override {
     return static_cast<unsigned int>(dp_bits->size());
@@ -96,7 +96,7 @@ class RDKIT_DATASTRUCTS_EXPORT SparseBitVect : public BitVect {
 
  private:
   unsigned int d_size{0};
-  void _initForSize(const unsigned int size) override;
+  void _initForSize(unsigned int size) override;
   bool checkIndex(const unsigned int idx) const {
     return idx < d_size || (idx == d_size &&
                             d_size == std::numeric_limits<unsigned int>::max());

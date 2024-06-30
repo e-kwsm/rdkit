@@ -230,7 +230,7 @@ class RDKIT_CHEMREACTIONS_EXPORT ChemicalReaction : public RDProps {
     result sets.
   */
   std::vector<MOL_SPTR_VECT> runReactants(
-      const MOL_SPTR_VECT reactants, unsigned int numProducts = 1000) const;
+      MOL_SPTR_VECT reactants, unsigned int numProducts = 1000) const;
 
   //! Runs a single reactant against a single reactant template
   /*!

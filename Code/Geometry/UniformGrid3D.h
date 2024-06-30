@@ -197,7 +197,7 @@ class RDKIT_RDGEOMETRYLIB_EXPORT UniformGrid3D
       *dp_storage;  //!< storage for values at each grid point
 
   //! \brief construct from a pickle
-  void initFromText(const char *pkl, const unsigned int length);
+  void initFromText(const char *pkl, unsigned int length);
 };
 
 //! \brief writes the contents of the grid to a stream

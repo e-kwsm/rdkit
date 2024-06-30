@@ -78,10 +78,9 @@ struct RCore {
    * attachment points. Including when two user defined attachment points can
    * match the same target atom.
    */
-  [[deprecated("please use checkAllBondsToRGroupPresent")]]
-  bool checkAllBondsToAttachmentPointPresent(
-      const ROMol &mol, const int attachmentIdx,
-      const MatchVectType &mapping) const;
+  [[deprecated("please use checkAllBondsToRGroupPresent")]] bool
+  checkAllBondsToAttachmentPointPresent(const ROMol &mol, int attachmentIdx,
+                                        const MatchVectType &mapping) const;
 
   /*
    * For when onlyMatchAtRGroups = true.  Checks the query core can satisfy all
@@ -89,7 +88,7 @@ struct RCore {
    * match the same target atom.
    */
   bool checkAllBondsToRGroupPresent(
-      const ROMol &mol, const int attachmentIdx,
+      const ROMol &mol, int attachmentIdx,
       const std::vector<std::vector<int>> &targetToCoreIndices) const;
 
  private:

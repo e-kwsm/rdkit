@@ -58,11 +58,11 @@ RDKIT_FILEPARSERS_EXPORT unsigned int toUnsigned(const std::string &input,
                                                  bool acceptSpaces = true);
 RDKIT_FILEPARSERS_EXPORT double toDouble(const std::string &input,
                                          bool acceptSpaces = true);
-RDKIT_FILEPARSERS_EXPORT int toInt(const std::string_view input,
+RDKIT_FILEPARSERS_EXPORT int toInt(std::string_view input,
                                    bool acceptSpaces = true);
 RDKIT_FILEPARSERS_EXPORT unsigned int toUnsigned(std::string_view input,
                                                  bool acceptSpaces = true);
-RDKIT_FILEPARSERS_EXPORT double toDouble(const std::string_view input,
+RDKIT_FILEPARSERS_EXPORT double toDouble(std::string_view input,
                                          bool acceptSpaces = true);
 
 // gets a V3000 CTAB for a molecule
