@@ -669,7 +669,7 @@ int BFSWorkspace::smallestRingsBfs(const ROMol &mol, int root,
   INT_VECT ring;
 
   unsigned int curSize = UINT_MAX;
-  while (bfsq.size() > 0) {
+  while (!bfsq.empty()) {
     if (bfsq.size() >= RingUtils::MAX_BFSQ_SIZE) {
       std::string msg =
           "Maximum BFS search size exceeded.\nThis is likely due to a highly "
@@ -952,7 +952,7 @@ int findSSSR(const ROMol &mol, VECT_INT_VECT &res, bool includeDativeBonds) {
       // std::cerr<<" activeBonds: "<<activeBonds<<std::endl;
       // std::cerr<<"  done: ";
       // trim all bonds that connect to degree 0 and 1 atoms
-      while (changed.size() > 0) {
+      while (!changed.empty()) {
         int cand = *(changed.begin());
         changed.erase(changed.begin());
         if (!doneAts[cand]) {
@@ -974,7 +974,7 @@ int findSSSR(const ROMol &mol, VECT_INT_VECT &res, bool includeDativeBonds) {
           std::copy(d2nodes.begin(),d2nodes.end(),std::ostream_iterator<int>(std::cerr," "));
           std::cerr<<std::endl;
 #endif
-      if (d2nodes.size() > 0) {  // deal with the current degree two nodes
+      if (!d2nodes.empty()) {  // deal with the current degree two nodes
         // place to record any duplicate rings discovered from the current d2
         // nodes
         FindRings::findRingsD2nodes(mol, fragRes, invars, d2nodes, atomDegrees,
@@ -1052,7 +1052,7 @@ int findSSSR(const ROMol &mol, VECT_INT_VECT &res, bool includeDativeBonds) {
         }
       }
       boost::dynamic_bitset<> deadBonds(mol.getNumBonds());
-      while (possibleBonds.size()) {
+      while (!possibleBonds.empty()) {
         bool ringFound = FindRings::findRingConnectingAtoms(
             mol, possibleBonds[0], fragRes, invars, ringBonds, ringAtoms);
         if (!ringFound) {
