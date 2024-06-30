@@ -780,7 +780,7 @@ bool finalChiralChecks(RDGeom::PointPtrVect *positions,
     }
   }
   std::vector<int> atomsToCheck(atoms.begin(), atoms.end());
-  if (atomsToCheck.size() > 0) {
+  if (!atomsToCheck.empty()) {
     if (!_boundsFulfilled(atomsToCheck, *eargs.mmat, *positions)) {
 #ifdef DEBUG_EMBEDDING
       std::cerr << " fail3a! (" << atomsToCheck[0] << ") iter: "  //<< iter
@@ -906,7 +906,7 @@ bool embedPoints(RDGeom::PointPtrVect *positions, detail::EmbedArgs eargs,
 
       // Check if any of our chiral centers are badly out of whack.
       if (gotCoords && embedParams.enforceChirality &&
-          eargs.chiralCenters->size() > 0) {
+          !eargs.chiralCenters->empty()) {
         gotCoords =
             EmbeddingOps::checkChiralCenters(positions, eargs, embedParams);
         if (!gotCoords) {
@@ -921,7 +921,7 @@ bool embedPoints(RDGeom::PointPtrVect *positions, detail::EmbedArgs eargs,
       // redo the minimization if we have a chiral center
       // or have started from random coords.
       if (gotCoords &&
-          (eargs.chiralCenters->size() > 0 || embedParams.useRandomCoords)) {
+          (!eargs.chiralCenters->empty() || embedParams.useRandomCoords)) {
         if (ControlCHandler::getGotSignal()) {
           return false;
         }
@@ -1594,7 +1594,7 @@ void EmbedMultipleConfs(ROMol &mol, INT_VECT &res, unsigned int numConfs,
     // will first embed the molecule in four dimensions, otherwise we will
     // use 3D
     bool fourD = false;
-    if (params.useRandomCoords || chiralCenters.size() > 0) {
+    if (params.useRandomCoords || !chiralCenters.empty()) {
       fourD = true;
     }
     int numThreads = getNumThreadsToUse(params.numThreads);

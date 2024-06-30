@@ -96,7 +96,7 @@ class MarvinCMLWriter {
       if (!atom->hasProp(common_properties::dummyLabel)) {
         if (atom->hasQuery() &&
             (atom->getQuery()->getTypeLabel() == "A" ||
-             atom->getQuery()->getTypeLabel() == "" ||
+             atom->getQuery()->getTypeLabel().empty() ||
              (atom->getQuery()->getNegation() &&
               atom->getQuery()->getDescription() == "AtomAtomicNum" &&
               static_cast<ATOM_EQUALS_QUERY *>(atom->getQuery())->getVal() ==
@@ -303,7 +303,7 @@ class MarvinCMLWriter {
     if (bond->hasQuery()) {
       order = "1";
       queryType = getMarvinQueryBondSymbol(bond);
-      if (queryType == "") {
+      if (queryType.empty()) {
         throw MarvinWriterException(
             "Only 1,2,3,Aromatic, and query bonds SA, DA, and SD are supported for MarvinWriter");
       }
@@ -441,7 +441,7 @@ class MarvinCMLWriter {
         if (marvinAtom->isElement()) {
           marvinAtom->isotope = atom->getIsotope();
 
-          if (marvinAtom->radical == "" && hasNonDefaultValence(atom)) {
+          if (marvinAtom->radical.empty() && hasNonDefaultValence(atom)) {
             if (atom->getTotalDegree() == 0) {
               // Specify zero valence for elements/metals without neighbors
               // or hydrogens (degree 0) instead of writing them as radicals.
@@ -1022,8 +1022,7 @@ class MarvinCMLWriter {
 
     // make sure we have both reactants and products
 
-    if (marvinReaction->reactants.size() == 0 ||
-        marvinReaction->products.size() == 0) {
+    if (marvinReaction->reactants.empty() || marvinReaction->products.empty()) {
       return;
     }
 
@@ -1061,7 +1060,7 @@ class MarvinCMLWriter {
         ARROW_MIN_LENGTH + 2.0 * ARROW_SPACE) {
       marvinReaction->arrow.x1 = reactantRect.lowerRight.x + ARROW_SPACE;
       marvinReaction->arrow.x2 = productRect.upperLeft.x - ARROW_SPACE;
-      if (marvinReaction->agents.size() > 0) {
+      if (!marvinReaction->agents.empty()) {
         marvinReaction->arrow.y1 =
             GetArrowPerdendicularPosition(marvinReaction->agents, true);
       } else {
@@ -1077,7 +1076,7 @@ class MarvinCMLWriter {
 
     else if (reactantRect.lowerRight.y - productRect.upperLeft.y >
              ARROW_MIN_LENGTH + 2.0 * ARROW_SPACE) {
-      if (marvinReaction->agents.size() > 0) {
+      if (!marvinReaction->agents.empty()) {
         marvinReaction->arrow.x1 =
             GetArrowPerdendicularPosition(marvinReaction->agents, false);
       } else {

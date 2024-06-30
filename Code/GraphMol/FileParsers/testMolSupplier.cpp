@@ -2179,7 +2179,7 @@ void testGetItemText() {
     // supplier:
     // (this was sf.net issue 2632960)
     molB = tdtsup.getItemText(0);
-    TEST_ASSERT(molB != "");
+    TEST_ASSERT(!molB.empty());
   }
 
   {
@@ -2188,7 +2188,7 @@ void testGetItemText() {
     TEST_ASSERT(tdtsup.length() == 10);
 
     molB = tdtsup.getItemText(0);
-    TEST_ASSERT(molB != "");
+    TEST_ASSERT(!molB.empty());
 
     mol1 = tdtsup[0];
     TEST_ASSERT(mol1);
@@ -2209,7 +2209,7 @@ void testGetItemText() {
     // make sure getItemText() works on the last molecule
     // (this was sf.net issue 1874882
     molB = tdtsup.getItemText(9);
-    TEST_ASSERT(molB != "");
+    TEST_ASSERT(!molB.empty());
     TEST_ASSERT(molB.substr(0, 12) == "$SMI<Cc1n[nH");
   }
 
@@ -2225,7 +2225,7 @@ void testGetItemText() {
 
     // (this was sf.net issue 3299878
     molB = tdtsup.getItemText(9);
-    TEST_ASSERT(molB != "");
+    TEST_ASSERT(!molB.empty());
     TEST_ASSERT(molB.substr(0, 12) == "$SMI<Cc1n[nH");
     TEST_ASSERT(tdtsup.atEnd());
   }

@@ -38,7 +38,7 @@ void test1() {
   TEST_ASSERT(feq(f1.getLoc().x, 0.0));
   TEST_ASSERT(feq(f1.getLoc().y, 0.0));
   TEST_ASSERT(feq(f1.getLoc().z, 0.0));
-  TEST_ASSERT(f1.getDirs().size() == 0);
+  TEST_ASSERT(f1.getDirs().empty());
 
   f1 = ExplicitFeature<TypeMarker>(barType, fooType);
   TEST_ASSERT(f1.getFamily() == barType);
@@ -46,7 +46,7 @@ void test1() {
   TEST_ASSERT(feq(f1.getLoc().x, 0.0));
   TEST_ASSERT(feq(f1.getLoc().y, 0.0));
   TEST_ASSERT(feq(f1.getLoc().z, 0.0));
-  TEST_ASSERT(f1.getDirs().size() == 0);
+  TEST_ASSERT(f1.getDirs().empty());
 
   f1 = ExplicitFeature<TypeMarker>(barType, fooType, Point3D(1.0, 2.0, 3.0));
   TEST_ASSERT(f1.getFamily() == barType);
@@ -54,13 +54,13 @@ void test1() {
   TEST_ASSERT(feq(f1.getLoc().x, 1.0));
   TEST_ASSERT(feq(f1.getLoc().y, 2.0));
   TEST_ASSERT(feq(f1.getLoc().z, 3.0));
-  TEST_ASSERT(f1.getDirs().size() == 0);
+  TEST_ASSERT(f1.getDirs().empty());
 
   f1.setLoc(Point3D(-1.0, -2.0, -3.0));
   TEST_ASSERT(feq(f1.getLoc().x, -1.0));
   TEST_ASSERT(feq(f1.getLoc().y, -2.0));
   TEST_ASSERT(feq(f1.getLoc().z, -3.0));
-  TEST_ASSERT(f1.getDirs().size() == 0);
+  TEST_ASSERT(f1.getDirs().empty());
 
   std::cerr << "  done" << std::endl;
 }
@@ -77,7 +77,7 @@ void test2() {
   TEST_ASSERT(feq(f1.getLoc().x, 0.0));
   TEST_ASSERT(feq(f1.getLoc().y, 0.0));
   TEST_ASSERT(feq(f1.getLoc().z, 0.0));
-  TEST_ASSERT(f1.getDirs().size() == 0);
+  TEST_ASSERT(f1.getDirs().empty());
 
   f1 = ImplicitFeature<TypeMarker>(barType, fooType);
   TEST_ASSERT(f1.getFamily() == barType);
@@ -85,7 +85,7 @@ void test2() {
   TEST_ASSERT(feq(f1.getLoc().x, 0.0));
   TEST_ASSERT(feq(f1.getLoc().y, 0.0));
   TEST_ASSERT(feq(f1.getLoc().z, 0.0));
-  TEST_ASSERT(f1.getDirs().size() == 0);
+  TEST_ASSERT(f1.getDirs().empty());
 
   Point3D p1(0, 0, 0), p2(1, 0, 0), p3(0, 1, 0);
   f1.addPoint(&p1);
@@ -119,26 +119,26 @@ void test3() {
   TEST_ASSERT(f1.getFamily() == "foob");
   TEST_ASSERT(feq(f1.getLoc().x, 0.0));
   TEST_ASSERT(feq(f1.getLoc().y, 0.0));
-  TEST_ASSERT(f1.getDirs().size() == 0);
+  TEST_ASSERT(f1.getDirs().empty());
 
   f1 = LocalFeature("foo", "bar");
   TEST_ASSERT(f1.getFamily() == "foo");
   TEST_ASSERT(f1.getType() == "bar");
   TEST_ASSERT(feq(f1.getLoc().x, 0.0));
   TEST_ASSERT(feq(f1.getLoc().y, 0.0));
-  TEST_ASSERT(f1.getDirs().size() == 0);
+  TEST_ASSERT(f1.getDirs().empty());
 
   f1 = LocalFeature("grm", "grn", Point2D(1.0, 2.0));
   TEST_ASSERT(f1.getFamily() == "grm");
   TEST_ASSERT(f1.getType() == "grn");
   TEST_ASSERT(feq(f1.getLoc().x, 1.0));
   TEST_ASSERT(feq(f1.getLoc().y, 2.0));
-  TEST_ASSERT(f1.getDirs().size() == 0);
+  TEST_ASSERT(f1.getDirs().empty());
 
   f1.setLoc(Point2D(-1.0, -2.0));
   TEST_ASSERT(feq(f1.getLoc().x, -1.0));
   TEST_ASSERT(feq(f1.getLoc().y, -2.0));
-  TEST_ASSERT(f1.getDirs().size() == 0);
+  TEST_ASSERT(f1.getDirs().empty());
 
   std::cerr << "  done" << std::endl;
 }

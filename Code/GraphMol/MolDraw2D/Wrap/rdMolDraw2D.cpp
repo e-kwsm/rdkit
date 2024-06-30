@@ -312,7 +312,7 @@ void drawMoleculesHelper2(MolDraw2D &self, python::object pmols,
                           python::object pconfIds, python::object plegends) {
   std::unique_ptr<std::vector<ROMol *>> mols =
       pythonObjectToVect<ROMol *>(pmols);
-  if (mols == nullptr || !mols->size()) {
+  if (mols == nullptr || mols->empty()) {
     return;
   }
   unsigned int nThere = mols->size();
