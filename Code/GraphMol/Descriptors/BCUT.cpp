@@ -16,8 +16,7 @@
 #include "GraphMol/PartialCharges/GasteigerParams.h"
 #include <RDGeneral/types.h>
 
-namespace RDKit {
-namespace Descriptors {
+namespace RDKit::Descriptors {
 constexpr int NUM_BCUTS = 8;
 
 // diagonal elements are a property (atomic num, charge, etc)
@@ -139,7 +138,6 @@ std::vector<double> BCUT2D(const ROMol &m) {
       logp.first,      logp.second,      mr.first,        mr.second};
   return res;
 }
-}  // namespace Descriptors
-}  // namespace RDKit
+}  // namespace RDKit::Descriptors
 
 #endif
