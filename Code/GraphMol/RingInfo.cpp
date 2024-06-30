@@ -114,7 +114,7 @@ bool RingInfo::isBondInRingOfSize(unsigned int idx, unsigned int size) const {
 unsigned int RingInfo::minBondRingSize(unsigned int idx) const {
   PRECONDITION(df_init, "RingInfo not initialized");
 
-  if (idx < d_bondMembers.size() && d_bondMembers[idx].size()) {
+  if (idx < d_bondMembers.size() && !d_bondMembers[idx].empty()) {
     return d_bondRings
         .at(*std::min_element(
             d_bondMembers[idx].begin(), d_bondMembers[idx].end(),

@@ -126,7 +126,7 @@ void _MolToSDStream(std::ostream *dp_ostream, const ROMol &mol, int confId,
 
   // now write the properties
   STR_VECT_CI pi;
-  if (props && props->size() > 0) {
+  if (props && !props->empty()) {
     // check if we have any properties the user specified to write out
     // in which loop over them and write them out
     for (pi = props->begin(); pi != props->end(); pi++) {

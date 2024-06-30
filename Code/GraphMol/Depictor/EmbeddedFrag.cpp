@@ -268,7 +268,7 @@ void EmbeddedFrag::updateNewNeighs(
   auto deg = getDepictDegree(dp_mol->getAtomWithIdx(aid));
   // order the neighbors by their CIPranks, if the number is between > 0 but
   // less than 3
-  if ((d_eatoms[aid].neighs.size() > 0) &&
+  if ((!d_eatoms[aid].neighs.empty()) &&
       ((deg < 4) || (d_eatoms[aid].neighs.size() < 3))) {
     d_eatoms[aid].neighs = rankAtomsByRank(*dp_mol, d_eatoms[aid].neighs);
   } else if ((deg >= 4) && (d_eatoms[aid].neighs.size() >= 3)) {
@@ -277,7 +277,7 @@ void EmbeddedFrag::updateNewNeighs(
     d_eatoms[aid].neighs = setNbrOrder(aid, d_eatoms[aid].neighs, *dp_mol);
   }
 
-  if (d_eatoms[aid].neighs.size() > 0) {
+  if (!d_eatoms[aid].neighs.empty()) {
     if (std::find(d_attachPts.begin(), d_attachPts.end(),
                   static_cast<int>(aid)) == d_attachPts.end()) {
       d_attachPts.push_back(aid);
@@ -1136,7 +1136,7 @@ void EmbeddedFrag::mergeWithCommon(EmbeddedFrag &embObj,
                                    RDKit::INT_VECT &commAtms) {
   PRECONDITION(dp_mol, "");
   PRECONDITION(dp_mol == embObj.getMol(), "Molecule mismatch");
-  PRECONDITION(commAtms.size() >= 1, "");
+  PRECONDITION(!commAtms.empty(), "");
 
   // we already have one or more common atoms between this fragment One atom in
   // common can happen (look at issue 173)
@@ -1265,7 +1265,7 @@ void EmbeddedFrag::mergeFragsWithComm(std::list<EmbeddedFrag> &efrags) {
     for (auto efri = efrags.begin(); efri != efrags.end(); ++efri) {
       if (!efri->isDone()) {
         commAtms = this->findCommonAtoms(*efri);
-        if (commAtms.size() > 0) {
+        if (!commAtms.empty()) {
           nfri = efri;
           break;
         }
@@ -1297,7 +1297,7 @@ void EmbeddedFrag::expandEfrag(RDKit::INT_LIST &nratms,
 
   this->mergeFragsWithComm(efrags);  //, dp_mol);
 
-  while (d_attachPts.size() > 0) {
+  while (!d_attachPts.empty()) {
     auto aid = d_attachPts.front();
     auto nbrs = d_eatoms[aid].neighs;
     CHECK_INVARIANT(!nbrs.empty(), "");
@@ -1983,7 +1983,7 @@ void EmbeddedFrag::removeCollisionsBondFlip() {
   auto colls = this->findCollisions(dmat);
   std::map<int, unsigned int> doneBonds;
   unsigned int iter = 0;
-  while (iter < MAX_COLL_ITERS && colls.size()) {
+  while (iter < MAX_COLL_ITERS && !colls.empty()) {
     auto ncols = colls.size();
     if (ncols > 0) {
       // we have a collision
@@ -2083,7 +2083,7 @@ void EmbeddedFrag::removeCollisionsShortenBonds() {
     }
     // now find the path between the two ends
     auto path = RDKit::MolOps::getShortestPath(*dp_mol, aid1, aid2);
-    if (!path.size()) {
+    if (path.empty()) {
       // there's no path between the ends, so there's nothing
       // we can really do about this collision.
       colls.erase(colls.begin());
@@ -2120,7 +2120,7 @@ void EmbeddedFrag::removeCollisionsShortenBonds() {
         RDKit::INT_VECT rPath;
         RDKit::INT_INT_VECT_MAP nbrMap;
         _recurseDegTwoRingAtoms(aid1, dp_mol, rPath, nbrMap);
-        if (rPath.size() == 0) {
+        if (rPath.empty()) {
           _recurseDegTwoRingAtoms(aid2, dp_mol, rPath, nbrMap);
         }
         // now we will take each of the atoms in rPath and

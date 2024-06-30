@@ -108,7 +108,7 @@ Atom *addquery(Q *qry, std::string symbol, RWMol &mol, unsigned int idx) {
   qa->setNoImplicit(true);
   mol.replaceAtom(idx, qa.get());
   Atom *res = mol.getAtomWithIdx(idx);
-  if (symbol != "") {
+  if (!symbol.empty()) {
     res->setProp(common_properties::atomLabel, symbol);
   }
   return res;
@@ -229,7 +229,7 @@ bool parse_fragment(RWMol &mol, ptree &frag,
                   for (auto &snode : tnode.second) {
                     if (snode.first == "s") {
                       auto s = snode.second.data();
-                      if (s.size()) {
+                      if (!s.empty()) {
                         if (s[0] == 'R') {
                           if (s.size() > 1) {
                             rgroup_num = stoi(s.substr(1));
@@ -304,7 +304,7 @@ bool parse_fragment(RWMol &mol, ptree &frag,
       const bool updateLabels = true;
       const bool takeOwnership = true;
       auto idx = mol.addAtom(rd_atom, updateLabels, takeOwnership);
-      if (query_label.size()) {
+      if (!query_label.empty()) {
         if (query_label[0] == 'R') {
           rd_atom = addquery(makeAtomNullQuery(), query_label, mol, idx);
         } else if (query_label == "A") {
@@ -312,7 +312,7 @@ bool parse_fragment(RWMol &mol, ptree &frag,
         } else if (query_label == "Q") {
           rd_atom = addquery(makeQAtomQuery(), query_label, mol, idx);
         } else if (query_label == "ElementList") {
-          if (!elementlist.size()) {
+          if (elementlist.empty()) {
             BOOST_LOG(rdWarningLog)
                 << "ElementList is empty, ignoring..." << std::endl;
           } else {
@@ -751,7 +751,7 @@ std::vector<std::unique_ptr<RWMol>> MolsFromCDXMLDataStream(
       }
     }
     // Apply schemes
-    if (schemes.size()) {
+    if (!schemes.empty()) {
       std::map<unsigned int, size_t> fragments;
       std::map<unsigned int, size_t> agents;
       std::map<unsigned int, size_t> products;

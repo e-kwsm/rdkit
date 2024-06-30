@@ -195,7 +195,7 @@ std::vector<ROMOL_SPTR> replaceSubstructs(
 
   // if we didn't find any matches, there's nothing to be done here
   // simply return a list with a copy of the starting molecule
-  if (fgpMatches.size() == 0) {
+  if (fgpMatches.empty()) {
     res.push_back(ROMOL_SPTR(new ROMol(mol, false)));
     res[0]->clearComputedProps(false);
     return res;
@@ -213,7 +213,7 @@ std::vector<ROMOL_SPTR> replaceSubstructs(
     INT_VECT sortMatch = match;
     std::sort(sortMatch.begin(), sortMatch.end());
 
-    if (!replaceAll || !res.size()) {
+    if (!replaceAll || res.empty()) {
       res.push_back(ROMOL_SPTR(new ROMol(mol, false)));
     }
     RWMol *newMol = static_cast<RWMol *>(res.rbegin()->get());
@@ -258,7 +258,7 @@ std::vector<ROMOL_SPTR> replaceSubstructs(
     }
   }
 
-  if (delList.size()) {
+  if (!delList.empty()) {
     if (replaceAll) {
       // remove the atoms from the delList:
       auto *newMol = static_cast<RWMol *>(res[0].get());
@@ -292,7 +292,7 @@ ROMol *replaceSidechains(const ROMol &mol, const ROMol &coreQuery,
 
   // if we didn't find any matches, there's nothing to be done here
   // simply return null to indicate the problem
-  if (!matchFound || matchV.size() == 0) {
+  if (!matchFound || matchV.empty()) {
     return nullptr;
   }
 
@@ -377,7 +377,7 @@ ROMol *replaceCore(const ROMol &mol, const ROMol &coreQuery,
 
   // if we didn't find any matches, there's nothing to be done here
   // simply return null to indicate the problem
-  if (!matchFound || matchV.size() == 0) {
+  if (!matchFound || matchV.empty()) {
     return nullptr;
   }
 
@@ -983,7 +983,7 @@ void parseQueryDefFile(std::istream *inStream,
   while (!inStream->eof() && !inStream->fail()) {
     line++;
     tempStr = getLine(inStream);
-    if (tempStr == "" || tempStr.find(comment) == 0) {
+    if (tempStr.empty() || tempStr.find(comment) == 0) {
       continue;
     }
     boost::tokenizer<boost::char_separator<char>> tokens(tempStr, sep);
@@ -1001,7 +1001,7 @@ void parseQueryDefFile(std::istream *inStream,
     }
     boost::trim_if(qname, boost::is_any_of(" \t"));
     boost::trim_if(qval, boost::is_any_of(" \t"));
-    if (qname == "" || qval == "") {
+    if (qname.empty() || qval.empty()) {
       continue;
     }
     RWMol *m = nullptr;

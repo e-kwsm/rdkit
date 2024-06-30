@@ -1659,8 +1659,8 @@ std::string DrawMol::getAtomSymbol(const Atom &atom,
     // allenes need a C, but extend to any atom with degree 2 and both
     // bonds in a line.
     if (isLinearAtom(atom, atCds_) ||
-        (atom.getAtomicNum() != 6 || atom.getDegree() == 0 || preText.size() ||
-         postText.size())) {
+        (atom.getAtomicNum() != 6 || atom.getDegree() == 0 ||
+         !preText.empty() || !postText.empty())) {
       symbol += atom.getSymbol();
     }
     for (const std::string &se : postText) {

@@ -54,7 +54,7 @@ void test1(bool doLong = 0) {
 
     std::string pickle;
     MolPickler::pickleMol(*m, pickle);
-    TEST_ASSERT(pickle.size());
+    TEST_ASSERT(!pickle.empty());
 
     ROMol m2;
     MolPickler::molFromPickle(pickle, m2);
