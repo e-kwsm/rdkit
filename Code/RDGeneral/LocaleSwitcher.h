@@ -29,8 +29,8 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 #include <RDGeneral/export.h>
-#ifndef _RD_LOCALESWITCHER_H
-#define _RD_LOCALESWITCHER_H
+#ifndef RD_LOCALESWITCHER_H
+#define RD_LOCALESWITCHER_H
 
 namespace RDKit {
 namespace Utils {
