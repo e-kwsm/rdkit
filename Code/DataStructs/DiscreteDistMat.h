@@ -9,7 +9,7 @@
 //
 #include <RDGeneral/export.h>
 #ifndef __RD_DISCRETEDISTMAT_H__
-#define __RD_DISCRETEDISTMAT_H__
+#define RD_DISCRETEDISTMAT_H_
 #include "DiscreteValueVect.h"
 
 namespace RDKit {

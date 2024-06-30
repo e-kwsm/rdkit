@@ -9,7 +9,7 @@
 //
 #include <RDGeneral/export.h>
 #ifndef __RD_BITVECT_H__
-#define __RD_BITVECT_H__
+#define RD_BITVECT_H_
 
 #include <vector>
 #include <string>

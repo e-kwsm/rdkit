@@ -9,7 +9,7 @@
 //
 #include <RDGeneral/export.h>
 #ifndef __RD_DISCRETE_VALUE_VECT_20050124__
-#define __RD_DISCRETE_VALUE_VECT_20050124__
+#define RD_DISCRETE_VALUE_VECT_20050124_
 
 #include <boost/smart_ptr.hpp>
 #include <string>

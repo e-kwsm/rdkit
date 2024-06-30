@@ -9,7 +9,7 @@
 //
 #include <RDGeneral/export.h>
 #ifndef __RD_BASE64_H__
-#define __RD_BASE64_H__
+#define RD_BASE64_H_
 /*! \file base64.h
 
   \brief Functionality for base64 encoding/decoding

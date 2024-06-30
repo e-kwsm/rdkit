@@ -14,7 +14,7 @@
 */
 #include <RDGeneral/export.h>
 #ifndef __BITVECTS_H__
-#define __BITVECTS_H__
+#define BITVECTS_H_
 
 #include "BitVect.h"
 #include "ExplicitBitVect.h"
