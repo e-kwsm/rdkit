@@ -35,14 +35,16 @@ class RDKIT_MOLCATALOG_EXPORT MolCatalogEntry : public RDCatalog::CatalogEntry {
 
   ~MolCatalogEntry() override;
 
-  std::string getDescription() const override { return d_descrip; }
+  [[nodiscard]] std::string getDescription() const override {
+    return d_descrip;
+  }
 
   void setDescription(std::string val) { d_descrip = val; }
 
-  unsigned int getOrder() const { return d_order; }
+  [[nodiscard]] unsigned int getOrder() const { return d_order; }
   void setOrder(unsigned int order) { d_order = order; }
 
-  const ROMol *getMol() const { return dp_mol; }
+  [[nodiscard]] const ROMol *getMol() const { return dp_mol; }
   //! hold the provided ROMol
   /*!
     The MolCatalogEntry takes ownership of the pointer.
@@ -81,7 +83,9 @@ class RDKIT_MOLCATALOG_EXPORT MolCatalogEntry : public RDCatalog::CatalogEntry {
     return dp_props->hasVal(key);
   }
   //! \overload
-  bool hasProp(const std::string &key) const { return hasProp(key.c_str()); }
+  [[nodiscard]] bool hasProp(const std::string &key) const {
+    return hasProp(key.c_str());
+  }
 
   //! clears a named property
   void clearProp(const char *key) const { dp_props->clearVal(key); }
@@ -91,7 +95,7 @@ class RDKIT_MOLCATALOG_EXPORT MolCatalogEntry : public RDCatalog::CatalogEntry {
   //! serializes this entry to the stream
   void toStream(std::ostream &ss) const override;
   //! returns a serialized (pickled) form of the entry
-  std::string Serialize() const override;
+  [[nodiscard]] std::string Serialize() const override;
   //! initialize from a stream containing a pickle
   void initFromStream(std::istream &ss) override;
   //! initialize from a string containing a pickle
