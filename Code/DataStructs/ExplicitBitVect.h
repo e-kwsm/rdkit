@@ -9,8 +9,8 @@
 //  of the RDKit source tree.
 //
 #include <RDGeneral/export.h>
-#ifndef __RD_EXPLICITBITVECTS_H__
-#define __RD_EXPLICITBITVECTS_H__
+#ifndef RD_EXPLICITBITVECTS_H__
+#define RD_EXPLICITBITVECTS_H_
 
 #include <RDGeneral/BoostStartInclude.h>
 #include <boost/dynamic_bitset.hpp>
