@@ -17,8 +17,7 @@
 #include <string>
 #include <memory>
 
-namespace RDKit {
-namespace Deprotect {
+namespace RDKit::Deprotect {
 /*! Data for Deprotecting molecules
 
  Deprotects are described as reactions that remove the protecting
@@ -100,6 +99,6 @@ RDKIT_DEPROTECT_EXPORT std::unique_ptr<ROMol> deprotect(
 RDKIT_DEPROTECT_EXPORT bool deprotectInPlace(
     RWMol &mol,
     const std::vector<DeprotectData> &deprotections = getDeprotections());
-}  // namespace Deprotect
-}  // namespace RDKit
+}  // namespace RDKit::Deprotect
+
 #endif
