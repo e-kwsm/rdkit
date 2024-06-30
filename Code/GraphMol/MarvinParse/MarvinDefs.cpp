@@ -1148,6 +1148,7 @@ MarvinBond *MarvinMolBase::findBondByRef(const std::string &bondId) {
 
 const std::vector<std::string> MarvinMolBase::getBondList() const {
   std::vector<std::string> bondList;
+  bondList.reserve(bonds.size());
   for (auto bond : bonds) {
     bondList.push_back(bond->id);
   }
@@ -1157,6 +1158,7 @@ const std::vector<std::string> MarvinMolBase::getBondList() const {
 
 const std::vector<std::string> MarvinMolBase::getAtomList() const {
   std::vector<std::string> atomList;
+  atomList.reserve(atoms.size());
   for (auto atom : atoms) {
     atomList.push_back(atom->id);
   }

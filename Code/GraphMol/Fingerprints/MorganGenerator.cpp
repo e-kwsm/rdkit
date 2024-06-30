@@ -18,6 +18,7 @@
 #include <RDGeneral/BoostStartInclude.h>
 #include <boost/dynamic_bitset.hpp>
 #include <tuple>
+#include <utility>
 #include <RDGeneral/BoostEndInclude.h>
 
 #include <GraphMol/Fingerprints/FingerprintUtil.h>
