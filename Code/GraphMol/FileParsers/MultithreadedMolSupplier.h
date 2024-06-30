@@ -57,15 +57,15 @@ class RDKIT_FILEPARSERS_EXPORT MultithreadedMolSupplier : public MolSupplier {
   bool atEnd() override;
 
   //! included for the interface, always returns false
-  bool getEOFHitOnRead() const { return false; }
+  [[nodiscard]] bool getEOFHitOnRead() const { return false; }
 
   //! returns the record id of the last extracted item
   //! Note: d_LastRecordId = 0, initially therefore the value 0 is returned
   //! if and only if the function is called before extracting the first
   //! record
-  unsigned int getLastRecordId() const;
+  [[nodiscard]] unsigned int getLastRecordId() const;
   //! returns the text block for the last extracted item
-  std::string getLastItemText() const;
+  [[nodiscard]] std::string getLastItemText() const;
 
   //! sets the callback to be applied to molecules before they are returned by
   ///! the next() function
@@ -125,7 +125,7 @@ class RDKIT_FILEPARSERS_EXPORT MultithreadedMolSupplier : public MolSupplier {
   //! not yet implemented
   void reset() override;
   void init() override = 0;
-  virtual bool getEnd() const = 0;
+  [[nodiscard]] virtual bool getEnd() const = 0;
   //! extracts next record from the input file or stream
   virtual bool extractNextRecord(std::string &record, unsigned int &lineNum,
                                  unsigned int &index) = 0;
@@ -174,7 +174,7 @@ class RDKIT_FILEPARSERS_EXPORT MultithreadedMolSupplier : public MolSupplier {
   MultithreadedMolSupplier() {}
 
   //! included for the interface, always returns false
-  bool getEOFHitOnRead() const {
+  [[nodiscard]] bool getEOFHitOnRead() const {
     if (dp_supplier) {
       return static_cast<ContainedType *>(dp_supplier.get())->getEOFHitOnRead();
     }
@@ -185,12 +185,12 @@ class RDKIT_FILEPARSERS_EXPORT MultithreadedMolSupplier : public MolSupplier {
   //! Note: d_LastRecordId = 0, initially therefore the value 0 is returned
   //! if and only if the function is called before extracting the first
   //! record
-  unsigned int getLastRecordId() const {
+  [[nodiscard]] unsigned int getLastRecordId() const {
     PRECONDITION(dp_supplier, "no supplier");
     return static_cast<ContainedType *>(dp_supplier.get())->getLastRecordId();
   }
   //! returns the text block for the last extracted item
-  std::string getLastItemText() const {
+  [[nodiscard]] std::string getLastItemText() const {
     PRECONDITION(dp_supplier, "no supplier");
     return static_cast<ContainedType *>(dp_supplier.get())->getLastItemText();
   }
