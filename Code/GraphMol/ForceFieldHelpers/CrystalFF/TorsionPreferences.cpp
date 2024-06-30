@@ -28,8 +28,7 @@ typedef boost::tokenizer<boost::char_separator<char>> tokenizer;
 #include <boost/flyweight/key_value.hpp>
 #include <boost/flyweight/no_tracking.hpp>
 
-namespace ForceFields {
-namespace CrystalFF {
+namespace ForceFields::CrystalFF {
 using namespace RDKit;
 
 // the "macrocycle" patterns for ETKDGv3 use a minimum ring size of 9
@@ -376,5 +375,4 @@ void getExperimentalTorsions(const RDKit::ROMol &mol, CrystalFFDetails &details,
                           useBasicKnowledge, version, verbose);
 }
 
-}  // namespace CrystalFF
-}  // namespace ForceFields
+}  // namespace ForceFields::CrystalFF

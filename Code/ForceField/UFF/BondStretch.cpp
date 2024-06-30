@@ -16,8 +16,7 @@
 #include <RDGeneral/Invariant.h>
 #include <RDGeneral/utils.h>
 
-namespace ForceFields {
-namespace UFF {
+namespace ForceFields::UFF {
 namespace Utils {
 double calcBondRestLength(double bondOrder, const AtomicParams *end1Params,
                           const AtomicParams *end2Params) {
@@ -99,5 +98,4 @@ void BondStretchContrib::getGrad(double *pos, double *grad) const {
     grad[3 * d_end2Idx + i] -= dGrad;
   }
 }
-}  // namespace UFF
-}  // namespace ForceFields
+}  // namespace ForceFields::UFF

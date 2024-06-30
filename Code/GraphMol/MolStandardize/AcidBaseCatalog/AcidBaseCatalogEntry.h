@@ -18,8 +18,7 @@
 #include "AcidBaseCatalogParams.h"
 #include <GraphMol/RDKitBase.h>
 
-namespace RDKit {
-namespace MolStandardize {
+namespace RDKit::MolStandardize {
 
 class RDKIT_MOLSTANDARDIZE_EXPORT AcidBaseCatalogEntry
     : public RDCatalog::CatalogEntry {
@@ -50,7 +49,6 @@ class RDKIT_MOLSTANDARDIZE_EXPORT AcidBaseCatalogEntry
 
 };  // class AcidBaseCatalogEntry
 
-}  // namespace MolStandardize
-}  // namespace RDKit
+}  // namespace RDKit::MolStandardize
 
 #endif
