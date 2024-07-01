@@ -258,7 +258,8 @@ unsigned int CalcBitmapNumBitsInCommon(const unsigned char *afp,
 
 int NumOnBitsInCommon(const ExplicitBitVect &bv1, const ExplicitBitVect &bv2) {
   // Don't try this at home, we (hope we) know what we're doing
-  const unsigned char *afp, *bfp;
+  const unsigned char* afp;
+  const unsigned char* bfp;
   unsigned int nBytes;
   if (EBVToBitmap(bv1, afp, nBytes) && EBVToBitmap(bv2, bfp, nBytes)) {
     unsigned int result = CalcBitmapNumBitsInCommon(afp, bfp, nBytes);
