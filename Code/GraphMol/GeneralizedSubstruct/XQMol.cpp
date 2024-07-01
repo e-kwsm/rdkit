@@ -153,10 +153,9 @@ ExtendedQueryMol createExtendedQueryMol(const RWMol &mol, bool doEnumeration,
         return {std::make_unique<RWMol>(*lmol)};
       }  // return the tautomers
         return {std::move(tq)};
-
-    } else {
-      return {std::make_unique<RWMol>(*lmol)};
     }
+    return {std::make_unique<RWMol>(*lmol)};
+
   } else {
     MolBundle lbndl;
     for (auto &bmol : bndl.getMols()) {
