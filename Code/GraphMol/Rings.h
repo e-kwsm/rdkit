@@ -1,3 +1,6 @@
+#ifndef LLVM_CODE_GRAPHMOL_RINGS_H
+#define LLVM_CODE_GRAPHMOL_RINGS_H
+
 //
 //  Copyright (C) 2004-2026 Greg Landrum and other RDKit contributors
 //
@@ -15,15 +18,15 @@
 #ifndef RDRINGS_H
 #define RDRINGS_H
 
-#include <vector>
-#include <map>
 #include <boost/dynamic_bitset_fwd.hpp>
+#include <map>
+#include <vector>
 
 struct RDL_cycle;
 
 namespace RDKit {
 class ROMol;
-};
+}  // namespace RDKit
 
 namespace RingUtils {
 typedef std::vector<int> INT_VECT;
@@ -96,5 +99,7 @@ void normalizeRing(std::vector<int> &ring);
 std::vector<int> rdlCycleToAtomRing(RDL_cycle *cycle);
 
 }  // namespace RingUtils
+
+#endif
 
 #endif
