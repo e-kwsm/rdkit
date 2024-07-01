@@ -38,9 +38,15 @@ pathMat: the path matrix, should be dim x dim
 -----------------------------------------------*/
 template <class T>
 void FloydWarshall(int dim, T *adjMat, int *pathMat) {
-  int k, i, j;
-  T *currD, *lastD, *tTemp;
-  int *currP, *lastP, *iTemp;
+  int k;
+  int i;
+  int j;
+  T *currD;
+  T *lastD;
+  T *tTemp;
+  int *currP;
+  int *lastP;
+  int *iTemp;
 
   currD = new T[dim * dim];
   currP = new int[dim * dim];
@@ -102,8 +108,12 @@ void FloydWarshall(int dim, T *adjMat, int *pathMat) {
 template <class T>
 void FloydWarshall(int dim, T *adjMat, int *pathMat,
                    const std::vector<int> &activeAtoms) {
-  T *currD, *lastD, *tTemp;
-  int *currP, *lastP, *iTemp;
+  T *currD;
+  T *lastD;
+  T *tTemp;
+  int *currP;
+  int *lastP;
+  int *iTemp;
 
   currD = new T[dim * dim];
   currP = new int[dim * dim];
@@ -187,7 +197,8 @@ double *getDistanceMat(const ROMol &mol, bool useBO, bool useAtomWts,
   }
   int nAts = mol.getNumAtoms();
   auto *dMat = new double[nAts * nAts];
-  int i, j;
+  int i;
+  int j;
   // initialize off diagonals to LOCAL_INF and diagonals to 0
   for (i = 0; i < nAts * nAts; i++) {
     dMat[i] = LOCAL_INF;
@@ -196,7 +207,8 @@ double *getDistanceMat(const ROMol &mol, bool useBO, bool useAtomWts,
     dMat[i * nAts + i] = 0.0;
   }
 
-  ROMol::EDGE_ITER firstB, lastB;
+  ROMol::EDGE_ITER firstB;
+  ROMol::EDGE_ITER lastB;
   boost::tie(firstB, lastB) = mol.getEdges();
   while (firstB != lastB) {
     const Bond *bond = mol[*firstB];
@@ -241,7 +253,8 @@ double *getDistanceMat(const ROMol &mol, const std::vector<int> &activeAtoms,
   const int nAts = rdcast<int>(activeAtoms.size());
 
   auto *dMat = new double[nAts * nAts];
-  int i, j;
+  int i;
+  int j;
   // initialize off diagonals to LOCAL_INF and diagonals to 0
   for (i = 0; i < nAts * nAts; i++) {
     dMat[i] = LOCAL_INF;
@@ -348,7 +361,8 @@ INT_LIST getShortestPath(const ROMol &mol, int aid1, int aid2) {
 
   bfsQ.push_back(aid1);
   bool done = false;
-  ROMol::ADJ_ITER nbrIdx, endNbrs;
+  ROMol::ADJ_ITER nbrIdx;
+  ROMol::ADJ_ITER endNbrs;
   while ((!done) && (bfsQ.size() > 0)) {
     int curAid = bfsQ.front();
     boost::tie(nbrIdx, endNbrs) =

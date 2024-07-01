@@ -113,7 +113,8 @@ void ActivatePartitions(unsigned int nAtoms, int *order, int *count,
   PRECONDITION(count, "bad pointer");
   PRECONDITION(next, "bad pointer");
   PRECONDITION(changed, "bad pointer");
-  unsigned int i, j;
+  unsigned int i;
+  unsigned int j;
   activeset = -1;
   for (i = 0; i < nAtoms; i++) {
     next[i] = -2;
@@ -385,7 +386,8 @@ bool hasRingNbr(const ROMol &mol, const Atom *at) {
 void getNbrs(const ROMol &mol, const Atom *at, int *ids) {
   PRECONDITION(at, "bad pointer");
   PRECONDITION(ids, "bad pointer");
-  ROMol::ADJ_ITER beg, end;
+  ROMol::ADJ_ITER beg;
+  ROMol::ADJ_ITER end;
   boost::tie(beg, end) = mol.getAtomNeighbors(at);
   unsigned int idx = 0;
   while (beg != end) {
@@ -471,7 +473,8 @@ void getBonds(const ROMol &mol, const Atom *at, std::vector<bondholder> &nbrs,
               bool includeChirality,
               const std::vector<Canon::canon_atom> &atoms) {
   PRECONDITION(at, "bad pointer");
-  ROMol::OEDGE_ITER beg, end;
+  ROMol::OEDGE_ITER beg;
+  ROMol::OEDGE_ITER end;
   boost::tie(beg, end) = mol.getAtomBonds(at);
   while (beg != end) {
     const Bond *bond = (mol)[*beg];
@@ -485,7 +488,8 @@ void getBonds(const ROMol &mol, const Atom *at, std::vector<bondholder> &nbrs,
 void getChiralBonds(const ROMol &mol, const Atom *at,
                     std::vector<bondholder> &nbrs) {
   PRECONDITION(at, "bad pointer");
-  ROMol::OEDGE_ITER beg, end;
+  ROMol::OEDGE_ITER beg;
+  ROMol::OEDGE_ITER end;
   boost::tie(beg, end) = mol.getAtomBonds(at);
   while (beg != end) {
     const Bond *bond = (mol)[*beg];
@@ -715,7 +719,8 @@ void updateAtomNeighborNumSwaps(
     std::list<unsigned int> neighborsSeen;
     bool tooManySimilarNbrs = false;
     if (isRingAtom && atoms[nbrIdx].atom->getChiralTag() != 0) {
-      std::vector<int> ref, probe;
+      std::vector<int> ref;
+      std::vector<int> probe;
       for (unsigned i = 0; i < atoms[nbrIdx].degree; ++i) {
         auto nbrNbrId =
             atoms[nbrIdx].nbrIds[i];  // id of the neighbor's neighbor
