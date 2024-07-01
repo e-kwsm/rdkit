@@ -95,7 +95,7 @@ class RDKIT_CHEMREACTIONS_EXPORT EnumerateLibraryBase {
 
   //! reset the enumeration to the beginning.
   void reset() {
-    if (m_initialEnumerator.get()) {
+    if (m_initialEnumerator) {
       m_enumerator.reset(m_initialEnumerator->copy());
     }
   }
