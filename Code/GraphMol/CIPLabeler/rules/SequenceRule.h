@@ -39,7 +39,7 @@ class SequenceRule {
 
   virtual ~SequenceRule();
 
-  Descriptor getBondLabel(const Edge *edge) const;
+  static Descriptor getBondLabel(const Edge *edge);
 
   int getComparision(const Edge *a, const Edge *b) const;
 
@@ -61,7 +61,7 @@ class SequenceRule {
   std::unique_ptr<const Sort> dp_sorter = nullptr;
 
  private:
-  bool areUpEdges(Node *aNode, Node *bNode, Edge *aEdge, Edge *bEdge) const;
+  static bool areUpEdges(Node *aNode, Node *bNode, Edge *aEdge, Edge *bEdge);
 };
 
 }  // namespace CIPLabeler

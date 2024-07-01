@@ -1805,7 +1805,7 @@ void HBond::addVectElements(atomtype type,
   }
 }
 
-void HBond::normalize(double &x, double &y, double &z) const {
+void HBond::normalize(double &x, double &y, double &z) {
   double temp = x * x + y * y + z * z;
   temp = sqrt(temp);
   x /= temp;
@@ -1814,7 +1814,7 @@ void HBond::normalize(double &x, double &y, double &z) const {
 }
 
 double HBond::angle(double x1, double y1, double z1, double x2, double y2,
-                    double z2) const {
+                    double z2) {
   double dotProd = x1 * x2 + y1 * y2 + z1 * z2;
   if (dotProd < -1.0) {
     dotProd = -1.0;

@@ -102,7 +102,7 @@ struct RCore {
   bool checkedForTautomerQuery = false;
   std::shared_ptr<TautomerQuery> matchingTautomerQuery = nullptr;
 
-  void replaceCoreAtom(RWMol &mol, Atom &atom, const Atom &other) const;
+  static void replaceCoreAtom(RWMol &mol, Atom &atom, const Atom &other);
 
   // Convert a matching molecule index to a core index
   int matchingIndexToCoreIndex(int matchingIndex) const;

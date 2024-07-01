@@ -82,8 +82,9 @@ accordingly.
 
   const MetalDisconnectorOptions d_options;
 
-  void adjust_charges(RDKit::RWMol &mol, std::map<int, NonMetal> &nonMetals,
-                      std::map<int, int> &metalChargeExcess);
+  static void adjust_charges(RDKit::RWMol &mol,
+                             std::map<int, NonMetal> &nonMetals,
+                             std::map<int, int> &metalChargeExcess);
   // Remove any dummy atoms that are bonded to a metal and have the ENDPTS
   // prop.  These are assumed to marking a haptic bond from the aotms in
   // ENDPTS to the metal, e.g. in ferrocene.

@@ -24,7 +24,7 @@ class GA_EXPORT IntegerStringChromosomePolicy {
 
   int mutate(int pos, int currentValue) const;
   int initialize(int pos) const;
-  bool isAllowSwitch() { return false; }
+  static bool isAllowSwitch() { return false; }
 
   void setMax(int max);
   void setMax(int pos, int max);

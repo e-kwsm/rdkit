@@ -69,7 +69,7 @@ class DrawMolMCHCircleAndLine : public DrawMolMCH {
   void adjustLineEndForHighlight(int at_idx, Point2D p1, Point2D &p2) const;
   void calcSymbolEllipse(unsigned int atomIdx, Point2D &centre, double &xradius,
                          double &yradius) const;
-  void fixHighlightJoinProblems(
+  static void fixHighlightJoinProblems(
       std::vector<std::unique_ptr<DrawShape>> &atomHighlights,
       std::vector<std::unique_ptr<DrawShape>> &bondHighlights);
 };

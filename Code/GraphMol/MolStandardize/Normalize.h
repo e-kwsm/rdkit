@@ -86,8 +86,8 @@ class RDKIT_MOLSTANDARDIZE_EXPORT Normalizer {
   ROMOL_SPTR normalizeFragment(
       const ROMol &mol,
       const std::vector<std::shared_ptr<ChemicalReaction>> &transforms) const;
-  SmilesMolPair applyTransform(const ROMOL_SPTR &mol,
-                               ChemicalReaction &rule) const;
+  static SmilesMolPair applyTransform(const ROMOL_SPTR &mol,
+                                      ChemicalReaction &rule);
 
 };  // Normalizer class
 

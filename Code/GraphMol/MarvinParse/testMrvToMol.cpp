@@ -134,7 +134,7 @@ class MrvTests {
           bondCount(bondCountInit) {};
   };
 
-  RWMol *GetMolv1(const MolTest *molTest) {
+  static RWMol *GetMolv1(const MolTest *molTest) {
     std::string rdbase = getenv("RDBASE");
     std::string fName =
         rdbase + "/Code/GraphMol/MarvinParse/test_data/" + molTest->fileName;
@@ -147,7 +147,7 @@ class MrvTests {
     }
   }
 
-  ChemicalReaction *GetReactionv1(const RxnTest *rxnTest) {
+  static ChemicalReaction *GetReactionv1(const RxnTest *rxnTest) {
     std::string rdbase = getenv("RDBASE");
     std::string fName =
         rdbase + "/Code/GraphMol/MarvinParse/test_data/" + rxnTest->fileName;
@@ -160,7 +160,7 @@ class MrvTests {
     throw BadFileException("Could not parse the MRV block");
   }
 
-  std::unique_ptr<RWMol> GetMolv2(const MolTest *molTest) {
+  static std::unique_ptr<RWMol> GetMolv2(const MolTest *molTest) {
     std::string rdbase = getenv("RDBASE");
     std::string fName =
         rdbase + "/Code/GraphMol/MarvinParse/test_data/" + molTest->fileName;
@@ -176,7 +176,8 @@ class MrvTests {
     }
   }
 
-  std::unique_ptr<ChemicalReaction> GetReactionv2(const RxnTest *rxnTest) {
+  static std::unique_ptr<ChemicalReaction> GetReactionv2(
+      const RxnTest *rxnTest) {
     std::string rdbase = getenv("RDBASE");
     std::string fName =
         rdbase + "/Code/GraphMol/MarvinParse/test_data/" + rxnTest->fileName;
@@ -192,7 +193,7 @@ class MrvTests {
     throw BadFileException("Could not parse the MRV block");
   }
 
-  std::string GetExpectedValue(std::string expectedFileName) {
+  static std::string GetExpectedValue(std::string expectedFileName) {
     std::stringstream expectedMolStr;
     std::ifstream in;
     in.open(expectedFileName);
@@ -915,7 +916,7 @@ class MrvTests {
     return;
   }
 
-  void testPrecision() {
+  static void testPrecision() {
     BOOST_LOG(rdInfoLog) << "testing marvin writing" << std::endl;
     std::string rdbase = getenv("RDBASE");
     std::string fName =
