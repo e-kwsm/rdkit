@@ -1,3 +1,6 @@
+#ifndef LLVM_CODE_RDGENERAL_UTILS_H
+#define LLVM_CODE_RDGENERAL_UTILS_H
+
 //
 //  Copyright (C) 2002-2020 Greg Landrum and Rational Discovery LLC
 //
@@ -13,10 +16,10 @@
 #define RD_UTILS_H
 
 #include "types.h"
-#include <RDGeneral/Invariant.h>
-#include <RDGeneral/BoostStartInclude.h>
-#include <boost/random.hpp>
 #include <RDGeneral/BoostEndInclude.h>
+#include <RDGeneral/BoostStartInclude.h>
+#include <RDGeneral/Invariant.h>
+#include <boost/random.hpp>
 
 namespace RDKit {
 const int NUM_PRIMES_AVAIL =
@@ -88,9 +91,8 @@ inline double int_pow(double x) {
   double half = int_pow<n / 2>(x);
   if (n % 2 == 0) {  // even
     return half * half;
-  } else {
-    return half * half * x;
   }
+  return half * half * x;
 }
 
 template <>
@@ -102,5 +104,7 @@ template <>
 inline double int_pow<1>(double x) {
   return x;  // this does a series of muls
 }
+
+#endif
 
 #endif
