@@ -1,3 +1,6 @@
+#ifndef LLVM_CODE_GRAPHMOL_SMILESPARSE_SMILESPARSEOPS_H
+#define LLVM_CODE_GRAPHMOL_SMILESPARSE_SMILESPARSEOPS_H
+
 //
 //  Copyright (C) 2001-2022 Greg Landrum and other RDKit contributors
 //
@@ -67,5 +70,7 @@ constexpr auto _needsDetectBondStereo = "_needsDetectBondStereo";
 constexpr auto _needsDetectAtomStereo = "_needsDetectAtomStereo";
 }  // namespace detail
 }  // namespace SmilesParseOps
+
+#endif
 
 #endif

@@ -1,3 +1,6 @@
+#ifndef LLVM_CODE_GRAPHMOL_CANON_H
+#define LLVM_CODE_GRAPHMOL_CANON_H
+
 //
 //  Copyright (C) 2004-2022 Greg Landrum and other RDKit contributors
 //
@@ -11,10 +14,10 @@
 #ifndef RD_CANON_H
 #define RD_CANON_H
 
-#include <RDGeneral/BoostStartInclude.h>
-#include <tuple>
-#include <boost/dynamic_bitset.hpp>
 #include <RDGeneral/BoostEndInclude.h>
+#include <RDGeneral/BoostStartInclude.h>
+#include <boost/dynamic_bitset.hpp>
+#include <tuple>
 
 namespace RDKit {
 class ROMol;
@@ -139,4 +142,6 @@ RDKIT_GRAPHMOL_EXPORT void canonicalizeEnhancedStereo(
 
 }  // end of namespace Canon
 }  // end of namespace RDKit
+#endif
+
 #endif
