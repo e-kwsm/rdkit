@@ -39,8 +39,8 @@ class RDKIT_RDGENERAL_EXPORT Dict {
     std::string key;
     RDValue val;
 
-    Pair() : key(), val() {}
-    explicit Pair(std::string s) : key(std::move(s)), val() {}
+    Pair() {}
+    explicit Pair(std::string s) : key(std::move(s)) {}
     Pair(std::string s, const RDValue &v) : key(std::move(s)), val(v) {}
   };
 
