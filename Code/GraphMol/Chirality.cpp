@@ -17,7 +17,6 @@
 #include <GraphMol/Atropisomers.h>
 #include <RDGeneral/Invariant.h>
 #include <RDGeneral/RDLog.h>
-#include <RDGeneral/Ranking.h>
 #include <RDGeneral/types.h>
 #include <RDGeneral/utils.h>
 
