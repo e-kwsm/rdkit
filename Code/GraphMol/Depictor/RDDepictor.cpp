@@ -28,8 +28,6 @@
 #include <GraphMol/MolAlign/AlignMolecules.h>
 #include <GraphMol/MolTransforms/MolTransforms.h>
 #include <GraphMol/Substruct/SubstructUtils.h>
-#include <GraphMol/Chirality.h>
-#include "EmbeddedFrag.h"
 #include "DepictUtils.h"
 #include <iostream>
 #include <boost/dynamic_bitset.hpp>
