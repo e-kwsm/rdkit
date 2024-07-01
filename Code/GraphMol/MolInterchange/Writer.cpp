@@ -456,8 +456,7 @@ void addMol(const T &imol, rj::Value &rjMol, rj::Document &doc,
   }
   if (mol.hasProp(common_properties::_Name)) {
     rj::Value nmv;
-    const std::string &nm =
-        mol.getProp<std::string>(common_properties::_Name).c_str();
+    const std::string &nm = mol.getProp<std::string>(common_properties::_Name);
     nmv.SetString(nm.c_str(), nm.size(), doc.GetAllocator());
     rjMol.AddMember("name", nmv, doc.GetAllocator());
   }

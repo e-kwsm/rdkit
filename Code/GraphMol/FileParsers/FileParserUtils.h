@@ -50,7 +50,7 @@ T stripSpacesAndCast(std::string_view input, bool acceptSpaces = false) {
 }
 template <typename T>
 T stripSpacesAndCast(const std::string &input, bool acceptSpaces = false) {
-  return stripSpacesAndCast<T>(std::string_view(input.c_str()), acceptSpaces);
+  return stripSpacesAndCast<T>(std::string_view(input), acceptSpaces);
 }
 RDKIT_FILEPARSERS_EXPORT int toInt(const std::string &input,
                                    bool acceptSpaces = true);
