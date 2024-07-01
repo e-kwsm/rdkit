@@ -2211,7 +2211,7 @@ Atom *ParseV3000AtomSymbol(std::string_view token, unsigned int &line,
 bool splitAssignToken(std::string_view token, std::string &prop,
                       std::string_view &val) {
   auto equalsLoc = token.find("=");
-  if (equalsLoc == token.npos || equalsLoc != token.rfind("=")) {
+  if (equalsLoc == std::string_view::npos || equalsLoc != token.rfind("=")) {
     return false;
   }
   prop = token.substr(0, equalsLoc);
