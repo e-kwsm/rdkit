@@ -20,7 +20,6 @@
 #include <RDGeneral/BoostEndInclude.h>
 #include <cstring>
 #include <cassert>
-#include <cstring>
 #include <vector>
 
 // #define VERBOSE_CANON 1
