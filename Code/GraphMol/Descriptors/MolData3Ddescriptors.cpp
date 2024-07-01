@@ -118,7 +118,8 @@ int MolData3Ddescriptors::GetPrincipalQuantumNumber(int AtomicNum) {
   }
   if (AtomicNum <= 36) {
     return 4;
-  } else if (AtomicNum <= 54) {
+  }
+  if (AtomicNum <= 54) {
     return 5;
   } else if (AtomicNum <= 86) {
     return 6;
