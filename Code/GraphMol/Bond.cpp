@@ -9,9 +9,9 @@
 //
 #include "Bond.h"
 #include "Atom.h"
+#include "Atropisomers.h"
 #include "ROMol.h"
 #include <RDGeneral/Invariant.h>
-#include "Atropisomers.h"
 
 namespace RDKit {
 
@@ -82,7 +82,8 @@ unsigned int Bond::getOtherAtomIdx(const unsigned int thisIdx) const {
                "bad index");
   if (d_beginAtomIdx == thisIdx) {
     return d_endAtomIdx;
-  } else if (d_endAtomIdx == thisIdx) {
+  }
+  if (d_endAtomIdx == thisIdx) {
     return d_beginAtomIdx;
   }
   // we cannot actually get down here
