@@ -149,8 +149,8 @@ class RDKIT_QUERY_EXPORT Query {
  protected:
   MatchFuncArgType d_val = 0;
   MatchFuncArgType d_tol = 0;
-  std::string d_description = "";
-  std::string d_queryType = "";
+  std::string d_description;
+  std::string d_queryType;
   CHILD_VECT d_children;
   bool df_negate{false};
   bool (*d_matchFunc)(MatchFuncArgType);
