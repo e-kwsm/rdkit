@@ -18,7 +18,7 @@ BinaryStringChromosomePolicy::BinaryStringChromosomePolicy(
 
 BinaryStringChromosomePolicy::~BinaryStringChromosomePolicy() {}
 
-bool BinaryStringChromosomePolicy::mutate(int pos, bool currentValue) const {
+bool BinaryStringChromosomePolicy::mutate(int pos, bool currentValue) {
   (void)pos;  // not used
   return !currentValue;
 }

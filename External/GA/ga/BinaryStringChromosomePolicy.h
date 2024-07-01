@@ -21,9 +21,9 @@ class GA_EXPORT BinaryStringChromosomePolicy {
   BinaryStringChromosomePolicy(GarethUtil::RandomUtil &rng_);
   virtual ~BinaryStringChromosomePolicy();
 
-  bool mutate(int pos, bool currentValue) const;
+  static bool mutate(int pos, bool currentValue);
   bool initialize(int pos) const;
-  bool isAllowSwitch() { return false; }
+  static bool isAllowSwitch() { return false; }
 
  private:
   GarethUtil::RandomUtil &rng;

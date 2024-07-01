@@ -190,9 +190,9 @@ class DrawMol {
                            Point2D &toCentre) const;
   // Given some coords in molecule space (angstrom, probably) return the
   // screen coords.
-  Point2D getDrawCoords(const Point2D &atCds, const Point2D &trans,
-                        const Point2D &scaleFactor,
-                        const Point2D &toCentre) const;
+  static Point2D getDrawCoords(const Point2D &atCds, const Point2D &trans,
+                               const Point2D &scaleFactor,
+                               const Point2D &toCentre);
   Point2D getDrawCoords(const Point2D &atCds) const;
   Point2D getDrawCoords(int atnum) const;
   // and the other way.
@@ -220,9 +220,10 @@ class DrawMol {
   void transformAll(const Point2D *trans = nullptr, Point2D *scale = nullptr,
                     const Point2D *toCentre = nullptr);
   // Apply the transformations to the given point and return a new one.
-  Point2D transformPoint(const Point2D &pt, const Point2D *trans = nullptr,
-                         Point2D *scale = nullptr,
-                         const Point2D *toCentre = nullptr) const;
+  static Point2D transformPoint(const Point2D &pt,
+                                const Point2D *trans = nullptr,
+                                Point2D *scale = nullptr,
+                                const Point2D *toCentre = nullptr);
   void calcDoubleBondLines(double offset, const Bond &bond, Point2D &l1s,
                            Point2D &l1f, Point2D &l2s, Point2D &l2f) const;
   void bondInsideRing(const Bond &bond, double offset, Point2D &l2s,

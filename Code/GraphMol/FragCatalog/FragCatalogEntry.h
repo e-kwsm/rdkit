@@ -64,7 +64,7 @@ class RDKIT_FRAGCATALOG_EXPORT FragCatalogEntry
   const INT_INT_VECT_MAP &getFuncGroupMap() const { return d_aToFmap; }
 
   // REVIEW: this should be removed?
-  std::string getSmarts() { return ""; }
+  static std::string getSmarts() { return ""; }
 
   // FUnctions on the property dictionary
   template <typename T>
