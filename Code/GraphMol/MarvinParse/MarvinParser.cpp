@@ -683,7 +683,7 @@ class MarvinCMLReader {
     MarvinMolBase *res = nullptr;
 
     try {
-      std::string role = "";
+      std::string role;
 
       if (parentMol == nullptr) {
         res = new MarvinMol(molTree);

@@ -2605,7 +2605,7 @@ BOOST_PYTHON_MODULE(rdmolfiles) {
      RETURNS:
        a Mol object, None on failure.)DOC";
 
-  std::string cdxml_notes = R"DOC()DOC";
+  std::string cdxml_notes;
 
   python::def(
       "MolFromPNGFile", MolFromPNGFile,
