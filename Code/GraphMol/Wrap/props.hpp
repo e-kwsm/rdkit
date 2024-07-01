@@ -190,12 +190,15 @@ python::object autoConvertString(const RDOb *ob, const std::string &key) {
   double dvalue;
   std::string svalue;
 
-  if (ob->getPropIfPresent(key, ivalue))
+  if (ob->getPropIfPresent(key, ivalue)) {
     return python::object(ivalue);
-  else if (ob->getPropIfPresent(key, dvalue))
+  }
+  if (ob->getPropIfPresent(key, dvalue)) {
     return python::object(dvalue);
-  else if (ob->getPropIfPresent(key, svalue))
+  }
+  if (ob->getPropIfPresent(key, svalue)) {
     return python::object(svalue);
+  }
 
   return python::object();
 }
