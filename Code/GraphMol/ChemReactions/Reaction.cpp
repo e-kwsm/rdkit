@@ -524,7 +524,8 @@ bool isChangedAtom(const Atom &rAtom, const Atom &pAtom, int mapNum,
       pAtom.getAtomicNum() > 0) {
     // the atomic number changed and the product wasn't a dummy
     return true;
-  } else if (rAtom.getDegree() != pAtom.getDegree()) {
+  }
+  if (rAtom.getDegree() != pAtom.getDegree()) {
     // the degree changed
     return true;
   } else if (pAtom.getAtomicNum() > 0 && isComplexQuery(&rAtom)) {
@@ -566,34 +567,34 @@ bool isChangedAtom(const Atom &rAtom, const Atom &pAtom, int mapNum,
         if (!pBond->hasQuery()) {
           // reactant query, product not query: always a change
           return true;
+        }
+        if (pBond->getQuery()->getDescription() == "BondNull") {
+          // null queries are trump, they match everything
+        } else if (rBond->getBondType() == Bond::SINGLE &&
+                   pBond->getBondType() == Bond::SINGLE &&
+                   ((rBond->getQuery()->getDescription() == "BondOr" &&
+                     pBond->getQuery()->getDescription() == "BondOr") ||
+                    (rBond->getQuery()->getDescription() ==
+                         "SingleOrAromaticBond" &&
+                     pBond->getQuery()->getDescription() ==
+                         "SingleOrAromaticBond"))) {
+          // The SMARTS parser tags unspecified bonds as single, but then
+          // adds a query so that they match single or double. these cases
+          // match
         } else {
-          if (pBond->getQuery()->getDescription() == "BondNull") {
-            // null queries are trump, they match everything
-          } else if (rBond->getBondType() == Bond::SINGLE &&
-                     pBond->getBondType() == Bond::SINGLE &&
-                     ((rBond->getQuery()->getDescription() == "BondOr" &&
-                       pBond->getQuery()->getDescription() == "BondOr") ||
-                      (rBond->getQuery()->getDescription() ==
-                           "SingleOrAromaticBond" &&
-                       pBond->getQuery()->getDescription() ==
-                           "SingleOrAromaticBond"))) {
-            // The SMARTS parser tags unspecified bonds as single, but then
-            // adds a query so that they match single or double. these cases
-            // match
+          if (rBond->getBondType() == pBond->getBondType() &&
+              rBond->getQuery()->getDescription() == "BondOrder" &&
+              pBond->getQuery()->getDescription() == "BondOrder" &&
+              static_cast<BOND_EQUALS_QUERY *>(rBond->getQuery())->getVal() ==
+                  static_cast<BOND_EQUALS_QUERY *>(pBond->getQuery())
+                      ->getVal()) {
+            // bond order queries with equal orders also match
           } else {
-            if (rBond->getBondType() == pBond->getBondType() &&
-                rBond->getQuery()->getDescription() == "BondOrder" &&
-                pBond->getQuery()->getDescription() == "BondOrder" &&
-                static_cast<BOND_EQUALS_QUERY *>(rBond->getQuery())->getVal() ==
-                    static_cast<BOND_EQUALS_QUERY *>(pBond->getQuery())
-                        ->getVal()) {
-              // bond order queries with equal orders also match
-            } else {
-              // anything else does not match
-              return true;
-            }
+            // anything else does not match
+            return true;
           }
         }
+
       } else if (pBond->hasQuery()) {
         // reactant not query, product query
         // if product is anything other than the null query
