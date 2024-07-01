@@ -9,9 +9,9 @@
 //  of the RDKit source tree.
 //
 #include "DiscreteDistMat.h"
+#include "DatastructsException.h"
 #include "DiscreteValueVect.h"
 #include <iostream>
-#include "DatastructsException.h"
 
 namespace RDKit {
 void _fillDistMat(unsigned int dmat[], unsigned int nBits) {

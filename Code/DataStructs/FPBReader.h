@@ -1,3 +1,6 @@
+#ifndef LLVM_CODE_DATASTRUCTS_FPBREADER_H
+#define LLVM_CODE_DATASTRUCTS_FPBREADER_H
+
 //
 // Copyright (c) 2016 Greg Landrum
 //
@@ -18,21 +21,21 @@
      in future releases.
 */
 
-#include <iostream>
+#include <DataStructs/ExplicitBitVect.h>
+#include <RDGeneral/BadFileException.h>
 #include <fstream>
+#include <iostream>
 #include <sstream>
 #include <string>
-#include <RDGeneral/BadFileException.h>
-#include <DataStructs/ExplicitBitVect.h>
 
-#include <cstdint>
-#include <boost/shared_ptr.hpp>
 #include <boost/shared_array.hpp>
+#include <boost/shared_ptr.hpp>
+#include <cstdint>
 
 namespace RDKit {
 namespace detail {
 struct FPBReader_impl;
-}
+}  // namespace detail
 
 //! class for reading and searching FPB files
 /*!
@@ -278,4 +281,6 @@ class RDKIT_DATASTRUCTS_EXPORT FPBReader {
   }
 };
 }  // namespace RDKit
+#endif
+
 #endif
