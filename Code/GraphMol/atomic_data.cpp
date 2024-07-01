@@ -11,8 +11,8 @@
 //  Automatically generated from elements.txt
 #include "atomic_data.h"
 #include <boost/tokenizer.hpp>
-#include <sstream>
 #include <locale>
+#include <sstream>
 
 typedef boost::tokenizer<boost::char_separator<char>> tokenizer;
 
@@ -21,7 +21,7 @@ namespace RDKit {
 namespace constants {
 const double electronMass =
     0.00054857991;  // value from http://physics.nist.gov/cgi-bin/cuu/Value?me
-}
+}  // namespace constants
 
 // these data came from a variety of sources. If it's not explicitly listed
 // here, then it has likely been lost in antiquity. Columns:
