@@ -49,9 +49,8 @@ RDKIT_GRAPHMOL_EXPORT extern bool
     useLegacyStereoPerception;  //!< Toggle usage of the legacy stereo
                                 //!< perception code
 
-RDKIT_GRAPHMOL_EXPORT extern bool
-    useLegacyStereoPerception;  //!< Toggle usage of the legacy stereo
-                                //!< perception code
+//!< Toggle usage of the legacy stereo
+//!< perception code
 
 /// @cond
 /*!
