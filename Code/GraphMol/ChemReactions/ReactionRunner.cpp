@@ -213,9 +213,8 @@ bool getReactantMatches(const MOL_SPTR_VECT &reactants,
   for (auto iter = rxn.beginReactantTemplates();
        iter != rxn.endReactantTemplates(); ++iter, i++) {
     if (matchSingleReactant == MatchAll || matchSingleReactant == i) {
-      auto matches =
-          getReactantMatchesToTemplate(*reactants[i].get(), *iter->get(),
-                                       maxMatches, rxn.getSubstructParams());
+      auto matches = getReactantMatchesToTemplate(
+          *reactants[i].get(), **iter, maxMatches, rxn.getSubstructParams());
       if (matches.empty()) {
         // no point continuing if we don't match one of the reactants:
         res = false;
