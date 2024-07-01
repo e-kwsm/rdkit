@@ -69,9 +69,8 @@ namespace {
 bool localMatch(ATOM_EQUALS_QUERY const *q1, ATOM_EQUALS_QUERY const *q2) {
   if (q1->getNegation() == q2->getNegation()) {
     return q1->getVal() == q2->getVal();
-  } else {
-    return q1->getVal() != q2->getVal();
   }
+  return q1->getVal() != q2->getVal();
 }
 bool queriesMatch(QueryAtom::QUERYATOM_QUERY const *q1,
                   QueryAtom::QUERYATOM_QUERY const *q2) {
@@ -188,9 +187,8 @@ bool QueryAtom::QueryMatch(QueryAtom const *what) const {
   PRECONDITION(dp_query, "no query set");
   if (!what->hasQuery()) {
     return dp_query->Match(what);
-  } else {
-    return queriesMatch(dp_query, what->getQuery());
   }
+  return queriesMatch(dp_query, what->getQuery());
 }
 
 };  // namespace RDKit

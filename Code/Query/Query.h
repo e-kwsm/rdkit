@@ -202,10 +202,8 @@ int queryCmp(const T1 v1, const T2 v2, const T1 tol) {
       return 0;
     }
     return -1;
-
-  } else {
-    return 1;
   }
+  return 1;
 };
 }  // namespace Queries
 #endif
