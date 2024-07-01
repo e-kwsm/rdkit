@@ -54,7 +54,8 @@ void FromDaylightString(T &sbv, const std::string &s) {
     default:
       throw "ValueError bad daylight fingerprint string";
   }
-  size_t i = 0, nBitsDone = 0;
+  size_t i = 0;
+  size_t nBitsDone = 0;
   while (i < length) {
     char bytes[3];
     a2b(s.c_str() + i, bytes);
@@ -112,7 +113,8 @@ template RDKIT_DATASTRUCTS_EXPORT void FromBitString(ExplicitBitVect &sbv,
 */
 void a2b(const char *a4, char *b3) {
   int i;
-  char byte = 0x00, b = 0x00;
+  char byte = 0x00;
+  char b = 0x00;
 
   /*********************************************
   *** Use the Daylight mapping to convert each
