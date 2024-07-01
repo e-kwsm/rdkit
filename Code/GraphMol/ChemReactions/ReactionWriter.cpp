@@ -265,18 +265,18 @@ ROMol *ChemicalReactionToRxnMol(const ChemicalReaction &rxn) {
 
   for (auto iter = rxn.beginReactantTemplates();
        iter != rxn.endReactantTemplates(); ++iter) {
-    setRXNRoleOfAllMoleculeAtoms(*iter->get(), 1);
-    res->insertMol(*iter->get());
+    setRXNRoleOfAllMoleculeAtoms(**iter, 1);
+    res->insertMol(**iter);
   }
   for (auto iter = rxn.beginProductTemplates();
        iter != rxn.endProductTemplates(); ++iter) {
-    setRXNRoleOfAllMoleculeAtoms(*iter->get(), 2);
-    res->insertMol(*iter->get());
+    setRXNRoleOfAllMoleculeAtoms(**iter, 2);
+    res->insertMol(**iter);
   }
   for (auto iter = rxn.beginAgentTemplates(); iter != rxn.endAgentTemplates();
        ++iter) {
-    setRXNRoleOfAllMoleculeAtoms(*iter->get(), 3);
-    res->insertMol(*iter->get());
+    setRXNRoleOfAllMoleculeAtoms(**iter, 3);
+    res->insertMol(**iter);
   }
   return (ROMol *)res;
 }

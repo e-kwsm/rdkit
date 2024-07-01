@@ -32,7 +32,7 @@ ScaffoldNetworkParams::ScaffoldNetworkParams(
   bondBreakersRxns.reserve(bondBreakersSmarts.size());
   for (auto sma : bondBreakersSmarts) {
     std::shared_ptr<ChemicalReaction> rxn(RxnSmartsToChemicalReaction(sma));
-    if (rxn.get() == nullptr) {
+    if (rxn == nullptr) {
       throw ValueErrorException("could not parse reaction smarts: " + sma);
     }
     if (rxn->getNumReactantTemplates() != 1) {
