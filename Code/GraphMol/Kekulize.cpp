@@ -7,9 +7,9 @@
 //  which is included in the file license.txt, found at the root
 //  of the RDKit source tree.
 //
-#include <GraphMol/RDKitBase.h>
-#include <GraphMol/QueryOps.h>
 #include <GraphMol/Canon.h>
+#include <GraphMol/QueryOps.h>
+#include <GraphMol/RDKitBase.h>
 #include <GraphMol/Rings.h>
 #include <GraphMol/SanitException.h>
 #include <RDGeneral/RDLog.h>
@@ -89,7 +89,7 @@ void markDbondCands(RWMol &mol, const INT_VECT &allAtms,
   for (const auto &aring : mol.getRingInfo()->atomRings()) {
     isRingNotCand.set(ri);
     for (auto ai : aring) {
-      const auto at = mol.getAtomWithIdx(ai);
+      auto *const at = mol.getAtomWithIdx(ai);
       if (isAromaticAtom(*at) && mol.getRingInfo()->numAtomRings(ai) == 1) {
         isRingNotCand.reset(ri);
         break;
@@ -115,8 +115,8 @@ void markDbondCands(RWMol &mol, const INT_VECT &allAtms,
     int sbo = 0;
     unsigned nToIgnore = 0;
     unsigned int nonArNonDummyNbr = 0;
-    for (const auto bond : mol.atomBonds(at)) {
-      auto otherAt = bond->getOtherAtom(at);
+    for (auto *const bond : mol.atomBonds(at)) {
+      auto *otherAt = bond->getOtherAtom(at);
       if (otherAt->getAtomicNum() && !otherAt->getIsAromatic() &&
           inAllAtms.test(otherAt->getIdx())) {
         ++nonArNonDummyNbr;
@@ -290,7 +290,7 @@ bool kekulizeWorker(RWMol &mol, const INT_VECT &allAtms,
             allAtms.end()) {
           continue;
         }
-        auto nbrBond = mol.getBondBetweenAtoms(curr, nbrIdx);
+        auto *nbrBond = mol.getBondBetweenAtoms(curr, nbrIdx);
 
         // if the neighbor is not on the stack add it
         if (std::find(astack.begin(), astack.end(), nbrIdx) == astack.end()) {
@@ -331,7 +331,7 @@ bool kekulizeWorker(RWMol &mol, const INT_VECT &allAtms,
       if (!opts.empty()) {
         ncnd = opts.front();
         opts.pop_front();
-        auto bnd = mol.getBondBetweenAtoms(curr, ncnd);
+        auto *bnd = mol.getBondBetweenAtoms(curr, ncnd);
         bnd->setBondType(Bond::DOUBLE);
 
         // remove current and the neighbor from the dBndCands list
@@ -434,7 +434,7 @@ bool permuteDummiesAndKekulize(RWMol &mol, const INT_VECT &allAtms,
     boost::dynamic_bitset<> dBndAdds(mol.getNumBonds());
     INT_VECT done;
     // reset the state: all aromatic bonds are remarked to single:
-    for (const auto bond : mol.bonds()) {
+    for (auto *const bond : mol.bonds()) {
       if (bond->getIsAromatic() && bond->getBondType() != Bond::SINGLE &&
           atomsInPlay[bond->getBeginAtomIdx()] &&
           atomsInPlay[bond->getEndAtomIdx()]) {
@@ -519,7 +519,7 @@ void KekulizeFragment(RWMol &mol, const boost::dynamic_bitset<> &atomsToUse,
   // there's no point doing kekulization if there are no aromatic bonds
   // without queries:
   bool foundAromatic = false;
-  for (const auto bond : mol.bonds()) {
+  for (auto *const bond : mol.bonds()) {
     if (bondsToUse[bond->getIdx()]) {
       if (QueryOps::hasBondTypeQuery(*bond)) {
         // we don't kekulize bonds with bond type queries
@@ -537,7 +537,7 @@ void KekulizeFragment(RWMol &mol, const boost::dynamic_bitset<> &atomsToUse,
   INT_VECT valences(numAtoms);
   boost::dynamic_bitset<> dummyAts(numAtoms);
 
-  for (auto atom : mol.atoms()) {
+  for (auto *atom : mol.atoms()) {
     if (!atomsToUse[atom->getIdx()]) {
       continue;
     }
@@ -557,7 +557,7 @@ void KekulizeFragment(RWMol &mol, const boost::dynamic_bitset<> &atomsToUse,
   if (bondsToUse.any()) {
     // mark atoms at the beginning of wedged bonds
     boost::dynamic_bitset<> wedgedAtoms(numAtoms);
-    for (const auto bond : mol.bonds()) {
+    for (auto *const bond : mol.bonds()) {
       if (bondsToUse[bond->getIdx()] &&
           (bond->getBondDir() == Bond::BEGINWEDGE ||
            bond->getBondDir() == Bond::BEGINDASH)) {
@@ -678,12 +678,12 @@ void KekulizeFragment(RWMol &mol, const boost::dynamic_bitset<> &atomsToUse,
     if (!mol.getRingInfo()->isInitialized()) {
       MolOps::findSSSR(mol);
     }
-    for (auto bond : mol.bonds()) {
+    for (auto *bond : mol.bonds()) {
       if (bondsToUse[bond->getIdx()]) {
         bond->setIsAromatic(false);
       }
     }
-    for (auto atom : mol.atoms()) {
+    for (auto *atom : mol.atoms()) {
       if (atomsToUse[atom->getIdx()] && atom->getIsAromatic()) {
         // if we're doing the full molecule and there are aromatic atoms not in
         // a ring, throw an exception
@@ -711,7 +711,7 @@ void KekulizeFragment(RWMol &mol, const boost::dynamic_bitset<> &atomsToUse,
   // ok some error checking here force a implicit valence
   // calculation that should do some error checking by itself. In
   // addition compare them to what they were before kekulizing
-  for (auto atom : mol.atoms()) {
+  for (auto *atom : mol.atoms()) {
     if (!atomsToUse[atom->getIdx()]) {
       continue;
     }
@@ -738,13 +738,13 @@ void Kekulize(RWMol &mol, bool markAtomsBonds, unsigned int maxBackTracks) {
 bool KekulizeIfPossible(RWMol &mol, bool markAtomsBonds,
                         unsigned int maxBackTracks) {
   boost::dynamic_bitset<> aromaticBonds(mol.getNumBonds());
-  for (const auto bond : mol.bonds()) {
+  for (auto *const bond : mol.bonds()) {
     if (bond->getIsAromatic()) {
       aromaticBonds.set(bond->getIdx());
     }
   }
   boost::dynamic_bitset<> aromaticAtoms(mol.getNumAtoms());
-  for (const auto atom : mol.atoms()) {
+  for (auto *const atom : mol.atoms()) {
     if (isAromaticAtom(*atom)) {
       aromaticAtoms.set(atom->getIdx());
     }
@@ -756,7 +756,7 @@ bool KekulizeIfPossible(RWMol &mol, bool markAtomsBonds,
     res = false;
     for (unsigned int i = 0; i < mol.getNumBonds(); ++i) {
       if (aromaticBonds[i]) {
-        auto bond = mol.getBondWithIdx(i);
+        auto *bond = mol.getBondWithIdx(i);
         bond->setIsAromatic(true);
         bond->setBondType(Bond::BondType::AROMATIC);
       }
