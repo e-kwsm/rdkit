@@ -346,7 +346,6 @@ void a2b(const char *a4, char *b3) {
         break;
     }
   }
-  return;
 }
 
 // Demo Data:

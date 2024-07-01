@@ -510,7 +510,6 @@ MolOps::Hybridizations::Hybridizations(const ROMol &mol) {
     // determine hybridization and remove chiral atoms that are not sp3
     d_hybridizations.push_back((int)atom->getHybridization());
   }
-  return;
 }
 
 void cleanupAtropisomers(RWMol &mol) {

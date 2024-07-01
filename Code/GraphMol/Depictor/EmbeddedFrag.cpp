@@ -1440,7 +1440,6 @@ void _recurseAtomOneSide(unsigned int endAid, unsigned int begAid,
       _recurseAtomOneSide(nbr->getIdx(), begAid, mol, flipAids);
     }
   }
-  return;
 }
 
 double _crossVal(const RDGeom::Point2D &v1, const RDGeom::Point2D &v2) {
