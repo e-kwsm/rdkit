@@ -212,7 +212,13 @@ void UniformGrid3D::setSphereOccupancy(const Point3D &center, double radius,
       bgRad + nLayers * gStepSize;  // largest radius in grid coords
   double gRad2 = gRadius * gRadius;
   double bgRad2 = bgRad * bgRad;
-  double dx, dy, dz, d, d2, dy2z2, dz2;
+  double dx;
+  double dy;
+  double dz;
+  double d;
+  double d2;
+  double dy2z2;
+  double dz2;
   int xmax = static_cast<int>(floor(gPt.x + gRadius));
   int xmin = static_cast<int>(ceil(gPt.x - gRadius));
   int ymax = static_cast<int>(floor(gPt.y + gRadius));
@@ -363,7 +369,9 @@ void UniformGrid3D::initFromText(const char *pkl, const unsigned int length) {
   streamRead(ss, tInt);
   d_numZ = tInt;
   streamRead(ss, d_spacing);
-  double oX, oY, oZ;
+  double oX;
+  double oY;
+  double oZ;
   streamRead(ss, oX);
   streamRead(ss, oY);
   streamRead(ss, oZ);
@@ -413,7 +421,8 @@ void writeGridToStream(const UniformGrid3D &grid, std::ostream &outStrm) {
   outStrm << "1"
           << " " << outX1 << " " << outX2 << " " << outY1 << " " << outY2 << " "
           << outZ1 << " " << outZ2 << "\n";
-  unsigned int i, nPts = grid.getSize();
+  unsigned int i;
+  unsigned int nPts = grid.getSize();
   for (i = 0; i < nPts; i++) {
     outStrm << static_cast<double>(grid.getVal(i)) << std::endl;
   }
