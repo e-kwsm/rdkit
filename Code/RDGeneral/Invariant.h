@@ -60,7 +60,7 @@ class RDKIT_RDGENERAL_EXPORT Invariant : public std::runtime_error {
   Invariant(const char *prefix, const std::string &mess, const char *expr,
             const char *const file, int line)
       : std::runtime_error(prefix),
-        mess_d(mess.c_str()),
+        mess_d(mess),
         expr_d(expr),
         prefix_d(prefix),
         file_dp(file),
