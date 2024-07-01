@@ -113,9 +113,8 @@ namespace {
 bool localMatch(BOND_EQUALS_QUERY const *q1, BOND_EQUALS_QUERY const *q2) {
   if (q1->getNegation() == q2->getNegation()) {
     return q1->getVal() == q2->getVal();
-  } else {
-    return q1->getVal() != q2->getVal();
   }
+  return q1->getVal() != q2->getVal();
 }
 
 bool queriesMatch(QueryBond::QUERYBOND_QUERY const *q1,
@@ -213,9 +212,8 @@ bool QueryBond::QueryMatch(QueryBond const *what) const {
   PRECONDITION(dp_query, "no query set");
   if (!what->hasQuery()) {
     return dp_query->Match(what);
-  } else {
-    return queriesMatch(dp_query, what->getQuery());
   }
+  return queriesMatch(dp_query, what->getQuery());
 }
 
 double QueryBond::getValenceContrib(const Atom *atom) const {
