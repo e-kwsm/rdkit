@@ -152,20 +152,19 @@ void ForwardSDMolSupplier::readMolProps(ROMol &mol) {
           // FIX: should we be deleting the molecule (which is probably fine)
           // because we couldn't read the data ???
           throw FileParseException("Problems encountered parsing data fields");
-        } else {
-          if (!warningIssued) {
-            if (hasProp) {
-              BOOST_LOG(rdWarningLog)
-                  << "Property <" << dlabel << "> will be truncated after "
-                  << "the first blank line" << std::endl;
-            } else {
-              BOOST_LOG(rdWarningLog)
-                  << "Spurious data before the first property will be "
-                     "ignored"
-                  << std::endl;
-            }
-            warningIssued = true;
+        }
+        if (!warningIssued) {
+          if (hasProp) {
+            BOOST_LOG(rdWarningLog)
+                << "Property <" << dlabel << "> will be truncated after "
+                << "the first blank line" << std::endl;
+          } else {
+            BOOST_LOG(rdWarningLog)
+                << "Spurious data before the first property will be "
+                   "ignored"
+                << std::endl;
           }
+          warningIssued = true;
         }
       }
     }
