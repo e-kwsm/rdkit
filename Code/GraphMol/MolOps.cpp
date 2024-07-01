@@ -94,7 +94,7 @@ void nitrogenCleanup(RWMol &mol, Atom *atom) {
                  (mol.getBondBetweenAtoms(aid, nbr->getIdx())->getBondType() ==
                   Bond::TRIPLE)) {
         // here's the triple bonded nitrogen
-        auto b = mol.getBondBetweenAtoms(aid, nbr->getIdx());
+        auto *b = mol.getBondBetweenAtoms(aid, nbr->getIdx());
         b->setBondType(Bond::DOUBLE);
         atom->setFormalCharge(1);
         nbr->setFormalCharge(-1);
