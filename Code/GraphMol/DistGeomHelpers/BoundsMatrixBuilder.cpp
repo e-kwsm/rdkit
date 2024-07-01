@@ -255,7 +255,7 @@ void set12Bounds(const ROMol &mol, DistGeom::BoundsMatPtr mmat,
 }
 
 void setLowerBoundVDW(const ROMol &mol, DistGeom::BoundsMatPtr mmat, bool,
-                      double *dmat) {
+                      const double *dmat) {
   unsigned int npt = mmat->numRows();
   PRECONDITION(npt == mol.getNumAtoms(), "Wrong size metric matrix");
 
@@ -592,7 +592,7 @@ Bond::BondStereo _getAtomStereo(const Bond *bnd, unsigned int aid1,
 
 void _setInRing14Bounds(const ROMol &mol, const Bond *bnd1, const Bond *bnd2,
                         const Bond *bnd3, ComputedData &accumData,
-                        DistGeom::BoundsMatPtr mmat, double *dmat,
+                        DistGeom::BoundsMatPtr mmat, const double *dmat,
                         int ringSize) {
   PRECONDITION(bnd1, "");
   PRECONDITION(bnd2, "");
@@ -708,7 +708,8 @@ void _setInRing14Bounds(const ROMol &mol, const Bond *bnd1, const Bond *bnd2,
 void _setTwoInSameRing14Bounds(const ROMol &mol, const Bond *bnd1,
                                const Bond *bnd2, const Bond *bnd3,
                                ComputedData &accumData,
-                               DistGeom::BoundsMatPtr mmat, double *dmat) {
+                               DistGeom::BoundsMatPtr mmat,
+                               const double *dmat) {
   PRECONDITION(bnd1, "");
   PRECONDITION(bnd2, "");
   PRECONDITION(bnd3, "");
@@ -1246,7 +1247,7 @@ void _setMacrocycleTwoInSameRing14Bounds(const ROMol &mol, const Bond *bnd1,
                                          const Bond *bnd2, const Bond *bnd3,
                                          ComputedData &accumData,
                                          DistGeom::BoundsMatPtr mmat,
-                                         double *dmat) {
+                                         const double *dmat) {
   PRECONDITION(bnd1, "");
   PRECONDITION(bnd2, "");
   PRECONDITION(bnd3, "");
@@ -1949,7 +1950,7 @@ double _compute15DistsTransCis(double d1, double d2, double d3, double d4,
 void _set15BoundsHelper(const ROMol &mol, unsigned int bid1, unsigned int bid2,
                         unsigned int bid3, unsigned int type,
                         ComputedData &accumData, DistGeom::BoundsMatPtr mmat,
-                        double *dmat) {
+                        const double *dmat) {
   unsigned int i, aid1, aid2, aid3, aid4, aid5;
   double d1, d2, d3, d4, ang12, ang23, ang34, du, dl, vw1, vw5;
   unsigned int nb = mol.getNumBonds();
