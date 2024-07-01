@@ -49,7 +49,7 @@ namespace RDKit {
 
 namespace {
 std::string getArgName(const boost::shared_ptr<FilterMatcherBase> &arg) {
-  if (arg.get()) {
+  if (arg) {
     return arg->getName();
   }
   return "<nullmatcher>";
@@ -486,7 +486,7 @@ class RDKIT_FILTERCATALOG_EXPORT FilterHierarchyMatcher
 
   //! Return the name for this node (from the underlying FilterMatcherBase)
   std::string getName() const override {
-    if (d_matcher.get()) {
+    if (d_matcher) {
       return d_matcher->getName();
     }
     return "FilterMatcherHierarchy root";

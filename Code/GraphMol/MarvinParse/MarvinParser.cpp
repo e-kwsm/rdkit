@@ -587,7 +587,7 @@ class MarvinCMLReader {
         marvinSgroup->parseMoleculeSpecific(mol.get(), sgroup, sequenceId);
 
         if (sgroup->getIsValid()) {
-          addSubstanceGroup(*mol, *sgroup.get());
+          addSubstanceGroup(*mol, *sgroup);
         }
         // increment the sequenceId
 

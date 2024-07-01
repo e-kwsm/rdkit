@@ -540,7 +540,7 @@ void canonicalizeStereoGroups_internal(
   auto newMolCount = std::pow(2, groupsToProcess.size());
 
   for (unsigned int molIndex = 0; molIndex < newMolCount; ++molIndex) {
-    auto newMol = std::unique_ptr<RDKit::ROMol>(new RDKit::RWMol(*(mol.get())));
+    auto newMol = std::unique_ptr<RDKit::ROMol>(new RDKit::RWMol(*mol));
 
     for (unsigned int grpIndex = 0; grpIndex < groupsToProcess.size();
          ++grpIndex) {
@@ -626,11 +626,11 @@ void canonicalizeStereoGroups_internal(
     // inverted in a smiles string
 
     std::vector<unsigned int> atomsToInvert;
-    RDKit::getAtomsToInvert2(*newMol.get(), chosenOrder, reversedOrder,
+    RDKit::getAtomsToInvert2(*newMol, chosenOrder, reversedOrder,
                              atomsToInvert);
 
-    newMol.reset((RDKit::RWMol *)RDKit::MolOps::renumberAtoms(*newMol.get(),
-                                                              chosenOrder));
+    newMol.reset(
+        (RDKit::RWMol *)RDKit::MolOps::renumberAtoms(*newMol, chosenOrder));
 
     RDKit::RankedValue newRankedValue;
 

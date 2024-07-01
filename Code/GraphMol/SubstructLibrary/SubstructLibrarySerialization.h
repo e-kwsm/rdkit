@@ -61,7 +61,7 @@ void save(Archive &ar, const RDKit::MolHolder &molholder,
 
     for (auto &mol : molholder.getMols()) {
       std::string pkl;
-      RDKit::MolPickler::pickleMol(*mol.get(), pkl);
+      RDKit::MolPickler::pickleMol(*mol, pkl);
       ar << pkl;
     }
   } else {
