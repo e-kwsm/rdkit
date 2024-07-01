@@ -259,7 +259,7 @@ class RDKIT_FORCEFIELD_EXPORT ForceField {
   /*!
       \param pos     should be \c 3*this->numPoints() long;
   */
-  void gather(double *pos);
+  void gather(const double *pos);
 
   //! initializes our internal distance matrix
   void initDistanceMatrix();
