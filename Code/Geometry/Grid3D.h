@@ -1,3 +1,6 @@
+#ifndef LLVM_CODE_GEOMETRY_GRID3D_H
+#define LLVM_CODE_GEOMETRY_GRID3D_H
+
 //
 //   Copyright (C) 2005-2006 Rational Discovery LLC
 //
@@ -16,7 +19,7 @@
 
 namespace RDKit {
 class DiscreteValueVect;
-}
+}  // namespace RDKit
 namespace RDGeom {
 class Point3D;
 
@@ -50,5 +53,7 @@ class RDKIT_RDGEOMETRYLIB_EXPORT Grid3D {
   virtual const VectorType *getOccupancyVect() const = 0;
 };
 }  // namespace RDGeom
+
+#endif
 
 #endif
