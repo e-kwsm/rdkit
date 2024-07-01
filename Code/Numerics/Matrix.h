@@ -1,3 +1,6 @@
+#ifndef LLVM_CODE_NUMERICS_MATRIX_H
+#define LLVM_CODE_NUMERICS_MATRIX_H
+
 //
 //  Copyright (C) 2004-2006 Greg Landrum and other RDKit contributors
 //
@@ -356,5 +359,7 @@ std::ostream &operator<<(std::ostream &target,
   }
   return target;
 }
+
+#endif
 
 #endif
