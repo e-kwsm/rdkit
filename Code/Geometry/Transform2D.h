@@ -1,3 +1,6 @@
+#ifndef LLVM_CODE_GEOMETRY_TRANSFORM2D_H
+#define LLVM_CODE_GEOMETRY_TRANSFORM2D_H
+
 //
 //   Copyright (C) 2003-2006 Rational Discovery LLC
 //
@@ -81,5 +84,7 @@ class RDKIT_RDGEOMETRYLIB_EXPORT Transform2D
  */
 RDKIT_RDGEOMETRYLIB_EXPORT RDGeom::Transform2D operator*(
     const RDGeom::Transform2D &t1, const RDGeom::Transform2D &t2);
+
+#endif
 
 #endif

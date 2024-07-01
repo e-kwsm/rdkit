@@ -1,3 +1,6 @@
+#ifndef LLVM_CODE_GEOMETRY_POINT_H
+#define LLVM_CODE_GEOMETRY_POINT_H
+
 //
 // Copyright (C) 2003-2021 Greg Landrum and other RDKit contributors
 //
@@ -11,17 +14,17 @@
 #include <RDGeneral/export.h>
 #ifndef __RD_POINT_H__
 #define __RD_POINT_H__
-#include <iostream>
 #include <cmath>
-#include <vector>
+#include <iostream>
 #include <map>
+#include <vector>
 
 #ifndef M_PI
 #define M_PI 3.14159265358979323846
 #endif
 
-#include <RDGeneral/Invariant.h>
 #include <Numerics/Vector.h>
+#include <RDGeneral/Invariant.h>
 #include <boost/smart_ptr.hpp>
 
 namespace RDGeom {
@@ -73,22 +76,22 @@ class RDKIT_RDGEOMETRYLIB_EXPORT Point3D : public Point {
     PRECONDITION(i < 3, "Invalid index on Point3D");
     if (i == 0) {
       return x;
-    } else if (i == 1) {
-      return y;
-    } else {
-      return z;
     }
+    if (i == 1) {
+      return y;
+    }
+    return z;
   }
 
   inline double &operator[](unsigned int i) override {
     PRECONDITION(i < 3, "Invalid index on Point3D");
     if (i == 0) {
       return x;
-    } else if (i == 1) {
-      return y;
-    } else {
-      return z;
     }
+    if (i == 1) {
+      return y;
+    }
+    return z;
   }
 
   Point3D &operator=(const Point3D &other) {
@@ -292,18 +295,16 @@ class RDKIT_RDGEOMETRYLIB_EXPORT Point2D : public Point {
     PRECONDITION(i < 2, "Invalid index on Point2D");
     if (i == 0) {
       return x;
-    } else {
-      return y;
     }
+    return y;
   }
 
   inline double &operator[](unsigned int i) override {
     PRECONDITION(i < 2, "Invalid index on Point2D");
     if (i == 0) {
       return x;
-    } else {
-      return y;
     }
+    return y;
   }
 
   Point2D &operator=(const Point2D &other) {
@@ -581,5 +582,7 @@ RDKIT_RDGEOMETRYLIB_EXPORT RDGeom::PointND operator*(const RDGeom::PointND &p1,
 RDKIT_RDGEOMETRYLIB_EXPORT RDGeom::PointND operator/(const RDGeom::PointND &p1,
                                                      double v);
 }  // namespace RDGeom
+
+#endif
 
 #endif

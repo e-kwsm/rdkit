@@ -1,3 +1,6 @@
+#ifndef LLVM_CODE_NUMERICS_MATRIX_H
+#define LLVM_CODE_NUMERICS_MATRIX_H
+
 //
 //  Copyright (C) 2004-2006 Rational Discovery LLC
 //
@@ -11,12 +14,12 @@
 #ifndef __RD_MATRIX_H__
 #define __RD_MATRIX_H__
 
-#include <RDGeneral/Invariant.h>
 #include "Vector.h"
-#include <iostream>
-#include <iomanip>
-#include <cstring>
+#include <RDGeneral/Invariant.h>
 #include <boost/smart_ptr.hpp>
+#include <cstring>
+#include <iomanip>
+#include <iostream>
 
 //#ifndef INVARIANT_SILENT_METHOD
 //#define INVARIANT_SILENT_METHOD
@@ -344,5 +347,7 @@ std::ostream &operator<<(std::ostream &target,
   }
   return target;
 }
+
+#endif
 
 #endif
