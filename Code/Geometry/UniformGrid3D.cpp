@@ -113,7 +113,9 @@ int UniformGrid3D::getGridPointIndex(const Point3D &point) const {
   Point3D tPt(point);
   tPt -= d_offSet;  // d_origin;
   tPt /= d_spacing;
-  int xi, yi, zi;
+  int xi;
+  int yi;
+  int zi;
   double move = 0.5;
   xi = static_cast<int>(floor(tPt.x + move));
   yi = static_cast<int>(floor(tPt.y + move));
@@ -222,9 +224,22 @@ void UniformGrid3D::setSphereOccupancy(const Point3D &center, double radius,
       bgRad + nLayers * gStepSize;  // largest radius in grid coords
   double gRad2 = gRadius * gRadius;
   double bgRad2 = bgRad * bgRad;
-  int i, j, k;
-  double dx, dy, dz, d, d2, dy2z2, dz2;
-  int xmin, xmax, ymin, ymax, zmin, zmax;
+  int i;
+  int j;
+  int k;
+  double dx;
+  double dy;
+  double dz;
+  double d;
+  double d2;
+  double dy2z2;
+  double dz2;
+  int xmin;
+  int xmax;
+  int ymin;
+  int ymax;
+  int zmin;
+  int zmax;
   xmax = (int)floor(gPt.x + gRadius);
   xmin = (int)ceil(gPt.x - gRadius);
   ymax = (int)floor(gPt.y + gRadius);
@@ -232,8 +247,11 @@ void UniformGrid3D::setSphereOccupancy(const Point3D &center, double radius,
   zmax = (int)floor(gPt.z + gRadius);
   zmin = (int)ceil(gPt.z - gRadius);
 
-  unsigned int oval, val, valChange;
-  int ptId1, ptId2;
+  unsigned int oval;
+  unsigned int val;
+  unsigned int valChange;
+  int ptId1;
+  int ptId2;
   for (k = zmin; k <= zmax; ++k) {
     if ((k >= 0) &&
         (k < (int)d_numZ)) {  // we are inside the grid in the z-direction
@@ -373,7 +391,9 @@ void UniformGrid3D::initFromText(const char *pkl, const unsigned int length) {
   streamRead(ss, tInt);
   d_numZ = tInt;
   streamRead(ss, d_spacing);
-  double oX, oY, oZ;
+  double oX;
+  double oY;
+  double oZ;
   streamRead(ss, oX);
   streamRead(ss, oY);
   streamRead(ss, oZ);
@@ -422,7 +442,8 @@ void writeGridToStream(const UniformGrid3D &grid, std::ostream &outStrm) {
   outStrm << "1"
           << " " << outX1 << " " << outX2 << " " << outY1 << " " << outY2 << " "
           << outZ1 << " " << outZ2 << "\n";
-  unsigned int i, nPts = grid.getSize();
+  unsigned int i;
+  unsigned int nPts = grid.getSize();
   for (i = 0; i < nPts; i++) {
     outStrm << static_cast<double>(grid.getVal(i)) << std::endl;
   }

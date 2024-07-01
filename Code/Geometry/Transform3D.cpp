@@ -18,7 +18,8 @@
 
 namespace RDGeom {
 void Transform3D::setToIdentity() {
-  unsigned int i, id;
+  unsigned int i;
+  unsigned int id;
   double *data = d_data.get();
   memset(static_cast<void *>(data), 0, d_dataSize * sizeof(double));
   for (i = 0; i < DIM_3D; i++) {
@@ -28,7 +29,9 @@ void Transform3D::setToIdentity() {
 }
 
 void Transform3D::TransformPoint(Point3D &pt) const {
-  double x, y, z;
+  double x;
+  double y;
+  double z;
   double *data = d_data.get();
   x = data[0] * pt.x + data[1] * pt.y + data[2] * pt.z + data[3];
   y = data[4] * pt.x + data[5] * pt.y + data[6] * pt.z + data[7];
@@ -75,7 +78,9 @@ void Transform3D::SetRotation(double angle, AxisType axis) {
 
 void Transform3D::SetRotation(double cosT, double sinT, const Point3D &axis) {
   double t = 1 - cosT;
-  double X = axis.x, Y = axis.y, Z = axis.z;
+  double X = axis.x;
+  double Y = axis.y;
+  double Z = axis.z;
   double *data = d_data.get();
   data[0] = t * X * X + cosT;
   data[1] = t * X * Y - sinT * Z;
@@ -125,7 +130,9 @@ void Transform3D::SetRotationFromQuaternion(double quaternion[4]) {
 }
 
 void Transform3D::Reflect() {
-  unsigned int i, j, id;
+  unsigned int i;
+  unsigned int j;
+  unsigned int id;
   double *data = d_data.get();
   for (i = 0; i < DIM_3D - 1; i++) {
     id = i * DIM_3D;

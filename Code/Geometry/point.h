@@ -372,7 +372,8 @@ class RDKIT_RDGEOMETRYLIB_EXPORT Point2D : public Point {
   }
 
   double angleTo(const Point2D &other) const {
-    Point2D t1, t2;
+    Point2D t1;
+    Point2D t2;
     t1 = *this;
     t2 = other;
     t1.normalize();

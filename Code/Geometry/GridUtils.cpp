@@ -87,7 +87,8 @@ std::vector<int> computeGridIndices(const UniformGrid3D &grid,
   // if(gridIdxCache.count(radInGrid)>0){
   //  return gridIdxCache[radInGrid];
   //}
-  unsigned int dX, dY;
+  unsigned int dX;
+  unsigned int dY;
   dX = grid.getNumX();
   dY = grid.getNumY();
   std::vector<int> res;

@@ -363,7 +363,8 @@ QueryDetails getQueryDetails(const Query<int, T const *, true> *query) {
     return QueryDetails(MolPickler::QUERY_NULL);
   } else if (typeid(*query) == typeid(RangeQuery<int, T const *, true>)) {
     char ends;
-    bool lowerOpen, upperOpen;
+    bool lowerOpen;
+    bool upperOpen;
     boost::tie(lowerOpen, upperOpen) =
         static_cast<const RangeQuery<int, T const *, true> *>(query)
             ->getEndsOpen();
@@ -988,7 +989,9 @@ void MolPickler::molFromPickle(std::istream &ss, ROMol *mol,
     if (static_cast<Tags>(tmpInt) != VERSION) {
       throw MolPicklerException("Bad pickle format: no version tag");
     }
-    int32_t majorVersion, minorVersion, patchVersion;
+    int32_t majorVersion;
+    int32_t minorVersion;
+    int32_t patchVersion;
     streamRead(ss, majorVersion);
     streamRead(ss, minorVersion);
     streamRead(ss, patchVersion);
@@ -1722,7 +1725,9 @@ template <typename T>
 Atom *MolPickler::_addAtomFromPickle(std::istream &ss, ROMol *mol,
                                      RDGeom::Point3D &pos, int version, bool) {
   PRECONDITION(mol, "empty molecule");
-  float x, y, z;
+  float x;
+  float y;
+  float z;
   char tmpChar;
   unsigned char tmpUchar;
   signed char tmpSchar;
@@ -1752,7 +1757,8 @@ Atom *MolPickler::_addAtomFromPickle(std::istream &ss, ROMol *mol,
   atom->setIsAromatic(flags & 0x1 << 6);
   atom->setNoImplicit(flags & 0x1 << 5);
 
-  bool hasAtomMap = 0, hasDummyLabel = 0;
+  bool hasAtomMap = 0;
+  bool hasDummyLabel = 0;
   if (version >= 6020) {
     hasAtomMap = flags & 0x1 << 3;
     hasDummyLabel = flags & 0x1 << 2;
@@ -1976,7 +1982,8 @@ Bond *MolPickler::_addBondFromPickle(std::istream &ss, ROMol *mol, int version,
   PRECONDITION(mol, "empty molecule");
   char tmpChar;
   char flags;
-  int begIdx, endIdx;
+  int begIdx;
+  int endIdx;
   T tmpT;
 
   Bond *bond = nullptr;
@@ -2593,7 +2600,8 @@ void MolPickler::_addAtomFromPickleV1(std::istream &ss, ROMol *mol) {
 void MolPickler::_addBondFromPickleV1(std::istream &ss, ROMol *mol) {
   PRECONDITION(mol, "empty molecule");
   Tags tag;
-  int intVar, idx = -1;
+  int intVar;
+  int idx = -1;
   int version = 1;
   Bond::BondType bt;
   Bond::BondDir bd;

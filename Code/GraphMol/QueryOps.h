@@ -181,7 +181,8 @@ static inline int queryAtomMissingChiralTag(Atom const *at) {
 };
 
 static inline int queryAtomHasHeteroatomNbrs(Atom const *at) {
-  ROMol::ADJ_ITER nbrIdx, endNbrs;
+  ROMol::ADJ_ITER nbrIdx;
+  ROMol::ADJ_ITER endNbrs;
   boost::tie(nbrIdx, endNbrs) = at->getOwningMol().getAtomNeighbors(at);
   while (nbrIdx != endNbrs) {
     const Atom *nbr = at->getOwningMol()[*nbrIdx];
@@ -195,7 +196,8 @@ static inline int queryAtomHasHeteroatomNbrs(Atom const *at) {
 
 static inline int queryAtomNumHeteroatomNbrs(Atom const *at) {
   int res = 0;
-  ROMol::ADJ_ITER nbrIdx, endNbrs;
+  ROMol::ADJ_ITER nbrIdx;
+  ROMol::ADJ_ITER endNbrs;
   boost::tie(nbrIdx, endNbrs) = at->getOwningMol().getAtomNeighbors(at);
   while (nbrIdx != endNbrs) {
     const Atom *nbr = at->getOwningMol()[*nbrIdx];
@@ -208,7 +210,8 @@ static inline int queryAtomNumHeteroatomNbrs(Atom const *at) {
 };
 
 static inline int queryAtomHasAliphaticHeteroatomNbrs(Atom const *at) {
-  ROMol::ADJ_ITER nbrIdx, endNbrs;
+  ROMol::ADJ_ITER nbrIdx;
+  ROMol::ADJ_ITER endNbrs;
   boost::tie(nbrIdx, endNbrs) = at->getOwningMol().getAtomNeighbors(at);
   while (nbrIdx != endNbrs) {
     const Atom *nbr = at->getOwningMol()[*nbrIdx];
@@ -223,7 +226,8 @@ static inline int queryAtomHasAliphaticHeteroatomNbrs(Atom const *at) {
 
 static inline int queryAtomNumAliphaticHeteroatomNbrs(Atom const *at) {
   int res = 0;
-  ROMol::ADJ_ITER nbrIdx, endNbrs;
+  ROMol::ADJ_ITER nbrIdx;
+  ROMol::ADJ_ITER endNbrs;
   boost::tie(nbrIdx, endNbrs) = at->getOwningMol().getAtomNeighbors(at);
   while (nbrIdx != endNbrs) {
     const Atom *nbr = at->getOwningMol()[*nbrIdx];
