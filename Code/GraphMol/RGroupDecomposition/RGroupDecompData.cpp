@@ -133,15 +133,14 @@ double RGroupDecompData::scoreFromPrunedData(
       pruneLength = permutation.size();
     }
     return score;
+  }
+  if (reset) {
+    return fingerprintVarianceScore(permutation, matches, labels);
   } else {
-    if (reset) {
-      return fingerprintVarianceScore(permutation, matches, labels);
-    } else {
-      prunedFingerprintVarianceScoreData.clear();
-      pruneLength = permutation.size();
-      return fingerprintVarianceScore(permutation, matches, labels,
-                                      &prunedFingerprintVarianceScoreData);
-    }
+    prunedFingerprintVarianceScoreData.clear();
+    pruneLength = permutation.size();
+    return fingerprintVarianceScore(permutation, matches, labels,
+                                    &prunedFingerprintVarianceScoreData);
   }
 }
 
