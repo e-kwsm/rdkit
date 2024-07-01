@@ -538,7 +538,7 @@ ROMol *TautomerEnumerator::pickCanonical(
   } else {
     // Calculate score for each tautomer
     int bestScore = std::numeric_limits<int>::min();
-    std::string bestSmiles = "";
+    std::string bestSmiles;
     for (const auto &t : tautRes.d_tautomers) {
       auto score = scoreFunc(*t.second.tautomer);
 #ifdef VERBOSE_ENUMERATION
