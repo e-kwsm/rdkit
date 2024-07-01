@@ -20,7 +20,7 @@ typedef boost::tokenizer<boost::char_separator<char>> tokenizer;
 namespace RDKit {
 namespace {
 ROMol *getMol(const std::string &name, const std::string &smarts) {
-  auto mol = SmartsToMol(smarts);
+  auto *mol = SmartsToMol(smarts);
   if (!mol) {
     throw ValueErrorException("Failed parsing fragment SMARTS: " + smarts);
   }
@@ -102,7 +102,7 @@ std::vector<std::shared_ptr<ROMol>> readFuncGroups(
     const std::vector<std::pair<std::string, std::string>> &data) {
   std::vector<std::shared_ptr<ROMol>> funcGroups;
   for (const auto &pr : data) {
-    auto mol = getMol(pr.first, pr.second);
+    auto *mol = getMol(pr.first, pr.second);
     if (mol) {
       funcGroups.push_back(std::shared_ptr<ROMol>(mol));
     }
