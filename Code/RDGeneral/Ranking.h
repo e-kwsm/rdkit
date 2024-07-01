@@ -1,3 +1,6 @@
+#ifndef LLVM_CODE_RDGENERAL_RANKING_H
+#define LLVM_CODE_RDGENERAL_RANKING_H
+
 //
 //  Copyright (C) 2004-2015 Greg Landrum and Rational Discovery LLC
 //
@@ -18,10 +21,10 @@
 #ifndef RD_RANKING_H
 #define RD_RANKING_H
 
-#include <vector>
-#include <functional>
 #include <algorithm>
 #include <cstdint>
+#include <functional>
+#include <vector>
 
 namespace Rankers {
 inline auto pairGreater = [](const auto &v1, const auto &v2) {
@@ -63,4 +66,6 @@ void rankVect(const std::vector<T1> &vect, T2 &res) {
   }
 }
 }  // namespace Rankers
+#endif
+
 #endif

@@ -1,3 +1,6 @@
+#ifndef LLVM_CODE_DATASTRUCTS_FPBREADER_H
+#define LLVM_CODE_DATASTRUCTS_FPBREADER_H
+
 //
 // Copyright (c) 2016 Greg Landrum
 //
@@ -31,7 +34,7 @@
 namespace RDKit {
 namespace detail {
 struct FPBReader_impl;
-}
+}  // namespace detail
 
 //! class for reading and searching FPB files
 /*!
@@ -277,4 +280,6 @@ class RDKIT_DATASTRUCTS_EXPORT FPBReader {
   }
 };
 }  // namespace RDKit
+#endif
+
 #endif
