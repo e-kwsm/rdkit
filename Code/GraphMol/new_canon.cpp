@@ -107,7 +107,7 @@ void CreateSinglePartition(unsigned int nAtoms, int *order, int *count,
   count[0] = nAtoms;
 }
 
-void ActivatePartitions(unsigned int nAtoms, int *order, int *count,
+void ActivatePartitions(unsigned int nAtoms, const int *order, const int *count,
                         int &activeset, int *next, int *changed) {
   PRECONDITION(order, "bad pointer");
   PRECONDITION(count, "bad pointer");
