@@ -11,15 +11,15 @@
 
 #include "ROMol.h"
 #include "Atom.h"
-#include "PeriodicTable.h"
-#include "SanitException.h"
-#include "QueryOps.h"
 #include "MonomerInfo.h"
+#include "PeriodicTable.h"
+#include "QueryOps.h"
+#include "SanitException.h"
 
+#include <RDGeneral/Dict.h>
 #include <RDGeneral/Invariant.h>
 #include <RDGeneral/RDLog.h>
 #include <RDGeneral/types.h>
-#include <RDGeneral/Dict.h>
 
 namespace RDKit {
 
@@ -285,7 +285,7 @@ unsigned int Atom::getTotalDegree() const {
 unsigned int Atom::getTotalNumHs(bool includeNeighbors) const {
   int res = getNumExplicitHs() + getNumImplicitHs();
   if (includeNeighbors) {
-    for (auto nbr : getOwningMol().atomNeighbors(this)) {
+    for (auto *nbr : getOwningMol().atomNeighbors(this)) {
       if (nbr->getAtomicNum() == 1) {
         ++res;
       }
@@ -338,7 +338,7 @@ int calculateExplicitValence(const Atom &atom, bool strict, bool checkIt) {
   // FIX: contributions of bonds to valence are being done at best
   // approximately
   double accum = 0;
-  for (const auto bnd : atom.getOwningMol().atomBonds(&atom)) {
+  for (auto *const bnd : atom.getOwningMol().atomBonds(&atom)) {
     accum += bnd->getValenceContrib(&atom);
   }
   accum += atom.getNumExplicitHs();
@@ -373,9 +373,8 @@ int calculateExplicitValence(const Atom &atom, bool strict, bool checkIt) {
       }
       if (val > accum) {
         break;
-      } else {
-        pval = val;
       }
+      pval = val;
     }
     // if we're within 1.5 of the allowed valence, go ahead and take it.
     // this reflects things like the N in c1cccn1C, which starts with
@@ -428,9 +427,8 @@ int calculateExplicitValence(const Atom &atom, bool strict, bool checkIt) {
         std::string msg = errout.str();
         BOOST_LOG(rdErrorLog) << msg << std::endl;
         throw AtomValenceException(msg, atom.getIdx());
-      } else {
-        return -1;
       }
+      return -1;
     }
   }
   return res;
@@ -451,7 +449,7 @@ int calculateImplicitValence(const Atom &atom, bool strict, bool checkIt) {
   if (atomicNum == 0) {
     return 0;
   }
-  for (const auto bnd : atom.getOwningMol().atomBonds(&atom)) {
+  for (auto *const bnd : atom.getOwningMol().atomBonds(&atom)) {
     if (QueryOps::hasComplexBondTypeQuery(*bnd)) {
       return 0;
     }
@@ -462,7 +460,8 @@ int calculateImplicitValence(const Atom &atom, bool strict, bool checkIt) {
   if (explicitValence == 0 && numRadicalElectrons == 0 && atomicNum == 1) {
     if (formalCharge == 1 || formalCharge == -1) {
       return 0;
-    } else if (formalCharge == 0) {
+    }
+    if (formalCharge == 0) {
       return 1;
     } else {
       if (strict) {
@@ -560,9 +559,8 @@ int calculateImplicitValence(const Atom &atom, bool strict, bool checkIt) {
           std::string msg = errout.str();
           BOOST_LOG(rdErrorLog) << msg << std::endl;
           throw AtomValenceException(msg, atom.getIdx());
-        } else {
-          return -1;
         }
+        return -1;
       }
       res = 0;
     }
@@ -590,9 +588,9 @@ int calculateImplicitValence(const Atom &atom, bool strict, bool checkIt) {
           std::string msg = errout.str();
           BOOST_LOG(rdErrorLog) << msg << std::endl;
           throw AtomValenceException(msg, atom.getIdx());
-        } else {
-          return -1;
         }
+        return -1;
+
       } else {
         res = 0;
       }
@@ -628,9 +626,8 @@ double Atom::getMass() const {
       res = d_isotope;
     }
     return res;
-  } else {
-    return PeriodicTable::getTable()->getAtomicWeight(d_atomicNum);
   }
+  return PeriodicTable::getTable()->getAtomicWeight(d_atomicNum);
 }
 
 bool Atom::hasValenceViolation() const {
@@ -734,7 +731,7 @@ bool Atom::needsUpdatePropertyCache() const {
 //   getPerturbationOrder([1,2,0,3]) = 2
 int Atom::getPerturbationOrder(const INT_LIST &probe) const {
   INT_LIST ref;
-  for (const auto bnd : getOwningMol().atomBonds(this)) {
+  for (auto *const bnd : getOwningMol().atomBonds(this)) {
     ref.push_back(bnd->getIdx());
   }
   return static_cast<int>(countSwapsToInterconvert(probe, ref));
@@ -916,7 +913,7 @@ unsigned int numPiElectrons(const Atom &atom) {
     auto val = static_cast<unsigned int>(atom.getExplicitValence());
     unsigned int physical_bonds = atom.getNumExplicitHs();
     const auto &mol = atom.getOwningMol();
-    for (const auto bond : mol.atomBonds(&atom)) {
+    for (auto *const bond : mol.atomBonds(&atom)) {
       if (bond->getValenceContrib(&atom) != 0.0) {
         ++physical_bonds;
       }
@@ -1008,7 +1005,7 @@ std::ostream &operator<<(std::ostream &target, const RDKit::Atom &at) {
     }
     target << " nbrs:[";
     bool first = true;
-    for (const auto nbr : at.getOwningMol().atomNeighbors(&at)) {
+    for (auto *const nbr : at.getOwningMol().atomNeighbors(&at)) {
       if (!first) {
         target << " ";
       } else {
