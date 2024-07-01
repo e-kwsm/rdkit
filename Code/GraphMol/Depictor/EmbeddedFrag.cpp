@@ -1427,7 +1427,6 @@ void _recurseAtomOneSide(unsigned int endAid, unsigned int begAid,
       _recurseAtomOneSide(nbr->getIdx(), begAid, mol, flipAids);
     }
   }
-  return;
 }
 
 std::vector<std::span<const int>> _getRingsForSpiroCenter(

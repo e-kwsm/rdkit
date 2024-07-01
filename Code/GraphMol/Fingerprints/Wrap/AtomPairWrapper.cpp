@@ -100,8 +100,6 @@ void exportAtompair() {
               "account for invariants\n"
               "  RETURNS: AtomInvariantsGenerator\n\n",
               python::return_value_policy<python::manage_new_object>());
-
-  return;
 }
 }  // namespace AtomPairWrapper
 

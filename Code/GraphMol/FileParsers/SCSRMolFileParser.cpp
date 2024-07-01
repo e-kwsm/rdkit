@@ -181,8 +181,6 @@ void parseTemplateLine(RWMol *templateMol, std::string lineStr,
         << line;
     throw FileParseException(errout.str());
   }
-
-  return;
 }
 
 //------------------------------------------------
@@ -565,7 +563,6 @@ class MolFromSCSRMolConverter {
     }
 
     // error attachment ord not found
-    return;
   }
 
   void copySgroupIntoResult(
@@ -854,7 +851,6 @@ class MolFromSCSRMolConverter {
                 mainBeginAtomIdx, beginHatomConnections[0].d_templateAtomIdx)],
             originAtomMap[OriginAtomDef(
                 mainEndAtomIdx, endHatomConnections[0].d_templateAtomIdx)]);
-    return;
   }
 
  public:
