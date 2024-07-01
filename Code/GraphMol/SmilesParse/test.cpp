@@ -3597,7 +3597,7 @@ void testEmptyStrings() {
                        << std::endl;
   {
     RWMol *m;
-    std::string smiles = "";
+    std::string smiles;
     m = SmilesToMol(smiles);
     TEST_ASSERT(m);
     TEST_ASSERT(m->getNumAtoms() == 0);
@@ -3608,7 +3608,7 @@ void testEmptyStrings() {
   }
   {
     RWMol *m;
-    std::string smiles = "";
+    std::string smiles;
     m = SmartsToMol(smiles);
     TEST_ASSERT(m);
     TEST_ASSERT(m->getNumAtoms() == 0);
