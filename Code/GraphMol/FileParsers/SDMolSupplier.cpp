@@ -123,7 +123,7 @@ void SDMolSupplier::checkForEnd() {
   }
 }
 
-void SDMolSupplier::peekCheckForEnd(char *bufPtr, char *bufEnd,
+void SDMolSupplier::peekCheckForEnd(char *bufPtr, const char *bufEnd,
                                     std::streampos molStartPos) {
   PRECONDITION(dp_inStream, "no stream");
   int emptyLines = 0;
