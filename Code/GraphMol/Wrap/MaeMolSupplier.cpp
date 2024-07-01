@@ -40,7 +40,7 @@ bool streamIsGoodOrExhausted(std::istream *stream) {
 
 class LocalMaeMolSupplier : public RDKit::MaeMolSupplier {
  public:
-  LocalMaeMolSupplier() : RDKit::MaeMolSupplier() {}
+  LocalMaeMolSupplier() {}
 
   LocalMaeMolSupplier(python::object &input, bool sanitize, bool removeHs)
       : dp_streambuf(new streambuf(input)) {
