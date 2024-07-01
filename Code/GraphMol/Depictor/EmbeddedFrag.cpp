@@ -159,15 +159,18 @@ void EmbeddedFrag::computeNbrsAndAng(unsigned int aid,
       nb2 = wnb1;
       nb1 = nbrPair.second;
       break;
-    } else if (wnb1 == nbrPair.second) {
+    }
+    if (wnb1 == nbrPair.second) {
       nb2 = wnb1;
       nb1 = nbrPair.first;
       break;
-    } else if (wnb2 == nbrPair.first) {
+    }
+    if (wnb2 == nbrPair.first) {
       nb2 = wnb2;
       nb1 = nbrPair.second;
       break;
-    } else if (wnb2 == nbrPair.second) {
+    }
+    if (wnb2 == nbrPair.second) {
       nb2 = wnb2;
       nb1 = nbrPair.first;
       break;
@@ -388,7 +391,8 @@ bool EmbeddedFrag::matchToTemplate(const RDKit::INT_VECT &ringSystemAtoms,
     // and bond count first
     if (mol->getNumBonds() != rs_mol.getNumBonds()) {
       continue;
-    } else if (mol->getRingInfo()->numRings() != ring_count) {
+    }
+    if (mol->getRingInfo()->numRings() != ring_count) {
       continue;
     }
     RDKit::SubstructMatchParameters params;
@@ -1625,13 +1629,12 @@ void _recurseDegTwoRingAtoms(unsigned int aid, const RDKit::ROMol *mol,
   }
   if (nbrs.size() != 2) {
     return;
-  } else {
-    rPath.push_back(aid);
-    nbrMap[aid] = nbrs;
-    for (auto nbr : nbrs) {
-      if (std::find(rPath.begin(), rPath.end(), nbr) == rPath.end()) {
-        _recurseDegTwoRingAtoms(nbr, mol, rPath, nbrMap);
-      }
+  }
+  rPath.push_back(aid);
+  nbrMap[aid] = nbrs;
+  for (auto nbr : nbrs) {
+    if (std::find(rPath.begin(), rPath.end(), nbr) == rPath.end()) {
+      _recurseDegTwoRingAtoms(nbr, mol, rPath, nbrMap);
     }
   }
 }
@@ -1854,26 +1857,26 @@ void EmbeddedFrag::removeCollisionsBondFlip() {
           if (colls.size() < ncols) {
             doneBonds[ri] = NUM_BONDS_FLIPS;  // lock this rotatable bond
             break;
-          } else if (colls.size() == ncols && newDensity < prevDensity) {
-            break;
-          } else {
-            // we made the wrong move earlier - reject the flip move it back
-            flipAboutBond(ri);
-            colls = this->findCollisions(dmat);
-            // and try the other end:
-            flipAboutBond(ri, false);
-            colls = this->findCollisions(dmat);
-            newDensity = this->totalDensity();
-            if (colls.size() < ncols) {
-              doneBonds[ri] = NUM_BONDS_FLIPS;  // lock this rotatable bond
-              break;
-            } else if (colls.size() == ncols && newDensity < prevDensity) {
-              break;
-            } else {
-              flipAboutBond(ri, false);
-              colls = this->findCollisions(dmat);
-            }
           }
+          if (colls.size() == ncols && newDensity < prevDensity) {
+            break;
+          }
+          // we made the wrong move earlier - reject the flip move it back
+          flipAboutBond(ri);
+          colls = this->findCollisions(dmat);
+          // and try the other end:
+          flipAboutBond(ri, false);
+          colls = this->findCollisions(dmat);
+          newDensity = this->totalDensity();
+          if (colls.size() < ncols) {
+            doneBonds[ri] = NUM_BONDS_FLIPS;  // lock this rotatable bond
+            break;
+          }
+          if (colls.size() == ncols && newDensity < prevDensity) {
+            break;
+          }
+          flipAboutBond(ri, false);
+          colls = this->findCollisions(dmat);
         }
       }
     }
