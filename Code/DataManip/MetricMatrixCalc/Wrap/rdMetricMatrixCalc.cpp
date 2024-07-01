@@ -135,12 +135,11 @@ PyObject *getEuclideanDistMat(python::object descripMat) {
       mmCalc.calcMetricMatrix(desc2D, nrows, ncols, dMat);
       delete[] desc2D;
       return PyArray_Return(distRes);
-    } else {
-      // unrecognized type for the matrix, throw up
-      throw_value_error(
-          "The array has to be of type int, float, or double for "
-          "GetEuclideanDistMat");
     }
+    // unrecognized type for the matrix, throw up
+    throw_value_error(
+        "The array has to be of type int, float, or double for "
+        "GetEuclideanDistMat");
   }  // done with an array input
   else {
     // REVIEW: removed a ton of code here
