@@ -55,7 +55,7 @@ struct RDKIT_FILTERCATALOG_EXPORT FilterMatch {
   boost::shared_ptr<FilterMatcherBase> filterMatch;
   MatchVectType atomPairs;
 
-  FilterMatch() : filterMatch(), atomPairs() {}
+  FilterMatch() {}
   FilterMatch(boost::shared_ptr<FilterMatcherBase> filter,
               MatchVectType atomPairs)
       : filterMatch(std::move(filter)), atomPairs(std::move(atomPairs)) {}
@@ -80,12 +80,10 @@ class RDKIT_FILTERCATALOG_EXPORT FilterMatcherBase
 
  public:
   FilterMatcherBase(std::string name = DEFAULT_FILTERMATCHERBASE_NAME)
-      : boost::enable_shared_from_this<FilterMatcherBase>(),
-        d_filterName(std::move(name)) {}
+      : d_filterName(std::move(name)) {}
 
   FilterMatcherBase(const FilterMatcherBase &rhs)
-      : boost::enable_shared_from_this<FilterMatcherBase>(),
-        d_filterName(rhs.d_filterName) {}
+      : d_filterName(rhs.d_filterName) {}
 
   virtual ~FilterMatcherBase() {}
 
