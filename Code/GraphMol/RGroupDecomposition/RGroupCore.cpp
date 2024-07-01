@@ -85,138 +85,135 @@ RWMOL_SPTR RCore::extractCoreFromMolMatch(
     if (queryAtom->getAtomicNum() == 0 && queryAtom->hasProp(RLABEL) &&
         queryAtom->getDegree() == 1) {
       continue;
-    } else {
-      atomIndicesToKeep.set(pair.second);
-      molAtomMap[mol.getAtomWithIdx(pair.second)] = targetAtom;
-      int neighborNumber = -1;
+    }
+    atomIndicesToKeep.set(pair.second);
+    molAtomMap[mol.getAtomWithIdx(pair.second)] = targetAtom;
+    int neighborNumber = -1;
 #ifdef VERBOSE
-      std::cerr << "Atom Chirality In " << targetAtom->getChiralTag()
-                << std::endl;
+    std::cerr << "Atom Chirality In " << targetAtom->getChiralTag()
+              << std::endl;
 #endif
-      bool isChiral = targetAtom->getChiralTag() == Atom::CHI_TETRAHEDRAL_CCW ||
-                      targetAtom->getChiralTag() == Atom::CHI_TETRAHEDRAL_CW;
-      if (isChiral && !params.substructmatchParams.useChirality) {
-        // if we're not doing chiral matching don't copy chirality to the
-        // extracted core.
-        targetAtom->setChiralTag(Atom::CHI_UNSPECIFIED);
-        isChiral = false;
-      }
-      // collect neighbors in vector, so we can add atoms while looping
-      std::vector<Atom *> targetNeighborAtoms;
-      for (auto targetNeighborAtom : extractedCore->atomNeighbors(targetAtom)) {
-        targetNeighborAtoms.push_back(targetNeighborAtom);
-      }
-      // explicit hydrogens to keep in extracted core to preserve chiralty
-      std::vector<int> hydrogensToAdd;
-      for (const auto targetNeighborAtom : targetNeighborAtoms) {
-        ++neighborNumber;
-        auto targetNeighborIndex = targetNeighborAtom->getIdx();
-        auto queryNeighborMapping = std::find_if(
-            match.begin(), match.end(),
-            [this, targetNeighborIndex, pair](const auto &p) {
-              return p.second == static_cast<int>(targetNeighborIndex) &&
-                     core->getBondBetweenAtoms(pair.first, p.first);
-            });
-        if (queryNeighborMapping == match.end()) {
-          if (targetNeighborAtom->getAtomicNum() == 1) {
-            // Hydrogen needed to define chirality is present in target but
-            // not mapped to core.  Copy it to the extracted core
-            hydrogensToAdd.push_back(static_cast<int>(targetNeighborIndex));
-            molAtomMap[mol.getAtomWithIdx(targetNeighborIndex)] =
-                targetNeighborAtom;
-          } else if (isChiral) {
-            // There is a heavy sidechain in the decomp that is connected to
-            // the core by an unknown bond (onlyMatchAtRGroups = False and
-            // allowMultipleRGroupsOnUnlabelled = False).
-            // As there is no explicit target bond chriality is not preserved.
-            // In some cases we could handle chirality, but that has not been
-            // implemented (if there is only one free bond on the query that
-            // would be easy- or we could arbitrarily assign bonds).
-            isChiral = false;
-            targetAtom->setChiralTag(Atom::CHI_UNSPECIFIED);
-          }
-          continue;
+    bool isChiral = targetAtom->getChiralTag() == Atom::CHI_TETRAHEDRAL_CCW ||
+                    targetAtom->getChiralTag() == Atom::CHI_TETRAHEDRAL_CW;
+    if (isChiral && !params.substructmatchParams.useChirality) {
+      // if we're not doing chiral matching don't copy chirality to the
+      // extracted core.
+      targetAtom->setChiralTag(Atom::CHI_UNSPECIFIED);
+      isChiral = false;
+    }
+    // collect neighbors in vector, so we can add atoms while looping
+    std::vector<Atom *> targetNeighborAtoms;
+    for (auto targetNeighborAtom : extractedCore->atomNeighbors(targetAtom)) {
+      targetNeighborAtoms.push_back(targetNeighborAtom);
+    }
+    // explicit hydrogens to keep in extracted core to preserve chiralty
+    std::vector<int> hydrogensToAdd;
+    for (const auto targetNeighborAtom : targetNeighborAtoms) {
+      ++neighborNumber;
+      auto targetNeighborIndex = targetNeighborAtom->getIdx();
+      auto queryNeighborMapping = std::find_if(
+          match.begin(), match.end(),
+          [this, targetNeighborIndex, pair](const auto &p) {
+            return p.second == static_cast<int>(targetNeighborIndex) &&
+                   core->getBondBetweenAtoms(pair.first, p.first);
+          });
+      if (queryNeighborMapping == match.end()) {
+        if (targetNeighborAtom->getAtomicNum() == 1) {
+          // Hydrogen needed to define chirality is present in target but
+          // not mapped to core.  Copy it to the extracted core
+          hydrogensToAdd.push_back(static_cast<int>(targetNeighborIndex));
+          molAtomMap[mol.getAtomWithIdx(targetNeighborIndex)] =
+              targetNeighborAtom;
+        } else if (isChiral) {
+          // There is a heavy sidechain in the decomp that is connected to
+          // the core by an unknown bond (onlyMatchAtRGroups = False and
+          // allowMultipleRGroupsOnUnlabelled = False).
+          // As there is no explicit target bond chriality is not preserved.
+          // In some cases we could handle chirality, but that has not been
+          // implemented (if there is only one free bond on the query that
+          // would be easy- or we could arbitrarily assign bonds).
+          isChiral = false;
+          targetAtom->setChiralTag(Atom::CHI_UNSPECIFIED);
         }
-        const auto queryNeighbor =
-            core->getAtomWithIdx((*queryNeighborMapping).first);
-        if (queryNeighbor->getAtomicNum() == 0 &&
-            queryNeighbor->hasProp(RLABEL) && queryNeighbor->getDegree() == 1) {
-          auto newDummy = new Atom(*queryNeighbor);
-          dummyAtomMap[newDummy] = static_cast<int>(targetNeighborIndex);
-          newDummy->clearComputedProps();
-          const auto newDummyIdx =
-              extractedCore->addAtom(newDummy, false, true);
-          if (newDummyIdx >= atomIndicesToKeep.size()) {
-            atomIndicesToKeep.resize(newDummyIdx + 1);
-          }
-          atomIndicesToKeep.set(newDummyIdx);
-          auto connectingBond =
-              extractedCore
-                  ->getBondBetweenAtoms(pair.second, targetNeighborIndex)
-                  ->copy();
-          if (connectingBond->getStereo() > Bond::BondStereo::STEREOANY) {
-            // stereo double bonds
-            connectingBond->setStereo(Bond::BondStereo::STEREOANY);
+        continue;
+      }
+      const auto queryNeighbor =
+          core->getAtomWithIdx((*queryNeighborMapping).first);
+      if (queryNeighbor->getAtomicNum() == 0 &&
+          queryNeighbor->hasProp(RLABEL) && queryNeighbor->getDegree() == 1) {
+        auto newDummy = new Atom(*queryNeighbor);
+        dummyAtomMap[newDummy] = static_cast<int>(targetNeighborIndex);
+        newDummy->clearComputedProps();
+        const auto newDummyIdx = extractedCore->addAtom(newDummy, false, true);
+        if (newDummyIdx >= atomIndicesToKeep.size()) {
+          atomIndicesToKeep.resize(newDummyIdx + 1);
+        }
+        atomIndicesToKeep.set(newDummyIdx);
+        auto connectingBond =
+            extractedCore->getBondBetweenAtoms(pair.second, targetNeighborIndex)
+                ->copy();
+        if (connectingBond->getStereo() > Bond::BondStereo::STEREOANY) {
+          // stereo double bonds
+          connectingBond->setStereo(Bond::BondStereo::STEREOANY);
+        }
+
+        if (connectingBond->getBeginAtomIdx() == targetNeighborIndex) {
+          connectingBond->setBeginAtomIdx(newDummyIdx);
+        } else {
+          connectingBond->setEndAtomIdx(newDummyIdx);
+        }
+        newBonds.push_back(connectingBond);
+
+        // Check to see if we are breaking a stereo bond definition, by removing
+        // one of the stereo atoms If so, set to the new atom
+        for (auto bond : extractedCore->atomBonds(targetAtom)) {
+          if (bond->getIdx() == connectingBond->getIdx()) {
+            continue;
           }
 
-          if (connectingBond->getBeginAtomIdx() == targetNeighborIndex) {
-            connectingBond->setBeginAtomIdx(newDummyIdx);
-          } else {
-            connectingBond->setEndAtomIdx(newDummyIdx);
-          }
-          newBonds.push_back(connectingBond);
-
-          // Check to see if we are breaking a stereo bond definition, by removing one of the stereo atoms
-          // If so, set to the new atom
-          for (auto bond: extractedCore->atomBonds(targetAtom)) {
-            if (bond->getIdx() == connectingBond->getIdx()) {
-              continue;
-            }
-
-            if (bond->getStereo() > Bond::STEREOANY) {
-              auto &stereoAtoms = bond->getStereoAtoms();
-              for (int& stereoAtom : stereoAtoms) {
-                if (stereoAtom == static_cast<int>(targetNeighborIndex)) {
-                  stereoAtom = static_cast<int>(newDummyIdx);
-                }
+          if (bond->getStereo() > Bond::STEREOANY) {
+            auto &stereoAtoms = bond->getStereoAtoms();
+            for (int &stereoAtom : stereoAtoms) {
+              if (stereoAtom == static_cast<int>(targetNeighborIndex)) {
+                stereoAtom = static_cast<int>(newDummyIdx);
               }
             }
           }
+        }
 
-          // Chirality parity stuff see RDKit::replaceCore in
-          // Code/GraphMol/ChemTransforms/ChemTransforms.cpp
-          if (isChiral) {
-            bool switchIt = false;
-            switch (extractedCore->getAtomDegree(targetAtom)) {
-              case 4:
-                if (!(neighborNumber % 2)) {
-                  switchIt = true;
-                }
-                break;
-              case 3:
-                if (neighborNumber == 1) {
-                  switchIt = true;
-                }
-                break;
-            }
-            // because this neighbor will be moved at the end of the neighbor
-            // list, we need to decrement the neighbor number in case additional
-            // dummy atoms are to be connected to the targetAtom
-            --neighborNumber;
-            if (switchIt) {
-              targetAtom->invertChirality();
-            }
+        // Chirality parity stuff see RDKit::replaceCore in
+        // Code/GraphMol/ChemTransforms/ChemTransforms.cpp
+        if (isChiral) {
+          bool switchIt = false;
+          switch (extractedCore->getAtomDegree(targetAtom)) {
+            case 4:
+              if (!(neighborNumber % 2)) {
+                switchIt = true;
+              }
+              break;
+            case 3:
+              if (neighborNumber == 1) {
+                switchIt = true;
+              }
+              break;
+          }
+          // because this neighbor will be moved at the end of the neighbor
+          // list, we need to decrement the neighbor number in case additional
+          // dummy atoms are to be connected to the targetAtom
+          --neighborNumber;
+          if (switchIt) {
+            targetAtom->invertChirality();
           }
         }
       }
-      for (const auto index : hydrogensToAdd) {
-        atomIndicesToKeep.set(index);
-      }
-#ifdef VERBOSE
-      std::cerr << "Atom Chirality Out " << targetAtom->getChiralTag()
-                << std::endl;
-#endif
     }
+    for (const auto index : hydrogensToAdd) {
+      atomIndicesToKeep.set(index);
+    }
+#ifdef VERBOSE
+    std::cerr << "Atom Chirality Out " << targetAtom->getChiralTag()
+              << std::endl;
+#endif
   }
   for (const auto newBond : newBonds) {
     extractedCore->addBond(newBond, true);
