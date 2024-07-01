@@ -337,8 +337,8 @@ QueryDetails getQueryDetails(const Query<int, T const *, true> *query) {
             ->getVal(),
         static_cast<const GreaterQuery<int, T const *, true> *>(query)
             ->getTol()));
-  } else if (typeid(*query) ==
-             typeid(GreaterEqualQuery<int, T const *, true>)) {
+  }
+  if (typeid(*query) == typeid(GreaterEqualQuery<int, T const *, true>)) {
     return QueryDetails(std::make_tuple(
         MolPickler::QUERY_GREATEREQUAL,
         static_cast<const GreaterEqualQuery<int, T const *, true> *>(query)
