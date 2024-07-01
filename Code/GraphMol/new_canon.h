@@ -299,7 +299,8 @@ class RDKIT_GRAPHMOL_EXPORT AtomCompareFunctor {
   }
 
   int basecomp(int i, int j) const {
-    unsigned int ivi, ivj;
+    unsigned int ivi;
+    unsigned int ivj;
 
     // always start with the current class:
     ivi = dp_atoms[i].index;
@@ -585,7 +586,8 @@ class RDKIT_GRAPHMOL_EXPORT ChiralAtomCompareFunctor {
 
   int basecomp(int i, int j) const {
     PRECONDITION(dp_atoms, "no atoms");
-    unsigned int ivi, ivj;
+    unsigned int ivi;
+    unsigned int ivj;
 
     // always start with the current class:
     ivi = dp_atoms[i].index;

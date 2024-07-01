@@ -32,7 +32,8 @@ Atom *getAtomNeighborNot(ROMol *mol, const Atom *atom, const Atom *other) {
   PRECONDITION(other, "bad atom");
   Atom *res = nullptr;
 
-  ROMol::ADJ_ITER nbrIdx, endNbrs;
+  ROMol::ADJ_ITER nbrIdx;
+  ROMol::ADJ_ITER endNbrs;
   boost::tie(nbrIdx, endNbrs) = mol->getAtomNeighbors(atom);
   while (nbrIdx != endNbrs) {
     if (*nbrIdx != other->getIdx()) {
@@ -64,7 +65,8 @@ void AssignHsResidueInfo(RWMol &mol) {
     Atom *newAt = mol.getAtomWithIdx(aidx);
     auto *info = (AtomPDBResidueInfo *)(newAt->getMonomerInfo());
     if (info && info->getMonomerType() == AtomMonomerInfo::PDBRESIDUE) {
-      ROMol::ADJ_ITER begin, end;
+      ROMol::ADJ_ITER begin;
+      ROMol::ADJ_ITER end;
       boost::tie(begin, end) = mol.getAtomNeighbors(newAt);
       while (begin != end) {
         if (mol.getAtomWithIdx(*begin)->getAtomicNum() == 1) {
@@ -193,14 +195,22 @@ void setTerminalAtomCoords(ROMol &mol, unsigned int idx,
 
   RDGeom::Point3D dirVect(0, 0, 0);
 
-  RDGeom::Point3D perpVect, rotnAxis, nbrPerp;
-  RDGeom::Point3D nbr1Vect, nbr2Vect, nbr3Vect;
+  RDGeom::Point3D perpVect;
+  RDGeom::Point3D rotnAxis;
+  RDGeom::Point3D nbrPerp;
+  RDGeom::Point3D nbr1Vect;
+  RDGeom::Point3D nbr2Vect;
+  RDGeom::Point3D nbr3Vect;
   RDGeom::Transform3D tform;
-  RDGeom::Point3D otherPos, atomPos;
+  RDGeom::Point3D otherPos;
+  RDGeom::Point3D atomPos;
 
-  const Atom *nbr1 = nullptr, *nbr2 = nullptr, *nbr3 = nullptr;
+  const Atom *nbr1 = nullptr;
+  const Atom *nbr2 = nullptr;
+  const Atom *nbr3 = nullptr;
   const Bond *nbrBond;
-  ROMol::ADJ_ITER nbrIdx, endNbrs;
+  ROMol::ADJ_ITER nbrIdx;
+  ROMol::ADJ_ITER endNbrs;
 
   switch (otherAtom->getDegree()) {
     case 1:
@@ -1239,12 +1249,14 @@ void mergeQueryHs(RWMol &mol, bool mergeUnmappedOnly, bool mergeIsotopes) {
   for (unsigned int i = 0; i < mol.getNumAtoms(); ++i) {
     hatoms[i] = isQueryH(mol.getAtomWithIdx(i)) == HydrogenType::QueryHydrogen;
   }
-  unsigned int currIdx = 0, stopIdx = mol.getNumAtoms();
+  unsigned int currIdx = 0;
+  unsigned int stopIdx = mol.getNumAtoms();
   while (currIdx < stopIdx) {
     Atom *atom = mol.getAtomWithIdx(currIdx);
     if (!hatoms[currIdx]) {
       unsigned int numHsToRemove = 0;
-      ROMol::ADJ_ITER begin, end;
+      ROMol::ADJ_ITER begin;
+      ROMol::ADJ_ITER end;
       boost::tie(begin, end) = mol.getAtomNeighbors(atom);
 
       while (begin != end) {

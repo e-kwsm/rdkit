@@ -83,7 +83,8 @@ void makeRingNeighborMap(const VECT_INT_VECT &brings,
                          INT_INT_VECT_MAP &neighMap, unsigned int maxSize,
                          unsigned int maxOverlapSize) {
   auto nrings = rdcast<int>(brings.size());
-  int i, j;
+  int i;
+  int j;
   INT_VECT ring1;
 
   for (i = 0; i < nrings; ++i) {
