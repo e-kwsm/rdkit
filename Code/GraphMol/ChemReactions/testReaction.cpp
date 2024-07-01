@@ -6943,10 +6943,10 @@ void testGithub1868() {
     TEST_ASSERT(rxn->getNumProductTemplates() == 1);
 
     for (auto v : rxn->getReactants()) {
-      MolToSmiles(*v.get());
+      MolToSmiles(*v);
     }
     for (auto v : rxn->getProducts()) {
-      MolToSmiles(*v.get());
+      MolToSmiles(*v);
     }
   }
 }
