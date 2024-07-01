@@ -1676,7 +1676,7 @@ std::string get_sgroup_hierarchy_block(const ROMol &mol) {
           res << v << ".";
         }
         // remove the extra ".":
-        res.seekp(-1, res.cur);
+        res.seekp(-1, std::stringstream::cur);
         res << ",";
       }
     }
@@ -1745,7 +1745,7 @@ std::string get_sgroup_polymer_block(
         res << revAtomOrder[oaid] << ",";
       }
       // remove the extra ",":
-      res.seekp(-1, res.cur);
+      res.seekp(-1, std::stringstream::cur);
       res << ":";
       std::string label;
       if (sg.getPropIfPresent("LABEL", label)) {
@@ -1765,7 +1765,7 @@ std::string get_sgroup_polymer_block(
           res << bondOrder[v] << ",";
         }
         // remove the extra ",":
-        res.seekp(-1, res.cur);
+        res.seekp(-1, std::stringstream::cur);
       }
       res << ":";
       std::vector<unsigned int> tailCrossings;
@@ -1775,7 +1775,7 @@ std::string get_sgroup_polymer_block(
           res << bondOrder[tailCrossings[i]] << ",";
         }
         // remove the extra ",":
-        res.seekp(-1, res.cur);
+        res.seekp(-1, std::stringstream::cur);
       }
       res << ":";
     }
@@ -1820,7 +1820,7 @@ std::string get_sgroup_data_block(const ROMol &mol,
         res << revOrder[oaid] << ",";
       }
       // remove the extra ",":
-      res.seekp(-1, res.cur);
+      res.seekp(-1, std::stringstream::cur);
       res << ":";
       std::string prop;
       if (sg.getPropIfPresent("FIELDNAME", prop) && !prop.empty()) {
@@ -1833,7 +1833,7 @@ std::string get_sgroup_data_block(const ROMol &mol,
           res << pv << ",";
         }
         // remove the extra ",":
-        res.seekp(-1, res.cur);
+        res.seekp(-1, std::stringstream::cur);
       }
       res << ":";
       if (sg.getPropIfPresent("QUERYOP", prop) && !prop.empty()) {
