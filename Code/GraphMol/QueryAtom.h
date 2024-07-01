@@ -1,3 +1,6 @@
+#ifndef LLVM_CODE_GRAPHMOL_QUERYATOM_H
+#define LLVM_CODE_GRAPHMOL_QUERYATOM_H
+
 //
 //  Copyright (C) 2001-2022 Greg Landrum and other RDKit contributors
 //
@@ -11,10 +14,10 @@
 #ifndef RD_QUERYATOM_H
 #define RD_QUERYATOM_H
 
-#include <utility>
 #include "Atom.h"
-#include <Query/QueryObjects.h>
 #include <GraphMol/QueryOps.h>
+#include <Query/QueryObjects.h>
+#include <utility>
 
 namespace RDKit {
 
@@ -157,5 +160,7 @@ inline std::string describeQuery(const Atom *atom) {
 }
 
 };  // namespace RDKit
+
+#endif
 
 #endif
