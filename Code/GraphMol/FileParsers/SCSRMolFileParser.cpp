@@ -300,7 +300,7 @@ static std::unique_ptr<SCSRMol> SCSRMolFromSCSRDataStream(
   // and the ATTCHORD entries of each main atom must be consistent
   // with the template mol it matches.
 
-  unsigned int atomCount = res.get()->getMol()->getNumAtoms();
+  unsigned int atomCount = res->getMol()->getNumAtoms();
   for (unsigned int atomIdx = 0; atomIdx < atomCount; ++atomIdx) {
     auto atom = res->getMol()->getAtomWithIdx(atomIdx);
 
@@ -321,7 +321,7 @@ static std::unique_ptr<SCSRMol> SCSRMolFromSCSRDataStream(
 
       bool templateFound = false;
       for (unsigned int templateIdx = 0;
-           !templateFound && templateIdx < res.get()->getTemplateCount();
+           !templateFound && templateIdx < res->getTemplateCount();
            ++templateIdx) {
         auto templateMol = res->getTemplate(templateIdx);
         if (templateMol->getProp<std::string>(
@@ -1321,7 +1321,7 @@ class MolFromSCSRMolConverter {
 
     if (newSgroups.size() > 0) {
       for (auto &sg : newSgroups) {
-        addSubstanceGroup(*resMol, *sg.get());
+        addSubstanceGroup(*resMol, *sg);
       }
     }
     newSgroups.clear();  // just tidy cleanup
