@@ -68,8 +68,9 @@ bool enhancedStereoIsOK(
       if (mol_group == molStereoGroups.end()) {
         // group matching absolute. not ok.
         return false;
-      } else if (is_and && mol_group->second->getGroupType() !=
-                               StereoGroupType::STEREO_AND) {
+      }
+      if (is_and &&
+          mol_group->second->getGroupType() != StereoGroupType::STEREO_AND) {
         // AND matching OR. not ok.
         return false;
       }
