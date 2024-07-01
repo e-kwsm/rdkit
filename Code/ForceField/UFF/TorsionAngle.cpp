@@ -45,7 +45,7 @@ double equation17(double bondOrder23, const AtomicParams *at2Params,
          (1. + 4.18 * log(bondOrder23));
 }
 
-void calcTorsionGrad(RDGeom::Point3D *r, RDGeom::Point3D *t, double *d,
+void calcTorsionGrad(RDGeom::Point3D *r, RDGeom::Point3D *t, const double *d,
                      double **g, double &sinTerm, double &cosPhi) {
   // -------
   // dTheta/dx is trickier:
