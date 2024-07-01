@@ -745,7 +745,7 @@ RGroupColumns RGroupDecomposition::getRGroupsAsColumns() const {
     auto Rs_seen(usedLabelMap);
     const R_DECOMP &in_rgroups = it->rgroups;
     if (data->params.includeTargetMolInResults) {
-      groups[RGroupData::getMolLabel()].push_back(
+      groups[RGroupData::getMolLabel()].emplace_back(
           it->getTargetMoleculeForHighlights(
               data->params.removeHydrogensPostMatch));
     }
@@ -768,14 +768,14 @@ RGroupColumns RGroupDecomposition::getRGroupsAsColumns() const {
       col.emplace_back(rgroup.second->combinedMol);
       rGroupWithRealMol.insert(r);
     }
-    groups[RGroupData::getCoreLabel()].push_back(
+    groups[RGroupData::getCoreLabel()].emplace_back(
         outputCoreMolecule(*it, Rs_seen));
 
     // add empty entries to columns where this molecule didn't appear
     for (const auto &realLabel : data->finalRlabelMapping) {
       if (!Rs_seen.getIsUsed(realLabel.second)) {
         auto r = RGroupData::getRGroupLabel(realLabel.second);
-        groups[r].push_back(boost::make_shared<RWMol>());
+        groups[r].emplace_back(boost::make_shared<RWMol>());
       }
     }
   }
