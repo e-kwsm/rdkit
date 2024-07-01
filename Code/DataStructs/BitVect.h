@@ -1,3 +1,6 @@
+#ifndef LLVM_CODE_DATASTRUCTS_BITVECT_H
+#define LLVM_CODE_DATASTRUCTS_BITVECT_H
+
 //
 // Copyright (c) 2003-2008 greg Landrum and Rational Discovery LLC
 //
@@ -11,8 +14,8 @@
 #ifndef __RD_BITVECT_H__
 #define __RD_BITVECT_H__
 
-#include <vector>
 #include <string>
+#include <vector>
 
 typedef std::vector<int> IntVect;
 typedef IntVect::iterator IntVectIter;
@@ -64,5 +67,7 @@ class RDKIT_DATASTRUCTS_EXPORT BitVect {
  private:
   virtual void _initForSize(const unsigned int size) = 0;
 };
+
+#endif
 
 #endif
