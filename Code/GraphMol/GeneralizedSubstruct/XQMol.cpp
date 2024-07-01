@@ -155,17 +155,16 @@ ExtendedQueryMol createExtendedQueryMol(const RWMol &mol, bool doEnumeration,
         return {std::move(tq)};
     }
     return {std::make_unique<RWMol>(*lmol)};
-
-  } else {
-    MolBundle lbndl;
-    for (auto &bmol : bndl.getMols()) {
-      if (adjustQueryProperties) {
-        boost::shared_ptr<ROMol> lmol(
-            MolOps::adjustQueryProperties(*bmol, &params));
-        lbndl.addMol(lmol);
-      } else {
-        lbndl.addMol(bmol);
-      }
+  }
+  MolBundle lbndl;
+  for (auto &bmol : bndl.getMols()) {
+    if (adjustQueryProperties) {
+      boost::shared_ptr<ROMol> lmol(
+          MolOps::adjustQueryProperties(*bmol, &params));
+      lbndl.addMol(lmol);
+    } else {
+      lbndl.addMol(bmol);
+    }
     }
     bool hadTautomers = false;
     auto tautomerBundle =
@@ -184,7 +183,6 @@ ExtendedQueryMol createExtendedQueryMol(const RWMol &mol, bool doEnumeration,
       return {std::make_unique<MolBundle>(lbndl)};
     }  // return the tautomer bundle
       return {std::move(tautomerBundle)};
-  }
 }
 
 std::unique_ptr<ExplicitBitVect> patternFingerprintTargetMol(
