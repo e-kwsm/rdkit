@@ -102,7 +102,8 @@ void markUselessD2s(unsigned int root, const ROMol &tMol,
                     const boost::dynamic_bitset<> &activeBonds) {
   // recursive function to mark any degree 2 nodes that are already represented
   // by root for the purpose of finding smallest rings.
-  ROMol::OEDGE_ITER beg, end;
+  ROMol::OEDGE_ITER beg;
+  ROMol::OEDGE_ITER end;
   boost::tie(beg, end) = tMol.getAtomBonds(tMol.getAtomWithIdx(root));
   while (beg != end) {
     const Bond *bond = tMol[*beg];
@@ -432,9 +433,12 @@ void findRingsD3Node(const ROMol &tMol, VECT_INT_VECT &res,
   // if already found >3 rings we are done with this degree 3 node
   // if we found less than 3 we have to find other potential ring/s
   if (nsmall < 3) {
-    int n1 = -1, n2 = -1, n3 = -1;
+    int n1 = -1;
+    int n2 = -1;
+    int n3 = -1;
 
-    ROMol::OEDGE_ITER beg, end;
+    ROMol::OEDGE_ITER beg;
+    ROMol::OEDGE_ITER end;
     boost::tie(beg, end) = tMol.getAtomBonds(tMol.getAtomWithIdx(cand));
     while (beg != end && !activeBonds[tMol[*beg]->getIdx()]) {
       ++beg;
@@ -497,7 +501,8 @@ void findRingsD3Node(const ROMol &tMol, VECT_INT_VECT &res,
     if (nsmall == 1) {
       // we found 1 ring - we need to find two more that involve the 3rd
       // neighbor
-      int f1 = -1, f2 = -1;
+      int f1 = -1;
+      int f2 = -1;
       // Which of our three neighbors are in the small ring?
       //   these are f1 and f2
       if (std::find(srings[0].begin(), srings[0].end(), n1) ==
@@ -587,7 +592,8 @@ int greatestComFac(long curfac, long nfac) {
  ******************************************************************************/
 void trimBonds(unsigned int cand, const ROMol &tMol, INT_SET &changed,
                INT_VECT &atomDegrees, boost::dynamic_bitset<> &activeBonds) {
-  ROMol::OEDGE_ITER beg, end;
+  ROMol::OEDGE_ITER beg;
+  ROMol::OEDGE_ITER end;
   boost::tie(beg, end) = tMol.getAtomBonds(tMol.getAtomWithIdx(cand));
   while (beg != end) {
     const Bond *bond = tMol[*beg];
@@ -634,7 +640,9 @@ int BFSWorkspace::smallestRingsBfs(const ROMol &mol, int root,
 
   // FIX: this should be number of atoms in the fragment (if it's required at
   // all, see below)
-  const int WHITE = 0, GRAY = 1, BLACK = 2;
+  const int WHITE = 0;
+  const int GRAY = 1;
+  const int BLACK = 2;
   d_done.assign(mol.getNumAtoms(), WHITE);
 
   if (forbidden) {
@@ -671,7 +679,8 @@ int BFSWorkspace::smallestRingsBfs(const ROMol &mol, int root,
       break;
     }
 
-    ROMol::OEDGE_ITER beg, end;
+    ROMol::OEDGE_ITER beg;
+    ROMol::OEDGE_ITER end;
     boost::tie(beg, end) = mol.getAtomBonds(mol.getAtomWithIdx(curr));
     while (beg != end) {
       const Bond *bond = mol[*beg];
@@ -754,7 +763,8 @@ bool _atomSearchBFS(const ROMol &tMol, unsigned int startAtomIdx,
     bfsq.pop_front();
 
     unsigned int currAtomIdx = tv.back();
-    ROMol::ADJ_ITER nbrIdx, endNbrs;
+    ROMol::ADJ_ITER nbrIdx;
+    ROMol::ADJ_ITER endNbrs;
     boost::tie(nbrIdx, endNbrs) =
         tMol.getAtomNeighbors(tMol.getAtomWithIdx(currAtomIdx));
     while (nbrIdx != endNbrs) {
@@ -1280,7 +1290,8 @@ void findRingFamilies(const ROMol &mol) {
       free(edges);
       throw ValueErrorException("Cannot get URF edges");
     }
-    INT_VECT nvect(nNodes), evect(nEdges);
+    INT_VECT nvect(nNodes);
+    INT_VECT evect(nEdges);
     for (unsigned int ridx = 0; ridx < nNodes; ++ridx) {
       nvect[ridx] = nodes[ridx];
     }
