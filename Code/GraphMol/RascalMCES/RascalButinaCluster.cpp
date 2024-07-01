@@ -59,9 +59,8 @@ std::vector<std::vector<unsigned int>> buildNborLists(
                const std::vector<unsigned int> &nl2) -> bool {
               if (nl1.size() == nl2.size()) {
                 return nl1 > nl2;
-              } else {
-                return nl1.size() > nl2.size();
               }
+              return nl1.size() > nl2.size();
             });
   return nborLists;
 }
@@ -97,9 +96,8 @@ std::vector<std::vector<unsigned int>> formClusters(
                  const std::vector<unsigned int> &nl2) -> bool {
                 if (nl1.size() == nl2.size()) {
                   return nl1 > nl2;
-                } else {
-                  return nl1.size() > nl2.size();
                 }
+                return nl1.size() > nl2.size();
               });
   }
   return clusters;
