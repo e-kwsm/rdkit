@@ -1,3 +1,6 @@
+#ifndef LLVM_CODE_GEOMETRY_UNIFORMGRID3D_H
+#define LLVM_CODE_GEOMETRY_UNIFORMGRID3D_H
+
 //
 //   Copyright (C) 2005-2013 Greg Landrum and Rational Discovery LLC
 //
@@ -11,9 +14,9 @@
 #ifndef UNIFORMGRID3D_H_20050124_1703
 #define UNIFORMGRID3D_H_20050124_1703
 
+#include "Grid3D.h"
 #include "point.h"
 #include <DataStructs/DiscreteValueVect.h>
-#include "Grid3D.h"
 #include <iostream>
 
 namespace RDGeom {
@@ -215,5 +218,7 @@ RDKIT_RDGEOMETRYLIB_EXPORT void writeGridToStream(const UniformGrid3D &grid,
 RDKIT_RDGEOMETRYLIB_EXPORT void writeGridToFile(const UniformGrid3D &grid,
                                                 const std::string &filename);
 }  // namespace RDGeom
+
+#endif
 
 #endif
