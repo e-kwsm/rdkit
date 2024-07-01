@@ -470,7 +470,8 @@ int calculateImplicitValence(const Atom &atom, bool strict, bool checkIt) {
       std::string msg = errout.str();
       BOOST_LOG(rdErrorLog) << msg << std::endl;
       throw AtomValenceException(msg, atom.getIdx());
-    } else if (checkIt) {
+    }
+    if (checkIt) {
       return -1;
     } else {
       return 0;
