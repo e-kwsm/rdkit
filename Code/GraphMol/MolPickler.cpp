@@ -318,7 +318,8 @@ QueryDetails getQueryDetails(const Query<int, T const *, true> *query) {
   }
   if (typeid(*query) == typeid(OrQuery<int, T const *, true>)) {
     return QueryDetails(MolPickler::QUERY_OR);
-  } else if (typeid(*query) == typeid(XOrQuery<int, T const *, true>)) {
+  }
+  if (typeid(*query) == typeid(XOrQuery<int, T const *, true>)) {
     return QueryDetails(MolPickler::QUERY_XOR);
   } else if (typeid(*query) == typeid(EqualityQuery<int, T const *, true>)) {
     return QueryDetails(std::make_tuple(
@@ -1009,7 +1010,8 @@ void MolPickler::pickleMol(const ROMol *mol, std::ostream &ss,
     }
     if (ss.bad()) {
       throw MolPicklerException("Bad pickle format: write error while writing");
-    } else if (ss.fail()) {
+    }
+    if (ss.fail()) {
       throw MolPicklerException(
           "Bad pickle format: logical error while writing");
     } else {
@@ -1113,7 +1115,8 @@ void MolPickler::molFromPickle(std::istream &ss, ROMol *mol,
     }
     if (ss.bad()) {
       throw MolPicklerException("Bad pickle format: read error while reading");
-    } else if (ss.fail()) {
+    }
+    if (ss.fail()) {
       throw MolPicklerException(
           "Bad pickle format: logical error while reading");
     } else {
