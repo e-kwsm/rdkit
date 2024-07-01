@@ -61,13 +61,12 @@ bool hanoi(int *base, int nel, int *temp, int *count, int *changed,
       count[n1] = 1;
       count[n2] = 1;
       return false;
-    } else /* stat > 0 */ {
-      count[n1] = 1;
-      count[n2] = 1;
-      base[0] = n2; /* temp[0] = n2; */
-      base[1] = n1; /* temp[1] = n1; */
-      return false; /* return True;  */
-    }
+    } /* stat > 0 */
+    count[n1] = 1;
+    count[n2] = 1;
+    base[0] = n2; /* temp[0] = n2; */
+    base[1] = n1; /* temp[1] = n1; */
+    return false; /* return True;  */
   }
 
   n1 = nel / 2;
