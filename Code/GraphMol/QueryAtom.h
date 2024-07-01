@@ -29,7 +29,7 @@ class RDKIT_GRAPHMOL_EXPORT QueryAtom : public Atom {
  public:
   typedef Queries::Query<int, Atom const *, true> QUERYATOM_QUERY;
 
-  QueryAtom() : Atom() {}
+  QueryAtom() {}
   explicit QueryAtom(int num) : Atom(num), dp_query(makeAtomNumQuery(num)) {}
   explicit QueryAtom(const Atom &other)
       : Atom(other), dp_query(makeAtomNumQuery(other.getAtomicNum())) {
