@@ -6580,7 +6580,7 @@ TEST_CASE("MaeWriter basic testing", "[mae][MaeWriter][writer]") {
   }
 })MAE";
 
-    auto iss = new std::istringstream(maeBlock.data());
+    auto iss = new std::istringstream(maeBlock);
     MaeMolSupplier r(iss);
 
     std::unique_ptr<ROMol> mol(r.next());
