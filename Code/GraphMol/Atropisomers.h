@@ -1,3 +1,6 @@
+#ifndef LLVM_CODE_GRAPHMOL_ATROPISOMERS_H
+#define LLVM_CODE_GRAPHMOL_ATROPISOMERS_H
+
 //
 //  Copyright (C) 2004-2025 Tad Hurst/CDD and other RDKit contributors
 //
@@ -12,10 +15,10 @@
 #ifndef RD_ATROPISOMERS_H
 #define RD_ATROPISOMERS_H
 
-#include <GraphMol/RDKitBase.h>
 #include <GraphMol/Chirality.h>
-#include <string>
+#include <GraphMol/RDKitBase.h>
 #include <stdexcept>
+#include <string>
 
 namespace RDKit {
 namespace Atropisomers {
@@ -41,4 +44,6 @@ RDKIT_GRAPHMOL_EXPORT void getAllAtomIdsForStereoGroup(
 RDKIT_GRAPHMOL_EXPORT void cleanupAtropisomerStereoGroups(ROMol &mol);
 }  // namespace Atropisomers
 }  // namespace RDKit
+#endif
+
 #endif
