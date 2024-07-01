@@ -93,8 +93,7 @@ struct AtomInfo {
         templateIdx(templateIdx),
         rlabel(0),
         atomMap(0),
-        isotope(at->getIsotope()),
-        dummyLabel() {
+        isotope(at->getIsotope()) {
     atom->getPropIfPresent(common_properties::_MolFileRLabel, rlabel);
     atom->getPropIfPresent(common_properties::molAtomMapNumber, atomMap);
     atom->getPropIfPresent(common_properties::dummyLabel, dummyLabel);
