@@ -113,10 +113,8 @@ class RDKIT_CHEMREACTIONS_EXPORT EnumerateLibrary
   EnumerationTypes::BBS m_bbs;
 
  public:
-  EnumerateLibrary() : EnumerateLibraryBase(), m_bbs() {}
-  EnumerateLibrary(const std::string &s) : EnumerateLibraryBase(), m_bbs() {
-    initFromString(s);
-  }
+  EnumerateLibrary() {}
+  EnumerateLibrary(const std::string &s) { initFromString(s); }
 
   EnumerateLibrary(const ChemicalReaction &rxn,
                    const EnumerationTypes::BBS &reagents,

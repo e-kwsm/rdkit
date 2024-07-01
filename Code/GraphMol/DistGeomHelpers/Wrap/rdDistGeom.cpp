@@ -29,7 +29,7 @@ struct PyEmbedParameters
     : public RDKit::DGeomHelpers::EmbedParameters,
       public python::wrapper<RDKit::DGeomHelpers::EmbedParameters> {
  public:
-  PyEmbedParameters() : RDKit::DGeomHelpers::EmbedParameters() {}
+  PyEmbedParameters() {}
   PyEmbedParameters(const RDKit::DGeomHelpers::EmbedParameters &other)
       : RDKit::DGeomHelpers::EmbedParameters(other) {}
   void setCoordMap(const python::dict &cmap) {
