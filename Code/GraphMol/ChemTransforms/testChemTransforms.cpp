@@ -962,7 +962,7 @@ void testReplaceCoreMatchVectMultipleMappingToCore() {
   mol = "C1CC2NC12"_smiles;
   MatchVectType mapping{{0, 4}, {1, 3}, {2, 2}, {3, 3}, {4, 1}, {5, 0}};
 
-  ROMOL_SPTR result(replaceCore(*mol.get(), *core.get(), mapping, false));
+  ROMOL_SPTR result(replaceCore(*mol, *core, mapping, false));
   std::string smi = MolToSmiles(*result.get(), true);
   TEST_ASSERT("[1*]N[2*]" == smi);
 
@@ -970,7 +970,7 @@ void testReplaceCoreMatchVectMultipleMappingToCore() {
   core = "C1([*:1])C([*:2])C([*:3])C1"_smiles;
   mol = "C1C2C3N2C13"_smiles;
   mapping.assign({{0, 4}, {1, 3}, {2, 2}, {3, 3}, {4, 1}, {5, 3}, {6, 0}});
-  result.reset(replaceCore(*mol.get(), *core.get(), mapping, false));
+  result.reset(replaceCore(*mol, *core, mapping, false));
   smi = MolToSmiles(*result.get(), true);
   TEST_ASSERT("[1*]N([2*])[3*]" == smi);
 }

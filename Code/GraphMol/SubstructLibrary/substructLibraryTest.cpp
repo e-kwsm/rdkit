@@ -394,10 +394,10 @@ void ringTest(const std::string &name) {
   boost::shared_ptr<Holder> patternHolder = boost::make_shared<Holder>();
 
   SubstructLibrary lib(molHolder, patternHolder);
-  lib.addMol(*m.get());
-  std::vector<unsigned int> results = lib.getMatches(*q.get());
+  lib.addMol(*m);
+  std::vector<unsigned int> results = lib.getMatches(*q);
   TEST_ASSERT(results.size() == 1);
-  results = lib.getMatches(*q2.get());
+  results = lib.getMatches(*q2);
   TEST_ASSERT(results.size() == 1);
 
   BOOST_LOG(rdErrorLog) << "    Done (C++ ring query tests)" << std::endl;
