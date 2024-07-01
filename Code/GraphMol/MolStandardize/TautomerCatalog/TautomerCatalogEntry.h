@@ -39,7 +39,7 @@ class RDKIT_MOLSTANDARDIZE_EXPORT TautomerCatalogEntry
   }
 
   // TODO Catalog.h requires a getOrder function
-  unsigned int getOrder() const { return 0; }  // dp_mol->getNumBonds(); }
+  static unsigned int getOrder() { return 0; }  // dp_mol->getNumBonds(); }
 
   void toStream(std::ostream &ss) const override;
   std::string Serialize() const override;

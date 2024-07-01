@@ -135,14 +135,15 @@ class RDKIT_MOLDRAW2D_EXPORT DrawText {
                          const Point2D &cds, const StringRect &rect) const;
   // does the vector of StringRects, each translated by cds, intersect the
   // given StringRect.
-  bool doesRectIntersect(const std::vector<std::shared_ptr<StringRect>> &rects,
-                         const Point2D &cds, const StringRect &rect) const;
+  static bool doesRectIntersect(
+      const std::vector<std::shared_ptr<StringRect>> &rects, const Point2D &cds,
+      const StringRect &rect);
   bool doesLineIntersect(const std::string &label, OrientType orient,
                          const Point2D &cds, const Point2D &end1,
                          const Point2D &end2, double padding) const;
-  bool doesLineIntersect(const std::vector<std::shared_ptr<StringRect>> &rects,
-                         const Point2D &cds, const Point2D &end1,
-                         const Point2D &end2, double padding) const;
+  static bool doesLineIntersect(
+      const std::vector<std::shared_ptr<StringRect>> &rects, const Point2D &cds,
+      const Point2D &end1, const Point2D &end2, double padding);
   bool doesStringIntersect(
       const std::vector<std::shared_ptr<StringRect>> &rects,
       const Point2D &cds1, const std::string &label2, OrientType orient2,
@@ -155,12 +156,12 @@ class RDKIT_MOLDRAW2D_EXPORT DrawText {
       TextAlignType align, const std::vector<TextDrawType> &draw_modes,
       std::vector<std::shared_ptr<StringRect>> &rects) const;
   // adjust the string rectangles up and down for super- and subscripts
-  void adjustStringRectsForSuperSubScript(
+  static void adjustStringRectsForSuperSubScript(
       const std::vector<TextDrawType> &draw_modes,
-      std::vector<std::shared_ptr<StringRect>> &rects) const;
+      std::vector<std::shared_ptr<StringRect>> &rects);
   // return a scale factor appropriate for the character and draw type
   // (normal or super- or subscript)
-  double selectScaleFactor(char c, TextDrawType draw_type) const;
+  static double selectScaleFactor(char c, TextDrawType draw_type);
 
   // amount to scale subscripts and superscripts by
   constexpr static double SUBS_SCALE = 0.66;

@@ -230,7 +230,7 @@ void RGroupGa::rGroupCrossoverOperation(
 }
 
 const vector<shared_ptr<GaOperation<RGroupDecompositionChromosome>>>
-RGroupGa::getOperations() const {
+RGroupGa::getOperations() {
   // bias to mutation as that operator is so efficient
   auto mutationOperation =
       make_shared<GaOperation<RGroupDecompositionChromosome>>(

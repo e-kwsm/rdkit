@@ -99,7 +99,7 @@ int Rule4b::compare(const Edge *a, const Edge *b) const {
   }
 }
 
-bool Rule4b::hasDescriptors(const Node *node) const {
+bool Rule4b::hasDescriptors(const Node *node) {
   auto queue = std::list<const Node *>({node});
 
   for (const auto &node : queue) {
@@ -120,7 +120,7 @@ bool Rule4b::hasDescriptors(const Node *node) const {
 }
 
 bool Rule4b::getReference(const std::vector<const Node *> &nodes,
-                          std::vector<Descriptor> &result) const {
+                          std::vector<Descriptor> &result) {
   int right = 0;
   int left = 0;
   for (const auto &node : nodes) {
@@ -157,8 +157,7 @@ bool Rule4b::getReference(const std::vector<const Node *> &nodes,
   }
 }
 
-std::vector<std::vector<const Node *>> Rule4b::initialLevel(
-    const Node *node) const {
+std::vector<std::vector<const Node *>> Rule4b::initialLevel(const Node *node) {
   return {{node}};
 }
 
@@ -201,7 +200,7 @@ std::vector<std::vector<const Node *>> Rule4b::getNextLevel(
 }
 
 std::vector<const Node *> Rule4b::toNodeList(
-    const std::vector<Edge *> &eqEdges) const {
+    const std::vector<Edge *> &eqEdges) {
   std::vector<const Node *> eqNodes;
   eqNodes.reserve(eqEdges.size());
   for (const auto &edge : eqEdges) {
@@ -211,7 +210,7 @@ std::vector<const Node *> Rule4b::toNodeList(
 }
 
 std::vector<PairList> Rule4b::newPairLists(
-    const std::vector<Descriptor> &descriptors) const {
+    const std::vector<Descriptor> &descriptors) {
   std::vector<PairList> pairs;
   pairs.reserve(descriptors.size());
   for (Descriptor descriptor : descriptors) {

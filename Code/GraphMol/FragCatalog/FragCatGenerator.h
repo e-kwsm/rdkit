@@ -26,7 +26,7 @@ class RDKIT_FRAGCATALOG_EXPORT FragCatGenerator {
  public:
   FragCatGenerator() {}
 
-  unsigned int addFragsFromMol(const ROMol &mol, FragCatalog *fcat);
+  static unsigned int addFragsFromMol(const ROMol &mol, FragCatalog *fcat);
 };
 }  // namespace RDKit
 

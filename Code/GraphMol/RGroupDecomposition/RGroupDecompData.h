@@ -78,10 +78,10 @@ struct RGroupDecompData {
     int next();
   };
 
-  void addCoreUserLabels(const RWMol &core, std::set<int> &userLabels);
+  static void addCoreUserLabels(const RWMol &core, std::set<int> &userLabels);
 
-  void addAtoms(RWMol &mol,
-                const std::vector<std::pair<Atom *, Atom *>> &atomsToAdd);
+  static void addAtoms(
+      RWMol &mol, const std::vector<std::pair<Atom *, Atom *>> &atomsToAdd);
 
   bool replaceHydrogenCoreDummy(const RGroupMatch &match, RWMol &core,
                                 const Atom &atom, const int currentLabel,
