@@ -122,9 +122,8 @@ ExpTorsionAngleCollection::ExpTorsionAngleCollection(
       }
       angle.dp_pattern.reset(SmartsToMol(angle.smarts));
       // get the atom indices for atom 1, 2, 3, 4 in the pattern
-      for (unsigned int i = 0; i < (angle.dp_pattern.get())->getNumAtoms();
-           ++i) {
-        Atom const *atom = (angle.dp_pattern.get())->getAtomWithIdx(i);
+      for (unsigned int i = 0; i < angle.dp_pattern->getNumAtoms(); ++i) {
+        Atom const *atom = angle.dp_pattern->getAtomWithIdx(i);
         int num;
         if (atom->getPropIfPresent("molAtomMapNumber", num)) {
           if (num > 0 && num < 5) {
@@ -212,7 +211,7 @@ void getExperimentalTorsions(
     // loop over patterns
     for (const auto &param : *params) {
       std::vector<MatchVectType> matches;
-      SubstructMatch(mol, *(param.dp_pattern.get()), matches, false, true);
+      SubstructMatch(mol, *param.dp_pattern, matches, false, true);
       // loop over matches
       for (const auto &match : matches) {
         // get bond indices

@@ -32,7 +32,7 @@ void CatalogSearcher(
     int numThreads) {
   for (unsigned int idx = start; idx < smiles.size(); idx += numThreads) {
     std::unique_ptr<ROMol> mol(SmilesToMol(smiles[idx]));
-    if (mol.get()) {
+    if (mol) {
       results[idx] = fc.getMatches(*mol);
     } else {
       results[idx].push_back(makeBadSmilesEntry());

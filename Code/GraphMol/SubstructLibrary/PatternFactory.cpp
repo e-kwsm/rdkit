@@ -23,8 +23,8 @@ void fillPatterns(const SubstructLibrary &slib, const FPHolderBase &fph,
                   unsigned int end, unsigned int numThreads) {
   for (unsigned int idx = start; idx < end; idx += numThreads) {
     auto mol = slib.getMol(idx);
-    if (mol.get()) {
-      fps[idx] = fph.makeFingerprint(*mol.get());
+    if (mol) {
+      fps[idx] = fph.makeFingerprint(*mol);
     } else {
       // Make an empty FP
       fps[idx] = fph.makeFingerprint(ROMol());

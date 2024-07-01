@@ -474,7 +474,7 @@ TEST_CASE("CDXML") {
     CHECK(mols.size() == expected.size());
     int i = 0;
     for (auto &mol : mols) {
-      mol.get()->clearConformers();
+      mol->clearConformers();
       CHECK(MolToSmiles(*mol) == expected[i]);
       CHECK(MolToCXSmiles(*mol) == expected_cx[i++]);
     }
@@ -491,7 +491,7 @@ TEST_CASE("CDXML") {
     SmilesWriteParams wp;
     for (auto &mol : mols) {
       auto tomol = std::unique_ptr<ROMol>(mol.release());
-      tomol.get()->clearConformers();
+      tomol->clearConformers();
       RDKit::canonicalizeStereoGroups(tomol);
 
       CHECK(MolToSmiles(*tomol) == expected[i]);
