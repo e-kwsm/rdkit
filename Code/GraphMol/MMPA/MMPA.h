@@ -14,9 +14,7 @@
 #include <stdexcept>
 #include "../RDKitBase.h"
 
-namespace RDKit {
-
-namespace MMPA {
+namespace RDKit::MMPA {
 //! fragments a Molecule for processing with the Matched Molecular Pairs
 //!  MMPA algorithm (Hussain et al)
 /*!
@@ -77,5 +75,4 @@ RDKIT_MMPA_EXPORT bool fragmentMol(
     const std::vector<unsigned int>& bondsToCut, unsigned int minCuts = 1,
     unsigned int maxCuts = 3);
 
-}  // namespace MMPA
-}  // namespace RDKit
+}  // namespace RDKit::MMPA
