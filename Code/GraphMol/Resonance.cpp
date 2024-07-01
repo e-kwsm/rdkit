@@ -351,7 +351,8 @@ std::uint8_t AtomElectrons::findAllowedBonds(unsigned int bi) {
 bool AtomElectrons::isNbrCharged(unsigned int bo, unsigned int oeConstraint) {
   bool res = false;
   const ROMol &mol = d_parent->parent()->mol();
-  ROMol::OEDGE_ITER nbrIdx, endNbrs;
+  ROMol::OEDGE_ITER nbrIdx;
+  ROMol::OEDGE_ITER endNbrs;
   boost::tie(nbrIdx, endNbrs) = mol.getAtomBonds(d_atom);
   for (; !res && (nbrIdx != endNbrs); ++nbrIdx) {
     const Bond *bondNbr = mol[*nbrIdx];
@@ -432,7 +433,8 @@ std::uint8_t AtomElectrons::canAddBondWithOrder(unsigned int bo) {
 void AtomElectrons::allConjBondsDefinitiveBut(unsigned int bi) {
   bool allDefinitive = true;
   ROMol &mol = d_atom->getOwningMol();
-  ROMol::OEDGE_ITER nbrIdx, endNbrs;
+  ROMol::OEDGE_ITER nbrIdx;
+  ROMol::OEDGE_ITER endNbrs;
   boost::tie(nbrIdx, endNbrs) = mol.getAtomBonds(d_atom);
   for (; allDefinitive && (nbrIdx != endNbrs); ++nbrIdx) {
     unsigned int nbi = mol[*nbrIdx]->getIdx();
@@ -1572,7 +1574,8 @@ void ResonanceMolSupplier::buildCEMap(CEMap &ceMap, unsigned int conjGrpIdx) {
       BondElectrons *be = nullptr;
       // loop over neighbors of the atom popped from the
       // atom index stack
-      ROMol::ADJ_ITER nbrIdx, endNbrs;
+      ROMol::ADJ_ITER nbrIdx;
+      ROMol::ADJ_ITER endNbrs;
       boost::tie(nbrIdx, endNbrs) =
           d_mol->getAtomNeighbors(ae[BEGIN_POS]->atom());
       for (; nbrIdx != endNbrs; ++nbrIdx) {
