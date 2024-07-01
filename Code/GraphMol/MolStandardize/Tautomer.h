@@ -400,7 +400,7 @@ class RDKIT_MOLSTANDARDIZE_EXPORT TautomerEnumerator {
     } else {
       // Calculate score for each tautomer
       int bestScore = std::numeric_limits<int>::min();
-      std::string bestSmiles = "";
+      std::string bestSmiles;
       for (const auto &t : tautomers) {
         auto score = scoreFunc(*t);
 #ifdef VERBOSE_ENUMERATION
