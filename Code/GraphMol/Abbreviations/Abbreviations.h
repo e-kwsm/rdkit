@@ -44,7 +44,7 @@ struct RDKIT_ABBREVIATIONS_EXPORT AbbreviationMatch {
   AbbreviationMatch(std::vector<std::pair<int, int>> matchArg,
                     AbbreviationDefinition abbrevArg)
       : match(std::move(matchArg)), abbrev(std::move(abbrevArg)) {}
-  AbbreviationMatch() : match(), abbrev() {}
+  AbbreviationMatch() : abbrev() {}
   bool operator==(const AbbreviationMatch &other) const {
     return abbrev == other.abbrev && match == other.match;
   }

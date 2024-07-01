@@ -61,7 +61,7 @@ class RDKIT_FILTERCATALOG_EXPORT FilterCatalogEntry
   Dict d_props;
 
  public:
-  FilterCatalogEntry() : d_matcher(), d_props() {}
+  FilterCatalogEntry() {}
 
   FilterCatalogEntry(const std::string &name, const FilterMatcherBase &matcher)
       : RDCatalog::CatalogEntry(), d_matcher(matcher.copy()) {
