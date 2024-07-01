@@ -463,19 +463,17 @@ int calculateImplicitValence(const Atom &atom, bool strict, bool checkIt) {
     }
     if (formalCharge == 0) {
       return 1;
+    }
+    if (strict) {
+      std::ostringstream errout;
+      errout << "Unreasonable formal charge on atom # " << atom.getIdx() << ".";
+      std::string msg = errout.str();
+      BOOST_LOG(rdErrorLog) << msg << std::endl;
+      throw AtomValenceException(msg, atom.getIdx());
+    } else if (checkIt) {
+      return -1;
     } else {
-      if (strict) {
-        std::ostringstream errout;
-        errout << "Unreasonable formal charge on atom # " << atom.getIdx()
-               << ".";
-        std::string msg = errout.str();
-        BOOST_LOG(rdErrorLog) << msg << std::endl;
-        throw AtomValenceException(msg, atom.getIdx());
-      } else if (checkIt) {
-        return -1;
-      } else {
-        return 0;
-      }
+      return 0;
     }
   }
 
@@ -590,10 +588,8 @@ int calculateImplicitValence(const Atom &atom, bool strict, bool checkIt) {
           throw AtomValenceException(msg, atom.getIdx());
         }
         return -1;
-
-      } else {
-        res = 0;
       }
+      res = 0;
     }
   }
   return res;
