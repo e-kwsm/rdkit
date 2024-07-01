@@ -1,3 +1,6 @@
+#ifndef LLVM_CODE_DATASTRUCTS_BITVECTS_H
+#define LLVM_CODE_DATASTRUCTS_BITVECTS_H
+
 //
 // Copyright (c) 2001-2006 greg Landrum and Rational Discovery LLC
 //
@@ -21,5 +24,7 @@
 #include "SparseBitVect.h"
 typedef SparseBitVect SBV;
 typedef ExplicitBitVect EBV;
+
+#endif
 
 #endif
