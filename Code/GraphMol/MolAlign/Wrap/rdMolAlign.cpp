@@ -320,13 +320,13 @@ class PyO3A {
   PyO3A(O3A *o) : o3a(o) {};
   PyO3A(boost::shared_ptr<O3A> o) : o3a(std::move(o)) {};
   ~PyO3A() = default;
-  double align() { return o3a.get()->align(); };
+  double align() { return o3a->align(); };
   PyObject *trans() {
     RDGeom::Transform3D trans;
-    double rmsd = o3a.get()->trans(trans);
+    double rmsd = o3a->trans(trans);
     return RDKit::generateRmsdTransMatchPyTuple(rmsd, trans);
   };
-  double score() { return o3a.get()->score(); };
+  double score() { return o3a->score(); };
   boost::python::list matches() {
     boost::python::list matchList;
     const RDKit::MatchVectType *o3aMatchVect = o3a->matches();

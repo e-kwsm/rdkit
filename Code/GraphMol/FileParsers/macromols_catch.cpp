@@ -102,7 +102,7 @@ class ScsiMolTest {
       return;
     }
 
-    RDKit::Chirality::removeNonExplicit3DChirality(*(mol.get()));
+    RDKit::Chirality::removeNonExplicit3DChirality(*mol);
 
     CHECK(mol != nullptr);
     CHECK(mol->getNumAtoms() == scsiTest->totalAtomCount);
@@ -168,7 +168,7 @@ class ScsiMolTest {
       return;
     }
 
-    RDKit::Chirality::removeNonExplicit3DChirality(*(mol.get()));
+    RDKit::Chirality::removeNonExplicit3DChirality(*mol);
 
     CHECK(mol);
     CHECK(mol->getNumAtoms() == scsiTest->totalAtomCount);

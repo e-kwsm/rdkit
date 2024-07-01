@@ -1397,7 +1397,7 @@ void ResonanceMolSupplier::enumerate() {
   if (d_isEnumerated) {
     return;
   }
-  if (d_callback.get()) {
+  if (d_callback) {
     d_callback->d_progress.resize(d_nConjGrp);
   }
   resizeCeVect();
@@ -1692,7 +1692,7 @@ void ResonanceMolSupplier::buildCEMap(CEMap &ceMap, unsigned int conjGrpIdx) {
         delete ce;
         // quit the loop early if the number of non-degenerate
         // structures already exceeds d_maxStructs
-        if (d_callback.get()) {
+        if (d_callback) {
           d_callback->d_progress[conjGrpIdx].d_totalStructs = ceMap.size();
           d_callback->d_progress[conjGrpIdx].d_diverseStructs =
               ceDegCount.size();
