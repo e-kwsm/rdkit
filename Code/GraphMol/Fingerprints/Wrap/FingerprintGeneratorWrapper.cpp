@@ -93,8 +93,6 @@ void convertPyArguments(
       }
     }
   }
-
-  return;
 }
 
 template <typename OutputType>
