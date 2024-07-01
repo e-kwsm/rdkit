@@ -76,10 +76,8 @@ class RDKIT_CHEMREACTIONS_EXPORT RandomSampleAllBBsStrategy
 
  public:
   RandomSampleAllBBsStrategy()
-      : EnumerationStrategyBase(),
 
-        m_rng(),
-        m_distributions() {
+  {
     for (size_t i = 0; i < m_permutation.size(); ++i) {
       m_distributions.emplace_back(0, m_permutation[i] - 1);
     }

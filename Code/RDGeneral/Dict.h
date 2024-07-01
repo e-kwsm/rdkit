@@ -343,7 +343,7 @@ class RDKIT_RDGENERAL_EXPORT Dict {
   }
 
  private:
-  DataType _data{};            //!< the actual dictionary
+  DataType _data;              //!< the actual dictionary
   bool _hasNonPodData{false};  // if true, need a deep copy
                                //  (copy_rdvalue)
 };

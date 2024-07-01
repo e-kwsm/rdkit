@@ -57,15 +57,14 @@ void ROMol::destroy() {
   d_stereo_groups.clear();
 }
 
-ROMol::ROMol(const std::string &pickle) : RDProps() {
+ROMol::ROMol(const std::string &pickle) {
   initMol();
   numBonds = 0;
   MolPickler::molFromPickle(pickle, *this);
   numBonds = rdcast<unsigned int>(boost::num_edges(d_graph));
 }
 
-ROMol::ROMol(const std::string &pickle, unsigned int propertyFlags)
-    : RDProps() {
+ROMol::ROMol(const std::string &pickle, unsigned int propertyFlags) {
   initMol();
   numBonds = 0;
   MolPickler::molFromPickle(pickle, *this, propertyFlags);

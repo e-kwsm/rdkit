@@ -58,7 +58,7 @@ inline bool MolBundleCanSerialize() {
 */
 class MolBundle : public RDProps {
  public:
-  MolBundle() : RDProps() {}
+  MolBundle() {}
 
   //! copy constructor
   MolBundle(const MolBundle &other) : RDProps(other) { d_mols = other.d_mols; }
@@ -172,7 +172,7 @@ class MolBundle : public RDProps {
 */
 class FixedMolSizeMolBundle : public MolBundle {
  public:
-  FixedMolSizeMolBundle() : MolBundle() {}
+  FixedMolSizeMolBundle() {}
 
   //! copy constructor
   FixedMolSizeMolBundle(const FixedMolSizeMolBundle &other)

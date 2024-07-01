@@ -15,9 +15,9 @@
 
 namespace RDKit {
 
-Bond::Bond() : RDProps() { initBond(); };
+Bond::Bond() { initBond(); };
 
-Bond::Bond(BondType bT) : RDProps() {
+Bond::Bond(BondType bT) {
   initBond();
   d_bondType = bT;
 };

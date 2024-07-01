@@ -16,8 +16,7 @@
 namespace RDKit {
 namespace EnumerateStereoisomers {
 namespace details {
-AtomFlipper::AtomFlipper(RWMol &mol, const Chirality::StereoInfo &si)
-    : Flipper() {
+AtomFlipper::AtomFlipper(RWMol &mol, const Chirality::StereoInfo &si) {
   dp_atom = mol.getAtomWithIdx(si.centeredOn);
 }
 
@@ -29,8 +28,7 @@ void AtomFlipper::flip(bool flag) {
   }
 }
 
-BondFlipper::BondFlipper(RWMol &mol, const Chirality::StereoInfo &si)
-    : Flipper() {
+BondFlipper::BondFlipper(RWMol &mol, const Chirality::StereoInfo &si) {
   dp_bond = mol.getBondWithIdx((si.centeredOn));
   auto stereoAtoms = dp_bond->getStereoAtoms();
   if (stereoAtoms.empty()) {
@@ -51,7 +49,7 @@ void BondFlipper::flip(bool flag) {
   }
 }
 
-StereoGroupFlipper::StereoGroupFlipper(const StereoGroup &sg) : Flipper() {
+StereoGroupFlipper::StereoGroupFlipper(const StereoGroup &sg) {
   for (auto a : sg.getAtoms()) {
     d_original_parities.emplace_back(std::make_pair(a, a->getChiralTag()));
   }
