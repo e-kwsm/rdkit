@@ -42,7 +42,7 @@ double calcAngleForceConstant(double theta0, double bondOrder12,
   return res;
 }
 
-void calcAngleBendGrad(RDGeom::Point3D *r, double *dist, double **g,
+void calcAngleBendGrad(RDGeom::Point3D *r, const double *dist, double **g,
                        double &dE_dTheta, double &cosTheta, double &sinTheta) {
   // -------
   // dTheta/dx is trickier:
