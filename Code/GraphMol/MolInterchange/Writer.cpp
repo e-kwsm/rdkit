@@ -111,7 +111,7 @@ void addAtom(const Atom &atom, bj::object &bjAtom,
   addIntVal(bjAtom, bjDefaults, "chg", atom.getFormalCharge());
   addIntVal(bjAtom, bjDefaults, "isotope", atom.getIsotope());
   addIntVal(bjAtom, bjDefaults, "nRad", atom.getNumRadicalElectrons());
-  std::string chi = "";
+  std::string chi;
   if (inv_chilookup.find(atom.getChiralTag()) != inv_chilookup.end()) {
     chi = inv_chilookup.find(atom.getChiralTag())->second;
   } else {
@@ -225,7 +225,7 @@ void addBond(const Bond &bond, bj::object &bjBond, const bj::object &bjDefaults,
   bjAtoms.push_back(static_cast<int>(bond.getEndAtomIdx()));
   bjBond["atoms"] = std::move(bjAtoms);
 
-  std::string chi = "";
+  std::string chi;
   if (auto sbIter = inv_stereoBondlookup.find(bond.getStereo());
       sbIter != inv_stereoBondlookup.end()) {
     chi = sbIter->second;

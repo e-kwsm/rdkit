@@ -54,7 +54,7 @@ struct charge_wrapper {
     python::scope().attr("__doc__") =
         "Module containing functions for charge corrections";
 
-    std::string docString = "";
+    std::string docString;
 
     python::class_<MolStandardize::ChargeCorrection, boost::noncopyable>(
         "ChargeCorrection",

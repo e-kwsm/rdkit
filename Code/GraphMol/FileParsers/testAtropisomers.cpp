@@ -527,7 +527,7 @@ void testLookForAtropisomersInSDdfFiles(std::string fileName,
   unsigned int foundCount = 0;
   unsigned int notFoundCount = 0;
   while (!in.eof()) {
-    std::string molBlock = "";
+    std::string molBlock;
     while (std::getline(in, line)) {
       if (line.find("$$$$") != std::string::npos) {
         break;
