@@ -1,3 +1,6 @@
+#ifndef LLVM_CODE_RDGENERAL_UTILS_H
+#define LLVM_CODE_RDGENERAL_UTILS_H
+
 //
 //  Copyright (C) 2002-2026 Greg Landrum and other RDKit contributors
 //
@@ -15,10 +18,10 @@
 #include <cstdlib>
 
 #include "types.h"
-#include <RDGeneral/Invariant.h>
-#include <RDGeneral/BoostStartInclude.h>
-#include <boost/random.hpp>
 #include <RDGeneral/BoostEndInclude.h>
+#include <RDGeneral/BoostStartInclude.h>
+#include <RDGeneral/Invariant.h>
+#include <boost/random.hpp>
 
 #ifdef _WIN32
 inline int setenv(const char *name, const char *value, int) {
@@ -110,9 +113,8 @@ inline double int_pow(double x) {
   double half = int_pow<n / 2>(x);
   if (n % 2 == 0) {  // even
     return half * half;
-  } else {
-    return half * half * x;
   }
+  return half * half * x;
 }
 
 template <>
@@ -124,5 +126,7 @@ template <>
 inline double int_pow<1>(double x) {
   return x;  // this does a series of muls
 }
+
+#endif
 
 #endif

@@ -1,3 +1,6 @@
+#ifndef LLVM_CODE_DATASTRUCTS_SPARSEBITVECT_H
+#define LLVM_CODE_DATASTRUCTS_SPARSEBITVECT_H
+
 //
 //  Copyright (C) 2007-2024 Greg Landrum and other RDKit contributors
 //
@@ -15,8 +18,8 @@
 
 #include <set>
 using std::set;
-#include <iterator>
 #include <algorithm>
+#include <iterator>
 #include <limits>
 
 typedef set<int> IntSet;
@@ -106,5 +109,7 @@ class RDKIT_DATASTRUCTS_EXPORT SparseBitVect : public BitVect {
     return *which >= 0 && static_cast<unsigned int>(*which) < d_size;
   }
 };
+
+#endif
 
 #endif

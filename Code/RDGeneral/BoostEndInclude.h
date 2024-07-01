@@ -1,3 +1,6 @@
+#ifndef LLVM_CODE_RDGENERAL_BOOSTENDINCLUDE_H
+#define LLVM_CODE_RDGENERAL_BOOSTENDINCLUDE_H
+
 //  Copyright (c) 2015, Novartis Institutes for BioMedical Research Inc.
 //  All rights reserved.
 //
@@ -66,4 +69,5 @@
 #ifdef RDK_ALLOW_BOOST_DEPRECATED_HEADERS
 #undef RDK_ALLOW_BOOST_DEPRECATED_HEADERS
 #undef BOOST_ALLOW_DEPRECATED_HEADERS
+#endif
 #endif
