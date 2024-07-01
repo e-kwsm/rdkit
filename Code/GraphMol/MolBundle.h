@@ -26,14 +26,12 @@
 #include <RDGeneral/BoostEndInclude.h>
 
 #ifdef RDK_USE_BOOST_SERIALIZATION
-#include <RDGeneral/BoostStartInclude.h>
 #include <boost/serialization/vector.hpp>
 #include <boost/serialization/shared_ptr.hpp>
 #include <boost/serialization/split_member.hpp>
 #include <boost/archive/text_oarchive.hpp>
 #include <boost/archive/text_iarchive.hpp>
 #include <boost/archive/archive_exception.hpp>
-#include <RDGeneral/BoostEndInclude.h>
 #endif
 
 // our stuff
