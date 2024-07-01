@@ -72,7 +72,7 @@ class RDKIT_CHEMREACTIONS_EXPORT CartesianProductStrategy
   size_t m_numPermutationsProcessed{};
 
  public:
-  CartesianProductStrategy() : EnumerationStrategyBase() {}
+  CartesianProductStrategy() {}
 
   using EnumerationStrategyBase::initialize;
 

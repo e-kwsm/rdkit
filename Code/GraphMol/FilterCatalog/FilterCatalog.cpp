@@ -121,8 +121,7 @@ FilterCatalog::~FilterCatalog() {}
 
 void FilterCatalog::Clear() { d_entries.clear(); }
 
-FilterCatalog::FilterCatalog(const std::string &binStr)
-    : FCatalog(), d_entries() {
+FilterCatalog::FilterCatalog(const std::string &binStr) {
 #ifndef RDK_USE_BOOST_SERIALIZATION
   PRECONDITION(0, "Boost SERIALIZATION is not enabled")
 #else
