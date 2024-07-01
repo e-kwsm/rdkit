@@ -1,3 +1,6 @@
+#ifndef LLVM_CODE_GRAPHMOL_MOLPICKLER_H
+#define LLVM_CODE_GRAPHMOL_MOLPICKLER_H
+
 ///
 //  Copyright (C) 2001-2021 Greg Landrum and Rational Discovery LLC
 //
@@ -13,19 +16,19 @@
 
 #include <Geometry/point.h>
 #include <GraphMol/Atom.h>
-#include <GraphMol/QueryAtom.h>
 #include <GraphMol/Bond.h>
+#include <GraphMol/QueryAtom.h>
 #include <GraphMol/QueryBond.h>
+#include <Query/QueryObjects.h>
 #include <RDGeneral/StreamOps.h>
 #include <boost/utility/binary.hpp>
 #include <boost/variant.hpp>
-#include <Query/QueryObjects.h>
 
 // Std stuff
-#include <iostream>
-#include <string>
-#include <sstream>
 #include <exception>
+#include <iostream>
+#include <sstream>
+#include <string>
 #ifdef WIN32
 #include <ios>
 #endif
@@ -326,5 +329,7 @@ QueryDetails getQueryDetails(const Queries::Query<int, T const *, true> *query);
 }  // namespace PicklerOps
 
 };  // namespace RDKit
+
+#endif
 
 #endif
