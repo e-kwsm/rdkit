@@ -21,7 +21,6 @@
 #include <cstring>
 #include <iostream>
 #include <cassert>
-#include <cstring>
 #include <vector>
 
 // #define VERBOSE_CANON 1
