@@ -38,8 +38,7 @@
 #include <GraphMol/RascalMCES/RascalResult.h>
 #include <GraphMol/RascalMCES/RascalDetails.h>
 
-namespace RDKit {
-namespace RascalMCES {
+namespace RDKit::RascalMCES {
 
 class TimedOutException : public std::exception {
  public:
@@ -1103,5 +1102,4 @@ std::vector<RascalResult> rascalMCES(const ROMol &mol1, const ROMol &mol2,
   return results;
 }
 
-}  // namespace RascalMCES
-}  // namespace RDKit
+}  // namespace RDKit::RascalMCES

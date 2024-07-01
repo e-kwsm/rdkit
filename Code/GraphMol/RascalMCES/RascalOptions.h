@@ -12,9 +12,7 @@
 #ifndef RASCALOPTIONS_H
 #define RASCALOPTIONS_H
 
-namespace RDKit {
-
-namespace RascalMCES {
+namespace RDKit::RascalMCES {
 
 struct RDKIT_RASCALMCES_EXPORT RascalOptions {
   double similarityThreshold =
@@ -48,7 +46,6 @@ struct RDKIT_RASCALMCES_EXPORT RascalOptions {
                                    pairs can cause it to run out of memory. This
                                    is a reasonable default for my Mac. */
 };
-}  // namespace RascalMCES
-}  // namespace RDKit
+}  // namespace RDKit::RascalMCES
 
 #endif  // RASCALOPTIONS_H
