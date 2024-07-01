@@ -639,19 +639,19 @@ class RDKIT_SUBSTRUCTLIBRARY_EXPORT SubstructLibrary {
   //! Get the underlying key holder implementation.
   /*! Throws a value error if no keyholder have been set */
   KeyHolderBase &getKeys() {
-    if (!keyholder.get()) {
+    if (!keyholder) {
       throw ValueErrorException("Substruct Library does not have fingerprints");
     }
-    return *keyholder.get();
+    return *keyholder;
   }
 
   //! Get the underlying key holder implementation.
   /*! Throws a value error if no keyholder have been set */
   const KeyHolderBase &getKeys() const {
-    if (!keyholder.get()) {
+    if (!keyholder) {
       throw ValueErrorException("Substruct Library does not have fingerprints");
     }
-    return *keyholder.get();
+    return *keyholder;
   }
 
   //! Add a molecule to the library
