@@ -1,3 +1,6 @@
+#ifndef LLVM_CODE_QUERY_QUERYOBJECTS_H
+#define LLVM_CODE_QUERY_QUERYOBJECTS_H
+
 //
 // Copyright (c) 2003-2006 Greg Landrum and Rational Discovery LLC
 //
@@ -20,10 +23,10 @@
 #include "Query.h"
 
 #include "EqualityQuery.h"
-#include "LessQuery.h"
-#include "LessEqualQuery.h"
-#include "GreaterQuery.h"
 #include "GreaterEqualQuery.h"
+#include "GreaterQuery.h"
+#include "LessEqualQuery.h"
+#include "LessQuery.h"
 
 #include "RangeQuery.h"
 #include "SetQuery.h"
@@ -34,5 +37,7 @@
 
 namespace Queries {
 typedef enum { COMPOSITE_AND, COMPOSITE_OR, COMPOSITE_XOR } CompositeQueryType;
-}
+}  // namespace Queries
+#endif
+
 #endif
