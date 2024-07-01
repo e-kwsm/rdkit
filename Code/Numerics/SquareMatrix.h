@@ -43,8 +43,14 @@ class SquareMatrix : public Matrix<TYPE> {
 
     const TYPE *bData = B.getData();
     TYPE *newData = new TYPE[this->d_dataSize];
-    unsigned int i, j, k;
-    unsigned int idA, idAt, idC, idCt, idB;
+    unsigned int i;
+    unsigned int j;
+    unsigned int k;
+    unsigned int idA;
+    unsigned int idAt;
+    unsigned int idC;
+    unsigned int idCt;
+    unsigned int idB;
     TYPE *data = this->d_data.get();
     for (i = 0; i < this->d_nRows; i++) {
       idA = i * this->d_nRows;
@@ -66,8 +72,11 @@ class SquareMatrix : public Matrix<TYPE> {
 
   //! In place matrix transpose
   virtual SquareMatrix<TYPE> &transposeInplace() {
-    unsigned int i, j;
-    unsigned int id1, id1t, id2;
+    unsigned int i;
+    unsigned int j;
+    unsigned int id1;
+    unsigned int id1t;
+    unsigned int id2;
     TYPE temp;
     TYPE *data = this->d_data.get();
     for (i = 1; i < this->d_nRows; i++) {

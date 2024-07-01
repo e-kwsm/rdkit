@@ -127,7 +127,8 @@ class Matrix {
   inline virtual void getCol(unsigned int i, Vector<TYPE> &col) const {
     PRECONDITION(i < d_nCols, "bad index");
     PRECONDITION(d_nRows == col.size(), "");
-    unsigned int j, id;
+    unsigned int j;
+    unsigned int id;
     TYPE *rData = col.getData();
     TYPE *data = d_data.get();
     for (j = 0; j < d_nRows; j++) {
@@ -225,8 +226,11 @@ class Matrix {
     unsigned int tCols = transpose.numCols();
     PRECONDITION(d_nCols == tRows, "Size mismatch during transposing");
     PRECONDITION(d_nRows == tCols, "Size mismatch during transposing");
-    unsigned int i, j;
-    unsigned int idA, idAt, idT;
+    unsigned int i;
+    unsigned int j;
+    unsigned int idA;
+    unsigned int idAt;
+    unsigned int idT;
     TYPE *tData = transpose.getData();
     TYPE *data = d_data.get();
     for (i = 0; i < d_nRows; i++) {
@@ -280,8 +284,14 @@ Matrix<TYPE> &multiply(const Matrix<TYPE> &A, const Matrix<TYPE> &B,
   TYPE *cData = C.getData();
   const TYPE *bData = B.getData();
   const TYPE *aData = A.getData();
-  unsigned int i, j, k;
-  unsigned int idA, idAt, idB, idC, idCt;
+  unsigned int i;
+  unsigned int j;
+  unsigned int k;
+  unsigned int idA;
+  unsigned int idAt;
+  unsigned int idB;
+  unsigned int idC;
+  unsigned int idCt;
   for (i = 0; i < aRows; i++) {
     idC = i * cCols;
     idA = i * aCols;
@@ -319,8 +329,10 @@ Vector<TYPE> &multiply(const Matrix<TYPE> &A, const Vector<TYPE> &x,
   unsigned int ySiz = y.size();
   CHECK_INVARIANT(aCols == xSiz, "Size mismatch during multiplication");
   CHECK_INVARIANT(aRows == ySiz, "Size mismatch during multiplication");
-  unsigned int i, j;
-  unsigned int idA, idAt;
+  unsigned int i;
+  unsigned int j;
+  unsigned int idA;
+  unsigned int idAt;
   const TYPE *xData = x.getData();
   const TYPE *aData = A.getData();
   TYPE *yData = y.getData();
@@ -346,7 +358,8 @@ std::ostream &operator<<(std::ostream &target,
   unsigned int nc = mat.numCols();
   target << "Rows: " << mat.numRows() << " Columns: " << mat.numCols() << "\n";
 
-  unsigned int i, j;
+  unsigned int i;
+  unsigned int j;
   for (i = 0; i < nr; i++) {
     for (j = 0; j < nc; j++) {
       target << std::setfill(' ') << std::setw(7) << std::setprecision(3)

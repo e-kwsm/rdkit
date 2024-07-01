@@ -45,7 +45,8 @@ class RDProps {
   STR_VECT getPropList(bool includePrivate = true,
                        bool includeComputed = true) const {
     const STR_VECT &tmp = d_props.keys();
-    STR_VECT res, computed;
+    STR_VECT res;
+    STR_VECT computed;
     if (!includeComputed &&
         getPropIfPresent(RDKit::detail::computedPropName, computed)) {
       computed.emplace_back(RDKit::detail::computedPropName);
