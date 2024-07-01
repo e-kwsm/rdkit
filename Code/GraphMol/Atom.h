@@ -1,3 +1,6 @@
+#ifndef LLVM_CODE_GRAPHMOL_ATOM_H
+#define LLVM_CODE_GRAPHMOL_ATOM_H
+
 //
 //  Copyright (C) 2001-2024 Greg Landrum and other RDKit contributors
 //
@@ -20,15 +23,15 @@
 #include <iostream>
 
 // ours
-#include <RDGeneral/Invariant.h>
-#include <Query/QueryObjects.h>
-#include <RDGeneral/types.h>
-#include <RDGeneral/RDProps.h>
 #include <GraphMol/details.h>
+#include <Query/QueryObjects.h>
+#include <RDGeneral/Invariant.h>
+#include <RDGeneral/RDProps.h>
+#include <RDGeneral/types.h>
 
 namespace RDKit {
 class Atom;
-}
+}  // namespace RDKit
 //! allows Atom objects to be dumped to streams
 RDKIT_GRAPHMOL_EXPORT std::ostream &operator<<(std::ostream &target,
                                                const RDKit::Atom &at);
@@ -446,4 +449,6 @@ RDKIT_GRAPHMOL_EXPORT unsigned int numPiElectrons(const Atom &atom);
 //! allows Atom objects to be dumped to streams
 RDKIT_GRAPHMOL_EXPORT std::ostream &operator<<(std::ostream &target,
                                                const RDKit::Atom &at);
+#endif
+
 #endif

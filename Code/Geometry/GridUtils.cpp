@@ -12,8 +12,8 @@
 #include "Grid3D.h"
 #include "UniformGrid3D.h"
 #include "point.h"
-#include <RDGeneral/Exceptions.h>
 #include <DataStructs/DiscreteValueVect.h>
+#include <RDGeneral/Exceptions.h>
 #include <cmath>
 
 using namespace RDKit;
