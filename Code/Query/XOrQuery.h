@@ -1,3 +1,6 @@
+#ifndef LLVM_CODE_QUERY_XORQUERY_H
+#define LLVM_CODE_QUERY_XORQUERY_H
+
 //
 // Copyright (c) 2003-2020 Greg Landrum and Rational Discovery LLC
 //
@@ -33,9 +36,8 @@ class RDKIT_QUERY_EXPORT XOrQuery
         if (res) {
           res = false;
           break;
-        } else {
-          res = true;
         }
+        res = true;
       }
     }
     if (this->getNegation()) {
@@ -60,4 +62,6 @@ class RDKIT_QUERY_EXPORT XOrQuery
   }
 };
 }  // namespace Queries
+#endif
+
 #endif

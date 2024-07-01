@@ -1,3 +1,6 @@
+#ifndef LLVM_CODE_GRAPHMOL_DETAILS_H
+#define LLVM_CODE_GRAPHMOL_DETAILS_H
+
 //
 //  Copyright (C) 2014 Greg Landrum
 //
@@ -12,4 +15,6 @@
 
 namespace RDKit {
 typedef std::uint32_t atomindex_t;
-}
+}  // namespace RDKit
+
+#endif

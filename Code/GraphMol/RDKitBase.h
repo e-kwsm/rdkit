@@ -1,3 +1,6 @@
+#ifndef LLVM_CODE_GRAPHMOL_RDKITBASE_H
+#define LLVM_CODE_GRAPHMOL_RDKITBASE_H
+
 //
 //  Copyright (C) 2002-2018 Greg Landrum and Rational Discovery LLC
 //
@@ -21,15 +24,17 @@
 #include <RDGeneral/Invariant.h>
 
 #include <GraphMol/Atom.h>
+#include <GraphMol/AtomIterators.h>
 #include <GraphMol/Bond.h>
+#include <GraphMol/BondIterators.h>
 #include <GraphMol/Conformer.h>
 #include <GraphMol/GraphMol.h>
 #include <GraphMol/MolOps.h>
-#include <GraphMol/RingInfo.h>
-#include <GraphMol/AtomIterators.h>
-#include <GraphMol/BondIterators.h>
 #include <GraphMol/PeriodicTable.h>
+#include <GraphMol/RingInfo.h>
 #include <GraphMol/SanitException.h>
 #include <GraphMol/StereoGroup.h>
+
+#endif
 
 #endif
