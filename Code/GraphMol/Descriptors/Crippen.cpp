@@ -60,7 +60,7 @@ void getCrippenAtomContribs(const ROMol &mol, std::vector<double> &logpContribs,
   const CrippenParamCollection *params = CrippenParamCollection::getParams();
   for (const auto &param : *params) {
     std::vector<MatchVectType> matches;
-    SubstructMatch(mol, *(param.dp_pattern.get()), matches, false, true);
+    SubstructMatch(mol, *(param.dp_pattern), matches, false, true);
     for (std::vector<MatchVectType>::const_iterator matchIt = matches.begin();
          matchIt != matches.end(); ++matchIt) {
       int idx = (*matchIt)[0].second;
