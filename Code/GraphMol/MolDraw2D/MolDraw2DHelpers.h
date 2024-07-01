@@ -209,10 +209,10 @@ struct RDKIT_MOLDRAW2D_EXPORT MolDrawOptions {
            // always used irrespective of scale, minFontSize and maxFontSize.
   double annotationFontScale = 0.5;  // scales font relative to atom labels for
                                      // atom and bond annotation.
-  std::string fontFile = "";  // name of font file for freetype rendering.  If
-                              // given, over-rides default
-                              // (BuiltinTelexRegular).  Can also be
-                              // BuiltinRobotoRegular.
+  std::string fontFile;  // name of font file for freetype rendering.  If
+                         // given, over-rides default
+                         // (BuiltinTelexRegular).  Can also be
+                         // BuiltinRobotoRegular.
   DrawColour legendColour{0, 0,
                           0};  // color to be used for the legend (if present)
   double multipleBondOffset = 0.15;  // offset for the extra lines
