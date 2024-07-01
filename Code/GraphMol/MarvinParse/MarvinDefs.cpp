@@ -3007,7 +3007,7 @@ void MarvinSuperatomSgroup::convertFromOneSuperAtom() {
     RDGeom::Point3D centerOfAttachmentPoints;
     RDGeom::Point3D centerOfGroup;
     for (auto orphanedBond : actualParent->bonds) {
-      std::string attachedAtomId = "";
+      std::string attachedAtomId;
       if (orphanedBond->atomRefs2[0] == dummyAtomPtr->id) {
         attachedAtomId = orphanedBond->atomRefs2[1];
       } else if (orphanedBond->atomRefs2[1] == dummyAtomPtr->id) {
@@ -3195,7 +3195,7 @@ void MarvinMulticenterSgroup::processOneMulticenterSgroup() {
   // delete the bonds to the dummy atom
   std::vector<MarvinBond *> orphanedBonds;  // list of bonds to delete
   for (auto orphanedBond : actualParent->bonds) {
-    std::string attachedAtomId = "";
+    std::string attachedAtomId;
     if (orphanedBond->atomRefs2[0] == this->center->id ||
         orphanedBond->atomRefs2[1] == this->center->id) {
       orphanedBonds.push_back(orphanedBond);

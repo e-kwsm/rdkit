@@ -619,7 +619,7 @@ Query<int, T const *, true> *buildBaseQuery(std::istream &ss, T const *owner,
         throw MolPicklerException(
             "Bad pickle format: QUERY_VALUE tag not found.");
       }
-      std::string propName = "";
+      std::string propName;
       streamRead(ss, propName, version);
       res = makeHasPropQuery<T>(propName);
     } break;
@@ -681,7 +681,7 @@ Query<int, Atom const *, true> *unpickleQuery(std::istream &ss,
                                               Atom const *owner, int version) {
   PRECONDITION(owner, "no query");
   std::string descr;
-  std::string typeLabel = "";
+  std::string typeLabel;
   bool isNegated = false;
   Query<int, Atom const *, true> *res;
   streamRead(ss, descr, version);
@@ -753,7 +753,7 @@ Query<int, Bond const *, true> *unpickleQuery(std::istream &ss,
                                               Bond const *owner, int version) {
   PRECONDITION(owner, "no query");
   std::string descr;
-  std::string typeLabel = "";
+  std::string typeLabel;
   bool isNegated = false;
   Query<int, Bond const *, true> *res;
   streamRead(ss, descr, version);

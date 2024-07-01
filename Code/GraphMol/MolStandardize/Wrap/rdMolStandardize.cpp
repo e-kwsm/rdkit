@@ -395,7 +395,7 @@ BOOST_PYTHON_MODULE(rdMolStandardize) {
   bool noproxy = true;
   RegisterVectorConverter<RDKit::ROMOL_SPTR>("MOL_SPTR_VECT", noproxy);
 
-  std::string docString = "";
+  std::string docString;
 
   python::class_<RDKit::MolStandardize::CleanupParameters, boost::noncopyable>(
       "CleanupParameters", "Parameters controlling molecular standardization")
