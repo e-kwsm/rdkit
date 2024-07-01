@@ -24,7 +24,6 @@
 #include "SmilesParse.h"
 #include "SmilesParseOps.h"
 #include <GraphMol/MolEnumerator/LinkNode.h>
-#include <GraphMol/Chirality.h>
 #include <map>
 
 namespace SmilesParseOps {
