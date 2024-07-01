@@ -830,7 +830,7 @@ static void yy_symbol_print(FILE *yyo, int yytype,
 | TOP (included).                                                   |
 `------------------------------------------------------------------*/
 
-static void yy_stack_print(yy_state_t *yybottom, yy_state_t *yytop) {
+static void yy_stack_print(yy_state_t *yybottom, const yy_state_t *yytop) {
   YYFPRINTF(stderr, "Stack now");
   for (; yybottom <= yytop; yybottom++) {
     int yybot = *yybottom;
@@ -848,7 +848,7 @@ static void yy_stack_print(yy_state_t *yybottom, yy_state_t *yytop) {
 | Report that the YYRULE is going to be reduced.  |
 `------------------------------------------------*/
 
-static void yy_reduce_print(yy_state_t *yyssp, YYSTYPE *yyvsp, int yyrule,
+static void yy_reduce_print(const yy_state_t *yyssp, YYSTYPE *yyvsp, int yyrule,
                             const char *input,
                             std::vector<RDKit::RWMol *> *molList,
                             RDKit::Atom *&lastAtom, RDKit::Bond *&lastBond,

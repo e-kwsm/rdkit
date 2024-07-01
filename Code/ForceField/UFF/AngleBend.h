@@ -82,8 +82,9 @@ RDKIT_FORCEFIELD_EXPORT double calcAngleForceConstant(
     double theta0, double bondOrder12, double bondOrder23,
     const AtomicParams *at1Params, const AtomicParams *at2Params,
     const AtomicParams *at3Params);
-RDKIT_FORCEFIELD_EXPORT void calcAngleBendGrad(RDGeom::Point3D *r, double *dist,
-                                               double **g, double &dE_dTheta,
+RDKIT_FORCEFIELD_EXPORT void calcAngleBendGrad(RDGeom::Point3D *r,
+                                               const double *dist, double **g,
+                                               double &dE_dTheta,
                                                double &cosTheta,
                                                double &sinTheta);
 }  // namespace Utils
