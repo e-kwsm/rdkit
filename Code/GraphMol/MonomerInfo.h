@@ -1,3 +1,6 @@
+#ifndef LLVM_CODE_GRAPHMOL_MONOMERINFO_H
+#define LLVM_CODE_GRAPHMOL_MONOMERINFO_H
+
 //
 //  Copyright (C) 2013-2024 Greg Landrum and other RDKit contributors
 //
@@ -16,9 +19,9 @@
 #ifndef RD_MONOMERINFO_H
 #define RD_MONOMERINFO_H
 
+#include <boost/shared_ptr.hpp>
 #include <string>
 #include <utility>
-#include <boost/shared_ptr.hpp>
 
 namespace RDKit {
 
@@ -121,5 +124,7 @@ class RDKIT_GRAPHMOL_EXPORT AtomPDBResidueInfo : public AtomMonomerInfo {
 //! allows AtomPDBResidueInfo objects to be dumped to streams
 RDKIT_GRAPHMOL_EXPORT std::ostream &operator<<(
     std::ostream &target, const RDKit::AtomPDBResidueInfo &apri);
+
+#endif
 
 #endif
