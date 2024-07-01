@@ -136,12 +136,11 @@ double RGroupDecompData::scoreFromPrunedData(
   }
   if (reset) {
     return fingerprintVarianceScore(permutation, matches, labels);
-  } else {
-    prunedFingerprintVarianceScoreData.clear();
-    pruneLength = permutation.size();
-    return fingerprintVarianceScore(permutation, matches, labels,
-                                    &prunedFingerprintVarianceScoreData);
   }
+  prunedFingerprintVarianceScoreData.clear();
+  pruneLength = permutation.size();
+  return fingerprintVarianceScore(permutation, matches, labels,
+                                  &prunedFingerprintVarianceScoreData);
 }
 
 void RGroupDecompData::prune() {  // prune all but the current "best"
