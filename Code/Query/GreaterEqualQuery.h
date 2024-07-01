@@ -1,3 +1,6 @@
+#ifndef LLVM_CODE_QUERY_GREATEREQUALQUERY_H
+#define LLVM_CODE_QUERY_GREATEREQUALQUERY_H
+
 //
 // Copyright (c) 2003-2020 Greg Landrum and Rational Discovery LLC
 //
@@ -10,8 +13,8 @@
 #include <RDGeneral/export.h>
 #ifndef RD_GREATEREQUALQUERY_H
 #define RD_GREATEREQUALQUERY_H
-#include "Query.h"
 #include "EqualityQuery.h"
+#include "Query.h"
 
 namespace Queries {
 //! \brief a Query implementing >= using a particular
@@ -40,9 +43,8 @@ class RDKIT_QUERY_EXPORT GreaterEqualQuery
         this->TypeConvert(what, Int2Type<needsConversion>());
     if (queryCmp(this->d_val, mfArg, this->d_tol) >= 0) {
       return !this->getNegation();
-    } else {
-      return this->getNegation();
     }
+    return this->getNegation();
   }
   Query<MatchFuncArgType, DataFuncArgType, needsConversion> *copy()
       const override {
@@ -71,4 +73,6 @@ class RDKIT_QUERY_EXPORT GreaterEqualQuery
   }
 };
 }  // namespace Queries
+#endif
+
 #endif
