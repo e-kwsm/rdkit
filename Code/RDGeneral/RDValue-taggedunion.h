@@ -1,3 +1,6 @@
+#ifndef LLVM_CODE_RDGENERAL_RDVALUE_TAGGEDUNION_H
+#define LLVM_CODE_RDGENERAL_RDVALUE_TAGGEDUNION_H
+
 //  Copyright (c) 2015, Novartis Institutes for BioMedical Research Inc.
 //  All rights reserved.
 //
@@ -525,4 +528,6 @@ inline bool rdvalue_cast<bool>(RDValue_cast_t v) {
 }
 
 }  // namespace RDKit
+#endif
+
 #endif

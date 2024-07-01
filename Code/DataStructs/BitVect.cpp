@@ -9,10 +9,10 @@
 //  of the RDKit source tree.
 //
 #include "BitVect.h"
-#include <sstream>
-#include <limits>
-#include <RDGeneral/StreamOps.h>
 #include "base64.h"
+#include <RDGeneral/StreamOps.h>
+#include <limits>
+#include <sstream>
 #ifdef WIN32
 #include <ios>
 #endif
