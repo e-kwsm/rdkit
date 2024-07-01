@@ -49,9 +49,10 @@ const double MAXSTEP = 100.0;  //!< Default maximum step size in the minimizer
     - -1: the direction is bad (orthogonal to the gradient)
 */
 template <typename EnergyFunctor>
-void linearSearch(unsigned int dim, double *oldPt, double oldVal, double *grad,
-                  double *dir, double *newPt, double &newVal,
-                  EnergyFunctor func, double maxStep, int &resCode) {
+void linearSearch(unsigned int dim, double *oldPt, double oldVal,
+                  const double *grad, double *dir, double *newPt,
+                  double &newVal, EnergyFunctor func, double maxStep,
+                  int &resCode) {
   PRECONDITION(oldPt, "bad input array");
   PRECONDITION(grad, "bad input array");
   PRECONDITION(dir, "bad input array");
