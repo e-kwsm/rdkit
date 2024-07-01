@@ -210,14 +210,14 @@ SubstanceGroup::BondType SubstanceGroup::getBondType(
 
   if (begin_atom_in_sgroup && end_atom_in_sgroup) {
     return SubstanceGroup::BondType::CBOND;
-  } else if (begin_atom_in_sgroup || end_atom_in_sgroup) {
-    return SubstanceGroup::BondType::XBOND;
-  } else {
-    std::ostringstream errout;
-    errout << "Neither beginning nor ending atoms of bond " << bond->getIdx()
-           << " is in this SubstanceGroup.";
-    throw SubstanceGroupException(errout.str());
   }
+  if (begin_atom_in_sgroup || end_atom_in_sgroup) {
+    return SubstanceGroup::BondType::XBOND;
+  }
+  std::ostringstream errout;
+  errout << "Neither beginning nor ending atoms of bond " << bond->getIdx()
+         << " is in this SubstanceGroup.";
+  throw SubstanceGroupException(errout.str());
 }
 
 bool SubstanceGroup::adjustToRemovedAtom(unsigned int atomIdx) {
