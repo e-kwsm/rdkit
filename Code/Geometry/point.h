@@ -12,15 +12,16 @@
 #ifndef RD_POINT_H
 #define RD_POINT_H
 #include <cmath>
-#include <vector>
+#include <iostream>
 #include <map>
+#include <vector>
 
 #ifndef M_PI
 #define M_PI 3.14159265358979323846
 #endif
 
-#include <RDGeneral/Invariant.h>
 #include <Numerics/Vector.h>
+#include <RDGeneral/Invariant.h>
 #include <boost/smart_ptr.hpp>
 
 namespace RDGeom {
