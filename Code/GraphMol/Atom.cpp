@@ -473,9 +473,8 @@ int calculateImplicitValence(const Atom &atom, bool strict, bool checkIt) {
     }
     if (checkIt) {
       return -1;
-    } else {
-      return 0;
     }
+    return 0;
   }
 
   int explicitPlusRadV =
