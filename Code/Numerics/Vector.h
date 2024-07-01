@@ -1,3 +1,6 @@
+#ifndef LLVM_CODE_NUMERICS_VECTOR_H
+#define LLVM_CODE_NUMERICS_VECTOR_H
+
 //
 //  Copyright (C) 2004-2008 Greg Landrum and Rational Discovery LLC
 //
@@ -13,14 +16,14 @@
 
 #include <RDGeneral/Invariant.h>
 #include <RDGeneral/utils.h>
+#include <boost/random.hpp>
+#include <boost/smart_ptr.hpp>
 #include <cmath>
-#include <iostream>
-#include <iomanip>
 #include <cstdlib>
 #include <cstring>
 #include <ctime>
-#include <boost/random.hpp>
-#include <boost/smart_ptr.hpp>
+#include <iomanip>
+#include <iostream>
 
 static constexpr double zero_tolerance = 1.e-16;
 
@@ -328,5 +331,7 @@ std::ostream &operator<<(std::ostream &target,
   target << "]\n";
   return target;
 }
+
+#endif
 
 #endif
