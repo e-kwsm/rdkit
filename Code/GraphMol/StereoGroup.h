@@ -1,3 +1,6 @@
+#ifndef LLVM_CODE_GRAPHMOL_STEREOGROUP_H
+#define LLVM_CODE_GRAPHMOL_STEREOGROUP_H
+
 //
 //  Copyright (C) 2018-2021 Greg Landrum and other RDKit contributors
 //
@@ -111,5 +114,7 @@ RDKIT_GRAPHMOL_EXPORT void forwardStereoGroupIds(ROMol &mol);
 //! allows StereoGroup objects to be dumped to streams
 RDKIT_GRAPHMOL_EXPORT std::ostream &operator<<(std::ostream &target,
                                                const RDKit::StereoGroup &stg);
+
+#endif
 
 #endif
