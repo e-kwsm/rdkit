@@ -148,7 +148,7 @@ void MultithreadedSDMolSupplier::readMolProps(RWMol &mol,
   bool hasProp = false;
   bool warningIssued = false;
   std::string tempStr;
-  std::string dlabel = "";
+  std::string dlabel;
   std::getline(inStream, tempStr);
 
   // FIX: report files missing the $$$$ marker
@@ -187,7 +187,7 @@ void MultithreadedSDMolSupplier::readMolProps(RWMol &mol,
           // until we hit a blank line
           std::getline(inStream, tempStr);
 
-          std::string prop = "";
+          std::string prop;
           std::string stmp = strip(tempStr);
           int nplines = 0;  // number of lines for this property
           while (stmp.length() != 0 || tempStr[0] == ' ' ||
