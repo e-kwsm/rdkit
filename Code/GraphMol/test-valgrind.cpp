@@ -46,7 +46,7 @@ void test1() {
   std::string smi = "CCC";
   for (int i = 4; i < 20; ++i) {
     smi += "C";
-    RWMol *m = SmilesToMol(smi.c_str());
+    RWMol *m = SmilesToMol(smi);
     testRemovals(*m);
     delete m;
   }
