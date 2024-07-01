@@ -2325,9 +2325,8 @@ void DrawMol::makeBondHighlightLines(double lineWidth, double scale) {
                       }
                       if (val < 0.0) {
                         return true;
-                      } else {
-                        return false;
                       }
+                      return false;
                     });
           DrawShape *hb = new DrawShapePolyLine(
               points, 0, false, col, true, thisIdx + activeAtmIdxOffset_,
@@ -3418,7 +3417,6 @@ void DrawMol::makeHighlightEnd(const Atom *end1, const Atom *end2,
       return ins;
     }
     return Point2D(e1);
-   
   };
 
   auto end1Cds = atCds_[end1->getIdx()];
