@@ -528,7 +528,8 @@ bool isChangedAtom(const Atom &rAtom, const Atom &pAtom, int mapNum,
   if (rAtom.getDegree() != pAtom.getDegree()) {
     // the degree changed
     return true;
-  } else if (pAtom.getAtomicNum() > 0 && isComplexQuery(&rAtom)) {
+  }
+  if (pAtom.getAtomicNum() > 0 && isComplexQuery(&rAtom)) {
     // more than a simple query
     return true;
   }
