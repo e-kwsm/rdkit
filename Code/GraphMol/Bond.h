@@ -1,3 +1,6 @@
+#ifndef LLVM_CODE_GRAPHMOL_BOND_H
+#define LLVM_CODE_GRAPHMOL_BOND_H
+
 //
 //  Copyright (C) 2001-2021 Greg Landrum and other RDKit contributors
 //
@@ -15,11 +18,11 @@
 #include <utility>
 
 // Ours
-#include <RDGeneral/Invariant.h>
-#include <Query/QueryObjects.h>
-#include <RDGeneral/types.h>
-#include <RDGeneral/RDProps.h>
 #include <GraphMol/details.h>
+#include <Query/QueryObjects.h>
+#include <RDGeneral/Invariant.h>
+#include <RDGeneral/RDProps.h>
+#include <RDGeneral/types.h>
 
 namespace RDKit {
 class ROMol;
@@ -426,5 +429,7 @@ RDKIT_GRAPHMOL_EXPORT extern uint8_t getTwiceBondType(const RDKit::Bond &b);
 //! allows Bond objects to be dumped to streams
 RDKIT_GRAPHMOL_EXPORT extern std::ostream &operator<<(std::ostream &target,
                                                       const RDKit::Bond &b);
+
+#endif
 
 #endif
