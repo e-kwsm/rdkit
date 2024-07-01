@@ -1,3 +1,6 @@
+#ifndef LLVM_CODE_GRAPHMOL_QUERYOPS_H
+#define LLVM_CODE_GRAPHMOL_QUERYOPS_H
+
 //
 //  Copyright (C) 2003-2021 Greg Landrum and other RDKit contributors
 //
@@ -17,11 +20,11 @@
 #ifndef RD_QUERY_OPS_H
 #define RD_QUERY_OPS_H
 
-#include <GraphMol/RDKitBase.h>
-#include <Query/QueryObjects.h>
-#include <Query/Query.h>
-#include <DataStructs/BitVects.h>
 #include <DataStructs/BitOps.h>
+#include <DataStructs/BitVects.h>
+#include <GraphMol/RDKitBase.h>
+#include <Query/Query.h>
+#include <Query/QueryObjects.h>
 
 #ifdef RDK_BUILD_THREADSAFE_SSS
 #include <mutex>
@@ -87,7 +90,7 @@ static inline int queryAtomNonHydrogenDegree(Atom const *at) {
   int res = 0;
   for (const auto nbri :
        boost::make_iterator_range(at->getOwningMol().getAtomNeighbors(at))) {
-    const auto nbr = at->getOwningMol()[nbri];
+    auto *const nbr = at->getOwningMol()[nbri];
     if (nbr->getAtomicNum() != 1 || nbr->getIsotope() > 1) {
       res++;
     }
@@ -100,7 +103,7 @@ static inline int queryAtomHeavyAtomDegree(Atom const *at) {
   int heavyDegree = 0;
   for (const auto nbri :
        boost::make_iterator_range(at->getOwningMol().getAtomNeighbors(at))) {
-    const auto nbr = at->getOwningMol()[nbri];
+    auto *const nbr = at->getOwningMol()[nbri];
     if (nbr->getAtomicNum() > 1) {
       heavyDegree++;
     }
@@ -325,18 +328,16 @@ template <int tgt>
 int queryAtomIsInRingOfSize(Atom const *at) {
   if (at->getOwningMol().getRingInfo()->isAtomInRingOfSize(at->getIdx(), tgt)) {
     return tgt;
-  } else {
-    return 0;
   }
+  return 0;
 };
 template <int tgt>
 int queryBondIsInRingOfSize(Bond const *bond) {
   if (bond->getOwningMol().getRingInfo()->isBondInRingOfSize(bond->getIdx(),
                                                              tgt)) {
     return tgt;
-  } else {
-    return 0;
   }
+  return 0;
 };
 
 template <class T>
@@ -1161,4 +1162,6 @@ inline bool hasComplexBondTypeQuery(const Bond &bond) {
 RDKIT_GRAPHMOL_EXPORT bool isMetal(const Atom &atom);
 }  // namespace QueryOps
 }  // namespace RDKit
+#endif
+
 #endif

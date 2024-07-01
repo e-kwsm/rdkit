@@ -1,3 +1,6 @@
+#ifndef LLVM_CODE_QUERY_ORQUERY_H
+#define LLVM_CODE_QUERY_ORQUERY_H
+
 //
 // Copyright (c) 2003-2020 Greg Landrum and Rational Discovery LLC
 //
@@ -55,4 +58,6 @@ class RDKIT_QUERY_EXPORT OrQuery
   }
 };
 }  // namespace Queries
+#endif
+
 #endif
