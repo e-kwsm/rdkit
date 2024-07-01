@@ -48,9 +48,8 @@ bool getValFromEnvironment(const char *var, bool defVal) {
   if (evar != nullptr) {
     if (!strcmp(evar, "0")) {
       return false;
-    } else {
-      return true;
     }
+    return true;
   }
   return defVal;
 }
@@ -430,7 +429,8 @@ const Atom *findHighestCIPNeighbor(const Atom *atom, const Atom *skipAtom) {
       // If at least one of the atoms doesn't have a CIP rank, the highest rank
       // does not make sense, so return a nullptr.
       return nullptr;
-    } else if (cip > bestCipRank || bestCipRankedAtom == nullptr) {
+    }
+    if (cip > bestCipRank || bestCipRankedAtom == nullptr) {
       bestCipRank = cip;
       bestCipRankedAtom = neighbor;
     } else if (cip == bestCipRank) {
@@ -2099,11 +2099,10 @@ INT_VECT findStereoAtoms(const Bond *bond) {
     int endStereoAtomIdx = static_cast<int>(endStereoAtom->getIdx());
 
     return {startStereoAtomIdx, endStereoAtomIdx};
-  } else {
-    BOOST_LOG(rdWarningLog) << "Unable to assign stereo atoms for bond "
-                            << bond->getIdx() << std::endl;
-    return {};
   }
+  BOOST_LOG(rdWarningLog) << "Unable to assign stereo atoms for bond "
+                          << bond->getIdx() << std::endl;
+  return {};
 }
 
 void cleanupStereoGroups(ROMol &mol) {
@@ -2244,7 +2243,8 @@ void legacyStereoPerception(ROMol &mol, bool cleanIt,
           bond->getStereoAtoms().clear();
         }
         continue;
-      } else if (bond->getBondType() == Bond::DOUBLE) {
+      }
+      if (bond->getBondType() == Bond::DOUBLE) {
         if (bond->getBondDir() == Bond::EITHERDOUBLE) {
           bond->setStereo(Bond::STEREOANY);
           bond->getStereoAtoms().clear();
@@ -2528,9 +2528,8 @@ bool canBeStereoBond(const Bond *bond) {
           if (std::find(nbrRanks.begin(), nbrRanks.end(), rank) !=
               nbrRanks.end()) {
             return false;
-          } else {
-            nbrRanks.push_back(rank);
           }
+          nbrRanks.push_back(rank);
         }
       }
     }
@@ -2793,56 +2792,56 @@ void findPotentialStereoBonds(ROMol &mol, bool cleanIt) {
   // make this function callable multiple times
   if ((mol.hasProp(common_properties::_BondsPotentialStereo)) && (!cleanIt)) {
     return;
-  } else {
-    UINT_VECT ranks;
-    ranks.resize(mol.getNumAtoms());
-    bool cipDone = false;
+  }
+  UINT_VECT ranks;
+  ranks.resize(mol.getNumAtoms());
+  bool cipDone = false;
 
-    ROMol::BondIterator bondIt;
-    for (bondIt = mol.beginBonds(); bondIt != mol.endBonds(); ++bondIt) {
-      if ((*bondIt)->getBondType() == Bond::DOUBLE &&
-          !(mol.getRingInfo()->numBondRings((*bondIt)->getIdx()))) {
-        // we are ignoring ring bonds here - read the FIX above
-        Bond *dblBond = *bondIt;
-        // proceed only if we either want to clean the stereocode on this bond,
-        // if none is set on it yet, or it is STEREOANY and we need to find
-        // stereoatoms
-        if (cleanIt || dblBond->getStereo() == Bond::STEREONONE ||
-            (dblBond->getStereo() == Bond::STEREOANY &&
-             dblBond->getStereoAtoms().size() != 2)) {
-          dblBond->setStereo(Bond::STEREONONE);
-          const Atom *begAtom = dblBond->getBeginAtom(),
-                     *endAtom = dblBond->getEndAtom();
-          // we're only going to handle 2 or three coordinate atoms:
-          if ((begAtom->getDegree() == 2 || begAtom->getDegree() == 3) &&
-              (endAtom->getDegree() == 2 || endAtom->getDegree() == 3)) {
-            // ------------------
-            // get the CIP ranking of each atom if we need it:
-            if (!cipDone) {
-              if (!begAtom->hasProp(common_properties::_CIPRank)) {
-                Chirality::assignAtomCIPRanks(mol, ranks);
-              } else {
-                // no need to recompute if we don't need to recompute. :-)
-                for (unsigned int ai = 0; ai < mol.getNumAtoms(); ++ai) {
-                  ranks[ai] = mol.getAtomWithIdx(ai)->getProp<unsigned int>(
-                      common_properties::_CIPRank);
-                }
+  ROMol::BondIterator bondIt;
+  for (bondIt = mol.beginBonds(); bondIt != mol.endBonds(); ++bondIt) {
+    if ((*bondIt)->getBondType() == Bond::DOUBLE &&
+        !(mol.getRingInfo()->numBondRings((*bondIt)->getIdx()))) {
+      // we are ignoring ring bonds here - read the FIX above
+      Bond *dblBond = *bondIt;
+      // proceed only if we either want to clean the stereocode on this bond,
+      // if none is set on it yet, or it is STEREOANY and we need to find
+      // stereoatoms
+      if (cleanIt || dblBond->getStereo() == Bond::STEREONONE ||
+          (dblBond->getStereo() == Bond::STEREOANY &&
+           dblBond->getStereoAtoms().size() != 2)) {
+        dblBond->setStereo(Bond::STEREONONE);
+        const Atom *begAtom = dblBond->getBeginAtom(),
+                   *endAtom = dblBond->getEndAtom();
+        // we're only going to handle 2 or three coordinate atoms:
+        if ((begAtom->getDegree() == 2 || begAtom->getDegree() == 3) &&
+            (endAtom->getDegree() == 2 || endAtom->getDegree() == 3)) {
+          // ------------------
+          // get the CIP ranking of each atom if we need it:
+          if (!cipDone) {
+            if (!begAtom->hasProp(common_properties::_CIPRank)) {
+              Chirality::assignAtomCIPRanks(mol, ranks);
+            } else {
+              // no need to recompute if we don't need to recompute. :-)
+              for (unsigned int ai = 0; ai < mol.getNumAtoms(); ++ai) {
+                ranks[ai] = mol.getAtomWithIdx(ai)->getProp<unsigned int>(
+                    common_properties::_CIPRank);
               }
-              cipDone = true;
             }
-            // find the neighbors for the begin atom and the endAtom
-            UINT_VECT begAtomNeighbors, endAtomNeighbors;
-            bool checkDir = false;
-            bool includeAromatic = true;
-            Chirality::findAtomNeighborsHelper(mol, begAtom, dblBond,
-                                               begAtomNeighbors, checkDir,
-                                               includeAromatic);
-            Chirality::findAtomNeighborsHelper(mol, endAtom, dblBond,
-                                               endAtomNeighbors, checkDir,
-                                               includeAromatic);
-            if (begAtomNeighbors.size() > 0 && endAtomNeighbors.size() > 0) {
-              if ((begAtomNeighbors.size() == 2) &&
-                  (endAtomNeighbors.size() == 2)) {
+            cipDone = true;
+          }
+          // find the neighbors for the begin atom and the endAtom
+          UINT_VECT begAtomNeighbors, endAtomNeighbors;
+          bool checkDir = false;
+          bool includeAromatic = true;
+          Chirality::findAtomNeighborsHelper(mol, begAtom, dblBond,
+                                             begAtomNeighbors, checkDir,
+                                             includeAromatic);
+          Chirality::findAtomNeighborsHelper(mol, endAtom, dblBond,
+                                             endAtomNeighbors, checkDir,
+                                             includeAromatic);
+          if (begAtomNeighbors.size() > 0 && endAtomNeighbors.size() > 0) {
+            if ((begAtomNeighbors.size() == 2) &&
+                (endAtomNeighbors.size() == 2)) {
 // if both of the atoms have 2 neighbors (other than the one
 // connected
 // by the double bond) and ....
@@ -2916,7 +2915,6 @@ void findPotentialStereoBonds(ROMol &mol, bool cleanIt) {
       }        // end of double bond
     }          // end of for loop over all bonds
     mol.setProp(common_properties::_BondsPotentialStereo, 1, true);
-  }
 }
 
 // removes chirality markers from sp and sp2 hybridized centers:
