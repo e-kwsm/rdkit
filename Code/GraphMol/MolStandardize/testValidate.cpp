@@ -193,7 +193,7 @@ void testMolVSOptions() {
 
   // testing MolVSDefault
   // testing for molecule with no atoms
-  string smi1 = "";
+  string smi1;
   unique_ptr<ROMol> m1(SmilesToMol(smi1, 0, false));
   vector<ValidationErrorInfo> errout1 = vm.validate(*m1, true);
   // for (const auto &msg : errout1) {
