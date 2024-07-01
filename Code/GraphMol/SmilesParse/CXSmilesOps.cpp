@@ -62,7 +62,7 @@ void processCXSmilesLabels(RWMol &mol) {
     return;
   }
   for (auto atom : mol.atoms()) {
-    std::string symb = "";
+    std::string symb;
     if (atom->getPropIfPresent(common_properties::atomLabel, symb)) {
       atom->clearProp(common_properties::dummyLabel);
       if (symb == "star_e") {
@@ -112,7 +112,7 @@ const std::string _tailCrossings = "_tailCrossings";
 
 template <typename Iterator>
 bool read_int(Iterator &first, Iterator last, unsigned int &res) {
-  std::string num = "";
+  std::string num;
   while (first <= last && *first >= '0' && *first <= '9') {
     num += *first;
     ++first;
@@ -127,7 +127,7 @@ template <typename Iterator>
 bool read_int_list(Iterator &first, Iterator last,
                    std::vector<unsigned int> &res, char sep = ',') {
   while (1) {
-    std::string num = "";
+    std::string num;
     while (first <= last && *first >= '0' && *first <= '9') {
       num += *first;
       ++first;
@@ -157,7 +157,7 @@ bool read_int_pair(Iterator &first, Iterator last, unsigned int &n1,
 
 template <typename Iterator>
 std::string read_text_to(Iterator &first, Iterator last, std::string delims) {
-  std::string res = "";
+  std::string res;
   Iterator start = first;
   // EFF: there are certainly faster ways to do this
   while (first <= last && delims.find_first_of(*first) == std::string::npos) {
@@ -661,7 +661,7 @@ bool parse_linknodes(Iterator &first, Iterator last, RDKit::RWMol &mol,
     return false;
   }
   first += 3;
-  std::string accum = "";
+  std::string accum;
   while (first < last && *first >= '0' && *first <= '9') {
     unsigned int atidx;
     if (!read_int(first, last, atidx)) {
@@ -1904,7 +1904,7 @@ std::string get_sgroup_data_block(const ROMol &mol,
 
 std::string get_atomlabel_block(const ROMol &mol,
                                 const std::vector<unsigned int> &atomOrder) {
-  std::string res = "";
+  std::string res;
   for (auto idx : atomOrder) {
     if (idx != atomOrder.front()) {
       res += ";";
@@ -1941,7 +1941,7 @@ std::string get_atomlabel_block(const ROMol &mol,
 std::string get_value_block(const ROMol &mol,
                             const std::vector<unsigned int> &atomOrder,
                             const std::string &prop) {
-  std::string res = "";
+  std::string res;
   bool first = true;
   for (auto idx : atomOrder) {
     if (!first) {
@@ -1958,7 +1958,7 @@ std::string get_value_block(const ROMol &mol,
 }
 std::string get_radical_block(const ROMol &mol,
                               const std::vector<unsigned int> &atomOrder) {
-  std::string res = "";
+  std::string res;
   std::map<unsigned int, std::vector<unsigned int>> rads;
   for (unsigned int i = 0; i < atomOrder.size(); ++i) {
     auto idx = atomOrder[i];
@@ -1998,7 +1998,7 @@ double zero_small_vals(double val) {
 }
 std::string get_coords_block(const ROMol &mol,
                              const std::vector<unsigned int> &atomOrder) {
-  std::string res = "";
+  std::string res;
   const auto &conf = mol.getConformer();
   bool first = true;
   for (auto idx : atomOrder) {
@@ -2025,7 +2025,7 @@ std::string get_atom_props_block(const ROMol &mol,
   std::vector<std::string> skip = {common_properties::atomLabel,
                                    common_properties::molFileValue,
                                    common_properties::molParity};
-  std::string res = "";
+  std::string res;
   unsigned int which = 0;
   for (auto idx : atomOrder) {
     const auto atom = mol.getAtomWithIdx(idx);
@@ -2222,7 +2222,7 @@ std::string get_bond_config_block(
         std::find(atomOrder.begin(), atomOrder.end(), wedgeStartAtomIdx) -
         atomOrder.begin();
 
-    std::string wType = "";
+    std::string wType;
     if (bd == Bond::BondDir::UNKNOWN) {
       wType = "w";
     } else if (coordsIncluded || isAnAtropisomer) {
@@ -2243,7 +2243,7 @@ std::string get_bond_config_block(
           boost::str(boost::format("%d.%d") % begAtomOrder % i));
     }
   }
-  std::string res = "";
+  std::string res;
 
   for (auto wPart : wParts) {
     if (res != "") {
@@ -2259,7 +2259,7 @@ std::string get_coord_or_hydrogen_bonds_block(
     const ROMol &mol, Bond::BondType bondType, std::string symbol,
     const std::vector<unsigned int> &atomOrder,
     const std::vector<unsigned int> &bondOrder) {
-  std::string res = "";
+  std::string res;
   for (unsigned int i = 0; i < bondOrder.size(); ++i) {
     auto idx = bondOrder[i];
     const auto bond = mol.getBondWithIdx(idx);
@@ -2307,7 +2307,7 @@ std::string get_ringbond_cistrans_block(
   }
 
   const auto rinfo = mol.getRingInfo();
-  std::string c = "", t = "", ctu = "";
+  std::string c, t, ctu;
   for (unsigned int i = 0; i < bondOrder.size(); ++i) {
     auto idx = bondOrder[i];
     if (!rinfo->numBondRings(idx) ||

@@ -99,7 +99,7 @@ python::list standardizeSmilesHelper(const std::string &smiles) {
 
 struct validate_wrapper {
   static void wrap() {
-    std::string docString = "";
+    std::string docString;
 
     python::class_<ValidationMethodWrap, boost::noncopyable>("ValidationMethod")
         .def("validate", pythonValidateMethod,
