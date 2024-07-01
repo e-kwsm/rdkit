@@ -109,7 +109,8 @@ std::vector<double> MolData3Ddescriptors::GetCharges(const RDKit::ROMol& mol) {
 int MolData3Ddescriptors::GetPrincipalQuantumNumber(int AtomicNum) {
   if (AtomicNum <= 2) {
     return 1;
-  } else if (AtomicNum <= 10) {
+  }
+  if (AtomicNum <= 10) {
     return 2;
   }
   if (AtomicNum <= 18) {
