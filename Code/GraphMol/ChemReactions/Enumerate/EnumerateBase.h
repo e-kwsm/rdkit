@@ -68,7 +68,7 @@ class RDKIT_CHEMREACTIONS_EXPORT EnumerateLibraryBase {
 
  public:
   //! default constructor
-  EnumerateLibraryBase() : m_rxn(), m_enumerator(), m_initialEnumerator() {}
+  EnumerateLibraryBase() {}
 
   //! construct with a chemical reaction and an enumeration strategy
   EnumerateLibraryBase(const ChemicalReaction &rxn,

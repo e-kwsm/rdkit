@@ -92,8 +92,8 @@ class RDKIT_MOLENUMERATOR_EXPORT PositionVariationOp : public MolEnumeratorOp {
  private:
   std::shared_ptr<ROMol> dp_mol{nullptr};
   std::vector<std::pair<unsigned int, std::vector<unsigned int>>>
-      d_variationPoints{};
-  std::vector<size_t> d_dummiesAtEachPoint{};
+      d_variationPoints;
+  std::vector<size_t> d_dummiesAtEachPoint;
   void initFromMol();
 };
 
@@ -147,7 +147,7 @@ class RDKIT_MOLENUMERATOR_EXPORT LinkNodeOp : public MolEnumeratorOp {
  private:
   std::shared_ptr<ROMol> dp_mol{nullptr};
   std::shared_ptr<RWMol> dp_frame{nullptr};
-  std::vector<size_t> d_countAtEachPoint{};
+  std::vector<size_t> d_countAtEachPoint;
   std::vector<std::tuple<unsigned, unsigned, unsigned>> d_variations;
   std::vector<std::pair<unsigned, unsigned>> d_pointRanges;
   std::map<unsigned, unsigned> d_isotopeMap;
@@ -225,9 +225,9 @@ class RDKIT_MOLENUMERATOR_EXPORT RepeatUnitOp : public MolEnumeratorOp {
   std::shared_ptr<ROMol> dp_mol{nullptr};
   std::shared_ptr<RWMol> dp_frame{nullptr};
   std::vector<std::shared_ptr<RWMol>> d_repeats;
-  std::vector<RWMol> dp_repeatUnits{};
-  std::vector<size_t> d_countAtEachPoint{};
-  std::vector<unsigned> d_sruOrder{};
+  std::vector<RWMol> dp_repeatUnits;
+  std::vector<size_t> d_countAtEachPoint;
+  std::vector<unsigned> d_sruOrder;
   std::vector<std::tuple<unsigned, unsigned, unsigned>> d_variations;
   std::vector<std::pair<unsigned, unsigned>> d_pointRanges;
   std::map<unsigned, unsigned> d_isotopeMap;

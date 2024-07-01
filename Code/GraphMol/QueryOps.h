@@ -792,7 +792,7 @@ class RDKIT_GRAPHMOL_EXPORT AtomRingQuery
 class RDKIT_GRAPHMOL_EXPORT RecursiveStructureQuery
     : public Queries::SetQuery<int, Atom const *, true> {
  public:
-  RecursiveStructureQuery() : Queries::SetQuery<int, Atom const *, true>() {
+  RecursiveStructureQuery() {
     setDataFunc(getAtIdx);
     setDescription("RecursiveStructure");
   }
@@ -802,8 +802,7 @@ class RDKIT_GRAPHMOL_EXPORT RecursiveStructureQuery
       - this takes over ownership of the pointer
   */
   RecursiveStructureQuery(ROMol const *query, unsigned int serialNumber = 0)
-      : Queries::SetQuery<int, Atom const *, true>(),
-        d_serialNumber(serialNumber) {
+      : d_serialNumber(serialNumber) {
     setQueryMol(query);
     setDataFunc(getAtIdx);
     setDescription("RecursiveStructure");
@@ -868,7 +867,7 @@ class HasPropQuery : public Queries::EqualityQuery<int, TargetPtr, true> {
   std::string propname;
 
  public:
-  HasPropQuery() : Queries::EqualityQuery<int, TargetPtr, true>(), propname() {
+  HasPropQuery() : Queries::EqualityQuery<int, TargetPtr, true>() {
     this->setDescription("HasProp");
     this->setDataFunc(nullptr);
   }
@@ -926,7 +925,7 @@ class HasPropWithValueQuery
 
  public:
   HasPropWithValueQuery()
-      : Queries::EqualityQuery<int, TargetPtr, true>(), propname(), val() {
+      : Queries::EqualityQuery<int, TargetPtr, true>(), val() {
     // default is to just do a number of rings query:
     this->setDescription("HasPropWithValue");
     this->setDataFunc(0);
@@ -1000,8 +999,7 @@ class HasPropWithValueQuery<TargetPtr, std::string>
   std::string val;
 
  public:
-  HasPropWithValueQuery()
-      : Queries::EqualityQuery<int, TargetPtr, true>(), propname(), val() {
+  HasPropWithValueQuery() : Queries::EqualityQuery<int, TargetPtr, true>() {
     // default is to just do a number of rings query:
     this->setDescription("HasPropWithValue");
     this->setDataFunc(0);
@@ -1074,8 +1072,7 @@ class HasPropWithValueQuery<TargetPtr, ExplicitBitVect>
   double tol{0.0};
 
  public:
-  HasPropWithValueQuery()
-      : Queries::EqualityQuery<int, TargetPtr, true>(), propname(), val() {
+  HasPropWithValueQuery() : Queries::EqualityQuery<int, TargetPtr, true>() {
     this->setDescription("HasPropWithValue");
     this->setDataFunc(0);
   }
