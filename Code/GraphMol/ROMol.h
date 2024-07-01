@@ -515,7 +515,7 @@ class RDKIT_GRAPHMOL_EXPORT ROMol : public RDProps {
     return {&d_graph};
   }
 
-  ROMol() : RDProps() { initMol(); }
+  ROMol() { initMol(); }
 
   //! copy constructor with a twist
   /*!
@@ -528,8 +528,7 @@ class RDKIT_GRAPHMOL_EXPORT ROMol : public RDProps {
     \param confId (optional) if this is >=0 and \c quickCopy is false, the
     resulting ROMol will contain only the specified conformer from \c other.
   */
-  ROMol(const ROMol &other, bool quickCopy = false, int confId = -1)
-      : RDProps() {
+  ROMol(const ROMol &other, bool quickCopy = false, int confId = -1) {
     dp_ringInfo = nullptr;
     initFromOther(other, quickCopy, confId);
     numBonds = rdcast<unsigned int>(boost::num_edges(d_graph));

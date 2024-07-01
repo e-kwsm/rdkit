@@ -70,7 +70,7 @@ namespace RDKit {
 struct RDAny {
   RDValue m_value;
 
-  RDAny() : m_value() {}
+  RDAny() {}
   template <class T>
   RDAny(const T &d) : m_value(d) {}
   /*

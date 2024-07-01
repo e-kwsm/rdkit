@@ -70,13 +70,8 @@ class RDKIT_CHEMREACTIONS_EXPORT EvenSamplePairsStrategy
 
  public:
   EvenSamplePairsStrategy()
-      : EnumerationStrategyBase(),
 
-        used_count(),
-        var_used(),
-        pair_used(),
-        pair_counts(),
-        selected() {}
+  {}
 
   EvenSamplePairsStrategy(const EvenSamplePairsStrategy &rhs)
       : EnumerationStrategyBase(rhs),

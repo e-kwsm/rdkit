@@ -131,7 +131,7 @@ class RDKIT_CHEMREACTIONS_EXPORT EnumerationStrategyBase {
  public:
   static const boost::uint64_t EnumerationOverflow =
       static_cast<boost::uint64_t>(-1);
-  EnumerationStrategyBase() : m_permutation(), m_permutationSizes() {}
+  EnumerationStrategyBase() {}
 
   virtual ~EnumerationStrategyBase() {}
 
