@@ -1,3 +1,6 @@
+#ifndef LLVM_CODE_DATASTRUCTS_EXPLICITBITVECT_H
+#define LLVM_CODE_DATASTRUCTS_EXPLICITBITVECT_H
+
 //
 // Copyright (c) 2003-208 greg Landrum and Rational Discovery LLC
 //  Copyright (c) 2014, Novartis Institutes for BioMedical Research Inc.
@@ -12,10 +15,10 @@
 #ifndef __RD_EXPLICITBITVECTS_H__
 #define __RD_EXPLICITBITVECTS_H__
 
+#include "BitVect.h"
+#include <RDGeneral/BoostEndInclude.h>
 #include <RDGeneral/BoostStartInclude.h>
 #include <boost/dynamic_bitset.hpp>
-#include <RDGeneral/BoostEndInclude.h>
-#include "BitVect.h"
 
 //! a class for bit vectors that are densely occupied
 /*!
@@ -95,5 +98,7 @@ class RDKIT_DATASTRUCTS_EXPORT ExplicitBitVect : public BitVect {
   unsigned int d_numOnBits{0};
   void _initForSize(const unsigned int size) override;
 };
+
+#endif
 
 #endif

@@ -10,11 +10,11 @@
 #include "RDLog.h"
 
 #if 1
-#include <iomanip>
-#include <string>
 #include <ctime>
+#include <iomanip>
 #include <iostream>
 #include <sstream>
+#include <string>
 
 RDLogger rdAppLog = nullptr;
 RDLogger rdDebugLog = nullptr;
@@ -28,7 +28,7 @@ namespace {
 const std::vector<RDLogger *> allLogs = {&rdAppLog,     &rdDebugLog,
                                          &rdInfoLog,    &rdErrorLog,
                                          &rdWarningLog, &rdStatusLog};
-}
+}  // namespace
 
 LogStateSetter::LogStateSetter() {
   for (auto i = 0u; i < allLogs.size(); ++i) {

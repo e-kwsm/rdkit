@@ -131,7 +131,7 @@ class LocaleSwitcherImpl {
   }
   ~LocaleSwitcherImpl() {
     if (switched) {
-      auto loc = uselocale(old_loc);
+      auto *loc = uselocale(old_loc);
       freelocale(loc);
       recurseLocale(ResetLocale);
     }

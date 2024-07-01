@@ -1,3 +1,6 @@
+#ifndef LLVM_CODE_RDGENERAL_LOCALESWITCHER_H
+#define LLVM_CODE_RDGENERAL_LOCALESWITCHER_H
+
 //  Copyright (c) 2016, Novartis Institutes for BioMedical Research Inc.
 //  All rights reserved.
 //
@@ -39,7 +42,7 @@ namespace Utils {
 
 namespace detail {
 class LocaleSwitcherImpl;  // concrete OS dependent implementation
-}
+}  // namespace detail
 
 class RDKIT_RDGENERAL_EXPORT LocaleSwitcher {
   detail::LocaleSwitcherImpl *impl;
@@ -50,5 +53,7 @@ class RDKIT_RDGENERAL_EXPORT LocaleSwitcher {
 };
 }  // namespace Utils
 }  // namespace RDKit
+
+#endif
 
 #endif
