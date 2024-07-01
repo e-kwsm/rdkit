@@ -44,7 +44,7 @@ FragCatParams::FragCatParams(const FragCatParams &other) {
   MOL_SPTR_VECT::const_iterator fgi;
   // MOL_PTR_VECT_CI fgi;
   for (fgi = ofgrps.begin(); fgi != ofgrps.end(); fgi++) {
-    auto *nmol = new ROMol(*(fgi->get()));
+    auto *nmol = new ROMol(**fgi);
     // ROMol *nmol = new ROMol(*(*fgi));
     d_funcGroups.push_back(ROMOL_SPTR(nmol));
     // d_funcGroups.push_back(nmol);

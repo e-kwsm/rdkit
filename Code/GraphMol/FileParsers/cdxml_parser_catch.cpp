@@ -470,7 +470,7 @@ TEST_CASE("CDXML") {
     CHECK(mols.size() == expected.size());
     int i = 0;
     for (auto &mol : mols) {
-      mol.get()->clearConformers();
+      mol->clearConformers();
       CHECK(MolToSmiles(*mol) == expected[i]);
       CHECK(MolToCXSmiles(*mol) == expected_cx[i++]);
     }
@@ -485,7 +485,7 @@ TEST_CASE("CDXML") {
     CHECK(mols.size() == expected.size());
     int i = 0;
     for (auto &mol : mols) {
-      mol.get()->clearConformers();
+      mol->clearConformers();
       CHECK(MolToSmiles(*mol) == expected[i]);
       CHECK(MolToCXSmiles(*mol) == expected_cx[i++]);
     }
