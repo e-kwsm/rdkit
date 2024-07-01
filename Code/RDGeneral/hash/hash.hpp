@@ -1,3 +1,5 @@
+#ifndef LLVM_CODE_RDGENERAL_HASH_HASH_HPP
+#define LLVM_CODE_RDGENERAL_HASH_HASH_HPP
 
 // Copyright 2005-2009 Daniel James.
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
@@ -12,11 +14,11 @@
 #if !defined(GBOOST_FUNCTIONAL_HASH_HASH_HPP)
 #define GBOOST_FUNCTIONAL_HASH_HASH_HPP
 
-#include <RDGeneral/hash/hash_fwd.hpp>
-#include <functional>
-#include <boost/functional.hpp>
 #include <RDGeneral/hash/detail/hash_float.hpp>
+#include <RDGeneral/hash/hash_fwd.hpp>
 #include <boost/detail/container_fwd.hpp>
+#include <boost/functional.hpp>
+#include <functional>
 #include <string>
 
 #if defined(BOOST_NO_TEMPLATE_PARTIAL_SPECIALIZATION)
@@ -474,4 +476,6 @@ struct hash : public gboost::hash_detail::hash_impl<
 #if !defined(GBOOST_HASH_NO_EXTENSIONS) && \
     !defined(GBOOST_FUNCTIONAL_HASH_EXTENSIONS_HPP)
 #include <RDGeneral/hash/extensions.hpp>
+#endif
+
 #endif

@@ -18,12 +18,12 @@
 #endif
 #endif
 
-#include <RDGeneral/hash/hash_fwd.hpp>
 #include <RDGeneral/hash/detail/float_functions.hpp>
-#include <boost/integer/static_log2.hpp>
-#include <cstdint>
-#include <boost/limits.hpp>
+#include <RDGeneral/hash/hash_fwd.hpp>
 #include <boost/assert.hpp>
+#include <boost/integer/static_log2.hpp>
+#include <boost/limits.hpp>
+#include <cstdint>
 
 // Select implementation for the current platform.
 
