@@ -135,7 +135,7 @@ inline std::string qhelper(const Bond::QUERYBOND_QUERY *q, unsigned int depth) {
 }  // namespace detail
 inline std::string describeQuery(const Bond *bond) {
   PRECONDITION(bond, "bad bond");
-  std::string res = "";
+  std::string res;
   if (bond->hasQuery()) {
     res = detail::qhelper(bond->getQuery(), 0);
   }
