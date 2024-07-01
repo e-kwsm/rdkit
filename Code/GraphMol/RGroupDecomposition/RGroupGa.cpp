@@ -64,7 +64,7 @@ double RGroupDecompositionChromosome::recalculateScore() {
 }
 
 void RGroupDecompositionChromosome::decode() {
-  auto values = getString();
+  auto *values = getString();
   permutation.clear();
   const auto &matches = rGroupGa.getRGroupData().matches;
   auto pos = 0;
