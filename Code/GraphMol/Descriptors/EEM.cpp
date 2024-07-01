@@ -121,7 +121,7 @@ unsigned int getAtomtype(const ROMol &mol, const RDKit::Atom *atom) {
   return t;
 }
 
-std::unique_ptr<double[]> getEEMMatrix(double *dist3D, unsigned int n,
+std::unique_ptr<double[]> getEEMMatrix(const double *dist3D, unsigned int n,
                                        const EEM_arrays &EEMatoms) {
   PRECONDITION(dist3D != nullptr, "bad dist3D argument")
   int sizeArray = (n + 1) * (n + 1);

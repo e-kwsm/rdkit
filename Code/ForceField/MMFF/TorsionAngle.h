@@ -76,9 +76,9 @@ RDKIT_FORCEFIELD_EXPORT double calcTorsionEnergy(const double V1,
                                                  const double V3,
                                                  const double cosPhi);
 RDKIT_FORCEFIELD_EXPORT void calcTorsionGrad(RDGeom::Point3D *r,
-                                             RDGeom::Point3D *t, double *d,
-                                             double **g, double &sinTerm,
-                                             double &cosPhi);
+                                             RDGeom::Point3D *t,
+                                             const double *d, double **g,
+                                             double &sinTerm, double &cosPhi);
 }  // namespace Utils
 }  // namespace MMFF
 }  // namespace ForceFields
