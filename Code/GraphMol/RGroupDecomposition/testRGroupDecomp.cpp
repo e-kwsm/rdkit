@@ -63,13 +63,13 @@ void CHECK_RGROUP(RGroupRows::const_iterator &it, const std::string &expected,
     if (i) {
       str << " ";
       if (mol) {
-        res = molzip(*res, *rgroups->second.get());
+        res = molzip(*res, *rgroups->second);
       }
     } else if (mol) {
-      res = std::unique_ptr<ROMol>(new ROMol(*rgroups->second.get()));
+      res = std::unique_ptr<ROMol>(new ROMol(*rgroups->second));
     }
     // rlabel:smiles
-    str << rgroups->first << ":" << MolToSmiles(*rgroups->second.get());
+    str << rgroups->first << ":" << MolToSmiles(*rgroups->second);
   }
   std::string result = str.str();
 
@@ -86,8 +86,7 @@ void DUMP_RGROUP(RGroupRows::const_iterator &it, std::string &result) {
 
   for (const auto &rgroups : *it) {
     // rlabel:smiles
-    str << rgroups.first << ":" << MolToSmiles(*rgroups.second.get(), true)
-        << " ";
+    str << rgroups.first << ":" << MolToSmiles(*rgroups.second, true) << " ";
   }
   result = str.str();
 }
