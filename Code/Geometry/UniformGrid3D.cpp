@@ -9,12 +9,12 @@
 //  of the RDKit source tree.
 //
 #include "UniformGrid3D.h"
-#include <DataStructs/DiscreteValueVect.h>
-#include <RDGeneral/StreamOps.h>
-#include <RDGeneral/Exceptions.h>
 #include "point.h"
-#include <fstream>
+#include <DataStructs/DiscreteValueVect.h>
+#include <RDGeneral/Exceptions.h>
+#include <RDGeneral/StreamOps.h>
 #include <cstdint>
+#include <fstream>
 
 constexpr double OFFSET_TOL = 1.e-8;
 constexpr double SPACING_TOL = 1.e-8;
@@ -185,9 +185,8 @@ void UniformGrid3D::setSphereOccupancy(const Point3D &center, double radius,
   if (ptIndex == -1) {
     if (ignoreOutOfBound) {
       return;
-    } else {
-      throw GridException("Center outside the grid boundary");
     }
+    throw GridException("Center outside the grid boundary");
   }
   Point3D gPt(center);  // point on the grid
   gPt -= d_offSet;
