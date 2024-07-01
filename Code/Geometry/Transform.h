@@ -1,3 +1,6 @@
+#ifndef LLVM_CODE_GEOMETRY_TRANSFORM_H
+#define LLVM_CODE_GEOMETRY_TRANSFORM_H
+
 //
 //   Copyright (C) 2003-2006 Rational Discovery LLC
 //
@@ -14,6 +17,8 @@
 namespace RDGeom {
 
 typedef enum { X_Axis, Y_Axis, Z_Axis } AxisType;
-}
+}  // namespace RDGeom
+
+#endif
 
 #endif
