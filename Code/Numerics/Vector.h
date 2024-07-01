@@ -1,3 +1,6 @@
+#ifndef LLVM_CODE_NUMERICS_VECTOR_H
+#define LLVM_CODE_NUMERICS_VECTOR_H
+
 //
 //  Copyright (C) 2004-2008 Greg Landrum and Rational Discovery LLC
 //
@@ -327,5 +330,7 @@ std::ostream &operator<<(std::ostream &target,
   target << "]\n";
   return target;
 }
+
+#endif
 
 #endif
