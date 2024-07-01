@@ -9,11 +9,11 @@
 //  of the RDKit source tree.
 //
 #include "PeriodicTable.h"
-#include <string>
 #include <boost/tokenizer.hpp>
+#include <string>
 typedef boost::tokenizer<boost::char_separator<char>> tokenizer;
-#include <sstream>
 #include <locale>
+#include <sstream>
 
 #ifdef RDK_BUILD_THREADSAFE_SSS
 #include <mutex>
