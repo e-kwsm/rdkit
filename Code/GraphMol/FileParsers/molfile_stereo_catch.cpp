@@ -233,7 +233,7 @@ void testStereoExample(const std::string &mb, unsigned int aidx,
   REQUIRE(m);
   CHECK(m->getAtomWithIdx(aidx)->getChiralTag() == expected);
   CIPLabeler::assignCIPLabels(*m);
-  std::string CIP = "";
+  std::string CIP;
   CHECK(m->getAtomWithIdx(aidx)->getPropIfPresent(common_properties::_CIPCode,
                                                   CIP));
   CHECK(CIP == expectedCIP);

@@ -187,7 +187,7 @@ bool parse_fragment(RWMol &mol, ptree &frag,
       std::vector<int> bond_ordering;
       std::vector<int> elementlist;
       std::vector<double> atom_coords;
-      std::string nodetype = "";
+      std::string nodetype;
       for (auto &attr : node.second.get_child("<xmlattr>")) {
         try {
           if (attr.first == "id") {

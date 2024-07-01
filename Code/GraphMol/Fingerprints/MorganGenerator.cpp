@@ -422,7 +422,7 @@ MorganEnvGenerator<OutputType>::getEnvironments(
         if (morganArguments->df_includeChirality && looksChiral) {
           chiralAtoms[atomIdx] = 1;
           // add an extra value to the invariant to reflect chirality:
-          std::string cip = "";
+          std::string cip;
           tAtom->getPropIfPresent(common_properties::_CIPCode, cip);
           if (cip == "R") {
             gboost::hash_combine(invar, 3);

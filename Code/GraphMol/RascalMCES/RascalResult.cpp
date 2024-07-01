@@ -781,7 +781,7 @@ void cleanSmarts(std::string &smarts, const std::string &equivalentAtoms) {
       {std::regex(R"(([A-Z][1-9]*)-([A-Z]))"), "$1$2"},
       {std::regex(R"(([A-Z])-([1-9]))"), "$1$2"}};
   // Sometimes it needs more than 1 pass through
-  std::string start_smt = "";
+  std::string start_smt;
   while (start_smt != smarts) {
     start_smt = smarts;
     for (auto [patt, repl] : repls) {

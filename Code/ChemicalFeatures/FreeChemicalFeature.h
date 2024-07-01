@@ -34,11 +34,10 @@ class RDKIT_CHEMICALFEATURES_EXPORT FreeChemicalFeature
 
   //! start with family and location specified, leave the type blank
   FreeChemicalFeature(std::string family, const RDGeom::Point3D &loc)
-      : d_id(-1), d_family(std::move(family)), d_type(""), d_position(loc) {}
+      : d_id(-1), d_family(std::move(family)), d_position(loc) {}
 
   //! start with everything blank
-  FreeChemicalFeature()
-      : d_family(""), d_type(""), d_position(RDGeom::Point3D(0.0, 0.0, 0.0)) {}
+  FreeChemicalFeature() : d_position(RDGeom::Point3D(0.0, 0.0, 0.0)) {}
 
   explicit FreeChemicalFeature(const std::string &pickle) {
     this->initFromString(pickle);

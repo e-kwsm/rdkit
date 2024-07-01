@@ -51,7 +51,7 @@ struct fragment_wrapper {
         "Module containing tools for dealing with molecules with more than \
 					one covalently bonded unit";
 
-    std::string docString = "";
+    std::string docString;
 
     python::class_<MolStandardize::FragmentRemover, boost::noncopyable>(
         "FragmentRemover", python::init<>(python::args("self")))

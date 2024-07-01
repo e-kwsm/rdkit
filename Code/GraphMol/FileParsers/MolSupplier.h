@@ -321,7 +321,7 @@ class RDKIT_FILEPARSERS_EXPORT SmilesMolSupplier : public MolSupplier {
 };
 
 struct TDTMolSupplierParams {
-  std::string nameRecord = "";
+  std::string nameRecord;
   int confId2D = -1;
   int confId3D = -1;
   v2::SmilesParse::SmilesParserParams parseParameters = {

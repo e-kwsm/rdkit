@@ -56,7 +56,7 @@ void setRXNRoleOfAllMoleculeAtoms(RDKit::ROMol &mol, int role) {
 
 std::string molToString(RDKit::ROMol &mol, bool toSmiles,
                         const RDKit::SmilesWriteParams &params) {
-  std::string res = "";
+  std::string res;
   if (toSmiles) {
     res = MolToSmiles(mol, params);
   } else {
@@ -72,7 +72,7 @@ std::string molToString(RDKit::ROMol &mol, bool toSmiles,
 std::string chemicalReactionTemplatesToString(
     const RDKit::ChemicalReaction &rxn, RDKit::ReactionMoleculeType type,
     bool toSmiles, const RDKit::SmilesWriteParams &params) {
-  std::string res = "";
+  std::string res;
   std::vector<std::string> vfragsmi;
   auto begin = getStartIterator(rxn, type);
   auto end = getEndIterator(rxn, type);
@@ -94,7 +94,7 @@ std::string chemicalReactionTemplatesToString(
 std::string chemicalReactionToRxnToString(
     const RDKit::ChemicalReaction &rxn, bool toSmiles,
     const RDKit::SmilesWriteParams &params, bool includeCX, std::uint32_t flags = RDKit::SmilesWrite::CXSmilesFields::CX_ALL) {
-  std::string res = "";
+  std::string res;
   res +=
       chemicalReactionTemplatesToString(rxn, RDKit::Reactant, toSmiles, params);
   res += ">";

@@ -1479,7 +1479,7 @@ std::string getAtomListText(const Atom &atom) {
                    atom.getQuery()->getDescription() == "AtomOr",
                "bad query type");
 
-  std::string res = "";
+  std::string res;
   if (atom.getQuery()->getNegation()) {
     res += "!";
   }

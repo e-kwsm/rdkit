@@ -205,7 +205,7 @@ MolChemicalFeatureDef *parseFeatureDef(
   // read out the rest of the definition
   //
   std::vector<double> weights;
-  std::string family = "";
+  std::string family;
   bool foundEnd = false;
   Local::getNextLine(inStream, nextLine, lineNo);
   // std::getline(inStream,nextLine);

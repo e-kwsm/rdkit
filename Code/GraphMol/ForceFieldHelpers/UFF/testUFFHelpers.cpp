@@ -1012,7 +1012,7 @@ void testGitHubIssue62() {
       ROMol *mol = MolOps::addHs(*tmp);
       delete tmp;
       TEST_ASSERT(mol);
-      std::string molName = "";
+      std::string molName;
       if (mol->hasProp(common_properties::_Name)) {
         mol->getProp(common_properties::_Name, molName);
       }
