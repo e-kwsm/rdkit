@@ -109,8 +109,10 @@ inline signed char EndianSwapBytes(signed char value) {
 //! Packs an integer and outputs it to a stream
 inline void appendPackedIntToStream(std::stringstream &ss,
                                     boost::uint32_t num) {
-  int nbytes, bix;
-  unsigned int val, res;
+  int nbytes;
+  int bix;
+  unsigned int val;
+  unsigned int res;
   char tc;
 
   res = num;
@@ -152,8 +154,10 @@ inline void appendPackedIntToStream(std::stringstream &ss,
 
 //! Reads an integer from a stream in packed format and returns the result.
 inline boost::uint32_t readPackedIntFromStream(std::stringstream &ss) {
-  boost::uint32_t val, num;
-  int shift, offset;
+  boost::uint32_t val;
+  boost::uint32_t num;
+  int shift;
+  int offset;
   char tmp;
   ss.read(&tmp, sizeof(tmp));
   if (ss.fail()) {
@@ -218,8 +222,10 @@ inline boost::uint32_t readPackedIntFromStream(std::stringstream &ss) {
 //! Reads an integer from a char * in packed format and returns the result.
 //!  The argument is advanced
 inline boost::uint32_t pullPackedIntFromString(const char *&text) {
-  boost::uint32_t val, num;
-  int shift, offset;
+  boost::uint32_t val;
+  boost::uint32_t num;
+  int shift;
+  int offset;
   char tmp;
   tmp = *text;
   text++;
