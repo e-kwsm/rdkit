@@ -28,12 +28,12 @@
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
-#ifndef RDKIT_DATASTRUCTS_STREAMOPS
-#define RDKIT_DATASTRUCTS_STREAMOPS
-#include <RDGeneral/StreamOps.h>
+#ifndef LLVM_CODE_DATASTRUCTS_DATASTRUCTSSTREAMOPS_H
+#define LLVM_CODE_DATASTRUCTS_DATASTRUCTSSTREAMOPS_H
 #include <DataStructs/ExplicitBitVect.h>
-#include <typeinfo>
+#include <RDGeneral/StreamOps.h>
 #include <any>
+#include <typeinfo>
 
 namespace RDKit {
 class DataStructsExplicitBitVecPropHandler : public CustomPropHandler {
