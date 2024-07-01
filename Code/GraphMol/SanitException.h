@@ -1,3 +1,6 @@
+#ifndef LLVM_CODE_GRAPHMOL_SANITEXCEPTION_H
+#define LLVM_CODE_GRAPHMOL_SANITEXCEPTION_H
+
 //
 //  Copyright (C) 2002-2019 Greg Landrum and Rational Discovery LLC
 //
@@ -12,15 +15,15 @@
 #ifndef RD_SANITEXCEPTION_H
 #define RD_SANITEXCEPTION_H
 
-#include <RDGeneral/types.h>
-#include <GraphMol/GraphMol.h>
 #include <GraphMol/Atom.h>
 #include <GraphMol/Bond.h>
+#include <GraphMol/GraphMol.h>
+#include <RDGeneral/types.h>
 
+#include <exception>
 #include <string>
 #include <utility>
 #include <vector>
-#include <exception>
 
 namespace RDKit {
 
@@ -116,5 +119,7 @@ class RDKIT_GRAPHMOL_EXPORT KekulizeException : public MolSanitizeException {
 };
 
 }  // namespace RDKit
+
+#endif
 
 #endif

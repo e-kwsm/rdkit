@@ -1,3 +1,6 @@
+#ifndef LLVM_CODE_GRAPHMOL_RINGINFO_H
+#define LLVM_CODE_GRAPHMOL_RINGINFO_H
+
 //
 //  Copyright (C) 2004-2022 Greg Landrum and other RDKit contributors
 //
@@ -11,10 +14,10 @@
 #ifndef RD_RINGINFO_H
 #define RD_RINGINFO_H
 
-#include <map>
-#include <vector>
 #include <RDGeneral/BoostStartInclude.h>
 #include <boost/dynamic_bitset.hpp>
+#include <map>
+#include <vector>
 #ifdef RDK_USE_URF
 #include <boost/shared_ptr.hpp>
 #endif
@@ -339,5 +342,7 @@ class RDKIT_GRAPHMOL_EXPORT RingInfo {
 #endif
 };
 }  // namespace RDKit
+
+#endif
 
 #endif
