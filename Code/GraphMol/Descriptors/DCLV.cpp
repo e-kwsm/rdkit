@@ -455,7 +455,7 @@ struct State {
     return neighbourList;
   }
 
-  bool testPoint(double *vect, double solvrad) {
+  bool testPoint(const double *vect, double solvrad) {
     if (recordCache) {
       double dist = recordCache->radius + solvrad;
       double dx = recordCache->pos.x - vect[0];
