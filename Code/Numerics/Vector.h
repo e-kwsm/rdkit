@@ -206,7 +206,8 @@ class Vector {
   //! i.e. the entry being used for the L-infinity norm
   inline unsigned int largestAbsValId() const {
     TYPE res = (TYPE)(-1.0);
-    unsigned int i, id = d_size;
+    unsigned int i;
+    unsigned int id = d_size;
     TYPE *data = d_data.get();
     for (i = 0; i < d_size; i++) {
       if (fabs(data[i]) > res) {
@@ -220,7 +221,8 @@ class Vector {
   //! \brief Gets the ID of the entry that has the largest value
   inline unsigned int largestValId() const {
     TYPE res = (TYPE)(-1.e8);
-    unsigned int i, id = d_size;
+    unsigned int i;
+    unsigned int id = d_size;
     TYPE *data = d_data.get();
     for (i = 0; i < d_size; i++) {
       if (data[i] > res) {
@@ -234,7 +236,8 @@ class Vector {
   //! \brief Gets the ID of the entry that has the smallest value
   inline unsigned int smallestValId() const {
     TYPE res = (TYPE)(1.e8);
-    unsigned int i, id = d_size;
+    unsigned int i;
+    unsigned int id = d_size;
     TYPE *data = d_data.get();
     for (i = 0; i < d_size; i++) {
       if (data[i] < res) {

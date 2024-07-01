@@ -63,7 +63,8 @@ class RDKIT_QUERY_EXPORT RangeQuery
         this->TypeConvert(what, Int2Type<needsConversion>());
     int lCmp = queryCmp(this->d_lower, mfArg, this->d_tol);
     int uCmp = queryCmp(this->d_upper, mfArg, this->d_tol);
-    bool lowerRes, upperRes;
+    bool lowerRes;
+    bool upperRes;
     if (this->df_lowerOpen) {
       lowerRes = lCmp < 0;
     } else {
