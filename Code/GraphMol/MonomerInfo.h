@@ -43,7 +43,7 @@ class RDKIT_GRAPHMOL_EXPORT AtomMonomerInfo {
 
  private:
   AtomMonomerType d_monomerType{UNKNOWN};
-  std::string d_name{""};
+  std::string d_name;
 };
 
 //! Captures atom-level information about peptide residues
@@ -105,11 +105,11 @@ class RDKIT_GRAPHMOL_EXPORT AtomPDBResidueInfo : public AtomMonomerInfo {
   // element and charge are not present since the atom itself stores that
   // information
   unsigned int d_serialNumber = 0;
-  std::string d_altLoc = "";
-  std::string d_residueName = "";
+  std::string d_altLoc;
+  std::string d_residueName;
   int d_residueNumber = 0;
-  std::string d_chainId = "";
-  std::string d_insertionCode = "";
+  std::string d_chainId;
+  std::string d_insertionCode;
   double d_occupancy = 1.0;
   double d_tempFactor = 0.0;
   // additional, non-PDB fields:
