@@ -2619,9 +2619,9 @@ TEST_CASE("read metadata from PNG", "[reader][PNG]") {
     std::string fname =
         rdbase + "/Code/GraphMol/FileParsers/test_data/colchicine.png";
     auto istr = std::ifstream(fname, std::ios_base::binary);
-    istr.seekg(0, istr.end);
+    istr.seekg(0, std::ifstream::end);
     auto sz = istr.tellg();
-    istr.seekg(0, istr.beg);
+    istr.seekg(0, std::ifstream::beg);
     char *buff = new char[sz];
     istr.read(buff, sz);
     std::string data(buff, sz);
