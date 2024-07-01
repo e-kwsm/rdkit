@@ -1,3 +1,6 @@
+#ifndef LLVM_CODE_GRAPHMOL_BONDITERATORS_H
+#define LLVM_CODE_GRAPHMOL_BONDITERATORS_H
+
 //
 //  Copyright (C) 2002-2006 Greg Landrum and Rational Discovery LLC
 //
@@ -71,5 +74,7 @@ class RDKIT_GRAPHMOL_EXPORT ConstBondIterator_ {
   ROMol const *_mol{nullptr};
 };
 }  // namespace RDKit
+
+#endif
 
 #endif
