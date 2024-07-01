@@ -248,9 +248,8 @@ int HeteroatomIterator_<Atom_, Mol_>::_findNext(int from) {
   while (from < _end) {
     if (_qA->Match((*_mol)[from])) {
       break;
-    } else {
-      from++;
     }
+    from++;
   }
   return from;
 }
@@ -260,9 +259,8 @@ int HeteroatomIterator_<Atom_, Mol_>::_findPrev(int from) {
   while (from > 0) {
     if (_qA->Match((*_mol)[from])) {
       break;
-    } else {
-      from--;
     }
+    from--;
   }
   if (from < 0) {
     from = _end;
@@ -357,9 +355,8 @@ int AromaticAtomIterator_<Atom_, Mol_>::_findNext(int from) {
   while (from < _end) {
     if ((*_mol)[from]->getIsAromatic()) {
       break;
-    } else {
-      from++;
     }
+    from++;
   }
   return from;
 }
@@ -369,9 +366,8 @@ int AromaticAtomIterator_<Atom_, Mol_>::_findPrev(int from) {
   while (from > 0) {
     if ((*_mol)[from]->getIsAromatic()) {
       break;
-    } else {
-      from--;
     }
+    from--;
   }
   if (from < 0) {
     from = _end;
@@ -487,9 +483,8 @@ int QueryAtomIterator_<Atom_, Mol_>::_findNext(int from) {
   while (from < _end) {
     if (_qA->Match((*_mol)[from])) {
       break;
-    } else {
-      from++;
     }
+    from++;
   }
   return from;
 }
@@ -501,9 +496,8 @@ int QueryAtomIterator_<Atom_, Mol_>::_findPrev(int from) {
   while (from > 0) {
     if (_qA->Match((*_mol)[from])) {
       break;
-    } else {
-      from--;
     }
+    from--;
   }
   if (from < 0) {
     from = _end;
@@ -608,9 +602,8 @@ int MatchingAtomIterator_<Atom_, Mol_>::_findNext(int from) {
   while (from < _end) {
     if (_qF((*_mol)[from])) {
       break;
-    } else {
-      ++from;
     }
+    ++from;
   }
   return from;
 }
@@ -622,9 +615,8 @@ int MatchingAtomIterator_<Atom_, Mol_>::_findPrev(int from) {
   while (from > 0) {
     if (_qF((*_mol)[from])) {
       break;
-    } else {
-      --from;
     }
+    --from;
   }
   if (from < 0) {
     from = _end;
