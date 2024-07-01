@@ -208,7 +208,7 @@ void parseAtomAttribs(Atom *atom, AttribListType attribs, bool doingQuery) {
     } else {
       // a block of properties that can have "f" values, and so need special
       // handling:
-      std::string fTag = "";
+      std::string fTag;
       int val = 0;
       if (attribVal == "f" || attribName == "f") {
         fTag = "_SLN_";
