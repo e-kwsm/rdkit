@@ -314,54 +314,63 @@ QueryDetails getQueryDetails(const Query<int, T const *, true> *query) {
   PRECONDITION(query, "no query");
   if (typeid(*query) == typeid(AndQuery<int, T const *, true>)) {
     return QueryDetails(MolPickler::QUERY_AND);
-  } else if (typeid(*query) == typeid(OrQuery<int, T const *, true>)) {
+  }
+  if (typeid(*query) == typeid(OrQuery<int, T const *, true>)) {
     return QueryDetails(MolPickler::QUERY_OR);
-  } else if (typeid(*query) == typeid(XOrQuery<int, T const *, true>)) {
+  }
+  if (typeid(*query) == typeid(XOrQuery<int, T const *, true>)) {
     return QueryDetails(MolPickler::QUERY_XOR);
-  } else if (typeid(*query) == typeid(EqualityQuery<int, T const *, true>)) {
+  }
+  if (typeid(*query) == typeid(EqualityQuery<int, T const *, true>)) {
     return QueryDetails(std::make_tuple(
         MolPickler::QUERY_EQUALS,
         static_cast<const EqualityQuery<int, T const *, true> *>(query)
             ->getVal(),
         static_cast<const EqualityQuery<int, T const *, true> *>(query)
             ->getTol()));
-  } else if (typeid(*query) == typeid(GreaterQuery<int, T const *, true>)) {
+  }
+  if (typeid(*query) == typeid(GreaterQuery<int, T const *, true>)) {
     return QueryDetails(std::make_tuple(
         MolPickler::QUERY_GREATER,
         static_cast<const GreaterQuery<int, T const *, true> *>(query)
             ->getVal(),
         static_cast<const GreaterQuery<int, T const *, true> *>(query)
             ->getTol()));
-  } else if (typeid(*query) ==
-             typeid(GreaterEqualQuery<int, T const *, true>)) {
+  }
+  if (typeid(*query) == typeid(GreaterEqualQuery<int, T const *, true>)) {
     return QueryDetails(std::make_tuple(
         MolPickler::QUERY_GREATEREQUAL,
         static_cast<const GreaterEqualQuery<int, T const *, true> *>(query)
             ->getVal(),
         static_cast<const GreaterEqualQuery<int, T const *, true> *>(query)
             ->getTol()));
-  } else if (typeid(*query) == typeid(LessQuery<int, T const *, true>)) {
+  }
+  if (typeid(*query) == typeid(LessQuery<int, T const *, true>)) {
     return QueryDetails(std::make_tuple(
         MolPickler::QUERY_LESS,
         static_cast<const LessQuery<int, T const *, true> *>(query)->getVal(),
         static_cast<const LessQuery<int, T const *, true> *>(query)->getTol()));
-  } else if (typeid(*query) == typeid(LessEqualQuery<int, T const *, true>)) {
+  }
+  if (typeid(*query) == typeid(LessEqualQuery<int, T const *, true>)) {
     return QueryDetails(std::make_tuple(
         MolPickler::QUERY_LESSEQUAL,
         static_cast<const LessEqualQuery<int, T const *, true> *>(query)
             ->getVal(),
         static_cast<const LessEqualQuery<int, T const *, true> *>(query)
             ->getTol()));
-  } else if (typeid(*query) == typeid(AtomRingQuery)) {
+  }
+  if (typeid(*query) == typeid(AtomRingQuery)) {
     return QueryDetails(std::make_tuple(
         MolPickler::QUERY_ATOMRING,
         static_cast<const EqualityQuery<int, T const *, true> *>(query)
             ->getVal(),
         static_cast<const EqualityQuery<int, T const *, true> *>(query)
             ->getTol()));
-  } else if (typeid(*query) == typeid(Query<int, T const *, true>)) {
+  }
+  if (typeid(*query) == typeid(Query<int, T const *, true>)) {
     return QueryDetails(MolPickler::QUERY_NULL);
-  } else if (typeid(*query) == typeid(RangeQuery<int, T const *, true>)) {
+  }
+  if (typeid(*query) == typeid(RangeQuery<int, T const *, true>)) {
     char ends;
     bool lowerOpen, upperOpen;
     boost::tie(lowerOpen, upperOpen) =
@@ -376,15 +385,15 @@ QueryDetails getQueryDetails(const Query<int, T const *, true> *query) {
             ->getUpper(),
         static_cast<const RangeQuery<int, T const *, true> *>(query)->getTol(),
         ends));
-  } else if (typeid(*query) == typeid(SetQuery<int, T const *, true>)) {
+  }
+  if (typeid(*query) == typeid(SetQuery<int, T const *, true>)) {
     std::set<int32_t> tset(
         static_cast<const SetQuery<int, T const *, true> *>(query)->beginSet(),
         static_cast<const SetQuery<int, T const *, true> *>(query)->endSet());
     return QueryDetails(
         std::make_tuple(MolPickler::QUERY_SET, std::move(tset)));
-  } else {
-    throw MolPicklerException("do not know how to pickle part of the query.");
   }
+  throw MolPicklerException("do not know how to pickle part of the query.");
 }
 template RDKIT_GRAPHMOL_EXPORT QueryDetails getQueryDetails<RDKit::Atom>(
     const Queries::Query<int, RDKit::Atom const *, true> *query);
@@ -924,15 +933,16 @@ void MolPickler::pickleMol(const ROMol *mol, std::ostream &ss,
     if (ss.eof()) {
       throw MolPicklerException(
           "Bad pickle format: unexpected End-of-File while writing");
-    } else if (ss.bad()) {
+    }
+    if (ss.bad()) {
       throw MolPicklerException("Bad pickle format: write error while writing");
-    } else if (ss.fail()) {
+    }
+    if (ss.fail()) {
       throw MolPicklerException(
           "Bad pickle format: logical error while writing");
-    } else {
-      throw MolPicklerException(
-          "Bad pickle format: unexpected error while writing");
     }
+    throw MolPicklerException(
+        "Bad pickle format: unexpected error while writing");
   }
 }
 
@@ -1027,15 +1037,16 @@ void MolPickler::molFromPickle(std::istream &ss, ROMol *mol,
     if (ss.eof()) {
       throw MolPicklerException(
           "Bad pickle format: unexpected End-of-File while reading");
-    } else if (ss.bad()) {
+    }
+    if (ss.bad()) {
       throw MolPicklerException("Bad pickle format: read error while reading");
-    } else if (ss.fail()) {
+    }
+    if (ss.fail()) {
       throw MolPicklerException(
           "Bad pickle format: logical error while reading");
-    } else {
-      throw MolPicklerException(
-          "Bad pickle format: unexpected error while reading");
     }
+    throw MolPicklerException(
+        "Bad pickle format: unexpected error while reading");
   }
 }
 void MolPickler::molFromPickle(const std::string &pickle, ROMol *mol,
