@@ -1,3 +1,6 @@
+#ifndef LLVM_CODE_RDGENERAL_RDTHREADS_H
+#define LLVM_CODE_RDGENERAL_RDTHREADS_H
+
 //
 // Copyright (C) 2015-2018 Greg Landrum
 //
@@ -25,9 +28,8 @@ inline unsigned int getNumThreadsToUse(int target) {
   unsigned int res = std::thread::hardware_concurrency();
   if (res > rdcast<unsigned int>(-target)) {
     return res + target;
-  } else {
-    return 1;
   }
+  return 1;
 }
 }  // namespace RDKit
 
@@ -39,6 +41,8 @@ inline unsigned int getNumThreadsToUse(int target) {
   return 1;
 }
 }  // namespace RDKit
+#endif
+
 #endif
 
 #endif
