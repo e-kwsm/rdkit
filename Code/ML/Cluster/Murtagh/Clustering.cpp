@@ -28,7 +28,7 @@ extern "C" void distdriver_(boost::int64_t *n, boost::int64_t *len, real *dists,
 // (thus drowning in the waves of f2c hate), we'll generate
 // the distance matrix on our own here and then call distdriver_
 //
-static void clusterit(real *dataP, boost::int64_t n, boost::int64_t m,
+static void clusterit(const real *dataP, boost::int64_t n, boost::int64_t m,
                       boost::int64_t iopt, boost::int64_t *ia,
                       boost::int64_t *ib, real *crit) {
   real *dists;
