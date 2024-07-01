@@ -877,49 +877,48 @@ std::string GetAtomSmarts(const Atom *atom, const SmilesWriteParams &params) {
     // we have simple atom - just generate the smiles and return
     res = SmilesWrite::GetAtomSmiles(atom);
     return res;
-  } else {
-    if ((descrip == "AtomOr") || (descrip == "AtomAnd")) {
-      const QueryAtom *qatom = dynamic_cast<const QueryAtom *>(atom);
-      PRECONDITION(qatom, "could not convert atom to query atom");
-      // we have a composite query
-      needParen = true;
-      res = _recurseGetSmarts(qatom, query, query->getNegation(), queryFeatures,
-                              params);
-      if (res.length() == 1) {  // single atom symbol we don't need parens
-        needParen = false;
-      }
-    } else if (descrip == "RecursiveStructure") {
-      // it's a bare recursive structure query:
-      res = getRecursiveStructureQuerySmarts(query, params);
-      needParen = true;
-    } else {  // we have a simple smarts
-      const QueryAtom *qatom = dynamic_cast<const QueryAtom *>(atom);
-      PRECONDITION(qatom, "could not convert atom to query atom");
-      res = getAtomSmartsSimple(qatom, query, needParen, true, params);
-      if (query->getNegation()) {
-        res = "!" + res;
-        needParen = true;
-      }
-    }
-    std::string mapNum;
-    if (atom->getPropIfPresent(common_properties::molAtomMapNumber, mapNum)) {
-      needParen = true;
-      res += ":" + mapNum;
-    }
-    std::string symbol;
-    if (atom->getPropIfPresent(common_properties::smilesSymbol, symbol)) {
-      needParen = true;
-      if (!res.empty()) {
-        res = symbol + ";" + res;
-      } else {
-        res = symbol;
-      }
-    }
-    if (needParen) {
-      res = "[" + res + "]";
-    }
-    return res;
   }
+  if ((descrip == "AtomOr") || (descrip == "AtomAnd")) {
+    const QueryAtom *qatom = dynamic_cast<const QueryAtom *>(atom);
+    PRECONDITION(qatom, "could not convert atom to query atom");
+    // we have a composite query
+    needParen = true;
+    res = _recurseGetSmarts(qatom, query, query->getNegation(), queryFeatures,
+                            params);
+    if (res.length() == 1) {  // single atom symbol we don't need parens
+      needParen = false;
+    }
+  } else if (descrip == "RecursiveStructure") {
+    // it's a bare recursive structure query:
+    res = getRecursiveStructureQuerySmarts(query, params);
+    needParen = true;
+  } else {  // we have a simple smarts
+    const QueryAtom *qatom = dynamic_cast<const QueryAtom *>(atom);
+    PRECONDITION(qatom, "could not convert atom to query atom");
+    res = getAtomSmartsSimple(qatom, query, needParen, true, params);
+    if (query->getNegation()) {
+      res = "!" + res;
+      needParen = true;
+    }
+  }
+  std::string mapNum;
+  if (atom->getPropIfPresent(common_properties::molAtomMapNumber, mapNum)) {
+    needParen = true;
+    res += ":" + mapNum;
+  }
+  std::string symbol;
+  if (atom->getPropIfPresent(common_properties::smilesSymbol, symbol)) {
+    needParen = true;
+    if (!res.empty()) {
+      res = symbol + ";" + res;
+    } else {
+      res = symbol;
+    }
+  }
+  if (needParen) {
+    res = "[" + res + "]";
+  }
+  return res;
 }
 
 std::string GetBondSmarts(const Bond *bond, const SmilesWriteParams &params,
