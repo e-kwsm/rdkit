@@ -124,9 +124,8 @@ int MolData3Ddescriptors::GetPrincipalQuantumNumber(int AtomicNum) {
   }
   if (AtomicNum <= 86) {
     return 6;
-  } else {
-    return 7;
   }
+  return 7;
 }
 
 std::vector<double> MolData3Ddescriptors::GetIState(const RDKit::ROMol& mol) {
