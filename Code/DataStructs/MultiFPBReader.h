@@ -1,3 +1,6 @@
+#ifndef LLVM_CODE_DATASTRUCTS_MULTIFPBREADER_H
+#define LLVM_CODE_DATASTRUCTS_MULTIFPBREADER_H
+
 //
 // Copyright (c) 2016-2022 Greg Landrum
 //
@@ -19,9 +22,9 @@
      in future releases.
 */
 
-#include <RDGeneral/Exceptions.h>
 #include <DataStructs/ExplicitBitVect.h>
 #include <DataStructs/FPBReader.h>
+#include <RDGeneral/Exceptions.h>
 #include <tuple>
 
 namespace RDKit {
@@ -211,4 +214,6 @@ class RDKIT_DATASTRUCTS_EXPORT MultiFPBReader {
   MultiFPBReader &operator=(const MultiFPBReader &);
 };
 }  // namespace RDKit
+#endif
+
 #endif

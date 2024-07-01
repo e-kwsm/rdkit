@@ -1,3 +1,6 @@
+#ifndef LLVM_CODE_DATASTRUCTS_DISCRETEVALUEVECT_H
+#define LLVM_CODE_DATASTRUCTS_DISCRETEVALUEVECT_H
+
 //
 //  Copyright (C) 2004-2008 Greg Landrum and Rational Discovery LLC
 //
@@ -12,9 +15,9 @@
 #define __RD_DISCRETE_VALUE_VECT_20050124__
 
 #include <boost/smart_ptr.hpp>
-#include <string>
-#include <cstring>
 #include <cstdint>
+#include <cstring>
+#include <string>
 
 namespace RDKit {
 // we require 32bit unsigneds using the std::uint32_t type:
@@ -142,5 +145,7 @@ operator+(const DiscreteValueVect &p1, const DiscreteValueVect &p2);
 RDKIT_DATASTRUCTS_EXPORT DiscreteValueVect
 operator-(const DiscreteValueVect &p1, const DiscreteValueVect &p2);
 }  // namespace RDKit
+
+#endif
 
 #endif
