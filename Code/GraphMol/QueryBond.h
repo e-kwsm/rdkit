@@ -29,7 +29,7 @@ class RDKIT_GRAPHMOL_EXPORT QueryBond : public Bond {
  public:
   typedef Queries::Query<int, Bond const *, true> QUERYBOND_QUERY;
 
-  QueryBond() : Bond() {}
+  QueryBond() {}
   //! initialize with a particular bond order
   explicit QueryBond(BondType bT);
   //! initialize from a bond
