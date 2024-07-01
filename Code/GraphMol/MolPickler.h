@@ -1,3 +1,6 @@
+#ifndef LLVM_CODE_GRAPHMOL_MOLPICKLER_H
+#define LLVM_CODE_GRAPHMOL_MOLPICKLER_H
+
 ///
 //  Copyright (C) 2001-2021 Greg Landrum and Rational Discovery LLC
 //
@@ -325,5 +328,7 @@ QueryDetails getQueryDetails(const Queries::Query<int, T const *, true> *query);
 }  // namespace PicklerOps
 
 };  // namespace RDKit
+
+#endif
 
 #endif
