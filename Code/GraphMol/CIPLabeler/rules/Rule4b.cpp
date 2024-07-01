@@ -65,14 +65,14 @@ int Rule4b::compare(const Edge *a, const Edge *b) const {
       }
     }
     return 0;
-  } else {
-    auto list1 = newPairLists(getReferenceDescriptors(aEnd));
+  }
+  auto list1 = newPairLists(getReferenceDescriptors(aEnd));
 
-    auto list2 = newPairLists(getReferenceDescriptors(bEnd));
+  auto list2 = newPairLists(getReferenceDescriptors(bEnd));
 
-    if (list1.empty() != list2.empty()) {
-      throw std::runtime_error(
-          "Substituents should be topologically equivalent!");
+  if (list1.empty() != list2.empty()) {
+    throw std::runtime_error(
+        "Substituents should be topologically equivalent!");
     }
     if (list1.size() == 1) {
       return comparePairs(aEnd, bEnd, list1[0].getRefDescriptor(),
@@ -96,7 +96,6 @@ int Rule4b::compare(const Edge *a, const Edge *b) const {
       }
     }
     return 0;
-  }
 }
 
 bool Rule4b::hasDescriptors(const Node *node) const {
@@ -144,7 +143,8 @@ bool Rule4b::getReference(const std::vector<const Node *> &nodes,
   }
   if (right + left == 0) {
     return false;
-  } else if (right > left) {
+  }
+  if (right > left) {
     result.push_back(Descriptor::R);
     return true;
   } else if (right < left) {
@@ -255,7 +255,8 @@ int Rule4b::comparePairs(const Node *a, const Node *b, Descriptor refA,
 
     if (desA == refA && desB != refB) {
       return +1;
-    } else if (desA != refA && desB == refB) {
+    }
+    if (desA != refA && desB == refB) {
       return -1;
     }
 
