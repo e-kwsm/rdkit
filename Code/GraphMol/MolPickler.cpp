@@ -345,7 +345,8 @@ QueryDetails getQueryDetails(const Query<int, T const *, true> *query) {
             ->getVal(),
         static_cast<const GreaterEqualQuery<int, T const *, true> *>(query)
             ->getTol()));
-  } else if (typeid(*query) == typeid(LessQuery<int, T const *, true>)) {
+  }
+  if (typeid(*query) == typeid(LessQuery<int, T const *, true>)) {
     return QueryDetails(std::make_tuple(
         MolPickler::QUERY_LESS,
         static_cast<const LessQuery<int, T const *, true> *>(query)->getVal(),
