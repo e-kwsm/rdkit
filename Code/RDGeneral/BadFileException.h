@@ -1,3 +1,6 @@
+#ifndef LLVM_CODE_RDGENERAL_BADFILEEXCEPTION_H
+#define LLVM_CODE_RDGENERAL_BADFILEEXCEPTION_H
+
 //
 // Copyright 2003-2006 Greg Landrum and Rational Discovery LLC
 //
@@ -11,10 +14,10 @@
 #ifndef _RD_BADFILEEXCEPTION_H
 #define _RD_BADFILEEXCEPTION_H
 
+#include <stdexcept>
 #include <string>
 #include <utility>
 #include <vector>
-#include <stdexcept>
 
 namespace RDKit {
 
@@ -35,5 +38,7 @@ class RDKIT_RDGENERAL_EXPORT BadFileException : public std::runtime_error {
   std::string _msg;
 };
 }  // namespace RDKit
+
+#endif
 
 #endif

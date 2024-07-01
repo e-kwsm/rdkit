@@ -1,3 +1,6 @@
+#ifndef LLVM_CODE_RDGENERAL_EXCEPTIONS_H
+#define LLVM_CODE_RDGENERAL_EXCEPTIONS_H
+
 //
 // Copyright (c) 2003-2005 greg Landrum and Rational Discovery LLC
 //
@@ -74,5 +77,7 @@ class RDKIT_RDGENERAL_EXPORT KeyErrorException : public std::runtime_error {
   std::string _key;
   std::string _msg;
 };
+
+#endif
 
 #endif
