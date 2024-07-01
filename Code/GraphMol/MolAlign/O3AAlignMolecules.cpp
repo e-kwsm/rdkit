@@ -1015,7 +1015,8 @@ void SDM::fillFromLAP(LAP &lap) {
     }
   }
   // sort the SDM matrix by increasing scores
-  std::sort(d_SDMPtrVect.begin(), d_SDMPtrVect.end(), this->compareSDMScore);
+  std::sort(d_SDMPtrVect.begin(), d_SDMPtrVect.end(),
+            RDKit::MolAlign::SDM::compareSDMScore);
 }
 
 void SDM::fillFromDist(double threshold,
@@ -1074,7 +1075,8 @@ void SDM::fillFromDist(double threshold,
   }
   // sort the SDM matrix by decreasing constraint weights and,
   // as a second criterion, increasing distances
-  std::sort(d_SDMPtrVect.begin(), d_SDMPtrVect.end(), this->compareSDMDist);
+  std::sort(d_SDMPtrVect.begin(), d_SDMPtrVect.end(),
+            RDKit::MolAlign::SDM::compareSDMDist);
   // increase the number of pairs which will be used
   // by rmsAlgorithm until an atom which has been
   // included in a previous pair is found
