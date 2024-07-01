@@ -89,7 +89,8 @@ void makeRingNeighborMap(const VECT_INT_VECT &brings,
                          INT_INT_VECT_MAP &neighMap, unsigned int maxSize,
                          unsigned int maxOverlapSize) {
   auto nrings = rdcast<int>(brings.size());
-  int i, j;
+  int i;
+  int j;
   INT_VECT ring1;
 
   for (i = 0; i < nrings; ++i) {
@@ -291,7 +292,11 @@ bool applyHuckel(ROMol &, const INT_VECT &ring, const VECT_EDON_TYPE &edon,
   if (ring.size() < minRingSize) {
     return false;
   }
-  int atlw, atup, rlw, rup, rie;
+  int atlw;
+  int atup;
+  int rlw;
+  int rup;
+  int rie;
   bool aromatic = false;
   rlw = 0;
   rup = 0;

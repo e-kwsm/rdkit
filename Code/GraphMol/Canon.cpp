@@ -177,8 +177,10 @@ void canonicalizeDoubleBond(Bond *dblBond, UINT_VECT &bondVisitOrders,
     std::swap(atom1, atom2);
   }
 
-  Bond *firstFromAtom1 = nullptr, *secondFromAtom1 = nullptr;
-  Bond *firstFromAtom2 = nullptr, *secondFromAtom2 = nullptr;
+  Bond *firstFromAtom1 = nullptr;
+  Bond *secondFromAtom1 = nullptr;
+  Bond *firstFromAtom2 = nullptr;
+  Bond *secondFromAtom2 = nullptr;
 
   ROMol &mol = dblBond->getOwningMol();
   auto firstVisitOrder = mol.getNumBonds() + 1;
@@ -187,7 +189,8 @@ void canonicalizeDoubleBond(Bond *dblBond, UINT_VECT &bondVisitOrders,
   // -------------------------------------------------------
   // find the lowest visit order bonds from each end and determine
   // if anything is already constraining our choice of directions:
-  bool dir1Set = false, dir2Set = false;
+  bool dir1Set = false;
+  bool dir2Set = false;
 
   auto findNeighborBonds = [&mol, &dblBond, &bondDirCounts, &bondVisitOrders,
                             &firstVisitOrder](
@@ -682,7 +685,8 @@ void dfsBuildStack(ROMol &mol, int atomIdx, int inBondIdx,
                    const std::vector<std::string> *bondSymbols, bool doRandom) {
 
   Atom *atom = mol.getAtomWithIdx(atomIdx);
-  INT_LIST directTravList, cycleEndList;
+  INT_LIST directTravList;
+  INT_LIST cycleEndList;
   boost::dynamic_bitset<> seenFromHere(mol.getNumAtoms());
 
   seenFromHere.set(atomIdx);
@@ -890,7 +894,8 @@ void clearBondDirs(ROMol &mol, Bond *refBond, const Atom *fromAtom,
 
   ROMol::OEDGE_ITER beg, end;
   boost::tie(beg, end) = mol.getAtomBonds(fromAtom);
-  bool nbrPossible = false, adjusted = false;
+  bool nbrPossible = false;
+  bool adjusted = false;
   while (beg != end) {
     Bond *oBond = mol[*beg];
     if (oBond != refBond && canHaveDirection(*oBond)) {
@@ -944,7 +949,8 @@ void removeRedundantBondDirSpecs(ROMol &mol, MolStack &molStack,
       if (canHaveDirection(*tBond) && bondDirCounts[tBond->getIdx()] >= 1) {
         // start by finding the double bond that sets tBond's direction:
         const Atom *dblBondAtom = nullptr;
-        ROMol::OEDGE_ITER beg, end;
+        ROMol::OEDGE_ITER beg;
+        ROMol::OEDGE_ITER end;
         boost::tie(beg, end) = mol.getAtomBonds(canonBeginAtom);
         while (beg != end) {
           if (mol[*beg] != tBond && mol[*beg]->getBondType() == Bond::DOUBLE &&
