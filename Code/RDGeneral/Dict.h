@@ -1,3 +1,6 @@
+#ifndef LLVM_CODE_RDGENERAL_DICT_H
+#define LLVM_CODE_RDGENERAL_DICT_H
+
 //
 // Copyright (C) 2003-2021 Greg Landrum and other RDKit contributors
 //
@@ -16,14 +19,14 @@
 #ifndef RD_DICT_H_012020
 #define RD_DICT_H_012020
 
+#include "Exceptions.h"
+#include "RDValue.h"
+#include <RDGeneral/BoostEndInclude.h>
+#include <RDGeneral/BoostStartInclude.h>
+#include <boost/lexical_cast.hpp>
 #include <map>
 #include <string>
 #include <vector>
-#include "RDValue.h"
-#include "Exceptions.h"
-#include <RDGeneral/BoostStartInclude.h>
-#include <boost/lexical_cast.hpp>
-#include <RDGeneral/BoostEndInclude.h>
 
 namespace RDKit {
 typedef std::vector<std::string> STR_VECT;
@@ -350,4 +353,6 @@ inline std::string Dict::getVal<std::string>(const std::string &what) const {
 }
 
 }  // namespace RDKit
+#endif
+
 #endif

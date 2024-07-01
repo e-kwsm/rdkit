@@ -14,7 +14,7 @@
 namespace RDKit {
 namespace detail {
 const std::string computedPropName = "__computedProps";
-}
+}  // namespace detail
 
 namespace common_properties {
 const std::string TWOD = "2D";

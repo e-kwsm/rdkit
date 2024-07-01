@@ -9,13 +9,13 @@
 //  which is included in the file license.txt, found at the root
 //  of the RDKit source tree.
 //
-#include <iostream>
-#include <RDGeneral/Exceptions.h>
 #include "ExplicitBitVect.h"
-#include <RDGeneral/StreamOps.h>
 #include "base64.h"
-#include <sstream>
+#include <RDGeneral/Exceptions.h>
+#include <RDGeneral/StreamOps.h>
+#include <iostream>
 #include <limits>
+#include <sstream>
 #ifdef WIN32
 #include <ios>
 #endif
@@ -73,11 +73,10 @@ bool ExplicitBitVect::setBit(const unsigned int which) {
   }
   if ((bool)(*dp_bits)[which]) {
     return true;
-  } else {
-    (*dp_bits)[which] = 1;
-    ++d_numOnBits;
-    return false;
   }
+  (*dp_bits)[which] = 1;
+  ++d_numOnBits;
+  return false;
 };
 bool ExplicitBitVect::unsetBit(const unsigned int which) {
   if (which >= d_size) {
@@ -87,9 +86,8 @@ bool ExplicitBitVect::unsetBit(const unsigned int which) {
     (*dp_bits)[which] = 0;
     --d_numOnBits;
     return true;
-  } else {
-    return false;
   }
+  return false;
 };
 bool ExplicitBitVect::getBit(const unsigned int which) const {
   if (which >= d_size) {

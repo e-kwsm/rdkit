@@ -1,3 +1,6 @@
+#ifndef LLVM_CODE_RDGENERAL_RDVALUE_TAGGEDUNION_H
+#define LLVM_CODE_RDGENERAL_RDVALUE_TAGGEDUNION_H
+
 //  Copyright (c) 2015, Novartis Institutes for BioMedical Research Inc.
 //  All rights reserved.
 //
@@ -32,22 +35,22 @@
 #ifndef RDKIT_RDVALUE_TAGGED_UNION_H
 #define RDKIT_RDVALUE_TAGGED_UNION_H
 
-#include <cassert>
 #include "Invariant.h"
-#include <iostream>
-#include <iomanip>
-#include <sstream>
-#include <vector>
-#include <cstdint>
+#include "LocaleSwitcher.h"
+#include <RDGeneral/BoostEndInclude.h>
 #include <RDGeneral/BoostStartInclude.h>
-#include <cstdint>
 #include <any>
-#include <boost/utility.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/numeric/conversion/cast.hpp>
 #include <boost/type_traits/is_floating_point.hpp>
-#include <RDGeneral/BoostEndInclude.h>
-#include "LocaleSwitcher.h"
+#include <boost/utility.hpp>
+#include <cassert>
+#include <cstdint>
+#include <cstdint>
+#include <iomanip>
+#include <iostream>
+#include <sstream>
+#include <vector>
 
 #define RDVALUE_HASBOOL
 
@@ -526,4 +529,6 @@ inline bool rdvalue_cast<bool>(RDValue_cast_t v) {
 }
 
 }  // namespace RDKit
+#endif
+
 #endif

@@ -1,3 +1,6 @@
+#ifndef LLVM_CODE_RDGENERAL_STREAMOPS_H
+#define LLVM_CODE_RDGENERAL_STREAMOPS_H
+
 //
 //  Copyright (C) 2002-2008 Greg Landrum and Rational Discovery LLC
 //
@@ -12,15 +15,15 @@
 #ifndef _RD_STREAMOPS_H
 #define _RD_STREAMOPS_H
 
-#include "types.h"
 #include "Invariant.h"
 #include "RDProps.h"
-#include <string>
-#include <sstream>
-#include <iostream>
-#include <unordered_set>
+#include "types.h"
 #include <boost/cstdint.hpp>
 #include <boost/predef.h>
+#include <iostream>
+#include <sstream>
+#include <string>
+#include <unordered_set>
 
 namespace RDKit {
 // this code block for handling endian problems is adapted from :
@@ -133,9 +136,8 @@ inline void appendPackedIntToStream(std::stringstream &ss,
       val = ((res << 3) | 7);
       nbytes = 4;
       break;
-    } else {
-      CHECK_INVARIANT(0, "ERROR: Integer too big to pack\n");
     }
+    CHECK_INVARIANT(0, "ERROR: Integer too big to pack\n");
   }
   // val = EndianSwapBytes<HOST_ENDIAN_ORDER,LITTLE_ENDIAN_ORDER>(val);
 
@@ -645,5 +647,7 @@ inline unsigned int streamReadProps(std::istream &ss, RDProps &props,
 }
 
 }  // namespace RDKit
+
+#endif
 
 #endif

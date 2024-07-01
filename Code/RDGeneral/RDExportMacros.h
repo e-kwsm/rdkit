@@ -1,3 +1,6 @@
+#ifndef LLVM_CODE_RDGENERAL_RDEXPORTMACROS_H
+#define LLVM_CODE_RDGENERAL_RDEXPORTMACROS_H
+
 //
 //  Copyright (C) 2021 Schrödinger, LLC
 //
@@ -37,4 +40,6 @@
 #endif
 #ifndef RDKIT_IMPORT_API
 #define RDKIT_IMPORT_API
+#endif
+
 #endif
