@@ -1013,7 +1013,7 @@ void testGitHubIssue62() {
     for (unsigned int i = 0; i < supplier.length(); ++i) {
       auto mol = supplier[i];
       TEST_ASSERT(mol);
-      std::string molName = "";
+      std::string molName;
       if (mol->hasProp(common_properties::_Name)) {
         mol->getProp(common_properties::_Name, molName);
       }

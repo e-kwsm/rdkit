@@ -65,7 +65,7 @@ void ForwardSDMolSupplier::readMolProps(ROMol &mol) {
   d_line++;
   bool hasProp = false;
   bool warningIssued = false;
-  std::string dlabel = "";
+  std::string dlabel;
   std::string inl;
   std::getline(*dp_inStream, inl);
   std::string_view tempStr = inl;
@@ -113,7 +113,7 @@ void ForwardSDMolSupplier::readMolProps(ROMol &mol) {
           std::getline(*dp_inStream, inl);
           tempStr = inl;
 
-          std::string prop = "";
+          std::string prop;
           auto stmp = FileParserUtils::strip(tempStr);
           int nplines = 0;  // number of lines for this property
           while (!stmp.empty() ||

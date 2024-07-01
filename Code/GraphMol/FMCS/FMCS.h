@@ -175,7 +175,7 @@ struct RDKIT_FMCS_EXPORT MCSParameters {
   // user-defined criteria
   MCSAcceptanceFunction ShouldAcceptMCS = nullptr;
   void *ShouldAcceptMCSUserData = nullptr;
-  std::string InitialSeed = "";  // user defined or empty string (default)
+  std::string InitialSeed;  // user defined or empty string (default)
   void setMCSAtomTyperFromEnum(AtomComparator atomComp);
   void setMCSAtomTyperFromConstChar(const char *atomComp);
   void setMCSBondTyperFromEnum(BondComparator bondComp);

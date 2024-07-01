@@ -254,7 +254,7 @@ std::string GetBondSmiles(const Bond *bond, const SmilesWriteParams &params,
     atomToLeftIdx = bond->getBeginAtomIdx();
   }
 
-  std::string res = "";
+  std::string res;
   bool aromatic = false;
   if (!params.doKekule && (bond->getBondType() == Bond::SINGLE ||
                            bond->getBondType() == Bond::DOUBLE ||

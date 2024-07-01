@@ -989,8 +989,8 @@ void parseQueryDefFile(std::istream *inStream,
     boost::tokenizer<boost::char_separator<char>> tokens(tempStr, sep);
     unsigned int tpos;
     boost::tokenizer<boost::char_separator<char>>::iterator token;
-    std::string qname = "";
-    std::string qval = "";
+    std::string qname;
+    std::string qval;
     for (token = tokens.begin(), tpos = 0; token != tokens.end();
          ++token, ++tpos) {
       if (tpos == nameColumn) {
