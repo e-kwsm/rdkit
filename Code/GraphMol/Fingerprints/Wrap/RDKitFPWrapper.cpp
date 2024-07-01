@@ -106,8 +106,6 @@ void exportRDKit() {
               "Get an RDKit atom invariants generator\n\n"
               "  RETURNS: AtomInvariantsGenerator\n\n",
               python::return_value_policy<python::manage_new_object>());
-
-  return;
 }
 }  // namespace RDKitFPWrapper
 

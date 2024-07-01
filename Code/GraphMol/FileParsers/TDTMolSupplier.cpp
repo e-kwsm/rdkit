@@ -169,7 +169,6 @@ void TDTMolSupplier::checkForEnd() {
     // position of the next line:
     d_len = d_molpos.size() - 1;
   }
-  return;
 }
 
 void TDTMolSupplier::reset() {

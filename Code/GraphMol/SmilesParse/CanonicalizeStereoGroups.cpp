@@ -467,8 +467,6 @@ void getAtomsToInvert2(const RDKit::ROMol &mol,
       }
     }
   }
-
-  return;
 }
 
 void addSingleAbsGroup(ROMol &mol) {
@@ -865,8 +863,6 @@ void canonicalizeStereoGroups_internal(
   bestNewMol->setStereoGroups(newGroups);
 
   mol = std::unique_ptr<RDKit::ROMol>(bestNewMol.release());
-
-  return;
 }
 void canonicalizeStereoGroups(std::unique_ptr<ROMol> &mol,
                               StereoGroupAbsOptions outputAbsoluteGroups,
