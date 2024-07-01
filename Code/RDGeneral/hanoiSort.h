@@ -56,7 +56,8 @@ bool hanoi(int *base, int nel, int *temp, int *count, int *changed,
       count[n1] = 2;
       count[n2] = 0;
       return false;
-    } else if (stat < 0) {
+    }
+    if (stat < 0) {
       count[n1] = 1;
       count[n2] = 1;
       return false;
