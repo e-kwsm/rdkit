@@ -712,7 +712,7 @@ void setGenericQueriesFromProperties(ROMol &mol, bool useAtomLabels,
                                      bool useSGroups) {
   if (useAtomLabels) {
     for (const auto atom : mol.atoms()) {
-      std::string label = "";
+      std::string label;
       if (!atom->getPropIfPresent(common_properties::atomLabel, label)) {
         continue;
       }

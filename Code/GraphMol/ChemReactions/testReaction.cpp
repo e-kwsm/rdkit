@@ -4204,7 +4204,7 @@ void test45SmilesWriter() {
     TEST_ASSERT(nWarn == 0);
     TEST_ASSERT(nError == 0);
 
-    std::string res = "";
+    std::string res;
     for (MOL_SPTR_VECT::const_iterator iter = rxn->beginReactantTemplates();
          iter != rxn->endReactantTemplates(); ++iter) {
       if (iter != rxn->beginReactantTemplates()) {
@@ -4244,7 +4244,7 @@ void test45SmilesWriter() {
     TEST_ASSERT(rxn->getNumReactantTemplates() == 2);
     TEST_ASSERT(rxn->getNumProductTemplates() == 1);
 
-    std::string res = "";
+    std::string res;
     for (MOL_SPTR_VECT::const_iterator iter = rxn->beginReactantTemplates();
          iter != rxn->endReactantTemplates(); ++iter) {
       if (iter != rxn->beginReactantTemplates()) {
@@ -4280,7 +4280,7 @@ void test45SmilesWriter() {
     TEST_ASSERT(rxn->getNumReactantTemplates() == 2);
     TEST_ASSERT(rxn->getNumProductTemplates() == 1);
 
-    std::string res = "";
+    std::string res;
     for (MOL_SPTR_VECT::const_iterator iter = rxn->beginReactantTemplates();
          iter != rxn->endReactantTemplates(); ++iter) {
       if (iter != rxn->beginReactantTemplates()) {

@@ -198,7 +198,7 @@ struct rgroupdecomp_wrapper {
     bool noproxy = true;
     RegisterVectorConverter<RDKit::ROMOL_SPTR>("MOL_SPTR_VECT", noproxy);
 
-    std::string docString = "";
+    std::string docString;
     python::enum_<RDKit::RGroupLabels>("RGroupLabels")
         .value("IsotopeLabels", RDKit::IsotopeLabels)
         .value("AtomMapLabels", RDKit::AtomMapLabels)
