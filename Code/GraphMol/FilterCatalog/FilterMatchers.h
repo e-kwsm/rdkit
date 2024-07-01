@@ -63,7 +63,7 @@ class RDKIT_FILTERCATALOG_EXPORT And : public FilterMatcherBase {
 
  public:
   // !Default Constructor for serialization
-  And() : FilterMatcherBase("And"), arg1(), arg2() {}
+  And() : FilterMatcherBase("And") {}
 
   //! Constructs an Ander
   //! True if arg1 and arg2 FilterMatchers are true
@@ -131,7 +131,7 @@ class RDKIT_FILTERCATALOG_EXPORT Or : public FilterMatcherBase {
 
  public:
   // !Default Constructor for serialization
-  Or() : FilterMatcherBase("Or"), arg1(), arg2() {}
+  Or() : FilterMatcherBase("Or") {}
 
   //! Constructs or Ander
   //! true if arg1 or arg2 are true
@@ -190,7 +190,7 @@ class RDKIT_FILTERCATALOG_EXPORT Not : public FilterMatcherBase {
 
  public:
   // !Default Constructor for serialization
-  Not() : FilterMatcherBase("Not"), arg1() {}
+  Not() : FilterMatcherBase("Not") {}
 
   //! Constructs a Noter
   //! true if arg1 is false (note, never returns matches
@@ -250,7 +250,6 @@ class RDKIT_FILTERCATALOG_EXPORT SmartsMatcher : public FilterMatcherBase {
   //! Construct a SmartsMatcher
   SmartsMatcher(const std::string &name = SMARTS_MATCH_NAME_DEFAULT)
       : FilterMatcherBase(name),
-        d_pattern(),
 
         d_max_count(UINT_MAX) {}
 
@@ -384,7 +383,7 @@ class RDKIT_FILTERCATALOG_EXPORT ExclusionList : public FilterMatcherBase {
   std::vector<boost::shared_ptr<FilterMatcherBase>> d_offPatterns;
 
  public:
-  ExclusionList() : FilterMatcherBase("Not any of"), d_offPatterns() {}
+  ExclusionList() : FilterMatcherBase("Not any of") {}
 
   //! Constructs an ExclusionList
   //! true if non of the FilterMatcherBases are true
@@ -472,7 +471,7 @@ class RDKIT_FILTERCATALOG_EXPORT FilterHierarchyMatcher
 
  public:
   // !Default Constructor for serialization
-  FilterHierarchyMatcher() : FilterMatcherBase(), d_matcher() {}
+  FilterHierarchyMatcher() {}
   //! Constructs a FilterHierarchyMatcher from a FilterMatchBase
   //!  A FilterHierarchyMatcher is a tree hierarchy where to
   //!  match a child node, one needs to match the parent first.
@@ -482,7 +481,7 @@ class RDKIT_FILTERCATALOG_EXPORT FilterHierarchyMatcher
       \param matcher FilterMatcherBase to match this node against
   */
   FilterHierarchyMatcher(const FilterMatcherBase &matcher)
-      : FilterMatcherBase(), d_matcher(matcher.copy()) {}
+      : d_matcher(matcher.copy()) {}
 
   //! Return the name for this node (from the underlying FilterMatcherBase)
   std::string getName() const override {

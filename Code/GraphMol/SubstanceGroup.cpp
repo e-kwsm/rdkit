@@ -27,7 +27,7 @@ void remove_element(std::vector<T> &container, unsigned int element) {
 }  // namespace
 
 SubstanceGroup::SubstanceGroup(ROMol *owning_mol, const std::string &type)
-    : RDProps(), dp_mol(owning_mol) {
+    : dp_mol(owning_mol) {
   PRECONDITION(owning_mol, "supplied owning molecule is bad");
 
   // TYPE is required to be set , as other properties will depend on it.
