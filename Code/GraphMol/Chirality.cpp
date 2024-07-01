@@ -182,7 +182,8 @@ void updateDoubleBondNeighbors(ROMol &mol, Bond *dblBond, const Conformer *conf,
 
   std::vector<Bond *> followupBonds;
 
-  Bond *bond1 = nullptr, *obond1 = nullptr;
+  Bond *bond1 = nullptr;
+  Bond *obond1 = nullptr;
   bool squiggleBondSeen = false;
   bool doubleBondSeen = false;
 
@@ -200,7 +201,8 @@ void updateDoubleBondNeighbors(ROMol &mol, Bond *dblBond, const Conformer *conf,
     return;
   }
 
-  Bond *bond2 = nullptr, *obond2 = nullptr;
+  Bond *bond2 = nullptr;
+  Bond *obond2 = nullptr;
   controllingBondFromAtom(mol, needsDir, singleBondCounts, dblBond,
                           dblBond->getEndAtom(), bond2, obond2,
                           squiggleBondSeen, doubleBondSeen);
@@ -328,7 +330,8 @@ void updateDoubleBondNeighbors(ROMol &mol, Bond *dblBond, const Conformer *conf,
   */
   bool reverseBondDir = sameTorsionDir;
 
-  Atom *atom1 = dblBond->getBeginAtom(), *atom2 = dblBond->getEndAtom();
+  Atom *atom1 = dblBond->getBeginAtom();
+  Atom *atom2 = dblBond->getEndAtom();
   if (needsDir[bond1->getIdx()]) {
     for (auto bidx : singleBondNbrs[bond1->getIdx()]) {
       // std::cerr << "       neighbor from: " << bond1->getIdx() << " " << bidx
@@ -1540,7 +1543,8 @@ bool atomIsCandidateForRingStereochem(const ROMol &mol, const Atom *atom) {
           nbrRanks.insert(rnk);
         }
       }
-      unsigned int rank1 = 0, rank2 = 0;
+      unsigned int rank1 = 0;
+      unsigned int rank2 = 0;
       switch (nonRingNbrs.size()) {
         case 2:
           if (nonRingNbrs[0]->getPropIfPresent(common_properties::_CIPRank,
@@ -1910,9 +1914,11 @@ std::pair<bool, bool> assignBondStereoCodes(ROMol &mol, UINT_VECT &ranks) {
           // direction marked:
 
           // the pairs here are: atomIdx,bonddir
-          Chirality::INT_PAIR_VECT begAtomNeighbors, endAtomNeighbors;
+          Chirality::INT_PAIR_VECT begAtomNeighbors;
+          Chirality::INT_PAIR_VECT endAtomNeighbors;
           bool hasExplicitUnknownStereo = false;
-          int bgn_stereo = false, end_stereo = false;
+          int bgn_stereo = false;
+          int end_stereo = false;
           if ((dblBond->getBeginAtom()->getPropIfPresent(
                    common_properties::_UnknownStereo, bgn_stereo) &&
                bgn_stereo) ||
@@ -1933,7 +1939,10 @@ std::pair<bool, bool> assignBondStereoCodes(ROMol &mol, UINT_VECT &ranks) {
             // directionality.  Find the highest-ranked directionality
             // on each side:
 
-            int begDir, endDir, endNbrAid, begNbrAid;
+            int begDir;
+            int endDir;
+            int endNbrAid;
+            int begNbrAid;
             if (begAtomNeighbors.size() == 1 ||
                 ranks[begAtomNeighbors[0].first] >
                     ranks[begAtomNeighbors[1].first]) {
@@ -2411,7 +2420,8 @@ void legacyStereoPerception(ROMol &mol, bool cleanIt,
   }
   UINT_VECT atomRanks;
   bool keepGoing = hasStereoAtoms | hasStereoBonds;
-  bool changedStereoAtoms, changedStereoBonds;
+  bool changedStereoAtoms;
+  bool changedStereoBonds;
   while (keepGoing) {
     if (hasStereoAtoms) {
       std::tie(hasStereoAtoms, changedStereoAtoms) =
@@ -2959,8 +2969,8 @@ void findPotentialStereoBonds(ROMol &mol, bool cleanIt) {
             (dblBond->getStereo() == Bond::STEREOANY &&
              dblBond->getStereoAtoms().size() != 2)) {
           dblBond->setStereo(Bond::STEREONONE);
-          const Atom *begAtom = dblBond->getBeginAtom(),
-                     *endAtom = dblBond->getEndAtom();
+          const Atom *begAtom = dblBond->getBeginAtom();
+          const Atom *endAtom = dblBond->getEndAtom();
           // we're only going to handle 2 or three coordinate atoms:
           if ((begAtom->getDegree() == 2 || begAtom->getDegree() == 3) &&
               (endAtom->getDegree() == 2 || endAtom->getDegree() == 3)) {
@@ -2979,7 +2989,8 @@ void findPotentialStereoBonds(ROMol &mol, bool cleanIt) {
               cipDone = true;
             }
             // find the neighbors for the begin atom and the endAtom
-            UINT_VECT begAtomNeighbors, endAtomNeighbors;
+            UINT_VECT begAtomNeighbors;
+            UINT_VECT endAtomNeighbors;
             bool checkDir = false;
             bool includeAromatic = true;
             Chirality::findAtomNeighborsHelper(mol, begAtom, dblBond,
@@ -3069,7 +3080,8 @@ void findPotentialStereoBonds(ROMol &mol, bool cleanIt) {
 
 // removes chirality markers from sp and sp2 hybridized centers:
 void cleanupChirality(RWMol &mol) {
-  unsigned int degree, perm;
+  unsigned int degree;
+  unsigned int perm;
   for (auto atom : mol.atoms()) {
     switch (atom->getChiralTag()) {
       case Atom::CHI_TETRAHEDRAL_CW:
@@ -3235,7 +3247,8 @@ static bool assignNontetrahedralChiralTypeFrom3D(ROMol &mol,
   RDGeom::Point3D v[6];
   unsigned int count = 0;
 
-  ROMol::ADJ_ITER nbrIdx, endNbrs;
+  ROMol::ADJ_ITER nbrIdx;
+  ROMol::ADJ_ITER endNbrs;
   boost::tie(nbrIdx, endNbrs) = mol.getAtomNeighbors(atom);
   while (nbrIdx != endNbrs) {
     if (count == 6) {
