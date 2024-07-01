@@ -1,3 +1,6 @@
+#ifndef LLVM_CODE_NUMERICS_SQUAREMATRIX_H
+#define LLVM_CODE_NUMERICS_SQUAREMATRIX_H
+
 //
 //  Copyright (C) 2004-2006 Rational Discovery LLC
 //
@@ -85,5 +88,7 @@ class SquareMatrix : public Matrix<TYPE> {
 };
 typedef SquareMatrix<double> DoubleSquareMatrix;
 }  // namespace RDNumeric
+
+#endif
 
 #endif

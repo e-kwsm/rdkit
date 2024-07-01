@@ -9,12 +9,12 @@
 //  of the RDKit source tree.
 //
 
-#include <RDGeneral/Invariant.h>
-#include <cstring>
 #include "Transform.h"
 #include "Transform3D.h"
-#include <cmath>
 #include "point.h"
+#include <RDGeneral/Invariant.h>
+#include <cmath>
+#include <cstring>
 
 namespace RDGeom {
 void Transform3D::setToIdentity() {

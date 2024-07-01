@@ -8,12 +8,12 @@
 //  which is included in the file license.txt, found at the root
 //  of the RDKit source tree.
 //
-#include <RDGeneral/Invariant.h>
-#include <cstring>
 #include "Transform.h"
 #include "Transform2D.h"
-#include <cmath>
 #include "point.h"
+#include <RDGeneral/Invariant.h>
+#include <cmath>
+#include <cstring>
 
 namespace RDGeom {
 
