@@ -983,7 +983,7 @@ bool IsInScaffold(Atom *atom, unsigned int maxatomidx) {
   return count > 1;
 }
 
-bool HasNbrInScaffold(Atom *aptr, unsigned char *is_in_scaffold) {
+bool HasNbrInScaffold(Atom *aptr, const unsigned char *is_in_scaffold) {
   PRECONDITION(aptr, "bad atom pointer");
   PRECONDITION(is_in_scaffold, "bad pointer");
   for (auto nbri : boost::make_iterator_range(

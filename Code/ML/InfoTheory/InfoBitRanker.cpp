@@ -53,7 +53,7 @@ void InfoBitRanker::setMaskBits(RDKit::INT_VECT &maskBits) {
   }
 }
 
-bool InfoBitRanker::BiasCheckBit(RDKit::USHORT *resMat) const {
+bool InfoBitRanker::BiasCheckBit(const RDKit::USHORT *resMat) const {
   PRECONDITION(resMat, "bad results pointer");
   if ((d_biasList.size() == 0) || (d_biasList.size() == d_classes)) {
     // we will accept the bit

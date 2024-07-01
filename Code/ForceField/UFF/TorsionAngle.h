@@ -102,9 +102,9 @@ RDKIT_FORCEFIELD_EXPORT double calculateCosTorsion(const RDGeom::Point3D &p1,
                                                    const RDGeom::Point3D &p3,
                                                    const RDGeom::Point3D &p4);
 RDKIT_FORCEFIELD_EXPORT void calcTorsionGrad(RDGeom::Point3D *r,
-                                             RDGeom::Point3D *t, double *d,
-                                             double **g, double &sinTerm,
-                                             double &cosPhi);
+                                             RDGeom::Point3D *t,
+                                             const double *d, double **g,
+                                             double &sinTerm, double &cosPhi);
 RDKIT_FORCEFIELD_EXPORT double equation17(double bondOrder23,
                                           const AtomicParams *at2Params,
                                           const AtomicParams *at3Params);
