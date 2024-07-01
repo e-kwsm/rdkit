@@ -9,15 +9,15 @@
 //
 #include <GraphMol/RDKitBase.h>
 #include <GraphMol/Rings.h>
-#include <RDGeneral/RDLog.h>
 #include <RDGeneral/Exceptions.h>
+#include <RDGeneral/RDLog.h>
 
 #include <RDGeneral/utils.h>
-#include <vector>
-#include <set>
 #include <algorithm>
 #include <boost/dynamic_bitset.hpp>
 #include <cstdint>
+#include <set>
+#include <vector>
 
 using RINGINVAR = boost::dynamic_bitset<>;
 using RINGINVAR_SET = std::set<RINGINVAR>;
@@ -137,9 +137,8 @@ void pickD2Nodes(const ROMol &tMol, INT_VECT &d2nodes, const INT_VECT &currFrag,
     }
     if (root == -1) {
       break;
-    } else {
-      markUselessD2s(root, tMol, forb, atomDegrees, activeBonds);
     }
+    markUselessD2s(root, tMol, forb, atomDegrees, activeBonds);
   }
 }
 
@@ -851,9 +850,8 @@ int findSSSR(const ROMol &mol, VECT_INT_VECT *res, bool includeDativeBonds) {
   if (!res) {
     VECT_INT_VECT rings;
     return findSSSR(mol, rings, includeDativeBonds);
-  } else {
-    return findSSSR(mol, (*res), includeDativeBonds);
   }
+  return findSSSR(mol, (*res), includeDativeBonds);
 }
 
 int findSSSR(const ROMol &mol, VECT_INT_VECT &res, bool includeDativeBonds) {
@@ -894,7 +892,7 @@ int findSSSR(const ROMol &mol, VECT_INT_VECT &res, bool includeDativeBonds) {
     int deg = atom->getDegree();
     atomDegrees[i] = deg;
     atomDegreesWithZeroOrderBonds[i] = deg;
-    for (const auto bond : mol.atomBonds(atom)) {
+    for (auto *const bond : mol.atomBonds(atom)) {
       if (bond->getBondType() == Bond::ZERO ||
           (!includeDativeBonds && isDative(*bond))) {
         atomDegrees[i]--;
@@ -1224,7 +1222,7 @@ void _DFS(const ROMol &mol, const Atom *atom, INT_VECT &atomColors,
   atomColors[atom->getIdx()] = 1;
   traversalOrder.push_back(atom);
 
-  for (const auto nbr : mol.atomNeighbors(atom)) {
+  for (auto *const nbr : mol.atomNeighbors(atom)) {
     unsigned int nbrIdx = nbr->getIdx();
     // std::cerr<<"   "<<atom->getIdx()<<"       consider: "<<nbrIdx<<"
     // "<<atomColors[nbrIdx]<<std::endl;
