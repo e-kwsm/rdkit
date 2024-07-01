@@ -52,7 +52,7 @@ double calcTorsionEnergy(const double V1, const double V2, const double V3,
           (V1 * (1.0 + cosPhi) + V2 * (1.0 - cos2Phi) + V3 * (1.0 + cos3Phi)));
 }
 
-void calcTorsionGrad(RDGeom::Point3D *r, RDGeom::Point3D *t, double *d,
+void calcTorsionGrad(RDGeom::Point3D *r, RDGeom::Point3D *t, const double *d,
                      double **g, double &sinTerm, double &cosPhi) {
   // -------
   // dTheta/dx is trickier:
