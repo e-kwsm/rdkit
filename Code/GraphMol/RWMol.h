@@ -31,7 +31,7 @@ namespace RDKit {
  */
 class RDKIT_GRAPHMOL_EXPORT RWMol : public ROMol {
  public:
-  RWMol() : ROMol() {}
+  RWMol() {}
   //! copy constructor with a twist
   /*!
     \param other     the molecule to be copied
