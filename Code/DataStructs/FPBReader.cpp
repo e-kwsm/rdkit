@@ -365,7 +365,8 @@ std::string extractId(const FPBReader_impl *dp_impl, unsigned int which) {
   }
   std::string res;
 
-  boost::uint64_t offset = 0, len = 0;
+  boost::uint64_t offset = 0;
+  boost::uint64_t len = 0;
   if (which < dp_impl->num4ByteElements) {
     if (!dp_impl->df_lazy) {
       offset = *reinterpret_cast<const boost::uint32_t *>(
@@ -436,7 +437,8 @@ void tanimotoNeighbors(const FPBReader_impl *dp_impl, const boost::uint8_t *bv,
   boost::uint64_t probeCount =
       CalcBitmapPopcount(bv, dp_impl->numBytesStoredPerFingerprint);
 
-  boost::uint64_t startScan = 0, endScan = dp_impl->len;
+  boost::uint64_t startScan = 0;
+  boost::uint64_t endScan = dp_impl->len;
   if (usePopcountScreen &&
       dp_impl->popCountOffsets.size() == dp_impl->nBits + 2) {
     // figure out the bounds based on equation 24 from:
@@ -491,7 +493,8 @@ void tverskyNeighbors(const FPBReader_impl *dp_impl, const boost::uint8_t *bv,
   boost::uint64_t probeCount =
       CalcBitmapPopcount(bv, dp_impl->numBytesStoredPerFingerprint);
 
-  boost::uint64_t startScan = 0, endScan = dp_impl->len;
+  boost::uint64_t startScan = 0;
+  boost::uint64_t endScan = dp_impl->len;
   if (usePopcountScreen &&
       dp_impl->popCountOffsets.size() == dp_impl->nBits + 2) {
     // figure out the bounds based on equation 25 from:
@@ -542,7 +545,8 @@ void containingNeighbors(const FPBReader_impl *dp_impl,
   boost::uint64_t probeCount =
       CalcBitmapPopcount(bv, dp_impl->numBytesStoredPerFingerprint);
 
-  boost::uint64_t startScan = 0, endScan = dp_impl->len;
+  boost::uint64_t startScan = 0;
+  boost::uint64_t endScan = dp_impl->len;
   if (dp_impl->popCountOffsets.size() == dp_impl->nBits + 2) {
     startScan = dp_impl->popCountOffsets[probeCount];
     // std::cerr << " scan: " << startScan << "-" << endScan << std::endl;
