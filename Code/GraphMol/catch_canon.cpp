@@ -364,7 +364,7 @@ TEST_CASE("chiralRandomTest") {
       for (unsigned int i = 0; i < mol1->getNumAtoms(); ++i) {
         idxV[i] = i;
       }
-      std::string smiExpected = "";
+      std::string smiExpected;
       auto randomGen = std::mt19937(0xf00d);
       for (auto i = 0; i < 100; ++i) {
         std::vector<unsigned int> nVect(idxV);

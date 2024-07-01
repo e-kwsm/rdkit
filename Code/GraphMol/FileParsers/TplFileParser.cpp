@@ -97,8 +97,8 @@ void ParseTPLBondLine(std::string text, unsigned int lineNum, RWMol *mol) {
   idx2 = FileParserUtils::stripSpacesAndCast<unsigned int>(splitLine[3]) - 1;
 
   unsigned int bondIdx = mol->addBond(idx1, idx2, bondOrder) - 1;
-  std::string stereoFlag1 = "";
-  std::string stereoFlag2 = "";
+  std::string stereoFlag1;
+  std::string stereoFlag2;
   stereoFlag1 = splitLine[4];
   if (splitLine.size() > 5) {
     stereoFlag2 = splitLine[5];

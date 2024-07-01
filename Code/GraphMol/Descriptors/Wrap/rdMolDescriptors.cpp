@@ -964,7 +964,7 @@ BOOST_PYTHON_MODULE(rdMolDescriptors) {
   python::scope().attr("__doc__") =
       "Module containing functions to compute molecular descriptors";
 
-  std::string docString = "";
+  std::string docString;
 
   python::class_<python::object>("AtomPairsParameters")
       .setattr("version", RDKit::AtomPairs::atomPairsVersion)

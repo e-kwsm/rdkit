@@ -40,7 +40,7 @@ struct normalize_wrapper {
         "Module containing tools for normalizing molecules defined by SMARTS "
         "patterns";
 
-    std::string docString = "";
+    std::string docString;
 
     python::class_<MolStandardize::Normalizer, boost::noncopyable>(
         "Normalizer", python::init<>(python::args("self")))

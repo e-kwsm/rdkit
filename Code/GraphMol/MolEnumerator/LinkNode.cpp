@@ -60,7 +60,7 @@ void LinkNodeOp::initFromMol() {
   }
   dp_frame.reset(new RWMol(*dp_mol));
   auto nodes = utils::getMolLinkNodes(*dp_frame, true, &d_atomMap);
-  std::string attachSmarts = "";
+  std::string attachSmarts;
   std::vector<std::string> linkEnums;
   std::vector<std::string> molEnums;
   for (auto node : nodes) {
@@ -68,7 +68,7 @@ void LinkNodeOp::initFromMol() {
       UNDER_CONSTRUCTION(
           "only link nodes with 2 bonds are currently supported");
     }
-    std::string productSmarts = "";
+    std::string productSmarts;
     d_countAtEachPoint.push_back(node.maxRep - node.minRep + 1);
     d_pointRanges.push_back(std::make_pair(node.minRep, node.maxRep));
     auto varAtom = dp_frame->getAtomWithIdx(node.bondAtoms[0].first);

@@ -64,11 +64,11 @@ struct RDKIT_RASCALMCES_EXPORT RascalOptions {
   unsigned int maxBondMatchPairs = 1000; /* Too many matching bond (vertex)
                                    pairs can cause it to run out of memory. This
                                    is a reasonable default for my Mac. */
-  std::string equivalentAtoms = ""; /* SMARTS strings defining atoms that should
-                                       be considered equivalent. e.g.
-                                       [F,Cl,Br,I] so all halogens will match
-                                       each other. Space-separated list allowing
-                                       more than 1 class of equivalent atoms.*/
+  std::string equivalentAtoms;   /* SMARTS strings defining atoms that should
+                                         be considered equivalent. e.g.
+                                         [F,Cl,Br,I] so all halogens will match
+                                         each other. Space-separated list allowing
+                                         more than 1 class of equivalent atoms.*/
   bool ignoreBondOrders = false; /* If true, will treat all bonds as the same,
                                     irrespective of order. */
   bool ignoreAtomAromaticity = true; /* If true, atoms are matched just on

@@ -281,7 +281,7 @@ void LargestFragmentChooser::chooseInPlace(RWMol &mol) const {
   mol.commitBatchEdit();
 }
 
-LargestFragmentChooser::Largest::Largest() : Smiles(""), Fragment(nullptr) {}
+LargestFragmentChooser::Largest::Largest() : Fragment(nullptr) {}
 
 LargestFragmentChooser::Largest::Largest(std::string &smiles,
                                          boost::shared_ptr<ROMol> fragment,
