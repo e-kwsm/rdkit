@@ -102,10 +102,10 @@ struct Bits {
       } else if (std::holds_alternative<ExtendedQueryMol::MolBundle_T>(
                      xqm.xqmol)) {
         auto &bndl = std::get<ExtendedQueryMol::MolBundle_T>(xqm.xqmol);
-        auto tqb = new ExplicitBitVect(ph->getNumBits());
+        auto *tqb = new ExplicitBitVect(ph->getNumBits());
         queryBits = tqb;
         for (auto mol : bndl->getMols()) {
-          auto tfp = fps->makeFingerprint(*mol);
+          auto *tfp = fps->makeFingerprint(*mol);
           *tqb &= *tfp;
           delete tfp;
         }
@@ -131,10 +131,10 @@ struct Bits {
           fps = nullptr;
         } else {
           auto &bndl = std::get<ExtendedQueryMol::TautomerBundle_T>(xqm.xqmol);
-          auto tqb = new ExplicitBitVect(ph->getNumBits());
+          auto *tqb = new ExplicitBitVect(ph->getNumBits());
           queryBits = tqb;
           for (auto &tq : *bndl) {
-            auto tfp = tq->patternFingerprintTemplate(tph->getNumBits());
+            auto *tfp = tq->patternFingerprintTemplate(tph->getNumBits());
             *tqb &= *tfp;
             delete tfp;
           }

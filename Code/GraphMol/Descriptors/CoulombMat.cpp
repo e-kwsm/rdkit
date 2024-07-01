@@ -46,7 +46,7 @@ void CoulombMat(const ROMol &mol, std::vector<std::vector<double>> &res,
   res.resize(numAtoms);
   for (unsigned int i = 0; i < numAtoms; ++i) {
     res[i].resize(numAtoms);
-    const auto at = mol.getAtomWithIdx(i);
+    const auto *const at = mol.getAtomWithIdx(i);
     double Zi = at->getAtomicNum();
     res[i][i] = 0.5 * pow(Zi, 2.4);
 

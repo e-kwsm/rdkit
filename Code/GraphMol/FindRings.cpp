@@ -894,7 +894,7 @@ int findSSSR(const ROMol &mol, VECT_INT_VECT &res, bool includeDativeBonds) {
     int deg = atom->getDegree();
     atomDegrees[i] = deg;
     atomDegreesWithZeroOrderBonds[i] = deg;
-    for (const auto bond : mol.atomBonds(atom)) {
+    for (auto *const bond : mol.atomBonds(atom)) {
       if (bond->getBondType() == Bond::ZERO ||
           (!includeDativeBonds && isDative(*bond))) {
         atomDegrees[i]--;
@@ -1224,7 +1224,7 @@ void _DFS(const ROMol &mol, const Atom *atom, INT_VECT &atomColors,
   atomColors[atom->getIdx()] = 1;
   traversalOrder.push_back(atom);
 
-  for (const auto nbr : mol.atomNeighbors(atom)) {
+  for (auto *const nbr : mol.atomNeighbors(atom)) {
     unsigned int nbrIdx = nbr->getIdx();
     // std::cerr<<"   "<<atom->getIdx()<<"       consider: "<<nbrIdx<<"
     // "<<atomColors[nbrIdx]<<std::endl;

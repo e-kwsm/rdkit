@@ -440,7 +440,7 @@ bool parse_fragment(RWMol &mol, ptree &frag,
       }
       unsigned bondIdx = 0;
       if (bond.order == Bond::BondType::UNSPECIFIED) {
-        auto qb = new QueryBond();
+        auto *qb = new QueryBond();
         qb->setQuery(makeBondNullQuery());
         qb->setBeginAtomIdx(startIdx);
         qb->setEndAtomIdx(endIdx);
@@ -714,7 +714,7 @@ std::vector<std::unique_ptr<RWMol>> MolsFromCDXMLDataStream(
   try {
     read_xml(inStream, pt);
   } catch (boost::property_tree::ptree_error &e) {
-    auto xml = dynamic_cast<boost::property_tree::file_parser_error *>(&e);
+    auto *xml = dynamic_cast<boost::property_tree::file_parser_error *>(&e);
     if (xml != nullptr) {
       auto msg = std::string(xml->message()) +
                  " at line: " + boost::lexical_cast<std::string>(xml->line());

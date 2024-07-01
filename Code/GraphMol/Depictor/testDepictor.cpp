@@ -1233,7 +1233,7 @@ M  END)RES"_ctab;
   RDDepict::generateDepictionMatching2DStructure(*orthoMeta, *templateRef);
   TEST_ASSERT(orthoMeta->getNumConformers() == 1);
 
-  for (auto mol : {ortho.get(), meta.get(), biphenyl.get(), phenyl.get()}) {
+  for (auto *mol : {ortho.get(), meta.get(), biphenyl.get(), phenyl.get()}) {
     // fails as does not match template
     bool raised = false;
     try {
@@ -1279,7 +1279,7 @@ M  END)RES"_ctab;
   std::unique_ptr<ROMol> pyridineRefHs(
       MolOps::addHs(static_cast<const ROMol &>(*pyridineRef)));
 
-  for (auto mol : {ortho.get(), meta.get(), biphenyl.get(), phenyl.get()}) {
+  for (auto *mol : {ortho.get(), meta.get(), biphenyl.get(), phenyl.get()}) {
     auto matchVect = RDDepict::generateDepictionMatching2DStructure(
         *mol, *pyridineRef, -1, genericRefPatternWithRGroups.get(), false,
         false, true);
@@ -1411,7 +1411,7 @@ M  END)RES"_ctab;
   RDDepict::generateDepictionMatching2DStructure(*orthoMeta, *templateRef);
   TEST_ASSERT(orthoMeta->getNumConformers() == 1);
   for (bool alignOnly : {true, false}) {
-    for (auto mol :
+    for (auto *mol :
          {ortho.get(), meta.get(), para.get(), biphenyl.get(), phenyl.get()}) {
       TEST_ASSERT(mol);
       RDDepict::ConstrainedDepictionParams p;
@@ -1608,7 +1608,7 @@ M  END)RES"_ctab;
     auto noradrenalineMJCopy =
         std::unique_ptr<RWMol>(new RWMol(*noradrenalineMJ));
     const auto &conformer0 = noradrenalineMJCopy->getConformer(0);
-    auto conformer1 = new Conformer(conformer0);
+    auto *conformer1 = new Conformer(conformer0);
     noradrenalineMJCopy->addConformer(conformer1, true);
     TEST_ASSERT(MolAlign::CalcRMS(*noradrenalineMJ, *noradrenalineMJCopy, 0,
                                   0) < 1.e-5);
@@ -1620,7 +1620,7 @@ M  END)RES"_ctab;
     TEST_ASSERT(MolAlign::CalcRMS(*noradrenalineMJ, *noradrenalineMJCopy, 0,
                                   1) > 1.e-5);
     TEST_ASSERT(RDKit::feq(scalingFactor, 1.875, 1.e-3));
-    auto conformer2 = new Conformer(*conformer1);
+    auto *conformer2 = new Conformer(*conformer1);
     noradrenalineMJCopy->addConformer(conformer2, true);
     auto bond10_11Conf0 = conformer0.getAtomPos(11) - conformer0.getAtomPos(10);
     TEST_ASSERT(RDKit::feq(bond10_11Conf0.x, 0.825, 1.e-3));
@@ -1649,7 +1649,7 @@ M  END)RES"_ctab;
     auto noradrenalineMJCopy =
         std::unique_ptr<RWMol>(new RWMol(*noradrenalineMJ));
     const auto &conformer0 = noradrenalineMJCopy->getConformer(0);
-    auto conformer1 = new Conformer(conformer0);
+    auto *conformer1 = new Conformer(conformer0);
     noradrenalineMJCopy->addConformer(conformer1, true);
     auto scalingFactor =
         RDDepict::normalizeDepiction(*noradrenalineMJCopy, 1, -1);
@@ -1658,7 +1658,7 @@ M  END)RES"_ctab;
     TEST_ASSERT(MolAlign::CalcRMS(*noradrenalineMJ, *noradrenalineMJCopy, 0,
                                   1) > 1.e-5);
     TEST_ASSERT(RDKit::feq(scalingFactor, 1.875, 1.e-3));
-    auto conformer2 = new Conformer(*conformer1);
+    auto *conformer2 = new Conformer(*conformer1);
     noradrenalineMJCopy->addConformer(conformer2, true);
     auto bond10_11Conf0 = conformer0.getAtomPos(11) - conformer0.getAtomPos(10);
     TEST_ASSERT(RDKit::feq(bond10_11Conf0.x, 0.825, 1.e-3));
@@ -1681,7 +1681,7 @@ M  END)RES"_ctab;
     auto noradrenalineMJCopy =
         std::unique_ptr<RWMol>(new RWMol(*noradrenalineMJ));
     const auto &conformer0 = noradrenalineMJCopy->getConformer(0);
-    auto conformer1 = new Conformer(conformer0);
+    auto *conformer1 = new Conformer(conformer0);
     noradrenalineMJCopy->addConformer(conformer1, true);
     auto scalingFactor =
         RDDepict::normalizeDepiction(*noradrenalineMJCopy, 1, 0, 3.0);
@@ -1690,9 +1690,9 @@ M  END)RES"_ctab;
     TEST_ASSERT(MolAlign::CalcRMS(*noradrenalineMJ, *noradrenalineMJCopy, 0,
                                   1) > 1.e-5);
     TEST_ASSERT(RDKit::feq(scalingFactor, 3.0, 1.e-3));
-    auto conformer2 = new Conformer(*conformer1);
+    auto *conformer2 = new Conformer(*conformer1);
     noradrenalineMJCopy->addConformer(conformer2, true);
-    auto conformer3 = new Conformer(*conformer1);
+    auto *conformer3 = new Conformer(*conformer1);
     noradrenalineMJCopy->addConformer(conformer3, true);
     auto bond10_11Conf0 = conformer0.getAtomPos(11) - conformer0.getAtomPos(10);
     TEST_ASSERT(RDKit::feq(bond10_11Conf0.x, 0.825, 1.e-3));
@@ -1721,7 +1721,7 @@ M  END)RES"_ctab;
     TEST_ASSERT(RDKit::feq(bond4_11Conf2.y, bond4_11Conf3.y, 1.e-3));
   }
   {
-    auto zeroCoordCTab = R"RES(
+    const auto *zeroCoordCTab = R"RES(
      RDKit          2D
 
   6  6  0  0  0  0  0  0  0  0999 V2000
@@ -1748,7 +1748,7 @@ M  END
     // cyclopentadiene which is already straight should not be biased
     // towards a 30-degree angle rotate since it has no bonds
     // whose angle with the X axis is multiple of 60 degrees
-    auto cpSittingOnHorizontalBondCTab = R"RES(
+    const auto *cpSittingOnHorizontalBondCTab = R"RES(
   MJ201100                      
 
   5  5  0  0  0  0  0  0  0  0999 V2000

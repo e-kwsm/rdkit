@@ -107,7 +107,7 @@ void AddFragToMol(RWMol *mol, RWMol *frag, Bond::BondType bondOrder,
   //
   // update ring-closure order information on the added atoms:
   //
-  for (const auto atom : frag->atoms()) {
+  for (auto *const atom : frag->atoms()) {
     INT_VECT tmpVect;
     if (atom->getPropIfPresent(common_properties::_RingClosures, tmpVect)) {
       for (auto &v : tmpVect) {
@@ -116,7 +116,7 @@ void AddFragToMol(RWMol *mol, RWMol *frag, Bond::BondType bondOrder,
           v += nOrigBonds;
         }
       }
-      auto newAtom = mol->getAtomWithIdx(nOrigAtoms + atom->getIdx());
+      auto *newAtom = mol->getAtomWithIdx(nOrigAtoms + atom->getIdx());
       newAtom->setProp(common_properties::_RingClosures, tmpVect);
     }
   }
@@ -126,14 +126,14 @@ void AddFragToMol(RWMol *mol, RWMol *frag, Bond::BondType bondOrder,
   //
   if (bondOrder != Bond::IONIC) {
     // FIX: this is not so much with the elegance...
-    auto firstAt = mol->getAtomWithIdx(nOrigAtoms);
+    auto *firstAt = mol->getAtomWithIdx(nOrigAtoms);
     int atomIdx1 = firstAt->getIdx();
     int atomIdx2 = lastAt->getIdx();
     if (frag->hasBondBookmark(ci_LEADING_BOND)) {
       // std::cout << "found it" << std::endl;
       const ROMol::BOND_PTR_LIST &leadingBonds =
           frag->getAllBondsWithBookmark(ci_LEADING_BOND);
-      for (auto leadingBond : leadingBonds) {
+      for (auto *leadingBond : leadingBonds) {
         // we've already got a bond, so just set its local info
         // and then add it to the molecule intact (no sense doing
         // any extra work).
@@ -179,7 +179,7 @@ void AddFragToMol(RWMol *mol, RWMol *frag, Bond::BondType bondOrder,
     // don't bother even considering bookmarks outside
     // the range used for cycles
     if (couldBeRingClosure(atIt.first)) {
-      for (auto at2 : atIt.second) {
+      for (auto *at2 : atIt.second) {
         int newIdx = at2->getIdx() + nOrigAtoms;
         mol->setAtomBookmark(mol->getAtomWithIdx(newIdx), atIt.first);
         while (frag->hasBondBookmark(atIt.first)) {
@@ -207,7 +207,7 @@ bool operator<(const std::pair<T, T> &p1, const std::pair<T, T> &p2) {
 
 void AdjustAtomChiralityFlags(RWMol *mol) {
   PRECONDITION(mol, "no molecule");
-  for (auto atom : mol->atoms()) {
+  for (auto *atom : mol->atoms()) {
     Atom::ChiralType chiralType = atom->getChiralTag();
     if (chiralType == Atom::CHI_TETRAHEDRAL_CW ||
         chiralType == Atom::CHI_TETRAHEDRAL_CCW) {
@@ -327,7 +327,7 @@ Bond::BondType GetUnspecifiedBondType(const RWMol *mol, const Atom *atom1,
 }
 void SetUnspecifiedBondTypes(RWMol *mol) {
   PRECONDITION(mol, "no molecule");
-  for (auto bond : mol->bonds()) {
+  for (auto *bond : mol->bonds()) {
     if (bond->hasProp(RDKit::common_properties::_unspecifiedOrder)) {
       bond->setBondType(GetUnspecifiedBondType(mol, bond->getBeginAtom(),
                                                bond->getEndAtom()));
@@ -380,7 +380,7 @@ bool checkChiralPermutation(int chiralTag, int permutation) {
 
 void CheckChiralitySpecifications(RDKit::RWMol *mol, bool strict) {
   PRECONDITION(mol, "no molecule");
-  for (const auto atom : mol->atoms()) {
+  for (auto *const atom : mol->atoms()) {
     int permutation;
     if (atom->getChiralTag() > RDKit::Atom::ChiralType::CHI_OTHER &&
         permutationLimits.find(atom->getChiralTag()) !=
@@ -589,7 +589,7 @@ void CloseMolRings(RWMol *mol, bool toleratePartials) {
       }
       int mark = bookmark.first;
       ++bookmarkIt;
-      for (const auto atom : bookmarkedAtomsToRemove) {
+      for (auto *const atom : bookmarkedAtomsToRemove) {
         mol->clearAtomBookmark(mark, atom);
       }
     } else {
@@ -600,7 +600,7 @@ void CloseMolRings(RWMol *mol, bool toleratePartials) {
 
 void CleanupAfterParsing(RWMol *mol) {
   PRECONDITION(mol, "no molecule");
-  for (auto atom : mol->atoms()) {
+  for (auto *atom : mol->atoms()) {
     atom->clearProp(common_properties::_RingClosures);
     atom->clearProp(common_properties::_SmilesStart);
     std::string label;
@@ -616,7 +616,7 @@ void CleanupAfterParsing(RWMol *mol) {
       }
     }
   }
-  for (auto bond : mol->bonds()) {
+  for (auto *bond : mol->bonds()) {
     bond->clearProp(common_properties::_unspecifiedOrder);
     bond->clearProp("_cxsmilesBondIdx");
   }
@@ -625,7 +625,7 @@ void CleanupAfterParsing(RWMol *mol) {
   }
   if (!Chirality::getAllowNontetrahedralChirality()) {
     bool needWarn = false;
-    for (auto atom : mol->atoms()) {
+    for (auto *atom : mol->atoms()) {
       if (atom->hasProp(common_properties::_chiralPermutation)) {
         needWarn = true;
         atom->clearProp(common_properties::_chiralPermutation);

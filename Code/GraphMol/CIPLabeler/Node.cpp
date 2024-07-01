@@ -124,7 +124,7 @@ void Node::setAux(Descriptor desc) { d_aux = desc; }
 
 const std::vector<Edge *> &Node::getEdges() const {
   if (!isExpanded()) {
-    auto non_const_this = const_cast<Node *>(this);
+    auto *non_const_this = const_cast<Node *>(this);
     non_const_this->d_flags |= EXPANDED;
     dp_g->expand(non_const_this);
   }
