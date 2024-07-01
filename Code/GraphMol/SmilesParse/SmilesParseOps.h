@@ -1,3 +1,6 @@
+#ifndef LLVM_CODE_GRAPHMOL_SMILESPARSE_SMILESPARSEOPS_H
+#define LLVM_CODE_GRAPHMOL_SMILESPARSE_SMILESPARSEOPS_H
+
 //
 //  Copyright (C) 2001-2022 Greg Landrum and other RDKit contributors
 //
@@ -73,5 +76,7 @@ void printSyntaxErrorMessage(std::string_view input,
                              unsigned int bad_token_position);
 }  // namespace detail
 }  // namespace SmilesParseOps
+
+#endif
 
 #endif
