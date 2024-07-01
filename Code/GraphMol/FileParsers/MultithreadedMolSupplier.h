@@ -57,7 +57,7 @@ class RDKIT_FILEPARSERS_EXPORT MultithreadedMolSupplier : public MolSupplier {
   bool atEnd() override;
 
   //! included for the interface, always returns false
-  bool getEOFHitOnRead() const { return false; }
+  static bool getEOFHitOnRead() { return false; }
 
   //! returns the record id of the last extracted item
   //! Note: d_LastRecordId = 0, initially therefore the value 0 is returned

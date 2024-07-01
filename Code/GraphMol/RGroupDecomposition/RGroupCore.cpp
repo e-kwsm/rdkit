@@ -364,7 +364,7 @@ ROMOL_SPTR RCore::replaceCoreAtomsWithMolMatches(
   return coreReplacedAtoms;
 }
 
-void RCore::replaceCoreAtom(RWMol &mol, Atom &atom, const Atom &other) const {
+void RCore::replaceCoreAtom(RWMol &mol, Atom &atom, const Atom &other) {
   auto atomicNumber = other.getAtomicNum();
   auto targetAtom = &atom;
   bool wasDummy = (atom.getAtomicNum() == 0);

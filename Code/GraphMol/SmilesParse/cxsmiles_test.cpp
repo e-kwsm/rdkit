@@ -713,7 +713,7 @@ class SmilesTest {
         atomCount(atomCountInit),
         bondCount(bondCountInit) {};
 
-  bool isRxnTest() const { return false; }
+  static bool isRxnTest() { return false; }
 };
 
 std::string getExpectedValue(std::string expectedFileName) {

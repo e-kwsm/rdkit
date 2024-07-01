@@ -93,10 +93,11 @@ class RDKIT_MOLSTANDARDIZE_EXPORT Reionizer {
   AcidBaseCatalog *d_abcat;
   std::vector<ChargeCorrection> d_ccs;
 
-  std::pair<unsigned int, std::vector<unsigned int>> *strongestProtonated(
+  static std::pair<unsigned int, std::vector<unsigned int>> *
+  strongestProtonated(
       const ROMol &mol,
       const std::vector<std::pair<ROMOL_SPTR, ROMOL_SPTR>> &abpairs);
-  std::pair<unsigned int, std::vector<unsigned int>> *weakestIonized(
+  static std::pair<unsigned int, std::vector<unsigned int>> *weakestIonized(
       const ROMol &mol,
       const std::vector<std::pair<ROMOL_SPTR, ROMOL_SPTR>> &abpairs);
 

@@ -60,7 +60,7 @@ class RGroupDecompositionChromosome : public IntegerStringChromosome {
 
   double recalculateScore();
 
-  bool isOk() { return true; }
+  static bool isOk() { return true; }
 
   void decode();
 
@@ -121,8 +121,8 @@ class RDKIT_RGROUPDECOMPOSITION_EXPORT RGroupGa : public GaBase {
 
   const RGroupDecompData &getRGroupData() const { return rGroupData; }
 
-  const vector<shared_ptr<GaOperation<RGroupDecompositionChromosome>>>
-  getOperations() const;
+  static const vector<shared_ptr<GaOperation<RGroupDecompositionChromosome>>>
+  getOperations();
 
   unsigned int numberPermutations() const { return numPermutations; }
 

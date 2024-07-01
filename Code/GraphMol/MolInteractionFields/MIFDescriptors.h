@@ -480,9 +480,9 @@ class RDKIT_MOLINTERACTIONFIELDS_EXPORT HBond {
                        const RDGeom::Point3D &plane = RDGeom::Point3D(0.0, 0.0,
                                                                       0.0));
 
-  void normalize(double &x, double &y, double &z) const;
-  double angle(double x1, double y1, double z1, double x2, double y2,
-               double z2) const;
+  static void normalize(double &x, double &y, double &z);
+  static double angle(double x1, double y1, double z1, double x2, double y2,
+                      double z2);
 
   std::vector<double (*)(double, double, double)> d_function;
 };
