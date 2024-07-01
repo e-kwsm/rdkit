@@ -255,7 +255,7 @@ unsigned int getChiralRank(const ROMol *dp_mol, canon_atom *dp_atoms,
   unsigned int res = 0;
   std::vector<unsigned int> perm;
   perm.reserve(dp_atoms[i].atom->getDegree());
-  for (const auto nbr : dp_mol->atomNeighbors(dp_atoms[i].atom)) {
+  for (auto *const nbr : dp_mol->atomNeighbors(dp_atoms[i].atom)) {
     auto rnk = dp_atoms[nbr->getIdx()].index;
     // make sure we don't have duplicate ranks
     if (std::find(perm.begin(), perm.end(), rnk) != perm.end()) {
@@ -286,7 +286,7 @@ class RDKIT_GRAPHMOL_EXPORT AtomCompareFunctor {
       return 0;
     }
 
-    auto nbrs = dp_atoms[i].nbrIds.get();
+    auto *nbrs = dp_atoms[i].nbrIds.get();
     unsigned int code = 0;
     for (unsigned j = 0; j < dp_atoms[i].degree; ++j) {
       if (dp_atoms[nbrs[j]].isRingStereoAtom) {
@@ -409,11 +409,11 @@ class RDKIT_GRAPHMOL_EXPORT AtomCompareFunctor {
           ivj = dp_atoms[j].whichStereoGroup - 1;
           // now check the current classes of the other members of the SG
           std::set<unsigned int> sgi;
-          for (auto sgat : dp_mol->getStereoGroups()[ivi].getAtoms()) {
+          for (auto *sgat : dp_mol->getStereoGroups()[ivi].getAtoms()) {
             sgi.insert(dp_atoms[sgat->getIdx()].index);
           }
           std::set<unsigned int> sgj;
-          for (auto sgat : dp_mol->getStereoGroups()[ivj].getAtoms()) {
+          for (auto *sgat : dp_mol->getStereoGroups()[ivj].getAtoms()) {
             sgj.insert(dp_atoms[sgat->getIdx()].index);
           }
           if (sgi < sgj) {
