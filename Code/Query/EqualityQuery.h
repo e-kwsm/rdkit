@@ -1,3 +1,6 @@
+#ifndef LLVM_CODE_QUERY_EQUALITYQUERY_H
+#define LLVM_CODE_QUERY_EQUALITYQUERY_H
+
 //
 // Copyright (c) 2003-2020 Greg Landrum and Rational Discovery LLC
 //
@@ -53,9 +56,8 @@ class RDKIT_QUERY_EXPORT EqualityQuery
         this->TypeConvert(what, Int2Type<needsConversion>());
     if (queryCmp(this->d_val, mfArg, this->d_tol) == 0) {
       return !this->getNegation();
-    } else {
-      return this->getNegation();
     }
+    return this->getNegation();
   }
 
   Query<MatchFuncArgType, DataFuncArgType, needsConversion> *copy()
@@ -85,4 +87,6 @@ class RDKIT_QUERY_EXPORT EqualityQuery
   }
 };
 }  // namespace Queries
+#endif
+
 #endif

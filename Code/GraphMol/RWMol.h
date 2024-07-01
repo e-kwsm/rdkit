@@ -1,3 +1,6 @@
+#ifndef LLVM_CODE_GRAPHMOL_RWMOL_H
+#define LLVM_CODE_GRAPHMOL_RWMOL_H
+
 //
 //  Copyright (C) 2003-2021 Greg Landrum and other RDKit contributors
 //
@@ -234,5 +237,7 @@ using RWMOL_SPTR = boost::shared_ptr<RWMol>;
 using RWMOL_SPTR_VECT = std::vector<RWMOL_SPTR>;
 
 };  // namespace RDKit
+
+#endif
 
 #endif

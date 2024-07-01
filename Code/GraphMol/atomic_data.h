@@ -1,3 +1,6 @@
+#ifndef LLVM_CODE_GRAPHMOL_ATOMIC_DATA_H
+#define LLVM_CODE_GRAPHMOL_ATOMIC_DATA_H
+
 //
 //  Copyright (C) 2001-2008 Greg Landrum and Rational Discovery LLC
 //
@@ -28,7 +31,7 @@ RDKIT_GRAPHMOL_EXPORT extern const std::string isotopesAtomData[];
 RDKIT_GRAPHMOL_EXPORT extern const std::vector<std::string> elementNames;
 namespace constants {
 RDKIT_GRAPHMOL_EXPORT extern const double electronMass;
-}
+}  // namespace constants
 class RDKIT_GRAPHMOL_EXPORT atomicData {
  public:
   atomicData(const std::string &dataLine);
@@ -79,4 +82,6 @@ class RDKIT_GRAPHMOL_EXPORT atomicData {
   unsigned int row;          // row in the periodic table
 };
 };  // namespace RDKit
+#endif
+
 #endif

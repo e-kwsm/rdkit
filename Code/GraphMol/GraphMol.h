@@ -1,3 +1,6 @@
+#ifndef LLVM_CODE_GRAPHMOL_GRAPHMOL_H
+#define LLVM_CODE_GRAPHMOL_GRAPHMOL_H
+
 //
 //  Copyright (C) 2001-2006 Greg Landrum and Rational Discovery LLC
 //
@@ -18,5 +21,7 @@
 
 #include "ROMol.h"
 #include "RWMol.h"
+
+#endif
 
 #endif
