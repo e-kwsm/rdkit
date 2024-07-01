@@ -19,7 +19,7 @@ class RDProps {
   //  on const objects.
 
  public:
-  RDProps() : d_props() {}
+  RDProps() {}
   RDProps(const RDProps &rhs) : d_props(rhs.d_props) {}
   RDProps &operator=(const RDProps &rhs) {
     if (this == &rhs) {
