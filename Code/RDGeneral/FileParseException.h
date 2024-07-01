@@ -1,3 +1,6 @@
+#ifndef LLVM_CODE_RDGENERAL_FILEPARSEEXCEPTION_H
+#define LLVM_CODE_RDGENERAL_FILEPARSEEXCEPTION_H
+
 //
 // Copyright 2003-2006 Rational Discovery LLC
 //
@@ -11,8 +14,8 @@
 #ifndef RD_FILEPARSEEXCEPTION_H
 #define RD_FILEPARSEEXCEPTION_H
 
-#include <string>
 #include <stdexcept>
+#include <string>
 
 namespace RDKit {
 //! used by various file parsing classes to indicate a parse error
@@ -32,5 +35,7 @@ class RDKIT_RDGENERAL_EXPORT FileParseException : public std::runtime_error {
   std::string _msg;
 };
 }  // namespace RDKit
+
+#endif
 
 #endif
