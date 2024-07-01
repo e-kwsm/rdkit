@@ -510,7 +510,7 @@ void addMol(const T &imol, rj::Value &rjMol, rj::Document &doc,
     for (auto conf = mol.beginConformers(); conf != mol.endConformers();
          ++conf) {
       rj::Value rjConf(rj::kObjectType);
-      addConformer(*(conf->get()), rjConf, doc);
+      addConformer(**conf, rjConf, doc);
       rjConfs.PushBack(rjConf, doc.GetAllocator());
     }
 
