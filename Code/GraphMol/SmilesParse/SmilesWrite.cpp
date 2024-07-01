@@ -69,7 +69,7 @@ void updateCXSmilesFieldsFromJSON(SmilesWrite::CXSmilesFields &cxSmilesFields,
     ss.str(details_json);
     boost::property_tree::read_json(ss, pt);
     auto cxSmilesFieldsFromJson =
-        static_cast<std::underlying_type<SmilesWrite::CXSmilesFields>::type>(
+        static_cast<std::underlying_type_t<SmilesWrite::CXSmilesFields>>(
             SmilesWrite::CXSmilesFields::CX_NONE);
     for (const auto &keyValuePair : cxSmilesFieldsKeyValuePairs) {
       cxSmilesFieldsFromJson |= (pt.get(keyValuePair.first, false)
