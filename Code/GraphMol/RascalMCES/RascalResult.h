@@ -114,7 +114,7 @@ class RDKIT_RASCALMCES_EXPORT RascalResult {
   bool d_ringMatchesRingOnly{false};
   int d_maxFragSep{-1};
   bool d_exactConnectionsMatch{false};
-  std::string d_equivalentAtoms{""};
+  std::string d_equivalentAtoms;
   bool d_ignoreBondOrders{false};
 
   // These are used for sorting the results.

@@ -63,7 +63,7 @@ void testMolFiles(const MolTest *molFileTest) {
 
     {
       std::string expectedMrvName = fName + ".expected.sdf";
-      std::string outMolStr = "";
+      std::string outMolStr;
       try {
         outMolStr = MolToMolBlock(*mol, true, 0, true, true);
       } catch (const RDKit::KekulizeException &e) {

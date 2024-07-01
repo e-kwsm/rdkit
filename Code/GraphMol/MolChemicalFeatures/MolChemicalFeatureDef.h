@@ -26,7 +26,7 @@ class RDKIT_MOLCHEMICALFEATURES_EXPORT MolChemicalFeatureDef {
  public:
   typedef std::list<boost::shared_ptr<MolChemicalFeatureDef>> CollectionType;
 
-  MolChemicalFeatureDef() : d_family(""), d_type(""), d_smarts("") {}
+  MolChemicalFeatureDef() {}
   MolChemicalFeatureDef(const std::string &smarts, std::string family,
                         std::string type);
 

@@ -75,7 +75,7 @@ BOOST_PYTHON_MODULE(rdReducedGraphs) {
 
   rdkit_import_array();
 
-  std::string docString = "";
+  std::string docString;
 
   docString = "Returns the reduced graph for a molecule";
   python::def(

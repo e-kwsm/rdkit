@@ -138,7 +138,7 @@ class RDKIT_GRAPHMOL_EXPORT QueryAtom : public Atom {
 
 namespace detail {
 inline std::string qhelper(const Atom::QUERYATOM_QUERY *q, unsigned int depth) {
-  std::string res = "";
+  std::string res;
   if (q) {
     for (unsigned int i = 0; i < depth; ++i) {
       res += "  ";
@@ -154,7 +154,7 @@ inline std::string qhelper(const Atom::QUERYATOM_QUERY *q, unsigned int depth) {
 }  // namespace detail
 inline std::string describeQuery(const Atom *atom) {
   PRECONDITION(atom, "bad atom");
-  std::string res = "";
+  std::string res;
   if (atom->hasQuery()) {
     res = detail::qhelper(atom->getQuery(), 0);
   }
