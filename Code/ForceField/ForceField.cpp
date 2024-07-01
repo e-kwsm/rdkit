@@ -388,7 +388,7 @@ void ForceField::scatter(double *pos) const {
   POSTCONDITION(tab == this->dimension() * d_positions.size(), "bad index");
 }
 
-void ForceField::gather(double *pos) {
+void ForceField::gather(const double *pos) {
   PRECONDITION(df_init, "not initialized");
   PRECONDITION(pos, "bad position vector");
 

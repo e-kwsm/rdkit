@@ -3112,7 +3112,7 @@ void cleanupChirality(RWMol &mol) {
 
 #define VOLTEST(X, Y, Z) (v[X].dotProduct(v[Y].crossProduct(v[Z])) >= 0.0)
 
-static unsigned int OctahedralPermFrom3D(unsigned char *pair,
+static unsigned int OctahedralPermFrom3D(const unsigned char *pair,
                                          const RDGeom::Point3D *v) {
   switch (pair[0]) {
     case 2:  // a-b

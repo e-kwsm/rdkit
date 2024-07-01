@@ -66,8 +66,9 @@ RDKIT_FORCEFIELD_EXPORT double calcAngleBendEnergy(const double theta0,
                                                    const double ka,
                                                    bool isLinear,
                                                    const double cosTheta);
-RDKIT_FORCEFIELD_EXPORT void calcAngleBendGrad(RDGeom::Point3D *r, double *dist,
-                                               double **g, double &dE_dTheta,
+RDKIT_FORCEFIELD_EXPORT void calcAngleBendGrad(RDGeom::Point3D *r,
+                                               const double *dist, double **g,
+                                               double &dE_dTheta,
                                                double &cosTheta,
                                                double &sinTheta);
 }  // namespace Utils

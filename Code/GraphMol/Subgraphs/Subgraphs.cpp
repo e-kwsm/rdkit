@@ -176,8 +176,8 @@ void recurseWalkRange(
 }
 
 PATH_LIST
-extendPaths(int *adjMat, unsigned int dim, const PATH_LIST &paths,
-            int allowRingClosures = -1, double *distMat = nullptr) {
+extendPaths(const int *adjMat, unsigned int dim, const PATH_LIST &paths,
+            int allowRingClosures = -1, const double *distMat = nullptr) {
   PRECONDITION(adjMat, "no matrix");
   //
   //  extend each of the currently active paths by adding
