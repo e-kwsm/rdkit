@@ -674,7 +674,7 @@ void ChemicalReaction::removeUnmappedReactantTemplates(
   MOL_SPTR_VECT res_reactantTemplates;
   for (auto iter = beginReactantTemplates(); iter != endReactantTemplates();
        ++iter) {
-    if (isReactionTemplateMoleculeAgent(*iter->get(), thresholdUnmappedAtoms)) {
+    if (isReactionTemplateMoleculeAgent(**iter, thresholdUnmappedAtoms)) {
       if (moveToAgentTemplates) {
         m_agentTemplates.push_back(*iter);
       }
@@ -698,7 +698,7 @@ void ChemicalReaction::removeUnmappedProductTemplates(
   MOL_SPTR_VECT res_productTemplates;
   for (auto iter = beginProductTemplates(); iter != endProductTemplates();
        ++iter) {
-    if (isReactionTemplateMoleculeAgent(*iter->get(), thresholdUnmappedAtoms)) {
+    if (isReactionTemplateMoleculeAgent(**iter, thresholdUnmappedAtoms)) {
       if (moveToAgentTemplates) {
         m_agentTemplates.push_back(*iter);
       }
