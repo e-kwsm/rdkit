@@ -26,7 +26,8 @@ Node *Edge::getOther(const Node *node) const {
 
   if (isBeg(node)) {
     return getEnd();
-  } else if (isEnd(node)) {
+  }
+  if (isEnd(node)) {
     return getBeg();
   } else {
     throw std::runtime_error("Not an end-point of this edge!");
