@@ -1,3 +1,6 @@
+#ifndef LLVM_CODE_GRAPHMOL_QUERYBOND_H
+#define LLVM_CODE_GRAPHMOL_QUERYBOND_H
+
 //
 //  Copyright (C) 2001-2022 Greg Landrum and other RDKit contributors
 //
@@ -11,9 +14,9 @@
 #ifndef _RD_QUERYBOND_H
 #define _RD_QUERYBOND_H
 
-#include <Query/QueryObjects.h>
 #include "Bond.h"
 #include "QueryOps.h"
+#include <Query/QueryObjects.h>
 
 namespace RDKit {
 
@@ -142,5 +145,7 @@ inline std::string describeQuery(const Bond *bond) {
   return res;
 }
 };  // namespace RDKit
+
+#endif
 
 #endif
