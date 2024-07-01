@@ -22,8 +22,7 @@
 #include "MultithreadedSDMolSupplier.h"
 #include "MultithreadedSmilesMolSupplier.h"
 
-namespace RDKit {
-namespace GeneralMolSupplier {
+namespace RDKit::GeneralMolSupplier {
 struct SupplierOptions {
   bool takeOwnership = true;
   bool sanitize = true;
@@ -166,6 +165,6 @@ std::unique_ptr<MolSupplier> getSupplier(const std::string& path,
   throw BadFileException("Unsupported file format: " + fileFormat);
 }
 
-}  // namespace GeneralMolSupplier
-}  // namespace RDKit
+}  // namespace RDKit::GeneralMolSupplier
+
 #endif
