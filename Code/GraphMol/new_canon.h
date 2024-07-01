@@ -346,9 +346,8 @@ class RDKIT_GRAPHMOL_EXPORT AtomCompareFunctor {
       }
       if (*(dp_atoms[i].p_symbol) > *(dp_atoms[j].p_symbol)) {
         return 1;
-      } else {
-        return 0;
       }
+      return 0;
     }
 
     // move onto atomic number
@@ -415,7 +414,8 @@ class RDKIT_GRAPHMOL_EXPORT AtomCompareFunctor {
         }
         if (ivj && !ivi) {
           return -1;
-        } else if (ivi && ivj) {
+        }
+        if (ivi && ivj) {
           ivi = static_cast<unsigned int>(dp_atoms[i].typeOfStereoGroup);
           ivj = static_cast<unsigned int>(dp_atoms[j].typeOfStereoGroup);
           if (ivi < ivj) {
