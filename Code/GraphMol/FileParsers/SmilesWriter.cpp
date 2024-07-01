@@ -120,7 +120,7 @@ void SmilesWriter::write(const ROMol &mol, int) {
     dumpHeader();
   }
 
-  std::string name = "";
+  std::string name;
   std::string smi = MolToSmiles(mol, df_isomericSmiles, df_kekuleSmiles);
   (*dp_ostream) << smi;
   if (d_nameHeader != "") {
