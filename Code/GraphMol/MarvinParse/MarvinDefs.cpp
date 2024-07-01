@@ -958,8 +958,8 @@ const std::string MarvinBond::getBondType() const {
     std::ostringstream err;
     err << "unrecognized query bond type " << queryType << " in MRV File ";
     throw FileParseException(err.str());
-
-  } else if (tempConvention != "")  // if no query type, check for convention
+  }
+  if (tempConvention != "")  // if no query type, check for convention
   {
     if (tempConvention == "CXN:COORD") {
       return "DATIVE";
