@@ -52,10 +52,6 @@ RDKIT_GRAPHMOL_EXPORT extern bool
     useLegacyStereoPerception;  //!< Toggle usage of the legacy stereo
                                 //!< perception code
 
-RDKIT_GRAPHMOL_EXPORT extern bool
-    useLegacyStereoPerception;  //!< Toggle usage of the legacy stereo
-                                //!< perception code
-
 /// @cond
 /*!
   \param mol the molecule to be altered
