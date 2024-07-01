@@ -50,7 +50,7 @@ python::tuple fragmentOnSomeBondsHelper(const ROMol &mol,
                                         python::object pyBondTypes,
                                         bool returnCutsPerAtom) {
   auto bondIndices = pythonObjectToVect(pyBondIndices, mol.getNumBonds());
-  if (!bondIndices.get()) {
+  if (!bondIndices) {
     throw_value_error("empty bond indices");
   }
 
@@ -124,7 +124,7 @@ ROMol *fragmentOnBondsHelper(const ROMol &mol, python::object pyBondIndices,
                              python::object pyBondTypes,
                              python::list pyCutsPerAtom) {
   auto bondIndices = pythonObjectToVect(pyBondIndices, mol.getNumBonds());
-  if (!bondIndices.get()) {
+  if (!bondIndices) {
     throw_value_error("empty bond indices");
   }
   std::vector<std::pair<unsigned int, unsigned int>> *dummyLabels = nullptr;
