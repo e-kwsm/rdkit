@@ -61,11 +61,13 @@ void determineFormat(const std::string path, std::string& fileFormat,
     fileFormat = "mae";
     compressionFormat = "gz";
     return;
-  } else if (boost::algorithm::iends_with(path, ".sdfgz")) {
+  }
+  if (boost::algorithm::iends_with(path, ".sdfgz")) {
     fileFormat = "sdf";
     compressionFormat = "gz";
     return;
-  } else if (boost::algorithm::iends_with(path, ".gz")) {
+  }
+  if (boost::algorithm::iends_with(path, ".gz")) {
     compressionFormat = "gz";
     basename = path.substr(0, path.size() - 3);
   } else if (boost::algorithm::iends_with(path, ".zst") ||
@@ -131,8 +133,8 @@ std::unique_ptr<MolSupplier> getSupplier(const std::string& path,
     return p;
   }
 
-  else if (fileFormat == "smi" || fileFormat == "csv" || fileFormat == "txt" ||
-           fileFormat == "tsv") {
+  if (fileFormat == "smi" || fileFormat == "csv" || fileFormat == "txt" ||
+      fileFormat == "tsv") {
 #ifdef RDK_BUILD_THREADSAFE_SSS
     if (opt.numWriterThreads > 0) {
       MultithreadedSmilesMolSupplier* smsup =
@@ -150,7 +152,7 @@ std::unique_ptr<MolSupplier> getSupplier(const std::string& path,
     return p;
   }
 #ifdef RDK_BUILD_MAEPARSER_SUPPORT
-  else if (fileFormat == "mae") {
+  if (fileFormat == "mae") {
     MaeMolSupplier* maesup =
         new MaeMolSupplier(strm, true, opt.sanitize, opt.removeHs);
     std::unique_ptr<MolSupplier> p(maesup);
