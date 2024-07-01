@@ -61,7 +61,7 @@ class SubstructLibraryWrap {
  public:
   SubstructLibrary ss;
 
-  SubstructLibraryWrap() : ss() {}
+  SubstructLibraryWrap() {}
   SubstructLibraryWrap(boost::shared_ptr<MolHolderBase> molecules)
       : ss(molecules) {}
   SubstructLibraryWrap(boost::shared_ptr<MolHolderBase> molecules,

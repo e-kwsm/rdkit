@@ -128,15 +128,14 @@ class RDKIT_FILTERCATALOG_EXPORT FilterCatalog : public FCatalog {
   //  we can enable support for this feature
   typedef boost::shared_ptr<const entryType_t> CONST_SENTRY;
 
-  FilterCatalog() : FCatalog(), d_entries() {}
+  FilterCatalog() {}
 
-  FilterCatalog(FilterCatalogParams::FilterCatalogs catalogs)
-      : FCatalog(), d_entries() {
+  FilterCatalog(FilterCatalogParams::FilterCatalogs catalogs) {
     paramType_t temp_params(catalogs);
     setCatalogParams(&temp_params);
   }
 
-  FilterCatalog(const FilterCatalogParams &params) : FCatalog(), d_entries() {
+  FilterCatalog(const FilterCatalogParams &params) {
     setCatalogParams(&params);
   }
 
