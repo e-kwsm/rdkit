@@ -1,3 +1,6 @@
+#ifndef LLVM_CODE_RDGENERAL_HANOISORT_H
+#define LLVM_CODE_RDGENERAL_HANOISORT_H
+
 //
 //  Copyright (C) 2014 Greg Landrum
 //  Adapted from pseudo-code from Roger Sayle
@@ -40,7 +43,8 @@ bool hanoi(int *base, int nel, int *temp, int *count, int *changed,
   if (nel == 1) {
     count[base[0]] = 1;
     return false;
-  } else if (nel == 2) {
+  }
+  if (nel == 2) {
     n1 = base[0];
     n2 = base[1];
     int stat =
@@ -164,3 +168,5 @@ void hanoisort(int *base, int nel, int *count, int *changed,
 #endif
 
 #endif /* HANOISORT_H_ */
+
+#endif
