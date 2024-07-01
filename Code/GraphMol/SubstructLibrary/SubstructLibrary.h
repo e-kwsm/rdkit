@@ -88,7 +88,7 @@ class RDKIT_SUBSTRUCTLIBRARY_EXPORT MolHolder : public MolHolderBase {
   std::vector<boost::shared_ptr<ROMol>> mols;
 
  public:
-  MolHolder() : MolHolderBase(), mols() {}
+  MolHolder() : MolHolderBase() {}
 
   unsigned int addMol(const ROMol &m) override {
     mols.push_back(boost::make_shared<ROMol>(m));
@@ -122,7 +122,7 @@ class RDKIT_SUBSTRUCTLIBRARY_EXPORT CachedMolHolder : public MolHolderBase {
   std::vector<std::string> mols;
 
  public:
-  CachedMolHolder() : MolHolderBase(), mols() {}
+  CachedMolHolder() : MolHolderBase() {}
 
   unsigned int addMol(const ROMol &m) override {
     mols.emplace_back();
@@ -168,7 +168,7 @@ class RDKIT_SUBSTRUCTLIBRARY_EXPORT CachedSmilesMolHolder
   std::vector<std::string> mols;
 
  public:
-  CachedSmilesMolHolder() : MolHolderBase(), mols() {}
+  CachedSmilesMolHolder() : MolHolderBase() {}
 
   unsigned int addMol(const ROMol &m) override {
     bool doIsomericSmiles = true;
@@ -219,7 +219,7 @@ class RDKIT_SUBSTRUCTLIBRARY_EXPORT CachedTrustedSmilesMolHolder
   std::vector<std::string> mols;
 
  public:
-  CachedTrustedSmilesMolHolder() : MolHolderBase(), mols() {}
+  CachedTrustedSmilesMolHolder() : MolHolderBase() {}
 
   unsigned int addMol(const ROMol &m) override {
     bool doIsomericSmiles = true;
@@ -337,7 +337,7 @@ class RDKIT_SUBSTRUCTLIBRARY_EXPORT PatternHolder : public FPHolderBase {
 class RDKIT_SUBSTRUCTLIBRARY_EXPORT TautomerPatternHolder
     : public PatternHolder {
  public:
-  TautomerPatternHolder() : PatternHolder() {}
+  TautomerPatternHolder() {}
   TautomerPatternHolder(unsigned int numBits) : PatternHolder(numBits) {}
   ExplicitBitVect *makeFingerprint(const ROMol &m) const override {
     std::vector<unsigned int> *atomCounts = nullptr;
@@ -373,7 +373,7 @@ class RDKIT_SUBSTRUCTLIBRARY_EXPORT KeyHolderBase {
 class RDKIT_SUBSTRUCTLIBRARY_EXPORT KeyFromPropHolder : public KeyHolderBase {
   std::string propname;
   std::vector<std::string> keys;
-  const std::string empty_string = {};
+  const std::string empty_string;
 
  public:
   KeyFromPropHolder(const std::string &propname = "_Name")
@@ -529,14 +529,12 @@ class RDKIT_SUBSTRUCTLIBRARY_EXPORT SubstructLibrary {
  public:
   SubstructLibrary()
       : molholder(new MolHolder),
-        fpholder(),
-        keyholder(),
+
         mols(molholder.get()) {}
 
   SubstructLibrary(boost::shared_ptr<MolHolderBase> molecules)
       : molholder(std::move(molecules)),
-        fpholder(),
-        keyholder(),
+
         mols(molholder.get()),
         fps(nullptr) {}
 
@@ -544,7 +542,7 @@ class RDKIT_SUBSTRUCTLIBRARY_EXPORT SubstructLibrary {
                    boost::shared_ptr<FPHolderBase> fingerprints)
       : molholder(std::move(molecules)),
         fpholder(std::move(fingerprints)),
-        keyholder(),
+
         mols(molholder.get()),
         fps(fpholder.get()) {
     if (fpholder.get() &&
@@ -556,7 +554,7 @@ class RDKIT_SUBSTRUCTLIBRARY_EXPORT SubstructLibrary {
   SubstructLibrary(boost::shared_ptr<MolHolderBase> molecules,
                    boost::shared_ptr<KeyHolderBase> keys)
       : molholder(std::move(molecules)),
-        fpholder(),
+
         keyholder(std::move(keys)),
         mols(molholder.get()),
         fps(nullptr) {
@@ -582,7 +580,7 @@ class RDKIT_SUBSTRUCTLIBRARY_EXPORT SubstructLibrary {
 
   SubstructLibrary(const std::string &pickle)
       : molholder(new MolHolder),
-        fpholder(),
+
         mols(molholder.get()),
         fps(nullptr) {
     initFromString(pickle);
