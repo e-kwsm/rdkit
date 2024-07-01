@@ -319,8 +319,8 @@ void test1() {
       //            MolToSmiles(*res[j].second) : es) <<"\n";
       std::stringstream ss;
       ss << smiles << "," << id << ",";
-      ss << (res[j].first.get() ? MolToSmiles(*res[j].first, true) : "") << ",";
-      ss << (res[j].second.get() ? MolToSmiles(*res[j].second, true) : "");
+      ss << (res[j].first ? MolToSmiles(*res[j].first, true) : "") << ",";
+      ss << (res[j].second ? MolToSmiles(*res[j].second, true) : "");
       size_t matchedRefRes = -1;
       bool failed = true;
       for (size_t r = 0; r < sizeof(fs) / sizeof(fs[0]); r++) {
@@ -450,16 +450,16 @@ void test2() {
        * Workaround is: save -> load -> save
        */
       std::string first_res =
-          (res[res_idx].first.get() ? createCanonicalFromSmiles(MolToSmiles(
-                                          *res[res_idx].first, true))
-                                    : "");
+          (res[res_idx].first ? createCanonicalFromSmiles(
+                                    MolToSmiles(*res[res_idx].first, true))
+                              : "");
       std::string second_res =
-          (res[res_idx].second.get() ? createCanonicalFromSmiles(MolToSmiles(
-                                           *res[res_idx].second, true))
-                                     : "");
+          (res[res_idx].second ? createCanonicalFromSmiles(
+                                     MolToSmiles(*res[res_idx].second, true))
+                               : "");
 
-      std::cout << (res[res_idx].first.get() ? first_res : es) << ", ";
-      std::cout << (res[res_idx].second.get() ? second_res : es) << "\n";
+      std::cout << (res[res_idx].first ? first_res : es) << ", ";
+      std::cout << (res[res_idx].second ? second_res : es) << "\n";
 
       std::stringstream res_str;
       res_str << first_res << "," << second_res;
@@ -546,16 +546,16 @@ void doTest(const char *smi, const char *fs[], unsigned fs_size) {
      * Workaround is: save -> load -> save
      */
     std::string first_res =
-        (res[res_idx].first.get()
+        (res[res_idx].first
              ? createCanonicalFromSmiles(MolToSmiles(*res[res_idx].first, true))
              : "");
     std::string second_res =
-        (res[res_idx].second.get() ? createCanonicalFromSmiles(MolToSmiles(
-                                         *res[res_idx].second, true))
-                                   : "");
+        (res[res_idx].second ? createCanonicalFromSmiles(
+                                   MolToSmiles(*res[res_idx].second, true))
+                             : "");
 
-    std::cout << (res[res_idx].first.get() ? first_res : es) << ",";
-    std::cout << (res[res_idx].second.get() ? second_res : es) << "\n";
+    std::cout << (res[res_idx].first ? first_res : es) << ",";
+    std::cout << (res[res_idx].second ? second_res : es) << "\n";
 
     std::stringstream res_str;
     res_str << first_res << "," << second_res;
