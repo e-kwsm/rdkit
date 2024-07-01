@@ -179,17 +179,17 @@ bool isEarlyAtom(int atomicNum) {
   return ((unsigned int)atomicNum < 119) && table[atomicNum];
 }
 
-Atom::Atom() : RDProps() {
+Atom::Atom() {
   d_atomicNum = 0;
   initAtom();
 }
 
-Atom::Atom(unsigned int num) : RDProps() {
+Atom::Atom(unsigned int num) {
   d_atomicNum = num;
   initAtom();
 };
 
-Atom::Atom(const std::string &what) : RDProps() {
+Atom::Atom(const std::string &what) {
   d_atomicNum = PeriodicTable::getTable()->getAtomicNumber(what);
   initAtom();
 };
@@ -219,7 +219,7 @@ void Atom::initFromOther(const Atom &other) {
   d_flags = other.d_flags;
 }
 
-Atom::Atom(const Atom &other) : RDProps() { initFromOther(other); }
+Atom::Atom(const Atom &other) { initFromOther(other); }
 
 Atom &Atom::operator=(const Atom &other) {
   if (this == &other) {
