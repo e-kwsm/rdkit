@@ -426,7 +426,8 @@ void assignRadicals(RWMol &mol) {
         PeriodicTable::getTable()->getNouterElecs(atom->getAtomicNum());
     if (valens.size() != 1 || valens[0] != -1) {
       double accum = 0.0;
-      RWMol::OEDGE_ITER beg, end;
+      RWMol::OEDGE_ITER beg;
+      RWMol::OEDGE_ITER end;
       boost::tie(beg, end) = mol.getAtomBonds(atom);
       while (beg != end) {
         accum += mol[*beg]->getValenceContrib(atom);
@@ -914,7 +915,8 @@ std::map<T, std::unique_ptr<ROMol>> getTheFragsWithQuery(
     ids[i] = frag->addAtom(mol.getAtomWithIdx(i)->copy(), false, true);
     // loop over neighbors and add bonds in the fragment to all atoms
     // that are already in the same fragment
-    ROMol::ADJ_ITER nbrIdx, endNbrs;
+    ROMol::ADJ_ITER nbrIdx;
+    ROMol::ADJ_ITER endNbrs;
     boost::tie(nbrIdx, endNbrs) = mol.getAtomNeighbors(mol.getAtomWithIdx(i));
     while (nbrIdx != endNbrs) {
       if (*nbrIdx < i && assignments[*nbrIdx] == where) {

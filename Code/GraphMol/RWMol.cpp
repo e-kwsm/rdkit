@@ -170,7 +170,8 @@ void RWMol::insertMol(const ROMol &other) {
 
   for (const auto obond : other.bonds()) {
     Bond *bond_p = obond->copy();
-    unsigned int idx1, idx2;
+    unsigned int idx1;
+    unsigned int idx2;
     idx1 = bond_p->getBeginAtomIdx() + origNumAtoms;
     idx2 = bond_p->getEndAtomIdx() + origNumAtoms;
     bond_p->setOwningMol(this);
@@ -352,7 +353,8 @@ void RWMol::removeAtom(Atom *atom, bool clearProps) {
   // remove bonds attached to the atom
   //  In batch mode this will schedule bond removal
   std::vector<std::pair<unsigned int, unsigned int>> nbrs;
-  ADJ_ITER b1, b2;
+  ADJ_ITER b1;
+  ADJ_ITER b2;
   boost::tie(b1, b2) = getAtomNeighbors(atom);
   while (b1 != b2) {
     nbrs.emplace_back(atom->getIdx(), rdcast<unsigned int>(*b1));
@@ -410,7 +412,8 @@ void RWMol::removeAtom(Atom *atom, bool clearProps) {
   //   indices will need to be handled and if they have an
   //   ENDPTS prop that includes idx, it will need updating.
   unsigned int nBonds = 0;
-  EDGE_ITER beg, end;
+  EDGE_ITER beg;
+  EDGE_ITER end;
   boost::tie(beg, end) = getEdges();
   std::string sprop;
   while (beg != end) {
@@ -800,7 +803,8 @@ void RWMol::batchRemoveAtoms() {
     //   their end indices may need to be decremented and their
     //   indices will need to be handled and if they have an
     //   ENDPTS prop that includes idx, it will need updating.
-    EDGE_ITER beg, end;
+    EDGE_ITER beg;
+    EDGE_ITER end;
     boost::tie(beg, end) = getEdges();
     std::string sprop;
     while (beg != end) {

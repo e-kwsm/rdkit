@@ -239,7 +239,8 @@ BOND_EQUALS_QUERY *makeBondMinRingSizeQuery(int tgt) {
 }
 
 unsigned int queryAtomBondProduct(Atom const *at) {
-  ROMol::OEDGE_ITER beg, end;
+  ROMol::OEDGE_ITER beg;
+  ROMol::OEDGE_ITER end;
   boost::tie(beg, end) = at->getOwningMol().getAtomBonds(at);
   unsigned int prod = 1;
   while (beg != end) {
@@ -250,7 +251,8 @@ unsigned int queryAtomBondProduct(Atom const *at) {
   return prod;
 }
 unsigned int queryAtomAllBondProduct(Atom const *at) {
-  ROMol::OEDGE_ITER beg, end;
+  ROMol::OEDGE_ITER beg;
+  ROMol::OEDGE_ITER end;
 
   boost::tie(beg, end) = at->getOwningMol().getAtomBonds(at);
   unsigned int prod = 1;

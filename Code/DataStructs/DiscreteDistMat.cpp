@@ -14,7 +14,13 @@
 
 namespace RDKit {
 void _fillDistMat(unsigned int dmat[], unsigned int nBits) {
-  unsigned int i, j, a, b, ta, tb, dist;
+  unsigned int i;
+  unsigned int j;
+  unsigned int a;
+  unsigned int b;
+  unsigned int ta;
+  unsigned int tb;
+  unsigned int dist;
   int temp;
   unsigned int mask = ((1 << nBits) - 1);
   for (i = 0; i < 256; ++i) {
