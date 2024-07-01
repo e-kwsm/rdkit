@@ -1,3 +1,6 @@
+#ifndef LLVM_CODE_GRAPHMOL_CHIRALITY_H
+#define LLVM_CODE_GRAPHMOL_CHIRALITY_H
+
 //
 //  Copyright (C) 2008-2022 Greg Landrum and other RDKit contributors
 //
@@ -13,8 +16,8 @@
 #include <RDGeneral/export.h>
 #ifndef RD_CHIRALITY_20AUG2008_H
 #define RD_CHIRALITY_20AUG2008_H
-#include <RDGeneral/types.h>
 #include <GraphMol/Bond.h>
+#include <RDGeneral/types.h>
 #include <boost/dynamic_bitset.hpp>
 #include <limits>
 
@@ -409,4 +412,6 @@ findMesoCenters(const ROMol &mol, bool includeIsotopes = true,
 
 }  // namespace Chirality
 }  // namespace RDKit
+#endif
+
 #endif
