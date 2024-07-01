@@ -836,8 +836,9 @@ RDKIT_GRAPHMOL_EXPORT void CreateSinglePartition(unsigned int nAtoms,
                                                  int *order, int *count,
                                                  canon_atom *atoms);
 
-RDKIT_GRAPHMOL_EXPORT void ActivatePartitions(unsigned int nAtoms, int *order,
-                                              int *count, int &activeset,
+RDKIT_GRAPHMOL_EXPORT void ActivatePartitions(unsigned int nAtoms,
+                                              const int *order,
+                                              const int *count, int &activeset,
                                               int *next, int *changed);
 
 RDKIT_GRAPHMOL_EXPORT void rankMolAtoms(
