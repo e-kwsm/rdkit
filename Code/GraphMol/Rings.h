@@ -1,3 +1,6 @@
+#ifndef LLVM_CODE_GRAPHMOL_RINGS_H
+#define LLVM_CODE_GRAPHMOL_RINGS_H
+
 //
 //  Copyright (C) 2004-2008 Greg Landrum and Rational Discovery LLC
 //
@@ -15,13 +18,13 @@
 #ifndef _RDRINGS_H_
 #define _RDRINGS_H_
 
-#include <vector>
-#include <map>
 #include <boost/dynamic_bitset_fwd.hpp>
+#include <map>
+#include <vector>
 
 namespace RDKit {
 class ROMol;
-};
+}  // namespace RDKit
 
 namespace RingUtils {
 typedef std::vector<int> INT_VECT;
@@ -86,5 +89,7 @@ RDKIT_GRAPHMOL_EXPORT void convertToBonds(const VECT_INT_VECT &res,
                                           VECT_INT_VECT &brings,
                                           const RDKit::ROMol &mol);
 };  // namespace RingUtils
+
+#endif
 
 #endif
