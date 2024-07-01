@@ -86,7 +86,7 @@ int toInt(const std::string_view input, bool acceptSpaces) {
   return res;
 }
 int toInt(const std::string &input, bool acceptSpaces) {
-  return toInt(std::string_view(input.c_str()), acceptSpaces);
+  return toInt(std::string_view(input), acceptSpaces);
 }
 unsigned int toUnsigned(const std::string_view input, bool acceptSpaces) {
   // don't need to worry about locale stuff here because
@@ -120,7 +120,7 @@ unsigned int toUnsigned(const std::string_view input, bool acceptSpaces) {
   return res;
 }
 unsigned int toUnsigned(const std::string &input, bool acceptSpaces) {
-  return toUnsigned(std::string_view(input.c_str()), acceptSpaces);
+  return toUnsigned(std::string_view(input), acceptSpaces);
 }
 double toDouble(const std::string_view input, bool acceptSpaces) {
   // sanity check on the input since strtol doesn't do it for us:
@@ -141,7 +141,7 @@ double toDouble(const std::string_view input, bool acceptSpaces) {
   return res;
 }
 double toDouble(const std::string &input, bool acceptSpaces) {
-  return toDouble(std::string_view(input.c_str()), acceptSpaces);
+  return toDouble(std::string_view(input), acceptSpaces);
 }
 std::string getV3000Line(std::istream *inStream, unsigned int &line) {
   // FIX: technically V3K blocks are case-insensitive. We should really be
@@ -1939,7 +1939,7 @@ bool ParseMolBlockProperties(std::istream *inStream, unsigned int &line,
   } else {
     if (tempStr[0] != 'M' && tempStr[0] != 'A' && tempStr[0] != 'V' &&
         tempStr[0] != 'G' && tempStr[0] != 'S') {
-      ParseOldAtomList(mol, std::string_view(tempStr.c_str()), line);
+      ParseOldAtomList(mol, std::string_view(tempStr), line);
     }
   }
 
