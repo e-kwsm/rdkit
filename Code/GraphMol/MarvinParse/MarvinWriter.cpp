@@ -265,7 +265,8 @@ class MarvinCMLWriter {
             }
             if (t1 == Bond::SINGLE && t2 == Bond::AROMATIC) {
               return "SA";
-            } else if (t1 == Bond::DOUBLE && t2 == Bond::AROMATIC) {
+            }
+            if (t1 == Bond::DOUBLE && t2 == Bond::AROMATIC) {
               return "DA";
             }
           }
