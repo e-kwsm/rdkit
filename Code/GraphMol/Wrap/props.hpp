@@ -101,7 +101,8 @@ boost::python::dict GetPropsAsDict(const T &obj, bool includePrivate,
             // Auto convert strings to ints and double if possible
             if (AddToDict<int>(obj, dict, rdvalue.key)) {
               break;
-            } else if (AddToDict<double>(obj, dict, rdvalue.key)) {
+            }
+            if (AddToDict<double>(obj, dict, rdvalue.key)) {
               break;
             }
           }
@@ -182,12 +183,15 @@ python::object autoConvertString(const RDOb *ob, const std::string &key) {
   double dvalue;
   std::string svalue;
 
-  if (ob->getPropIfPresent(key, ivalue))
+  if (ob->getPropIfPresent(key, ivalue)) {
     return python::object(ivalue);
-  else if (ob->getPropIfPresent(key, dvalue))
+  }
+  if (ob->getPropIfPresent(key, dvalue)) {
     return python::object(dvalue);
-  else if (ob->getPropIfPresent(key, svalue))
+  }
+  if (ob->getPropIfPresent(key, svalue)) {
     return python::object(svalue);
+  }
 
   return python::object();
 }
