@@ -1,3 +1,6 @@
+#ifndef LLVM_CODE_RDGENERAL_TYPES_H
+#define LLVM_CODE_RDGENERAL_TYPES_H
+
 //
 //  Copyright 2001-2021 Greg Landrum and other RDKit contributors
 //
@@ -24,24 +27,24 @@
 #undef _USE_MATH_DEFINES
 #endif
 
-#include "Invariant.h"
 #include "Dict.h"
+#include "Invariant.h"
 
-#include <vector>
+#include <algorithm>
 #include <deque>
+#include <limits>
+#include <list>
 #include <map>
+#include <numeric>
 #include <set>
 #include <string>
-#include <algorithm>
-#include <numeric>
-#include <list>
-#include <limits>
+#include <vector>
 
-#include <cstring>
-#include <any>
-#include <RDGeneral/BoostStartInclude.h>
-#include <boost/lexical_cast.hpp>
 #include <RDGeneral/BoostEndInclude.h>
+#include <RDGeneral/BoostStartInclude.h>
+#include <any>
+#include <boost/lexical_cast.hpp>
+#include <cstring>
 
 namespace RDKit {
 
@@ -357,9 +360,8 @@ struct RDKIT_RDGENERAL_EXPORT ltDouble {
   bool operator()(double d1, double d2) const {
     if (fabs(d1 - d2) < _tol) {
       return false;
-    } else {
-      return (d1 < d2);
     }
+    return (d1 < d2);
   }
 
  private:
@@ -417,5 +419,7 @@ RDKIT_RDGENERAL_EXPORT void Union(const VECT_INT_VECT &rings, INT_VECT &res,
 */
 RDKIT_RDGENERAL_EXPORT int nextCombination(INT_VECT &comb, int tot);
 };  // namespace RDKit
+
+#endif
 
 #endif
