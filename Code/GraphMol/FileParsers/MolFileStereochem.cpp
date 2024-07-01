@@ -55,8 +55,9 @@ const Atom *getNonsharedAtom(const Bond &bond1, const Bond &bond2) {
   if (bond1.getBeginAtomIdx() == bond2.getBeginAtomIdx() ||
       bond1.getBeginAtomIdx() == bond2.getEndAtomIdx()) {
     return bond1.getEndAtom();
-  } else if (bond1.getEndAtomIdx() == bond2.getBeginAtomIdx() ||
-             bond1.getEndAtomIdx() == bond2.getEndAtomIdx()) {
+  }
+  if (bond1.getEndAtomIdx() == bond2.getBeginAtomIdx() ||
+      bond1.getEndAtomIdx() == bond2.getEndAtomIdx()) {
     return bond1.getBeginAtom();
   }
   POSTCONDITION(0, "bonds don't share an atom");
