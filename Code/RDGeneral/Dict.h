@@ -1,3 +1,6 @@
+#ifndef LLVM_CODE_RDGENERAL_DICT_H
+#define LLVM_CODE_RDGENERAL_DICT_H
+
 //
 // Copyright (C) 2003-2021 Greg Landrum and other RDKit contributors
 //
@@ -16,15 +19,15 @@
 #ifndef RD_DICT_H_012020
 #define RD_DICT_H_012020
 
+#include "Exceptions.h"
+#include "RDValue.h"
+#include <RDGeneral/BoostEndInclude.h>
+#include <RDGeneral/BoostStartInclude.h>
+#include <boost/lexical_cast.hpp>
 #include <map>
 #include <string>
 #include <string_view>
 #include <vector>
-#include "RDValue.h"
-#include "Exceptions.h"
-#include <RDGeneral/BoostStartInclude.h>
-#include <boost/lexical_cast.hpp>
-#include <RDGeneral/BoostEndInclude.h>
 
 namespace RDKit {
 typedef std::vector<std::string> STR_VECT;
@@ -380,4 +383,6 @@ class PairHolder : public Dict::Pair {
   ~PairHolder() { RDValue::cleanup_rdvalue(this->val); }
 };
 }  // namespace RDKit
+#endif
+
 #endif
