@@ -1,3 +1,6 @@
+#ifndef LLVM_CODE_GRAPHMOL_ROMOL_H
+#define LLVM_CODE_GRAPHMOL_ROMOL_H
+
 //
 //  Copyright (C) 2003-2022 Greg Landrum and other RDKit contributors
 //
@@ -21,14 +24,14 @@
 /// Std stuff
 #include <cstddef>
 #include <iterator>
-#include <utility>
 #include <map>
+#include <utility>
 
 // boost stuff
 #include <RDGeneral/BoostStartInclude.h>
+#include <boost/dynamic_bitset.hpp>
 #include <boost/graph/adjacency_list.hpp>
 #include <boost/smart_ptr.hpp>
-#include <boost/dynamic_bitset.hpp>
 
 #ifdef RDK_USE_BOOST_SERIALIZATION
 #include <boost/serialization/split_member.hpp>
@@ -36,14 +39,14 @@
 #include <RDGeneral/BoostEndInclude.h>
 
 // our stuff
-#include <RDGeneral/types.h>
-#include <RDGeneral/RDProps.h>
 #include "Atom.h"
 #include "Bond.h"
 #include "Conformer.h"
-#include "SubstanceGroup.h"
-#include "StereoGroup.h"
 #include "RingInfo.h"
+#include "StereoGroup.h"
+#include "SubstanceGroup.h"
+#include <RDGeneral/RDProps.h>
+#include <RDGeneral/types.h>
 
 namespace RDKit {
 class SubstanceGroup;
@@ -352,10 +355,10 @@ class RDKIT_GRAPHMOL_EXPORT ROMol : public RDProps {
         d_sgroups(std::move(o.d_sgroups)),
         d_stereo_groups(std::move(o.d_stereo_groups)),
         numBonds(o.numBonds) {
-    for (auto atom : atoms()) {
+    for (auto *atom : atoms()) {
       atom->setOwningMol(this);
     }
-    for (auto bond : bonds()) {
+    for (auto *bond : bonds()) {
       bond->setOwningMol(this);
     }
     for (auto conf : d_confs) {
@@ -391,10 +394,10 @@ class RDKIT_GRAPHMOL_EXPORT ROMol : public RDProps {
     numBonds = o.numBonds;
     o.numBonds = 0;
 
-    for (auto atom : atoms()) {
+    for (auto *atom : atoms()) {
       atom->setOwningMol(this);
     }
-    for (auto bond : bonds()) {
+    for (auto *bond : bonds()) {
       bond->setOwningMol(this);
     }
     for (auto conf : d_confs) {
@@ -882,4 +885,6 @@ typedef MOL_PTR_VECT::const_iterator MOL_PTR_VECT_CI;
 typedef MOL_PTR_VECT::iterator MOL_PTR_VECT_I;
 
 };  // namespace RDKit
+#endif
+
 #endif
