@@ -1,3 +1,6 @@
+#ifndef LLVM_CODE_RDGENERAL_RDVALUE_H
+#define LLVM_CODE_RDGENERAL_RDVALUE_H
+
 //  Copyright (c) 2015, Novartis Institutes for BioMedical Research Inc.
 //  All rights reserved.
 //
@@ -297,4 +300,6 @@ typename boost::disable_if<boost::is_arithmetic<T>, T>::type from_rdvalue(
   return rdvalue_cast<T>(arg);
 }
 }  // namespace RDKit
+#endif
+
 #endif
