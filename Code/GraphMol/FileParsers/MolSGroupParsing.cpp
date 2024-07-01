@@ -810,8 +810,8 @@ void ParseSGroupV2000SAPLine(IDX_TO_SGROUP_MAP &sGroupMap, RWMol *mol,
       if (text.size() < pos + 4) {
         sgroup->setIsValid(false);
         return;
-        }
-        lvIdx = mol->getNumAtoms();
+      }
+      lvIdx = mol->getNumAtoms();
     }
 
     std::string id = "  ";
@@ -1063,10 +1063,9 @@ std::string ParseV3000StringPropLabel(std::stringstream &stream) {
         // Otherwise we're done
         if (nextChar != '"') {
           break;
-        } else {
-          // skip the second \"
-          stream.get();
         }
+        // skip the second \"
+        stream.get();
       }
       strValue += chr;
     }
@@ -1253,11 +1252,10 @@ std::string ParseV3000SGroupsBlock(std::istream *inStream, unsigned int line,
                << "' when expecting a separator (space) on line " << line;
         if (strictParsing) {
           throw FileParseException(errout.str());
-        } else {
-          BOOST_LOG(rdWarningLog) << errout.str() << std::endl;
-          sgroup.setIsValid(false);
-          continue;
         }
+        BOOST_LOG(rdWarningLog) << errout.str() << std::endl;
+        sgroup.setIsValid(false);
+        continue;
       }
 
       std::getline(lineStream, label, '=');
@@ -1284,11 +1282,10 @@ std::string ParseV3000SGroupsBlock(std::istream *inStream, unsigned int line,
                << defaultLineNum;
         if (strictParsing) {
           throw FileParseException(errout.str());
-        } else {
-          BOOST_LOG(rdWarningLog) << errout.str() << std::endl;
-          sgroup.setIsValid(false);
-          continue;
         }
+        BOOST_LOG(rdWarningLog) << errout.str() << std::endl;
+        sgroup.setIsValid(false);
+        continue;
       }
 
       std::getline(lineStream, label, '=');
@@ -1307,8 +1304,8 @@ std::string ParseV3000SGroupsBlock(std::istream *inStream, unsigned int line,
           BOOST_LOG(rdWarningLog) << errout.str() << std::endl;
           sgroup.setIsValid(false);
           continue;
-
-        } else if (spacer == '(') {
+        }
+        if (spacer == '(') {
           std::getline(lineStream, label, ')');
           lineStream.get(spacer);
         } else if (spacer == '"') {
