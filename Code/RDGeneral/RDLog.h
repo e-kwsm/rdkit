@@ -1,3 +1,6 @@
+#ifndef LLVM_CODE_RDGENERAL_RDLOG_H
+#define LLVM_CODE_RDGENERAL_RDLOG_H
+
 //
 // Copyright (C)  2005-2022 Greg Landrum and other RDKit contributors
 //
@@ -13,14 +16,14 @@
 #define RDLOG_H_29JUNE2005
 
 #if 1
-#include "BoostStartInclude.h"
-#include <boost/iostreams/tee.hpp>
-#include <boost/iostreams/stream.hpp>
 #include "BoostEndInclude.h"
-#include <iostream>
-#include <fstream>
-#include <vector>
+#include "BoostStartInclude.h"
+#include <boost/iostreams/stream.hpp>
+#include <boost/iostreams/tee.hpp>
 #include <cstdint>
+#include <fstream>
+#include <iostream>
+#include <vector>
 
 namespace boost {
 namespace logging {
@@ -58,7 +61,7 @@ class RDKIT_RDGENERAL_EXPORT rdLogger {
   //! Sets a filename to tee the output to.
   void SetTee(const char *filename) {
     if (dp_dest) {
-      auto s = new std::ofstream(filename);
+      auto *s = new std::ofstream(filename);
       SetTee(*s);
       dp_teeHelperStream = s;
     }
@@ -106,7 +109,7 @@ RDKIT_RDGENERAL_EXPORT std::string log_status();
 }  // namespace boost
 namespace RDLog {
 RDKIT_RDGENERAL_EXPORT std::ostream &toStream(std::ostream &);
-}
+}  // namespace RDLog
 #define BOOST_LOG(__arg__)                                      \
   if ((__arg__) && (__arg__->dp_dest) && (__arg__->df_enabled)) \
   RDLog::toStream((__arg__->teestream) ? *(__arg__->teestream)  \
@@ -154,4 +157,6 @@ inline void deprecationWarning(const std::string &message) {
 }
 
 }  // namespace RDLog
+#endif
+
 #endif

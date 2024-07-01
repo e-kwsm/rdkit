@@ -1,3 +1,6 @@
+#ifndef LLVM_CODE_RDGENERAL_INVARIANT_H
+#define LLVM_CODE_RDGENERAL_INVARIANT_H
+
 //
 // Copyright (C)  2001-2013 Greg Landrum, Randal M. Henne and Rational Discovery
 // LLC
@@ -14,13 +17,13 @@
 #define __RD_INVARIANT_H__
 
 #include <cassert>
-#include <string>
 #include <iostream>
 #include <stdexcept>
+#include <string>
 
+#include "BoostEndInclude.h"
 #include "BoostStartInclude.h"
 #include <RDGeneral/RDLog.h>
-#include "BoostEndInclude.h"
 
 #ifdef RDDEBUG
 // Enable RDDEBUG for testing whether rdcast
@@ -195,5 +198,7 @@ RDKIT_RDGENERAL_EXPORT std::ostream &operator<<(std::ostream &s,
 // Silence warnings for unused params while
 //   still indicating that they are unused
 #define RDUNUSED_PARAM(x) (void)x;
+
+#endif
 
 #endif
