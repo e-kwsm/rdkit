@@ -1,3 +1,6 @@
+#ifndef LLVM_CODE_QUERY_SETQUERY_H
+#define LLVM_CODE_QUERY_SETQUERY_H
+
 //
 // Copyright (c) 2003-2020 Greg Landrum and Rational Discovery LLC
 //
@@ -10,11 +13,11 @@
 #include <RDGeneral/export.h>
 #ifndef RD_SETQUERY_H
 #define RD_SETQUERY_H
-#include <set>
 #include "Query.h"
-#include <sstream>
 #include <algorithm>
 #include <iterator>
+#include <set>
+#include <sstream>
 
 namespace Queries {
 //! \brief a Query implementing a set: arguments must
@@ -84,4 +87,6 @@ class RDKIT_QUERY_EXPORT SetQuery
   CONTAINER_TYPE d_set;
 };
 }  // namespace Queries
+#endif
+
 #endif

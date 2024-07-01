@@ -1,3 +1,6 @@
+#ifndef LLVM_CODE_GRAPHMOL_CONFORMER_H
+#define LLVM_CODE_GRAPHMOL_CONFORMER_H
+
 //
 //  Copyright (C) 2001-2024 Greg Landrum and other RDKit contributors
 //
@@ -12,9 +15,9 @@
 #define _RD_CONFORMER_H
 
 #include <Geometry/point.h>
+#include <RDGeneral/RDProps.h>
 #include <RDGeneral/types.h>
 #include <boost/smart_ptr.hpp>
-#include <RDGeneral/RDProps.h>
 #include <cmath>
 #include <limits>
 #include <utility>
@@ -174,5 +177,7 @@ inline bool hasNonZeroZCoords(const Conformer &conf) {
 }
 
 }  // namespace RDKit
+
+#endif
 
 #endif

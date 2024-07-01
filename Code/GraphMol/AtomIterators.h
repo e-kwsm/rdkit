@@ -1,3 +1,6 @@
+#ifndef LLVM_CODE_GRAPHMOL_ATOMITERATORS_H
+#define LLVM_CODE_GRAPHMOL_ATOMITERATORS_H
+
 //
 //  Copyright (C) 2002-2026 Greg Landrum and other RDKit contributors
 //
@@ -206,5 +209,7 @@ class RDKIT_GRAPHMOL_EXPORT MatchingAtomIterator_ {
 };
 
 }  // namespace RDKit
+
+#endif
 
 #endif
