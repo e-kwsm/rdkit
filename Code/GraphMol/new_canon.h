@@ -420,23 +420,25 @@ class RDKIT_GRAPHMOL_EXPORT AtomCompareFunctor {
           ivj = static_cast<unsigned int>(dp_atoms[j].typeOfStereoGroup);
           if (ivi < ivj) {
             return -1;
-          } else if (ivi > ivj) {
+          }
+          if (ivi > ivj) {
             return 1;
           }
           ivi = dp_atoms[i].whichStereoGroup - 1;
           ivj = dp_atoms[j].whichStereoGroup - 1;
           // now check the current classes of the other members of the SG
           std::set<unsigned int> sgi;
-          for (auto sgat : dp_mol->getStereoGroups()[ivi].getAtoms()) {
+          for (auto *sgat : dp_mol->getStereoGroups()[ivi].getAtoms()) {
             sgi.insert(dp_atoms[sgat->getIdx()].index);
           }
           std::set<unsigned int> sgj;
-          for (auto sgat : dp_mol->getStereoGroups()[ivj].getAtoms()) {
+          for (auto *sgat : dp_mol->getStereoGroups()[ivj].getAtoms()) {
             sgj.insert(dp_atoms[sgat->getIdx()].index);
           }
           if (sgi < sgj) {
             return -1;
-          } else if (sgi > sgj) {
+          }
+          if (sgi > sgj) {
             return 1;
           }
         }
