@@ -115,7 +115,8 @@ unsigned int calcNumRotatableBonds(const ROMol &mol,
     std::string pattern = "[!$(*#*)&!D1]-,:;!@[!$(*#*)&!D1]";
     pattern_flyweight m(pattern);
     return m.get().countMatches(mol);
-  } else if (strict == Strict) {
+  }
+  if (strict == Strict) {
     std::string strict_pattern =
         "[!$(*#*)&!D1&!$(C(F)(F)F)&!$(C(Cl)(Cl)Cl)&!$(C(Br)(Br)Br)&!$(C([CH3])("
         "[CH3])[CH3])&!$([CD3](=[N,O,S])-!@[#7,O,S!D1])&!$([#7,O,S!D1]-!@[CD3]="
