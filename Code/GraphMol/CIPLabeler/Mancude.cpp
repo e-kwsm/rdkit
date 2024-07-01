@@ -23,9 +23,7 @@
 #include "Mancude.h"
 #include "CIPMol.h"
 
-namespace RDKit {
-
-namespace CIPLabeler {
+namespace RDKit::CIPLabeler {
 
 namespace {
 
@@ -270,5 +268,4 @@ std::vector<boost::rational<int>> calcFracAtomNums(const CIPMol &mol) {
   return fractions;
 }
 
-}  // namespace CIPLabeler
-}  // namespace RDKit
+}  // namespace RDKit::CIPLabeler

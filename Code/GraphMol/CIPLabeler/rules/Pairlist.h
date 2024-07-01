@@ -17,8 +17,7 @@
 
 #include "../Descriptor.h"
 
-namespace RDKit {
-namespace CIPLabeler {
+namespace RDKit::CIPLabeler {
 
 /**
  * Implementation of a descriptor list that allows descriptors to be added and
@@ -174,5 +173,4 @@ class PairList {
   }
 };
 
-}  // namespace CIPLabeler
-}  // namespace RDKit
+}  // namespace RDKit::CIPLabeler
