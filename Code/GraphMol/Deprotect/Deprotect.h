@@ -63,7 +63,7 @@ struct RDKIT_DEPROTECT_EXPORT DeprotectData {
 
   //! Returns true if the deprotection is valid
   bool isValid() const {
-    return rxn.get() != nullptr && rxn->getNumProductTemplates() == 1;
+    return rxn != nullptr && rxn->getNumProductTemplates() == 1;
   }
 };
 
