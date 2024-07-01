@@ -11,10 +11,10 @@
 
 #include "Invariant.h"
 
-#include <string>
-#include <iostream>
-#include <boost/lexical_cast.hpp>
 #include "versions.h"
+#include <boost/lexical_cast.hpp>
+#include <iostream>
+#include <string>
 
 #ifdef RDK_USE_BOOST_STACKTRACE
 #include <boost/stacktrace.hpp>
