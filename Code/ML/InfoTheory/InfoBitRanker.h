@@ -222,7 +222,7 @@ class RDKIT_INFOTHEORY_EXPORT InfoBitRanker {
    *              with the bit set and the second row to entires of each class
    *with the bit turned off
    */
-  bool BiasCheckBit(RDKit::USHORT *resMat) const;
+  bool BiasCheckBit(const RDKit::USHORT *resMat) const;
 
   /*! \brief Compute the biased info entropy gain based on the bias list
    *
