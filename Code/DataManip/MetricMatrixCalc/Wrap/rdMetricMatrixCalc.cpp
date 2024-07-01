@@ -108,8 +108,7 @@ PyObject *getEuclideanDistMat(python::object descripMat) {
     }
 
     // if we have a float array
-    else if (PyArray_DESCR((PyArrayObject *)descMatObj)->type_num ==
-             NPY_FLOAT) {
+    if (PyArray_DESCR((PyArrayObject *)descMatObj)->type_num == NPY_FLOAT) {
       auto *desc = (float *)PyArray_DATA(copy);
       auto **desc2D = new float *[nrows];
       for (i = 0; i < nrows; i++) {
@@ -124,7 +123,7 @@ PyObject *getEuclideanDistMat(python::object descripMat) {
     }
 
     // if we have an integer array
-    else if (PyArray_DESCR((PyArrayObject *)descMatObj)->type_num == NPY_INT) {
+    if (PyArray_DESCR((PyArrayObject *)descMatObj)->type_num == NPY_INT) {
       int *desc = (int *)PyArray_DATA(copy);
       auto **desc2D = new int *[nrows];
       for (i = 0; i < nrows; i++) {
