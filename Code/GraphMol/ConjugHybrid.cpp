@@ -8,13 +8,13 @@
 //  of the RDKit source tree.
 //
 #include "ROMol.h"
-#include "RWMol.h"
 #include "Atom.h"
+#include "AtomIterators.h"
 #include "Bond.h"
+#include "BondIterators.h"
 #include "MolOps.h"
 #include "PeriodicTable.h"
-#include "AtomIterators.h"
-#include "BondIterators.h"
+#include "RWMol.h"
 
 namespace RDKit {
 // local utility namespace:
@@ -66,7 +66,7 @@ void markConjAtomBonds(Atom *at) {
       if (bnd1 == bnd2) {
         continue;
       }
-      auto at2 = mol.getAtomWithIdx(bnd2->getOtherAtomIdx(atx));
+      auto *at2 = mol.getAtomWithIdx(bnd2->getOtherAtomIdx(atx));
       sbo = at2->getDegree() + at2->getTotalNumHs();
       if (sbo > 3) {
         continue;
@@ -84,7 +84,7 @@ int numBondsPlusLonePairs(Atom *at) {
   int deg = at->getTotalDegree();
 
   auto &mol = at->getOwningMol();
-  for (const auto bond : mol.atomBonds(at)) {
+  for (auto *const bond : mol.atomBonds(at)) {
     if (bond->getBondType() == Bond::ZERO ||
         (isDative(*bond) && at->getIdx() != bond->getEndAtomIdx())) {
       --deg;
@@ -105,10 +105,9 @@ int numBondsPlusLonePairs(Atom *at) {
     int numRadicals = at->getNumRadicalElectrons();
     int numLonePairs = (numFreeElectrons - numRadicals) / 2;
     return deg + numLonePairs + numRadicals;
-  } else {
-    int numLonePairs = numFreeElectrons / 2;
-    return deg + numLonePairs;
   }
+  int numLonePairs = numFreeElectrons / 2;
+  return deg + numLonePairs;
 }
 }  // namespace
 
@@ -128,19 +127,19 @@ bool atomHasConjugatedBond(const Atom *at) {
 void setConjugation(ROMol &mol) {
   // start with all bonds being marked unconjugated
   // except for aromatic bonds
-  for (auto bond : mol.bonds()) {
+  for (auto *bond : mol.bonds()) {
     bond->setIsConjugated(bond->getIsAromatic());
   }
 
   // loop over each atom and check if the bonds connecting to it can
   // be conjugated
-  for (auto atom : mol.atoms()) {
+  for (auto *atom : mol.atoms()) {
     markConjAtomBonds(atom);
   }
 }
 
 void setHybridization(ROMol &mol) {
-  for (auto atom : mol.atoms()) {
+  for (auto *atom : mol.atoms()) {
     if (atom->getAtomicNum() == 0) {
       atom->setHybridization(Atom::UNSPECIFIED);
     } else {
