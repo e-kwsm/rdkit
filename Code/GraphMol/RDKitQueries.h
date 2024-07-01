@@ -1,3 +1,6 @@
+#ifndef LLVM_CODE_GRAPHMOL_RDKITQUERIES_H
+#define LLVM_CODE_GRAPHMOL_RDKITQUERIES_H
+
 //
 //  Copyright (C) 2002-2006 Rational Discovery LLC
 //
@@ -17,9 +20,11 @@
 #ifndef _RDKIT_QUERIES_H
 #define _RDKIT_QUERIES_H
 
-#include <Query/QueryObjects.h>
 #include <GraphMol/QueryAtom.h>
 #include <GraphMol/QueryBond.h>
 #include <GraphMol/QueryOps.h>
+#include <Query/QueryObjects.h>
+
+#endif
 
 #endif
