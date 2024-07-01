@@ -79,7 +79,9 @@ void DiscreteValueVect::setVal(unsigned int i, unsigned int val) {
 }
 
 unsigned int DiscreteValueVect::getTotalVal() const {
-  unsigned int i, j, res = 0;
+  unsigned int i;
+  unsigned int j;
+  unsigned int res = 0;
 
   for (i = 0; i < d_numInts; ++i) {
     for (j = 0; j < d_valsPerInt; ++j) {
