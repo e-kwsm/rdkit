@@ -1,3 +1,6 @@
+#ifndef LLVM_CODE_GRAPHMOL_NEW_CANON_H
+#define LLVM_CODE_GRAPHMOL_NEW_CANON_H
+
 //
 //  Copyright (C) 2014 Greg Landrum
 //  Adapted from pseudo-code from Roger Sayle
@@ -9,19 +12,19 @@
 //  of the RDKit source tree.
 //
 
-#include <RDGeneral/export.h>
-#include <RDGeneral/hanoiSort.h>
 #include <GraphMol/ROMol.h>
 #include <GraphMol/RingInfo.h>
 #include <GraphMol/StereoGroup.h>
-#include <RDGeneral/BoostStartInclude.h>
-#include <cstdint>
-#include <boost/dynamic_bitset.hpp>
 #include <RDGeneral/BoostEndInclude.h>
+#include <RDGeneral/BoostStartInclude.h>
+#include <RDGeneral/export.h>
+#include <RDGeneral/hanoiSort.h>
+#include <boost/dynamic_bitset.hpp>
+#include <cassert>
+#include <cstdint>
+#include <cstring>
 #include <cstring>
 #include <iostream>
-#include <cassert>
-#include <cstring>
 #include <vector>
 
 // #define VERBOSE_CANON 1
@@ -70,18 +73,21 @@ struct RDKIT_GRAPHMOL_EXPORT bondholder {
     if (x.p_symbol && y.p_symbol) {
       if ((*x.p_symbol) < (*y.p_symbol)) {
         return -1;
-      } else if ((*x.p_symbol) > (*y.p_symbol)) {
+      }
+      if ((*x.p_symbol) > (*y.p_symbol)) {
         return 1;
       }
     }
     if (x.bondType < y.bondType) {
       return -1;
-    } else if (x.bondType > y.bondType) {
+    }
+    if (x.bondType > y.bondType) {
       return 1;
     }
     if (x.bondStereo < y.bondStereo) {
       return -1;
-    } else if (x.bondStereo > y.bondStereo) {
+    }
+    if (x.bondStereo > y.bondStereo) {
       return 1;
     }
     auto scdiv = x.nbrSymClass / div - y.nbrSymClass / div;
@@ -215,13 +221,15 @@ class RDKIT_GRAPHMOL_EXPORT SpecialSymmetryAtomCompareFunctor {
 
     if (dp_atoms[i].neighborNum < dp_atoms[j].neighborNum) {
       return -1;
-    } else if (dp_atoms[i].neighborNum > dp_atoms[j].neighborNum) {
+    }
+    if (dp_atoms[i].neighborNum > dp_atoms[j].neighborNum) {
       return 1;
     }
 
     if (dp_atoms[i].revistedNeighbors < dp_atoms[j].revistedNeighbors) {
       return -1;
-    } else if (dp_atoms[i].revistedNeighbors > dp_atoms[j].revistedNeighbors) {
+    }
+    if (dp_atoms[i].revistedNeighbors > dp_atoms[j].revistedNeighbors) {
       return 1;
     }
 
@@ -242,7 +250,8 @@ class RDKIT_GRAPHMOL_EXPORT SpecialSymmetryAtomCompareFunctor {
 
     if (dp_atoms[i].bonds.size() < dp_atoms[j].bonds.size()) {
       return -1;
-    } else if (dp_atoms[i].bonds.size() > dp_atoms[j].bonds.size()) {
+    }
+    if (dp_atoms[i].bonds.size() > dp_atoms[j].bonds.size()) {
       return 1;
     }
     return 0;
@@ -255,14 +264,13 @@ unsigned int getChiralRank(const ROMol *dp_mol, canon_atom *dp_atoms,
   unsigned int res = 0;
   std::vector<unsigned int> perm;
   perm.reserve(dp_atoms[i].atom->getDegree());
-  for (const auto nbr : dp_mol->atomNeighbors(dp_atoms[i].atom)) {
+  for (auto *const nbr : dp_mol->atomNeighbors(dp_atoms[i].atom)) {
     auto rnk = dp_atoms[nbr->getIdx()].index;
     // make sure we don't have duplicate ranks
     if (std::find(perm.begin(), perm.end(), rnk) != perm.end()) {
       break;
-    } else {
-      perm.push_back(rnk);
     }
+    perm.push_back(rnk);
   }
   if (perm.size() == dp_atoms[i].atom->getDegree()) {
     auto ctag = dp_atoms[i].atom->getChiralTag();
@@ -286,7 +294,7 @@ class RDKIT_GRAPHMOL_EXPORT AtomCompareFunctor {
       return 0;
     }
 
-    auto nbrs = dp_atoms[i].nbrIds.get();
+    auto *nbrs = dp_atoms[i].nbrIds.get();
     unsigned int code = 0;
     for (unsigned j = 0; j < dp_atoms[i].degree; ++j) {
       if (dp_atoms[nbrs[j]].isRingStereoAtom) {
@@ -304,7 +312,8 @@ class RDKIT_GRAPHMOL_EXPORT AtomCompareFunctor {
     ivj = dp_atoms[j].index;
     if (ivi < ivj) {
       return -1;
-    } else if (ivi > ivj) {
+    }
+    if (ivi > ivj) {
       return 1;
     }
 
@@ -339,7 +348,8 @@ class RDKIT_GRAPHMOL_EXPORT AtomCompareFunctor {
       }
       if (molAtomMapNumber_i < molAtomMapNumber_j) {
         return -1;
-      } else if (molAtomMapNumber_i > molAtomMapNumber_j) {
+      }
+      if (molAtomMapNumber_i > molAtomMapNumber_j) {
         return 1;
       }
     }
@@ -348,13 +358,15 @@ class RDKIT_GRAPHMOL_EXPORT AtomCompareFunctor {
     ivj = dp_atoms[j].degree;
     if (ivi < ivj) {
       return -1;
-    } else if (ivi > ivj) {
+    }
+    if (ivi > ivj) {
       return 1;
     }
     if (dp_atoms[i].p_symbol && dp_atoms[j].p_symbol) {
       if (*(dp_atoms[i].p_symbol) < *(dp_atoms[j].p_symbol)) {
         return -1;
-      } else if (*(dp_atoms[i].p_symbol) > *(dp_atoms[j].p_symbol)) {
+      }
+      if (*(dp_atoms[i].p_symbol) > *(dp_atoms[j].p_symbol)) {
         return 1;
       } else {
         return 0;
@@ -366,7 +378,8 @@ class RDKIT_GRAPHMOL_EXPORT AtomCompareFunctor {
     ivj = dp_atoms[j].atom->getAtomicNum();
     if (ivi < ivj) {
       return -1;
-    } else if (ivi > ivj) {
+    }
+    if (ivi > ivj) {
       return 1;
     }
     // isotopes if we're using them
@@ -375,7 +388,8 @@ class RDKIT_GRAPHMOL_EXPORT AtomCompareFunctor {
       ivj = dp_atoms[j].atom->getIsotope();
       if (ivi < ivj) {
         return -1;
-      } else if (ivi > ivj) {
+      }
+      if (ivi > ivj) {
         return 1;
       }
     }
@@ -385,7 +399,8 @@ class RDKIT_GRAPHMOL_EXPORT AtomCompareFunctor {
     ivj = dp_atoms[j].totalNumHs;
     if (ivi < ivj) {
       return -1;
-    } else if (ivi > ivj) {
+    }
+    if (ivi > ivj) {
       return 1;
     }
     // charge
@@ -393,7 +408,8 @@ class RDKIT_GRAPHMOL_EXPORT AtomCompareFunctor {
     ivj = dp_atoms[j].atom->getFormalCharge();
     if (ivi < ivj) {
       return -1;
-    } else if (ivi > ivj) {
+    }
+    if (ivi > ivj) {
       return 1;
     }
     // presence of specified chirality if it's being used
@@ -404,7 +420,8 @@ class RDKIT_GRAPHMOL_EXPORT AtomCompareFunctor {
           dp_atoms[j].atom->getChiralTag() != Atom::ChiralType::CHI_UNSPECIFIED;
       if (ivi < ivj) {
         return -1;
-      } else if (ivi > ivj) {
+      }
+      if (ivi > ivj) {
         return 1;
       }
     }
@@ -417,7 +434,8 @@ class RDKIT_GRAPHMOL_EXPORT AtomCompareFunctor {
       if (ivi || ivj) {
         if (ivi && !ivj) {
           return 1;
-        } else if (ivj && !ivi) {
+        }
+        if (ivj && !ivi) {
           return -1;
         } else if (ivi && ivj) {
           auto iType = dp_atoms[i].typeOfStereoGroup;
@@ -466,7 +484,8 @@ class RDKIT_GRAPHMOL_EXPORT AtomCompareFunctor {
         ivj = dp_atoms[j].atom->getChiralTag() != 0;
         if (ivi < ivj) {
           return -1;
-        } else if (ivi > ivj) {
+        }
+        if (ivi > ivj) {
           return 1;
         }
         // stereo set
@@ -479,7 +498,8 @@ class RDKIT_GRAPHMOL_EXPORT AtomCompareFunctor {
           }
           if (ivi < ivj) {
             return -1;
-          } else if (ivi > ivj) {
+          }
+          if (ivi > ivj) {
             return 1;
           }
         }
@@ -492,7 +512,8 @@ class RDKIT_GRAPHMOL_EXPORT AtomCompareFunctor {
       ivj = getAtomRingNbrCode(j);
       if (ivi < ivj) {
         return -1;
-      } else if (ivi > ivj) {
+      }
+      if (ivi > ivj) {
         return 1;
       }  // bond stereo is taken care of in the neighborhood comparison
     }
@@ -551,7 +572,8 @@ class RDKIT_GRAPHMOL_EXPORT AtomCompareFunctor {
 
       if (dp_atoms[i].bonds.size() < dp_atoms[j].bonds.size()) {
         return -1;
-      } else if (dp_atoms[i].bonds.size() > dp_atoms[j].bonds.size()) {
+      }
+      if (dp_atoms[i].bonds.size() > dp_atoms[j].bonds.size()) {
         return 1;
       }
     }
@@ -590,7 +612,8 @@ class RDKIT_GRAPHMOL_EXPORT ChiralAtomCompareFunctor {
     ivj = dp_atoms[j].index;
     if (ivi < ivj) {
       return -1;
-    } else if (ivi > ivj) {
+    }
+    if (ivi > ivj) {
       return 1;
     }
 
@@ -599,7 +622,8 @@ class RDKIT_GRAPHMOL_EXPORT ChiralAtomCompareFunctor {
     ivj = dp_atoms[j].atom->getAtomicNum();
     if (ivi < ivj) {
       return -1;
-    } else if (ivi > ivj) {
+    }
+    if (ivi > ivj) {
       return 1;
     }
 
@@ -608,7 +632,8 @@ class RDKIT_GRAPHMOL_EXPORT ChiralAtomCompareFunctor {
     ivj = dp_atoms[j].atom->getIsotope();
     if (ivi < ivj) {
       return -1;
-    } else if (ivi > ivj) {
+    }
+    if (ivi > ivj) {
       return 1;
     }
 
@@ -626,7 +651,8 @@ class RDKIT_GRAPHMOL_EXPORT ChiralAtomCompareFunctor {
     }
     if (ivi < ivj) {
       return -1;
-    } else if (ivi > ivj) {
+    }
+    if (ivi > ivj) {
       return 1;
     }
 
@@ -677,7 +703,8 @@ class RDKIT_GRAPHMOL_EXPORT ChiralAtomCompareFunctor {
       }
       if (dp_atoms[i].bonds.size() < dp_atoms[j].bonds.size()) {
         return -1;
-      } else if (dp_atoms[i].bonds.size() > dp_atoms[j].bonds.size()) {
+      }
+      if (dp_atoms[i].bonds.size() > dp_atoms[j].bonds.size()) {
         return 1;
       }
     }
@@ -905,3 +932,4 @@ void rankWithFunctor(T &ftor, bool breakTies, int *order,
 
 }  // namespace Canon
 }  // namespace RDKit
+#endif
