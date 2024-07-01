@@ -373,9 +373,8 @@ int calculateExplicitValence(const Atom &atom, bool strict, bool checkIt) {
       }
       if (val > accum) {
         break;
-      } else {
-        pval = val;
       }
+      pval = val;
     }
     // if we're within 1.5 of the allowed valence, go ahead and take it.
     // this reflects things like the N in c1cccn1C, which starts with
@@ -428,9 +427,8 @@ int calculateExplicitValence(const Atom &atom, bool strict, bool checkIt) {
         std::string msg = errout.str();
         BOOST_LOG(rdErrorLog) << msg << std::endl;
         throw AtomValenceException(msg, atom.getIdx());
-      } else {
-        return -1;
       }
+      return -1;
     }
   }
   return res;
@@ -462,22 +460,21 @@ int calculateImplicitValence(const Atom &atom, bool strict, bool checkIt) {
   if (explicitValence == 0 && numRadicalElectrons == 0 && atomicNum == 1) {
     if (formalCharge == 1 || formalCharge == -1) {
       return 0;
-    } else if (formalCharge == 0) {
-      return 1;
-    } else {
-      if (strict) {
-        std::ostringstream errout;
-        errout << "Unreasonable formal charge on atom # " << atom.getIdx()
-               << ".";
-        std::string msg = errout.str();
-        BOOST_LOG(rdErrorLog) << msg << std::endl;
-        throw AtomValenceException(msg, atom.getIdx());
-      } else if (checkIt) {
-        return -1;
-      } else {
-        return 0;
-      }
     }
+    if (formalCharge == 0) {
+      return 1;
+    }
+    if (strict) {
+      std::ostringstream errout;
+      errout << "Unreasonable formal charge on atom # " << atom.getIdx() << ".";
+      std::string msg = errout.str();
+      BOOST_LOG(rdErrorLog) << msg << std::endl;
+      throw AtomValenceException(msg, atom.getIdx());
+    }
+    if (checkIt) {
+      return -1;
+    }
+    return 0;
   }
 
   int explicitPlusRadV =
@@ -560,9 +557,8 @@ int calculateImplicitValence(const Atom &atom, bool strict, bool checkIt) {
           std::string msg = errout.str();
           BOOST_LOG(rdErrorLog) << msg << std::endl;
           throw AtomValenceException(msg, atom.getIdx());
-        } else {
-          return -1;
         }
+        return -1;
       }
       res = 0;
     }
@@ -590,12 +586,10 @@ int calculateImplicitValence(const Atom &atom, bool strict, bool checkIt) {
           std::string msg = errout.str();
           BOOST_LOG(rdErrorLog) << msg << std::endl;
           throw AtomValenceException(msg, atom.getIdx());
-        } else {
-          return -1;
         }
-      } else {
-        res = 0;
+        return -1;
       }
+      res = 0;
     }
   }
   return res;
@@ -628,9 +622,8 @@ double Atom::getMass() const {
       res = d_isotope;
     }
     return res;
-  } else {
-    return PeriodicTable::getTable()->getAtomicWeight(d_atomicNum);
   }
+  return PeriodicTable::getTable()->getAtomicWeight(d_atomicNum);
 }
 
 bool Atom::hasValenceViolation() const {
