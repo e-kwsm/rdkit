@@ -962,7 +962,8 @@ void ParseAttachPointLine(RWMol *mol, const std::string &text,
         errout << "Value " << val << " from APO specification on line " << line
                << " is invalid";
         throw FileParseException(errout.str());
-      } else if (val) {
+      }
+      if (val) {
         if (val == 3) {
           // this is -1 in v3k mol blocks, so use that:
           val = -1;
@@ -973,9 +974,9 @@ void ParseAttachPointLine(RWMol *mol, const std::string &text,
                  << " on line " << line;
           if (strictParsing) {
             throw FileParseException(errout.str());
-          } else {
-            BOOST_LOG(rdWarningLog) << errout.str() << std::endl;
           }
+          BOOST_LOG(rdWarningLog) << errout.str() << std::endl;
+
         } else {
           atom->setProp(common_properties::molAttachPoint, val);
         }
@@ -3011,17 +3012,20 @@ void processSGroups(RWMol *mol) {
           processMrvImplicitH(*mol, sg);
           sgsToRemove.push_back(sgIdx);
           continue;
-        } else if (field == "ZBO") {
+        }
+        if (field == "ZBO") {
           // RDKit extension for zero-order bonds
           processZBO(*mol, sg);
           sgsToRemove.push_back(sgIdx);
           continue;
-        } else if (field == "ZCH") {
+        }
+        if (field == "ZCH") {
           // RDKit extension for charge on atoms involved in zero-order bonds
           processZCH(*mol, sg);
           sgsToRemove.push_back(sgIdx);
           continue;
-        } else if (field == "HYD") {
+        }
+        if (field == "HYD") {
           // RDKit extension for hydrogen-count on atoms involved in
           // zero-order bonds
           processHYD(*mol, sg);
