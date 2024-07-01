@@ -76,8 +76,8 @@ ChemicalReaction *RxnMolToChemicalReaction(const ROMol &mol) {
   unsigned countFragments = 0;
   for (auto iter = fragments.begin(); iter != fragments.end();
        ++iter, countFragments++) {
-    int role = getRXNRoleOfMolecule(*iter->get());
-    if (!testForSameRXNRoleOfAllMoleculeAtoms(*iter->get(), role)) {
+    int role = getRXNRoleOfMolecule(**iter);
+    if (!testForSameRXNRoleOfAllMoleculeAtoms(**iter, role)) {
       BOOST_LOG(rdWarningLog)
           << ">> Atoms within one molecule have different RXN roles.\n";
       continue;
