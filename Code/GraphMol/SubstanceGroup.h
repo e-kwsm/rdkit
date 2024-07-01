@@ -1,3 +1,6 @@
+#ifndef LLVM_CODE_GRAPHMOL_SUBSTANCEGROUP_H
+#define LLVM_CODE_GRAPHMOL_SUBSTANCEGROUP_H
+
 //
 //
 //  Copyright (C) 2018-2020 Greg Landrum and T5 Informatics GmbH
@@ -18,12 +21,12 @@
 #define _RD_SGROUP_H
 
 #include <iostream>
-#include <utility>
 #include <unordered_map>
+#include <utility>
 
 #include <Geometry/point.h>
-#include <RDGeneral/types.h>
 #include <RDGeneral/RDProps.h>
+#include <RDGeneral/types.h>
 #include <boost/smart_ptr.hpp>
 
 namespace RDKit {
@@ -299,4 +302,6 @@ RDKIT_GRAPHMOL_EXPORT void removeSubstanceGroupsReferencingBond(
 //! allows SubstanceGroup objects to be dumped to streams
 RDKIT_GRAPHMOL_EXPORT std::ostream &operator<<(std::ostream &target,
                                                const RDKit::SubstanceGroup &sg);
+#endif
+
 #endif

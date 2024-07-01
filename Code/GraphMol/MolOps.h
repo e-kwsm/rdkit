@@ -1,3 +1,6 @@
+#ifndef LLVM_CODE_GRAPHMOL_MOLOPS_H
+#define LLVM_CODE_GRAPHMOL_MOLOPS_H
+
 //
 //  Copyright (C) 2001-2024 Greg Landrum and other RDKit contributors
 //
@@ -11,16 +14,16 @@
 #ifndef RD_MOL_OPS_H
 #define RD_MOL_OPS_H
 
-#include <vector>
-#include <map>
-#include <list>
-#include <RDGeneral/BoostStartInclude.h>
-#include <boost/smart_ptr.hpp>
-#include <boost/dynamic_bitset.hpp>
-#include <RDGeneral/BoostEndInclude.h>
-#include <RDGeneral/types.h>
 #include "SanitException.h"
+#include <RDGeneral/BoostEndInclude.h>
+#include <RDGeneral/BoostStartInclude.h>
 #include <RDGeneral/FileParseException.h>
+#include <RDGeneral/types.h>
+#include <boost/dynamic_bitset.hpp>
+#include <boost/smart_ptr.hpp>
+#include <list>
+#include <map>
+#include <vector>
 
 RDKIT_GRAPHMOL_EXPORT extern const int ci_LOCAL_INF;
 namespace RDKit {
@@ -1227,5 +1230,7 @@ RDKIT_GRAPHMOL_EXPORT bool isAttachmentPoint(const Atom *atom,
 
 }  // namespace MolOps
 }  // namespace RDKit
+
+#endif
 
 #endif
