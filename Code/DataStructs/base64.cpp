@@ -8,9 +8,9 @@
 //  which is included in the file license.txt, found at the root
 //  of the RDKit source tree.
 //
-#include <iostream>
-#include <cstring>
 #include "base64.h"
+#include <cstring>
+#include <iostream>
 // Encoding table from RFC 2045
 //
 //     Value Encoding  Value Encoding  Value Encoding  Value Encoding

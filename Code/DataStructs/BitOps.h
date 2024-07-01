@@ -1,3 +1,6 @@
+#ifndef LLVM_CODE_DATASTRUCTS_BITOPS_H
+#define LLVM_CODE_DATASTRUCTS_BITOPS_H
+
 //
 //  Copyright (C) 2003-2012 greg Landrum and Rational Discovery LLC
 //
@@ -334,4 +337,6 @@ RDKIT_DATASTRUCTS_EXPORT double CalcBitmapTversky(const unsigned char *bv1,
                                                   double ca, double cb);
 RDKIT_DATASTRUCTS_EXPORT bool CalcBitmapAllProbeBitsMatch(
     const unsigned char *probe, const unsigned char *ref, unsigned int nBytes);
+#endif
+
 #endif
