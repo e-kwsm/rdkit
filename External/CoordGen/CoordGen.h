@@ -77,7 +77,7 @@ unsigned int addCoords(T &mol, const CoordGenParams *params = nullptr) {
   // FIX: only do this check once.
   // std::cerr << "  TEMPLATES: " << templateFileDir << std::endl;
   if (templateFileDir != "") {
-    minimizer.setTemplateFileDir(templateFileDir);
+    sketcherMinimizer::setTemplateFileDir(templateFileDir);
   }
   bool hasTemplateMatch = false;
   MatchVectType mv;
@@ -149,7 +149,7 @@ unsigned int addCoords(T &mol, const CoordGenParams *params = nullptr) {
     bnds[obnd->getIdx()] = bnd;
   }
   // setup double bond stereo
-  min_mol->assignBondsAndNeighbors(ats, bnds);
+  sketcherMinimizerMolecule::assignBondsAndNeighbors(ats, bnds);
   for (auto bndit = mol.beginBonds(); bndit != mol.endBonds(); ++bndit) {
     auto obnd = *bndit;
     if (obnd->getBondType() != Bond::DOUBLE ||
