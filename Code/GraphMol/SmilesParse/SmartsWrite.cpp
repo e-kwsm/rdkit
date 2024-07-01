@@ -45,7 +45,7 @@ std::string _recurseBondSmarts(const Bond *bond,
 std::string _combineChildSmarts(std::string cs1, unsigned int features1,
                                 std::string cs2, unsigned int features2,
                                 std::string descrip, unsigned int &features) {
-  std::string res = "";
+  std::string res;
   if ((descrip.find("Or") > 0) && (descrip.find("Or") < descrip.length())) {
     // if either of child smarts already have a "," and ";" we can't have one
     // more OR here
@@ -416,7 +416,7 @@ std::string getBondSmartsSimple(const Bond *bond,
   auto *equery = dynamic_cast<const BOND_EQUALS_QUERY *>(bquery);
 
   std::string descrip = bquery->getDescription();
-  std::string res = "";
+  std::string res;
   if (descrip == "BondNull") {
     res += "~";
   } else if (descrip == "BondInRing") {
@@ -590,7 +590,7 @@ std::string _recurseBondSmarts(const Bond *bond,
   PRECONDITION(bond, "bad bond");
   PRECONDITION(node, "bad node");
   std::string descrip = node->getDescription();
-  std::string res = "";
+  std::string res;
 
   const QueryBond::QUERYBOND_QUERY *child1;
   const QueryBond::QUERYBOND_QUERY *child2;
@@ -959,7 +959,7 @@ std::string GetBondSmarts(const Bond *bond, const SmilesWriteParams &params,
                           int atomToLeftIdx) {
   PRECONDITION(bond, "bad bond");
 
-  std::string res = "";
+  std::string res;
 
   // BOOST_LOG(rdInfoLog) << "bond: " << bond->getIdx() << std::endl;
   ;

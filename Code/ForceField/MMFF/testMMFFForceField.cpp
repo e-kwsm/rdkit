@@ -209,15 +209,15 @@ void fixTorsionInstance(TorsionInstance *torsionInstance) {
 
 int mmffValidationSuite(int argc, char *argv[]) {
   std::string arg;
-  std::string ffVariant = "";
+  std::string ffVariant;
   std::vector<std::string> ffVec;
   std::string verbosity;
-  std::string molFile = "";
-  std::string molType = "";
+  std::string molFile;
+  std::string molType;
   std::vector<std::string> molFileVec;
   std::vector<std::string> molTypeVec;
-  std::string rdk = "";
-  std::string ref = "";
+  std::string rdk;
+  std::string ref;
   std::streampos rdkPos;
   std::streampos rdkCurrent;
   std::streampos refPos;

@@ -802,7 +802,7 @@ void testOneAtropisomers(const SmilesTest *smilesTest) {
         std::unique_ptr<RWMol>(SmilesToMol(inputSmiles, smilesParserParams));
     {
       std::string expectedFileName = fName + ".expected.sdf";
-      std::string outMolStr = "";
+      std::string outMolStr;
       try {
         outMolStr = MolToMolBlock(*smilesMol, true, 0, true, true);
       } catch (const RDKit::KekulizeException &e) {
@@ -822,7 +822,7 @@ void testOneAtropisomers(const SmilesTest *smilesTest) {
     {
       std::string mrvBlock;
       std::string expectedFileName = fName + ".expected.mrv";
-      std::string outMolStr = "";
+      std::string outMolStr;
       try {
         RDKit::Chirality::reapplyMolBlockWedging(*smilesMol);
         outMolStr = MolToMrvBlock(*smilesMol, true, -1, true, false);
@@ -1342,7 +1342,7 @@ TEST_CASE("SMILES CANONICALIZATION") {
     std::ifstream in;
     in.open(fName);
     while (!in.eof()) {
-      std::string molBlock = "";
+      std::string molBlock;
       std::string line;
       while (!in.eof() && line.find("$$$$") == std::string::npos) {
         std::getline(in, line);

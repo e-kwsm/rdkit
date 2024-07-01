@@ -32,7 +32,7 @@ struct CoordGenParams {
   double coordgenScaling = 50.0;       // at the time this was written, coordgen
   // returned coordinates with a single bond
   // length of 50.
-  std::string templateFileDir = "";
+  std::string templateFileDir;
   float minimizerPrecision =
       sketcherCoarsePrecision;     // controls sketch precision
   bool dbg_useConstrained = true;  // debugging

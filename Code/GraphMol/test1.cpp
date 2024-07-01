@@ -1168,7 +1168,7 @@ void testNeedsUpdatePropertyCache() {
 
 namespace {
 std::string qhelper(Atom::QUERYATOM_QUERY *q, unsigned int depth = 0) {
-  std::string res = "";
+  std::string res;
   if (q) {
     for (unsigned int i = 0; i < depth; ++i) {
       res += "  ";

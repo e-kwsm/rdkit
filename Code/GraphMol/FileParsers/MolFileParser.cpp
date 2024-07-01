@@ -1017,7 +1017,7 @@ void ParseLinkNodeLine(RWMol *mol, const std::string &text, unsigned int line) {
            << line;
     throw FileParseException(errout.str());
   }
-  std::string propVal = "";
+  std::string propVal;
   unsigned int spos = 9;
   for (unsigned int ie = 0; ie < nent; ie++) {
     try {
@@ -1493,7 +1493,7 @@ Atom *ParseMolFileAtomLine(const std::string_view text, RDGeom::Point3D &pos,
     }
     if (massDiff == 0 && symb[0] == 'R') {
       if (symb.length() > 1 && symb >= "R0" && symb <= "R99") {
-        std::string rlabel = "";
+        std::string rlabel;
         rlabel = symb.substr(1, symb.length() - 1);
         int rnumber;
         try {
@@ -3269,7 +3269,7 @@ bool ParseV3000CTAB(std::istream *inStream, unsigned int &line, RWMol *mol,
     boost::to_upper(tempStr);
     // if the line has nothing on it we just ignore it
     if (tempStr.size() > 9) {
-      std::string existing = "";
+      std::string existing;
       if (mol->getPropIfPresent(common_properties::molFileLinkNodes,
                                 existing)) {
         existing += "|";
