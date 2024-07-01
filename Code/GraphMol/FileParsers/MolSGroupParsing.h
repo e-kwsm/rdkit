@@ -1,3 +1,6 @@
+#ifndef LLVM_CODE_GRAPHMOL_FILEPARSERS_MOLSGROUPPARSING_H
+#define LLVM_CODE_GRAPHMOL_FILEPARSERS_MOLSGROUPPARSING_H
+
 //
 //  Copyright (C) 2002-2018 Greg Landrum and T5 Informatics GmbH
 //
@@ -45,9 +48,8 @@ template <class Exc = FileParseException>
 void SGroupWarnOrThrow(bool strictParsing, const std::string &msg) {
   if (strictParsing) {
     throw Exc(msg);
-  } else {
-    BOOST_LOG(rdWarningLog) << msg << std::endl;
   }
+  BOOST_LOG(rdWarningLog) << msg << std::endl;
 }
 
 void ParseSGroupV2000STYLine(IDX_TO_SGROUP_MAP &sGroupMap, RWMol *mol,
@@ -160,3 +162,5 @@ std::string ParseV3000SGroupsBlock(std::istream *inStream, unsigned int &line,
 
 }  // namespace SGroupParsing
 }  // namespace RDKit
+
+#endif
