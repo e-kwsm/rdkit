@@ -8,8 +8,8 @@
 //  which is included in the file license.txt, found at the root
 //  of the RDKit source tree.
 //
-#ifndef RD_NULLQUERYALGEBRA_H
-#define RD_NULLQUERYALGEBRA_H
+#ifndef LLVM_CODE_QUERY_NULLQUERYALGEBRA_H
+#define LLVM_CODE_QUERY_NULLQUERYALGEBRA_H
 
 #include <GraphMol/QueryOps.h>
 
