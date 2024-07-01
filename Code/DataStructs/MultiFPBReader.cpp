@@ -32,10 +32,9 @@ auto tplSorter = [](const MultiFPBReader::ResultTuple &v1,
       return std::get<1>(v1) < std::get<1>(v2);
     }
     return std::get<2>(v1) < std::get<2>(v2);
-
-  } else {
-    return std::get<0>(v1) > std::get<0>(v2);
   }
+  return std::get<0>(v1) > std::get<0>(v2);
+ 
 };
 
 auto pairSorter = [](const auto &v1, const auto &v2) {
