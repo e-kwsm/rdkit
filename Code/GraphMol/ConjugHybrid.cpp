@@ -97,10 +97,9 @@ int numBondsPlusLonePairs(Atom *at) {
     int numRadicals = at->getNumRadicalElectrons();
     int numLonePairs = (numFreeElectrons - numRadicals) / 2;
     return deg + numLonePairs + numRadicals;
-  } else {
-    int numLonePairs = numFreeElectrons / 2;
-    return deg + numLonePairs;
   }
+  int numLonePairs = numFreeElectrons / 2;
+  return deg + numLonePairs;
 }
 }  // namespace
 
