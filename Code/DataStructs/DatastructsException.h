@@ -1,3 +1,6 @@
+#ifndef LLVM_CODE_DATASTRUCTS_DATASTRUCTSEXCEPTION_H
+#define LLVM_CODE_DATASTRUCTS_DATASTRUCTSEXCEPTION_H
+
 //
 //  Copyright (C) 2005-2006 Rational Discovery LLC
 //
@@ -29,5 +32,7 @@ class RDKIT_DATASTRUCTS_EXPORT DatastructsException : public std::exception {
  private:
   std::string _msg;
 };
+
+#endif
 
 #endif
