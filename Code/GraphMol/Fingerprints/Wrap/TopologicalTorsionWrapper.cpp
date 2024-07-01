@@ -87,8 +87,6 @@ void exportTopologicalTorsion() {
       "    - bitPaths: map from bitId to vectors of atom indices\n\n"
       "  RETURNS: FingerprintGenerator\n\n",
       python::return_value_policy<python::manage_new_object>());
-
-  return;
 }
 }  // namespace TopologicalTorsionWrapper
 

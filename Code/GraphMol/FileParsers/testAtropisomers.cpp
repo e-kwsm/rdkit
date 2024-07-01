@@ -173,8 +173,6 @@ class MolAtropTest {
       return;
     }
     TEST_ASSERT(molFileTest->expectedResult == true);
-
-    return;
   }
 
   void testAromAtropMolFile(const MolTest *molFileTest) {
@@ -290,8 +288,6 @@ class MolAtropTest {
       return;
     }
     TEST_ASSERT(expectedResult == true);
-
-    return;
   }
 
   void testKekuleWedgeErrorSmiles(const KekuleTest *kekuleTest) {

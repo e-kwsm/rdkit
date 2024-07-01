@@ -1444,7 +1444,6 @@ void _recurseAtomOneSide(unsigned int endAid, unsigned int begAid,
       _recurseAtomOneSide(nbr->getIdx(), begAid, mol, flipAids);
     }
   }
-  return;
 }
 
 std::vector<RDKit::INT_VECT> _getRingsForSpiroCenter(unsigned int spiroAid,
