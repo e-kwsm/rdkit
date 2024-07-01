@@ -1,3 +1,6 @@
+#ifndef LLVM_CODE_GEOMETRY_GRIDUTILS_H
+#define LLVM_CODE_GEOMETRY_GRIDUTILS_H
+
 //
 //   Copyright (C) 2003-2007 Rational Discovery LLC
 //
@@ -60,5 +63,7 @@ computeGridCentroid(const UniformGrid3D &grid, const Point3D &pt,
 RDKIT_RDGEOMETRYLIB_EXPORT std::vector<Point3D> findGridTerminalPoints(
     const UniformGrid3D &grid, double windowRadius, double inclusionFraction);
 }  // namespace RDGeom
+
+#endif
 
 #endif
