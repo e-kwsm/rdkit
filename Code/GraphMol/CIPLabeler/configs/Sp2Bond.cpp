@@ -134,15 +134,13 @@ Descriptor Sp2Bond::label(Node *root1, Digraph &digraph, const Rules &comp) {
   if (config == Bond::STEREOCIS) {
     if (priority1.isPseudoAsymetric() != priority2.isPseudoAsymetric()) {
       return Descriptor::seqCis;
-    } else {
-      return Descriptor::Z;
     }
+    return Descriptor::Z;
   } else if (config == Bond::STEREOTRANS) {
     if (priority1.isPseudoAsymetric() != priority2.isPseudoAsymetric()) {
       return Descriptor::seqTrans;
-    } else {
-      return Descriptor::E;
     }
+    return Descriptor::E;
   }
   return Descriptor::UNKNOWN;
 }
