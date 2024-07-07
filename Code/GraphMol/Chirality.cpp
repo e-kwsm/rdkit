@@ -47,9 +47,8 @@ bool getValFromEnvironment(const char *var, bool defVal) {
   if (evar != nullptr) {
     if (!strcmp(evar, "0")) {
       return false;
-    } else {
-      return true;
     }
+    return true;
   }
   return defVal;
 }
@@ -404,7 +403,8 @@ const Atom *findHighestCIPNeighbor(const Atom *atom, const Atom *skipAtom) {
       // If at least one of the atoms doesn't have a CIP rank, the highest rank
       // does not make sense, so return a nullptr.
       return nullptr;
-    } else if (cip > bestCipRank || bestCipRankedAtom == nullptr) {
+    }
+    if (cip > bestCipRank || bestCipRankedAtom == nullptr) {
       bestCipRank = cip;
       bestCipRankedAtom = neighbor;
     } else if (cip == bestCipRank) {
@@ -2177,11 +2177,10 @@ INT_VECT findStereoAtoms(const Bond *bond) {
     int endStereoAtomIdx = static_cast<int>(endStereoAtom->getIdx());
 
     return {startStereoAtomIdx, endStereoAtomIdx};
-  } else {
+  }
     BOOST_LOG(rdWarningLog) << "Unable to assign stereo atoms for bond "
                             << bond->getIdx() << std::endl;
     return {};
-  }
 }
 void cleanupStereoGroups(ROMol &mol) {
   std::vector<StereoGroup> newsgs;
@@ -2325,7 +2324,8 @@ void legacyStereoPerception(ROMol &mol, bool cleanIt,
           bond->getStereoAtoms().clear();
         }
         continue;
-      } else if (bond->getBondType() == Bond::DOUBLE) {
+      }
+      if (bond->getBondType() == Bond::DOUBLE) {
         if (bond->getBondDir() == Bond::EITHERDOUBLE) {
           bond->setStereo(Bond::STEREOANY);
           bond->getStereoAtoms().clear();
@@ -2654,9 +2654,8 @@ bool canBeStereoBond(const Bond *bond) {
           if (std::find(nbrRanks.begin(), nbrRanks.end(), rank) !=
               nbrRanks.end()) {
             return false;
-          } else {
-            nbrRanks.push_back(rank);
           }
+          nbrRanks.push_back(rank);
         }
       }
     }
@@ -2923,7 +2922,7 @@ void findPotentialStereoBonds(ROMol &mol, bool cleanIt) {
   // make this function callable multiple times
   if ((mol.hasProp(common_properties::_BondsPotentialStereo)) && (!cleanIt)) {
     return;
-  } else {
+  }
     UINT_VECT ranks;
     ranks.resize(mol.getNumAtoms());
     bool cipDone = false;
@@ -3033,7 +3032,6 @@ void findPotentialStereoBonds(ROMol &mol, bool cleanIt) {
       }  // end of double bond
     }  // end of for loop over all bonds
     mol.setProp(common_properties::_BondsPotentialStereo, 1, true);
-  }
 }
 
 // removes chirality markers from sp and sp2 hybridized centers:
