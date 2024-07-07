@@ -159,15 +159,18 @@ void EmbeddedFrag::computeNbrsAndAng(unsigned int aid,
       nb2 = wnb1;
       nb1 = nbrPair.second;
       break;
-    } else if (wnb1 == nbrPair.second) {
+    }
+    if (wnb1 == nbrPair.second) {
       nb2 = wnb1;
       nb1 = nbrPair.first;
       break;
-    } else if (wnb2 == nbrPair.first) {
+    }
+    if (wnb2 == nbrPair.first) {
       nb2 = wnb2;
       nb1 = nbrPair.second;
       break;
-    } else if (wnb2 == nbrPair.second) {
+    }
+    if (wnb2 == nbrPair.second) {
       nb2 = wnb2;
       nb1 = nbrPair.first;
       break;
@@ -449,7 +452,8 @@ bool EmbeddedFrag::matchToTemplate(const RDKit::INT_VECT &ringSystemAtoms,
     // and bond count first
     if (mol->getNumBonds() != numBonds) {
       continue;
-    } else if (mol->getRingInfo()->numRings() != ring_count) {
+    }
+    if (mol->getRingInfo()->numRings() != ring_count) {
       continue;
     }
     // also check if the mol atoms have the same connectivity as the template
@@ -1731,7 +1735,7 @@ void _recurseDegTwoRingAtoms(unsigned int aid, const RDKit::ROMol *mol,
   }
   if (nbrs.size() != 2) {
     return;
-  } else {
+  }
     rPath.push_back(aid);
     nbrMap[aid] = nbrs;
     for (auto nbr : nbrs) {
@@ -1739,7 +1743,6 @@ void _recurseDegTwoRingAtoms(unsigned int aid, const RDKit::ROMol *mol,
         _recurseDegTwoRingAtoms(nbr, mol, rPath, nbrMap);
       }
     }
-  }
 }
 
 unsigned int _anyNonRingBonds(unsigned int aid, RDKit::INT_LIST path,
@@ -1960,9 +1963,10 @@ void EmbeddedFrag::removeCollisionsBondFlip() {
           if (colls.size() < ncols) {
             doneBonds[ri] = NUM_BONDS_FLIPS;  // lock this rotatable bond
             break;
-          } else if (colls.size() == ncols && newDensity < prevDensity) {
+          }
+          if (colls.size() == ncols && newDensity < prevDensity) {
             break;
-          } else {
+          }
             // we made the wrong move earlier - reject the flip move it back
             flipAboutBond(ri);
             colls = this->findCollisions(dmat);
@@ -1973,13 +1977,12 @@ void EmbeddedFrag::removeCollisionsBondFlip() {
             if (colls.size() < ncols) {
               doneBonds[ri] = NUM_BONDS_FLIPS;  // lock this rotatable bond
               break;
-            } else if (colls.size() == ncols && newDensity < prevDensity) {
+            }
+            if (colls.size() == ncols && newDensity < prevDensity) {
               break;
-            } else {
+            }
               flipAboutBond(ri, false);
               colls = this->findCollisions(dmat);
-            }
-          }
         }
       }
     }
