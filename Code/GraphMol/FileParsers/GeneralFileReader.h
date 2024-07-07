@@ -36,7 +36,7 @@ struct SupplierOptions {
   int nameColumn = 1;
   bool titleLine = true;
 
-  std::string nameRecord = "";
+  std::string nameRecord;
   int confId2D = -1;
   int confId3D = 0;
 
