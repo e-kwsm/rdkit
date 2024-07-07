@@ -954,32 +954,35 @@ const std::string MarvinBond::getBondType() const {
     if (tempQueryType == "SD" || tempQueryType == "SA" ||
         tempQueryType == "DA" || tempQueryType == "ANY") {
       return tempQueryType;
+    } else {
+      std::ostringstream err;
+      err << "unrecognized query bond type " << queryType << " in MRV File ";
+      throw FileParseException(err.str());
     }
-    std::ostringstream err;
-    err << "unrecognized query bond type " << queryType << " in MRV File ";
-    throw FileParseException(err.str());
-  }
-  if (tempConvention != "")  // if no query type, check for convention
+  } else if (tempConvention != "")  // if no query type, check for convention
   {
     if (tempConvention == "CXN:COORD") {
       return "DATIVE";
+    } else {
+      std::ostringstream err;
+      err << "unrecognized convention " << convention << " in MRV File ";
+      throw FileParseException(err.str());
     }
-    std::ostringstream err;
-    err << "unrecognized convention " << convention << " in MRV File ";
-    throw FileParseException(err.str());
-  }
-  if (tempOrder != "")  // if no query type not convention,  so check for order
+  } else if (tempOrder !=
+             "")  // if no query type not convention,  so check for order
   {
     if (tempOrder == "1" || tempOrder == "2" || tempOrder == "3" ||
         tempOrder == "A") {
       return tempOrder;
+    } else {
+      std::ostringstream err;
+      err << "unrecognized bond type " << order << " in MRV File ";
+      throw FileParseException(err.str());
     }
-    std::ostringstream err;
-    err << "unrecognized bond type " << order << " in MRV File ";
-    throw FileParseException(err.str());
+  } else {
+    throw FileParseException(
+        "bond must have one of:  order, queryType, or convention in MRV File ");
   }
-  throw FileParseException(
-      "bond must have one of:  order, queryType, or convention in MRV File ");
 }
 
 bool MarvinBond::isEqual(const MarvinAtom &other) const {
@@ -1072,8 +1075,9 @@ int MarvinMolBase::getAtomIndex(std::string id) const {
               [id](const MarvinAtom *arg) { return arg->id == id; });
   if (atomIter != atoms.end()) {
     return atomIter - atoms.begin();
+  } else {
+    return -1;
   }
-  return -1;
 }
 
 void MarvinMolBase::pushOwnedAtom(MarvinAtom *atom) {
@@ -1104,8 +1108,9 @@ int MarvinMolBase::getBondIndex(std::string id) const {
               [id](const MarvinBond *arg) { return arg->id == id; });
   if (bondIter != bonds.end()) {
     return bondIter - bonds.begin();
+  } else {
+    return -1;
   }
-  return -1;
 }
 
 MarvinAtom *MarvinMolBase::findAtomByRef(std::string atomId) {

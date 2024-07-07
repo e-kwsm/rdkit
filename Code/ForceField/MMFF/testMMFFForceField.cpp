@@ -239,8 +239,7 @@ int mmffValidationSuite(int argc, char *argv[]) {
     error = ((arg == "-h") || (arg == "--help"));
     if (error) {
       break;
-    }
-    if (arg == "-f") {
+    } else if (arg == "-f") {
       error = ((iarg + 1) >= argc);
       if (error) {
         break;

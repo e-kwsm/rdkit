@@ -137,8 +137,9 @@ void pickD2Nodes(const ROMol &tMol, INT_VECT &d2nodes, const INT_VECT &currFrag,
     }
     if (root == -1) {
       break;
+    } else {
+      markUselessD2s(root, tMol, forb, atomDegrees, activeBonds);
     }
-    markUselessD2s(root, tMol, forb, atomDegrees, activeBonds);
   }
 }
 
@@ -850,8 +851,9 @@ int findSSSR(const ROMol &mol, VECT_INT_VECT *res, bool includeDativeBonds) {
   if (!res) {
     VECT_INT_VECT rings;
     return findSSSR(mol, rings, includeDativeBonds);
+  } else {
+    return findSSSR(mol, (*res), includeDativeBonds);
   }
-  return findSSSR(mol, (*res), includeDativeBonds);
 }
 
 int findSSSR(const ROMol &mol, VECT_INT_VECT &res, bool includeDativeBonds) {

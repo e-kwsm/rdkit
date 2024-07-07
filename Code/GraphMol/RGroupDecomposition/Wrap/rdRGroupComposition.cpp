@@ -184,8 +184,9 @@ python::object RGroupDecomp(python::object cores, python::object mols,
   decomp.Process();
   if (asRows) {
     return make_tuple(decomp.GetRGroupsAsRows(asSmiles), unmatched);
+  } else {
+    return make_tuple(decomp.GetRGroupsAsColumn(asSmiles), unmatched);
   }
-  return make_tuple(decomp.GetRGroupsAsColumn(asSmiles), unmatched);
 }
 
 void relabelMappedDummiesHelper(ROMol &mol, unsigned int inputLabels,

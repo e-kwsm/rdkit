@@ -133,8 +133,7 @@ unsigned int readAmberTrajectory(const std::string &fName, Trajectory &traj) {
           std::stringstream ss;
           ss << "Error while reading file: " << fName;
           throw ValueErrorException(ss.str());
-        }
-        if (i && (i < (nCoords - 1))) {
+        } else if (i && (i < (nCoords - 1))) {
           std::stringstream ss;
           ss << "Premature end of file: " << fName;
           throw ValueErrorException(ss.str());

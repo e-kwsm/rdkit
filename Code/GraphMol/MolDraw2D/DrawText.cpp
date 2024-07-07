@@ -473,18 +473,15 @@ bool setStringDrawMode(const std::string &instring, TextDrawType &draw_mode,
     draw_mode = TextDrawType::TextDrawSubscript;
     i += 4;
     return true;
-  }
-  if (std::string("<sup>") == bit1) {
+  } else if (std::string("<sup>") == bit1) {
     draw_mode = TextDrawType::TextDrawSuperscript;
     i += 4;
     return true;
-  }
-  if (std::string("</sub>") == bit2) {
+  } else if (std::string("</sub>") == bit2) {
     draw_mode = TextDrawType::TextDrawNormal;
     i += 5;
     return true;
-  }
-  if (std::string("</sup>") == bit2) {
+  } else if (std::string("</sup>") == bit2) {
     draw_mode = TextDrawType::TextDrawNormal;
     i += 5;
     return true;

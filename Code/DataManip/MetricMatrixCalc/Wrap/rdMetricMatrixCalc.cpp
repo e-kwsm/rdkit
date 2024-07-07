@@ -108,7 +108,8 @@ PyObject *getEuclideanDistMat(python::object descripMat) {
     }
 
     // if we have a float array
-    if (PyArray_DESCR((PyArrayObject *)descMatObj)->type_num == NPY_FLOAT) {
+    else if (PyArray_DESCR((PyArrayObject *)descMatObj)->type_num ==
+             NPY_FLOAT) {
       auto *desc = (float *)PyArray_DATA(copy);
       auto **desc2D = new float *[nrows];
       for (i = 0; i < nrows; i++) {
@@ -123,7 +124,7 @@ PyObject *getEuclideanDistMat(python::object descripMat) {
     }
 
     // if we have an integer array
-    if (PyArray_DESCR((PyArrayObject *)descMatObj)->type_num == NPY_INT) {
+    else if (PyArray_DESCR((PyArrayObject *)descMatObj)->type_num == NPY_INT) {
       int *desc = (int *)PyArray_DATA(copy);
       auto **desc2D = new int *[nrows];
       for (i = 0; i < nrows; i++) {
@@ -135,11 +136,12 @@ PyObject *getEuclideanDistMat(python::object descripMat) {
       mmCalc.calcMetricMatrix(desc2D, nrows, ncols, dMat);
       delete[] desc2D;
       return PyArray_Return(distRes);
+    } else {
+      // unrecognized type for the matrix, throw up
+      throw_value_error(
+          "The array has to be of type int, float, or double for "
+          "GetEuclideanDistMat");
     }
-    // unrecognized type for the matrix, throw up
-    throw_value_error(
-        "The array has to be of type int, float, or double for "
-        "GetEuclideanDistMat");
   }  // done with an array input
   else {
     // REVIEW: removed a ton of code here

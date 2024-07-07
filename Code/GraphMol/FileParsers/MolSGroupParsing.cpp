@@ -48,9 +48,10 @@ unsigned int ParseSGroupIntField(bool &ok, bool strictParsing,
   } catch (const std::exception &e) {
     if (strictParsing) {
       throw;
+    } else {
+      ok = false;
+      BOOST_LOG(rdWarningLog) << e.what() << std::endl;
     }
-    ok = false;
-    BOOST_LOG(rdWarningLog) << e.what() << std::endl;
   }
   return res;
 }
@@ -85,9 +86,10 @@ double ParseSGroupDoubleField(bool &ok, bool strictParsing,
   } catch (const std::exception &e) {
     if (strictParsing) {
       throw;
+    } else {
+      ok = false;
+      BOOST_LOG(rdWarningLog) << e.what() << std::endl;
     }
-    ok = false;
-    BOOST_LOG(rdWarningLog) << e.what() << std::endl;
   }
   return res;
 }
@@ -646,8 +648,7 @@ void ParseSGroupV2000SCDSEDLine(IDX_TO_SGROUP_MAP &sGroupMap,
     SGroupWarnOrThrow<>(strictParsing, errout.str());
     sgroup->setIsValid(false);
     return;
-  }
-  if (lastDataSGroup == 0 && type == "SCD") {
+  } else if (lastDataSGroup == 0 && type == "SCD") {
     lastDataSGroup = sgIdx;
   } else if (type == "SED") {
     lastDataSGroup = 0;
@@ -805,13 +806,14 @@ void ParseSGroupV2000SAPLine(IDX_TO_SGROUP_MAP &sGroupMap, RWMol *mol,
       errout << "SGroup SAP line too short: '" << text << "' on line " << line;
       if (strictParsing) {
         throw FileParseException(errout.str());
+      } else {
+        BOOST_LOG(rdWarningLog) << errout.str() << std::endl;
+        if (text.size() < pos + 4) {
+          sgroup->setIsValid(false);
+          return;
+        }
+        lvIdx = mol->getNumAtoms();
       }
-      BOOST_LOG(rdWarningLog) << errout.str() << std::endl;
-      if (text.size() < pos + 4) {
-        sgroup->setIsValid(false);
-        return;
-      }
-      lvIdx = mol->getNumAtoms();
     }
 
     std::string id = "  ";
@@ -1045,8 +1047,7 @@ std::string ParseV3000StringPropLabel(std::stringstream &stream) {
   if (nextChar == ' ') {
     // empty value, we peeked at the next field's separator
     return strValue;
-  }
-  if (nextChar == '"') {
+  } else if (nextChar == '"') {
     // skip the opening quote:
     stream.get();
 
@@ -1063,9 +1064,10 @@ std::string ParseV3000StringPropLabel(std::stringstream &stream) {
         // Otherwise we're done
         if (nextChar != '"') {
           break;
+        } else {
+          // skip the second \"
+          stream.get();
         }
-        // skip the second \"
-        stream.get();
       }
       strValue += chr;
     }
@@ -1159,9 +1161,8 @@ void ParseV3000ParseLabel(const std::string &label,
         errout << "Unsupported SGroup subtype '" << strValue << "' on line "
                << line;
         throw FileParseException(errout.str());
-      }
-      if (label == "CONNECT" &&
-          !SubstanceGroupChecks::isValidConnectType(strValue)) {
+      } else if (label == "CONNECT" &&
+                 !SubstanceGroupChecks::isValidConnectType(strValue)) {
         std::ostringstream errout;
         errout << "Unsupported SGroup connection type '" << strValue
                << "' on line " << line;
@@ -1230,9 +1231,10 @@ std::string ParseV3000SGroupsBlock(std::istream *inStream, unsigned int line,
                << "' assigned to a second SGroup on line " << line;
         if (strictParsing) {
           throw FileParseException(errout.str());
+        } else {
+          BOOST_LOG(rdWarningLog) << errout.str() << std::endl;
+          sgroup.setIsValid(false);
         }
-        BOOST_LOG(rdWarningLog) << errout.str() << std::endl;
-        sgroup.setIsValid(false);
       }
 
       sgroup.setProp<unsigned int>("ID", externalId);
@@ -1245,17 +1247,17 @@ std::string ParseV3000SGroupsBlock(std::istream *inStream, unsigned int line,
       lineStream.get(spacer);
       if (lineStream.gcount() == 0) {
         continue;
-      }
-      if (spacer != ' ') {
+      } else if (spacer != ' ') {
         std::ostringstream errout;
         errout << "Found character '" << spacer
                << "' when expecting a separator (space) on line " << line;
         if (strictParsing) {
           throw FileParseException(errout.str());
+        } else {
+          BOOST_LOG(rdWarningLog) << errout.str() << std::endl;
+          sgroup.setIsValid(false);
+          continue;
         }
-        BOOST_LOG(rdWarningLog) << errout.str() << std::endl;
-        sgroup.setIsValid(false);
-        continue;
       }
 
       std::getline(lineStream, label, '=');
@@ -1274,18 +1276,18 @@ std::string ParseV3000SGroupsBlock(std::istream *inStream, unsigned int line,
       lineStream.get(spacer);
       if (lineStream.gcount() == 0) {
         continue;
-      }
-      if (spacer != ' ') {
+      } else if (spacer != ' ') {
         std::ostringstream errout;
         errout << "Found character '" << spacer
                << "' when expecting a separator (space) in DEFAULTS on line "
                << defaultLineNum;
         if (strictParsing) {
           throw FileParseException(errout.str());
+        } else {
+          BOOST_LOG(rdWarningLog) << errout.str() << std::endl;
+          sgroup.setIsValid(false);
+          continue;
         }
-        BOOST_LOG(rdWarningLog) << errout.str() << std::endl;
-        sgroup.setIsValid(false);
-        continue;
       }
 
       std::getline(lineStream, label, '=');
@@ -1300,12 +1302,12 @@ std::string ParseV3000SGroupsBlock(std::istream *inStream, unsigned int line,
           errout << "Found unexpected whitespace at DEFAULT label " << label;
           if (strictParsing) {
             throw FileParseException(errout.str());
+          } else {
+            BOOST_LOG(rdWarningLog) << errout.str() << std::endl;
+            sgroup.setIsValid(false);
+            continue;
           }
-          BOOST_LOG(rdWarningLog) << errout.str() << std::endl;
-          sgroup.setIsValid(false);
-          continue;
-        }
-        if (spacer == '(') {
+        } else if (spacer == '(') {
           std::getline(lineStream, label, ')');
           lineStream.get(spacer);
         } else if (spacer == '"') {
@@ -1331,8 +1333,9 @@ std::string ParseV3000SGroupsBlock(std::istream *inStream, unsigned int line,
            << " were expected." << std::endl;
     if (strictParsing) {
       throw FileParseException(errout.str());
+    } else {
+      BOOST_LOG(rdWarningLog) << errout.str() << std::endl;
     }
-    BOOST_LOG(rdWarningLog) << errout.str() << std::endl;
   }
   // SGroups successfully parsed, now add them to the molecule
   for (const auto &sg : sGroupMap) {

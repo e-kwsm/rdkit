@@ -148,23 +148,24 @@ void Reionizer::reionizeInPlace(RWMol &mol) {
           this->strongestProtonated(mol, abpairs));
       if (res == nullptr) {
         break;
-      }
-      unsigned int ppos = res->first;
-      std::vector<unsigned int> poccur = res->second;
-      std::string abname;
-      std::pair<ROMOL_SPTR, ROMOL_SPTR> abpair = abpairs[ppos];
-      (abpair.first)->getProp(common_properties::_Name, abname);
-      BOOST_LOG(rdInfoLog) << "Ionizing " << abname
-                           << " to balance previous charge corrections\n";
-      Atom *patom = mol.getAtomWithIdx(poccur.back());
-      patom->setFormalCharge(patom->getFormalCharge() - 1);
+      } else {
+        unsigned int ppos = res->first;
+        std::vector<unsigned int> poccur = res->second;
+        std::string abname;
+        std::pair<ROMOL_SPTR, ROMOL_SPTR> abpair = abpairs[ppos];
+        (abpair.first)->getProp(common_properties::_Name, abname);
+        BOOST_LOG(rdInfoLog) << "Ionizing " << abname
+                             << " to balance previous charge corrections\n";
+        Atom *patom = mol.getAtomWithIdx(poccur.back());
+        patom->setFormalCharge(patom->getFormalCharge() - 1);
 
-      if (patom->getNumExplicitHs() > 0) {
-        patom->setNumExplicitHs(patom->getNumExplicitHs() - 1);
+        if (patom->getNumExplicitHs() > 0) {
+          patom->setNumExplicitHs(patom->getNumExplicitHs() - 1);
         }
 
         patom->updatePropertyCache();
         --charge_diff;
+      }
     }
   }
 

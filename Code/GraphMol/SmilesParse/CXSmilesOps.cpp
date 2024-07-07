@@ -1684,8 +1684,9 @@ std::string get_sgroup_hierarchy_block(const ROMol &mol) {
       resStr.pop_back();
     }
     return resStr;
+  } else {
+    return "";
   }
-  return "";
 }
 
 std::string get_sgroup_polymer_block(
@@ -2065,56 +2066,57 @@ std::string get_bond_config_block(
                     bondNbr, atomAndBondVecs, mol)) {
               throw ValueErrorException("Internal error - should not occur");
               // should not happend
-            }
-            unsigned int swaps = 0;
+            } else {
+              unsigned int swaps = 0;
 
-            unsigned int firstReorderedIdx =
-                std::find(atomOrder.begin(), atomOrder.end(),
-                          bondNbr->getBeginAtom()->getIdx()) -
-                atomOrder.begin();
-            unsigned int secondReorderedIdx =
-                std::find(atomOrder.begin(), atomOrder.end(),
-                          bondNbr->getEndAtom()->getIdx()) -
-                atomOrder.begin();
-            if (firstReorderedIdx > secondReorderedIdx) {
-              ++swaps;
-            }
+              unsigned int firstReorderedIdx =
+                  std::find(atomOrder.begin(), atomOrder.end(),
+                            bondNbr->getBeginAtom()->getIdx()) -
+                  atomOrder.begin();
+              unsigned int secondReorderedIdx =
+                  std::find(atomOrder.begin(), atomOrder.end(),
+                            bondNbr->getEndAtom()->getIdx()) -
+                  atomOrder.begin();
+              if (firstReorderedIdx > secondReorderedIdx) {
+                ++swaps;
+              }
 
-            for (unsigned int bondAtomIndex = 0; bondAtomIndex < 2;
-                 ++bondAtomIndex) {
-              if (atomAndBondVecs[bondAtomIndex].first == firstAtom)
-                continue;  // swapped atoms on the side where the wedge bond
-                           // is does NOT change the wedge bond
-              if (atomAndBondVecs[bondAtomIndex].second.size() == 2) {
-                unsigned int firstOtherAtomIdx =
-                    atomAndBondVecs[bondAtomIndex]
-                        .second[0]
-                        ->getOtherAtom(atomAndBondVecs[bondAtomIndex].first)
-                        ->getIdx();
-                unsigned int secondOtherAtomIdx =
-                    atomAndBondVecs[bondAtomIndex]
-                        .second[1]
-                        ->getOtherAtom(atomAndBondVecs[bondAtomIndex].first)
-                        ->getIdx();
+              for (unsigned int bondAtomIndex = 0; bondAtomIndex < 2;
+                   ++bondAtomIndex) {
+                if (atomAndBondVecs[bondAtomIndex].first == firstAtom)
+                  continue;  // swapped atoms on the side where the wedge bond
+                             // is does NOT change the wedge bond
+                if (atomAndBondVecs[bondAtomIndex].second.size() == 2) {
+                  unsigned int firstOtherAtomIdx =
+                      atomAndBondVecs[bondAtomIndex]
+                          .second[0]
+                          ->getOtherAtom(atomAndBondVecs[bondAtomIndex].first)
+                          ->getIdx();
+                  unsigned int secondOtherAtomIdx =
+                      atomAndBondVecs[bondAtomIndex]
+                          .second[1]
+                          ->getOtherAtom(atomAndBondVecs[bondAtomIndex].first)
+                          ->getIdx();
 
-                unsigned int firstReorderedAtomIdx =
-                    std::find(atomOrder.begin(), atomOrder.end(),
-                              firstOtherAtomIdx) -
-                    atomOrder.begin();
-                unsigned int secondReorderedAtomIdx =
-                    std::find(atomOrder.begin(), atomOrder.end(),
-                              secondOtherAtomIdx) -
-                    atomOrder.begin();
+                  unsigned int firstReorderedAtomIdx =
+                      std::find(atomOrder.begin(), atomOrder.end(),
+                                firstOtherAtomIdx) -
+                      atomOrder.begin();
+                  unsigned int secondReorderedAtomIdx =
+                      std::find(atomOrder.begin(), atomOrder.end(),
+                                secondOtherAtomIdx) -
+                      atomOrder.begin();
 
-                if (firstReorderedAtomIdx > secondReorderedAtomIdx) {
-                  ++swaps;
+                  if (firstReorderedAtomIdx > secondReorderedAtomIdx) {
+                    ++swaps;
+                  }
                 }
               }
-            }
-            if (swaps % 2) {
-              bd = (bd == Bond::BondDir::BEGINWEDGE)
-                       ? Bond::BondDir::BEGINDASH
-                       : Bond::BondDir::BEGINWEDGE;
+              if (swaps % 2) {
+                bd = (bd == Bond::BondDir::BEGINWEDGE)
+                         ? Bond::BondDir::BEGINDASH
+                         : Bond::BondDir::BEGINWEDGE;
+              }
             }
           }
 

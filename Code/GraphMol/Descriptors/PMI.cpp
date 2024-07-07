@@ -183,8 +183,9 @@ double inertialShapeFactor(const ROMol& mol, int confId, bool useAtomicMasses,
   if (pm1 < 1e-4 || pm3 < 1e-4) {
     // planar or no coordinates
     return 0.0;
+  } else {
+    return pm2 / (pm1 * pm3);
   }
-  return pm2 / (pm1 * pm3);
 }
 double eccentricity(const ROMol& mol, int confId, bool useAtomicMasses,
                     bool force) {
@@ -197,8 +198,9 @@ double eccentricity(const ROMol& mol, int confId, bool useAtomicMasses,
   if (pm3 < 1e-4 || (pm3 * pm3 - pm1 * pm1) < 1e-4) {
     // no coordinates or very close to degeneracy
     return 0.0;
+  } else {
+    return sqrt(pm3 * pm3 - pm1 * pm1) / pm3;
   }
-  return sqrt(pm3 * pm3 - pm1 * pm1) / pm3;
 }
 
 double asphericity(const ROMol& mol, int confId, bool useAtomicMasses,
@@ -213,11 +215,12 @@ double asphericity(const ROMol& mol, int confId, bool useAtomicMasses,
   if (pm3 < 1e-4) {
     // no coordinates
     return 0.0;
-  }
-  double denom = pm1 + pm2 + pm3;
+  } else {
+    double denom = pm1 + pm2 + pm3;
 
-  return 0.5 * (pow(pm1 - pm2, 2) + pow(pm1 - pm3, 2) + pow(pm2 - pm3, 2)) /
-         (denom * denom);
+    return 0.5 * (pow(pm1 - pm2, 2) + pow(pm1 - pm3, 2) + pow(pm2 - pm3, 2)) /
+           (denom * denom);
+  }
 }
 double spherocityIndex(const ROMol& mol, int confId, bool force) {
   PRECONDITION(mol.getNumConformers() >= 1, "molecule has no conformers");
@@ -231,8 +234,9 @@ double spherocityIndex(const ROMol& mol, int confId, bool force) {
   if (pm3 < 1e-4) {
     // no coordinates
     return 0.0;
+  } else {
+    return 3. * pm1 / (pm1 + pm2 + pm3);
   }
-  return 3. * pm1 / (pm1 + pm2 + pm3);
 }
 
 }  // namespace Descriptors

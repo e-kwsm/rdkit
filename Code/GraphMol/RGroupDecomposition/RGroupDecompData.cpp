@@ -133,14 +133,16 @@ double RGroupDecompData::scoreFromPrunedData(
       pruneLength = permutation.size();
     }
     return score;
+  } else {
+    if (reset) {
+      return fingerprintVarianceScore(permutation, matches, labels);
+    } else {
+      prunedFingerprintVarianceScoreData.clear();
+      pruneLength = permutation.size();
+      return fingerprintVarianceScore(permutation, matches, labels,
+                                      &prunedFingerprintVarianceScoreData);
+    }
   }
-  if (reset) {
-    return fingerprintVarianceScore(permutation, matches, labels);
-  }
-  prunedFingerprintVarianceScoreData.clear();
-  pruneLength = permutation.size();
-  return fingerprintVarianceScore(permutation, matches, labels,
-                                  &prunedFingerprintVarianceScoreData);
 }
 
 void RGroupDecompData::prune() {  // prune all but the current "best"

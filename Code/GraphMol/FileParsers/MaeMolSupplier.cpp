@@ -213,8 +213,7 @@ std::string strip_prefix_from_mae_property(const std::string &propName) {
     ++propNamePtr;
     if (strncmp(propNamePtr, "_rdk_", 5) == 0) {
       return propName.substr(6);
-    }
-    if (strncmp(propNamePtr, "_rdkit_", 7) == 0) {
+    } else if (strncmp(propNamePtr, "_rdkit_", 7) == 0) {
       return propName.substr(8);
     }
   }
@@ -285,8 +284,7 @@ void set_atom_properties(Atom &atom, const mae::IndexedBlock &atom_block,
         prop.first == PDB_CHAIN_NAME || prop.first == PDB_INSERTION_CODE) {
       // PDB information is parsed separately.
       continue;
-    }
-    if (!prop.second->isDefined(i)) {
+    } else if (!prop.second->isDefined(i)) {
       continue;
     }
 
@@ -300,12 +298,10 @@ void set_atom_properties(Atom &atom, const mae::IndexedBlock &atom_block,
       // Coordinates are used in defining a conformation, and should not be
       // set on the atom.
       continue;
-    }
-    if (prop.first == PDB_OCCUPANCY || prop.first == PDB_TFACTOR) {
+    } else if (prop.first == PDB_OCCUPANCY || prop.first == PDB_TFACTOR) {
       // PDB information is parsed separately.
       continue;
-    }
-    if (!prop.second->isDefined(i)) {
+    } else if (!prop.second->isDefined(i)) {
       continue;
     }
 
@@ -316,12 +312,10 @@ void set_atom_properties(Atom &atom, const mae::IndexedBlock &atom_block,
     if (prop.first == mae::ATOM_ATOMIC_NUM) {
       // Atomic number was already used in the creation of the atom
       continue;
-    }
-    if (prop.first == PDB_RESIDUE_NUMBER) {
+    } else if (prop.first == PDB_RESIDUE_NUMBER) {
       // PDB information is parsed separately.
       continue;
-    }
-    if (!prop.second->isDefined(i)) {
+    } else if (!prop.second->isDefined(i)) {
       continue;
     }
 
@@ -583,8 +577,7 @@ std::unique_ptr<RWMol> MaeMolSupplier::next() {
   PRECONDITION(dp_sInStream != nullptr, "no stream");
   if (!d_stored_exc.empty()) {
     throw FileParseException(d_stored_exc);
-  }
-  if (atEnd()) {
+  } else if (atEnd()) {
     throw FileParseException("All structures read from Maestro file");
   }
 

@@ -525,8 +525,7 @@ unsigned int getAtomParityFlag(const Atom *atom, const Conformer *conf) {
   }
   if (vol < 0) {
     return 2;
-  }
-  if (vol > 0) {
+  } else if (vol > 0) {
     return 1;
   }
   return 0;

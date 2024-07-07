@@ -394,8 +394,7 @@ bool cleanUpMol2Substructures(RWMol *res) {
             << nm << ": Error - C.Cat with bad number of N neighbors."
             << std::endl;
         return false;
-      }
-      if (noNNeighbors == 2) {
+      } else if (noNNeighbors == 2) {
         // the idea is that we assign the positive charge according to the
         // following precedence:
         // 1. is part of N-oxide
@@ -585,8 +584,7 @@ Atom *ParseMol2FileAtomLine(const std::string atomLine, RDGeom::Point3D &pos) {
   if (symb == "LP") {
     delete res;
     return nullptr;
-  }
-  if (symb == "ANY" || symb == "Du") {
+  } else if (symb == "ANY" || symb == "Du") {
     // queryAtoms
     // according to the SYBYL spec, these match anything
     auto *query = new QueryAtom(0);
@@ -1015,8 +1013,9 @@ std::unique_ptr<RWMol> MolFromMol2File(const std::string &fName,
   }
   if (!inStream.eof()) {
     return MolFromMol2DataStream(inStream, params);
+  } else {
+    return nullptr;
   }
-  return nullptr;
 }
 }  // namespace FileParsers
 }  // namespace v2

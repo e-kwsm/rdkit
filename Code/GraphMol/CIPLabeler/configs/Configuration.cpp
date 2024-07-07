@@ -35,8 +35,7 @@ bool Configuration::isInternalEdge(const Edge *edge, Atom *f1, Atom *f2) {
   const auto &end = edge->getEnd();
   if (f1 == beg->getAtom() && f2 == end->getAtom()) {
     return true;
-  }
-  if (f1 == end->getAtom() && f2 == beg->getAtom()) {
+  } else if (f1 == end->getAtom() && f2 == beg->getAtom()) {
     return true;
   }
   return false;

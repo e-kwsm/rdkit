@@ -186,8 +186,9 @@ Bond::BondDir getBondDirForAtropisomer3d(Bond *whichBond,
        conf->getAtomPos(whichBond->getBeginAtom()->getIdx()).z) >
       REALLY_SMALL_BOND_LEN) {
     return Bond::BondDir::BEGINWEDGE;
+  } else {
+    return Bond::BondDir::BEGINDASH;
   }
-  return Bond::BondDir::BEGINDASH;
 }
 
 bool getAtropIsomerEndVect(const AtropAtomAndBondVec &atomAndBondVec,
@@ -686,16 +687,17 @@ bool WedgeBondFromAtropisomerOneBondNoConf(
               << bond->getBeginAtomIdx() << " " << bond->getEndAtomIdx()
               << std::endl;
           return false;
+        } else {
+          continue;  // wedge or hash bond affecting the OTHER atom
+                     // = perhaps a chiral center
         }
-        continue;  // wedge or hash bond affecting the OTHER atom
-                   // = perhaps a chiral center
       }
       auto ringCount = ri->numBondRings(bondToTry->getIdx());
       if (ringCount > bestRingCount) {
         continue;
       }
 
-      if (ringCount < bestRingCount) {
+      else if (ringCount < bestRingCount) {
         bestBondEnd = whichEnd;
         bestBondNumber = whichBond;
         bestRingCount = ringCount;
@@ -893,11 +895,13 @@ bool WedgeBondFromAtropisomerOneBond2d(
                 << bond->getBeginAtomIdx() << " " << bond->getEndAtomIdx()
                 << std::endl;
             return false;
+          } else {
+            continue;  // probably a slash up or down for a double bond
           }
-          continue;  // probably a slash up or down for a double bond
+        } else {
+          continue;  // wedge or hash bond affecting the OTHER atom
+                     // = perhaps a chiral center
         }
-        continue;  // wedge or hash bond affecting the OTHER atom
-                   // = perhaps a chiral center
       }
       auto ringCount = ri->numBondRings(bondToTry->getIdx());
       unsigned int ringSize = 0;
@@ -913,8 +917,7 @@ bool WedgeBondFromAtropisomerOneBond2d(
       }
       if (ringCount > bestRingCount) {
         continue;
-      }
-      if (ringCount < bestRingCount || ringSize > largestRingSize) {
+      } else if (ringCount < bestRingCount || ringSize > largestRingSize) {
         bestBondEnd = whichEnd;
         bestBondNumber = whichBond;
         bestRingCount = ringCount;
@@ -1077,9 +1080,10 @@ bool WedgeBondFromAtropisomerOneBond3d(
               << bond->getBeginAtomIdx() << " " << bond->getEndAtomIdx()
               << std::endl;
           return false;
+        } else {
+          continue;  // wedge or hash bond affecting the OTHER atom
+                     // = perhaps a chiral center
         }
-        continue;  // wedge or hash bond affecting the OTHER atom
-                   // = perhaps a chiral center
       }
       auto ringCount = ri->numBondRings(bondToTry->getIdx());
       unsigned int ringSize = 0;
@@ -1095,8 +1099,7 @@ bool WedgeBondFromAtropisomerOneBond3d(
       }
       if (ringCount > bestRingCount) {
         continue;
-      }
-      if (ringCount < bestRingCount || ringSize > largestRingSize) {
+      } else if (ringCount < bestRingCount || ringSize > largestRingSize) {
         bestBond = bondToTry;
         bestBondEnd = whichEnd;
         bestRingCount = ringCount;

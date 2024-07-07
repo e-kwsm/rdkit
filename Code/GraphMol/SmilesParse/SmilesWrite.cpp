@@ -143,8 +143,7 @@ std::string getAtomChiralityInfo(const Atom *atom) {
           !SmilesParseOps::checkChiralPermutation(atom->getChiralTag(),
                                                   permutation)) {
         throw ValueErrorException("bad chirality spec");
-      }
-      if (permutation) {
+      } else if (permutation) {
         atString += std::to_string(permutation);
       }
     }

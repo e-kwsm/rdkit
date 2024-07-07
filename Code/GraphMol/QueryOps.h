@@ -324,16 +324,18 @@ template <int tgt>
 int queryAtomIsInRingOfSize(Atom const *at) {
   if (at->getOwningMol().getRingInfo()->isAtomInRingOfSize(at->getIdx(), tgt)) {
     return tgt;
+  } else {
+    return 0;
   }
-  return 0;
 };
 template <int tgt>
 int queryBondIsInRingOfSize(Bond const *bond) {
   if (bond->getOwningMol().getRingInfo()->isBondInRingOfSize(bond->getIdx(),
                                                              tgt)) {
     return tgt;
+  } else {
+    return 0;
   }
-  return 0;
 };
 
 template <class T>

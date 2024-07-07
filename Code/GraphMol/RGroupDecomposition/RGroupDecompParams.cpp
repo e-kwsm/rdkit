@@ -95,14 +95,11 @@ unsigned int RGroupDecompositionParameters::autoGetLabels(const RWMol &core) {
 
   if (hasMDLRGroup) {
     return autoLabels | MDLRGroupLabels;
-  }
-  if (hasAtomMapNum) {
+  } else if (hasAtomMapNum) {
     return autoLabels | AtomMapLabels;
-  }
-  if (hasIsotopes) {
+  } else if (hasIsotopes) {
     return autoLabels | IsotopeLabels;
-  }
-  if (hasDummies) {
+  } else if (hasDummies) {
     return autoLabels | DummyAtomLabels;
   }
 

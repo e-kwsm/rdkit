@@ -872,9 +872,8 @@ bool isAtomListQuery(const Atom *a) {
       }
     }
     return true;
-  }
-  if (a->getQuery()->getNegation() &&
-      _atomListQueryHelper(a->getQuery(), true)) {
+  } else if (a->getQuery()->getNegation() &&
+             _atomListQueryHelper(a->getQuery(), true)) {
     // this was github #5930: negated list queries containing a single atom were
     // being lost on output
     return true;

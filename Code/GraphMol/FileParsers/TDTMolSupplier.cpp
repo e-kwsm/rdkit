@@ -58,8 +58,9 @@ void ParseNumberList(std::string inLine, std::vector<T> &res,
     }
     if (foundEnd || !inStream || inStream->eof()) {
       break;
+    } else {
+      std::getline(*inStream, inLine);
     }
-    std::getline(*inStream, inLine);
   }
   if (!foundEnd) {
     throw FileParseException("no end tag found for numeric list");
@@ -244,12 +245,13 @@ std::unique_ptr<RWMol> TDTMolSupplier::parseMol(std::string inLine) {
           std::ostringstream errout;
           errout << "no end tag found for property" << propName;
           throw FileParseException(errout.str());
-        }
-        std::string propVal = inLine.substr(startP, endP - startP);
-        res->setProp(propName, propVal);
-        if (propName == d_params.nameRecord) {
-          res->setProp(common_properties::_Name, propVal);
+        } else {
+          std::string propVal = inLine.substr(startP, endP - startP);
+          res->setProp(propName, propVal);
+          if (propName == d_params.nameRecord) {
+            res->setProp(common_properties::_Name, propVal);
           }
+        }
       }
       std::getline(*dp_inStream, inLine);
     }
@@ -381,21 +383,22 @@ unsigned int TDTMolSupplier::length() {
   // return the number of mol blocks in the sdfile
   if (d_len > 0) {
     return d_len;
-  }
-  std::string tempStr;
-  d_len = d_molpos.size();
-  dp_inStream->seekg(d_molpos.back());
-  std::string inL;
-  std::getline(*dp_inStream, inL);
-  while (this->advanceToNextRecord()) {
-    d_molpos.push_back(dp_inStream->tellg());
-    d_len++;
+  } else {
+    std::string tempStr;
+    d_len = d_molpos.size();
+    dp_inStream->seekg(d_molpos.back());
+    std::string inL;
     std::getline(*dp_inStream, inL);
+    while (this->advanceToNextRecord()) {
+      d_molpos.push_back(dp_inStream->tellg());
+      d_len++;
+      std::getline(*dp_inStream, inL);
     }
     // now remember to set the stream to the last position we want to read
     dp_inStream->clear();
     dp_inStream->seekg(d_molpos[d_last]);
     return d_len;
+  }
 }
 
 bool TDTMolSupplier::atEnd() {

@@ -20,21 +20,23 @@ int Rule1b::compare(const Edge *a, const Edge *b) const {
   if (IUPAC_2013) {
     return -three_way_comparison(a->getEnd()->getDistance(),
                                  b->getEnd()->getDistance());
+  } else {
+    if (a->getEnd()->isSet(Node::RING_DUPLICATE) &&
+        b->getEnd()->isSet(Node::RING_DUPLICATE)) {
+      return -three_way_comparison(a->getEnd()->getDistance(),
+                                   b->getEnd()->getDistance());
+    } else {
+      if (a->getEnd()->isSet(Node::RING_DUPLICATE) &&
+          !b->getEnd()->isSet(Node::RING_DUPLICATE)) {
+        return +1;
+      }
+      if (!a->getEnd()->isSet(Node::RING_DUPLICATE) &&
+          b->getEnd()->isSet(Node::RING_DUPLICATE)) {
+        return -1;
+      }
+      return 0;
+    }
   }
-  if (a->getEnd()->isSet(Node::RING_DUPLICATE) &&
-      b->getEnd()->isSet(Node::RING_DUPLICATE)) {
-    return -three_way_comparison(a->getEnd()->getDistance(),
-                                 b->getEnd()->getDistance());
-  }
-  if (a->getEnd()->isSet(Node::RING_DUPLICATE) &&
-      !b->getEnd()->isSet(Node::RING_DUPLICATE)) {
-    return +1;
-  }
-  if (!a->getEnd()->isSet(Node::RING_DUPLICATE) &&
-      b->getEnd()->isSet(Node::RING_DUPLICATE)) {
-    return -1;
-  }
-  return 0;
 }
 
 }  // namespace CIPLabeler

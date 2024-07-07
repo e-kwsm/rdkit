@@ -15,8 +15,7 @@ void storeIdsInUse(boost::dynamic_bitset<> &ids, StereoGroup &sg) {
   const auto groupId = sg.getWriteId();
   if (groupId == 0) {
     return;
-  }
-  if (groupId >= ids.size()) {
+  } else if (groupId >= ids.size()) {
     ids.resize(groupId + 1);
   }
   if (ids[groupId]) {

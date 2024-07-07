@@ -87,8 +87,9 @@ ROMol *MolSupplGetItem(T *suppl, int idx) {
     if (suppl->atEnd()) {
       PyErr_SetString(PyExc_IndexError, "invalid index");
       throw boost::python::error_already_set();
+    } else {
+      res = nullptr;
     }
-    res = nullptr;
   }
   return res;
 }

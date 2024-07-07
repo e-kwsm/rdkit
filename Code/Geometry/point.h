@@ -73,22 +73,22 @@ class RDKIT_RDGEOMETRYLIB_EXPORT Point3D : public Point {
     PRECONDITION(i < 3, "Invalid index on Point3D");
     if (i == 0) {
       return x;
-    }
-    if (i == 1) {
+    } else if (i == 1) {
       return y;
+    } else {
+      return z;
     }
-    return z;
   }
 
   inline double &operator[](unsigned int i) override {
     PRECONDITION(i < 3, "Invalid index on Point3D");
     if (i == 0) {
       return x;
-    }
-    if (i == 1) {
+    } else if (i == 1) {
       return y;
+    } else {
+      return z;
     }
-    return z;
   }
 
   Point3D &operator=(const Point3D &other) {
@@ -292,16 +292,18 @@ class RDKIT_RDGEOMETRYLIB_EXPORT Point2D : public Point {
     PRECONDITION(i < 2, "Invalid index on Point2D");
     if (i == 0) {
       return x;
+    } else {
+      return y;
     }
-    return y;
   }
 
   inline double &operator[](unsigned int i) override {
     PRECONDITION(i < 2, "Invalid index on Point2D");
     if (i == 0) {
       return x;
+    } else {
+      return y;
     }
-    return y;
   }
 
   Point2D &operator=(const Point2D &other) {

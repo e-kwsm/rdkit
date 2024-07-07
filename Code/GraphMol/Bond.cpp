@@ -80,8 +80,7 @@ unsigned int Bond::getOtherAtomIdx(const unsigned int thisIdx) const {
                "bad index");
   if (d_beginAtomIdx == thisIdx) {
     return d_endAtomIdx;
-  }
-  if (d_endAtomIdx == thisIdx) {
+  } else if (d_endAtomIdx == thisIdx) {
     return d_beginAtomIdx;
   }
   // we cannot actually get down here

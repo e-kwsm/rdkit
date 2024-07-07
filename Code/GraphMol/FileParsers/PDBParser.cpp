@@ -40,8 +40,7 @@ Atom *PDBAtomFromSymbol(const char *symb) {
     auto *result = new Atom(1);
     result->setIsotope(2);
     return result;
-  }
-  if (symb[0] == 'T' && !symb[1]) {
+  } else if (symb[0] == 'T' && !symb[1]) {
     auto *result = new Atom(1);
     result->setIsotope(3);
     return result;
@@ -569,13 +568,11 @@ void parsePdbBlock(RWMol *&mol, const char *str, bool sanitize, bool removeHs,
           next++;
         }
         break;
-      }
-      if (*next == '\n') {
+      } else if (*next == '\n') {
         len = (unsigned int)(next - str);
         next++;
         break;
-      }
-      if (*next == '\0') {
+      } else if (*next == '\0') {
         len = (unsigned int)(next - str);
         break;
       }

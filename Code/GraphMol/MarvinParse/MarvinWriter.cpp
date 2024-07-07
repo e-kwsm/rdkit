@@ -235,7 +235,8 @@ class MarvinCMLWriter {
     Bond::QUERYBOND_QUERY *qry = bond->getQuery();
     if (qry->getDescription() == "BondOrder" || isQueryBondInRing(bond)) {
       return "";
-    }  // start by catching combined bond order + bond topology queries
+    } else {
+      // start by catching combined bond order + bond topology queries
       if (qry->getDescription() == "BondAnd" && !qry->getNegation() &&
           qry->endChildren() - qry->beginChildren() == 2) {
         auto child1 = qry->beginChildren();
@@ -262,11 +263,9 @@ class MarvinCMLWriter {
             }
             if (t1 == Bond::SINGLE && t2 == Bond::DOUBLE) {
               return "SD";
-            }
-            if (t1 == Bond::SINGLE && t2 == Bond::AROMATIC) {
+            } else if (t1 == Bond::SINGLE && t2 == Bond::AROMATIC) {
               return "SA";
-            }
-            if (t1 == Bond::DOUBLE && t2 == Bond::AROMATIC) {
+            } else if (t1 == Bond::DOUBLE && t2 == Bond::AROMATIC) {
               return "DA";
             }
           }
@@ -283,6 +282,7 @@ class MarvinCMLWriter {
       } else if (qry->getDescription() == "BondNull" && !qry->getNegation()) {
         return "Any";
       }
+    }
 
     throw MarvinWriterException(
         "Only SA, DA, SD, and Any query bond are supported for MarvinWriter");
@@ -882,8 +882,9 @@ class MarvinCMLWriter {
 
     if (verticalFlag) {
       return rectangleList.front().lowerRight.y - ARROW_SPACE;
+    } else {
+      return rectangleList.front().upperLeft.x - ARROW_SPACE;
     }
-    return rectangleList.front().upperLeft.x - ARROW_SPACE;
   }
 
   void AddMarvinPluses(MarvinReaction &rxn,

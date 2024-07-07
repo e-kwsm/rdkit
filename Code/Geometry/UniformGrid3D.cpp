@@ -195,8 +195,9 @@ void UniformGrid3D::setSphereOccupancy(const Point3D &center, double radius,
   if (ptIndex == -1) {
     if (ignoreOutOfBound) {
       return;
+    } else {
+      throw GridException("Center outside the grdi boundary");
     }
-    throw GridException("Center outside the grdi boundary");
   }
   Point3D gPt(center);  // point on the grid
   gPt -= d_offSet;

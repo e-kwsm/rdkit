@@ -420,9 +420,10 @@ python::object AddRecursiveQueriesToReaction(ChemicalReaction &self,
       reactantLabels.append(python::tuple(tmpLabels));
     }
     return python::tuple(reactantLabels);
+  } else {
+    addRecursiveQueriesToReaction(self, queries, propName);
+    return python::object();  // this is None
   }
-  addRecursiveQueriesToReaction(self, queries, propName);
-  return python::object();  // this is None
 }
 
 python::object PreprocessReaction(ChemicalReaction &reaction,

@@ -241,8 +241,9 @@ inline int rotationDir(const RDGeom::Point2D &center,
   cross *= diffAngle;
   if (cross >= 0.0) {
     return -1;
+  } else {
+    return 1;
   }
-  return 1;
 }
 
 //! computes and return the normal of a vector between two points

@@ -895,9 +895,11 @@ void LAP::computeMinCostPath(const int dim) {
                 endOfPath = j;
                 unassignedFound = 1;
                 break;
-              }  // else add to list to be scanned right away
+              } else {
+                // else add to list to be scanned right away
                 d_colList[k] = d_colList[up];
                 d_colList[up++] = j;
+              }
             }
             d_d[j] = v2;
           }
