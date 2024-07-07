@@ -208,7 +208,8 @@ const RGROUPS &EvenSamplePairsStrategy::next() {
       if (seed > rdcast<boost::uint64_t>(m_numPermutations)) {
         rejected_period += 1;
         continue;
-      } else if (selected.find(seed) != selected.end()) {
+      }
+      if (selected.find(seed) != selected.end()) {
         rejected_unique += 1;
         continue;
       } else if (try_add(seed)) {
