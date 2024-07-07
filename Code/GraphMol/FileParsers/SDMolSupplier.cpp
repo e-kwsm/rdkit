@@ -233,7 +233,7 @@ unsigned int SDMolSupplier::length() {
   // return the number of mol blocks in the sdfile
   if (d_len > 0 || (df_end && d_len == 0)) {
     return d_len;
-  } else {
+  }
     std::string tempStr;
     d_len = rdcast<int>(d_molpos.size());
     dp_inStream->seekg(d_molpos.back());
@@ -255,7 +255,6 @@ unsigned int SDMolSupplier::length() {
     dp_inStream->seekg(d_molpos[d_last]);
     df_end = false;
     return d_len;
-  }
 }
 
 bool SDMolSupplier::atEnd() {
