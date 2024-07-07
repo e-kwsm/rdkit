@@ -289,9 +289,8 @@ std::unique_ptr<RWMol> MolFromTPLFile(const std::string &fName,
   if (!inStream.eof()) {
     unsigned int line = 0;
     return MolFromTPLDataStream(inStream, line, params);
-  } else {
-    return nullptr;
   }
+  return nullptr;
 }
 }  // namespace FileParsers
 }  // namespace v2
