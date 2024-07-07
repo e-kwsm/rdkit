@@ -80,8 +80,8 @@ bool hasReactionMoleculeTemplateSubstructMatch(
        ++begin) {
     for (auto begin_query = getStartIterator(query_rxn, t);
          begin_query != getEndIterator(query_rxn, t); ++begin_query) {
-      auto tvect = SubstructMatch(*begin->get(), *begin_query->get(),
-                                  rxn.getSubstructParams());
+      auto tvect =
+          SubstructMatch(**begin, **begin_query, rxn.getSubstructParams());
       if (!tvect.empty()) {
         return true;
       }
@@ -140,7 +140,7 @@ bool hasReactionAtomMapping(const ChemicalReaction &rxn) {
   auto begin = getStartIterator(rxn, Reactant);
   auto end = getEndIterator(rxn, Reactant);
   for (; begin != end; ++begin) {
-    const ROMol &reactant = *begin->get();
+    const ROMol &reactant = **begin;
     if (MolOps::getNumAtomsWithDistinctProperty(
             reactant, common_properties::molAtomMapNumber)) {
       return true;
@@ -149,7 +149,7 @@ bool hasReactionAtomMapping(const ChemicalReaction &rxn) {
   begin = getStartIterator(rxn, Product);
   end = getEndIterator(rxn, Product);
   for (; begin != end; ++begin) {
-    const ROMol &reactant = *begin->get();
+    const ROMol &reactant = **begin;
     if (MolOps::getNumAtomsWithDistinctProperty(
             reactant, common_properties::molAtomMapNumber)) {
       return true;
@@ -340,7 +340,7 @@ namespace {
 void removeMappingNumbersFromReactionMoleculeTemplate(
     const MOL_SPTR_VECT &molVec) {
   for (const auto &begin : molVec) {
-    ROMol &mol = *begin.get();
+    ROMol &mol = *begin;
     for (ROMol::AtomIterator atomIt = mol.beginAtoms();
          atomIt != mol.endAtoms(); ++atomIt) {
       if ((*atomIt)->hasProp(common_properties::molAtomMapNumber)) {
