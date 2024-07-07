@@ -608,7 +608,8 @@ void ParseUnsaturationLine(RWMol *mol, const std::string &text,
       spos += 4;
       if (count == 0) {
         continue;
-      } else if (count == 1) {
+      }
+      if (count == 1) {
         ATOM_EQUALS_QUERY *q = makeAtomUnsaturatedQuery();
         if (!atom->hasQuery()) {
           atom = QueryOps::replaceAtomWithQueryAtom(mol, atom);
@@ -742,9 +743,8 @@ void ParseZCHLine(RWMol *mol, const std::string &text, unsigned int line) {
         errout << "Atom " << aid << " from ZCH specification on line " << line
                << " not found";
         throw FileParseException(errout.str());
-      } else {
-        atom->setFormalCharge(val);
       }
+      atom->setFormalCharge(val);
     } catch (boost::bad_lexical_cast &) {
       std::ostringstream errout;
       errout << "Cannot convert '" << text.substr(spos, 4)
@@ -793,12 +793,11 @@ void ParseHYDLine(RWMol *mol, const std::string &text, unsigned int line) {
         errout << "Atom " << aid << " from HYD specification on line " << line
                << " not found";
         throw FileParseException(errout.str());
-      } else {
+      }
         if (val >= 0) {
           atom->setProp("_ZBO_H", true);
           atom->setNumExplicitHs(val);
         }
-      }
     } catch (boost::bad_lexical_cast &) {
       std::ostringstream errout;
       errout << "Cannot convert '" << text.substr(spos, 4)
@@ -848,13 +847,12 @@ void ParseZBOLine(RWMol *mol, const std::string &text, unsigned int line) {
         errout << "Bond " << bid << " from ZBO specification on line " << line
                << " not found";
         throw FileParseException(errout.str());
-      } else {
+      }
         if (order == 0) {
           bnd->setBondType(Bond::ZERO);
         } else {
           bnd->setBondType(static_cast<Bond::BondType>(order));
         }
-      }
     } catch (boost::bad_lexical_cast &) {
       std::ostringstream errout;
       errout << "Cannot convert '" << text.substr(spos, 4)
@@ -955,7 +953,7 @@ void ParseAttachPointLine(RWMol *mol, const std::string &text,
         errout << "Atom " << aid << " from APO specification on line " << line
                << " not found";
         throw FileParseException(errout.str());
-      } else {
+      }
         if (val < 0 || val > 3) {
           std::ostringstream errout;
           errout << "Value " << val << " from APO specification on line "
@@ -979,7 +977,6 @@ void ParseAttachPointLine(RWMol *mol, const std::string &text,
             atom->setProp(common_properties::molAttachPoint, val);
           }
         }
-      }
     } catch (boost::bad_lexical_cast &) {
       std::ostringstream errout;
       errout << "Cannot convert '" << text.substr(spos, 4)
@@ -1387,10 +1384,9 @@ void lookupAtomicNumber(Atom *res, const std::string &symb,
   } catch (const Invar::Invariant &e) {
     if (strictParsing || symb.empty()) {
       throw FileParseException(e.what());
-    } else {
+    }
       res->setAtomicNum(0);
       res->setProp(common_properties::dummyLabel, symb);
-    }
   }
 }
 
