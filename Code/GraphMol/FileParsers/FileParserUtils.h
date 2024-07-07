@@ -44,9 +44,8 @@ T stripSpacesAndCast(std::string_view input, bool acceptSpaces = false) {
   auto trimmed = strip(input, " ");
   if (acceptSpaces && trimmed.empty()) {
     return 0;
-  } else {
-    return boost::lexical_cast<T>(trimmed);
   }
+  return boost::lexical_cast<T>(trimmed);
 }
 template <typename T>
 T stripSpacesAndCast(const std::string &input, bool acceptSpaces = false) {
