@@ -923,9 +923,8 @@ void GenerateFP(const RDKit::ROMol &mol, ExplicitBitVect &fp) {
       if (nArom) {
         fp.setBit(125);
         break;
-      } else {
-        nArom++;
       }
+      nArom++;
     }
   }
 
