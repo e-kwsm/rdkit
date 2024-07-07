@@ -470,7 +470,7 @@ INT_PAIR_VECT findBondsPairsToPermuteDeg4(const RDGeom::Point2D &center,
       res.push_back(p2);
     }
     return res;
-  } else {
+  }
     // bids[0] and bids[1] are opposite to each other, so bids[2] and bids[3]
     // must
     // be perpendicular to bids[0]
@@ -479,7 +479,6 @@ INT_PAIR_VECT findBondsPairsToPermuteDeg4(const RDGeom::Point2D &center,
     INT_PAIR p2(nbrBids[0], nbrBids[3]);
     res.push_back(p2);
     return res;
-  }
 }
 
 template <class T>
