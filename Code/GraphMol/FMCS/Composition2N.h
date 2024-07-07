@@ -32,9 +32,8 @@ class Composition2N {  // generator of 2^N-1 possible bit combinations
     if ((++Bits) <= MaxValue) {
       InverseBits = (~Bits + 1) & ValueMask;
       return true;
-    } else {
-      return false;
     }
+    return false;
   }
   bool is2Power() const {  // one bit is set only
     BitSet bits = getBitSet();
