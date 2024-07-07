@@ -1746,7 +1746,8 @@ OrientType DrawMol::getAtomOrientation(const RDKit::Atom &atom) const {
           if (ang > 80.0 && ang < 100.0 && orient == OrientType::S) {
             orient = OrientType::S;
             break;
-          } else if (ang < -80.0 && ang > -100.0 && orient == OrientType::N) {
+          }
+          if (ang < -80.0 && ang > -100.0 && orient == OrientType::N) {
             orient = OrientType::N;
             break;
           }
@@ -2535,7 +2536,8 @@ void DrawMol::makeBondHighlightLines(double lineWidth, double scale) {
                     [](Point2D &p1, Point2D &p2) -> bool {
                       if (p1.y < p2.y) {
                         return true;
-                      } else if (p1.y == p2.y) {
+                      }
+                      if (p1.y == p2.y) {
                         return p1.x < p2.x;
                       }
                       return false;
@@ -2549,11 +2551,11 @@ void DrawMol::makeBondHighlightLines(double lineWidth, double scale) {
                                  (p1.x - p0.x) * (p2.y - p1.y);
                       if (val == 0.0) {
                         return (p0 - p2).lengthSq() < (p0 - p1).lengthSq();
-                      } else if (val < 0.0) {
-                        return true;
-                      } else {
-                        return false;
                       }
+                      if (val < 0.0) {
+                        return true;
+                      }
+                      return false;
                     });
           DrawShape *hb = new DrawShapePolyLine(
               points, 0, false, col, true, thisIdx + activeAtmIdxOffset_,
@@ -2591,12 +2593,11 @@ void DrawMol::calcAnnotationPosition(const Atom *atom,
       int clashScore = doesNoteClash(annot);
       if (!clashScore) {
         return;
-      } else {
+      }
         if (clashScore < leastWorstScore) {
           leastWorstScore = clashScore;
           leastWorstPos = annot.pos_;
         }
-      }
     }
   }
   annot.pos_ = leastWorstPos;
@@ -3667,9 +3668,8 @@ void DrawMol::makeHighlightEnd(const Atom *end1, const Atom *end2,
     Point2D ins;
     if (doLinesIntersect(line12, line11, line22, line21, &ins)) {
       return ins;
-    } else {
-      return Point2D(e1);
     }
+    return Point2D(e1);
   };
 
   auto end1Cds = atCds_[end1->getIdx()];
@@ -4064,9 +4064,8 @@ const Atom *otherNeighbor(const Atom *firstAtom, const Atom *secondAtom,
     if (nbr->getIdx() != secondAtom->getIdx()) {
       if (nbourCount == nborNum) {
         return nbr;
-      } else {
-        nbourCount++;
       }
+      nbourCount++;
     }
   }
   return nullptr;
