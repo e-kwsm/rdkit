@@ -104,7 +104,7 @@ std::unique_ptr<RWMol> constructMolFromString(
     ps.mergeHs = false;
     ps.skipCleanup = true;
     return SmilesParse::MolFromSmarts(txt, ps);
-  } else {
+  }
     SmilesParse::SmilesParserParams ps;
     ps.replacements = params.replacements;
     ps.allowCXSMILES = false;
@@ -113,7 +113,6 @@ std::unique_ptr<RWMol> constructMolFromString(
     ps.removeHs = false;
     ps.skipCleanup = true;
     return SmilesParse::MolFromSmiles(txt, ps);
-  }
 }
 
 }  // end of namespace DaylightParserUtils
