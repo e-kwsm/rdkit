@@ -108,19 +108,23 @@ std::vector<double> MolData3Ddescriptors::GetCharges(const RDKit::ROMol &mol) {
 int MolData3Ddescriptors::GetPrincipalQuantumNumber(int AtomicNum) {
   if (AtomicNum <= 2) {
     return 1;
-  } else if (AtomicNum <= 10) {
-    return 2;
-  } else if (AtomicNum <= 18) {
-    return 3;
-  } else if (AtomicNum <= 36) {
-    return 4;
-  } else if (AtomicNum <= 54) {
-    return 5;
-  } else if (AtomicNum <= 86) {
-    return 6;
-  } else {
-    return 7;
   }
+  if (AtomicNum <= 10) {
+    return 2;
+  }
+  if (AtomicNum <= 18) {
+    return 3;
+  }
+  if (AtomicNum <= 36) {
+    return 4;
+  }
+  if (AtomicNum <= 54) {
+    return 5;
+  }
+  if (AtomicNum <= 86) {
+    return 6;
+  }
+  return 7;
 }
 
 std::vector<double> MolData3Ddescriptors::GetIState(const RDKit::ROMol &mol) {
