@@ -119,7 +119,7 @@ void addAtom(const Atom &atom, rj::Value &rjAtom, rj::Document &doc,
   addIntVal(rjAtom, rjDefaults, "chg", atom.getFormalCharge(), doc);
   addIntVal(rjAtom, rjDefaults, "isotope", atom.getIsotope(), doc);
   addIntVal(rjAtom, rjDefaults, "nRad", atom.getNumRadicalElectrons(), doc);
-  std::string chi = "";
+  std::string chi;
   if (inv_chilookup.find(atom.getChiralTag()) != inv_chilookup.end()) {
     chi = inv_chilookup.find(atom.getChiralTag())->second;
   } else {
@@ -241,7 +241,7 @@ void addBond(const Bond &bond, rj::Value &rjBond, rj::Document &doc,
   rjAtoms.PushBack(v2, doc.GetAllocator());
   rjBond.AddMember("atoms", rjAtoms, doc.GetAllocator());
 
-  std::string chi = "";
+  std::string chi;
   if (auto sbIter = inv_stereoBondlookup.find(bond.getStereo());
       sbIter != inv_stereoBondlookup.end()) {
     chi = sbIter->second;
@@ -651,7 +651,7 @@ void addMol(const T &imol, rj::Value &rjMol, rj::Document &doc,
 template <typename T>
 std::string MolsToJSONData(const std::vector<T> &mols,
                            const JSONWriteParameters &params) {
-  std::string res = "";
+  std::string res;
   rj::Document doc;
   doc.SetObject();
 
