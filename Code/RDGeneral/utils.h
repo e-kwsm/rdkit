@@ -88,9 +88,8 @@ inline double int_pow(double x) {
   double half = int_pow<n / 2>(x);
   if (n % 2 == 0) {  // even
     return half * half;
-  } else {
-    return half * half * x;
   }
+  return half * half * x;
 }
 
 template <>
