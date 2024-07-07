@@ -123,7 +123,8 @@ int GetMatchVectItem(std::pair<int, int> &pair, size_t idx) {
   static const int def = 0xDEADBEEF;
   if (idx == 0) {
     return pair.first;
-  } else if (idx == 1) {
+  }
+  if (idx == 1) {
     return pair.second;
   }
   PyErr_SetString(PyExc_IndexError, "Index out of bounds");
