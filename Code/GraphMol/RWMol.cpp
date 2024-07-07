@@ -320,9 +320,8 @@ void RWMol::replaceBond(unsigned int idx, Bond *bond_pin, bool preserveProps,
 Atom *RWMol::getActiveAtom() {
   if (hasAtomBookmark(ci_RIGHTMOST_ATOM)) {
     return getAtomWithBookmark(ci_RIGHTMOST_ATOM);
-  } else {
-    return getLastAtom();
   }
+  return getLastAtom();
 };
 
 void RWMol::setActiveAtom(Atom *at) {
@@ -462,7 +461,8 @@ void RWMol::removeAtom(Atom *atom, bool clearProps) {
       if ((*bsi) == rdcast<int>(idx)) {
         bond->getStereoAtoms().clear();
         break;
-      } else if ((*bsi) > rdcast<int>(idx)) {
+      }
+      if ((*bsi) > rdcast<int>(idx)) {
         --(*bsi);
       }
     }
@@ -649,7 +649,8 @@ void RWMol::beginBatchEdit() {
 void RWMol::commitBatchEdit() {
   if (!(dp_delBonds || dp_delAtoms)) {
     return;
-  } else if (dp_delBonds->none() && dp_delAtoms->none()) {
+  }
+  if (dp_delBonds->none() && dp_delAtoms->none()) {
     // no need to reset ring info & calculated properties,
     // since nothing gets removed
     dp_delBonds.reset();
