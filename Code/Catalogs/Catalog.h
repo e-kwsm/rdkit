@@ -66,7 +66,8 @@ class Catalog {
 
   //------------------------------------
   //! returns a particular entry in the Catalog
-  virtual const entryType *getEntryWithIdx(unsigned int idx) const = 0;
+  [[nodiscard]] virtual const entryType *getEntryWithIdx(
+      unsigned int idx) const = 0;
 
   //------------------------------------
   //! returns the number of entries
@@ -98,7 +99,7 @@ class Catalog {
 
   //------------------------------------
   //! returns a pointer to our parameters
-  const paramType *getCatalogParams() const { return dp_cParams; }
+  [[nodiscard]] const paramType *getCatalogParams() const { return dp_cParams; }
 
  protected:
   // this is the ID that will be assigned to the next entry
