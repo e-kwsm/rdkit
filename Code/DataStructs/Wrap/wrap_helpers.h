@@ -55,9 +55,8 @@ int get_VectItem(const T& self, int which) {
   if (which < 0) {
     if (which + static_cast<int>(self.getNumBits()) < 0) {
       throw IndexErrorException(which);
-    } else {
-      which += self.getNumBits();
     }
+    which += self.getNumBits();
   }
   return self.getBit(static_cast<unsigned int>(which));
 }
