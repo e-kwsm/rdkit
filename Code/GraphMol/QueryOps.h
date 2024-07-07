@@ -1054,7 +1054,7 @@ class HasPropWithValueQuery<TargetPtr, ExplicitBitVect>
   }
 
   //! returns a copy of this query
-  Queries::Query<int, TargetPtr, true> *copy() const override {
+  [[nodiscard]] Queries::Query<int, TargetPtr, true> *copy() const override {
     HasPropWithValueQuery<TargetPtr, ExplicitBitVect> *res =
         new HasPropWithValueQuery<TargetPtr, ExplicitBitVect>(
             this->propname, this->val, this->tol);
