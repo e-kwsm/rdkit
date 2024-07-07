@@ -305,9 +305,8 @@ double TverskySimilarity(const T1& bv1, const T2& bv2, double a, double b) {
   double denom = a * y + b * z + (1 - a - b) * x;
   if (denom == 0.0) {
     return 1.0;
-  } else {
-    return x / denom;
   }
+  return x / denom;
 }
 
 template <typename T1, typename T2>
@@ -321,9 +320,8 @@ double CosineSimilarity(const T1& bv1, const T2& bv2) {
 
   if (y * z > 0.0) {
     return x / sqrt(y * z);
-  } else {
-    return 0.0;
   }
+  return 0.0;
 }
 
 template <typename T1, typename T2>
