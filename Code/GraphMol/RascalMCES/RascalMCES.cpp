@@ -56,7 +56,7 @@ class TimedOutException : public std::exception {
     }
   }
 
-  const char *what() const throw() override { return d_message.c_str(); }
+  const char *what() const noexcept override { return d_message.c_str(); }
 
   std::vector<std::vector<unsigned int>> d_cliques;
 
