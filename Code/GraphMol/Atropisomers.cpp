@@ -686,17 +686,16 @@ bool WedgeBondFromAtropisomerOneBondNoConf(
               << bond->getBeginAtomIdx() << " " << bond->getEndAtomIdx()
               << std::endl;
           return false;
-        } else {
+        }
           continue;  // wedge or hash bond affecting the OTHER atom
                      // = perhaps a chiral center
-        }
       }
       auto ringCount = ri->numBondRings(bondToTry->getIdx());
       if (ringCount > bestRingCount) {
         continue;
       }
 
-      else if (ringCount < bestRingCount) {
+      if (ringCount < bestRingCount) {
         bestBondEnd = whichEnd;
         bestBondNumber = whichBond;
         bestRingCount = ringCount;
@@ -894,9 +893,8 @@ bool WedgeBondFromAtropisomerOneBond2d(
                 << bond->getBeginAtomIdx() << " " << bond->getEndAtomIdx()
                 << std::endl;
             return false;
-          } else {
-            continue;  // probably a slash up or down for a double bond
           }
+          continue;  // probably a slash up or down for a double bond
         } else {
           continue;  // wedge or hash bond affecting the OTHER atom
                      // = perhaps a chiral center
@@ -916,7 +914,8 @@ bool WedgeBondFromAtropisomerOneBond2d(
       }
       if (ringCount > bestRingCount) {
         continue;
-      } else if (ringCount < bestRingCount || ringSize > largestRingSize) {
+      }
+      if (ringCount < bestRingCount || ringSize > largestRingSize) {
         bestBondEnd = whichEnd;
         bestBondNumber = whichBond;
         bestRingCount = ringCount;
@@ -1079,10 +1078,9 @@ bool WedgeBondFromAtropisomerOneBond3d(
               << bond->getBeginAtomIdx() << " " << bond->getEndAtomIdx()
               << std::endl;
           return false;
-        } else {
+        }
           continue;  // wedge or hash bond affecting the OTHER atom
                      // = perhaps a chiral center
-        }
       }
       auto ringCount = ri->numBondRings(bondToTry->getIdx());
       unsigned int ringSize = 0;
@@ -1098,7 +1096,8 @@ bool WedgeBondFromAtropisomerOneBond3d(
       }
       if (ringCount > bestRingCount) {
         continue;
-      } else if (ringCount < bestRingCount || ringSize > largestRingSize) {
+      }
+      if (ringCount < bestRingCount || ringSize > largestRingSize) {
         bestBond = bondToTry;
         bestBondEnd = whichEnd;
         bestRingCount = ringCount;
