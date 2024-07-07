@@ -67,15 +67,13 @@ int set_VectItem(T &self, int which, const int val) {
   if (which < 0) {
     if (which + static_cast<int>(self.getNumBits()) < 0) {
       throw IndexErrorException(which);
-    } else {
-      which += self.getNumBits();
     }
+    which += self.getNumBits();
   }
   if (val) {
     return self.setBit(static_cast<unsigned int>(which));
-  } else {
-    return self.unsetBit(static_cast<unsigned int>(which));
   }
+  return self.unsetBit(static_cast<unsigned int>(which));
 }
 
 // used to support getOnBits()
