@@ -1966,7 +1966,7 @@ void EmbeddedFrag::removeCollisionsBondFlip() {
           }
           if (colls.size() == ncols && newDensity < prevDensity) {
             break;
-          } else {
+          }
             // we made the wrong move earlier - reject the flip move it back
             flipAboutBond(ri);
             colls = this->findCollisions(dmat);
@@ -1983,7 +1983,6 @@ void EmbeddedFrag::removeCollisionsBondFlip() {
               flipAboutBond(ri, false);
               colls = this->findCollisions(dmat);
             }
-          }
         }
       }
     }
