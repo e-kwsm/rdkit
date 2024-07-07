@@ -388,9 +388,8 @@ class RDKIT_MOLSTANDARDIZE_EXPORT TautomerEnumerator {
   /// overload for efficiency (TautomerEnumeratorResult already has SMILES so no
   /// need to recompute them)
   template <class Iterable,
-            typename std::enable_if<
-                !std::is_same<Iterable, TautomerEnumeratorResult>::value,
-                int>::type = 0>
+            std::enable_if_t<
+                !std::is_same_v<Iterable, TautomerEnumeratorResult>, int> = 0>
   ROMol *pickCanonical(const Iterable &tautomers,
                        boost::function<int(const ROMol &mol)> scoreFunc =
                            TautomerScoringFunctions::scoreTautomer) const {
