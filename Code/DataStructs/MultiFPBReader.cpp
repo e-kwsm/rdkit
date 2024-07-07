@@ -30,20 +30,17 @@ auto tplSorter = [](const MultiFPBReader::ResultTuple &v1,
   if (std::get<0>(v1) == std::get<0>(v2)) {
     if (std::get<2>(v1) == std::get<2>(v2)) {
       return std::get<1>(v1) < std::get<1>(v2);
-    } else {
-      return std::get<2>(v1) < std::get<2>(v2);
     }
-  } else {
-    return std::get<0>(v1) > std::get<0>(v2);
+    return std::get<2>(v1) < std::get<2>(v2);
   }
+  return std::get<0>(v1) > std::get<0>(v2); 
 };
 
 auto pairSorter = [](const auto &v1, const auto &v2) {
   if (v1.first == v2.first) {
     return v1.second < v2.second;
-  } else {
-    return v1.first < v2.first;
   }
+  return v1.first < v2.first;
 };
 
 struct sim_args {
