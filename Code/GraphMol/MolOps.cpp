@@ -90,7 +90,8 @@ void nitrogenCleanup(RWMol &mol, Atom *atom) {
         atom->setFormalCharge(1);
         nbr->setFormalCharge(-1);
         break;
-      } else if ((nbr->getAtomicNum() == 7) && (nbr->getFormalCharge() == 0) &&
+      }
+      if ((nbr->getAtomicNum() == 7) && (nbr->getFormalCharge() == 0) &&
                  (mol.getBondBetweenAtoms(aid, nbr->getIdx())->getBondType() ==
                   Bond::TRIPLE)) {
         // here's the triple bonded nitrogen
@@ -268,9 +269,8 @@ void metalBondCleanup(RWMol &mol, Atom *atom,
                   int nda2 = numDativeBonds(a2);
                   if (nda1 == nda2) {
                     return ranks[a1->getIdx()] > ranks[a2->getIdx()];
-                  } else {
-                    return nda1 < nda2;
                   }
+                  return nda1 < nda2;
                 });
       auto bond =
           mol.getBondBetweenAtoms(atom->getIdx(), metals.front()->getIdx());
@@ -873,7 +873,8 @@ std::map<T, std::unique_ptr<ROMol>> getTheFragsWithQuery(
                    whiteList->end();
       if (!found && !negateList) {
         continue;
-      } else if (found && negateList) {
+      }
+      if (found && negateList) {
         continue;
       }
     }
