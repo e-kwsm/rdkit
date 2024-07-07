@@ -40,18 +40,18 @@ struct RDKIT_RGROUPDECOMPOSITION_EXPORT RGroupData {
   void add(const ROMOL_SPTR &newMol,
            const std::vector<int> &rlabel_attachments);
 
-  std::map<int, int> getNumBondsToRlabels() const;
+  [[nodiscard]] std::map<int, int> getNumBondsToRlabels() const;
 
-  std::string toString() const;
+  [[nodiscard]] std::string toString() const;
 
  private:
   void computeIsHydrogen();
 
-  bool isMolHydrogen(const ROMol &mol) const;
+  [[nodiscard]] bool isMolHydrogen(const ROMol &mol) const;
 
   //! compute the canonical smiles for the attachments (bug: removes dupes since
   //! we are using a set...)
-  std::string getSmiles() const;
+  [[nodiscard]] std::string getSmiles() const;
 };
 }  // namespace RDKit
 
