@@ -49,11 +49,11 @@ int calcOxidationNumberByEN(const Atom *atom) {
   auto sf = [](float enDiff) -> int {
     if (enDiff > 0.0) {
       return -1;
-    } else if (enDiff < 0.0) {
-      return 1;
-    } else {
-      return 0;
     }
+    if (enDiff < 0.0) {
+      return 1;
+    }
+    return 0;
   };
 
   int oxNum = 0;
