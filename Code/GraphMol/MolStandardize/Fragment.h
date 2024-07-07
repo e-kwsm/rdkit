@@ -65,10 +65,9 @@ inline FragmentRemover *fragmentRemoverFromParams(
   if (params.fragmentData.empty()) {
     return new FragmentRemover(params.fragmentFile, leave_last,
                                skip_if_all_match);
-  } else {
+  }
     return new FragmentRemover(params.fragmentData, leave_last,
                                skip_if_all_match);
-  }
 }
 
 class RDKIT_MOLSTANDARDIZE_EXPORT LargestFragmentChooser {
