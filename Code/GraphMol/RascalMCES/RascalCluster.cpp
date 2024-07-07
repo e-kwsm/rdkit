@@ -254,9 +254,8 @@ std::vector<std::vector<unsigned int>> formInitialClusters(
                const std::vector<unsigned int> &c2) -> bool {
               if (c1.size() == c2.size()) {
                 return c1.front() < c2.front();
-              } else {
-                return c1.size() > c2.size();
               }
+              return c1.size() > c2.size();
             });
   clusters.erase(std::unique(clusters.begin(), clusters.end()), clusters.end());
   return clusters;
