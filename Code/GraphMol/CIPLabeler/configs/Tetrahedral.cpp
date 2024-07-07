@@ -192,7 +192,8 @@ Descriptor Tetrahedral::label(Node *node, const Rules &comp) {
       return Descriptor::s;
     }
     return Descriptor::S;
-  } else if (config == Atom::CHI_TETRAHEDRAL_CW) {
+  }
+  if (config == Atom::CHI_TETRAHEDRAL_CW) {
     if (priority.isPseudoAsymetric()) {
       return Descriptor::r;
     }
