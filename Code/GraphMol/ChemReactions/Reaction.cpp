@@ -493,10 +493,12 @@ bool isChangedAtom(const Atom &rAtom, const Atom &pAtom, int mapNum,
       pAtom.getAtomicNum() > 0) {
     // the atomic number changed and the product wasn't a dummy
     return true;
-  } else if (rAtom.getDegree() != pAtom.getDegree()) {
+  }
+  if (rAtom.getDegree() != pAtom.getDegree()) {
     // the degree changed
     return true;
-  } else if (pAtom.getAtomicNum() > 0 && isComplexQuery(&rAtom)) {
+  }
+  if (pAtom.getAtomicNum() > 0 && isComplexQuery(&rAtom)) {
     // more than a simple query
     return true;
   }
@@ -535,7 +537,7 @@ bool isChangedAtom(const Atom &rAtom, const Atom &pAtom, int mapNum,
         if (!pBond->hasQuery()) {
           // reactant query, product not query: always a change
           return true;
-        } else {
+        }
           if (pBond->getQuery()->getDescription() == "BondNull") {
             // null queries are trump, they match everything
           } else if (rBond->getBondType() == Bond::SINGLE &&
@@ -562,7 +564,6 @@ bool isChangedAtom(const Atom &rAtom, const Atom &pAtom, int mapNum,
               return true;
             }
           }
-        }
       } else if (pBond->hasQuery()) {
         // reactant not query, product query
         // if product is anything other than the null query
