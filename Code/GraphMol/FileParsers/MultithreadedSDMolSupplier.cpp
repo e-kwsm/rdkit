@@ -224,7 +224,7 @@ void MultithreadedSDMolSupplier::readMolProps(RWMol &mol,
           // FIX: should we be deleting the molecule (which is probably fine)
           // because we couldn't read the data ???
           throw FileParseException("Problems encountered parsing data fields");
-        } else {
+        }
           if (!warningIssued) {
             if (hasProp) {
               BOOST_LOG(rdWarningLog)
@@ -236,7 +236,6 @@ void MultithreadedSDMolSupplier::readMolProps(RWMol &mol,
             }
             warningIssued = true;
           }
-        }
       }
     }
     std::getline(inStream, tempStr);
