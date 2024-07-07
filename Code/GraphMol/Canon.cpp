@@ -45,7 +45,8 @@ bool hasSingleHQuery(const Atom::QUERYATOM_QUERY *q) {
       if (cDescr == "AtomHCount") {
         return !(*cIt)->getNegation() &&
                ((ATOM_EQUALS_QUERY *)(*cIt).get())->getVal() == 1;
-      } else if (cDescr == "AtomAnd") {
+      }
+      if (cDescr == "AtomAnd") {
         res = hasSingleHQuery((*cIt).get());
         if (res) {
           return true;
@@ -95,9 +96,8 @@ bool checkBondsInSameBranch(MolStack &molStack, Bond *dblBnd, Bond *dirBnd) {
         if (item.obj.bond == dirBnd || item.obj.bond == dblBnd) {
           if (seenDblBond) {
             return branchCounter == 0;
-          } else {
-            seenDblBond = true;
           }
+          seenDblBond = true;
         }
         break;
       case MOL_STACK_BRANCH_OPEN:
