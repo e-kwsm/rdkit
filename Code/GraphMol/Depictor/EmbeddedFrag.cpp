@@ -159,7 +159,8 @@ void EmbeddedFrag::computeNbrsAndAng(unsigned int aid,
       nb2 = wnb1;
       nb1 = nbrPair.second;
       break;
-    } else if (wnb1 == nbrPair.second) {
+    }
+    if (wnb1 == nbrPair.second) {
       nb2 = wnb1;
       nb1 = nbrPair.first;
       break;
@@ -388,7 +389,8 @@ bool EmbeddedFrag::matchToTemplate(const RDKit::INT_VECT &ringSystemAtoms,
     // and bond count first
     if (mol->getNumBonds() != rs_mol.getNumBonds()) {
       continue;
-    } else if (mol->getRingInfo()->numRings() != ring_count) {
+    }
+    if (mol->getRingInfo()->numRings() != ring_count) {
       continue;
     }
     RDKit::SubstructMatchParameters params;
@@ -1625,7 +1627,7 @@ void _recurseDegTwoRingAtoms(unsigned int aid, const RDKit::ROMol *mol,
   }
   if (nbrs.size() != 2) {
     return;
-  } else {
+  }
     rPath.push_back(aid);
     nbrMap[aid] = nbrs;
     for (auto nbr : nbrs) {
@@ -1633,7 +1635,6 @@ void _recurseDegTwoRingAtoms(unsigned int aid, const RDKit::ROMol *mol,
         _recurseDegTwoRingAtoms(nbr, mol, rPath, nbrMap);
       }
     }
-  }
 }
 
 unsigned int _anyNonRingBonds(unsigned int aid, RDKit::INT_LIST path,
