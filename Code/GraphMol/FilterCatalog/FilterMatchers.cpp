@@ -118,14 +118,14 @@ bool SmartsMatcher::hasMatch(const ROMol &mol) const {
   if (d_min_count == 1 && d_max_count == UINT_MAX) {
     RDKit::MatchVectType matches;
     return SubstructMatch(mol, *d_pattern.get(), matches);
-  } else {  // need to count
+  }
+    // need to count
     const bool uniquify = true;
     std::vector<RDKit::MatchVectType> matches;
     unsigned int count =
         RDKit::SubstructMatch(mol, *d_pattern.get(), matches, uniquify);
     return (count >= d_min_count &&
             (d_max_count == UINT_MAX || count <= d_max_count));
-  }
 }
 
 bool FilterHierarchyMatcher::getMatches(const ROMol &mol,
