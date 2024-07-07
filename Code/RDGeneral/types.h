@@ -271,9 +271,8 @@ struct RDKIT_RDGENERAL_EXPORT ltDouble {
   bool operator()(double d1, double d2) const {
     if (fabs(d1 - d2) < _tol) {
       return false;
-    } else {
-      return (d1 < d2);
     }
+    return (d1 < d2);
   }
 
  private:
