@@ -117,9 +117,8 @@ python::tuple fragmentOnSomeBondsHelper(const ROMol &mol,
     tres.append(python::tuple(res));
     tres.append(python::tuple(pyCutsPerAtom));
     return python::tuple(tres);
-  } else {
-    return python::tuple(res);
   }
+  return python::tuple(res);
 }
 
 python::tuple getShortestPathHelper(const ROMol &mol, int aid1, int aid2) {
