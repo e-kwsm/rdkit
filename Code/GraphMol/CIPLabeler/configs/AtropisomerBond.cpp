@@ -145,12 +145,12 @@ Descriptor AtropisomerBond::label(Node *root1, Digraph &digraph,
       return Descriptor::m;
     }
     return Descriptor::M;
-  } else if (config == Bond::STEREOATROPCW) {
+  }
+  if (config == Bond::STEREOATROPCW) {
     if (priority1.isPseudoAsymetric() || priority2.isPseudoAsymetric()) {
       return Descriptor::p;
-    } else {
-      return Descriptor::P;
     }
+    return Descriptor::P;
   }
   return Descriptor::UNKNOWN;
 }
