@@ -170,7 +170,7 @@ class RDKIT_QUERY_EXPORT Query {
                                Int2Type<false> /*d*/) const {
     MatchFuncArgType mfArg;
     if (this->d_dataFuncSameType != nullptr &&
-        std::is_same<MatchFuncArgType, DataFuncArgType>::value) {
+        std::is_same_v<MatchFuncArgType, DataFuncArgType>) {
       mfArg = this->d_dataFuncSameType(what);
     } else {
       mfArg = what;
