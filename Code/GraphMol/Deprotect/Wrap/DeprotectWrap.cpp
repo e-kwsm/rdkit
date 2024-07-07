@@ -21,9 +21,8 @@ boost::shared_ptr<ROMol> DeprotectWrap(const ROMol &mol,
     std::vector<Deprotect::DeprotectData> deprotections;
     pythonObjectToVect<Deprotect::DeprotectData>(iterable, deprotections);
     return Deprotect::deprotect(mol, deprotections);
-  } else {
-    return Deprotect::deprotect(mol, Deprotect::getDeprotections());
   }
+  return Deprotect::deprotect(mol, Deprotect::getDeprotections());
 }
 
 bool DeprotectInPlaceWrap(ROMol &mol, const python::object &iterable) {
@@ -32,9 +31,8 @@ bool DeprotectInPlaceWrap(ROMol &mol, const python::object &iterable) {
     std::vector<Deprotect::DeprotectData> deprotections;
     pythonObjectToVect<Deprotect::DeprotectData>(iterable, deprotections);
     return Deprotect::deprotectInPlace(rwmol, deprotections);
-  } else {
-    return Deprotect::deprotectInPlace(rwmol, Deprotect::getDeprotections());
   }
+  return Deprotect::deprotectInPlace(rwmol, Deprotect::getDeprotections());
 }
 
 //! Make a copy so we don't try and change a const vector
