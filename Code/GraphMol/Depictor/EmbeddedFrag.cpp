@@ -1977,12 +1977,12 @@ void EmbeddedFrag::removeCollisionsBondFlip() {
             if (colls.size() < ncols) {
               doneBonds[ri] = NUM_BONDS_FLIPS;  // lock this rotatable bond
               break;
-            } else if (colls.size() == ncols && newDensity < prevDensity) {
+            }
+            if (colls.size() == ncols && newDensity < prevDensity) {
               break;
-            } else {
+            }
               flipAboutBond(ri, false);
               colls = this->findCollisions(dmat);
-            }
         }
       }
     }
