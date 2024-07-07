@@ -45,9 +45,9 @@ class RDKIT_MOLSTANDARDIZE_EXPORT ValidationMethod {
   ValidationMethod() = default;
   virtual ~ValidationMethod() = default;
 
-  virtual std::vector<ValidationErrorInfo> validate(
+  [[nodiscard]] virtual std::vector<ValidationErrorInfo> validate(
       const ROMol &mol, bool reportAllFailures) const = 0;
-  virtual std::shared_ptr<ValidationMethod> copy() const = 0;
+  [[nodiscard]] virtual std::shared_ptr<ValidationMethod> copy() const = 0;
 };
 
 //! The CompositeValidation class provides a simple way to apply a collection of
@@ -59,10 +59,10 @@ class RDKIT_MOLSTANDARDIZE_EXPORT CompositeValidation
       const std::vector<std::shared_ptr<ValidationMethod>> &validations)
       : validations(validations){};
 
-  std::vector<ValidationErrorInfo> validate(
+  [[nodiscard]] std::vector<ValidationErrorInfo> validate(
       const ROMol &mol, bool reportAllFailures) const override;
 
-  std::shared_ptr<ValidationMethod> copy() const override {
+  [[nodiscard]] std::shared_ptr<ValidationMethod> copy() const override {
     return std::make_shared<CompositeValidation>(*this);
   }
 
@@ -80,10 +80,10 @@ class RDKIT_MOLSTANDARDIZE_EXPORT CompositeValidation
 */
 class RDKIT_MOLSTANDARDIZE_EXPORT RDKitValidation : public ValidationMethod {
  public:
-  std::vector<ValidationErrorInfo> validate(
+  [[nodiscard]] std::vector<ValidationErrorInfo> validate(
       const ROMol &mol, bool reportAllFailures) const override;
 
-  std::shared_ptr<ValidationMethod> copy() const override {
+  [[nodiscard]] std::shared_ptr<ValidationMethod> copy() const override {
     return std::make_shared<RDKitValidation>(*this);
   }
 };
@@ -99,7 +99,7 @@ class RDKIT_MOLSTANDARDIZE_EXPORT NoAtomValidation : public ValidationMethod {
   std::vector<ValidationErrorInfo> validate(
       const ROMol &mol, bool reportAllFailures) const override;
 
-  std::shared_ptr<ValidationMethod> copy() const override {
+  [[nodiscard]] std::shared_ptr<ValidationMethod> copy() const override {
     return std::make_shared<NoAtomValidation>(*this);
   }
 };
@@ -110,7 +110,7 @@ class RDKIT_MOLSTANDARDIZE_EXPORT FragmentValidation : public ValidationMethod {
   std::vector<ValidationErrorInfo> validate(
       const ROMol &mol, bool reportAllFailures) const override;
 
-  std::shared_ptr<ValidationMethod> copy() const override {
+  [[nodiscard]] std::shared_ptr<ValidationMethod> copy() const override {
     return std::make_shared<FragmentValidation>(*this);
   }
 };
@@ -121,7 +121,7 @@ class RDKIT_MOLSTANDARDIZE_EXPORT NeutralValidation : public ValidationMethod {
   std::vector<ValidationErrorInfo> validate(
       const ROMol &mol, bool reportAllFailures) const override;
 
-  std::shared_ptr<ValidationMethod> copy() const override {
+  [[nodiscard]] std::shared_ptr<ValidationMethod> copy() const override {
     return std::make_shared<NeutralValidation>(*this);
   }
 };
@@ -140,7 +140,7 @@ class RDKIT_MOLSTANDARDIZE_EXPORT IsotopeValidation : public ValidationMethod {
   std::vector<ValidationErrorInfo> validate(
       const ROMol &mol, bool reportAllFailures) const override;
 
-  std::shared_ptr<ValidationMethod> copy() const override {
+  [[nodiscard]] std::shared_ptr<ValidationMethod> copy() const override {
     return std::make_shared<IsotopeValidation>(*this);
   }
 
@@ -160,7 +160,7 @@ class RDKIT_MOLSTANDARDIZE_EXPORT MolVSValidation : public CompositeValidation {
   MolVSValidation(
       const std::vector<std::shared_ptr<ValidationMethod>> &validations);
 
-  std::shared_ptr<ValidationMethod> copy() const override {
+  [[nodiscard]] std::shared_ptr<ValidationMethod> copy() const override {
     return std::make_shared<MolVSValidation>(*this);
   }
 };
@@ -172,10 +172,10 @@ class RDKIT_MOLSTANDARDIZE_EXPORT AllowedAtomsValidation
  public:
   AllowedAtomsValidation(std::vector<std::shared_ptr<Atom>> atoms)
       : d_allowedList(std::move(atoms)) {}
-  std::vector<ValidationErrorInfo> validate(
+  [[nodiscard]] std::vector<ValidationErrorInfo> validate(
       const ROMol &mol, bool reportAllFailures) const override;
 
-  std::shared_ptr<ValidationMethod> copy() const override {
+  [[nodiscard]] std::shared_ptr<ValidationMethod> copy() const override {
     return std::make_shared<AllowedAtomsValidation>(*this);
   }
 
@@ -190,10 +190,10 @@ class RDKIT_MOLSTANDARDIZE_EXPORT DisallowedAtomsValidation
  public:
   DisallowedAtomsValidation(std::vector<std::shared_ptr<Atom>> atoms)
       : d_disallowedList(std::move(atoms)) {}
-  std::vector<ValidationErrorInfo> validate(
+  [[nodiscard]] std::vector<ValidationErrorInfo> validate(
       const ROMol &mol, bool reportAllFailures) const override;
 
-  std::shared_ptr<ValidationMethod> copy() const override {
+  [[nodiscard]] std::shared_ptr<ValidationMethod> copy() const override {
     return std::make_shared<DisallowedAtomsValidation>(*this);
   }
 
