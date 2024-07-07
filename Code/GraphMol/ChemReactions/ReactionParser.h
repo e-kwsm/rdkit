@@ -121,9 +121,8 @@ inline ChemicalReaction *RxnSmartsToChemicalReaction(
   params.allowCXSMILES = allowCXSMILES;
   if (useSmiles) {
     return v2::ReactionParser::ReactionFromSmiles(text, params).release();
-  } else {
-    return v2::ReactionParser::ReactionFromSmarts(text, params).release();
   }
+  return v2::ReactionParser::ReactionFromSmarts(text, params).release();
 }
 }  // namespace v1
 //! returns the reaction SMARTS for a reaction
