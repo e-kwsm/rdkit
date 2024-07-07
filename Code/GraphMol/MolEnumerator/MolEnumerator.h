@@ -37,7 +37,7 @@ class RDKIT_MOLENUMERATOR_EXPORT MolEnumeratorOp {
   virtual ~MolEnumeratorOp() {}
   //! returns a vector of the number of possible variations at variability point
   //! covered by this operation
-  virtual std::vector<size_t> getVariationCounts() const = 0;
+  [[nodiscard]] virtual std::vector<size_t> getVariationCounts() const = 0;
   //! returns a the molecule corresponding to a particular variation
   /*!  which.size() should be equal to the number of variation counts.
    */
@@ -46,7 +46,7 @@ class RDKIT_MOLENUMERATOR_EXPORT MolEnumeratorOp {
   //! initializes this operation to work on a particular molecule
   virtual void initFromMol(const ROMol &mol) = 0;
   //! polymorphic copy
-  virtual std::unique_ptr<MolEnumeratorOp> copy() const = 0;
+  [[nodiscard]] virtual std::unique_ptr<MolEnumeratorOp> copy() const = 0;
 };
 
 //! Molecule enumeration operation corresponding to position variation bonds
@@ -75,7 +75,7 @@ class RDKIT_MOLENUMERATOR_EXPORT PositionVariationOp : public MolEnumeratorOp {
     return *this;
   }
   //! \override
-  std::vector<size_t> getVariationCounts() const override;
+  [[nodiscard]] std::vector<size_t> getVariationCounts() const override;
 
   //! \override
   std::unique_ptr<ROMol> operator()(
@@ -85,7 +85,7 @@ class RDKIT_MOLENUMERATOR_EXPORT PositionVariationOp : public MolEnumeratorOp {
   void initFromMol(const ROMol &mol) override;
 
   //! \override
-  std::unique_ptr<MolEnumeratorOp> copy() const override {
+  [[nodiscard]] std::unique_ptr<MolEnumeratorOp> copy() const override {
     return std::unique_ptr<MolEnumeratorOp>(new PositionVariationOp(*this));
   }
 
@@ -130,7 +130,7 @@ class RDKIT_MOLENUMERATOR_EXPORT LinkNodeOp : public MolEnumeratorOp {
     return *this;
   }
   //! \override
-  std::vector<size_t> getVariationCounts() const override;
+  [[nodiscard]] std::vector<size_t> getVariationCounts() const override;
 
   //! \override
   std::unique_ptr<ROMol> operator()(
@@ -140,7 +140,7 @@ class RDKIT_MOLENUMERATOR_EXPORT LinkNodeOp : public MolEnumeratorOp {
   void initFromMol(const ROMol &mol) override;
 
   //! \override
-  std::unique_ptr<MolEnumeratorOp> copy() const override {
+  [[nodiscard]] std::unique_ptr<MolEnumeratorOp> copy() const override {
     return std::unique_ptr<MolEnumeratorOp>(new LinkNodeOp(*this));
   }
 
@@ -204,7 +204,7 @@ class RDKIT_MOLENUMERATOR_EXPORT RepeatUnitOp : public MolEnumeratorOp {
     return *this;
   };
   //! \override
-  std::vector<size_t> getVariationCounts() const override;
+  [[nodiscard]] std::vector<size_t> getVariationCounts() const override;
 
   //! \override
   std::unique_ptr<ROMol> operator()(
@@ -214,7 +214,7 @@ class RDKIT_MOLENUMERATOR_EXPORT RepeatUnitOp : public MolEnumeratorOp {
   void initFromMol(const ROMol &mol) override;
 
   //! \override
-  std::unique_ptr<MolEnumeratorOp> copy() const override {
+  [[nodiscard]] std::unique_ptr<MolEnumeratorOp> copy() const override {
     return std::unique_ptr<MolEnumeratorOp>(new RepeatUnitOp(*this));
   }
 
