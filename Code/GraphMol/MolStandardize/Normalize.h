@@ -95,9 +95,8 @@ class RDKIT_MOLSTANDARDIZE_EXPORT Normalizer {
 inline Normalizer *normalizerFromParams(const CleanupParameters &params) {
   if (params.normalizationData.empty()) {
     return new Normalizer(params.normalizations, params.maxRestarts);
-  } else {
-    return new Normalizer(params.normalizationData, params.maxRestarts);
   }
+  return new Normalizer(params.normalizationData, params.maxRestarts);
 }
 
 }  // namespace MolStandardize
