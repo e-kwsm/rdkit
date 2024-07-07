@@ -818,10 +818,12 @@ bool _checkH2NX3H1OX2(const Atom *atm) {
   if ((atm->getAtomicNum() == 6) && (atm->getTotalNumHs(true) == 2)) {
     // CH2
     return true;
-  } else if ((atm->getAtomicNum() == 8) && (atm->getTotalNumHs(true) == 0)) {
+  }
+  if ((atm->getAtomicNum() == 8) && (atm->getTotalNumHs(true) == 0)) {
     // OX2
     return true;
-  } else if ((atm->getAtomicNum() == 7) && (atm->getDegree() == 3) &&
+  }
+  if ((atm->getAtomicNum() == 7) && (atm->getDegree() == 3) &&
              (atm->getTotalNumHs(true) == 1)) {
     // FIX: assuming hydrogen is not in the graph
     // this is NX3H1 situation
