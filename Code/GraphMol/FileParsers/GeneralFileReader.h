@@ -152,7 +152,7 @@ std::unique_ptr<MolSupplier> getSupplier(const std::string& path,
     return p;
   }
 #ifdef RDK_BUILD_MAEPARSER_SUPPORT
-  else if (fileFormat == "mae") {
+  if (fileFormat == "mae") {
     MaeMolSupplier* maesup =
         new MaeMolSupplier(strm, true, opt.sanitize, opt.removeHs);
     std::unique_ptr<MolSupplier> p(maesup);
