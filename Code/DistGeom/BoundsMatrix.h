@@ -37,9 +37,8 @@ class RDKIT_DISTGEOMETRY_EXPORT BoundsMatrix
   inline double getUpperBound(unsigned int i, unsigned int j) const {
     if (i < j) {
       return getVal(i, j);
-    } else {
-      return getVal(j, i);
     }
+    return getVal(j, i);
   }
 
   //! Set the lower bound between points i and j
@@ -84,9 +83,8 @@ class RDKIT_DISTGEOMETRY_EXPORT BoundsMatrix
   inline double getLowerBound(unsigned int i, unsigned int j) const {
     if (i < j) {
       return getVal(j, i);
-    } else {
-      return getVal(i, j);
     }
+    return getVal(i, j);
   }
 
   //! Do a simple check of the current bounds - i.e. all lower bounds are
