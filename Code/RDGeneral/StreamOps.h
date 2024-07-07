@@ -136,9 +136,8 @@ inline void appendPackedIntToStream(std::stringstream &ss,
       val = ((res << 3) | 7);
       nbytes = 4;
       break;
-    } else {
-      CHECK_INVARIANT(0, "ERROR: Integer too big to pack\n");
     }
+    CHECK_INVARIANT(0, "ERROR: Integer too big to pack\n");
   }
   // val = EndianSwapBytes<HOST_ENDIAN_ORDER,LITTLE_ENDIAN_ORDER>(val);
 
