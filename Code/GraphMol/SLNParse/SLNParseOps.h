@@ -169,12 +169,11 @@ void closeRingBond(std::vector<RWMol *> &molList, unsigned int molIdx,
       bond->setEndAtomIdx(mp->getActiveAtom()->getIdx());
       mp->setBondBookmark(bond, ringIdx);
       return;
-    } else {
+    }
       std::stringstream err;
       err << "SLN Parser error: Ring closure " << ringIdx
           << " does not have a corresponding opener.";
       throw SLNParseException(err.str());
-    }
   }
   Atom *opener = mp->getAtomWithBookmark(ringIdx);
   CHECK_INVARIANT(opener, "invalid atom");
@@ -230,18 +229,18 @@ int addBranchToMol(std::vector<RWMol *> &molList, unsigned int molIdx,
       err << "SLN Parser error: Atom ID " << bmIt->first
           << " used a second time.";
       throw SLNParseException(err.str());
-    } else if (mp->hasBondBookmark(bmIt->first)) {
+    }
+    if (mp->hasBondBookmark(bmIt->first)) {
       std::stringstream err;
       err << "SLN Parser error: Atom ID " << bmIt->first
           << " appears *after* its ring closure.";
       throw SLNParseException(err.str());
-    } else {
+    }
       CHECK_INVARIANT(bmIt->second.size() == 1,
                       "bad atom bookmark list on branch");
       Atom *tgtAtom =
           mp->getAtomWithIdx((*bmIt->second.begin())->getIdx() + nOrigAtoms);
       mp->setAtomBookmark(tgtAtom, bmIt->first);
-    }
   }
 
   // loop over bond bookmarks in the branch and close the corresponding rings
