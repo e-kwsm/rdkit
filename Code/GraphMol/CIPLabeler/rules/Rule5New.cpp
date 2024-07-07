@@ -62,11 +62,11 @@ int Rule5New::compare(const Edge *a, const Edge *b) const {
     // -1/+1 if not (e.g. the R > R and S > S lists)
     if (cmpR < 0) {
       return cmpS < 0 ? -1 : -2;
-    } else if (cmpR > 0) {
-      return cmpS > 0 ? +1 : +2;
-    } else {
-      return 0;
     }
+    if (cmpR > 0) {
+      return cmpS > 0 ? +1 : +2;
+    }
+    return 0;
 }
 
 void Rule5New::fillPairs(const Node *beg, PairList &plist) const {
