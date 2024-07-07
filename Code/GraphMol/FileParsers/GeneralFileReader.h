@@ -61,11 +61,13 @@ inline void determineFormat(const std::string path, std::string &fileFormat,
     fileFormat = "mae";
     compressionFormat = "gz";
     return;
-  } else if (boost::algorithm::iends_with(path, ".sdfgz")) {
+  }
+  if (boost::algorithm::iends_with(path, ".sdfgz")) {
     fileFormat = "sdf";
     compressionFormat = "gz";
     return;
-  } else if (boost::algorithm::iends_with(path, ".gz")) {
+  }
+  if (boost::algorithm::iends_with(path, ".gz")) {
     compressionFormat = "gz";
     basename = path.substr(0, path.size() - 3);
   } else if (boost::algorithm::iends_with(path, ".zst") ||
@@ -148,7 +150,7 @@ inline std::unique_ptr<FileParsers::MolSupplier> getSupplier(
                                                                parseParams);
   }
 
-  else if (fileFormat == "smi" || fileFormat == "csv" || fileFormat == "txt" ||
+  if (fileFormat == "smi" || fileFormat == "csv" || fileFormat == "txt" ||
            fileFormat == "tsv") {
     FileParsers::SmilesMolSupplierParams parseParams;
     parseParams.delimiter = opt.delimiter;
