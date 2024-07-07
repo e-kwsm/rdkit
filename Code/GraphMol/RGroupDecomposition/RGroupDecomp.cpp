@@ -282,13 +282,12 @@ int RGroupDecomposition::getMatchingCoreInternal(
               if (data->params.onlyMatchAtRGroups) {
                 passes_filter = false;
                 break;
-              } else {
+              }
                 // for each match, we keep track of the number of
                 // R labels that need to be added to match all
                 // non-user-labelled R groups in this molecule
                 // if we use this core for RGD
                 ++tmatches_heavy_nbrs[i];
-              }
             }
           }
         } else if (core.second.isTerminalRGroupWithUserLabel(match.first) &&
