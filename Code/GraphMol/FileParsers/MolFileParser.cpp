@@ -959,7 +959,8 @@ void ParseAttachPointLine(RWMol *mol, const std::string &text,
           errout << "Value " << val << " from APO specification on line "
                  << line << " is invalid";
           throw FileParseException(errout.str());
-        } else if (val) {
+        }
+        if (val) {
           if (val == 3) {
             // this is -1 in v3k mol blocks, so use that:
             val = -1;
