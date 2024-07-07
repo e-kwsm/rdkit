@@ -148,7 +148,7 @@ void Reionizer::reionizeInPlace(RWMol &mol) {
           this->strongestProtonated(mol, abpairs));
       if (res == nullptr) {
         break;
-      } else {
+      }
         unsigned int ppos = res->first;
         std::vector<unsigned int> poccur = res->second;
         std::string abname;
@@ -165,7 +165,6 @@ void Reionizer::reionizeInPlace(RWMol &mol) {
 
         patom->updatePropertyCache();
         --charge_diff;
-      }
     }
   }
 
