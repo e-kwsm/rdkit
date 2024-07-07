@@ -910,7 +910,7 @@ std::string GetAtomSmarts(const Atom *atom, const SmilesWriteParams &params) {
     // we have simple atom - just generate the smiles and return
     res = SmilesWrite::GetAtomSmiles(atom);
     return res;
-  } else {
+  }
     if ((descrip == "AtomOr") || (descrip == "AtomAnd")) {
       const QueryAtom *qatom = dynamic_cast<const QueryAtom *>(atom);
       PRECONDITION(qatom, "could not convert atom to query atom");
@@ -952,7 +952,6 @@ std::string GetAtomSmarts(const Atom *atom, const SmilesWriteParams &params) {
       res = "[" + res + "]";
     }
     return res;
-  }
 }
 
 std::string GetBondSmarts(const Bond *bond, const SmilesWriteParams &params,
