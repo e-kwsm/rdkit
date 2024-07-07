@@ -55,10 +55,9 @@ inline std::vector<LinkNode> getMolLinkNodes(
              << "' to unsigned ints";
       if (strict) {
         throw ValueErrorException(errout.str());
-      } else {
+      }
         BOOST_LOG(rdWarningLog) << errout.str() << std::endl;
         continue;
-      }
     }
     // the second test here is for the atom-pairs defining the bonds
     // data[2] contains the number of bonds
@@ -67,10 +66,9 @@ inline std::vector<LinkNode> getMolLinkNodes(
       errout << "not enough values in LINKNODE '" << linknodetext << "'";
       if (strict) {
         throw ValueErrorException(errout.str());
-      } else {
+      }
         BOOST_LOG(rdWarningLog) << errout.str() << std::endl;
         continue;
-      }
     }
 
     node.minRep = data[0];
@@ -80,22 +78,20 @@ inline std::vector<LinkNode> getMolLinkNodes(
       errout << "bad counts in LINKNODE '" << linknodetext << "'";
       if (strict) {
         throw ValueErrorException(errout.str());
-      } else {
+      }
         BOOST_LOG(rdWarningLog) << errout.str() << std::endl;
         continue;
-      }
     }
     node.nBonds = data[2];
     if (node.nBonds != 2) {
       if (strict) {
         UNDER_CONSTRUCTION(
             "only link nodes with 2 bonds are currently supported");
-      } else {
+      }
         BOOST_LOG(rdWarningLog)
             << "only link nodes with 2 bonds are currently supported"
             << std::endl;
         continue;
-      }
     }
     // both bonds must start from the same atom:
     if (data[3] != data[5]) {
