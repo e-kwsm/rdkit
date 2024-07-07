@@ -117,7 +117,7 @@ class RDKIT_QUERY_EXPORT Query {
   }
 
   //! returns whether or not we match the argument
-  virtual bool Match(const DataFuncArgType arg) const {
+  [[nodiscard]] virtual bool Match(const DataFuncArgType arg) const {
     MatchFuncArgType mfArg = TypeConvert(arg, Int2Type<needsConversion>());
     bool tRes;
     if (this->d_matchFunc) {
@@ -190,8 +190,8 @@ class RDKIT_QUERY_EXPORT Query {
   }
   //! calls our \c dataFunc (which must be set) on \c what and returns the
   /// result
-  MatchFuncArgType TypeConvert(DataFuncArgType what,
-                               Int2Type<true> /*d*/) const {
+  [[nodiscard]] MatchFuncArgType TypeConvert(DataFuncArgType what,
+                                             Int2Type<true> /*d*/) const {
     PRECONDITION(this->d_dataFunc, "no data function");
     MatchFuncArgType mfArg;
     mfArg = this->d_dataFunc(what);
