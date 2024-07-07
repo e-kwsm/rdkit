@@ -50,9 +50,8 @@ string getUserName() {
 
   if (!getlogin_r(buffer, bufsize)) {
     return string(buffer);
-  } else {
-    return string("");
   }
+  return string("");
 #endif
 }
 
