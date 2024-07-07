@@ -1135,9 +1135,8 @@ std::vector<RascalResult> rascalMCES(const ROMol &mol1, const ROMol &mol2,
     if (opts.returnEmptyMCES) {
       return std::vector<RascalResult>(
           1, RascalResult(starter.d_tier1Sim, starter.d_tier2Sim));
-    } else {
-      return std::vector<RascalResult>();
     }
+    return std::vector<RascalResult>();
   }
   auto results = findMCES(starter, opts);
   if (!opts.allBestMCESs && results.size() > 1) {
