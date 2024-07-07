@@ -119,9 +119,8 @@ inline std::vector<LinkNode> getMolLinkNodes(
           }
             BOOST_LOG(rdWarningLog) << errout.str() << std::endl;
             continue;
-        } else {
-          data[i] = aidx->second->getIdx();
         }
+        data[i] = aidx->second->getIdx();
       }
     } else {
       for (unsigned int i = 3; i <= 6; ++i) {
