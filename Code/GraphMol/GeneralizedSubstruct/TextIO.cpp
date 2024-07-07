@@ -235,10 +235,9 @@ RWMol *pt_to_mol(bpt::ptree &pt) {
   auto smi = pt.get<std::string>("smiles", "");
   if (!smi.empty()) {
     return SmilesToMol(smi);
-  } else {
+  }
     auto sma = pt.get<std::string>("smarts");
     return SmartsToMol(sma);
-  }
 }
 
 template <typename T>
