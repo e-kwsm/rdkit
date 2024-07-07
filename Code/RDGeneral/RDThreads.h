@@ -25,9 +25,8 @@ inline unsigned int getNumThreadsToUse(int target) {
   unsigned int res = std::thread::hardware_concurrency();
   if (res > rdcast<unsigned int>(-target)) {
     return res + target;
-  } else {
-    return 1;
   }
+  return 1;
 }
 }  // namespace RDKit
 
