@@ -163,7 +163,8 @@ void embedOctahedral(const RDKit::ROMol &mol, const RDKit::Atom *atom,
         axial2 = nbrs[j];
         all90 = false;
         break;
-      } else if (fabs(RDKit::Chirality::getIdealAngleBetweenLigands(
+      }
+      if (fabs(RDKit::Chirality::getIdealAngleBetweenLigands(
                           atom, nbrs[i], nbrs[j]) -
                       90) > 0.1) {
         all90 = false;
@@ -1125,10 +1126,9 @@ void generateDepictionMatching3DStructure(RDKit::ROMol &mol,
     if (acceptFailure) {
       compute2DCoords(mol);
       return;
-    } else {
+    }
       throw DepictException(
           "Reference molecule not compatible with target molecule.");
-    }
   }
 
   std::vector<int> mol_to_ref(num_ats, -1);
@@ -1140,10 +1140,9 @@ void generateDepictionMatching3DStructure(RDKit::ROMol &mol,
       if (acceptFailure) {
         compute2DCoords(mol);
         return;
-      } else {
+      }
         throw DepictException(
             "Reference pattern didn't match molecule or reference.");
-      }
     }
     for (size_t i = 0; i < molMatchVect.size(); ++i) {
       mol_to_ref[molMatchVect[i].second] = refMatchVect[i].second;
