@@ -167,9 +167,8 @@ double getLassoWidth(const DrawMolMCH *dm, int atNum, int lassoNum) {
   if (lassoNum > 4) {
     // It's going to look horrible, probably, but it's a lot of lassos.
     return xrad * (1 + lassoNum) * 0.75;
-  } else {
-    return xrad * rats[lassoNum];
   }
+  return xrad * rats[lassoNum];
 }
 }  // namespace
 
