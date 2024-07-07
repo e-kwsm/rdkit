@@ -154,7 +154,7 @@ class RDKIT_FILTERCATALOG_EXPORT FilterCatalogEntry
   }
   //! \overload
   template <typename T>
-  T getProp(const std::string &key) const {
+  [[nodiscard]] T getProp(const std::string &key) const {
     return d_props.getVal<T>(key);
   }
 
