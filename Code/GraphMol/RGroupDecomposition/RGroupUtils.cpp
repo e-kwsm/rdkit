@@ -155,9 +155,8 @@ std::string MolToText(const ROMol &mol) {
   }
   if (!hasQuery) {
     return MolToSmiles(mol);
-  } else {
-    return MolToSmarts(mol);
   }
+  return MolToSmarts(mol);
 }
 }  // namespace
 
