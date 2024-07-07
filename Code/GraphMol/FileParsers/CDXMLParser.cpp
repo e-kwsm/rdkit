@@ -415,9 +415,8 @@ bool parse_fragment(RWMol &mol, ptree &frag,
         skip_fragment =
             true;  // ChemDraw doesn't skip, it just ignores bad bonds...
         break;
-      } else {
-        bonds.push_back(bond);
       }
+      bonds.push_back(bond);
       // end if atom or bond
     }
   }  // for node
