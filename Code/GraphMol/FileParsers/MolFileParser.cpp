@@ -971,9 +971,8 @@ void ParseAttachPointLine(RWMol *mol, const std::string &text,
                    << " on line " << line;
             if (strictParsing) {
               throw FileParseException(errout.str());
-            } else {
-              BOOST_LOG(rdWarningLog) << errout.str() << std::endl;
             }
+            BOOST_LOG(rdWarningLog) << errout.str() << std::endl;
           } else {
             atom->setProp(common_properties::molAttachPoint, val);
           }
