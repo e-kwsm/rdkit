@@ -691,12 +691,10 @@ class RDKIT_SUBSTRUCTLIBRARY_EXPORT SubstructLibrary {
                        [default -1]
   */
   template <class Query>
-  std::vector<unsigned int> getMatches(const Query &query,
-                                       bool recursionPossible = true,
-                                       bool useChirality = true,
-                                       bool useQueryQueryMatches = false,
-                                       int numThreads = -1,
-                                       int maxResults = -1) const {
+  [[nodiscard]] [[nodiscard]] [[nodiscard]] std::vector<unsigned int>
+  getMatches(const Query &query, bool recursionPossible = true,
+             bool useChirality = true, bool useQueryQueryMatches = false,
+             int numThreads = -1, int maxResults = -1) const {
     SubstructMatchParameters params;
     params.recursionPossible = recursionPossible;
     params.useChirality = useChirality;
@@ -728,7 +726,7 @@ class RDKIT_SUBSTRUCTLIBRARY_EXPORT SubstructLibrary {
                        [default -1]
   */
   template <class Query>
-  std::vector<unsigned int> getMatches(
+  [[nodiscard]] std::vector<unsigned int> getMatches(
       const Query &query, unsigned int startIdx, unsigned int endIdx,
       bool recursionPossible = true, bool useChirality = true,
       bool useQueryQueryMatches = false, int numThreads = -1,
@@ -773,10 +771,11 @@ class RDKIT_SUBSTRUCTLIBRARY_EXPORT SubstructLibrary {
     \param numThreads  If -1 use all available processors [default -1]
   */
   template <class Query>
-  unsigned int countMatches(const Query &query, bool recursionPossible = true,
-                            bool useChirality = true,
-                            bool useQueryQueryMatches = false,
-                            int numThreads = -1) const {
+  [[nodiscard]] unsigned int countMatches(const Query &query,
+                                          bool recursionPossible = true,
+                                          bool useChirality = true,
+                                          bool useQueryQueryMatches = false,
+                                          int numThreads = -1) const {
     SubstructMatchParameters params;
     params.recursionPossible = recursionPossible;
     params.useChirality = useChirality;
@@ -808,11 +807,10 @@ class RDKIT_SUBSTRUCTLIBRARY_EXPORT SubstructLibrary {
     \param numThreads  If -1 use all available processors [default -1]
   */
   template <class Query>
-  unsigned int countMatches(const Query &query, unsigned int startIdx,
-                            unsigned int endIdx, bool recursionPossible = true,
-                            bool useChirality = true,
-                            bool useQueryQueryMatches = false,
-                            int numThreads = -1) const {
+  [[nodiscard]] [[nodiscard]] [[nodiscard]] [[nodiscard]] unsigned int
+  countMatches(const Query &query, unsigned int startIdx, unsigned int endIdx,
+               bool recursionPossible = true, bool useChirality = true,
+               bool useQueryQueryMatches = false, int numThreads = -1) const {
     SubstructMatchParameters params;
     params.recursionPossible = recursionPossible;
     params.useChirality = useChirality;
@@ -879,9 +877,10 @@ class RDKIT_SUBSTRUCTLIBRARY_EXPORT SubstructLibrary {
     \param numThreads  If -1 use all available processors [default -1]
   */
   template <class Query>
-  bool hasMatch(const Query &query, unsigned int startIdx, unsigned int endIdx,
-                bool recursionPossible = true, bool useChirality = true,
-                bool useQueryQueryMatches = false, int numThreads = -1) const {
+  [[nodiscard]] [[nodiscard]] [[nodiscard]] [[nodiscard]] bool hasMatch(
+      const Query &query, unsigned int startIdx, unsigned int endIdx,
+      bool recursionPossible = true, bool useChirality = true,
+      bool useQueryQueryMatches = false, int numThreads = -1) const {
     SubstructMatchParameters params;
     params.recursionPossible = recursionPossible;
     params.useChirality = useChirality;
