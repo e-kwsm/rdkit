@@ -80,7 +80,8 @@ void Bond::setOwningMol(ROMol *other) {
 unsigned int Bond::getOtherAtomIdx(const unsigned int thisIdx) const {
   if (d_beginAtomIdx == thisIdx) {
     return d_endAtomIdx;
-  } else if (d_endAtomIdx == thisIdx) {
+  }
+  if (d_endAtomIdx == thisIdx) {
     return d_beginAtomIdx;
   }
   // This "precondition" would check exactly the same that is checked
