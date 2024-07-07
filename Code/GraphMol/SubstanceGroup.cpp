@@ -210,7 +210,8 @@ SubstanceGroup::BondType SubstanceGroup::getBondType(
 
   if (begin_atom_in_sgroup && end_atom_in_sgroup) {
     return SubstanceGroup::BondType::CBOND;
-  } else if (begin_atom_in_sgroup || end_atom_in_sgroup) {
+  }
+  if (begin_atom_in_sgroup || end_atom_in_sgroup) {
     return SubstanceGroup::BondType::XBOND;
   } else {
     std::ostringstream errout;
