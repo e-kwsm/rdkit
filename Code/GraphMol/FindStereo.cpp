@@ -55,26 +55,30 @@ bool isAtomPotentialTetrahedralCenter(const Atom *atom) {
   auto tnzDegree = nzDegree + atom->getTotalNumHs();
   if (tnzDegree > 4) {
     return false;
-  } else {
+  }
     const auto &mol = atom->getOwningMol();
     if (nzDegree == 4) {
       // chirality is always possible with 4 nbrs
       return true;
-    } else if (nzDegree <= 1) {
+    }
+    if (nzDegree <= 1) {
       // chirality is never possible with 0 or 1 nbr
       return false;
-    } else if (nzDegree < 3 &&
+    }
+    if (nzDegree < 3 &&
                (atom->getAtomicNum() != 15 && atom->getAtomicNum() != 33)) {
       // less than three neighbors is never stereogenic
       // unless it is a phosphine/arsine with implicit H
       return false;
-    } else if (atom->getAtomicNum() == 15 || atom->getAtomicNum() == 33) {
+    }
+    if (atom->getAtomicNum() == 15 || atom->getAtomicNum() == 33) {
       // from logical flow: degree is 2 or 3 (implicit H)
       // Since InChI Software v. 1.02-standard (2009), phosphines and arsines
       // are always treated as stereogenic even with H atom neighbors.
       // Accept automatically.
       return true;
-    } else if (nzDegree == 3) {
+    }
+    if (nzDegree == 3) {
       // three-coordinate with a single H we'll accept automatically:
       if (atom->getTotalNumHs() == 1) {
         if (detail::has_protium_neighbor(mol, atom)) {
@@ -82,7 +86,7 @@ bool isAtomPotentialTetrahedralCenter(const Atom *atom) {
           return false;
         }
         return true;
-      } else {
+      }
         // otherwise we default to not being a legal center
         bool legalCenter = false;
         // but there are a few special cases we'll accept
@@ -108,11 +112,8 @@ bool isAtomPotentialTetrahedralCenter(const Atom *atom) {
           }
         }
         return legalCenter;
-      }
-    } else {
-      return false;
     }
-  }
+      return false;
 }
 
 bool isAtomPotentialStereoAtom(const Atom *atom,
@@ -405,9 +406,8 @@ bool isBondPotentialStereoBond(const Bond *bond) {
       }
     }
     return true;
-  } else {
-    return false;
   }
+    return false;
 }
 }  // namespace detail
 
@@ -474,7 +474,8 @@ bool areStereobondControllingAtomsDupes(
     if (*it1 < *it2) {
       ++it1;
       continue;
-    } else if (*it1 > *it2) {
+    }
+    if (*it1 > *it2) {
       ++it2;
       continue;
     }
