@@ -78,9 +78,8 @@ class RDKIT_QUERY_EXPORT RangeQuery
     bool tempR = !(lowerRes && upperRes);
     if (this->getNegation()) {
       return tempR;
-    } else {
-      return !tempR;
     }
+    return !tempR;
   }
 
   Query<MatchFuncArgType, DataFuncArgType, needsConversion> *copy()
