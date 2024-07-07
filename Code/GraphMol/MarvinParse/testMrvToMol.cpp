@@ -227,7 +227,7 @@ class MrvTests {
         std::string expectedMrvName =
             fName + (smilesTest->sanitizeFlag ? "" : ".nosan") +
             ".expected.sdf";
-        std::string outMolStr = "";
+        std::string outMolStr;
         outMolStr = MolToMolBlock(*smilesMol, true, 0, true, true);
 
         generateNewExpectedFilesIfSoSpecified(
@@ -241,7 +241,7 @@ class MrvTests {
         std::string expectedMrvName =
             fName + (smilesTest->sanitizeFlag ? "" : ".nosan") +
             ".expected.mrv";
-        std::string outMolStr = "";
+        std::string outMolStr;
         try {
           outMolStr = MolToMrvBlock(*smilesMol, true, -1, true, false);
         } catch (const RDKit::KekulizeException &) {
@@ -309,7 +309,7 @@ class MrvTests {
             fName + (molTest->sanitizeFlag ? "" : ".nosan") +
             (molTest->reapplyMolBlockWedging ? "" : ".noreapply") +
             ".expected.sdf";
-        std::string outMolStr = "";
+        std::string outMolStr;
         try {
           outMolStr = MolToMolBlock(*mol, true, 0, true, true);
         } catch (const RDKit::KekulizeException &) {
@@ -335,7 +335,7 @@ class MrvTests {
             (molTest->reapplyMolBlockWedging ? "" : ".noreapply") +
             ".expected.mrv";
 
-        std::string outMolStr = "";
+        std::string outMolStr;
         try {
           outMolStr = MolToMrvBlock(*mol, true, -1, true, false);
         } catch (const RDKit::KekulizeException &) {
@@ -529,7 +529,7 @@ class MrvTests {
 
       {
         std::string expectedMrvName = fName + ".expected.sdf";
-        std::string outMolStr = "";
+        std::string outMolStr;
         try {
           outMolStr = MolToMolBlock(*mol, true, 0, true, true);
         } catch (const RDKit::KekulizeException &) {
@@ -550,7 +550,7 @@ class MrvTests {
       {
         std::string expectedMrvName = fName + ".expected.mrv";
 
-        std::string outMolStr = "";
+        std::string outMolStr;
         try {
           outMolStr = MolToMrvBlock(*mol, true, -1, true, false);
           RDKit::Chirality::removeNonExplicit3DChirality(*mol);
@@ -672,7 +672,7 @@ class MrvTests {
         std::string expectedMrvName =
             fName + (molFileTest->sanitizeFlag ? "" : ".nosan") +
             ".expected.sdf";
-        std::string outMolStr = "";
+        std::string outMolStr;
         try {
           outMolStr = MolToMolBlock(*mol, true, 0, true, true);
         } catch (const RDKit::KekulizeException &) {
@@ -695,7 +695,7 @@ class MrvTests {
             fName + (molFileTest->sanitizeFlag ? "" : ".nosan") +
             ".expected.mrv";
 
-        std::string outMolStr = "";
+        std::string outMolStr;
         try {
           outMolStr = MolToMrvBlock(*mol, true, -1, true, false);
         } catch (const RDKit::KekulizeException &) {
