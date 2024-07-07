@@ -527,9 +527,8 @@ Point2D MolDraw2D::getDrawCoords(const Point2D &mol_cds) const {
   PRECONDITION(globalDrawTrans_ || !drawMols_.empty(), "no scaling info");
   if (globalDrawTrans_) {
     return globalDrawTrans_->getDrawCoords(mol_cds);
-  } else {
-    return drawMols_[activeMolIdx_]->getDrawCoords(mol_cds);
   }
+  return drawMols_[activeMolIdx_]->getDrawCoords(mol_cds);
 }
 
 // ****************************************************************************
@@ -561,10 +560,9 @@ Point2D MolDraw2D::getAtomCoords(const pair<double, double> &screen_cds) const {
   if (globalDrawTrans_) {
     return globalDrawTrans_->getAtomCoords(
         Point2D(screen_cds.first, screen_cds.second));
-  } else {
+  }
     return drawMols_[activeMolIdx_]->getAtomCoords(
         Point2D(screen_cds.first, screen_cds.second));
-  }
 }
 
 // ****************************************************************************
@@ -608,10 +606,9 @@ Point2D MolDraw2D::minPt() const {
   // the ys are inverted in the DrawMol.
   if (globalDrawTrans_) {
     return Point2D(globalDrawTrans_->xMin_, -globalDrawTrans_->yMax_);
-  } else {
+  }
     return Point2D(drawMols_[activeMolIdx_]->xMin_,
                    -drawMols_[activeMolIdx_]->yMax_);
-  }
 }
 // ****************************************************************************
 Point2D MolDraw2D::range() const {
@@ -619,10 +616,9 @@ Point2D MolDraw2D::range() const {
   PRECONDITION(globalDrawTrans_ || activeMolIdx_ >= 0, "bad active mol");
   if (globalDrawTrans_) {
     return Point2D(globalDrawTrans_->xRange_, globalDrawTrans_->yRange_);
-  } else {
+  }
     return Point2D(drawMols_[activeMolIdx_]->xRange_,
                    drawMols_[activeMolIdx_]->yRange_);
-  }
 }
 
 // ****************************************************************************
