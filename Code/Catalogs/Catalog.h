@@ -355,7 +355,8 @@ class HierarchCatalog : public Catalog<entryType, paramType> {
 
   //------------------------------------
   //! returns a pointer to our entry with a particular index
-  const entryType *getEntryWithIdx(unsigned int idx) const override {
+  [[nodiscard]] const entryType *getEntryWithIdx(
+      unsigned int idx) const override {
     URANGE_CHECK(idx, getNumEntries());
     int vd = static_cast<int>(boost::vertex(idx, d_graph));
     typename boost::property_map<CatalogGraph, vertex_entry_t>::const_type
@@ -365,7 +366,7 @@ class HierarchCatalog : public Catalog<entryType, paramType> {
 
   //------------------------------------
   //! returns a pointer to our entry with a particular bit ID
-  const entryType *getEntryWithBitId(unsigned int idx) const {
+  [[nodiscard]] const entryType *getEntryWithBitId(unsigned int idx) const {
     URANGE_CHECK(idx, this->getFPLength());
     typename boost::property_map<CatalogGraph, vertex_entry_t>::const_type
         pMap = boost::get(vertex_entry_t(), d_graph);
@@ -422,7 +423,7 @@ class HierarchCatalog : public Catalog<entryType, paramType> {
   /*!
     \overload
   */
-  const RDKit::INT_VECT &getEntriesOfOrder(orderType ord) const {
+  [[nodiscard]] const RDKit::INT_VECT &getEntriesOfOrder(orderType ord) const {
     typename std::map<orderType, RDKit::INT_VECT>::const_iterator elem;
     elem = d_orderMap.find(ord);
     CHECK_INVARIANT(
