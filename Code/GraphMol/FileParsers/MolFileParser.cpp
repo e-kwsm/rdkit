@@ -3018,12 +3018,14 @@ void processSGroups(RWMol *mol) {
           processZBO(*mol, sg);
           sgsToRemove.push_back(sgIdx);
           continue;
-        } else if (field == "ZCH") {
+        }
+        if (field == "ZCH") {
           // RDKit extension for charge on atoms involved in zero-order bonds
           processZCH(*mol, sg);
           sgsToRemove.push_back(sgIdx);
           continue;
-        } else if (field == "HYD") {
+        }
+        if (field == "HYD") {
           // RDKit extension for hydrogen-count on atoms involved in
           // zero-order bonds
           processHYD(*mol, sg);
@@ -3509,9 +3511,8 @@ std::unique_ptr<RWMol> MolFromMolDataStream(std::istream &inStream,
       errout << "CTAB version string invalid at line " << line;
       if (params.strictParsing) {
         throw FileParseException(errout.str());
-      } else {
-        BOOST_LOG(rdWarningLog) << errout.str() << std::endl;
       }
+      BOOST_LOG(rdWarningLog) << errout.str() << std::endl;
     } else if (tempStr.substr(34, 5) == "V3000") {
       ctabVersion = 3000;
     } else if (tempStr.substr(34, 5) != "V2000") {
@@ -3520,9 +3521,8 @@ std::unique_ptr<RWMol> MolFromMolDataStream(std::istream &inStream,
              << "' at line " << line;
       if (params.strictParsing) {
         throw FileParseException(errout.str());
-      } else {
-        BOOST_LOG(rdWarningLog) << errout.str() << std::endl;
       }
+      BOOST_LOG(rdWarningLog) << errout.str() << std::endl;
     }
   }
 
@@ -3542,9 +3542,8 @@ std::unique_ptr<RWMol> MolFromMolDataStream(std::istream &inStream,
                << line << ")";
         if (params.strictParsing) {
           throw FileParseException(errout.str());
-        } else {
-          BOOST_LOG(rdWarningLog) << errout.str() << std::endl;
         }
+        BOOST_LOG(rdWarningLog) << errout.str() << std::endl;
       }
       fileComplete = FileParserUtils::ParseV3000CTAB(
           &inStream, line, res.get(), conf, chiralityPossible, nAtoms, nBonds,
@@ -3620,9 +3619,8 @@ std::unique_ptr<RWMol> MolFromMolFile(const std::string &fName,
   if (!inStream.eof()) {
     unsigned int line = 0;
     return MolFromMolDataStream(inStream, line, params);
-  } else {
-    return std::unique_ptr<RWMol>();
   }
+  return std::unique_ptr<RWMol>();
 }
 }  // namespace FileParsers
 }  // namespace v2
