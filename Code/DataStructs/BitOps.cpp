@@ -312,9 +312,8 @@ double TverskySimilarity(const T1 &bv1, const T2 &bv2, double a, double b) {
   double denom = a * y + b * z + (1 - a - b) * x;
   if (denom == 0.0) {
     return 1.0;
-  } else {
-    return x / denom;
   }
+  return x / denom;
 }
 
 template <typename T1, typename T2>
@@ -328,9 +327,8 @@ double CosineSimilarity(const T1 &bv1, const T2 &bv2) {
 
   if (y * z > 0.0) {
     return x / sqrt(y * z);
-  } else {
-    return 0.0;
   }
+  return 0.0;
 }
 
 template <typename T1, typename T2>
@@ -344,9 +342,8 @@ double KulczynskiSimilarity(const T1 &bv1, const T2 &bv2) {
 
   if (y * z > 0.0) {
     return x * (y + z) / (2 * y * z);
-  } else {
-    return 0.0;
   }
+  return 0.0; 
 }
 
 template <typename T1, typename T2>
@@ -360,9 +357,8 @@ double DiceSimilarity(const T1 &bv1, const T2 &bv2) {
 
   if (y + z > 0.0) {
     return 2 * x / (y + z);
-  } else {
-    return 0.0;
   }
+  return 0.0;
 }
 
 template <typename T1, typename T2>
@@ -391,9 +387,8 @@ double McConnaugheySimilarity(const T1 &bv1, const T2 &bv2) {
 
   if (y * z > 0.0) {
     return (x * (y + z) - (y * z)) / (y * z);
-  } else {
-    return 0.0;
   }
+  return 0.0;
 }
 
 template <typename T1, typename T2>
@@ -408,9 +403,8 @@ double AsymmetricSimilarity(const T1 &bv1, const T2 &bv2) {
   double min = std::min(y, z);
   if (min > 0.0) {
     return x / min;
-  } else {
-    return 0.0;
   }
+  return 0.0;
 }
 
 template <typename T1, typename T2>
@@ -425,9 +419,8 @@ double BraunBlanquetSimilarity(const T1 &bv1, const T2 &bv2) {
   double max = std::max(y, z);
   if (max > 0.0) {
     return x / max;
-  } else {
-    return 0.0;
   }
+  return 0.0;
 }
 
 template <typename T1, typename T2>
@@ -459,11 +452,11 @@ double RogotGoldbergSimilarity(const T1 &bv1, const T2 &bv2) {
   double denom2 = 2 * l - y - z;
   if ((x == l) || (d == l)) {
     return 1.0;
-  } else if (denom1 == 0 || denom2 == 0) {
-    return 0.0;
-  } else {
-    return (x / (y + z) + (d) / (2 * l - y - z));
   }
+  if (denom1 == 0 || denom2 == 0) {
+    return 0.0;
+  }
+  return (x / (y + z) + (d) / (2 * l - y - z));
 }
 
 // """ -------------------------------------------------------
@@ -489,9 +482,8 @@ double OnBitSimilarity(const T1 &bv1, const T2 &bv2) {
 
   if (denom > 0) {
     return num / denom;
-  } else {
-    return 0;
   }
+  return 0;
 }
 
 // """ -------------------------------------------------------
