@@ -56,7 +56,8 @@ int Sort::compareSubstituents(const Node *node, const Edge *a, const Edge *b,
   // ensure 'out' edges are moved to the front
   if (!a->isBeg(node) && b->isBeg(node)) {
     return +1;
-  } else if (a->isBeg(node) && !b->isBeg(node)) {
+  }
+  if (a->isBeg(node) && !b->isBeg(node)) {
     return -1;
   }
 
