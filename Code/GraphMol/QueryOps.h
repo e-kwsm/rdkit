@@ -840,7 +840,7 @@ class HasPropQuery : public Queries::EqualityQuery<int, TargetPtr, true> {
   }
 
   //! returns a copy of this query
-  Queries::Query<int, TargetPtr, true> *copy() const override {
+  [[nodiscard]] Queries::Query<int, TargetPtr, true> *copy() const override {
     HasPropQuery *res = new HasPropQuery(this->propname);
     res->setNegation(this->getNegation());
     res->d_description = this->d_description;
@@ -919,7 +919,7 @@ class HasPropWithValueQuery
   }
 
   //! returns a copy of this query
-  Queries::Query<int, TargetPtr, true> *copy() const override {
+  [[nodiscard]] Queries::Query<int, TargetPtr, true> *copy() const override {
     HasPropWithValueQuery *res =
         new HasPropWithValueQuery(this->propname, this->val, this->tolerance);
     res->setNegation(this->getNegation());
@@ -985,7 +985,7 @@ class HasPropWithValueQuery<TargetPtr, std::string>
   }
 
   //! returns a copy of this query
-  Queries::Query<int, TargetPtr, true> *copy() const override {
+  [[nodiscard]] Queries::Query<int, TargetPtr, true> *copy() const override {
     HasPropWithValueQuery<TargetPtr, std::string> *res =
         new HasPropWithValueQuery<TargetPtr, std::string>(this->propname,
                                                           this->val);
