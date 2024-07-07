@@ -58,11 +58,10 @@ void getNextLine(std::istream &inStream, std::string &line,
         }
         line += tmpLine;
         return;
-      } else {
+      }
         continuationLine = true;
         boost::trim_if(tmpLine, boost::is_any_of(" \t\r\n"));
         line += tmpLine.substr(0, tmpLine.size() - 1);
-      }
     }
   }
 }
@@ -218,7 +217,8 @@ MolChemicalFeatureDef *parseFeatureDef(
       if (token == "ENDFEATURE") {
         foundEnd = true;
         break;
-      } else if (token == "FAMILY") {
+      }
+      if (token == "FAMILY") {
         tokIt++;
         if (tokIt == tok.end()) {
           std::string msg = "bad Type line for feature: " + subType;
