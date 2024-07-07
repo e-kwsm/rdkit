@@ -1685,9 +1685,8 @@ std::string get_sgroup_hierarchy_block(const ROMol &mol) {
       resStr.pop_back();
     }
     return resStr;
-  } else {
-    return "";
   }
+  return "";
 }
 
 std::string get_sgroup_polymer_block(
@@ -2067,7 +2066,7 @@ std::string get_bond_config_block(
                     bondNbr, atomAndBondVecs, mol)) {
               throw ValueErrorException("Internal error - should not occur");
               // should not happend
-            } else {
+            }
               unsigned int swaps = 0;
 
               unsigned int firstReorderedIdx =
@@ -2118,7 +2117,6 @@ std::string get_bond_config_block(
                          ? Bond::BondDir::BEGINDASH
                          : Bond::BondDir::BEGINWEDGE;
               }
-            }
           }
 
           break;
