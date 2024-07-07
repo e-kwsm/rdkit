@@ -212,7 +212,8 @@ const RGROUPS &EvenSamplePairsStrategy::next() {
       if (selected.find(seed) != selected.end()) {
         rejected_unique += 1;
         continue;
-      } else if (try_add(seed)) {
+      }
+      if (try_add(seed)) {
         m_numPermutationsProcessed++;
         return decode(seed);
       }
