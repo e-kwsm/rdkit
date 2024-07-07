@@ -115,7 +115,8 @@ unsigned int calcNumRotatableBonds(const ROMol &mol,
     std::string pattern = "[!$(*#*)&!D1]-,:;!@[!$(*#*)&!D1]";
     pattern_flyweight m(pattern);
     return m.get().countMatches(mol);
-  } else if (strict == Strict) {
+  }
+  if (strict == Strict) {
     std::string strict_pattern =
         "[!$(*#*)&!D1&!$(C(F)(F)F)&!$(C(Cl)(Cl)Cl)&!$(C(Br)(Br)Br)&!$(C([CH3])("
         "[CH3])[CH3])&!$([CD3](=[N,O,S])-!@[#7,O,S!D1])&!$([#7,O,S!D1]-!@[CD3]="
@@ -124,7 +125,7 @@ unsigned int calcNumRotatableBonds(const ROMol &mol,
         "CH3])[CH3])]";
     pattern_flyweight m(strict_pattern);
     return m.get().countMatches(mol);
-  } else {
+  }
     // Major changes in definition relative to the original GPS calculator:
     //   Bonds linking ring systems:
     //     - Single bonds between aliphatic ring Cs are always rotatable. This
@@ -185,7 +186,6 @@ unsigned int calcNumRotatableBonds(const ROMol &mol,
       res = 0;
     }
     return static_cast<unsigned int>(res);
-  }
 }
 
 unsigned int calcNumRotatableBonds(const ROMol &mol, bool strict) {
