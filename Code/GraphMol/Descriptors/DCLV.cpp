@@ -379,7 +379,8 @@ struct State {
     if (typeFlag) { /* Only Recognise Backbone Atoms! */
       if ((name[1] == 'C') && (name[2] == 'A')) {
         return &elemA;
-      } else if (name[2] == ' ')
+      }
+      if (name[2] == ' ')
         switch (name[1]) {
           case 'C':
             return &elemC;
