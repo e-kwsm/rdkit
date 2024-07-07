@@ -375,7 +375,7 @@ void SmilesMolSupplier::moveTo(unsigned int idx) {
       errout << "ERROR: Index error (idx = " << idx << "): "
              << "ran out of lines\n";
       throw FileParseException(errout.str());
-    } else {
+    }
       d_molpos.emplace_back(nextP);
       d_lineNums.push_back(d_line);
       if (d_molpos.size() == idx + 1 && df_end) {
@@ -387,7 +387,6 @@ void SmilesMolSupplier::moveTo(unsigned int idx) {
         d_len = d_molpos.size();
         break;
       }
-    }
   }
 
   POSTCONDITION(d_molpos.size() > idx, "not enough lines");
@@ -477,7 +476,7 @@ unsigned int SmilesMolSupplier::length() {
   // return the number of molecule lines in the file
   if (d_len > 0) {
     return d_len;
-  } else {
+  }
     std::streampos oPos = dp_inStream->tellg();
     if (d_molpos.size()) {
       // we've already read some molecules, go to the last
@@ -501,7 +500,6 @@ unsigned int SmilesMolSupplier::length() {
     dp_inStream->seekg(oPos);
     d_len = d_molpos.size();
     return d_len;
-  }
 }
 
 bool SmilesMolSupplier::atEnd() { return df_end; }
