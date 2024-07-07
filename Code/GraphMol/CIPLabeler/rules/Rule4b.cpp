@@ -77,7 +77,8 @@ int Rule4b::compare(const Edge *a, const Edge *b) const {
     if (list1.size() == 1) {
       return comparePairs(aEnd, bEnd, list1[0].getRefDescriptor(),
                           list2[0].getRefDescriptor());
-    } else if (list1.size() > 1) {
+    }
+    if (list1.size() > 1) {
       for (auto &plist : list1) {
         fillPairs(aEnd, plist);
       }
@@ -151,11 +152,10 @@ bool Rule4b::getReference(const std::vector<const Node *> &nodes,
   if (right < left) {
     result.push_back(Descriptor::S);
     return true;
-  } else {
+  }
     result.push_back(Descriptor::R);
     result.push_back(Descriptor::S);
     return true;
-  }
 }
 
 std::vector<std::vector<const Node *>> Rule4b::initialLevel(
