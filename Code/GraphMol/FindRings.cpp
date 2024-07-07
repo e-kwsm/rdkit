@@ -137,9 +137,8 @@ void pickD2Nodes(const ROMol &tMol, INT_VECT &d2nodes, const INT_VECT &currFrag,
     }
     if (root == -1) {
       break;
-    } else {
-      markUselessD2s(root, tMol, forb, atomDegrees, activeBonds);
     }
+    markUselessD2s(root, tMol, forb, atomDegrees, activeBonds);
   }
 }
 
