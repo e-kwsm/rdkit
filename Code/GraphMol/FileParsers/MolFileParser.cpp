@@ -3012,7 +3012,8 @@ void processSGroups(RWMol *mol) {
           processMrvImplicitH(*mol, sg);
           sgsToRemove.push_back(sgIdx);
           continue;
-        } else if (field == "ZBO") {
+        }
+        if (field == "ZBO") {
           // RDKit extension for zero-order bonds
           processZBO(*mol, sg);
           sgsToRemove.push_back(sgIdx);
@@ -3205,9 +3206,8 @@ bool ParseV3000CTAB(std::istream *inStream, unsigned int &line, RWMol *mol,
         errout << "END SGROUP line not found on line " << line;
         if (strictParsing) {
           throw FileParseException(errout.str());
-        } else {
-          BOOST_LOG(rdWarningLog) << errout.str() << std::endl;
         }
+        BOOST_LOG(rdWarningLog) << errout.str() << std::endl;
       } else {
         tempStr = getV3000Line(inStream, line);
       }
@@ -3238,9 +3238,8 @@ bool ParseV3000CTAB(std::istream *inStream, unsigned int &line, RWMol *mol,
       errout << "BEGIN OBJ3D line not found on line " << line;
       if (strictParsing) {
         throw FileParseException(errout.str());
-      } else {
-        BOOST_LOG(rdWarningLog) << errout.str() << std::endl;
       }
+      BOOST_LOG(rdWarningLog) << errout.str() << std::endl;
     }
     for (unsigned int i = 0; i < n3DConstraints; ++i) {
       tempStr = getV3000Line(inStream, line);
@@ -3252,9 +3251,8 @@ bool ParseV3000CTAB(std::istream *inStream, unsigned int &line, RWMol *mol,
       errout << "END OBJ3D line not found on line " << line;
       if (strictParsing) {
         throw FileParseException(errout.str());
-      } else {
-        BOOST_LOG(rdWarningLog) << errout.str() << std::endl;
       }
+      BOOST_LOG(rdWarningLog) << errout.str() << std::endl;
     } else {
       tempStr = getV3000Line(inStream, line);
     }
@@ -3264,9 +3262,8 @@ bool ParseV3000CTAB(std::istream *inStream, unsigned int &line, RWMol *mol,
   if (tempStr.length() < 8 || tempStr.substr(0, 8) != "END CTAB") {
     if (strictParsing) {
       throw FileParseException("END CTAB line not found");
-    } else {
-      BOOST_LOG(rdWarningLog) << "END CTAB line not found." << std::endl;
     }
+    BOOST_LOG(rdWarningLog) << "END CTAB line not found." << std::endl;
   }
 
   if (expectMEND) {
