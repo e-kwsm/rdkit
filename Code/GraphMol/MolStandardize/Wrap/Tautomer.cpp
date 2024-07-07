@@ -238,7 +238,7 @@ inline std::vector<ROMOL_SPTR> extractPythonIterable(const python::object &o) {
     PyErr_SetString(PyExc_TypeError,
                     "the passed object should be an iterable of Mol objects");
     python::throw_error_already_set();
-    return std::vector<ROMOL_SPTR>();
+    return {};
   }
   return std::vector<ROMOL_SPTR>(python::stl_input_iterator<ROMOL_SPTR>(o),
                                  python::stl_input_iterator<ROMOL_SPTR>());
