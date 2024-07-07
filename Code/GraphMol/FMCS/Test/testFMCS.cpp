@@ -94,9 +94,8 @@ std::string getSmilesOnlyTxt(
       --i;
     }
     return std::string(sp, i);
-  } else {
-    return smiles;
   }
+  return smiles;
 }
 
 std::string getSmilesOnlyChEMBL(
