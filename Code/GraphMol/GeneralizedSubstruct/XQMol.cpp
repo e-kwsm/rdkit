@@ -154,14 +154,12 @@ ExtendedQueryMol createExtendedQueryMol(const RWMol &mol, bool doEnumeration,
       if (tq->getTautomers().size() == 1) {
         // no tautomers, just one molecule, return the molecule:
         return {std::make_unique<RWMol>(*lmol)};
-      } else {
+      }
         // return the tautomers
         return {std::move(tq)};
-      }
-    } else {
-      return {std::make_unique<RWMol>(*lmol)};
     }
-  } else {
+    return {std::make_unique<RWMol>(*lmol)};
+  }
     MolBundle lbndl;
     for (auto &bmol : bndl.getMols()) {
       if (adjustQueryProperties) {
@@ -187,11 +185,9 @@ ExtendedQueryMol createExtendedQueryMol(const RWMol &mol, bool doEnumeration,
     if (!hadTautomers) {
       // no tautomers, just return the bundle
       return {std::make_unique<MolBundle>(lbndl)};
-    } else {
+    }
       // return the tautomer bundle
       return {std::move(tautomerBundle)};
-    }
-  }
 }
 
 std::unique_ptr<ExplicitBitVect> patternFingerprintTargetMol(const ROMol &mol,
