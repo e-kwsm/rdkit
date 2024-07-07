@@ -828,7 +828,8 @@ ROMol *MurckoDecompose(const ROMol &mol) {
                   ->getBondType() == Bond::DOUBLE) {
             removeIt = false;
             break;
-          } else if (nbr->getIsAromatic() && nbr->getAtomicNum() != 6) {
+          }
+          if (nbr->getIsAromatic() && nbr->getAtomicNum() != 6) {
             // fix aromatic heteroatoms:
             nbr->setNumExplicitHs(1);
           } else if (nbr->getIsAromatic() && nbr->getAtomicNum() == 6 &&
