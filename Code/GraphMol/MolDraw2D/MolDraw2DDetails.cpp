@@ -395,7 +395,8 @@ void adjustLineEndForEllipse(const Point2D &centre, double xradius,
     // no solutions, leave things as they are.  Bit crap, though.
     p2 += centre;
     return;
-  } else if (fabs(disc) < 1.0e-6) {
+  }
+  if (fabs(disc) < 1.0e-6) {
     // 1 solution
     double t = -B / (2.0 * A);
     p2 = t_to_point(t);
