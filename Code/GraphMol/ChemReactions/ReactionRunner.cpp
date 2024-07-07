@@ -139,7 +139,8 @@ class StereoBondEndCap {
       // The corresponding StereoAtom exists in the product
       return {newAnchorMatches->second, swapStereo};
 
-    } else if (hasNonAnchor()) {
+    }
+    if (hasNonAnchor()) {
       // The non-StereoAtom neighbor exists in the product
       newAnchorMatches = react2Prod.find(getNonAnchorIdx());
       if (newAnchorMatches != react2Prod.end()) {
@@ -674,7 +675,8 @@ void updateStereoBonds(RWMOL_SPTR product, const ROMol &reactant,
     // We are only interested in double bonds
     if (pBond->getBondType() != Bond::BondType::DOUBLE) {
       continue;
-    } else if (pBond->hasProp(_UnknownStereoRxnBond)) {
+    }
+    if (pBond->hasProp(_UnknownStereoRxnBond)) {
       pBond->setStereo(Bond::BondStereo::STEREONONE);
       pBond->clearProp(_UnknownStereoRxnBond);
       continue;
@@ -878,7 +880,7 @@ Bond *addBondToProduct(const Bond &origB, RWMol &product,
   if (!origB.hasQuery()) {
     auto idx = product.addBond(begAtomIdx, endAtomIdx, origB.getBondType());
     return product.getBondWithIdx(idx - 1);
-  } else {
+  }
     QueryBond *qbond = new QueryBond(origB.getBondType());
     qbond->setBeginAtomIdx(begAtomIdx);
     qbond->setEndAtomIdx(endAtomIdx);
@@ -886,7 +888,6 @@ Bond *addBondToProduct(const Bond &origB, RWMol &product,
     bool takeOwnership = true;
     product.addBond(qbond, takeOwnership);
     return qbond;
-  }
 }
 
 void addMissingProductBonds(const Bond &origB, RWMOL_SPTR product,
