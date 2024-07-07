@@ -62,7 +62,7 @@ class RDKIT_QUERY_EXPORT RangeQuery
   //! returns our tolerance
   [[nodiscard]] const MatchFuncArgType getTol() const { return this->d_tol; }
 
-  bool Match(const DataFuncArgType what) const override {
+  [[nodiscard]] bool Match(const DataFuncArgType what) const override {
     MatchFuncArgType mfArg =
         this->TypeConvert(what, Int2Type<needsConversion>());
     int lCmp = queryCmp(this->d_lower, mfArg, this->d_tol);
