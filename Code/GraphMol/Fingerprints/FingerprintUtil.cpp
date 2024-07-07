@@ -62,7 +62,8 @@ std::uint32_t getAtomCode(const Atom *atom, unsigned int branchSubtract,
     if (atomNumberTypes[typeIdx] ==
         static_cast<unsigned int>(atom->getAtomicNum())) {
       break;
-    } else if (atomNumberTypes[typeIdx] >
+    }
+    if (atomNumberTypes[typeIdx] >
                static_cast<unsigned int>(atom->getAtomicNum())) {
       typeIdx = nTypes;
       break;
@@ -115,7 +116,8 @@ std::uint64_t getTopologicalTorsionCode(
     if (pathCodes[i] > pathCodes[j]) {
       reverseIt = true;
       break;
-    } else if (pathCodes[i] < pathCodes[j]) {
+    }
+    if (pathCodes[i] < pathCodes[j]) {
       break;
     }
     ++i;
@@ -146,7 +148,8 @@ std::uint32_t getTopologicalTorsionHash(
     if (pathCodes[i] > pathCodes[j]) {
       reverseIt = true;
       break;
-    } else if (pathCodes[i] < pathCodes[j]) {
+    }
+    if (pathCodes[i] < pathCodes[j]) {
       break;
     }
     ++i;
