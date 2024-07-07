@@ -104,10 +104,9 @@ inline std::vector<LinkNode> getMolLinkNodes(
              << linknodetext << "'";
       if (strict) {
         throw ValueErrorException(errout.str());
-      } else {
+      }
         BOOST_LOG(rdWarningLog) << errout.str() << std::endl;
         continue;
-      }
     }
 
     if (atomIdxMap) {
@@ -121,10 +120,9 @@ inline std::vector<LinkNode> getMolLinkNodes(
                  << linknodetext << "'";
           if (strict) {
             throw ValueErrorException(errout.str());
-          } else {
+          }
             BOOST_LOG(rdWarningLog) << errout.str() << std::endl;
             continue;
-          }
         } else {
           data[i] = aidx->second->getIdx();
         }
@@ -143,10 +141,9 @@ inline std::vector<LinkNode> getMolLinkNodes(
              << "'";
       if (strict) {
         throw ValueErrorException(errout.str());
-      } else {
+      }
         BOOST_LOG(rdWarningLog) << errout.str() << std::endl;
         continue;
-      }
     }
     res.push_back(std::move(node));
   }
