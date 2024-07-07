@@ -211,10 +211,9 @@ RDKIT_DATASTRUCTS_EXPORT boost::dynamic_bitset<> *bytesToBitset(
     const auto *fpBlocks =
         reinterpret_cast<const boost::dynamic_bitset<>::block_type *>(fpData);
     return new boost::dynamic_bitset<>(fpBlocks, fpBlocks + nBlocks);
-  } else {
+  }
     return reinterpret_cast<boost::dynamic_bitset<> *>(
         new boost::dynamic_bitset<boost::uint8_t>(fpData, fpData + nBytes));
-  }
 }
 
 // caller is responsible for delete []'ing the result
@@ -593,7 +592,8 @@ void FPBReader::init() {
       detail::readChunkData(*dp_istrm, chunkSz, chunk);
       if (chunkNm == "FEND") {
         break;
-      } else if (chunkNm == "POPC") {
+      }
+      if (chunkNm == "POPC") {
         detail::extractPopCounts(dp_impl, chunkSz, chunk);
       } else if (chunkNm == "AREN") {
         dp_impl->dp_arenaChunk.reset(chunk);
@@ -684,11 +684,10 @@ std::pair<unsigned int, unsigned int> FPBReader::getFPIdsInCountRange(
   if (dp_impl->popCountOffsets.size() == dp_impl->nBits + 2) {
     return std::make_pair(dp_impl->popCountOffsets[minCount],
                           dp_impl->popCountOffsets[maxCount + 1]);
-  } else {
+  }
     // we don't have popcounts, so we have to work for it.
     // FIX: complete this
     return std::make_pair(0, 0);
-  }
 };
 double FPBReader::getTanimoto(unsigned int idx,
                               const boost::uint8_t *bv) const {
