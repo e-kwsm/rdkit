@@ -3668,7 +3668,7 @@ void DrawMol::makeHighlightEnd(const Atom *end1, const Atom *end2,
     if (doLinesIntersect(line12, line11, line22, line21, &ins)) {
       return ins;
     } else {
-      return Point2D(e1);
+      return Point2D{e1};
     }
   };
 
