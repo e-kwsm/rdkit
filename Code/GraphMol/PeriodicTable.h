@@ -246,9 +246,8 @@ class RDKIT_GRAPHMOL_EXPORT PeriodicTable {
         m.find(isotope);
     if (item == m.end()) {
       return 0.0;
-    } else {
-      return item->second.first;
     }
+    return item->second.first;
   }
   //! \overload
   double getMassForIsotope(const std::string &elementSymbol,
@@ -271,9 +270,8 @@ class RDKIT_GRAPHMOL_EXPORT PeriodicTable {
         m.find(isotope);
     if (item == m.end()) {
       return 0.0;
-    } else {
-      return item->second.second;
     }
+    return item->second.second;
   }
   //! \overload
   double getAbundanceForIsotope(const std::string &elementSymbol,
