@@ -106,9 +106,8 @@ class RDKIT_MOLSTANDARDIZE_EXPORT Reionizer {
 inline Reionizer *reionizerFromParams(const CleanupParameters &params) {
   if (params.acidbaseData.empty()) {
     return new Reionizer(params.acidbaseFile);
-  } else {
-    return new Reionizer(params.acidbaseData);
   }
+  return new Reionizer(params.acidbaseData);
 }
 
 //! The Uncharger class for neutralizing ionized acids and bases.
