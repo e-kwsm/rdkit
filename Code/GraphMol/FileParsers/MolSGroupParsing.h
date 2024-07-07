@@ -45,9 +45,8 @@ template <class Exc = FileParseException>
 void SGroupWarnOrThrow(bool strictParsing, const std::string &msg) {
   if (strictParsing) {
     throw Exc(msg);
-  } else {
-    BOOST_LOG(rdWarningLog) << msg << std::endl;
   }
+  BOOST_LOG(rdWarningLog) << msg << std::endl;
 }
 
 void ParseSGroupV2000STYLine(IDX_TO_SGROUP_MAP &sGroupMap, RWMol *mol,
