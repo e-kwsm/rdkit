@@ -75,9 +75,8 @@ class RDKIT_QUERY_EXPORT Query {
   virtual std::string getFullDescription() const {
     if (!getNegation()) {
       return getDescription();
-    } else {
-      return "not " + getDescription();
     }
+    return "not " + getDescription();
   }
 
   //! sets our type label
@@ -123,9 +122,8 @@ class RDKIT_QUERY_EXPORT Query {
 
     if (this->getNegation()) {
       return !tRes;
-    } else {
-      return tRes;
     }
+    return tRes;
   }
 
   //! returns a copy of this Query
@@ -204,12 +202,10 @@ int queryCmp(const T1 v1, const T2 v2, const T1 tol) {
   if (diff <= tol) {
     if (diff >= -tol) {
       return 0;
-    } else {
-      return -1;
     }
-  } else {
-    return 1;
+    return -1;
   }
+  return 1;
 };
 }  // namespace Queries
 #endif
