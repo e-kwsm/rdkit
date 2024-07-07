@@ -40,9 +40,8 @@ class RDKIT_QUERY_EXPORT LessEqualQuery
         this->TypeConvert(what, Int2Type<needsConversion>());
     if (queryCmp(this->d_val, mfArg, this->d_tol) <= 0) {
       return !this->getNegation();
-    } else {
-      return this->getNegation();
     }
+    return this->getNegation();
   }
 
   Query<MatchFuncArgType, DataFuncArgType, needsConversion> *copy()
