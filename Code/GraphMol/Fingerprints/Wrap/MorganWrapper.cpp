@@ -63,9 +63,8 @@ AtomInvariantsGenerator *getMorganFeatureAtomInvGen(
   if (patternsE.check()) {
     patterns = patternsE();
     return new MorganFingerprint::MorganFeatureAtomInvGenerator(&patterns);
-  } else {
-    return new MorganFingerprint::MorganFeatureAtomInvGenerator(nullptr);
   }
+  return new MorganFingerprint::MorganFeatureAtomInvGenerator(nullptr);
 }
 
 BondInvariantsGenerator *getMorganBondInvGen(const bool useBondTypes,
