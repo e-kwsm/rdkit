@@ -186,7 +186,8 @@ void setMDLAromaticity(RWMol &mol) {
         // we only do fully aromatic rings:
         keepIt = false;
         break;
-      } else if (atom->getAtomicNum() == 0 && atom->hasQuery() &&
+      }
+      if (atom->getAtomicNum() == 0 && atom->hasQuery() &&
                  atom->getQuery()->getTypeLabel() == "A") {
         if (dummy >= ring.size()) {
           dummy = i;
@@ -223,7 +224,8 @@ void setMDLAromaticity(RWMol &mol) {
       for (auto ai : ring) {
         if (ai == l0) {
           continue;
-        } else if (mol.getBondBetweenAtoms(ai, l0)) {
+        }
+        if (mol.getBondBetweenAtoms(ai, l0)) {
           l1.push_back(ai);
         } else {
           l2.push_back(ai);
