@@ -892,7 +892,8 @@ std::map<T, std::unique_ptr<ROMol>> getTheFragsWithQuery(
                    whiteList->end();
       if (!found && !negateList) {
         continue;
-      } else if (found && negateList) {
+      }
+      if (found && negateList) {
         continue;
       }
     }
