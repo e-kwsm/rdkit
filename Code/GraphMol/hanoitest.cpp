@@ -27,7 +27,8 @@ using namespace RDKit;
 int pcmp(const void *a, const void *b) {
   if ((*(int *)a) < (*(int *)b)) {
     return -1;
-  } else if ((*(int *)a) > (*(int *)b)) {
+  }
+  if ((*(int *)a) > (*(int *)b)) {
     return 1;
   }
   return 0;
@@ -35,7 +36,8 @@ int pcmp(const void *a, const void *b) {
 int icmp(int a, int b) {
   if (a < b) {
     return -1;
-  } else if (a > b) {
+  }
+  if (a > b) {
     return 1;
   }
   return 0;
@@ -53,11 +55,11 @@ class int_compare_ftor {
     unsigned int ivj = dp_ints[j];
     if (ivi < ivj) {
       return -1;
-    } else if (ivi > ivj) {
-      return 1;
-    } else {
-      return 0;
     }
+    if (ivi > ivj) {
+      return 1;
+    }
+    return 0;
   }
 };
 
@@ -143,7 +145,8 @@ class atomcomparefunctor {
     ivj = d_atoms[j].index;
     if (ivi < ivj) {
       return -1;
-    } else if (ivi > ivj) {
+    }
+    if (ivi > ivj) {
       return 1;
     }
 
@@ -151,7 +154,8 @@ class atomcomparefunctor {
     ivj = d_atoms[j].atom->getAtomicNum();
     if (ivi < ivj) {
       return -1;
-    } else if (ivi > ivj) {
+    }
+    if (ivi > ivj) {
       return 1;
     }
 
@@ -173,7 +177,8 @@ class atomcomparefunctor2 {
     ivj = d_atoms[j].index;
     if (ivi < ivj) {
       return -1;
-    } else if (ivi > ivj) {
+    }
+    if (ivi > ivj) {
       return 1;
     }
 
@@ -182,7 +187,8 @@ class atomcomparefunctor2 {
     ivj = d_atoms[j].atom->getDegree();
     if (ivi < ivj) {
       return -1;
-    } else if (ivi > ivj) {
+    }
+    if (ivi > ivj) {
       return 1;
     }
 
@@ -191,7 +197,8 @@ class atomcomparefunctor2 {
     ivj = d_atoms[j].atom->getAtomicNum();
     if (ivi < ivj) {
       return -1;
-    } else if (ivi > ivj) {
+    }
+    if (ivi > ivj) {
       return 1;
     }
 
@@ -392,7 +399,8 @@ class atomcomparefunctor3 {
     ivj = dp_atoms[j].index;
     if (ivi < ivj) {
       return -1;
-    } else if (ivi > ivj) {
+    }
+    if (ivi > ivj) {
       return 1;
     }
 
@@ -401,7 +409,8 @@ class atomcomparefunctor3 {
     ivj = dp_atoms[j].atom->getDegree();
     if (ivi < ivj) {
       return -1;
-    } else if (ivi > ivj) {
+    }
+    if (ivi > ivj) {
       return 1;
     }
 
@@ -410,7 +419,8 @@ class atomcomparefunctor3 {
     ivj = dp_atoms[j].atom->getAtomicNum();
     if (ivi < ivj) {
       return -1;
-    } else if (ivi > ivj) {
+    }
+    if (ivi > ivj) {
       return 1;
     }
 
@@ -437,7 +447,8 @@ class atomcomparefunctor3 {
       // "<<ivj<<std::endl;
       if (ivi < ivj) {
         return -1;
-      } else if (ivi > ivj) {
+      }
+      if (ivi > ivj) {
         return 1;
       }
     }
