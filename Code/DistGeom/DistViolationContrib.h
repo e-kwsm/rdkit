@@ -38,7 +38,7 @@ class RDKIT_DISTGEOMETRY_EXPORT DistViolationContrib
   double getEnergy(double *pos) const override;
 
   void getGrad(double *pos, double *grad) const override;
-  DistViolationContrib *copy() const override {
+  [[nodiscard]] DistViolationContrib *copy() const override {
     return new DistViolationContrib(*this);
   }
 
