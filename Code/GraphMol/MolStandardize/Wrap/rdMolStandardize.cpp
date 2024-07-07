@@ -360,9 +360,8 @@ RDKit::ROMol *disconnectOrganometallicsHelper(RDKit::ROMol &mol,
         python::extract<RDKit::MolStandardize::MetalDisconnectorOptions *>(
             params);
     return RDKit::MolStandardize::disconnectOrganometallics(mol, *mdo);
-  } else {
-    return RDKit::MolStandardize::disconnectOrganometallics(mol);
   }
+  return RDKit::MolStandardize::disconnectOrganometallics(mol);
 }
 void disconnectOrganometallicsInPlaceHelper(RDKit::ROMol *mol,
                                             python::object params) {
@@ -372,10 +371,9 @@ void disconnectOrganometallicsInPlaceHelper(RDKit::ROMol *mol,
             params);
     return RDKit::MolStandardize::disconnectOrganometallicsInPlace(
         *static_cast<RDKit::RWMol *>(mol), *mdo);
-  } else {
+  }
     return RDKit::MolStandardize::disconnectOrganometallicsInPlace(
         *static_cast<RDKit::RWMol *>(mol));
-  }
 }
 
 }  // namespace
