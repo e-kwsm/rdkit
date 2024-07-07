@@ -138,9 +138,8 @@ double PyForceField::calcEnergyWithPos(const python::object &pos) {
       c[i] = python::extract<double>(pos[i]);
     }
     return this->field->calcEnergy(c.data());
-  } else {
-    return this->field->calcEnergy();
   }
+  return this->field->calcEnergy();
 }
 
 PyObject *PyForceField::positions() {
