@@ -186,9 +186,8 @@ Bond::BondDir getBondDirForAtropisomer3d(Bond *whichBond,
        conf->getAtomPos(whichBond->getBeginAtom()->getIdx()).z) >
       REALLY_SMALL_BOND_LEN) {
     return Bond::BondDir::BEGINWEDGE;
-  } else {
-    return Bond::BondDir::BEGINDASH;
   }
+  return Bond::BondDir::BEGINDASH;
 }
 
 bool getAtropIsomerEndVect(const AtropAtomAndBondVec &atomAndBondVec,
