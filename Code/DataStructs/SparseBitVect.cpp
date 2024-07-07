@@ -235,9 +235,8 @@ bool SparseBitVect::unsetBit(const unsigned int which) {
   if (dp_bits->count(which)) {
     dp_bits->erase(dp_bits->find(which));
     return true;
-  } else {
-    return false;
   }
+  return false;
 }
 
 // """ -------------------------------------------------------
