@@ -48,7 +48,7 @@ class RDKIT_QUERY_EXPORT EqualityQuery
   //! returns out tolerance
   [[nodiscard]] const MatchFuncArgType getTol() const { return this->d_tol; }
 
-  bool Match(const DataFuncArgType what) const override {
+  [[nodiscard]] bool Match(const DataFuncArgType what) const override {
     MatchFuncArgType mfArg =
         this->TypeConvert(what, Int2Type<needsConversion>());
     if (queryCmp(this->d_val, mfArg, this->d_tol) == 0) {
