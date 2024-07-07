@@ -86,7 +86,7 @@ bool isAtomPotentialTetrahedralCenter(const Atom *atom) {
           return false;
         }
         return true;
-      } else {
+      }
         // otherwise we default to not being a legal center
         bool legalCenter = false;
         // but there are a few special cases we'll accept
@@ -112,7 +112,6 @@ bool isAtomPotentialTetrahedralCenter(const Atom *atom) {
           }
         }
         return legalCenter;
-      }
     } else {
       return false;
     }
