@@ -51,9 +51,8 @@ int bondholder::compareStereo(const bondholder &o) const {
   if (st1 == Bond::BondStereo::STEREONONE) {
     if (st2 == Bond::BondStereo::STEREONONE) {
       return 0;
-    } else {
-      return -1;
     }
+    return -1;
   }
   if (st2 == Bond::BondStereo::STEREONONE) {
     return 1;
@@ -61,9 +60,8 @@ int bondholder::compareStereo(const bondholder &o) const {
   if (st1 == Bond::BondStereo::STEREOANY) {
     if (st2 == Bond::BondStereo::STEREOANY) {
       return 0;
-    } else {
-      return -1;
     }
+    return -1;
   }
   if (st2 == Bond::BondStereo::STEREOANY) {
     return 1;
@@ -75,7 +73,8 @@ int bondholder::compareStereo(const bondholder &o) const {
       (st2 == Bond::BondStereo::STEREOE || st2 == Bond::BondStereo::STEREOZ)) {
     if (st1 < st2) {
       return -1;
-    } else if (st1 > st2) {
+    }
+    if (st1 > st2) {
       return 1;
     }
     return 0;
@@ -86,7 +85,8 @@ int bondholder::compareStereo(const bondholder &o) const {
   flipIfNeeded(st2, o.controllingAtoms);
   if (st1 < st2) {
     return -1;
-  } else if (st1 > st2) {
+  }
+  if (st1 > st2) {
     return 1;
   }
   return 0;
