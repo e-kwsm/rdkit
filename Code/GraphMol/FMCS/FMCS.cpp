@@ -215,9 +215,8 @@ bool checkAtomRingMatch(const MCSAtomCompareParameters &p, const ROMol &mol1,
     bool atom1inRing = (ri1->numAtomRings(atom1) > 0);
     bool atom2inRing = (ri2->numAtomRings(atom2) > 0);
     return atom1inRing == atom2inRing;
-  } else {
-    return true;
   }
+  return true;
 }
 
 bool checkAtomCharge(const MCSAtomCompareParameters &, const ROMol &mol1,
@@ -381,9 +380,8 @@ bool checkBondStereo(const MCSBondCompareParameters &, const ROMol &mol1,
   if (b1->getBondType() == Bond::DOUBLE && b2->getBondType() == Bond::DOUBLE) {
     if (bs1 > Bond::STEREOANY && !(bs2 > Bond::STEREOANY)) {
       return false;
-    } else {
-      return bs1 == bs2;
     }
+    return bs1 == bs2;
   }
   return true;
 }
@@ -749,9 +747,8 @@ bool FinalChiralityCheckFunction(const std::uint32_t c1[],
       // target[c2[i]], a1Degree, a1.getDegree(), a2.getDegree());
       if (1 == a1Degree && a1->getDegree() == a2->getDegree()) {
         continue;  // continue to grow the seed
-      } else {
-        return false;
       }
+      return false;
     }
 
     INT_LIST qOrder;
