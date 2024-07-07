@@ -85,7 +85,7 @@ RWMOL_SPTR RCore::extractCoreFromMolMatch(
     if (queryAtom->getAtomicNum() == 0 && queryAtom->hasProp(RLABEL) &&
         queryAtom->getDegree() == 1) {
       continue;
-    } else {
+    }
       atomIndicesToKeep.set(pair.second);
       molAtomMap[mol.getAtomWithIdx(pair.second)] = targetAtom;
       int neighborNumber = -1;
@@ -216,7 +216,6 @@ RWMOL_SPTR RCore::extractCoreFromMolMatch(
       std::cerr << "Atom Chirality Out " << targetAtom->getChiralTag()
                 << std::endl;
 #endif
-    }
   }
   for (const auto newBond : newBonds) {
     extractedCore->addBond(newBond, true);
