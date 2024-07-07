@@ -259,9 +259,8 @@ Bond::BondDir determineBondWedgeState(
   if (wbi->second->getType() ==
       Chirality::WedgeInfoType::WedgeInfoTypeAtropisomer) {
     return wbi->second->getDir();
-  } else {
-    return determineBondWedgeState(bond, wbi->second->getIdx(), conf);
   }
+  return determineBondWedgeState(bond, wbi->second->getIdx(), conf);
 }
 
 // Logic for two wedges at one atom (based on IUPAC stuff)
