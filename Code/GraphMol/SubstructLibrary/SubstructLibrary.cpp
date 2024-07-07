@@ -178,7 +178,8 @@ bool query_needs_rings(const ROMol &in_query) {
     if (atom->hasQuery()) {
       if (describeQuery(atom).find("Ring") != std::string::npos) {
         return true;
-      } else if (atom->getQuery()->getDescription() == "RecursiveStructure") {
+      }
+      if (atom->getQuery()->getDescription() == "RecursiveStructure") {
         auto *rsq = (RecursiveStructureQuery *)atom->getQuery();
         if (query_needs_rings(*rsq->getQueryMol())) {
           return true;
@@ -203,12 +204,14 @@ bool query_needs_rings(const TautomerQuery &in_query) {
 bool query_needs_rings(const ExtendedQueryMol &xqm) {
   if (std::holds_alternative<ExtendedQueryMol::RWMol_T>(xqm.xqmol)) {
     return query_needs_rings(*std::get<ExtendedQueryMol::RWMol_T>(xqm.xqmol));
-  } else if (std::holds_alternative<ExtendedQueryMol::TautomerQuery_T>(
+  }
+  if (std::holds_alternative<ExtendedQueryMol::TautomerQuery_T>(
                  xqm.xqmol)) {
     return query_needs_rings(
         std::get<ExtendedQueryMol::TautomerQuery_T>(xqm.xqmol)
             ->getTemplateMolecule());
-  } else if (std::holds_alternative<ExtendedQueryMol::MolBundle_T>(xqm.xqmol)) {
+  }
+  if (std::holds_alternative<ExtendedQueryMol::MolBundle_T>(xqm.xqmol)) {
     for (const auto &mol :
          std::get<ExtendedQueryMol::MolBundle_T>(xqm.xqmol)->getMols()) {
       if (query_needs_rings(*mol)) {
@@ -216,7 +219,8 @@ bool query_needs_rings(const ExtendedQueryMol &xqm) {
       }
     }
     return false;
-  } else if (std::holds_alternative<ExtendedQueryMol::TautomerBundle_T>(
+  }
+  if (std::holds_alternative<ExtendedQueryMol::TautomerBundle_T>(
                  xqm.xqmol)) {
     for (const auto &tq :
          *std::get<ExtendedQueryMol::TautomerBundle_T>(xqm.xqmol)) {
