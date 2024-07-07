@@ -2059,10 +2059,9 @@ bool ParseMolBlockProperties(std::istream *inStream, unsigned int &line,
         errout << "SGroup " << sgroup.first << " is invalid";
         if (strictParsing) {
           throw FileParseException(errout.str());
-        } else {
+        }
           BOOST_LOG(rdWarningLog)
               << errout.str() << " and will be ignored" << std::endl;
-        }
       }
     }
 
@@ -2265,13 +2264,12 @@ void ParseV3000AtomProps(RWMol *mol, Atom *&atom, typename T::iterator &token,
         errout << "Bad value for MASS :" << val << " for atom "
                << atom->getIdx() + 1 << " on line " << line << std::endl;
         throw FileParseException(errout.str());
-      } else {
+      }
         if (!atom->hasQuery()) {
           atom->setIsotope(v);
         } else {
           atom->expandQuery(makeAtomIsotopeQuery(v));
         }
-      }
     } else if (prop == "CFG") {
       auto cfg = FileParserUtils::toInt(val);
       switch (cfg) {
@@ -2368,10 +2366,9 @@ void ParseV3000AtomProps(RWMol *mol, Atom *&atom, typename T::iterator &token,
                  << " on line " << line;
           if (strictParsing) {
             throw FileParseException(errout.str());
-          } else {
+          }
             BOOST_LOG(rdWarningLog) << errout.str() << std::endl;
             errout.str(std::string());
-          }
         } else {
           atom->setProp(common_properties::molAttachPoint, ival);
         }
@@ -2466,7 +2463,8 @@ bool calculate3dFlag(const RWMol &mol, const Conformer &conf,
       return false;
     }
     return true;
-  } else if (marked3d == 0 && nonzeroZ) {
+  }
+    if (marked3d == 0 && nonzeroZ) {
     BOOST_LOG(rdWarningLog)
         << "Warning: molecule is tagged as 2D, but at least one Z coordinate is not zero. "
            "Marking the mol as 3D."
@@ -3008,7 +3006,8 @@ void processSGroups(RWMol *mol) {
           processMrvCoordinateBond(*mol, sg);
           sgsToRemove.push_back(sgIdx);
           continue;
-        } else if (field == "MRV_IMPLICIT_H") {
+        }
+        if (field == "MRV_IMPLICIT_H") {
           // CXN extension to specify implicit Hs, used for aromatic rings
           processMrvImplicitH(*mol, sg);
           sgsToRemove.push_back(sgIdx);
@@ -3195,9 +3194,8 @@ bool ParseV3000CTAB(std::istream *inStream, unsigned int &line, RWMol *mol,
       errout << "BEGIN SGROUP line not found on line " << line;
       if (strictParsing) {
         throw FileParseException(errout.str());
-      } else {
-        BOOST_LOG(rdWarningLog) << errout.str() << std::endl;
       }
+        BOOST_LOG(rdWarningLog) << errout.str() << std::endl;
     } else {
       tempStr =
           ParseV3000SGroupsBlock(inStream, line, nSgroups, mol, strictParsing);
