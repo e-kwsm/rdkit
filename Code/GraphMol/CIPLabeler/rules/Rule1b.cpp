@@ -25,7 +25,7 @@ int Rule1b::compare(const Edge *a, const Edge *b) const {
         b->getEnd()->isSet(Node::RING_DUPLICATE)) {
       return -three_way_comparison(a->getEnd()->getDistance(),
                                    b->getEnd()->getDistance());
-    } else {
+    }
       if (a->getEnd()->isSet(Node::RING_DUPLICATE) &&
           !b->getEnd()->isSet(Node::RING_DUPLICATE)) {
         return +1;
@@ -35,7 +35,6 @@ int Rule1b::compare(const Edge *a, const Edge *b) const {
         return -1;
       }
       return 0;
-    }
 }
 
 }  // namespace CIPLabeler
