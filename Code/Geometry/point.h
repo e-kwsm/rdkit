@@ -73,7 +73,8 @@ class RDKIT_RDGEOMETRYLIB_EXPORT Point3D : public Point {
     PRECONDITION(i < 3, "Invalid index on Point3D");
     if (i == 0) {
       return x;
-    } else if (i == 1) {
+    }
+    if (i == 1) {
       return y;
     } else {
       return z;
