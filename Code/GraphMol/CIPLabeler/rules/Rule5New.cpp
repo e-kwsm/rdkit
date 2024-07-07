@@ -47,7 +47,7 @@ int Rule5New::compare(const Edge *a, const Edge *b) const {
       }
     }
     return 0;
-  } else {
+  }
     auto listRA = PairList(Descriptor::R);
     auto listRB = PairList(Descriptor::R);
     auto listSA = PairList(Descriptor::S);
@@ -67,7 +67,6 @@ int Rule5New::compare(const Edge *a, const Edge *b) const {
     } else {
       return 0;
     }
-  }
 }
 
 void Rule5New::fillPairs(const Node *beg, PairList &plist) const {
