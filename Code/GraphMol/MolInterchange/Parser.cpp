@@ -186,7 +186,8 @@ void readAtom(RWMol *mol, const rj::Value &atomVal,
     throw FileParseException("Bad Format: bad stereo value for atom");
   }
   at->setChiralTag(chilookup.find(stereo)->second);
-  bool updateLabel = false, takeOwnership = true;
+  bool updateLabel = false;
+  bool takeOwnership = true;
   mol->addAtom(at, updateLabel, takeOwnership);
 }
 
