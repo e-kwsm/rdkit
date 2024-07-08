@@ -191,7 +191,8 @@ class SymmMatrix {
         unsigned int idCt = idC + j;
         cData[idCt] = (TYPE)0.0;
         for (unsigned int k = 0; k < d_size; k++) {
-          unsigned int idA, idB;
+          unsigned int idA;
+          unsigned int idB;
           if (k <= i) {
             idA = i * (i + 1) / 2 + k;
           } else {
@@ -275,7 +276,8 @@ SymmMatrix<TYPE> &multiply(const SymmMatrix<TYPE> &A, const SymmMatrix<TYPE> &B,
       unsigned int idCt = idC + j;
       cData[idCt] = (TYPE)0.0;
       for (unsigned int k = 0; k < aSize; k++) {
-        unsigned int idA, idB;
+        unsigned int idA;
+        unsigned int idB;
         if (k <= i) {
           idA = i * (i + 1) / 2 + k;
         } else {
