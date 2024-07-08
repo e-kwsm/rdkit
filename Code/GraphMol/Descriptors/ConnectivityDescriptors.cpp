@@ -25,7 +25,8 @@ void hkDeltas(const ROMol &mol, std::vector<double> &deltas, bool force) {
     return;
   }
   const PeriodicTable *tbl = PeriodicTable::getTable();
-  ROMol::VERTEX_ITER atBegin, atEnd;
+  ROMol::VERTEX_ITER atBegin;
+  ROMol::VERTEX_ITER atEnd;
   boost::tie(atBegin, atEnd) = mol.getVertices();
   while (atBegin != atEnd) {
     const Atom *at = mol[*atBegin];
@@ -54,7 +55,8 @@ void nVals(const ROMol &mol, std::vector<double> &nVs, bool force) {
     return;
   }
   const PeriodicTable *tbl = PeriodicTable::getTable();
-  ROMol::VERTEX_ITER atBegin, atEnd;
+  ROMol::VERTEX_ITER atBegin;
+  ROMol::VERTEX_ITER atEnd;
   boost::tie(atBegin, atEnd) = mol.getVertices();
   while (atBegin != atEnd) {
     const Atom *at = mol[*atBegin];
@@ -216,7 +218,8 @@ double calcChi1v(const ROMol &mol, bool force) {
   detail::hkDeltas(mol, hkDs, force);
 
   double res = 0.0;
-  ROMol::EDGE_ITER firstB, lastB;
+  ROMol::EDGE_ITER firstB;
+  ROMol::EDGE_ITER lastB;
   boost::tie(firstB, lastB) = mol.getEdges();
   while (firstB != lastB) {
     const Bond *bond = mol[*firstB];
@@ -245,7 +248,8 @@ double calcChi1n(const ROMol &mol, bool force) {
   detail::nVals(mol, nVs, force);
 
   double res = 0.0;
-  ROMol::EDGE_ITER firstB, lastB;
+  ROMol::EDGE_ITER firstB;
+  ROMol::EDGE_ITER lastB;
   boost::tie(firstB, lastB) = mol.getEdges();
   while (firstB != lastB) {
     const Bond *bond = mol[*firstB];
@@ -270,7 +274,8 @@ double calcHallKierAlpha(const ROMol &mol, std::vector<double> *atomContribs) {
   const PeriodicTable *tbl = PeriodicTable::getTable();
   double alphaSum = 0.0;
   double rC = tbl->getRb0(6);
-  ROMol::VERTEX_ITER atBegin, atEnd;
+  ROMol::VERTEX_ITER atBegin;
+  ROMol::VERTEX_ITER atEnd;
   boost::tie(atBegin, atEnd) = mol.getVertices();
   while (atBegin != atEnd) {
     const Atom *at = mol[*atBegin];
