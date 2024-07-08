@@ -42,7 +42,7 @@ struct PyErrStream : std::ostream, std::streambuf {
     return 0;
   }
 
-  void write(char c) {
+  static void write(char c) {
     if (c == '\n') {
       PyGILStateHolder h;
       PySys_WriteStderr("%s\n", buffer.c_str());
