@@ -43,7 +43,11 @@ AtomSymbol::AtomSymbol(const std::string &symbol, int atIdx, OrientType orient,
 // ****************************************************************************
 void AtomSymbol::findExtremes(double &xmin, double &xmax, double &ymin,
                               double &ymax) const {
-  Point2D bl, br, tl, tr, origTrans;
+  Point2D bl;
+  Point2D br;
+  Point2D tl;
+  Point2D tr;
+  Point2D origTrans;
   for (auto rect : rects_) {
     origTrans = rect->trans_;
     rect->trans_ += cds_;
@@ -144,7 +148,11 @@ void AtomSymbol::adjustColons() {
 
 // ****************************************************************************
 void AtomSymbol::drawRects(MolDraw2D &molDrawer) const {
-  Point2D tl, tr, br, bl, origTrans;
+  Point2D tl;
+  Point2D tr;
+  Point2D br;
+  Point2D bl;
+  Point2D origTrans;
   for (auto &rect : rects_) {
     origTrans = rect->trans_;
     rect->trans_ += cds_;
