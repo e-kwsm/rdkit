@@ -131,7 +131,6 @@ void getAtomNumbers(const Atom *a, std::vector<int> &atomNums) {
       ++childIt;
     }
   }
-  return;
 }
 }  // namespace detail
 
