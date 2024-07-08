@@ -116,7 +116,8 @@ bool MultithreadedSDMolSupplier::extractNextRecord(std::string &record,
     return false;
   }
 
-  std::string currentStr, prevStr;
+  std::string currentStr;
+  std::string prevStr;
   record = "";
   lineNum = d_line;
   while (!dp_inStream->eof() && !dp_inStream->fail() &&
