@@ -192,7 +192,9 @@ unsigned int readGromosTrajectory(const std::string &fName, Trajectory &traj) {
           continue;
         }
         std::stringstream ls(tempStr);
-        double x, y, z;
+        double x;
+        double y;
+        double z;
         if (!(ls >> x >> y >> z)) {
           throw ValueErrorException("Error while reading file");
         }
