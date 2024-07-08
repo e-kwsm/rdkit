@@ -195,7 +195,8 @@ static void addResult(std::vector<std::pair<ROMOL_SPTR, ROMOL_SPTR>>
 #ifdef MMPA_DEBUG
   std::cout << "\n";
 #endif
-  RWMOL_SPTR core, side_chains;  // core & side_chains output molecules
+  RWMOL_SPTR core;
+  RWMOL_SPTR side_chains;  // core & side_chains output molecules
 
   if (bondIndices.size() == 1) {
     side_chains =
