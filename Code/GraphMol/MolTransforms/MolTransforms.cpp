@@ -187,7 +187,12 @@ bool getEigenValEigenVectFromCovMat(const RDKit::Conformer &conf,
   // std::cerr << "getEigenValEigenVectFromCovMat ignoreHs " << ignoreHs << "
   // normalizeCovar " << normalizeCovar << " weights " << weights << " origin "
   // << origin.x << "," << origin.y << ","  << origin.z << std::endl;
-  double sumXX, sumXY, sumXZ, sumYY, sumYZ, sumZZ;
+  double sumXX;
+  double sumXY;
+  double sumXZ;
+  double sumYY;
+  double sumYZ;
+  double sumZZ;
   computeCovarianceTerms(conf, origin, sumXX, sumXY, sumXZ, sumYY, sumYZ, sumZZ,
                          normalizeCovar, ignoreHs, weights);
 
@@ -215,7 +220,12 @@ bool computePrincipalAxesAndMoments(const RDKit::Conformer &conf,
   }
   auto origin = computeCentroid(conf, ignoreHs, weights);
 
-  double sumXX, sumXY, sumXZ, sumYY, sumYZ, sumZZ;
+  double sumXX;
+  double sumXY;
+  double sumXZ;
+  double sumYY;
+  double sumYZ;
+  double sumZZ;
   computeInertiaTerms(conf, origin, sumXX, sumXY, sumXZ, sumYY, sumYZ, sumZZ,
                       ignoreHs, weights);
 
