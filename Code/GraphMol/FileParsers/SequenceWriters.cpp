@@ -479,11 +479,13 @@ static bool FindHELMAtom(std::vector<AtomPDBResidueInfo *> *seq,
 static std::string NameHELMBond(std::vector<AtomPDBResidueInfo *> *seq,
                                 AtomPDBResidueInfo *src,
                                 AtomPDBResidueInfo *dst) {
-  std::string id1, pos1;
+  std::string id1;
+  std::string pos1;
   if (!FindHELMAtom(seq, src, id1, pos1)) {
     return "";
   }
-  std::string id2, pos2;
+  std::string id2;
+  std::string pos2;
   if (!FindHELMAtom(seq, dst, id2, pos2)) {
     return "";
   }
