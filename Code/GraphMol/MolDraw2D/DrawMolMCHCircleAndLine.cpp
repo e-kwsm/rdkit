@@ -150,7 +150,8 @@ void DrawMolMCHCircleAndLine::makeBondHighlights(
 void DrawMolMCHCircleAndLine::makeAtomHighlights(
     std::vector<std::unique_ptr<DrawShape>> &atomHighlights) {
   for (auto &ha : mcHighlightAtomMap_) {
-    double xradius, yradius;
+    double xradius;
+    double yradius;
     Point2D centre;
     int lineWidth = getHighlightBondWidth(drawOptions_, -1, nullptr);
     calcSymbolEllipse(ha.first, centre, xradius, yradius);
@@ -189,7 +190,8 @@ void DrawMolMCHCircleAndLine::adjustLineEndForHighlight(int at_idx, Point2D p1,
   // this code is transliterated from
   // http://csharphelper.com/blog/2017/08/calculate-where-a-line-segment-and-an-ellipse-intersect-in-c/
   // which has it in C#
-  double xradius, yradius;
+  double xradius;
+  double yradius;
   Point2D centre;
   calcSymbolEllipse(at_idx, centre, xradius, yradius);
   if (xradius < 1.0e-6 || yradius < 1.0e-6) {
@@ -211,7 +213,10 @@ void DrawMolMCHCircleAndLine::calcSymbolEllipse(unsigned int atomIdx,
     return;
   }
 
-  double x_min, y_min, x_max, y_max;
+  double x_min;
+  double y_min;
+  double x_max;
+  double y_max;
   x_min = y_min = std::numeric_limits<double>::max();
   x_max = y_max = std::numeric_limits<double>::lowest();
   atomLabels_[atomIdx]->findExtremes(x_min, x_max, y_min, y_max);
