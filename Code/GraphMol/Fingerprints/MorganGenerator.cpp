@@ -372,7 +372,8 @@ MorganEnvGenerator<OutputType>::getEnvironments(
           continue;
         }
 
-        ROMol::OEDGE_ITER beg, end;
+        ROMol::OEDGE_ITER beg;
+        ROMol::OEDGE_ITER end;
         boost::tie(beg, end) = mol.getAtomBonds(tAtom);
 
         // add up to date invariants of neighbors
