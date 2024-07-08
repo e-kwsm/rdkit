@@ -36,7 +36,8 @@ void writeAtom(const ROMol &mol, unsigned int atomId,
   const RDGeom::Point3D &pos = (*confIt)->getAtomPos(atomId);
   dest << " " << 100. * pos.x << " " << 100. * pos.y << " " << 100. * pos.z;
 
-  ROMol::ADJ_ITER nbrIdx, endNbrs;
+  ROMol::ADJ_ITER nbrIdx;
+  ROMol::ADJ_ITER endNbrs;
   boost::tie(nbrIdx, endNbrs) = mol.getAtomNeighbors(atom);
   dest << " " << (endNbrs - nbrIdx);
   while (nbrIdx != endNbrs) {
