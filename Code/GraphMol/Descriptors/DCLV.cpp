@@ -253,7 +253,9 @@ struct State {
 
   void tesselate(const Point3D &p, const Point3D &q, const Point3D &r,
                  unsigned int d) {
-    Point3D u, v, w;
+    Point3D u;
+    Point3D v;
+    Point3D w;
 
     if (d--) {
       u = p + q;
@@ -280,7 +282,12 @@ struct State {
 
   void generateElemPoints(ElemStruct *elem, double rad, double probeRadius,
                           int dotDensity) {
-    double x, y, z, p, q, xy;
+    double x;
+    double y;
+    double z;
+    double p;
+    double q;
+    double xy;
     unsigned int vert;
 
     elem->radius = rad;
@@ -753,7 +760,9 @@ struct State {
 
     unsigned int count = 0;
 
-    double px, py, pz;
+    double px;
+    double py;
+    double pz;
     px = py = pz = 0.0;
 
     double vect[3];
