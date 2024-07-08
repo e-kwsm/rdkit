@@ -911,7 +911,8 @@ class MarvinCMLReader {
           int pointCount = 0;
           for (auto &v2 : v.second) {
             if (v2.first == "MPoint") {
-              double x, y;
+              double x;
+              double y;
               std::string xStr = v2.second.get<std::string>("<xmlattr>.x", "");
               std::string yStr = v2.second.get<std::string>("<xmlattr>.y", "");
               if (!getCleanNumber(xStr, x) || !getCleanNumber(yStr, y)) {
