@@ -68,7 +68,10 @@ struct StringRect {
     c.y -= y_shift_;
   }
   bool isPointInside(const Point2D &pt, double padding = 0.0) const {
-    Point2D tl, tr, br, bl;
+    Point2D tl;
+    Point2D tr;
+    Point2D br;
+    Point2D bl;
     calcCorners(tl, tr, br, bl, padding);
     // is +ve y up or down?
     if (tl.y < bl.y) {
@@ -78,14 +81,20 @@ struct StringRect {
     return pt.x >= tl.x && pt.x <= br.x && pt.y >= br.y && pt.y <= tl.y;
   }
   bool doesItIntersect(const StringRect &other, double padding = 0.0) const {
-    Point2D ttl, ttr, tbr, tbl;
+    Point2D ttl;
+    Point2D ttr;
+    Point2D tbr;
+    Point2D tbl;
     calcCorners(ttl, ttr, tbr, tbl, padding);
     // is +ve y up or down?
     if (ttl.y < tbl.y) {
       std::swap(ttl, tbl);
       std::swap(ttr, tbr);
     }
-    Point2D otl, otr, obr, obl;
+    Point2D otl;
+    Point2D otr;
+    Point2D obr;
+    Point2D obl;
     other.calcCorners(otl, otr, obr, obl, padding);
     if (otl.y < obl.y) {
       std::swap(otl, obl);
