@@ -24,7 +24,7 @@ class RDKIT_QUERY_EXPORT AndQuery
   typedef Query<MatchFuncArgType, DataFuncArgType, needsConversion> BASE;
   AndQuery() { this->df_negate = false; }
 
-  bool Match(const DataFuncArgType what) const override {
+  [[nodiscard]] bool Match(const DataFuncArgType what) const override {
     bool res = true;
     typename BASE::CHILD_VECT_CI it1;
     for (it1 = this->beginChildren(); it1 != this->endChildren(); ++it1) {

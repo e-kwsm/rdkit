@@ -39,7 +39,7 @@ class RDKIT_QUERY_EXPORT SetQuery
   //! clears our \c set
   void clear() { this->d_set.clear(); }
 
-  bool Match(const DataFuncArgType what) const override {
+  [[nodiscard]] bool Match(const DataFuncArgType what) const override {
     MatchFuncArgType mfArg =
         this->TypeConvert(what, Int2Type<needsConversion>());
     return (this->d_set.find(mfArg) != this->d_set.end()) ^ this->getNegation();
