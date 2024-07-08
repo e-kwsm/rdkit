@@ -349,7 +349,7 @@ struct State {
     (*list)->ptr[(*list)->count++] = ptr;
   }
 
-  void freeAtomList(AtomList *ptr) {
+  static void freeAtomList(AtomList *ptr) {
     while (ptr) {
       AtomList *next = ptr->next;
 #if 0
