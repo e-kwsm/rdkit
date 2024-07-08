@@ -93,8 +93,6 @@ void convertPyArguments(python::object py_fromAtoms,
       }
     }
   }
-
-  return;
 }
 
 template <typename OutputType>

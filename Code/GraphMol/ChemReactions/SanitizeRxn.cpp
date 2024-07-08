@@ -246,7 +246,6 @@ void fixRGroups(ChemicalReaction &rxn) {
           << " in template: " << rat.templateIdx << std::endl;
     }
   }
-  return;
 }
 
 // if we have query atoms without rlabels, make proper rlabels if possible
