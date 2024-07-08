@@ -73,8 +73,8 @@ void test1() {
   double grad[2], dir[2];
   double nLoc[2], nVal;
   int resCode;
-  double (*func)(double *);
-  double (*gradFunc)(double *, double *);
+  double (*func)(const double *);
+  double (*gradFunc)(const double *, double *);
 
   func = circ_0_0;
   gradFunc = circ_0_0_grad;
@@ -136,8 +136,8 @@ void test2() {
   double oLoc[2], oVal;
   double nVal;
   unsigned int nIters;
-  double (*func)(double *);
-  double (*gradFunc)(double *, double *);
+  double (*func)(const double *);
+  double (*gradFunc)(const double *, double *);
 
   func = circ_0_0;
   gradFunc = circ_0_0_grad;
