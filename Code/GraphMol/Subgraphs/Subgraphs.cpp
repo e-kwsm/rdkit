@@ -37,7 +37,8 @@ void getNbrsList(const ROMol &mol, bool useHs, INT_INT_VECT_MAP &nbrs) {
     // them
     // move on
     if (useHs || atom->getAtomicNum() != 1) {
-      ROMol::OEDGE_ITER bIt1, end;
+      ROMol::OEDGE_ITER bIt1;
+      ROMol::OEDGE_ITER end;
       boost::tie(bIt1, end) = mol.getAtomBonds(atom);
       while (bIt1 != end) {
         const Bond *bond1 = mol[*bIt1];
@@ -456,7 +457,8 @@ findAllPathsOfLengthsMtoN(const ROMol &mol, unsigned int lowerLen,
 
   // the molecule owns the distance matrix pointer (if we need to get it)
   double *distMat = onlyShortestPaths ? MolOps::getDistanceMat(mol) : nullptr;
-  int *adjMat, dim;
+  int *adjMat;
+  int dim;
   dim = mol.getNumAtoms();
   adjMat = new int[dim * dim];
   memset((void *)adjMat, 0, dim * dim * sizeof(int));
@@ -573,7 +575,8 @@ PATH_TYPE findAtomEnvironmentOfRadiusN(
   }  // Return empty path if radius=0
 
   std::list<std::pair<int, int>> nbrStack;
-  ROMol::OEDGE_ITER beg, end;
+  ROMol::OEDGE_ITER beg;
+  ROMol::OEDGE_ITER end;
   boost::tie(beg, end) = mol.getAtomBonds(mol.getAtomWithIdx(rootedAtAtom));
   while (beg != end) {
     const Bond *bond = mol[*beg];
@@ -592,7 +595,8 @@ PATH_TYPE findAtomEnvironmentOfRadiusN(
 
     std::list<std::pair<int, int>> nextLayer;
     while (!nbrStack.empty()) {
-      int bondIdx, startAtom;
+      int bondIdx;
+      int startAtom;
       boost::tie(startAtom, bondIdx) = nbrStack.front();
       nbrStack.pop_front();
       if (!bondsIn.test(bondIdx)) {
