@@ -38,7 +38,8 @@ void ptreeToMol(RWMol *mol, const pt::ptree &molE) {
         continue;
       }
 
-      bool updateLabel = false, takeOwnership = true;
+      bool updateLabel = false;
+      bool takeOwnership = true;
       mol->addAtom(atom, updateLabel, takeOwnership);
       RDGeom::Point3D pt(atE.second.get<double>("<xmlattr>.x", 0.0),
                          atE.second.get<double>("<xmlattr>.y", 0.0),
