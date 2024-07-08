@@ -72,7 +72,9 @@ void ParseV2000RxnBlock(std::istream &inStream, unsigned int &line,
     throw ChemicalReactionParserException("premature EOF hit.");
   }
 
-  unsigned int nReacts = 0, nProds = 0, nAgents = 0;
+  unsigned int nReacts = 0;
+  unsigned int nProds = 0;
+  unsigned int nAgents = 0;
   unsigned int spos = 0;
   if (tempStr.size() < 6) {
     throw ChemicalReactionParserException("rxn counts line is too short");
@@ -213,7 +215,8 @@ void ParseV3000RxnBlock(std::istream &inStream, unsigned int &line,
   const bool expectMEND = false;
   for (unsigned int i = 0; i < nReacts; ++i) {
     RWMol *react;
-    unsigned int natoms, nbonds;
+    unsigned int natoms;
+    unsigned int nbonds;
     bool chiralityPossible = false;
     Conformer *conf = nullptr;
     react = new RWMol();
@@ -246,7 +249,8 @@ void ParseV3000RxnBlock(std::istream &inStream, unsigned int &line,
   }
   for (unsigned int i = 0; i < nProds; ++i) {
     RWMol *prod;
-    unsigned int natoms, nbonds;
+    unsigned int natoms;
+    unsigned int nbonds;
     bool chiralityPossible = false;
     Conformer *conf = nullptr;
     prod = new RWMol();
