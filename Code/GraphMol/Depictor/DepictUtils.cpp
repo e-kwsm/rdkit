@@ -168,7 +168,8 @@ int pickFirstRingToEmbed(const RDKit::ROMol &mol,
   // we will pick the ring with the smallest number of substituents
   int res = -1;
   unsigned int maxSize = 0;
-  int subs, minsubs = static_cast<int>(1e8);
+  int subs;
+  int minsubs = static_cast<int>(1e8);
   int cnt = 0;
   for (const auto &fusedRing : fusedRings) {
     subs = 0;
@@ -276,7 +277,10 @@ RDKit::INT_VECT findNextRingToEmbed(const RDKit::INT_VECT &doneRings,
   PRECONDITION(doneRings.size() > 0, "");
   PRECONDITION(fusedRings.size() > 1, "");
 
-  RDKit::INT_VECT commonAtoms, res, doneAtoms, notDone;
+  RDKit::INT_VECT commonAtoms;
+  RDKit::INT_VECT res;
+  RDKit::INT_VECT doneAtoms;
+  RDKit::INT_VECT notDone;
   for (int i = 0; i < rdcast<int>(fusedRings.size()); i++) {
     if (std::find(doneRings.begin(), doneRings.end(), i) == doneRings.end()) {
       notDone.push_back(i);
