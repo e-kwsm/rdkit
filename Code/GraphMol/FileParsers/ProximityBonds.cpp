@@ -239,7 +239,8 @@ static void ConnectTheDots_Large(RWMol *mol, unsigned int flags) {
       auto *atom_info = (AtomPDBResidueInfo *)(atom->getMonomerInfo());
       // cut all but shortest Bond
       RDGeom::Point3D p = conf->getAtomPos(i);
-      RDKit::RWMol::ADJ_ITER nbr, end_nbr;
+      RDKit::RWMol::ADJ_ITER nbr;
+      RDKit::RWMol::ADJ_ITER end_nbr;
       boost::tie(nbr, end_nbr) = mol->getAtomNeighbors(atom);
       float best = 10000;
       unsigned int best_idx = mol->getNumAtoms() + 1;
