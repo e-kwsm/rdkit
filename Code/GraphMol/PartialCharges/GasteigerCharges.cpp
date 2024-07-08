@@ -35,9 +35,12 @@ void splitChargeConjugated(const ROMol &mol, DOUBLE_VECT &charges) {
   int natms = mol.getNumAtoms();
   INT_VECT marker;
   INT_VECT_CI mci;
-  int aax, yax;
+  int aax;
+  int yax;
   double formal;
-  const Atom *at, *aat, *yat;
+  const Atom *at;
+  const Atom *aat;
+  const Atom *yat;
   for (aix = 0; aix < natms; aix++) {
     at = mol.getAtomWithIdx(aix);
     formal = at->getFormalCharge();
@@ -45,7 +48,10 @@ void splitChargeConjugated(const ROMol &mol, DOUBLE_VECT &charges) {
     marker.resize(0);
     if ((fabs(formal) > EPS_DOUBLE) && (fabs(charges[aix]) < EPS_DOUBLE)) {
       marker.push_back(aix);
-      ROMol::OEDGE_ITER bnd1, end1, bnd2, end2;
+      ROMol::OEDGE_ITER bnd1;
+      ROMol::OEDGE_ITER end1;
+      ROMol::OEDGE_ITER bnd2;
+      ROMol::OEDGE_ITER end2;
       boost::tie(bnd1, end1) = mol.getAtomBonds(at);
       while (bnd1 != end1) {
         if (mol[*bnd1]->getIsConjugated()) {
@@ -125,7 +131,8 @@ void computeGasteigerCharges(const ROMol &mol, std::vector<double> &charges,
   DOUBLE_VECT energ;
   energ.resize(natms, 0.0);
 
-  ROMol::ADJ_ITER nbrIdx, endIdx;
+  ROMol::ADJ_ITER nbrIdx;
+  ROMol::ADJ_ITER endIdx;
 
   // deal with the conjugated system - distribute the formal charges on atoms of
   // same type in each
@@ -190,8 +197,15 @@ void computeGasteigerCharges(const ROMol &mol, std::vector<double> &charges,
   }
 
   // do the iteration here
-  int itx, aix, sgn, niHs;
-  double enr, dq, dx, qHs, dqH;
+  int itx;
+  int aix;
+  int sgn;
+  int niHs;
+  double enr;
+  double dq;
+  double dx;
+  double qHs;
+  double dqH;
   // parameters for hydrogen atoms (for case where the hydrogen are not in the
   // graph (implicit hydrogens)
   DOUBLE_VECT hParams;
