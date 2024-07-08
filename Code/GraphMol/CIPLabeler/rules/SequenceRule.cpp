@@ -20,7 +20,7 @@ SequenceRule::SequenceRule() = default;
 
 SequenceRule::~SequenceRule() = default;
 
-Descriptor SequenceRule::getBondLabel(const Edge *edge) const {
+Descriptor SequenceRule::getBondLabel(const Edge *edge) {
   Bond *bond = edge->getBond();
   if (bond == nullptr) {
     return Descriptor::NONE;
@@ -140,7 +140,7 @@ Priority SequenceRule::sort(const Node *node,
 }
 
 bool SequenceRule::areUpEdges(Node *aNode, Node *bNode, Edge *aEdge,
-                              Edge *bEdge) const {
+                              Edge *bEdge) {
   // step over 'up' edges
   if (aEdge->isEnd(aNode)) {
     // if b is 'down' something's not right!
