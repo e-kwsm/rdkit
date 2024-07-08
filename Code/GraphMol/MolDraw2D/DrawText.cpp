@@ -126,7 +126,10 @@ void DrawText::adjustLineForString(const std::string &label, OrientType orient,
     const auto &r = rects[i];
     r->trans_ += lab_pos;
 
-    Point2D tl, tr, bl, br;
+    Point2D tl;
+    Point2D tr;
+    Point2D bl;
+    Point2D br;
     r->calcCorners(tl, tr, br, bl, 0.025 * bond_len);
     std::unique_ptr<Point2D> ip(new Point2D);
 
@@ -159,7 +162,10 @@ void DrawText::drawStringRects(const std::string &label, OrientType orient,
   for (auto r : rects) {
     r->trans_.x += cds.x;
     r->trans_.y += cds.y;
-    Point2D tl, tr, br, bl;
+    Point2D tl;
+    Point2D tr;
+    Point2D br;
+    Point2D bl;
     r->calcCorners(tl, tr, br, bl, 0.0);
 
     tl = mol_draw.getAtomCoords(std::make_pair(tl.x, tl.y));
@@ -228,7 +234,10 @@ bool DrawText::doesLineIntersect(
     StringRect nr(*r);
     nr.trans_ += cds;
 
-    Point2D tl, tr, bl, br;
+    Point2D tl;
+    Point2D tr;
+    Point2D bl;
+    Point2D br;
     nr.calcCorners(tl, tr, br, bl, padding);
     if (MolDraw2D_detail::doLinesIntersect(end2, end1, tl, tr, nullptr)) {
       return true;
@@ -309,7 +318,10 @@ void DrawText::getStringExtremes(const std::string &label, OrientType orient,
   getStringRects(label, orient, rects, draw_modes, to_draw, dontSplit);
 
   for (auto r : rects) {
-    Point2D tl, tr, br, bl;
+    Point2D tl;
+    Point2D tr;
+    Point2D br;
+    Point2D bl;
     r->calcCorners(tl, tr, br, bl, 0.0);
     // sometimes the rect is in a coordinate frame where +ve y is down,
     // sometimes it's up.  For these purposes, we don't care so long as
@@ -362,7 +374,10 @@ void DrawText::alignString(
     for (size_t i = 0; i < rects.size(); ++i) {
       if (draw_modes[i] == TextDrawType::TextDrawNormal) {
         align_char = align_char == -1 ? i : align_char;
-        Point2D tl, tr, br, bl;
+        Point2D tl;
+        Point2D tr;
+        Point2D br;
+        Point2D bl;
         rects[i]->calcCorners(tl, tr, br, bl, 0.0);
         // sometimes the rect is in a coordinate frame where +ve y is down,
         // sometimes it's up.  For these purposes, we don't care so long as
@@ -456,7 +471,10 @@ double DrawText::selectScaleFactor(char c, TextDrawType draw_type) const {
 // ****************************************************************************
 void DrawText::getStringSize(const std::string &label, double &label_width,
                              double &label_height) const {
-  double x_min, y_min, x_max, y_max;
+  double x_min;
+  double y_min;
+  double x_max;
+  double y_max;
   getStringExtremes(label, OrientType::E, x_min, y_min, x_max, y_max);
   label_width = x_max - x_min;
   label_height = y_max - y_min;
