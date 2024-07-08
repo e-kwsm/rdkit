@@ -104,8 +104,6 @@ bool StringChromosomeBase<T, ChromosomePolicy>::equals(
 
 /**
  * copies the gene to another chromosome
- *
- * @param other
  */
 template <typename T, typename ChromosomePolicy>
 void StringChromosomeBase<T, ChromosomePolicy>::copyGene(
