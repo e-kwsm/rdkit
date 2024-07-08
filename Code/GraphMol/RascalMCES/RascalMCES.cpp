@@ -158,7 +158,8 @@ void assignCosts(const std::vector<std::pair<int, int>> &atomDegrees1,
                  const std::vector<unsigned int> &bondLabels2,
                  const ROMol &mol1, const ROMol &mol2,
                  std::vector<std::vector<int>> &costsMat) {
-  std::vector<unsigned int> atomiBLs, atomjBLs;
+  std::vector<unsigned int> atomiBLs;
+  std::vector<unsigned int> atomjBLs;
   for (auto i = 0u; i < atomDegrees1.size(); ++i) {
     atomiBLs.clear();
     const auto atomi = mol1.getAtomWithIdx(atomDegrees1[i].second);
@@ -285,7 +286,8 @@ void getBondLabels(const ROMol &mol1, const ROMol &mol2,
                    const RascalOptions &opts,
                    std::vector<unsigned int> &bondLabels1,
                    std::vector<unsigned int> &bondLabels2) {
-  std::vector<std::string> tmpBondLabels1, tmpBondLabels2;
+  std::vector<std::string> tmpBondLabels1;
+  std::vector<std::string> tmpBondLabels2;
 
   getBondLabels(mol1, opts, tmpBondLabels1);
   getBondLabels(mol2, opts, tmpBondLabels2);
@@ -432,8 +434,10 @@ void buildPairs(const ROMol &mol1, const std::vector<unsigned int> &vtxLabels1,
                 const ROMol &mol2, const std::vector<unsigned int> &vtxLabels2,
                 const RascalOptions &opts,
                 std::vector<std::pair<int, int>> &vtxPairs) {
-  std::vector<std::string> mol1RingSmiles, mol2RingSmiles;
-  std::vector<std::unique_ptr<ROMol>> mol1Rings, mol2Rings;
+  std::vector<std::string> mol1RingSmiles;
+  std::vector<std::string> mol2RingSmiles;
+  std::vector<std::unique_ptr<ROMol>> mol1Rings;
+  std::vector<std::unique_ptr<ROMol>> mol2Rings;
   // For these purposes, it is correct that n1cccc1 and [nH]1cccc1 match - the
   // former would be from an N-substituted pyrrole, the latter from a plain
   // one.
@@ -712,7 +716,8 @@ int minFragSeparation(const ROMol &mol, const ROMol &molFrags,
       }
     }
   };
-  std::vector<int> frag1Atoms, frag2Atoms;
+  std::vector<int> frag1Atoms;
+  std::vector<int> frag2Atoms;
   extractFragAtoms(frag1, frag1Atoms);
   extractFragAtoms(frag2, frag2Atoms);
   auto pathMatrix = MolOps::getDistanceMat(mol);
@@ -730,9 +735,12 @@ int minFragSeparation(const ROMol &mol, const ROMol &molFrags,
 bool cliqueOk(const std::vector<unsigned int> clique, const RascalOptions &opts,
               const ROMol &mol1, const ROMol &mol2,
               const std::vector<std::pair<int, int>> &vtxPairs) {
-  std::unique_ptr<RWMol> mol1Frags, mol2Frags;
-  std::vector<int> mol1FragMapping, mol2FragMapping;
-  int numMol1Frags = 0, numMol2Frags = 0;
+  std::unique_ptr<RWMol> mol1Frags;
+  std::unique_ptr<RWMol> mol2Frags;
+  std::vector<int> mol1FragMapping;
+  std::vector<int> mol2FragMapping;
+  int numMol1Frags = 0;
+  int numMol2Frags = 0;
 
   auto buildFrags = [&]() -> void {
     if (mol1Frags) {
@@ -777,7 +785,8 @@ void updateMaxClique(const std::vector<unsigned int> &clique, bool deltaYPoss,
         maxCliques.push_back((clique));
       }
     } else {
-      bool goodClique = false, didCliqueOk = false;
+      bool goodClique = false;
+      bool didCliqueOk = false;
       if (clique.size() > maxCliques.front().size()) {
         goodClique = cliqueOk(clique, opts, mol1, mol2, vtxPairs);
         didCliqueOk = true;
@@ -1051,13 +1060,15 @@ RascalStartPoint makeInitialPartitionSet(const ROMol *mol1, const ROMol *mol2,
   assignEquivalentAtoms(*starter.d_mol1, opts.equivalentAtoms);
   assignEquivalentAtoms(*starter.d_mol2, opts.equivalentAtoms);
 
-  std::map<int, std::vector<std::pair<int, int>>> degSeqs1, degSeqs2;
+  std::map<int, std::vector<std::pair<int, int>>> degSeqs1;
+  std::map<int, std::vector<std::pair<int, int>>> degSeqs2;
   starter.d_tier1Sim =
       details::tier1Sim(*starter.d_mol1, *starter.d_mol2, degSeqs1, degSeqs2);
   if (starter.d_tier1Sim < opts.similarityThreshold) {
     return starter;
   }
-  std::vector<unsigned int> bondLabels1, bondLabels2;
+  std::vector<unsigned int> bondLabels1;
+  std::vector<unsigned int> bondLabels2;
   details::getBondLabels(*starter.d_mol1, *starter.d_mol2, opts, bondLabels1,
                          bondLabels2);
   starter.d_tier2Sim =
