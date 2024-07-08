@@ -258,7 +258,8 @@ void contourAndDrawGaussians(MolDraw2D &drawer,
 
   // start by setting up the grid
   if (params.setScale) {
-    Point2D minP, maxP;
+    Point2D minP;
+    Point2D maxP;
     minP.x = minP.y = std::numeric_limits<double>::max();
     maxP.x = maxP.y = std::numeric_limits<double>::lowest();
     for (const auto &loc : locs) {
