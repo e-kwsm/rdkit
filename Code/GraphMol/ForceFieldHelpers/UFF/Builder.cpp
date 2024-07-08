@@ -254,14 +254,18 @@ void addTrigonalBipyramidAngles(const Atom *atom, const ROMol &mol, int confId,
   PRECONDITION(mol.getNumAtoms() == params.size(), "bad parameters");
   PRECONDITION(field, "bad forcefield");
 
-  const Bond *ax1 = nullptr, *ax2 = nullptr;
-  const Bond *eq1 = nullptr, *eq2 = nullptr, *eq3 = nullptr;
+  const Bond *ax1 = nullptr;
+  const Bond *ax2 = nullptr;
+  const Bond *eq1 = nullptr;
+  const Bond *eq2 = nullptr;
+  const Bond *eq3 = nullptr;
 
   const Conformer &conf = mol.getConformer(confId);
   //------------------------------------------------------------
   // identify the axial and equatorial bonds:
   double mostNeg = 100.0;
-  ROMol::OEDGE_ITER beg1, end1;
+  ROMol::OEDGE_ITER beg1;
+  ROMol::OEDGE_ITER end1;
   boost::tie(beg1, end1) = mol.getAtomBonds(atom);
   unsigned int aid = atom->getIdx();
   while (beg1 != end1) {
@@ -270,7 +274,8 @@ void addTrigonalBipyramidAngles(const Atom *atom, const ROMol &mol, int confId,
     RDGeom::Point3D v1 =
         conf.getAtomPos(aid).directionVector(conf.getAtomPos(oaid));
 
-    ROMol::OEDGE_ITER beg2, end2;
+    ROMol::OEDGE_ITER beg2;
+    ROMol::OEDGE_ITER end2;
     boost::tie(beg2, end2) = mol.getAtomBonds(atom);
     while (beg2 != end2) {
       const Bond *bond2 = mol[*beg2];
@@ -316,7 +321,8 @@ void addTrigonalBipyramidAngles(const Atom *atom, const ROMol &mol, int confId,
   // alright, add the angles:
   AngleBendContrib *contrib;
   int atomIdx = atom->getIdx();
-  int i, j;
+  int i;
+  int j;
 
   // Axial-Axial
   i = ax1->getOtherAtomIdx(atomIdx);
@@ -532,13 +538,15 @@ void addTorsions(const ROMol &mol, const AtomicParamVect &params,
          atom1->getHybridization() == Atom::SP3) &&
         (atom2->getHybridization() == Atom::SP2 ||
          atom2->getHybridization() == Atom::SP3)) {
-      ROMol::OEDGE_ITER beg1, end1;
+      ROMol::OEDGE_ITER beg1;
+      ROMol::OEDGE_ITER end1;
       boost::tie(beg1, end1) = mol.getAtomBonds(atom1);
       while (beg1 != end1) {
         const Bond *tBond1 = mol[*beg1];
         if (tBond1 != bond) {
           int bIdx = tBond1->getOtherAtomIdx(idx1);
-          ROMol::OEDGE_ITER beg2, end2;
+          ROMol::OEDGE_ITER beg2;
+          ROMol::OEDGE_ITER end2;
           boost::tie(beg2, end2) = mol.getAtomBonds(atom2);
           while (beg2 != end2) {
             const Bond *tBond2 = mol[*beg2];
