@@ -49,7 +49,8 @@ void compute2DCoordsForReaction(RDKit::ChemicalReaction &rxn, double spacing,
     }
     compute2DCoords(*reactant, nullptr, canonOrient, true, nFlipsPerSample,
                     nSamples, sampleSeed, permuteDeg4Nodes);
-    double minX = 1e8, maxX = -1e8;
+    double minX = 1e8;
+    double maxX = -1e8;
     for (auto &pt : reactant->getConformer().getPositions()) {
       minX = std::min(pt.x, minX);
       maxX = std::max(pt.x, maxX);
@@ -69,7 +70,8 @@ void compute2DCoordsForReaction(RDKit::ChemicalReaction &rxn, double spacing,
     }
     compute2DCoords(*product, nullptr, canonOrient, true, nFlipsPerSample,
                     nSamples, sampleSeed, permuteDeg4Nodes);
-    double minX = 100., maxX = -100.;
+    double minX = 100.;
+    double maxX = -100.;
     for (auto &pt : product->getConformer().getPositions()) {
       minX = std::min(pt.x, minX);
       maxX = std::max(pt.x, maxX);
