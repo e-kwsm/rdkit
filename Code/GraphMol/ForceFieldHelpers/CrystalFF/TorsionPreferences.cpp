@@ -160,7 +160,10 @@ void getExperimentalTorsions(
   details.expTorsionAngles.clear();
   details.improperAtoms.clear();
 
-  unsigned int aid1, aid2, aid3, aid4;
+  unsigned int aid1;
+  unsigned int aid2;
+  unsigned int aid3;
+  unsigned int aid4;
   unsigned int bid2;
 
   // exclude bonds in bridged ring systems
