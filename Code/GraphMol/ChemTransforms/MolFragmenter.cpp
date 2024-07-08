@@ -472,7 +472,8 @@ ROMol *fragmentOnBonds(
       (*nCutsPerAtom)[eidx] += 1;
     }
     if (addDummies) {
-      Atom *at1, *at2;
+      Atom *at1;
+      Atom *at2;
       at1 = new Atom(0);
       at2 = new Atom(0);
       if (dummyLabels) {
