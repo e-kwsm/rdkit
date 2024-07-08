@@ -45,11 +45,11 @@ class RDKIT_DESCRIPTORS_EXPORT Data3Ddescriptors {
 
  public:
   Data3Ddescriptors();
-  double *getMW();
-  double *getVDW();
-  double *getNEG();
-  double *getPOL();
-  double *getIonPOL();
-  double *getRCOV();
+  static double *getMW();
+  static double *getVDW();
+  static double *getNEG();
+  static double *getPOL();
+  static double *getIonPOL();
+  static double *getRCOV();
 };
 #endif

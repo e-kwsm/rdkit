@@ -136,8 +136,8 @@ class MarvinCMLReader {
     return rxn;
   }
 
-  Atom *molAtomFromMarvinAtom(const MarvinAtom *marvinAtom,
-                              const MarvinMolBase *marvinMolBase) {
+  static Atom *molAtomFromMarvinAtom(const MarvinAtom *marvinAtom,
+                                     const MarvinMolBase *marvinMolBase) {
     PRECONDITION(marvinAtom, "bad marvin atom");
     PRECONDITION(marvinMolBase, "bad marvin mol");
     Atom *res = nullptr;
@@ -248,9 +248,9 @@ class MarvinCMLReader {
     }
   }
 
-  void molBondFromMarvinBond(const MarvinBond *marvinBond,
-                             const MarvinMol *marvinMol, RWMol *mol,
-                             bool &chiralityPossible) {
+  static void molBondFromMarvinBond(const MarvinBond *marvinBond,
+                                    const MarvinMol *marvinMol, RWMol *mol,
+                                    bool &chiralityPossible) {
     PRECONDITION(marvinBond, "bad marvin bond");
     PRECONDITION(marvinMol, "bad marvin mol");
 
@@ -424,9 +424,9 @@ class MarvinCMLReader {
     }
   }
 
-  std::unique_ptr<RWMol> parseMolecule(MarvinMol *marvinMol,
-                                       bool sanitize = false,
-                                       bool removeHs = false) {
+  static std::unique_ptr<RWMol> parseMolecule(MarvinMol *marvinMol,
+                                              bool sanitize = false,
+                                              bool removeHs = false) {
     PRECONDITION(marvinMol, "no molecule");
     std::vector<MarvinStereoGroup *> stereoGroups;
     std::unique_ptr<Conformer> confPtr;
