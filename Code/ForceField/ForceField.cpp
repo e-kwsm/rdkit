@@ -200,7 +200,8 @@ double ForceField::distance(unsigned int i, unsigned int j, double *pos) {
         res += tmp * tmp;
       }
 #else
-      double *pi = &(pos[d_dimension * i]), *pj = &(pos[d_dimension * j]);
+      double *pi = &(pos[d_dimension * i]);
+      double *pj = &(pos[d_dimension * j]);
       for (unsigned int idx = 0; idx < d_dimension; ++idx, ++pi, ++pj) {
         double tmp = *pi - *pj;
         res += tmp * tmp;
@@ -238,7 +239,8 @@ double ForceField::distance2(unsigned int i, unsigned int j,
       res += tmp * tmp;
     }
 #else
-    double *pi = &(pos[d_dimension * i]), *pj = &(pos[d_dimension * j]);
+    double *pi = &(pos[d_dimension * i]);
+    double *pj = &(pos[d_dimension * j]);
     for (unsigned int idx = 0; idx < d_dimension; ++idx, ++pi, ++pj) {
       double tmp = *pi - *pj;
       res += tmp * tmp;
