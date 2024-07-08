@@ -181,7 +181,8 @@ RWMol *MultithreadedSmilesMolSupplier::processMoleculeRecord(
         static_cast<int>(col) == d_parseParams.nameColumn) {
       continue;
     }
-    std::string pname, pval;
+    std::string pname;
+    std::string pval;
     if (d_props.size() > col) {
       pname = d_props[col];
     } else {
