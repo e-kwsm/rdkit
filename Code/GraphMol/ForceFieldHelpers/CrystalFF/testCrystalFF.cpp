@@ -51,7 +51,7 @@ void testTorsionAngleM6() {
 
   contrib = new ForceFields::CrystalFF::TorsionAngleContribM6(&ff, 0, 1, 2, 3,
                                                               v, signs);
-  ff.contribs().push_back(ForceFields::ContribPtr(contrib));
+  ff.contribs().emplace_back(contrib);
 
   p1.x = 0;
   p1.y = 1.5;
@@ -89,7 +89,7 @@ void testTorsionAngleM6() {
   ff.contribs().pop_back();
   contrib = new ForceFields::CrystalFF::TorsionAngleContribM6(&ff, 0, 1, 2, 3,
                                                               v, signs);
-  ff.contribs().push_back(ForceFields::ContribPtr(contrib));
+  ff.contribs().emplace_back(contrib);
 
   p1.x = 0;
   p1.y = 1.5;
