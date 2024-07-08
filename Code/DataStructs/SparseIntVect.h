@@ -441,7 +441,8 @@ void calcVectParams(const SparseIntVect<IndexType> &v1,
   v1Sum = v2Sum = andSum = 0.0;
   // we're doing : (v1&v2).getTotalVal(), but w/o generating
   // the other vector:
-  typename SparseIntVect<IndexType>::StorageType::const_iterator iter1, iter2;
+  typename SparseIntVect<IndexType>::StorageType::const_iterator iter1;
+  typename SparseIntVect<IndexType>::StorageType::const_iterator iter2;
   iter1 = v1.getNonzeroElements().begin();
   if (iter1 != v1.getNonzeroElements().end()) {
     v1Sum += abs(iter1->second);
