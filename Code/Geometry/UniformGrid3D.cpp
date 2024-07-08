@@ -226,8 +226,11 @@ void UniformGrid3D::setSphereOccupancy(const Point3D &center, double radius,
   int zmax = static_cast<int>(floor(gPt.z + gRadius));
   int zmin = static_cast<int>(ceil(gPt.z - gRadius));
 
-  unsigned int oval, val, valChange;
-  int ptId1, ptId2;
+  unsigned int oval;
+  unsigned int val;
+  unsigned int valChange;
+  int ptId1;
+  int ptId2;
   for (int k = zmin; k <= zmax; ++k) {
     if ((k >= 0) &&
         (k < static_cast<int>(
