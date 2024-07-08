@@ -58,8 +58,14 @@ void linearSearch(unsigned int dim, double *oldPt, double oldVal, double *grad,
   PRECONDITION(newPt, "bad input array");
 
   const unsigned int MAX_ITER_LINEAR_SEARCH = 1000;
-  double sum = 0.0, slope = 0.0, test = 0.0, lambda = 0.0;
-  double lambda2 = 0.0, lambdaMin = 0.0, tmpLambda = 0.0, val2 = 0.0;
+  double sum = 0.0;
+  double slope = 0.0;
+  double test = 0.0;
+  double lambda = 0.0;
+  double lambda2 = 0.0;
+  double lambdaMin = 0.0;
+  double tmpLambda = 0.0;
+  double val2 = 0.0;
 
   resCode = -1;
 
@@ -199,10 +205,15 @@ int minimize(unsigned int dim, double *pos, double gradTol,
   PRECONDITION(pos, "bad input array");
   PRECONDITION(gradTol > 0, "bad tolerance");
 
-  double sum, maxStep, fp;
+  double sum;
+  double maxStep;
+  double fp;
 
-  double *grad, *dGrad, *hessDGrad;
-  double *newPos, *xi;
+  double *grad;
+  double *dGrad;
+  double *hessDGrad;
+  double *newPos;
+  double *xi;
   double *invHessian;
 
   grad = new double[dim];
@@ -294,7 +305,10 @@ int minimize(unsigned int dim, double *pos, double gradTol,
     //}
 
     // compute hessian*dGrad:
-    double fac = 0, fae = 0, sumDGrad = 0, sumXi = 0;
+    double fac = 0;
+    double fae = 0;
+    double sumDGrad = 0;
+    double sumXi = 0;
     for (unsigned int i = 0; i < dim; i++) {
 #if 0
       unsigned int itab = i * dim;
@@ -334,9 +348,12 @@ int minimize(unsigned int dim, double *pos, double gradTol,
           invHessian[j * dim + i] = invHessian[itab + j];
         }
 #else
-        double pxi = fac * xi[i], hdgi = fad * hessDGrad[i],
-               dgi = fae * dGrad[i];
-        double *pxj = &(xi[i]), *hdgj = &(hessDGrad[i]), *dgj = &(dGrad[i]);
+        double pxi = fac * xi[i];
+        double hdgi = fad * hessDGrad[i];
+        double dgi = fae * dGrad[i];
+        double *pxj = &(xi[i]);
+        double *hdgj = &(hessDGrad[i]);
+        double *dgj = &(dGrad[i]);
         for (unsigned int j = i; j < dim; ++j, ++pxj, ++hdgj, ++dgj) {
           invHessian[itab + j] += pxi * *pxj - hdgi * *hdgj + dgi * *dgj;
           invHessian[j * dim + i] = invHessian[itab + j];
@@ -353,7 +370,9 @@ int minimize(unsigned int dim, double *pos, double gradTol,
         xi[i] -= invHessian[itab + j] * grad[j];
       }
 #else
-      double &pxi = xi[i], *ivh = &(invHessian[itab]), *gj = grad;
+      double &pxi = xi[i];
+      double *ivh = &(invHessian[itab]);
+      double *gj = grad;
       for (unsigned int j = 0; j < dim; ++j, ++ivh, ++gj) {
         pxi -= *ivh * *gj;
       }
