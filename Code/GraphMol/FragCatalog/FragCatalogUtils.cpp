@@ -139,7 +139,8 @@ MatchVectType findFuncGroupsOnMol(const ROMol &mol, const FragCatParams *params,
                           // is the atom ID from mol
 
       // grab the list of atom Ids from mol that match the functional group
-      INT_VECT bondIds, maids;
+      INT_VECT bondIds;
+      INT_VECT maids;
       for (mi = mati->begin(); mi != mati->end(); mi++) {
         maids.push_back(mi->second);
       }
@@ -185,7 +186,8 @@ ROMol *prepareMol(const ROMol &mol, const FragCatParams *fparams,
   // without the functional groups). This basically the part of the molecule
   // that does not contain the function group bonds given by "fgBonds"
   INT_VECT cBonds;
-  int bid, nbds = mol.getNumBonds();
+  int bid;
+  int nbds = mol.getNumBonds();
 
   for (bid = 0; bid < nbds; bid++) {
     if (std::find(fgBonds.begin(), fgBonds.end(), bid) == fgBonds.end()) {
