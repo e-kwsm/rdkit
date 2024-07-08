@@ -74,7 +74,7 @@ inline std::string getV3000CTAB(const ROMol &tmol, int confId = -1,
                                 unsigned int precision = 6) {
   boost::dynamic_bitset<> wasAromatic(tmol.getNumBonds());
   return getV3000CTAB(tmol, wasAromatic, confId, precision);
-};
+}
 // reads a line from an MDL v3K CTAB
 RDKIT_FILEPARSERS_EXPORT std::string getV3000Line(std::istream *inStream,
                                                   unsigned int &line);
