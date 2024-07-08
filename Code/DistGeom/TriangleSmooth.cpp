@@ -17,8 +17,15 @@ bool triangleSmoothBounds(BoundsMatPtr boundsMat, double tol) {
 }
 bool triangleSmoothBounds(BoundsMatrix *boundsMat, double tol) {
   int npt = boundsMat->numRows();
-  int i, j, k;
-  double Uik, Lik, Ukj, sumUikUkj, diffLikUjk, diffLjkUik;
+  int i;
+  int j;
+  int k;
+  double Uik;
+  double Lik;
+  double Ukj;
+  double sumUikUkj;
+  double diffLikUjk;
+  double diffLjkUik;
 
   for (k = 0; k < npt; k++) {
     for (i = 0; i < npt - 1; i++) {
