@@ -362,8 +362,6 @@ class MrvTests {
       return;
     }
     TEST_ASSERT(molTest->expectedResult == true);
-
-    return;
   }
 
   void testMarvinRxn(const RxnTest *rxnTest) {
@@ -457,8 +455,6 @@ class MrvTests {
     }
 
     TEST_ASSERT(rxnTest->expectedResult == true);
-
-    return;
   }
 
   void testMarvinRxnMols(const RxnTest *rxnTest) {
@@ -500,8 +496,6 @@ class MrvTests {
     }
 
     TEST_ASSERT(rxnTest->expectedResult == true);
-
-    return;
   }
 
   void testMarvin3dChiral(const MolTest *molTest) {
@@ -577,8 +571,6 @@ class MrvTests {
       return;
     }
     TEST_ASSERT(molTest->expectedResult == true);
-
-    return;
   }
 
   void testMarvinAtrop(const MolTest *molTest) {
@@ -646,8 +638,6 @@ class MrvTests {
       return;
     }
     TEST_ASSERT(molTest->expectedResult == true);
-
-    return;
   }
 
   void testMolFiles(const MolTest *molFileTest) {
@@ -752,8 +742,6 @@ class MrvTests {
     }
 
     TEST_ASSERT(molFileTest->expectedResult == true);
-
-    return;
   }
 
   void testRxn(const RxnTest *rxnTest) {
@@ -831,8 +819,6 @@ class MrvTests {
     }
 
     TEST_ASSERT(rxnTest->expectedResult == true);
-
-    return;
   }
 
   void testPrecision() {
