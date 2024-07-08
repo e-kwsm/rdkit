@@ -145,7 +145,8 @@ static void addResult(std::vector<std::pair<ROMOL_SPTR, ROMOL_SPTR>>&
 #ifdef MMPA_DEBUG
   std::cout << "\n";
 #endif
-  RWMOL_SPTR core, side_chains;  // core & side_chains output molecules
+  RWMOL_SPTR core;
+  RWMOL_SPTR side_chains;  // core & side_chains output molecules
 
   if (isotope == 1) {
     side_chains = RWMOL_SPTR(new RWMol(em));  // output = '%s,%s,,%s.%s'
@@ -214,7 +215,8 @@ static void addResult(std::vector<std::pair<ROMOL_SPTR, ROMOL_SPTR>>&
         // add all bonds from this fragment
         for (int ai : frags[i]) {
           Atom* a = em.getAtomWithIdx(ai);
-          ROMol::OEDGE_ITER beg, end;
+          ROMol::OEDGE_ITER beg;
+          ROMol::OEDGE_ITER end;
           for (boost::tie(beg, end) = em.getAtomBonds(a); beg != end; ++beg) {
             const Bond* bond = em[*beg];
             if (newAtomMap.end() == newAtomMap.find(bond->getBeginAtomIdx()) ||
@@ -255,7 +257,8 @@ static void addResult(std::vector<std::pair<ROMOL_SPTR, ROMOL_SPTR>>&
       // add all bonds from this fragment
       for (int ai : frags[iCore]) {
         Atom* a = em.getAtomWithIdx(ai);
-        ROMol::OEDGE_ITER beg, end;
+        ROMol::OEDGE_ITER beg;
+        ROMol::OEDGE_ITER end;
         for (boost::tie(beg, end) = em.getAtomBonds(a); beg != end; ++beg) {
           const Bond* bond = em[*beg];
           if (newAtomMap.end() == newAtomMap.find(bond->getBeginAtomIdx()) ||
