@@ -228,7 +228,8 @@ std::vector<ROMOL_SPTR> replaceSubstructs(
     // loop over the central atom's (the first atom in match) bonds
     // and duplicate any that connect to the remainder of the molecule:
     Atom *origAtom = newMol->getAtomWithIdx(match[0]);
-    ROMol::ADJ_ITER nbrIdx, endNbrs;
+    ROMol::ADJ_ITER nbrIdx;
+    ROMol::ADJ_ITER endNbrs;
     boost::tie(nbrIdx, endNbrs) = newMol->getAtomNeighbors(origAtom);
     while (nbrIdx != endNbrs) {
       // we don't want to duplicate any "intra-match" bonds:
@@ -310,7 +311,8 @@ ROMol *replaceSidechains(const ROMol &mol, const ROMol &coreQuery,
     // core, we have an attachment point:
     if (newMol->getAtomWithIdx(mvit.second)->getDegree() >
         coreQuery.getAtomWithIdx(mvit.first)->getDegree()) {
-      ROMol::ADJ_ITER nbrIdx, endNbrs;
+      ROMol::ADJ_ITER nbrIdx;
+      ROMol::ADJ_ITER endNbrs;
       boost::tie(nbrIdx, endNbrs) =
           newMol->getAtomNeighbors(newMol->getAtomWithIdx(mvit.second));
       while (nbrIdx != endNbrs) {
@@ -548,7 +550,8 @@ ROMol *replaceCore(const ROMol &mol, const ROMol &core,
 
       // loop over our neighbors and see if any are in the match:
       std::list<unsigned int> nbrList;
-      ROMol::ADJ_ITER nbrIter, endNbrs;
+      ROMol::ADJ_ITER nbrIter;
+      ROMol::ADJ_ITER endNbrs;
       boost::tie(nbrIter, endNbrs) = newMol->getAtomNeighbors(sidechainAtom);
       while (nbrIter != endNbrs && (*nbrIter) < origNumAtoms) {
         // we need to add bonds and atoms to the molecule while looping
@@ -899,7 +902,8 @@ void addRecursiveQueries(
     (*reactantLabels).resize(0);
   }
 
-  ROMol::VERTEX_ITER atBegin, atEnd;
+  ROMol::VERTEX_ITER atBegin;
+  ROMol::VERTEX_ITER atEnd;
   boost::tie(atBegin, atEnd) = mol.getVertices();
   while (atBegin != atEnd) {
     Atom *at = mol[*atBegin];
