@@ -502,7 +502,8 @@ unsigned int getAtomParityFlag(const Atom *atom, const Conformer *conf) {
   const ROMol &mol = atom->getOwningMol();
   RDGeom::Point3D pos = conf->getAtomPos(atom->getIdx());
   std::vector<std::pair<unsigned int, RDGeom::Point3D>> vs;
-  ROMol::ADJ_ITER nbrIdx, endNbrs;
+  ROMol::ADJ_ITER nbrIdx;
+  ROMol::ADJ_ITER endNbrs;
   boost::tie(nbrIdx, endNbrs) = mol.getAtomNeighbors(atom);
   while (nbrIdx != endNbrs) {
     const Atom *at = mol.getAtomWithIdx(*nbrIdx);
@@ -599,9 +600,12 @@ const std::string GetMolFileAtomLine(const Atom *atom, const Conformer *conf,
                                      boost::dynamic_bitset<> &queryListAtoms) {
   PRECONDITION(atom, "");
   std::string res;
-  int totValence, atomMapNumber;
+  int totValence;
+  int atomMapNumber;
   unsigned int parityFlag;
-  double x, y, z;
+  double x;
+  double y;
+  double z;
   GetMolFileAtomProperties(atom, conf, totValence, atomMapNumber, parityFlag, x,
                            y, z);
 
@@ -740,9 +744,12 @@ const std::string GetV3000MolFileAtomLine(
     const Atom *atom, const Conformer *conf,
     boost::dynamic_bitset<> &queryListAtoms, unsigned int precision) {
   PRECONDITION(atom, "");
-  int totValence, atomMapNumber;
+  int totValence;
+  int atomMapNumber;
   unsigned int parityFlag;
-  double x, y, z;
+  double x;
+  double y;
+  double z;
   GetMolFileAtomProperties(atom, conf, totValence, atomMapNumber, parityFlag, x,
                            y, z);
 
@@ -1243,8 +1250,15 @@ std::string outputMolToMolBlock(const RWMol &tmol, int confId,
                                 unsigned int precision,
                                 const boost::dynamic_bitset<> &aromaticBonds) {
   std::string res;
-  unsigned int nAtoms, nBonds, nLists, chiralFlag, nsText, nRxnComponents;
-  unsigned int nReactants, nProducts, nIntermediates;
+  unsigned int nAtoms;
+  unsigned int nBonds;
+  unsigned int nLists;
+  unsigned int chiralFlag;
+  unsigned int nsText;
+  unsigned int nRxnComponents;
+  unsigned int nReactants;
+  unsigned int nProducts;
+  unsigned int nIntermediates;
   nAtoms = tmol.getNumAtoms();
   nBonds = tmol.getNumBonds();
   nLists = 0;
