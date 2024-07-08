@@ -88,7 +88,8 @@ bool computeInitialCoords(const RDNumeric::SymmMatrix<double> &distMat,
   unsigned int dim = positions.front()->dimension();
 
   const double *data = distMat.getData();
-  RDNumeric::SymmMatrix<double> sqMat(N), T(N, 0.0);
+  RDNumeric::SymmMatrix<double> sqMat(N);
+  RDNumeric::SymmMatrix<double> T(N, 0.0);
   RDNumeric::DoubleMatrix eigVecs(dim, N);
   RDNumeric::DoubleVector eigVals(dim);
 
