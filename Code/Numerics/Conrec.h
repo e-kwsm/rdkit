@@ -51,18 +51,31 @@ inline void Contour(const double *d, size_t ilb, size_t iub, size_t jlb,
   PRECONDITION(iub > ilb, "bad bounds");
   PRECONDITION(jub > jlb, "bad bounds");
 
-  int m1, m2, m3, case_value;
-  double dmin, dmax, x1 = 0, x2 = 0, y1 = 0, y2 = 0;
-  int i, j, m;
+  int m1;
+  int m2;
+  int m3;
+  int case_value;
+  double dmin;
+  double dmax;
+  double x1 = 0;
+  double x2 = 0;
+  double y1 = 0;
+  double y2 = 0;
+  int i;
+  int j;
+  int m;
   size_t k;
   double h[5];
   int sh[5];
-  double xh[5], yh[5];
-  int im[4] = {0, 1, 1, 0}, jm[4] = {0, 0, 1, 1};
+  double xh[5];
+  double yh[5];
+  int im[4] = {0, 1, 1, 0};
+  int jm[4] = {0, 0, 1, 1};
   int castab[3][3][3] = {{{0, 0, 8}, {0, 2, 5}, {7, 6, 9}},
                          {{0, 3, 4}, {1, 3, 1}, {4, 3, 0}},
                          {{9, 6, 7}, {5, 2, 0}, {8, 0, 0}}};
-  double temp1, temp2;
+  double temp1;
+  double temp2;
   size_t ny = jub - jlb + 1;
 
   auto xsect = [&](int p1, int p2) {
