@@ -151,7 +151,8 @@ void EmbeddedFrag::computeNbrsAndAng(unsigned int aid,
   auto wnb2 = winPair.second;
 
   // now find the smallest angle that contains one of these nbrs
-  int nb2 = -1, nb1 = -1;
+  int nb2 = -1;
+  int nb1 = -1;
   for (auto anglePair : anglePairs) {
     auto nbrPair = anglePair.second;
     if (wnb1 == nbrPair.first) {
@@ -780,7 +781,8 @@ void EmbeddedFrag::reflectIfNecessaryCisTrans(EmbeddedFrag &embFrag,
   // specification
   // so lets try to correct it with a reflection
   const auto &p1Loc = d_eatoms[aid1].loc;
-  RDGeom::Point2D rAtmLoc, p1norm;
+  RDGeom::Point2D rAtmLoc;
+  RDGeom::Point2D p1norm;
   if (ctCase == 1) {
     // embObj is the cis/trans case - find the normal at aid1 - this should tell
     // us where the ring single bond in the cis/trans system should have gone
@@ -1394,7 +1396,8 @@ void EmbeddedFrag::canonicalizeOrientation() {
     yy += (elem.second.loc.y) * (elem.second.loc.y);
   }
 
-  RDGeom::Point2D eig1, eig2;
+  RDGeom::Point2D eig1;
+  RDGeom::Point2D eig2;
   // the eigen vectors are given by
   //   (2*xy, (yy - xx) + d) and (2*xy, (yy - xx) - d)
   // where d = sqrt((xx - yy)^2 + 4*xy^2)
@@ -1550,7 +1553,8 @@ void EmbeddedFrag::permuteBonds(unsigned int aid, unsigned int aid1,
   auto rl2 = d_eatoms.at(aid1).loc + d_eatoms.at(aid2).loc;
   rl2 *= 0.5;
 
-  RDKit::INT_VECT fragA, fragB;
+  RDKit::INT_VECT fragA;
+  RDKit::INT_VECT fragB;
 
   // now find the fragment that contains aid1 but not aid
   _recurseAtomOneSide(aid1, aid, dp_mol, fragA);
@@ -1580,14 +1584,16 @@ void EmbeddedFrag::randomSampleFlipsAndPermutations(
   // around and can be permuted
   unsigned int nd4 = 0;
   RDKit::INT_VECT deg4nodes;
-  RDKit::VECT_INT_VECT deg4NbrBids, deg4NbrAids;
+  RDKit::VECT_INT_VECT deg4NbrBids;
+  RDKit::VECT_INT_VECT deg4NbrAids;
 
   if (permuteDeg4Nodes) {
     for (const auto atom : dp_mol->atoms()) {
       auto caid = atom->getIdx();
       if ((getDepictDegree(atom) == 4) &&
           (!(dp_mol->getRingInfo()->numAtomRings(caid)))) {
-        RDKit::INT_VECT aids, bids;
+        RDKit::INT_VECT aids;
+        RDKit::INT_VECT bids;
         getNbrAtomAndBondIds(caid, dp_mol, aids, bids);
         // make sure all the atoms in aids are in this embeddedfrag and can be
         // perturbed
@@ -1686,7 +1692,8 @@ std::vector<PAIR_I_I> EmbeddedFrag::findCollisions(const double *dmat,
   // if we a re dealing with non carbon atoms we will increase the collision
   // threshold. This is because only hetero atoms are typically drawn in a
   // depiction.
-  double atomTypeFactor1, atomTypeFactor2;
+  double atomTypeFactor1;
+  double atomTypeFactor2;
   for (auto efi = d_eatoms.begin(); efi != d_eatoms.end(); ++efi) {
     atomTypeFactor1 = 1.0;
     if (dp_mol->getAtomWithIdx(efi->first)->getAtomicNum() != 6) {
@@ -1941,7 +1948,8 @@ void EmbeddedFrag::openAngles(const double *dmat, unsigned int aid1,
   auto v1 = d_eatoms.at(aidB).loc - d_eatoms.at(aidA).loc;
   auto cross = (v1.x) * (v2.y) - (v1.y) * (v2.x);
   double angle;
-  RDGeom::Transform2D trans1, trans2;
+  RDGeom::Transform2D trans1;
+  RDGeom::Transform2D trans2;
   switch (type) {
     case 1:
       angle = ANGLE_OPEN;
