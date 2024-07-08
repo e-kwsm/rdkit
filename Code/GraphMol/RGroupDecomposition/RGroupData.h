@@ -47,7 +47,7 @@ struct RDKIT_RGROUPDECOMPOSITION_EXPORT RGroupData {
  private:
   void computeIsHydrogen();
 
-  bool isMolHydrogen(const ROMol &mol) const;
+  static bool isMolHydrogen(const ROMol &mol);
 
   //! compute the canonical smiles for the attachments (bug: removes dupes since
   //! we are using a set...)

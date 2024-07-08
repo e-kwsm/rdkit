@@ -99,7 +99,7 @@ void RGroupData::computeIsHydrogen() {  // is the rgroup all Hs
   });
 }
 
-bool RGroupData::isMolHydrogen(const ROMol &mol) const {
+bool RGroupData::isMolHydrogen(const ROMol &mol) {
   auto atoms = mol.atoms();
   return std::all_of(atoms.begin(), atoms.end(), [](const auto &atom) {
     return (atom->getAtomicNum() == 1 || (atom->getAtomicNum() == 0 && atom->hasProp(SIDECHAIN_RLABELS)));
