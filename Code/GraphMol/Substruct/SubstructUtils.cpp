@@ -162,7 +162,8 @@ bool chiralAtomCompat(const Atom *&a1, const Atom *&a2) {
   PRECONDITION(a2, "bad atom");
   bool res = a1->Match(a2);
   if (res) {
-    std::string s1, s2;
+    std::string s1;
+    std::string s2;
     bool hascode1 = a1->getPropIfPresent(common_properties::_CIPCode, s1);
     bool hascode2 = a2->getPropIfPresent(common_properties::_CIPCode, s2);
     if (hascode1 || hascode2) {
