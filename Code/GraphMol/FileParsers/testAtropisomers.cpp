@@ -171,8 +171,6 @@ class MolAtropTest {
       return;
     }
     TEST_ASSERT(molFileTest->expectedResult == true);
-
-    return;
   }
 
   void testKekuleWedgeError(RWMol *mol, std::string expectedSmi,
