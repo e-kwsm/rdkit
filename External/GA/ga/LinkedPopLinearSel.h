@@ -132,7 +132,8 @@ LinkedPopLinearSel<Chromosome, PopulationPolicy>::LinkedPopLinearSel(
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunused-but-set-variable"
 #endif
-  double predictTotalScaledFitness = .0, currentFitness = SELECT_START;
+  double predictTotalScaledFitness = .0;
+  double currentFitness = SELECT_START;
   for (size_t i = 0; i < popsize; i++) {
     predictTotalScaledFitness += currentFitness;
     currentFitness += scaledFitnessStep;
@@ -204,7 +205,8 @@ template <typename Chromosome, typename PopulationPolicy>
 std::shared_ptr<Chromosome> &
 LinkedPopLinearSel<Chromosome, PopulationPolicy>::selectParent() {
   double val = rng.normalRand() * totalScaledFitness;
-  double sum = SELECT_START, currentFitness = SELECT_START;
+  double sum = SELECT_START;
+  double currentFitness = SELECT_START;
   auto iterator = population.begin();
   for (size_t i = 0; i < popsize; i++) {
     if (val <= sum) {
@@ -226,12 +228,14 @@ LinkedPopLinearSel<Chromosome, PopulationPolicy>::selectParent() {
  */
 template <typename Chromosome, typename PopulationPolicy>
 void LinkedPopLinearSel<Chromosome, PopulationPolicy>::iterate() {
-  thread_local std::vector<std::shared_ptr<Chromosome>> parents, children;
+  thread_local std::vector<std::shared_ptr<Chromosome>> parents;
+  thread_local std::vector<std::shared_ptr<Chromosome>> children;
   parents.clear();
   children.clear();
 
   // select an operator.
-  double total = 0, val = rng.normalRand() * totalOperatorWeights;
+  double total = 0;
+  double val = rng.normalRand() * totalOperatorWeights;
   std::shared_ptr<GaOperation<Chromosome>> selectedOperation = nullptr;
   for (auto &operation : operations) {
     total += operation->getWeight();
