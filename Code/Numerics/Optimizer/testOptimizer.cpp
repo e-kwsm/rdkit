@@ -15,14 +15,14 @@
 
 #include "BFGSOpt.h"
 
-double circ_0_0(double *v) {
+double circ_0_0(const double *v) {
   double dx = v[0];
   double dy = v[1];
 
   return dx * dx + dy * dy;
 }
 
-double circ_0_0_grad(double *v, double *grad) {
+double circ_0_0_grad(const double *v, double *grad) {
   double dx = v[0];
   double dy = v[1];
   grad[0] = 2 * dx;
@@ -30,14 +30,14 @@ double circ_0_0_grad(double *v, double *grad) {
   return 1.0;
 }
 
-double circ_1_0(double *v) {
+double circ_1_0(const double *v) {
   double dx = v[0] - 1;
   double dy = v[1];
 
   return dx * dx + dy * dy;
 }
 
-double circ_1_0_grad(double *v, double *grad) {
+double circ_1_0_grad(const double *v, double *grad) {
   double dx = v[0] - 1;
   double dy = v[1];
   grad[0] = 2 * dx;
@@ -45,7 +45,7 @@ double circ_1_0_grad(double *v, double *grad) {
   return 1.0;
 }
 
-double func2(double *v) {
+double func2(const double *v) {
   double weight = .5;
   double dx = v[0] - 1;
   double dy = v[1];
@@ -54,7 +54,7 @@ double func2(double *v) {
   return term1 * term1 + weight * term2;
 }
 
-double grad2(double *v, double *grad) {
+double grad2(const double *v, double *grad) {
   double weight = .5;
   double dx = v[0] - 1;
   double dy = v[1];
