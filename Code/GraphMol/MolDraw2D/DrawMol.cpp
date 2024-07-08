@@ -2885,7 +2885,7 @@ void DrawMol::getDrawTransformers(Point2D &trans, Point2D &scale,
 // ****************************************************************************
 Point2D DrawMol::getDrawCoords(const Point2D &atCds, const Point2D &trans,
                                const Point2D &scaleFactor,
-                               const Point2D &toCentre) const {
+                               const Point2D &toCentre) {
   // we always invert y
   Point2D drawCoords{atCds.x, -atCds.y};
   drawCoords += trans;
@@ -3077,7 +3077,7 @@ void DrawMol::transformAll(const Point2D *trans, Point2D *scale,
 
 // ****************************************************************************
 Point2D DrawMol::transformPoint(const Point2D &pt, const Point2D *trans,
-                                Point2D *scale, const Point2D *toCentre) const {
+                                Point2D *scale, const Point2D *toCentre) {
   Point2D retPt{pt};
   if (trans) {
     retPt += *trans;
