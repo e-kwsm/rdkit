@@ -369,7 +369,9 @@ bool DetectAtropisomerChiralityOneBond(Bond *bond, ROMol &mol,
 
   // create a frame of reference that has its X-axis along the atrop bond
 
-  RDGeom::Point3D xAxis, yAxis, zAxis;
+  RDGeom::Point3D xAxis;
+  RDGeom::Point3D yAxis;
+  RDGeom::Point3D zAxis;
   if (!getBondFrameOfReference(bond, conf, xAxis, yAxis, zAxis)) {
     // connot percieve atroisomer
     BOOST_LOG(rdWarningLog)
@@ -663,7 +665,8 @@ bool WedgeBondFromAtropisomerOneBondNoConf(
 
   const RingInfo *ri = bond->getOwningMol().getRingInfo();
 
-  int bestBondEnd = -1, bestBondNumber = -1;
+  int bestBondEnd = -1;
+  int bestBondNumber = -1;
   bool bestBondIsSingle = false;
   unsigned int bestRingCount = INT_MAX;
   Bond::BondDir bestBondDir = Bond::BondDir::NONE;
@@ -784,7 +787,9 @@ bool WedgeBondFromAtropisomerOneBond2d(
 
   // create a frame of reference that has its X-axis along the atrop bond
 
-  RDGeom::Point3D xAxis, yAxis, zAxis;
+  RDGeom::Point3D xAxis;
+  RDGeom::Point3D yAxis;
+  RDGeom::Point3D zAxis;
 
   if (!getBondFrameOfReference(bond, conf, xAxis, yAxis, zAxis)) {
     // connot percieve atroisomer bond
@@ -868,7 +873,8 @@ bool WedgeBondFromAtropisomerOneBond2d(
 
   const RingInfo *ri = bond->getOwningMol().getRingInfo();
 
-  int bestBondEnd = -1, bestBondNumber = -1;
+  int bestBondEnd = -1;
+  int bestBondNumber = -1;
   bool bestBondIsSingle = false;
   unsigned int bestRingCount = INT_MAX;
   unsigned int largestRingSize = 0;
