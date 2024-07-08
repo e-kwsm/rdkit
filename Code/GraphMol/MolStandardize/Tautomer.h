@@ -379,9 +379,9 @@ class RDKIT_MOLSTANDARDIZE_EXPORT TautomerEnumerator {
             boost::dynamic_bitset<> *modifiedBonds = nullptr) const;
 
   //! returns the canonical tautomer from a \c TautomerEnumeratorResult
-  ROMol *pickCanonical(const TautomerEnumeratorResult &tautRes,
-                       boost::function<int(const ROMol &mol)> scoreFunc =
-                           TautomerScoringFunctions::scoreTautomer) const;
+  static ROMol *pickCanonical(const TautomerEnumeratorResult &tautRes,
+                              boost::function<int(const ROMol &mol)> scoreFunc =
+                                  TautomerScoringFunctions::scoreTautomer);
 
   //! returns the canonical tautomer from an iterable of possible tautomers
   /// When Iterable is TautomerEnumeratorResult we use the other non-templated
