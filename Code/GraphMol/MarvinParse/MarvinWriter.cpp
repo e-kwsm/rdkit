@@ -377,7 +377,10 @@ class MarvinCMLWriter {
     MarvinMol *marvinMol = nullptr;
     const Conformer *conf = nullptr;
     const Conformer *conf3d = nullptr;
-    int tempMolCount = 0, tempAtomCount = 0, tempBondCount = 0, tempSgCount = 0;
+    int tempMolCount = 0;
+    int tempAtomCount = 0;
+    int tempBondCount = 0;
+    int tempSgCount = 0;
     try {
       marvinMol = new MarvinMol();
 
@@ -811,7 +814,10 @@ class MarvinCMLWriter {
   MarvinMol *MolToMarvinMol(RWMol *mol, int confId = -1) {
     PRECONDITION(mol, "bad mol");
 
-    int molCount = 0, atomCount = 0, bondCount = 0, sgCount = 0;
+    int molCount = 0;
+    int atomCount = 0;
+    int bondCount = 0;
+    int sgCount = 0;
 
     return MolToMarvinMol(mol, molCount, atomCount, bondCount, sgCount, confId);
   }
@@ -1124,7 +1130,10 @@ class MarvinCMLWriter {
     MarvinReaction *marvinReaction = nullptr;
     try {
       auto marvinReaction = new MarvinReaction();
-      int molCount = 0, atomCount = 0, bondCount = 0, sgCount = 0;
+      int molCount = 0;
+      int atomCount = 0;
+      int bondCount = 0;
+      int sgCount = 0;
       for (const auto &mol : rxn->getReactants()) {
         RWMol rwMol(*mol);
         marvinReaction->reactants.emplace_back(MolToMarvinMol(
