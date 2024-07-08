@@ -26,36 +26,32 @@ double ChiSquare(T *dMat, long int dim1, long int dim2) {
   //
   //  Th chi squere formula is
   //  chi = sum((N/Ri)*sum(Nij^2/Cj) ) -N
-  T *rowSums;
-  T *colSums;
-  int i;
-  int j;
-  int tSum;
+
   // find the row sum
-  tSum = 0;
-  rowSums = new T[dim1];
-  for (i = 0; i < dim1; i++) {
+  int tSum = 0;
+  T *rowSums = new T[dim1];
+  for (int i = 0; i < dim1; i++) {
     int idx1 = i * dim2;
     rowSums[i] = (T)0.0;
-    for (j = 0; j < dim2; j++) {
+    for (int j = 0; j < dim2; j++) {
       rowSums[i] += dMat[idx1 + j];
     }
     tSum += (int)rowSums[i];
   }
 
   // find the column sums
-  colSums = new T[dim2];
-  for (i = 0; i < dim2; i++) {
+  T *colSums = new T[dim2];
+  for (int i = 0; i < dim2; i++) {
     colSums[i] = (T)0.0;
-    for (j = 0; j < dim1; j++) {
+    for (int j = 0; j < dim1; j++) {
       colSums[i] += dMat[j * dim2 + i];
     }
   }
 
   double chi = 0.0;
-  for (i = 0; i < dim1; i++) {
+  for (int i = 0; i < dim1; i++) {
     double rchi = 0.0;
-    for (j = 0; j < dim2; j++) {
+    for (int j = 0; j < dim2; j++) {
       rchi += (pow((double)dMat[i * dim2 + j], 2) / colSums[j]);
     }
     chi += (((double)tSum / rowSums[i]) * rchi);
@@ -69,18 +65,15 @@ double ChiSquare(T *dMat, long int dim1, long int dim2) {
 
 template <class T>
 double InfoEntropy(T *tPtr, long int dim) {
-  int i;
   T nInstances = 0;
-  double accum = 0.0;
-  double d;
-
-  for (i = 0; i < dim; i++) {
+  for (int i = 0; i < dim; i++) {
     nInstances += tPtr[i];
   }
 
+  double accum = 0.0;
   if (nInstances != 0) {
-    for (i = 0; i < dim; i++) {
-      d = (double)tPtr[i] / nInstances;
+    for (int i = 0; i < dim; i++) {
+      double d = (double)tPtr[i] / nInstances;
       if (d != 0) {
         accum += -d * log(d);
       }
@@ -91,14 +84,8 @@ double InfoEntropy(T *tPtr, long int dim) {
 
 template <class T>
 double InfoEntropyGain(T *dMat, long int dim1, long int dim2) {
-  T *variableRes;
-  T *overallRes;
-  double gain;
-  double term2;
-  int tSum;
-
   // std::cerr<<" --------\n    ieg: "<<dim1<<" "<<dim2<<std::endl;
-  variableRes = new T[dim1];
+  T *variableRes = new T[dim1];
   for (long int i = 0; i < dim1; i++) {
     long int idx1 = i * dim2;
     variableRes[i] = (T)0.0;
@@ -108,7 +95,7 @@ double InfoEntropyGain(T *dMat, long int dim1, long int dim2) {
     }
   }
 
-  overallRes = new T[dim2];
+  T *overallRes = new T[dim2];
   // do the col sums
   for (long int i = 0; i < dim2; i++) {
     overallRes[i] = (T)0.0;
@@ -118,17 +105,18 @@ double InfoEntropyGain(T *dMat, long int dim1, long int dim2) {
     }
   }
 
-  term2 = 0.0;
+  double term2 = 0.0;
   for (long int i = 0; i < dim1; i++) {
     T *tPtr;
     tPtr = dMat + i * dim2;
     term2 += variableRes[i] * InfoEntropy(tPtr, dim2);
   }
-  tSum = 0;
+  int tSum = 0;
   for (long int i = 0; i < dim2; i++) {
     tSum += static_cast<int>(overallRes[i]);
   }
 
+  double gain;
   if (tSum != 0) {
     term2 /= tSum;
     gain = InfoEntropy(overallRes, dim2) - term2;
