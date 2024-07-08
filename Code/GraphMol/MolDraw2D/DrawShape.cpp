@@ -214,7 +214,10 @@ void DrawShapeEllipse::move(const Point2D &trans) { points_[0] += trans; }
 bool DrawShapeEllipse::doesRectClash(const StringRect &rect,
                                      double padding) const {
   padding = scaleLineWidth_ ? padding * lineWidth_ : padding;
-  Point2D tl, tr, br, bl;
+  Point2D tl;
+  Point2D tr;
+  Point2D br;
+  Point2D bl;
   rect.calcCorners(tl, tr, br, bl, padding);
   auto w = points_[1].x;
   auto h = points_[1].y;
@@ -303,7 +306,10 @@ void DrawShapePolyLine::myDraw(MolDraw2D &drawer) const {
 bool DrawShapePolyLine::doesRectClash(const StringRect &rect,
                                       double padding) const {
   padding = scaleLineWidth_ ? padding * lineWidth_ : padding;
-  Point2D tl, tr, br, bl;
+  Point2D tl;
+  Point2D tr;
+  Point2D br;
+  Point2D bl;
   rect.calcCorners(tl, tr, br, bl, padding);
   for (size_t i = 1; i < points_.size(); ++i) {
     if (doesLineIntersect(rect, points_[i - 1], points_[i], padding)) {
@@ -514,7 +520,8 @@ void DrawShapeSolidWedge::trimOtherBondVecs() {
   if (otherBondVecs_.size() < 3) {
     return;
   }
-  int firstVec = 0, secondVec = 1;
+  int firstVec = 0;
+  int secondVec = 1;
   double largestAng = -361.0;
   for (unsigned int i = 0; i < otherBondVecs_.size() - 1; ++i) {
     for (unsigned int j = i + 1; j < otherBondVecs_.size(); ++j) {
@@ -754,7 +761,10 @@ void DrawShapeArc::move(const Point2D &trans) { points_[0] += trans; }
 // ****************************************************************************
 bool DrawShapeArc::doesRectClash(const StringRect &rect, double padding) const {
   padding = scaleLineWidth_ ? padding * lineWidth_ : padding;
-  Point2D tl, tr, br, bl;
+  Point2D tl;
+  Point2D tr;
+  Point2D br;
+  Point2D bl;
   rect.calcCorners(tl, tr, br, bl, padding);
   if (doesLineIntersectArc(points_[0], points_[1].x, points_[1].y, ang1_, ang2_,
                            padding, tl, tr)) {
