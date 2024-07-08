@@ -389,7 +389,8 @@ void checkChiralityPostMove(const ROMol &mol, const Atom *oAt, Atom *nAt,
       }
     }
   } else {
-    ROMol::OEDGE_ITER beg, end;
+    ROMol::OEDGE_ITER beg;
+    ROMol::OEDGE_ITER end;
     boost::tie(beg, end) = mol.getAtomBonds(oAt);
     while (beg != end) {
       const Bond *obond = mol[*beg];
@@ -422,7 +423,8 @@ std::vector<std::pair<Bond *, std::vector<int>>> getNbrBondStereo(
   const auto bgn = bnd->getBeginAtom();
   const auto end = bnd->getEndAtom();
   for (const auto *atom : {bgn, end}) {
-    ROMol::OEDGE_ITER a1, a2;
+    ROMol::OEDGE_ITER a1;
+    ROMol::OEDGE_ITER a2;
     for (boost::tie(a1, a2) = mol.getAtomBonds(atom); a1 != a2; ++a1) {
       Bond *obnd = mol[*a1];
       if (obnd->getIdx() != bnd->getIdx() && !obnd->getStereoAtoms().empty()) {
@@ -475,7 +477,8 @@ ROMol *fragmentOnBonds(
       (*nCutsPerAtom)[eidx] += 1;
     }
     if (addDummies) {
-      Atom *at1, *at2;
+      Atom *at1;
+      Atom *at2;
       at1 = new Atom(0);
       at2 = new Atom(0);
       if (dummyLabels) {
