@@ -269,7 +269,8 @@ ExplicitBitVect *LayeredFingerprintMol(
   std::vector<const Bond *> bondCache;
   bondCache.resize(mol.getNumBonds());
   std::vector<short> isQueryBond(mol.getNumBonds(), 0);
-  ROMol::EDGE_ITER firstB, lastB;
+  ROMol::EDGE_ITER firstB;
+  ROMol::EDGE_ITER lastB;
   boost::tie(firstB, lastB) = mol.getEdges();
   while (firstB != lastB) {
     const Bond *bond = mol[*firstB];
@@ -289,7 +290,8 @@ ExplicitBitVect *LayeredFingerprintMol(
 
   std::vector<bool> aromaticAtoms(mol.getNumAtoms(), false);
   std::vector<int> anums(mol.getNumAtoms(), 0);
-  ROMol::VERTEX_ITER firstA, lastA;
+  ROMol::VERTEX_ITER firstA;
+  ROMol::VERTEX_ITER lastA;
   boost::tie(firstA, lastA) = mol.getVertices();
   while (firstA != lastA) {
     const Atom *atom = mol[*firstA];
@@ -388,7 +390,8 @@ ExplicitBitVect *LayeredFingerprintMol(
 
         if (layerFlags & 0x1) {
           // layer 1: straight topology
-          unsigned int a1Deg, a2Deg;
+          unsigned int a1Deg;
+          unsigned int a2Deg;
           a1Deg = atomDegrees[bi->getBeginAtomIdx()];
           a2Deg = atomDegrees[bi->getEndAtomIdx()];
           if (a1Deg < a2Deg) {
@@ -409,7 +412,8 @@ ExplicitBitVect *LayeredFingerprintMol(
           } else {
             bondHash = Bond::SINGLE;
           }
-          unsigned int a1Deg, a2Deg;
+          unsigned int a1Deg;
+          unsigned int a2Deg;
           a1Deg = atomDegrees[bi->getBeginAtomIdx()];
           a2Deg = atomDegrees[bi->getEndAtomIdx()];
           if (a1Deg < a2Deg) {
@@ -426,10 +430,12 @@ ExplicitBitVect *LayeredFingerprintMol(
           // std::cerr<<" consider: "<<bi->getBeginAtomIdx()<<" - "
           // <<bi->getEndAtomIdx()<<std::endl;
           // layer 3: include atom types:
-          unsigned int a1Hash, a2Hash;
+          unsigned int a1Hash;
+          unsigned int a2Hash;
           a1Hash = (anums[bi->getBeginAtomIdx()] % 128);
           a2Hash = (anums[bi->getEndAtomIdx()] % 128);
-          unsigned int a1Deg, a2Deg;
+          unsigned int a1Deg;
+          unsigned int a2Deg;
           a1Deg = atomDegrees[bi->getBeginAtomIdx()];
           a2Deg = atomDegrees[bi->getEndAtomIdx()];
           if (a1Hash < a2Hash) {
