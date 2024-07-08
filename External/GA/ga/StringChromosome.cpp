@@ -23,7 +23,8 @@ int StringChromosome<bool, BinaryStringChromosomePolicy>::decodeToInt(
     int start, int nBits) const {
   assert(length >= (start + nBits));
 
-  int mask = 1, result = 0;
+  int mask = 1;
+  int result = 0;
   bool *ptr = string.get() + start;
   for (int i = 0; i < nBits; i++, mask <<= 1) {
     if (*ptr++) {
