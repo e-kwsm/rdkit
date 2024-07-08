@@ -427,7 +427,9 @@ std::unique_ptr<RWMol> MolFromSmiles(const std::string &smiles,
     yysmiles_debug = params.debugParse;
   }
 
-  std::string lsmiles, name, cxPart;
+  std::string lsmiles;
+  std::string name;
+  std::string cxPart;
   preprocessSmiles(smiles, params, lsmiles, name, cxPart);
   // strip any leading/trailing whitespace:
   // boost::trim_if(smi,boost::is_any_of(" \t\r\n"));
@@ -438,7 +440,8 @@ std::unique_ptr<RWMol> MolFromSmiles(const std::string &smiles,
   handleCXPartAndName(res.get(), params, cxPart, name);
 
   // get a conformer
-  const Conformer *conf = nullptr, *conf3d = nullptr;
+  const Conformer *conf = nullptr;
+  const Conformer *conf3d = nullptr;
   if (res && res->getNumConformers() > 0) {
     for (unsigned int confId = 0; confId < res->getNumConformers(); ++confId) {
       auto *testConf = &res->getConformer(confId);
@@ -501,7 +504,9 @@ std::unique_ptr<RWMol> MolFromSmiles(const std::string &smiles,
     }
     res->clearProp(SmilesParseOps::detail::_needsDetectBondStereo);
     // figure out stereochemistry:
-    bool cleanIt = true, force = true, flagPossible = true;
+    bool cleanIt = true;
+    bool force = true;
+    bool flagPossible = true;
     MolOps::assignStereochemistry(*res, cleanIt, force, flagPossible);
   } else {
     //  we still need to do something about double bond stereochemistry
@@ -555,7 +560,9 @@ std::unique_ptr<RWMol> MolFromSmarts(const std::string &smarts,
     yysmarts_debug = params.debugParse;
   }
 
-  std::string lsmarts, name, cxPart;
+  std::string lsmarts;
+  std::string name;
+  std::string cxPart;
   preprocessSmiles(smarts, params, lsmarts, name, cxPart);
 
   auto res = toMol(labelRecursivePatterns(lsmarts), smarts_parse, lsmarts);
