@@ -59,7 +59,8 @@ double alignConfsOnAtomMap(const Conformer &prbCnf, const Conformer &refCnf,
                            RDGeom::Transform3D &trans,
                            const RDNumeric::DoubleVector *weights, bool reflect,
                            unsigned int maxIterations) {
-  RDGeom::Point3DConstPtrVect refPoints, prbPoints;
+  RDGeom::Point3DConstPtrVect refPoints;
+  RDGeom::Point3DConstPtrVect prbPoints;
   for (const auto &mi : atomMap) {
     prbPoints.push_back(&prbCnf.getAtomPos(mi.first));
     refPoints.push_back(&refCnf.getAtomPos(mi.second));
@@ -120,7 +121,8 @@ double calcMSDInternal(const Conformer &prbCnf, const Conformer &refCnf,
   } else {
     PRECONDITION(npt == weights->size(), "Mismatch in number of weights");
   }
-  RDGeom::Point3DConstPtrVect refPoints, prbPoints;
+  RDGeom::Point3DConstPtrVect refPoints;
+  RDGeom::Point3DConstPtrVect prbPoints;
   for (const auto &mi : atomMap) {
     prbPoints.push_back(&prbCnf.getAtomPos(mi.first));
     refPoints.push_back(&refCnf.getAtomPos(mi.second));
@@ -424,7 +426,8 @@ void alignMolConformers(ROMol &mol, const std::vector<unsigned int> *atomIds,
     return;
   }
 
-  RDGeom::Point3DConstPtrVect refPoints, prbPoints;
+  RDGeom::Point3DConstPtrVect refPoints;
+  RDGeom::Point3DConstPtrVect prbPoints;
   int cid = -1;
   if ((confIds != nullptr) && (confIds->size() > 0)) {
     cid = confIds->front();
