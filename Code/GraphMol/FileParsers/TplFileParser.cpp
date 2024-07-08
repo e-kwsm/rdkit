@@ -92,7 +92,8 @@ void ParseTPLBondLine(std::string text, unsigned int lineNum, RWMol *mol) {
            << std::endl;
     throw FileParseException(errout.str());
   }
-  unsigned int idx1, idx2;
+  unsigned int idx1;
+  unsigned int idx2;
   idx1 = FileParserUtils::stripSpacesAndCast<unsigned int>(splitLine[2]) - 1;
   idx2 = FileParserUtils::stripSpacesAndCast<unsigned int>(splitLine[3]) - 1;
 
@@ -213,7 +214,8 @@ std::unique_ptr<RWMol> MolFromTPLDataStream(std::istream &inStream,
   // we're at the counts line:
   boost::split(splitText, tempStr, boost::is_any_of(" \t"),
                boost::token_compress_on);
-  unsigned int nAtoms, nBonds;
+  unsigned int nAtoms;
+  unsigned int nBonds;
   nAtoms = FileParserUtils::stripSpacesAndCast<unsigned int>(splitText[0]);
   nBonds = FileParserUtils::stripSpacesAndCast<unsigned int>(splitText[1]);
 
