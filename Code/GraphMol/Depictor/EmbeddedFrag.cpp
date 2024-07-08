@@ -1857,12 +1857,13 @@ void EmbeddedFrag::flipAboutBond(unsigned int bondId, bool flipEnd) {
     endSideFlip = false;
     // there are fixed atoms on both sides, just return
     return;
-  }
+  } else {
     auto nats = d_eatoms.size();
     auto nEndSide = endSideAids.size();
     if ((nats - nEndSide) < nEndSide) {
       endSideFlip = false;
     }
+  }
   for (auto &d_eatom : d_eatoms) {
     const auto fii = std::find(endSideAids.begin(), endSideAids.end(),
                                static_cast<int>(d_eatom.first));
