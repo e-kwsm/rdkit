@@ -69,7 +69,7 @@ void AngleConstraintContribs::addContrib(unsigned int idx1, unsigned int idx2,
 }
 
 double AngleConstraintContribs::computeAngleTerm(
-    const double &angle, const AngleConstraintContribsParams &contrib) const {
+    const double &angle, const AngleConstraintContribsParams &contrib) {
   double angleTerm = 0.0;
   if (angle < contrib.minAngle) {
     angleTerm = angle - contrib.minAngle;
