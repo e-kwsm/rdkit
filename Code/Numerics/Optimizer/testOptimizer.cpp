@@ -69,11 +69,9 @@ TEST_CASE("testLinearSearch") {
   double grad[2], dir[2];
   double nLoc[2], nVal;
   int resCode;
-  double (*func)(double *);
-  double (*gradFunc)(double *, double *);
 
-  func = circ_0_0;
-  gradFunc = circ_0_0_grad;
+  auto func = circ_0_0;
+  auto gradFunc = circ_0_0_grad;
   oLoc[0] = 0;
   oLoc[1] = 1.0;
   oVal = func(oLoc);
