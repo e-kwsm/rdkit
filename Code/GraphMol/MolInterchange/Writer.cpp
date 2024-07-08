@@ -324,7 +324,8 @@ void addStereoGroup(const StereoGroup &sg, rj::Value &rjSG, rj::Document &doc) {
 
 void addSubstanceGroup(const SubstanceGroup &sg, rj::Value &rjSG,
                        rj::Document &doc) {
-  bool includePrivate = false, includeComputed = false;
+  bool includePrivate = false;
+  bool includeComputed = false;
   auto propNames = sg.getPropList(includePrivate, includeComputed);
   if (propNames.size()) {
     rj::Value properties(rj::kObjectType);
@@ -517,7 +518,8 @@ void addMol(const T &imol, rj::Value &rjMol, rj::Document &doc,
     rjMol.AddMember("conformers", rjConfs, doc.GetAllocator());
   }
 
-  bool includePrivate = false, includeComputed = false;
+  bool includePrivate = false;
+  bool includeComputed = false;
   auto propNames = mol.getPropList(includePrivate, includeComputed);
   if (propNames.size()) {
     rj::Value properties(rj::kObjectType);
