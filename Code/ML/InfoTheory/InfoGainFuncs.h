@@ -26,8 +26,11 @@ double ChiSquare(T *dMat, long int dim1, long int dim2) {
   //
   //  Th chi squere formula is
   //  chi = sum((N/Ri)*sum(Nij^2/Cj) ) -N
-  T *rowSums, *colSums;
-  int i, j, tSum;
+  T *rowSums;
+  T *colSums;
+  int i;
+  int j;
+  int tSum;
   // find the row sum
   tSum = 0;
   rowSums = new T[dim1];
@@ -68,7 +71,8 @@ template <class T>
 double InfoEntropy(T *tPtr, long int dim) {
   int i;
   T nInstances = 0;
-  double accum = 0.0, d;
+  double accum = 0.0;
+  double d;
 
   for (i = 0; i < dim; i++) {
     nInstances += tPtr[i];
@@ -87,8 +91,10 @@ double InfoEntropy(T *tPtr, long int dim) {
 
 template <class T>
 double InfoEntropyGain(T *dMat, long int dim1, long int dim2) {
-  T *variableRes, *overallRes;
-  double gain, term2;
+  T *variableRes;
+  T *overallRes;
+  double gain;
+  double term2;
   int tSum;
 
   // std::cerr<<" --------\n    ieg: "<<dim1<<" "<<dim2<<std::endl;
