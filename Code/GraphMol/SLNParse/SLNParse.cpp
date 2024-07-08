@@ -127,7 +127,8 @@ std::string replaceSLNMacroAtoms(std::string inp) {
   if (res != inp) {
     // there are macro definitions, we're going to replace
     // the macro atoms in the input:
-    std::string::const_iterator start, end;
+    std::string::const_iterator start;
+    std::string::const_iterator end;
     start = inp.begin();
     end = inp.end();
     std::match_results<std::string::const_iterator> what;
