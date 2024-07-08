@@ -168,7 +168,6 @@ void MolDraw2D::drawMoleculeWithHighlights(
   ++activeMolIdx_;
   startDrawing();
   drawTheMolecule((*drawMols_.back()));
-  return;
 }
 
 // ****************************************************************************
