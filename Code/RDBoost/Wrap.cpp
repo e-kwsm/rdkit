@@ -76,8 +76,8 @@ boost::dynamic_bitset<> pythonObjectToDynBitset(
     const python::object &obj, boost::dynamic_bitset<>::size_type maxV) {
   boost::dynamic_bitset<> res(maxV);
   if (obj) {
-    python::stl_input_iterator<boost::dynamic_bitset<>::size_type> beg(obj),
-        end;
+    python::stl_input_iterator<boost::dynamic_bitset<>::size_type> beg(obj);
+    python::stl_input_iterator<boost::dynamic_bitset<>::size_type> end;
     while (beg != end) {
       auto v = *beg;
       if (v >= maxV) {
