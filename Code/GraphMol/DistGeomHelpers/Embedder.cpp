@@ -1091,7 +1091,8 @@ void findChiralSets(const ROMol &mol, DistGeom::VECT_CHIRALSET &chiralCenters,
         nbrs.reserve(4);
         // find the neighbors of this atom and enter them into the
         // nbr list
-        ROMol::OEDGE_ITER beg, end;
+        ROMol::OEDGE_ITER beg;
+        ROMol::OEDGE_ITER end;
         boost::tie(beg, end) = mol.getAtomBonds(atom);
         while (beg != end) {
           nbrs.push_back(mol[*beg]->getOtherAtom(atom)->getIdx());
