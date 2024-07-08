@@ -642,13 +642,15 @@ void addTorsions(const ROMol &mol, MMFFMolProperties *mmffMolProperties,
          (jAtom->getHybridization() == Atom::SP3)) &&
         ((kAtom->getHybridization() == Atom::SP2) ||
          (kAtom->getHybridization() == Atom::SP3))) {
-      ROMol::OEDGE_ITER beg1, end1;
+      ROMol::OEDGE_ITER beg1;
+      ROMol::OEDGE_ITER end1;
       boost::tie(beg1, end1) = mol.getAtomBonds(jAtom);
       while (beg1 != end1) {
         const Bond *tBond1 = mol[*beg1];
         if (tBond1 != bond) {
           int idx1 = tBond1->getOtherAtomIdx(idx2);
-          ROMol::OEDGE_ITER beg2, end2;
+          ROMol::OEDGE_ITER beg2;
+          ROMol::OEDGE_ITER end2;
           boost::tie(beg2, end2) = mol.getAtomBonds(kAtom);
           while (beg2 != end2) {
             const Bond *tBond2 = mol[*beg2];
