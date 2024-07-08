@@ -27,7 +27,8 @@ std::vector<unsigned int> calcMQNs(const ROMol &mol, bool) {
   //       as the original paper on polarity counts
   //       since we're using different donor and acceptor
   //       definitions.
-  ROMol::VERTEX_ITER atBegin, atEnd;
+  ROMol::VERTEX_ITER atBegin;
+  ROMol::VERTEX_ITER atEnd;
   boost::tie(atBegin, atEnd) = mol.getVertices();
   while (atBegin != atEnd) {
     const Atom *at = mol[*atBegin];
@@ -138,7 +139,8 @@ std::vector<unsigned int> calcMQNs(const ROMol &mol, bool) {
   // ---------------------------------------------------
   // bond counts:
   unsigned int nAromatic = 0;
-  ROMol::EDGE_ITER firstB, lastB;
+  ROMol::EDGE_ITER firstB;
+  ROMol::EDGE_ITER lastB;
   boost::tie(firstB, lastB) = mol.getEdges();
   while (firstB != lastB) {
     const Bond *bond = mol[*firstB];
