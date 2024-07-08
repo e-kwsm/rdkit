@@ -212,7 +212,8 @@ const std::string FractionCSP3Version = "1.0.0";
 double calcFractionCSP3(const ROMol &mol) {
   unsigned int nCSP3 = 0;
   unsigned int nC = 0;
-  ROMol::VERTEX_ITER atBegin, atEnd;
+  ROMol::VERTEX_ITER atBegin;
+  ROMol::VERTEX_ITER atEnd;
   boost::tie(atBegin, atEnd) = mol.getVertices();
   while (atBegin != atEnd) {
     const Atom *at = mol[*atBegin];
