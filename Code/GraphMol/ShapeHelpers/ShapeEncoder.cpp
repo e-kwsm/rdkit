@@ -34,7 +34,8 @@ void EncodeShape(const Conformer &conf, RDGeom::UniformGrid3D &grid,
   const ROMol &mol = conf.getOwningMol();
   ROMol::ConstAtomIterator ai;
   double rad;
-  unsigned int aid, anum;
+  unsigned int aid;
+  unsigned int anum;
   for (ai = mol.beginAtoms(); ai != mol.endAtoms(); ai++) {
     anum = (*ai)->getAtomicNum();
     if ((anum == 1) && (ignoreHs)) {  // ignore hydrigens
