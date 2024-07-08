@@ -54,7 +54,8 @@ namespace RDKit {
 namespace {
 void fixNitroSubstructureAndCharge(RWMol *res, unsigned int atIdx) {
   unsigned int noODblNeighbors = 0;
-  ROMol::ADJ_ITER nbrIdxIt, nbrEndIdxIt;
+  ROMol::ADJ_ITER nbrIdxIt;
+  ROMol::ADJ_ITER nbrEndIdxIt;
   unsigned int toModIdx = 0;
   boost::tie(nbrIdxIt, nbrEndIdxIt) =
       res->getAtomNeighbors(res->getAtomWithIdx(atIdx));
@@ -81,7 +82,8 @@ void readFormalChargesFromAttr(std::istream *inStream, RWMol *res) {
   typedef boost::tokenizer<boost::char_separator<char>> tokenizer;
   boost::char_separator<char> sep(" \t\n");
   bool readNextAtomAttribs = true;
-  unsigned int atomIdx = 0, noAtomAttr = 0;
+  unsigned int atomIdx = 0;
+  unsigned int noAtomAttr = 0;
 
   // std::streampos stPos = inStream->tellg();
   std::string tempStr = getLine(inStream);
@@ -268,7 +270,8 @@ unsigned int chkNoHNeighbNOx(RWMol *res, ROMol::ADJ_ITER atIdxIt,
                              int &toModIdx) {
   Atom *at = res->getAtomWithIdx(*atIdxIt);
   unsigned int noHNbrs = 0;
-  ROMol::ADJ_ITER nbrIdxIt, nbrEndIdxIt;
+  ROMol::ADJ_ITER nbrIdxIt;
+  ROMol::ADJ_ITER nbrEndIdxIt;
   boost::tie(nbrIdxIt, nbrEndIdxIt) = res->getAtomNeighbors(at);
   while (nbrIdxIt != nbrEndIdxIt) {
     if (res->getAtomWithIdx(*nbrIdxIt)->getAtomicNum() == 1) {
@@ -369,7 +372,9 @@ bool cleanUpMol2Substructures(RWMol *res) {
       // remember : this is not canonical!
       // first - set the C.cat as fixed
       isFixed[idx] = 1;
-      ROMol::ADJ_ITER nbrIdxIt, endNbrsIdxIt, tmpIdxIt;
+      ROMol::ADJ_ITER nbrIdxIt;
+      ROMol::ADJ_ITER endNbrsIdxIt;
+      ROMol::ADJ_ITER tmpIdxIt;
       unsigned int lowestDeg = 100;
       boost::tie(nbrIdxIt, endNbrsIdxIt) = res->getAtomNeighbors(at);
       // one problem of programs like Corina is, that they will create also
@@ -402,7 +407,8 @@ bool cleanUpMol2Substructures(RWMol *res) {
         // 3. atom in ring
         // 4. random
         // first we identify the N atoms
-        ROMol::ADJ_ITER idxIt1 = nbrIdxIt, idxIt2 = nbrIdxIt;
+        ROMol::ADJ_ITER idxIt1 = nbrIdxIt;
+        ROMol::ADJ_ITER idxIt2 = nbrIdxIt;
         bool firstIdent = false;
         while (nbrIdxIt != endNbrsIdxIt) {
           if (res->getAtomWithIdx(*nbrIdxIt)->getSymbol() == "N") {
@@ -472,7 +478,8 @@ bool cleanUpMol2Substructures(RWMol *res) {
             // we get in here if this N.pl3 was not seen / fixed before
             Atom *nbr = res->getAtomWithIdx(*nbrIdxIt);
             // get the number of heavy atoms connected to this atom
-            ROMol::ADJ_ITER nbrNbrIdxIt, nbrEndNbrsIdxIt;
+            ROMol::ADJ_ITER nbrNbrIdxIt;
+            ROMol::ADJ_ITER nbrEndNbrsIdxIt;
             unsigned int hvyAtDeg = 0;
             boost::tie(nbrNbrIdxIt, nbrEndNbrsIdxIt) =
                 res->getAtomNeighbors(nbr);
@@ -528,7 +535,8 @@ bool cleanUpMol2Substructures(RWMol *res) {
 Atom *ParseMol2FileAtomLine(const std::string atomLine, RDGeom::Point3D &pos) {
   typedef boost::tokenizer<boost::char_separator<char>> tokenizer;
   boost::char_separator<char> sep(" \t\n");
-  std::string tAN, tAT;
+  std::string tAN;
+  std::string tAT;
   tokenizer tokens(atomLine, sep);
   tokenizer::const_iterator itemIt = tokens.begin();
   if (itemIt == tokens.end()) {
@@ -645,7 +653,8 @@ Atom *ParseMol2FileAtomLine(const std::string atomLine, RDGeom::Point3D &pos) {
 
 Bond *ParseMol2FileBondLine(const std::string bondLine,
                             const INT_VECT &idxCorresp) {
-  unsigned int idx1, idx2;
+  unsigned int idx1;
+  unsigned int idx2;
 
   typedef boost::tokenizer<boost::char_separator<char>> tokenizer;
   boost::char_separator<char> sep(" \t\n");
@@ -819,7 +828,8 @@ namespace FileParsers {
 //------------------------------------------------
 std::unique_ptr<RWMol> MolFromMol2DataStream(std::istream &inStream,
                                              const Mol2ParserParams &params) {
-  std::string tempStr, lineBeg;
+  std::string tempStr;
+  std::string lineBeg;
   typedef boost::tokenizer<boost::char_separator<char>> tokenizer;
   boost::char_separator<char> sep(" \t\n");
   Utils::LocaleSwitcher ls;
@@ -828,7 +838,10 @@ std::unique_ptr<RWMol> MolFromMol2DataStream(std::istream &inStream,
   // define an end of
   // molecule than to find a new one or an eof. Hence I have to read until I
   // find one of the two ...
-  std::streampos molStart = 0, atomStart = 0, bondStart = 0, chargeStart = 0;
+  std::streampos molStart = 0;
+  std::streampos atomStart = 0;
+  std::streampos bondStart = 0;
+  std::streampos chargeStart = 0;
   while (!inStream.eof() && !inStream.fail()) {
     tempStr = getLine(inStream);
     if (inStream.eof()) {
@@ -888,7 +901,8 @@ std::unique_ptr<RWMol> MolFromMol2DataStream(std::istream &inStream,
     throw FileParseException("Empty counts line");
   }
 
-  unsigned int nAtoms = 0, nBonds = 0;
+  unsigned int nAtoms = 0;
+  unsigned int nBonds = 0;
   tokenizer::const_iterator itemIt = tokens.begin();
   // counts line, this is where we really get started
   try {
