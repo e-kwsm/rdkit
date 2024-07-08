@@ -156,8 +156,6 @@ void exportMorgan() {
       "part of the bond invariants\n\n"
       "  RETURNS: BondInvariantsGenerator\n\n",
       python::return_value_policy<python::manage_new_object>());
-
-  return;
 }
 }  // namespace MorganWrapper
 
