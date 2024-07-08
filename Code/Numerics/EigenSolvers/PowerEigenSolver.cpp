@@ -30,7 +30,8 @@ bool powerEigenSolver(unsigned int numEig, DoubleSymmMatrix &mat,
   CHECK_INVARIANT(eigenValues.size() >= numEig, "");
   CHECK_INVARIANT(numEig <= N, "");
   if (eigenVectors) {
-    unsigned int evRows, evCols;
+    unsigned int evRows;
+    unsigned int evCols;
     evRows = eigenVectors->numRows();
     evCols = eigenVectors->numCols();
     CHECK_INVARIANT(evCols >= N, "");
@@ -38,11 +39,17 @@ bool powerEigenSolver(unsigned int numEig, DoubleSymmMatrix &mat,
   }
 
   unsigned int ei;
-  double eigVal, prevVal;
+  double eigVal;
+  double prevVal;
   bool converged = false;
-  unsigned int i, j, id, iter, evalId;
+  unsigned int i;
+  unsigned int j;
+  unsigned int id;
+  unsigned int iter;
+  unsigned int evalId;
 
-  DoubleVector v(N), z(N);
+  DoubleVector v(N);
+  DoubleVector z(N);
   if (seed <= 0) {
     seed = clock();
   }
