@@ -225,14 +225,13 @@ double *InfoBitRanker::getTopN(unsigned int num) {
   delete[] dp_topBits;
   dp_topBits = new double[num * ncols];
 
-  int offset;
-  int bid;
-
   RDKit::INT_VECT maskBits;
   if (dp_maskBits && topN.size() < num) {
     dp_maskBits->getOnBits(maskBits);
   }
 
+  int offset;
+  int bid;
   for (int i = num - 1; i >= 0; i--) {
     offset = i * ncols;
     if (topN.size() == 0) {
