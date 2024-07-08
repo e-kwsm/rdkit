@@ -20,7 +20,10 @@ namespace Utils {
 double calculateCosTorsion(const RDGeom::Point3D &p1, const RDGeom::Point3D &p2,
                            const RDGeom::Point3D &p3,
                            const RDGeom::Point3D &p4) {
-  RDGeom::Point3D r1 = p1 - p2, r2 = p3 - p2, r3 = p2 - p3, r4 = p4 - p3;
+  RDGeom::Point3D r1 = p1 - p2;
+  RDGeom::Point3D r2 = p3 - p2;
+  RDGeom::Point3D r3 = p2 - p3;
+  RDGeom::Point3D r4 = p4 - p3;
   RDGeom::Point3D t1 = r1.crossProduct(r2);
   RDGeom::Point3D t2 = r3.crossProduct(r4);
   double d1 = t1.length();
@@ -133,7 +136,8 @@ void TorsionAngleContrib::calcTorsionParams(double bondOrder23, int atNum2,
     // special case for single bonds between group 6 elements:
     if (bondOrder23 == 1.0 && Utils::isInGroup6(atNum2) &&
         Utils::isInGroup6(atNum3)) {
-      double V2 = 6.8, V3 = 6.8;
+      double V2 = 6.8;
+      double V3 = 6.8;
       if (atNum2 == 8) {
         V2 = 2.0;
       }
