@@ -107,7 +107,8 @@ const float B3[] =
 unsigned int getAtomtype(const ROMol &mol, const RDKit::Atom *atom) {
   PRECONDITION(atom != nullptr, "bad atom argument")
   unsigned int t = 1;
-  RDKit::ROMol::OEDGE_ITER beg, end;
+  RDKit::ROMol::OEDGE_ITER beg;
+  RDKit::ROMol::OEDGE_ITER end;
   boost::tie(beg, end) = mol.getAtomBonds(atom);
   while (beg != end) {
     const Bond *bond = mol[*beg];
