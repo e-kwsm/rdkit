@@ -649,7 +649,10 @@ ptree MarvinPlus::toPtree() const {
 
   out.put_child("Field", field);
 
-  ptree p1, p2, p3, p4;
+  ptree p1;
+  ptree p2;
+  ptree p3;
+  ptree p4;
   p1.put("<xmlattr>.x", getDoubleAsText(x1));
   p1.put("<xmlattr>.y", getDoubleAsText(y1));
   out.add_child("MPoint", p1);
@@ -719,7 +722,8 @@ ptree MarvinCondition::toPtree() const {
 
   // add four points
 
-  std::ostringstream xstr, ystr;
+  std::ostringstream xstr;
+  std::ostringstream ystr;
   xstr << x;
   ystr << y;
 
@@ -1594,7 +1598,8 @@ ptree MarvinDataSgroup::toPtree() const {
     out.put("<xmlattr>.queryType", queryType);
     out.put("<xmlattr>.queryOp", queryOp);
   }
-  std::ostringstream xstr, ystr;
+  std::ostringstream xstr;
+  std::ostringstream ystr;
   xstr << x;
   ystr << y;
   out.put("<xmlattr>.x", xstr.str());
@@ -4060,7 +4065,10 @@ MarvinReaction::~MarvinReaction() {}
 void MarvinReaction::prepSgroupsForRDKit() {
   // This routine converts all the mols in the rxn to be ready for conversion
   // to RDKIT mols
-  int molCount = 0, atomCount = 0, bondCount = 0, sgCount = 0;
+  int molCount = 0;
+  int atomCount = 0;
+  int bondCount = 0;
+  int sgCount = 0;
 
   std::map<std::string, std::string> sgMap;
   std::map<std::string, std::string> atomMap;
