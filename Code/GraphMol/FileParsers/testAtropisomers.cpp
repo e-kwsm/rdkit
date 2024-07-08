@@ -153,8 +153,6 @@ class MolAtropTest {
       return;
     }
     TEST_ASSERT(molFileTest->expectedResult == true);
-
-    return;
   }
 
   void RunTests() {
