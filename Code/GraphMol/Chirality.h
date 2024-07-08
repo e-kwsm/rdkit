@@ -417,7 +417,7 @@ RDKIT_GRAPHMOL_EXPORT void simplifyEnhancedStereo(
 
 //! returns the meso centers in a molecule (if any)
 /*!
- \param mol: molecule to work with
+ \param mol molecule to work with
 
 */
 RDKIT_GRAPHMOL_EXPORT std::vector<std::pair<unsigned int, unsigned int>>
