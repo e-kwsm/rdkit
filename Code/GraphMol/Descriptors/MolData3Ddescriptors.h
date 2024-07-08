@@ -54,9 +54,9 @@ class RDKIT_DESCRIPTORS_EXPORT MolData3Ddescriptors {
   std::vector<double> GetRelativeVdW(const RDKit::ROMol& mol);
   static std::vector<double> GetUn(int numAtoms);
   static int GetPrincipalQuantumNumber(int AtomicNum);
-  std::vector<double> GetIState(const RDKit::ROMol& mol);
-  std::vector<double> GetIStateDrag(const RDKit::ROMol& mol);
-  std::vector<double> GetEState(const RDKit::ROMol& mol);
-  std::vector<double> GetEState2(const RDKit::ROMol& mol);
+  static std::vector<double> GetIState(const RDKit::ROMol& mol);
+  static std::vector<double> GetIStateDrag(const RDKit::ROMol& mol);
+  static std::vector<double> GetEState(const RDKit::ROMol& mol);
+  static std::vector<double> GetEState2(const RDKit::ROMol& mol);
 };
 #endif
