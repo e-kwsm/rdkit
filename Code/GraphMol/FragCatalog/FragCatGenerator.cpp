@@ -102,10 +102,12 @@ unsigned int addHigherOrderPaths(const INT_PATH_LIST_MAP &allPaths,
   PATH_LIST paths;
   PATH_LIST_CI pi;
   bool found;
-  double invar, sinvar;
+  double invar;
+  double sinvar;
   int entId;
   DOUBLE_INT_MAP mapk;
-  int mEntId, vid;
+  int mEntId;
+  int vid;
   const FragCatParams *fparams = fcat->getCatalogParams();
 
   unsigned int lLen = fparams->getLowerFragLength();
@@ -129,7 +131,8 @@ unsigned int addHigherOrderPaths(const INT_PATH_LIST_MAP &allPaths,
       nent->setDescription(fparams);
 
       unsigned int scnt = 0;
-      INT_VECT intersect, tmpVect;
+      INT_VECT intersect;
+      INT_VECT tmpVect;
       INT_VECT_CI iti;
       invar = computeIntVectPrimesProduct(*pi);
       DOUBLE_VECT sinvarV;
