@@ -373,7 +373,8 @@ void ParseChargeLine(RWMol *mol, const std::string &text, bool firstCall,
     }
   }
 
-  int ie, nent;
+  int ie;
+  int nent;
   try {
     nent = FileParserUtils::toInt(text.substr(6, 3));
   } catch (boost::bad_lexical_cast &) {
@@ -384,7 +385,8 @@ void ParseChargeLine(RWMol *mol, const std::string &text, bool firstCall,
   }
   int spos = 9;
   for (ie = 0; ie < nent; ie++) {
-    int aid, chg;
+    int aid;
+    int chg;
     try {
       aid = FileParserUtils::toInt(text.substr(spos, 4));
       spos += 4;
@@ -414,7 +416,8 @@ void ParseRadicalLine(RWMol *mol, const std::string &text, bool firstCall,
     }
   }
 
-  int ie, nent;
+  int ie;
+  int nent;
   try {
     nent = FileParserUtils::toInt(text.substr(6, 3));
   } catch (boost::bad_lexical_cast &) {
@@ -425,7 +428,8 @@ void ParseRadicalLine(RWMol *mol, const std::string &text, bool firstCall,
   }
   int spos = 9;
   for (ie = 0; ie < nent; ie++) {
-    int aid, rad;
+    int aid;
+    int rad;
     std::ostringstream errout;
 
     try {
@@ -1416,7 +1420,9 @@ void lookupAtomicNumber(Atom *res, const std::string &symb,
 Atom *ParseMolFileAtomLine(const std::string_view text, RDGeom::Point3D &pos,
                            unsigned int line, bool strictParsing) {
   std::string symb;
-  int massDiff, chg, hCount;
+  int massDiff;
+  int chg;
+  int hCount;
 
   if ((strictParsing && text.size() < 34) || text.size() < 32) {
     std::ostringstream errout;
@@ -1675,7 +1681,10 @@ Atom *ParseMolFileAtomLine(const std::string_view text, RDGeom::Point3D &pos,
 }
 
 Bond *ParseMolFileBondLine(const std::string_view text, unsigned int line) {
-  unsigned int idx1, idx2, bType, stereo;
+  unsigned int idx1;
+  unsigned int idx2;
+  unsigned int bType;
+  unsigned int stereo;
   int spos = 0;
 
   if (text.size() < 9) {
@@ -3240,7 +3249,9 @@ bool ParseV3000CTAB(std::istream *inStream, unsigned int &line, RWMol *mol,
   nBonds = FileParserUtils::toUnsigned(splitLine[1]);
   conf = new Conformer(nAtoms);
 
-  unsigned int nSgroups = 0, n3DConstraints = 0, chiralFlag = 0;
+  unsigned int nSgroups = 0;
+  unsigned int n3DConstraints = 0;
+  unsigned int chiralFlag = 0;
 
   if (splitLine.size() > 2) {
     nSgroups = FileParserUtils::toUnsigned(splitLine[2]);
@@ -3560,9 +3571,15 @@ std::unique_ptr<RWMol> MolFromMolDataStream(std::istream &inStream,
   tempStr = getLine(inStream);
   res->setProp("_MolFileComments", tempStr);
 
-  unsigned int nAtoms = 0, nBonds = 0, nLists = 0, chiralFlag = 0, nsText = 0,
-               nRxnComponents = 0;
-  int nReactants = 0, nProducts = 0, nIntermediates = 0;
+  unsigned int nAtoms = 0;
+  unsigned int nBonds = 0;
+  unsigned int nLists = 0;
+  unsigned int chiralFlag = 0;
+  unsigned int nsText = 0;
+  unsigned int nRxnComponents = 0;
+  int nReactants = 0;
+  int nProducts = 0;
+  int nIntermediates = 0;
   (void)nLists;  // read from the file but unused
   (void)nsText;
   (void)nRxnComponents;
