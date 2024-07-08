@@ -58,8 +58,14 @@ void linearSearch(unsigned int dim, double *oldPt, double oldVal, double *grad,
   PRECONDITION(newPt, "bad input array");
 
   const unsigned int MAX_ITER_LINEAR_SEARCH = 1000;
-  double sum = 0.0, slope = 0.0, test = 0.0, lambda = 0.0;
-  double lambda2 = 0.0, lambdaMin = 0.0, tmpLambda = 0.0, val2 = 0.0;
+  double sum = 0.0;
+  double slope = 0.0;
+  double test = 0.0;
+  double lambda = 0.0;
+  double lambda2 = 0.0;
+  double lambdaMin = 0.0;
+  double tmpLambda = 0.0;
+  double val2 = 0.0;
 
   resCode = -1;
 
@@ -274,7 +280,10 @@ int minimize(unsigned int dim, double *pos, double gradTol,
     //}
 
     // compute hessian*dGrad:
-    double fac = 0, fae = 0, sumDGrad = 0, sumXi = 0;
+    double fac = 0;
+    double fae = 0;
+    double sumDGrad = 0;
+    double sumXi = 0;
     for (unsigned int i = 0; i < dim; i++) {
       double *ivh = &(invHessian[i * dim]);
       double &hdgradi = hessDGrad[i];
