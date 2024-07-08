@@ -318,7 +318,8 @@ void PDBBondLine(RWMol *mol, const char *ptr, unsigned int len,
 
   std::string tmp(ptr + 6, 5);
   bool fail = false;
-  int src, dst;
+  int src;
+  int dst;
 
   try {
     src = FileParserUtils::toInt(tmp);
@@ -529,7 +530,8 @@ void StandardPDBResidueChirality(RWMol *mol) {
 }
 
 void BasicPDBCleanup(RWMol &mol) {
-  ROMol::VERTEX_ITER atBegin, atEnd;
+  ROMol::VERTEX_ITER atBegin;
+  ROMol::VERTEX_ITER atEnd;
   boost::tie(atBegin, atEnd) = mol.getVertices();
   while (atBegin != atEnd) {
     Atom *atom = mol[*atBegin];
