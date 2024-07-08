@@ -187,8 +187,9 @@ void updatePatternFingerprint(const ROMol &mol, ExplicitBitVect &fp,
     MolOps::fastFindRings(mol);
   }
 
-  boost::dynamic_bitset<> isQueryAtom(mol.getNumAtoms()),
-      isQueryBond(mol.getNumBonds()), isTautomerBond(mol.getNumBonds());
+  boost::dynamic_bitset<> isQueryAtom(mol.getNumAtoms());
+  boost::dynamic_bitset<> isQueryBond(mol.getNumBonds());
+  boost::dynamic_bitset<> isTautomerBond(mol.getNumBonds());
   for (const auto at : mol.atoms()) {
     // isComplexQuery() no longer considers "AtomNull" to be complex, but for
     // the purposes of the pattern FP, it definitely needs to be treated as a
@@ -258,7 +259,8 @@ void updatePatternFingerprint(const ROMol &mol, ExplicitBitVect &fp,
       }
       auto tautomerBitId = bitId;
       auto tautomerQuery = false;
-      ROMol::EDGE_ITER firstB, lastB;
+      ROMol::EDGE_ITER firstB;
+      ROMol::EDGE_ITER lastB;
       boost::tie(firstB, lastB) = patt->getEdges();
 #ifdef VERBOSE_FINGERPRINTING
       std::cerr << " bs:|| ";
