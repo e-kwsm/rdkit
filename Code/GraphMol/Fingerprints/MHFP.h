@@ -111,20 +111,20 @@ class RDKIT_FINGERPRINTS_EXPORT MHFPEncoder {
 
     \returns the shingling of a molecule.
    */
-  std::vector<std::string> CreateShingling(const ROMol &mol,
-                                           unsigned char radius = 3,
-                                           bool rings = true,
-                                           bool isomeric = false,
-                                           bool kekulize = false,
-                                           unsigned char min_radius = 1);
+  static std::vector<std::string> CreateShingling(const ROMol &mol,
+                                                  unsigned char radius = 3,
+                                                  bool rings = true,
+                                                  bool isomeric = false,
+                                                  bool kekulize = false,
+                                                  unsigned char min_radius = 1);
 
   //! \overload
-  std::vector<std::string> CreateShingling(const std::string &smiles,
-                                           unsigned char radius = 3,
-                                           bool rings = true,
-                                           bool isomeric = false,
-                                           bool kekulize = false,
-                                           unsigned char min_radius = 1);
+  static std::vector<std::string> CreateShingling(const std::string &smiles,
+                                                  unsigned char radius = 3,
+                                                  bool rings = true,
+                                                  bool isomeric = false,
+                                                  bool kekulize = false,
+                                                  unsigned char min_radius = 1);
 
   /*!
     \brief Creates a MinHash vector from a molecule.
@@ -202,27 +202,28 @@ class RDKIT_FINGERPRINTS_EXPORT MHFPEncoder {
 
     \returns the SECFP fingerprint.
    */
-  ExplicitBitVect EncodeSECFP(ROMol &mol, unsigned char radius = 3,
-                              bool rings = true, bool isomeric = false,
-                              bool kekulize = false,
-                              unsigned char min_radius = 1,
-                              size_t length = 2048);
+  static ExplicitBitVect EncodeSECFP(ROMol &mol, unsigned char radius = 3,
+                                     bool rings = true, bool isomeric = false,
+                                     bool kekulize = false,
+                                     unsigned char min_radius = 1,
+                                     size_t length = 2048);
 
   //! \overload
-  std::vector<ExplicitBitVect> EncodeSECFP(
+  static std::vector<ExplicitBitVect> EncodeSECFP(
       std::vector<ROMol> &mols, unsigned char radius = 3, bool rings = true,
       bool isomeric = false, bool kekulize = false,
       unsigned char min_radius = 1, size_t length = 2048);
 
   //! \overload
-  ExplicitBitVect EncodeSECFP(std::string &smiles, unsigned char radius = 3,
-                              bool rings = true, bool isomeric = false,
-                              bool kekulize = false,
-                              unsigned char min_radius = 1,
-                              size_t length = 2048);
+  static ExplicitBitVect EncodeSECFP(std::string &smiles,
+                                     unsigned char radius = 3,
+                                     bool rings = true, bool isomeric = false,
+                                     bool kekulize = false,
+                                     unsigned char min_radius = 1,
+                                     size_t length = 2048);
 
   //! \overload
-  std::vector<ExplicitBitVect> EncodeSECFP(
+  static std::vector<ExplicitBitVect> EncodeSECFP(
       std::vector<std::string> &smiles, unsigned char radius = 3,
       bool rings = true, bool isomeric = false, bool kekulize = false,
       unsigned char min_radius = 1, size_t length = 2048);
@@ -251,12 +252,12 @@ class RDKIT_FINGERPRINTS_EXPORT MHFPEncoder {
 
  private:
   //! The fastest mod implementation.
-  uint64_t FastMod(const uint64_t input, const uint64_t ceil) {
+  static uint64_t FastMod(const uint64_t input, const uint64_t ceil) {
     return input >= ceil ? input % ceil : input;
   }
 
-  ExplicitBitVect Fold(const std::vector<uint32_t> &vec,
-                       uint32_t length = 2048) {
+  static ExplicitBitVect Fold(const std::vector<uint32_t> &vec,
+                              uint32_t length = 2048) {
     ExplicitBitVect ebv(length);
     for (size_t i = 0; i < vec.size(); i++) {
       ebv.setBit(vec[i] % length);
@@ -264,7 +265,7 @@ class RDKIT_FINGERPRINTS_EXPORT MHFPEncoder {
     return ebv;
   }
 
-  std::vector<uint32_t> HashShingling(std::vector<std::string> vec) {
+  static std::vector<uint32_t> HashShingling(std::vector<std::string> vec) {
     std::vector<uint32_t> result(vec.size());
     for (size_t i = 0; i < vec.size(); i++) {
       result[i] = FNV::hash(vec[i]);

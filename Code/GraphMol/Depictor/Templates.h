@@ -87,7 +87,7 @@ class RDKIT_DEPICTOR_EXPORT CoordinateTemplates {
 
   ~CoordinateTemplates() { clearTemplates(); }
 
-  void loadTemplatesFromPath(
+  static void loadTemplatesFromPath(
       const std::string &templatePath,
       std::unordered_map<
           unsigned int, std::vector<std::shared_ptr<RDKit::ROMol>>> &templates);

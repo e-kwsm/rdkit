@@ -93,7 +93,7 @@ class RDKIT_FILEPARSERS_EXPORT MolSupplier {
   // opens a stream for reading and verifies that it can be read from.
   // if not it throws an exception
   // the caller owns the resulting stream
-  std::istream *openAndCheckStream(const std::string &filename) {
+  static std::istream *openAndCheckStream(const std::string &filename) {
     // FIX: this binary mode of opening file is here because of a bug in
     // VC++ 6.0
     // the function "tellg" does not work correctly if we do not open it this
