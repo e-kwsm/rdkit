@@ -171,7 +171,8 @@ std::unique_ptr<RWMol> SmilesMolSupplier::processLine(std::string inLine) {
           static_cast<int>(col) == d_params.nameColumn) {
         continue;
       }
-      std::string pname, pval;
+      std::string pname;
+      std::string pval;
       if (d_props.size() > col) {
         pname = d_props[col];
       } else {
