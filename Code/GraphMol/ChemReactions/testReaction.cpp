@@ -82,12 +82,12 @@ void test1Basics() {
   smi = "C(=O)O";
   mol = SmilesToMol(smi);
   TEST_ASSERT(mol);
-  reacts.push_back(ROMOL_SPTR(mol));
+  reacts.emplace_back(mol);
 
   smi = "CN";
   mol = SmilesToMol(smi);
   TEST_ASSERT(mol);
-  reacts.push_back(ROMOL_SPTR(mol));
+  reacts.emplace_back(mol);
 
   rxn.initReactantMatchers();
   prods = rxn.runReactants(reacts);
@@ -97,12 +97,12 @@ void test1Basics() {
   smi = "CC(C(=O)O)C(=O)O";
   mol = SmilesToMol(smi);
   TEST_ASSERT(mol);
-  reacts.push_back(ROMOL_SPTR(mol));
+  reacts.emplace_back(mol);
 
   smi = "CN";
   mol = SmilesToMol(smi);
   TEST_ASSERT(mol);
-  reacts.push_back(ROMOL_SPTR(mol));
+  reacts.emplace_back(mol);
 
   prods = rxn.runReactants(reacts);
   TEST_ASSERT(prods.size() == 2);
@@ -111,12 +111,12 @@ void test1Basics() {
   smi = "CC(C(=O)O)C(=O)O";
   mol = SmilesToMol(smi);
   TEST_ASSERT(mol);
-  reacts.push_back(ROMOL_SPTR(mol));
+  reacts.emplace_back(mol);
 
   smi = "NCN";
   mol = SmilesToMol(smi);
   TEST_ASSERT(mol);
-  reacts.push_back(ROMOL_SPTR(mol));
+  reacts.emplace_back(mol);
 
   prods = rxn.runReactants(reacts);
   TEST_ASSERT(prods.size() == 4);
@@ -155,12 +155,12 @@ void test2SimpleReactions() {
   smi = "C(=O)O";
   mol = SmilesToMol(smi);
   TEST_ASSERT(mol);
-  reacts.push_back(ROMOL_SPTR(mol));
+  reacts.emplace_back(mol);
 
   smi = "CN";
   mol = SmilesToMol(smi);
   TEST_ASSERT(mol);
-  reacts.push_back(ROMOL_SPTR(mol));
+  reacts.emplace_back(mol);
 
   rxn.initReactantMatchers();
   prods = rxn.runReactants(reacts);
@@ -173,12 +173,12 @@ void test2SimpleReactions() {
   smi = "CC(=O)O";
   mol = SmilesToMol(smi);
   TEST_ASSERT(mol);
-  reacts.push_back(ROMOL_SPTR(mol));
+  reacts.emplace_back(mol);
 
   smi = "CN";
   mol = SmilesToMol(smi);
   TEST_ASSERT(mol);
-  reacts.push_back(ROMOL_SPTR(mol));
+  reacts.emplace_back(mol);
 
   prods = rxn.runReactants(reacts);
   TEST_ASSERT(prods.size() == 1);
@@ -190,12 +190,12 @@ void test2SimpleReactions() {
   smi = "CC(C(=O)O)C(=O)O";
   mol = SmilesToMol(smi);
   TEST_ASSERT(mol);
-  reacts.push_back(ROMOL_SPTR(mol));
+  reacts.emplace_back(mol);
 
   smi = "CN";
   mol = SmilesToMol(smi);
   TEST_ASSERT(mol);
-  reacts.push_back(ROMOL_SPTR(mol));
+  reacts.emplace_back(mol);
 
   prods = rxn.runReactants(reacts);
   TEST_ASSERT(prods.size() == 2);
@@ -209,12 +209,12 @@ void test2SimpleReactions() {
   smi = "CC(C(=O)O)C(=O)O";
   mol = SmilesToMol(smi);
   TEST_ASSERT(mol);
-  reacts.push_back(ROMOL_SPTR(mol));
+  reacts.emplace_back(mol);
 
   smi = "NCN";
   mol = SmilesToMol(smi);
   TEST_ASSERT(mol);
-  reacts.push_back(ROMOL_SPTR(mol));
+  reacts.emplace_back(mol);
   prods = rxn.runReactants(reacts);
   TEST_ASSERT(prods.size() == 4);
   TEST_ASSERT(prods[0].size() == 1);
@@ -263,12 +263,12 @@ void test3RingFormation() {
   smi = "C=C";
   mol = SmilesToMol(smi);
   TEST_ASSERT(mol);
-  reacts.push_back(ROMOL_SPTR(mol));
+  reacts.emplace_back(mol);
 
   smi = "C=CC=C";
   mol = SmilesToMol(smi);
   TEST_ASSERT(mol);
-  reacts.push_back(ROMOL_SPTR(mol));
+  reacts.emplace_back(mol);
 
   rxn.initReactantMatchers();
   prods = rxn.runReactants(reacts);
@@ -284,12 +284,12 @@ void test3RingFormation() {
   smi = "CC=C";
   mol = SmilesToMol(smi);
   TEST_ASSERT(mol);
-  reacts.push_back(ROMOL_SPTR(mol));
+  reacts.emplace_back(mol);
 
   smi = "C=CC=C";
   mol = SmilesToMol(smi);
   TEST_ASSERT(mol);
-  reacts.push_back(ROMOL_SPTR(mol));
+  reacts.emplace_back(mol);
 
   prods = rxn.runReactants(reacts);
   TEST_ASSERT(prods.size() == 4);
@@ -303,12 +303,12 @@ void test3RingFormation() {
   smi = "CC=C[Cl]";
   mol = SmilesToMol(smi);
   TEST_ASSERT(mol);
-  reacts.push_back(ROMOL_SPTR(mol));
+  reacts.emplace_back(mol);
 
   smi = "[F]C=CC=C[Br]";
   mol = SmilesToMol(smi);
   TEST_ASSERT(mol);
-  reacts.push_back(ROMOL_SPTR(mol));
+  reacts.emplace_back(mol);
 
   prods = rxn.runReactants(reacts);
   TEST_ASSERT(prods.size() == 4);
@@ -328,12 +328,12 @@ void test3RingFormation() {
   smi = "C1C=CCCC1";
   mol = SmilesToMol(smi);
   TEST_ASSERT(mol);
-  reacts.push_back(ROMOL_SPTR(mol));
+  reacts.emplace_back(mol);
 
   smi = "C=CC=C";
   mol = SmilesToMol(smi);
   TEST_ASSERT(mol);
-  reacts.push_back(ROMOL_SPTR(mol));
+  reacts.emplace_back(mol);
 
   prods = rxn.runReactants(reacts);
   TEST_ASSERT(prods.size() == 4);
