@@ -149,7 +149,10 @@ std::vector<Point2D> handdrawnLine(Point2D cds1, Point2D cds2, double scale,
 // ****************************************************************************
 bool doesLineIntersect(const StringRect &rect, const Point2D &end1,
                        const Point2D &end2, double padding) {
-  Point2D tl, tr, bl, br;
+  Point2D tl;
+  Point2D tr;
+  Point2D bl;
+  Point2D br;
   rect.calcCorners(tl, tr, br, bl, padding);
   if (doLinesIntersect(end2, end1, tl, tr, nullptr)) {
     return true;
@@ -176,7 +179,10 @@ bool doesTriangleIntersect(const StringRect &rect, const Point2D &pt1,
     return true;
   }
   // But if the rectangle is inside the triangle, that's not enough of a test.
-  Point2D tl, tr, br, bl;
+  Point2D tl;
+  Point2D tr;
+  Point2D br;
+  Point2D bl;
   rect.calcCorners(tl, tr, br, bl, padding);
   if (isPointInTriangle(tl, pt1, pt2, pt3) ||
       isPointInTriangle(tr, pt1, pt2, pt3) ||
@@ -285,7 +291,8 @@ bool doLinesIntersect(const Point2D &l1s, const Point2D &l1f,
     // parallel lines.
     return false;
   }
-  double s, t;
+  double s;
+  double t;
   s = (-s1_y * (l1s.x - l2s.x) + s1_x * (l1s.y - l2s.y)) / d;
   t = (s2_x * (l1s.y - l2s.y) - s2_y * (l1s.x - l2s.x)) / d;
 
