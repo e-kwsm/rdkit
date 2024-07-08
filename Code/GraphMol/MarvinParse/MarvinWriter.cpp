@@ -48,7 +48,7 @@ using namespace RDKit::SGroupWriting;
 
 namespace RDKit {
 class MarvinCMLWriter {
-  bool hasComplexQuery(const Atom *atom) {
+  static bool hasComplexQuery(const Atom *atom) {
     PRECONDITION(atom, "bad atom");
     bool res = false;
     if (atom->hasQuery()) {
@@ -71,7 +71,7 @@ class MarvinCMLWriter {
     return res;
   }
 
-  void GetMarvinAtomInfo(const Atom *atom, MarvinAtom *marvinAtom) {
+  static void GetMarvinAtomInfo(const Atom *atom, MarvinAtom *marvinAtom) {
     PRECONDITION(atom, "bad atom");
     PRECONDITION(marvinAtom, "bad marvinAtom");
 
@@ -202,7 +202,7 @@ class MarvinCMLWriter {
     return;
   }
 
-  bool isQueryBondInRing(const Bond *bond) {
+  static bool isQueryBondInRing(const Bond *bond) {
     PRECONDITION(bond, "no bond");
     PRECONDITION(bond->hasQuery(), "no query");
     Bond::QUERYBOND_QUERY *qry = bond->getQuery();
@@ -228,7 +228,7 @@ class MarvinCMLWriter {
     return false;
   }
 
-  std::string getMarvinQueryBondSymbol(const Bond *bond) {
+  static std::string getMarvinQueryBondSymbol(const Bond *bond) {
     PRECONDITION(bond, "no bond");
     PRECONDITION(bond->hasQuery(), "no query");
 
@@ -288,8 +288,9 @@ class MarvinCMLWriter {
         "Only SA, DA, SD, and Any query bond are supported for MarvinWriter");
   }
 
-  void GetMarvinBondSymbol(const Bond *bond, std::string &order,
-                           std::string &queryType, std::string &convention) {
+  static void GetMarvinBondSymbol(const Bond *bond, std::string &order,
+                                  std::string &queryType,
+                                  std::string &convention) {
     PRECONDITION(bond, "");
 
     convention = "";
@@ -343,7 +344,7 @@ class MarvinCMLWriter {
   }
 
  private:
-  bool hasNonDefaultValence(const Atom *atom) {
+  static bool hasNonDefaultValence(const Atom *atom) {
     PRECONDITION(atom, "no atom");
     if (atom->getNumRadicalElectrons() != 0) {
       return true;
@@ -361,8 +362,9 @@ class MarvinCMLWriter {
     return true;
   }
 
-  MarvinMol *MolToMarvinMol(RWMol *mol, int &molCount, int &atomCount,
-                            int &bondCount, int &sgCount, int confId = -1) {
+  static MarvinMol *MolToMarvinMol(RWMol *mol, int &molCount, int &atomCount,
+                                   int &bondCount, int &sgCount,
+                                   int confId = -1) {
     PRECONDITION(mol, "no molecule");
     // molCount is the starting and ending molCount - used when called from a
     // rxn
@@ -796,7 +798,7 @@ class MarvinCMLWriter {
   }
 
  public:
-  MarvinMol *MolToMarvinMol(RWMol *mol, int confId = -1) {
+  static MarvinMol *MolToMarvinMol(RWMol *mol, int confId = -1) {
     PRECONDITION(mol, "bad mol");
 
     int molCount = 0, atomCount = 0, bondCount = 0, sgCount = 0;
@@ -813,7 +815,7 @@ class MarvinCMLWriter {
         rect1, rect2);  // just compare the first one in each row
   }
 
-  double GetArrowPerdendicularPosition(
+  static double GetArrowPerdendicularPosition(
       std::vector<std::unique_ptr<MarvinMol>>
           &molList  // list of mols (agents) to examine
                     // for a space for the arrow
@@ -887,9 +889,9 @@ class MarvinCMLWriter {
     }
   }
 
-  void AddMarvinPluses(MarvinReaction &rxn,
-                       std::vector<std::unique_ptr<MarvinMol>> &molList,
-                       int &plusCount) {
+  static void AddMarvinPluses(MarvinReaction &rxn,
+                              std::vector<std::unique_ptr<MarvinMol>> &molList,
+                              int &plusCount) {
     // dividing the mols into rows and sorted by y value
 
     std::vector<std::vector<MarvinRectangle>> rowsOfRectangles;
@@ -996,7 +998,7 @@ class MarvinCMLWriter {
     }
   }
 
-  void SetArrow(MarvinReaction *marvinReaction) {
+  static void SetArrow(MarvinReaction *marvinReaction) {
     PRECONDITION(marvinReaction, "bad reaction");
 
     // add a reaction arrow
@@ -1105,8 +1107,8 @@ class MarvinCMLWriter {
     }
   }
 
-  MarvinReaction *ChemicalReactionToMarvinRxn(const ChemicalReaction *rxn,
-                                              int confId = -1) {
+  static MarvinReaction *ChemicalReactionToMarvinRxn(
+      const ChemicalReaction *rxn, int confId = -1) {
     PRECONDITION(rxn, "bad reaction");
 
     MarvinReaction *marvinReaction = nullptr;
