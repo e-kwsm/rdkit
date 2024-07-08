@@ -24,7 +24,8 @@ RDGeom::Point3D _weightedSumOfPoints(const RDGeom::Point3DConstPtrVect &points,
                                      const DoubleVector &weights) {
   PRECONDITION(points.size() == weights.size(), "");
   RDGeom::Point3DConstPtrVect_CI pti;
-  RDGeom::Point3D tmpPt, res;
+  RDGeom::Point3D tmpPt;
+  RDGeom::Point3D res;
   const double *wData = weights.getData();
   unsigned int i = 0;
   for (pti = points.begin(); pti != points.end(); pti++) {
@@ -63,7 +64,8 @@ double _sumOfWeights(const DoubleVector &weights) {
 void _computeCovarianceMat(const RDGeom::Point3DConstPtrVect &refPoints,
                            const RDGeom::Point3DConstPtrVect &probePoints,
                            const DoubleVector &weights, double covMat[3][3]) {
-  unsigned int i, j;
+  unsigned int i;
+  unsigned int j;
   for (i = 0; i < 3; i++) {
     for (j = 0; j < 3; j++) {
       covMat[i][j] = 0.0;
@@ -75,7 +77,8 @@ void _computeCovarianceMat(const RDGeom::Point3DConstPtrVect &refPoints,
                   "Number of points and number of weights do not match");
   const double *wData = weights.getData();
 
-  const RDGeom::Point3D *rpt, *ppt;
+  const RDGeom::Point3D *rpt;
+  const RDGeom::Point3D *ppt;
   double w;
   for (i = 0; i < npt; i++) {
     rpt = refPoints[i];
@@ -100,9 +103,15 @@ void _covertCovMatToQuad(const double covMat[3][3],
                          const RDGeom::Point3D &rptSum,
                          const RDGeom::Point3D &pptSum, double wtsSum,
                          double quad[4][4]) {
-  double PxRx, PxRy, PxRz;
-  double PyRx, PyRy, PyRz;
-  double PzRx, PzRy, PzRz;
+  double PxRx;
+  double PxRy;
+  double PxRz;
+  double PyRx;
+  double PyRy;
+  double PyRz;
+  double PzRx;
+  double PzRy;
+  double PzRz;
   double temp;
 
   temp = pptSum.x / wtsSum;
@@ -164,10 +173,20 @@ void _covertCovMatToQuad(const double covMat[3][3],
 
 unsigned int jacobi(double quad[4][4], double eigenVals[4],
                     double eigenVecs[4][4], unsigned int maxIter) {
-  double offDiagNorm, diagNorm;
-  double b, dma, q, t, c, s;
-  double atemp, vtemp, dtemp;
-  int i, j, k;
+  double offDiagNorm;
+  double diagNorm;
+  double b;
+  double dma;
+  double q;
+  double t;
+  double c;
+  double s;
+  double atemp;
+  double vtemp;
+  double dtemp;
+  int i;
+  int j;
+  int k;
   unsigned int l;
 
   // initialize the eigen vector to Identity
@@ -263,7 +282,8 @@ Exit_now:
 }
 
 void reflectCovMat(double covMat[3][3]) {
-  unsigned int i, j;
+  unsigned int i;
+  unsigned int j;
   for (i = 0; i < 3; i++) {
     for (j = 0; j < 3; j++) {
       covMat[i][j] = -covMat[i][j];
@@ -316,7 +336,8 @@ double AlignPoints(const RDGeom::Point3DConstPtrVect &refPoints,
   _covertCovMatToQuad(covMat, rptSum, pptSum, wtsSum, quad);
 
   // get the eigenVecs and eigenVals for the matrix
-  double eigenVecs[4][4], eigenVals[4];
+  double eigenVecs[4][4];
+  double eigenVals[4];
   jacobi(quad, eigenVals, eigenVecs, maxIterations);
 
   // get the quaternion
