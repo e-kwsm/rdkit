@@ -70,7 +70,7 @@ RDKIT_RDINCHILIB_EXPORT RWMol* InchiToMol(const std::string& inchi,
  */
 RDKIT_RDINCHILIB_EXPORT std::string MolToInchi(const ROMol& mol,
                                                ExtraInchiReturnValues& rv,
-                                               const char* options = NULL);
+                                               const char* options = nullptr);
 /*! Get the InChI string for a given mol block
  * \param mol The input mol block
  * \param rv An ExtraInchiReturnValues struct instance that is used to receive
@@ -84,9 +84,9 @@ RDKIT_RDINCHILIB_EXPORT std::string MolToInchi(const ROMol& mol,
  * and the User Guide:
  * http://www.inchi-trust.org/fileadmin/user_upload/software/inchi-v1.04/InChI_UserGuide.pdf
  */
-RDKIT_RDINCHILIB_EXPORT std::string MolBlockToInchi(const std::string& mol,
-                                                    ExtraInchiReturnValues& rv,
-                                                    const char* options = NULL);
+RDKIT_RDINCHILIB_EXPORT std::string MolBlockToInchi(
+    const std::string& mol, ExtraInchiReturnValues& rv,
+    const char* options = nullptr);
 /*! Get the InChI Key for an input InChI string
  * \param inchi The input InChI string, which can be standard or not.
  */
@@ -102,7 +102,8 @@ RDKIT_RDINCHILIB_EXPORT std::string InchiToInchiKey(const std::string& inchi);
  * and the User Guide:
  * http://www.inchi-trust.org/fileadmin/user_upload/software/inchi-v1.04/InChI_UserGuide.pdf
  */
-inline std::string MolToInchiKey(const ROMol& mol, const char* options = NULL) {
+inline std::string MolToInchiKey(const ROMol& mol,
+                                 const char* options = nullptr) {
   ExtraInchiReturnValues rv;
   return InchiToInchiKey(MolToInchi(mol, rv, options));
 };
