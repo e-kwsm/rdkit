@@ -300,7 +300,8 @@ void MolDraw2D::drawReaction(
   }
 
   std::vector<Point2D> offsets;
-  Point2D arrowBeg, arrowEnd;
+  Point2D arrowBeg;
+  Point2D arrowEnd;
   calcReactionOffsets(reagents, products, agents, plusWidth, offsets, arrowBeg,
                       arrowEnd);
   activeMolIdx_ = -1;
@@ -650,7 +651,12 @@ void MolDraw2D::setScale(int width, int height, const Point2D &minv,
   PRECONDITION(width > 0, "bad width");
   PRECONDITION(height > 0, "bad height");
 
-  double x_min, x_max, x_range, y_min, y_max, y_range;
+  double x_min;
+  double x_max;
+  double x_range;
+  double y_min;
+  double y_max;
+  double y_range;
   bool setFontScale = false;
   if (mol) {
     setupTextDrawer();
@@ -711,7 +717,9 @@ void MolDraw2D::setScale(int width, int height, const Point2D &minv,
   MolDraw2D_detail::DrawMol *drawMol = new MolDraw2D_detail::DrawMol(
       panelWidth(), panelHeight(), drawOptions(), *text_drawer_, x_min, x_max,
       y_min, y_max, scale_, fontScale_);
-  Point2D trans, scale, toCentre;
+  Point2D trans;
+  Point2D scale;
+  Point2D toCentre;
   drawMol->getDrawTransformers(trans, scale, toCentre);
   globalDrawTrans_.reset(drawMol);
   // the padding is now a no-go area around the image, so it is applied
@@ -742,7 +750,8 @@ void MolDraw2D::getLabelSize(const string &label,
     label_width = 0.0;
     vector<string> sym_bits =
         MolDraw2D_detail::atomLabelToPieces(label, orient);
-    double height, width;
+    double height;
+    double width;
     for (auto bit : sym_bits) {
       getStringSize(bit, width, height);
       if (width > label_width) {
@@ -828,7 +837,8 @@ void MolDraw2D::getReactionDrawMols(
   ChemicalReaction nrxn(rxn);
 
   const double agentFrac = 0.4;
-  double minScale = std::numeric_limits<double>::max(), minFontScale;
+  double minScale = std::numeric_limits<double>::max();
+  double minFontScale;
 
   std::map<int, DrawColour> atomColours;
   findReactionHighlights(rxn, highlightByReactant, highlightColorsReactants,
@@ -868,7 +878,8 @@ void MolDraw2D::getReactionDrawMols(
   // set the active atom/bond indices so they run in series for all pieces.
   // DrawMols start each new set at 0 by default.  The original code had
   // reagents, products then agents, so do the same here.
-  int atomIdxOffset = 0, bondIdxOffset = 0;
+  int atomIdxOffset = 0;
+  int bondIdxOffset = 0;
   for (auto &dm : drawMols_) {
     dm->activeAtmIdxOffset_ = atomIdxOffset;
     dm->activeBndIdxOffset_ = bondIdxOffset;
@@ -884,8 +895,10 @@ void MolDraw2D::makeReactionComponents(
     std::vector<std::shared_ptr<MolDraw2D_detail::DrawMol>> &dms,
     double &minScale, double &minFontScale) {
   for (size_t midx = 0; midx < bits.size(); ++midx) {
-    std::vector<int> highlightAtoms, highlightBonds;
-    std::map<int, DrawColour> highlightAtomMap, highlightBondMap;
+    std::vector<int> highlightAtoms;
+    std::vector<int> highlightBonds;
+    std::map<int, DrawColour> highlightAtomMap;
+    std::map<int, DrawColour> highlightBondMap;
     int cid = -1;
     if (confIds) {
       cid = (*confIds)[midx];
