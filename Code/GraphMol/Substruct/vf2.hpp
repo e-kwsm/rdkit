@@ -110,7 +110,8 @@ template <class Graph>
 node_id *SortNodesByFrequency(const Graph *g) {
   std::vector<NodeInfo> vect;
   vect.reserve(boost::num_vertices(*g));
-  typename Graph::vertex_iterator bNode, eNode;
+  typename Graph::vertex_iterator bNode;
+  typename Graph::vertex_iterator eNode;
   boost::tie(bNode, eNode) = boost::vertices(*g);
   while (bNode != eNode) {
     NodeInfo t;
@@ -387,7 +388,8 @@ class VF2SubState {
 #endif
 
     // Check the out edges of node1
-    typename Graph::out_edge_iterator bNbrs, eNbrs;
+    typename Graph::out_edge_iterator bNbrs;
+    typename Graph::out_edge_iterator eNbrs;
     boost::tie(bNbrs, eNbrs) = boost::out_edges(node1, *g1);
     while (bNbrs != eNbrs) {
       other1 = getOtherIdx(*g1, *bNbrs, node1);
@@ -453,7 +455,8 @@ class VF2SubState {
     core_1[node1] = node2;
     core_2[node2] = node1;
 
-    typename Graph::out_edge_iterator bNbrs, eNbrs;
+    typename Graph::out_edge_iterator bNbrs;
+    typename Graph::out_edge_iterator eNbrs;
     // FIX: this is explicitly ignoring directionality
     boost::tie(bNbrs, eNbrs) = boost::out_edges(node1, *g1);
     while (bNbrs != eNbrs) {
@@ -477,7 +480,8 @@ class VF2SubState {
     }
   }
   void GetCoreSet(node_id c1[], node_id c2[]) {
-    unsigned int i, j;
+    unsigned int i;
+    unsigned int j;
     for (i = 0, j = 0; i < n1; ++i) {
       if (core_1[i] != NULL_NODE) {
         c1[j] = i;
@@ -493,7 +497,8 @@ class VF2SubState {
       --t1_len;
     }
 
-    typename Graph::out_edge_iterator bNbrs, eNbrs;
+    typename Graph::out_edge_iterator bNbrs;
+    typename Graph::out_edge_iterator eNbrs;
     boost::tie(bNbrs, eNbrs) = boost::out_edges(node1, *g1);
     while (bNbrs != eNbrs) {
       unsigned int other = getOtherIdx(*g1, *bNbrs, node1);
