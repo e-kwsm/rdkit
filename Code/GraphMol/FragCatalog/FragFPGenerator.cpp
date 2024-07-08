@@ -50,7 +50,8 @@ void FragFPGenerator::computeFP(const ROMol &mol, const FragCatalog &fcat,
   int uLen = fparams->getUpperFragLength();
   double tol = fparams->getTolerance();
 
-  DOUBLE_INT_MAP mapkm1, mapk;
+  DOUBLE_INT_MAP mapkm1;
+  DOUBLE_INT_MAP mapk;
 
   // get all the paths in the molecule mapped by their order
   INT_PATH_LIST_MAP allPathsMap = findAllSubgraphsOfLengthsMtoN(mol, 1, uLen);
@@ -117,7 +118,8 @@ void FragFPGenerator::computeFP(const ROMol &mol, const FragCatalog &fcat,
       // std::cout << "Testing 2nd order fragment: " << nent->getDescription()
       // << std::endl;
       int scnt = 0;
-      INT_VECT intersect, tmpVect;
+      INT_VECT intersect;
+      INT_VECT tmpVect;
       INT_VECT_CI iti;
       PATH_TYPE::const_iterator pii;
 
