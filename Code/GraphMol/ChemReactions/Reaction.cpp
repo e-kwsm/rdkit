@@ -70,7 +70,8 @@ ChemicalReaction::ChemicalReaction(const std::string &pickle) {
 }
 
 void ChemicalReaction::initReactantMatchers(bool silent) {
-  unsigned int nWarnings, nErrors;
+  unsigned int nWarnings;
+  unsigned int nErrors;
   if (!this->validate(nWarnings, nErrors, silent)) {
     BOOST_LOG(rdErrorLog) << "initialization failed\n";
     this->df_needsInit = true;
