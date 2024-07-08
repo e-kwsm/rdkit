@@ -27,11 +27,12 @@ class RDKIT_FRAGCATALOG_EXPORT FragFPGenerator {
  public:
   FragFPGenerator() {}
 
-  ExplicitBitVect *getFPForMol(const ROMol &mol, const FragCatalog &fcat);
+  static ExplicitBitVect *getFPForMol(const ROMol &mol,
+                                      const FragCatalog &fcat);
 
  private:
-  void computeFP(const ROMol &mol, const FragCatalog &fcat,
-                 const MatchVectType &aidToFid, ExplicitBitVect *fp);
+  static void computeFP(const ROMol &mol, const FragCatalog &fcat,
+                        const MatchVectType &aidToFid, ExplicitBitVect *fp);
 };
 }  // namespace RDKit
 
