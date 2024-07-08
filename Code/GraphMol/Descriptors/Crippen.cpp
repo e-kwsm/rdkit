@@ -44,7 +44,8 @@ void getCrippenAtomContribs(const ROMol &mol, std::vector<double> &logpContribs,
   PRECONDITION((!atomTypeLabels || atomTypeLabels->size() == mol.getNumAtoms()),
                "bad atomTypeLabels vector");
   if (!force && mol.hasProp(common_properties::_crippenLogPContribs)) {
-    std::vector<double> tmpVect1, tmpVect2;
+    std::vector<double> tmpVect1;
+    std::vector<double> tmpVect2;
     mol.getProp(common_properties::_crippenLogPContribs, tmpVect1);
     mol.getProp(common_properties::_crippenMRContribs, tmpVect2);
     if (tmpVect1.size() == mol.getNumAtoms() &&
@@ -121,13 +122,15 @@ void calcCrippenDescriptors(const ROMol &mol, double &logp, double &mr,
 };
 
 double calcClogP(const ROMol &mol) {
-  double clogp, mr;
+  double clogp;
+  double mr;
   calcCrippenDescriptors(mol, clogp, mr);
   return clogp;
 }
 
 double calcMR(const ROMol &mol) {
-  double clogp, mr;
+  double clogp;
+  double mr;
   calcCrippenDescriptors(mol, clogp, mr);
   return mr;
 }
