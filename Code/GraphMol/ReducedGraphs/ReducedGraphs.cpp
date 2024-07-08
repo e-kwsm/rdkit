@@ -228,7 +228,8 @@ ROMol *generateMolExtendedReducedGraph(
   for (const auto &ring : mol.getRingInfo()->atomRings()) {
     if (ring.size() < 8) {
       int nIdx = res->addAtom(new Atom(0), false, true);
-      int nAromatic = 0, nSP2 = 0;
+      int nAromatic = 0;
+      int nSP2 = 0;
       for (auto idx : ring) {
         res->addBond(idx, nIdx, Bond::SINGLE);
         if (mol.getAtomWithIdx(idx)->getIsAromatic()) {
