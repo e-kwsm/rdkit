@@ -881,7 +881,7 @@ struct ZipBond {
   // Mark the original order of the nbr atoms including the dummy
   //  The goal is to copy the dummy chiral order over to the
   //  atom being bonded
-  void mark(Atom *chiral_atom, Atom *dummy_atom, Atom *new_atom) const {
+  static void mark(Atom *chiral_atom, Atom *dummy_atom, Atom *new_atom) {
     if (chiral_atom->getChiralTag()) {
       std::string mark =
           "__molzip_mark_" + std::to_string(chiral_atom->getIdx());
@@ -922,7 +922,7 @@ struct ZipBond {
 
   // Restore the atom's chirality by comparing the original order
   //  to the current
-  void restore(Atom *chiral_atom) const {
+  static void restore(Atom *chiral_atom) {
     if (!chiral_atom->getChiralTag()) {
       return;
     }
