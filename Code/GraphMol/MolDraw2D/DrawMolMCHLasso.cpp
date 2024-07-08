@@ -160,7 +160,8 @@ void DrawMolMCHLasso::drawLasso(size_t lassoNum, const RDKit::DrawColour &col,
 namespace {
 double getLassoWidth(const DrawMolMCH *dm, int atNum, int lassoNum) {
   PRECONDITION(dm, "Needs valid DrawMolMCH")
-  double xrad, yrad;
+  double xrad;
+  double yrad;
   dm->getAtomRadius(atNum, xrad, yrad);
   // Double the area of the circles for successive lassos.
   const static double rats[] = {1.0, 1.414, 2, 2.828, 4};
@@ -353,7 +354,8 @@ void intersectingCirclePoints(const Point2D &at1Cds, double rad1,
 void calcIntersectingArcAngles(const Point2D &at1Cds, double rad1,
                                const Point2D &at2Cds, double rad2, double &ang1,
                                double &ang2, double &bang) {
-  Point2D isect1, isect2;
+  Point2D isect1;
+  Point2D isect2;
   intersectingCirclePoints(at1Cds, rad1, at2Cds, rad2, isect1, isect2);
   bool swapped;
   calcSubtendedAngles(isect1, isect2, at1Cds, at2Cds, ang1, ang2, bang,
@@ -440,7 +442,9 @@ void DrawMolMCHLasso::makeIntersectingArcs(
       // the first entry is the atom itself, that's how it's set up
       for (size_t j = 1; j < intersects[i].size(); ++j) {
         auto radJ = getLassoWidth(this, intersects[i][j], lassoNum);
-        double ang1, ang2, bang;
+        double ang1;
+        double ang2;
+        double bang;
         calcIntersectingArcAngles(atCds_[i], radI, atCds_[intersects[i][j]],
                                   radJ, ang1, ang2, bang);
         arcAngs.push_back(ang1);
@@ -652,7 +656,8 @@ Point2D *adjustLineEnd(const DrawShapeArc &arc, DrawShapeSimpleLine &line) {
 void calcAnglesFromXAxis(Point2D &centre, Point2D &end1, Point2D &end2,
                          double &ang1, double &ang2) {
   static const Point2D index{1.0, 0.0};
-  Point2D rad1, rad2;
+  Point2D rad1;
+  Point2D rad2;
   rad1 = centre.directionVector(end1);
   ang1 = 360.0 - rad1.signedAngleTo(index) * 180.0 / M_PI;
   rad2 = centre.directionVector(end2);
