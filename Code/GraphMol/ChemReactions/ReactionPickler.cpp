@@ -92,7 +92,9 @@ void ReactionPickler::reactionFromPickle(std::istream &ss,
   if (tag != VERSION) {
     throw ReactionPicklerException("Bad pickle format: no version tag");
   }
-  int32_t majorVersion, minorVersion, patchVersion;
+  int32_t majorVersion;
+  int32_t minorVersion;
+  int32_t patchVersion;
   streamRead(ss, majorVersion);
   streamRead(ss, minorVersion);
   streamRead(ss, patchVersion);
@@ -216,7 +218,9 @@ void ReactionPickler::_depickle(std::istream &ss, ChemicalReaction *rxn,
   PRECONDITION(rxn, "empty reaction");
 
   Tags tag;
-  uint32_t numReactants, numProducts, numAgents = 0;
+  uint32_t numReactants;
+  uint32_t numProducts;
+  uint32_t numAgents = 0;
 
   streamRead(ss, numReactants);
   streamRead(ss, numProducts);
