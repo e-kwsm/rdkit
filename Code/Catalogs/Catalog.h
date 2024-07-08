@@ -400,7 +400,8 @@ class HierarchCatalog : public Catalog<entryType, paramType> {
   //! returns a list of the indices of entries below the one passed in
   RDKit::INT_VECT getDownEntryList(unsigned int idx) const {
     RDKit::INT_VECT res;
-    DOWN_ENT_ITER nbrIdx, endIdx;
+    DOWN_ENT_ITER nbrIdx;
+    DOWN_ENT_ITER endIdx;
     boost::tie(nbrIdx, endIdx) = boost::adjacent_vertices(idx, d_graph);
     while (nbrIdx != endIdx) {
       res.push_back(static_cast<int>(*nbrIdx));
