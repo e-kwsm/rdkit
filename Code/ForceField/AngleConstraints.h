@@ -99,8 +99,8 @@ class RDKIT_FORCEFIELD_EXPORT AngleConstraintContribs
 
  private:
   std::vector<AngleConstraintContribsParams> d_contribs;
-  double computeAngleTerm(const double &angle,
-                          const AngleConstraintContribsParams &contrib) const;
+  static double computeAngleTerm(const double &angle,
+                                 const AngleConstraintContribsParams &contrib);
 };
 }  // namespace ForceFields
 #endif

@@ -218,7 +218,7 @@ ROMOL_SPTR Normalizer::normalizeFragment(
 }
 
 SmilesMolPair Normalizer::applyTransform(const ROMOL_SPTR &mol,
-                                         ChemicalReaction &transform) const {
+                                         ChemicalReaction &transform) {
   // Repeatedly apply normalization transform to molecule until no changes
   // occur.
   //
