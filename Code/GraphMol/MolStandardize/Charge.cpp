@@ -202,7 +202,8 @@ void Reionizer::reionizeInPlace(RWMol &mol) {
         }
         already_moved.insert(key);
 
-        std::string prot_name, ionized_name;
+        std::string prot_name;
+        std::string ionized_name;
         std::pair<ROMOL_SPTR, ROMOL_SPTR> prot_pair = abpairs[ppos];
         std::pair<ROMOL_SPTR, ROMOL_SPTR> ionized_pair = abpairs[ipos];
         (prot_pair.first)->getProp(common_properties::_Name, prot_name);
