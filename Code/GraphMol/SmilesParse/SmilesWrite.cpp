@@ -391,7 +391,8 @@ std::string FragmentSmilesConstruct(
   std::stringstream res;
 
   std::map<int, int> ringClosureMap;
-  int ringIdx, closureVal;
+  int ringIdx;
+  int closureVal;
   if (!params.canonical) {
     mol.setProp(common_properties::_StereochemDone, 1);
   }
