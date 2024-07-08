@@ -439,7 +439,8 @@ ReactantProductAtomMapping *getAtomMappingsReactantProduct(
   // each other.
   // This is part of the fix for #1387
   {
-    ROMol::EDGE_ITER firstB, lastB;
+    ROMol::EDGE_ITER firstB;
+    ROMol::EDGE_ITER lastB;
     boost::tie(firstB, lastB) = reactantTemplate.getEdges();
     while (firstB != lastB) {
       const Bond *bond = reactantTemplate[*firstB];
@@ -970,7 +971,8 @@ void addReactantNeighborsToProduct(
     unsigned lreactIdx = lReactantAtom->getIdx();
     visitedAtoms[lreactIdx] = 1;
     // Check our neighbors:
-    ROMol::ADJ_ITER nbrIdx, endNbrs;
+    ROMol::ADJ_ITER nbrIdx;
+    ROMol::ADJ_ITER endNbrs;
     boost::tie(nbrIdx, endNbrs) = reactant.getAtomNeighbors(lReactantAtom);
     while (nbrIdx != endNbrs) {
       // Four possibilities here. The neighbor:
@@ -1219,7 +1221,8 @@ void checkAndCorrectChiralityOfProduct(
         // this will contain the indices of product bonds in the
         // reactant order:
         INT_LIST newOrder;
-        ROMol::OEDGE_ITER beg, end;
+        ROMol::OEDGE_ITER beg;
+        ROMol::OEDGE_ITER end;
         boost::tie(beg, end) =
             reactantAtom->getOwningMol().getAtomBonds(reactantAtom);
         while (beg != end) {
