@@ -413,7 +413,8 @@ void DrawMol::extractMolNotes() {
     // molecule annotations use a full-size font, hence the 1 below.
     DrawAnnotation tmp(note, TextAlignType::START, "note", 1, Point2D(0.0, 0.0),
                        drawOptions_.annotationColour, textDrawer_);
-    double height, width;
+    double height;
+    double width;
     tmp.getDimensions(width, height);
     // Try all 4 corners until there's no clash with the underlying molecule.
     // Even though alignment is START, the DrawAnnotation puts the middle
@@ -467,7 +468,8 @@ void DrawMol::extractAtomNotes() {
 
 // ****************************************************************************
 void DrawMol::extractStereoGroups() {
-  int orCount(0), andCount(0);
+  int orCount(0);
+  int andCount(0);
   for (const StereoGroup &group : drawMol_->getStereoGroups()) {
     std::string stereoGroupType;
 
@@ -930,7 +932,9 @@ void DrawMol::extractCloseContacts() {
   int tol =
       drawOptions_.flagCloseContactsDist * drawOptions_.flagCloseContactsDist;
   boost::dynamic_bitset<> flagged(atCds_.size());
-  Point2D trans, scale, toCentre;
+  Point2D trans;
+  Point2D scale;
+  Point2D toCentre;
   getDrawTransformers(trans, scale, toCentre);
   for (unsigned int i = 0; i < atCds_.size(); ++i) {
     if (flagged[i]) {
@@ -1200,7 +1204,9 @@ void DrawMol::findExtremes() {
 
 // ****************************************************************************
 void DrawMol::changeToDrawCoords() {
-  Point2D trans, scale, toCentre;
+  Point2D trans;
+  Point2D scale;
+  Point2D toCentre;
   getDrawTransformers(trans, scale, toCentre);
   transformAll(&trans, &scale, &toCentre);
 }
@@ -1525,7 +1531,8 @@ std::string DrawMol::getAtomSymbol(const Atom &atom,
     iso = 0;
   } else {
     literal_symbol = false;
-    std::vector<std::string> preText, postText;
+    std::vector<std::string> preText;
+    std::vector<std::string> postText;
 
     // first thing after the symbol is the atom map
     std::string mapNum;
@@ -1732,7 +1739,8 @@ void DrawMol::extractLegend() {
                                 double &total_height) {
     total_width = total_height = 0;
     for (auto &bit : legend_bits) {
-      double height, width;
+      double height;
+      double width;
       DrawAnnotation da(bit, TextAlignType::MIDDLE, "legend", relFontScale,
                         Point2D(0.0, 0.0), drawOptions_.legendColour,
                         textDrawer_);
@@ -1763,7 +1771,8 @@ void DrawMol::extractLegend() {
   // padding round the picture.
   double fsize = textDrawer_.fontSize();
   double relFontScale = drawOptions_.legendFontSize / fsize;
-  double total_width, total_height;
+  double total_width;
+  double total_height;
   calc_legend_height(legend_bits, relFontScale, total_width, total_height);
   if (total_width >= drawWidth_) {
     if (!flexiCanvasX_) {
@@ -1803,7 +1812,10 @@ void DrawMol::extractLegend() {
   // The letters have different amounts above and below the centre,
   // which matters when placing them vertically.
   // Draw them from the bottom up.
-  double xmin, xmax, ymin, ymax;
+  double xmin;
+  double xmax;
+  double ymin;
+  double ymax;
   xmin = ymin = std::numeric_limits<double>::max();
   xmax = ymax = std::numeric_limits<double>::lowest();
   legends_.back()->findExtremes(xmin, xmax, ymin, ymax);
@@ -1852,7 +1864,8 @@ void DrawMol::makeStandardBond(Bond *bond, double doubleBondOffset) {
   } else {
     // in all other cases, we will definitely want to draw a line between
     // the two atoms
-    Point2D end1, end2;
+    Point2D end1;
+    Point2D end2;
     adjustBondEndsForLabels(begAt, endAt, end1, end2);
     newBondLine(end1, end2, cols.first, cols.second, begAt, endAt,
                 bond->getIdx(), noDash);
@@ -1878,7 +1891,8 @@ void DrawMol::makeQueryBond(Bond *bond, double doubleBondOffset) {
     return;
   }
 
-  Point2D end1, end2;
+  Point2D end1;
+  Point2D end2;
   adjustBondEndsForLabels(begAt->getIdx(), endAt->getIdx(), end1, end2);
   Point2D sat1 = atCds_[begAt->getIdx()];
   Point2D sat2 = atCds_[endAt->getIdx()];
@@ -1897,7 +1911,10 @@ void DrawMol::makeQueryBond(Bond *bond, double doubleBondOffset) {
     at2Idx = drawOptions_.splitBonds ? -1 : endAt->getIdx();
     newBondLine(at1_cds, midp, queryColour, queryColour, at1Idx, at2Idx,
                 bond->getIdx(), noDash);
-    Point2D l1s, l1f, l2s, l2f;
+    Point2D l1s;
+    Point2D l1f;
+    Point2D l2s;
+    Point2D l2f;
     calcDoubleBondLines(doubleBondOffset, *bond, l1s, l1f, l2s, l2f);
     at1Idx = drawOptions_.splitBonds ? endAt->getIdx() : begAt->getIdx();
     at2Idx = drawOptions_.splitBonds ? -1 : endAt->getIdx();
@@ -1912,7 +1929,10 @@ void DrawMol::makeQueryBond(Bond *bond, double doubleBondOffset) {
     at2Idx = drawOptions_.splitBonds ? -1 : endAt->getIdx();
     newBondLine(at1_cds, midp, queryColour, queryColour, at1Idx, at2Idx,
                 bond->getIdx(), noDash);
-    Point2D l1s, l1f, l2s, l2f;
+    Point2D l1s;
+    Point2D l1f;
+    Point2D l2s;
+    Point2D l2f;
     calcDoubleBondLines(doubleBondOffset, *bond, l1s, l1f, l2s, l2f);
     at1Idx = drawOptions_.splitBonds ? endAt->getIdx() : begAt->getIdx();
     at2Idx = drawOptions_.splitBonds ? -1 : endAt->getIdx();
@@ -1925,7 +1945,10 @@ void DrawMol::makeQueryBond(Bond *bond, double doubleBondOffset) {
   } else if (qry->getDescription() == "DoubleOrAromaticBond") {
     at1Idx = begAt->getIdx();
     at2Idx = drawOptions_.splitBonds ? -1 : endAt->getIdx();
-    Point2D l1s, l1f, l2s, l2f;
+    Point2D l1s;
+    Point2D l1f;
+    Point2D l2s;
+    Point2D l2f;
     calcDoubleBondLines(doubleBondOffset, *bond, l1s, l1f, l2s, l2f);
     midp = (l1s + l1f) / 2.0;
     newBondLine(l1s, midp, queryColour, queryColour, at1Idx, at2Idx,
@@ -2011,7 +2034,8 @@ void DrawMol::makeQueryBond(Bond *bond, double doubleBondOffset) {
 void DrawMol::makeDoubleBondLines(
     Bond *bond, double doubleBondOffset,
     const std::pair<DrawColour, DrawColour> &cols) {
-  Point2D end1, end2;
+  Point2D end1;
+  Point2D end2;
   int at1Idx = bond->getBeginAtomIdx();
   int at2Idx = bond->getEndAtomIdx();
   adjustBondEndsForLabels(at1Idx, at2Idx, end1, end2);
@@ -2023,7 +2047,12 @@ void DrawMol::makeDoubleBondLines(
     skipOuterLine = true;
   }
 
-  Point2D l1s, l1f, l2s, l2f, sat1, sat2;
+  Point2D l1s;
+  Point2D l1f;
+  Point2D l2s;
+  Point2D l2f;
+  Point2D sat1;
+  Point2D sat2;
   sat1 = atCds_[at1Idx];
   atCds_[at1Idx] = end1;
   sat2 = atCds_[at2Idx];
@@ -2074,12 +2103,18 @@ void DrawMol::makeDoubleBondLines(
 void DrawMol::makeTripleBondLines(
     Bond *bond, double doubleBondOffset,
     const std::pair<DrawColour, DrawColour> &cols) {
-  Point2D end1, end2;
+  Point2D end1;
+  Point2D end2;
   int at1Idx = bond->getBeginAtomIdx();
   int at2Idx = bond->getEndAtomIdx();
   adjustBondEndsForLabels(at1Idx, at2Idx, end1, end2);
 
-  Point2D l1s, l1f, l2s, l2f, sat1, sat2;
+  Point2D l1s;
+  Point2D l1f;
+  Point2D l2s;
+  Point2D l2f;
+  Point2D sat1;
+  Point2D sat2;
   sat1 = atCds_[at1Idx];
   atCds_[at1Idx] = end1;
   sat2 = atCds_[at2Idx];
@@ -2112,7 +2147,8 @@ void DrawMol::makeWedgedBond(Bond *bond,
   if (atomLabels_[at1->getIdx()] || atomLabels_[at2->getIdx()]) {
     meanBondLength_ *= 2.0;
   }
-  Point2D end1, end2;
+  Point2D end1;
+  Point2D end2;
   adjustBondEndsForLabels(at1->getIdx(), at2->getIdx(), end1, end2);
   if (atomLabels_[at1->getIdx()] || atomLabels_[at2->getIdx()]) {
     meanBondLength_ /= 2.0;
@@ -2156,7 +2192,8 @@ void DrawMol::makeWavyBond(Bond *bond, double offset,
                            const std::pair<DrawColour, DrawColour> &cols) {
   auto at1 = bond->getBeginAtom();
   auto at2 = bond->getEndAtom();
-  Point2D end1, end2;
+  Point2D end1;
+  Point2D end2;
   adjustBondEndsForLabels(at1->getIdx(), at2->getIdx(), end1, end2);
   std::vector<Point2D> pts{end1, end2};
   DrawShapeWavyLine *s = new DrawShapeWavyLine(
@@ -2171,7 +2208,8 @@ void DrawMol::makeDativeBond(Bond *bond, double offset,
                              const std::pair<DrawColour, DrawColour> &cols) {
   auto at1 = bond->getBeginAtom();
   auto at2 = bond->getEndAtom();
-  Point2D end1, end2;
+  Point2D end1;
+  Point2D end2;
   adjustBondEndsForLabels(at1->getIdx(), at2->getIdx(), end1, end2);
 
   Point2D mid = (end1 + end2) * 0.5;
@@ -2195,7 +2233,8 @@ void DrawMol::makeZeroBond(Bond *bond,
                            const DashPattern &dashPattern) {
   auto at1 = bond->getBeginAtom();
   auto at2 = bond->getEndAtom();
-  Point2D end1, end2;
+  Point2D end1;
+  Point2D end2;
   adjustBondEndsForLabels(at1->getIdx(), at2->getIdx(), end1, end2);
   newBondLine(end1, end2, cols.first, cols.second, at1->getIdx(), at2->getIdx(),
               bond->getIdx(), dashPattern);
@@ -2273,7 +2312,8 @@ void DrawMol::newBondLine(const Point2D &pt1, const Point2D &pt2,
 
 // ****************************************************************************
 std::pair<DrawColour, DrawColour> DrawMol::getBondColours(Bond *bond) {
-  DrawColour col1, col2;
+  DrawColour col1;
+  DrawColour col2;
 
   bool highlight_bond = false;
   if (std::find(highlightBonds_.begin(), highlightBonds_.end(),
@@ -2358,7 +2398,8 @@ void DrawMol::makeAtomEllipseHighlights(double lineWidth) {
         col = highlightAtomMap_.find(thisIdx)->second;
       }
       Point2D centre = atCds_[thisIdx];
-      double xradius, yradius;
+      double xradius;
+      double yradius;
       if (highlightRadii_.find(thisIdx) != highlightRadii_.end()) {
         xradius = highlightRadii_.find(thisIdx)->second;
       } else {
@@ -2366,7 +2407,10 @@ void DrawMol::makeAtomEllipseHighlights(double lineWidth) {
       }
       yradius = xradius;
       if (!drawOptions_.atomHighlightsAreCircles && atomLabels_[thisIdx]) {
-        double xMin, yMin, xMax, yMax;
+        double xMin;
+        double yMin;
+        double xMax;
+        double yMax;
         xMin = yMin = std::numeric_limits<double>::max();
         xMax = yMax = std::numeric_limits<double>::lowest();
         atomLabels_[thisIdx]->findExtremes(xMin, xMax, yMin, yMax);
@@ -2719,7 +2763,10 @@ OrientType DrawMol::calcRadicalRect(const Atom *atom,
   }
   OrientType orient = atomSyms_[atom->getIdx()].second;
   double rad_size = (4 * num_rade - 2) * spot_rad / fontScale_;
-  double x_min, y_min, x_max, y_max;
+  double x_min;
+  double y_min;
+  double x_max;
+  double y_max;
   if (atomLabels_[atom->getIdx()]) {
     x_min = y_min = std::numeric_limits<double>::max();
     x_max = y_max = std::numeric_limits<double>::lowest();
@@ -2822,7 +2869,9 @@ Point2D DrawMol::getDrawCoords(const Point2D &atCds, const Point2D &trans,
 Point2D DrawMol::getDrawCoords(const Point2D &atCds) const {
   // we always invert y
   Point2D drawCoords{atCds.x, -atCds.y};
-  Point2D trans, scale, toCentre;
+  Point2D trans;
+  Point2D scale;
+  Point2D toCentre;
   getDrawTransformers(trans, scale, toCentre);
   drawCoords += trans;
   drawCoords.x *= scale.x;
@@ -2840,7 +2889,9 @@ Point2D DrawMol::getDrawCoords(int atnum) const {
 
 // ****************************************************************************
 Point2D DrawMol::getAtomCoords(const Point2D &screenCds) const {
-  Point2D trans, scale, toCentre;
+  Point2D trans;
+  Point2D scale;
+  Point2D toCentre;
   getDrawTransformers(trans, scale, toCentre);
   Point2D atCds{screenCds};
   atCds -= toCentre;
@@ -3451,7 +3502,8 @@ void DrawMol::adjustBondsOnSolidWedgeEnds() {
         }
       }
       if (wedge != nullptr && bondLine != nullptr) {
-        int p1 = -1, p2 = -1;
+        int p1 = -1;
+        int p2 = -1;
         // find the points that are the top of the wedge.  Clearly, this
         // assumes the order that the triangles are created in the
         // DrawShapeSolidWedge.
@@ -3891,7 +3943,10 @@ void adjustBondEndForString(
     Point2D origTrans = r->trans_;
     r->trans_ += labelPos;
 
-    Point2D tl, tr, bl, br;
+    Point2D tl;
+    Point2D tr;
+    Point2D bl;
+    Point2D br;
     r->calcCorners(tl, tr, br, bl, padding);
 
     // if it's a wide label, such as C:7, the bond can intersect
