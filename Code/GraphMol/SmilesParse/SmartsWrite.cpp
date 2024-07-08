@@ -608,10 +608,12 @@ std::string _recurseBondSmarts(const Bond *bond,
   // well - at least in this case
   CHECK_INVARIANT(chi == node->endChildren(), "Too many children on the query");
 
-  std::string dsc1, dsc2;
+  std::string dsc1;
+  std::string dsc2;
   dsc1 = child1->getDescription();
   dsc2 = child2->getDescription();
-  std::string csmarts1, csmarts2;
+  std::string csmarts1;
+  std::string csmarts2;
 
   if ((dsc1 != "BondOr") && (dsc1 != "BondAnd")) {
     // child1 is  simple node get the smarts directly
