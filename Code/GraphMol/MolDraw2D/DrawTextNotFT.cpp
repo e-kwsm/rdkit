@@ -39,7 +39,8 @@ void DrawTextNotFT::alignString(
     }
   }
 
-  Point2D align_trans, align_offset;
+  Point2D align_trans;
+  Point2D align_offset;
   if (talign == TextAlignType::START || talign == TextAlignType::END) {
     size_t align_char = 0;
     for (size_t i = 0; i < rects.size(); ++i) {
@@ -61,7 +62,10 @@ void DrawTextNotFT::alignString(
     int num_norm = 0;
     for (size_t i = 0; i < rects.size(); ++i) {
       if (draw_modes[i] == TextDrawType::TextDrawNormal) {
-        Point2D tl, tr, br, bl;
+        Point2D tl;
+        Point2D tr;
+        Point2D br;
+        Point2D bl;
         rects[i]->calcCorners(tl, tr, br, bl, 0.0);
         // sometimes the rect is in a coordinate frame where +ve y is down,
         // sometimes it's up.  For these purposes, we don't care so long as
