@@ -34,7 +34,8 @@ MultithreadedMolSupplier::~MultithreadedMolSupplier() {
 
 void MultithreadedMolSupplier::reader() {
   std::string record;
-  unsigned int lineNum, index;
+  unsigned int lineNum;
+  unsigned int index;
   while (extractNextRecord(record, lineNum, index)) {
     if (readCallback) {
       try {
