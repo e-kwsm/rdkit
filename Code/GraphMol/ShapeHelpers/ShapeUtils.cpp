@@ -21,7 +21,12 @@ namespace MolShapes {
 void computeConfBox(const Conformer &conf, RDGeom::Point3D &leftBottom,
                     RDGeom::Point3D &rightTop, const RDGeom::Transform3D *trans,
                     double padding) {
-  double xmin, xmax, ymin, ymax, zmin, zmax;
+  double xmin;
+  double xmax;
+  double ymin;
+  double ymax;
+  double zmin;
+  double zmax;
   xmin = ymin = zmin = 1.e8;
   xmax = ymax = zmax = -1.e8;
   unsigned int nAtms = conf.getNumAtoms();
@@ -60,7 +65,8 @@ void computeConfDimsAndOffset(const Conformer &conf, RDGeom::Point3D &dims,
 std::vector<double> getConfDimensions(const Conformer &conf, double padding,
                                       const RDGeom::Point3D *center,
                                       bool ignoreHs) {
-  RDGeom::Point3D lb, rb;
+  RDGeom::Point3D lb;
+  RDGeom::Point3D rb;
   computeConfBox(conf, lb, rb, nullptr, padding);
 
   if (!center) {
@@ -145,9 +151,67 @@ double tverskyIndex(const Conformer &conf1, const Conformer &conf2,
                     DiscreteValueVect::DiscreteValueType bitsPerPoint,
                     double vdwScale, double stepSize, int maxLayers,
                     bool ignoreHs) {
+<<<<<<< HEAD
   const auto [grd1, grd2] =
       createShapeGrids(conf1, conf2, gridSpacing, bitsPerPoint, vdwScale,
                        stepSize, maxLayers, ignoreHs);
+||||||| parent of db1e9ceb1ad1 (Code/GraphMol/ShapeHelpers/ShapeUtils.cpp)
+  RDGeom::Transform3D *trans = MolTransforms::computeCanonicalTransform(conf1);
+
+  // now use this transform and figure out what size grid we will need
+  // find the lower-left and upper-right corners for each of the conformers
+  // and take a union of these boxes - we will use this fo grid dimensions
+  RDGeom::Point3D leftBottom1, rightTop1, leftBottom2, rightTop2, uLeftBottom,
+      uRightTop;
+  computeConfBox(conf1, leftBottom1, rightTop1, trans);
+  computeConfBox(conf2, leftBottom2, rightTop2, trans);
+
+  computeUnionBox(leftBottom1, rightTop1, leftBottom2, rightTop2, uLeftBottom,
+                  uRightTop);
+
+  // make the grid object to store the encoding
+  uRightTop -= uLeftBottom;  // uRightTop now has grid dimensions
+
+  RDGeom::UniformGrid3D grd1(uRightTop.x, uRightTop.y, uRightTop.z, gridSpacing,
+                             bitsPerPoint, &uLeftBottom);
+  RDGeom::UniformGrid3D grd2(uRightTop.x, uRightTop.y, uRightTop.z, gridSpacing,
+                             bitsPerPoint, &uLeftBottom);
+
+  EncodeShape(conf1, grd1, trans, vdwScale, stepSize, maxLayers, ignoreHs);
+  EncodeShape(conf2, grd2, trans, vdwScale, stepSize, maxLayers, ignoreHs);
+
+  delete trans;
+=======
+  RDGeom::Transform3D *trans = MolTransforms::computeCanonicalTransform(conf1);
+
+  // now use this transform and figure out what size grid we will need
+  // find the lower-left and upper-right corners for each of the conformers
+  // and take a union of these boxes - we will use this fo grid dimensions
+  RDGeom::Point3D leftBottom1;
+  RDGeom::Point3D rightTop1;
+  RDGeom::Point3D leftBottom2;
+  RDGeom::Point3D rightTop2;
+  RDGeom::Point3D uLeftBottom;
+  RDGeom::Point3D uRightTop;
+  computeConfBox(conf1, leftBottom1, rightTop1, trans);
+  computeConfBox(conf2, leftBottom2, rightTop2, trans);
+
+  computeUnionBox(leftBottom1, rightTop1, leftBottom2, rightTop2, uLeftBottom,
+                  uRightTop);
+
+  // make the grid object to store the encoding
+  uRightTop -= uLeftBottom;  // uRightTop now has grid dimensions
+
+  RDGeom::UniformGrid3D grd1(uRightTop.x, uRightTop.y, uRightTop.z, gridSpacing,
+                             bitsPerPoint, &uLeftBottom);
+  RDGeom::UniformGrid3D grd2(uRightTop.x, uRightTop.y, uRightTop.z, gridSpacing,
+                             bitsPerPoint, &uLeftBottom);
+
+  EncodeShape(conf1, grd1, trans, vdwScale, stepSize, maxLayers, ignoreHs);
+  EncodeShape(conf2, grd2, trans, vdwScale, stepSize, maxLayers, ignoreHs);
+
+  delete trans;
+>>>>>>> db1e9ceb1ad1 (Code/GraphMol/ShapeHelpers/ShapeUtils.cpp)
   return RDGeom::tverskyIndex(grd1, grd2, alpha, beta);
 }
 
@@ -171,6 +235,60 @@ double tanimotoDistance(const Conformer &conf1, const Conformer &conf2,
       createShapeGrids(conf1, conf2, gridSpacing, bitsPerPoint, vdwScale,
                        stepSize, maxLayers, ignoreHs);
 
+<<<<<<< HEAD
+||||||| parent of db1e9ceb1ad1 (Code/GraphMol/ShapeHelpers/ShapeUtils.cpp)
+  // now use this transform and figure out what size grid we will need
+  // find the lower-left and upper-right corners for each of the conformers
+  // and take a union of these boxes - we will use this fo grid dimensions
+  RDGeom::Point3D leftBottom1, rightTop1, leftBottom2, rightTop2, uLeftBottom,
+      uRightTop;
+  computeConfBox(conf1, leftBottom1, rightTop1, trans);
+  computeConfBox(conf2, leftBottom2, rightTop2, trans);
+
+  computeUnionBox(leftBottom1, rightTop1, leftBottom2, rightTop2, uLeftBottom,
+                  uRightTop);
+
+  // make the grid object to store the encoding
+  uRightTop -= uLeftBottom;  // uRightTop now has grid dimensions
+
+  RDGeom::UniformGrid3D grd1(uRightTop.x, uRightTop.y, uRightTop.z, gridSpacing,
+                             bitsPerPoint, &uLeftBottom);
+  RDGeom::UniformGrid3D grd2(uRightTop.x, uRightTop.y, uRightTop.z, gridSpacing,
+                             bitsPerPoint, &uLeftBottom);
+
+  EncodeShape(conf1, grd1, trans, vdwScale, stepSize, maxLayers, ignoreHs);
+  EncodeShape(conf2, grd2, trans, vdwScale, stepSize, maxLayers, ignoreHs);
+
+  delete trans;
+=======
+  // now use this transform and figure out what size grid we will need
+  // find the lower-left and upper-right corners for each of the conformers
+  // and take a union of these boxes - we will use this fo grid dimensions
+  RDGeom::Point3D leftBottom1;
+  RDGeom::Point3D rightTop1;
+  RDGeom::Point3D leftBottom2;
+  RDGeom::Point3D rightTop2;
+  RDGeom::Point3D uLeftBottom;
+  RDGeom::Point3D uRightTop;
+  computeConfBox(conf1, leftBottom1, rightTop1, trans);
+  computeConfBox(conf2, leftBottom2, rightTop2, trans);
+
+  computeUnionBox(leftBottom1, rightTop1, leftBottom2, rightTop2, uLeftBottom,
+                  uRightTop);
+
+  // make the grid object to store the encoding
+  uRightTop -= uLeftBottom;  // uRightTop now has grid dimensions
+
+  RDGeom::UniformGrid3D grd1(uRightTop.x, uRightTop.y, uRightTop.z, gridSpacing,
+                             bitsPerPoint, &uLeftBottom);
+  RDGeom::UniformGrid3D grd2(uRightTop.x, uRightTop.y, uRightTop.z, gridSpacing,
+                             bitsPerPoint, &uLeftBottom);
+
+  EncodeShape(conf1, grd1, trans, vdwScale, stepSize, maxLayers, ignoreHs);
+  EncodeShape(conf2, grd2, trans, vdwScale, stepSize, maxLayers, ignoreHs);
+
+  delete trans;
+>>>>>>> db1e9ceb1ad1 (Code/GraphMol/ShapeHelpers/ShapeUtils.cpp)
   return RDGeom::tanimotoDistance(grd1, grd2);
 }
 
@@ -191,9 +309,71 @@ double protrudeDistance(const Conformer &conf1, const Conformer &conf2,
                         DiscreteValueVect::DiscreteValueType bitsPerPoint,
                         double vdwScale, double stepSize, int maxLayers,
                         bool ignoreHs, bool allowReordering) {
+<<<<<<< HEAD
   const auto [grd1, grd2] =
       createShapeGrids(conf1, conf2, gridSpacing, bitsPerPoint, vdwScale,
                        stepSize, maxLayers, ignoreHs);
+||||||| parent of db1e9ceb1ad1 (Code/GraphMol/ShapeHelpers/ShapeUtils.cpp)
+  //
+  // FIX: all this duplicated code needs to be refactored out.
+  //
+  RDGeom::Transform3D *trans = MolTransforms::computeCanonicalTransform(conf1);
+
+  // now use this transform and figure out what size grid we will need
+  // find the lower-left and upper-right corners for each of the conformers
+  // and take a union of these boxes - we will use this fo grid dimensions
+  RDGeom::Point3D leftBottom1, rightTop1, leftBottom2, rightTop2, uLeftBottom,
+      uRightTop;
+  computeConfBox(conf1, leftBottom1, rightTop1, trans);
+  computeConfBox(conf2, leftBottom2, rightTop2, trans);
+
+  computeUnionBox(leftBottom1, rightTop1, leftBottom2, rightTop2, uLeftBottom,
+                  uRightTop);
+
+  // make the grid object to store the encoding
+  uRightTop -= uLeftBottom;  // uRightTop now has grid dimensions
+
+  RDGeom::UniformGrid3D grd1(uRightTop.x, uRightTop.y, uRightTop.z, gridSpacing,
+                             bitsPerPoint, &uLeftBottom);
+  RDGeom::UniformGrid3D grd2(uRightTop.x, uRightTop.y, uRightTop.z, gridSpacing,
+                             bitsPerPoint, &uLeftBottom);
+
+  EncodeShape(conf1, grd1, trans, vdwScale, stepSize, maxLayers, ignoreHs);
+  EncodeShape(conf2, grd2, trans, vdwScale, stepSize, maxLayers, ignoreHs);
+  delete trans;
+=======
+  //
+  // FIX: all this duplicated code needs to be refactored out.
+  //
+  RDGeom::Transform3D *trans = MolTransforms::computeCanonicalTransform(conf1);
+
+  // now use this transform and figure out what size grid we will need
+  // find the lower-left and upper-right corners for each of the conformers
+  // and take a union of these boxes - we will use this fo grid dimensions
+  RDGeom::Point3D leftBottom1;
+  RDGeom::Point3D rightTop1;
+  RDGeom::Point3D leftBottom2;
+  RDGeom::Point3D rightTop2;
+  RDGeom::Point3D uLeftBottom;
+  RDGeom::Point3D uRightTop;
+  computeConfBox(conf1, leftBottom1, rightTop1, trans);
+  computeConfBox(conf2, leftBottom2, rightTop2, trans);
+
+  computeUnionBox(leftBottom1, rightTop1, leftBottom2, rightTop2, uLeftBottom,
+                  uRightTop);
+
+  // make the grid object to store the encoding
+  uRightTop -= uLeftBottom;  // uRightTop now has grid dimensions
+
+  RDGeom::UniformGrid3D grd1(uRightTop.x, uRightTop.y, uRightTop.z, gridSpacing,
+                             bitsPerPoint, &uLeftBottom);
+  RDGeom::UniformGrid3D grd2(uRightTop.x, uRightTop.y, uRightTop.z, gridSpacing,
+                             bitsPerPoint, &uLeftBottom);
+
+  EncodeShape(conf1, grd1, trans, vdwScale, stepSize, maxLayers, ignoreHs);
+  EncodeShape(conf2, grd2, trans, vdwScale, stepSize, maxLayers, ignoreHs);
+  delete trans;
+>>>>>>> db1e9ceb1ad1 (Code/GraphMol/ShapeHelpers/ShapeUtils.cpp)
 
   double res;
   if (allowReordering && (grd2.getOccupancyVect()->getTotalVal() <
