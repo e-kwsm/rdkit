@@ -39,7 +39,11 @@ void DrawAnnotation::findExtremes(double &xmin, double &xmax, double &ymin,
   if (text_.empty()) {
     return;
   }
-  Point2D tl, tr, br, bl, otrans;
+  Point2D tl;
+  Point2D tr;
+  Point2D br;
+  Point2D bl;
+  Point2D otrans;
   for (auto r : rects_) {
     otrans = r->trans_;
     r->trans_ += pos_;
@@ -58,7 +62,10 @@ void DrawAnnotation::findExtremes(double &xmin, double &xmax, double &ymin,
 
 // ****************************************************************************
 void DrawAnnotation::getDimensions(double &width, double &height) const {
-  double xMin, yMin, xMax, yMax;
+  double xMin;
+  double yMin;
+  double xMax;
+  double yMax;
   xMin = yMin = std::numeric_limits<double>::max();
   xMax = yMax = std::numeric_limits<double>::lowest();
   findExtremes(xMin, xMax, yMin, yMax);
@@ -102,7 +109,11 @@ void DrawAnnotation::draw(MolDraw2D &molDrawer) const {
 void DrawAnnotation::drawRects(MolDraw2D &molDrawer) const {
   auto olw = molDrawer.lineWidth();
   molDrawer.setLineWidth(1);
-  Point2D tl, tr, br, bl, origTrans;
+  Point2D tl;
+  Point2D tr;
+  Point2D br;
+  Point2D bl;
+  Point2D origTrans;
   for (auto &rect : rects_) {
     origTrans = rect->trans_;
     rect->trans_ += pos_;
