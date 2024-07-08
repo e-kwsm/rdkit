@@ -84,7 +84,7 @@ class MolAtropTest {
     }
   }
 
-  std::string GetExpectedValue(std::string expectedFileName) {
+  static std::string GetExpectedValue(std::string expectedFileName) {
     std::stringstream expectedMolStr;
     std::ifstream in;
     in.open(expectedFileName);

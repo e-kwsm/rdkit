@@ -35,21 +35,21 @@ class Rule4b : public SequenceRule {
 
   std::vector<Descriptor> getReferenceDescriptors(const Node *node) const;
 
-  bool hasDescriptors(const Node *node) const;
+  static bool hasDescriptors(const Node *node);
 
-  bool getReference(const std::vector<const Node *> &nodes,
-                    std::vector<Descriptor> &result) const;
+  static bool getReference(const std::vector<const Node *> &nodes,
+                           std::vector<Descriptor> &result);
 
-  std::vector<std::vector<const Node *>> initialLevel(const Node *node) const;
+  static std::vector<std::vector<const Node *>> initialLevel(const Node *node);
 
   std::vector<std::vector<const Node *>> getNextLevel(
       const std::vector<std::vector<const Node *>> &prevLevel) const;
 
-  std::vector<const Node *> toNodeList(
-      const std::vector<Edge *> &eqEdges) const;
+  static std::vector<const Node *> toNodeList(
+      const std::vector<Edge *> &eqEdges);
 
-  std::vector<PairList> newPairLists(
-      const std::vector<Descriptor> &descriptors) const;
+  static std::vector<PairList> newPairLists(
+      const std::vector<Descriptor> &descriptors);
 
   void fillPairs(const Node *beg, PairList &plist) const;
 

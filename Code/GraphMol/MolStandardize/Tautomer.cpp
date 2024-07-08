@@ -531,7 +531,7 @@ TautomerEnumeratorResult TautomerEnumerator::enumerate(const ROMol &mol) const {
 // pickCanonical non-templated overload that avoids recomputing SMILES
 ROMol *TautomerEnumerator::pickCanonical(
     const TautomerEnumeratorResult &tautRes,
-    boost::function<int(const ROMol &mol)> scoreFunc) const {
+    boost::function<int(const ROMol &mol)> scoreFunc) {
   ROMOL_SPTR bestMol;
   if (tautRes.d_tautomers.size() == 1) {
     bestMol = tautRes.d_tautomers.begin()->second.tautomer;
