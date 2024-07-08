@@ -152,7 +152,8 @@ static void addResult(std::vector<std::pair<ROMOL_SPTR, ROMOL_SPTR>>
 #ifdef MMPA_DEBUG
   std::cout << "\n";
 #endif
-  RWMOL_SPTR core, side_chains;  // core & side_chains output molecules
+  RWMOL_SPTR core;
+  RWMOL_SPTR side_chains;  // core & side_chains output molecules
 
   if (isotope == 1) {
     side_chains = RWMOL_SPTR(new RWMol(em));  // output = '%s,%s,,%s.%s'
