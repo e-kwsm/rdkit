@@ -3339,7 +3339,6 @@ void MarvinMolBase::prepSgroupsForRDKit() {
   //  do any sgroup specific processing
 
   processSpecialSgroups();
-  return;
 }
 
 void MarvinMolBase::processSpecialSgroups() {
@@ -3986,8 +3985,6 @@ void MarvinMolBase::processSgroupsFromRDKit() {
               // vector
     }
   }
-
-  return;
 }
 
 MarvinMolBase *MarvinMol::copyMol(const std::string &) const {
