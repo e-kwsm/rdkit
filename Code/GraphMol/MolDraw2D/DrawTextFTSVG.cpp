@@ -47,7 +47,8 @@ double DrawTextFTSVG::extractOutline() {
 
 // ****************************************************************************
 int DrawTextFTSVG::MoveToFunctionImpl(const FT_Vector *to) {
-  double dx, dy;
+  double dx;
+  double dy;
   fontPosToDrawPos(to->x, to->y, dx, dy);
   oss_ << "M " << MolDraw2D_detail::formatDouble(dx) << ' '
        << MolDraw2D_detail::formatDouble(dy) << "\n";
@@ -57,7 +58,8 @@ int DrawTextFTSVG::MoveToFunctionImpl(const FT_Vector *to) {
 
 // ****************************************************************************
 int DrawTextFTSVG::LineToFunctionImpl(const FT_Vector *to) {
-  double dx, dy;
+  double dx;
+  double dy;
   fontPosToDrawPos(to->x, to->y, dx, dy);
   oss_ << "L " << MolDraw2D_detail::formatDouble(dx) << ' '
        << MolDraw2D_detail::formatDouble(dy) << "\n";
@@ -68,10 +70,12 @@ int DrawTextFTSVG::LineToFunctionImpl(const FT_Vector *to) {
 // ****************************************************************************
 int DrawTextFTSVG::ConicToFunctionImpl(const FT_Vector *control,
                                        const FT_Vector *to) {
-  double controlX, controlY;
+  double controlX;
+  double controlY;
   fontPosToDrawPos(control->x, control->y, controlX, controlY);
 
-  double dx, dy;
+  double dx;
+  double dy;
   fontPosToDrawPos(to->x, to->y, dx, dy);
 
   oss_ << "Q " << MolDraw2D_detail::formatDouble(controlX) << ' '
@@ -86,12 +90,15 @@ int DrawTextFTSVG::ConicToFunctionImpl(const FT_Vector *control,
 int DrawTextFTSVG::CubicToFunctionImpl(const FT_Vector *controlOne,
                                        const FT_Vector *controlTwo,
                                        const FT_Vector *to) {
-  double controlOneX, controlOneY;
+  double controlOneX;
+  double controlOneY;
   fontPosToDrawPos(controlOne->x, controlOne->y, controlOneX, controlOneY);
-  double controlTwoX, controlTwoY;
+  double controlTwoX;
+  double controlTwoY;
   fontPosToDrawPos(controlTwo->x, controlTwo->y, controlTwoX, controlTwoY);
 
-  double dx, dy;
+  double dx;
+  double dy;
   fontPosToDrawPos(to->x, to->y, dx, dy);
 
   oss_ << "C " << MolDraw2D_detail::formatDouble(controlOneX) << ' '
