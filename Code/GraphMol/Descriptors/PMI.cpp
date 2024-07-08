@@ -108,7 +108,9 @@ bool getMomentsFromGyration(const ROMol &mol, int confId, bool useAtomicMasses,
 
 double NPR1(const ROMol &mol, int confId, bool useAtomicMasses, bool force) {
   PRECONDITION(mol.getNumConformers() >= 1, "molecule has no conformers");
-  double pm1, pm2, pm3;
+  double pm1;
+  double pm2;
+  double pm3;
   if (!getMoments(mol, confId, useAtomicMasses, pm1, pm2, pm3, force)) {
     // the eigenvector calculation failed
     return 0.0;  // FIX: throw an exception here?
@@ -120,7 +122,9 @@ double NPR1(const ROMol &mol, int confId, bool useAtomicMasses, bool force) {
 }
 double NPR2(const ROMol &mol, int confId, bool useAtomicMasses, bool force) {
   PRECONDITION(mol.getNumConformers() >= 1, "molecule has no conformers");
-  double pm1, pm2, pm3;
+  double pm1;
+  double pm2;
+  double pm3;
   if (!getMoments(mol, confId, useAtomicMasses, pm1, pm2, pm3, force)) {
     // the eigenvector calculation failed
     return 0.0;  // FIX: throw an exception here?
@@ -132,7 +136,9 @@ double NPR2(const ROMol &mol, int confId, bool useAtomicMasses, bool force) {
 }
 double PMI1(const ROMol &mol, int confId, bool useAtomicMasses, bool force) {
   PRECONDITION(mol.getNumConformers() >= 1, "molecule has no conformers");
-  double pm1, pm2, pm3;
+  double pm1;
+  double pm2;
+  double pm3;
   if (!getMoments(mol, confId, useAtomicMasses, pm1, pm2, pm3, force)) {
     // the eigenvector calculation failed
     return 0.0;  // FIX: throw an exception here?
@@ -141,7 +147,9 @@ double PMI1(const ROMol &mol, int confId, bool useAtomicMasses, bool force) {
 }
 double PMI2(const ROMol &mol, int confId, bool useAtomicMasses, bool force) {
   PRECONDITION(mol.getNumConformers() >= 1, "molecule has no conformers");
-  double pm1, pm2, pm3;
+  double pm1;
+  double pm2;
+  double pm3;
   if (!getMoments(mol, confId, useAtomicMasses, pm1, pm2, pm3, force)) {
     // the eigenvector calculation failed
     return 0.0;  // FIX: throw an exception here?
@@ -150,7 +158,9 @@ double PMI2(const ROMol &mol, int confId, bool useAtomicMasses, bool force) {
 }
 double PMI3(const ROMol &mol, int confId, bool useAtomicMasses, bool force) {
   PRECONDITION(mol.getNumConformers() >= 1, "molecule has no conformers");
-  double pm1, pm2, pm3;
+  double pm1;
+  double pm2;
+  double pm3;
   if (!getMoments(mol, confId, useAtomicMasses, pm1, pm2, pm3, force)) {
     // the eigenvector calculation failed
     return 0.0;  // FIX: throw an exception here?
@@ -161,7 +171,9 @@ double PMI3(const ROMol &mol, int confId, bool useAtomicMasses, bool force) {
 double radiusOfGyration(const ROMol &mol, int confId, bool useAtomicMasses,
                         bool force) {
   PRECONDITION(mol.getNumConformers() >= 1, "molecule has no conformers");
-  double pm1, pm2, pm3;
+  double pm1;
+  double pm2;
+  double pm3;
   if (!getMomentsFromGyration(mol, confId, useAtomicMasses, pm1, pm2, pm3,
                               force)) {
     // the eigenvector calculation failed
@@ -173,7 +185,9 @@ double radiusOfGyration(const ROMol &mol, int confId, bool useAtomicMasses,
 double inertialShapeFactor(const ROMol &mol, int confId, bool useAtomicMasses,
                            bool force) {
   PRECONDITION(mol.getNumConformers() >= 1, "molecule has no conformers");
-  double pm1, pm2, pm3;
+  double pm1;
+  double pm2;
+  double pm3;
   if (!getMoments(mol, confId, useAtomicMasses, pm1, pm2, pm3, force)) {
     // the eigenvector calculation failed
     return 0.0;  // FIX: throw an exception here?
@@ -188,7 +202,9 @@ double inertialShapeFactor(const ROMol &mol, int confId, bool useAtomicMasses,
 double eccentricity(const ROMol &mol, int confId, bool useAtomicMasses,
                     bool force) {
   PRECONDITION(mol.getNumConformers() >= 1, "molecule has no conformers");
-  double pm1, pm2, pm3;
+  double pm1;
+  double pm2;
+  double pm3;
   if (!getMoments(mol, confId, useAtomicMasses, pm1, pm2, pm3, force)) {
     // the eigenvector calculation failed
     return 0.0;  // FIX: throw an exception here?
@@ -204,7 +220,9 @@ double eccentricity(const ROMol &mol, int confId, bool useAtomicMasses,
 double asphericity(const ROMol &mol, int confId, bool useAtomicMasses,
                    bool force) {
   PRECONDITION(mol.getNumConformers() >= 1, "molecule has no conformers");
-  double pm1, pm2, pm3;
+  double pm1;
+  double pm2;
+  double pm3;
   if (!getMomentsFromGyration(mol, confId, useAtomicMasses, pm1, pm2, pm3,
                               force)) {
     // the eigenvector calculation failed
@@ -223,7 +241,9 @@ double asphericity(const ROMol &mol, int confId, bool useAtomicMasses,
 double spherocityIndex(const ROMol &mol, int confId, bool force) {
   PRECONDITION(mol.getNumConformers() >= 1, "molecule has no conformers");
   bool useAtomicMasses = false;
-  double pm1, pm2, pm3;
+  double pm1;
+  double pm2;
+  double pm3;
   if (!getMomentsFromGyration(mol, confId, useAtomicMasses, pm1, pm2, pm3,
                               force)) {
     // the eigenvector calculation failed
