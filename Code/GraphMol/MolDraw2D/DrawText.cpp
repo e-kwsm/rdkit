@@ -196,7 +196,7 @@ bool DrawText::doesRectIntersect(const std::string &label, OrientType orient,
 // ****************************************************************************
 bool DrawText::doesRectIntersect(
     const std::vector<std::shared_ptr<StringRect>> &rects, const Point2D &cds,
-    const StringRect &rect) const {
+    const StringRect &rect) {
   for (auto r : rects) {
     StringRect nr(*r);
     nr.trans_ += cds;
@@ -223,7 +223,7 @@ bool DrawText::doesLineIntersect(const std::string &label, OrientType orient,
 // ****************************************************************************
 bool DrawText::doesLineIntersect(
     const std::vector<std::shared_ptr<StringRect>> &rects, const Point2D &cds,
-    const Point2D &end1, const Point2D &end2, double padding) const {
+    const Point2D &end1, const Point2D &end2, double padding) {
   for (auto r : rects) {
     StringRect nr(*r);
     nr.trans_ += cds;
@@ -391,7 +391,7 @@ void DrawText::alignString(
 // ****************************************************************************
 void DrawText::adjustStringRectsForSuperSubScript(
     const std::vector<TextDrawType> &draw_modes,
-    std::vector<std::shared_ptr<StringRect>> &rects) const {
+    std::vector<std::shared_ptr<StringRect>> &rects) {
   int last_char = -1;
 
   for (size_t i = 0; i < draw_modes.size(); ++i) {
@@ -437,7 +437,7 @@ void DrawText::adjustStringRectsForSuperSubScript(
 }
 
 // ****************************************************************************
-double DrawText::selectScaleFactor(char c, TextDrawType draw_type) const {
+double DrawText::selectScaleFactor(char c, TextDrawType draw_type) {
   switch (draw_type) {
     case TextDrawType::TextDrawNormal:
       return 1.0;
