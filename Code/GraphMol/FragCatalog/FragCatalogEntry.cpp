@@ -69,7 +69,8 @@ void FragCatalogEntry::setDescription(const FragCatParams *params) {
   for (fMapIt = d_aToFmap.begin(); fMapIt != d_aToFmap.end(); fMapIt++) {
     int atIdx = fMapIt->first;
     INT_VECT fGroups = fMapIt->second;
-    std::string label = "", temp;
+    std::string label = "";
+    std::string temp;
 
     INT_VECT::const_iterator fGroupIdx = fGroups.begin();
     const ROMol *fGroup;
@@ -104,7 +105,8 @@ bool FragCatalogEntry::match(const FragCatalogEntry *other, double tol) const {
   }
 
   // now check if the IDs are the same
-  INT_INT_VECT_MAP_CI tfi, ofi;
+  INT_INT_VECT_MAP_CI tfi;
+  INT_INT_VECT_MAP_CI ofi;
   for (tfi = d_aToFmap.begin(); tfi != d_aToFmap.end(); tfi++) {
     bool found = false;
     // std::cerr << "     "<< (tfi->second[0]) << ":";
@@ -123,7 +125,8 @@ bool FragCatalogEntry::match(const FragCatalogEntry *other, double tol) const {
 
   // FIX: if might be better if we just do the balaban first and then
   // move onto eigen values
-  Subgraphs::DiscrimTuple tdiscs, odiscs;
+  Subgraphs::DiscrimTuple tdiscs;
+  Subgraphs::DiscrimTuple odiscs;
   odiscs = other->getDiscrims();
 
   tdiscs = this->getDiscrims();
@@ -236,7 +239,9 @@ void FragCatalogEntry::initFromStream(std::istream &ss) {
   // now the map:
   streamRead(ss, tmpInt);
   for (int i = 0; i < tmpInt; i++) {
-    std::int32_t key, value, size;
+    std::int32_t key;
+    std::int32_t value;
+    std::int32_t size;
     streamRead(ss, key);
     streamRead(ss, size);
     INT_VECT tmpVect;
