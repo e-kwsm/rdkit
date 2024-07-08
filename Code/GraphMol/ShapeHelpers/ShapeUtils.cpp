@@ -21,10 +21,16 @@ namespace MolShapes {
 void computeConfBox(const Conformer &conf, RDGeom::Point3D &leftBottom,
                     RDGeom::Point3D &rightTop, const RDGeom::Transform3D *trans,
                     double padding) {
-  double xmin, xmax, ymin, ymax, zmin, zmax;
+  double xmin;
+  double xmax;
+  double ymin;
+  double ymax;
+  double zmin;
+  double zmax;
   xmin = ymin = zmin = 1.e8;
   xmax = ymax = zmax = -1.e8;
-  unsigned int i, nAtms = conf.getNumAtoms();
+  unsigned int i;
+  unsigned int nAtms = conf.getNumAtoms();
   for (i = 0; i < nAtms; ++i) {
     RDGeom::Point3D loc = conf.getAtomPos(i);
     if (trans) {
@@ -60,7 +66,8 @@ void computeConfDimsAndOffset(const Conformer &conf, RDGeom::Point3D &dims,
 std::vector<double> getConfDimensions(const Conformer &conf, double padding,
                                       const RDGeom::Point3D *center,
                                       bool ignoreHs) {
-  RDGeom::Point3D lb, rb;
+  RDGeom::Point3D lb;
+  RDGeom::Point3D rb;
   computeConfBox(conf, lb, rb, nullptr, padding);
 
   if (!center) {
@@ -118,8 +125,12 @@ double tverskyIndex(const Conformer &conf1, const Conformer &conf2,
   // now use this transform and figure out what size grid we will need
   // find the lower-left and upper-right corners for each of the conformers
   // and take a union of these boxes - we will use this fo grid dimensions
-  RDGeom::Point3D leftBottom1, rightTop1, leftBottom2, rightTop2, uLeftBottom,
-      uRightTop;
+  RDGeom::Point3D leftBottom1;
+  RDGeom::Point3D rightTop1;
+  RDGeom::Point3D leftBottom2;
+  RDGeom::Point3D rightTop2;
+  RDGeom::Point3D uLeftBottom;
+  RDGeom::Point3D uRightTop;
   computeConfBox(conf1, leftBottom1, rightTop1, trans);
   computeConfBox(conf2, leftBottom2, rightTop2, trans);
 
@@ -162,8 +173,12 @@ double tanimotoDistance(const Conformer &conf1, const Conformer &conf2,
   // now use this transform and figure out what size grid we will need
   // find the lower-left and upper-right corners for each of the conformers
   // and take a union of these boxes - we will use this fo grid dimensions
-  RDGeom::Point3D leftBottom1, rightTop1, leftBottom2, rightTop2, uLeftBottom,
-      uRightTop;
+  RDGeom::Point3D leftBottom1;
+  RDGeom::Point3D rightTop1;
+  RDGeom::Point3D leftBottom2;
+  RDGeom::Point3D rightTop2;
+  RDGeom::Point3D uLeftBottom;
+  RDGeom::Point3D uRightTop;
   computeConfBox(conf1, leftBottom1, rightTop1, trans);
   computeConfBox(conf2, leftBottom2, rightTop2, trans);
 
@@ -210,8 +225,12 @@ double protrudeDistance(const Conformer &conf1, const Conformer &conf2,
   // now use this transform and figure out what size grid we will need
   // find the lower-left and upper-right corners for each of the conformers
   // and take a union of these boxes - we will use this fo grid dimensions
-  RDGeom::Point3D leftBottom1, rightTop1, leftBottom2, rightTop2, uLeftBottom,
-      uRightTop;
+  RDGeom::Point3D leftBottom1;
+  RDGeom::Point3D rightTop1;
+  RDGeom::Point3D leftBottom2;
+  RDGeom::Point3D rightTop2;
+  RDGeom::Point3D uLeftBottom;
+  RDGeom::Point3D uRightTop;
   computeConfBox(conf1, leftBottom1, rightTop1, trans);
   computeConfBox(conf2, leftBottom2, rightTop2, trans);
 
