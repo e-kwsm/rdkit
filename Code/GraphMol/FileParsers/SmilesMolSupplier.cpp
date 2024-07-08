@@ -393,7 +393,6 @@ void SmilesMolSupplier::moveTo(unsigned int idx) {
   POSTCONDITION(d_molpos.size() > idx, "not enough lines");
   dp_inStream->seekg(d_molpos[idx]);
   d_next = idx;
-  return;
 }
 
 // ----------------------------------------------------------------------
