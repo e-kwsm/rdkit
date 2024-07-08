@@ -92,7 +92,8 @@ class RDKIT_DISTGEOMETRY_EXPORT BoundsMatrix
   //! Do a simple check of the current bounds - i.e. all lower bounds are
   //! smaller than the existing upper bounds
   inline bool checkValid() const {
-    unsigned int i, j;
+    unsigned int i;
+    unsigned int j;
     for (i = 1; i < d_nRows; i++) {
       for (j = 0; j < i; j++) {
         if (getUpperBound(i, j) < getLowerBound(i, j)) {
