@@ -101,7 +101,8 @@ void SDMolSupplier::checkForEnd() {
   }
   // we are not at the end of file, check for blank lines
   unsigned int nempty = 0;
-  std::string tempStr, stmp;
+  std::string tempStr;
+  std::string stmp;
   for (unsigned int i = 0; i < 4; i++) {
     tempStr = getLine(dp_inStream);
     if (dp_inStream->eof()) {
