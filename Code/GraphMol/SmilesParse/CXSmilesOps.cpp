@@ -2038,7 +2038,8 @@ std::string get_atom_props_block(const ROMol &mol,
     const auto atom = mol.getAtomWithIdx(idx);
     bool isAttachmentPoint = !atom->getAtomicNum() &&
                              atom->hasProp(common_properties::_fromAttachPoint);
-    bool includePrivate = false, includeComputed = false;
+    bool includePrivate = false;
+    bool includeComputed = false;
     for (const auto &pn : atom->getPropList(includePrivate, includeComputed)) {
       if (std::find(skip.begin(), skip.end(), pn) == skip.end()) {
         std::string pv = atom->getProp<std::string>(pn);
@@ -2314,7 +2315,9 @@ std::string get_ringbond_cistrans_block(
   }
 
   const auto rinfo = mol.getRingInfo();
-  std::string c = "", t = "", ctu = "";
+  std::string c = "";
+  std::string t = "";
+  std::string ctu = "";
   for (unsigned int i = 0; i < bondOrder.size(); ++i) {
     auto idx = bondOrder[i];
     if (!rinfo->numBondRings(idx) ||
