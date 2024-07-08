@@ -1133,7 +1133,8 @@ void generateDepictionMatching3DStructure(RDKit::ROMol &mol,
 
   std::vector<int> mol_to_ref(num_ats, -1);
   if (referencePattern && referencePattern->getNumAtoms()) {
-    RDKit::MatchVectType molMatchVect, refMatchVect;
+    RDKit::MatchVectType molMatchVect;
+    RDKit::MatchVectType refMatchVect;
     RDKit::SubstructMatch(mol, *referencePattern, molMatchVect);
     RDKit::SubstructMatch(reference, *referencePattern, refMatchVect);
     if (molMatchVect.empty() || refMatchVect.empty()) {
