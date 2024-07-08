@@ -151,37 +151,25 @@ GA_EXPORT string &toUpperCase(string &str);
 
 /**
  * Converts string to lower case.  Original argument is modified and returned.
- * @param str
- * @return
  */
 GA_EXPORT string &toLowerCase(string &str);
 
 /**
- * @param str1
- * @param str2
  * @return true if the two strings are equal
  */
 GA_EXPORT bool equals(const string &str1, const string &str2);
 
 /**
- * @param str1
- * @param str2
  * @return true if the two strings are equal (case insensitive)
  */
 GA_EXPORT bool equalsIgnoreCase(const string &str1, const string &str2);
 
 /**
- *
- * @param str
- * @param suffix
  * @return true if str ends with suffix
  */
 GA_EXPORT bool endsWith(const string &str, const string &suffix);
 
 /**
- *
- * @param vector
- * @param value
  * @return true if vector contains value
  */
 template <typename T>
@@ -193,38 +181,23 @@ bool contains(std::vector<T> vector, T value) {
  * Determines if two double numbers are equal within multiples of machine
  * precision
  *
- * @param d1
- * @param d2
  * @param ulp machine precision (units in the last place)
  * @return
  */
 GA_EXPORT bool equals(const double d1, const double d2, const int ulp);
 
 /**
- * Returns true if the two numbers are within epsilon of each other
- *
- * @param d1
- * @param d2
- * @param epsilon
- * @return
+ * @return true if the two numbers are within epsilon of each other
  */
 GA_EXPORT bool equals(const double d1, const double d2, const double epsilon);
 
 /**
  * Determines if two double numbers are within one unit of the last place.
- *
- * @param d1
- * @param d2
- * @return
  */
 GA_EXPORT bool equals(const double d1, const double d2);
 
 /**
  * Finds the first occurrence of an matching item in a list
- *
- * @param values
- * @param matcher
- * @return
  */
 template <typename T>
 boost::optional<T> findFirstInList(const std::vector<T> &values,
@@ -238,10 +211,6 @@ boost::optional<T> findFirstInList(const std::vector<T> &values,
 
 /**
  * Finds the first occurrence of an matching item in a list of unique pointers
- *
- * @param values
- * @param matcher
- * @return
  */
 template <typename T>
 boost::optional<T *> findFirstInUniquePtrList(
@@ -257,10 +226,6 @@ boost::optional<T *> findFirstInUniquePtrList(
 /**
  * Removes all items from a list that DON'T match the filter.  Alters and
  * returns the original list.
- *
- * @param values
- * @param filter
- * @return
  */
 template <typename T>
 std::vector<T> &filterList(std::vector<T> &values,
@@ -272,9 +237,6 @@ std::vector<T> &filterList(std::vector<T> &values,
 
 /**
  * Creates a new vector of items in the input vector that match the filter
- * @param values
- * @param filter
- * @return
  */
 template <typename T>
 std::vector<T> filterListToNewList(const std::vector<T> &values,
@@ -290,10 +252,6 @@ std::vector<T> filterListToNewList(const std::vector<T> &values,
  * This method is specialized for an input list of unique pointers.
  * A list of raw pointers is returned.  It is assumed that the input list will
  * outlast the filtered list.
- *
- * @param values
- * @param filter
- * @return
  */
 template <typename T>
 std::vector<T *> filterUniquePtrListToRawPtrList(
@@ -312,9 +270,6 @@ std::vector<T *> filterUniquePtrListToRawPtrList(
 /**
  * Specialization of the above for filtering non-const unique_ptrs to const raw
  * pointer filtered list
- * @param values
- * @param filter
- * @return
  */
 template <typename T>
 std::vector<const T *> filterUniquePtrListToConstRawPtrList(
