@@ -202,8 +202,6 @@ class MarvinCMLWriter {
         }
       }
     }
-
-    return;
   }
 
   bool isQueryBondInRing(const Bond *bond) {
