@@ -48,7 +48,8 @@ std::string GetPDBAtomLine(const Atom *atom, const Conformer *conf,
   std::stringstream ss;
 
   std::string symb = atom->getSymbol();
-  char at1, at2;
+  char at1;
+  char at2;
   switch (symb.length()) {
     case 0:
       at1 = ' ';
