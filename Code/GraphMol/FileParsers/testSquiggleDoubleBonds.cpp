@@ -102,8 +102,6 @@ void testMolFiles(const MolTest *molFileTest) {
   }
 
   CHECK(molFileTest->expectedResult == true);
-
-  return;
 }
 
 TEST_CASE("CrossedDoubleBondWithChiralNbr") {
