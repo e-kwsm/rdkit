@@ -112,7 +112,8 @@ void StringChromosomeBase<T, ChromosomePolicy>::copyGene(
     const StringChromosomeBase &other) {
   assert(length == other.length);
   assert(typeid(other.string) == typeid(string));
-  T *ptr = string.get(), *otherPtr = other.string.get();
+  T *ptr = string.get();
+  T *otherPtr = other.string.get();
   for (int i = 0; i < length; i++, ptr++, otherPtr++) {
     *ptr = *otherPtr;
   }
