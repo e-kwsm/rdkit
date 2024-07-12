@@ -539,7 +539,7 @@ void yyfree ( void * , yyscan_t yyscanner );
 
 /* Begin user sect3 */
 
-#define yysmiles_wrap(yyscanner) (/*CONSTCOND*/1)
+#define yysmiles_wrap(yyscanner) (/*CONSTCOND*/ true)
 #define YY_SKIP_YYWRAP
 typedef flex_uint8_t YY_CHAR;
 
@@ -1168,7 +1168,7 @@ YY_DECL
 
 #line 1169 "/localhome/glandrum/RDKit_git/Code/GraphMol/SmilesParse/lex.yysmiles.cpp"
 
-	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
+	while ( /*CONSTCOND*/ true )		/* loops until end-of-file is reached */
 		{
 		yy_cp = yyg->yy_c_buf_p;
 
