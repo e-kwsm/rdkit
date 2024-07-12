@@ -115,7 +115,7 @@ static inline int queryAtomImplicitHCount(Atom const *at) {
   return at->getTotalNumHs(false);
 };
 static inline int queryAtomHasImplicitH(Atom const *at) {
-  return int(at->getTotalNumHs(false) > 0);
+  return static_cast<int>(at->getTotalNumHs(false) > 0);
 };
 static inline int queryAtomImplicitValence(Atom const *at) {
   return at->getValence(Atom::ValenceType::IMPLICIT);

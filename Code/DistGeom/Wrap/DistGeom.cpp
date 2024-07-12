@@ -172,7 +172,8 @@ PyObject *embedBoundsMatrix(python::object boundsMatArg, int maxIters = 10,
   npy_intp dims[2];
   dims[0] = nrows;
   dims[1] = 3;
-  auto *res = (PyArrayObject *)PyArray_SimpleNew(2, dims, NPY_DOUBLE);
+  auto *res =
+      reinterpret_cast<PyArrayObject *>(PyArray_SimpleNew(2, dims, NPY_DOUBLE));
   auto *resData = reinterpret_cast<double *>(PyArray_DATA(res));
   for (unsigned int i = 0; i < nrows; i++) {
     unsigned int iTab = i * 3;

@@ -128,14 +128,15 @@ struct forwardsdmolsup_wrap {
              python::arg("sanitize") = true, python::arg("removeHs") = true,
              python::arg("strictParsing") = true)))
         .def("__enter__",
-             (LocalForwardSDMolSupplier * (*)(LocalForwardSDMolSupplier *)) &
-                 MolIOEnter,
+             static_cast<LocalForwardSDMolSupplier
+                             *(*)(LocalForwardSDMolSupplier *)>(&MolIOEnter),
              python::return_internal_reference<>())
-        .def("__exit__", (bool (*)(LocalForwardSDMolSupplier *, python::object,
-                                   python::object, python::object)) &
-                             MolIOExit)
+        .def("__exit__",
+             static_cast<bool (*)(LocalForwardSDMolSupplier *, python::object,
+                                  python::object, python::object)>(&MolIOExit))
         .def("__next__",
-             (ROMol * (*)(LocalForwardSDMolSupplier *)) & MolForwardSupplNext,
+             static_cast<ROMol *(*)(LocalForwardSDMolSupplier *)>(
+                 &MolForwardSupplNext),
              "Returns the next molecule in the file.  Raises _StopIteration_ "
              "on EOF.\n",
              python::return_value_policy<python::manage_new_object>(),
