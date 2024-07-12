@@ -97,6 +97,32 @@ class RDKIT_RDGEOMETRYLIB_EXPORT Point3D : public Point {
     }
   }
 
+  template <unsigned n>
+  double get() const noexcept {
+    if constexpr (n == 0u) {
+      return x;
+    } else if constexpr (n == 1u) {
+      return y;
+    } else if constexpr (n == 2u) {
+      return z;
+    } else {
+      static_assert(false);
+    }
+  }
+
+  template <unsigned n>
+  double &get() noexcept {
+    if constexpr (n == 0u) {
+      return x;
+    } else if constexpr (n == 1u) {
+      return y;
+    } else if constexpr (n == 2u) {
+      return z;
+    } else {
+      static_assert(false);
+    }
+  }
+
   Point3D &operator=(const Point3D &other) {
     if (&other == this) {
       return *this;
@@ -315,6 +341,28 @@ class RDKIT_RDGEOMETRYLIB_EXPORT Point2D : public Point {
       default:
         throw ValueErrorException("Invalid index on Point2D");
         break;
+    }
+  }
+
+  template <unsigned n>
+  double get() const noexcept {
+    if constexpr (n == 0u) {
+      return x;
+    } else if constexpr (n == 1u) {
+      return y;
+    } else {
+      static_assert(false);
+    }
+  }
+
+  template <unsigned n>
+  double &get() noexcept {
+    if constexpr (n == 0u) {
+      return x;
+    } else if constexpr (n == 1u) {
+      return y;
+    } else {
+      static_assert(false);
     }
   }
 
