@@ -277,9 +277,9 @@ std::vector<std::vector<unsigned int>> mergeClusters(
       std::set_intersection(outClusters[i].begin(), outClusters[i].end(),
                             outClusters[j].begin(), outClusters[j].end(),
                             std::back_inserter(inCommon));
-      double s =
-          double(inCommon.size()) / std::min(double(outClusters[i].size()),
-                                             double(outClusters[j].size()));
+      double s = static_cast<double>(inCommon.size()) /
+                 std::min(static_cast<double>(outClusters[i].size()),
+                          static_cast<double>(outClusters[j].size()));
       if (s > clusOpts.clusterMergeSim) {
         outClusters[i].insert(outClusters[i].end(), outClusters[j].begin(),
                               outClusters[j].end());
