@@ -627,8 +627,9 @@ Sample Usage:
            "Removes agents from reaction. If targetList is provide the agents "
            "will be transferred to that list.")
       .def("RunReactants",
-           (PyObject * (*)(RDKit::ChemicalReaction *, python::tuple,
-                           unsigned int maxProducts)) RDKit::RunReactants,
+           static_cast<PyObject *(*)(RDKit::ChemicalReaction *, python::tuple,
+                                     unsigned int maxProducts)>(
+               RDKit::RunReactants),
            (python::arg("self"), python::arg("reactants"),
             python::arg("maxProducts") = 1000),
            "apply the reaction to a sequence of reactant molecules and return "
@@ -636,8 +637,9 @@ Sample Usage:
            " stop the reaction when maxProducts have been generated "
            "[default=1000]")
       .def("RunReactants",
-           (PyObject * (*)(RDKit::ChemicalReaction *, python::list,
-                           unsigned int maxProducts)) RDKit::RunReactants,
+           static_cast<PyObject *(*)(RDKit::ChemicalReaction *, python::list,
+                                     unsigned int maxProducts)>(
+               RDKit::RunReactants),
            (python::arg("self"), python::arg("reactants"),
             python::arg("maxProducts") = 1000),
            "apply the reaction to a sequence of reactant molecules and return "
@@ -885,25 +887,26 @@ see the documentation for rdkit.Chem.MolFromSmiles for an explanation\n\
 of the replacements argument.",
       python::return_value_policy<python::manage_new_object>());
   python::def("ReactionToSmarts",
-              (std::string(*)(const RDKit::ChemicalReaction &))
-                  RDKit::ChemicalReactionToRxnSmarts,
+              static_cast<std::string (*)(const RDKit::ChemicalReaction &)>(
+                  RDKit::ChemicalReactionToRxnSmarts),
               (python::arg("reaction")),
               "construct a reaction SMARTS string for a ChemicalReaction");
-  python::def("ReactionToSmiles",
-              (std::string(*)(const RDKit::ChemicalReaction &,
-                              bool))RDKit::ChemicalReactionToRxnSmiles,
-              (python::arg("reaction"), python::arg("canonical") = true),
-              "construct a reaction SMILES string for a ChemicalReaction");
+  python::def(
+      "ReactionToSmiles",
+      static_cast<std::string (*)(const RDKit::ChemicalReaction &, bool)>(
+          RDKit::ChemicalReactionToRxnSmiles),
+      (python::arg("reaction"), python::arg("canonical") = true),
+      "construct a reaction SMILES string for a ChemicalReaction");
   python::def("ReactionToSmarts",
-              (std::string(*)(const RDKit::ChemicalReaction &,
-                              const RDKit::SmilesWriteParams &))
-                  RDKit::ChemicalReactionToRxnSmarts,
+              static_cast<std::string (*)(const RDKit::ChemicalReaction &,
+                                          const RDKit::SmilesWriteParams &)>(
+                  RDKit::ChemicalReactionToRxnSmarts),
               (python::arg("reaction"), python::arg("params")),
               "construct a reaction SMARTS string for a ChemicalReaction");
   python::def("ReactionToSmiles",
-              (std::string(*)(const RDKit::ChemicalReaction &,
-                              const RDKit::SmilesWriteParams &))
-                  RDKit::ChemicalReactionToRxnSmiles,
+              static_cast<std::string (*)(const RDKit::ChemicalReaction &,
+                                          const RDKit::SmilesWriteParams &)>(
+                  RDKit::ChemicalReactionToRxnSmiles),
               (python::arg("reaction"), python::arg("params")),
               "construct a reaction SMILES string for a ChemicalReaction");
 
