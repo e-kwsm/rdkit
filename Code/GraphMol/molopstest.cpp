@@ -4804,7 +4804,7 @@ void testGitHubIssue8() {
     TEST_ASSERT(m);
     MolOps::assignStereochemistry(*m);
     TEST_ASSERT(m->getBondWithIdx(1)->getStereoAtoms().size() == 2);
-    m->removeAtom((unsigned int)0);
+    m->removeAtom(static_cast<unsigned int>(0));
     TEST_ASSERT(m->getBondWithIdx(1)->getStereoAtoms().size() == 0);
     delete m;
   }
@@ -4816,7 +4816,7 @@ void testGitHubIssue8() {
     INT_VECT &sas = m->getBondWithIdx(2)->getStereoAtoms();
     TEST_ASSERT(sas.size() == 2);
     TEST_ASSERT(std::find(sas.begin(), sas.end(), 1) != sas.end());
-    m->removeAtom((unsigned int)0);
+    m->removeAtom(static_cast<unsigned int>(0));
     TEST_ASSERT(m->getBondWithIdx(1)->getStereoAtoms().size() == 2);
     TEST_ASSERT(std::find(sas.begin(), sas.end(), 0) != sas.end());
     TEST_ASSERT(std::find(sas.begin(), sas.end(), 1) == sas.end());
@@ -4831,7 +4831,7 @@ void testGitHubIssue8() {
     TEST_ASSERT(sas.size() == 2);
     TEST_ASSERT(std::find(sas.begin(), sas.end(), 0) != sas.end());
     TEST_ASSERT(std::find(sas.begin(), sas.end(), 3) != sas.end());
-    m->removeAtom((unsigned int)4);
+    m->removeAtom(static_cast<unsigned int>(4));
     TEST_ASSERT(m->getBondWithIdx(1)->getStereoAtoms().size() == 2);
     TEST_ASSERT(std::find(sas.begin(), sas.end(), 0) != sas.end());
     TEST_ASSERT(std::find(sas.begin(), sas.end(), 3) != sas.end());
@@ -4852,7 +4852,7 @@ void testGitHubIssue42() {
     TEST_ASSERT(m);
     int indices[] = {29, 28, 27, 26, 25, 24, 8, 7, 6, 5, 4, 3, 2, 1, 0, -1};
     for (unsigned int i = 0; indices[i] > -1; ++i) {
-      m->removeAtom((unsigned int)indices[i]);
+      m->removeAtom(static_cast<unsigned int>(indices[i]));
     }
     smi = MolToSmiles(*m, true);
     std::cerr << "smiles: " << smi << std::endl;

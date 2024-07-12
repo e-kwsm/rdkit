@@ -44,7 +44,8 @@ PyObject *GetPos(const Conformer *conf) {
   dims[1] = 3;
 
   // initialize the array
-  auto *res = (PyArrayObject *)PyArray_SimpleNew(2, dims, NPY_DOUBLE);
+  auto *res =
+      reinterpret_cast<PyArrayObject *>(PyArray_SimpleNew(2, dims, NPY_DOUBLE));
 
   // represent the array as a 1D/flat array of doubles
   auto *resData = reinterpret_cast<double *>(PyArray_DATA(res));
@@ -153,11 +154,12 @@ struct conformer_wrapper {
             "Set positions of all the atoms given a 2D or 3D numpy array of type double\n")
         .def("SetAtomPosition", SetAtomPos, python::args("self", "aid", "loc"),
              "Set the position of the specified atom\n")
-        .def("SetAtomPosition",
-             (void(Conformer::*)(unsigned int, const RDGeom::Point3D &)) &
-                 Conformer::setAtomPos,
-             python::args("self", "atomId", "position"),
-             "Set the position of the specified atom\n")
+        .def(
+            "SetAtomPosition",
+            static_cast<void (Conformer::*)(
+                unsigned int, const RDGeom::Point3D &)>(&Conformer::setAtomPos),
+            python::args("self", "atomId", "position"),
+            "Set the position of the specified atom\n")
 
         .def("Set3D", &Conformer::set3D, python::args("self", "v"),
              "Set the 3D flag of the conformer\n")
