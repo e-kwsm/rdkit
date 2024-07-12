@@ -157,7 +157,7 @@ inline std::hash_result_t float_hash_value(T v) {
     case FP_INFINITE:
       return (std::hash_result_t)(v > 0 ? -1 : -2);
     case FP_NAN:
-      return (std::hash_result_t)(-3);
+      return static_cast<std::hash_result_t>(-3);
     case FP_NORMAL:
     case FP_SUBNORMAL:
       return float_hash_impl(v);
