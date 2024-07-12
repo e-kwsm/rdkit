@@ -152,7 +152,7 @@ void test5() {
   delete q;
 }
 
-int foofun(double bar) { return int(floor(bar)); };
+int foofun(double bar) { return static_cast<int>(floor(bar)); };
 
 void test6() {
   cout << "pointer and copy foo" << endl;
@@ -186,7 +186,7 @@ void test6() {
 
 bool matchF(int v) { return v == 3; }
 
-int dataF(float v) { return int(floor(v)) * 3; }
+int dataF(float v) { return static_cast<int>(floor(v)) * 3; }
 
 bool cmp(int v) { return v < 3; }
 

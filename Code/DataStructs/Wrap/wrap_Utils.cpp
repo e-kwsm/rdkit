@@ -58,13 +58,14 @@ struct Utils_wrapper {
         python::args("fps"),
         "Creates an ExplicitBitVect from a binary string (byte array).");
 
+    python::def("InitFromDaylightString",
+                static_cast<void (*)(SparseBitVect &, const std::string &)>(
+                    FromDaylightString),
+                python::args("sbv", "s"));
     python::def(
         "InitFromDaylightString",
-        (void (*)(SparseBitVect &, const std::string &))FromDaylightString,
-        python::args("sbv", "s"));
-    python::def(
-        "InitFromDaylightString",
-        (void (*)(ExplicitBitVect &, const std::string &))FromDaylightString,
+        static_cast<void (*)(ExplicitBitVect &, const std::string &)>(
+            FromDaylightString),
         python::args("sbv", "s"),
         "Fill a BitVect using an ASCII (Daylight) encoding of a fingerprint.\n\
 \n\

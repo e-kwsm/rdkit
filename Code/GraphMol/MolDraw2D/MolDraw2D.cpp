@@ -409,11 +409,11 @@ void MolDraw2D::drawArc(const Point2D &centre, double xradius, double yradius,
   std::vector<Point2D> pts;
   // 5 degree increments should be plenty, as the circles are probably
   // going to be small.
-  int num_steps = 1 + int((ang2 - ang1) / 5.0);
-  double ang_incr = double((ang2 - ang1) / num_steps) * M_PI / 180.0;
+  int num_steps = 1 + static_cast<int>((ang2 - ang1) / 5.0);
+  double ang_incr = ((ang2 - ang1) / num_steps) * M_PI / 180.0;
   double start_ang_rads = ang1 * M_PI / 180.0;
   for (int i = 0; i <= num_steps; ++i) {
-    double ang = start_ang_rads + double(i) * ang_incr;
+    double ang = start_ang_rads + static_cast<double>(i) * ang_incr;
     double x = centre.x + xradius * cos(ang);
     double y = centre.y + yradius * sin(ang);
     pts.emplace_back(x, y);
@@ -546,8 +546,8 @@ Point2D MolDraw2D::getDrawCoords(int at_num) const {
 Point2D MolDraw2D::getAtomCoords(const pair<int, int> &screen_cds) const {
   // Prefers globalDrawTrans_ if it exists.
   PRECONDITION(globalDrawTrans_ || !drawMols_.empty(), "no scaling info");
-  return getAtomCoords(
-      make_pair(double(screen_cds.first), double(screen_cds.second)));
+  return getAtomCoords(make_pair(static_cast<double>(screen_cds.first),
+                                 static_cast<double>(screen_cds.second)));
 }
 
 // ****************************************************************************
@@ -691,7 +691,7 @@ void MolDraw2D::setScale(int width, int height, const Point2D &minv,
   double drawWidth = width * (1 - 2 * drawOptions().padding);
   double drawHeight = height * (1 - 2 * drawOptions().padding);
 
-  scale_ = std::min(double(drawWidth) / x_range, double(drawHeight) / y_range);
+  scale_ = std::min((drawWidth) / x_range, (drawHeight) / y_range);
   // Absent any other information, we'll have to go with fontScale_ the
   // same as scale_.
   if (!setFontScale) {
@@ -853,7 +853,7 @@ void MolDraw2D::getReactionDrawMols(
   plusWidth = minScale;
 
   // agents
-  int agentHeight = int(agentFrac * useHeight);
+  int agentHeight = static_cast<int>(agentFrac * useHeight);
   minScale = std::numeric_limits<double>::max();
   makeReactionComponents(rxn.getAgents(), confIds, agentHeight, atomColours,
                          agents, minScale, minFontScale);
@@ -1044,8 +1044,7 @@ void MolDraw2D::calcReactionOffsets(
     plusWidth = (*maxWidthIt)->width_ / 4;
     plusWidth = plusWidth > width() / 20 ? width() / 20 : plusWidth;
     auto oldTotWidth = totWidth;
-    auto stretch =
-        double(width_ * (1 - 2.0 * drawOptions().padding)) / totWidth;
+    auto stretch = (width_ * (1 - 2.0 * drawOptions().padding)) / totWidth;
     // If stretch < 1, we need to shrink the DrawMols to fit.  This isn't
     // necessary if we're just stretching them along the panel as they already
     // fit for height.
