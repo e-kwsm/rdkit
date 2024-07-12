@@ -14,6 +14,7 @@
 #include <cmath>
 #include <vector>
 #include <map>
+#include <type_traits>
 
 #ifndef M_PI
 #define M_PI 3.14159265358979323846
@@ -95,6 +96,32 @@ class RDKIT_RDGEOMETRYLIB_EXPORT Point3D : public Point {
       default:
         throw ValueErrorException("Invalid index on Point3D");
         break;
+    }
+  }
+
+  template <unsigned n>
+  double get() const noexcept {
+    if constexpr (n == 0u) {
+      return x;
+    } else if constexpr (n == 1u) {
+      return y;
+    } else if constexpr (n == 2u) {
+      return z;
+    } else {
+      static_assert(false);
+    }
+  }
+
+  template <unsigned n>
+  double &get() noexcept {
+    if constexpr (n == 0u) {
+      return x;
+    } else if constexpr (n == 1u) {
+      return y;
+    } else if constexpr (n == 2u) {
+      return z;
+    } else {
+      static_assert(false);
     }
   }
 
@@ -322,6 +349,28 @@ class RDKIT_RDGEOMETRYLIB_EXPORT Point2D : public Point {
       default:
         throw ValueErrorException("Invalid index on Point2D");
         break;
+    }
+  }
+
+  template <unsigned n>
+  double get() const noexcept {
+    if constexpr (n == 0u) {
+      return x;
+    } else if constexpr (n == 1u) {
+      return y;
+    } else {
+      static_assert(false);
+    }
+  }
+
+  template <unsigned n>
+  double &get() noexcept {
+    if constexpr (n == 0u) {
+      return x;
+    } else if constexpr (n == 1u) {
+      return y;
+    } else {
+      static_assert(false);
     }
   }
 
@@ -587,5 +636,33 @@ RDKIT_RDGEOMETRYLIB_EXPORT RDGeom::PointND operator*(const RDGeom::PointND &p1,
 RDKIT_RDGEOMETRYLIB_EXPORT RDGeom::PointND operator/(const RDGeom::PointND &p1,
                                                      double v);
 }  // namespace RDGeom
+
+namespace std {
+template <>
+struct tuple_size<RDGeom::Point2D> : integral_constant<size_t, 2u> {};
+template <>
+struct tuple_size<RDGeom::Point3D> : integral_constant<size_t, 3u> {};
+
+template <>
+struct tuple_element<0u, RDGeom::Point2D> {
+  using type = double;
+};
+template <>
+struct tuple_element<1u, RDGeom::Point2D> {
+  using type = double;
+};
+template <>
+struct tuple_element<0u, RDGeom::Point3D> {
+  using type = double;
+};
+template <>
+struct tuple_element<1u, RDGeom::Point3D> {
+  using type = double;
+};
+template <>
+struct tuple_element<2u, RDGeom::Point3D> {
+  using type = double;
+};
+}  // namespace std
 
 #endif
