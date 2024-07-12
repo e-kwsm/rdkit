@@ -176,7 +176,7 @@ bool isEarlyAtom(int atomicNum) {
       true,   // #117 Ts
       true,   // #118 Og
   };
-  return ((unsigned int)atomicNum < 119) && table[atomicNum];
+  return (static_cast<unsigned int>(atomicNum) < 119) && table[atomicNum];
 }
 
 Atom::Atom() : RDProps() {
