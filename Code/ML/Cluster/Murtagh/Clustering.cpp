@@ -37,7 +37,7 @@ void clusterit(real *dataP, boost::int64_t n, boost::int64_t m,
   boost::int64_t i, j, k, iTab, jTab;
   double tmp;
   len = (n * (n - 1)) / 2;
-  dists = (real *)calloc(len, sizeof(real));
+  dists = static_cast<real *>(calloc(len, sizeof(real)));
   CHECK_INVARIANT(dists, "failed to allocate memory");
   for (i = 1; i < n; i++) {
     iTab = i * m;
@@ -71,11 +71,12 @@ static PyObject *Clustering_MurtaghCluster(python::object data, int nPts,
     return nullptr;
   }
 
-  ia = (boost::int64_t *)calloc(nPts, sizeof(boost::int64_t));
-  ib = (boost::int64_t *)calloc(nPts, sizeof(boost::int64_t));
-  crit = (real *)calloc(nPts, sizeof(real));
+  ia = static_cast<boost::int64_t *>(calloc(nPts, sizeof(boost::int64_t)));
+  ib = static_cast<boost::int64_t *>(calloc(nPts, sizeof(boost::int64_t)));
+  crit = static_cast<real *>(calloc(nPts, sizeof(real)));
 
-  clusterit((real *)PyArray_DATA(dataContig), nPts, sz, option, ia, ib, crit);
+  clusterit(static_cast<real *>(PyArray_DATA(dataContig)), nPts, sz, option, ia,
+            ib, crit);
 
   dims[0] = nPts;
   res = PyTuple_New(3);
@@ -85,13 +86,13 @@ static PyObject *Clustering_MurtaghCluster(python::object data, int nPts,
   //  Python will take care of it for us.
   //
   tmp = PyArray_SimpleNewFromData(1, dims, NPY_LONG, (void *)ia);
-  PyTuple_SetItem(res, 0, (PyObject *)tmp);
+  PyTuple_SetItem(res, 0, tmp);
 
   tmp = PyArray_SimpleNewFromData(1, dims, NPY_LONG, (void *)ib);
-  PyTuple_SetItem(res, 1, (PyObject *)tmp);
+  PyTuple_SetItem(res, 1, tmp);
 
   tmp = PyArray_SimpleNewFromData(1, dims, NPY_DOUBLE, (void *)crit);
-  PyTuple_SetItem(res, 2, (PyObject *)tmp);
+  PyTuple_SetItem(res, 2, tmp);
 
   return res;
 };
@@ -121,10 +122,11 @@ static PyObject *Clustering_MurtaghDistCluster(python::object data, int nPts,
     return nullptr;
   }
 
-  ia = (boost::int64_t *)calloc(nPts, sizeof(boost::int64_t));
-  ib = (boost::int64_t *)calloc(nPts, sizeof(boost::int64_t));
-  crit = (real *)calloc(nPts, sizeof(real));
-  distclusterit((real *)PyArray_DATA(dataContig), nPts, option, ia, ib, crit);
+  ia = static_cast<boost::int64_t *>(calloc(nPts, sizeof(boost::int64_t)));
+  ib = static_cast<boost::int64_t *>(calloc(nPts, sizeof(boost::int64_t)));
+  crit = static_cast<real *>(calloc(nPts, sizeof(real)));
+  distclusterit(static_cast<real *>(PyArray_DATA(dataContig)), nPts, option, ia,
+                ib, crit);
 
   dims[0] = nPts;
 

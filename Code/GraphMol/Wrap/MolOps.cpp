@@ -497,7 +497,8 @@ PyObject *getDistanceMatrix(ROMol &mol, bool useBO = false,
 
   distMat = MolOps::getDistanceMat(mol, useBO, useAtomWts, force, prefix);
 
-  auto *res = (PyArrayObject *)PyArray_SimpleNew(2, dims, NPY_DOUBLE);
+  auto *res =
+      reinterpret_cast<PyArrayObject *>(PyArray_SimpleNew(2, dims, NPY_DOUBLE));
 
   memcpy(PyArray_DATA(res), static_cast<void *>(distMat),
          nats * nats * sizeof(double));
@@ -515,7 +516,8 @@ PyObject *get3DDistanceMatrix(ROMol &mol, int confId = -1,
 
   distMat = MolOps::get3DDistanceMat(mol, confId, useAtomWts, force, prefix);
 
-  auto *res = (PyArrayObject *)PyArray_SimpleNew(2, dims, NPY_DOUBLE);
+  auto *res =
+      reinterpret_cast<PyArrayObject *>(PyArray_SimpleNew(2, dims, NPY_DOUBLE));
 
   memcpy(PyArray_DATA(res), static_cast<void *>(distMat),
          nats * nats * sizeof(double));
@@ -539,15 +541,17 @@ PyObject *getAdjacencyMatrix(ROMol &mol, bool useBO = false, int emptyVal = 0,
   PyArrayObject *res;
   if (useBO) {
     // if we're using valence, the results matrix is made up of doubles
-    res = (PyArrayObject *)PyArray_SimpleNew(2, dims, NPY_DOUBLE);
+    res = reinterpret_cast<PyArrayObject *>(
+        PyArray_SimpleNew(2, dims, NPY_DOUBLE));
     memcpy(PyArray_DATA(res), static_cast<void *>(tmpMat),
            nats * nats * sizeof(double));
   } else {
-    res = (PyArrayObject *)PyArray_SimpleNew(2, dims, NPY_INT);
+    res =
+        reinterpret_cast<PyArrayObject *>(PyArray_SimpleNew(2, dims, NPY_INT));
     int *data = static_cast<int *>(PyArray_DATA(res));
     for (int i = 0; i < nats; i++) {
       for (int j = 0; j < nats; j++) {
-        data[i * nats + j] = (int)std::round(tmpMat[i * nats + j]);
+        data[i * nats + j] = static_cast<int>(std::round(tmpMat[i * nats + j]));
       }
     }
   }
@@ -926,7 +930,7 @@ ROMol *replaceCoreHelper(const ROMol &mol, const ROMol &core,
              << core.getNumAtoms() << entries;
           throw ValueErrorException(ss.str());
         }
-        v1 = (int)i;
+        v1 = static_cast<int>(i);
         v2 = python::extract<int>(match[i]);
         break;
       case 2:
@@ -982,7 +986,7 @@ ROMol *molzipHelper(python::object &pmols, const MolzipParams &p) {
 ROMol *rgroupRowZipHelper(python::dict row, const MolzipParams &p) {
   std::map<std::string, ROMOL_SPTR> rgroup_row;
   python::list items = row.items();
-  for (size_t i = 0; i < (size_t)python::len(items); ++i) {
+  for (size_t i = 0; i < static_cast<size_t>(python::len(items)); ++i) {
     python::object key = items[i][0];
     python::object value = items[i][1];
     python::extract<std::string> rgroup_key(key);
@@ -1316,7 +1320,8 @@ struct molops_wrapper {
     - Hs that are not connected to anything else will not be removed\n\
 \n ";
     python::def("RemoveHs",
-                (ROMol * (*)(const ROMol &, bool, bool, bool)) MolOps::removeHs,
+                static_cast<ROMol *(*)(const ROMol &, bool, bool, bool)>(
+                    MolOps::removeHs),
                 (python::arg("mol"), python::arg("implicitOnly") = false,
                  python::arg("updateExplicitCount") = false,
                  python::arg("sanitize") = true),
@@ -1382,20 +1387,23 @@ struct molops_wrapper {
                        "DEPRECATED");
     python::def(
         "RemoveHs",
-        (ROMol * (*)(const ROMol &, const MolOps::RemoveHsParameters &, bool)) &
-            MolOps::removeHs,
+        static_cast<ROMol *(*)(const ROMol &,
+                               const MolOps::RemoveHsParameters &, bool)>(
+            &MolOps::removeHs),
         (python::arg("mol"), python::arg("params"),
          python::arg("sanitize") = true),
         "Returns a copy of the molecule with Hs removed. Which Hs are "
         "removed is controlled by the params argument",
         python::return_value_policy<python::manage_new_object>());
-    python::def("RemoveAllHs",
-                (ROMol * (*)(const ROMol &, bool)) & MolOps::removeAllHs,
-                (python::arg("mol"), python::arg("sanitize") = true),
-                "Returns a copy of the molecule with all Hs removed.",
-                python::return_value_policy<python::manage_new_object>());
+    python::def(
+        "RemoveAllHs",
+        static_cast<ROMol *(*)(const ROMol &, bool)>(&MolOps::removeAllHs),
+        (python::arg("mol"), python::arg("sanitize") = true),
+        "Returns a copy of the molecule with all Hs removed.",
+        python::return_value_policy<python::manage_new_object>());
     python::def("MergeQueryHs",
-                (ROMol * (*)(const ROMol &, bool, bool)) & MolOps::mergeQueryHs,
+                static_cast<ROMol *(*)(const ROMol &, bool, bool)>(
+                    &MolOps::mergeQueryHs),
                 (python::arg("mol"), python::arg("mergeUnmappedOnly") = false,
                  python::arg("mergeIsotopes") = false),
                 "merges hydrogens into their neighboring atoms as queries",
@@ -2760,8 +2768,8 @@ EXAMPLES:\n\n\
 \n\
 \n";
     python::def("ReplaceCore",
-                (ROMol * (*)(const ROMol &, const ROMol &, bool, bool, bool,
-                             bool)) replaceCore,
+                static_cast<ROMol *(*)(const ROMol &, const ROMol &, bool, bool,
+                                       bool, bool)>(replaceCore),
                 (python::arg("mol"), python::arg("coreQuery"),
                  python::arg("replaceDummies") = true,
                  python::arg("labelByIndex") = false,
@@ -2881,8 +2889,8 @@ The atoms to zip can be specified with the MolzipParams class.\n\
 ";
     python::def(
         "molzip",
-        (ROMol * (*)(const ROMol &, const ROMol &, const MolzipParams &)) &
-            molzip_new,
+        static_cast<ROMol *(*)(const ROMol &, const ROMol &,
+                               const MolzipParams &)>(&molzip_new),
         (python::arg("a"), python::arg("b"),
          python::arg("params") = MolzipParams()),
         "zip together two molecules using the given matching parameters",
@@ -2890,14 +2898,16 @@ The atoms to zip can be specified with the MolzipParams class.\n\
 
     python::def(
         "molzip",
-        (ROMol * (*)(const ROMol &, const MolzipParams &)) & molzip_new,
+        static_cast<ROMol *(*)(const ROMol &, const MolzipParams &)>(
+            &molzip_new),
         (python::arg("a"), python::arg("params") = MolzipParams()),
         "zip together two molecules using the given matching parameters",
         python::return_value_policy<python::manage_new_object>());
 
     python::def(
         "molzipFragments",
-        (ROMol * (*)(python::object &, const MolzipParams &)) & molzipHelper,
+        static_cast<ROMol *(*)(python::object &, const MolzipParams &)>(
+            &molzipHelper),
         (python::arg("mols"), python::arg("params") = MolzipParams()),
         "zip together multiple molecules from an R group decomposition \n\
 using the given matching parameters.  The first molecule in the list\n\
@@ -2916,12 +2926,12 @@ must be the core",
         "  >>> for rgroup in rgroups:\n"
         "  ...     mol = rgd.molzip(rgroup)\n"
         "\n";
-    python::def(
-        "molzip",
-        (ROMol * (*)(python::dict, const MolzipParams &)) & rgroupRowZipHelper,
-        (python::arg("row"), python::arg("params") = MolzipParams()),
-        docString.c_str(),
-        python::return_value_policy<python::manage_new_object>());
+    python::def("molzip",
+                static_cast<ROMol *(*)(python::dict, const MolzipParams &)>(
+                    &rgroupRowZipHelper),
+                (python::arg("row"), python::arg("params") = MolzipParams()),
+                docString.c_str(),
+                python::return_value_policy<python::manage_new_object>());
 
     // ------------------------------------------------------------------------
     docString =

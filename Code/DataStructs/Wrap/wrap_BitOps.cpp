@@ -238,37 +238,39 @@ struct BitOps_wrapper {
     {
       std::string help = "B(bv1&bv2) / (a*B(bv1)+b*B(bv2)+(1-a-b)*B(bv1&bv2)";
       python::def("TverskySimilarity",
-                  (double (*)(const SBV &, const SBV &, double, double,
-                              bool))TverskySimilarity_w,
+                  static_cast<double (*)(const SBV &, const SBV &, double,
+                                         double, bool)>(TverskySimilarity_w),
                   (python::args("bv1"), python::args("bv2"), python::args("a"),
                    python::args("b"), python::args("returnDistance") = 0));
       python::def("TverskySimilarity",
-                  (double (*)(const EBV &, const EBV &, double, double,
-                              bool))TverskySimilarity_w,
+                  static_cast<double (*)(const EBV &, const EBV &, double,
+                                         double, bool)>(TverskySimilarity_w),
                   (python::args("bv1"), python::args("bv2"), python::args("a"),
-                   python::args("b"), python::args("returnDistance") = 0),
-                  help.c_str());
-      python::def("TverskySimilarity",
-                  (double (*)(const SBV &, const std::string &, double, double,
-                              bool))TverskySimilarity_w,
-                  (python::args("bv1"), python::args("pkl"), python::args("a"),
-                   python::args("b"), python::args("returnDistance") = 0));
-      python::def("TverskySimilarity",
-                  (double (*)(const EBV &, const std::string &, double, double,
-                              bool))TverskySimilarity_w,
-                  (python::args("bv1"), python::args("pkl"), python::args("a"),
                    python::args("b"), python::args("returnDistance") = 0),
                   help.c_str());
       python::def(
+          "TverskySimilarity",
+          static_cast<double (*)(const SBV &, const std::string &, double,
+                                 double, bool)>(TverskySimilarity_w),
+          (python::args("bv1"), python::args("pkl"), python::args("a"),
+           python::args("b"), python::args("returnDistance") = 0));
+      python::def(
+          "TverskySimilarity",
+          static_cast<double (*)(const EBV &, const std::string &, double,
+                                 double, bool)>(TverskySimilarity_w),
+          (python::args("bv1"), python::args("pkl"), python::args("a"),
+           python::args("b"), python::args("returnDistance") = 0),
+          help.c_str());
+      python::def(
           "BulkTverskySimilarity",
-          (python::list(*)(const SBV *, python::object, double, double,
-                           bool))BulkTverskySimilarity,
+          static_cast<python::list (*)(const SBV *, python::object, double,
+                                       double, bool)>(BulkTverskySimilarity),
           (python::args("bv1"), python::args("bvList"), python::args("a"),
            python::args("b"), python::args("returnDistance") = 0));
       python::def(
           "BulkTverskySimilarity",
-          (python::list(*)(const EBV *, python::object, double, double,
-                           bool))BulkTverskySimilarity,
+          static_cast<python::list (*)(const EBV *, python::object, double,
+                                       double, bool)>(BulkTverskySimilarity),
           (python::args("bv1"), python::args("bvList"), python::args("a"),
            python::args("b"), python::args("returnDistance") = 0),
           help.c_str());
@@ -279,90 +281,106 @@ struct BitOps_wrapper {
             "(B(bv1) - B(bv1^bv2)) / B(bv1)");
 
     python::def("OnBitProjSimilarity",
-                (DoubleVect(*)(const SBV &, const SBV &))OnBitProjSimilarity,
+                static_cast<DoubleVect (*)(const SBV &, const SBV &)>(
+                    OnBitProjSimilarity),
                 python::args("bv1", "bv2"));
     python::def(
         "OnBitProjSimilarity",
-        (DoubleVect(*)(const EBV &, const EBV &))OnBitProjSimilarity,
+        static_cast<DoubleVect (*)(const EBV &, const EBV &)>(
+            OnBitProjSimilarity),
         python::args("bv1", "bv2"),
         "Returns a 2-tuple: (B(bv1&bv2) / B(bv1), B(bv1&bv2) / B(bv2))");
     python::def("OffBitProjSimilarity",
-                (DoubleVect(*)(const SBV &, const SBV &))OffBitProjSimilarity,
+                static_cast<DoubleVect (*)(const SBV &, const SBV &)>(
+                    OffBitProjSimilarity),
                 python::args("bv1", "bv2"));
     python::def("OffBitProjSimilarity",
-                (DoubleVect(*)(const EBV &, const EBV &))OffBitProjSimilarity,
+                static_cast<DoubleVect (*)(const EBV &, const EBV &)>(
+                    OffBitProjSimilarity),
                 python::args("bv1", "bv2"));
 
     python::def("NumBitsInCommon",
-                (int (*)(const SBV &, const SBV &))NumBitsInCommon,
+                static_cast<int (*)(const SBV &, const SBV &)>(NumBitsInCommon),
                 python::args("bv1", "bv2"));
     python::def("NumBitsInCommon",
-                (int (*)(const EBV &, const EBV &))NumBitsInCommon,
+                static_cast<int (*)(const EBV &, const EBV &)>(NumBitsInCommon),
                 python::args("bv1", "bv2"),
                 "Returns the total number of bits in common between the two "
                 "bit vectors");
-    python::def("OnBitsInCommon",
-                (IntVect(*)(const SBV &, const SBV &))OnBitsInCommon,
-                python::args("bv1", "bv2"));
     python::def(
-        "OnBitsInCommon", (IntVect(*)(const EBV &, const EBV &))OnBitsInCommon,
+        "OnBitsInCommon",
+        static_cast<IntVect (*)(const SBV &, const SBV &)>(OnBitsInCommon),
+        python::args("bv1", "bv2"));
+    python::def(
+        "OnBitsInCommon",
+        static_cast<IntVect (*)(const EBV &, const EBV &)>(OnBitsInCommon),
         python::args("bv1", "bv2"),
         "Returns the number of on bits in common between the two bit vectors");
-    python::def("OffBitsInCommon",
-                (IntVect(*)(const SBV &, const SBV &))OffBitsInCommon,
-                python::args("bv1", "bv2"));
     python::def(
         "OffBitsInCommon",
-        (IntVect(*)(const EBV &, const EBV &))OffBitsInCommon,
+        static_cast<IntVect (*)(const SBV &, const SBV &)>(OffBitsInCommon),
+        python::args("bv1", "bv2"));
+    python::def(
+        "OffBitsInCommon",
+        static_cast<IntVect (*)(const EBV &, const EBV &)>(OffBitsInCommon),
         python::args("bv1", "bv2"),
         "Returns the number of off bits in common between the two bit vectors");
 
-    python::def("FoldFingerprint",
-                (SBV * (*)(const SBV &, unsigned int)) FoldFingerprint,
-                (python::arg("bv"), python::arg("foldFactor") = 2),
-                python::return_value_policy<python::manage_new_object>());
-    python::def("FoldFingerprint",
-                (EBV * (*)(const EBV &, unsigned int)) FoldFingerprint,
-                (python::arg("bv"), python::arg("foldFactor") = 2),
-                python::return_value_policy<python::manage_new_object>(),
-                "Folds the fingerprint by the provided amount. The default, "
-                "foldFactor=2, returns a fingerprint that is half the size of "
-                "the original.");
+    python::def(
+        "FoldFingerprint",
+        static_cast<SBV *(*)(const SBV &, unsigned int)>(FoldFingerprint),
+        (python::arg("bv"), python::arg("foldFactor") = 2),
+        python::return_value_policy<python::manage_new_object>());
+    python::def(
+        "FoldFingerprint",
+        static_cast<EBV *(*)(const EBV &, unsigned int)>(FoldFingerprint),
+        (python::arg("bv"), python::arg("foldFactor") = 2),
+        python::return_value_policy<python::manage_new_object>(),
+        "Folds the fingerprint by the provided amount. The default, "
+        "foldFactor=2, returns a fingerprint that is half the size of "
+        "the original.");
 
+    python::def(
+        "AllProbeBitsMatch",
+        static_cast<bool (*)(const SBV &, const SBV &)>(AllProbeBitsMatch),
+        python::args("probe", "ref"));
+    python::def(
+        "AllProbeBitsMatch",
+        static_cast<bool (*)(const EBV &, const EBV &)>(AllProbeBitsMatch),
+        python::args("probe", "ref"));
     python::def("AllProbeBitsMatch",
-                (bool (*)(const SBV &, const SBV &))AllProbeBitsMatch,
-                python::args("probe", "ref"));
-    python::def("AllProbeBitsMatch",
-                (bool (*)(const EBV &, const EBV &))AllProbeBitsMatch,
-                python::args("probe", "ref"));
-    python::def("AllProbeBitsMatch",
-                (bool (*)(const SBV &, const std::string &))AllProbeBitsMatch,
+                static_cast<bool (*)(const SBV &, const std::string &)>(
+                    AllProbeBitsMatch),
                 python::args("probe", "ref"));
     python::def(
         "AllProbeBitsMatch",
-        (bool (*)(const EBV &, const std::string &))AllProbeBitsMatch,
+        static_cast<bool (*)(const EBV &, const std::string &)>(
+            AllProbeBitsMatch),
         python::args("probe", "ref"),
         "Returns True if all bits in the first argument match all bits in the \n\
   vector defined by the pickle in the second argument.\n");
 
-    python::def("BitVectToText", (std::string(*)(const SBV &))BitVectToText,
+    python::def("BitVectToText",
+                static_cast<std::string (*)(const SBV &)>(BitVectToText),
                 python::args("bv1"));
     python::def(
-        "BitVectToText", (std::string(*)(const EBV &))BitVectToText,
+        "BitVectToText",
+        static_cast<std::string (*)(const EBV &)>(BitVectToText),
         python::args("bv1"),
         "Returns a string of zeros and ones representing the bit vector.");
     python::def("BitVectToFPSText",
-                (std::string(*)(const SBV &))BitVectToFPSText,
+                static_cast<std::string (*)(const SBV &)>(BitVectToFPSText),
                 python::args("bv1"));
     python::def("BitVectToFPSText",
-                (std::string(*)(const EBV &))BitVectToFPSText,
+                static_cast<std::string (*)(const EBV &)>(BitVectToFPSText),
                 python::args("bv1"),
                 "Returns an FPS string representing the bit vector.");
     python::def("BitVectToBinaryText",
-                (python::object(*)(const SBV &))BVToBinaryText,
+                static_cast<python::object (*)(const SBV &)>(BVToBinaryText),
                 python::args("bv"));
     python::def(
-        "BitVectToBinaryText", (python::object(*)(const EBV &))BVToBinaryText,
+        "BitVectToBinaryText",
+        static_cast<python::object (*)(const EBV &)>(BVToBinaryText),
         python::args("bv"),
         "Returns a binary string (byte array) representing the bit vector.");
   }

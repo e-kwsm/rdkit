@@ -79,12 +79,12 @@ void hs1(const std::vector<std::vector<int>> &vects) {
   for (const auto &vect : vects) {
     const int *data = &vect.front();
     int_compare_ftor icmp(data);
-    int *indices = (int *)malloc(vect.size() * sizeof(int));
+    int *indices = static_cast<int *>(malloc(vect.size() * sizeof(int)));
     for (unsigned int j = 0; j < vect.size(); ++j) {
       indices[j] = j;
     }
-    int *count = (int *)malloc(vect.size() * sizeof(int));
-    int *changed = (int *)malloc(vect.size() * sizeof(int));
+    int *count = static_cast<int *>(malloc(vect.size() * sizeof(int)));
+    int *changed = static_cast<int *>(malloc(vect.size() * sizeof(int)));
     memset(changed, 1, vect.size() * sizeof(int));
     RDKit::hanoisort(indices, vect.size(), count, changed, icmp);
     for (unsigned int j = 1; j < vect.size(); ++j) {
@@ -217,8 +217,8 @@ void test2() {
     atomcomparefunctor ftor(&atoms.front());
 
     int *data = &indices.front();
-    int *count = (int *)malloc(atoms.size() * sizeof(int));
-    int *changed = (int *)malloc(atoms.size() * sizeof(int));
+    int *count = static_cast<int *>(malloc(atoms.size() * sizeof(int)));
+    int *changed = static_cast<int *>(malloc(atoms.size() * sizeof(int)));
     memset(changed, 1, atoms.size() * sizeof(int));
     RDKit::hanoisort(data, atoms.size(), count, changed, ftor);
 
@@ -257,13 +257,13 @@ void test3() {
     atomcomparefunctor ftor(&atoms.front());
 
     RDKit::Canon::canon_atom *data = &atoms.front();
-    int *count = (int *)malloc(atoms.size() * sizeof(int));
-    int *order = (int *)malloc(atoms.size() * sizeof(int));
+    int *count = static_cast<int *>(malloc(atoms.size() * sizeof(int)));
+    int *order = static_cast<int *>(malloc(atoms.size() * sizeof(int)));
     int activeset;
-    int *next = (int *)malloc(atoms.size() * sizeof(int));
-    int *changed = (int *)malloc(atoms.size() * sizeof(int));
+    int *next = static_cast<int *>(malloc(atoms.size() * sizeof(int)));
+    int *changed = static_cast<int *>(malloc(atoms.size() * sizeof(int)));
     memset(changed, 1, atoms.size() * sizeof(int));
-    char *touched = (char *)malloc(atoms.size() * sizeof(char));
+    char *touched = static_cast<char *>(malloc(atoms.size() * sizeof(char)));
     memset(touched, 0, atoms.size() * sizeof(char));
 
     RDKit::Canon::CreateSinglePartition(atoms.size(), order, count, data);
@@ -316,13 +316,13 @@ void test3() {
     atomcomparefunctor2 ftor(&atoms.front());
 
     RDKit::Canon::canon_atom *data = &atoms.front();
-    int *count = (int *)malloc(atoms.size() * sizeof(int));
-    int *order = (int *)malloc(atoms.size() * sizeof(int));
+    int *count = static_cast<int *>(malloc(atoms.size() * sizeof(int)));
+    int *order = static_cast<int *>(malloc(atoms.size() * sizeof(int)));
     int activeset;
-    int *next = (int *)malloc(atoms.size() * sizeof(int));
-    int *changed = (int *)malloc(atoms.size() * sizeof(int));
+    int *next = static_cast<int *>(malloc(atoms.size() * sizeof(int)));
+    int *changed = static_cast<int *>(malloc(atoms.size() * sizeof(int)));
     memset(changed, 1, atoms.size() * sizeof(int));
-    char *touched = (char *)malloc(atoms.size() * sizeof(char));
+    char *touched = static_cast<char *>(malloc(atoms.size() * sizeof(char)));
     memset(touched, 0, atoms.size() * sizeof(char));
 
     RDKit::Canon::CreateSinglePartition(atoms.size(), order, count, data);
@@ -458,13 +458,13 @@ void test4() {
     initCanonAtoms(*m, atoms, true);
     atomcomparefunctor3 ftor(&atoms.front(), *m);
     RDKit::Canon::canon_atom *data = &atoms.front();
-    int *count = (int *)malloc(atoms.size() * sizeof(int));
-    int *order = (int *)malloc(atoms.size() * sizeof(int));
+    int *count = static_cast<int *>(malloc(atoms.size() * sizeof(int)));
+    int *order = static_cast<int *>(malloc(atoms.size() * sizeof(int)));
     int activeset;
-    int *next = (int *)malloc(atoms.size() * sizeof(int));
-    int *changed = (int *)malloc(atoms.size() * sizeof(int));
+    int *next = static_cast<int *>(malloc(atoms.size() * sizeof(int)));
+    int *changed = static_cast<int *>(malloc(atoms.size() * sizeof(int)));
     memset(changed, 1, atoms.size() * sizeof(int));
-    char *touched = (char *)malloc(atoms.size() * sizeof(char));
+    char *touched = static_cast<char *>(malloc(atoms.size() * sizeof(char)));
     memset(touched, 0, atoms.size() * sizeof(char));
 
     RDKit::Canon::CreateSinglePartition(atoms.size(), order, count, data);
@@ -525,13 +525,13 @@ void test4() {
     atomcomparefunctor3 ftor(&atoms.front(), *m);
 
     RDKit::Canon::canon_atom *data = &atoms.front();
-    int *count = (int *)malloc(atoms.size() * sizeof(int));
-    int *order = (int *)malloc(atoms.size() * sizeof(int));
+    int *count = static_cast<int *>(malloc(atoms.size() * sizeof(int)));
+    int *order = static_cast<int *>(malloc(atoms.size() * sizeof(int)));
     int activeset;
-    int *next = (int *)malloc(atoms.size() * sizeof(int));
-    int *changed = (int *)malloc(atoms.size() * sizeof(int));
+    int *next = static_cast<int *>(malloc(atoms.size() * sizeof(int)));
+    int *changed = static_cast<int *>(malloc(atoms.size() * sizeof(int)));
     memset(changed, 1, atoms.size() * sizeof(int));
-    char *touched = (char *)malloc(atoms.size() * sizeof(char));
+    char *touched = static_cast<char *>(malloc(atoms.size() * sizeof(char)));
     memset(touched, 0, atoms.size() * sizeof(char));
 
     RDKit::Canon::CreateSinglePartition(atoms.size(), order, count, data);
@@ -579,13 +579,13 @@ void test4() {
     atomcomparefunctor3 ftor(&atoms.front(), *m);
 
     RDKit::Canon::canon_atom *data = &atoms.front();
-    int *count = (int *)malloc(atoms.size() * sizeof(int));
-    int *order = (int *)malloc(atoms.size() * sizeof(int));
+    int *count = static_cast<int *>(malloc(atoms.size() * sizeof(int)));
+    int *order = static_cast<int *>(malloc(atoms.size() * sizeof(int)));
     int activeset;
-    int *next = (int *)malloc(atoms.size() * sizeof(int));
-    int *changed = (int *)malloc(atoms.size() * sizeof(int));
+    int *next = static_cast<int *>(malloc(atoms.size() * sizeof(int)));
+    int *changed = static_cast<int *>(malloc(atoms.size() * sizeof(int)));
     memset(changed, 1, atoms.size() * sizeof(int));
-    char *touched = (char *)malloc(atoms.size() * sizeof(char));
+    char *touched = static_cast<char *>(malloc(atoms.size() * sizeof(char)));
     memset(touched, 0, atoms.size() * sizeof(char));
 
     RDKit::Canon::CreateSinglePartition(atoms.size(), order, count, data);
@@ -655,13 +655,13 @@ void test5() {
     atomcomparefunctor3 ftor(&atoms.front(), *m);
 
     RDKit::Canon::canon_atom *data = &atoms.front();
-    int *count = (int *)malloc(atoms.size() * sizeof(int));
-    int *order = (int *)malloc(atoms.size() * sizeof(int));
+    int *count = static_cast<int *>(malloc(atoms.size() * sizeof(int)));
+    int *order = static_cast<int *>(malloc(atoms.size() * sizeof(int)));
     int activeset;
-    int *next = (int *)malloc(atoms.size() * sizeof(int));
-    int *changed = (int *)malloc(atoms.size() * sizeof(int));
+    int *next = static_cast<int *>(malloc(atoms.size() * sizeof(int)));
+    int *changed = static_cast<int *>(malloc(atoms.size() * sizeof(int)));
     memset(changed, 1, atoms.size() * sizeof(int));
-    char *touched = (char *)malloc(atoms.size() * sizeof(char));
+    char *touched = static_cast<char *>(malloc(atoms.size() * sizeof(char)));
     memset(touched, 0, atoms.size() * sizeof(char));
 
     RDKit::Canon::CreateSinglePartition(atoms.size(), order, count, data);
@@ -947,7 +947,7 @@ void _renumberTest2(const ROMol *m, std::string inSmiles,
 
     UINT_VECT ranks(nAtoms);
     Canon::rankMolAtoms(*nm, ranks, true);
-    char *ranksSet = (char *)malloc(nAtoms * sizeof(char));
+    char *ranksSet = static_cast<char *>(malloc(nAtoms * sizeof(char)));
     memset(ranksSet, 0, nAtoms * sizeof(char));
     for (unsigned int rank : ranks) {
       ranksSet[rank] = 1;

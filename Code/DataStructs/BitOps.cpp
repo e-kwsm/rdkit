@@ -243,8 +243,8 @@ bool EBVToBitmap(const ExplicitBitVect &bv, const unsigned char *&fp,
   if (p1->m_num_bits != bv.dp_bits->size()) {
     return false;
   }
-  fp = (const unsigned char *)p1->m_bits.data();
-  nBytes = (unsigned int)p1->m_num_bits / 8;
+  fp = reinterpret_cast<const unsigned char *>(p1->m_bits.data());
+  nBytes = static_cast<unsigned int>(p1->m_num_bits) / 8;
   if (p1->m_num_bits % 8) {
     ++nBytes;
   }
