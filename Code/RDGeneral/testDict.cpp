@@ -183,7 +183,7 @@ TEST_CASE("testRDValue") {
     std::clock_t clock2 = std::clock();
 
     std::cout << "static boost any:"
-              << (double)(clock2 - clock1) / CLOCKS_PER_SEC << " s"
+              << static_cast<double>(clock2 - clock1) / CLOCKS_PER_SEC << " s"
               << std::endl;
   }
   {
@@ -198,7 +198,7 @@ TEST_CASE("testRDValue") {
     std::clock_t clock2 = std::clock();
 
     std::cout << "dynamic boost any:"
-              << (double)(clock2 - clock1) / CLOCKS_PER_SEC << " s"
+              << static_cast<double>(clock2 - clock1) / CLOCKS_PER_SEC << " s"
               << std::endl;
   }
 
@@ -210,8 +210,9 @@ TEST_CASE("testRDValue") {
     }
     std::clock_t clock2 = std::clock();
 
-    std::cout << "static RDAny:" << (double)(clock2 - clock1) / CLOCKS_PER_SEC
-              << " s" << std::endl;
+    std::cout << "static RDAny:"
+              << static_cast<double>(clock2 - clock1) / CLOCKS_PER_SEC << " s"
+              << std::endl;
   }
 
   {
@@ -225,8 +226,9 @@ TEST_CASE("testRDValue") {
     delete vv;
     std::clock_t clock2 = std::clock();
 
-    std::cout << "dynamic RDAny:" << (double)(clock2 - clock1) / CLOCKS_PER_SEC
-              << " s" << std::endl;
+    std::cout << "dynamic RDAny:"
+              << static_cast<double>(clock2 - clock1) / CLOCKS_PER_SEC << " s"
+              << std::endl;
   }
 
   {
@@ -237,8 +239,9 @@ TEST_CASE("testRDValue") {
     }
     std::clock_t clock2 = std::clock();
 
-    std::cout << "static RDValue:" << (double)(clock2 - clock1) / CLOCKS_PER_SEC
-              << " s" << std::endl;
+    std::cout << "static RDValue:"
+              << static_cast<double>(clock2 - clock1) / CLOCKS_PER_SEC << " s"
+              << std::endl;
   }
 
   {
@@ -251,7 +254,7 @@ TEST_CASE("testRDValue") {
     std::clock_t clock2 = std::clock();
 
     std::cout << "dynamic RDValue:"
-              << (double)(clock2 - clock1) / CLOCKS_PER_SEC << " s"
+              << static_cast<double>(clock2 - clock1) / CLOCKS_PER_SEC << " s"
               << std::endl;
   }
 
@@ -483,8 +486,8 @@ TEST_CASE("testConstReturns") {
     }
     end = std::clock();
     BOOST_LOG(rdErrorLog) << "done: "
-                          << (end - start) / (double)(CLOCKS_PER_SEC) << " "
-                          << ls << std::endl;
+                          << (end - start) / static_cast<double>(CLOCKS_PER_SEC)
+                          << " " << ls << std::endl;
 
     ls = 0;
     start = std::clock();
@@ -494,8 +497,8 @@ TEST_CASE("testConstReturns") {
     }
     end = std::clock();
     BOOST_LOG(rdErrorLog) << "done: "
-                          << (end - start) / (double)(CLOCKS_PER_SEC) << " "
-                          << ls << std::endl;
+                          << (end - start) / static_cast<double>(CLOCKS_PER_SEC)
+                          << " " << ls << std::endl;
 
     ls = 0;
     start = std::clock();
@@ -505,8 +508,8 @@ TEST_CASE("testConstReturns") {
     }
     end = std::clock();
     BOOST_LOG(rdErrorLog) << "done: "
-                          << (end - start) / (double)(CLOCKS_PER_SEC) << " "
-                          << ls << std::endl;
+                          << (end - start) / static_cast<double>(CLOCKS_PER_SEC)
+                          << " " << ls << std::endl;
 
     ls = 0;
     start = std::clock();
@@ -516,8 +519,8 @@ TEST_CASE("testConstReturns") {
     }
     end = std::clock();
     BOOST_LOG(rdErrorLog) << "done: "
-                          << (end - start) / (double)(CLOCKS_PER_SEC) << " "
-                          << ls << std::endl;
+                          << (end - start) / static_cast<double>(CLOCKS_PER_SEC)
+                          << " " << ls << std::endl;
 
     ls = 0;
     start = std::clock();
@@ -530,8 +533,8 @@ TEST_CASE("testConstReturns") {
     }
     end = std::clock();
     BOOST_LOG(rdErrorLog) << "done: "
-                          << (end - start) / (double)(CLOCKS_PER_SEC) << " "
-                          << ls << std::endl;
+                          << (end - start) / static_cast<double>(CLOCKS_PER_SEC)
+                          << " " << ls << std::endl;
 
     // std::string nv=d.getVal<std::string>("foo");
   }

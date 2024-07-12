@@ -78,13 +78,13 @@ bool ExplicitBitVect::operator[](const unsigned int which) const {
   if (which >= d_size) {
     throw IndexErrorException(which);
   }
-  return (bool)(*dp_bits)[which];
+  return static_cast<bool>((*dp_bits)[which]);
 }
 bool ExplicitBitVect::setBit(const unsigned int which) {
   if (which >= d_size) {
     throw IndexErrorException(which);
   }
-  if ((bool)(*dp_bits)[which]) {
+  if (static_cast<bool>((*dp_bits)[which])) {
     return true;
   } else {
     (*dp_bits)[which] = 1;
@@ -96,7 +96,7 @@ bool ExplicitBitVect::unsetBit(const unsigned int which) {
   if (which >= d_size) {
     throw IndexErrorException(which);
   }
-  if ((bool)(*dp_bits)[which]) {
+  if (static_cast<bool>((*dp_bits)[which])) {
     (*dp_bits)[which] = 0;
     --d_numOnBits;
     return true;
@@ -108,7 +108,7 @@ bool ExplicitBitVect::getBit(const unsigned int which) const {
   if (which >= d_size) {
     throw IndexErrorException(which);
   }
-  return ((bool)(*dp_bits)[which]);
+  return static_cast<bool>((*dp_bits)[which]);
 }
 
 ExplicitBitVect ExplicitBitVect::operator^(const ExplicitBitVect &other) const {
@@ -189,7 +189,7 @@ void ExplicitBitVect::getOnBits(IntVect &v) const {
   }
   v.reserve(nOn);
   for (unsigned int i = 0; i < d_size; i++) {
-    if ((bool)(*dp_bits)[i]) {
+    if (static_cast<bool>((*dp_bits)[i])) {
       v.push_back(i);
     }
   }
@@ -226,7 +226,7 @@ std::string ExplicitBitVect::toString() const {
   int prev = -1;
   unsigned int zeroes;
   for (unsigned int i = 0; i < d_size; i++) {
-    if ((bool)(*dp_bits)[i]) {
+    if (static_cast<bool>((*dp_bits)[i])) {
       zeroes = i - prev - 1;
       RDKit::appendPackedIntToStream(ss, zeroes);
       prev = i;

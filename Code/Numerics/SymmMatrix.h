@@ -76,7 +76,7 @@ class SymmMatrix {
     TYPE *data = d_data.get();
     memset(static_cast<void *>(data), 0, d_dataSize * sizeof(TYPE));
     for (unsigned int i = 0; i < d_size; i++) {
-      data[i * (i + 3) / 2] = (TYPE)1.0;
+      data[i * (i + 3) / 2] = static_cast<TYPE>(1.0);
     }
   }
 
@@ -189,7 +189,7 @@ class SymmMatrix {
       unsigned int idC = i * (i + 1) / 2;
       for (unsigned int j = 0; j < i + 1; j++) {
         unsigned int idCt = idC + j;
-        cData[idCt] = (TYPE)0.0;
+        cData[idCt] = static_cast<TYPE>(0.0);
         for (unsigned int k = 0; k < d_size; k++) {
           unsigned int idA, idB;
           if (k <= i) {
@@ -273,7 +273,7 @@ SymmMatrix<TYPE> &multiply(const SymmMatrix<TYPE> &A, const SymmMatrix<TYPE> &B,
     unsigned int idC = i * (i + 1) / 2;
     for (unsigned int j = 0; j < i + 1; j++) {
       unsigned int idCt = idC + j;
-      cData[idCt] = (TYPE)0.0;
+      cData[idCt] = static_cast<TYPE>(0.0);
       for (unsigned int k = 0; k < aSize; k++) {
         unsigned int idA, idB;
         if (k <= i) {
@@ -319,7 +319,7 @@ Vector<TYPE> &multiply(const SymmMatrix<TYPE> &A, const Vector<TYPE> &x,
   const TYPE *aData = A.getData();
   TYPE *yData = y.getData();
   for (unsigned int i = 0; i < aSize; i++) {
-    yData[i] = (TYPE)(0.0);
+    yData[i] = static_cast<TYPE>(0.0);
     unsigned int idA = i * (i + 1) / 2;
     for (unsigned int j = 0; j < i + 1; j++) {
       // idA = i*(i+1)/2 + j;

@@ -154,7 +154,8 @@ PyObject *AlignPointPairs(python::object refPoints, python::object probePoints,
   npy_intp dims[2];
   dims[0] = 4;
   dims[1] = 4;
-  auto *res = (PyArrayObject *)PyArray_SimpleNew(2, dims, NPY_DOUBLE);
+  auto *res =
+      reinterpret_cast<PyArrayObject *>(PyArray_SimpleNew(2, dims, NPY_DOUBLE));
   auto *resData = reinterpret_cast<double *>(PyArray_DATA(res));
   const double *tdata = trans.getData();
   for (unsigned int i = 0; i < trans.numRows(); ++i) {

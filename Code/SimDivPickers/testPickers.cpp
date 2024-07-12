@@ -14,7 +14,7 @@
 
 namespace {
 double dist_on_line(unsigned int i, unsigned int j) {
-  return std::fabs((double)i - (double)j);
+  return std::fabs(static_cast<double>(i) - static_cast<double>(j));
 }
 }  // namespace
 TEST_CASE("testGithub1421") {

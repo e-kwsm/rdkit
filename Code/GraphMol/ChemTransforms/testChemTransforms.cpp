@@ -743,10 +743,10 @@ void testReplaceCore2() {
       std::string smi = MolToSmiles(*res.get(), true);
       if (smi != tests[i].expected) {
         std::cerr << i << " " << tests[i].smiles << " " << tests[i].smarts
-                  << " " << (int)tests[i].replaceDummies << " "
-                  << (int)tests[i].labelByIndex << " "
-                  << (int)tests[i].requireDummyMatch << " "
-                  << (int)tests[i].useChirality
+                  << " " << static_cast<int>(tests[i].replaceDummies) << " "
+                  << static_cast<int>(tests[i].labelByIndex) << " "
+                  << static_cast<int>(tests[i].requireDummyMatch) << " "
+                  << static_cast<int>(tests[i].useChirality)
                   << " expected:" << tests[i].expected << " got => " << smi
                   << std::endl;
       }
@@ -771,10 +771,10 @@ void testReplaceCore2() {
       std::string smi = MolToSmiles(*res.get(), true);
       if (smi != tests[i].expected) {
         std::cerr << i << " " << tests[i].smiles << " " << tests[i].smarts
-                  << " " << (int)tests[i].replaceDummies << " "
-                  << (int)tests[i].labelByIndex << " "
-                  << (int)tests[i].requireDummyMatch << " "
-                  << (int)tests[i].useChirality
+                  << " " << static_cast<int>(tests[i].replaceDummies) << " "
+                  << static_cast<int>(tests[i].labelByIndex) << " "
+                  << static_cast<int>(tests[i].requireDummyMatch) << " "
+                  << static_cast<int>(tests[i].useChirality)
                   << " expected:" << tests[i].expected << " got => " << smi
                   << std::endl;
       }

@@ -286,34 +286,34 @@ void testInsaneEnumerations() {
   bbs[0].push_back(boost::shared_ptr<ROMol>(SmilesToMol("CCNCC")));
   bbs[0].push_back(boost::shared_ptr<ROMol>(SmilesToMol("NCC")));
   std::cerr << "0,0 "
-            << (int)SubstructMatch(*bbs[0][0].get(),
-                                   *rxn2->getReactants()[0].get(), tvect)
+            << static_cast<int>(SubstructMatch(
+                   *bbs[0][0].get(), *rxn2->getReactants()[0].get(), tvect))
             << std::endl;
   std::cerr << "0,1 "
-            << (int)SubstructMatch(*bbs[0][1].get(),
-                                   *rxn2->getReactants()[0].get(), tvect)
+            << static_cast<int>(SubstructMatch(
+                   *bbs[0][1].get(), *rxn2->getReactants()[0].get(), tvect))
             << std::endl;
 
   bbs[1].push_back(boost::shared_ptr<ROMol>(SmilesToMol("ClC1CCC1")));
   bbs[1].push_back(boost::shared_ptr<ROMol>(SmilesToMol("ClC1CCC1Cl")));
   std::cerr << "1,0 "
-            << (int)SubstructMatch(*bbs[1][0].get(),
-                                   *rxn2->getReactants()[1].get(), tvect)
+            << static_cast<int>(SubstructMatch(
+                   *bbs[1][0].get(), *rxn2->getReactants()[1].get(), tvect))
             << std::endl;
   std::cerr << "1,1 "
-            << (int)SubstructMatch(*bbs[1][1].get(),
-                                   *rxn2->getReactants()[1].get(), tvect)
+            << static_cast<int>(SubstructMatch(
+                   *bbs[1][1].get(), *rxn2->getReactants()[1].get(), tvect))
             << std::endl;
 
   bbs[2].push_back(boost::shared_ptr<ROMol>(SmilesToMol("CCNCC")));
   bbs[2].push_back(boost::shared_ptr<ROMol>(SmilesToMol("NCC")));
   std::cerr << "2,0 "
-            << (int)SubstructMatch(*bbs[2][0].get(),
-                                   *rxn2->getReactants()[2].get(), tvect)
+            << static_cast<int>(SubstructMatch(
+                   *bbs[2][0].get(), *rxn2->getReactants()[2].get(), tvect))
             << std::endl;
   std::cerr << "2,1 "
-            << (int)SubstructMatch(*bbs[2][1].get(),
-                                   *rxn2->getReactants()[2].get(), tvect)
+            << static_cast<int>(SubstructMatch(
+                   *bbs[2][1].get(), *rxn2->getReactants()[2].get(), tvect))
             << std::endl;
 
   {
