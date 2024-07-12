@@ -99,7 +99,7 @@ std::string GetPDBAtomLine(const Atom *atom, const Conformer *conf,
     ss << *ptr;
     ss << "   ";
   } else {
-    info = (AtomPDBResidueInfo *)nullptr;
+    info = nullptr;
     std::string atnum = GetDefaultAtomNumber(atom, elem);
     ss << "HETATM";
     ss << std::setw(5) << atom->getIdx() + 1;
@@ -127,10 +127,10 @@ std::string GetPDBAtomLine(const Atom *atom, const Conformer *conf,
   ss << at2;
   int charge = atom->getFormalCharge();
   if (charge > 0 && charge < 10) {
-    ss << (char)('0' + charge);
+    ss << static_cast<char>('0' + charge);
     ss << '+';
   } else if (charge < 0 && charge > -10) {
-    ss << (char)('0' - charge);
+    ss << static_cast<char>('0' - charge);
     ss << '-';
   } else {
     ss << "  ";

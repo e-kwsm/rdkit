@@ -638,7 +638,8 @@ bool MaximumCommonSubgraph::growSeeds() {
                       << McsIdx.Atoms.size() << " atoms, "
                       << McsIdx.Bonds.size() << " bonds";
             printf(" for %.4lf seconds. bond[0]=%u\n",
-                   double(VerboseStatistics.MCSFoundTime - To) / 1000000.,
+                   static_cast<double>(VerboseStatistics.MCSFoundTime - To) /
+                       1000000.,
                    McsIdx.Bonds.front()->getIdx());
           }
           if (Parameters.StoreAll) {
@@ -1067,8 +1068,9 @@ MCSResult MaximumCommonSubgraph::find(const std::vector<ROMOL_SPTR> &src_mols) {
     std::cout << "Total Growing Steps  = " << VerboseStatistics.TotalSteps
               << ", MCS found on " << VerboseStatistics.MCSFoundStep << " step";
     if (VerboseStatistics.MCSFoundTime - To > 0) {
-      printf(", for %.4lf seconds\n",
-             double(VerboseStatistics.MCSFoundTime - To) / 1000000.);
+      printf(
+          ", for %.4lf seconds\n",
+          static_cast<double>(VerboseStatistics.MCSFoundTime - To) / 1000000.);
     } else {
       std::cout << ", for less than 1 second\n";
     }
