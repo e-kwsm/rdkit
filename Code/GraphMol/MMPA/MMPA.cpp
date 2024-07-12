@@ -87,8 +87,10 @@ static inline void convertMatchingToBondVect(
     matching_bonds.emplace_back();
     BondVector_t &mb = matching_bonds.back();  // current match
     // assume pattern is only one bond pattern
-    auto a1 = (unsigned)matching_atom[0].second;  // mol atom 1 index
-    auto a2 = (unsigned)matching_atom[1].second;  // mol atom 2 index
+    auto a1 =
+        static_cast<unsigned>(matching_atom[0].second);  // mol atom 1 index
+    auto a2 =
+        static_cast<unsigned>(matching_atom[1].second);  // mol atom 2 index
     mb.push_back(std::pair<unsigned, unsigned>(a1, a2));
   }
 }
@@ -137,11 +139,11 @@ static void addResult(std::vector<std::pair<ROMOL_SPTR, ROMOL_SPTR>>
 
     // now add attachment points and set attachment point labels
     auto *a = new Atom(0);
-    a->setProp(common_properties::molAtomMapNumber, (int)isotope);
+    a->setProp(common_properties::molAtomMapNumber, static_cast<int>(isotope));
     unsigned newAtomA = em.addAtom(a, true, true);
     em.addBond(bi.first, newAtomA, Bond::SINGLE);
     a = new Atom(0);
-    a->setProp(common_properties::molAtomMapNumber, (int)isotope);
+    a->setProp(common_properties::molAtomMapNumber, static_cast<int>(isotope));
     unsigned newAtomB = em.addAtom(a, true, true);
     em.addBond(bi.second, newAtomB, Bond::SINGLE);
 
