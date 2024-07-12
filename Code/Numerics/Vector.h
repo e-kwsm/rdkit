@@ -246,7 +246,7 @@ class Vector {
                  "Size mismatch in vector doct product");
     const TYPE *oData = other.getData();
     unsigned int i;
-    TYPE res = (TYPE)(0.0);
+    TYPE res = static_cast<TYPE>(0.0);
     TYPE *data = d_data.get();
     for (i = 0; i < d_size; i++) {
       res += (data[i] * oData[i]);
