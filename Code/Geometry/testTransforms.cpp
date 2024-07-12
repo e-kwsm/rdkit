@@ -35,7 +35,7 @@ bool ptEq(const Point2D pt1, const Point2D pt2, double val = 1.e-8) {
 }
 
 double randNum(double x = 5) {
-  auto res = (double)rand();
+  auto res = static_cast<double>(rand());
   res /= RAND_MAX;
   res *= x;
   return res;

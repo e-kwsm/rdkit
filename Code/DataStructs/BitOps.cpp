@@ -33,14 +33,14 @@ int getBitId(const char *&text, int format, int size, int curr) {
   int res = -1;
   if ((format == 0) ||
       ((format == 1) && (size >= std::numeric_limits<unsigned short>::max()))) {
-    int tmp =
-        EndianSwapBytes<LITTLE_ENDIAN_ORDER, HOST_ENDIAN_ORDER>(*(int *)text);
+    int tmp = EndianSwapBytes<LITTLE_ENDIAN_ORDER, HOST_ENDIAN_ORDER>(
+        *static_cast<int *>(text));
     text += sizeof(tmp);
     res = tmp;
   } else if (format == 1) {  // version 16 and on bits sorted as short ints
     unsigned short tmp =
         EndianSwapBytes<LITTLE_ENDIAN_ORDER, HOST_ENDIAN_ORDER>(
-            *(unsigned short *)text);
+            *static_cast<unsigned short *>(text));
     text += sizeof(tmp);
     res = tmp;
   } else if (format == 2) {  // run length encoded format
@@ -60,8 +60,8 @@ bool AllProbeBitsMatch(const char *probe, const char *ref) {
   int refFormat = 0;
   int version = 0;
 
-  int probeSize =
-      EndianSwapBytes<LITTLE_ENDIAN_ORDER, HOST_ENDIAN_ORDER>(*(int *)probe);
+  int probeSize = EndianSwapBytes<LITTLE_ENDIAN_ORDER, HOST_ENDIAN_ORDER>(
+      *static_cast<int *>(probe));
   probe += sizeof(probeSize);
   if (probeSize < 0) {
     version = -1 * probeSize;
@@ -77,13 +77,13 @@ bool AllProbeBitsMatch(const char *probe, const char *ref) {
             "Unknown version type for the encode bit vect");
         break;
     }
-    probeSize =
-        EndianSwapBytes<LITTLE_ENDIAN_ORDER, HOST_ENDIAN_ORDER>(*(int *)probe);
+    probeSize = EndianSwapBytes<LITTLE_ENDIAN_ORDER, HOST_ENDIAN_ORDER>(
+        *static_cast<int *>(probe));
     probe += sizeof(probeSize);
   }
 
   int refSize =
-      EndianSwapBytes<LITTLE_ENDIAN_ORDER, HOST_ENDIAN_ORDER>(*(int *)ref);
+      EndianSwapBytes<LITTLE_ENDIAN_ORDER, HOST_ENDIAN_ORDER>(*static_cast<int *>ref));
   ref += sizeof(refSize);
   if (refSize < 0) {
     version = -1 * refSize;
@@ -99,16 +99,16 @@ bool AllProbeBitsMatch(const char *probe, const char *ref) {
             "Unknown version type for the encode bit vect");
         break;
     }
-    refSize =
-        EndianSwapBytes<LITTLE_ENDIAN_ORDER, HOST_ENDIAN_ORDER>(*(int *)ref);
+    refSize = EndianSwapBytes<LITTLE_ENDIAN_ORDER, HOST_ENDIAN_ORDER>(
+        *static_cast<int *>(ref));
     ref += sizeof(refSize);
   }
 
-  int nProbeOn =
-      EndianSwapBytes<LITTLE_ENDIAN_ORDER, HOST_ENDIAN_ORDER>(*(int *)probe);
+  int nProbeOn = EndianSwapBytes<LITTLE_ENDIAN_ORDER, HOST_ENDIAN_ORDER>(
+      *static_cast<int *>(probe));
   probe += sizeof(nProbeOn);
-  int nRefOn =
-      EndianSwapBytes<LITTLE_ENDIAN_ORDER, HOST_ENDIAN_ORDER>(*(int *)ref);
+  int nRefOn = EndianSwapBytes<LITTLE_ENDIAN_ORDER, HOST_ENDIAN_ORDER>(
+      *static_cast<int *>(ref));
   ref += sizeof(nRefOn);
 
   int currProbeBit = 0;
@@ -238,13 +238,14 @@ bool EBVToBitmap(const ExplicitBitVect &bv, const unsigned char *&fp,
   if (!canUseBitmapHack) {
     return false;
   }
-  const auto *p1 = (const bitset_impl *)(const void *)bv.dp_bits.get();
+  const auto *p1 =
+      static_cast<const bitset_impl *>((const void *)bv.dp_bits.get());
   // Run-time sanity check (just in case)
   if (p1->m_num_bits != bv.dp_bits->size()) {
     return false;
   }
-  fp = (const unsigned char *)p1->m_bits.data();
-  nBytes = (unsigned int)p1->m_num_bits / 8;
+  fp = reinterpret_cast<const unsigned char *>(p1->m_bits.data());
+  nBytes = static_cast<unsigned int>(p1->m_num_bits) / 8;
   if (p1->m_num_bits % 8) {
     ++nBytes;
   }
@@ -262,7 +263,7 @@ int NumOnBitsInCommon(const ExplicitBitVect &bv1, const ExplicitBitVect &bv2) {
   unsigned int nBytes;
   if (EBVToBitmap(bv1, afp, nBytes) && EBVToBitmap(bv2, bfp, nBytes)) {
     unsigned int result = CalcBitmapNumBitsInCommon(afp, bfp, nBytes);
-    return (int)result;
+    return static_cast<int>(result);
   }
 
   return static_cast<int>(((*bv1.dp_bits) & (*bv2.dp_bits)).count());
@@ -293,7 +294,7 @@ double TanimotoSimilarity(const T1 &bv1, const T2 &bv2) {
     return 0.0;
   }
   unsigned int common = NumOnBitsInCommon(bv1, bv2);
-  return (double)common / (double)(total - common);
+  return static_cast<double>(common) / static_cast<double>(total - common);
 }
 
 template <typename T1, typename T2>
@@ -752,7 +753,7 @@ void UpdateBitVectFromFPSText(T1 &bv1, const std::string &fps) {
   PRECONDITION(fps.length() % 2 == 0, "bad FPS length");
   unsigned int bitIdx = 0;
   char tptr[3];
-  tptr[2] = (char)0;
+  tptr[2] = static_cast<char>(0);
   for (unsigned int i = 0; i < fps.size() && bitIdx < bv1.getNumBits();
        i += 2) {
     unsigned short c = 0;

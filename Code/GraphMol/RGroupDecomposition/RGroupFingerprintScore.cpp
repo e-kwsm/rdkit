@@ -231,8 +231,8 @@ double FingerprintVarianceScoreData::fingerprintVarianceGroupScore() {
   // Heuristic correction of missing user r_groups - equivalent to a variance
   // penalty of 1 for each missing user R-group across the entire dataset
   CHECK_INVARIANT(numberOfMolecules > 0, "No compounds to be scored!");
-  double rgroupPenalty =
-      (double)numberOfMissingUserRGroups / (double)numberOfMolecules;
+  double rgroupPenalty = static_cast<double>(numberOfMissingUserRGroups) /
+                         static_cast<double>(numberOfMolecules);
   // double the penalty to catch systems like
   // https://github.com/rdkit/rdkit/issues/3896
 
@@ -300,8 +300,8 @@ double VarianceDataForLabel::variance() const {
     if (bitCount == 0) {
       return sum;
     }
-    auto dNumberFingerprints = (double)numberFingerprints;
-    auto dBitCount = (double)bitCount;
+    auto dNumberFingerprints = static_cast<double>(numberFingerprints);
+    auto dBitCount = static_cast<double>(bitCount);
     // variance calculation because fingerprint is binary:
     // sum  == squared sum == bit count
     // ss = sqrSum - (sum * sum) / cnt;

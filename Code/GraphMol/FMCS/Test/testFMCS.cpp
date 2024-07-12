@@ -63,7 +63,7 @@ unsigned long long t0;
 
 void printTime() {
   unsigned long long t1 = nanoClock();
-  double sec = double(t1 - t0) / 1000000.;
+  double sec = static_cast<double>(t1 - t0) / 1000000.;
   printf("Time elapsed %.3lf seconds\n", sec);
   t0 = nanoClock();
 }
@@ -309,7 +309,7 @@ void testFileMCSB(const char *test, unsigned int timeout = 30,
     unsigned long long tc0 = nanoClock();
     MCSResult res = findMCS(tcmols, &p);  // *** T E S T ***
     unsigned long long tc1 = nanoClock();
-    double sec = double(tc1 - tc0) /
+    double sec = static_cast<double>(tc1 - tc0) /
                  1000000.;  // without time of SMILES to ROMol conversion
     secTotal += sec;
     if (!test_N.empty()) {
@@ -494,7 +494,7 @@ void test504() {
   unsigned int nq = qm->getNumAtoms();
   for (size_t ai = 0; ai < nq; ai++) {
     Atom *atom = qm->getAtomWithIdx(ai);
-    atom->setProp(common_properties::molAtomMapNumber, (int)ai);
+    atom->setProp(common_properties::molAtomMapNumber, static_cast<int>(ai));
   }
   std::cout << "Query +MAP " << MolToSmiles(*qm) << "\n";
   mols.emplace_back(qm);  // with RING INFO
@@ -541,7 +541,7 @@ std::string testChEMBL_Txt(const char *test, double th = 1.0,
   t0 = nanoClock();
   MCSResult res = findMCS(mols, &p);
   unsigned long long tc1 = nanoClock();
-  double sec = double(tc1 - t0) / 1000000.;
+  double sec = static_cast<double>(tc1 - t0) / 1000000.;
 
   std::cout << "MCS : " << res.SmartsString << " " << res.NumAtoms << " atoms, "
             << res.NumBonds << " bonds\n";
@@ -553,7 +553,7 @@ std::string testChEMBL_Txt(const char *test, double th = 1.0,
   t0 = nanoClock();
   res = findMCS(mols, &p);
   tc1 = nanoClock();
-  sec = double(tc1 - t0) / 1000000.;
+  sec = static_cast<double>(tc1 - t0) / 1000000.;
   p.BondTyper = MCSBondCompareOrder;
 
   std::cout << "MCS : " << res.SmartsString << " " << res.NumAtoms << " atoms, "
@@ -1802,7 +1802,7 @@ int main(int argc, const char *argv[]) {
   //  "*******************************************************\n";
 
   unsigned long long t1 = nanoClock();
-  double sec = double(t1 - T0) / 1000000.;
+  double sec = static_cast<double>(t1 - T0) / 1000000.;
   printf("TOTAL Time elapsed %.2lf seconds\n", sec);
 
   return 0;

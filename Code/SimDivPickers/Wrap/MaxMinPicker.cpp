@@ -41,9 +41,9 @@ RDKit::INT_VECT MaxMinPicks(MaxMinPicker *picker, python::object distMat,
   }
 
   PyArrayObject *copy;
-  copy = (PyArrayObject *)PyArray_ContiguousFromObject(distMat.ptr(),
-                                                       NPY_DOUBLE, 1, 1);
-  auto *dMat = (double *)PyArray_DATA(copy);
+  copy = reinterpret_cast<PyArrayObject *>(
+      PyArray_ContiguousFromObject(distMat.ptr(), NPY_DOUBLE, 1, 1));
+  auto *dMat = static_cast<double *>(PyArray_DATA(copy));
 
   RDKit::INT_VECT firstPickVect;
   for (unsigned int i = 0; i < boost::python::len(firstPicks); ++i) {

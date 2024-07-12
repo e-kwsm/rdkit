@@ -173,7 +173,8 @@ std::string DiscreteValueVect::toString() const {
   ss.write((const char *)td, d_numInts * sizeof(tInt));
   delete[] td;
 #else
-  ss.write((const char *)d_data.get(), d_numInts * sizeof(tInt));
+  ss.write(reinterpret_cast<const char *>(d_data.get()),
+           d_numInts * sizeof(tInt));
 #endif
   std::string res(ss.str());
   return res;
@@ -204,7 +205,7 @@ void DiscreteValueVect::initFromText(const char *pkl, const unsigned int len) {
   streamRead(ss, tInt);
   d_numInts = tInt;
   auto *data = new std::uint32_t[d_numInts];
-  ss.read((char *)data, d_numInts * sizeof(std::uint32_t));
+  ss.read(reinterpret_cast<char *>(data), d_numInts * sizeof(std::uint32_t));
 
 #if defined(BOOST_BIG_ENDIAN)
   std::uint32_t *td = new std::uint32_t[d_numInts];

@@ -148,7 +148,7 @@ std::vector<double> getWhimD(std::vector<double> weightvector,
   // Index and/or Sphericity !
 
   double gamma[3];  // Gamma values
-  auto nAT = (double)numAtoms;
+  auto nAT = static_cast<double>(numAtoms);
 
   // check if two atoms are symmetric versus the new axis ie newx,newy,newz a
   for (int i = 0; i < 3; i++) {

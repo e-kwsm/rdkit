@@ -171,7 +171,7 @@ void DrawMolMCHCircleAndLine::makeAtomHighlights(
                                drawOptions_.fillHighlights, ha.first);
       atomHighlights.emplace_back(ell);
     } else {
-      auto arc_size = 360.0 / double(ha.second.size());
+      auto arc_size = 360.0 / static_cast<double>(ha.second.size());
       auto arc_start = 270.0;
       for (size_t i = 0; i < ha.second.size(); ++i) {
         auto arc_stop = arc_start + arc_size;

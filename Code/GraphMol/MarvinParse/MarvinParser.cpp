@@ -539,7 +539,7 @@ class MarvinCMLReader {
           // add this atom to the group
 
           marvinStereoGroup->atoms.push_back(
-              (unsigned int)marvinMol->getAtomIndex(atomPtr->id));
+              static_cast<unsigned int>(marvinMol->getAtomIndex(atomPtr->id)));
         }
       }
 

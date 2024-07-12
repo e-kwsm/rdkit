@@ -247,7 +247,7 @@ RGroupGa::getOperations() const {
 
 std::string timeInfo(const std::clock_t start) {
   auto now = std::clock();
-  auto seconds = (now - start) / (double)CLOCKS_PER_SEC;
+  auto seconds = (now - start) / static_cast<double> CLOCKS_PER_SEC;
   auto format = boost::format("Time %7.2f") % seconds;
   return format.str();
 }

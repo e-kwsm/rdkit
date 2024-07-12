@@ -19,7 +19,7 @@
 
 namespace RDKit {
 
-const int LOCAL_INF = (int)1e8;
+const int LOCAL_INF = static_cast<int>(1e8);
 
 // local utility namespace
 namespace {

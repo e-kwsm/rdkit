@@ -51,7 +51,7 @@ void testMMFFO3A() {
     // newMol->write(prbMol);
     delete prbMol;
   }
-  cumMsd /= (double)nMol;
+  cumMsd /= static_cast<double>(nMol);
   delete refMol;
   // newMol->close();
   // std::cerr<<cumScore<<","<<sqrt(cumMsd)<<std::endl;
@@ -96,7 +96,7 @@ void testCrippenO3A() {
     // newMol->write(prbMol);
     delete prbMol;
   }
-  cumMsd /= (double)nMol;
+  cumMsd /= static_cast<double>(nMol);
   delete refMol;
   // newMol->close();
   // std::cerr<<cumScore<<","<<sqrt(cumMsd)<<std::endl;
@@ -134,7 +134,7 @@ void testMMFFO3AMolHist() {
     // newMol->write(prbMol);
     delete prbMol;
   }
-  cumMsd /= (double)nMol;
+  cumMsd /= static_cast<double>(nMol);
   delete refMol;
   // newMol->close();
   // std::cerr<<cumScore<<","<<sqrt(cumMsd)<<std::endl;
@@ -185,7 +185,7 @@ void testCrippenO3AMolHist() {
     // newMol->write(prbMol);
     delete prbMol;
   }
-  cumMsd /= (double)nMol;
+  cumMsd /= static_cast<double>(nMol);
   delete refMol;
   // newMol->close();
   // std::cerr<<cumScore<<","<<sqrt(cumMsd)<<std::endl;
