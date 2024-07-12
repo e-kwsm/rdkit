@@ -708,7 +708,7 @@ void updateAtomNeighborNumSwaps(
         auto nbrNbrId =
             atoms[nbrIdx].nbrIds[i];  // id of the neighbor's neighbor
         ref.push_back(nbrNbrId);
-        if ((int)atomIdx != nbrNbrId) {
+        if (static_cast<int>(atomIdx) != nbrNbrId) {
           if ((std::find(neighborsSeen.begin(), neighborsSeen.end(),
                          atoms[nbrNbrId].index) != neighborsSeen.end())) {
             tooManySimilarNbrs = true;

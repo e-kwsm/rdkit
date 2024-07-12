@@ -32,7 +32,7 @@
 //        16 Q            33 h            50 y
 
 char *Base64Encode(const char *inText, const unsigned int inLen) {
-  return Base64Encode((const unsigned char *)inText, inLen);
+  return Base64Encode(reinterpret_cast<const unsigned char *>(inText), inLen);
 }
 
 char *Base64Encode(const unsigned char *inText, const unsigned int inLen) {
@@ -91,13 +91,13 @@ char *Base64Decode(const char *inText, unsigned int *size) {
     transTable[i] = 0x80;
   }
   for (i = 'A'; i <= 'Z'; i++) {
-    transTable[i] = (unsigned char)i - 'A';
+    transTable[i] = static_cast<unsigned char>(i) - 'A';
   }
   for (i = 'a'; i <= 'z'; i++) {
-    transTable[i] = (unsigned char)i - 'a' + 26;
+    transTable[i] = static_cast<unsigned char>(i) - 'a' + 26;
   }
   for (i = '0'; i <= '9'; i++) {
-    transTable[i] = (unsigned char)i - '0' + 52;
+    transTable[i] = static_cast<unsigned char>(i) - '0' + 52;
   }
   transTable[static_cast<int>('+')] = 62;
   transTable[static_cast<int>('/')] = 63;

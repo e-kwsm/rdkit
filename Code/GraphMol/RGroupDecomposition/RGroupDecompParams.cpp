@@ -349,7 +349,7 @@ void RGroupDecompositionParameters::addDummyAtomsToUnlabelledCoreAtoms(
           PeriodicTable::getTable()->getValenceList(atom->getAtomicNum());
       auto valence = *std::max_element(valances.begin(), valances.end());
       // round up aromatic contributions
-      dummiesToAdd = valence - (int)(bondOrder + .51);
+      dummiesToAdd = valence - static_cast<int>(bondOrder + .51);
       dummiesToAdd = std::min(dummiesToAdd, maxNumDummies);
     }
 

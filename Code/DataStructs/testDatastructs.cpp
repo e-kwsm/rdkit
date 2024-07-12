@@ -1537,8 +1537,8 @@ TEST_CASE("old main") {
   stringstream ss(ios_base::binary | ios_base::out | ios_base::in);
   int v1 = 4, v2 = 5, v3, v4;
 
-  ss.write((const char *)&v1, sizeof(v1));
-  ss.write((const char *)&v2, sizeof(v2));
+  ss.write(reinterpret_cast<const char *>(&v1), sizeof(v1));
+  ss.write(reinterpret_cast<const char *>(&v2), sizeof(v2));
   ss.seekp(0, ios_base::beg);
   RDKit::streamRead(ss, v3);
   RDKit::streamRead(ss, v4);

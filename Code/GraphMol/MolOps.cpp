@@ -494,7 +494,7 @@ MolOps::Hybridizations::Hybridizations(const ROMol &mol) {
   if ((*mol.atoms().begin())->getHybridization() !=
       Atom::HybridizationType::UNSPECIFIED) {
     for (auto atom : mol.atoms()) {
-      d_hybridizations.push_back((int)atom->getHybridization());
+      d_hybridizations.push_back(static_cast<int>(atom->getHybridization()));
     }
     return;
   }
@@ -508,7 +508,7 @@ MolOps::Hybridizations::Hybridizations(const ROMol &mol) {
   MolOps::sanitizeMol(molCopy, operationThatFailed, santitizeOps);
   for (auto atom : molCopy.atoms()) {
     // determine hybridization and remove chiral atoms that are not sp3
-    d_hybridizations.push_back((int)atom->getHybridization());
+    d_hybridizations.push_back(static_cast<int>(atom->getHybridization()));
   }
   return;
 }

@@ -636,7 +636,7 @@ const Conformer &ROMol::getConformer(int id) const {
   if (id < 0) {
     return *(d_confs.front());
   }
-  auto cid = (unsigned int)id;
+  auto cid = static_cast<unsigned int>(id);
   for (auto conf : d_confs) {
     if (conf->getId() == cid) {
       return *conf;
@@ -669,10 +669,10 @@ unsigned int ROMol::addConformer(Conformer *conf, bool assignId) {
   if (assignId) {
     int maxId = -1;
     for (auto cptr : d_confs) {
-      maxId = std::max((int)(cptr->getId()), maxId);
+      maxId = std::max(static_cast<int>(cptr->getId()), maxId);
     }
     maxId++;
-    conf->setId((unsigned int)maxId);
+    conf->setId(static_cast<unsigned int>(maxId));
   }
   conf->setOwningMol(this);
   CONFORMER_SPTR nConf(conf);

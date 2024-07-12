@@ -268,7 +268,7 @@ class streambuf : public std::basic_streambuf<char> {
           "The method 'read' of the Python file object "
           "did not return a string.");
     }
-    off_type n_read = (off_type)py_n_read;
+    off_type n_read = static_cast<off_type>(py_n_read);
     pos_of_read_buffer_end_in_py_file += n_read;
     setg(read_buffer_data, read_buffer_data, read_buffer_data + n_read);
     // ^^^27.5.2.3.1 (4)
@@ -285,7 +285,7 @@ class streambuf : public std::basic_streambuf<char> {
           "That Python file object has no 'write' attribute");
     }
     farthest_pptr = std::max(farthest_pptr, pptr());
-    off_type n_written = (off_type)(farthest_pptr - pbase());
+    off_type n_written = static_cast<off_type>(farthest_pptr - pbase());
     off_type orig_n_written = n_written;
     const unsigned int STD_ASCII = 0x7F;
     if (df_isTextMode && static_cast<unsigned int>(c) > STD_ASCII) {
@@ -370,7 +370,7 @@ class streambuf : public std::basic_streambuf<char> {
        on the stream using this buffer. That simplifies the code
        in a few places.
     */
-    int const failure = off_type(-1);
+    int const failure = static_cast<off_type>(-1);
 
     if (py_seek == bp::object()) {
       throw std::invalid_argument(
@@ -457,7 +457,7 @@ class streambuf : public std::basic_streambuf<char> {
 
   boost::optional<off_type> seekoff_without_calling_python(
       off_type off, std::ios_base::seekdir way, std::ios_base::openmode which) {
-    boost::optional<off_type> const failure = off_type(-1);
+    boost::optional<off_type> const failure = static_cast<off_type>(-1);
 
     // Buffer range and current position
     off_type buf_begin, buf_end, buf_cur, upper_bound;
