@@ -67,7 +67,7 @@ unsigned long long t0;
 
 void printTime() {
   unsigned long long t1 = nanoClock();
-  double sec = double(t1 - t0) / 1000000.;
+  double sec = static_cast<double>(t1 - t0) / 1000000.;
   printf("Time elapsed %.3lf seconds\n", sec);
   t0 = nanoClock();
 }
@@ -294,7 +294,7 @@ void test504() {
   unsigned int nq = qm->getNumAtoms();
   for (size_t ai = 0; ai < nq; ai++) {
     Atom *atom = qm->getAtomWithIdx(ai);
-    atom->setProp("molAtomMapNumber", (int)ai);
+    atom->setProp("molAtomMapNumber", static_cast<int>(ai));
   }
   std::cout << "Query +MAP " << MolToSmiles(*qm) << "\n";
   mols.emplace_back(qm);  // with RING INFO
@@ -333,7 +333,7 @@ void test18() {
   unsigned int nq = qm->getNumAtoms();
   for (size_t ai = 0; ai < nq; ai++) {
     Atom *atom = qm->getAtomWithIdx(ai);
-    atom->setProp("molAtomMapNumber", (int)ai);
+    atom->setProp("molAtomMapNumber", static_cast<int>(ai));
   }
   std::cout << "Query +MAP " << MolToSmiles(*qm) << "\n";
   mols.emplace_back(qm);  // with RING INFO
@@ -3131,7 +3131,7 @@ int main(int argc, const char *argv[]) {
   testAtomRingQueries();
 
   unsigned long long t1 = nanoClock();
-  double sec = double(t1 - T0) / 1000000.;
+  double sec = static_cast<double>(t1 - T0) / 1000000.;
   printf("TOTAL Time elapsed %.2lf seconds\n", sec);
 
   BOOST_LOG(rdInfoLog)

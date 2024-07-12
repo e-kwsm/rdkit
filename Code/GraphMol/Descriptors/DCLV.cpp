@@ -296,7 +296,7 @@ struct State {
 
       unsigned int i = 0;
       for (unsigned int j = 0; (i < count) && (j < vert); j++) {
-        p = (M_PI * j) / (double)vert;
+        p = (M_PI * j) / static_cast<double>(vert);
         z = cos(p);
         xy = sin(p);
         unsigned int horz = (equat * xy);
@@ -305,7 +305,7 @@ struct State {
         }
 
         for (unsigned int k = 0; (i < count) && (k < horz); k++) {
-          q = (2.0 * M_PI * k) / (double)horz;
+          q = (2.0 * M_PI * k) / static_cast<double>(horz);
           x = xy * sin(q);
           y = xy * cos(q);
 
@@ -341,7 +341,7 @@ struct State {
         (*list)->next = nullptr;
         (*list)->count = 0;
       } else {
-        (*list) = (AtomList *)malloc(sizeof(AtomList));
+        (*list) = static_cast<AtomList *>(malloc(sizeof(AtomList)));
         (*list)->next = nullptr;
         (*list)->count = 0;
       }
@@ -694,16 +694,16 @@ struct State {
             } else {
               count = 0;
             }
-            ptr->bFactor = (float)area;
+            ptr->bFactor = static_cast<float>(area);
           } else {
-            ptr->bFactor = (float)0.0;
+            ptr->bFactor = 0.0f;
           }
         } else if (!sameResidue(ptr, prev)) {
           totalArea += area;
           checkResidue(prev, count);
           while (prev != ptr) {
             if (!(prev->flag & (HetAtmFlag))) {
-              prev->bFactor = (float)area;
+              prev->bFactor = static_cast<float>(area);
             }
             prev++;
           }
@@ -715,15 +715,16 @@ struct State {
             } else {
               count = 0;
             }
-            ptr->bFactor = (float)area;
+            ptr->bFactor = static_cast<float>(area);
             prev = ptr;
 
           } else {
-            ptr->bFactor = (float)0.0;
+            ptr->bFactor = 0.0f;
             init = false;
           }
         } else if (!(ptr->flag & HetAtmFlag)) {
-          ptr->bFactor = (float)surfaceArea(*ptr, probeRadius, dotDensity);
+          ptr->bFactor =
+              static_cast<float>(surfaceArea(*ptr, probeRadius, dotDensity));
 
           area += ptr->bFactor;
           if (ptr->atmName.compare(0, 4, " OXT") != 0) {
@@ -737,7 +738,7 @@ struct State {
         checkResidue(prev, count);
         while (prev != ptr) {
           if (!(prev->flag & (HetAtmFlag))) {
-            prev->bFactor = (float)area;
+            prev->bFactor = static_cast<float>(area);
           }
           prev++;
         }

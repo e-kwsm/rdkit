@@ -211,38 +211,40 @@ struct sgroup_wrap {
              python::args("self"))
 
         .def("SetProp",
-             (void(RDProps::*)(const std::string &, std::string, bool) const) &
-                 SubstanceGroup::setProp<std::string>,
+             static_cast<void (RDProps::*)(const std::string &, std::string,
+                                           bool) const>(
+                 &SubstanceGroup::setProp<std::string>),
              (python::arg("self"), python::arg("key"), python::arg("val"),
               python::arg("computed") = false),
              "sets the value of a particular property")
         .def("SetDoubleProp",
-             (void(RDProps::*)(const std::string &, double, bool) const) &
-                 SubstanceGroup::setProp<double>,
+             static_cast<void (RDProps::*)(const std::string &, double, bool)
+                             const>(&SubstanceGroup::setProp<double>),
              (python::arg("self"), python::arg("key"), python::arg("val"),
               python::arg("computed") = false),
              "sets the value of a particular property")
         .def("SetIntProp",
-             (void(RDProps::*)(const std::string &, int, bool) const) &
-                 SubstanceGroup::setProp<int>,
+             static_cast<void (RDProps::*)(const std::string &, int, bool)
+                             const>(&SubstanceGroup::setProp<int>),
              (python::arg("self"), python::arg("key"), python::arg("val"),
               python::arg("computed") = false),
              "sets the value of a particular property")
         .def("SetUnsignedProp",
-             (void(RDProps::*)(const std::string &, unsigned int, bool) const) &
-                 SubstanceGroup::setProp<unsigned int>,
+             static_cast<void (RDProps::*)(const std::string &, unsigned int,
+                                           bool) const>(
+                 &SubstanceGroup::setProp<unsigned int>),
              (python::arg("self"), python::arg("key"), python::arg("val"),
               python::arg("computed") = false),
              "sets the value of a particular property")
         .def("SetBoolProp",
-             (void(RDProps::*)(const std::string &, bool, bool) const) &
-                 SubstanceGroup::setProp<bool>,
+             static_cast<void (RDProps::*)(const std::string &, bool, bool)
+                             const>(&SubstanceGroup::setProp<bool>),
              (python::arg("self"), python::arg("key"), python::arg("val"),
               python::arg("computed") = false),
              "sets the value of a particular property")
         .def("HasProp",
-             (bool(RDProps::*)(const std::string &) const) &
-                 SubstanceGroup::hasProp,
+             static_cast<bool (RDProps::*)(const std::string &) const>(
+                 &SubstanceGroup::hasProp),
              python::args("self", "key"),
              "returns whether or not a particular property exists")
         .def(
@@ -258,34 +260,35 @@ struct sgroup_wrap {
             "    - If the property has not been set, a KeyError exception "
             "will be raised.\n")
         .def("GetIntProp",
-             (int(RDProps::*)(const std::string &) const) &
-                 SubstanceGroup::getProp<int>,
+             static_cast<int (RDProps::*)(const std::string &) const>(
+                 &SubstanceGroup::getProp<int>),
              python::args("self", "key"),
              "returns the value of a particular property")
         .def("GetUnsignedProp",
-             (unsigned int (RDProps::*)(const std::string &) const) &
-                 SubstanceGroup::getProp<unsigned int>,
+             static_cast<unsigned int (RDProps::*)(const std::string &) const>(
+                 &SubstanceGroup::getProp<unsigned int>),
              python::args("self", "key"),
              "returns the value of a particular property")
         .def("GetDoubleProp",
-             (double(RDProps::*)(const std::string &) const) &
-                 SubstanceGroup::getProp<double>,
+             static_cast<double (RDProps::*)(const std::string &) const>(
+                 &SubstanceGroup::getProp<double>),
              python::args("self", "key"),
              "returns the value of a particular property")
         .def("GetBoolProp",
-             (bool(RDProps::*)(const std::string &) const) &
-                 SubstanceGroup::getProp<bool>,
+             static_cast<bool (RDProps::*)(const std::string &) const>(
+                 &SubstanceGroup::getProp<bool>),
              python::args("self", "key"),
              "returns the value of a particular property")
-        .def(
-            "GetUnsignedVectProp",
-            (std::vector<unsigned int>(RDProps::*)(const std::string &) const) &
-                SubstanceGroup::getProp<std::vector<unsigned int>>,
-            python::args("self", "key"),
-            "returns the value of a particular property")
+        .def("GetUnsignedVectProp",
+             static_cast<std::vector<unsigned int> (RDProps::*)(
+                 const std::string &) const>(
+                 &SubstanceGroup::getProp<std::vector<unsigned int>>),
+             python::args("self", "key"),
+             "returns the value of a particular property")
         .def("GetStringVectProp",
-             (std::vector<std::string>(RDProps::*)(const std::string &) const) &
-                 SubstanceGroup::getProp<std::vector<std::string>>,
+             static_cast<std::vector<std::string> (RDProps::*)(
+                 const std::string &) const>(
+                 &SubstanceGroup::getProp<std::vector<std::string>>),
              python::args("self", "key"),
              "returns the value of a particular property")
         .def("GetPropNames", &SubstanceGroup::getPropList,
@@ -301,8 +304,8 @@ struct sgroup_wrap {
              "SubstanceGroup.\n"
              " n.b. some properties cannot be converted to python types.\n")
         .def("ClearProp",
-             (void(RDProps::*)(const std::string &) const) &
-                 SubstanceGroup::clearProp,
+             static_cast<void (RDProps::*)(const std::string &) const>(
+                 &SubstanceGroup::clearProp),
              python::args("self", "key"),
              "Removes a particular property (does nothing if not set).\n\n");
 
