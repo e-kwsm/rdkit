@@ -680,8 +680,8 @@ struct substructlibrary_wrapper {
              "Adds a molecule to the fingerprint database, returns the index "
              "of the new pattern")
         .def("AddFingerprint",
-             (unsigned int (FPHolderBase::*)(const ExplicitBitVect &)) &
-                 FPHolderBase::addFingerprint,
+             static_cast<unsigned int (FPHolderBase::*)(
+                 const ExplicitBitVect &)>(&FPHolderBase::addFingerprint),
              python::args("self", "v"),
              "Adds a raw bit vector to the fingerprint database, returns the "
              "index of the supplied pattern")
@@ -730,8 +730,8 @@ struct substructlibrary_wrapper {
         .def(
             python::init<const std::string &>(python::args("self", "propname")))
         .def("GetPropName",
-             (const std::string &(KeyFromPropHolder::*)() const) &
-                 KeyFromPropHolder::getPropName,
+             static_cast<const std::string &(KeyFromPropHolder::*)() const>(
+                 &KeyFromPropHolder::getPropName),
              python::return_value_policy<python::copy_const_reference>(),
              python::args("self"),
              "Return the key for the given molecule index");
@@ -839,17 +839,18 @@ struct substructlibrary_wrapper {
                 "Returns True if the SubstructLibrary is serializable "
                 "(requires boost serialization");
 
-    python::def("AddPatterns",
-                (void (*)(SubstructLibraryWrap &, int)) & addPatternsHelper,
-                "Add pattern fingerprints to the given library, use "
-                "numThreads=-1 to use all available cores",
-                (python::arg("sslib"), python::arg("numThreads") = 1));
+    python::def(
+        "AddPatterns",
+        static_cast<void (*)(SubstructLibraryWrap &, int)>(&addPatternsHelper),
+        "Add pattern fingerprints to the given library, use "
+        "numThreads=-1 to use all available cores",
+        (python::arg("sslib"), python::arg("numThreads") = 1));
 
     python::def(
         "AddPatterns",
-        (void (*)(SubstructLibraryWrap &, boost::shared_ptr<FPHolderBase>,
-                  int)) &
-            addPatternsHelper,
+        static_cast<void (*)(SubstructLibraryWrap &,
+                             boost::shared_ptr<FPHolderBase>, int)>(
+            &addPatternsHelper),
         "Add pattern fingerprints to the given library, use numThreads=-1 to "
         "use all available cores",
         (python::arg("sslib"), python::arg("patterns"),

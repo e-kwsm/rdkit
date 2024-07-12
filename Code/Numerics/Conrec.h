@@ -72,8 +72,8 @@ inline void Contour(const double *d, size_t ilb, size_t iub, size_t jlb,
     return (h[p2] * yh[p1] - h[p1] * yh[p2]) / (h[p2] - h[p1]);
   };
 
-  for (j = (jub - 1); j >= (int)jlb; j--) {
-    for (i = ilb; i <= (int)iub - 1; i++) {
+  for (j = (jub - 1); j >= static_cast<int>(jlb); j--) {
+    for (i = ilb; i <= static_cast<int>(iub) - 1; i++) {
       temp1 = std::min(d[i * ny + j], d[i * ny + j + 1]);
       temp2 = std::min(d[(i + 1) * ny + j], d[(i + 1) * ny + j + 1]);
       dmin = std::min(temp1, temp2);

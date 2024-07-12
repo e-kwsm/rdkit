@@ -67,7 +67,7 @@ void get2DautocorrelationDesc(const double *dist, unsigned int numAtoms,
 
   for (unsigned int i = 0; i < numAtoms; i++) {
     for (unsigned int t = 0; t < 6; ++t) {
-      wmean[t] += w[t * numAtoms + i] / (double)numAtoms;
+      wmean[t] += w[t * numAtoms + i] / static_cast<double>(numAtoms);
     }
   }
 
@@ -155,7 +155,7 @@ void get2DautocorrelationDescCustom(const double *dist, unsigned int numAtoms,
   double wmean = 0.0;
 
   for (unsigned int i = 0; i < numAtoms; i++) {
-    wmean += wc[+i] / (double)numAtoms;
+    wmean += wc[+i] / static_cast<double>(numAtoms);
   }
 
   double squaresumdiff = 0.0;

@@ -172,7 +172,7 @@ std::vector<AbbreviationMatch> findApplicableAbbreviationMatches(
     if (maxCoverage > 0) {
       unsigned int nDummies;
       abbrev.mol->getProp(common_properties::numDummies, nDummies);
-      if (double(abbrev.mol->getNumAtoms() - nDummies) / nAtoms >=
+      if (static_cast<double>(abbrev.mol->getNumAtoms() - nDummies) / nAtoms >=
           maxCoverage) {
         continue;
       }

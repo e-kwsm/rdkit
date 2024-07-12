@@ -1282,15 +1282,15 @@ BOOST_PYTHON_MODULE(rdMolDescriptors) {
 #endif
 
   python::def("CalcNumRotatableBonds",
-              (unsigned int (*)(const RDKit::ROMol &,
-                                bool))RDKit::Descriptors::calcNumRotatableBonds,
+              static_cast<unsigned int (*)(const RDKit::ROMol &, bool)>(
+                  RDKit::Descriptors::calcNumRotatableBonds),
               (python::arg("mol"), python::arg("strict")), docString.c_str());
 
   python::def(
       "CalcNumRotatableBonds",
-      (unsigned int (*)(const RDKit::ROMol &,
-                        RDKit::Descriptors::NumRotatableBondsOptions))
-          RDKit::Descriptors::calcNumRotatableBonds,
+      static_cast<unsigned int (*)(
+          const RDKit::ROMol &, RDKit::Descriptors::NumRotatableBondsOptions)>(
+          RDKit::Descriptors::calcNumRotatableBonds),
       (python::arg("mol"), python::arg("strict") = RDKit::Descriptors::Default),
       docString.c_str());
   python::scope().attr("_CalcNumRotatableBonds_version") =

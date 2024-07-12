@@ -588,16 +588,17 @@ int o3aMMFFCostFunc(const unsigned int prbIdx, const unsigned int refIdx,
                        1];
 
   return std::lround(
-      (static_cast<double>(((O3AFuncData *)data)->coeff) * O3_CHARGE_WEIGHT *
+      (static_cast<double>((static_cast<O3AFuncData *>(data))->coeff) *
+           O3_CHARGE_WEIGHT *
            fabs((static_cast<MMFF::MMFFMolProperties *>(
                      (static_cast<O3AFuncData *>(data))->refProp))
                     ->getMMFFPartialCharge(refIdx) -
                 (static_cast<MMFF::MMFFMolProperties *>(
                      (static_cast<O3AFuncData *>(data))->prbProp))
                     ->getMMFFPartialCharge(prbIdx)) +
-       (((O3AFuncData *)data)->useMMFFSim
+       ((static_cast<O3AFuncData *>(data))->useMMFFSim
             ? static_cast<double>(O3_MAX_WEIGHT_COEFF -
-                                  ((O3AFuncData *)data)->coeff) *
+                                  (static_cast<O3AFuncData *>(data))->coeff) *
                   static_cast<double>(mmffSim)
             : 0.0) +
        hSum) *
@@ -1114,7 +1115,7 @@ double o3aMMFFWeightFunc(const unsigned int prbIdx, const unsigned int refIdx,
                           (static_cast<MMFF::MMFFMolProperties *>(
                                (static_cast<O3AFuncData *>(data))->prbProp))
                               ->getMMFFPartialCharge(prbIdx)))) +
-         (double)((static_cast<O3AFuncData *>(data))->weight) /
+         static_cast<double>((static_cast<O3AFuncData *>(data))->weight) /
              static_cast<double>(mmffSim);
 }
 
@@ -1249,7 +1250,7 @@ O3A::O3A(int (*costFunc)(const unsigned int, const unsigned int, double,
   std::vector<unsigned int> pairs(4, 0);
   std::vector<double> score(3, 0.0);
   std::vector<double> pairsRMSD(2, 0.0);
-  std::vector<SDM *> bestSDM((unsigned int)3, nullptr);
+  std::vector<SDM *> bestSDM(static_cast<unsigned int>(3), nullptr);
   SDM startSDM(&prbConf, &refConf, o3aConstraintVect);
   MolHistogram *refHist = nullptr;
   MolHistogram *prbHist = nullptr;
@@ -1289,8 +1290,9 @@ O3A::O3A(int (*costFunc)(const unsigned int, const unsigned int, double,
       pairs[2] = 0;
       bool flag = true;
       unsigned int iter = 0;
-      double sdmThresholdDist = O3_SDM_THRESHOLD_START +
-                                (double)sdmThresholdIt * O3_SDM_THRESHOLD_STEP;
+      double sdmThresholdDist =
+          O3_SDM_THRESHOLD_START +
+          static_cast<double>(sdmThresholdIt) * O3_SDM_THRESHOLD_STEP;
       while (flag && (iter < O3_MAX_SDM_ITERATIONS)) {
         SDM progressSDM(&prbConf, &refConf, o3aConstraintVect);
         progressSDM.fillFromDist(sdmThresholdDist, refHvyAtoms, prbHvyAtoms);
@@ -1482,7 +1484,7 @@ O3A::O3A(ROMol &prbMol, const ROMol &refMol, void *prbProp, void *refProp,
   }
   for (l = 0, score[0] = 0.0;
        l <= (((accuracy < 2) && (atomTypes == MMFF94)) ? 1 : 0); ++l) {
-    data.useMMFFSim = (bool)l;
+    data.useMMFFSim = static_cast<bool>(l);
     for (c = 0; c <= O3_MAX_WEIGHT_COEFF;
          c += ((accuracy < 3) ? 1 : (O3_MAX_WEIGHT_COEFF + 1))) {
       data.weight = (l ? c : 0);
@@ -1556,9 +1558,9 @@ double _rmsdMatchVect(ROMol *d_prbMol, const ROMol *d_refMol,
       refCtd[2] += refPos[i][2];
       ++nHeavy;
     }
-    refCtd[0] /= (double)nHeavy;
-    refCtd[1] /= (double)nHeavy;
-    refCtd[2] /= (double)nHeavy;
+    refCtd[0] /= static_cast<double>(nHeavy);
+    refCtd[1] /= static_cast<double>(nHeavy);
+    refCtd[2] /= static_cast<double>(nHeavy);
     for (i = 0, nHeavy = 0; i < prbPos.size(); ++i) {
       if (d_prbMol->getAtomWithIdx(i)->getAtomicNum() == 1) {
         continue;
@@ -1568,9 +1570,9 @@ double _rmsdMatchVect(ROMol *d_prbMol, const ROMol *d_refMol,
       prbCtd[2] += prbPos[i][2];
       ++nHeavy;
     }
-    prbCtd[0] /= (double)nHeavy;
-    prbCtd[1] /= (double)nHeavy;
-    prbCtd[2] /= (double)nHeavy;
+    prbCtd[0] /= static_cast<double>(nHeavy);
+    prbCtd[1] /= static_cast<double>(nHeavy);
+    prbCtd[2] /= static_cast<double>(nHeavy);
     rmsd = (refCtd - prbCtd).length();
   }
 

@@ -284,7 +284,7 @@ python::object getNumPyFingerprint(
   for (auto i = 0u; i < ebv->size(); ++i) {
     if ((*ebv)[i]) {
       PyArray_SETITEM(
-          (PyArrayObject *)arr,
+          reinterpret_cast<PyArrayObject *>(arr),
           static_cast<char *>(PyArray_GETPTR1((PyArrayObject *)arr, i)), one);
     }
   }
@@ -310,7 +310,7 @@ python::object getNumPyCountFingerprint(
     if (v) {
       PyObject *val = PyInt_FromLong(v);
       PyArray_SETITEM(
-          (PyArrayObject *)arr,
+          reinterpret_cast<PyArrayObject *>(arr),
           static_cast<char *>(PyArray_GETPTR1((PyArrayObject *)arr, i)), val);
       Py_DECREF(val);
     }

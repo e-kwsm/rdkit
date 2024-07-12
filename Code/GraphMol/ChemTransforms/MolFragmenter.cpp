@@ -39,7 +39,7 @@
 namespace RDKit {
 namespace MolFragmenter {
 std::size_t hash_value(const FragmenterBondType &fbt) {
-  size_t res = boost::hash<int>()((int)fbt.bondType);
+  size_t res = boost::hash<int>()(static_cast<int>(fbt.bondType));
   boost::hash_combine(res, fbt.atom1Label);
   boost::hash_combine(res, fbt.atom2Label);
   return res;

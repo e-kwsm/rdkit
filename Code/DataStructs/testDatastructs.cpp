@@ -1452,7 +1452,7 @@ TEST_CASE("test14RealVect") {
   }
   RealValueVect vect2(30);
   for (i = 0; i < vect2.getLength(); ++i) {
-    vect2.setVal(i, double(1.0 / (i + 1.0)));
+    vect2.setVal(i, 1.0 / (i + 1.0));
   }
 
   REQUIRE(vect2.getLength() == 30);
@@ -1561,8 +1561,8 @@ TEST_CASE("old main") {
   stringstream ss(ios_base::binary | ios_base::out | ios_base::in);
   int v1 = 4, v2 = 5, v3, v4;
 
-  ss.write((const char *)&v1, sizeof(v1));
-  ss.write((const char *)&v2, sizeof(v2));
+  ss.write(reinterpret_cast<const char *>(&v1), sizeof(v1));
+  ss.write(reinterpret_cast<const char *>(&v2), sizeof(v2));
   ss.seekp(0, ios_base::beg);
   RDKit::streamRead(ss, v3);
   RDKit::streamRead(ss, v4);

@@ -460,7 +460,7 @@ std::string FragmentSmilesConstruct(
           ringClosureMap[ringIdx] = closureVal;
         }
         if (closureVal < 10) {
-          res << (char)(closureVal + '0');
+          res << static_cast<char>(closureVal + '0');
         } else if (closureVal < 100) {
           res << '%' << closureVal;
         } else {  // use extension to OpenSMILES

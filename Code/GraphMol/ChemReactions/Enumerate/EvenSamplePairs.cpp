@@ -128,9 +128,10 @@ bool EvenSamplePairsStrategy::try_add(boost::uint64_t iseed) {
       boost::uint64_t ii = digits[i] + ioffset;
       boost::uint64_t jj = digits[j] + joffset;
       if (pair_used[ii][jj] > 0) {
-        auto numer = (double)pair_used[ii][jj];
-        double denom = sqrt((double)(rgroups[i]) * (double)(rgroups[j]));
-        islack = (int)(numer / denom);
+        auto numer = static_cast<double>(pair_used[ii][jj]);
+        double denom = sqrt(static_cast<double>(rgroups[i]) *
+                            static_cast<double>(rgroups[j]));
+        islack = static_cast<int>(numer / denom);
       }
       joffset += rgroups[j];
     }
@@ -243,7 +244,7 @@ std::string EvenSamplePairsStrategy::stats() const {
       }
     }
     ss << boost::format("%lu\t%lu\t%6.2f") % (i + 1) % nvars[i] %
-              ((double)m_numPermutationsProcessed / nvars[i]);
+              (static_cast<double>(m_numPermutationsProcessed) / nvars[i]);
 
     for (l = 0; l <= maxcount; l++) {
       boost::uint64_t n = 0;
@@ -282,7 +283,8 @@ std::string EvenSamplePairsStrategy::stats() const {
       }
       ss << boost::format("%lu\t%lu\t%lu\t%lu\t%6.2f") % (i + 1) % (j + 1) %
                 nvars[i] % nvars[j] %
-                ((double)m_numPermutationsProcessed / (nvars[i] * nvars[j]));
+                (static_cast<double>(m_numPermutationsProcessed) /
+                 (nvars[i] * nvars[j]));
       for (l = 0; l <= maxcount; l++) {
         int n = 0;
         for (ii = 0; ii < nvars[i]; ii++) {
