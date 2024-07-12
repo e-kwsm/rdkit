@@ -842,7 +842,7 @@ size_t setup_smiles_string(const std::string &text,yyscan_t yyscanner){
   yy_size_t _yybytes_len=text.size(), n, start, end;
   /* Get memory for full buffer, including space for trailing EOB's. */
   n = _yybytes_len + 2;
-  buf = (char *) yysmiles_alloc(n ,yyscanner );
+  buf = static_cast<char *>(yysmiles_alloc(n ,yyscanner ));
   if ( ! buf )
     smiles_lexer_error( "out of dynamic memory in yysmiles__scan_bytes()" );
 
@@ -1117,7 +1117,7 @@ YY_DECL
 	yy_state_type yy_current_state;
 	char *yy_cp, *yy_bp;
 	int yy_act;
-    struct yyguts_t * yyg = (struct yyguts_t*)yyscanner;
+    struct yyguts_t * yyg = static_cast<struct yyguts_t*>(yyscanner);
 
     yylval = yylval_param;
 
@@ -1180,7 +1180,7 @@ yy_match:
 				}
 			while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
 				{
-				yy_current_state = (int) yy_def[yy_current_state];
+				yy_current_state = static_cast<int>(yy_def[yy_current_state]);
 				if ( yy_current_state >= 247 )
 					yy_c = yy_meta[yy_c];
 				}
@@ -2005,7 +2005,7 @@ YY_FATAL_ERROR( "flex scanner jammed" );
 	case YY_END_OF_BUFFER:
 		{
 		/* Amount of text matched not including the EOB char. */
-		int yy_amount_of_matched_text = (int) (yy_cp - yyg->yytext_ptr) - 1;
+		int yy_amount_of_matched_text = static_cast<int>(yy_cp - yyg->yytext_ptr) - 1;
 
 		/* Undo the effects of YY_DO_BEFORE_ACTION. */
 		*yy_cp = yyg->yy_hold_char;
@@ -2142,7 +2142,7 @@ YY_FATAL_ERROR( "flex scanner jammed" );
  */
 static int yy_get_next_buffer (yyscan_t yyscanner)
 {
-    struct yyguts_t * yyg = (struct yyguts_t*)yyscanner;
+    struct yyguts_t * yyg = static_cast<struct yyguts_t*>(yyscanner);
 	char *dest = YY_CURRENT_BUFFER_LVALUE->yy_ch_buf;
 	char *source = yyg->yytext_ptr;
 	int number_to_move, i;
@@ -2174,7 +2174,7 @@ static int yy_get_next_buffer (yyscan_t yyscanner)
 	/* Try to read more data. */
 
 	/* First move last chars to start of buffer. */
-	number_to_move = (int) (yyg->yy_c_buf_p - yyg->yytext_ptr - 1);
+	number_to_move = static_cast<int>(yyg->yy_c_buf_p - yyg->yytext_ptr - 1);
 
 	for ( i = 0; i < number_to_move; ++i )
 		*(dest++) = *(source++);
@@ -2197,7 +2197,7 @@ static int yy_get_next_buffer (yyscan_t yyscanner)
 			YY_BUFFER_STATE b = YY_CURRENT_BUFFER_LVALUE;
 
 			int yy_c_buf_p_offset =
-				(int) (yyg->yy_c_buf_p - b->yy_ch_buf);
+				static_cast<int>(yyg->yy_c_buf_p - b->yy_ch_buf);
 
 			if ( b->yy_is_our_buffer )
 				{
@@ -2208,10 +2208,10 @@ static int yy_get_next_buffer (yyscan_t yyscanner)
 				else
 					b->yy_buf_size *= 2;
 
-				b->yy_ch_buf = (char *)
+				b->yy_ch_buf = static_cast<char *>(
 					/* Include room in for 2 EOB chars. */
 					yyrealloc( (void *) b->yy_ch_buf,
-							 (yy_size_t) (b->yy_buf_size + 2) , yyscanner );
+							 (yy_size_t) (b->yy_buf_size + 2) , yyscanner ));
 				}
 			else
 				/* Can't grow it, we don't own it. */
@@ -2260,12 +2260,12 @@ static int yy_get_next_buffer (yyscan_t yyscanner)
 	if ((yyg->yy_n_chars + number_to_move) > YY_CURRENT_BUFFER_LVALUE->yy_buf_size) {
 		/* Extend the array by 50%, plus the number we really need. */
 		int new_size = yyg->yy_n_chars + number_to_move + (yyg->yy_n_chars >> 1);
-		YY_CURRENT_BUFFER_LVALUE->yy_ch_buf = (char *) yyrealloc(
-			(void *) YY_CURRENT_BUFFER_LVALUE->yy_ch_buf, (yy_size_t) new_size , yyscanner );
+		YY_CURRENT_BUFFER_LVALUE->yy_ch_buf = static_cast<char *>(yyrealloc(
+			(void *) YY_CURRENT_BUFFER_LVALUE->yy_ch_buf, static_cast<yy_size_t>(new_size) , yyscanner ));
 		if ( ! YY_CURRENT_BUFFER_LVALUE->yy_ch_buf )
 			YY_FATAL_ERROR( "out of dynamic memory in yy_get_next_buffer()" );
 		/* "- 2" to take care of EOB's */
-		YY_CURRENT_BUFFER_LVALUE->yy_buf_size = (int) (new_size - 2);
+		YY_CURRENT_BUFFER_LVALUE->yy_buf_size = (new_size - 2);
 	}
 
 	yyg->yy_n_chars += number_to_move;
@@ -2283,7 +2283,7 @@ static int yy_get_next_buffer (yyscan_t yyscanner)
 {
 	yy_state_type yy_current_state;
 	char *yy_cp;
-    struct yyguts_t * yyg = (struct yyguts_t*)yyscanner;
+    struct yyguts_t * yyg = static_cast<struct yyguts_t*>(yyscanner);
 
 	yy_current_state = yyg->yy_start;
 
@@ -2297,7 +2297,7 @@ static int yy_get_next_buffer (yyscan_t yyscanner)
 			}
 		while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
 			{
-			yy_current_state = (int) yy_def[yy_current_state];
+			yy_current_state = static_cast<int>(yy_def[yy_current_state]);
 			if ( yy_current_state >= 247 )
 				yy_c = yy_meta[yy_c];
 			}
@@ -2315,7 +2315,7 @@ static int yy_get_next_buffer (yyscan_t yyscanner)
     static yy_state_type yy_try_NUL_trans  (yy_state_type yy_current_state , yyscan_t yyscanner)
 {
 	int yy_is_jam;
-    struct yyguts_t * yyg = (struct yyguts_t*)yyscanner; /* This var may be unused depending upon options. */
+    struct yyguts_t * yyg = static_cast<struct yyguts_t*>(yyscanner); /* This var may be unused depending upon options. */
 	char *yy_cp = yyg->yy_c_buf_p;
 
 	YY_CHAR yy_c = 1;
@@ -2326,7 +2326,7 @@ static int yy_get_next_buffer (yyscan_t yyscanner)
 		}
 	while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
 		{
-		yy_current_state = (int) yy_def[yy_current_state];
+		yy_current_state = static_cast<int>(yy_def[yy_current_state]);
 		if ( yy_current_state >= 247 )
 			yy_c = yy_meta[yy_c];
 		}
@@ -2342,7 +2342,7 @@ static int yy_get_next_buffer (yyscan_t yyscanner)
     static void yyunput (int c, char * yy_bp , yyscan_t yyscanner)
 {
 	char *yy_cp;
-    struct yyguts_t * yyg = (struct yyguts_t*)yyscanner;
+    struct yyguts_t * yyg = static_cast<struct yyguts_t*>(yyscanner);
 
     yy_cp = yyg->yy_c_buf_p;
 
@@ -2361,16 +2361,16 @@ static int yy_get_next_buffer (yyscan_t yyscanner)
 		while ( source > YY_CURRENT_BUFFER_LVALUE->yy_ch_buf )
 			*--dest = *--source;
 
-		yy_cp += (int) (dest - source);
-		yy_bp += (int) (dest - source);
+		yy_cp += static_cast<int>(dest - source);
+		yy_bp += static_cast<int>(dest - source);
 		YY_CURRENT_BUFFER_LVALUE->yy_n_chars =
-			yyg->yy_n_chars = (int) YY_CURRENT_BUFFER_LVALUE->yy_buf_size;
+			yyg->yy_n_chars = YY_CURRENT_BUFFER_LVALUE->yy_buf_size;
 
 		if ( yy_cp < YY_CURRENT_BUFFER_LVALUE->yy_ch_buf + 2 )
 			YY_FATAL_ERROR( "flex scanner push-back overflow" );
 		}
 
-	*--yy_cp = (char) c;
+	*--yy_cp = static_cast<char>(c);
 
 	yyg->yytext_ptr = yy_bp;
 	yyg->yy_hold_char = *yy_cp;
@@ -2388,7 +2388,7 @@ static int yy_get_next_buffer (yyscan_t yyscanner)
 
 {
 	int c;
-    struct yyguts_t * yyg = (struct yyguts_t*)yyscanner;
+    struct yyguts_t * yyg = static_cast<struct yyguts_t*>(yyscanner);
 
 	*yyg->yy_c_buf_p = yyg->yy_hold_char;
 
@@ -2404,7 +2404,7 @@ static int yy_get_next_buffer (yyscan_t yyscanner)
 
 		else
 			{ /* need more input */
-			int offset = (int) (yyg->yy_c_buf_p - yyg->yytext_ptr);
+			int offset = static_cast<int>(yyg->yy_c_buf_p - yyg->yytext_ptr);
 			++yyg->yy_c_buf_p;
 
 			switch ( yy_get_next_buffer( yyscanner ) )
@@ -2446,7 +2446,7 @@ static int yy_get_next_buffer (yyscan_t yyscanner)
 			}
 		}
 
-	c = *(unsigned char *) yyg->yy_c_buf_p;	/* cast for 8-bit char's */
+	c = *reinterpret_cast<unsigned char *>(yyg->yy_c_buf_p);	/* cast for 8-bit char's */
 	*yyg->yy_c_buf_p = '\0';	/* preserve yytext */
 	yyg->yy_hold_char = *++yyg->yy_c_buf_p;
 
@@ -2461,7 +2461,7 @@ static int yy_get_next_buffer (yyscan_t yyscanner)
  */
     void yyrestart  (FILE * input_file , yyscan_t yyscanner)
 {
-    struct yyguts_t * yyg = (struct yyguts_t*)yyscanner;
+    struct yyguts_t * yyg = static_cast<struct yyguts_t*>(yyscanner);
 
 	if ( ! YY_CURRENT_BUFFER ){
         yyensure_buffer_stack (yyscanner);
@@ -2479,7 +2479,7 @@ static int yy_get_next_buffer (yyscan_t yyscanner)
  */
     void yy_switch_to_buffer  (YY_BUFFER_STATE  new_buffer , yyscan_t yyscanner)
 {
-    struct yyguts_t * yyg = (struct yyguts_t*)yyscanner;
+    struct yyguts_t * yyg = static_cast<struct yyguts_t*>(yyscanner);
 
 	/* TODO. We should be able to replace this entire function body
 	 * with
@@ -2511,7 +2511,7 @@ static int yy_get_next_buffer (yyscan_t yyscanner)
 
 static void yy_load_buffer_state  (yyscan_t yyscanner)
 {
-    struct yyguts_t * yyg = (struct yyguts_t*)yyscanner;
+    struct yyguts_t * yyg = static_cast<struct yyguts_t*>(yyscanner);
 	yyg->yy_n_chars = YY_CURRENT_BUFFER_LVALUE->yy_n_chars;
 	yyg->yytext_ptr = yyg->yy_c_buf_p = YY_CURRENT_BUFFER_LVALUE->yy_buf_pos;
 	yyin = YY_CURRENT_BUFFER_LVALUE->yy_input_file;
@@ -2528,7 +2528,7 @@ static void yy_load_buffer_state  (yyscan_t yyscanner)
 {
 	YY_BUFFER_STATE b;
     
-	b = (YY_BUFFER_STATE) yyalloc( sizeof( struct yy_buffer_state ) , yyscanner );
+	b = static_cast<YY_BUFFER_STATE>(yyalloc( sizeof( struct yy_buffer_state ) , yyscanner ));
 	if ( ! b )
 		YY_FATAL_ERROR( "out of dynamic memory in yy_create_buffer()" );
 
@@ -2537,7 +2537,7 @@ static void yy_load_buffer_state  (yyscan_t yyscanner)
 	/* yy_ch_buf has to be 2 characters longer than the size given because
 	 * we need to put in 2 end-of-buffer characters.
 	 */
-	b->yy_ch_buf = (char *) yyalloc( (yy_size_t) (b->yy_buf_size + 2) , yyscanner );
+	b->yy_ch_buf = static_cast<char *>(yyalloc( static_cast<yy_size_t>(b->yy_buf_size + 2) , yyscanner ));
 	if ( ! b->yy_ch_buf )
 		YY_FATAL_ERROR( "out of dynamic memory in yy_create_buffer()" );
 
@@ -2554,7 +2554,7 @@ static void yy_load_buffer_state  (yyscan_t yyscanner)
  */
     void yy_delete_buffer (YY_BUFFER_STATE  b , yyscan_t yyscanner)
 {
-    struct yyguts_t * yyg = (struct yyguts_t*)yyscanner;
+    struct yyguts_t * yyg = static_cast<struct yyguts_t*>(yyscanner);
 
 	if ( ! b )
 		return;
@@ -2576,7 +2576,7 @@ static void yy_load_buffer_state  (yyscan_t yyscanner)
 
 {
 	int oerrno = errno;
-    struct yyguts_t * yyg = (struct yyguts_t*)yyscanner;
+    struct yyguts_t * yyg = static_cast<struct yyguts_t*>(yyscanner);
 
 	yy_flush_buffer( b , yyscanner);
 
@@ -2603,7 +2603,7 @@ static void yy_load_buffer_state  (yyscan_t yyscanner)
  */
     void yy_flush_buffer (YY_BUFFER_STATE  b , yyscan_t yyscanner)
 {
-    struct yyguts_t * yyg = (struct yyguts_t*)yyscanner;
+    struct yyguts_t * yyg = static_cast<struct yyguts_t*>(yyscanner);
 	if ( ! b )
 		return;
 
@@ -2633,8 +2633,8 @@ static void yy_load_buffer_state  (yyscan_t yyscanner)
  */
 void yypush_buffer_state (YY_BUFFER_STATE new_buffer , yyscan_t yyscanner)
 {
-    struct yyguts_t * yyg = (struct yyguts_t*)yyscanner;
-	if (new_buffer == NULL)
+    struct yyguts_t * yyg = static_cast<struct yyguts_t*>(yyscanner);
+	if (new_buffer == nullptr)
 		return;
 
 	yyensure_buffer_stack(yyscanner);
@@ -2664,7 +2664,7 @@ void yypush_buffer_state (YY_BUFFER_STATE new_buffer , yyscan_t yyscanner)
  */
 void yypop_buffer_state (yyscan_t yyscanner)
 {
-    struct yyguts_t * yyg = (struct yyguts_t*)yyscanner;
+    struct yyguts_t * yyg = static_cast<struct yyguts_t*>(yyscanner);
 	if (!YY_CURRENT_BUFFER)
 		return;
 
@@ -2685,7 +2685,7 @@ void yypop_buffer_state (yyscan_t yyscanner)
 static void yyensure_buffer_stack (yyscan_t yyscanner)
 {
 	yy_size_t num_to_alloc;
-    struct yyguts_t * yyg = (struct yyguts_t*)yyscanner;
+    struct yyguts_t * yyg = static_cast<struct yyguts_t*>(yyscanner);
 
 	if (!yyg->yy_buffer_stack) {
 
@@ -2694,9 +2694,9 @@ static void yyensure_buffer_stack (yyscan_t yyscanner)
 		 * immediate realloc on the next call.
          */
       num_to_alloc = 1; /* After all that talk, this was set to 1 anyways... */
-		yyg->yy_buffer_stack = (struct yy_buffer_state**)yyalloc
+		yyg->yy_buffer_stack = static_cast<struct yy_buffer_state**>(yyalloc
 								(num_to_alloc * sizeof(struct yy_buffer_state*)
-								, yyscanner);
+								, yyscanner));
 		if ( ! yyg->yy_buffer_stack )
 			YY_FATAL_ERROR( "out of dynamic memory in yyensure_buffer_stack()" );
 
@@ -2713,10 +2713,10 @@ static void yyensure_buffer_stack (yyscan_t yyscanner)
 		yy_size_t grow_size = 8 /* arbitrary grow size */;
 
 		num_to_alloc = yyg->yy_buffer_stack_max + grow_size;
-		yyg->yy_buffer_stack = (struct yy_buffer_state**)yyrealloc
+		yyg->yy_buffer_stack = static_cast<struct yy_buffer_state**>(yyrealloc
 								(yyg->yy_buffer_stack,
 								num_to_alloc * sizeof(struct yy_buffer_state*)
-								, yyscanner);
+								, yyscanner));
 		if ( ! yyg->yy_buffer_stack )
 			YY_FATAL_ERROR( "out of dynamic memory in yyensure_buffer_stack()" );
 
@@ -2742,11 +2742,11 @@ YY_BUFFER_STATE yy_scan_buffer  (char * base, yy_size_t  size , yyscan_t yyscann
 		/* They forgot to leave room for the EOB's. */
 		return NULL;
 
-	b = (YY_BUFFER_STATE) yyalloc( sizeof( struct yy_buffer_state ) , yyscanner );
+	b = static_cast<YY_BUFFER_STATE>(yyalloc( sizeof( struct yy_buffer_state ) , yyscanner ));
 	if ( ! b )
 		YY_FATAL_ERROR( "out of dynamic memory in yy_scan_buffer()" );
 
-	b->yy_buf_size = (int) (size - 2);	/* "- 2" to take care of EOB's */
+	b->yy_buf_size = static_cast<int>(size - 2);	/* "- 2" to take care of EOB's */
 	b->yy_buf_pos = b->yy_ch_buf = base;
 	b->yy_is_our_buffer = 0;
 	b->yy_input_file = NULL;
@@ -2772,7 +2772,7 @@ YY_BUFFER_STATE yy_scan_buffer  (char * base, yy_size_t  size , yyscan_t yyscann
 YY_BUFFER_STATE yy_scan_string (const char * yystr , yyscan_t yyscanner)
 {
     
-	return yy_scan_bytes( yystr, (int) strlen(yystr) , yyscanner);
+	return yy_scan_bytes( yystr, static_cast<int>(strlen(yystr)) , yyscanner);
 }
 
 /** Setup the input buffer state to scan the given bytes. The next call to yylex() will
@@ -2790,8 +2790,8 @@ YY_BUFFER_STATE yy_scan_bytes  (const char * yybytes, int  _yybytes_len , yyscan
 	int i;
     
 	/* Get memory for full buffer, including space for trailing EOB's. */
-	n = (yy_size_t) (_yybytes_len + 2);
-	buf = (char *) yyalloc( n , yyscanner );
+	n = static_cast<yy_size_t>(_yybytes_len + 2);
+	buf = static_cast<char *>(yyalloc( n , yyscanner ));
 	if ( ! buf )
 		YY_FATAL_ERROR( "out of dynamic memory in yy_scan_bytes()" );
 
@@ -2818,7 +2818,7 @@ YY_BUFFER_STATE yy_scan_bytes  (const char * yybytes, int  _yybytes_len , yyscan
 
 static void yynoreturn yy_fatal_error (const char* msg , yyscan_t yyscanner)
 {
-	struct yyguts_t * yyg = (struct yyguts_t*)yyscanner;
+	struct yyguts_t * yyg = static_cast<struct yyguts_t*>(yyscanner);
 	(void)yyg;
 	fprintf( stderr, "%s\n", msg );
 	exit( YY_EXIT_FAILURE );
@@ -2848,7 +2848,7 @@ static void yynoreturn yy_fatal_error (const char* msg , yyscan_t yyscanner)
  */
 YY_EXTRA_TYPE yyget_extra  (yyscan_t yyscanner)
 {
-    struct yyguts_t * yyg = (struct yyguts_t*)yyscanner;
+    struct yyguts_t * yyg = static_cast<struct yyguts_t*>(yyscanner);
     return yyextra;
 }
 
@@ -2857,7 +2857,7 @@ YY_EXTRA_TYPE yyget_extra  (yyscan_t yyscanner)
  */
 int yyget_lineno  (yyscan_t yyscanner)
 {
-    struct yyguts_t * yyg = (struct yyguts_t*)yyscanner;
+    struct yyguts_t * yyg = static_cast<struct yyguts_t*>(yyscanner);
 
         if (! YY_CURRENT_BUFFER)
             return 0;
@@ -2870,7 +2870,7 @@ int yyget_lineno  (yyscan_t yyscanner)
  */
 int yyget_column  (yyscan_t yyscanner)
 {
-    struct yyguts_t * yyg = (struct yyguts_t*)yyscanner;
+    struct yyguts_t * yyg = static_cast<struct yyguts_t*>(yyscanner);
 
         if (! YY_CURRENT_BUFFER)
             return 0;
@@ -2883,7 +2883,7 @@ int yyget_column  (yyscan_t yyscanner)
  */
 FILE *yyget_in  (yyscan_t yyscanner)
 {
-    struct yyguts_t * yyg = (struct yyguts_t*)yyscanner;
+    struct yyguts_t * yyg = static_cast<struct yyguts_t*>(yyscanner);
     return yyin;
 }
 
@@ -2892,7 +2892,7 @@ FILE *yyget_in  (yyscan_t yyscanner)
  */
 FILE *yyget_out  (yyscan_t yyscanner)
 {
-    struct yyguts_t * yyg = (struct yyguts_t*)yyscanner;
+    struct yyguts_t * yyg = static_cast<struct yyguts_t*>(yyscanner);
     return yyout;
 }
 
@@ -2901,7 +2901,7 @@ FILE *yyget_out  (yyscan_t yyscanner)
  */
 int yyget_leng  (yyscan_t yyscanner)
 {
-    struct yyguts_t * yyg = (struct yyguts_t*)yyscanner;
+    struct yyguts_t * yyg = static_cast<struct yyguts_t*>(yyscanner);
     return yyleng;
 }
 
@@ -2911,7 +2911,7 @@ int yyget_leng  (yyscan_t yyscanner)
 
 char *yyget_text  (yyscan_t yyscanner)
 {
-    struct yyguts_t * yyg = (struct yyguts_t*)yyscanner;
+    struct yyguts_t * yyg = static_cast<struct yyguts_t*>(yyscanner);
     return yytext;
 }
 
@@ -2921,7 +2921,7 @@ char *yyget_text  (yyscan_t yyscanner)
  */
 void yyset_extra (YY_EXTRA_TYPE  user_defined , yyscan_t yyscanner)
 {
-    struct yyguts_t * yyg = (struct yyguts_t*)yyscanner;
+    struct yyguts_t * yyg = static_cast<struct yyguts_t*>(yyscanner);
     yyextra = user_defined ;
 }
 
@@ -2931,7 +2931,7 @@ void yyset_extra (YY_EXTRA_TYPE  user_defined , yyscan_t yyscanner)
  */
 void yyset_lineno (int  _line_number , yyscan_t yyscanner)
 {
-    struct yyguts_t * yyg = (struct yyguts_t*)yyscanner;
+    struct yyguts_t * yyg = static_cast<struct yyguts_t*>(yyscanner);
 
         /* lineno is only valid if an input buffer exists. */
         if (! YY_CURRENT_BUFFER )
@@ -2946,7 +2946,7 @@ void yyset_lineno (int  _line_number , yyscan_t yyscanner)
  */
 void yyset_column (int  _column_no , yyscan_t yyscanner)
 {
-    struct yyguts_t * yyg = (struct yyguts_t*)yyscanner;
+    struct yyguts_t * yyg = static_cast<struct yyguts_t*>(yyscanner);
 
         /* column is only valid if an input buffer exists. */
         if (! YY_CURRENT_BUFFER )
@@ -2963,25 +2963,25 @@ void yyset_column (int  _column_no , yyscan_t yyscanner)
  */
 void yyset_in (FILE *  _in_str , yyscan_t yyscanner)
 {
-    struct yyguts_t * yyg = (struct yyguts_t*)yyscanner;
+    struct yyguts_t * yyg = static_cast<struct yyguts_t*>(yyscanner);
     yyin = _in_str ;
 }
 
 void yyset_out (FILE *  _out_str , yyscan_t yyscanner)
 {
-    struct yyguts_t * yyg = (struct yyguts_t*)yyscanner;
+    struct yyguts_t * yyg = static_cast<struct yyguts_t*>(yyscanner);
     yyout = _out_str ;
 }
 
 int yyget_debug  (yyscan_t yyscanner)
 {
-    struct yyguts_t * yyg = (struct yyguts_t*)yyscanner;
+    struct yyguts_t * yyg = static_cast<struct yyguts_t*>(yyscanner);
     return yy_flex_debug;
 }
 
 void yyset_debug (int  _bdebug , yyscan_t yyscanner)
 {
-    struct yyguts_t * yyg = (struct yyguts_t*)yyscanner;
+    struct yyguts_t * yyg = static_cast<struct yyguts_t*>(yyscanner);
     yy_flex_debug = _bdebug ;
 }
 
@@ -2989,13 +2989,13 @@ void yyset_debug (int  _bdebug , yyscan_t yyscanner)
 
 YYSTYPE * yyget_lval  (yyscan_t yyscanner)
 {
-    struct yyguts_t * yyg = (struct yyguts_t*)yyscanner;
+    struct yyguts_t * yyg = static_cast<struct yyguts_t*>(yyscanner);
     return yylval;
 }
 
 void yyset_lval (YYSTYPE *  yylval_param , yyscan_t yyscanner)
 {
-    struct yyguts_t * yyg = (struct yyguts_t*)yyscanner;
+    struct yyguts_t * yyg = static_cast<struct yyguts_t*>(yyscanner);
     yylval = yylval_param;
 }
 
@@ -3012,7 +3012,7 @@ int yylex_init(yyscan_t* ptr_yy_globals)
         return 1;
     }
 
-    *ptr_yy_globals = (yyscan_t) yyalloc ( sizeof( struct yyguts_t ), NULL );
+    *ptr_yy_globals = static_cast<yyscan_t>(yyalloc ( sizeof( struct yyguts_t ), nullptr ));
 
     if (*ptr_yy_globals == NULL){
         errno = ENOMEM;
@@ -3043,7 +3043,7 @@ int yylex_init_extra( YY_EXTRA_TYPE yy_user_defined, yyscan_t* ptr_yy_globals )
         return 1;
     }
 
-    *ptr_yy_globals = (yyscan_t) yyalloc ( sizeof( struct yyguts_t ), &dummy_yyguts );
+    *ptr_yy_globals = static_cast<yyscan_t>(yyalloc ( sizeof( struct yyguts_t ), &dummy_yyguts ));
 
     if (*ptr_yy_globals == NULL){
         errno = ENOMEM;
@@ -3061,7 +3061,7 @@ int yylex_init_extra( YY_EXTRA_TYPE yy_user_defined, yyscan_t* ptr_yy_globals )
 
 static int yy_init_globals (yyscan_t yyscanner)
 {
-    struct yyguts_t * yyg = (struct yyguts_t*)yyscanner;
+    struct yyguts_t * yyg = static_cast<struct yyguts_t*>(yyscanner);
     /* Initialization is the same as for the non-reentrant scanner.
      * This function is called from yylex_destroy(), so don't allocate here.
      */
@@ -3095,7 +3095,7 @@ static int yy_init_globals (yyscan_t yyscanner)
 /* yylex_destroy is for both reentrant and non-reentrant scanners. */
 int yylex_destroy  (yyscan_t yyscanner)
 {
-    struct yyguts_t * yyg = (struct yyguts_t*)yyscanner;
+    struct yyguts_t * yyg = static_cast<struct yyguts_t*>(yyscanner);
 
     /* Pop the buffer stack, destroying each element. */
 	while(YY_CURRENT_BUFFER){
@@ -3151,14 +3151,14 @@ static int yy_flex_strlen (const char * s , yyscan_t yyscanner)
 
 void *yyalloc (yy_size_t  size , yyscan_t yyscanner)
 {
-	struct yyguts_t * yyg = (struct yyguts_t*)yyscanner;
+	struct yyguts_t * yyg = static_cast<struct yyguts_t*>(yyscanner);
 	(void)yyg;
 	return malloc(size);
 }
 
 void *yyrealloc  (void * ptr, yy_size_t  size , yyscan_t yyscanner)
 {
-	struct yyguts_t * yyg = (struct yyguts_t*)yyscanner;
+	struct yyguts_t * yyg = static_cast<struct yyguts_t*>(yyscanner);
 	(void)yyg;
 
 	/* The cast to (char *) in the following accommodates both
@@ -3173,9 +3173,9 @@ void *yyrealloc  (void * ptr, yy_size_t  size , yyscan_t yyscanner)
 
 void yyfree (void * ptr , yyscan_t yyscanner)
 {
-	struct yyguts_t * yyg = (struct yyguts_t*)yyscanner;
+	struct yyguts_t * yyg = static_cast<struct yyguts_t*>(yyscanner);
 	(void)yyg;
-	free( (char *) ptr );	/* see yyrealloc() for (char *) cast */
+	free( static_cast<char *>(ptr) );	/* see yyrealloc() for (char *) cast */
 }
 
 #define YYTABLES_NAME "yytables"
