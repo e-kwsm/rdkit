@@ -437,15 +437,16 @@ struct mol_wrapper {
         .def("GetNumHeavyAtoms", &ROMol::getNumHeavyAtoms, python::args("self"),
              "Returns the number of heavy atoms (atomic number >1) in the "
              "molecule.\n\n")
-        .def("GetAtomWithIdx",
-             (Atom * (ROMol::*)(unsigned int)) & ROMol::getAtomWithIdx,
-             python::return_internal_reference<
-                 1, python::with_custodian_and_ward_postcall<0, 1>>(),
-             python::args("self", "idx"),
-             "Returns a particular Atom.\n\n"
-             "  ARGUMENTS:\n"
-             "    - idx: which Atom to return\n\n"
-             "  NOTE: atom indices start at 0\n")
+        .def(
+            "GetAtomWithIdx",
+            static_cast<Atom *(ROMol::*)(unsigned int)>(&ROMol::getAtomWithIdx),
+            python::return_internal_reference<
+                1, python::with_custodian_and_ward_postcall<0, 1>>(),
+            python::args("self", "idx"),
+            "Returns a particular Atom.\n\n"
+            "  ARGUMENTS:\n"
+            "    - idx: which Atom to return\n\n"
+            "  NOTE: atom indices start at 0\n")
 
         .def("GetNumBonds", &ROMol::getNumBonds,
              ((python::arg("self"), python::arg("onlyHeavy") = true)),
@@ -455,15 +456,16 @@ struct mol_wrapper {
              "(not Hs)\n"
              "                  defaults to 1.\n")
 
-        .def("GetBondWithIdx",
-             (Bond * (ROMol::*)(unsigned int)) & ROMol::getBondWithIdx,
-             python::return_internal_reference<
-                 1, python::with_custodian_and_ward_postcall<0, 1>>(),
-             python::args("self", "idx"),
-             "Returns a particular Bond.\n\n"
-             "  ARGUMENTS:\n"
-             "    - idx: which Bond to return\n\n"
-             "  NOTE: bond indices start at 0\n")
+        .def(
+            "GetBondWithIdx",
+            static_cast<Bond *(ROMol::*)(unsigned int)>(&ROMol::getBondWithIdx),
+            python::return_internal_reference<
+                1, python::with_custodian_and_ward_postcall<0, 1>>(),
+            python::args("self", "idx"),
+            "Returns a particular Bond.\n\n"
+            "  ARGUMENTS:\n"
+            "    - idx: which Bond to return\n\n"
+            "  NOTE: bond indices start at 0\n")
 
         .def("GetNumConformers", &ROMol::getNumConformers, python::args("self"),
              "Return the number of conformations on the molecule")
@@ -503,8 +505,8 @@ struct mol_wrapper {
              python::args("self", "id"),
              "Remove the conformer with the specified ID")
         .def("GetBondBetweenAtoms",
-             (Bond * (ROMol::*)(unsigned int, unsigned int)) &
-                 ROMol::getBondBetweenAtoms,
+             static_cast<Bond *(ROMol::*)(unsigned int, unsigned int)>(
+                 &ROMol::getBondBetweenAtoms),
              python::return_internal_reference<
                  1, python::with_custodian_and_ward_postcall<0, 1>>(),
              python::args("self", "idx1", "idx2"),
@@ -522,8 +524,8 @@ struct mol_wrapper {
 
         // substructures
         .def("HasSubstructMatch",
-             (bool (*)(const ROMol &m, const ROMol &query, bool, bool,
-                       bool))HasSubstructMatch,
+             static_cast<bool (*)(const ROMol &m, const ROMol &query, bool,
+                                  bool, bool)>(HasSubstructMatch),
              (python::arg("self"), python::arg("query"),
               python::arg("recursionPossible") = true,
               python::arg("useChirality") = false,
@@ -538,8 +540,8 @@ struct mol_wrapper {
              "    - useQueryQueryMatches: use query-query matching logic\n\n"
              "  RETURNS: True or False\n")
         .def("GetSubstructMatch",
-             (PyObject * (*)(const ROMol &m, const ROMol &query, bool, bool))
-                 GetSubstructMatch,
+             static_cast<PyObject *(*)(const ROMol &m, const ROMol &query, bool,
+                                       bool)>(GetSubstructMatch),
              (python::arg("self"), python::arg("query"),
               python::arg("useChirality") = false,
               python::arg("useQueryQueryMatches") = false),
@@ -561,8 +563,9 @@ struct mol_wrapper {
              "query.\n")
 
         .def("GetSubstructMatches",
-             (PyObject * (*)(const ROMol &m, const ROMol &query, bool, bool,
-                             bool, unsigned int)) GetSubstructMatches,
+             static_cast<PyObject *(*)(const ROMol &m, const ROMol &query, bool,
+                                       bool, bool, unsigned int)>(
+                 GetSubstructMatches),
              (python::arg("self"), python::arg("query"),
               python::arg("uniquify") = true,
               python::arg("useChirality") = false,
@@ -599,22 +602,23 @@ struct mol_wrapper {
              "query.\n")
 
         .def("HasSubstructMatch",
-             (bool (*)(const ROMol &m, const MolBundle &query, bool, bool,
-                       bool))HasSubstructMatch,
+             static_cast<bool (*)(const ROMol &m, const MolBundle &query, bool,
+                                  bool, bool)>(HasSubstructMatch),
              (python::arg("self"), python::arg("query"),
               python::arg("recursionPossible") = true,
               python::arg("useChirality") = false,
               python::arg("useQueryQueryMatches") = false))
         .def("GetSubstructMatch",
-             (PyObject * (*)(const ROMol &m, const MolBundle &query, bool,
-                             bool)) GetSubstructMatch,
+             static_cast<PyObject *(*)(const ROMol &m, const MolBundle &query,
+                                       bool, bool)>(GetSubstructMatch),
              (python::arg("self"), python::arg("query"),
               python::arg("useChirality") = false,
               python::arg("useQueryQueryMatches") = false))
 
         .def("GetSubstructMatches",
-             (PyObject * (*)(const ROMol &m, const MolBundle &query, bool, bool,
-                             bool, unsigned int)) GetSubstructMatches,
+             static_cast<PyObject *(*)(const ROMol &m, const MolBundle &query,
+                                       bool, bool, bool, unsigned int)>(
+                 GetSubstructMatches),
              (python::arg("self"), python::arg("query"),
               python::arg("uniquify") = true,
               python::arg("useChirality") = false,
@@ -623,8 +627,9 @@ struct mol_wrapper {
 
         //--------------------------------------------
         .def("HasSubstructMatch",
-             (bool (*)(const ROMol &m, const ROMol &query,
-                       const SubstructMatchParameters &))helpHasSubstructMatch,
+             static_cast<bool (*)(const ROMol &m, const ROMol &query,
+                                  const SubstructMatchParameters &)>(
+                 helpHasSubstructMatch),
              (python::arg("self"), python::arg("query"), python::arg("params")),
              "Queries whether or not the molecule contains a particular "
              "substructure.\n\n"
@@ -633,9 +638,9 @@ struct mol_wrapper {
              "    - params: parameters controlling the substructure match\n\n"
              "  RETURNS: True or False\n")
         .def("GetSubstructMatch",
-             (PyObject * (*)(const ROMol &m, const ROMol &query,
-                             const SubstructMatchParameters &params))
-                 helpGetSubstructMatch,
+             static_cast<PyObject *(*)(const ROMol &m, const ROMol &query,
+                                       const SubstructMatchParameters &params)>(
+                 helpGetSubstructMatch),
              (python::arg("self"), python::arg("query"), python::arg("params")),
              "Returns the indices of the molecule's atoms that match a "
              "substructure query.\n\n"
@@ -653,9 +658,9 @@ struct mol_wrapper {
              "query.\n")
 
         .def("GetSubstructMatches",
-             (PyObject * (*)(const ROMol &m, const ROMol &query,
-                             const SubstructMatchParameters &))
-                 helpGetSubstructMatches,
+             static_cast<PyObject *(*)(const ROMol &m, const ROMol &query,
+                                       const SubstructMatchParameters &)>(
+                 helpGetSubstructMatches),
              (python::arg("self"), python::arg("query"), python::arg("params")),
              "Returns tuples of the indices of the molecule's atoms that "
              "match "
@@ -673,19 +678,20 @@ struct mol_wrapper {
              "query.\n")
 
         .def("HasSubstructMatch",
-             (bool (*)(const ROMol &m, const MolBundle &query,
-                       const SubstructMatchParameters &))helpHasSubstructMatch,
+             static_cast<bool (*)(const ROMol &m, const MolBundle &query,
+                                  const SubstructMatchParameters &)>(
+                 helpHasSubstructMatch),
              (python::arg("self"), python::arg("query"),
               python::arg("params") = true))
         .def("GetSubstructMatch",
-             (PyObject * (*)(const ROMol &m, const MolBundle &query,
-                             const SubstructMatchParameters &))
-                 helpGetSubstructMatch,
+             static_cast<PyObject *(*)(const ROMol &m, const MolBundle &query,
+                                       const SubstructMatchParameters &)>(
+                 helpGetSubstructMatch),
              (python::arg("self"), python::arg("query"), python::arg("params")))
         .def("GetSubstructMatches",
-             (PyObject * (*)(const ROMol &m, const MolBundle &query,
-                             const SubstructMatchParameters &))
-                 helpGetSubstructMatches,
+             static_cast<PyObject *(*)(const ROMol &m, const MolBundle &query,
+                                       const SubstructMatchParameters &)>(
+                 helpGetSubstructMatches),
              (python::arg("self"), python::arg("query"), python::arg("params")))
 
         // properties

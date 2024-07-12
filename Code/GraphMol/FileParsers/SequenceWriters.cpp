@@ -458,7 +458,7 @@ static bool FindHELMAtom(std::vector<AtomPDBResidueInfo *> *seq,
 
   int resno = info->getResidueNumber();
   for (unsigned int i = 1; i < 10; i++) {
-    auto len = (unsigned int)seq[i].size();
+    auto len = static_cast<unsigned int>(seq[i].size());
     for (unsigned int j = 0; j < len; j++) {
       AtomPDBResidueInfo *targ = seq[i][j];
       if (targ->getResidueNumber() == resno &&
@@ -466,7 +466,7 @@ static bool FindHELMAtom(std::vector<AtomPDBResidueInfo *> *seq,
           targ->getChainId() == info->getChainId() &&
           targ->getInsertionCode() == info->getInsertionCode()) {
         id = "PEPTIDE";
-        id += (char)(i + '0');
+        id += static_cast<char>(i + '0');
         sprintf(buffer, "%u:R%c", j + 1, ch);
         pos = buffer;
         return true;
@@ -577,7 +577,7 @@ std::string MolToHELM(const ROMol &mol) {
         id++;
         chain = info->getChainId();
         result += "}|PEPTIDE";
-        result += (char)(id + '0');
+        result += static_cast<char>(id + '0');
         result += "{";
         peptide = true;
       } else {
@@ -604,7 +604,7 @@ std::string MolToHELM(const ROMol &mol) {
         id++;
         chain = info->getChainId();
         result += "}|PEPTIDE";
-        result += (char)(id + '0');
+        result += static_cast<char>(id + '0');
         result += "{[ac]";
         peptide = true;
       } else {
@@ -630,7 +630,7 @@ std::string MolToHELM(const ROMol &mol) {
         id++;
         chain = info->getChainId();
         result += "}|RNA";
-        result += (char)(id + '0');
+        result += static_cast<char>(id + '0');
         result += "{";
         peptide = false;
         Pstate = 2;
@@ -662,7 +662,7 @@ std::string MolToHELM(const ROMol &mol) {
           id++;
           chain = info->getChainId();
           result += "}|RNA";
-          result += (char)(id + '0');
+          result += static_cast<char>(id + '0');
           result += "{P";
           peptide = false;
           Pstate = 1;

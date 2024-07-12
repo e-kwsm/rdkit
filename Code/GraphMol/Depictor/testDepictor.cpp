@@ -341,13 +341,13 @@ void tempTest() {
   RDGeom::Point3D rotnAxis;
   double dt;
   for (i = 0; i < 100; i++) {
-    pt1.x = (double)(rand() % 1000);
-    pt1.y = (double)(rand() % 1000);
-    pt1.z = (double)(rand() % 1000);
+    pt1.x = static_cast<double>(rand() % 1000);
+    pt1.y = static_cast<double>(rand() % 1000);
+    pt1.z = static_cast<double>(rand() % 1000);
     pt1.normalize();
-    pt2.x = (double)(rand() % 1000);
-    pt2.y = (double)(rand() % 1000);
-    pt2.z = (double)(rand() % 1000);
+    pt2.x = static_cast<double>(rand() % 1000);
+    pt2.y = static_cast<double>(rand() % 1000);
+    pt2.z = static_cast<double>(rand() % 1000);
     pt2.normalize();
 
     cosT = -pt1.dotProduct(pt2);

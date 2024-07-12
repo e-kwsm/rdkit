@@ -225,9 +225,9 @@ double tier1Sim(const ROMol &mol1, const ROMol &mol2,
     }
   }
   eg1g2 /= 2;
-  double sim = double((vg1g2 + eg1g2) * (vg1g2 + eg1g2)) /
-               double((mol1.getNumAtoms() + mol1.getNumBonds()) *
-                      (mol2.getNumAtoms() + mol2.getNumBonds()));
+  double sim = static_cast<double>((vg1g2 + eg1g2) * (vg1g2 + eg1g2)) /
+               static_cast<double>((mol1.getNumAtoms() + mol1.getNumBonds()) *
+                                   (mol2.getNumAtoms() + mol2.getNumBonds()));
   return sim;
 }
 // Calculate the tier 2 similarity between the 2 mols.
@@ -247,9 +247,9 @@ double tier2Sim(const ROMol &mol1, const ROMol &mol2,
     }
   }
   eg1g2 /= 2;
-  double sim = double((vg1g2 + eg1g2) * (vg1g2 + eg1g2)) /
-               double((mol1.getNumAtoms() + mol1.getNumBonds()) *
-                      (mol2.getNumAtoms() + mol2.getNumBonds()));
+  double sim = static_cast<double>((vg1g2 + eg1g2) * (vg1g2 + eg1g2)) /
+               static_cast<double>((mol1.getNumAtoms() + mol1.getNumBonds()) *
+                                   (mol2.getNumAtoms() + mol2.getNumBonds()));
   return sim;
 }
 // For each bond in the molecule, encode it with its type and the labels of the

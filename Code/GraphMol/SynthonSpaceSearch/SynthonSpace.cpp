@@ -369,8 +369,10 @@ void SynthonSpace::writeDBFile(const std::string &outFilename) const {
   // In case we ever want to do random access file reading, save the
   // positions of the synthons and reactions.  Put dummy positions
   // in for now then overwrite at the end.
-  std::vector<std::uint64_t> synthonPos(d_synthonPool.size(), std::uint64_t(0));
-  std::vector<std::uint64_t> reactionPos(d_reactions.size(), std::uint64_t(0));
+  std::vector<std::uint64_t> synthonPos(d_synthonPool.size(),
+                                        static_cast<std::uint64_t>(0));
+  std::vector<std::uint64_t> reactionPos(d_reactions.size(),
+                                         static_cast<std::uint64_t>(0));
   std::streampos synthonPoolStart = os.tellp();
   for (const auto p : synthonPos) {
     streamWrite(os, p);
@@ -525,11 +527,13 @@ void SynthonSpace::readDBFile(const std::string &inFilename,
   streamRead(is, numReactions);
   streamRead(is, d_numProducts);
 
-  std::vector<std::uint64_t> synthonPos(numSynthons, std::uint64_t(0));
+  std::vector<std::uint64_t> synthonPos(numSynthons,
+                                        static_cast<std::uint64_t>(0));
   for (std::uint64_t i = 0; i < numSynthons; i++) {
     streamRead(is, synthonPos[i]);
   }
-  std::vector<std::uint64_t> reactionPos(numReactions, std::uint64_t(0));
+  std::vector<std::uint64_t> reactionPos(numReactions,
+                                         static_cast<std::uint64_t>(0));
   for (std::uint64_t i = 0; i < numReactions; i++) {
     streamRead(is, reactionPos[i]);
   }

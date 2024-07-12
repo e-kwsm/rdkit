@@ -96,7 +96,7 @@ static inline int gettimeofday(struct timeval *tv, struct timezone *tz) {
 static inline unsigned long long nanoClock(
     void) {  // actually returns microseconds
   struct timeval t;
-  gettimeofday(&t, (struct timezone *)nullptr);
+  gettimeofday(&t, static_cast<struct timezone *>(nullptr));
   return t.tv_usec + t.tv_sec * 1000000ULL;
 }
 

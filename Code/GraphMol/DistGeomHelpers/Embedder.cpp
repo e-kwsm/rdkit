@@ -1686,7 +1686,7 @@ void EmbedMultipleConfs(ROMol &mol, INT_VECT &res, unsigned int numConfs,
       // a close-by conformation has already been chosen :
       if (params.pruneRmsThresh <= 0.0 ||
           _isConfFarFromRest(mol, *conf, params.pruneRmsThresh, selfMatches)) {
-        int confId = (int)mol.addConformer(conf.release(), true);
+        int confId = static_cast<int>(mol.addConformer(conf.release(), true));
         res.push_back(confId);
       }
     }
