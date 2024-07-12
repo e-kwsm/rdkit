@@ -136,8 +136,8 @@ std::vector<double> MolData3Ddescriptors::GetIState(const RDKit::ROMol &mol) {
           true);  // caution getTotalNumHs(true) to count h !!!!
       int dv = RDKit::PeriodicTable::getTable()->getNouterElecs(atNum) -
                h;  // number of valence (explicit with Hs)
-      int N = GetPrincipalQuantumNumber(atNum);  // principal quantum number
-      double d = (double)degree - h;             // degree-h
+      int N = GetPrincipalQuantumNumber(atNum);    // principal quantum number
+      double d = static_cast<double>(degree) - h;  // degree-h
       if (d > 0) {
         Is[i] = std::round(1000 * (4.0 / (N * N) * dv + 1.0) / d) / 1000;
       }
@@ -159,10 +159,11 @@ std::vector<double> MolData3Ddescriptors::GetIStateDrag(
     if (degree > 0 && atNum > 1) {
       int h = atom->getTotalNumHs(true);
       int Zv = RDKit::PeriodicTable::getTable()->getNouterElecs(
-          atNum);                  // number of valence (explicit with Hs)
-      double dv = (double)Zv - h;  // number of valence electron without Hs
-      int N = GetPrincipalQuantumNumber(atNum);  // principal quantum number
-      double d = (double)degree - h;             // degree-h
+          atNum);  // number of valence (explicit with Hs)
+      double dv =
+          static_cast<double>(Zv) - h;  // number of valence electron without Hs
+      int N = GetPrincipalQuantumNumber(atNum);    // principal quantum number
+      double d = static_cast<double>(degree) - h;  // degree-h
       if (d > 0) {
         Is[i] = std::round(1000 * (4.0 / (N * N) * dv + 1.0) / d) / 1000;
       }

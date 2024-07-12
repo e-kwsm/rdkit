@@ -182,7 +182,7 @@ std::string read_text_to(Iterator &first, Iterator last, std::string delims) {
       }
       if (next > first + 2) {
         std::string blk = std::string(first + 2, next);
-        res += (char)(boost::lexical_cast<int>(blk));
+        res += static_cast<char>(boost::lexical_cast<int>(blk));
       }
       first = next + 1;
       start = first;

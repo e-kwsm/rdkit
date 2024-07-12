@@ -87,7 +87,7 @@ void PDBAtomLine(RWMol *mol, const char *ptr, unsigned int len,
     throw FileParseException(errout.str());
   }
 
-  Atom *atom = (Atom *)nullptr;
+  Atom *atom = nullptr;
   char symb[3];
 
   // Attempt #1:  Atomic Symbol in columns 76 and 77
@@ -563,7 +563,7 @@ std::unique_ptr<RWMol> parsePdbBlock(const char *str, bool sanitize,
     const char *next = str + 1;
     for (;;) {
       if (*next == '\r') {
-        len = (unsigned int)(next - str);
+        len = static_cast<unsigned int>(next - str);
         if (next[1] == '\n') {
           next += 2;
         } else {
@@ -571,11 +571,11 @@ std::unique_ptr<RWMol> parsePdbBlock(const char *str, bool sanitize,
         }
         break;
       } else if (*next == '\n') {
-        len = (unsigned int)(next - str);
+        len = static_cast<unsigned int>(next - str);
         next++;
         break;
       } else if (*next == '\0') {
-        len = (unsigned int)(next - str);
+        len = static_cast<unsigned int>(next - str);
         break;
       }
       next++;

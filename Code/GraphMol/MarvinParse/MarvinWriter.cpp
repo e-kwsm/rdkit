@@ -83,7 +83,7 @@ class MarvinCMLWriter {
 
       unsigned int rgroupRef;
       atom->getProp(common_properties::_MolFileRLabel, rgroupRef);
-      marvinAtom->rgroupRef = (int)rgroupRef;
+      marvinAtom->rgroupRef = static_cast<int>(rgroupRef);
 
       std::string alias;
       if (atom->hasProp(common_properties::molFileAlias)) {

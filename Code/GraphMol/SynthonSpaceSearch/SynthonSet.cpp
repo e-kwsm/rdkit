@@ -521,13 +521,13 @@ void SynthonSet::buildAddAndSubtractFPs(
   double frac = 0.75;
   d_addFP = std::make_unique<ExplicitBitVect>(numBits);
   for (size_t i = 0; i < naddbitcounts.size(); ++i) {
-    if (naddbitcounts[i] > int(totSamples * frac)) {
+    if (naddbitcounts[i] > static_cast<int>(totSamples * frac)) {
       d_addFP->setBit(i);
     }
   }
   d_subtractFP = std::make_unique<ExplicitBitVect>(numBits);
   for (size_t i = 0; i < nsubbitcounts.size(); ++i) {
-    if (nsubbitcounts[i] > int(totSamples * frac)) {
+    if (nsubbitcounts[i] > static_cast<int>(totSamples * frac)) {
       d_subtractFP->setBit(i);
     }
   }
