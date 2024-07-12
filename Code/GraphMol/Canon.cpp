@@ -44,7 +44,7 @@ bool hasSingleHQuery(const Atom::QUERYATOM_QUERY *q) {
       auto cDescr = (*cIt)->getDescription();
       if (cDescr == "AtomHCount") {
         return !(*cIt)->getNegation() &&
-               ((ATOM_EQUALS_QUERY *)(*cIt).get())->getVal() == 1;
+               static_cast<ATOM_EQUALS_QUERY *>((*cIt).get())->getVal() == 1;
       } else if (cDescr == "AtomAnd") {
         res = hasSingleHQuery((*cIt).get());
         if (res) {
