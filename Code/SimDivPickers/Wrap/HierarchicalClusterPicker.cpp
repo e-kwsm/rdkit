@@ -38,9 +38,9 @@ RDKit::INT_VECT HierarchicalPicks(HierarchicalClusterPicker *picker,
   // it's painful to have to copy the input matrix, but the
   // picker itself will step on the distance matrix, so use
   // CopyFromObject here instead of ContiguousFromObject
-  copy =
-      (PyArrayObject *)PyArray_CopyFromObject(distMat.ptr(), NPY_DOUBLE, 1, 1);
-  auto *dMat = (double *)PyArray_DATA(copy);
+  copy = reinterpret_cast<PyArrayObject *>(
+      PyArray_CopyFromObject(distMat.ptr(), NPY_DOUBLE, 1, 1));
+  auto *dMat = static_cast<double *>(PyArray_DATA(copy));
   RDKit::INT_VECT res = picker->pick(dMat, poolSize, pickSize);
   Py_DECREF(copy);
   return res;
@@ -59,9 +59,9 @@ RDKit::VECT_INT_VECT HierarchicalClusters(HierarchicalClusterPicker *picker,
   // it's painful to have to copy the input matrix, but the
   // picker itself will step on the distance matrix, so use
   // CopyFromObject here instead of ContiguousFromObject
-  copy =
-      (PyArrayObject *)PyArray_CopyFromObject(distMat.ptr(), NPY_DOUBLE, 1, 1);
-  auto *dMat = (double *)PyArray_DATA(copy);
+  copy = reinterpret_cast<PyArrayObject *>(
+      PyArray_CopyFromObject(distMat.ptr(), NPY_DOUBLE, 1, 1));
+  auto *dMat = static_cast<double *>(PyArray_DATA(copy));
 
   RDKit::VECT_INT_VECT res = picker->cluster(dMat, poolSize, pickSize);
   Py_DECREF(copy);

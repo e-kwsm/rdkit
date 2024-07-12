@@ -260,7 +260,7 @@ std::vector<double> GetGeodesicMatrix(const double *dist, int lag,
   std::vector<double> Geodesic;
   Geodesic.resize(sizeArray);
   std::transform(dist, dist + sizeArray, Geodesic.begin(),
-                 [lag](double dist) { return int(dist == lag); });
+                 [lag](double dist) { return static_cast<int>(dist == lag); });
 
   return Geodesic;
 }
@@ -318,7 +318,7 @@ std::vector<int> GetHeavyList(const ROMol &mol) {
   HeavyList.reserve(numAtoms);
   for (int i = 0; i < numAtoms; ++i) {
     const RDKit::Atom *atom = mol.getAtomWithIdx(i);
-    HeavyList.push_back(int(atom->getAtomicNum() > 1));
+    HeavyList.push_back(static_cast<int>(atom->getAtomicNum() > 1));
   }
   return HeavyList;
 }
@@ -466,11 +466,14 @@ void getGETAWAYDescCustom(MatrixXd H, MatrixXd R, MatrixXd Adj, int numAtoms,
       for (int j = 0; j < numAtoms; j++) {
         for (int k = j; k < numAtoms; k++) {
           if (Bi(j, k) > 0) {
-            HATSc += getHATS((double)Wc(j), (double)Wc(j), (double)H(j, j),
-                             (double)H(j, j));
+            HATSc += getHATS(
+                static_cast<double>(Wc(j)), static_cast<double>(Wc(j)),
+                static_cast<double>(H(j, j)), static_cast<double>(H(j, j)));
 
             if (H(j, k) > 0) {
-              H0c += getH((double)Wc(j), (double)Wc(k), (double)H(j, k));
+              H0c +=
+                  getH(static_cast<double>(Wc(j)), static_cast<double>(Wc(k)),
+                       static_cast<double>(H(j, k)));
             }
           }
         }
@@ -482,11 +485,14 @@ void getGETAWAYDescCustom(MatrixXd H, MatrixXd R, MatrixXd Adj, int numAtoms,
       for (int j = 0; j < numAtoms - 1; j++) {
         for (int k = j + 1; k < numAtoms; k++) {
           if (Bj(j, k) == 1) {
-            HATSc += getHATS((double)Wc(j), (double)Wc(k), (double)H(j, j),
-                             (double)H(k, k));
+            HATSc += getHATS(
+                static_cast<double>(Wc(j)), static_cast<double>(Wc(k)),
+                static_cast<double>(H(j, j)), static_cast<double>(H(k, k)));
 
             if (H(j, k) > 0) {
-              H0c += getH((double)Wc(j), (double)Wc(k), (double)H(j, k));
+              H0c +=
+                  getH(static_cast<double>(Wc(j)), static_cast<double>(Wc(k)),
+                       static_cast<double>(H(j, k)));
             }
           }
         }
@@ -497,11 +503,15 @@ void getGETAWAYDescCustom(MatrixXd H, MatrixXd R, MatrixXd Adj, int numAtoms,
       for (int j = 0; j < numAtoms - 1; j++) {
         for (int k = j + 1; k < numAtoms; k++) {
           if (Bj(j, k) == 1) {
-            HATSct += 2 * getHATS((double)Wc(j), (double)Wc(k), (double)H(j, j),
-                                  (double)H(k, k));
+            HATSct += 2 * getHATS(static_cast<double>(Wc(j)),
+                                  static_cast<double>(Wc(k)),
+                                  static_cast<double>(H(j, j)),
+                                  static_cast<double>(H(k, k)));
 
             if (H(j, k) > 0) {
-              H0ct += 2 * getH((double)Wc(j), (double)Wc(k), (double)H(j, k));
+              H0ct += 2 * getH(static_cast<double>(Wc(j)),
+                               static_cast<double>(Wc(k)),
+                               static_cast<double>(H(j, k)));
             }
           }
         }
@@ -521,8 +531,9 @@ void getGETAWAYDescCustom(MatrixXd H, MatrixXd R, MatrixXd Adj, int numAtoms,
       for (int j = 0; j < numAtoms - 1; j++) {
         for (int k = j + 1; k < numAtoms; k++) {
           if (Bj(j, k) == 1) {
-            tmpc = getH((double)Wc(j), (double)Wc(k),
-                        (double)R(j, k));  // Use same function but on all R not
+            tmpc = getH(static_cast<double>(Wc(j)), static_cast<double>(Wc(k)),
+                        static_cast<double>(
+                            R(j, k)));  // Use same function but on all R not
             // "H>0" like in the previous loop &
             // i>0!
 
@@ -543,8 +554,10 @@ void getGETAWAYDescCustom(MatrixXd H, MatrixXd R, MatrixXd Adj, int numAtoms,
       for (int j = 0; j < numAtoms - 1; j++) {
         for (int k = j + 1; k < numAtoms; k++) {
           if (Bj(j, k) == 1) {
-            R0ct += 2 * getH((double)Wc(j), (double)Wc(k),
-                             (double)R(j, k));  // Use same function but on all
+            R0ct +=
+                2 * getH(static_cast<double>(Wc(j)), static_cast<double>(Wc(k)),
+                         static_cast<double>(
+                             R(j, k)));  // Use same function but on all
             // R not "H>0" like in the
             // previous loop & i>0!
           }
@@ -757,29 +770,50 @@ void getGETAWAYDesc(MatrixXd H, MatrixXd R, MatrixXd Adj, int numAtoms,
       for (int j = 0; j < numAtoms; j++) {
         for (int k = j; k < numAtoms; k++) {
           if (Bi(j, k) > 0) {
-            HATSu += getHATS((double)Wu(j), (double)Wu(j), (double)H(j, j),
-                             (double)H(j, j));
-            HATSm += getHATS((double)Wm(j), (double)Wm(j), (double)H(j, j),
-                             (double)H(j, j));
-            HATSv += getHATS((double)Wv(j), (double)Wv(j), (double)H(j, j),
-                             (double)H(j, j));
-            HATSe += getHATS((double)We(j), (double)We(j), (double)H(j, j),
-                             (double)H(j, j));
-            HATSp += getHATS((double)Wp(j), (double)Wp(j), (double)H(j, j),
-                             (double)H(j, j));
-            HATSi += getHATS((double)Wi(j), (double)Wi(j), (double)H(j, j),
-                             (double)H(j, j));
-            HATSs += getHATS((double)Ws(j), (double)Ws(j), (double)H(j, j),
-                             (double)H(j, j));
+            HATSu += getHATS(
+                static_cast<double>(Wu(j)), static_cast<double>(Wu(j)),
+                static_cast<double>(H(j, j)), static_cast<double>(H(j, j)));
+            HATSm += getHATS(
+                static_cast<double>(Wm(j)), static_cast<double>(Wm(j)),
+                static_cast<double>(H(j, j)), static_cast<double>(H(j, j)));
+            HATSv += getHATS(
+                static_cast<double>(Wv(j)), static_cast<double>(Wv(j)),
+                static_cast<double>(H(j, j)), static_cast<double>(H(j, j)));
+            HATSe += getHATS(
+                static_cast<double>(We(j)), static_cast<double>(We(j)),
+                static_cast<double>(H(j, j)), static_cast<double>(H(j, j)));
+            HATSp += getHATS(
+                static_cast<double>(Wp(j)), static_cast<double>(Wp(j)),
+                static_cast<double>(H(j, j)), static_cast<double>(H(j, j)));
+            HATSi += getHATS(
+                static_cast<double>(Wi(j)), static_cast<double>(Wi(j)),
+                static_cast<double>(H(j, j)), static_cast<double>(H(j, j)));
+            HATSs += getHATS(
+                static_cast<double>(Ws(j)), static_cast<double>(Ws(j)),
+                static_cast<double>(H(j, j)), static_cast<double>(H(j, j)));
 
             if (H(j, k) > 0) {
-              H0u += getH((double)Wu(j), (double)Wu(k), (double)H(j, k));
-              H0m += getH((double)Wm(j), (double)Wm(k), (double)H(j, k));
-              H0v += getH((double)Wv(j), (double)Wv(k), (double)H(j, k));
-              H0e += getH((double)We(j), (double)We(k), (double)H(j, k));
-              H0p += getH((double)Wp(j), (double)Wp(k), (double)H(j, k));
-              H0i += getH((double)Wi(j), (double)Wi(k), (double)H(j, k));
-              H0s += getH((double)Ws(j), (double)Ws(k), (double)H(j, k));
+              H0u +=
+                  getH(static_cast<double>(Wu(j)), static_cast<double>(Wu(k)),
+                       static_cast<double>(H(j, k)));
+              H0m +=
+                  getH(static_cast<double>(Wm(j)), static_cast<double>(Wm(k)),
+                       static_cast<double>(H(j, k)));
+              H0v +=
+                  getH(static_cast<double>(Wv(j)), static_cast<double>(Wv(k)),
+                       static_cast<double>(H(j, k)));
+              H0e +=
+                  getH(static_cast<double>(We(j)), static_cast<double>(We(k)),
+                       static_cast<double>(H(j, k)));
+              H0p +=
+                  getH(static_cast<double>(Wp(j)), static_cast<double>(Wp(k)),
+                       static_cast<double>(H(j, k)));
+              H0i +=
+                  getH(static_cast<double>(Wi(j)), static_cast<double>(Wi(k)),
+                       static_cast<double>(H(j, k)));
+              H0s +=
+                  getH(static_cast<double>(Ws(j)), static_cast<double>(Ws(k)),
+                       static_cast<double>(H(j, k)));
             }
           }
         }
@@ -791,29 +825,50 @@ void getGETAWAYDesc(MatrixXd H, MatrixXd R, MatrixXd Adj, int numAtoms,
       for (int j = 0; j < numAtoms - 1; j++) {
         for (int k = j + 1; k < numAtoms; k++) {
           if (Bj(j, k) == 1) {
-            HATSu += getHATS((double)Wu(j), (double)Wu(k), (double)H(j, j),
-                             (double)H(k, k));
-            HATSm += getHATS((double)Wm(j), (double)Wm(k), (double)H(j, j),
-                             (double)H(k, k));
-            HATSv += getHATS((double)Wv(j), (double)Wv(k), (double)H(j, j),
-                             (double)H(k, k));
-            HATSe += getHATS((double)We(j), (double)We(k), (double)H(j, j),
-                             (double)H(k, k));
-            HATSp += getHATS((double)Wp(j), (double)Wp(k), (double)H(j, j),
-                             (double)H(k, k));
-            HATSi += getHATS((double)Wi(j), (double)Wi(k), (double)H(j, j),
-                             (double)H(k, k));
-            HATSs += getHATS((double)Ws(j), (double)Ws(k), (double)H(j, j),
-                             (double)H(k, k));
+            HATSu += getHATS(
+                static_cast<double>(Wu(j)), static_cast<double>(Wu(k)),
+                static_cast<double>(H(j, j)), static_cast<double>(H(k, k)));
+            HATSm += getHATS(
+                static_cast<double>(Wm(j)), static_cast<double>(Wm(k)),
+                static_cast<double>(H(j, j)), static_cast<double>(H(k, k)));
+            HATSv += getHATS(
+                static_cast<double>(Wv(j)), static_cast<double>(Wv(k)),
+                static_cast<double>(H(j, j)), static_cast<double>(H(k, k)));
+            HATSe += getHATS(
+                static_cast<double>(We(j)), static_cast<double>(We(k)),
+                static_cast<double>(H(j, j)), static_cast<double>(H(k, k)));
+            HATSp += getHATS(
+                static_cast<double>(Wp(j)), static_cast<double>(Wp(k)),
+                static_cast<double>(H(j, j)), static_cast<double>(H(k, k)));
+            HATSi += getHATS(
+                static_cast<double>(Wi(j)), static_cast<double>(Wi(k)),
+                static_cast<double>(H(j, j)), static_cast<double>(H(k, k)));
+            HATSs += getHATS(
+                static_cast<double>(Ws(j)), static_cast<double>(Ws(k)),
+                static_cast<double>(H(j, j)), static_cast<double>(H(k, k)));
 
             if (H(j, k) > 0) {
-              H0u += getH((double)Wu(j), (double)Wu(k), (double)H(j, k));
-              H0m += getH((double)Wm(j), (double)Wm(k), (double)H(j, k));
-              H0v += getH((double)Wv(j), (double)Wv(k), (double)H(j, k));
-              H0e += getH((double)We(j), (double)We(k), (double)H(j, k));
-              H0p += getH((double)Wp(j), (double)Wp(k), (double)H(j, k));
-              H0i += getH((double)Wi(j), (double)Wi(k), (double)H(j, k));
-              H0s += getH((double)Ws(j), (double)Ws(k), (double)H(j, k));
+              H0u +=
+                  getH(static_cast<double>(Wu(j)), static_cast<double>(Wu(k)),
+                       static_cast<double>(H(j, k)));
+              H0m +=
+                  getH(static_cast<double>(Wm(j)), static_cast<double>(Wm(k)),
+                       static_cast<double>(H(j, k)));
+              H0v +=
+                  getH(static_cast<double>(Wv(j)), static_cast<double>(Wv(k)),
+                       static_cast<double>(H(j, k)));
+              H0e +=
+                  getH(static_cast<double>(We(j)), static_cast<double>(We(k)),
+                       static_cast<double>(H(j, k)));
+              H0p +=
+                  getH(static_cast<double>(Wp(j)), static_cast<double>(Wp(k)),
+                       static_cast<double>(H(j, k)));
+              H0i +=
+                  getH(static_cast<double>(Wi(j)), static_cast<double>(Wi(k)),
+                       static_cast<double>(H(j, k)));
+              H0s +=
+                  getH(static_cast<double>(Ws(j)), static_cast<double>(Ws(k)),
+                       static_cast<double>(H(j, k)));
             }
           }
         }
@@ -823,29 +878,57 @@ void getGETAWAYDesc(MatrixXd H, MatrixXd R, MatrixXd Adj, int numAtoms,
       for (int j = 0; j < numAtoms - 1; j++) {
         for (int k = j + 1; k < numAtoms; k++) {
           if (Bj(j, k) == 1) {
-            HATSut += 2 * getHATS((double)Wu(j), (double)Wu(k), (double)H(j, j),
-                                  (double)H(k, k));
-            HATSmt += 2 * getHATS((double)Wm(j), (double)Wm(k), (double)H(j, j),
-                                  (double)H(k, k));
-            HATSvt += 2 * getHATS((double)Wv(j), (double)Wv(k), (double)H(j, j),
-                                  (double)H(k, k));
-            HATSet += 2 * getHATS((double)We(j), (double)We(k), (double)H(j, j),
-                                  (double)H(k, k));
-            HATSpt += 2 * getHATS((double)Wp(j), (double)Wp(k), (double)H(j, j),
-                                  (double)H(k, k));
-            HATSit += 2 * getHATS((double)Wi(j), (double)Wi(k), (double)H(j, j),
-                                  (double)H(k, k));
-            HATSst += 2 * getHATS((double)Ws(j), (double)Ws(k), (double)H(j, j),
-                                  (double)H(k, k));
+            HATSut += 2 * getHATS(static_cast<double>(Wu(j)),
+                                  static_cast<double>(Wu(k)),
+                                  static_cast<double>(H(j, j)),
+                                  static_cast<double>(H(k, k)));
+            HATSmt += 2 * getHATS(static_cast<double>(Wm(j)),
+                                  static_cast<double>(Wm(k)),
+                                  static_cast<double>(H(j, j)),
+                                  static_cast<double>(H(k, k)));
+            HATSvt += 2 * getHATS(static_cast<double>(Wv(j)),
+                                  static_cast<double>(Wv(k)),
+                                  static_cast<double>(H(j, j)),
+                                  static_cast<double>(H(k, k)));
+            HATSet += 2 * getHATS(static_cast<double>(We(j)),
+                                  static_cast<double>(We(k)),
+                                  static_cast<double>(H(j, j)),
+                                  static_cast<double>(H(k, k)));
+            HATSpt += 2 * getHATS(static_cast<double>(Wp(j)),
+                                  static_cast<double>(Wp(k)),
+                                  static_cast<double>(H(j, j)),
+                                  static_cast<double>(H(k, k)));
+            HATSit += 2 * getHATS(static_cast<double>(Wi(j)),
+                                  static_cast<double>(Wi(k)),
+                                  static_cast<double>(H(j, j)),
+                                  static_cast<double>(H(k, k)));
+            HATSst += 2 * getHATS(static_cast<double>(Ws(j)),
+                                  static_cast<double>(Ws(k)),
+                                  static_cast<double>(H(j, j)),
+                                  static_cast<double>(H(k, k)));
 
             if (H(j, k) > 0) {
-              H0ut += 2 * getH((double)Wu(j), (double)Wu(k), (double)H(j, k));
-              H0mt += 2 * getH((double)Wm(j), (double)Wm(k), (double)H(j, k));
-              H0vt += 2 * getH((double)Wv(j), (double)Wv(k), (double)H(j, k));
-              H0et += 2 * getH((double)We(j), (double)We(k), (double)H(j, k));
-              H0pt += 2 * getH((double)Wp(j), (double)Wp(k), (double)H(j, k));
-              H0it += 2 * getH((double)Wi(j), (double)Wi(k), (double)H(j, k));
-              H0st += 2 * getH((double)Ws(j), (double)Ws(k), (double)H(j, k));
+              H0ut += 2 * getH(static_cast<double>(Wu(j)),
+                               static_cast<double>(Wu(k)),
+                               static_cast<double>(H(j, k)));
+              H0mt += 2 * getH(static_cast<double>(Wm(j)),
+                               static_cast<double>(Wm(k)),
+                               static_cast<double>(H(j, k)));
+              H0vt += 2 * getH(static_cast<double>(Wv(j)),
+                               static_cast<double>(Wv(k)),
+                               static_cast<double>(H(j, k)));
+              H0et += 2 * getH(static_cast<double>(We(j)),
+                               static_cast<double>(We(k)),
+                               static_cast<double>(H(j, k)));
+              H0pt += 2 * getH(static_cast<double>(Wp(j)),
+                               static_cast<double>(Wp(k)),
+                               static_cast<double>(H(j, k)));
+              H0it += 2 * getH(static_cast<double>(Wi(j)),
+                               static_cast<double>(Wi(k)),
+                               static_cast<double>(H(j, k)));
+              H0st += 2 * getH(static_cast<double>(Ws(j)),
+                               static_cast<double>(Ws(k)),
+                               static_cast<double>(H(j, k)));
             }
           }
         }
@@ -891,34 +974,34 @@ void getGETAWAYDesc(MatrixXd H, MatrixXd R, MatrixXd Adj, int numAtoms,
       for (int j = 0; j < numAtoms - 1; j++) {
         for (int k = j + 1; k < numAtoms; k++) {
           if (Bj(j, k) == 1) {
-            tmpu = getH((double)Wu(j), (double)Wu(k),
-                        (double)R(j, k));  // Use same function but on all R not
-                                           // "H>0" like in the previous loop &
-                                           // i>0!
-            tmpm = getH((double)Wm(j), (double)Wm(k),
-                        (double)R(j, k));  // Use same function but on all R not
-                                           // "H>0" like in the previous loop &
-                                           // i>0!
-            tmpv = getH((double)Wv(j), (double)Wv(k),
-                        (double)R(j, k));  // Use same function but on all R not
-                                           // "H>0" like in the previous loop &
-                                           // i>0!
-            tmpe = getH((double)We(j), (double)We(k),
-                        (double)R(j, k));  // Use same function but on all R not
-                                           // "H>0" like in the previous loop &
-                                           // i>0!
-            tmpp = getH((double)Wp(j), (double)Wp(k),
-                        (double)R(j, k));  // Use same function but on all R not
-                                           // "H>0" like in the previous loop &
-                                           // i>0!
-            tmpi = getH((double)Wi(j), (double)Wi(k),
-                        (double)R(j, k));  // Use same function but on all R not
-                                           // "H>0" like in the previous loop &
-                                           // i>0!
-            tmps = getH((double)Ws(j), (double)Ws(k),
-                        (double)R(j, k));  // Use same function but on all R not
-                                           // "H>0" like in the previous loop &
-                                           // i>0!
+            tmpu = getH(static_cast<double>(Wu(j)), static_cast<double>(Wu(k)),
+                        static_cast<double>(R(
+                            j, k)));  // Use same function but on all R not
+                                      // "H>0" like in the previous loop & i>0!
+            tmpm = getH(static_cast<double>(Wm(j)), static_cast<double>(Wm(k)),
+                        static_cast<double>(R(
+                            j, k)));  // Use same function but on all R not
+                                      // "H>0" like in the previous loop & i>0!
+            tmpv = getH(static_cast<double>(Wv(j)), static_cast<double>(Wv(k)),
+                        static_cast<double>(R(
+                            j, k)));  // Use same function but on all R not
+                                      // "H>0" like in the previous loop & i>0!
+            tmpe = getH(static_cast<double>(We(j)), static_cast<double>(We(k)),
+                        static_cast<double>(R(
+                            j, k)));  // Use same function but on all R not
+                                      // "H>0" like in the previous loop & i>0!
+            tmpp = getH(static_cast<double>(Wp(j)), static_cast<double>(Wp(k)),
+                        static_cast<double>(R(
+                            j, k)));  // Use same function but on all R not
+                                      // "H>0" like in the previous loop & i>0!
+            tmpi = getH(static_cast<double>(Wi(j)), static_cast<double>(Wi(k)),
+                        static_cast<double>(R(
+                            j, k)));  // Use same function but on all R not
+                                      // "H>0" like in the previous loop & i>0!
+            tmps = getH(static_cast<double>(Ws(j)), static_cast<double>(Ws(k)),
+                        static_cast<double>(R(
+                            j, k)));  // Use same function but on all R not
+                                      // "H>0" like in the previous loop & i>0!
             R0u += tmpu;
             R0m += tmpm;
             R0v += tmpv;
@@ -972,34 +1055,48 @@ void getGETAWAYDesc(MatrixXd H, MatrixXd R, MatrixXd Adj, int numAtoms,
       for (int j = 0; j < numAtoms - 1; j++) {
         for (int k = j + 1; k < numAtoms; k++) {
           if (Bj(j, k) == 1) {
-            R0ut += 2 * getH((double)Wu(j), (double)Wu(k),
-                             (double)R(j, k));  // Use same function but on all
-                                                // R not "H>0" like in the
-                                                // previous loop & i>0!
-            R0mt += 2 * getH((double)Wm(j), (double)Wm(k),
-                             (double)R(j, k));  // Use same function but on all
-                                                // R not "H>0" like in the
-                                                // previous loop & i>0!
-            R0vt += 2 * getH((double)Wv(j), (double)Wv(k),
-                             (double)R(j, k));  // Use same function but on all
-                                                // R not "H>0" like in the
-                                                // previous loop & i>0!
-            R0et += 2 * getH((double)We(j), (double)We(k),
-                             (double)R(j, k));  // Use same function but on all
-                                                // R not "H>0" like in the
-                                                // previous loop & i>0!
-            R0pt += 2 * getH((double)Wp(j), (double)Wp(k),
-                             (double)R(j, k));  // Use same function but on all
-                                                // R not "H>0" like in the
-                                                // previous loop & i>0!
-            R0it += 2 * getH((double)Wi(j), (double)Wi(k),
-                             (double)R(j, k));  // Use same function but on all
-                                                // R not "H>0" like in the
-                                                // previous loop & i>0!
-            R0st += 2 * getH((double)Ws(j), (double)Ws(k),
-                             (double)R(j, k));  // Use same function but on all
-                                                // R not "H>0" like in the
-                                                // previous loop & i>0!
+            R0ut +=
+                2 *
+                getH(static_cast<double>(Wu(j)), static_cast<double>(Wu(k)),
+                     static_cast<double>(R(j, k)));  // Use same function but on
+                                                     // all R not "H>0" like in
+                                                     // the previous loop & i>0!
+            R0mt +=
+                2 *
+                getH(static_cast<double>(Wm(j)), static_cast<double>(Wm(k)),
+                     static_cast<double>(R(j, k)));  // Use same function but on
+                                                     // all R not "H>0" like in
+                                                     // the previous loop & i>0!
+            R0vt +=
+                2 *
+                getH(static_cast<double>(Wv(j)), static_cast<double>(Wv(k)),
+                     static_cast<double>(R(j, k)));  // Use same function but on
+                                                     // all R not "H>0" like in
+                                                     // the previous loop & i>0!
+            R0et +=
+                2 *
+                getH(static_cast<double>(We(j)), static_cast<double>(We(k)),
+                     static_cast<double>(R(j, k)));  // Use same function but on
+                                                     // all R not "H>0" like in
+                                                     // the previous loop & i>0!
+            R0pt +=
+                2 *
+                getH(static_cast<double>(Wp(j)), static_cast<double>(Wp(k)),
+                     static_cast<double>(R(j, k)));  // Use same function but on
+                                                     // all R not "H>0" like in
+                                                     // the previous loop & i>0!
+            R0it +=
+                2 *
+                getH(static_cast<double>(Wi(j)), static_cast<double>(Wi(k)),
+                     static_cast<double>(R(j, k)));  // Use same function but on
+                                                     // all R not "H>0" like in
+                                                     // the previous loop & i>0!
+            R0st +=
+                2 *
+                getH(static_cast<double>(Ws(j)), static_cast<double>(Ws(k)),
+                     static_cast<double>(R(j, k)));  // Use same function but on
+                                                     // all R not "H>0" like in
+                                                     // the previous loop & i>0!
           }
         }
       }

@@ -31,7 +31,8 @@ PyObject *computeCanonTrans(const Conformer &conf,
   npy_intp dims[2];
   dims[0] = 4;
   dims[1] = 4;
-  auto *res = (PyArrayObject *)PyArray_SimpleNew(2, dims, NPY_DOUBLE);
+  auto *res =
+      reinterpret_cast<PyArrayObject *>(PyArray_SimpleNew(2, dims, NPY_DOUBLE));
   auto *resData = reinterpret_cast<double *>(PyArray_DATA(res));
   const double *tdata = trans->getData();
   memcpy(static_cast<void *>(resData), static_cast<const void *>(tdata),
@@ -68,7 +69,8 @@ PyObject *computePrincAxesMomentsHelper(
     npy_intp dims[2];
     dims[0] = 3;
     dims[1] = 3;
-    auto *axesNpy = (PyArrayObject *)PyArray_SimpleNew(2, dims, NPY_DOUBLE);
+    auto *axesNpy = reinterpret_cast<PyArrayObject *>(
+        PyArray_SimpleNew(2, dims, NPY_DOUBLE));
     auto *axesNpyData = reinterpret_cast<double *>(PyArray_DATA(axesNpy));
     i = 0;
     for (size_t y = 0; y < 3; ++y) {
@@ -76,14 +78,15 @@ PyObject *computePrincAxesMomentsHelper(
         axesNpyData[i++] = axes(y, x);
       }
     }
-    auto *momentsNpy = (PyArrayObject *)PyArray_SimpleNew(1, dims, NPY_DOUBLE);
+    auto *momentsNpy = reinterpret_cast<PyArrayObject *>(
+        PyArray_SimpleNew(1, dims, NPY_DOUBLE));
     auto *momentsNpyData = reinterpret_cast<double *>(PyArray_DATA(momentsNpy));
     for (size_t y = 0; y < 3; ++y) {
       momentsNpyData[y] = moments(y);
     }
     res = PyTuple_New(2);
-    PyTuple_SetItem(res, 0, (PyObject *)axesNpy);
-    PyTuple_SetItem(res, 1, (PyObject *)momentsNpy);
+    PyTuple_SetItem(res, 0, reinterpret_cast<PyObject *>(axesNpy));
+    PyTuple_SetItem(res, 1, reinterpret_cast<PyObject *>(momentsNpy));
   } else {
     PyTuple_SetItem(res, 0, Py_None);
     PyTuple_SetItem(res, 1, Py_None);

@@ -517,9 +517,9 @@ std::unique_ptr<SparseBitVect>
 FingerprintGenerator<OutputType>::getSparseFingerprint(
     const ROMol &mol, FingerprintFuncArguments &args) const {
   // make sure the result will fit into SparseBitVect
-  std::uint32_t resultSize =
-      std::min((std::uint64_t)std::numeric_limits<std::uint32_t>::max(),
-               (std::uint64_t)dp_atomEnvironmentGenerator->getResultSize());
+  std::uint32_t resultSize = std::min(
+      static_cast<std::uint64_t>(std::numeric_limits<std::uint32_t>::max()),
+      (std::uint64_t)dp_atomEnvironmentGenerator->getResultSize());
 
   std::uint32_t effectiveSize = resultSize;
   if (dp_fingerprintArguments->df_countSimulation) {

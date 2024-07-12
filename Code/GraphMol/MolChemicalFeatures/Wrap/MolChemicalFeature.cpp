@@ -54,14 +54,14 @@ struct feat_wrapper {
              python::return_value_policy<python::copy_const_reference>(),
              python::args("self"))
         .def("GetPos",
-             (RDGeom::Point3D(MolChemicalFeature::*)(int) const) &
-                 MolChemicalFeature::getPos,
+             static_cast<RDGeom::Point3D (MolChemicalFeature::*)(int) const>(
+                 &MolChemicalFeature::getPos),
              (python::arg("self"), python::arg("confId")),
              "Get the location of the chemical feature")
         .def(
             "GetPos",
-            (RDGeom::Point3D(MolChemicalFeature::*)() const) &
-                MolChemicalFeature::getPos,
+            static_cast<RDGeom::Point3D (MolChemicalFeature::*)() const>(
+                &MolChemicalFeature::getPos),
             python::arg("self"),
             "Get the location of the default chemical feature (first position)")
         .def("GetAtomIds", getFeatAtomIds, python::args("self"),

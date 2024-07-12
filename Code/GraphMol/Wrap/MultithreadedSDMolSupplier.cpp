@@ -84,34 +84,36 @@ struct multiSDMolSup_wrap {
              python::arg("sizeOutputQueue") = 5),
             multiSdsDocStr.c_str()))
         .def("__iter__",
-             (MultithreadedSDMolSupplier * (*)(MultithreadedSDMolSupplier *)) &
-                 MTMolSupplIter,
+             static_cast<
+                 MultithreadedSDMolSupplier *(*)(MultithreadedSDMolSupplier *)>(
+                 &MTMolSupplIter),
              python::return_internal_reference<1>(), python::args("self"))
         .def("__enter__",
-             (MultithreadedSDMolSupplier * (*)(MultithreadedSDMolSupplier *)) &
-                 MolIOEnter,
+             static_cast<MultithreadedSDMolSupplier
+                             *(*)(MultithreadedSDMolSupplier *)>(&MolIOEnter),
              python::return_internal_reference<>())
-        .def("__exit__", (bool (*)(MultithreadedSDMolSupplier *, python::object,
-                                   python::object, python::object)) &
-                             MolIOExit)
+        .def("__exit__",
+             static_cast<bool (*)(MultithreadedSDMolSupplier *, python::object,
+                                  python::object, python::object)>(&MolIOExit))
         .def("__next__",
-             (ROMol * (*)(MultithreadedSDMolSupplier *)) & MolForwardSupplNext,
+             static_cast<ROMol *(*)(MultithreadedSDMolSupplier *)>(
+                 &MolForwardSupplNext),
              "Returns the next molecule in the file. Raises _StopIteration_ "
              "on EOF.\n",
              python::return_value_policy<python::manage_new_object>(),
              python::args("self"))
         .def("atEnd", &MultithreadedSDMolSupplier::atEnd, python::args("self"),
              "Returns true if we have read all records else false.\n")
-        .def(
-            "GetLastRecordId",
-            (unsigned int (*)(MultithreadedSDMolSupplier *)) & MTMolSupplLastId,
-            python::args("self"),
-            "Returns the record id for the last extracted item.\n")
-        .def(
-            "GetLastItemText",
-            (std::string(*)(MultithreadedSDMolSupplier *)) & MTMolSupplLastItem,
-            python::args("self"),
-            "Returns the text for the last extracted item.\n")
+        .def("GetLastRecordId",
+             static_cast<unsigned int (*)(MultithreadedSDMolSupplier *)>(
+                 &MTMolSupplLastId),
+             python::args("self"),
+             "Returns the record id for the last extracted item.\n")
+        .def("GetLastItemText",
+             static_cast<std::string (*)(MultithreadedSDMolSupplier *)>(
+                 &MTMolSupplLastItem),
+             python::args("self"),
+             "Returns the text for the last extracted item.\n")
         .def("GetProcessPropertyLists",
              &MultithreadedSDMolSupplier::getProcessPropertyLists,
              python::args("self"),

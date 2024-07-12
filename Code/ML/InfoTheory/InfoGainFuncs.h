@@ -55,7 +55,7 @@ double ChiSquare(T *dMat, long int dim1, long int dim2) {
     for (j = 0; j < dim2; j++) {
       rchi += (pow((double)dMat[i * dim2 + j], 2) / colSums[j]);
     }
-    chi += (((double)tSum / rowSums[i]) * rchi);
+    chi += ((static_cast<double>(tSum) / rowSums[i]) * rchi);
   }
   chi -= tSum;
   delete[] rowSums;

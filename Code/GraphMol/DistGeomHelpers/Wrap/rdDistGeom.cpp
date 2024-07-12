@@ -236,7 +236,8 @@ PyObject *getMolBoundsMatrix(ROMol &mol, bool set15bounds = true,
   if (doTriangleSmoothing) {
     DistGeom::triangleSmoothBounds(mat);
   }
-  auto *res = (PyArrayObject *)PyArray_SimpleNew(2, dims, NPY_DOUBLE);
+  auto *res =
+      reinterpret_cast<PyArrayObject *>(PyArray_SimpleNew(2, dims, NPY_DOUBLE));
   memcpy(static_cast<void *>(PyArray_DATA(res)),
          static_cast<void *>(mat->getData()), nats * nats * sizeof(double));
 

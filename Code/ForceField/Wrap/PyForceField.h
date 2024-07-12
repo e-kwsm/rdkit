@@ -90,7 +90,7 @@ class PyMMFFMolProperties {
   ~PyMMFFMolProperties() = default;
 
   unsigned int getMMFFAtomType(unsigned int idx) {
-    return (unsigned int)(mmffMolProperties->getMMFFAtomType(idx));
+    return static_cast<unsigned int>(mmffMolProperties->getMMFFAtomType(idx));
   }
   double getMMFFFormalCharge(unsigned int idx) {
     return mmffMolProperties->getMMFFFormalCharge(idx);

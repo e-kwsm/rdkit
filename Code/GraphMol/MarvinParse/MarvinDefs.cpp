@@ -2377,7 +2377,7 @@ void MarvinSuperatomSgroup::cleanUpNumberingMolsAtomsBonds(
                                                 sgMap, atomMap, bondMap);
 
   // the specific part for this class
-  auto marvinSuperatomSgroup = (MarvinSuperatomSgroup *)this;
+  auto marvinSuperatomSgroup = static_cast<MarvinSuperatomSgroup *>(this);
   for (auto &attachmentPoint : marvinSuperatomSgroup->attachmentPoints) {
     attachmentPoint->atom = atomMap[attachmentPoint->atom];
     attachmentPoint->bond =

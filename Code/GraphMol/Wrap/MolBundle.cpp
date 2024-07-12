@@ -73,8 +73,8 @@ struct molbundle_wrap {
 
         // substructures
         .def("HasSubstructMatch",
-             (bool (*)(const MolBundle &m, const ROMol &query, bool, bool,
-                       bool))HasSubstructMatch,
+             static_cast<bool (*)(const MolBundle &m, const ROMol &query, bool,
+                                  bool, bool)>(HasSubstructMatch),
              (python::arg("self"), python::arg("query"),
               python::arg("recursionPossible") = true,
               python::arg("useChirality") = false,
@@ -89,8 +89,8 @@ struct molbundle_wrap {
              "    - useQueryQueryMatches: use query-query matching logic\n\n"
              "  RETURNS: True or False\n")
         .def("GetSubstructMatch",
-             (PyObject * (*)(const MolBundle &m, const ROMol &query, bool,
-                             bool)) GetSubstructMatch,
+             static_cast<PyObject *(*)(const MolBundle &m, const ROMol &query,
+                                       bool, bool)>(GetSubstructMatch),
              (python::arg("self"), python::arg("query"),
               python::arg("useChirality") = false,
               python::arg("useQueryQueryMatches") = false),
@@ -111,8 +111,9 @@ struct molbundle_wrap {
              "         this molecule that matches the first atom in the "
              "query.\n")
         .def("GetSubstructMatches",
-             (PyObject * (*)(const MolBundle &m, const ROMol &query, bool, bool,
-                             bool, unsigned int)) GetSubstructMatches,
+             static_cast<PyObject *(*)(const MolBundle &m, const ROMol &query,
+                                       bool, bool, bool, unsigned int)>(
+                 GetSubstructMatches),
              (python::arg("self"), python::arg("query"),
               python::arg("uniquify") = true,
               python::arg("useChirality") = false,
@@ -147,8 +148,8 @@ struct molbundle_wrap {
              "         this molecule that matches the first atom in the "
              "query.\n")
         .def("HasSubstructMatch",
-             (bool (*)(const MolBundle &m, const MolBundle &query, bool, bool,
-                       bool))HasSubstructMatch,
+             static_cast<bool (*)(const MolBundle &m, const MolBundle &query,
+                                  bool, bool, bool)>(HasSubstructMatch),
              (python::arg("self"), python::arg("query"),
               python::arg("recursionPossible") = true,
               python::arg("useChirality") = false,
@@ -163,8 +164,9 @@ struct molbundle_wrap {
              "    - useQueryQueryMatches: use query-query matching logic\n\n"
              "  RETURNS: True or False\n")
         .def("GetSubstructMatch",
-             (PyObject * (*)(const MolBundle &m, const MolBundle &query, bool,
-                             bool)) GetSubstructMatch,
+             static_cast<PyObject *(*)(const MolBundle &m,
+                                       const MolBundle &query, bool, bool)>(
+                 GetSubstructMatch),
              (python::arg("self"), python::arg("query"),
               python::arg("useChirality") = false,
               python::arg("useQueryQueryMatches") = false),
@@ -186,8 +188,9 @@ struct molbundle_wrap {
              "query.\n")
 
         .def("GetSubstructMatches",
-             (PyObject * (*)(const MolBundle &m, const MolBundle &query, bool,
-                             bool, bool, unsigned int)) GetSubstructMatches,
+             static_cast<PyObject *(*)(const MolBundle &m,
+                                       const MolBundle &query, bool, bool, bool,
+                                       unsigned int)>(GetSubstructMatches),
              (python::arg("self"), python::arg("query"),
               python::arg("uniquify") = true,
               python::arg("useChirality") = false,
@@ -225,8 +228,9 @@ struct molbundle_wrap {
 
         // ------------------------------------------------
         .def("HasSubstructMatch",
-             (bool (*)(const MolBundle &m, const ROMol &query,
-                       const SubstructMatchParameters &))helpHasSubstructMatch,
+             static_cast<bool (*)(const MolBundle &m, const ROMol &query,
+                                  const SubstructMatchParameters &)>(
+                 helpHasSubstructMatch),
              (python::arg("self"), python::arg("query"), python::arg("params")),
              "Queries whether or not any molecule in the bundle contains a "
              "particular substructure.\n\n"
@@ -237,9 +241,9 @@ struct molbundle_wrap {
              "    - useQueryQueryMatches: use query-query matching logic\n\n"
              "  RETURNS: True or False\n")
         .def("GetSubstructMatch",
-             (PyObject * (*)(const MolBundle &m, const ROMol &query,
-                             const SubstructMatchParameters &))
-                 helpGetSubstructMatch,
+             static_cast<PyObject *(*)(const MolBundle &m, const ROMol &query,
+                                       const SubstructMatchParameters &)>(
+                 helpGetSubstructMatch),
              (python::arg("self"), python::arg("query"), python::arg("params")),
              "Returns the indices of the atoms from the first molecule in a "
              "bundle that matches a substructure query.\n\n"
@@ -256,9 +260,9 @@ struct molbundle_wrap {
              "         this molecule that matches the first atom in the "
              "query.\n")
         .def("GetSubstructMatches",
-             (PyObject * (*)(const MolBundle &m, const ROMol &query,
-                             const SubstructMatchParameters &))
-                 helpGetSubstructMatches,
+             static_cast<PyObject *(*)(const MolBundle &m, const ROMol &query,
+                                       const SubstructMatchParameters &)>(
+                 helpGetSubstructMatches),
              (python::arg("self"), python::arg("query"), python::arg("params")),
              "Returns tuple of all indices of the atoms from the first "
              "molecule in a bundle that matches a substructure query.\n\n"
@@ -274,8 +278,9 @@ struct molbundle_wrap {
              "         this molecule that matches the first atom in the "
              "query.\n")
         .def("HasSubstructMatch",
-             (bool (*)(const MolBundle &m, const MolBundle &query,
-                       const SubstructMatchParameters &))helpHasSubstructMatch,
+             static_cast<bool (*)(const MolBundle &m, const MolBundle &query,
+                                  const SubstructMatchParameters &)>(
+                 helpHasSubstructMatch),
              (python::arg("self"), python::arg("query"), python::arg("params")),
              "Queries whether or not any molecule in the first bundle matches "
              "any molecule in the second bundle.\n\n"
@@ -284,9 +289,10 @@ struct molbundle_wrap {
              "    - params: parameters controlling the substructure match\n\n"
              "  RETURNS: True or False\n")
         .def("GetSubstructMatch",
-             (PyObject * (*)(const MolBundle &m, const MolBundle &query,
-                             const SubstructMatchParameters &))
-                 helpGetSubstructMatch,
+             static_cast<PyObject *(*)(const MolBundle &m,
+                                       const MolBundle &query,
+                                       const SubstructMatchParameters &)>(
+                 helpGetSubstructMatch),
              (python::arg("self"), python::arg("query"), python::arg("params")),
              "Returns the indices of the atoms from the first molecule in a "
              "bundle that matches a substructure query from a bundle.\n\n"
@@ -304,9 +310,10 @@ struct molbundle_wrap {
              "query.\n")
 
         .def("GetSubstructMatches",
-             (PyObject * (*)(const MolBundle &m, const MolBundle &query,
-                             const SubstructMatchParameters &))
-                 helpGetSubstructMatches,
+             static_cast<PyObject *(*)(const MolBundle &m,
+                                       const MolBundle &query,
+                                       const SubstructMatchParameters &)>(
+                 helpGetSubstructMatches),
              (python::arg("self"), python::arg("query"), python::arg("params")),
              "Returns tuple of all indices of the atoms from the first "
              "molecule in a bundle that matches a substructure query from the "

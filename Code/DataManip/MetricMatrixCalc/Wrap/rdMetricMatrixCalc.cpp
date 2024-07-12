@@ -85,8 +85,8 @@ PyObject *getEuclideanDistMat(python::object descripMat) {
   PyObjectManager<PyArrayObject> distRes;
   if (PyArray_Check(descMatObj)) {
     // get the dimensions of the array
-    int nrows = PyArray_DIM((PyArrayObject *)descMatObj, 0);
-    int ncols = PyArray_DIM((PyArrayObject *)descMatObj, 1);
+    int nrows = PyArray_DIM(reinterpret_cast<PyArrayObject *>(descMatObj), 0);
+    int ncols = PyArray_DIM(reinterpret_cast<PyArrayObject *>(descMatObj), 1);
     int i;
     CHECK_INVARIANT((nrows > 0) && (ncols > 0), "");
 
@@ -95,7 +95,8 @@ PyObject *getEuclideanDistMat(python::object descripMat) {
     // now that we have the dimensions declare the distance matrix which is
     // always a
     // 1D double array
-    distRes = (PyArrayObject *)PyArray_SimpleNew(1, &dMatLen, NPY_DOUBLE);
+    distRes = reinterpret_cast<PyArrayObject *>(
+        PyArray_SimpleNew(1, &dMatLen, NPY_DOUBLE));
 
     // grab a pointer to the data in the array so that we can directly put
     // values in there
@@ -107,8 +108,10 @@ PyObject *getEuclideanDistMat(python::object descripMat) {
             descMatObj, PyArray_DESCR((PyArrayObject *)descMatObj)->type_num, 2,
             2));
     // if we have double array
-    if (PyArray_DESCR((PyArrayObject *)descMatObj)->type_num == NPY_DOUBLE) {
-      auto *desc = (double *)PyArray_DATA((PyArrayObject *)descMatObj);
+    if (PyArray_DESCR(reinterpret_cast<PyArrayObject *>(descMatObj))
+            ->type_num == NPY_DOUBLE) {
+      auto *desc = static_cast<double *>(
+          PyArray_DATA(reinterpret_cast<PyArrayObject *>(descMatObj)));
 
       // REVIEW: create an adaptor object to hold a double * and support
       //  operator[]() so that we don't have to do this stuff:
@@ -217,8 +220,9 @@ PyObject *getTanimotoDistMat(python::object bitVectList) {
   }
 
   npy_intp dMatLen = nrows * (nrows - 1) / 2;
-  auto *simRes = (PyArrayObject *)PyArray_SimpleNew(1, &dMatLen, NPY_DOUBLE);
-  auto *sMat = (double *)PyArray_DATA(simRes);
+  auto *simRes = reinterpret_cast<PyArrayObject *>(
+      PyArray_SimpleNew(1, &dMatLen, NPY_DOUBLE));
+  auto *sMat = static_cast<double *>(PyArray_DATA(simRes));
 
   if (ebvWorks.check()) {
     PySequenceHolder<ExplicitBitVect> dData(bitVectList);
@@ -252,8 +256,9 @@ PyObject *getTanimotoSimMat(python::object bitVectList) {
   }
 
   npy_intp dMatLen = nrows * (nrows - 1) / 2;
-  auto *simRes = (PyArrayObject *)PyArray_SimpleNew(1, &dMatLen, NPY_DOUBLE);
-  auto *sMat = (double *)PyArray_DATA(simRes);
+  auto *simRes = reinterpret_cast<PyArrayObject *>(
+      PyArray_SimpleNew(1, &dMatLen, NPY_DOUBLE));
+  auto *sMat = static_cast<double *>(PyArray_DATA(simRes));
 
   if (ebvWorks.check()) {
     PySequenceHolder<ExplicitBitVect> dData(bitVectList);

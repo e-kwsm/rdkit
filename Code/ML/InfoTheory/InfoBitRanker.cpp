@@ -67,7 +67,7 @@ bool InfoBitRanker::BiasCheckBit(RDKit::USHORT *resMat) const {
   double maxCor = 0.0;
   for (unsigned int i = 0; i < d_classes; i++) {
     if (d_clsCount[i] > 0) {
-      fracs[i] = ((double)resMat[i]) / d_clsCount[i];
+      fracs[i] = (static_cast<double>(resMat[i])) / d_clsCount[i];
     } else {
       fracs[i] = 0.0;
     }
@@ -246,10 +246,10 @@ double *InfoBitRanker::getTopN(unsigned int num) {
       dp_topBits[offset + 1] = topN.top().first;  // value of the infogain
       topN.pop();
     }
-    dp_topBits[offset] = (double)bid;
+    dp_topBits[offset] = static_cast<double>(bid);
 
     for (unsigned int j = 0; j < d_classes; j++) {
-      dp_topBits[offset + 2 + j] = (double)d_counts[j][bid];
+      dp_topBits[offset + 2 + j] = static_cast<double>(d_counts[j][bid]);
     }
   }
   return dp_topBits;
@@ -264,10 +264,12 @@ void InfoBitRanker::writeTopBitsToStream(std::ostream *outStream) const {
 
   unsigned int ncols = 2 + d_classes;
   for (unsigned int i = 0; i < d_top; i++) {
-    (*outStream) << std::setw(12) << (int)dp_topBits[i * ncols] << std::setw(12)
-                 << std::setprecision(5) << dp_topBits[i * ncols + 1];
+    (*outStream) << std::setw(12) << static_cast<int>(dp_topBits[i * ncols])
+                 << std::setw(12) << std::setprecision(5)
+                 << dp_topBits[i * ncols + 1];
     for (unsigned int ic = 0; ic < d_classes; ic++) {
-      (*outStream) << std::setw(10) << (int)dp_topBits[i * ncols + 2 + ic];
+      (*outStream) << std::setw(10)
+                   << static_cast<int>(dp_topBits[i * ncols + 2 + ic]);
     }
     (*outStream) << "\n";
   }

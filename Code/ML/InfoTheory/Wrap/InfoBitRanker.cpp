@@ -30,7 +30,8 @@ PyObject *getTopNbits(InfoBitRanker *ranker,
   npy_intp dims[2];
   dims[0] = num;
   dims[1] = ranker->getNumClasses() + 2;
-  auto *res = (PyArrayObject *)PyArray_SimpleNew(2, dims, NPY_DOUBLE);
+  auto *res =
+      reinterpret_cast<PyArrayObject *>(PyArray_SimpleNew(2, dims, NPY_DOUBLE));
   memcpy(static_cast<void *>(PyArray_DATA(res)), static_cast<void *>(dres),
          dims[0] * dims[1] * sizeof(double));
   return PyArray_Return(res);

@@ -285,8 +285,10 @@ void contourAndDrawGaussians(MolDraw2D &drawer,
     drawer.setScale(drawer.width(), drawer.height(), minP, maxP, mol);
   }
 
-  size_t nx = (size_t)ceil(drawer.range().x / params.gridResolution) + 1;
-  size_t ny = (size_t)ceil(drawer.range().y / params.gridResolution) + 1;
+  size_t nx =
+      static_cast<size_t>(ceil(drawer.range().x / params.gridResolution)) + 1;
+  size_t ny =
+      static_cast<size_t>(ceil(drawer.range().y / params.gridResolution)) + 1;
   std::vector<double> xcoords(nx);
   for (size_t i = 0; i < nx; ++i) {
     xcoords[i] = drawer.minPt().x + i * params.gridResolution;

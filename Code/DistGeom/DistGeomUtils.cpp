@@ -124,7 +124,7 @@ bool computeInitialCoords(const RDNumeric::SymmMatrix<double> &distMat,
   }
   unsigned int nEigs = (dim < N) ? dim : N;
   RDNumeric::EigenSolvers::powerEigenSolver(nEigs, T, eigVals, eigVecs,
-                                            (int)(sumSqD2 * N));
+                                            static_cast<int>(sumSqD2 * N));
 
   double *eigData = eigVals.getData();
   bool foundNeg = false;

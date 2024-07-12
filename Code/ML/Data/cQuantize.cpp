@@ -131,9 +131,10 @@ double RecurseHelper(double *vals, int nVals, long int *cuts, int nCuts,
   int highestCutHere = nStarts - nCuts + which;
   int i, nBounds = nCuts;
 
-  varTable = (long int *)calloc((nCuts + 1) * nPossibleRes, sizeof(long int));
-  bestCuts = (long int *)calloc(nCuts, sizeof(long int));
-  tCuts = (long int *)calloc(nCuts, sizeof(long int));
+  varTable = static_cast<long int *>(
+      calloc((nCuts + 1) * nPossibleRes, sizeof(long int)));
+  bestCuts = static_cast<long int *>(calloc(nCuts, sizeof(long int)));
+  tCuts = static_cast<long int *>(calloc(nCuts, sizeof(long int)));
   CHECK_INVARIANT(varTable, "failed to allocate memory");
   CHECK_INVARIANT(bestCuts, "failed to allocate memory");
   CHECK_INVARIANT(tCuts, "failed to allocate memory");
@@ -250,7 +251,7 @@ static python::tuple cQuantize_RecurseOnBounds(python::object vals,
   }
 
   python::ssize_t nCuts = python::len(pyCuts);
-  cuts = (long int *)calloc(nCuts, sizeof(long int));
+  cuts = static_cast<long int *>(calloc(nCuts, sizeof(long int)));
   CHECK_INVARIANT(cuts, "failed to allocate memory");
   for (python::ssize_t i = 0; i < nCuts; i++) {
     python::object elem = pyCuts[i];
@@ -258,7 +259,7 @@ static python::tuple cQuantize_RecurseOnBounds(python::object vals,
   }
 
   python::ssize_t nStarts = python::len(pyStarts);
-  starts = (long int *)calloc(nStarts, sizeof(long int));
+  starts = static_cast<long int *>(calloc(nStarts, sizeof(long int)));
   CHECK_INVARIANT(starts, "failed to allocate memory");
   for (python::ssize_t i = 0; i < nStarts; i++) {
     python::object elem = pyStarts[i];
@@ -267,9 +268,9 @@ static python::tuple cQuantize_RecurseOnBounds(python::object vals,
 
   // do the real work
   double gain = RecurseHelper(
-      (double *)PyArray_DATA(contigVals), PyArray_DIM(contigVals, 0), cuts,
-      nCuts, which, starts, nStarts, (long int *)PyArray_DATA(contigResults),
-      nPossibleRes);
+      static_cast<double *>(PyArray_DATA(contigVals)),
+      PyArray_DIM(contigVals, 0), cuts, nCuts, which, starts, nStarts,
+      static_cast<long int *>(PyArray_DATA(contigResults)), nPossibleRes);
 
   /*
     -------
@@ -302,7 +303,7 @@ static python::list cQuantize_FindStartPoints(python::object values,
     throw_value_error("could not convert value argument");
   }
 
-  auto *vals = (double *)PyArray_DATA(contigVals);
+  auto *vals = static_cast<double *>(PyArray_DATA(contigVals));
 
   auto *contigResults = reinterpret_cast<PyArrayObject *>(
       PyArray_ContiguousFromObject(results.ptr(), NPY_LONG, 1, 1));
@@ -310,7 +311,7 @@ static python::list cQuantize_FindStartPoints(python::object values,
     throw_value_error("could not convert results argument");
   }
 
-  long *res = (long *)PyArray_DATA(contigResults);
+  long *res = static_cast<long *>(PyArray_DATA(contigResults));
 
   bool firstBlock = true;
   long lastBlockAct = -2, blockAct = res[0];

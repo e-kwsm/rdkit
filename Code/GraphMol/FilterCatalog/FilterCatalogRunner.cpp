@@ -50,7 +50,7 @@ RunFilterCatalog(const FilterCatalog &fc,
 
 #ifdef RDK_BUILD_THREADSAFE_SSS
   std::vector<std::future<void>> thread_group;
-  numThreads = (int)getNumThreadsToUse(numThreads);
+  numThreads = static_cast<int>(getNumThreadsToUse(numThreads));
   for (int thread_group_idx = 0; thread_group_idx < numThreads;
        ++thread_group_idx) {
     // need to use std::ref otherwise things are passed by value

@@ -581,7 +581,7 @@ int RascalResult::calcMaxDeltaAtomAtomDistScore() const {
   int score = 0;
   auto dist = [](int idx1, int idx2, const double *dists,
                  int num_atoms) -> int {
-    return int(std::nearbyint(dists[idx1 * num_atoms + idx2]));
+    return static_cast<int>(std::nearbyint(dists[idx1 * num_atoms + idx2]));
   };
   for (size_t i = 0; i < d_atomMatches.size() - 1; ++i) {
     for (size_t j = i + 1; j < d_atomMatches.size(); ++j) {

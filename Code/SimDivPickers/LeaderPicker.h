@@ -175,7 +175,7 @@ struct LeaderPickerState {
       bcount = (count + (bsize - 1)) / bsize;
       unsigned int tasks = (bcount + 1) / 2;
       // limit number of threads to available work
-      if (nt > (int)tasks) {
+      if (nt > static_cast<int>(tasks)) {
         nt = tasks;
       }
     } else {

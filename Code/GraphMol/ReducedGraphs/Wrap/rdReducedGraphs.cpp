@@ -46,7 +46,8 @@ PyObject *GenerateErGFingerprintForReducedGraphHelper(const RDKit::ROMol &mol,
       RDKit::ReducedGraphs::generateErGFingerprintForReducedGraph(
           mol, nullptr, fuzzIncrement, minPath, maxPath);
   npy_intp dim = dv->size();
-  auto *res = (PyArrayObject *)PyArray_SimpleNew(1, &dim, NPY_DOUBLE);
+  auto *res =
+      reinterpret_cast<PyArrayObject *>(PyArray_SimpleNew(1, &dim, NPY_DOUBLE));
   memcpy(static_cast<void *>(PyArray_DATA(res)),
          static_cast<void *>(dv->getData()), dv->size() * sizeof(double));
   delete dv;
@@ -62,7 +63,8 @@ PyObject *GetErGFingerprintHelper(const RDKit::ROMol &mol,
   RDNumeric::DoubleVector *dv = RDKit::ReducedGraphs::getErGFingerprint(
       mol, nullptr, fuzzIncrement, minPath, maxPath);
   npy_intp dim = dv->size();
-  auto *res = (PyArrayObject *)PyArray_SimpleNew(1, &dim, NPY_DOUBLE);
+  auto *res =
+      reinterpret_cast<PyArrayObject *>(PyArray_SimpleNew(1, &dim, NPY_DOUBLE));
   memcpy(static_cast<void *>(PyArray_DATA(res)),
          static_cast<void *>(dv->getData()), dv->size() * sizeof(double));
   delete dv;

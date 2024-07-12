@@ -2310,13 +2310,12 @@ unsigned int sanitizeMMFFMol(RWMol &mol) {
   try {
     MolOps::sanitizeMol(
         mol, error,
-        (unsigned int)(MolOps::SANITIZE_CLEANUP | MolOps::SANITIZE_PROPERTIES |
-                       MolOps::SANITIZE_SYMMRINGS | MolOps::SANITIZE_KEKULIZE |
-                       MolOps::SANITIZE_FINDRADICALS |
-                       MolOps::SANITIZE_SETCONJUGATION |
-                       MolOps::SANITIZE_SETHYBRIDIZATION |
-                       MolOps::SANITIZE_CLEANUPCHIRALITY |
-                       MolOps::SANITIZE_ADJUSTHS));
+        static_cast<unsigned int>(
+            MolOps::SANITIZE_CLEANUP | MolOps::SANITIZE_PROPERTIES |
+            MolOps::SANITIZE_SYMMRINGS | MolOps::SANITIZE_KEKULIZE |
+            MolOps::SANITIZE_FINDRADICALS | MolOps::SANITIZE_SETCONJUGATION |
+            MolOps::SANITIZE_SETHYBRIDIZATION |
+            MolOps::SANITIZE_CLEANUPCHIRALITY | MolOps::SANITIZE_ADJUSTHS));
     if (!(mol.hasProp(common_properties::_MMFFSanitized))) {
       mol.setProp(common_properties::_MMFFSanitized, 1, true);
     }
@@ -2395,10 +2394,11 @@ MMFFMolProperties::MMFFMolProperties(ROMol &mol, const std::string &mmffVariant,
       oStream << std::left << std::setw(2)
               << mol.getAtomWithIdx(idx)->getSymbol() << std::left << " #"
               << std::setw(5) << idx + 1 << std::right << std::setw(5)
-              << (unsigned int)(this->getMMFFAtomType(idx)) << std::right
-              << std::setw(10) << std::fixed << std::setprecision(3)
-              << this->getMMFFFormalCharge(idx) << std::right << std::setw(10)
-              << this->getMMFFPartialCharge(idx) << std::endl;
+              << static_cast<unsigned int>(this->getMMFFAtomType(idx))
+              << std::right << std::setw(10) << std::fixed
+              << std::setprecision(3) << this->getMMFFFormalCharge(idx)
+              << std::right << std::setw(10) << this->getMMFFPartialCharge(idx)
+              << std::endl;
     }
     if (!(this->isValid())) {
       oStream << "\nMissing atom types - charges were not computed"
@@ -2467,11 +2467,12 @@ unsigned int MMFFMolProperties::getMMFFBondType(const Bond *bond) {
   // return 1 if the bond is single and the properties for this
   // single bond match either those of sbmb or aromatic bonds
   // for this atom pair, 0 if they don't
-  return (unsigned int)(((bond->getBondType() == Bond::SINGLE) &&
-                         ((mmffPropAtom1->sbmb && mmffPropAtom2->sbmb) ||
-                          (mmffPropAtom1->arom && mmffPropAtom2->arom)))
-                            ? 1
-                            : 0);
+  return static_cast<unsigned int>(
+      ((bond->getBondType() == Bond::SINGLE) &&
+       ((mmffPropAtom1->sbmb && mmffPropAtom2->sbmb) ||
+        (mmffPropAtom1->arom && mmffPropAtom2->arom)))
+          ? 1
+          : 0);
 }
 
 // given the angle type and the two bond types of the bond
@@ -2895,7 +2896,8 @@ MMFFMolProperties::getMMFFTorsionEmpiricalRuleParams(const ROMol &mol,
   double W[2] = {0.0, 0.0};
   double beta = 0.0;
   double pi_jk = 0.0;
-  const auto N_jk = (double)((jMMFFProp->crd - 1) * (kMMFFProp->crd - 1));
+  const auto N_jk =
+      static_cast<double>((jMMFFProp->crd - 1) * (kMMFFProp->crd - 1));
   int atomicNum[2] = {mol.getAtomWithIdx(idx2)->getAtomicNum(),
                       mol.getAtomWithIdx(idx3)->getAtomicNum()};
 
@@ -3151,8 +3153,8 @@ void MMFFMolProperties::computeMMFFCharges(const ROMol &mol) {
             // Anionic terminal sulfur: charge is localized
             fChg = ((nTermOSbondedToNbr == 1)
                         ? -1.0
-                        : -((double)(nTermOSbondedToNbr - 1) /
-                            (double)nTermOSbondedToNbr));
+                        : -(static_cast<double>(nTermOSbondedToNbr - 1) /
+                            static_cast<double>(nTermOSbondedToNbr)));
             break;
           }
           // if the neighbor is NO2 or NO3
@@ -3174,8 +3176,8 @@ void MMFFMolProperties::computeMMFFCharges(const ROMol &mol) {
             // One of 4 terminal O's on P
             fChg = ((nTermOSbondedToNbr == 1)
                         ? 0.0
-                        : -((double)(nTermOSbondedToNbr - 1) /
-                            (double)nTermOSbondedToNbr));
+                        : -(static_cast<double>(nTermOSbondedToNbr - 1) /
+                            static_cast<double>(nTermOSbondedToNbr)));
             break;
           }
           // if the neighbor is SO2, SO2N, SO3, SO4, SO2M, SSOM
@@ -3190,11 +3192,11 @@ void MMFFMolProperties::computeMMFFCharges(const ROMol &mol) {
             // Sulfate group sulfur
             // SNO
             // Sulfur in nitrogen analog of a sulfone
-            fChg =
-                (((nSecNbondedToNbr + nTermOSbondedToNbr) == 2)
-                     ? 0.0
-                     : -((double)((nSecNbondedToNbr + nTermOSbondedToNbr) - 2) /
-                         (double)nTermOSbondedToNbr));
+            fChg = (((nSecNbondedToNbr + nTermOSbondedToNbr) == 2)
+                        ? 0.0
+                        : -(static_cast<double>(
+                                (nSecNbondedToNbr + nTermOSbondedToNbr) - 2) /
+                            static_cast<double>(nTermOSbondedToNbr)));
             break;
           }
           if ((nbrAtomType == 73) && nTermOSbondedToNbr) {
@@ -3204,14 +3206,14 @@ void MMFFMolProperties::computeMMFFCharges(const ROMol &mol) {
             // Tricoordinate sulfur in anionic thiosulfinate group
             fChg = ((nTermOSbondedToNbr == 1)
                         ? 0.0
-                        : -((double)(nTermOSbondedToNbr - 1) /
-                            (double)nTermOSbondedToNbr));
+                        : -(static_cast<double>(nTermOSbondedToNbr - 1) /
+                            static_cast<double>(nTermOSbondedToNbr)));
             break;
           }
           if ((nbrAtomType == 77) && nTermOSbondedToNbr) {
             // O4Cl
             // Oxygen in perchlorate anion
-            fChg = -(1.0 / (double)nTermOSbondedToNbr);
+            fChg = -(1.0 / static_cast<double>(nTermOSbondedToNbr));
             break;
           }
         }
@@ -3237,7 +3239,7 @@ void MMFFMolProperties::computeMMFFCharges(const ROMol &mol) {
             }
           }
           if (nNitrogensIn5Ring) {
-            fChg = -(1.0 / (double)nNitrogensIn5Ring);
+            fChg = -(1.0 / static_cast<double>(nNitrogensIn5Ring));
           }
         }
         break;
@@ -3267,7 +3269,7 @@ void MMFFMolProperties::computeMMFFCharges(const ROMol &mol) {
         // probably such conjugated systems are anyway out of the
         // scope of MMFF, but this is an attempt to correctly
         // deal with them somehow
-        fChg = (double)(atom->getFormalCharge());
+        fChg = static_cast<double>(atom->getFormalCharge());
         nConj = 1;
         old_nConj = 0;
         conjNBitVect.reset();
@@ -3308,7 +3310,7 @@ void MMFFMolProperties::computeMMFFCharges(const ROMol &mol) {
                 // adjust the total formal charge of the conjugated system
                 if (!conjNBitVect[j]) {
                   conjNBitVect[j] = 1;
-                  fChg += (double)(nbr2Atom->getFormalCharge());
+                  fChg += static_cast<double>(nbr2Atom->getFormalCharge());
                   ++nConj;
                 }
               }
@@ -3316,7 +3318,7 @@ void MMFFMolProperties::computeMMFFCharges(const ROMol &mol) {
           }
         }
         if (nConj) {
-          fChg /= (double)nConj;
+          fChg /= static_cast<double>(nConj);
         }
         break;
 
@@ -3426,7 +3428,7 @@ void MMFFMolProperties::computeMMFFCharges(const ROMol &mol) {
     const Atom *atom = mol.getAtomWithIdx(idx);
     atomType = this->getMMFFAtomType(idx);
     double q0 = this->getMMFFFormalCharge(idx);
-    auto M = (double)((*mmffProp)(atomType)->crd);
+    auto M = static_cast<double>((*mmffProp)(atomType)->crd);
     double v = (*mmffPBCI)(atomType)->fcadj;
     double sumFormalCharge = 0.0;
     double sumPartialCharge = 0.0;
@@ -3442,7 +3444,8 @@ void MMFFMolProperties::computeMMFFCharges(const ROMol &mol) {
         // if neighbors have a negative formal charge, the latter
         // influences the charge on ipso
         if (nbrFormalCharge < 0.0) {
-          q0 += (nbrFormalCharge / (2.0 * (double)(nbrAtom->getDegree())));
+          q0 += (nbrFormalCharge /
+                 (2.0 * static_cast<double>(nbrAtom->getDegree())));
         }
       }
     }
@@ -3473,10 +3476,10 @@ void MMFFMolProperties::computeMMFFCharges(const ROMol &mol) {
       mmffChgParams =
           mmffChg->getMMFFChgParams(bondType, atomType, nbrAtomType);
       sumPartialCharge +=
-          (mmffChgParams.second
-               ? (double)(mmffChgParams.first) * ((mmffChgParams.second)->bci)
-               : ((*mmffPBCI)(atomType)->pbci -
-                  (*mmffPBCI)(nbrAtomType)->pbci));
+          (mmffChgParams.second ? static_cast<double>(mmffChgParams.first) *
+                                      ((mmffChgParams.second)->bci)
+                                : ((*mmffPBCI)(atomType)->pbci -
+                                   (*mmffPBCI)(nbrAtomType)->pbci));
       nbrFormalCharge = this->getMMFFFormalCharge(nbrAtom->getIdx());
       sumFormalCharge += nbrFormalCharge;
     }

@@ -3265,6 +3265,7 @@ const unsigned char telex_regular_raw_data[] = {
 
 };
 }  // namespace
-const std::string telex_regular_ttf((const char *)telex_regular_raw_data,
-                                    (const char *)telex_regular_raw_data +
-                                        sizeof(telex_regular_raw_data));
+const std::string telex_regular_ttf(
+    reinterpret_cast<const char *>(telex_regular_raw_data),
+    reinterpret_cast<const char *>(telex_regular_raw_data) +
+        sizeof(telex_regular_raw_data));

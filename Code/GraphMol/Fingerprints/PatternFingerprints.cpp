@@ -301,12 +301,14 @@ void updatePatternFingerprint(const ROMol &mol, ExplicitBitVect &fp,
 
         if (!tautomerQuery) {
           if (!mbond->getIsAromatic()) {
-            gboost::hash_combine(bitId, (std::uint32_t)mbond->getBondType());
+            gboost::hash_combine(
+                bitId, static_cast<std::uint32_t>(mbond->getBondType()));
 #ifdef VERBOSE_FINGERPRINTING
             std::cerr << mbond->getBondType() << " ";
 #endif
           } else {
-            gboost::hash_combine(bitId, (std::uint32_t)Bond::AROMATIC);
+            gboost::hash_combine(bitId,
+                                 static_cast<std::uint32_t>(Bond::AROMATIC));
 #ifdef VERBOSE_FINGERPRINTING
             std::cerr << Bond::AROMATIC << " ";
 #endif

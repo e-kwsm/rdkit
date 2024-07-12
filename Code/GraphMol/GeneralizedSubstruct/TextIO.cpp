@@ -326,17 +326,19 @@ std::string ExtendedQueryMol::toJSON() const {
   bpt::ptree pt;
 
   if (std::holds_alternative<RWMol_T>(xqmol)) {
-    pt.put("xqm_type", (int)ExtendedQueryMolTypes::XQM_MOL);
+    pt.put("xqm_type", static_cast<int>(ExtendedQueryMolTypes::XQM_MOL));
     to_pt(pt, *std::get<RWMol_T>(xqmol));
 #ifdef RDK_USE_BOOST_SERIALIZATION
   } else if (std::holds_alternative<MolBundle_T>(xqmol)) {
-    pt.put("xqm_type", (int)ExtendedQueryMolTypes::XQM_MOLBUNDLE);
+    pt.put("xqm_type", static_cast<int>(ExtendedQueryMolTypes::XQM_MOLBUNDLE));
     to_pt(pt, *std::get<MolBundle_T>(xqmol));
   } else if (std::holds_alternative<TautomerQuery_T>(xqmol)) {
-    pt.put("xqm_type", (int)ExtendedQueryMolTypes::XQM_TAUTOMERQUERY);
+    pt.put("xqm_type",
+           static_cast<int>(ExtendedQueryMolTypes::XQM_TAUTOMERQUERY));
     to_pt(pt, *std::get<TautomerQuery_T>(xqmol));
   } else if (std::holds_alternative<TautomerBundle_T>(xqmol)) {
-    pt.put("xqm_type", (int)ExtendedQueryMolTypes::XQM_TAUTOMERBUNDLE);
+    pt.put("xqm_type",
+           static_cast<int>(ExtendedQueryMolTypes::XQM_TAUTOMERBUNDLE));
     const auto &itm = std::get<TautomerBundle_T>(xqmol);
     pt.put("num_entries", itm->size());
     to_pt(pt, itm);

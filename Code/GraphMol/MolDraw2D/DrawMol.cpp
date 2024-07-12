@@ -419,8 +419,8 @@ void DrawMol::extractMolNotes() {
     std::vector<Point2D> locs = {
         {width_ - width, height},
         {0.0 + tmp.rects_[0]->width_ / 2.0, height},
-        {0.0 + tmp.rects_[0]->width_ / 2.0, double(drawHeight_ - height)},
-        {width_ - width, double(drawHeight_ - height)},
+        {0.0 + tmp.rects_[0]->width_ / 2.0, (drawHeight_ - height)},
+        {width_ - width, (drawHeight_ - height)},
     };
     bool didIt = false;
     for (int i = 0; i < 3; ++i) {
@@ -1162,7 +1162,7 @@ void DrawMol::calculateScale() {
     molHeight_ =
         drawOptions_.scalingFactor * yRange_ * (1 + 2 * marginPadding_);
   } else if (width_ < 0 && yRange_ > 1.0e-4) {
-    newScale = double(height_) / yRange_;
+    newScale = static_cast<double>(height_) / yRange_;
     // if the molecule is very wide and short (e.g. HO-NH2) don't let the
     // bonds get too long.
     double mbl = meanBondLength_ * newScale;
@@ -1171,7 +1171,7 @@ void DrawMol::calculateScale() {
     }
     width_ = newScale * xRange_;
   } else if (height_ < 0 && xRange_ > 1.0e-4) {
-    newScale = double(width_) / xRange_;
+    newScale = static_cast<double>(width_) / xRange_;
     double mbl = meanBondLength_ * newScale;
     if (mbl > width_ / 2) {
       newScale *= (width_ / 2) / mbl;
@@ -1189,8 +1189,8 @@ void DrawMol::calculateScale() {
   partitionForLegend();
 
   if (xRange_ > 1e-4 || yRange_ > 1e-4) {
-    newScale =
-        std::min(double(drawWidth_) / xRange_, double(molHeight_) / yRange_);
+    newScale = std::min(static_cast<double>(drawWidth_) / xRange_,
+                        static_cast<double>(molHeight_) / yRange_);
     double fix_scale = newScale;
     // after all that, use the fixed scale unless it's too big, in which case
     // scale the drawing down to fit.
@@ -1199,7 +1199,7 @@ void DrawMol::calculateScale() {
       fix_scale = drawOptions_.fixedBondLength;
     }
     if (drawOptions_.fixedScale > 0.0) {
-      fix_scale = double(drawWidth_) * drawOptions_.fixedScale;
+      fix_scale = static_cast<double>(drawWidth_) * drawOptions_.fixedScale;
     }
     if (newScale > fix_scale) {
       newScale = fix_scale;
@@ -1786,7 +1786,8 @@ void DrawMol::partitionForLegend() {
     legendHeight_ = 0;
   } else {
     if (!flexiCanvasY_) {
-      legendHeight_ = int(drawOptions_.legendFraction * float(drawHeight_));
+      legendHeight_ = static_cast<int>(drawOptions_.legendFraction *
+                                       static_cast<float>(drawHeight_));
       molHeight_ = drawHeight_ - legendHeight_;
     } else {
       molHeight_ = drawHeight_;
@@ -1844,7 +1845,7 @@ void DrawMol::extractLegend() {
   calc_legend_height(legend_bits, relFontScale, total_width, total_height);
   if (total_width >= drawWidth_) {
     if (!flexiCanvasX_) {
-      relFontScale *= double(drawWidth_) / total_width;
+      relFontScale *= static_cast<double>(drawWidth_) / total_width;
       calc_legend_height(legend_bits, relFontScale, total_width, total_height);
     } else {
       width_ = total_width * (1 + 2 * marginPadding_);
@@ -1856,7 +1857,7 @@ void DrawMol::extractLegend() {
     auto adjLegHt = drawHeight_ * drawOptions_.legendFraction;
     // subtract off space for the padding.
     if (total_height > adjLegHt) {
-      relFontScale *= double(adjLegHt) / total_height;
+      relFontScale *= static_cast<double>(adjLegHt) / total_height;
       calc_legend_height(legend_bits, relFontScale, total_width, total_height);
     }
   } else {

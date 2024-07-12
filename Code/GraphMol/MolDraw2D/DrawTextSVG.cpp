@@ -89,15 +89,17 @@ void DrawTextSVG::getStringRects(
     draw_modes.push_back(draw_mode);
     draw_chars.push_back(text[i]);
 
-    max_width = std::max(
-        max_width,
-        static_cast<double>(MolDraw2D_detail::char_widths[(int)text[i]]));
+    max_width =
+        std::max(max_width,
+                 static_cast<double>(
+                     MolDraw2D_detail::char_widths[static_cast<int>(text[i])]));
   }
 
   for (size_t i = 0; i < draw_chars.size(); ++i) {
     double char_width =
         0.6 * act_font_size *
-        static_cast<double>(MolDraw2D_detail::char_widths[(int)draw_chars[i]]) /
+        static_cast<double>(
+            MolDraw2D_detail::char_widths[static_cast<int>(draw_chars[i])]) /
         max_width;
     // Absent a proper set of font metrics (we don't know what font we'll be
     // using, for starters) this is something of an empirical bodge.

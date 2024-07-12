@@ -37,7 +37,7 @@ static void clusterit(real *dataP, boost::int64_t n, boost::int64_t m,
   boost::int64_t i, j, k, iTab, jTab;
   double tmp;
   len = (n * (n - 1)) / 2;
-  dists = (real *)calloc(len, sizeof(real));
+  dists = static_cast<real *>(calloc(len, sizeof(real)));
   CHECK_INVARIANT(dists, "failed to allocate memory");
   for (i = 1; i < n; i++) {
     iTab = i * m;

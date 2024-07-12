@@ -249,9 +249,10 @@ void parseAtomAttribs(Atom *atom, AttribListType attribs, bool doingQuery) {
         if (fTag == "") {
           val = parseIntAttribVal(attribName, attribVal);
         }
-        query = makeQueryFromOp(
-            "=", val, (int (*)(const RDKit::Atom *))(queryAtomAllBondProduct),
-            fTag + "AtomBondEnvironment");
+        query = makeQueryFromOp("=", val,
+                                reinterpret_cast<int (*)(const RDKit::Atom *)>(
+                                    queryAtomAllBondProduct),
+                                fTag + "AtomBondEnvironment");
       } else {
         // anything we don't know how to deal with we'll just store in raw form:
         atom->setProp(attribName, attribVal);
@@ -359,7 +360,7 @@ void parseFinalAtomAttribs(Atom *atom, bool doingQuery) {
       boost::erase_head(description, 5);
       query->setDescription(description);
       static_cast<ATOM_EQUALS_QUERY *>(query)->setVal(
-          (int)(query->getDataFunc()(atom)));
+          static_cast<int>(query->getDataFunc()(atom)));
     }
     // now add the query's children to the queue and continue:
     for (auto cIt = query->beginChildren(); cIt != query->endChildren();

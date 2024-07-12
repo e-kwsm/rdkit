@@ -168,7 +168,7 @@ RDNumeric::DoubleVector *generateErGFingerprintForReducedGraph(
       if (tvs[j].empty()) {
         continue;
       }
-      int dist = int(dm[i * mol.getNumAtoms() + j]);
+      int dist = static_cast<int>(dm[i * mol.getNumAtoms() + j]);
       if (dist < rdcast<int>(minPath) || dist > rdcast<int>(maxPath)) {
         continue;
       }

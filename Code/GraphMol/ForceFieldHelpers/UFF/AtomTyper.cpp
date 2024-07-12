@@ -626,7 +626,8 @@ bool getUFFTorsionParams(const ROMol &mol, unsigned int idx1, unsigned int idx2,
       // general case:
       uffTorsionParams.V = sqrt(paramVect[0]->V1 * paramVect[1]->V1);
       // special case for single bonds between group 6 elements:
-      if (((int)(bondOrder * 10) == 10) && UFF::Utils::isInGroup6(atNum[0]) &&
+      if ((static_cast<int>(bondOrder * 10) == 10) &&
+          UFF::Utils::isInGroup6(atNum[0]) &&
           UFF::Utils::isInGroup6(atNum[1])) {
         double V2 = 6.8;
         double V3 = 6.8;
@@ -644,7 +645,7 @@ bool getUFFTorsionParams(const ROMol &mol, unsigned int idx1, unsigned int idx2,
     } else {
       // SP2 - SP3,  this is, by default, independent of atom type in UFF:
       uffTorsionParams.V = 1.0;
-      if ((int)(bondOrder * 10) == 10) {
+      if (static_cast<int>(bondOrder * 10) == 10) {
         // special case between group 6 sp3 and non-group 6 sp2:
         if (((hyb[0] == RDKit::Atom::SP3) && UFF::Utils::isInGroup6(atNum[0]) &&
              (!UFF::Utils::isInGroup6(atNum[1]))) ||
