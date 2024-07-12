@@ -115,7 +115,7 @@ unsigned int getAtomtype(const ROMol &mol, const RDKit::Atom *atom) {
     if (a == 1.5) {
       a = 2.0;
     }
-    t = std::max(t, (unsigned int)a);
+    t = std::max(t, static_cast<unsigned int>(a));
     ++beg;
   }
   return t;

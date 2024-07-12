@@ -36,7 +36,7 @@ void hkDeltas(const ROMol &mol, std::vector<double> &deltas, bool force) {
       deltas[at->getIdx()] = tbl->getNouterElecs(n) - at->getTotalNumHs();
     } else {
       deltas[at->getIdx()] =
-          double(tbl->getNouterElecs(n) - at->getTotalNumHs()) /
+          static_cast<double>(tbl->getNouterElecs(n) - at->getTotalNumHs()) /
           (n - tbl->getNouterElecs(n) - 1);
     }
     if (deltas[at->getIdx()] != 0.0) {

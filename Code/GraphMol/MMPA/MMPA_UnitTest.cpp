@@ -114,7 +114,7 @@ static inline unsigned long long nanoClock(
 
 void printTime() {
   unsigned long long t1 = nanoClock();
-  double sec = double(t1 - t0) / 1000000.;
+  double sec = static_cast<double>(t1 - t0) / 1000000.;
   printf("Time elapsed %.6lf seconds\n", sec);
   t0 = nanoClock();
 }
