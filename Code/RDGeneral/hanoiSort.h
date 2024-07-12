@@ -151,7 +151,7 @@ template <typename CompareFunc>
 void hanoisort(int *base, int nel, int *count, int *changed,
                CompareFunc compar) {
   assert(base);
-  int *temp = (int *)malloc(nel * sizeof(int));
+  int *temp = static_cast<int *>(malloc(nel * sizeof(int)));
   assert(temp);
   if (hanoi(base, nel, temp, count, changed, compar)) {
     memmove(base, temp, nel * sizeof(int));

@@ -1260,8 +1260,8 @@ BOOST_PYTHON_MODULE(rdmolfiles) {
 \n";
   python::def(
       "MolToMolBlock",
-      (std::string(*)(const ROMol &, const MolWriterParams &,
-                      int))RDKit::MolToMolBlock,
+      static_cast<std::string (*)(const ROMol &, const MolWriterParams &, int)>(
+          RDKit::MolToMolBlock),
       (python::arg("mol"), python::arg("params"), python::arg("confId") = -1),
       docString.c_str());
 
@@ -1282,13 +1282,14 @@ BOOST_PYTHON_MODULE(rdmolfiles) {
 \n\
     a string\n\
 \n";
-  python::def("MolToMolBlock",
-              (std::string(*)(const ROMol &, bool, int, bool,
-                              bool))RDKit::MolToMolBlock,
-              (python::arg("mol"), python::arg("includeStereo") = true,
-               python::arg("confId") = -1, python::arg("kekulize") = true,
-               python::arg("forceV3000") = false),
-              docString.c_str());
+  python::def(
+      "MolToMolBlock",
+      static_cast<std::string (*)(const ROMol &, bool, int, bool, bool)>(
+          RDKit::MolToMolBlock),
+      (python::arg("mol"), python::arg("includeStereo") = true,
+       python::arg("confId") = -1, python::arg("kekulize") = true,
+       python::arg("forceV3000") = false),
+      docString.c_str());
 
   docString =
       "Returns a V3000 Mol block for a molecule\n\
@@ -1304,8 +1305,8 @@ BOOST_PYTHON_MODULE(rdmolfiles) {
 \n ";
   python::def(
       "MolToV3KMolBlock",
-      (std::string(*)(const ROMol &, const MolWriterParams &,
-                      int))RDKit::MolToV3KMolBlock,
+      static_cast<std::string (*)(const ROMol &, const MolWriterParams &, int)>(
+          RDKit::MolToV3KMolBlock),
       (python::arg("mol"), python::arg("params"), python::arg("confId") = -1),
       docString.c_str());
 
@@ -1325,12 +1326,12 @@ BOOST_PYTHON_MODULE(rdmolfiles) {
      a string\n\
 \n ";
 
-  python::def(
-      "MolToV3KMolBlock",
-      (std::string(*)(const ROMol &, bool, int, bool))RDKit::MolToV3KMolBlock,
-      (python::arg("mol"), python::arg("includeStereo") = true,
-       python::arg("confId") = -1, python::arg("kekulize") = true),
-      docString.c_str());
+  python::def("MolToV3KMolBlock",
+              static_cast<std::string (*)(const ROMol &, bool, int, bool)>(
+                  RDKit::MolToV3KMolBlock),
+              (python::arg("mol"), python::arg("includeStereo") = true,
+               python::arg("confId") = -1, python::arg("kekulize") = true),
+              docString.c_str());
 
   docString =
       R"DOC(Returns a V2000 Mol block for a molecule
@@ -1360,12 +1361,13 @@ BOOST_PYTHON_MODULE(rdmolfiles) {
     - params: the MolWriterParams\n\
     - confId: (optional) selects which conformation to output (-1 = default)\n\
 \n";
-  python::def("MolToMolFile",
-              (void (*)(const ROMol &, const std::string &,
-                        const MolWriterParams &, int))RDKit::MolToMolFile,
-              (python::arg("mol"), python::arg("filename"),
-               python::arg("params"), python::arg("confId") = -1),
-              docString.c_str());
+  python::def(
+      "MolToMolFile",
+      static_cast<void (*)(const ROMol &, const std::string &,
+                           const MolWriterParams &, int)>(RDKit::MolToMolFile),
+      (python::arg("mol"), python::arg("filename"), python::arg("params"),
+       python::arg("confId") = -1),
+      docString.c_str());
 
   docString =
       "Writes a Mol file for a molecule\n\
@@ -1383,8 +1385,8 @@ BOOST_PYTHON_MODULE(rdmolfiles) {
 \n";
   python::def(
       "MolToMolFile",
-      (void (*)(const ROMol &, const std::string &, bool, int, bool,
-                bool))RDKit::MolToMolFile,
+      static_cast<void (*)(const ROMol &, const std::string &, bool, int, bool,
+                           bool)>(RDKit::MolToMolFile),
       (python::arg("mol"), python::arg("filename"),
        python::arg("includeStereo") = true, python::arg("confId") = -1,
        python::arg("kekulize") = true, python::arg("forceV3000") = false),
@@ -1400,8 +1402,9 @@ BOOST_PYTHON_MODULE(rdmolfiles) {
     - confId: (optional) selects which conformation to output (-1 = default)\n\
 \n";
   python::def("MolToV3KMolFile",
-              (void (*)(const ROMol &, const std::string &,
-                        const MolWriterParams &, int))RDKit::MolToV3KMolFile,
+              static_cast<void (*)(const ROMol &, const std::string &,
+                                   const MolWriterParams &, int)>(
+                  RDKit::MolToV3KMolFile),
               (python::arg("mol"), python::arg("filename"),
                python::arg("params") = true, python::arg("confId") = -1),
               docString.c_str());
@@ -1419,8 +1422,8 @@ BOOST_PYTHON_MODULE(rdmolfiles) {
       as suggested by the MDL spec.\n\
 \n";
   python::def("MolToV3KMolFile",
-              (void (*)(const ROMol &, const std::string &, bool, int,
-                        bool))RDKit::MolToV3KMolFile,
+              static_cast<void (*)(const ROMol &, const std::string &, bool,
+                                   int, bool)>(RDKit::MolToV3KMolFile),
               (python::arg("mol"), python::arg("filename"),
                python::arg("includeStereo") = true, python::arg("confId") = -1,
                python::arg("kekulize") = true),
@@ -1442,13 +1445,14 @@ BOOST_PYTHON_MODULE(rdmolfiles) {
 \n\
     a string\n\
 \n";
-  python::def("MolToMrvBlock",
-              (std::string(*)(const ROMol &, bool, int, bool,
-                              bool))RDKit::MolToMrvBlock,
-              (python::arg("mol"), python::arg("includeStereo") = true,
-               python::arg("confId") = -1, python::arg("kekulize") = true,
-               python::arg("prettyPrint") = false),
-              docString.c_str());
+  python::def(
+      "MolToMrvBlock",
+      static_cast<std::string (*)(const ROMol &, bool, int, bool, bool)>(
+          RDKit::MolToMrvBlock),
+      (python::arg("mol"), python::arg("includeStereo") = true,
+       python::arg("confId") = -1, python::arg("kekulize") = true,
+       python::arg("prettyPrint") = false),
+      docString.c_str());
 
   docString =
       "Returns a Marvin (Mrv) Mol block for a molecule\n\
@@ -1464,8 +1468,8 @@ BOOST_PYTHON_MODULE(rdmolfiles) {
 \n";
   python::def(
       "MolToMrvBlock",
-      (std::string(*)(const ROMol &, const MrvWriterParams &,
-                      int))RDKit::MolToMrvBlock,
+      static_cast<std::string (*)(const ROMol &, const MrvWriterParams &, int)>(
+          RDKit::MolToMrvBlock),
       (python::arg("mol"), python::arg("params"), python::arg("confId") = -1),
       docString.c_str());
 
@@ -1483,8 +1487,8 @@ BOOST_PYTHON_MODULE(rdmolfiles) {
 \n";
   python::def(
       "MolToMrvFile",
-      (void (*)(const ROMol &, const std::string &, bool, int, bool,
-                bool))RDKit::MolToMrvFile,
+      static_cast<void (*)(const ROMol &, const std::string &, bool, int, bool,
+                           bool)>(RDKit::MolToMrvFile),
       (python::arg("mol"), python::arg("filename"),
        python::arg("includeStereo") = true, python::arg("confId") = -1,
        python::arg("kekulize") = true, python::arg("prettyPrint") = false),
@@ -1499,12 +1503,13 @@ BOOST_PYTHON_MODULE(rdmolfiles) {
     - params: marvin write params\n\
     - confId: (optional) selects which conformation to output (-1 = default)\n\
 \n";
-  python::def("MolToMrvFile",
-              (void (*)(const ROMol &, const std::string &,
-                        const MrvWriterParams &, int))RDKit::MolToMrvFile,
-              (python::arg("mol"), python::arg("filename"),
-               python::arg("params"), python::arg("confId") = -1),
-              docString.c_str());
+  python::def(
+      "MolToMrvFile",
+      static_cast<void (*)(const ROMol &, const std::string &,
+                           const MrvWriterParams &, int)>(RDKit::MolToMrvFile),
+      (python::arg("mol"), python::arg("filename"), python::arg("params"),
+       python::arg("confId") = -1),
+      docString.c_str());
 
   docString =
       "Writes a CML block for a molecule\n\
@@ -1747,11 +1752,12 @@ BOOST_PYTHON_MODULE(rdmolfiles) {
           "ignore atom map numbers when canonicalizing the molecule")
       .def("__setattr__", &safeSetattr);
 
-  python::def("MolToSmiles",
-              (std::string(*)(const ROMol &,
-                              const SmilesWriteParams &))RDKit::MolToSmiles,
-              (python::arg("mol"), python::arg("params")),
-              "Returns the canonical SMILES string for a molecule");
+  python::def(
+      "MolToSmiles",
+      static_cast<std::string (*)(const ROMol &, const SmilesWriteParams &)>(
+          RDKit::MolToSmiles),
+      (python::arg("mol"), python::arg("params")),
+      "Returns the canonical SMILES string for a molecule");
 
   docString =
       "Returns the canonical SMILES string for a molecule\n\
@@ -1783,8 +1789,8 @@ BOOST_PYTHON_MODULE(rdmolfiles) {
 \n";
   python::def(
       "MolToSmiles",
-      (std::string(*)(const ROMol &, bool, bool, int, bool, bool, bool, bool,
-                      bool))RDKit::MolToSmiles,
+      static_cast<std::string (*)(const ROMol &, bool, bool, int, bool, bool,
+                                  bool, bool, bool)>(RDKit::MolToSmiles),
       (python::arg("mol"), python::arg("isomericSmiles") = true,
        python::arg("kekuleSmiles") = false, python::arg("rootedAtAtom") = -1,
        python::arg("canonical") = true, python::arg("allBondsExplicit") = false,
@@ -1906,8 +1912,9 @@ BOOST_PYTHON_MODULE(rdmolfiles) {
 
   python::def(
       "MolToCXSmiles",
-      (std::string(*)(const ROMol &, const SmilesWriteParams &, std::uint32_t,
-                      RestoreBondDirOption))RDKit::MolToCXSmiles,
+      static_cast<std::string (*)(const ROMol &, const SmilesWriteParams &,
+                                  std::uint32_t, RestoreBondDirOption)>(
+          RDKit::MolToCXSmiles),
       (python::arg("mol"), python::arg("params"),
        python::arg("flags") = RDKit::SmilesWrite::CXSmilesFields::CX_ALL,
        python::arg("restoreBondDirs") =
@@ -1941,8 +1948,8 @@ BOOST_PYTHON_MODULE(rdmolfiles) {
 \n";
   python::def(
       "MolToCXSmiles",
-      (std::string(*)(const ROMol &, bool, bool, int, bool, bool, bool,
-                      bool))RDKit::MolToCXSmiles,
+      static_cast<std::string (*)(const ROMol &, bool, bool, int, bool, bool,
+                                  bool, bool)>(RDKit::MolToCXSmiles),
       (python::arg("mol"), python::arg("isomericSmiles") = true,
        python::arg("kekuleSmiles") = false, python::arg("rootedAtAtom") = -1,
        python::arg("canonical") = true, python::arg("allBondsExplicit") = false,
@@ -2030,7 +2037,8 @@ BOOST_PYTHON_MODULE(rdmolfiles) {
     a string\n\
 \n";
   python::def("MolToSmarts",
-              (std::string(*)(const ROMol &, bool, int))RDKit::MolToSmarts,
+              static_cast<std::string (*)(const ROMol &, bool, int)>(
+                  RDKit::MolToSmarts),
               (python::arg("mol"), python::arg("isomericSmiles") = true,
                python::arg("rootedAtAtom") = -1),
               docString.c_str());
@@ -2046,10 +2054,11 @@ BOOST_PYTHON_MODULE(rdmolfiles) {
 \n\
     a string\n\
 \n";
-  python::def("MolToSmarts",
-              (std::string(*)(const ROMol &,
-                              const SmilesWriteParams &))RDKit::MolToSmarts,
-              (python::arg("mol"), python::arg("params")), docString.c_str());
+  python::def(
+      "MolToSmarts",
+      static_cast<std::string (*)(const ROMol &, const SmilesWriteParams &)>(
+          RDKit::MolToSmarts),
+      (python::arg("mol"), python::arg("params")), docString.c_str());
 
   docString =
       "Returns a SMARTS string for a fragment of a molecule\n\
@@ -2083,10 +2092,11 @@ BOOST_PYTHON_MODULE(rdmolfiles) {
 \n\
     a string\n\
 \n";
-  python::def("MolToCXSmarts",
-              (std::string(*)(const ROMol &, bool))RDKit::MolToCXSmarts,
-              (python::arg("mol"), python::arg("isomericSmiles") = true),
-              docString.c_str());
+  python::def(
+      "MolToCXSmarts",
+      static_cast<std::string (*)(const ROMol &, bool)>(RDKit::MolToCXSmarts),
+      (python::arg("mol"), python::arg("isomericSmiles") = true),
+      docString.c_str());
 
   docString =
       "Returns a SMARTS string for a fragment of a molecule\n\
