@@ -262,7 +262,7 @@ int NumOnBitsInCommon(const ExplicitBitVect &bv1, const ExplicitBitVect &bv2) {
   unsigned int nBytes;
   if (EBVToBitmap(bv1, afp, nBytes) && EBVToBitmap(bv2, bfp, nBytes)) {
     unsigned int result = CalcBitmapNumBitsInCommon(afp, bfp, nBytes);
-    return (int)result;
+    return static_cast<int>(result);
   }
 
   return static_cast<int>(((*bv1.dp_bits) & (*bv2.dp_bits)).count());
@@ -293,7 +293,7 @@ double TanimotoSimilarity(const T1 &bv1, const T2 &bv2) {
     return 1.0;
   }
   unsigned int common = NumOnBitsInCommon(bv1, bv2);
-  return (double)common / (double)(total - common);
+  return static_cast<double>(common) / static_cast<double>(total - common);
 }
 
 template <typename T1, typename T2>
@@ -751,7 +751,7 @@ void UpdateBitVectFromFPSText(T1 &bv1, const std::string &fps) {
   PRECONDITION(fps.length() % 2 == 0, "bad FPS length");
   unsigned int bitIdx = 0;
   char tptr[3];
-  tptr[2] = (char)0;
+  tptr[2] = static_cast<char>(0);
   for (unsigned int i = 0; i < fps.size() && bitIdx < bv1.getNumBits();
        i += 2) {
     unsigned short c = 0;
