@@ -166,7 +166,7 @@ class Vector {
 
   //! L2 norm squared
   inline TYPE normL2Sq() const {
-    TYPE res = (TYPE)0.0;
+    TYPE res = static_cast<TYPE>(0.0);
     unsigned int i;
     TYPE *data = d_data.get();
     for (i = 0; i < d_size; i++) {
@@ -180,7 +180,7 @@ class Vector {
 
   //! L1 norm
   inline TYPE normL1() const {
-    TYPE res = (TYPE)0.0;
+    TYPE res = static_cast<TYPE>(0.0);
     unsigned int i;
     TYPE *data = d_data.get();
     for (i = 0; i < d_size; i++) {
@@ -191,7 +191,7 @@ class Vector {
 
   //! L-infinity norm
   inline TYPE normLinfinity() const {
-    TYPE res = (TYPE)(-1.0);
+    TYPE res = static_cast<TYPE>(-1.0);
     unsigned int i;
     TYPE *data = d_data.get();
     for (i = 0; i < d_size; i++) {
@@ -205,7 +205,7 @@ class Vector {
   //! \brief Gets the ID of the entry that has the largest absolute value
   //! i.e. the entry being used for the L-infinity norm
   inline unsigned int largestAbsValId() const {
-    TYPE res = (TYPE)(-1.0);
+    TYPE res = static_cast<TYPE>(-1.0);
     unsigned int i, id = d_size;
     TYPE *data = d_data.get();
     for (i = 0; i < d_size; i++) {
@@ -219,7 +219,7 @@ class Vector {
 
   //! \brief Gets the ID of the entry that has the largest value
   inline unsigned int largestValId() const {
-    TYPE res = (TYPE)(-1.e8);
+    TYPE res = static_cast<TYPE>(-1.e8);
     unsigned int i, id = d_size;
     TYPE *data = d_data.get();
     for (i = 0; i < d_size; i++) {
@@ -233,7 +233,7 @@ class Vector {
 
   //! \brief Gets the ID of the entry that has the smallest value
   inline unsigned int smallestValId() const {
-    TYPE res = (TYPE)(1.e8);
+    TYPE res = static_cast<TYPE>(1.e8);
     unsigned int i, id = d_size;
     TYPE *data = d_data.get();
     for (i = 0; i < d_size; i++) {
@@ -251,7 +251,7 @@ class Vector {
                  "Size mismatch in vector doct product");
     const TYPE *oData = other.getData();
     unsigned int i;
-    TYPE res = (TYPE)(0.0);
+    TYPE res = static_cast<TYPE>(0.0);
     TYPE *data = d_data.get();
     for (i = 0; i < d_size; i++) {
       res += (data[i] * oData[i]);
