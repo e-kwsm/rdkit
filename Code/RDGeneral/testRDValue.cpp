@@ -199,7 +199,7 @@ TEST_CASE("testPropertyPickler") {
 TEST_CASE("testPickleBinaryString") {
   char buf[10];
   for (int i = 0; i < 10; ++i) {
-    buf[i] = (char)i;
+    buf[i] = static_cast<char>(i);
   }
   std::string str(buf, 10);
   std::stringstream ss;

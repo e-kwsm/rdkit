@@ -33,7 +33,7 @@ int main() {
 
   for (i = 0; i < n; i++) {
     for (j = 0; j < m; j++) {
-      desc[i * m + j] = ((double)rand()) / 10;
+      desc[i * m + j] = (static_cast<double>(rand())) / 10;
     }
   }
 

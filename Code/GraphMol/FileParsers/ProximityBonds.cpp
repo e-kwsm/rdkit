@@ -33,24 +33,25 @@ static bool IsBonded(ProximityEntry *p, ProximityEntry *q, unsigned int flags) {
   if (flags & ctdIGNORE_H_H_CONTACTS && p->elem == 1 && q->elem == 1) {
     return false;
   }
-  double dx = (double)p->x - (double)q->x;
+  double dx = static_cast<double>(p->x) - static_cast<double>(q->x);
   double dist2 = dx * dx;
   if (dist2 > MAXDIST2) {
     return false;
   }
-  double dy = (double)p->y - (double)q->y;
+  double dy = static_cast<double>(p->y) - static_cast<double>(q->y);
   dist2 += dy * dy;
   if (dist2 > MAXDIST2) {
     return false;
   }
-  double dz = (double)p->z - (double)q->z;
+  double dz = static_cast<double>(p->z) - static_cast<double>(q->z);
   dist2 += dz * dz;
 
   if (dist2 > MAXDIST2 || dist2 < MINDIST2) {
     return false;
   }
 
-  double radius = (double)p->r + (double)q->r + EXTDIST;
+  double radius =
+      static_cast<double>(p->r) + static_cast<double>(q->r) + EXTDIST;
   return dist2 <= radius * radius;
 }
 
@@ -167,7 +168,8 @@ static void ConnectTheDots_Large(RWMol *mol, unsigned int flags) {
   memset(HashTable, -1, sizeof(HashTable));
 
   unsigned int count = mol->getNumAtoms();
-  auto *tmp = (ProximityEntry *)malloc(count * sizeof(ProximityEntry));
+  auto *tmp =
+      static_cast<ProximityEntry *>(malloc(count * sizeof(ProximityEntry)));
   CHECK_INVARIANT(tmp, "bad allocation");
   PeriodicTable *table = PeriodicTable::getTable();
   Conformer *conf = &mol->getConformer();
@@ -177,15 +179,16 @@ static void ConnectTheDots_Large(RWMol *mol, unsigned int flags) {
     unsigned int elem = atom->getAtomicNum();
     RDGeom::Point3D p = conf->getAtomPos(i);
     ProximityEntry *tmpi = tmp + i;
-    tmpi->x = (float)p.x;
-    tmpi->y = (float)p.y;
-    tmpi->z = (float)p.z;
-    tmpi->r = (float)table->getRcovalent(elem);
+    tmpi->x = static_cast<float>(p.x);
+    tmpi->y = static_cast<float>(p.y);
+    tmpi->z = static_cast<float>(p.z);
+    tmpi->r = static_cast<float>(table->getRcovalent(elem));
     tmpi->atm = i;
     tmpi->elem = elem;
 
-    int hash = HASHX * (int)(p.x / MAXDIST) + HASHY * (int)(p.y / MAXDIST) +
-               HASHZ * (int)(p.z / MAXDIST);
+    int hash = HASHX * static_cast<int>(p.x / MAXDIST) +
+               HASHY * static_cast<int>(p.y / MAXDIST) +
+               HASHZ * static_cast<int>(p.z / MAXDIST);
 
     for (int dx = -HASHX; dx <= HASHX; dx += HASHX) {
       for (int dy = -HASHY; dy <= HASHY; dy += HASHY) {

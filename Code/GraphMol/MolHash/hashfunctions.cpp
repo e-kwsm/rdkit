@@ -230,8 +230,8 @@ std::string NMMolecularFormula(RWMol *mol, bool sep = false) {
     return "";
   }
 
-  auto size = (unsigned int)(acount * sizeof(int));
-  auto *parts = (unsigned int *)malloc(size);
+  auto size = static_cast<unsigned int>(acount * sizeof(int));
+  auto *parts = static_cast<unsigned int *>(malloc(size));
   unsigned int pcount = NMDetermineComponents(mol, parts, acount);
 
   std::string result;
@@ -1059,7 +1059,7 @@ bool DepthFirstSearchForRing(Atom *root, Atom *nbor, unsigned int maxatomidx) {
   PRECONDITION(nbor, "bad atom pointer");
 
   unsigned int natoms = maxatomidx;
-  auto *visit = (unsigned char *)alloca(natoms);
+  auto *visit = static_cast<unsigned char *>(alloca(natoms));
   memset(visit, 0, natoms);
 
   visit[root->getIdx()] = true;
@@ -1104,7 +1104,7 @@ std::string ExtendedMurckoScaffold(RWMol *mol, bool useCXSmiles,
   }
 
   unsigned int maxatomidx = mol->getNumAtoms();
-  auto *is_in_scaffold = (unsigned char *)alloca(maxatomidx);
+  auto *is_in_scaffold = static_cast<unsigned char *>(alloca(maxatomidx));
   for (auto aptr : mol->atoms()) {
     is_in_scaffold[aptr->getIdx()] = IsInScaffold(aptr, maxatomidx);
   }
@@ -1380,7 +1380,7 @@ std::string ArthorSubOrderHash(RWMol *mol) {
 
   unsigned int pcount = 1;
   unsigned int size = 4 * mol->getNumAtoms() + 4;
-  auto *parts = (unsigned int *)malloc(size);
+  auto *parts = static_cast<unsigned int *>(malloc(size));
   if (parts) {
     memset(parts, 0, size);
     pcount = NMDetermineComponents(mol, parts, acount);
