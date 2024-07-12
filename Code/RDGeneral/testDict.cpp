@@ -96,7 +96,7 @@ void testRDAny() {
     bool a = true;
     RDValue v(a);
     TEST_ASSERT(rdvalue_cast<bool>(v) == true);
-    v = (int)10;
+    v = 10;
     TEST_ASSERT(rdvalue_cast<int>(v) == 10);
   }
 
@@ -198,7 +198,7 @@ void testRDAny() {
     std::clock_t clock2 = std::clock();
 
     std::cout << "static boost any:"
-              << (double)(clock2 - clock1) / CLOCKS_PER_SEC << " s"
+              << static_cast<double>(clock2 - clock1) / CLOCKS_PER_SEC << " s"
               << std::endl;
   }
   {
@@ -213,7 +213,7 @@ void testRDAny() {
     std::clock_t clock2 = std::clock();
 
     std::cout << "dynamic boost any:"
-              << (double)(clock2 - clock1) / CLOCKS_PER_SEC << " s"
+              << static_cast<double>(clock2 - clock1) / CLOCKS_PER_SEC << " s"
               << std::endl;
   }
 
@@ -225,8 +225,9 @@ void testRDAny() {
     }
     std::clock_t clock2 = std::clock();
 
-    std::cout << "static RDAny:" << (double)(clock2 - clock1) / CLOCKS_PER_SEC
-              << " s" << std::endl;
+    std::cout << "static RDAny:"
+              << static_cast<double>(clock2 - clock1) / CLOCKS_PER_SEC << " s"
+              << std::endl;
   }
 
   {
@@ -240,8 +241,9 @@ void testRDAny() {
     delete vv;
     std::clock_t clock2 = std::clock();
 
-    std::cout << "dynamic RDAny:" << (double)(clock2 - clock1) / CLOCKS_PER_SEC
-              << " s" << std::endl;
+    std::cout << "dynamic RDAny:"
+              << static_cast<double>(clock2 - clock1) / CLOCKS_PER_SEC << " s"
+              << std::endl;
   }
 
   {
@@ -252,8 +254,9 @@ void testRDAny() {
     }
     std::clock_t clock2 = std::clock();
 
-    std::cout << "static RDValue:" << (double)(clock2 - clock1) / CLOCKS_PER_SEC
-              << " s" << std::endl;
+    std::cout << "static RDValue:"
+              << static_cast<double>(clock2 - clock1) / CLOCKS_PER_SEC << " s"
+              << std::endl;
   }
 
   {
@@ -266,7 +269,7 @@ void testRDAny() {
     std::clock_t clock2 = std::clock();
 
     std::cout << "dynamic RDValue:"
-              << (double)(clock2 - clock1) / CLOCKS_PER_SEC << " s"
+              << static_cast<double>(clock2 - clock1) / CLOCKS_PER_SEC << " s"
               << std::endl;
   }
 
@@ -533,8 +536,8 @@ void testConstReturns() {
     }
     end = std::clock();
     BOOST_LOG(rdErrorLog) << "done: "
-                          << (end - start) / (double)(CLOCKS_PER_SEC) << " "
-                          << ls << std::endl;
+                          << (end - start) / static_cast<double>(CLOCKS_PER_SEC)
+                          << " " << ls << std::endl;
 
     ls = 0;
     BOOST_LOG(rdErrorLog) << "copy" << std::endl;
@@ -545,8 +548,8 @@ void testConstReturns() {
     }
     end = std::clock();
     BOOST_LOG(rdErrorLog) << "done: "
-                          << (end - start) / (double)(CLOCKS_PER_SEC) << " "
-                          << ls << std::endl;
+                          << (end - start) / static_cast<double>(CLOCKS_PER_SEC)
+                          << " " << ls << std::endl;
 
     ls = 0;
     BOOST_LOG(rdErrorLog) << "ref" << std::endl;
@@ -557,8 +560,8 @@ void testConstReturns() {
     }
     end = std::clock();
     BOOST_LOG(rdErrorLog) << "done: "
-                          << (end - start) / (double)(CLOCKS_PER_SEC) << " "
-                          << ls << std::endl;
+                          << (end - start) / static_cast<double>(CLOCKS_PER_SEC)
+                          << " " << ls << std::endl;
 
     ls = 0;
     BOOST_LOG(rdErrorLog) << "dict" << std::endl;
@@ -569,8 +572,8 @@ void testConstReturns() {
     }
     end = std::clock();
     BOOST_LOG(rdErrorLog) << "done: "
-                          << (end - start) / (double)(CLOCKS_PER_SEC) << " "
-                          << ls << std::endl;
+                          << (end - start) / static_cast<double>(CLOCKS_PER_SEC)
+                          << " " << ls << std::endl;
 
     ls = 0;
     BOOST_LOG(rdErrorLog) << "ref with hasVal" << std::endl;
@@ -584,8 +587,8 @@ void testConstReturns() {
     }
     end = std::clock();
     BOOST_LOG(rdErrorLog) << "done: "
-                          << (end - start) / (double)(CLOCKS_PER_SEC) << " "
-                          << ls << std::endl;
+                          << (end - start) / static_cast<double>(CLOCKS_PER_SEC)
+                          << " " << ls << std::endl;
 
     // std::string nv=d.getVal<std::string>("foo");
   }

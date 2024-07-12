@@ -367,14 +367,14 @@ struct filtercat_wrapper {
 
         .def("IsValid", &SmartsMatcher::isValid, python::args("self"),
              "Returns True if the SmartsMatcher is valid")
-        .def(
-            "SetPattern",
-            (void(SmartsMatcher::*)(const ROMol &)) & SmartsMatcher::setPattern,
-            python::args("self", "pat"),
-            "Set the pattern molecule for the SmartsMatcher")
         .def("SetPattern",
-             (void(SmartsMatcher::*)(const std::string &)) &
-                 SmartsMatcher::setPattern,
+             static_cast<void (SmartsMatcher::*)(const ROMol &)>(
+                 &SmartsMatcher::setPattern),
+             python::args("self", "pat"),
+             "Set the pattern molecule for the SmartsMatcher")
+        .def("SetPattern",
+             static_cast<void (SmartsMatcher::*)(const std::string &)>(
+                 &SmartsMatcher::setPattern),
              python::args("self", "pat"),
              "Set the smarts pattern for the Smarts Matcher (warning: "
              "MinimumCount is not reset)")
@@ -451,16 +451,18 @@ struct filtercat_wrapper {
         .def("GetPropList", &FilterCatalogEntry::getPropList,
              python::args("self"))
         .def("SetProp",
-             (void(FilterCatalogEntry::*)(const std::string &, std::string)) &
-                 FilterCatalogEntry::setProp<std::string>,
+             static_cast<void (FilterCatalogEntry::*)(const std::string &,
+                                                      std::string)>(
+                 &FilterCatalogEntry::setProp<std::string>),
              python::args("self", "key", "val"))
-        .def("GetProp",
-             (std::string(FilterCatalogEntry::*)(const std::string &) const) &
-                 FilterCatalogEntry::getProp<std::string>,
-             python::args("self", "key"))
+        .def(
+            "GetProp",
+            static_cast<std::string (FilterCatalogEntry::*)(const std::string &)
+                            const>(&FilterCatalogEntry::getProp<std::string>),
+            python::args("self", "key"))
         .def("ClearProp",
-             (void(FilterCatalogEntry::*)(const std::string &)) &
-                 FilterCatalogEntry::clearProp,
+             static_cast<void (FilterCatalogEntry::*)(const std::string &)>(
+                 &FilterCatalogEntry::clearProp),
              python::args("self", "key"));
 
     python::register_ptr_to_python<boost::shared_ptr<FilterCatalogEntry>>();

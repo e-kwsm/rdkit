@@ -2735,7 +2735,7 @@ M  END)CTAB"_ctab;
     std::vector<int> rotns = {0, 30, 60, 90, 120, 150, 180};
     for (auto rotn : rotns) {
       MolDraw2DSVG drawer(350, 300);
-      drawer.drawOptions().rotate = (double)rotn;
+      drawer.drawOptions().rotate = static_cast<double>(rotn);
       drawer.drawMolecule(*m);
       drawer.finishDrawing();
       auto text = drawer.getDrawingText();
@@ -2982,7 +2982,7 @@ M  END)CTAB"_ctab;
     std::vector<int> rotns = {0, 30, 60, 90, 120, 150, 180};
     for (auto rotn : rotns) {
       MolDraw2DSVG drawer(350, 300);
-      drawer.drawOptions().rotate = (double)rotn;
+      drawer.drawOptions().rotate = static_cast<double>(rotn);
       drawer.drawMolecule(*m);
       drawer.finishDrawing();
       auto text = drawer.getDrawingText();
