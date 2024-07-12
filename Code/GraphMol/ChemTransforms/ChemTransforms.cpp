@@ -233,7 +233,7 @@ std::vector<ROMOL_SPTR> replaceSubstructs(
     while (nbrIdx != endNbrs) {
       // we don't want to duplicate any "intra-match" bonds:
       if (!std::binary_search(sortMatch.begin(), sortMatch.end(),
-                              int(*nbrIdx))) {
+                              static_cast<int>(*nbrIdx))) {
         Bond *oBond = newMol->getBondBetweenAtoms(match[0], *nbrIdx);
         CHECK_INVARIANT(oBond, "required bond not found");
         newMol->addBond(numOrigAtoms + replacementConnectionPoint, *nbrIdx,

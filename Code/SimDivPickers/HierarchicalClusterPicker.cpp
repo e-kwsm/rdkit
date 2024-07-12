@@ -26,22 +26,22 @@ RDKit::VECT_INT_VECT HierarchicalClusterPicker::cluster(
                "pickSize cannot be larger than the poolSize");
 
   // Do the clustering
-  auto method = (long int)d_method;
+  auto method = static_cast<long int>(d_method);
   long int len = poolSize * (poolSize - 1);
-  auto *ia = (long int *)calloc(poolSize, sizeof(long int));
-  auto *ib = (long int *)calloc(poolSize, sizeof(long int));
-  real *crit = (real *)calloc(poolSize, sizeof(real));
+  auto *ia = static_cast<long int *>(calloc(poolSize, sizeof(long int)));
+  auto *ib = static_cast<long int *>(calloc(poolSize, sizeof(long int)));
+  real *crit = static_cast<real *>(calloc(poolSize, sizeof(real)));
   CHECK_INVARIANT(ia, "failed to allocate memory");
   CHECK_INVARIANT(ib, "failed to allocate memory");
   CHECK_INVARIANT(crit, "failed to allocate memory");
   auto poolSize2 = static_cast<long int>(poolSize);
 
-  distdriver_(&poolSize2,       // number of items in the pool
-              &len,             // number of entries in the distance matrix
-              (real *)distMat,  // distance matrix
-              &method,          // the clustering method (ward, slink etc.)
-              ia,               // int vector with clustering history
-              ib,               // one more clustering history matrix
+  distdriver_(&poolSize2,  // number of items in the pool
+              &len,        // number of entries in the distance matrix
+              const_cast<real *>(distMat),  // distance matrix
+              &method,  // the clustering method (ward, slink etc.)
+              ia,       // int vector with clustering history
+              ib,       // one more clustering history matrix
               crit  // I believe this is a vector the difference in heights of
                     // two clusters
   );

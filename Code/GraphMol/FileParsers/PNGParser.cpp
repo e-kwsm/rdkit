@@ -50,7 +50,7 @@ std::vector<unsigned char> pngHeader = {137, 80, 78, 71, 13, 10, 26, 10};
 bool checkPNGHeader(std::istream &inStream) {
   for (auto byte : pngHeader) {
     unsigned char ibyte;
-    inStream.read((char *)&ibyte, 1);
+    inStream.read(reinterpret_cast<char *>(&ibyte), 1);
     if (ibyte != byte) {
       return false;
     }
@@ -161,7 +161,7 @@ std::vector<std::pair<std::string, std::string>> PNGStreamToMetadata(
   // requires zlib
   while (inStream) {
     std::uint32_t blockLen;
-    inStream.read((char *)&blockLen, sizeof(blockLen));
+    inStream.read(reinterpret_cast<char *>(&blockLen), sizeof(blockLen));
     if (inStream.fail()) {
       throw FileParseException("error when reading from PNG");
     }
@@ -250,21 +250,21 @@ std::string addMetadataToPNGStream(
   std::uint32_t finalCRC;
   while (inStream) {
     std::uint32_t blockLen;
-    inStream.read((char *)&blockLen, sizeof(blockLen));
+    inStream.read(reinterpret_cast<char *>(&blockLen), sizeof(blockLen));
     char bytes[4];
     inStream.read(bytes, 4);
     if (bytes[0] == 'I' && bytes[1] == 'E' && bytes[2] == 'N' &&
         bytes[3] == 'D') {
       foundEnd = true;
-      inStream.read((char *)&finalCRC, sizeof(finalCRC));
+      inStream.read(reinterpret_cast<char *>(&finalCRC), sizeof(finalCRC));
       break;
     }
-    res.write((char *)&blockLen, sizeof(blockLen));
+    res.write(reinterpret_cast<char *>(&blockLen), sizeof(blockLen));
     res.write(bytes, 4);
     // PNG is big endian, make sure we handle the order correctly
     blockLen = EndianSwapBytes<BIG_ENDIAN_ORDER, HOST_ENDIAN_ORDER>(blockLen);
     std::string block(blockLen + 4, 0);
-    inStream.read((char *)&block.front(),
+    inStream.read(static_cast<char *>(&block.front()),
                   blockLen + 4);  // the extra 4 bytes are the CRC
     res.write(block.c_str(), blockLen + 4);
   }
@@ -305,20 +305,20 @@ std::string addMetadataToPNGStream(
     // PNG is big endian, make sure we handle the order correctly
     blksize = EndianSwapBytes<HOST_ENDIAN_ORDER, BIG_ENDIAN_ORDER>(blksize);
 
-    res.write((char *)&blksize, sizeof(blksize));
+    res.write(reinterpret_cast<char *>(&blksize), sizeof(blksize));
     res.write(blob.c_str(), blob.size());
     // PNG is big endian, make sure we handle the order correctly
     crcVal = EndianSwapBytes<HOST_ENDIAN_ORDER, BIG_ENDIAN_ORDER>(crcVal);
-    res.write((char *)&crcVal, sizeof(crcVal));
+    res.write(reinterpret_cast<char *>(&crcVal), sizeof(crcVal));
   }
 
   // write out the IEND block
   std::uint32_t blksize = 0;
-  res.write((char *)&blksize, sizeof(blksize));
+  res.write(reinterpret_cast<char *>(&blksize), sizeof(blksize));
 
   const char *endTag = "IEND";
   res.write(endTag, 4);
-  res.write((char *)&finalCRC, sizeof(finalCRC));
+  res.write(reinterpret_cast<char *>(&finalCRC), sizeof(finalCRC));
   return res.str();
 }
 

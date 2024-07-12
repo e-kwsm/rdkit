@@ -91,22 +91,19 @@ struct multiSmiMolSup_wrap {
              python::arg("sizeOutputQueue") = 5),
             multiSmsDocStr.c_str()))
         .def("__iter__",
-             (MultithreadedSmilesMolSupplier *
-              (*)(MultithreadedSmilesMolSupplier *)) &
-                 MTMolSupplIter,
+             static_cast<MultithreadedSmilesMolSupplier *(
+                     *)(MultithreadedSmilesMolSupplier *)>(&MTMolSupplIter),
              python::return_internal_reference<1>(), python::args("self"))
         .def("__enter__",
-             (MultithreadedSmilesMolSupplier *
-              (*)(MultithreadedSmilesMolSupplier *)) &
-                 MolIOEnter,
+             static_cast<MultithreadedSmilesMolSupplier *(
+                     *)(MultithreadedSmilesMolSupplier *)>(&MolIOEnter),
              python::return_internal_reference<>())
-        .def("__exit__",
-             (bool (*)(MultithreadedSmilesMolSupplier *, python::object,
-                       python::object, python::object)) &
-                 MolIOExit)
+        .def("__exit__", static_cast<bool (*)(MultithreadedSmilesMolSupplier *,
+                                              python::object, python::object,
+                                              python::object)>(&MolIOExit))
         .def("__next__",
-             (ROMol * (*)(MultithreadedSmilesMolSupplier *)) &
-                 MolForwardSupplNext,
+             static_cast<ROMol *(*)(MultithreadedSmilesMolSupplier *)>(
+                 &MolForwardSupplNext),
              "Returns the next molecule in the file. Raises _StopIteration_ "
              "on EOF.\n",
              python::return_value_policy<python::manage_new_object>(),
@@ -115,13 +112,13 @@ struct multiSmiMolSup_wrap {
              python::args("self"),
              "Returns true if we have read all records else false.\n")
         .def("GetLastRecordId",
-             (unsigned int (*)(MultithreadedSmilesMolSupplier *)) &
-                 MTMolSupplLastId,
+             static_cast<unsigned int (*)(MultithreadedSmilesMolSupplier *)>(
+                 &MTMolSupplLastId),
              python::args("self"),
              "Returns the record id for the last extracted item.\n")
         .def("GetLastItemText",
-             (std::string(*)(MultithreadedSmilesMolSupplier *)) &
-                 MTMolSupplLastItem,
+             static_cast<std::string (*)(MultithreadedSmilesMolSupplier *)>(
+                 &MTMolSupplLastItem),
              python::args("self"),
              "Returns the text for the last extracted item.\n");
   };

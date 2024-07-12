@@ -212,17 +212,19 @@ struct resmolsup_wrap {
         python::init<ROMol &, unsigned int, unsigned int>(
             (python::arg("self"), python::arg("mol"), python::arg("flags") = 0,
              python::arg("maxStructs") = 1000)))
-        .def(
-            "__iter__",
-            (ResonanceMolSupplier * (*)(ResonanceMolSupplier *)) & MolSupplIter,
-            python::return_internal_reference<1>(), python::args("self"))
-        .def("__next__", (ROMol * (*)(ResonanceMolSupplier *)) & MolSupplNext,
+        .def("__iter__",
+             static_cast<ResonanceMolSupplier *(*)(ResonanceMolSupplier *)>(
+                 &MolSupplIter),
+             python::return_internal_reference<1>(), python::args("self"))
+        .def("__next__",
+             static_cast<ROMol *(*)(ResonanceMolSupplier *)>(&MolSupplNext),
              "Returns the next resonance structure in the supplier. Raises "
              "_StopIteration_ on end.\n",
              python::return_value_policy<python::manage_new_object>(),
              python::args("self"))
         .def("__getitem__",
-             (ROMol * (*)(ResonanceMolSupplier *, int)) & MolSupplGetItem,
+             static_cast<ROMol *(*)(ResonanceMolSupplier *, int)>(
+                 &MolSupplGetItem),
              python::return_value_policy<python::manage_new_object>(),
              python::args("self", "idx"))
         .def("reset", &ResonanceMolSupplier::reset, python::args("self"),
@@ -280,8 +282,9 @@ struct resmolsup_wrap {
              "Returns true if resonance structure enumeration has already "
              "happened.\n")
         .def("GetSubstructMatch",
-             (PyObject * (*)(ResonanceMolSupplier & m, const ROMol &query, bool,
-                             bool)) GetSubstructMatch,
+             static_cast<PyObject *(*)(ResonanceMolSupplier &m,
+                                       const ROMol &query, bool, bool)>(
+                 GetSubstructMatch),
              (python::arg("self"), python::arg("query"),
               python::arg("useChirality") = false,
               python::arg("useQueryQueryMatches") = false),
