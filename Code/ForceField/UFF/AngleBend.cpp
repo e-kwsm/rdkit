@@ -206,7 +206,7 @@ double AngleBendContrib::getEnergyTerm(double cosTheta,
         break;
     }
     res = 1. - res;
-    res /= (double)(d_order * d_order);
+    res /= static_cast<double>(d_order * d_order);
   }
   return res;
 }
@@ -246,7 +246,7 @@ double AngleBendContrib::getThetaDeriv(double cosTheta, double sinTheta) const {
         dE_dTheta = cosTheta * sinTheta * (4. - 8. * sinTheta * sinTheta);
         break;
     }
-    dE_dTheta *= d_forceConstant / (double)(d_order);
+    dE_dTheta *= d_forceConstant / static_cast<double>(d_order);
   }
   return dE_dTheta;
 }
