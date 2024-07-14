@@ -48,15 +48,15 @@ namespace RDKit {
   RGD_ENUM_ITEM(FingerprintVariance, 1 << 2)
 
 #define RGD_ENUM_ITEM(k, v) k = v,
-typedef enum { RGROUPLABELS_ENUM_ITEMS } RGroupLabels;
+enum RGroupLabels { RGROUPLABELS_ENUM_ITEMS };
 
-typedef enum { RGROUPMATCHING_ENUM_ITEMS } RGroupMatching;
+enum RGroupMatching { RGROUPMATCHING_ENUM_ITEMS };
 
-typedef enum { RGROUPLABELLING_ENUM_ITEMS } RGroupLabelling;
+enum RGroupLabelling { RGROUPLABELLING_ENUM_ITEMS };
 
-typedef enum { RGROUPCOREALIGNMENT_ENUM_ITEMS } RGroupCoreAlignment;
+enum RGroupCoreAlignment { RGROUPCOREALIGNMENT_ENUM_ITEMS };
 
-typedef enum { RGROUPSCORE_ENUM_ITEMS } RGroupScore;
+enum RGroupScore { RGROUPSCORE_ENUM_ITEMS };
 #undef RGD_ENUM_ITEM
 #define RGD_STD_MAP_ITEM(k) {#k, k},
 #define RGD_ENUM_ITEM(k, v) RGD_STD_MAP_ITEM(k)

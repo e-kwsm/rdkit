@@ -21,7 +21,7 @@
 // #include <boost/log/functions.hpp>
 using namespace RDKit;
 using namespace std;
-using Mol = ROMol;
+typedef ROMol Mol;
 
 #define LOCAL_TEST_ALL 1
 #if LOCAL_TEST_ALL
