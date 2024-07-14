@@ -96,7 +96,7 @@ extern int yysmarts_debug;
     CHI_CLASS_TOKEN = 297,         /* CHI_CLASS_TOKEN  */
     EOS_TOKEN = 298                /* EOS_TOKEN  */
   };
-  using yytoken_kind_t = enum yytokentype;
+  typedef enum yytokentype yytoken_kind_t;
 #endif
 
 /* Value type.  */
