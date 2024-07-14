@@ -27,6 +27,7 @@
 
 #include <maeparser/MaeConstants.hpp>
 #include <maeparser/Reader.hpp>
+#include <memory>
 
 using namespace schrodinger;
 using namespace RDKit::FileParsers::schrodinger;
@@ -542,7 +543,7 @@ MaeMolSupplier::MaeMolSupplier(const std::string &fileName,
 
 void MaeMolSupplier::init() {
   PRECONDITION(dp_sInStream, "no input stream")
-  d_reader.reset(new mae::Reader(dp_sInStream));
+  d_reader = std::make_shared<mae::Reader>(dp_sInStream);
   CHECK_INVARIANT(streamIsGoodOrExhausted(dp_inStream), "bad instream");
 
   d_position = 0;
