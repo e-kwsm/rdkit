@@ -20,6 +20,7 @@
 #include <boost/flyweight.hpp>
 #include <boost/flyweight/key_value.hpp>
 #include <boost/flyweight/no_tracking.hpp>
+#include <memory>
 #include <utility>
 
 // #define VERBOSE_ENUMERATION 1
@@ -160,7 +161,7 @@ TautomerEnumerator::TautomerEnumerator(const CleanupParameters &params)
   } else {
     tautParams.reset(new TautomerCatalogParams(params.tautomerTransformData));
   }
-  dp_catalog.reset(new TautomerCatalog(tautParams.get()));
+  dp_catalog = std::make_shared<TautomerCatalog>(tautParams.get());
 }
 
 bool TautomerEnumerator::setTautomerStereoAndIsoHs(
