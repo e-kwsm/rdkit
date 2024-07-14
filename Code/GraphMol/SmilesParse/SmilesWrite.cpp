@@ -205,7 +205,7 @@ std::string GetAtomSmiles(const Atom *atom, const SmilesWriteParams &params) {
     if (fc || nonStandard ||
         atom->hasProp(common_properties::molAtomMapNumber)) {
       needsBracket = true;
-    } else if (params.doIsomericSmiles && (isotope || atString != "")) {
+    } else if (params.doIsomericSmiles && (isotope || !atString.empty())) {
       needsBracket = true;
     }
   } else {
