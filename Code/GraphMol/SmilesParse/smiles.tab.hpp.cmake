@@ -86,7 +86,7 @@ union YYSTYPE {
 #line 89 "C:/Users/glandrum/RDKit_git/Code/GraphMol/SmilesParse/smiles.tab.hpp" /* yacc.c:1909  */
 };
 
-typedef union YYSTYPE YYSTYPE;
+using YYSTYPE = union YYSTYPE;
 #define YYSTYPE_IS_TRIVIAL 1
 #define YYSTYPE_IS_DECLARED 1
 #endif
