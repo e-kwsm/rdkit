@@ -160,7 +160,7 @@ TautomerEnumerator::TautomerEnumerator(const CleanupParameters &params)
   } else {
     tautParams.reset(new TautomerCatalogParams(params.tautomerTransformData));
   }
-  dp_catalog.reset(new TautomerCatalog(tautParams.get()));
+  dp_catalog = std::make_shared<TautomerCatalog>(tautParams.get());
 }
 
 bool TautomerEnumerator::setTautomerStereoAndIsoHs(

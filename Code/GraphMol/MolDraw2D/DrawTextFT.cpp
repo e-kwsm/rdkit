@@ -13,7 +13,6 @@
 
 #include <cstdio>
 #include <iostream>
-#include <memory>
 
 #include <GraphMol/MolDraw2D/MolDraw2D.h>
 #include <GraphMol/MolDraw2D/DrawTextFT.h>
