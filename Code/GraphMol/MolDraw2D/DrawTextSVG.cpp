@@ -12,7 +12,6 @@
 // A concrete class derived from DrawText that uses SVG
 // to draw text onto a picture.
 
-#include <memory>
 #include <sstream>
 #include <boost/algorithm/string.hpp>
 #include <boost/format.hpp>
