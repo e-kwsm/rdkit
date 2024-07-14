@@ -166,7 +166,7 @@ int smiles_parse(const std::string &inp, std::vector<RDKit::RWMol *> &molVect) {
   return smiles_parse_helper(inp, molVect, atom, bond, start_tok);
 }
 
-enum SmaState { BASE = 0, BRANCH, RECURSE };
+typedef enum { BASE = 0, BRANCH, RECURSE } SmaState;
 
 std::string labelRecursivePatterns(const std::string &sma) {
 #ifndef NO_AUTOMATIC_SMARTS_RELABELLING
