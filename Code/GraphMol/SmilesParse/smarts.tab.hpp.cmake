@@ -96,7 +96,7 @@ extern int yysmarts_debug;
     CHI_CLASS_TOKEN = 297,         /* CHI_CLASS_TOKEN  */
     EOS_TOKEN = 298                /* EOS_TOKEN  */
   };
-  typedef enum yytokentype yytoken_kind_t;
+  using yytoken_kind_t = yytokentype;
 #endif
 
 /* Value type.  */
@@ -114,7 +114,7 @@ union YYSTYPE
 #line 115 "/scratch/RDKit_git/Code/GraphMol/SmilesParse/smarts.tab.hpp"
 
 };
-typedef union YYSTYPE YYSTYPE;
+using YYSTYPE = union YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1
 #endif
