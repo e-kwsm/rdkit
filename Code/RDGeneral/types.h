@@ -263,9 +263,9 @@ RDKIT_RDGENERAL_EXPORT extern const std::string _isotopicHs;
 
 }  // namespace common_properties
 #ifndef WIN32
-typedef long long int LONGINT;
+using LONGINT = long long;
 #else
-typedef __int64 LONGINT;
+using LONGINT = __int64;
 #endif
 #ifdef max
 #undef max  // FUCK I hate this nonsense
