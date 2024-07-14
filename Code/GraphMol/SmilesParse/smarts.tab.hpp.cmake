@@ -97,7 +97,7 @@ extern int yysmarts_debug;
     BAD_CHARACTER = 298,           /* BAD_CHARACTER  */
     EOS_TOKEN = 299                /* EOS_TOKEN  */
   };
-  typedef enum yytokentype yytoken_kind_t;
+  using yytoken_kind_t = yytokentype;
 #endif
 
 /* Value type.  */
@@ -113,7 +113,7 @@ union YYSTYPE
 
 
 };
-typedef union YYSTYPE YYSTYPE;
+using YYSTYPE = union YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1
 #endif
