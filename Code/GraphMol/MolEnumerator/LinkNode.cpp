@@ -19,6 +19,7 @@
 #include <boost/tokenizer.hpp>
 #include <boost/format.hpp>
 #include <algorithm>
+#include <memory>
 
 typedef boost::tokenizer<boost::char_separator<char>> tokenizer;
 
@@ -26,7 +27,7 @@ namespace RDKit {
 namespace MolEnumerator {
 
 void LinkNodeOp::initFromMol(const ROMol &mol) {
-  dp_mol.reset(new ROMol(mol));
+  dp_mol = std::make_shared<ROMol>(mol);
   initFromMol();
 }
 void LinkNodeOp::initFromMol() {
@@ -58,7 +59,7 @@ void LinkNodeOp::initFromMol() {
         "LINKNODE enumeration only supported for molecules with a single "
         "fragment.");
   }
-  dp_frame.reset(new RWMol(*dp_mol));
+  dp_frame = std::make_shared<RWMol>(*dp_mol);
   auto nodes = utils::getMolLinkNodes(*dp_frame, true, &d_atomMap);
   std::string attachSmarts = "";
   std::vector<std::string> linkEnums;
