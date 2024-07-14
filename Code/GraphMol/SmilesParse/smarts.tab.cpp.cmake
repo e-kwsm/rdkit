@@ -299,7 +299,7 @@ using yytype_uint16 = uint_least16_t;
 #elif !defined __UINT_LEAST16_MAX__ && USHRT_MAX <= INT_MAX
 using yytype_uint16 = unsigned short;
 #else
-typedef int yytype_uint16;
+using yytype_uint16 = int;
 #endif
 
 #ifndef YYPTRDIFF_T

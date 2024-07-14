@@ -336,7 +336,7 @@ using flex_uint32_t = unsigned int;
 /* An opaque pointer. */
 #ifndef YY_TYPEDEF_YY_SCANNER_T
 #define YY_TYPEDEF_YY_SCANNER_T
-typedef void* yyscan_t;
+using yyscan_t = void*;
 #endif
 
 /* For convenience, these vars (plus the bison vars far below)
@@ -386,12 +386,12 @@ typedef void* yyscan_t;
 
 #ifndef YY_TYPEDEF_YY_BUFFER_STATE
 #define YY_TYPEDEF_YY_BUFFER_STATE
-typedef struct yy_buffer_state *YY_BUFFER_STATE;
+using YY_BUFFER_STATE = struct yy_buffer_state*;
 #endif
 
 #ifndef YY_TYPEDEF_YY_SIZE_T
 #define YY_TYPEDEF_YY_SIZE_T
-typedef size_t yy_size_t;
+using yy_size_t = size_t;
 #endif
 
 #define EOB_ACT_CONTINUE_SCAN 0
@@ -541,9 +541,9 @@ void yyfree ( void * , yyscan_t yyscanner );
 
 #define yysmarts_wrap(yyscanner) (/*CONSTCOND*/1)
 #define YY_SKIP_YYWRAP
-typedef flex_uint8_t YY_CHAR;
+using YY_CHAR = flex_uint8_t;
 
-typedef int yy_state_type;
+using yy_state_type = int;
 
 #define yytext_ptr yytext_r
 
