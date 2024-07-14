@@ -920,12 +920,15 @@ static int input (yyscan_t yyscanner );
 		int c = '*'; \
 		yy_size_t n; \
 		for ( n = 0; n < max_size && \
-			     (c = getc( yyin )) != EOF && c != '\n'; ++n ) \
+			     (c = getc( yyin )) != EOF && c != '\n'; ++n ) { \
 			buf[n] = (char) c; \
-		if ( c == '\n' ) \
+		} \
+		if ( c == '\n' ) { \
 			buf[n++] = (char) c; \
-		if ( c == EOF && ferror( yyin ) ) \
+		} \
+		if ( c == EOF && ferror( yyin ) ) { \
 			YY_FATAL_ERROR( "input in flex scanner failed" ); \
+		} \
 		result = n; \
 		} \
 	else \
@@ -1071,7 +1074,7 @@ yy_match:
 			yy_current_state = yy_nxt[yy_base[yy_current_state] + (unsigned int) yy_c];
 			++yy_cp;
 			}
-		while ( yy_base[yy_current_state] != 702 );
+		while ( yy_base[yy_current_state] != 702 ) {}
 
 yy_find_action:
 		yy_act = yy_accept[yy_current_state];
