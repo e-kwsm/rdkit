@@ -97,7 +97,7 @@ extern int yysmarts_debug;
     BAD_CHARACTER = 298,           /* BAD_CHARACTER  */
     EOS_TOKEN = 299                /* EOS_TOKEN  */
   };
-  using yytoken_kind_t = enum yytokentype;
+  typedef enum yytokentype yytoken_kind_t;
 #endif
 
 /* Value type.  */
