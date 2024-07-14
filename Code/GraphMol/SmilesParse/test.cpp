@@ -21,7 +21,7 @@
 
 using namespace RDKit;
 using namespace std;
-using Mol = ROMol;
+typedef ROMol Mol;
 
 void testPass() {
   int i = 0;
