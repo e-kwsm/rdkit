@@ -219,7 +219,7 @@ ForceFields::ForceField *constructForceField(
     }
   }
   if (!contrib->empty()) {
-    field->contribs().push_back(ForceFields::ContribPtr(contrib));
+    field->contribs().emplace_back(contrib);
   } else {
     delete contrib;
   }
@@ -231,7 +231,7 @@ ForceFields::ForceField *constructForceField(
       contrib->addContrib(cset.get(), weightChiral);
     }
     if (!contrib->empty()) {
-      field->contribs().push_back(ForceFields::ContribPtr(contrib));
+      field->contribs().emplace_back(contrib);
     } else {
       delete contrib;
     }
@@ -244,7 +244,7 @@ ForceFields::ForceField *constructForceField(
       contrib->addContrib(i, weightFourthDim);
     }
     if (!contrib->empty()) {
-      field->contribs().push_back(ForceFields::ContribPtr(contrib));
+      field->contribs().emplace_back(contrib);
     } else {
       delete contrib;
     }
