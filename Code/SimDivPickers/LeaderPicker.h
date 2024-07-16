@@ -38,8 +38,7 @@ class LeaderPicker : public DistPicker {
    *
    */
   LeaderPicker() {}
-  LeaderPicker(double threshold)
-      : default_threshold(threshold), default_nthreads(1) {}
+  LeaderPicker(double threshold) : default_threshold(threshold) {}
   LeaderPicker(double threshold, int nthreads)
       : default_threshold(threshold), default_nthreads(nthreads) {}
 
