@@ -404,7 +404,7 @@ class atomcomparefunctor3 {
   bool df_useNbrs{false};
   atomcomparefunctor3() {};
   atomcomparefunctor3(Canon::canon_atom *atoms, const ROMol &m)
-      : dp_atoms(atoms), dp_mol(&m), df_useNbrs(false) {};
+      : dp_atoms(atoms), dp_mol(&m) {}
   int operator()(int i, int j) const {
     PRECONDITION(dp_atoms, "no atoms");
     PRECONDITION(dp_mol, "no molecule");
