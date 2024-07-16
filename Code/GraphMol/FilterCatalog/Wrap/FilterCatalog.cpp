@@ -140,13 +140,11 @@ void filter_catalog_add_entry(FilterCatalog &catalog,
 
 class PythonFilterMatch : public FilterMatcherBase {
   PyObject *functor;
-  bool incref;
+  bool incref{false};
 
  public:
   PythonFilterMatch(PyObject *callback)
-      : FilterMatcherBase("Python Filter Matcher"),
-        functor(callback),
-        incref(false) {};
+      : FilterMatcherBase("Python Filter Matcher"), functor(callback) {}
 
   // ONLY CALLED FROM C++ from the copy operation
   PythonFilterMatch(const PythonFilterMatch &rhs)
