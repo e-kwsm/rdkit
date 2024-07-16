@@ -141,7 +141,7 @@ void testMolVSValidation() {
   std::string smi7 = "COc1cccc(C=N[N-]C(N)=O)c1[O-].O.O.O.O=[U+2]=O";
   unique_ptr<ROMol> m7(SmilesToMol(smi7, 0, false));
   vector<ValidationErrorInfo> errout7 = vm.validate(*m7, true);
-  TEST_ASSERT(errout7.size() != 0);
+  TEST_ASSERT(!errout7.empty());
   for (const auto &msg : errout7) {
     TEST_ASSERT(msg == "INFO: [FragmentValidation] water/hydroxide is present");
   }
@@ -149,7 +149,7 @@ void testMolVSValidation() {
   std::string smi8 = "CC(=O)O.NCC(=O)NCCCCCCCCCCNC(=O)CN";
   unique_ptr<ROMol> m8(SmilesToMol(smi8, 0, false));
   vector<ValidationErrorInfo> errout8 = vm.validate(*m8, true);
-  TEST_ASSERT(errout8.size() != 0);
+  TEST_ASSERT(!errout8.empty());
   for (const auto &msg : errout8) {
     TEST_ASSERT(msg ==
                 "INFO: [FragmentValidation] acetate/acetic acid is present");
