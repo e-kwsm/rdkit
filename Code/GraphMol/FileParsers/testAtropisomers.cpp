@@ -160,7 +160,7 @@ class MolAtropTest {
   void RunTests() {
     // the molecule tests
 
-    if (testToRun == "" || testToRun == "sdfTests") {
+    if (testToRun.empty() || testToRun == "sdfTests") {
       std::list<MolTest> sdfTests{
           MolTest("atropWedgeTest.sdf", true, 16, 16),
           MolTest("AtropTest.sdf", true, 38, 41),
