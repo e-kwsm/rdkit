@@ -44,7 +44,7 @@ template <class T1, class T2, class T3>
 class ReadOnlySeq {
  private:
   T1 _start, _end, _pos;
-  int _size;
+  int _size{-1};
   T3 _lenFunc;
   size_t _origLen;
   const ROMOL_SPTR _mol;
@@ -55,7 +55,6 @@ class ReadOnlySeq {
       : _start(start),
         _end(end),
         _pos(start),
-        _size(-1),
         _lenFunc(lenFunc),
         _origLen(lenFunc()),
         _mol(std::move(mol)) {}
