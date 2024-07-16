@@ -111,7 +111,7 @@ bool RGroupData::isMolHydrogen(const ROMol &mol) const {
 std::string RGroupData::getSmiles() const {
   std::string s;
   for (const auto &it : smilesVect) {
-    if (s.length()) {
+    if (!s.empty()) {
       s += ".";
     }
     s += it;
