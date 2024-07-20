@@ -27,7 +27,7 @@ extern int yysmiles_lex(YYSTYPE *,void *,int &, unsigned int&);
 using namespace RDKit;
 namespace {
  void yyErrorCleanup(std::vector<RDKit::RWMol *> *molList){
-  for(std::vector<RDKit::RWMol *>::iterator iter=molList->begin();
+  for(auto iter=molList->begin();
       iter != molList->end(); ++iter){
       SmilesParseOps::CleanupAfterParseError(*iter);
       delete *iter;
