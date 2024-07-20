@@ -26,7 +26,7 @@ extern int yysmarts_lex(YYSTYPE *,void *, int &, unsigned int&);
 using namespace RDKit;
 namespace {
  void yyErrorCleanup(std::vector<RDKit::RWMol *> *molList){
-  for(std::vector<RDKit::RWMol *>::iterator iter=molList->begin();
+  for(auto iter=molList->begin();
       iter != molList->end(); ++iter){
      SmilesParseOps::CleanupAfterParseError(*iter);
      delete *iter;
@@ -399,13 +399,13 @@ hydrogen_atom:	ATOM_OPEN_TOKEN H_TOKEN ATOM_CLOSE_TOKEN
   $$->setProp(RDKit::common_properties::molAtomMapNumber,$4);
 }
 | ATOM_OPEN_TOKEN number H_TOKEN ATOM_CLOSE_TOKEN {
-  QueryAtom *newQ = new QueryAtom(1);
+  auto *newQ = new QueryAtom(1);
   newQ->setIsotope($2);
   newQ->expandQuery(makeAtomIsotopeQuery($2),Queries::COMPOSITE_AND,true);
   $$=newQ;
 }
 | ATOM_OPEN_TOKEN number H_TOKEN COLON_TOKEN number ATOM_CLOSE_TOKEN {
-  QueryAtom *newQ = new QueryAtom(1);
+  auto *newQ = new QueryAtom(1);
   newQ->setIsotope($2);
   newQ->expandQuery(makeAtomIsotopeQuery($2),Queries::COMPOSITE_AND,true);
   newQ->setProp(RDKit::common_properties::molAtomMapNumber,$5);
@@ -414,13 +414,13 @@ hydrogen_atom:	ATOM_OPEN_TOKEN H_TOKEN ATOM_CLOSE_TOKEN
 }
 
 | ATOM_OPEN_TOKEN H_TOKEN charge_spec ATOM_CLOSE_TOKEN {
-  QueryAtom *newQ = new QueryAtom(1);
+  auto *newQ = new QueryAtom(1);
   newQ->setFormalCharge($3);
   newQ->expandQuery(makeAtomFormalChargeQuery($3),Queries::COMPOSITE_AND,true);
   $$=newQ;
 }
 | ATOM_OPEN_TOKEN H_TOKEN charge_spec COLON_TOKEN number ATOM_CLOSE_TOKEN {
-  QueryAtom *newQ = new QueryAtom(1);
+  auto *newQ = new QueryAtom(1);
   newQ->setFormalCharge($3);
   newQ->expandQuery(makeAtomFormalChargeQuery($3),Queries::COMPOSITE_AND,true);
   newQ->setProp(RDKit::common_properties::molAtomMapNumber,$5);
@@ -428,7 +428,7 @@ hydrogen_atom:	ATOM_OPEN_TOKEN H_TOKEN ATOM_CLOSE_TOKEN
   $$=newQ;
 }
 | ATOM_OPEN_TOKEN number H_TOKEN charge_spec ATOM_CLOSE_TOKEN {
-  QueryAtom *newQ = new QueryAtom(1);
+  auto *newQ = new QueryAtom(1);
   newQ->setIsotope($2);
   newQ->setFormalCharge($4);
   newQ->expandQuery(makeAtomIsotopeQuery($2),Queries::COMPOSITE_AND,true);
@@ -436,7 +436,7 @@ hydrogen_atom:	ATOM_OPEN_TOKEN H_TOKEN ATOM_CLOSE_TOKEN
   $$=newQ;
 }
 | ATOM_OPEN_TOKEN number H_TOKEN charge_spec COLON_TOKEN number ATOM_CLOSE_TOKEN {
-  QueryAtom *newQ = new QueryAtom(1);
+  auto *newQ = new QueryAtom(1);
   newQ->setIsotope($2);
   newQ->setFormalCharge($4);
   newQ->expandQuery(makeAtomIsotopeQuery($2),Queries::COMPOSITE_AND,true);
@@ -506,7 +506,7 @@ point_query: NOT_TOKEN point_query {
 /* --------------------------------------------------------------- */
 recursive_query: BEGIN_RECURSE mol END_RECURSE {
   // this is a recursive SMARTS expression
-  QueryAtom *qA = new QueryAtom();
+  auto *qA = new QueryAtom();
   //  FIX: there's maybe a leak here
   RWMol *molP = (*molList)[$2];
   // close any rings in the molecule:
@@ -527,7 +527,7 @@ recursive_query: BEGIN_RECURSE mol END_RECURSE {
   // please don't write your own SMARTS that include this extension:
   // the RDKit smarts parsing code will automatically insert serial
   // numbers for recursive smarts patterns.
-  QueryAtom *qA = new QueryAtom();
+  auto *qA = new QueryAtom();
   //  FIX: there's maybe a leak here
   RWMol *molP = (*molList)[$2];
   // close any rings in the molecule:
@@ -588,26 +588,26 @@ atom_query:	simple_atom
   $1->setQuery(makeAtomImplicitHCountQuery($2));
 }
 | possible_range_query RANGE_OPEN_TOKEN MINUS_TOKEN number RANGE_CLOSE_TOKEN {
-  ATOM_EQUALS_QUERY *oq = static_cast<ATOM_EQUALS_QUERY *>($1->getQuery());
-  ATOM_GREATEREQUAL_QUERY *nq = makeAtomSimpleQuery<ATOM_GREATEREQUAL_QUERY>($4,oq->getDataFunc(),
+  auto *oq = static_cast<ATOM_EQUALS_QUERY *>($1->getQuery());
+  auto *nq = makeAtomSimpleQuery<ATOM_GREATEREQUAL_QUERY>($4,oq->getDataFunc(),
     std::string("greater_")+oq->getDescription());
   $1->setQuery(nq);
 }
 | possible_range_query RANGE_OPEN_TOKEN number MINUS_TOKEN RANGE_CLOSE_TOKEN {
-  ATOM_EQUALS_QUERY *oq = static_cast<ATOM_EQUALS_QUERY *>($1->getQuery());
-  ATOM_LESSEQUAL_QUERY *nq = makeAtomSimpleQuery<ATOM_LESSEQUAL_QUERY>($3,oq->getDataFunc(),
+  auto *oq = static_cast<ATOM_EQUALS_QUERY *>($1->getQuery());
+  auto *nq = makeAtomSimpleQuery<ATOM_LESSEQUAL_QUERY>($3,oq->getDataFunc(),
     std::string("less_")+oq->getDescription());
   $1->setQuery(nq);
 }
 | possible_range_query RANGE_OPEN_TOKEN number MINUS_TOKEN number RANGE_CLOSE_TOKEN {
-  ATOM_EQUALS_QUERY *oq = static_cast<ATOM_EQUALS_QUERY *>($1->getQuery());
+  auto *oq = static_cast<ATOM_EQUALS_QUERY *>($1->getQuery());
   ATOM_RANGE_QUERY *nq = makeAtomRangeQuery($3,$5,false,false,
     oq->getDataFunc(),
     std::string("range_")+oq->getDescription());
   $1->setQuery(nq);
 }
 | number H_TOKEN {
-  QueryAtom *newQ = new QueryAtom();
+  auto *newQ = new QueryAtom();
   newQ->setQuery(makeAtomIsotopeQuery($1));
   newQ->setIsotope($1);
   newQ->expandQuery(makeAtomHCountQuery(1),Queries::COMPOSITE_AND,true);
@@ -615,7 +615,7 @@ atom_query:	simple_atom
   $$=newQ;
 }
 | number H_TOKEN number {
-  QueryAtom *newQ = new QueryAtom();
+  auto *newQ = new QueryAtom();
   newQ->setQuery(makeAtomIsotopeQuery($1));
   newQ->setIsotope($1);
   newQ->expandQuery(makeAtomHCountQuery($3),Queries::COMPOSITE_AND,true);
@@ -623,44 +623,44 @@ atom_query:	simple_atom
   $$=newQ;
 }
 | H_TOKEN number {
-  QueryAtom *newQ = new QueryAtom();
+  auto *newQ = new QueryAtom();
   newQ->setQuery(makeAtomHCountQuery($2));
   newQ->setNumExplicitHs($2);
   $$=newQ;
 }
 | H_TOKEN {
-  QueryAtom *newQ = new QueryAtom();
+  auto *newQ = new QueryAtom();
   newQ->setQuery(makeAtomHCountQuery(1));
   newQ->setNumExplicitHs(1);
   $$=newQ;
 }
 | charge_spec {
-  QueryAtom *newQ = new QueryAtom();
+  auto *newQ = new QueryAtom();
   newQ->setQuery(makeAtomFormalChargeQuery($1));
   newQ->setFormalCharge($1);
   $$=newQ;
 }
 | AT_TOKEN AT_TOKEN {
-  QueryAtom *newQ = new QueryAtom();
+  auto *newQ = new QueryAtom();
   newQ->setQuery(makeAtomNullQuery());
   newQ->setChiralTag(Atom::CHI_TETRAHEDRAL_CW);
   $$=newQ;
 }
 | AT_TOKEN {
-  QueryAtom *newQ = new QueryAtom();
+  auto *newQ = new QueryAtom();
   newQ->setQuery(makeAtomNullQuery());
   newQ->setChiralTag(Atom::CHI_TETRAHEDRAL_CCW);
   $$=newQ;
 }
 | CHI_CLASS_TOKEN {
-  QueryAtom *newQ = new QueryAtom();
+  auto *newQ = new QueryAtom();
   newQ->setQuery(makeAtomNullQuery());
   newQ->setChiralTag($1);
   newQ->setProp(common_properties::_chiralPermutation,0);
   $$=newQ;
 }
 | CHI_CLASS_TOKEN number {
-  QueryAtom *newQ = new QueryAtom();
+  auto *newQ = new QueryAtom();
   newQ->setQuery(makeAtomNullQuery());
   newQ->setChiralTag($1);
   newQ->setProp(common_properties::_chiralPermutation,$2);
@@ -668,7 +668,7 @@ atom_query:	simple_atom
 }
 | HYB_TOKEN
 | number {
-  QueryAtom *newQ = new QueryAtom();
+  auto *newQ = new QueryAtom();
   newQ->setQuery(makeAtomIsotopeQuery($1));
   $$=newQ;
 }
@@ -691,12 +691,12 @@ possible_range_query : COMPLEX_ATOM_QUERY_TOKEN
   $1->setQuery(makeAtomImplicitHCountQuery(0));
 }
 | PLUS_TOKEN {
-  QueryAtom *newQ = new QueryAtom();
+  auto *newQ = new QueryAtom();
   newQ->setQuery(makeAtomFormalChargeQuery(0));
   $$ = newQ;
 }
 | MINUS_TOKEN {
-  QueryAtom *newQ = new QueryAtom();
+  auto *newQ = new QueryAtom();
   newQ->setQuery(makeAtomNegativeFormalChargeQuery(0));
   $$ = newQ;
 }
@@ -750,25 +750,25 @@ bond_query: bondd
 /* --------------------------------------------------------------- */
 bondd: BOND_TOKEN
 | MINUS_TOKEN {
-  QueryBond *newB= new QueryBond();
+  auto *newB= new QueryBond();
   newB->setBondType(Bond::SINGLE);
   newB->setQuery(makeBondOrderEqualsQuery(Bond::SINGLE));
   $$ = newB;
 }
 | HASH_TOKEN {
-  QueryBond *newB= new QueryBond();
+  auto *newB= new QueryBond();
   newB->setBondType(Bond::TRIPLE);
   newB->setQuery(makeBondOrderEqualsQuery(Bond::TRIPLE));
   $$ = newB;
 }
 | COLON_TOKEN {
-  QueryBond *newB= new QueryBond();
+  auto *newB= new QueryBond();
   newB->setBondType(Bond::AROMATIC);
   newB->setQuery(makeBondOrderEqualsQuery(Bond::AROMATIC));
   $$ = newB;
 }
 | AT_TOKEN {
-  QueryBond *newB= new QueryBond();
+  auto *newB= new QueryBond();
   newB->setQuery(makeBondIsInRingQuery());
   $$ = newB;
 }
