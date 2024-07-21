@@ -224,7 +224,7 @@ FilterCatalog::CONST_SENTRY FilterCatalog::getFirstMatch(
   return CONST_SENTRY();
 }
 
-const std::vector<FilterCatalog::CONST_SENTRY> FilterCatalog::getMatches(
+std::vector<FilterCatalog::CONST_SENTRY> FilterCatalog::getMatches(
     const ROMol &mol) const {
   std::vector<CONST_SENTRY> result;
   for (const auto &d_entry : d_entries) {
@@ -235,7 +235,7 @@ const std::vector<FilterCatalog::CONST_SENTRY> FilterCatalog::getMatches(
   return result;
 }
 
-const std::vector<FilterMatch> FilterCatalog::getFilterMatches(
+std::vector<FilterMatch> FilterCatalog::getFilterMatches(
     const ROMol &mol) const {
   std::vector<FilterMatch> result;
   for (const auto &d_entry : d_entries) {
