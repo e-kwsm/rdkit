@@ -703,10 +703,9 @@ class RDKIT_SUBSTRUCTLIBRARY_EXPORT SubstructLibrary {
   }
   //! overload
   template <class Query>
-  std::vector<unsigned int> getMatches(const Query &query,
-                                       const SubstructMatchParameters &params,
-                                       int numThreads = -1,
-                                       int maxResults = -1) const {
+  [[nodiscard]] std::vector<unsigned int> getMatches(
+      const Query &query, const SubstructMatchParameters &params,
+      int numThreads = -1, int maxResults = -1) const {
     return getMatches(query, 0, size(), params, numThreads, maxResults);
   }
   //! Get the matching indices for the query between the given indices
@@ -784,9 +783,9 @@ class RDKIT_SUBSTRUCTLIBRARY_EXPORT SubstructLibrary {
   }
   //! overload
   template <class Query>
-  unsigned int countMatches(const Query &query,
-                            const SubstructMatchParameters &params,
-                            int numThreads = -1) const {
+  [[nodiscard]] unsigned int countMatches(
+      const Query &query, const SubstructMatchParameters &params,
+      int numThreads = -1) const {
     return countMatches(query, 0, size(), params, numThreads);
   }
 
@@ -848,9 +847,10 @@ class RDKIT_SUBSTRUCTLIBRARY_EXPORT SubstructLibrary {
     \param numThreads  If -1 use all available processors [default -1]
   */
   template <class Query>
-  bool hasMatch(const Query &query, bool recursionPossible = true,
-                bool useChirality = true, bool useQueryQueryMatches = false,
-                int numThreads = -1) const {
+  [[nodiscard]] bool hasMatch(const Query &query, bool recursionPossible = true,
+                              bool useChirality = true,
+                              bool useQueryQueryMatches = false,
+                              int numThreads = -1) const {
     SubstructMatchParameters params;
     params.recursionPossible = recursionPossible;
     params.useChirality = useChirality;
@@ -859,8 +859,9 @@ class RDKIT_SUBSTRUCTLIBRARY_EXPORT SubstructLibrary {
   }
   //! overload
   template <class Query>
-  bool hasMatch(const Query &query, const SubstructMatchParameters &params,
-                int numThreads = -1) const {
+  [[nodiscard]] bool hasMatch(const Query &query,
+                              const SubstructMatchParameters &params,
+                              int numThreads = -1) const {
     return hasMatch(query, 0, size(), params, numThreads);
   }
   //! Returns true if any match exists for the query between the specified
