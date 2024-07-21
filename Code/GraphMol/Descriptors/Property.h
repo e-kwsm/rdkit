@@ -62,9 +62,9 @@ struct RDKIT_DESCRIPTORS_EXPORT PropertyFunctor {
   virtual double operator()(const RDKit::ROMol &) const = 0;
 
   //! Return the name of the property
-  const std::string getName() const { return propName; }
+  std::string getName() const { return propName; }
   //! Return the properties version
-  const std::string getVersion() const { return propVersion; }
+  std::string getVersion() const { return propVersion; }
 };
 
 //! Holds a collection of properties for computation purposes
