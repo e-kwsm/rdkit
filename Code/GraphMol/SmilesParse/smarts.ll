@@ -278,9 +278,9 @@ B			{ yylval->ival = 5; return ORGANIC_ATOM_TOKEN; }
 
 C			{ yylval->ival = 6; return ORGANIC_ATOM_TOKEN; }
 
-N			{ yylval->ival = 7;  return ORGANIC_ATOM_TOKEN; }
+N			{ yylval->ival = 7; return ORGANIC_ATOM_TOKEN; }
 
-O			{ yylval->ival = 8;  return ORGANIC_ATOM_TOKEN; }
+O			{ yylval->ival = 8; return ORGANIC_ATOM_TOKEN; }
 
 F			{ yylval->ival = 9; return ORGANIC_ATOM_TOKEN; }
 
@@ -411,7 +411,7 @@ A			{
 
 \%              { return PERCENT_TOKEN; }
 
-[0]		{ yylval->ival = 0;  return ZERO_TOKEN; }
+[0]		{ yylval->ival = 0; return ZERO_TOKEN; }
 [1-9]		{ yylval->ival = yytext[0] - '0'; return NONZERO_DIGIT_TOKEN; }
 
 \!			{ return NOT_TOKEN; }
