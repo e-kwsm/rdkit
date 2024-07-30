@@ -18,43 +18,35 @@
 #define YYDEBUG 1
 #include "smarts.tab.hpp"
 
-extern int yysmarts_lex(YYSTYPE *,void *, int &);
+extern int yysmarts_lex(YYSTYPE *, void *, int &);
 
 using namespace RDKit;
 namespace {
- void yyErrorCleanup(std::vector<RDKit::RWMol *> *molList){
-  for(std::vector<RDKit::RWMol *>::iterator iter=molList->begin();
-      iter != molList->end(); ++iter){
-     SmilesParseOps::CleanupAfterParseError(*iter);
-     delete *iter;
+void yyErrorCleanup(std::vector<RDKit::RWMol *> *molList) {
+  for (std::vector<RDKit::RWMol *>::iterator iter = molList->begin();
+       iter != molList->end(); ++iter) {
+    SmilesParseOps::CleanupAfterParseError(*iter);
+    delete *iter;
   }
   molList->clear();
   molList->resize(0);
- }
 }
-void
-yysmarts_error( const char *input,
-                std::vector<RDKit::RWMol *> *ms,
-                RDKit::Atom* &,
-                RDKit::Bond* &,
-                unsigned int &,unsigned int &,
-                std::list<unsigned int> *,
-		void *,int , const char *msg  )
-{
+}  // namespace
+void yysmarts_error(const char *input, std::vector<RDKit::RWMol *> *ms,
+                    RDKit::Atom *&, RDKit::Bond *&, unsigned int &,
+                    unsigned int &, std::list<unsigned int> *, void *, int,
+                    const char *msg) {
   yyErrorCleanup(ms);
-  BOOST_LOG(rdErrorLog) << "SMARTS Parse Error: " << msg << " while parsing: " << input << std::endl;
+  BOOST_LOG(rdErrorLog) << "SMARTS Parse Error: " << msg
+                        << " while parsing: " << input << std::endl;
 }
 
-void
-yysmarts_error( const char *input,
-                std::vector<RDKit::RWMol *> *ms,
-                std::list<unsigned int> *,
-		void *,int, const char * msg )
-{
+void yysmarts_error(const char *input, std::vector<RDKit::RWMol *> *ms,
+                    std::list<unsigned int> *, void *, int, const char *msg) {
   yyErrorCleanup(ms);
-  BOOST_LOG(rdErrorLog) << "SMARTS Parse Error: " << msg << " while parsing: " << input << std::endl;
+  BOOST_LOG(rdErrorLog) << "SMARTS Parse Error: " << msg
+                        << " while parsing: " << input << std::endl;
 }
-
 
 %}
 
@@ -79,11 +71,11 @@ yysmarts_error( const char *input,
 }
 
 %union {
-  int                      moli;
-  RDKit::QueryAtom * atom;
-  RDKit::QueryBond * bond;
+  int moli;
+  RDKit::QueryAtom *atom;
+  RDKit::QueryBond *bond;
   RDKit::Atom::ChiralType chiraltype;
-  int                      ival;
+  int ival;
 }
 
 %token START_MOL START_ATOM START_BOND;
@@ -175,37 +167,38 @@ ATOM_OPEN_TOKEN bad_atom_def
 /* --------------------------------------------------------------- */
 // FIX: mol MINUS DIGIT
 mol: atomd {
-  int sz     = molList->size();
-  molList->resize( sz + 1);
-  (*molList)[ sz ] = new RWMol();
-  $1->setProp(RDKit::common_properties::_SmilesStart,1);
-  (*molList)[ sz ]->addAtom($1,true,true);
-  //delete $1;
+  int sz = molList->size();
+  molList->resize(sz + 1);
+  (*molList)[sz] = new RWMol();
+  $1->setProp(RDKit::common_properties::_SmilesStart, 1);
+  (*molList)[sz]->addAtom($1, true, true);
+  // delete $1;
   $$ = sz;
 }
 | mol atomd       {
   RWMol *mp = (*molList)[$$];
   Atom *a1 = mp->getActiveAtom();
-  int atomIdx1=a1->getIdx();
-  int atomIdx2=mp->addAtom($2,true,true);
+  int atomIdx1 = a1->getIdx();
+  int atomIdx2 = mp->addAtom($2, true, true);
 
-  QueryBond *newB = SmilesParseOps::getUnspecifiedQueryBond(a1,mp->getAtomWithIdx(atomIdx2));
+  QueryBond *newB =
+       SmilesParseOps::getUnspecifiedQueryBond(a1, mp->getAtomWithIdx(atomIdx2));
   newB->setOwningMol(mp);
   newB->setBeginAtomIdx(atomIdx1);
   newB->setEndAtomIdx(atomIdx2);
-  newB->setProp("_cxsmilesBondIdx",numBondsParsed++);
-  mp->addBond(newB,true);
+  newB->setProp("_cxsmilesBondIdx", numBondsParsed++);
+  mp->addBond(newB, true);
 }
 
 | mol bond_expr atomd  {
   RWMol *mp = (*molList)[$$];
   int atomIdx1 = mp->getActiveAtom()->getIdx();
-  int atomIdx2 = mp->addAtom($3,true,true);
-  if( $2->getBondType() == Bond::DATIVER ){
+  int atomIdx2 = mp->addAtom($3, true, true);
+  if ($2->getBondType() == Bond::DATIVER) {
     $2->setBeginAtomIdx(atomIdx1);
     $2->setEndAtomIdx(atomIdx2);
     $2->setBondType(Bond::DATIVE);
-  }else if ( $2->getBondType() == Bond::DATIVEL ){
+  } else if ($2->getBondType() == Bond::DATIVEL) {
     $2->setBeginAtomIdx(atomIdx2);
     $2->setEndAtomIdx(atomIdx1);
     $2->setBondType(Bond::DATIVE);
@@ -213,73 +206,73 @@ mol: atomd {
     $2->setBeginAtomIdx(atomIdx1);
     $2->setEndAtomIdx(atomIdx2);
   }
-  $2->setProp("_cxsmilesBondIdx",numBondsParsed++);
+  $2->setProp("_cxsmilesBondIdx", numBondsParsed++);
   mp->addBond($2);
   delete $2;
 }
 
 | mol SEPARATOR_TOKEN atomd {
   RWMol *mp = (*molList)[$$];
-  $3->setProp(RDKit::common_properties::_SmilesStart,1,true);
-  mp->addAtom($3,true,true);
+  $3->setProp(RDKit::common_properties::_SmilesStart, 1, true);
+  mp->addAtom($3, true, true);
 }
 
 | mol ring_number {
   RWMol * mp = (*molList)[$$];
-  Atom *atom=mp->getActiveAtom();
+  Atom *atom = mp->getActiveAtom();
 
   QueryBond *newB = SmilesParseOps::getUnspecifiedQueryBond(atom, nullptr);
   newB->setOwningMol(mp);
   newB->setBeginAtomIdx(atom->getIdx());
-  mp->setBondBookmark(newB,$2);
-  if(!(mp->getAllBondsWithBookmark($2).size()%2)){
-    newB->setProp("_cxsmilesBondIdx",numBondsParsed++);
+  mp->setBondBookmark(newB, $2);
+  if (!(mp->getAllBondsWithBookmark($2).size() % 2)) {
+    newB->setProp("_cxsmilesBondIdx", numBondsParsed++);
   }
-  mp->setAtomBookmark(atom,$2);
+  mp->setAtomBookmark(atom, $2);
 
-  SmilesParseOps::CheckRingClosureBranchStatus(atom,mp);
+  SmilesParseOps::CheckRingClosureBranchStatus(atom, mp);
 
   INT_VECT tmp;
-  if(atom->hasProp(RDKit::common_properties::_RingClosures)){
-    atom->getProp(RDKit::common_properties::_RingClosures,tmp);
+  if (atom->hasProp(RDKit::common_properties::_RingClosures)) {
+    atom->getProp(RDKit::common_properties::_RingClosures, tmp);
   }
-  tmp.push_back(-($2+1));
-  atom->setProp(RDKit::common_properties::_RingClosures,tmp);
+  tmp.push_back(-($2 + 1));
+  atom->setProp(RDKit::common_properties::_RingClosures, tmp);
 
 }
 
 | mol bond_expr ring_number {
-  RWMol * mp = (*molList)[$$];
-  Atom *atom=mp->getActiveAtom();
+  RWMol *mp = (*molList)[$$];
+  Atom *atom = mp->getActiveAtom();
 
-  mp->setBondBookmark($2,$3);
+  mp->setBondBookmark($2, $3);
   $2->setOwningMol(mp);
   $2->setBeginAtomIdx(atom->getIdx());
-  $2->setProp("_cxsmilesBondIdx",numBondsParsed++);
-  mp->setAtomBookmark(atom,$3);
+  $2->setProp("_cxsmilesBondIdx", numBondsParsed++);
+  mp->setAtomBookmark(atom, $3);
 
-  SmilesParseOps::CheckRingClosureBranchStatus(atom,mp);
+  SmilesParseOps::CheckRingClosureBranchStatus(atom, mp);
 
   INT_VECT tmp;
-  if(atom->hasProp(RDKit::common_properties::_RingClosures)){
-    atom->getProp(RDKit::common_properties::_RingClosures,tmp);
+  if (atom->hasProp(RDKit::common_properties::_RingClosures)) {
+    atom->getProp(RDKit::common_properties::_RingClosures, tmp);
   }
-  tmp.push_back(-($3+1));
-  atom->setProp(RDKit::common_properties::_RingClosures,tmp);
-
+  tmp.push_back(-($3 + 1));
+  atom->setProp(RDKit::common_properties::_RingClosures, tmp);
 }
 
 | mol GROUP_OPEN_TOKEN atomd {
   RWMol *mp = (*molList)[$$];
   Atom *a1 = mp->getActiveAtom();
-  int atomIdx1=a1->getIdx();
-  int atomIdx2=mp->addAtom($3,true,true);
+  int atomIdx1 = a1->getIdx();
+  int atomIdx2 = mp->addAtom($3, true, true);
 
-  QueryBond *newB = SmilesParseOps::getUnspecifiedQueryBond(a1,mp->getAtomWithIdx(atomIdx2));
+  QueryBond *newB = SmilesParseOps::getUnspecifiedQueryBond(
+      a1, mp->getAtomWithIdx(atomIdx2));
   newB->setOwningMol(mp);
   newB->setBeginAtomIdx(atomIdx1);
   newB->setEndAtomIdx(atomIdx2);
-  newB->setProp("_cxsmilesBondIdx",numBondsParsed++);
+  newB->setProp("_cxsmilesBondIdx", numBondsParsed++);
   mp->addBond(newB);
   delete newB;
 
@@ -289,12 +282,12 @@ mol: atomd {
 | mol GROUP_OPEN_TOKEN bond_expr atomd  {
   RWMol *mp = (*molList)[$$];
   int atomIdx1 = mp->getActiveAtom()->getIdx();
-  int atomIdx2 = mp->addAtom($4,true,true);
-  if( $3->getBondType() == Bond::DATIVER ){
+  int atomIdx2 = mp->addAtom($4, true, true);
+  if ($3->getBondType() == Bond::DATIVER) {
     $3->setBeginAtomIdx(atomIdx1);
     $3->setEndAtomIdx(atomIdx2);
     $3->setBondType(Bond::DATIVE);
-  }else if ( $3->getBondType() == Bond::DATIVEL ){
+  } else if ($3->getBondType() == Bond::DATIVEL) {
     $3->setBeginAtomIdx(atomIdx2);
     $3->setEndAtomIdx(atomIdx1);
     $3->setBondType(Bond::DATIVE);
@@ -302,18 +295,18 @@ mol: atomd {
     $3->setBeginAtomIdx(atomIdx1);
     $3->setEndAtomIdx(atomIdx2);
   }
-  $3->setProp("_cxsmilesBondIdx",numBondsParsed++);
-  mp->addBond($3,true);
+  $3->setProp("_cxsmilesBondIdx", numBondsParsed++);
+  mp->addBond($3, true);
   branchPoints->push_back(atomIdx1);
-
 }
 
 
 | mol GROUP_CLOSE_TOKEN {
-  if(branchPoints->empty()){
-     yyerror(input,molList,branchPoints,scanner,start_token,"extra close parentheses");
-     yyErrorCleanup(molList);
-     YYABORT;
+  if (branchPoints->empty()) {
+    yyerror(input, molList, branchPoints, scanner, start_token,
+            "extra close parentheses");
+    yyErrorCleanup(molList);
+    YYABORT;
   }
   RWMol *mp = (*molList)[$$];
   mp->setActiveAtom(branchPoints->back());
@@ -332,7 +325,7 @@ atomd:	simple_atom
 | ATOM_OPEN_TOKEN atom_expr COLON_TOKEN number ATOM_CLOSE_TOKEN
 {
   $$ = $2;
-  $$->setProp(RDKit::common_properties::molAtomMapNumber,$4);
+  $$->setProp(RDKit::common_properties::molAtomMapNumber, $4);
 }
 ;
 
@@ -359,94 +352,98 @@ hydrogen_atom:	ATOM_OPEN_TOKEN H_TOKEN ATOM_CLOSE_TOKEN
 | ATOM_OPEN_TOKEN H_TOKEN COLON_TOKEN number ATOM_CLOSE_TOKEN
 {
   $$ = new QueryAtom(1);
-  $$->setProp(RDKit::common_properties::molAtomMapNumber,$4);
+  $$->setProp(RDKit::common_properties::molAtomMapNumber, $4);
 }
 | ATOM_OPEN_TOKEN number H_TOKEN ATOM_CLOSE_TOKEN {
   QueryAtom *newQ = new QueryAtom(1);
   newQ->setIsotope($2);
-  newQ->expandQuery(makeAtomIsotopeQuery($2),Queries::COMPOSITE_AND,true);
+  newQ->expandQuery(makeAtomIsotopeQuery($2), Queries::COMPOSITE_AND, true);
   $$=newQ;
 }
 | ATOM_OPEN_TOKEN number H_TOKEN COLON_TOKEN number ATOM_CLOSE_TOKEN {
   QueryAtom *newQ = new QueryAtom(1);
   newQ->setIsotope($2);
-  newQ->expandQuery(makeAtomIsotopeQuery($2),Queries::COMPOSITE_AND,true);
-  newQ->setProp(RDKit::common_properties::molAtomMapNumber,$5);
+  newQ->expandQuery(makeAtomIsotopeQuery($2), Queries::COMPOSITE_AND, true);
+  newQ->setProp(RDKit::common_properties::molAtomMapNumber, $5);
 
-  $$=newQ;
+  $$ = newQ;
 }
 
 | ATOM_OPEN_TOKEN H_TOKEN charge_spec ATOM_CLOSE_TOKEN {
   QueryAtom *newQ = new QueryAtom(1);
   newQ->setFormalCharge($3);
-  newQ->expandQuery(makeAtomFormalChargeQuery($3),Queries::COMPOSITE_AND,true);
-  $$=newQ;
+  newQ->expandQuery(makeAtomFormalChargeQuery($3), Queries::COMPOSITE_AND, true);
+  $$ = newQ;
 }
 | ATOM_OPEN_TOKEN H_TOKEN charge_spec COLON_TOKEN number ATOM_CLOSE_TOKEN {
   QueryAtom *newQ = new QueryAtom(1);
   newQ->setFormalCharge($3);
-  newQ->expandQuery(makeAtomFormalChargeQuery($3),Queries::COMPOSITE_AND,true);
-  newQ->setProp(RDKit::common_properties::molAtomMapNumber,$5);
+  newQ->expandQuery(makeAtomFormalChargeQuery($3), Queries::COMPOSITE_AND, true);
+  newQ->setProp(RDKit::common_properties::molAtomMapNumber, $5);
 
-  $$=newQ;
+  $$ = newQ;
 }
 | ATOM_OPEN_TOKEN number H_TOKEN charge_spec ATOM_CLOSE_TOKEN {
   QueryAtom *newQ = new QueryAtom(1);
   newQ->setIsotope($2);
   newQ->setFormalCharge($4);
-  newQ->expandQuery(makeAtomIsotopeQuery($2),Queries::COMPOSITE_AND,true);
-  newQ->expandQuery(makeAtomFormalChargeQuery($4),Queries::COMPOSITE_AND,true);
-  $$=newQ;
+  newQ->expandQuery(makeAtomIsotopeQuery($2), Queries::COMPOSITE_AND, true);
+  newQ->expandQuery(makeAtomFormalChargeQuery($4), Queries::COMPOSITE_AND, true);
+  $$ = newQ;
 }
 | ATOM_OPEN_TOKEN number H_TOKEN charge_spec COLON_TOKEN number ATOM_CLOSE_TOKEN {
   QueryAtom *newQ = new QueryAtom(1);
   newQ->setIsotope($2);
   newQ->setFormalCharge($4);
-  newQ->expandQuery(makeAtomIsotopeQuery($2),Queries::COMPOSITE_AND,true);
-  newQ->expandQuery(makeAtomFormalChargeQuery($4),Queries::COMPOSITE_AND,true);
-  newQ->setProp(RDKit::common_properties::molAtomMapNumber,$6);
+  newQ->expandQuery(makeAtomIsotopeQuery($2), Queries::COMPOSITE_AND, true);
+  newQ->expandQuery(makeAtomFormalChargeQuery($4), Queries::COMPOSITE_AND, true);
+  newQ->setProp(RDKit::common_properties::molAtomMapNumber, $6);
 
-  $$=newQ;
+  $$ = newQ;
 }
 ;
 
 /* --------------------------------------------------------------- */
 atom_expr: atom_expr AND_TOKEN atom_expr {
-  $1->expandQuery($3->getQuery()->copy(),Queries::COMPOSITE_AND,true);
-  if($1->getChiralTag()==Atom::CHI_UNSPECIFIED) $1->setChiralTag($3->getChiralTag());
+  $1->expandQuery($3->getQuery()->copy(), Queries::COMPOSITE_AND, true);
+  if ($1->getChiralTag() == Atom::CHI_UNSPECIFIED)
+    $1->setChiralTag($3->getChiralTag());
   SmilesParseOps::ClearAtomChemicalProps($1);
   delete $3;
 }
 | atom_expr OR_TOKEN atom_expr {
-  $1->expandQuery($3->getQuery()->copy(),Queries::COMPOSITE_OR,true);
-  if($1->getChiralTag()==Atom::CHI_UNSPECIFIED) $1->setChiralTag($3->getChiralTag());
+  $1->expandQuery($3->getQuery()->copy(), Queries::COMPOSITE_OR, true);
+  if ($1->getChiralTag() == Atom::CHI_UNSPECIFIED)
+    $1->setChiralTag($3->getChiralTag());
   SmilesParseOps::ClearAtomChemicalProps($1);
   $1->setAtomicNum(0);
   delete $3;
 }
 | atom_expr SEMI_TOKEN atom_expr {
-  $1->expandQuery($3->getQuery()->copy(),Queries::COMPOSITE_AND,true);
-  if($1->getChiralTag()==Atom::CHI_UNSPECIFIED) $1->setChiralTag($3->getChiralTag());
+  $1->expandQuery($3->getQuery()->copy(), Queries::COMPOSITE_AND, true);
+  if ($1->getChiralTag() == Atom::CHI_UNSPECIFIED)
+    $1->setChiralTag($3->getChiralTag());
   SmilesParseOps::ClearAtomChemicalProps($1);
   delete $3;
 }
 | atom_expr point_query {
-  $1->expandQuery($2->getQuery()->copy(),Queries::COMPOSITE_AND,true);
-  if($1->getChiralTag()==Atom::CHI_UNSPECIFIED) $1->setChiralTag($2->getChiralTag());
-  if($2->getNumExplicitHs()){
-    if(!$1->getNumExplicitHs()){
+  $1->expandQuery($2->getQuery()->copy(), Queries::COMPOSITE_AND, true);
+  if ($1->getChiralTag() == Atom::CHI_UNSPECIFIED)
+    $1->setChiralTag($2->getChiralTag());
+  if ($2->getNumExplicitHs()) {
+    if (!$1->getNumExplicitHs()) {
       $1->setNumExplicitHs($2->getNumExplicitHs());
       $1->setNoImplicit(true);
-    } else if($1->getNumExplicitHs()!=$2->getNumExplicitHs()){
+    } else if ($1->getNumExplicitHs() != $2->getNumExplicitHs()) {
       // conflicting queries...
       $1->setNumExplicitHs(0);
       $1->setNoImplicit(false);
     }
   }
-  if($2->getFormalCharge()){
-    if(!$1->getFormalCharge()){
+  if ($2->getFormalCharge()) {
+    if (!$1->getFormalCharge()) {
       $1->setFormalCharge($2->getFormalCharge());
-    } else if($1->getFormalCharge()!=$2->getFormalCharge()){
+    } else if ($1->getFormalCharge() != $2->getFormalCharge()) {
       // conflicting queries...
       $1->setFormalCharge(0);
     }
@@ -473,7 +470,7 @@ recursive_query: BEGIN_RECURSE mol END_RECURSE {
   //  FIX: there's maybe a leak here
   RWMol *molP = (*molList)[$2];
   // close any rings in the molecule:
-  SmilesParseOps::CloseMolRings(molP,0);
+  SmilesParseOps::CloseMolRings(molP, 0);
 
   //molP->debugMol(std::cout);
   qA->setQuery(new RecursiveStructureQuery(molP));
@@ -494,14 +491,14 @@ recursive_query: BEGIN_RECURSE mol END_RECURSE {
   //  FIX: there's maybe a leak here
   RWMol *molP = (*molList)[$2];
   // close any rings in the molecule:
-  SmilesParseOps::CloseMolRings(molP,0);
+  SmilesParseOps::CloseMolRings(molP, 0);
 
-  //molP->debugMol(std::cout);
-  qA->setQuery(new RecursiveStructureQuery(molP,$5));
-  //std::cout << "qA: " << qA << " " << qA->getQuery() << std::endl;
+  // molP->debugMol(std::cout);
+  qA->setQuery(new RecursiveStructureQuery(molP, $5));
+  // std::cout << "qA: " << qA << " " << qA->getQuery() << std::endl;
   int sz = molList->size();
-  if ( sz==$2+1) {
-    molList->resize( sz-1 );
+  if (sz == $2 + 1) {
+    molList->resize(sz - 1);
   }
   $$ = qA;
 }
@@ -511,20 +508,20 @@ recursive_query: BEGIN_RECURSE mol END_RECURSE {
 atom_query:	simple_atom
 | number simple_atom {
   $2->setIsotope($1);
-  $2->expandQuery(makeAtomIsotopeQuery($1),Queries::COMPOSITE_AND,true);
+  $2->expandQuery(makeAtomIsotopeQuery($1), Queries::COMPOSITE_AND, true);
   $$=$2;
 }
 | ATOM_TOKEN
 | number ATOM_TOKEN {
   $2->setIsotope($1);
-  $2->expandQuery(makeAtomIsotopeQuery($1),Queries::COMPOSITE_AND,true);
+  $2->expandQuery(makeAtomIsotopeQuery($1), Queries::COMPOSITE_AND, true);
   $$=$2;
 }
 | HASH_TOKEN number { $$ = new QueryAtom($2); }
 | number HASH_TOKEN number {
   $$ = new QueryAtom($3);
   $$->setIsotope($1);
-  $$->expandQuery(makeAtomIsotopeQuery($1),Queries::COMPOSITE_AND,true);
+  $$->expandQuery(makeAtomIsotopeQuery($1), Queries::COMPOSITE_AND, true);
 }
 | COMPLEX_ATOM_QUERY_TOKEN
 | HETERONEIGHBOR_ATOM_QUERY_TOKEN
@@ -552,28 +549,30 @@ atom_query:	simple_atom
 }
 | possible_range_query RANGE_OPEN_TOKEN MINUS_TOKEN number RANGE_CLOSE_TOKEN {
   ATOM_EQUALS_QUERY *oq = static_cast<ATOM_EQUALS_QUERY *>($1->getQuery());
-  ATOM_GREATEREQUAL_QUERY *nq = makeAtomSimpleQuery<ATOM_GREATEREQUAL_QUERY>($4,oq->getDataFunc(),
-    std::string("greater_")+oq->getDescription());
+  ATOM_GREATEREQUAL_QUERY *nq =
+          makeAtomSimpleQuery<ATOM_GREATEREQUAL_QUERY>($4, oq->getDataFunc(),
+          std::string("greater_") + oq->getDescription());
   $1->setQuery(nq);
 }
 | possible_range_query RANGE_OPEN_TOKEN number MINUS_TOKEN RANGE_CLOSE_TOKEN {
   ATOM_EQUALS_QUERY *oq = static_cast<ATOM_EQUALS_QUERY *>($1->getQuery());
-  ATOM_LESSEQUAL_QUERY *nq = makeAtomSimpleQuery<ATOM_LESSEQUAL_QUERY>($3,oq->getDataFunc(),
-    std::string("less_")+oq->getDescription());
+  ATOM_LESSEQUAL_QUERY *nq = makeAtomSimpleQuery<ATOM_LESSEQUAL_QUERY>(
+      $3, oq->getDataFunc(),
+      std::string("less_") + oq->getDescription());
   $1->setQuery(nq);
 }
 | possible_range_query RANGE_OPEN_TOKEN number MINUS_TOKEN number RANGE_CLOSE_TOKEN {
   ATOM_EQUALS_QUERY *oq = static_cast<ATOM_EQUALS_QUERY *>($1->getQuery());
-  ATOM_RANGE_QUERY *nq = makeAtomRangeQuery($3,$5,false,false,
-    oq->getDataFunc(),
-    std::string("range_")+oq->getDescription());
+  ATOM_RANGE_QUERY *nq = makeAtomRangeQuery( $3, $5, false, false,
+      oq->getDataFunc(),
+      std::string("range_") + oq->getDescription());
   $1->setQuery(nq);
 }
 | number H_TOKEN {
   QueryAtom *newQ = new QueryAtom();
   newQ->setQuery(makeAtomIsotopeQuery($1));
   newQ->setIsotope($1);
-  newQ->expandQuery(makeAtomHCountQuery(1),Queries::COMPOSITE_AND,true);
+  newQ->expandQuery(makeAtomHCountQuery(1), Queries::COMPOSITE_AND, true);
   newQ->setNumExplicitHs(1);
   $$=newQ;
 }
@@ -581,7 +580,7 @@ atom_query:	simple_atom
   QueryAtom *newQ = new QueryAtom();
   newQ->setQuery(makeAtomIsotopeQuery($1));
   newQ->setIsotope($1);
-  newQ->expandQuery(makeAtomHCountQuery($3),Queries::COMPOSITE_AND,true);
+  newQ->expandQuery(makeAtomHCountQuery($3), Queries::COMPOSITE_AND, true);
   newQ->setNumExplicitHs($3);
   $$=newQ;
 }
@@ -619,14 +618,14 @@ atom_query:	simple_atom
   QueryAtom *newQ = new QueryAtom();
   newQ->setQuery(makeAtomNullQuery());
   newQ->setChiralTag($1);
-  newQ->setProp(common_properties::_chiralPermutation,0);
+  newQ->setProp(common_properties::_chiralPermutation, 0);
   $$=newQ;
 }
 | CHI_CLASS_TOKEN number {
   QueryAtom *newQ = new QueryAtom();
   newQ->setQuery(makeAtomNullQuery());
   newQ->setChiralTag($1);
-  newQ->setProp(common_properties::_chiralPermutation,$2);
+  newQ->setProp(common_properties::_chiralPermutation, $2);
   $$=newQ;
 }
 | HYB_TOKEN
@@ -676,12 +675,12 @@ simple_atom: 	ORGANIC_ATOM_TOKEN {
   // The following rule applies a similar logic to aromatic atoms.
   //
   $$ = new QueryAtom($1);
-  $$->setQuery(makeAtomTypeQuery($1,false));
+  $$->setQuery(makeAtomTypeQuery($1, false));
 }
 | AROMATIC_ATOM_TOKEN {
   $$ = new QueryAtom($1);
   $$->setIsAromatic(true);
-  $$->setQuery(makeAtomTypeQuery($1,true));
+  $$->setQuery(makeAtomTypeQuery($1, true));
 }
 | SIMPLE_ATOM_QUERY_TOKEN
 ;
@@ -689,15 +688,15 @@ simple_atom: 	ORGANIC_ATOM_TOKEN {
 
 /* --------------------------------------------------------------- */
 bond_expr:bond_expr AND_TOKEN bond_expr {
-  $1->expandQuery($3->getQuery()->copy(),Queries::COMPOSITE_AND,true);
+  $1->expandQuery($3->getQuery()->copy(), Queries::COMPOSITE_AND, true);
   delete $3;
 }
 | bond_expr OR_TOKEN bond_expr {
-  $1->expandQuery($3->getQuery()->copy(),Queries::COMPOSITE_OR,true);
+  $1->expandQuery($3->getQuery()->copy(), Queries::COMPOSITE_OR, true);
   delete $3;
 }
 | bond_expr SEMI_TOKEN bond_expr {
-  $1->expandQuery($3->getQuery()->copy(),Queries::COMPOSITE_AND,true);
+  $1->expandQuery($3->getQuery()->copy(), Queries::COMPOSITE_AND, true);
   delete $3;
 }
 | bond_query
@@ -705,7 +704,7 @@ bond_expr:bond_expr AND_TOKEN bond_expr {
 
 bond_query: bondd
 | bond_query bondd {
-  $1->expandQuery($2->getQuery()->copy(),Queries::COMPOSITE_AND,true);
+  $1->expandQuery($2->getQuery()->copy(), Queries::COMPOSITE_AND, true);
   delete $2;
 }
 ;
@@ -719,19 +718,19 @@ bondd: BOND_TOKEN
   $$ = newB;
 }
 | HASH_TOKEN {
-  QueryBond *newB= new QueryBond();
+  QueryBond *newB = new QueryBond();
   newB->setBondType(Bond::TRIPLE);
   newB->setQuery(makeBondOrderEqualsQuery(Bond::TRIPLE));
   $$ = newB;
 }
 | COLON_TOKEN {
-  QueryBond *newB= new QueryBond();
+  QueryBond *newB = new QueryBond();
   newB->setBondType(Bond::AROMATIC);
   newB->setQuery(makeBondOrderEqualsQuery(Bond::AROMATIC));
   $$ = newB;
 }
 | AT_TOKEN {
-  QueryBond *newB= new QueryBond();
+  QueryBond *newB = new QueryBond();
   newB->setQuery(makeBondIsInRingQuery());
   $$ = newB;
 }
@@ -742,22 +741,22 @@ bondd: BOND_TOKEN
 ;
 
 /* --------------------------------------------------------------- */
-charge_spec: PLUS_TOKEN PLUS_TOKEN { $$=2; }
-| PLUS_TOKEN number { $$=$2; }
-| PLUS_TOKEN { $$=1; }
-| MINUS_TOKEN MINUS_TOKEN { $$=-2; }
-| MINUS_TOKEN number { $$=-$2; }
-| MINUS_TOKEN { $$=-1; }
+charge_spec: PLUS_TOKEN PLUS_TOKEN { $$ = 2; }
+| PLUS_TOKEN number { $$ = $2; }
+| PLUS_TOKEN { $$ = 1; }
+| MINUS_TOKEN MINUS_TOKEN { $$ = -2; }
+| MINUS_TOKEN number { $$ = -$2; }
+| MINUS_TOKEN { $$ = -1; }
 ;
 
 /* --------------------------------------------------------------- */
 ring_number:  digit
-| PERCENT_TOKEN NONZERO_DIGIT_TOKEN digit { $$ = $2*10+$3; }
+| PERCENT_TOKEN NONZERO_DIGIT_TOKEN digit { $$ = $2 * 10 + $3; }
 | PERCENT_TOKEN GROUP_OPEN_TOKEN digit GROUP_CLOSE_TOKEN { $$ = $3; }
-| PERCENT_TOKEN GROUP_OPEN_TOKEN digit digit GROUP_CLOSE_TOKEN { $$ = $3*10+$4; }
-| PERCENT_TOKEN GROUP_OPEN_TOKEN digit digit digit GROUP_CLOSE_TOKEN { $$ = $3*100+$4*10+$5; }
-| PERCENT_TOKEN GROUP_OPEN_TOKEN digit digit digit digit GROUP_CLOSE_TOKEN { $$ = $3*1000+$4*100+$5*10+$6; }
-| PERCENT_TOKEN GROUP_OPEN_TOKEN digit digit digit digit digit GROUP_CLOSE_TOKEN { $$ = $3*10000+$4*1000+$5*100+$6*10+$7; }
+| PERCENT_TOKEN GROUP_OPEN_TOKEN digit digit GROUP_CLOSE_TOKEN { $$ = $3 * 10 + $4; }
+| PERCENT_TOKEN GROUP_OPEN_TOKEN digit digit digit GROUP_CLOSE_TOKEN { $$ = $3 * 100 + $4 * 10 + $5; }
+| PERCENT_TOKEN GROUP_OPEN_TOKEN digit digit digit digit GROUP_CLOSE_TOKEN { $$ = $3 * 1000 + $4 * 100 + $5 * 10 + $6; }
+| PERCENT_TOKEN GROUP_OPEN_TOKEN digit digit digit digit digit GROUP_CLOSE_TOKEN { $$ = $3 * 10000 + $4 * 1000 + $5 * 100 + $6 * 10 + $7; }
 ;
 
 
@@ -769,12 +768,15 @@ number:  ZERO_TOKEN
 /* --------------------------------------------------------------- */
 nonzero_number:  NONZERO_DIGIT_TOKEN
 | nonzero_number digit { 
-    if($1 >= std::numeric_limits<std::int32_t>::max()/10 || 
-     $1*10 >= std::numeric_limits<std::int32_t>::max()-$2 ){
-     yysmarts_error(input,molList,lastAtom,lastBond,numAtomsParsed,numBondsParsed,branchPoints,scanner,start_token,"number too large");
-     YYABORT;
+    if ((yyvsp[-1].ival) >= std::numeric_limits<std::int32_t>::max() / 10 ||
+        $1 * 10 >= std::numeric_limits<std::int32_t>::max() - $2) {
+      yysmarts_error(input, molList, lastAtom, lastBond, numAtomsParsed,
+                     numBondsParsed, branchPoints, scanner, start_token,
+                     "number too large");
+      YYABORT;
   }
-  $$ = $1*10 + $2; }
+  $$ = $1 * 10 + $2;
+}
 ;
 
 digit: NONZERO_DIGIT_TOKEN
