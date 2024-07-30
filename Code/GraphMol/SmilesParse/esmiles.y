@@ -10,12 +10,11 @@
 #include <iostream>
 #include <string>
 
-
 #include <GraphMol/GraphMol.h>
 #include <GraphMol/Atom.h>
 #include <GraphMol/Bond.h>
 #include <RDGeneral/Invariant.h>
-#include "SmilesParseOps.h"  
+#include "SmilesParseOps.h"
 
 #include <vector>
 
@@ -25,28 +24,23 @@ extern int yylex();
 
 #define YYDEBUG 1
 
-void
-yyerror( const char * msg )
-{
-  std::cerr << msg << "\n";
-}
+void yyerror(const char *msg) { std::cerr << msg << "\n"; }
 
 using namespace RDKit;
 
 extern vector<Mol *> molList_g;
-static Mol * curMol_gps = 0;
+static Mol *curMol_gps = 0;
 
 int label_gs = -1;
 
 
 %}
  
- 
 %union {
-  int                      moli;
-  RDKit::Atom * atom;
-  RDKit::Bond * bond;
-  int                      ival;
+  int moli;
+  RDKit::Atom *atom;
+  RDKit::Bond *bond;
+  int ival;
 }
 
 %token <atom> AROMATIC_ATOM ATOM ORGANIC_ATOM
