@@ -7,10 +7,9 @@
 //
 #pragma warning(disable:4786)
 
-
 #include <stdio.h>
 
-#undef yywrap 
+#undef yywrap
 #undef YY_INPUT
 
 #include "InputFiller.h"
@@ -33,7 +32,7 @@ extern INPUT_FUNC_TYPE gp_myInput;
 #ifdef WIN32
 int
 isatty( int fd )
-{ 
+{
 	return _isatty( fd );
 }
 #endif
@@ -145,8 +144,8 @@ static PeriodicTable * gl_ptab = PeriodicTable::getTable();
 <IN_ATOM_STATE>Fm |
 <IN_ATOM_STATE>Md |
 <IN_ATOM_STATE>No |
-<IN_ATOM_STATE>Lr 	{   yylval.atom = new Atom( gl_ptab->getAtomicNumber( yytext ) );
-				return ATOM; 
+<IN_ATOM_STATE>Lr 	{   yylval.atom = new Atom(gl_ptab->getAtomicNumber(yytext));
+				return ATOM;
 			}
 B  |
 C  |
@@ -156,34 +155,35 @@ P  |
 S  |
 F  |
 Cl |
-Br | 
-I			{	yylval.atom = new Atom( gl_ptab->getAtomicNumber( yytext ) );
+Br |
+I			{
+  yylval.atom = new Atom( gl_ptab->getAtomicNumber( yytext ) );
 				return ORGANIC_ATOM;
 			}
 
 H			{
-				return H; 
+				return H;
 			}
 
 c		    {	yylval.atom = new Atom ( 6 );
 			yylval.atom->setIsAromatic(true);
-				return AROMATIC_ATOM; 
+				return AROMATIC_ATOM;
 			}
 n		    {	yylval.atom = new Atom( 7 );
 			yylval.atom->setIsAromatic(true);
-				return AROMATIC_ATOM; 
+				return AROMATIC_ATOM;
 			}
 o		    {	yylval.atom = new Atom( 8 );
 			yylval.atom->setIsAromatic(true);
-				return AROMATIC_ATOM; 
+				return AROMATIC_ATOM;
 			}
 p		    {	yylval.atom = new Atom( 15 );
 			yylval.atom->setIsAromatic(true);
-				return AROMATIC_ATOM; 
+				return AROMATIC_ATOM;
 			}
 s		    {	yylval.atom = new Atom( 16 );
 			yylval.atom->setIsAromatic(true);
-				return AROMATIC_ATOM; 
+				return AROMATIC_ATOM;
 			}
 
 \-			{ return MINUS; }
@@ -231,7 +231,7 @@ s		    {	yylval.atom = new Atom( 16 );
 
 \%              { return PERCENT; }
 
-[0-9]		{ yylval.ival = atoi( yytext ); return DIGIT; }
+[0-9]		{ yylval.ival = atoi(yytext); return DIGIT; }
 
 
 
@@ -241,6 +241,4 @@ s		    {	yylval.atom = new Atom( 16 );
 
 %%
 
-int yywrap( void ) { return 1; }
-
-
+int yywrap(void) { return 1; }
