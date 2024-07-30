@@ -320,9 +320,11 @@ s		    {	yylval->atom = new Atom(16);
 	  return BOND_TOKEN; }
 \<\-	{ yylval->bond = new Bond(Bond::DATIVEL);
 	  return BOND_TOKEN; }
-\~	{ yylval->bond = new QueryBond();
+\~	{
+         yylval->bond = new QueryBond();
 	  yylval->bond->setQuery(makeBondNullQuery());
-	  return BOND_TOKEN;  }
+	  return BOND_TOKEN;
+}
 
 [\\]{1,2}    { yylval->bond = new Bond(Bond::UNSPECIFIED);
             yylval->bond->setProp(RDKit::common_properties::_unspecifiedOrder,
