@@ -1,5 +1,6 @@
 #include "CMLWriter.h"
 #include <fstream>
+#include <utility>
 
 #include <boost/format.hpp>
 #include <boost/property_tree/xml_parser.hpp>
