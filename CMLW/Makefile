@@ -1,7 +1,7 @@
 CXXFLAGS := -std=c++17 -O0 -Wall -Wextra -Wpedantic -g -fPIC
 ifneq ($(shell which clang++ 2> /dev/null),)
-	#CXX := clang++
-	#CXXFLAGS += -Weverything -Wno-c++98-compat -Wno-padded -Wno-shadow
+	CXX := clang++
+	CXXFLAGS += -Weverything -Wno-c++98-compat -Wno-padded -Wno-shadow
 else
 	CXX := g++
 endif
