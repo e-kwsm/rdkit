@@ -15,7 +15,7 @@
 
 namespace RDKit {
 
-std::string MolToXYZBlock(const ROMol& mol, int confId,
+std::string MolToXYZBlock(const ROMol &mol, int confId,
                           unsigned int precision) {
   if (!mol.getNumConformers()) {
     BOOST_LOG(rdErrorLog)
@@ -23,7 +23,7 @@ std::string MolToXYZBlock(const ROMol& mol, int confId,
     return "";
   }
 
-  const auto& conf = mol.getConformer(confId);
+  const auto &conf = mol.getConformer(confId);
   const unsigned int nAtoms = mol.getNumAtoms();
 
   std::stringstream ss;
@@ -42,14 +42,14 @@ std::string MolToXYZBlock(const ROMol& mol, int confId,
   ss << '\n';
 
   for (unsigned int i = 0; i < nAtoms; i++) {
-    const auto& symbol = mol.getAtomWithIdx(i)->getSymbol();
-    const auto& pos = conf.getAtomPos(i);
+    const auto &symbol = mol.getAtomWithIdx(i)->getSymbol();
+    const auto &pos = conf.getAtomPos(i);
     ss << boost::format{formatString.str()} % symbol % pos.x % pos.y % pos.z;
   }
   return ss.str();
 }
 
-void MolToXYZFile(const ROMol& mol, const std::string& fName, int confId,
+void MolToXYZFile(const ROMol &mol, const std::string &fName, int confId,
                   unsigned int precision) {
   std::ofstream outStream(fName);
   if (!outStream) {

@@ -51,8 +51,8 @@ const std::vector<std::string> supportedCompressionFormats{"gz"};
 //! returns true on success, otherwise false
 //! Note: Error handeling is done in the getSupplier method
 
-void determineFormat(const std::string path, std::string& fileFormat,
-                     std::string& compressionFormat) {
+void determineFormat(const std::string path, std::string &fileFormat,
+                     std::string &compressionFormat) {
   //! filename without compression format
   std::string basename;
   //! Special case maegz.
@@ -78,7 +78,7 @@ void determineFormat(const std::string path, std::string& fileFormat,
     basename = path;
     compressionFormat = "";
   }
-  for (auto const& suffix : supportedFileFormats) {
+  for (auto const &suffix : supportedFileFormats) {
     if (boost::algorithm::iends_with(basename, "." + suffix)) {
       fileFormat = suffix;
       return;
@@ -95,14 +95,14 @@ void determineFormat(const std::string path, std::string& fileFormat,
       - the caller owns the memory and therefore the pointer must be deleted
 */
 
-std::unique_ptr<MolSupplier> getSupplier(const std::string& path,
-                                         const struct SupplierOptions& opt) {
+std::unique_ptr<MolSupplier> getSupplier(const std::string &path,
+                                         const struct SupplierOptions &opt) {
   std::string fileFormat = "";
   std::string compressionFormat = "";
   //! get the file and compression format form the path
   determineFormat(path, fileFormat, compressionFormat);
 
-  std::istream* strm;
+  std::istream *strm;
   if (compressionFormat.empty()) {
     strm = new std::ifstream(path.c_str(), std::ios::in | std::ios::binary);
   } else {
@@ -118,14 +118,14 @@ std::unique_ptr<MolSupplier> getSupplier(const std::string& path,
   if (fileFormat == "sdf") {
 #ifdef RDK_BUILD_THREADSAFE_SSS
     if (opt.numWriterThreads > 0) {
-      MultithreadedSDMolSupplier* sdsup = new MultithreadedSDMolSupplier(
+      MultithreadedSDMolSupplier *sdsup = new MultithreadedSDMolSupplier(
           strm, true, opt.sanitize, opt.removeHs, opt.strictParsing,
           opt.numWriterThreads);
       std::unique_ptr<MolSupplier> p(sdsup);
       return p;
     }
 #endif
-    ForwardSDMolSupplier* sdsup = new ForwardSDMolSupplier(
+    ForwardSDMolSupplier *sdsup = new ForwardSDMolSupplier(
         strm, true, opt.sanitize, opt.removeHs, opt.strictParsing);
     std::unique_ptr<MolSupplier> p(sdsup);
     return p;
@@ -135,7 +135,7 @@ std::unique_ptr<MolSupplier> getSupplier(const std::string& path,
            fileFormat == "tsv") {
 #ifdef RDK_BUILD_THREADSAFE_SSS
     if (opt.numWriterThreads > 0) {
-      MultithreadedSmilesMolSupplier* smsup =
+      MultithreadedSmilesMolSupplier *smsup =
           new MultithreadedSmilesMolSupplier(
               strm, true, opt.delimiter, opt.smilesColumn, opt.nameColumn,
               opt.titleLine, opt.sanitize, opt.numWriterThreads);
@@ -143,7 +143,7 @@ std::unique_ptr<MolSupplier> getSupplier(const std::string& path,
       return p;
     }
 #endif
-    SmilesMolSupplier* smsup =
+    SmilesMolSupplier *smsup =
         new SmilesMolSupplier(strm, true, opt.delimiter, opt.smilesColumn,
                               opt.nameColumn, opt.titleLine, opt.sanitize);
     std::unique_ptr<MolSupplier> p(smsup);
@@ -151,14 +151,14 @@ std::unique_ptr<MolSupplier> getSupplier(const std::string& path,
   }
 #ifdef RDK_BUILD_MAEPARSER_SUPPORT
   else if (fileFormat == "mae") {
-    MaeMolSupplier* maesup =
+    MaeMolSupplier *maesup =
         new MaeMolSupplier(strm, true, opt.sanitize, opt.removeHs);
     std::unique_ptr<MolSupplier> p(maesup);
     return p;
   }
 #endif
   else if (fileFormat == "tdt") {
-    TDTMolSupplier* tdtsup = new TDTMolSupplier(
+    TDTMolSupplier *tdtsup = new TDTMolSupplier(
         strm, true, opt.nameRecord, opt.confId2D, opt.confId3D, opt.sanitize);
     std::unique_ptr<MolSupplier> p(tdtsup);
     return p;

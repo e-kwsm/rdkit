@@ -76,7 +76,7 @@ void testSdf() {
   auto sdsup = getSupplier(fname, opt);
   unsigned int i = 0;
   while (!sdsup->atEnd()) {
-    ROMol* nmol = sdsup->next();
+    ROMol *nmol = sdsup->next();
     TEST_ASSERT(nmol || sdsup->atEnd());
     if (nmol) {
       TEST_ASSERT(nmol->hasProp(common_properties::_Name));
@@ -94,7 +94,7 @@ void testSdf() {
   auto sdsupMulti = getSupplier(fname, optConcurrent);
   i = 0;
   while (!sdsupMulti->atEnd()) {
-    ROMol* nmol = sdsupMulti->next();
+    ROMol *nmol = sdsupMulti->next();
     if (nmol) {
       TEST_ASSERT(nmol->hasProp(common_properties::_Name));
       TEST_ASSERT(nmol->hasProp("NCI_AIDS_Antiviral_Screen_Conclusion"));
@@ -111,7 +111,7 @@ void testSdf() {
   auto sdsup2 = getSupplier(fname, opt);
   i = 0;
   while (!sdsup2->atEnd()) {
-    ROMol* nmol = sdsup2->next();
+    ROMol *nmol = sdsup2->next();
     if (nmol) {
       TEST_ASSERT(nmol->hasProp(common_properties::_Name));
       TEST_ASSERT(nmol->hasProp("NCI_AIDS_Antiviral_Screen_Conclusion"));
@@ -138,7 +138,7 @@ void testSmi() {
   auto sup = getSupplier(fname, opt_smi);
   unsigned int i = 0;
   while (!sup->atEnd()) {
-    ROMol* mol = sup->next();
+    ROMol *mol = sup->next();
     if (i == 3) {
       mol->getProp(common_properties::_Name, mname);
       CHECK_INVARIANT(mname == "4", "");
@@ -155,7 +155,7 @@ void testSmi() {
   auto supMulti = getSupplier(fname, opt_smi);
   i = 0;
   while (!supMulti->atEnd()) {
-    ROMol* mol = supMulti->next();
+    ROMol *mol = supMulti->next();
     if (mol) {
       delete mol;
       i++;
@@ -189,7 +189,7 @@ void testMae() {
   //! Test atom properties
   TEST_ASSERT(nmol->getNumAtoms() == 19);
   for (int i = 0; i < 19; ++i) {
-    const auto* atom = nmol->getAtomWithIdx(i);
+    const auto *atom = nmol->getAtomWithIdx(i);
 
     //! The integer property is present for all atoms
     TEST_ASSERT(atom->hasProp("i_m_minimize_atom_index"));
@@ -225,8 +225,8 @@ void testMae() {
 
   std::shared_ptr<ROMol> nmol2;
   nmol2.reset(cmaesup->next());
-  const Atom* atom = nmol2->getAtomWithIdx(0);
-  auto* info = (AtomPDBResidueInfo*)(atom->getMonomerInfo());
+  const Atom *atom = nmol2->getAtomWithIdx(0);
+  auto *info = (AtomPDBResidueInfo *)(atom->getMonomerInfo());
   TEST_ASSERT(info->getResidueName() == "ARG ");
   TEST_ASSERT(info->getChainId() == "A");
   TEST_ASSERT(info->getResidueNumber() == 5);
@@ -245,7 +245,7 @@ void testTdt() {
 
   unsigned int i = 0;
   while (!suppl->atEnd()) {
-    ROMol* nmol = suppl->next();
+    ROMol *nmol = suppl->next();
     if (nmol) {
       std::string prop1, prop2;
       TEST_ASSERT(nmol->getNumAtoms() > 0);

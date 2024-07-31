@@ -38,7 +38,7 @@ TEST_CASE("Github #1632", "[Reaction][PDB][bug]") {
     std::unique_ptr<RWMol> mol(SequenceToMol("K", sanitize, flavor));
     REQUIRE(mol);
     REQUIRE(mol->getAtomWithIdx(0)->getMonomerInfo());
-    auto res = static_cast<AtomPDBResidueInfo*>(
+    auto res = static_cast<AtomPDBResidueInfo *>(
         mol->getAtomWithIdx(0)->getMonomerInfo());
     CHECK(res->getResidueNumber() == 1);
     std::unique_ptr<ChemicalReaction> rxn(RxnSmartsToChemicalReaction(
@@ -53,15 +53,15 @@ TEST_CASE("Github #1632", "[Reaction][PDB][bug]") {
     auto p = prods[0][0];
     CHECK(p->getNumAtoms() == mol->getNumAtoms() + 1);
     REQUIRE(p->getAtomWithIdx(0)->getMonomerInfo());
-    auto pres = static_cast<AtomPDBResidueInfo*>(
+    auto pres = static_cast<AtomPDBResidueInfo *>(
         p->getAtomWithIdx(0)->getMonomerInfo());
     CHECK(pres->getResidueNumber() == 1);
     REQUIRE(!p->getAtomWithIdx(4)->getMonomerInfo());
   }
 }
 
-static void clearAtomMappingProps(ROMol& mol) {
-  for (auto&& a : mol.atoms()) {
+static void clearAtomMappingProps(ROMol &mol) {
+  for (auto &&a : mol.atoms()) {
     a->clear();
   }
 }
@@ -186,7 +186,7 @@ TEST_CASE("negative charge queries. Part of testing changes for github #2604",
     // we don't have a way to directly create NegativeFormalCharge queries, so
     // make one by hand
     REQUIRE(rxn->getProducts()[0]->getAtomWithIdx(0)->hasQuery());
-    static_cast<QueryAtom*>(rxn->getProducts()[0]->getAtomWithIdx(0))
+    static_cast<QueryAtom *>(rxn->getProducts()[0]->getAtomWithIdx(0))
         ->expandQuery(makeAtomNegativeFormalChargeQuery(1));
     unsigned nWarnings = 0;
     unsigned nErrors = 0;
@@ -202,7 +202,7 @@ TEST_CASE("negative charge queries. Part of testing changes for github #2604",
     // we don't have a way to directly create NegativeFormalCharge queries, so
     // make one by hand
     REQUIRE(rxn->getProducts()[0]->getAtomWithIdx(0)->hasQuery());
-    static_cast<QueryAtom*>(rxn->getProducts()[0]->getAtomWithIdx(0))
+    static_cast<QueryAtom *>(rxn->getProducts()[0]->getAtomWithIdx(0))
         ->expandQuery(makeAtomNegativeFormalChargeQuery(
             -1));  // a bit kludgy, but we need to check
     unsigned nWarnings = 0;
@@ -219,7 +219,7 @@ TEST_CASE("negative charge queries. Part of testing changes for github #2604",
     // we don't have a way to directly create NegativeFormalCharge queries, so
     // make one by hand
     REQUIRE(rxn->getProducts()[0]->getAtomWithIdx(0)->hasQuery());
-    static_cast<QueryAtom*>(rxn->getProducts()[0]->getAtomWithIdx(0))
+    static_cast<QueryAtom *>(rxn->getProducts()[0]->getAtomWithIdx(0))
         ->expandQuery(makeAtomNegativeFormalChargeQuery(2));
     unsigned nWarnings = 0;
     unsigned nErrors = 0;
@@ -295,7 +295,7 @@ TEST_CASE("reaction data in PNGs 1", "[Reaction][PNG]") {
     metadata = PNGStringToMetadata(pngData);
     auto iter =
         std::find_if(metadata.begin(), metadata.end(),
-                     [](const std::pair<std::string, std::string>& val) {
+                     [](const std::pair<std::string, std::string> &val) {
                        return val.first == PNGData::rxnSmartsTag;
                      });
     REQUIRE(iter != metadata.end());
@@ -403,7 +403,7 @@ TEST_CASE("Github #2891", "[Reaction][chirality][bug]") {
         {"[C:4][C@:2]([F:1])([Cl])[Br:3]>>[C:4][C@:2]([F:1])[S:3]", 1},
         {"[C:4][C@@:2]([F:1])([Cl])[Br:3]>>[C:4][C@:2]([F:1])[S:3]", 2},
     };
-    for (const auto& pr : tests) {
+    for (const auto &pr : tests) {
       std::unique_ptr<ChemicalReaction> rxn(
           RxnSmartsToChemicalReaction(pr.first));
       REQUIRE(rxn);
@@ -1287,14 +1287,14 @@ TEST_CASE("CDXML Parser") {
     CHECK(rxns.size() == 1);
     unsigned int i = 0;
     int count = 0;
-    for (auto& mol : rxns[0]->getReactants()) {
+    for (auto &mol : rxns[0]->getReactants()) {
       CHECK(mol->getProp<unsigned int>("CDX_SCHEME_ID") == 397);
       CHECK(mol->getProp<unsigned int>("CDX_STEP_ID") == 398);
       CHECK(mol->getProp<unsigned int>("CDX_REAGENT_ID") == i++);
       CHECK(MolToSmiles(*mol) == expected[count++]);
     }
     i = 0;
-    for (auto& mol : rxns[0]->getProducts()) {
+    for (auto &mol : rxns[0]->getProducts()) {
       CHECK(mol->getProp<unsigned int>("CDX_SCHEME_ID") == 397);
       CHECK(mol->getProp<unsigned int>("CDX_STEP_ID") == 398);
       CHECK(mol->getProp<unsigned int>("CDX_PRODUCT_ID") == i++);
@@ -1591,7 +1591,7 @@ TEST_CASE("Github #6211: substructmatchparams for chemical reactions") {
           {"CC[C@H](N)O", "CC[C@@H](N)O"},
           {"CC[C@@H](N)O", "CC[C@H](N)O"},
           {"CCC(N)O", "CCC(N)O"}};
-      for (const auto& [inSmi, outSmi] : data) {
+      for (const auto &[inSmi, outSmi] : data) {
         INFO(inSmi);
         MOL_SPTR_VECT reacts = {ROMOL_SPTR(SmilesToMol(inSmi))};
         REQUIRE(reacts[0]);
@@ -1616,7 +1616,7 @@ TEST_CASE("Github #6211: substructmatchparams for chemical reactions") {
           {"CC[C@@H](N)O", ""},
           {"CCC(N)O", ""}};
       rxn->getSubstructParams().useChirality = true;
-      for (const auto& [inSmi, outSmi] : data) {
+      for (const auto &[inSmi, outSmi] : data) {
         INFO(inSmi);
         MOL_SPTR_VECT reacts = {ROMOL_SPTR(SmilesToMol(inSmi))};
         REQUIRE(reacts[0]);
@@ -1635,7 +1635,7 @@ TEST_CASE("Github #6211: substructmatchparams for chemical reactions") {
       }
       // make sure the parameters are copied
       ChemicalReaction cpy(*rxn);
-      for (const auto& [inSmi, outSmi] : data) {
+      for (const auto &[inSmi, outSmi] : data) {
         INFO(inSmi);
         MOL_SPTR_VECT reacts = {ROMOL_SPTR(SmilesToMol(inSmi))};
         REQUIRE(reacts[0]);
@@ -1775,7 +1775,7 @@ TEST_CASE("Github #7028: Spacing bug in compute2DCoordsForReaction") {
     REQUIRE(rxn);
     RDDepict::compute2DCoordsForReaction(*rxn);
     std::vector<std::pair<double, double>> xbounds;
-    for (const auto& reactant : rxn->getReactants()) {
+    for (const auto &reactant : rxn->getReactants()) {
       REQUIRE(reactant->getNumConformers() == 1);
       std::pair<double, double> bounds = {1e8, -1e8};
       auto conf = reactant->getConformer();
@@ -1786,7 +1786,7 @@ TEST_CASE("Github #7028: Spacing bug in compute2DCoordsForReaction") {
       }
       xbounds.push_back(bounds);
     }
-    for (const auto& product : rxn->getProducts()) {
+    for (const auto &product : rxn->getProducts()) {
       REQUIRE(product->getNumConformers() == 1);
       std::pair<double, double> bounds = {1e8, -1e8};
       auto conf = product->getConformer();

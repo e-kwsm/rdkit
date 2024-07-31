@@ -32,7 +32,7 @@ void test1() {
   std::string smi1, smi2, smi3, smi4, smi5, smi6, smi7;
 
   Normalizer normalizer;
-  auto normalize = [&normalizer](const std::string& smiles) -> std::string {
+  auto normalize = [&normalizer](const std::string &smiles) -> std::string {
     std::unique_ptr<ROMol> molecule(SmilesToMol(smiles));
     std::unique_ptr<ROMol> normalized(normalizer.normalize(*molecule));
     return MolToSmiles(*normalized);

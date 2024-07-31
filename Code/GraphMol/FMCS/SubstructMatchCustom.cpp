@@ -20,17 +20,17 @@ namespace RDKit {
 namespace FMCS {
 
 class MolMatchFinalCheckFunctor {
-  const FMCS::Graph& QueryTopology;
-  const FMCS::Graph& TargetTopology;
-  const ROMol& d_query;
-  const ROMol& d_mol;
-  const MCSParameters* Parameters;
+  const FMCS::Graph &QueryTopology;
+  const FMCS::Graph &TargetTopology;
+  const ROMol &d_query;
+  const ROMol &d_mol;
+  const MCSParameters *Parameters;
 
  public:
-  MolMatchFinalCheckFunctor(const FMCS::Graph& query, const FMCS::Graph& target,
-                            const ROMol& querySrc, const ROMol& mol  // target
+  MolMatchFinalCheckFunctor(const FMCS::Graph &query, const FMCS::Graph &target,
+                            const ROMol &querySrc, const ROMol &mol  // target
                             ,
-                            const MCSParameters* parameters)
+                            const MCSParameters *parameters)
       : QueryTopology(query),
         TargetTopology(target),
         d_query(querySrc),
@@ -54,13 +54,13 @@ class MolMatchFinalCheckFunctor {
 // functions
 
 class AtomTableCompareFunctor {
-  const FMCS::Graph& QueryTopology;
-  const FMCS::Graph& TargetTopology;
-  const FMCS::MatchTable& MatchTable;
+  const FMCS::Graph &QueryTopology;
+  const FMCS::Graph &TargetTopology;
+  const FMCS::MatchTable &MatchTable;
 
  public:
-  AtomTableCompareFunctor(const FMCS::Graph& query, const FMCS::Graph& target,
-                          const FMCS::MatchTable& targetMatch)
+  AtomTableCompareFunctor(const FMCS::Graph &query, const FMCS::Graph &target,
+                          const FMCS::MatchTable &targetMatch)
       : QueryTopology(query), TargetTopology(target), MatchTable(targetMatch) {}
   bool operator()(unsigned int i, unsigned int j) const {
     return MatchTable.at(QueryTopology[i], TargetTopology[j]);
@@ -68,13 +68,13 @@ class AtomTableCompareFunctor {
 };
 
 class BondTableCompareFunctor {
-  const FMCS::Graph& QueryTopology;
-  const FMCS::Graph& TargetTopology;
-  const FMCS::MatchTable& MatchTable;
+  const FMCS::Graph &QueryTopology;
+  const FMCS::Graph &TargetTopology;
+  const FMCS::MatchTable &MatchTable;
 
  public:
-  BondTableCompareFunctor(const FMCS::Graph& query, const FMCS::Graph& target,
-                          const FMCS::MatchTable& targetMatch)
+  BondTableCompareFunctor(const FMCS::Graph &query, const FMCS::Graph &target,
+                          const FMCS::MatchTable &targetMatch)
       : QueryTopology(query), TargetTopology(target), MatchTable(targetMatch) {}
   bool operator()(FMCS::Graph::edge_descriptor i,
                   FMCS::Graph::edge_descriptor j) const {
@@ -82,11 +82,11 @@ class BondTableCompareFunctor {
   }
 };
 
-bool SubstructMatchCustomTable(const FMCS::Graph& target, const ROMol& mol,
-                               const FMCS::Graph& query, const ROMol& querySrc,
-                               const MatchTable& atomMatchTable,
-                               const MatchTable& bondMatchTable,
-                               const MCSParameters* p, match_V_t* match) {
+bool SubstructMatchCustomTable(const FMCS::Graph &target, const ROMol &mol,
+                               const FMCS::Graph &query, const ROMol &querySrc,
+                               const MatchTable &atomMatchTable,
+                               const MatchTable &bondMatchTable,
+                               const MCSParameters *p, match_V_t *match) {
   if (query.m_vertices.size() > target.m_vertices.size()  // query > target
       || query.m_edges.size() > target.m_edges.size()) {
     return false;
@@ -109,20 +109,20 @@ bool SubstructMatchCustomTable(const FMCS::Graph& target, const ROMol& mol,
 //=========================================================================
 
 class AtomLabelFunctor {
-  const FMCS::Graph& QueryTopology;
-  const FMCS::Graph& TargetTopology;
-  const ROMol& d_query;
-  const ROMol& d_mol;
+  const FMCS::Graph &QueryTopology;
+  const FMCS::Graph &TargetTopology;
+  const ROMol &d_query;
+  const ROMol &d_mol;
   MCSAtomCompareFunction AtomCompare;
-  const MCSAtomCompareParameters& Parameters;
-  void* UserData;
+  const MCSAtomCompareParameters &Parameters;
+  void *UserData;
 
  public:
-  AtomLabelFunctor(const FMCS::Graph& query, const FMCS::Graph& target,
-                   const ROMol& querySrc, const ROMol& mol  // target
+  AtomLabelFunctor(const FMCS::Graph &query, const FMCS::Graph &target,
+                   const ROMol &querySrc, const ROMol &mol  // target
                    ,
                    MCSAtomCompareFunction atomCompare,
-                   const MCSAtomCompareParameters& p, void* ud)
+                   const MCSAtomCompareParameters &p, void *ud)
       : QueryTopology(query),
         TargetTopology(target),
         d_query(querySrc),
@@ -137,19 +137,19 @@ class AtomLabelFunctor {
 };
 
 class BondLabelFunctor {
-  const FMCS::Graph& QueryTopology;
-  const FMCS::Graph& TargetTopology;
-  const ROMol& d_query;
-  const ROMol& d_mol;
+  const FMCS::Graph &QueryTopology;
+  const FMCS::Graph &TargetTopology;
+  const ROMol &d_query;
+  const ROMol &d_mol;
   MCSBondCompareFunction BondCompare;
-  const MCSBondCompareParameters& Parameters;
-  void* UserData;
+  const MCSBondCompareParameters &Parameters;
+  void *UserData;
 
  public:
-  BondLabelFunctor(const FMCS::Graph& query, const FMCS::Graph& target,
-                   const ROMol& querySrc, const ROMol& mol,
+  BondLabelFunctor(const FMCS::Graph &query, const FMCS::Graph &target,
+                   const ROMol &querySrc, const ROMol &mol,
                    MCSBondCompareFunction bondCompare,
-                   const MCSBondCompareParameters& p, void* ud)
+                   const MCSBondCompareParameters &p, void *ud)
       : QueryTopology(query),
         TargetTopology(target),
         d_query(querySrc),
@@ -169,12 +169,12 @@ class BondLabelFunctor {
 };
 
 bool SubstructMatchCustom(
-    const FMCS::Graph& target, const ROMol& mol, const FMCS::Graph& query,
-    const ROMol& querySrc  // seed and full source query molecule
+    const FMCS::Graph &target, const ROMol &mol, const FMCS::Graph &query,
+    const ROMol &querySrc  // seed and full source query molecule
     ,
     MCSAtomCompareFunction atomCompare, MCSBondCompareFunction bondCompare,
-    MCSFinalMatchCheckFunction, const MCSAtomCompareParameters& acp,
-    const MCSBondCompareParameters& bcp, void* ud, match_V_t* match) {
+    MCSFinalMatchCheckFunction, const MCSAtomCompareParameters &acp,
+    const MCSBondCompareParameters &bcp, void *ud, match_V_t *match) {
   MolMatchFinalCheckFunctor matchChecker(query, target, querySrc, mol, nullptr);
   AtomLabelFunctor atomLabeler(query, target, querySrc, mol, atomCompare, acp,
                                ud);
