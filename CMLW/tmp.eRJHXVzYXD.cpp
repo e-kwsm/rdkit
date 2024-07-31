@@ -41,43 +41,52 @@ void CMLWriter::add_molecule(const ROMol &mol, int confId) {
 
   RWMol rwmol{mol};
   put_atomArray(molecule_node, rwmol, confId);
+  std::string name;
+  rwmol.getPropIfPresent(common_properties::_Name, name);
+  if (!name.empty()) {
+    molecule_node.put("name", name);
+  }
+
+  put_atomArray(
+      molecule_node, rwmol,
+      rwmol.getNumConformers() ? &rwmol.getConformer(confId) : nullptr);
   put_bondArray(molecule_node);
 }
 
 void CMLWriter::put_atomArray(boost::property_tree::ptree &molecule_node,
-                              const RWMol &rwmol, int confId) {
-  const Conformer *const conf =
-      rwmol.getNumConformers() ? &rwmol.getConformer(confId) : nullptr;
-
+                              const RWMol &rwmol, const Conformer *const conf) {
+  int mol_formal_charge = 0;
   auto &atomArray = molecule_node.put("atomArray", "");
   for (unsigned i = 0u, nAtoms = rwmol.getNumAtoms(); i < nAtoms; i++) {
-    auto &atom = atomArray.add("atom", "");
+    auto &atom_node = atomArray.add("atom", "");
     const auto &a = rwmol.getAtomWithIdx(i);
 
-    atom.put("<xmlattr>.id", boost::format{"%1%%2%"} % atom_id_prefix % i);
-    atom.put("<xmlattr>.elementType",
-             a->getAtomicNum() ? a->getSymbol() : "Du");
+    atom_node.put("<xmlattr>.id", boost::format{"%1%%2%"} % atom_id_prefix % i);
+    atom_node.put("<xmlattr>.elementType",
+                  a->getAtomicNum() ? a->getSymbol() : "Du");
 
     if (conf != nullptr) {
       const auto &pos = conf->getAtomPos(i);
       boost::format xyz_fmt{"%.6f"};
 
       if (!conf->is3D()) {
-        atom.put("<xmlattr>.x2", xyz_fmt % pos.x);
-        atom.put("<xmlattr>.y2", xyz_fmt % pos.y);
+        atom_node.put("<xmlattr>.x2", xyz_fmt % pos.x);
+        atom_node.put("<xmlattr>.y2", xyz_fmt % pos.y);
       } else {
-        atom.put("<xmlattr>.x3", xyz_fmt % pos.x);
-        atom.put("<xmlattr>.y3", xyz_fmt % pos.y);
-        atom.put("<xmlattr>.z3", xyz_fmt % pos.z);
+        atom_node.put("<xmlattr>.x3", xyz_fmt % pos.x);
+        atom_node.put("<xmlattr>.y3", xyz_fmt % pos.y);
+        atom_node.put("<xmlattr>.z3", xyz_fmt % pos.z);
       }
     }
 
-    if (auto charge = a->getFormalCharge(); charge != 0) {
-      // mol_formal_charge += charge;
+    auto charge = a->getFormalCharge();
+    if (charge != 0) {
+      mol_formal_charge += charge;
       atom.put("<xmlattr>.formalCharge", charge);
     }
 
-    if (auto isotope = a->getIsotope(); isotope != 0u) {
+    auto isotope = a->getIsotope();
+    if (isotope != 0u) {
       atom.put("<xmlattr>.isotopeNumber", isotope);
     }
   }
