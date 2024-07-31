@@ -10,11 +10,12 @@ int main() {
   const RDKit::v2::FileParsers::MolFileParserParams params{.removeHs = false};
   RDKit::CMLWriter w{"a.cml"};
 
-  w.add_molecule(*RDKit::v2::FileParsers::MolFromMolBlock(R"(Rn
+  w.add_molecule(*RDKit::v2::FileParsers::MolFromMolBlock(R"(Cl-
  OpenBabel08012407203D
 
   1  0  0  0  0  0  0  0  0  0999 V2000
-    1.0965    0.0061   -0.0255 Rn  0  0  0  0  0  0  0  0  0  0  0  0
+    1.0965    0.0061   -0.0255 Cl  0  0  0  0  0  0  0  0  0  0  0  0
+M  CHG  1   1  -1
 M  END
 )",
                                                           params));
