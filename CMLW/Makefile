@@ -1,7 +1,7 @@
 CXXFLAGS := -std=c++17 -O0 -Wall -Wextra -Wpedantic -g -fPIC
 ifneq ($(shell which clang++ 2> /dev/null),)
-	CXX := clang++
-	CXXFLAGS += -Weverything -Wno-c++98-compat -Wno-padded -Wno-shadow
+	#CXX := clang++
+	#CXXFLAGS += -Weverything -Wno-c++98-compat -Wno-padded -Wno-shadow
 else
 	CXX := g++
 endif
@@ -11,7 +11,6 @@ Boost_DIR := /usr
 CPPFLAGS := \
 	-isystem ../Code
 
-#CPPFLAGS := \
 #	-isystem $(shell python3 -c 'import sysconfig; print(sysconfig.get_config_var("INCLUDEPY"))') \
 #	-I$(Boost_DIR)/include \
 #	-isystem ../Code \
@@ -19,34 +18,37 @@ CPPFLAGS := \
 #	-isystem ../build/Code \
 #	-isystem ../build/_deps/catch2-src/src/catch2/.. \
 #	-isystem ../build/_deps/catch2-build/generated-includes \
-#
-#LDFLAGS := \
+
+LDFLAGS := \
+	-L../build/lib '-Wl,-rpath=$$ORIGIN/../build/lib' \
+
 #	-L$(Boost_DIR)/lib -Wl,-rpath=$(Boost_DIR)/lib \
-#	-L../build/lib '-Wl,-rpath=$$ORIGIN/../build/lib' \
 #	-L../build/Code/RDGeneral \
 #	-L../build/_deps/catch2-build/src \
-#
-#LDLIBS := \
-#	-lrdkitCatch \
+
+LDLIBS := \
+	-g \
+	-lRDKitFileParsers \
+	-lRDKitGraphMol \
+	-lRDKitRDGeneral \
+
 #	-lCatch2 \
-#	-lRDKitFileParsers \
-#	-lRDKitGraphMol \
+#	-lrdkitCatch \
 #	-lRDKitRDGeometryLib \
-#	-lRDKitRDGeneral \
 #	-lboost_python$(shell python3 -c 'import sysconfig; print(sysconfig.get_config_var("py_version_nodot"))') \
 #	$(shell python3 -c 'import sysconfig; print(sysconfig.get_config_var("BLDLIBRARY"))') \
 #	-lpthread \
 #	-Wl,--as-needed
-#
+
 #CMAKE_CXX_CLANG_TIDY := clang-tidy --fix --header-filter=! \
 #	--checks=bugprone-*,clang-*,misc-*,-misc-non-private-member-variables-in-classes,-misc-unused-parameters,modernize-*,-modernize-use-trailing-return-type,readbility-*
 
 .PHONY: all
-all: tmp.eRJHXVzYXD.o
+all: tmp.eRJHXVzYXD.o a.out
 
-#a.out: main.o CMLReader.o
-#	$(CXX) -o $@ $^ $(LDFLAGS) $(LDLIBS)
-#
+a.out: main.o tmp.eRJHXVzYXD.o
+	$(CXX) -o $@ $^ $(LDFLAGS) $(LDLIBS)
+
 #file_parsers_catch.out: file_parsers_catch.o CMLReader.o
 #	$(CXX) -o $@ $^ $(LDFLAGS) $(LDLIBS)
 #
