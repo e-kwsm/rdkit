@@ -27,6 +27,11 @@ class RDKIT_FILEPARSERS_EXPORT CMLWriter {
   void write() const;
 
  private:
+  void put_atomArray(boost::property_tree::ptree &molecule_node,
+                     const RWMol &rwmol, const Conformer *const conformer);
+  void put_bondArray(boost::property_tree::ptree &molecule_node,
+                     const RWMol &rwmol);
+
   std::unique_ptr<std::ostream> p_ostream;
   boost::property_tree::ptree tree;
   unsigned int num_written_mols = 0u;

@@ -31,6 +31,7 @@ LDLIBS := \
 	-lRDKitFileParsers \
 	-lRDKitGraphMol \
 	-lRDKitRDGeneral \
+	-lRDKitMolHash \
 
 #	-lCatch2 \
 #	-lrdkitCatch \
