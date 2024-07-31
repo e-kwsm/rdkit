@@ -40,7 +40,6 @@ void CMLWriter::add_molecule(const ROMol &mol, int confId) {
       boost::format{"%1%%2%"} % molecule_id_prefix % num_written_mols++);
 
   RWMol rwmol{mol};
-  put_atomArray(molecule_node, rwmol, confId);
   std::string name;
   rwmol.getPropIfPresent(common_properties::_Name, name);
   if (!name.empty()) {
@@ -90,6 +89,7 @@ void CMLWriter::put_atomArray(boost::property_tree::ptree &molecule_node,
       atom.put("<xmlattr>.isotopeNumber", isotope);
     }
   }
+  molecule_node.put("<xmlattr>.formalCharge", mol_formal_charge);
 }
 
 void CMLWriter::put_bondArray(boost::property_tree::ptree &molecule_node) {
