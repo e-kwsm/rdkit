@@ -1,5 +1,6 @@
 #include "CMLWriter.h"
 #include <fstream>
+#include <utility>
 
 #include <boost/format.hpp>
 #include <boost/property_tree/xml_parser.hpp>
@@ -49,18 +50,18 @@ void CMLWriter::add_molecule(const ROMol &mol, int confId) {
   put_atomArray(
       molecule_node, rwmol,
       rwmol.getNumConformers() ? &rwmol.getConformer(confId) : nullptr);
-  put_bondArray(molecule_node);
+  put_bondArray(molecule_node, rwmol);
 }
 
 void CMLWriter::put_atomArray(boost::property_tree::ptree &molecule_node,
-                              const RWMol &rwmol, const Conformer *const conf) {
+                              const ROMol &mol, const Conformer *const conf) {
   int mol_formal_charge = 0;
   unsigned mol_num_radical_electrons = 0u;
 
   auto &atomArray = molecule_node.put("atomArray", "");
-  for (unsigned i = 0u, nAtoms = rwmol.getNumAtoms(); i < nAtoms; i++) {
+  for (unsigned i = 0u, nAtoms = mol.getNumAtoms(); i < nAtoms; i++) {
     auto &atom_node = atomArray.add("atom", "");
-    const auto &a = rwmol.getAtomWithIdx(i);
+    const auto &a = mol.getAtomWithIdx(i);
 
     atom_node.put("<xmlattr>.id", boost::format{"%1%%2%"} % atom_id_prefix % i);
     atom_node.put("<xmlattr>.elementType",
@@ -80,20 +81,22 @@ void CMLWriter::put_atomArray(boost::property_tree::ptree &molecule_node,
       }
     }
 
-    auto isotope = a->getIsotope();
+    const auto isotope = a->getIsotope();
     if (isotope != 0u) {
-      atom.put("<xmlattr>.isotopeNumber", isotope);
+      atom_node.put("<xmlattr>.isotopeNumber", isotope);
     }
 
-    auto charge = a->getFormalCharge();
-    if (charge != 0) {
-      mol_formal_charge += charge;
-      atom.put("<xmlattr>.formalCharge", charge);
-    }
+    const auto charge = a->getFormalCharge();
+    atom_node.put("<xmlattr>.formalCharge", charge);
+    mol_formal_charge += charge;
 
-    auto n_rad_es = a->getNumRadicalElectrons();
+    const auto n_rad_es = a->getNumRadicalElectrons();
+    if (n_rad_es < 2u) {
+      atom_node.put("<xmlattr>.spinMultiplicity", n_rad_es + 1u);
+    }
     mol_num_radical_electrons += n_rad_es;
   }
+
   molecule_node.put("<xmlattr>.formalCharge", mol_formal_charge);
 
   if (mol_num_radical_electrons < 2u) {
@@ -107,32 +110,91 @@ void CMLWriter::put_atomArray(boost::property_tree::ptree &molecule_node,
   }
 }
 
-void CMLWriter::put_bondArray(boost::property_tree::ptree &molecule_node) {
+void CMLWriter::put_bondArray(boost::property_tree::ptree &molecule_node,
+                              const ROMol &mol, bool strict) {
   unsigned bond_id = 0u;
   auto &bondArray = molecule_node.put("bondArray", "");
-#if 0
-  for (auto atom_itr = rwmol.beginAtoms(), atom_itr_end = rwmol.endAtoms();
-       atom_itr != atom_itr_end; ++atom_itr) {
-    const auto &atom = *atom_itr;
-    PRECONDITION(atom, "bad atom");
-    const auto src = atom->getIdx();
-    for (auto bond_itrs = rwmol.getAtomBonds(atom);
-         bond_itrs.first != bond_itrs.second; ++bond_itrs.first) {
-      auto *bptr = rwmol[*bond_itrs.first];
-      auto *nptr = bptr->getOtherAtom(atom);
-      const auto dst = nptr->getIdx();
-      if (dst < src) {
-        continue;
-      }
+  for (auto bond : mol.bonds()) {
+    auto &bond_node = bondArray.add("bond", "");
+    bond_node.put("<xmlattr>.id",
+                  boost::format{"%1%%2%"} % bond_id_prefix % bond_id++);
+    bond_node.put("<xmlattr>.atomRefs2",
+                  boost::format{"%1%%2% %1%%3%"} % atom_id_prefix %
+                      bond->getBeginAtomIdx() % bond->getEndAtomIdx());
+    bond_node.put("<xmlattr>.order", bond_order(*bond, strict));
 
-      auto &bond = bondArray.add("bond", "");
-      bond.put("<xmlattr>.atomRefs2",
-               boost::format{"%1%%2% %1%%3%"} % atom_id_prefix % src % dst);
-
-      bond.put("<xmlattr>.id",
-               boost::format{"%1%%2%"} % bond_id_prefix % bond_id++);
+    // bond/@BondStereo if appropriate
+    // http://www.xml-cml.org/convention/molecular#bondStereo-element
+    auto bdir = bond->getBondDir();
+    switch (bdir) {
+      case Bond::BondDir::BEGINDASH:
+        bond_node.put("<xmlattr>.bondStereo", "H");
+        break;
+      case Bond::BondDir::BEGINWEDGE:
+        bond_node.put("<xmlattr>.bondStereo", "W");
+        break;
+      case Bond::BondDir::NONE:
+        break;
+      default:
+        break;
     }
   }
-#endif
+}
+
+std::string CMLWriter::bond_order(const Bond &bond, bool strict) {
+  auto type = bond.getBondType();
+
+  auto standardize = [=](auto val) {
+    BOOST_LOG(rdWarningLog)
+        << boost::format{"%1%: BondType %2% is not standard-conformant\n"} %
+               __func__ % type;
+    return strict ? "unknown" : val;
+  };
+
+  switch (type) {
+    case Bond::SINGLE:
+      return "S";
+    case Bond::DOUBLE:
+      return "D";
+    case Bond::TRIPLE:
+      return "T";
+    case Bond::AROMATIC:
+      return "A";
+
+    case Bond::DATIVEONE:
+      return standardize("0.5");
+    case Bond::DATIVE:
+      [[fallthrough]];
+    case Bond::DATIVEL:
+      [[fallthrough]];
+    case Bond::DATIVER:
+      return "S";
+
+    case Bond::QUADRUPLE:
+      return standardize("4");
+    case Bond::QUINTUPLE:
+      return standardize("5");
+    case Bond::HEXTUPLE:
+      return standardize("6");
+
+    case Bond::ONEANDAHALF:
+      return standardize("1.5");
+    case Bond::TWOANDAHALF:
+      return standardize("2.5");
+    case Bond::THREEANDAHALF:
+      return standardize("3.5");
+    case Bond::FOURANDAHALF:
+      return standardize("4.5");
+    case Bond::FIVEANDAHALF:
+      return standardize("5.5");
+
+    case Bond::ZERO:
+      return standardize("0");
+
+    default:
+      BOOST_LOG(rdWarningLog)
+          << boost::format{"CMLWriter: Unsupported BondType %1%\n"} % type;
+      return "unknown";
+  }
 }
 }  // namespace RDKit
