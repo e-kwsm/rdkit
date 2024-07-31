@@ -55,6 +55,8 @@ void CMLWriter::add_molecule(const ROMol &mol, int confId) {
 void CMLWriter::put_atomArray(boost::property_tree::ptree &molecule_node,
                               const RWMol &rwmol, const Conformer *const conf) {
   int mol_formal_charge = 0;
+  unsigned mol_num_radical_electrons = 0u;
+
   auto &atomArray = molecule_node.put("atomArray", "");
   for (unsigned i = 0u, nAtoms = rwmol.getNumAtoms(); i < nAtoms; i++) {
     auto &atom_node = atomArray.add("atom", "");
@@ -78,18 +80,31 @@ void CMLWriter::put_atomArray(boost::property_tree::ptree &molecule_node,
       }
     }
 
+    auto isotope = a->getIsotope();
+    if (isotope != 0u) {
+      atom.put("<xmlattr>.isotopeNumber", isotope);
+    }
+
     auto charge = a->getFormalCharge();
     if (charge != 0) {
       mol_formal_charge += charge;
       atom.put("<xmlattr>.formalCharge", charge);
     }
 
-    auto isotope = a->getIsotope();
-    if (isotope != 0u) {
-      atom.put("<xmlattr>.isotopeNumber", isotope);
-    }
+    auto n_rad_es = a->getNumRadicalElectrons();
+    mol_num_radical_electrons += n_rad_es;
   }
   molecule_node.put("<xmlattr>.formalCharge", mol_formal_charge);
+
+  if (mol_num_radical_electrons < 2u) {
+    molecule_node.put("<xmlattr>.spinMultiplicity",
+                      mol_num_radical_electrons + 1u);
+  } else {
+    BOOST_LOG(rdInfoLog)
+        << "CMLWriter: Unable to determine molecule/@spinMultiplicity "
+        << boost::format{"(%1% radical electrons)\n"} %
+               mol_num_radical_electrons;
+  }
 }
 
 void CMLWriter::put_bondArray(boost::property_tree::ptree &molecule_node) {
