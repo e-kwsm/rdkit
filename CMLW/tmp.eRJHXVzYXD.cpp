@@ -46,7 +46,7 @@ void CMLWriter::add_molecule(const ROMol &mol, int confId) {
 
 void CMLWriter::put_atomArray(boost::property_tree::ptree &molecule_node,
                               const RWMol &rwmol, int confId) {
-  const Conformer *conf =
+  const Conformer *const conf =
       rwmol.getNumConformers() ? &rwmol.getConformer(confId) : nullptr;
 
   auto &atomArray = molecule_node.put("atomArray", "");
@@ -55,11 +55,8 @@ void CMLWriter::put_atomArray(boost::property_tree::ptree &molecule_node,
     const auto &a = rwmol.getAtomWithIdx(i);
 
     atom.put("<xmlattr>.id", boost::format{"%1%%2%"} % atom_id_prefix % i);
-    if (a->getAtomicNum()) {
-      atom.put("<xmlattr>.elementType", a->getSymbol());
-    } else {
-      atom.put("<xmlattr>.elementType", "Du");  // dummy
-    }
+    atom.put("<xmlattr>.elementType",
+             a->getAtomicNum() ? a->getSymbol() : "Du");
 
     if (conf != nullptr) {
       const auto &pos = conf->getAtomPos(i);
@@ -73,6 +70,15 @@ void CMLWriter::put_atomArray(boost::property_tree::ptree &molecule_node,
         atom.put("<xmlattr>.y3", xyz_fmt % pos.y);
         atom.put("<xmlattr>.z3", xyz_fmt % pos.z);
       }
+    }
+
+    if (auto charge = a->getFormalCharge(); charge != 0) {
+      // mol_formal_charge += charge;
+      atom.put("<xmlattr>.formalCharge", charge);
+    }
+
+    if (auto isotope = a->getIsotope(); isotope != 0u) {
+      atom.put("<xmlattr>.isotopeNumber", isotope);
     }
   }
 }
