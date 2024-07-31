@@ -41,8 +41,8 @@ LDLIBS := \
 #	-lpthread \
 #	-Wl,--as-needed
 
-#CMAKE_CXX_CLANG_TIDY := clang-tidy --fix --header-filter=! \
-#	--checks=bugprone-*,clang-*,misc-*,-misc-non-private-member-variables-in-classes,-misc-unused-parameters,modernize-*,-modernize-use-trailing-return-type,readbility-*
+CMAKE_CXX_CLANG_TIDY := clang-tidy --fix --header-filter=! \
+	--checks=bugprone-*,clang-*,misc-*,-misc-non-private-member-variables-in-classes,-misc-unused-parameters,modernize-*,-modernize-use-trailing-return-type,readbility-*
 
 .PHONY: all
 all: tmp.eRJHXVzYXD.o a.out
@@ -62,13 +62,13 @@ a.out: main.o tmp.eRJHXVzYXD.o
 #.PHONY: clang-format
 #clang-format:
 #	clang-format -i $(shell realpath CMLReader.cpp)
-#
-#.PHONY: clang-tidy
-#clang-tidy: $(patsubst %.cpp,%.tidy,CMLReader.cpp file_parsers_catch.cpp main.cpp rdmolfiles.cpp)
-#
-#%.tidy: %.cpp
-#	$(CMAKE_CXX_CLANG_TIDY) $(shell realpath $^) -- $(CXX) $(CXXFLAGS) $(CPPFLAGS) -c $(shell realpath $^)
-#	touch $@
+
+.PHONY: clang-tidy
+clang-tidy: $(patsubst %.cpp,%.tidy,tmp.eRJHXVzYXD.cpp)
+
+%.tidy: %.cpp
+	$(CMAKE_CXX_CLANG_TIDY) $(shell realpath $^) -- $(CXX) $(CXXFLAGS) $(CPPFLAGS) -c $(shell realpath $^)
+	touch $@
 
 .PHONY: clean
 clean:
