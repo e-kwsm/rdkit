@@ -30,9 +30,8 @@ CMLWriter::~CMLWriter() { write(); }
 void CMLWriter::write() const {
   PRECONDITION(p_ostream, "no output stream");
   boost::property_tree::write_xml(
-      *p_ostream, tree
-      // ,boost::property_tree::xml_writer_make_settings<std::string>(' ', 2)
-  );
+      *p_ostream, tree,
+      boost::property_tree::xml_writer_make_settings<std::string>(' ', 2));
 }
 
 void CMLWriter::add_molecule(const ROMol &mol, int confId) {
@@ -55,14 +54,14 @@ void CMLWriter::add_molecule(const ROMol &mol, int confId) {
 }
 
 void CMLWriter::put_atomArray(boost::property_tree::ptree &molecule_node,
-                              const RWMol &rwmol, const Conformer *const conf) {
+                              const ROMol &mol, const Conformer *const conf) {
   int mol_formal_charge = 0;
   unsigned mol_num_radical_electrons = 0u;
 
   auto &atomArray = molecule_node.put("atomArray", "");
-  for (unsigned i = 0u, nAtoms = rwmol.getNumAtoms(); i < nAtoms; i++) {
+  for (unsigned i = 0u, nAtoms = mol.getNumAtoms(); i < nAtoms; i++) {
     auto &atom_node = atomArray.add("atom", "");
-    const auto &a = rwmol.getAtomWithIdx(i);
+    const auto &a = mol.getAtomWithIdx(i);
 
     atom_node.put("<xmlattr>.id", boost::format{"%1%%2%"} % atom_id_prefix % i);
     atom_node.put("<xmlattr>.elementType",
@@ -112,10 +111,10 @@ void CMLWriter::put_atomArray(boost::property_tree::ptree &molecule_node,
 }
 
 void CMLWriter::put_bondArray(boost::property_tree::ptree &molecule_node,
-                              const RWMol &rwmol, bool strict) {
+                              const ROMol &mol, bool strict) {
   unsigned bond_id = 0u;
   auto &bondArray = molecule_node.put("bondArray", "");
-  for (auto bond : rwmol.bonds()) {
+  for (auto bond : mol.bonds()) {
     auto &bond_node = bondArray.add("bond", "");
     bond_node.put("<xmlattr>.id",
                   boost::format{"%1%%2%"} % bond_id_prefix % bond_id++);
