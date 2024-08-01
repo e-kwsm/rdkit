@@ -87,10 +87,8 @@ void CMLWriter::put_atomArray(boost::property_tree::ptree &molecule_node,
     }
 
     const auto charge = a->getFormalCharge();
-    if (charge != 0) {
-      atom_node.put("<xmlattr>.formalCharge", charge);
-      mol_formal_charge += charge;
-    }
+    atom_node.put("<xmlattr>.formalCharge", charge);
+    mol_formal_charge += charge;
 
     const auto n_rad_es = a->getNumRadicalElectrons();
     if (n_rad_es < 2u) {
