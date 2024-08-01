@@ -8,7 +8,6 @@
 
 #include <RDGeneral/export.h>
 #include <GraphMol/ROMol.h>
-#include <GraphMol/RWMol.h>
 
 namespace RDKit {
 class RDKIT_FILEPARSERS_EXPORT CMLWriter {
@@ -28,9 +27,9 @@ class RDKIT_FILEPARSERS_EXPORT CMLWriter {
 
  private:
   void put_atomArray(boost::property_tree::ptree &molecule_node,
-                     const RWMol &rwmol, const Conformer *const conformer);
+                     const ROMol &rwmol, const Conformer *const conformer);
   void put_bondArray(boost::property_tree::ptree &molecule_node,
-                     const RWMol &rwmol, bool strict = false);
+                     const ROMol &rwmol, bool strict = false);
   static std::string bond_order(const Bond &bond, bool strict);
 
   std::unique_ptr<std::ostream> p_ostream;
