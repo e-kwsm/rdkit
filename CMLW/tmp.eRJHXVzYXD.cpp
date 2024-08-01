@@ -30,8 +30,9 @@ CMLWriter::~CMLWriter() { write(); }
 void CMLWriter::write() const {
   PRECONDITION(p_ostream, "no output stream");
   boost::property_tree::write_xml(
-      *p_ostream, tree,
-      boost::property_tree::xml_writer_make_settings<std::string>(' ', 2));
+      *p_ostream, tree
+      // ,boost::property_tree::xml_writer_make_settings<std::string>(' ', 2)
+  );
 }
 
 void CMLWriter::add_molecule(const ROMol &mol, int confId) {
@@ -111,7 +112,7 @@ void CMLWriter::put_atomArray(boost::property_tree::ptree &molecule_node,
 }
 
 void CMLWriter::put_bondArray(boost::property_tree::ptree &molecule_node,
-                              const RWMol &rwmol) {
+                              const RWMol &rwmol, bool strict) {
   unsigned bond_id = 0u;
   auto &bondArray = molecule_node.put("bondArray", "");
   for (auto bond : rwmol.bonds()) {
@@ -121,7 +122,7 @@ void CMLWriter::put_bondArray(boost::property_tree::ptree &molecule_node,
     bond_node.put("<xmlattr>.atomRefs2",
                   boost::format{"%1%%2% %1%%3%"} % atom_id_prefix %
                       bond->getBeginAtomIdx() % bond->getEndAtomIdx());
-    bond_node.put("<xmlattr>.order", bond_order(*bond));
+    bond_node.put("<xmlattr>.order", bond_order(*bond, strict));
 
     // bond/@BondStereo if appropriate
     // http://www.xml-cml.org/convention/molecular#bondStereo-element
@@ -141,8 +142,16 @@ void CMLWriter::put_bondArray(boost::property_tree::ptree &molecule_node,
   }
 }
 
-std::string CMLWriter::bond_order(const Bond &bond) {
+std::string CMLWriter::bond_order(const Bond &bond, bool strict) {
   auto type = bond.getBondType();
+
+  auto standardize = [=](auto val) {
+    BOOST_LOG(rdWarningLog)
+        << boost::format{"%1%: BondType %2% is not standard-conformant\n"} %
+               __func__ % type;
+    return strict ? "unknown" : val;
+  };
+
   switch (type) {
     case Bond::SINGLE:
       return "S";
@@ -154,7 +163,7 @@ std::string CMLWriter::bond_order(const Bond &bond) {
       return "A";
 
     case Bond::DATIVEONE:
-      return "0.5";
+      return standardize("0.5");
     case Bond::DATIVE:
       [[fallthrough]];
     case Bond::DATIVEL:
@@ -163,28 +172,28 @@ std::string CMLWriter::bond_order(const Bond &bond) {
       return "S";
 
     case Bond::QUADRUPLE:
-      return "4";
+      return standardize("4");
     case Bond::QUINTUPLE:
-      return "5";
+      return standardize("5");
     case Bond::HEXTUPLE:
-      return "6";
+      return standardize("6");
 
     case Bond::ONEANDAHALF:
-      return "1.5";
+      return standardize("1.5");
     case Bond::TWOANDAHALF:
-      return "2.5";
+      return standardize("2.5");
     case Bond::THREEANDAHALF:
-      return "3.5";
+      return standardize("3.5");
     case Bond::FOURANDAHALF:
-      return "4.5";
+      return standardize("4.5");
     case Bond::FIVEANDAHALF:
-      return "5.5";
+      return standardize("5.5");
 
     case Bond::ZERO:
-      return "0";
+      return standardize("0");
 
     default:
-      BOOST_LOG(rdInfoLog)
+      BOOST_LOG(rdWarningLog)
           << boost::format{"CMLWriter: Unsupported BondType %1%\n"} % type;
       return "unknown";
   }
