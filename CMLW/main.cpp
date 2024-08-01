@@ -7,15 +7,16 @@
 #include <boost/format.hpp>
 
 int main() {
-  const RDKit::v2::FileParsers::MolFileParserParams params{.removeHs = false};
+  const RDKit::v2::FileParsers::MolFileParserParams params{.sanitize = false,
+                                                           .removeHs = false};
   RDKit::CMLWriter w{"a.cml"};
 
   w.add_molecule(*RDKit::v2::FileParsers::MolFromMolBlock(R"(OH
  OpenBabel08012407203D
 
   2  1  0  0  0  0  0  0  0  0999 V2000
-    1.0990   -0.0544    0.0016 O   0  0  0  0  0  1  0  0  0  0  0  0
-    2.0388   -0.0544    0.0016 H   0  0  0  0  0  0  0  0  0  0  0  0
+    1.0349   -0.0700   -0.0673 O   0  0  0  0  0  1  0  0  0  0  0  0
+    2.0028   -0.0245   -0.0762 H   0  0  0  0  0  0  0  0  0  0  0  0
   1  2  1  0  0  0  0
 M  END
 )",
