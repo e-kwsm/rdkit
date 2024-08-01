@@ -81,22 +81,22 @@ void CMLWriter::put_atomArray(boost::property_tree::ptree &molecule_node,
       }
     }
 
-    auto isotope = a->getIsotope();
+    const auto isotope = a->getIsotope();
     if (isotope != 0u) {
       atom_node.put("<xmlattr>.isotopeNumber", isotope);
     }
 
-    auto charge = a->getFormalCharge();
+    const auto charge = a->getFormalCharge();
     if (charge != 0) {
       atom_node.put("<xmlattr>.formalCharge", charge);
       mol_formal_charge += charge;
     }
 
-    auto n_rad_es = a->getNumRadicalElectrons();
-    if (n_rad_es > 0u) {
+    const auto n_rad_es = a->getNumRadicalElectrons();
+    if (n_rad_es < 2u) {
       atom_node.put("<xmlattr>.spinMultiplicity", n_rad_es + 1u);
-      mol_num_radical_electrons += n_rad_es;
     }
+    mol_num_radical_electrons += n_rad_es;
   }
 
   molecule_node.put("<xmlattr>.formalCharge", mol_formal_charge);
