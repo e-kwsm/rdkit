@@ -5,9 +5,9 @@
 #include <boost/format.hpp>
 #include <boost/property_tree/xml_parser.hpp>
 
-#include <GraphMol/MolHash/MolHash.h>
 #include <RDGeneral/BadFileException.h>
 #include <RDGeneral/FileParseException.h>
+#include <GraphMol/RWMol.h>
 
 namespace RDKit {
 CMLWriter::CMLWriter(const std::string &fileName)
