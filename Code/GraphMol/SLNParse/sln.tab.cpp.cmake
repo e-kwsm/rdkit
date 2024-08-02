@@ -741,9 +741,11 @@ static const yytype_uint8 yyr2[] = {
 #define YYFPRINTF fprintf
 #endif
 
-#define YYDPRINTF(Args)          \
-  do {                           \
-    if (yydebug) YYFPRINTF Args; \
+#define YYDPRINTF(Args) \
+  do {                  \
+    if (yydebug) {      \
+      YYFPRINTF Args;   \
+    }                   \
   } while (0)
 
 /* This macro is provided for backward compatibility. */
