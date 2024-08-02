@@ -72,8 +72,9 @@ static NAME##PropertyFunctor NAME##PropertyFunctor__;
     }                                                                       \
     NAME##PropertyFunctor(bool registerProp = true)                         \
         : PropertyFunctor(#NAME, NAME##Version, _func) {                    \
-      if (registerProp)                                                     \
+      if (registerProp) {                                                   \
         Properties::registerProperty(new NAME##PropertyFunctor(false));     \
+      }                                                                     \
     }                                                                       \
     double operator()(const RDKit::ROMol &mol) const { return _func(mol); } \
   };                                                                        \
