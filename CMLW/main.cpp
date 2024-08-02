@@ -9,6 +9,25 @@
 int main() {
   const RDKit::v2::FileParsers::MolFileParserParams params{.sanitize = false,
                                                            .removeHs = false};
+
+  {
+    auto mol = RDKit::v2::FileParsers::MolFromMolBlock(R"(
+ OpenBabel08022400333D
+
+  2  1  0  0  0  0  0  0  0  0999 V2000
+    1.0097   -0.0332    0.0942 O   0  0  0  0  0  1  0  0  0  0  0  0
+    1.9495   -0.0332    0.0942 H   0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+M  END
+)",
+                                                       params);
+    for (auto a : mol->atoms()) {
+      std::cerr << a->getAtomicNum() << "\t" << a->getNumRadicalElectrons()
+                << "\n";
+    }
+    return 0;
+  }
+
   RDKit::CMLWriter w{"a.cml"};
 
   w.add_molecule(*RDKit::v2::FileParsers::MolFromMolBlock(R"(OH
