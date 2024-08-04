@@ -504,7 +504,7 @@ void DrawMolMCHLasso::extractBondLines(
         }
         auto lassoWidthJ = getLassoWidth(this, colAtoms[j], lassoNum);
         auto dispJ = lassoWidthJ * 0.75;
-        auto bond = drawMol_->getBondBetweenAtoms(colAtoms[i], colAtoms[j]);
+        auto *bond = drawMol_->getBondBetweenAtoms(colAtoms[i], colAtoms[j]);
         if (bond) {
           if (!mcHighlightBondMap_.empty()) {
             auto bndIt = mcHighlightBondMap_.find(bond->getIdx());
@@ -608,14 +608,14 @@ void DrawMolMCHLasso::extractAtomArcs(
       arcs.emplace_back(arc);
     } else {
       for (size_t i = 0; i < atomLine.size() - 1; ++i) {
-        auto arc =
+        auto *arc =
             makeArc(atomLine[i], atomLine[i + 1], atCds_[atomLine[i].atom]);
         if (arc) {
           arcs.emplace_back(arc);
         }
       }
-      auto arc = makeArc(atomLine.back(), atomLine.front(),
-                         atCds_[atomLine.front().atom]);
+      auto *arc = makeArc(atomLine.back(), atomLine.front(),
+                          atCds_[atomLine.front().atom]);
       if (arc) {
         arcs.emplace_back(arc);
       }
