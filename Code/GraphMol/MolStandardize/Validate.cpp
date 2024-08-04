@@ -368,7 +368,7 @@ std::vector<ValidationErrorInfo> FeaturesValidation::validate(
   }
 
   // Optionally disallow using the enahanced stereochemistry
-  if (!allowEnhancedStereo && mol.getStereoGroups().size()) {
+  if (!allowEnhancedStereo && !mol.getStereoGroups().empty()) {
     errors.emplace_back(
         "ERROR: [FeaturesValidation] Enhanced stereochemistry features are not allowed");
   }
