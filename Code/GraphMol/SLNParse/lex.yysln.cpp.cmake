@@ -1899,13 +1899,10 @@ static int yy_get_next_buffer (yyscan_t yyscanner)
 			return EOB_ACT_END_OF_FILE;
 			}
 
-		else
-			{
 			/* We matched some text prior to the EOB, first
 			 * process it.
 			 */
 			return EOB_ACT_LAST_MATCH;
-			}
 		}
 
 	/* Try to read more data. */
