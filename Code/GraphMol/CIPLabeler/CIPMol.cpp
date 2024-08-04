@@ -50,7 +50,7 @@ CIPMolSpan<Atom *, ROMol::ADJ_ITER> CIPMol::getNeighbors(Atom *atom) const {
 
 bool CIPMol::isInRing(Bond *bond) const {
   PRECONDITION(bond, "bad bond")
-  const auto rings = d_mol.getRingInfo();
+  auto *const rings = d_mol.getRingInfo();
 
   if (!rings->isFindFastOrBetter()) {
     MolOps::fastFindRings(d_mol);
@@ -62,7 +62,7 @@ bool CIPMol::isInRing(Bond *bond) const {
 int CIPMol::getBondOrder(Bond *bond) const {
   PRECONDITION(bond, "bad bond")
   if (dp_kekulized_mol == nullptr) {
-    auto tmp = new RWMol(d_mol);
+    auto *tmp = new RWMol(d_mol);
     try {
       MolOps::Kekulize(*tmp);
     } catch (const MolSanitizeException &) {
@@ -70,7 +70,7 @@ int CIPMol::getBondOrder(Bond *bond) const {
     const_cast<CIPMol *>(this)->dp_kekulized_mol.reset(tmp);
   }
 
-  const auto kekulized_bond = dp_kekulized_mol->getBondWithIdx(bond->getIdx());
+  auto *const kekulized_bond = dp_kekulized_mol->getBondWithIdx(bond->getIdx());
 
   // Dative bonds might need to be considered with a different bond order
   // for the end atom at the end of the bond.
