@@ -76,7 +76,7 @@ PyObject *generateRmsdTransMatchPyTuple(double rmsd,
     for (const auto &pair : *match) {
       pairList.append(python::make_tuple(pair.first, pair.second));
     }
-    auto pairTup = new python::tuple(pairList);
+    auto *pairTup = new python::tuple(pairList);
     PyTuple_SetItem(resTup, 2, pairTup->ptr());
   }
   return resTup;
