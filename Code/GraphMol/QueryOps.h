@@ -847,7 +847,7 @@ class HasPropQuery : public Queries::EqualityQuery<int, TargetPtr, true> {
     return res;
   }
 
-  const std::string &getPropName() const { return propname; }
+  [[nodiscard]] const std::string &getPropName() const { return propname; }
 };
 
 typedef Queries::EqualityQuery<int, Atom const *, true> ATOM_PROP_QUERY;
