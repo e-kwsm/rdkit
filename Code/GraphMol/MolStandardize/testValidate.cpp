@@ -936,7 +936,7 @@ M  END
 
   mol.reset(MolBlockToMol(mblock, false, false));
   errout = layout2D.validate(*mol, true);
-  TEST_ASSERT(errout.size() == 0);
+  TEST_ASSERT(errout.empty());
 
   Layout2DValidation customLayout2D(0.15, 10.0, false);
   errout = customLayout2D.validate(*mol, true);
@@ -984,7 +984,7 @@ M  END
 
   mol.reset(MolBlockToMol(mblock, false, false));
   errout = stereo.validate(*mol, true);
-  TEST_ASSERT(errout.size() == 0);
+  TEST_ASSERT(errout.empty());
 
   // 4 ligands - too many stereo bonds with the same wedge/dash direction
   mblock = R"(
@@ -1166,7 +1166,7 @@ M  END
   mol.reset(MolBlockToMol(mblock, false, false));
   Chirality::reapplyMolBlockWedging(*mol);
   errout = stereo.validate(*mol, true);
-  TEST_ASSERT(errout.size() == 0);
+  TEST_ASSERT(errout.empty());
 
   // 3 Ligands - No issues
   mblock = R"(
@@ -1193,7 +1193,7 @@ M  END
   mol.reset(MolBlockToMol(mblock, false, false));
   Chirality::reapplyMolBlockWedging(*mol);
   errout = stereo.validate(*mol, true);
-  TEST_ASSERT(errout.size() == 0);
+  TEST_ASSERT(errout.empty());
 
   // 3 Ligands - multiple stereo bonds
   mblock = R"(
@@ -1287,7 +1287,7 @@ M  END
   mol.reset(MolBlockToMol(mblock, false, false));
   Chirality::reapplyMolBlockWedging(*mol);
   errout = stereo.validate(*mol, true);
-  TEST_ASSERT(errout.size() == 0);
+  TEST_ASSERT(errout.empty());
 
   // Double bond w/ 2 incident wavy bonds
   mblock = R"(
@@ -1324,7 +1324,7 @@ M  END
   for (auto msg : errout) {
     cerr << msg << endl;
   }
-  TEST_ASSERT(errout.size() == 0);
+  TEST_ASSERT(errout.empty());
 
   // Mixed wavy and wedged bonds
   mblock = R"(
@@ -1477,7 +1477,7 @@ M  END
   mol.reset(MolBlockToMol(mblock, false, false));
   Chirality::reapplyMolBlockWedging(*mol);
   errout = stereo.validate(*mol, true);
-  TEST_ASSERT(errout.size() == 0);
+  TEST_ASSERT(errout.empty());
 
   // stereo bonds in phenyl rings validate w/out errors
   mblock = R"(
@@ -1511,7 +1511,7 @@ M  END
   mol.reset(MolBlockToMol(mblock, false, false));
   Chirality::reapplyMolBlockWedging(*mol);
   errout = stereo.validate(*mol, true);
-  TEST_ASSERT(errout.size() == 0);
+  TEST_ASSERT(errout.empty());
 
   // adjacent double bonds do not interfere with the validation of a
   // center's stereochemistry
@@ -1551,7 +1551,7 @@ M  END
     cerr << msg << endl;
   }
 
-  TEST_ASSERT(errout.size() == 0);
+  TEST_ASSERT(errout.empty());
 
   // stereo bonds between stereocenters do not interfere with the validation
   // of each individual center.
@@ -1600,7 +1600,7 @@ M  END
     cerr << msg << endl;
   }
 
-  TEST_ASSERT(errout.size() == 0);
+  TEST_ASSERT(errout.empty());
 
   BOOST_LOG(rdInfoLog) << "Finished" << std::endl;
 }
