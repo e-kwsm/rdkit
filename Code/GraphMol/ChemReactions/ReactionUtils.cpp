@@ -173,7 +173,7 @@ void getMappingNumAtomIdxMapReactants(
     const ChemicalReaction &rxn, std::map<int, Atom *> &reactantAtomMapping) {
   for (auto reactIt = rxn.beginReactantTemplates();
        reactIt != rxn.endReactantTemplates(); ++reactIt) {
-    for (const auto atom : (*reactIt)->atoms()) {
+    for (auto *const atom : (*reactIt)->atoms()) {
       int reactMapNum;
       if (atom->getPropIfPresent(common_properties::molAtomMapNumber,
                                  reactMapNum)) {
@@ -191,7 +191,7 @@ std::pair<unsigned int, std::vector<int>> getNbrOrder(const Atom *atom1,
   std::vector<int> order;
   order.reserve(atom1->getDegree());
   unsigned nUnmapped = 0;
-  for (const auto nbrAtom : atom1->getOwningMol().atomNeighbors(atom1)) {
+  for (auto *const nbrAtom : atom1->getOwningMol().atomNeighbors(atom1)) {
     if (nbrAtom->getAtomMapNum() > 0) {
       order.push_back(nbrAtom->getAtomMapNum());
     } else {
@@ -270,7 +270,7 @@ void updateProductsStereochem(ChemicalReaction *rxn) {
   getMappingNumAtomIdxMapReactants(*rxn, reactantMapping);
   for (MOL_SPTR_VECT::const_iterator prodIt = rxn->beginProductTemplates();
        prodIt != rxn->endProductTemplates(); ++prodIt) {
-    for (auto prodAtom : (*prodIt)->atoms()) {
+    for (auto *prodAtom : (*prodIt)->atoms()) {
       if (prodAtom->hasProp(common_properties::molInversionFlag)) {
         continue;
       }
@@ -283,7 +283,7 @@ void updateProductsStereochem(ChemicalReaction *rxn) {
       int mapNum;
       prodAtom->getProp(common_properties::molAtomMapNumber, mapNum);
       if (reactantMapping.find(mapNum) != reactantMapping.end()) {
-        const auto reactAtom = reactantMapping[mapNum];
+        auto *const reactAtom = reactantMapping[mapNum];
         if (prodAtom->getChiralTag() != Atom::CHI_UNSPECIFIED &&
             prodAtom->getChiralTag() != Atom::CHI_OTHER) {
           if (reactAtom->getChiralTag() != Atom::CHI_UNSPECIFIED &&
