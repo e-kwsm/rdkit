@@ -96,7 +96,7 @@ class RDKIT_MOLSTANDARDIZE_EXPORT RDKitValidation : public ValidationMethod {
 /// molecule.
 class RDKIT_MOLSTANDARDIZE_EXPORT NoAtomValidation : public ValidationMethod {
  public:
-  std::vector<ValidationErrorInfo> validate(
+  [[nodiscard]] std::vector<ValidationErrorInfo> validate(
       const ROMol &mol, bool reportAllFailures) const override;
 
   [[nodiscard]] std::shared_ptr<ValidationMethod> copy() const override {
@@ -107,7 +107,7 @@ class RDKIT_MOLSTANDARDIZE_EXPORT NoAtomValidation : public ValidationMethod {
 //! The FragmentValidation class logs if certain fragments are present.
 class RDKIT_MOLSTANDARDIZE_EXPORT FragmentValidation : public ValidationMethod {
  public:
-  std::vector<ValidationErrorInfo> validate(
+  [[nodiscard]] std::vector<ValidationErrorInfo> validate(
       const ROMol &mol, bool reportAllFailures) const override;
 
   [[nodiscard]] std::shared_ptr<ValidationMethod> copy() const override {
@@ -118,7 +118,7 @@ class RDKIT_MOLSTANDARDIZE_EXPORT FragmentValidation : public ValidationMethod {
 //! The NeutralValidation class logs if not an overall neutral system.
 class RDKIT_MOLSTANDARDIZE_EXPORT NeutralValidation : public ValidationMethod {
  public:
-  std::vector<ValidationErrorInfo> validate(
+  [[nodiscard]] std::vector<ValidationErrorInfo> validate(
       const ROMol &mol, bool reportAllFailures) const override;
 
   [[nodiscard]] std::shared_ptr<ValidationMethod> copy() const override {
@@ -137,7 +137,7 @@ class RDKIT_MOLSTANDARDIZE_EXPORT NeutralValidation : public ValidationMethod {
 class RDKIT_MOLSTANDARDIZE_EXPORT IsotopeValidation : public ValidationMethod {
  public:
   IsotopeValidation(bool strict = false) : strict(strict){};
-  std::vector<ValidationErrorInfo> validate(
+  [[nodiscard]] std::vector<ValidationErrorInfo> validate(
       const ROMol &mol, bool reportAllFailures) const override;
 
   [[nodiscard]] std::shared_ptr<ValidationMethod> copy() const override {
@@ -207,10 +207,10 @@ class RDKIT_MOLSTANDARDIZE_EXPORT DisallowedAtomsValidation
 class RDKIT_MOLSTANDARDIZE_EXPORT DisallowedRadicalValidation
     : public ValidationMethod {
  public:
-  std::vector<ValidationErrorInfo> validate(
+  [[nodiscard]] std::vector<ValidationErrorInfo> validate(
       const ROMol &mol, bool reportAllFailures) const override;
 
-  std::shared_ptr<ValidationMethod> copy() const override {
+  [[nodiscard]] std::shared_ptr<ValidationMethod> copy() const override {
     return std::make_shared<DisallowedRadicalValidation>(*this);
   }
 };
@@ -230,9 +230,9 @@ class RDKIT_MOLSTANDARDIZE_EXPORT FeaturesValidation : public ValidationMethod {
         allowQueries(allowQueries),
         allowDummies(allowDummies),
         allowAtomAliases(allowAtomAliases){};
-  std::vector<ValidationErrorInfo> validate(
+  [[nodiscard]] std::vector<ValidationErrorInfo> validate(
       const ROMol &mol, bool reportAllFailures) const override;
-  std::shared_ptr<ValidationMethod> copy() const override {
+  [[nodiscard]] std::shared_ptr<ValidationMethod> copy() const override {
     return std::make_shared<FeaturesValidation>(*this);
   }
   bool allowEnhancedStereo;
@@ -250,9 +250,9 @@ class RDKIT_MOLSTANDARDIZE_EXPORT FeaturesValidation : public ValidationMethod {
 class RDKIT_MOLSTANDARDIZE_EXPORT Is2DValidation : public ValidationMethod {
  public:
   Is2DValidation(double threshold = 1.e-3) : threshold(threshold){};
-  std::vector<ValidationErrorInfo> validate(
+  [[nodiscard]] std::vector<ValidationErrorInfo> validate(
       const ROMol &mol, bool reportAllFailures) const override;
-  std::shared_ptr<ValidationMethod> copy() const override {
+  [[nodiscard]] std::shared_ptr<ValidationMethod> copy() const override {
     return std::make_shared<Is2DValidation>(*this);
   }
 
@@ -273,9 +273,9 @@ class RDKIT_MOLSTANDARDIZE_EXPORT Layout2DValidation : public ValidationMethod {
         allowLongBondsInRings(allowLongBondsInRings),
         allowAtomBondClashExemption(allowAtomBondClashExemption),
         minMedianBondLength(minMedianBondLength){};
-  std::vector<ValidationErrorInfo> validate(
+  [[nodiscard]] std::vector<ValidationErrorInfo> validate(
       const ROMol &mol, bool reportAllFailures) const override;
-  std::shared_ptr<ValidationMethod> copy() const override {
+  [[nodiscard]] std::shared_ptr<ValidationMethod> copy() const override {
     return std::make_shared<Layout2DValidation>(*this);
   }
 
@@ -296,9 +296,9 @@ class RDKIT_MOLSTANDARDIZE_EXPORT Layout2DValidation : public ValidationMethod {
 /// These validation criteria were ported from the AvalonTools STRUCHK software.
 class RDKIT_MOLSTANDARDIZE_EXPORT StereoValidation : public ValidationMethod {
  public:
-  std::vector<ValidationErrorInfo> validate(
+  [[nodiscard]] std::vector<ValidationErrorInfo> validate(
       const ROMol &mol, bool reportAllFailures) const override;
-  std::shared_ptr<ValidationMethod> copy() const override {
+  [[nodiscard]] std::shared_ptr<ValidationMethod> copy() const override {
     return std::make_shared<StereoValidation>(*this);
   }
 };
