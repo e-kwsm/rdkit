@@ -140,7 +140,7 @@ boost::shared_ptr<PropertyFunctor> Properties::getProperty(
   throw KeyErrorException(name);
 }
 
-Properties::Properties() : m_properties() {
+Properties::Properties() {
   registerDescriptors();
   for (auto prop : Properties::registry) {
     m_properties.push_back(prop);
