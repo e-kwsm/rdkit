@@ -600,7 +600,7 @@ TEST_CASE(
 
 TEST_CASE("stereo in ring", "[molblock][stereo]") {
   SECTION("test 1") {
-    auto molblock = R"CTAB(
+    const auto *molblock = R"CTAB(
   Mrv2311 10242314442D          
 
   0  0  0     0  0            999 V3000
@@ -635,7 +635,7 @@ M  V30 END CTAB
 M  END
 )CTAB";
 
-    auto m = MolBlockToMol(molblock, true, false, false);
+    auto *m = MolBlockToMol(molblock, true, false, false);
 
     REQUIRE(m);
     CHECK(m->getBondWithIdx(1)->getStereo() == Bond::BondStereo::STEREONONE);
