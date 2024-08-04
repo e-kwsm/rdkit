@@ -148,7 +148,7 @@ void Digraph::expand(Node *beg) {
     const int virtual_nodes = bord - 1;
 
     if (!beg->isVisited(nbrIdx)) {
-      auto end = beg->newChild(nbrIdx, nbr);
+      auto *end = beg->newChild(nbrIdx, nbr);
       addEdge(beg, bond, end);
 
       // duplicate nodes for bond orders (except for root atoms...)
@@ -168,12 +168,12 @@ void Digraph::expand(Node *beg) {
     } else if (bond == prev) {  // bond order expansion (backwards)
       if (dp_origin->getAtom() != nbr || d_atropisomerMode) {
         for (int i = 0; i < virtual_nodes; ++i) {
-          auto end = beg->newBondDuplicateChild(nbrIdx, nbr);
+          auto *end = beg->newBondDuplicateChild(nbrIdx, nbr);
           addEdge(beg, bond, end);
         }
       }
     } else {  // ring closures
-      auto end = beg->newRingDuplicateChild(nbrIdx, nbr);
+      auto *end = beg->newRingDuplicateChild(nbrIdx, nbr);
       addEdge(beg, bond, end);
 
       if (atom->getFormalCharge() < 0 &&
@@ -192,7 +192,7 @@ void Digraph::expand(Node *beg) {
   // Create implicit hydrogen nodes
   const int hcnt = atom->getTotalNumHs();
   for (int i = 0; i < hcnt; ++i) {
-    auto end = beg->newImplicitHydrogenChild();
+    auto *end = beg->newImplicitHydrogenChild();
     addEdge(beg, nullptr, end);
   }
 }
