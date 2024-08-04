@@ -598,7 +598,7 @@ TEST_CASE("variable attachment bonds") {
   {
     auto m = "CO*.C1=CC=NC=C1 |m:2:3.5.4|"_smiles;
     REQUIRE(m);
-    const auto bnd = m->getBondBetweenAtoms(1, 2);
+    auto *const bnd = m->getBondBetweenAtoms(1, 2);
     REQUIRE(bnd);
     CHECK(bnd->hasProp(common_properties::_MolFileBondAttach));
     CHECK(bnd->getProp<std::string>(common_properties::_MolFileBondAttach) ==
@@ -612,7 +612,7 @@ TEST_CASE("variable attachment bonds") {
     auto m = "F*.Cl*.C1=CC=NC=C1 |m:1:9.8,3:4.5|"_smiles;
     REQUIRE(m);
     {
-      const auto bnd = m->getBondBetweenAtoms(0, 1);
+      auto *const bnd = m->getBondBetweenAtoms(0, 1);
       REQUIRE(bnd);
       CHECK(bnd->hasProp(common_properties::_MolFileBondAttach));
       CHECK(bnd->getProp<std::string>(common_properties::_MolFileBondAttach) ==
@@ -622,7 +622,7 @@ TEST_CASE("variable attachment bonds") {
             "(2 10 9)");
     }
     {
-      const auto bnd = m->getBondBetweenAtoms(2, 3);
+      auto *const bnd = m->getBondBetweenAtoms(2, 3);
       REQUIRE(bnd);
       CHECK(bnd->hasProp(common_properties::_MolFileBondAttach));
       CHECK(bnd->getProp<std::string>(common_properties::_MolFileBondAttach) ==
