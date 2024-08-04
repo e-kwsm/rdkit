@@ -429,7 +429,7 @@ void testEnumeratorParams() {
     TautomerEnumerator te(params);
     TautomerEnumeratorResult res = te.enumerate(*sAla);
     for (const auto &taut : res) {
-      const auto tautAtom = taut->getAtomWithIdx(1);
+      auto *const tautAtom = taut->getAtomWithIdx(1);
       if (tautAtom->getHybridization() == Atom::SP3) {
         TEST_ASSERT(tautAtom->hasProp(common_properties::_CIPCode));
         TEST_ASSERT(
@@ -504,7 +504,7 @@ void testEnumeratorParams() {
     TautomerEnumerator te(params);
     TautomerEnumeratorResult res = te.enumerate(*chembl2024142);
     for (const auto &taut : res) {
-      const auto tautAtom = taut->getAtomWithIdx(12);
+      auto *const tautAtom = taut->getAtomWithIdx(12);
       TEST_ASSERT(!tautAtom->hasProp(common_properties::_isotopicHs));
     }
   }
@@ -515,7 +515,7 @@ void testEnumeratorParams() {
     TautomerEnumerator te(params);
     TautomerEnumeratorResult res = te.enumerate(*chembl2024142);
     for (const auto &taut : res) {
-      const auto tautAtom = taut->getAtomWithIdx(12);
+      auto *const tautAtom = taut->getAtomWithIdx(12);
       TEST_ASSERT(tautAtom->hasProp(common_properties::_isotopicHs));
     }
   }
@@ -529,7 +529,7 @@ void testEnumeratorParams() {
     TautomerEnumerator te(params);
     TautomerEnumeratorResult res = te.enumerate(*enolexample);
     for (const auto &taut : res) {
-      const auto tautAtom = taut->getAtomWithIdx(0);
+      auto *const tautAtom = taut->getAtomWithIdx(0);
       TEST_ASSERT(!(tautAtom->hasProp(common_properties::_isotopicHs) &&
                     !tautAtom->getTotalNumHs()));
     }
@@ -540,7 +540,7 @@ void testEnumeratorParams() {
     TautomerEnumerator te(params);
     TautomerEnumeratorResult res = te.enumerate(*enolexample);
     for (const auto &taut : res) {
-      const auto tautAtom = taut->getAtomWithIdx(0);
+      auto *const tautAtom = taut->getAtomWithIdx(0);
       TEST_ASSERT(!(tautAtom->hasProp(common_properties::_isotopicHs) &&
                     !tautAtom->getTotalNumHs()));
     }
