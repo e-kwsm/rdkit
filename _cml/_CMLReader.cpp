@@ -44,6 +44,17 @@
 
 namespace RDKit {
 namespace {
+CMLMoleculeParser::CMLMoleculeParser(
+    std::string molecule_xpath,
+    const boost::property_tree::ptree &molecule_node)
+    : molecule_xpath{std::move(molecule_xpath)},
+      molecule_node{molecule_node},
+      molecule_id{molecule_node.get_optional<std::string>("<xmlattr>.id")},
+      formalCharge{get_attribute_optionally<int>(molecule_node, "formalCharge",
+                                                 xpath())},
+      spinMultiplicity{get_attribute_optionally<unsigned>(
+          molecule_node, "spinMultiplicity", xpath())} {}
+
 void CMLMoleculeParser::check_molecule() {
   // http://www.xml-cml.org/convention/molecular#molecule-id
   // > A molecule element MUST have an id attribute
