@@ -17,6 +17,8 @@
 
 #include <string>
 #include <regex>
+#include <unordered_map>
+#include <unordered_set>
 
 #include <boost/lexical_cast.hpp>
 #include <boost/property_tree/ptree.hpp>
@@ -26,6 +28,8 @@
 #include <RDGeneral/FileParseException.h>
 
 namespace RDKit {
+class Atom;
+class Conformer;
 class RWMol;
 
 namespace v2 {
@@ -76,14 +80,7 @@ class CMLMoleculeParser {
   // @param molecule_xpath XPath for messages
   // @param molecule_node
   CMLMoleculeParser(std::string molecule_xpath,
-                    const boost::property_tree::ptree &molecule_node)
-      : molecule_xpath{std::move(molecule_xpath)},
-        molecule_node{molecule_node},
-        molecule_id{molecule_node.get_optional<std::string>("<xmlattr>.id")},
-        formalCharge{get_attribute_optionally<int>(molecule_node,
-                                                   "formalCharge", xpath())},
-        spinMultiplicity{get_attribute_optionally<unsigned>(
-            molecule_node, "spinMultiplicity", xpath())} {}
+                    const boost::property_tree::ptree &molecule_node);
   ~CMLMoleculeParser() = default;
   CMLMoleculeParser(const CMLMoleculeParser &) = delete;
 
