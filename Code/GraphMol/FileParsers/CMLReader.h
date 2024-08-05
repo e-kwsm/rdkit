@@ -30,11 +30,6 @@ class RWMol;
 
 namespace v2 {
 namespace FileParsers {
-struct RDKIT_FILEPARSERS_EXPORT CMLFileParserParams {
-  bool sanitize = true;  ///< sanitize the molecule after building it
-  bool removeHs = true;  ///< remove Hs after constructing the molecule
-};
-
 namespace cml {
 class CMLError : public RDKit::FileParseException {
  public:
@@ -54,6 +49,11 @@ class MandatoryElementNotFound final : public CMLError {
   ~MandatoryElementNotFound() override;
 };
 }  // namespace cml
+
+struct RDKIT_FILEPARSERS_EXPORT CMLFileParserParams {
+  bool sanitize = true;  ///< sanitize the molecule after building it
+  bool removeHs = true;  ///< remove Hs after constructing the molecule
+};
 
 class RDKIT_FILEPARSERS_EXPORT CMLSupplier {
  public:
