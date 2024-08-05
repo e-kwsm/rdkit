@@ -35,10 +35,11 @@
 #include <boost/format.hpp>
 #include <boost/property_tree/xml_parser.hpp>
 
-#include "FileParsers.h"
+// #include "FileParsers.h"
 #include "CMLReader.h"
-#include <RDGeneral/BadFileException.h>
+#include <GraphMol/RWMol.h>
 #include <RDGeneral/Invariant.h>
+#include <RDGeneral/BadFileException.h>
 
 #ifndef __clang__version__    // FIXME
 #pragma GCC diagnostic pop    // FIXME
@@ -112,7 +113,7 @@ std::unique_ptr<RWMol> CMLSupplier::next() {
   return tmp;
 }
 
-std::optional<boost::property_tree::ptree> CMLSupplier::get_array(
+std::unique_ptr<boost::property_tree::ptree> CMLSupplier::get_array(
     const boost::property_tree::ptree &node, const std::string &name) const
     noexcept(false) {
   auto xpath = [](auto x) { return x; };
@@ -120,9 +121,9 @@ std::optional<boost::property_tree::ptree> CMLSupplier::get_array(
     case 0u:
       BOOST_LOG(rdInfoLog) << boost::format{"%1% is missing"} % xpath(name)
                            << std::endl;
-      return std::nullopt;
+      return nullptr;
     case 1u:
-      return node.get_child(name);
+      return std::make_unique<boost::property_tree::ptree>(node.get_child(name));
     default:
       // auto msg = boost::format{"%1% has multiple %2% elements"} %
       // molecule_xpath % node; throw RDKit::FileParseException{msg.str()};
@@ -137,8 +138,16 @@ std::unique_ptr<RWMol> CMLSupplier::parse_molecule_node(
   // http://www.xml-cml.org/convention/molecular#molecule-atomArray
   // > A molecule MAY contain a single atomArray child except when it contains
   // > child molecules.
-  if (auto aa = get_array(node, "atomArray")) {
+  if (auto atomArray = get_array(node, "atomArray")) {
     // parse_atomArray(xpath("atomArray").str(), *aa);
+    const auto num_atoms = static_cast<unsigned>(atomArray->count("atom"));
+    // http://www.xml-cml.org/convention/molecular#atomArray-element
+    // > An atomArray element MUST contain at least one child atom element.
+    if (num_atoms == 0u) {
+      // auto msg = boost::format{"%1% has no atom elements"} %
+      // xpath_to_atomArray; throw RDKit::FileParseException{msg.str()};
+      throw RDKit::FileParseException{__func__};
+    }
   }
 
   return mol;
