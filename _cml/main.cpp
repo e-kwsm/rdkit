@@ -62,6 +62,7 @@ int main(int argc, char **argv) {
     std::stringbuf buf{ss.str()};
     std::unique_ptr<std::istream> pis = std::make_unique<std::istream>(&buf);
     CMLSupplier supp{std::exchange(pis, nullptr)};
+    std::cout << MolToCMLBlock(*supp.next()) << std::endl;
   }
 
 #if 0
