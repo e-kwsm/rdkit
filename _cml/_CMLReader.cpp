@@ -43,6 +43,7 @@
 // using namespace std::literals::string_literals;  // XXX
 
 namespace RDKit {
+#if 0
 namespace {
 CMLMoleculeParser::CMLMoleculeParser(
     std::string molecule_xpath,
@@ -636,4 +637,5 @@ std::unique_ptr<RWMol> MolFromCMLFile(
   return MolFromCMLDataStream(ifs, params);
 }
 }  // namespace v2::FileParsers
+#endif
 }  // namespace RDKit
