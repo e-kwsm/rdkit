@@ -112,9 +112,35 @@ std::unique_ptr<RWMol> CMLSupplier::next() {
   return tmp;
 }
 
+std::optional<boost::property_tree::ptree> CMLSupplier::get_array(
+    const boost::property_tree::ptree &node, const std::string &name) const
+    noexcept(false) {
+  auto xpath = [](auto x) { return x; };
+  switch (node.count(name)) {
+    case 0u:
+      BOOST_LOG(rdInfoLog) << boost::format{"%1% is missing"} % xpath(name)
+                           << std::endl;
+      return std::nullopt;
+    case 1u:
+      return node.get_child(name);
+    default:
+      // auto msg = boost::format{"%1% has multiple %2% elements"} %
+      // molecule_xpath % node; throw RDKit::FileParseException{msg.str()};
+      throw;
+  }
+}
+
 std::unique_ptr<RWMol> CMLSupplier::parse_molecule_node(
     const boost::property_tree::ptree &node) {
   std::unique_ptr<RWMol> mol;
+
+  // http://www.xml-cml.org/convention/molecular#molecule-atomArray
+  // > A molecule MAY contain a single atomArray child except when it contains
+  // > child molecules.
+  if (auto aa = get_array(node, "atomArray")) {
+    // parse_atomArray(xpath("atomArray").str(), *aa);
+  }
+
   return mol;
 }
 

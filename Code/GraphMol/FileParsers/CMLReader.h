@@ -50,7 +50,14 @@ class RDKIT_FILEPARSERS_EXPORT CMLSupplier {
   void close();
 
  private:
+  std::optional<boost::property_tree::ptree> get_array(
+      const boost::property_tree::ptree &node, const std::string &name) const
+      noexcept(false);
   std::unique_ptr<RWMol> parse_molecule_node(
+      const boost::property_tree::ptree &node);
+  std::unique_ptr<RWMol> parse_atom_node(
+      const boost::property_tree::ptree &node);
+  std::unique_ptr<RWMol> parse_bond_node(
       const boost::property_tree::ptree &node);
 
   std::unique_ptr<std::istream> p_istream;
