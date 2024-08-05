@@ -10,6 +10,7 @@ int main() {
   const RDKit::v2::FileParsers::MolFileParserParams params{.sanitize = false,
                                                            .removeHs = false};
 
+#if 0
   {
     auto mol = RDKit::v2::FileParsers::MolFromMolBlock(R"(
  OpenBabel08022400333D
@@ -27,6 +28,7 @@ M  END
     }
     return 0;
   }
+#endif
 
   RDKit::CMLWriter w{"a.cml"};
 
