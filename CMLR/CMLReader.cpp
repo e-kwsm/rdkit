@@ -18,6 +18,8 @@
 
 #include <boost/format.hpp>
 
+using namespace std::literals::string_literals;
+
 namespace RDKit {
 namespace v2 {
 namespace FileParsers {
@@ -44,7 +46,7 @@ auto CMLMolecule::get_array(const std::string &name) const {
       break;
     default:
       auto msg = boost::format{"multiple %s elements"} % name;
-      throw cml::CMLError{msg.str()};
+      throw CMLError{msg.str()};
   }
   return p;
 }
@@ -74,7 +76,7 @@ void CMLMolecule::parse_atomArray(const boost::property_tree::ptree &node) {
   // http://www.xml-cml.org/convention/molecular#atomArray-element
   // > An atomArray element MUST contain at least one child atom element.
   if (num_atoms == 0u) {
-    throw cml::CMLError{"atomArray has no atom elements"};
+    throw CMLError{"atomArray has no atom elements"};
   }
   conformer->reserve(num_atoms);
 
@@ -109,14 +111,14 @@ void CMLMolecule::parse_atom(const boost::property_tree::ptree &node,
     try {
       tmp = node.get<std::string>("<xmlattr>.id");
     } catch (const boost::property_tree::ptree_bad_path &) {
-      throw cml::CMLError{"atom/@id is missing"};
+      throw CMLError{"atom/@id is missing"};
     }
     // http://www.xml-cml.org/convention/molecular#atom-id
     // > The value of the id MUST be unique amongst the atoms within the eldest
     // > containing molecule.
     if (id_atom.count(tmp)) {
       auto msg = boost::format{R"("atom/@id (= "%1%") is not unique")"} % tmp;
-      throw cml::CMLError{msg.str()};
+      throw CMLError{msg.str()};
     }
     return tmp;
   }();
@@ -129,7 +131,7 @@ void CMLMolecule::parse_atom(const boost::property_tree::ptree &node,
     try {
       tmp = node.get<std::string>("<xmlattr>.elementType");
     } catch (const boost::property_tree::ptree_bad_path &) {
-      throw cml::CMLError{"atom/@elementType is missing"};
+      throw CMLError{"atom/@elementType is missing"};
     }
 
     // http://www.xml-cml.org/schema/schema3/schema.xsd
@@ -161,7 +163,7 @@ void CMLMolecule::parse_atom(const boost::property_tree::ptree &node,
           node.get_optional<unsigned>("<xmlattr>.spinMultiplicity")) {
     if (*spinMultiplicity == 0u) {
       auto msg = boost::format{"atom/@spinMultiplicity is zero"};
-      throw cml::CMLError{msg.str()};
+      throw CMLError{msg.str()};
     }
     if (*spinMultiplicity <= 2u) {
       atom->setNumRadicalElectrons(*spinMultiplicity - 1u);
@@ -191,10 +193,9 @@ void CMLMolecule::parse_atom(const boost::property_tree::ptree &node,
     if (!(x3 && y3 && z3)) {
       auto msg =
           boost::format{"/atom/ does not have all of x3, y3 and z3 attributes"};
-      throw cml::CMLError{msg.str()};
+      throw CMLError{msg.str()};
     }
     RDGeom::Point3D r{*x3, *y3, *z3};
-    // BOOST_LOG(rdDebugLog) << xpath_to_atom << ' ' << r << std::endl;
     conformer->setAtomPos(idx, r);
   } else {
     // Ignore x2 and y2
@@ -204,15 +205,188 @@ void CMLMolecule::parse_atom(const boost::property_tree::ptree &node,
     // > coordinates for the object.
     BOOST_LOG(rdInfoLog)
         << boost::format{"/atom does not have geometrical info "
-                 "(x2 and y2 are ignored if exist)"}
+                 "(x2 and y2 are ignored even if exist)"}
         << std::endl;
   }
 
   id_atom[id] = std::move(atom);
 }
 
-void CMLMolecule::parse_bondArray(const boost::property_tree::ptree &node) {}
-void CMLMolecule::parse_bond(const boost::property_tree::ptree &node) {}
+void CMLMolecule::parse_bondArray(const boost::property_tree::ptree &node) {
+  // http://www.xml-cml.org/convention/molecular#bondArray-element
+  // > A bondArray element MUST contain at least one child bond element.
+  if (node.count("bond") == 0u) {
+    auto msg = boost::format{"/bondArray has no bond elements"};
+    throw CMLError{msg.str()};
+  }
+
+  for (const auto &bonditr : node) {
+    if (bonditr.first == "<xmlattr>") {
+      continue;
+    }
+
+    if (bonditr.first != "bond") {
+      BOOST_LOG(rdInfoLog) << boost::format{"bondArray/%1% is ignored"} %
+                                  bonditr.first
+                           << std::endl;
+      continue;
+    }
+
+    parse_bond(bonditr.second);
+  }
+}
+
+void CMLMolecule::parse_bond(const boost::property_tree::ptree &node) {
+  auto xpath_to_bond = "/bond"s;
+  // http://www.xml-cml.org/convention/molecular#bond-id
+  // > It is RECOMMENDED that a bond has an id attribute so that it can be
+  // > referenced.
+  const auto id = node.get_optional<std::string>("<xmlattr>.id");
+  if (!id) {
+    BOOST_LOG(rdInfoLog) << boost::format{"%1%/@id is missing"} % xpath_to_bond
+                         << std::endl;
+  }
+  // } else if (!is_valid_id(*id)) {
+  //   auto msg =
+  //       boost::format{"%1%/@id (= \"%2%\") is invalid"} % xpath_to_bond %
+  //       id;
+  //   throw RDKit::FileParseException{msg.str()};
+  else if (!bond_ids.insert(*id).second) {
+    // http://www.xml-cml.org/convention/molecular#bond-id
+    // > The id of a bond MUST be unique amongst the bonds of the eldest
+    // > containing molecule.
+    auto msg = boost::format{"%1%/@id (= \"%2%\") is not unique"} %
+               xpath_to_bond % *id;
+    throw RDKit::FileParseException{msg.str()};
+  } else {
+    xpath_to_bond += "[@id=\"" + *id + "\"]";
+  }
+
+  // http://www.xml-cml.org/convention/molecular#bond-order
+  // > A bond MUST have an order attribute
+  const auto order = [&]() {
+    std::string tmp;
+    try {
+      tmp = node.get<std::string>("<xmlattr>.order");
+    } catch (...) {
+      auto msg = boost::format{"%1%/@order is missing"} % xpath_to_bond;
+      throw CMLError{msg.str()};
+    }
+    return tmp;
+  }();
+
+  RDKit::Bond::BondType bt = RDKit::Bond::UNSPECIFIED;
+  if (order == "1" || order == "S") {
+    bt = RDKit::Bond::SINGLE;
+  } else if (order == "2" || order == "D") {
+    bt = RDKit::Bond::DOUBLE;
+  } else if (order == "3" || order == "T") {
+    bt = RDKit::Bond::TRIPLE;
+  } else if (order == "A") {
+    bt = RDKit::Bond::AROMATIC;
+  } /* RDKit extension */ else if (order == "4") {
+    bt = RDKit::Bond::QUADRUPLE;
+  } else if (order == "5") {
+    bt = RDKit::Bond::QUINTUPLE;
+  } else if (order == "6") {
+    bt = RDKit::Bond::HEXTUPLE;
+  } else if (order == "1.5") {
+    bt = RDKit::Bond::ONEANDAHALF;
+  } else if (order == "2.5") {
+    bt = RDKit::Bond::TWOANDAHALF;
+  } else if (order == "3.5") {
+    bt = RDKit::Bond::THREEANDAHALF;
+  } else if (order == "4.5") {
+    bt = RDKit::Bond::FOURANDAHALF;
+  } else if (order == "5.5") {
+    bt = RDKit::Bond::FIVEANDAHALF;
+  } else {
+    BOOST_LOG(rdWarningLog)
+        << boost::format{R"("%1%/@order (= "%2%") is unrecognizable")"} %
+               xpath_to_bond % order
+        << std::endl;
+  }
+
+  // http://www.xml-cml.org/convention/molecular#bond-atomRefs2
+  // > A bond MUST have a atomRefs2 attribute, the value of which MUST be the
+  // > space separated ids of two different atoms which MUST be in the same
+  // > molecule.
+  const auto atomRefs2 = [&]() {
+    std::string tmp;
+    try {
+      tmp = node.get<std::string>("<xmlattr>.atomRefs2");
+    } catch (...) {
+      auto msg = boost::format{"%1%/@atomRefs2 is missing"} % xpath_to_bond;
+      throw CMLError{msg.str()};
+    }
+    return tmp;
+  }();
+
+  std::istringstream iss{atomRefs2};
+  std::string id_bgn, id_end;
+  if (!(iss >> id_bgn >> id_end)) {
+    auto msg =
+        boost::format{R"(%1%/@atomRefs2 (= "%2%") does not have two ids ")"
+                      "separated by space"} %
+        xpath_to_bond % atomRefs2;
+    throw CMLError{msg.str()};
+  } else if (std::string extra; iss >> extra) {
+    auto msg =
+        boost::format{R"(%1%/@atomRefs2 (= "%2%") has three or more ids)"} %
+        xpath_to_bond % atomRefs2;
+    throw CMLError{msg.str()};
+  }
+
+  if (id_bgn == id_end) {
+    auto msg = boost::format{R"(%1%/@atomRefs2 (= "%2%") is self-bond)"} %
+               xpath_to_bond % atomRefs2;
+    throw CMLError{msg.str()};
+  }
+
+  auto distance = [&](const auto &atom_id) {
+    auto i = id_atom.find(atom_id);
+    if (i == id_atom.end()) {
+      auto msg =
+          boost::format{
+              R"(%1%/@atomRefs2 (= \"%2%\") refers to non-existing )"
+              R"(../../../atomArray/atom[@id="%3%"])"} %
+          xpath_to_bond % atomRefs2 % atom_id;
+      throw CMLError{msg.str()};
+    }
+    return static_cast<unsigned>(std::distance(id_atom.begin(), i));
+  };
+
+  const auto index_bgn = distance(id_bgn);
+  const auto index_end = distance(id_end);
+
+  auto bond = std::make_unique<RDKit::Bond>(bt);
+  bond->setBeginAtomIdx(index_bgn);
+  bond->setEndAtomIdx(index_end);
+
+  // TODO
+  const auto bondStereo = node.get_optional<std::string>("bondStereo");
+  if (bondStereo) {
+    if (*bondStereo == "C") {
+      // TODO
+      // b->setStereo(Bond::STEREOCIS);
+    } else if (*bondStereo == "T") {
+      // TODO
+      // b->setStereo(Bond::STEREOTRANS);
+    } else if (*bondStereo == "W") {
+    } else if (*bondStereo == "H") {
+    } else if (*bondStereo == "other") {
+      BOOST_LOG(rdWarningLog) << "not implemented" << std::endl;
+    } else if (*bondStereo != "undefined") {
+      BOOST_LOG(rdWarningLog)
+          << boost::format{"%1%/bondStereo (= \"%2%\") is unrecognizable"} %
+                 xpath_to_bond % *bondStereo
+          << std::endl;
+    }
+  }
+
+  bond->setOwningMol(*molecule);
+  molecule->addBond(bond.release(), true);
+}
 }  // namespace cml
 }  // namespace FileParsers
 }  // namespace v2
