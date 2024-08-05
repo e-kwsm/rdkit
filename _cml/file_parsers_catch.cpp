@@ -30,8 +30,7 @@ using namespace std::literals::string_literals;
 using namespace RDKit;
 using namespace RDKit::v2::FileParsers;
 
-namespace {
-}  // namespace
+namespace {}  // namespace
 
 SCENARIO("CML Reader", "[CML][reader]") {
   using namespace RDKit::v2::FileParsers;
@@ -48,5 +47,23 @@ SCENARIO("CML Reader", "[CML][reader]") {
       std::unique_ptr<std::istream> pis = std::make_unique<std::istream>(&buf);
       REQUIRE_THROWS_AS(CMLSupplier{std::move(pis)}, RDKit::FileParseException);
     }
+  }
+
+  WHEN("//molecule/atomArray has no atom elements") {
+    std::stringbuf buf{R"(<?xml version="1.0"?>
+<cml>
+  <molecule>
+    <atomArray/>
+  </molecule>
+</cml>
+)"s};
+    std::unique_ptr<std::istream> pis = std::make_unique<std::istream>(&buf);
+    CMLSupplier supp{std::move(pis)};
+    REQUIRE_THROWS_AS(supp.next(), RDKit::FileParseException);
+
+    // auto cml = cml_root(MoleculeNode{}.str(cml_atomArray("")));
+    // REQUIRE_THROWS_WITH(
+    //     MolFromCMLBlock(cml),
+    //     Matches(".*/molecule[^/]*/atomArray has no atom elements"));
   }
 }
