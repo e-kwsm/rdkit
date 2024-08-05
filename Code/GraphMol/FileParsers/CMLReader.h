@@ -43,10 +43,10 @@ class XMLMalformedError final : public CMLError {
   ~XMLMalformedError() override;
 };
 
-class MandatoryElementNotFound final : public CMLError {
+class MandatoryElementNotFoundError final : public CMLError {
  public:
-  MandatoryElementNotFound(const std::string &what) : CMLError{what} {}
-  ~MandatoryElementNotFound() override;
+  MandatoryElementNotFoundError(const std::string &what) : CMLError{what} {}
+  ~MandatoryElementNotFoundError() override;
 };
 }  // namespace cml
 
