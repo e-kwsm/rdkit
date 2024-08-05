@@ -56,7 +56,10 @@ namespace cml {
 CMLError::~CMLError() = default;
 XMLMalformedError::~XMLMalformedError() = default;
 MandatoryElementNotFoundError::~MandatoryElementNotFoundError() = default;
-MandatoryAttributeNotFoundError::~MandatoryAttributeNotFoundError() = default;
+CMLAttributeError::~CMLAttributeError() = default;
+
+CMLMolecule::CMLMolecule(const boost::property_tree::ptree &molecule_node)
+    : molecule_node{molecule_node} {}
 }  // namespace cml
 
 CMLSupplier::CMLSupplier(std::unique_ptr<std::istream> &&p_istream,
@@ -185,13 +188,23 @@ std::unique_ptr<RWMol> CMLSupplier::parse_molecule_node(
 
       const auto &atom_node = atomitr.second;
 
-      const auto elementType =
-          atom_node.get_optional<std::string>("<xmlattr>.elementType");
       // http://www.xml-cml.org/convention/molecular#atom-elementType
       // > An atom MUST have an elementType attribute
-      if (!elementType) {
+      try {
+        const auto elementType =
+            atom_node.get<std::string>("<xmlattr>.elementType");
+
+        // http://www.xml-cml.org/schema/schema3/schema.xsd
+        // > Du. ("dummy") This does not correspond to a "real" atom and can
+        // support a > point in space or within a chemical graph. > R.
+        // ("R-group") This indicates that an atom or group of atoms could be >
+        // attached at this point.
+        auto atom = (elementType == "Du" || elementType == "R")
+                        ? std::make_unique<RDKit::Atom>()
+                        : std::make_unique<RDKit::Atom>(elementType);
+      } catch (const boost::property_tree::ptree_bad_path &) {
         auto msg = boost::format{"%1%/@elementType is missing"} % xpath_to_atom;
-        throw cml::MandatoryAttributeNotFoundError{msg.str()};
+        throw cml::CMLAttributeError{msg.str()};
       }
     }
   }
