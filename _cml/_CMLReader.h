@@ -15,27 +15,42 @@
 
 #pragma once
 
+#include <iosfwd>
+#include <memory>
 #include <string>
-#include <regex>
-#include <unordered_map>
-#include <unordered_set>
 
-#include <boost/lexical_cast.hpp>
-#include <boost/property_tree/ptree.hpp>
-#include <boost/format.hpp>
+// #include <regex>
+// #include <unordered_map>
+// #include <unordered_set>
 
-#include <RDGeneral/export.h>
-#include <RDGeneral/FileParseException.h>
+// #include <boost/lexical_cast.hpp>
+// #include <boost/property_tree/ptree.hpp>
+// #include <boost/format.hpp>
+
+// #include <RDGeneral/export.h>
+// #include <RDGeneral/FileParseException.h>
 
 namespace RDKit {
+class RWMol;
+
 namespace v2 {
 namespace FileParsers {
 class CMLSupplier {
-public:
+ public:
   CMLSupplier() = delete;
+  CMLSupplier(std::unique_ptr<std::istream> &&p);
+  CMLSupplier(const std::string &fileName);
   ~CMLSupplier();
   CMLSupplier(const CMLSupplier &) = delete;
   CMLSupplier &operator=(const CMLSupplier &) = delete;
+
+  void init();
+  void reset();
+  std::unique_ptr<RWMol> next();
+  void close();
+
+ private:
+  std::unique_ptr<std::istream> p_is;
 };
 }  // namespace FileParsers
 }  // namespace v2
