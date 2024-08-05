@@ -35,6 +35,7 @@
 // #include "FileParsers.h"
 #include "CMLReader.h"
 #include <RDGeneral/BadFileException.h>
+#include <RDGeneral/Invariant.h>
 
 // #include <boost/exception/diagnostic_information.hpp>
 // #include <boost/property_tree/xml_parser.hpp>
@@ -51,11 +52,13 @@ namespace RDKit {
 namespace v2 {
 namespace FileParsers {
 CMLSupplier::CMLSupplier(std::unique_ptr<std::istream> &&p)
-    : p_is{std::move(p)} {}
+    : p_istream{std::move(p)} {
+  PRECONDITION(p_istream, "bad stream");
+}
 
 CMLSupplier::CMLSupplier(const std::string &fileName) {
-  p_is = std::make_unique<std::ifstream>(fileName);
-  if (!p_is || p_is->bad()) {
+  p_istream = std::make_unique<std::ifstream>(fileName);
+  if (!p_istream || p_istream->bad()) {
     auto msg = boost::format{"Bad input file %1%"} % fileName;
     throw BadFileException{msg.str()};
   }
@@ -63,9 +66,7 @@ CMLSupplier::CMLSupplier(const std::string &fileName) {
 
 CMLSupplier::~CMLSupplier() = default;
 
-void CMLSupplier::close() {
-  p_is.reset();
-}
+void CMLSupplier::close() { p_istream.reset(); }
 }  // namespace FileParsers
 }  // namespace v2
 
