@@ -16,6 +16,7 @@
 #include "RDGeneral/test.h"
 #include <catch2/catch_all.hpp>
 #include <GraphMol/FileParsers/FileParsers.h>
+#include "CMLReader.h"
 
 #include <boost/format.hpp>
 
@@ -27,6 +28,7 @@
 
 using namespace RDKit;
 // using RDKit::v2::FileParsers::MolFromCMLBlock;
+using namespace RDKit::v2::FileParsers;
 
 #define LOCATION                                           \
   do {                                                     \
@@ -157,6 +159,17 @@ struct Hoge {
 };
 #endif
 }  // namespace
+
+SCENARIO("CML Reader", "[CML][reader]") {
+  using namespace RDKit::v2::FileParsers;
+  WHEN("multiple root nodes exist") {
+    std::stringstream ss;
+    ss << R"(<?xml version="1.0"?><cml/><cml/>)";
+    std::stringbuf buf{ss.str()};
+    std::unique_ptr<std::istream> pis = std::make_unique<std::istream>(&buf);
+    CMLSupplier supp{std::move(pis)};
+  }
+}
 
 #if 0
 SCENARIO("CML Reader", "[CML][reader]") {
