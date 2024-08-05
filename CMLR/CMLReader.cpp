@@ -69,8 +69,47 @@ std::unique_ptr<RWMol> CMLMolecule::parse() {
   return mol;
 }
 
-void CMLMolecule::parse_atomArray(const boost::property_tree::ptree &node) {}
-void CMLMolecule::parse_atom(const boost::property_tree::ptree &node) {}
+void CMLMolecule::parse_atomArray(const boost::property_tree::ptree &node) {
+  const auto num_atoms = static_cast<unsigned>(node.count("atom"));
+  // http://www.xml-cml.org/convention/molecular#atomArray-element
+  // > An atomArray element MUST contain at least one child atom element.
+  if (num_atoms == 0u) {
+    throw cml::CMLError{"atomArray has no atom elements"};
+  }
+  conformer->reserve(num_atoms);
+
+  // unsigned atom_idx = 0u;
+  for (const auto &atomitr : node) {
+    if (atomitr.first == "<xmlattr>") {
+      for (const auto &i : atomitr.second) {
+        BOOST_LOG(rdInfoLog)
+            << boost::format{R"("/@%1% (= "%2%") is ignored")"} % i.first %
+                   i.second.data()
+            << std::endl;
+      }
+      continue;
+    }
+
+    if (atomitr.first != "atom") {
+      BOOST_LOG(rdInfoLog) << boost::format{"/%1% is ignored"} % atomitr.first
+                           << std::endl;
+      continue;
+    }
+
+    parse_atom(atomitr.second);
+  }
+}
+
+void CMLMolecule::parse_atom(const boost::property_tree::ptree &node) {
+  const auto id = [&]() {
+    try {
+      return node.get<std::string>("<xmlattr>.id");
+    } catch (...) {
+      throw;
+    }
+  }();
+}
+
 void CMLMolecule::parse_bondArray(const boost::property_tree::ptree &node) {}
 void CMLMolecule::parse_bond(const boost::property_tree::ptree &node) {}
 }  // namespace cml
