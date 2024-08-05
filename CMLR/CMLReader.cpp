@@ -20,6 +20,8 @@ namespace RDKit {
 namespace v2 {
 namespace FileParsers {
 namespace cml {
+CMLError::~CMLError() = default;
+
 CMLMolecule::~CMLMolecule() = default;
 }  // namespace cml
 }  // namespace FileParsers

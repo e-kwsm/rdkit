@@ -22,6 +22,8 @@
 
 #include <boost/property_tree/ptree.hpp>
 
+#include <RDGeneral/FileParseException.h>
+
 namespace RDKit {
 class Atom;
 class Conformer;
@@ -30,6 +32,12 @@ class RWMol;
 namespace v2 {
 namespace FileParsers {
 namespace cml {
+class CMLError : public RDKit::FileParseException {
+ public:
+  CMLError(const std::string &what) : RDKit::FileParseException{what} {}
+  ~CMLError() override;
+};
+
 class CMLMolecule {
  public:
   CMLMolecule(const boost::property_tree::ptree &molecule_node);
