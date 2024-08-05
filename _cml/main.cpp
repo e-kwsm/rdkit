@@ -31,9 +31,31 @@ namespace {
 //   return std::move(is);
 // }
 // std::istream &&to_stream(std::stringstream &&s) { }
+
+void f(std::stringstream &ss) {
+  std::stringbuf buf{ss.str()};
+  std::unique_ptr<std::istream> pis = std::make_unique<std::istream>(&buf);
+  CMLSupplier supp{std::exchange(pis, nullptr)};
+  std::unique_ptr<RDKit::RWMol> mol;
+  do {
+    mol = supp.next();
+    if (mol) {
+      std::cout << MolToCMLBlock(*mol) << std::endl;
+    }
+  } while (mol);
+}
 }  // namespace
 
 int main(int argc, char **argv) {
+  {
+    std::stringstream ss;
+    ss << R"(<?xml version="1.0"?><cml/><cml/>)";
+    try {
+      f(ss);
+    } catch (const RDKit::FileParseException &) {
+    }
+  }
+
   {
     std::stringstream ss;
     ss << R"(<?xml version="1.0"?>
@@ -59,10 +81,7 @@ int main(int argc, char **argv) {
   </molecule>
 </cml>)";
 
-    std::stringbuf buf{ss.str()};
-    std::unique_ptr<std::istream> pis = std::make_unique<std::istream>(&buf);
-    CMLSupplier supp{std::exchange(pis, nullptr)};
-    std::cout << MolToCMLBlock(*supp.next()) << std::endl;
+    f(ss);
   }
 
 #if 0
