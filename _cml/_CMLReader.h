@@ -44,9 +44,9 @@ class RDKIT_FILEPARSERS_EXPORT CMLSupplier {
  public:
   CMLSupplier() = delete;
   CMLSupplier(std::unique_ptr<std::istream> &&p_istream,
-              const CMLFileParserParams &params = {});
+              const CMLFileParserParams &params = {}) noexcept(false);
   CMLSupplier(const std::string &fileName,
-              const CMLFileParserParams &params = {});
+              const CMLFileParserParams &params = {}) noexcept(false);
   ~CMLSupplier();
   CMLSupplier(const CMLSupplier &) = delete;
   CMLSupplier &operator=(const CMLSupplier &) = delete;

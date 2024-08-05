@@ -51,7 +51,7 @@ namespace RDKit {
 namespace v2 {
 namespace FileParsers {
 CMLSupplier::CMLSupplier(std::unique_ptr<std::istream> &&p_istream,
-                         const CMLFileParserParams &params)
+                         const CMLFileParserParams &params) noexcept(false)
     : p_istream{std::move(p_istream)}, params{params} {
   PRECONDITION(this->p_istream, "bad stream");
 
@@ -64,10 +64,22 @@ CMLSupplier::CMLSupplier(std::unique_ptr<std::istream> &&p_istream,
   if (pt.size() > 1u) {
     throw RDKit::FileParseException{"XML MUST NOT have multiple roots"};
   }
+  const auto root = pt.front();
+  if (root.first == "molecule") {
+  } else {
+    // http://www.xml-cml.org/convention/molecular#applying
+    // > If the molecular convention is specified on a cml element then that
+    // > element MUST have at least one child molecule element that either has
+    // > no convention specified or specifies the molecular convention.
+    if (root.first != "cml") {
+      BOOST_LOG(rdWarningLog)
+          << boost::format{"XML root element is %s"} % root.first << std::endl;
+    }
+  }
 }
 
 CMLSupplier::CMLSupplier(const std::string &fileName,
-                         const CMLFileParserParams &params)
+                         const CMLFileParserParams &params) noexcept(false)
     : params{params} {
   p_istream = std::make_unique<std::ifstream>(fileName);
   if (!p_istream || !p_istream->good()) {
