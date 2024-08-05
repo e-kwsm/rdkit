@@ -16,6 +16,8 @@
 #include "CMLReader.h"
 #include <GraphMol/RWMol.h>
 
+#include <boost/format.hpp>
+
 namespace RDKit {
 namespace v2 {
 namespace FileParsers {
@@ -28,6 +30,24 @@ CMLMolecule::CMLMolecule(const boost::property_tree::ptree &molecule_node)
       conformer{std::make_unique<RDKit::Conformer>()} {}
 
 CMLMolecule::~CMLMolecule() = default;
+
+auto CMLMolecule::get_array(const std::string &name) const {
+  std::unique_ptr<boost::property_tree::ptree> p;
+  switch (molecule_node.count(name)) {
+    case 0u:
+      BOOST_LOG(rdInfoLog) << boost::format{"%s is missing"} % name
+                           << std::endl;
+      break;
+    case 1u:
+      p = std::make_unique<boost::property_tree::ptree>(
+          molecule_node.get_child(name));
+      break;
+    default:
+      auto msg = boost::format{"multiple %s elements"} % name;
+      throw cml::CMLError{msg.str()};
+  }
+  return p;
+}
 
 std::unique_ptr<RWMol> CMLMolecule::parse() {
   auto mol = std::make_unique<RWMol>();
