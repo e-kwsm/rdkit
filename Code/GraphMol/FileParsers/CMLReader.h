@@ -39,16 +39,19 @@ namespace cml {
 class CMLError : public RDKit::FileParseException {
  public:
   CMLError(const std::string &what) : RDKit::FileParseException{what} {}
+  ~CMLError() override;
 };
 
-class XMLMalformedError : public CMLError {
+class XMLMalformedError final : public CMLError {
  public:
   XMLMalformedError(const std::string &what) : CMLError{what} {}
+  ~XMLMalformedError() override;
 };
 
-class MandatoryElementNotFound : public CMLError {
+class MandatoryElementNotFound final : public CMLError {
  public:
   MandatoryElementNotFound(const std::string &what) : CMLError{what} {}
+  ~MandatoryElementNotFound() override;
 };
 }  // namespace cml
 
