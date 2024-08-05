@@ -59,4 +59,50 @@ SCENARIO("CML Reader", "[CML][reader]") {
     REQUIRE_THROWS_AS(sup.parse(), v2::FileParsers::cml::CMLError);
   }
 
+  WHEN("/molecule/atomArray/@elementType is missing") {
+    auto block = R"(
+<molecule>
+  <atomArray>
+    <atom id="a1"/>
+  </atomArray>
+</molecule>
+)"s;
+    std::istringstream ss{block};
+    v2::FileParsers::cml::CMLMolecule sup{f(ss)};
+    REQUIRE_THROWS_AS(sup.parse(), v2::FileParsers::cml::CMLError);
+  }
+
+#if 0
+  WHEN("/molecule/atomArray/@elementType is invalid") {
+    auto block = R"(
+<molecule>
+  <atomArray>
+    <atom id="a1" elementType="ABC"/>
+  </atomArray>
+</molecule>
+)"s;
+    std::istringstream ss{block};
+    v2::FileParsers::cml::CMLMolecule sup{f(ss)};
+    REQUIRE_THROWS_AS(sup.parse(), Invar::Invariant);
+  }
+#endif
+
+  WHEN("/molecule/atomArray/@x3 is missing") {
+    for (auto a : {
+             R"(<atom id="a1" elementType="H" x3="0" y3="0"/>)"s,
+             R"(<atom id="a1" elementType="H" x3="0" z3="0"/>)"s,
+             R"(<atom id="a1" elementType="H" y3="0" z3="0"/>)"s,
+         }) {
+      auto block = R"(
+<molecule>
+  <atomArray>
+    )" + a + R"(
+  </atomArray>
+</molecule>
+)"s;
+      std::istringstream ss{block};
+      v2::FileParsers::cml::CMLMolecule sup{f(ss)};
+      REQUIRE_THROWS_AS(sup.parse(), v2::FileParsers::cml::CMLError);
+    }
+  }
 }
