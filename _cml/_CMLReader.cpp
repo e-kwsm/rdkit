@@ -15,6 +15,7 @@
 
 // TODO namespace support
 
+#include <optional>
 #ifndef __clang__version__                     // FIXME
 #pragma GCC diagnostic push                    // FIXME
 #pragma GCC diagnostic ignored "-Wall"         // FIXME
@@ -66,6 +67,7 @@ CMLSupplier::CMLSupplier(std::unique_ptr<std::istream> &&p_istream,
   }
   const auto root = pt.front();
   if (root.first == "molecule") {
+    molecule_node = root.second;
   } else {
     // http://www.xml-cml.org/convention/molecular#applying
     // > If the molecular convention is specified on a cml element then that
@@ -74,6 +76,15 @@ CMLSupplier::CMLSupplier(std::unique_ptr<std::istream> &&p_istream,
     if (root.first != "cml") {
       BOOST_LOG(rdWarningLog)
           << boost::format{"XML root element is %s"} % root.first << std::endl;
+    }
+    auto m = root.second.find("molecule");
+    // XXX do not dig into 3rd or deeper
+    if (m == root.second.not_found()) {
+      BOOST_LOG(rdWarningLog)
+          << boost::format{"/%1%/molecule is not found"} % root.first
+          << std::endl;
+    } else {
+      molecule_node = m->second;
     }
   }
 }
@@ -93,8 +104,18 @@ CMLSupplier::~CMLSupplier() = default;
 void CMLSupplier::close() { p_istream.reset(); }
 
 std::unique_ptr<RWMol> CMLSupplier::next() {
-  //
-  return nullptr;
+  if (!molecule_node) {
+    throw FileParseException("EOF hit.");
+  }
+  auto tmp = parse_molecule_node(molecule_node.value());
+  molecule_node = std::nullopt;  // XXX
+  return tmp;
+}
+
+std::unique_ptr<RWMol> CMLSupplier::parse_molecule_node(
+    const boost::property_tree::ptree &node) {
+  std::unique_ptr<RWMol> mol;
+  return mol;
 }
 
 }  // namespace FileParsers
@@ -634,14 +655,6 @@ std::unique_ptr<RWMol> PTreeToMol(
   if (root.first == "molecule") {
     p = std::make_unique<CMLMoleculeParser>("/" + root.first, root.second);
   } else {
-    // http://www.xml-cml.org/convention/molecular#applying
-    // > If the molecular convention is specified on a cml element then that
-    // > element MUST have at least one child molecule element that either has
-    // > no convention specified or specifies the molecular convention.
-    if (root.first != "cml") {
-      BOOST_LOG(rdWarningLog)
-          << boost::format{"XML root element is %1%"} % root.first << std::endl;
-    }
     auto m = root.second.find("molecule");
     // XXX do not dig into 3rd or deeper
     if (m == root.second.not_found()) {
