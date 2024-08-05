@@ -28,6 +28,7 @@
 #include <RDGeneral/FileParseException.h>
 
 namespace RDKit {
+#if 0
 class Atom;
 class Conformer;
 class RWMol;
@@ -148,4 +149,5 @@ class CMLMoleculeParser {
 };
 }  // namespace FileParsers
 }  // namespace v2
+#endif
 }  // namespace RDKit
