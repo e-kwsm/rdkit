@@ -61,7 +61,7 @@ int main(int argc, char **argv) {
 
     std::stringbuf buf{ss.str()};
     std::istream is{&buf};
-    CMLSupplier supp{std::make_unique<std::istream>(new &is)};
+    CMLSupplier supp{std::unique_ptr<std::istream>(&is)};
   }
 
 #if 0
