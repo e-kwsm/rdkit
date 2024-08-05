@@ -51,12 +51,52 @@ int main() {
   {
     std::stringstream ss;
     ss << R"(<?xml version="1.0"?>
-<cml:cml>
-<molecule/>
-</cml:cml>
+<molecule>
+    <atomArray>
+      <atom id="a1" elementType="F" hydrogenCount="0" formalCharge="0" spinMultiplicity="1" x3="-0.678800" y3="-1.175502" z3="0.000000"/>
+      <atom id="a2" elementType="C" hydrogenCount="1" formalCharge="0" spinMultiplicity="1" x3="-0.000000" y3="0.000000" z3="0.000000"/>
+      <atom id="a3" elementType="C" hydrogenCount="1" formalCharge="0" spinMultiplicity="1" x3="1.328807" y3="0.000000" z3="0.000000"/>
+      <atom id="a4" elementType="F" hydrogenCount="0" formalCharge="0" spinMultiplicity="1" x3="2.007607" y3="1.175502" z3="0.000000"/>
+      <atom id="a5" elementType="H" hydrogenCount="0" formalCharge="0" spinMultiplicity="1" x3="-0.678800" y3="-1.175502" z3="0.000000"/>
+      <atom id="a6" elementType="H" hydrogenCount="0" formalCharge="0" spinMultiplicity="1" x3="2.007607" y3="1.175502" z3="0.000000"/>
+    </atomArray>
+    <bondArray>
+      <bond atomRefs2="a1 a2" order="1"/>
+      <bond atomRefs2="a2 a3" order="2">
+        <bondStereo>T</bondStereo>
+      </bond>
+      <bond atomRefs2="a3 a4" order="1"/>
+      <bond atomRefs2="a2 a5" order="1"/>
+      <bond atomRefs2="a3 a6" order="1"/>
+    </bondArray>
+</molecule>
 )";
     f(ss);
   }
+
+  {
+    std::stringstream ss;
+    ss << R"(<?xml version="1.0"?>
+<molecule>
+  <atomArray>
+  <atom/>
+  </atomArray>
+</molecule>
+)";
+    f(ss);
+  }
+
+  {
+    std::stringstream ss;
+    ss << R"(<?xml version="1.0"?>
+<molecule>
+  <bondArray/>
+</molecule>
+)";
+    f(ss);
+  }
+
+  return 0;
 
   {
     std::stringstream ss;
