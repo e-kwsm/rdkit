@@ -23,7 +23,7 @@
 // #include <unordered_map>
 // #include <unordered_set>
 
-#include <boost/property_tree/ptree_fwd.hpp>
+#include <boost/property_tree/ptree.hpp>
 // #include <boost/lexical_cast.hpp>
 // #include <boost/format.hpp>
 
