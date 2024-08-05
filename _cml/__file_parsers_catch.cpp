@@ -165,10 +165,17 @@ SCENARIO("CML Reader", "[CML][reader]") {
   using namespace RDKit::v2::FileParsers;
   WHEN("unreadable file is passed") { REQUIRE_THROWS(CMLSupplier{"/a.cml"}); }
 
-  WHEN("multiple root nodes exist") {
-    std::stringbuf buf{R"(<?xml version="1.0"?><cml/><cml/>)"s};
-    std::unique_ptr<std::istream> pis = std::make_unique<std::istream>(&buf);
-    REQUIRE_THROWS(CMLSupplier{std::move(pis)});
+  WHEN("XML is malformed") {
+    {
+      std::stringbuf buf{R"(<?xml version="1.0"?><cml/><cml/>)"s};
+      std::unique_ptr<std::istream> pis = std::make_unique<std::istream>(&buf);
+      REQUIRE_THROWS_AS(CMLSupplier{std::move(pis)}, RDKit::FileParseException);
+    }
+    {
+      std::stringbuf buf{R"(<?xml version="1.0"?><cml>)"s};
+      std::unique_ptr<std::istream> pis = std::make_unique<std::istream>(&buf);
+      REQUIRE_THROWS_AS(CMLSupplier{std::move(pis)}, RDKit::FileParseException);
+    }
   }
 }
 
