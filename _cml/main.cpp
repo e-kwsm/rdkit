@@ -13,6 +13,7 @@
 #include <iostream>
 
 #include <GraphMol/FileParsers/FileParsers.h>
+#include "CMLReader.h"
 
 #pragma GCC diagnostic pop    // FIXME
 #ifdef __clang__version__     // FIXME
