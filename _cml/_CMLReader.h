@@ -50,7 +50,7 @@ class CMLSupplier {
   void close();
 
  private:
-  std::unique_ptr<std::istream> p_is;
+  std::unique_ptr<std::istream> p_istream;
 };
 }  // namespace FileParsers
 }  // namespace v2
