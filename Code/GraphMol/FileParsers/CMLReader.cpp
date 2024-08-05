@@ -55,7 +55,7 @@ namespace FileParsers {
 namespace cml {
 CMLError::~CMLError() = default;
 XMLMalformedError::~XMLMalformedError() = default;
-MandatoryElementNotFound::~MandatoryElementNotFound() = default;
+MandatoryElementNotFoundError::~MandatoryElementNotFoundError() = default;
 }  // namespace cml
 
 CMLSupplier::CMLSupplier(std::unique_ptr<std::istream> &&p_istream,
@@ -153,7 +153,7 @@ std::unique_ptr<RWMol> CMLSupplier::parse_molecule_node(
     if (num_atoms == 0u) {
       // auto msg = boost::format{"%1% has no atom elements"} %
       // xpath_to_atomArray; throw RDKit::FileParseException{msg.str()};
-      throw cml::MandatoryElementNotFound{__func__};
+      throw cml::MandatoryElementNotFoundError{__func__};
     }
   }
 
