@@ -60,14 +60,16 @@ class CMLAttributeError final : public CMLError {
 };
 
 class CMLMolecule {
+ public:
   CMLMolecule(const boost::property_tree::ptree &molecule_node);
-  ~CMLMolecule() = default;
+  ~CMLMolecule();
 
   std::unique_ptr<RWMol> parse();
 
  private:
-  void parse_atomArray();
-  void parse_bondArray();
+  void parse_atomArray(const boost::property_tree::ptree &atomArray);
+  void parse_atom(const boost::property_tree::ptree &atom);
+  void parse_bondArray(const boost::property_tree::ptree &bondArray);
 
   // /*const*/ std::string molecule_xpath;
   boost::property_tree::ptree molecule_node;
@@ -75,10 +77,8 @@ class CMLMolecule {
   // /*const*/ boost::optional<int> formalCharge;
   // /*const*/ boost::optional<unsigned> spinMultiplicity;
 
-  std::unique_ptr<RDKit::RWMol>
-      molecule;  // = std::make_unique<RDKit::RWMol>();
-  std::unique_ptr<RDKit::Conformer>
-      conformer;  // = std::make_unique<RDKit::Conformer>();
+  std::unique_ptr<RDKit::RWMol> molecule;
+  std::unique_ptr<RDKit::Conformer> conformer;
 
   std::unordered_map<std::string, std::unique_ptr<RDKit::Atom>> id_atom;
   std::unordered_map<std::string, boost::optional<unsigned>> id_hydrogenCount;
