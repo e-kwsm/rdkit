@@ -56,6 +56,7 @@ namespace cml {
 CMLError::~CMLError() = default;
 XMLMalformedError::~XMLMalformedError() = default;
 MandatoryElementNotFoundError::~MandatoryElementNotFoundError() = default;
+MandatoryAttributeNotFoundError::~MandatoryAttributeNotFoundError() = default;
 }  // namespace cml
 
 CMLSupplier::CMLSupplier(std::unique_ptr<std::istream> &&p_istream,
@@ -142,6 +143,9 @@ std::unique_ptr<RWMol> CMLSupplier::parse_molecule_node(
     const boost::property_tree::ptree &node) {
   std::unique_ptr<RWMol> mol;
 
+  constexpr auto xpath_to_atomArray = __func__;
+  constexpr auto xpath_to_atom = __func__;
+
   // http://www.xml-cml.org/convention/molecular#molecule-atomArray
   // > A molecule MAY contain a single atomArray child except when it contains
   // > child molecules.
@@ -154,6 +158,41 @@ std::unique_ptr<RWMol> CMLSupplier::parse_molecule_node(
       // auto msg = boost::format{"%1% has no atom elements"} %
       // xpath_to_atomArray; throw RDKit::FileParseException{msg.str()};
       throw cml::MandatoryElementNotFoundError{__func__};
+    }
+
+    auto conformer = std::make_unique<RDKit::Conformer>(num_atoms);
+    unsigned atom_idx = 0u;
+    for (const auto &atomitr : *atomArray) {
+      if (atomitr.first == "<xmlattr>") {
+        for (const auto &i : atomitr.second) {
+          BOOST_LOG(rdInfoLog)
+              << boost::format{"%1%/@%2% (= \"%3%\") is ignored"} %
+                     xpath_to_atomArray % i.first % i.second.data()
+              << std::endl;
+        }
+        continue;
+      }
+
+      if (atomitr.first != "atom") {
+        BOOST_LOG(rdInfoLog) << boost::format{"%1%/%2% is ignored"} %
+                                    xpath_to_atomArray % atomitr.first
+                             << std::endl;
+        continue;
+      }
+
+      // parse_atom(xpath_to_atomArray + "/" + atomitr.first, atomitr.second,
+      // atom_idx++);
+
+      const auto &atom_node = atomitr.second;
+
+      const auto elementType =
+          atom_node.get_optional<std::string>("<xmlattr>.elementType");
+      // http://www.xml-cml.org/convention/molecular#atom-elementType
+      // > An atom MUST have an elementType attribute
+      if (!elementType) {
+        auto msg = boost::format{"%1%/@elementType is missing"} % xpath_to_atom;
+        throw cml::MandatoryAttributeNotFoundError{msg.str()};
+      }
     }
   }
 
