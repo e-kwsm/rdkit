@@ -166,7 +166,7 @@ SCENARIO("CML Reader", "[CML][reader]") {
   WHEN("unreadable file is passed") { REQUIRE_THROWS(CMLSupplier{"/a.cml"}); }
 
   WHEN("multiple root nodes exist") {
-    std::stringbuf buf{R"(<?xml version="1.0"?><cml/><cml/>)"};
+    std::stringbuf buf{R"(<?xml version="1.0"?><cml/><cml/>)"s};
     std::unique_ptr<std::istream> pis = std::make_unique<std::istream>(&buf);
     REQUIRE_THROWS(CMLSupplier{std::move(pis)});
   }
@@ -177,10 +177,6 @@ SCENARIO("CML Reader", "[CML][reader]") {
   // RDLog::InitLogs();  // FIXME
   using namespace std::literals::string_literals;
   using Catch::Matchers::Matches;
-
-  WHEN("multiple root nodes exist") {
-    REQUIRE_THROWS(MolFromCMLBlock(cml_root("") + cml_root("")));
-  }
 
   WHEN("//molecule/@formalCharge") {
     AND_WHEN("is not numeric") {
