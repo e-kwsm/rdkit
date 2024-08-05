@@ -28,6 +28,18 @@
 #include <RDGeneral/FileParseException.h>
 
 namespace RDKit {
+namespace v2 {
+namespace FileParsers {
+class CMLSupplier {
+public:
+  CMLSupplier() = delete;
+  ~CMLSupplier();
+  CMLSupplier(const CMLSupplier &) = delete;
+  CMLSupplier &operator=(const CMLSupplier &) = delete;
+};
+}  // namespace FileParsers
+}  // namespace v2
+
 #if 0
 class Atom;
 class Conformer;
