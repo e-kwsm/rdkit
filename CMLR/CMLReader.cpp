@@ -51,6 +51,21 @@ auto CMLMolecule::get_array(const std::string &name) const {
 
 std::unique_ptr<RWMol> CMLMolecule::parse() {
   auto mol = std::make_unique<RWMol>();
+
+  // http://www.xml-cml.org/convention/molecular#molecule-atomArray
+  // > A molecule MAY contain a single atomArray child except when it contains
+  // > child molecules.
+  if (auto aa = get_array("atomArray")) {
+    parse_atomArray(*aa);
+  }
+
+  // http://www.xml-cml.org/convention/molecular#molecule-bondArray
+  // > A molecule MAY contain a single bondyArray child provided that it does
+  // > not contain child molecules.
+  if (auto ba = get_array("bondArray")) {
+    parse_bondArray(*ba);
+  }
+
   return mol;
 }
 
