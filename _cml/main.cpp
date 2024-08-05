@@ -1,3 +1,4 @@
+#include <istream>
 #pragma GCC diagnostic push                  // FIXME
 #pragma GCC diagnostic ignored "-Wall"       // FIXME
 #pragma GCC diagnostic ignored "-Wextra"     // FIXME
@@ -23,7 +24,46 @@
 using namespace RDKit;
 using namespace RDKit::v2::FileParsers;
 
-int main(int argc, char** argv) {
+namespace {
+// std::istream &&to_stream(std::string &&s) {
+//   std::stringbuf buf{s};
+//   std::istream is{&buf};
+//   return std::move(is);
+// }
+// std::istream &&to_stream(std::stringstream &&s) { }
+}  // namespace
+
+int main(int argc, char **argv) {
+  {
+    std::stringstream ss;
+    ss << R"(<?xml version="1.0"?>
+<cml>
+  <molecule id="m1" formalCharge="0" spinMultiplicity="1">
+    <atomArray>
+      <atom id="a1" elementType="F" hydrogenCount="0" formalCharge="0" spinMultiplicity="1" x3="-0.678800" y3="-1.175502" z3="0.000000"/>
+      <atom id="a2" elementType="C" hydrogenCount="1" formalCharge="0" spinMultiplicity="1" x3="-0.000000" y3="0.000000" z3="0.000000"/>
+      <atom id="a3" elementType="C" hydrogenCount="1" formalCharge="0" spinMultiplicity="1" x3="1.328807" y3="0.000000" z3="0.000000"/>
+      <atom id="a4" elementType="F" hydrogenCount="0" formalCharge="0" spinMultiplicity="1" x3="2.007607" y3="1.175502" z3="0.000000"/>
+      <atom id="a5" elementType="H" hydrogenCount="0" formalCharge="0" spinMultiplicity="1" x3="-0.678800" y3="-1.175502" z3="0.000000"/>
+      <atom id="a6" elementType="H" hydrogenCount="0" formalCharge="0" spinMultiplicity="1" x3="2.007607" y3="1.175502" z3="0.000000"/>
+    </atomArray>
+    <bondArray>
+      <bond atomRefs2="a1 a2" order="1"/>
+      <bond atomRefs2="a2 a3" order="2">
+        <bondStereo>T</bondStereo>
+      </bond>
+      <bond atomRefs2="a3 a4" order="1"/>
+      <bond atomRefs2="a2 a5" order="1"/>
+      <bond atomRefs2="a3 a6" order="1"/>
+    </bondArray>
+  </molecule>
+</cml>)";
+
+    std::stringbuf buf{ss.str()};
+    std::istream is{&buf};
+    CMLSupplier supp{std::make_unique<std::istream>(new &is)};
+  }
+
 #if 0
   RDLog::InitLogs();
   auto f = [](const auto& m) {
