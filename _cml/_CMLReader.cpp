@@ -70,7 +70,7 @@ CMLSupplier::CMLSupplier(const std::string &fileName,
                          const CMLFileParserParams &params)
     : params{params} {
   p_istream = std::make_unique<std::ifstream>(fileName);
-  if (!p_istream || p_istream->bad()) {
+  if (!p_istream || !p_istream->good()) {
     auto msg = boost::format{"Bad input file %1%"} % fileName;
     throw BadFileException{msg.str()};
   }
