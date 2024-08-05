@@ -101,12 +101,23 @@ void CMLMolecule::parse_atomArray(const boost::property_tree::ptree &node) {
 }
 
 void CMLMolecule::parse_atom(const boost::property_tree::ptree &node) {
+  // http://www.xml-cml.org/convention/molecular#atom-id
+  // > An atom MUST have an id attribute
   const auto id = [&]() {
+    std::string tmp;
     try {
-      return node.get<std::string>("<xmlattr>.id");
-    } catch (...) {
-      throw;
+      tmp = node.get<std::string>("<xmlattr>.id");
+    } catch (const boost::property_tree::ptree_bad_path &) {
+      throw RDKit::FileParseException{"/@id is missing"};
     }
+    if (id_atom.count(tmp)) {
+      // http://www.xml-cml.org/convention/molecular#atom-id
+      // > The value of the id MUST be unique amongst the atoms within the
+      // > eldest containing molecule.
+      auto msg = boost::format{R"("/@id (= "%1%") is not unique")"} % tmp;
+      throw cml::CMLError{msg.str()};
+    }
+    return tmp;
   }();
 }
 
