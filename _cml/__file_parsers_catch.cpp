@@ -26,6 +26,7 @@
 #pragma clang diagnostic pop  // FIXME
 #endif                        // FIXME
 
+using namespace std::literals::string_literals;
 using namespace RDKit;
 // using RDKit::v2::FileParsers::MolFromCMLBlock;
 using namespace RDKit::v2::FileParsers;
@@ -163,11 +164,9 @@ struct Hoge {
 SCENARIO("CML Reader", "[CML][reader]") {
   using namespace RDKit::v2::FileParsers;
   WHEN("multiple root nodes exist") {
-    std::stringstream ss;
-    ss << R"(<?xml version="1.0"?><cml/><cml/>)";
-    std::stringbuf buf{ss.str()};
+    std::stringbuf buf{R"(<?xml version="1.0"?><cml/><cml/>)"s};
     std::unique_ptr<std::istream> pis = std::make_unique<std::istream>(&buf);
-    CMLSupplier supp{std::move(pis)};
+    REQUIRE_THROWS(CMLSupplier{std::move(pis)});
   }
 }
 
