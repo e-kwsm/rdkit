@@ -52,6 +52,12 @@
 namespace RDKit {
 namespace v2 {
 namespace FileParsers {
+namespace cml {
+CMLError::~CMLError() = default;
+XMLMalformedError::~XMLMalformedError() = default;
+MandatoryElementNotFound::~MandatoryElementNotFound() = default;
+}  // namespace cml
+
 CMLSupplier::CMLSupplier(std::unique_ptr<std::istream> &&p_istream,
                          const CMLFileParserParams &params) noexcept(false)
     : p_istream{std::move(p_istream)}, params{params} {
