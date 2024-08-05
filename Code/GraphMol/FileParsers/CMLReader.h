@@ -19,6 +19,8 @@
 #include <memory>
 #include <optional>
 #include <string>
+#include <unordered_map>
+#include <unordered_set>
 
 #include <boost/property_tree/ptree.hpp>
 
@@ -26,6 +28,8 @@
 #include <RDGeneral/export.h>
 
 namespace RDKit {
+class Atom;
+class Conformer;
 class RWMol;
 
 namespace v2 {
@@ -49,10 +53,37 @@ class MandatoryElementNotFoundError final : public CMLError {
   ~MandatoryElementNotFoundError() override;
 };
 
-class MandatoryAttributeNotFoundError final : public CMLError {
+class CMLAttributeError final : public CMLError {
  public:
-  MandatoryAttributeNotFoundError(const std::string &what) : CMLError{what} {}
-  ~MandatoryAttributeNotFoundError() override;
+  CMLAttributeError(const std::string &what) : CMLError{what} {}
+  ~CMLAttributeError() override;
+};
+
+class CMLMolecule {
+  CMLMolecule(const boost::property_tree::ptree &molecule_node);
+  ~CMLMolecule() = default;
+
+  std::unique_ptr<RWMol> parse();
+
+ private:
+  void parse_atomArray();
+  void parse_bondArray();
+
+  // /*const*/ std::string molecule_xpath;
+  boost::property_tree::ptree molecule_node;
+  // /*const*/ boost::optional<std::string> molecule_id;
+  // /*const*/ boost::optional<int> formalCharge;
+  // /*const*/ boost::optional<unsigned> spinMultiplicity;
+
+  std::unique_ptr<RDKit::RWMol>
+      molecule;  // = std::make_unique<RDKit::RWMol>();
+  std::unique_ptr<RDKit::Conformer>
+      conformer;  // = std::make_unique<RDKit::Conformer>();
+
+  std::unordered_map<std::string, std::unique_ptr<RDKit::Atom>> id_atom;
+  std::unordered_map<std::string, boost::optional<unsigned>> id_hydrogenCount;
+  std::unordered_set<std::string> bond_ids;
+  int sum_formalCharge = 0;
 };
 }  // namespace cml
 
