@@ -24,6 +24,7 @@ using namespace RDKit;
 using namespace RDKit::v2::FileParsers;
 
 int main(int argc, char** argv) {
+#if 0
   RDLog::InitLogs();
   auto f = [](const auto& m) {
     if (m) {
@@ -137,4 +138,5 @@ int main(int argc, char** argv) {
 </cml>)"));
 
   MolFromCMLFile("XXX.cml");
+#endif
 }
