@@ -32,7 +32,6 @@
 
 #include <boost/exception/diagnostic_information.hpp>
 #include <boost/format.hpp>
-#include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/xml_parser.hpp>
 
 #include "FileParsers.h"
@@ -60,6 +59,10 @@ CMLSupplier::CMLSupplier(std::unique_ptr<std::istream> &&p_istream,
     boost::property_tree::read_xml(*this->p_istream, pt);
   } catch (const boost::property_tree::xml_parser_error &e) {
     throw RDKit::FileParseException{boost::diagnostic_information(e)};
+  }
+
+  if (pt.size() > 1u) {
+    throw RDKit::FileParseException{"XML MUST NOT have multiple roots"};
   }
 }
 
