@@ -29,6 +29,7 @@ namespace python = boost::python;
 using namespace RDKit;
 
 namespace RDKit {
+#if 0
 ROMol* MolFromCMLBlock(const std::string& block, bool sanitize = true,
                        bool removeHs = true) {
   RDLog::InitLogs();  // FIXME
@@ -63,8 +64,10 @@ ROMol* MolFromCMLFile(const std::string& filename, bool sanitize = true,
   }
   return static_cast<ROMol*>(mol.release());
 }
+#endif
 }  // namespace RDKit
 
+#if 0
 BOOST_PYTHON_MODULE(rdmolfiles) {
   std::string docString;
 
@@ -104,3 +107,4 @@ BOOST_PYTHON_MODULE(rdmolfiles) {
               docString.c_str(),
               python::return_value_policy<python::manage_new_object>());
 }
+#endif
