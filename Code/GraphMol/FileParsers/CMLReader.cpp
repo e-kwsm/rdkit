@@ -88,7 +88,7 @@ CMLSupplier::CMLSupplier(std::unique_ptr<std::istream> &&p_istream,
     // XXX do not dig into 3rd or deeper
     if (m == root.second.not_found()) {
       BOOST_LOG(rdWarningLog)
-          << boost::format{"/%1%/molecule is not found"} % root.first
+          << boost::format{"/%s/molecule is not found"} % root.first
           << std::endl;
     } else {
       molecule_node = m->second;
@@ -129,7 +129,8 @@ std::unique_ptr<boost::property_tree::ptree> CMLSupplier::get_array(
                            << std::endl;
       return nullptr;
     case 1u:
-      return std::make_unique<boost::property_tree::ptree>(node.get_child(name));
+      return std::make_unique<boost::property_tree::ptree>(
+          node.get_child(name));
     default:
       // auto msg = boost::format{"%1% has multiple %2% elements"} %
       // molecule_xpath % node; throw RDKit::FileParseException{msg.str()};
