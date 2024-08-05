@@ -166,7 +166,7 @@ SCENARIO("CML Reader", "[CML][reader]") {
   WHEN("unreadable file is passed") { REQUIRE_THROWS(CMLSupplier{"/a.cml"}); }
 
   WHEN("multiple root nodes exist") {
-    std::stringbuf buf{R"(<?xml version="1.0"?><cml/><cml/>)"s};
+    std::stringbuf buf{R"(<?xml version="1.0"?><cml/><cml/>)"};
     std::unique_ptr<std::istream> pis = std::make_unique<std::istream>(&buf);
     REQUIRE_THROWS(CMLSupplier{std::move(pis)});
   }
