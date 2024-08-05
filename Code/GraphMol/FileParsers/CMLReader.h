@@ -35,6 +35,23 @@ struct RDKIT_FILEPARSERS_EXPORT CMLFileParserParams {
   bool removeHs = true;  ///< remove Hs after constructing the molecule
 };
 
+namespace cml {
+class CMLError : public RDKit::FileParseException {
+ public:
+  CMLError(const std::string &what) : RDKit::FileParseException{what} {}
+};
+
+class XMLMalformedError : public CMLError {
+ public:
+  XMLMalformedError(const std::string &what) : CMLError{what} {}
+};
+
+class MandatoryElementNotFound : public CMLError {
+ public:
+  MandatoryElementNotFound(const std::string &what) : CMLError{what} {}
+};
+}  // namespace cml
+
 class RDKIT_FILEPARSERS_EXPORT CMLSupplier {
  public:
   CMLSupplier() = delete;
