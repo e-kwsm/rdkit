@@ -30,15 +30,15 @@
 #include <fstream>
 #include <iostream>
 
+#include <boost/exception/diagnostic_information.hpp>
 #include <boost/format.hpp>
+#include <boost/property_tree/ptree.hpp>
+#include <boost/property_tree/xml_parser.hpp>
 
-// #include "FileParsers.h"
+#include "FileParsers.h"
 #include "CMLReader.h"
 #include <RDGeneral/BadFileException.h>
 #include <RDGeneral/Invariant.h>
-
-// #include <boost/exception/diagnostic_information.hpp>
-// #include <boost/property_tree/xml_parser.hpp>
 
 #ifndef __clang__version__    // FIXME
 #pragma GCC diagnostic pop    // FIXME
@@ -55,6 +55,12 @@ CMLSupplier::CMLSupplier(std::unique_ptr<std::istream> &&p_istream,
                          const CMLFileParserParams &params)
     : p_istream{std::move(p_istream)}, params{params} {
   PRECONDITION(this->p_istream, "bad stream");
+
+  try {
+    boost::property_tree::read_xml(*this->p_istream, pt);
+  } catch (const boost::property_tree::xml_parser_error &e) {
+    throw RDKit::FileParseException{boost::diagnostic_information(e)};
+  }
 }
 
 CMLSupplier::CMLSupplier(const std::string &fileName,
@@ -70,6 +76,12 @@ CMLSupplier::CMLSupplier(const std::string &fileName,
 CMLSupplier::~CMLSupplier() = default;
 
 void CMLSupplier::close() { p_istream.reset(); }
+
+std::unique_ptr<RWMol> CMLSupplier::next() {
+  //
+  return nullptr;
+}
+
 }  // namespace FileParsers
 }  // namespace v2
 
