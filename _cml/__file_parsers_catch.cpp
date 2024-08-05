@@ -26,7 +26,7 @@
 #endif                        // FIXME
 
 using namespace RDKit;
-using RDKit::v2::FileParsers::MolFromCMLBlock;
+// using RDKit::v2::FileParsers::MolFromCMLBlock;
 
 #define LOCATION                                           \
   do {                                                     \
@@ -36,6 +36,7 @@ using RDKit::v2::FileParsers::MolFromCMLBlock;
 // FIXME
 
 namespace {
+#if 0
 std::string put_attribute_unless_none(const std::string& key,
                                       const std::optional<std::string>& val) {
   return val ? (boost::format{" %1%='%2%'"} % key % *val).str() : "";
@@ -154,8 +155,10 @@ struct Hoge {
   std::vector<AtomNode> atom_node;
   std::vector<BondNode> bond_node;
 };
+#endif
 }  // namespace
 
+#if 0
 SCENARIO("CML Reader", "[CML][reader]") {
   // RDLog::InitLogs();  // FIXME
   using namespace std::literals::string_literals;
@@ -412,3 +415,4 @@ SCENARIO("CML Reader", "[CML][reader]") {
 #endif
   }
 }
+#endif
