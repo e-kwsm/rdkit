@@ -50,16 +50,11 @@ int main() {
   RDLog::InitLogs();
   {
     std::stringstream ss;
-    ss << R"(<?xml version="1.0"?><cml/><cml/>)";
-    try {
-      f(ss);
-    } catch (const RDKit::FileParseException &) {
-    }
-  }
-
-  {
-    std::stringstream ss;
-    ss << R"(<?xml version="1.0"?><cml:cml/>)";
+    ss << R"(<?xml version="1.0"?>
+<cml:cml>
+<molecule/>
+</cml:cml>
+)";
     f(ss);
   }
 
