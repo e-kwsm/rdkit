@@ -60,8 +60,8 @@ int main(int argc, char **argv) {
 </cml>)";
 
     std::stringbuf buf{ss.str()};
-    std::istream is{&buf};
-    CMLSupplier supp{std::unique_ptr<std::istream>(&is)};
+    std::unique_ptr<std::istream> pis = std::make_unique<std::istream>(&buf);
+    CMLSupplier supp{std::exchange(pis, nullptr)};
   }
 
 #if 0
