@@ -46,7 +46,8 @@ void f(std::stringstream &ss) {
 }
 }  // namespace
 
-int main(int argc, char **argv) {
+int main() {
+  RDLog::InitLogs();
   {
     std::stringstream ss;
     ss << R"(<?xml version="1.0"?><cml/><cml/>)";
@@ -54,6 +55,12 @@ int main(int argc, char **argv) {
       f(ss);
     } catch (const RDKit::FileParseException &) {
     }
+  }
+
+  {
+    std::stringstream ss;
+    ss << R"(<?xml version="1.0"?><cml:cml/>)";
+    f(ss);
   }
 
   {
@@ -85,7 +92,6 @@ int main(int argc, char **argv) {
   }
 
 #if 0
-  RDLog::InitLogs();
   auto f = [](const auto& m) {
     if (m) {
       std::cout << MolToCMLBlock(*m);
