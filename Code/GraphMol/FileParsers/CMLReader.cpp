@@ -60,11 +60,11 @@ CMLSupplier::CMLSupplier(std::unique_ptr<std::istream> &&p_istream,
   try {
     boost::property_tree::read_xml(*this->p_istream, pt);
   } catch (const boost::property_tree::xml_parser_error &e) {
-    throw RDKit::FileParseException{boost::diagnostic_information(e)};
+    throw cml::XMLMalformedError{boost::diagnostic_information(e)};
   }
 
   if (pt.size() > 1u) {
-    throw RDKit::FileParseException{"XML MUST NOT have multiple roots"};
+    throw cml::XMLMalformedError{"XML MUST NOT have multiple roots"};
   }
   const auto root = pt.front();
   if (root.first == "molecule") {
@@ -106,7 +106,7 @@ void CMLSupplier::close() { p_istream.reset(); }
 
 std::unique_ptr<RWMol> CMLSupplier::next() {
   if (!molecule_node) {
-    throw FileParseException("EOF hit.");
+    throw cml::CMLError{"EOF"};
   }
   auto tmp = parse_molecule_node(molecule_node.value());
   molecule_node = std::nullopt;  // XXX
@@ -146,7 +146,7 @@ std::unique_ptr<RWMol> CMLSupplier::parse_molecule_node(
     if (num_atoms == 0u) {
       // auto msg = boost::format{"%1% has no atom elements"} %
       // xpath_to_atomArray; throw RDKit::FileParseException{msg.str()};
-      throw RDKit::FileParseException{__func__};
+      throw cml::MandatoryElementNotFound{__func__};
     }
   }
 
