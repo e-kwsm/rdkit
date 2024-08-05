@@ -48,6 +48,12 @@ class MandatoryElementNotFoundError final : public CMLError {
   MandatoryElementNotFoundError(const std::string &what) : CMLError{what} {}
   ~MandatoryElementNotFoundError() override;
 };
+
+class MandatoryAttributeNotFoundError final : public CMLError {
+ public:
+  MandatoryAttributeNotFoundError(const std::string &what) : CMLError{what} {}
+  ~MandatoryAttributeNotFoundError() override;
+};
 }  // namespace cml
 
 struct RDKIT_FILEPARSERS_EXPORT CMLFileParserParams {
