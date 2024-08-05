@@ -61,6 +61,6 @@ SCENARIO("CML Reader", "[CML][reader]") {
 )"s};
     std::unique_ptr<std::istream> pis = std::make_unique<std::istream>(&buf);
     CMLSupplier supp{std::move(pis)};
-    REQUIRE_THROWS_AS(supp.next(), cml::MandatoryElementNotFound);
+    REQUIRE_THROWS_AS(supp.next(), cml::MandatoryElementNotFoundError);
   }
 }
