@@ -43,6 +43,12 @@
 // using namespace std::literals::string_literals;  // XXX
 
 namespace RDKit {
+namespace v2 {
+namespace FileParsers {
+CMLSupplier::~CMLSupplier() = default;
+}  // namespace FileParsers
+}  // namespace v2
+
 #if 0
 namespace {
 CMLMoleculeParser::CMLMoleculeParser(
