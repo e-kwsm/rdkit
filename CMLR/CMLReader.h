@@ -46,9 +46,9 @@ class CMLMolecule {
   std::unique_ptr<RWMol> parse();
 
  private:
-  auto get_array(const std::string& name) const;
+  auto get_array(const std::string &name) const;
   void parse_atomArray(const boost::property_tree::ptree &node);
-  void parse_atom(const boost::property_tree::ptree &node);
+  void parse_atom(const boost::property_tree::ptree &node, unsigned idx);
   void parse_bondArray(const boost::property_tree::ptree &node);
   void parse_bond(const boost::property_tree::ptree &node);
 
