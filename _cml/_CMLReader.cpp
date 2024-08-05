@@ -27,12 +27,17 @@
 #pragma clang diagnostic ignored "-Wpedantic"  // FIXME
 #endif                                         // FIXME
 
-#include "FileParsers.h"
+#include <fstream>
+#include <iostream>
+
+#include <boost/format.hpp>
+
+// #include "FileParsers.h"
 #include "CMLReader.h"
 #include <RDGeneral/BadFileException.h>
 
-#include <boost/exception/diagnostic_information.hpp>
-#include <boost/property_tree/xml_parser.hpp>
+// #include <boost/exception/diagnostic_information.hpp>
+// #include <boost/property_tree/xml_parser.hpp>
 
 #ifndef __clang__version__    // FIXME
 #pragma GCC diagnostic pop    // FIXME
@@ -45,7 +50,22 @@
 namespace RDKit {
 namespace v2 {
 namespace FileParsers {
+CMLSupplier::CMLSupplier(std::unique_ptr<std::istream> &&p)
+    : p_is{std::move(p)} {}
+
+CMLSupplier::CMLSupplier(const std::string &fileName) {
+  p_is = std::make_unique<std::ifstream>(fileName);
+  if (!p_is || p_is->bad()) {
+    auto msg = boost::format{"Bad input file %1%"} % fileName;
+    throw BadFileException{msg.str()};
+  }
+}
+
 CMLSupplier::~CMLSupplier() = default;
+
+void CMLSupplier::close() {
+  p_is.reset();
+}
 }  // namespace FileParsers
 }  // namespace v2
 
