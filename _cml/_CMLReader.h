@@ -17,6 +17,7 @@
 
 #include <iosfwd>
 #include <memory>
+#include <optional>
 #include <string>
 
 // #include <regex>
@@ -56,9 +57,13 @@ class RDKIT_FILEPARSERS_EXPORT CMLSupplier {
   void close();
 
  private:
+  std::unique_ptr<RWMol> parse_molecule_node(
+      const boost::property_tree::ptree &node);
+
   std::unique_ptr<std::istream> p_istream;
   const CMLFileParserParams params;
   boost::property_tree::ptree pt;
+  std::optional<boost::property_tree::ptree> molecule_node;
 };
 }  // namespace FileParsers
 }  // namespace v2
