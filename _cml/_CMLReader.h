@@ -43,8 +43,9 @@ struct RDKIT_FILEPARSERS_EXPORT CMLFileParserParams {
 class RDKIT_FILEPARSERS_EXPORT CMLSupplier {
  public:
   CMLSupplier() = delete;
-  CMLSupplier(std::unique_ptr<std::istream> &&p);
-  CMLSupplier(const std::string &fileName);
+  CMLSupplier(std::unique_ptr<std::istream> &&p_istream,
+              const CMLFileParserParams &params);
+  CMLSupplier(const std::string &fileName, const CMLFileParserParams &params);
   ~CMLSupplier();
   CMLSupplier(const CMLSupplier &) = delete;
   CMLSupplier &operator=(const CMLSupplier &) = delete;
@@ -56,6 +57,7 @@ class RDKIT_FILEPARSERS_EXPORT CMLSupplier {
 
  private:
   std::unique_ptr<std::istream> p_istream;
+  const CMLFileParserParams params;
 };
 }  // namespace FileParsers
 }  // namespace v2
