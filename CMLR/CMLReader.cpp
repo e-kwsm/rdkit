@@ -108,7 +108,7 @@ void CMLMolecule::parse_atom(const boost::property_tree::ptree &node) {
     try {
       tmp = node.get<std::string>("<xmlattr>.id");
     } catch (const boost::property_tree::ptree_bad_path &) {
-      throw RDKit::FileParseException{"/@id is missing"};
+      throw cml::CMLError{"/@id is missing"};
     }
     if (id_atom.count(tmp)) {
       // http://www.xml-cml.org/convention/molecular#atom-id
@@ -119,6 +119,7 @@ void CMLMolecule::parse_atom(const boost::property_tree::ptree &node) {
     }
     return tmp;
   }();
+  id_atom[id] = nullptr;
 }
 
 void CMLMolecule::parse_bondArray(const boost::property_tree::ptree &node) {}
