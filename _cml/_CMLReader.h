@@ -27,7 +27,7 @@
 // #include <boost/property_tree/ptree.hpp>
 // #include <boost/format.hpp>
 
-// #include <RDGeneral/export.h>
+#include <RDGeneral/export.h>
 // #include <RDGeneral/FileParseException.h>
 
 namespace RDKit {
@@ -35,7 +35,12 @@ class RWMol;
 
 namespace v2 {
 namespace FileParsers {
-class CMLSupplier {
+struct RDKIT_FILEPARSERS_EXPORT CMLFileParserParams {
+  bool sanitize = true;  ///< sanitize the molecule after building it
+  bool removeHs = true;  ///< remove Hs after constructing the molecule
+};
+
+class RDKIT_FILEPARSERS_EXPORT CMLSupplier {
  public:
   CMLSupplier() = delete;
   CMLSupplier(std::unique_ptr<std::istream> &&p);
@@ -62,11 +67,6 @@ class RWMol;
 
 namespace v2 {
 namespace FileParsers {
-struct RDKIT_FILEPARSERS_EXPORT CMLFileParserParams {
-  bool sanitize = true;  ///< sanitize the molecule after building it
-  bool removeHs = true;  ///< remove Hs after constructing the molecule
-};
-
 RDKIT_FILEPARSERS_EXPORT std::unique_ptr<RWMol> MolFromCMLDataStream(
     std::istream &inStream,
     const CMLFileParserParams &params = {}) noexcept(false);
