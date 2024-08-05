@@ -23,8 +23,8 @@
 // #include <unordered_map>
 // #include <unordered_set>
 
+#include <boost/property_tree/ptree_fwd.hpp>
 // #include <boost/lexical_cast.hpp>
-// #include <boost/property_tree/ptree.hpp>
 // #include <boost/format.hpp>
 
 #include <RDGeneral/export.h>
@@ -51,7 +51,6 @@ class RDKIT_FILEPARSERS_EXPORT CMLSupplier {
   CMLSupplier(const CMLSupplier &) = delete;
   CMLSupplier &operator=(const CMLSupplier &) = delete;
 
-  void init();
   void reset();
   std::unique_ptr<RWMol> next();
   void close();
@@ -59,6 +58,7 @@ class RDKIT_FILEPARSERS_EXPORT CMLSupplier {
  private:
   std::unique_ptr<std::istream> p_istream;
   const CMLFileParserParams params;
+  boost::property_tree::ptree pt;
 };
 }  // namespace FileParsers
 }  // namespace v2
