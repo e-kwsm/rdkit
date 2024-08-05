@@ -22,6 +22,7 @@
 
 #include <boost/property_tree/ptree.hpp>
 
+#include <RDGeneral/FileParseException.h>
 #include <RDGeneral/export.h>
 
 namespace RDKit {
@@ -50,7 +51,7 @@ class RDKIT_FILEPARSERS_EXPORT CMLSupplier {
   void close();
 
  private:
-  std::optional<boost::property_tree::ptree> get_array(
+  std::unique_ptr<boost::property_tree::ptree> get_array(
       const boost::property_tree::ptree &node, const std::string &name) const
       noexcept(false);
   std::unique_ptr<RWMol> parse_molecule_node(
