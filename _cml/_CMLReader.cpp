@@ -60,11 +60,11 @@ class LexicalTranslator {
   static_assert(std::is_arithmetic<T>::value);
 
   LexicalTranslator(std::string path) : path{std::move(path)} {}
-  [[nodiscard]] external_type get_value(const internal_type& s) const
+  [[nodiscard]] external_type get_value(const internal_type &s) const
       noexcept(false) {
     try {
       return boost::lexical_cast<external_type>(s);
-    } catch (const boost::bad_lexical_cast&) {
+    } catch (const boost::bad_lexical_cast &) {
       auto msg =
           boost::format{"%1% (= \"%2%\") is not convertible to numeric"} %
           path % s;
@@ -82,7 +82,7 @@ class CMLMoleculeParser {
   // @param molecule_xpath XPath for messages
   // @param molecule_node
   CMLMoleculeParser(std::string molecule_xpath,
-                    const boost::property_tree::ptree& molecule_node)
+                    const boost::property_tree::ptree &molecule_node)
       : molecule_xpath{std::move(molecule_xpath)},
         molecule_node{molecule_node},
         molecule_id{molecule_node.get_optional<std::string>("<xmlattr>.id")},
@@ -91,37 +91,40 @@ class CMLMoleculeParser {
         spinMultiplicity{get_attribute_optionally<unsigned>(
             molecule_node, "spinMultiplicity", xpath())} {}
   ~CMLMoleculeParser() = default;
+  CMLMoleculeParser(const CMLMoleculeParser &) = delete;
+
+  CMLMoleculeParser &operator=(const CMLMoleculeParser &) = delete;
 
   std::unique_ptr<RWMol> parse(
-      const v2::FileParsers::CMLFileParserParams& params);
+      const v2::FileParsers::CMLFileParserParams &params);
 
  private:
   void check_molecule();
   void parse_atomArray(
-      const std::string& xpath_to_atomArray,
-      const boost::property_tree::ptree& atomArray) noexcept(false);
+      const std::string &xpath_to_atomArray,
+      const boost::property_tree::ptree &atomArray) noexcept(false);
   void parse_atom(std::string xpath_to_atom,
-                  const boost::property_tree::ptree& atom_node,
+                  const boost::property_tree::ptree &atom_node,
                   unsigned idx) noexcept(false);
   void parse_bondArray(
-      const std::string& xpath_to_bondArray,
-      const boost::property_tree::ptree& bondArray) noexcept(false);
+      const std::string &xpath_to_bondArray,
+      const boost::property_tree::ptree &bondArray) noexcept(false);
   void parse_bond(std::string xpath_to_bond,
-                  const boost::property_tree::ptree& bond_node) noexcept(false);
+                  const boost::property_tree::ptree &bond_node) noexcept(false);
 
   std::string xpath() const {
     return molecule_xpath +
            (molecule_id ? ("[@id=\"" + *molecule_id + "\"]") : "");
   }
   template <typename S>
-  boost::format xpath(const S& path) const {
+  boost::format xpath(const S &path) const {
     return boost::format{"%1%/%2%"} % xpath() % path;
   }
 
   template <typename T>
   static boost::optional<T> get_attribute_optionally(
-      const boost::property_tree::ptree& pt, const std::string& name,
-      const std::string& parent) noexcept(false) {
+      const boost::property_tree::ptree &pt, const std::string &name,
+      const std::string &parent) noexcept(false) {
     return pt.get_optional<T>("<xmlattr>." + name,
                               LexicalTranslator<T>{parent + "/@" + name});
   }
@@ -130,7 +133,7 @@ class CMLMoleculeParser {
   // http://www.xml-cml.org/convention/molecular#atom-id
   // > The value of the id attribute MUST start with a letter,
   // > and MUST only contain letters, numbers, dot, hyphen or underscore.
-  static bool is_valid_id(const std::string& id) {
+  static bool is_valid_id(const std::string &id) {
     return std::regex_match(id, std::regex{"^[A-Za-z][A-Za-z0-9._-]*$"});
   }
 
@@ -195,7 +198,7 @@ void CMLMoleculeParser::check_molecule() {
 }
 
 std::unique_ptr<RWMol> CMLMoleculeParser::parse(
-    const v2::FileParsers::CMLFileParserParams& params) {
+    const v2::FileParsers::CMLFileParserParams &params) {
   check_molecule();
 
   // http://www.xml-cml.org/convention/molecular#molecule-name
@@ -259,8 +262,8 @@ std::unique_ptr<RWMol> CMLMoleculeParser::parse(
 }
 
 void CMLMoleculeParser::parse_atomArray(
-    const std::string& xpath_to_atomArray,
-    const boost::property_tree::ptree& atomArray) noexcept(false) {
+    const std::string &xpath_to_atomArray,
+    const boost::property_tree::ptree &atomArray) noexcept(false) {
   const auto num_atoms = static_cast<unsigned>(atomArray.count("atom"));
   // http://www.xml-cml.org/convention/molecular#atomArray-element
   // > An atomArray element MUST contain at least one child atom element.
@@ -271,9 +274,9 @@ void CMLMoleculeParser::parse_atomArray(
   conformer->reserve(num_atoms);
 
   unsigned atom_idx = 0u;
-  for (const auto& atomitr : atomArray) {
+  for (const auto &atomitr : atomArray) {
     if (atomitr.first == "<xmlattr>") {
-      for (const auto& i : atomitr.second) {
+      for (const auto &i : atomitr.second) {
         BOOST_LOG(rdInfoLog)
             << boost::format{"%1%/@%2% (= \"%3%\") is ignored"} %
                    xpath_to_atomArray % i.first % i.second.data()
@@ -302,13 +305,13 @@ void CMLMoleculeParser::parse_atomArray(
 
   // TODO check spinMultiplicity
 
-  for (auto&& p : id_atom) {
+  for (auto &&p : id_atom) {
     molecule->addAtom(p.second.release(), true, true);
   }
 }
 
 void CMLMoleculeParser::parse_atom(std::string xpath_to_atom,
-                                   const boost::property_tree::ptree& atom_node,
+                                   const boost::property_tree::ptree &atom_node,
                                    unsigned idx) noexcept(false) {
   const auto id = atom_node.get_optional<std::string>("<xmlattr>.id");
   if (!id) {
@@ -428,8 +431,8 @@ void CMLMoleculeParser::parse_atom(std::string xpath_to_atom,
 }
 
 void CMLMoleculeParser::parse_bondArray(
-    const std::string& xpath_to_bondArray,
-    const boost::property_tree::ptree& bondArray) noexcept(false) {
+    const std::string &xpath_to_bondArray,
+    const boost::property_tree::ptree &bondArray) noexcept(false) {
   if (bondArray.count("bond") == 0u) {
     // http://www.xml-cml.org/convention/molecular#bondArray-element
     // > A bondArray element MUST contain at least one child bond element.
@@ -437,7 +440,7 @@ void CMLMoleculeParser::parse_bondArray(
     throw RDKit::FileParseException{msg.str()};
   }
 
-  for (const auto& bonditr : bondArray) {
+  for (const auto &bonditr : bondArray) {
     if (bonditr.first == "<xmlattr>") {
       continue;
     }
@@ -455,7 +458,7 @@ void CMLMoleculeParser::parse_bondArray(
 
 void CMLMoleculeParser::parse_bond(
     std::string xpath_to_bond,
-    const boost::property_tree::ptree& bond_node) noexcept(false) {
+    const boost::property_tree::ptree &bond_node) noexcept(false) {
   // http://www.xml-cml.org/convention/molecular#bond-id
   // > It is RECOMMENDED that a bond has an id attribute so that it can be
   // > referenced.
@@ -550,7 +553,7 @@ void CMLMoleculeParser::parse_bond(
     throw RDKit::FileParseException{msg.str()};
   }
 
-  auto distance = [&](const auto& atom_id) {
+  auto distance = [&](const auto &atom_id) {
     auto i = id_atom.find(atom_id);
     if (i == id_atom.end()) {
       auto msg =
@@ -597,9 +600,9 @@ void CMLMoleculeParser::parse_bond(
 
 void CMLMoleculeParser::check_hydrogenCount() {
   unsigned i = 0u;
-  for (const auto& id_hc : id_hydrogenCount) {
-    const auto& atom = (*molecule)[i++];
-    const auto& hydrogenCount = id_hc.second;
+  for (const auto &id_hc : id_hydrogenCount) {
+    const auto &atom = (*molecule)[i++];
+    const auto &hydrogenCount = id_hc.second;
     if (!hydrogenCount) {
       continue;
     }
@@ -627,12 +630,12 @@ void CMLMoleculeParser::check_hydrogenCount() {
 }
 
 std::unique_ptr<RWMol> PTreeToMol(
-    const boost::property_tree::ptree& pt,
-    const v2::FileParsers::CMLFileParserParams& params) noexcept(false) {
+    const boost::property_tree::ptree &pt,
+    const v2::FileParsers::CMLFileParserParams &params) noexcept(false) {
   if (pt.size() > 1u) {
     throw RDKit::FileParseException{"XML MUST NOT have multiple roots"};
   }
-  const auto& root = pt.front();
+  const auto &root = pt.front();
 
 #if 0
   for (const auto& it : root.second) {
@@ -706,26 +709,26 @@ std::unique_ptr<RWMol> PTreeToMol(
 
 namespace v2::FileParsers {
 std::unique_ptr<RWMol> MolFromCMLDataStream(
-    std::istream& inStream, const CMLFileParserParams& params) noexcept(false) {
+    std::istream &inStream, const CMLFileParserParams &params) noexcept(false) {
   boost::property_tree::ptree pt;
   try {
     boost::property_tree::read_xml(inStream, pt);
-  } catch (const boost::property_tree::xml_parser_error& e) {
+  } catch (const boost::property_tree::xml_parser_error &e) {
     throw FileParseException{boost::diagnostic_information(e)};
   }
   return PTreeToMol(pt, params);
 }
 
 std::unique_ptr<RWMol> MolFromCMLBlock(
-    const std::string& block,
-    const CMLFileParserParams& params) noexcept(false) {
+    const std::string &block,
+    const CMLFileParserParams &params) noexcept(false) {
   std::istringstream iss{block};
   return MolFromCMLDataStream(iss, params);
 }
 
 std::unique_ptr<RWMol> MolFromCMLFile(
-    const std::string& filename,
-    const CMLFileParserParams& params) noexcept(false) {
+    const std::string &filename,
+    const CMLFileParserParams &params) noexcept(false) {
   std::ifstream ifs{filename};
   if (!ifs || ifs.bad()) {
     auto msg = boost::format{"Bad input file %1%"} % filename;
