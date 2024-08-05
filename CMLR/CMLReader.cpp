@@ -22,7 +22,22 @@ namespace FileParsers {
 namespace cml {
 CMLError::~CMLError() = default;
 
+CMLMolecule::CMLMolecule(const boost::property_tree::ptree &molecule_node)
+    : molecule_node{molecule_node},
+      molecule{std::make_unique<RDKit::RWMol>()},
+      conformer{std::make_unique<RDKit::Conformer>()} {}
+
 CMLMolecule::~CMLMolecule() = default;
+
+std::unique_ptr<RWMol> CMLMolecule::parse() {
+  auto mol = std::make_unique<RWMol>();
+  return mol;
+}
+
+void CMLMolecule::parse_atomArray(const boost::property_tree::ptree &node) {}
+void CMLMolecule::parse_atom(const boost::property_tree::ptree &node) {}
+void CMLMolecule::parse_bondArray(const boost::property_tree::ptree &node) {}
+void CMLMolecule::parse_bond(const boost::property_tree::ptree &node) {}
 }  // namespace cml
 }  // namespace FileParsers
 }  // namespace v2
