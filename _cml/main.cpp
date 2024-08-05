@@ -79,7 +79,19 @@ int main() {
     ss << R"(<?xml version="1.0"?>
 <molecule>
   <atomArray>
-  <atom/>
+    <atom elementType="He" x3="0" y3="0" z3="0"/>
+  </atomArray>
+</molecule>
+)";
+    f(ss);
+  }
+
+  {
+    std::stringstream ss;
+    ss << R"(<?xml version="1.0"?>
+<molecule>
+  <atomArray>
+    <atom elementType="He"/>
   </atomArray>
 </molecule>
 )";
