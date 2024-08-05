@@ -51,12 +51,15 @@
 namespace RDKit {
 namespace v2 {
 namespace FileParsers {
-CMLSupplier::CMLSupplier(std::unique_ptr<std::istream> &&p)
-    : p_istream{std::move(p)} {
-  PRECONDITION(p_istream, "bad stream");
+CMLSupplier::CMLSupplier(std::unique_ptr<std::istream> &&p_istream,
+                         const CMLFileParserParams &params)
+    : p_istream{std::move(p_istream)}, params{params} {
+  PRECONDITION(this->p_istream, "bad stream");
 }
 
-CMLSupplier::CMLSupplier(const std::string &fileName) {
+CMLSupplier::CMLSupplier(const std::string &fileName,
+                         const CMLFileParserParams &params)
+    : params{params} {
   p_istream = std::make_unique<std::ifstream>(fileName);
   if (!p_istream || p_istream->bad()) {
     auto msg = boost::format{"Bad input file %1%"} % fileName;
