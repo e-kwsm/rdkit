@@ -162,7 +162,7 @@ double getBestRMSInternal(const ROMol &prbMol, const ROMol &refMol, int prbCid,
     for (auto ti = 0u; ti < numThreads; ++ti) {
       auto func = [&](unsigned int tidx) {
         for (auto midx = tidx; midx < matches.size(); midx += numThreads) {
-          auto matche = matches[midx];
+          const auto& matche = matches[midx];
           RDGeom::Transform3D tmpTrans;
           auto msd = trans
                          ? alignConfsOnAtomMap(prbCnf, refCnf, matche, tmpTrans,
@@ -328,7 +328,8 @@ std::vector<double> getAllConformerBestRMS(
       }
     };
     std::vector<std::thread> tg;
-    for (auto ti = 0; ti < numThreads; ++ti) {
+    tg.reserve(numThreads);
+for (auto ti = 0; ti < numThreads; ++ti) {
       tg.emplace_back(std::thread(func, ti));
     }
     for (auto &thread : tg) {
