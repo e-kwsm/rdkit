@@ -23,8 +23,7 @@
 #include <GraphMol/SmilesParse/SmilesWrite.h>
 #include <GraphMol/Chirality.h>
 
-namespace RDKit {
-namespace MolStandardize {
+namespace RDKit::MolStandardize {
 
 void PipelineResult::append(PipelineStatus newStatus, const std::string &info) {
   status = static_cast<PipelineStatus>(status | newStatus);
@@ -583,5 +582,4 @@ RWMOL_SPTR_PAIR makeParent(RWMOL_SPTR mol, PipelineResult &result,
 }
 }  // namespace Operations
 
-}  // namespace MolStandardize
-}  // namespace RDKit
+}  // namespace RDKit::MolStandardize
