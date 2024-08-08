@@ -112,7 +112,7 @@ void readFormalChargesFromAttr(std::istream *inStream, RWMol *res) {
         // FIX:what if an atom has multiple properties? Seems like they might be
         // separated
         // with ";" ... need to look at that in more detail!
-        if ((*itemIt).find("=") == std::string::npos) {
+        if ((*itemIt).find('=') == std::string::npos) {
           try {
             formCharge = boost::lexical_cast<int>(*itemIt);
           } catch (boost::bad_lexical_cast &) {
@@ -525,7 +525,7 @@ bool cleanUpMol2Substructures(RWMol *res) {
   return true;
 }
 
-Atom *ParseMol2FileAtomLine(const std::string atomLine, RDGeom::Point3D &pos) {
+Atom *ParseMol2FileAtomLine(const std::string& atomLine, RDGeom::Point3D &pos) {
   typedef boost::tokenizer<boost::char_separator<char>> tokenizer;
   boost::char_separator<char> sep(" \t\n");
   std::string tAN, tAT;
@@ -643,7 +643,7 @@ Atom *ParseMol2FileAtomLine(const std::string atomLine, RDGeom::Point3D &pos) {
   return res;
 }
 
-Bond *ParseMol2FileBondLine(const std::string bondLine,
+Bond *ParseMol2FileBondLine(const std::string& bondLine,
                             const INT_VECT &idxCorresp) {
   unsigned int idx1, idx2;
 

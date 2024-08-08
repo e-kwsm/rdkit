@@ -27,7 +27,7 @@ class Conformer;
 
 namespace FileParserUtils {
 RDKIT_FILEPARSERS_EXPORT inline std::string_view strip(
-    std::string_view orig, std::string stripChars = " \t\r\n") {
+    std::string_view orig, const std::string& stripChars = " \t\r\n") {
   std::string_view res = orig;
   auto start = res.find_first_not_of(stripChars);
   if (start != std::string_view::npos) {
@@ -165,7 +165,7 @@ static const std::string atomPropPrefix = "atom.";
 //! if the property name matches our rules for atom property lists, we'll
 //! apply it to the atoms
 inline void processMolPropertyList(
-    ROMol &mol, const std::string pn,
+    ROMol &mol, const std::string& pn,
     const std::string &missingValueMarker = "n/a") {
   if (pn.find(atomPropPrefix) == 0 && pn.length() > atomPropPrefix.length()) {
     std::string prefix = atomPropPrefix + "prop.";
@@ -194,7 +194,7 @@ inline void processMolPropertyList(
 //! atom property lists to the atoms
 inline void processMolPropertyLists(
     ROMol &mol, const std::string &missingValueMarker = "n/a") {
-  for (auto pn : mol.getPropList()) {
+  for (const auto& pn : mol.getPropList()) {
     processMolPropertyList(mol, pn, missingValueMarker);
   }
 }
