@@ -73,8 +73,8 @@ class RDKIT_FILEPARSERS_EXPORT SmilesWriter : public MolWriter {
                bool includeHeader = true, bool isomericSmiles = true,
                bool kekuleSmiles = false);
   //! \overload
-  SmilesWriter(std::ostream *outStream, std::string delimiter = " ",
-               std::string nameHeader = "Name", bool includeHeader = true,
+  SmilesWriter(std::ostream *outStream, const std::string& delimiter = " ",
+               const std::string& nameHeader = "Name", bool includeHeader = true,
                bool takeOwnership = false, bool isomericSmiles = true,
                bool kekuleSmiles = false);
 
