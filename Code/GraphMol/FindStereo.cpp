@@ -64,8 +64,9 @@ bool isAtomPotentialTetrahedralCenter(const Atom *atom) {
   if (nzDegree <= 1) {
     // chirality is never possible with 0 or 1 nbr
     return false;
-  } else if (nzDegree < 3 &&
-             (atom->getAtomicNum() != 15 && atom->getAtomicNum() != 33)) {
+  }
+  if (nzDegree < 3 &&
+      (atom->getAtomicNum() != 15 && atom->getAtomicNum() != 33)) {
     // less than three neighbors is never stereogenic
     // unless it is a phosphine/arsine with implicit H
     return false;
