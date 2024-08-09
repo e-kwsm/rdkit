@@ -8,15 +8,15 @@
 //  of the RDKit source tree.
 //
 #include "MolTransforms.h"
-#include <GraphMol/RDKitBase.h>
-#include <GraphMol/QueryOps.h>
-#include <Numerics/EigenSolvers/PowerEigenSolver.h>
-#include <Numerics/SymmMatrix.h>
-#include <Numerics/Matrix.h>
 #include <Geometry/Transform3D.h>
-#include <stack>
-#include <boost/dynamic_bitset.hpp>
+#include <GraphMol/QueryOps.h>
+#include <GraphMol/RDKitBase.h>
+#include <Numerics/EigenSolvers/PowerEigenSolver.h>
+#include <Numerics/Matrix.h>
+#include <Numerics/SymmMatrix.h>
 #include <RDGeneral/Exceptions.h>
+#include <boost/dynamic_bitset.hpp>
+#include <stack>
 
 #ifndef RDK_HAS_EIGEN3
 constexpr double EIGEN_TOLERANCE = 5.0e-2;
