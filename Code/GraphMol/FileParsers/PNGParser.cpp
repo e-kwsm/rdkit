@@ -16,15 +16,15 @@
 #include <GraphMol/MolPickler.h>
 #include <RDGeneral/FileParseException.h>
 #include <RDGeneral/StreamOps.h>
-#include <vector>
-#include <boost/crc.hpp>
 #include <boost/algorithm/string.hpp>
+#include <boost/crc.hpp>
+#include <vector>
 
 #include "FileParsers.h"
 #ifdef RDK_USE_BOOST_IOSTREAMS
-#include <boost/iostreams/filtering_streambuf.hpp>
 #include <boost/iostreams/copy.hpp>
 #include <boost/iostreams/filter/zlib.hpp>
+#include <boost/iostreams/filtering_streambuf.hpp>
 #endif
 
 namespace RDKit {

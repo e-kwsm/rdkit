@@ -1,3 +1,6 @@
+#ifndef LLVM_CODE_GRAPHMOL_FILEPARSERS_PNGPARSER_H
+#define LLVM_CODE_GRAPHMOL_FILEPARSERS_PNGPARSER_H
+
 //
 //  Copyright (C) 2020 Greg Landrum
 //
@@ -11,17 +14,17 @@
 #ifndef RD_PNGPARSER_H
 #define RD_PNGPARSER_H
 
-#include <RDGeneral/types.h>
-#include <RDGeneral/BadFileException.h>
 #include <GraphMol/RDKitBase.h>
 #include <GraphMol/SmilesParse/SmilesParse.h>
 #include <GraphMol/SmilesParse/SmilesWrite.h>
+#include <RDGeneral/BadFileException.h>
+#include <RDGeneral/types.h>
 
 #include <boost/format.hpp>
 
-#include <string>
 #include <fstream>
 #include <sstream>
+#include <string>
 
 namespace RDKit {
 
@@ -199,5 +202,7 @@ inline std::string addMolToPNGFile(const ROMol &mol, const std::string &fname,
 //! @}
 
 }  // namespace RDKit
+
+#endif
 
 #endif
