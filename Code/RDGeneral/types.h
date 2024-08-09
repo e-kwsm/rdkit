@@ -24,9 +24,9 @@
 #undef _USE_MATH_DEFINES
 #endif
 
-#include "Invariant.h"
-#include "Dict.h"
-
+#include <RDGeneral/BoostStartInclude.h>
+#include <boost/lexical_cast.hpp>
+#include <RDGeneral/BoostEndInclude.h>
 #include <vector>
 #include <deque>
 #include <map>
@@ -37,12 +37,11 @@
 #include <numeric>
 #include <list>
 #include <limits>
-
 #include <cstring>
 #include <any>
-#include <RDGeneral/BoostStartInclude.h>
-#include <boost/lexical_cast.hpp>
-#include <RDGeneral/BoostEndInclude.h>
+
+#include "Invariant.h"
+#include "Dict.h"
 
 namespace RDKit {
 

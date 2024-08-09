@@ -10,7 +10,6 @@
 #include "RDLog.h"
 
 #if 1
-#include <iomanip>
 #include <string>
 #include <ctime>
 #include <iostream>
@@ -169,6 +168,7 @@ std::ostream &toStream(std::ostream &logstrm) {
 #include <boost/log/extra/functions_ts.hpp>
 #endif
 #include <iostream>
+
 namespace logging = boost::logging;
 
 BOOST_DEFINE_LOG(rdAppLog, "rdApp")
