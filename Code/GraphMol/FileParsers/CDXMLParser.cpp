@@ -8,20 +8,20 @@
 //  of the RDKit source tree.
 //
 #include "CDXMLParser.h"
-#include <boost/property_tree/xml_parser.hpp>
-#include <boost/property_tree/ptree.hpp>
+#include <GraphMol/Atropisomers.h>
+#include <GraphMol/ChemTransforms/MolFragmenter.h>
+#include <GraphMol/FileParsers/MolFileStereochem.h>
 #include <GraphMol/MolOps.h>
 #include <GraphMol/QueryAtom.h>
 #include <GraphMol/QueryBond.h>
 #include <GraphMol/QueryOps.h>
-#include <GraphMol/ChemTransforms/MolFragmenter.h>
 #include <GraphMol/SmilesParse/SmilesWrite.h>
 #include <RDGeneral/BadFileException.h>
+#include <RDGeneral/FileParseException.h>
+#include <boost/property_tree/ptree.hpp>
+#include <boost/property_tree/xml_parser.hpp>
 #include <fstream>
 #include <sstream>
-#include <GraphMol/FileParsers/MolFileStereochem.h>
-#include <RDGeneral/FileParseException.h>
-#include <GraphMol/Atropisomers.h>
 
 using boost::property_tree::ptree;
 namespace RDKit {
@@ -411,9 +411,9 @@ bool parse_fragment(RWMol &mol, ptree &frag,
         skip_fragment =
             true;  // ChemDraw doesn't skip, it just ignores bad bonds...
         break;
-      } else {
-        bonds.push_back(bond);
       }
+      bonds.push_back(bond);
+
       // end if atom or bond
     }
   }  // for node
@@ -438,7 +438,7 @@ bool parse_fragment(RWMol &mol, ptree &frag,
       }
       unsigned bondIdx = 0;
       if (bond.order == Bond::BondType::UNSPECIFIED) {
-        auto qb = new QueryBond();
+        auto *qb = new QueryBond();
         qb->setQuery(makeBondNullQuery());
         qb->setBeginAtomIdx(startIdx);
         qb->setEndAtomIdx(endIdx);
@@ -712,7 +712,7 @@ std::vector<std::unique_ptr<RWMol>> MolsFromCDXMLDataStream(
   try {
     read_xml(inStream, pt);
   } catch (boost::property_tree::ptree_error &e) {
-    auto xml = dynamic_cast<boost::property_tree::file_parser_error *>(&e);
+    auto *xml = dynamic_cast<boost::property_tree::file_parser_error *>(&e);
     if (xml != nullptr) {
       auto msg = std::string(xml->message()) +
                  " at line: " + boost::lexical_cast<std::string>(xml->line());
