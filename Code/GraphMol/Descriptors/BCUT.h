@@ -7,12 +7,12 @@
 //  which is included in the file license.txt, found at the root
 //  of the RDKit source tree.
 //
-#ifndef RDKIT_BCUT_H
-#define RDKIT_BCUT_H
+#ifndef LLVM_CODE_GRAPHMOL_DESCRIPTORS_BCUT_H
+#define LLVM_CODE_GRAPHMOL_DESCRIPTORS_BCUT_H
 #ifdef RDK_HAS_EIGEN3
 #include <RDGeneral/export.h>
-#include <vector>
 #include <string>
+#include <vector>
 namespace RDKit {
 class ROMol;
 namespace Descriptors {
