@@ -1,3 +1,6 @@
+#ifndef LLVM_CODE_GRAPHMOL_SUBGRAPHS_SUBGRAPHUTILS_H
+#define LLVM_CODE_GRAPHMOL_SUBGRAPHS_SUBGRAPHUTILS_H
+
 //
 //  Copyright (C) 2003-2022 Greg Landrum and other RDKit contributors
 //
@@ -12,9 +15,9 @@
 #define RD_SUBGRAPHUTILS_H
 
 #include "Subgraphs.h"
+#include <RDGeneral/BoostEndInclude.h>
 #include <RDGeneral/BoostStartInclude.h>
 #include <tuple>
-#include <RDGeneral/BoostEndInclude.h>
 
 #include <cstdint>
 
@@ -52,5 +55,7 @@ RDKIT_SUBGRAPHS_EXPORT ROMol *pathToSubmol(const ROMol &mol,
                                            bool useQuery = false);
 }  // end of namespace Subgraphs
 }  // namespace RDKit
+
+#endif
 
 #endif
