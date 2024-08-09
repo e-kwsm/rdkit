@@ -1,3 +1,6 @@
+#ifndef LLVM_CODE_GRAPHMOL_DESCRIPTORS_MOLSURF_H
+#define LLVM_CODE_GRAPHMOL_DESCRIPTORS_MOLSURF_H
+
 //
 //  Copyright (C) 2007-2011 Greg Landrum
 //
@@ -116,5 +119,7 @@ RDKIT_DESCRIPTORS_EXPORT std::vector<double> calcCustomProp_VSA(
 
 }  // end of namespace Descriptors
 }  // end of namespace RDKit
+
+#endif
 
 #endif
