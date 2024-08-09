@@ -10,10 +10,10 @@
 #ifdef RDK_HAS_EIGEN3
 #include "BCUT.h"
 #include "Crippen.h"
-#include <Eigen/Dense>
-#include <GraphMol/RDKitBase.h>
 #include "GraphMol/PartialCharges/GasteigerCharges.h"
 #include "GraphMol/PartialCharges/GasteigerParams.h"
+#include <Eigen/Dense>
+#include <GraphMol/RDKitBase.h>
 #include <RDGeneral/types.h>
 
 namespace RDKit {
