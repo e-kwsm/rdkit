@@ -63,17 +63,14 @@ class RDKIT_PARTIALCHARGES_EXPORT GasteigerParams {
       message += " Mode: ";
       message += mode;
       throw ValueErrorException(message);
-    } else {
-      iter =
-          d_paramMap.find(std::make_pair(std::string("X"), std::string("*")));
-      if (iter != d_paramMap.end()) {
-        return iter->second;
-      } else {
-        std::string message =
-            "ERROR: Default Gasteiger Partial Charge parameters are missing";
-        throw ValueErrorException(message);
-      }
     }
+    iter = d_paramMap.find(std::make_pair(std::string("X"), std::string("*")));
+    if (iter != d_paramMap.end()) {
+      return iter->second;
+    }
+    std::string message =
+        "ERROR: Default Gasteiger Partial Charge parameters are missing";
+    throw ValueErrorException(message);
   }
 
   GasteigerParams(std::string paramData = "");
