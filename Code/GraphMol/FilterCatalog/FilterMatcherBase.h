@@ -1,3 +1,6 @@
+#ifndef LLVM_CODE_GRAPHMOL_FILTERCATALOG_FILTERMATCHERBASE_H
+#define LLVM_CODE_GRAPHMOL_FILTERCATALOG_FILTERMATCHERBASE_H
+
 //  Copyright (c) 2015, Novartis Institutes for BioMedical Research Inc.
 //  All rights reserved.
 //
@@ -38,12 +41,12 @@
 #include <GraphMol/Substruct/SubstructMatch.h>
 
 #ifdef RDK_USE_BOOST_SERIALIZATION
-#include <RDGeneral/BoostStartInclude.h>
-#include <boost/archive/text_oarchive.hpp>
-#include <boost/archive/text_iarchive.hpp>
-#include <boost/serialization/assume_abstract.hpp>
-#include <boost/enable_shared_from_this.hpp>
 #include <RDGeneral/BoostEndInclude.h>
+#include <RDGeneral/BoostStartInclude.h>
+#include <boost/archive/text_iarchive.hpp>
+#include <boost/archive/text_oarchive.hpp>
+#include <boost/enable_shared_from_this.hpp>
+#include <boost/serialization/assume_abstract.hpp>
 #endif  // RDK_USE_BOOST_SERIALIZATION
 
 namespace RDKit {
@@ -146,4 +149,6 @@ class RDKIT_FILTERCATALOG_EXPORT FilterMatcherBase
 BOOST_SERIALIZATION_ASSUME_ABSTRACT(FilterMatcherBase)
 #endif
 }  // namespace RDKit
+#endif
+
 #endif
