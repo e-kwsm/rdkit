@@ -1,3 +1,6 @@
+#ifndef LLVM_CODE_GRAPHMOL_DESCRIPTORS_AUTOCORR2D_H
+#define LLVM_CODE_GRAPHMOL_DESCRIPTORS_AUTOCORR2D_H
+
 //
 //  Copyright (c) 2016, Guillaume GODIN
 //  All rights reserved.
@@ -46,4 +49,6 @@ RDKIT_DESCRIPTORS_EXPORT void AUTOCORR2D(
     const std::string &customAtomPropName = "");
 }  // namespace Descriptors
 }  // namespace RDKit
+#endif
+
 #endif
