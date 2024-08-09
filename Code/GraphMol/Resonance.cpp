@@ -8,14 +8,14 @@
 //  which is included in the file license.txt, found at the root
 //  of the RDKit source tree.
 //
-#include <GraphMol/RDKitBase.h>
 #include <GraphMol/MolOps.h>
+#include <GraphMol/RDKitBase.h>
 #include <GraphMol/Resonance.h>
-#include <RDGeneral/hash/hash.hpp>
 #include <RDGeneral/RDThreads.h>
+#include <RDGeneral/hash/hash.hpp>
 #ifdef RDK_BUILD_THREADSAFE_SSS
-#include <thread>
 #include <future>
+#include <thread>
 #endif
 #include <algorithm>
 
@@ -999,7 +999,7 @@ void ConjElectrons::computeMetrics() {
 
 void ConjElectrons::updateDegCount(CEDegCount &ceDegCount) {
   static const size_t ceMetricsArrayLen = 5;
-  const auto metricsIt = reinterpret_cast<const int *>(&d_ceMetrics);
+  const auto *const metricsIt = reinterpret_cast<const int *>(&d_ceMetrics);
   d_ceMetrics.d_hash =
       boost::hash_range(metricsIt, metricsIt + ceMetricsArrayLen);
   ++ceDegCount[d_ceMetrics.d_hash];
@@ -1451,7 +1451,7 @@ void ResonanceMolSupplier::assignConjGrpIdx() {
   std::stack<unsigned int> bondIndexStack;
   d_bondConjGrpIdx.resize(nb, -1);
   for (d_nConjGrp = 0; true; ++d_nConjGrp) {
-    for (const auto b : d_mol->bonds()) {
+    for (auto *const b : d_mol->bonds()) {
       unsigned int i = b->getIdx();
       if (b->getIsConjugated() && (d_bondConjGrpIdx[i] == -1)) {
         bondIndexStack.push(i);
