@@ -10,11 +10,8 @@
 //  of the RDKit source tree.
 //
 #include <RDGeneral/Exceptions.h>
-#include "ExplicitBitVect.h"
 #include <RDGeneral/StreamOps.h>
-#include "base64.h"
-#include <sstream>
-#include <limits>
+
 #ifdef WIN32
 #include <ios>
 #endif
