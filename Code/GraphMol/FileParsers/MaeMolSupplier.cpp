@@ -8,20 +8,20 @@
 //  of the RDKit source tree.
 //
 #include <cstring>
-#include <iostream>
 #include <fstream>
+#include <iostream>
 
 #include <boost/unordered_set.hpp>
 
-#include <RDGeneral/BadFileException.h>
-#include <RDGeneral/FileParseException.h>
+#include <GraphMol/FileParsers/FileParserUtils.h>
+#include <GraphMol/FileParsers/MaestroProperties.h>
+#include <GraphMol/FileParsers/MolSupplier.h>
 #include <GraphMol/MolInterchange/details.h>
 #include <GraphMol/MolOps.h>
 #include <GraphMol/MonomerInfo.h>
 #include <GraphMol/RWMol.h>
-#include <GraphMol/FileParsers/MaestroProperties.h>
-#include <GraphMol/FileParsers/MolSupplier.h>
-#include <GraphMol/FileParsers/FileParserUtils.h>
+#include <RDGeneral/BadFileException.h>
+#include <RDGeneral/FileParseException.h>
 
 #include <boost/tokenizer.hpp>
 
@@ -223,7 +223,8 @@ std::string strip_prefix_from_mae_property(const std::string &propName) {
     ++propNamePtr;
     if (strncmp(propNamePtr, "_rdk_", 5) == 0) {
       return propName.substr(6);
-    } else if (strncmp(propNamePtr, "_rdkit_", 7) == 0) {
+    }
+    if (strncmp(propNamePtr, "_rdkit_", 7) == 0) {
       return propName.substr(8);
     }
   }
@@ -300,7 +301,8 @@ void set_atom_properties(Atom &atom, const mae::IndexedBlock &atom_block,
         prop.first == PDB_CHAIN_NAME || prop.first == PDB_INSERTION_CODE) {
       // PDB information is parsed separately.
       continue;
-    } else if (!prop.second->isDefined(i)) {
+    }
+    if (!prop.second->isDefined(i)) {
       continue;
     }
 
@@ -314,7 +316,8 @@ void set_atom_properties(Atom &atom, const mae::IndexedBlock &atom_block,
       // Coordinates are used in defining a conformation, and should not be
       // set on the atom.
       continue;
-    } else if (prop.first == PDB_OCCUPANCY || prop.first == PDB_TFACTOR) {
+    }
+    if (prop.first == PDB_OCCUPANCY || prop.first == PDB_TFACTOR) {
       // PDB information is parsed separately.
       continue;
     } else if (!prop.second->isDefined(i)) {
@@ -328,7 +331,8 @@ void set_atom_properties(Atom &atom, const mae::IndexedBlock &atom_block,
     if (prop.first == mae::ATOM_ATOMIC_NUM) {
       // Atomic number was already used in the creation of the atom
       continue;
-    } else if (prop.first == PDB_RESIDUE_NUMBER) {
+    }
+    if (prop.first == PDB_RESIDUE_NUMBER) {
       // PDB information is parsed separately.
       continue;
     } else if (!prop.second->isDefined(i)) {
@@ -367,7 +371,7 @@ void addAtoms(const mae::IndexedBlock &atom_block, RWMol &mol,
 
   // atomic numbers, and x, y, and z coordinates
   const auto size = atomicNumbers->size();
-  auto conf = new RDKit::Conformer(size);
+  auto *conf = new RDKit::Conformer(size);
   conf->setId(0);
 
   PDBInfo pdb_info(atom_block);
@@ -430,7 +434,7 @@ void addBonds(const mae::IndexedBlock &bond_block, RWMol &mol) {
     const auto from_atom = from_atoms->at(i) - 1;
     const auto to_atom = to_atoms->at(i) - 1;
     const auto order = bolookup.find(orders->at(i))->second;
-    if (auto bond = mol.getBondBetweenAtoms(from_atom, to_atom);
+    if (auto *bond = mol.getBondBetweenAtoms(from_atom, to_atom);
         bond != nullptr) {
       if (order != bond->getBondType()) {
         BOOST_LOG(rdWarningLog)
@@ -441,7 +445,7 @@ void addBonds(const mae::IndexedBlock &bond_block, RWMol &mol) {
       continue;  // Maestro files may double-list some bonds
     }
 
-    auto bond = new Bond(order);
+    auto *bond = new Bond(order);
     bond->setOwningMol(mol);
     bond->setBeginAtomIdx(from_atom);
     bond->setEndAtomIdx(to_atom);
@@ -593,7 +597,8 @@ std::unique_ptr<RWMol> MaeMolSupplier::next() {
   PRECONDITION(dp_sInStream != nullptr, "no stream");
   if (!d_stored_exc.empty()) {
     throw FileParseException(d_stored_exc);
-  } else if (atEnd()) {
+  }
+  if (atEnd()) {
     throw FileParseException("All structures read from Maestro file");
   }
 

@@ -1,3 +1,6 @@
+#ifndef LLVM_CODE_GRAPHMOL_FILEPARSERS_MAESTROPROPERTIES_H
+#define LLVM_CODE_GRAPHMOL_FILEPARSERS_MAESTROPROPERTIES_H
+
 //
 //  Copyright (C) 2024 Schrödinger, LLC
 //
@@ -31,3 +34,5 @@ static const std::string PDB_TFACTOR = "r_m_pdb_tfactor";
 }  // namespace schrodinger
 }  // namespace FileParsers
 }  // namespace RDKit
+
+#endif

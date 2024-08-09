@@ -12,20 +12,20 @@
 #include <boost/lexical_cast.hpp>
 #include <RDGeneral/BoostEndInclude.h>
 
-#include "FileParsers.h"
 #include "FileParserUtils.h"
+#include "FileParsers.h"
 #include <RDGeneral/StreamOps.h>
 
-#include <RDGeneral/FileParseException.h>
 #include <RDGeneral/BadFileException.h>
+#include <RDGeneral/FileParseException.h>
 #include <exception>
 
-#include <iostream>
+#include <cstdio>
+#include <cstdlib>
 #include <fstream>
+#include <iostream>
 #include <sstream>
 #include <string>
-#include <cstdlib>
-#include <cstdio>
 #include <vector>
 
 namespace RDKit {
@@ -159,9 +159,8 @@ std::unique_ptr<RWMol> MolFromXYZBlock(const std::string &xyzBlock) {
   xyz.peek();
   if (!xyz.eof()) {
     return MolFromXYZDataStream(xyz);
-  } else {
-    return nullptr;
   }
+  return nullptr;
 }
 
 std::unique_ptr<RWMol> MolFromXYZFile(const std::string &fName) {
@@ -175,9 +174,8 @@ std::unique_ptr<RWMol> MolFromXYZFile(const std::string &fName) {
   xyzFile.peek();
   if (!xyzFile.eof()) {
     return MolFromXYZDataStream(xyzFile);
-  } else {
-    return nullptr;
   }
+  return nullptr;
 }
 }  // namespace FileParsers
 }  // namespace v2
