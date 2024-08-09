@@ -11,6 +11,9 @@
 
 #include "types.h"
 
+#include <algorithm>
+#include <limits>
+
 namespace RDKit {
 
 //  template <typename T>
