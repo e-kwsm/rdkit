@@ -1,3 +1,6 @@
+#ifndef RD_FILEPARSERUTILS_H
+#define RD_FILEPARSERUTILS_H
+
 //
 //  Copyright (C) 2010-2025 Greg Landrum and other RDKit contributors
 //
@@ -8,8 +11,6 @@
 //  of the RDKit source tree.
 //
 #include <RDGeneral/export.h>
-#ifndef RD_FILEPARSERUTILS_H
-#define RD_FILEPARSERUTILS_H
 
 #include <string>
 #include <iostream>
@@ -44,9 +45,8 @@ T stripSpacesAndCast(std::string_view input, bool acceptSpaces = false) {
   auto trimmed = strip(input, " ");
   if (acceptSpaces && trimmed.empty()) {
     return 0;
-  } else {
-    return boost::lexical_cast<T>(trimmed);
   }
+  return boost::lexical_cast<T>(trimmed);
 }
 template <typename T>
 T stripSpacesAndCast(const std::string &input, bool acceptSpaces = false) {
