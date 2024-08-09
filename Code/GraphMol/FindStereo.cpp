@@ -110,10 +110,8 @@ bool isAtomPotentialTetrahedralCenter(const Atom *atom) {
         }
       }
       return legalCenter;
-
-  } else {
-    return false;
   }
+  return false;
 }
 
 bool isAtomPotentialStereoAtom(const Atom *atom,

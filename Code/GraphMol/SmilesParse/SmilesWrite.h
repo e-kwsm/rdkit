@@ -1,3 +1,6 @@
+#ifndef LLVM_CODE_GRAPHMOL_SMILESPARSE_SMILESWRITE_H
+#define LLVM_CODE_GRAPHMOL_SMILESPARSE_SMILESWRITE_H
+
 //
 //  Copyright (C) 2002-2021 Greg Landrum and other RDKit contributors
 //
@@ -11,11 +14,11 @@
 #ifndef RD_SMILESWRITE_H_012020
 #define RD_SMILESWRITE_H_012020
 
-#include <string>
-#include <vector>
-#include <memory>
 #include <cstdint>
 #include <limits>
+#include <memory>
+#include <string>
+#include <vector>
 
 namespace RDKit {
 class Atom;
@@ -139,7 +142,7 @@ inline std::string GetBondSmiles(const Bond *bond, int atomToLeftIdx = -1,
 namespace detail {
 RDKIT_SMILESPARSE_EXPORT std::string MolToSmiles(
     const ROMol &mol, const SmilesWriteParams &params, bool doingCXSmiles);
-}
+}  // namespace detail
 
 }  // namespace SmilesWrite
 
@@ -371,4 +374,6 @@ void updateCXSmilesFieldsFromJSON(SmilesWrite::CXSmilesFields &cxSmilesFields,
                                   const char *details_json);
 
 }  // namespace RDKit
+#endif
+
 #endif
