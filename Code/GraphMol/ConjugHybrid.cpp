@@ -57,12 +57,12 @@ void markConjAtomBonds(Atom *at) {
     return;
   }
 
-  for (const auto bnd1 : mol.atomBonds(at)) {
+  for (auto *const bnd1 : mol.atomBonds(at)) {
     if (bnd1->getValenceContrib(at) < 1.5 ||
         !isAtomConjugCand(bnd1->getOtherAtom(at))) {
       continue;
     }
-    for (const auto bnd2 : mol.atomBonds(at)) {
+    for (auto *const bnd2 : mol.atomBonds(at)) {
       if (bnd1 == bnd2) {
         continue;
       }
@@ -116,7 +116,7 @@ bool atomHasConjugatedBond(const Atom *at) {
   PRECONDITION(at, "bad atom");
 
   auto &mol = at->getOwningMol();
-  for (const auto bnd : mol.atomBonds(at)) {
+  for (auto *const bnd : mol.atomBonds(at)) {
     if (bnd->getIsConjugated()) {
       return true;
     }

@@ -375,7 +375,8 @@ QueryDetails getQueryDetails(const Query<int, T const *, true> *query) {
   }
   if (typeid(*query) == typeid(Query<int, T const *, true>)) {
     return QueryDetails(MolPickler::QUERY_NULL);
-  } else if (typeid(*query) == typeid(RangeQuery<int, T const *, true>)) {
+  }
+  if (typeid(*query) == typeid(RangeQuery<int, T const *, true>)) {
     char ends;
     bool lowerOpen, upperOpen;
     boost::tie(lowerOpen, upperOpen) =
