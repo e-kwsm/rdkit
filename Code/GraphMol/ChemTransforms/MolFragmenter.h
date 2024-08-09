@@ -1,3 +1,6 @@
+#ifndef LLVM_CODE_GRAPHMOL_CHEMTRANSFORMS_MOLFRAGMENTER_H
+#define LLVM_CODE_GRAPHMOL_CHEMTRANSFORMS_MOLFRAGMENTER_H
+
 //
 //  Copyright (C) 2013 Greg Landrum
 //
@@ -11,8 +14,8 @@
 #ifndef _RD_MOLFRAGMENTER_H__
 #define _RD_MOLFRAGMENTER_H__
 
-#include <istream>
 #include <GraphMol/ROMol.h>
+#include <istream>
 
 namespace RDKit {
 namespace MolFragmenter {
@@ -157,4 +160,6 @@ RDKIT_CHEMTRANSFORMS_EXPORT std::unique_ptr<ROMol> molzip(
 RDKIT_CHEMTRANSFORMS_EXPORT std::unique_ptr<ROMol> molzip(const std::map<std::string, ROMOL_SPTR> &row,
 							  const MolzipParams &params=MolzipParams());
 }  // namespace RDKit
+#endif
+
 #endif
