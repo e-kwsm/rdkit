@@ -7,21 +7,21 @@
 //  which is included in the file license.txt, found at the root
 //  of the RDKit source tree.
 //
-#include <cstring>
-#include <cstdio>
-#include <string>
-#include <iostream>
-#include <fstream>
-#include <RDGeneral/BoostStartInclude.h>
-#include <boost/lexical_cast.hpp>
-#include <boost/algorithm/string.hpp>
-#include <RDGeneral/BoostEndInclude.h>
-#include <RDGeneral/BadFileException.h>
-#include <RDGeneral/FileParseException.h>
-#include <GraphMol/FileParsers/FileParsers.h>
-#include <GraphMol/FileParsers/FileParserUtils.h>
-#include <RDGeneral/LocaleSwitcher.h>
 #include "ProximityBonds.h"
+#include <GraphMol/FileParsers/FileParserUtils.h>
+#include <GraphMol/FileParsers/FileParsers.h>
+#include <RDGeneral/BadFileException.h>
+#include <RDGeneral/BoostEndInclude.h>
+#include <RDGeneral/BoostStartInclude.h>
+#include <RDGeneral/FileParseException.h>
+#include <RDGeneral/LocaleSwitcher.h>
+#include <boost/algorithm/string.hpp>
+#include <boost/lexical_cast.hpp>
+#include <cstdio>
+#include <cstring>
+#include <fstream>
+#include <iostream>
+#include <string>
 
 #include <GraphMol/MonomerInfo.h>
 
@@ -40,7 +40,8 @@ Atom *PDBAtomFromSymbol(const char *symb) {
     auto *result = new Atom(1);
     result->setIsotope(2);
     return result;
-  } else if (symb[0] == 'T' && !symb[1]) {
+  }
+  if (symb[0] == 'T' && !symb[1]) {
     auto *result = new Atom(1);
     result->setIsotope(3);
     return result;
@@ -568,7 +569,8 @@ void parsePdbBlock(RWMol *&mol, const char *str, bool sanitize, bool removeHs,
           next++;
         }
         break;
-      } else if (*next == '\n') {
+      }
+      if (*next == '\n') {
         len = (unsigned int)(next - str);
         next++;
         break;
@@ -687,7 +689,7 @@ std::unique_ptr<RWMol> MolFromPDBDataStream(std::istream &inStream,
     std::getline(inStream, line);
     buffer += line;
     buffer += '\n';
-    auto ptr = line.c_str();
+    const auto *ptr = line.c_str();
     // Check for END
     if (ptr[0] == 'E' && ptr[1] == 'N' && ptr[2] == 'D' &&
         (ptr[3] == ' ' || ptr[3] == '\r' || ptr[3] == '\n' || !ptr[3])) {
