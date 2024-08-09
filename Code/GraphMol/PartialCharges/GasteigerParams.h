@@ -1,3 +1,6 @@
+#ifndef LLVM_CODE_GRAPHMOL_PARTIALCHARGES_GASTEIGERPARAMS_H
+#define LLVM_CODE_GRAPHMOL_PARTIALCHARGES_GASTEIGERPARAMS_H
+
 //
 //  Copyright (C) 2003-2015 Rational Discovery LLC
 //
@@ -11,10 +14,10 @@
 #ifndef _RD_GASTEIGERPARAMS_H
 #define _RD_GASTEIGERPARAMS_H
 
-#include <RDGeneral/types.h>
 #include <RDGeneral/Exceptions.h>
-#include <string>
+#include <RDGeneral/types.h>
 #include <map>
+#include <string>
 
 namespace RDKit {
 extern std::string paramData;
@@ -52,24 +55,23 @@ class RDKIT_PARTIALCHARGES_EXPORT GasteigerParams {
     iter = d_paramMap.find(query);
     if (iter != d_paramMap.end()) {
       return iter->second;
+    }
+    if (throwOnFailure) {
+      std::string message =
+          "ERROR: No Gasteiger Partial Charge parameters for Element: ";
+      message += elem;
+      message += " Mode: ";
+      message += mode;
+      throw ValueErrorException(message);
     } else {
-      if (throwOnFailure) {
-        std::string message =
-            "ERROR: No Gasteiger Partial Charge parameters for Element: ";
-        message += elem;
-        message += " Mode: ";
-        message += mode;
-        throw ValueErrorException(message);
+      iter =
+          d_paramMap.find(std::make_pair(std::string("X"), std::string("*")));
+      if (iter != d_paramMap.end()) {
+        return iter->second;
       } else {
-        iter =
-            d_paramMap.find(std::make_pair(std::string("X"), std::string("*")));
-        if (iter != d_paramMap.end()) {
-          return iter->second;
-        } else {
-          std::string message =
-              "ERROR: Default Gasteiger Partial Charge parameters are missing";
-          throw ValueErrorException(message);
-        }
+        std::string message =
+            "ERROR: Default Gasteiger Partial Charge parameters are missing";
+        throw ValueErrorException(message);
       }
     }
   }
@@ -82,5 +84,7 @@ class RDKIT_PARTIALCHARGES_EXPORT GasteigerParams {
   static class GasteigerParams *ds_instance;
 };
 };  // namespace RDKit
+
+#endif
 
 #endif
