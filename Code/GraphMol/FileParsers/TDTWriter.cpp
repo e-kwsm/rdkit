@@ -10,6 +10,7 @@
 //
 #include <fstream>
 #include <iomanip>
+#include <iostream>
 #include <sstream>
 #include <string>
 
@@ -25,8 +26,8 @@
 #ifdef RDK_BUILD_MAEPARSER_SUPPORT
 #undef RDK_BUILD_MAEPARSER_SUPPORT
 #endif
-#include "MolWriters.h"
 #include "FileParsers.h"
+#include "MolWriters.h"
 
 namespace RDKit {
 TDTWriter::TDTWriter(const std::string &fileName) {

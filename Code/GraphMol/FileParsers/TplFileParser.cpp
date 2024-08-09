@@ -7,21 +7,21 @@
 //  which is included in the file license.txt, found at the root
 //  of the RDKit source tree.
 //
+#include <RDGeneral/BoostEndInclude.h>
 #include <RDGeneral/BoostStartInclude.h>
-#include <boost/lexical_cast.hpp>
 #include <boost/algorithm/string.hpp>
 #include <boost/algorithm/string/trim.hpp>
-#include <RDGeneral/BoostEndInclude.h>
+#include <boost/lexical_cast.hpp>
 
-#include "FileParsers.h"
 #include "FileParserUtils.h"
+#include "FileParsers.h"
 #include <GraphMol/FileParsers/MolFileStereochem.h>
 #include <RDGeneral/StreamOps.h>
 
 #include <fstream>
 
-#include <RDGeneral/FileParseException.h>
 #include <RDGeneral/BadFileException.h>
+#include <RDGeneral/FileParseException.h>
 #include <typeinfo>
 
 namespace RDKit {
@@ -289,9 +289,8 @@ std::unique_ptr<RWMol> MolFromTPLFile(const std::string &fName,
   if (!inStream.eof()) {
     unsigned int line = 0;
     return MolFromTPLDataStream(inStream, line, params);
-  } else {
-    return nullptr;
   }
+  return nullptr;
 }
 }  // namespace FileParsers
 }  // namespace v2
