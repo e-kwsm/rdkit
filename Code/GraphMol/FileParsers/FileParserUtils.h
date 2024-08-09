@@ -1,3 +1,6 @@
+#ifndef LLVM_CODE_GRAPHMOL_FILEPARSERS_FILEPARSERUTILS_H
+#define LLVM_CODE_GRAPHMOL_FILEPARSERS_FILEPARSERUTILS_H
+
 //
 //  Copyright (C) 2010-2025 Greg Landrum and other RDKit contributors
 //
@@ -11,14 +14,14 @@
 #ifndef RD_FILEPARSERUTILS_H
 #define RD_FILEPARSERUTILS_H
 
-#include <string>
-#include <iostream>
+#include "FileParsers.h"
+#include <RDGeneral/BoostEndInclude.h>
 #include <RDGeneral/BoostStartInclude.h>
-#include <boost/lexical_cast.hpp>
 #include <boost/algorithm/string.hpp>
 #include <boost/format.hpp>
-#include <RDGeneral/BoostEndInclude.h>
-#include "FileParsers.h"
+#include <boost/lexical_cast.hpp>
+#include <iostream>
+#include <string>
 #include <string_view>
 
 namespace RDKit {
@@ -44,9 +47,8 @@ T stripSpacesAndCast(std::string_view input, bool acceptSpaces = false) {
   auto trimmed = strip(input, " ");
   if (acceptSpaces && trimmed.empty()) {
     return 0;
-  } else {
-    return boost::lexical_cast<T>(trimmed);
   }
+  return boost::lexical_cast<T>(trimmed);
 }
 template <typename T>
 T stripSpacesAndCast(const std::string &input, bool acceptSpaces = false) {
@@ -374,5 +376,7 @@ RDKIT_FILEPARSERS_EXPORT void moveAdditionalPropertiesToSGroups(RWMol &mol);
 
 }  // namespace FileParserUtils
 }  // namespace RDKit
+
+#endif
 
 #endif
