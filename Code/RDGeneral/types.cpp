@@ -11,6 +11,9 @@
 
 #include "types.h"
 
+#include <algorithm>
+#include <limits>
+
 namespace RDKit {
 namespace detail {
 const std::string computedPropName = "__computedProps";
