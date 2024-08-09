@@ -39,7 +39,8 @@ Atom *PDBAtomFromSymbol(const char *symb) {
     auto *result = new Atom(1);
     result->setIsotope(2);
     return result;
-  } else if (symb[0] == 'T' && !symb[1]) {
+  }
+  if (symb[0] == 'T' && !symb[1]) {
     auto *result = new Atom(1);
     result->setIsotope(3);
     return result;
@@ -570,7 +571,8 @@ std::unique_ptr<RWMol> parsePdbBlock(const char *str, bool sanitize,
           next++;
         }
         break;
-      } else if (*next == '\n') {
+      }
+      if (*next == '\n') {
         len = (unsigned int)(next - str);
         next++;
         break;
@@ -689,7 +691,7 @@ std::unique_ptr<RWMol> MolFromPDBDataStream(std::istream &inStream,
     std::getline(inStream, line);
     buffer += line;
     buffer += '\n';
-    auto ptr = line.c_str();
+    const auto *ptr = line.c_str();
     // Check for END
     if (ptr[0] == 'E' && ptr[1] == 'N' && ptr[2] == 'D' &&
         (ptr[3] == ' ' || ptr[3] == '\r' || ptr[3] == '\n' || !ptr[3])) {
