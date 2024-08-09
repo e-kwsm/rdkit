@@ -1,3 +1,6 @@
+#ifndef LLVM_CODE_NUMERICS_SYMMMATRIX_H
+#define LLVM_CODE_NUMERICS_SYMMMATRIX_H
+
 //
 //  Copyright (C) 2004-2006 Rational Discovery LLC
 //
@@ -13,8 +16,8 @@
 
 #include "Matrix.h"
 #include "SquareMatrix.h"
-#include <cstring>
 #include <boost/smart_ptr.hpp>
+#include <cstring>
 
 // #ifndef INVARIANT_SILENT_METHOD
 // #define INVARIANT_SILENT_METHOD
@@ -357,5 +360,7 @@ std::ostream &operator<<(std::ostream &target,
   }
   return target;
 }
+
+#endif
 
 #endif
