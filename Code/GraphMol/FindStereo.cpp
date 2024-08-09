@@ -70,7 +70,8 @@ bool isAtomPotentialTetrahedralCenter(const Atom *atom) {
     // less than three neighbors is never stereogenic
     // unless it is a phosphine/arsine with implicit H
     return false;
-  } else if (atom->getAtomicNum() == 15 || atom->getAtomicNum() == 33) {
+  }
+  if (atom->getAtomicNum() == 15 || atom->getAtomicNum() == 33) {
     // from logical flow: degree is 2 or 3 (implicit H)
     // Since InChI Software v. 1.02-standard (2009), phosphines and arsines
     // are always treated as stereogenic even with H atom neighbors.
