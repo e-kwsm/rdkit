@@ -11,14 +11,15 @@
 #ifndef __RD_SPARSEBITVECTS_H__
 #define __RD_SPARSEBITVECTS_H__
 
+#include <algorithm>
+#include <iterator>
+#include <limits>
+#include <set>
+#include <string>
+
 #include "BitVect.h"
 
-#include <set>
 using std::set;
-#include <iterator>
-#include <algorithm>
-#include <limits>
-
 typedef set<int> IntSet;
 typedef IntSet::iterator IntSetIter;
 typedef IntSet::const_iterator IntSetConstIter;
