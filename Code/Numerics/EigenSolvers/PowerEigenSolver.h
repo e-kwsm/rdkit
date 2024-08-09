@@ -1,3 +1,6 @@
+#ifndef LLVM_CODE_NUMERICS_EIGENSOLVERS_POWEREIGENSOLVER_H
+#define LLVM_CODE_NUMERICS_EIGENSOLVERS_POWEREIGENSOLVER_H
+
 //
 //  Copyright (C) 2004-2006 Rational Discovery LLC
 //
@@ -12,9 +15,9 @@
 #ifndef _RD_POWER_EIGENSOLVER_H
 #define _RD_POWER_EIGENSOLVER_H
 
-#include <Numerics/Vector.h>
 #include <Numerics/Matrix.h>
 #include <Numerics/SymmMatrix.h>
+#include <Numerics/Vector.h>
 
 namespace RDNumeric {
 namespace EigenSolvers {
@@ -64,5 +67,7 @@ static inline bool powerEigenSolver(unsigned int numEig, DoubleSymmMatrix &mat,
 }
 };  // namespace EigenSolvers
 };  // namespace RDNumeric
+
+#endif
 
 #endif
