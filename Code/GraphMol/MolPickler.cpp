@@ -359,7 +359,8 @@ QueryDetails getQueryDetails(const Query<int, T const *, true> *query) {
             ->getVal(),
         static_cast<const LessEqualQuery<int, T const *, true> *>(query)
             ->getTol()));
-  } else if (typeid(*query) == typeid(AtomRingQuery)) {
+  }
+  if (typeid(*query) == typeid(AtomRingQuery)) {
     return QueryDetails(std::make_tuple(
         MolPickler::QUERY_ATOMRING,
         static_cast<const EqualityQuery<int, T const *, true> *>(query)
