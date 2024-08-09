@@ -1873,10 +1873,9 @@ void EmbeddedFrag::removeCollisionsBondFlip() {
             }
             if (colls.size() == ncols && newDensity < prevDensity) {
               break;
-            } else {
-              flipAboutBond(ri, false);
-              colls = this->findCollisions(dmat);
             }
+            flipAboutBond(ri, false);
+            colls = this->findCollisions(dmat);
         }
       }
     }
