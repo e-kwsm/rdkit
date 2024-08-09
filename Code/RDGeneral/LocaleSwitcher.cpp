@@ -34,8 +34,8 @@
 #endif
 
 #include "LocaleSwitcher.h"
-#include <string>
 
+#include <bits/types/locale_t.h>
 // LocaleSwitcher Dependencies
 #include <clocale>
 #ifdef __APPLE__
@@ -43,9 +43,6 @@
 #endif
 #ifdef __CYGWIN__
 #include <locale.h>
-#endif
-#ifdef RDK_BUILD_THREADSAFE_SSS
-#include <thread>
 #endif
 
 namespace RDKit {

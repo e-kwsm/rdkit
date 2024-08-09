@@ -8,6 +8,8 @@
 //  of the RDKit source tree.
 //
 #include <RDGeneral/export.h>
+#include <boost/smart_ptr/detail/operator_bool.hpp>
+#include <boost/smart_ptr/shared_array.hpp>
 #ifndef __RD_DISCRETE_VALUE_VECT_20050124__
 #define __RD_DISCRETE_VALUE_VECT_20050124__
 

@@ -8,11 +8,19 @@
 //  of the RDKit source tree.
 //
 #include "utils.h"
+
+#include <boost/format/alt_sstream_impl.hpp>
+#include <boost/format/format_class.hpp>
+#include <boost/format/format_fwd.hpp>
+#include <boost/format/format_implementation.hpp>
+#include <boost/optional/optional.hpp>
 #include <cmath>
 #include <string>
-#include <boost/random.hpp>
-#include <boost/format.hpp>
+#include <ostream>
+#include <vector>
+
 #include "versions.h"
+#include "RDGeneral/types.h"
 
 namespace RDKit {
 static rng_type generator(42u);
