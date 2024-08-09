@@ -8,17 +8,17 @@
 //  of the RDKit source tree.
 //
 //
-#include <list>
-#include <RDGeneral/RDLog.h>
+#include <Geometry/point.h>
 #include <GraphMol/Chirality.h>
 #include <GraphMol/FileParsers/MolFileStereochem.h>
-#include <Geometry/point.h>
-#include <RDGeneral/BoostStartInclude.h>
-#include <boost/dynamic_bitset.hpp>
 #include <RDGeneral/BoostEndInclude.h>
-#include <algorithm>
-#include <RDGeneral/Ranking.h>
+#include <RDGeneral/BoostStartInclude.h>
 #include <RDGeneral/FileParseException.h>
+#include <RDGeneral/RDLog.h>
+#include <RDGeneral/Ranking.h>
+#include <algorithm>
+#include <boost/dynamic_bitset.hpp>
+#include <list>
 
 namespace RDKit {
 
@@ -34,7 +34,7 @@ std::vector<Bond *> getBondNeighbors(ROMol &mol, const Bond &bond) {
   std::vector<Bond *> res;
   for (auto nbri :
        boost::make_iterator_range(mol.getAtomBonds(bond.getBeginAtom()))) {
-    auto nbrBond = mol[nbri];
+    auto *nbrBond = mol[nbri];
     if (nbrBond == &bond) {
       continue;
     }
@@ -42,7 +42,7 @@ std::vector<Bond *> getBondNeighbors(ROMol &mol, const Bond &bond) {
   }
   for (auto nbri :
        boost::make_iterator_range(mol.getAtomBonds(bond.getEndAtom()))) {
-    auto nbrBond = mol[nbri];
+    auto *nbrBond = mol[nbri];
     if (nbrBond == &bond) {
       continue;
     }
@@ -55,8 +55,9 @@ const Atom *getNonsharedAtom(const Bond &bond1, const Bond &bond2) {
   if (bond1.getBeginAtomIdx() == bond2.getBeginAtomIdx() ||
       bond1.getBeginAtomIdx() == bond2.getEndAtomIdx()) {
     return bond1.getEndAtom();
-  } else if (bond1.getEndAtomIdx() == bond2.getBeginAtomIdx() ||
-             bond1.getEndAtomIdx() == bond2.getEndAtomIdx()) {
+  }
+  if (bond1.getEndAtomIdx() == bond2.getBeginAtomIdx() ||
+      bond1.getEndAtomIdx() == bond2.getEndAtomIdx()) {
     return bond1.getBeginAtom();
   }
   POSTCONDITION(0, "bonds don't share an atom");
@@ -83,14 +84,14 @@ void addWavyBondsForStereoAny(ROMol &mol, bool clearDoubleBondFlags,
   std::map<unsigned, std::vector<unsigned>> singleBondNeighbors;
   boost::dynamic_bitset<> doubleBondsToSet(mol.getNumBonds());
   // mark single bonds adjacent to double bonds
-  for (const auto dblBond : mol.bonds()) {
+  for (auto *const dblBond : mol.bonds()) {
     if (dblBond->getBondType() != Bond::BondType::DOUBLE) {
       continue;
     }
     if (dblBond->getStereo() == Bond::BondStereo::STEREOANY) {
       doubleBondsToSet.set(dblBond->getIdx());
     }
-    for (auto singleBond : getBondNeighbors(mol, *dblBond)) {
+    for (auto *singleBond : getBondNeighbors(mol, *dblBond)) {
       if (singleBond->getBondType() != Bond::BondType::SINGLE) {
         continue;
       }
@@ -115,7 +116,7 @@ void addWavyBondsForStereoAny(ROMol &mol, bool clearDoubleBondFlags,
       }
 
       // atom-related penalties
-      auto otherAtom = getNonsharedAtom(*singleBond, *dblBond);
+      const auto *otherAtom = getNonsharedAtom(*singleBond, *dblBond);
       // favor atoms with smaller numbers of neighbors:
       score += 10 * otherAtom->getDegree();
       // penalty for being adjacent to an atom with specified stereo
@@ -156,7 +157,7 @@ void addWavyBondsForStereoAny(ROMol &mol, bool clearDoubleBondFlags,
         mol.getBondWithIdx(std::get<2>(tpl))
             ->setBondDir(Bond::BondDir::UNKNOWN);
         if (clearDoubleBondFlags) {
-          auto dblBond = mol.getBondWithIdx(dblBondIdx);
+          auto *dblBond = mol.getBondWithIdx(dblBondIdx);
           if (dblBond->getBondDir() == Bond::BondDir::EITHERDOUBLE) {
             dblBond->setBondDir(Bond::BondDir::NONE);
           }
@@ -231,7 +232,7 @@ void markUnspecifiedStereoAsUnknown(ROMol &mol, int confId) {
   PRECONDITION(mol.getNumConformers(), "no conformer");
   const auto conf = mol.getConformer(confId);
   auto wedgeBonds = RDKit::Chirality::pickBondsToWedge(mol, nullptr, &conf);
-  for (auto b : mol.bonds()) {
+  for (auto *b : mol.bonds()) {
     if (b->getBondType() == Bond::DOUBLE) {
       int dirCode;
       bool reverse;
@@ -252,12 +253,12 @@ void markUnspecifiedStereoAsUnknown(ROMol &mol, int confId) {
       if (i.type == Chirality::StereoType::Atom_Tetrahedral &&
           i.specified == Chirality::StereoSpecified::Unspecified) {
         i.specified = Chirality::StereoSpecified::Unknown;
-        auto atom = mol.getAtomWithIdx(i.centeredOn);
+        auto *atom = mol.getAtomWithIdx(i.centeredOn);
         std::map<int, std::unique_ptr<RDKit::Chirality::WedgeInfoBase>>
             resSoFar;
         int bndIdx = Chirality::detail::pickBondToWedge(atom, mol, nChiralNbrs,
                                                         resSoFar, noNbrs);
-        auto bond = mol.getBondWithIdx(bndIdx);
+        auto *bond = mol.getBondWithIdx(bndIdx);
         bond->setBondDir(Bond::UNKNOWN);
       }
     }
@@ -282,10 +283,10 @@ void translateChiralFlagToStereoGroups(ROMol &mol,
   boost::dynamic_bitset<> sgBonds(mol.getNumBonds());
   const StereoGroup *absGroup = nullptr;
   for (const auto &sg : sgs) {
-    for (const auto aptr : sg.getAtoms()) {
+    for (auto *const aptr : sg.getAtoms()) {
       sgAtoms.set(aptr->getIdx());
     }
-    for (const auto bptr : sg.getBonds()) {
+    for (auto *const bptr : sg.getBonds()) {
       sgBonds.set(bptr->getIdx());
     }
     // if we already have an ABS group, we'll add to it
@@ -296,14 +297,14 @@ void translateChiralFlagToStereoGroups(ROMol &mol,
   }
   ROMol::ATOM_PTR_VECT stereoAts;
   ROMol::BOND_PTR_VECT stereoBds;
-  for (const auto atom : mol.atoms()) {
+  for (auto *const atom : mol.atoms()) {
     if (!sgAtoms[atom->getIdx()] &&
         (atom->getChiralTag() == Atom::ChiralType::CHI_TETRAHEDRAL_CCW ||
          atom->getChiralTag() == Atom::ChiralType::CHI_TETRAHEDRAL_CW)) {
       stereoAts.push_back(atom);
     }
   }
-  for (const auto bond : mol.bonds()) {
+  for (auto *const bond : mol.bonds()) {
     if (!sgBonds[bond->getIdx()] &&
         (bond->getStereo() == Bond::BondStereo::STEREOATROPCCW ||
          bond->getStereo() == Bond::BondStereo::STEREOATROPCW)) {
