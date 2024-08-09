@@ -16,7 +16,6 @@
 #include "versions.h"
 
 #ifdef RDK_USE_BOOST_STACKTRACE
-#include <boost/stacktrace.hpp>
 #include <sstream>
 #endif
 

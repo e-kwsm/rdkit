@@ -8,6 +8,10 @@
 //  of the RDKit source tree.
 //
 #include <RDGeneral/export.h>
+#include <boost/smart_ptr/shared_array.hpp>
+#include <boost/smart_ptr/shared_ptr.hpp>
+#include <utility>
+#include <vector>
 #ifndef RD_FPBREADER_H_DEC2015
 #define RD_FPBREADER_H_DEC2015
 /*! \file FPBReader.h
@@ -18,16 +22,15 @@
      in future releases.
 */
 
+#include <RDGeneral/BadFileException.h>
+#include <DataStructs/ExplicitBitVect.h>
+#include <boost/shared_ptr.hpp>
+#include <boost/shared_array.hpp>
 #include <iostream>
 #include <fstream>
 #include <sstream>
 #include <string>
-#include <RDGeneral/BadFileException.h>
-#include <DataStructs/ExplicitBitVect.h>
-
 #include <cstdint>
-#include <boost/shared_ptr.hpp>
-#include <boost/shared_array.hpp>
 
 namespace RDKit {
 namespace detail {
