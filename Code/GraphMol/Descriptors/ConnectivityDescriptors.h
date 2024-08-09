@@ -1,3 +1,6 @@
+#ifndef LLVM_CODE_GRAPHMOL_DESCRIPTORS_CONNECTIVITYDESCRIPTORS_H
+#define LLVM_CODE_GRAPHMOL_DESCRIPTORS_CONNECTIVITYDESCRIPTORS_H
+
 //
 //  Copyright (C) 2012-2021 Greg Landrum
 //
@@ -17,9 +20,9 @@
 #ifndef __RD_CONNECTIVITYDESCRIPTORS_H__
 #define __RD_CONNECTIVITYDESCRIPTORS_H__
 
+#include <boost/smart_ptr.hpp>
 #include <string>
 #include <vector>
-#include <boost/smart_ptr.hpp>
 
 namespace RDKit {
 class ROMol;
@@ -203,9 +206,11 @@ const std::string PhiVersion = "1.0.0";
 namespace detail {
 RDKIT_DESCRIPTORS_EXPORT void hkDeltas(const ROMol &mol,
                                        std::vector<double> &deltas, bool force);
-}
+}  // namespace detail
 
 }  // end of namespace Descriptors
 }  // namespace RDKit
+
+#endif
 
 #endif
