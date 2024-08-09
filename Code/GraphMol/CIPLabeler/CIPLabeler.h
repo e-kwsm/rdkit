@@ -1,3 +1,6 @@
+#ifndef LLVM_CODE_GRAPHMOL_CIPLABELER_CIPLABELER_H
+#define LLVM_CODE_GRAPHMOL_CIPLABELER_CIPLABELER_H
+
 //
 //
 //  Copyright (C) 2020 Schrödinger, LLC
@@ -22,7 +25,7 @@ class ROMol;
 
 namespace CIPLabeler_detail {
 RDKIT_CIPLABELER_EXPORT bool decrementRemainingCallCountAndCheck();
-}
+}  // namespace CIPLabeler_detail
 
 namespace CIPLabeler {
 
@@ -87,3 +90,5 @@ RDKIT_CIPLABELER_EXPORT void assignCIPLabels(
 
 }  // namespace CIPLabeler
 }  // namespace RDKit
+
+#endif

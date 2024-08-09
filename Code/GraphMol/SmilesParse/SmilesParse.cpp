@@ -24,22 +24,22 @@
 //
 //
 #include "SmilesParse.h"
+#include <GraphMol/Atropisomers.h>
+#include <GraphMol/CIPLabeler/CIPLabeler.h>
+#include <GraphMol/Chirality.h>
+#include <GraphMol/Chirality.h>
+#include <GraphMol/FileParsers/MolFileStereochem.h>
+#include <GraphMol/QueryOps.h>
+#include <GraphMol/RDKitBase.h>
+#include <RDGeneral/BoostEndInclude.h>
 #include <RDGeneral/BoostStartInclude.h>
 #include <boost/algorithm/string.hpp>
 #include <boost/lexical_cast.hpp>
-#include <RDGeneral/BoostEndInclude.h>
-#include <GraphMol/RDKitBase.h>
-#include <GraphMol/QueryOps.h>
-#include <GraphMol/Chirality.h>
-#include <GraphMol/Atropisomers.h>
-#include <GraphMol/FileParsers/MolFileStereochem.h>
-#include <GraphMol/CIPLabeler/CIPLabeler.h>
-#include <GraphMol/Chirality.h>
 
 #include "SmilesParseOps.h"
-#include <RDGeneral/RDLog.h>
-#include <RDGeneral/Invariant.h>
 #include "smiles.tab.hpp"
+#include <RDGeneral/Invariant.h>
+#include <RDGeneral/RDLog.h>
 // NOTE: this is a bit fragile since a lot of the #defines in smiles.tab.hpp
 // could prevent the same #defines in smarts.tab.hpp from being read.
 // Fortunately if there are actually any problems here, they will inevitably
