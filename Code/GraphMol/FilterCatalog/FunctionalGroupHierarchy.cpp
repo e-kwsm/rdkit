@@ -31,13 +31,13 @@
 //
 
 #include "FunctionalGroupHierarchy.h"
-#include "FilterMatchers.h"
 #include "FilterCatalog.h"
+#include "FilterMatchers.h"
 #include <GraphMol/SmilesParse/SmilesParse.h>
-#include <RDGeneral/BoostStartInclude.h>
-#include <boost/shared_ptr.hpp>
-#include <boost/algorithm/string.hpp>
 #include <RDGeneral/BoostEndInclude.h>
+#include <RDGeneral/BoostStartInclude.h>
+#include <boost/algorithm/string.hpp>
+#include <boost/shared_ptr.hpp>
 #ifdef RDK_BUILD_THREADSAFE_SSS
 #include <mutex>
 #endif
