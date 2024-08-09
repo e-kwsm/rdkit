@@ -8,14 +8,14 @@
 //
 
 #include "FilterCatalog.h"
-#include "Filters.h"
 #include "FilterMatchers.h"
+#include "Filters.h"
 #include <GraphMol/SmilesParse/SmilesParse.h>
 
 #ifdef RDK_BUILD_THREADSAFE_SSS
 #include <RDGeneral/RDThreads.h>
-#include <thread>
 #include <future>
+#include <thread>
 #endif
 
 namespace RDKit {

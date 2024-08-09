@@ -30,12 +30,12 @@
 //
 
 #include "FilterCatalog.h"
-#include "Filters.h"
 #include "FilterMatchers.h"
+#include "Filters.h"
 
 #ifdef RDK_USE_BOOST_SERIALIZATION
-#include <boost/archive/text_oarchive.hpp>
 #include <boost/archive/text_iarchive.hpp>
+#include <boost/archive/text_oarchive.hpp>
 #include <boost/serialization/shared_ptr.hpp>
 #endif
 
