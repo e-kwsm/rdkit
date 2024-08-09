@@ -895,11 +895,9 @@ bool WedgeBondFromAtropisomerOneBond2d(
             return false;
           }
           continue;  // probably a slash up or down for a double bond
-
-        } else {
-          continue;  // wedge or hash bond affecting the OTHER atom
-                     // = perhaps a chiral center
         }
+        continue;  // wedge or hash bond affecting the OTHER atom
+                   // = perhaps a chiral center
       }
       auto ringCount = ri->numBondRings(bondToTry->getIdx());
       unsigned int ringSize = 0;

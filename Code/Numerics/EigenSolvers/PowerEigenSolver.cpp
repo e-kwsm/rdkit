@@ -9,9 +9,9 @@
 //  of the RDKit source tree.
 //
 #include "PowerEigenSolver.h"
-#include <Numerics/Vector.h>
 #include <Numerics/Matrix.h>
 #include <Numerics/SymmMatrix.h>
+#include <Numerics/Vector.h>
 #include <RDGeneral/Invariant.h>
 #include <ctime>
 
