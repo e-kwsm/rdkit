@@ -8,16 +8,16 @@
 //  of the RDKit source tree.
 //
 #include "SmartsWrite.h"
-#include <sstream>
-#include <cstdint>
-#include <boost/algorithm/string.hpp>
 #include "SmilesWrite.h"
+#include <GraphMol/Canon.h>
 #include <GraphMol/RDKitBase.h>
 #include <GraphMol/RDKitQueries.h>
-#include <GraphMol/Canon.h>
 #include <GraphMol/new_canon.h>
 #include <RDGeneral/Exceptions.h>
 #include <RDGeneral/RDLog.h>
+#include <boost/algorithm/string.hpp>
+#include <cstdint>
+#include <sstream>
 
 namespace RDKit {
 using namespace Canon;
@@ -495,7 +495,7 @@ std::string _recurseGetSmarts(const QueryAtom *qatom,
   unsigned int child1Features = 0;
   unsigned int child2Features = 0;
   auto chi = node->beginChildren();
-  auto child1 = chi->get();
+  auto *child1 = chi->get();
   auto dsc1 = child1->getDescription();
 
   ++chi;
@@ -534,7 +534,7 @@ std::string _recurseGetSmarts(const QueryAtom *qatom,
   }
   auto res = csmarts1;
   while (chi != node->endChildren()) {
-    auto child2 = chi->get();
+    auto *child2 = chi->get();
     ++chi;
 
     auto dsc2 = child2->getDescription();
@@ -859,7 +859,7 @@ std::string molToSmarts(const ROMol &inmol, const SmilesWriteParams &params,
       // If we can't find non-chiral atom, use the chiral atom with
       // the lowest rank (we are guaranteed to find an unprocessed atom).
       unsigned nextRank = nAtoms + 1;
-      for (auto atom : mol.atoms()) {
+      for (auto *atom : mol.atoms()) {
         if (colors[atom->getIdx()] == Canon::WHITE_NODE) {
           if (atom->getChiralTag() != Atom::CHI_TETRAHEDRAL_CCW &&
               atom->getChiralTag() != Atom::CHI_TETRAHEDRAL_CW) {
@@ -902,7 +902,7 @@ std::string GetAtomSmarts(const Atom *atom, const SmilesWriteParams &params) {
     // BOOST_LOG(rdInfoLog)<<"\tno query:" <<res;
     return res;
   }
-  const auto query = atom->getQuery();
+  auto *const query = atom->getQuery();
   PRECONDITION(query, "atom has no query");
   unsigned int queryFeatures = 0;
   std::string descrip = query->getDescription();
@@ -910,30 +910,30 @@ std::string GetAtomSmarts(const Atom *atom, const SmilesWriteParams &params) {
     // we have simple atom - just generate the smiles and return
     res = SmilesWrite::GetAtomSmiles(atom);
     return res;
-  } else {
-    if ((descrip == "AtomOr") || (descrip == "AtomAnd")) {
-      const QueryAtom *qatom = dynamic_cast<const QueryAtom *>(atom);
-      PRECONDITION(qatom, "could not convert atom to query atom");
-      // we have a composite query
-      needParen = true;
-      res = _recurseGetSmarts(qatom, query, query->getNegation(), queryFeatures,
-                              params);
-      if (res.length() == 1) {  // single atom symbol we don't need parens
-        needParen = false;
-      }
-    } else if (descrip == "RecursiveStructure") {
-      // it's a bare recursive structure query:
-      res = getRecursiveStructureQuerySmarts(query, params);
-      needParen = true;
-    } else {  // we have a simple smarts
-      const QueryAtom *qatom = dynamic_cast<const QueryAtom *>(atom);
-      PRECONDITION(qatom, "could not convert atom to query atom");
-      res = getAtomSmartsSimple(qatom, query, needParen, true, params);
-      if (query->getNegation()) {
-        res = "!" + res;
-        needParen = true;
-      }
+  }
+  if ((descrip == "AtomOr") || (descrip == "AtomAnd")) {
+    const QueryAtom *qatom = dynamic_cast<const QueryAtom *>(atom);
+    PRECONDITION(qatom, "could not convert atom to query atom");
+    // we have a composite query
+    needParen = true;
+    res = _recurseGetSmarts(qatom, query, query->getNegation(), queryFeatures,
+                            params);
+    if (res.length() == 1) {  // single atom symbol we don't need parens
+      needParen = false;
     }
+  } else if (descrip == "RecursiveStructure") {
+    // it's a bare recursive structure query:
+    res = getRecursiveStructureQuerySmarts(query, params);
+    needParen = true;
+  } else {  // we have a simple smarts
+    const QueryAtom *qatom = dynamic_cast<const QueryAtom *>(atom);
+    PRECONDITION(qatom, "could not convert atom to query atom");
+    res = getAtomSmartsSimple(qatom, query, needParen, true, params);
+    if (query->getNegation()) {
+      res = "!" + res;
+      needParen = true;
+    }
+  }
     std::string mapNum;
     if (atom->getPropIfPresent(common_properties::molAtomMapNumber, mapNum)) {
       needParen = true;
@@ -952,7 +952,6 @@ std::string GetAtomSmarts(const Atom *atom, const SmilesWriteParams &params) {
       res = "[" + res + "]";
     }
     return res;
-  }
 }
 
 std::string GetBondSmarts(const Bond *bond, const SmilesWriteParams &params,
@@ -971,7 +970,7 @@ std::string GetBondSmarts(const Bond *bond, const SmilesWriteParams &params,
     return res;
   }
   // describeQuery(bond->getQuery());
-  auto qbond = dynamic_cast<const QueryBond *>(bond);
+  const auto *qbond = dynamic_cast<const QueryBond *>(bond);
   if (!qbond && ((bond->getBondType() == Bond::SINGLE) ||
                  (bond->getBondType() == Bond::AROMATIC))) {
     BOOST_LOG(rdInfoLog) << "\tbasic:" << res << std::endl;
@@ -979,7 +978,7 @@ std::string GetBondSmarts(const Bond *bond, const SmilesWriteParams &params,
   }
   CHECK_INVARIANT(qbond, "could not convert bond to QueryBond");
 
-  const auto query = qbond->getQuery();
+  auto *const query = qbond->getQuery();
   CHECK_INVARIANT(query, "bond has no query");
 
   unsigned int queryFeatures = 0;
