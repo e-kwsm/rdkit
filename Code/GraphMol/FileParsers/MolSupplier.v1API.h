@@ -7,8 +7,8 @@
 //  which is included in the file license.txt, found at the root
 //  of the RDKit source tree.
 //
-#ifndef RD_MOLSUPPLIER_v1_H
-#define RD_MOLSUPPLIER_v1_H
+#ifndef LLVM_CODE_GRAPHMOL_FILEPARSERS_MOLSUPPLIER_V1API_H
+#define LLVM_CODE_GRAPHMOL_FILEPARSERS_MOLSUPPLIER_V1API_H
 
 namespace RDKit {
 inline namespace v1 {
