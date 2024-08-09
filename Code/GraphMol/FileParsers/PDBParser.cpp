@@ -576,7 +576,8 @@ std::unique_ptr<RWMol> parsePdbBlock(const char *str, bool sanitize,
         len = (unsigned int)(next - str);
         next++;
         break;
-      } else if (*next == '\0') {
+      }
+      if (*next == '\0') {
         len = (unsigned int)(next - str);
         break;
       }
