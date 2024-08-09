@@ -8,19 +8,23 @@
 //  which is included in the file license.txt, found at the root
 //  of the RDKit source tree.
 //
-#include "BitVects.h"
-#include "BitOps.h"
+#include <RDGeneral/StreamOps.h>
+#include <RDGeneral/Exceptions.h>
+#include <stdint.h>
+#include <boost/cstdint.hpp>
+#include <boost/dynamic_bitset/dynamic_bitset.hpp>
 #include <cmath>
 #include <string>
 #include <iostream>
-#include <RDGeneral/StreamOps.h>
-#include <RDGeneral/types.h>
-#include <RDGeneral/Exceptions.h>
 #include <sstream>
 #include <cstdlib>
 #include <algorithm>
+#include <limits>
+#include <vector>
 
-#include <boost/lexical_cast.hpp>
+#include "BitOps.h"
+#include "RDGeneral/Invariant.h"
+#include "RDGeneral/export.h"
 
 #if _MSC_VER
 #include <intrin.h>
