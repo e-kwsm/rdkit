@@ -8,6 +8,8 @@
 //  of the RDKit source tree.
 //
 #include <RDGeneral/export.h>
+#include <utility>
+#include <vector>
 #ifndef RD_FPBREADER_H_DEC2015
 #define RD_FPBREADER_H_DEC2015
 /*! \file FPBReader.h
