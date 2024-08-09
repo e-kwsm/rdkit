@@ -8,10 +8,10 @@
 //  of the RDKit source tree.
 //
 #include "ProximityBonds.h"
-#include <algorithm>
+#include <GraphMol/MonomerInfo.h>
 #include <GraphMol/RDKitBase.h>
 #include <GraphMol/RWMol.h>
-#include <GraphMol/MonomerInfo.h>
+#include <algorithm>
 
 namespace RDKit {
 
