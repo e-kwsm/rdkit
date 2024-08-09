@@ -1,3 +1,6 @@
+#ifndef LLVM_CODE_GRAPHMOL_FILEPARSERS_MULTITHREADEDSMILESMOLSUPPLIER_H
+#define LLVM_CODE_GRAPHMOL_FILEPARSERS_MULTITHREADEDSMILESMOLSUPPLIER_H
+
 //
 //  Copyright (C) 2020 Shrey Aryan
 //
@@ -135,4 +138,6 @@ class RDKIT_FILEPARSERS_EXPORT MultithreadedSmilesMolSupplier
 
 }  // namespace RDKit
 #endif
+#endif
+
 #endif
