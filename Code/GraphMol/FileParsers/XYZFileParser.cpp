@@ -158,9 +158,8 @@ std::unique_ptr<RWMol> MolFromXYZBlock(const std::string &xyzBlock) {
   xyz.peek();
   if (!xyz.eof()) {
     return MolFromXYZDataStream(xyz);
-  } else {
-    return nullptr;
   }
+  return nullptr;
 }
 
 std::unique_ptr<RWMol> MolFromXYZFile(const std::string &fName) {
@@ -174,9 +173,8 @@ std::unique_ptr<RWMol> MolFromXYZFile(const std::string &fName) {
   xyzFile.peek();
   if (!xyzFile.eof()) {
     return MolFromXYZDataStream(xyzFile);
-  } else {
-    return nullptr;
   }
+  return nullptr;
 }
 }  // namespace FileParsers
 }  // namespace v2
