@@ -8,12 +8,15 @@
 //  of the RDKit source tree.
 //
 #include <RDGeneral/export.h>
+#include <functional>
+#include <string>
 #ifndef __RD_SPARSEBITVECTS_H__
 #define __RD_SPARSEBITVECTS_H__
 
+#include <set>
+
 #include "BitVect.h"
 
-#include <set>
 using std::set;
 #include <iterator>
 #include <algorithm>
