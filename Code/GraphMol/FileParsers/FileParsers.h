@@ -1,3 +1,6 @@
+#ifndef LLVM_CODE_GRAPHMOL_FILEPARSERS_FILEPARSERS_H
+#define LLVM_CODE_GRAPHMOL_FILEPARSERS_FILEPARSERS_H
+
 //
 //  Copyright (C) 2002-2024 Greg Landrum and other RDKit contributors
 //
@@ -11,15 +14,15 @@
 #ifndef RD_FILEPARSERS_H
 #define RD_FILEPARSERS_H
 
-#include <RDGeneral/types.h>
-#include <GraphMol/RDKitBase.h>
-#include <GraphMol/FileParsers/FileWriters.h>
 #include "CDXMLParser.h"
+#include <GraphMol/FileParsers/FileWriters.h>
+#include <GraphMol/RDKitBase.h>
+#include <RDGeneral/types.h>
+#include <exception>
+#include <iostream>
 #include <string>
 #include <string_view>
-#include <iostream>
 #include <vector>
-#include <exception>
 
 #include <boost/shared_ptr.hpp>
 
@@ -474,5 +477,7 @@ inline std::unique_ptr<RDKit::RWMol> operator"" _pdb(const char *text,
 }
 
 }  // namespace RDKit
+
+#endif
 
 #endif
