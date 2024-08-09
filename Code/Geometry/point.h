@@ -9,6 +9,10 @@
 //
 
 #include <RDGeneral/export.h>
+#include <boost/smart_ptr/detail/operator_bool.hpp>
+#include <boost/smart_ptr/shared_ptr.hpp>
+
+#include "RDGeneral/Exceptions.h"
 #ifndef __RD_POINT_H__
 #define __RD_POINT_H__
 #include <iostream>
