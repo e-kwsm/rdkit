@@ -77,7 +77,8 @@ bool isAtomPotentialTetrahedralCenter(const Atom *atom) {
     // are always treated as stereogenic even with H atom neighbors.
     // Accept automatically.
     return true;
-  } else if (nzDegree == 3) {
+  }
+  if (nzDegree == 3) {
     // three-coordinate with a single H we'll accept automatically:
     if (atom->getTotalNumHs() == 1) {
       if (detail::has_protium_neighbor(mol, atom)) {
