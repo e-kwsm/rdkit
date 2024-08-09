@@ -7,14 +7,14 @@
 //  which is included in the file license.txt, found at the root
 //  of the RDKit source tree.
 //
-#include <cstring>
 #include <cstdio>
+#include <cstring>
 #include <string>
 
 #include "SequenceWriters.h"
-#include <GraphMol/RDKitBase.h>
 #include <GraphMol/GraphMol.h>
 #include <GraphMol/MonomerInfo.h>
+#include <GraphMol/RDKitBase.h>
 
 namespace RDKit {
 

@@ -1,3 +1,6 @@
+#ifndef LLVM_CODE_GRAPHMOL_FILEPARSERS_SEQUENCEPARSERS_H
+#define LLVM_CODE_GRAPHMOL_FILEPARSERS_SEQUENCEPARSERS_H
+
 //
 //  Copyright (C) 2015,2016 Greg Landrum and NextMove Software
 //
@@ -113,5 +116,7 @@ RDKIT_FILEPARSERS_EXPORT RWMol *HELMToMol(const char *helm,
 RDKIT_FILEPARSERS_EXPORT RWMol *HELMToMol(const std::string &helm,
                                           bool sanitize = true);
 }  // namespace RDKit
+
+#endif
 
 #endif

@@ -1,3 +1,6 @@
+#ifndef LLVM_CODE_GRAPHMOL_FILEPARSERS_SEQUENCEWRITERS_H
+#define LLVM_CODE_GRAPHMOL_FILEPARSERS_SEQUENCEWRITERS_H
+
 //
 //  Copyright (C) 2015 Greg Landrum and NextMove Software
 //
@@ -43,5 +46,7 @@ RDKIT_FILEPARSERS_EXPORT std::string MolToFASTA(const ROMol &mol);
  */
 RDKIT_FILEPARSERS_EXPORT std::string MolToHELM(const ROMol &mol);
 }  // namespace RDKit
+
+#endif
 
 #endif
