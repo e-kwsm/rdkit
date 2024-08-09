@@ -15,18 +15,13 @@
 #include <DataStructs/ExplicitBitVect.h>
 #include <cstdint>
 #include <DataStructs/BitOps.h>
+
 #include <RDGeneral/Invariant.h>
 #include <RDGeneral/StreamOps.h>
 #include <RDGeneral/Ranking.h>
-#include <cmath>
-
 #include "FPBReader.h"
 #include <boost/scoped_ptr.hpp>
 #include <boost/scoped_array.hpp>
-#include "RDGeneral/BadFileException.h"
-#include "RDGeneral/Exceptions.h"
-#include "RDGeneral/RDLog.h"
-#include "RDGeneral/export.h"
 
 namespace RDKit {
 
