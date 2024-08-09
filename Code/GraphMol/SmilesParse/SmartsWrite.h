@@ -1,3 +1,6 @@
+#ifndef LLVM_CODE_GRAPHMOL_SMILESPARSE_SMARTSWRITE_H
+#define LLVM_CODE_GRAPHMOL_SMILESPARSE_SMARTSWRITE_H
+
 //
 //  Copyright (C) 2004-2024 Greg Landrum and other RDKit contributors
 //
@@ -11,9 +14,9 @@
 #ifndef RD_SMARTSWRITE_H_012020
 #define RD_SMARTSWRITE_H_012020
 
+#include "SmilesWrite.h"
 #include <string>
 #include <vector>
-#include "SmilesWrite.h"
 
 namespace RDKit {
 class Atom;
@@ -93,5 +96,7 @@ inline std::string MolFragmentToCXSmarts(
   return MolFragmentToCXSmarts(mol, params, atomsToUse, bondsToUse);
 }
 };  // namespace RDKit
+
+#endif
 
 #endif
