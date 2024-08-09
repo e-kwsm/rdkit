@@ -1,3 +1,6 @@
+#ifndef LLVM_CODE_GRAPHMOL_SUBSTRUCT_VF2_HPP
+#define LLVM_CODE_GRAPHMOL_SUBSTRUCT_VF2_HPP
+
 /*
  * This is an extensive modification by Greg Landrum of
  * pieces from several files in the vflib-2.0 distribution
@@ -10,14 +13,14 @@
  *  http://amalfi.dis.unina.it/graph/db/vflib-2.0/doc/vflib.html
  *
  */
-#include <boost/graph/adjacency_list.hpp>
-#include <vector>
 #include <algorithm>
+#include <boost/graph/adjacency_list.hpp>
 #include <cstring>
+#include <vector>
 
 #ifndef __BGL_VF2_SUB_STATE_H__
 #define __BGL_VF2_SUB_STATE_H__
-//#define RDK_VF2_PRUNING
+// #define RDK_VF2_PRUNING
 #define RDK_ADJ_ITER typename Graph::adjacency_iterator
 
 namespace boost {
@@ -680,3 +683,5 @@ bool vf2_all(const Graph &g1, const Graph &g2, VertexLabeling &vertex_labeling,
 
 #undef RDK_VF2_PRUNING
 #undef RDK_ADJ_ITER
+
+#endif
