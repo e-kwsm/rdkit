@@ -1,3 +1,6 @@
+#ifndef LLVM_CODE_GRAPHMOL_MOLINTERCHANGE_DETAILS_H
+#define LLVM_CODE_GRAPHMOL_MOLINTERCHANGE_DETAILS_H
+
 //
 //  Copyright (C) 2018-2022 Greg Landrum
 //
@@ -60,4 +63,6 @@ static const std::map<StereoGroupType, std::string> inv_stereoGrouplookup = {
 
 }  // namespace MolInterchange
 }  // namespace RDKit
+#endif
+
 #endif
