@@ -1,3 +1,6 @@
+#ifndef LLVM_CODE_GRAPHMOL_MOLBUNDLE_H
+#define LLVM_CODE_GRAPHMOL_MOLBUNDLE_H
+
 //
 //  Copyright (C) 2017-2023 Greg Landrum and other RDKit contributors
 //
@@ -21,24 +24,24 @@
 #include <vector>
 
 // boost stuff
+#include <RDGeneral/BoostEndInclude.h>
 #include <RDGeneral/BoostStartInclude.h>
 #include <boost/smart_ptr.hpp>
-#include <RDGeneral/BoostEndInclude.h>
 
 #ifdef RDK_USE_BOOST_SERIALIZATION
+#include <RDGeneral/BoostEndInclude.h>
 #include <RDGeneral/BoostStartInclude.h>
-#include <boost/serialization/vector.hpp>
+#include <boost/archive/archive_exception.hpp>
+#include <boost/archive/text_iarchive.hpp>
+#include <boost/archive/text_oarchive.hpp>
 #include <boost/serialization/shared_ptr.hpp>
 #include <boost/serialization/split_member.hpp>
-#include <boost/archive/text_oarchive.hpp>
-#include <boost/archive/text_iarchive.hpp>
-#include <boost/archive/archive_exception.hpp>
-#include <RDGeneral/BoostEndInclude.h>
+#include <boost/serialization/vector.hpp>
 #endif
 
 // our stuff
-#include <RDGeneral/Exceptions.h>
 #include <GraphMol/MolPickler.h>
+#include <RDGeneral/Exceptions.h>
 
 namespace RDKit {
 class ROMol;
@@ -202,4 +205,6 @@ class FixedMolSizeMolBundle : public MolBundle {
 };
 
 };  // namespace RDKit
+#endif
+
 #endif
