@@ -1,3 +1,6 @@
+#ifndef LLVM_CODE_GRAPHMOL_DESCRIPTORS_CRIPPEN_H
+#define LLVM_CODE_GRAPHMOL_DESCRIPTORS_CRIPPEN_H
+
 //
 //  Copyright (C) 2004-2007 Greg Landrum and Rational Discovery LLC
 //
@@ -17,9 +20,9 @@
 #ifndef __RD_CRIPPEN_H__
 #define __RD_CRIPPEN_H__
 
+#include <boost/smart_ptr.hpp>
 #include <string>
 #include <vector>
-#include <boost/smart_ptr.hpp>
 
 namespace RDKit {
 class ROMol;
@@ -133,5 +136,7 @@ class RDKIT_DESCRIPTORS_EXPORT CrippenParamCollection {
 };
 }  // end of namespace Descriptors
 }  // namespace RDKit
+
+#endif
 
 #endif
