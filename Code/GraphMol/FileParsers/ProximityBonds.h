@@ -1,3 +1,6 @@
+#ifndef LLVM_CODE_GRAPHMOL_FILEPARSERS_PROXIMITYBONDS_H
+#define LLVM_CODE_GRAPHMOL_FILEPARSERS_PROXIMITYBONDS_H
+
 //
 //  Copyright (C) 2013-2017 Greg Landrum and NextMove Software
 //
@@ -25,3 +28,5 @@ RDKIT_FILEPARSERS_EXPORT bool SamePDBResidue(AtomPDBResidueInfo *p,
 }  // namespace RDKit
 
 #endif  // _RD_PROXIMITYBONDS_H_
+
+#endif
