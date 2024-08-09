@@ -12,14 +12,14 @@
 typedef boost::tokenizer<boost::char_separator<char>> tokenizer;
 #include "GasteigerParams.h"
 
+#include <RDGeneral/BoostEndInclude.h>
 #include <RDGeneral/BoostStartInclude.h>
 #include <boost/flyweight.hpp>
 #include <boost/flyweight/key_value.hpp>
 #include <boost/flyweight/no_tracking.hpp>
-#include <RDGeneral/BoostEndInclude.h>
 
-#include <sstream>
 #include <locale>
+#include <sstream>
 
 namespace RDKit {
 
