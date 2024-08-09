@@ -7,19 +7,19 @@
 //  which is included in the file license.txt, found at the root
 //  of the RDKit source tree.
 //
-#include <RDGeneral/utils.h>
+#include <Geometry/point.h>
+#include <GraphMol/FileParsers/FileParsers.h>
+#include <GraphMol/RDKitBase.h>
+#include <GraphMol/SmilesParse/SmilesParse.h>
 #include <RDGeneral/Invariant.h>
 #include <RDGeneral/RDLog.h>
-#include <GraphMol/RDKitBase.h>
-#include <Geometry/point.h>
-#include <GraphMol/SmilesParse/SmilesParse.h>
-#include <GraphMol/FileParsers/FileParsers.h>
+#include <RDGeneral/utils.h>
 
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/xml_parser.hpp>
 #include <sstream>
-#include <vector>
 #include <string>
+#include <vector>
 namespace pt = boost::property_tree;
 
 namespace RDKit {
