@@ -168,7 +168,8 @@ void EmbeddedFrag::computeNbrsAndAng(unsigned int aid,
       nb2 = wnb2;
       nb1 = nbrPair.second;
       break;
-    } else if (wnb2 == nbrPair.second) {
+    }
+    if (wnb2 == nbrPair.second) {
       nb2 = wnb2;
       nb1 = nbrPair.first;
       break;
@@ -2021,7 +2022,8 @@ void EmbeddedFrag::removeCollisionsBondFlip() {
             if (colls.size() < ncols) {
               doneBonds[ri] = NUM_BONDS_FLIPS;  // lock this rotatable bond
               break;
-            } else if (colls.size() == ncols && newDensity < prevDensity) {
+            }
+            if (colls.size() == ncols && newDensity < prevDensity) {
               break;
             } else {
               flipAboutBond(ri, false);

@@ -123,7 +123,7 @@ RDKit::INT_VECT setNbrOrder(unsigned int aid, const RDKit::INT_VECT &nbrs,
   // find the neighbor of aid that is not in nbrs i.e. atom A from the comments
   // in the header file and the store the pair <degree, aid> in the order of
   // increasing degree
-  for (auto anbr : mol.atomNeighbors(mol.getAtomWithIdx(aid))) {
+  for (auto *anbr : mol.atomNeighbors(mol.getAtomWithIdx(aid))) {
     // We used to use degree here instead we will start using the CIP rank here
     if (std::find(nbrs.begin(), nbrs.end(), static_cast<int>(anbr->getIdx())) ==
         nbrs.end()) {
@@ -359,7 +359,7 @@ RDKit::INT_VECT findNextRingToEmbed(const RDKit::INT_VECT &doneRings,
 
 RDKit::INT_VECT getAllRotatableBonds(const RDKit::ROMol &mol) {
   RDKit::INT_VECT res;
-  for (const auto bond : mol.bonds()) {
+  for (auto *const bond : mol.bonds()) {
     int bid = bond->getIdx();
     if ((bond->getStereo() <= RDKit::Bond::STEREOANY) &&
         (!(mol.getRingInfo()->numBondRings(bid)))) {
@@ -408,7 +408,7 @@ void getNbrAtomAndBondIds(unsigned int aid, const RDKit::ROMol *mol,
   unsigned int na = mol->getNumAtoms();
   URANGE_CHECK(aid, na);
 
-  for (auto nbr : mol->atomNeighbors(mol->getAtomWithIdx(aid))) {
+  for (auto *nbr : mol->atomNeighbors(mol->getAtomWithIdx(aid))) {
     auto bi = mol->getBondBetweenAtoms(aid, nbr->getIdx())->getIdx();
     aids.push_back(nbr->getIdx());
     bids.push_back(bi);
@@ -470,8 +470,7 @@ INT_PAIR_VECT findBondsPairsToPermuteDeg4(const RDGeom::Point2D &center,
       res.push_back(p2);
     }
     return res;
-  } else {
-    // bids[0] and bids[1] are opposite to each other, so bids[2] and bids[3]
+  }  // bids[0] and bids[1] are opposite to each other, so bids[2] and bids[3]
     // must
     // be perpendicular to bids[0]
     INT_PAIR p1(nbrBids[0], nbrBids[2]);
@@ -479,7 +478,6 @@ INT_PAIR_VECT findBondsPairsToPermuteDeg4(const RDGeom::Point2D &center,
     INT_PAIR p2(nbrBids[0], nbrBids[3]);
     res.push_back(p2);
     return res;
-  }
 }
 
 template <class T>
@@ -549,8 +547,8 @@ std::unique_ptr<RDKit::RWMol> prepareTemplateForRGroups(
   for (const auto &bond : templateMol.bonds()) {
     int atomIdxToRemove = -1;
     int nbrIdx = -1;
-    auto beginAtom = bond->getBeginAtom();
-    auto endAtom = bond->getEndAtom();
+    auto *beginAtom = bond->getBeginAtom();
+    auto *endAtom = bond->getEndAtom();
     if (RDKit::isAtomTerminalRGroupOrQueryHydrogen(beginAtom) &&
         endAtom->hasQuery()) {
       atomIdxToRemove = beginAtom->getIdx();
@@ -566,12 +564,12 @@ std::unique_ptr<RDKit::RWMol> prepareTemplateForRGroups(
   }
   if (!removedIdxToNbrIdx.empty()) {
     reducedTemplateMol.reset(new RDKit::RWMol(templateMol));
-    for (auto reducedTemplateAtom : reducedTemplateMol->atoms()) {
+    for (auto *reducedTemplateAtom : reducedTemplateMol->atoms()) {
       auto formerIdx = reducedTemplateAtom->getIdx();
       reducedTemplateAtom->setProp(FORMER_IDX, formerIdx);
       auto it = removedIdxToNbrIdx.find(formerIdx);
       if (it != removedIdxToNbrIdx.end()) {
-        auto otherAtom = reducedTemplateMol->getAtomWithIdx(it->second);
+        auto *otherAtom = reducedTemplateMol->getAtomWithIdx(it->second);
         std::vector<unsigned int> formerNbrIndices;
         otherAtom->getPropIfPresent(FORMER_NBR_INDICES, formerNbrIndices);
         formerNbrIndices.push_back(formerIdx);
@@ -599,8 +597,9 @@ void reducedToFullMatches(const RDKit::RWMol &reducedQuery,
     }
     RDKit::MatchVectType newMatch;
     for (auto pairIt = match.begin(); pairIt != match.end(); ++pairIt) {
-      const auto reducedQueryAtom = reducedQuery.getAtomWithIdx(pairIt->first);
-      const auto molAtom = molHs.getAtomWithIdx(pairIt->second);
+      const auto *const reducedQueryAtom =
+          reducedQuery.getAtomWithIdx(pairIt->first);
+      const auto *const molAtom = molHs.getAtomWithIdx(pairIt->second);
       unsigned int formerIdx;
       reducedQueryAtom->getProp(FORMER_IDX, formerIdx);
       pairIt->first = formerIdx;
