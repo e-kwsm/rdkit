@@ -1,3 +1,6 @@
+#ifndef LLVM_CODE_GRAPHMOL_FILEPARSERS_MOLFILESTEREOCHEM_H
+#define LLVM_CODE_GRAPHMOL_FILEPARSERS_MOLFILESTEREOCHEM_H
+
 //
 //  Copyright (C) 2004-2023 Greg Landrum and other RDKit contributors
 //
@@ -11,8 +14,8 @@
 #ifndef RD_MOL_FILE_STEREOCHEM_H
 #define RD_MOL_FILE_STEREOCHEM_H
 
-#include <GraphMol/RDKitBase.h>
 #include <GraphMol/Chirality.h>
+#include <GraphMol/RDKitBase.h>
 
 namespace RDKit {
 //! deprecated, please use MolOps::assignChiralTypesFromBondDirs instead
@@ -101,4 +104,6 @@ RDKIT_FILEPARSERS_EXPORT void translateChiralFlagToStereoGroups(
     StereoGroupType zeroFlagGroupType = StereoGroupType::STEREO_AND);
 
 }  // namespace RDKit
+#endif
+
 #endif
