@@ -7,18 +7,18 @@
 //  of the RDKit source tree.
 //
 #include "SubstructUtils.h"
-#include <set>
-#include <RDGeneral/utils.h>
 #include <GraphMol/RDKitBase.h>
 #include <GraphMol/RDKitQueries.h>
 #include <GraphMol/Substruct/SubstructUtils.h>
+#include <RDGeneral/utils.h>
+#include <set>
 
+#include <RDGeneral/BoostEndInclude.h>
 #include <RDGeneral/BoostStartInclude.h>
 #include <boost/dynamic_bitset.hpp>
 #include <boost/lexical_cast.hpp>
-#include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/json_parser.hpp>
-#include <RDGeneral/BoostEndInclude.h>
+#include <boost/property_tree/ptree.hpp>
 
 namespace RDKit {
 
@@ -75,8 +75,8 @@ class ScoreMatchesByDegreeOfCoreSubstitution {
     return (aPair.second < bPair.second);
   }
   bool doesRGroupMatchHydrogen(const std::pair<int, int> &pair) const {
-    const auto queryAtom = d_query.getAtomWithIdx(pair.first);
-    const auto molAtom = d_mol.getAtomWithIdx(pair.second);
+    const auto *const queryAtom = d_query.getAtomWithIdx(pair.first);
+    const auto *const molAtom = d_mol.getAtomWithIdx(pair.second);
     return (molAtom->getAtomicNum() == 1 &&
             isAtomTerminalRGroupOrQueryHydrogen(queryAtom));
   }
