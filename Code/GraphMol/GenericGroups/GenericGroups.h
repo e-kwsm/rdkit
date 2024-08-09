@@ -1,3 +1,6 @@
+#ifndef LLVM_CODE_GRAPHMOL_GENERICGROUPS_GENERICGROUPS_H
+#define LLVM_CODE_GRAPHMOL_GENERICGROUPS_GENERICGROUPS_H
+
 //
 //  Copyright (C) 2021-2023 Greg Landrum and RDKit contributors
 //
@@ -7,16 +10,16 @@
 //  which is included in the file license.txt, found at the root
 //  of the RDKit source tree.
 //
-#include <RDGeneral/export.h>
-#include <GraphMol/RWMol.h>
 #include <GraphMol/MolOps.h>
+#include <GraphMol/RWMol.h>
+#include <RDGeneral/export.h>
 #ifndef RD_GENERICGROUPS_H
 #define RD_GENERICGROUPS_H
 
-#include <vector>
+#include <boost/dynamic_bitset.hpp>
 #include <functional>
 #include <map>
-#include <boost/dynamic_bitset.hpp>
+#include <vector>
 
 namespace RDKit {
 class ROMol;
@@ -622,5 +625,7 @@ RDKIT_GENERICGROUPS_EXPORT void convertGenericQueriesToSubstanceGroups(
     ROMol &mol);
 }  // namespace GenericGroups
 }  // namespace RDKit
+
+#endif
 
 #endif
