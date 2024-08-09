@@ -1,3 +1,6 @@
+#ifndef LLVM_CODE_GRAPHMOL_FILEPARSERS_MULTITHREADEDMOLSUPPLIER_H
+#define LLVM_CODE_GRAPHMOL_FILEPARSERS_MULTITHREADEDMOLSUPPLIER_H
+
 //
 //  Copyright (C) 2020 Shrey Aryan
 //
@@ -198,4 +201,6 @@ class RDKIT_FILEPARSERS_EXPORT MultithreadedMolSupplier : public MolSupplier {
 }  // namespace v1
 }  // namespace RDKit
 #endif
+#endif
+
 #endif
