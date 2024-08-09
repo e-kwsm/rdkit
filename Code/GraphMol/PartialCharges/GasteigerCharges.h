@@ -1,3 +1,6 @@
+#ifndef LLVM_CODE_GRAPHMOL_PARTIALCHARGES_GASTEIGERCHARGES_H
+#define LLVM_CODE_GRAPHMOL_PARTIALCHARGES_GASTEIGERCHARGES_H
+
 //
 //  Copyright (C) 2003-2011 Rational Discovery LLC
 //
@@ -23,5 +26,7 @@ RDKIT_PARTIALCHARGES_EXPORT void computeGasteigerCharges(
     const ROMol &mol, std::vector<double> &charges, int nIter = 12,
     bool throwOnParamFailure = false);
 }  // namespace RDKit
+
+#endif
 
 #endif

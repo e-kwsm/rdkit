@@ -1,3 +1,6 @@
+#ifndef LLVM_CODE_GRAPHMOL_SUBGRAPHS_SUBGRAPHS_H
+#define LLVM_CODE_GRAPHMOL_SUBGRAPHS_SUBGRAPHS_H
+
 //
 //  Copyright (C) 2003-2026 Greg Landrum and other RDKit contributors
 //
@@ -164,5 +167,7 @@ RDKIT_SUBGRAPHS_EXPORT PATH_TYPE findAtomEnvironmentOfRadiusN(
     std::unordered_map<unsigned int, unsigned int> *atomMap = nullptr);
 
 }  // namespace RDKit
+
+#endif
 
 #endif
