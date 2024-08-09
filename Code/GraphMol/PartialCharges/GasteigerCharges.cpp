@@ -9,11 +9,11 @@
 //  of the RDKit source tree.
 //
 #include "GasteigerCharges.h"
-#include <RDGeneral/types.h>
+#include "GasteigerParams.h"
+#include <GraphMol/MolOps.h>
 #include <GraphMol/RDKitBase.h>
 #include <GraphMol/ROMol.h>
-#include <GraphMol/MolOps.h>
-#include "GasteigerParams.h"
+#include <RDGeneral/types.h>
 
 namespace Gasteiger {
 using namespace RDKit;
