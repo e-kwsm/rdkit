@@ -1,3 +1,6 @@
+#ifndef LLVM_CODE_GRAPHMOL_SUBSTRUCT_SUBSTRUCTMATCH_H
+#define LLVM_CODE_GRAPHMOL_SUBSTRUCT_SUBSTRUCTMATCH_H
+
 //
 //  Copyright (C) 2001-2020 Greg Landrum and Rational Discovery LLC
 //
@@ -14,11 +17,11 @@
 // std bits
 #include <vector>
 
-#include <unordered_set>
-#include <functional>
-#include <unordered_map>
 #include <cstdint>
+#include <functional>
 #include <string>
+#include <unordered_map>
+#include <unordered_set>
 
 #include <boost/dynamic_bitset.hpp>
 #if BOOST_VERSION >= 107100
@@ -252,5 +255,7 @@ class RDKIT_SUBSTRUCTMATCH_EXPORT MolMatchFinalCheckFunctor {
 };
 
 }  // namespace RDKit
+
+#endif
 
 #endif

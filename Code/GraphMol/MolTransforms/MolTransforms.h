@@ -1,3 +1,6 @@
+#ifndef LLVM_CODE_GRAPHMOL_MOLTRANSFORMS_MOLTRANSFORMS_H
+#define LLVM_CODE_GRAPHMOL_MOLTRANSFORMS_MOLTRANSFORMS_H
+
 //
 //   Copyright (C) 2003-2006 Rational Discovery LLC
 //
@@ -26,7 +29,7 @@ class Conformer;
 
 namespace RDGeom {
 class Transform3D;
-}
+}  // namespace RDGeom
 
 namespace MolTransforms {
 RDKIT_MOLTRANSFORMS_EXPORT void transformMolsAtoms(RDKit::ROMol *mol,
@@ -219,4 +222,6 @@ inline void setDihedralDeg(RDKit::Conformer &conf, unsigned int iAtomId,
   setDihedralRad(conf, iAtomId, jAtomId, kAtomId, lAtomId, value / 180. * M_PI);
 }
 }  // namespace MolTransforms
+#endif
+
 #endif
