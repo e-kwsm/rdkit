@@ -7,11 +7,11 @@
 //  which is included in the file license.txt, found at the root
 //  of the RDKit source tree.
 //
+#include <GraphMol/AtomIterators.h>
+#include <GraphMol/BondIterators.h>
 #include <GraphMol/GraphMol.h>
 #include <GraphMol/MolOps.h>
 #include <RDGeneral/Exceptions.h>
-#include <GraphMol/AtomIterators.h>
-#include <GraphMol/BondIterators.h>
 
 namespace RDKit {
 namespace MolOps {
@@ -114,10 +114,10 @@ ROMol *renumberAtoms(const ROMol &mol,
       std::vector<Bond *> bds;
       ats.reserve(osg.getAtoms().size());
       bds.reserve(osg.getBonds().size());
-      for (const auto aptr : osg.getAtoms()) {
+      for (auto *const aptr : osg.getAtoms()) {
         ats.push_back(res->getAtomWithIdx(revOrder[aptr->getIdx()]));
       }
-      for (const auto bptr : osg.getBonds()) {
+      for (auto *const bptr : osg.getBonds()) {
         bds.push_back(
             res->getBondWithIdx(bptr->getIdx()));  // bonds do not change order
       }
