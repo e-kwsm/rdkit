@@ -15,12 +15,12 @@
 
 #include "FileParsers.h"
 #include <GraphMol/FileParsers/MolFileStereochem.h>
-#include <fstream>
-#include <sstream>
+#include <RDGeneral/Invariant.h>
 #include <boost/format.hpp>
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/xml_parser.hpp>
-#include <RDGeneral/Invariant.h>
+#include <fstream>
+#include <sstream>
 
 #if __cplusplus >= 201402L && __has_cpp_attribute(fallthrough)
 #define FALLTHROUGH [[fallthrough]]
@@ -48,7 +48,7 @@ boost::property_tree::ptree molToPTree(const ROMol &mol, int confId,
 
   // molecule/@id MUST start with an alphabetical character
   // http://www.xml-cml.org/convention/molecular#molecule-id
-  const auto molecule_id_default_prefix = "m";
+  const auto *const molecule_id_default_prefix = "m";
   molecule.put("<xmlattr>.id",
                boost::format{"%1%%2%"} % molecule_id_default_prefix % confId);
 
@@ -63,7 +63,7 @@ boost::property_tree::ptree molToPTree(const ROMol &mol, int confId,
 
   // atom/@id MUST start with an alphabetical character
   // http://www.xml-cml.org/convention/molecular#atom-id
-  const auto atom_id_prefix = "a";
+  const auto *const atom_id_prefix = "a";
 
   const Conformer *conf = nullptr;
   if (rwmol.getNumConformers()) {
@@ -128,7 +128,7 @@ boost::property_tree::ptree molToPTree(const ROMol &mol, int confId,
     if (parity) {
       std::vector<unsigned> neighbors;
       for (auto nbri : boost::make_iterator_range(rwmol.getAtomNeighbors(a))) {
-        const auto at = rwmol[nbri];
+        auto *const at = rwmol[nbri];
         neighbors.push_back(at->getIdx());
       }
 
@@ -152,7 +152,7 @@ boost::property_tree::ptree molToPTree(const ROMol &mol, int confId,
 
   // bond/@id so that it can be referenced
   // http://www.xml-cml.org/convention/molecular#bond-id
-  const auto bond_id_prefix = "b";
+  const auto *const bond_id_prefix = "b";
   unsigned bond_id = 0u;
 
   auto &bondArray = molecule.add("bondArray", "");
