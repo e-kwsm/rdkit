@@ -23,8 +23,8 @@
 #ifdef RDK_BUILD_MAEPARSER_SUPPORT
 #undef RDK_BUILD_MAEPARSER_SUPPORT
 #endif
-#include "MolWriters.h"
 #include "FileParsers.h"
+#include "MolWriters.h"
 
 namespace RDKit {
 SDWriter::SDWriter(const std::string &fileName) {
