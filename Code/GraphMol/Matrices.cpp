@@ -8,15 +8,15 @@
 //  which is included in the file license.txt, found at the root
 //  of the RDKit source tree.
 //
-#include <GraphMol/ROMol.h>
 #include <GraphMol/Atom.h>
 #include <GraphMol/Bond.h>
 #include <GraphMol/BondIterators.h>
 #include <GraphMol/MolOps.h>
-#include <memory>
-#include <boost/shared_array.hpp>
+#include <GraphMol/ROMol.h>
 #include <algorithm>
+#include <boost/shared_array.hpp>
 #include <cstring>
+#include <memory>
 
 namespace RDKit {
 
@@ -250,7 +250,7 @@ double *getDistanceMat(const ROMol &mol, const std::vector<int> &activeAtoms,
     dMat[i * nAts + i] = 0.0;
   }
 
-  for (auto bond : bonds) {
+  for (const auto *bond : bonds) {
     i = rdcast<int>(std::find(activeAtoms.begin(), activeAtoms.end(),
                               static_cast<int>(bond->getBeginAtomIdx())) -
                     activeAtoms.begin());
