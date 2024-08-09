@@ -1,3 +1,6 @@
+#ifndef LLVM_CODE_NUMERICS_ALIGNMENT_ALIGNPOINTS_H
+#define LLVM_CODE_NUMERICS_ALIGNMENT_ALIGNPOINTS_H
+
 //
 //  Copyright (C) 2004-2008 Greg Landrum and Rational Discovery LLC
 //
@@ -11,8 +14,8 @@
 #ifndef __RD_ALIGN_POINTS_H__
 #define __RD_ALIGN_POINTS_H__
 
-#include <Geometry/point.h>
 #include <Geometry/Transform3D.h>
+#include <Geometry/point.h>
 #include <Numerics/Vector.h>
 
 namespace RDNumeric {
@@ -45,5 +48,7 @@ AlignPoints(const RDGeom::Point3DConstPtrVect &refPoints,
             bool reflect = false, unsigned int maxIterations = 50);
 }  // namespace Alignments
 }  // namespace RDNumeric
+
+#endif
 
 #endif
