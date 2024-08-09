@@ -1,3 +1,6 @@
+#ifndef RD_MOLSUPPLIER_H
+#define RD_MOLSUPPLIER_H
+
 //
 //  Copyright (C) 2002-2024 greg landrum and other RDKit contributors
 //
@@ -8,8 +11,6 @@
 //  of the RDKit source tree.
 //
 #include <RDGeneral/export.h>
-#ifndef RD_MOLSUPPLIER_H
-#define RD_MOLSUPPLIER_H
 
 #include <RDGeneral/types.h>
 
