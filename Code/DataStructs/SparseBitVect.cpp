@@ -9,10 +9,9 @@
 //
 #include "SparseBitVect.h"
 #include <RDGeneral/Exceptions.h>
-
-#include "base64.h"
 #include <RDGeneral/StreamOps.h>
 #include <sstream>
+#include <utility>
 
 #ifdef WIN32
 #include <ios>
