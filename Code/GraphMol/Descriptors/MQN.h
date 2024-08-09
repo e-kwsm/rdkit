@@ -1,3 +1,6 @@
+#ifndef LLVM_CODE_GRAPHMOL_DESCRIPTORS_MQN_H
+#define LLVM_CODE_GRAPHMOL_DESCRIPTORS_MQN_H
+
 //
 //  Copyright (C) 2013 Greg Landrum
 //
@@ -44,5 +47,7 @@ RDKIT_DESCRIPTORS_EXPORT std::vector<unsigned int> calcMQNs(const ROMol &mol,
 
 }  // end of namespace Descriptors
 }  // end of namespace RDKit
+
+#endif
 
 #endif
