@@ -1,3 +1,6 @@
+#ifndef LLVM_CODE_GRAPHMOL_MOLALIGN_ALIGNMOLECULES_H
+#define LLVM_CODE_GRAPHMOL_MOLALIGN_ALIGNMOLECULES_H
+
 //
 //  Copyright (C) 2001-2022 Greg Landrum and other RDKit contributors
 //
@@ -302,4 +305,6 @@ RDKIT_MOLALIGN_EXPORT void symmetrizeTerminalAtoms(RWMol &mol);
 }  // namespace details
 }  // namespace MolAlign
 }  // namespace RDKit
+#endif
+
 #endif
