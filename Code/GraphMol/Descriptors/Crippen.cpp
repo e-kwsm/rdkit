@@ -8,26 +8,26 @@
 //  which is included in the file license.txt, found at the root
 //  of the RDKit source tree.
 //
-#include <RDGeneral/Invariant.h>
+#include "Crippen.h"
+#include "MolDescriptors.h"
 #include <GraphMol/GraphMol.h>
 #include <GraphMol/MolOps.h>
 #include <GraphMol/SmilesParse/SmilesParse.h>
 #include <GraphMol/Substruct/SubstructMatch.h>
-#include "MolDescriptors.h"
-#include "Crippen.h"
+#include <RDGeneral/Invariant.h>
+#include <RDGeneral/StreamOps.h>
+#include <boost/dynamic_bitset.hpp>
+#include <boost/lexical_cast.hpp>
+#include <boost/tokenizer.hpp>
 #include <iostream>
 #include <sstream>
-#include <RDGeneral/StreamOps.h>
-#include <boost/lexical_cast.hpp>
-#include <boost/dynamic_bitset.hpp>
-#include <boost/tokenizer.hpp>
 typedef boost::tokenizer<boost::char_separator<char>> tokenizer;
 
+#include <RDGeneral/BoostEndInclude.h>
 #include <RDGeneral/BoostStartInclude.h>
 #include <boost/flyweight.hpp>
 #include <boost/flyweight/key_value.hpp>
 #include <boost/flyweight/no_tracking.hpp>
-#include <RDGeneral/BoostEndInclude.h>
 
 namespace RDKit {
 namespace Descriptors {
