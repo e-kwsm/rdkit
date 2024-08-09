@@ -1,3 +1,6 @@
+#ifdef RDK_BUILD_THREADSAFE_SSS
+#ifndef MULTITHREADED_SD_MOL_SUPPLIER
+#define MULTITHREADED_SD_MOL_SUPPLIER
 //
 //  Copyright (C) 2020 Shrey Aryan
 //
@@ -7,9 +10,6 @@
 //  which is included in the file license.txt, found at the root
 //  of the RDKit source tree.
 //
-#ifdef RDK_BUILD_THREADSAFE_SSS
-#ifndef MULTITHREADED_SD_MOL_SUPPLIER
-#define MULTITHREADED_SD_MOL_SUPPLIER
 #include "MultithreadedMolSupplier.h"
 namespace RDKit {
 namespace v2 {
