@@ -8,6 +8,7 @@
 //  of the RDKit source tree.
 //
 #include <cstring>
+
 #include "base64.h"
 // Encoding table from RFC 2045
 //
