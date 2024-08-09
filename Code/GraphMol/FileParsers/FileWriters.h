@@ -1,3 +1,6 @@
+#ifndef LLVM_CODE_GRAPHMOL_FILEPARSERS_FILEWRITERS_H
+#define LLVM_CODE_GRAPHMOL_FILEPARSERS_FILEWRITERS_H
+
 //
 //  Copyright (C) 2002-2024 Greg Landrum and other RDKit contributors
 //
@@ -11,10 +14,10 @@
 #ifndef RD_FILEWRITERS_H
 #define RD_FILEWRITERS_H
 
-#include <RDGeneral/types.h>
 #include <GraphMol/RDKitBase.h>
-#include <string>
+#include <RDGeneral/types.h>
 #include <iostream>
+#include <string>
 
 namespace RDKit {
 
@@ -240,5 +243,7 @@ RDKIT_FILEPARSERS_EXPORT void MolToPDBFile(const ROMol &mol,
                                            unsigned int flavor = 0);
 
 }  // namespace RDKit
+
+#endif
 
 #endif
