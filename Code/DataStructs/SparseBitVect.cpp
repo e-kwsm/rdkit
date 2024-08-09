@@ -8,6 +8,7 @@
 //  of the RDKit source tree.
 //
 #include "SparseBitVect.h"
+
 #include <RDGeneral/Exceptions.h>
 #include <RDGeneral/StreamOps.h>
 #include <sstream>
@@ -17,6 +18,8 @@
 #include <ios>
 #endif
 #include <cstdint>
+
+#include "DataStructs/BitVect.h"
 
 // """ -------------------------------------------------------
 //
