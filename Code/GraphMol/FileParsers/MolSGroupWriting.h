@@ -1,3 +1,6 @@
+#ifndef LLVM_CODE_GRAPHMOL_FILEPARSERS_MOLSGROUPWRITING_H
+#define LLVM_CODE_GRAPHMOL_FILEPARSERS_MOLSGROUPWRITING_H
+
 //
 //  Copyright (C) 2002-2021 Greg Landrum and T5 Informatics GmbH
 //
@@ -10,9 +13,9 @@
 
 #pragma once
 
+#include <GraphMol/SubstanceGroup.h>
 #include <boost/algorithm/string/trim.hpp>
 #include <boost/format.hpp>
-#include <GraphMol/SubstanceGroup.h>
 
 namespace RDKit {
 namespace SGroupWriting {
@@ -131,3 +134,5 @@ const std::string GetV3000MolFileSGroupLines(const unsigned int idx,
                                              const SubstanceGroup &sgroup);
 }  // namespace SGroupWriting
 }  // namespace RDKit
+
+#endif

@@ -974,9 +974,9 @@ void ParseAttachPointLine(RWMol *mol, const std::string &text,
                  << " on line " << line;
           if (strictParsing) {
             throw FileParseException(errout.str());
-          } else {
-            BOOST_LOG(rdWarningLog) << errout.str() << std::endl;
           }
+          BOOST_LOG(rdWarningLog) << errout.str() << std::endl;
+
         } else {
           atom->setProp(common_properties::molAttachPoint, val);
         }
@@ -3025,7 +3025,8 @@ void processSGroups(RWMol *mol) {
           processZBO(*mol, sg);
           sgsToRemove.push_back(sgIdx);
           continue;
-        } else if (field == "ZCH") {
+        }
+        if (field == "ZCH") {
           // RDKit extension for charge on atoms involved in zero-order bonds
           processZCH(*mol, sg);
           sgsToRemove.push_back(sgIdx);
