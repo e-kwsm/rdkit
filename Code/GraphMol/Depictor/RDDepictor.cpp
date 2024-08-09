@@ -47,7 +47,7 @@ std::vector<const RDKit::Atom *> getRankedAtomNeighbors(
     const RDKit::ROMol &mol, const RDKit::Atom *atom,
     const std::vector<int> &atomRanks) {
   std::vector<const RDKit::Atom *> nbrs;
-  for (auto nbr : mol.atomNeighbors(atom)) {
+  for (auto *nbr : mol.atomNeighbors(atom)) {
     nbrs.push_back(nbr);
   }
   std::sort(nbrs.begin(), nbrs.end(),
@@ -75,7 +75,7 @@ void embedSquarePlanar(const RDKit::ROMol &mol, const RDKit::Atom *atom,
   coordMap[atom->getIdx()] = RDGeom::Point2D(0., 0.);
   coordMap[nbrs[0]->getIdx()] = idealPoints[0];
   bool q2Full = false;
-  for (const auto nbr : nbrs) {
+  for (const auto *const nbr : nbrs) {
     if (nbr == nbrs.front()) {
       continue;
     }
@@ -125,7 +125,7 @@ void embedTBP(const RDKit::ROMol &mol, const RDKit::Atom *atom,
     coordMap[axial2->getIdx()] = idealPoints[1];
   }
   unsigned whichEq = 2;
-  for (const auto nbr : nbrs) {
+  for (const auto *const nbr : nbrs) {
     if (nbr != axial1 && nbr != axial2) {
       coordMap[nbr->getIdx()] = idealPoints[whichEq++];
     }
@@ -163,9 +163,10 @@ void embedOctahedral(const RDKit::ROMol &mol, const RDKit::Atom *atom,
         axial2 = nbrs[j];
         all90 = false;
         break;
-      } else if (fabs(RDKit::Chirality::getIdealAngleBetweenLigands(
-                          atom, nbrs[i], nbrs[j]) -
-                      90) > 0.1) {
+      }
+      if (fabs(RDKit::Chirality::getIdealAngleBetweenLigands(atom, nbrs[i],
+                                                             nbrs[j]) -
+               90) > 0.1) {
         all90 = false;
       }
     }
@@ -184,7 +185,7 @@ void embedOctahedral(const RDKit::ROMol &mol, const RDKit::Atom *atom,
   }
   const RDKit::Atom *refEqAtom1 = nullptr;
   const RDKit::Atom *refEqAtom2 = nullptr;
-  for (const auto nbr : nbrs) {
+  for (const auto *const nbr : nbrs) {
     if (nbr != axial1 && nbr != axial2) {
       if (!refEqAtom1) {
         refEqAtom1 = nbr;
@@ -198,7 +199,7 @@ void embedOctahedral(const RDKit::ROMol &mol, const RDKit::Atom *atom,
           continue;
         }
         coordMap[nbr->getIdx()] = idealPoints[3];
-        const auto acrossAtom2 =
+        auto *const acrossAtom2 =
             RDKit::Chirality::getChiralAcrossAtom(atom, nbr);
         if (acrossAtom2) {
           coordMap[acrossAtom2->getIdx()] = idealPoints[5];
@@ -214,7 +215,7 @@ void embedNontetrahedralStereo(const RDKit::ROMol &mol,
                                std::list<EmbeddedFrag> &efrags,
                                const std::vector<int> &atomRanks) {
   boost::dynamic_bitset<> consider(mol.getNumAtoms());
-  for (const auto atm : mol.atoms()) {
+  for (auto *const atm : mol.atoms()) {
     if (RDKit::Chirality::hasNonTetrahedralStereo(atm)) {
       consider[atm->getIdx()] = 1;
     }
@@ -222,7 +223,7 @@ void embedNontetrahedralStereo(const RDKit::ROMol &mol,
   if (consider.empty()) {
     return;
   }
-  for (const auto atm : mol.atoms()) {
+  for (auto *const atm : mol.atoms()) {
     if (!consider[atm->getIdx()]) {
       continue;
     }
@@ -297,7 +298,7 @@ void embedFusedSystems(const RDKit::ROMol &mol,
 
 void embedCisTransSystems(const RDKit::ROMol &mol,
                           std::list<EmbeddedFrag> &efrags) {
-  for (auto bond : mol.bonds()) {
+  for (auto *bond : mol.bonds()) {
     // check if this bond is in a cis/trans double bond
     // and it is not a ring bond
     if ((bond->getBondType() == RDKit::Bond::DOUBLE)  // this is a double bond
@@ -985,7 +986,7 @@ RDKit::MatchVectType generateDepictionMatching2DStructure(
           RDKit::MatchVectType prunedMatch;
           prunedMatch.reserve(match.size());
           for (const auto &pair : match) {
-            const auto refAtom = queryAdj->getAtomWithIdx(pair.first);
+            auto *const refAtom = queryAdj->getAtomWithIdx(pair.first);
             if (isAtomTerminalRGroupOrQueryHydrogen(refAtom)) {
               // skip the match if it is an added H
               if (pair.second >= numMolAtoms) {
@@ -1125,10 +1126,9 @@ void generateDepictionMatching3DStructure(RDKit::ROMol &mol,
     if (acceptFailure) {
       compute2DCoords(mol);
       return;
-    } else {
-      throw DepictException(
-          "Reference molecule not compatible with target molecule.");
     }
+    throw DepictException(
+        "Reference molecule not compatible with target molecule.");
   }
 
   std::vector<int> mol_to_ref(num_ats, -1);
@@ -1140,10 +1140,9 @@ void generateDepictionMatching3DStructure(RDKit::ROMol &mol,
       if (acceptFailure) {
         compute2DCoords(mol);
         return;
-      } else {
-        throw DepictException(
-            "Reference pattern didn't match molecule or reference.");
       }
+      throw DepictException(
+          "Reference pattern didn't match molecule or reference.");
     }
     for (size_t i = 0; i < molMatchVect.size(); ++i) {
       mol_to_ref[molMatchVect[i].second] = refMatchVect[i].second;
@@ -1192,7 +1191,7 @@ void straightenDepiction(RDKit::ROMol &mol, int confId, bool minimizeRotation) {
   auto &conf = mol.getConformer(confId);
   auto &pos = conf.getPositions();
   std::unordered_map<int, DepictorLocal::ThetaBin> thetaBins;
-  for (const auto b : mol.bonds()) {
+  for (auto *const b : mol.bonds()) {
     auto bi = b->getBeginAtomIdx();
     auto ei = b->getEndAtomIdx();
     auto bv = pos.at(bi) - pos.at(ei);
@@ -1273,7 +1272,7 @@ double normalizeDepiction(RDKit::ROMol &mol, int confId, int canonicalize,
     int mostCommonBondLengthInt = -1;
     unsigned int maxCount = 0;
     std::unordered_map<int, unsigned int> binnedBondLengths;
-    for (const auto b : mol.bonds()) {
+    for (auto *const b : mol.bonds()) {
       int bondLength =
           static_cast<int>(MolTransforms::getBondLength(
                                conf, b->getBeginAtomIdx(), b->getEndAtomIdx()) *
