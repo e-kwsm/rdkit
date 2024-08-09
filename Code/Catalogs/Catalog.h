@@ -1,3 +1,6 @@
+#ifndef LLVM_CODE_CATALOGS_CATALOG_H
+#define LLVM_CODE_CATALOGS_CATALOG_H
+
 //
 //  Copyright (C) 2003-2006 Rational Discovery LLC
 //
@@ -14,8 +17,8 @@
 
 // Boost graph stuff
 #include <RDGeneral/BoostStartInclude.h>
-#include <boost/graph/graph_traits.hpp>
 #include <boost/graph/adjacency_list.hpp>
+#include <boost/graph/graph_traits.hpp>
 #include <boost/version.hpp>
 #if BOOST_VERSION >= 104000
 #include <boost/property_map/property_map.hpp>
@@ -25,8 +28,8 @@
 #include <RDGeneral/BoostEndInclude.h>
 
 // for some typedefs
-#include <RDGeneral/types.h>
 #include <RDGeneral/StreamOps.h>
+#include <RDGeneral/types.h>
 
 namespace RDCatalog {
 const int versionMajor = 1;
@@ -454,5 +457,7 @@ class HierarchCatalog : public Catalog<entryType, paramType> {
 };
 
 }  // namespace RDCatalog
+
+#endif
 
 #endif
