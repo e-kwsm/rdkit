@@ -1,3 +1,6 @@
+#ifndef LLVM_CODE_GRAPHMOL_FILTERCATALOG_FUNCTIONALGROUPHIERARCHY_H
+#define LLVM_CODE_GRAPHMOL_FILTERCATALOG_FUNCTIONALGROUPHIERARCHY_H
+
 //
 //  Copyright (c) 2016, Novartis Institutes for BioMedical Research Inc.
 //  All rights reserved.
@@ -48,5 +51,7 @@ RDKIT_FILTERCATALOG_EXPORT const FilterCatalog &GetFunctionalGroupHierarchy();
 RDKIT_FILTERCATALOG_EXPORT const std::map<std::string, ROMOL_SPTR> &
 GetFlattenedFunctionalGroupHierarchy(bool normalized = false);
 }  // namespace RDKit
+
+#endif
 
 #endif
