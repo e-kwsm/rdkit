@@ -8,8 +8,8 @@
 //  of the RDKit source tree.
 //
 #include "GenericGroups.h"
-#include <GraphMol/RDKitBase.h>
 #include <GraphMol/QueryOps.h>
+#include <GraphMol/RDKitBase.h>
 #include <algorithm>
 
 namespace RDKit {
@@ -47,13 +47,13 @@ bool AllAtomsMatch(const ROMol &mol, const Atom &atom,
   std::deque<const Atom *> nbrs;
   nbrs.push_back(&atom);
   while (!nbrs.empty()) {
-    const auto atm = nbrs.front();
+    const auto *const atm = nbrs.front();
     if (!atomAtLeast && atLeastOneAtom(*atm)) {
       atomAtLeast = true;
     }
     nbrs.pop_front();
     ignore.set(atm->getIdx());
-    for (const auto nbr : mol.atomNeighbors(atm)) {
+    for (auto *const nbr : mol.atomNeighbors(atm)) {
       if (ignore[nbr->getIdx()]) {
         continue;
       }
@@ -61,7 +61,8 @@ bool AllAtomsMatch(const ROMol &mol, const Atom &atom,
         return false;
       }
       if (bondMatcher || !bondAtLeast) {
-        const auto bnd = mol.getBondBetweenAtoms(atm->getIdx(), nbr->getIdx());
+        const auto *const bnd =
+            mol.getBondBetweenAtoms(atm->getIdx(), nbr->getIdx());
         if (bondMatcher && !(bondMatcher)(*bnd)) {
           return false;
         }
@@ -663,7 +664,7 @@ bool genericAtomMatcher(const ROMol &mol, const ROMol &query,
     ignore.set(idx);
   }
 
-  for (const auto atom : query.atoms()) {
+  for (auto *const atom : query.atoms()) {
     if (atom->getDegree() > 1) {
       continue;
     }
@@ -695,7 +696,7 @@ ROMol *adjustQueryPropertiesWithGenericGroups(
 }
 
 void convertGenericQueriesToSubstanceGroups(ROMol &mol) {
-  for (const auto atom : mol.atoms()) {
+  for (auto *const atom : mol.atoms()) {
     std::string label;
     if (atom->getPropIfPresent(common_properties::_QueryAtomGenericLabel,
                                label)) {
@@ -711,7 +712,7 @@ void convertGenericQueriesToSubstanceGroups(ROMol &mol) {
 void setGenericQueriesFromProperties(ROMol &mol, bool useAtomLabels,
                                      bool useSGroups) {
   if (useAtomLabels) {
-    for (const auto atom : mol.atoms()) {
+    for (auto *const atom : mol.atoms()) {
       std::string label = "";
       if (!atom->getPropIfPresent(common_properties::atomLabel, label)) {
         continue;
