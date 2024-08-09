@@ -86,8 +86,7 @@ bool isAtomPotentialTetrahedralCenter(const Atom *atom) {
         return false;
       }
       return true;
-    } else {
-      // otherwise we default to not being a legal center
+    }  // otherwise we default to not being a legal center
       bool legalCenter = false;
       // but there are a few special cases we'll accept
       // sulfur or selenium with either a positive charge or a double
@@ -111,7 +110,7 @@ bool isAtomPotentialTetrahedralCenter(const Atom *atom) {
         }
       }
       return legalCenter;
-    }
+
   } else {
     return false;
   }
