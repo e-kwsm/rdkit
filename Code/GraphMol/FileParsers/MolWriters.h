@@ -1,3 +1,6 @@
+#ifndef LLVM_CODE_GRAPHMOL_FILEPARSERS_MOLWRITERS_H
+#define LLVM_CODE_GRAPHMOL_FILEPARSERS_MOLWRITERS_H
+
 //
 //  Copyright (C) 2002-2017 Greg Landrum, Rational Discovery LLC
 //
@@ -420,5 +423,7 @@ class RDKIT_FILEPARSERS_EXPORT MaeWriter : public MolWriter {
 #endif  // RDK_BUILD_MAEPARSER_SUPPORT
 
 }  // namespace RDKit
+
+#endif
 
 #endif
