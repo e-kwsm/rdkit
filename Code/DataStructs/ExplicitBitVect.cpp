@@ -9,13 +9,13 @@
 //  which is included in the file license.txt, found at the root
 //  of the RDKit source tree.
 //
-#include <iostream>
 #include <RDGeneral/Exceptions.h>
-#include "ExplicitBitVect.h"
 #include <RDGeneral/StreamOps.h>
-#include "base64.h"
+#include <boost/move/utility_core.hpp>
 #include <sstream>
-#include <limits>
+
+#include "ExplicitBitVect.h"
+#include "DataStructs/BitVect.h"
 #ifdef WIN32
 #include <ios>
 #endif

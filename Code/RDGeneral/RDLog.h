@@ -9,18 +9,23 @@
 //
 
 #include <RDGeneral/export.h>
+#include <boost/core/noncopyable.hpp>
+#include <algorithm>
+#include <memory>
+#include <string>
 #ifndef RDLOG_H_29JUNE2005
 #define RDLOG_H_29JUNE2005
 
 #if 1
-#include "BoostStartInclude.h"
 #include <boost/iostreams/tee.hpp>
 #include <boost/iostreams/stream.hpp>
-#include "BoostEndInclude.h"
 #include <iostream>
 #include <fstream>
 #include <vector>
 #include <cstdint>
+
+#include "BoostStartInclude.h"
+#include "BoostEndInclude.h"
 
 namespace boost {
 namespace logging {
@@ -124,6 +129,7 @@ RDKIT_RDGENERAL_EXPORT extern RDLogger rdStatusLog;
 #else
 #define BOOST_LOG_NO_LIB
 #include <boost/log/log.hpp>
+
 BOOST_DECLARE_LOG(rdAppLog)
 BOOST_DECLARE_LOG(rdDebugLog)
 BOOST_DECLARE_LOG(rdInfoLog)

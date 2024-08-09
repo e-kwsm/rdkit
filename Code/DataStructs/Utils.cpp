@@ -8,10 +8,15 @@
 //  which is included in the file license.txt, found at the root
 //  of the RDKit source tree.
 //
-#include "BitVects.h"
-#include "BitVectUtils.h"
 #include <RDGeneral/Invariant.h>
-#include <iostream>
+#include <stddef.h>
+#include <map>
+#include <string>
+
+#include "BitVectUtils.h"
+#include "DataStructs/ExplicitBitVect.h"
+#include "DataStructs/SparseBitVect.h"
+#include "RDGeneral/export.h"
 
 //! Convert a SparseBitVector to an ExplicitBitVector
 ExplicitBitVect *convertToExplicit(const SparseBitVect *sbv) {

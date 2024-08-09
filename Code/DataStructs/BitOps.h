@@ -8,6 +8,9 @@
 //  of the RDKit source tree.
 //
 #include <RDGeneral/export.h>
+
+#include "DataStructs/BitVect.h"
+#include "DataStructs/ExplicitBitVect.h"
 #ifndef __RD_BITOPS_H__
 #define __RD_BITOPS_H__
 /*! \file BitOps.h
@@ -22,8 +25,9 @@
 
  */
 
-#include "BitVects.h"
 #include <string>
+
+#include "BitVects.h"
 
 //! general purpose wrapper for calculating the similarity between two bvs
 //! that may be of unequal size (will automatically fold as appropriate)
