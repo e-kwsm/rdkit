@@ -1,3 +1,6 @@
+#ifndef LLVM_CODE_GRAPHMOL_DESCRIPTORS_PROPERTY_H
+#define LLVM_CODE_GRAPHMOL_DESCRIPTORS_PROPERTY_H
+
 //
 //  Copyright (c) 2016, Novartis Institutes for BioMedical Research Inc.
 //  All rights reserved.
@@ -34,13 +37,13 @@
 #define RDKIT_PROPERTIES_H
 
 #include <GraphMol/RDKitBase.h>
+#include <Query/Query.h>
+#include <RDGeneral/BoostEndInclude.h>
+#include <RDGeneral/BoostStartInclude.h>
+#include <RDGeneral/Exceptions.h>
+#include <boost/shared_ptr.hpp>
 #include <string>
 #include <utility>
-#include <RDGeneral/BoostStartInclude.h>
-#include <boost/shared_ptr.hpp>
-#include <RDGeneral/BoostEndInclude.h>
-#include <Query/Query.h>
-#include <RDGeneral/Exceptions.h>
 
 namespace RDKit {
 namespace Descriptors {
@@ -123,4 +126,6 @@ RDKIT_DESCRIPTORS_EXPORT PROP_RANGE_QUERY *makePropertyRangeQuery(
 
 }  // namespace Descriptors
 }  // namespace RDKit
+#endif
+
 #endif
