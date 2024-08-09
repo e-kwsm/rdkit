@@ -7,15 +7,15 @@
 //  which is included in the file license.txt, found at the root
 //  of the RDKit source tree.
 //
-#include <RDGeneral/FileParseException.h>
-#include <RDGeneral/BadFileException.h>
-#include <RDGeneral/StreamOps.h>
-#include <RDGeneral/RDLog.h>
 #include <GraphMol/SanitException.h>
+#include <RDGeneral/BadFileException.h>
+#include <RDGeneral/FileParseException.h>
+#include <RDGeneral/RDLog.h>
+#include <RDGeneral/StreamOps.h>
 
-#include <boost/algorithm/string.hpp>
-#include "MolSupplier.h"
 #include "FileParsers.h"
+#include "MolSupplier.h"
+#include <boost/algorithm/string.hpp>
 
 #include <fstream>
 #include <iostream>
@@ -234,29 +234,28 @@ unsigned int SDMolSupplier::length() {
   // return the number of mol blocks in the sdfile
   if (d_len > 0 || (df_end && d_len == 0)) {
     return d_len;
-  } else {
-    std::string tempStr;
-    d_len = rdcast<int>(d_molpos.size());
-    dp_inStream->seekg(d_molpos.back());
-    while (!dp_inStream->eof() && !dp_inStream->fail()) {
-      std::getline(*dp_inStream, tempStr);
-      if (tempStr.length() >= 4 && tempStr[0] == '$' && tempStr[1] == '$' &&
-          tempStr[2] == '$' && tempStr[3] == '$') {
-        std::streampos posHold = dp_inStream->tellg();
-        // don't worry about the last molecule:
-        this->checkForEnd();
-        if (!this->df_end) {
-          d_molpos.push_back(posHold);
-          ++d_len;
-        }
+  }
+  std::string tempStr;
+  d_len = rdcast<int>(d_molpos.size());
+  dp_inStream->seekg(d_molpos.back());
+  while (!dp_inStream->eof() && !dp_inStream->fail()) {
+    std::getline(*dp_inStream, tempStr);
+    if (tempStr.length() >= 4 && tempStr[0] == '$' && tempStr[1] == '$' &&
+        tempStr[2] == '$' && tempStr[3] == '$') {
+      std::streampos posHold = dp_inStream->tellg();
+      // don't worry about the last molecule:
+      this->checkForEnd();
+      if (!this->df_end) {
+        d_molpos.push_back(posHold);
+        ++d_len;
       }
+    }
     }
     // now remember to set the stream to the last position we want to read
     dp_inStream->clear();
     dp_inStream->seekg(d_molpos[d_last]);
     df_end = false;
     return d_len;
-  }
 }
 
 bool SDMolSupplier::atEnd() {
