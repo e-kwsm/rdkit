@@ -9,8 +9,8 @@
 //  of the RDKit source tree.
 //
 #include "DiscreteDistMat.h"
-
 #include "DiscreteValueVect.h"
+#include <iostream>
 #include "DatastructsException.h"
 
 namespace RDKit {

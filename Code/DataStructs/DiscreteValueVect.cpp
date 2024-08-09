@@ -9,16 +9,13 @@
 //  of the RDKit source tree.
 //
 #include "DiscreteValueVect.h"
-
 #include <RDGeneral/Invariant.h>
 #include <RDGeneral/StreamOps.h>
-#include <RDGeneral/Exceptions.h>
-#include <algorithm>
-#include <cstdint>
-#include <cstdlib>
-#include <sstream>
-
+#include "DatastructsException.h"
 #include "DiscreteDistMat.h"
+#include <RDGeneral/Exceptions.h>
+#include <cstdint>
+#include <algorithm>
 
 namespace RDKit {
 const int ci_DISCRETEVALUEVECTPICKLE_VERSION = 0x1;

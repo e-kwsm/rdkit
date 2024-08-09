@@ -11,9 +11,6 @@
 
 #include "types.h"
 
-#include <algorithm>
-#include <limits>
-
 namespace RDKit {
 
 const double MAX_DOUBLE = std::numeric_limits<double>::max();

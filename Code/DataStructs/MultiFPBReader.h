@@ -8,7 +8,6 @@
 //  of the RDKit source tree.
 //
 #include <RDGeneral/export.h>
-
 #ifndef RD_MULTIFPBREADER_H_APR2016
 #define RD_MULTIFPBREADER_H_APR2016
 /*! \file MultiFPBReader.h
@@ -19,13 +18,10 @@
      in future releases.
 */
 
-#include <tuple>
-#include <utility>
-#include <vector>
-
 #include <RDGeneral/Exceptions.h>
 #include <DataStructs/ExplicitBitVect.h>
 #include <DataStructs/FPBReader.h>
+#include <tuple>
 
 namespace RDKit {
 
