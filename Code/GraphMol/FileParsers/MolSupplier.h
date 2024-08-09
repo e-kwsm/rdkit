@@ -1,3 +1,6 @@
+#ifndef LLVM_CODE_GRAPHMOL_FILEPARSERS_MOLSUPPLIER_H
+#define LLVM_CODE_GRAPHMOL_FILEPARSERS_MOLSUPPLIER_H
+
 //
 //  Copyright (C) 2002-2024 greg landrum and other RDKit contributors
 //
@@ -13,17 +16,17 @@
 
 #include <RDGeneral/types.h>
 
-#include <string>
-#include <string_view>
+#include "FileParsers.h"
+#include <GraphMol/ROMol.h>
+#include <GraphMol/SmilesParse/SmilesParse.h>
+#include <RDGeneral/BadFileException.h>
+#include <fstream>
+#include <iostream>
 #include <list>
 #include <memory>
+#include <string>
+#include <string_view>
 #include <vector>
-#include <iostream>
-#include <fstream>
-#include <GraphMol/ROMol.h>
-#include <RDGeneral/BadFileException.h>
-#include "FileParsers.h"
-#include <GraphMol/SmilesParse/SmilesParse.h>
 
 #ifdef RDK_BUILD_MAEPARSER_SUPPORT
 namespace schrodinger {
@@ -460,5 +463,7 @@ class RDKIT_FILEPARSERS_EXPORT MaeMolSupplier : public MolSupplier {
 }  // namespace RDKit
 
 #include "MolSupplier.v1API.h"
+
+#endif
 
 #endif
