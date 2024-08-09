@@ -397,9 +397,8 @@ QueryDetails getQueryDetails(const Query<int, T const *, true> *query) {
         static_cast<const SetQuery<int, T const *, true> *>(query)->endSet());
     return QueryDetails(
         std::make_tuple(MolPickler::QUERY_SET, std::move(tset)));
-  } else {
-    throw MolPicklerException("do not know how to pickle part of the query.");
   }
+  throw MolPicklerException("do not know how to pickle part of the query.");
 }
 template RDKIT_GRAPHMOL_EXPORT QueryDetails getQueryDetails<RDKit::Atom>(
     const Queries::Query<int, RDKit::Atom const *, true> *query);
