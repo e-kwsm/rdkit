@@ -1,3 +1,6 @@
+#ifndef LLVM_CODE_GRAPHMOL_FILTERCATALOG_FILTERCATALOGENTRY_H
+#define LLVM_CODE_GRAPHMOL_FILTERCATALOG_FILTERCATALOGENTRY_H
+
 //  Copyright (c) 2015, Novartis Institutes for BioMedical Research Inc.
 //  All rights reserved.
 //
@@ -35,18 +38,18 @@
 #include <string_view>
 #include <utility>
 
-#include <RDGeneral/types.h>  // For Dict
+#include <Catalogs/CatalogEntry.h>
 #include <GraphMol/RDKitBase.h>
 #include <GraphMol/Substruct/SubstructMatch.h>
-#include <Catalogs/CatalogEntry.h>
+#include <RDGeneral/types.h>  // For Dict
 
 #ifdef RDK_USE_BOOST_SERIALIZATION
-#include <RDGeneral/BoostStartInclude.h>
-#include <boost/archive/text_oarchive.hpp>
-#include <boost/archive/text_iarchive.hpp>
-#include <boost/serialization/vector.hpp>
-#include <boost/serialization/shared_ptr.hpp>
 #include <RDGeneral/BoostEndInclude.h>
+#include <RDGeneral/BoostStartInclude.h>
+#include <boost/archive/text_iarchive.hpp>
+#include <boost/archive/text_oarchive.hpp>
+#include <boost/serialization/shared_ptr.hpp>
+#include <boost/serialization/vector.hpp>
 #endif
 
 #include "FilterMatchers.h"
@@ -244,3 +247,5 @@ BOOST_CLASS_VERSION(RDKit::FilterCatalogEntry, 1);
 #endif
 
 #endif  //__RD_FILTER_CATALOG_H__
+
+#endif

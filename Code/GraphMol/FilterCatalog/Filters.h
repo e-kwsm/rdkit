@@ -1,3 +1,6 @@
+#ifndef LLVM_CODE_GRAPHMOL_FILTERCATALOG_FILTERS_H
+#define LLVM_CODE_GRAPHMOL_FILTERCATALOG_FILTERS_H
+
 //  Copyright (c) 2015, Novartis Institutes for BioMedical Research Inc.
 //  All rights reserved.
 //
@@ -33,8 +36,8 @@
 #ifndef __RDKIT_FILTERDATA__
 #define __RDKIT_FILTERDATA__
 
-#include "FilterCatalogEntry.h"
 #include "FilterCatalog.h"
+#include "FilterCatalogEntry.h"
 
 namespace RDKit {
 struct FilterData_t {
@@ -59,5 +62,7 @@ FilterCatalogEntry *MakeFilterCatalogEntry(
     const FilterData_t &, unsigned int num_props = 0,
     const FilterProperty_t *props = nullptr);
 }  // namespace RDKit
+
+#endif
 
 #endif
