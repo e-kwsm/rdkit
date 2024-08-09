@@ -13,15 +13,15 @@
 #include <string>
 #include <vector>
 
+#include <RDGeneral/BoostEndInclude.h>
 #include <RDGeneral/BoostStartInclude.h>
 #include <boost/format.hpp>
-#include <RDGeneral/BoostEndInclude.h>
 
 #ifdef RDK_BUILD_MAEPARSER_SUPPORT
 #undef RDK_BUILD_MAEPARSER_SUPPORT
 #endif
-#include <GraphMol/FileParsers/MolWriters.h>
 #include <GraphMol/FileParsers/FileParsers.h>
+#include <GraphMol/FileParsers/MolWriters.h>
 #include <GraphMol/MonomerInfo.h>
 #include <GraphMol/RDKitBase.h>
 #include <RDGeneral/BadFileException.h>
