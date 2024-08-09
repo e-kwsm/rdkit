@@ -1,3 +1,6 @@
+#ifndef LLVM_CODE_GRAPHMOL_DEPICTOR_EMBEDDEDFRAG_H
+#define LLVM_CODE_GRAPHMOL_DEPICTOR_EMBEDDEDFRAG_H
+
 //
 //  Copyright (C) 2003-2022 Greg Landrum and other RDKit contributors
 //
@@ -11,10 +14,10 @@
 #ifndef RD_EMBEDDED_FRAG_H
 #define RD_EMBEDDED_FRAG_H
 
-#include <RDGeneral/types.h>
+#include "DepictUtils.h"
 #include <Geometry/Transform2D.h>
 #include <Geometry/point.h>
-#include "DepictUtils.h"
+#include <RDGeneral/types.h>
 #include <boost/smart_ptr.hpp>
 
 namespace RDKit {
@@ -550,5 +553,7 @@ class RDKIT_DEPICTOR_EXPORT EmbeddedFrag {
   const RDKit::ROMol *dp_mol = nullptr;
 };
 }  // namespace RDDepict
+
+#endif
 
 #endif
