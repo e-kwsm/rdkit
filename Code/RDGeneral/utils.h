@@ -9,14 +9,20 @@
 //
 //
 #include <RDGeneral/export.h>
+#include <boost/random/linear_congruential.hpp>
+#include <boost/random/uniform_int.hpp>
+#include <boost/random/uniform_real.hpp>
+#include <boost/random/variate_generator.hpp>
+#include <string>
 #ifndef RD_UTILS_H
 #define RD_UTILS_H
 
-#include "types.h"
 #include <RDGeneral/Invariant.h>
 #include <RDGeneral/BoostStartInclude.h>
 #include <boost/random.hpp>
 #include <RDGeneral/BoostEndInclude.h>
+
+#include "types.h"
 
 namespace RDKit {
 const int NUM_PRIMES_AVAIL =
