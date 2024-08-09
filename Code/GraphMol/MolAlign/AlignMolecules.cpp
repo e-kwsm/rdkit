@@ -9,15 +9,15 @@
 //
 #include "AlignMolecules.h"
 #include <Geometry/Transform3D.h>
-#include <Numerics/Vector.h>
-#include <GraphMol/Substruct/SubstructMatch.h>
 #include <GraphMol/Conformer.h>
-#include <GraphMol/ROMol.h>
-#include <GraphMol/QueryOps.h>
-#include <GraphMol/QueryBond.h>
-#include <GraphMol/SmilesParse/SmilesParse.h>
-#include <Numerics/Alignment/AlignPoints.h>
 #include <GraphMol/MolTransforms/MolTransforms.h>
+#include <GraphMol/QueryBond.h>
+#include <GraphMol/QueryOps.h>
+#include <GraphMol/ROMol.h>
+#include <GraphMol/SmilesParse/SmilesParse.h>
+#include <GraphMol/Substruct/SubstructMatch.h>
+#include <Numerics/Alignment/AlignPoints.h>
+#include <Numerics/Vector.h>
 #include <RDGeneral/RDThreads.h>
 #include <algorithm>
 #include <boost/format.hpp>
@@ -47,7 +47,7 @@ void symmetrizeTerminalAtoms(RWMol &mol) {
   qb.setQuery(makeSingleOrDoubleBondQuery());
   for (const auto &match : matches) {
     mol.getAtomWithIdx(match[0].second)->setFormalCharge(0);
-    auto obond = mol.getBondBetweenAtoms(match[0].second, match[1].second);
+    auto *obond = mol.getBondBetweenAtoms(match[0].second, match[1].second);
     CHECK_INVARIANT(obond, "could not find expected bond");
     mol.replaceBond(obond->getIdx(), &qb);
   }
