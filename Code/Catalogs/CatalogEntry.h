@@ -1,3 +1,6 @@
+#ifndef LLVM_CODE_CATALOGS_CATALOGENTRY_H
+#define LLVM_CODE_CATALOGS_CATALOGENTRY_H
+
 //
 //  Copyright (C) 2003-2006 Rational Discovery LLC
 //
@@ -43,5 +46,7 @@ class RDKIT_CATALOGS_EXPORT CatalogEntry {
                 // uninitialized entries.
 };
 }  // namespace RDCatalog
+
+#endif
 
 #endif
