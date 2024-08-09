@@ -8,15 +8,15 @@
 //  of the RDKit source tree.
 //
 #include "MolTransforms.h"
-#include <GraphMol/RDKitBase.h>
-#include <GraphMol/QueryOps.h>
-#include <Numerics/EigenSolvers/PowerEigenSolver.h>
-#include <Numerics/SymmMatrix.h>
-#include <Numerics/Matrix.h>
 #include <Geometry/Transform3D.h>
-#include <stack>
-#include <boost/dynamic_bitset.hpp>
+#include <GraphMol/QueryOps.h>
+#include <GraphMol/RDKitBase.h>
+#include <Numerics/EigenSolvers/PowerEigenSolver.h>
+#include <Numerics/Matrix.h>
+#include <Numerics/SymmMatrix.h>
 #include <RDGeneral/Exceptions.h>
+#include <boost/dynamic_bitset.hpp>
+#include <stack>
 
 #ifdef RDK_HAS_EIGEN3
 // Eigen module headers (LU/QR/SVD/...) must be included at global scope, not

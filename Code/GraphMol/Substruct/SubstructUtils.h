@@ -1,3 +1,6 @@
+#ifndef LLVM_CODE_GRAPHMOL_SUBSTRUCT_SUBSTRUCTUTILS_H
+#define LLVM_CODE_GRAPHMOL_SUBSTRUCT_SUBSTRUCTUTILS_H
+
 //
 //  Copyright (C) 2003-2025 Greg Landrum and other RDKit contributors
 //
@@ -48,5 +51,7 @@ RDKIT_SUBSTRUCTMATCH_EXPORT bool isAtomTerminalRGroupOrQueryHydrogen(
     const Atom *atom);
 
 }  // namespace RDKit
+
+#endif
 
 #endif
