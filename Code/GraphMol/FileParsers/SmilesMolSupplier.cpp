@@ -7,19 +7,19 @@
 //  which is included in the file license.txt, found at the root
 //  of the RDKit source tree.
 //
+#include "FileParsers.h"
+#include "MolSupplier.h"
 #include <RDGeneral/BadFileException.h>
 #include <RDGeneral/FileParseException.h>
-#include <RDGeneral/StreamOps.h>
 #include <RDGeneral/RDLog.h>
-#include "MolSupplier.h"
-#include "FileParsers.h"
+#include <RDGeneral/StreamOps.h>
 #include <boost/tokenizer.hpp>
 typedef boost::tokenizer<boost::char_separator<char>> tokenizer;
 
+#include <cstdlib>
 #include <fstream>
 #include <sstream>
 #include <string>
-#include <cstdlib>
 
 namespace RDKit {
 
@@ -375,19 +375,18 @@ void SmilesMolSupplier::moveTo(unsigned int idx) {
       errout << "ERROR: Index error (idx = " << idx << "): "
              << "ran out of lines\n";
       throw FileParseException(errout.str());
-    } else {
-      d_molpos.emplace_back(nextP);
-      d_lineNums.push_back(d_line);
-      if (d_molpos.size() == idx + 1 && df_end) {
-        // boundary condition: we could read the point we were looking for
-        // but not the next one.
-        // indicate that we've reached EOF:
-        dp_inStream->clear();
-        dp_inStream->seekg(0, std::ios_base::end);
-        d_len = d_molpos.size();
-        break;
-      }
     }
+    d_molpos.emplace_back(nextP);
+    d_lineNums.push_back(d_line);
+    if (d_molpos.size() == idx + 1 && df_end) {
+      // boundary condition: we could read the point we were looking for
+      // but not the next one.
+      // indicate that we've reached EOF:
+      dp_inStream->clear();
+      dp_inStream->seekg(0, std::ios_base::end);
+      d_len = d_molpos.size();
+      break;
+      }
   }
 
   POSTCONDITION(d_molpos.size() > idx, "not enough lines");
@@ -477,14 +476,14 @@ unsigned int SmilesMolSupplier::length() {
   // return the number of molecule lines in the file
   if (d_len > 0) {
     return d_len;
-  } else {
-    std::streampos oPos = dp_inStream->tellg();
-    if (d_molpos.size()) {
-      // we've already read some molecules, go to the last
-      // one and read it in to initialize our location:
-      dp_inStream->seekg(d_molpos.back());
-      // skip that line and then continue:
-      this->skipComments();
+  }
+  std::streampos oPos = dp_inStream->tellg();
+  if (d_molpos.size()) {
+    // we've already read some molecules, go to the last
+    // one and read it in to initialize our location:
+    dp_inStream->seekg(d_molpos.back());
+    // skip that line and then continue:
+    this->skipComments();
     } else {
       // process the title line if need be:
       if (d_params.titleLine) {
@@ -501,7 +500,6 @@ unsigned int SmilesMolSupplier::length() {
     dp_inStream->seekg(oPos);
     d_len = d_molpos.size();
     return d_len;
-  }
 }
 
 bool SmilesMolSupplier::atEnd() { return df_end; }
