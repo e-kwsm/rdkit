@@ -35,19 +35,19 @@
 //
 
 #include "FileParsers.h"
-#include <RDGeneral/Invariant.h>
 #include <GraphMol/RDKitQueries.h>
-#include <RDGeneral/StreamOps.h>
+#include <RDGeneral/Invariant.h>
 #include <RDGeneral/RDLog.h>
+#include <RDGeneral/StreamOps.h>
 //
-#include <fstream>
-#include <boost/tokenizer.hpp>
-#include <boost/lexical_cast.hpp>
+#include <RDGeneral/BadFileException.h>
+#include <RDGeneral/FileParseException.h>
+#include <RDGeneral/LocaleSwitcher.h>
 #include <boost/algorithm/string/trim.hpp>
 #include <boost/dynamic_bitset.hpp>
-#include <RDGeneral/FileParseException.h>
-#include <RDGeneral/BadFileException.h>
-#include <RDGeneral/LocaleSwitcher.h>
+#include <boost/lexical_cast.hpp>
+#include <boost/tokenizer.hpp>
+#include <fstream>
 
 namespace RDKit {
 
@@ -153,7 +153,7 @@ void guessFormalCharges(RWMol *res) {
       // this will barf when I have e.g. an uncharged 4 valent nitrogen ...
       int noAromBonds = 0;
       double accum = 0;  // FIX: could this give non int values ?
-      for (const auto bnd : res->atomBonds(at)) {
+      for (auto *const bnd : res->atomBonds(at)) {
         accum += bnd->getValenceContrib(at);
         if (bnd->getBondType() == Bond::AROMATIC) {
           ++noAromBonds;
@@ -285,7 +285,7 @@ unsigned int chkNoHNeighbNOx(RWMol *res, ROMol::ADJ_ITER atIdxIt,
 bool cleanUpMol2Substructures(RWMol *res) {
   // NOTE: check the nitro fix in guess formal charges!
   boost::dynamic_bitset<> isFixed(res->getNumAtoms());
-  for (auto at : res->atoms()) {
+  for (auto *at : res->atoms()) {
     unsigned int idx = at->getIdx();
     // make sure we haven't finished this atom already
     if (isFixed[idx]) {
@@ -306,7 +306,7 @@ bool cleanUpMol2Substructures(RWMol *res) {
       }
       auto nbrs = res->atomNeighbors(at);
       // this should return only the C.2
-      auto nbr = *nbrs.begin();
+      auto *nbr = *nbrs.begin();
       auto tATT = nbr->getProp<std::string>(common_properties::_TriposAtomType);
       if (tATT == "P.3") {
         // special case for phosphates
@@ -316,7 +316,7 @@ bool cleanUpMol2Substructures(RWMol *res) {
         b->setIsAromatic(false);
         at->setIsAromatic(false);
         isFixed[idx] = 1;
-        for (auto onbr : res->atomNeighbors(nbr)) {
+        for (auto *onbr : res->atomNeighbors(nbr)) {
           if (onbr->getAtomicNum() == 8 && !isFixed[onbr->getIdx()] &&
               onbr->getProp<std::string>(common_properties::_TriposAtomType) ==
                   "O.co2") {
@@ -392,7 +392,8 @@ bool cleanUpMol2Substructures(RWMol *res) {
             << nm << ": Error - C.Cat with bad number of N neighbors."
             << std::endl;
         return false;
-      } else if (noNNeighbors == 2) {
+      }
+      if (noNNeighbors == 2) {
         // the idea is that we assign the positive charge according to the
         // following precedence:
         // 1. is part of N-oxide
@@ -582,7 +583,8 @@ Atom *ParseMol2FileAtomLine(const std::string atomLine, RDGeom::Point3D &pos) {
   if (symb == "LP") {
     delete res;
     return nullptr;
-  } else if (symb == "ANY" || symb == "Du") {
+  }
+  if (symb == "ANY" || symb == "Du") {
     // queryAtoms
     // according to the SYBYL spec, these match anything
     auto *query = new QueryAtom(0);
@@ -1025,9 +1027,8 @@ std::unique_ptr<RWMol> MolFromMol2File(const std::string &fName,
   }
   if (!inStream.eof()) {
     return MolFromMol2DataStream(inStream, params);
-  } else {
-    return nullptr;
   }
+  return nullptr;
 }
 }  // namespace FileParsers
 }  // namespace v2
