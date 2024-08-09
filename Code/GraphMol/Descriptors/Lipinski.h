@@ -1,3 +1,6 @@
+#ifndef LLVM_CODE_GRAPHMOL_DESCRIPTORS_LIPINSKI_H
+#define LLVM_CODE_GRAPHMOL_DESCRIPTORS_LIPINSKI_H
+
 //
 //  Copyright (C) 2007-2011 Greg Landrum
 //
@@ -165,5 +168,7 @@ RDKIT_DESCRIPTORS_EXPORT unsigned numUnspecifiedAtomStereoCenters(
 RDKIT_DESCRIPTORS_EXPORT void registerDescriptors();
 }  // end of namespace Descriptors
 }  // end of namespace RDKit
+
+#endif
 
 #endif
