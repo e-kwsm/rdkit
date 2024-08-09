@@ -4,9 +4,9 @@
 
 #include <boost/dynamic_bitset.hpp>
 
-#include "StereoGroup.h"
 #include "Atom.h"
 #include "ROMol.h"
+#include "StereoGroup.h"
 
 namespace RDKit {
 
@@ -15,7 +15,8 @@ void storeIdsInUse(boost::dynamic_bitset<> &ids, StereoGroup &sg) {
   const auto groupId = sg.getWriteId();
   if (groupId == 0) {
     return;
-  } else if (groupId >= ids.size()) {
+  }
+  if (groupId >= ids.size()) {
     ids.resize(groupId + 1);
   }
   if (ids[groupId]) {
@@ -100,7 +101,7 @@ void removeGroupsWithBond(const Bond *bond, std::vector<StereoGroup> &groups) {
 void removeGroupsWithAtoms(const std::vector<Atom *> &atoms,
                            std::vector<StereoGroup> &groups) {
   auto containsAnyAtom = [&atoms](const StereoGroup &group) {
-    for (auto atom : atoms) {
+    for (auto *atom : atoms) {
       if (std::find(group.getAtoms().cbegin(), group.getAtoms().cend(), atom) !=
           group.getAtoms().cend()) {
         return true;
@@ -115,7 +116,7 @@ void removeGroupsWithAtoms(const std::vector<Atom *> &atoms,
 void removeGroupsWithBonds(const std::vector<Bond *> &bonds,
                            std::vector<StereoGroup> &groups) {
   auto containsAnyBond = [&bonds](const StereoGroup &group) {
-    for (auto bond : bonds) {
+    for (auto *bond : bonds) {
       if (std::find(group.getBonds().cbegin(), group.getBonds().cend(), bond) !=
           group.getBonds().cend()) {
         return true;
@@ -179,12 +180,12 @@ std::ostream &operator<<(std::ostream &target, const RDKit::StereoGroup &stg) {
   target << " rId: " << stg.getReadId();
   target << " wId: " << stg.getWriteId();
   target << " atoms: { ";
-  for (auto atom : stg.getAtoms()) {
+  for (auto *atom : stg.getAtoms()) {
     target << atom->getIdx() << ' ';
   }
   if (stg.getBonds().size() > 0) {
     target << " Bonds: { ";
-    for (auto bond : stg.getBonds()) {
+    for (auto *bond : stg.getBonds()) {
       target << bond->getIdx() << ' ';
     }
     target << '}';
