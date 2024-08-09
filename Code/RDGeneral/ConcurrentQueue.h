@@ -1,3 +1,6 @@
+#ifndef LLVM_CODE_RDGENERAL_CONCURRENTQUEUE_H
+#define LLVM_CODE_RDGENERAL_CONCURRENTQUEUE_H
+
 //
 //  Copyright (C) 2020 Shrey Aryan
 //
@@ -131,4 +134,6 @@ void ConcurrentQueue<E>::clear() {
 
 }  // namespace RDKit
 #endif
+#endif
+
 #endif
