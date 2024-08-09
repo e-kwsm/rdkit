@@ -10,14 +10,14 @@
 //
 #include "SubgraphUtils.h"
 #include "Subgraphs.h"
-#include <RDGeneral/utils.h>
-#include <GraphMol/RDKitBase.h>
 #include <GraphMol/QueryAtom.h>
 #include <GraphMol/QueryBond.h>
-#include <iostream>
-#include <algorithm>
-#include <map>
+#include <GraphMol/RDKitBase.h>
 #include <RDGeneral/hash/hash.hpp>
+#include <RDGeneral/utils.h>
+#include <algorithm>
+#include <iostream>
+#include <map>
 
 namespace RDKit {
 namespace Subgraphs {
