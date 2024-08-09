@@ -1,3 +1,6 @@
+#ifndef LLVM_CODE_GRAPHMOL_DESCRIPTORS_MOLDESCRIPTORS_H
+#define LLVM_CODE_GRAPHMOL_DESCRIPTORS_MOLDESCRIPTORS_H
+
 //
 //  Copyright (C) 2004-2021 Greg Landrum and other RDKit contributors
 //
@@ -12,12 +15,12 @@
 #ifndef RD_MOLDESCRIPTORS_H
 #define RD_MOLDESCRIPTORS_H
 
-#include <GraphMol/Descriptors/Crippen.h>
-#include <GraphMol/Descriptors/MolSurf.h>
-#include <GraphMol/Descriptors/Lipinski.h>
-#include <GraphMol/Descriptors/ConnectivityDescriptors.h>
-#include <GraphMol/Descriptors/MQN.h>
 #include <GraphMol/Descriptors/AUTOCORR2D.h>
+#include <GraphMol/Descriptors/ConnectivityDescriptors.h>
+#include <GraphMol/Descriptors/Crippen.h>
+#include <GraphMol/Descriptors/Lipinski.h>
+#include <GraphMol/Descriptors/MQN.h>
+#include <GraphMol/Descriptors/MolSurf.h>
 
 namespace RDKit {
 class ROMol;
@@ -82,5 +85,7 @@ RDKIT_DESCRIPTORS_EXPORT std::string calcMolFormula(
 
 }  // end of namespace Descriptors
 }  // end of namespace RDKit
+
+#endif
 
 #endif
