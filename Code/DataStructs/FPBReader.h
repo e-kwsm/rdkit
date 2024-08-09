@@ -18,10 +18,12 @@
      in future releases.
 */
 
-#include <iostream>
 #include <fstream>
+#include <iostream>
 #include <sstream>
 #include <string>
+#include <utility>
+#include <vector>
 #include <RDGeneral/BadFileException.h>
 #include <DataStructs/ExplicitBitVect.h>
 

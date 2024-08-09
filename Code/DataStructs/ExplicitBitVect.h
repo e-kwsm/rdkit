@@ -9,12 +9,14 @@
 //  of the RDKit source tree.
 //
 #include <RDGeneral/export.h>
+#include <string>
 #ifndef __RD_EXPLICITBITVECTS_H__
 #define __RD_EXPLICITBITVECTS_H__
 
 #include <RDGeneral/BoostStartInclude.h>
 #include <boost/dynamic_bitset.hpp>
 #include <RDGeneral/BoostEndInclude.h>
+
 #include "BitVect.h"
 
 //! a class for bit vectors that are densely occupied
