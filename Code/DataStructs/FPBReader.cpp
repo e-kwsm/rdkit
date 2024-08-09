@@ -16,10 +16,12 @@
 #include <cstdint>
 #include <cstring>
 #include <DataStructs/BitOps.h>
-
 #include <RDGeneral/Invariant.h>
 #include <RDGeneral/StreamOps.h>
 #include <RDGeneral/Ranking.h>
+#include <algorithm>
+#include <cmath>
+
 #include "FPBReader.h"
 #include <boost/scoped_ptr.hpp>
 #include <boost/scoped_array.hpp>
