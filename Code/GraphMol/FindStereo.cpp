@@ -60,58 +60,58 @@ bool isAtomPotentialTetrahedralCenter(const Atom *atom) {
   if (nzDegree == 4) {
     // chirality is always possible with 4 nbrs
     return true;
-    } else if (nzDegree <= 1) {
-      // chirality is never possible with 0 or 1 nbr
-      return false;
-    } else if (nzDegree < 3 &&
-               (atom->getAtomicNum() != 15 && atom->getAtomicNum() != 33)) {
-      // less than three neighbors is never stereogenic
-      // unless it is a phosphine/arsine with implicit H
-      return false;
-    } else if (atom->getAtomicNum() == 15 || atom->getAtomicNum() == 33) {
-      // from logical flow: degree is 2 or 3 (implicit H)
-      // Since InChI Software v. 1.02-standard (2009), phosphines and arsines
-      // are always treated as stereogenic even with H atom neighbors.
-      // Accept automatically.
-      return true;
-    } else if (nzDegree == 3) {
-      // three-coordinate with a single H we'll accept automatically:
-      if (atom->getTotalNumHs() == 1) {
-        if (detail::has_protium_neighbor(mol, atom)) {
-          // more than one H is never stereogenic
-          return false;
-        }
-        return true;
-      } else {
-        // otherwise we default to not being a legal center
-        bool legalCenter = false;
-        // but there are a few special cases we'll accept
-        // sulfur or selenium with either a positive charge or a double
-        // bond:
-        if ((atom->getAtomicNum() == 16 || atom->getAtomicNum() == 34) &&
-            (atom->getExplicitValence() == 4 ||
-             (atom->getExplicitValence() == 3 &&
-              atom->getFormalCharge() == 1))) {
-          legalCenter = true;
-        } else if (atom->getAtomicNum() == 7) {
-          // three-coordinate N additional requirements:
-          //   in a ring of size 3  (from InChI)
-          // OR
-          /// is a bridgehead atom (RDKit extension)
-          // Also: cannot be SP2 hybridized or have a conjugated bond
-          //   (this was Github #7434)
-          if (atom->getHybridization() == Atom::HybridizationType::SP3 &&
-              !MolOps::atomHasConjugatedBond(atom) &&
-              (mol.getRingInfo()->isAtomInRingOfSize(atom->getIdx(), 3) ||
-               queryIsAtomBridgehead(atom))) {
-            legalCenter = true;
-          }
-        }
-        return legalCenter;
+  }
+  if (nzDegree <= 1) {
+    // chirality is never possible with 0 or 1 nbr
+    return false;
+  } else if (nzDegree < 3 &&
+             (atom->getAtomicNum() != 15 && atom->getAtomicNum() != 33)) {
+    // less than three neighbors is never stereogenic
+    // unless it is a phosphine/arsine with implicit H
+    return false;
+  } else if (atom->getAtomicNum() == 15 || atom->getAtomicNum() == 33) {
+    // from logical flow: degree is 2 or 3 (implicit H)
+    // Since InChI Software v. 1.02-standard (2009), phosphines and arsines
+    // are always treated as stereogenic even with H atom neighbors.
+    // Accept automatically.
+    return true;
+  } else if (nzDegree == 3) {
+    // three-coordinate with a single H we'll accept automatically:
+    if (atom->getTotalNumHs() == 1) {
+      if (detail::has_protium_neighbor(mol, atom)) {
+        // more than one H is never stereogenic
+        return false;
       }
+      return true;
     } else {
-      return false;
+      // otherwise we default to not being a legal center
+      bool legalCenter = false;
+      // but there are a few special cases we'll accept
+      // sulfur or selenium with either a positive charge or a double
+      // bond:
+      if ((atom->getAtomicNum() == 16 || atom->getAtomicNum() == 34) &&
+          (atom->getExplicitValence() == 4 ||
+           (atom->getExplicitValence() == 3 && atom->getFormalCharge() == 1))) {
+        legalCenter = true;
+      } else if (atom->getAtomicNum() == 7) {
+        // three-coordinate N additional requirements:
+        //   in a ring of size 3  (from InChI)
+        // OR
+        /// is a bridgehead atom (RDKit extension)
+        // Also: cannot be SP2 hybridized or have a conjugated bond
+        //   (this was Github #7434)
+        if (atom->getHybridization() == Atom::HybridizationType::SP3 &&
+            !MolOps::atomHasConjugatedBond(atom) &&
+            (mol.getRingInfo()->isAtomInRingOfSize(atom->getIdx(), 3) ||
+             queryIsAtomBridgehead(atom))) {
+          legalCenter = true;
+        }
+      }
+      return legalCenter;
     }
+  } else {
+    return false;
+  }
 }
 
 bool isAtomPotentialStereoAtom(const Atom *atom,
