@@ -1,3 +1,6 @@
+#ifndef LLVM_CODE_GRAPHMOL_SUBGRAPHS_SUBGRAPHS_H
+#define LLVM_CODE_GRAPHMOL_SUBGRAPHS_SUBGRAPHS_H
+
 //
 //  Copyright (C) 2003-2022 Greg Landrum and other RDKit contributors
 //
@@ -184,5 +187,7 @@ copyMolSubset(const RDKit::ROMol& mol,
                    bool sanitize = true);
 
 }  // namespace RDKit
+
+#endif
 
 #endif
