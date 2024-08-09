@@ -10,13 +10,17 @@
 
 #include <RDGeneral/Invariant.h>
 #include <RDGeneral/RDThreads.h>
+#include <boost/dynamic_bitset/dynamic_bitset.hpp>
 #ifdef RDK_BUILD_THREADSAFE_SSS
-#include <thread>
 #include <future>
 #endif
 
-#include "MultiFPBReader.h"
 #include <algorithm>
+
+#include "MultiFPBReader.h"
+#include "DataStructs/ExplicitBitVect.h"
+#include "DataStructs/FPBReader.h"
+#include "RDGeneral/Exceptions.h"
 
 namespace RDKit {
 

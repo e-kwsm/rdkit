@@ -8,6 +8,12 @@
 //  of the RDKit source tree.
 //
 #include <RDGeneral/export.h>
+#include <boost/smart_ptr/shared_array.hpp>
+#include <cstdint>
+#include <utility>
+#include <vector>
+
+#include "RDGeneral/Invariant.h"
 #ifndef RD_MULTIFPBREADER_H_APR2016
 #define RD_MULTIFPBREADER_H_APR2016
 /*! \file MultiFPBReader.h
