@@ -13,29 +13,29 @@
 #include "FileParsers.h"
 #include "FileParserUtils.h"
 #include "MolSGroupWriting.h"
-#include <RDGeneral/Invariant.h>
+#include <GraphMol/Atropisomers.h>
+#include <GraphMol/Chirality.h>
 #include <GraphMol/FileParsers/MolFileStereochem.h>
 #include <GraphMol/RDKitQueries.h>
 #include <GraphMol/SubstanceGroup.h>
-#include <GraphMol/Chirality.h>
-#include <GraphMol/Atropisomers.h>
-#include <RDGeneral/Ranking.h>
+#include <RDGeneral/Invariant.h>
 #include <RDGeneral/LocaleSwitcher.h>
+#include <RDGeneral/Ranking.h>
 
-#include <vector>
 #include <algorithm>
-#include <fstream>
-#include <iostream>
-#include <iomanip>
 #include <cstdio>
+#include <fstream>
+#include <iomanip>
+#include <iostream>
+#include <vector>
 
-#include <boost/format.hpp>
-#include <boost/dynamic_bitset.hpp>
-#include <RDGeneral/BadFileException.h>
-#include <GraphMol/SmilesParse/SmilesWrite.h>
-#include <GraphMol/SmilesParse/SmartsWrite.h>
 #include <GraphMol/Depictor/RDDepictor.h>
 #include <GraphMol/GenericGroups/GenericGroups.h>
+#include <GraphMol/SmilesParse/SmartsWrite.h>
+#include <GraphMol/SmilesParse/SmilesWrite.h>
+#include <RDGeneral/BadFileException.h>
+#include <boost/dynamic_bitset.hpp>
+#include <boost/format.hpp>
 
 #include <boost/algorithm/string.hpp>
 
@@ -236,12 +236,12 @@ const std::string GetMolFileQueryInfo(
     const RWMol &mol, const boost::dynamic_bitset<> &queryListAtoms) {
   std::stringstream ss;
   boost::dynamic_bitset<> listQs(mol.getNumAtoms());
-  for (const auto atom : mol.atoms()) {
+  for (auto *const atom : mol.atoms()) {
     if (isAtomListQuery(atom) && !queryListAtoms[atom->getIdx()]) {
       listQs.set(atom->getIdx());
     }
   }
-  for (const auto atom : mol.atoms()) {
+  for (auto *const atom : mol.atoms()) {
     bool wrote_query = false;
     if (!listQs[atom->getIdx()] && !queryListAtoms[atom->getIdx()] &&
         hasComplexQuery(atom)) {
@@ -257,7 +257,7 @@ const std::string GetMolFileQueryInfo(
          << "\n";
     }
   }
-  for (const auto atom : mol.atoms()) {
+  for (auto *const atom : mol.atoms()) {
     if (listQs[atom->getIdx()]) {
       INT_VECT vals;
       getAtomListQueryVals(atom->getQuery(), vals);
@@ -314,7 +314,7 @@ const std::string GetMolFileAliasInfo(const RWMol &mol) {
 
 const std::string GetMolFilePXAInfo(const RWMol &mol) {
   std::string res;
-  for (const auto atom : mol.atoms()) {
+  for (auto *const atom : mol.atoms()) {
     if (atom->hasProp("_MolFile_PXA")) {
       res +=
           boost::str(boost::format("M  PXA % 3d%s\n") % (atom->getIdx() + 1) %
@@ -525,7 +525,8 @@ unsigned int getAtomParityFlag(const Atom *atom, const Conformer *conf) {
   }
   if (vol < 0) {
     return 2;
-  } else if (vol > 0) {
+  }
+  if (vol > 0) {
     return 1;
   }
   return 0;
@@ -958,7 +959,7 @@ void createSMARTSQSubstanceGroups(ROMol &mol) {
     }
     return false;
   };
-  for (const auto atom : mol.atoms()) {
+  for (auto *const atom : mol.atoms()) {
     if (atom->hasQuery()) {
       std::string sma;
 
@@ -992,7 +993,7 @@ void createZBOSubstanceGroups(ROMol &mol) {
   SubstanceGroup bsg(&mol, "DAT");
   bsg.setProp("FIELDNAME", "ZBO");
   boost::dynamic_bitset<> atomsAffected(mol.getNumAtoms(), 0);
-  for (const auto bond : mol.bonds()) {
+  for (auto *const bond : mol.bonds()) {
     if (bond->getBondType() == Bond::ZERO) {
       bsg.addBondWithIdx(bond->getIdx());
       atomsAffected[bond->getBeginAtomIdx()] = 1;
@@ -1193,7 +1194,7 @@ std::string getV3000CTAB(const ROMol &tmol,
   if (tmol.getNumBonds()) {
     res += "M  V30 BEGIN BOND\n";
 
-    for (const auto bond : tmol.bonds()) {
+    for (auto *const bond : tmol.bonds()) {
       res += GetV3000MolFileBondLine(bond, wedgeBonds, conf,
                                      wasAromatic[bond->getIdx()]);
       res += "\n";
@@ -1298,7 +1299,7 @@ std::string outputMolToMolBlock(const RWMol &tmol, int confId,
   res += "\n";
 
   bool hasDative = false;
-  for (const auto bond : tmol.bonds()) {
+  for (auto *const bond : tmol.bonds()) {
     if (bond->getBondType() == Bond::DATIVE) {
       hasDative = true;
       break;
@@ -1355,7 +1356,7 @@ std::string outputMolToMolBlock(const RWMol &tmol, int confId,
 
     auto wedgeBonds = Chirality::pickBondsToWedge(tmol, nullptr, conf);
 
-    for (const auto bond : tmol.bonds()) {
+    for (auto *const bond : tmol.bonds()) {
       res += GetMolFileBondLine(bond, wedgeBonds, conf,
                                 aromaticBonds[bond->getIdx()]);
       res += "\n";
@@ -1388,7 +1389,7 @@ void prepareMol(RWMol &trwmol, const MolWriterParams &params,
     trwmol.updatePropertyCache(false);
   }
   if (params.kekulize && trwmol.getNumBonds()) {
-    for (const auto bond : trwmol.bonds()) {
+    for (auto *const bond : trwmol.bonds()) {
       if (bond->getIsAromatic()) {
         aromaticBonds.set(bond->getIdx());
       }
