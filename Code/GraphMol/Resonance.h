@@ -1,3 +1,6 @@
+#ifndef LLVM_CODE_GRAPHMOL_RESONANCE_H
+#define LLVM_CODE_GRAPHMOL_RESONANCE_H
+
 //
 //  Copyright (C) 2015 Paolo Tosco
 //
@@ -13,10 +16,10 @@
 #include <memory>
 #include <cstdint>
 
-#include <vector>
-#include <stack>
 #include <map>
+#include <stack>
 #include <unordered_map>
+#include <vector>
 
 namespace RDKit {
 class ROMol;
@@ -235,4 +238,6 @@ class RDKIT_GRAPHMOL_EXPORT ResonanceMolSupplier {
   static bool cePermCompare(const CEPerm *a, const CEPerm *b);
 };
 }  // namespace RDKit
+#endif
+
 #endif
