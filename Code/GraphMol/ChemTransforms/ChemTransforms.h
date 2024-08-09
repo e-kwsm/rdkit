@@ -1,3 +1,6 @@
+#ifndef _RD_CHEMTRANSFORMS_H__
+#define _RD_CHEMTRANSFORMS_H__
+
 //
 //  Copyright (C) 2006-2012 Greg Landrum
 //
@@ -8,8 +11,6 @@
 //  of the RDKit source tree.
 //
 #include <RDGeneral/export.h>
-#ifndef _RD_CHEMTRANSFORMS_H__
-#define _RD_CHEMTRANSFORMS_H__
 
 #include <boost/smart_ptr.hpp>
 #include <string_view>
@@ -276,4 +277,6 @@ RDKIT_CHEMTRANSFORMS_EXPORT void copyStereoGroups(
 }  // namespace details
 
 }  // namespace RDKit
+#endif
+
 #endif
