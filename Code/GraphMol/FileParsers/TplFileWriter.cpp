@@ -10,11 +10,11 @@
 //
 
 #include "FileParsers.h"
-#include <RDGeneral/RDLog.h>
-#include <sstream>
-#include <fstream>
-#include <RDGeneral/FileParseException.h>
 #include <RDGeneral/BadFileException.h>
+#include <RDGeneral/FileParseException.h>
+#include <RDGeneral/RDLog.h>
+#include <fstream>
+#include <sstream>
 
 namespace RDKit {
 namespace TPLWriter {
