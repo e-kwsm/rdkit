@@ -1,3 +1,6 @@
+#ifndef LLVM_CODE_GRAPHMOL_SUBGRAPHS_SUBGRAPHS_H
+#define LLVM_CODE_GRAPHMOL_SUBGRAPHS_SUBGRAPHS_H
+
 //
 //  Copyright (C) 2003-2022 Greg Landrum and other RDKit contributors
 //
@@ -29,10 +32,10 @@
 #ifndef RD_SUBGRAPHS_H
 #define RD_SUBGRAPHS_H
 
-#include <vector>
 #include <list>
 #include <map>
 #include <unordered_map>
+#include <vector>
 
 namespace RDKit {
 class ROMol;
@@ -152,5 +155,7 @@ RDKIT_SUBGRAPHS_EXPORT PATH_TYPE findAtomEnvironmentOfRadiusN(
     std::unordered_map<unsigned int, unsigned int> *atomMap = nullptr);
 
 }  // namespace RDKit
+
+#endif
 
 #endif
