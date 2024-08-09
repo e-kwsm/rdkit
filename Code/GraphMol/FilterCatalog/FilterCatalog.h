@@ -1,3 +1,6 @@
+#ifndef LLVM_CODE_GRAPHMOL_FILTERCATALOG_FILTERCATALOG_H
+#define LLVM_CODE_GRAPHMOL_FILTERCATALOG_FILTERCATALOG_H
+
 //  Copyright (c) 2015, Novartis Institutes for BioMedical Research Inc.
 //  All rights reserved.
 //
@@ -33,9 +36,9 @@
 #ifndef _RD_FILTER_CATALOG_PARAMS_
 #define _RD_FILTER_CATALOG_PARAMS_
 
+#include "FilterCatalogEntry.h"
 #include <Catalogs/Catalog.h>
 #include <Catalogs/CatalogParams.h>
-#include "FilterCatalogEntry.h"
 
 namespace RDKit {
 class FilterCatalog;
@@ -266,5 +269,7 @@ std::vector<std::vector<boost::shared_ptr<const FilterCatalogEntry>>>
 RunFilterCatalog(const FilterCatalog &filterCatalog,
                  const std::vector<std::string> &smiles, int numThreads = 1);
 }  // namespace RDKit
+
+#endif
 
 #endif
