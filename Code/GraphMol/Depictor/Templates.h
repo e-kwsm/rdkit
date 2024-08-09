@@ -1,3 +1,6 @@
+#ifndef LLVM_CODE_GRAPHMOL_DEPICTOR_TEMPLATES_H
+#define LLVM_CODE_GRAPHMOL_DEPICTOR_TEMPLATES_H
+
 //
 //  Copyright (C) 2023 Schrödinger, LLC
 //
@@ -8,13 +11,14 @@
 //  of the RDKit source tree.
 //
 
+#include <GraphMol/MolOps.h>
 #include <GraphMol/ROMol.h>
 #include <GraphMol/SmilesParse/SmilesParse.h>
-#include <GraphMol/MolOps.h>
 
 #include "TemplateSmiles.h"
 
 #include <fstream>
+#include <iostream>
 #include <unordered_map>
 
 namespace RDDepict {
@@ -96,3 +100,5 @@ class RDKIT_DEPICTOR_EXPORT CoordinateTemplates {
       m_templates;
 };
 }  // namespace RDDepict
+
+#endif

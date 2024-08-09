@@ -1,3 +1,6 @@
+#ifndef LLVM_CODE_GRAPHMOL_DEPICTOR_TEMPLATESMILES_H
+#define LLVM_CODE_GRAPHMOL_DEPICTOR_TEMPLATESMILES_H
+
 //
 //  Copyright (C) 2023 Schrödinger, LLC
 //
@@ -95,3 +98,5 @@ const std::vector<std::string> TEMPLATE_SMILES = {
     "C1CC2CC1C2 |(0.562,0.77,;0.562,-0.77,;-0.9027,-1.2459,;-1.8079,0,;-0.9027,1.2459,;-0.5912,0,)|",
 };
 // clang-format on
+
+#endif

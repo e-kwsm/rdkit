@@ -1,3 +1,6 @@
+#ifndef LLVM_CODE_GRAPHMOL_DEPICTOR_DEPICTUTILS_H
+#define LLVM_CODE_GRAPHMOL_DEPICTOR_DEPICTUTILS_H
+
 //
 //  Copyright (C) 2003-2022 Greg Landrum and other RDKit contributors
 //
@@ -12,14 +15,14 @@
 #define RD_DEPICT_UTILS_H
 
 // REVIEW: remove extra headers here
-#include <RDGeneral/types.h>
-#include <GraphMol/RDKitBase.h>
-#include <GraphMol/RWMol.h>
-#include <GraphMol/ROMol.h>
-#include <GraphMol/Substruct/SubstructUtils.h>
 #include <Geometry/Transform2D.h>
 #include <Geometry/Transform3D.h>
 #include <Geometry/point.h>
+#include <GraphMol/RDKitBase.h>
+#include <GraphMol/ROMol.h>
+#include <GraphMol/RWMol.h>
+#include <GraphMol/Substruct/SubstructUtils.h>
+#include <RDGeneral/types.h>
 #include <queue>
 
 namespace RDDepict {
@@ -256,9 +259,8 @@ inline int rotationDir(const RDGeom::Point2D &center,
   cross *= diffAngle;
   if (cross >= 0.0) {
     return -1;
-  } else {
-    return 1;
   }
+  return 1;
 }
 
 //! computes and return the normal of a vector between two points
@@ -388,5 +390,7 @@ RDKIT_DEPICTOR_EXPORT void reducedToFullMatches(
 RDKIT_DEPICTOR_EXPORT bool invertWedgingIfMolHasFlipped(
     RDKit::ROMol &mol, const RDGeom::Transform3D &trans);
 }  // namespace RDDepict
+
+#endif
 
 #endif
