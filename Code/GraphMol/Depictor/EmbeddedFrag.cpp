@@ -163,7 +163,8 @@ void EmbeddedFrag::computeNbrsAndAng(unsigned int aid,
       nb2 = wnb1;
       nb1 = nbrPair.first;
       break;
-    } else if (wnb2 == nbrPair.first) {
+    }
+    if (wnb2 == nbrPair.first) {
       nb2 = wnb2;
       nb1 = nbrPair.second;
       break;
@@ -2010,8 +2011,7 @@ void EmbeddedFrag::removeCollisionsBondFlip() {
           }
           if (colls.size() == ncols && newDensity < prevDensity) {
             break;
-          } else {
-            // we made the wrong move earlier - reject the flip move it back
+          }  // we made the wrong move earlier - reject the flip move it back
             flipAboutBond(ri);
             colls = this->findCollisions(dmat);
             // and try the other end:
@@ -2027,7 +2027,6 @@ void EmbeddedFrag::removeCollisionsBondFlip() {
               flipAboutBond(ri, false);
               colls = this->findCollisions(dmat);
             }
-          }
         }
       }
     }
