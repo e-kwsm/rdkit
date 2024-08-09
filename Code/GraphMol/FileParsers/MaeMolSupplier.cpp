@@ -323,7 +323,8 @@ void set_atom_properties(Atom &atom, const mae::IndexedBlock &atom_block,
     if (prop.first == PDB_OCCUPANCY || prop.first == PDB_TFACTOR) {
       // PDB information is parsed separately.
       continue;
-    } else if (!prop.second->isDefined(i)) {
+    }
+    if (!prop.second->isDefined(i)) {
       continue;
     }
 
@@ -338,7 +339,8 @@ void set_atom_properties(Atom &atom, const mae::IndexedBlock &atom_block,
     if (prop.first == PDB_RESIDUE_NUMBER) {
       // PDB information is parsed separately.
       continue;
-    } else if (!prop.second->isDefined(i)) {
+    }
+    if (!prop.second->isDefined(i)) {
       continue;
     }
 
