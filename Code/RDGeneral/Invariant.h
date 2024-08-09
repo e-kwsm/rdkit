@@ -13,12 +13,12 @@
 #ifndef __RD_INVARIANT_H__
 #define __RD_INVARIANT_H__
 
+#include <RDGeneral/RDLog.h>
 #include <cassert>
 #include <string>
 #include <stdexcept>
 
 #include "BoostStartInclude.h"
-#include <RDGeneral/RDLog.h>
 #include "BoostEndInclude.h"
 
 #ifdef RDDEBUG
