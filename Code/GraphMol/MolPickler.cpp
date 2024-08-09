@@ -372,7 +372,8 @@ QueryDetails getQueryDetails(const Query<int, T const *, true> *query) {
     return QueryDetails(std::make_tuple(
         MolPickler::QUERY_PROPERTY,
         static_cast<const HasPropQuery<T const *> *>(query)->getPropName()));
-  } else if (typeid(*query) == typeid(Query<int, T const *, true>)) {
+  }
+  if (typeid(*query) == typeid(Query<int, T const *, true>)) {
     return QueryDetails(MolPickler::QUERY_NULL);
   } else if (typeid(*query) == typeid(RangeQuery<int, T const *, true>)) {
     char ends;
