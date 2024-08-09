@@ -367,7 +367,8 @@ QueryDetails getQueryDetails(const Query<int, T const *, true> *query) {
             ->getVal(),
         static_cast<const EqualityQuery<int, T const *, true> *>(query)
             ->getTol()));
-  } else if (typeid(*query) == typeid(HasPropQuery<T const *>)) {
+  }
+  if (typeid(*query) == typeid(HasPropQuery<T const *>)) {
     return QueryDetails(std::make_tuple(
         MolPickler::QUERY_PROPERTY,
         static_cast<const HasPropQuery<T const *> *>(query)->getPropName()));
