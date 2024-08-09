@@ -1,3 +1,6 @@
+#ifndef LLVM_CODE_GRAPHMOL_FILEPARSERS_CDXMLPARSER_H
+#define LLVM_CODE_GRAPHMOL_FILEPARSERS_CDXMLPARSER_H
+
 //
 //  Copyright (c) 2022 Brian P Kelley
 //  All rights reserved.
@@ -12,8 +15,8 @@
 #define RD_CDXML_FILEPARSERS_H
 
 #include <RDGeneral/types.h>
-#include <string>
 #include <iostream>
+#include <string>
 #include <vector>
 
 namespace RDKit {
@@ -130,3 +133,5 @@ inline std::vector<std::unique_ptr<RWMol>> CDXMLToMols(const std::string &cdxml,
 }  // namespace v1
 }  // namespace RDKit
 #endif  // _RD_CDXML_FILEPARSERS_H
+
+#endif
