@@ -8,14 +8,17 @@
 //  of the RDKit source tree.
 //
 #include <RDGeneral/export.h>
+#include <boost/smart_ptr/shared_array.hpp>
 #ifndef __RD_TRANSFORM2D_H__
 #define __RD_TRANSFORM2D_H__
 
-#include "Transform.h"
 #include <Numerics/SquareMatrix.h>
+
+#include "Transform.h"
 
 namespace RDGeom {
 class Point2D;
+
 const unsigned int DIM_2D = 3;
 
 class RDKIT_RDGEOMETRYLIB_EXPORT Transform2D
