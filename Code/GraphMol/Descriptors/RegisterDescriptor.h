@@ -1,3 +1,6 @@
+#ifndef LLVM_CODE_GRAPHMOL_DESCRIPTORS_REGISTERDESCRIPTOR_H
+#define LLVM_CODE_GRAPHMOL_DESCRIPTORS_REGISTERDESCRIPTOR_H
+
 //
 //  Copyright (c) 2016, Novartis Institutes for BioMedical Research Inc.
 //  All rights reserved.
@@ -34,10 +37,10 @@
 #ifndef RDKIT_REGISTER_DESCRIPTOR_H
 #define RDKIT_REGISTER_DESCRIPTOR_H
 
+#include "Property.h"
+#include <RDGeneral/BoostEndInclude.h>
 #include <RDGeneral/BoostStartInclude.h>
 #include <boost/shared_ptr.hpp>
-#include <RDGeneral/BoostEndInclude.h>
-#include "Property.h"
 
 namespace RDKit {
 class ROMol;
@@ -80,5 +83,7 @@ static NAME##PropertyFunctor NAME##PropertyFunctor__;
   static NAME##PropertyFunctor NAME##PropertyFunctor__;
 }  // namespace Descriptors
 }  // namespace RDKit
+
+#endif
 
 #endif
