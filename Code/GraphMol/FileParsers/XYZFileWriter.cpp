@@ -8,10 +8,10 @@
 //
 
 #include "FileParsers.h"
+#include <RDGeneral/BadFileException.h>
+#include <boost/format.hpp>
 #include <fstream>
 #include <sstream>
-#include <boost/format.hpp>
-#include <RDGeneral/BadFileException.h>
 
 namespace RDKit {
 
