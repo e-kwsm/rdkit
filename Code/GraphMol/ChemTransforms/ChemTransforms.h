@@ -1,3 +1,6 @@
+#ifndef LLVM_CODE_GRAPHMOL_CHEMTRANSFORMS_CHEMTRANSFORMS_H
+#define LLVM_CODE_GRAPHMOL_CHEMTRANSFORMS_CHEMTRANSFORMS_H
+
 //
 //  Copyright (C) 2006-2012 Greg Landrum
 //
@@ -12,11 +15,11 @@
 #define _RD_CHEMTRANSFORMS_H__
 
 #include <boost/smart_ptr.hpp>
-#include <vector>
 #include <iostream>
+#include <vector>
 
-#include <GraphMol/Substruct/SubstructMatch.h>
 #include "MolFragmenter.h"
+#include <GraphMol/Substruct/SubstructMatch.h>
 
 namespace RDKit {
 class ROMol;
@@ -276,4 +279,6 @@ RDKIT_CHEMTRANSFORMS_EXPORT void copyStereoGroups(
 }  // namespace details
 
 }  // namespace RDKit
+#endif
+
 #endif
