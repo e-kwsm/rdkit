@@ -1,3 +1,6 @@
+#ifndef LLVM_CODE_GRAPHMOL_DEPICTOR_RDDEPICTOR_H
+#define LLVM_CODE_GRAPHMOL_DEPICTOR_RDDEPICTOR_H
+
 //
 //  Copyright (C) 2003-2022 Greg Landrum and other RDKit contributors
 //
@@ -12,14 +15,14 @@
 #ifndef RDDEPICTOR_H
 #define RDDEPICTOR_H
 
+#include <Geometry/point.h>
 #include <GraphMol/Substruct/SubstructMatch.h>
 #include <RDGeneral/types.h>
-#include <Geometry/point.h>
 #include <boost/smart_ptr.hpp>
 
 namespace RDKit {
 class ROMol;
-}
+}  // namespace RDKit
 
 namespace RDDepict {
 
@@ -466,5 +469,7 @@ RDKIT_DEPICTOR_EXPORT double normalizeDepiction(RDKit::ROMol &mol,
                                                 int canonicalize = 1,
                                                 double scaleFactor = -1.0);
 };  // namespace RDDepict
+
+#endif
 
 #endif
