@@ -1,3 +1,6 @@
+#ifndef LLVM_CODE_GRAPHMOL_FILTERCATALOG_FILTERMATCHERS_H
+#define LLVM_CODE_GRAPHMOL_FILTERCATALOG_FILTERMATCHERS_H
+
 //  Copyright (c) 2015, Novartis Institutes for BioMedical Research Inc.
 //  All rights reserved.
 //
@@ -34,15 +37,15 @@
 #define __RD_FILTER_MATCHER_H__
 #include <utility>
 
-#include <GraphMol/RDKitBase.h>
-#include <GraphMol/Substruct/SubstructMatch.h>
 #include "FilterMatcherBase.h"
 #include <GraphMol/MolPickler.h>
+#include <GraphMol/RDKitBase.h>
+#include <GraphMol/Substruct/SubstructMatch.h>
 
 #ifdef RDK_USE_BOOST_SERIALIZATION
+#include <RDGeneral/BoostEndInclude.h>
 #include <RDGeneral/BoostStartInclude.h>
 #include <boost/serialization/shared_ptr.hpp>
-#include <RDGeneral/BoostEndInclude.h>
 #endif
 
 namespace RDKit {
@@ -575,6 +578,8 @@ void registerFilterMatcherTypes(Archive &ar) {
 BOOST_CLASS_VERSION(RDKit::SmartsMatcher, 1)
 BOOST_CLASS_VERSION(RDKit::ExclusionList, 1)
 BOOST_CLASS_VERSION(RDKit::FilterHierarchyMatcher, 1)
+#endif
+
 #endif
 
 #endif
