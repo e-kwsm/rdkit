@@ -1,3 +1,6 @@
+#ifndef LLVM_CODE_GRAPHMOL_SMILESPARSE_SMILESPARSE_H
+#define LLVM_CODE_GRAPHMOL_SMILESPARSE_SMILESPARSE_H
+
 //
 //  Copyright (C) 2001-2021 Greg Landrum and other RDKit contributors
 //
@@ -12,10 +15,10 @@
 #define RD_SMILESPARSE_H
 
 #include <GraphMol/SanitException.h>
-#include <string>
 #include <exception>
 #include <map>
 #include <memory>
+#include <string>
 
 namespace RDKit {
 class RWMol;
@@ -133,7 +136,7 @@ inline RDKit::RWMol *SmilesToMol(const std::string &smi,
 }
 
 inline Atom *SmilesToAtom(const std::string &smi) {
-  auto res = RDKit::v2::SmilesParse::AtomFromSmiles(smi).release();
+  auto *res = RDKit::v2::SmilesParse::AtomFromSmiles(smi).release();
   return res;
 }
 
@@ -250,5 +253,7 @@ inline std::unique_ptr<RDKit::RWMol> operator"" _smarts(const char *text,
 }
 
 }  // namespace RDKit
+
+#endif
 
 #endif
