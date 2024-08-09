@@ -46,7 +46,7 @@ void MultithreadedMolSupplier::writer() {
   std::tuple<std::string, unsigned int, unsigned int> r;
   while (d_inputQueue->pop(r)) {
     try {
-      auto mol = processMoleculeRecord(std::get<0>(r), std::get<1>(r));
+      auto *mol = processMoleculeRecord(std::get<0>(r), std::get<1>(r));
       auto temp = std::tuple<RWMol*, std::string, unsigned int>{
           mol, std::get<0>(r), std::get<2>(r)};
       d_outputQueue->push(temp);
