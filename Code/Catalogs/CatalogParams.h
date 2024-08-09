@@ -1,3 +1,6 @@
+#ifndef LLVM_CODE_CATALOGS_CATALOGPARAMS_H
+#define LLVM_CODE_CATALOGS_CATALOGPARAMS_H
+
 //
 //  Copyright (C) 2003-2006 Rational Discovery LLC
 //
@@ -38,5 +41,7 @@ class RDKIT_CATALOGS_EXPORT CatalogParams {
   std::string d_typeStr;  //!< our type string
 };
 }  // namespace RDCatalog
+
+#endif
 
 #endif
