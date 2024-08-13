@@ -229,7 +229,7 @@ void RGroupGa::rGroupCrossoverOperation(
   parent1->twoPointCrossover(*parent2, *child1, *child2);
 }
 
-const vector<shared_ptr<GaOperation<RGroupDecompositionChromosome>>>
+vector<shared_ptr<GaOperation<RGroupDecompositionChromosome>>>
 RGroupGa::getOperations() const {
   // bias to mutation as that operator is so efficient
   auto mutationOperation =
