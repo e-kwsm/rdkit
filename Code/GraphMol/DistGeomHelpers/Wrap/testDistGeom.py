@@ -162,11 +162,11 @@ class TestCase(unittest.TestCase):
   def test2Utils(self):
     mol = Chem.MolFromSmiles('CC')
     bm = rdDistGeom.GetMoleculeBoundsMatrix(mol)
-    self.assertTrue(bm[1, 0] > 0)
-    self.assertTrue(bm[0, 1] > 0)
-    self.assertTrue(bm[0, 1] >= bm[1, 0])
-    self.assertTrue(bm[1, 0] < 1.510)
-    self.assertTrue(bm[0, 1] > 1.510)
+    self.assertGreater(bm[1, 0], 0)
+    self.assertGreater(bm[0, 1], 0)
+    self.assertGreaterEqual(bm[0, 1], bm[1, 0])
+    self.assertLess(bm[1, 0], 1.510)
+    self.assertGreater(bm[0, 1], 1.510)
 
   def test3MultiConf(self):
     mol = Chem.MolFromSmiles("CC(C)(C)c(cc12)n[n]2C(=O)/C=C(N1)/COC")
@@ -218,7 +218,7 @@ class TestCase(unittest.TestCase):
 
     d = [abs(x - y) for x, y in zip(expected, nconfs)]
     # print(nconfs)
-    self.assertTrue(max(d) <= 1)
+    self.assertLessEqual(max(d), 1)
 
     # previous settings
     params = rdDistGeom.ETKDG()
@@ -235,7 +235,7 @@ class TestCase(unittest.TestCase):
 
     d = [abs(x - y) for x, y in zip(expected, nconfs)]
     # print(nconfs)
-    self.assertTrue(max(d) <= 1)
+    self.assertLessEqual(max(d), 1)
 
   def test6Chirality(self):
     # turn on chirality and we should get chiral volume that is pretty consistent and
@@ -249,7 +249,7 @@ class TestCase(unittest.TestCase):
       conf = mol.GetConformer(cid)
       vol = computeChiralVol(conf.GetAtomPosition(0), conf.GetAtomPosition(2),
                              conf.GetAtomPosition(3), conf.GetAtomPosition(4))
-      self.assertTrue(abs(vol - tgtVol) < 1)
+      self.assertLess(abs(vol - tgtVol), 1)
 
     # turn of chirality and now we should see both chiral forms
     smiles = "ClC(C)(F)Br"
@@ -267,8 +267,8 @@ class TestCase(unittest.TestCase):
         nNeg += 1
       else:
         nPos += 1
-    self.assertTrue(nPos > 0)
-    self.assertTrue(nNeg > 0)
+    self.assertGreater(nPos, 0)
+    self.assertGreater(nNeg, 0)
 
     tgtVol = 3.0
     for i in range(10):
@@ -278,7 +278,7 @@ class TestCase(unittest.TestCase):
       conf = mol.GetConformer(ci)
       vol = computeChiralVol(conf.GetAtomPosition(0), conf.GetAtomPosition(1),
                              conf.GetAtomPosition(2), conf.GetAtomPosition(3))
-      self.assertTrue(abs(vol - tgtVol) < 1, "%s %s" % (vol, tgtVol))
+      self.assertLess(abs(vol - tgtVol), 1, "%s %s" % (vol, tgtVol))
 
     tgtVol = 3.5
     expected = [-3.62, -3.67, -3.72, 3.91, 3.95, 3.98, 3.90, 3.94, 3.98, 3.91]
@@ -297,8 +297,8 @@ class TestCase(unittest.TestCase):
       else:
         nPos += 1
 
-    self.assertTrue(nPos > 0)
-    self.assertTrue(nNeg > 0)
+    self.assertGreater(nPos, 0)
+    self.assertGreater(nNeg, 0)
 
     smiles = "Cl[C@H](F)Br"
     m = Chem.MolFromSmiles(smiles)
@@ -310,7 +310,7 @@ class TestCase(unittest.TestCase):
       conf = mol.GetConformer(cid)
       vol = computeChiralVol(conf.GetAtomPosition(0), conf.GetAtomPosition(2),
                              conf.GetAtomPosition(3), conf.GetAtomPosition(4))
-      self.assertTrue(abs(vol - tgtVol) < 2.)
+      self.assertLess(abs(vol - tgtVol), 2.)
 
     # let's try a little more complicated system
     expectedV1 = -2.0
@@ -342,8 +342,8 @@ class TestCase(unittest.TestCase):
     expectedV1 = 2.0  # [-2.30, -2.31, -2.30,  2.30, -1.77]
     expectedV2 = 2.8  # [2.90,  2.89,  2.69, -2.90, -2.93]
 
-    self.assertTrue(nPos > 0)
-    self.assertTrue(nNeg > 0)
+    self.assertGreater(nPos, 0)
+    self.assertGreater(nNeg, 0)
     for i in range(5):
       smi = "C1=CC=C(C=C1)C(OC1=C[NH]N=C1)C(=O)[NH]CC(Cl)C1=CC=NC=C1"
       mol = Chem.MolFromSmiles(smi)
@@ -356,8 +356,8 @@ class TestCase(unittest.TestCase):
                               conf.GetAtomPosition(7), conf.GetAtomPosition(13))
       vol2 = computeChiralVol(conf.GetAtomPosition(17), conf.GetAtomPosition(16),
                               conf.GetAtomPosition(18), conf.GetAtomPosition(19))
-      self.assertTrue(abs(abs(vol1) - expectedV1) < 1.0)
-      self.assertTrue(abs(abs(vol2) - expectedV2) < 1.0)
+      self.assertLess(abs(abs(vol1) - expectedV1), 1.0)
+      self.assertLess(abs(abs(vol2) - expectedV2), 1.0)
 
   def test7ConstrainedEmbedding(self):
     ofile = os.path.join(RDConfig.RDBaseDir, 'Code', 'GraphMol', 'DistGeomHelpers', 'test_data',
@@ -370,10 +370,10 @@ class TestCase(unittest.TestCase):
     for i in range(5):
       cMap[i] = ref.GetConformer().GetAtomPosition(i)
     ci = rdDistGeom.EmbedMolecule(probe, coordMap=cMap, randomSeed=23)
-    self.assertTrue(ci > -1)
+    self.assertGreater(ci, -1)
     algMap = list(zip(range(5), range(5)))
     ssd = rdMolAlign.AlignMol(probe, ref, atomMap=algMap)
-    self.assertTrue(ssd < 0.1)
+    self.assertLess(ssd, 0.1)
 
   def test8MultiThreadMultiConf(self):
     if (rdBase.rdkitBuild.split('|')[2] != "MINGW"):
@@ -407,7 +407,7 @@ class TestCase(unittest.TestCase):
         msd += (mol.GetConformer().GetAtomPosition(i) -
                 mol2.GetConformer().GetAtomPosition(i)).LengthSq()
       msd /= mol.GetNumAtoms()
-      self.assertTrue(msd < MSD_TOLERANCE)
+      self.assertLess(msd, MSD_TOLERANCE)
 
   def _compareConfs(self, mol, ref, molConfId, refConfId):
     self.assertEqual(mol.GetNumAtoms(), ref.GetNumAtoms())
@@ -527,7 +527,7 @@ class TestCase(unittest.TestCase):
     mol = Chem.MolFromSmiles('CCCCC')
     bm1 = rdDistGeom.GetMoleculeBoundsMatrix(mol)
     bm2 = rdDistGeom.GetMoleculeBoundsMatrix(mol, doTriangleSmoothing=False)
-    self.assertTrue(bm1[0, 4] < bm2[0, 4])
+    self.assertLess(bm1[0, 4], bm2[0, 4])
 
   def testGithub2057(self):
     # ensure that ETKDG is the default Embedder
