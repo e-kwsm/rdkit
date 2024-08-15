@@ -685,7 +685,7 @@ M  END''')
     d2d.DrawMolecule(m)
     d2d.FinishDrawing()
     txt = d2d.GetDrawingText()
-    self.assertFalse('>8</text>' in txt)
+    self.assertNotIn('>8</text>', txt)
 
     drawOptions = rdMolDraw2D.MolDrawOptions()
     Draw.UpdateMolDrawOptionsFromJSON(drawOptions, '{"addAtomIndices": 1}')
@@ -695,14 +695,14 @@ M  END''')
     d2d.DrawMolecule(m)
     d2d.FinishDrawing()
     txt = d2d.GetDrawingText()
-    self.assertTrue('>8</text>' in txt)
+    self.assertIn('>8</text>', txt)
 
     d2d = Draw.MolDraw2DSVG(250, 200, -1, -1, True)
     Draw.UpdateDrawerParamsFromJSON(d2d, '{"addAtomIndices": 1}')
     d2d.DrawMolecule(m)
     d2d.FinishDrawing()
     txt = d2d.GetDrawingText()
-    self.assertTrue('>8</text>' in txt)
+    self.assertIn('>8</text>', txt)
 
   def testIsotopeLabels(self):
     m = Chem.MolFromSmiles("[1*]c1cc([2*])c([3*])c[14c]1")
@@ -851,7 +851,7 @@ M  END''')
     d2d.DrawMolecule(m)
     d2d.FinishDrawing()
     text = d2d.GetDrawingText()
-    self.assertTrue("#7F7F7F" in text)
+    self.assertIn("#7F7F7F", text)
 
     # Check that queryColour can be set to black.
     query_colour = (0.0, 0.0, 0.0)
@@ -860,7 +860,7 @@ M  END''')
     d2d.DrawMolecule(m)
     d2d.FinishDrawing()
     text = d2d.GetDrawingText()
-    self.assertTrue("#7F7F7F" not in text)
+    self.assertNotIn("#7F7F7F", text)
 
     query_colour = (0.0, 0.0, 0.0)
     d2d = rdMolDraw2D.MolDraw2DSVG(-1, -1)
@@ -870,7 +870,7 @@ M  END''')
     d2d.DrawMolecule(m)
     d2d.FinishDrawing()
     text = d2d.GetDrawingText()
-    self.assertTrue("#7F7F7F" not in text)
+    self.assertNotIn("#7F7F7F", text)
 
   def testColourProperties(self):
     m = Chem.MolFromSmiles("c1ncccc1.*[C@H](F)Cl |m:6:0.1.2|")
@@ -898,7 +898,7 @@ M  END''')
       d2d.DrawMolecule(m, highlightAtoms=[4, 5], legend='foo')
       d2d.FinishDrawing()
       text = d2d.GetDrawingText()
-      self.assertTrue(hexc in text)
+      self.assertIn(hexc, text)
 
   @unittest.skipUnless(hasattr(Draw, 'MolDraw2DCairo'), 'Cairo support not enabled')
   def testGithub7409(self):
@@ -924,7 +924,7 @@ M  END''')
     d2d.FinishDrawing()
     text = d2d.GetDrawingText()
     #confirm that at least one CIP code is present
-    self.assertTrue("class='CIP_Code'" in text)
+    self.assertIn("class='CIP_Code'", text)
 
   def testDrawingExtentsInclude(self):
     coordRegex = re.compile(
