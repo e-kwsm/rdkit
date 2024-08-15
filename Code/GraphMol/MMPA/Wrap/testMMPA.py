@@ -97,7 +97,7 @@ class TestCase(unittest.TestCase):
       "CC[C@H](C)[C@@H](C(=O)N[C@H]1CSSC[C@H]2C(=O)NCC(=O)N3CCC[C@H]3C(=O)N[C@H](C(=O)N[C@H](C(=O)N[C@H](C(=O)N[C@@H](CSSC[C@@H](C(=O)N[C@H](C(=O)N4CCC[C@H]4C(=O)N[C@H](C(=O)N2)C)CC(=O)N)NC1=O)C(=O)N)CO)Cc5ccc(cc5)O)CCCC[NH3+])N"
     )  # ALPHA-CONOTOXIN SI
     frags = rdMMPA.FragmentMol(m, resultsAsMols=False)
-    self.assertFalse(len(frags))
+    self.assertFalse(frags)
     frags = rdMMPA.FragmentMol(m, maxCuts=2, maxCutBonds=21, resultsAsMols=False)
     self.assertEqual(len(frags), 231)
 
@@ -106,7 +106,7 @@ class TestCase(unittest.TestCase):
       "CC[C@H](C)[C@@H](C(=O)N[C@H]1CSSC[C@H]2C(=O)NCC(=O)N3CCC[C@H]3C(=O)N[C@H](C(=O)N[C@H](C(=O)N[C@H](C(=O)N[C@@H](CSSC[C@@H](C(=O)N[C@H](C(=O)N4CCC[C@H]4C(=O)N[C@H](C(=O)N2)C)CC(=O)N)NC1=O)C(=O)N)CO)Cc5ccc(cc5)O)CCCC[NH3+])N"
     )  # ALPHA-CONOTOXIN SI
     frags = rdMMPA.FragmentMol(m, resultsAsMols=False)
-    self.assertFalse(len(frags))
+    self.assertFalse(frags)
     frags1 = rdMMPA.FragmentMol(m, minCuts=1, maxCuts=1, maxCutBonds=21, resultsAsMols=False)
     frags2 = rdMMPA.FragmentMol(m, minCuts=2, maxCuts=2, maxCutBonds=21, resultsAsMols=False)
 
