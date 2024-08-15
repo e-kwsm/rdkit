@@ -1002,9 +1002,9 @@ M  END
       p.alignOnly = alignOnly
       res = rdDepictor.GenerateDepictionMatching2DStructure(mol, template_ref, params=p)
       expectedMolIndices = [11, 10, 7, 8, 9, 6]
-      self.assertTrue(
-        all(templateRefAtomIdx == i and molAtomIdx == expectedMolIndices[i]
-            for i, (templateRefAtomIdx, molAtomIdx) in enumerate(res)))
+      for i, (templateRefAtomIdx, molAtomIdx) in enumerate(res))):
+        self.assertEqual(templateRefAtomIdx, i)
+        self.assertEqual(molAtomIdx, expectedMolIndices[i])
       self.assertEqual(Chem.MolToSmiles(mol), "C1CC2CCC1N2C1CNC1N1C2CCC1CC2")
       self.assertTrue(
         all((mol.GetConformer().GetAtomPosition(molAtomIdx) -
