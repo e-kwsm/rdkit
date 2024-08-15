@@ -219,7 +219,7 @@ class TestCase(unittest.TestCase):
     self.assertTrue(4 <= np.median(list(pairs02.values())) <= 6)
     self.assertTrue(4 <= np.median(list(pairs12.values())) <= 6)
 
-    self.assertTrue("PAIRSTAT" in strategy.Stats())
+    self.assertIn("PAIRSTAT", strategy.Stats())
 
   def testEnumerateLibrary(self):
     log("testEnumerateLibrary")
