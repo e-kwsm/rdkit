@@ -255,7 +255,7 @@ class TestCase(unittest.TestCase):
     bbs = enumerator.GetReagents()
     for i in range(len(bbs)):
       for j in range(len(bbs[i])):
-        self.assertTrue(Chem.MolToSmiles(reagents[i][j]) == Chem.MolToSmiles(bbs[i][j]))
+        self.assertEqual(Chem.MolToSmiles(reagents[i][j]), Chem.MolToSmiles(bbs[i][j]))
 
     smiresults = [
       'C=CCNC(=S)NCc1ncc(Cl)cc1Br', 'CC=CCNC(=S)NCc1ncc(Cl)cc1Br', 'C=CCNC(=S)NCCc1ncc(Cl)cc1Br',
@@ -613,9 +613,9 @@ class TestCase(unittest.TestCase):
         self.assertTrue(bb.HasSubstructMatch(reagent))
 
     en = rdChemReactions.EnumerateLibrary(rxn, bbs)
-    self.assertTrue(len(en.GetReagents()[0]) == 2)
-    self.assertTrue(len(en.GetReagents()[1]) == 2)
-    self.assertTrue(len(en.GetReagents()[2]) == 2)
+    self.assertEqual(len(en.GetReagents()[0]), 2)
+    self.assertEqual(len(en.GetReagents()[1]), 2)
+    self.assertEqual(len(en.GetReagents()[2]), 2)
 
     #####################################################################################
     # Match only at rgroups (ChemDraw style)
@@ -628,9 +628,9 @@ class TestCase(unittest.TestCase):
 
     # Now try EnumerateLibrary
     en = rdChemReactions.EnumerateLibrary(rxn, bbs)
-    self.assertTrue(len(en.GetReagents()[0]) == 1)
-    self.assertTrue(len(en.GetReagents()[1]) == 2)
-    self.assertTrue(len(en.GetReagents()[2]) == 1)
+    self.assertEqual(len(en.GetReagents()[0]), 1)
+    self.assertEqual(len(en.GetReagents()[1]), 2)
+    self.assertEqual(len(en.GetReagents()[2]), 1)
 
     #####################################################################################
     # now set the removal options ot only make one product per reagent set
@@ -640,9 +640,9 @@ class TestCase(unittest.TestCase):
     opts = rdChemReactions.EnumerationParams()
     opts.reagentMaxMatchCount = 1
     en = rdChemReactions.EnumerateLibrary(rxn, bbs, params=opts)
-    self.assertTrue(len(en.GetReagents()[0]) == 1)
-    self.assertTrue(len(en.GetReagents()[1]) == 1)
-    self.assertTrue(len(en.GetReagents()[2]) == 1)
+    self.assertEqual(len(en.GetReagents()[0]), 1)
+    self.assertEqual(len(en.GetReagents()[1]), 1)
+    self.assertEqual(len(en.GetReagents()[2]), 1)
 
     #####################################################################################
     # now set the removal options ot only make one product per reagent set
@@ -653,9 +653,9 @@ class TestCase(unittest.TestCase):
     opts = rdChemReactions.EnumerationParams()
     opts.reagentMaxMatchCount = 1
     en = rdChemReactions.EnumerateLibrary(rxn, bbs, params=opts)
-    self.assertTrue(len(en.GetReagents()[0]) == 1)
-    self.assertTrue(len(en.GetReagents()[1]) == 1)
-    self.assertTrue(len(en.GetReagents()[2]) == 1)
+    self.assertEqual(len(en.GetReagents()[0]), 1)
+    self.assertEqual(len(en.GetReagents()[1]), 1)
+    self.assertEqual(len(en.GetReagents()[2]), 1)
 
 if __name__ == '__main__':
   unittest.main()
