@@ -2423,29 +2423,29 @@ CAS<~>
     mol.GetAtomWithIdx(0).SetProp("foo", "bar")
     mol.GetBondWithIdx(0).SetProp("foo", "bar")
     newBond = mol2.GetBondWithIdx(0)
-    self.assertTrue(type(mol) == Chem.Mol)
+    self.assertEqual(type(mol), Chem.Mol)
 
     for rwmol in [Chem.EditableMol(mol), Chem.RWMol(mol)]:
       newAt = Chem.Atom(8)
       rwmol.ReplaceAtom(0, newAt)
-      self.assertTrue(Chem.MolToSmiles(rwmol.GetMol()) == 'C1COC1')
+      self.assertEqual(Chem.MolToSmiles(rwmol.GetMol()), 'C1COC1')
       self.assertFalse(rwmol.GetMol().GetAtomWithIdx(0).HasProp("foo"))
 
     for rwmol in [Chem.EditableMol(mol), Chem.RWMol(mol)]:
       newAt = Chem.Atom(8)
       rwmol.ReplaceAtom(0, newAt, preserveProps=True)
-      self.assertTrue(Chem.MolToSmiles(rwmol.GetMol()) == 'C1COC1')
+      self.assertEqual(Chem.MolToSmiles(rwmol.GetMol()), 'C1COC1')
       self.assertTrue(rwmol.GetMol().GetAtomWithIdx(0).HasProp("foo"))
       self.assertEqual(rwmol.GetMol().GetAtomWithIdx(0).GetProp("foo"), "bar")
 
     for rwmol in [Chem.EditableMol(mol), Chem.RWMol(mol)]:
       rwmol.ReplaceBond(0, newBond)
-      self.assertTrue(Chem.MolToSmiles(rwmol.GetMol()) == 'C1CCC1')
+      self.assertEqual(Chem.MolToSmiles(rwmol.GetMol()), 'C1CCC1')
       self.assertFalse(rwmol.GetMol().GetBondWithIdx(0).HasProp("foo"))
 
     for rwmol in [Chem.EditableMol(mol), Chem.RWMol(mol)]:
       rwmol.ReplaceBond(0, newBond, preserveProps=True)
-      self.assertTrue(Chem.MolToSmiles(rwmol.GetMol()) == 'C1CCC1')
+      self.assertEqual(Chem.MolToSmiles(rwmol.GetMol()), 'C1CCC1')
       self.assertTrue(rwmol.GetMol().GetBondWithIdx(0).HasProp("foo"))
       self.assertEqual(rwmol.GetMol().GetBondWithIdx(0).GetProp("foo"), "bar")
 
@@ -2454,25 +2454,25 @@ CAS<~>
 
     """
     m = Chem.MolFromSmarts("[C,N]C")
-    self.assertTrue(m.GetAtomWithIdx(0).GetSmarts() == '[C,N]')
-    self.assertTrue(m.GetAtomWithIdx(1).GetSmarts() == 'C')
+    self.assertEqual(m.GetAtomWithIdx(0).GetSmarts(), '[C,N]')
+    self.assertEqual(m.GetAtomWithIdx(1).GetSmarts(), 'C')
     self.assertEqual(m.GetBondBetweenAtoms(0, 1).GetSmarts(), '')
 
     m = Chem.MolFromSmarts("[$(C=O)]-O")
-    self.assertTrue(m.GetAtomWithIdx(0).GetSmarts() == '[$(C=O)]')
-    self.assertTrue(m.GetAtomWithIdx(1).GetSmarts() == 'O')
-    self.assertTrue(m.GetBondBetweenAtoms(0, 1).GetSmarts() == '-')
+    self.assertEqual(m.GetAtomWithIdx(0).GetSmarts(), '[$(C=O)]')
+    self.assertEqual(m.GetAtomWithIdx(1).GetSmarts(), 'O')
+    self.assertEqual(m.GetBondBetweenAtoms(0, 1).GetSmarts(), '-')
 
     m = Chem.MolFromSmiles("CO")
-    self.assertTrue(m.GetAtomWithIdx(0).GetSmarts() == 'C')
-    self.assertTrue(m.GetAtomWithIdx(1).GetSmarts() == 'O')
-    self.assertTrue(m.GetBondBetweenAtoms(0, 1).GetSmarts() == '')
-    self.assertTrue(m.GetBondBetweenAtoms(0, 1).GetSmarts(allBondsExplicit=True) == '-')
+    self.assertEqual(m.GetAtomWithIdx(0).GetSmarts(), 'C')
+    self.assertEqual(m.GetAtomWithIdx(1).GetSmarts(), 'O')
+    self.assertEqual(m.GetBondBetweenAtoms(0, 1).GetSmarts(), '')
+    self.assertEqual(m.GetBondBetweenAtoms(0, 1).GetSmarts(allBondsExplicit=True), '-')
 
     m = Chem.MolFromSmiles("C=O")
-    self.assertTrue(m.GetAtomWithIdx(0).GetSmarts() == 'C')
-    self.assertTrue(m.GetAtomWithIdx(1).GetSmarts() == 'O')
-    self.assertTrue(m.GetBondBetweenAtoms(0, 1).GetSmarts() == '=')
+    self.assertEqual(m.GetAtomWithIdx(0).GetSmarts(), 'C')
+    self.assertEqual(m.GetAtomWithIdx(1).GetSmarts(), 'O')
+    self.assertEqual(m.GetBondBetweenAtoms(0, 1).GetSmarts(), '=')
 
     m = Chem.MolFromSmiles('C[C@H](F)[15NH3+]')
     self.assertEqual(m.GetAtomWithIdx(0).GetSmarts(), 'C')
@@ -2540,7 +2540,7 @@ CAS<~>
     smarts = Chem.MolFromSmarts("[r5]")
     mol = Chem.MolFromSmiles("N12CCC36C1CC(C(C2)=CCOC4CC5=O)C4C3N5c7ccccc76")
     count = len(mol.GetSubstructMatches(smarts, uniquify=0))
-    self.assertTrue(count == 9)
+    self.assertEqual(count, 9)
 
   def test51RadicalHandling(self):
     """ test handling of atoms with radicals
@@ -2548,24 +2548,24 @@ CAS<~>
     mol = Chem.MolFromSmiles("[C]C")
     self.assertTrue(mol)
     atom = mol.GetAtomWithIdx(0)
-    self.assertTrue(atom.GetNumRadicalElectrons() == 3)
+    self.assertEqual(atom.GetNumRadicalElectrons(), 3)
     self.assertTrue(atom.GetNoImplicit())
     atom.SetNoImplicit(False)
     atom.SetNumRadicalElectrons(1)
     mol.UpdatePropertyCache()
-    self.assertTrue(atom.GetNumRadicalElectrons() == 1)
-    self.assertTrue(atom.GetNumImplicitHs() == 2)
+    self.assertEqual(atom.GetNumRadicalElectrons(), 1)
+    self.assertEqual(atom.GetNumImplicitHs(), 2)
 
     mol = Chem.MolFromSmiles("[c]1ccccc1")
     self.assertTrue(mol)
     atom = mol.GetAtomWithIdx(0)
-    self.assertTrue(atom.GetNumRadicalElectrons() == 1)
+    self.assertEqual(atom.GetNumRadicalElectrons(), 1)
     self.assertTrue(atom.GetNoImplicit())
 
     mol = Chem.MolFromSmiles("[n]1ccccc1")
     self.assertTrue(mol)
     atom = mol.GetAtomWithIdx(0)
-    self.assertTrue(atom.GetNumRadicalElectrons() == 0)
+    self.assertEqual(atom.GetNumRadicalElectrons(), 0)
     self.assertTrue(atom.GetNoImplicit())
 
   def test52MolFrags(self):
@@ -2574,26 +2574,26 @@ CAS<~>
     mol = Chem.MolFromSmiles("C.CC")
     self.assertTrue(mol)
     fs = Chem.GetMolFrags(mol)
-    self.assertTrue(len(fs) == 2)
-    self.assertTrue(len(fs[0]) == 1)
-    self.assertTrue(tuple(fs[0]) == (0, ))
-    self.assertTrue(len(fs[1]) == 2)
-    self.assertTrue(tuple(fs[1]) == (1, 2))
+    self.assertEqual(len(fs), 2)
+    self.assertEqual(len(fs[0]), 1)
+    self.assertEqual(tuple(fs[0]), (0, ))
+    self.assertEqual(len(fs[1]), 2)
+    self.assertEqual(tuple(fs[1]), (1, 2))
 
     fs = Chem.GetMolFrags(mol, True)
-    self.assertTrue(len(fs) == 2)
-    self.assertTrue(fs[0].GetNumAtoms() == 1)
-    self.assertTrue(fs[1].GetNumAtoms() == 2)
+    self.assertEqual(len(fs), 2)
+    self.assertEqual(fs[0].GetNumAtoms(), 1)
+    self.assertEqual(fs[1].GetNumAtoms(), 2)
 
     mol = Chem.MolFromSmiles("CCC")
     self.assertTrue(mol)
     fs = Chem.GetMolFrags(mol)
-    self.assertTrue(len(fs) == 1)
-    self.assertTrue(len(fs[0]) == 3)
-    self.assertTrue(tuple(fs[0]) == (0, 1, 2))
+    self.assertEqual(len(fs), 1)
+    self.assertEqual(len(fs[0]), 3)
+    self.assertEqual(tuple(fs[0]), (0, 1, 2))
     fs = Chem.GetMolFrags(mol, True)
-    self.assertTrue(len(fs) == 1)
-    self.assertTrue(fs[0].GetNumAtoms() == 3)
+    self.assertEqual(len(fs), 1)
+    self.assertEqual(fs[0].GetNumAtoms(), 3)
 
     mol = Chem.MolFromSmiles("CO")
     em = Chem.EditableMol(mol)
@@ -2634,20 +2634,20 @@ CAS<~>
     self.assertTrue(feq(d[1, 0], 1.0))
     self.assertTrue(feq(d[2, 0], 2.0))
     a = Chem.GetAdjacencyMatrix(m, 0)
-    self.assertTrue(a[0, 1] == 1)
-    self.assertTrue(a[0, 2] == 0)
-    self.assertTrue(a[1, 2] == 1)
-    self.assertTrue(a[1, 0] == 1)
-    self.assertTrue(a[2, 0] == 0)
+    self.assertEqual(a[0, 1], 1)
+    self.assertEqual(a[0, 2], 0)
+    self.assertEqual(a[1, 2], 1)
+    self.assertEqual(a[1, 0], 1)
+    self.assertEqual(a[2, 0], 0)
 
     m = Chem.MolFromSmiles('C1CC1')
     d = Chem.GetDistanceMatrix(m, 0)
     self.assertTrue(feq(d[0, 1], 1.0))
     self.assertTrue(feq(d[0, 2], 1.0))
     a = Chem.GetAdjacencyMatrix(m, 0)
-    self.assertTrue(a[0, 1] == 1)
-    self.assertTrue(a[0, 2] == 1)
-    self.assertTrue(a[1, 2] == 1)
+    self.assertEqual(a[0, 1], 1)
+    self.assertEqual(a[0, 2], 1)
+    self.assertEqual(a[1, 2], 1)
 
     m = Chem.MolFromSmiles('CC.C')
     d = Chem.GetDistanceMatrix(m, 0)
@@ -2655,9 +2655,9 @@ CAS<~>
     self.assertGreater(d[0, 2], 1000)
     self.assertGreater(d[1, 2], 1000)
     a = Chem.GetAdjacencyMatrix(m, 0)
-    self.assertTrue(a[0, 1] == 1)
-    self.assertTrue(a[0, 2] == 0)
-    self.assertTrue(a[1, 2] == 0)
+    self.assertEqual(a[0, 1], 1)
+    self.assertEqual(a[0, 2], 0)
+    self.assertEqual(a[1, 2], 0)
 
   def test54Mol2Parser(self):
     """ test the mol2 parser
@@ -2665,8 +2665,8 @@ CAS<~>
     fileN = os.path.join(RDConfig.RDBaseDir, 'Code', 'GraphMol', 'FileParsers', 'test_data',
                          'pyrazole_pyridine.mol2')
     m = Chem.MolFromMol2File(fileN)
-    self.assertTrue(m.GetNumAtoms() == 5)
-    self.assertTrue(Chem.MolToSmiles(m) == 'c1cn[nH]c1', Chem.MolToSmiles(m))
+    self.assertEqual(m.GetNumAtoms(), 5)
+    self.assertEqual(Chem.MolToSmiles(m), 'c1cn[nH]c1')
 
     fileN = os.path.join(RDConfig.RDBaseDir, 'Code', 'GraphMol', 'FileParsers', 'test_data',
                          '3505.mol2')
@@ -2730,17 +2730,17 @@ CAS<~>
     i = 0
     for mol in sdSup:
       self.assertTrue(mol)
-      self.assertTrue(mol.GetProp("_Name") == molNames[i])
+      self.assertEqual(mol.GetProp("_Name"), molNames[i])
       i += 1
       if (mol.GetProp("_Name") == "192"):
         # test parsed charges on one of the molecules
         for id in chgs192.keys():
-          self.assertTrue(mol.GetAtomWithIdx(id).GetFormalCharge() == chgs192[id])
+          self.assertEqual(mol.GetAtomWithIdx(id).GetFormalCharge(), chgs192[id])
     self.assertEqual(i, 16)
 
     sdSup = Chem.CompressedSDMolSupplier(fileN)
     ns = [mol.GetProp("_Name") for mol in sdSup]
-    self.assertTrue(ns == molNames)
+    self.assertEqual(ns, molNames)
 
     sdSup = Chem.CompressedSDMolSupplier(fileN, 0)
     for mol in sdSup:
@@ -2755,7 +2755,7 @@ CAS<~>
     self.assertTrue(m1.HasSubstructMatch(q2))
     self.assertTrue(m1.HasSubstructMatch(q1))
     self.assertTrue(m1.HasSubstructMatch(q1))
-    self.assertTrue(m1.GetSubstructMatch(q1) == (2, 1))
+    self.assertEqual(m1.GetSubstructMatch(q1), (2, 1))
 
     q3 = Chem.MolFromSmiles('CS')
     Chem.AddRecursiveQuery(q1, q3, 1)
@@ -2765,7 +2765,7 @@ CAS<~>
 
     m2 = Chem.MolFromSmiles('OC(S)C')
     self.assertTrue(m2.HasSubstructMatch(q1))
-    self.assertTrue(m2.GetSubstructMatch(q1) == (3, 1))
+    self.assertEqual(m2.GetSubstructMatch(q1), (3, 1))
 
     m3 = Chem.MolFromSmiles('SCC')
     self.assertTrue(m3.HasSubstructMatch(q3))
@@ -2775,7 +2775,7 @@ CAS<~>
     Chem.AddRecursiveQuery(q1, q2, 1)
     Chem.AddRecursiveQuery(q1, q3, 1, False)
     self.assertTrue(m3.HasSubstructMatch(q1))
-    self.assertTrue(m3.GetSubstructMatch(q1) == (2, 1))
+    self.assertEqual(m3.GetSubstructMatch(q1), (2, 1))
 
   def test58Issue2983794(self):
     fileN = os.path.join(RDConfig.RDBaseDir, 'Code', 'GraphMol', 'Wrap', 'test_data',
@@ -2895,7 +2895,7 @@ CAS<~>
     while not suppl.atEnd():
       mol = next(suppl)
       self.assertTrue(mol)
-      self.assertTrue(mol.GetProp("_Name") == molNames[i])
+      self.assertEqual(mol.GetProp("_Name"), molNames[i])
       i += 1
     self.assertEqual(i, 16)
 
@@ -2907,7 +2907,7 @@ CAS<~>
     while not suppl.atEnd():
       mol = next(suppl)
       self.assertTrue(mol)
-      self.assertTrue(mol.GetProp("_Name") == molNames[i])
+      self.assertEqual(mol.GetProp("_Name"), molNames[i])
       i += 1
     self.assertEqual(i, 16)
 
@@ -2926,7 +2926,7 @@ CAS<~>
     while not suppl.atEnd():
       mol = next(suppl)
       self.assertTrue(mol)
-      self.assertTrue(mol.GetProp("_Name") == molNames[i])
+      self.assertEqual(mol.GetProp("_Name"), molNames[i])
       i += 1
     self.assertEqual(i, 16)
 
@@ -2938,7 +2938,7 @@ CAS<~>
     while not suppl.atEnd():
       mol = next(suppl)
       self.assertTrue(mol)
-      self.assertTrue(mol.GetProp("_Name") == molNames[i])
+      self.assertEqual(mol.GetProp("_Name"), molNames[i])
       i += 1
     self.assertEqual(i, 16)
 
@@ -2956,7 +2956,7 @@ CAS<~>
     while not suppl.atEnd():
       mol = next(suppl)
       self.assertTrue(mol)
-      self.assertTrue(mol.GetProp("_Name") == molNames[i])
+      self.assertEqual(mol.GetProp("_Name"), molNames[i])
       i += 1
     self.assertEqual(i, 16)
 
@@ -2979,7 +2979,7 @@ CAS<~>
       else:
         self.assertTrue(mol)
         self.assertTrue(mol.HasProp("_Name"))
-        self.assertTrue(mol.GetNumAtoms() == 1)
+        self.assertEqual(mol.GetNumAtoms(), 1)
 
     self.assertFalse(suppl.atEnd())
     self.assertTrue(ok)
@@ -3065,7 +3065,7 @@ CAS<~>
     i = 0
     for mol in suppl:
       self.assertTrue(mol)
-      self.assertTrue(mol.GetProp("_Name") == molNames[i])
+      self.assertEqual(mol.GetProp("_Name"), molNames[i])
       i += 1
     self.assertEqual(i, 16)
 
@@ -3081,7 +3081,7 @@ CAS<~>
     i = 0
     for mol in suppl:
       self.assertTrue(mol)
-      self.assertTrue(mol.GetProp("_Name") == molNames[i])
+      self.assertEqual(mol.GetProp("_Name"), molNames[i])
       i += 1
     self.assertEqual(i, 16)
 
@@ -3096,7 +3096,7 @@ CAS<~>
     i = 0
     for mol in suppl:
       self.assertTrue(mol)
-      self.assertTrue(mol.GetProp("_Name") == molNames[i])
+      self.assertEqual(mol.GetProp("_Name"), molNames[i])
       i += 1
     self.assertEqual(i, 16)
 
@@ -3115,7 +3115,7 @@ CAS<~>
     i = 0
     for mol in suppl:
       self.assertTrue(mol)
-      self.assertTrue(mol.GetProp("_Name") == molNames[i])
+      self.assertEqual(mol.GetProp("_Name"), molNames[i])
       i += 1
     self.assertEqual(i, 16)
 
@@ -3133,7 +3133,7 @@ CAS<~>
     i = 0
     for mol in suppl:
       self.assertTrue(mol)
-      self.assertTrue(mol.GetProp("_Name") == molNames[i])
+      self.assertEqual(mol.GetProp("_Name"), molNames[i])
       w.write(mol)
       i += 1
     self.assertEqual(i, 16)
@@ -3145,7 +3145,7 @@ CAS<~>
     i = 0
     for mol in suppl:
       self.assertTrue(mol)
-      self.assertTrue(mol.GetProp("_Name") == molNames[i])
+      self.assertEqual(mol.GetProp("_Name"), molNames[i])
       i += 1
     self.assertEqual(i, 16)
 
