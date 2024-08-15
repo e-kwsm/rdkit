@@ -745,7 +745,7 @@ chlorine	[Cl]
     enumerator_copy = rdMolStandardize.TautomerEnumerator(enumerator)
     res68 = enumerator.Enumerate(m68)
     res68_copy = enumerator_copy.Enumerate(m68)
-    self.assertTrue(res68.status == res68_copy.status)
+    self.assertEqual(res68.status, res68_copy.status)
 
   def test17PickCanonicalCIPChangeOnChiralCenter(self):
 
