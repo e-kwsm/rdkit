@@ -353,7 +353,7 @@ class Common:
       '[#6](:[#6]:[#6]):[#6]:[#7]:[#6]-[#6]-[#7](-[#6](-[#6])-[#6]1:[#6]:[#6]:[#6]:[#6]:[#7]:1)-[#6]-[#6]-[#6]-[#6]-[#7]'
     )
     qm = Chem.MolFromSmarts(mcs.smartsString)
-    self.assertTrue(qm is not None)
+    self.assertIsNotNone(qm)
     for m in ms:
       self.assertTrue(m.HasSubstructMatch(qm))
 
@@ -370,7 +370,7 @@ class Common:
       '[#6](:[#6]:[#6]):[#6]:[#7]:[#6]-[#6]-[#7](-[#6](-[#6])-[#6]1:[#6]:[#6]:[#6]:[#6]:[#7]:1)-[#6]-[#6]-[#6]-[#6]-[#7]'
     )
     qm = Chem.MolFromSmarts(mcs.smartsString)
-    self.assertTrue(qm is not None)
+    self.assertIsNotNone(qm)
     for m in ms:
       self.assertTrue(m.HasSubstructMatch(qm))
 
@@ -401,7 +401,7 @@ class Common:
     self.assertEqual(mcs.numBonds, 9)
     self.assertEqual(mcs.numAtoms, 10)
     qm = Chem.MolFromSmarts(mcs.smartsString)
-    self.assertTrue(qm is not None)
+    self.assertIsNotNone(qm)
     for m in ms:
       self.assertTrue(m.HasSubstructMatch(qm))
     # smarts too hard to canonicalize this
@@ -416,7 +416,7 @@ class Common:
     self.assertEqual(mcs.numBonds, 20)
     self.assertEqual(mcs.numAtoms, 19)
     qm = Chem.MolFromSmarts(mcs.smartsString)
-    self.assertTrue(qm is not None)
+    self.assertIsNotNone(qm)
     nHits = 0
     for m in ms:
       if m.HasSubstructMatch(qm):
