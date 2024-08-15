@@ -117,7 +117,7 @@ class TestCase(unittest.TestCase):
     # now test that we can get a list of RMS values
     rmsvals = []
     rdMolAlign.AlignMolConformers(mol, aids, RMSlist=rmsvals)
-    self.assertTrue((len(rmsvals) == mol.GetNumConformers() - 1))
+    self.assertEqual(len(rmsvals), mol.GetNumConformers() - 1)
 
     # make sure something sensible happens if we provide a stupid
     # argument:
