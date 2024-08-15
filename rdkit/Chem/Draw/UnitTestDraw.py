@@ -196,7 +196,7 @@ class TestCase(unittest.TestCase):
           # Test that items in 2D list are in correct position in 1D list
           self.assertTrue(mols[linearIndex] == item)
           # Test that 1D list items are not lists
-          self.assertFalse(isinstance(item, list))
+          self.assertNotIsInstance(item, list)
 
       # Other three matrices (legends; atom and bond highlighting) need not be supplied;
       #   only test each if it's supplied
@@ -207,7 +207,7 @@ class TestCase(unittest.TestCase):
             # Test that items in 2D list are in correct position in 1D list
             self.assertTrue(legends[linearIndex] == item)
             # Test that 1D list items are not lists
-            self.assertFalse(isinstance(item, list))
+            self.assertNotIsInstance(item, list)
 
       if highlightAtomListsMatrix is not None:
         for r, row in enumerate(highlightAtomListsMatrix):
@@ -217,7 +217,7 @@ class TestCase(unittest.TestCase):
             self.assertTrue(highlightAtomLists[linearIndex] == item)
             # For highlight parameters, entries are lists, so check that sub-items are not lists
             for subitem in item:
-              self.assertFalse(isinstance(subitem, list))
+              self.assertNotIsInstance(subitem, list)
 
       if highlightBondListsMatrix is not None:
         for r, row in enumerate(highlightBondListsMatrix):
@@ -227,7 +227,7 @@ class TestCase(unittest.TestCase):
             self.assertTrue(highlightBondLists[linearIndex] == item)
             # For highlight parameters, entries are lists, so check that sub-items are not lists
             for subitem in item:
-              self.assertFalse(isinstance(subitem, list))
+              self.assertNotIsInstance(subitem, list)
 
       # Test that 1D list has the correct length
       self.assertTrue(len(mols) == nrows * molsPerRow)
