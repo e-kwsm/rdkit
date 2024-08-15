@@ -137,7 +137,7 @@ class TestCase(unittest.TestCase):
       res = rn.GetTopN(1)
     except Exception:
       res = None
-    self.assertTrue(res is not None)
+    self.assertIsNotNone(res)
 
   def test4Issue237(self):
     with open(
