@@ -811,7 +811,7 @@ if __name__ == '__main__':
       ]
       ts = [Chem.MolToSmiles(Chem.MolFromSmiles(x), True) for x in ts]
       for t in ts:
-        self.assertTrue(t in ms, (t, ms))
+        self.assertIn(t, ms)
 
       ms2 = list(BRICSBuild(catalog, maxDepth=4, scrambleReagents=False))
       for m in ms2:
@@ -829,12 +829,12 @@ if __name__ == '__main__':
       m = Chem.MolFromSmiles('CCOc1ccccc1c1ncc(c2nc(NCCCC)ncn2)cc1')
       res = BRICSDecompose(m)
       self.assertEqual(len(res), 7)
-      self.assertTrue('[3*]O[3*]' in res)
-      self.assertFalse('[14*]c1ncnc(NCCCC)n1' in res)
+      self.assertIn('[3*]O[3*]', res)
+      self.assertNotIn('[14*]c1ncnc(NCCCC)n1', res)
       res = BRICSDecompose(m, singlePass=True)
       self.assertEqual(len(res), 13)
-      self.assertTrue('[3*]OCC' in res)
-      self.assertTrue('[14*]c1ncnc(NCCCC)n1' in res)
+      self.assertIn('[3*]OCC', res)
+      self.assertIn('[14*]c1ncnc(NCCCC)n1', res)
 
     def test10(self):
       m = Chem.MolFromSmiles('C1CCCCN1c1ccccc1')
@@ -1038,7 +1038,7 @@ M  END
       m = Chem.MolFromSmiles('c1ccccc1[C@H](C)NC')
       res = BRICSDecompose(m)
       self.assertEqual(len(res), 3)
-      self.assertTrue('[4*][C@H]([8*])C' in res)
+      self.assertIn('[4*][C@H]([8*])C', res)
       res = BreakBRICSBonds(m)
       self.assertEqual(Chem.MolToSmiles(res, isomericSmiles=True),
                        '[16*]c1ccccc1.[4*][C@H]([8*])C.[5*]NC')
