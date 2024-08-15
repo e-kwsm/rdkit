@@ -72,20 +72,20 @@ class TestCase(unittest.TestCase):
     else:
       pickle = None
 
-    self.assertTrue(entry.GetDescription() == "Bar")
-    self.assertTrue(matcher.GetMinCount() == 1)
-    self.assertTrue(matcher.GetMaxCount() == 2**32 - 1)
+    self.assertEqual(entry.GetDescription(), "Bar")
+    self.assertEqual(matcher.GetMinCount(), 1)
+    self.assertEqual(matcher.GetMaxCount(), 2**32 - 1)
     self.assertTrue(matcher.IsValid())
 
     entry.SetDescription("Foo")
-    self.assertTrue(entry.GetDescription() == "Foo")
+    self.assertEqual(entry.GetDescription(), "Foo")
 
     mol = Chem.MolFromSmiles("c1ccccc1")
     self.assertTrue(matcher.HasMatch(mol))
 
     matcher = FilterCatalog.SmartsMatcher(pat)
     self.assertEqual(str(matcher), "Unnamed SmartsMatcher")
-    self.assertTrue(matcher.GetMinCount() == 1)
+    self.assertEqual(matcher.GetMinCount(), 1)
     self.assertTrue(matcher.HasMatch(mol))
     matches = matcher.GetMatches(mol)
 
@@ -103,7 +103,7 @@ class TestCase(unittest.TestCase):
 
     pat = Chem.MolFromSmarts("c:c:c:c:c")
     matcher = FilterCatalog.SmartsMatcher("Five aromatic carbons", pat)
-    self.assertTrue(matcher.GetMinCount() == 1)
+    self.assertEqual(matcher.GetMinCount(), 1)
     self.assertTrue(matcher.HasMatch(mol))
     matches = matcher.GetMatches(mol)
 
@@ -199,7 +199,7 @@ class TestCase(unittest.TestCase):
 
     pat = Chem.MolFromSmarts("c:c:c:c:c")
     matcher = FilterCatalog.SmartsMatcher("Five aromatic carbons", pat)
-    self.assertTrue(matcher.GetMinCount() == 1)
+    self.assertEqual(matcher.GetMinCount(), 1)
     self.assertTrue(matcher.HasMatch(mol))
     matches = matcher.GetMatches(mol)
 
@@ -279,7 +279,7 @@ class TestCase(unittest.TestCase):
     print("*" * 44)
     self.assertTrue(catalog.RemoveEntry(entry))
     del entry
-    self.assertTrue(catalog.GetNumEntries() == sz - 1)
+    self.assertEqual(catalog.GetNumEntries(), sz - 1)
 
     descs2 = set(
       [catalog.GetEntryWithIdx(i).GetDescription() for i in range(catalog.GetNumEntries())])
@@ -353,7 +353,7 @@ class TestCase(unittest.TestCase):
     entry = FilterCatalog.FilterCatalogEntry("MW Violation", MWFilter(100, 500))
     fc = FilterCatalog.FilterCatalog()
     fc.AddEntry(entry)
-    self.assertTrue(entry.GetDescription() == "MW Violation")
+    self.assertEqual(entry.GetDescription(), "MW Violation")
 
     mol = Chem.MolFromSmiles("c1ccccc1")
     catalogEntry = fc.GetFirstMatch(mol)
@@ -579,7 +579,7 @@ class TestCase(unittest.TestCase):
     entry = FilterCatalog.FilterCatalogEntry("MW Violation", MWFilter(100, 500))
     fc = FilterCatalog.FilterCatalog()
     fc.AddEntry(entry)
-    self.assertTrue(entry.GetDescription() == "MW Violation")
+    self.assertEqual(entry.GetDescription(), "MW Violation")
 
     print("running")
     results = FilterCatalog.RunFilterCatalog(fc, smiles * 10, numThreads=3)
@@ -599,7 +599,7 @@ class TestCase(unittest.TestCase):
       params = FilterCatalog.FilterCatalogParams()
       self.assertTrue(params.AddCatalog(catalog_idx))
       catalog = FilterCatalog.FilterCatalog(params)
-      self.assertTrue(num == catalog.GetNumEntries())
+      self.assertEqual(num, catalog.GetNumEntries())
 
 
 if __name__ == '__main__':
