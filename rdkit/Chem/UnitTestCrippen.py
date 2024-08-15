@@ -66,11 +66,13 @@ class TestCase(unittest.TestCase):
       if 1:
         clog = self.clogs[i]
         tmp = Crippen.MolLogP(mol)
-        self.assertTrue(feq(clog, tmp), 'bad logp for %s: %4.4f != %4.4f' % (smi, clog, tmp))
+        self.assertAlmostEqual(clog, tmp, delta=1e-5,
+                               msg='bad logp for %s: %4.4f != %4.4f' % (smi, clog, tmp))
 
         mr = self.mrs[i]
         tmp = Crippen.MolMR(mol)
-        self.assertTrue(feq(mr, tmp), 'bad MR for %s: %4.4f != %4.4f' % (smi, mr, tmp))
+        self.assertAlmostEqual(mr, tmp, delta=1e-5,
+                               msg='bad MR for %s: %4.4f != %4.4f' % (smi, mr, tmp))
       else:
         clog = Crippen.MolLogP(mol)
         mr = Crippen.MolMR(mol)
@@ -86,12 +88,14 @@ class TestCase(unittest.TestCase):
       clog = self.clogs[i]
       tmp = Crippen.MolLogP(mol)
       tmp = Crippen.MolLogP(mol)
-      self.assertTrue(feq(clog, tmp), 'bad logp fooutF,r %s: %4.4f != %4.4f' % (smi, clog, tmp))
+      self.assertAlmostEqual(clog, tmp, delta=1e-5,
+                             msg='bad logp fooutF,r %s: %4.4f != %4.4f' % (smi, clog, tmp))
 
       mr = self.mrs[i]
       tmp = Crippen.MolMR(mol)
       tmp = Crippen.MolMR(mol)
-      self.assertTrue(feq(mr, tmp), 'bad MR for %s: %4.4f != %4.4f' % (smi, mr, tmp))
+      self.assertAlmostEqual(mr, tmp, delta=1e-5,
+                             msg='bad MR for %s: %4.4f != %4.4f' % (smi, mr, tmp))
 
   def _writeDetailFile(self, inF, outF):
     while 1:
@@ -186,7 +190,7 @@ class TestCase(unittest.TestCase):
   def testIssue1749494(self):
     m1 = Chem.MolFromSmiles('[*]CC')
     v = Crippen.MolLogP(m1)
-    self.assertTrue(feq(v, 0.9739))
+    self.assertAlmostEqual(v, 0.9739, delta=1e-5)
 
 
 if __name__ == '__main__':
