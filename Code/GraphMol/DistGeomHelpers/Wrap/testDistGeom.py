@@ -199,7 +199,7 @@ class TestCase(unittest.TestCase):
     for i, ci in enumerate(cs):
       for j in range(i + 1, len(cs)):
         cj = cs[j]
-        self.assertTrue(Chem.MolToMolBlock(m, confId=ci) != Chem.MolToMolBlock(m, confId=cj))
+        self.assertNotEqual(Chem.MolToMolBlock(m, confId=ci), Chem.MolToMolBlock(m, confId=cj))
 
   def test6RmsPruning(self):
     smiles = [
@@ -244,7 +244,7 @@ class TestCase(unittest.TestCase):
     smiles = "Cl[C@](C)(F)Br"
     mol = Chem.MolFromSmiles(smiles)
     cids = rdDistGeom.EmbedMultipleConfs(mol, 30, maxAttempts=30, randomSeed=100)
-    self.assertTrue(len(cids) == 30)
+    self.assertEqual(len(cids), 30)
     for cid in cids:
       conf = mol.GetConformer(cid)
       vol = computeChiralVol(conf.GetAtomPosition(0), conf.GetAtomPosition(2),
@@ -255,7 +255,7 @@ class TestCase(unittest.TestCase):
     smiles = "ClC(C)(F)Br"
     mol = Chem.MolFromSmiles(smiles)
     cids = rdDistGeom.EmbedMultipleConfs(mol, 30, maxAttempts=30, randomSeed=120)
-    self.assertTrue(len(cids) == 30)
+    self.assertEqual(len(cids), 30)
     nPos = 0
     nNeg = 0
     for cid in cids:
@@ -304,7 +304,7 @@ class TestCase(unittest.TestCase):
     m = Chem.MolFromSmiles(smiles)
     mol = Chem.AddHs(m)
     cids = rdDistGeom.EmbedMultipleConfs(mol, 10, maxAttempts=30, randomSeed=100)
-    self.assertTrue(len(cids) == 10)
+    self.assertEqual(len(cids), 10)
     tgtVol = 10.5
     for cid in cids:
       conf = mol.GetConformer(cid)
