@@ -111,14 +111,9 @@ M  END"""
   def testUFFMinInfLoop(self):
     os = OptSafe()
     m = Chem.MolFromMolBlock(os.minInfLoop)
-    self.assertTrue(m)
-    ok = False
-    try:
-      ok = os.opt(m, os.uffOptFunc)
-    except RuntimeError:
-      ok = True
-      pass
-    self.assertTrue(ok)
+    self.assertIsNotNone(m)
+    with self.assertRaises(RuntimeError):
+      os.opt(m, os.uffOptFunc)
 
   def testUFFDistanceConstraints(self):
     m = Chem.MolFromMolBlock(self.molB, True, False)
