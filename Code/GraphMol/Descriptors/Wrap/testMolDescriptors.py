@@ -10,10 +10,6 @@ from rdkit.Chem import rdMolDescriptors as rdMD
 haveBCUT = hasattr(rdMD, 'BCUT2D')
 
 
-def feq(v1, v2, tol=1.e-4):
-  return abs(v1 - v2) < tol
-
-
 class TestCase(unittest.TestCase):
 
   def setUp(self):
@@ -329,18 +325,18 @@ class TestCase(unittest.TestCase):
   def testMolWt(self):
     mol = Chem.MolFromSmiles("C")
     amw = rdMD._CalcMolWt(mol)
-    self.assertTrue(feq(amw, 16.043, .001))
+    self.assertAlmostEqual(amw, 16.043, delta=.001)
     amw = rdMD._CalcMolWt(mol, True)
-    self.assertTrue(feq(amw, 12.011, .001))
+    self.assertAlmostEqual(amw, 12.011, delta=.001)
     mol2 = Chem.AddHs(mol)
     amw = rdMD._CalcMolWt(mol2)
-    self.assertTrue(feq(amw, 16.043, .001))
+    self.assertAlmostEqual(amw, 16.043, delta=.001)
     amw = rdMD._CalcMolWt(mol2, True)
-    self.assertTrue(feq(amw, 12.011, .001))
+    self.assertAlmostEqual(amw, 12.011, delta=.001)
 
     mol = Chem.MolFromSmiles("C")
     amw = rdMD.CalcExactMolWt(mol)
-    self.assertTrue(feq(amw, 16.031, .001))
+    self.assertAlmostEqual(amw, 16.031, delta=.001)
 
   def testPairValues(self):
     import base64
@@ -600,7 +596,7 @@ class TestCase(unittest.TestCase):
     bins = [-.3, -.25, -.20, -.15, -.10, -.05, 0, .05, .10, .15, .20, .25, .30]
     custom_vsa = rdMD.CustomProp_VSA_(mol, customPropName='_GasteigerCharge', bins=bins)
     for p, c in zip(peoe_vsa, custom_vsa):
-      self.assertTrue(feq(p, c, .001))
+      self.assertAlmostEqual(p, c, delta=.001)
 
   def testGithub1973(self):
 
@@ -683,7 +679,7 @@ class TestCase(unittest.TestCase):
     bcut2 = rdMD.BCUT2D(m, props)
     bcut3 = rdMD.BCUT2D(m, tuple(props))
 
-    # might need feq
+    # might need assertAlmostEqual
     self.assertEqual(list(bcut1), list(bcut2))
     self.assertEqual(list(bcut3), list(bcut2))
 
