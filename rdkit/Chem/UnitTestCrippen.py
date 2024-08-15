@@ -148,7 +148,7 @@ class TestCase(unittest.TestCase):
               break
         else:
           print('Problems with SMILES:', smi)
-    self.assertTrue(nFails < nFailsAllowed)
+    self.assertLess(nFails, nFailsAllowed)
 
   def testDetails(self):
     Crippen._Init()
