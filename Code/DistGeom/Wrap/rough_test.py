@@ -17,10 +17,6 @@ import numpy as np
 from rdkit import DistanceGeometry as DG
 
 
-def feq(v1, v2, tol2=1e-4):
-  return abs(v1 - v2) <= tol2
-
-
 class TestCase(unittest.TestCase):
 
   def setUp(self):
@@ -29,11 +25,11 @@ class TestCase(unittest.TestCase):
   def test1SmoothPass(self):
     arr = np.array([[0, 1.0, 5.0], [1.0, 0, 1.0], [0.0, 1.0, 0]], float)
     self.assertTrue(DG.DoTriangleSmoothing(arr))
-    self.assertTrue(feq(arr[0, 2], 2.0))
-    self.assertTrue(feq(arr[2, 0], 0.0))
-    self.assertTrue(feq(arr[0, 1], 1.0))
-    self.assertTrue(feq(arr[1, 0], 1.0))
-    self.assertTrue(feq(arr[1, 2], 1.0))
+    self.assertAlmostEqual(arr[0, 2], 2.0, delta=1e-4)
+    self.assertAlmostEqual(arr[2, 0], 0.0, delta=1e-4)
+    self.assertAlmostEqual(arr[0, 1], 1.0, delta=1e-4)
+    self.assertAlmostEqual(arr[1, 0], 1.0, delta=1e-4)
+    self.assertAlmostEqual(arr[1, 2], 1.0, delta=1e-4)
 
   def test2SmoothFail(self):
     arr = np.array([[0, 1.0, 5.0], [1.0, 0, 1.0], [3.0, 1.0, 0]], float)
@@ -42,11 +38,11 @@ class TestCase(unittest.TestCase):
   def test3SmoothPass(self):
     arr = np.array([[0, 1.1, 5.0], [0.9, 0, 1.1], [0.0, 0.9, 0]], float)
     self.assertTrue(DG.DoTriangleSmoothing(arr))
-    self.assertTrue(feq(arr[0, 2], 2.2))
-    self.assertTrue(feq(arr[2, 0], 0.0))
-    self.assertTrue(feq(arr[0, 1], 1.1))
-    self.assertTrue(feq(arr[1, 0], 0.9))
-    self.assertTrue(feq(arr[1, 2], 1.1))
+    self.assertAlmostEqual(arr[0, 2], 2.2, delta=1e-4)
+    self.assertAlmostEqual(arr[2, 0], 0.0, delta=1e-4)
+    self.assertAlmostEqual(arr[0, 1], 1.1, delta=1e-4)
+    self.assertAlmostEqual(arr[1, 0], 0.9, delta=1e-4)
+    self.assertAlmostEqual(arr[1, 2], 1.1, delta=1e-4)
 
   def test4Embed(self):
     arr = np.array([[0, 1.0, 5.0], [1.0, 0, 1.0], [0.0, 1.0, 0]], float)
@@ -55,9 +51,9 @@ class TestCase(unittest.TestCase):
     v1 = coords[0] - coords[1]
     v2 = coords[1] - coords[2]
     d1 = np.dot(v1, v1)
-    self.assertTrue(feq(d1, 1.0, 0.001))
+    self.assertAlmostEqual(d1, 1.0, delta=0.001)
     d2 = np.dot(v2, v2)
-    self.assertTrue(feq(d2, 1.0, 0.001))
+    self.assertAlmostEqual(d2, 1.0, delta=0.001)
 
   def test5EmbedFail(self):
     arr = np.array([[0, 1.0, 5.0], [1.0, 0, 1.0], [3.0, 1.0, 0]], float)
@@ -73,9 +69,9 @@ class TestCase(unittest.TestCase):
     v2 = coords[1] - coords[2]
     d1 = np.dot(v1, v1)
 
-    self.assertTrue(feq(d1, 1.0, 2e-3))
+    self.assertAlmostEqual(d1, 1.0, delta=2e-3)
     d2 = np.dot(v2, v2)
-    self.assertTrue(feq(d2, 1.0, 2e-3))
+    self.assertAlmostEqual(d2, 1.0, delta=2e-3)
     arr = np.array(
       [[0.0, 1.0, 1.0, 1.01], [1.0, 0.0, 1.0, 1.0], [1.0, 1.0, 0.0, 1.0], [0.99, 1.0, 1.0, 0.0]],
       float)
@@ -84,9 +80,9 @@ class TestCase(unittest.TestCase):
     v1 = coords[0] - coords[1]
     v2 = coords[1] - coords[2]
     d1 = np.dot(v1, v1)
-    self.assertTrue(feq(d1, 1.0, 1e-3))
+    self.assertAlmostEqual(d1, 1.0, delta=1e-3)
     d2 = np.dot(v2, v2)
-    self.assertTrue(feq(d2, 1.0, 1e-3))
+    self.assertAlmostEqual(d2, 1.0, delta=1e-3)
 
     return
     # this test is currently (rev:4769) passing on windows and
@@ -103,9 +99,9 @@ class TestCase(unittest.TestCase):
     v1 = coords[0] - coords[1]
     v2 = coords[1] - coords[2]
     d1 = np.dot(v1, v1)
-    self.assertTrue(feq(d1, 1.0, 1e-3))
+    self.assertAlmostEqual(d1, 1.0, delta=1e-3)
     d2 = np.dot(v2, v2)
-    self.assertTrue(feq(d2, 1.0, 1e-3))
+    self.assertAlmostEqual(d2, 1.0, delta=1e-3)
 
 
 if __name__ == '__main__':
