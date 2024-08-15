@@ -147,42 +147,42 @@ class TestCase(unittest.TestCase):
 
     self.assertTrue(feq(tbl.GetAtomicWeight(6), 12.011))
     self.assertTrue(feq(tbl.GetAtomicWeight("C"), 12.011))
-    self.assertTrue(tbl.GetAtomicNumber('C') == 6)
+    self.assertEqual(tbl.GetAtomicNumber('C'), 6)
     self.assertTrue(feq(tbl.GetRvdw(6), 1.7))
     self.assertTrue(feq(tbl.GetRvdw("C"), 1.7))
     self.assertTrue(feq(tbl.GetRcovalent(6), 0.76))
     self.assertTrue(feq(tbl.GetRcovalent("C"), 0.76))
-    self.assertTrue(tbl.GetDefaultValence(6) == 4)
-    self.assertTrue(tbl.GetDefaultValence("C") == 4)
-    self.assertTrue(tuple(tbl.GetValenceList(6)) == (4, ))
-    self.assertTrue(tuple(tbl.GetValenceList("C")) == (4, ))
-    self.assertTrue(tuple(tbl.GetValenceList(16)) == (2, 4, 6))
-    self.assertTrue(tuple(tbl.GetValenceList("S")) == (2, 4, 6))
-    self.assertTrue(tbl.GetNOuterElecs(6) == 4)
-    self.assertTrue(tbl.GetNOuterElecs("C") == 4)
-    self.assertTrue(tbl.GetMostCommonIsotope(6) == 12)
-    self.assertTrue(tbl.GetMostCommonIsotope('C') == 12)
-    self.assertTrue(tbl.GetMostCommonIsotopeMass(6) == 12.0)
-    self.assertTrue(tbl.GetMostCommonIsotopeMass('C') == 12.0)
-    self.assertTrue(tbl.GetAbundanceForIsotope(6, 12) == 98.93)
-    self.assertTrue(tbl.GetAbundanceForIsotope('C', 12) == 98.93)
+    self.assertEqual(tbl.GetDefaultValence(6), 4)
+    self.assertEqual(tbl.GetDefaultValence("C"), 4)
+    self.assertEqual(tuple(tbl.GetValenceList(6)), (4, ))
+    self.assertEqual(tuple(tbl.GetValenceList("C")), (4, ))
+    self.assertEqual(tuple(tbl.GetValenceList(16)), (2, 4, 6))
+    self.assertEqual(tuple(tbl.GetValenceList("S")), (2, 4, 6))
+    self.assertEqual(tbl.GetNOuterElecs(6), 4)
+    self.assertEqual(tbl.GetNOuterElecs("C"), 4)
+    self.assertEqual(tbl.GetMostCommonIsotope(6), 12)
+    self.assertEqual(tbl.GetMostCommonIsotope('C'), 12)
+    self.assertEqual(tbl.GetMostCommonIsotopeMass(6), 12.0)
+    self.assertEqual(tbl.GetMostCommonIsotopeMass('C'), 12.0)
+    self.assertEqual(tbl.GetAbundanceForIsotope(6, 12), 98.93)
+    self.assertEqual(tbl.GetAbundanceForIsotope('C', 12), 98.93)
     self.assertTrue(feq(tbl.GetRb0(6), 0.77))
     self.assertTrue(feq(tbl.GetRb0("C"), 0.77))
-    self.assertTrue(tbl.GetElementSymbol(6) == 'C')
-    self.assertTrue(tbl.GetElementName(6) == 'Carbon')
-    self.assertTrue(tbl.GetRow(6) == 2)
-    self.assertTrue(tbl.GetRow("C") == 2)
+    self.assertEqual(tbl.GetElementSymbol(6), 'C')
+    self.assertEqual(tbl.GetElementName(6), 'Carbon')
+    self.assertEqual(tbl.GetRow(6), 2)
+    self.assertEqual(tbl.GetRow("C"), 2)
 
   def test2Atom(self):
     atom = Chem.Atom(6)
     self.assertTrue(atom)
-    self.assertTrue(atom.GetAtomicNum() == 6)
+    self.assertEqual(atom.GetAtomicNum(), 6)
     atom.SetAtomicNum(8)
-    self.assertTrue(atom.GetAtomicNum() == 8)
+    self.assertEqual(atom.GetAtomicNum(), 8)
 
     atom = Chem.Atom("C")
     self.assertTrue(atom)
-    self.assertTrue(atom.GetAtomicNum() == 6)
+    self.assertEqual(atom.GetAtomicNum(), 6)
 
   def test3Bond(self):
     # No longer relevant, bonds are not constructible from Python
@@ -195,13 +195,13 @@ class TestCase(unittest.TestCase):
   def test5Smiles(self):
     mol = Chem.MolFromSmiles('n1ccccc1')
     self.assertTrue(mol)
-    self.assertTrue(mol.GetNumAtoms() == 6)
-    self.assertTrue(mol.GetNumAtoms(1) == 6)
-    self.assertTrue(mol.GetNumAtoms(0) == 11)
+    self.assertEqual(mol.GetNumAtoms(), 6)
+    self.assertEqual(mol.GetNumAtoms(1), 6)
+    self.assertEqual(mol.GetNumAtoms(0), 11)
     at = mol.GetAtomWithIdx(2)
-    self.assertTrue(at.GetAtomicNum() == 6)
+    self.assertEqual(at.GetAtomicNum(), 6)
     at = mol.GetAtomWithIdx(0)
-    self.assertTrue(at.GetAtomicNum() == 7)
+    self.assertEqual(at.GetAtomicNum(), 7)
 
   def _test6Bookmarks(self):
     mol = Chem.MolFromSmiles('n1ccccc1')
@@ -223,7 +223,7 @@ class TestCase(unittest.TestCase):
 
     at = mol.GetAtomWithBookmark(0)
     self.assertTrue(at)
-    self.assertTrue(at.GetAtomicNum() == 7)
+    self.assertEqual(at.GetAtomicNum(), 7)
     mol.ClearAtomBookmark(0)
     self.assertTrue(not mol.HasAtomBookmark(0))
     self.assertTrue(mol.HasAtomBookmark(1))
@@ -355,9 +355,9 @@ class TestCase(unittest.TestCase):
     smi = Chem.MolToSmiles(mol)
     Chem.SanitizeMol(mol)
     nr = Chem.GetSymmSSSR(mol)
-    self.assertTrue((len(nr) == 3))
+    self.assertEqual(len(nr), 3)
     nr = Chem.GetSSSR(mol)
-    self.assertTrue((len(nr) == 3))
+    self.assertEqual(len(nr), 3)
 
   def test12Smarts(self):
     query1 = Chem.MolFromSmarts('C(=O)O')
@@ -371,11 +371,11 @@ class TestCase(unittest.TestCase):
     self.assertTrue(mol)
 
     self.assertTrue(mol.HasSubstructMatch(query1))
-    self.assertTrue(mol.GetSubstructMatch(query1) == (2, 3, 4))
+    self.assertEqual(mol.GetSubstructMatch(query1), (2, 3, 4))
     self.assertTrue(mol.HasSubstructMatch(query2))
-    self.assertTrue(mol.GetSubstructMatch(query2) == (2, 3, 4))
+    self.assertEqual(mol.GetSubstructMatch(query2), (2, 3, 4))
     self.assertTrue(mol.HasSubstructMatch(query3))
-    self.assertTrue(mol.GetSubstructMatch(query3) == (2, ))
+    self.assertEqual(mol.GetSubstructMatch(query3), (2, ))
 
     mol = Chem.MolFromSmiles('CCC(=O)N')
     self.assertTrue(mol)
@@ -383,19 +383,19 @@ class TestCase(unittest.TestCase):
     self.assertTrue(not mol.HasSubstructMatch(query1))
     self.assertTrue(not mol.GetSubstructMatch(query1))
     self.assertTrue(mol.HasSubstructMatch(query2))
-    self.assertTrue(mol.GetSubstructMatch(query2) == (2, 3, 4))
+    self.assertEqual(mol.GetSubstructMatch(query2), (2, 3, 4))
     self.assertTrue(not mol.HasSubstructMatch(query3))
 
     mol = Chem.MolFromSmiles('OC(=O)CC(=O)O')
     self.assertTrue(mol)
     self.assertTrue(mol.HasSubstructMatch(query1))
-    self.assertTrue(mol.GetSubstructMatch(query1) == (1, 2, 0))
-    self.assertTrue(mol.GetSubstructMatches(query1) == ((1, 2, 0), (4, 5, 6)))
+    self.assertEqual(mol.GetSubstructMatch(query1), (1, 2, 0))
+    self.assertEqual(mol.GetSubstructMatches(query1), ((1, 2, 0), (4, 5, 6)))
     self.assertTrue(mol.HasSubstructMatch(query2))
-    self.assertTrue(mol.GetSubstructMatch(query2) == (1, 2, 0))
-    self.assertTrue(mol.GetSubstructMatches(query2) == ((1, 2, 0), (4, 5, 6)))
+    self.assertEqual(mol.GetSubstructMatch(query2), (1, 2, 0))
+    self.assertEqual(mol.GetSubstructMatches(query2), ((1, 2, 0), (4, 5, 6)))
     self.assertTrue(mol.HasSubstructMatch(query3))
-    self.assertTrue(mol.GetSubstructMatches(query3) == ((1, ), (4, )))
+    self.assertEqual(mol.GetSubstructMatches(query3), ((1, ), (4, )))
 
   def test13Smarts(self):
     # previous smarts problems:
@@ -410,15 +410,15 @@ class TestCase(unittest.TestCase):
 
     query = Chem.MolFromSmarts('[Cl,$(O)]')
     mol = Chem.MolFromSmiles('C(=O)O')
-    self.assertTrue(len(mol.GetSubstructMatches(query)) == 2)
+    self.assertEqual(len(mol.GetSubstructMatches(query)), 2)
     mol = Chem.MolFromSmiles('C(=N)N')
-    self.assertTrue(len(mol.GetSubstructMatches(query)) == 0)
+    self.assertEqual(len(mol.GetSubstructMatches(query)), 0)
 
     query = Chem.MolFromSmarts('[$([O,S]-[!$(*=O)])]')
     mol = Chem.MolFromSmiles('CC(S)C(=O)O')
-    self.assertTrue(len(mol.GetSubstructMatches(query)) == 1)
+    self.assertEqual(len(mol.GetSubstructMatches(query)), 1)
     mol = Chem.MolFromSmiles('C(=O)O')
-    self.assertTrue(len(mol.GetSubstructMatches(query)) == 0)
+    self.assertEqual(len(mol.GetSubstructMatches(query)), 0)
 
   def test14Hs(self):
     m = Chem.MolFromSmiles('CC(=O)[OH]')
@@ -507,14 +507,14 @@ class TestCase(unittest.TestCase):
 
   def test15Neighbors(self):
     m = Chem.MolFromSmiles('CC(=O)[OH]')
-    self.assertTrue(m.GetNumAtoms() == 4)
+    self.assertEqual(m.GetNumAtoms(), 4)
 
     a = m.GetAtomWithIdx(1)
     ns = a.GetNeighbors()
-    self.assertTrue(len(ns) == 3)
+    self.assertEqual(len(ns), 3)
 
     bs = a.GetBonds()
-    self.assertTrue(len(bs) == 3)
+    self.assertEqual(len(bs), 3)
 
     for b in bs:
       try:
@@ -522,24 +522,24 @@ class TestCase(unittest.TestCase):
       except Exception:
         a2 = None
       self.assertTrue(a2)
-    self.assertTrue(len(bs) == 3)
+    self.assertEqual(len(bs), 3)
 
   def test16Pickle(self):
     import pickle
     m = Chem.MolFromSmiles('C1=CN=CC=C1')
     pkl = pickle.dumps(m)
     m2 = pickle.loads(pkl)
-    self.assertTrue(type(m2) == Chem.Mol)
+    self.assertEqual(type(m2), Chem.Mol)
     smi1 = Chem.MolToSmiles(m)
     smi2 = Chem.MolToSmiles(m2)
-    self.assertTrue(smi1 == smi2)
+    self.assertEqual(smi1, smi2)
 
     pkl = pickle.dumps(Chem.RWMol(m))
     m2 = pickle.loads(pkl)
-    self.assertTrue(type(m2) == Chem.RWMol)
+    self.assertEqual(type(m2), Chem.RWMol)
     smi1 = Chem.MolToSmiles(m)
     smi2 = Chem.MolToSmiles(m2)
-    self.assertTrue(smi1 == smi2)
+    self.assertEqual(smi1, smi2)
 
   def test16Props(self):
     m = Chem.MolFromSmiles('C1=CN=CC=C1')
@@ -549,7 +549,7 @@ class TestCase(unittest.TestCase):
     m.SetProp('prop1', 'foob')
     self.assertTrue(not m.HasProp('prop2'))
     self.assertTrue(m.HasProp('prop1'))
-    self.assertTrue(m.GetProp('prop1') == 'foob')
+    self.assertEqual(m.GetProp('prop1'), 'foob')
     self.assertTrue(not m.HasProp('propo'))
     try:
       m.GetProp('prop2')
@@ -568,24 +568,24 @@ class TestCase(unittest.TestCase):
     self.assertTrue(not m.HasProp('cprop2'))
 
     m.SetDoubleProp("a", 2.0)
-    self.assertTrue(m.GetDoubleProp("a") == 2.0)
+    self.assertEqual(m.GetDoubleProp("a"), 2.0)
 
     try:
-      self.assertTrue(m.GetIntProp("a") == 2.0)
+      self.assertEqual(m.GetIntProp("a"), 2.0)
       raise Exception("Expected runtime exception")
     except ValueError:
       pass
 
     try:
-      self.assertTrue(m.GetUnsignedProp("a") == 2.0)
+      self.assertEqual(m.GetUnsignedProp("a"), 2.0)
       raise Exception("Expected runtime exception")
     except ValueError:
       pass
 
     m.SetDoubleProp("a", -2)
-    self.assertTrue(m.GetDoubleProp("a") == -2.0)
+    self.assertEqual(m.GetDoubleProp("a"), -2.0)
     m.SetIntProp("a", -2)
-    self.assertTrue(m.GetIntProp("a") == -2)
+    self.assertEqual(m.GetIntProp("a"), -2)
 
     try:
       m.SetUnsignedProp("a", -2)
