@@ -377,7 +377,7 @@ M  END"""
     self.assertEqual(len(before), len(after))
     self.assertTrue(all(map(lambda i: i == 0, res)))
     for a, b in zip(after, before):
-      self.assertTrue(a < b)
+      self.assertLess(a, b)
 
   def testEmptyFF(self) -> None:
     m = Chem.MolFromSmiles(

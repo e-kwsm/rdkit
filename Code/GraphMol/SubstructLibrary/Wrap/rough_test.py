@@ -406,7 +406,7 @@ class TestCase(unittest.TestCase):
     slib.ToStream(s)
 
     sb = BytesIO(s.getvalue().encode("ascii"))
-    self.assertTrue(len(sb.getvalue()) > 0)
+    self.assertGreater(len(sb.getvalue()), 0)
     slib3 = rdSubstructLibrary.SubstructLibrary()
     slib3.InitFromStream(sb)
     self.assertEqual(len(slib), len(slib2))
