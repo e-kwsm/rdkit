@@ -1102,8 +1102,8 @@ class TestCase(unittest.TestCase):
       self.assertTrue(mol.HasProp("ID"))
       self.assertEqual(mol.GetProp("ID"), "Lig1")
       self.assertTrue(mol.HasProp("ANOTHER_PROPERTY"))
-      self.assertTrue(
-        mol.GetProp("ANOTHER_PROPERTY") == "No blank line before dollars\n"
+      self.assertEqual(
+        mol.GetProp("ANOTHER_PROPERTY"), "No blank line before dollars\n"
         "$$$$\n"
         "Structure1\n"
         "csChFnd70/05230312262D")
@@ -1135,8 +1135,8 @@ class TestCase(unittest.TestCase):
       self.assertTrue(mol.HasProp("ID"))
       self.assertEqual(mol.GetProp("ID"), "Lig1")
       self.assertTrue(mol.HasProp("ANOTHER_PROPERTY"))
-      self.assertTrue(
-        mol.GetProp("ANOTHER_PROPERTY") == "No blank line before dollars\n"
+      self.assertEqual(
+        mol.GetProp("ANOTHER_PROPERTY"), "No blank line before dollars\n"
         "$$$$\n"
         "Structure1\n"
         "csChFnd70/05230312262D")
