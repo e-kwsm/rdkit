@@ -119,12 +119,12 @@ class TestCase(unittest.TestCase):
               self.assertEqual([str(idx) for idx in res], list(slib.GetKeyHolder().GetKeys(res)))
 
             t2 = time.time()
-            self.assertTrue(len(res) == 100)
+            self.assertEqual(len(res), 100)
 
             res = slib.GetMatches(m)
 
             self.assertEqual(len(res), 100)
-            self.assertTrue(set(res) == set(list(range(100))))
+            self.assertEqual(set(res), set(range(100)))
 
             res = slib.GetMatches(m, maxResults=100)
             self.assertEqual(len(res), 100)
@@ -179,7 +179,7 @@ class TestCase(unittest.TestCase):
 
             res = slib.GetMatches(m2)
             self.assertEqual(len(res), 100)
-            self.assertTrue(set(res) == set(list(range(1, 200, 2))))
+            self.assertEqual(set(res), set(range(1, 200, 2)))
             if keyholderCls:
               self.assertEqual([str(idx) for idx in res], [str(idx) for idx in range(1, 200, 2)])
 
