@@ -139,7 +139,7 @@ class TestCase(unittest.TestCase):
   def test1Table(self):
 
     tbl = Chem.GetPeriodicTable()
-    self.assertTrue(tbl)
+    self.assertIsNotNone(tbl)
 
     self.assertAlmostEqual(tbl.GetAtomicWeight(6), 12.011, delta=1e-4)
     self.assertAlmostEqual(tbl.GetAtomicWeight("C"), 12.011, delta=1e-4)
@@ -171,13 +171,13 @@ class TestCase(unittest.TestCase):
 
   def test2Atom(self):
     atom = Chem.Atom(6)
-    self.assertTrue(atom)
+    self.assertIsNotNone(atom)
     self.assertEqual(atom.GetAtomicNum(), 6)
     atom.SetAtomicNum(8)
     self.assertEqual(atom.GetAtomicNum(), 8)
 
     atom = Chem.Atom("C")
-    self.assertTrue(atom)
+    self.assertIsNotNone(atom)
     self.assertEqual(atom.GetAtomicNum(), 6)
 
   def test3Bond(self):
@@ -186,11 +186,11 @@ class TestCase(unittest.TestCase):
 
   def test4Mol(self):
     mol = Chem.Mol()
-    self.assertTrue(mol)
+    self.assertIsNotNone(mol)
 
   def test5Smiles(self):
     mol = Chem.MolFromSmiles('n1ccccc1')
-    self.assertTrue(mol)
+    self.assertIsNotNone(mol)
     self.assertEqual(mol.GetNumAtoms(), 6)
     self.assertEqual(mol.GetNumAtoms(1), 6)
     self.assertEqual(mol.GetNumAtoms(0), 11)
@@ -201,7 +201,7 @@ class TestCase(unittest.TestCase):
 
   def _test6Bookmarks(self):
     mol = Chem.MolFromSmiles('n1ccccc1')
-    self.assertTrue(mol)
+    self.assertIsNotNone(mol)
 
     self.assertFalse(mol.HasAtomBookmark(0))
     mol.SetAtomBookmark(mol.GetAtomWithIdx(0), 0)
