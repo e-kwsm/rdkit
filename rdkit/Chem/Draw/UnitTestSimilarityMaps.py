@@ -79,11 +79,11 @@ class TestCase(unittest.TestCase):
 
     weights = sm.GetAtomicWeightsForFingerprint(
       self.mol1, self.mol2, lambda m, i: sm.GetMorganFingerprint(m, i, fpType='count'))
-    self.assertTrue(weights[3] < 0)
+    self.assertLess(weights[3], 0)
     weights = sm.GetAtomicWeightsForFingerprint(
       self.mol1, self.mol2,
       lambda m, i: sm.GetMorganFingerprint(m, i, fpType='bv', useFeatures=True))
-    self.assertTrue(weights[3] < 0)
+    self.assertLess(weights[3], 0)
 
     # hashed AP BV
     refWeights = [0.09523, 0.17366, 0.17366, -0.23809, 0.17366, 0.17366]
@@ -94,10 +94,10 @@ class TestCase(unittest.TestCase):
 
     weights = sm.GetAtomicWeightsForFingerprint(
       self.mol1, self.mol2, lambda m, i: sm.GetAPFingerprint(m, i, fpType='normal'))
-    self.assertTrue(weights[3] < 0)
+    self.assertLess(weights[3], 0)
     weights = sm.GetAtomicWeightsForFingerprint(
       self.mol1, self.mol2, lambda m, i: sm.GetAPFingerprint(m, i, fpType='hashed'))
-    self.assertTrue(weights[3] < 0)
+    self.assertLess(weights[3], 0)
 
     # hashed TT BV
     refWeights = [0.5, 0.5, -0.16666, -0.5, -0.16666, 0.5]
@@ -109,10 +109,10 @@ class TestCase(unittest.TestCase):
 
     weights = sm.GetAtomicWeightsForFingerprint(
       self.mol1, self.mol2, lambda m, i: sm.GetTTFingerprint(m, i, fpType='normal'))
-    self.assertTrue(weights[3] < 0)
+    self.assertLess(weights[3], 0)
     weights = sm.GetAtomicWeightsForFingerprint(
       self.mol1, self.mol2, lambda m, i: sm.GetTTFingerprint(m, i, fpType='hashed'))
-    self.assertTrue(weights[3] < 0)
+    self.assertLess(weights[3], 0)
 
     # RDK fingerprint BV
     refWeights = [0.42105, 0.42105, 0.42105, -0.32895, 0.42105, 0.42105]
@@ -141,14 +141,14 @@ class TestCase(unittest.TestCase):
     weights = sm.GetAtomicWeightsForFingerprint(
       m1, m2, lambda m, i: sm.GetTTFingerprint(m, atomId=i, includeChirality=False))
     for w in weights:
-      self.assertTrue(w > 0.0)
+      self.assertGreater(w, 0.0)
     weights = sm.GetAtomicWeightsForFingerprint(
       m1, m2, lambda m, i: sm.GetTTFingerprint(m, atomId=i, includeChirality=True))
     for i, w in enumerate(weights):
       if i > 4:
-        self.assertTrue(w > 0.0)
+        self.assertGreater(w, 0.0)
       else:
-        self.assertTrue(w < 0.0)
+        self.assertLess(w, 0.0)
 
     weights = sm.GetAtomicWeightsForFingerprint(
       m1, m2, lambda m, i: sm.GetMorganFingerprint(m, radius=1, atomId=i, useChirality=False))
@@ -156,7 +156,7 @@ class TestCase(unittest.TestCase):
       m1, m2, lambda m, i: sm.GetMorganFingerprint(m, radius=1, atomId=i, useChirality=True))
     # testing explicit values here seems silly, just check that the contribution of the
     # chiral center drops:
-    self.assertTrue(weights[2] > weights2[2])
+    self.assertGreater(weights[2], weights2[2])
 
   def testSimilarityMapsMolDraw2D(self):
     # nothing really sensible to test here, just make sure things run
