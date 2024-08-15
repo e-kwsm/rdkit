@@ -42,17 +42,17 @@ class TestCase(unittest.TestCase):
     self.assertTrue(ff)
     e1 = ff.CalcEnergy()
     r = ff.Minimize()
-    self.assertTrue(r == 0)
+    self.assertEqual(r, 0)
     e2 = ff.CalcEnergy()
     self.assertLess(e2, e1)
 
     # test keyword args:
     r = ff.Minimize(forceTol=1e-8)
-    self.assertTrue(r == 0)
+    self.assertEqual(r, 0)
 
     # test keyword args:
     r = ff.Minimize(energyTol=1e-3)
-    self.assertTrue(r == 0)
+    self.assertEqual(r, 0)
 
   def test3(self):
     molB = """
@@ -74,7 +74,7 @@ M  END"""
     self.assertTrue(ff)
     e1 = ff.CalcEnergy()
     r = ff.Minimize()
-    self.assertTrue(r == 0)
+    self.assertEqual(r, 0)
     e2 = ff.CalcEnergy()
     self.assertLess(e2, e1)
 
@@ -110,17 +110,17 @@ M  END"""
     self.assertTrue(ff)
     e1 = ff.CalcEnergy()
     r = ff.Minimize()
-    self.assertTrue(r == 0)
+    self.assertEqual(r, 0)
     e2 = ff.CalcEnergy()
     self.assertLess(e2, e1)
 
     # test keyword args:
     r = ff.Minimize(forceTol=1.0e-8)
-    self.assertTrue(r == 0)
+    self.assertEqual(r, 0)
 
     # test keyword args:
     r = ff.Minimize(energyTol=1.0e-3)
-    self.assertTrue(r == 0)
+    self.assertEqual(r, 0)
 
   def test7(self):
     molB = """
@@ -143,7 +143,7 @@ M  END"""
     self.assertTrue(ff)
     e1 = ff.CalcEnergy()
     r = ff.Minimize()
-    self.assertTrue(r == 0)
+    self.assertEqual(r, 0)
     e2 = ff.CalcEnergy()
     self.assertLess(e2, e1)
 
