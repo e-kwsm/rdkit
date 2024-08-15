@@ -541,7 +541,8 @@ class TestCase(unittest.TestCase):
       matches1 = sorted(ssslib1.GetMatches(query))
       matches2 = sorted(ssslib2.GetMatches(query))
       self.assertEqual(len(matches1), len(matches2))
-      self.assertTrue(all([m1 == matches2[i] for i, m1 in enumerate(matches1)]))
+      for m1, m2 in zip(matches1, matches2):
+        self.assertEqual(m1, m2)
 
   def testMolBundles(self):
     ssl = rdSubstructLibrary.SubstructLibrary()
