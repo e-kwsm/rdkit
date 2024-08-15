@@ -1227,7 +1227,7 @@ mol-4,CCOC
     # there are 4 entries in the supplier:
     self.assertTrue(len(smiSup) == 4)
     # but the 3rd is a None:
-    self.assertTrue(smiSup[2] is None)
+    self.assertIsNone(smiSup[2])
 
 
     text="Id SMILES Column_2\n"+\
@@ -4909,7 +4909,7 @@ $$$$
     ps.allowCXSMILES = False
     ps.parseName = False
     m = Chem.MolFromSmiles(smi, ps)
-    self.assertTrue(m is None)
+    self.assertIsNone(m)
     ps.allowCXSMILES = True
     ps.parseName = True
     m = Chem.MolFromSmiles(smi, ps)
@@ -5402,7 +5402,7 @@ width='200px' height='200px' >
 <text x='89.9952' y='194' style='font-size:12px;font-style:normal;font-weight:normal;fill-opacity:1;stroke:none;font-family:sans-serif;text-anchor:start;fill:#000000' ><tspan>m1</tspan></text>
 </svg>"""
     mol = Chem.MolFromRDKitSVG(svg2)
-    self.assertTrue(mol is None)
+    self.assertIsNone(mol)
 
     with self.assertRaises(RuntimeError):
       mol = Chem.MolFromRDKitSVG("bad svg")
@@ -5974,7 +5974,7 @@ CC(C)(C)(C)C duff2
     suppl2.SetData(smi2, titleLine=False, nameColumn=1)
     l = [x for x in suppl2]
     self.assertEqual(len(l), 7)
-    self.assertTrue(l[6] is None)
+    self.assertIsNone(l[6])
 
     # SMILES failure in last entry
     smi2 = '''c1ccccc  duff
@@ -5989,7 +5989,7 @@ C1C(Cl)CCCC duff2
     suppl2.SetData(smi2, titleLine=False, nameColumn=1)
     l = [x for x in suppl2]
     self.assertEqual(len(l), 7)
-    self.assertTrue(l[6] is None)
+    self.assertIsNone(l[6])
 
     sdf = b"""
   Mrv1810 06051911332D
@@ -6023,15 +6023,15 @@ $$$$
     suppl3.SetData(sdf)
     l = [x for x in suppl3]
     self.assertEqual(len(l), 3)
-    self.assertTrue(l[1] is None)
-    self.assertTrue(l[2] is None)
+    self.assertIsNone(l[1])
+    self.assertIsNone(l[2])
 
     sio = BytesIO(sdf)
     suppl3 = Chem.ForwardSDMolSupplier(sio)
     l = [x for x in suppl3]
     self.assertEqual(len(l), 3)
-    self.assertTrue(l[1] is None)
-    self.assertTrue(l[2] is None)
+    self.assertIsNone(l[1])
+    self.assertIsNone(l[2])
 
     sdf = b"""
   Mrv1810 06051911332D
@@ -7044,7 +7044,7 @@ M  END
     self.assertAlmostEqual(info.GetTempFactor(), 13.79, 2)
 
     m2 = Chem.MolFromSmiles('CC(C(C(=O)O)N)O')
-    self.assertTrue(m2.GetAtomWithIdx(6).GetPDBResidueInfo() is None)
+    self.assertIsNone(m2.GetAtomWithIdx(6).GetPDBResidueInfo())
     m2.GetAtomWithIdx(6).SetPDBResidueInfo(info)
     info2 = m2.GetAtomWithIdx(6).GetPDBResidueInfo()
     self.assertEqual(info2.GetName(), " N  ")
@@ -7283,7 +7283,7 @@ CAS<~>
     ps.allowCXSMILES = False
     ps.parseName = False
     m = Chem.MolFromSmarts(smi, ps)
-    self.assertTrue(m is None)
+    self.assertIsNone(m)
     ps.allowCXSMILES = True
     ps.parseName = True
     m = Chem.MolFromSmarts(smi, ps)
