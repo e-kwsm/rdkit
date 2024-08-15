@@ -211,13 +211,8 @@ M  END"""
     os = OptSafe()
     m = Chem.MolFromMolBlock(os.minInfLoop)
     self.assertTrue(m)
-    ok = False
-    try:
-      ok = os.opt(m, os.mmffOptFunc)
-    except RuntimeError:
-      ok = True
-      pass
-    self.assertTrue(ok)
+    with self.assertRaises(RuntimeError):
+      os.opt(m, os.mmffOptFunc)
 
   def testMMFFDistanceConstraints(self):
     m = Chem.MolFromMolBlock(self.molB, True, False)
