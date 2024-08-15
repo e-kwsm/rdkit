@@ -193,9 +193,9 @@ class TestCase(unittest.TestCase):
   def test1(self):
     m1 = Chem.MolFromSmiles('c1cccnc1')
     smi = pyAvalonTools.GetCanonSmiles(m1)
-    self.assertTrue(smi == 'c1ccncc1')
+    self.assertEqual(smi, 'c1ccncc1')
     smi = pyAvalonTools.GetCanonSmiles('c1cccnc1', True)
-    self.assertTrue(smi == 'c1ccncc1')
+    self.assertEqual(smi, 'c1ccncc1')
 
   def test2(self):
     tgts = [
@@ -209,9 +209,9 @@ class TestCase(unittest.TestCase):
       d = f.read()
     mbs = d.split('$$$$\n')[:10]
     smis = [pyAvalonTools.GetCanonSmiles(mb, False) for mb in mbs]
-    self.assertTrue(smis == tgts)
+    self.assertEqual(smis, tgts)
     smis = [pyAvalonTools.GetCanonSmiles(smi, True) for smi in smis]
-    self.assertTrue(smis == tgts)
+    self.assertEqual(smis, tgts)
 
   def test3(self):
     bv = pyAvalonTools.GetAvalonFP(Chem.MolFromSmiles('c1ccccn1'))
