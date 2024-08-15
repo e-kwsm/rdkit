@@ -26,12 +26,8 @@ class TestCase(unittest.TestCase):
       e = True
     self.assertTrue(e)
     s = Snapshot([0.0, 0.0, 0.0])
-    e = False
-    try:
+    with self.assertRaises(Exception):
       s.GetPoint2D(0)
-    except Exception:
-      e = True
-    self.assertTrue(e)
 
   def testTrajectory2D(self):
     dim = 2
@@ -46,18 +42,10 @@ class TestCase(unittest.TestCase):
     for i in range(ns):
       traj.AddSnapshot(Snapshot(c, float(i)))
     self.assertEqual(len(traj), ns)
-    e = False
-    try:
+    with self.assertRaises(Exception):
       traj.GetSnapshot(ns)
-    except Exception:
-      e = True
-    self.assertTrue(e)
-    e = False
-    try:
+    with self.assertRaises(Exception):
       traj.GetSnapshot(0).GetPoint2D(np)
-    except Exception:
-      e = True
-    self.assertTrue(e)
     for i in range(np):
       self.assertAlmostEqual(traj.GetSnapshot(0).GetPoint2D(i).x, float(i * dim))
       self.assertAlmostEqual(traj.GetSnapshot(0).GetPoint2D(i).y, float(i * dim + 1))
