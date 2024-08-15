@@ -75,8 +75,8 @@ class TestCase(unittest.TestCase):
       ac1 = rdMD.GetAtomPairAtomCode(mol.GetAtomWithIdx(1), includeChirality=True)
       self.assertFalse(
         rdMD.GetAtomPairCode(ac0, ac1, 1, includeChirality=True) in fp.GetNonzeroElements())
-      self.assertTrue(
-        rdMD.GetAtomPairCode(ac0, ac1, 1, includeChirality=True) in cfp.GetNonzeroElements())
+      self.assertIn(
+        rdMD.GetAtomPairCode(ac0, ac1, 1, includeChirality=True), cfp.GetNonzeroElements())
 
   def testAtomPairs(self):
     m = Chem.MolFromSmiles('CCC')
