@@ -256,9 +256,9 @@ class TestCase(unittest.TestCase):
     a6 = mol.GetAtomWithIdx(6)
     a7 = mol.GetAtomWithIdx(7)
 
-    self.assertTrue(a0.GetAtomicNum() == 7)
-    self.assertTrue(a0.GetSymbol() == 'N')
-    self.assertTrue(a0.GetIdx() == 0)
+    self.assertEqual(a0.GetAtomicNum(), 7)
+    self.assertEqual(a0.GetSymbol(), 'N')
+    self.assertEqual(a0.GetIdx(), 0)
 
     aList = [a0, a1, a6, a7]
     self.assertTrue(a0.GetDegree() == 2)
@@ -682,49 +682,49 @@ class TestCase(unittest.TestCase):
     #  Rev. Comp. Chem. vol 2, 367-422, (1991)
     #
     m = Chem.MolFromSmiles("CCCCCC")
-    self.assertTrue(len(Chem.FindAllPathsOfLengthN(m, 1, useBonds=1)) == 5)
-    self.assertTrue(len(Chem.FindAllPathsOfLengthN(m, 2, useBonds=1)) == 4)
-    self.assertTrue(len(Chem.FindAllPathsOfLengthN(m, 3, useBonds=1)) == 3)
+    self.assertEqual(len(Chem.FindAllPathsOfLengthN(m, 1, useBonds=1)), 5)
+    self.assertEqual(len(Chem.FindAllPathsOfLengthN(m, 2, useBonds=1)), 4)
+    self.assertEqual(len(Chem.FindAllPathsOfLengthN(m, 3, useBonds=1)), 3)
 
     m = Chem.MolFromSmiles("CCC(C)CC")
-    self.assertTrue(len(Chem.FindAllPathsOfLengthN(m, 1, useBonds=1)) == 5)
-    self.assertTrue(len(Chem.FindAllPathsOfLengthN(m, 2, useBonds=1)) == 5)
+    self.assertEqual(len(Chem.FindAllPathsOfLengthN(m, 1, useBonds=1)), 5)
+    self.assertEqual(len(Chem.FindAllPathsOfLengthN(m, 2, useBonds=1)), 5)
     self.assertTrue(
       len(Chem.FindAllPathsOfLengthN(m, 3, useBonds=1)) == 4,
       Chem.FindAllPathsOfLengthN(m, 3, useBonds=1))
 
     m = Chem.MolFromSmiles("CCCC(C)C")
-    self.assertTrue(len(Chem.FindAllPathsOfLengthN(m, 1, useBonds=1)) == 5)
-    self.assertTrue(len(Chem.FindAllPathsOfLengthN(m, 2, useBonds=1)) == 5)
-    self.assertTrue(len(Chem.FindAllPathsOfLengthN(m, 3, useBonds=1)) == 3)
+    self.assertEqual(len(Chem.FindAllPathsOfLengthN(m, 1, useBonds=1)), 5)
+    self.assertEqual(len(Chem.FindAllPathsOfLengthN(m, 2, useBonds=1)), 5)
+    self.assertEqual(len(Chem.FindAllPathsOfLengthN(m, 3, useBonds=1)), 3)
 
     m = Chem.MolFromSmiles("CC(C)C(C)C")
-    self.assertTrue(len(Chem.FindAllPathsOfLengthN(m, 1, useBonds=1)) == 5)
-    self.assertTrue(len(Chem.FindAllPathsOfLengthN(m, 2, useBonds=1)) == 6)
-    self.assertTrue(len(Chem.FindAllPathsOfLengthN(m, 3, useBonds=1)) == 4)
+    self.assertEqual(len(Chem.FindAllPathsOfLengthN(m, 1, useBonds=1)), 5)
+    self.assertEqual(len(Chem.FindAllPathsOfLengthN(m, 2, useBonds=1)), 6)
+    self.assertEqual(len(Chem.FindAllPathsOfLengthN(m, 3, useBonds=1)), 4)
 
     m = Chem.MolFromSmiles("CC(C)(C)CC")
-    self.assertTrue(len(Chem.FindAllPathsOfLengthN(m, 1, useBonds=1)) == 5)
-    self.assertTrue(len(Chem.FindAllPathsOfLengthN(m, 2, useBonds=1)) == 7)
+    self.assertEqual(len(Chem.FindAllPathsOfLengthN(m, 1, useBonds=1)), 5)
+    self.assertEqual(len(Chem.FindAllPathsOfLengthN(m, 2, useBonds=1)), 7)
     self.assertTrue(
       len(Chem.FindAllPathsOfLengthN(m, 3, useBonds=1)) == 3,
       Chem.FindAllPathsOfLengthN(m, 3, useBonds=1))
 
     m = Chem.MolFromSmiles("C1CCCCC1")
-    self.assertTrue(len(Chem.FindAllPathsOfLengthN(m, 1, useBonds=1)) == 6)
-    self.assertTrue(len(Chem.FindAllPathsOfLengthN(m, 2, useBonds=1)) == 6)
-    self.assertTrue(len(Chem.FindAllPathsOfLengthN(m, 3, useBonds=1)) == 6)
+    self.assertEqual(len(Chem.FindAllPathsOfLengthN(m, 1, useBonds=1)), 6)
+    self.assertEqual(len(Chem.FindAllPathsOfLengthN(m, 2, useBonds=1)), 6)
+    self.assertEqual(len(Chem.FindAllPathsOfLengthN(m, 3, useBonds=1)), 6)
 
     m = Chem.MolFromSmiles("C1CC2C1CC2")
-    self.assertTrue(len(Chem.FindAllPathsOfLengthN(m, 1, useBonds=1)) == 7)
+    self.assertEqual(len(Chem.FindAllPathsOfLengthN(m, 1, useBonds=1)), 7)
     self.assertTrue(
       len(Chem.FindAllPathsOfLengthN(m, 2, useBonds=1)) == 10,
       Chem.FindAllPathsOfLengthN(m, 2, useBonds=1))
-    self.assertTrue(len(Chem.FindAllPathsOfLengthN(m, 3, useBonds=1)) == 14)
+    self.assertEqual(len(Chem.FindAllPathsOfLengthN(m, 3, useBonds=1)), 14)
 
     m = Chem.MolFromSmiles("CC2C1CCC12")
-    self.assertTrue(len(Chem.FindAllPathsOfLengthN(m, 1, useBonds=1)) == 7)
-    self.assertTrue(len(Chem.FindAllPathsOfLengthN(m, 2, useBonds=1)) == 11)
+    self.assertEqual(len(Chem.FindAllPathsOfLengthN(m, 1, useBonds=1)), 7)
+    self.assertEqual(len(Chem.FindAllPathsOfLengthN(m, 2, useBonds=1)), 11)
     # FIX: this result disagrees with the paper (which says 13),
     #   but it seems right
     self.assertTrue(
@@ -734,20 +734,20 @@ class TestCase(unittest.TestCase):
   def test19Subgraphs(self):
     m = Chem.MolFromSmiles('C1CC1C')
     self.assertTrue(m)
-    self.assertTrue(len(Chem.FindAllSubgraphsOfLengthN(m, 1, 0)) == 4)
-    self.assertTrue(len(Chem.FindAllSubgraphsOfLengthN(m, 2)) == 5)
-    self.assertTrue(len(Chem.FindAllSubgraphsOfLengthN(m, 3)) == 4)
-    self.assertTrue(len(Chem.FindAllSubgraphsOfLengthN(m, 4)) == 1)
-    self.assertTrue(len(Chem.FindAllSubgraphsOfLengthN(m, 5)) == 0)
+    self.assertEqual(len(Chem.FindAllSubgraphsOfLengthN(m, 1, 0)), 4)
+    self.assertEqual(len(Chem.FindAllSubgraphsOfLengthN(m, 2)), 5)
+    self.assertEqual(len(Chem.FindAllSubgraphsOfLengthN(m, 3)), 4)
+    self.assertEqual(len(Chem.FindAllSubgraphsOfLengthN(m, 4)), 1)
+    self.assertEqual(len(Chem.FindAllSubgraphsOfLengthN(m, 5)), 0)
 
     #
     #  Hexane example from Hall-Kier Rev.Comp.Chem. paper
     #  Rev. Comp. Chem. vol 2, 367-422, (1991)
     #
     m = Chem.MolFromSmiles("CCCCCC")
-    self.assertTrue(len(Chem.FindAllSubgraphsOfLengthN(m, 1)) == 5)
-    self.assertTrue(len(Chem.FindAllSubgraphsOfLengthN(m, 2)) == 4)
-    self.assertTrue(len(Chem.FindAllSubgraphsOfLengthN(m, 3)) == 3)
+    self.assertEqual(len(Chem.FindAllSubgraphsOfLengthN(m, 1)), 5)
+    self.assertEqual(len(Chem.FindAllSubgraphsOfLengthN(m, 2)), 4)
+    self.assertEqual(len(Chem.FindAllSubgraphsOfLengthN(m, 3)), 3)
 
     l = Chem.FindAllSubgraphsOfLengthMToN(m, 1, 3)
     self.assertEqual(len(l), 3)
@@ -757,42 +757,42 @@ class TestCase(unittest.TestCase):
     self.assertRaises(ValueError, lambda: Chem.FindAllSubgraphsOfLengthMToN(m, 4, 3))
 
     m = Chem.MolFromSmiles("CCC(C)CC")
-    self.assertTrue(len(Chem.FindAllSubgraphsOfLengthN(m, 1)) == 5)
-    self.assertTrue(len(Chem.FindAllSubgraphsOfLengthN(m, 2)) == 5)
-    self.assertTrue(len(Chem.FindAllSubgraphsOfLengthN(m, 3)) == 5)
+    self.assertEqual(len(Chem.FindAllSubgraphsOfLengthN(m, 1)), 5)
+    self.assertEqual(len(Chem.FindAllSubgraphsOfLengthN(m, 2)), 5)
+    self.assertEqual(len(Chem.FindAllSubgraphsOfLengthN(m, 3)), 5)
 
     m = Chem.MolFromSmiles("CCCC(C)C")
-    self.assertTrue(len(Chem.FindAllSubgraphsOfLengthN(m, 1)) == 5)
-    self.assertTrue(len(Chem.FindAllSubgraphsOfLengthN(m, 2)) == 5)
-    self.assertTrue(len(Chem.FindAllSubgraphsOfLengthN(m, 3)) == 4)
+    self.assertEqual(len(Chem.FindAllSubgraphsOfLengthN(m, 1)), 5)
+    self.assertEqual(len(Chem.FindAllSubgraphsOfLengthN(m, 2)), 5)
+    self.assertEqual(len(Chem.FindAllSubgraphsOfLengthN(m, 3)), 4)
 
     m = Chem.MolFromSmiles("CC(C)C(C)C")
-    self.assertTrue(len(Chem.FindAllSubgraphsOfLengthN(m, 1)) == 5)
-    self.assertTrue(len(Chem.FindAllSubgraphsOfLengthN(m, 2)) == 6)
-    self.assertTrue(len(Chem.FindAllSubgraphsOfLengthN(m, 3)) == 6)
+    self.assertEqual(len(Chem.FindAllSubgraphsOfLengthN(m, 1)), 5)
+    self.assertEqual(len(Chem.FindAllSubgraphsOfLengthN(m, 2)), 6)
+    self.assertEqual(len(Chem.FindAllSubgraphsOfLengthN(m, 3)), 6)
 
     m = Chem.MolFromSmiles("CC(C)(C)CC")
-    self.assertTrue(len(Chem.FindAllSubgraphsOfLengthN(m, 1)) == 5)
-    self.assertTrue(len(Chem.FindAllSubgraphsOfLengthN(m, 2)) == 7)
+    self.assertEqual(len(Chem.FindAllSubgraphsOfLengthN(m, 1)), 5)
+    self.assertEqual(len(Chem.FindAllSubgraphsOfLengthN(m, 2)), 7)
     self.assertTrue(
       len(Chem.FindAllSubgraphsOfLengthN(m, 3)) == 7, Chem.FindAllSubgraphsOfLengthN(m, 3))
 
     m = Chem.MolFromSmiles("C1CCCCC1")
-    self.assertTrue(len(Chem.FindAllSubgraphsOfLengthN(m, 1)) == 6)
-    self.assertTrue(len(Chem.FindAllSubgraphsOfLengthN(m, 2)) == 6)
-    self.assertTrue(len(Chem.FindAllSubgraphsOfLengthN(m, 3)) == 6)
-    #self.assertTrue(len(Chem.FindUniqueSubgraphsOfLengthN(m,1))==1)
-    self.assertTrue(len(Chem.FindUniqueSubgraphsOfLengthN(m, 2)) == 1)
-    self.assertTrue(len(Chem.FindUniqueSubgraphsOfLengthN(m, 3)) == 1)
+    self.assertEqual(len(Chem.FindAllSubgraphsOfLengthN(m, 1)), 6)
+    self.assertEqual(len(Chem.FindAllSubgraphsOfLengthN(m, 2)), 6)
+    self.assertEqual(len(Chem.FindAllSubgraphsOfLengthN(m, 3)), 6)
+    #self.assertEqual(len(Chem.FindUniqueSubgraphsOfLengthN(m,1)), 1)
+    self.assertEqual(len(Chem.FindUniqueSubgraphsOfLengthN(m, 2)), 1)
+    self.assertEqual(len(Chem.FindUniqueSubgraphsOfLengthN(m, 3)), 1)
 
     m = Chem.MolFromSmiles("C1CC2C1CC2")
-    self.assertTrue(len(Chem.FindAllSubgraphsOfLengthN(m, 1)) == 7)
-    self.assertTrue(len(Chem.FindAllSubgraphsOfLengthN(m, 2)) == 10)
-    self.assertTrue(len(Chem.FindAllSubgraphsOfLengthN(m, 3)) == 16)
+    self.assertEqual(len(Chem.FindAllSubgraphsOfLengthN(m, 1)), 7)
+    self.assertEqual(len(Chem.FindAllSubgraphsOfLengthN(m, 2)), 10)
+    self.assertEqual(len(Chem.FindAllSubgraphsOfLengthN(m, 3)), 16)
 
     m = Chem.MolFromSmiles("CC2C1CCC12")
-    self.assertTrue(len(Chem.FindAllSubgraphsOfLengthN(m, 1)) == 7)
-    self.assertTrue(len(Chem.FindAllSubgraphsOfLengthN(m, 2)) == 11)
+    self.assertEqual(len(Chem.FindAllSubgraphsOfLengthN(m, 1)), 7)
+    self.assertEqual(len(Chem.FindAllSubgraphsOfLengthN(m, 2)), 11)
     self.assertTrue(
       len(Chem.FindAllSubgraphsOfLengthN(m, 3)) == 18, len(Chem.FindAllSubgraphsOfLengthN(m, 3)))
 
@@ -834,29 +834,29 @@ class TestCase(unittest.TestCase):
     mol = Chem.MolFromSmiles('CCC(=O)O')
     nmol = Chem.DeleteSubstructs(mol, query)
 
-    self.assertTrue(Chem.MolToSmiles(nmol) == 'CC')
+    self.assertEqual(Chem.MolToSmiles(nmol), 'CC')
 
     mol = Chem.MolFromSmiles('CCC(=O)O.O=CO')
     # now delete only fragments
     nmol = Chem.DeleteSubstructs(mol, query, 1)
-    self.assertTrue(Chem.MolToSmiles(nmol) == 'CCC(=O)O', Chem.MolToSmiles(nmol))
+    self.assertEqual(Chem.MolToSmiles(nmol), 'CCC(=O)O'))
 
     mol = Chem.MolFromSmiles('CCC(=O)O.O=CO')
     nmol = Chem.DeleteSubstructs(mol, query, 0)
-    self.assertTrue(Chem.MolToSmiles(nmol) == 'CC')
+    self.assertEqual(Chem.MolToSmiles(nmol), 'CC')
 
     mol = Chem.MolFromSmiles('CCCO')
     nmol = Chem.DeleteSubstructs(mol, query, 0)
-    self.assertTrue(Chem.MolToSmiles(nmol) == 'CCCO')
+    self.assertEqual(Chem.MolToSmiles(nmol), 'CCCO')
 
     # Issue 96 prevented this from working:
     mol = Chem.MolFromSmiles('CCC(=O)O.O=CO')
     nmol = Chem.DeleteSubstructs(mol, query, 1)
-    self.assertTrue(Chem.MolToSmiles(nmol) == 'CCC(=O)O')
+    self.assertEqual(Chem.MolToSmiles(nmol), 'CCC(=O)O')
     nmol = Chem.DeleteSubstructs(nmol, query, 1)
-    self.assertTrue(Chem.MolToSmiles(nmol) == 'CCC(=O)O')
+    self.assertEqual(Chem.MolToSmiles(nmol), 'CCC(=O)O')
     nmol = Chem.DeleteSubstructs(nmol, query, 0)
-    self.assertTrue(Chem.MolToSmiles(nmol) == 'CC')
+    self.assertEqual(Chem.MolToSmiles(nmol), 'CC')
 
   def test23MolFileParsing(self):
     fileN = os.path.join(RDConfig.RDBaseDir, 'Code', 'GraphMol', 'FileParsers', 'test_data',
@@ -865,11 +865,11 @@ class TestCase(unittest.TestCase):
       inD = inF.read()
     m1 = Chem.MolFromMolBlock(inD)
     self.assertTrue(m1 is not None)
-    self.assertTrue(m1.GetNumAtoms() == 9)
+    self.assertEqual(m1.GetNumAtoms(), 9)
 
     m1 = Chem.MolFromMolFile(fileN)
     self.assertTrue(m1 is not None)
-    self.assertTrue(m1.GetNumAtoms() == 9)
+    self.assertEqual(m1.GetNumAtoms(), 9)
 
     fileN = os.path.join(RDConfig.RDBaseDir, 'Code', 'GraphMol', 'FileParsers', 'test_data',
                          'triazine.mof')
@@ -921,16 +921,16 @@ class TestCase(unittest.TestCase):
     from rdkit import DataStructs
     m1 = Chem.MolFromSmiles('C1=CC=CC=C1')
     fp1 = Chem.RDKFingerprint(m1)
-    self.assertTrue(len(fp1) == 2048)
+    self.assertEqual(len(fp1), 2048)
     m2 = Chem.MolFromSmiles('C1=CC=CC=C1')
     fp2 = Chem.RDKFingerprint(m2)
 
     tmp = DataStructs.TanimotoSimilarity(fp1, fp2)
-    self.assertTrue(tmp == 1.0, tmp)
+    self.assertEqual(tmp, 1.0)
 
     m2 = Chem.MolFromSmiles('C1=CC=CC=N1')
     fp2 = Chem.RDKFingerprint(m2)
-    self.assertTrue(len(fp2) == 2048)
+    self.assertEqual(len(fp2), 2048)
     tmp = DataStructs.TanimotoSimilarity(fp1, fp2)
     self.assertGreater(tmp, 0.0)
     self.assertLess(tmp, 1.0)
@@ -990,26 +990,26 @@ class TestCase(unittest.TestCase):
     i = 0
     for mol in sdSup:
       self.assertTrue(mol)
-      self.assertTrue(mol.GetProp("_Name") == molNames[i])
+      self.assertEqual(mol.GetProp("_Name"), molNames[i])
       i += 1
       if (mol.GetProp("_Name") == "192"):
         # test parsed charges on one of the molecules
         for id in chgs192.keys():
-          self.assertTrue(mol.GetAtomWithIdx(id).GetFormalCharge() == chgs192[id])
+          self.assertEqual(mol.GetAtomWithIdx(id).GetFormalCharge(), chgs192[id])
     self.assertRaises(StopIteration, lambda: next(sdSup))
     sdSup.reset()
 
     ns = [mol.GetProp("_Name") for mol in sdSup]
-    self.assertTrue(ns == molNames)
+    self.assertEqual(ns, molNames)
 
     sdSup = Chem.SDMolSupplier(fileN, 0)
     for mol in sdSup:
       self.assertTrue(not mol.HasProp("numArom"))
 
     sdSup = Chem.SDMolSupplier(fileN)
-    self.assertTrue(len(sdSup) == 16)
+    self.assertEqual(len(sdSup), 16)
     mol = sdSup[5]
-    self.assertTrue(mol.GetProp("_Name") == "170")
+    self.assertEqual(mol.GetProp("_Name"), "170")
 
     # test handling of H removal:
     fileN = os.path.join(RDConfig.RDBaseDir, 'Code', 'GraphMol', 'FileParsers', 'test_data',
@@ -1017,36 +1017,36 @@ class TestCase(unittest.TestCase):
     sdSup = Chem.SDMolSupplier(fileN)
     m = next(sdSup)
     self.assertTrue(m)
-    self.assertTrue(m.GetNumAtoms() == 23)
+    self.assertEqual(m.GetNumAtoms(), 23)
     m = next(sdSup)
     self.assertTrue(m)
-    self.assertTrue(m.GetNumAtoms() == 28)
+    self.assertEqual(m.GetNumAtoms(), 28)
 
     sdSup = Chem.SDMolSupplier(fileN, removeHs=False)
     m = next(sdSup)
     self.assertTrue(m)
-    self.assertTrue(m.GetNumAtoms() == 39)
+    self.assertEqual(m.GetNumAtoms(), 39)
     m = next(sdSup)
     self.assertTrue(m)
-    self.assertTrue(m.GetNumAtoms() == 30)
+    self.assertEqual(m.GetNumAtoms(), 30)
 
     with open(fileN, 'rb') as dFile:
       d = dFile.read()
     sdSup.SetData(d)
     m = next(sdSup)
     self.assertTrue(m)
-    self.assertTrue(m.GetNumAtoms() == 23)
+    self.assertEqual(m.GetNumAtoms(), 23)
     m = next(sdSup)
     self.assertTrue(m)
-    self.assertTrue(m.GetNumAtoms() == 28)
+    self.assertEqual(m.GetNumAtoms(), 28)
 
     sdSup.SetData(d, removeHs=False)
     m = next(sdSup)
     self.assertTrue(m)
-    self.assertTrue(m.GetNumAtoms() == 39)
+    self.assertEqual(m.GetNumAtoms(), 39)
     m = next(sdSup)
     self.assertTrue(m)
-    self.assertTrue(m.GetNumAtoms() == 30)
+    self.assertEqual(m.GetNumAtoms(), 30)
 
     # test strictParsing1:
     fileN = os.path.join(RDConfig.RDBaseDir, 'Code', 'GraphMol', 'FileParsers', 'test_data',
@@ -1061,7 +1061,7 @@ class TestCase(unittest.TestCase):
         self.assertTrue(not mol.HasProp("ID"))
       self.assertTrue(not mol.HasProp("ANOTHER_PROPERTY"))
       i += 1
-    self.assertTrue(i == 2)
+    self.assertEqual(i, 2)
 
     #lax from file
     sdSup = Chem.SDMolSupplier(fileN, strictParsing=False)
@@ -1072,7 +1072,7 @@ class TestCase(unittest.TestCase):
       self.assertTrue(mol.HasProp("ID"))
       self.assertTrue(mol.HasProp("ANOTHER_PROPERTY"))
       i += 1
-    self.assertTrue(i == 2)
+    self.assertEqual(i, 2)
 
     #strict from text
     with open(fileN, 'rb') as dFile:
@@ -1087,7 +1087,7 @@ class TestCase(unittest.TestCase):
         self.assertTrue(not mol.HasProp("ID"))
       self.assertTrue(not mol.HasProp("ANOTHER_PROPERTY"))
       i += 1
-    self.assertTrue(i == 2)
+    self.assertEqual(i, 2)
 
     #lax from text
     sdSup = Chem.SDMolSupplier()
@@ -1099,7 +1099,7 @@ class TestCase(unittest.TestCase):
       self.assertTrue(mol.HasProp("ID"))
       self.assertTrue(mol.HasProp("ANOTHER_PROPERTY"))
       i += 1
-    self.assertTrue(i == 2)
+    self.assertEqual(i, 2)
 
     # test strictParsing2:
     fileN = os.path.join(RDConfig.RDBaseDir, 'Code', 'GraphMol', 'FileParsers', 'test_data',
@@ -1111,7 +1111,7 @@ class TestCase(unittest.TestCase):
     for mol in sdSup:
       self.assertTrue(mol.HasProp("_Name"))
       self.assertTrue(mol.HasProp("ID"))
-      self.assertTrue(mol.GetProp("ID") == "Lig1")
+      self.assertEqual(mol.GetProp("ID"), "Lig1")
       self.assertTrue(mol.HasProp("ANOTHER_PROPERTY"))
       self.assertTrue(
         mol.GetProp("ANOTHER_PROPERTY") == "No blank line before dollars\n"
@@ -1119,7 +1119,7 @@ class TestCase(unittest.TestCase):
         "Structure1\n"
         "csChFnd70/05230312262D")
       i += 1
-    self.assertTrue(i == 1)
+    self.assertEqual(i, 1)
 
     #lax from file
     sdSup = Chem.SDMolSupplier(fileN, strictParsing=False)
@@ -1128,11 +1128,11 @@ class TestCase(unittest.TestCase):
     for mol in sdSup:
       self.assertTrue(mol.HasProp("_Name"))
       self.assertTrue(mol.HasProp("ID"))
-      self.assertTrue(mol.GetProp("ID") == "Lig2")
+      self.assertEqual(mol.GetProp("ID"), "Lig2")
       self.assertTrue(mol.HasProp("ANOTHER_PROPERTY"))
-      self.assertTrue(mol.GetProp("ANOTHER_PROPERTY") == "Value2")
+      self.assertEqual(mol.GetProp("ANOTHER_PROPERTY"), "Value2")
       i += 1
-    self.assertTrue(i == 1)
+    self.assertEqual(i, 1)
 
     #strict from text
     with open(fileN, 'rb') as dFile:
@@ -1144,7 +1144,7 @@ class TestCase(unittest.TestCase):
     for mol in sdSup:
       self.assertTrue(mol.HasProp("_Name"))
       self.assertTrue(mol.HasProp("ID"))
-      self.assertTrue(mol.GetProp("ID") == "Lig1")
+      self.assertEqual(mol.GetProp("ID"), "Lig1")
       self.assertTrue(mol.HasProp("ANOTHER_PROPERTY"))
       self.assertTrue(
         mol.GetProp("ANOTHER_PROPERTY") == "No blank line before dollars\n"
@@ -1152,7 +1152,7 @@ class TestCase(unittest.TestCase):
         "Structure1\n"
         "csChFnd70/05230312262D")
       i += 1
-    self.assertTrue(i == 1)
+    self.assertEqual(i, 1)
 
     #lax from text
     sdSup = Chem.SDMolSupplier()
@@ -1162,11 +1162,11 @@ class TestCase(unittest.TestCase):
     for mol in sdSup:
       self.assertTrue(mol.HasProp("_Name"))
       self.assertTrue(mol.HasProp("ID"))
-      self.assertTrue(mol.GetProp("ID") == "Lig2")
+      self.assertEqual(mol.GetProp("ID"), "Lig2")
       self.assertTrue(mol.HasProp("ANOTHER_PROPERTY"))
-      self.assertTrue(mol.GetProp("ANOTHER_PROPERTY") == "Value2")
+      self.assertEqual(mol.GetProp("ANOTHER_PROPERTY"), "Value2")
       i += 1
-    self.assertTrue(i == 1)
+    self.assertEqual(i, 1)
 
   def test26SmiMolSupplier(self):
     fileN = os.path.join(RDConfig.RDBaseDir, 'Code', 'GraphMol', 'FileParsers', 'test_data',
@@ -1174,12 +1174,12 @@ class TestCase(unittest.TestCase):
     #fileN = "../FileParsers/test_data/first_200.tpsa.csv"
     smiSup = Chem.SmilesMolSupplier(fileN, ",", 0, -1)
     mol = smiSup[16]
-    self.assertTrue(mol.GetProp("TPSA") == "46.25")
+    self.assertEqual(mol.GetProp("TPSA"), "46.25")
 
     mol = smiSup[8]
-    self.assertTrue(mol.GetProp("TPSA") == "65.18")
+    self.assertEqual(mol.GetProp("TPSA"), "65.18")
 
-    self.assertTrue(len(smiSup) == 200)
+    self.assertEqual(len(smiSup), 200)
 
     fileN = os.path.join(RDConfig.RDBaseDir, 'Code', 'GraphMol', 'FileParsers', 'test_data',
                          'fewSmi.csv')
@@ -1188,13 +1188,13 @@ class TestCase(unittest.TestCase):
     names = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]
     i = 0
     for mol in smiSup:
-      self.assertTrue(mol.GetProp("_Name") == names[i])
+      self.assertEqual(mol.GetProp("_Name"), names[i])
       i += 1
 
     mol = smiSup[3]
 
-    self.assertTrue(mol.GetProp("_Name") == "4")
-    self.assertTrue(mol.GetProp("Column_2") == "82.78")
+    self.assertEqual(mol.GetProp("_Name"), "4")
+    self.assertEqual(mol.GetProp("Column_2"), "82.78")
 
     # and test doing a supplier from text:
     with open(fileN, 'r') as inF:
@@ -1204,18 +1204,18 @@ class TestCase(unittest.TestCase):
     i = 0
     # iteration interface:
     for mol in smiSup:
-      self.assertTrue(mol.GetProp("_Name") == names[i])
+      self.assertEqual(mol.GetProp("_Name"), names[i])
       i += 1
-    self.assertTrue(i == 10)
+    self.assertEqual(i, 10)
     # random access:
     mol = smiSup[3]
-    self.assertTrue(len(smiSup) == 10)
-    self.assertTrue(mol.GetProp("_Name") == "4")
-    self.assertTrue(mol.GetProp("Column_2") == "82.78")
+    self.assertEqual(len(smiSup), 10)
+    self.assertEqual(mol.GetProp("_Name"), "4")
+    self.assertEqual(mol.GetProp("Column_2"), "82.78")
 
     # issue 113:
     smiSup.SetData(inD, delimiter=",", smilesColumn=1, nameColumn=0, titleLine=0)
-    self.assertTrue(len(smiSup) == 10)
+    self.assertEqual(len(smiSup), 10)
 
     # and test failure handling:
     inD = """mol-1,CCC
@@ -1225,7 +1225,7 @@ mol-4,CCOC
     """
     smiSup.SetData(inD, delimiter=",", smilesColumn=1, nameColumn=0, titleLine=0)
     # there are 4 entries in the supplier:
-    self.assertTrue(len(smiSup) == 4)
+    self.assertEqual(len(smiSup), 4)
     # but the 3rd is a None:
     self.assertTrue(smiSup[2] is None)
 
