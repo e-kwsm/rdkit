@@ -85,9 +85,9 @@ class TestCase(unittest.TestCase):
     #for frag in sorted(frags):
     #    print(frag)
     cores = set(x[0] for x in frags)
-    self.assertTrue('C([*:1])([*:2])[*:3]' in cores)
+    self.assertIn('C([*:1])([*:2])[*:3]', cores)
     # FIX: this needs to be investigated, it's not currently passing
-    #self.assertTrue('O=C(N[*:3])C([*:1])[*:2]' in cores)
+    #self.assertIn('O=C(N[*:3])C([*:1])[*:2]', cores)
     self.assertEqual(len(frags), 18)
     for frag in frags:
       self.assertEqual(len(frag), 2)

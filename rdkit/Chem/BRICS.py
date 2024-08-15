@@ -678,13 +678,13 @@ if __name__ == '__main__':
       res = BRICSDecompose(m)
       self.assertTrue(res)
       self.assertTrue(len(res) == 3, res)
-      self.assertTrue('[11*]S[11*]' in res, res)
+      self.assertIn('[11*]S[11*]', res)
 
       m = Chem.MolFromSmiles('CCNC(=O)C1CC1')
       res = BRICSDecompose(m)
       self.assertTrue(res)
       self.assertTrue(len(res) == 4, res)
-      self.assertTrue('[5*]N[5*]' in res, res)
+      self.assertIn('[5*]N[5*]', res)
 
     def test2(self):
       # example from the paper, nexavar:
@@ -698,9 +698,9 @@ if __name__ == '__main__':
       res = BRICSDecompose(m)
       self.assertTrue(res)
       self.assertTrue(len(res) == 5, res)
-      self.assertTrue('[5*]N[5*]' in res, res)
-      self.assertTrue('[16*]c1ccccc1' in res, res)
-      self.assertTrue('[8*]C(F)(F)F' in res, res)
+      self.assertIn('[5*]N[5*]', res)
+      self.assertIn('[16*]c1ccccc1', res)
+      self.assertIn('[8*]C(F)(F)F', res)
 
     def test4(self):
       allNodes = set()
@@ -741,8 +741,8 @@ if __name__ == '__main__':
       res = list(res)
       self.assertTrue(len(res) == 6)
       smis = [Chem.MolToSmiles(x, True) for x in res]
-      self.assertTrue('c1ccc(-c2ccccc2)cc1' in smis)
-      self.assertTrue('c1ccc(-c2ccccn2)cc1' in smis)
+      self.assertIn('c1ccc(-c2ccccc2)cc1', smis)
+      self.assertIn('c1ccc(-c2ccccn2)cc1', smis)
 
     def test5a(self):
       allNodes = set()
@@ -756,8 +756,8 @@ if __name__ == '__main__':
       res = list(res)
       smis = [Chem.MolToSmiles(x, True) for x in res]
       self.assertTrue(len(smis) == 2, smis)
-      self.assertTrue('c1ccc(Oc2ccccc2)cc1' in smis)
-      self.assertTrue('c1ccc(-c2ccccc2)cc1' in smis)
+      self.assertIn('c1ccc(Oc2ccccc2)cc1', smis)
+      self.assertIn('c1ccc(-c2ccccc2)cc1', smis)
 
     def test6(self):
       allNodes = set()
@@ -772,9 +772,9 @@ if __name__ == '__main__':
       res = list(res)
       self.assertTrue(len(res) == 3)
       smis = [Chem.MolToSmiles(x, True) for x in res]
-      self.assertTrue('c1ccc(-c2ccccc2)cc1' in smis)
-      self.assertTrue('COc1ccccc1' in smis)
-      self.assertTrue('c1ccc(-n2cccc2)cc1' in smis, smis)
+      self.assertIn('c1ccc(-c2ccccc2)cc1', smis)
+      self.assertIn('COc1ccccc1', smis)
+      self.assertIn('c1ccc(-n2cccc2)cc1', smis)
 
     def test7(self):
       allNodes = set()
@@ -789,9 +789,9 @@ if __name__ == '__main__':
       res = list(res)
       smis = [Chem.MolToSmiles(x, True) for x in res]
       self.assertTrue(len(res) == 3)
-      self.assertTrue('c1ccc(-c2ccccc2)cc1' in smis)
-      self.assertTrue('COc1ccccc1' in smis)
-      self.assertTrue('O=C(COc1ccccc1)c1ccccc1' in smis)
+      self.assertIn('c1ccc(-c2ccccc2)cc1', smis)
+      self.assertIn('COc1ccccc1', smis)
+      self.assertIn('O=C(COc1ccccc1)c1ccccc1', smis)
 
     def test8(self):
       random.seed(23)

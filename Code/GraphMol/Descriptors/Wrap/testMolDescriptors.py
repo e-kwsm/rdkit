@@ -70,7 +70,7 @@ class TestCase(unittest.TestCase):
     for mol, fp, cfp in zip(mols, fps, chiralFps):
       ac0 = rdMD.GetAtomPairAtomCode(mol.GetAtomWithIdx(0))
       ac1 = rdMD.GetAtomPairAtomCode(mol.GetAtomWithIdx(1))
-      self.assertTrue(rdMD.GetAtomPairCode(ac0, ac1, 1) in fp.GetNonzeroElements())
+      self.assertIn(rdMD.GetAtomPairCode(ac0, ac1, 1), fp.GetNonzeroElements())
       ac0 = rdMD.GetAtomPairAtomCode(mol.GetAtomWithIdx(0), includeChirality=True)
       ac1 = rdMD.GetAtomPairAtomCode(mol.GetAtomWithIdx(1), includeChirality=True)
       self.assertFalse(
@@ -536,11 +536,11 @@ class TestCase(unittest.TestCase):
     props = rdMD.Properties(["CustomNumAtoms"])
     self.assertEqual(1, props.ComputeProperties(Chem.MolFromSmiles("C"))[0])
 
-    self.assertTrue("CustomNumAtoms" in rdMD.Properties.GetAvailableProperties())
+    self.assertIn("CustomNumAtoms", rdMD.Properties.GetAvailableProperties())
     # check memory
     del numAtoms
     self.assertEqual(1, props.ComputeProperties(Chem.MolFromSmiles("C"))[0])
-    self.assertTrue("CustomNumAtoms" in rdMD.Properties.GetAvailableProperties())
+    self.assertIn("CustomNumAtoms", rdMD.Properties.GetAvailableProperties())
 
     m = Chem.MolFromSmiles("c1ccccc1")
     properties = rdMD.Properties()
@@ -693,7 +693,7 @@ class TestCase(unittest.TestCase):
       bcut2 = rdMD.BCUT2D(m, props)
       self.assertTrue(0, "Failed to handle bad prop size")
     except RuntimeError as e:
-      self.assertTrue("tom_props.size() == num_atoms" in str(e))
+      self.assertIn("tom_props.size() == num_atoms", str(e))
 
     try:
       bcut2 = rdMD.BCUT2D(m, "property not existing on the atom")
