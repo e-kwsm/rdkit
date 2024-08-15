@@ -24,10 +24,10 @@ class TestCase(unittest.TestCase):
     lines = txt.split('\n')
     if not lines[-1]:
       del lines[-1]
-    self.assertTrue(len(lines) == 201, 'bad num lines: %d' % len(lines))
+    self.assertEqual(len(lines), 201, 'bad num lines: %d' % len(lines))
     line0 = lines[0].split(',')
     self.assertEqual(len(line0), 20)
-    self.assertTrue(line0[0] == 'SMILES')
+    self.assertEqual(line0[0], 'SMILES')
 
   def test2(self):
     fName = os.path.join(RDConfig.RDDataDir, 'NCI', 'first_200.props.sdf')
@@ -41,11 +41,11 @@ class TestCase(unittest.TestCase):
       self.fail('conversion failed')
     txt = io.getvalue()
     lines = [line for line in txt.split('\n') if line.strip() != '']
-    self.assertTrue(len(lines) == 6, 'bad num lines: %d' % len(lines))
+    self.assertEqual(len(lines), 6, 'bad num lines: %d' % len(lines))
     line0 = lines[0].split(',')
     self.assertEqual(len(line0), 20)
-    self.assertTrue(line0[0] == 'AMW')
-    self.assertTrue(line0[1] == 'SMILES')
+    self.assertEqual(line0[0], 'AMW')
+    self.assertEqual(line0[1], 'SMILES')
 
   def test_parser(self):
     parser = initParser()
