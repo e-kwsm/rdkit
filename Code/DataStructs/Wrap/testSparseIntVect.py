@@ -15,10 +15,6 @@ from rdkit import DataStructs as ds
 from rdkit import RDConfig
 
 
-def feq(v1, v2, tol=1e-4):
-  return abs(v1 - v2) < tol
-
-
 class TestCase(unittest.TestCase):
 
   def setUp(self):
@@ -150,7 +146,7 @@ class TestCase(unittest.TestCase):
     v1[4] = 4
     v1[0] = 2
     v1[3] = 1
-    self.assertTrue(feq(ds.DiceSimilarity(v1, v1), 1.0))
+    self.assertAlmostEqual(ds.DiceSimilarity(v1, v1), 1.0, delta=1e-4)
 
     v1 = ds.IntSparseIntVect(5)
     v1[0] = 2
@@ -162,8 +158,8 @@ class TestCase(unittest.TestCase):
     v2[2] = 3
     v2[3] = 4
     v2[4] = 4
-    self.assertTrue(feq(ds.DiceSimilarity(v1, v2), 18.0 / 26.))
-    self.assertTrue(feq(ds.DiceSimilarity(v2, v1), 18.0 / 26.))
+    self.assertAlmostEqual(ds.DiceSimilarity(v1, v2), 18.0 / 26., delta=1e-4)
+    self.assertAlmostEqual(ds.DiceSimilarity(v2, v1), 18.0 / 26., delta=1e-4)
 
   def test6BulkDice(self):
     """
@@ -183,7 +179,7 @@ class TestCase(unittest.TestCase):
     baseDs = [ds.DiceSimilarity(vs[0], vs[x]) for x in range(1, nVs)]
     bulkDs = ds.BulkDiceSimilarity(vs[0], vs[1:])
     for bbaseDs, bbulkDs in zip(baseDs, bulkDs):
-      self.assertTrue(feq(bbaseDs, bbulkDs))
+      self.assertAlmostEqual(bbaseDs, bbulkDs, delta=1e-4)
 
   def test6BulkTversky(self):
     """
@@ -204,17 +200,17 @@ class TestCase(unittest.TestCase):
     bulkDs = ds.BulkTverskySimilarity(vs[0], vs[1:], 0.5, 0.5)
     diceDs = [ds.DiceSimilarity(vs[0], vs[x]) for x in range(1, nVs)]
     for bbaseDs, bbulkDs, ddiceDs in zip(baseDs, bulkDs, diceDs):
-      self.assertTrue(feq(bbaseDs, bbulkDs))
-      self.assertTrue(feq(bbaseDs, ddiceDs))
-      self.assertTrue(feq(bbulkDs, ddiceDs))
+      self.assertAlmostEqual(bbaseDs, bbulkDs, delta=1e-4)
+      self.assertAlmostEqual(bbaseDs, ddiceDs, delta=1e-4)
+      self.assertAlmostEqual(bbulkDs, ddiceDs, delta=1e-4)
 
     bulkDs = ds.BulkTverskySimilarity(vs[0], vs[1:], 1.0, 1.0)
     taniDs = [ds.TanimotoSimilarity(vs[0], vs[x]) for x in range(1, nVs)]
     for bbulkDs, ttaniDs in zip(bulkDs, taniDs):
-      self.assertTrue(feq(bbulkDs, ttaniDs))
+      self.assertAlmostEqual(bbulkDs, ttaniDs, delta=1e-4)
     taniDs = ds.BulkTanimotoSimilarity(vs[0], vs[1:])
     for bbulkDs, ttaniDs in zip(bulkDs, taniDs):
-      self.assertTrue(feq(bbulkDs, ttaniDs))
+      self.assertAlmostEqual(bbulkDs, ttaniDs, delta=1e-4)
 
   def test7ToList(self):
     l = [0] * 2048
