@@ -49,7 +49,7 @@ class TestCase(unittest.TestCase):
 
   def test1Basics(self):
     pcophore = self.pcophore
-    self.assertTrue(len(pcophore.getFeatures()) == 3)
+    self.assertEqual(len(pcophore.getFeatures()), 3)
     self.assertTrue(pcophore.getFeature(0))
     self.assertTrue(pcophore.getFeature(1))
     self.assertTrue(pcophore.getFeature(2))
@@ -97,22 +97,22 @@ class TestCase(unittest.TestCase):
     pcophore = self.pcophore
 
     pcophore.setUpperBound2D(0, 1, 3)
-    self.assertTrue(pcophore.getUpperBound2D(0, 1) == 3)
-    self.assertTrue(pcophore.getUpperBound2D(1, 0) == 3)
+    self.assertEqual(pcophore.getUpperBound2D(0, 1), 3)
+    self.assertEqual(pcophore.getUpperBound2D(1, 0), 3)
     pcophore.setUpperBound2D(1, 0, 5)
-    self.assertTrue(pcophore.getUpperBound2D(0, 1) == 5)
-    self.assertTrue(pcophore.getUpperBound2D(1, 0) == 5)
+    self.assertEqual(pcophore.getUpperBound2D(0, 1), 5)
+    self.assertEqual(pcophore.getUpperBound2D(1, 0), 5)
     self.assertRaises(IndexError, pcophore.setUpperBound2D, 0, 3, 2)
     self.assertRaises(ValueError, pcophore.setUpperBound2D, 0, 3, 2, checkBounds=True)
     self.assertRaises(IndexError, pcophore.setUpperBound2D, 3, 0, 2)
     self.assertRaises(ValueError, pcophore.setUpperBound2D, 3, 0, 2, checkBounds=True)
 
     pcophore.setLowerBound2D(0, 1, 3)
-    self.assertTrue(pcophore.getLowerBound2D(0, 1) == 3)
-    self.assertTrue(pcophore.getLowerBound2D(1, 0) == 3)
+    self.assertEqual(pcophore.getLowerBound2D(0, 1), 3)
+    self.assertEqual(pcophore.getLowerBound2D(1, 0), 3)
     pcophore.setLowerBound2D(1, 0, 5)
-    self.assertTrue(pcophore.getLowerBound2D(0, 1) == 5)
-    self.assertTrue(pcophore.getLowerBound2D(1, 0) == 5)
+    self.assertEqual(pcophore.getLowerBound2D(0, 1), 5)
+    self.assertEqual(pcophore.getLowerBound2D(1, 0), 5)
     self.assertRaises(IndexError, pcophore.setLowerBound2D, 0, 3, 2)
     self.assertRaises(ValueError, pcophore.setLowerBound2D, 0, 3, 2, checkBounds=True)
     self.assertRaises(IndexError, pcophore.setLowerBound2D, 3, 0, 2)
