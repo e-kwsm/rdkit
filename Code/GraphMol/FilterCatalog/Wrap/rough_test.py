@@ -60,7 +60,7 @@ class TestCase(unittest.TestCase):
 
   def test0FilterCatalogEntry(self):
     matcher = FilterCatalog.SmartsMatcher("Aromatic carbon chain")
-    self.assertTrue(not matcher.IsValid())
+    self.assertFalse(matcher.IsValid())
 
     pat = Chem.MolFromSmarts("c:c:c:c:c")
     matcher.SetPattern(pat)
@@ -91,12 +91,12 @@ class TestCase(unittest.TestCase):
 
     matcher = FilterCatalog.ExclusionList()
     matcher.SetExclusionPatterns([matcher])
-    self.assertTrue(not matcher.HasMatch(mol))
+    self.assertFalse(matcher.HasMatch(mol))
 
     #pat = Chem.MolFromSmarts("c:c:c:c:c")
     #entry.SetOnPattern(pat)
     #entry.SetOffPatterns([pat,pat,pat])
-    #self.assertTrue(not entry.HasMatch(pat))
+    #self.assertFalse(entry.HasMatch(pat))
 
   def test1FilterMatchOps(self):
     mol = Chem.MolFromSmiles("c1ccccc1")
@@ -109,10 +109,10 @@ class TestCase(unittest.TestCase):
 
     matcher2 = FilterCatalog.ExclusionList()
     matcher2.SetExclusionPatterns([matcher])
-    self.assertTrue(not matcher2.HasMatch(mol))
+    self.assertFalse(matcher2.HasMatch(mol))
 
     and_match = FilterMatchOps.And(matcher, matcher2)
-    self.assertTrue(not and_match.HasMatch(mol))
+    self.assertFalse(and_match.HasMatch(mol))
     not_match = FilterMatchOps.Not(and_match)
     self.assertTrue(not_match.HasMatch(mol))
     or_match = FilterMatchOps.Or(matcher, matcher2)
