@@ -144,19 +144,11 @@ class TestCase(unittest.TestCase):
   def test9(self):
     m = Chem.MolFromSmiles("Oc1ccccc1N")
 
-    try:
-
+    with self.assertRaisesRegex(ValueError, "supplied maxCuts is less than minCuts"):
       frags1 = rdMMPA.FragmentMol(m, minCuts=1, maxCuts=0, maxCutBonds=21, resultsAsMols=False)
-      self.assertTrue(False)  # should not get here
-    except ValueError as e:
-      self.assertEqual(str(e), "supplied maxCuts is less than minCuts")
 
-    try:
-
+    with self.assertRaisesRegex(ValueError, "minCuts must be greater than 0"):
       frags1 = rdMMPA.FragmentMol(m, minCuts=0, maxCuts=0, maxCutBonds=21, resultsAsMols=False)
-      self.assertTrue(False)  # should not get here
-    except ValueError as e:
-      self.assertEqual(str(e), "minCuts must be greater than 0")
 
 
 if __name__ == "__main__":
