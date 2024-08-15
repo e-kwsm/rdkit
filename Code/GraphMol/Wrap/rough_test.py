@@ -2862,17 +2862,15 @@ CAS<~>
   def test64MoleculeCleanup(self):
     m = Chem.MolFromSmiles('CN(=O)=O', False)
     self.assertTrue(m)
-    self.assertTrue(
-      m.GetAtomWithIdx(1).GetFormalCharge() == 0 and m.GetAtomWithIdx(2).GetFormalCharge() == 0
-      and m.GetAtomWithIdx(3).GetFormalCharge() == 0)
-    self.assertTrue(
-      m.GetBondBetweenAtoms(1, 3).GetBondType() == Chem.BondType.DOUBLE
-      and m.GetBondBetweenAtoms(1, 2).GetBondType() == Chem.BondType.DOUBLE)
+    self.assertEqual(m.GetAtomWithIdx(1).GetFormalCharge(), 0)
+    self.assertEqual(m.GetAtomWithIdx(2).GetFormalCharge(), 0)
+    self.assertEqual(m.GetAtomWithIdx(3).GetFormalCharge(), 0)
+    self.assertEqual(m.GetBondBetweenAtoms(1, 2).GetBondType(), Chem.BondType.DOUBLE)
+    self.assertEqual(m.GetBondBetweenAtoms(1, 3).GetBondType(), Chem.BondType.DOUBLE)
     Chem.Cleanup(m)
     m.UpdatePropertyCache()
-    self.assertTrue(
-      m.GetAtomWithIdx(1).GetFormalCharge() == 1 and
-      (m.GetAtomWithIdx(2).GetFormalCharge() == -1 or m.GetAtomWithIdx(3).GetFormalCharge() == -1))
+    self.assertEqual(m.GetAtomWithIdx(1).GetFormalCharge(), 1)
+    self.assertTrue(m.GetAtomWithIdx(2).GetFormalCharge() == -1 or m.GetAtomWithIdx(3).GetFormalCharge() == -1)
     self.assertTrue(
       m.GetBondBetweenAtoms(1, 3).GetBondType() == Chem.BondType.SINGLE
       or m.GetBondBetweenAtoms(1, 2).GetBondType() == Chem.BondType.SINGLE)
