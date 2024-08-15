@@ -98,19 +98,22 @@ class TestCase(unittest.TestCase):
     self.assertTrue(fp1 == fp2)
     fp2 = rdMD.GetHashedAtomPairFingerprint(m, 2048, 1, 2)
     sim = DataStructs.DiceSimilarity(fp1, fp2)
-    self.assertTrue(sim > 0.0 and sim < 1.0)
+    self.assertGreater(sim, 0.0)
+    self.assertLess(sim, 1.0)
 
     m = Chem.MolFromSmiles('c1ccccn1')
     fp2 = rdMD.GetHashedAtomPairFingerprint(m, 2048)
     sim = DataStructs.DiceSimilarity(fp1, fp2)
-    self.assertTrue(sim > 0.0 and sim < 1.0)
+    self.assertGreater(sim, 0.0)
+    self.assertLess(sim, 1.0)
 
     m = Chem.MolFromSmiles('c1ccccc1')
     fp1 = rdMD.GetHashedAtomPairFingerprintAsBitVect(m, 2048)
     m = Chem.MolFromSmiles('c1ccccn1')
     fp2 = rdMD.GetHashedAtomPairFingerprintAsBitVect(m, 2048)
     sim = DataStructs.DiceSimilarity(fp1, fp2)
-    self.assertTrue(sim > 0.0 and sim < 1.0)
+    self.assertGreater(sim, 0.0)
+    self.assertLess(sim, 1.0)
 
   def testRootedAtomPairs(self):
     m = Chem.MolFromSmiles('Oc1ccccc1')
@@ -119,7 +122,7 @@ class TestCase(unittest.TestCase):
     nz1 = fp1.GetNonzeroElements()
     nz2 = fp2.GetNonzeroElements()
     for k, v in nz2.items():
-      self.assertTrue(v <= nz1[k])
+      self.assertLessEqual(v, nz1[k])
 
   def testTopologicalTorsions(self):
     mol = Chem.MolFromSmiles("CC")
@@ -156,7 +159,7 @@ class TestCase(unittest.TestCase):
     nz1 = fp1.GetNonzeroElements()
     nz2 = fp2.GetNonzeroElements()
     for k, v in nz2.items():
-      self.assertTrue(v <= nz1[k])
+      self.assertLessEqual(v, nz1[k])
 
     m = Chem.MolFromSmiles('COCC')
     fp1 = rdMD.GetTopologicalTorsionFingerprint(m)
@@ -734,30 +737,30 @@ class TestCase(unittest.TestCase):
     # test default params
     default = rdMD.DoubleCubicLatticeVolume(mol1, isProtein=True, includeLigand=False)
 
-    self.assertTrue(abs(default.GetSurfaceArea() - 8330.59) < 0.05)
-    self.assertTrue(abs(default.GetVolume() - 31789.6) < 0.05)
-    self.assertTrue(abs(default.GetVDWVolume() - 15355.3) < 0.05)
-    self.assertTrue(abs(default.GetCompactness() - 1.7166) < 0.05)
-    self.assertTrue(abs(default.GetPackingDensity() - 0.48303) < 0.05)
+    self.assertLess(abs(default.GetSurfaceArea() - 8330.59), 0.05)
+    self.assertLess(abs(default.GetVolume() - 31789.6), 0.05)
+    self.assertLess(abs(default.GetVDWVolume() - 15355.3), 0.05)
+    self.assertLess(abs(default.GetCompactness() - 1.7166), 0.05)
+    self.assertLess(abs(default.GetPackingDensity() - 0.48303), 0.05)
 
     # test set depth and radius
     depthrad = rdMD.DoubleCubicLatticeVolume(mol1, isProtein=True, includeLigand=False,
                                              probeRadius=1.6, depth=6)
 
-    self.assertTrue(abs(depthrad.GetSurfaceArea() - 8186.06) < 0.05)
-    self.assertTrue(abs(depthrad.GetVolume() - 33464.5) < 0.05)
-    self.assertTrue(abs(depthrad.GetVDWVolume() - 15350.7) < 0.05)
-    self.assertTrue(abs(depthrad.GetCompactness() - 1.63005) < 0.05)
-    self.assertTrue(abs(depthrad.GetPackingDensity() - 0.458717) < 0.05)
+    self.assertLess(abs(depthrad.GetSurfaceArea() - 8186.06), 0.05)
+    self.assertLess(abs(depthrad.GetVolume() - 33464.5), 0.05)
+    self.assertLess(abs(depthrad.GetVDWVolume() - 15350.7), 0.05)
+    self.assertLess(abs(depthrad.GetCompactness() - 1.63005), 0.05)
+    self.assertLess(abs(depthrad.GetPackingDensity() - 0.458717), 0.05)
 
     # test include ligand
     withlig = rdMD.DoubleCubicLatticeVolume(mol1, isProtein=True, includeLigand=True)
 
-    self.assertTrue(abs(withlig.GetSurfaceArea() - 8010.56) < 0.05)
-    self.assertTrue(abs(withlig.GetVolume() - 31228.4) < 0.05)
-    self.assertTrue(abs(withlig.GetVDWVolume() - 15155.7) < 0.05)
-    self.assertTrue(abs(withlig.GetCompactness() - 1.67037) < 0.05)
-    self.assertTrue(abs(withlig.GetPackingDensity() - 0.48532) < 0.05)
+    self.assertLess(abs(withlig.GetSurfaceArea() - 8010.56), 0.05)
+    self.assertLess(abs(withlig.GetVolume() - 31228.4), 0.05)
+    self.assertLess(abs(withlig.GetVDWVolume() - 15155.7), 0.05)
+    self.assertLess(abs(withlig.GetCompactness() - 1.67037), 0.05)
+    self.assertLess(abs(withlig.GetPackingDensity() - 0.48532), 0.05)
 
     fname2 = str(Path(rdbase) / 'Code' / 'GraphMol' / 'Descriptors' / 'test_data' / 'TZL_model.sdf')
     suppl = Chem.SDMolSupplier(fname2)
@@ -767,9 +770,9 @@ class TestCase(unittest.TestCase):
     # test from SDF file with defaults
     sdf = rdMD.DoubleCubicLatticeVolume(mol2, isProtein=False)
 
-    self.assertTrue(abs(sdf.GetSurfaceArea() - 296.466) < 0.05)
-    self.assertTrue(abs(sdf.GetVolume() - 411.972) < 0.05)
-    self.assertTrue(abs(sdf.GetVDWVolume() - 139.97) < 0.05)
+    self.assertLess(abs(sdf.GetSurfaceArea() - 296.466), 0.05)
+    self.assertLess(abs(sdf.GetVolume() - 411.972), 0.05)
+    self.assertLess(abs(sdf.GetVDWVolume() - 139.97), 0.05)
 
 
 if __name__ == '__main__':
