@@ -207,15 +207,15 @@ class TestCase(unittest.TestCase):
     mol = Chem.MolFromSmiles('n1ccccc1')
     self.assertTrue(mol)
 
-    self.assertTrue(not mol.HasAtomBookmark(0))
+    self.assertFalse(mol.HasAtomBookmark(0))
     mol.SetAtomBookmark(mol.GetAtomWithIdx(0), 0)
     mol.SetAtomBookmark(mol.GetAtomWithIdx(1), 1)
     self.assertTrue(mol.HasAtomBookmark(0))
     self.assertTrue(mol.HasAtomBookmark(1))
 
     if 1:
-      self.assertTrue(not mol.HasBondBookmark(0))
-      self.assertTrue(not mol.HasBondBookmark(1))
+      self.assertFalse(mol.HasBondBookmark(0))
+      self.assertFalse(mol.HasBondBookmark(1))
       mol.SetBondBookmark(mol.GetBondWithIdx(0), 0)
       mol.SetBondBookmark(mol.GetBondWithIdx(1), 1)
       self.assertTrue(mol.HasBondBookmark(0))
@@ -225,11 +225,11 @@ class TestCase(unittest.TestCase):
     self.assertTrue(at)
     self.assertEqual(at.GetAtomicNum(), 7)
     mol.ClearAtomBookmark(0)
-    self.assertTrue(not mol.HasAtomBookmark(0))
+    self.assertFalse(mol.HasAtomBookmark(0))
     self.assertTrue(mol.HasAtomBookmark(1))
     mol.ClearAllAtomBookmarks()
-    self.assertTrue(not mol.HasAtomBookmark(0))
-    self.assertTrue(not mol.HasAtomBookmark(1))
+    self.assertFalse(mol.HasAtomBookmark(0))
+    self.assertFalse(mol.HasAtomBookmark(1))
 
     mol.SetAtomBookmark(mol.GetAtomWithIdx(1), 1)
 
@@ -239,11 +239,11 @@ class TestCase(unittest.TestCase):
       bond = mol.GetBondWithBookmark(0)
       self.assertTrue(bond)
       mol.ClearBondBookmark(0)
-      self.assertTrue(not mol.HasBondBookmark(0))
+      self.assertFalse(mol.HasBondBookmark(0))
       self.assertTrue(mol.HasBondBookmark(1))
       mol.ClearAllBondBookmarks()
-      self.assertTrue(not mol.HasBondBookmark(0))
-      self.assertTrue(not mol.HasBondBookmark(1))
+      self.assertFalse(mol.HasBondBookmark(0))
+      self.assertFalse(mol.HasBondBookmark(1))
 
       self.assertTrue(mol.HasAtomBookmark(1))
 
@@ -325,9 +325,9 @@ class TestCase(unittest.TestCase):
     mol = Chem.MolFromSmiles('CCC(=O)N')
     self.assertTrue(mol)
 
-    self.assertTrue(not mol.HasSubstructMatch(query1))
+    self.assertFalse(mol.HasSubstructMatch(query1))
     self.assertTrue(mol.HasSubstructMatch(query2))
-    self.assertTrue(not mol.HasSubstructMatch(query3))
+    self.assertFalse(mol.HasSubstructMatch(query3))
 
   def test10Iterators(self):
     mol = Chem.MolFromSmiles('CCOC')
@@ -378,11 +378,11 @@ class TestCase(unittest.TestCase):
     mol = Chem.MolFromSmiles('CCC(=O)N')
     self.assertTrue(mol)
 
-    self.assertTrue(not mol.HasSubstructMatch(query1))
-    self.assertTrue(not mol.GetSubstructMatch(query1))
+    self.assertFalse(mol.HasSubstructMatch(query1))
+    self.assertFalse(mol.GetSubstructMatch(query1))
     self.assertTrue(mol.HasSubstructMatch(query2))
     self.assertEqual(mol.GetSubstructMatch(query2), (2, 3, 4))
-    self.assertTrue(not mol.HasSubstructMatch(query3))
+    self.assertFalse(mol.HasSubstructMatch(query3))
 
     mol = Chem.MolFromSmiles('OC(=O)CC(=O)O')
     self.assertTrue(mol)
@@ -400,7 +400,7 @@ class TestCase(unittest.TestCase):
     query = Chem.MolFromSmarts('N(=,-C)')
     self.assertTrue(query)
     mol = Chem.MolFromSmiles('N#C')
-    self.assertTrue(not mol.HasSubstructMatch(query))
+    self.assertFalse(mol.HasSubstructMatch(query))
     mol = Chem.MolFromSmiles('N=C')
     self.assertTrue(mol.HasSubstructMatch(query))
     mol = Chem.MolFromSmiles('NC')
@@ -541,14 +541,14 @@ class TestCase(unittest.TestCase):
 
   def test16Props(self):
     m = Chem.MolFromSmiles('C1=CN=CC=C1')
-    self.assertTrue(not m.HasProp('prop1'))
-    self.assertTrue(not m.HasProp('prop2'))
-    self.assertTrue(not m.HasProp('prop2'))
+    self.assertFalse(m.HasProp('prop1'))
+    self.assertFalse(m.HasProp('prop2'))
+    self.assertFalse(m.HasProp('prop2'))
     m.SetProp('prop1', 'foob')
-    self.assertTrue(not m.HasProp('prop2'))
+    self.assertFalse(m.HasProp('prop2'))
     self.assertTrue(m.HasProp('prop1'))
     self.assertEqual(m.GetProp('prop1'), 'foob')
-    self.assertTrue(not m.HasProp('propo'))
+    self.assertFalse(m.HasProp('propo'))
     try:
       m.GetProp('prop2')
     except KeyError:
@@ -562,8 +562,8 @@ class TestCase(unittest.TestCase):
     m.SetProp('cprop2', 'foo2', 1)
 
     m.ClearComputedProps()
-    self.assertTrue(not m.HasProp('cprop1'))
-    self.assertTrue(not m.HasProp('cprop2'))
+    self.assertFalse(m.HasProp('cprop1'))
+    self.assertFalse(m.HasProp('cprop2'))
 
     m.SetDoubleProp("a", 2.0)
     self.assertEqual(m.GetDoubleProp("a"), 2.0)
@@ -801,18 +801,18 @@ class TestCase(unittest.TestCase):
     self.assertTrue(m.GetAtomWithIdx(1).IsInRingSize(4))
     self.assertTrue(m.GetAtomWithIdx(2).IsInRingSize(4))
     self.assertTrue(m.GetAtomWithIdx(3).IsInRingSize(4))
-    self.assertTrue(not m.GetAtomWithIdx(4).IsInRingSize(4))
+    self.assertFalse(m.GetAtomWithIdx(4).IsInRingSize(4))
 
-    self.assertTrue(not m.GetAtomWithIdx(0).IsInRingSize(3))
-    self.assertTrue(not m.GetAtomWithIdx(1).IsInRingSize(3))
-    self.assertTrue(not m.GetAtomWithIdx(2).IsInRingSize(3))
-    self.assertTrue(not m.GetAtomWithIdx(3).IsInRingSize(3))
-    self.assertTrue(not m.GetAtomWithIdx(4).IsInRingSize(3))
+    self.assertFalse(m.GetAtomWithIdx(0).IsInRingSize(3))
+    self.assertFalse(m.GetAtomWithIdx(1).IsInRingSize(3))
+    self.assertFalse(m.GetAtomWithIdx(2).IsInRingSize(3))
+    self.assertFalse(m.GetAtomWithIdx(3).IsInRingSize(3))
+    self.assertFalse(m.GetAtomWithIdx(4).IsInRingSize(3))
 
     self.assertTrue(m.GetBondWithIdx(0).IsInRingSize(4))
-    self.assertTrue(not m.GetBondWithIdx(3).IsInRingSize(4))
-    self.assertTrue(not m.GetBondWithIdx(0).IsInRingSize(3))
-    self.assertTrue(not m.GetBondWithIdx(3).IsInRingSize(3))
+    self.assertFalse(m.GetBondWithIdx(3).IsInRingSize(4))
+    self.assertFalse(m.GetBondWithIdx(0).IsInRingSize(3))
+    self.assertFalse(m.GetBondWithIdx(3).IsInRingSize(3))
 
   def test21Robustification(self):
     ok = False
@@ -895,12 +895,12 @@ class TestCase(unittest.TestCase):
     mol = Chem.MolFromSmiles(smi, 0)
     self.assertTrue(mol.HasSubstructMatch(query))
     Chem.SanitizeMol(mol)
-    self.assertTrue(not mol.HasSubstructMatch(query))
+    self.assertFalse(mol.HasSubstructMatch(query))
 
     mol = Chem.MolFromSmiles('N1=CC=CC=C1', 0)
     self.assertTrue(mol.HasSubstructMatch(query))
     mol = Chem.MolFromSmiles('S1=CC=CC=C1', 0)
-    self.assertTrue(not mol.HasSubstructMatch(query))
+    self.assertFalse(mol.HasSubstructMatch(query))
     mol = Chem.MolFromSmiles('P1=CC=CC=C1', 0)
     self.assertTrue(mol.HasSubstructMatch(query))
 
@@ -1002,7 +1002,7 @@ class TestCase(unittest.TestCase):
 
     sdSup = Chem.SDMolSupplier(fileN, 0)
     for mol in sdSup:
-      self.assertTrue(not mol.HasProp("numArom"))
+      self.assertFalse(mol.HasProp("numArom"))
 
     sdSup = Chem.SDMolSupplier(fileN)
     self.assertEqual(len(sdSup), 16)
@@ -1056,8 +1056,8 @@ class TestCase(unittest.TestCase):
     for mol in sdSup:
       self.assertTrue(mol.HasProp("_Name"))
       if (i == 0):
-        self.assertTrue(not mol.HasProp("ID"))
-      self.assertTrue(not mol.HasProp("ANOTHER_PROPERTY"))
+        self.assertFalse(mol.HasProp("ID"))
+      self.assertFalse(mol.HasProp("ANOTHER_PROPERTY"))
       i += 1
     self.assertEqual(i, 2)
 
@@ -1082,8 +1082,8 @@ class TestCase(unittest.TestCase):
     for mol in sdSup:
       self.assertTrue(mol.HasProp("_Name"))
       if (i == 0):
-        self.assertTrue(not mol.HasProp("ID"))
-      self.assertTrue(not mol.HasProp("ANOTHER_PROPERTY"))
+        self.assertFalse(mol.HasProp("ID"))
+      self.assertFalse(mol.HasProp("ANOTHER_PROPERTY"))
       i += 1
     self.assertEqual(i, 2)
 
@@ -1400,7 +1400,7 @@ mol-4,CCOC
     self.assertTrue(m1.HasSubstructMatch(m1))
     self.assertTrue(m1.HasSubstructMatch(m2))
     self.assertTrue(m1.HasSubstructMatch(m1, useChirality=True))
-    self.assertTrue(not m1.HasSubstructMatch(m2, useChirality=True))
+    self.assertFalse(m1.HasSubstructMatch(m2, useChirality=True))
 
   def _test32MolFilesWithChirality(self):
     inD = """chiral1.mol
@@ -1636,17 +1636,17 @@ M  END
     q2 = Chem.MolFromSmarts('O[C;H1]', 1)
     q3 = Chem.MolFromSmarts('O[C;H1][H]', 1)
 
-    self.assertTrue(not m1.HasSubstructMatch(q1))
-    self.assertTrue(not m1.HasSubstructMatch(q2))
-    self.assertTrue(not m1.HasSubstructMatch(q3))
+    self.assertFalse(m1.HasSubstructMatch(q1))
+    self.assertFalse(m1.HasSubstructMatch(q2))
+    self.assertFalse(m1.HasSubstructMatch(q3))
 
     self.assertTrue(m2.HasSubstructMatch(q1))
     self.assertTrue(m2.HasSubstructMatch(q2))
     self.assertTrue(m2.HasSubstructMatch(q3))
 
     self.assertTrue(m3.HasSubstructMatch(q1))
-    self.assertTrue(not m3.HasSubstructMatch(q2))
-    self.assertTrue(not m3.HasSubstructMatch(q3))
+    self.assertFalse(m3.HasSubstructMatch(q2))
+    self.assertFalse(m3.HasSubstructMatch(q3))
 
     m1H = Chem.AddHs(m1)
     m2H = Chem.AddHs(m2)
@@ -1655,9 +1655,9 @@ M  END
     q2 = Chem.MolFromSmarts('O[C;H1]')
     q3 = Chem.MolFromSmarts('O[C;H1][H]')
 
-    self.assertTrue(not m1H.HasSubstructMatch(q1))
-    self.assertTrue(not m1H.HasSubstructMatch(q2))
-    self.assertTrue(not m1H.HasSubstructMatch(q3))
+    self.assertFalse(m1H.HasSubstructMatch(q1))
+    self.assertFalse(m1H.HasSubstructMatch(q2))
+    self.assertFalse(m1H.HasSubstructMatch(q3))
 
     #m2H.Debug()
     self.assertTrue(m2H.HasSubstructMatch(q1))
@@ -1665,8 +1665,8 @@ M  END
     self.assertTrue(m2H.HasSubstructMatch(q3))
 
     self.assertTrue(m3H.HasSubstructMatch(q1))
-    self.assertTrue(not m3H.HasSubstructMatch(q2))
-    self.assertTrue(not m3H.HasSubstructMatch(q3))
+    self.assertFalse(m3H.HasSubstructMatch(q2))
+    self.assertFalse(m3H.HasSubstructMatch(q3))
 
   def test34Issue124(self):
     """ issue 124 relates to calculation of the distance matrix
@@ -2031,8 +2031,8 @@ M  END
     self.assertTrue(mol.HasSubstructMatch(query))
     self.assertTrue(Chem._HasSubstructMatchStr(mol.ToBinary(), query))
     mol = Chem.MolFromSmiles('S1=CC=CC=C1')
-    self.assertTrue(not Chem._HasSubstructMatchStr(mol.ToBinary(), query))
-    self.assertTrue(not mol.HasSubstructMatch(query))
+    self.assertFalse(Chem._HasSubstructMatchStr(mol.ToBinary(), query))
+    self.assertFalse(mol.HasSubstructMatch(query))
     mol = Chem.MolFromSmiles('P1=CC=CC=C1')
     self.assertTrue(mol.HasSubstructMatch(query))
     self.assertTrue(Chem._HasSubstructMatchStr(mol.ToBinary(), query))
@@ -2744,7 +2744,7 @@ CAS<~>
 
     sdSup = Chem.CompressedSDMolSupplier(fileN, 0)
     for mol in sdSup:
-      self.assertTrue(not mol.HasProp("numArom"))
+      self.assertFalse(mol.HasProp("numArom"))
 
   def test57AddRecursiveQuery(self):
     q1 = Chem.MolFromSmiles('CC')
