@@ -185,7 +185,7 @@ class TestCase(unittest.TestCase):
   def testGetMolDescriptors(self):
     mol = Chem.MolFromSmiles('CCCO')
     descs = Descriptors.CalcMolDescriptors(mol)
-    self.assertTrue('MolLogP' in descs)
+    self.assertIn('MolLogP', descs)
     self.assertEqual(descs['NumHDonors'], 1)
 
   def testGet3DMolDescriptors(self):
@@ -198,7 +198,7 @@ class TestCase(unittest.TestCase):
                              '-0.741018,0.544094,0.296045;-1.37212,-0.605065,-0.176546)|')
     # test function returns expected outputs
     descs = Descriptors3D.CalcMolDescriptors3D(mol)
-    self.assertTrue('InertialShapeFactor' in descs)
+    self.assertIn('InertialShapeFactor', descs)
     self.assertAlmostEqual(descs['PMI1'], 20.9583, delta=1e-4)
 
     # test function returns expected outputs
