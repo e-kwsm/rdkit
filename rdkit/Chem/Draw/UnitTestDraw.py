@@ -194,7 +194,7 @@ class TestCase(unittest.TestCase):
         for c, item in enumerate(row):
           linearIndex = (r * molsPerRow) + c
           # Test that items in 2D list are in correct position in 1D list
-          self.assertTrue(mols[linearIndex] == item)
+          self.assertEqual(mols[linearIndex], item)
           # Test that 1D list items are not lists
           self.assertFalse(isinstance(item, list))
 
@@ -205,7 +205,7 @@ class TestCase(unittest.TestCase):
           for c, item in enumerate(row):
             linearIndex = (r * molsPerRow) + c
             # Test that items in 2D list are in correct position in 1D list
-            self.assertTrue(legends[linearIndex] == item)
+            self.assertEqual(legends[linearIndex], item)
             # Test that 1D list items are not lists
             self.assertFalse(isinstance(item, list))
 
@@ -214,7 +214,7 @@ class TestCase(unittest.TestCase):
           for c, item in enumerate(row):
             linearIndex = (r * molsPerRow) + c
             # Test that items in 2D list are in correct position in 1D list
-            self.assertTrue(highlightAtomLists[linearIndex] == item)
+            self.assertEqual(highlightAtomLists[linearIndex], item)
             # For highlight parameters, entries are lists, so check that sub-items are not lists
             for subitem in item:
               self.assertFalse(isinstance(subitem, list))
@@ -224,13 +224,13 @@ class TestCase(unittest.TestCase):
           for c, item in enumerate(row):
             linearIndex = (r * molsPerRow) + c
             # Test that items in 2D list are in correct position in 1D list
-            self.assertTrue(highlightBondLists[linearIndex] == item)
+            self.assertEqual(highlightBondLists[linearIndex], item)
             # For highlight parameters, entries are lists, so check that sub-items are not lists
             for subitem in item:
               self.assertFalse(isinstance(subitem, list))
 
       # Test that 1D list has the correct length
-      self.assertTrue(len(mols) == nrows * molsPerRow)
+      self.assertEqual(len(mols), nrows * molsPerRow)
 
     # Parametrize tests: In addition to supplying molsMatrix, supply 0-3 other matrices
     for paramSet in self.paramSets:
