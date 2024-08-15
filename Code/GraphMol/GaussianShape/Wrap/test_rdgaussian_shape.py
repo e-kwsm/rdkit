@@ -40,7 +40,7 @@ class TestCase(unittest.TestCase):
     shp = rdGaussianShape.ShapeInput(self.ref, -1, shpOpts, ovOpts)
     self.assertAlmostEqual(shp.ShapeVolume, 591.058, places=3)
     self.assertAlmostEqual(shp.ColorVolume, 31.935, places=3)
-    self.assertTrue(type(shp) == rdGaussianShape.ShapeInput)
+    self.assertIsInstance(shp, rdGaussianShape.ShapeInput)
     tpl = rdGaussianShape.AlignMol(shp, self.probe)
     self.assertAlmostEqual(tpl[0], 0.497, places=3)
     self.assertAlmostEqual(tpl[1], 0.760, places=3)
