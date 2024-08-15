@@ -113,27 +113,15 @@ class TestCase(unittest.TestCase):
     rdbase = os.environ['RDBASE']
     fName = os.path.join(rdbase, 'Code', 'GraphMol', 'test_data', 'water_coords_bad.trx')
     traj = Trajectory(2, 0)
-    ok = False
-    try:
+    with self.assertRaises(Exception):
       ReadAmberTrajectory(fName, traj)
-    except Exception:
-      ok = True
-    self.assertTrue(ok)
     traj = Trajectory(3, 3)
-    ok = False
-    try:
+    with self.assertRaises(Exception):
       ReadAmberTrajectory(fName, traj)
-    except Exception:
-      ok = True
-    self.assertTrue(ok)
     fName = os.path.join(rdbase, 'Code', 'GraphMol', 'test_data', 'water_coords_bad2.trx')
-    ok = False
-    try:
+    with self.assertRaises(Exception):
       traj = Trajectory(3, 3)
       ReadAmberTrajectory(fName, traj)
-    except Exception:
-      ok = True
-    self.assertTrue(ok)
     fName = os.path.join(rdbase, 'Code', 'GraphMol', 'test_data', 'water_coords.trx')
     traj = Trajectory(3, 3)
     ReadAmberTrajectory(fName, traj)
@@ -195,27 +183,15 @@ class TestCase(unittest.TestCase):
     rdbase = os.environ['RDBASE']
     fName = os.path.join(rdbase, 'Code', 'GraphMol', 'test_data', 'water_coords_bad.trc')
     traj = Trajectory(2, 0)
-    ok = False
-    try:
+    with self.assertRaises(Exception):
       ReadGromosTrajectory(fName, traj)
-    except Exception:
-      ok = True
-    self.assertTrue(ok)
     traj = Trajectory(3, 3)
-    ok = False
-    try:
+    with self.assertRaises(Exception):
       ReadGromosTrajectory(fName, traj)
-    except Exception:
-      ok = True
-    self.assertTrue(ok)
     fName = os.path.join(rdbase, 'Code', 'GraphMol', 'test_data', 'water_coords_bad2.trc')
-    ok = False
-    try:
+    with self.assertRaises(Exception):
       traj = Trajectory(3, 3)
       ReadGromosTrajectory(fName, traj)
-    except Exception:
-      ok = True
-    self.assertTrue(ok)
     fName = os.path.join(rdbase, 'Code', 'GraphMol', 'test_data', 'water_coords.trc')
     traj = Trajectory(3, 3)
     ReadGromosTrajectory(fName, traj)
@@ -403,12 +379,8 @@ class TestCase(unittest.TestCase):
     n2 = mol.GetNumConformers()
     self.assertEqual(n1, n2)
     # GetSnapshot should raise exception after Clear()
-    e = False
-    try:
+    with self.assertRaises(Exception):
       traj.GetSnapshot(0)
-    except Exception:
-      e = True
-    self.assertTrue(e)
 
   def testAddConformersFromAmberTrajectory(self):
     mol = Chem.MolFromSmiles('CCC')
