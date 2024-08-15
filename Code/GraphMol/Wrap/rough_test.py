@@ -3713,7 +3713,7 @@ CAS<~>
 
     """
     mol = Chem.MolFromSmiles('C1CCC1')
-    self.assertTrue(type(mol) == Chem.Mol)
+    self.assertIsInstance(mol, Chem.Mol)
     rwmol = Chem.RWMol(mol)
     self.assertEqual(Chem.MolToSmiles(rwmol, True), Chem.MolToSmiles(rwmol.GetMol()))
     newAt = Chem.Atom(8)
