@@ -143,12 +143,8 @@ class TestCase(unittest.TestCase):
         ptEq(conf.GetAtomPosition(i), Geometry.Point3D(coordMap[i].x, coordMap[i].y, 0.0)))
 
     m1 = Chem.MolFromSmiles('CCC')
-    try:
+    with self.assertRaises(ValueError):
       rdDepictor.Compute2DCoords(m1, coordMap=coordMap)
-      ok = 0
-    except ValueError:
-      ok = 1
-    self.assertTrue(ok)
 
   def test3IssueSF1526844(self):
     t = Chem.MolFromSmiles('c1nc(N)ccc1')
