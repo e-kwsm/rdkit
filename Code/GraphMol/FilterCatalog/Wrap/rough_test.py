@@ -155,9 +155,9 @@ class TestCase(unittest.TestCase):
           mol = Chem.MolFromSmiles("O=C(Cn1cnc2c1c(=O)n(C)c(=O)n2C)N/N=C/c1c(O)ccc2c1cccc2")
           entry = catalog.GetFirstMatch(mol)
           prop_list = entry.GetPropList()
-          self.assertTrue("Reference" in prop_list)
-          self.assertTrue("Scope" in prop_list)
-          self.assertTrue("FilterSet" in prop_list)
+          self.assertIn("Reference", prop_list)
+          self.assertIn("Scope", prop_list)
+          self.assertIn("FilterSet", prop_list)
           for key in entry.GetPropList():
             if key == "Reference":
               self.assertEqual(
