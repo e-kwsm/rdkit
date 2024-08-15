@@ -751,12 +751,10 @@ class TestCase(unittest.TestCase):
                                 msg="Failed to handle bad prop size"):
       bcut2 = rdMD.BCUT2D(m, props)
 
-    try:
+    # nanobind wraps the key name with "Key Error: " prefix; boost does not
+    with self.assertRaisesRegex(KeyError, "property not existing on the atom",
+                                msg="Failed to handle not existing properties"):
       bcut2 = rdMD.BCUT2D(m, "property not existing on the atom")
-      self.assertTrue(0, "Failed to handle not existing properties")
-    except KeyError as e:
-      # nanobind wraps the key name with "Key Error: " prefix; boost does not
-      self.assertIn("property not existing on the atom", str(e))
 
     for atom in m.GetAtoms():
       atom.SetProp("bad_prop", "not a double")
