@@ -19,12 +19,8 @@ class TestCase(unittest.TestCase):
 
   def testSnapshot(self):
     s = Snapshot([])
-    e = False
-    try:
+    with self.assertRaises(Exception):
       s.GetPoint2D(12)
-    except Exception:
-      e = True
-    self.assertTrue(e)
     s = Snapshot([0.0, 0.0, 0.0])
     with self.assertRaises(Exception):
       s.GetPoint2D(0)
