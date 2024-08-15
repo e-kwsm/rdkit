@@ -226,7 +226,7 @@ class TestCase(unittest.TestCase):
 
     bv = pyAvalonTools.GetAvalonFP(Chem.MolFromSmiles('c1ncncc1'), nBits=1024)
     self.assertEqual(len(bv), 1024)
-    self.assertTrue(bv.GetNumOnBits() > 27)
+    self.assertGreater(bv.GetNumOnBits(), 27)
 
   def test4(self):
     bv = pyAvalonTools.GetAvalonFP('c1ccccn1', True)
@@ -239,7 +239,7 @@ class TestCase(unittest.TestCase):
     self.assertEqual(bv.GetNumOnBits(), 27)
     bv = pyAvalonTools.GetAvalonFP('c1ncncc1', True, nBits=1024)
     self.assertEqual(len(bv), 1024)
-    self.assertTrue(bv.GetNumOnBits() > 27)
+    self.assertGreater(bv.GetNumOnBits(), 27)
 
     bv = pyAvalonTools.GetAvalonFP(Chem.MolToMolBlock(Chem.MolFromSmiles('c1ccccn1')), False)
     self.assertEqual(len(bv), 512)
@@ -311,7 +311,7 @@ class TestCase(unittest.TestCase):
     (err, fixed_mol) = pyAvalonTools.CheckMoleculeString(smi_good, True)
     self.assertEqual(err, 0)
     self.assertNotEqual(fixed_mol, "")
-    self.assertTrue(fixed_mol.find('M  END') > 0)
+    self.assertGreater(fixed_mol.find('M  END'), 0)
 
     (err, fixed_mol) = pyAvalonTools.CheckMolecule(smi_bad, False)
     self.assertNotEqual(err, 0)
