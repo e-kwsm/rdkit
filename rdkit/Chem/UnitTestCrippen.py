@@ -181,7 +181,7 @@ class TestCase(unittest.TestCase):
     ref = Crippen.MolLogP(m)
     Lipinski.NHOHCount(m)
     probe = Crippen.MolLogP(m)
-    self.assertTrue(probe == ref)
+    self.assertEqual(probe, ref)
 
   def testIssue1749494(self):
     m1 = Chem.MolFromSmiles('[*]CC')
