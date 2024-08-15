@@ -47,20 +47,20 @@ class TestCase(unittest.TestCase):
 
   def test1Basics(self):
     m1 = rdSLNParse.MolFromSLN('CH3CH3')
-    self.assertTrue(m1)
+    self.assertIsNotNone(m1)
     self.assertEqual(m1.GetNumAtoms(), 2)
 
     m1 = rdSLNParse.MolFromSLN('C[1]H:CH:CH:CH:CH:CH:@1')
-    self.assertTrue(m1)
+    self.assertIsNotNone(m1)
     self.assertEqual(m1.GetNumAtoms(), 6)
 
   def test2Queries(self):
     patt = rdSLNParse.MolFromQuerySLN('C[HC=2]~O')
-    self.assertTrue(patt)
+    self.assertIsNotNone(patt)
     self.assertEqual(patt.GetNumAtoms(), 2)
 
     m = Chem.MolFromSmiles('COCC=O')
-    self.assertTrue(m.HasSubstructMatch(patt))
+    self.assertIsNotNone(m.HasSubstructMatch(patt))
     ms = m.GetSubstructMatches(patt)
     self.assertEqual(len(ms), 1)
 
