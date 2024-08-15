@@ -5070,11 +5070,8 @@ M  END
   def testGithub1461(self):
     # this is simple, it should throw a precondition and not seg fault
     m = Chem.RWMol()
-    try:
+    self.assertRaises(RuntimeError):
       m.AddBond(0, 1, Chem.BondType.SINGLE)
-      self.assertFalse(True)  # shouldn't get here
-    except RuntimeError:
-      pass
 
   def testMolBundles1(self):
     b = Chem.MolBundle()
