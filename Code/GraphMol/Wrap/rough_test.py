@@ -290,8 +290,8 @@ class TestCase(unittest.TestCase):
     b8 = mol.GetBondWithIdx(8)
 
     bList = [b0, b6, b7, b8]
-    self.assertTrue(
-      [x.GetBondType() for x in bList] ==
+    self.assertEqual(
+      [x.GetBondType() for x in bList],
       [Chem.BondType.AROMATIC, Chem.BondType.SINGLE, Chem.BondType.DOUBLE, Chem.BondType.SINGLE])
     self.assertEqual([x.GetIsAromatic() for x in bList], [1, 0, 0, 0])
     self.assertEqual(bList[0].GetBondTypeAsDouble(), 1.5)
@@ -651,8 +651,8 @@ class TestCase(unittest.TestCase):
     m = Chem.MolFromSmiles("C1CC2C1CC2")
     #self.assertEqual(len(Chem.FindAllPathsOfLengthN(m,1,useBonds=1)), 7)
     #print(Chem.FindAllPathsOfLengthN(m,3,useBonds=0))
-    self.assertTrue(
-      len(Chem.FindAllPathsOfLengthN(m, 2, useBonds=1)) == 10,
+    self.assertEqual(
+      len(Chem.FindAllPathsOfLengthN(m, 2, useBonds=1)), 10,
       Chem.FindAllPathsOfLengthN(m, 2, useBonds=1))
     self.assertEqual(len(Chem.FindAllPathsOfLengthN(m, 3, useBonds=1)), 14)
 
@@ -660,14 +660,14 @@ class TestCase(unittest.TestCase):
     self.assertTrue(m)
     self.assertEqual(len(Chem.FindAllPathsOfLengthN(m, 1, useBonds=1)), 4)
     self.assertEqual(len(Chem.FindAllPathsOfLengthN(m, 2, useBonds=1)), 5)
-    self.assertTrue(
-      len(Chem.FindAllPathsOfLengthN(m, 3, useBonds=1)) == 3,
+    self.assertEqual(
+      len(Chem.FindAllPathsOfLengthN(m, 3, useBonds=1)), 3,
       Chem.FindAllPathsOfLengthN(m, 3, useBonds=1))
-    self.assertTrue(
-      len(Chem.FindAllPathsOfLengthN(m, 4, useBonds=1)) == 1,
+    self.assertEqual(
+      len(Chem.FindAllPathsOfLengthN(m, 4, useBonds=1)), 1,
       Chem.FindAllPathsOfLengthN(m, 4, useBonds=1))
-    self.assertTrue(
-      len(Chem.FindAllPathsOfLengthN(m, 5, useBonds=1)) == 0,
+    self.assertEqual(
+      len(Chem.FindAllPathsOfLengthN(m, 5, useBonds=1)), 0,
       Chem.FindAllPathsOfLengthN(m, 5, useBonds=1))
 
     #
@@ -682,8 +682,8 @@ class TestCase(unittest.TestCase):
     m = Chem.MolFromSmiles("CCC(C)CC")
     self.assertEqual(len(Chem.FindAllPathsOfLengthN(m, 1, useBonds=1)), 5)
     self.assertEqual(len(Chem.FindAllPathsOfLengthN(m, 2, useBonds=1)), 5)
-    self.assertTrue(
-      len(Chem.FindAllPathsOfLengthN(m, 3, useBonds=1)) == 4,
+    self.assertEqual(
+      len(Chem.FindAllPathsOfLengthN(m, 3, useBonds=1)), 4,
       Chem.FindAllPathsOfLengthN(m, 3, useBonds=1))
 
     m = Chem.MolFromSmiles("CCCC(C)C")
@@ -699,8 +699,8 @@ class TestCase(unittest.TestCase):
     m = Chem.MolFromSmiles("CC(C)(C)CC")
     self.assertEqual(len(Chem.FindAllPathsOfLengthN(m, 1, useBonds=1)), 5)
     self.assertEqual(len(Chem.FindAllPathsOfLengthN(m, 2, useBonds=1)), 7)
-    self.assertTrue(
-      len(Chem.FindAllPathsOfLengthN(m, 3, useBonds=1)) == 3,
+    self.assertEqual(
+      len(Chem.FindAllPathsOfLengthN(m, 3, useBonds=1)), 3,
       Chem.FindAllPathsOfLengthN(m, 3, useBonds=1))
 
     m = Chem.MolFromSmiles("C1CCCCC1")
@@ -710,8 +710,8 @@ class TestCase(unittest.TestCase):
 
     m = Chem.MolFromSmiles("C1CC2C1CC2")
     self.assertEqual(len(Chem.FindAllPathsOfLengthN(m, 1, useBonds=1)), 7)
-    self.assertTrue(
-      len(Chem.FindAllPathsOfLengthN(m, 2, useBonds=1)) == 10,
+    self.assertEqual(
+      len(Chem.FindAllPathsOfLengthN(m, 2, useBonds=1)), 10,
       Chem.FindAllPathsOfLengthN(m, 2, useBonds=1))
     self.assertEqual(len(Chem.FindAllPathsOfLengthN(m, 3, useBonds=1)), 14)
 
@@ -720,8 +720,8 @@ class TestCase(unittest.TestCase):
     self.assertEqual(len(Chem.FindAllPathsOfLengthN(m, 2, useBonds=1)), 11)
     # FIX: this result disagrees with the paper (which says 13),
     #   but it seems right
-    self.assertTrue(
-      len(Chem.FindAllPathsOfLengthN(m, 3, useBonds=1)) == 15,
+    self.assertEqual(
+      len(Chem.FindAllPathsOfLengthN(m, 3, useBonds=1)), 15,
       Chem.FindAllPathsOfLengthN(m, 3, useBonds=1))
 
   def test19Subgraphs(self):
@@ -767,8 +767,8 @@ class TestCase(unittest.TestCase):
     m = Chem.MolFromSmiles("CC(C)(C)CC")
     self.assertEqual(len(Chem.FindAllSubgraphsOfLengthN(m, 1)), 5)
     self.assertEqual(len(Chem.FindAllSubgraphsOfLengthN(m, 2)), 7)
-    self.assertTrue(
-      len(Chem.FindAllSubgraphsOfLengthN(m, 3)) == 7, Chem.FindAllSubgraphsOfLengthN(m, 3))
+    self.assertEqual(
+      len(Chem.FindAllSubgraphsOfLengthN(m, 3)), 7, Chem.FindAllSubgraphsOfLengthN(m, 3))
 
     m = Chem.MolFromSmiles("C1CCCCC1")
     self.assertEqual(len(Chem.FindAllSubgraphsOfLengthN(m, 1)), 6)
@@ -786,8 +786,8 @@ class TestCase(unittest.TestCase):
     m = Chem.MolFromSmiles("CC2C1CCC12")
     self.assertEqual(len(Chem.FindAllSubgraphsOfLengthN(m, 1)), 7)
     self.assertEqual(len(Chem.FindAllSubgraphsOfLengthN(m, 2)), 11)
-    self.assertTrue(
-      len(Chem.FindAllSubgraphsOfLengthN(m, 3)) == 18, len(Chem.FindAllSubgraphsOfLengthN(m, 3)))
+    self.assertEqual(
+      len(Chem.FindAllSubgraphsOfLengthN(m, 3)), 18, len(Chem.FindAllSubgraphsOfLengthN(m, 3)))
 
   def test20IsInRing(self):
     m = Chem.MolFromSmiles('C1CCC1C')
