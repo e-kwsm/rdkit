@@ -817,17 +817,12 @@ class TestCase(unittest.TestCase):
     self.assertTrue(not m.GetBondWithIdx(3).IsInRingSize(3))
 
   def test21Robustification(self):
-    ok = False
     # FIX: at the moment I can't figure out how to catch the
     # actual exception that BPL is throwing when it gets
     # invalid arguments (Boost.Python.ArgumentError)
-    try:
+    # with self.assertRaises(ValueError):
+    with self.assertRaises(Exception):
       Chem.MolFromSmiles('C=O').HasSubstructMatch(Chem.MolFromSmarts('fiib'))
-    #except ValueError:
-    #  ok=True
-    except Exception:
-      ok = True
-    self.assertTrue(ok)
 
   def test22DeleteSubstruct(self):
     query = Chem.MolFromSmarts('C(=O)O')
