@@ -20,12 +20,12 @@ class TestCase(unittest.TestCase):
     for frag in frags:
       self.assertEqual(len(frag), 2)
     frags = sorted(frags, key=natoms)
-    self.assertEqual(frags[0][0], None)
-    self.assertEqual(frags[1][0], None)
-    self.assertNotEqual(frags[2][0], None)
-    self.assertNotEqual(frags[0][1], None)
-    self.assertNotEqual(frags[1][1], None)
-    self.assertNotEqual(frags[2][1], None)
+    self.assertIsNone(frags[0][0])
+    self.assertIsNone(frags[1][0])
+    self.assertIsNotNone(frags[2][0])
+    self.assertIsNotNone(frags[0][1])
+    self.assertIsNotNone(frags[1][1])
+    self.assertIsNotNone(frags[2][1])
 
     self.assertEqual(frags[0][1].GetNumAtoms(), m.GetNumAtoms() + 2)
     self.assertEqual(frags[1][1].GetNumAtoms(), m.GetNumAtoms() + 2)
