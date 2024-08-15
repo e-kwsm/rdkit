@@ -6123,7 +6123,7 @@ H      0.635000    0.635000    0.635000
     except Chem.KekulizeException as exc:
       self.assertEqual(exc.cause.GetAtomIndices(), (0, 1, 2))
     else:
-      self.assertFalse(True)
+      self.fail()
 
   def testSanitizationExceptionHierarchy(self):
     with self.assertRaises(Chem.AtomValenceException):
