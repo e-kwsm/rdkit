@@ -209,7 +209,7 @@ class TestCase(unittest.TestCase):
     with open('github4763.svg', 'w+') as outf:
       outf.write(svg)
     self.assertFalse('fill:#FBFCFB7F' in svg)
-    self.assertTrue('fill:#DDDCDB' in svg)
+    self.assertIn('fill:#DDDCDB', svg)
 
 
 if __name__ == '__main__':
