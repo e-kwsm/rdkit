@@ -218,7 +218,8 @@ class TestCase(unittest.TestCase):
       conn.InsertColumnData(newTblName, 'val3', r[0], 'id={0}'.format(r[0]))
     conn.Commit()
     d = conn.GetColumns('id,val3', table=newTblName)
-    self.assertTrue(all(r[0] == r[1] for r in d))
+    for r in d:
+      self.assertEqual(r[0], r[1])
 
     d = None
     try:
