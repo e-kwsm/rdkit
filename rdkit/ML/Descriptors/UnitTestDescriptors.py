@@ -32,10 +32,10 @@ class TestCase(unittest.TestCase):
                [1.51555249095, 0.806695491076, 1.34000003338, 1.29999995232],
                [1.78445098797, 0.717062658734, 1.34000003338, 1.29999995232]]
     for i in range(len(composList)):
-      self.assertTrue(
+      self.assertLess(
         max(
           map(lambda x, y: abs(x - y), compare[i],
-              self.desc.CalcSimpleDescriptorsForComposition(composList[i]))) < self.tol,
+              self.desc.CalcSimpleDescriptorsForComposition(composList[i]))), self.tol,
         'Descriptor calculation failed')
 
     names = self.desc.GetDescriptorNames()
