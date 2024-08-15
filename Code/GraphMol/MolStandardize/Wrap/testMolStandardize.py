@@ -677,8 +677,8 @@ chlorine	[Cl]
         self._start_time = datetime.now()
 
       def __call__(self, mol, res):
-        self._parent.assertTrue(isinstance(mol, Chem.Mol))
-        self._parent.assertTrue(isinstance(res, rdMolStandardize.TautomerEnumeratorResult))
+        self._parent.assertIsInstance(mol, Chem.Mol)
+        self._parent.assertIsInstance(res, rdMolStandardize.TautomerEnumeratorResult)
         return (datetime.now() - self._start_time < self._timeout)
 
     class MyBrokenCallback(rdMolStandardize.TautomerEnumeratorCallback):
