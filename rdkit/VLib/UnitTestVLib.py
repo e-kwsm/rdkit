@@ -43,9 +43,9 @@ class Test_VLib(unittest.TestCase):
     filt.AddParent(suppl2)
     self.assertEqual([x for x in filt], [(1, 1), (2, 2), (3, 1)])
     filt.reset()
-    self.assertEqual(filt.Negate(), False)
+    self.assertFalse(filt.Negate())
     filt.SetNegate(True)
-    self.assertEqual(filt.Negate(), True)
+    self.assertTrue(filt.Negate())
     self.assertEqual([x for x in filt], [
       (3, 3),
     ])
