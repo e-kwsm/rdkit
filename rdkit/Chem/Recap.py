@@ -248,8 +248,8 @@ class TestCase(unittest.TestCase):
     self.assertTrue(len(res.children.keys()) == 2)
     # we get two more nodes from that:
     self.assertTrue(len(allNodes.keys()) == 5)
-    self.assertTrue('*c1ccccc1OC' in allNodes)
-    self.assertTrue('*c1ccccc1' in allNodes)
+    self.assertIn('*c1ccccc1OC', allNodes)
+    self.assertIn('*c1ccccc1', allNodes)
 
     m = Chem.MolFromSmiles('C1CC1Oc1ccccc1-c1ncccc1')
     res = RecapDecompose(m, allNodes=allNodes)
@@ -263,9 +263,9 @@ class TestCase(unittest.TestCase):
     self.assertTrue(res)
     self.assertTrue(len(res.GetLeaves()) == 2)
     ks = res.GetLeaves().keys()
-    self.assertFalse('*C(*)*' in ks)
-    self.assertTrue('*c1ccccc1' in ks)
-    self.assertTrue('*C(*)Oc1ccccc1' in ks)
+    self.assertNotIn('*C(*)*', ks)
+    self.assertIn('*c1ccccc1', ks)
+    self.assertIn('*C(*)Oc1ccccc1', ks)
 
   def testSFNetIssue1804418(self):
     m = Chem.MolFromSmiles('C1CCCCN1CCCC')
@@ -273,8 +273,8 @@ class TestCase(unittest.TestCase):
     self.assertTrue(res)
     self.assertTrue(len(res.GetLeaves()) == 2)
     ks = res.GetLeaves().keys()
-    self.assertTrue('*N1CCCCC1' in ks)
-    self.assertTrue('*CCCC' in ks)
+    self.assertIn('*N1CCCCC1', ks)
+    self.assertIn('*CCCC', ks)
 
   def testMinFragmentSize(self):
     m = Chem.MolFromSmiles('CCCOCCC')
@@ -285,7 +285,7 @@ class TestCase(unittest.TestCase):
     self.assertTrue(res)
     self.assertTrue(len(res.GetLeaves()) == 1)
     ks = res.GetLeaves().keys()
-    self.assertTrue('*CCC' in ks)
+    self.assertIn('*CCC', ks)
 
     m = Chem.MolFromSmiles('CCCOCC')
     res = RecapDecompose(m, minFragmentSize=3)
@@ -297,9 +297,9 @@ class TestCase(unittest.TestCase):
     self.assertTrue(res)
     self.assertTrue(len(res.GetLeaves()) == 2)
     ks = res.GetLeaves().keys()
-    self.assertTrue('*CCC' in ks)
+    self.assertIn('*CCC', ks)
     ks = res.GetLeaves().keys()
-    self.assertTrue('*CCOC' in ks)
+    self.assertIn('*CCOC', ks)
 
   def testAmideRxn(self):
     m = Chem.MolFromSmiles('C1CC1C(=O)NC1OC1')
