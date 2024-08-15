@@ -2975,7 +2975,7 @@ CAS<~>
         mol = next(suppl)
       except RuntimeError as e:
         self.assertEqual(i, 1)
-        self.assertTrue(err_msg_substr in str(e))
+        self.assertIn(err_msg_substr, str(e))
         ok = True
         break
       else:
@@ -3318,14 +3318,14 @@ CAS<~>
     fileN = os.path.join(RDConfig.RDBaseDir, 'Code', 'GraphMol', 'ChemTransforms', 'testData',
                          'query_file1.txt')
     d = Chem.ParseMolQueryDefFile(fileN, standardize=False)
-    self.assertTrue('CarboxylicAcid' in d)
+    self.assertIn('CarboxylicAcid', d)
     m = Chem.MolFromSmiles('CC(=O)O')
     self.assertTrue(m.HasSubstructMatch(d['CarboxylicAcid']))
     self.assertFalse(m.HasSubstructMatch(d['CarboxylicAcid.Aromatic']))
 
     d = Chem.ParseMolQueryDefFile(fileN)
-    self.assertTrue('carboxylicacid' in d)
-    self.assertFalse('CarboxylicAcid' in d)
+    self.assertIn('carboxylicacid', d)
+    self.assertNotIn('CarboxylicAcid', d)
 
   def test81Issue275(self):
     smi = Chem.MolToSmiles(Chem.MurckoDecompose(
@@ -4702,10 +4702,10 @@ $$$$
       details = str(e)
       if platform.system() == 'Windows':
         details = details.replace('\\', '/')
-      self.assertTrue("Code/GraphMol/ROMol.cpp".lower() in details.lower())
-      self.assertTrue("Failed Expression: 3 < 1" in details)
-      self.assertTrue("RDKIT:" in details)
-      self.assertTrue(__version__ in details)
+      self.assertIn("Code/GraphMol/ROMol.cpp".lower(), details.lower())
+      self.assertIn("Failed Expression: 3 < 1", details)
+      self.assertIn("RDKIT:", details)
+      self.assertIn(__version__, details)
 
   def testGetSDText(self):
     fileN = os.path.join(RDConfig.RDBaseDir, 'Code', 'GraphMol', 'FileParsers', 'test_data',
@@ -4729,17 +4729,17 @@ $$$$
     fp = AllChem.UnfoldedRDKFingerprintCountBased(m)
     fpDict = fp.GetNonzeroElements()
     self.assertEqual(len(fpDict.items()), 19)
-    self.assertTrue(374073638 in fpDict)
+    self.assertIn(374073638, fpDict)
     self.assertEqual(fpDict[374073638], 6)
-    self.assertTrue(464351883 in fpDict)
+    self.assertIn(464351883, fpDict)
     self.assertEqual(fpDict[464351883], 2)
-    self.assertTrue(1949583554 in fpDict)
+    self.assertIn(1949583554, fpDict)
     self.assertEqual(fpDict[1949583554], 6)
-    self.assertTrue(4105342207 in fpDict)
+    self.assertIn(4105342207, fpDict)
     self.assertEqual(fpDict[4105342207], 1)
-    self.assertTrue(794080973 in fpDict)
+    self.assertIn(794080973, fpDict)
     self.assertEqual(fpDict[794080973], 1)
-    self.assertTrue(3826517238 in fpDict)
+    self.assertIn(3826517238, fpDict)
     self.assertEqual(fpDict[3826517238], 2)
 
     m = Chem.MolFromSmiles('Cl')
@@ -4752,20 +4752,20 @@ $$$$
     fp = AllChem.UnfoldedRDKFingerprintCountBased(m, bitInfo=aBits)
     fpDict = fp.GetNonzeroElements()
     self.assertEqual(len(fpDict.items()), 5)
-    self.assertTrue(1524090560 in fpDict)
+    self.assertIn(1524090560, fpDict)
     self.assertEqual(fpDict[1524090560], 1)
-    self.assertTrue(1940446997 in fpDict)
+    self.assertIn(1940446997, fpDict)
     self.assertEqual(fpDict[1940446997], 1)
-    self.assertTrue(3977409745 in fpDict)
+    self.assertIn(3977409745, fpDict)
     self.assertEqual(fpDict[3977409745], 1)
-    self.assertTrue(4274652475 in fpDict)
+    self.assertIn(4274652475, fpDict)
     self.assertEqual(fpDict[4274652475], 1)
-    self.assertTrue(4275705116 in fpDict)
+    self.assertIn(4275705116, fpDict)
     self.assertEqual(fpDict[4275705116], 2)
 
-    self.assertTrue(1524090560 in aBits)
+    self.assertIn(1524090560, aBits)
     self.assertEqual(aBits[1524090560], [[1, 2]])
-    self.assertTrue(1940446997 in aBits)
+    self.assertIn(1940446997, aBits)
     self.assertEqual(aBits[1940446997], [[0, 1]])
     self.assertTrue(3977409745 in aBits)
     self.assertEqual(aBits[3977409745], [[0, 1, 2]])
