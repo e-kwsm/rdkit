@@ -20,7 +20,7 @@ class TestCase(unittest.TestCase):
       m = Chem.MolFromSmiles(smi)
       entry = MolCatalog.MolCatalogEntry()
       entry.SetMol(m)
-      self.assertTrue(entry.GetMol())
+      self.assertIsNotNone(entry.GetMol())
       eSmi = Chem.MolToSmiles(entry.GetMol())
       self.assertEqual(eSmi, Chem.MolToSmiles(m))
       entry.SetDescription(smi)
