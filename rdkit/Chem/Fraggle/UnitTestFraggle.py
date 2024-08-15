@@ -122,10 +122,10 @@ class TestCase(unittest.TestCase):
 
   def test_isValidRingCut(self):
     rdBase.DisableLog('rdApp.error')
-    self.assertEqual(FraggleSim.isValidRingCut(Chem.MolFromSmiles('*CCC*')), False)
-    self.assertEqual(FraggleSim.isValidRingCut(Chem.MolFromSmiles('*C1CC1*')), True)
-    self.assertEqual(FraggleSim.isValidRingCut(Chem.MolFromSmiles('*c1ccccc1*')), True)
-    self.assertEqual(FraggleSim.isValidRingCut(Chem.MolFromSmiles('*cccc*', sanitize=False)), False)
+    self.assertFalse(FraggleSim.isValidRingCut(Chem.MolFromSmiles('*CCC*')))
+    self.assertTrue(FraggleSim.isValidRingCut(Chem.MolFromSmiles('*C1CC1*')))
+    self.assertTrue(FraggleSim.isValidRingCut(Chem.MolFromSmiles('*c1ccccc1*')))
+    self.assertFalse(FraggleSim.isValidRingCut(Chem.MolFromSmiles('*cccc*', sanitize=False)))
     rdBase.EnableLog('rdApp.error')
 
   def test_GetFraggleSimilarity(self):
