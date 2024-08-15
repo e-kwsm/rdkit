@@ -15,10 +15,6 @@ from io import StringIO
 from rdkit.Chem.FeatMaps import FeatMapParser, FeatMaps
 
 
-def feq(n1, n2, tol=1e-5):
-  return abs(n1 - n2) <= tol
-
-
 class TestCase(unittest.TestCase):
   data = """
 
@@ -48,9 +44,9 @@ EndPoints
     self.assertTrue(fm.GetNumFeatures() == 3)
 
     feats = fm.GetFeatures()
-    self.assertTrue(feq(feats[0].weight, 1.25))
-    self.assertTrue(feq(feats[1].weight, 2.0))
-    self.assertTrue(feq(feats[2].weight, 1.25))
+    self.assertAlmostEqual(feats[0].weight, 1.25, delta=1e-5)
+    self.assertAlmostEqual(feats[1].weight, 2.0, delta=1e-5)
+    self.assertAlmostEqual(feats[2].weight, 1.25, delta=1e-5)
 
     self.assertTrue(len(feats[0].featDirs) == 1)
     self.assertTrue(len(feats[1].featDirs) == 2)
