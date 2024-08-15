@@ -22,10 +22,6 @@ from rdkit.Chem import ChemicalFeatures, rdDistGeom
 from rdkit.Chem.Pharm3D import EmbedLib, Pharmacophore
 
 
-def feq(n1, n2, tol=1e-5):
-  return abs(n1 - n2) <= tol
-
-
 def load_tests(loader, tests, ignore):
   """ Add the Doctests from the module """
   tests.addTests(
@@ -151,9 +147,9 @@ class TestCase(unittest.TestCase):
             print(name)
             print(','.join([f'{x:.2f}' for x in stats]))
             # we'll use different tolerances for the different values:
-            self.assertTrue(feq(tgt[0], stats[0], 5.0), (tgt[0], stats[0]))
+            self.assertAlmostEqual(tgt[0], stats[0], delta=5.0)
             for i in range(2, len(tgt)):
-              self.assertTrue(feq(tgt[i], stats[i], 5.0), (tgt[i], stats[i]))
+              self.assertAlmostEqual(tgt[i], stats[i], delta=5.0)
 
     self.assertEqual(nDone, 100)
     # print 'nHits:',nHits
