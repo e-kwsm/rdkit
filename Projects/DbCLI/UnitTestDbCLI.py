@@ -99,7 +99,7 @@ class TestCase(unittest.TestCase):
       lastVal = 1.0
       while i < len(line):
         nbrs[line[i]] = line[i + 1]
-        self.assertTrue(float(line[i + 1]) <= lastVal)
+        self.assertLessEqual(float(line[i + 1]), lastVal)
         lastVal = float(line[i + 1])
         i += 2
       self.assertTrue(lbl in nbrs)
@@ -132,7 +132,7 @@ class TestCase(unittest.TestCase):
       lastVal = 1.0
       while i < len(line):
         nbrs[line[i]] = line[i + 1]
-        self.assertTrue(float(line[i + 1]) <= lastVal)
+        self.assertLessEqual(float(line[i + 1]), lastVal)
         lastVal = float(line[i + 1])
         i += 2
       self.assertTrue(lbl in nbrs)
@@ -164,7 +164,7 @@ class TestCase(unittest.TestCase):
       lastVal = 1.0
       while i < len(line):
         nbrs[line[i]] = line[i + 1]
-        self.assertTrue(float(line[i + 1]) <= lastVal)
+        self.assertLessEqual(float(line[i + 1]), lastVal)
         lastVal = float(line[i + 1])
         i += 2
       self.assertTrue(lbl in nbrs)
@@ -325,7 +325,7 @@ class TestCase(unittest.TestCase):
       lastVal = 1.0
       while i < len(line):
         nbrs[line[i]] = line[i + 1]
-        self.assertTrue(float(line[i + 1]) <= lastVal)
+        self.assertLessEqual(float(line[i + 1]), lastVal)
         lastVal = float(line[i + 1])
         i += 2
       self.assertTrue(lbl in nbrs)
@@ -357,7 +357,7 @@ class TestCase(unittest.TestCase):
     splitL.pop(0)
     for i in range(0, len(splitL), 2):
       v = float(splitL[i + 1])
-      self.assertTrue(v > 0.7)
+      self.assertGreater(v, 0.7)
     os.unlink('testData/bzr/search.out')
 
   def test4CreateOptions(self):
@@ -515,7 +515,7 @@ class TestCase(unittest.TestCase):
       lastVal = 1.0
       while i < len(line):
         nbrs[line[i]] = line[i + 1]
-        self.assertTrue(float(line[i + 1]) <= lastVal)
+        self.assertLessEqual(float(line[i + 1]), lastVal)
         lastVal = float(line[i + 1])
         i += 2
       self.assertTrue(lbl in nbrs)
