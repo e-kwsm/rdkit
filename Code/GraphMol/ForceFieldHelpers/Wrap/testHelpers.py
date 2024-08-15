@@ -43,7 +43,7 @@ class TestCase(unittest.TestCase):
     r = ff.Minimize()
     self.assertTrue(r == 0)
     e2 = ff.CalcEnergy()
-    self.assertTrue(e2 < e1)
+    self.assertLess(e2, e1)
 
     # test keyword args:
     r = ff.Minimize(forceTol=1e-8)
@@ -75,7 +75,7 @@ M  END"""
     r = ff.Minimize()
     self.assertTrue(r == 0)
     e2 = ff.CalcEnergy()
-    self.assertTrue(e2 < e1)
+    self.assertLess(e2, e1)
 
   def test4(self):
     m = Chem.MolFromSmiles('[Cu](C)(C)(C)(C)C')
@@ -111,7 +111,7 @@ M  END"""
     r = ff.Minimize()
     self.assertTrue(r == 0)
     e2 = ff.CalcEnergy()
-    self.assertTrue(e2 < e1)
+    self.assertLess(e2, e1)
 
     # test keyword args:
     r = ff.Minimize(forceTol=1.0e-8)
@@ -144,7 +144,7 @@ M  END"""
     r = ff.Minimize()
     self.assertTrue(r == 0)
     e2 = ff.CalcEnergy()
-    self.assertTrue(e2 < e1)
+    self.assertLess(e2, e1)
 
   def test8(self):
     m = Chem.MolFromSmiles('[Cu](C)(C)(C)(C)C')
@@ -265,7 +265,7 @@ M  END"""
     e1 = ff.CalcEnergy()
     ff.Minimize(10000, 1.0e-6, 1.0e-3)
     e2 = ff.CalcEnergy()
-    self.assertTrue(e2 < e1)
+    self.assertLess(e2, e1)
     e3 = ff.CalcEnergy(savedPos)
     self.assertAlmostEqual(e3, e1, 2)
     savedPos = tuple(positions)
@@ -289,7 +289,7 @@ M  END"""
     e1 = ff.CalcEnergy()
     ff.Minimize(10000, 1.0e-6, 1.0e-3)
     e2 = ff.CalcEnergy()
-    self.assertTrue(e2 < e1)
+    self.assertLess(e2, e1)
     e3 = ff.CalcEnergy(savedPos)
     self.assertAlmostEqual(e3, e1, 2)
 
@@ -376,7 +376,8 @@ M  END"""
     self.assertEqual(len(res), 10)
     self.assertEqual(len(before), len(after))
     self.assertTrue(all(map(lambda i: i == 0, res)))
-    self.assertTrue(all(after[i] < b for i, b in enumerate(before)))
+    for a, b in zip(after, before):
+      self.assertTrue(a < b)
 
   def testEmptyFF(self) -> None:
     m = Chem.MolFromSmiles(
