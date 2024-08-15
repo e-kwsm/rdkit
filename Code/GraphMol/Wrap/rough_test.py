@@ -84,10 +84,6 @@ def load_tests(loader, tests, ignore):
   return tests
 
 
-def feq(v1, v2, tol2=1e-4):
-  return abs(v1 - v2) <= tol2
-
-
 def getTotalFormalCharge(mol):
   totalFormalCharge = 0
   for atom in mol.GetAtoms():
@@ -145,13 +141,13 @@ class TestCase(unittest.TestCase):
     tbl = Chem.GetPeriodicTable()
     self.assertTrue(tbl)
 
-    self.assertTrue(feq(tbl.GetAtomicWeight(6), 12.011))
-    self.assertTrue(feq(tbl.GetAtomicWeight("C"), 12.011))
+    self.assertAlmostEqual(tbl.GetAtomicWeight(6), 12.011, delta=1e-4)
+    self.assertAlmostEqual(tbl.GetAtomicWeight("C"), 12.011, delta=1e-4)
     self.assertEqual(tbl.GetAtomicNumber('C'), 6)
-    self.assertTrue(feq(tbl.GetRvdw(6), 1.7))
-    self.assertTrue(feq(tbl.GetRvdw("C"), 1.7))
-    self.assertTrue(feq(tbl.GetRcovalent(6), 0.76))
-    self.assertTrue(feq(tbl.GetRcovalent("C"), 0.76))
+    self.assertAlmostEqual(tbl.GetRvdw(6), 1.7, delta=1e-4)
+    self.assertAlmostEqual(tbl.GetRvdw("C"), 1.7, delta=1e-4)
+    self.assertAlmostEqual(tbl.GetRcovalent(6), 0.76, delta=1e-4)
+    self.assertAlmostEqual(tbl.GetRcovalent("C"), 0.76, delta=1e-4)
     self.assertEqual(tbl.GetDefaultValence(6), 4)
     self.assertEqual(tbl.GetDefaultValence("C"), 4)
     self.assertEqual(tuple(tbl.GetValenceList(6)), (4, ))
@@ -166,8 +162,8 @@ class TestCase(unittest.TestCase):
     self.assertEqual(tbl.GetMostCommonIsotopeMass('C'), 12.0)
     self.assertEqual(tbl.GetAbundanceForIsotope(6, 12), 98.93)
     self.assertEqual(tbl.GetAbundanceForIsotope('C', 12), 98.93)
-    self.assertTrue(feq(tbl.GetRb0(6), 0.77))
-    self.assertTrue(feq(tbl.GetRb0("C"), 0.77))
+    self.assertAlmostEqual(tbl.GetRb0(6), 0.77, delta=1e-4)
+    self.assertAlmostEqual(tbl.GetRb0("C"), 0.77, delta=1e-4)
     self.assertEqual(tbl.GetElementSymbol(6), 'C')
     self.assertEqual(tbl.GetElementName(6), 'Carbon')
     self.assertEqual(tbl.GetRow(6), 2)
@@ -1674,12 +1670,12 @@ M  END
     """
     m = Chem.MolFromSmiles('CC=C')
     d = Chem.GetDistanceMatrix(m, 0)
-    self.assertTrue(feq(d[0, 1], 1.0))
-    self.assertTrue(feq(d[0, 2], 2.0))
+    self.assertAlmostEqual(d[0, 1], 1.0, delta=1e-4)
+    self.assertAlmostEqual(d[0, 2], 2.0, delta=1e-4)
     # force an update:
     d = Chem.GetDistanceMatrix(m, 1, 0, 1)
-    self.assertTrue(feq(d[0, 1], 1.0))
-    self.assertTrue(feq(d[0, 2], 1.5))
+    self.assertAlmostEqual(d[0, 1], 1.0, delta=1e-4)
+    self.assertAlmostEqual(d[0, 2], 1.5, delta=1e-4)
 
   def test35ChiralityPerception(self):
     """ Test perception of chirality and CIP encoding
@@ -2629,10 +2625,10 @@ CAS<~>
     """
     m = Chem.MolFromSmiles('CC=C')
     d = Chem.GetDistanceMatrix(m, 0)
-    self.assertTrue(feq(d[0, 1], 1.0))
-    self.assertTrue(feq(d[0, 2], 2.0))
-    self.assertTrue(feq(d[1, 0], 1.0))
-    self.assertTrue(feq(d[2, 0], 2.0))
+    self.assertAlmostEqual(d[0, 1], 1.0, delta=1e-4)
+    self.assertAlmostEqual(d[0, 2], 2.0, delta=1e-4)
+    self.assertAlmostEqual(d[1, 0], 1.0, delta=1e-4)
+    self.assertAlmostEqual(d[2, 0], 2.0, delta=1e-4)
     a = Chem.GetAdjacencyMatrix(m, 0)
     self.assertEqual(a[0, 1], 1)
     self.assertEqual(a[0, 2], 0)
@@ -2642,8 +2638,8 @@ CAS<~>
 
     m = Chem.MolFromSmiles('C1CC1')
     d = Chem.GetDistanceMatrix(m, 0)
-    self.assertTrue(feq(d[0, 1], 1.0))
-    self.assertTrue(feq(d[0, 2], 1.0))
+    self.assertAlmostEqual(d[0, 1], 1.0, delta=1e-4)
+    self.assertAlmostEqual(d[0, 2], 1.0, delta=1e-4)
     a = Chem.GetAdjacencyMatrix(m, 0)
     self.assertEqual(a[0, 1], 1)
     self.assertEqual(a[0, 2], 1)
@@ -2651,7 +2647,7 @@ CAS<~>
 
     m = Chem.MolFromSmiles('CC.C')
     d = Chem.GetDistanceMatrix(m, 0)
-    self.assertTrue(feq(d[0, 1], 1.0))
+    self.assertAlmostEqual(d[0, 1], 1.0, delta=1e-4)
     self.assertGreater(d[0, 2], 1000)
     self.assertGreater(d[1, 2], 1000)
     a = Chem.GetAdjacencyMatrix(m, 0)
