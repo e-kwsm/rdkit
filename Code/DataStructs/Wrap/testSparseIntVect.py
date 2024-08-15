@@ -69,7 +69,7 @@ class TestCase(unittest.TestCase):
     self.assertTrue(v3 == v1)
 
     onVs = v1.GetNonzeroElements()
-    self.assertTrue(onVs == {0: 1, 2: 2, 1 << 35: 3})
+    self.assertEqual(onVs, {0: 1, 2: 2, 1 << 35: 3})
 
   def test3Pickle1(self):
     """
