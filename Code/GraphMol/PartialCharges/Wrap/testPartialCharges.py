@@ -44,7 +44,7 @@ class TestCase(unittest.TestCase):
 
     i = 0
     for line in lines:
-      self.assertTrue(line.strip() == olst[i])
+      self.assertEqual(line.strip(), olst[i])
       i += 1
 
   def test1PPDataset(self):
