@@ -128,7 +128,7 @@ M  END"""
     self.assertTrue(r == 0)
     conf = m.GetConformer()
     dist = rdMolTransforms.GetBondLength(conf, 1, 3)
-    self.assertTrue(dist > 1.99)
+    self.assertGreater(dist, 1.99)
     ff = ChemicalForceFields.UFFGetMoleculeForceField(m)
     self.assertTrue(ff)
     ff.UFFAddDistanceConstraint(1, 3, True, -0.2, 0.2, 1.0e5)
@@ -136,7 +136,7 @@ M  END"""
     self.assertTrue(r == 0)
     conf = m.GetConformer()
     dist = rdMolTransforms.GetBondLength(conf, 1, 3)
-    self.assertTrue(dist > 1.79)
+    self.assertGreater(dist, 1.79)
 
   def testUFFAngleConstraints(self):
     m = Chem.MolFromMolBlock(self.molB, True, False)
@@ -197,7 +197,7 @@ M  END"""
     r = ff.Minimize()
     self.assertTrue(r == 0)
     q = conf.GetAtomPosition(1)
-    self.assertTrue((p - q).Length() < 0.3)
+    self.assertLess((p - q).Length(), 0.3)
 
   def testUFFFixedAtoms(self):
     m = Chem.MolFromMolBlock(self.molB, True, False)
@@ -209,7 +209,7 @@ M  END"""
     r = ff.Minimize()
     self.assertTrue(r == 0)
     fq = conf.GetAtomPosition(1)
-    self.assertTrue((fp - fq).Length() < 0.01)
+    self.assertLess((fp - fq).Length(), 0.01)
 
   def testMMFFMinInfLoop(self):
     os = OptSafe()
@@ -233,7 +233,7 @@ M  END"""
     self.assertTrue(r == 0)
     conf = m.GetConformer()
     dist = rdMolTransforms.GetBondLength(conf, 1, 3)
-    self.assertTrue(dist > 1.99)
+    self.assertGreater(dist, 1.99)
     ff = ChemicalForceFields.MMFFGetMoleculeForceField(m, mp)
     self.assertTrue(ff)
     ff.MMFFAddDistanceConstraint(1, 3, True, -0.2, 0.2, 1.0e5)
@@ -241,7 +241,7 @@ M  END"""
     self.assertTrue(r == 0)
     conf = m.GetConformer()
     dist = rdMolTransforms.GetBondLength(conf, 1, 3)
-    self.assertTrue(dist > 1.79)
+    self.assertGreater(dist, 1.79)
 
   def testMMFFAngleConstraints(self):
     m = Chem.MolFromMolBlock(self.molB, True, False)
@@ -305,7 +305,7 @@ M  END"""
     r = ff.Minimize()
     self.assertTrue(r == 0)
     q = conf.GetAtomPosition(1)
-    self.assertTrue((p - q).Length() < 0.3)
+    self.assertLess((p - q).Length(), 0.3)
 
   def testMMFFFixedAtoms(self):
     m = Chem.MolFromMolBlock(self.molB, True, False)
@@ -318,7 +318,7 @@ M  END"""
     r = ff.Minimize()
     self.assertTrue(r == 0)
     fq = conf.GetAtomPosition(1)
-    self.assertTrue((fp - fq).Length() < 0.01)
+    self.assertLess((fp - fq).Length(), 0.01)
 
 
 if __name__ == '__main__':
