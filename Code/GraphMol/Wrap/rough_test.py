@@ -1706,8 +1706,8 @@ M  END
     else:
       self.assertTrue(m.GetBondWithIdx(1).GetStereo() == Chem.BondStereo.STEREOCIS)
     atoms = m.GetBondWithIdx(1).GetStereoAtoms()
-    self.assertTrue(0 in atoms)
-    self.assertTrue(3 in atoms)
+    self.assertIn(0, atoms)
+    self.assertIn(3, atoms)
     self.assertTrue(m.GetBondWithIdx(2).GetStereo() == Chem.BondStereo.STEREONONE)
     Chem.RemoveStereochemistry(m)
     self.assertTrue(m.GetBondWithIdx(1).GetStereo() == Chem.BondStereo.STEREONONE)
@@ -4767,11 +4767,11 @@ $$$$
     self.assertEqual(aBits[1524090560], [[1, 2]])
     self.assertIn(1940446997, aBits)
     self.assertEqual(aBits[1940446997], [[0, 1]])
-    self.assertTrue(3977409745 in aBits)
+    self.assertIn(3977409745, aBits)
     self.assertEqual(aBits[3977409745], [[0, 1, 2]])
-    self.assertTrue(4274652475 in aBits)
+    self.assertIn(4274652475, aBits)
     self.assertEqual(aBits[4274652475], [[2]])
-    self.assertTrue(4275705116 in aBits)
+    self.assertIn(4275705116, aBits)
     self.assertEqual(aBits[4275705116], [[0], [1]])
 
   def testRDKFingerprintBitInfo(self):
@@ -4779,15 +4779,15 @@ $$$$
     m = Chem.MolFromSmiles('CCCO')
     aBits = {}
     fp1 = Chem.RDKFingerprint(m, bitInfo=aBits)
-    self.assertTrue(1183 in aBits)
+    self.assertIn(1183, aBits)
     self.assertEqual(aBits[1183], [[1, 2]])
-    self.assertTrue(709 in aBits)
+    self.assertIn(709, aBits)
     self.assertEqual(aBits[709], [[0, 1]])
-    self.assertTrue(1118 in aBits)
+    self.assertIn(1118, aBits)
     self.assertEqual(aBits[1118], [[0, 1, 2]])
-    self.assertTrue(562 in aBits)
+    self.assertIn(562, aBits)
     self.assertEqual(aBits[562], [[2]])
-    self.assertTrue(1772 in aBits)
+    self.assertIn(1772, aBits)
     self.assertEqual(aBits[1772], [[0], [1]])
 
   def testSimpleAromaticity(self):
@@ -4966,8 +4966,8 @@ $$$$
       self.assertFalse(atom.HasProp("foo"))
 
   def testGithub1352(self):
-    self.assertTrue('SP' in Chem.HybridizationType.names)
-    self.assertTrue('S' in Chem.HybridizationType.names)
+    self.assertIn('SP', Chem.HybridizationType.names)
+    self.assertIn('S', Chem.HybridizationType.names)
     m = Chem.MolFromSmiles('CC(=O)O.[Na]')
     self.assertEqual(m.GetAtomWithIdx(0).GetHybridization().name, 'SP3')
     self.assertEqual(m.GetAtomWithIdx(4).GetHybridization().name, 'S')
@@ -5458,7 +5458,7 @@ M  END
 """
     mol = Chem.MolFromMolBlock(ctab)
     self.assertFalse(mol.GetConformer().Is3D())
-    self.assertTrue("@" in Chem.MolToSmiles(mol, True))
+    self.assertIn("@", Chem.MolToSmiles(mol, True))
 
   def testGitHub2082_2(self):
     # test a mol block that lies is 3D but labelled 2D
@@ -5929,8 +5929,8 @@ M  END
     self.assertTrue(m.GetConformer().HasProp("foo"))
     self.assertFalse(m.GetConformer().HasProp("food"))
     d = m.GetConformer().GetPropsAsDict()
-    self.assertTrue('foo' in d)
-    self.assertTrue('bar' in d)
+    self.assertIn('foo', d)
+    self.assertIn('bar', d)
     self.assertEqual(d['bar'], 'foo')
     self.assertEqual(m.GetConformer().GetProp("bar"), "foo")
     self.assertEqual(m.GetConformer().GetIntProp("foo"), 1)
@@ -6873,9 +6873,9 @@ M  END
     vals = {'foo': '1', 'bar': '2'}
     nd = Chem.AddMetadataToPNGString(vals, nd)
     nvals = Chem.MetadataFromPNGString(nd)
-    self.assertTrue('foo' in nvals)
+    self.assertIn('foo', nvals)
     self.assertEqual(nvals['foo'], b'1')
-    self.assertTrue('bar' in nvals)
+    self.assertIn('bar', nvals)
     self.assertEqual(nvals['bar'], b'2')
 
     with open(fileN, 'rb') as inf:
@@ -6895,9 +6895,9 @@ M  END
 
     nd = Chem.AddMetadataToPNGFile(vals, fileN)
     nvals = Chem.MetadataFromPNGString(nd)
-    self.assertTrue('foo' in nvals)
+    self.assertIn('foo', nvals)
     self.assertEqual(nvals['foo'], b'1')
-    self.assertTrue('bar' in nvals)
+    self.assertIn('bar', nvals)
     self.assertEqual(nvals['bar'], b'2')
 
     vals = {'foo': 1, 'bar': '2'}
@@ -6997,7 +6997,7 @@ M  END
       w.write(mol)
       w.flush()
       txt = sio.getvalue()
-      self.assertTrue(pval in txt)
+      self.assertIn(pval, txt)
 
   def test_github1631(self):
     fileN = os.path.join(RDConfig.RDBaseDir, 'Code', 'GraphMol', 'FileParsers', 'test_data',
@@ -8415,8 +8415,8 @@ M  END
     self.assertIsNotNone(mol)
     self.assertEqual(mol.GetNumAtoms(), 13)
     mrv = Chem.MolToMrvBlock(mol)
-    self.assertTrue('<molecule molID="m1">' in mrv)
-    self.assertFalse('<reaction>' in mrv)
+    self.assertIn('<molecule molID="m1">', mrv)
+    self.assertNotIn('<reaction>', mrv)
 
     fName = tempfile.NamedTemporaryFile(suffix='.mrv').name
     self.assertFalse(os.path.exists(fName))
@@ -8537,8 +8537,8 @@ M  END
     mol = Chem.MolFromSmiles('[NH3]->[Fe]')
     self.assertIsNotNone(mol)
     mb = Chem.MolToV2KMolBlock(mol)
-    self.assertTrue('V2000' in mb)
-    self.assertTrue('  1  2  9  0' in mb)
+    self.assertIn('V2000', mb)
+    self.assertIn('  1  2  9  0', mb)
 
   def testFindMesoCenters(self):
     mol = Chem.MolFromSmiles('C[C@@H](Cl)C[C@H](C)Cl')
