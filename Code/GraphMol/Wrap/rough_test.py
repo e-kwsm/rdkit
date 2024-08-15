@@ -3693,8 +3693,8 @@ CAS<~>
     self.assertEqual(m2.GetConformer(1).GetNumAtoms(), 12)
 
     m2 = Chem.Mol(m1, True)
-    self.assertTrue(m2.GetNumAtoms() == 12)
-    self.assertTrue(m2.GetNumConformers() == 0)
+    self.assertEqual(m2.GetNumAtoms(), 12)
+    self.assertEqual(m2.GetNumConformers(), 0)
 
     m2 = Chem.RWMol(m1)
     self.assertEqual(m2.GetNumAtoms(), 12)
@@ -3713,8 +3713,8 @@ CAS<~>
     self.assertEqual(m2.GetConformer(1).GetNumAtoms(), 12)
 
     m2 = Chem.RWMol(m1, True)
-    self.assertTrue(m2.GetNumAtoms() == 12)
-    self.assertTrue(m2.GetNumConformers() == 0)
+    self.assertEqual(m2.GetNumAtoms(), 12)
+    self.assertEqual(m2.GetNumConformers(), 0)
 
   def testAtomPropQueries(self):
     """ test the property queries
@@ -4856,7 +4856,7 @@ $$$$
     m2 = pickle.loads(pkl)
     smi1 = Chem.MolToSmiles(m)
     smi2 = Chem.MolToSmiles(m2)
-    self.assertTrue(smi1 == smi2)
+    self.assertEqual(smi1, smi2)
     self.assertEqual(m2.GetProp("_Name"), "Name")
     for atom in m2.GetAtoms():
       self.assertEqual(atom.GetProp("_foo"), "bar" + str(atom.GetIdx()))
@@ -4867,7 +4867,7 @@ $$$$
     m2 = pickle.loads(pkl)
     smi1 = Chem.MolToSmiles(m)
     smi2 = Chem.MolToSmiles(m2)
-    self.assertTrue(smi1 == smi2)
+    self.assertEqual(smi1, smi2)
     self.assertFalse(m2.HasProp("_Name"))
     for atom in m2.GetAtoms():
       self.assertFalse(atom.HasProp("_foo"))
@@ -4878,7 +4878,7 @@ $$$$
     m2 = pickle.loads(pkl)
     smi1 = Chem.MolToSmiles(m)
     smi2 = Chem.MolToSmiles(m2)
-    self.assertTrue(smi1 == smi2)
+    self.assertEqual(smi1, smi2)
     self.assertFalse(m2.HasProp("_Name"))
     for atom in m2.GetAtoms():
       self.assertFalse(atom.HasProp("_foo"))
@@ -4890,7 +4890,7 @@ $$$$
     m2 = pickle.loads(pkl)
     smi1 = Chem.MolToSmiles(m)
     smi2 = Chem.MolToSmiles(m2)
-    self.assertTrue(smi1 == smi2)
+    self.assertEqual(smi1, smi2)
     self.assertEqual(m2.GetProp("_Name"), "Name")
     for atom in m2.GetAtoms():
       self.assertFalse(atom.HasProp("_foo"))
@@ -5409,32 +5409,32 @@ M  END
                            'query_A.mol')
     m = next(Chem.SDMolSupplier(query_a))
     self.assertTrue(m.GetAtomWithIdx(6).HasQuery())
-    self.assertTrue(m.GetAtomWithIdx(6).GetQueryType() == "A")
+    self.assertEqual(m.GetAtomWithIdx(6).GetQueryType(), "A")
 
     query_a_v3k = os.path.join(RDConfig.RDBaseDir, 'Code', 'GraphMol', 'FileParsers', 'test_data',
                                'query_A.v3k.mol')
     m = next(Chem.SDMolSupplier(query_a_v3k))
     self.assertTrue(m.GetAtomWithIdx(6).HasQuery())
-    self.assertTrue(m.GetAtomWithIdx(6).GetQueryType() == "A")
+    self.assertEqual(m.GetAtomWithIdx(6).GetQueryType(), "A")
 
     query_q = os.path.join(RDConfig.RDBaseDir, 'Code', 'GraphMol', 'FileParsers', 'test_data',
                            'query_Q.mol')
     m = next(Chem.SDMolSupplier(query_q))
     self.assertTrue(m.GetAtomWithIdx(6).HasQuery())
-    self.assertTrue(m.GetAtomWithIdx(6).GetQueryType() == "Q")
+    self.assertEqual(m.GetAtomWithIdx(6).GetQueryType(), "Q")
 
     query_q_v3k = os.path.join(RDConfig.RDBaseDir, 'Code', 'GraphMol', 'FileParsers', 'test_data',
                                'query_Q.v3k.mol')
     m = next(Chem.SDMolSupplier(query_q_v3k))
     self.assertTrue(m.GetAtomWithIdx(6).HasQuery())
-    self.assertTrue(m.GetAtomWithIdx(6).GetQueryType() == "Q")
+    self.assertEqual(m.GetAtomWithIdx(6).GetQueryType(), "Q")
 
     m = Chem.MolFromSmiles("*CC")
     params = Chem.rdmolops.AdjustQueryParameters.NoAdjustments()
     params.makeDummiesQueries = True
     m = Chem.rdmolops.AdjustQueryProperties(m, params)
     self.assertTrue(m.GetAtomWithIdx(0).HasQuery())
-    self.assertTrue(m.GetAtomWithIdx(0).GetQueryType() == "")
+    self.assertEqual(m.GetAtomWithIdx(0).GetQueryType(), "")
 
   def testBondSetQuery(self):
     pat = Chem.MolFromSmarts('[#6]=[#6]')
@@ -6434,7 +6434,8 @@ M  END
         for match in Chem.SortMatchesByDegreeOfCoreSubstitution(mol, core, matches)
       ]
       self.assertEqual(len(ctrlCounts), len(sortedCounts))
-      self.assertTrue(all(ctrl == sortedCounts[i] for i, ctrl in enumerate(ctrlCounts)))
+      for ctrl, expected in zip(ctrlCounts, sortedCounts):
+        self.assertEqual(ctrl, expected)
     with self.assertRaises(ValueError):
       Chem.GetMostSubstitutedCoreMatch(orthoMeta, core, [])
     with self.assertRaises(ValueError):
@@ -7604,31 +7605,31 @@ CAS<~>
 
     m1 = Chem.MolFromMolBlock(inD, sanitize=False, removeHs=False, strictParsing=True)
     self.assertIsNotNone(m1)
-    self.assertTrue(m1.GetNumAtoms() == 16)
+    self.assertEqual(m1.GetNumAtoms(), 16)
     smi = Chem.MolToCXSmiles(m1)
-    self.assertTrue(smi == inWedges)
+    self.assertEqual(smi, inWedges)
 
     m1 = Chem.MolFromMolFile(fileN, sanitize=False, removeHs=False, strictParsing=True)
     self.assertIsNotNone(m1)
-    self.assertTrue(m1.GetNumAtoms() == 16)
+    self.assertEqual(m1.GetNumAtoms(), 16)
     smi = Chem.MolToCXSmiles(m1)
-    self.assertTrue(smi == inWedges)
+    self.assertEqual(smi, inWedges)
 
     m1 = Chem.MolFromMolBlock(inD, sanitize=False, removeHs=False, strictParsing=True)
     Chem.RemoveNonExplicit3DChirality(m1)
 
     self.assertIsNotNone(m1)
-    self.assertTrue(m1.GetNumAtoms() == 16)
+    self.assertEqual(m1.GetNumAtoms(), 16)
     smi = Chem.MolToCXSmiles(m1)
-    self.assertTrue(smi == inNoWedges)
+    self.assertEqual(smi, inNoWedges)
 
     m1 = Chem.MolFromMolFile(fileN, sanitize=False, removeHs=False, strictParsing=True)
     Chem.RemoveNonExplicit3DChirality(m1)
 
     self.assertIsNotNone(m1)
-    self.assertTrue(m1.GetNumAtoms() == 16)
+    self.assertEqual(m1.GetNumAtoms(), 16)
     smi = Chem.MolToCXSmiles(m1)
-    self.assertTrue(smi == inNoWedges)
+    self.assertEqual(smi, inNoWedges)
 
   def test3dChiralMrvFile(self):
     fileN = os.path.join(RDConfig.RDBaseDir, 'Code', 'GraphMol', 'MarvinParse', 'test_data',
@@ -7649,33 +7650,33 @@ CAS<~>
     m1 = Chem.MolFromMrvBlock(inD, sanitize=False, removeHs=False)
 
     self.assertIsNotNone(m1)
-    self.assertTrue(m1.GetNumAtoms() == 16)
+    self.assertEqual(m1.GetNumAtoms(), 16)
     smi = Chem.MolToCXSmiles(m1)
     sys.stdout.flush()
-    self.assertTrue(smi == inWedges)
+    self.assertEqual(smi, inWedges)
 
     m1 = Chem.MolFromMrvFile(fileN, sanitize=False, removeHs=False)
 
     self.assertIsNotNone(m1)
-    self.assertTrue(m1.GetNumAtoms() == 16)
+    self.assertEqual(m1.GetNumAtoms(), 16)
     smi = Chem.MolToCXSmiles(m1)
-    self.assertTrue(smi == inWedges)
+    self.assertEqual(smi, inWedges)
 
     m1 = Chem.MolFromMrvBlock(inD, sanitize=False, removeHs=False)
     Chem.RemoveNonExplicit3DChirality(m1)
 
     self.assertIsNotNone(m1)
-    self.assertTrue(m1.GetNumAtoms() == 16)
+    self.assertEqual(m1.GetNumAtoms(), 16)
     smi = Chem.MolToCXSmiles(m1)
-    self.assertTrue(smi == inNoWedges)
+    self.assertEqual(smi, inNoWedges)
 
     m1 = Chem.MolFromMrvFile(fileN, sanitize=False, removeHs=False)
     Chem.RemoveNonExplicit3DChirality(m1)
 
     self.assertIsNotNone(m1)
-    self.assertTrue(m1.GetNumAtoms() == 16)
+    self.assertEqual(m1.GetNumAtoms(), 16)
     smi = Chem.MolToCXSmiles(m1)
-    self.assertTrue(smi == inNoWedges)
+    self.assertEqual(smi, inNoWedges)
 
   def test3dChiralCxsmiles(self):
     fileN = os.path.join(RDConfig.RDBaseDir, 'Code', 'GraphMol', 'SmilesParse', 'test_data',
@@ -7701,20 +7702,20 @@ CAS<~>
 
     m1 = Chem.MolFromSmiles(inD, ps)
     self.assertIsNotNone(m1)
-    self.assertTrue(m1.GetNumAtoms() == 16)
+    self.assertEqual(m1.GetNumAtoms(), 16)
     smi = Chem.MolToCXSmiles(m1)
     sys.stdout.flush()
-    self.assertTrue(smi == inWedges)
+    self.assertEqual(smi, inWedges)
 
     m1 = Chem.MolFromSmiles(inD, ps)
     Chem.RemoveNonExplicit3DChirality(m1)
 
     self.assertIsNotNone(m1)
-    self.assertTrue(m1.GetNumAtoms() == 16)
+    self.assertEqual(m1.GetNumAtoms(), 16)
     smi = Chem.MolToCXSmiles(m1)
     print('inWedges: ', inNoWedges)
 
-    self.assertTrue(smi == inNoWedges)
+    self.assertEqual(smi, inNoWedges)
 
   def testReapplyMolBlockWedging(self):
     fileN = os.path.join(RDConfig.RDBaseDir, 'Code', 'GraphMol', 'MarvinParse', 'test_data',
@@ -7732,17 +7733,17 @@ CAS<~>
 
     m = Chem.MolFromMrvFile(fileN, False, False)
     self.assertIsNotNone(m)
-    self.assertTrue(m.GetNumAtoms() == 38)
+    self.assertEqual(m.GetNumAtoms(), 38)
     mBlock = Chem.MolToMolBlock(m, False, -1, True, True)
 
     sys.stdout.flush()
-    self.assertTrue(mBlock == isNotReapplied)
+    self.assertEqual(mBlock, isNotReapplied)
     Chem.ReapplyMolBlockWedging(m)
 
     mBlock = Chem.MolToMolBlock(m, False, -1, True, True)
     sys.stdout.flush()
 
-    self.assertTrue(mBlock == isReapplied)
+    self.assertEqual(mBlock, isReapplied)
 
   def testReapplyMolBlockWedgingAllBondTypes(self):
     m = Chem.MolFromMolBlock('''
@@ -7778,7 +7779,7 @@ M  END
       'CC1=C(N2C=CC=C2[C@H](C)Cl)C(C)CCC1 |(2.679,0.4142,;1.3509,1.181,;0.0229,0.4141,;0.0229,-1.1195,;1.2645,-2.0302,;0.7901,-3.4813,;-0.7446,-3.4813,;-1.219,-2.0302,;-2.679,-1.5609,;-3.0039,-0.0556,;-3.8202,-2.595,;-1.3054,1.1809,;-2.6335,0.4141,;-1.3054,2.7145,;0.0229,3.4813,;1.3509,2.7146,),wD:2.11,wU:8.10,&1:8|'
     )
     self.assertIsNotNone(m)
-    self.assertTrue(m.GetNumAtoms() == 16)
+    self.assertEqual(m.GetNumAtoms(), 16)
 
     sys.stdout.flush()
     flags = Chem.CXSmilesFields.CX_COORDS | \
