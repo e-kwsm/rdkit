@@ -22,7 +22,7 @@ class TestCase(unittest.TestCase):
     # test that the prealigned flag is working
     rms1 = AllChem.GetConformerRMS(m1, 0, 1, prealigned=True)
     rms2 = AllChem.GetConformerRMS(m1, 0, 1, prealigned=False)
-    self.assertTrue((rms1 > rms2))
+    self.assertGreater(rms1, rms2)
 
     # test that RMS is the same as calculated by AlignMol()
     self.assertAlmostEqual(rms2, AllChem.GetBestRMS(m2, m1, 1, 0), 3)
@@ -173,7 +173,7 @@ class TestCase(unittest.TestCase):
     path = os.path.join(RDConfig.RDCodeDir, 'Chem', 'test_data', fname)
     mol = Chem.MolFromMolFile(path)
     refSmiles = mol.GetProp("_Name")
-    self.assertTrue(len(refSmiles) > 0)
+    self.assertGreater(len(refSmiles), 0)
     self.assertEqual(Chem.MolToSmiles(mol, isomericSmiles=True), refSmiles)
 
     # now test Chem.DetectBondStereoChemistry more directly by constructing the molecule from scratch
