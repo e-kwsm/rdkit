@@ -79,7 +79,6 @@ class TestPandasTools(unittest.TestCase):
     # This test only makes sure that we get no exception. To see the created images, set
     # interactive to True
     interactive = False
-    self.assertTrue(True)
     df = self.df
 
     result = PandasTools.FrameToGridImage(df)
