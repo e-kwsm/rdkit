@@ -73,7 +73,7 @@ class TestCase(unittest.TestCase):
     for mol, fp, cfp in zip(mols, fps, chiralFps):
       ac0 = rdMD.GetAtomPairAtomCode(mol.GetAtomWithIdx(0))
       ac1 = rdMD.GetAtomPairAtomCode(mol.GetAtomWithIdx(1))
-      self.assertTrue(rdMD.GetAtomPairCode(ac0, ac1, 1) in fp.GetNonzeroElements())
+      self.assertIn(rdMD.GetAtomPairCode(ac0, ac1, 1), fp.GetNonzeroElements())
       ac0 = rdMD.GetAtomPairAtomCode(mol.GetAtomWithIdx(0), includeChirality=True)
       ac1 = rdMD.GetAtomPairAtomCode(mol.GetAtomWithIdx(1), includeChirality=True)
       self.assertFalse(
@@ -540,7 +540,7 @@ class TestCase(unittest.TestCase):
 
     rdMD.Properties.RegisterProperty(numAtoms)
     props = rdMD.Properties(["CustomNumAtoms"])
-    self.assertTrue("CustomNumAtoms" in rdMD.Properties.GetAvailableProperties())
+    self.assertIn("CustomNumAtoms", rdMD.Properties.GetAvailableProperties())
     self.assertEqual(1, props.ComputeProperties(Chem.MolFromSmiles("C"))[0])
 
     # check memory
@@ -548,7 +548,7 @@ class TestCase(unittest.TestCase):
     gc.collect()
 
     self.assertEqual(1, props.ComputeProperties(Chem.MolFromSmiles("C"))[0])
-    self.assertTrue("CustomNumAtoms" in rdMD.Properties.GetAvailableProperties())
+    self.assertIn("CustomNumAtoms", rdMD.Properties.GetAvailableProperties())
 
     properties = rdMD.Properties()
     for name, value in zip(properties.GetPropertyNames(), properties.ComputeProperties(m)):
@@ -605,10 +605,10 @@ class TestCase(unittest.TestCase):
     m = Chem.MolFromSmiles('c1ccccc1CC1CC1')
     bi = {}
     _ = rdMD.GetMorganFingerprintAsBitVect(m, radius=2, bitInfo=bi)
-    self.assertTrue(872 in bi)
+    self.assertIn(872, bi)
     bi = {}
     _ = rdMD.GetMorganFingerprintAsBitVect(m, radius=2, fromAtoms=[0, 1, 2], bitInfo=bi)
-    self.assertTrue(1066 in bi)
+    self.assertIn(1066, bi)
 
   def testCustomVSA(self):
     mol = Chem.MolFromSmiles("c1ccccc1O")
@@ -711,7 +711,7 @@ class TestCase(unittest.TestCase):
       bcut2 = rdMD.BCUT2D(m, props)
       self.assertTrue(0, "Failed to handle bad prop size")
     except RuntimeError as e:
-      self.assertTrue("tom_props.size() == num_atoms" in str(e))
+      self.assertIn("tom_props.size() == num_atoms", str(e))
 
     try:
       bcut2 = rdMD.BCUT2D(m, "property not existing on the atom")
