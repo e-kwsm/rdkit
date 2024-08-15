@@ -4361,7 +4361,7 @@ $$$$
     self.assertIsNone(callback)
     resMolSuppl.SetProgressCallback(ExceedNumStructures(self))
     callback = resMolSuppl.GetProgressCallback()
-    self.assertTrue(isinstance(callback, ExceedNumStructures))
+    self.assertIsInstance(callback, ExceedNumStructures)
     resMolSuppl.SetProgressCallback(None)
     callback = resMolSuppl.GetProgressCallback()
     self.assertIsNone(callback)
