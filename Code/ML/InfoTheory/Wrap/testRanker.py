@@ -90,7 +90,7 @@ class TestCase(unittest.TestCase):
     for i in range(50):
       fan = res3[i, 2] / na
       fin = res3[i, 3] / ni
-      self.assertTrue(fan > fin)
+      self.assertGreater(fan, fin)
 
   def test2ranker(self):
     nbits = 100
