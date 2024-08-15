@@ -327,7 +327,7 @@ class TestCase(unittest.TestCase):
     try:
       (err, fixed_mol) = pyAvalonTools.CheckMoleculeString(atom_clash, False)
       log = pyAvalonTools.GetCheckMolLog()
-      self.assertTrue("of average bond length from bond" in log)
+      self.assertIn("of average bond length from bond", log)
 
       # make sure that the log is cleared for the next molecule
       (err, fixed_mol) = pyAvalonTools.CheckMoleculeString("c1ccccc1", True)
