@@ -596,23 +596,23 @@ M  END)""")
     default_status = rdDepictor.GetPreferCoordGen()
 
     # This is the default; we shouldn't have changed it
-    self.assertEqual(default_status, False)
+    self.assertFalse(default_status)
 
     with rdDepictor.UsingCoordGen(True):
       current_status = rdDepictor.GetPreferCoordGen()
-      self.assertEqual(current_status, True)
+      self.assertTrue(current_status)
 
     current_status = rdDepictor.GetPreferCoordGen()
-    self.assertEqual(current_status, False)
+    self.assertFalse(current_status)
 
     rdDepictor.SetPreferCoordGen(True)
 
     with rdDepictor.UsingCoordGen(False):
       current_status = rdDepictor.GetPreferCoordGen()
-      self.assertEqual(current_status, False)
+      self.assertFalse(current_status)
 
     current_status = rdDepictor.GetPreferCoordGen()
-    self.assertEqual(current_status, True)
+    self.assertTrue(current_status)
 
     rdDepictor.SetPreferCoordGen(default_status)
 
