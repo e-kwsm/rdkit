@@ -261,11 +261,11 @@ class TestCase(unittest.TestCase):
     self.assertEqual(a0.GetIdx(), 0)
 
     aList = [a0, a1, a6, a7]
-    self.assertTrue(a0.GetDegree() == 2)
-    self.assertTrue(a1.GetDegree() == 2)
-    self.assertTrue(a6.GetDegree() == 2)
-    self.assertTrue(a7.GetDegree() == 1)
-    self.assertTrue([x.GetDegree() for x in aList] == [2, 2, 2, 1])
+    self.assertEqual(a0.GetDegree(), 2)
+    self.assertEqual(a1.GetDegree(), 2)
+    self.assertEqual(a6.GetDegree(), 2)
+    self.assertEqual(a7.GetDegree(), 1)
+    self.assertEqual([x.GetDegree() for x in aList], [2, 2, 2, 1])
 
     self.assertTrue([x.GetTotalNumHs() for x in aList] == [0, 1, 2, 2])
     self.assertTrue([x.GetNumImplicitHs() for x in aList] == [0, 1, 2, 0])
@@ -296,7 +296,7 @@ class TestCase(unittest.TestCase):
     self.assertTrue(
       [x.GetBondType() for x in bList] ==
       [Chem.BondType.AROMATIC, Chem.BondType.SINGLE, Chem.BondType.DOUBLE, Chem.BondType.SINGLE])
-    self.assertTrue([x.GetIsAromatic() for x in bList] == [1, 0, 0, 0])
+    self.assertEqual([x.GetIsAromatic() for x in bList], [1, 0, 0, 0])
     self.assertEqual(bList[0].GetBondTypeAsDouble(), 1.5)
     self.assertEqual(bList[1].GetBondTypeAsDouble(), 1.0)
     self.assertEqual(bList[2].GetBondTypeAsDouble(), 2.0)
@@ -639,34 +639,34 @@ class TestCase(unittest.TestCase):
   def test17Kekulize(self):
     m = Chem.MolFromSmiles('c1ccccc1')
     smi = Chem.MolToSmiles(m)
-    self.assertTrue(smi == 'c1ccccc1')
+    self.assertEqual(smi, 'c1ccccc1')
 
     Chem.Kekulize(m)
     smi = Chem.MolToSmiles(m)
-    self.assertTrue(smi == 'c1ccccc1')
+    self.assertEqual(smi, 'c1ccccc1')
 
     m = Chem.MolFromSmiles('c1ccccc1')
     smi = Chem.MolToSmiles(m)
-    self.assertTrue(smi == 'c1ccccc1')
+    self.assertEqual(smi, 'c1ccccc1')
 
     Chem.Kekulize(m, 1)
     smi = Chem.MolToSmiles(m)
-    self.assertTrue(smi == 'C1=CC=CC=C1', smi)
+    self.assertEqual(smi, 'C1=CC=CC=C1')
 
   def test18Paths(self):
 
     m = Chem.MolFromSmiles("C1CC2C1CC2")
-    #self.assertTrue(len(Chem.FindAllPathsOfLengthN(m,1,useBonds=1))==7)
+    #self.assertEqual(len(Chem.FindAllPathsOfLengthN(m,1,useBonds=1)), 7)
     #print(Chem.FindAllPathsOfLengthN(m,3,useBonds=0))
     self.assertTrue(
       len(Chem.FindAllPathsOfLengthN(m, 2, useBonds=1)) == 10,
       Chem.FindAllPathsOfLengthN(m, 2, useBonds=1))
-    self.assertTrue(len(Chem.FindAllPathsOfLengthN(m, 3, useBonds=1)) == 14)
+    self.assertEqual(len(Chem.FindAllPathsOfLengthN(m, 3, useBonds=1)), 14)
 
     m = Chem.MolFromSmiles('C1CC1C')
     self.assertTrue(m)
-    self.assertTrue(len(Chem.FindAllPathsOfLengthN(m, 1, useBonds=1)) == 4)
-    self.assertTrue(len(Chem.FindAllPathsOfLengthN(m, 2, useBonds=1)) == 5)
+    self.assertEqual(len(Chem.FindAllPathsOfLengthN(m, 1, useBonds=1)), 4)
+    self.assertEqual(len(Chem.FindAllPathsOfLengthN(m, 2, useBonds=1)), 5)
     self.assertTrue(
       len(Chem.FindAllPathsOfLengthN(m, 3, useBonds=1)) == 3,
       Chem.FindAllPathsOfLengthN(m, 3, useBonds=1))
@@ -1235,28 +1235,28 @@ mol-4,CCOC
     "mol-2 CC 4.0\n"+\
     "mol-4 CCCC 16.0"
     smiSup.SetData(text, delimiter=" ", smilesColumn=1, nameColumn=0, titleLine=1)
-    self.assertTrue(len(smiSup) == 3)
+    self.assertEqual(len(smiSup), 3)
     self.assertTrue(smiSup[0])
     self.assertTrue(smiSup[1])
     self.assertTrue(smiSup[2])
     m = [x for x in smiSup]
     self.assertTrue(smiSup[2])
-    self.assertTrue(len(m) == 3)
-    self.assertTrue(m[0].GetProp("Column_2") == "1.0")
+    self.assertEqual(len(m), 3)
+    self.assertEqual(m[0].GetProp("Column_2"), "1.0")
 
     # test simple parsing and Issue 114:
     smis = ['CC', 'CCC', 'CCOC', 'CCCOCC', 'CCCOCCC']
     inD = '\n'.join(smis)
     smiSup.SetData(inD, delimiter=",", smilesColumn=0, nameColumn=-1, titleLine=0)
-    self.assertTrue(len(smiSup) == 5)
+    self.assertEqual(len(smiSup), 5)
     m = [x for x in smiSup]
     self.assertTrue(smiSup[4])
-    self.assertTrue(len(m) == 5)
+    self.assertEqual(len(m), 5)
 
     # order dependence:
     smiSup.SetData(inD, delimiter=",", smilesColumn=0, nameColumn=-1, titleLine=0)
     self.assertTrue(smiSup[4])
-    self.assertTrue(len(smiSup) == 5)
+    self.assertEqual(len(smiSup), 5)
 
     # this was a nasty BC:
     # asking for a particular entry with a higher index than what we've
@@ -1266,7 +1266,7 @@ mol-4,CCOC
     smiSup.SetData(inD, delimiter=",", smilesColumn=0, nameColumn=-1, titleLine=0)
     m = next(smiSup)
     m = smiSup[3]
-    self.assertTrue(len(smiSup) == 4)
+    self.assertEqual(len(smiSup), 4)
 
     with self.assertRaisesRegex(Exception, ""):
       smiSup[4]
@@ -1308,8 +1308,8 @@ mol-4,CCOC
     i = 0
     for mol in smiSup:
       #print([repr(x) for x in mol.GetPropNames()])
-      self.assertTrue(mol.GetProp("_Name") == names[i])
-      self.assertTrue(mol.GetProp("Column_2") == props[i])
+      self.assertEqual(mol.GetProp("_Name"), names[i])
+      self.assertEqual(mol.GetProp("Column_2"), props[i])
       i += 1
 
   def writerSDFile(self):
@@ -1339,12 +1339,12 @@ mol-4,CCOC
     for mol in sdSup:
       #print('mol:',mol)
       #print('\t',molNames[i])
-      self.assertTrue(mol.GetProp("_Name") == molNames[i])
+      self.assertEqual(mol.GetProp("_Name"), molNames[i])
       i += 1
       if (mol.GetProp("_Name") == "192"):
         # test parsed charges on one of the molecules
         for id in chgs192.keys():
-          self.assertTrue(mol.GetAtomWithIdx(id).GetFormalCharge() == chgs192[id])
+          self.assertEqual(mol.GetAtomWithIdx(id).GetFormalCharge(), chgs192[id])
 
   def test30Issues109and110(self):
     """ issues 110 and 109 were both related to handling of explicit Hs in
@@ -1352,52 +1352,52 @@ mol-4,CCOC
 
     """
     m1 = Chem.MolFromSmiles('N12[CH](SC(C)(C)[CH]1C(O)=O)[CH](C2=O)NC(=O)[CH](N)c3ccccc3')
-    self.assertTrue(m1.GetNumAtoms() == 24)
+    self.assertEqual(m1.GetNumAtoms(), 24)
     m2 = Chem.MolFromSmiles(
       'C1C=C([CH](N)C(=O)N[C]2([H])[C]3([H])SC(C)(C)[CH](C(=O)O)N3C(=O)2)C=CC=1')
-    self.assertTrue(m2.GetNumAtoms() == 24)
+    self.assertEqual(m2.GetNumAtoms(), 24)
 
     smi1 = Chem.MolToSmiles(m1)
     smi2 = Chem.MolToSmiles(m2)
-    self.assertTrue(smi1 == smi2)
+    self.assertEqual(smi1, smi2)
 
     m1 = Chem.MolFromSmiles('[H]CCl')
-    self.assertTrue(m1.GetNumAtoms() == 2)
-    self.assertTrue(m1.GetAtomWithIdx(0).GetNumExplicitHs() == 1)
+    self.assertEqual(m1.GetNumAtoms(), 2)
+    self.assertEqual(m1.GetAtomWithIdx(0).GetNumExplicitHs(), 1)
     m1 = Chem.MolFromSmiles('[H][CH2]Cl')
-    self.assertTrue(m1.GetNumAtoms() == 2)
-    self.assertTrue(m1.GetAtomWithIdx(0).GetNumExplicitHs() == 3)
+    self.assertEqual(m1.GetNumAtoms(), 2)
+    self.assertEqual(m1.GetAtomWithIdx(0).GetNumExplicitHs(), 3)
     m2 = Chem.AddHs(m1)
-    self.assertTrue(m2.GetNumAtoms() == 5)
+    self.assertEqual(m2.GetNumAtoms(), 5)
     m2 = Chem.RemoveHs(m2)
-    self.assertTrue(m2.GetNumAtoms() == 2)
+    self.assertEqual(m2.GetNumAtoms(), 2)
 
   def test31ChiralitySmiles(self):
     m1 = Chem.MolFromSmiles('F[C@](Br)(I)Cl')
     self.assertTrue(m1 is not None)
-    self.assertTrue(m1.GetNumAtoms() == 5)
-    self.assertTrue(Chem.MolToSmiles(m1, 1) == 'F[C@](Cl)(Br)I', Chem.MolToSmiles(m1, 1))
+    self.assertEqual(m1.GetNumAtoms(), 5)
+    self.assertEqual(Chem.MolToSmiles(m1, 1), 'F[C@](Cl)(Br)I')
 
     m1 = Chem.MolFromSmiles('CC1C[C@@]1(Cl)F')
     self.assertTrue(m1 is not None)
-    self.assertTrue(m1.GetNumAtoms() == 6)
-    self.assertTrue(Chem.MolToSmiles(m1, 1) == 'CC1C[C@]1(F)Cl', Chem.MolToSmiles(m1, 1))
+    self.assertEqual(m1.GetNumAtoms(), 6)
+    self.assertEqual(Chem.MolToSmiles(m1, 1), 'CC1C[C@]1(F)Cl')
 
     m1 = Chem.MolFromSmiles('CC1C[C@]1(Cl)F')
     self.assertTrue(m1 is not None)
-    self.assertTrue(m1.GetNumAtoms() == 6)
-    self.assertTrue(Chem.MolToSmiles(m1, 1) == 'CC1C[C@@]1(F)Cl', Chem.MolToSmiles(m1, 1))
+    self.assertEqual(m1.GetNumAtoms(), 6)
+    self.assertEqual(Chem.MolToSmiles(m1, 1), 'CC1C[C@@]1(F)Cl')
 
   def test31aChiralitySubstructs(self):
     m1 = Chem.MolFromSmiles('CC1C[C@@]1(Cl)F')
     self.assertTrue(m1 is not None)
-    self.assertTrue(m1.GetNumAtoms() == 6)
-    self.assertTrue(Chem.MolToSmiles(m1, 1) == 'CC1C[C@]1(F)Cl', Chem.MolToSmiles(m1, 1))
+    self.assertEqual(m1.GetNumAtoms(), 6)
+    self.assertEqual(Chem.MolToSmiles(m1, 1), 'CC1C[C@]1(F)Cl')
 
     m2 = Chem.MolFromSmiles('CC1C[C@]1(Cl)F')
     self.assertTrue(m2 is not None)
-    self.assertTrue(m2.GetNumAtoms() == 6)
-    self.assertTrue(Chem.MolToSmiles(m2, 1) == 'CC1C[C@@]1(F)Cl', Chem.MolToSmiles(m2, 1))
+    self.assertEqual(m2.GetNumAtoms(), 6)
+    self.assertEqual(Chem.MolToSmiles(m2, 1), 'CC1C[C@@]1(F)Cl')
 
     self.assertTrue(m1.HasSubstructMatch(m1))
     self.assertTrue(m1.HasSubstructMatch(m2))
@@ -1422,9 +1422,9 @@ M  END
 """
     m1 = Chem.MolFromMolBlock(inD)
     self.assertTrue(m1 is not None)
-    self.assertTrue(m1.GetNumAtoms() == 5)
+    self.assertEqual(m1.GetNumAtoms(), 5)
     smi = Chem.MolToSmiles(m1)
-    self.assertTrue(smi == 'F[C@](Cl)(Br)I', smi)
+    self.assertEqual(smi, 'F[C@](Cl)(Br)I')
 
     inD = """chiral2.cdxml
   ChemDraw10160314052D
@@ -1443,8 +1443,8 @@ M  END
 """
     m1 = Chem.MolFromMolBlock(inD)
     self.assertTrue(m1 is not None)
-    self.assertTrue(m1.GetNumAtoms() == 5)
-    self.assertTrue(Chem.MolToSmiles(m1, 1) == 'F[C@@](Cl)(Br)I')
+    self.assertEqual(m1.GetNumAtoms(), 5)
+    self.assertEqual(Chem.MolToSmiles(m1, 1), 'F[C@@](Cl)(Br)I')
 
     inD = """chiral1.mol
   ChemDraw10160313232D
@@ -1463,8 +1463,8 @@ M  END
 """
     m1 = Chem.MolFromMolBlock(inD)
     self.assertTrue(m1 is not None)
-    self.assertTrue(m1.GetNumAtoms() == 5)
-    self.assertTrue(Chem.MolToSmiles(m1, 1) == 'F[C@](Cl)(Br)I')
+    self.assertEqual(m1.GetNumAtoms(), 5)
+    self.assertEqual(Chem.MolToSmiles(m1, 1), 'F[C@](Cl)(Br)I')
 
     inD = """chiral1.mol
   ChemDraw10160313232D
@@ -1483,8 +1483,8 @@ M  END
 """
     m1 = Chem.MolFromMolBlock(inD)
     self.assertTrue(m1 is not None)
-    self.assertTrue(m1.GetNumAtoms() == 5)
-    self.assertTrue(Chem.MolToSmiles(m1, 1) == 'F[C@](Cl)(Br)I')
+    self.assertEqual(m1.GetNumAtoms(), 5)
+    self.assertEqual(Chem.MolToSmiles(m1, 1), 'F[C@](Cl)(Br)I')
 
     inD = """chiral3.mol
   ChemDraw10160314362D
@@ -1502,8 +1502,8 @@ M  END
 """
     m1 = Chem.MolFromMolBlock(inD)
     self.assertTrue(m1 is not None)
-    self.assertTrue(m1.GetNumAtoms() == 4)
-    self.assertTrue(Chem.MolToSmiles(m1, 1) == 'F[C@H](Cl)Br')
+    self.assertEqual(m1.GetNumAtoms(), 4)
+    self.assertEqual(Chem.MolToSmiles(m1, 1), 'F[C@H](Cl)Br')
 
     inD = """chiral4.mol
   ChemDraw10160314362D
@@ -1521,8 +1521,8 @@ M  END
 """
     m1 = Chem.MolFromMolBlock(inD)
     self.assertTrue(m1 is not None)
-    self.assertTrue(m1.GetNumAtoms() == 4)
-    self.assertTrue(Chem.MolToSmiles(m1, 1) == 'FN(Cl)Br')
+    self.assertEqual(m1.GetNumAtoms(), 4)
+    self.assertEqual(Chem.MolToSmiles(m1, 1), 'FN(Cl)Br')
 
     inD = """chiral5.mol
   ChemDraw10160314362D
@@ -1541,8 +1541,8 @@ M  END
 """
     m1 = Chem.MolFromMolBlock(inD)
     self.assertTrue(m1 is not None)
-    self.assertTrue(m1.GetNumAtoms() == 4)
-    self.assertTrue(Chem.MolToSmiles(m1, 1) == 'F[N@H+](Cl)Br')
+    self.assertEqual(m1.GetNumAtoms(), 4)
+    self.assertEqual(Chem.MolToSmiles(m1, 1), 'F[N@H+](Cl)Br')
 
     inD = """Case 10-14-3
   ChemDraw10140308512D
@@ -1559,8 +1559,8 @@ M  END
 """
     m1 = Chem.MolFromMolBlock(inD)
     self.assertTrue(m1 is not None)
-    self.assertTrue(m1.GetNumAtoms() == 4)
-    self.assertTrue(Chem.MolToSmiles(m1, 1) == 'F[C@H](Cl)Br')
+    self.assertEqual(m1.GetNumAtoms(), 4)
+    self.assertEqual(Chem.MolToSmiles(m1, 1), 'F[C@H](Cl)Br')
 
     inD = """Case 10-14-4
   ChemDraw10140308512D
@@ -1578,8 +1578,8 @@ M  END
 """
     m1 = Chem.MolFromMolBlock(inD)
     self.assertTrue(m1 is not None)
-    self.assertTrue(m1.GetNumAtoms() == 4)
-    self.assertTrue(Chem.MolToSmiles(m1, 1) == 'F[C@H](Cl)Br')
+    self.assertEqual(m1.GetNumAtoms(), 4)
+    self.assertEqual(Chem.MolToSmiles(m1, 1), 'F[C@H](Cl)Br')
 
     inD = """chiral4.mol
   ChemDraw10160315172D
@@ -1601,8 +1601,8 @@ M  END
 """
     m1 = Chem.MolFromMolBlock(inD)
     self.assertTrue(m1 is not None)
-    self.assertTrue(m1.GetNumAtoms() == 6)
-    self.assertTrue(Chem.MolToSmiles(m1, 1) == 'CC1C[C@@]1(F)Cl', Chem.MolToSmiles(m1, 1))
+    self.assertEqual(m1.GetNumAtoms(), 6)
+    self.assertEqual(Chem.MolToSmiles(m1, 1), 'CC1C[C@@]1(F)Cl')
 
     inD = """chiral4.mol
   ChemDraw10160315172D
@@ -1624,8 +1624,8 @@ M  END
 """
     m1 = Chem.MolFromMolBlock(inD)
     self.assertTrue(m1 is not None)
-    self.assertTrue(m1.GetNumAtoms() == 6)
-    self.assertTrue(Chem.MolToSmiles(m1, 1) == 'CC1C[C@]1(F)Cl', Chem.MolToSmiles(m1, 1))
+    self.assertEqual(m1.GetNumAtoms(), 6)
+    self.assertEqual(Chem.MolToSmiles(m1, 1), 'CC1C[C@]1(F)Cl')
 
   def test33Issue65(self):
     """ issue 65 relates to handling of [H] in SMARTS
