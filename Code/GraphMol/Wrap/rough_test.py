@@ -2364,10 +2364,10 @@ CAS<~>
 
     """
     mol = Chem.MolFromSmiles('C1CCC1')
-    self.assertTrue(type(mol) == Chem.Mol)
+    self.assertIsInstance(mol, Chem.Mol)
 
     for rwmol in [Chem.EditableMol(mol), Chem.RWMol(mol)]:
-      self.assertTrue(type(rwmol) in [Chem.EditableMol, Chem.RWMol])
+      self.assertIsInstance(rwmol, (Chem.EditableMol, Chem.RWMol))
       newAt = Chem.Atom(8)
       rwmol.ReplaceAtom(0, newAt)
       self.assertTrue(Chem.MolToSmiles(rwmol.GetMol()) == 'C1COC1')
