@@ -25,8 +25,8 @@ class RDKIT_FORCEFIELD_EXPORT AngleConstraintContrib
   \param idx1        index of atom1 in the ForceField's positions
   \param idx2        index of atom2 in the ForceField's positions
   \param idx3        index of atom3 in the ForceField's positions
-  \param minAngle    minimum angle, must be between 0.0 and 180.0
-  \param maxAngle    maximum angle, must be between 0.0 and 180.0
+  \param minAngleDeg minimum angle, must be between 0.0 and 180.0
+  \param maxAngleDeg maximum angle, must be between 0.0 and 180.0
   \param forceConst  force Constant
 
   */
