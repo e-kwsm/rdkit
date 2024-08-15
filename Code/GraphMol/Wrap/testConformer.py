@@ -42,10 +42,10 @@ class TestCase(unittest.TestCase):
     conf.SetId(0)
     cid = mol.AddConformer(conf)
 
-    self.assertTrue(cid == 0)
+    self.assertEqual(cid, 0)
 
     conf2 = mol.GetConformer(0)
-    self.assertTrue(conf2.GetId() == cid)
+    self.assertEqual(conf2.GetId(), cid)
     pt1 = conf2.GetAtomPosition(0)
     self.assertTrue(ptEq(pt1, Point3D(-0.5, 0.0, 0.0)))
 
@@ -63,7 +63,7 @@ class TestCase(unittest.TestCase):
     conf.SetId(2)
 
     cid = mol.AddConformer(conf, 0)
-    self.assertTrue(cid == 2)
+    self.assertEqual(cid, 2)
     conf3 = mol.GetConformer(2)
 
   def test0AddHds(self):
@@ -74,12 +74,12 @@ class TestCase(unittest.TestCase):
     cid = mol.AddConformer(conf)
 
     conf2 = mol.GetConformer()
-    self.assertTrue(conf2.GetNumAtoms() == 2)
+    self.assertEqual(conf2.GetNumAtoms(), 2)
 
     nmol = Chem.AddHs(mol, 0, 1)
     conf3 = nmol.GetConformer()
-    self.assertTrue(conf3.GetNumAtoms() == 8)
-    self.assertTrue(conf2.GetNumAtoms() == 2)
+    self.assertEqual(conf3.GetNumAtoms(), 8)
+    self.assertEqual(conf2.GetNumAtoms(), 2)
 
     targetCoords = [[-0.5, 0.0, 0.0], [1.0, 0.0, 0.0], [-0.8667, 0.0, 1.03709],
                     [-0.8667, 0.8981, -0.5185], [-0.8667, -0.8981, -0.5185], [1.3667, 0.0, -1.0371],
@@ -93,14 +93,14 @@ class TestCase(unittest.TestCase):
     smi = 'c1ccccc1'
     m = Chem.MolFromSmiles(smi)
     addConf(m)
-    self.assertTrue(m.GetNumConformers() == 1)
+    self.assertEqual(m.GetNumConformers(), 1)
     mb2 = Chem.MolToMolBlock(m)
 
   def test3Exceptions(self):
     smi = 'c1ccccc1'
     m = Chem.MolFromSmiles(smi)
     addConf(m)
-    self.assertTrue(m.GetNumConformers() == 1)
+    self.assertEqual(m.GetNumConformers(), 1)
     self.assertRaises(ValueError, lambda: m.GetConformer(2))
 
   def test4ConfTuple(self):
@@ -110,7 +110,7 @@ class TestCase(unittest.TestCase):
       addConf(m)
 
     confs = m.GetConformers()
-    self.assertTrue(len(confs) == 10)
+    self.assertEqual(len(confs), 10)
 
     for conf in confs:
       for i in range(6):
@@ -118,7 +118,7 @@ class TestCase(unittest.TestCase):
         self.assertTrue(ptEq(pt, Point3D(0.0, 0.0, 0.0)))
 
     m.RemoveAllConformers()
-    self.assertTrue(m.GetNumConformers() == 0)
+    self.assertEqual(m.GetNumConformers(), 0)
     confs = m.GetConformers()
     self.assertEqual(len(confs), 0)
 
@@ -128,14 +128,14 @@ class TestCase(unittest.TestCase):
     addConf(m)
 
     confs = m.GetConformers()
-    self.assertTrue(len(confs) == 1)
+    self.assertEqual(len(confs), 1)
 
     for conf in confs:
       pos = conf.GetPositions()
       self.assertTrue(pos.shape, (6, 3))
 
     m.RemoveAllConformers()
-    self.assertTrue(m.GetNumConformers() == 0)
+    self.assertEqual(m.GetNumConformers(), 0)
     confs = m.GetConformers()
     self.assertEqual(len(confs), 0)
 
