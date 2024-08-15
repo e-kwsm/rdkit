@@ -125,9 +125,9 @@ M  END
     self.assertEqual(sorted(sgs[0].GetPropNames()),
                      ['DATAFIELDS', 'FIELDDISP', 'FIELDNAME', 'ID', 'TYPE', 'index'])
     dd = sgs[0].GetPropsAsDict()
-    self.assertTrue("TYPE" in dd)
+    self.assertIn("TYPE", dd)
     self.assertEqual(dd["TYPE"], "DAT")
-    self.assertTrue("FIELDNAME" in dd)
+    self.assertIn("FIELDNAME", dd)
     self.assertEqual(dd["FIELDNAME"], "pH")
 
     sgs[0].ClearProp("FIELDNAME")
@@ -155,9 +155,9 @@ M  END
     self.assertEqual(sorted(sgs[0].GetPropNames()),
                      ['DATAFIELDS', 'FIELDDISP', 'FIELDNAME', 'TYPE', 'index'])
     dd = sgs[0].GetPropsAsDict()
-    self.assertTrue("TYPE" in dd)
+    self.assertIn("TYPE", dd)
     self.assertEqual(dd["TYPE"], "DAT")
-    self.assertTrue("FIELDNAME" in dd)
+    self.assertIn("FIELDNAME", dd)
     self.assertEqual(dd["FIELDNAME"], "pH")
 
     Chem.ClearMolSubstanceGroups(self.m2)
@@ -184,7 +184,7 @@ M  END
     sg.SetProp("foo", "bar")
     sgs2 = Chem.GetMolSubstanceGroups(mcpy)
     pd = sgs2[0].GetPropsAsDict()
-    self.assertTrue('foo' in pd)
+    self.assertIn('foo', pd)
     self.assertEqual(pd['foo'], 'bar')
 
   def testCreateSGroup(self):
@@ -404,7 +404,7 @@ M  END
     self.assertEqual(len(sgs), 1)
     sg0 = sgs[0]
     pd = sg0.GetPropsAsDict()
-    self.assertTrue('TYPE' in pd)
+    self.assertIn('TYPE', pd)
     self.assertEqual(pd['TYPE'], 'SUP')
     cstates = sg0.GetCStates()
     self.assertEqual(len(cstates), 1)
@@ -445,7 +445,7 @@ M  END''')
     self.assertEqual(len(sgs), 1)
     sg0 = sgs[0]
     pd = sg0.GetPropsAsDict()
-    self.assertTrue('TYPE' in pd)
+    self.assertIn('TYPE', pd)
     self.assertEqual(pd['TYPE'], 'MON')
     brackets = sg0.GetBrackets()
     self.assertEqual(len(brackets), 2)
@@ -494,7 +494,7 @@ M  END''')
     self.assertEqual(len(sgs), 1)
     sg0 = sgs[0]
     pd = sg0.GetPropsAsDict()
-    self.assertTrue('TYPE' in pd)
+    self.assertIn('TYPE', pd)
     self.assertEqual(pd['TYPE'], 'SUP')
     aps = sg0.GetAttachPoints()
     self.assertEqual(len(aps), 1)
