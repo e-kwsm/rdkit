@@ -102,7 +102,7 @@ class TestCase(unittest.TestCase):
         self.assertTrue(float(line[i + 1]) <= lastVal)
         lastVal = float(line[i + 1])
         i += 2
-      self.assertTrue(lbl in nbrs)
+      self.assertIn(lbl, nbrs)
       self.assertTrue(nbrs[lbl] == '1.000', nbrs[lbl])
     os.unlink('testData/bzr/search.out')
 
@@ -135,7 +135,7 @@ class TestCase(unittest.TestCase):
         self.assertTrue(float(line[i + 1]) <= lastVal)
         lastVal = float(line[i + 1])
         i += 2
-      self.assertTrue(lbl in nbrs)
+      self.assertIn(lbl, nbrs)
       self.assertTrue(nbrs[lbl] == '1.000')
     os.unlink('testData/bzr/search.out')
 
@@ -167,7 +167,7 @@ class TestCase(unittest.TestCase):
         self.assertTrue(float(line[i + 1]) <= lastVal)
         lastVal = float(line[i + 1])
         i += 2
-      self.assertTrue(lbl in nbrs)
+      self.assertIn(lbl, nbrs)
       self.assertTrue(nbrs[lbl] == '1.000')
     os.unlink('testData/bzr/search.out')
 
@@ -328,7 +328,7 @@ class TestCase(unittest.TestCase):
         self.assertTrue(float(line[i + 1]) <= lastVal)
         lastVal = float(line[i + 1])
         i += 2
-      self.assertTrue(lbl in nbrs)
+      self.assertIn(lbl, nbrs)
       self.assertTrue(nbrs[lbl] == '1.000')
     self.assertEqual(splitLs[0][0], 'Adinazolam')
     self.assertEqual(splitLs[0][3], 'alpha-hydroxytriazolam')
@@ -386,7 +386,7 @@ class TestCase(unittest.TestCase):
     d = conn.GetData('molecules', fields='*')
     self.assertEqual(len(d), 10)
     cns = [x.lower() for x in d.GetColumnNames()]
-    self.assertFalse('smiles' in cns)
+    self.assertNotIn('smiles', cns)
 
     conn = None
     d = None
@@ -416,7 +416,7 @@ class TestCase(unittest.TestCase):
     d = conn.GetData('molecules', fields='*')
     self.assertTrue(len(d) == 10)
     cns = [x.lower() for x in d.GetColumnNames()]
-    self.assertFalse('smiles' in cns)
+    self.assertNotIn('smiles', cns)
     d = None
     conn.KillCursor()
     conn = None
@@ -439,7 +439,7 @@ class TestCase(unittest.TestCase):
     d = conn.GetData('molecules', fields='*')
     self.assertEqual(len(d), 10)
     cns = [x.lower() for x in d.GetColumnNames()]
-    self.assertTrue('smiles' in cns)
+    self.assertIn('smiles', cns)
     d = None
     conn.KillCursor()
     conn = None
@@ -463,7 +463,7 @@ class TestCase(unittest.TestCase):
     d = conn.GetData('molecules', fields='*')
     self.assertEqual(len(d), 10)
     cns = [x.lower() for x in d.GetColumnNames()]
-    self.assertTrue('smiles' in cns)
+    self.assertIn('smiles', cns)
     d = None
     conn.KillCursor()
     conn = None
@@ -520,7 +520,7 @@ class TestCase(unittest.TestCase):
         self.assertTrue(float(line[i + 1]) <= lastVal)
         lastVal = float(line[i + 1])
         i += 2
-      self.assertTrue(lbl in nbrs)
+      self.assertIn(lbl, nbrs)
       self.assertTrue(nbrs[lbl] == '1.000')
     os.unlink('testData/bzr/search.out')
 
