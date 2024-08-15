@@ -44,7 +44,7 @@ class TestCase(unittest.TestCase):
     mol2 = Chem.MolFromMolFile(file2)
 
     rmsd = rdMolAlign.AlignMol(mol2, mol1)
-    self.assertTrue(feq(rmsd, 0.6578))
+    self.assertAlmostEqual(rmsd, 0.6578, delta=1e-4)
 
     file3 = os.path.join(RDConfig.RDBaseDir, 'Code', 'GraphMol', 'MolAlign', 'test_data',
                          '1oir_trans.mol')
