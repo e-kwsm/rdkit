@@ -35,19 +35,19 @@ class TestCase(unittest.TestCase):
 
     conn = DbConnect('testData/bzr/Compounds.sqlt')
     d = conn.GetData('molecules', fields='count(*)')
-    self.assertTrue(d[0][0] == 10)
+    self.assertEqual(d[0][0], 10)
 
     conn = DbConnect('testData/bzr/AtomPairs.sqlt')
     d = conn.GetData('atompairs', fields='count(*)')
-    self.assertTrue(d[0][0] == 10)
+    self.assertEqual(d[0][0], 10)
 
     conn = DbConnect('testData/bzr/Descriptors.sqlt')
     d = conn.GetData('descriptors_v1', fields='count(*)')
-    self.assertTrue(d[0][0] == 10)
+    self.assertEqual(d[0][0], 10)
 
     conn = DbConnect('testData/bzr/Fingerprints.sqlt')
     d = conn.GetData('rdkitfps', fields='count(*)')
-    self.assertTrue(d[0][0] == 10)
+    self.assertEqual(d[0][0], 10)
 
     p = subprocess.Popen((sys.executable, 'CreateDb.py', '--dbDir=testData/bzr', '--molFormat=sdf',
                           '--doGobbi2D', 'testData/bzr.sdf'))
@@ -62,19 +62,19 @@ class TestCase(unittest.TestCase):
 
     conn = DbConnect('testData/bzr/Compounds.sqlt')
     d = conn.GetData('molecules', fields='count(*)')
-    self.assertTrue(d[0][0] == 163)
+    self.assertEqual(d[0][0], 163)
 
     conn = DbConnect('testData/bzr/AtomPairs.sqlt')
     d = conn.GetData('atompairs', fields='count(*)')
-    self.assertTrue(d[0][0] == 163)
+    self.assertEqual(d[0][0], 163)
 
     conn = DbConnect('testData/bzr/Descriptors.sqlt')
     d = conn.GetData('descriptors_v1', fields='count(*)')
-    self.assertTrue(d[0][0] == 163)
+    self.assertEqual(d[0][0], 163)
 
     conn = DbConnect('testData/bzr/Fingerprints.sqlt')
     d = conn.GetData('rdkitfps', fields='count(*)')
-    self.assertTrue(d[0][0] == 163)
+    self.assertEqual(d[0][0], 163)
 
   def test2_1SearchFPs(self):
     self.assertTrue(os.path.exists('testData/bzr/Compounds.sqlt'))
@@ -92,7 +92,7 @@ class TestCase(unittest.TestCase):
     with open('testData/bzr/search.out', 'r') as inF:
       lines = inF.readlines()
 
-    self.assertTrue(len(lines) == 163)
+    self.assertEqual(len(lines), 163)
     splitLs = [x.strip().split(',') for x in lines]
     for line in splitLs:
       lbl = line[0]
@@ -105,7 +105,7 @@ class TestCase(unittest.TestCase):
         lastVal = float(line[i + 1])
         i += 2
       self.assertTrue(lbl in nbrs)
-      self.assertTrue(nbrs[lbl] == '1.000', nbrs[lbl])
+      self.assertEqual(nbrs[lbl], '1.000')
     os.unlink('testData/bzr/search.out')
 
   def test2_2SearchAtomPairs(self):
@@ -125,7 +125,7 @@ class TestCase(unittest.TestCase):
     with open('testData/bzr/search.out', 'r') as inF:
       lines = inF.readlines()
 
-    self.assertTrue(len(lines) == 163)
+    self.assertEqual(len(lines), 163)
     splitLs = [x.strip().split(',') for x in lines]
     for line in splitLs:
       lbl = line[0]
@@ -138,7 +138,7 @@ class TestCase(unittest.TestCase):
         lastVal = float(line[i + 1])
         i += 2
       self.assertTrue(lbl in nbrs)
-      self.assertTrue(nbrs[lbl] == '1.000')
+      self.assertEqual(nbrs[lbl], '1.000')
     os.unlink('testData/bzr/search.out')
 
   def test2_3SearchTorsions(self):
@@ -157,7 +157,7 @@ class TestCase(unittest.TestCase):
     self.assertTrue(os.path.exists('testData/bzr/search.out'))
     with open('testData/bzr/search.out', 'r') as inF:
       lines = inF.readlines()
-    self.assertTrue(len(lines) == 163)
+    self.assertEqual(len(lines), 163)
     splitLs = [x.strip().split(',') for x in lines]
     for line in splitLs:
       lbl = line[0]
@@ -170,7 +170,7 @@ class TestCase(unittest.TestCase):
         lastVal = float(line[i + 1])
         i += 2
       self.assertTrue(lbl in nbrs)
-      self.assertTrue(nbrs[lbl] == '1.000')
+      self.assertEqual(nbrs[lbl], '1.000')
     os.unlink('testData/bzr/search.out')
 
   def test2_4SearchProps(self):
@@ -189,7 +189,7 @@ class TestCase(unittest.TestCase):
     self.assertTrue(os.path.exists('testData/bzr/search.out'))
     with open('testData/bzr/search.out', 'r') as inF:
       lines = inF.readlines()
-    self.assertTrue(len(lines) == 30)
+    self.assertEqual(len(lines), 30)
     os.unlink('testData/bzr/search.out')
 
     p = subprocess.Popen((sys.executable, 'SearchDb.py', '--dbDir=testData/bzr',
@@ -202,7 +202,7 @@ class TestCase(unittest.TestCase):
     self.assertTrue(os.path.exists('testData/bzr/search.out'))
     with open('testData/bzr/search.out', 'r') as inF:
       lines = inF.readlines()
-    self.assertTrue(len(lines) == 30)
+    self.assertEqual(len(lines), 30)
     os.unlink('testData/bzr/search.out')
 
   def test2_5SearchSmarts(self):
@@ -318,7 +318,7 @@ class TestCase(unittest.TestCase):
     self.assertTrue(os.path.exists('testData/bzr/search.out'))
     with open('testData/bzr/search.out', 'r') as inF:
       lines = inF.readlines()
-    self.assertTrue(len(lines) == 163)
+    self.assertEqual(len(lines), 163)
     splitLs = [x.strip().split(',') for x in lines]
     for line in splitLs:
       lbl = line[0]
@@ -331,7 +331,7 @@ class TestCase(unittest.TestCase):
         lastVal = float(line[i + 1])
         i += 2
       self.assertTrue(lbl in nbrs)
-      self.assertTrue(nbrs[lbl] == '1.000')
+      self.assertEqual(nbrs[lbl], '1.000')
     self.assertEqual(splitLs[0][0], 'Adinazolam')
     self.assertEqual(splitLs[0][3], 'alpha-hydroxytriazolam')
     self.assertEqual(splitLs[0][4], '0.631')
@@ -354,7 +354,7 @@ class TestCase(unittest.TestCase):
     with open('testData/bzr/search.out', 'r') as inF:
       lines = inF.readlines()
 
-    self.assertTrue(len(lines) == 1)
+    self.assertEqual(len(lines), 1)
     splitL = lines[0].strip().split(',')
     splitL.pop(0)
     for i in range(0, len(splitL), 2):
@@ -413,9 +413,9 @@ class TestCase(unittest.TestCase):
 
     conn = DbConnect('testData/bzr/Compounds.sqlt')
     d = conn.GetData('molecules', fields='count(*)')
-    self.assertTrue(d[0][0] == 10)
+    self.assertEqual(d[0][0], 10)
     d = conn.GetData('molecules', fields='*')
-    self.assertTrue(len(d) == 10)
+    self.assertEqual(len(d), 10)
     cns = [x.lower() for x in d.GetColumnNames()]
     self.assertFalse('smiles' in cns)
     d = None
@@ -521,7 +521,7 @@ class TestCase(unittest.TestCase):
         lastVal = float(line[i + 1])
         i += 2
       self.assertTrue(lbl in nbrs)
-      self.assertTrue(nbrs[lbl] == '1.000')
+      self.assertEqual(nbrs[lbl], '1.000')
     os.unlink('testData/bzr/search.out')
 
   def test6Update(self):
