@@ -562,7 +562,8 @@ class TestCase(unittest.TestCase):
     rmsdCopy, bestTrans, bestMatch = rdMolAlign.GetBestAlignmentTransform(prbCopy, ref, params)
     self.assertAlmostEqual(refRmsd, rmsdCopy, 3)
     self.assertEqual(len(bestMatch), ref.GetNumAtoms())
-    self.assertTrue(all(len(tup) == 2 for tup in bestMatch))
+    for tup in bestMatch:
+      self.assertEqual(len(tup), 2)
 
   def test18GetBestRMSAndConjugatedGroups(self):
     mol = Chem.MolFromSmiles(
