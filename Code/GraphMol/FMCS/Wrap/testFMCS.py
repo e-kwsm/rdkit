@@ -194,16 +194,16 @@ class ProgressCallback(rdFMCS.MCSProgress):
 
   def __call__(self, stat, params):
     self.callCount += 1
-    self.parent.assertTrue(isinstance(stat, rdFMCS.MCSProgressData))
+    self.parent.assertIsInstance(stat, rdFMCS.MCSProgressData)
     self.parent.assertTrue(hasattr(stat, "numAtoms"))
-    self.parent.assertTrue(isinstance(stat.numAtoms, int))
+    self.parent.assertIsInstance(stat.numAtoms, int)
     self.parent.assertTrue(hasattr(stat, "numBonds"))
-    self.parent.assertTrue(isinstance(stat.numBonds, int))
+    self.parent.assertIsInstance(stat.numBonds, int)
     self.parent.assertTrue(hasattr(stat, "seedProcessed"))
-    self.parent.assertTrue(isinstance(stat.seedProcessed, int))
-    self.parent.assertTrue(isinstance(params, rdFMCS.MCSParameters))
-    self.parent.assertTrue(isinstance(params.AtomTyper, rdFMCS.MCSAtomCompare))
-    self.parent.assertTrue(isinstance(params.BondTyper, rdFMCS.BondCompare))
+    self.parent.assertIsInstance(stat.seedProcessed, int)
+    self.parent.assertIsInstance(params, rdFMCS.MCSParameters)
+    self.parent.assertIsInstance(params.AtomTyper, rdFMCS.MCSAtomCompare)
+    self.parent.assertIsInstance(params.BondTyper, rdFMCS.BondCompare)
     self.parent.assertEqual(params.ProgressCallback, self)
     return (self.callCount < 3)
 
@@ -223,13 +223,13 @@ class Test21AcceptanceCallback(rdFMCS.MCSAcceptance):
     self.parent = parent
 
   def __call__(self, query, target, atom_idx_match, bond_idx_match, params):
-    self.parent.assertTrue(isinstance(query, Chem.Mol))
-    self.parent.assertTrue(isinstance(target, Chem.Mol))
+    self.parent.assertIsInstance(query, Chem.Mol)
+    self.parent.assertIsInstance(target, Chem.Mol)
     self.parent.assertGreater(len(atom_idx_match), 0)
     self.parent.assertTrue(len(atom_idx_match) == 1 or len(bond_idx_match) > 0)
-    self.parent.assertTrue(isinstance(params, rdFMCS.MCSParameters))
-    self.parent.assertTrue(isinstance(params.AtomTyper, rdFMCS.MCSAtomCompare))
-    self.parent.assertTrue(isinstance(params.BondTyper, rdFMCS.BondCompare))
+    self.parent.assertIsInstance(params, rdFMCS.MCSParameters)
+    self.parent.assertIsInstance(params.AtomTyper, rdFMCS.MCSAtomCompare)
+    self.parent.assertIsInstance(params.BondTyper, rdFMCS.BondCompare)
     self.parent.assertEqual(params.ShouldAcceptMCS, self)
     for query_atom_idx, target_atom_idx in atom_idx_match:
       if query.GetAtomWithIdx(query_atom_idx).GetAtomicNum() == 0:
@@ -271,16 +271,16 @@ class Test21ProgressCallback(rdFMCS.MCSProgress):
 
   def __call__(self, stat, params):
     self.callCount += 1
-    self.parent.assertTrue(isinstance(stat, rdFMCS.MCSProgressData))
+    self.parent.assertIsInstance(stat, rdFMCS.MCSProgressData)
     self.parent.assertTrue(hasattr(stat, "numAtoms"))
-    self.parent.assertTrue(isinstance(stat.numAtoms, int))
+    self.parent.assertIsInstance(stat.numAtoms, int)
     self.parent.assertTrue(hasattr(stat, "numBonds"))
-    self.parent.assertTrue(isinstance(stat.numBonds, int))
+    self.parent.assertIsInstance(stat.numBonds, int)
     self.parent.assertTrue(hasattr(stat, "seedProcessed"))
-    self.parent.assertTrue(isinstance(stat.seedProcessed, int))
-    self.parent.assertTrue(isinstance(params, rdFMCS.MCSParameters))
-    self.parent.assertTrue(isinstance(params.AtomTyper, rdFMCS.MCSAtomCompare))
-    self.parent.assertTrue(isinstance(params.BondTyper, rdFMCS.BondCompare))
+    self.parent.assertIsInstance(stat.seedProcessed, int)
+    self.parent.assertIsInstance(params, rdFMCS.MCSParameters)
+    self.parent.assertIsInstance(params.AtomTyper, rdFMCS.MCSAtomCompare)
+    self.parent.assertIsInstance(params.BondTyper, rdFMCS.BondCompare)
     self.parent.assertEqual(params.ProgressCallback, self)
     return True
 
@@ -302,13 +302,13 @@ class Test21FinalMatchCheckCallback(rdFMCS.MCSFinalMatchCheck):
 
   def __call__(self, mol1, mol2, atom_idx_match, bond_idx_match, params):
     self.callCount += 1
-    self.parent.assertTrue(isinstance(mol1, Chem.Mol))
-    self.parent.assertTrue(isinstance(mol2, Chem.Mol))
+    self.parent.assertIsInstance(mol1, Chem.Mol)
+    self.parent.assertIsInstance(mol2, Chem.Mol)
     self.parent.assertGreater(len(atom_idx_match), 0)
     self.parent.assertGreater(len(bond_idx_match), 0)
-    self.parent.assertTrue(isinstance(params, rdFMCS.MCSParameters))
-    self.parent.assertTrue(isinstance(params.AtomTyper, rdFMCS.MCSAtomCompare))
-    self.parent.assertTrue(isinstance(params.BondTyper, rdFMCS.BondCompare))
+    self.parent.assertIsInstance(params, rdFMCS.MCSParameters)
+    self.parent.assertIsInstance(params.AtomTyper, rdFMCS.MCSAtomCompare)
+    self.parent.assertIsInstance(params.BondTyper, rdFMCS.BondCompare)
     self.parent.assertEqual(params.FinalMatchChecker, self)
     return True
 
