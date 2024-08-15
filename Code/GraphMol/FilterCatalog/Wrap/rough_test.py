@@ -540,7 +540,7 @@ class TestCase(unittest.TestCase):
     descriptions = ["hzone_phenol_A(479)", "cyano_imine_B(17)", "keto_keto_gamma(5)"]
 
     for i, res in enumerate(results):
-      self.assertTrue(len(res) > 0)
+      self.assertGreater(len(res), 0)
       self.assertEqual(res[0].GetDescription(), descriptions[i])
 
     # Test with some bad input

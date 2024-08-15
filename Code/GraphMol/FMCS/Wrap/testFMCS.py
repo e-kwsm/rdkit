@@ -422,7 +422,7 @@ class Common:
     for m in ms:
       if m.HasSubstructMatch(qm):
         nHits += 1
-    self.assertTrue(nHits >= int(0.8 * len(smis)))
+    self.assertGreaterEqual(nHits, int(0.8 * len(smis)))
     # smarts too hard to canonicalize this
     # self.assertEqual(mcs.smartsString,'[#6]1:[#6]:[#6]:[#6](:[#6]:[#6]:1)-[#6](-[#8]-[#6]-[#6]-[#7]-[#6]-[#6])-[#6]2:[#6]:[#6]:[#6]:[#6]:[#6]:2')
 
