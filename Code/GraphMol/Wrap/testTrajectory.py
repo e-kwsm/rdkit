@@ -81,29 +81,17 @@ class TestCase(unittest.TestCase):
     for i in range(ns):
       traj.AddSnapshot(Snapshot(c, float(i)))
     self.assertEqual(len(traj), ns)
-    e = False
-    try:
+    with self.assertRaises(Exception):
       traj.GetSnapshot(ns)
-    except Exception:
-      e = True
-    self.assertTrue(e)
-    e = False
-    try:
+    with self.assertRaises(Exception):
       traj.GetSnapshot(0).GetPoint2D(np)
-    except Exception:
-      e = True
-    self.assertTrue(e)
     for i in range(np):
       self.assertAlmostEqual(traj.GetSnapshot(0).GetPoint3D(i).x, float(i * dim))
       self.assertAlmostEqual(traj.GetSnapshot(0).GetPoint3D(i).y, float(i * dim + 1))
       self.assertAlmostEqual(traj.GetSnapshot(0).GetPoint3D(i).z, float(i * dim + 2))
       if (not i):
-        e = False
-        try:
+        with self.assertRaises(Exception):
           traj.GetSnapshot(0).GetPoint2D(i)
-        except Exception:
-          e = True
-        self.assertTrue(e)
     for i in range(ns):
       self.assertAlmostEqual(traj.GetSnapshot(i).GetEnergy(), float(i))
     traj.RemoveSnapshot(0)
@@ -436,12 +424,8 @@ class TestCase(unittest.TestCase):
       self.assertAlmostEqual(mol.GetConformer(i).GetAtomPosition(0).x, 0.1941767)
       self.assertAlmostEqual(mol.GetConformer(i).GetAtomPosition(2).z, -0.4088006)
     mol.RemoveAllConformers()
-    e = False
-    try:
+    with self.assertRaises(Exception):
       traj.AddConformersToMol(mol, 1)
-    except Exception:
-      e = True
-    self.assertTrue(e)
     self.assertEqual(mol.GetNumConformers(), 0)
     fName = os.path.join(rdbase, 'Code', 'GraphMol', 'test_data', 'water_coords2.trx')
     traj = Trajectory(3, mol.GetNumAtoms())
@@ -469,12 +453,8 @@ class TestCase(unittest.TestCase):
       self.assertAlmostEqual(mol.GetConformer(i).GetAtomPosition(0).x, 1.941767)
       self.assertAlmostEqual(mol.GetConformer(i).GetAtomPosition(2).z, -4.088006)
     mol.RemoveAllConformers()
-    e = False
-    try:
+    with self.assertRaises(Exception):
       traj.AddConformersToMol(mol, 1)
-    except Exception:
-      e = True
-    self.assertTrue(e)
     self.assertEqual(mol.GetNumConformers(), 0)
     fName = os.path.join(rdbase, 'Code', 'GraphMol', 'test_data', 'water_coords2.trc')
     traj = Trajectory(3, mol.GetNumAtoms())
