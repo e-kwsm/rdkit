@@ -6113,7 +6113,7 @@ H      0.635000    0.635000    0.635000
     except Chem.AtomValenceException as exc:
       self.assertEqual(exc.cause.GetAtomIdx(), 1)
     else:
-      self.assertFalse(True)
+      self.fail()
 
     try:
       Chem.SanitizeMol(Chem.MolFromSmiles('c1cc1', sanitize=False))
