@@ -493,7 +493,7 @@ M  END
       for k, v in FilterCatalog.GetFlattenedFunctionalGroupHierarchy().items()
     }
 
-    self.assertTrue('CarboxylicAcid' in FilterCatalog.GetFlattenedFunctionalGroupHierarchy())
+    self.assertIn('CarboxylicAcid', FilterCatalog.GetFlattenedFunctionalGroupHierarchy())
     rxn.AddRecursiveQueriesToReaction(querydefs, 'query')
     q = rxn.GetReactantTemplate(0)
     m = Chem.MolFromSmiles('C(=O)[O-].N')
@@ -1147,7 +1147,7 @@ M  END
     rxn = rdChemReactions.ReactionFromMrvFile(fn2)
     self.assertIsNotNone(rxn)
     rxnb = rdChemReactions.ReactionToMrvBlock(rxn)
-    self.assertTrue('<reaction>' in rxnb)
+    self.assertIn('<reaction>', rxnb)
 
     fName = tempfile.NamedTemporaryFile(suffix='.mrv').name
     self.assertFalse(os.path.exists(fName))
