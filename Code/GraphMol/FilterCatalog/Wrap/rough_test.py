@@ -311,7 +311,7 @@ class TestCase(unittest.TestCase):
     func = MyFilterMatcher("FilterMatcher")
     self.assertEqual(func.GetName(), "FilterMatcher")
     mol = Chem.MolFromSmiles("c1ccccc1")
-    self.assertEqual(func.HasMatch(mol), True)
+    self.assertTrue(func.HasMatch(mol))
 
     or_match = FilterMatchOps.Or(func, func)
     self.assertEqual([[tuple(x) for x in filtermatch.atomPairs]
@@ -319,11 +319,11 @@ class TestCase(unittest.TestCase):
 
     not_match = FilterMatchOps.Not(func)
     print(not_match)
-    self.assertEqual(not_match.HasMatch(mol), False)
+    self.assertFalse(not_match.HasMatch(mol))
     # test memory
     del func
 
-    self.assertEqual(not_match.HasMatch(mol), False)
+    self.assertFalse(not_match.HasMatch(mol))
     self.assertEqual([[tuple(x) for x in filtermatch.atomPairs]
                        for filtermatch in not_match.GetMatches(mol)], [])
 
