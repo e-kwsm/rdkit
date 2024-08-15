@@ -27,17 +27,17 @@ class TestCase(unittest.TestCase):
     cfac = ChemicalFeatures.BuildFeatureFactory(
       os.path.join(RDConfig.RDBaseDir, 'Code', 'GraphMol', 'MolChemicalFeatures', 'test_data',
                    'featDef.txt'))
-    self.assertTrue(cfac.GetNumFeatureDefs() == 2)
+    self.assertEqual(cfac.GetNumFeatureDefs(), 2)
 
     fNames = cfac.GetFeatureFamilies()
-    self.assertTrue(len(fNames) == 2)
-    self.assertTrue(fNames[0] == 'HBondDonor')
-    self.assertTrue(fNames[1] == 'HBondAcceptor')
+    self.assertEqual(len(fNames), 2)
+    self.assertEqual(fNames[0], 'HBondDonor')
+    self.assertEqual(fNames[1], 'HBondAcceptor')
 
     mol = Chem.MolFromSmiles("COCN")
     rdDistGeom.EmbedMolecule(mol, 30, 100, useExpTorsionAnglePrefs=False, useBasicKnowledge=False)
 
-    self.assertTrue(cfac.GetNumMolFeatures(mol) == 3)
+    self.assertEqual(cfac.GetNumMolFeatures(mol), 3)
     for i in range(cfac.GetNumMolFeatures(mol)):
       self.assertTrue(cfac.GetMolFeature(mol, i))
     # check that the recompute argument works:
@@ -47,7 +47,7 @@ class TestCase(unittest.TestCase):
     self.assertRaises(IndexError, lambda: cfac.GetMolFeature(mol, 3))
 
     feats = cfac.GetFeaturesForMol(mol)
-    self.assertTrue(len(feats) == 3)
+    self.assertEqual(len(feats), 3)
     fTypes = ['HBondDonor', 'HBondAcceptor', 'HBondAcceptor']
 
     positions = [[1.3041, -0.6079, 0.0924], [-0.7066, 0.5994, 0.1824], [1.3041, -0.6079, 0.0924]]
@@ -68,27 +68,27 @@ class TestCase(unittest.TestCase):
     cfac = ChemicalFeatures.BuildFeatureFactory(
       os.path.join(RDConfig.RDBaseDir, 'Code', 'GraphMol', 'MolChemicalFeatures', 'test_data',
                    'featDef.txt'))
-    self.assertTrue(cfac.GetNumFeatureDefs() == 2)
+    self.assertEqual(cfac.GetNumFeatureDefs(), 2)
 
     mol = Chem.MolFromSmiles("COCN")
     rdDistGeom.EmbedMolecule(mol)
 
-    self.assertTrue(cfac.GetNumMolFeatures(mol, includeOnly="HBondAcceptor") == 2)
-    self.assertTrue(cfac.GetNumMolFeatures(mol, includeOnly="HBondDonor") == 1)
-    self.assertTrue(cfac.GetNumMolFeatures(mol, includeOnly="Bogus") == 0)
+    self.assertEqual(cfac.GetNumMolFeatures(mol, includeOnly="HBondAcceptor"), 2)
+    self.assertEqual(cfac.GetNumMolFeatures(mol, includeOnly="HBondDonor"), 1)
+    self.assertEqual(cfac.GetNumMolFeatures(mol, includeOnly="Bogus"), 0)
 
     self.assertRaises(IndexError, lambda: cfac.GetMolFeature(mol, 1, includeOnly="HBondDonor"))
     self.assertRaises(IndexError,
                       lambda: cfac.GetMolFeature(mol, 2, includeOnly="HBondAcceptor"))
     f = cfac.GetMolFeature(mol, 0, includeOnly="HBondDonor")
-    self.assertTrue(f.GetFamily() == 'HBondDonor')
+    self.assertEqual(f.GetFamily(), 'HBondDonor')
 
     feats = cfac.GetFeaturesForMol(mol, includeOnly="HBondAcceptor")
-    self.assertTrue(len(feats) == 2)
+    self.assertEqual(len(feats), 2)
     feats = cfac.GetFeaturesForMol(mol, includeOnly="HBondDonor")
-    self.assertTrue(len(feats) == 1)
+    self.assertEqual(len(feats), 1)
     feats = cfac.GetFeaturesForMol(mol, includeOnly="Bogus")
-    self.assertTrue(len(feats) == 0)
+    self.assertEqual(len(feats), 0)
 
   def testStringParse(self):
     fdefBlock = \
@@ -102,7 +102,7 @@ DefineFeature HAcceptor1 [N,O;H0]
 EndFeature
 """
     cfac = ChemicalFeatures.BuildFeatureFactoryFromString(fdefBlock)
-    self.assertTrue(cfac.GetNumFeatureDefs() == 2)
+    self.assertEqual(cfac.GetNumFeatureDefs(), 2)
 
   def testStringParse2(self):
     fdefBlock = \
@@ -116,7 +116,7 @@ DefineFeature HAcceptor1 [N,O;H0]\r
 EndFeature\r
 """
     cfac = ChemicalFeatures.BuildFeatureFactoryFromString(fdefBlock)
-    self.assertTrue(cfac.GetNumFeatureDefs() == 2)
+    self.assertEqual(cfac.GetNumFeatureDefs(), 2)
 
   def testParseErrorHandling(self):
     fdefBlock = \
@@ -150,18 +150,18 @@ DefineFeature Arom1 a1aaaaa1
 EndFeature
 """
     cfac = ChemicalFeatures.BuildFeatureFactoryFromString(fdefBlock)
-    self.assertTrue(cfac.GetNumFeatureDefs() == 2)
+    self.assertEqual(cfac.GetNumFeatureDefs(), 2)
     mol = Chem.MolFromSmiles('n1ccccc1')
     feats = cfac.GetFeaturesForMol(mol)
-    self.assertTrue(len(feats) == 2)
+    self.assertEqual(len(feats), 2)
     m = ChemicalFeatures.GetAtomMatch(feats)
     self.assertFalse(m)
 
     mol = Chem.MolFromSmiles('c1ccccc1N')
     feats = cfac.GetFeaturesForMol(mol)
-    self.assertTrue(len(feats) == 2)
+    self.assertEqual(len(feats), 2)
     m = ChemicalFeatures.GetAtomMatch(feats)
-    self.assertTrue(len(m) == 2)
+    self.assertEqual(len(m), 2)
 
   def testIssue231(self):
     fdefs = """
