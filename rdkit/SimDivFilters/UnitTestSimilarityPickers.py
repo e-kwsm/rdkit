@@ -59,7 +59,7 @@ class TestCase(unittest.TestCase):
     self.assertNotEqual(picker._picks, None)
     # or by addressing the elements
     picker = SimilarityPickers.TopNOverallPicker(numToPick=2, probeFps=[probeFp], dataSet=probefps)
-    self.assertEqual(picker._picks, None)
+    self.assertIsNone(picker._picks)
     fp, score = picker[0]
     self.assertEqual(fp._id, 'ether-1')
     self.assertEqual(score, 1.0)
@@ -73,12 +73,12 @@ class TestCase(unittest.TestCase):
 
     # The picker is initialized lazy; calculation is triggered either by len
     picker = SimilarityPickers.SpreadPicker(numToPick=2, probeFps=[probeFp], dataSet=probefps)
-    self.assertEqual(picker._picks, None)
+    self.assertIsNone(picker._picks)
     self.assertEqual(len(picker), 2)
 
     # or by addressing the elements
     picker = SimilarityPickers.SpreadPicker(numToPick=2, probeFps=[probeFp], dataSet=probefps)
-    self.assertEqual(picker._picks, None)
+    self.assertIsNone(picker._picks)
     fp, score = picker[0]
     self.assertEqual(fp._id, 'ether-1')
     self.assertEqual(score, 1.0)
