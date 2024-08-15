@@ -689,11 +689,9 @@ class TestCase(unittest.TestCase):
     self.assertEqual(list(bcut3), list(bcut2))
 
     props.append(0.0)
-    try:
+    with self.assertRaisesRegex(RuntimeError, "tom_props.size() == num_atoms",
+                                msg="Failed to handle bad prop size"):
       bcut2 = rdMD.BCUT2D(m, props)
-      self.assertTrue(0, "Failed to handle bad prop size")
-    except RuntimeError as e:
-      self.assertTrue("tom_props.size() == num_atoms" in str(e))
 
     try:
       bcut2 = rdMD.BCUT2D(m, "property not existing on the atom")
@@ -705,9 +703,10 @@ class TestCase(unittest.TestCase):
       atom.SetProp("bad_prop", "not a double")
       break
 
-    try:
+    with self.assertRaisesRegex(RuntimeError, r"[B,b]ad any[\ ,_]cast",
+                                msg="Failed to handle bad prop (not a double)"):
       bcut2 = rdMD.BCUT2D(m, "bad_prop")
-      self.assertTrue(0, "Failed to handle bad prop (not a double)")
+      self.fail("Failed to handle bad prop (not a double)")
     except RuntimeError as e:
       self.assertTrue(re.search(r"[B,b]ad any[\ ,_]cast", str(e)))
 
