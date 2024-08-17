@@ -67,7 +67,8 @@ bool HillCompare(const std::pair<unsigned int, std::string> &v1,
       return true;
     }
     return nCompare;
-  } else if (v2.second == "C") {
+  }
+  if (v2.second == "C") {
     return false;
   }
 
@@ -76,28 +77,30 @@ bool HillCompare(const std::pair<unsigned int, std::string> &v1,
       return true;
     }
     return nCompare;
-  } else if (v2.second == "H") {
+  }
+  if (v2.second == "H") {
     return false;
   }
 
   if (v1.second == "D") {
     return true;
-  } else if (v2.second == "D") {
+  }
+  if (v2.second == "D") {
     return false;
   }
 
   if (v1.second == "T") {
     return true;
-  } else if (v2.second == "T") {
+  }
+  if (v2.second == "T") {
     return false;
   }
 
   // finally, just compare the symbols and the isotopes:
   if (v1 != v2) {
     return v1 < v2;
-  } else {
-    return nCompare;
   }
+  return nCompare;
 }
 }  // namespace
 
