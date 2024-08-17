@@ -14,10 +14,8 @@
 #include <RDGeneral/hash/hash.hpp>
 #include <boost/dynamic_bitset.hpp>
 
-#include <GraphMol/RDKitBase.h>
 #include <GraphMol/SmilesParse/SmilesParse.h>
 #include <GraphMol/Substruct/SubstructMatch.h>
-#include <boost/dynamic_bitset.hpp>
 #include <algorithm>
 #include <RDGeneral/BoostStartInclude.h>
 #include <boost/flyweight.hpp>
@@ -30,10 +28,8 @@
 #include <DataStructs/BitOps.h>
 #include <GraphMol/Subgraphs/SubgraphUtils.h>
 #include <RDGeneral/Invariant.h>
-#include <RDGeneral/BoostStartInclude.h>
 #include <boost/random.hpp>
 #include <cstdint>
-#include <RDGeneral/BoostEndInclude.h>
 #include <climits>
 #include <RDGeneral/types.h>
 
