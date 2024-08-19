@@ -618,7 +618,7 @@ Query<int, T const *, true> *buildBaseQuery(std::istream &ss, T const *owner,
         throw MolPicklerException(
             "Bad pickle format: QUERY_VALUE tag not found.");
       }
-      std::string propName = "";
+      std::string propName;
       streamRead(ss, propName, version);
       res = makeHasPropQuery<T>(propName);
     } break;
