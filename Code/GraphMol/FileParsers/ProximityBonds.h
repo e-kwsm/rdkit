@@ -10,9 +10,11 @@
 #include <RDGeneral/export.h>
 #ifndef _RD_PROXIMITYBONDS_H_
 #define _RD_PROXIMITYBONDS_H_
-#include <GraphMol/RWMol.h>
 
 namespace RDKit {
+class Atom;
+class RWMol;
+
 static const unsigned int ctdIGNORE_H_H_CONTACTS = 0x1;
 static const unsigned int ctdQUICKREMOVE_H_H_CONTACTS = 0x2;
 // static const unsigned int ctdALL_FLAGS = 0xFFFFFFFF;
