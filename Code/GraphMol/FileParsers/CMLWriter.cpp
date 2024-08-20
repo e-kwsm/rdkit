@@ -21,6 +21,7 @@
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/xml_parser.hpp>
 #include <RDGeneral/Invariant.h>
+#include <GraphMol/ROMol.h>
 
 #if __cplusplus >= 201402L && __has_cpp_attribute(fallthrough)
 #define FALLTHROUGH [[fallthrough]]
