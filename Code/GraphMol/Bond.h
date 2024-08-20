@@ -365,7 +365,7 @@ class RDKIT_GRAPHMOL_EXPORT Bond : public RDProps {
     <b>Notes:</b>
       - requires an owning molecule
   */
-  void updatePropertyCache(bool strict = true) { (void)strict; }
+  void updatePropertyCache([[maybe_unused]] bool strict = true) {}
 
  protected:
   //! sets our owning molecule
