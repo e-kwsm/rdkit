@@ -26,9 +26,8 @@ class Writer;
 }  // namespace schrodinger
 #endif  // RDK_BUILD_MAEPARSER_SUPPORT
 
-#include <GraphMol/ROMol.h>
-
 namespace RDKit {
+class ROMol;
 
 static int defaultConfId = -1;
 
