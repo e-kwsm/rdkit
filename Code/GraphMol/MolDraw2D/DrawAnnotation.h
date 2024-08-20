@@ -30,9 +30,10 @@ class DrawAnnotation {
  public:
   ~DrawAnnotation() = default;
 
-  DrawAnnotation(std::string note, const TextAlignType &align, std::string cls,
-                 double relFontScale, const Point2D &pos,
-                 const DrawColour &colour, DrawText &textDrawer);
+  DrawAnnotation(const std::string &note, const TextAlignType &align,
+                 const std::string &cls, double relFontScale,
+                 const Point2D &pos, const DrawColour &colour,
+                 DrawText &textDrawer);
   DrawAnnotation(const DrawAnnotation &) = delete;
   DrawAnnotation(DrawAnnotation &&) = delete;
   DrawAnnotation &operator=(const DrawAnnotation &) = delete;
