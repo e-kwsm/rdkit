@@ -19,7 +19,6 @@
 #include <memory>
 #include <vector>
 #include <fstream>
-#include <GraphMol/ROMol.h>
 #include <RDGeneral/BadFileException.h>
 #include "FileParsers.h"
 #include <GraphMol/SmilesParse/SmilesParse.h>
