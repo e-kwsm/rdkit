@@ -50,7 +50,7 @@ class DrawMolMCH : public DrawMol {
    */
   DrawMolMCH(const ROMol &mol, const std::string &legend, int width, int height,
              MolDrawOptions &drawOptions, DrawText &textDrawer,
-             std::map<int, std::vector<DrawColour>> highlight_atom_map,
+             const std::map<int, std::vector<DrawColour>> &highlight_atom_map,
              const std::map<int, std::vector<DrawColour>> &highlight_bond_map,
              const std::map<int, double> &highlight_radii,
              const std::map<int, int> &highlight_linewidth_multipliers,
