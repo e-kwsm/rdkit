@@ -24,10 +24,10 @@ namespace RDKit {
 namespace MolDraw2D_detail {
 
 // ****************************************************************************
-AtomSymbol::AtomSymbol(std::string symbol, int atIdx, OrientType orient,
+AtomSymbol::AtomSymbol(const std::string &symbol, int atIdx, OrientType orient,
                        const Point2D &cds, const DrawColour &colour,
                        DrawText &textDrawer)
-    : symbol_(std::move(symbol)),
+    : symbol_(symbol),
       atIdx_(atIdx),
       orient_(orient),
       cds_(cds),
