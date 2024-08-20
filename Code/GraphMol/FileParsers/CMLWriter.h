@@ -7,9 +7,12 @@
 #include <boost/property_tree/ptree.hpp>
 
 #include <RDGeneral/export.h>
-#include <GraphMol/ROMol.h>
 
 namespace RDKit {
+class Bond;
+class Conformer;
+class ROMol;
+
 class RDKIT_FILEPARSERS_EXPORT CMLWriter {
  public:
   CMLWriter() = delete;
