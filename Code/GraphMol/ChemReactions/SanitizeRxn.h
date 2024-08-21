@@ -87,6 +87,7 @@ inline const MolOps::AdjustQueryParameters DefaultRxnAdjustParams() {
 // Default adjustment parameters for ChemDraw style matching of reagents
 //  -- deprecated - renamed MatchOnlyAtRgroupsAdjustParams
 //  -- this doesn't match sciquest style searching
+[[deprecated("please use MatchOnlyAtRgroupsAdjustParams instead")]]
 inline const MolOps::AdjustQueryParameters ChemDrawRxnAdjustParams() {
   BOOST_LOG(rdWarningLog)
       << " deprecated -- please use MatchOnlyAtRgroupsAdjustParams instead"
