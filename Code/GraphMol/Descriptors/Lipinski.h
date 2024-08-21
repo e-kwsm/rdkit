@@ -58,6 +58,7 @@ RDKIT_DESCRIPTORS_EXPORT unsigned int calcNumRotatableBonds(
   \param mol           the molecule of interest
   \param strict        if Strict == true, uses NumRotatableBondsOptions::Strict
 */
+[[deprecated("please use calcNumRotatableBonds(const ROMol&, int)")]]
 RDKIT_DESCRIPTORS_EXPORT unsigned int calcNumRotatableBonds(const ROMol &mol,
                                                             bool strict);
 
