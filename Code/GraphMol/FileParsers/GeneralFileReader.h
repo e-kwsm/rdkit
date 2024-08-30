@@ -98,8 +98,8 @@ inline void determineFormat(const std::string path, std::string &fileFormat,
 
 inline std::unique_ptr<FileParsers::MolSupplier> getSupplier(
     const std::string &path, const struct SupplierOptions &opt) {
-  std::string fileFormat = "";
-  std::string compressionFormat = "";
+  std::string fileFormat;
+  std::string compressionFormat;
   //! get the file and compression format form the path
   determineFormat(path, fileFormat, compressionFormat);
 
