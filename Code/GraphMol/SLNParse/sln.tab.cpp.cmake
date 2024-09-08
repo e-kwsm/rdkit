@@ -1325,7 +1325,7 @@ yysetstate:
 
     {
       yytype_int16 *yyss1 = yyss;
-      union yyalloc *yyptr =
+      auto *yyptr =
           (union yyalloc *)YYSTACK_ALLOC(YYSTACK_BYTES(yystacksize));
       if (!yyptr) { goto yyexhaustedlab; }
       YYSTACK_RELOCATE(yyss_alloc, yyss);
@@ -1877,9 +1877,9 @@ yyreduce:
                     "sequential bonds not allowed in non-queries");
         YYABORT;
       } else {
-        RDKit::QueryBond *b1 =
+        auto *b1 =
             static_cast<RDKit::QueryBond *>((yyvsp[-1].bond_T));
-        RDKit::QueryBond *b2 =
+        auto *b2 =
             static_cast<RDKit::QueryBond *>((yyvsp[0].bond_T));
         b1->expandQuery(b2->getQuery()->copy(), Queries::COMPOSITE_OR, true);
         delete b2;
@@ -2121,9 +2121,9 @@ yyreduce:
       RDKit::ROMol *mol = (*molList)[(yyvsp[0].mol_T)];
       molList->resize(sz - 1);
       SLNParse::finalizeQueryMol(mol, true);
-      RDKit::RecursiveStructureQuery *rsq =
+      auto *rsq =
           new RDKit::RecursiveStructureQuery(mol);
-      RDKit::ATOM_OR_QUERY *orq = new RDKit::ATOM_OR_QUERY();
+      auto *orq = new RDKit::ATOM_OR_QUERY();
       orq->addChild(RDKit::ATOM_OR_QUERY::CHILD_TYPE(rsq));
       (yyval.attrib_T) = new SLNParse::AttribType();
       (yyval.attrib_T)->first = "is";
@@ -2141,9 +2141,9 @@ yyreduce:
       RDKit::ROMol *mol = (*molList)[(yyvsp[0].mol_T)];
       molList->resize(sz - 1);
       SLNParse::finalizeQueryMol(mol, true);
-      RDKit::RecursiveStructureQuery *rsq =
+      auto *rsq =
           new RDKit::RecursiveStructureQuery(mol);
-      RDKit::ATOM_OR_QUERY *orq = new RDKit::ATOM_OR_QUERY();
+      auto *orq = new RDKit::ATOM_OR_QUERY();
       orq->addChild(RDKit::ATOM_OR_QUERY::CHILD_TYPE(rsq));
       orq->setNegation(true);
 
@@ -2163,10 +2163,10 @@ yyreduce:
       RDKit::ROMol *mol = (*molList)[(yyvsp[0].mol_T)];
       molList->resize(sz - 1);
       SLNParse::finalizeQueryMol(mol, true);
-      RDKit::RecursiveStructureQuery *rsq =
+      auto *rsq =
           new RDKit::RecursiveStructureQuery(mol);
 
-      RDKit::ATOM_OR_QUERY *orq = static_cast<RDKit::ATOM_OR_QUERY *>(
+      auto *orq = static_cast<RDKit::ATOM_OR_QUERY *>(
           (yyvsp[-2].attrib_T)->structQuery);
       orq->addChild(RDKit::ATOM_OR_QUERY::CHILD_TYPE(rsq));
       (yyval.attrib_T) = (yyvsp[-2].attrib_T);
