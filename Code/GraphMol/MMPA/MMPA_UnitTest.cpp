@@ -477,7 +477,7 @@ void test2() {
       } else {
         std::cout << res_idx + 1
                   << ": NOREF. Reference data NOT LISTED in test case."
-                  << res_str.str() << "\n";  //<< "FS: " << fs[j] <<"\n";
+                  << res_str.str() << "\n";  // << "FS: " << fs[j] <<"\n";
         has_failed = true;
       }
       std::cout.flush();
