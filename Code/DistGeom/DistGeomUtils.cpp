@@ -391,10 +391,11 @@ void add12Terms(ForceFields::ForceField *ff,
   a bit is set to one when the atom pair is the both end atoms of a 13
   contribution that is constrained here
   \param positions A vector of pointers to 3D Points to write out the resulting
-  coordinates \param forceConstant force constant with which to constrain bond
-  distances \param isImproperConstrained bit vector with length of total num
-  atoms of the molecule where index of every central atom of improper torsion is
-  set to one \param useBasicKnowledge whether to use basic knowledge terms
+  coordinates
+  \param forceConstant force constant with which to constrain bond distances
+  \param isImproperConstrained bit vector with length of total num atoms of the
+  molecule where index of every central atom of improper torsion is set to one
+  \param useBasicKnowledge whether to use basic knowledge terms
   \param mmat Bounds matrix from which 13 distances are used in case an angle
   is part of an improper torsion
   \param numAtoms number of atoms in molecule
