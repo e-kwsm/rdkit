@@ -253,7 +253,7 @@ std::string StringChromosomeBase<T, ChromosomePolicy>::geneInfo() const {
  * @return  the value on the chromosome at the position
  */
 template <typename T, typename ChromosomePolicy>
-T StrimosomeBase<T, ChromosomePolicy>::getValue(int pos) const {
+T StringChromosomeBase<T, ChromosomePolicy>::getValue(int pos) const {
   return string[pos];
 }
 
