@@ -79,7 +79,7 @@ class RDKIT_MOLSTANDARDIZE_EXPORT TautomerCatalogParams
 
   const std::vector<TautomerTransform> &getTransforms() const;
 
-  TautomerTransform getTransform(unsigned int fid) const;
+  const TautomerTransform getTransform(unsigned int fid) const;
 
   void toStream(std::ostream &) const override;
   std::string Serialize() const override;
