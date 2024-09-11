@@ -50,7 +50,8 @@ const std::vector<TautomerTransform> &TautomerCatalogParams::getTransforms()
   return d_transforms;
 }
 
-TautomerTransform TautomerCatalogParams::getTransform(unsigned int fid) const {
+const TautomerTransform TautomerCatalogParams::getTransform(
+    unsigned int fid) const {
   URANGE_CHECK(fid, d_transforms.size());
   return d_transforms[fid];  //.get();
 }
