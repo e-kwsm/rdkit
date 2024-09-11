@@ -48,19 +48,14 @@ class LeaderPicker : public DistPicker {
    * See the documentation for the pick() method for details about the algorithm
    *
    *   \param func - a function (or functor) taking two unsigned ints as
-   *arguments and returning the distance (as a double) between those two
-   *elements.
+   * arguments and returning the distance (as a double) between those two
+   * elements.
    *
    *   \param poolSize - the size of the pool to pick the items from. It is
-   *assumed that the distance matrix above contains the right number of
-   *elements; i.e. poolSize*(poolSize-1)
+   * assumed that the distance matrix above contains the right number of
+   * elements; i.e. poolSize*(poolSize-1)
    *
    *   \param pickSize - the number items to pick from pool (<= poolSize)
-   *
-   *   \param firstPicks - (optional)the first items in the pick list
-   *
-   *   \param seed - (optional) seed for the random number generator. If this is
-   *<0 the generator will be seeded with a random number.
    */
   template <typename T>
   RDKit::INT_VECT lazyPick(T &func, unsigned int poolSize,
