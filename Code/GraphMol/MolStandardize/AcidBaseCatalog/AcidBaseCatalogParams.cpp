@@ -57,7 +57,7 @@ AcidBaseCatalogParams::getPairs() const {
   return d_pairs;
 }
 
-const std::pair<ROMOL_SPTR, ROMOL_SPTR> AcidBaseCatalogParams::getPair(
+std::pair<ROMOL_SPTR, ROMOL_SPTR> AcidBaseCatalogParams::getPair(
     unsigned int fid) const {
   URANGE_CHECK(fid, d_pairs.size());
   return d_pairs[fid];

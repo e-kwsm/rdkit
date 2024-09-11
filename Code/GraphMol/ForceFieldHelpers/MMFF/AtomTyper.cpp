@@ -2525,11 +2525,9 @@ unsigned int getMMFFStretchBendType(const unsigned int angleType,
 // torsion type, to be used only if parameters could not be found
 // (empirically found - this is not mentioned either in MMFF.IV
 // nor in MMFF.V)
-const std::pair<unsigned int, unsigned int>
-MMFFMolProperties::getMMFFTorsionType(const ROMol &mol, const unsigned int idx1,
-                                      const unsigned int idx2,
-                                      const unsigned int idx3,
-                                      const unsigned int idx4) {
+std::pair<unsigned int, unsigned int> MMFFMolProperties::getMMFFTorsionType(
+    const ROMol &mol, const unsigned int idx1, const unsigned int idx2,
+    const unsigned int idx3, const unsigned int idx4) {
   PRECONDITION(this->isValid(), "missing atom types - invalid force-field");
 
   const Bond *bondJK = mol.getBondBetweenAtoms(idx2, idx3);
