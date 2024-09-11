@@ -46,24 +46,24 @@ class RDKIT_FORCEFIELD_EXPORT DistanceConstraintContribs
   ~DistanceConstraintContribs() override = default;
   //! Add contribution to this contrib.
   /*!
-    \param idx1        index of atom1 in the ForceField's positions
-    \param idx2        index of atom2 in the ForceField's positions
-    \param minLen      minimum distance
-    \param maxLen      maximum distance
-    \param forceConst  force Constant
+    \param idx1           index of atom1 in the ForceField's positions
+    \param idx2           index of atom2 in the ForceField's positions
+    \param minLen         minimum distance
+    \param maxLen         maximum distance
+    \param forceConstant  force Constant
 
   */
   void addContrib(unsigned int idx1, unsigned int idx2, double minLen,
                   double maxLen, double forceConstant);
   //! Add contribution to this contrib.
   /*!
-    \param idx1        index of atom1 in the ForceField's positions
-    \param idx2        index of atom2 in the ForceField's positions
-    \param relative    whether to add the provided distance to the
+    \param idx1           index of atom1 in the ForceField's positions
+    \param idx2           index of atom2 in the ForceField's positions
+    \param relative       whether to add the provided distance to the
     current distance
-    \param minLen      minimum distance
-    \param maxLen      maximum distance
-    \param forceConst  force Constant
+    \param minLen         minimum distance
+    \param maxLen         maximum distance
+    \param forceConstant  force Constant
 
   */
   void addContrib(unsigned int idx1, unsigned int idx2, bool relative,
