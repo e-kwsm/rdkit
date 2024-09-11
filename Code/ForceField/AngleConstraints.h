@@ -52,8 +52,8 @@ class RDKIT_FORCEFIELD_EXPORT AngleConstraintContribs
   \param idx1        index of atom1 in the ForceField's positions
   \param idx2        index of atom2 in the ForceField's positions
   \param idx3        index of atom3 in the ForceField's positions
-  \param minAngle    minimum angle
-  \param maxAngle    maximum angle
+  \param minAngleDeg minimum angle
+  \param maxAngleDeg maximum angle
   \param forceConst  force Constant
 
   */
@@ -65,8 +65,8 @@ class RDKIT_FORCEFIELD_EXPORT AngleConstraintContribs
   \param idx2        index of atom2 in the ForceField's positions
   \param idx3        index of atom3 in the ForceField's positions
   \param relative    whether to add the provided angle to the current angle
-  \param minAngle    minimum angle
-  \param maxAngle    maximum angle
+  \param minAngleDeg minimum angle
+  \param maxAngleDeg maximum angle
   \param forceConst  force Constant
 
   */
