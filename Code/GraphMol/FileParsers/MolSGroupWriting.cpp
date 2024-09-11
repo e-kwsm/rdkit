@@ -401,7 +401,7 @@ std::string BuildV2000SCLLine(const int idx, const SubstanceGroup &sgroup) {
   return ret.str();
 }
 
-std::string GetMolFileSGroupInfo(const RWMol &mol) {
+const std::string GetMolFileSGroupInfo(const RWMol &mol) {
   std::ostringstream ret;
 
   // multiple group per line properties
@@ -658,8 +658,8 @@ void addBlockToSGroupString(std::string block, std::string &currentLine,
 }  // namespace
 
 //! Write a SGroup line. The order of the labels is defined in the spec.
-std::string GetV3000MolFileSGroupLines(const unsigned int idx,
-                                       const SubstanceGroup &sgroup) {
+const std::string GetV3000MolFileSGroupLines(const unsigned int idx,
+                                             const SubstanceGroup &sgroup) {
   std::ostringstream os;
 
   unsigned int id = 0;
