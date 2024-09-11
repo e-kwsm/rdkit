@@ -164,8 +164,8 @@ RDKIT_DEPICTOR_EXPORT RDKit::VECT_INT_VECT findCoreRings(
   embedded.
 
   \param doneRings    a vector of ring IDs that have been embedded already
-  \param fusedRings   list of all the rings in the fused system \param nextId
-  this is where the ID for the next ring is written
+  \param fusedRings   list of all the rings in the fused system
+  \param nextId       this is where the ID for the next ring is written
 
   \return list of atom ids that are common
 */
