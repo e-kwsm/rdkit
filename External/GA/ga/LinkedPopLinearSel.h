@@ -388,7 +388,7 @@ LinkedPopLinearSel<Chromosome, PopulationPolicy>::getBest() const {
 }
 
 template <typename Chromosome, typename PopulationPolicy>
-const std::vector<std::shared_ptr<Chromosome>>
+std::vector<std::shared_ptr<Chromosome>>
 LinkedPopLinearSel<Chromosome, PopulationPolicy>::getTiedBest(
     double tolerance) const {
   std::vector<std::shared_ptr<Chromosome>> ties;
@@ -433,8 +433,7 @@ std::string LinkedPopLinearSel<Chromosome, PopulationPolicy>::populationInfo()
  * @return true if this chromosome is already present in the population
  */
 template <typename Chromosome, typename PopulationPolicy>
-const typename std::multimap<double,
-                             std::shared_ptr<Chromosome>>::const_iterator
+typename std::multimap<double, std::shared_ptr<Chromosome>>::const_iterator
 LinkedPopLinearSel<Chromosome, PopulationPolicy>::findExactMatch(
     Chromosome &c) const {
   std::pair<std::multimap<char, int>::iterator,
