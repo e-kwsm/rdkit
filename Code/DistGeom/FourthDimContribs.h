@@ -34,9 +34,6 @@ class RDKIT_DISTGEOMETRY_EXPORT FourthDimContribs
   //! Constructor
   /*!
     \param owner       pointer to the owning ForceField
-    \param idx        the index of the atom to be considered
-    \param weight     (optional) the weight to be used for this contrib
-
   */
   FourthDimContribs(ForceFields::ForceField *owner) {
     PRECONDITION(owner, "bad force field");
@@ -48,7 +45,7 @@ class RDKIT_DISTGEOMETRY_EXPORT FourthDimContribs
     d_contribs.emplace_back(idx, weight);
   }
 
-  //! return the contribution of this contrib to the energy of a given state
+  //! \return the contribution of this contrib to the energy of a given state
   double getEnergy(double *pos) const override {
     PRECONDITION(pos, "bad vector");
     constexpr unsigned int ffdim = 4;
