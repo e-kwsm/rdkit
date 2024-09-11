@@ -149,7 +149,7 @@ bool isAtomRGroup(const Atom &atom) {
 }
 }  // namespace
 
-std::string GetMolFileChargeInfo(const RWMol &mol) {
+const std::string GetMolFileChargeInfo(const RWMol &mol) {
   std::stringstream res;
   std::stringstream chgss;
   std::stringstream radss;
@@ -235,8 +235,8 @@ bool hasComplexQuery(const Atom *atom) {
   return res;
 }
 
-std::string GetMolFileQueryInfo(const RWMol &mol,
-                                const boost::dynamic_bitset<> &queryListAtoms) {
+const std::string GetMolFileQueryInfo(
+    const RWMol &mol, const boost::dynamic_bitset<> &queryListAtoms) {
   std::stringstream ss;
   boost::dynamic_bitset<> listQs(mol.getNumAtoms());
   for (const auto atom : mol.atoms()) {
@@ -281,7 +281,7 @@ std::string GetMolFileQueryInfo(const RWMol &mol,
   return ss.str();
 }
 
-std::string GetMolFileRGroupInfo(const RWMol &mol) {
+const std::string GetMolFileRGroupInfo(const RWMol &mol) {
   std::stringstream ss;
   unsigned int nEntries = 0;
   for (ROMol::ConstAtomIterator atomIt = mol.beginAtoms();
@@ -300,7 +300,7 @@ std::string GetMolFileRGroupInfo(const RWMol &mol) {
   return ss2.str();
 }
 
-std::string GetMolFileAliasInfo(const RWMol &mol) {
+const std::string GetMolFileAliasInfo(const RWMol &mol) {
   std::stringstream ss;
   for (ROMol::ConstAtomIterator atomIt = mol.beginAtoms();
        atomIt != mol.endAtoms(); ++atomIt) {
@@ -315,7 +315,7 @@ std::string GetMolFileAliasInfo(const RWMol &mol) {
   return ss.str();
 }
 
-std::string GetMolFilePXAInfo(const RWMol &mol) {
+const std::string GetMolFilePXAInfo(const RWMol &mol) {
   std::string res;
   for (const auto atom : mol.atoms()) {
     if (atom->hasProp("_MolFile_PXA")) {
@@ -326,7 +326,7 @@ std::string GetMolFilePXAInfo(const RWMol &mol) {
   }
   return res;
 }
-std::string GetMolFileZBOInfo(const RWMol &mol) {
+const std::string GetMolFileZBOInfo(const RWMol &mol) {
   std::stringstream res;
   std::stringstream ss;
   unsigned int nEntries = 0;
@@ -388,8 +388,9 @@ std::string GetMolFileZBOInfo(const RWMol &mol) {
   return res.str();
 }
 
-std::string AtomGetMolFileSymbol(const Atom *atom, bool padWithSpaces,
-                                 boost::dynamic_bitset<> &queryListAtoms) {
+const std::string AtomGetMolFileSymbol(
+    const Atom *atom, bool padWithSpaces,
+    boost::dynamic_bitset<> &queryListAtoms) {
   PRECONDITION(atom, "");
 
   std::string res;
@@ -598,8 +599,8 @@ void GetMolFileAtomProperties(const Atom *atom, const Conformer *conf,
   }
 }
 
-std::string GetMolFileAtomLine(const Atom *atom, const Conformer *conf,
-                               boost::dynamic_bitset<> &queryListAtoms) {
+const std::string GetMolFileAtomLine(const Atom *atom, const Conformer *conf,
+                                     boost::dynamic_bitset<> &queryListAtoms) {
   PRECONDITION(atom, "");
   std::string res;
   int totValence, atomMapNumber;
@@ -700,7 +701,7 @@ int BondGetMolFileSymbol(const Bond *bond) {
   // return res.c_str();
 }
 
-std::string GetMolFileBondLine(
+const std::string GetMolFileBondLine(
     const Bond *bond,
     const std::map<int, std::unique_ptr<Chirality::WedgeInfoBase>> &wedgeBonds,
     const Conformer *conf, bool wasAromatic) {
@@ -738,9 +739,9 @@ std::string GetMolFileBondLine(
   return ss.str();
 }
 
-std::string GetV3000MolFileAtomLine(const Atom *atom, const Conformer *conf,
-                                    boost::dynamic_bitset<> &queryListAtoms,
-                                    unsigned int precision) {
+const std::string GetV3000MolFileAtomLine(
+    const Atom *atom, const Conformer *conf,
+    boost::dynamic_bitset<> &queryListAtoms, unsigned int precision) {
   PRECONDITION(atom, "");
   int totValence, atomMapNumber;
   unsigned int parityFlag;
@@ -1044,7 +1045,7 @@ void moveAdditionalPropertiesToSGroups(RWMol &mol) {
   createZBOSubstanceGroups(mol);
 }
 }  // namespace FileParserUtils
-std::string GetV3000MolFileBondLine(
+const std::string GetV3000MolFileBondLine(
     const Bond *bond,
     const std::map<int, std::unique_ptr<Chirality::WedgeInfoBase>> &wedgeBonds,
     const Conformer *conf, bool wasAromatic) {
