@@ -97,7 +97,7 @@ std::string BuildV2000SCDSEDLines(const int idx, const SubstanceGroup *sgroup);
 std::string BuildV2000SAPLines(const int idx, const SubstanceGroup *sgroup);
 
 std::string BuildV2000SCLLine(const int idx, const SubstanceGroup *sgroup);
-const std::string GetMolFileSGroupInfo(const RWMol &mol);
+std::string GetMolFileSGroupInfo(const RWMol &mol);
 
 /* ------------------ V3000 Utils  ------------------ */
 
@@ -127,7 +127,7 @@ std::string FormatV3000BracketBlock(
 std::string FormatV3000CStateBlock(
     const std::vector<SubstanceGroup::CState> &cstates);
 
-const std::string GetV3000MolFileSGroupLines(const unsigned int idx,
-                                             const SubstanceGroup &sgroup);
+std::string GetV3000MolFileSGroupLines(const unsigned int idx,
+                                       const SubstanceGroup &sgroup);
 }  // namespace SGroupWriting
 }  // namespace RDKit
