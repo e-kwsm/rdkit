@@ -675,7 +675,7 @@ std::string RascalResult::getSmarts() const {
   return d_smarts;
 }
 
-const std::shared_ptr<ROMol> RascalResult::getMcesMol() const {
+std::shared_ptr<ROMol> RascalResult::getMcesMol() const {
   if (d_mcesMol || !d_mol1) {
     return d_mcesMol;
   }
