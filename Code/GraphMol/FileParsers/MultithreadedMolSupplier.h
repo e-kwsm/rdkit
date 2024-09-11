@@ -63,7 +63,7 @@ class RDKIT_FILEPARSERS_EXPORT MultithreadedMolSupplier : public MolSupplier {
   //! sets the callback to be applied to molecules before they are returned by
   ///! the next() function
   /*!
-    \param cb: a function that takes a reference to an RWMol and a const
+    \param cb a function that takes a reference to an RWMol and a const
     reference to the MultithreadedMolSupplier. This can modify the molecule in
     place
 
@@ -75,7 +75,7 @@ class RDKIT_FILEPARSERS_EXPORT MultithreadedMolSupplier : public MolSupplier {
   //! sets the callback to be applied to molecules after they are processed, but
   ///! before they are written to the output queue
   /*!
-    \param cb: a function that takes a reference to an RWMol, a const reference
+    \param cb a function that takes a reference to an RWMol, a const reference
     to the string record, and an unsigned int record id. This can modify the
     molecule in place
   */
@@ -86,7 +86,7 @@ class RDKIT_FILEPARSERS_EXPORT MultithreadedMolSupplier : public MolSupplier {
   //! sets the callback to be applied to input text records before they are
   ///! added to the input queue
   /*!
-    \param cb: a function that takes a const reference to the string record and
+    \param cb a function that takes a const reference to the string record and
     an unsigned int record id and returns the modified string record
   */
   template <typename T>
