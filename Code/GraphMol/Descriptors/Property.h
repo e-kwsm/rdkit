@@ -64,9 +64,9 @@ struct RDKIT_DESCRIPTORS_EXPORT PropertyFunctor {
   }
 
   //! Return the name of the property
-  std::string getName() const { return propName; }
+  const std::string getName() const { return propName; }
   //! Return the properties version
-  std::string getVersion() const { return propVersion; }
+  const std::string getVersion() const { return propVersion; }
 };
 
 //! Holds a collection of properties for computation purposes
