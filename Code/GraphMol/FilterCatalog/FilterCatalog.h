@@ -233,14 +233,14 @@ class RDKIT_FILTERCATALOG_EXPORT FilterCatalog : public FCatalog {
   /*
     \param mol  ROMol to match against the catalog
   */
-  std::vector<CONST_SENTRY> getMatches(const ROMol &mol) const;
+  const std::vector<CONST_SENTRY> getMatches(const ROMol &mol) const;
 
   //--------------------------------------------
   //! Returns all FilterMatches for the molecule
   /*
     \param mol  ROMol to match against the catalog
   */
-  std::vector<FilterMatch> getFilterMatches(const ROMol &mol) const;
+  const std::vector<FilterMatch> getFilterMatches(const ROMol &mol) const;
 
  private:
   void Clear();
