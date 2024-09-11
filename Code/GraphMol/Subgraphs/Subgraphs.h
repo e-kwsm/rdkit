@@ -141,10 +141,12 @@ RDKIT_SUBGRAPHS_EXPORT INT_PATH_LIST_MAP findAllPathsOfLengthsMtoN(
  *   \param enforceSize - If false, all the bonds within the requested radius
  *                        (<= radius) is collected. Otherwise, at least one bond
  *                        located at the requested radius must be found and
- * added. \param atomMap - Optional: If provided, it will measure the minimum
- * distance of the atom from the rooted atom (start with 0 from the rooted
- * atom). The result is a pair of the atom ID and the distance. The result is a
- * path (a vector of bond indices)
+ *                        added.
+ *   \param atomMap - Optional: If provided, it will measure the minimum
+ *                    distance of the atom from the rooted atom (start with 0
+ *                    from the rooted atom). The result is a pair of the atom ID
+ *                    and the distance. The result is a path (a vector of bond
+ *                    indices)
  */
 RDKIT_SUBGRAPHS_EXPORT PATH_TYPE findAtomEnvironmentOfRadiusN(
     const ROMol &mol, unsigned int radius, unsigned int rootedAtAtom,
