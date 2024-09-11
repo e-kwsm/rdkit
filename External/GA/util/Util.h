@@ -287,10 +287,6 @@ std::vector<const T *> filterUniquePtrListToConstRawPtrList(
 
 /**
  * Creates a new list from an existing list by applying the mapping function.
- *
- * @param values
- * @param map
- * @return
  */
 template <typename T, typename V>
 std::vector<V> mapToNewList(const std::vector<T> &values,
@@ -304,10 +300,6 @@ std::vector<V> mapToNewList(const std::vector<T> &values,
 
 /**
  * Creates a new list from an existing list by applying the mapping function.
- *
- * @param values
- * @param map
- * @return
  */
 template <typename T>
 std::vector<T> mapToNewList(const std::vector<T> &values,
@@ -317,9 +309,6 @@ std::vector<T> mapToNewList(const std::vector<T> &values,
 
 /**
  * Applies a function to every value in a list.
- *
- * @param values
- * @param func
  */
 template <typename T>
 void forEach(const std::vector<T> &values, const function<void(T &)> &func) {
