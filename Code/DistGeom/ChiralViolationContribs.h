@@ -51,20 +51,15 @@ class RDKIT_DISTGEOMETRY_EXPORT ChiralViolationContribs
   //! Constructor
   /*!
     \param owner      pointer to the owning forcefield
-    \param cset       a chiral set containing the four chiral atom ids (in
-    sequence)
-                      and the upper and lower limits on the signed chiral
-    volume \param weight     (optional) the weight to be used for this contrib
-
   */
   ChiralViolationContribs(ForceFields::ForceField *owner);
 
   //! adds a new chiral constraint
   /*!
     \param cset       a chiral set containing the four chiral atom ids (in
-    sequence)
-                      and the upper and lower limits on the signed chiral
-    volume \param weight     (optional) the weight to be used for this contrib
+                      sequence) and the upper and lower limits on the signed
+                      chiral volume
+    \param weight     (optional) the weight to be used for this contrib
 
   */
   void addContrib(const ChiralSet *cset, double weight = 1.0);
