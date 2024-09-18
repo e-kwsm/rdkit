@@ -100,7 +100,7 @@ struct RGroupMatch {
     MolOps::RemoveHsParameters rhps;
     rhps.removeMapped = false;
     MolOps::removeHs(*targetMolForHighlights, rhps);
-    for (auto atom : targetMolForHighlights->atoms()) {
+    for (auto *atom : targetMolForHighlights->atoms()) {
       auto atomMapNum = atom->getAtomMapNum();
       if (atomMapNum) {
         --atomMapNum;

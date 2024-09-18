@@ -77,13 +77,13 @@ static PyObject *Clustering_MurtaghCluster(python::object data, int nPts,
   }
 
   ia = (boost::int64_t *)calloc(nPts, sizeof(boost::int64_t));
-  auto ia_capsule = PyCapsule_New(ia, nullptr, capsule_cleanup);
+  auto *ia_capsule = PyCapsule_New(ia, nullptr, capsule_cleanup);
 
   ib = (boost::int64_t *)calloc(nPts, sizeof(boost::int64_t));
-  auto ib_capsule = PyCapsule_New(ib, nullptr, capsule_cleanup);
+  auto *ib_capsule = PyCapsule_New(ib, nullptr, capsule_cleanup);
 
   crit = (real *)calloc(nPts, sizeof(real));
-  auto crit_capsule = PyCapsule_New(crit, nullptr, capsule_cleanup);
+  auto *crit_capsule = PyCapsule_New(crit, nullptr, capsule_cleanup);
 
   clusterit((real *)PyArray_DATA(dataContig), nPts, sz, option, ia, ib, crit);
 
@@ -135,13 +135,13 @@ static PyObject *Clustering_MurtaghDistCluster(python::object data, int nPts,
   }
 
   ia = (boost::int64_t *)calloc(nPts, sizeof(boost::int64_t));
-  auto ia_capsule = PyCapsule_New(ia, nullptr, capsule_cleanup);
+  auto *ia_capsule = PyCapsule_New(ia, nullptr, capsule_cleanup);
 
   ib = (boost::int64_t *)calloc(nPts, sizeof(boost::int64_t));
-  auto ib_capsule = PyCapsule_New(ib, nullptr, capsule_cleanup);
+  auto *ib_capsule = PyCapsule_New(ib, nullptr, capsule_cleanup);
 
   crit = (real *)calloc(nPts, sizeof(real));
-  auto crit_capsule = PyCapsule_New(crit, nullptr, capsule_cleanup);
+  auto *crit_capsule = PyCapsule_New(crit, nullptr, capsule_cleanup);
 
   distclusterit((real *)PyArray_DATA(dataContig), nPts, option, ia, ib, crit);
 

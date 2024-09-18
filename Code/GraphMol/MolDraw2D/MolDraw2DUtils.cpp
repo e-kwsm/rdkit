@@ -58,7 +58,7 @@ void prepareMolForDrawing(RWMol &mol, bool kekulize, bool addChiralHs,
   }
   if (addChiralHs) {
     std::vector<unsigned int> chiralAts;
-    for (auto atom : mol.atoms()) {
+    for (auto *atom : mol.atoms()) {
       if (isAtomCandForChiralH(mol, atom)) {
         chiralAts.push_back(atom->getIdx());
       }
@@ -403,7 +403,7 @@ double meanBondLength(const ROMol &mol, int confId) {
   double bondLen = 0.0;
   if (mol.getNumBonds()) {
     auto conf = mol.getConformer(confId);
-    for (auto bond : mol.bonds()) {
+    for (auto *bond : mol.bonds()) {
       bondLen += MolTransforms::getBondLength(conf, bond->getBeginAtomIdx(),
                                               bond->getEndAtomIdx());
     }

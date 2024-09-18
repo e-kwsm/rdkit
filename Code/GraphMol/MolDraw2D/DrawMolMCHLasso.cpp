@@ -94,9 +94,9 @@ void DrawMolMCHLasso::extractAtomColourLists(
   auto listsIntersect =
       [](const std::vector<int> &v1, const std::vector<int> &v2,
          const std::vector<std::vector<int>> &colourAtoms) -> bool {
-    for (auto &mv1 : v1) {
+    for (const auto &mv1 : v1) {
       for (auto ca : colourAtoms[mv1]) {
-        for (auto &mv2 : v2) {
+        for (const auto &mv2 : v2) {
           if (std::find(colourAtoms[mv2].begin(), colourAtoms[mv2].end(), ca) !=
               colourAtoms[mv2].end()) {
             return true;
@@ -234,13 +234,13 @@ void DrawMolMCHLasso::addNoLineArcs(
     const std::vector<std::unique_ptr<DrawShapeSimpleLine>> &lines,
     std::vector<std::unique_ptr<DrawShapeArc>> &arcs) const {
   boost::dynamic_bitset<> inColAtoms(drawMol_->getNumAtoms());
-  for (auto &ca : colAtoms) {
+  for (const auto &ca : colAtoms) {
     inColAtoms.set(ca);
   }
   std::vector<boost::dynamic_bitset<>> inLines(
       drawMol_->getNumAtoms(),
       boost::dynamic_bitset<>(drawMol_->getNumAtoms()));
-  for (auto &l : lines) {
+  for (const auto &l : lines) {
     inLines[l->atom2_].set(l->atom1_);
     inLines[l->atom1_].set(l->atom2_);
   }
@@ -506,7 +506,7 @@ void DrawMolMCHLasso::extractBondLines(
         }
         auto lassoWidthJ = getLassoWidth(this, colAtoms[j], lassoNum);
         auto dispJ = lassoWidthJ * 0.75;
-        auto bond = drawMol_->getBondBetweenAtoms(colAtoms[i], colAtoms[j]);
+        auto *bond = drawMol_->getBondBetweenAtoms(colAtoms[i], colAtoms[j]);
         if (bond) {
           if (!mcHighlightBondMap_.empty()) {
             auto bndIt = mcHighlightBondMap_.find(bond->getIdx());
@@ -610,14 +610,14 @@ void DrawMolMCHLasso::extractAtomArcs(
       arcs.emplace_back(arc);
     } else {
       for (size_t i = 0; i < atomLine.size() - 1; ++i) {
-        auto arc =
+        auto *arc =
             makeArc(atomLine[i], atomLine[i + 1], atCds_[atomLine[i].atom]);
         if (arc) {
           arcs.emplace_back(arc);
         }
       }
-      auto arc = makeArc(atomLine.back(), atomLine.front(),
-                         atCds_[atomLine.front().atom]);
+      auto *arc = makeArc(atomLine.back(), atomLine.front(),
+                          atCds_[atomLine.front().atom]);
       if (arc) {
         arcs.emplace_back(arc);
       }

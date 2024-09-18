@@ -183,12 +183,12 @@ void RascalResult::rebuildFromFrags(
   boost::dynamic_bitset<> fragBonds(
       std::max(d_mol1->getNumBonds(), d_mol2->getNumBonds()));
   for (const auto &f : frags) {
-    for (auto atom : f->atoms()) {
+    for (auto *atom : f->atoms()) {
       if (atom->hasProp("ORIG_INDEX")) {
         fragAtoms.set(atom->getProp<int>("ORIG_INDEX"));
       }
     }
-    for (auto bond : f->bonds()) {
+    for (auto *bond : f->bonds()) {
       if (bond->hasProp("ORIG_INDEX")) {
         fragBonds.set(bond->getProp<int>("ORIG_INDEX"));
       }
@@ -218,13 +218,13 @@ std::string RascalResult::createSmartsString() const {
   }
   RWMol smartsMol;
   std::map<int, unsigned int> atomMap;
-  auto mol1Rings = d_mol1->getRingInfo();
-  auto mol2Rings = d_mol2->getRingInfo();
+  auto *mol1Rings = d_mol1->getRingInfo();
+  auto *mol2Rings = d_mol2->getRingInfo();
   for (const auto &am : d_atomMatches) {
     RDKit::QueryAtom a;
-    auto mol1Atom = d_mol1->getAtomWithIdx(am.first);
+    auto *mol1Atom = d_mol1->getAtomWithIdx(am.first);
     a.setQuery(RDKit::makeAtomNumQuery(mol1Atom->getAtomicNum()));
-    auto mol2Atom = d_mol2->getAtomWithIdx(am.second);
+    auto *mol2Atom = d_mol2->getAtomWithIdx(am.second);
     if (mol1Atom->getAtomicNum() != mol2Atom->getAtomicNum()) {
       a.expandQuery(RDKit::makeAtomNumQuery(mol2Atom->getAtomicNum()),
                     Queries::COMPOSITE_OR);
@@ -252,8 +252,8 @@ std::string RascalResult::createSmartsString() const {
 
   for (const auto &bm : d_bondMatches) {
     RDKit::QueryBond b;
-    auto mol1Bond = d_mol1->getBondWithIdx(bm.first);
-    auto mol2Bond = d_mol2->getBondWithIdx(bm.second);
+    auto *mol1Bond = d_mol1->getBondWithIdx(bm.first);
+    auto *mol2Bond = d_mol2->getBondWithIdx(bm.second);
     b.setBeginAtomIdx(atomMap[mol1Bond->getBeginAtomIdx()]);
     b.setEndAtomIdx(atomMap[mol1Bond->getEndAtomIdx()]);
     if (d_ignoreBondOrders) {
@@ -304,7 +304,7 @@ void RascalResult::matchCliqueAtoms(
   std::vector<int> mol1Matches(d_mol1->getNumAtoms(), -1);
   // set the clique atoms to -2 in mol1Matches, to mark them as yet undecided.
   for (const auto &bm : d_bondMatches) {
-    auto bond1 = d_mol1->getBondWithIdx(bm.first);
+    auto *bond1 = d_mol1->getBondWithIdx(bm.first);
     mol1Matches[bond1->getBeginAtomIdx()] = -2;
     mol1Matches[bond1->getEndAtomIdx()] = -2;
   }
@@ -313,14 +313,14 @@ void RascalResult::matchCliqueAtoms(
   // incident on them.
   for (size_t i = 0; i < d_bondMatches.size() - 1; ++i) {
     const auto &pair1 = d_bondMatches[i];
-    auto bond1_1 = d_mol1->getBondWithIdx(pair1.first);
-    auto bond2_1 = d_mol2->getBondWithIdx(pair1.second);
+    auto *bond1_1 = d_mol1->getBondWithIdx(pair1.first);
+    auto *bond2_1 = d_mol2->getBondWithIdx(pair1.second);
     for (size_t j = i + 1; j < d_bondMatches.size(); ++j) {
       const auto &pair2 = d_bondMatches[j];
       if (mol1_adj_matrix[pair1.first][pair2.first]) {
         // the 2 bonds are incident on the same atom, so the 2 atoms must match
-        auto bond1_2 = d_mol1->getBondWithIdx(pair2.first);
-        auto bond2_2 = d_mol2->getBondWithIdx(pair2.second);
+        auto *bond1_2 = d_mol1->getBondWithIdx(pair2.first);
+        auto *bond2_2 = d_mol2->getBondWithIdx(pair2.second);
         auto mol1Atom = common_atom_in_bonds(bond1_1, bond1_2);
         auto mol2Atom = common_atom_in_bonds(bond2_1, bond2_2);
         if (mol1Atom != -1) {
@@ -340,10 +340,10 @@ void RascalResult::matchCliqueAtoms(
     // Any -2 entries in mol1Matches are down to isolated bonds, which are a bit
     // tricky.
     for (const auto &pair1 : d_bondMatches) {
-      auto bond1_1 = d_mol1->getBondWithIdx(pair1.first);
+      auto *bond1_1 = d_mol1->getBondWithIdx(pair1.first);
       if (mol1Matches[bond1_1->getBeginAtomIdx()] == -2 &&
           mol1Matches[bond1_1->getEndAtomIdx()] == -2) {
-        auto bond2_1 = d_mol2->getBondWithIdx(pair1.second);
+        auto *bond2_1 = d_mol2->getBondWithIdx(pair1.second);
         if (bond1_1->getBeginAtom()->getAtomicNum() !=
             bond1_1->getEndAtom()->getAtomicNum()) {
           // it's fairly straightforward:
@@ -393,9 +393,9 @@ void RascalResult::applyMaxFragSep() {
                          const boost::shared_ptr<RDKit::ROMol> &frag2,
                          const double *pathMatrix, int num_atoms) -> double {
     int minDist = std::numeric_limits<int>::max();
-    for (auto at1 : frag1->atoms()) {
+    for (auto *at1 : frag1->atoms()) {
       int at1Idx = at1->getProp<int>("ORIG_INDEX");
-      for (auto at2 : frag2->atoms()) {
+      for (auto *at2 : frag2->atoms()) {
         int at2Idx = at2->getProp<int>("ORIG_INDEX");
         int dist = std::nearbyint(pathMatrix[at1Idx * num_atoms + at2Idx]);
         if (dist < minDist) {
@@ -411,8 +411,8 @@ void RascalResult::applyMaxFragSep() {
   // These arrays must not be deleted - they are cached in the molecule and
   // deleted when it is. The distance matrix will be re-calculated in case
   // something's been copied over somewhere.
-  auto mol1Dists = RDKit::MolOps::getDistanceMat(*d_mol1, false, false, true);
-  auto mol2Dists = RDKit::MolOps::getDistanceMat(*d_mol2, false, false, true);
+  auto *mol1Dists = RDKit::MolOps::getDistanceMat(*d_mol1, false, false, true);
+  auto *mol2Dists = RDKit::MolOps::getDistanceMat(*d_mol2, false, false, true);
 
   bool deletedFrag = false;
   for (size_t i = 0; i < frags1.size() - 1; ++i) {
@@ -447,7 +447,7 @@ void RascalResult::applyMaxFragSep() {
       if (!frag) {
         continue;
       }
-      for (auto b : frag->bonds()) {
+      for (auto *b : frag->bonds()) {
         int b_idx = b->getProp<int>("ORIG_INDEX");
         for (auto &bm : d_bondMatches) {
           if (b_idx == bm.first) {
@@ -464,7 +464,7 @@ void RascalResult::applyMaxFragSep() {
       if (!frag) {
         continue;
       }
-      for (auto a : frag->atoms()) {
+      for (auto *a : frag->atoms()) {
         int a_idx = a->getProp<int>("ORIG_INDEX");
         for (auto &am : d_atomMatches) {
           if (a_idx == am.first) {
@@ -709,7 +709,7 @@ const std::shared_ptr<ROMol> RascalResult::getMcesMol() const {
       tmpMol->removeBond(bond->getBeginAtomIdx(), bond->getEndAtomIdx());
     }
   }
-  for (auto atom : tmpMol->atoms()) {
+  for (auto *atom : tmpMol->atoms()) {
     if (!mol1Atoms[atom->getIdx()]) {
       tmpMol->removeAtom(atom);
     }

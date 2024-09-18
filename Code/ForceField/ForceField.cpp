@@ -379,7 +379,7 @@ void ForceField::scatter(double *pos) const {
   PRECONDITION(pos, "bad position vector");
 
   unsigned int tab = 0;
-  for (auto d_position : d_positions) {
+  for (auto *d_position : d_positions) {
     for (unsigned int di = 0; di < this->dimension(); ++di) {
       pos[tab + di] = (*d_position)[di];  //->x;
     }

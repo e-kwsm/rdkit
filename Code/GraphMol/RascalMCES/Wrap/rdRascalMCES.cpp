@@ -113,9 +113,9 @@ std::vector<std::shared_ptr<ROMol>> extractMols(python::object mols) {
 python::list packOutputMols(
     const std::vector<std::vector<unsigned int>> &clusters) {
   python::list pyres;
-  for (auto &clus : clusters) {
+  for (const auto &clus : clusters) {
     python::list mols;
-    for (auto &m : clus) {
+    for (const auto &m : clus) {
       mols.append(m);
     }
     pyres.append(mols);
