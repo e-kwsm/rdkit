@@ -201,7 +201,7 @@ SubstanceGroup::BondType SubstanceGroup::getBondType(
       std::find(d_bonds.begin(), d_bonds.end(), bondIdx) != d_bonds.end(),
       "bond is not part of the SubstanceGroup")
 
-  auto bond = dp_mol->getBondWithIdx(bondIdx);
+  auto *bond = dp_mol->getBondWithIdx(bondIdx);
   bool begin_atom_in_sgroup =
       std::find(d_atoms.begin(), d_atoms.end(), bond->getBeginAtomIdx()) !=
       d_atoms.end();

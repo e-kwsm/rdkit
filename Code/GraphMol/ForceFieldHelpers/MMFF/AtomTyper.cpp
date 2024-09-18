@@ -2355,7 +2355,7 @@ MMFFMolProperties::MMFFMolProperties(ROMol &mol, const std::string &mmffVariant,
   }
   if (!mol.hasProp(common_properties::_MMFFSanitized)) {
     bool isAromaticSet = false;
-    for (const auto atom : mol.atoms()) {
+    for (auto *const atom : mol.atoms()) {
       if (atom->getIsAromatic()) {
         isAromaticSet = true;
         break;
@@ -2372,12 +2372,12 @@ MMFFMolProperties::MMFFMolProperties(ROMol &mol, const std::string &mmffVariant,
   }
   MolOps::setMMFFAromaticity((RWMol &)mol);
   RingMembershipSize rmSize(mol);
-  for (const auto atom : mol.atoms()) {
+  for (auto *const atom : mol.atoms()) {
     if (atom->getAtomicNum() != 1) {
       this->setMMFFHeavyAtomType(rmSize, atom);
     }
   }
-  for (const auto atom : mol.atoms()) {
+  for (auto *const atom : mol.atoms()) {
     if (atom->getAtomicNum() == 1) {
       this->setMMFFHydrogenType(atom);
     }

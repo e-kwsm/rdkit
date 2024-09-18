@@ -37,7 +37,7 @@ class LocalForwardSDMolSupplier : public RDKit::ForwardSDMolSupplier {
   LocalForwardSDMolSupplier(python::object &input, bool sanitize, bool removeHs,
                             bool strictParsing) {
     dp_streambuf.reset(new streambuf(input, 'b'));
-    auto sbis = new streambuf::istream(*dp_streambuf);
+    auto *sbis = new streambuf::istream(*dp_streambuf);
     bool owner = true;
 
     RDKit::v2::FileParsers::MolFileParserParams params;
@@ -50,7 +50,7 @@ class LocalForwardSDMolSupplier : public RDKit::ForwardSDMolSupplier {
   }
   LocalForwardSDMolSupplier(streambuf &input, bool sanitize, bool removeHs,
                             bool strictParsing) {
-    auto sbis = new streambuf::istream(input);
+    auto *sbis = new streambuf::istream(input);
     bool owner = true;
 
     RDKit::v2::FileParsers::MolFileParserParams params;

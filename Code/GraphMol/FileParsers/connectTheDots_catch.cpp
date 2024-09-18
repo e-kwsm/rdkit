@@ -36,7 +36,7 @@ TEST_CASE(
     CHECK(m->getNumBonds() == 8);
     // start without bonds
     m->beginBatchEdit();
-    for (auto bond : m->bonds()) {
+    for (auto *bond : m->bonds()) {
       m->removeBond(bond->getBeginAtomIdx(), bond->getEndAtomIdx());
     }
     m->commitBatchEdit();
@@ -55,7 +55,7 @@ TEST_CASE(
     CHECK(m->getNumBonds() == 2);
     // start without bonds
     m->beginBatchEdit();
-    for (auto bond : m->bonds()) {
+    for (auto *bond : m->bonds()) {
       m->removeBond(bond->getBeginAtomIdx(), bond->getEndAtomIdx());
     }
     m->commitBatchEdit();

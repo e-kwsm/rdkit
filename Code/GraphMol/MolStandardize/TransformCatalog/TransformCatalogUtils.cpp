@@ -22,7 +22,7 @@ namespace RDKit {
 namespace {
 ChemicalReaction *getReaction(const std::string &name,
                               const std::string &smarts) {
-  auto transformation = RxnSmartsToChemicalReaction(smarts);
+  auto *transformation = RxnSmartsToChemicalReaction(smarts);
   if (!transformation) {
     throw ValueErrorException("Failed parsing reaction SMARTS: " + smarts);
   }
@@ -83,7 +83,7 @@ std::vector<std::shared_ptr<ChemicalReaction>> readTransformations(
     inStream.getline(inLine, MAX_LINE_LEN, '\n');
     tmpstr = inLine;
     // parse the reaction on this line (if there is one)
-    auto transformation = getReaction(tmpstr);
+    auto *transformation = getReaction(tmpstr);
     if (transformation) {
       transformations.push_back(
           std::shared_ptr<ChemicalReaction>(transformation));
@@ -97,7 +97,7 @@ std::vector<std::shared_ptr<ChemicalReaction>> readTransformations(
     const std::vector<std::pair<std::string, std::string>> &data) {
   std::vector<std::shared_ptr<ChemicalReaction>> transformations;
   for (const auto &pr : data) {
-    auto transformation = getReaction(pr.first, pr.second);
+    auto *transformation = getReaction(pr.first, pr.second);
     if (transformation) {
       transformations.push_back(
           std::shared_ptr<ChemicalReaction>(transformation));

@@ -44,7 +44,7 @@ class LocalMaeMolSupplier : public RDKit::MaeMolSupplier {
 
   LocalMaeMolSupplier(python::object &input, bool sanitize, bool removeHs)
       : dp_streambuf(new streambuf(input)) {
-    auto inStream = new streambuf::istream(*dp_streambuf);
+    auto *inStream = new streambuf::istream(*dp_streambuf);
     bool owner = true;
     RDKit::v2::FileParsers::MaeMolSupplierParams params;
     params.sanitize = sanitize;
@@ -53,7 +53,7 @@ class LocalMaeMolSupplier : public RDKit::MaeMolSupplier {
         new RDKit::v2::FileParsers::MaeMolSupplier(inStream, owner, params));
   }
   LocalMaeMolSupplier(streambuf &input, bool sanitize, bool removeHs) {
-    auto inStream = new streambuf::istream(input);
+    auto *inStream = new streambuf::istream(input);
 
     bool owner = true;
     RDKit::v2::FileParsers::MaeMolSupplierParams params;

@@ -248,7 +248,7 @@ void SynthonSet::readFromDBStream(std::istream &is, const SynthonSpace &space,
       std::string smiles;
       streamRead(is, smiles, 0);
       // The synthons should be in the pool by now.
-      if (auto synth = space.getSynthonFromPool(smiles); synth == nullptr) {
+      if (auto *synth = space.getSynthonFromPool(smiles); synth == nullptr) {
         std::cout << "smiles " << smiles << " not in pool" << std::endl;
         throw std::runtime_error("Database file " + space.getInputFileName() +
                                  " appears corrupted.");
@@ -522,8 +522,8 @@ void SynthonSet::buildAddAndSubtractFPs(
               [](const std::pair<size_t, std::pair<std::string, Synthon *>> &a,
                  const std::pair<size_t, std::pair<std::string, Synthon *>> &b)
                   -> bool {
-                auto as = a.second.second;
-                auto bs = b.second.second;
+                auto *as = a.second.second;
+                auto *bs = b.second.second;
                 if (as->getOrigMol()->getNumAtoms() ==
                     bs->getOrigMol()->getNumAtoms()) {
                   return a.second.first < b.second.first;
@@ -621,11 +621,11 @@ std::unique_ptr<RWMol> SynthonSet::copySynthon(size_t synthonSetNum,
                                                size_t synthonIdx) const {
   std::unique_ptr<RWMol> synthon(new RWMol(
       *d_synthons[synthonSetNum][synthonIdx].second->getOrigMol().get()));
-  for (auto &atom : synthon->atoms()) {
+  for (const auto &atom : synthon->atoms()) {
     atom->setProp<unsigned int>("molNum", synthonSetNum);
     atom->setProp<unsigned int>("idx", atom->getIdx());
   }
-  for (auto &bond : synthon->bonds()) {
+  for (const auto &bond : synthon->bonds()) {
     bond->setProp<unsigned int>("molNum", synthonSetNum);
     bond->setProp<unsigned int>("idx", bond->getIdx());
   }
@@ -765,9 +765,9 @@ std::unique_ptr<ROMol> SynthonSet::buildMolecule(
   std::string molName = "";
   for (size_t i = 0; i < synthonNums.size(); ++i) {
     auto synthMol = copySynthon(i, synthonNums[i]);
-    for (auto atom : synthMol->atoms()) {
+    for (auto *atom : synthMol->atoms()) {
       if (!atom->getAtomicNum() && atom->getIsotope()) {
-        for (auto nbr : synthMol->atomNeighbors(atom)) {
+        for (auto *nbr : synthMol->atomNeighbors(atom)) {
           addJoinInfo(nbr, atom->getIsotope());
           addJoinInfo(atom, atom->getIsotope());
         }

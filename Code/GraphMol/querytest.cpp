@@ -897,7 +897,7 @@ void testHasBondTypeQuery() {
   {
     auto m = "C-C-@C@-C@CC-,=C!-C"_smarts;
     TEST_ASSERT(m);
-    for (const auto bond : m->bonds()) {
+    for (auto *const bond : m->bonds()) {
       bool hasQ = QueryOps::hasBondTypeQuery(*bond);
       if (bond->getIdx() != 3) {
         TEST_ASSERT(hasQ);
@@ -905,7 +905,7 @@ void testHasBondTypeQuery() {
         TEST_ASSERT(!hasQ);
       }
     }
-    for (const auto bond : m->bonds()) {
+    for (auto *const bond : m->bonds()) {
       bool hasQ = QueryOps::hasComplexBondTypeQuery(*bond);
       if (bond->getIdx() < 4) {
         TEST_ASSERT(!hasQ);
@@ -917,7 +917,7 @@ void testHasBondTypeQuery() {
   {
     auto m = "CC-C"_smiles;
     TEST_ASSERT(m);
-    for (const auto bond : m->bonds()) {
+    for (auto *const bond : m->bonds()) {
       TEST_ASSERT(!QueryOps::hasBondTypeQuery(*bond));
     }
   }

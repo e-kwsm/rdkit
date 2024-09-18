@@ -326,7 +326,7 @@ void GenerateFP(const RDKit::ROMol &mol, ExplicitBitVect &fp) {
   RDKit::MatchVectType match;
   unsigned int count;
 
-  for (const auto atom : mol.atoms()) {
+  for (auto *const atom : mol.atoms()) {
     switch (atom->getAtomicNum()) {
       case 3:
       case 11:
