@@ -59,7 +59,7 @@ TEST_CASE("MolOps::assignStereochemistry", "[stereo]") {
     for (auto &mol : samples) {
       MolOps::assignStereochemistry(mol, cleanIt, force,
                                     flagPossibleStereoCenters);
-      for (auto &atom : mol.atoms()) {
+      for (const auto &atom : mol.atoms()) {
         total += atom->getChiralTag();
       }
 

@@ -263,12 +263,12 @@ void testAtomPairOutput() {
   TEST_ASSERT(mol);
   AdditionalOutput additionalOutput;
 
-  auto atomPairGenerator = AtomPair::getAtomPairGenerator<std::uint32_t>();
+  auto *atomPairGenerator = AtomPair::getAtomPairGenerator<std::uint32_t>();
   additionalOutput.allocateAtomToBits();
   additionalOutput.allocateAtomCounts();
 
-  auto fp = atomPairGenerator->getSparseCountFingerprint(*mol, nullptr, nullptr,
-                                                         -1, &additionalOutput);
+  auto *fp = atomPairGenerator->getSparseCountFingerprint(
+      *mol, nullptr, nullptr, -1, &additionalOutput);
   auto c1 = AtomPair::getAtomCode(mol->getAtomWithIdx(0), 0, false);
   auto c2 = AtomPair::getAtomCode(mol->getAtomWithIdx(1), 0, false);
   auto c3 = AtomPair::getAtomCode(mol->getAtomWithIdx(2), 0, false);

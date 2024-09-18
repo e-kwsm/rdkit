@@ -107,7 +107,7 @@ bool ChemicalReaction::validate(unsigned int &numWarnings,
   for (auto molIter = this->beginReactantTemplates();
        molIter != this->endReactantTemplates(); ++molIter) {
     bool thisMolMapped = false;
-    for (const auto atom : (*molIter)->atoms()) {
+    for (auto *const atom : (*molIter)->atoms()) {
       int mapNum;
       if (atom->getPropIfPresent(common_properties::molAtomMapNumber, mapNum)) {
         thisMolMapped = true;
@@ -141,7 +141,7 @@ bool ChemicalReaction::validate(unsigned int &numWarnings,
        molIter != this->endProductTemplates(); ++molIter) {
     // clear out some possible cached properties to prevent
     // misleading warnings
-    for (auto atom : (*molIter)->atoms()) {
+    for (auto *atom : (*molIter)->atoms()) {
       if (atom->hasProp(common_properties::_QueryFormalCharge)) {
         atom->clearProp(common_properties::_QueryFormalCharge);
       }
@@ -156,7 +156,7 @@ bool ChemicalReaction::validate(unsigned int &numWarnings,
       }
     }
     bool thisMolMapped = false;
-    for (auto atom : (*molIter)->atoms()) {
+    for (auto *atom : (*molIter)->atoms()) {
       int mapNum;
       if (atom->getPropIfPresent(common_properties::molAtomMapNumber, mapNum)) {
         thisMolMapped = true;
@@ -618,7 +618,7 @@ VECT_INT_VECT getReactingAtoms(const ChemicalReaction &rxn,
   auto resIt = res.begin();
   for (auto rIt = rxn.beginReactantTemplates();
        rIt != rxn.endReactantTemplates(); ++rIt, ++resIt) {
-    for (const auto oAtom : (*rIt)->atoms()) {
+    for (auto *const oAtom : (*rIt)->atoms()) {
       // unmapped atoms are definitely changing:
       int mapNum;
       if (!oAtom->getPropIfPresent(common_properties::molAtomMapNumber,

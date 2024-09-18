@@ -107,7 +107,7 @@ std::string getAtomSmartsSimple(const QueryAtom *qatom,
                                 const SmilesWriteParams &) {
   PRECONDITION(query, "bad query");
 
-  auto *equery = dynamic_cast<const ATOM_EQUALS_QUERY *>(query);
+  const auto *equery = dynamic_cast<const ATOM_EQUALS_QUERY *>(query);
 
   std::string descrip = query->getDescription();
   bool hasVal = false;
@@ -403,7 +403,7 @@ std::string getBondSmartsSimple(const Bond *bond,
   PRECONDITION(bond, "bad bond");
   PRECONDITION(bquery, "bad query");
 
-  auto *equery = dynamic_cast<const BOND_EQUALS_QUERY *>(bquery);
+  const auto *equery = dynamic_cast<const BOND_EQUALS_QUERY *>(bquery);
 
   std::string descrip = bquery->getDescription();
   QueryOps::RangeQueryType bmods = QueryOps::parseRangeQueryType(descrip);
@@ -516,7 +516,7 @@ std::string _recurseGetSmarts(const QueryAtom *qatom,
   unsigned int child1Features = 0;
   unsigned int child2Features = 0;
   auto chi = node->beginChildren();
-  auto child1 = chi->get();
+  auto *child1 = chi->get();
   auto dsc1 = child1->getDescription();
 
   ++chi;
@@ -555,7 +555,7 @@ std::string _recurseGetSmarts(const QueryAtom *qatom,
   }
   auto res = csmarts1;
   while (chi != node->endChildren()) {
-    auto child2 = chi->get();
+    auto *child2 = chi->get();
     ++chi;
 
     auto dsc2 = child2->getDescription();
@@ -692,7 +692,7 @@ std::string FragmentSmartsConstruct(
 
   mol.getRingInfo()->reset();
   mol.getRingInfo()->initialize(FIND_RING_TYPE_SYMM_SSSR);
-  for (auto &atom : mol.atoms()) {
+  for (const auto &atom : mol.atoms()) {
     atom->updatePropertyCache(false);
   }
 
@@ -880,7 +880,7 @@ std::string molToSmarts(const ROMol &inmol, const SmilesWriteParams &params,
       // If we can't find non-chiral atom, use the chiral atom with
       // the lowest rank (we are guaranteed to find an unprocessed atom).
       unsigned nextRank = nAtoms + 1;
-      for (auto atom : mol.atoms()) {
+      for (auto *atom : mol.atoms()) {
         if (colors[atom->getIdx()] == Canon::WHITE_NODE) {
           if (atom->getChiralTag() != Atom::CHI_TETRAHEDRAL_CCW &&
               atom->getChiralTag() != Atom::CHI_TETRAHEDRAL_CW) {
@@ -924,7 +924,7 @@ std::string GetAtomSmarts(const Atom *atom, const SmilesWriteParams &params) {
     // BOOST_LOG(rdInfoLog)<<"\tno query:" <<res;
     return res;
   }
-  const auto query = atom->getQuery();
+  auto *const query = atom->getQuery();
   PRECONDITION(query, "atom has no query");
   unsigned int queryFeatures = 0;
   std::string descrip = query->getDescription();
@@ -993,7 +993,7 @@ std::string GetBondSmarts(const Bond *bond, const SmilesWriteParams &params,
     return res;
   }
   // describeQuery(bond->getQuery());
-  auto qbond = dynamic_cast<const QueryBond *>(bond);
+  const auto *qbond = dynamic_cast<const QueryBond *>(bond);
   if (!qbond && ((bond->getBondType() == Bond::SINGLE) ||
                  (bond->getBondType() == Bond::AROMATIC))) {
     BOOST_LOG(rdInfoLog) << "\tbasic:" << res << std::endl;
@@ -1001,7 +1001,7 @@ std::string GetBondSmarts(const Bond *bond, const SmilesWriteParams &params,
   }
   CHECK_INVARIANT(qbond, "could not convert bond to QueryBond");
 
-  const auto query = qbond->getQuery();
+  auto *const query = qbond->getQuery();
   CHECK_INVARIANT(query, "bond has no query");
 
   unsigned int queryFeatures = 0;

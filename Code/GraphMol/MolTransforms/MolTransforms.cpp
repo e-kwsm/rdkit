@@ -44,7 +44,7 @@ void transformAtom(Atom *atom, RDGeom::Transform3D &tform) {
 void transformMolsAtoms(ROMol *mol, RDGeom::Transform3D &tform) {
   PRECONDITION(mol, "no molecule");
 
-  for (auto atom : mol->atoms()) {
+  for (auto *atom : mol->atoms()) {
     transformAtom(atom, tform);
   }
 }
@@ -80,7 +80,7 @@ void computeCovarianceTerms(const Conformer &conf,
   xx = xy = xz = yy = yz = zz = 0.0;
   const ROMol &mol = conf.getOwningMol();
   double wSum = 0.0;
-  for (const auto atom : mol.atoms()) {
+  for (auto *const atom : mol.atoms()) {
     if ((atom->getAtomicNum() == 1) && (ignoreHs)) {
       continue;
     }
@@ -135,7 +135,7 @@ void computeInertiaTerms(const Conformer &conf, const RDGeom::Point3D &center,
 
   xx = xy = xz = yy = yz = zz = 0.0;
   const ROMol &mol = conf.getOwningMol();
-  for (const auto atom : mol.atoms()) {
+  for (auto *const atom : mol.atoms()) {
     if ((atom->getAtomicNum() == 1) && (ignoreHs)) {
       continue;
     }
@@ -482,7 +482,7 @@ void _toBeMovedIdxList(const ROMol &mol, unsigned int iAtomId,
     doMainLoop = false;
     tIdx = stack.top();
     const Atom *tAtom = mol.getAtomWithIdx(tIdx);
-    for (auto atom : mol.atomNeighbors(tAtom)) {
+    for (auto *atom : mol.atomNeighbors(tAtom)) {
       wIdx = atom->getIdx();
       if (!visitedIdx[wIdx]) {
         visitedIdx[wIdx] = 1;

@@ -67,12 +67,12 @@ TEST_CASE("testCoresLabelledProperly", "[RGroupInternals]") {
   params.scoreMethod = FingerprintVariance;
   RGroupDecomposition decomposition(cores, params);
 
-  auto data = decomposition.data;
+  auto *data = decomposition.data;
   std::set<int> rlabels;
 
   for (const auto &core : data->cores) {
     auto mol = core.second.core;
-    for (const auto atom : mol->atoms()) {
+    for (auto *const atom : mol->atoms()) {
       if (atom->hasProp(RLABEL)) {
         int rlabel = atom->getProp<int>(RLABEL);
         if (rlabel < 0) {
@@ -87,7 +87,7 @@ TEST_CASE("testCoresLabelledProperly", "[RGroupInternals]") {
 std::pair<int, RData> makeRData(int attachment, std::vector<int> attachments,
                                 const std::string &smiles) {
   auto rData = boost::make_shared<RGroupData>();
-  auto mol = SmilesToMol(smiles);
+  auto *mol = SmilesToMol(smiles);
   auto frags = MolOps::getMolFrags(*mol);
   for (auto &frag : frags) {
     rData->add(frag, attachments);
@@ -170,7 +170,7 @@ TEST_CASE("testGithub3746", "[RGroupInternals]") {
     CHECK(decomposition.add(*mol) == static_cast<int>(i++));
   }
 
-  auto data = decomposition.data;
+  auto *data = decomposition.data;
   RGroupGa ga(*data);
   auto numberPermutations = ga.numberPermutations();
 

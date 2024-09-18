@@ -36,7 +36,7 @@ std::unique_ptr<Eigen::MatrixXd> make_burden(const ROMol &m) {
     }
   }
 
-  for (auto &bond : m.bonds()) {
+  for (const auto &bond : m.bonds()) {
     unsigned int i = bond->getBeginAtomIdx();
     unsigned int j = bond->getEndAtomIdx();
     double score = 0.0;
@@ -100,7 +100,7 @@ std::pair<double, double> BCUT2D(const ROMol &m,
                                  const std::string &atom_double_prop) {
   std::vector<double> props;
   props.reserve(m.getNumAtoms());
-  for (auto &atom : m.atoms()) {
+  for (const auto &atom : m.atoms()) {
     props.push_back(atom->getProp<double>(atom_double_prop));
   }
   return BCUT2D(m, props);
@@ -118,7 +118,7 @@ std::vector<double> BCUT2D(const ROMol &m) {
   charges.reserve(numAtoms);
 
   RDKit::computeGasteigerCharges(*mol, 12, true);
-  for (auto &atom : mol->atoms()) {
+  for (const auto &atom : mol->atoms()) {
     masses.push_back(atom->getMass());
     charges.push_back(
         atom->getProp<double>(common_properties::_GasteigerCharge));

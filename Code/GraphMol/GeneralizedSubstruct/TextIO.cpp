@@ -132,12 +132,12 @@ void ExtendedQueryMol::initFromBinary(const std::string &pickle) {
 
 namespace {
 bool has_query_feature(const ROMol &mol) {
-  for (const auto atom : mol.atoms()) {
+  for (auto *const atom : mol.atoms()) {
     if (atom->hasQuery()) {
       return true;
     }
   }
-  for (const auto bond : mol.bonds()) {
+  for (auto *const bond : mol.bonds()) {
     if (bond->hasQuery()) {
       return true;
     }

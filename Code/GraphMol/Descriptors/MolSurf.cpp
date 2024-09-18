@@ -40,7 +40,7 @@ double getLabuteAtomContribs(const ROMol &mol, std::vector<double> &Vi,
     Vi[i] = 0.0;
   }
 
-  for (const auto bond : mol.bonds()) {
+  for (auto *const bond : mol.bonds()) {
     const double bondScaleFacts[4] = {.1, 0, .2, .3};
     double Ri = rads[bond->getBeginAtomIdx()];
     double Rj = rads[bond->getEndAtomIdx()];
@@ -117,7 +117,7 @@ double getTPSAAtomContribs(const ROMol &mol, std::vector<double> &Vi,
   unsigned int nAtoms = mol.getNumAtoms();
   std::vector<int> nNbrs(nAtoms, 0), nSing(nAtoms, 0), nDoub(nAtoms, 0),
       nTrip(nAtoms, 0), nArom(nAtoms, 0), nHs(nAtoms, 0);
-  for (const auto bond : mol.bonds()) {
+  for (auto *const bond : mol.bonds()) {
     if (bond->getBeginAtom()->getAtomicNum() == 1) {
       nNbrs[bond->getEndAtomIdx()] -= 1;
       nHs[bond->getEndAtomIdx()] += 1;

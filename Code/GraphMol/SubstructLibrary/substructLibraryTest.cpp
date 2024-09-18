@@ -120,7 +120,7 @@ TEST_CASE("test1", "[substruct]") {
   boost::dynamic_bitset<> hasMatch;
 
   int i = 0;
-  for (auto lib : libs) {
+  for (auto *lib : libs) {
     auto query = "[#6;$([#6]([#6])[!#6])]"_smarts;
     if (i == 0) {
       hasMatch = runTest(*lib, *query, 1);
@@ -135,7 +135,7 @@ TEST_CASE("test1", "[substruct]") {
   }
 
   i = 0;
-  for (auto lib : libs) {
+  for (auto *lib : libs) {
     auto query = "[$([O,S]-[!$(*=O)])]"_smarts;
     if (i == 0) {
       hasMatch = runTest(*lib, *query, 1);
@@ -196,7 +196,7 @@ TEST_CASE("test2", "[substruct]") {
   libs.push_back(&serialized);
 #endif
 
-  for (auto lib : libs) {
+  for (auto *lib : libs) {
     auto query = "[#6]([#6])[!#6]"_smarts;
     runTest(*lib, *query, 1);
 #ifdef RDK_TEST_MULTITHREADED
@@ -233,7 +233,7 @@ TEST_CASE("test3", "[substruct][stereochemistry]") {
   REQUIRE(dynamic_cast<MolHolder *>(_holder) != nullptr);
 #endif
 
-  for (auto lib : libs) {
+  for (auto *lib : libs) {
     auto query = "C-1-C-C-O-C(-[O])(-[N])1"_smarts;
     std::vector<unsigned int> res = lib->getMatches(*query, true, false);
     REQUIRE(res.size() == 40);
@@ -275,7 +275,7 @@ TEST_CASE("test4", "[substruct]") {
   REQUIRE(dynamic_cast<CachedSmilesMolHolder *>(_holder) != nullptr);
 #endif
 
-  for (auto lib : libs) {
+  for (auto *lib : libs) {
     auto query = "C-1-C-C-O-C(-[O])(-[N])1"_smarts;
 
     std::vector<unsigned int> res = lib->getMatches(*query, true, false);

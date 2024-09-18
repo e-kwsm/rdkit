@@ -133,7 +133,7 @@ void standardizeMultipleMolsInPlace(FuncType sfunc, std::vector<RWMol *> &mols,
   unsigned int numThreadsToUse = std::min(
       static_cast<unsigned int>(mols.size()), getNumThreadsToUse(numThreads));
   if (numThreadsToUse == 1) {
-    for (auto molp : mols) {
+    for (auto *molp : mols) {
       sfunc(*molp, params);
     }
   }
@@ -177,7 +177,7 @@ void throwIfMolPtrListContainsDuplicates(const std::vector<RWMol *> &mols) {
 }  // namespace
 
 RWMol *cleanup(const RWMol *mol, const CleanupParameters &params) {
-  auto nmol = new RWMol(*mol);
+  auto *nmol = new RWMol(*mol);
   cleanupInPlace(*nmol, params);
   return nmol;
 }
@@ -294,7 +294,7 @@ void isotopeParentInPlace(RWMol &mol, const CleanupParameters &params,
     cleanupInPlace(mol, params);
   }
 
-  for (auto atom : mol.atoms()) {
+  for (auto *atom : mol.atoms()) {
     atom->setIsotope(0);
   }
 }

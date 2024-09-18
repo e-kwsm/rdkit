@@ -41,7 +41,7 @@ TEST_CASE("Standard deprotections", "[deprotect]") {
     auto res2 = deprotect(test_m); // should fail?
   }
   SECTION("test deprotection examples") {
-    for (auto &data : getDeprotections()) {
+    for (const auto &data : getDeprotections()) {
       std::vector<DeprotectData> vect = {data};
       std::vector<std::string> examples;
       boost::split(examples, data.example, boost::is_any_of(">"));
@@ -68,7 +68,7 @@ TEST_CASE("Standard deprotections in place", "[deprotect]") {
     CHECK(m->getProp<std::vector<std::string>>("DEPROTECTIONS") == expected);
   }
   SECTION("test deprotection examples") {
-    for (auto &data : getDeprotections()) {
+    for (const auto &data : getDeprotections()) {
       std::vector<DeprotectData> vect = {data};
       std::vector<std::string> examples;
       boost::split(examples, data.example, boost::is_any_of(">"));
