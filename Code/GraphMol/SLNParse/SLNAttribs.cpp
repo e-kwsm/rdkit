@@ -469,7 +469,7 @@ void parseMolAttribs(ROMol *mol, AttribListType attribs) {
 }
 
 void adjustAtomChiralities(RWMol *mol) {
-  for (auto atom : mol->atoms()) {
+  for (auto *atom : mol->atoms()) {
     std::string attribVal;
     if (atom->getPropIfPresent(common_properties::_SLN_s, attribVal)) {
       // the atom is marked as chiral, translate the sln chirality into
@@ -486,7 +486,7 @@ void adjustAtomChiralities(RWMol *mol) {
         atom->setChiralTag(Atom::CHI_TETRAHEDRAL_CCW);
       }
       std::list<std::pair<int, int>> neighbors;
-      for (auto nbrBond : mol->atomBonds(atom)) {
+      for (auto *nbrBond : mol->atomBonds(atom)) {
         neighbors.emplace_back(nbrBond->getOtherAtomIdx(atom->getIdx()),
                                nbrBond->getIdx());
       }

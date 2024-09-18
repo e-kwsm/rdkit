@@ -101,7 +101,7 @@ std::unique_ptr<RWMol> extractSubset(
     keepAtoms[atk] = true;
   }
   retMol->beginBatchEdit();
-  for (const auto atom : retMol->atoms()) {
+  for (auto *const atom : retMol->atoms()) {
     if (!keepAtoms[atom->getIdx()]) {
       retMol->removeAtom(atom->getIdx());
     }
@@ -110,8 +110,8 @@ std::unique_ptr<RWMol> extractSubset(
 
   // Fix the aromatic flags on anything that is no longer in a ring.
   MolOps::findSSSR(*retMol);
-  const auto rings = retMol->getRingInfo();
-  for (const auto a : retMol->atoms()) {
+  auto *const rings = retMol->getRingInfo();
+  for (auto *const a : retMol->atoms()) {
     if (a->getIsAromatic() && !rings->numAtomRings(a->getIdx())) {
       a->setIsAromatic(false);
     }
@@ -130,7 +130,7 @@ ShapeInput::ShapeInput(const ROMol &mol, const int confId,
   // Subsetting the molecule makes any bespoke atom radii, identified
   // by atom index, incorrect so stash them as atom properties.
   for (const auto &[idx, radius] : opts.atomRadii) {
-    const auto atom = mol.getAtomWithIdx(idx);
+    const auto *const atom = mol.getAtomWithIdx(idx);
     atom->setProp<double>("BespokeRadius", radius);
   }
 
@@ -469,13 +469,13 @@ std::unique_ptr<RWMol> ShapeInput::shapeToMol(const bool includeColors,
   } else {
     mol.reset(new RWMol());
     for (unsigned int i = 0; i < getNumAtoms(); i++) {
-      const auto atom = new Atom(6);
+      auto *const atom = new Atom(6);
       mol->addAtom(atom, true, true);
     }
   }
   if (includeColors) {
     for (unsigned int i = 0; i < getNumFeatures(); i++) {
-      const auto atom = new Atom(54);
+      auto *const atom = new Atom(54);
       mol->addAtom(atom, true, true);
     }
   }
@@ -483,7 +483,7 @@ std::unique_ptr<RWMol> ShapeInput::shapeToMol(const bool includeColors,
   if (includeColors) {
     num += getNumFeatures();
   }
-  const auto conf = new Conformer(num);
+  auto *const conf = new Conformer(num);
   const auto &shapeCds = getCoords();
   for (unsigned int i = 0; i < num; i++) {
     auto &pos = conf->getAtomPos(i);
@@ -614,7 +614,7 @@ void ShapeInput::extractAtoms(const Conformer &conf,
   }
   std::vector<double> theseCoords;
   theseCoords.reserve(conf.getNumAtoms() * 3);
-  for (const auto atom : conf.getOwningMol().atoms()) {
+  for (auto *const atom : conf.getOwningMol().atoms()) {
     // Ignore H atoms except deuterium and tritium which are treated elsewhere
     // as explicit atoms, and do use dummies if requested.  The latter two
     // are set to be ignored in the volume calculation, however.  This is
@@ -626,7 +626,7 @@ void ShapeInput::extractAtoms(const Conformer &conf,
         continue;
       }
       const auto atIdx = atom->getIdx();
-      auto &pos = conf.getAtomPos(atIdx);
+      const auto &pos = conf.getAtomPos(atIdx);
       theseCoords.push_back(pos.x);
       theseCoords.push_back(pos.y);
       theseCoords.push_back(pos.z);

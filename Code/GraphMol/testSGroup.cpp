@@ -1076,7 +1076,7 @@ M  END)CTAB"_ctab;
   // Keep SAP aIdx (but remove lvIdx).
   // (This molecule is completely bogus).
   {
-    auto molblock = R"CTAB(
+    const auto *molblock = R"CTAB(
      RDKit          2D
 
   0  0  0  0  0  0  0  0  0  0999 V3000

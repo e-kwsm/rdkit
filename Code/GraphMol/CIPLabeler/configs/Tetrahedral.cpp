@@ -49,7 +49,7 @@ void Tetrahedral::setPrimaryLabel(Descriptor desc) {
     case Descriptor::S:
     case Descriptor::r:
     case Descriptor::s: {
-      auto chiralAtom = getFocus();
+      auto *chiralAtom = getFocus();
       chiralAtom->setProp(common_properties::_CIPCode, to_string(desc));
       chiralAtom->setProp(common_properties::_CIPNeighborOrder,
                           d_ranked_anchors, true);
@@ -84,7 +84,7 @@ void Tetrahedral::resetPrimaryLabel() const {
 Descriptor Tetrahedral::label(const Rules &comp) {
   auto &digraph = getDigraph();
 
-  auto root = digraph.getOriginalRoot();
+  auto *root = digraph.getOriginalRoot();
   if (digraph.getCurrentRoot() != root) {
     digraph.changeRoot(root);
   }
@@ -98,7 +98,7 @@ Descriptor Tetrahedral::label(Node *node, Digraph &digraph, const Rules &comp) {
 }
 
 Descriptor Tetrahedral::label(Node *node, const Rules &comp) {
-  auto focus = getFocus();
+  auto *focus = getFocus();
   auto edges = node->getEdges();
 
   d_ranked_anchors.clear();
@@ -151,7 +151,7 @@ Descriptor Tetrahedral::label(Node *node, const Rules &comp) {
       continue;
     }
 
-    auto atom = edge->getEnd()->getAtom();
+    auto *atom = edge->getEnd()->getAtom();
     ordered[idx] = atom;
 
     // In this case we don't worry about implicit H (see Sp2Bond

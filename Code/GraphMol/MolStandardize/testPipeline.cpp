@@ -1660,7 +1660,7 @@ M  END
     Chirality::reapplyMolBlockWedging(*parentMol);
 
     const Bond *wedged = nullptr;
-    for (auto bond : parentMol->bonds()) {
+    for (auto *bond : parentMol->bonds()) {
       auto bondDir = bond->getBondDir();
       if (bondDir == Bond::BondDir::BEGINWEDGE) {
         wedged = bond;
@@ -1669,10 +1669,10 @@ M  END
     }
     REQUIRE(wedged != nullptr);
 
-    auto beginAtom = wedged->getBeginAtom();
+    auto *beginAtom = wedged->getBeginAtom();
     REQUIRE(beginAtom->getAtomicNum() == 6);
     REQUIRE(beginAtom->getDegree() == 3);
-    auto endAtom = wedged->getEndAtom();
+    auto *endAtom = wedged->getEndAtom();
     REQUIRE(endAtom->getAtomicNum() == 6);
     REQUIRE(endAtom->getDegree() == 1);
   }
@@ -1731,7 +1731,7 @@ M  END
 
     // no wavy bond is expected to be found
     const Bond *wavy = nullptr;
-    for (auto bond : parentMol->bonds()) {
+    for (auto *bond : parentMol->bonds()) {
       auto bondDir = bond->getBondDir();
       if (bondDir == Bond::BondDir::UNKNOWN) {
         wavy = bond;
@@ -1802,7 +1802,7 @@ M  END
 
     // no wavy bond is expected to be found
     wavy = nullptr;
-    for (auto bond : parentMol->bonds()) {
+    for (auto *bond : parentMol->bonds()) {
       auto bondDir = bond->getBondDir();
       if (bondDir == Bond::BondDir::UNKNOWN) {
         wavy = bond;
@@ -1813,7 +1813,7 @@ M  END
 
     // the double bond should have stereo type STEREOANY
     doubleBond = nullptr;
-    for (auto bond : parentMol->bonds()) {
+    for (auto *bond : parentMol->bonds()) {
       auto bondType = bond->getBondType();
       if (bondType == Bond::DOUBLE) {
         doubleBond = bond;
@@ -1878,7 +1878,7 @@ M  END
 
     // no wavy bond is expected to be found
     wavy = nullptr;
-    for (auto bond : parentMol->bonds()) {
+    for (auto *bond : parentMol->bonds()) {
       auto bondDir = bond->getBondDir();
       if (bondDir == Bond::BondDir::UNKNOWN) {
         wavy = bond;
@@ -1889,7 +1889,7 @@ M  END
 
     // the double bond should have stereo type STEREOANY
     doubleBond = nullptr;
-    for (auto bond : parentMol->bonds()) {
+    for (auto *bond : parentMol->bonds()) {
       auto bondType = bond->getBondType();
       if (bondType == Bond::DOUBLE) {
         doubleBond = bond;
@@ -1957,7 +1957,7 @@ M  END
 
     // no wavy bond is expected to be found
     wavy = nullptr;
-    for (auto bond : parentMol->bonds()) {
+    for (auto *bond : parentMol->bonds()) {
       auto bondDir = bond->getBondDir();
       if (bondDir == Bond::BondDir::UNKNOWN) {
         wavy = bond;
@@ -1968,7 +1968,7 @@ M  END
 
     // the double bond should have stereo type STEREOANY
     doubleBond = nullptr;
-    for (auto bond : parentMol->bonds()) {
+    for (auto *bond : parentMol->bonds()) {
       auto bondType = bond->getBondType();
       if (bondType == Bond::DOUBLE) {
         doubleBond = bond;
@@ -2038,7 +2038,7 @@ M  END
 
     // no wavy bond is expected to be found
     wavy = nullptr;
-    for (auto bond : parentMol->bonds()) {
+    for (auto *bond : parentMol->bonds()) {
       auto bondDir = bond->getBondDir();
       if (bondDir == Bond::BondDir::UNKNOWN) {
         wavy = bond;
@@ -2049,7 +2049,7 @@ M  END
 
     // the double bond should have stereo type STEREONONE
     doubleBond = nullptr;
-    for (auto bond : parentMol->bonds()) {
+    for (auto *bond : parentMol->bonds()) {
       auto bondType = bond->getBondType();
       if (bondType == Bond::DOUBLE) {
         doubleBond = bond;
@@ -2112,7 +2112,7 @@ M  END
 
     // no wavy bond is expected to be found
     wavy = nullptr;
-    for (auto bond : parentMol->bonds()) {
+    for (auto *bond : parentMol->bonds()) {
       auto bondDir = bond->getBondDir();
       if (bondDir == Bond::BondDir::UNKNOWN) {
         wavy = bond;
@@ -2123,7 +2123,7 @@ M  END
 
     // the double bond should have stereo type STEREOANY
     doubleBond = nullptr;
-    for (auto bond : parentMol->bonds()) {
+    for (auto *bond : parentMol->bonds()) {
       auto bondType = bond->getBondType();
       if (bondType == Bond::DOUBLE) {
         doubleBond = bond;
@@ -2200,7 +2200,7 @@ M  END
     Chirality::reapplyMolBlockWedging(*parentMol);
 
     const Bond *wedged = nullptr;
-    for (auto bond : parentMol->bonds()) {
+    for (auto *bond : parentMol->bonds()) {
       auto bondDir = bond->getBondDir();
       if (bondDir == Bond::BondDir::BEGINWEDGE) {
         wedged = bond;
@@ -2209,7 +2209,7 @@ M  END
     }
     REQUIRE(wedged != nullptr);
 
-    auto beginAtom = wedged->getBeginAtom();
+    auto *beginAtom = wedged->getBeginAtom();
     // there's only two position with degree 3
     // and they are equivalent
     REQUIRE(beginAtom->getDegree() == 3);

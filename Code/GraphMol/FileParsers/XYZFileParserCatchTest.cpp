@@ -41,7 +41,7 @@ TEST_CASE("xyz file parser") {
     CHECK(mol->hasProp("_FileComments"));
     CHECK(mol->getProp<std::string>("_FileComments") == "charge=-1=");
 
-    auto conf = &mol->getConformer();
+    auto *conf = &mol->getConformer();
     REQUIRE(conf);
     REQUIRE(conf->getNumAtoms() == 7);
 
@@ -81,7 +81,7 @@ TEST_CASE("xyz file parser") {
 
     CHECK(!mol->hasProp("_FileComments"));
 
-    auto conf = &mol->getConformer();
+    auto *conf = &mol->getConformer();
     REQUIRE(conf);
     REQUIRE(conf->getNumAtoms() == 8);
 
@@ -144,7 +144,7 @@ TEST_CASE("xyz block parser") {
     CHECK(mol->hasProp("_FileComments"));
     CHECK(mol->getProp<std::string>("_FileComments") == "        methane");
 
-    auto conf = &mol->getConformer();
+    auto *conf = &mol->getConformer();
     REQUIRE(conf);
     REQUIRE(conf->getNumAtoms() == 5);
 

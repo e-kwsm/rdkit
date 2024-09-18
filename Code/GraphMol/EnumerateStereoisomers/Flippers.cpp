@@ -52,7 +52,7 @@ void BondFlipper::flip(bool flag) {
 }
 
 StereoGroupFlipper::StereoGroupFlipper(const StereoGroup &sg) : Flipper() {
-  for (auto a : sg.getAtoms()) {
+  for (auto *a : sg.getAtoms()) {
     d_original_parities.emplace_back(std::make_pair(a, a->getChiralTag()));
   }
 }
@@ -83,10 +83,12 @@ AtropisomerFlipper::AtropisomerFlipper(RWMol &mol,
 
 void AtropisomerFlipper::flip(bool flag) {
   auto mol = dp_bond->getOwningMol();
-  auto b1 = mol.getBondBetweenAtoms(dp_bond->getBeginAtomIdx(), d_ctrlAtoms[0]);
-  auto b2 = mol.getBondBetweenAtoms(dp_bond->getBeginAtomIdx(), d_ctrlAtoms[1]);
-  auto b3 = mol.getBondBetweenAtoms(dp_bond->getEndAtomIdx(), d_ctrlAtoms[2]);
-  auto b4 = mol.getBondBetweenAtoms(dp_bond->getEndAtomIdx(), d_ctrlAtoms[3]);
+  auto *b1 =
+      mol.getBondBetweenAtoms(dp_bond->getBeginAtomIdx(), d_ctrlAtoms[0]);
+  auto *b2 =
+      mol.getBondBetweenAtoms(dp_bond->getBeginAtomIdx(), d_ctrlAtoms[1]);
+  auto *b3 = mol.getBondBetweenAtoms(dp_bond->getEndAtomIdx(), d_ctrlAtoms[2]);
+  auto *b4 = mol.getBondBetweenAtoms(dp_bond->getEndAtomIdx(), d_ctrlAtoms[3]);
   b3->setBondDir(Bond::BondDir::NONE);
   b4->setBondDir(Bond::BondDir::NONE);
   if (!flag) {

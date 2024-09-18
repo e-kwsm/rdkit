@@ -35,7 +35,7 @@ PartitionSet::PartitionSet(const std::vector<boost::dynamic_bitset<>> &modProd,
   // all vertices in a partition have the same vertex in the first
   // line graph.
   for (size_t i = 0; i < vtxPairs.size(); ++i) {
-    auto &vp = vtxPairs[i];
+    const auto &vp = vtxPairs[i];
     if (vp.first != firstVtx) {
       d_parts.push_back(std::vector<unsigned int>());
       d_parts.back().push_back(i);
@@ -196,7 +196,7 @@ void PartitionSet::decrementVertexCounts(int vtxNum) {
 std::ostream &operator<<(std::ostream &os, const PartitionSet &pt) {
   for (size_t i = 0; i < pt.d_parts.size(); ++i) {
     os << i << " :: " << pt.d_parts[i].size() << " ::";
-    for (auto &mem : pt.d_parts[i]) {
+    for (const auto &mem : pt.d_parts[i]) {
       os << " " << mem << " (" << (*pt.d_VtxPairs)[mem].first << ","
          << (*pt.d_VtxPairs)[mem].second << ")";
     }

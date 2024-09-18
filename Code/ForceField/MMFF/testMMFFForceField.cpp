@@ -383,7 +383,7 @@ int mmffValidationSuite(int argc, char *argv[]) {
           }
           delete mmffMolProperties;
         }
-        for (auto m : molVec) {
+        for (auto *m : molVec) {
           delete m;
         }
         sdfWriter->close();
@@ -1765,7 +1765,7 @@ void testMMFFButaneScan() {
   std::cerr << "-------------------------------------" << std::endl;
   std::cerr << "Unit test for MMFF butane scan." << std::endl;
 
-  auto molblock = R"(
+  const auto *molblock = R"(
      RDKit          3D
 
  14 13  0  0  0  0  0  0  0  0999 V2000

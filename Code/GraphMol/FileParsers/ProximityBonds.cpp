@@ -219,7 +219,7 @@ static void ConnectTheDots_Large(RWMol *mol, unsigned int flags) {
       if (flags & ctdQUICKREMOVE_H_H_CONTACTS) {
         Bond *bondToH = nullptr;
         Bond *bondToNonH = nullptr;
-        for (auto bond : mol->atomBonds(atom)) {
+        for (auto *bond : mol->atomBonds(atom)) {
           if (bond->getOtherAtom(atom)->getAtomicNum() == 1) {
             bondToH = bond;
           } else {
@@ -534,7 +534,7 @@ static bool StandardPDBDoubleBond(RWMol *mol, Atom *beg, Atom *end) {
 }
 
 void StandardPDBResidueBondOrders(RWMol *mol) {
-  for (const auto bond : mol->bonds()) {
+  for (auto *const bond : mol->bonds()) {
     if (bond->getBondType() == Bond::SINGLE) {
       Atom *beg = bond->getBeginAtom();
       Atom *end = bond->getEndAtom();

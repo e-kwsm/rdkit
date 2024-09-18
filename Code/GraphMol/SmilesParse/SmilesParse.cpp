@@ -97,7 +97,7 @@ int generic_parse_helper(T parser,
   lex_destroy(scanner);
 
   if (!branchPoints.empty()) {
-    auto input = inp.c_str() + ltrim;
+    const auto *input = inp.c_str() + ltrim;
     // If there are multiple unclosed brackets, we want to report them all at
     // once.
     for (auto [_, open_bracket_position] : branchPoints) {

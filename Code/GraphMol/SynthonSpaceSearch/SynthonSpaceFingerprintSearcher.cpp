@@ -174,7 +174,7 @@ SynthonSpaceFingerprintSearcher::searchFragSet(
 
   std::vector<ExplicitBitVect *> fragFPs;
   fragFPs.reserve(fragSet.size());
-  for (auto &frag : fragSet) {
+  for (const auto &frag : fragSet) {
     std::pair<void *, ExplicitBitVect *> tmp{frag.get(), nullptr};
     const auto it =
         std::lower_bound(d_fragFPs.begin(), d_fragFPs.end(), tmp,
@@ -200,7 +200,7 @@ SynthonSpaceFingerprintSearcher::searchFragSet(
       details::permMFromN(fragSet.size(), reaction.getSynthons().size());
 
   for (const auto &synthonOrder : synthonOrders) {
-    for (auto &connCombPatt : connCombConnPatterns) {
+    for (const auto &connCombPatt : connCombConnPatterns) {
       // Make sure that for this connector combination, the synthons in this
       // order have something similar.  All query fragment connectors must
       // match something in the corresponding synthon.  The synthon can
@@ -244,7 +244,7 @@ bool SynthonSpaceFingerprintSearcher::quickVerify(
   }
   // The hitsets produced by the fingerprint searcher are SynthonSpaceFPHitSets,
   // which have the synthon fps as well.
-  const auto hs = dynamic_cast<const SynthonSpaceFPHitSet *>(hitset);
+  const auto *const hs = dynamic_cast<const SynthonSpaceFPHitSet *>(hitset);
   // Make an approximate fingerprint by combining the FPs for
   // these synthons, adding in the addFP and taking out the
   // subtractFP.

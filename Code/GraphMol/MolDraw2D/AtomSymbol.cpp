@@ -98,7 +98,7 @@ void AtomSymbol::draw(MolDraw2D &molDrawer) const {
 
 // ****************************************************************************
 bool AtomSymbol::doesRectClash(const StringRect &rect, double padding) const {
-  for (auto &alrect : rects_) {
+  for (const auto &alrect : rects_) {
     auto oldTrans = alrect->trans_;
     alrect->trans_ += cds_;
     bool dii = alrect->doesItIntersect(rect, padding);
@@ -145,7 +145,7 @@ void AtomSymbol::adjustColons() {
 // ****************************************************************************
 void AtomSymbol::drawRects(MolDraw2D &molDrawer) const {
   Point2D tl, tr, br, bl, origTrans;
-  for (auto &rect : rects_) {
+  for (const auto &rect : rects_) {
     origTrans = rect->trans_;
     rect->trans_ += cds_;
     rect->calcCorners(tl, tr, br, bl, 0.0);

@@ -332,7 +332,7 @@ void SynthonSpace::readStream(std::istream &is, bool &cancelled) {
     auto currReaction = addReactionToPool(nextSynthon[3]);
     fixConnectors(nextSynthon[0]);
     auto synthonNum = getSynthonNum(format, nextSynthon[2]);
-    auto newSynth = addSynthonToPool(nextSynthon[0]);
+    auto *newSynth = addSynthonToPool(nextSynthon[0]);
     currReaction->addSynthon(synthonNum, newSynth, nextSynthon[1]);
   }
   // Do some final processing.
@@ -379,12 +379,12 @@ void SynthonSpace::writeDBFile(const std::string &outFilename) const {
     streamWrite(os, p);
   }
   size_t synthonNum = 0;
-  for (auto &[smiles, synthon] : d_synthonPool) {
+  for (const auto &[smiles, synthon] : d_synthonPool) {
     synthonPos[synthonNum++] = os.tellp();
     synthon->writeToDBStream(os);
   }
   size_t reactionNum = 0;
-  for (auto &[id, reaction] : d_reactions) {
+  for (const auto &[id, reaction] : d_reactions) {
     reactionPos[reactionNum++] = os.tellp();
     reaction->writeToDBStream(os);
   }
@@ -697,7 +697,7 @@ Synthon *SynthonSpace::addSynthonToPool(const std::string &smiles) {
     return it->second.get();
   } else {
     tmp.second.reset(new Synthon(smiles));
-    auto retVal = tmp.second.get();
+    auto *retVal = tmp.second.get();
     d_synthonPool.insert(it, std::move(tmp));
     return retVal;
   }

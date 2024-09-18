@@ -92,9 +92,9 @@ void MetalDisconnector::disconnect(RWMol &mol) {
     for (const auto &match : matches) {
       int metal_idx = match[0].second;
       metalChargeExcess[metal_idx] = 0;
-      auto metal = mol.getAtomWithIdx(metal_idx);
+      auto *metal = mol.getAtomWithIdx(metal_idx);
       int non_idx = match[1].second;
-      auto nonMetal = mol.getAtomWithIdx(non_idx);
+      auto *nonMetal = mol.getAtomWithIdx(non_idx);
 
       Bond *b = mol.getBondBetweenAtoms(metal_idx, non_idx);
       int order = (b->getBondType() >= Bond::DATIVEONE &&
@@ -133,7 +133,7 @@ void MetalDisconnector::adjust_charges(RDKit::RWMol &mol,
                                        std::map<int, NonMetal> &nonMetals,
                                        std::map<int, int> &metalChargeExcess) {
   for (auto it = nonMetals.begin(); it != nonMetals.end(); ++it) {
-    auto a = mol.getAtomWithIdx(it->first);
+    auto *a = mol.getAtomWithIdx(it->first);
     // do not blindly trust the original formal charge as it is often wrong
     // instead, find out the most appropriate formal charge based
     // on the allowed element valences and on its current valence/lone electrons
@@ -206,7 +206,7 @@ void MetalDisconnector::adjust_charges(RDKit::RWMol &mol,
   // adjust formal charges of metal atoms
   for (auto it = metalChargeExcess.begin(); it != metalChargeExcess.end();
        ++it) {
-    auto a = mol.getAtomWithIdx(it->first);
+    auto *a = mol.getAtomWithIdx(it->first);
     auto currentFc = a->getFormalCharge();
     const auto &valens =
         PeriodicTable::getTable()->getValenceList(a->getAtomicNum());
@@ -260,7 +260,7 @@ void MetalDisconnector::remove_haptic_dummies(RDKit::RWMol &mol) {
   for (const auto &match : matches) {
     int metal_idx = match[0].second;
     int dummy_idx = match[1].second;
-    auto bond = mol.getBondBetweenAtoms(metal_idx, dummy_idx);
+    auto *bond = mol.getBondBetweenAtoms(metal_idx, dummy_idx);
     std::string sprop;
     if (bond->getPropIfPresent(RDKit::common_properties::_MolFileBondEndPts,
                                sprop)) {

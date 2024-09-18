@@ -510,7 +510,7 @@ bool StandardPDBChiralAtom(const char *resnam, const char *atmnam) {
 }
 
 void StandardPDBResidueChirality(RWMol *mol) {
-  for (auto atom : mol->atoms()) {
+  for (auto *atom : mol->atoms()) {
     if (atom->getChiralTag() != Atom::CHI_UNSPECIFIED) {
       auto *info = (AtomPDBResidueInfo *)atom->getMonomerInfo();
       if (info && info->getMonomerType() == AtomMonomerInfo::PDBRESIDUE &&
@@ -527,7 +527,7 @@ void StandardPDBResidueChirality(RWMol *mol) {
 }
 
 void BasicPDBCleanup(RWMol &mol) {
-  for (auto atom : mol.atoms()) {
+  for (auto *atom : mol.atoms()) {
     atom->calcExplicitValence(false);
 
     // correct four-valent neutral N -> N+
@@ -683,7 +683,7 @@ std::unique_ptr<RWMol> MolFromPDBDataStream(std::istream &inStream,
     std::getline(inStream, line);
     buffer += line;
     buffer += '\n';
-    auto ptr = line.c_str();
+    const auto *ptr = line.c_str();
     // Check for END
     if (ptr[0] == 'E' && ptr[1] == 'N' && ptr[2] == 'D' &&
         (ptr[3] == ' ' || ptr[3] == '\r' || ptr[3] == '\n' || !ptr[3])) {

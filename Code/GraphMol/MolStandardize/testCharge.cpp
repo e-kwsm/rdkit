@@ -202,7 +202,7 @@ void testGithub2346() {
 
     std::unique_ptr<ROMol> res1(uncharger.uncharge(*m1));
     TEST_ASSERT(res1);
-    for (auto &atom : res1->atoms()) {
+    for (const auto &atom : res1->atoms()) {
       TEST_ASSERT(atom->getFormalCharge() == 0);
     }
 
@@ -210,7 +210,7 @@ void testGithub2346() {
     TEST_ASSERT(m2);
     std::unique_ptr<ROMol> res2(uncharger.uncharge(*m2));
     TEST_ASSERT(res2);
-    for (auto &atom : res2->atoms()) {
+    for (const auto &atom : res2->atoms()) {
       TEST_ASSERT(atom->getFormalCharge() == 0);
     }
   }

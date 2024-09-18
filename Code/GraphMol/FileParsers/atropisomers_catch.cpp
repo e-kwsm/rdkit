@@ -134,7 +134,7 @@ TEST_CASE("Github #8602: atropisomer with slight z coordinates") {
   SECTION("as reported") {
     auto m = v2::FileParsers::MolFromMolFile(rdbase + "atropWith3d_8602.mol");
     REQUIRE(m);
-    for (auto bond : m->bonds()) {
+    for (auto *bond : m->bonds()) {
       // we read in the molecule, but the bonds should be co-planar
       // in the current implementation, where 2D mol in 3D does not
       // fall back to a 2D bond explicit annotation check
@@ -146,7 +146,7 @@ TEST_CASE("Github #8602: atropisomer with slight z coordinates") {
     auto m =
         v2::FileParsers::MolFromMolFile(rdbase + "atropWith3d_8602_allZ.mol");
     REQUIRE(m);
-    for (auto bond : m->bonds()) {
+    for (auto *bond : m->bonds()) {
       // we read in the molecule, but the bonds should be co-planar
       // in the current implementation, where 2D mol in 3D does not
       // fall back to a 2D bond explicit annotation check
