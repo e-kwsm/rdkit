@@ -11,9 +11,9 @@
 #ifndef UTILS_H_
 #define UTILS_H_
 
+#include "export.h"
 #include <cstdint>
 #include <random>
-#include "export.h"
 
 namespace GarethUtil {
 
