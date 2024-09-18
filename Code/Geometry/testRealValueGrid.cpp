@@ -45,7 +45,7 @@ void test1UniformRealValueGrid3D() {
 
   grd.setVal(1, 1.0);
   TEST_ASSERT(!grd.compareVectors(grd2));
-  TEST_ASSERT(grd.compareParams(grd2))
+  TEST_ASSERT(grd.compareParams(grd2));
   // make sure the data are actually decoupled:
   // grd.setSphereOccupancy(Point3D(1.0, 1.0, 0.0), 1.5, 0.25);
   // CHECK_INVARIANT(grd.getOccupancyVect()->getTotalVal()>523, "" );
