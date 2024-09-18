@@ -75,15 +75,15 @@ class Matrix {
   virtual ~Matrix() {}
 
   //! returns the number of rows
-  inline unsigned int numRows() const { return d_nRows; }
+  unsigned int numRows() const { return d_nRows; }
 
   //! returns the number of columns
-  inline unsigned int numCols() const { return d_nCols; }
+  unsigned int numCols() const { return d_nCols; }
 
-  inline unsigned int getDataSize() const { return d_dataSize; }
+  unsigned int getDataSize() const { return d_dataSize; }
 
   //! returns a particular element of the matrix
-  inline virtual TYPE getVal(unsigned int i, unsigned int j) const {
+  virtual TYPE getVal(unsigned int i, unsigned int j) const {
     PRECONDITION(i < d_nRows, "bad index");
     PRECONDITION(j < d_nCols, "bad index");
     unsigned int id = i * d_nCols + j;
@@ -91,7 +91,7 @@ class Matrix {
   }
 
   //! sets a particular element of the matrix
-  inline virtual void setVal(unsigned int i, unsigned int j, TYPE val) {
+  virtual void setVal(unsigned int i, unsigned int j, TYPE val) {
     PRECONDITION(i < d_nRows, "bad index");
     PRECONDITION(j < d_nCols, "bad index");
     unsigned int id = i * d_nCols + j;
@@ -113,7 +113,7 @@ class Matrix {
     d_data[id] = val;
   }
   //! returns a copy of a row of the matrix
-  inline virtual void getRow(unsigned int i, Vector<TYPE> &row) const {
+  virtual void getRow(unsigned int i, Vector<TYPE> &row) const {
     PRECONDITION(i < d_nRows, "bad index");
     PRECONDITION(d_nCols == row.size(), "");
     unsigned int id = i * d_nCols;
@@ -124,7 +124,7 @@ class Matrix {
   }
 
   //! returns a copy of a column of the matrix
-  inline virtual void getCol(unsigned int i, Vector<TYPE> &col) const {
+  virtual void getCol(unsigned int i, Vector<TYPE> &col) const {
     PRECONDITION(i < d_nCols, "bad index");
     PRECONDITION(d_nRows == col.size(), "");
     unsigned int j, id;
@@ -137,10 +137,10 @@ class Matrix {
   }
 
   //! returns a pointer to our data array
-  inline TYPE *getData() { return d_data.get(); }
+  TYPE *getData() { return d_data.get(); }
 
   //! returns a const pointer to our data array
-  inline const TYPE *getData() const { return d_data.get(); }
+  const TYPE *getData() const { return d_data.get(); }
 
   //! Copy operator.
   /*! We make a copy of the other Matrix's data.
