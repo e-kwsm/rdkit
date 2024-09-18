@@ -24,7 +24,7 @@ bool isMacroAtom(const Atom *atom) {
 
 unsigned int MacroMol::addMacroAtom(std::string symbol,
                                     MonomerClass monomerClass) {
-  auto atom = new Atom(0);
+  auto *atom = new Atom(0);
 
   atom->setMacroAtomInfo(new MacroAtomInfo(std::move(symbol), monomerClass));
 
@@ -37,7 +37,7 @@ unsigned int MacroMol::addMacroBondHelper(unsigned int beginAtomIdx,
                                           unsigned int endAtomIdx,
                                           int beginAttachPt, int endAttachPt,
                                           Bond::BondType bondType) {
-  auto bond = this->getBondBetweenAtoms(beginAtomIdx, endAtomIdx);
+  auto *bond = this->getBondBetweenAtoms(beginAtomIdx, endAtomIdx);
   if (!bond) {
     // The actual macro bond types live in MacroBondInfo.
     auto numBonds =

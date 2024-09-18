@@ -43,7 +43,7 @@ std::vector<std::unique_ptr<T>> mtWorker(
 
   auto workerfunc = [&](RWMol &mol, const std::string &,
                         unsigned int recordId) {
-    auto item = func(mol);
+    auto *item = func(mol);
     {
       std::lock_guard<std::mutex> lock(get_fp_mutex());
       accum[recordId].reset(item);
@@ -74,7 +74,7 @@ std::vector<std::unique_ptr<T>> worker(v2::FileParsers::MolSupplier *suppl,
   // if we are using a multi-threaded supplier then we can register a write
   // callback to do our processing multi-threaded too
 #ifdef RDK_BUILD_THREADSAFE_SSS
-  auto tsuppl =
+  auto *tsuppl =
       dynamic_cast<v2::FileParsers::MultithreadedMolSupplier *>(suppl);
   if (tsuppl) {
     return mtWorker(tsuppl, func);
@@ -87,7 +87,7 @@ std::vector<std::unique_ptr<T>> worker(v2::FileParsers::MolSupplier *suppl,
     while (!suppl->atEnd()) {
       auto mol = suppl->next();
       if (mol) {
-        auto fp = func(*mol);
+        auto *fp = func(*mol);
         results.emplace_back(fp);
       } else if (!suppl->atEnd()) {
         results.emplace_back(nullptr);

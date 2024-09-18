@@ -343,7 +343,7 @@ void MolDraw2DSVG::addMoleculeMetadata(const ROMol &mol, int confId) const {
        << " version=\"" << RDKIT_SVG_VERSION << "\""
        << ">"
        << "\n";
-  for (const auto atom : mol.atoms()) {
+  for (auto *const atom : mol.atoms()) {
     d_os << "<rdkit:atom idx=\"" << atom->getIdx() + 1 << "\"";
     bool doKekule = false, allHsExplicit = true, isomericSmiles = true;
     d_os << " atom-smiles=\""
@@ -372,7 +372,7 @@ void MolDraw2DSVG::addMoleculeMetadata(const ROMol &mol, int confId) const {
     d_os << " />"
          << "\n";
   }
-  for (const auto bond : mol.bonds()) {
+  for (auto *const bond : mol.bonds()) {
     d_os << "<rdkit:bond idx=\"" << bond->getIdx() + 1 << "\"";
     d_os << " begin-atom-idx=\"" << bond->getBeginAtomIdx() + 1 << "\"";
     d_os << " end-atom-idx=\"" << bond->getEndAtomIdx() + 1 << "\"";

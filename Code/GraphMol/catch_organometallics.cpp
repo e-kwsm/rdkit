@@ -113,7 +113,7 @@ TEST_CASE("get haptic bond end points") {
   std::unique_ptr<RWMol> mol(
       MolFileToMol(pathName + "MOL_00002.mol", sanitize));
   REQUIRE(mol);
-  auto bond = mol->getBondWithIdx(0);
+  auto *bond = mol->getBondWithIdx(0);
   auto endPts = MolOps::details::hapticBondEndpoints(bond);
   CHECK(std::vector<int>{1, 2, 3, 4, 0} == endPts);
   bond = mol->getBondWithIdx(11);
@@ -165,12 +165,12 @@ TEST_CASE("Github 6252 - wrong endpoints after dativeBondsToHaptic") {
     CHECK(initSmi == MolToSmiles(*mol));
     std::string endpts;
     std::string attach;
-    auto bond10 = mol->getBondWithIdx(10);
+    auto *bond10 = mol->getBondWithIdx(10);
     CHECK(bond10->getBondType() == Bond::DATIVE);
     CHECK(bond10->getPropIfPresent(common_properties::_MolFileBondEndPts,
                                    endpts));
     CHECK(endpts == "(5 2 3 1 4 5)");
-    auto bond11 = mol->getBondWithIdx(11);
+    auto *bond11 = mol->getBondWithIdx(11);
     CHECK(bond11->getBondType() == Bond::DATIVE);
     CHECK(bond11->getPropIfPresent(common_properties::_MolFileBondEndPts,
                                    endpts));

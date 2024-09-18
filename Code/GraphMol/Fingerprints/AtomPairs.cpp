@@ -183,7 +183,7 @@ SparseIntVect<boost::int64_t> *getTopologicalTorsionFingerprint(
 
   std::vector<std::uint32_t> atomCodes;
   atomCodes.reserve(lmol->getNumAtoms());
-  for (const auto atom : lmol->atoms()) {
+  for (auto *const atom : lmol->atoms()) {
     if (!atomInvariants) {
       atomCodes.push_back(getAtomCode(atom, 0, includeChirality));
     } else {

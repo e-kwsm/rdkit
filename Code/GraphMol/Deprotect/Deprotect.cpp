@@ -118,7 +118,7 @@ std::unique_ptr<ROMol> deprotect(
   auto m = boost::make_shared<ROMol>(mol);
   while (something_happened) {
     something_happened = false;
-    for (auto &deprotect : deprotections) {
+    for (const auto &deprotect : deprotections) {
       if (!deprotect.isValid()) {
         // error and contine;
         continue;
@@ -156,7 +156,7 @@ bool deprotectInPlace(RWMol &mol,
   bool something_happened = true;
   while (something_happened) {
     something_happened = false;
-    for (auto &deprotect : deprotections) {
+    for (const auto &deprotect : deprotections) {
       if (!deprotect.isValid()) {
         // error and contine;
         continue;

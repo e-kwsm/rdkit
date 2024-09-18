@@ -30,10 +30,10 @@ StereoisomerEnumerator::StereoisomerEnumerator(
   }
   buildFlippers();
   // Clear unhelpful stuff out
-  for (auto atom : d_mol.atoms()) {
+  for (auto *atom : d_mol.atoms()) {
     atom->clearProp("_CIPCode");
   }
-  for (auto bond : d_mol.bonds()) {
+  for (auto *bond : d_mol.bonds()) {
     if (bond->getBondDir() == Bond::BondDir::EITHERDOUBLE ||
         bond->getBondDir() == Bond::BondDir::UNKNOWN) {
       bond->setBondDir(Bond::BondDir::NONE);

@@ -31,8 +31,8 @@ TEST_CASE("testBuildMacroMol") {
                                               Bond::BondType::SINGLE);
   auto bond_idx_1 = num_bonds_1 - 1;
   auto bond_idx_2 = num_bonds_2 - 1;
-  auto bond_1 = macro_mol->getBondWithIdx(bond_idx_1);
-  auto bond_2 = macro_mol->getBondWithIdx(bond_idx_2);
+  auto *bond_1 = macro_mol->getBondWithIdx(bond_idx_1);
+  auto *bond_2 = macro_mol->getBondWithIdx(bond_idx_2);
   REQUIRE(bond_1);
   REQUIRE(bond_2);
   CHECK(macro_mol->getNumAtoms() == 3);
@@ -54,7 +54,7 @@ TEST_CASE("testBuildMacroMol") {
     CHECK(info->getMonomerClass() == MonomerClass::AminoAcid);
   }
   CHECK(sequence == "ACD");
-  for (auto bond : {bond_1, bond_2}) {
+  for (auto *bond : {bond_1, bond_2}) {
     CHECK(bond->getBondType() == Bond::UNSPECIFIED);
     const auto *info = bond->getMacroBondInfo();
     REQUIRE(info);
@@ -78,7 +78,7 @@ TEST_CASE("testMultipleConnectionsSameMacroAtoms") {
   CHECK(num_bonds_1 == num_bonds_2);
   auto bond_idx = num_bonds_1 - 1;
   CHECK(macro_mol->getNumBonds() == 1);
-  auto graph_bond = macro_mol->getBondWithIdx(bond_idx);
+  auto *graph_bond = macro_mol->getBondWithIdx(bond_idx);
   CHECK(graph_bond->getBeginAtomIdx() == macro_atom_1);
   CHECK(graph_bond->getEndAtomIdx() == macro_atom_2);
   CHECK(graph_bond->getBondType() == Bond::BondType::UNSPECIFIED);
@@ -101,7 +101,7 @@ TEST_CASE("testAddAtomToMacroAtomBond") {
   // bonds, and that the properties of the macro atom and the bond are as
   // expected.
   auto atomMacroAtom = std::make_unique<MacroMol>();
-  auto atom = new Atom(6);
+  auto *atom = new Atom(6);
   auto atom_idx = atomMacroAtom->addAtom(atom, false, true);
   auto macro_atom_idx =
       atomMacroAtom->addMacroAtom("C", MonomerClass::AminoAcid);
@@ -111,12 +111,12 @@ TEST_CASE("testAddAtomToMacroAtomBond") {
   CHECK(atomMacroAtom->getNumAtoms() == 2);
   CHECK(atomMacroAtom->getNumBonds() == 1);
   CHECK(num_bonds == atomMacroAtom->getNumBonds());
-  auto macro_atom = atomMacroAtom->getAtomWithIdx(macro_atom_idx);
+  auto *macro_atom = atomMacroAtom->getAtomWithIdx(macro_atom_idx);
   const auto *macro_info = macro_atom->getMacroAtomInfo();
   REQUIRE(macro_info);
   CHECK(macro_info->getSymbol() == "C");
   CHECK(macro_info->getMonomerClass() == MonomerClass::AminoAcid);
-  auto bond = atomMacroAtom->getBondWithIdx(bond_idx);
+  auto *bond = atomMacroAtom->getBondWithIdx(bond_idx);
   CHECK(bond->getBeginAtomIdx() == atom_idx);
   CHECK(bond->getEndAtomIdx() == macro_atom_idx);
   CHECK(bond->getBondType() == Bond::BondType::UNSPECIFIED);
@@ -137,7 +137,7 @@ TEST_CASE("testAddMacroAtomToAtomBond") {
   auto macroAtomAtom = std::make_unique<MacroMol>();
   auto macro_atom_idx =
       macroAtomAtom->addMacroAtom("C", MonomerClass::AminoAcid);
-  auto atom = new Atom(6);
+  auto *atom = new Atom(6);
   auto atom_idx = macroAtomAtom->addAtom(atom, false, true);
   auto num_bonds =
       macroAtomAtom->addMacroAtomToAtomBond(macro_atom_idx, atom_idx, 1);
@@ -145,12 +145,12 @@ TEST_CASE("testAddMacroAtomToAtomBond") {
   CHECK(macroAtomAtom->getNumAtoms() == 2);
   CHECK(macroAtomAtom->getNumBonds() == 1);
   CHECK(num_bonds == macroAtomAtom->getNumBonds());
-  auto macro_atom = macroAtomAtom->getAtomWithIdx(macro_atom_idx);
+  auto *macro_atom = macroAtomAtom->getAtomWithIdx(macro_atom_idx);
   const auto *macro_info = macro_atom->getMacroAtomInfo();
   REQUIRE(macro_info);
   CHECK(macro_info->getSymbol() == "C");
   CHECK(macro_info->getMonomerClass() == MonomerClass::AminoAcid);
-  auto bond = macroAtomAtom->getBondWithIdx(bond_idx);
+  auto *bond = macroAtomAtom->getBondWithIdx(bond_idx);
   CHECK(bond->getBeginAtomIdx() == macro_atom_idx);
   CHECK(bond->getEndAtomIdx() == atom_idx);
   CHECK(bond->getBondType() == Bond::BondType::UNSPECIFIED);
@@ -171,12 +171,12 @@ TEST_CASE("testAddBond") {
   auto macro_atom_2 = macro_mol->addMacroAtom("C", MonomerClass::AminoAcid);
   CHECK_THROWS_AS(macro_mol->addBond(macro_atom_1, macro_atom_2),
                   Invar::Invariant);
-  auto atom = new Atom(6);
+  auto *atom = new Atom(6);
   auto atom_idx = macro_mol->addAtom(atom, false, true);
   CHECK_THROWS_AS(macro_mol->addBond(atom_idx, macro_atom_1), Invar::Invariant);
 
-  auto macro_atom = macro_mol->getAtomWithIdx(macro_atom_1);
-  auto regular_atom = macro_mol->getAtomWithIdx(atom_idx);
+  auto *macro_atom = macro_mol->getAtomWithIdx(macro_atom_1);
+  auto *regular_atom = macro_mol->getAtomWithIdx(atom_idx);
   CHECK_THROWS_AS(macro_mol->addBond(macro_atom, regular_atom),
                   Invar::Invariant);
   CHECK_THROWS_AS(macro_mol->addBond(regular_atom, macro_atom),
@@ -187,9 +187,9 @@ TEST_CASE("testAddBond") {
   macro_bond->setEndAtomIdx(macro_atom_2);
   CHECK_THROWS_AS(macro_mol->addBond(macro_bond.get()), Invar::Invariant);
 
-  auto second_atom = new Atom(6);
+  auto *second_atom = new Atom(6);
   auto second_atom_idx = macro_mol->addAtom(second_atom, false, true);
-  auto second_regular_atom = macro_mol->getAtomWithIdx(second_atom_idx);
+  auto *second_regular_atom = macro_mol->getAtomWithIdx(second_atom_idx);
   CHECK(macro_mol->addBond(regular_atom, second_regular_atom) == 1);
   CHECK(macro_mol->getNumBonds() == 1);
 }
