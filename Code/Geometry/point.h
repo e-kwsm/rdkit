@@ -445,21 +445,17 @@ class RDKIT_RDGEOMETRYLIB_EXPORT PointND : public Point {
 
   ~PointND() override = default;
 
-  inline double operator[](unsigned int i) const override {
+  double operator[](unsigned int i) const override {
     return dp_storage.get()->getVal(i);
   }
 
-  inline double &operator[](unsigned int i) override {
-    return (*dp_storage.get())[i];
-  }
+  double &operator[](unsigned int i) override { return (*dp_storage.get())[i]; }
 
-  inline void normalize() override { dp_storage.get()->normalize(); }
+  void normalize() override { dp_storage.get()->normalize(); }
 
-  inline double length() const override { return dp_storage.get()->normL2(); }
+  double length() const override { return dp_storage.get()->normL2(); }
 
-  inline double lengthSq() const override {
-    return dp_storage.get()->normL2Sq();
-  }
+  double lengthSq() const override { return dp_storage.get()->normL2Sq(); }
 
   unsigned int dimension() const override { return dp_storage.get()->size(); }
 
@@ -524,7 +520,7 @@ class RDKIT_RDGEOMETRYLIB_EXPORT PointND : public Point {
 
  private:
   VECT_SH_PTR dp_storage;
-  inline const RDNumeric::Vector<double> *getStorage() const {
+  const RDNumeric::Vector<double> *getStorage() const {
     return dp_storage.get();
   }
 };

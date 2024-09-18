@@ -161,19 +161,19 @@ union Value {
   std::vector<unsigned int> *vu;
   std::vector<std::string> *vs;
 
-  inline Value() {}
-  inline Value(double v) : d(v) {}
-  inline Value(float v) : f(v) {}
-  inline Value(int v) : i(v) {}
-  inline Value(unsigned int v) : u(v) {}
-  inline Value(bool v) : b(v) {}
-  inline Value(std::string *v) : s(v) {}
-  inline Value(std::any *v) : a(v) {}
-  inline Value(std::vector<double> *v) : vd(v) {}
-  inline Value(std::vector<float> *v) : vf(v) {}
-  inline Value(std::vector<int> *v) : vi(v) {}
-  inline Value(std::vector<unsigned int> *v) : vu(v) {}
-  inline Value(std::vector<std::string> *v) : vs(v) {}
+  Value() {}
+  Value(double v) : d(v) {}
+  Value(float v) : f(v) {}
+  Value(int v) : i(v) {}
+  Value(unsigned int v) : u(v) {}
+  Value(bool v) : b(v) {}
+  Value(std::string *v) : s(v) {}
+  Value(std::any *v) : a(v) {}
+  Value(std::vector<double> *v) : vd(v) {}
+  Value(std::vector<float> *v) : vf(v) {}
+  Value(std::vector<int> *v) : vi(v) {}
+  Value(std::vector<unsigned int> *v) : vu(v) {}
+  Value(std::vector<std::string> *v) : vs(v) {}
 };
 
 template <class T>
@@ -219,42 +219,41 @@ struct RDValue {
   short type;
   short reserved_tag = 0;  // 16 bit alignment
 
-  inline RDValue() : value(0.0), type(RDTypeTag::EmptyTag) {}
+  RDValue() : value(0.0), type(RDTypeTag::EmptyTag) {}
   // Pod Style (Direct storage)
-  inline RDValue(double v) : value(v), type(RDTypeTag::DoubleTag) {}
-  inline RDValue(float v) : value(v), type(RDTypeTag::FloatTag) {}
-  inline RDValue(int v) : value(v), type(RDTypeTag::IntTag) {}
-  inline RDValue(unsigned v) : value(v), type(RDTypeTag::UnsignedIntTag) {}
-  inline RDValue(bool v) : value(v), type(RDTypeTag::BoolTag) {}
+  RDValue(double v) : value(v), type(RDTypeTag::DoubleTag) {}
+  RDValue(float v) : value(v), type(RDTypeTag::FloatTag) {}
+  RDValue(int v) : value(v), type(RDTypeTag::IntTag) {}
+  RDValue(unsigned v) : value(v), type(RDTypeTag::UnsignedIntTag) {}
+  RDValue(bool v) : value(v), type(RDTypeTag::BoolTag) {}
 
-  inline RDValue(std::any *v) : value(v), type(RDTypeTag::AnyTag) {}
+  RDValue(std::any *v) : value(v), type(RDTypeTag::AnyTag) {}
 
   // Copies passed in pointers
-  inline RDValue(const std::any &v)
+  RDValue(const std::any &v)
       : value(new std::any(v)), type(RDTypeTag::AnyTag) {}
-  inline RDValue(const std::string &v)
+  RDValue(const std::string &v)
       : value(new std::string(v)), type(RDTypeTag::StringTag) {}
   template <class T>
-  inline RDValue(const T &v)
-      : value(new std::any(v)), type(RDTypeTag::AnyTag) {}
+  RDValue(const T &v) : value(new std::any(v)), type(RDTypeTag::AnyTag) {}
 
-  inline RDValue(const std::vector<double> &v)
+  RDValue(const std::vector<double> &v)
       : value(new std::vector<double>(v)), type(RDTypeTag::VecDoubleTag) {}
-  inline RDValue(const std::vector<float> &v)
+  RDValue(const std::vector<float> &v)
       : value(new std::vector<float>(v)), type(RDTypeTag::VecFloatTag) {}
-  inline RDValue(const std::vector<int> &v)
+  RDValue(const std::vector<int> &v)
       : value(new std::vector<int>(v)), type(RDTypeTag::VecIntTag) {}
-  inline RDValue(const std::vector<unsigned int> &v)
+  RDValue(const std::vector<unsigned int> &v)
       : value(new std::vector<unsigned int>(v)),
         type(RDTypeTag::VecUnsignedIntTag) {}
-  inline RDValue(const std::vector<std::string> &v)
+  RDValue(const std::vector<std::string> &v)
       : value(new std::vector<std::string>(v)), type(RDTypeTag::VecStringTag) {}
 
   short getTag() const { return type; }
 
   // ptrCast - unsafe, use rdvalue_cast instead.
   template <class T>
-  inline T *ptrCast() const {
+  T *ptrCast() const {
     return RDTypeTag::detail::valuePtrCast<T>(value);
   }
 
@@ -292,7 +291,7 @@ struct RDValue {
   }
 
   static  // Given a type and an RDAnyValue - delete the appropriate structure
-      inline void
+      void
       cleanup_rdvalue(RDValue &rdvalue) {
     rdvalue.destroy();
   }

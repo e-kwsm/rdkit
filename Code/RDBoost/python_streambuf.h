@@ -123,7 +123,7 @@ class streambuf : public std::basic_streambuf<char> {
   typedef base_t::traits_type traits_type;
 
   // work around Visual C++ 7.1 problem
-  inline static int traits_type_eof() { return traits_type::eof(); }
+  static int traits_type_eof() { return traits_type::eof(); }
 
   /// The default size of the read and write buffer.
   /** They are respectively used to buffer data read from and data written to

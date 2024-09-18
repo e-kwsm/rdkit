@@ -54,8 +54,7 @@ class RDKIT_DISTGEOMETRY_EXPORT BoundsMatrix
 
   //! Set the upper bound between points i and j only if it is better than
   //! previously existing value (i.e. the new value is smaller)
-  inline void setUpperBoundIfBetter(unsigned int i, unsigned int j,
-                                    double val) {
+  void setUpperBoundIfBetter(unsigned int i, unsigned int j, double val) {
     if ((val < getUpperBound(i, j)) && (val > getLowerBound(i, j))) {
       setUpperBound(i, j, val);
     }
@@ -73,8 +72,7 @@ class RDKIT_DISTGEOMETRY_EXPORT BoundsMatrix
 
   //! Set the lower bound between points i and j only if it is better than
   //! previously existing value (i.e. the new value is larger)
-  inline void setLowerBoundIfBetter(unsigned int i, unsigned int j,
-                                    double val) {
+  void setLowerBoundIfBetter(unsigned int i, unsigned int j, double val) {
     if ((val > getLowerBound(i, j)) && (val < getUpperBound(i, j))) {
       setLowerBound(i, j, val);
     }
@@ -91,7 +89,7 @@ class RDKIT_DISTGEOMETRY_EXPORT BoundsMatrix
 
   //! Do a simple check of the current bounds - i.e. all lower bounds are
   //! smaller than the existing upper bounds
-  inline bool checkValid() const {
+  bool checkValid() const {
     unsigned int i, j;
     for (i = 1; i < d_nRows; i++) {
       for (j = 0; j < i; j++) {
