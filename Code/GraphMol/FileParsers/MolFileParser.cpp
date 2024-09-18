@@ -1094,7 +1094,7 @@ const QueryAtom::QUERYATOM_QUERY *getAndQueries(
     const QueryAtom::QUERYATOM_QUERY *q,
     std::vector<const QueryAtom::QUERYATOM_QUERY *> &queryVect) {
   if (q) {
-    auto qOrig = q;
+    const auto *qOrig = q;
     for (auto cq = qOrig->beginChildren(); cq != qOrig->endChildren(); ++cq) {
       if (q == qOrig && q->getDescription() != "AtomAnd") {
         q = nullptr;
@@ -1535,13 +1535,13 @@ Atom *ParseMolFileAtomLine(const std::string_view text, RDGeom::Point3D &pos,
 
   if (hCount >= 1) {
     if (!res->hasQuery()) {
-      auto qatom = new QueryAtom(*res);
+      auto *qatom = new QueryAtom(*res);
       res.reset(qatom);
     }
     res->setNoImplicit(true);
     if (hCount > 1) {
       ATOM_EQUALS_QUERY *oq = makeAtomImplicitHCountQuery(hCount - 1);
-      auto nq = makeAtomSimpleQuery<ATOM_LESSEQUAL_QUERY>(
+      auto *nq = makeAtomSimpleQuery<ATOM_LESSEQUAL_QUERY>(
           hCount - 1, oq->getDataFunc(),
           std::string("less_") + oq->getDescription());
       res->expandQuery(nq);
@@ -1896,7 +1896,7 @@ bool checkAttachmentPointsAreValid(
     if (attachPoint.lvIdx == nAtoms) {
       const std::vector<unsigned int> &bonds = sgroup.second.getBonds();
       if (bonds.size() == 1) {
-        const auto bond = mol->getBondWithIdx(bonds.front());
+        const auto *const bond = mol->getBondWithIdx(bonds.front());
         if (bond->getBeginAtomIdx() == attachPoint.aIdx ||
             bond->getEndAtomIdx() == attachPoint.aIdx) {
           attachPoint.lvIdx = bond->getOtherAtomIdx(attachPoint.aIdx);
@@ -2314,7 +2314,7 @@ void ParseV3000AtomProps(RWMol *mol, Atom *&atom, typename T::iterator &token,
         }
         if (hcount > 0) {
           ATOM_EQUALS_QUERY *oq = makeAtomImplicitHCountQuery(hcount);
-          auto nq = makeAtomSimpleQuery<ATOM_LESSEQUAL_QUERY>(
+          auto *nq = makeAtomSimpleQuery<ATOM_LESSEQUAL_QUERY>(
               hcount, oq->getDataFunc(),
               std::string("less_") + oq->getDescription());
           atom->expandQuery(nq);
@@ -2930,7 +2930,7 @@ void processSMARTSQ(RWMol &mol, const SubstanceGroup &sg) {
   }
 
   for (auto aidx : sg.getAtoms()) {
-    auto at = mol.getAtomWithIdx(aidx);
+    auto *at = mol.getAtomWithIdx(aidx);
 
     std::unique_ptr<RWMol> m;
     try {
@@ -2974,11 +2974,11 @@ void processMrvImplicitH(RWMol &mol, const SubstanceGroup &sg) {
           if (atIdx < mol.getNumAtoms()) {
             // if the atom has aromatic bonds to it, then set the explicit
             // value, otherwise skip it.
-            auto atom = mol.getAtomWithIdx(atIdx);
+            auto *atom = mol.getAtomWithIdx(atIdx);
             bool hasAromaticBonds = false;
             for (auto bndI :
                  boost::make_iterator_range(mol.getAtomBonds(atom))) {
-              auto bnd = (mol)[bndI];
+              auto *bnd = (mol)[bndI];
               if (bnd->getIsAromatic() ||
                   bnd->getBondType() == Bond::AROMATIC) {
                 hasAromaticBonds = true;
@@ -3007,7 +3007,7 @@ void processMrvImplicitH(RWMol &mol, const SubstanceGroup &sg) {
 
 void processZBO(RWMol &mol, const SubstanceGroup &sg) {
   for (auto bidx : sg.getBonds()) {
-    auto bond = mol.getBondWithIdx(bidx);
+    auto *bond = mol.getBondWithIdx(bidx);
     bond->setBondType(Bond::BondType::ZERO);
   }
 }
@@ -3035,7 +3035,7 @@ void processZCH(RWMol &mol, const SubstanceGroup &sg) {
       }
       for (auto i = 0u; i < aids.size(); ++i) {
         auto aid = aids[i];
-        auto atom = mol.getAtomWithIdx(aid);
+        auto *atom = mol.getAtomWithIdx(aid);
         auto val = 0;
         if (!splitLine[i].empty()) {
           val = FileParserUtils::toInt(splitLine[i]);
@@ -3067,7 +3067,7 @@ void processHYD(RWMol &mol, const SubstanceGroup &sg) {
       }
       for (auto i = 0u; i < aids.size(); ++i) {
         auto aid = aids[i];
-        auto atom = mol.getAtomWithIdx(aid);
+        auto *atom = mol.getAtomWithIdx(aid);
         auto val = 0;
         if (!splitLine[i].empty()) {
           val = FileParserUtils::toInt(splitLine[i]);
@@ -3138,7 +3138,7 @@ void ProcessMolProps(RWMol *mol) {
   // we have to loop the ugly way because we may need to actually replace an
   // atom
   for (unsigned int aidx = 0; aidx < mol->getNumAtoms(); ++aidx) {
-    auto atom = mol->getAtomWithIdx(aidx);
+    auto *atom = mol->getAtomWithIdx(aidx);
     int ival = 0;
     if (atom->getPropIfPresent(common_properties::molSubstCount, ival) &&
         ival != 0) {
@@ -3454,7 +3454,7 @@ void finishMolProcessing(
   }
 
   // calculate explicit valence on each atom:
-  for (auto atom : res->atoms()) {
+  for (auto *atom : res->atoms()) {
     atom->calcExplicitValence(false);
   }
 

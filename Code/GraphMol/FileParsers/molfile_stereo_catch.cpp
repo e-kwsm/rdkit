@@ -598,7 +598,7 @@ TEST_CASE(
 
 TEST_CASE("stereo in ring", "[molblock][stereo]") {
   SECTION("test 1") {
-    auto molblock = R"CTAB(
+    const auto *molblock = R"CTAB(
   Mrv2311 10242314442D
 
   0  0  0     0  0            999 V3000
@@ -642,7 +642,7 @@ M  END
 
 TEST_CASE("github #9020: implicit/explicit H labels depend on 3D conformers") {
   SECTION("as reported") {
-    auto mb3 = R"CTAB(
+    const auto *mb3 = R"CTAB(
      RDKit          3D
 
   6  5  0  0  0  0  0  0  0  0999 V2000
@@ -677,7 +677,7 @@ M  END)CTAB";
     }
   }
   SECTION("With a quaternary N") {
-    auto mb3 = R"CTAB(
+    const auto *mb3 = R"CTAB(
      RDKit          3D
 
   6  5  0  0  0  0  0  0  0  0999 V2000
@@ -718,7 +718,7 @@ M  END)CTAB";
     }
   }
   SECTION("actually chiral") {
-    auto mb3 = R"CTAB(
+    const auto *mb3 = R"CTAB(
      RDKit          3D
 
   6  5  0  0  0  0  0  0  0  0999 V2000
@@ -753,7 +753,7 @@ M  END)CTAB";
     }
   }
   SECTION("not chiral, one H") {
-    auto mb3 = R"CTAB(
+    const auto *mb3 = R"CTAB(
      RDKit          3D
 
   6  5  0  0  0  0  0  0  0  0999 V2000

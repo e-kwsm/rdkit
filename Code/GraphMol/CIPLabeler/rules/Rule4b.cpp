@@ -247,8 +247,8 @@ int Rule4b::comparePairs(const Node *a, const Node *b, Descriptor refA,
   auto bQueue = std::vector<const Node *>({b});
 
   for (auto pos = 0u; pos < aQueue.size() && pos < bQueue.size(); ++pos) {
-    const auto aNode = aQueue[pos];
-    const auto bNode = bQueue[pos];
+    const auto *const aNode = aQueue[pos];
+    const auto *const bNode = bQueue[pos];
 
     const auto &desA = PairList::ref(aNode->getAux());
     const auto &desB = PairList::ref(bNode->getAux());

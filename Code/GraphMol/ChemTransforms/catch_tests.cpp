@@ -62,7 +62,7 @@ TEST_CASE("Github #1039") {
     auto m = "O/C=N/C=C"_smiles;
     std::vector<std::pair<unsigned int, unsigned int>> dummyLabels{{1, 1}};
     std::vector<unsigned int> bonds{0};
-    auto resa = RDKit::MolFragmenter::fragmentOnBonds(*m, bonds);
+    auto *resa = RDKit::MolFragmenter::fragmentOnBonds(*m, bonds);
     CHECK(MolToSmiles(*resa) == "*/C=N/C=C.[1*]O");
     // make sure we still have stereo atoms
     std::vector<std::vector<int>> expected_stereo_atoms{
@@ -80,7 +80,7 @@ TEST_CASE("Github #1039") {
     auto m = "C/C(O)=N/C=C"_smiles;
     std::vector<std::pair<unsigned int, unsigned int>> dummyLabels{{1, 1}};
     std::vector<unsigned int> bonds{0};
-    auto resa = RDKit::MolFragmenter::fragmentOnBonds(*m, bonds);
+    auto *resa = RDKit::MolFragmenter::fragmentOnBonds(*m, bonds);
     CHECK(MolToSmiles(*resa) == "*/C(O)=N/C=C.[1*]C");
     // make sure we still have stereo atoms
     std::vector<std::vector<int>> expected_stereo_atoms;
@@ -106,7 +106,7 @@ TEST_CASE("Github #1039") {
         "[2*]C=C.[3*]/N=C/O", "[3*]=C.[4*]=C/N=C/O"};
     for (unsigned int i = 0; i < m->getNumBonds(); ++i) {
       std::vector<unsigned int> bonds{i};
-      auto resa = RDKit::MolFragmenter::fragmentOnBonds(*m, bonds);
+      auto *resa = RDKit::MolFragmenter::fragmentOnBonds(*m, bonds);
       auto smiles = MolToSmiles(*resa);
       CHECK(smiles == expected[i]);
       delete resa;
@@ -124,7 +124,7 @@ TEST_CASE("Github #1039") {
         "[3*]F.[5*][C@@H](I)/N=C/O"};
     for (unsigned int i = 0; i < m->getNumBonds(); ++i) {
       std::vector<unsigned int> bonds{i};
-      auto resa = RDKit::MolFragmenter::fragmentOnBonds(*m, bonds);
+      auto *resa = RDKit::MolFragmenter::fragmentOnBonds(*m, bonds);
       auto smiles = MolToSmiles(*resa);
       CHECK(smiles == expected[i]);
       delete resa;
@@ -197,14 +197,14 @@ TEST_CASE("molzip") {
         for (unsigned int j = 0; j < m->getNumBonds(); ++j) {
           if (i != j) {
             std::vector<unsigned int> bonds{i, j};
-            auto resa = RDKit::MolFragmenter::fragmentOnBonds(*m, bonds);
+            auto *resa = RDKit::MolFragmenter::fragmentOnBonds(*m, bonds);
             MolzipParams p;
             p.label = MolzipLabel::FragmentOnBonds;
             CHECK(MolToSmiles(*molzip(*resa, p)) == MolToSmiles(*m));
             delete resa;
             // Now try using atom labels
-            auto res = RDKit::MolFragmenter::fragmentOnBonds(*m, bonds, true,
-                                                             &dummyLabels);
+            auto *res = RDKit::MolFragmenter::fragmentOnBonds(*m, bonds, true,
+                                                              &dummyLabels);
             for (auto *atom : res->atoms()) {
               if (atom->getIsotope()) {
                 atom->setAtomMapNum(atom->getIsotope());
@@ -480,7 +480,7 @@ TEST_CASE("Molzip with 2D coordinates", "[molzip]") {
   for (size_t i = 0; i < frags.size(); i++) {
     const auto sma =
         std::regex_replace(frags[i], std::regex(R"(\[\d\*\:\d\])"), "*");
-    const auto query = SmartsToMol(sma);
+    auto *const query = SmartsToMol(sma);
     const auto &mol = mols[i];
     const auto &molConformer = mol->getConformer();
     const auto molMatches = SubstructMatch(*mol, *query);
@@ -529,7 +529,7 @@ TEST_CASE("Github #6034: FragmentOnBonds may create unexpected radicals") {
   REQUIRE(pieces);
   REQUIRE(nCutsPerAtom == std::vector<unsigned>{1, 1, 0, 0, 0, 0, 0, 0, 0});
 
-  for (auto at : pieces->atoms()) {
+  for (auto *at : pieces->atoms()) {
     INFO("atom " + std::to_string(at->getIdx()));
     if (at->getAtomicNum() == 6) {
       CHECK(at->getNoImplicit() == (at->getIdx() == 1));
@@ -591,27 +591,27 @@ TEST_CASE(
   // Basic test
   auto m1 = "c1ccccc1-C1CCCCC1"_smarts;
   REQUIRE(m1);
-  auto bond1 = m1->getBondWithIdx(1);
+  auto *bond1 = m1->getBondWithIdx(1);
   REQUIRE(bond1);
   REQUIRE(bond1->hasQuery());
   std::unique_ptr<ROMol> splitM1(
       MolFragmenter::fragmentOnBonds(*m1, std::vector<unsigned int>{1, 5}));
   REQUIRE(splitM1);
-  auto nb1 = splitM1->getBondWithIdx(11);
+  auto *nb1 = splitM1->getBondWithIdx(11);
   REQUIRE(nb1);
   CHECK(nb1->hasQuery());
   CHECK(nb1->getQuery()->getDescription() == "SingleOrAromaticBond");
 
-  auto nb2 = splitM1->getBondWithIdx(12);
+  auto *nb2 = splitM1->getBondWithIdx(12);
   REQUIRE(nb2);
   CHECK(nb2->hasQuery());
   CHECK(nb2->getQuery()->getDescription() == "SingleOrAromaticBond");
 
-  auto nb3 = splitM1->getBondWithIdx(13);
+  auto *nb3 = splitM1->getBondWithIdx(13);
   REQUIRE(nb3);
   CHECK(nb3->hasQuery());
   CHECK(nb3->getQuery()->getDescription() == "BondOrder");
-  auto nb4 = splitM1->getBondWithIdx(14);
+  auto *nb4 = splitM1->getBondWithIdx(14);
   REQUIRE(nb4);
   CHECK(nb4->hasQuery());
   CHECK(nb4->getQuery()->getDescription() == "BondOrder");
@@ -619,23 +619,23 @@ TEST_CASE(
   // Check it does nothing if there isn't a query
   auto m2 = "c1ccccc1"_smiles;
   REQUIRE(m2);
-  auto bond2 = m2->getBondWithIdx(1);
+  auto *bond2 = m2->getBondWithIdx(1);
   REQUIRE(bond2);
   REQUIRE(!bond2->hasQuery());
   std::unique_ptr<ROMol> splitM2(
       MolFragmenter::fragmentOnBonds(*m2, std::vector<unsigned int>{1}));
   REQUIRE(splitM2);
-  auto nb5 = splitM2->getBondWithIdx(5);
+  auto *nb5 = splitM2->getBondWithIdx(5);
   REQUIRE(nb5);
   CHECK(!nb5->hasQuery());
-  auto nb6 = splitM2->getBondWithIdx(6);
+  auto *nb6 = splitM2->getBondWithIdx(6);
   REQUIRE(nb6);
   CHECK(!nb6->hasQuery());
 
   // Check it does nothing if bond types are specified
   auto m3 = "c1ccccc1"_smiles;
   REQUIRE(m3);
-  auto bond3 = m3->getBondWithIdx(1);
+  auto *bond3 = m3->getBondWithIdx(1);
   REQUIRE(bond3);
   REQUIRE(!bond3->hasQuery());
   auto dummyLabels =
@@ -644,10 +644,10 @@ TEST_CASE(
   std::unique_ptr<ROMol> splitM3(MolFragmenter::fragmentOnBonds(
       *m3, std::vector<unsigned int>{1}, true, &dummyLabels, &newTypes));
   REQUIRE(splitM3);
-  auto nb7 = splitM3->getBondWithIdx(5);
+  auto *nb7 = splitM3->getBondWithIdx(5);
   REQUIRE(nb7);
   CHECK(!nb7->hasQuery());
-  auto nb8 = splitM3->getBondWithIdx(6);
+  auto *nb8 = splitM3->getBondWithIdx(6);
   REQUIRE(nb8);
   CHECK(!nb8->hasQuery());
 }

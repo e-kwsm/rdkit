@@ -153,7 +153,7 @@ void guessFormalCharges(RWMol *res) {
       // this will barf when I have e.g. an uncharged 4 valent nitrogen ...
       int noAromBonds = 0;
       double accum = 0;  // FIX: could this give non int values ?
-      for (const auto bnd : res->atomBonds(at)) {
+      for (auto *const bnd : res->atomBonds(at)) {
         accum += bnd->getValenceContrib(at);
         if (bnd->getBondType() == Bond::AROMATIC) {
           ++noAromBonds;
@@ -285,7 +285,7 @@ unsigned int chkNoHNeighbNOx(RWMol *res, ROMol::ADJ_ITER atIdxIt,
 bool cleanUpMol2Substructures(RWMol *res) {
   // NOTE: check the nitro fix in guess formal charges!
   boost::dynamic_bitset<> isFixed(res->getNumAtoms());
-  for (auto at : res->atoms()) {
+  for (auto *at : res->atoms()) {
     unsigned int idx = at->getIdx();
     // make sure we haven't finished this atom already
     if (isFixed[idx]) {
@@ -306,7 +306,7 @@ bool cleanUpMol2Substructures(RWMol *res) {
       }
       auto nbrs = res->atomNeighbors(at);
       // this should return only the C.2
-      auto nbr = *nbrs.begin();
+      auto *nbr = *nbrs.begin();
       auto tATT = nbr->getProp<std::string>(common_properties::_TriposAtomType);
       if (tATT == "P.3") {
         // special case for phosphates
@@ -316,7 +316,7 @@ bool cleanUpMol2Substructures(RWMol *res) {
         b->setIsAromatic(false);
         at->setIsAromatic(false);
         isFixed[idx] = 1;
-        for (auto onbr : res->atomNeighbors(nbr)) {
+        for (auto *onbr : res->atomNeighbors(nbr)) {
           if (onbr->getAtomicNum() == 8 && !isFixed[onbr->getIdx()] &&
               onbr->getProp<std::string>(common_properties::_TriposAtomType) ==
                   "O.co2") {

@@ -224,7 +224,7 @@ void getFeatureInvariants(const ROMol &mol, std::vector<uint32_t> &invars,
     }
   }
   std::fill(invars.begin(), invars.end(), 0);
-  auto &queries = (useLocalPatterns ? featureMatchers : *patterns);
+  const auto &queries = (useLocalPatterns ? featureMatchers : *patterns);
   for (unsigned int i = 0; i < queries.size(); ++i) {
     unsigned int mask = 1 << i;
     std::vector<MatchVectType> matchVect;

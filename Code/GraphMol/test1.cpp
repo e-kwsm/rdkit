@@ -1310,7 +1310,7 @@ void testReplaceChargedAtomWithQueryAtom() {
                        << std::endl;
   auto mol = "[NH3+]C"_smiles;
   TEST_ASSERT(mol.get());
-  auto a = mol->getAtomWithIdx(0);
+  auto *a = mol->getAtomWithIdx(0);
   TEST_ASSERT(a);
   const QueryAtom *qa = dynamic_cast<const QueryAtom *>(
       QueryOps::replaceAtomWithQueryAtom(mol.get(), a));
@@ -1485,7 +1485,7 @@ void testRanges() {
 
   // For by value (ok since the atoms are pointers)
   unsigned int i = 0;
-  for (auto atom : m->atoms()) {
+  for (auto *atom : m->atoms()) {
     TEST_ASSERT(atom->getIdx() == i);
     i++;
   }
@@ -1506,24 +1506,24 @@ void testRanges() {
 
   const RWMol *cm = m;
   i = 0;
-  for (auto atom : cm->atoms()) {
+  for (auto *atom : cm->atoms()) {
     TEST_ASSERT(atom->getIdx() == i);
     i++;
   }
 
   i = 0;
-  for (auto bond : m->bonds()) {
+  for (auto *bond : m->bonds()) {
     TEST_ASSERT(bond->getIdx() == i);
     i++;
   }
 
   i = 0;
-  for (auto bond : cm->bonds()) {
+  for (auto *bond : cm->bonds()) {
     TEST_ASSERT(bond->getIdx() == i);
     i++;
   }
 
-  const auto atom = m->getAtomWithIdx(0);
+  auto *const atom = m->getAtomWithIdx(0);
   i = 0;
   for (const auto &nbri :
        boost::make_iterator_range(m->getAtomNeighbors(atom))) {
@@ -1545,7 +1545,7 @@ void testRanges() {
   i = 0;
   for (const auto &nbri :
        boost::make_iterator_range(m->getAtomNeighbors(atom))) {
-    auto nbr = (*m)[nbri];
+    auto *nbr = (*m)[nbri];
     TEST_ASSERT(nbr->getAtomicNum() == 6);
     nbr->setAtomicNum(7);
     nbr->setAtomicNum(6);
@@ -1555,7 +1555,7 @@ void testRanges() {
 
   i = 0;
   for (const auto &nbri : boost::make_iterator_range(m->getAtomBonds(atom))) {
-    auto bnd = (*m)[nbri];
+    auto *bnd = (*m)[nbri];
     TEST_ASSERT(bnd->getBondType() == Bond::SINGLE);
     bnd->setBondType(Bond::DOUBLE);
     bnd->setBondType(Bond::SINGLE);
@@ -1647,7 +1647,7 @@ void testHasValenceViolation() {
            "[*] |$_R1$|",    // rgroup
        }) {
     auto mol = to_mol(smiles);
-    for (auto atom : mol->atoms()) {
+    for (auto *atom : mol->atoms()) {
       TEST_ASSERT(!atom->hasValenceViolation());
     }
   }
@@ -1678,7 +1678,7 @@ void testHasValenceViolation() {
            "[Lv-4]",
        }) {
     auto mol = to_mol(smiles);
-    auto atom = mol->getAtomWithIdx(0);
+    auto *atom = mol->getAtomWithIdx(0);
     TEST_ASSERT(atom->hasValenceViolation());
   }
 
@@ -1692,7 +1692,7 @@ void testHasValenceViolation() {
            "[#6&R](-[#6])=[#6]",         // advanced query features
        }) {
     auto mol = v2::SmilesParse::MolFromSmarts(smarts);
-    for (auto atom : mol->atoms()) {
+    for (auto *atom : mol->atoms()) {
       TEST_ASSERT(!atom->hasValenceViolation());
     }
   }
