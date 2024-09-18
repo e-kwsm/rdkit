@@ -6724,14 +6724,14 @@ void testGithub1950() {
     auto fName =
         rdbase + "/Code/GraphMol/ChemReactions/testData/github1950_1.rxn";
 
-    auto rxn = RxnFileToChemicalReaction(fName);
+    auto *rxn = RxnFileToChemicalReaction(fName);
     TEST_ASSERT(rxn);
     TEST_ASSERT(rxn->getNumReactantTemplates() == 2);
     TEST_ASSERT(rxn->getNumProductTemplates() == 1);
 
     MOL_SPTR_VECT reacts;
     std::string smi = "c1ccccc1Cl";
-    auto mol = SmilesToMol(smi);
+    auto *mol = SmilesToMol(smi);
     TEST_ASSERT(mol);
     reacts.push_back(ROMOL_SPTR(mol));
 
@@ -6753,14 +6753,14 @@ void testGithub1950() {
     auto fName =
         rdbase + "/Code/GraphMol/ChemReactions/testData/github1950_2.rxn";
     std::cerr << "-------------" << std::endl;
-    auto rxn = RxnFileToChemicalReaction(fName);
+    auto *rxn = RxnFileToChemicalReaction(fName);
     TEST_ASSERT(rxn);
     TEST_ASSERT(rxn->getNumReactantTemplates() == 2);
     TEST_ASSERT(rxn->getNumProductTemplates() == 1);
 
     MOL_SPTR_VECT reacts;
     std::string smi = "c1ccccc1Cl";
-    auto mol = SmilesToMol(smi);
+    auto *mol = SmilesToMol(smi);
     TEST_ASSERT(mol);
     reacts.push_back(ROMOL_SPTR(mol));
 
@@ -6784,14 +6784,14 @@ void testGithub1950() {
      // this is roughly the same reaction as SMARTS
     std::string smarts =
         "Cl[#6:2]=,:[#6,#7:3].[#8:5]-[#6:4]>>[#6:4]-[#8:5]-[#6:2]~[*:3]";
-    auto rxn = RxnSmartsToChemicalReaction(smarts);
+    auto *rxn = RxnSmartsToChemicalReaction(smarts);
     TEST_ASSERT(rxn);
     TEST_ASSERT(rxn->getNumReactantTemplates() == 2);
     TEST_ASSERT(rxn->getNumProductTemplates() == 1);
 
     MOL_SPTR_VECT reacts;
     std::string smi = "c1ccccc1Cl";
-    auto mol = SmilesToMol(smi);
+    auto *mol = SmilesToMol(smi);
     TEST_ASSERT(mol);
     reacts.push_back(ROMOL_SPTR(mol));
 
@@ -6889,7 +6889,7 @@ void testGithub1269() {
 
     MOL_SPTR_VECT reacts;
     std::string smi = "NC";
-    auto mol = SmilesToMol(smi);
+    auto *mol = SmilesToMol(smi);
     TEST_ASSERT(mol);
     reacts.push_back(ROMOL_SPTR(mol));
 
@@ -7325,7 +7325,7 @@ void testDblBondCrash() {
       // with serialized molecules from old RDKit versions)
       auto mol = RWMOL_SPTR(SmilesToMol("C/C=C(/C)CN"));
       mol->getBondWithIdx(1)->getStereoAtoms().clear();
-      for (auto atom : mol->atoms()) {
+      for (auto *atom : mol->atoms()) {
         if (atom->hasProp(common_properties::_CIPRank)) {
           atom->clearProp(common_properties::_CIPRank);
         }
@@ -7515,7 +7515,7 @@ void testGithub3078() {
   TEST_ASSERT(prods.size() == 1);
   TEST_ASSERT(prods[0].size() == 1);
 
-  const auto bond = prods[0][0]->getBondWithIdx(1);
+  auto *const bond = prods[0][0]->getBondWithIdx(1);
   TEST_ASSERT(bond->getBondType() == Bond::DOUBLE);
   TEST_ASSERT(bond->getStereo() == Bond::STEREONONE);
 
@@ -7557,7 +7557,7 @@ void testGithub4114() {
   // Set dummy properties on all bonds; mark the central double bonds
   // as EITHERDOUBLE
   for (unsigned int i = 0; i < mol[0]->getNumBonds(); ++i) {
-    auto bnd = mol[0]->getBondWithIdx(i);
+    auto *bnd = mol[0]->getBondWithIdx(i);
     bnd->setProp(DUMMY_PROP, i);
 
     if (i >= 3 && i <= 6) {
@@ -7577,8 +7577,8 @@ void testGithub4114() {
   }
 
   for (const auto &rBnd : mol[0]->bonds()) {
-    auto pBnd = prods[0][0]->getBondBetweenAtoms(rBnd->getBeginAtomIdx(),
-                                                 rBnd->getEndAtomIdx());
+    auto *pBnd = prods[0][0]->getBondBetweenAtoms(rBnd->getBeginAtomIdx(),
+                                                  rBnd->getEndAtomIdx());
 
     // Bonds 0, 1 and 4 are overridden in the product template, and should
     // therefore override the properties.
@@ -7641,7 +7641,7 @@ void testGithub4410() {
   TEST_ASSERT(prods.size() == 1);
   TEST_ASSERT(prods[0].size() == 1);
 
-  auto dblBnd = prods[0][0]->getBondBetweenAtoms(1, 3);
+  auto *dblBnd = prods[0][0]->getBondBetweenAtoms(1, 3);
 
   TEST_ASSERT(dblBnd->getBondType() == Bond::DOUBLE);
   TEST_ASSERT(dblBnd->getStereoAtoms() == std::vector<int>({2, 4}));
@@ -7778,7 +7778,8 @@ void testChemicalReactionCopyAssignment() {
 void testGithub6138() {
   // Pickling reactions removed some of their properties set after reaction
   // initialization
-  auto rxn_smarts = "[c:1]:[n&H1&+0&D2:3]:[n:2]>>[c:1]:[3n&H0&+0&D3:3]:[2n:2]";
+  const auto *rxn_smarts =
+      "[c:1]:[n&H1&+0&D2:3]:[n:2]>>[c:1]:[3n&H0&+0&D3:3]:[2n:2]";
   std::unique_ptr<ChemicalReaction> rxn(
       RxnSmartsToChemicalReaction(rxn_smarts));
   ROMOL_SPTR mol("c1cn[nH]c1"_smiles);

@@ -699,7 +699,7 @@ void testCustomProps() {
   FooHandler foo_handler;
   std::vector<CustomPropHandler *> handlers = {&foo_handler,
                                                foo_handler.clone()};
-  for (auto handler : handlers) {
+  for (auto *handler : handlers) {
     TEST_ASSERT(handler->canSerialize(value));
     RDValue bad_value = 1;
     TEST_ASSERT(!handler->canSerialize(bad_value));

@@ -767,7 +767,7 @@ TEST_CASE("github #3320: incorrect bond properties from CXSMILES",
     std::vector<std::pair<unsigned, unsigned>> bonds = {
         {0, 1}, {3, 1}, {2, 1}, {6, 1}};
     for (const auto &pr : bonds) {
-      auto bnd = m->getBondBetweenAtoms(pr.first, pr.second);
+      auto *bnd = m->getBondBetweenAtoms(pr.first, pr.second);
       REQUIRE(bnd);
       CHECK(bnd->getBondType() == Bond::BondType::DATIVE);
       CHECK(bnd->getBeginAtomIdx() == pr.first);
@@ -779,7 +779,7 @@ TEST_CASE("github #3320: incorrect bond properties from CXSMILES",
     std::vector<std::pair<unsigned, unsigned>> bonds = {
         {0, 1}, {3, 1}, {2, 1}, {12, 1}};
     for (const auto &pr : bonds) {
-      auto bnd = m->getBondBetweenAtoms(pr.first, pr.second);
+      auto *bnd = m->getBondBetweenAtoms(pr.first, pr.second);
       REQUIRE(bnd);
       CHECK(bnd->getBondType() == Bond::BondType::DATIVE);
       CHECK(bnd->getBeginAtomIdx() == pr.first);
@@ -1680,7 +1680,7 @@ TEST_CASE("Github #4582: double bonds and ring closures") {
  20 21  1  0
 M  END)CTAB"_ctab;
   REQUIRE(mol);
-  auto dbond = mol->getBondBetweenAtoms(1, 19);
+  auto *dbond = mol->getBondBetweenAtoms(1, 19);
   REQUIRE(dbond);
   CHECK(dbond->getBondType() == Bond::BondType::DOUBLE);
   CHECK((dbond->getStereo() == Bond::BondStereo::STEREOE ||
@@ -2322,14 +2322,14 @@ TEST_CASE(
   SECTION("'w:' label") {
     auto m = "CC1CN1C=CC1CC1 |w:4.5|"_smiles;
     REQUIRE(m);
-    auto b = m->getBondWithIdx(4);
+    auto *b = m->getBondWithIdx(4);
     REQUIRE(b->getBondType() == Bond::BondType::DOUBLE);
     CHECK(b->getBondDir() == Bond::BondDir::UNKNOWN);
   }
   SECTION("'ctu:' label") {
     auto m = "CC1CN1C=CC1CC1 |ctu:5|"_smiles;
     REQUIRE(m);
-    auto b = m->getBondWithIdx(4);
+    auto *b = m->getBondWithIdx(4);
     REQUIRE(b->getBondType() == Bond::BondType::DOUBLE);
     CHECK(b->getStereo() == Bond::STEREOANY);
   }
@@ -2338,7 +2338,7 @@ TEST_CASE(
 
     auto m = "CC1CN1C=CC1CC1 |c:5|"_smiles;
     REQUIRE(m);
-    auto b = m->getBondWithIdx(4);
+    auto *b = m->getBondWithIdx(4);
     REQUIRE(b->getBondType() == Bond::BondType::DOUBLE);
     CHECK(b->getStereo() == Bond::STEREOCIS);
   }
@@ -2347,7 +2347,7 @@ TEST_CASE(
 
     auto m = "CC1CN1C=CC1CC1 |t:5|"_smiles;
     REQUIRE(m);
-    auto b = m->getBondWithIdx(4);
+    auto *b = m->getBondWithIdx(4);
     REQUIRE(b->getBondType() == Bond::BondType::DOUBLE);
     CHECK(b->getStereo() == Bond::STEREOTRANS);
   }
@@ -2362,7 +2362,7 @@ TEST_CASE("Github #5683: SMARTS bond ordering should be the same as SMILES") {
     CHECK(m->getBondBetweenAtoms(0, 3)->getIdx() == 2);
   }
   SECTION("as reported: SMARTS which should generate an exception") {
-    auto sma = "O=C(C=CCC1CCCCC1)N1N=Cc2ccccc2C1c1ccccc1 |w:3.1|";
+    const auto *sma = "O=C(C=CCC1CCCCC1)N1N=Cc2ccccc2C1c1ccccc1 |w:3.1|";
     CHECK_THROWS_AS(SmartsToMol(sma), SmilesParseException);
   }
 }
@@ -2406,7 +2406,7 @@ TEST_CASE("smilesSymbol in SMARTS", "[smarts][smilesSymbol]") {
   SECTION("smilesSymbol with additional queries") {
     auto m = "[#6]C[#6]"_smarts;
     REQUIRE(m);
-    auto atom = m->getAtomWithIdx(1);
+    auto *atom = m->getAtomWithIdx(1);
 
     atom->expandQuery(makeAtomExplicitDegreeQuery(3), Queries::COMPOSITE_AND);
     atom->expandQuery(makeAtomTotalValenceQuery(4), Queries::COMPOSITE_AND);
@@ -2891,7 +2891,7 @@ TEST_CASE("CX_BOND_ATROPISOMER option requires ring info", "[bug][cxsmiles]") {
   auto m = v2::FileParsers::MolFromMolFile(fName);
   REQUIRE(m);
 
-  auto atropBond = m->getBondWithIdx(3);
+  auto *atropBond = m->getBondWithIdx(3);
   REQUIRE(atropBond->getStereo() == Bond::STEREOATROPCW);
 
   // Clear ring info to check that atropisomer wedging doesn't fail
