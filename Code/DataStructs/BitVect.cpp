@@ -27,7 +27,7 @@ void BitVect::initFromText(const char *data, const unsigned int dataLen,
   if (isBase64) {
     unsigned int actualLen;
     char *decoded;
-    decoded = Base64Decode((const char *)data, &actualLen);
+    decoded = Base64Decode(data, &actualLen);
     ss.write(decoded, actualLen);
     delete[] decoded;
   } else {
