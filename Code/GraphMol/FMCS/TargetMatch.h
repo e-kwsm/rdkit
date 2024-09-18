@@ -67,12 +67,12 @@ struct TargetMatch {
     }
 
     MatchedBondSize = 0;
-    for (const auto bond : seed.MoleculeFragment.Bonds) {
+    for (const auto *const bond : seed.MoleculeFragment.Bonds) {
       unsigned int i = bond->getBeginAtomIdx();
       unsigned int j = bond->getEndAtomIdx();
       unsigned int ti = TargetAtomIdx.at(i);
       unsigned int tj = TargetAtomIdx.at(j);
-      const auto tb = target.Molecule->getBondBetweenAtoms(ti, tj);
+      const auto *const tb = target.Molecule->getBondBetweenAtoms(ti, tj);
       if (tb) {
         ++MatchedBondSize;
         TargetBondIdx[bond->getIdx()] = tb->getIdx();  // add

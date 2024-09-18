@@ -422,21 +422,21 @@ TEST_CASE("enhanced stereo") {
     REQUIRE(m);
     CHECK(m->getNumAtoms() == 8);
 
-    auto &stereo_groups = m->getStereoGroups();
+    const auto &stereo_groups = m->getStereoGroups();
 
     CHECK(stereo_groups.size() == 2);
 
     auto stg = stereo_groups.begin();
     CHECK(stg->getGroupType() == StereoGroupType::STEREO_ABSOLUTE);
     {
-      auto &atoms = stg->getAtoms();
+      const auto &atoms = stg->getAtoms();
       CHECK(atoms.size() == 1);
       CHECK(atoms[0]->getIdx() == 1);
     }
     ++stg;
     CHECK(stg->getGroupType() == StereoGroupType::STEREO_OR);
     {
-      auto &atoms = stg->getAtoms();
+      const auto &atoms = stg->getAtoms();
       CHECK(atoms.size() == 2);
       CHECK(atoms[0]->getIdx() == 3);
       CHECK(atoms[1]->getIdx() == 5);
@@ -451,14 +451,14 @@ TEST_CASE("enhanced stereo") {
     REQUIRE(m);
     CHECK(m->getNumAtoms() == 8);
 
-    auto &stereo_groups = m->getStereoGroups();
+    const auto &stereo_groups = m->getStereoGroups();
 
     CHECK(stereo_groups.size() == 2);
 
     auto stg = stereo_groups.begin();
     CHECK(stg->getGroupType() == StereoGroupType::STEREO_AND);
     {
-      auto &atoms = stg->getAtoms();
+      const auto &atoms = stg->getAtoms();
       CHECK(atoms.size() == 2);
       CHECK(atoms[0]->getIdx() == 3);
       CHECK(atoms[1]->getIdx() == 5);
@@ -466,7 +466,7 @@ TEST_CASE("enhanced stereo") {
     ++stg;
     CHECK(stg->getGroupType() == StereoGroupType::STEREO_ABSOLUTE);
     {
-      auto &atoms = stg->getAtoms();
+      const auto &atoms = stg->getAtoms();
       CHECK(atoms.size() == 1);
       CHECK(atoms[0]->getIdx() == 1);
     }
@@ -599,7 +599,7 @@ TEST_CASE("variable attachment bonds") {
   {
     auto m = "CO*.C1=CC=NC=C1 |m:2:3.5.4|"_smiles;
     REQUIRE(m);
-    const auto bnd = m->getBondBetweenAtoms(1, 2);
+    auto *const bnd = m->getBondBetweenAtoms(1, 2);
     REQUIRE(bnd);
     CHECK(bnd->hasProp(common_properties::_MolFileBondAttach));
     CHECK(bnd->getProp<std::string>(common_properties::_MolFileBondAttach) ==
@@ -613,7 +613,7 @@ TEST_CASE("variable attachment bonds") {
     auto m = "F*.Cl*.C1=CC=NC=C1 |m:1:9.8,3:4.5|"_smiles;
     REQUIRE(m);
     {
-      const auto bnd = m->getBondBetweenAtoms(0, 1);
+      auto *const bnd = m->getBondBetweenAtoms(0, 1);
       REQUIRE(bnd);
       CHECK(bnd->hasProp(common_properties::_MolFileBondAttach));
       CHECK(bnd->getProp<std::string>(common_properties::_MolFileBondAttach) ==
@@ -623,7 +623,7 @@ TEST_CASE("variable attachment bonds") {
             "(2 10 9)");
     }
     {
-      const auto bnd = m->getBondBetweenAtoms(2, 3);
+      auto *const bnd = m->getBondBetweenAtoms(2, 3);
       REQUIRE(bnd);
       CHECK(bnd->hasProp(common_properties::_MolFileBondAttach));
       CHECK(bnd->getProp<std::string>(common_properties::_MolFileBondAttach) ==

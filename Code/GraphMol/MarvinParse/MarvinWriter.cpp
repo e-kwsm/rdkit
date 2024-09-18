@@ -416,8 +416,8 @@ class MarvinCMLWriter {
       if (mol->needsUpdatePropertyCache()) {
         mol->updatePropertyCache(false);
       }
-      for (auto atom : mol->atoms()) {
-        auto marvinAtom = new MarvinAtom();
+      for (auto *atom : mol->atoms()) {
+        auto *marvinAtom = new MarvinAtom();
         marvinMol->pushOwnedAtom(marvinAtom);
 
         marvinMol->atoms.push_back(marvinAtom);
@@ -498,8 +498,8 @@ class MarvinCMLWriter {
       }
       auto wedgeBonds = Chirality::pickBondsToWedge(*mol, nullptr, confToUse);
 
-      for (auto bond : mol->bonds()) {
-        auto marvinBond = new MarvinBond();
+      for (auto *bond : mol->bonds()) {
+        auto *marvinBond = new MarvinBond();
         marvinMol->pushOwnedBond(marvinBond);
         marvinMol->bonds.push_back(marvinBond);
 
@@ -603,7 +603,7 @@ class MarvinCMLWriter {
             mrvType = "CopolymerSgroup";
           }
 
-          auto marvinCoModSruSgroup =
+          auto *marvinCoModSruSgroup =
               new MarvinSruCoModSgroup(mrvType, marvinMol);
           marvinMol->sgroups.push_back(
               std::unique_ptr<MarvinMolBase>(marvinCoModSruSgroup));
@@ -635,7 +635,7 @@ class MarvinCMLWriter {
         }
 
         else if (type == "DAT") {
-          auto marvinDataSgroup = new MarvinDataSgroup(marvinMol);
+          auto *marvinDataSgroup = new MarvinDataSgroup(marvinMol);
           marvinMol->sgroups.push_back(
               std::unique_ptr<MarvinMolBase>(marvinDataSgroup));
 
@@ -695,7 +695,7 @@ class MarvinCMLWriter {
         }
 
         else if (type == "SUP") {
-          auto superatomSgroupExpanded =
+          auto *superatomSgroupExpanded =
               new MarvinSuperatomSgroupExpanded(marvinMol);
           marvinMol->sgroups.push_back(
               std::unique_ptr<MarvinMolBase>(superatomSgroupExpanded));
@@ -716,7 +716,7 @@ class MarvinCMLWriter {
         }
 
         else if (type == "MUL") {
-          auto marvinMultipleSgroup = new MarvinMultipleSgroup(marvinMol);
+          auto *marvinMultipleSgroup = new MarvinMultipleSgroup(marvinMol);
           marvinMol->sgroups.push_back(
               std::unique_ptr<MarvinMolBase>(marvinMultipleSgroup));
           marvinMultipleSgroup->id = "sg" + std::to_string(++tempSgCount);
@@ -744,7 +744,7 @@ class MarvinCMLWriter {
         }
 
         else if (type == "GEN") {
-          auto marvinGenericSgroup = new MarvinGenericSgroup(marvinMol);
+          auto *marvinGenericSgroup = new MarvinGenericSgroup(marvinMol);
           marvinMol->sgroups.push_back(
               std::unique_ptr<MarvinMolBase>(marvinGenericSgroup));
           marvinGenericSgroup->id = "sg" + std::to_string(++tempSgCount);
@@ -767,7 +767,7 @@ class MarvinCMLWriter {
           // <molecule id="sg1" role="MonomerSgroup" title="mon"
           // charge="onAtoms" molID="m2" atomRefs="a2 a1 a3 a4">
           // </molecule>
-          auto marvinMonomerSgroup = new MarvinMonomerSgroup(marvinMol);
+          auto *marvinMonomerSgroup = new MarvinMonomerSgroup(marvinMol);
           marvinMol->sgroups.push_back(
               std::unique_ptr<MarvinMolBase>(marvinMonomerSgroup));
 
@@ -1120,7 +1120,7 @@ class MarvinCMLWriter {
 
     MarvinReaction *marvinReaction = nullptr;
     try {
-      auto marvinReaction = new MarvinReaction();
+      auto *marvinReaction = new MarvinReaction();
       int molCount = 0, atomCount = 0, bondCount = 0, sgCount = 0;
       for (const auto &mol : rxn->getReactants()) {
         RWMol rwMol(*mol);
@@ -1179,7 +1179,7 @@ std::string MolToMrvBlock(const ROMol &mol, const MrvWriterParams &params,
 
   MarvinCMLWriter marvinCMLWriter;
 
-  auto marvinMol = marvinCMLWriter.MolToMarvinMol(&trwmol, confId);
+  auto *marvinMol = marvinCMLWriter.MolToMarvinMol(&trwmol, confId);
   marvinMol->setPrecision(params.precision);
   ptree pt = marvinMol->toMolPtree();
   std::ostringstream out;
@@ -1220,7 +1220,7 @@ std::string ChemicalReactionToMrvBlock(const ChemicalReaction &rxn,
 
   MarvinCMLWriter marvinCMLWriter;
 
-  auto marvinRxn = marvinCMLWriter.ChemicalReactionToMarvinRxn(&rxn);
+  auto *marvinRxn = marvinCMLWriter.ChemicalReactionToMarvinRxn(&rxn);
   ptree pt = marvinRxn->toPtree();
   std::ostringstream out;
   if (prettyPrint) {
