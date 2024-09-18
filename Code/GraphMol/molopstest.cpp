@@ -3265,8 +3265,8 @@ TEST_CASE("Testing sf.net issue 2196817: handling of aromatic dummies") {
   }
 
   {
-    for (auto smi : {"c12ccccc1**CC2", "c12ccccc1C**C2", "*12ccccc1CCCC2",
-                     "*12ccccc1***C2"}) {
+    for (const auto *smi : {"c12ccccc1**CC2", "c12ccccc1C**C2",
+                            "*12ccccc1CCCC2", "*12ccccc1***C2"}) {
       std::unique_ptr<RWMol> m(SmilesToMol(smi));
       REQUIRE(m);
       for (size_t i = 0; i < 6; ++i) {
@@ -3295,9 +3295,10 @@ TEST_CASE("Testing sf.net issue 2196817: handling of aromatic dummies") {
   }
 
   {
-    for (auto smi : {"c12ccccc1****2", "c12ccccc1***2", "C12=CC=CC=C1****2",
-                     "c1ccccc1N1****1", "c1ccccc1C1****1", "c1ccccc1*1****1",
-                     "c1ccccc1*1*=**=*1"}) {
+    for (const auto *smi :
+         {"c12ccccc1****2", "c12ccccc1***2", "C12=CC=CC=C1****2",
+          "c1ccccc1N1****1", "c1ccccc1C1****1", "c1ccccc1*1****1",
+          "c1ccccc1*1*=**=*1"}) {
       std::unique_ptr<RWMol> m(SmilesToMol(smi));
       REQUIRE(m);
       for (unsigned int i = 6; i < m->getNumAtoms(); ++i) {
@@ -3307,7 +3308,7 @@ TEST_CASE("Testing sf.net issue 2196817: handling of aromatic dummies") {
   }
 
   {
-    for (auto smi : {"C1CC*2ccccc21", "C1C**2ccccc21"}) {
+    for (const auto *smi : {"C1CC*2ccccc21", "C1C**2ccccc21"}) {
       std::unique_ptr<RWMol> m(SmilesToMol(smi));
       REQUIRE(m);
       for (unsigned int i = 0; i < 3; ++i) {
@@ -3330,8 +3331,8 @@ TEST_CASE("Testing sf.net issue 2196817: handling of aromatic dummies") {
   }
 
   {
-    for (auto smi : {"N1****1", "C1=C*2C=CC=C*2C=C1", "N1*C=CC=C1",
-                     "C1=CC2=CC=C3C=CC4=CC=C5C=CN1*1*2*3*4*51"}) {
+    for (const auto *smi : {"N1****1", "C1=C*2C=CC=C*2C=C1", "N1*C=CC=C1",
+                            "C1=CC2=CC=C3C=CC4=CC=C5C=CN1*1*2*3*4*51"}) {
       std::unique_ptr<RWMol> m(SmilesToMol(smi));
       REQUIRE(m);
       for (const auto b : m->bonds()) {
@@ -3350,7 +3351,7 @@ TEST_CASE("Testing sf.net issue 2196817: handling of aromatic dummies") {
       }
     }
     unsigned int nNonAromaticBonds = 0;
-    for (const auto b : m->bonds()) {
+    for (auto *const b : m->bonds()) {
       if (!b->getIsAromatic()) {
         ++nNonAromaticBonds;
       }
@@ -3359,7 +3360,7 @@ TEST_CASE("Testing sf.net issue 2196817: handling of aromatic dummies") {
   }
 
   {
-    for (auto smi :
+    for (const auto *smi :
          {"*1C=CC=C1", "N1*=**=*1", "C1=CC2=CC=C3C=CC4=CC=C5C=CN1N1N2N3N4N51",
           "C1=CC2=CC=C3C=CC4=CC=C5C=CN1*1N2*3N4N51"}) {
       std::unique_ptr<RWMol> m(SmilesToMol(smi));
@@ -7404,9 +7405,9 @@ TEST_CASE("Testing Github issue 1990: removeHs screws up bond stereo") {
 TEST_CASE("Testing removeAndTrackIsotopes parameter") {
   struct IsotopicHsCount {
     IsotopicHsCount(const ROMol &mol) {
-      for (auto b : mol.bonds()) {
-        const auto ba = b->getBeginAtom();
-        const auto ea = b->getEndAtom();
+      for (auto *b : mol.bonds()) {
+        auto *const ba = b->getBeginAtom();
+        auto *const ea = b->getEndAtom();
         if (ba->getAtomicNum() == 1 && ba->getIsotope()) {
           ++d_map[ea->getIdx()];
         } else if (ea->getAtomicNum() == 1 && ea->getIsotope()) {
@@ -7431,7 +7432,7 @@ TEST_CASE("Testing removeAndTrackIsotopes parameter") {
                                         unsigned int &impl) {
       expl = 0;
       impl = 0;
-      for (auto a : m.atoms()) {
+      for (auto *a : m.atoms()) {
         expl += a->getNumExplicitHs();
         impl += a->getNumImplicitHs();
       }
@@ -7819,7 +7820,7 @@ TEST_CASE("Testing adding coordinates to a terminal atom") {
   5  6  2  0
   6  1  1  0
 M  END)CTAB"_ctab;
-  auto atom = new Atom(0);
+  auto *atom = new Atom(0);
   auto idx = mol->addAtom(atom);
   delete atom;
   mol->addBond(idx, 0);

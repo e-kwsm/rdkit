@@ -250,7 +250,7 @@ double *getDistanceMat(const ROMol &mol, const std::vector<int> &activeAtoms,
     dMat[i * nAts + i] = 0.0;
   }
 
-  for (auto bond : bonds) {
+  for (const auto *bond : bonds) {
     i = rdcast<int>(std::find(activeAtoms.begin(), activeAtoms.end(),
                               static_cast<int>(bond->getBeginAtomIdx())) -
                     activeAtoms.begin());

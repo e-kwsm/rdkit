@@ -54,7 +54,7 @@ std::shared_ptr<mae::IndexedProperty<T>> getIndexedProperty(
   }
 
   std::vector<T> values(numAtoms);
-  auto nullsBitset = new boost::dynamic_bitset<>(numAtoms);
+  auto *nullsBitset = new boost::dynamic_bitset<>(numAtoms);
   nullsBitset->set();
   auto newProp = std::make_shared<mae::IndexedProperty<T>>(values, nullsBitset);
 
@@ -255,7 +255,7 @@ static void copyAtomNumChirality(const ROMol &mol, mae::Block &stBlock) {
 
   // Set atom numbering chirality
   int chiralAts = 0;
-  for (const auto at : mol.atoms()) {
+  for (auto *const at : mol.atoms()) {
     std::string atomNumChirality;
     if (at->getChiralTag() == Atom::CHI_TETRAHEDRAL_CW) {
       atomNumChirality = "ANR";
@@ -273,7 +273,7 @@ static void copyAtomNumChirality(const ROMol &mol, mae::Block &stBlock) {
     // We don't know CIP ranks of atoms, so instead we use atom numbering
     // chirality and adjacent atoms will just be sorted by index.
     std::vector<int> neighbors;
-    for (const auto nb : mol.atomNeighbors(at)) {
+    for (auto *const nb : mol.atomNeighbors(at)) {
       neighbors.push_back(nb->getIdx());
     }
 
@@ -342,7 +342,7 @@ void mapAtom(
                    atom.getFormalCharge());
 
   // Residue information
-  auto monomerInfo =
+  const auto *monomerInfo =
       static_cast<const AtomPDBResidueInfo *>(atom.getMonomerInfo());
   if (monomerInfo != nullptr) {
     setPropertyValue(atomBlock, PDB_ATOM_NAME, numAtoms, idx,
@@ -397,7 +397,7 @@ void mapAtoms(const ROMol &mol, const STR_VECT &propNames, int confId,
     setPropertyValue(*atomBlock, prop, numAtoms, idx, value);
   };
 
-  for (auto atom : mol.atoms()) {
+  for (auto *atom : mol.atoms()) {
     mapAtom(conformer, *atom, propNames, *atomBlock, numAtoms, boolSetter,
             intSetter, realSetter, stringSetter);
   }
@@ -454,7 +454,7 @@ void mapBonds(const ROMol &mol, const STR_VECT &propNames,
 
   std::shared_ptr<mae::IndexedProperty<mae::BoolProperty>> dativeBondMark =
       nullptr;
-  for (auto &bond : mol.bonds()) {
+  for (const auto &bond : mol.bonds()) {
     if (bond->getBondType() == Bond::BondType::DATIVE) {
       dativeBondMark = getIndexedProperty<mae::BoolProperty>(
           *bondBlock, MAE_BOND_DATIVE_MARK, numBonds);
@@ -481,7 +481,7 @@ void mapBonds(const ROMol &mol, const STR_VECT &propNames,
     setPropertyValue(*bondBlock, prop, numBonds, idx, value);
   };
 
-  for (auto bond : mol.bonds()) {
+  for (auto *bond : mol.bonds()) {
     mapBond(*bond, dativeBondMark, propNames, *bondBlock, numBonds, boolSetter,
             intSetter, realSetter, stringSetter);
   }

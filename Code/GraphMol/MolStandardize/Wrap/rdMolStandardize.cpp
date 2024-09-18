@@ -182,7 +182,7 @@ void mtinPlaceHelper(python::object pymols, int numThreads,
   unsigned int nmols = python::len(pymols);
   std::vector<RDKit::RWMol *> mols(nmols);
   for (auto i = 0u; i < nmols; ++i) {
-    auto mol = static_cast<RDKit::RWMol *>(
+    auto *mol = static_cast<RDKit::RWMol *>(
         python::extract<RDKit::ROMol *>(pymols[i])());
     mols[i] = mol;
   }
@@ -202,7 +202,7 @@ void mtinPlaceHelper2(python::object pymols, int numThreads,
   unsigned int nmols = python::len(pymols);
   std::vector<RDKit::RWMol *> mols(nmols);
   for (auto i = 0u; i < nmols; ++i) {
-    auto mol = static_cast<RDKit::RWMol *>(
+    auto *mol = static_cast<RDKit::RWMol *>(
         python::extract<RDKit::ROMol *>(pymols[i])());
     mols[i] = mol;
   }

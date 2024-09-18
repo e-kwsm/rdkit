@@ -131,8 +131,8 @@ void addQuery(const Q &query, bj::object &bjQuery,
     bjQuery["negated"] = true;
   }
   if (typeid(query) == typeid(RecursiveStructureQuery)) {
-    auto rq = (const RecursiveStructureQuery *)&query;
-    auto submol = rq->getQueryMol();
+    const auto *rq = (const RecursiveStructureQuery *)&query;
+    const auto *submol = rq->getQueryMol();
     PRECONDITION(submol, "bad recursive query");
     bj::object subquery;
     bj::object atomDefaults, bondDefaults;

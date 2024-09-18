@@ -83,10 +83,10 @@ RGroupDecomposition::RGroupDecomposition(
 RGroupDecomposition::~RGroupDecomposition() { delete data; }
 
 void RGroupDecomposition::labelAtomBondIndices(RWMol &mol) {
-  for (const auto targetAtom : mol.atoms()) {
+  for (auto *const targetAtom : mol.atoms()) {
     targetAtom->setProp(TARGET_ATOM_IDX, targetAtom->getIdx());
   }
-  for (const auto targetBond : mol.bonds()) {
+  for (auto *const targetBond : mol.bonds()) {
     targetBond->setProp(TARGET_BOND_IDX, targetBond->getIdx());
   }
 }
@@ -97,7 +97,7 @@ void RGroupDecomposition::setTargetAtomBondIndices(
   std::vector<int> bondIndices(mol.getNumBonds(), -1);
   int largestAtomIdx = -1;
   bool isHydrogen = RGroupData::isMolHydrogen(mol);
-  for (const auto atom : mol.atoms()) {
+  for (auto *const atom : mol.atoms()) {
     int targetAtomIdx;
     if (atom->getPropIfPresent(TARGET_ATOM_IDX, targetAtomIdx)) {
       atom->clearProp(TARGET_ATOM_IDX);
@@ -113,7 +113,7 @@ void RGroupDecomposition::setTargetAtomBondIndices(
   }
   atomIndices.resize(largestAtomIdx + 1);
   int largestBondIdx = -1;
-  for (const auto bond : mol.bonds()) {
+  for (auto *const bond : mol.bonds()) {
     int targetBondIdx;
     if (bond->getPropIfPresent(TARGET_BOND_IDX, targetBondIdx)) {
       bond->clearProp(TARGET_BOND_IDX);
@@ -268,7 +268,7 @@ int RGroupDecomposition::getMatchingCoreInternal(
       }
 
       for (const auto &match : mv) {
-        const auto atm = mol.getAtomWithIdx(match.second);
+        auto *const atm = mol.getAtomWithIdx(match.second);
         // is this a labelled rgroup or not?
         if (!core.second.isCoreAtomUserLabelled(match.first)) {
           // nope... if any neighbor is not part of the substructure

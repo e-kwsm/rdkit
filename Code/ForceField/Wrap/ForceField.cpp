@@ -150,7 +150,7 @@ PyObject *PyForceField::positions() {
   const RDGeom::PointPtrVect &p = this->field->positions();
   size_t i = 0;
   PyObject *coordItem;
-  for (const auto pptr : p) {
+  for (auto *const pptr : p) {
     for (size_t j = 0; j < 3; ++j) {
       coordItem = PyFloat_FromDouble((*pptr)[j]);
       PyTuple_SetItem(coordTuple, i++, coordItem);
