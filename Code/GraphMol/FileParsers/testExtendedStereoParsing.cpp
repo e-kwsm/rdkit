@@ -26,7 +26,7 @@ std::unique_ptr<RWMol> readTestFile(const std::string &baseName) {
   std::string rdbase = getenv("RDBASE");
   std::string fName =
       rdbase + "/Code/GraphMol/FileParsers/test_data/" + baseName;
-  auto m = MolFileToMol(fName);
+  auto *m = MolFileToMol(fName);
   return std::unique_ptr<RWMol>(m);
 }
 
@@ -90,7 +90,7 @@ void testWrite() {
   auto m0 = readTestFile("two_centers_and.mol");
   TEST_ASSERT(m0.get());
   std::string block = RDKit::MolToMolBlock(*m0);
-  auto m1 = RDKit::MolBlockToMol(block);
+  auto *m1 = RDKit::MolBlockToMol(block);
 
   // Check that the extended stereo information has the same extended stereo
   // types and same atoms marked for extended stereo.

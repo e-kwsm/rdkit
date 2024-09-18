@@ -45,7 +45,7 @@ TransformCatalogParams::TransformCatalogParams(
 
   const std::vector<std::shared_ptr<ChemicalReaction>> &otransforms =
       other.getTransformations();
-  for (auto &transi : otransforms) {
+  for (const auto &transi : otransforms) {
     std::shared_ptr<ChemicalReaction> transform(new ChemicalReaction(*transi));
     d_transformations.push_back(transform);
   }
@@ -66,7 +66,7 @@ const ChemicalReaction *TransformCatalogParams::getTransformation(
 }
 
 void TransformCatalogParams::initializeTransforms() const {
-  for (auto &transform : d_transformations) {
+  for (const auto &transform : d_transformations) {
     if (!transform || transform->isInitialized()) {
       continue;
     }

@@ -52,7 +52,7 @@ void addBonds(const ROMol &mol, MMFFMolProperties *mmffMolProperties,
 
   auto contrib = std::make_unique<BondStretchContrib>(field);
   bool hasContrib = false;
-  for (const auto bond : mol.bonds()) {
+  for (auto *const bond : mol.bonds()) {
     unsigned int idx1 = bond->getBeginAtomIdx();
     unsigned int idx2 = bond->getEndAtomIdx();
     unsigned int bondType;
@@ -136,7 +136,7 @@ boost::shared_array<std::uint8_t> buildNeighborMatrix(const ROMol &mol) {
 
   constexpr bool useBO = false;
   constexpr bool useAtomWts = false;
-  auto dmat = MolOps::getDistanceMat(mol, useBO, useAtomWts);
+  auto *dmat = MolOps::getDistanceMat(mol, useBO, useAtomWts);
   for (unsigned i = 0; i < nAtoms; ++i) {
     setTwoBitCell(res, twoBitCellPos(nAtoms, i, i), RELATION_1_X);
     for (unsigned j = i + 1; j < nAtoms; ++j) {

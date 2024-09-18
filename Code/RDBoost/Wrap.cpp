@@ -119,7 +119,7 @@ std::vector<std::vector<std::pair<int, int>>> translateAtomMapSeq(
   std::vector<std::vector<std::pair<int, int>>> aMapVec;
   PySequenceHolder<python::object> pyAtomMapSeq(atomMapSeq);
   for (size_t i = 0; i < pyAtomMapSeq.size(); ++i) {
-    auto res = translateAtomMap(pyAtomMapSeq[i]);
+    auto *res = translateAtomMap(pyAtomMapSeq[i]);
     aMapVec.push_back(*res);
     delete res;
   }

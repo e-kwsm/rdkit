@@ -39,7 +39,7 @@ Sp2Bond::Sp2Bond(const CIPMol &mol, Bond *bond, Atom *startAtom, Atom *endAtom,
         carrierIdx == static_cast<int>(otherFocus->getIdx())) {
       return false;
     }
-    for (const auto neighbor : mol.getNeighbors(focus)) {
+    for (auto *const neighbor : mol.getNeighbors(focus)) {
       if (neighbor->getIdx() == static_cast<unsigned int>(carrierIdx)) {
         return true;
       }
@@ -96,7 +96,7 @@ bool Sp2Bond::hasPrimaryLabel() const {
 
 Descriptor Sp2Bond::label(const Rules &comp) {
   auto &digraph = getDigraph();
-  auto root1 = digraph.getOriginalRoot();
+  auto *root1 = digraph.getOriginalRoot();
   if (digraph.getCurrentRoot() != root1) {
     digraph.changeRoot(root1);
   }

@@ -65,12 +65,12 @@ void markConjAtomBonds(Atom *at,
     return;
   }
 
-  for (const auto bnd1 : mol.atomBonds(at)) {
+  for (auto *const bnd1 : mol.atomBonds(at)) {
     if (bnd1->getValenceContrib(at) < 1.5 ||
         !atomInfo[bnd1->getOtherAtomIdx(atx)].isCandidate) {
       continue;
     }
-    for (const auto bnd2 : mol.atomBonds(at)) {
+    for (auto *const bnd2 : mol.atomBonds(at)) {
       if (bnd1 == bnd2) {
         continue;
       }
@@ -93,7 +93,7 @@ void markConjAtomBonds(Atom *at,
   PRECONDITION(at, "bad atom");
   auto &mol = at->getOwningMol();
   std::vector<ConjAtomInfo> atomInfo(mol.getNumAtoms());
-  for (const auto atom : mol.atoms()) {
+  for (auto *const atom : mol.atoms()) {
     const auto isCandidate = isAtomConjugCand(atom);
     atomInfo[atom->getIdx()] = {
         isCandidate ? atom->getDegree() + atom->getTotalNumHs() : 0u,
@@ -107,7 +107,7 @@ int numBondsPlusLonePairs(Atom *at) {
   int deg = at->getTotalDegree();
 
   auto &mol = at->getOwningMol();
-  for (const auto bond : mol.atomBonds(at)) {
+  for (auto *const bond : mol.atomBonds(at)) {
     if (bond->getBondType() == Bond::ZERO ||
         (isDative(*bond) && at->getIdx() != bond->getEndAtomIdx())) {
       --deg;
@@ -140,7 +140,7 @@ bool atomHasConjugatedBond(const Atom *at) {
   PRECONDITION(at, "bad atom");
 
   auto &mol = at->getOwningMol();
-  for (const auto bnd : mol.atomBonds(at)) {
+  for (auto *const bnd : mol.atomBonds(at)) {
     if (bnd->getIsConjugated()) {
       return true;
     }
@@ -151,7 +151,7 @@ bool atomHasConjugatedBond(const Atom *at) {
 void setConjugation(ROMol &mol) {
   // start with all bonds being marked unconjugated
   // except for aromatic bonds
-  for (auto bond : mol.bonds()) {
+  for (auto *bond : mol.bonds()) {
     bond->setIsConjugated(bond->getIsAromatic());
   }
 
@@ -168,13 +168,13 @@ void setConjugation(ROMol &mol) {
 
   // loop over each atom and check if the bonds connecting to it can
   // be conjugated
-  for (auto atom : mol.atoms()) {
+  for (auto *atom : mol.atoms()) {
     markConjAtomBonds(atom, atomInfo);
   }
 }
 
 void setHybridization(ROMol &mol) {
-  for (auto atom : mol.atoms()) {
+  for (auto *atom : mol.atoms()) {
     if (atom->getAtomicNum() == 0) {
       atom->setHybridization(Atom::UNSPECIFIED);
     } else {

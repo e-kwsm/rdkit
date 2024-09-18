@@ -98,7 +98,7 @@ void addNeighborsToStack(const unsigned int atomIdx,
       if (range.upper - range.lower >= M_PI * 2.0 - 1e-6) {
         // all unconstraint => order by ring size s.t., non-rings are handled
         // first
-        const auto rInfo = mol.getRingInfo();
+        auto *const rInfo = mol.getRingInfo();
         std::ranges::sort(bonds, std::ranges::greater(),
                           [&rInfo](const auto *bnd) {
                             return rInfo->minBondRingSize(bnd->getIdx());
