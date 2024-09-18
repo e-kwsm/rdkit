@@ -277,7 +277,7 @@ bool doLabelsClash(AtomSymbol &atsym1, const AtomSymbol &atsym2) {
 // ****************************************************************************
 void DrawMol::extractAtomSymbols() {
   atomicNums_.clear();
-  for (auto at1 : drawMol_->atoms()) {
+  for (auto *at1 : drawMol_->atoms()) {
     if (!isComplexQuery(at1)) {
       atomicNums_.push_back(at1->getAtomicNum());
     } else {
@@ -303,7 +303,7 @@ void DrawMol::extractBonds() {
   calcMeanBondLength();
   double doubleBondOffset = drawOptions_.multipleBondOffset * meanBondLength_;
 
-  for (auto bond : drawMol_->bonds()) {
+  for (auto *bond : drawMol_->bonds()) {
     bool isComplex = false;
     if (bond->hasQuery()) {
       std::string descr = bond->getQuery()->getDescription();
@@ -365,7 +365,7 @@ void DrawMol::extractRegions() {
 // ****************************************************************************
 void DrawMol::extractAttachments() {
   if (drawOptions_.dummiesAreAttachments) {
-    for (const auto at1 : drawMol_->atoms()) {
+    for (auto *const at1 : drawMol_->atoms()) {
       if (at1->hasProp(common_properties::atomLabel) ||
           drawOptions_.atomLabels.find(at1->getIdx()) !=
               drawOptions_.atomLabels.end()) {
@@ -449,7 +449,7 @@ void DrawMol::extractMolNotes() {
 
 // ****************************************************************************
 void DrawMol::extractAtomNotes() {
-  for (const auto atom : drawMol_->atoms()) {
+  for (auto *const atom : drawMol_->atoms()) {
     std::string note;
     if (atom->getPropIfPresent(common_properties::atomNote, note)) {
       if (!note.empty()) {
@@ -567,7 +567,7 @@ void DrawMol::extractStereoGroups() {
 
 // ****************************************************************************
 void DrawMol::extractBondNotes() {
-  for (const auto bond : drawMol_->bonds()) {
+  for (auto *const bond : drawMol_->bonds()) {
     std::string note;
     if (bond->getPropIfPresent(common_properties::bondNote, note)) {
       if (!note.empty()) {
@@ -587,7 +587,7 @@ void DrawMol::extractRadicals() {
   if (!drawOptions_.includeRadicals) {
     return;
   }
-  for (const auto atom : drawMol_->atoms()) {
+  for (auto *const atom : drawMol_->atoms()) {
     if (!atom->getNumRadicalElectrons()) {
       continue;
     }
@@ -697,7 +697,7 @@ void DrawMol::extractSGroupData() {
 // ****************************************************************************
 void DrawMol::extractVariableBonds() {
   boost::dynamic_bitset<> atomsInvolved(drawMol_->getNumAtoms());
-  for (const auto bond : drawMol_->bonds()) {
+  for (auto *const bond : drawMol_->bonds()) {
     std::string endpts;
     std::string attach;
     if (bond->getPropIfPresent(common_properties::_MolFileBondEndPts, endpts) &&
@@ -722,7 +722,7 @@ void DrawMol::extractVariableBonds() {
         preShapes_.emplace_back(ell);
       }
 
-      for (const auto bond : drawMol_->bonds()) {
+      for (auto *const bond : drawMol_->bonds()) {
         if (atomsInvolved[bond->getBeginAtomIdx()] &&
             atomsInvolved[bond->getEndAtomIdx()]) {
           std::vector<Point2D> points{atCds_[bond->getBeginAtomIdx()],
@@ -833,7 +833,7 @@ void DrawMol::extractBrackets() {
 
     std::vector<std::pair<Point2D, Point2D>> sgBondSegments;
     for (auto bndIdx : sg.getBonds()) {
-      const auto bnd = drawMol_->getBondWithIdx(bndIdx);
+      auto *const bnd = drawMol_->getBondWithIdx(bndIdx);
       if (std::find(sg.getAtoms().begin(), sg.getAtoms().end(),
                     bnd->getBeginAtomIdx()) != sg.getAtoms().end()) {
         sgBondSegments.push_back(std::make_pair(atCds_[bnd->getBeginAtomIdx()],
@@ -908,8 +908,8 @@ void DrawMol::extractBrackets() {
 
       std::string label;
       if (sg.getPropIfPresent("LABEL", label)) {
-        auto da = drawBottomLabel(label, *postShapes_[labelBrk], drawOptions_,
-                                  textDrawer_, horizontal);
+        auto *da = drawBottomLabel(label, *postShapes_[labelBrk], drawOptions_,
+                                   textDrawer_, horizontal);
         annotations_.emplace_back(da);
       } else if (sg.getPropIfPresent("TYPE", label)) {
         if (label == "GEN") {
@@ -918,8 +918,8 @@ void DrawMol::extractBrackets() {
         }
         // draw the lowercase type if there's no label to go there.
         std::transform(label.begin(), label.end(), label.begin(), ::tolower);
-        auto da = drawBottomLabel(label, *postShapes_[labelBrk], drawOptions_,
-                                  textDrawer_, horizontal);
+        auto *da = drawBottomLabel(label, *postShapes_[labelBrk], drawOptions_,
+                                   textDrawer_, horizontal);
         annotations_.emplace_back(da);
       }
     }
@@ -1094,7 +1094,7 @@ bool orientAtomLabel(int atIdx,
       break;
   }
   bool ok = false;
-  for (auto &orient1 : newOrients[pref]) {
+  for (const auto &orient1 : newOrients[pref]) {
     atomLabels[atIdx]->orient_ = orient1;
     atomLabels[atIdx]->recalculateRects();
     if (!doesLabelClashWithLabels(atIdx, atomLabels) &&
@@ -1115,9 +1115,9 @@ bool orientAtomLabel(int atIdx,
 
 // ****************************************************************************
 void DrawMol::resolveAtomSymbolClashes() {
-  for (auto at1 : drawMol_->atoms()) {
+  for (auto *at1 : drawMol_->atoms()) {
     const auto atIdx1 = at1->getIdx();
-    for (auto at2 : drawMol_->atoms()) {
+    for (auto *at2 : drawMol_->atoms()) {
       const auto atIdx2 = at2->getIdx();
       if (atIdx1 >= atIdx2) {
         continue;
@@ -1279,32 +1279,32 @@ void DrawMol::draw(MolDraw2D &drawer) const {
   auto keepFontScale = textDrawer_.fontScale();
   textDrawer_.setFontScale(fontScale_, true);
 
-  for (auto &ps : preShapes_) {
+  for (const auto &ps : preShapes_) {
     ps->draw(drawer);
   }
-  for (auto &hl : highlights_) {
+  for (const auto &hl : highlights_) {
     hl->draw(drawer);
   }
-  for (auto &bond : bonds_) {
+  for (const auto &bond : bonds_) {
     bond->draw(drawer);
   }
-  for (auto &label : atomLabels_) {
+  for (const auto &label : atomLabels_) {
     if (label) {
       label->draw(drawer);
     }
   }
   if (includeAnnotations_) {
-    for (auto &annot : annotations_) {
+    for (const auto &annot : annotations_) {
       annot->draw(drawer);
     }
   }
   if (drawOptions_.includeRadicals) {
     drawRadicals(drawer);
   }
-  for (auto &ps : postShapes_) {
+  for (const auto &ps : postShapes_) {
     ps->draw(drawer);
   }
-  for (auto &leg : legends_) {
+  for (const auto &leg : legends_) {
     leg->draw(drawer);
   }
   drawer.setScale(keepScale);
@@ -1672,7 +1672,7 @@ OrientType DrawMol::getAtomOrientation(const RDKit::Atom &atom) const {
   auto &mol = atom.getOwningMol();
   const Point2D &at1_cds = atCds_[atom.getIdx()];
   Point2D nbr_sum(0.0, 0.0);
-  for (const auto bond : mol.atomBonds(&atom)) {
+  for (auto *const bond : mol.atomBonds(&atom)) {
     const Point2D &at2_cds = atCds_[bond->getOtherAtomIdx(atom.getIdx())];
     nbr_sum += at2_cds - at1_cds;
   }
@@ -1715,7 +1715,7 @@ OrientType DrawMol::getAtomOrientation(const RDKit::Atom &atom) const {
         // orientation or up with N orientation, which puts the H on the bond.
         auto &mol = atom.getOwningMol();
         const Point2D &at1_cds = atCds_[atom.getIdx()];
-        for (const auto bond : mol.atomBonds(&atom)) {
+        for (auto *const bond : mol.atomBonds(&atom)) {
           const Point2D &at2_cds = atCds_[bond->getOtherAtomIdx(atom.getIdx())];
           Point2D bond_vec = at2_cds - at1_cds;
           if (std::fabs(bond_vec.x) < 1.e-16) {
@@ -1793,7 +1793,7 @@ void DrawMol::extractLegend() {
                                 double relFontScale, double &total_width,
                                 double &total_height) {
     total_width = total_height = 0;
-    for (auto &bit : legend_bits) {
+    for (const auto &bit : legend_bits) {
       double height, width;
       DrawAnnotation da(bit, TextAlignType::MIDDLE, "legend", relFontScale,
                         Point2D(0.0, 0.0), drawOptions_.legendColour,
@@ -1927,10 +1927,10 @@ void DrawMol::makeStandardBond(Bond *bond, double doubleBondOffset) {
 // ****************************************************************************
 void DrawMol::makeQueryBond(Bond *bond, double doubleBondOffset) {
   PRECONDITION(bond->hasQuery(), "no query");
-  const auto qry = bond->getQuery();
+  auto *const qry = bond->getQuery();
 
-  auto begAt = bond->getBeginAtom();
-  auto endAt = bond->getEndAtom();
+  auto *begAt = bond->getBeginAtom();
+  auto *endAt = bond->getEndAtom();
   const Point2D &at1_cds = atCds_[begAt->getIdx()];
   const Point2D &at2_cds = atCds_[endAt->getIdx()];
   // If the 2 atoms are on top of each other, don't do anything.  We can
@@ -2159,8 +2159,8 @@ void DrawMol::makeTripleBondLines(
 // ****************************************************************************
 void DrawMol::makeWedgedBond(Bond *bond,
                              const std::pair<DrawColour, DrawColour> &cols) {
-  auto at1 = bond->getBeginAtom();
-  auto at2 = bond->getEndAtom();
+  auto *at1 = bond->getBeginAtom();
+  auto *at2 = bond->getEndAtom();
   auto col1 = cols.first;
   auto col2 = cols.second;
   if (drawOptions_.singleColourWedgeBonds) {
@@ -2216,8 +2216,8 @@ void DrawMol::makeWedgedBond(Bond *bond,
 // ****************************************************************************
 void DrawMol::makeWavyBond(Bond *bond, double offset,
                            const std::pair<DrawColour, DrawColour> &cols) {
-  auto at1 = bond->getBeginAtom();
-  auto at2 = bond->getEndAtom();
+  auto *at1 = bond->getBeginAtom();
+  auto *at2 = bond->getEndAtom();
   Point2D end1, end2;
   adjustBondEndsForLabels(at1->getIdx(), at2->getIdx(), end1, end2);
   std::vector<Point2D> pts{end1, end2};
@@ -2231,8 +2231,8 @@ void DrawMol::makeWavyBond(Bond *bond, double offset,
 // ****************************************************************************
 void DrawMol::makeDativeBond(Bond *bond, double offset,
                              const std::pair<DrawColour, DrawColour> &cols) {
-  auto at1 = bond->getBeginAtom();
-  auto at2 = bond->getEndAtom();
+  auto *at1 = bond->getBeginAtom();
+  auto *at2 = bond->getEndAtom();
   Point2D end1, end2;
   adjustBondEndsForLabels(at1->getIdx(), at2->getIdx(), end1, end2);
 
@@ -2255,8 +2255,8 @@ void DrawMol::makeDativeBond(Bond *bond, double offset,
 void DrawMol::makeZeroBond(Bond *bond,
                            const std::pair<DrawColour, DrawColour> &cols,
                            const DashPattern &dashPattern) {
-  auto at1 = bond->getBeginAtom();
-  auto at2 = bond->getEndAtom();
+  auto *at1 = bond->getBeginAtom();
+  auto *at2 = bond->getEndAtom();
   Point2D end1, end2;
   adjustBondEndsForLabels(at1->getIdx(), at2->getIdx(), end1, end2);
   newBondLine(end1, end2, cols.first, cols.second, at1->getIdx(), at2->getIdx(),
@@ -2453,8 +2453,8 @@ void DrawMol::makeBondHighlightLines(double lineWidth, double scale) {
   // bonded to atom with a highlighted bond
   auto findHighBondNbrs = [&](const Atom *atom, const Atom *otherAtom,
                               std::vector<Atom *> &highNbrs) -> void {
-    for (const auto bond : drawMol_->atomBonds(atom)) {
-      auto nbr = bond->getOtherAtom(atom);
+    for (auto *const bond : drawMol_->atomBonds(atom)) {
+      auto *nbr = bond->getOtherAtom(atom);
       if (nbr == otherAtom) {
         continue;
       }
@@ -2475,9 +2475,9 @@ void DrawMol::makeBondHighlightLines(double lineWidth, double scale) {
     // same conversion factor as in MolDraw2D::getDrawLineWidth()
     lineWidth *= lineWidthScaleFactor;
   }
-  for (const auto atom : drawMol_->atoms()) {
+  for (auto *const atom : drawMol_->atoms()) {
     auto thisIdx = atom->getIdx();
-    for (const auto bond : drawMol_->atomBonds(atom)) {
+    for (auto *const bond : drawMol_->atomBonds(atom)) {
       unsigned int nbrIdx = bond->getOtherAtomIdx(thisIdx);
       if (nbrIdx < static_cast<unsigned int>(atCds_.size()) &&
           nbrIdx > thisIdx) {
@@ -2495,7 +2495,7 @@ void DrawMol::makeBondHighlightLines(double lineWidth, double scale) {
               highlightAtoms_, highlightAtomMap_);
           std::vector<Atom *> thisHighNbrs;
           std::vector<Atom *> nbrHighNbrs;
-          auto nbr = drawMol_->getAtomWithIdx(nbrIdx);
+          auto *nbr = drawMol_->getAtomWithIdx(nbrIdx);
           findHighBondNbrs(atom, nbr, thisHighNbrs);
           findHighBondNbrs(nbr, atom, nbrHighNbrs);
           std::vector<Point2D> end1points;
@@ -2715,7 +2715,7 @@ int DrawMol::doesNoteClash(const DrawAnnotation &annot) const {
   // It's intended only to be used when finding where to put the
   // annotation, so annot should only be added to annotations_ once
   // its position has been determined.
-  for (auto &rect : annot.rects_) {
+  for (const auto &rect : annot.rects_) {
     Point2D otrans = rect->trans_;
     rect->trans_ += annot.pos_;
     // if padding is less than this, the letters can fit between the 2 lines
@@ -2742,7 +2742,7 @@ int DrawMol::doesRectClash(const StringRect &rect, double padding) const {
   // double bond.
   // Also, no longer check if it clashes with highlights.  This frequently
   // results in bad pictures and things look ok on top of highlights.
-  for (auto bond : drawMol_->bonds()) {
+  for (auto *bond : drawMol_->bonds()) {
     if (bond->getBondType() == Bond::DOUBLE) {
       auto at1 = bond->getBeginAtomIdx();
       auto at2 = bond->getEndAtomIdx();
@@ -3150,8 +3150,8 @@ void DrawMol::bondInsideRing(const Bond &bond, double offset, Point2D &l2s,
   // that isn't the other end of the bond.
   auto other_ring_atom = [&](unsigned int bondAtom, const Bond &bond,
                              const INT_VECT &ringBonds) -> int {
-    auto atom = drawMol_->getAtomWithIdx(bondAtom);
-    for (const auto bond2 : drawMol_->atomBonds(atom)) {
+    auto *atom = drawMol_->getAtomWithIdx(bondAtom);
+    for (auto *const bond2 : drawMol_->atomBonds(atom)) {
       if (bond2->getIdx() == bond.getIdx()) {
         continue;
       }
@@ -3215,8 +3215,8 @@ void DrawMol::bondInsideRing(const Bond &bond, double offset, Point2D &l2s,
 // Returns in l2s and l2f the start and finish points of the inner line
 void DrawMol::bondNonRing(const Bond &bond, double offset, Point2D &l2s,
                           Point2D &l2f) const {
-  auto begAt = bond.getBeginAtom();
-  auto endAt = bond.getEndAtom();
+  auto *begAt = bond.getBeginAtom();
+  auto *endAt = bond.getEndAtom();
   const Atom *thirdAtom = nullptr;
   const Atom *fourthAtom = nullptr;
 
@@ -3441,8 +3441,8 @@ void DrawMol::findOtherBondVecs(const Atom *atom, const Atom *otherAtom,
     return;
   }
   for (unsigned int i = 1; i < atom->getDegree(); ++i) {
-    auto thirdAtom = otherNeighbor(atom, otherAtom, i - 1, *drawMol_);
-    auto bond =
+    const auto *thirdAtom = otherNeighbor(atom, otherAtom, i - 1, *drawMol_);
+    auto *bond =
         drawMol_->getBondBetweenAtoms(atom->getIdx(), thirdAtom->getIdx());
     // Don't do anything if the wedge is to a triple bond.  It gets
     // really messed up especially if the two bonds aren't exactly
@@ -3469,10 +3469,10 @@ void DrawMol::adjustBondsOnSolidWedgeEnds() {
         bond->getEndAtom()->getDegree() == 2 &&
         !atomLabels_[bond->getEndAtomIdx()]) {
       // find the bond at the end atom
-      auto thirdAtom =
+      const auto *thirdAtom =
           otherNeighbor(bond->getEndAtom(), bond->getBeginAtom(), 0, *drawMol_);
-      auto bond1 = drawMol_->getBondBetweenAtoms(bond->getEndAtomIdx(),
-                                                 thirdAtom->getIdx());
+      auto *bond1 = drawMol_->getBondBetweenAtoms(bond->getEndAtomIdx(),
+                                                  thirdAtom->getIdx());
       // Don't do anything if it's a triple bond.  Moving the central
       // line to the wedge corner is clearly wrong.
       if (bond1->getBondType() == Bond::BondType::TRIPLE) {
@@ -3551,7 +3551,7 @@ void DrawMol::smoothBondJoins() {
   // The bonds aren't drawn as paths because in SVGs each line is given
   // classes for the atoms and bond it involves, and people use this to
   // identify the lines for other purposes.
-  for (auto atom : drawMol_->atoms()) {
+  for (auto *atom : drawMol_->atoms()) {
     // If there's an atom label, there is no join.
     if (atomLabels_[atom->getIdx()]) {
       continue;
@@ -3560,8 +3560,8 @@ void DrawMol::smoothBondJoins() {
     if (atom->getDegree() == 2) {
       doIt = true;
     } else if (atom->getDegree() == 3) {
-      for (const auto nbr : drawMol_->atomNeighbors(atom)) {
-        auto bond =
+      for (auto *const nbr : drawMol_->atomNeighbors(atom)) {
+        auto *bond =
             drawMol_->getBondBetweenAtoms(atom->getIdx(), nbr->getIdx());
         if ((nbr->getDegree() == 1 && bond->getBondType() == Bond::DOUBLE) ||
             bond->getBondDir() == Bond::BEGINDASH ||
@@ -4045,7 +4045,7 @@ bool areBondsParallel(const Point2D &at1, const Point2D &at2,
 const Atom *otherNeighbor(const Atom *firstAtom, const Atom *secondAtom,
                           int nborNum, const ROMol &mol) {
   int nbourCount = 0;
-  for (const auto nbr : mol.atomNeighbors(firstAtom)) {
+  for (auto *const nbr : mol.atomNeighbors(firstAtom)) {
     if (nbr->getIdx() != secondAtom->getIdx()) {
       if (nbourCount == nborNum) {
         return nbr;
