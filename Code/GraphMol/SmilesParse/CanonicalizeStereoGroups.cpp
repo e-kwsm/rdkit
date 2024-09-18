@@ -50,12 +50,12 @@ void buildTree(int atomIndexToAdd, const ROMol *mol,
   chosenOrder.push_back(atomIndexToAdd);
   reverseOrder[atomIndexToAdd] = chosenOrder.size() - 1;
 
-  auto atomToAdd = mol->getAtomWithIdx(atomIndexToAdd);
+  const auto *atomToAdd = mol->getAtomWithIdx(atomIndexToAdd);
 
   std::vector<std::pair<unsigned int, unsigned int>> nbrRanks;
   nbrRanks.reserve(mol->getAtomDegree(atomToAdd));
 
-  for (const auto nbr : mol->atomNeighbors(atomToAdd)) {
+  for (auto *const nbr : mol->atomNeighbors(atomToAdd)) {
     nbrRanks.push_back(std::make_pair(ranks[nbr->getIdx()], nbr->getIdx()));
   }
   std::sort(nbrRanks.begin(), nbrRanks.end());
@@ -518,7 +518,7 @@ void canonicalizeStereoGroups_internal(
   std::vector<RDKit::StereoGroup> groupsToProcess;
   std::vector<RDKit::StereoGroup> andGroupsToKeep;
 
-  for (auto &grp : mol->getStereoGroups()) {
+  for (const auto &grp : mol->getStereoGroups()) {
     if (stereoGroupType == grp.getGroupType()) {
       groupsToProcess.push_back(grp);
     } else if (stereoGroupType == RDKit::StereoGroupType::STEREO_OR &&
@@ -545,7 +545,7 @@ void canonicalizeStereoGroups_internal(
     for (unsigned int grpIndex = 0; grpIndex < groupsToProcess.size();
          ++grpIndex) {
       if (molIndex & (1 << grpIndex)) {
-        for (auto atomPtr : groupsToProcess[grpIndex].getAtoms()) {
+        for (auto *atomPtr : groupsToProcess[grpIndex].getAtoms()) {
           if (atomPtr->getChiralTag() == RDKit::Atom::CHI_TETRAHEDRAL_CW) {
             newMol->getAtomWithIdx(atomPtr->getIdx())
                 ->setChiralTag(RDKit::Atom::CHI_TETRAHEDRAL_CCW);
@@ -557,7 +557,7 @@ void canonicalizeStereoGroups_internal(
         }
         // do any  atropisomer bonds in this stereo group
 
-        for (auto bond : groupsToProcess[grpIndex].getBonds()) {
+        for (auto *bond : groupsToProcess[grpIndex].getBonds()) {
           if (bond->getStereo() == RDKit::Bond::STEREOATROPCW) {
             newMol->getBondWithIdx(bond->getIdx())
                 ->setStereo(RDKit::Bond::STEREOATROPCCW);
@@ -638,10 +638,10 @@ void canonicalizeStereoGroups_internal(
     boost::dynamic_bitset<> bondIndicesInStereoGroups(newMol->getNumBonds());
 
     for (auto grp : newMol->getStereoGroups()) {
-      for (auto atomPtr : grp.getAtoms()) {
+      for (auto *atomPtr : grp.getAtoms()) {
         atomIndicesInStereoGroups.set(atomPtr->getIdx());
       }
-      for (auto bondPtr : grp.getBonds()) {
+      for (auto *bondPtr : grp.getBonds()) {
         bondIndicesInStereoGroups.set(bondPtr->getIdx());
       }
     }
@@ -649,7 +649,7 @@ void canonicalizeStereoGroups_internal(
     // now get all chiral centers and atrop bonds that are not in the stereo
     // groups
 
-    for (auto atom : newMol->atoms()) {
+    for (auto *atom : newMol->atoms()) {
       if ((atom->getChiralTag() == RDKit::Atom::CHI_TETRAHEDRAL_CCW ||
            atom->getChiralTag() == RDKit::Atom::CHI_TETRAHEDRAL_CW) &&
           !atomIndicesInStereoGroups[atom->getIdx()]) {
@@ -657,7 +657,7 @@ void canonicalizeStereoGroups_internal(
       }
     }
 
-    for (auto bond : newMol->bonds()) {
+    for (auto *bond : newMol->bonds()) {
       if ((bond->getStereo() == RDKit::Bond::BondStereo::STEREOATROPCCW ||
            bond->getStereo() == RDKit::Bond::BondStereo::STEREOATROPCW) &&
           !bondIndicesInStereoGroups[bond->getIdx()]) {
@@ -946,7 +946,7 @@ void canonicalizeStereoGroups(std::unique_ptr<ROMol> &mol,
   }
 
   bool foundOrGroup = false;
-  for (auto &stg : mol->getStereoGroups()) {
+  for (const auto &stg : mol->getStereoGroups()) {
     if (stg.getGroupType() == StereoGroupType::STEREO_OR) {
       foundOrGroup = true;
       break;
@@ -977,7 +977,7 @@ void canonicalizeStereoGroups(std::unique_ptr<ROMol> &mol,
                       includeStereoGroups, useNonStereoRanks,
                       includeRingStereo);
 
-  for (auto atom : mol->atoms()) {
+  for (auto *atom : mol->atoms()) {
     atom->setProp(common_properties::_CanonicalRankingNumber,
                   ranks[atom->getIdx()]);
   }

@@ -858,7 +858,7 @@ DoubleCubicLatticeVolume::DoubleCubicLatticeVolume(const ROMol &mol,
 
   std::vector<AtomRecord> memberAtoms;
 
-  for (const auto atom : nmol->atoms()) {
+  for (auto *const atom : nmol->atoms()) {
     AtomRecord curr_atom(*atom, conf);
     curr_atom.initFlag();
     if (!curr_atom.solventFlag) {

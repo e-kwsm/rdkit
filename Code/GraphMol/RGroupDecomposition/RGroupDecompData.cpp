@@ -229,7 +229,7 @@ std::vector<RGroupMatch> RGroupDecompData::GetCurrentBestPermutation() const {
   }
 
   for (auto &position : results) {
-    for (auto atom : position.matchedCore->atoms()) {
+    for (auto *atom : position.matchedCore->atoms()) {
       if (int atomLabel; atom->getAtomicNum() == 0 &&
                          atom->getPropIfPresent(RLABEL, atomLabel)) {
         if (atomLabel > 0 && !params.removeAllHydrogenRGroupsAndLabels) {
@@ -433,7 +433,7 @@ void RGroupDecompData::relabelCore(
 
   addAtoms(core, atomsToAdd);
   for (const auto &rlabels : atoms) {
-    auto atom = rlabels.second;
+    auto *atom = rlabels.second;
     atom->clearProp(RLABEL);
     atom->clearProp(RLABEL_TYPE);
   }
@@ -509,7 +509,7 @@ void RGroupDecompData::relabelRGroup(RGroupData &rgroup,
   rgroup.labelled = true;
 
   // Restore any core matches that we have set to dummy
-  for (auto atom : mol.atoms()) {
+  for (auto *atom : mol.atoms()) {
     if (atom->hasProp(RLABEL_CORE_INDEX)) {
       // don't need to set IsAromatic on atom - that seems to have been saved
       atom->setAtomicNum(
