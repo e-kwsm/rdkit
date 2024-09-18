@@ -191,8 +191,8 @@ class MolAtropTest {
     std::unique_ptr<RWMol> mol =
         std::unique_ptr<RWMol>(MolFileToMol(fName, false, false, false));
 
-    TEST_ASSERT(mol->getNumAtoms() == molFileTest->atomCount)
-    TEST_ASSERT(mol->getNumBonds() == molFileTest->bondCount)
+    TEST_ASSERT(mol->getNumAtoms() == molFileTest->atomCount);
+    TEST_ASSERT(mol->getNumBonds() == molFileTest->bondCount);
 
     testAromAtropMol(mol.get(), molFileTest->expectedResult, fName);
   }
@@ -261,8 +261,8 @@ class MolAtropTest {
     BOOST_LOG(rdInfoLog) << "testing aromatic atropisomers" << std::endl;
 
     TEST_ASSERT(mol != nullptr);
-    TEST_ASSERT(mol->getNumAtoms() == expectedAtomCount)
-    TEST_ASSERT(mol->getNumBonds() == expectedBondCount)
+    TEST_ASSERT(mol->getNumAtoms() == expectedAtomCount);
+    TEST_ASSERT(mol->getNumBonds() == expectedBondCount);
 
     try {
       SmilesWriteParams ps;
