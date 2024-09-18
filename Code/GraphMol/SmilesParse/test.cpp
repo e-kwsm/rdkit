@@ -1568,10 +1568,10 @@ void testIssue256() {
   v2::SmilesParse::SmilesParserParams ps;
   ps.sanitize = false;
   {
-    auto smi = "C1CC[C+]1=1CCC1";
+    const auto *smi = "C1CC[C+]1=1CCC1";
     auto mol = v2::SmilesParse::MolFromSmiles(smi, ps);
     TEST_ASSERT(mol);
-    auto bond = mol->getBondBetweenAtoms(3, 0);
+    auto *bond = mol->getBondBetweenAtoms(3, 0);
     TEST_ASSERT(bond)
     TEST_ASSERT(bond->getBondType() == Bond::SINGLE);
     bond = mol->getBondBetweenAtoms(3, 6);
@@ -1580,10 +1580,10 @@ void testIssue256() {
   }
 
   {
-    auto smi = "C1CC[C+]=11CCC1";
+    const auto *smi = "C1CC[C+]=11CCC1";
     auto mol = v2::SmilesParse::MolFromSmiles(smi, ps);
     TEST_ASSERT(mol);
-    auto bond = mol->getBondBetweenAtoms(3, 0);
+    auto *bond = mol->getBondBetweenAtoms(3, 0);
     TEST_ASSERT(bond)
     TEST_ASSERT(bond->getBondType() == Bond::DOUBLE);
     bond = mol->getBondBetweenAtoms(3, 6);
@@ -4055,7 +4055,7 @@ void testIsomericSmilesIsDefault() {
       << "Testing that isomeric SMILES is now the default output" << std::endl;
   {
     std::string smi = "C[C@H](Cl)Br";
-    auto m = SmilesToMol(smi);
+    auto *m = SmilesToMol(smi);
     TEST_ASSERT(m)
     auto csmi = MolToSmiles(*m);
     TEST_ASSERT(csmi.find("@") != std::string::npos);
@@ -4068,7 +4068,7 @@ void testHashAtomExtension() {
   BOOST_LOG(rdInfoLog) << "Testing constructs like [#6]" << std::endl;
   {
     std::string smi = "[#6][12#6]";
-    auto m = SmilesToMol(smi);
+    auto *m = SmilesToMol(smi);
     TEST_ASSERT(m);
     TEST_ASSERT(m->getAtomWithIdx(0)->getAtomicNum() == 6);
     TEST_ASSERT(m->getAtomWithIdx(0)->getIsotope() == 0);

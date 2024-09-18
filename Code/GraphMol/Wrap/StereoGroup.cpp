@@ -46,7 +46,7 @@ StereoGroup *createStereoGroup(StereoGroupType typ, ROMol &mol,
 
 python::object getAtomsHelper(StereoGroup &sg) {
   python::list res;
-  for (auto at : sg.getAtoms()) {
+  for (auto *at : sg.getAtoms()) {
     res.append(boost::ref(*at));
   }
   return python::tuple(res);

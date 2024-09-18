@@ -404,7 +404,7 @@ inline bool isSerializable(const Dict::Pair &pair,
     case RDTypeTag::VecDoubleTag:
       return true;
     case RDTypeTag::AnyTag:
-      for (auto &handler : handlers) {
+      for (const auto &handler : handlers) {
         if (handler->canSerialize(pair.val)) {
           return true;
         }
@@ -469,7 +469,7 @@ inline bool streamWriteProp(std::ostream &ss, const Dict::Pair &pair,
       streamWriteVec(ss, rdvalue_cast<std::vector<unsigned int>>(pair.val));
       break;
     default:
-      for (auto &handler : handlers) {
+      for (const auto &handler : handlers) {
         if (handler->canSerialize(pair.val)) {
           // The form of a custom tag is
           //  CustomTag
@@ -612,7 +612,7 @@ inline bool streamReadProp(std::istream &ss, Dict::Pair &pair,
       std::string propType;
       int version = 0;
       streamRead(ss, propType, version);
-      for (auto &handler : handlers) {
+      for (const auto &handler : handlers) {
         if (propType == handler->getPropName()) {
           handler->read(ss, pair.val);
           dictHasNonPOD = true;

@@ -41,7 +41,7 @@ void compute2DCoordsForReaction(RDKit::ChemicalReaction &rxn, double spacing,
                                 unsigned int nSamples, int sampleSeed,
                                 bool permuteDeg4Nodes) {
   double xOffset = 0.0;
-  for (auto &reactant : rxn.getReactants()) {
+  for (const auto &reactant : rxn.getReactants()) {
     if (updateProps) {
       reactant->updatePropertyCache(false);
       RDKit::MolOps::setConjugation(*reactant);
@@ -61,7 +61,7 @@ void compute2DCoordsForReaction(RDKit::ChemicalReaction &rxn, double spacing,
     }
     xOffset = maxX + spacing;
   }
-  for (auto &product : rxn.getProducts()) {
+  for (const auto &product : rxn.getProducts()) {
     if (updateProps) {
       product->updatePropertyCache(false);
       RDKit::MolOps::setConjugation(*product);

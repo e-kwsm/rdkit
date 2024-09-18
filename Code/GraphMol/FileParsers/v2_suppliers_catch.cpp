@@ -159,7 +159,7 @@ TEST_CASE("TestParsingInvalidChiralityLabelsWithMaeMolSupplier") {
   }
 }
 )DATA";
-  auto invalid_chirality_label =
+  const auto *invalid_chirality_label =
       GENERATE("12_R_1_3_4_5",     // missing chiral atom
                "12_ANR_1_3_4_15",  // missing substituent atom
                "2_S_1_3_4",        // incomplete substituent list
@@ -175,7 +175,7 @@ TEST_CASE("TestParsingInvalidChiralityLabelsWithMaeMolSupplier") {
   constexpr FileParsers::MaeMolSupplierParams params{.sanitize = false};
 
   FileParsers::MaeMolSupplier suppl(iss.release(), takeOwnership, params);
-  auto mol = suppl.next();
+  auto *mol = suppl.next();
 
   REQUIRE(mol);
   CHECK(mol->getNumAtoms() == 5);
