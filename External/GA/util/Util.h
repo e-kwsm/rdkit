@@ -10,21 +10,21 @@
 #ifndef UTIL_H_
 #define UTIL_H_
 
-#include <cmath>
-#include <limits>
-#include <cstdio>
-#include <ctime>
-#include <string>
-#include <iostream>
-#include <iterator>
-#include <fstream>
-#include <sstream>
-#include <vector>
-#include <memory>
-#include <map>
+#include "export.h"
 #include <algorithm>
 #include <boost/optional.hpp>
-#include "export.h"
+#include <cmath>
+#include <cstdio>
+#include <ctime>
+#include <fstream>
+#include <iostream>
+#include <iterator>
+#include <limits>
+#include <map>
+#include <memory>
+#include <sstream>
+#include <string>
+#include <vector>
 
 /*
  * Utility methods

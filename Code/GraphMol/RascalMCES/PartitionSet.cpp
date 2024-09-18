@@ -157,9 +157,9 @@ void PartitionSet::sortPartitions() {
                const std::vector<unsigned int> &v2) {
               if (v1.size() == v2.size() && !v1.empty()) {
                 return v1.front() < v2.front();
-              } else {
-                return v1.size() > v2.size();
               }
+              return v1.size() > v2.size();
+             
             });
 }
 
