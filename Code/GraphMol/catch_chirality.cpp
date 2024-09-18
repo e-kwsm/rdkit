@@ -31,7 +31,7 @@ using namespace RDKit;
 
 unsigned count_wedged_bonds(const ROMol &mol) {
   unsigned nWedged = 0;
-  for (const auto bond : mol.bonds()) {
+  for (auto *const bond : mol.bonds()) {
     if (bond->getBondDir() != Bond::BondDir::NONE) {
       ++nWedged;
     }
@@ -355,7 +355,7 @@ TEST_CASE("isAtomPotentialStereoAtom", "[unittest]") {
     {
       auto mol = "CC(F)(Cl)CNC(C)(C)C"_smiles;
       REQUIRE(mol);
-      for (const auto atom : mol->atoms()) {
+      for (auto *const atom : mol->atoms()) {
         CHECK(Chirality::detail::isAtomPotentialTetrahedralCenter(atom) ==
               Chirality::detail::isAtomPotentialStereoAtom(atom));
       }
@@ -363,7 +363,7 @@ TEST_CASE("isAtomPotentialStereoAtom", "[unittest]") {
     {
       auto mol = "CN1CC1N(F)C"_smiles;
       REQUIRE(mol);
-      for (const auto atom : mol->atoms()) {
+      for (auto *const atom : mol->atoms()) {
         CHECK(Chirality::detail::isAtomPotentialTetrahedralCenter(atom) ==
               Chirality::detail::isAtomPotentialStereoAtom(atom));
       }
@@ -371,7 +371,7 @@ TEST_CASE("isAtomPotentialStereoAtom", "[unittest]") {
     {
       auto mol = "O=S(F)CC[S+]([O-])CS=O"_smiles;
       REQUIRE(mol);
-      for (const auto atom : mol->atoms()) {
+      for (auto *const atom : mol->atoms()) {
         CHECK(Chirality::detail::isAtomPotentialTetrahedralCenter(atom) ==
               Chirality::detail::isAtomPotentialStereoAtom(atom));
       }
@@ -1258,7 +1258,7 @@ TEST_CASE("ring stereo finding is overly aggressive", "[chirality][bug]") {
       auto mol = "N/C=C/C"_smiles;
       CHECK(mol->getBondWithIdx(1)->getStereo() ==
             Bond::BondStereo::STEREOTRANS);
-      auto rwmol = dynamic_cast<RWMol *>(mol.get());
+      auto *rwmol = dynamic_cast<RWMol *>(mol.get());
       rwmol->removeBond(0, 1);
       CHECK(mol->getBondWithIdx(0)->getStereo() ==
             Bond::BondStereo::STEREONONE);
@@ -1267,7 +1267,7 @@ TEST_CASE("ring stereo finding is overly aggressive", "[chirality][bug]") {
       auto mol = "N/C=C/C"_smiles;
       CHECK(mol->getBondWithIdx(1)->getStereo() ==
             Bond::BondStereo::STEREOTRANS);
-      auto rwmol = dynamic_cast<RWMol *>(mol.get());
+      auto *rwmol = dynamic_cast<RWMol *>(mol.get());
       rwmol->removeBond(2, 3);
       CHECK(mol->getBondWithIdx(1)->getStereo() ==
             Bond::BondStereo::STEREONONE);
@@ -1616,7 +1616,7 @@ TEST_CASE("addWavyBondsForStereoAny()") {
     CHECK(mol->getBondWithIdx(9)->getStereo() == Bond::BondStereo::STEREONONE);
     CHECK(mol->getBondWithIdx(5)->getStereo() == Bond::BondStereo::STEREONONE);
     CHECK(mol->getBondWithIdx(8)->getBondDir() == Bond::BondDir::UNKNOWN);
-    for (const auto bond : mol->bonds()) {
+    for (auto *const bond : mol->bonds()) {
       if (bond->getBondType() == Bond::BondType::SINGLE &&
           bond->getIdx() != 8) {
         CHECK(bond->getBondDir() == Bond::BondDir::NONE);
@@ -2087,7 +2087,7 @@ M  END)CTAB"_ctab;
   SECTION("as reported - reversed datives") {
     // structure is bogus, but we want to test
     for (auto bidx : {3, 4, 5, 6}) {
-      auto bond = mol->getBondWithIdx(bidx);
+      auto *bond = mol->getBondWithIdx(bidx);
       bond->setEndAtomIdx(bond->getBeginAtomIdx());
       bond->setBeginAtomIdx(4);
       bond->setBondType(Bond::BondType::DATIVE);
@@ -2147,7 +2147,7 @@ TEST_CASE(
     "Github #5239: Precondition violation on chiral Atoms with zero order "
     "bonds") {
   RDLog::LogStateSetter setter;  // disable irritating warning messages
-  auto molblock = R"CTAB(
+  const auto *molblock = R"CTAB(
      RDKit          3D
      
   0  0  0  0  0  0  0  0  0  0999 V3000
@@ -2187,7 +2187,7 @@ TEST_CASE("nontetrahedral stereo from 3D", "[nontetrahedral]") {
       MolOps::assignChiralTypesFrom3D(*m);
       auto ct = m->getProp<std::string>("ChiralType");
       auto cp = m->getProp<unsigned>("ChiralPermutation");
-      auto atom = m->getAtomWithIdx(0);
+      auto *atom = m->getAtomWithIdx(0);
 
       if (ct == "SP") {
         CHECK(atom->getChiralTag() == Atom::ChiralType::CHI_SQUAREPLANAR);
@@ -2213,7 +2213,7 @@ TEST_CASE("nontetrahedral stereo from 3D", "[nontetrahedral]") {
       REQUIRE(m);
       MolOps::assignChiralTypesFrom3D(*m);
       auto ct = m->getProp<std::string>("ChiralType");
-      auto atom = m->getAtomWithIdx(0);
+      auto *atom = m->getAtomWithIdx(0);
 
       if (ct == "TH") {
         CHECK(atom->getChiralTag() == Atom::ChiralType::CHI_TETRAHEDRAL);
@@ -2418,7 +2418,7 @@ TEST_CASE("getChiralPermutation", "[nontetrahedral]") {
     // clang-format on
     auto m = "CCS[As@TB1](F)(Cl)(Br)N"_smiles;
     REQUIRE(m);
-    const auto atm = m->getAtomWithIdx(3);
+    auto *const atm = m->getAtomWithIdx(3);
     for (const auto &pr : data) {
       // std::cerr << "---- " << pr.second << std::endl;
       CHECK(Chirality::getChiralPermutation(atm, pr.first) == pr.second);
@@ -2435,7 +2435,7 @@ TEST_CASE("getChiralPermutation", "[nontetrahedral]") {
     // clang-format on
     auto m = "CCC[Pt@SP1](F)(Cl)N"_smiles;
     REQUIRE(m);
-    const auto atm = m->getAtomWithIdx(3);
+    auto *const atm = m->getAtomWithIdx(3);
     for (const auto &pr : data) {
       // std::cerr << "---- " << pr.second << std::endl;
       CHECK(Chirality::getChiralPermutation(atm, pr.first) == pr.second);
@@ -2493,7 +2493,7 @@ TEST_CASE("getChiralPermutation", "[nontetrahedral]") {
     // clang-format on
     auto m = "CCO[Co@OH1](Cl)(C)(N)(F)P"_smiles;
     REQUIRE(m);
-    const auto atm = m->getAtomWithIdx(3);
+    auto *const atm = m->getAtomWithIdx(3);
     for (const auto &pr : data) {
       // std::cerr << "---- " << pr.second << std::endl;
       CHECK(Chirality::getChiralPermutation(atm, pr.first) == pr.second);
@@ -3880,7 +3880,7 @@ M  END
         RWMol cp(*mol);
         REQUIRE(count_wedged_bonds(cp) == 0);
 
-        auto bond = cp.getBondBetweenAtoms(1, wedgedAtomIdx);
+        auto *bond = cp.getBondBetweenAtoms(1, wedgedAtomIdx);
         if (bond->getEndAtomIdx() == 1) {
           // One of the bonds in the input is reversed, make sure the chiral
           // atom is always at the start so that the wedge is valid!
@@ -3911,7 +3911,7 @@ M  END
     bwps.wedgeTwoBondsIfPossible = true;
     Chirality::wedgeMolBonds(*m, &m->getConformer(), &bwps);
     unsigned nWedged = 0;
-    for (const auto bond : m->bonds()) {
+    for (auto *const bond : m->bonds()) {
       if (bond->getBondDir() != Bond::BondDir::NONE) {
         ++nWedged;
       }
@@ -3971,7 +3971,7 @@ TEST_CASE(
   auto stereoInfo = Chirality::findPotentialStereo(*m);
   CHECK(stereoInfo.size() == 0);
 
-  auto at = m->getAtomWithIdx(1);
+  auto *at = m->getAtomWithIdx(1);
 
   auto sinfo = Chirality::detail::getStereoInfo(at);
   CHECK(sinfo.type == Chirality::StereoType::Atom_Tetrahedral);
@@ -3997,7 +3997,7 @@ TEST_CASE(
   REQUIRE(m);
   REQUIRE(m->getNumAtoms() == 5);
 
-  auto at = m->getAtomWithIdx(1);
+  auto *at = m->getAtomWithIdx(1);
   REQUIRE(at->getAtomicNum() == 6);
   REQUIRE(at->getDegree() == 3);
 
@@ -4062,7 +4062,7 @@ M  END)CTAB";
   // Removal of the stereogenic H will cause loss of stereo information
   // on the imine double bond, and although the bond is still detected as
   // potentially stereo, it will be reverted to "unspecified"
-  auto bond = mol->getBondWithIdx(2);
+  auto *bond = mol->getBondWithIdx(2);
   REQUIRE(bond->getBondType() == Bond::BondType::DOUBLE);
   CHECK(Chirality::detail::isBondPotentialStereoBond(bond));
   CHECK(bond->getStereo() == Bond::BondStereo::STEREONONE);
@@ -5353,8 +5353,8 @@ M  END)CTAB"_ctab;
   REQUIRE(m0);
   REQUIRE(m1);
 
-  const auto cAt0 = m0->getAtomWithIdx(1);
-  const auto cAt1 = m1->getAtomWithIdx(1);
+  auto *const cAt0 = m0->getAtomWithIdx(1);
+  auto *const cAt1 = m1->getAtomWithIdx(1);
   REQUIRE(cAt0->getAtomicNum() == 6);
   REQUIRE(cAt1->getAtomicNum() == 6);
 
@@ -5445,13 +5445,13 @@ M  END)CTAB"_ctab;
     REQUIRE(m);
     CHECK(m->getBondWithIdx(3)->getStereo() == Bond::BondStereo::STEREOATROPCW);
     // after reading in, there's no bond wedging:
-    for (const auto bnd : m->bonds()) {
+    for (auto *const bnd : m->bonds()) {
       INFO(bnd->getIdx());
       CHECK(bnd->getBondDir() == Bond::BondDir::NONE);
     }
     Chirality::wedgeMolBonds(*m, &m->getConformer());
     // now there is:
-    for (const auto bnd : m->bonds()) {
+    for (auto *const bnd : m->bonds()) {
       INFO(bnd->getIdx());
       if (bnd->getIdx() != 19) {
         CHECK(bnd->getBondDir() == Bond::BondDir::NONE);
@@ -5518,13 +5518,13 @@ M  END
     REQUIRE(m);
     CHECK(m->getBondWithIdx(3)->getStereo() == Bond::BondStereo::STEREOATROPCW);
     // after reading in, there's no bond wedging:
-    for (const auto bnd : m->bonds()) {
+    for (auto *const bnd : m->bonds()) {
       INFO(bnd->getIdx());
       CHECK(bnd->getBondDir() == Bond::BondDir::NONE);
     }
     Chirality::wedgeMolBonds(*m, &m->getConformer());
     // now there is:
-    for (const auto bnd : m->bonds()) {
+    for (auto *const bnd : m->bonds()) {
       INFO(bnd->getIdx());
       if (bnd->getIdx() != 4) {
         CHECK(bnd->getBondDir() == Bond::BondDir::NONE);
@@ -5577,13 +5577,13 @@ M  END
     REQUIRE(m);
     CHECK(m->getBondBetweenAtoms(5, 6)->getStereo() ==
           Bond::BondStereo::STEREOATROPCW);
-    for (const auto bnd : m->bonds()) {
+    for (auto *const bnd : m->bonds()) {
       INFO(bnd->getIdx());
       CHECK(bnd->getBondDir() == Bond::BondDir::NONE);
     }
     Chirality::wedgeMolBonds(*m, &m->getConformer());
     // now there is:
-    for (const auto bnd : m->bonds()) {
+    for (auto *const bnd : m->bonds()) {
       INFO(bnd->getIdx());
       if (bnd->getIdx() != 13) {
         CHECK(bnd->getBondDir() == Bond::BondDir::NONE);
@@ -5637,13 +5637,13 @@ M  END
     REQUIRE(m);
     CHECK(m->getBondBetweenAtoms(5, 6)->getStereo() ==
           Bond::BondStereo::STEREOATROPCW);
-    for (const auto bnd : m->bonds()) {
+    for (auto *const bnd : m->bonds()) {
       INFO(bnd->getIdx());
       CHECK(bnd->getBondDir() == Bond::BondDir::NONE);
     }
     Chirality::wedgeMolBonds(*m, &m->getConformer());
     // now there is:
-    for (const auto bnd : m->bonds()) {
+    for (auto *const bnd : m->bonds()) {
       INFO(bnd->getIdx());
       if (bnd->getIdx() != 7) {
         CHECK(bnd->getBondDir() == Bond::BondDir::NONE);
@@ -5660,7 +5660,7 @@ M  END
     m->getBondWithIdx(1)->setStereo(Bond::BondStereo::STEREOATROPCW);
     Chirality::wedgeMolBonds(*m, &m->getConformer());
     // now there is:
-    for (const auto bnd : m->bonds()) {
+    for (auto *const bnd : m->bonds()) {
       INFO(bnd->getIdx());
       if (bnd->getIdx() != 13) {
         CHECK(bnd->getBondDir() == Bond::BondDir::NONE);
@@ -5879,7 +5879,7 @@ M  END
 )CTAB"_ctab;
   REQUIRE(m);
 
-  auto at = m->getAtomWithIdx(2);
+  auto *at = m->getAtomWithIdx(2);
   REQUIRE(at->getChiralTag() == Atom::ChiralType::CHI_TETRAHEDRAL_CW);
 
   auto &pos = m->getConformer().getPositions();
@@ -6078,7 +6078,7 @@ M  V30 END COLLECTION
 M  V30 END CTAB
 M  END)CTAB"_ctab;
     REQUIRE(m);
-    auto &sgs = m->getStereoGroups();
+    const auto &sgs = m->getStereoGroups();
     REQUIRE(sgs.size() == 1);
     CHECK(sgs[0].getGroupType() == StereoGroupType::STEREO_ABSOLUTE);
     CHECK(sgs[0].getAtoms().size() == 1);
@@ -6133,9 +6133,9 @@ $$$$
     pathName += "/Code/GraphMol/test_data/Github8323.sdf";
     SDMolSupplier suppl(pathName);
     while (!suppl.atEnd()) {
-      auto mol = suppl.next();
+      auto *mol = suppl.next();
       REQUIRE(mol);
-      auto &sgs = mol->getStereoGroups();
+      const auto &sgs = mol->getStereoGroups();
       REQUIRE(sgs.size() == 1);
       REQUIRE(mol->hasProp("StereoGroupOnAtom"));
       auto aid = std::stoul(mol->getProp<std::string>("StereoGroupOnAtom"));

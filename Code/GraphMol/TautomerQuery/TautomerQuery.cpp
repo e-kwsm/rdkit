@@ -161,7 +161,7 @@ TautomerQuery *TautomerQuery::fromMol(
     }
   }
 
-  auto templateMolecule = new RWMol(query);
+  auto *templateMolecule = new RWMol(query);
   for (auto idx : modifiedAtoms) {
     const auto atom = query.getAtomWithIdx(idx);
     const auto queryAtom = new QueryAtom(atom->getAtomicNum());
@@ -178,8 +178,8 @@ TautomerQuery *TautomerQuery::fromMol(
     delete queryAtom;
   }
   for (auto idx : modifiedBonds) {
-    auto bondQuery = makeSingleOrDoubleOrAromaticBondQuery();
-    auto queryBond = new QueryBond();
+    auto *bondQuery = makeSingleOrDoubleOrAromaticBondQuery();
+    auto *queryBond = new QueryBond();
     queryBond->setQuery(bondQuery);
     templateMolecule->replaceBond(idx, queryBond, true);
     delete queryBond;
@@ -195,8 +195,8 @@ bool TautomerQuery::matchTautomer(
     const std::vector<unsigned int> &match,
     const SubstructMatchParameters &params) const {
   for (auto idx : d_modifiedAtoms) {
-    const auto queryAtom = tautomer.getAtomWithIdx(idx);
-    const auto targetAtom = mol.getAtomWithIdx(match[idx]);
+    const auto *const queryAtom = tautomer.getAtomWithIdx(idx);
+    const auto *const targetAtom = mol.getAtomWithIdx(match[idx]);
 #ifdef VERBOSE
     std::cout << "Query atom " << queryAtom->getSymbol() << " target atom "
               << targetAtom->getSymbol() << std::endl;
@@ -210,12 +210,12 @@ bool TautomerQuery::matchTautomer(
   }
 
   for (auto idx : d_modifiedBonds) {
-    const auto queryBond = tautomer.getBondWithIdx(idx);
+    const auto *const queryBond = tautomer.getBondWithIdx(idx);
     const auto beginIdx = queryBond->getBeginAtomIdx();
     const auto endIdx = queryBond->getEndAtomIdx();
     const auto targetBeginIdx = match[beginIdx];
     const auto targetEndIdx = match[endIdx];
-    const auto targetBond =
+    const auto *const targetBond =
         mol.getBondBetweenAtoms(targetBeginIdx, targetEndIdx);
 #ifdef VERBOSE
     std::cout << "Query bond " << queryBond->getBondType() << " target bond "

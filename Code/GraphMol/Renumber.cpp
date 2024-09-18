@@ -114,10 +114,10 @@ ROMol *renumberAtoms(const ROMol &mol,
       std::vector<Bond *> bds;
       ats.reserve(osg.getAtoms().size());
       bds.reserve(osg.getBonds().size());
-      for (const auto aptr : osg.getAtoms()) {
+      for (auto *const aptr : osg.getAtoms()) {
         ats.push_back(res->getAtomWithIdx(revOrder[aptr->getIdx()]));
       }
-      for (const auto bptr : osg.getBonds()) {
+      for (auto *const bptr : osg.getBonds()) {
         bds.push_back(
             res->getBondWithIdx(bptr->getIdx()));  // bonds do not change order
       }
