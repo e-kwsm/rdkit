@@ -65,7 +65,7 @@ void DrawMolMCHCircleAndLine::makeBondHighlights(
       lineWidth = getHighlightBondWidth(drawOptions_, bond_idx,
                                         &highlightLinewidthMultipliers_);
     }
-    auto bond = drawMol_->getBondWithIdx(bond_idx);
+    auto *bond = drawMol_->getBondWithIdx(bond_idx);
     auto at1_idx = bond->getBeginAtomIdx();
     auto at2_idx = bond->getEndAtomIdx();
     auto at1_cds = atCds_[at1_idx];
@@ -149,7 +149,7 @@ void DrawMolMCHCircleAndLine::makeBondHighlights(
 // ****************************************************************************
 void DrawMolMCHCircleAndLine::makeAtomHighlights(
     std::vector<std::unique_ptr<DrawShape>> &atomHighlights) {
-  for (auto &ha : mcHighlightAtomMap_) {
+  for (const auto &ha : mcHighlightAtomMap_) {
     double xradius, yradius;
     Point2D centre;
     int lineWidth = getHighlightBondWidth(drawOptions_, -1, nullptr);

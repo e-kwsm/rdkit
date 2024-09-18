@@ -347,7 +347,7 @@ const std::vector<const ROMol *> convertPyArgumentsForBulk(
 python::list getSparseCountFPBulkPy(python::list &py_molVect, FPType fPType) {
   const std::vector<const ROMol *> molVect =
       convertPyArgumentsForBulk(py_molVect);
-  auto tempResult = getSparseCountFPBulk(molVect, fPType);
+  auto *tempResult = getSparseCountFPBulk(molVect, fPType);
   python::list result;
 
   for (auto &it : *tempResult) {
@@ -360,7 +360,7 @@ python::list getSparseCountFPBulkPy(python::list &py_molVect, FPType fPType) {
 python::list getSparseFPBulkPy(python::list &py_molVect, FPType fpType) {
   const std::vector<const ROMol *> molVect =
       convertPyArgumentsForBulk(py_molVect);
-  auto tempResult = getSparseFPBulk(molVect, fpType);
+  auto *tempResult = getSparseFPBulk(molVect, fpType);
   python::list result;
 
   for (auto &it : *tempResult) {
@@ -375,7 +375,7 @@ python::list getSparseFPBulkPy(python::list &py_molVect, FPType fpType) {
 python::list getCountFPBulkPy(python::list &py_molVect, FPType fPType) {
   const std::vector<const ROMol *> molVect =
       convertPyArgumentsForBulk(py_molVect);
-  auto tempResult = getCountFPBulk(molVect, fPType);
+  auto *tempResult = getCountFPBulk(molVect, fPType);
   python::list result;
 
   for (auto &it : *tempResult) {
@@ -388,7 +388,7 @@ python::list getCountFPBulkPy(python::list &py_molVect, FPType fPType) {
 python::list getFPBulkPy(python::list &py_molVect, FPType fPType) {
   const std::vector<const ROMol *> molVect =
       convertPyArgumentsForBulk(py_molVect);
-  auto tempResult = getFPBulk(molVect, fPType);
+  auto *tempResult = getFPBulk(molVect, fPType);
   python::list result;
 
   for (auto &it : *tempResult) {

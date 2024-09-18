@@ -108,7 +108,7 @@ void Normalizer::normalizeInPlace(RWMol &mol) {
 
   // make the transforms are compatible with the
   // restrictions on in-place reactions
-  for (auto &transform : transforms) {
+  for (const auto &transform : transforms) {
     if (transform->getNumProductTemplates() != 1 ||
         transform->getNumReactantTemplates() != 1 ||
         transform->getProducts()[0]->getNumAtoms() >
@@ -124,7 +124,7 @@ void Normalizer::normalizeInPlace(RWMol &mol) {
   for (unsigned int i = 0; i < MAX_RESTARTS; ++i) {
     bool loop_break = false;
     // Iterate through Normalization transforms and apply each in order
-    for (auto &transform : transforms) {
+    for (const auto &transform : transforms) {
       constexpr bool removeUnmatchedAtoms = false;
       if (transform->runReactant(mol, removeUnmatchedAtoms)) {
         BOOST_LOG(rdInfoLog)
@@ -194,7 +194,7 @@ ROMOL_SPTR Normalizer::normalizeFragment(
   for (unsigned int i = 0; i < MAX_RESTARTS; ++i) {
     bool loop_break = false;
     // Iterate through Normalization transforms and apply each in order
-    for (auto &transform : transforms) {
+    for (const auto &transform : transforms) {
       SmilesMolPair product = applyTransform(nfrag, *transform);
       if (!product.first.empty() && !seenProductSmiles.count(product.first)) {
         seenProductSmiles.insert(product.first);
