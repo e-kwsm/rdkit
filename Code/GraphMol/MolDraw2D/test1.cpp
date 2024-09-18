@@ -2585,7 +2585,7 @@ void test12DrawMols() {
     outs.close();
     check_file_hash("test12_2.svg");
   }
-  for (auto m : mols) {
+  for (auto *m : mols) {
     delete m;
   }
   std::cerr << " Done" << std::endl;
@@ -3121,7 +3121,7 @@ void test16MoleculeMetadata() {
           std::string::npos);
 #endif
       check_file_hash("test16_2.svg");
-      for (auto ptr : ms) {
+      for (auto *ptr : ms) {
         delete ptr;
       }
     }
@@ -3962,12 +3962,12 @@ void test20Annotate() {
   // There's an option for this, but for debugging it's sometimes
   // useful to be able to put notes on just a few atoms.
   auto addAtomSerialNumbers = [](ROMol &mol) {
-    for (auto atom : mol.atoms()) {
+    for (auto *atom : mol.atoms()) {
       atom->setProp(common_properties::atomNote, atom->getIdx());
     }
   };
   auto addBondSerialNumbers = [](ROMol &mol) {
-    for (auto bond : mol.bonds()) {
+    for (auto *bond : mol.bonds()) {
       bond->setProp(common_properties::bondNote, bond->getIdx());
     }
   };
@@ -4050,9 +4050,9 @@ void test20Annotate() {
   }
   {
     auto m1 = "S=C1N=C(NC(CC#N)(C)C=C=C)NC2=NNN=C21"_smiles;
-    auto atom = m1->getAtomWithIdx(3);
+    auto *atom = m1->getAtomWithIdx(3);
     atom->setProp("atomNote", "foolish annotation");
-    auto bond = m1->getBondWithIdx(5);
+    auto *bond = m1->getBondWithIdx(5);
     bond->setProp("bondNote", "way too long to be useful");
 #ifdef RDK_BUILD_CAIRO_SUPPORT
     {

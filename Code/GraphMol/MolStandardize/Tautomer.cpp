@@ -32,7 +32,7 @@ namespace MolStandardize {
 namespace TautomerScoringFunctions {
 int scoreRings(const ROMol &mol) {
   int score = 0;
-  auto ringInfo = mol.getRingInfo();
+  auto *ringInfo = mol.getRingInfo();
   std::unique_ptr<ROMol> cp;
   if (!ringInfo->isSymmSssr()) {
     cp.reset(new ROMol(mol));
@@ -149,12 +149,12 @@ TautomerEnumerator::TautomerEnumerator(const CleanupParameters &params)
 bool TautomerEnumerator::setTautomerStereoAndIsoHs(
     const ROMol &mol, ROMol &taut, const TautomerEnumeratorResult &res) const {
   bool modified = false;
-  for (auto atom : mol.atoms()) {
+  for (auto *atom : mol.atoms()) {
     auto atomIdx = atom->getIdx();
     if (!res.d_modifiedAtoms.test(atomIdx)) {
       continue;
     }
-    auto tautAtom = taut.getAtomWithIdx(atomIdx);
+    auto *tautAtom = taut.getAtomWithIdx(atomIdx);
     // clear chiral tag on sp2 atoms (also sp3 if d_removeSp3Stereo is true)
     if (tautAtom->getHybridization() == Atom::SP2 || d_removeSp3Stereo) {
       modified |= (tautAtom->getChiralTag() != Atom::CHI_UNSPECIFIED);
@@ -178,7 +178,7 @@ bool TautomerEnumerator::setTautomerStereoAndIsoHs(
     }
   }
   // remove stereochemistry on bonds that are part of a tautomeric path
-  for (auto bond : mol.bonds()) {
+  for (auto *bond : mol.bonds()) {
     auto bondIdx = bond->getIdx();
     if (!res.d_modifiedBonds.test(bondIdx)) {
       continue;
@@ -188,7 +188,7 @@ bool TautomerEnumerator::setTautomerStereoAndIsoHs(
         bond->getStereo() > Bond::STEREOANY) {
       // look around the beginning and end atoms and check for bonds with
       // direction set
-      for (auto atom : {bond->getBeginAtom(), bond->getEndAtom()}) {
+      for (auto *atom : {bond->getBeginAtom(), bond->getEndAtom()}) {
         for (const auto &nbri :
              boost::make_iterator_range(mol.getAtomBonds(atom))) {
           const auto &obnd = mol[nbri];
@@ -199,7 +199,7 @@ bool TautomerEnumerator::setTautomerStereoAndIsoHs(
         }
       }
     }
-    auto tautBond = taut.getBondWithIdx(bondIdx);
+    auto *tautBond = taut.getBondWithIdx(bondIdx);
     if (tautBond->getBondType() != Bond::DOUBLE || d_removeBondStereo) {
       // When bond stereo is being removed for bonds involved in tautomerism,
       // use STEREOANY (for *non-ring* double bonds) instead of STEREONONE.
@@ -207,7 +207,7 @@ bool TautomerEnumerator::setTautomerStereoAndIsoHs(
       // assignment from 2D coordinates after bond orders have been changed.
       bool isRingBond = false;
       if (tautBond->getBondType() == Bond::DOUBLE) {
-        auto ringInfo = taut.getRingInfo();
+        auto *ringInfo = taut.getRingInfo();
         // We only need to know whether the bond is in a ring; avoid forcing
         // SymmSSSR here since that has a performance cost.
         // this might be not precise enough for large rings like 9-or-more macrocycles
@@ -262,13 +262,13 @@ bool TautomerEnumerator::setTautomerStereoAndIsoHs(
     // coordinate-based E/Z inference. If bond stereo removal is enabled,
     // re-apply our contract to the bonds involved in tautomerism.
     if (d_removeBondStereo) {
-      auto ringInfo = taut.getRingInfo();
+      auto *ringInfo = taut.getRingInfo();
       if (!ringInfo || !ringInfo->isFindFastOrBetter()) {
         // might prefer more expensive calc here to better support 9-or-more macrocycles
         MolOps::fastFindRings(taut);
         ringInfo = taut.getRingInfo();
       }
-      for (auto bond : taut.bonds()) {
+      for (auto *bond : taut.bonds()) {
         const auto bondIdx = bond->getIdx();
         if (!res.d_modifiedBonds.test(bondIdx)) {
           continue;
@@ -436,7 +436,7 @@ TautomerEnumeratorResult TautomerEnumerator::enumerate(const ROMol &mol) const {
           // Adjust bond orders
           unsigned int bi = 0;
           for (size_t i = 0; i < transform.Mol->getNumBonds(); ++i) {
-            const auto tbond = transform.Mol->getBondWithIdx(i);
+            auto *const tbond = transform.Mol->getBondWithIdx(i);
             Bond *bond = product->getBondBetweenAtoms(
                 match[tbond->getBeginAtomIdx()].second,
                 match[tbond->getEndAtomIdx()].second);
@@ -660,8 +660,8 @@ void TautomerEnumerator::canonicalizeInPlace(
   TEST_ASSERT(tmp->getNumAtoms() == mol.getNumAtoms());
   TEST_ASSERT(tmp->getNumBonds() == mol.getNumBonds());
   // now copy the info from the canonical tautomer over to the input molecule
-  for (const auto tmpAtom : tmp->atoms()) {
-    auto atom = mol.getAtomWithIdx(tmpAtom->getIdx());
+  for (auto *const tmpAtom : tmp->atoms()) {
+    auto *atom = mol.getAtomWithIdx(tmpAtom->getIdx());
     TEST_ASSERT(tmpAtom->getAtomicNum() == atom->getAtomicNum());
     atom->setFormalCharge(tmpAtom->getFormalCharge());
     atom->setNoImplicit(tmpAtom->getNoImplicit());
@@ -670,8 +670,8 @@ void TautomerEnumerator::canonicalizeInPlace(
     atom->setNumRadicalElectrons(tmpAtom->getNumRadicalElectrons());
     atom->setChiralTag(tmpAtom->getChiralTag());
   }
-  for (const auto tmpBond : tmp->bonds()) {
-    auto bond = mol.getBondWithIdx(tmpBond->getIdx());
+  for (auto *const tmpBond : tmp->bonds()) {
+    auto *bond = mol.getBondWithIdx(tmpBond->getIdx());
     TEST_ASSERT(tmpBond->getBeginAtomIdx() == bond->getBeginAtomIdx());
     TEST_ASSERT(tmpBond->getEndAtomIdx() == bond->getEndAtomIdx());
     bond->setBondType(tmpBond->getBondType());

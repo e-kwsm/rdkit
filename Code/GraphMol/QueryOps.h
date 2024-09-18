@@ -91,7 +91,7 @@ static inline int queryAtomNonHydrogenDegree(Atom const *at) {
   int res = 0;
   for (const auto nbri :
        boost::make_iterator_range(at->getOwningMol().getAtomNeighbors(at))) {
-    const auto nbr = at->getOwningMol()[nbri];
+    auto *const nbr = at->getOwningMol()[nbri];
     if (nbr->getAtomicNum() != 1 || nbr->getIsotope() > 1) {
       res++;
     }
@@ -104,7 +104,7 @@ static inline int queryAtomHeavyAtomDegree(Atom const *at) {
   int heavyDegree = 0;
   for (const auto nbri :
        boost::make_iterator_range(at->getOwningMol().getAtomNeighbors(at))) {
-    const auto nbr = at->getOwningMol()[nbri];
+    auto *const nbr = at->getOwningMol()[nbri];
     if (nbr->getAtomicNum() > 1) {
       heavyDegree++;
     }
@@ -340,7 +340,7 @@ static inline int queryAtomIsInRingOfSize(Atom const *at, int tgt) {
 static inline int queryAtomIsInRingOfSize(Atom const *at, int lower, int upper,
                                           bool lowerOpen = false,
                                           bool upperOpen = false) {
-  const auto ri = at->getOwningMol().getRingInfo();
+  auto *const ri = at->getOwningMol().getRingInfo();
   for (const auto ringSize : ri->atomRingSizes(at->getIdx())) {
     if ((ringSize > lower || (ringSize == lower && !lowerOpen)) &&
         (upper < 0 ||

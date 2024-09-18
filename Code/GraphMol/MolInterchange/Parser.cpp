@@ -60,9 +60,9 @@ struct DefaultValueCache {
     if (lookup != intMap.end()) {
       return lookup->second;
     }
-    if (const auto fobj = bjDefaults.if_object()) {
-      if (const auto kit = fobj->find(key); kit != fobj->end()) {
-        const auto val = kit->value().if_int64();
+    if (const auto *const fobj = bjDefaults.if_object()) {
+      if (const auto *const kit = fobj->find(key); kit != fobj->end()) {
+        const auto *const val = kit->value().if_int64();
         if (!val) {
           throw FileParseException(std::string("Bad format: value of ") +
                                    std::string(key) +
@@ -81,9 +81,9 @@ struct DefaultValueCache {
     if (lookup != boolMap.end()) {
       return lookup->second;
     }
-    if (const auto fobj = bjDefaults.if_object()) {
-      if (const auto kit = fobj->find(key); kit != fobj->end()) {
-        const auto val = kit->value().if_bool();
+    if (const auto *const fobj = bjDefaults.if_object()) {
+      if (const auto *const kit = fobj->find(key); kit != fobj->end()) {
+        const auto *const val = kit->value().if_bool();
         if (!val) {
           throw FileParseException(std::string("Bad format: value of ") +
                                    std::string(key) +
@@ -103,15 +103,15 @@ struct DefaultValueCache {
     if (lookup != stringMap.end()) {
       return lookup->second;
     }
-    if (const auto fobj = bjDefaults.if_object()) {
-      if (const auto kit = fobj->find(key); kit != fobj->end()) {
-        const auto val = kit->value().if_string();
+    if (const auto *const fobj = bjDefaults.if_object()) {
+      if (const auto *const kit = fobj->find(key); kit != fobj->end()) {
+        const auto *const val = kit->value().if_string();
         if (!val) {
           throw FileParseException(std::string("Bad format: value of ") +
                                    std::string(key) +
                                    std::string(" is not a string"));
         }
-        auto res = val->c_str();
+        const auto *res = val->c_str();
         stringMap[key] = res;
         return res;
       }
@@ -123,9 +123,9 @@ struct DefaultValueCache {
 int getIntDefaultValue(const char *key, const bj::value &from,
                        const DefaultValueCache &defaults) {
   PRECONDITION(key, "no key");
-  if (const auto fobj = from.if_object()) {
-    if (const auto kit = fobj->find(key); kit != fobj->end()) {
-      const auto val = kit->value().if_int64();
+  if (const auto *const fobj = from.if_object()) {
+    if (const auto *const kit = fobj->find(key); kit != fobj->end()) {
+      const auto *const val = kit->value().if_int64();
       if (!val) {
         throw FileParseException(std::string("Bad format: value of ") +
                                  std::string(key) +
@@ -139,9 +139,9 @@ int getIntDefaultValue(const char *key, const bj::value &from,
 bool getBoolDefaultValue(const char *key, const bj::value &from,
                          const DefaultValueCache &defaults) {
   PRECONDITION(key, "no key");
-  if (const auto fobj = from.if_object()) {
-    if (const auto kit = fobj->find(key); kit != fobj->end()) {
-      const auto val = kit->value().if_bool();
+  if (const auto *const fobj = from.if_object()) {
+    if (const auto *const kit = fobj->find(key); kit != fobj->end()) {
+      const auto *const val = kit->value().if_bool();
       if (!val) {
         throw FileParseException(std::string("Bad format: value of ") +
                                  std::string(key) +
@@ -155,9 +155,9 @@ bool getBoolDefaultValue(const char *key, const bj::value &from,
 std::string getStringDefaultValue(const char *key, const bj::value &from,
                                   const DefaultValueCache &defaults) {
   PRECONDITION(key, "no key");
-  if (const auto fobj = from.if_object()) {
-    if (const auto kit = fobj->find(key); kit != fobj->end()) {
-      const auto val = kit->value().if_string();
+  if (const auto *const fobj = from.if_object()) {
+    if (const auto *const kit = fobj->find(key); kit != fobj->end()) {
+      const auto *const val = kit->value().if_string();
       if (!val) {
         throw FileParseException(std::string("Bad format: value of ") +
                                  std::string(key) +
@@ -287,7 +287,7 @@ void readSubstanceGroups(RWMol *mol, const bj::value &sgVals) {
           "Bad Format: substance group does not have TYPE property");
     }
 
-    auto sgType = sgVal.at("properties").at("TYPE").as_string().c_str();
+    const auto *sgType = sgVal.at("properties").at("TYPE").as_string().c_str();
     if (!SubstanceGroupChecks::isValidType(sgType)) {
       throw FileParseException(
           (boost::format(
@@ -614,7 +614,7 @@ void finishQuery(T const *owner, U *res, const bj::value &repVal,
                  const JSONParseParameters &params) {
   PRECONDITION(owner, "no owner");
   PRECONDITION(res, "no result");
-  auto descr = repVal.at("descr").as_string().c_str();
+  const auto *descr = repVal.at("descr").as_string().c_str();
   res->setDescription(descr);
   std::string typ;
   if (repVal.as_object().contains("type")) {
@@ -723,7 +723,7 @@ void readQueries(RWMol *mol, const bj::value &repVal,
         if (idx >= mol->getNumAtoms()) {
           throw FileParseException("too much atom data found");
         }
-        auto atom = mol->getAtomWithIdx(idx);
+        auto *atom = mol->getAtomWithIdx(idx);
         CHECK_INVARIANT(atom != nullptr, "no atom");
         // we need to replace the current atom with a query atom:
         QueryAtom qatom(*atom);
@@ -754,7 +754,7 @@ void readQueries(RWMol *mol, const bj::value &repVal,
         if (idx >= mol->getNumBonds()) {
           throw FileParseException("too much bond data found");
         }
-        auto bond = mol->getBondWithIdx(idx);
+        auto *bond = mol->getBondWithIdx(idx);
         CHECK_INVARIANT(bond != nullptr, "no bond");
         QueryBond qbond(*bond);
         qbond.setQuery(nullptr);
@@ -841,7 +841,7 @@ void readRDKitRepresentation(RWMol *mol, const bj::value &repVal,
     if (miter != repVal.as_object().end()) {
       CHECK_INVARIANT(!mol->getRingInfo()->isInitialized(),
                       "rings already initialized");
-      auto ri = mol->getRingInfo();
+      auto *ri = mol->getRingInfo();
       ri->initialize();
       for (const auto &val : miter->value().as_array()) {
         if (!val.is_array()) {
@@ -952,7 +952,7 @@ std::vector<boost::shared_ptr<ROMol>> DocToMols(
   }
 
   if (doc.as_object().contains("commonchem")) {
-    auto jobj = doc.at("commonchem").if_object();
+    auto *jobj = doc.at("commonchem").if_object();
     if (!jobj || !jobj->contains("version")) {
       throw FileParseException("Bad Format: missing version in JSON");
     }

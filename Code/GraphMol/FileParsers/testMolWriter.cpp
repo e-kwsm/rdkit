@@ -1633,7 +1633,7 @@ void testMolFileGithub8265() {
   BOOST_LOG(rdInfoLog) << "-----------------------------------------\n";
   BOOST_LOG(rdInfoLog) << "Running testMolFileGithub8265()\n";
   auto m = "C"_smiles;
-  auto conf = new Conformer(1);
+  auto *conf = new Conformer(1);
   m->addConformer(conf);
 
   for (int i = 0; i < 2; ++i) {

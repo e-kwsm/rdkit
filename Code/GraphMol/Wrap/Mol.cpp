@@ -204,7 +204,7 @@ class ReadWriteMol : public RWMol {
     std::vector<StereoGroup> groups;
     pythonObjectToVect<StereoGroup>(stereo_groups, groups);
     for (const auto &group : groups) {
-      for (const auto atom : group.getAtoms()) {
+      for (auto *const atom : group.getAtoms()) {
         if (!atom) {
           throw_value_error("NULL atom in StereoGroup");
         }
