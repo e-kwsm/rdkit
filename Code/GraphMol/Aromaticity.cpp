@@ -240,7 +240,7 @@ bool incidentNonCyclicMultipleBond(const Atom *at, int &who) {
   // if yes check which atom this bond goes to
   // and record the atomID in who
   const auto &mol = at->getOwningMol();
-  for (const auto bond : mol.atomBonds(at)) {
+  for (auto *const bond : mol.atomBonds(at)) {
     if (!mol.getRingInfo()->numBondRings(bond->getIdx())) {
       if (bond->getValenceContrib(at) >= 2.0) {
         who = bond->getOtherAtomIdx(at->getIdx());
@@ -254,7 +254,7 @@ bool incidentNonCyclicMultipleBond(const Atom *at, int &who) {
 bool incidentCyclicMultipleBond(const Atom *at) {
   PRECONDITION(at, "bad atom");
   const auto &mol = at->getOwningMol();
-  for (const auto bond : mol.atomBonds(at)) {
+  for (auto *const bond : mol.atomBonds(at)) {
     if (mol.getRingInfo()->numBondRings(bond->getIdx())) {
       if (bond->getValenceContrib(at) >= 2.0) {
         return true;
@@ -553,7 +553,7 @@ bool isAtomCandForArom(const Atom *at, const ElectronDonorType edon,
   if (nUnsaturations > 1) {
     unsigned int nMult = 0;
     const auto &mol = at->getOwningMol();
-    for (const auto bond : mol.atomBonds(at)) {
+    for (auto *const bond : mol.atomBonds(at)) {
       switch (bond->getBondType()) {
         case Bond::SINGLE:
         case Bond::AROMATIC:
@@ -584,7 +584,7 @@ bool isAtomCandForArom(const Atom *at, const ElectronDonorType edon,
 
   if (!allowExocyclicMultipleBonds) {
     const auto &mol = at->getOwningMol();
-    for (const auto bond : mol.atomBonds(at)) {
+    for (auto *const bond : mol.atomBonds(at)) {
       if ((bond->getBondType() == Bond::DOUBLE ||
            bond->getBondType() == Bond::TRIPLE) &&
           !queryIsBondInRing(bond)) {
@@ -652,7 +652,7 @@ ElectronDonorType getAtomDonorTypeArom(
       // external multiple bond this electron will not be available
       // for aromaticity if this atom is bonded to a more electro
       // negative atom
-      const auto at2 = mol.getAtomWithIdx(who);
+      const auto *const at2 = mol.getAtomWithIdx(who);
       if (exocyclicBondsStealElectrons &&
           PeriodicTable::getTable()->moreElectroNegative(at2->getAtomicNum(),
                                                          at->getAtomicNum())) {
@@ -676,7 +676,7 @@ ElectronDonorType getAtomDonorTypeArom(
       // if there is an incident multiple bond with an element that
       // is more electronegative than the this atom, count one less
       // electron
-      const auto at2 = mol.getAtomWithIdx(who);
+      const auto *const at2 = mol.getAtomWithIdx(who);
       if (exocyclicBondsStealElectrons &&
           PeriodicTable::getTable()->moreElectroNegative(at2->getAtomicNum(),
                                                          at->getAtomicNum())) {
@@ -720,7 +720,7 @@ int countAtomElec(const Atom *at) {
   int degree = at->getDegree() + at->getTotalNumHs();
 
   const auto &mol = at->getOwningMol();
-  for (const auto bond : mol.atomBonds(at)) {
+  for (auto *const bond : mol.atomBonds(at)) {
     // don't count bonds that aren't actually contributing to the valence here:
     // if the bond is "real" (not undefined or zero), it always contributes to
     // valence/degree, and in case the bond is a query bond with no order, we
@@ -777,11 +777,11 @@ int mdlAromaticityHelper(RWMol &mol, const VECT_INT_VECT &srings) {
   VECT_EDON_TYPE edon(natoms);
 
   VECT_INT_VECT cRings;  // holder for rings that are candidates for aromaticity
-  for (auto &sring : srings) {
+  for (const auto &sring : srings) {
     bool allAromatic = true;
     bool allDummy = true;
     for (auto firstIdx : sring) {
-      const auto at = mol.getAtomWithIdx(firstIdx);
+      auto *const at = mol.getAtomWithIdx(firstIdx);
 
       if (allDummy && at->getAtomicNum() != 0) {
         allDummy = false;
@@ -843,7 +843,7 @@ int mdlAromaticityHelper(RWMol &mol, const VECT_INT_VECT &srings) {
 
   std::vector<Bond *> bondsByIdx;
   bondsByIdx.reserve(mol.getNumBonds());
-  for (const auto b : mol.bonds()) {
+  for (auto *const b : mol.bonds()) {
     bondsByIdx.push_back(b);
   }
 
@@ -876,7 +876,7 @@ int mmff94AromaticityHelper(RWMol &mol, const VECT_INT_VECT &srings) {
   // set aromaticity as done in MMFF94 init
   if (!mol.hasProp(common_properties::_MMFFSanitized)) {
     bool isAromaticSet = false;
-    for (const auto atom : mol.atoms()) {
+    for (auto *const atom : mol.atoms()) {
       if (atom->getIsAromatic()) {
         isAromaticSet = true;
         break;
@@ -891,9 +891,9 @@ int mmff94AromaticityHelper(RWMol &mol, const VECT_INT_VECT &srings) {
 
   // count aromatic rings for return value
   int narom = 1;
-  for (auto &sring : srings) {
+  for (const auto &sring : srings) {
     bool isAromRing = true;
-    for (auto &aid : sring) {
+    for (const auto &aid : sring) {
       Atom *atom = mol.getAtomWithIdx(aid);
       if (!atom->getIsAromatic()) {
         isAromRing = false;
@@ -922,7 +922,7 @@ int aromaticityHelper(RWMol &mol, const VECT_INT_VECT &srings,
   VECT_EDON_TYPE edon(natoms);
 
   VECT_INT_VECT cRings;  // holder for rings that are candidates for aromaticity
-  for (auto &sring : srings) {
+  for (const auto &sring : srings) {
     size_t ringSz = sring.size();
     // test ring size:
     if ((minRingSize && ringSz < minRingSize) ||
@@ -943,7 +943,7 @@ int aromaticityHelper(RWMol &mol, const VECT_INT_VECT &srings,
     bool nonCandidatesInFusedRings = true;
     bool allDummy = true;
     for (auto firstIdx : sring) {
-      const auto at = mol.getAtomWithIdx(firstIdx);
+      auto *const at = mol.getAtomWithIdx(firstIdx);
 
       if (allDummy && !isAtomDummy(at)) {
         allDummy = false;
@@ -985,7 +985,7 @@ int aromaticityHelper(RWMol &mol, const VECT_INT_VECT &srings,
 
   std::vector<Bond *> bondsByIdx;
   bondsByIdx.reserve(mol.getNumBonds());
-  for (auto b : mol.bonds()) {
+  for (auto *b : mol.bonds()) {
     bondsByIdx.push_back(b);
   }
 
