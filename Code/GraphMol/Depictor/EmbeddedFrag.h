@@ -361,10 +361,10 @@ class RDKIT_DEPICTOR_EXPORT EmbeddedFrag {
   //!  within a specified distant of a point
   int findNumNeigh(const RDGeom::Point2D &pt, double radius);
 
-  inline double getBoxPx() { return d_px; }
-  inline double getBoxNx() { return d_nx; }
-  inline double getBoxPy() { return d_py; }
-  inline double getBoxNy() { return d_ny; }
+  double getBoxPx() { return d_px; }
+  double getBoxNx() { return d_nx; }
+  double getBoxPy() { return d_py; }
+  double getBoxNy() { return d_ny; }
 
   void canonicalizeOrientation();
 
