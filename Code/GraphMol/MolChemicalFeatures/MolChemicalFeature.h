@@ -64,7 +64,7 @@ class RDKIT_MOLCHEMICALFEATURES_EXPORT MolChemicalFeature
   int getId() const override { return d_id; }
 
   //! \brief returns the number of atoms defining the feature
-  inline unsigned int getNumAtoms() const { return d_atoms.size(); }
+  unsigned int getNumAtoms() const { return d_atoms.size(); }
 
   //! \brief sets the active conformer (in the associated molecule)
   void setActiveConformer(int confId);

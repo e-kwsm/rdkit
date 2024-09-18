@@ -206,9 +206,9 @@ class PyGILStateHolder {
 //   between releasing and grabbing the lock
 class RDKIT_RDBOOST_EXPORT RDUNUSED NOGIL {
  public:
-  inline NOGIL() { m_thread_state = PyEval_SaveThread(); }
+  NOGIL() { m_thread_state = PyEval_SaveThread(); }
 
-  inline ~NOGIL() {
+  ~NOGIL() {
     PyEval_RestoreThread(m_thread_state);
     m_thread_state = nullptr;
   }

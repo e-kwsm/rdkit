@@ -65,12 +65,12 @@ class SymmMatrix {
   ~SymmMatrix() = default;
 
   //! returns the number of rows
-  inline unsigned int numRows() const { return d_size; }
+  unsigned int numRows() const { return d_size; }
 
   //! returns the number of columns
-  inline unsigned int numCols() const { return d_size; }
+  unsigned int numCols() const { return d_size; }
 
-  inline unsigned int getDataSize() const { return d_dataSize; }
+  unsigned int getDataSize() const { return d_dataSize; }
 
   void setToIdentity() {
     TYPE *data = d_data.get();
@@ -135,10 +135,10 @@ class SymmMatrix {
   }
 
   //! returns a pointer to our data array
-  inline TYPE *getData() { return d_data.get(); }
+  TYPE *getData() { return d_data.get(); }
 
   //! returns a const pointer to our data array
-  inline const TYPE *getData() const { return d_data.get(); }
+  const TYPE *getData() const { return d_data.get(); }
 
   SymmMatrix<TYPE> &operator*=(TYPE scale) {
     TYPE *data = d_data.get();
