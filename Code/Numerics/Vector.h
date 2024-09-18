@@ -80,32 +80,32 @@ class Vector {
   unsigned int size() const { return d_size; }
 
   //! returns the value at a particular index
-  inline TYPE getVal(unsigned int i) const {
+  TYPE getVal(unsigned int i) const {
     PRECONDITION(i < d_size, "bad index");
     return d_data[i];
   }
 
   //! sets the index at a particular value
-  inline void setVal(unsigned int i, TYPE val) {
+  void setVal(unsigned int i, TYPE val) {
     PRECONDITION(i < d_size, "bad index");
     d_data[i] = val;
   }
 
-  inline TYPE operator[](unsigned int i) const {
+  TYPE operator[](unsigned int i) const {
     PRECONDITION(i < d_size, "bad index");
     return d_data[i];
   }
 
-  inline TYPE &operator[](unsigned int i) {
+  TYPE &operator[](unsigned int i) {
     PRECONDITION(i < d_size, "bad index");
     return d_data[i];
   }
 
   //! returns a pointer to our data array
-  inline TYPE *getData() { return d_data.get(); }
+  TYPE *getData() { return d_data.get(); }
 
   //! returns a const pointer to our data array
-  inline const TYPE *getData() const {
+  const TYPE *getData() const {
     // return dp_data;
     return d_data.get();
   }
@@ -165,7 +165,7 @@ class Vector {
   }
 
   //! L2 norm squared
-  inline TYPE normL2Sq() const {
+  TYPE normL2Sq() const {
     TYPE res = (TYPE)0.0;
     unsigned int i;
     TYPE *data = d_data.get();
@@ -176,10 +176,10 @@ class Vector {
   }
 
   //! L2 norm
-  inline TYPE normL2() const { return sqrt(this->normL2Sq()); }
+  TYPE normL2() const { return sqrt(this->normL2Sq()); }
 
   //! L1 norm
-  inline TYPE normL1() const {
+  TYPE normL1() const {
     TYPE res = (TYPE)0.0;
     unsigned int i;
     TYPE *data = d_data.get();
@@ -190,7 +190,7 @@ class Vector {
   }
 
   //! L-infinity norm
-  inline TYPE normLinfinity() const {
+  TYPE normLinfinity() const {
     TYPE res = (TYPE)(-1.0);
     unsigned int i;
     TYPE *data = d_data.get();
@@ -204,7 +204,7 @@ class Vector {
 
   //! \brief Gets the ID of the entry that has the largest absolute value
   //! i.e. the entry being used for the L-infinity norm
-  inline unsigned int largestAbsValId() const {
+  unsigned int largestAbsValId() const {
     TYPE res = (TYPE)(-1.0);
     unsigned int i, id = d_size;
     TYPE *data = d_data.get();
@@ -218,7 +218,7 @@ class Vector {
   }
 
   //! \brief Gets the ID of the entry that has the largest value
-  inline unsigned int largestValId() const {
+  unsigned int largestValId() const {
     TYPE res = (TYPE)(-1.e8);
     unsigned int i, id = d_size;
     TYPE *data = d_data.get();
@@ -232,7 +232,7 @@ class Vector {
   }
 
   //! \brief Gets the ID of the entry that has the smallest value
-  inline unsigned int smallestValId() const {
+  unsigned int smallestValId() const {
     TYPE res = (TYPE)(1.e8);
     unsigned int i, id = d_size;
     TYPE *data = d_data.get();
@@ -246,7 +246,7 @@ class Vector {
   }
 
   //! returns the dot product between two Vectors
-  inline TYPE dotProduct(const Vector<TYPE> other) const {
+  TYPE dotProduct(const Vector<TYPE> other) const {
     PRECONDITION(d_size == other.size(),
                  "Size mismatch in vector doct product");
     const TYPE *oData = other.getData();
@@ -260,7 +260,7 @@ class Vector {
   }
 
   //! Normalize the vector using the L2 norm
-  inline void normalize() {
+  void normalize() {
     TYPE val = this->normL2();
     if (val < zero_tolerance) {
       throw std::runtime_error("Cannot normalize a zero length vector");
@@ -269,7 +269,7 @@ class Vector {
   }
 
   //! Set to a random unit vector
-  inline void setToRandom(unsigned int seed = 0) {
+  void setToRandom(unsigned int seed = 0) {
     // we want to get our own RNG here instead of using the global
     // one.  This is related to Issue285.
     RDKit::rng_type generator(42u);
