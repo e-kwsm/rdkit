@@ -61,7 +61,7 @@ void processCXSmilesLabels(RWMol &mol) {
   if (mol.hasProp("_cxsmilesLabelsProcessed")) {
     return;
   }
-  for (auto atom : mol.atoms()) {
+  for (auto *atom : mol.atoms()) {
     std::string symb = "";
     if (atom->getPropIfPresent(common_properties::atomLabel, symb)) {
       atom->clearProp(common_properties::dummyLabel);
@@ -202,9 +202,9 @@ void setupUnmarkedPolymerSGroup(RWMol &mol, SubstanceGroup &sgroup,
   if (atoms.empty()) {
     throw SmilesParseException("no atoms in polymer sgroup");
   }
-  const auto firstAtom = mol.getAtomWithIdx(atoms.front());
+  auto *const firstAtom = mol.getAtomWithIdx(atoms.front());
   for (auto nbr : boost::make_iterator_range(mol.getAtomNeighbors(firstAtom))) {
-    const auto nbrAtom = mol[nbr];
+    auto *const nbrAtom = mol[nbr];
     if (std::find(atoms.begin(), atoms.end(), nbrAtom->getIdx()) ==
         atoms.end()) {
       // in most cases we just add this to the set of headCrossings.
@@ -230,10 +230,10 @@ void setupUnmarkedPolymerSGroup(RWMol &mol, SubstanceGroup &sgroup,
     }
   }
   if (atoms.size() > 1) {
-    const auto lastAtom = mol.getAtomWithIdx(atoms.back());
+    auto *const lastAtom = mol.getAtomWithIdx(atoms.back());
     for (auto nbr :
          boost::make_iterator_range(mol.getAtomNeighbors(lastAtom))) {
-      const auto nbrAtom = mol[nbr];
+      auto *const nbrAtom = mol[nbr];
       if (std::find(atoms.begin(), atoms.end(), nbrAtom->getIdx()) ==
           atoms.end()) {
         tailCrossings.push_back(
@@ -306,7 +306,7 @@ void finalizePolymerSGroup(RWMol &mol, SubstanceGroup &sgroup) {
 }
 
 Bond *get_bond_with_smiles_idx(const ROMol &mol, unsigned idx) {
-  for (auto bnd : mol.bonds()) {
+  for (auto *bnd : mol.bonds()) {
     unsigned int smilesIdx;
     if (bnd->getPropIfPresent("_cxsmilesBondIdx", smilesIdx) &&
         smilesIdx == idx) {
@@ -485,7 +485,7 @@ bool parse_coordinate_bonds(Iterator &first, Iterator last, RDKit::RWMol &mol,
     unsigned int bidx;
     if (read_int_pair(first, last, aidx, bidx)) {
       if (VALID_ATIDX(aidx) && VALID_BNDIDX(bidx)) {
-        auto bnd = get_bond_with_smiles_idx(mol, bidx - startBondIdx);
+        auto *bnd = get_bond_with_smiles_idx(mol, bidx - startBondIdx);
         if (!bnd || (bnd->getBeginAtomIdx() != aidx - startAtomIdx &&
                      bnd->getEndAtomIdx() != aidx - startAtomIdx)) {
           BOOST_LOG(rdWarningLog) << "BOND NOT FOUND! " << bidx
@@ -526,7 +526,7 @@ bool parse_unsaturation(Iterator &first, Iterator last, RDKit::RWMol &mol,
       return false;
     }
     if (VALID_ATIDX(idx)) {
-      auto atom = mol.getAtomWithIdx(idx - startAtomIdx);
+      auto *atom = mol.getAtomWithIdx(idx - startAtomIdx);
       if (!atom->hasQuery()) {
         atom = QueryOps::replaceAtomWithQueryAtom(&mol, atom);
       }
@@ -584,7 +584,7 @@ bool parse_ring_bonds(Iterator &first, Iterator last, RDKit::RWMol &mol,
       }
     }
     if (VALID_ATIDX(n1)) {
-      auto atom = mol.getAtomWithIdx(n1 - startAtomIdx);
+      auto *atom = mol.getAtomWithIdx(n1 - startAtomIdx);
       if (!atom->hasQuery()) {
         atom = QueryOps::replaceAtomWithQueryAtom(&mol, atom);
       }
@@ -592,7 +592,7 @@ bool parse_ring_bonds(Iterator &first, Iterator last, RDKit::RWMol &mol,
         atom->expandQuery(makeAtomRingBondCountQuery(n2),
                           Queries::COMPOSITE_AND);
       } else {
-        auto q = static_cast<ATOM_EQUALS_QUERY *>(new ATOM_LESSEQUAL_QUERY);
+        auto *q = static_cast<ATOM_EQUALS_QUERY *>(new ATOM_LESSEQUAL_QUERY);
         q->setVal(n2);
         q->setDescription("AtomRingBondCount");
         q->setDataFunc(queryAtomRingBondCount);
@@ -1006,7 +1006,7 @@ bool parse_variable_attachments(Iterator &first, Iterator last,
 
       for (auto nbri : boost::make_iterator_range(
                mol.getAtomBonds(mol.getAtomWithIdx(at1idx - startAtomIdx)))) {
-        auto bnd = mol[nbri];
+        auto *bnd = mol[nbri];
         bnd->setProp(common_properties::_MolFileBondEndPts, endPts);
         bnd->setProp(common_properties::_MolFileBondAttach, std::string("ANY"));
       }
@@ -1073,8 +1073,8 @@ bool parse_wedged_bonds(Iterator &first, Iterator last, RDKit::RWMol &mol,
     }
 
     if (VALID_ATIDX(atomIdx) && VALID_BNDIDX(bondIdx)) {
-      auto atom = mol.getAtomWithIdx(atomIdx - startAtomIdx);
-      auto bond = get_bond_with_smiles_idx(mol, bondIdx - startBondIdx);
+      auto *atom = mol.getAtomWithIdx(atomIdx - startAtomIdx);
+      auto *bond = get_bond_with_smiles_idx(mol, bondIdx - startBondIdx);
 
       if (!bond) {
         BOOST_LOG(rdWarningLog)
@@ -1144,7 +1144,7 @@ bool parse_doublebond_stereo(Iterator &first, Iterator last, RDKit::RWMol &mol,
       return false;
     }
     if (VALID_BNDIDX(bondIdx)) {
-      auto bond = get_bond_with_smiles_idx(mol, bondIdx - startBondIdx);
+      auto *bond = get_bond_with_smiles_idx(mol, bondIdx - startBondIdx);
 
       if (!bond) {
         BOOST_LOG(rdWarningLog)
@@ -1193,7 +1193,7 @@ bool parse_substitution(Iterator &first, Iterator last, RDKit::RWMol &mol,
       }
     }
     if (VALID_ATIDX(n1)) {
-      auto atom = mol.getAtomWithIdx(n1 - startAtomIdx);
+      auto *atom = mol.getAtomWithIdx(n1 - startAtomIdx);
       if (!atom->hasQuery()) {
         atom = QueryOps::replaceAtomWithQueryAtom(&mol, atom);
       }
@@ -1528,7 +1528,7 @@ getSortedStereoGroupsAndIndices(
         &wedgeBonds) {
   using StGrpIdxPair = std::pair<StereoGroup, std::vector<unsigned>>;
 
-  auto &groups = mol.getStereoGroups();
+  const auto &groups = mol.getStereoGroups();
 
   std::vector<StGrpIdxPair> sortingGroups;
   sortingGroups.reserve(groups.size());
@@ -1870,7 +1870,7 @@ std::string get_atomlabel_block(const ROMol &mol,
     }
     std::string lbl;
     int val;
-    const auto atom = mol.getAtomWithIdx(idx);
+    const auto *const atom = mol.getAtomWithIdx(idx);
     if (atom->getPropIfPresent(common_properties::_QueryAtomGenericLabel,
                                lbl)) {
       res += quote_string(lbl + "_p");
@@ -1987,7 +1987,7 @@ std::string get_atom_props_block(const ROMol &mol,
   std::string res = "";
   unsigned int which = 0;
   for (auto idx : atomOrder) {
-    const auto atom = mol.getAtomWithIdx(idx);
+    const auto *const atom = mol.getAtomWithIdx(idx);
     bool isAttachmentPoint = !atom->getAtomicNum() &&
                              atom->hasProp(common_properties::_fromAttachPoint);
     bool includePrivate = false, includeComputed = false;
@@ -2023,7 +2023,7 @@ std::string get_bond_config_block(
   std::map<std::string, std ::vector<std::string>> wParts;
   for (unsigned int i = 0; i < bondOrder.size(); ++i) {
     auto idx = bondOrder[i];
-    const auto bond = mol.getBondWithIdx(idx);
+    const auto *const bond = mol.getBondWithIdx(idx);
     unsigned int wedgeStartAtomIdx = bond->getBeginAtomIdx();
 
     if (!canHaveDirection(*bond)) {
@@ -2050,7 +2050,7 @@ std::string get_bond_config_block(
 
     const Atom *firstAtom = bond->getBeginAtom();
     if (bd == Bond::BondDir::BEGINDASH || bd == Bond::BondDir::BEGINWEDGE) {
-      for (auto bondNbr : mol.atomBonds(firstAtom)) {
+      for (auto *bondNbr : mol.atomBonds(firstAtom)) {
         if (bondNbr->getIdx() == bond->getIdx()) {
           continue;  // a bond is not its own neighbor
         }
@@ -2220,7 +2220,7 @@ std::string get_coordbonds_block(const ROMol &mol,
   std::string res = "";
   for (unsigned int i = 0; i < bondOrder.size(); ++i) {
     auto idx = bondOrder[i];
-    const auto bond = mol.getBondWithIdx(idx);
+    const auto *const bond = mol.getBondWithIdx(idx);
     if (bond->getBondType() != Bond::BondType::DATIVE) {
       continue;
     }
@@ -2244,7 +2244,7 @@ std::string get_ringbond_cistrans_block(
     return "";
   }
 
-  const auto rinfo = mol.getRingInfo();
+  auto *const rinfo = mol.getRingInfo();
   std::string c = "", t = "", ctu = "";
   for (unsigned int i = 0; i < bondOrder.size(); ++i) {
     auto idx = bondOrder[i];
@@ -2254,7 +2254,7 @@ std::string get_ringbond_cistrans_block(
       // we only do ring bonds of a minimum size
       continue;
     }
-    const auto bond = mol.getBondWithIdx(idx);
+    const auto *const bond = mol.getBondWithIdx(idx);
     if (bond->getBondType() != Bond::BondType::DOUBLE &&
         bond->getBondType() != Bond::BondType::AROMATIC) {
       continue;
@@ -2282,7 +2282,7 @@ std::string get_ringbond_cistrans_block(
       bool needSwap = false;
       if (begAtom->getDegree() > 2) {
         unsigned int o1 = atomOrder[bond->getStereoAtoms()[0]];
-        for (const auto nbr : mol.atomNeighbors(begAtom)) {
+        for (auto *const nbr : mol.atomNeighbors(begAtom)) {
           if (nbr == endAtom ||
               nbr->getIdx() ==
                   static_cast<unsigned>(bond->getStereoAtoms()[0])) {
@@ -2296,7 +2296,7 @@ std::string get_ringbond_cistrans_block(
       }
       if (endAtom->getDegree() > 2) {
         unsigned int o1 = atomOrder[bond->getStereoAtoms()[1]];
-        for (const auto nbr : mol.atomNeighbors(endAtom)) {
+        for (auto *const nbr : mol.atomNeighbors(endAtom)) {
           if (nbr == begAtom ||
               nbr->getIdx() ==
                   static_cast<unsigned>(bond->getStereoAtoms()[1])) {
@@ -2451,7 +2451,7 @@ std::string getCXExtensions(const ROMol &mol, std::uint32_t flags) {
   bool needLabels = false;
   bool needValues = false;
   for (auto idx : atomOrder) {
-    const auto at = mol.getAtomWithIdx(idx);
+    const auto *const at = mol.getAtomWithIdx(idx);
     if (at->hasProp(common_properties::atomLabel) ||
         at->hasProp(common_properties::_QueryAtomGenericLabel) ||
         at->hasProp(common_properties::dummyLabel) ||

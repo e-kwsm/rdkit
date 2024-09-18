@@ -150,8 +150,8 @@ void addQuery(const Q &query, rj::Value &rjQuery, rj::Document &doc,
     rjQuery.AddMember("negated", true, doc.GetAllocator());
   }
   if (typeid(query) == typeid(RecursiveStructureQuery)) {
-    auto rq = (const RecursiveStructureQuery *)&query;
-    auto submol = rq->getQueryMol();
+    const auto *rq = (const RecursiveStructureQuery *)&query;
+    const auto *submol = rq->getQueryMol();
     PRECONDITION(submol, "bad recursive query");
     rj::Value subquery(rj::kObjectType);
     addMol(*submol, subquery, doc,
@@ -305,7 +305,7 @@ void addStereoGroup(const StereoGroup &sg, rj::Value &rjSG, rj::Document &doc) {
   }
 
   rj::Value rjAtoms(rj::kArrayType);
-  for (const auto atm : sg.getAtoms()) {
+  for (auto *const atm : sg.getAtoms()) {
     rj::Value v1(static_cast<int>(atm->getIdx()));
     rjAtoms.PushBack(v1, doc.GetAllocator());
   }
