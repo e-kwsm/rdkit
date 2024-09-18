@@ -58,16 +58,16 @@ void copyStereoGroups(const std::map<const Atom *, Atom *> &molAtomMap,
   // Copy over any stereo groups that lie in the new molecule
   if (!mol.getStereoGroups().empty()) {
     std::vector<StereoGroup> newStereoGroups;
-    for (auto &stereoGroup : mol.getStereoGroups()) {
+    for (const auto &stereoGroup : mol.getStereoGroups()) {
       std::vector<Atom *> newStereoAtoms;
       std::vector<Bond *> newStereoBonds;
-      for (const auto stereoGroupAtom : stereoGroup.getAtoms()) {
+      for (auto *const stereoGroupAtom : stereoGroup.getAtoms()) {
         if (auto found = molAtomMap.find(stereoGroupAtom);
             found != molAtomMap.end()) {
           newStereoAtoms.push_back(found->second);
         }
       }
-      for (const auto stereoGroupBond : stereoGroup.getBonds()) {
+      for (auto *const stereoGroupBond : stereoGroup.getBonds()) {
         auto foundFirst = molAtomMap.find(stereoGroupBond->getBeginAtom());
         auto foundSecond = molAtomMap.find(stereoGroupBond->getEndAtom());
 
@@ -337,7 +337,7 @@ ROMol *replaceSidechains(const ROMol &mol, const ROMol &coreQuery,
   }
   boost::dynamic_bitset<> removedAtoms(mol.getNumAtoms());
   newMol->beginBatchEdit();
-  for (const auto at : newMol->atoms()) {
+  for (auto *const at : newMol->atoms()) {
     if (!keepSet.test(at->getIdx())) {
       newMol->removeAtom(at);
       removedAtoms.set(at->getIdx());
@@ -347,7 +347,7 @@ ROMol *replaceSidechains(const ROMol &mol, const ROMol &coreQuery,
   if (dummyIndices.size() > 1) {
     for (size_t i = 0; i < dummyIndices.size() - 1; ++i) {
       for (size_t j = i + 1; j < dummyIndices.size(); ++j) {
-        const auto b =
+        auto *const b =
             newMol->getBondBetweenAtoms(dummyIndices.at(i), dummyIndices.at(j));
         if (b) {
           newMol->removeBond(dummyIndices.at(i), dummyIndices.at(j));
@@ -392,7 +392,7 @@ const std::string replaceCoreDummyBond = "_replaceCoreDummyBond";
 int findNbrBond(RWMol &mol, Bond *bond, Atom *bondAtom, const INT_VECT &bring,
                 const boost::dynamic_bitset<> &removedAtoms) {
   int res = -1;
-  for (const auto nbrBond : mol.atomBonds(bondAtom)) {
+  for (auto *const nbrBond : mol.atomBonds(bondAtom)) {
     if (nbrBond != bond &&
         (nbrBond->hasProp(replaceCoreDummyBond) ||
          (!removedAtoms[nbrBond->getOtherAtomIdx(bondAtom->getIdx())] &&
@@ -419,7 +419,7 @@ void setSubMolBrokenRingStereo(RWMol &mol,
                               removedAtoms[bond->getEndAtomIdx()];
                      }) != bring.end()) {
       for (auto bidx : bring) {
-        const auto bond = mol.getBondWithIdx(bidx);
+        auto *const bond = mol.getBondWithIdx(bidx);
         // is this a bond we can reasonably set cis/trans for and where neither
         // atom is being removed?
         if ((bond->getIsAromatic() ||
@@ -489,7 +489,7 @@ ROMol *replaceCore(const ROMol &mol, const ROMol &core,
     for (const auto &match : matches) {
       const auto &mappingInfo = match.second;
       if (multipleMappedMolAtoms[mappingInfo.molIndex]) {
-        auto coreAtom = core.getAtomWithIdx(mappingInfo.coreIndex);
+        const auto *coreAtom = core.getAtomWithIdx(mappingInfo.coreIndex);
         CHECK_INVARIANT(
             coreAtom->getDegree() == 1,
             "Multiple core atoms match a mol atom, but one of the core "
@@ -503,7 +503,7 @@ ROMol *replaceCore(const ROMol &mol, const ROMol &core,
                          })
                 ->second;
         if (molNeighborIdx > -1) {
-          auto connectingBond =
+          const auto *connectingBond =
               mol.getBondBetweenAtoms(mappingInfo.molIndex, molNeighborIdx);
           CHECK_INVARIANT(connectingBond,
                           "expected bond in molecule not found");
@@ -564,7 +564,7 @@ ROMol *replaceCore(const ROMol &mol, const ROMol &core,
         Bond *connectingBond =
             newMol->getBondBetweenAtoms(mappingInfo.molIndex, nbrIdx);
         bool bondToCore = matchingIndices[nbrIdx] > -1;
-        auto coreBond =
+        const auto *coreBond =
             bondToCore && allIndices[nbrIdx] > -1 && mappingInfo.coreIndex > -1
                 ? core.getBondBetweenAtoms(mappingInfo.coreIndex,
                                            allIndices[nbrIdx])
@@ -627,7 +627,7 @@ ROMol *replaceCore(const ROMol &mol, const ROMol &core,
 
           // Check to see if we are breaking a stereo bond definition, by
           // removing one of the stereo atoms If so, set to the new atom
-          for (const auto bond : newMol->atomBonds(sidechainAtom)) {
+          for (auto *const bond : newMol->atomBonds(sidechainAtom)) {
             if (bond->getIdx() == connectingBond->getIdx()) {
               continue;
             }
@@ -713,7 +713,7 @@ ROMol *replaceCore(const ROMol &mol, const ROMol &core,
   boost::dynamic_bitset<> removedAtoms(mol.getNumAtoms());
   bool removedRingAtom = false;
   newMol->beginBatchEdit();
-  for (const auto at : newMol->atoms()) {
+  for (auto *const at : newMol->atoms()) {
     if (std::find(keepList.begin(), keepList.end(), at) == keepList.end()) {
       newMol->removeAtom(at);
       removedAtoms.set(at->getIdx());
@@ -726,7 +726,7 @@ ROMol *replaceCore(const ROMol &mol, const ROMol &core,
   }
   if (removedRingAtom) {
     setSubMolBrokenRingStereo(*newMol, removedAtoms);
-    for (auto bond : newMol->bonds()) {
+    for (auto *bond : newMol->bonds()) {
       bond->clearProp(replaceCoreDummyBond);
     }
   }
@@ -737,8 +737,8 @@ ROMol *replaceCore(const ROMol &mol, const ROMol &core,
   // Update any terminal dummy atom coordinates after removing atoms not in the
   // keeplist and calling updateSubMolConfs
   for (auto &newBond : allNewBonds) {
-    auto beginAtom = newBond->getBeginAtom();
-    auto endAtom = newBond->getEndAtom();
+    auto *beginAtom = newBond->getBeginAtom();
+    auto *endAtom = newBond->getEndAtom();
     CHECK_INVARIANT(beginAtom->getDegree() == 1 || endAtom->getDegree() == 1,
                     "neither atom has degree one");
     if (newMol->getNumConformers()) {
@@ -823,7 +823,7 @@ ROMol *MurckoDecompose(const ROMol &mol) {
       bool removeIt = true;
 
       // check if the atom has a neighboring keeper:
-      for (auto nbr : res->atomNeighbors(atom)) {
+      for (auto *nbr : res->atomNeighbors(atom)) {
         if (keepAtoms[nbr->getIdx()]) {
           if (res->getBondBetweenAtoms(atom->getIdx(), nbr->getIdx())
                   ->getBondType() == Bond::DOUBLE) {

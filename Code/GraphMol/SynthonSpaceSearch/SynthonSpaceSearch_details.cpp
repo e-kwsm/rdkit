@@ -98,11 +98,12 @@ std::vector<const Bond *> getContiguousAromaticBonds(const ROMol &mol,
   boost::dynamic_bitset<> done(mol.getNumBonds());
   done[aromBond->getIdx()] = true;
   while (!toDo.empty()) {
-    const auto nextBond = toDo.front();
+    const auto *const nextBond = toDo.front();
     toDo.pop_front();
     for (const auto nbr :
          make_iterator_range(mol.getAtomNeighbors(nextBond->getBeginAtom()))) {
-      if (auto bond = mol.getBondBetweenAtoms(nextBond->getBeginAtomIdx(), nbr);
+      if (const auto *bond =
+              mol.getBondBetweenAtoms(nextBond->getBeginAtomIdx(), nbr);
           !done[bond->getIdx()] && bond->getIsAromatic()) {
         aromBonds.push_back(bond);
         done[bond->getIdx()] = true;
@@ -111,7 +112,8 @@ std::vector<const Bond *> getContiguousAromaticBonds(const ROMol &mol,
     }
     for (const auto nbr :
          make_iterator_range(mol.getAtomNeighbors(nextBond->getEndAtom()))) {
-      if (auto bond = mol.getBondBetweenAtoms(nextBond->getEndAtomIdx(), nbr);
+      if (const auto *bond =
+              mol.getBondBetweenAtoms(nextBond->getEndAtomIdx(), nbr);
           !done[bond->getIdx()] && bond->getIsAromatic()) {
         aromBonds.push_back(bond);
         done[bond->getIdx()] = true;
@@ -130,7 +132,7 @@ std::vector<std::vector<std::unique_ptr<ROMol>>> splitMolecule(
   }
   maxBondSplits =
       std::min({maxBondSplits, MAX_CONNECTOR_NUM, query.getNumBonds()});
-  const auto ringInfo = query.getRingInfo();
+  auto *const ringInfo = query.getRingInfo();
   if (!ringInfo->isInitialized()) {
     // Query molecules don't seem to have the ring info generated on creation.
     MolOps::findSSSR(query);
@@ -228,7 +230,7 @@ std::vector<std::vector<std::unique_ptr<ROMol>>> splitMolecule(
 
 int countConnections(const ROMol &mol) {
   int res = 0;
-  for (const auto atom : mol.atoms()) {
+  for (auto *const atom : mol.atoms()) {
     if (!atom->getAtomicNum() && atom->getIsotope() >= 1 &&
         atom->getIsotope() <= MAX_CONNECTOR_NUM) {
       ++res;
@@ -287,7 +289,7 @@ std::vector<std::vector<std::unique_ptr<ROMol>>> getConnectorPermutations(
     for (const auto &f : molFrags) {
       connPerms.back().emplace_back(new RWMol(*f));
       boost::dynamic_bitset<> atomDone(f->getNumAtoms());
-      for (const auto atom : connPerms.back().back()->atoms()) {
+      for (auto *const atom : connPerms.back().back()->atoms()) {
         if (!atom->getAtomicNum()) {
           for (size_t i = 0; i < perm.size(); ++i) {
             if (!atomDone[atom->getIdx()] && atom->getIsotope() == i + 1) {
