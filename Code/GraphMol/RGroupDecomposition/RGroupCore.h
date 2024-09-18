@@ -37,7 +37,7 @@ struct RCore {
 
   void init();
 
-  inline bool isCoreAtomUserLabelled(int idx) const {
+  bool isCoreAtomUserLabelled(int idx) const {
     return core_atoms_with_user_labels.test(idx);
   }
 
@@ -68,7 +68,7 @@ struct RCore {
 
   std::shared_ptr<TautomerQuery> getMatchingTautomerQuery();
 
-  inline bool isTerminalRGroupWithUserLabel(const int idx) const {
+  bool isTerminalRGroupWithUserLabel(const int idx) const {
     return terminalRGroupAtomToNeighbor.find(idx) !=
            terminalRGroupAtomToNeighbor.end();
   }
