@@ -14,7 +14,6 @@
 #include <GraphMol/Fingerprints/FingerprintGenerator.h>
 #include <RDGeneral/hash/hash.hpp>
 #include <cstdint>
-#include <memory>
 
 #include <GraphMol/Fingerprints/AtomPairGenerator.h>
 #include <GraphMol/Fingerprints/MorganGenerator.h>

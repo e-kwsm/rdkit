@@ -170,7 +170,7 @@ void DrawMol::finishCreateDrawObjects() {
 
 // ****************************************************************************
 void DrawMol::initDrawMolecule(const ROMol &mol) {
-  drawMol_.reset(new RWMol(mol));
+  drawMol_ = std::make_unique<RWMol>(mol);
   if (drawOptions_.centreMoleculesBeforeDrawing) {
     if (drawMol_->getNumConformers()) {
       centerMolForDrawing(*drawMol_, confId_);

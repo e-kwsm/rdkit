@@ -17,7 +17,6 @@
 #include <RDGeneral/RDLog.h>
 #include <cstdint>
 #include <boost/dynamic_bitset.hpp>
-#include <memory>
 #include <GraphMol/Fingerprints/FingerprintUtil.h>
 #include <GraphMol/Fingerprints/AtomPairGenerator.h>
 #include <GraphMol/Fingerprints/TopologicalTorsionGenerator.h>
