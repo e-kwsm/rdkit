@@ -511,11 +511,11 @@ TEST_CASE("tag atoms in SVG", "[drawing][SVG]") {
     auto m1 = "C1N[C@@H]2OCC12"_smiles;
     REQUIRE(m1);
 
-    for (auto atom : m1->atoms()) {
+    for (auto *atom : m1->atoms()) {
       auto prop = boost::format("__prop_class_atom_%d") % atom->getIdx();
       atom->setProp("_tagClass", prop.str());
     }
-    for (auto bond : m1->bonds()) {
+    for (auto *bond : m1->bonds()) {
       auto prop = boost::format("__prop_class_bond_%d") % bond->getIdx();
       bond->setProp("_tagClass", prop.str());
     }
@@ -562,11 +562,11 @@ TEST_CASE("metadata in SVG", "[drawing][SVG]") {
     auto m1 = "C1N[C@@H]2OCC12"_smiles;
     REQUIRE(m1);
 
-    for (auto atom : m1->atoms()) {
+    for (auto *atom : m1->atoms()) {
       auto prop = boost::format("__prop_metadata_atom_%d") % atom->getIdx();
       atom->setProp("_metaData-atom-inject-prop", prop.str());
     }
-    for (auto bond : m1->bonds()) {
+    for (auto *bond : m1->bonds()) {
       auto prop = boost::format("__prop_metadata_bond_%d") % bond->getIdx();
       bond->setProp("_metaData-bond-inject-prop", prop.str());
     }
@@ -4878,7 +4878,7 @@ TEST_CASE("Github 5269 - bad index positions with highlights") {
     auto m2 = "CN(C)C(C)C=O"_smiles;
     REQUIRE(m2);
     std::vector<int> hit_atoms{0, 1, 2};
-    auto atom = m2->getAtomWithIdx(0);
+    auto *atom = m2->getAtomWithIdx(0);
     atom->setProp(common_properties::atomNote, "0.91");
     atom = m2->getAtomWithIdx(1);
     atom->setProp(common_properties::atomNote, "1.03");
@@ -4945,7 +4945,7 @@ TEST_CASE("Class values in SVG for wavy bonds.") {
   6 11  1  4
 M  END)CTAB"_ctab;
     REQUIRE(m1);
-    auto b10 = m1->getBondWithIdx(10);
+    auto *b10 = m1->getBondWithIdx(10);
     b10->setBondDir(Bond::UNKNOWN);
     MolDraw2DSVG drawer(400, 400, -1, -1);
     drawer.drawMolecule(*m1);
@@ -7615,8 +7615,8 @@ TEST_CASE(
         DrawColour(0.8, 0.0, 0.8), DrawColour(0.8, 0.8, 0.0),
         DrawColour(0.0, 0.8, 0.8), DrawColour(0.0, 0.0, 0.8)};
 
-    auto rings = m->getRingInfo();
-    auto &atomRings = rings->atomRings();
+    auto *rings = m->getRingInfo();
+    const auto &atomRings = rings->atomRings();
     std::map<int, std::vector<DrawColour>> atomCols;
     std::map<int, double> atomRads;
     for (auto i = 0u; i < atomRings.size(); ++i) {
@@ -7635,7 +7635,7 @@ TEST_CASE(
       }
     }
 
-    auto &bondRings = rings->bondRings();
+    const auto &bondRings = rings->bondRings();
     std::map<int, int> bondMults;
     std::map<int, std::vector<DrawColour>> bondCols;
     for (auto i = 0u; i < bondRings.size(); ++i) {
@@ -9332,7 +9332,7 @@ TEST_CASE("Github 6749 : various bad things in the lasso highlighting") {
     for (auto at1 : ats) {
       for (auto at2 : ats) {
         if (at1 > at2) {
-          auto b = mol.getBondBetweenAtoms(at1, at2);
+          const auto *b = mol.getBondBetweenAtoms(at1, at2);
           if (b) {
             auto ex = hb_map.find(b->getIdx());
             if (ex == hb_map.end()) {

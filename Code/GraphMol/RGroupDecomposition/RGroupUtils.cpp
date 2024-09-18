@@ -40,7 +40,7 @@ std::string labellingToString(Labelling type) {
 std::map<int, Atom *> getRlabels(const RWMol &mol) {
   std::map<int, Atom *> atoms;
 
-  for (auto atom : mol.atoms()) {
+  for (auto *atom : mol.atoms()) {
     if (atom->hasProp(RLABEL)) {
       int rlabel = atom->getProp<int>(RLABEL);  // user label
       CHECK_INVARIANT(atoms.find(rlabel) == atoms.end(),
@@ -139,14 +139,14 @@ bool hasDummy(const RWMol &core) {
 namespace {
 std::string MolToText(const ROMol &mol) {
   bool hasQuery = false;
-  for (const auto atom : mol.atoms()) {
+  for (auto *const atom : mol.atoms()) {
     if (atom->hasQuery() && atom->getQuery()->getDescription() != "AtomNull") {
       hasQuery = true;
       break;
     }
   }
   if (!hasQuery) {
-    for (const auto bond : mol.bonds()) {
+    for (auto *const bond : mol.bonds()) {
       if (bond->hasQuery()) {
         hasQuery = true;
         break;

@@ -159,7 +159,7 @@ TEST_CASE("TestParsingInvalidChiralityLabelsWithMaeMolSupplier") {
   }
 }
 )DATA";
-  auto invalid_chirality_label =
+  const auto *invalid_chirality_label =
       GENERATE("12_R_1_3_4_5",     // missing chiral atom
                "12_ANR_1_3_4_15",  // missing substituent atom
                "2_S_1_3_4",        // incomplete substituent list

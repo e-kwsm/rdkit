@@ -9,7 +9,7 @@ namespace bench_common {
 
 std::vector<RDKit::ROMol> load_samples() {
   std::vector<RDKit::ROMol> ret;
-  for (auto smiles : SAMPLES) {
+  for (const auto *smiles : SAMPLES) {
     auto mol = RDKit::v2::SmilesParse::MolFromSmiles(smiles);
     REQUIRE(mol);
     ret.push_back(std::move(*mol));

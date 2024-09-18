@@ -488,7 +488,7 @@ void testCalcEnergyPassedCoords() {
   size_t l = 3 * field->numPoints();
   auto *savedPos = new double[l];
   size_t i = 0;
-  for (const auto pptr : field->positions()) {
+  for (auto *const pptr : field->positions()) {
     for (size_t j = 0; j < 3; ++j) {
       savedPos[i++] = (*pptr)[j];
     }
@@ -529,7 +529,7 @@ void testCalcGrad() {
   auto *grad1 = new double[l];
   auto *grad2 = new double[l];
   size_t i = 0;
-  for (const auto pptr : field->positions()) {
+  for (auto *const pptr : field->positions()) {
     for (size_t j = 0; j < 3; ++j) {
       savedPos[i++] = (*pptr)[j];
     }
@@ -1077,7 +1077,7 @@ void testGithub6728() {
   TEST_ASSERT(mol);
   MolOps::addHs(*mol);
   TEST_ASSERT(DGeomHelpers::EmbedMolecule(*mol) >= 0);
-  auto field = MMFF::constructForceField(*mol);
+  auto *field = MMFF::constructForceField(*mol);
   TEST_ASSERT(field);
   field->initialize();
   delete mol;

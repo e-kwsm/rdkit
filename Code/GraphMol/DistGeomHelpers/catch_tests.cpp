@@ -202,7 +202,7 @@ TEST_CASE("EmbedParameters to JSON") {
   SECTION("With CoordMap") {
     auto ps = DGeomHelpers::KDG;
     auto p = RDGeom::Point3D(1.1, 2.2, 3.3);
-    auto coordMap = new std::map<int, RDGeom::Point3D>();
+    auto *coordMap = new std::map<int, RDGeom::Point3D>();
     coordMap->insert({3, p});
     ps.coordMap = coordMap;
     auto json = DGeomHelpers::embedParametersToJSON(ps);
@@ -588,7 +588,7 @@ TEST_CASE("double bond stereo not honored in conformer generator") {
     REQUIRE(cid >= 0);
     MolOps::assignStereochemistryFrom3D(cp);
     // std::cerr << MolToMolBlock(cp) << std::endl;
-    for (const auto bnd : cp.bonds()) {
+    for (auto *const bnd : cp.bonds()) {
       if (bnd->getBondType() == Bond::BondType::DOUBLE) {
         INFO(bnd->getIdx());
         CHECK(bnd->getStereo() ==
@@ -610,7 +610,7 @@ TEST_CASE("double bond stereo not honored in conformer generator") {
       REQUIRE(cid >= 0);
       MolOps::assignStereochemistryFrom3D(lcp);
       // std::cerr << MolToMolBlock(cp) << std::endl;
-      for (const auto bnd : lcp.bonds()) {
+      for (auto *const bnd : lcp.bonds()) {
         if (bnd->getBondType() == Bond::BondType::DOUBLE) {
           INFO(iter);
           CHECK(bnd->getStereo() ==
@@ -634,7 +634,7 @@ TEST_CASE("double bond stereo not honored in conformer generator") {
       REQUIRE(cid >= 0);
       MolOps::assignStereochemistryFrom3D(lcp);
       // std::cerr << MolToMolBlock(cp) << std::endl;
-      for (const auto bnd : lcp.bonds()) {
+      for (auto *const bnd : lcp.bonds()) {
         if (bnd->getBondType() == Bond::BondType::DOUBLE) {
           INFO(iter);
           CHECK(bnd->getStereo() ==
@@ -660,7 +660,7 @@ TEST_CASE("double bond stereo not honored in conformer generator") {
       auto cid = DGeomHelpers::EmbedMolecule(lcp, ps);
       REQUIRE(cid >= 0);
       MolOps::assignStereochemistryFrom3D(lcp, cid, true);
-      auto bnd = lcp.getBondBetweenAtoms(22, 23);
+      auto *bnd = lcp.getBondBetweenAtoms(22, 23);
       REQUIRE(bnd);
       REQUIRE(bnd->getBondType() == Bond::BondType::DOUBLE);
       CHECK(bnd->getStereo() == m->getBondWithIdx(bnd->getIdx())->getStereo());

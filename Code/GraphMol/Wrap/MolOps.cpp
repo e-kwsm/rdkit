@@ -197,7 +197,7 @@ ROMol *renumberAtomsHelper(const ROMol &mol, python::object &pyNewOrder) {
 
 namespace {
 std::string getResidue(const ROMol &, const Atom *at) {
-  auto monomerInfo = at->getMonomerInfo();
+  const auto *monomerInfo = at->getMonomerInfo();
   if (!monomerInfo ||
       monomerInfo->getMonomerType() != AtomMonomerInfo::PDBRESIDUE) {
     return "";
@@ -205,7 +205,7 @@ std::string getResidue(const ROMol &, const Atom *at) {
   return static_cast<const AtomPDBResidueInfo *>(monomerInfo)->getResidueName();
 }
 std::string getChainId(const ROMol &, const Atom *at) {
-  auto monomerInfo = at->getMonomerInfo();
+  const auto *monomerInfo = at->getMonomerInfo();
   if (!monomerInfo ||
       monomerInfo->getMonomerType() != AtomMonomerInfo::PDBRESIDUE) {
     return "";
@@ -926,7 +926,7 @@ ROMol *replaceCoreHelper(const ROMol &mol, const ROMol &core,
   unsigned int length = python::len(match);
   for (unsigned int i = 0; i < length; ++i) {
     // This is what boost::python::len() does internally
-    auto pyObj = static_cast<python::object>(match[i]).ptr();
+    auto *pyObj = static_cast<python::object>(match[i]).ptr();
     unsigned int sz = PyObject_Length(pyObj);
     if (PyErr_Occurred()) {
       PyErr_Clear();

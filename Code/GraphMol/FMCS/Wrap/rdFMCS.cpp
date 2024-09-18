@@ -118,7 +118,7 @@ struct PyMCSAtomCompare : public PyMCSWrapper {
     return res;
   }
   PyMCSAtomCompare *extractPyObject() const {
-    auto res = dynamic_cast<PyMCSAtomCompare *>(pyObjectExtract());
+    auto *res = dynamic_cast<PyMCSAtomCompare *>(pyObjectExtract());
     if (!res) {
       failedToExtractPyObject();
     }
@@ -163,7 +163,7 @@ struct PyMCSBondCompare : public PyMCSWrapper {
     return res;
   }
   PyMCSBondCompare *extractPyObject() const {
-    auto res = dynamic_cast<PyMCSBondCompare *>(pyObjectExtract());
+    auto *res = dynamic_cast<PyMCSBondCompare *>(pyObjectExtract());
     if (!res) {
       failedToExtractPyObject();
     }
@@ -220,7 +220,7 @@ struct PyMCSProgress : public PyMCSWrapper {
   PyMCSProgress(PyObject *obj) : PyMCSWrapper(obj) { extractPyMCSWrapper(); }
   ~PyMCSProgress() override {}
   PyMCSProgress *extractPyObject() const {
-    auto res = dynamic_cast<PyMCSProgress *>(pyObjectExtract());
+    auto *res = dynamic_cast<PyMCSProgress *>(pyObjectExtract());
     if (!res) {
       failedToExtractPyObject();
     }
@@ -259,7 +259,7 @@ struct PyMCSFinalMatchCheck : public PyMCSWrapper {
   }
   ~PyMCSFinalMatchCheck() override {}
   PyMCSFinalMatchCheck *extractPyObject() const {
-    auto res = dynamic_cast<PyMCSFinalMatchCheck *>(pyObjectExtract());
+    auto *res = dynamic_cast<PyMCSFinalMatchCheck *>(pyObjectExtract());
     if (!res) {
       failedToExtractPyObject();
     }
@@ -279,7 +279,7 @@ struct PyMCSAcceptance : public PyMCSWrapper {
   PyMCSAcceptance(PyObject *obj) : PyMCSWrapper(obj) { extractPyMCSWrapper(); }
   ~PyMCSAcceptance() override {}
   PyMCSAcceptance *extractPyObject() const {
-    auto res = dynamic_cast<PyMCSAcceptance *>(pyObjectExtract());
+    auto *res = dynamic_cast<PyMCSAcceptance *>(pyObjectExtract());
     if (!res) {
       failedToExtractPyObject();
     }
@@ -383,7 +383,7 @@ class PyMCSParameters : public boost::noncopyable {
       p->CompareFunctionsUserData = &cfud;
       p->BondTyper = MCSBondComparePyFunc;
       cfud.pyAtomBondCompData.pyBondComp = pyMCSBondCompare.pyObject();
-      auto bc = pyMCSBondCompare.extractPyObject();
+      auto *bc = pyMCSBondCompare.extractPyObject();
       bc->mcsParameters = p.get();
       cfud.mcsParameters = p.get();
     }
@@ -529,11 +529,11 @@ class PyMCSParameters : public boost::noncopyable {
       auto queryBondIt = boost::edges(query).first;
       PyObject *pyBondIdxMatch = PyTuple_New(numMcsBonds);
       for (unsigned int i = 0; i < numMcsBonds; ++i, ++queryBondIt) {
-        const auto queryBond = mol1.getBondBetweenAtoms(
+        const auto *const queryBond = mol1.getBondBetweenAtoms(
             query[c1[boost::source(*queryBondIt, query)]],
             query[c1[boost::target(*queryBondIt, query)]]);
         CHECK_INVARIANT(queryBond, "");
-        const auto targetBond = mol2.getBondBetweenAtoms(
+        const auto *const targetBond = mol2.getBondBetweenAtoms(
             target[c2[boost::source(*queryBondIt, query)]],
             target[c2[boost::target(*queryBondIt, query)]]);
         CHECK_INVARIANT(targetBond, "");
@@ -563,8 +563,8 @@ class PyMCSParameters : public boost::noncopyable {
     {
       PyGILStateHolder h;
       PyMCSParameters ps(*params, *afud);
-      auto pyAtomIdxMatch = convertMatchesToTupleOfPairs(atomIdxMatch);
-      auto pyBondIdxMatch = convertMatchesToTupleOfPairs(bondIdxMatch);
+      auto *pyAtomIdxMatch = convertMatchesToTupleOfPairs(atomIdxMatch);
+      auto *pyBondIdxMatch = convertMatchesToTupleOfPairs(bondIdxMatch);
       res = python::call_method<bool>(
           afud->pyMCSAcceptance.ptr(), CALLBACK_FUNC_NAME, boost::ref(query),
           boost::ref(target), python::handle<>(pyAtomIdxMatch),

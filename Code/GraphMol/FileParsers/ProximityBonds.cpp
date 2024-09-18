@@ -219,7 +219,7 @@ static void ConnectTheDots_Large(RWMol *mol, unsigned int flags) {
       if (flags & ctdQUICKREMOVE_H_H_CONTACTS) {
         Bond *bondToH = nullptr;
         Bond *bondToNonH = nullptr;
-        for (auto bond : mol->atomBonds(atom)) {
+        for (auto *bond : mol->atomBonds(atom)) {
           if (bond->getOtherAtom(atom)->getAtomicNum() == 1) {
             bondToH = bond;
           } else {

@@ -96,7 +96,7 @@ Reionizer::~Reionizer() { delete d_abcat; }
 // d_css(css) {};
 
 ROMol *Reionizer::reionize(const ROMol &mol) {
-  auto omol = new RWMol(mol);
+  auto *omol = new RWMol(mol);
   this->reionizeInPlace(*omol);
   return static_cast<ROMol *>(omol);
 }
@@ -372,7 +372,7 @@ bool removePosIfPossible(Atom *atom, bool protonationOnly) {
 }  // namespace
 
 ROMol *Uncharger::uncharge(const ROMol &mol) {
-  auto omol = new RWMol(mol);
+  auto *omol = new RWMol(mol);
   this->unchargeInPlace(*omol);
   return static_cast<ROMol *>(omol);
 }
@@ -399,7 +399,7 @@ void Uncharger::unchargeInPlace(RWMol &mol) {
     q_matched += mol.getAtomWithIdx(match[0].second)->getFormalCharge();
   }
   for (const auto &match : p_matches) {
-    const auto atom = mol.getAtomWithIdx(match[0].second);
+    auto *const atom = mol.getAtomWithIdx(match[0].second);
     if (!canRemovePos(atom, df_protonationOnly)) {
       q_matched += atom->getFormalCharge();
     }

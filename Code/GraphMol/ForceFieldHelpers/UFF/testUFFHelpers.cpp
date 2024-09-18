@@ -729,7 +729,7 @@ void testCalcEnergyPassedCoords() {
   field->initialize();
   auto *savedPos = new double[3 * field->numPoints()];
   size_t i = 0;
-  for (const auto pptr : field->positions()) {
+  for (auto *const pptr : field->positions()) {
     for (size_t j = 0; j < 3; ++j) {
       savedPos[i++] = (*pptr)[j];
     }
@@ -769,7 +769,7 @@ void testCalcGrad() {
   auto *grad1 = new double[l];
   auto *grad2 = new double[l];
   size_t i = 0;
-  for (const auto pptr : field->positions()) {
+  for (auto *const pptr : field->positions()) {
     for (size_t j = 0; j < 3; ++j) {
       savedPos[i++] = (*pptr)[j];
     }
@@ -1272,7 +1272,7 @@ void testGitHubIssue613() {
     TEST_ASSERT(foundAll);
     TEST_ASSERT(types.size() == mol->getNumAtoms());
 
-    auto params = ForceFields::UFF::ParamCollection::getParams();
+    const auto *params = ForceFields::UFF::ParamCollection::getParams();
     const ForceFields::UFF::AtomicParams *ap = (*params)("Eu6+3");
     TEST_ASSERT(ap);
     TEST_ASSERT(ap->r1 == types[0]->r1);

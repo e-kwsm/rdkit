@@ -197,7 +197,7 @@ void Synthon::calcProperties() {
   d_numDummies = 0;
   d_numHeavyAtoms = 0;
   MolOps::assignStereochemistry(*dp_origMol);
-  for (const auto atom : dp_origMol->atoms()) {
+  for (auto *const atom : dp_origMol->atoms()) {
     if (atom->getAtomicNum() == 0) {
       d_numDummies++;
     } else if (atom->getAtomicNum() > 1) {

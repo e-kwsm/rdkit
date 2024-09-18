@@ -839,7 +839,7 @@ TEST_CASE("ensure unused features are not used") {
 TEST_CASE(
     "GitHub Issue #6633: Pre-condition violation in canonicalization of dative bond adjacent to double bond",
     "[bug][canonicalization]") {
-  auto mb = R"CTAB(
+  const auto *mb = R"CTAB(
                     3D
 
   0  0  0     0  0            999 V3000
@@ -932,7 +932,7 @@ TEST_CASE(
     "[bug]") {
   UseLegacyStereoPerceptionFixture reset_stereo_perception{false};
 
-  const auto molb = R"CTAB("
+  const auto *const molb = R"CTAB("
      RDKit          2D
 
   0  0  0  0  0  0  0  0  0  0999 V3000
@@ -1343,13 +1343,13 @@ TEST_CASE("Canonicalization issues watch (see GitHub Issue #8775)") {
 
   auto count_features = [](RWMol m) {
     unsigned int nChiralCenters = 0;
-    for (const auto atom : m.atoms()) {
+    for (auto *const atom : m.atoms()) {
       if (atom->getChiralTag() != Atom::ChiralType::CHI_UNSPECIFIED) {
         ++nChiralCenters;
       }
     }
     unsigned int nDoubleBondStereo = 0;
-    for (const auto bond : m.bonds()) {
+    for (auto *const bond : m.bonds()) {
       if (bond->getStereo() > Bond::STEREOANY) {
         ++nDoubleBondStereo;
       }

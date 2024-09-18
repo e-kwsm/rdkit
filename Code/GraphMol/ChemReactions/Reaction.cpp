@@ -625,7 +625,7 @@ VECT_INT_VECT getReactingAtoms(const ChemicalReaction &rxn,
   auto resIt = res.begin();
   for (auto rIt = rxn.beginReactantTemplates();
        rIt != rxn.endReactantTemplates(); ++rIt, ++resIt) {
-    for (const auto oAtom : (*rIt)->atoms()) {
+    for (auto *const oAtom : (*rIt)->atoms()) {
       // unmapped atoms are definitely changing:
       int mapNum;
       if (!oAtom->getPropIfPresent(common_properties::molAtomMapNumber,

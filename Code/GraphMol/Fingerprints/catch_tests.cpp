@@ -781,10 +781,10 @@ TEST_CASE(
 
   for (auto bond_idx : {2, 3, 12, 21, 28, 31}) {
     INFO("bond = " << bond_idx);
-    auto bond = mol->getBondWithIdx(bond_idx);
+    auto *bond = mol->getBondWithIdx(bond_idx);
     REQUIRE(bond->getBondType() == Bond::DATIVE);
 
-    const auto atom = bond->getBeginAtom();
+    auto *const atom = bond->getBeginAtom();
     CHECK(atom->getHybridization() == Atom::SP2);
 
     if (atom->getAtomicNum() == 8) {

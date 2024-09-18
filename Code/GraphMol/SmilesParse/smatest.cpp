@@ -80,14 +80,14 @@ void testPass() {
       // github #1710):
       std::string pkl;
       MolPickler::pickleMol(*mol, pkl);
-      auto mol2 = new Mol(pkl);
+      auto *mol2 = new Mol(pkl);
       TEST_ASSERT(mol2);
       delete mol2;
     }
     {
       // finally make sure that we can create parsable SMARTS from it:
       auto outSmarts = MolToSmarts(*mol);
-      auto mol2 = SmartsToMol(outSmarts);
+      auto *mol2 = SmartsToMol(outSmarts);
       TEST_ASSERT(mol2);
       delete mol2;
     }
@@ -2593,7 +2593,8 @@ void testGithub2142() {
     std::unique_ptr<ROMol> m2(SmartsToMol(sma2));
     TEST_ASSERT(m2);
     auto *qa = static_cast<QueryAtom *>(m2->getAtomWithIdx(0));
-    const auto q1 = static_cast<QueryAtom *>(m1->getAtomWithIdx(0))->getQuery();
+    auto *const q1 =
+        static_cast<QueryAtom *>(m1->getAtomWithIdx(0))->getQuery();
     qa->expandQuery(q1->copy(), Queries::COMPOSITE_OR);
     bool ok = true;
     try {
@@ -2752,7 +2753,7 @@ void testGithub6730() {
                        << std::endl;
   {
     auto input = "[C@H](F)(Cl)O"_smarts;
-    auto expected = "F[C@@&H1](Cl)O";
+    const auto *expected = "F[C@@&H1](Cl)O";
     auto actual = MolToSmarts(*input, true, 1);  // doChiral,root=F(1)
     TEST_ASSERT(expected == actual);
   }

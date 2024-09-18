@@ -110,14 +110,14 @@ void AssignHsResidueInfo(RWMol &mol) {
 
 std::map<unsigned int, std::vector<unsigned int>> getIsoMap(const ROMol &mol) {
   std::map<unsigned int, std::vector<unsigned int>> isoMap;
-  for (auto atom : mol.atoms()) {
+  for (auto *atom : mol.atoms()) {
     if (atom->hasProp(common_properties::_isotopicHs)) {
       atom->clearProp(common_properties::_isotopicHs);
     }
   }
-  for (auto bond : mol.bonds()) {
-    auto ba = bond->getBeginAtom();
-    auto ea = bond->getEndAtom();
+  for (auto *bond : mol.bonds()) {
+    auto *ba = bond->getBeginAtom();
+    auto *ea = bond->getEndAtom();
     int ha = -1;
     unsigned int iso;
     if (ba->getAtomicNum() == 1 && ba->getIsotope() &&
@@ -141,7 +141,7 @@ std::map<unsigned int, std::vector<unsigned int>> getIsoMap(const ROMol &mol) {
 bool may_need_extra_H(const ROMol &mol, const Atom *atom) {
   unsigned single_bonds = 0;
   unsigned aromatic_bonds = 0;
-  for (auto bond : mol.atomBonds(atom)) {
+  for (auto *bond : mol.atomBonds(atom)) {
     if (bond->getBondType() == Bond::SINGLE) {
       ++single_bonds;
     } else if (bond->getBondType() == Bond::AROMATIC) {
@@ -521,7 +521,7 @@ bool isQueryAtom(const RWMol &mol, const Atom &atom) {
   if (atom.hasQuery()) {
     return true;
   }
-  for (const auto bnd : mol.atomBonds(&atom)) {
+  for (auto *const bnd : mol.atomBonds(&atom)) {
     if (bnd->hasQuery()) {
       return true;
     }
@@ -551,7 +551,7 @@ void addHs(RWMol &mol, const AddHsParameters &params,
   }
   std::vector<unsigned int> numExplicitHs(mol.getNumAtoms(), 0);
   std::vector<unsigned int> numImplicitHs(mol.getNumAtoms(), 0);
-  for (auto at : mol.atoms()) {
+  for (auto *at : mol.atoms()) {
     numExplicitHs[at->getIdx()] = at->getNumExplicitHs();
     numImplicitHs[at->getIdx()] = at->getNumImplicitHs();
     if (onAtoms[at->getIdx()]) {
@@ -594,7 +594,7 @@ void addHs(RWMol &mol, const AddHsParameters &params,
     for (unsigned int i = 0; i < onumexpl; i++) {
       newIdx = mol.addAtom(new Atom(1), false, true);
       mol.addBond(aidx, newIdx, Bond::SINGLE);
-      auto hAtom = mol.getAtomWithIdx(newIdx);
+      auto *hAtom = mol.getAtomWithIdx(newIdx);
       hAtom->updatePropertyCache();
       if (params.addCoords) {
         setTerminalAtomCoords(mol, newIdx, aidx);
@@ -614,7 +614,7 @@ void addHs(RWMol &mol, const AddHsParameters &params,
         mol.addBond(aidx, newIdx, Bond::SINGLE);
         // set the isImplicit label so that we can strip these back
         // off later if need be.
-        auto hAtom = mol.getAtomWithIdx(newIdx);
+        auto *hAtom = mol.getAtomWithIdx(newIdx);
         hAtom->setProp(common_properties::isImplicit, 1);
         hAtom->updatePropertyCache();
         if (params.addCoords) {
@@ -697,9 +697,9 @@ bool adjustStereoAtomsIfRequired(RWMol &mol, const Atom *atom,
 }
 
 void molRemoveH(RWMol &mol, unsigned int idx, bool updateExplicitCount) {
-  auto atom = mol.getAtomWithIdx(idx);
+  auto *atom = mol.getAtomWithIdx(idx);
   PRECONDITION(atom->getAtomicNum() == 1, "idx corresponds to a non-Hydrogen");
-  for (const auto bond : mol.atomBonds(atom)) {
+  for (auto *const bond : mol.atomBonds(atom)) {
     Atom *heavyAtom = bond->getOtherAtom(atom);
     int heavyAtomNum = heavyAtom->getAtomicNum();
 
@@ -874,7 +874,7 @@ bool shouldRemoveH(const RWMol &mol, const Atom *atom,
       // it's not part of the group, but it defines its boundaries.
       for (const auto &bond_idx : sg.getBonds()) {
         if (sg.getBondType(bond_idx) == SubstanceGroup::BondType::XBOND) {
-          auto bond = mol.getBondWithIdx(bond_idx);
+          const auto *bond = mol.getBondWithIdx(bond_idx);
           if (bond->getBeginAtom() == atom || bond->getEndAtom() == atom) {
             return false;
           }
@@ -891,7 +891,7 @@ bool shouldRemoveH(const RWMol &mol, const Atom *atom,
 
       for (const auto &cs : sg.getCStates()) {
         // The bond to the H atom defines a CState
-        auto bond = mol.getBondWithIdx(cs.bondIdx);
+        const auto *bond = mol.getBondWithIdx(cs.bondIdx);
         if (bond->getBeginAtom() == atom || bond->getEndAtom() == atom) {
           return false;
         }
@@ -913,7 +913,7 @@ bool shouldRemoveH(const RWMol &mol, const Atom *atom,
        !ps.removeOnlyHNeighbors || !ps.removeNontetrahedralNeighbors ||
        !ps.removeWithWedgedBond)) {
     bool onlyHNeighbors = true;
-    for (const auto nbr : mol.atomNeighbors(atom)) {
+    for (auto *const nbr : mol.atomNeighbors(atom)) {
       // is it a dummy?
       if (!ps.removeDummyNeighbors && nbr->getAtomicNum() < 1) {
         if (ps.showWarnings) {
@@ -938,7 +938,8 @@ bool shouldRemoveH(const RWMol &mol, const Atom *atom,
         onlyHNeighbors = false;
       }
       if (!ps.removeWithWedgedBond) {
-        const auto bnd = mol.getBondBetweenAtoms(atom->getIdx(), nbr->getIdx());
+        const auto *const bnd =
+            mol.getBondBetweenAtoms(atom->getIdx(), nbr->getIdx());
         if (bnd->getBondDir() == Bond::BEGINDASH ||
             bnd->getBondDir() == Bond::BEGINWEDGE) {
           if (ps.showWarnings) {
@@ -952,7 +953,7 @@ bool shouldRemoveH(const RWMol &mol, const Atom *atom,
       // Check to see if the neighbor has a double bond and we're the only
       // neighbor at this end.  This was part of github #1810
       if (!ps.removeDefiningBondStereo && nbr->getDegree() == 2) {
-        for (const auto bnd : mol.atomBonds(nbr)) {
+        for (auto *const bnd : mol.atomBonds(nbr)) {
           if (bnd->getBondType() == Bond::DOUBLE &&
               (bnd->getStereo() > Bond::STEREOANY ||
                mol.getBondBetweenAtoms(atom->getIdx(), nbr->getIdx())
@@ -1010,7 +1011,7 @@ void removeHs(RWMol &mol, const RemoveHsParameters &ps, bool sanitize) {
     // if there are any non-isotopic Hs remove them first
     // to make sure chirality is preserved
     bool needRemoveHs = false;
-    for (auto atom : mol.atoms()) {
+    for (auto *atom : mol.atoms()) {
       if (atom->getAtomicNum() == 1 && atom->getIsotope() == 0) {
         needRemoveHs = true;
         break;
@@ -1023,7 +1024,7 @@ void removeHs(RWMol &mol, const RemoveHsParameters &ps, bool sanitize) {
       removeHs(mol, psCopy, false);
     }
   }
-  for (auto atom : mol.atoms()) {
+  for (auto *atom : mol.atoms()) {
     atom->updatePropertyCache(false);
   }
   if (ps.removeAndTrackIsotopes) {
@@ -1034,7 +1035,7 @@ void removeHs(RWMol &mol, const RemoveHsParameters &ps, bool sanitize) {
   }
   boost::dynamic_bitset<> atomsToRemove{mol.getNumAtoms(), 0};
 
-  for (auto atom : mol.atoms()) {
+  for (auto *atom : mol.atoms()) {
     if (shouldRemoveH(mol, atom, ps)) {
       atomsToRemove.set(atom->getIdx());
     }
@@ -1338,7 +1339,7 @@ ROMol *mergeQueryHs(const ROMol &mol, bool mergeUnmappedOnly,
 };
 
 bool needsHs(const ROMol &mol) {
-  for (const auto atom : mol.atoms()) {
+  for (auto *const atom : mol.atoms()) {
     bool includeNeighbors = false;
     if (atom->getTotalNumHs(includeNeighbors)) {
       return true;
@@ -1352,7 +1353,7 @@ std::pair<bool, bool> hasQueryHs(const ROMol &mol) {
   // We don't care about announcing ORs or other items during isQueryH
   RDLog::LogStateSetter blocker;
 
-  for (const auto atom : mol.atoms()) {
+  for (auto *const atom : mol.atoms()) {
     switch (isQueryH(atom)) {
       case HydrogenType::UnMergableQueryHydrogen:
         return std::make_pair(true, true);

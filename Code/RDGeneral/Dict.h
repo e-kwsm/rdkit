@@ -193,7 +193,7 @@ class RDKIT_RDGENERAL_EXPORT Dict {
   //! \overload
   template <typename T>
   T getVal(const std::string_view what) const {
-    for (auto &data : _data) {
+    for (const auto &data : _data) {
       if (data.key == what) {
         return from_rdvalue<T>(data.val);
       }

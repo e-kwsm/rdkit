@@ -71,7 +71,7 @@ PyObject *tautomerGetSubstructMatches(const TautomerQuery &self,
 PyObject *getTautomers(const TautomerQuery &self) {
   auto tauts = self.getTautomers();
   auto nTauts = tauts.size();
-  auto tuple = PyTuple_New(nTauts);
+  auto *tuple = PyTuple_New(nTauts);
   for (size_t i = 0; i < nTauts; i++) {
     PyTuple_SetItem(tuple, i,
                     python::converter::shared_ptr_to_python(tauts[i]));
@@ -169,7 +169,7 @@ python::object TQToBinary(const TautomerQuery &tq) {
 
 struct TautomerQuery_wrapper {
   static void wrap() {
-    auto docString =
+    const auto *docString =
         "The Tautomer Query Class.\n\
   Creates a query that enables structure search accounting for matching of\n\
   Tautomeric forms\n";

@@ -352,10 +352,10 @@ class RDKIT_GRAPHMOL_EXPORT ROMol : public RDProps {
         d_sgroups(std::move(o.d_sgroups)),
         d_stereo_groups(std::move(o.d_stereo_groups)),
         numBonds(o.numBonds) {
-    for (auto atom : atoms()) {
+    for (auto *atom : atoms()) {
       atom->setOwningMol(this);
     }
-    for (auto bond : bonds()) {
+    for (auto *bond : bonds()) {
       bond->setOwningMol(this);
     }
     for (auto conf : d_confs) {
@@ -391,10 +391,10 @@ class RDKIT_GRAPHMOL_EXPORT ROMol : public RDProps {
     numBonds = o.numBonds;
     o.numBonds = 0;
 
-    for (auto atom : atoms()) {
+    for (auto *atom : atoms()) {
       atom->setOwningMol(this);
     }
-    for (auto bond : bonds()) {
+    for (auto *bond : bonds()) {
       bond->setOwningMol(this);
     }
     for (auto conf : d_confs) {

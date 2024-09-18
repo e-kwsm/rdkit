@@ -158,7 +158,7 @@ ROMol *createAbbreviationMol(const std::string &txt, bool removeExtraDummies,
   ps.adjustRingCountFlags = MolOps::AdjustQueryWhichFlags::ADJUST_IGNOREDUMMIES;
   MolOps::adjustQueryProperties(*q, &ps);
   if (!allowConnectionToDummies) {
-    auto qry = makeAtomNumQuery(0);
+    auto *qry = makeAtomNumQuery(0);
     qry->setNegation(true);
     q->getAtomWithIdx(0)->expandQuery(qry);
   }
@@ -166,7 +166,7 @@ ROMol *createAbbreviationMol(const std::string &txt, bool removeExtraDummies,
                                         [](char c) { return c == '*'; });
   if (removeExtraDummies) {
     q->beginBatchEdit();
-    for (const auto at : q->atoms()) {
+    for (auto *const at : q->atoms()) {
       if (!at->getIdx()) {
         // skip the first atom
         continue;

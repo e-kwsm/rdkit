@@ -1572,7 +1572,7 @@ $$$$
   // Reading from a MDL molblock also sets isotopic labels, so no need
   // to set them again; we only clear MDL R-group labels
   for (auto &core : cores) {
-    for (auto a : core->atoms()) {
+    for (auto *a : core->atoms()) {
       if (a->hasProp(common_properties::_MolFileRLabel)) {
         a->clearProp(common_properties::_MolFileRLabel);
       }
@@ -1595,7 +1595,7 @@ $$$$
                      expectedItems);
 
   for (auto &core : cores) {
-    for (auto a : core->atoms()) {
+    for (auto *a : core->atoms()) {
       auto iso = a->getIsotope();
       if (iso) {
         a->setAtomMapNum(iso);
@@ -1620,7 +1620,7 @@ $$$$
                      expectedItems);
 
   for (auto &core : cores) {
-    for (auto a : core->atoms()) {
+    for (auto *a : core->atoms()) {
       if (a->getAtomMapNum()) {
         a->setAtomMapNum(0);
       }
@@ -1795,7 +1795,7 @@ TEST_CASE("testUnprocessedMapping", "[RGroupDecomp]") {
     params.scoreMethod = match;
     RGroupDecomposition decomposition(cores, params);
     for (auto &smi : structureSmi) {
-      auto mol = SmilesToMol(smi);
+      auto *mol = SmilesToMol(smi);
       decomposition.add(*mol);
       delete mol;
     }
@@ -2061,7 +2061,7 @@ M  END
     const auto &rgdCore = it->second;
     REQUIRE(rgdCore->getNumConformers() == 1);
     size_t r2Num = 0;
-    for (const auto atom : rgdCore->atoms()) {
+    for (auto *const atom : rgdCore->atoms()) {
       // test that R2 has non-zero coords and a sensible bond length
       // to its neighboring atom
       if (atom->getAtomicNum() == 0 && atom->getAtomMapNum() == 2) {
@@ -2071,8 +2071,8 @@ M  END
         REQUIRE(fabs(r2Coord.y) > 1e-4);
         for (const auto &nbri :
              boost::make_iterator_range(rgdCore->getAtomNeighbors(atom))) {
-          const auto nbr = (*rgdCore)[nbri];
-          const auto bond =
+          auto *const nbr = (*rgdCore)[nbri];
+          auto *const bond =
               rgdCore->getBondBetweenAtoms(nbr->getIdx(), atom->getIdx());
           REQUIRE(bond);
           auto &nbrCoord = rgdCore->getConformer().getAtomPos(nbr->getIdx());
@@ -2165,7 +2165,7 @@ TEST_CASE("testNoTempLabels", "[RGroupDecomp]") {
   REQUIRE(rows.size() == 1);
   const auto &res = rows.front();
   for (const auto &pair : res) {
-    for (const auto a : pair.second->atoms()) {
+    for (auto *const a : pair.second->atoms()) {
       for (const auto &propName : a->getPropList()) {
         REQUIRE(propName.find("label") == std::string::npos);
       }
@@ -2347,7 +2347,7 @@ TEST_CASE("testAlignOutputCoreToMolecule", "[RGroupDecomp]") {
   struct Helper {
     static RDGeom::Point3D findPointForAtomNumber(const ROMol &mol,
                                                   int atomNumber) {
-      for (const auto atom : mol.atoms()) {
+      for (auto *const atom : mol.atoms()) {
         if (atom->getAtomicNum() == atomNumber) {
           return mol.getConformer().getAtomPos(atom->getIdx());
         }
@@ -2763,7 +2763,7 @@ M  END
   auto r2 = rows[0]["R2"];
   auto match = std::find_if(r2->atoms().begin(), r2->atoms().end(),
                             [](Atom *a) { return a->getAtomicNum() == 0; });
-  auto dummy = *match;
+  auto *dummy = *match;
   int neighborIndex = *r2->getAtomNeighbors(dummy).first;
   auto conf = r2->getConformer();
   auto p1 = conf.getAtomPos(dummy->getIdx());
@@ -2926,7 +2926,7 @@ TEST_CASE("testMultipleGroupsToUnlabelledCoreAtom", "[RGroupDecomp]") {
     params.scoreMethod = FingerprintVariance;
     RGroupDecomposition decomp(*core, params);
     for (auto smiles : smilesVec) {
-      auto mol = SmilesToMol(smiles);
+      auto *mol = SmilesToMol(smiles);
       auto result = decomp.add(*mol);
       REQUIRE(result > -1);
       delete mol;
@@ -2987,7 +2987,7 @@ TEST_CASE("testMultipleGroupsToUnlabelledCoreAtom", "[RGroupDecomp]") {
     params.scoreMethod = FingerprintVariance;
     RGroupDecomposition decomp(*core, params);
     for (auto smiles : smilesVec) {
-      auto mol = SmilesToMol(smiles);
+      auto *mol = SmilesToMol(smiles);
       auto result = decomp.add(*mol);
       REQUIRE(result > -1);
       delete mol;
@@ -3368,7 +3368,7 @@ M  END
   RGroupRows rows = decomp.getRGroupsAsRows();
   auto coreRgd = rows[0]["Core"];
   auto numberGroups = 0;
-  for (const auto atom : coreRgd->atoms()) {
+  for (auto *const atom : coreRgd->atoms()) {
     if (int rGroupNum = atom->getAtomMapNum(); rGroupNum > 0) {
       auto coreAtoms = core->atoms();
       auto originalAtom = std::find_if(
@@ -3747,7 +3747,7 @@ M  END
   auto r1 = rows[0]["R1"];
   // Check to see that Stereo bond is present and defined
   bool foundStereo = false;
-  for (const auto bond : r1->bonds()) {
+  for (auto *const bond : r1->bonds()) {
     if (bond->getStereo() > Bond::STEREOANY) {
       REQUIRE(!foundStereo);
       foundStereo = true;
@@ -3784,7 +3784,7 @@ M  END
   r1 = rows[0]["R1"];
   // Check to see that Stereo bond is not present
   foundStereo = false;
-  for (const auto bond : r1->bonds()) {
+  for (auto *const bond : r1->bonds()) {
     if (bond->getStereo() > Bond::STEREOANY) {
       foundStereo = true;
     }
@@ -3820,7 +3820,7 @@ M  END
   const auto c1 = rows[0]["Core"];
   // Check to see that Stereo bond is not present
   foundStereo = false;
-  for (const auto bond : c1->bonds()) {
+  for (auto *const bond : c1->bonds()) {
     if (bond->getStereo() > Bond::STEREOANY) {
       REQUIRE(!foundStereo);
       foundStereo = true;

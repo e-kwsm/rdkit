@@ -57,7 +57,7 @@ bool hasAttachedLabels(const ROMol &mol, const Atom *atom,
   RWMol::ADJ_ITER nbrIdx, endNbrs;
   boost::tie(nbrIdx, endNbrs) = mol.getAtomNeighbors(atom);
   while (nbrIdx != endNbrs) {
-    const auto neighborAtom = mol.getAtomWithIdx(*nbrIdx);
+    const auto *const neighborAtom = mol.getAtomWithIdx(*nbrIdx);
     if (neighborAtom->getAtomicNum() == 0 && neighborAtom->getDegree() == 1 &&
         hasLabel(neighborAtom, autoLabels)) {
       return true;
@@ -78,7 +78,7 @@ unsigned int RGroupDecompositionParameters::autoGetLabels(const RWMol &core) {
   bool hasAtomMapNum = false;
   bool hasIsotopes = false;
   bool hasDummies = false;
-  for (auto atm : core.atoms()) {
+  for (auto *atm : core.atoms()) {
     if (atm->getIsotope()) {
       hasIsotopes = true;
     }
@@ -113,8 +113,8 @@ bool rgdAtomCompare(const MCSAtomCompareParameters &p, const ROMol &mol1,
     return false;
   }
   unsigned int autoLabels = *reinterpret_cast<unsigned int *>(userData);
-  const auto a1 = mol1.getAtomWithIdx(atom1);
-  const auto a2 = mol2.getAtomWithIdx(atom2);
+  const auto *const a1 = mol1.getAtomWithIdx(atom1);
+  const auto *const a2 = mol2.getAtomWithIdx(atom2);
   bool atom1HasLabel = hasLabel(a1, autoLabels);
   bool atom2HasLabel = hasLabel(a2, autoLabels);
   // check for the presence of rgroup labels on adjacent terminal dummy atoms
@@ -141,10 +141,10 @@ bool RGroupDecompositionParameters::prepareCore(RWMol &core,
 
   // if we aren't doing stereochem matches, remove that info from the core
   if (!substructmatchParams.useChirality) {
-    for (auto atom : core.atoms()) {
+    for (auto *atom : core.atoms()) {
       atom->setChiralTag(Atom::ChiralType::CHI_UNSPECIFIED);
     }
-    for (auto bond : core.bonds()) {
+    for (auto *bond : core.bonds()) {
       bond->setStereo(Bond::BondStereo::STEREONONE);
     }
   }
@@ -211,7 +211,7 @@ bool RGroupDecompositionParameters::prepareCore(RWMol &core,
 
   std::map<int, int> atomToLabel;
 
-  for (auto atom : core.atoms()) {
+  for (auto *atom : core.atoms()) {
     bool found = false;
 
     if (atom->hasProp(RLABEL)) {
@@ -316,7 +316,7 @@ void RGroupDecompositionParameters::addDummyAtomsToUnlabelledCoreAtoms(
 
   // add R group substitutions to fill atomic valence
   std::vector<Atom *> unlabeledCoreAtoms{};
-  for (const auto atom : core.atoms()) {
+  for (auto *const atom : core.atoms()) {
     if (atom->getAtomicNum() == 1) {
       continue;
     }
@@ -326,7 +326,7 @@ void RGroupDecompositionParameters::addDummyAtomsToUnlabelledCoreAtoms(
     unlabeledCoreAtoms.push_back(atom);
   }
 
-  for (const auto atom : unlabeledCoreAtoms) {
+  for (auto *const atom : unlabeledCoreAtoms) {
     atom->calcImplicitValence(false);
     const auto atomIndex = atom->getIdx();
     int dummiesToAdd;
@@ -337,7 +337,7 @@ void RGroupDecompositionParameters::addDummyAtomsToUnlabelledCoreAtoms(
       dummiesToAdd = maxNumDummies;
     } else {
       double bondOrder = 0;
-      for (const auto bond : core.atomBonds(atom)) {
+      for (auto *const bond : core.atomBonds(atom)) {
         auto contrib = bond->getValenceContrib(atom);
         if (contrib == 0.0 && bond->hasQuery()) {
           contrib = 1.0;
@@ -355,7 +355,7 @@ void RGroupDecompositionParameters::addDummyAtomsToUnlabelledCoreAtoms(
 
     std::vector<int> newIndices;
     for (int i = 0; i < dummiesToAdd; i++) {
-      const auto newAtom = new Atom(0);
+      auto *const newAtom = new Atom(0);
       newAtom->setProp<bool>(UNLABELED_CORE_ATTACHMENT, true);
       const auto newIdx = core.addAtom(newAtom, false, true);
       newIndices.push_back(newIdx);
@@ -364,7 +364,7 @@ void RGroupDecompositionParameters::addDummyAtomsToUnlabelledCoreAtoms(
       qb->setBeginAtomIdx(atomIndex);
       qb->setEndAtomIdx(newIdx);
       core.addBond(qb, true);
-      const auto dummy = core.getAtomWithIdx(newIdx);
+      auto *const dummy = core.getAtomWithIdx(newIdx);
       dummy->updatePropertyCache();
     }
     atom->updatePropertyCache(false);

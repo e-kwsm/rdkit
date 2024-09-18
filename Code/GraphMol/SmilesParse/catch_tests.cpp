@@ -777,7 +777,7 @@ TEST_CASE("github #3320: incorrect bond properties from CXSMILES",
     std::vector<std::pair<unsigned, unsigned>> bonds = {
         {0, 1}, {3, 1}, {2, 1}, {6, 1}};
     for (const auto &pr : bonds) {
-      auto bnd = m->getBondBetweenAtoms(pr.first, pr.second);
+      auto *bnd = m->getBondBetweenAtoms(pr.first, pr.second);
       REQUIRE(bnd);
       CHECK(bnd->getBondType() == Bond::BondType::DATIVE);
       CHECK(bnd->getBeginAtomIdx() == pr.first);
@@ -789,7 +789,7 @@ TEST_CASE("github #3320: incorrect bond properties from CXSMILES",
     std::vector<std::pair<unsigned, unsigned>> bonds = {
         {0, 1}, {3, 1}, {2, 1}, {12, 1}};
     for (const auto &pr : bonds) {
-      auto bnd = m->getBondBetweenAtoms(pr.first, pr.second);
+      auto *bnd = m->getBondBetweenAtoms(pr.first, pr.second);
       REQUIRE(bnd);
       CHECK(bnd->getBondType() == Bond::BondType::DATIVE);
       CHECK(bnd->getBeginAtomIdx() == pr.first);
@@ -1689,7 +1689,7 @@ TEST_CASE("Github #4582: double bonds and ring closures") {
  20 21  1  0
 M  END)CTAB"_ctab;
   REQUIRE(mol);
-  auto dbond = mol->getBondBetweenAtoms(1, 19);
+  auto *dbond = mol->getBondBetweenAtoms(1, 19);
   REQUIRE(dbond);
   CHECK(dbond->getBondType() == Bond::BondType::DOUBLE);
   if (useLegacy) {
@@ -2316,14 +2316,14 @@ TEST_CASE(
   SECTION("'w:' label") {
     auto m = "CC1CN1C=CC1CC1 |w:4.5|"_smiles;
     REQUIRE(m);
-    auto b = m->getBondWithIdx(4);
+    auto *b = m->getBondWithIdx(4);
     REQUIRE(b->getBondType() == Bond::BondType::DOUBLE);
     CHECK(b->getBondDir() == Bond::BondDir::UNKNOWN);
   }
   SECTION("'ctu:' label") {
     auto m = "CC1CN1C=CC1CC1 |ctu:5|"_smiles;
     REQUIRE(m);
-    auto b = m->getBondWithIdx(4);
+    auto *b = m->getBondWithIdx(4);
     REQUIRE(b->getBondType() == Bond::BondType::DOUBLE);
     CHECK(b->getStereo() == Bond::STEREOANY);
   }
@@ -2332,7 +2332,7 @@ TEST_CASE(
 
     auto m = "CC1CN1C=CC1CC1 |c:5|"_smiles;
     REQUIRE(m);
-    auto b = m->getBondWithIdx(4);
+    auto *b = m->getBondWithIdx(4);
     REQUIRE(b->getBondType() == Bond::BondType::DOUBLE);
     CHECK(b->getStereo() == Bond::STEREOCIS);
   }
@@ -2341,7 +2341,7 @@ TEST_CASE(
 
     auto m = "CC1CN1C=CC1CC1 |t:5|"_smiles;
     REQUIRE(m);
-    auto b = m->getBondWithIdx(4);
+    auto *b = m->getBondWithIdx(4);
     REQUIRE(b->getBondType() == Bond::BondType::DOUBLE);
     CHECK(b->getStereo() == Bond::STEREOTRANS);
   }
@@ -2356,7 +2356,7 @@ TEST_CASE("Github #5683: SMARTS bond ordering should be the same as SMILES") {
     CHECK(m->getBondBetweenAtoms(0, 3)->getIdx() == 2);
   }
   SECTION("as reported: SMARTS which should generate an exception") {
-    auto sma = "O=C(C=CCC1CCCCC1)N1N=Cc2ccccc2C1c1ccccc1 |w:3.1|";
+    const auto *sma = "O=C(C=CCC1CCCCC1)N1N=Cc2ccccc2C1c1ccccc1 |w:3.1|";
     CHECK_THROWS_AS(SmartsToMol(sma), SmilesParseException);
   }
 }
@@ -2400,7 +2400,7 @@ TEST_CASE("smilesSymbol in SMARTS", "[smarts][smilesSymbol]") {
   SECTION("smilesSymbol with additional queries") {
     auto m = "[#6]C[#6]"_smarts;
     REQUIRE(m);
-    auto atom = m->getAtomWithIdx(1);
+    auto *atom = m->getAtomWithIdx(1);
 
     atom->expandQuery(makeAtomExplicitDegreeQuery(3), Queries::COMPOSITE_AND);
     atom->expandQuery(makeAtomTotalValenceQuery(4), Queries::COMPOSITE_AND);
@@ -2920,7 +2920,7 @@ TEST_CASE("CX_BOND_ATROPISOMER option requires ring info", "[bug][cxsmiles]") {
   auto m = v2::FileParsers::MolFromMolFile(fName);
   REQUIRE(m);
 
-  auto atropBond = m->getBondWithIdx(3);
+  auto *atropBond = m->getBondWithIdx(3);
   REQUIRE(atropBond->getStereo() == Bond::STEREOATROPCW);
 
   // Clear ring info to check that atropisomer wedging doesn't fail
@@ -2964,7 +2964,7 @@ TEST_CASE("Github #7372: SMILES output option to disable dative bonds") {
 }
 
 void strip_atom_properties(RWMol *molecule) {
-  for (auto atom : molecule->atoms()) {
+  for (auto *atom : molecule->atoms()) {
     for (auto property : atom->getPropList(false, false)) {
       atom->clearProp(property);
     }
@@ -3074,7 +3074,7 @@ TEST_CASE("trimethylcyclohexane") {
   SECTION("Basic") {
     UseLegacyStereoPerceptionFixture useLegacy(false);
 
-    auto smi = "C[C@H]1C[C@@H](C)C[C@@H](C)C1";
+    const auto *smi = "C[C@H]1C[C@@H](C)C[C@@H](C)C1";
     RDKit::v2::SmilesParse::SmilesParserParams smilesParserParams;
     auto m1 = RDKit::v2::SmilesParse::MolFromSmiles(smi, smilesParserParams);
     auto smiOut = RDKit::MolToCXSmiles(*m1);
@@ -3083,7 +3083,7 @@ TEST_CASE("trimethylcyclohexane") {
   SECTION("WithEnhancedStereo") {
     UseLegacyStereoPerceptionFixture useLegacy(false);
 
-    auto smi = "C[C@H]1C[C@@H](C)C[C@@H](C)C1 |o1:1,o2:6,o3:3|";
+    const auto *smi = "C[C@H]1C[C@@H](C)C[C@@H](C)C1 |o1:1,o2:6,o3:3|";
     RDKit::v2::SmilesParse::SmilesParserParams smilesParserParams;
     auto m1 = RDKit::v2::SmilesParse::MolFromSmiles(smi, smilesParserParams);
     auto smiOut = RDKit::MolToCXSmiles(*m1);
@@ -3093,7 +3093,7 @@ TEST_CASE("trimethylcyclohexane") {
 
 TEST_CASE("DnaTestError", "DnaTestError") {
   SECTION("basics") {
-    auto smi =
+    const auto *smi =
         "[H]OC[C@H]1O[C@@H]2[C@H](O)[C@@H]1OP(=O)(O)OC[C@H]1O[C@@H]3[C@H](O)[C@@H]1OP(=O)(O)OC[C@H]1O[C@@H]4[C@H](O)[C@@H]1OP(=O)(O)OC[C@H]1O[C@@H]5[C@H](O)[C@@H]1OP(=O)(O)OC[C@H]1O[C@@H]6[C@H](O)[C@@H]1OP(=O)(O)OC[C@H]1O[C@H]([C@H](O)[C@@H]1O[H])N1C=CC7=N8~N9C(=NC%10=C(N=CN%10[C@@H]%10O[C@H](COP(=O)(O)O[C@H]%11[C@@H](O)[C@@H](O[C@@H]%11COP(=O)(O)O[C@H]%11[C@@H](O)[C@@H](O[C@@H]%11COP(=O)(O)O[C@H]%11[C@@H](O)[C@@H](O[C@@H]%11COP(=O)(O)O[C@H]%11[C@@H](O)[C@@H](O[C@@H]%11COP(=O)(O)O[C@H]%11[C@@H](O)[C@@H](O[C@@H]%11CO[H])N%11C=NC%12=C%11N=C%11~O=C%13N2C=CC2=O~NC%12=N%11~N2%13)N2C=NC%11=C2N=C2N~O=C%12N3C=CC3=N%12~N2C%11=O~N3)N2C=CC3=N%11~N%12C(=NC%13=C(N=CN%134)C%12=O~N3)N~O=C2%11)N2C=C(C)C3=O~NC4=N%11~N3C2=O~C%11=NC2=C4N=CN25)N2C=NC3=C2N=C2~O=C4N6C=CC5=O~NC3=N2~N54)[C@@H](O[H])[C@H]%10O)C9=O~N7)N~O=C18 |(4.67218,-35.5914,;5.34598,-36.5843,;6.84288,-36.4764,;7.68418,-37.7162,;7.17218,-39.1261,;8.35478,-40.0487,;9.59778,-39.2091,;10.7257,-39.6187,;9.18338,-37.7674,;10.1024,-36.5843,;17.9626,-38.0598,;18.5623,-39.0992,;18.5623,-37.0204,;25.2033,-36.5843,;26.7002,-36.4764,;27.5415,-37.7162,;27.0295,-39.1261,;28.2121,-40.0487,;29.4551,-39.2091,;30.583,-39.6187,;29.0407,-37.7674,;29.9597,-36.5843,;37.8199,-38.0598,;38.4196,-39.0992,;38.4196,-37.0204,;45.0606,-36.5843,;46.5575,-36.4764,;47.3988,-37.7162,;46.8868,-39.1261,;48.0694,-40.0487,;49.3124,-39.2091,;50.4403,-39.6187,;48.898,-37.7674,;49.817,-36.5843,;57.6772,-38.0598,;58.2769,-39.0992,;58.2769,-37.0204,;64.9179,-36.5843,;66.4148,-36.4764,;67.2561,-37.7162,;66.7441,-39.1261,;67.9267,-40.0487,;69.1697,-39.2091,;70.2976,-39.6187,;68.7553,-37.7674,;69.6743,-36.5843,;77.5345,-38.0598,;78.1342,-39.0992,;78.1342,-37.0204,;84.7752,-36.5843,;86.2721,-36.4764,;87.1134,-37.7162,;86.6014,-39.1261,;87.784,-40.0487,;89.027,-39.2091,;90.1549,-39.6187,;88.6126,-37.7674,;89.5316,-36.5843,;97.3918,-38.0598,;97.9915,-39.0992,;97.9915,-37.0204,;104.632,-36.5843,;106.129,-36.4764,;106.971,-37.7162,;106.459,-39.1261,;107.641,-40.0487,;108.884,-39.2091,;110.012,-39.6187,;108.47,-37.7674,;109.389,-36.5843,;110.578,-36.7473,;106.21,-27.8713,;106.96,-26.5723,;108.46,-26.5724,;109.21,-27.8714,;108.46,-29.1704,;109.007,-16.4468,;107.581,-15.9834,;106.466,-16.9872,;106.778,-18.4544,;108.205,-18.9178,;108.205,-20.417,;106.778,-20.8806,;105.897,-19.6672,;107.641,-10.2628,;106.459,-9.34016,;106.971,-7.93026,;106.129,-6.69046,;104.632,-6.79836,;97.3918,-8.27388,;97.9915,-9.31328,;97.9915,-7.23447,;89.5316,-6.79836,;88.6126,-7.98146,;89.027,-9.42316,;90.1549,-9.83276,;87.784,-10.2628,;86.6014,-9.34016,;87.1134,-7.93026,;86.2721,-6.69046,;84.7752,-6.79836,;77.5345,-8.27388,;78.1342,-9.31328,;78.1342,-7.23447,;69.6743,-6.79836,;68.7553,-7.98146,;69.1697,-9.42316,;70.2976,-9.83276,;67.9267,-10.2628,;66.7441,-9.34016,;67.2561,-7.93026,;66.4148,-6.69046,;64.9179,-6.79836,;57.6772,-8.27388,;58.2769,-9.31328,;58.2769,-7.23447,;49.817,-6.79836,;48.898,-7.98146,;49.3124,-9.42316,;50.4403,-9.83276,;48.0694,-10.2628,;46.8868,-9.34016,;47.3988,-7.93026,;46.5575,-6.69046,;45.0606,-6.79836,;37.8199,-8.27388,;38.4196,-9.31328,;38.4196,-7.23447,;29.9597,-6.79836,;29.0407,-7.98146,;29.4551,-9.42316,;30.583,-9.83276,;28.2121,-10.2628,;27.0295,-9.34016,;27.5415,-7.93026,;26.7002,-6.69046,;25.2033,-6.79836,;17.9626,-8.27388,;18.5623,-9.31328,;18.5623,-7.23447,;10.1024,-6.79836,;9.18338,-7.98146,;9.59778,-9.42316,;10.7257,-9.83276,;8.35478,-10.2628,;7.17218,-9.34016,;7.68418,-7.93026,;6.84288,-6.69046,;5.34598,-6.79836,;4.67218,-5.80546,;6.58934,-19.3588,;7.47114,-20.5722,;8.89774,-20.1086,;8.89724,-18.6094,;7.47074,-18.146,;7.15874,-16.6788,;8.27334,-15.675,;7.07393,-26.0527,;7.67393,-27.0919,;6.92393,-28.3909,;7.67383,-29.69,;9.17383,-29.69,;9.92383,-28.391,;11.1239,-28.391,;11.1532,-17.9763,;10.0118,-17.6056,;9.69994,-16.1384,;9.17383,-27.092,;26.4675,-19.6672,;27.3493,-20.8806,;28.7759,-20.417,;28.7754,-18.9178,;27.3489,-18.4544,;27.0369,-16.9872,;28.1515,-15.9834,;27.9019,-14.8096,;26.9311,-30.2096,;27.5312,-29.1704,;26.7813,-27.8713,;27.5313,-26.5723,;29.0312,-26.5724,;29.7812,-27.8714,;29.0312,-29.1704,;29.5781,-16.4468,;29.89,-17.914,;31.0314,-18.2847,;30.9813,-27.8714,;46.6386,-17.9427,;47.3886,-16.6437,;48.8885,-16.6438,;49.6385,-17.9428,;48.8885,-19.2418,;49.4354,-26.3755,;48.0088,-25.9121,;46.8942,-26.9159,;47.2062,-28.3831,;48.6327,-28.8465,;48.6332,-30.3457,;47.2066,-30.8093,;46.3248,-29.5959,;49.7473,-27.8427,;50.8887,-28.2134,;50.8386,-17.9428,;47.7592,-24.7383,;46.7884,-20.281,;47.3885,-19.2418,;66.3458,-18.2025,;67.0957,-19.5016,;68.5957,-19.5016,;69.1957,-20.5409,;69.3457,-18.2026,;70.5458,-18.2026,;70.7251,-27.9049,;69.5837,-27.5342,;69.2718,-26.067,;68.5957,-16.9036,;67.0958,-16.9035,;66.4958,-15.8643,;67.8452,-25.6036,;66.7306,-26.6074,;67.0426,-28.0746,;68.4691,-28.538,;68.4696,-30.0372,;67.043,-30.5008,;66.1612,-29.2874,;86.0185,-19.3588,;86.9003,-20.5722,;88.3269,-20.1086,;88.3264,-18.6094,;86.8999,-18.146,;86.5879,-16.6788,;87.7025,-15.675,;86.5031,-26.0527,;87.1031,-27.0919,;86.3531,-28.3909,;87.103,-29.69,;88.603,-29.69,;89.353,-28.391,;90.5531,-28.391,;90.5824,-17.9763,;89.441,-17.6056,;89.1291,-16.1384,;88.603,-27.092,;108.47,-7.98146,;109.389,-6.79836,;110.578,-6.96136,;108.884,-9.42316,;110.012,-9.83276,;109.319,-17.914,;110.461,-18.2847,;110.41,-27.8714,;107.331,-14.8096,;106.36,-30.2096,;106.96,-29.1704,),wD:3.2,15.15,27.28,39.41,51.54,63.67,65.76,84.90,86.93,96.103,98.106,108.116,110.119,120.129,122.132,132.142,134.145,144.155,146.158,wU:5.4,6.6,8.9,17.17,18.19,20.22,29.30,30.32,32.35,41.43,42.45,44.48,53.56,54.58,56.61,66.71,68.74,93.99,94.101,105.112,106.114,117.125,118.127,129.138,130.140,141.151,142.153,243.285,246.289,H:76.81,156.169,164.177,166.182,175.194,183.203,185.208,191.215,202.228,204.231,211.241,215.244,217.249,231.268,239.276,241.281,249.293,251.296,a:3,5,6,8,15,17,18,20,27,29,30,32,39,41,42,44,51,53,54,56,63,65,66,68,84,86,93,94,96,98,105,106,108,110,117,118,120,122,129,130,132,134,141,142,144,146,243,246|";
     RDKit::v2::SmilesParse::SmilesParserParams sp;
     sp.sanitize = false;
@@ -3225,7 +3225,7 @@ TEST_CASE("ZOB cx smiles extension", "[smiles][cxsmiles]") {
     auto m = "CC"_smiles;
     REQUIRE(m);
 
-    auto b = m->getBondWithIdx(0);
+    auto *b = m->getBondWithIdx(0);
     b->setBondType(Bond::ZERO);
 
     auto smi = MolToCXSmiles(*m);
@@ -3244,7 +3244,7 @@ TEST_CASE("ZOB cx smiles extension", "[smiles][cxsmiles]") {
     auto m = v2::SmilesParse::MolFromSmiles(smi, p);
     REQUIRE(m);
 
-    auto b = m->getBondWithIdx(15);
+    auto *b = m->getBondWithIdx(15);
     CHECK(b->getBondType() == Bond::BondType::ZERO);
     CHECK(b->getBeginAtom()->getAtomicNum() == 7);
     CHECK(b->getEndAtom()->getAtomicNum() == 5);

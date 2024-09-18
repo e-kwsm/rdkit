@@ -308,10 +308,10 @@ void testFilterCatalogCHEMBL() {
     FilterCatalogParams params;
     params.addCatalog(FilterCatalogParams::CHEMBL_Inpharmatica);
     FilterCatalog catalog(params);
-    for (auto &test : tests) {
+    for (const auto &test : tests) {
       std::unique_ptr<RWMol> mol(SmilesToMol(test.first));
       std::string matches;
-      for (auto &match : catalog.getMatches(*mol)) {
+      for (const auto &match : catalog.getMatches(*mol)) {
         if (matches.size()) matches += "|";
         matches += match->getDescription();
       }
@@ -329,10 +329,10 @@ void testFilterCatalogCHEMBL() {
     FilterCatalogParams params;
     params.addCatalog(FilterCatalogParams::CHEMBL_LINT);
     FilterCatalog catalog(params);
-    for (auto &test : tests) {
+    for (const auto &test : tests) {
       std::unique_ptr<RWMol> mol(SmilesToMol(test.first));
       std::string matches;
-      for (auto &match : catalog.getMatches(*mol)) {
+      for (const auto &match : catalog.getMatches(*mol)) {
         if (matches.size()) matches += "|";
         matches += match->getDescription();
       }

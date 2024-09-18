@@ -212,7 +212,7 @@ void set12Bounds(const ROMol &mol, DistGeom::BoundsMatPtr mmat,
   boost::dynamic_bitset<> squishAtoms(mol.getNumAtoms());
   // find larger heteroatoms in conjugated 5 rings, because we need to add a bit
   // of extra flex for them
-  for (const auto bond : mol.bonds()) {
+  for (auto *const bond : mol.bonds()) {
     if (bond->getIsConjugated() &&
         (bond->getBeginAtom()->getAtomicNum() > 10 ||
          bond->getEndAtom()->getAtomicNum() > 10) &&
@@ -223,7 +223,7 @@ void set12Bounds(const ROMol &mol, DistGeom::BoundsMatPtr mmat,
     }
   }
 
-  for (const auto bond : mol.bonds()) {
+  for (auto *const bond : mol.bonds()) {
     auto begId = bond->getBeginAtomIdx();
     auto endId = bond->getEndAtomIdx();
     auto bOrder = bond->getBondTypeAsDouble();
@@ -367,7 +367,7 @@ void set13Bounds(const ROMol &mol, DistGeom::BoundsMatPtr mmat,
   //   or a ring atom and a non-ring atom, or ring atoms that belong to
   //   different simple rings
   // - finally set all other 13 distances
-  const auto rinfo = mol.getRingInfo();
+  auto *const rinfo = mol.getRingInfo();
   CHECK_INVARIANT(rinfo, "");
 
   unsigned int aid2, aid1, aid3, bid1, bid2;
@@ -392,8 +392,8 @@ void set13Bounds(const ROMol &mol, DistGeom::BoundsMatPtr mmat,
       } else {
         aid3 = ringi[i + 1];
       }
-      const auto b1 = mol.getBondBetweenAtoms(aid1, aid2);
-      const auto b2 = mol.getBondBetweenAtoms(aid2, aid3);
+      const auto *const b1 = mol.getBondBetweenAtoms(aid1, aid2);
+      const auto *const b2 = mol.getBondBetweenAtoms(aid2, aid3);
       CHECK_INVARIANT(b1, "no bond found");
       CHECK_INVARIANT(b2, "no bond found");
       bid1 = b1->getIdx();
@@ -424,7 +424,7 @@ void set13Bounds(const ROMol &mol, DistGeom::BoundsMatPtr mmat,
 
   // now deal with the remaining atoms
   for (aid2 = 0; aid2 < npt; aid2++) {
-    const auto atom = mol.getAtomWithIdx(aid2);
+    const auto *const atom = mol.getAtomWithIdx(aid2);
     auto deg = atom->getDegree();
     auto n13 = deg * (deg - 1) / 2;
     if (n13 == static_cast<unsigned int>(visited[aid2])) {
@@ -442,12 +442,12 @@ void set13Bounds(const ROMol &mol, DistGeom::BoundsMatPtr mmat,
       //  fused system
 
       while (beg1 != end1) {
-        const auto bnd1 = mol[*beg1];
+        const auto *const bnd1 = mol[*beg1];
         bid1 = bnd1->getIdx();
         aid1 = bnd1->getOtherAtomIdx(aid2);
         auto [beg2, end2] = mol.getAtomBonds(atom);
         while (beg2 != beg1) {
-          const auto bnd2 = mol[*beg2];
+          const auto *const bnd2 = mol[*beg2];
           bid2 = bnd2->getIdx();
           aid3 = bnd2->getOtherAtomIdx(aid2);
           if (accumData.bondAngles->getVal(bid1, bid2) < 0.0) {
@@ -500,12 +500,12 @@ void set13Bounds(const ROMol &mol, DistGeom::BoundsMatPtr mmat,
     } else if (visited[aid2] == 0) {
       // non-ring atoms - we will simply use angles based on hybridization
       while (beg1 != end1) {
-        const auto bnd1 = mol[*beg1];
+        const auto *const bnd1 = mol[*beg1];
         bid1 = bnd1->getIdx();
         aid1 = bnd1->getOtherAtomIdx(aid2);
         auto [beg2, end2] = mol.getAtomBonds(atom);
         while (beg2 != beg1) {
-          const auto bnd2 = mol[*beg2];
+          const auto *const bnd2 = mol[*beg2];
           bid2 = bnd2->getIdx();
           aid3 = bnd2->getOtherAtomIdx(aid2);
           if (Chirality::hasNonTetrahedralStereo(atom)) {
@@ -937,7 +937,7 @@ bool _checkMacrocycleAllInSameRingAmideEster14(const ROMol &mol, const Bond *,
 bool _isCarbonyl(const ROMol &mol, const Atom *at) {
   PRECONDITION(at, "bad atom");
   if (at->getAtomicNum() == 6 && at->getDegree() > 2) {
-    for (const auto nbr : mol.atomNeighbors(at)) {
+    for (auto *const nbr : mol.atomNeighbors(at)) {
       unsigned int atNum = nbr->getAtomicNum();
       if ((atNum == 8 || atNum == 7) &&
           mol.getBondBetweenAtoms(at->getIdx(), nbr->getIdx())->getBondType() ==
@@ -1527,7 +1527,7 @@ void set14Bounds(const ROMol &mol, DistGeom::BoundsMatPtr mmat,
     throw ValueErrorException(
         "Too many bonds in the molecule, cannot compute 1-4 bounds");
   }
-  const auto rinfo = mol.getRingInfo();  // FIX: make sure we have ring info
+  auto *const rinfo = mol.getRingInfo();  // FIX: make sure we have ring info
   CHECK_INVARIANT(rinfo, "");
   const auto &bondRings = rinfo->bondRings();
 
@@ -1573,14 +1573,14 @@ void set14Bounds(const ROMol &mol, DistGeom::BoundsMatPtr mmat,
       bid1 = bid2;
     }  // loop over bonds in the ring
   }  // end of all rings
-  for (const auto bond : mol.bonds()) {
+  for (auto *const bond : mol.bonds()) {
     auto bid2 = bond->getIdx();
     auto aid2 = bond->getBeginAtomIdx();
     auto aid3 = bond->getEndAtomIdx();
-    for (const auto bnd1 : mol.atomBonds(mol.getAtomWithIdx(aid2))) {
+    for (auto *const bnd1 : mol.atomBonds(mol.getAtomWithIdx(aid2))) {
       auto bid1 = bnd1->getIdx();
       if (bid1 != bid2) {
-        for (const auto bnd3 : mol.atomBonds(mol.getAtomWithIdx(aid3))) {
+        for (auto *const bnd3 : mol.atomBonds(mol.getAtomWithIdx(aid3))) {
           auto bid3 = bnd3->getIdx();
           if (bid3 != bid2) {
             auto id1 = bid1 * nb * nb + bid2 * nb + bid3;
@@ -1699,7 +1699,7 @@ void collectBondsAndAngles(const ROMol &mol,
   bonds.resize(0);
   angles.resize(0);
   bonds.reserve(mol.getNumBonds());
-  for (const auto bondi : mol.bonds()) {
+  for (auto *const bondi : mol.bonds()) {
     bonds.emplace_back(bondi->getBeginAtomIdx(), bondi->getEndAtomIdx());
 
     for (unsigned int j = bondi->getIdx() + 1; j < mol.getNumBonds(); ++j) {

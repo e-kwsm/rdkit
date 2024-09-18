@@ -218,7 +218,7 @@ TEST_CASE(
     "github #8121: symmetric ring finding not returning correct results for molecules with fragments") {
   auto twoCubanes = "C12C3C4C1C5C2C3C45.C12C3C4C1C5C2C3C45"_smiles;
   REQUIRE(twoCubanes);
-  auto rinfo = twoCubanes->getRingInfo();
+  auto *rinfo = twoCubanes->getRingInfo();
   CHECK(rinfo->numRings() == 12);
 }
 
@@ -253,7 +253,7 @@ M  END
   SECTION("degree 2, aligned 2nd neighbors") {
     // This looks like a weird mol, but it's an intermediate
     // state in AddHs.
-    auto mb = R"CTAB(
+    const auto *mb = R"CTAB(
   Mrv1908 06032010402D
 
   0  0  0     0  0            999 V3000
@@ -332,7 +332,7 @@ TEST_CASE("cleanuporganometallics and carbon") {
       INFO(smiles);
       auto mol = v2::SmilesParse::MolFromSmiles(smiles);
       REQUIRE(mol);
-      for (const auto bond : mol->bonds()) {
+      for (auto *const bond : mol->bonds()) {
         CHECK(bond->getBondType() != Bond::BondType::DATIVE);
       }
     }
@@ -444,7 +444,7 @@ static std::unique_ptr<RDKit::RWMol> getTestMol() {
   const auto num_atoms = mol.getNumAtoms();
   std::vector<bool> selected_atoms(num_atoms);
 
-  for (auto &atom_idx : atom_ids) {
+  for (const auto &atom_idx : atom_ids) {
     if (atom_idx < num_atoms) {
       selected_atoms[atom_idx] = true;
     }
@@ -550,20 +550,20 @@ TEST_CASE("test_extract_substance_groups", "[copyMolSubset]") {
 
   if (flag) {
     auto &extracted_sgroup = ::RDKit::getSubstanceGroups(*extracted_mol)[0];
-    for (auto &idx : extracted_sgroup.getAtoms()) {
-      auto atom = extracted_mol->getAtomWithIdx(idx);
+    for (const auto &idx : extracted_sgroup.getAtoms()) {
+      auto *atom = extracted_mol->getAtomWithIdx(idx);
       CHECK(selected_atoms[atom->template getProp<unsigned int>("orig_idx")] ==
             true);
     }
 
-    for (auto &idx : extracted_sgroup.getParentAtoms()) {
-      auto atom = extracted_mol->getAtomWithIdx(idx);
+    for (const auto &idx : extracted_sgroup.getParentAtoms()) {
+      auto *atom = extracted_mol->getAtomWithIdx(idx);
       CHECK(selected_atoms[atom->template getProp<unsigned int>("orig_idx")] ==
             true);
     }
 
-    for (auto &idx : extracted_sgroup.getBonds()) {
-      auto bond = extracted_mol->getBondWithIdx(idx);
+    for (const auto &idx : extracted_sgroup.getBonds()) {
+      auto *bond = extracted_mol->getBondWithIdx(idx);
       CHECK(selected_bonds[bond->template getProp<unsigned int>("orig_idx")] ==
             true);
     }
@@ -609,12 +609,12 @@ TEST_CASE("test_extract_stereo_groups", "[copyMolSubset]") {
   auto flag = extracted_mol->getStereoGroups().size() == 1;
 
   if (flag) {
-    auto &extracted_stereo_group = extracted_mol->getStereoGroups()[0];
-    for (auto &atom : extracted_stereo_group.getAtoms()) {
+    const auto &extracted_stereo_group = extracted_mol->getStereoGroups()[0];
+    for (const auto &atom : extracted_stereo_group.getAtoms()) {
       CHECK(selected_atoms[atom->template getProp<int>("orig_idx")] == true);
     }
 
-    for (auto &bond : extracted_stereo_group.getBonds()) {
+    for (const auto &bond : extracted_stereo_group.getBonds()) {
       CHECK(selected_bonds[bond->template getProp<int>("orig_idx")] == true);
     }
   }
@@ -624,7 +624,7 @@ TEST_CASE("GitHub #8726: Do not remove hydrides by default") {
   auto m = "[OH+][H-]"_smiles;
   REQUIRE(m);
   CHECK(m->getNumAtoms() == 2);
-  auto h_atom = m->getAtomWithIdx(1);
+  auto *h_atom = m->getAtomWithIdx(1);
   CHECK(h_atom->getAtomicNum() == 1);
   CHECK(h_atom->getFormalCharge() == -1);
 }

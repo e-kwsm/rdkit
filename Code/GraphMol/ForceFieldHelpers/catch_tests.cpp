@@ -58,7 +58,7 @@ TEST_CASE("Test empty force field") {
 
 TEST_CASE("github #7901") {
 #if 1
-  auto mb = R"CTAB(Acetone, enolate form
+  const auto *mb = R"CTAB(Acetone, enolate form
      RDKit          3D
 
   9  8  0  0  0  0  0  0  0  0999 V2000

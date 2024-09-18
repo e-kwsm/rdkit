@@ -223,7 +223,7 @@ static std::unique_ptr<SCSRMol> SCSRMolFromSCSRDataStream(
 
   while (tempStr.substr(0, 8) == "TEMPLATE") {
     res->addTemplate(std::unique_ptr<ROMol>(new ROMol()));
-    auto templateMol = (RWMol *)res->getTemplate(res->getTemplateCount() - 1);
+    auto *templateMol = (RWMol *)res->getTemplate(res->getTemplateCount() - 1);
 
     parseTemplateLine(templateMol, tempStr.c_str(), line);
 
@@ -302,7 +302,7 @@ static std::unique_ptr<SCSRMol> SCSRMolFromSCSRDataStream(
 
   unsigned int atomCount = res.get()->getMol()->getNumAtoms();
   for (unsigned int atomIdx = 0; atomIdx < atomCount; ++atomIdx) {
-    auto atom = res->getMol()->getAtomWithIdx(atomIdx);
+    auto *atom = res->getMol()->getAtomWithIdx(atomIdx);
 
     std::string dummyLabel = "";
     std::string atomClass = "";
@@ -323,7 +323,7 @@ static std::unique_ptr<SCSRMol> SCSRMolFromSCSRDataStream(
       for (unsigned int templateIdx = 0;
            !templateFound && templateIdx < res.get()->getTemplateCount();
            ++templateIdx) {
-        auto templateMol = res->getTemplate(templateIdx);
+        auto *templateMol = res->getTemplate(templateIdx);
         if (templateMol->getProp<std::string>(
                 common_properties::molAtomClass) == atomClass) {
           for (auto templateName :
@@ -529,7 +529,7 @@ class MolFromSCSRMolConverter {
       std::vector<HydrogenBondConnection> &hydrogenBondConnections) {
     std::string atomClass = "";
     unsigned int atomIdx = atom->getIdx();
-    auto templateMol = atomIdxToTemplateMol(atomIdx);
+    auto *templateMol = atomIdxToTemplateMol(atomIdx);
     hydrogenBondConnections.clear();
     if (!atom->getPropIfPresent<std::string>(common_properties::molAtomClass,
                                              atomClass)) {
@@ -551,7 +551,7 @@ class MolFromSCSRMolConverter {
         }
 
         for (auto templateAtomIdx : attachMapIt->second) {
-          auto templateAtom = templateMol->getAtomWithIdx(templateAtomIdx);
+          auto *templateAtom = templateMol->getAtomWithIdx(templateAtomIdx);
           templateAtom->updatePropertyCache();
           auto isDonor = templateAtom->getTotalNumHs() > 0;
           hydrogenBondConnections.emplace_back(templateAtomIdx, isDonor);
@@ -580,7 +580,7 @@ class MolFromSCSRMolConverter {
 
     const std::string typ = "SUP";
     newSgroups.emplace_back(new SubstanceGroup((ROMol *)resMol.get(), typ));
-    auto newSgroup = newSgroups.back().get();
+    auto *newSgroup = newSgroups.back().get();
     newSgroup->setProp("LABEL", sgroupName);
 
     // copy the atoms of the sgroup into the new molecule
@@ -591,9 +591,9 @@ class MolFromSCSRMolConverter {
     }
 
     for (auto templateAtomIdx : sgroup.getAtoms()) {
-      auto templateAtom =
+      auto *templateAtom =
           atomIdxToTemplateMol(atomIdx)->getAtomWithIdx(templateAtomIdx);
-      auto newAtom = new Atom(*templateAtom);
+      auto *newAtom = new Atom(*templateAtom);
 
       resMol->addAtom(newAtom, true, true);
       newSgroup->addAtomWithIdx(newAtom->getIdx());
@@ -614,7 +614,7 @@ class MolFromSCSRMolConverter {
 
   void addBond(const Bond::BondType bondType, unsigned int beginAtom,
                unsigned int endAtom) {
-    auto newBond = new Bond(bondType);
+    auto *newBond = new Bond(bondType);
     newBond->setBeginAtomIdx(beginAtom);
     newBond->setEndAtomIdx(endAtom);
     // newBond->updateProps(*bond, false);
@@ -886,7 +886,7 @@ class MolFromSCSRMolConverter {
 
       for (unsigned int templateIdx = 0;
            templateIdx < scsrMol->getTemplateCount(); ++templateIdx) {
-        auto templateMol = scsrMol->getTemplate(templateIdx);
+        auto *templateMol = scsrMol->getTemplate(templateIdx);
         RDGeom::Point3D sumOfCoords;
         const RDKit::Conformer *templateConf = nullptr;
         auto confCount = templateMol->getNumConformers();
@@ -961,7 +961,7 @@ class MolFromSCSRMolConverter {
             HydrogenBondConnection(9, false)}}};
       for (unsigned int templateIdx = 0;
            templateIdx < scsrMol->getTemplateCount(); ++templateIdx) {
-        auto templateMol = scsrMol->getTemplate(templateIdx);
+        auto *templateMol = scsrMol->getTemplate(templateIdx);
         templateMol->updatePropertyCache(false);
 
         if (templateMol->getProp<std::string>(
@@ -1000,7 +1000,7 @@ class MolFromSCSRMolConverter {
 
     unsigned int atomCount = mol->getNumAtoms();
     for (unsigned int atomIdx = 0; atomIdx < atomCount; ++atomIdx) {
-      auto atom = mol->getAtomWithIdx(atomIdx);
+      const auto *atom = mol->getAtomWithIdx(atomIdx);
       std::string dummyLabel = "";
       std::string atomClass = "";
 
@@ -1008,7 +1008,7 @@ class MolFromSCSRMolConverter {
           !atom->getPropIfPresent(common_properties::molAtomClass, atomClass) ||
           dummyLabel == "" || atomClass == "") {
         // NOT a template atom - just copy it
-        auto newAtom = new Atom(*atom);
+        auto *newAtom = new Atom(*atom);
         resMol->addAtom(newAtom, true, true);
         // atomMap[atomIdx].push_back(newAtom->getIdx());
 
@@ -1178,7 +1178,7 @@ class MolFromSCSRMolConverter {
         // if the bonds are between atoms in the new molecule
         // Bonds to atoms in leaving groups that "left" are NOT copied
 
-        for (auto bond : templateMol->bonds()) {
+        for (auto *bond : templateMol->bonds()) {
           if (originAtomMap.find(OriginAtomDef(
                   atomIdx, bond->getBeginAtomIdx())) == originAtomMap.end() ||
               originAtomMap.find(OriginAtomDef(
@@ -1190,7 +1190,7 @@ class MolFromSCSRMolConverter {
           auto newEndAtomIdx =
               originAtomMap[OriginAtomDef(atomIdx, bond->getEndAtomIdx())];
 
-          auto newBond = new Bond(bond->getBondType());
+          auto *newBond = new Bond(bond->getBondType());
           newBond->setBeginAtomIdx(newBeginAtomIdx);
           newBond->setEndAtomIdx(newEndAtomIdx);
           newBond->updateProps(*bond, false);
@@ -1201,11 +1201,11 @@ class MolFromSCSRMolConverter {
         // abs groups are added to the list of abs atoms and bonds, so
         // that we can add ONE abs group later
 
-        for (auto &sg : templateMol->getStereoGroups()) {
+        for (const auto &sg : templateMol->getStereoGroups()) {
           std::vector<Atom *> newGroupAtoms;
           std::vector<Bond *> newGroupBonds;
 
-          for (auto sgAtom : sg.getAtoms()) {
+          for (auto *sgAtom : sg.getAtoms()) {
             auto originAtom = OriginAtomDef(atomIdx, sgAtom->getIdx());
 
             auto newAtomPtr = originAtomMap.find(originAtom);
@@ -1215,7 +1215,7 @@ class MolFromSCSRMolConverter {
             }
           }
 
-          for (auto sgBond : sg.getBonds()) {
+          for (auto *sgBond : sg.getBonds()) {
             auto originBeginAtom =
                 OriginAtomDef(atomIdx, sgBond->getBeginAtomIdx());
             auto originEndAtom =
@@ -1225,7 +1225,7 @@ class MolFromSCSRMolConverter {
             auto newEndAtomPtr = originAtomMap.find(originEndAtom);
             if (newBeginAtomPtr != originAtomMap.end() &&
                 newEndAtomPtr != originAtomMap.end()) {
-              auto newBond = resMol->getBondBetweenAtoms(
+              auto *newBond = resMol->getBondBetweenAtoms(
                   newBeginAtomPtr->second, newEndAtomPtr->second);
               if (newBond != nullptr) {
                 newGroupBonds.push_back(newBond);
@@ -1259,7 +1259,7 @@ class MolFromSCSRMolConverter {
 
     // now deal with the bonds from the original mol.
 
-    for (auto bond : scsrMol->getMol()->bonds()) {
+    for (auto *bond : scsrMol->getMol()->bonds()) {
       processBondInMainMol(bond);
     }
 
@@ -1274,9 +1274,9 @@ class MolFromSCSRMolConverter {
 
     // copy the sgroups from the main mol for atoms not in a template
 
-    for (auto &sg : getSubstanceGroups(*mol)) {
+    for (const auto &sg : getSubstanceGroups(*mol)) {
       if (sg.getIsValid()) {
-        auto &atoms = sg.getAtoms();
+        const auto &atoms = sg.getAtoms();
         std::vector<unsigned int> newAtoms;
         for (auto atom : atoms) {
           auto originAtom = OriginAtomDef(atom, UINT_MAX);
@@ -1293,7 +1293,7 @@ class MolFromSCSRMolConverter {
         if (newAtoms.size() > 0) {
           const std::string type = "SUP";
           newSgroups.emplace_back(new SubstanceGroup(resMol.get(), type));
-          auto newSg = newSgroups.back().get();
+          auto *newSg = newSgroups.back().get();
           // RDKit::SubstanceGroup newSg(sg);
 
           newSg->setAtoms(newAtoms);
@@ -1305,7 +1305,7 @@ class MolFromSCSRMolConverter {
     // the non-template atoms, and we have all the bonds, find the
     // Xbonds for each substance group and add them
 
-    for (auto bond : resMol->bonds()) {
+    for (auto *bond : resMol->bonds()) {
       for (auto &sg : newSgroups) {
         // if one atom of the bond is found and the other is not in the
         // sgroup, this is a Xbond
@@ -1329,11 +1329,11 @@ class MolFromSCSRMolConverter {
     // take care of stereo groups in the main mol - for atoms that are
     // NOT template refs
 
-    for (auto &sg : mol->getStereoGroups()) {
+    for (const auto &sg : mol->getStereoGroups()) {
       std::vector<Atom *> newGroupAtoms;
       std::vector<Bond *> newGroupBonds;
 
-      for (auto sgAtom : sg.getAtoms()) {
+      for (auto *sgAtom : sg.getAtoms()) {
         auto originAtom = OriginAtomDef(sgAtom->getIdx(), UINT_MAX);
         auto newAtomPtr = originAtomMap.find(originAtom);
         if (newAtomPtr != originAtomMap.end()) {
@@ -1341,7 +1341,7 @@ class MolFromSCSRMolConverter {
         }
       }
 
-      for (auto sgBond : sg.getBonds()) {
+      for (auto *sgBond : sg.getBonds()) {
         auto originBeginAtom =
             OriginAtomDef(sgBond->getBeginAtomIdx(), UINT_MAX);
         auto originEndAtom = OriginAtomDef(sgBond->getEndAtomIdx(), UINT_MAX);
@@ -1350,8 +1350,8 @@ class MolFromSCSRMolConverter {
 
         if (newBeginAtomPtr != originAtomMap.end() &&
             newEndAtomPtr != originAtomMap.end()) {
-          auto newBond = resMol->getBondBetweenAtoms(newBeginAtomPtr->second,
-                                                     newEndAtomPtr->second);
+          auto *newBond = resMol->getBondBetweenAtoms(newBeginAtomPtr->second,
+                                                      newEndAtomPtr->second);
           if (newBond != nullptr) {
             newGroupBonds.push_back(newBond);
           }

@@ -79,14 +79,14 @@ void ROMol::initFromOther(const ROMol &other, bool quickCopy, int confId) {
   numBonds = 0;
   // std::cerr<<"    init from other: "<<this<<" "<<&other<<std::endl;
   // copy over the atoms
-  for (const auto oatom : other.atoms()) {
+  for (auto *const oatom : other.atoms()) {
     constexpr bool updateLabel = false;
     constexpr bool takeOwnership = true;
     addAtom(oatom->copy(), updateLabel, takeOwnership);
   }
 
   // and the bonds:
-  for (const auto obond : other.bonds()) {
+  for (auto *const obond : other.bonds()) {
     addBond(obond->copy(), true);
   }
 
@@ -100,13 +100,13 @@ void ROMol::initFromOther(const ROMol &other, bool quickCopy, int confId) {
 
   // enhanced stereochemical information
   d_stereo_groups.clear();
-  for (auto &otherGroup : other.d_stereo_groups) {
+  for (const auto &otherGroup : other.d_stereo_groups) {
     std::vector<Atom *> atoms;
-    for (auto &otherAtom : otherGroup.getAtoms()) {
+    for (const auto &otherAtom : otherGroup.getAtoms()) {
       atoms.push_back(getAtomWithIdx(otherAtom->getIdx()));
     }
     std::vector<Bond *> bonds;
-    for (auto &otherBond : otherGroup.getBonds()) {
+    for (const auto &otherBond : otherGroup.getBonds()) {
       bonds.push_back(getBondWithIdx(otherBond->getIdx()));
     }
     d_stereo_groups.emplace_back(otherGroup.getGroupType(), std::move(atoms),
@@ -178,7 +178,7 @@ unsigned int ROMol::getNumAtoms(bool onlyExplicit) const {
   if (!onlyExplicit) {
     // if we are interested in hydrogens as well add them up from
     // each
-    for (const auto atom : atoms()) {
+    for (auto *const atom : atoms()) {
       res += atom->getTotalNumHs();
     }
   }
@@ -186,7 +186,7 @@ unsigned int ROMol::getNumAtoms(bool onlyExplicit) const {
 };
 unsigned int ROMol::getNumHeavyAtoms() const {
   unsigned int res = 0;
-  for (const auto atom : atoms()) {
+  for (auto *const atom : atoms()) {
     if (atom->getAtomicNum() > 1) {
       ++res;
     }
@@ -198,7 +198,7 @@ Atom *ROMol::getAtomWithIdx(unsigned int idx) {
   URANGE_CHECK(idx, getNumAtoms());
 
   auto vd = boost::vertex(idx, d_graph);
-  auto res = d_graph[vd];
+  auto *res = d_graph[vd];
   POSTCONDITION(res, "");
   return res;
 }
@@ -207,7 +207,7 @@ const Atom *ROMol::getAtomWithIdx(unsigned int idx) const {
   URANGE_CHECK(idx, getNumAtoms());
 
   auto vd = boost::vertex(idx, d_graph);
-  const auto res = d_graph[vd];
+  auto *const res = d_graph[vd];
 
   POSTCONDITION(res, "");
   return res;
@@ -302,7 +302,7 @@ unsigned int ROMol::getNumBonds(bool onlyHeavy) const {
   auto res = numBonds;
   if (!onlyHeavy) {
     // If we need hydrogen connecting bonds add them up
-    for (const auto atom : atoms()) {
+    for (auto *const atom : atoms()) {
       res += atom->getTotalNumHs();
     }
   }
@@ -443,8 +443,8 @@ void ROMol::setStereoGroups(std::vector<StereoGroup> stereo_groups) {
     new_stereo_groups.reserve(stereo_groups.size() - num_abs + 1);
     for (auto &&sg : stereo_groups) {
       if (is_abs(sg)) {
-        auto &other_atoms = sg.getAtoms();
-        auto &other_bonds = sg.getBonds();
+        const auto &other_atoms = sg.getAtoms();
+        const auto &other_bonds = sg.getBonds();
         abs_atoms.insert(abs_atoms.begin(), other_atoms.begin(),
                          other_atoms.end());
         abs_bonds.insert(abs_bonds.begin(), other_bonds.begin(),
@@ -461,12 +461,12 @@ void ROMol::setStereoGroups(std::vector<StereoGroup> stereo_groups) {
 
 void ROMol::debugMol(std::ostream &str) const {
   str << "Atoms:" << std::endl;
-  for (const auto atom : atoms()) {
+  for (auto *const atom : atoms()) {
     str << "\t" << *atom << std::endl;
   }
 
   str << "Bonds:" << std::endl;
-  for (const auto bond : bonds()) {
+  for (auto *const bond : bonds()) {
     str << "\t" << *bond << std::endl;
   }
 
@@ -532,12 +532,12 @@ ROMol::ConstHeteroatomIterator ROMol::endHeteros() const {
 }
 
 bool ROMol::hasQuery() const {
-  for (auto atom : atoms()) {
+  for (auto *atom : atoms()) {
     if (atom->hasQuery()) {
       return true;
     }
   }
-  for (auto bond : bonds()) {
+  for (auto *bond : bonds()) {
     if (bond->hasQuery()) {
       return true;
     }
@@ -593,26 +593,26 @@ void ROMol::clearComputedProps(bool includeRings) const {
 
   RDProps::clearComputedProps();
 
-  for (auto atom : atoms()) {
+  for (auto *atom : atoms()) {
     atom->clearComputedProps();
   }
 
-  for (auto bond : bonds()) {
+  for (auto *bond : bonds()) {
     bond->clearComputedProps();
   }
 }
 
 void ROMol::updatePropertyCache(bool strict) {
-  for (auto atom : atoms()) {
+  for (auto *atom : atoms()) {
     atom->updatePropertyCache(strict);
   }
-  for (auto bond : bonds()) {
+  for (auto *bond : bonds()) {
     bond->updatePropertyCache(strict);
   }
 }
 
 bool ROMol::needsUpdatePropertyCache() const {
-  for (const auto atom : atoms()) {
+  for (auto *const atom : atoms()) {
     if (atom->needsUpdatePropertyCache()) {
       return true;
     }
@@ -622,7 +622,7 @@ bool ROMol::needsUpdatePropertyCache() const {
 }
 
 void ROMol::clearPropertyCache() {
-  for (auto atom : atoms()) {
+  for (auto *atom : atoms()) {
     atom->clearPropertyCache();
   }
 }

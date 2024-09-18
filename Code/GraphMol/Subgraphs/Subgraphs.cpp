@@ -611,7 +611,7 @@ PATH_TYPE findAtomEnvironmentOfRadiusN(
         // if we're going to do another iteration, then push the neighbors from
         // this round onto the stack
         if (i < radius - 1) {
-          for (const auto bond : mol.atomBonds(mol.getAtomWithIdx(oAtom))) {
+          for (auto *const bond : mol.atomBonds(mol.getAtomWithIdx(oAtom))) {
             if (!bondsIn.test(bond->getIdx())) {
               if (useHs || mol.getAtomWithIdx(bond->getOtherAtomIdx(oAtom))
                                    ->getAtomicNum() != 1) {

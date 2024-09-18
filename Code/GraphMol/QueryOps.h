@@ -87,7 +87,7 @@ static inline int queryAtomNonHydrogenDegree(Atom const *at) {
   int res = 0;
   for (const auto nbri :
        boost::make_iterator_range(at->getOwningMol().getAtomNeighbors(at))) {
-    const auto nbr = at->getOwningMol()[nbri];
+    auto *const nbr = at->getOwningMol()[nbri];
     if (nbr->getAtomicNum() != 1 || nbr->getIsotope() > 1) {
       res++;
     }
@@ -100,7 +100,7 @@ static inline int queryAtomHeavyAtomDegree(Atom const *at) {
   int heavyDegree = 0;
   for (const auto nbri :
        boost::make_iterator_range(at->getOwningMol().getAtomNeighbors(at))) {
-    const auto nbr = at->getOwningMol()[nbri];
+    auto *const nbr = at->getOwningMol()[nbri];
     if (nbr->getAtomicNum() > 1) {
       heavyDegree++;
     }

@@ -133,7 +133,7 @@ inline RDKit::RWMol *SmilesToMol(const std::string &smi,
 }
 
 inline Atom *SmilesToAtom(const std::string &smi) {
-  auto res = RDKit::v2::SmilesParse::AtomFromSmiles(smi).release();
+  auto *res = RDKit::v2::SmilesParse::AtomFromSmiles(smi).release();
   return res;
 }
 

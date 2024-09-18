@@ -129,7 +129,7 @@ void scaleBonds(const ROMol &mol, Conformer &conf, double targetBondLength,
   if (bondLength < 0) {
     // If we don't have a bond length for any reason, just scale the avgerage
     // bond length
-    for (auto &bond : mol.bonds()) {
+    for (const auto &bond : mol.bonds()) {
       avg_bond_length += (conf.getAtomPos(bond->getBeginAtomIdx()) -
                           conf.getAtomPos(bond->getEndAtomIdx()))
                              .length();
@@ -442,7 +442,7 @@ bool parse_fragment(RWMol &mol, ptree &frag,
       }
       unsigned bondIdx = 0;
       if (bond.order == Bond::BondType::UNSPECIFIED) {
-        auto qb = new QueryBond();
+        auto *qb = new QueryBond();
         qb->setQuery(makeBondNullQuery());
         qb->setBeginAtomIdx(startIdx);
         qb->setEndAtomIdx(endIdx);
@@ -525,7 +525,7 @@ void set_reaction_data(
             << " not found in document." << std::endl;
         continue;
       }
-      auto &mol = mols[fragment->second];
+      const auto &mol = mols[fragment->second];
       mol->setProp(CDX_SCHEME_ID, scheme.scheme_id);
       mol->setProp(CDX_STEP_ID, scheme.step_id);
       mol->setProp(prop, reagent_idx);
@@ -721,7 +721,7 @@ std::vector<std::unique_ptr<RWMol>> MolsFromCDXMLDataStream(
   try {
     read_xml(inStream, pt);
   } catch (boost::property_tree::ptree_error &e) {
-    auto xml = dynamic_cast<boost::property_tree::file_parser_error *>(&e);
+    auto *xml = dynamic_cast<boost::property_tree::file_parser_error *>(&e);
     if (xml != nullptr) {
       auto msg = std::string(xml->message()) +
                  " at line: " + boost::lexical_cast<std::string>(xml->line());
