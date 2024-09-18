@@ -1746,7 +1746,7 @@ void testAtomParity() {
 
     // look for the parity flags on output:
     auto molBlock = MolToMolBlock(*m);
-    auto m2 = MolBlockToMol(molBlock);
+    auto *m2 = MolBlockToMol(molBlock);
     TEST_ASSERT(m2);
     TEST_ASSERT(!m2->getAtomWithIdx(0)->hasProp(common_properties::molParity));
     TEST_ASSERT(m2->getAtomWithIdx(1)->hasProp(common_properties::molParity));
@@ -3747,10 +3747,10 @@ void testPDBFile() {
     std::string pkl;
     MolPickler::pickleMol(*m, pkl);
     RWMol m2(pkl);
-    for (const auto atom : m->atoms()) {
-      const auto atom2 = m2.getAtomWithIdx(atom->getIdx());
-      auto info1 = static_cast<AtomPDBResidueInfo *>(atom->getMonomerInfo());
-      auto info2 = static_cast<AtomPDBResidueInfo *>(atom2->getMonomerInfo());
+    for (auto *const atom : m->atoms()) {
+      auto *const atom2 = m2.getAtomWithIdx(atom->getIdx());
+      auto *info1 = static_cast<AtomPDBResidueInfo *>(atom->getMonomerInfo());
+      auto *info2 = static_cast<AtomPDBResidueInfo *>(atom2->getMonomerInfo());
       // this is awkward because operator== isn't defined for AtomPDBResidueInfo
       // yet
       TEST_ASSERT(info1->getName() == info2->getName());
@@ -5015,10 +5015,10 @@ void testMolBlockChirality() {
       << std::endl;
   {
     std::string smi = "C[C@H](Cl)Br";
-    auto mol = SmilesToMol(smi);
+    auto *mol = SmilesToMol(smi);
     TEST_ASSERT(mol);
     auto mb = MolToMolBlock(*mol, true);
-    auto mol2 = MolBlockToMol(mb);
+    auto *mol2 = MolBlockToMol(mb);
     TEST_ASSERT(mol2);
     auto csmi1 = MolToSmiles(*mol, true);
     auto csmi2 = MolToSmiles(*mol2, true);
@@ -5038,10 +5038,10 @@ void testMolBlock3DStereochem() {
   rdbase += "/Code/GraphMol/FileParsers/test_data/";
   {
     std::string fName = rdbase + "stereo3d_1.mol";
-    auto m1 = MolFileToMol(fName);
+    auto *m1 = MolFileToMol(fName);
     TEST_ASSERT(m1);
     std::string smi = "F[C@](Cl)(Br)I";
-    auto m2 = SmilesToMol(smi);
+    auto *m2 = SmilesToMol(smi);
     TEST_ASSERT(m2);
     auto csmi1 = MolToSmiles(*m1, true);
     auto csmi2 = MolToSmiles(*m2, true);
@@ -5052,10 +5052,10 @@ void testMolBlock3DStereochem() {
   }
   {
     std::string fName = rdbase + "stereo3d_2.mol";
-    auto m1 = MolFileToMol(fName);
+    auto *m1 = MolFileToMol(fName);
     TEST_ASSERT(m1);
     std::string smi = "F[C@@](Cl)(Br)I";
-    auto m2 = SmilesToMol(smi);
+    auto *m2 = SmilesToMol(smi);
     TEST_ASSERT(m2);
     auto csmi1 = MolToSmiles(*m1, true);
     auto csmi2 = MolToSmiles(*m2, true);
@@ -5066,10 +5066,10 @@ void testMolBlock3DStereochem() {
   }
   {
     std::string fName = rdbase + "stereo3d_conflict.mol";
-    auto m1 = MolFileToMol(fName);
+    auto *m1 = MolFileToMol(fName);
     TEST_ASSERT(m1);
     std::string smi = "F[C@](Cl)(Br)I";
-    auto m2 = SmilesToMol(smi);
+    auto *m2 = SmilesToMol(smi);
     TEST_ASSERT(m2);
     auto csmi1 = MolToSmiles(*m1, true);
     auto csmi2 = MolToSmiles(*m2, true);
@@ -5080,10 +5080,10 @@ void testMolBlock3DStereochem() {
   }
   {
     std::string fName = rdbase + "stereo3d_unknown.mol";
-    auto m1 = MolFileToMol(fName);
+    auto *m1 = MolFileToMol(fName);
     TEST_ASSERT(m1);
     std::string smi = "F[C](Cl)(Br)I";
-    auto m2 = SmilesToMol(smi);
+    auto *m2 = SmilesToMol(smi);
     TEST_ASSERT(m2);
     auto csmi1 = MolToSmiles(*m1, true);
     auto csmi2 = MolToSmiles(*m2, true);
@@ -5094,10 +5094,10 @@ void testMolBlock3DStereochem() {
   }
   {
     std::string fName = rdbase + "stereo3d_trans.mol";
-    auto m1 = MolFileToMol(fName);
+    auto *m1 = MolFileToMol(fName);
     TEST_ASSERT(m1);
     std::string smi = "F/C=C/F";
-    auto m2 = SmilesToMol(smi);
+    auto *m2 = SmilesToMol(smi);
     TEST_ASSERT(m2);
     auto csmi1 = MolToSmiles(*m1, true);
     auto csmi2 = MolToSmiles(*m2, true);
@@ -5108,10 +5108,10 @@ void testMolBlock3DStereochem() {
   }
   {
     std::string fName = rdbase + "stereo3d_cis.mol";
-    auto m1 = MolFileToMol(fName);
+    auto *m1 = MolFileToMol(fName);
     TEST_ASSERT(m1);
     std::string smi = "F/C=C\\F";
-    auto m2 = SmilesToMol(smi);
+    auto *m2 = SmilesToMol(smi);
     TEST_ASSERT(m2);
     auto csmi1 = MolToSmiles(*m1, true);
     auto csmi2 = MolToSmiles(*m2, true);
@@ -5124,10 +5124,10 @@ void testMolBlock3DStereochem() {
 
   {
     std::string fName = rdbase + "stereo3d_dblunknown.mol";
-    auto m1 = MolFileToMol(fName);
+    auto *m1 = MolFileToMol(fName);
     TEST_ASSERT(m1);
     std::string smi = "FC=CF";
-    auto m2 = SmilesToMol(smi);
+    auto *m2 = SmilesToMol(smi);
     TEST_ASSERT(m2);
     auto csmi1 = MolToSmiles(*m1, true);
     auto csmi2 = MolToSmiles(*m2, true);

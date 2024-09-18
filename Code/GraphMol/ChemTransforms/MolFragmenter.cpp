@@ -389,7 +389,7 @@ void checkChiralityPostMove(const ROMol &mol, const Atom *oAt, Atom *nAt,
       }
     }
   } else {
-    for (auto obond : mol.atomBonds(oAt)) {
+    for (auto *obond : mol.atomBonds(oAt)) {
       if (obond != bond) {
         newOrder.push_back(obond->getIdx());
       }
@@ -414,10 +414,10 @@ std::vector<std::pair<Bond *, std::vector<int>>> getNbrBondStereo(
   PRECONDITION(bnd, "null bond");
   // loop over neighboring double bonds and remove their stereo atom
   std::vector<std::pair<Bond *, std::vector<int>>> res;
-  const auto bgn = bnd->getBeginAtom();
-  const auto end = bnd->getEndAtom();
+  auto *const bgn = bnd->getBeginAtom();
+  auto *const end = bnd->getEndAtom();
   for (const auto *atom : {bgn, end}) {
-    for (auto obnd : mol.atomBonds(atom)) {
+    for (auto *obnd : mol.atomBonds(atom)) {
       if (obnd->getIdx() != bnd->getIdx() && !obnd->getStereoAtoms().empty()) {
         res.emplace_back(obnd, obnd->getStereoAtoms());
       }
@@ -532,7 +532,7 @@ ROMol *fragmentOnBonds(
     } else {
       // was github issues 429, 6034
       for (auto idx : {bidx, eidx}) {
-        if (auto tatom = res->getAtomWithIdx(idx);
+        if (auto *tatom = res->getAtomWithIdx(idx);
             tatom->getNoImplicit() ||
             (tatom->getIsAromatic() && tatom->getAtomicNum() != 6)) {
           tatom->setNumExplicitHs(tatom->getNumExplicitHs() + 1);
@@ -760,7 +760,7 @@ struct ZipBond {
         a_link->setProp("__molzip_used", true);
         b_link->setProp("__molzip_used", true);
       } else {
-        auto bnd = newmol.getBondBetweenAtoms(a->getIdx(), a_dummy->getIdx());
+        auto *bnd = newmol.getBondBetweenAtoms(a->getIdx(), a_dummy->getIdx());
         CHECK_INVARIANT(
             bnd != nullptr,
             "molzip: begin atom and specified dummy atom connection "
@@ -788,8 +788,8 @@ struct ZipBond {
         //  a-* b>* => a<b
         //  a-* b<* => a>b
         Bond::BondDir bond_dir{Bond::BondDir::NONE};
-        auto start = a;
-        auto end = b;
+        auto *start = a;
+        auto *end = b;
         if (bond_dir_a != Bond::BondDir::NONE &&
             bond_dir_b != Bond::BondDir::NONE) {
           // are we consistent between the two bond orders check for the case of
@@ -895,7 +895,7 @@ struct ZipBond {
     auto &m = chiral_atom->getOwningMol();
     for (auto nbrIdx :
          boost::make_iterator_range(m.getAtomNeighbors(chiral_atom))) {
-      auto bond = m.getBondBetweenAtoms(chiral_atom->getIdx(), nbrIdx);
+      auto *bond = m.getBondBetweenAtoms(chiral_atom->getIdx(), nbrIdx);
       if (bond->getStereo()) {
         std::string mark = "__molzip_bond_stereo_mark";
         std::vector<Atom *> atoms;
@@ -968,7 +968,7 @@ std::unique_ptr<ROMol> molzip(
     for (auto *atom : newmol->atoms()) {
       if (atom->getAtomicNum() == 0) {
         auto molno = atom->getIsotope();
-        auto attached_atom = get_other_atom(atom);
+        auto *attached_atom = get_other_atom(atom);
         auto &bond = mappings[molno];
         bond.a = attached_atom;
         bond.a_dummy = atom;
@@ -1003,7 +1003,7 @@ std::unique_ptr<ROMol> molzip(
     for (auto *atom : newmol->atoms()) {
       auto molno = get_label(atom, params);
       if (molno != NOLABEL) {
-        auto attached_atom = get_other_atom(atom);
+        auto *attached_atom = get_other_atom(atom);
         auto attached_molno =
             attached_atom ? get_label(attached_atom, params) : NOLABEL;
         if (attached_molno != NOLABEL) {
@@ -1016,7 +1016,7 @@ std::unique_ptr<ROMol> molzip(
             std::swap(atom, attached_atom);
           }
 
-          auto link_bond = atom->getOwningMol().getBondBetweenAtoms(
+          auto *link_bond = atom->getOwningMol().getBondBetweenAtoms(
               atom->getIdx(), attached_atom->getIdx());
           CHECK_INVARIANT(
               link_bond,
@@ -1186,7 +1186,7 @@ std::unique_ptr<ROMol> molzip(std::vector<ROMOL_SPTR> &decomposition,
   if (params.generateCoordinates) {
     int index = 0;
     for (const auto &mol : decomposition) {
-      for (const auto atom : mol->atoms()) {
+      for (auto *const atom : mol->atoms()) {
         atom->setProp(indexPropName, index++);
       }
     }
@@ -1230,9 +1230,9 @@ std::unique_ptr<ROMol> molzip(std::vector<ROMOL_SPTR> &decomposition,
     const auto zippedConf = zippedMol->getConformer(confId);
     auto attachmentMapping = *attachmentMappingOption;
     for (auto &mol : decomposition) {
-      const auto newConf = new Conformer(mol->getNumAtoms());
+      auto *const newConf = new Conformer(mol->getNumAtoms());
       newConf->set3D(false);
-      for (const auto atom : mol->atoms()) {
+      for (auto *const atom : mol->atoms()) {
         int zippedIndex = atom->getProp<int>(indexPropName);
         atom->clearProp(indexPropName);
         if (const auto attachment = attachmentMapping.find(zippedIndex);
@@ -1252,7 +1252,7 @@ std::unique_ptr<ROMol> molzip(std::vector<ROMOL_SPTR> &decomposition,
       }
       mol->addConformer(newConf, true);
     }
-    for (const auto atom : zippedMol->atoms()) {
+    for (auto *const atom : zippedMol->atoms()) {
       atom->clearProp(indexPropName);
     }
 

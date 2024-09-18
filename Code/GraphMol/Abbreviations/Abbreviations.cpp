@@ -36,7 +36,7 @@ void applyMatches(RWMol &mol, const std::vector<AbbreviationMatch> &matches) {
     // convert atom 1 to be the abbreviation so that we don't have to
     // worry about messing up chirality, etc.
     auto connectIdx = amatch.match.at(1).second;
-    auto connectingAtom = mol.getAtomWithIdx(connectIdx);
+    auto *connectingAtom = mol.getAtomWithIdx(connectIdx);
     connectingAtom->setProp(RDKit::common_properties::atomLabel,
                             amatch.abbrev.label);
     if (!amatch.abbrev.displayLabel.empty()) {
@@ -60,7 +60,7 @@ void applyMatches(RWMol &mol, const std::vector<AbbreviationMatch> &matches) {
       const auto &pr = amatch.match.at(i);
       CHECK_INVARIANT(!atomsToRemove[pr.second], "overlapping matches");
       atomsToRemove.set(pr.second);
-      for (const auto bond : mol.atomBonds(mol.getAtomWithIdx(pr.second))) {
+      for (auto *const bond : mol.atomBonds(mol.getAtomWithIdx(pr.second))) {
         bondsToRemove.set(bond->getIdx());
       }
       // if there's a molecule associated with the match, check to see if
@@ -68,7 +68,7 @@ void applyMatches(RWMol &mol, const std::vector<AbbreviationMatch> &matches) {
       if (amatch.abbrev.mol &&
           mol.getAtomWithIdx(pr.second)->getDegree() >
               amatch.abbrev.mol->getAtomWithIdx(pr.first)->getDegree()) {
-        for (const auto bond : mol.atomBonds(mol.getAtomWithIdx(pr.second))) {
+        for (auto *const bond : mol.atomBonds(mol.getAtomWithIdx(pr.second))) {
           // if this neighbor isn't in the match:
           auto nbrIdx = bond->getOtherAtomIdx(pr.second);
           if (!std::any_of(amatch.match.begin(), amatch.match.end(),
@@ -86,7 +86,7 @@ void applyMatches(RWMol &mol, const std::vector<AbbreviationMatch> &matches) {
     // make connections between any extraAttachAtoms and the connection point
     for (auto oaidx : amatch.abbrev.extraAttachAtoms) {
       int bondIdx = -1;
-      for (const auto bond : mol.atomBonds(mol.getAtomWithIdx(oaidx))) {
+      for (auto *const bond : mol.atomBonds(mol.getAtomWithIdx(oaidx))) {
         if (bondsToRemove.test(bond->getIdx())) {
           CHECK_INVARIANT(bondIdx == -1, "bondIdx must be unique");
           bondIdx = bond->getIdx();
@@ -135,7 +135,7 @@ void labelMatches(RWMol &mol, const std::vector<AbbreviationMatch> &matches) {
       const auto &pr = amatch.match[i];
       sg.addAtomWithIdx(pr.second);
     }
-    auto bnd =
+    auto *bnd =
         mol.getBondBetweenAtoms(amatch.match[0].second, amatch.match[1].second);
     CHECK_INVARIANT(bnd, "bond to attachment point not found");
     sg.addBondWithIdx(bnd->getIdx());
@@ -225,7 +225,7 @@ void condenseMolAbbreviations(
       findApplicableAbbreviationMatches(mol, abbrevs, maxCoverage);
   applyMatches(mol, applicable);
   if (sanitize) {
-    auto ringInfo = mol.getRingInfo();
+    auto *ringInfo = mol.getRingInfo();
     if (!ringInfo->isSymmSssr()) {
       MolOps::symmetrizeSSSR(mol);
     }
@@ -257,7 +257,7 @@ RDKIT_ABBREVIATIONS_EXPORT void condenseAbbreviationSubstanceGroups(
       } else {
         bool firstAttachFound = false;
         for (unsigned int i = 0; i < bnds.size(); ++i) {
-          auto bnd = mol.getBondWithIdx(bnds[i]);
+          auto *bnd = mol.getBondWithIdx(bnds[i]);
           unsigned int mAt;  // sgroup atom in the match
           unsigned int oAt;  // add the first attachment point to the beginning
                              // of the atom list

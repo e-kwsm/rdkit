@@ -98,7 +98,7 @@ SynthonSpaceRascalSearcher::searchFragSet(
 
   const auto connPatterns = details::getConnectorPatterns(fragSet);
   boost::dynamic_bitset<> conns(MAX_CONNECTOR_NUM + 1);
-  for (auto &connPattern : connPatterns) {
+  for (const auto &connPattern : connPatterns) {
     conns |= connPattern;
   }
 
@@ -116,7 +116,7 @@ SynthonSpaceRascalSearcher::searchFragSet(
   auto synthonOrders =
       details::permMFromN(fragSet.size(), reaction.getSynthons().size());
   for (const auto &synthonOrder : synthonOrders) {
-    for (auto &connCombPatt : connCombConnPatterns) {
+    for (const auto &connCombPatt : connCombConnPatterns) {
       // Make sure that for this connector combination, the synthons in this
       // order have something similar.  All query fragment connectors must
       // match something in the corresponding synthon.  The synthon can
