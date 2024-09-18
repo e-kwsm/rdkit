@@ -1680,7 +1680,7 @@ M  END)CTAB";
 TEST_CASE("Github #2695: Error when a squiggle bond is in an aromatic ring",
           "[bug][reader]") {
   SECTION("reported") {
-    auto ctab = R"CTAB(
+    const auto *ctab = R"CTAB(
   -ISIS-  -- StrEd --
 
  19 22  0  0  0  0  0  0  0  0999 V2000
@@ -2507,14 +2507,14 @@ M  V30 END CTAB
 M  END
 )CTAB"_ctab;
     REQUIRE(mol);
-    for (const auto atom : mol->atoms()) {
+    for (auto *const atom : mol->atoms()) {
       REQUIRE(atom->hasQuery());
       CHECK(!atom->getQuery()->getTypeLabel().empty());
     }
     std::string pkl;
     MolPickler::pickleMol(*mol, pkl);
     ROMol cp(pkl);
-    for (const auto atom : cp.atoms()) {
+    for (auto *const atom : cp.atoms()) {
       REQUIRE(atom->hasQuery());
       CHECK(!atom->getQuery()->getTypeLabel().empty());
       CHECK(atom->getQuery()->getTypeLabel() ==
@@ -2546,14 +2546,14 @@ M  END
 M  END
 )CTAB"_ctab;
     REQUIRE(mol);
-    for (const auto atom : mol->atoms()) {
+    for (auto *const atom : mol->atoms()) {
       REQUIRE(atom->hasQuery());
       CHECK(!atom->getQuery()->getTypeLabel().empty());
     }
     std::string pkl;
     MolPickler::pickleMol(*mol, pkl);
     ROMol cp(pkl);
-    for (const auto atom : cp.atoms()) {
+    for (auto *const atom : cp.atoms()) {
       REQUIRE(atom->hasQuery());
       CHECK(!atom->getQuery()->getTypeLabel().empty());
       CHECK(atom->getQuery()->getTypeLabel() ==
@@ -3467,7 +3467,7 @@ M  END
     {
       auto outctab = MolToMolBlock(*m);
       CHECK(outctab.find("1234.6") != std::string::npos);
-      auto nm = MolBlockToMol(outctab);
+      auto *nm = MolBlockToMol(outctab);
       REQUIRE(nm);
       auto sgs = getSubstanceGroups(*nm);
       REQUIRE(sgs.size() == 1);
@@ -3476,7 +3476,7 @@ M  END
     {
       auto outctab = MolToV3KMolBlock(*m);
       CHECK(outctab.find("1234.6") != std::string::npos);
-      auto nm = MolBlockToMol(outctab);
+      auto *nm = MolBlockToMol(outctab);
       REQUIRE(nm);
       auto sgs = getSubstanceGroups(*nm);
       REQUIRE(sgs.size() == 1);
@@ -3760,7 +3760,7 @@ M  END
         {5, 6}, {3, 7}, {1, 8}};
 
     for (const auto &bond_atoms : coordinate_bonds) {
-      auto bnd = m->getBondBetweenAtoms(bond_atoms.first, bond_atoms.second);
+      auto *bnd = m->getBondBetweenAtoms(bond_atoms.first, bond_atoms.second);
       REQUIRE(bnd);
       CHECK(bnd->getBondType() == Bond::BondType::DATIVE);
       CHECK(typeid(*bnd) == typeid(Bond));
@@ -3857,7 +3857,7 @@ M  END
         {5, 6}, {3, 7}, {1, 8}};
 
     for (const auto &bond_atoms : coordinate_bonds) {
-      auto bnd = m1->getBondBetweenAtoms(bond_atoms.first, bond_atoms.second);
+      auto *bnd = m1->getBondBetweenAtoms(bond_atoms.first, bond_atoms.second);
       REQUIRE(bnd);
       CHECK(bnd->getBondType() == Bond::BondType::DATIVE);
       CHECK(typeid(*bnd) == typeid(Bond));
@@ -3866,7 +3866,7 @@ M  END
 
     REQUIRE(m2);
     for (const auto &bond_atoms : coordinate_bonds) {
-      auto bnd = m2->getBondBetweenAtoms(bond_atoms.first, bond_atoms.second);
+      auto *bnd = m2->getBondBetweenAtoms(bond_atoms.first, bond_atoms.second);
       REQUIRE(bnd);
       CHECK(bnd->getBondType() != Bond::BondType::DATIVE);
     }
@@ -3903,7 +3903,7 @@ M  END)CTAB";
       std::unique_ptr<RWMol> m{
           MolBlockToMol(ctab, sanitize, removeHs, strictParsing)};
       REQUIRE(m);
-      auto atom = m->getAtomWithIdx(1);
+      auto *atom = m->getAtomWithIdx(1);
       REQUIRE(atom->hasProp(common_properties::molAttachPoint));
       REQUIRE(atom->getProp<int>(common_properties::molAttachPoint) == -1);
     }
@@ -4502,7 +4502,7 @@ M  END
 }
 TEST_CASE("checking array bounds") {
   SECTION("XBONDS") {
-    auto mb = R"CTAB(
+    const auto *mb = R"CTAB(
   Mrv2108 01202214292D
 
   0  0  0     0  0            999 V3000
@@ -4531,7 +4531,7 @@ M  END
     REQUIRE_THROWS_AS(mol.reset(MolBlockToMol(mb)), FileParseException);
   }
   SECTION("ATOMS") {
-    auto mb = R"CTAB(
+    const auto *mb = R"CTAB(
   Mrv2108 01202214292D
 
   0  0  0     0  0            999 V3000
@@ -4856,7 +4856,7 @@ END
   // Oxygen in ACE (3rd heavy atom in mol) should be C=O, i.e. not OH
   CHECK(mol->getAtomWithIdx(2)->getTotalNumHs() == 0);
   CHECK(mol->getAtomWithIdx(2)->getTotalDegree() == 1);
-  auto bond = mol->getBondBetweenAtoms(1, 2);
+  auto *bond = mol->getBondBetweenAtoms(1, 2);
   REQUIRE(bond);
   CHECK(bond->getBondType() == Bond::BondType::DOUBLE);
 }
@@ -6028,12 +6028,12 @@ void check_roundtripped_properties(RDProps &original, RDProps &roundtrip) {
 TEST_CASE("MaeWriter atom numbering chirality", "[mae][MaeWriter][writer]") {
   SECTION("R") {
     auto mol = "C/C=C/[C@@H](CO)C(C)C"_smiles;
-    auto oss = new std::ostringstream;
+    auto *oss = new std::ostringstream;
     MaeWriter w(oss);
     w.write(*mol);
     w.flush();
-    auto iss = new std::istringstream(oss->str());
-    auto roundtrip = MaeMolSupplier(iss).next();
+    auto *iss = new std::istringstream(oss->str());
+    auto *roundtrip = MaeMolSupplier(iss).next();
     CHECK(roundtrip->getAtomWithIdx(3)->getChiralTag() ==
           Atom::CHI_TETRAHEDRAL_CW);
     delete roundtrip;
@@ -6041,12 +6041,12 @@ TEST_CASE("MaeWriter atom numbering chirality", "[mae][MaeWriter][writer]") {
 
   SECTION("S") {
     auto mol = "C/C=C/[C@H](CO)C(C)C"_smiles;
-    auto oss = new std::ostringstream;
+    auto *oss = new std::ostringstream;
     MaeWriter w(oss);
     w.write(*mol);
     w.flush();
-    auto iss = new std::istringstream(oss->str());
-    auto roundtrip = MaeMolSupplier(iss).next();
+    auto *iss = new std::istringstream(oss->str());
+    auto *roundtrip = MaeMolSupplier(iss).next();
     CHECK(roundtrip->getAtomWithIdx(3)->getChiralTag() ==
           Atom::CHI_TETRAHEDRAL_CCW);
     delete roundtrip;
@@ -6083,7 +6083,7 @@ $$$$
 
   // Currently, MaeMolSupplier does not recognize "either" double bonds, this
   // just tests that the bond will be recognizable by schrodinger software
-  auto oss = new std::ostringstream;
+  auto *oss = new std::ostringstream;
   MaeWriter w(oss);
   w.write(*m);
   w.flush();
@@ -6114,7 +6114,7 @@ TEST_CASE("MaeWriter basic testing", "[mae][MaeWriter][writer]") {
     mol->setProp(common_properties::_Name, "test mol 1");
 
     // The writer always takes ownership of the stream!
-    auto oss = new std::ostringstream;
+    auto *oss = new std::ostringstream;
     MaeWriter w(oss);
     w.write(*mol);
     w.flush();
@@ -6174,7 +6174,7 @@ TEST_CASE("MaeWriter basic testing", "[mae][MaeWriter][writer]") {
     // in the bonds block, 'from' index must be lower than 'to' index
 
     // As usual, the writer takes ownership of the stream
-    auto oss = new std::stringstream;
+    auto *oss = new std::stringstream;
     MaeWriter w(oss);
     w.write(*mol);
     w.flush();
@@ -6243,7 +6243,7 @@ TEST_CASE("MaeWriter basic testing", "[mae][MaeWriter][writer]") {
     mol->setProp(common_properties::_Name, "test mol 2");
 
     // The writer always takes ownership of the stream!
-    auto oss = new std::ostringstream;
+    auto *oss = new std::ostringstream;
     MaeWriter w(oss);
 
     w.setProps(keptProps);
@@ -6324,12 +6324,12 @@ TEST_CASE("MaeWriter basic testing", "[mae][MaeWriter][writer]") {
     mol->setProp(common_properties::_Name, "test mol 3");
 
     // The writer always takes ownership of the stream!
-    auto oss = new std::ostringstream;
+    auto *oss = new std::ostringstream;
     MaeWriter w(oss);
     w.write(*mol);
     w.flush();
 
-    auto iss = new std::istringstream(oss->str());
+    auto *iss = new std::istringstream(oss->str());
     MaeMolSupplier r(iss);
 
     std::unique_ptr<ROMol> roundtrip_mol(r.next());
@@ -6368,14 +6368,14 @@ TEST_CASE("MaeWriter basic testing", "[mae][MaeWriter][writer]") {
   }
 })MAE";
 
-    auto iss = new std::istringstream(maeBlock.data());
+    auto *iss = new std::istringstream(maeBlock.data());
     MaeMolSupplier r(iss);
 
     std::unique_ptr<ROMol> mol(r.next());
     REQUIRE(mol);
 
     // The writer always takes ownership of the stream!
-    auto oss = new std::stringstream;
+    auto *oss = new std::stringstream;
     MaeWriter w(oss);
     w.write(*mol);
     w.flush();
@@ -6426,7 +6426,7 @@ TEST_CASE("MaeWriter basic testing", "[mae][MaeWriter][writer]") {
     mol->setProp(common_properties::_Name, "test mol 4");
 
     // The writer always takes ownership of the stream!
-    auto oss = new std::ostringstream;
+    auto *oss = new std::ostringstream;
     std::string mae;
     {
       MaeWriter w(oss);
@@ -6457,7 +6457,7 @@ TEST_CASE("MaeWriter edge case testing", "[mae][MaeWriter][writer][bug]") {
     auto m = "C"_smiles;
     REQUIRE(m);
 
-    auto oss = new std::ostringstream;
+    auto *oss = new std::ostringstream;
     MaeWriter w(oss);
     w.write(*m);
     w.flush();
@@ -6679,7 +6679,7 @@ TEST_CASE(
     REQUIRE(m->getNumAtoms() == 3);
     REQUIRE(m->getAtomWithIdx(0)->getAtomicNum() == 0);
 
-    auto oss = new std::ostringstream;
+    auto *oss = new std::ostringstream;
     MaeWriter w(oss);
     w.write(*m);
     w.flush();
@@ -6715,7 +6715,7 @@ TEST_CASE("MaeWriter should not prefix Maestro-formatted properties") {
 
   std::string mae_block;
   {
-    auto oss = new std::ostringstream;
+    auto *oss = new std::ostringstream;
     MaeWriter w(oss);
     w.write(*mol);
     w.flush();
@@ -6828,7 +6828,7 @@ M  END
     REQUIRE(mol);
     CHECK(mol->getNumAtoms() == 7);
 
-    auto dblBond = mol->getBondWithIdx(3);
+    auto *dblBond = mol->getBondWithIdx(3);
     REQUIRE(dblBond->getBondType() == Bond::DOUBLE);
     if (useLegacy) {
       CHECK(dblBond->getStereo() == Bond::STEREOE);
@@ -6867,7 +6867,7 @@ USER_CHARGES
     REQUIRE(mol);
     CHECK(mol->getNumAtoms() == 7);
 
-    auto dblBond = mol->getBondWithIdx(5);
+    auto *dblBond = mol->getBondWithIdx(5);
     REQUIRE(dblBond->getBondType() == Bond::DOUBLE);
     if (useLegacy) {
       CHECK(dblBond->getStereo() == Bond::STEREOE);
@@ -7078,7 +7078,7 @@ TEST_CASE(
   auto m = "NC(O)=N"_smiles;
   REQUIRE(m);
   REQUIRE(m->getNumAtoms() == 4);
-  auto bond = m->getBondWithIdx(2);
+  auto *bond = m->getBondWithIdx(2);
   REQUIRE(bond->getBondType() == Bond::DOUBLE);
   REQUIRE(bond->getStereo() == Bond::BondStereo::STEREONONE);
   REQUIRE(bond->getBondDir() == Bond::BondDir::NONE);
@@ -7106,7 +7106,7 @@ TEST_CASE(
   REQUIRE(m2);
   REQUIRE(m2->getNumAtoms() == 4);
 
-  auto bond2 = m2->getBondWithIdx(2);
+  auto *bond2 = m2->getBondWithIdx(2);
   REQUIRE(bond2->getBondType() == Bond::DOUBLE);
   CHECK(bond2->getStereo() == Bond::BondStereo::STEREONONE);
   CHECK(bond2->getBondDir() == Bond::BondDir::NONE);
@@ -7263,7 +7263,7 @@ TEST_CASE(
 TEST_CASE(
     "GitHub Issue #7256: RDKit fails to parse \"M RAD\" lines where radical is 0",
     "[bug]") {
-  const auto mb = R"CTAB(
+  const auto *const mb = R"CTAB(
      RDKit          2D
 
   1  0  0  0  0  0  0  0  0  0999 V2000
@@ -7275,7 +7275,7 @@ M  END
   std::unique_ptr<RWMol> mol(MolBlockToMol(mb));
   REQUIRE(mol);
   REQUIRE(mol->getNumAtoms() == 1);
-  const auto at = mol->getAtomWithIdx(0);
+  auto *const at = mol->getAtomWithIdx(0);
   CHECK(at->getNumRadicalElectrons() == 0);
 }
 
