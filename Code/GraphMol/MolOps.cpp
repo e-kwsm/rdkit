@@ -16,6 +16,7 @@
 #include <GraphMol/Chirality.h>
 #include <GraphMol/RDKitQueries.h>
 
+#include <memory>
 #include <vector>
 #include <algorithm>
 
@@ -666,7 +667,7 @@ std::vector<std::unique_ptr<ROMol>> getTheFrags(
     VECT_INT_VECT *fragsMolAtomMapping, bool copyConformers) {
   std::unique_ptr<INT_VECT> mappingStorage;
   if (!frags) {
-    mappingStorage.reset(new INT_VECT);
+    mappingStorage = std::make_unique<INT_VECT>();
     frags = mappingStorage.get();
   }
   int nFrags = getMolFrags(mol, *frags);
