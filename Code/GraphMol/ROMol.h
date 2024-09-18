@@ -418,7 +418,7 @@ class RDKIT_GRAPHMOL_EXPORT ROMol : public RDProps {
   //! @{
 
   //! returns our number of atoms
-  inline unsigned int getNumAtoms() const {
+  unsigned int getNumAtoms() const {
     return rdcast<unsigned int>(boost::num_vertices(d_graph));
   }
   unsigned int getNumAtoms(bool onlyExplicit) const;
@@ -565,7 +565,7 @@ class RDKIT_GRAPHMOL_EXPORT ROMol : public RDProps {
   */
   unsigned int addConformer(Conformer *conf, bool assignId = false);
 
-  inline unsigned int getNumConformers() const {
+  unsigned int getNumConformers() const {
     return rdcast<unsigned int>(d_confs.size());
   }
 
@@ -740,15 +740,13 @@ class RDKIT_GRAPHMOL_EXPORT ROMol : public RDProps {
   //! \overload
   ConstMatchingAtomIterator endMatchingAtoms() const;
 
-  inline ConformerIterator beginConformers() { return d_confs.begin(); }
+  ConformerIterator beginConformers() { return d_confs.begin(); }
 
-  inline ConformerIterator endConformers() { return d_confs.end(); }
+  ConformerIterator endConformers() { return d_confs.end(); }
 
-  inline ConstConformerIterator beginConformers() const {
-    return d_confs.begin();
-  }
+  ConstConformerIterator beginConformers() const { return d_confs.begin(); }
 
-  inline ConstConformerIterator endConformers() const { return d_confs.end(); }
+  ConstConformerIterator endConformers() const { return d_confs.end(); }
 
   //! @}
 
