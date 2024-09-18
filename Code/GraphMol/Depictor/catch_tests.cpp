@@ -285,7 +285,7 @@ TEST_CASE("templates are aware of E/Z stereochemistry") {
 TEST_CASE("dative bonds and rings") {
   auto mol = "O->[Pt]1(<-O)<-NC2CCC2N->1"_smiles;
   REQUIRE(mol);
-  auto rings = mol->getRingInfo();
+  auto *rings = mol->getRingInfo();
   CHECK(rings->numRings() == 1);  // the dative bonds are ignored
   RDDepict::compute2DCoords(*mol);
   CHECK(rings->numRings() == 1);  // ensure the ring count hasn't changed
@@ -391,7 +391,7 @@ TEST_CASE("trans bonds in large rings") {
 }
 
 TEST_CASE("generate aligned coords accept failure") {
-  auto template_ref_molblock = R"CTAB(
+  const auto *template_ref_molblock = R"CTAB(
      RDKit          2D
 
   9  9  0  0  0  0  0  0  0  0999 V2000
@@ -418,7 +418,7 @@ M  END
 )CTAB";
   std::unique_ptr<RWMol> template_ref(MolBlockToMol(template_ref_molblock));
   REQUIRE(template_ref);
-  auto mol_molblock = R"CTAB(
+  const auto *mol_molblock = R"CTAB(
      RDKit          2D
 
   9  9  0  0  0  0  0  0  0  0999 V2000
@@ -481,7 +481,7 @@ M  END
 }
 
 TEST_CASE("generate aligned coords alignOnly") {
-  auto template_ref_molblock = R"CTAB(
+  const auto *template_ref_molblock = R"CTAB(
      RDKit          2D
 
   6  6  0  0  0  0  0  0  0  0999 V2000
@@ -502,7 +502,7 @@ M  END
 )CTAB";
   std::unique_ptr<RWMol> template_ref(MolBlockToMol(template_ref_molblock));
   REQUIRE(template_ref);
-  auto mol_molblock = R"CTAB(
+  const auto *mol_molblock = R"CTAB(
      RDKit          2D
 
  18 22  0  0  0  0  0  0  0  0999 V2000
@@ -663,7 +663,7 @@ TEST_CASE("generate aligned coords and wedging") {
 M  END
 )CTAB"_ctab;
   REQUIRE(wedgedMol);
-  auto originalWedges = R"CTAB(  2  1  1  1
+  const auto *originalWedges = R"CTAB(  2  1  1  1
   2  3  1  0
   3  4  1  0
   5  4  1  6
@@ -699,7 +699,7 @@ M  END
  21 27  1  0
 M  END
 )CTAB";
-  auto invertedWedges = R"CTAB(  2  1  1  6
+  const auto *invertedWedges = R"CTAB(  2  1  1  6
   2  3  1  0
   3  4  1  0
   5  4  1  1
@@ -1198,7 +1198,7 @@ M  END
     }
   }
   SECTION("explicit hydrogen") {
-    auto smi = "[H]c1ccccc1";
+    const auto *smi = "[H]c1ccccc1";
     SmilesParserParams smilesParams;
     smilesParams.removeHs = false;
     for (auto alignOnly : {true, false}) {
@@ -2081,7 +2081,7 @@ M  END
   }
   SECTION(
       "roundtripping molblock with cis double bond should not change it into crosssed") {
-    auto molblockIn = R"CTAB(
+    const auto *molblockIn = R"CTAB(
      RDKit          2D
 
   5  4  0  0  0  0  0  0  0  0999 V2000

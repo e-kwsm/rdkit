@@ -50,7 +50,7 @@ CIPMolSpan<Atom *, ROMol::ADJ_ITER> CIPMol::getNeighbors(Atom *atom) const {
 
 bool CIPMol::isInRing(Bond *bond) const {
   PRECONDITION(bond, "bad bond")
-  const auto rings = d_mol.getRingInfo();
+  auto *const rings = d_mol.getRingInfo();
 
   if (!rings->isFindFastOrBetter()) {
     MolOps::fastFindRings(d_mol);

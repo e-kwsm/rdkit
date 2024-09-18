@@ -36,7 +36,7 @@ std::shared_ptr<MolEnumerator::MolEnumeratorOp> opFromName(
   return res;
 }
 MolEnumerator::MolEnumeratorParams *createParamsFromName(EnumeratorTypes typ) {
-  auto res = new MolEnumerator::MolEnumeratorParams();
+  auto *res = new MolEnumerator::MolEnumeratorParams();
   res->dp_operation = opFromName(typ);
   return res;
 }
