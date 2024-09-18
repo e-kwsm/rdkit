@@ -1729,7 +1729,7 @@ void testGithub2570() {
     const auto mol = R"([C@H](O)(F)Cl)"_smiles;
     const auto smarts = MolToSmarts(*mol);
     TEST_ASSERT(smarts == R"([#8]-[#6@@H](-[#9])-[#17])");
-    const auto query = SmartsToMol(smarts);
+    auto *const query = SmartsToMol(smarts);
     std::vector<MatchVectType> matches;
     TEST_ASSERT(SubstructMatch(*mol, *query, matches, uniquify,
                                recursionPossible, useChirality));
@@ -1752,7 +1752,7 @@ void testGithub2570() {
   {  // Without H
     const auto mol = R"([C@](O)(F)(Cl)C)"_smiles;
     const auto smarts = MolToSmarts(*mol);
-    const auto query = SmartsToMol(smarts);
+    auto *const query = SmartsToMol(smarts);
     TEST_ASSERT(smarts == R"([#8]-[#6@](-[#9])(-[#17])-[#6])");
     std::vector<MatchVectType> matches;
     TEST_ASSERT(SubstructMatch(*mol, *query, matches, uniquify,
@@ -1806,7 +1806,7 @@ void testEZVsCisTransMatch() {
 
   // Test with same stereoatoms as mol
   for (const auto &check : checks) {
-    auto query = SmilesToMol(check.first);
+    auto *query = SmilesToMol(check.first);
     {
       Bond *stereoBnd = query->getBondWithIdx(2);
       auto stereo = stereoBnd->getStereo();
@@ -1827,7 +1827,7 @@ void testEZVsCisTransMatch() {
   }
   // Symmetrize stereoatoms
   for (const auto &check : checks) {
-    auto query = SmilesToMol(check.first);
+    auto *query = SmilesToMol(check.first);
     {
       Bond *stereoBnd = query->getBondWithIdx(2);
       auto stereo = stereoBnd->getStereo();
@@ -1848,7 +1848,7 @@ void testEZVsCisTransMatch() {
   }
   // Flip one stereoatom and the label
   for (const auto &check : checks) {
-    auto query = SmilesToMol(check.first);
+    auto *query = SmilesToMol(check.first);
     {
       Bond *stereoBnd = query->getBondWithIdx(2);
       auto stereo = stereoBnd->getStereo();
@@ -1897,7 +1897,7 @@ void testMostSubstitutedCoreMatch() {
   };
 
   const auto &coreRef = *core;
-  for (auto &molResPair :
+  for (const auto &molResPair :
        {std::make_pair(orthoMeta.get(), 0u), std::make_pair(ortho.get(), 1u),
         std::make_pair(meta.get(), 1u), std::make_pair(biphenyl.get(), 2u),
         std::make_pair(phenyl.get(), 3u)}) {
@@ -1985,7 +1985,7 @@ void testIsAtomTerminalRGroupOrQueryHydrogen() {
 M  RGP  1   7   1
 M  END
 )CTAB"_ctab;
-    const auto rAtom = mol->getAtomWithIdx(mol->getNumAtoms() - 1);
+    auto *const rAtom = mol->getAtomWithIdx(mol->getNumAtoms() - 1);
     TEST_ASSERT(isAtomTerminalRGroupOrQueryHydrogen(rAtom));
   }
   {
@@ -2008,7 +2008,7 @@ M  END
 M  RGP  1   6   1
 M  END
 )CTAB"_ctab;
-    const auto rAtom = mol->getAtomWithIdx(mol->getNumAtoms() - 1);
+    auto *const rAtom = mol->getAtomWithIdx(mol->getNumAtoms() - 1);
     TEST_ASSERT(!isAtomTerminalRGroupOrQueryHydrogen(rAtom));
   }
   {
@@ -2033,7 +2033,7 @@ M  END
 M  ALS   7 10 F H   C   N   O   F   P   S   Cl  Br  I   
 M  END
 )CTAB"_ctab;
-    const auto rAtom = mol->getAtomWithIdx(mol->getNumAtoms() - 1);
+    auto *const rAtom = mol->getAtomWithIdx(mol->getNumAtoms() - 1);
     TEST_ASSERT(isAtomTerminalRGroupOrQueryHydrogen(rAtom));
   }
   {
@@ -2058,7 +2058,7 @@ M  END
 M  ALS   7  9 F C   N   O   F   P   S   Cl  Br  I   
 M  END
 )CTAB"_ctab;
-    const auto rAtom = mol->getAtomWithIdx(mol->getNumAtoms() - 1);
+    auto *const rAtom = mol->getAtomWithIdx(mol->getNumAtoms() - 1);
     TEST_ASSERT(!isAtomTerminalRGroupOrQueryHydrogen(rAtom));
   }
 }

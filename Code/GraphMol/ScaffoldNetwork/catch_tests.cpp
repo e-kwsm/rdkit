@@ -274,8 +274,8 @@ TEST_CASE("addMolToNetwork", "[unittest][scaffolds]") {
 TEST_CASE("Network defaults", "[scaffolds]") {
   auto smis = {"c1ccccc1CC1NC(=O)CCC1", "c1cccnc1CC1NC(=O)CCC1"};
   std::vector<ROMOL_SPTR> ms;
-  for (const auto smi : smis) {
-    auto m = SmilesToMol(smi);
+  for (const auto *const smi : smis) {
+    auto *m = SmilesToMol(smi);
     REQUIRE(m);
     ms.push_back(ROMOL_SPTR(m));
   }
@@ -342,8 +342,8 @@ TEST_CASE("Network defaults", "[scaffolds]") {
 TEST_CASE("ostream integration", "[scaffolds]") {
   auto smis = {"c1ccccc1CC1NC(=O)CCC1"};
   std::vector<ROMOL_SPTR> ms;
-  for (const auto smi : smis) {
-    auto m = SmilesToMol(smi);
+  for (const auto *const smi : smis) {
+    auto *m = SmilesToMol(smi);
     REQUIRE(m);
     ms.push_back(ROMOL_SPTR(m));
   }
@@ -768,8 +768,8 @@ TEST_CASE("GitHub #3153: Kekulization error in molecules with aromatic C+",
   SECTION("Standard Representation") {
     auto smis = {"O=C1C=CC(CC2=CC=CC2)=CC=C1"};
     std::vector<ROMOL_SPTR> ms;
-    for (const auto smi : smis) {
-      auto m = SmilesToMol(smi);
+    for (const auto *const smi : smis) {
+      auto *m = SmilesToMol(smi);
       REQUIRE(m);
       ms.push_back(ROMOL_SPTR(m));
     }
@@ -785,8 +785,8 @@ TEST_CASE("GitHub #3153: Kekulization error in molecules with aromatic C+",
   SECTION("Heteroatom inside ring") {
     auto smis = {"c1cccn1CC"};
     std::vector<ROMOL_SPTR> ms;
-    for (const auto smi : smis) {
-      auto m = SmilesToMol(smi);
+    for (const auto *const smi : smis) {
+      auto *m = SmilesToMol(smi);
       REQUIRE(m);
       ms.push_back(ROMOL_SPTR(m));
     }
@@ -803,8 +803,8 @@ TEST_CASE("GitHub #3153: Kekulization error in molecules with aromatic C+",
   SECTION("Aromatic Carbocation") {
     auto smis = {"[O-][C+]1C=CC(CC2=CC=CC2)=CC=C1"};
     std::vector<ROMOL_SPTR> ms;
-    for (const auto smi : smis) {
-      auto m = SmilesToMol(smi);
+    for (const auto *const smi : smis) {
+      auto *m = SmilesToMol(smi);
       REQUIRE(m);
       ms.push_back(ROMOL_SPTR(m));
     }
@@ -824,8 +824,8 @@ TEST_CASE("GitHub #3153: Kekulization error in molecules with aromatic C+",
 TEST_CASE("Serialization", "[serialization]") {
   auto smis = {"c1ccccc1CC1NC(=O)CCC1", "c1cccnc1CC1NC(=O)CCC1"};
   std::vector<ROMOL_SPTR> ms;
-  for (const auto smi : smis) {
-    auto m = SmilesToMol(smi);
+  for (const auto *const smi : smis) {
+    auto *m = SmilesToMol(smi);
     REQUIRE(m);
     ms.push_back(ROMOL_SPTR(m));
   }
@@ -873,8 +873,8 @@ TEST_CASE("molCounts", "[scaffolds]") {
     auto smis = {"C1CC(C1)C1C(C1C1NCCCC1)C1OCCC1",
                  "C1CC(C1)C1C(C1C1NCCCC1)C1CCCC1"};
     std::vector<ROMOL_SPTR> ms;
-    for (const auto smi : smis) {
-      auto m = SmilesToMol(smi);
+    for (const auto *const smi : smis) {
+      auto *m = SmilesToMol(smi);
       REQUIRE(m);
       ms.push_back(ROMOL_SPTR(m));
     }

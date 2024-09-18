@@ -295,8 +295,8 @@ std::string GetBondSmiles(const Bond *bond, const SmilesWriteParams &params,
                            bond->getBondType() == Bond::DOUBLE ||
                            bond->getBondType() == Bond::AROMATIC)) {
     if (bond->hasOwningMol()) {
-      auto a1 = bond->getOwningMol().getAtomWithIdx(atomToLeftIdx);
-      auto a2 = bond->getOwningMol().getAtomWithIdx(
+      auto *a1 = bond->getOwningMol().getAtomWithIdx(atomToLeftIdx);
+      auto *a2 = bond->getOwningMol().getAtomWithIdx(
           bond->getOtherAtomIdx(atomToLeftIdx));
       if ((a1->getIsAromatic() && a2->getIsAromatic()) &&
           (a1->getAtomicNum() || a2->getAtomicNum())) {
@@ -549,7 +549,7 @@ std::string MolToSmiles(const ROMol &mol, const SmilesWriteParams &params,
     for (auto aidx : atsInFrag) {
       atsPresent.set(aidx);
     }
-    for (const auto bnd : mol.bonds()) {
+    for (auto *const bnd : mol.bonds()) {
       if (atsPresent[bnd->getBeginAtomIdx()] &&
           atsPresent[bnd->getEndAtomIdx()]) {
         bondsInFrag.push_back(bnd->getIdx());
@@ -575,7 +575,7 @@ std::string MolToSmiles(const ROMol &mol, const SmilesWriteParams &params,
 
     // update property cache
     std::vector<int> atomMapNums(tmol->getNumAtoms(), 0);
-    for (auto atom : tmol->atoms()) {
+    for (auto *atom : tmol->atoms()) {
       if (params.ignoreAtomMapNumbers) {
         atomMapNums[atom->getIdx()] = atom->getAtomMapNum();
         atom->setAtomMapNum(0);
@@ -598,7 +598,7 @@ std::string MolToSmiles(const ROMol &mol, const SmilesWriteParams &params,
       tmol->setStereoGroups(noStereoGroups);
       // remove any wiggle bonds, unspecified double bond stereochemistry, or
       // dative bonds (if we aren't doing dative bonds in the standard SMILES)
-      for (auto bond : tmol->bonds()) {
+      for (auto *bond : tmol->bonds()) {
         if (bond->getBondDir() == Bond::BondDir::UNKNOWN ||
             bond->getBondDir() == Bond::BondDir::EITHERDOUBLE) {
           bond->setBondDir(Bond::BondDir::NONE);
@@ -614,7 +614,7 @@ std::string MolToSmiles(const ROMol &mol, const SmilesWriteParams &params,
     if (doingCXSmiles || !params.includeDativeBonds) {
       // do not output dative bonds in the SMILES if we are doing CXSmiles (we
       // output coordinate bonds there) or if the flag is set to ignore them
-      for (auto bond : tmol->bonds()) {
+      for (auto *bond : tmol->bonds()) {
         if (bond->getBondType() == Bond::DATIVE) {
           // we are intentionally only handling DATIVE here. The other weird
           // RDKit dative alternatives really shouldn't ever show up.
@@ -647,7 +647,7 @@ std::string MolToSmiles(const ROMol &mol, const SmilesWriteParams &params,
 
     if (params.canonical) {
       if (tmol->hasProp("_canonicalRankingNumbers")) {
-        for (const auto atom : tmol->atoms()) {
+        for (auto *const atom : tmol->atoms()) {
           unsigned int rankNum = 0;
           atom->getPropIfPresent("_canonicalRankingNumber", rankNum);
           ranks[atom->getIdx()] = rankNum;
@@ -658,7 +658,7 @@ std::string MolToSmiles(const ROMol &mol, const SmilesWriteParams &params,
                             params.doIsomericSmiles);
       }
       if (params.ignoreAtomMapNumbers) {
-        for (auto atom : tmol->atoms()) {
+        for (auto *atom : tmol->atoms()) {
           atom->setAtomMapNum(atomMapNums[atom->getIdx()]);
         }
       }
@@ -781,7 +781,7 @@ std::string MolToCXSmiles(const ROMol &romol, const SmilesWriteParams &params,
   if (restoreBondDirs == RestoreBondDirOptionTrue) {
     RDKit::Chirality::reapplyMolBlockWedging(trwmol);
   } else if (restoreBondDirs == RestoreBondDirOptionClear) {
-    for (auto bond : trwmol.bonds()) {
+    for (auto *bond : trwmol.bonds()) {
       if (!canHaveDirection(*bond)) {
         continue;
       }
@@ -907,7 +907,7 @@ std::string MolFragmentToSmiles(const ROMol &mol,
     }
   }
   if (tmol.needsUpdatePropertyCache()) {
-    for (auto atom : tmol.atoms()) {
+    for (auto *atom : tmol.atoms()) {
       atom->updatePropertyCache(false);
     }
   }

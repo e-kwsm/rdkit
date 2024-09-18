@@ -508,7 +508,7 @@ std::string getAtomLabel(const Atom *atom) {
 std::pair<AtomicParamVect, bool> getAtomTypes(const ROMol &mol,
                                               const std::string &) {
   bool foundAll = true;
-  auto params = ParamCollection::getParams();
+  const auto *params = ParamCollection::getParams();
 
   AtomicParamVect paramVect;
   paramVect.resize(mol.getNumAtoms());
@@ -535,7 +535,7 @@ std::pair<AtomicParamVect, bool> getAtomTypes(const ROMol &mol,
 
 bool getUFFBondStretchParams(const ROMol &mol, unsigned int idx1,
                              unsigned int idx2, UFFBond &uffBondStretchParams) {
-  auto params = ParamCollection::getParams();
+  const auto *params = ParamCollection::getParams();
   unsigned int idx[2] = {idx1, idx2};
   AtomicParamVect paramVect(2);
   unsigned int i;
@@ -560,7 +560,7 @@ bool getUFFBondStretchParams(const ROMol &mol, unsigned int idx1,
 bool getUFFAngleBendParams(const ROMol &mol, unsigned int idx1,
                            unsigned int idx2, unsigned int idx3,
                            UFFAngle &uffAngleBendParams) {
-  auto params = ParamCollection::getParams();
+  const auto *params = ParamCollection::getParams();
   unsigned int idx[3] = {idx1, idx2, idx3};
   AtomicParamVect paramVect(3);
   unsigned int i;
@@ -592,7 +592,7 @@ bool getUFFAngleBendParams(const ROMol &mol, unsigned int idx1,
 bool getUFFTorsionParams(const ROMol &mol, unsigned int idx1, unsigned int idx2,
                          unsigned int idx3, unsigned int idx4,
                          UFFTor &uffTorsionParams) {
-  auto params = ParamCollection::getParams();
+  const auto *params = ParamCollection::getParams();
   unsigned int idx[4] = {idx1, idx2, idx3, idx4};
   AtomicParamVect paramVect(2);
   unsigned int i;
@@ -714,7 +714,7 @@ bool getUFFInversionParams(const ROMol &mol, unsigned int idx1,
 bool getUFFVdWParams(const ROMol &mol, unsigned int idx1, unsigned int idx2,
                      UFFVdW &uffVdWParams) {
   bool res = true;
-  auto params = ParamCollection::getParams();
+  const auto *params = ParamCollection::getParams();
   unsigned int idx[2] = {idx1, idx2};
   AtomicParamVect paramVect(2);
   unsigned int i;
