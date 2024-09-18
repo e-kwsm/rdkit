@@ -8,8 +8,8 @@
 //  of the RDKit source tree.
 //
 
-#include <string>
 #include <cstdlib>
+#include <string>
 
 #include <RDGeneral/BoostStartInclude.h>
 #include <boost/algorithm/string.hpp>
@@ -50,9 +50,8 @@ string getUserName() {
 
   if (!getlogin_r(buffer, bufsize)) {
     return string(buffer);
-  } else {
-    return string("");
   }
+  return string("");
 #endif
 }
 
