@@ -160,7 +160,7 @@ PyObject *RunReactant(ChemicalReaction *self, python::object reactant,
 
 bool RunReactantInPlace(ChemicalReaction *self, ROMol *reactant,
                         bool removeUnmatchedAtoms) {
-  auto react = static_cast<RWMol *>(reactant);
+  auto *react = static_cast<RWMol *>(reactant);
   bool res = false;
   {
     NOGIL gil;

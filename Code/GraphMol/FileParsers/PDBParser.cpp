@@ -689,7 +689,7 @@ std::unique_ptr<RWMol> MolFromPDBDataStream(std::istream &inStream,
     std::getline(inStream, line);
     buffer += line;
     buffer += '\n';
-    auto ptr = line.c_str();
+    const auto *ptr = line.c_str();
     // Check for END
     if (ptr[0] == 'E' && ptr[1] == 'N' && ptr[2] == 'D' &&
         (ptr[3] == ' ' || ptr[3] == '\r' || ptr[3] == '\n' || !ptr[3])) {

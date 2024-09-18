@@ -47,7 +47,7 @@ void testTorsionAngleContribs() {
   std::vector<double> v(6, 0.0);
   v[2] = 4.0;
 
-  auto contrib = new ForceFields::CrystalFF::TorsionAngleContribs(&ff);
+  auto *contrib = new ForceFields::CrystalFF::TorsionAngleContribs(&ff);
   contrib->addContrib(0, 1, 2, 3, v, signs);
   ff.contribs().emplace_back(contrib);
 

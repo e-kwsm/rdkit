@@ -137,7 +137,7 @@ boost::shared_array<std::uint8_t> buildNeighborMatrix(const ROMol &mol) {
 
   constexpr bool useBO = false;
   constexpr bool useAtomWts = false;
-  auto dmat = MolOps::getDistanceMat(mol, useBO, useAtomWts);
+  auto *dmat = MolOps::getDistanceMat(mol, useBO, useAtomWts);
   for (unsigned i = 0; i < nAtoms; ++i) {
     setTwoBitCell(res, twoBitCellPos(nAtoms, i, i), RELATION_1_X);
     for (unsigned j = i + 1; j < nAtoms; ++j) {
