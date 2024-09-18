@@ -55,7 +55,7 @@ void updateMolProps(RWMol &mol) { MolOps::sanitizeMol(mol); }
 ROMol *makeScaffoldGeneric(const ROMol &mol, bool doAtoms, bool doBonds) {
   RWMol *res = new RWMol(mol);
   if (doAtoms) {
-    for (auto atom : res->atoms()) {
+    for (auto *atom : res->atoms()) {
       atom->setAtomicNum(0);
       atom->setNumExplicitHs(0);
       atom->setNoImplicit(false);
@@ -63,7 +63,7 @@ ROMol *makeScaffoldGeneric(const ROMol &mol, bool doAtoms, bool doBonds) {
     }
   }
   if (doBonds) {
-    for (auto bond : res->bonds()) {
+    for (auto *bond : res->bonds()) {
       bond->setBondType(Bond::SINGLE);
       bond->getBeginAtom()->setIsAromatic(false);
       bond->getEndAtom()->setIsAromatic(false);
@@ -74,12 +74,12 @@ ROMol *makeScaffoldGeneric(const ROMol &mol, bool doAtoms, bool doBonds) {
 ROMol *removeAttachmentPoints(const ROMol &mol, const ScaffoldNetworkParams &) {
   RWMol *res = new RWMol(mol);
   res->beginBatchEdit();
-  for (const auto atom : res->atoms()) {
+  for (auto *const atom : res->atoms()) {
     if (!atom->getAtomicNum() && atom->getDegree() == 1) {
       // if we're removing a neighbor from an aromatic heteroatom,
       // don't forget to set the H count on that atom:
       auto nbri = res->getAtomNeighbors(atom);
-      auto nbr = (*res)[*nbri.first];
+      auto *nbr = (*res)[*nbri.first];
       if (nbr->getIsAromatic() && nbr->getAtomicNum() > 0 &&
           nbr->getAtomicNum() != 6) {
         nbr->setNoImplicit(true);
@@ -106,7 +106,7 @@ ROMol *flattenMol(const ROMol &mol, const ScaffoldNetworkParams &params) {
   } else {
     res = new RWMol(mol);
   }
-  for (auto atom : res->atoms()) {
+  for (auto *atom : res->atoms()) {
     if (params.flattenIsotopes) {
       atom->setIsotope(0);
     }
@@ -123,7 +123,7 @@ ROMol *flattenMol(const ROMol &mol, const ScaffoldNetworkParams &params) {
     }
   }
   if (params.flattenChirality) {
-    for (auto bond : res->bonds()) {
+    for (auto *bond : res->bonds()) {
       bond->setBondDir(Bond::NONE);
       bond->setStereo(Bond::STEREONONE);
     }

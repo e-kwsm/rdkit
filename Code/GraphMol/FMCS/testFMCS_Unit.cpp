@@ -1344,7 +1344,7 @@ void testGithub2034() {
   const char *smi[] = {"C1CC1N2CC2", "C1CC1N"};
 
   for (auto &i : smi) {
-    auto m = SmilesToMol(getSmilesOnly(i));
+    auto *m = SmilesToMol(getSmilesOnly(i));
     TEST_ASSERT(m);
 
     mols.emplace_back(m);
@@ -1402,7 +1402,7 @@ void testGithub945() {
     const char *smi[] = {"c1cc2ccccc2s1", "c1cc2ccccc2o1"};
 
     for (auto &i : smi) {
-      auto m = SmilesToMol(getSmilesOnly(i));
+      auto *m = SmilesToMol(getSmilesOnly(i));
       TEST_ASSERT(m);
 
       mols.emplace_back(m);
@@ -1450,7 +1450,7 @@ void testGithub945() {
     const char *smi[] = {"c1cc2ccc(C)cc2s1", "c1cc2c(cccc2s1)C"};
 
     for (auto &i : smi) {
-      auto m = SmilesToMol(getSmilesOnly(i));
+      auto *m = SmilesToMol(getSmilesOnly(i));
       TEST_ASSERT(m);
 
       mols.emplace_back(m);
@@ -1521,7 +1521,7 @@ void testGithub2420() {
   const char *smi[] = {"C1CC2C(CC1)CCCC2", "C1CCCCCCCCC1"};
 
   for (auto &i : smi) {
-    auto m = SmilesToMol(getSmilesOnly(i));
+    auto *m = SmilesToMol(getSmilesOnly(i));
     TEST_ASSERT(m);
 
     mols.emplace_back(m);
@@ -1578,7 +1578,7 @@ void testGithub2663() {
     const char *smi[] = {"C1C(C)CC2CC12", "CC1CCCC2CCCC12"};
 
     for (auto &i : smi) {
-      auto m = SmilesToMol(getSmilesOnly(i));
+      auto *m = SmilesToMol(getSmilesOnly(i));
       TEST_ASSERT(m);
 
       mols.emplace_back(m);
@@ -1608,7 +1608,7 @@ void testGithub2662() {
     const char *smi[] = {"CC1CCCC1", "CC1CCCCC1"};
 
     for (auto &i : smi) {
-      auto m = SmilesToMol(getSmilesOnly(i));
+      auto *m = SmilesToMol(getSmilesOnly(i));
       TEST_ASSERT(m);
 
       mols.emplace_back(m);
@@ -1635,7 +1635,7 @@ void testNaphthalenes() {
   const char *smi[] = {"Cc1cccc2ccccc12", "Cc1ccc2ccccc2c1"};
 
   for (auto &i : smi) {
-    auto m = SmilesToMol(getSmilesOnly(i));
+    auto *m = SmilesToMol(getSmilesOnly(i));
     TEST_ASSERT(m);
 
     mols.emplace_back(m);
@@ -1679,7 +1679,7 @@ void testNaphthalenes() {
   // unless we specify MatchFusedRingsStrict
   char cyclodecapentaene[] = "Cc1ccccccccc1";
   {
-    auto m = SmilesToMol(cyclodecapentaene);
+    auto *m = SmilesToMol(cyclodecapentaene);
     TEST_ASSERT(m);
     mols.emplace_back(m);
   }
@@ -1734,7 +1734,7 @@ void testBicycles() {
   const char *smi[] = {"CC1CCCC2CCCC12", "CC1CCC2CC12", "C1C(C)CC2CC12"};
 
   for (auto &i : smi) {
-    auto m = SmilesToMol(getSmilesOnly(i));
+    auto *m = SmilesToMol(getSmilesOnly(i));
     TEST_ASSERT(m);
 
     mols.emplace_back(m);
@@ -1791,7 +1791,7 @@ void testBicyclesTricycles() {
                        "CC1CCCC(C3)2CCCC123", "C1C(C)CCC(C3)2CCCC123"};
 
   for (auto &i : smi) {
-    auto m = SmilesToMol(getSmilesOnly(i));
+    auto *m = SmilesToMol(getSmilesOnly(i));
     TEST_ASSERT(m);
 
     mols.emplace_back(m);
@@ -1846,7 +1846,7 @@ void test_p38() {
                        "O(c1cc2c(n(C)c1=O)nc(NC1CCOCC1)nc2)c1ccccc1"};
 
   for (auto &i : smi) {
-    auto m = SmilesToMol(getSmilesOnly(i));
+    auto *m = SmilesToMol(getSmilesOnly(i));
     TEST_ASSERT(m);
 
     mols.emplace_back(m);
@@ -1897,7 +1897,7 @@ void testGithub2714() {
     const char *smi[] = {"CC1CCC1", "CCC1CC1"};
 
     for (auto &i : smi) {
-      auto m = SmilesToMol(getSmilesOnly(i));
+      auto *m = SmilesToMol(getSmilesOnly(i));
       TEST_ASSERT(m);
 
       mols.emplace_back(m);
@@ -1930,7 +1930,7 @@ void testGitHub2731_comment546175466() {
                          "C1=CC=C2N=C3C=NC=CC3=CC2=C1"};
 
     for (auto &i : smi) {
-      auto m = SmilesToMol(getSmilesOnly(i));
+      auto *m = SmilesToMol(getSmilesOnly(i));
       TEST_ASSERT(m);
 
       mols.emplace_back(m);
@@ -1968,7 +1968,7 @@ void testGitHub2731_comment546175466() {
     const char *smi[] = {"C12CCC1C1CCCCC12", "C12CC1CC1CCC3CC123"};
 
     for (auto &i : smi) {
-      auto m = SmilesToMol(getSmilesOnly(i));
+      auto *m = SmilesToMol(getSmilesOnly(i));
       TEST_ASSERT(m);
 
       mols.emplace_back(m);
@@ -2024,7 +2024,7 @@ void testQueryMolVsSmarts() {
   const char *smi[] = {"C1CCC2CCCCC12", "C12CC1C1C3CCCC3CCC12"};
 
   for (auto &i : smi) {
-    auto m = SmilesToMol(getSmilesOnly(i));
+    auto *m = SmilesToMol(getSmilesOnly(i));
     TEST_ASSERT(m);
 
     mols.emplace_back(m);
@@ -2062,7 +2062,7 @@ void testCompareNonExistent() {
   const char *smi[] = {"C", "CC"};
 
   for (auto &i : smi) {
-    auto m = SmilesToMol(getSmilesOnly(i));
+    auto *m = SmilesToMol(getSmilesOnly(i));
     TEST_ASSERT(m);
 
     mols.emplace_back(m);
@@ -2122,7 +2122,7 @@ void testGitHub3095() {
     const char *smi[] = {"C", "OC"};
 
     for (auto &i : smi) {
-      auto m = SmilesToMol(getSmilesOnly(i));
+      auto *m = SmilesToMol(getSmilesOnly(i));
       TEST_ASSERT(m);
 
       mols.emplace_back(m);
@@ -2138,7 +2138,7 @@ void testGitHub3095() {
     const char *smi[] = {"C1CC1", "OC"};
 
     for (auto &i : smi) {
-      auto m = SmilesToMol(getSmilesOnly(i));
+      auto *m = SmilesToMol(getSmilesOnly(i));
       TEST_ASSERT(m);
 
       mols.emplace_back(m);
@@ -2165,7 +2165,7 @@ void testGitHub3095() {
     const char *smi[] = {"C1CC1", "C1CCC1"};
 
     for (auto &i : smi) {
-      auto m = SmilesToMol(getSmilesOnly(i));
+      auto *m = SmilesToMol(getSmilesOnly(i));
       TEST_ASSERT(m);
 
       mols.emplace_back(m);
@@ -2184,7 +2184,7 @@ void testGitHub3095() {
     const char *smi[] = {"CC1CC1", "CN1CCC1"};
 
     for (auto &i : smi) {
-      auto m = SmilesToMol(getSmilesOnly(i));
+      auto *m = SmilesToMol(getSmilesOnly(i));
       TEST_ASSERT(m);
 
       mols.emplace_back(m);
@@ -2225,7 +2225,7 @@ void testGitHub3458() {
         "C=CC(=O)Nc1ccc2ncnc(Nc3cc(Cl)c(Cl)cc3F)c2c1"};
 
     for (auto &i : smi) {
-      auto m = SmilesToMol(getSmilesOnly(i));
+      auto *m = SmilesToMol(getSmilesOnly(i));
       TEST_ASSERT(m);
 
       mols.emplace_back(m);
@@ -2527,8 +2527,8 @@ void testCustomShouldAcceptMCS() {
     static bool atomCompare(const MCSAtomCompareParameters &p,
                             const ROMol &mol1, unsigned int atom1,
                             const ROMol &mol2, unsigned int atom2, void *) {
-      const auto a1 = mol1.getAtomWithIdx(atom1);
-      const auto a2 = mol2.getAtomWithIdx(atom2);
+      const auto *const a1 = mol1.getAtomWithIdx(atom1);
+      const auto *const a2 = mol2.getAtomWithIdx(atom2);
       bool a1IsDummy = (a1->getAtomicNum() == 0);
       bool a2IsDummy = (a2->getAtomicNum() == 0);
       if (a1IsDummy ^ a2IsDummy) {
@@ -2567,8 +2567,9 @@ void testCustomShouldAcceptMCS() {
                       targetAtomIndices.set(pair.second);
                     });
       for (const auto &bondIdxPair : bondIdxMatch) {
-        const auto queryBond = query.getBondWithIdx(bondIdxPair.first);
-        const auto targetBond = target.getBondWithIdx(bondIdxPair.second);
+        const auto *const queryBond = query.getBondWithIdx(bondIdxPair.first);
+        const auto *const targetBond =
+            target.getBondWithIdx(bondIdxPair.second);
         TEST_ASSERT(queryBond);
         TEST_ASSERT(targetBond);
         TEST_ASSERT(queryAtomIndices.test(queryBond->getBeginAtomIdx()));

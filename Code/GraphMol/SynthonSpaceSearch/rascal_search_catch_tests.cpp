@@ -47,7 +47,7 @@ std::set<std::string> bruteForceSearch(
     const RascalOptions &rascalOptions) {
   std::set<std::string> fullSmi;
   std::set<std::string> names;
-  for (auto &[name, mol] : mols) {
+  for (const auto &[name, mol] : mols) {
     auto res = rascalMCES(queryMol, *mol, rascalOptions);
     if (!res.empty() &&
         res.front().getSimilarity() > rascalOptions.similarityThreshold) {

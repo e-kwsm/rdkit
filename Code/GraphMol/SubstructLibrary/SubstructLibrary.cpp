@@ -101,17 +101,17 @@ struct Bits {
             *std::get<ExtendedQueryMol::RWMol_T>(xqm.xqmol));
       } else if (std::holds_alternative<ExtendedQueryMol::MolBundle_T>(
                      xqm.xqmol)) {
-        auto &bndl = std::get<ExtendedQueryMol::MolBundle_T>(xqm.xqmol);
-        auto tqb = new ExplicitBitVect(ph->getNumBits());
+        const auto &bndl = std::get<ExtendedQueryMol::MolBundle_T>(xqm.xqmol);
+        auto *tqb = new ExplicitBitVect(ph->getNumBits());
         queryBits = tqb;
         for (auto mol : bndl->getMols()) {
-          auto tfp = fps->makeFingerprint(*mol);
+          auto *tfp = fps->makeFingerprint(*mol);
           *tqb &= *tfp;
           delete tfp;
         }
       } else if (std::holds_alternative<ExtendedQueryMol::TautomerQuery_T>(
                      xqm.xqmol)) {
-        auto &tq = std::get<ExtendedQueryMol::TautomerQuery_T>(xqm.xqmol);
+        const auto &tq = std::get<ExtendedQueryMol::TautomerQuery_T>(xqm.xqmol);
         if (!tph) {
           BOOST_LOG(rdWarningLog) << "Pattern fingerprints for tautomersearch "
                                      "aren't tautomer fingerprints, ignoring..."
@@ -130,11 +130,12 @@ struct Bits {
           queryBits = nullptr;
           fps = nullptr;
         } else {
-          auto &bndl = std::get<ExtendedQueryMol::TautomerBundle_T>(xqm.xqmol);
-          auto tqb = new ExplicitBitVect(ph->getNumBits());
+          const auto &bndl =
+              std::get<ExtendedQueryMol::TautomerBundle_T>(xqm.xqmol);
+          auto *tqb = new ExplicitBitVect(ph->getNumBits());
           queryBits = tqb;
           for (auto &tq : *bndl) {
-            auto tfp = tq->patternFingerprintTemplate(tph->getNumBits());
+            auto *tfp = tq->patternFingerprintTemplate(tph->getNumBits());
             *tqb &= *tfp;
             delete tfp;
           }

@@ -57,7 +57,7 @@ class RDKIT_RDGENERAL_EXPORT rdLogger {
   //! Sets a filename to tee the output to.
   void SetTee(const char *filename) {
     if (dp_dest) {
-      auto s = new std::ofstream(filename);
+      auto *s = new std::ofstream(filename);
       SetTee(*s);
       dp_teeHelperStream = s;
     }

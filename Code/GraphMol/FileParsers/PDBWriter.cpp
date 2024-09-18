@@ -231,7 +231,7 @@ std::string MolToPDBBody(const ROMol &mol, const Conformer *conf,
   std::string res;
   std::string last;
   std::map<unsigned int, unsigned int> elem;
-  for (auto atom : mol.atoms()) {
+  for (auto *atom : mol.atoms()) {
     last = GetPDBAtomLine(atom, conf, elem);
     res += last;
     res += '\n';
@@ -255,7 +255,7 @@ std::string MolToPDBBody(const ROMol &mol, const Conformer *conf,
   bool both = (flavor & 4) != 0;
   bool mult = (flavor & 8) == 0;
   if (all || mult) {
-    for (const auto atom : mol.atoms()) {
+    for (auto *const atom : mol.atoms()) {
       res += GetPDBBondLines(atom, all, both, mult, conect_count);
     }
   }

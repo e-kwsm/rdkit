@@ -224,7 +224,7 @@ void getFeatureInvariants(const ROMol &mol, std::vector<uint32_t> &invars,
     }
   }
   std::fill(invars.begin(), invars.end(), 0);
-  auto &queries = (useLocalPatterns ? featureMatchers : *patterns);
+  const auto &queries = (useLocalPatterns ? featureMatchers : *patterns);
   for (unsigned int i = 0; i < queries.size(); ++i) {
     unsigned int mask = 1 << i;
     std::vector<MatchVectType> matchVect;
@@ -272,7 +272,7 @@ void buildDefaultRDKitFingerprintAtomInvariants(
     const ROMol &mol, std::vector<std::uint32_t> &lAtomInvariants) {
   lAtomInvariants.clear();
   lAtomInvariants.reserve(mol.getNumAtoms());
-  for (const auto atom : mol.atoms()) {
+  for (auto *const atom : mol.atoms()) {
     unsigned int aHash = (atom->getAtomicNum() % 128) << 1 |
                          static_cast<unsigned int>(atom->getIsAromatic());
     lAtomInvariants.push_back(aHash);

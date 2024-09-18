@@ -115,7 +115,7 @@ std::vector<std::string> MHFPEncoder::CreateShingling(
   unsigned char min_radius_internal = min_radius;
 
   if (!min_radius) {
-    for (auto atom : tmol.atoms()) {
+    for (auto *atom : tmol.atoms()) {
       bool do_kekule = false;
       const RDKit::Bond *bond_in = nullptr;
       bool all_hs_explicit = false;

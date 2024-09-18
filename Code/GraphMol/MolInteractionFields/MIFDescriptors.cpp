@@ -110,7 +110,7 @@ MMFFVdWaals::MMFFVdWaals(const RDKit::ROMol &mol, int confId,
 void MMFFVdWaals::fillVdwParamVectors(unsigned int atomIdx) {
   PRECONDITION(atomIdx < d_mol->getNumAtoms(), "atomIdx out of bounds");
   const auto iAtomType = d_props->getMMFFAtomType(atomIdx);
-  auto params = (*d_mmffVdW)(iAtomType);
+  const auto *params = (*d_mmffVdW)(iAtomType);
   auto rStarIJ = ForceFields::MMFF::Utils::calcUnscaledVdWMinimum(
       d_mmffVdW, params, d_probeParams);
   d_R_star_ij.push_back(rStarIJ);

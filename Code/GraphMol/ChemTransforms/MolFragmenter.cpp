@@ -389,7 +389,7 @@ void checkChiralityPostMove(const ROMol &mol, const Atom *oAt, Atom *nAt,
       }
     }
   } else {
-    for (auto obond : mol.atomBonds(oAt)) {
+    for (auto *obond : mol.atomBonds(oAt)) {
       if (obond != bond) {
         newOrder.push_back(obond->getIdx());
       }
@@ -415,10 +415,10 @@ std::vector<std::pair<Bond *, std::vector<int>>> getNbrBondStereo(
   PRECONDITION(bnd, "null bond");
   // loop over neighboring double bonds and remove their stereo atom
   std::vector<std::pair<Bond *, std::vector<int>>> res;
-  const auto bgn = bnd->getBeginAtom();
-  const auto end = bnd->getEndAtom();
+  auto *const bgn = bnd->getBeginAtom();
+  auto *const end = bnd->getEndAtom();
   for (const auto *atom : {bgn, end}) {
-    for (auto obnd : mol.atomBonds(atom)) {
+    for (auto *obnd : mol.atomBonds(atom)) {
       if (obnd->getIdx() != bnd->getIdx() && !obnd->getStereoAtoms().empty()) {
         obnd->setProp(molfragSaveStereo, obnd->getStereo());
         res.emplace_back(obnd, obnd->getStereoAtoms());
@@ -471,7 +471,7 @@ ROMol *fragmentOnBonds(
     unsigned int bondidx;
     auto nbr_bond_stereo = getNbrBondStereo(*res, bond);
     // Grab a copy of any query on the outgoing bond if it will be needed later.
-    auto outBond = res->getBondBetweenAtoms(bidx, eidx);
+    auto *outBond = res->getBondBetweenAtoms(bidx, eidx);
     std::unique_ptr<Bond::QUERYBOND_QUERY> outQuery;
     if (!bondTypes && outBond->hasQuery()) {
       outQuery.reset(outBond->getQuery()->copy());

@@ -37,7 +37,7 @@ std::string RGroupDecompositionChromosome::info() const {
 }
 
 double RGroupDecompositionChromosome::score() {
-  auto &rGroupData = rGroupGa.getRGroupData();
+  const auto &rGroupData = rGroupGa.getRGroupData();
   RGroupScore scoreMethod =
       static_cast<RGroupScore>(rGroupData.params.scoreMethod);
   if (operationName != RgroupMutate) {
@@ -59,12 +59,12 @@ double RGroupDecompositionChromosome::score() {
 }
 
 double RGroupDecompositionChromosome::recalculateScore() {
-  auto &rGroupData = rGroupGa.getRGroupData();
+  const auto &rGroupData = rGroupGa.getRGroupData();
   return rGroupData.score(permutation);
 }
 
 void RGroupDecompositionChromosome::decode() {
-  auto values = getString();
+  auto *values = getString();
   permutation.clear();
   const auto &matches = rGroupGa.getRGroupData().matches;
   auto pos = 0;
@@ -182,8 +182,8 @@ void RGroupGa::rGroupMutateOperation(
   fingerprintVarianceGroupScore(fingerprintVarianceScoreData);
 #endif
 
-  auto &parentPermutation = parent->getPermutation();
-  auto &childPermutation = child->getPermutation();
+  const auto &parentPermutation = parent->getPermutation();
+  const auto &childPermutation = child->getPermutation();
   const auto &rgroupData = parent->getRGroupGA().getRGroupData();
   const auto &matches = rgroupData.matches;
   const auto &labels = rgroupData.labels;
@@ -350,7 +350,7 @@ shared_ptr<RGroupDecompositionChromosome> RGroupGa::createChromosome() {
 
 void copyVarianceData(const FingerprintVarianceScoreData &fromData,
                       FingerprintVarianceScoreData &toData) {
-  auto &from = fromData.labelsToVarianceData;
+  const auto &from = fromData.labelsToVarianceData;
   auto &to = toData.labelsToVarianceData;
 
   for (auto it = from.cbegin(); it != from.end(); ++it) {
@@ -358,7 +358,7 @@ void copyVarianceData(const FingerprintVarianceScoreData &fromData,
     if (df == to.end()) {
       to.emplace(it->first, make_shared<VarianceDataForLabel>(*it->second));
     } else {
-      auto &fromData = it->second;
+      const auto &fromData = it->second;
       auto &toData = df->second;
       toData->numberFingerprints = fromData->numberFingerprints;
       toData->bitCounts.assign(fromData->bitCounts.cbegin(),
