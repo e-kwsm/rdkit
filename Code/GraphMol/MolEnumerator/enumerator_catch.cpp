@@ -1646,7 +1646,7 @@ TEST_CASE(
     CHECK(bundle.size() == 3);
     auto q0 = bundle[0];
     REQUIRE(q0);
-    for (const auto atom : q0->atoms()) {
+    for (auto *const atom : q0->atoms()) {
       CHECK(!atom->hasProp(common_properties::reactantAtomIdx));
       CHECK(!atom->hasProp(common_properties::reactionMapNum));
       CHECK(!atom->hasProp("was_dummy"));

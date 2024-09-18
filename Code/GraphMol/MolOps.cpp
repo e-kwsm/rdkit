@@ -91,7 +91,7 @@ void nitrogensCleanup(RWMol &mol) {
           (mol.getBondBetweenAtoms(aid, nbr->getIdx())->getBondType() ==
            Bond::DOUBLE)) {
         // here's the double bonded oxygen
-        auto b = mol.getBondBetweenAtoms(aid, nbr->getIdx());
+        auto *b = mol.getBondBetweenAtoms(aid, nbr->getIdx());
         b->setBondType(Bond::SINGLE);
         atom->setFormalCharge(1);
         nbr->setFormalCharge(-1);
@@ -119,7 +119,7 @@ void nitrogensCleanup(RWMol &mol) {
           (mol.getBondBetweenAtoms(aid, nbr->getIdx())->getBondType() ==
            Bond::TRIPLE)) {
         // here's the triple bonded nitrogen
-        auto b = mol.getBondBetweenAtoms(aid, nbr->getIdx());
+        auto *b = mol.getBondBetweenAtoms(aid, nbr->getIdx());
         b->setBondType(Bond::DOUBLE);
         atom->setFormalCharge(1);
         nbr->setFormalCharge(-1);
@@ -156,7 +156,7 @@ void phosphorusCleanup(RWMol &mol, Atom *atom) {
     Bond *dbl_to_O = nullptr;
     Atom *O_atom = nullptr;
     bool hasDoubleToCorN = false;
-    for (const auto nbr : mol.atomNeighbors(atom)) {
+    for (auto *const nbr : mol.atomNeighbors(atom)) {
       if ((nbr->getAtomicNum() == 8) && (nbr->getFormalCharge() == 0) &&
           (mol.getBondBetweenAtoms(aid, nbr->getIdx())->getBondType() ==
            Bond::DOUBLE)) {
@@ -190,7 +190,7 @@ void halogenCleanup(RWMol &mol, Atom *atom) {
   int ev = atom->calcExplicitValence(false);
   if (atom->getFormalCharge() == 0 && (ev == 7 || ev == 5 || ev == 3)) {
     bool neighborsAllO = true;
-    for (const auto nbr : mol.atomNeighbors(atom)) {
+    for (auto *const nbr : mol.atomNeighbors(atom)) {
       if (nbr->getAtomicNum() != 8) {
         neighborsAllO = false;
         break;
@@ -198,10 +198,10 @@ void halogenCleanup(RWMol &mol, Atom *atom) {
     }
     if (neighborsAllO) {
       int formalCharge = 0;
-      for (auto bond : mol.atomBonds(atom)) {
+      for (auto *bond : mol.atomBonds(atom)) {
         if (bond->getBondType() == Bond::DOUBLE) {
           bond->setBondType(Bond::SINGLE);
-          auto otherAtom = bond->getOtherAtom(atom);
+          auto *otherAtom = bond->getOtherAtom(atom);
           formalCharge++;
           otherAtom->setFormalCharge(-1);
           otherAtom->calcExplicitValence(false);
@@ -251,7 +251,7 @@ bool isHypervalentNonMetal(Atom *atom) {
 int numDativeBonds(const Atom *atom) {
   int numDatives = 0;
   auto &mol = atom->getOwningMol();
-  for (auto bond : mol.atomBonds(atom)) {
+  for (auto *bond : mol.atomBonds(atom)) {
     if (bond->getBondType() == Bond::BondType::DATIVE ||
         bond->getBondType() == Bond::BondType::DATIVEONE ||
         bond->getBondType() == Bond::BondType::DATIVEL ||
@@ -282,7 +282,7 @@ void metalBondCleanup(RWMol &mol, Atom *atom,
   if (isHypervalentNonMetal(atom) && !noDative(atom)) {
     std::vector<Atom *> metals;
     // see if there are any metals bonded to it by a single bond
-    for (auto bond : mol.atomBonds(atom)) {
+    for (auto *bond : mol.atomBonds(atom)) {
       if (bond->getBondType() == Bond::BondType::SINGLE &&
           QueryOps::isMetal(*bond->getOtherAtom(atom))) {
         metals.push_back(bond->getOtherAtom(atom));
@@ -299,7 +299,7 @@ void metalBondCleanup(RWMol &mol, Atom *atom,
                     return nda1 < nda2;
                   }
                 });
-      auto bond =
+      auto *bond =
           mol.getBondBetweenAtoms(atom->getIdx(), metals.front()->getIdx());
       if (bond) {
         bond->setBondType(RDKit::Bond::BondType::DATIVE);
@@ -333,10 +333,10 @@ void cleanUpOrganometallics(RWMol &mol) {
   // its normal valence states, and replaces that bond with
   // a dative one from the non-metal to the metal.
   bool needsFixing = false;
-  for (const auto atom : mol.atoms()) {
+  for (auto *const atom : mol.atoms()) {
     if (isHypervalentNonMetal(atom) && !noDative(atom)) {
       // see if there are any metals bonded to it by a single bond
-      for (auto bond : mol.atomBonds(atom)) {
+      for (auto *bond : mol.atomBonds(atom)) {
         if (bond->getBondType() == Bond::BondType::SINGLE &&
             QueryOps::isMetal(*bond->getOtherAtom(atom))) {
           needsFixing = true;
@@ -365,7 +365,7 @@ void cleanUpOrganometallics(RWMol &mol) {
               return p1.second < p2.second;
             });
   for (auto ar : atom_ranks) {
-    auto atom = mol.getAtomWithIdx(ar.first);
+    auto *atom = mol.getAtomWithIdx(ar.first);
     metalBondCleanup(mol, atom, ranks);
   }
 }
@@ -381,7 +381,7 @@ void adjustHs(RWMol &mol) {
   //  sanitized, aromaticity has been perceived, and the implicit
   //  valence of everything has been calculated.
   //
-  for (auto atom : mol.atoms()) {
+  for (auto *atom : mol.atoms()) {
     int origImplicitV = atom->getValence(Atom::ValenceType::IMPLICIT);
     atom->calcExplicitValence(false);
     int origExplicitV = atom->getNumExplicitHs();
@@ -411,7 +411,7 @@ void adjustHs(RWMol &mol) {
 }
 
 void assignRadicals(RWMol &mol) {
-  for (auto atom : mol.atoms()) {
+  for (auto *atom : mol.atoms()) {
     // we only automatically assign radicals to atoms that
     // don't have implicit Hs:
     if (!atom->getNoImplicit() || !atom->getAtomicNum()) {
@@ -492,7 +492,7 @@ MolOps::Hybridizations::Hybridizations(const ROMol &mol) {
 
   if ((*mol.atoms().begin())->getHybridization() !=
       Atom::HybridizationType::UNSPECIFIED) {
-    for (auto atom : mol.atoms()) {
+    for (auto *atom : mol.atoms()) {
       d_hybridizations.push_back((int)atom->getHybridization());
     }
     return;
@@ -505,7 +505,7 @@ MolOps::Hybridizations::Hybridizations(const ROMol &mol) {
   unsigned int santitizeOps =
       MolOps::SANITIZE_SETCONJUGATION | MolOps::SANITIZE_SETHYBRIDIZATION;
   MolOps::sanitizeMol(molCopy, operationThatFailed, santitizeOps);
-  for (auto atom : molCopy.atoms()) {
+  for (auto *atom : molCopy.atoms()) {
     // determine hybridization and remove chiral atoms that are not sp3
     d_hybridizations.push_back((int)atom->getHybridization());
   }
@@ -538,7 +538,7 @@ void checkBond(RWMol &mol, Bond *bond, MolOps::Hybridizations &hybs) {
 void cleanupAtropisomers(RWMol &mol, MolOps::Hybridizations &hybs) {
   // make sure that ring info is available
   // (defensive, current calls have it available)
-  for (auto bond : mol.bonds()) {
+  for (auto *bond : mol.bonds()) {
     switch (bond->getStereo()) {
       case Bond::BondStereo::STEREOATROPCW:
       case Bond::BondStereo::STEREOATROPCCW:
@@ -725,12 +725,12 @@ std::vector<std::unique_ptr<ROMol>> getTheFrags(
               const boost::dynamic_bitset<> &atomsInFrag) -> bool {
         for (auto idx : comp) {
           // check for atoms with stereochem:
-          const auto atom = mol.getAtomWithIdx(idx);
+          const auto *const atom = mol.getAtomWithIdx(idx);
           if (atom->getChiralTag() != Atom::ChiralType::CHI_UNSPECIFIED &&
               atom->getChiralTag() != Atom::ChiralType::CHI_OTHER) {
             return true;
           }
-          for (auto bnd : mol.atomBonds(atom)) {
+          for (auto *bnd : mol.atomBonds(atom)) {
             if (atomsInFrag[bnd->getOtherAtomIdx(idx)]) {
               if (bnd->getStereo() != Bond::BondStereo::STEREONONE &&
                   bnd->getStereo() != Bond::BondStereo::STEREOANY) {
@@ -755,13 +755,13 @@ std::vector<std::unique_ptr<ROMol>> getTheFrags(
           // doesn't seem like this should be necessary, but in case
           // we ever need stereogroups where the atoms aren't marked
           // with stereo...
-          for (auto atom : stereoGroup.getAtoms()) {
+          for (auto *atom : stereoGroup.getAtoms()) {
             if (atomsInFrag[atom->getIdx()]) {
               return true;
             }
           }
           // same check for stereo groups involving bonds:
-          for (auto bond : stereoGroup.getBonds()) {
+          for (auto *bond : stereoGroup.getBonds()) {
             if (atomsInFrag[bond->getBeginAtomIdx()] &&
                 atomsInFrag[bond->getEndAtomIdx()]) {
               return true;
@@ -784,10 +784,10 @@ std::vector<std::unique_ptr<ROMol>> getTheFrags(
           atomIdxMap[aid] =
               frag->addAtom(mol.getAtomWithIdx(aid)->copy(), false, true);
         }
-        for (auto bond : mol.bonds()) {
+        for (auto *bond : mol.bonds()) {
           if (atomsInFrag[bond->getBeginAtomIdx()] &&
               atomsInFrag[bond->getEndAtomIdx()]) {
-            auto bondCopy = bond->copy();
+            auto *bondCopy = bond->copy();
             bondCopy->setBeginAtomIdx(atomIdxMap[bond->getBeginAtomIdx()]);
             bondCopy->setEndAtomIdx(atomIdxMap[bond->getEndAtomIdx()]);
             frag->addBond(bondCopy, true);
@@ -1030,7 +1030,7 @@ int getFormalCharge(const ROMol &mol) {
 unsigned getNumAtomsWithDistinctProperty(const ROMol &mol,
                                          const std::string_view &prop) {
   unsigned numPropAtoms = 0;
-  for (const auto atom : mol.atoms()) {
+  for (auto *const atom : mol.atoms()) {
     if (atom->hasProp(prop)) {
       ++numPropAtoms;
     }
@@ -1067,7 +1067,7 @@ void hapticBondsToDative(RWMol &mol) {
         continue;
       }
       for (auto oat : oats) {
-        auto atom = mol.getAtomWithIdx(oat);
+        auto *atom = mol.getAtomWithIdx(oat);
         if (atom) {
           mol.addBond(atom, metal, Bond::DATIVE);
         }
@@ -1102,7 +1102,7 @@ std::vector<std::vector<unsigned int>> contiguousAtoms(
     contigAts.push_back(std::vector<unsigned int>());
     std::list<const Atom *> toDo{mol.getAtomWithIdx(allAts[i])};
     while (!toDo.empty()) {
-      auto nextAt = toDo.front();
+      const auto *nextAt = toDo.front();
       toDo.pop_front();
       if (!doneAts[nextAt->getIdx()]) {
         doneAts[nextAt->getIdx()] = 1;
@@ -1127,7 +1127,7 @@ std::vector<std::vector<unsigned int>> contiguousAtoms(
 void addHapticBond(RWMol &mol, unsigned int metalIdx,
                    const std::vector<unsigned int> &hapticAtoms) {
   // So there is a * in the V3000 file as the symbol for the atom.
-  auto dummyAt = new QueryAtom(0);
+  auto *dummyAt = new QueryAtom(0);
   dummyAt->setQuery(makeAtomNullQuery());
 
   bool updateLabel = true;
@@ -1144,7 +1144,7 @@ void addHapticBond(RWMol &mol, unsigned int metalIdx,
     conf.setAtomPos(dummyIdx, dummyPos);
   }
   unsigned int numbonds = mol.addBond(dummyIdx, metalIdx, Bond::DATIVE);
-  auto bond = mol.getBondWithIdx(numbonds - 1);
+  auto *bond = mol.getBondWithIdx(numbonds - 1);
 
   // Get the atom numbers for the end points.  First number is the
   // count, the rest count from 1.
@@ -1256,7 +1256,7 @@ bool isAttachmentPoint(const Atom *atom, bool markedOnly) {
     return false;
   }
   // we know that the atom is degree 1
-  const auto bond = *atom->getOwningMol().atomBonds(atom).begin();
+  auto *const bond = *atom->getOwningMol().atomBonds(atom).begin();
   if ((bond->getBondType() != Bond::BondType::SINGLE &&
        bond->getBondType() != Bond::BondType::UNSPECIFIED) ||
       bond->getBondDir() != Bond::BondDir::NONE) {
@@ -1284,7 +1284,7 @@ bool isAttachmentPoint(const Atom *atom, bool markedOnly) {
 }  // namespace details
 
 void expandAttachmentPoints(RWMol &mol, bool addAsQueries, bool addCoords) {
-  for (auto atom : mol.atoms()) {
+  for (auto *atom : mol.atoms()) {
     int value;
     if (atom->getPropIfPresent(common_properties::molAttachPoint, value)) {
       std::vector<int> tgtVals;
@@ -1314,7 +1314,7 @@ void collapseAttachmentPoints(RWMol &mol, bool markedOnly) {
   bool removedAny = false;
   std::vector<int> attachLabels(mol.getNumAtoms(), 0);
 
-  for (auto atom : mol.atoms()) {
+  for (auto *atom : mol.atoms()) {
     if (details::isAttachmentPoint(atom, markedOnly)) {
       int value = 0;
       atom->getPropIfPresent(common_properties::_fromAttachPoint, value);
@@ -1327,7 +1327,7 @@ void collapseAttachmentPoints(RWMol &mol, bool markedOnly) {
       if (!markedOnly && !value) {
         value = 1;
       }
-      auto bond = *mol.atomBonds(atom).begin();
+      auto *bond = *mol.atomBonds(atom).begin();
       if ((bond->getBondType() != Bond::BondType::SINGLE &&
            bond->getBondType() != Bond::BondType::UNSPECIFIED) ||
           bond->getBondDir() != Bond::BondDir::NONE) {
@@ -1354,7 +1354,7 @@ void collapseAttachmentPoints(RWMol &mol, bool markedOnly) {
     }
   }
   // set the attachment point labels
-  for (auto atom : mol.atoms()) {
+  for (auto *atom : mol.atoms()) {
     if (attachLabels[atom->getIdx()]) {
       atom->setProp(common_properties::molAttachPoint,
                     attachLabels[atom->getIdx()]);

@@ -720,7 +720,7 @@ void readQueries(RWMol *mol, const bj::value &repVal,
         if (idx >= mol->getNumAtoms()) {
           throw FileParseException("too much atom data found");
         }
-        auto atom = mol->getAtomWithIdx(idx);
+        auto *atom = mol->getAtomWithIdx(idx);
         CHECK_INVARIANT(atom != nullptr, "no atom");
         // we need to replace the current atom with a query atom:
         QueryAtom qatom(*atom);
@@ -751,7 +751,7 @@ void readQueries(RWMol *mol, const bj::value &repVal,
         if (idx >= mol->getNumBonds()) {
           throw FileParseException("too much bond data found");
         }
-        auto bond = mol->getBondWithIdx(idx);
+        auto *bond = mol->getBondWithIdx(idx);
         CHECK_INVARIANT(bond != nullptr, "no bond");
         QueryBond qbond(*bond);
         qbond.setQuery(nullptr);
@@ -838,7 +838,7 @@ void readRDKitRepresentation(RWMol *mol, const bj::value &repVal,
     if (miter != repVal.as_object().end()) {
       CHECK_INVARIANT(!mol->getRingInfo()->isInitialized(),
                       "rings already initialized");
-      auto ri = mol->getRingInfo();
+      auto *ri = mol->getRingInfo();
       ri->initialize();
       for (const auto &val : miter->value().as_array()) {
         if (!val.is_array()) {

@@ -963,7 +963,7 @@ void testGitHub3349() {
 void testGitHub5406() {
   BOOST_LOG(rdInfoLog) << "-----------------------\n"
                        << "testGitHub5406 and 4884" << std::endl;
-  for (auto smiles_string : {"CC=[N+]=[N-]", "O=[N+][O-]"}) {
+  for (const auto *smiles_string : {"CC=[N+]=[N-]", "O=[N+][O-]"}) {
     std::unique_ptr<RWMol> mol(SmilesToMol(smiles_string));
     MolOps::addHs(*mol);
     std::unique_ptr<ResonanceMolSupplier> suppl =

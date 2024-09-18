@@ -31,13 +31,13 @@ int queryIsAtomBridgehead(Atom const *at) {
     return 0;
   }
   const auto &mol = at->getOwningMol();
-  const auto ri = mol.getRingInfo();
+  auto *const ri = mol.getRingInfo();
   if (!ri || !ri->isInitialized()) {
     return 0;
   }
   // track which ring bonds involve this atom
   boost::dynamic_bitset<> atomRingBonds(mol.getNumBonds());
-  for (const auto bnd : mol.atomBonds(at)) {
+  for (auto *const bnd : mol.atomBonds(at)) {
     if (ri->numBondRings(bnd->getIdx())) {
       atomRingBonds.set(bnd->getIdx());
     }
@@ -1007,7 +1007,7 @@ void completeQueryAndChildren(Atom::QUERYATOM_QUERY *query, Atom *tgt,
                               unsigned int magicVal) {
   PRECONDITION(query, "no query");
   PRECONDITION(tgt, "no atom");
-  auto eqQuery = dynamic_cast<ATOM_EQUALS_QUERY *>(query);
+  auto *eqQuery = dynamic_cast<ATOM_EQUALS_QUERY *>(query);
   if (eqQuery) {
     if (static_cast<unsigned int>(eqQuery->getVal()) == magicVal) {
       int tgtVal = eqQuery->getDataFunc()(tgt);
@@ -1022,7 +1022,7 @@ void completeQueryAndChildren(Atom::QUERYATOM_QUERY *query, Atom *tgt,
 }  // namespace
 void completeMolQueries(RWMol *mol, unsigned int magicVal) {
   PRECONDITION(mol, "bad molecule");
-  for (auto atom : mol->atoms()) {
+  for (auto *atom : mol->atoms()) {
     if (atom->hasQuery()) {
       completeQueryAndChildren(atom->getQuery(), atom, magicVal);
     }

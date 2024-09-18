@@ -300,7 +300,7 @@ TEST_CASE("Oxidation numbers") {
       std::vector<int> expected{-2, -2, 2, 3, 3, 2, -1, -1, -1, 0, -1};
       Descriptors::calcOxidationNumbers(m2);
       for (unsigned int i = 0; i < ats.size(); ++i) {
-        auto a = m2.getAtomWithIdx(ats[i]);
+        auto *a = m2.getAtomWithIdx(ats[i]);
         CHECK(a->getProp<int>(common_properties::OxidationNumber) ==
               expected[i]);
       }
@@ -543,7 +543,7 @@ TEST_CASE("Oxidation numbers") {
       RDKit::MolOps::Kekulize(*mol);
       Descriptors::calcOxidationNumbers(*mol);
       for (const auto &expected : std::get<2>(test)) {
-        auto atom = mol->getAtomWithIdx(expected.first);
+        auto *atom = mol->getAtomWithIdx(expected.first);
         CHECK(atom->getProp<int>(common_properties::OxidationNumber) ==
               expected.second);
       }
