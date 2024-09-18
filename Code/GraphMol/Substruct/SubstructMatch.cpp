@@ -97,7 +97,7 @@ bool enhancedStereoIsOK(
       }
 
       auto pos = molAtomsToQueryGroups.find(a->getIdx());
-      auto thisQGroup =
+      const auto *thisQGroup =
           pos == molAtomsToQueryGroups.end() ? nullptr : pos->second;
       if (!seen) {
         doesMatch = thisDoesMatch->second;
@@ -189,7 +189,7 @@ MolMatchFinalCheckFunctor::MolMatchFinalCheckFunctor(
       if (sg.getGroupType() == StereoGroupType::STEREO_ABSOLUTE) {
         continue;
       }
-      for (const auto a : sg.getAtoms()) {
+      for (auto *const a : sg.getAtoms()) {
         d_molStereoGroups[a->getIdx()] = &sg;
       }
     }
@@ -472,7 +472,7 @@ struct RecursiveLocker {
   }
 
   ~RecursiveLocker() {
-    for (auto v : locked) {
+    for (auto *v : locked) {
       v->clear();
 #ifdef RDK_BUILD_THREADSAFE_SSS
       v->d_mutex.unlock();
@@ -498,7 +498,7 @@ std::vector<MatchVectType> SubstructMatch(
   if (params.recursionPossible) {
     detail::SUBQUERY_MAP subqueryMap;
     ROMol::ConstAtomIterator atIt;
-    for (const auto atom : query.atoms()) {
+    for (auto *const atom : query.atoms()) {
       if (atom->hasQuery()) {
         // std::cerr<<"recurse from atom "<<(*atIt)->getIdx()<<std::endl;
         detail::MatchSubqueries(mol, atom->getQuery(), params, subqueryMap,
@@ -625,7 +625,7 @@ unsigned int RecursiveMatcher(const ROMol &mol, const ROMol &query,
   SubstructMatchParameters lparams = params;
   lparams.maxMatches = std::max(params.maxRecursiveMatches, params.maxMatches);
   lparams.uniquify = false;
-  for (auto qAtom : query.atoms()) {
+  for (auto *qAtom : query.atoms()) {
     if (qAtom->hasQuery()) {
       MatchSubqueries(mol, qAtom->getQuery(), lparams, subqueryMap, locked);
     }
@@ -698,7 +698,7 @@ void MatchSubqueries(const ROMol &mol, QueryAtom::QUERYATOM_QUERY *query,
       // we've matched an equivalent serial number before, just
       // copy in the matches:
       matchDone = true;
-      auto orsq =
+      const auto *orsq =
           (const RecursiveStructureQuery *)subqueryMap[rsq->getSerialNumber()];
       for (auto setIter = orsq->beginSet(); setIter != orsq->endSet();
            ++setIter) {
