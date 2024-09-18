@@ -32,7 +32,7 @@ namespace MolStandardize {
 namespace TautomerScoringFunctions {
 int scoreRings(const ROMol &mol) {
   int score = 0;
-  auto ringInfo = mol.getRingInfo();
+  auto *ringInfo = mol.getRingInfo();
   if (!ringInfo->isSymmSssr()) {
     MolOps::symmetrizeSSSR(const_cast<ROMol &>(mol));
     ringInfo = mol.getRingInfo();
@@ -145,7 +145,7 @@ std::vector<size_t> getRelevantSubstructTermIndices(
   //      doesn't match (since tautomerization doesn't create/destroy bonds)
 
   std::unordered_set<int> presentElements;
-  for (const auto atom : mol.atoms()) {
+  for (auto *const atom : mol.atoms()) {
     presentElements.insert(atom->getAtomicNum());
   }
 
@@ -192,7 +192,7 @@ std::vector<size_t> getRelevantSubstructTermIndices(
 inline unsigned int countDoubleOrAromaticBonds(const ROMol &mol, int elem1,
                                                int elem2) {
   unsigned int count = 0;
-  for (const auto bond : mol.bonds()) {
+  for (auto *const bond : mol.bonds()) {
     const auto bt = bond->getBondType();
     if (bt != Bond::DOUBLE && bt != Bond::AROMATIC) {
       continue;
@@ -209,7 +209,7 @@ inline unsigned int countDoubleOrAromaticBonds(const ROMol &mol, int elem1,
 // Count methyl groups: [CX4H3] - sp3 carbon with exactly 3 total H
 inline unsigned int countMethyls(const ROMol &mol) {
   unsigned int count = 0;
-  for (const auto atom : mol.atoms()) {
+  for (auto *const atom : mol.atoms()) {
     if (atom->getAtomicNum() != 6) {
       continue;
     }
@@ -229,7 +229,7 @@ inline unsigned int countMethyls(const ROMol &mol) {
 // Count [C]=[!#1;!#6] - aliphatic carbon double-bonded to heteroatom
 inline unsigned int countCarbonDoubleHetero(const ROMol &mol) {
   unsigned int count = 0;
-  for (const auto bond : mol.bonds()) {
+  for (auto *const bond : mol.bonds()) {
     if (bond->getBondType() != Bond::DOUBLE) {
       continue;
     }
@@ -253,7 +253,7 @@ inline unsigned int countCarbonDoubleHetero(const ROMol &mol) {
 inline unsigned int countAromaticCarbonExocyclicN(const ROMol &mol) {
   unsigned int count = 0;
   const auto *ringInfo = mol.getRingInfo();
-  for (const auto bond : mol.bonds()) {
+  for (auto *const bond : mol.bonds()) {
     if (bond->getBondType() != Bond::DOUBLE) {
       continue;
     }
@@ -368,7 +368,7 @@ const RingInfo *getFastRingInfo(ROMol &mol) {
   // We only need to know whether the bond is in a ring; avoid forcing
   // SymmSSSR here since that has a performance cost.
   // this might be not precise enough for large rings like 9-or-more macrocycles
-  auto ringInfo = mol.getRingInfo();
+  auto *ringInfo = mol.getRingInfo();
   if (!ringInfo->isFindFastOrBetter()) {
     MolOps::fastFindRings(mol);
   }
@@ -428,8 +428,9 @@ bool TautomerEnumerator::setTautomerStereoAndIsoHs(
   for (auto atomIdx = res.d_modifiedAtoms.find_first();
        atomIdx != boost::dynamic_bitset<>::npos;
        atomIdx = res.d_modifiedAtoms.find_next(atomIdx)) {
-    const auto atom = mol.getAtomWithIdx(static_cast<unsigned int>(atomIdx));
-    auto tautAtom = taut.getAtomWithIdx(atomIdx);
+    const auto *const atom =
+        mol.getAtomWithIdx(static_cast<unsigned int>(atomIdx));
+    auto *tautAtom = taut.getAtomWithIdx(atomIdx);
     // clear chiral tag on sp2 atoms (also sp3 if d_removeSp3Stereo is true)
     if (tautAtom->getHybridization() == Atom::SP2 || d_removeSp3Stereo) {
       modified |= (tautAtom->getChiralTag() != Atom::CHI_UNSPECIFIED);
@@ -462,23 +463,23 @@ bool TautomerEnumerator::setTautomerStereoAndIsoHs(
     const auto numBonds = mol.getNumBonds();
     molBonds.resize(numBonds);
     tautBonds.resize(numBonds);
-    for (auto bond : mol.bonds()) {
+    for (auto *bond : mol.bonds()) {
       molBonds[bond->getIdx()] = bond;
     }
-    for (auto bond : taut.bonds()) {
+    for (auto *bond : taut.bonds()) {
       tautBonds[bond->getIdx()] = bond;
     }
   }
   for (auto bondIdx = res.d_modifiedBonds.find_first();
        bondIdx != boost::dynamic_bitset<>::npos;
        bondIdx = res.d_modifiedBonds.find_next(bondIdx)) {
-    const auto bond = molBonds[bondIdx];
+    const auto *const bond = molBonds[bondIdx];
     std::vector<unsigned int> bondsToClearDirs;
     if (bond->getBondType() == Bond::DOUBLE &&
         bond->getStereo() > Bond::STEREOANY) {
       // look around the beginning and end atoms and check for bonds with
       // direction set
-      for (auto atom : {bond->getBeginAtom(), bond->getEndAtom()}) {
+      for (auto *atom : {bond->getBeginAtom(), bond->getEndAtom()}) {
         for (const auto &nbri :
              boost::make_iterator_range(mol.getAtomBonds(atom))) {
           const auto &obnd = mol[nbri];
@@ -489,7 +490,7 @@ bool TautomerEnumerator::setTautomerStereoAndIsoHs(
         }
       }
     }
-    auto tautBond = tautBonds[bondIdx];
+    auto *tautBond = tautBonds[bondIdx];
     if (tautBond->getBondType() != Bond::DOUBLE || d_removeBondStereo ||
         !hasPreservableDoubleBondStereo(*bond)) {
       // When bond stereo is being removed for bonds involved in tautomerism,
@@ -531,8 +532,8 @@ bool TautomerEnumerator::setTautomerStereoAndIsoHs(
     // coordinate-based E/Z inference. If bond stereo removal is enabled,
     // re-apply our contract to the bonds involved in tautomerism.
     if (d_removeBondStereo) {
-      const auto ringInfo = getFastRingInfo(taut);
-      for (auto bond : taut.bonds()) {
+      const auto *const ringInfo = getFastRingInfo(taut);
+      for (auto *bond : taut.bonds()) {
         const auto bondIdx = bond->getIdx();
         if (!res.d_modifiedBonds.test(bondIdx)) {
           continue;
@@ -736,7 +737,7 @@ TautomerEnumeratorResult TautomerEnumerator::enumerate(const ROMol &mol) const {
           // Adjust bond orders
           unsigned int bi = 0;
           for (size_t i = 0; i < transform.Mol->getNumBonds(); ++i) {
-            const auto tbond = transform.Mol->getBondWithIdx(i);
+            auto *const tbond = transform.Mol->getBondWithIdx(i);
             Bond *bond = product->getBondBetweenAtoms(
                 match[tbond->getBeginAtomIdx()].second,
                 match[tbond->getEndAtomIdx()].second);
@@ -827,8 +828,8 @@ TautomerEnumeratorResult TautomerEnumerator::enumerate(const ROMol &mol) const {
           // Use parallel iteration to avoid O(n) getBondWithIdx lookups
           {
             auto productBondIt = product->bonds().begin();
-            for (const auto molBond : mol.bonds()) {
-              const auto productBond = *productBondIt;
+            for (auto *const molBond : mol.bonds()) {
+              auto *const productBond = *productBondIt;
               ++productBondIt;
               auto i = molBond->getIdx();
               if (molBond->getBondType() != productBond->getBondType() &&
@@ -1018,8 +1019,8 @@ void TautomerEnumerator::canonicalizeInPlace(
   // indices
   {
     auto molAtomIt = mol.atoms().begin();
-    for (const auto tmpAtom : tmp->atoms()) {
-      auto atom = *molAtomIt;
+    for (auto *const tmpAtom : tmp->atoms()) {
+      auto *atom = *molAtomIt;
       ++molAtomIt;
       TEST_ASSERT(tmpAtom->getAtomicNum() == atom->getAtomicNum());
       atom->setFormalCharge(tmpAtom->getFormalCharge());
@@ -1032,8 +1033,8 @@ void TautomerEnumerator::canonicalizeInPlace(
   }
   {
     auto molBondIt = mol.bonds().begin();
-    for (const auto tmpBond : tmp->bonds()) {
-      auto bond = *molBondIt;
+    for (auto *const tmpBond : tmp->bonds()) {
+      auto *bond = *molBondIt;
       ++molBondIt;
       TEST_ASSERT(tmpBond->getBeginAtomIdx() == bond->getBeginAtomIdx());
       TEST_ASSERT(tmpBond->getEndAtomIdx() == bond->getEndAtomIdx());

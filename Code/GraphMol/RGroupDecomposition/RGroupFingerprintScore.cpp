@@ -49,7 +49,7 @@ static const bool useTopologicalFingerprints = false;
 void addFingerprintToRGroupData(RGroupData *rgroupData) {
   if (rgroupData->fingerprint == nullptr) {
     RWMol mol(*rgroupData->combinedMol);
-    for (auto atom : mol.atoms()) {
+    for (auto *atom : mol.atoms()) {
       // replace attachment atom by Boron
       // TODO- Handle multiple attachments differently?
       if (atom->getAtomicNum() == 0) {
@@ -69,10 +69,10 @@ void addFingerprintToRGroupData(RGroupData *rgroupData) {
 #ifdef DEBUG
     std::cerr << "Fingerprint mol smiles " << MolToSmiles(mol) << " ";
 #endif
-    auto fingerprint = useTopologicalFingerprints
-                           ? RDKFingerprintMol(mol, 1, 7, fingerprintSize)
-                           : MorganFingerprints::getFingerprintAsBitVect(
-                                 mol, 2, fingerprintSize);
+    auto *fingerprint = useTopologicalFingerprints
+                            ? RDKFingerprintMol(mol, 1, 7, fingerprintSize)
+                            : MorganFingerprints::getFingerprintAsBitVect(
+                                  mol, 2, fingerprintSize);
     fingerprint->getOnBits(rgroupData->fingerprintOnBits);
     rgroupData->fingerprint.reset(fingerprint);
   }

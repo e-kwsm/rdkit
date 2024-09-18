@@ -113,7 +113,7 @@ TEST_CASE("Iteration limit includes the preliminary pass",
   REQUIRE(comparisonMol);
   CIPLabeler::CIPMol cipmol(*comparisonMol);
   Digraph digraph(cipmol, cipmol.getAtom(1));
-  auto origin = digraph.getOriginalRoot();
+  auto *origin = digraph.getOriginalRoot();
   auto edges = origin->getEdges();
   Rule1a rule;
   CHECK_NOTHROW(rule.getSorter()->prioritize(origin, edges));
@@ -164,19 +164,19 @@ TEST_CASE("Digraph", "[accurateCIP]") {
   CIPLabeler::CIPMol cipmol(*mol);
 
   auto initial_root_idx = 1u;
-  auto initial_root_atom = cipmol.getAtom(initial_root_idx);
+  auto *initial_root_atom = cipmol.getAtom(initial_root_idx);
 
   Digraph g(cipmol, initial_root_atom);
   expandAll(g);
   REQUIRE(g.getNumNodes() == 3819);
 
-  auto current_root = g.getCurrentRoot();
+  auto *current_root = g.getCurrentRoot();
   REQUIRE(current_root->getAtom()->getIdx() == initial_root_idx);
 
   check_incoming_edge_count(current_root);
 
   auto new_root_idx = 24u;
-  auto new_root_atom = cipmol.getAtom(new_root_idx);
+  auto *new_root_atom = cipmol.getAtom(new_root_idx);
   auto new_root_nodes = g.getNodes(new_root_atom);
   CHECK(new_root_nodes.size() == 104);
 
@@ -203,7 +203,7 @@ TEST_CASE("Digraph safety limits", "[accurateCIP]") {
     RWMol mol;
     constexpr auto chain_length = 260u;
     for (auto i = 0u; i < chain_length; ++i) {
-      auto atom = new Atom(6);
+      auto *atom = new Atom(6);
       atom->setNoImplicit(true);
       mol.addAtom(atom, true, true);
       if (i != 0u) {
@@ -245,7 +245,7 @@ TEST_CASE("Mancude fractional atomic numbers", "[accurateCIP]") {
     auto mol = "[CH-]1C=CC=C1"_smiles;
     CIPLabeler::CIPMol cipmol(*mol);
 
-    for (const auto atom : mol->atoms()) {
+    for (auto *const atom : mol->atoms()) {
       const auto &frac = cipmol.getFractionalAtomicNum(atom);
       CHECK(frac.numerator() == 24);
       CHECK(frac.denominator() == 5);
@@ -258,7 +258,7 @@ TEST_CASE("Mancude fractional atomic numbers", "[accurateCIP]") {
     auto mol = "[CH-]1C=C1"_smiles;
     CIPLabeler::CIPMol cipmol(*mol);
 
-    for (const auto atom : mol->atoms()) {
+    for (auto *const atom : mol->atoms()) {
       const auto &frac = cipmol.getFractionalAtomicNum(atom);
       CHECK(frac.numerator() == 12);
       CHECK(frac.denominator() == 3);
@@ -268,7 +268,7 @@ TEST_CASE("Mancude fractional atomic numbers", "[accurateCIP]") {
 
     Digraph graph(cipmol, cipmol.getAtom(1));
     Node *negative_node = nullptr;
-    for (const auto edge : graph.getOriginalRoot()->getEdges()) {
+    for (auto *const edge : graph.getOriginalRoot()->getEdges()) {
       if (edge->isBeg(graph.getOriginalRoot()) &&
           edge->getEnd()->getAtom() == cipmol.getAtom(0) &&
           !edge->getEnd()->isDuplicate()) {
@@ -279,8 +279,8 @@ TEST_CASE("Mancude fractional atomic numbers", "[accurateCIP]") {
     REQUIRE(negative_node != nullptr);
 
     int bond_duplicates = 0;
-    for (const auto edge : negative_node->getEdges()) {
-      const auto end = edge->getEnd();
+    for (auto *const edge : negative_node->getEdges()) {
+      auto *const end = edge->getEnd();
       if (edge->isBeg(negative_node) && end->isSet(Node::BOND_DUPLICATE)) {
         ++bond_duplicates;
         CHECK(end->getAtomicNumFraction() == boost::rational<int>(4, 1));
@@ -306,7 +306,7 @@ TEST_CASE("Rule1a", "[accurateCIP]") {
     auto mol = "COC"_smiles;
     CIPLabeler::CIPMol cipmol(*mol);
     Digraph g(cipmol, cipmol.getAtom(1));
-    auto origin = g.getOriginalRoot();
+    auto *origin = g.getOriginalRoot();
 
     auto frac = origin->getAtomicNumFraction();
     REQUIRE(frac.numerator() == 8);
@@ -327,7 +327,7 @@ TEST_CASE("Rule1a", "[accurateCIP]") {
     auto mol = "CON"_smiles;
     CIPLabeler::CIPMol cipmol(*mol);
     Digraph g(cipmol, cipmol.getAtom(1));
-    auto origin = g.getOriginalRoot();
+    auto *origin = g.getOriginalRoot();
 
     auto frac = origin->getAtomicNumFraction();
     REQUIRE(frac.numerator() == 8);
@@ -359,7 +359,7 @@ TEST_CASE("Rule2", "[accurateCIP]") {
     auto mol = "COC"_smiles;
     CIPLabeler::CIPMol cipmol(*mol);
     Digraph g(cipmol, cipmol.getAtom(1));
-    auto origin = g.getOriginalRoot();
+    auto *origin = g.getOriginalRoot();
 
     auto frac = origin->getAtomicNumFraction();
     REQUIRE(frac.numerator() == 8);
@@ -380,7 +380,7 @@ TEST_CASE("Rule2", "[accurateCIP]") {
     auto mol = "CO[13C]"_smiles;
     CIPLabeler::CIPMol cipmol(*mol);
     Digraph g(cipmol, cipmol.getAtom(1));
-    auto origin = g.getOriginalRoot();
+    auto *origin = g.getOriginalRoot();
 
     auto frac = origin->getAtomicNumFraction();
     REQUIRE(frac.numerator() == 8);
@@ -405,7 +405,7 @@ TEST_CASE("Rule2", "[accurateCIP]") {
     auto mol = "[13C]O[14C]"_smiles;
     CIPLabeler::CIPMol cipmol(*mol);
     Digraph g(cipmol, cipmol.getAtom(1));
-    auto origin = g.getOriginalRoot();
+    auto *origin = g.getOriginalRoot();
 
     auto frac = origin->getAtomicNumFraction();
     REQUIRE(frac.numerator() == 8);
@@ -430,13 +430,13 @@ TEST_CASE("Rule2", "[accurateCIP]") {
     auto mol = "[999C]O[14C]"_smiles;
     CIPLabeler::CIPMol cipmol(*mol);
     Digraph g(cipmol, cipmol.getAtom(1));
-    auto origin = g.getOriginalRoot();
+    auto *origin = g.getOriginalRoot();
     auto edges = origin->getEdges();
     REQUIRE(edges.size() == 2);
 
     Edge *unknown = nullptr;
     Edge *known = nullptr;
-    for (auto edge : edges) {
+    for (auto *edge : edges) {
       if (edge->getEnd()->getMassNum() == 999) {
         unknown = edge;
       } else if (edge->getEnd()->getMassNum() == 14) {
@@ -457,7 +457,7 @@ TEST_CASE("Tetrahedral assignment", "[accurateCIP]") {
   auto mol = "Br[C@H](Cl)F"_smiles;
   REQUIRE(mol->getNumAtoms() == 4);
 
-  auto chiral_atom = mol->getAtomWithIdx(1);
+  auto *chiral_atom = mol->getAtomWithIdx(1);
   chiral_atom->clearProp(common_properties::_CIPCode);
   REQUIRE(chiral_atom->getChiralTag() == Atom::CHI_TETRAHEDRAL_CCW);
 
@@ -478,8 +478,8 @@ TEST_CASE("Double bond stereo assignment", "[accurateCIP]") {
   auto mol = R"(CC\C(\C(\C)=N\O)=N\O)"_smiles;  // VS013
   REQUIRE(mol->getNumAtoms() == 9);
 
-  auto bond_1 = mol->getBondWithIdx(4);
-  auto bond_2 = mol->getBondWithIdx(6);
+  auto *bond_1 = mol->getBondWithIdx(4);
+  auto *bond_2 = mol->getBondWithIdx(6);
   REQUIRE(bond_1->getBondType() == Bond::DOUBLE);
   REQUIRE(bond_2->getBondType() == Bond::DOUBLE);
   if (useLegacy) {
@@ -527,8 +527,8 @@ TEST_CASE("assign specific atoms and bonds", "[accurateCIP]") {
     auto mol = "C[C@H](Cl)CC[C@H](Cl)C"_smiles;
     REQUIRE(mol);
 
-    auto atom1 = mol->getAtomWithIdx(1);
-    auto atom5 = mol->getAtomWithIdx(5);
+    auto *atom1 = mol->getAtomWithIdx(1);
+    auto *atom5 = mol->getAtomWithIdx(5);
 
     REQUIRE(atom1->hasProp(common_properties::_CIPCode));
     REQUIRE(atom5->hasProp(common_properties::_CIPCode));
@@ -551,8 +551,8 @@ TEST_CASE("assign specific atoms and bonds", "[accurateCIP]") {
     auto mol = R"(C\C=C\C=C/C)"_smiles;
     REQUIRE(mol);
 
-    auto bond1 = mol->getBondWithIdx(1);
-    auto bond3 = mol->getBondWithIdx(3);
+    auto *bond1 = mol->getBondWithIdx(1);
+    auto *bond3 = mol->getBondWithIdx(3);
 
     REQUIRE(bond1->getBondType() == Bond::DOUBLE);
     REQUIRE(bond3->getBondType() == Bond::DOUBLE);
@@ -575,11 +575,11 @@ TEST_CASE("assign specific atoms and bonds", "[accurateCIP]") {
     auto mol = "C\\C=C/[C@@H](\\C=C\\O)[C@H](C)[C@H](\\C=C/C)\\C=C\\O"_smiles;
     REQUIRE(mol);
 
-    for (auto atom : mol->atoms()) {
+    for (auto *atom : mol->atoms()) {
       atom->clearProp(common_properties::_CIPCode);
       atom->clearProp(common_properties::_CIPNeighborOrder);
     }
-    for (auto bond : mol->bonds()) {
+    for (auto *bond : mol->bonds()) {
       bond->clearProp(common_properties::_CIPCode);
       bond->clearProp(common_properties::_CIPNeighborOrder);
     }
@@ -618,7 +618,7 @@ TEST_CASE("CIP label property lifecycle", "[accurateCIP]") {
   SECTION("Full assignment clears a center whose tag was removed") {
     auto mol = "C[C@H](F)Cl"_smiles;
     REQUIRE(mol);
-    auto atom = mol->getAtomWithIdx(1);
+    auto *atom = mol->getAtomWithIdx(1);
 
     CIPLabeler::assignCIPLabels(*mol);
     REQUIRE(atom->hasProp(common_properties::_CIPCode));
@@ -635,7 +635,7 @@ TEST_CASE("CIP label property lifecycle", "[accurateCIP]") {
       "Full assignment clears ranked neighbors when a center becomes tied") {
     auto mol = "C[C@H](F)Cl"_smiles;
     REQUIRE(mol);
-    auto atom = mol->getAtomWithIdx(1);
+    auto *atom = mol->getAtomWithIdx(1);
 
     CIPLabeler::assignCIPLabels(*mol);
     REQUIRE(atom->hasProp(common_properties::_CIPCode));
@@ -650,7 +650,7 @@ TEST_CASE("CIP label property lifecycle", "[accurateCIP]") {
   SECTION("Full assignment clears a bond whose stereo flag was removed") {
     auto mol = "F/C=C/Cl"_smiles;
     REQUIRE(mol);
-    auto bond = mol->getBondWithIdx(1);
+    auto *bond = mol->getBondWithIdx(1);
 
     CIPLabeler::assignCIPLabels(*mol);
     REQUIRE(bond->hasProp(common_properties::_CIPCode));
@@ -665,8 +665,8 @@ TEST_CASE("CIP label property lifecycle", "[accurateCIP]") {
   SECTION("Partial assignment clears only selected output state") {
     auto mol = "C[C@H](F)Cl"_smiles;
     REQUIRE(mol);
-    auto selected = mol->getAtomWithIdx(0);
-    auto unselected = mol->getAtomWithIdx(1);
+    auto *selected = mol->getAtomWithIdx(0);
+    auto *unselected = mol->getAtomWithIdx(1);
     selected->setProp(common_properties::_CIPCode, std::string("stale"));
     selected->setProp(common_properties::_CIPNeighborOrder,
                       std::vector<unsigned int>{1}, true);
@@ -689,7 +689,7 @@ TEST_CASE("Malformed stereo markers are ignored safely", "[accurateCIP]") {
   SECTION("Tetrahedral atom with too few carriers") {
     auto mol = "CF"_smiles;
     REQUIRE(mol);
-    auto atom = mol->getAtomWithIdx(0);
+    auto *atom = mol->getAtomWithIdx(0);
     atom->setChiralTag(Atom::CHI_TETRAHEDRAL_CW);
     atom->setProp(common_properties::_CIPCode, std::string("stale"));
     CHECK_NOTHROW(CIPLabeler::assignCIPLabels(*mol));
@@ -700,7 +700,7 @@ TEST_CASE("Malformed stereo markers are ignored safely", "[accurateCIP]") {
   SECTION("Cis/trans marker on a single bond") {
     auto mol = "CCCC"_smiles;
     REQUIRE(mol);
-    auto bond = mol->getBondBetweenAtoms(1, 2);
+    auto *bond = mol->getBondBetweenAtoms(1, 2);
     REQUIRE(bond);
     REQUIRE(bond->getBondType() == Bond::SINGLE);
 
@@ -717,7 +717,7 @@ TEST_CASE("Malformed stereo markers are ignored safely", "[accurateCIP]") {
   SECTION("Double bond with invalid stereo atom indexes") {
     auto mol = "FC=CCl"_smiles;
     REQUIRE(mol);
-    auto bond = mol->getBondWithIdx(1);
+    auto *bond = mol->getBondWithIdx(1);
     REQUIRE(bond->getBondType() == Bond::DOUBLE);
     auto &stereoAtoms = bond->getStereoAtoms();
     stereoAtoms.clear();
@@ -734,7 +734,7 @@ TEST_CASE("Malformed stereo markers are ignored safely", "[accurateCIP]") {
   SECTION("Invalid atropisomer marker") {
     auto mol = "CC"_smiles;
     REQUIRE(mol);
-    auto bond = mol->getBondWithIdx(0);
+    auto *bond = mol->getBondWithIdx(0);
     bond->setStereo(Bond::STEREOATROPCW);
     bond->setProp(common_properties::_CIPCode, std::string("stale"));
     CHECK_NOTHROW(CIPLabeler::assignCIPLabels(*mol));
@@ -934,12 +934,12 @@ TEST_CASE("GitHub Issue #5142", "[bug][accurateCIP]") {
 auto view_labels(const ROMol &mol) {
   std::stringstream msg;
   std::string label;
-  for (auto a : mol.atoms()) {
+  for (auto *a : mol.atoms()) {
     if (a->getPropIfPresent(common_properties::_CIPCode, label)) {
       msg << a->getIdx() << label << ' ';
     }
   }
-  for (auto b : mol.bonds()) {
+  for (auto *b : mol.bonds()) {
     if (b->getPropIfPresent(common_properties::_CIPCode, label)) {
       msg << b->getBeginAtomIdx() << '=' << b->getEndAtomIdx() << label << ' ';
     }
@@ -1110,7 +1110,7 @@ void testOneAtropIsomerMandP(std::string inputText, const std::string &expected,
 
   std::ostringstream out;
   bool foundOne = false;
-  for (auto bond : mol->bonds()) {
+  for (auto *bond : mol->bonds()) {
     if (bond->hasProp(common_properties::_CIPCode)) {
       out << bond->getBeginAtomIdx() << "-" << bond->getEndAtomIdx() << "="
           << bond->getProp<std::string>(common_properties::_CIPCode) << ":";
@@ -1241,7 +1241,7 @@ TEST_CASE("atropisomers", "[basic]") {
       CIPLabeler::assignCIPLabels(*molsdf, 100000);
 
       std::map<std::pair<unsigned int, unsigned int>, std::string> CIPVals;
-      for (auto bond : molsdf->bonds()) {
+      for (auto *bond : molsdf->bonds()) {
         auto a1 = bond->getBeginAtomIdx();
         auto a2 = bond->getEndAtomIdx();
         if (a1 > a2) {
@@ -1275,7 +1275,7 @@ TEST_CASE("atropisomers", "[basic]") {
       CIPLabeler::assignCIPLabels(*newMol, 100000);
 
       std::map<std::pair<unsigned int, unsigned int>, std::string> newCIPVals;
-      for (auto bond : newMol->bonds()) {
+      for (auto *bond : newMol->bonds()) {
         auto a1 = bond->getBeginAtomIdx();
         auto a2 = bond->getEndAtomIdx();
         if (a1 > a2) {
@@ -1293,7 +1293,7 @@ TEST_CASE("atropisomers", "[basic]") {
 
       auto match = RDKit::SubstructMatch(*molsdf, *newMol, params);
 
-      for (auto thisBond : newMol->bonds()) {
+      for (auto *thisBond : newMol->bonds()) {
         unsigned int a1 = thisBond->getBeginAtomIdx();
         unsigned int a2 = thisBond->getEndAtomIdx();
         if (a1 > a2) {
@@ -1384,7 +1384,7 @@ M  END
     auto mol = std::unique_ptr<RWMol>(MolBlockToMol(molBlock, true, false));
     RDKit::CIPLabeler::assignCIPLabels(*mol);
 
-    auto atom = mol->getBondWithIdx(0);
+    auto *atom = mol->getBondWithIdx(0);
     std::string thisVal;
     if (atom->hasProp(common_properties::_CIPCode)) {
       thisVal = atom->getProp<std::string>(common_properties::_CIPCode);
@@ -1565,7 +1565,7 @@ M  END
     auto mol = std::unique_ptr<RWMol>(MolBlockToMol(molBlock, true, false));
     RDKit::CIPLabeler::assignCIPLabels(*mol);
 
-    auto atom = mol->getBondWithIdx(6);
+    auto *atom = mol->getBondWithIdx(6);
     std::string thisVal;
     if (atom->hasProp(common_properties::_CIPCode)) {
       thisVal = atom->getProp<std::string>(common_properties::_CIPCode);
@@ -1584,7 +1584,7 @@ M  END
     auto mol2 = std::unique_ptr<RWMol>(MolBlockToMol(molBlock2, true, false));
     RDKit::CIPLabeler::assignCIPLabels(*mol2);
 
-    auto atom2 = mol2->getBondWithIdx(6);
+    auto *atom2 = mol2->getBondWithIdx(6);
     if (atom2->hasProp(common_properties::_CIPCode)) {
       thisVal = atom2->getProp<std::string>(common_properties::_CIPCode);
     }
@@ -1726,7 +1726,7 @@ $$$$
   REQUIRE_THROWS_AS(CIPLabeler::assignCIPLabels(*mol, 100000),
                     CIPLabeler::MaxIterationsExceeded);
 
-  auto at = mol->getAtomWithIdx(22);
+  auto *at = mol->getAtomWithIdx(22);
   REQUIRE(at->getChiralTag() == Atom::ChiralType::CHI_TETRAHEDRAL_CW);
 
   // This will fail if this chiral center is not resolved first (which
@@ -1740,7 +1740,7 @@ TEST_CASE("neighbor_annotations", "[basic]") {
     auto mol = R"(C1C[C@H](C)C(=O)C[C@H]1O)"_smiles;
     REQUIRE(mol);
 
-    auto a = mol->getAtomWithIdx(2);
+    auto *a = mol->getAtomWithIdx(2);
     REQUIRE(a->getChiralTag() != Atom::CHI_UNSPECIFIED);
 
     CIPLabeler::assignCIPLabels(*mol, 100);
@@ -1755,7 +1755,7 @@ TEST_CASE("neighbor_annotations", "[basic]") {
     auto mol = R"(C/C=C(C)/N)"_smiles;
     REQUIRE(mol);
 
-    auto b = mol->getBondWithIdx(1);
+    auto *b = mol->getBondWithIdx(1);
     REQUIRE(b->getBondType() == Bond::DOUBLE);
 
     b->setStereoAtoms(0, 3);
@@ -1818,7 +1818,7 @@ $$$$
 )"_ctab;
     REQUIRE(mol);
 
-    auto b = mol->getBondWithIdx(6);
+    auto *b = mol->getBondWithIdx(6);
     REQUIRE(b->getStereo() == Bond::STEREOATROPCW);
 
     // Check that reference atoms for the atropisomer bond
@@ -1846,7 +1846,7 @@ $$$$
     auto mol = R"([2H]/C(=C(/[1H])\[H])/[H])"_smiles;
     REQUIRE(mol);
 
-    auto b = mol->getBondWithIdx(1);
+    auto *b = mol->getBondWithIdx(1);
     REQUIRE(b->getBondType() == Bond::DOUBLE);
 
     b->setStereoAtoms(0, 3);
@@ -1869,18 +1869,18 @@ TEST_CASE("GitHub #9516: update return values for Rule 6") {
 
   CIPMol cipmol(*mol);
   Digraph digraph(cipmol, mol->getAtomWithIdx(0));
-  auto root = digraph.getCurrentRoot();
+  auto *root = digraph.getCurrentRoot();
   auto edges = root->getEdges();
 
   const auto findEdgeTo = [&mol, &edges](unsigned int atomIdx) {
-    const auto atom = mol->getAtomWithIdx(atomIdx);
+    auto *const atom = mol->getAtomWithIdx(atomIdx);
     const auto iter = std::ranges::find_if(
         edges, [atom](auto edge) { return edge->getEnd()->getAtom() == atom; });
     REQUIRE(iter != edges.end());
     return *iter;
   };
-  const auto refEdge = findEdgeTo(1);
-  const auto otherEdge = findEdgeTo(2);
+  auto *const refEdge = findEdgeTo(1);
+  auto *const otherEdge = findEdgeTo(2);
   digraph.setRule6Ref(refEdge->getEnd()->getAtom());
 
   const Rule6 rule;

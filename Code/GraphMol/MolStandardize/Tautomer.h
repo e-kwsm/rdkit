@@ -148,14 +148,14 @@ namespace detail {
 */
 inline unsigned int countSpecifiedStereo(const ROMol &mol) {
   unsigned int nSpecified = 0;
-  for (const auto atom : mol.atoms()) {
+  for (auto *const atom : mol.atoms()) {
     // CHI_UNSPECIFIED is the only "none" value on the atom side; ChiralType has
     // no analogue of STEREOANY, so a simple inequality is right here.
     if (atom->getChiralTag() != Atom::CHI_UNSPECIFIED) {
       ++nSpecified;
     }
   }
-  for (const auto bond : mol.bonds()) {
+  for (auto *const bond : mol.bonds()) {
     // STEREOANY is *intentionally unspecified*, not retained stereochemistry,
     // and getClearedTautomerBondStereo() assigns it to cleared acyclic double
     // bonds, so counting it would let a tautomer win a tie on unknown stereo.

@@ -103,7 +103,7 @@ void DrawAnnotation::drawRects(MolDraw2D &molDrawer) const {
   auto olw = molDrawer.lineWidth();
   molDrawer.setLineWidth(1);
   Point2D tl, tr, br, bl, origTrans;
-  for (auto &rect : rects_) {
+  for (const auto &rect : rects_) {
     origTrans = rect->trans_;
     rect->trans_ += pos_;
     rect->calcCorners(tl, tr, br, bl, 0.0);
@@ -143,7 +143,7 @@ void DrawAnnotation::move(const Point2D &trans) {
 // ****************************************************************************
 bool DrawAnnotation::doesRectClash(const StringRect &rect,
                                    double padding) const {
-  for (auto &alrect : rects_) {
+  for (const auto &alrect : rects_) {
     auto oldTrans = alrect->trans_;
     alrect->trans_ += pos_;
     bool dii = alrect->doesItIntersect(rect, padding);

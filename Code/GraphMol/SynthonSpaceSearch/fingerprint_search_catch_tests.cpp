@@ -42,7 +42,7 @@ std::map<std::string, std::unique_ptr<ExplicitBitVect>> getFingerprints(
   std::map<std::string, std::unique_ptr<ExplicitBitVect>> fps;
   while (!suppl.atEnd()) {
     auto mol = suppl.next();
-    auto fp = fpGen->getFingerprint(*mol);
+    auto *fp = fpGen->getFingerprint(*mol);
     fps.insert(std::make_pair(
         mol->getProp<std::string>(common_properties::_Name), fp));
     auto molName = mol->getProp<std::string>(common_properties::_Name);
@@ -269,7 +269,7 @@ TEST_CASE("FP Best Hit Found") {
   CHECK_NOTHROW(results =
                     synthonspace.fingerprintSearch(*queryMol, *fpGen, params));
   CHECK(results.getHitMolecules().empty());
-  auto &bestHit = results.getBestHit();
+  const auto &bestHit = results.getBestHit();
   REQUIRE(bestHit);
   CHECK_NOTHROW(bestHit->getProp<std::string>(common_properties::_Name));
   CHECK(bestHit->getProp<double>("Similarity") < 0.8);

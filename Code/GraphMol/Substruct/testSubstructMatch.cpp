@@ -1627,7 +1627,7 @@ TEST_CASE("testIsAtomTerminalRGroupOrQueryHydrogen", "[substruct][rgroup]") {
 M  RGP  1   7   1
 M  END
 )CTAB"_ctab;
-    const auto rAtom = mol->getAtomWithIdx(mol->getNumAtoms() - 1);
+    auto *const rAtom = mol->getAtomWithIdx(mol->getNumAtoms() - 1);
     CHECK(isAtomTerminalRGroupOrQueryHydrogen(rAtom));
   }
   {
@@ -1650,7 +1650,7 @@ M  END
 M  RGP  1   6   1
 M  END
 )CTAB"_ctab;
-    const auto rAtom = mol->getAtomWithIdx(mol->getNumAtoms() - 1);
+    auto *const rAtom = mol->getAtomWithIdx(mol->getNumAtoms() - 1);
     CHECK(!isAtomTerminalRGroupOrQueryHydrogen(rAtom));
   }
   {
@@ -1675,7 +1675,7 @@ M  END
 M  ALS   7 10 F H   C   N   O   F   P   S   Cl  Br  I   
 M  END
 )CTAB"_ctab;
-    const auto rAtom = mol->getAtomWithIdx(mol->getNumAtoms() - 1);
+    auto *const rAtom = mol->getAtomWithIdx(mol->getNumAtoms() - 1);
     CHECK(isAtomTerminalRGroupOrQueryHydrogen(rAtom));
   }
   {
@@ -1700,7 +1700,7 @@ M  END
 M  ALS   7  9 F C   N   O   F   P   S   Cl  Br  I   
 M  END
 )CTAB"_ctab;
-    const auto rAtom = mol->getAtomWithIdx(mol->getNumAtoms() - 1);
+    auto *const rAtom = mol->getAtomWithIdx(mol->getNumAtoms() - 1);
     CHECK(!isAtomTerminalRGroupOrQueryHydrogen(rAtom));
   }
 }

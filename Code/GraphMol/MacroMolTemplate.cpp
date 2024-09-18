@@ -81,7 +81,7 @@ void validateLeavingGroup(const ROMol &mol,
       invalidTemplate("main and leaving groups must not overlap");
     }
     atomMembership[atomIdx] = 2;
-    for (const auto nbr : mol.atomNeighbors(mol.getAtomWithIdx(atomIdx))) {
+    for (auto *const nbr : mol.atomNeighbors(mol.getAtomWithIdx(atomIdx))) {
       const auto otherAtomIdx = nbr->getIdx();
       if (leavingAtoms.find(otherAtomIdx) == leavingAtoms.end()) {
         ++boundaryBondCount;

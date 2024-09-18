@@ -40,7 +40,7 @@ void CoordinateTemplates::assertValidTemplate(RDKit::ROMol &mol,
     std::string msg = "Template is not a ring system: " + smiles;
     throw RDDepict::DepictException(msg);
   }
-  auto ri = mol.getRingInfo();
+  auto *ri = mol.getRingInfo();
   for (unsigned int i = 0; i < mol.getNumBonds(); ++i) {
     if (!ri->numBondRings(i)) {
       std::string msg = "Template is not a ring system: " + smiles;

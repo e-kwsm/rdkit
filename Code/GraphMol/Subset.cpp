@@ -28,15 +28,15 @@ inline void copyComputedProps(const ROMol &src, ROMol &dst) {
 atomindex_t getOtherAtomIdx(const ROMol &ref_mol, const Bond &ref_bond,
                             atomindex_t dblBndAtomIdx,
                             atomindex_t stereoAtomIdx) {
-  auto ref_atom = ref_bond.getBeginAtom();
-  auto other_atom = ref_bond.getEndAtom();
+  auto *ref_atom = ref_bond.getBeginAtom();
+  auto *other_atom = ref_bond.getEndAtom();
   if (other_atom->getIdx() == dblBndAtomIdx) {
     std::swap(ref_atom, other_atom);
   }
   CHECK_INVARIANT(ref_atom->getIdx() == dblBndAtomIdx,
                 "dblBndAtomIdx should be one of the bond's atoms");
 
-  for (auto nbr : ref_mol.atomNeighbors(ref_atom)) {
+  for (auto *nbr : ref_mol.atomNeighbors(ref_atom)) {
     auto nbrIdx = nbr->getIdx();
     if (nbrIdx != stereoAtomIdx && nbr != other_atom) {
       return nbrIdx;
@@ -59,7 +59,7 @@ void handleBondStereo(Bond &extracted_bond, const Bond &ref_bond,
   auto map2 = atomMapping.find(atoms[1]);
 
   if (map1 == atomMapping.end()) {
-    auto begin_atom = ref_bond.getBeginAtom();
+    auto *begin_atom = ref_bond.getBeginAtom();
     if (begin_atom->getDegree() < 3) {
       // No alternative atom on this side; clear stereo from the bond
       atoms.clear();
@@ -82,7 +82,7 @@ void handleBondStereo(Bond &extracted_bond, const Bond &ref_bond,
   }
 
   if (map2 == atomMapping.end()) {
-    auto end_atom = ref_bond.getEndAtom();
+    auto *end_atom = ref_bond.getEndAtom();
     if (end_atom->getDegree() < 3) {
       // No alternative atom on this side; clear stereo from the bond
       atoms.clear();

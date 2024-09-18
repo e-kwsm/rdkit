@@ -52,10 +52,10 @@ SynthonSpaceSearcher::SynthonSpaceSearcher(
   }
   // For the fragmentation, it is often useful to be able to keep track of the
   // original indices.
-  for (const auto atom : getQuery().atoms()) {
+  for (auto *const atom : getQuery().atoms()) {
     atom->setProp<unsigned int>("ORIG_IDX", atom->getIdx());
   }
-  for (const auto bond : getQuery().bonds()) {
+  for (auto *const bond : getQuery().bonds()) {
     bond->setProp<unsigned int>("ORIG_IDX", bond->getIdx());
   }
 }
@@ -213,7 +213,7 @@ void checkPossibleHitsPart(
     if (nextLine >= lastLine) {
       break;
     }
-    auto &[smiles, name] = checkLines[nextLine];
+    const auto &[smiles, name] = checkLines[nextLine];
     auto mol = v2::SmilesParse::MolFromSmiles(smiles);
     std::unique_ptr<ROMol> prod;
     try {

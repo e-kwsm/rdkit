@@ -505,7 +505,7 @@ void test4() {
     initCanonAtoms(*m, atoms, neighborIds, true);
     atomcomparefunctor3 ftor(atoms.data(), *m);
 
-    auto data = atoms.data();
+    auto *data = atoms.data();
     std::vector<int> count(atoms.size());
     std::vector<int> order(atoms.size());
     int activeset;
