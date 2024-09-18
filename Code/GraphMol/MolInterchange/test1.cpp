@@ -43,7 +43,7 @@ void test1() {
 
     auto mols = MolInterchange::JSONDataStreamToMols(&inStream);
     TEST_ASSERT(mols.size() == 1);
-    auto m = mols[0].get();
+    auto *m = mols[0].get();
     TEST_ASSERT(m);
     // m->debugMol(std::cerr);
     TEST_ASSERT(m->getNumAtoms() == 15);
@@ -82,7 +82,7 @@ void test1() {
 
     auto mols = MolInterchange::JSONDataStreamToMols(&inStream);
     TEST_ASSERT(mols.size() == 1);
-    auto m = mols[0].get();
+    auto *m = mols[0].get();
     TEST_ASSERT(m);
     TEST_ASSERT(m->getNumAtoms() == 6);
     TEST_ASSERT(m->getNumBonds() == 5);
@@ -118,7 +118,7 @@ void test1() {
         "2], \"cipCodes\": [], \"atomRings\": []}]}]}";
     auto mols = MolInterchange::JSONDataToMols(json);
     TEST_ASSERT(mols.size() == 1);
-    auto m = mols[0].get();
+    auto *m = mols[0].get();
     TEST_ASSERT(m);
     TEST_ASSERT(m->getBondBetweenAtoms(1, 2));
     TEST_ASSERT(m->getBondBetweenAtoms(1, 2)->getBondType() == Bond::ZERO);
@@ -136,7 +136,7 @@ void test1() {
         "name\",\"atoms\":[{},{}],\"bonds\":[{\"bo\":1, \"atoms\":[0, 1]}]}]}";
     auto mols = MolInterchange::JSONDataToMols(json);
     TEST_ASSERT(mols.size() == 1);
-    auto m = mols[0].get();
+    auto *m = mols[0].get();
     TEST_ASSERT(m);
     TEST_ASSERT(m->getNumAtoms() == 2)
     TEST_ASSERT(m->getBondBetweenAtoms(0, 1));
@@ -358,7 +358,7 @@ void test6() {
     MolInterchange::JSONParseParameters ps;
     auto mols = MolInterchange::JSONDataToMols(jsond, ps);
     TEST_ASSERT(mols.size() == 1);
-    auto m = mols[0].get();
+    auto *m = mols[0].get();
     TEST_ASSERT(m);
     TEST_ASSERT(m->getNumAtoms() == 6);
     TEST_ASSERT(m->getNumBonds() == 5);
@@ -374,7 +374,7 @@ void test6() {
     ps.parseConformers = false;
     auto mols = MolInterchange::JSONDataToMols(jsond, ps);
     TEST_ASSERT(mols.size() == 1);
-    auto m = mols[0].get();
+    auto *m = mols[0].get();
     TEST_ASSERT(m);
     TEST_ASSERT(m->getNumAtoms() == 6);
     TEST_ASSERT(m->getNumBonds() == 5);
@@ -391,7 +391,7 @@ void test6() {
     ps.parseProperties = false;
     auto mols = MolInterchange::JSONDataToMols(jsond, ps);
     TEST_ASSERT(mols.size() == 1);
-    auto m = mols[0].get();
+    auto *m = mols[0].get();
     TEST_ASSERT(m);
     TEST_ASSERT(m->getNumAtoms() == 6);
     TEST_ASSERT(m->getNumBonds() == 5);
@@ -407,7 +407,7 @@ void test6() {
     ps.parseProperties = false;
     auto mols = MolInterchange::JSONDataToMols(jsond, ps);
     TEST_ASSERT(mols.size() == 1);
-    auto m = mols[0].get();
+    auto *m = mols[0].get();
     TEST_ASSERT(m);
     TEST_ASSERT(m->getNumAtoms() == 6);
     TEST_ASSERT(m->getNumBonds() == 5);
