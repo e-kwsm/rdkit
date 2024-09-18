@@ -179,7 +179,7 @@ void testCanRetrieveProp() {
   std::vector<std::vector<int>> res;
   std::unique_ptr<ROMol> mrg(
       ReducedGraphs::generateMolExtendedReducedGraph(*m));
-  for (const auto atom : mrg->atoms()) {
+  for (auto *const atom : mrg->atoms()) {
     std::vector<int> atomTypes;
     TEST_ASSERT(atom->getPropIfPresent("_ErGAtomTypes", atomTypes));
     res.push_back(atomTypes);

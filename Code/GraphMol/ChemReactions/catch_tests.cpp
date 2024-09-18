@@ -39,7 +39,7 @@ TEST_CASE("Github #1632", "[Reaction][PDB][bug]") {
     std::unique_ptr<RWMol> mol(SequenceToMol("K", sanitize, flavor));
     REQUIRE(mol);
     REQUIRE(mol->getAtomWithIdx(0)->getMonomerInfo());
-    auto res = static_cast<AtomPDBResidueInfo *>(
+    auto *res = static_cast<AtomPDBResidueInfo *>(
         mol->getAtomWithIdx(0)->getMonomerInfo());
     CHECK(res->getResidueNumber() == 1);
     std::unique_ptr<ChemicalReaction> rxn(RxnSmartsToChemicalReaction(
@@ -54,7 +54,7 @@ TEST_CASE("Github #1632", "[Reaction][PDB][bug]") {
     auto p = prods[0][0];
     CHECK(p->getNumAtoms() == mol->getNumAtoms() + 1);
     REQUIRE(p->getAtomWithIdx(0)->getMonomerInfo());
-    auto pres = static_cast<AtomPDBResidueInfo *>(
+    auto *pres = static_cast<AtomPDBResidueInfo *>(
         p->getAtomWithIdx(0)->getMonomerInfo());
     CHECK(pres->getResidueNumber() == 1);
     REQUIRE(!p->getAtomWithIdx(4)->getMonomerInfo());
@@ -1300,7 +1300,7 @@ TEST_CASE("CXSMILES for reactions", "[cxsmiles]") {
     REQUIRE(rxn);
     CHECK(rxn->getReactants().size() == 2);
     CHECK(rxn->getProducts().size() == 1);
-    auto bnd = rxn->getReactants()[1]->getBondBetweenAtoms(1, 2);
+    auto *bnd = rxn->getReactants()[1]->getBondBetweenAtoms(1, 2);
     REQUIRE(bnd);
     CHECK(bnd->hasProp(common_properties::_MolFileBondAttach));
     CHECK(bnd->getProp<std::string>(common_properties::_MolFileBondAttach) ==
@@ -1421,14 +1421,14 @@ TEST_CASE("CDXML Parser") {
     CHECK(rxns.size() == 1);
     unsigned int i = 0;
     int count = 0;
-    for (auto &mol : rxns[0]->getReactants()) {
+    for (const auto &mol : rxns[0]->getReactants()) {
       CHECK(mol->getProp<unsigned int>("CDX_SCHEME_ID") == 397);
       CHECK(mol->getProp<unsigned int>("CDX_STEP_ID") == 398);
       CHECK(mol->getProp<unsigned int>("CDX_REAGENT_ID") == i++);
       CHECK(MolToSmiles(*mol) == expected[count++]);
     }
     i = 0;
-    for (auto &mol : rxns[0]->getProducts()) {
+    for (const auto &mol : rxns[0]->getProducts()) {
       CHECK(mol->getProp<unsigned int>("CDX_SCHEME_ID") == 397);
       CHECK(mol->getProp<unsigned int>("CDX_STEP_ID") == 398);
       CHECK(mol->getProp<unsigned int>("CDX_PRODUCT_ID") == i++);
@@ -1656,11 +1656,11 @@ TEST_CASE(
     REQUIRE(reactants[0]);
     auto products = rxn->runReactants(reactants);
     REQUIRE(products.size() == 1);
-    for (const auto atom : products[0][0]->atoms()) {
+    for (auto *const atom : products[0][0]->atoms()) {
       INFO(atom->getIdx());
       CHECK(atom->hasQuery());
     }
-    for (const auto bond : products[0][0]->bonds()) {
+    for (auto *const bond : products[0][0]->bonds()) {
       INFO(bond->getIdx());
       CHECK(bond->hasQuery());
     }
@@ -1832,7 +1832,7 @@ TEST_CASE(
   }
 
   SECTION("isotopes are weird") {
-    auto rxnb = R"CTAB($RXN V3000
+    const auto *rxnb = R"CTAB($RXN V3000
 
       Mrv2211  111620231722
 
@@ -2043,7 +2043,7 @@ TEST_CASE(
     "Github #7674: reaction pickling does not honor PicklePropertiesOptions") {
   auto pklOpts = MolPickler::getDefaultPickleProperties();
   SECTION("as reported") {
-    auto rxnb = R"RXN($RXN
+    const auto *rxnb = R"RXN($RXN
 
   Mrv17183    050301241900
 
@@ -2087,7 +2087,7 @@ M  END)RXN";
 
 TEST_CASE("Github #7675: pickling fails with a HasProp query") {
   SECTION("as reported") {
-    auto rxnb = R"RXN($RXN
+    const auto *rxnb = R"RXN($RXN
 
   Mrv17183    050301241900
 

@@ -119,13 +119,13 @@ class MarvinCMLReader {
 
     // convert atoms to queries:
     for (auto mol : rxn->getReactants()) {
-      for (auto atom : mol->atoms()) {
+      for (auto *atom : mol->atoms()) {
         QueryOps::replaceAtomWithQueryAtom(static_cast<RWMol *>(mol.get()),
                                            atom);
       }
     }
     for (auto mol : rxn->getProducts()) {
-      for (auto atom : mol->atoms()) {
+      for (auto *atom : mol->atoms()) {
         QueryOps::replaceAtomWithQueryAtom(static_cast<RWMol *>(mol.get()),
                                            atom);
       }
@@ -452,7 +452,7 @@ class MarvinCMLReader {
         conf3d->set3D(true);
       }
 
-      for (auto atomPtr : marvinMol->atoms) {
+      for (auto *atomPtr : marvinMol->atoms) {
         Atom *atom = molAtomFromMarvinAtom(atomPtr, marvinMol);
         unsigned int aid = mol->addAtom(atom, false, true);
 
@@ -551,7 +551,7 @@ class MarvinCMLReader {
 
       bool chiralityPossible = false;
 
-      for (auto bondPtr : marvinMol->bonds) {
+      for (auto *bondPtr : marvinMol->bonds) {
         molBondFromMarvinBond(bondPtr, marvinMol, mol.get(), chiralityPossible);
       }
 
@@ -559,7 +559,7 @@ class MarvinCMLReader {
 
       std::vector<StereoGroup> groups;
 
-      for (auto groupPtr : stereoGroups) {
+      for (auto *groupPtr : stereoGroups) {
         std::vector<Atom *> atoms;
         std::vector<Bond *> bonds;
         for (auto atomPtr : groupPtr->atoms) {

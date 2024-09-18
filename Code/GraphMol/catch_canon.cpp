@@ -828,7 +828,7 @@ TEST_CASE("ensure unused features are not used") {
 TEST_CASE(
     "GitHub Issue #6633: Pre-condition violation in canonicalization of dative bond adjacent to double bond",
     "[bug][canonicalization]") {
-  auto mb = R"CTAB(
+  const auto *mb = R"CTAB(
                     3D
 
   0  0  0     0  0            999 V3000
@@ -921,7 +921,7 @@ TEST_CASE(
     "[bug]") {
   UseLegacyStereoPerceptionFixture reset_stereo_perception{false};
 
-  const auto molb = R"CTAB("
+  const auto *const molb = R"CTAB("
      RDKit          2D
 
   0  0  0  0  0  0  0  0  0  0999 V3000
