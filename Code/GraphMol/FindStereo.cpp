@@ -129,8 +129,8 @@ bool isAtomPotentialStereoAtom(const Atom *atom) {
 StereoInfo getStereoInfo(const Bond *bond) {
   PRECONDITION(bond, "bond is null");
   StereoInfo sinfo;
-  const auto beginAtom = bond->getBeginAtom();
-  const auto endAtom = bond->getEndAtom();
+  auto *const beginAtom = bond->getBeginAtom();
+  auto *const endAtom = bond->getEndAtom();
   if (bond->getBondType() == Bond::BondType::DOUBLE) {
     if (beginAtom->getDegree() < 1 || endAtom->getDegree() < 1 ||
         beginAtom->getDegree() > 3 || endAtom->getDegree() > 3) {
@@ -146,7 +146,7 @@ StereoInfo getStereoInfo(const Bond *bond) {
 
     auto explore_bond_end = [&mol, &bond, &sinfo,
                              &seenSquiggleBond](const Atom *atom) {
-      for (const auto nbr : mol.atomBonds(atom)) {
+      for (auto *const nbr : mol.atomBonds(atom)) {
         if (nbr->getIdx() != bond->getIdx()) {
           if (nbr->getBondDir() == Bond::BondDir::UNKNOWN) {
             seenSquiggleBond = true;
@@ -240,7 +240,7 @@ StereoInfo getStereoInfo(const Bond *bond) {
     sinfo.controllingAtoms.reserve(4);
 
     const auto &mol = bond->getOwningMol();
-    for (const auto nbr : mol.atomBonds(beginAtom)) {
+    for (auto *const nbr : mol.atomBonds(beginAtom)) {
       if (nbr->getIdx() != bond->getIdx()) {
         sinfo.controllingAtoms.push_back(
             nbr->getOtherAtomIdx(beginAtom->getIdx()));
@@ -249,7 +249,7 @@ StereoInfo getStereoInfo(const Bond *bond) {
     if (beginAtom->getDegree() == 2) {
       sinfo.controllingAtoms.push_back(StereoInfo::NOATOM);
     }
-    for (const auto nbr : mol.atomBonds(endAtom)) {
+    for (auto *const nbr : mol.atomBonds(endAtom)) {
       if (nbr->getIdx() != bond->getIdx()) {
         sinfo.controllingAtoms.push_back(
             nbr->getOtherAtomIdx(endAtom->getIdx()));
@@ -389,14 +389,14 @@ bool isBondPotentialStereoBond(const Bond *bond) {
   // if it's a ring bond, the smallest ring it's in must have at least 8
   // members
   //  (this is common with InChI)
-  const auto beginAtom = bond->getBeginAtom();
+  auto *const beginAtom = bond->getBeginAtom();
   auto begDegree = beginAtom->getTotalDegree();
-  const auto endAtom = bond->getEndAtom();
+  auto *const endAtom = bond->getEndAtom();
   auto endDegree = endAtom->getTotalDegree();
   if (begDegree > 1 && begDegree < 4 && endDegree > 1 && endDegree < 4 &&
       beginAtom->getTotalNumHs(true) < 2 && endAtom->getTotalNumHs(true) < 2) {
     // check rings
-    const auto ri = bond->getOwningMol().getRingInfo();
+    auto *const ri = bond->getOwningMol().getRingInfo();
     for (const auto &bring : ri->bondRings()) {
       if (bring.size() < minRingSizeForDoubleBondStereo &&
           std::find(bring.begin(), bring.end(), bond->getIdx()) !=
@@ -464,7 +464,7 @@ bool areStereobondControllingAtomsDupes(
   // Now that we know we have 2 neighbors with the same rank, check whether
   // there is a common even sized ring between the controlling atoms in which
   // the atom opposite of the bond may be chiral, which would break the tie
-  auto ringInfo = mol.getRingInfo();
+  auto *ringInfo = mol.getRingInfo();
   auto atom1Members = ringInfo->atomMembers(controllingAtom1);
   auto atom2Members = ringInfo->atomMembers(controllingAtom2);
 
@@ -530,7 +530,7 @@ void initAtomInfo(ROMol &mol, bool flagPossible, bool cleanIt,
                   std::vector<std::string> &atomSymbols,
                   boost::dynamic_bitset<> &possibleAtoms) {
   bool allowNontetrahedralStereo = getAllowNontetrahedralChirality();
-  for (const auto atom : mol.atoms()) {
+  for (auto *const atom : mol.atoms()) {
     if (atom->needsUpdatePropertyCache()) {
       atom->updatePropertyCache(false);
     }
@@ -575,7 +575,7 @@ void initBondInfo(ROMol &mol, bool flagPossible, bool cleanIt,
                   boost::dynamic_bitset<> &knownBonds,
                   std::vector<std::string> &bondSymbols,
                   boost::dynamic_bitset<> &possibleBonds) {
-  for (const auto bond : mol.bonds()) {
+  for (auto *const bond : mol.bonds()) {
     auto bidx = bond->getIdx();
     bondSymbols[bidx] = getBondSymbol(bond);
     if (detail::isBondPotentialStereoBond(bond)) {
@@ -638,7 +638,7 @@ void flagRingStereo(ROMol &mol,
   //    central
   //       bond in C1CCC2CCCCC2C1
 
-  auto ringInfo = mol.getRingInfo();
+  auto *ringInfo = mol.getRingInfo();
   boost::dynamic_bitset<> possibleAtomsInRing(mol.getNumAtoms());
   for (unsigned int ridx = 0; ridx < ringInfo->atomRings().size(); ++ridx) {
     const auto &aring = ringInfo->atomRings()[ridx];
@@ -667,9 +667,9 @@ void flagRingStereo(ROMol &mol,
           for (unsigned int indexIncrement = incrementSize; indexIncrement < sz;
                indexIncrement += incrementSize) {
             auto otherIdx = aring[(ai + indexIncrement) % sz];
-            auto otherAtom = mol.getAtomWithIdx(otherIdx);
+            auto *otherAtom = mol.getAtomWithIdx(otherIdx);
 
-            for (auto bond : mol.atomBonds(otherAtom)) {
+            for (auto *bond : mol.atomBonds(otherAtom)) {
               auto bidx = bond->getIdx();
               if ((knownBonds[bidx] ||
                    (possibleBonds && possibleBonds->test(bidx))) &&
@@ -710,7 +710,7 @@ void flagRingStereo(ROMol &mol,
         auto previousOtherIdx = aidx;
         for (size_t step = 1; step <= halfSize; ++step) {
           auto otherIdx = aring[(ai + step) % sz];
-          auto bnd = mol.getBondBetweenAtoms(previousOtherIdx, otherIdx);
+          auto *bnd = mol.getBondBetweenAtoms(previousOtherIdx, otherIdx);
           if (ringInfo->numBondRings(bnd->getIdx()) < 2) {
             // We reached the end of the common edge.
             break;
@@ -756,7 +756,7 @@ bool updateAtoms(ROMol &mol, const std::vector<unsigned int> &aranks,
                  std::vector<unsigned int> &possibleRingStereoBonds,
                  std::vector<StereoInfo> &sinfos) {
   bool needAnotherRound = false;
-  for (const auto atom : mol.atoms()) {
+  for (auto *const atom : mol.atoms()) {
     auto aidx = atom->getIdx();
     if (knownAtoms[aidx] || possibleAtoms[aidx]) {
       auto sinfo = detail::getStereoInfo(atom);
@@ -774,7 +774,7 @@ bool updateAtoms(ROMol &mol, const std::vector<unsigned int> &aranks,
               // concerned about is a candidate for ring stereo and the bond
               // to the atom with the duplicate rank is a ring bond
               if (possibleRingStereoAtoms[aidx]) {
-                auto bnd = mol.getBondBetweenAtoms(aidx, nbrIdx);
+                auto *bnd = mol.getBondBetweenAtoms(aidx, nbrIdx);
                 if (!bnd || !possibleRingStereoBonds[bnd->getIdx()]) {
                   haveADupe = true;
                   break;
@@ -879,7 +879,7 @@ bool updateBonds(ROMol &mol, const std::vector<unsigned int> &aranks,
                  boost::dynamic_bitset<> &fixedBonds,
                  std::vector<StereoInfo> &sinfos) {
   bool needAnotherRound = false;
-  for (const auto bond : mol.bonds()) {
+  for (auto *const bond : mol.bonds()) {
     auto bidx = bond->getIdx();
     if (knownBonds[bidx] || possibleBonds[bidx]) {
       auto sinfo = detail::getStereoInfo(bond);
@@ -979,14 +979,14 @@ void cleanMolStereo(ROMol &mol, const boost::dynamic_bitset<> &fixedAtoms,
                     const boost::dynamic_bitset<> &knownAtoms,
                     const boost::dynamic_bitset<> &fixedBonds,
                     const boost::dynamic_bitset<> &knownBonds) {
-  for (auto atom : mol.atoms()) {
+  for (auto *atom : mol.atoms()) {
     const auto i = atom->getIdx();
     if (!fixedAtoms[i] && knownAtoms[i]) {
       switch (atom->getChiralTag()) {
         case Atom::ChiralType::CHI_TETRAHEDRAL_CCW:
         case Atom::ChiralType::CHI_TETRAHEDRAL_CW:
           atom->setChiralTag(Atom::ChiralType::CHI_UNSPECIFIED);
-          for (auto nbrBond : mol.atomBonds(atom)) {
+          for (auto *nbrBond : mol.atomBonds(atom)) {
             auto bondDir = nbrBond->getBondDir();
             if (bondDir == Bond::BondDir::BEGINDASH ||
                 bondDir == Bond::BondDir::BEGINWEDGE) {
@@ -1007,7 +1007,7 @@ void cleanMolStereo(ROMol &mol, const boost::dynamic_bitset<> &fixedAtoms,
   }
 
   bool removedStereo = false;
-  for (auto bond : mol.bonds()) {
+  for (auto *bond : mol.bonds()) {
     const auto i = bond->getIdx();
     if (!fixedBonds[i] && knownBonds[i]) {
       bond->setStereo(Bond::BondStereo::STEREONONE);
@@ -1020,13 +1020,13 @@ void cleanMolStereo(ROMol &mol, const boost::dynamic_bitset<> &fixedAtoms,
   // remove any slash bond dirs that do not have a stereo neighbor
 
   if (removedStereo) {
-    for (auto bond : mol.bonds()) {
+    for (auto *bond : mol.bonds()) {
       auto bondDir = bond->getBondDir();
       if (bondDir == Bond::BondDir::ENDDOWNRIGHT ||
           bondDir == Bond::BondDir::ENDUPRIGHT) {
         bool dirOk = false;
-        for (auto bondEnd : {bond->getBeginAtom(), bond->getEndAtom()}) {
-          for (auto nbrBond : mol.atomBonds(bondEnd)) {
+        for (auto *bondEnd : {bond->getBeginAtom(), bond->getEndAtom()}) {
+          for (auto *nbrBond : mol.atomBonds(bondEnd)) {
             if (nbrBond != bond &&
                 nbrBond->getStereo() != Bond::BondStereo::STEREONONE) {
               dirOk = true;
@@ -1243,7 +1243,7 @@ std::vector<StereoInfo> runCleanup(ROMol &mol, bool flagPossible,
   boost::dynamic_bitset<> possibleSpecialCases(mol.getNumAtoms());
   findChiralAtomSpecialCases(mol, possibleSpecialCases, aranks);
 
-  for (const auto atom : mol.atoms()) {
+  for (auto *const atom : mol.atoms()) {
     atom->setProp<unsigned int>(common_properties::_ChiralAtomRank,
                                 aranks[atom->getIdx()], true);
   }

@@ -480,7 +480,7 @@ void canonicalizeDoubleBond(Bond *dblBond, const UINT_VECT &bondVisitOrders,
   if (atom3->getDegree() == 3) {
     Bond *otherAtom3Bond = nullptr;
     bool dblBondPresent = false;
-    for (auto tbond : mol.atomBonds(atom3)) {
+    for (auto *tbond : mol.atomBonds(atom3)) {
       if (tbond->getBondType() == Bond::DOUBLE &&
           tbond->getStereo() > Bond::STEREOANY) {
         dblBondPresent = true;
@@ -997,10 +997,10 @@ void canonicalizeFragment(ROMol &mol, int atomIdx,
   boost::dynamic_bitset<> numSwapsChiralAtoms(nAtoms);
   std::vector<int> atomPermutationIndices(nAtoms, 0);
   if (doIsomericSmiles) {
-    for (const auto atom : mol.atoms()) {
+    for (auto *const atom : mol.atoms()) {
       if (atom->getChiralTag() != Atom::CHI_UNSPECIFIED) {
         // check if all of this atom's bonds are in play
-        for (const auto bnd : mol.atomBonds(atom)) {
+        for (auto *const bnd : mol.atomBonds(atom)) {
           if (bondsInPlay && !(*bondsInPlay)[bnd->getIdx()]) {
             atom->setProp(common_properties::_brokenChirality, true);
             break;
@@ -1028,7 +1028,7 @@ void canonicalizeFragment(ROMol &mol, int atomIdx,
           // bonds, even if they won't be written to the SMILES
           if (trueOrder.size() < atom->getDegree()) {
             INT_LIST tOrder = trueOrder;
-            for (const auto bnd : mol.atomBonds(atom)) {
+            for (auto *const bnd : mol.atomBonds(atom)) {
               int bndIdx = bnd->getIdx();
               if (std::find(trueOrder.begin(), trueOrder.end(), bndIdx) ==
                   trueOrder.end()) {
@@ -1157,14 +1157,14 @@ void canonicalizeFragment(ROMol &mol, int atomIdx,
                    msI.obj.atom->getPropIfPresent("_stereoGroup", sgidx) &&
                    mol.getStereoGroups().size() > sgidx) {
           // make sure that the reference atom in the stereogroup is CCW
-          auto &sg = mol.getStereoGroups()[sgidx];
+          const auto &sg = mol.getStereoGroups()[sgidx];
           bool swapIt =
               msI.obj.atom->getChiralTag() == Atom::CHI_TETRAHEDRAL_CW;
           if (swapIt) {
             msI.obj.atom->invertChirality();
           }
           if (swapIt || numSwapsChiralAtoms[msI.obj.atom->getIdx()]) {
-            for (auto at : sg.getAtoms()) {
+            for (auto *at : sg.getAtoms()) {
               if (at == msI.obj.atom) {
                 continue;
               }
@@ -1207,7 +1207,7 @@ void canonicalizeEnhancedStereo(ROMol &mol,
   // one thing that makes this all easier is that the stereogroups are
   // independent of each other
   std::vector<StereoGroup> newSgs;
-  for (auto &sg : sgs) {
+  for (const auto &sg : sgs) {
     // we don't do anything to ABS groups
     if (sg.getGroupType() == StereoGroupType::STEREO_ABSOLUTE) {
       newSgs.push_back(sg);
@@ -1265,10 +1265,10 @@ void canonicalizeEnhancedStereo(ROMol &mol,
       // we need to flip everyone... so loop over the other atoms and bonds
       // and flip them all:
 
-      for (auto atom : sgAtoms) {
+      for (auto *atom : sgAtoms) {
         atom->invertChirality();
       }
-      for (auto bond : sgBonds) {
+      for (auto *bond : sgBonds) {
         bond->invertChirality();
       }
     }

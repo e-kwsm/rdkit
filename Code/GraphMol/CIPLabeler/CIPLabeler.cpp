@@ -53,7 +53,7 @@ std::vector<std::unique_ptr<Configuration>> findConfigs(
 
   for (auto index = atoms.find_first(); index != boost::dynamic_bitset<>::npos;
        index = atoms.find_next(index)) {
-    auto atom = mol.getAtom(index);
+    auto *atom = mol.getAtom(index);
     auto chiraltag = atom->getChiralTag();
     if (chiraltag == Atom::CHI_TETRAHEDRAL_CW ||
         chiraltag == Atom::CHI_TETRAHEDRAL_CCW) {
@@ -64,7 +64,7 @@ std::vector<std::unique_ptr<Configuration>> findConfigs(
 
   for (auto index = bonds.find_first(); index != boost::dynamic_bitset<>::npos;
        index = bonds.find_next(index)) {
-    auto bond = mol.getBond(index);
+    auto *bond = mol.getBond(index);
 
     auto bond_cfg = bond->getStereo();
     switch (bond_cfg) {
@@ -117,7 +117,7 @@ bool labelAux(std::vector<std::unique_ptr<Configuration>> &configs,
       if (node->isDuplicate()) {
         continue;
       }
-      auto low = node;
+      auto *low = node;
       if (foci.size() == 2) {
         for (const auto &edge : node->getEdges(foci[1])) {
           const auto &other_node = edge->getOther(node);

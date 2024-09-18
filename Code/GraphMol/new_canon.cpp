@@ -360,7 +360,7 @@ void rankWithFunctor(T &ftor, bool breakTies, std::vector<int> &order,
 namespace {
 bool hasRingNbr(const ROMol &mol, const Atom *at) {
   PRECONDITION(at, "bad pointer");
-  for (const auto nbr : mol.atomNeighbors(at)) {
+  for (auto *const nbr : mol.atomNeighbors(at)) {
     if ((nbr->getChiralTag() == Atom::CHI_TETRAHEDRAL_CW ||
          nbr->getChiralTag() == Atom::CHI_TETRAHEDRAL_CCW) &&
         nbr->hasProp(common_properties::_ringStereoAtoms)) {
@@ -399,7 +399,7 @@ bondholder makeBondHolder(const Bond *bond, unsigned int otherIdx,
       res.controllingAtoms[0] = &atoms[bond->getStereoAtoms()[0]];
       res.controllingAtoms[2] = &atoms[bond->getStereoAtoms()[1]];
       if (bond->getBeginAtom()->getDegree() > 2) {
-        for (const auto nbr :
+        for (auto *const nbr :
              bond->getOwningMol().atomNeighbors(bond->getBeginAtom())) {
           if (nbr->getIdx() != bond->getEndAtomIdx() &&
               nbr->getIdx() !=
@@ -409,7 +409,7 @@ bondholder makeBondHolder(const Bond *bond, unsigned int otherIdx,
         }
       }
       if (bond->getEndAtom()->getDegree() > 2) {
-        for (const auto nbr :
+        for (auto *const nbr :
              bond->getOwningMol().atomNeighbors(bond->getEndAtom())) {
           if (nbr->getIdx() != bond->getBeginAtomIdx() &&
               nbr->getIdx() !=
@@ -566,8 +566,8 @@ void initCanonAtoms(const ROMol &mol, std::vector<Canon::canon_atom> &atoms,
   }
   if (includeChirality && includeStereoGroups) {
     unsigned int sgidx = 1;
-    for (auto &sg : mol.getStereoGroups()) {
-      for (auto atom : sg.getAtoms()) {
+    for (const auto &sg : mol.getStereoGroups()) {
+      for (auto *atom : sg.getAtoms()) {
         atoms[atom->getIdx()].whichStereoGroup = sgidx;
         atoms[atom->getIdx()].typeOfStereoGroup = sg.getGroupType();
       }
@@ -591,7 +591,7 @@ void initFragmentCanonAtoms(const ROMol &mol,
   PRECONDITION(!bondSymbols || bondSymbols->size() == mol.getNumBonds(),
                "bad bond symbols");
   // start by initializing the atoms
-  for (const auto atom : mol.atoms()) {
+  for (auto *const atom : mol.atoms()) {
     auto i = atom->getIdx();
     auto &atomsi = atoms[i];
     atomsi.atom = atom;
@@ -616,7 +616,7 @@ void initFragmentCanonAtoms(const ROMol &mol,
   // now deal with the bonds in the fragment.
   // these set the atomic degrees and update the neighbor lists
   if (needsInit) {
-    for (const auto bond : mol.bonds()) {
+    for (auto *const bond : mol.bonds()) {
       if (!bondsInPlay[bond->getIdx()] ||
           !atomsInPlay[bond->getBeginAtomIdx()] ||
           !atomsInPlay[bond->getEndAtomIdx()]) {

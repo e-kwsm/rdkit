@@ -385,7 +385,7 @@ void checkChiralityPostMove(const ROMol &mol, const Atom *oAt, Atom *nAt,
       }
     }
   } else {
-    for (auto obond : mol.atomBonds(oAt)) {
+    for (auto *obond : mol.atomBonds(oAt)) {
       if (obond != bond) {
         newOrder.push_back(obond->getIdx());
       }
@@ -411,10 +411,10 @@ std::vector<std::pair<Bond *, std::vector<int>>> getNbrBondStereo(
   PRECONDITION(bnd, "null bond");
   // loop over neighboring double bonds and remove their stereo atom
   std::vector<std::pair<Bond *, std::vector<int>>> res;
-  const auto bgn = bnd->getBeginAtom();
-  const auto end = bnd->getEndAtom();
+  auto *const bgn = bnd->getBeginAtom();
+  auto *const end = bnd->getEndAtom();
   for (const auto *atom : {bgn, end}) {
-    for (auto obnd : mol.atomBonds(atom)) {
+    for (auto *obnd : mol.atomBonds(atom)) {
       if (obnd->getIdx() != bnd->getIdx() && !obnd->getStereoAtoms().empty()) {
         obnd->setProp(molfragSaveStereo, obnd->getStereo());
         res.emplace_back(obnd, obnd->getStereoAtoms());
@@ -550,7 +550,7 @@ ROMol *fragmentOnBonds(
     } else {
       // was github issues 429, 6034
       for (auto idx : {bidx, eidx}) {
-        if (auto tatom = res->getAtomWithIdx(idx);
+        if (auto *tatom = res->getAtomWithIdx(idx);
             tatom->getNoImplicit() ||
             (tatom->getIsAromatic() && tatom->getAtomicNum() != 6)) {
           tatom->setNumExplicitHs(tatom->getNumExplicitHs() + 1);

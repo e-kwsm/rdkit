@@ -40,8 +40,8 @@ void insertStereoGroups(RWMol &mol, const ROMol &other,
     // here, just merge the atoms and bonds in them into one group. Other stereo
     // groups are just forwarded.
     if (sg.getGroupType() == RDKit::StereoGroupType::STEREO_ABSOLUTE) {
-      auto &atoms = sg.getAtoms();
-      auto &bonds = sg.getBonds();
+      const auto &atoms = sg.getAtoms();
+      const auto &bonds = sg.getBonds();
       abs_atoms.insert(abs_atoms.end(), atoms.begin(), atoms.end());
       abs_bonds.insert(abs_bonds.end(), bonds.begin(), bonds.end());
     } else {
@@ -53,11 +53,11 @@ void insertStereoGroups(RWMol &mol, const ROMol &other,
     // update the stereo group's atom and bond indices
     std::vector<RDKit::Atom *> new_atoms;
     std::vector<RDKit::Bond *> new_bonds;
-    for (auto atom : sg.getAtoms()) {
+    for (auto *atom : sg.getAtoms()) {
       auto idx = atom->getIdx() + origNumAtoms;
       new_atoms.push_back(mol.getAtomWithIdx(idx));
     }
-    for (auto bond : sg.getBonds()) {
+    for (auto *bond : sg.getBonds()) {
       auto idx = bond->getIdx() + origNumBonds;
       new_bonds.push_back(mol.getBondWithIdx(idx));
     }
@@ -144,7 +144,7 @@ RWMol &RWMol::operator=(const RWMol &other) {
 void RWMol::insertMol(const ROMol &other) {
   auto origNumAtoms = getNumAtoms();
   auto origNumBonds = getNumBonds();
-  for (const auto oatom : other.atoms()) {
+  for (auto *const oatom : other.atoms()) {
     Atom *newAt = oatom->copy();
     const bool updateLabel = false;
     const bool takeOwnership = true;
@@ -168,7 +168,7 @@ void RWMol::insertMol(const ROMol &other) {
     }
   }
 
-  for (const auto obond : other.bonds()) {
+  for (auto *const obond : other.bonds()) {
     Bond *bond_p = obond->copy();
     unsigned int idx1, idx2;
     idx1 = bond_p->getBeginAtomIdx() + origNumAtoms;
@@ -236,7 +236,7 @@ void RWMol::replaceAtom(unsigned int idx, Atom *atom_pin, bool,
                         bool preserveProps) {
   PRECONDITION(atom_pin, "bad atom passed to replaceAtom");
   URANGE_CHECK(idx, getNumAtoms());
-  auto atom_p = atom_pin->copy();
+  auto *atom_p = atom_pin->copy();
   atom_p->setOwningMol(this);
   atom_p->setIdx(idx);
   auto vd = boost::vertex(idx, d_graph);
@@ -245,7 +245,7 @@ void RWMol::replaceAtom(unsigned int idx, Atom *atom_pin, bool,
     atom_p->updateProps(*d_graph[vd], replaceExistingData);
   }
 
-  const auto orig_p = d_graph[vd];
+  auto *const orig_p = d_graph[vd];
   delete orig_p;
   d_graph[vd] = atom_p;
 
@@ -293,7 +293,7 @@ void RWMol::replaceBond(unsigned int idx, Bond *bond_pin, bool preserveProps,
   auto orderDifference =
       bond_p->getBondTypeAsDouble() - obond->getBondTypeAsDouble();
   if (orderDifference > 0) {
-    for (auto atom : {bond_p->getBeginAtom(), bond_p->getEndAtom()}) {
+    for (auto *atom : {bond_p->getBeginAtom(), bond_p->getEndAtom()}) {
       if (auto explicit_hs = atom->getNumExplicitHs(); explicit_hs > 0) {
         auto new_hs = static_cast<int>(explicit_hs - orderDifference);
         atom->setNumExplicitHs(std::max(new_hs, 0));
@@ -306,7 +306,7 @@ void RWMol::replaceBond(unsigned int idx, Bond *bond_pin, bool preserveProps,
     bond_p->updateProps(*d_graph[*(bIter.first)], replaceExistingData);
   }
 
-  const auto orig_p = d_graph[*(bIter.first)];
+  auto *const orig_p = d_graph[*(bIter.first)];
   delete orig_p;
   d_graph[*(bIter.first)] = bond_p;
 
@@ -501,8 +501,8 @@ void RWMol::removeAtom(Atom *atom) { removeAtom(atom, true); }
 unsigned int RWMol::addBond(unsigned int atomIdx1, unsigned int atomIdx2,
                             Bond::BondType bondType) {
   // if the atom indices are bad, the next two calls will catch that.
-  auto beginAtom = getAtomWithIdx(atomIdx1);
-  auto endAtom = getAtomWithIdx(atomIdx2);
+  auto *beginAtom = getAtomWithIdx(atomIdx1);
+  auto *endAtom = getAtomWithIdx(atomIdx2);
   PRECONDITION(atomIdx1 != atomIdx2, "attempt to add self-bond");
   PRECONDITION(!(boost::edge(atomIdx1, atomIdx2, d_graph).second),
                "bond already exists");
@@ -585,12 +585,12 @@ void RWMol::removeBond(unsigned int aid1, unsigned int aid2) {
 
   // loop over neighboring double bonds and remove their stereo atom
   //  information. This is definitely now invalid (was github issue 8)
-  auto beginAtm = bnd->getBeginAtom();
-  auto endAtm = bnd->getEndAtom();
+  auto *beginAtm = bnd->getBeginAtom();
+  auto *endAtm = bnd->getEndAtom();
   std::vector<std::vector<Atom *>> bond_atoms = {{beginAtm, endAtm},
                                                  {endAtm, beginAtm}};
   for (const auto &atoms : bond_atoms) {
-    for (auto obnd : this->atomBonds(atoms[0])) {
+    for (auto *obnd : this->atomBonds(atoms[0])) {
       if (obnd == bnd) {
         continue;
       }
@@ -616,7 +616,7 @@ void RWMol::removeBond(unsigned int aid1, unsigned int aid2) {
   removeBondFromGroups(bnd, d_stereo_groups);
 
   // loop over all bonds with higher indices and update their indices
-  for (auto bond : bonds()) {
+  for (auto *bond : bonds()) {
     if (bond->getIdx() > idx) {
       bond->setIdx(bond->getIdx() - 1);
     }
@@ -716,12 +716,12 @@ void RWMol::batchRemoveBonds() {
 
     // loop over neighboring double bonds and remove their stereo atom
     //  information. This is definitely now invalid (was github issue 8)
-    auto beginAtm = bnd->getBeginAtom();
-    auto endAtm = bnd->getEndAtom();
+    auto *beginAtm = bnd->getBeginAtom();
+    auto *endAtm = bnd->getEndAtom();
     std::vector<std::vector<Atom *>> bond_atoms = {{beginAtm, endAtm},
                                                    {endAtm, beginAtm}};
     for (const auto &atoms : bond_atoms) {
-      for (auto obnd : atomBonds(atoms[0])) {
+      for (auto *obnd : atomBonds(atoms[0])) {
         if (obnd == bnd) {
           continue;
         }
@@ -870,7 +870,7 @@ void RWMol::batchRemoveAtoms() {
   }
 
   // reassign atom indices in bonds
-  for (auto bond : bonds()) {
+  for (auto *bond : bonds()) {
     auto bgnidx = bond->getBeginAtomIdx();
     auto endidx = bond->getEndAtomIdx();
     Atom *bgn = oldIndices[bgnidx];

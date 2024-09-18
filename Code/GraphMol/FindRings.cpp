@@ -324,7 +324,7 @@ void findRingsD2nodes(const ROMol &tMol, VECT_INT_VECT &res,
   std::map<int, RINGINVAR_VECT> nodeInvars;
   std::map<int, RINGINVAR_VECT>::const_iterator nici;
   BFSWorkspace bfs_workspace;
-  for (auto &cand : d2nodes) {
+  for (const auto &cand : d2nodes) {
     // std::cerr<<"    smallest rings bfs: "<<cand<<std::endl;
     VECT_INT_VECT srings;
     // we have to find all non duplicate possible smallest rings for each node
@@ -875,7 +875,7 @@ int findSSSR(const ROMol &mol, VECT_INT_VECT &res, bool includeDativeBonds,
     int deg = atom->getDegree();
     atomDegrees[i] = deg;
     atomDegreesWithZeroOrderBonds[i] = deg;
-    for (const auto bond : mol.atomBonds(atom)) {
+    for (auto *const bond : mol.atomBonds(atom)) {
       auto bt = bond->getBondType();
       if (bt == Bond::ZERO || (!includeHydrogenBonds && bt == Bond::HYDROGEN) ||
           (!includeDativeBonds && isDative(bt))) {
@@ -1129,7 +1129,7 @@ int symmetrizeSSSR(ROMol &mol, VECT_INT_VECT &res, bool includeDativeBonds,
   }
 
   INT_VECT extraRing;
-  for (auto &extraAtomRing : extras) {
+  for (const auto &extraAtomRing : extras) {
     RingUtils::convertToBonds(extraAtomRing, extraRing, mol);
     for (auto &ring : bondsssrs) {
       if (ring.size() != extraRing.size()) {
@@ -1180,7 +1180,7 @@ void _DFS(const ROMol &mol, const Atom *atom, INT_VECT &atomColors,
   atomColors[atom->getIdx()] = 1;
   traversalOrder.push_back(atom);
 
-  for (const auto nbr : mol.atomNeighbors(atom)) {
+  for (auto *const nbr : mol.atomNeighbors(atom)) {
     unsigned int nbrIdx = nbr->getIdx();
     // std::cerr<<"   "<<atom->getIdx()<<"       consider: "<<nbrIdx<<"
     // "<<atomColors[nbrIdx]<<std::endl;

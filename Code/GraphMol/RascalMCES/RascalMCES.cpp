@@ -161,14 +161,14 @@ void assignCosts(const std::vector<std::pair<int, int>> &atomDegrees1,
   std::vector<unsigned int> atomiBLs, atomjBLs;
   for (auto i = 0u; i < atomDegrees1.size(); ++i) {
     atomiBLs.clear();
-    const auto atomi = mol1.getAtomWithIdx(atomDegrees1[i].second);
-    for (const auto b : mol1.atomBonds(atomi)) {
+    const auto *const atomi = mol1.getAtomWithIdx(atomDegrees1[i].second);
+    for (auto *const b : mol1.atomBonds(atomi)) {
       atomiBLs.push_back(bondLabels1[b->getIdx()]);
     }
     for (auto j = 0u; j < atomDegrees2.size(); ++j) {
-      const auto atomj = mol2.getAtomWithIdx(atomDegrees2[j].second);
+      const auto *const atomj = mol2.getAtomWithIdx(atomDegrees2[j].second);
       atomjBLs.clear();
-      for (const auto b : mol2.atomBonds(atomj)) {
+      for (auto *const b : mol2.atomBonds(atomj)) {
         atomjBLs.push_back(bondLabels2[b->getIdx()]);
       }
       costsMat[i][j] = calcCost(atomiBLs, atomjBLs);
@@ -338,8 +338,8 @@ bool checkRings(const ROMol &mol1, std::vector<std::string> &mol1RingSmiles,
                 int mol1BondIdx, const ROMol &mol2,
                 std::vector<std::string> &mol2RingSmiles, int mol2BondIdx,
                 bool aromaticRingsMatchOnly) {
-  auto mol1Bond = mol1.getBondWithIdx(mol1BondIdx);
-  auto mol2Bond = mol2.getBondWithIdx(mol2BondIdx);
+  const auto *mol1Bond = mol1.getBondWithIdx(mol1BondIdx);
+  const auto *mol2Bond = mol2.getBondWithIdx(mol2BondIdx);
   if (aromaticRingsMatchOnly &&
       (!mol1Bond->getIsAromatic() || !mol2Bond->getIsAromatic())) {
     return true;
@@ -393,11 +393,11 @@ void extractRings(const ROMol &mol,
       atomsInRing.set(a);
     }
     for (auto ringBondIdx : molBondRings[i]) {
-      auto ringBond = ringMol->getBondWithIdx(ringBondIdx);
+      auto *ringBond = ringMol->getBondWithIdx(ringBondIdx);
       ringBond->setProp<int>("ORIG_INDEX", ringBond->getIdx());
     }
     ringMol->beginBatchEdit();
-    for (auto b : ringMol->bonds()) {
+    for (auto *b : ringMol->bonds()) {
       if (!b->hasProp("ORIG_INDEX)")) {
         if (!atomsInRing[b->getBeginAtomIdx()]) {
           ringMol->removeAtom(b->getBeginAtom());
@@ -647,10 +647,10 @@ bool deltaYInClique(const std::vector<unsigned int> &clique, const ROMol &mol1,
   std::vector<int> cliqueDegs1(mol1.getNumAtoms(), 0);
   std::vector<int> cliqueDegs2(mol2.getNumAtoms(), 0);
   for (const auto &bm : bondMatches) {
-    const auto b1 = mol1.getBondWithIdx(bm.first);
+    const auto *const b1 = mol1.getBondWithIdx(bm.first);
     cliqueDegs1[b1->getBeginAtomIdx()]++;
     cliqueDegs1[b1->getEndAtomIdx()]++;
-    const auto b2 = mol2.getBondWithIdx(bm.second);
+    const auto *const b2 = mol2.getBondWithIdx(bm.second);
     cliqueDegs2[b2->getBeginAtomIdx()]++;
     cliqueDegs2[b2->getEndAtomIdx()]++;
   }
@@ -715,7 +715,7 @@ int minFragSeparation(const ROMol &mol, const ROMol &molFrags,
   std::vector<int> frag1Atoms, frag2Atoms;
   extractFragAtoms(frag1, frag1Atoms);
   extractFragAtoms(frag2, frag2Atoms);
-  auto pathMatrix = MolOps::getDistanceMat(mol);
+  auto *pathMatrix = MolOps::getDistanceMat(mol);
   double minDist = std::numeric_limits<double>::max();
   for (const auto &at1 : frag1Atoms) {
     for (const auto &at2 : frag2Atoms) {
@@ -1027,7 +1027,7 @@ void assignEquivalentAtoms(ROMol &mol, const std::string &equivalentAtoms) {
     if (RDKit::SubstructMatch(mol, *qmol, hits_vect)) {
       for (const auto &hv : hits_vect) {
         for (const auto &h : hv) {
-          auto a = mol.getAtomWithIdx(h.second);
+          auto *a = mol.getAtomWithIdx(h.second);
           a->setAtomicNum(atNum);
         }
       }

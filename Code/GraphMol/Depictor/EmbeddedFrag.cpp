@@ -253,7 +253,7 @@ void EmbeddedFrag::updateNewNeighs(
 
   d_eatoms[aid].neighs.clear();
   RDKit::INT_VECT hIndices;
-  for (const auto nbr : dp_mol->atomNeighbors(dp_mol->getAtomWithIdx(aid))) {
+  for (auto *const nbr : dp_mol->atomNeighbors(dp_mol->getAtomWithIdx(aid))) {
     if (d_eatoms.find(nbr->getIdx()) == d_eatoms.end()) {
       if (dp_mol->getAtomWithIdx(nbr->getIdx())->getAtomicNum() != 1) {
         d_eatoms[aid].neighs.push_back(nbr->getIdx());
@@ -300,7 +300,7 @@ int EmbeddedFrag::findNeighbor(
     unsigned int aid) {  //, const RDKit::ROMol *mol) {
   PRECONDITION(dp_mol, "");
 
-  for (const auto nbr : dp_mol->atomNeighbors(dp_mol->getAtomWithIdx(aid))) {
+  for (auto *const nbr : dp_mol->atomNeighbors(dp_mol->getAtomWithIdx(aid))) {
     if (d_eatoms.find(nbr->getIdx()) != d_eatoms.end()) {
       return nbr->getIdx();
     }
@@ -315,7 +315,7 @@ void EmbeddedFrag::setupAttachmentPoints() {
     // find the neighbors that are already embedded for each of these atoms
     RDKit::INT_VECT doneNbrs;
     const auto &enbrs = d_eatoms[dai].neighs;
-    for (const auto nbrAtom :
+    for (auto *const nbrAtom :
          dp_mol->atomNeighbors(dp_mol->getAtomWithIdx(dai))) {
       if (std::find(enbrs.begin(), enbrs.end(),
                     static_cast<int>(nbrAtom->getIdx())) == enbrs.end()) {
@@ -350,7 +350,7 @@ void EmbeddedFrag::setupAttachmentPoints() {
 static bool checkStereoChemistry(const RDKit::ROMol &mol,
                                  const RDKit::ROMol &template_mol,
                                  RDKit::MatchVectType match) {
-  for (auto bond : mol.bonds()) {
+  for (auto *bond : mol.bonds()) {
     if (bond->getBondType() != RDKit::Bond::DOUBLE ||
         bond->getStereo() == RDKit::Bond::STEREOANY ||
         bond->getStereo() == RDKit::Bond::STEREONONE) {
@@ -370,7 +370,7 @@ static bool checkStereoChemistry(const RDKit::ROMol &mol,
     int atom1_neighbor2 = -1;
     int atom2_neighbor2 = -1;
     if (mol.getAtomWithIdx(atom1)->getDegree() > 2) {
-      for (auto neighbor : mol.atomNeighbors(mol.getAtomWithIdx(atom1))) {
+      for (auto *neighbor : mol.atomNeighbors(mol.getAtomWithIdx(atom1))) {
         if (static_cast<int>(neighbor->getIdx()) != atom1_neighbor1 &&
             static_cast<int>(neighbor->getIdx()) != atom2) {
           atom1_neighbor2 = neighbor->getIdx();
@@ -379,7 +379,7 @@ static bool checkStereoChemistry(const RDKit::ROMol &mol,
       }
     }
     if (mol.getAtomWithIdx(atom2)->getDegree() > 2) {
-      for (auto neighbor : mol.atomNeighbors(mol.getAtomWithIdx(atom2))) {
+      for (auto *neighbor : mol.atomNeighbors(mol.getAtomWithIdx(atom2))) {
         if (static_cast<int>(neighbor->getIdx()) != atom2_neighbor1 &&
             static_cast<int>(neighbor->getIdx()) != atom1) {
           atom2_neighbor2 = neighbor->getIdx();
@@ -479,7 +479,7 @@ bool EmbeddedFrag::matchToTemplate(const RDKit::INT_VECT &ringSystemAtoms,
     }
   }
   auto numBonds = rs_mol.getNumBonds();
-  for (auto bnd : rs_mol.bonds()) {
+  for (auto *bnd : rs_mol.bonds()) {
     if (!rs_atoms.test(bnd->getBeginAtomIdx()) ||
         !rs_atoms.test(bnd->getEndAtomIdx())) {
       --numBonds;
@@ -508,12 +508,12 @@ bool EmbeddedFrag::matchToTemplate(const RDKit::INT_VECT &ringSystemAtoms,
     auto degreeCounts = [](const RDKit::ROMol &mol) {
 #endif
       std::array<int, 5> degrees_count({0, 0, 0, 0, 0});
-      for (auto atom : mol.atoms()) {
+      for (auto *atom : mol.atoms()) {
         if (atom->getAtomicNum() == DUMMY_ATOMIC_NUM) {
           continue;
         }
         auto degree = 0u;
-        for (auto nbr : mol.atomNeighbors(atom)) {
+        for (auto *nbr : mol.atomNeighbors(atom)) {
           if (nbr->getAtomicNum() != DUMMY_ATOMIC_NUM) {
             ++degree;
             if (degree == 4) {
@@ -565,7 +565,7 @@ static void mirrorTransRingAtoms(const RDKit::ROMol &mol,
   for (size_t i = 0; i < ring.size(); ++i) {
     const auto atom1 = ring[i];
     const auto atom2 = ring[(i + 1) % ring.size()];
-    const auto bond = mol.getBondBetweenAtoms(atom1, atom2);
+    const auto *const bond = mol.getBondBetweenAtoms(atom1, atom2);
     if (bond->getBondType() != RDKit::Bond::DOUBLE) {
       continue;
     }
@@ -1039,7 +1039,7 @@ void EmbeddedFrag::addAtomToAtomWithNoAng(unsigned int aid,
   CHECK_INVARIANT(currLoc.lengthSq() > 1.0e-8, "");
 
   // find out what angle we want to add bond at
-  const auto atm = dp_mol->getAtomWithIdx(toAid);
+  const auto *const atm = dp_mol->getAtomWithIdx(toAid);
   auto deg = getDepictDegree(atm);
 
   auto angle = computeSubAngle(deg, atm->getHybridization());
@@ -1433,7 +1433,7 @@ void _recurseAtomOneSide(unsigned int endAid, unsigned int begAid,
                          const RDKit::ROMol *mol, RDKit::INT_VECT &flipAids) {
   PRECONDITION(mol, "");
   flipAids.push_back(endAid);
-  for (auto nbr : mol->atomNeighbors(mol->getAtomWithIdx(endAid))) {
+  for (auto *nbr : mol->atomNeighbors(mol->getAtomWithIdx(endAid))) {
     if (nbr->getIdx() != begAid &&
         (std::find(flipAids.begin(), flipAids.end(),
                    static_cast<int>(nbr->getIdx())) == flipAids.end())) {
@@ -1470,7 +1470,7 @@ PAIR_I_I _findClosestPair(unsigned int beg1, unsigned int end1,
 }
 
 void EmbeddedFrag::computeDistMat(DOUBLE_SMART_PTR &dmat) {
-  auto dmatPtr = dmat.get();
+  auto *dmatPtr = dmat.get();
   for (auto efi = d_eatoms.begin(); efi != d_eatoms.end(); ++efi) {
     auto pti = efi->second.loc;
     auto ai = efi->first;
@@ -1583,7 +1583,7 @@ void EmbeddedFrag::randomSampleFlipsAndPermutations(
   RDKit::VECT_INT_VECT deg4NbrBids, deg4NbrAids;
 
   if (permuteDeg4Nodes) {
-    for (const auto atom : dp_mol->atoms()) {
+    for (auto *const atom : dp_mol->atoms()) {
       auto caid = atom->getIdx();
       if ((getDepictDegree(atom) == 4) &&
           (!(dp_mol->getRingInfo()->numAtomRings(caid)))) {
@@ -1717,7 +1717,7 @@ std::vector<PAIR_I_I> EmbeddedFrag::findCollisions(const double *dmat,
   if (includeBonds) {
     // now find bond collisions
     double BOND_THRES2 = BOND_THRES * BOND_THRES;
-    for (const auto b1 : dp_mol->bonds()) {
+    for (auto *const b1 : dp_mol->bonds()) {
       auto bid1 = b1->getIdx();
       auto beg1 = b1->getBeginAtomIdx();
       auto end1 = b1->getEndAtomIdx();
@@ -1726,7 +1726,7 @@ std::vector<PAIR_I_I> EmbeddedFrag::findCollisions(const double *dmat,
         auto v1 = d_eatoms[end1].loc - d_eatoms[beg1].loc;
         auto avg1 = d_eatoms[end1].loc + d_eatoms[beg1].loc;
         avg1 *= 0.5;
-        for (const auto b2 : dp_mol->bonds()) {
+        for (auto *const b2 : dp_mol->bonds()) {
           if (b2->getIdx() <= bid1) {
             continue;
           }
@@ -1770,7 +1770,7 @@ void _recurseDegTwoRingAtoms(unsigned int aid, const RDKit::ROMol *mol,
   // find all atoms along a path that have two ring atoms on them
   // aid is where will start looking and then we will recurse
   RDKit::INT_VECT nbrs;
-  for (const auto bnd : mol->atomBonds(mol->getAtomWithIdx(aid))) {
+  for (auto *const bnd : mol->atomBonds(mol->getAtomWithIdx(aid))) {
     if (mol->getRingInfo()->numBondRings(bnd->getIdx())) {
       nbrs.push_back(bnd->getOtherAtomIdx(aid));
     }
@@ -1795,7 +1795,7 @@ unsigned int _anyNonRingBonds(unsigned int aid, RDKit::INT_LIST path,
   auto prev = aid;
   auto nOpen = 0u;
   for (auto pi : path) {
-    const auto bond = mol->getBondBetweenAtoms(prev, pi);
+    const auto *const bond = mol->getBondBetweenAtoms(prev, pi);
     CHECK_INVARIANT(bond, "no bond found");
     if (!mol->getRingInfo()->numBondRings(bond->getIdx())) {
       ++nOpen;
@@ -1809,7 +1809,7 @@ void EmbeddedFrag::flipAboutBond(unsigned int bondId, bool flipEnd) {
   PRECONDITION(dp_mol, "");
   PRECONDITION(bondId < dp_mol->getNumBonds(), "");
   // reflect all the atoms on one side of a bond using the bond as the mirror
-  const auto bond = dp_mol->getBondWithIdx(bondId);
+  const auto *const bond = dp_mol->getBondWithIdx(bondId);
 
   // we should not be flip things around a ring bond
   CHECK_INVARIANT(!(dp_mol->getRingInfo()->numBondRings(bondId)), "");
@@ -1883,7 +1883,7 @@ unsigned int _findClosestNeighbor(const RDKit::ROMol *mol, const double *dmat,
   unsigned int res = 0;
   double mdist = 1.e8;
   auto naid = aid1 * (mol->getNumAtoms());
-  for (const auto nbr : mol->atomNeighbors(mol->getAtomWithIdx(aid2))) {
+  for (auto *const nbr : mol->atomNeighbors(mol->getAtomWithIdx(aid2))) {
     auto d = dmat[naid + nbr->getIdx()];
     if (d < mdist) {
       mdist = d;
@@ -1979,7 +1979,7 @@ void EmbeddedFrag::removeCollisionsBondFlip() {
   // the shortest path between the colliding atoms. we will limit the number of
   // times we are going to do this since we may fall into spiral where removing
   // a collision may create a new one
-  auto dmat = RDKit::MolOps::getDistanceMat(*dp_mol);
+  auto *dmat = RDKit::MolOps::getDistanceMat(*dp_mol);
   auto colls = this->findCollisions(dmat);
   std::map<int, unsigned int> doneBonds;
   unsigned int iter = 0;
@@ -2034,7 +2034,7 @@ void EmbeddedFrag::removeCollisionsBondFlip() {
 }
 
 void EmbeddedFrag::removeCollisionsOpenAngles() {
-  auto dmat = RDKit::MolOps::getDistanceMat(*dp_mol);
+  auto *dmat = RDKit::MolOps::getDistanceMat(*dp_mol);
   // try opening up angles
   for (const auto &cpi : this->findCollisions(dmat, 0)) {
     // find out which of the two offending atoms we want to move
@@ -2044,7 +2044,7 @@ void EmbeddedFrag::removeCollisionsOpenAngles() {
 }
 
 void EmbeddedFrag::removeCollisionsShortenBonds() {
-  auto dmat = RDKit::MolOps::getDistanceMat(*dp_mol);
+  auto *dmat = RDKit::MolOps::getDistanceMat(*dp_mol);
   // if there are still some collision points left - flipping rotatable bonds
   // and opening angles is not doing it - we will try two last things
   //  - if all the bonds between the colliding atoms are rings bonds,

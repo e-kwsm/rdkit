@@ -1428,10 +1428,10 @@ TEST_CASE("Testing Issue 256: SMILES yields incorrect structure") {
   v2::SmilesParse::SmilesParserParams ps;
   ps.sanitize = false;
   {
-    auto smi = "C1CC[C+]1=1CCC1";
+    const auto *smi = "C1CC[C+]1=1CCC1";
     auto mol = v2::SmilesParse::MolFromSmiles(smi, ps);
     REQUIRE(mol);
-    auto bond = mol->getBondBetweenAtoms(3, 0);
+    auto *bond = mol->getBondBetweenAtoms(3, 0);
     REQUIRE(bond);
     REQUIRE(bond->getBondType() == Bond::SINGLE);
     bond = mol->getBondBetweenAtoms(3, 6);
@@ -1440,10 +1440,10 @@ TEST_CASE("Testing Issue 256: SMILES yields incorrect structure") {
   }
 
   {
-    auto smi = "C1CC[C+]=11CCC1";
+    const auto *smi = "C1CC[C+]=11CCC1";
     auto mol = v2::SmilesParse::MolFromSmiles(smi, ps);
     REQUIRE(mol);
-    auto bond = mol->getBondBetweenAtoms(3, 0);
+    auto *bond = mol->getBondBetweenAtoms(3, 0);
     REQUIRE(bond);
     REQUIRE(bond->getBondType() == Bond::DOUBLE);
     bond = mol->getBondBetweenAtoms(3, 6);
@@ -3587,7 +3587,7 @@ TEST_CASE("Testing the %(....) notation for SMILES ring closure numbers") {
 
 TEST_CASE("Testing that isomeric SMILES is now the default output") {
   std::string smi = "C[C@H](Cl)Br";
-  auto m = SmilesToMol(smi);
+  auto *m = SmilesToMol(smi);
   REQUIRE(m);
   auto csmi = MolToSmiles(*m);
   REQUIRE(csmi.find("@") != std::string::npos);
@@ -3596,7 +3596,7 @@ TEST_CASE("Testing that isomeric SMILES is now the default output") {
 
 TEST_CASE("Testing constructs like [#6]") {
   std::string smi = "[#6][12#6]";
-  auto m = SmilesToMol(smi);
+  auto *m = SmilesToMol(smi);
   REQUIRE(m);
   REQUIRE(m->getAtomWithIdx(0)->getAtomicNum() == 6);
   REQUIRE(m->getAtomWithIdx(0)->getIsotope() == 0);
