@@ -75,8 +75,8 @@ class ScoreMatchesByDegreeOfCoreSubstitution {
     return (aPair.second < bPair.second);
   }
   bool doesRGroupMatchHydrogen(const std::pair<int, int> &pair) const {
-    const auto queryAtom = d_query.getAtomWithIdx(pair.first);
-    const auto molAtom = d_mol.getAtomWithIdx(pair.second);
+    const auto *const queryAtom = d_query.getAtomWithIdx(pair.first);
+    const auto *const molAtom = d_mol.getAtomWithIdx(pair.second);
     return (molAtom->getAtomicNum() == 1 &&
             isAtomTerminalRGroupOrQueryHydrogen(queryAtom));
   }

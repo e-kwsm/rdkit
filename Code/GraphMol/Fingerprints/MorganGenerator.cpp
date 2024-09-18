@@ -229,7 +229,7 @@ void MorganAtomEnv<OutputType>::updateAdditionalOutput(
     std::vector<int> atomsInvolved;
     atomsInvolved.push_back(d_atomId);
     if (d_layer > 0) {
-      const auto dm = MolOps::getDistanceMat(*d_mol);
+      auto *const dm = MolOps::getDistanceMat(*d_mol);
       for (unsigned int i = 0; i < d_mol->getNumAtoms(); ++i) {
         if (static_cast<unsigned int>(dm[d_atomId * d_mol->getNumAtoms() + i] +
                                       .1) <= d_layer &&

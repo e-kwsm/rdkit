@@ -890,14 +890,14 @@ void MolDraw2D::makeReactionComponents(
     if (confIds) {
       cid = (*confIds)[midx];
     }
-    auto fragMol = bits[midx].get();
-    for (auto atom : fragMol->atoms()) {
+    auto *fragMol = bits[midx].get();
+    for (auto *atom : fragMol->atoms()) {
       auto ai = atomColours.find(atom->getAtomMapNum());
-      for (auto bond : fragMol->bonds()) {
-        auto beg = bond->getBeginAtom();
+      for (auto *bond : fragMol->bonds()) {
+        auto *beg = bond->getBeginAtom();
         auto begi = atomColours.find(beg->getAtomMapNum());
         if (begi != atomColours.end()) {
-          auto end = bond->getEndAtom();
+          auto *end = bond->getEndAtom();
           auto endi = atomColours.find(end->getAtomMapNum());
           if (endi != atomColours.end() && begi->second == endi->second) {
             highlightBonds.push_back(bond->getIdx());
@@ -972,7 +972,7 @@ int reactionWidth(
     const MolDrawOptions &drawOptions, int arrowMult, int gapWidth) {
   int totWidth = 0;
   if (!reagents.empty()) {
-    for (auto &dm : reagents) {
+    for (const auto &dm : reagents) {
       totWidth += dm->width_;
     }
     totWidth += gapWidth * (reagents.size() - 1);
@@ -985,7 +985,7 @@ int reactionWidth(
   } else {
     // the agent doesn't start at front of arrow
     totWidth += gapWidth / 2;
-    for (auto &dm : agents) {
+    for (const auto &dm : agents) {
       totWidth += dm->width_ + gapWidth / 2;
     }
   }
@@ -994,7 +994,7 @@ int reactionWidth(
   }
 
   if (!products.empty()) {
-    for (auto &dm : products) {
+    for (const auto &dm : products) {
       totWidth += dm->width_;
     }
     // we don't want a plus after the last product
@@ -1204,7 +1204,7 @@ void MolDraw2D::findReactionHighlights(
       colors = highlightColorsReactants;
     }
     for (size_t midx = 0; midx < rxn.getReactants().size(); ++midx) {
-      auto fragMol = rxn.getReactants()[midx].get();
+      auto *fragMol = rxn.getReactants()[midx].get();
       for (auto &atom : fragMol->atoms()) {
         int atomRole = -1;
         if (atom->getPropIfPresent("molRxnRole", atomRole) && atomRole == 1 &&
