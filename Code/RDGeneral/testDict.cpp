@@ -637,7 +637,7 @@ TEST_CASE("testCustomProps") {
   FooHandler foo_handler;
   std::vector<CustomPropHandler *> handlers = {&foo_handler,
                                                foo_handler.clone()};
-  for (auto handler : handlers) {
+  for (auto *handler : handlers) {
     REQUIRE(handler->canSerialize(value));
     RDValue bad_value = 1;
     REQUIRE(!handler->canSerialize(bad_value));

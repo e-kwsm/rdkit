@@ -38,7 +38,7 @@ bool getAtropisomerAtomsAndBonds(const Bond *bond,
   // get the one or two bonds on each end
 
   for (int bondAtomIndex = 0; bondAtomIndex < 2; ++bondAtomIndex) {
-    for (const auto nbrBond :
+    for (auto *const nbrBond :
          mol.atomBonds(atomsAndBondVects[bondAtomIndex].first)) {
       if (nbrBond == bond) {
         continue;  // a bond is NOT its own neighbor
@@ -316,7 +316,7 @@ void DetectAtropisomerChiralityOneBond(Bond *bond, ROMol &mol,
   // make sure we do not have wiggle bonds
 
   for (auto atomAndBondVec : atomAndBondVecs) {
-    for (auto endBond : atomAndBondVec.second) {
+    for (auto *endBond : atomAndBondVec.second) {
       if (endBond->getBondDir() == Bond::UNKNOWN) {
         return;  // not an atropisomer
       }
@@ -490,10 +490,10 @@ void cleanupAtropisomerStereoGroups(ROMol &mol) {
     std::vector<Atom *> okatoms;
     std::vector<Bond *> okbonds;
 
-    for (auto atom : sg.getAtoms()) {
+    for (auto *atom : sg.getAtoms()) {
       bool foundAtrop = false;
       for (auto bndI : boost::make_iterator_range(mol.getAtomBonds(atom))) {
-        auto bond = (mol)[bndI];
+        auto *bond = (mol)[bndI];
         if (bond->getStereo() == Bond::BondStereo::STEREOATROPCCW ||
             bond->getStereo() == Bond::BondStereo::STEREOATROPCW) {
           foundAtrop = true;
@@ -525,7 +525,7 @@ void detectAtropisomerChirality(ROMol &mol, const Conformer *conf) {
 
   std::set<Bond *> bondsToTry;
 
-  for (auto bond : mol.bonds()) {
+  for (auto *bond : mol.bonds()) {
     if (canHaveDirection(*bond) &&
         (bond->getBondDir() == Bond::BondDir::BEGINDASH ||
          bond->getBondDir() == Bond::BondDir::BEGINWEDGE)) {
@@ -545,7 +545,7 @@ void detectAtropisomerChirality(ROMol &mol, const Conformer *conf) {
   // First, do a simple check with TotalDegree to see if any bonds might be
   // candidates before doing the expensive hybridization calculation.
   bool anyBondPassesDegreeCheck = false;
-  for (auto bondToTry : bondsToTry) {
+  for (auto *bondToTry : bondsToTry) {
     if (bondToTry->getBeginAtom()->needsUpdatePropertyCache()) {
       bondToTry->getBeginAtom()->updatePropertyCache(false);
     }
@@ -583,7 +583,7 @@ void detectAtropisomerChirality(ROMol &mol, const Conformer *conf) {
     MolOps::setHybridization(mol);
   }
 
-  for (auto bondToTry : bondsToTry) {
+  for (auto *bondToTry : bondsToTry) {
     if (bondToTry->getBondType() != Bond::SINGLE ||
         bondToTry->getStereo() == Bond::BondStereo::STEREOANY ||
         // before, we checked only on totalDegree = 2 or 3,
@@ -614,8 +614,8 @@ void getAllAtomIdsForStereoGroup(
     // figure out which atoms of the bond get wedge/hash indications
     // mark the atom with the wedge/hash
 
-    for (auto atom : {bond->getBeginAtom(), bond->getEndAtom()}) {
-      for (const auto atomBond : mol.atomBonds(atom)) {
+    for (auto *atom : {bond->getBeginAtom(), bond->getEndAtom()}) {
+      for (auto *const atomBond : mol.atomBonds(atom)) {
         if (atomBond->getIdx() == bond->getIdx()) {
           continue;
         }
@@ -649,7 +649,7 @@ bool WedgeBondFromAtropisomerOneBondNoConf(
   //  make sure we do not have wiggle bonds
 
   for (auto atomAndBondVec : atomAndBondVecs) {
-    for (auto endBond : atomAndBondVec.second) {
+    for (auto *endBond : atomAndBondVec.second) {
       if (endBond->getBondDir() == Bond::UNKNOWN) {
         return false;  // not an atropisomer)
       }
@@ -707,7 +707,7 @@ bool WedgeBondFromAtropisomerOneBondNoConf(
   for (unsigned int whichEnd = 0; whichEnd < 2; ++whichEnd) {
     for (unsigned int whichBond = 0;
          whichBond < atomAndBondVecs[whichEnd].second.size(); ++whichBond) {
-      auto bondToTry = atomAndBondVecs[whichEnd].second[whichBond];
+      auto *bondToTry = atomAndBondVecs[whichEnd].second[whichBond];
 
       if (!canHaveDirection(*bondToTry) ||
           wedgeBonds.find(bondToTry->getIdx()) != wedgeBonds.end()) {
@@ -776,7 +776,7 @@ bool WedgeBondFromAtropisomerOneBondNoConf(
     // wedge/hash the atom on the end of the main bond must be listed
     // first for the wedge/has bond
 
-    auto bestBond = atomAndBondVecs[bestBondEnd].second[bestBondNumber];
+    auto *bestBond = atomAndBondVecs[bestBondEnd].second[bestBondNumber];
     if (bestBond->getBeginAtom() != atomAndBondVecs[bestBondEnd].first) {
       bestBond->setEndAtom(bestBond->getBeginAtom());
       bestBond->setBeginAtom(atomAndBondVecs[bestBondEnd].first);
@@ -812,7 +812,7 @@ bool WedgeBondFromAtropisomerOneBond2d(
   //  make sure we do not have wiggle bonds
 
   for (auto atomAndBondVec : atomAndBondVecs) {
-    for (auto endBond : atomAndBondVec.second) {
+    for (auto *endBond : atomAndBondVec.second) {
       if (endBond->getBondDir() == Bond::UNKNOWN) {
         return false;  // not an atropisomer)
       }
@@ -913,7 +913,7 @@ bool WedgeBondFromAtropisomerOneBond2d(
   for (unsigned int whichEnd = 0; whichEnd < 2; ++whichEnd) {
     for (unsigned int whichBond = 0;
          whichBond < atomAndBondVecs[whichEnd].second.size(); ++whichBond) {
-      auto bondToTry = atomAndBondVecs[whichEnd].second[whichBond];
+      auto *bondToTry = atomAndBondVecs[whichEnd].second[whichBond];
 
       if (!canHaveDirection(*bondToTry) ||
           wedgeBonds.find(bondToTry->getIdx()) != wedgeBonds.end()) {
@@ -997,7 +997,7 @@ bool WedgeBondFromAtropisomerOneBond2d(
     // wedge/hash the atom on the end of the main bond must be listed
     // first for the wedge/has bond
 
-    auto bestBond = atomAndBondVecs[bestBondEnd].second[bestBondNumber];
+    auto *bestBond = atomAndBondVecs[bestBondEnd].second[bestBondNumber];
     if (bestBond->getBeginAtom() != atomAndBondVecs[bestBondEnd].first) {
       bestBond->setEndAtom(bestBond->getBeginAtom());
       bestBond->setBeginAtom(atomAndBondVecs[bestBondEnd].first);
@@ -1033,7 +1033,7 @@ bool WedgeBondFromAtropisomerOneBond3d(
   //  make sure we do not have wiggle bonds
 
   for (auto atomAndBondVecs : atomAndBondVecs) {
-    for (auto endBond : atomAndBondVecs.second) {
+    for (auto *endBond : atomAndBondVecs.second) {
       if (endBond->getBondDir() == Bond::UNKNOWN) {
         return false;  // not an atropisomer)
       }
@@ -1048,7 +1048,7 @@ bool WedgeBondFromAtropisomerOneBond3d(
   for (unsigned int whichEnd = 0; whichEnd < 2; ++whichEnd) {
     for (unsigned int whichBond = 0;
          whichBond < atomAndBondVecs[whichEnd].second.size(); ++whichBond) {
-      auto bond = atomAndBondVecs[whichEnd].second[whichBond];
+      auto *bond = atomAndBondVecs[whichEnd].second[whichBond];
       auto bondDir = bond->getBondDir();
 
       // see if it is a wedge or hash and its origin is the atom in the
@@ -1067,7 +1067,7 @@ bool WedgeBondFromAtropisomerOneBond3d(
   // correct.
 
   if (useBonds.size() > 0) {
-    for (auto useBond : useBonds) {
+    for (auto *useBond : useBonds) {
       useBond->setBondDir(getBondDirForAtropisomer3d(useBond, conf));
     }
 
@@ -1088,7 +1088,7 @@ bool WedgeBondFromAtropisomerOneBond3d(
   for (unsigned int whichEnd = 0; whichEnd < 2; ++whichEnd) {
     for (unsigned int whichBond = 0;
          whichBond < atomAndBondVecs[whichEnd].second.size(); ++whichBond) {
-      auto bondToTry = atomAndBondVecs[whichEnd].second[whichBond];
+      auto *bondToTry = atomAndBondVecs[whichEnd].second[whichBond];
 
       // cannot use a bond that is not single, nor if it is already slated
       // to be used for a chiral center
@@ -1208,7 +1208,7 @@ void wedgeBondsFromAtropisomers(
     RDKit::MolOps::findSSSR(mol);
   }
 
-  for (auto bond : mol.bonds()) {
+  for (auto *bond : mol.bonds()) {
     auto bondStereo = bond->getStereo();
 
     if (bond->getBondType() != Bond::BondType::SINGLE ||
@@ -1234,7 +1234,7 @@ void wedgeBondsFromAtropisomers(
 }
 
 bool doesMolHaveAtropisomers(const ROMol &mol) {
-  for (auto bond : mol.bonds()) {
+  for (auto *bond : mol.bonds()) {
     auto bondStereo = bond->getStereo();
 
     if (bondStereo == Bond::BondStereo::STEREOATROPCW ||

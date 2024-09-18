@@ -58,7 +58,7 @@ TEST_CASE("bulk parse test") {
     REQUIRE(mol);
     inorganicSanitize(*mol);
     bool hasNontet = false;
-    for (const auto atom : mol->atoms()) {
+    for (auto *const atom : mol->atoms()) {
       if (Chirality::hasNonTetrahedralStereo(atom)) {
         hasNontet = true;
         break;

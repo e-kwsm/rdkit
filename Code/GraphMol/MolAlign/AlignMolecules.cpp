@@ -47,7 +47,7 @@ void symmetrizeTerminalAtoms(RWMol &mol) {
   qb.setQuery(makeSingleOrDoubleBondQuery());
   for (const auto &match : matches) {
     mol.getAtomWithIdx(match[0].second)->setFormalCharge(0);
-    auto obond = mol.getBondBetweenAtoms(match[0].second, match[1].second);
+    auto *obond = mol.getBondBetweenAtoms(match[0].second, match[1].second);
     CHECK_INVARIANT(obond, "could not find expected bond");
     mol.replaceBond(obond->getIdx(), &qb);
   }

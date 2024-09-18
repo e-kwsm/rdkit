@@ -42,7 +42,7 @@ std::map<std::string, std::unique_ptr<ExplicitBitVect>> getFingerprints(
   std::map<std::string, std::unique_ptr<ExplicitBitVect>> fps;
   while (!suppl.atEnd()) {
     auto mol = suppl.next();
-    auto fp = fpGen->getFingerprint(*mol);
+    auto *fp = fpGen->getFingerprint(*mol);
     fps.insert(std::make_pair(
         mol->getProp<std::string>(common_properties::_Name), fp));
     auto molName = mol->getProp<std::string>(common_properties::_Name);

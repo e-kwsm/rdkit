@@ -220,7 +220,7 @@ void getExperimentalTorsions(
         aid2 = match[param.idx[1]].second;
         aid3 = match[param.idx[2]].second;
         aid4 = match[param.idx[3]].second;
-        const auto bnd = mol.getBondBetweenAtoms(aid2, aid3);
+        const auto *const bnd = mol.getBondBetweenAtoms(aid2, aid3);
         CHECK_INVARIANT(bnd, "bond between central atoms not found")
         bid2 = bnd->getIdx();
 
@@ -287,7 +287,7 @@ void getExperimentalTorsions(
             mol.getAtomDegree(atom2) == 3) {
           unsigned int i = 0;
           unsigned int isBoundToSP2O = 0;  // false
-          for (const auto atomX : mol.atomNeighbors(atom2)) {
+          for (auto *const atomX : mol.atomNeighbors(atom2)) {
             atoms[i] = atomX->getIdx();
             // if the central atom is sp2 carbon and is bound to sp2 oxygen,
             // set a flag

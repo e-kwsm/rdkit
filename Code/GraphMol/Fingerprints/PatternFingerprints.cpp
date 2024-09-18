@@ -189,7 +189,7 @@ void updatePatternFingerprint(const ROMol &mol, ExplicitBitVect &fp,
 
   boost::dynamic_bitset<> isQueryAtom(mol.getNumAtoms()),
       isQueryBond(mol.getNumBonds()), isTautomerBond(mol.getNumBonds());
-  for (const auto at : mol.atoms()) {
+  for (auto *const at : mol.atoms()) {
     // isComplexQuery() no longer considers "AtomNull" to be complex, but for
     // the purposes of the pattern FP, it definitely needs to be treated as a
     // query feature.
@@ -199,7 +199,7 @@ void updatePatternFingerprint(const ROMol &mol, ExplicitBitVect &fp,
     }
   }
 
-  for (const auto bond : mol.bonds()) {
+  for (auto *const bond : mol.bonds()) {
     if (isPatternComplexQuery(bond)) {
       isQueryBond.set(bond->getIdx());
       if (tautomericFingerprint && isTautomerBondQuery(bond)) {
@@ -209,7 +209,7 @@ void updatePatternFingerprint(const ROMol &mol, ExplicitBitVect &fp,
   }
 
   unsigned int pIdx = 0;
-  for (const auto patt : patts) {
+  for (const auto *const patt : patts) {
     ++pIdx;
     std::vector<MatchVectType> matches;
     // uniquify matches?

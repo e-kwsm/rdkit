@@ -173,7 +173,7 @@ bool computeRandomCoords(RDGeom::PointPtrVect &positions, double boxSize,
                          RDKit::double_source_type &rng) {
   CHECK_INVARIANT(boxSize > 0.0, "bad boxSize");
 
-  for (auto pt : positions) {
+  for (auto *pt : positions) {
     for (unsigned int i = 0; i < pt->dimension(); ++i) {
       (*pt)[i] = boxSize * (rng() - 0.5);
     }
@@ -192,7 +192,7 @@ ForceFields::ForceField *constructForceField(
   field->positions().insert(field->positions().begin(), positions.begin(),
                             positions.end());
 
-  auto contrib = new DistViolationContribs(field);
+  auto *contrib = new DistViolationContribs(field);
   for (unsigned int i = 1; i < N; i++) {
     for (unsigned int j = 0; j < i; j++) {
       if (fixedPts != nullptr && (*fixedPts)[i] && (*fixedPts)[j]) {
@@ -225,7 +225,7 @@ ForceFields::ForceField *constructForceField(
   }
   // now add chiral constraints
   if (weightChiral > 1.e-8) {
-    auto contrib = new ChiralViolationContribs(field);
+    auto *contrib = new ChiralViolationContribs(field);
 
     for (const auto &cset : csets) {
       contrib->addContrib(cset.get(), weightChiral);
@@ -239,7 +239,7 @@ ForceFields::ForceField *constructForceField(
 
   // finally the contribution from the fourth dimension if we need to
   if ((field->dimension() == 4) && (weightFourthDim > 1.e-8)) {
-    auto contrib = new FourthDimContribs(field);
+    auto *contrib = new FourthDimContribs(field);
     for (unsigned int i = 0; i < N; i++) {
       contrib->addContrib(i, weightFourthDim);
     }

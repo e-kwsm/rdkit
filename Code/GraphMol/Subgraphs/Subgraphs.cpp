@@ -452,7 +452,7 @@ findAllPathsOfLengthsMtoN(const ROMol &mol, unsigned int lowerLen,
 
   if (!distMat) {
     // generate the adjacency matrix by hand by looping over the bonds
-    for (const auto bond : mol.bonds()) {
+    for (auto *const bond : mol.bonds()) {
       Atom *beg = bond->getBeginAtom();
       Atom *end = bond->getEndAtom();
       // check for H, which we might be skipping
@@ -599,7 +599,7 @@ PATH_TYPE findAtomEnvironmentOfRadiusN(
         // if we're going to do another iteration, then push the neighbors from
         // this round onto the stack
         if (i < radius - 1) {
-          for (const auto bond : mol.atomBonds(mol.getAtomWithIdx(oAtom))) {
+          for (auto *const bond : mol.atomBonds(mol.getAtomWithIdx(oAtom))) {
             if (!bondsIn.test(bond->getIdx())) {
               if (useHs || mol.getAtomWithIdx(bond->getOtherAtomIdx(oAtom))
                                    ->getAtomicNum() != 1) {

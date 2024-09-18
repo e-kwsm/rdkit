@@ -72,7 +72,7 @@ MorganFeatureAtomInvGenerator::MorganFeatureAtomInvGenerator(
   if (patterns) {
     dp_patterns = new std::vector<const ROMol *>;
     dp_patterns->reserve(patterns->size());
-    for (auto pattern : *patterns) {
+    for (const auto *pattern : *patterns) {
       dp_patterns->push_back(new ROMol(*pattern));
     }
   }
@@ -80,7 +80,7 @@ MorganFeatureAtomInvGenerator::MorganFeatureAtomInvGenerator(
 
 void MorganFeatureAtomInvGenerator::cleanUpPatterns() {
   if (dp_patterns) {
-    for (auto mol : *dp_patterns) {
+    for (const auto *mol : *dp_patterns) {
       delete mol;
     }
     delete dp_patterns;
@@ -250,7 +250,7 @@ void MorganAtomEnv<OutputType>::updateAdditionalOutput(
     std::vector<int> atomsInvolved;
     atomsInvolved.push_back(d_atomId);
     if (d_layer > 0) {
-      const auto dm = MolOps::getDistanceMat(*d_mol);
+      auto *const dm = MolOps::getDistanceMat(*d_mol);
       for (unsigned int i = 0; i < d_mol->getNumAtoms(); ++i) {
         if (static_cast<unsigned int>(dm[d_atomId * d_mol->getNumAtoms() + i] +
                                       .1) <= d_layer &&

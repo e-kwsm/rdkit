@@ -45,7 +45,7 @@ void LinkNodeOp::initFromMol() {
   }
 
   d_atomMap.clear();
-  for (auto atom : dp_mol->atoms()) {
+  for (auto *atom : dp_mol->atoms()) {
     unsigned int oidx;
     if (atom->getPropIfPresent(detail::idxPropName, oidx)) {
       d_atomMap[oidx] = atom;
@@ -71,9 +71,9 @@ void LinkNodeOp::initFromMol() {
     std::string productSmarts = "";
     d_countAtEachPoint.push_back(node.maxRep - node.minRep + 1);
     d_pointRanges.push_back(std::make_pair(node.minRep, node.maxRep));
-    auto varAtom = dp_frame->getAtomWithIdx(node.bondAtoms[0].first);
-    auto attach1 = dp_frame->getAtomWithIdx(node.bondAtoms[0].second);
-    auto attach2 = dp_frame->getAtomWithIdx(node.bondAtoms[1].second);
+    auto *varAtom = dp_frame->getAtomWithIdx(node.bondAtoms[0].first);
+    auto *attach1 = dp_frame->getAtomWithIdx(node.bondAtoms[0].second);
+    auto *attach2 = dp_frame->getAtomWithIdx(node.bondAtoms[1].second);
     // save the isotope values:
     if (d_isotopeMap.find(1000 * (node.bondAtoms[0].first + 1)) ==
         d_isotopeMap.end()) {
@@ -160,7 +160,7 @@ std::unique_ptr<ROMol> LinkNodeOp::operator()(
     // std::cerr << "   APPLICATION: " << MolToSmiles(*res) << std::endl;
   }
   // reset the original isotopes
-  for (auto atom : res->atoms()) {
+  for (auto *atom : res->atoms()) {
     if (atom->getIsotope() >= 1000) {
       auto iter = d_isotopeMap.find(atom->getIsotope());
       if (iter != d_isotopeMap.end()) {

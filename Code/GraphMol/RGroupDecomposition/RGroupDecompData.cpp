@@ -229,7 +229,7 @@ std::vector<RGroupMatch> RGroupDecompData::GetCurrentBestPermutation() const {
   }
 
   for (auto &position : results) {
-    for (auto atom : position.matchedCore->atoms()) {
+    for (auto *atom : position.matchedCore->atoms()) {
       if (int atomLabel; atom->getAtomicNum() == 0 &&
                          atom->getPropIfPresent(RLABEL, atomLabel)) {
         if (atomLabel > 0 && !params.removeAllHydrogenRGroupsAndLabels) {
@@ -301,7 +301,7 @@ bool RGroupDecompData::replaceHydrogenCoreDummy(const RGroupMatch &match,
   if (const auto group = match.rgroups.find(currentLabel);
       group != match.rgroups.end()) {
     if (group->second->is_hydrogen) {
-      for (auto &neighbor : core.atomNeighbors(&atom)) {
+      for (const auto &neighbor : core.atomNeighbors(&atom)) {
         if (neighbor->getAtomicNum() == 1) {
           neighbor->setAtomicNum(0);
           setRlabel(neighbor, rLabel);
@@ -433,7 +433,7 @@ void RGroupDecompData::relabelCore(
 
   addAtoms(core, atomsToAdd);
   for (const auto &rlabels : atoms) {
-    auto atom = rlabels.second;
+    auto *atom = rlabels.second;
     atom->clearProp(RLABEL);
     atom->clearProp(RLABEL_TYPE);
   }
@@ -460,7 +460,7 @@ void RGroupDecompData::relabelRGroup(RGroupData &rgroup,
   std::vector<std::pair<Atom *, Atom *>> atomsToAdd;  // adds -R if necessary
   std::map<int, int> rLabelCoreIndexToAtomicWt;
 
-  for (auto atom : mol.atoms()) {
+  for (auto *atom : mol.atoms()) {
     if (atom->hasProp(SIDECHAIN_RLABELS)) {
       atom->setIsotope(0);
       const std::vector<int> &rlabels =
@@ -507,7 +507,7 @@ void RGroupDecompData::relabelRGroup(RGroupData &rgroup,
   rgroup.labelled = true;
 
   // Restore any core matches that we have set to dummy
-  for (auto atom : mol.atoms()) {
+  for (auto *atom : mol.atoms()) {
     if (atom->hasProp(RLABEL_CORE_INDEX)) {
       // don't need to set IsAromatic on atom - that seems to have been saved
       atom->setAtomicNum(

@@ -32,9 +32,9 @@ AtropisomerBond::AtropisomerBond(const CIPMol &mol, Bond *bond, Atom *startAtom,
                                                  bond->getOwningMol())) {
     return;  // not an atropisomer
   }
-  auto atom1 = mol.getAtom(atomAndBondVecs[0].second[0]->getOtherAtomIdx(
+  auto *atom1 = mol.getAtom(atomAndBondVecs[0].second[0]->getOtherAtomIdx(
       atomAndBondVecs[0].first->getIdx()));
-  auto atom2 = mol.getAtom(atomAndBondVecs[1].second[0]->getOtherAtomIdx(
+  auto *atom2 = mol.getAtom(atomAndBondVecs[1].second[0]->getOtherAtomIdx(
       atomAndBondVecs[1].first->getIdx()));
 
   std::vector<Atom *> anchors{atom1, atom2};
@@ -81,7 +81,7 @@ void AtropisomerBond::resetPrimaryLabel() const {
 
 Descriptor AtropisomerBond::label(const Rules &comp) {
   auto &digraph = getDigraph();
-  auto root1 = digraph.getOriginalRoot();
+  auto *root1 = digraph.getOriginalRoot();
   if (digraph.getCurrentRoot() != root1) {
     digraph.changeRoot(root1);
   }

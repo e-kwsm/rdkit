@@ -146,7 +146,7 @@ RDNumeric::DoubleVector *generateErGFingerprintForReducedGraph(
   // cache the atom type vectors:
   std::vector<std::vector<int>> tvs;
   tvs.reserve(mol.getNumAtoms());
-  for (const auto atom : mol.atoms()) {
+  for (auto *const atom : mol.atoms()) {
     const std::vector<int> &tv =
         atom->getProp<std::vector<int>>("_ErGAtomTypes");
     tvs.push_back(tv);
@@ -211,7 +211,7 @@ ROMol *generateMolExtendedReducedGraph(
   const int aliphaticFlag = atomTypes->size() - 1;  // the last type
   const int aromaticFlag = atomTypes->size();
 
-  for (const auto atom : res->atoms()) {
+  for (auto *const atom : res->atoms()) {
     std::vector<int> tv;
     tv.clear();
     for (unsigned int i = 0; i < atomTypes->size(); ++i) {

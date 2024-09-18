@@ -92,7 +92,7 @@ std::vector<double> MolData3Ddescriptors::GetCustomAtomProp(
   int numAtoms = mol.getNumAtoms();
 
   std::vector<double> customAtomArray(numAtoms, 1.0);
-  for (auto &atom : mol.atoms()) {
+  for (const auto &atom : mol.atoms()) {
     atom->getPropIfPresent(customAtomPropName, customAtomArray[atom->getIdx()]);
   }
   return customAtomArray;

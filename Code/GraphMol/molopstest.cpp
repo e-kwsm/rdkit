@@ -550,7 +550,7 @@ TEST_CASE("Testing Hydrogen Ops") {
 
   // addHs should not set the noImplicit flag.
   // This was Github Issue #7123
-  for (auto at : m2->atoms()) {
+  for (auto *at : m2->atoms()) {
     REQUIRE(at->getNoImplicit() == false);
   }
 
@@ -2943,8 +2943,8 @@ TEST_CASE("Testing some aromaticity edge cases") {
 }
 
 TEST_CASE("Testing sf.net issue 1942657") {
-  const auto smiles = GENERATE("C[C](C)(C)(C)C", "C[CH](C)(C)C", "C[C](=C)(C)C",
-                               "C[Si](=C)(=C)=C");
+  const auto *const smiles = GENERATE("C[C](C)(C)(C)C", "C[CH](C)(C)C",
+                                      "C[C](=C)(C)C", "C[Si](=C)(=C)=C");
   CAPTURE(smiles);
   CHECK_THROWS_AS(SmilesToMol(smiles), MolSanitizeException);
 }
@@ -3263,8 +3263,8 @@ TEST_CASE("Testing sf.net issue 2196817: handling of aromatic dummies") {
   }
 
   {
-    for (auto smi : {"c12ccccc1**CC2", "c12ccccc1C**C2", "*12ccccc1CCCC2",
-                     "*12ccccc1***C2"}) {
+    for (const auto *smi : {"c12ccccc1**CC2", "c12ccccc1C**C2",
+                            "*12ccccc1CCCC2", "*12ccccc1***C2"}) {
       std::unique_ptr<RWMol> m(SmilesToMol(smi));
       REQUIRE(m);
       for (size_t i = 0; i < 6; ++i) {
@@ -3293,9 +3293,10 @@ TEST_CASE("Testing sf.net issue 2196817: handling of aromatic dummies") {
   }
 
   {
-    for (auto smi : {"c12ccccc1****2", "c12ccccc1***2", "C12=CC=CC=C1****2",
-                     "c1ccccc1N1****1", "c1ccccc1C1****1", "c1ccccc1*1****1",
-                     "c1ccccc1*1*=**=*1"}) {
+    for (const auto *smi :
+         {"c12ccccc1****2", "c12ccccc1***2", "C12=CC=CC=C1****2",
+          "c1ccccc1N1****1", "c1ccccc1C1****1", "c1ccccc1*1****1",
+          "c1ccccc1*1*=**=*1"}) {
       std::unique_ptr<RWMol> m(SmilesToMol(smi));
       REQUIRE(m);
       for (unsigned int i = 6; i < m->getNumAtoms(); ++i) {
@@ -3305,7 +3306,7 @@ TEST_CASE("Testing sf.net issue 2196817: handling of aromatic dummies") {
   }
 
   {
-    for (auto smi : {"C1CC*2ccccc21", "C1C**2ccccc21"}) {
+    for (const auto *smi : {"C1CC*2ccccc21", "C1C**2ccccc21"}) {
       std::unique_ptr<RWMol> m(SmilesToMol(smi));
       REQUIRE(m);
       for (unsigned int i = 0; i < 3; ++i) {
@@ -3328,11 +3329,11 @@ TEST_CASE("Testing sf.net issue 2196817: handling of aromatic dummies") {
   }
 
   {
-    for (auto smi : {"N1****1", "C1=C*2C=CC=C*2C=C1", "N1*C=CC=C1",
-                     "C1=CC2=CC=C3C=CC4=CC=C5C=CN1*1*2*3*4*51"}) {
+    for (const auto *smi : {"N1****1", "C1=C*2C=CC=C*2C=C1", "N1*C=CC=C1",
+                            "C1=CC2=CC=C3C=CC4=CC=C5C=CN1*1*2*3*4*51"}) {
       std::unique_ptr<RWMol> m(SmilesToMol(smi));
       REQUIRE(m);
-      for (const auto b : m->bonds()) {
+      for (auto *const b : m->bonds()) {
         REQUIRE(!b->getIsAromatic());
       }
     }
@@ -3340,7 +3341,7 @@ TEST_CASE("Testing sf.net issue 2196817: handling of aromatic dummies") {
 
   {
     ROMOL_SPTR m = "C1=CC2=CC=C3C=CC4=CC=C5C=CN1*1*2*3*4N51"_smiles;
-    for (const auto a : m->atoms()) {
+    for (auto *const a : m->atoms()) {
       if (a->getIdx() == 16 || a->getIdx() == 17) {
         REQUIRE(!a->getIsAromatic());
       } else {
@@ -3348,7 +3349,7 @@ TEST_CASE("Testing sf.net issue 2196817: handling of aromatic dummies") {
       }
     }
     unsigned int nNonAromaticBonds = 0;
-    for (const auto b : m->bonds()) {
+    for (auto *const b : m->bonds()) {
       if (!b->getIsAromatic()) {
         ++nNonAromaticBonds;
       }
@@ -3357,12 +3358,12 @@ TEST_CASE("Testing sf.net issue 2196817: handling of aromatic dummies") {
   }
 
   {
-    for (auto smi :
+    for (const auto *smi :
          {"*1C=CC=C1", "N1*=**=*1", "C1=CC2=CC=C3C=CC4=CC=C5C=CN1N1N2N3N4N51",
           "C1=CC2=CC=C3C=CC4=CC=C5C=CN1*1N2*3N4N51"}) {
       std::unique_ptr<RWMol> m(SmilesToMol(smi));
       REQUIRE(m);
-      for (const auto b : m->bonds()) {
+      for (auto *const b : m->bonds()) {
         REQUIRE(b->getIsAromatic());
       }
     }
@@ -6177,7 +6178,7 @@ TEST_CASE("Testing Bond::setStereo(Bond::STEREOCIS / Bond::STEREOTRANS)") {
     constexpr Bond::BondStereo stereos[] = {Bond::STEREOCIS, Bond::STEREOTRANS};
     constexpr Bond::BondStereo ezstros[] = {Bond::STEREOZ, Bond::STEREOE};
 
-    for (auto &smile : smiles) {
+    for (const auto &smile : smiles) {
       ROMol *m = SmilesToMol(smile);
       MolOps::findPotentialStereoBonds(*m);
       Bond *bond = m->getBondWithIdx(1);
@@ -6220,7 +6221,7 @@ TEST_CASE("Testing Bond::setStereo(Bond::STEREOCIS / Bond::STEREOTRANS)") {
 
     for (auto desired_stereo : stereos) {
       std::string refSmiles;
-      for (auto &smile : smiles) {
+      for (const auto &smile : smiles) {
         ROMol *m = SmilesToMol(smile);
         MolOps::findPotentialStereoBonds(*m);
         REQUIRE(m->getNumAtoms() == 4);
@@ -6528,7 +6529,7 @@ TEST_CASE("Testing MMFF94 aromaticity") {
 
   MolOps::setAromaticity(*m, MolOps::AROMATICITY_RDKIT);
   int arombondcount = 0;
-  for (auto b : m->bonds()) {
+  for (auto *b : m->bonds()) {
     if (b->getIsAromatic()) {
       arombondcount++;
     }
@@ -6539,7 +6540,7 @@ TEST_CASE("Testing MMFF94 aromaticity") {
 
   MolOps::setAromaticity(*m, MolOps::AROMATICITY_MMFF94);
   arombondcount = 0;
-  for (auto b : m->bonds()) {
+  for (auto *b : m->bonds()) {
     if (b->getIsAromatic()) {
       arombondcount++;
     }
@@ -6970,7 +6971,7 @@ TEST_CASE("Testing Github issue 1622: add MDL aromaticity perception") {
         "C1=CC=CC=CC=CC=C1",              // 10 atoms
         "C1=CC=CC=CC=CC=CC=CC=CC=CC=C1",  // 18 atoms
         "N1=CN=NC=CC=CC=CC=CC=CC=CC=CC=CC=CC=CC=CC=CC=C1"};
-    for (auto smi : aromaticSmis) {
+    for (const auto *smi : aromaticSmis) {
       int debugParse = 0;
       bool sanitize = false;
       RWMol *mol = SmilesToMol(smi, debugParse, sanitize);
@@ -7017,7 +7018,7 @@ TEST_CASE("Testing Github issue 1622: add MDL aromaticity perception") {
         "C1=C[Te]C=C1",
 
     };
-    for (auto smi : nonaromaticSmis) {
+    for (const auto *smi : nonaromaticSmis) {
       int debugParse = 0;
       bool sanitize = false;
       RWMol *mol = SmilesToMol(smi, debugParse, sanitize);
@@ -7039,7 +7040,7 @@ TEST_CASE("Testing Github issue 1622: add MDL aromaticity perception") {
         "N1C2=CC=CC=C2C2=CC=CC=C12", "N1C=CC2=CC=CC=C12",
         "N1C=NC2=CC=CC=C12",         "N1C=NC2=CN=CN=C12",
         "C1CCCC2=CC3=CCCCC3=CC2=1"};
-    for (auto smi : mixedaromaticSmis) {
+    for (const auto *smi : mixedaromaticSmis) {
       int debugParse = 0;
       bool sanitize = false;
       RWMol *mol = SmilesToMol(smi, debugParse, sanitize);
@@ -7396,9 +7397,9 @@ TEST_CASE("Testing Github issue 1990: removeHs screws up bond stereo") {
 TEST_CASE("Testing removeAndTrackIsotopes parameter") {
   struct IsotopicHsCount {
     IsotopicHsCount(const ROMol &mol) {
-      for (auto b : mol.bonds()) {
-        const auto ba = b->getBeginAtom();
-        const auto ea = b->getEndAtom();
+      for (auto *b : mol.bonds()) {
+        auto *const ba = b->getBeginAtom();
+        auto *const ea = b->getEndAtom();
         if (ba->getAtomicNum() == 1 && ba->getIsotope()) {
           ++d_map[ea->getIdx()];
         } else if (ea->getAtomicNum() == 1 && ea->getIsotope()) {
@@ -7423,7 +7424,7 @@ TEST_CASE("Testing removeAndTrackIsotopes parameter") {
                                         unsigned int &impl) {
       expl = 0;
       impl = 0;
-      for (auto a : m.atoms()) {
+      for (auto *a : m.atoms()) {
         expl += a->getNumExplicitHs();
         impl += a->getNumImplicitHs();
       }
@@ -7809,7 +7810,7 @@ TEST_CASE("Testing adding coordinates to a terminal atom") {
   5  6  2  0
   6  1  1  0
 M  END)CTAB"_ctab;
-  auto atom = new Atom(0);
+  auto *atom = new Atom(0);
   auto idx = mol->addAtom(atom);
   delete atom;
   mol->addBond(idx, 0);
@@ -7933,7 +7934,7 @@ TEST_CASE("Testing isRingFused") {
   auto molOrig = "C1C(C2CC3CCCCC3C12)C1CCCCC1"_smiles;
   {
     RWMol mol(*molOrig);
-    auto ri = mol.getRingInfo();
+    auto *ri = mol.getRingInfo();
     REQUIRE(ri->numRings() == 4);
     boost::dynamic_bitset<> fusedRings(ri->numRings());
     for (size_t i = 0; i < ri->numRings(); ++i) {
@@ -7958,7 +7959,7 @@ TEST_CASE("Testing isRingFused") {
   }
   {
     RWMol mol(*molOrig);
-    auto ri = mol.getRingInfo();
+    auto *ri = mol.getRingInfo();
     REQUIRE(ri->numRings() == 4);
     boost::dynamic_bitset<> fusedRings(ri->numRings());
     for (size_t i = 0; i < ri->numRings(); ++i) {

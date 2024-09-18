@@ -59,7 +59,7 @@ void save(Archive &ar, const RDKit::MolHolder &molholder,
     std::int64_t pkl_count = molholder.getMols().size();
     ar & pkl_count;
 
-    for (auto &mol : molholder.getMols()) {
+    for (const auto &mol : molholder.getMols()) {
       std::string pkl;
       RDKit::MolPickler::pickleMol(*mol.get(), pkl);
       ar << pkl;
@@ -122,7 +122,7 @@ void save(Archive &ar, const RDKit::FPHolderBase &fpholder,
           const unsigned int version) {
   RDUNUSED_PARAM(version);
   std::vector<std::string> pickles;
-  for (auto &fp : fpholder.getFingerprints()) {
+  for (const auto &fp : fpholder.getFingerprints()) {
     pickles.push_back(fp->toString());
   }
   ar & pickles;

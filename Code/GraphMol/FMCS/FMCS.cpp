@@ -198,7 +198,7 @@ MCSResult findMCS(const std::vector<ROMOL_SPTR> &mols, bool maximizeBonds,
 bool MCSProgressCallbackTimeout(const MCSProgressData &,
                                 const MCSParameters &params, void *userData) {
   PRECONDITION(userData, "userData must not be NULL");
-  auto t0 = static_cast<unsigned long long *>(userData);
+  auto *t0 = static_cast<unsigned long long *>(userData);
   unsigned long long t = nanoClock();
   return !params.Timeout || (t - *t0 <= params.Timeout * 1000000ULL);
 }
@@ -210,8 +210,8 @@ bool checkAtomRingMatch(const MCSAtomCompareParameters &p, const ROMol &mol1,
                         unsigned int atom1, const ROMol &mol2,
                         unsigned int atom2) {
   if (p.RingMatchesRingOnly) {
-    const auto ri1 = mol1.getRingInfo();
-    const auto ri2 = mol2.getRingInfo();
+    auto *const ri1 = mol1.getRingInfo();
+    auto *const ri2 = mol2.getRingInfo();
     bool atom1inRing = (ri1->numAtomRings(atom1) > 0);
     bool atom2inRing = (ri2->numAtomRings(atom2) > 0);
     return atom1inRing == atom2inRing;
@@ -223,16 +223,16 @@ bool checkAtomRingMatch(const MCSAtomCompareParameters &p, const ROMol &mol1,
 bool checkAtomCharge(const MCSAtomCompareParameters &, const ROMol &mol1,
                      unsigned int atom1, const ROMol &mol2,
                      unsigned int atom2) {
-  const auto a1 = mol1.getAtomWithIdx(atom1);
-  const auto a2 = mol2.getAtomWithIdx(atom2);
+  const auto *const a1 = mol1.getAtomWithIdx(atom1);
+  const auto *const a2 = mol2.getAtomWithIdx(atom2);
   return a1->getFormalCharge() == a2->getFormalCharge();
 }
 
 bool checkAtomChirality(const MCSAtomCompareParameters &, const ROMol &mol1,
                         unsigned int atom1, const ROMol &mol2,
                         unsigned int atom2) {
-  const auto a1 = mol1.getAtomWithIdx(atom1);
-  const auto a2 = mol2.getAtomWithIdx(atom2);
+  const auto *const a1 = mol1.getAtomWithIdx(atom1);
+  const auto *const a2 = mol2.getAtomWithIdx(atom2);
   const auto ac1 = a1->getChiralTag();
   const auto ac2 = a2->getChiralTag();
   if (ac1 == Atom::CHI_TETRAHEDRAL_CW || ac1 == Atom::CHI_TETRAHEDRAL_CCW) {
@@ -275,8 +275,8 @@ bool MCSAtomCompareAny(const MCSAtomCompareParameters &p, const ROMol &mol1,
 bool MCSAtomCompareElements(const MCSAtomCompareParameters &p,
                             const ROMol &mol1, unsigned int atom1,
                             const ROMol &mol2, unsigned int atom2, void *) {
-  const auto a1 = mol1.getAtomWithIdx(atom1);
-  const auto a2 = mol2.getAtomWithIdx(atom2);
+  const auto *const a1 = mol1.getAtomWithIdx(atom1);
+  const auto *const a2 = mol2.getAtomWithIdx(atom2);
   if (a1->getAtomicNum() != a2->getAtomicNum()) {
     return false;
   }
@@ -302,8 +302,8 @@ bool MCSAtomCompareIsotopes(const MCSAtomCompareParameters &p,
                             const ROMol &mol1, unsigned int atom1,
                             const ROMol &mol2, unsigned int atom2, void *) {
   // ignore everything except isotope information:
-  const auto a1 = mol1.getAtomWithIdx(atom1);
-  const auto a2 = mol2.getAtomWithIdx(atom2);
+  const auto *const a1 = mol1.getAtomWithIdx(atom1);
+  const auto *const a2 = mol2.getAtomWithIdx(atom2);
   if (a1->getIsotope() != a2->getIsotope()) {
     return false;
   }
@@ -325,8 +325,8 @@ bool MCSAtomCompareIsotopes(const MCSAtomCompareParameters &p,
 bool MCSAtomCompareAnyHeavyAtom(const MCSAtomCompareParameters &p,
                                 const ROMol &mol1, unsigned int atom1,
                                 const ROMol &mol2, unsigned int atom2, void *) {
-  const auto a1 = mol1.getAtomWithIdx(atom1);
-  const auto a2 = mol2.getAtomWithIdx(atom2);
+  const auto *const a1 = mol1.getAtomWithIdx(atom1);
+  const auto *const a2 = mol2.getAtomWithIdx(atom2);
   // Any atom, including H, matches another atom of the same type,  according to
   // the other flags
   if (a1->getAtomicNum() == a2->getAtomicNum() ||
@@ -374,8 +374,8 @@ class BondMatchOrderMatrix {
 bool checkBondStereo(const MCSBondCompareParameters &, const ROMol &mol1,
                      unsigned int bond1, const ROMol &mol2,
                      unsigned int bond2) {
-  const auto b1 = mol1.getBondWithIdx(bond1);
-  const auto b2 = mol2.getBondWithIdx(bond2);
+  const auto *const b1 = mol1.getBondWithIdx(bond1);
+  const auto *const b2 = mol2.getBondWithIdx(bond2);
   auto bs1 = b1->getStereo();
   auto bs2 = b2->getStereo();
   if (b1->getBondType() == Bond::DOUBLE && b2->getBondType() == Bond::DOUBLE) {
@@ -391,8 +391,8 @@ bool checkBondStereo(const MCSBondCompareParameters &, const ROMol &mol1,
 bool havePairOfCompatibleRings(const MCSBondCompareParameters &,
                                const ROMol &mol1, unsigned int bond1,
                                const ROMol &mol2, unsigned int bond2) {
-  const auto ri1 = mol1.getRingInfo();
-  const auto ri2 = mol2.getRingInfo();
+  auto *const ri1 = mol1.getRingInfo();
+  auto *const ri2 = mol2.getRingInfo();
   const auto &bondRings1 = ri1->bondRings();
   const auto &bondRings2 = ri2->bondRings();
   for (unsigned int ringIdx1 : ri1->bondMembers(bond1)) {
@@ -418,8 +418,8 @@ bool havePairOfCompatibleRings(const MCSBondCompareParameters &,
 bool checkBondRingMatch(const MCSBondCompareParameters &p, const ROMol &mol1,
                         unsigned int bond1, const ROMol &mol2,
                         unsigned int bond2) {
-  const auto ri1 = mol1.getRingInfo();
-  const auto ri2 = mol2.getRingInfo();
+  auto *const ri1 = mol1.getRingInfo();
+  auto *const ri2 = mol2.getRingInfo();
   // indices of rings in the query molecule
   const auto &ringIndices1 = ri1->bondMembers(bond1);
   // indices of rings in the target molecule
@@ -454,8 +454,8 @@ bool MCSBondCompareOrder(const MCSBondCompareParameters &p, const ROMol &mol1,
                          unsigned int bond1, const ROMol &mol2,
                          unsigned int bond2, void *) {
   static const BondMatchOrderMatrix match(true);  // ignore Aromatization
-  const auto b1 = mol1.getBondWithIdx(bond1);
-  const auto b2 = mol2.getBondWithIdx(bond2);
+  const auto *const b1 = mol1.getBondWithIdx(bond1);
+  const auto *const b2 = mol2.getBondWithIdx(bond2);
   auto t1 = b1->getBondType();
   auto t2 = b2->getBondType();
   if (match.isEqual(t1, t2)) {
@@ -474,8 +474,8 @@ bool MCSBondCompareOrderExact(const MCSBondCompareParameters &p,
                               const ROMol &mol1, unsigned int bond1,
                               const ROMol &mol2, unsigned int bond2, void *) {
   static const BondMatchOrderMatrix match(false);  // AROMATIC != SINGLE
-  const auto b1 = mol1.getBondWithIdx(bond1);
-  const auto b2 = mol2.getBondWithIdx(bond2);
+  const auto *const b1 = mol1.getBondWithIdx(bond1);
+  const auto *const b2 = mol2.getBondWithIdx(bond2);
   auto t1 = b1->getBondType();
   auto t2 = b2->getBondType();
   if (match.isEqual(t1, t2)) {
@@ -515,7 +515,7 @@ class RingBondCountVect {
   // numBondRings.
   void setMCSBondBitsPass1(unsigned int beginAtomIdx, unsigned int endAtomIdx,
                            const std::uint32_t c[], const FMCS::Graph &graph) {
-    const auto bond =
+    const auto *const bond =
         d_mol.getBondBetweenAtoms(graph[c[beginAtomIdx]], graph[c[endAtomIdx]]);
     CHECK_INVARIANT(bond, "");
     const auto bi = bond->getIdx();
@@ -691,7 +691,7 @@ bool FinalMatchCheckFunction(const std::uint32_t c1[], const std::uint32_t c2[],
       !FinalChiralityCheckFunction(c1, c2, mol1, query, mol2, target, p)) {
     return false;
   }
-  const auto ip = dynamic_cast<const detail::MCSParametersInternal *>(p);
+  const auto *const ip = dynamic_cast<const detail::MCSParametersInternal *>(p);
   if (ip && ip->UserFinalMatchChecker) {
     return ip->UserFinalMatchChecker(c1, c2, mol1, query, mol2, target, p);
   }
@@ -706,10 +706,10 @@ bool FinalChiralityCheckFunction(const std::uint32_t c1[],
   const unsigned int qna = boost::num_vertices(query);  // getNumAtoms()
   // check chiral atoms only:
   for (unsigned int i = 0; i < qna; ++i) {
-    const auto a1 = mol1.getAtomWithIdx(query[c1[i]]);
+    const auto *const a1 = mol1.getAtomWithIdx(query[c1[i]]);
     const auto ac1 = a1->getChiralTag();
 
-    const auto a2 = mol2.getAtomWithIdx(target[c2[i]]);
+    const auto *const a2 = mol2.getAtomWithIdx(target[c2[i]]);
     const auto ac2 = a2->getChiralTag();
 
     ///*------------------ OLD Code :
@@ -756,7 +756,8 @@ bool FinalChiralityCheckFunction(const std::uint32_t c1[],
 
     INT_LIST qOrder;
     for (unsigned int j = 0; j < qna && qOrder.size() != a1Degree; ++j) {
-      const auto qB = mol1.getBondBetweenAtoms(query[c1[i]], query[c1[j]]);
+      const auto *const qB =
+          mol1.getBondBetweenAtoms(query[c1[i]], query[c1[j]]);
       if (qB) {
         qOrder.push_back(qB->getIdx());
       }
@@ -780,7 +781,8 @@ bool FinalChiralityCheckFunction(const std::uint32_t c1[],
 
     INT_LIST mOrder;
     for (unsigned int j = 0; j < qna && mOrder.size() != a2->getDegree(); ++j) {
-      const auto mB = mol2.getBondBetweenAtoms(target[c2[i]], target[c2[j]]);
+      const auto *const mB =
+          mol2.getBondBetweenAtoms(target[c2[i]], target[c2[j]]);
       if (mB) {
         mOrder.push_back(mB->getIdx());
       }
@@ -818,7 +820,7 @@ bool FinalChiralityCheckFunction(const std::uint32_t c1[],
     qMap[query[c1[j]]] = j;
   }
   for (const auto &bondIdx : boost::make_iterator_range(boost::edges(query))) {
-    const auto qBnd = mol1.getBondWithIdx(query[bondIdx]);
+    const auto *const qBnd = mol1.getBondWithIdx(query[bondIdx]);
     if (qBnd->getBondType() != Bond::DOUBLE ||
         qBnd->getStereo() <= Bond::STEREOANY) {
       continue;
@@ -830,7 +832,7 @@ bool FinalChiralityCheckFunction(const std::uint32_t c1[],
       continue;
     }
 
-    const auto mBnd =
+    const auto *const mBnd =
         mol2.getBondBetweenAtoms(target[c2[qMap[qBnd->getBeginAtomIdx()]]],
                                  target[c2[qMap[qBnd->getEndAtomIdx()]]]);
     CHECK_INVARIANT(mBnd, "Matching bond not found");
@@ -890,13 +892,13 @@ bool FinalChiralityCheckFunction_1(const short unsigned int c1[],
   const unsigned int qna = boost::num_vertices(query);  // getNumAtoms()
   // check chiral atoms:
   for (unsigned int i = 0; i < qna; ++i) {
-    const auto a1 = mol1.getAtomWithIdx(query[c1[i]]);
+    const auto *const a1 = mol1.getAtomWithIdx(query[c1[i]]);
     const auto ac1 = a1->getChiralTag();
     if (!(ac1 == Atom::CHI_TETRAHEDRAL_CW ||
           ac1 == Atom::CHI_TETRAHEDRAL_CCW)) {
       continue;  // skip non chiral center query atoms
     }
-    const auto a2 = mol2.getAtomWithIdx(target[c2[i]]);
+    const auto *const a2 = mol2.getAtomWithIdx(target[c2[i]]);
     const auto ac2 = a2->getChiralTag();
     if (!(ac2 == Atom::CHI_TETRAHEDRAL_CW ||
           ac2 == Atom::CHI_TETRAHEDRAL_CCW)) {
@@ -912,7 +914,8 @@ bool FinalChiralityCheckFunction_1(const short unsigned int c1[],
     }
     INT_LIST qOrder;
     for (unsigned int j = 0; j < qna && qOrder.size() != a1Degree; ++j) {
-      const auto qB = mol1.getBondBetweenAtoms(query[c1[i]], query[c1[j]]);
+      const auto *const qB =
+          mol1.getBondBetweenAtoms(query[c1[i]], query[c1[j]]);
       if (qB) {
         qOrder.push_back(qB->getIdx());
       }
@@ -921,7 +924,8 @@ bool FinalChiralityCheckFunction_1(const short unsigned int c1[],
     int qPermCount = a1->getPerturbationOrder(qOrder);
     INT_LIST mOrder;
     for (unsigned int j = 0; j < qna && mOrder.size() != a2->getDegree(); ++j) {
-      const auto mB = mol2.getBondBetweenAtoms(target[c2[i]], target[c2[j]]);
+      const auto *const mB =
+          mol2.getBondBetweenAtoms(target[c2[i]], target[c2[j]]);
       if (mB) {
         mOrder.push_back(mB->getIdx());
       }
@@ -942,7 +946,7 @@ bool FinalChiralityCheckFunction_1(const short unsigned int c1[],
     qMap[query[c1[j]]] = j;
   }
   for (const auto &bondIdx : boost::make_iterator_range(boost::edges(query))) {
-    const auto qBnd = mol1.getBondWithIdx(query[bondIdx]);
+    const auto *const qBnd = mol1.getBondWithIdx(query[bondIdx]);
     if (qBnd->getBondType() != Bond::DOUBLE ||
         qBnd->getStereo() <= Bond::STEREOANY) {
       continue;

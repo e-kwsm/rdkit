@@ -186,7 +186,7 @@ class DrawerFromDetails {
       bjDrawCoords.push_back(std::move(bjXY));
     }
     doc["drawCoords"] = bjDrawCoords;
-    const auto drawingResultKey = getDrawingResultKey();
+    const auto *const drawingResultKey = getDrawingResultKey();
     if (drawingResultKey) {
       doc[drawingResultKey] = res;
     }

@@ -937,7 +937,7 @@ void testChiralityCleanup() {
   smi = "C[C@H]1CC(N2CCc3ccc(N)cc3C2)C[C@H](C)C1";
   mol.reset(v2::SmilesParse::MolFromSmiles(smi).release());
   TEST_ASSERT(mol->getRingInfo()->isAtomInRingOfSize(3, 6));
-  auto chiral_center = mol->getAtomWithIdx(3);
+  auto *chiral_center = mol->getAtomWithIdx(3);
   TEST_ASSERT(chiral_center->getAtomicNum() == 6);
   TEST_ASSERT(chiral_center->getDegree() == 3);
   TEST_ASSERT(!chiral_center->getIsAromatic());
@@ -2652,7 +2652,7 @@ void stereochemTester(RWMol *m, std::string expectedCIP,
   TEST_ASSERT(!m->getAtomWithIdx(1)->hasProp(common_properties::_CIPCode));
   TEST_ASSERT(m->getBondWithIdx(3)->getStereo() == Bond::STEREONONE);
   // the mol file parser assigned bond dirs, get rid of them
-  for (const auto bond : m->bonds()) {
+  for (auto *const bond : m->bonds()) {
     bond->setBondDir(Bond::NONE);
   }
   MolOps::assignStereochemistryFrom3D(*m);
@@ -2819,14 +2819,14 @@ class TestAssignChiralTypesFromMolParity {
         {Atom::CHI_UNSPECIFIED, 0},
         {Atom::CHI_OTHER, 0}};
     MolOps::assignChiralTypesFrom3D(*d_rwMol);
-    for (const auto atom : d_rwMol->atoms()) {
+    for (auto *const atom : d_rwMol->atoms()) {
       int parity = parityMap.at(atom->getChiralTag());
       (atom)->setProp(common_properties::molParity, parity);
       (atom)->setChiralTag(Atom::CHI_UNSPECIFIED);
     }
   }
   void fillBondDefVect() {
-    for (const auto bond : d_rwMol->bonds()) {
+    for (auto *const bond : d_rwMol->bonds()) {
       d_bondDefVect.emplace_back(BondDef((bond)->getBeginAtomIdx(),
                                          (bond)->getEndAtomIdx(),
                                          (bond)->getBondType()));
@@ -3137,7 +3137,7 @@ void testGithub4494() {
       << "GitHub #4494: Small rings can have STEREOANY/EITHERDOUBLE bonds."
       << std::endl;
 
-  auto molblock = R"CTAB(
+  const auto *molblock = R"CTAB(
   MJ201500
 
   9  9  0  0  0  0  0  0  0  0999 V2000
@@ -3167,7 +3167,7 @@ M  END)CTAB";
   TEST_ASSERT(m);
 
   unsigned double_bonds_seen = 0;
-  for (const auto bnd : m->bonds()) {
+  for (auto *const bnd : m->bonds()) {
     if (bnd->getBondType() == Bond::DOUBLE) {
       TEST_ASSERT(bnd->getStereo() == Bond::STEREOANY);
       TEST_ASSERT(bnd->getBondDir() == Bond::EITHERDOUBLE);
@@ -3179,7 +3179,7 @@ M  END)CTAB";
   MolOps::assignStereochemistry(*m, true, true);
 
   double_bonds_seen = 0;
-  for (const auto bnd : m->bonds()) {
+  for (auto *const bnd : m->bonds()) {
     if (bnd->getBondType() == Bond::DOUBLE) {
       TEST_ASSERT(bnd->getStereo() == Bond::STEREONONE);
       TEST_ASSERT(bnd->getBondDir() == Bond::NONE);
@@ -3194,7 +3194,7 @@ M  END)CTAB";
   TEST_ASSERT(m);
 
   double_bonds_seen = 0;
-  for (const auto bnd : m->bonds()) {
+  for (auto *const bnd : m->bonds()) {
     if (bnd->getBondType() == Bond::AROMATIC) {
       TEST_ASSERT(bnd->getStereo() == Bond::STEREONONE);
       TEST_ASSERT(bnd->getBondDir() == Bond::NONE);
@@ -3221,7 +3221,7 @@ void testGithub7115() {
     TEST_ASSERT(smi == "C[C@]1(F)C[N@H+](O)C1");
   }
   {
-    auto insmi = "C[C@]1(F)C[N@+]([H])(O)C1";
+    const auto *insmi = "C[C@]1(F)C[N@+]([H])(O)C1";
     SmilesParserParams params;
     params.removeHs = false;
     std::unique_ptr<RWMol> s(SmilesToMol(insmi, params));

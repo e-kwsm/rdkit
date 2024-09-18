@@ -1378,7 +1378,7 @@ TEST_CASE("test16BitVectProps") {
 
   DataStructsExplicitBitVecPropHandler bv_handler;
   std::vector<CustomPropHandler *> handlers = {&bv_handler, bv_handler.clone()};
-  for (auto handler : handlers) {
+  for (auto *handler : handlers) {
     REQUIRE(handler->canSerialize(value));
     RDValue bad_value = 1;
     REQUIRE(!handler->canSerialize(bad_value));

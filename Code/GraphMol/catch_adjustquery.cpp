@@ -587,7 +587,7 @@ TEST_CASE("conjugated five-rings") {
     }
   }
   SECTION("query details") {
-    auto fname = "adjustqueryprops_fivering_2.mol";
+    const auto *fname = "adjustqueryprops_fivering_2.mol";
     std::string pathName = getenv("RDBASE");
     pathName += "/Code/GraphMol/test_data/";
     std::unique_ptr<RWMol> qry(MolFileToMol(pathName + fname));
