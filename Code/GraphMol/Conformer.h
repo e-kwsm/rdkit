@@ -116,7 +116,7 @@ class RDKIT_GRAPHMOL_EXPORT Conformer : public RDProps {
   }
 
   //! Set the position of the specified atom
-  inline void setAtomPos(unsigned int atomId, const RDGeom::Point3D &position) {
+  void setAtomPos(unsigned int atomId, const RDGeom::Point3D &position) {
     if (atomId == std::numeric_limits<unsigned int>::max()) {
       throw ValueErrorException("atom index overflow");
     }
@@ -131,17 +131,17 @@ class RDKIT_GRAPHMOL_EXPORT Conformer : public RDProps {
     return setAtomPos(rdcast<unsigned int>(atomId), position);
   }
   //! get the ID of this conformer
-  inline unsigned int getId() const { return d_id; }
+  unsigned int getId() const { return d_id; }
 
   //! set the ID of this conformer
-  inline void setId(unsigned int id) { d_id = id; }
+  void setId(unsigned int id) { d_id = id; }
 
   //! Get the number of atoms
-  inline unsigned int getNumAtoms() const {
+  unsigned int getNumAtoms() const {
     return rdcast<unsigned int>(d_positions.size());
   }
-  inline bool is3D() const { return df_is3D; }
-  inline void set3D(bool v) { df_is3D = v; }
+  bool is3D() const { return df_is3D; }
+  void set3D(bool v) { df_is3D = v; }
 
  protected:
   //! Set owning molecule
