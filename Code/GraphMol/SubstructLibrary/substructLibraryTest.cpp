@@ -122,7 +122,7 @@ void test1() {
   boost::dynamic_bitset<> hasMatch;
 
   int i = 0;
-  for (auto lib : libs) {
+  for (auto *lib : libs) {
     ROMol *query = SmartsToMol("[#6;$([#6]([#6])[!#6])]");
     if (i == 0) {
       hasMatch = runTest(*lib, *query, 1);
@@ -138,7 +138,7 @@ void test1() {
   }
 
   i = 0;
-  for (auto lib : libs) {
+  for (auto *lib : libs) {
     ROMol *query = SmartsToMol("[$([O,S]-[!$(*=O)])]");
     if (i == 0) {
       hasMatch = runTest(*lib, *query, 1);
@@ -205,7 +205,7 @@ void test2() {
   libs.push_back(&serialized);
 #endif
 
-  for (auto lib : libs) {
+  for (auto *lib : libs) {
     ROMol *query = SmartsToMol("[#6]([#6])[!#6]");
     runTest(*lib, *query, 1);
 #ifdef RDK_TEST_MULTITHREADED
@@ -252,7 +252,7 @@ void test3() {
   TEST_ASSERT(dynamic_cast<MolHolder *>(_holder) != nullptr);
 #endif
 
-  for (auto lib : libs) {
+  for (auto *lib : libs) {
     ROMol *query = SmartsToMol("C-1-C-C-O-C(-[O])(-[N])1");
     std::vector<unsigned int> res = lib->getMatches(*query, true, false);
     TEST_ASSERT(res.size() == 40);
@@ -301,7 +301,7 @@ void test4() {
   TEST_ASSERT(dynamic_cast<CachedSmilesMolHolder *>(_holder) != nullptr);
 #endif
 
-  for (auto lib : libs) {
+  for (auto *lib : libs) {
     ROMol *query = SmartsToMol("C-1-C-C-O-C(-[O])(-[N])1");
 
     std::vector<unsigned int> res = lib->getMatches(*query, true, false);

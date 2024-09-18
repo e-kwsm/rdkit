@@ -598,7 +598,7 @@ TEST_CASE(
 
 TEST_CASE("stereo in ring", "[molblock][stereo]") {
   SECTION("test 1") {
-    auto molblock = R"CTAB(
+    const auto *molblock = R"CTAB(
   Mrv2311 10242314442D
 
   0  0  0     0  0            999 V3000
