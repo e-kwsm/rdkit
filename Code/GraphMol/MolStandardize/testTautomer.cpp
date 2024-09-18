@@ -445,7 +445,7 @@ void testEnumeratorParams() {
     TautomerEnumeratorResult res = te.enumerate(*sAla);
     for (const auto &taut : res) {
       CIPLabeler::assignCIPLabels(*taut);
-      const auto tautAtom = taut->getAtomWithIdx(1);
+      auto *const tautAtom = taut->getAtomWithIdx(1);
       if (tautAtom->getHybridization() == Atom::SP3) {
         TEST_ASSERT(tautAtom->hasProp(common_properties::_CIPCode));
         TEST_ASSERT(
@@ -467,7 +467,7 @@ void testEnumeratorParams() {
     {
       unsigned int numStereoBonds = 0;
       const Bond *stereoBond = nullptr;
-      for (const auto b : eEnol->bonds()) {
+      for (auto *const b : eEnol->bonds()) {
         // Enum-order check: defined double-bond stereo (E/Z or cis/trans)
         // compares > STEREOANY, so this finds the one explicitly-stereo bond.
         if (b->getStereo() > Bond::STEREOANY) {
@@ -493,7 +493,8 @@ void testEnumeratorParams() {
       const auto &modifiedBonds = res.modifiedBonds();
       for (const auto &taut : res) {
         // Avoid fixed bond indices: tautomerization can shift bond orders.
-        const auto bond = taut->getBondBetweenAtoms(stereoBondA1, stereoBondA2);
+        auto *const bond =
+            taut->getBondBetweenAtoms(stereoBondA1, stereoBondA2);
         TEST_ASSERT(bond);
         TEST_ASSERT((bond->getBondType() == Bond::DOUBLE &&
                      bond->getStereo() == Bond::STEREOANY) ||
@@ -502,8 +503,8 @@ void testEnumeratorParams() {
 
         // STEREOANY should only appear on non-ring DOUBLE bonds.
         // (Ring DOUBLE bonds can appear due to kekulization.)
-        const auto ringInfo = taut->getRingInfo();
-        for (const auto b : taut->bonds()) {
+        auto *const ringInfo = taut->getRingInfo();
+        for (auto *const b : taut->bonds()) {
           // Enum-order check: require no defined bond stereo remains anywhere
           // (i.e. nothing that compares > STEREOANY).
           TEST_ASSERT(b->getStereo() <= Bond::STEREOANY);
@@ -528,7 +529,8 @@ void testEnumeratorParams() {
       TautomerEnumerator te(params);
       TautomerEnumeratorResult res = te.enumerate(*eEnol);
       for (const auto &taut : res) {
-        const auto bond = taut->getBondBetweenAtoms(stereoBondA1, stereoBondA2);
+        auto *const bond =
+            taut->getBondBetweenAtoms(stereoBondA1, stereoBondA2);
         TEST_ASSERT(bond);
         if (bond->getBondType() == Bond::DOUBLE) {
           if (useLegacy) {
@@ -546,7 +548,7 @@ void testEnumeratorParams() {
     {
       unsigned int numStereoBonds = 0;
       const Bond *stereoBond = nullptr;
-      for (const auto b : zEnol->bonds()) {
+      for (auto *const b : zEnol->bonds()) {
         // Enum-order check: defined double-bond stereo compares > STEREOANY.
         if (b->getStereo() > Bond::STEREOANY) {
           ++numStereoBonds;
@@ -570,15 +572,16 @@ void testEnumeratorParams() {
       TautomerEnumeratorResult res = te.enumerate(*zEnol);
       const auto &modifiedBonds = res.modifiedBonds();
       for (const auto &taut : res) {
-        const auto bond = taut->getBondBetweenAtoms(zStereoBondA1, zStereoBondA2);
+        auto *const bond =
+            taut->getBondBetweenAtoms(zStereoBondA1, zStereoBondA2);
         TEST_ASSERT(bond);
         TEST_ASSERT((bond->getBondType() == Bond::DOUBLE &&
                      bond->getStereo() == Bond::STEREOANY) ||
                     (bond->getBondType() != Bond::DOUBLE &&
                      bond->getStereo() == Bond::STEREONONE));
 
-        const auto ringInfo = taut->getRingInfo();
-        for (const auto b : taut->bonds()) {
+        auto *const ringInfo = taut->getRingInfo();
+        for (auto *const b : taut->bonds()) {
           // Enum-order check: ensure we didn't leave any defined bond stereo.
           TEST_ASSERT(b->getStereo() <= Bond::STEREOANY);
           const bool inRing = ringInfo && ringInfo->numBondRings(b->getIdx());
@@ -602,7 +605,8 @@ void testEnumeratorParams() {
       TautomerEnumerator te(params);
       TautomerEnumeratorResult res = te.enumerate(*zEnol);
       for (const auto &taut : res) {
-        const auto bond = taut->getBondBetweenAtoms(zStereoBondA1, zStereoBondA2);
+        auto *const bond =
+            taut->getBondBetweenAtoms(zStereoBondA1, zStereoBondA2);
         TEST_ASSERT(bond);
         if (bond->getBondType() == Bond::DOUBLE) {
           if (useLegacy) {
@@ -619,7 +623,7 @@ void testEnumeratorParams() {
     {
       unsigned int numStereoBonds = 0;
       const Bond *stereoBond = nullptr;
-      for (const auto b : eOxime->bonds()) {
+      for (auto *const b : eOxime->bonds()) {
         // Enum-order check: defined double-bond stereo compares > STEREOANY.
         if (b->getStereo() > Bond::STEREOANY) {
           ++numStereoBonds;
@@ -642,8 +646,8 @@ void testEnumeratorParams() {
       for (const auto &taut : res) {
         // Avoid fixed bond indices here: tautomerization can move the relevant
         // oxime double bond (e.g. C=N vs N=O) and therefore its bond index.
-        const auto ringInfo = taut->getRingInfo();
-        for (const auto b : taut->bonds()) {
+        auto *const ringInfo = taut->getRingInfo();
+        for (auto *const b : taut->bonds()) {
           TEST_ASSERT(b->getStereo() == Bond::STEREONONE ||
                       b->getStereo() == Bond::STEREOANY);
           const bool inRing = ringInfo && ringInfo->numBondRings(b->getIdx());
@@ -670,7 +674,7 @@ void testEnumeratorParams() {
       for (const auto &taut : res) {
         unsigned int numStereoBonds = 0;
         const Bond *stereoBond = nullptr;
-        for (const auto b : taut->bonds()) {
+        for (auto *const b : taut->bonds()) {
           // Enum-order check: count only *defined* bond stereo assignments.
           if (b->getStereo() > Bond::STEREOANY) {
             ++numStereoBonds;
@@ -689,7 +693,7 @@ void testEnumeratorParams() {
     {
       unsigned int numStereoBonds = 0;
       const Bond *stereoBond = nullptr;
-      for (const auto b : zOxime->bonds()) {
+      for (auto *const b : zOxime->bonds()) {
         // Enum-order check: defined double-bond stereo compares > STEREOANY.
         if (b->getStereo() > Bond::STEREOANY) {
           ++numStereoBonds;
@@ -712,8 +716,8 @@ void testEnumeratorParams() {
       for (const auto &taut : res) {
         // Avoid fixed bond indices here: tautomerization can move the relevant
         // oxime double bond (e.g. C=N vs N=O) and therefore its bond index.
-        const auto ringInfo = taut->getRingInfo();
-        for (const auto b : taut->bonds()) {
+        auto *const ringInfo = taut->getRingInfo();
+        for (auto *const b : taut->bonds()) {
           TEST_ASSERT(b->getStereo() == Bond::STEREONONE ||
                       b->getStereo() == Bond::STEREOANY);
           const bool inRing = ringInfo && ringInfo->numBondRings(b->getIdx());
@@ -740,7 +744,7 @@ void testEnumeratorParams() {
       for (const auto &taut : res) {
         unsigned int numStereoBonds = 0;
         const Bond *stereoBond = nullptr;
-        for (const auto b : taut->bonds()) {
+        for (auto *const b : taut->bonds()) {
           // Enum-order check: count only *defined* bond stereo assignments.
           if (b->getStereo() > Bond::STEREOANY) {
             ++numStereoBonds;
@@ -769,7 +773,7 @@ void testEnumeratorParams() {
     TautomerEnumerator te(params);
     TautomerEnumeratorResult res = te.enumerate(*chembl2024142);
     for (const auto &taut : res) {
-      const auto tautAtom = taut->getAtomWithIdx(12);
+      auto *const tautAtom = taut->getAtomWithIdx(12);
       TEST_ASSERT(!tautAtom->hasProp(common_properties::_isotopicHs));
     }
   }
@@ -780,7 +784,7 @@ void testEnumeratorParams() {
     TautomerEnumerator te(params);
     TautomerEnumeratorResult res = te.enumerate(*chembl2024142);
     for (const auto &taut : res) {
-      const auto tautAtom = taut->getAtomWithIdx(12);
+      auto *const tautAtom = taut->getAtomWithIdx(12);
       TEST_ASSERT(tautAtom->hasProp(common_properties::_isotopicHs));
     }
   }
@@ -794,7 +798,7 @@ void testEnumeratorParams() {
     TautomerEnumerator te(params);
     TautomerEnumeratorResult res = te.enumerate(*enolexample);
     for (const auto &taut : res) {
-      const auto tautAtom = taut->getAtomWithIdx(0);
+      auto *const tautAtom = taut->getAtomWithIdx(0);
       TEST_ASSERT(!(tautAtom->hasProp(common_properties::_isotopicHs) &&
                     !tautAtom->getTotalNumHs()));
     }
@@ -805,7 +809,7 @@ void testEnumeratorParams() {
     TautomerEnumerator te(params);
     TautomerEnumeratorResult res = te.enumerate(*enolexample);
     for (const auto &taut : res) {
-      const auto tautAtom = taut->getAtomWithIdx(0);
+      auto *const tautAtom = taut->getAtomWithIdx(0);
       TEST_ASSERT(!(tautAtom->hasProp(common_properties::_isotopicHs) &&
                     !tautAtom->getTotalNumHs()));
     }
@@ -1327,7 +1331,7 @@ void testGithub2990() {
                   Bond::BondDir::NONE);
       TEST_ASSERT(taut->getBondBetweenAtoms(1, 2)->getStereo() >
                   Bond::BondStereo::STEREOANY);
-      const auto bond45 = taut->getBondBetweenAtoms(4, 5);
+      auto *const bond45 = taut->getBondBetweenAtoms(4, 5);
       TEST_ASSERT((bond45->getBondType() == Bond::DOUBLE &&
                    bond45->getStereo() == Bond::BondStereo::STEREOANY) ||
                   (bond45->getBondType() != Bond::DOUBLE &&

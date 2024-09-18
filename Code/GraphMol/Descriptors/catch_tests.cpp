@@ -304,7 +304,7 @@ TEST_CASE("Oxidation numbers") {
       std::vector<int> expected{-2, -2, 2, 3, 3, 2, -1, -1, -1, 0, -1};
       Descriptors::calcOxidationNumbers(m2);
       for (unsigned int i = 0; i < ats.size(); ++i) {
-        auto a = m2.getAtomWithIdx(ats[i]);
+        auto *a = m2.getAtomWithIdx(ats[i]);
         CHECK(a->getProp<int>(common_properties::OxidationNumber) ==
               expected[i]);
       }
@@ -547,7 +547,7 @@ TEST_CASE("Oxidation numbers") {
       RDKit::MolOps::Kekulize(*mol);
       Descriptors::calcOxidationNumbers(*mol);
       for (const auto &expected : std::get<2>(test)) {
-        auto atom = mol->getAtomWithIdx(expected.first);
+        auto *atom = mol->getAtomWithIdx(expected.first);
         CHECK(atom->getProp<int>(common_properties::OxidationNumber) ==
               expected.second);
       }
@@ -562,7 +562,7 @@ TEST_CASE("DCLV") {
       pathName + "/Code/GraphMol/Descriptors/test_data/1mup.pdb";
   auto m = v2::FileParsers::MolFromPDBFile(pdbName);
   std::vector<double> radii;
-  for (const auto atom : m->atoms()) {
+  for (auto *const atom : m->atoms()) {
     radii.push_back(tbl->getRvdw(atom->getAtomicNum()));
   }
   REQUIRE(m);
@@ -632,7 +632,7 @@ TEST_CASE("DCLV") {
         pathName + "/Code/GraphMol/Descriptors/test_data/TZL_model.sdf";
     auto m = v2::FileParsers::MolFromMolFile(sdfName);
     std::vector<double> radii;
-    for (const auto atom : m->atoms()) {
+    for (auto *const atom : m->atoms()) {
       radii.push_back(tbl->getRvdw(atom->getAtomicNum()));
     }
     REQUIRE(m);

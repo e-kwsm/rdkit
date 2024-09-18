@@ -307,7 +307,7 @@ void ShapeInput::extractAtoms(const ROMol &mol, int confId,
   auto conf = mol.getConformer(confId);
   // Index of atoms that have been added to the shape.
   unsigned int idx = 0;
-  for (const auto atom : mol.atoms()) {
+  for (auto *const atom : mol.atoms()) {
     if (!opts.atomSubset.empty()) {
       const auto atomIdx = atom->getIdx();
       if (auto it = std::ranges::find_if(
@@ -445,7 +445,7 @@ void ShapeInput::extractFeatures(const ROMol &mol, int confId,
                                  const ShapeInputOptions &opts) {
   if (opts.customFeatures.empty()) {
     unsigned pattIdx = 1;
-    const auto pattVects = getPh4Patterns();
+    auto *const pattVects = getPh4Patterns();
     for (const auto &patts : *pattVects) {
       for (const auto &patt : patts) {
         std::vector<MatchVectType> matches;
@@ -555,7 +555,7 @@ void ShapeInput::calculateExtremes() {
 RDGeom::Point3D computeFeaturePos(const ROMol &mol, int confId,
                                   const std::vector<unsigned int> &ats) {
   RDGeom::Point3D featPos;
-  auto &conf = mol.getConformer(confId);
+  const auto &conf = mol.getConformer(confId);
   for (const auto at : ats) {
     featPos += conf.getAtomPos(at);
   }

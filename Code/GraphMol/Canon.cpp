@@ -287,7 +287,7 @@ bool sameSideDirsAreCompatible(const Bond &firstBond, const Bond &secondBond,
 
 namespace details {
 bool isUnsaturated(const Atom *atom, const ROMol &mol) {
-  for (auto bond : mol.atomBonds(atom)) {
+  for (auto *bond : mol.atomBonds(atom)) {
     // can't just check for single bonds, because dative bonds also have an
     // order of 1
     if (bond->getBondTypeAsDouble() > 1) {
@@ -722,8 +722,8 @@ void canonicalizeDoubleBonds(ROMol &mol, const UINT_VECT &bondVisitOrders,
 
   auto getNeighboringStereoBond = [&mol](const Atom *dblBndAtom,
                                          const Bond *nbrBnd) -> Bond * {
-    auto otherAtom = nbrBnd->getOtherAtom(dblBndAtom);
-    for (const auto bond : mol.atomBonds(otherAtom)) {
+    auto *otherAtom = nbrBnd->getOtherAtom(dblBndAtom);
+    for (auto *const bond : mol.atomBonds(otherAtom)) {
       if (bond != nbrBnd && bond->getBondType() == Bond::DOUBLE &&
           bond->getStereo() > Bond::STEREOANY) {
         return bond;
@@ -753,13 +753,13 @@ void canonicalizeDoubleBonds(ROMol &mol, const UINT_VECT &bondVisitOrders,
                       decltype(compareBondPriority)>
       q{compareBondPriority};
 
-  for (auto &msI : molStack) {
+  for (const auto &msI : molStack) {
     if (msI.type != MOL_STACK_BOND) {
       // not a bond, skip it
       continue;
     }
 
-    auto bond = msI.obj.bond;
+    auto *bond = msI.obj.bond;
     Bond::BondDir dir = bond->getBondDir();
     if (dir == Bond::ENDDOWNRIGHT || dir == Bond::ENDUPRIGHT) {
       bond->setBondDir(Bond::NONE);
@@ -779,7 +779,7 @@ void canonicalizeDoubleBonds(ROMol &mol, const UINT_VECT &bondVisitOrders,
         if (!canHaveDirection(*nbrBond)) {
           continue;
         }
-        auto nbrDblBnd = getNeighboringStereoBond(dblBondAtom, nbrBond);
+        auto *nbrDblBnd = getNeighboringStereoBond(dblBondAtom, nbrBond);
         if (nbrDblBnd != nullptr) {
           currentNbrs.push_back(nbrDblBnd);
         }
@@ -804,7 +804,7 @@ void canonicalizeDoubleBonds(ROMol &mol, const UINT_VECT &bondVisitOrders,
   // do the canonicalization
   std::vector<bool> seen_bonds(mol.getNumBonds());
   while (!q.empty()) {
-    const auto bond = q.top();
+    auto *const bond = q.top();
     q.pop();
     if (seen_bonds[bond->getIdx()]) {
       continue;
@@ -814,7 +814,7 @@ void canonicalizeDoubleBonds(ROMol &mol, const UINT_VECT &bondVisitOrders,
     connectedBondsQ.push(bond);
 
     while (!connectedBondsQ.empty()) {
-      const auto currentBond = connectedBondsQ.front();
+      auto *const currentBond = connectedBondsQ.front();
       connectedBondsQ.pop();
       if (seen_bonds[currentBond->getIdx()]) {
         continue;
@@ -824,7 +824,7 @@ void canonicalizeDoubleBonds(ROMol &mol, const UINT_VECT &bondVisitOrders,
                                     atomVisitOrders, bondDirCounts,
                                     atomDirCounts);
       seen_bonds[currentBond->getIdx()] = true;
-      for (auto nbrStereoBnd : stereoBondNbrs[currentBond]) {
+      for (auto *nbrStereoBnd : stereoBondNbrs[currentBond]) {
         if (!seen_bonds[nbrStereoBnd->getIdx()]) {
           connectedBondsQ.push(nbrStereoBnd);
         }
@@ -1032,7 +1032,7 @@ void dfsBuildStack(ROMol &mol, int atomIdx, int inBondIdx,
   // ---------------------
   std::vector<PossibleType> possibles;
   possibles.reserve(atom->getDegree());
-  for (auto theBond : mol.atomBonds(atom)) {
+  for (auto *theBond : mol.atomBonds(atom)) {
     if (bondsInPlay && !(*bondsInPlay)[theBond->getIdx()]) {
       continue;
     }
@@ -1169,14 +1169,14 @@ void clearBondDirs(ROMol &mol, Bond *refBond, const Atom *fromAtom,
     if (!bondDirCounts[bond->getIdx()]) {
       bond->setBondDir(Bond::NONE);
       --atomDirCounts[fromAtom->getIdx()];
-      if (auto otherAtom = bond->getOtherAtom(fromAtom);
+      if (auto *otherAtom = bond->getOtherAtom(fromAtom);
           atomDirCounts[otherAtom->getIdx()]) {
         --atomDirCounts[otherAtom->getIdx()];
       }
     }
   };
 
-  for (auto oBond : mol.atomBonds(fromAtom)) {
+  for (auto *oBond : mol.atomBonds(fromAtom)) {
     if (oBond != refBond && canHaveDirection(*oBond)) {
       if ((bondDirCounts[oBond->getIdx()] >=
            bondDirCounts[refBond->getIdx()]) &&
@@ -1217,8 +1217,8 @@ void removeUnwantedBondDirSpecs(ROMol &mol, MolStack &molStack,
       continue;
     }
 
-    auto firstAtom = msI.obj.bond->getBeginAtom();
-    auto secondAtom = msI.obj.bond->getEndAtom();
+    auto *firstAtom = msI.obj.bond->getBeginAtom();
+    auto *secondAtom = msI.obj.bond->getEndAtom();
     if (firstAtom->getDegree() == 1 || secondAtom->getDegree() == 1) {
       // One side of the bond does not have any neighbors. There's no way for
       // this double bond to have stereo!
@@ -1229,7 +1229,7 @@ void removeUnwantedBondDirSpecs(ROMol &mol, MolStack &molStack,
 
     // Look at the first side of the non-stereo double bond
 
-    for (auto bond : mol.atomBonds(firstAtom)) {
+    for (auto *bond : mol.atomBonds(firstAtom)) {
       if (bondDirCounts[bond->getIdx()]) {
         removalCandidates.push_back(bond);
       }
@@ -1253,7 +1253,7 @@ void removeUnwantedBondDirSpecs(ROMol &mol, MolStack &molStack,
     // Now look at the other side
 
     uint8_t candidatesOnSecondEnd = 0;
-    for (auto bond : mol.atomBonds(secondAtom)) {
+    for (auto *bond : mol.atomBonds(secondAtom)) {
       if (bondDirCounts[bond->getIdx()]) {
         removalCandidates.push_back(bond);
         ++candidatesOnSecondEnd;
@@ -1279,7 +1279,7 @@ void removeUnwantedBondDirSpecs(ROMol &mol, MolStack &molStack,
           return bondVisitOrders[a->getIdx()] < bondVisitOrders[b->getIdx()];
         });
 
-    for (auto candidateBond : removalCandidates) {
+    for (auto *candidateBond : removalCandidates) {
       Atom *otherAtom = nullptr;
       if (candidateBond->getBeginAtom() == firstAtom ||
           candidateBond->getEndAtom() == firstAtom) {
@@ -1318,7 +1318,7 @@ void removeRedundantBondDirSpecs(ROMol &mol, MolStack &molStack,
       return;
     }
 
-    for (auto bond : mol.atomBonds(atom)) {
+    for (auto *bond : mol.atomBonds(atom)) {
       if (bond != tBond && bond->getBondType() == Bond::DOUBLE &&
           bond->getStereo() > Bond::STEREOANY) {
         clearBondDirs(mol, tBond, atom, bondDirCounts, atomDirCounts);
@@ -1373,7 +1373,7 @@ void canonicalizeFragment(ROMol &mol, int atomIdx,
     // to set both those and the atomsInPlay here:
     atomsInPlay.set();
   } else {
-    for (const auto bnd : mol.bonds()) {
+    for (auto *const bnd : mol.bonds()) {
       if ((*bondsInPlay)[bnd->getIdx()]) {
         atomsInPlay.set(bnd->getBeginAtomIdx());
         atomsInPlay.set(bnd->getEndAtomIdx());
@@ -1430,13 +1430,13 @@ RDKIT_GRAPHMOL_EXPORT void canonicalizeFragment(
   boost::dynamic_bitset<> numSwapsChiralAtoms(nAtoms);
   std::vector<int> atomPermutationIndices(nAtoms, 0);
   if (doIsomericSmiles) {
-    for (const auto atom : mol.atoms()) {
+    for (auto *const atom : mol.atoms()) {
       if (atomsInPlay && !(*atomsInPlay)[atom->getIdx()]) {
         continue;
       }
       if (atom->getChiralTag() != Atom::CHI_UNSPECIFIED) {
         // check if all of this atom's bonds are in play
-        for (const auto bnd : mol.atomBonds(atom)) {
+        for (auto *const bnd : mol.atomBonds(atom)) {
           if (bondsInPlay && !(*bondsInPlay)[bnd->getIdx()]) {
             atom->setProp(common_properties::_brokenChirality, true);
             break;
@@ -1465,7 +1465,7 @@ RDKIT_GRAPHMOL_EXPORT void canonicalizeFragment(
           int nSwaps = 0;
           if (trueOrder.size() < atom->getDegree()) {
             INT_LIST tOrder = trueOrder;
-            for (const auto bnd : mol.atomBonds(atom)) {
+            for (auto *const bnd : mol.atomBonds(atom)) {
               int bndIdx = bnd->getIdx();
               if (std::find(trueOrder.begin(), trueOrder.end(), bndIdx) ==
                   trueOrder.end()) {
@@ -1586,14 +1586,14 @@ RDKIT_GRAPHMOL_EXPORT void canonicalizeFragment(
                    msI.obj.atom->getPropIfPresent("_stereoGroup", sgidx) &&
                    mol.getStereoGroups().size() > sgidx) {
           // make sure that the reference atom in the stereogroup is CCW
-          auto &sg = mol.getStereoGroups()[sgidx];
+          const auto &sg = mol.getStereoGroups()[sgidx];
           bool swapIt =
               msI.obj.atom->getChiralTag() == Atom::CHI_TETRAHEDRAL_CW;
           if (swapIt) {
             msI.obj.atom->invertChirality();
           }
           if (swapIt || numSwapsChiralAtoms[msI.obj.atom->getIdx()]) {
-            for (auto at : sg.getAtoms()) {
+            for (auto *at : sg.getAtoms()) {
               if (at == msI.obj.atom) {
                 continue;
               }
@@ -1643,7 +1643,7 @@ void canonicalizeEnhancedStereo(ROMol &mol,
   // one thing that makes this all easier is that the stereogroups are
   // independent of each other
   std::vector<StereoGroup> newSgs;
-  for (auto &sg : sgs) {
+  for (const auto &sg : sgs) {
     // we don't do anything to ABS groups
     if (sg.getGroupType() == StereoGroupType::STEREO_ABSOLUTE) {
       newSgs.push_back(sg);
@@ -1701,10 +1701,10 @@ void canonicalizeEnhancedStereo(ROMol &mol,
       // we need to flip everyone... so loop over the other atoms and bonds
       // and flip them all:
 
-      for (auto atom : sgAtoms) {
+      for (auto *atom : sgAtoms) {
         atom->invertChirality();
       }
-      for (auto bond : sgBonds) {
+      for (auto *bond : sgBonds) {
         bond->invertChirality();
       }
     }

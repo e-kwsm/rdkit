@@ -501,7 +501,7 @@ bool generateInitialCoords(RDGeom::PointPtrVect *positions,
     gotCoords = DistGeom::computeRandomCoords(*positions, boxSize, *rng);
     if (embedParams.useRandomCoords && embedParams.coordMap != nullptr) {
       for (const auto &v : *embedParams.coordMap) {
-        auto p = positions->at(v.first);
+        auto *p = positions->at(v.first);
         for (unsigned int ci = 0; ci < v.second.dimension(); ++ci) {
           (*p)[ci] = v.second[ci];
         }
@@ -1032,18 +1032,18 @@ RDKIT_DISTGEOMHELPERS_EXPORT void findDoubleBonds(
     const std::map<int, RDGeom::Point3D> *coordMap) {
   doubleBondEnds.clear();
   stereoDoubleBonds.clear();
-  for (const auto bnd : mol.bonds()) {
+  for (auto *const bnd : mol.bonds()) {
     if (bnd->getBondType() == Bond::BondType::DOUBLE) {
-      for (const auto atm : {bnd->getBeginAtom(), bnd->getEndAtom()}) {
+      for (auto *const atm : {bnd->getBeginAtom(), bnd->getEndAtom()}) {
         if (atm->getDegree() < 2) {
           continue;
         }
-        auto oatm = bnd->getOtherAtom(atm);
-        for (const auto nbr : mol.atomNeighbors(atm)) {
+        auto *oatm = bnd->getOtherAtom(atm);
+        for (auto *const nbr : mol.atomNeighbors(atm)) {
           if (nbr == oatm) {
             continue;
           }
-          const auto obnd =
+          const auto *const obnd =
               mol.getBondBetweenAtoms(atm->getIdx(), nbr->getIdx());
           if (!obnd || (obnd->getBondType() != Bond::BondType::SINGLE &&
                         atm->getDegree() == 2)) {
