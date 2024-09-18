@@ -767,7 +767,7 @@ class RDKIT_GRAPHMOL_EXPORT RecursiveStructureQuery
     setDescription("RecursiveStructure");
   }
   //! returns the index of an atom
-  static inline int getAtIdx(Atom const *at) {
+  static int getAtIdx(Atom const *at) {
     PRECONDITION(at, "bad atom argument");
     return at->getIdx();
   }
