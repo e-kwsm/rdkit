@@ -71,7 +71,7 @@ void Tetrahedral::setPrimaryLabel(Descriptor desc) {
 Descriptor Tetrahedral::label(const Rules &comp) {
   auto &digraph = getDigraph();
 
-  auto root = digraph.getOriginalRoot();
+  auto *root = digraph.getOriginalRoot();
   if (digraph.getCurrentRoot() != root) {
     digraph.changeRoot(root);
   }
@@ -85,7 +85,7 @@ Descriptor Tetrahedral::label(Node *node, Digraph &digraph, const Rules &comp) {
 }
 
 Descriptor Tetrahedral::label(Node *node, const Rules &comp) const {
-  auto focus = getFocus();
+  auto *focus = getFocus();
   auto edges = node->getEdges();
 
   // something not right!?! bad creation
