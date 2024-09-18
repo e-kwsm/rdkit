@@ -217,7 +217,7 @@ TEST_CASE(
     "github #8121: symmetric ring finding not returning correct results for molecules with fragments") {
   auto twoCubanes = "C12C3C4C1C5C2C3C45.C12C3C4C1C5C2C3C45"_smiles;
   REQUIRE(twoCubanes);
-  auto rinfo = twoCubanes->getRingInfo();
+  auto *rinfo = twoCubanes->getRingInfo();
   CHECK(rinfo->numRings() == 12);
 }
 
@@ -252,7 +252,7 @@ M  END
   SECTION("degree 2, aligned 2nd neighbors") {
     // This looks like a weird mol, but it's an intermediate
     // state in AddHs.
-    auto mb = R"CTAB(
+    const auto *mb = R"CTAB(
   Mrv1908 06032010402D
 
   0  0  0     0  0            999 V3000

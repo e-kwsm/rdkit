@@ -69,7 +69,7 @@ void DrawMolMCHCircleAndLine::makeBondHighlights(
       lineWidth = getHighlightBondWidth(drawOptions_, bond_idx,
                                         &highlightLinewidthMultipliers_);
     }
-    auto bond = drawMol_->getBondWithIdx(bond_idx);
+    auto *bond = drawMol_->getBondWithIdx(bond_idx);
     auto at1_idx = bond->getBeginAtomIdx();
     auto at2_idx = bond->getEndAtomIdx();
     auto at1_cds = atCds_[at1_idx];

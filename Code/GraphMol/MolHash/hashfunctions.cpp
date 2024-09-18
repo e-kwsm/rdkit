@@ -116,7 +116,7 @@ RDKit::Bond *NMRDKitMolNewBond(RDKit::RWMol *mol, RDKit::Atom *src,
 void NMRDKitSanitizeHydrogens(RDKit::RWMol *mol) {
   PRECONDITION(mol, "bad molecule");
   // Move all of the implicit Hs into one box
-  for (auto aptr : mol->atoms()) {
+  for (auto *aptr : mol->atoms()) {
     unsigned int hcount = aptr->getTotalNumHs();
     aptr->setNoImplicit(true);
     aptr->setNumExplicitHs(hcount);
@@ -141,7 +141,7 @@ unsigned int NMDetermineComponents(RWMol *mol, unsigned int *parts,
   std::vector<Atom *> todo;
 
   unsigned int result = 0;
-  for (auto aptr : mol->atoms()) {
+  for (auto *aptr : mol->atoms()) {
     unsigned int idx = aptr->getIdx();
     if (parts[idx] == 0) {
       parts[idx] = ++result;
@@ -152,7 +152,7 @@ unsigned int NMDetermineComponents(RWMol *mol, unsigned int *parts,
         todo.pop_back();
         for (auto nbri :
              boost::make_iterator_range(mol->getAtomNeighbors(aptr))) {
-          auto nptr = (*mol)[nbri];
+          auto *nptr = (*mol)[nbri];
           idx = nptr->getIdx();
           if (parts[idx] == 0) {
             parts[idx] = result;
@@ -174,7 +174,7 @@ std::string NMMolecularFormula(RWMol *mol, const unsigned int *parts,
 
   memset(hist, 0, sizeof(hist));
 
-  for (auto aptr : mol->atoms()) {
+  for (auto *aptr : mol->atoms()) {
     unsigned int idx = aptr->getIdx();
     if (part == 0 || parts[idx] == part) {
       unsigned int elem = aptr->getAtomicNum();
@@ -310,7 +310,7 @@ std::string AnonymousGraph(RWMol *mol, bool elem, bool useCXSmiles,
   PRECONDITION(mol, "bad molecule");
   std::string result;
 
-  for (auto aptr : mol->atoms()) {
+  for (auto *aptr : mol->atoms()) {
     aptr->setIsAromatic(false);
     aptr->setFormalCharge(0);
     if (!elem) {
@@ -323,7 +323,7 @@ std::string AnonymousGraph(RWMol *mol, bool elem, bool useCXSmiles,
     }
   }
 
-  for (auto bptr : mol->bonds()) {
+  for (auto *bptr : mol->bonds()) {
     bptr->setBondType(Bond::SINGLE);
     bptr->setIsAromatic(false);  // clear aromatic flags
   }
@@ -351,13 +351,13 @@ std::string MesomerHash(RWMol *mol, bool netq, bool useCXSmiles,
   char buffer[32];
   int charge = 0;
 
-  for (auto aptr : mol->atoms()) {
+  for (auto *aptr : mol->atoms()) {
     charge += aptr->getFormalCharge();
     aptr->setIsAromatic(false);
     aptr->setFormalCharge(0);
   }
 
-  for (auto bptr : mol->bonds()) {
+  for (auto *bptr : mol->bonds()) {
     bptr->setBondType(Bond::SINGLE);
   }
 
@@ -404,7 +404,7 @@ std::vector<std::uint64_t> getBondFlags(const ROMol &mol) {
   for (const auto &qry : queries) {
     auto matches = SubstructMatch(mol, *qry);
     for (const auto &match : matches) {
-      const auto bnd =
+      const auto *const bnd =
           mol.getBondBetweenAtoms(match[0].second, match[1].second);
       bondFlags[bnd->getIdx()] |= bondFlagCarboxyl;
     }
@@ -482,7 +482,7 @@ bool isPossibleStartingBond(const Bond *bptr,
 
 // is one of the atom's bonds in the startBonds set?
 bool hasStartBond(const Atom *aptr, const boost::dynamic_bitset<> &startBonds) {
-  for (const auto nbr : aptr->getOwningMol().atomBonds(aptr)) {
+  for (auto *const nbr : aptr->getOwningMol().atomBonds(aptr)) {
     if (startBonds[nbr->getIdx()]) {
       return true;
     }
@@ -522,14 +522,14 @@ std::string TautomerHashv2(RWMol *mol, bool proto, bool useCXSmiles,
   boost::dynamic_bitset<> bondsConsidered(mol->getNumBonds());
 
   boost::dynamic_bitset<> startBonds(mol->getNumBonds());
-  for (const auto bnd : mol->bonds()) {
+  for (auto *const bnd : mol->bonds()) {
     startBonds.set(bnd->getIdx(),
                    isPossibleStartingBond(bnd, atomFlags, bondFlags));
   }
 #ifdef VERBOSE_HASH
   std::cerr << " START BONDS: " << startBonds << std::endl;
 #endif
-  for (auto bptr : mol->bonds()) {
+  for (auto *bptr : mol->bonds()) {
     // If this has already been considered or is not a possible starting bond,
     // then skip it
     if (bondsToModify[bptr->getIdx()] || bondsConsidered[bptr->getIdx()] ||
@@ -542,7 +542,7 @@ std::string TautomerHashv2(RWMol *mol, bool proto, bool useCXSmiles,
     unsigned int activeHeteroHs = 0;
     std::deque<const Bond *> bq;
     // also include eligible neighbor bonds:
-    for (const auto atm :
+    for (const auto *const atm :
          std::vector<const Atom *>{bptr->getBeginAtom(), bptr->getEndAtom()}) {
       if (atm->getAtomicNum() == 6) {
         if (atm->getTotalNumHs()) {
@@ -551,11 +551,11 @@ std::string TautomerHashv2(RWMol *mol, bool proto, bool useCXSmiles,
       } else if (isHeteroAtom(atm)) {
         activeHeteroHs += atm->getTotalNumHs();
       }
-      for (const auto nbrBond : mol->atomBonds(atm)) {
+      for (auto *const nbrBond : mol->atomBonds(atm)) {
         if (nbrBond == bptr || bondsConsidered[nbrBond->getIdx()]) {
           continue;
         }
-        auto oatom = nbrBond->getOtherAtom(atm);
+        auto *oatom = nbrBond->getOtherAtom(atm);
 
         // if the bond is unsaturated or to an atom with free Hs, include it:
         // if (isUnsaturatedBond(nbrBond) || oatom->getTotalNumHs()) {
@@ -605,7 +605,7 @@ std::string TautomerHashv2(RWMol *mol, bool proto, bool useCXSmiles,
     }
 
     while (!bq.empty()) {
-      auto bnd = bq.front();
+      const auto *bnd = bq.front();
       bq.pop_front();
       if (bondsConsidered[bnd->getIdx()]) {
         continue;
@@ -618,7 +618,7 @@ std::string TautomerHashv2(RWMol *mol, bool proto, bool useCXSmiles,
 #endif
       bondsConsidered.set(bnd->getIdx());
       conjSystem.set(bnd->getIdx());
-      for (const auto atm :
+      for (const auto *const atm :
            std::vector<const Atom *>{bnd->getBeginAtom(), bnd->getEndAtom()}) {
         if (atomsInSystem[atm->getIdx()]) {
           continue;
@@ -632,11 +632,11 @@ std::string TautomerHashv2(RWMol *mol, bool proto, bool useCXSmiles,
           activeHeteroHs += atm->getTotalNumHs();
           atomsInSystem.set(atm->getIdx());
         }
-        for (auto nbrBnd : mol->atomBonds(atm)) {
+        for (auto *nbrBnd : mol->atomBonds(atm)) {
           if (nbrBnd == bnd) {
             continue;
           }
-          auto oatom = nbrBnd->getOtherAtom(atm);
+          auto *oatom = nbrBnd->getOtherAtom(atm);
 
 #ifdef VERBOSE_HASH
           std::cerr << "  check neighbor " << nbrBnd->getIdx() << " from "
@@ -687,7 +687,7 @@ std::string TautomerHashv2(RWMol *mol, bool proto, bool useCXSmiles,
 #endif
   boost::dynamic_bitset<> atomsToModify(mol->getNumAtoms());
   if (bondsToModify.any()) {
-    for (auto bptr : mol->bonds()) {
+    for (auto *bptr : mol->bonds()) {
       if (!bondsToModify[bptr->getIdx()]) {
         continue;
       }
@@ -700,7 +700,7 @@ std::string TautomerHashv2(RWMol *mol, bool proto, bool useCXSmiles,
   }
 
   if (atomsToModify.any()) {
-    for (auto aptr : mol->atoms()) {
+    for (auto *aptr : mol->atoms()) {
       if (!atomsToModify[aptr->getIdx()]) {
         continue;
       }
@@ -748,7 +748,7 @@ std::string TautomerHash(RWMol *mol, bool proto, bool useCXSmiles,
   int hcount = 0;
   int charge = 0;
 
-  for (auto aptr : mol->atoms()) {
+  for (auto *aptr : mol->atoms()) {
     charge += aptr->getFormalCharge();
     aptr->setIsAromatic(false);
     aptr->setFormalCharge(0);
@@ -759,7 +759,7 @@ std::string TautomerHash(RWMol *mol, bool proto, bool useCXSmiles,
     }
   }
 
-  for (auto bptr : mol->bonds()) {
+  for (auto *bptr : mol->bonds()) {
     if (bptr->getBondType() != Bond::SINGLE &&
         (bptr->getIsConjugated() || bptr->getBeginAtom()->getAtomicNum() != 6 ||
          bptr->getEndAtom()->getAtomicNum() != 6)) {
@@ -795,7 +795,7 @@ bool TraverseForRing(Atom *atom, unsigned char *visit) {
   visit[atom->getIdx()] = 1;
   for (auto nbri : boost::make_iterator_range(
            atom->getOwningMol().getAtomNeighbors(atom))) {
-    auto nptr = atom->getOwningMol()[nbri];
+    auto *nptr = atom->getOwningMol()[nbri];
     if (visit[nptr->getIdx()] == 0) {
       if (RDKit::queryIsAtomInRing(nptr)) {
         return true;
@@ -830,7 +830,7 @@ bool IsInScaffold(Atom *atom, unsigned int maxatomidx) {
   unsigned int count = 0;
   for (auto nbri : boost::make_iterator_range(
            atom->getOwningMol().getAtomNeighbors(atom))) {
-    auto nptr = atom->getOwningMol()[nbri];
+    auto *nptr = atom->getOwningMol()[nbri];
     if (DepthFirstSearchForRing(atom, nptr, maxatomidx)) {
       ++count;
     }
@@ -843,7 +843,7 @@ bool HasNbrInScaffold(Atom *aptr, unsigned char *is_in_scaffold) {
   PRECONDITION(is_in_scaffold, "bad pointer");
   for (auto nbri : boost::make_iterator_range(
            aptr->getOwningMol().getAtomNeighbors(aptr))) {
-    auto nptr = aptr->getOwningMol()[nbri];
+    auto *nptr = aptr->getOwningMol()[nbri];
     if (is_in_scaffold[nptr->getIdx()]) {
       return true;
     }
@@ -860,12 +860,12 @@ std::string ExtendedMurckoScaffold(RWMol *mol, bool useCXSmiles,
 
   unsigned int maxatomidx = mol->getNumAtoms();
   auto *is_in_scaffold = (unsigned char *)alloca(maxatomidx);
-  for (auto aptr : mol->atoms()) {
+  for (auto *aptr : mol->atoms()) {
     is_in_scaffold[aptr->getIdx()] = IsInScaffold(aptr, maxatomidx);
   }
 
   std::vector<Atom *> for_deletion;
-  for (auto aptr : mol->atoms()) {
+  for (auto *aptr : mol->atoms()) {
     unsigned int aidx = aptr->getIdx();
     if (is_in_scaffold[aidx]) {
       continue;
@@ -907,13 +907,13 @@ std::string MurckoScaffoldHash(RWMol *mol, bool useCXSmiles,
   std::vector<Atom *> for_deletion;
   do {
     for_deletion.clear();
-    for (auto aptr : mol->atoms()) {
+    for (auto *aptr : mol->atoms()) {
       unsigned int deg = aptr->getDegree();
       if (deg < 2) {
         if (deg == 1) {  // i.e. not 0 and the last atom in the molecule
           for (const auto &nbri : boost::make_iterator_range(
                    aptr->getOwningMol().getAtomBonds(aptr))) {
-            auto bptr = (aptr->getOwningMol())[nbri];
+            auto *bptr = (aptr->getOwningMol())[nbri];
             Atom *nbr = bptr->getOtherAtom(aptr);
             unsigned int hcount = nbr->getTotalNumHs(false);
             nbr->setNumExplicitHs(hcount + NMRDKitBondGetOrder(bptr));
@@ -949,7 +949,7 @@ std::string NetChargeHash(RWMol *mol) {
   PRECONDITION(mol, "bad molecule");
   int totalq = 0;
 
-  for (auto aptr : mol->atoms()) {
+  for (auto *aptr : mol->atoms()) {
     totalq += aptr->getFormalCharge();
   }
 
@@ -968,7 +968,7 @@ std::string SmallWorldHash(RWMol *mol, bool brl) {
 
   if (brl) {
     unsigned int lcount = 0;
-    for (auto aptr : mol->atoms()) {
+    for (auto *aptr : mol->atoms()) {
       if (aptr->getDegree() == 2) {
         lcount++;
       }
@@ -982,7 +982,7 @@ std::string SmallWorldHash(RWMol *mol, bool brl) {
 
 void DegreeVector(RWMol *mol, unsigned int *v) {
   memset(v, 0, 4 * sizeof(unsigned int));
-  for (auto aptr : mol->atoms()) {
+  for (auto *aptr : mol->atoms()) {
     switch (aptr->getDegree()) {
       case 4:
         v[0]++;
@@ -1004,7 +1004,7 @@ bool HasDoubleBond(Atom *atom) {
   PRECONDITION(atom, "bad atom");
   for (const auto &nbri :
        boost::make_iterator_range(atom->getOwningMol().getAtomBonds(atom))) {
-    auto bptr = (atom->getOwningMol())[nbri];
+    auto *bptr = (atom->getOwningMol())[nbri];
     if (NMRDKitBondGetOrder(bptr) == 2) {
       return true;
     }
@@ -1061,7 +1061,7 @@ void ClearEZStereo(Atom *atm) {
   PRECONDITION(atm, "bad atom");
   for (const auto &nbri :
        boost::make_iterator_range(atm->getOwningMol().getAtomBonds(atm))) {
-    auto bptr = (atm->getOwningMol())[nbri];
+    auto *bptr = (atm->getOwningMol())[nbri];
     if (bptr->getStereo() > RDKit::Bond::STEREOANY) {
       bptr->setStereo(RDKit::Bond::STEREOANY);
     }
@@ -1079,7 +1079,7 @@ std::string RegioisomerHash(RWMol *mol, bool useCXSmiles,
     MolOps::fastFindRings(molcpy);
   }
   for (int i = molcpy.getNumBonds() - 1; i >= 0; --i) {
-    auto bptr = molcpy.getBondWithIdx(i);
+    auto *bptr = molcpy.getBondWithIdx(i);
     int split = RegioisomerBond(bptr);
     if (split >= 0) {
       bptr = mol->getBondWithIdx(i);
@@ -1149,7 +1149,7 @@ std::string ArthorSubOrderHash(RWMol *mol) {
   unsigned int qcount = 0;
   unsigned int rcount = 0;
 
-  for (auto aptr : mol->atoms()) {
+  for (auto *aptr : mol->atoms()) {
     unsigned int elem = aptr->getAtomicNum();
     int charge = aptr->getFormalCharge();
     switch (elem) {
