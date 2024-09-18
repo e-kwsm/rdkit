@@ -68,7 +68,7 @@ void AtomClearProp(const Atom *atom, const std::string &key) {
 
 python::tuple AtomGetNeighbors(Atom *atom) {
   python::list res;
-  for (auto nbr : atom->getOwningMol().atomNeighbors(atom)) {
+  for (auto *nbr : atom->getOwningMol().atomNeighbors(atom)) {
     res.append(python::ptr(nbr));
   }
   return python::tuple(res);
@@ -76,7 +76,7 @@ python::tuple AtomGetNeighbors(Atom *atom) {
 
 python::tuple AtomGetBonds(Atom *atom) {
   python::list res;
-  for (auto bond : atom->getOwningMol().atomBonds(atom)) {
+  for (auto *bond : atom->getOwningMol().atomBonds(atom)) {
     res.append(python::ptr(bond));
   }
   return python::tuple(res);

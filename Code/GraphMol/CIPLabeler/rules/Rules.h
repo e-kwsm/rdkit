@@ -24,7 +24,7 @@ class Rules : public SequenceRule {
   Rules() = delete;
 
   Rules(std::initializer_list<SequenceRule *> rules) {
-    for (auto &rule : rules) {
+    for (const auto &rule : rules) {
       add(rule);
     }
   }

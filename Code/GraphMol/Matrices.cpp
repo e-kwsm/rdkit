@@ -249,7 +249,7 @@ double *getDistanceMat(const ROMol &mol, const std::vector<int> &activeAtoms,
     dMat[i * nAts + i] = 0.0;
   }
 
-  for (auto bond : bonds) {
+  for (const auto *bond : bonds) {
     i = rdcast<int>(std::find(activeAtoms.begin(), activeAtoms.end(),
                               static_cast<int>(bond->getBeginAtomIdx())) -
                     activeAtoms.begin());
@@ -308,7 +308,7 @@ double *getAdjacencyMatrix(const ROMol &mol, bool useBO, int emptyVal,
   auto *res = new double[nAts * nAts];
   memset(static_cast<void *>(res), emptyVal, nAts * nAts * sizeof(double));
 
-  for (const auto bond : mol.bonds()) {
+  for (auto *const bond : mol.bonds()) {
     if (bondsToUse && !(*bondsToUse)[bond->getIdx()]) {
       continue;
     }

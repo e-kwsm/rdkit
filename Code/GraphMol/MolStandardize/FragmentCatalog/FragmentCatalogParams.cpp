@@ -43,7 +43,7 @@ FragmentCatalogParams::FragmentCatalogParams(
   d_funcGroups.clear();
 
   const std::vector<std::shared_ptr<ROMol>> &ofgrps = other.getFuncGroups();
-  for (auto &fgi : ofgrps) {
+  for (const auto &fgi : ofgrps) {
     std::shared_ptr<ROMol> nmol(new ROMol(*fgi));
     d_funcGroups.push_back(nmol);
   }

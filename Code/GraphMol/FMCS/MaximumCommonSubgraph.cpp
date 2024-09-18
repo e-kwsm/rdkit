@@ -106,7 +106,7 @@ void MaximumCommonSubgraph::init(size_t startIdx) {
                                  // parameters
       QueryAtomLabels[ai] = 1;
     } else {
-      const auto atom = QueryMolecule->getAtomWithIdx(ai);
+      const auto *const atom = QueryMolecule->getAtomWithIdx(ai);
       if (MCSAtomCompareElements ==
           Parameters.AtomTyper) {  // predefined functor without atom compare
                                    // parameters
@@ -240,7 +240,7 @@ struct WeightedBond {
   unsigned int Weight{0};
   WeightedBond() {}
   WeightedBond(const Bond *bond) : BondPtr(bond), Weight(0) {
-    const auto ringInfo = bond->getOwningMol().getRingInfo();
+    auto *const ringInfo = bond->getOwningMol().getRingInfo();
     // score ((bond.is_in_ring + atom1.is_in_ring + atom2.is_in_ring)
     if (ringInfo->numBondRings(bond->getIdx())) {
       ++Weight;
@@ -296,16 +296,16 @@ void MaximumCommonSubgraph::makeInitialSeeds() {
       // add all bonds (existed in initial seed !!!) between all matched
       // atoms in query
       for (const auto &msb : ms) {
-        const auto atom = initialSeedMolecule->getAtomWithIdx(msb.first);
+        const auto *const atom = initialSeedMolecule->getAtomWithIdx(msb.first);
         for (const auto &nbri : boost::make_iterator_range(
                  initialSeedMolecule->getAtomBonds(atom))) {
-          const auto initialBond = (*initialSeedMolecule)[nbri];
+          const auto *const initialBond = (*initialSeedMolecule)[nbri];
           unsigned int qai1 =
               initialSeedToQueryAtom.at(initialBond->getBeginAtomIdx());
           unsigned int qai2 =
               initialSeedToQueryAtom.at(initialBond->getEndAtomIdx());
 
-          const auto b = QueryMolecule->getBondBetweenAtoms(qai1, qai2);
+          const auto *const b = QueryMolecule->getBondBetweenAtoms(qai1, qai2);
           CHECK_INVARIANT(b, "bond must not be NULL");
           if (!seed.ExcludedBonds.test(b->getIdx())) {
             seed.addBond(b);
@@ -383,7 +383,7 @@ void MaximumCommonSubgraph::makeInitialSeeds() {
   MatchVectType singleAtomPairMatch(1);
   MatchVectType emptyBondPairMatch;
   for (size_t i = 0; i < nq; i++) {  // all query's atoms
-    const auto queryMolAtom = QueryMolecule->getAtomWithIdx(i);
+    const auto *const queryMolAtom = QueryMolecule->getAtomWithIdx(i);
     bool isQueryMolAtomInRing = queryIsAtomInRing(queryMolAtom);
     unsigned int matched = 0;
     const Atom *candQueryMoleculeSingleMatchedAtom = nullptr;
@@ -391,7 +391,7 @@ void MaximumCommonSubgraph::makeInitialSeeds() {
       auto nt = tag.Molecule->getNumAtoms();
       for (size_t aj = 0; aj < nt; aj++) {
         if (tag.AtomMatchTable.at(i, aj)) {
-          const auto targetMolAtom = tag.Molecule->getAtomWithIdx(aj);
+          const auto *const targetMolAtom = tag.Molecule->getAtomWithIdx(aj);
           bool isTargetMolAtomInRing = queryIsAtomInRing(targetMolAtom);
           ++matched;
           if (!(Parameters.BondCompareParameters.CompleteRingsOnly &&
@@ -445,7 +445,7 @@ bool checkIfRingsAreClosed(const Seed &fs, bool noLoneRingAtoms) {
     return true;
   }
   const auto &om = fs.MoleculeFragment.Atoms.front()->getOwningMol();
-  const auto ri = om.getRingInfo();
+  auto *const ri = om.getRingInfo();
   if (!ri->numRings()) {
     return true;
   }
@@ -559,7 +559,7 @@ bool checkIfShouldAcceptMCS(const FMCS::MolFragment &f, const ROMol &query,
          boost::make_iterator_range(boost::edges(seed.Topology))) {
       int queryBeginAtomIdx = seed.Topology[boost::source(it, seed.Topology)];
       int queryEndAtomIdx = seed.Topology[boost::target(it, seed.Topology)];
-      const auto queryBond =
+      const auto *const queryBond =
           query.getBondBetweenAtoms(queryBeginAtomIdx, queryEndAtomIdx);
       CHECK_INVARIANT(queryBond, "");
       const auto targetBeginAtomIdx =
@@ -567,7 +567,7 @@ bool checkIfShouldAcceptMCS(const FMCS::MolFragment &f, const ROMol &query,
       CHECK_INVARIANT(targetBeginAtomIdx != NotSet, "");
       const auto targetEndAtomIdx = queryToTargetAtomIdx.at(queryEndAtomIdx);
       CHECK_INVARIANT(targetEndAtomIdx != NotSet, "");
-      const auto targetBond = target.Molecule->getBondBetweenAtoms(
+      const auto *const targetBond = target.Molecule->getBondBetweenAtoms(
           targetBeginAtomIdx, targetEndAtomIdx);
       CHECK_INVARIANT(targetBond, "");
       bondPairMatch.emplace_back(queryBond->getIdx(), targetBond->getIdx());
@@ -729,7 +729,8 @@ MaximumCommonSubgraph::generateResultSMARTSAndQueryMol(
             seed.Topology[m.first];
         atomMatchResult.at(itarget).at(ai).TargetAtomIdx =
             tag.Topology[m.second];
-        const auto ta = tag.Molecule->getAtomWithIdx(tag.Topology[m.second]);
+        const auto *const ta =
+            tag.Molecule->getAtomWithIdx(tag.Topology[m.second]);
         if (ta->getAtomicNum() !=
             seed.MoleculeFragment.Atoms.at(ai)->getAtomicNum()) {
           atomMatchSet[ai][ta->getAtomicNum()] = ta;  // add
@@ -742,7 +743,7 @@ MaximumCommonSubgraph::generateResultSMARTSAndQueryMol(
         const auto j = atomIdxMap.at(bond->getEndAtomIdx());
         const auto ti = atomMatchResult.at(itarget).at(i).TargetAtomIdx;
         const auto tj = atomMatchResult.at(itarget).at(j).TargetAtomIdx;
-        const auto tb = tag.Molecule->getBondBetweenAtoms(ti, tj);
+        const auto *const tb = tag.Molecule->getBondBetweenAtoms(ti, tj);
         if (tb && bond->getBondType() != tb->getBondType()) {
           bondMatchSet[bi][tb->getBondType()] = tb;  // add
         }
@@ -753,9 +754,9 @@ MaximumCommonSubgraph::generateResultSMARTSAndQueryMol(
   // Generate result's SMARTS
 
   // create molecule from MCS for MolToSmarts()
-  auto mol = new RWMol();
+  auto *mol = new RWMol();
   ROMOL_SPTR molSptr(mol);
-  const auto ri = mcsIdx.QueryMolecule->getRingInfo();
+  auto *const ri = mcsIdx.QueryMolecule->getRingInfo();
   boost::dynamic_bitset<> mcsRingIsComplete;
   bool needAtomRingQueries =
       (Parameters.AtomCompareParameters.RingMatchesRingOnly ||
@@ -810,18 +811,18 @@ MaximumCommonSubgraph::generateResultSMARTSAndQueryMol(
           });
       if (Parameters.AtomCompareParameters.RingMatchesRingOnly &&
           !numCompleteRings) {
-        auto q = makeAtomInRingQuery();
+        auto *q = makeAtomInRingQuery();
         q->setNegation(!numAtomRings);
         a.expandQuery(q, Queries::COMPOSITE_AND, true);
       } else if (Parameters.BondCompareParameters.MatchFusedRingsStrict &&
                  numAtomRings == 1 && numCompleteRings == 1) {
         auto ringSize =
             ri->atomRings().at(ringIndicesAtomIsMemberOf.front()).size();
-        auto q = new ATOM_OR_QUERY;
+        auto *q = new ATOM_OR_QUERY;
         q->setDescription("AtomOr");
         q->addChild(QueryAtom::QUERYATOM_QUERY::CHILD_TYPE(
             makeAtomMinRingSizeQuery(ringSize)));
-        auto q2 = makeAtomInNRingsQuery(1);
+        auto *q2 = makeAtomInNRingsQuery(1);
         q2->setNegation(true);
         q->addChild(QueryAtom::QUERYATOM_QUERY::CHILD_TYPE(q2));
         a.expandQuery(q, Queries::COMPOSITE_AND, true);
@@ -849,7 +850,7 @@ MaximumCommonSubgraph::generateResultSMARTSAndQueryMol(
     if (Parameters.BondCompareParameters.RingMatchesRingOnly ||
         Parameters.BondCompareParameters.MatchFusedRingsStrict) {
       const auto numBondRings = ri->numBondRings(bond->getIdx());
-      auto q = makeBondIsInRingQuery();
+      auto *q = makeBondIsInRingQuery();
       q->setNegation(!numBondRings);
       b.expandQuery(q, Queries::COMPOSITE_AND, true);
     }
@@ -891,7 +892,7 @@ bool MaximumCommonSubgraph::createSeedFromMCS(size_t newQueryTarget,
     unsigned int ai = m.first;  // SeedAtomIdx in mcs seed
     atomMatchResult[ai].QueryAtomIdx = mcs.Topology[m.first];
     atomMatchResult[ai].TargetAtomIdx = newQuery.Topology[m.second];
-    const auto ta =
+    const auto *const ta =
         newQuery.Molecule->getAtomWithIdx(newQuery.Topology[m.second]);
     newSeed.addAtom(ta);
   }
@@ -901,7 +902,7 @@ bool MaximumCommonSubgraph::createSeedFromMCS(size_t newQueryTarget,
     unsigned int j = mcsAtomIdxMap.at(bond->getEndAtomIdx());
     unsigned int ti = atomMatchResult.at(i).TargetAtomIdx;
     unsigned int tj = atomMatchResult.at(j).TargetAtomIdx;
-    const auto tb = newQuery.Molecule->getBondBetweenAtoms(ti, tj);
+    const auto *const tb = newQuery.Molecule->getBondBetweenAtoms(ti, tj);
     CHECK_INVARIANT(tb, "tb most not be NULL");
     newSeed.addBond(tb);
   }
@@ -1327,7 +1328,7 @@ bool MaximumCommonSubgraph::matchIncrementalFast(Seed &seed,
        newBondSeedIdx < seed.getNumBonds(); newBondSeedIdx++) {
     matched = false;
     bool atomAdded = false;
-    const auto newBond = seed.MoleculeFragment.Bonds.at(newBondSeedIdx);
+    const auto *const newBond = seed.MoleculeFragment.Bonds.at(newBondSeedIdx);
     unsigned int newBondQueryIdx = newBond->getIdx();
 
     // seed's index of atom from which new bond was added
@@ -1376,7 +1377,7 @@ bool MaximumCommonSubgraph::matchIncrementalFast(Seed &seed,
       }
     } else {
       // enumerate all bonds from source atom in the target
-      const auto atom =
+      const auto *const atom =
           target.Molecule->getAtomWithIdx(newBondSourceAtomTargetIdx);
       for (const auto &nbri :
            boost::make_iterator_range(target.Molecule->getAtomBonds(atom))) {

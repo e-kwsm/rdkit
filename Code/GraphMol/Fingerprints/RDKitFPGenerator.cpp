@@ -45,7 +45,7 @@ std::vector<std::uint32_t> *RDKitFPAtomInvGenerator::getAtomInvariants(
     const ROMol &mol) const {
   auto *result = new std::vector<std::uint32_t>();
   result->reserve(mol.getNumAtoms());
-  for (const auto atom : mol.atoms()) {
+  for (auto *const atom : mol.atoms()) {
     unsigned int aHash = (atom->getAtomicNum() % 128) << 1 |
                          static_cast<unsigned int>(atom->getIsAromatic());
     result->push_back(aHash);
