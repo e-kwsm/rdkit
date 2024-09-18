@@ -260,7 +260,7 @@ TEST_CASE("github #908: AddHs() using 3D coordinates with 2D conformations",
       // std::cerr << smi << std::endl;
       std::unique_ptr<RWMol> mol(SmilesToMol(smi));
       REQUIRE(mol);
-      auto conf = new Conformer(1);
+      auto *conf = new Conformer(1);
       conf->set3D(false);
       conf->setAtomPos(0, RDGeom::Point3D(0, 0, 0));
       mol->addConformer(conf, true);
@@ -364,7 +364,7 @@ TEST_CASE("Specialized exceptions for sanitization errors", "[molops]") {
     for (auto pr : smiles) {
       CHECK_THROWS_AS(SmilesToMol(pr.first), AtomValenceException);
       try {
-        auto m = SmilesToMol(pr.first);
+        auto *m = SmilesToMol(pr.first);
         RDUNUSED_PARAM(m);
       } catch (const AtomValenceException &e) {
         CHECK(e.getType() == "AtomValenceException");
@@ -379,7 +379,7 @@ TEST_CASE("Specialized exceptions for sanitization errors", "[molops]") {
     for (auto pr : smiles) {
       CHECK_THROWS_AS(SmilesToMol(pr.first), AtomKekulizeException);
       try {
-        auto m = SmilesToMol(pr.first);
+        auto *m = SmilesToMol(pr.first);
         RDUNUSED_PARAM(m);
       } catch (const AtomKekulizeException &e) {
         CHECK(e.getType() == "AtomKekulizeException");
@@ -395,7 +395,7 @@ TEST_CASE("Specialized exceptions for sanitization errors", "[molops]") {
     for (auto pr : smiles) {
       CHECK_THROWS_AS(SmilesToMol(pr.first), KekulizeException);
       try {
-        auto m = SmilesToMol(pr.first);
+        auto *m = SmilesToMol(pr.first);
         RDUNUSED_PARAM(m);
       } catch (const KekulizeException &e) {
         CHECK(e.getType() == "KekulizeException");
@@ -852,7 +852,7 @@ TEST_CASE(
     "Github #2784: Element symbol lookup for some transuranics returns "
     "incorrect results",
     "[transuranics][bug]") {
-  auto pt = PeriodicTable::getTable();
+  auto *pt = PeriodicTable::getTable();
   SECTION("number to symbol") {
     std::vector<std::pair<unsigned int, std::string>> data = {
         {113, "Nh"}, {114, "Fl"}, {115, "Mc"},
@@ -1134,7 +1134,7 @@ TEST_CASE("RemoveHsParameters", "[molops]") {
     m->getBondBetweenAtoms(0, 1)->setBondDir(Bond::BEGINWEDGE);
     RWMol cp(*m);
     MolOps::removeAllHs(cp);
-    for (auto atom : cp.atoms()) {
+    for (auto *atom : cp.atoms()) {
       CHECK(atom->getAtomicNum() != 1);
     }
   }
@@ -1145,7 +1145,7 @@ TEST_CASE("RemoveHsParameters", "[molops]") {
     // artificial wedging since we don't have a conformer
     m->getBondBetweenAtoms(0, 1)->setBondDir(Bond::BEGINWEDGE);
     std::unique_ptr<ROMol> cp{MolOps::removeAllHs(*m)};
-    for (auto atom : cp->atoms()) {
+    for (auto *atom : cp->atoms()) {
       CHECK(atom->getAtomicNum() != 1);
     }
   }
@@ -1166,7 +1166,7 @@ TEST_CASE("github #3256: fused ring aromaticity perception",
   SECTION("nitrogen only central ring") {
     auto mol = "C1=CN2C3=CC=CN3C3=CC=CN3C2=C1"_smiles;
     REQUIRE(mol);
-    for (const auto b : mol->bonds()) {
+    for (auto *const b : mol->bonds()) {
       CHECK(b->getBondType() == Bond::AROMATIC);
     }
     auto smi = MolToSmiles(*mol);
@@ -1241,7 +1241,7 @@ TEST_CASE("github #2890", "[bug][molops][stereo]") {
   auto mol = "CC=CC"_smiles;
   REQUIRE(mol);
 
-  auto bond = mol->getBondWithIdx(1);
+  auto *bond = mol->getBondWithIdx(1);
   bond->setStereo(Bond::STEREOANY);
   REQUIRE(bond->getStereoAtoms().empty());
 
@@ -1939,7 +1939,7 @@ TEST_CASE("github #4496: cannot draw aromatic atom lists from SMARTS",
     auto m = "[c,n]1[c,n][c,n][c,n][c,n][c,n]1"_smarts;
     REQUIRE(m);
     std::vector<int> expected({6, 7});
-    for (const auto a : m->atoms()) {
+    for (auto *const a : m->atoms()) {
       CHECK(isAtomListQuery(a));
       std::vector<int> vals;
       getAtomListQueryVals(a->getQuery(), vals);
@@ -1953,7 +1953,7 @@ TEST_CASE("bridgehead queries", "[query]") {
     {
       auto m = "CC12CCN(CC1)C2"_smiles;
       REQUIRE(m);
-      for (const auto atom : m->atoms()) {
+      for (auto *const atom : m->atoms()) {
         auto test = queryIsAtomBridgehead(atom);
         if (atom->getIdx() == 1 || atom->getIdx() == 4) {
           CHECK(test == 1);
@@ -1965,7 +1965,7 @@ TEST_CASE("bridgehead queries", "[query]") {
     {
       auto m = "CC12CCC(C)(CC1)CC2"_smiles;
       REQUIRE(m);
-      for (const auto atom : m->atoms()) {
+      for (auto *const atom : m->atoms()) {
         auto test = queryIsAtomBridgehead(atom);
         if (atom->getIdx() == 1 || atom->getIdx() == 4) {
           CHECK(test == 1);
@@ -1977,7 +1977,7 @@ TEST_CASE("bridgehead queries", "[query]") {
     {  // no bridgehead
       auto m = "C1CCC2CCCCC2C1"_smiles;
       REQUIRE(m);
-      for (const auto atom : m->atoms()) {
+      for (auto *const atom : m->atoms()) {
         auto test = queryIsAtomBridgehead(atom);
         CHECK(test == 0);
       }
@@ -1998,11 +1998,11 @@ TEST_CASE("replaceAtom/Bond should not screw up bookmarks", "[RWMol]") {
     auto m = "CCC"_smiles;
     REQUIRE(m);
     m->setAtomBookmark(m->getAtomWithIdx(2), 1);
-    auto origAt2 = m->getAtomWithIdx(2);
+    auto *origAt2 = m->getAtomWithIdx(2);
     CHECK(m->getUniqueAtomWithBookmark(1) == origAt2);
     Atom O(8);
     m->replaceAtom(2, &O);
-    auto at2 = m->getAtomWithIdx(2);
+    auto *at2 = m->getAtomWithIdx(2);
     CHECK(at2 != origAt2);
     CHECK(m->getUniqueAtomWithBookmark(1) == at2);
   }
@@ -2010,11 +2010,11 @@ TEST_CASE("replaceAtom/Bond should not screw up bookmarks", "[RWMol]") {
     auto m = "CCCC"_smiles;
     REQUIRE(m);
     m->setBondBookmark(m->getBondWithIdx(2), 1);
-    auto origB2 = m->getBondWithIdx(2);
+    auto *origB2 = m->getBondWithIdx(2);
     CHECK(m->getUniqueBondWithBookmark(1) == origB2);
     Bond single(Bond::BondType::SINGLE);
     m->replaceBond(2, &single);
-    auto b2 = m->getBondWithIdx(2);
+    auto *b2 = m->getBondWithIdx(2);
     CHECK(b2 != origB2);
     CHECK(m->getUniqueBondWithBookmark(1) == b2);
   }
@@ -2179,7 +2179,7 @@ TEST_CASE(
 TEST_CASE("atom copy ctor") {
   auto m = "CO"_smiles;
   REQUIRE(m);
-  for (const auto atom : m->atoms()) {
+  for (auto *const atom : m->atoms()) {
     Atom cp(*atom);
     CHECK(cp.getAtomicNum() == atom->getAtomicNum());
     CHECK(!cp.hasOwningMol());
@@ -2189,7 +2189,7 @@ TEST_CASE("atom copy ctor") {
 TEST_CASE("bond copy ctor") {
   auto m = "COC"_smiles;
   REQUIRE(m);
-  for (const auto bond : m->bonds()) {
+  for (auto *const bond : m->bonds()) {
     Bond cp(*bond);
     CHECK(cp.getBondType() == bond->getBondType());
     CHECK(!cp.hasOwningMol());
@@ -2218,7 +2218,7 @@ TEST_CASE("valence edge") {
 TEST_CASE("SetQuery on normal atoms") {
   auto m = "CC"_smiles;
   REQUIRE(m);
-  auto qry = makeAtomAliphaticQuery();
+  auto *qry = makeAtomAliphaticQuery();
   CHECK_THROWS_AS(m->getAtomWithIdx(0)->setQuery(qry), std::runtime_error);
   CHECK_THROWS_AS(m->getAtomWithIdx(0)->expandQuery(qry), std::runtime_error);
   delete qry;
@@ -2227,7 +2227,7 @@ TEST_CASE("SetQuery on normal atoms") {
 TEST_CASE("SetQuery on normal bonds") {
   auto m = "CC"_smiles;
   REQUIRE(m);
-  auto qry = makeBondOrderEqualsQuery(Bond::BondType::SINGLE);
+  auto *qry = makeBondOrderEqualsQuery(Bond::BondType::SINGLE);
   CHECK_THROWS_AS(m->getBondWithIdx(0)->setQuery(qry), std::runtime_error);
   CHECK_THROWS_AS(m->getBondWithIdx(0)->expandQuery(qry), std::runtime_error);
   delete qry;
@@ -2236,7 +2236,7 @@ TEST_CASE("SetQuery on normal bonds") {
 TEST_CASE("additional atom props") {
   auto m = "CC"_smiles;
   REQUIRE(m);
-  auto atom = m->getAtomWithIdx(0);
+  auto *atom = m->getAtomWithIdx(0);
   {
     CHECK(!atom->hasProp(common_properties::_MolFileRLabel));
     setAtomRLabel(atom, 1);
@@ -2370,7 +2370,7 @@ TEST_CASE("canon details") {
 TEST_CASE("switchBondDir") {
   auto m = "C/C=C/C"_smiles;
   REQUIRE(m);
-  auto bond = m->getBondWithIdx(0);
+  auto *bond = m->getBondWithIdx(0);
   CHECK(bond->getBondDir() == Bond::BondDir::ENDUPRIGHT);
   Canon::switchBondDir(bond);
   CHECK(bond->getBondDir() == Bond::BondDir::ENDDOWNRIGHT);
@@ -2482,7 +2482,7 @@ TEST_CASE("Github #4535: operator<< for AtomPDBResidue", "[PDB]") {
     std::unique_ptr<RWMol> mol(SequenceToMol("KY", sanitize, flavor));
     REQUIRE(mol);
     REQUIRE(mol->getAtomWithIdx(0)->getMonomerInfo());
-    auto res = static_cast<AtomPDBResidueInfo *>(
+    auto *res = static_cast<AtomPDBResidueInfo *>(
         mol->getAtomWithIdx(0)->getMonomerInfo());
     REQUIRE(res);
     std::stringstream oss;
@@ -2491,7 +2491,7 @@ TEST_CASE("Github #4535: operator<< for AtomPDBResidue", "[PDB]") {
         mol->getAtomWithIdx(mol->getNumAtoms() - 1)->getMonomerInfo());
     REQUIRE(res);
     oss << *res << std::endl;
-    auto tgt = R"FOO(1  N   LYS A 1
+    const auto *tgt = R"FOO(1  N   LYS A 1
 22  OXT TYR A 2
 )FOO";
     CHECK(oss.str() == tgt);
@@ -2531,11 +2531,11 @@ namespace {
 void check_dest(RWMol *m1, const ROMol &m2) {
   CHECK(m2.getNumAtoms() == 8);
   CHECK(m2.getNumBonds() == 7);
-  for (const auto atom : m2.atoms()) {
+  for (auto *const atom : m2.atoms()) {
     CHECK(&atom->getOwningMol() == &m2);
     CHECK(&atom->getOwningMol() != m1);
   }
-  for (const auto bond : m2.bonds()) {
+  for (auto *const bond : m2.bonds()) {
     CHECK(&bond->getOwningMol() == &m2);
     CHECK(&bond->getOwningMol() != m1);
   }
@@ -3143,7 +3143,7 @@ M  END
 )CTAB"_ctab;
   REQUIRE(m);
   std::string sprop;
-  auto bond = m->getBondWithIdx(12U);
+  auto *bond = m->getBondWithIdx(12U);
   CHECK(bond->getPropIfPresent(RDKit::common_properties::_MolFileBondEndPts,
                                sprop));
   CHECK(std::string("(5 1 2 3 4 5)") == sprop);
@@ -3463,7 +3463,7 @@ TEST_CASE(
   REQUIRE(m);
   REQUIRE(m->getNumAtoms() == 5);
 
-  auto bnd = m->getBondWithIdx(1);
+  auto *bnd = m->getBondWithIdx(1);
   REQUIRE(bnd->getBondType() == Bond::BondType::DOUBLE);
   REQUIRE(bnd->getStereo() == Bond::BondStereo::STEREOTRANS);
   REQUIRE(bnd->getStereoAtoms().size() == 2);
@@ -3517,16 +3517,16 @@ $$$$
   REQUIRE(m);
 
   // This bond was a dashed bond (dash is removed when parity is resolved)
-  auto bond = m->getBondWithIdx(0);
+  auto *bond = m->getBondWithIdx(0);
   int bond_dir = 0;
   REQUIRE(bond->getPropIfPresent("_MolFileBondCfg", bond_dir) == true);
   REQUIRE(bond_dir == 3);  // dashed bond
 
-  auto begin_atom = bond->getBeginAtom();
+  auto *begin_atom = bond->getBeginAtom();
   REQUIRE(begin_atom->getNumExplicitHs() == 1);
   REQUIRE(begin_atom->getTotalValence() == 4);
 
-  auto end_atom = bond->getEndAtom();
+  auto *end_atom = bond->getEndAtom();
   REQUIRE(end_atom->getNumExplicitHs() == 0);
   REQUIRE(end_atom->getTotalValence() == 4);
 
@@ -3589,7 +3589,7 @@ M  V30 END CTAB
 M  END
 $$$$)CTAB"_ctab;
   REQUIRE(m);
-  auto b = m->getBondWithIdx(0);
+  auto *b = m->getBondWithIdx(0);
   b->setBondDir(Bond::BondDir::BEGINDASH);
 
   MolOps::setDoubleBondNeighborDirections(*m);
@@ -4039,7 +4039,7 @@ M  END
     CHECK(stg.getGroupType() == type);
 
     std::vector<unsigned int> actualAtoms;
-    for (const auto atom : stg.getAtoms()) {
+    for (auto *const atom : stg.getAtoms()) {
       actualAtoms.push_back(atom->getIdx());
     }
 
@@ -4161,7 +4161,7 @@ TEST_CASE("Hybridization of dative bonded atoms") {
     auto m = "CCC(=O)O->[Cu]"_smiles;
     REQUIRE(m);
 
-    auto dBond = m->getBondWithIdx(4);
+    auto *dBond = m->getBondWithIdx(4);
     REQUIRE(dBond->getBondType() == Bond::BondType::DATIVE);
 
     for (unsigned int i = 0; i < m->getNumAtoms(); ++i) {
@@ -4200,7 +4200,7 @@ TEST_CASE("Try not to set wedged bonds as double in the kekulization") {
     // double bonds in the aromatic ring that includes a wedged bond.
     // verify that in both cases the kekulization results in assigning
     // a single bond order to the wedged bonds.
-    auto mblock1 = R"(
+    const auto *mblock1 = R"(
   Mrv2311 05242408112D
 
   0  0  0     0  0            999 V3000
@@ -4253,7 +4253,7 @@ M  END
     CHECK(m1->getBondBetweenAtoms(4, 6)->getBondType() ==
           Bond::BondType::DOUBLE);
 
-    auto mblock2 = R"(
+    const auto *mblock2 = R"(
   Mrv2311 05242408162D
 
   0  0  0     0  0            999 V3000
@@ -4315,7 +4315,7 @@ M  END
     //
     // similar to the previous test case, but adding fused rings and
     // an O atom that wouldn't accept double bonds
-    auto mblock1 = R"(
+    const auto *mblock1 = R"(
   Mrv2311 05282412322D
 
   0  0  0     0  0            999 V3000
@@ -4375,7 +4375,7 @@ M  END
     CHECK(m1->getBondBetweenAtoms(6, 8)->getBondType() ==
           Bond::BondType::DOUBLE);
 
-    auto mblock2 = R"(
+    const auto *mblock2 = R"(
   Mrv2311 05282412342D
 
   0  0  0     0  0            999 V3000
@@ -4506,7 +4506,7 @@ M  END
       INFO(nm);
       auto m = v2::FileParsers::MolFromMolFile(pathName + nm);
       REQUIRE(m);
-      const auto bnd = m->getBondWithIdx(idx);
+      auto *const bnd = m->getBondWithIdx(idx);
       REQUIRE((bnd->getStereo() == Bond::BondStereo::STEREOATROPCCW ||
                bnd->getStereo() == Bond::BondStereo::STEREOATROPCW));
       Chirality::wedgeMolBonds(*m, &m->getConformer());
@@ -4515,11 +4515,11 @@ M  END
       // m->debugMol(std::cerr);
       Bond *wedgedBond = nullptr;
       Bond *dblBond = nullptr;
-      for (auto atm : {bnd->getBeginAtom(), bnd->getEndAtom()}) {
+      for (auto *atm : {bnd->getBeginAtom(), bnd->getEndAtom()}) {
         if (!atm->getIsAromatic()) {
           continue;
         }
-        for (auto nbrBnd : m->atomBonds(atm)) {
+        for (auto *nbrBnd : m->atomBonds(atm)) {
           if (nbrBnd->getBondType() == Bond::BondType::DOUBLE) {
             dblBond = nbrBnd;
             CHECK(nbrBnd->getBondDir() == Bond::BondDir::NONE);
@@ -4543,7 +4543,7 @@ M  END
         }
         wedgedBond->setBondDir(Bond::BondDir::NONE);
         // re-aromatize:
-        for (auto bnd : m->bonds()) {
+        for (auto *bnd : m->bonds()) {
           if (bnd->getIsAromatic()) {
             bnd->setBondType(Bond::BondType::AROMATIC);
           }
@@ -4554,11 +4554,11 @@ M  END
           // before
           MolOps::Kekulize(*m, clearAromaticFlags);
           // and make sure that those didn't end up double again:
-          for (auto atm : {bnd->getBeginAtom(), bnd->getEndAtom()}) {
+          for (auto *atm : {bnd->getBeginAtom(), bnd->getEndAtom()}) {
             if (!atm->getIsAromatic()) {
               continue;
             }
-            for (auto nbrBnd : m->atomBonds(atm)) {
+            for (auto *nbrBnd : m->atomBonds(atm)) {
               if (nbrBnd->getBondType() == Bond::BondType::DOUBLE) {
                 CHECK(nbrBnd->getBondDir() == Bond::BondDir::NONE);
                 if (nbrBnd->getBondDir() != Bond::BondDir::NONE) {
@@ -4725,7 +4725,7 @@ TEST_CASE("Github #7873: monomer info segfaults and mem leaks", "[PDB]") {
 
     // make sure that the Monomer is delated when setting to nullptr
     bool was_deleted = false;
-    auto res = new FakeAtomMonomerInfo(&was_deleted);
+    auto *res = new FakeAtomMonomerInfo(&was_deleted);
     mol->getAtomWithIdx(0)->setMonomerInfo(res);
     mol->getAtomWithIdx(0)->setMonomerInfo(nullptr);
     CHECK(was_deleted == true);

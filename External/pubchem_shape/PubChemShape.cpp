@@ -225,12 +225,12 @@ ShapeInput PrepareConformer(const ROMol &mol, int confId, bool useColors) {
 
       DEBUG_MSG("# features: " << feature_idx_type.size());
     } else {
-      const auto pattVects = getPh4Patterns();
+      auto *const pattVects = getPh4Patterns();
       feature_idx_type.clear();
 
       unsigned pattIdx = 1;
       for (const auto &patts : *pattVects) {
-        for (const auto patt : patts) {
+        for (const auto *const patt : patts) {
           auto matches = SubstructMatch(mol, *patt);
           for (auto match : matches) {
             std::vector<unsigned int> ats;
@@ -247,7 +247,7 @@ ShapeInput PrepareConformer(const ROMol &mol, int confId, bool useColors) {
 
   // unpack atoms
 
-  auto &conformer = mol.getConformer(confId);
+  const auto &conformer = mol.getConformer(confId);
   if (!conformer.is3D()) {
     throw ValueErrorException("Conformer must be 3D");
   }
