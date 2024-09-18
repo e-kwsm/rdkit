@@ -385,7 +385,8 @@ QueryDetails getQueryDetails(const Query<int, T const *, true> *query) {
         static_cast<const SetQuery<int, T const *, true> *>(query)->endSet());
     return QueryDetails(
         std::make_tuple(MolPickler::QUERY_SET, std::move(tset)));
-  } else if (auto q = dynamic_cast<const HasPropWithValueQueryBase *>(query)) {
+  } else if (const auto *q =
+                 dynamic_cast<const HasPropWithValueQueryBase *>(query)) {
     return QueryDetails(std::make_tuple(MolPickler::QUERY_PROPERTY_WITH_VALUE,
                                         q->getPair(), q->getTolerance()));
   } else {
@@ -1168,7 +1169,7 @@ void MolPickler::_pickle(const ROMol *mol, std::ostream &ss,
   // -------------------
   streamWrite(ss, BEGINBOND);
   for (unsigned int i = 0; i < mol->getNumBonds(); i++) {
-    auto bond = mol->getBondWithIdx(i);
+    const auto *bond = mol->getBondWithIdx(i);
     _pickleBond<T>(ss, bond, atomIdxMap);
     bondIdxMap[bond->getIdx()] = i;
   }
@@ -1215,7 +1216,7 @@ void MolPickler::_pickle(const ROMol *mol, std::ostream &ss,
   }
   // Write Stereo Groups
   {
-    auto &stereo_groups = mol->getStereoGroups();
+    const auto &stereo_groups = mol->getStereoGroups();
     if (stereo_groups.size() > 0u) {
       streamWrite(ss, BEGINSTEREOGROUP);
       _pickleStereo<T>(ss, stereo_groups, atomIdxMap, bondIdxMap);
@@ -1269,7 +1270,7 @@ void MolPickler::_pickle(const ROMol *mol, std::ostream &ss,
   if (propertyFlags & PicklerOps::AtomProps) {
     std::stringstream tss;
     bool anyWritten = false;
-    for (const auto atom : mol->atoms()) {
+    for (auto *const atom : mol->atoms()) {
       anyWritten |= pickleAtomProperties(tss, *atom, propertyFlags);
     }
     if (anyWritten) {
@@ -1282,7 +1283,7 @@ void MolPickler::_pickle(const ROMol *mol, std::ostream &ss,
   if (propertyFlags & PicklerOps::BondProps) {
     std::stringstream tss;
     bool anyWritten = false;
-    for (const auto bond : mol->bonds()) {
+    for (auto *const bond : mol->bonds()) {
       anyWritten |= pickleBondProperties(tss, *bond, propertyFlags);
     }
     if (anyWritten) {
@@ -1475,7 +1476,7 @@ void MolPickler::_depickle(std::istream &ss, ROMol *mol, int version,
       if (version >= 13000 && !(propertyFlags & PicklerOps::AtomProps)) {
         ss.seekg(blkSize, std::ios_base::cur);
       } else {
-        for (const auto atom : mol->atoms()) {
+        for (auto *const atom : mol->atoms()) {
           unpickleAtomProperties(ss, *atom, version);
         }
       }
@@ -1488,13 +1489,13 @@ void MolPickler::_depickle(std::istream &ss, ROMol *mol, int version,
       if (version >= 13000 && !(propertyFlags & PicklerOps::BondProps)) {
         ss.seekg(blkSize, std::ios_base::cur);
       } else {
-        for (const auto bond : mol->bonds()) {
+        for (auto *const bond : mol->bonds()) {
           unpickleBondProperties(ss, *bond, version);
         }
       }
       streamRead(ss, tag, version);
     } else if (tag == BEGINQUERYATOMDATA) {
-      for (const auto atom : mol->atoms()) {
+      for (auto *const atom : mol->atoms()) {
         _unpickleAtomData(ss, atom, version);
       }
       streamRead(ss, tag, version);
@@ -1514,7 +1515,7 @@ void MolPickler::_depickle(std::istream &ss, ROMol *mol, int version,
     // we didn't read any property info for atoms with associated
     // queries. update their property caches
     // (was sf.net Issue 3316407)
-    for (const auto atom : mol->atoms()) {
+    for (auto *const atom : mol->atoms()) {
       if (atom->hasQuery()) {
         atom->updatePropertyCache(false);
       }
@@ -2451,14 +2452,14 @@ void MolPickler::_pickleStereo(std::ostream &ss,
     if (group.getGroupType() != StereoGroupType::STEREO_ABSOLUTE) {
       streamWrite(ss, static_cast<T>(group.getWriteId()));
     }
-    auto &atoms = group.getAtoms();
+    const auto &atoms = group.getAtoms();
     streamWrite(ss, static_cast<T>(atoms.size()));
     for (auto &&atom : atoms) {
       tmpT = static_cast<T>(atomIdxMap[atom->getIdx()]);
       streamWrite(ss, tmpT);
     }
 
-    auto &bonds = group.getBonds();
+    const auto &bonds = group.getBonds();
     streamWrite(ss, static_cast<T>(bonds.size()));
     for (auto &&bond : bonds) {
       tmpT = static_cast<T>(bondIdxMap[bond->getIdx()]);

@@ -33,7 +33,7 @@ using namespace RDKit;
 #ifdef RDK_TEST_MULTITHREADED
 namespace {
 void runblock_mmff(const std::vector<ROMol *> &mols) {
-  for (auto mol : mols) {
+  for (auto *mol : mols) {
     ForceFields::ForceField *field = MMFF::constructForceField(*mol);
     TEST_ASSERT(field);
     field->initialize();
