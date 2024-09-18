@@ -55,19 +55,19 @@ class PyResonanceMolSupplierCallback
     d_pyCallbackObject = pyCallbackObject;
     pyCallback->d_cppCallback = this;
   }
-  inline unsigned int wrapGetNumConjGrps() const {
+  unsigned int wrapGetNumConjGrps() const {
     return d_cppCallback->getNumConjGrps();
   }
-  inline size_t wrapGetMaxStructures() const {
+  size_t wrapGetMaxStructures() const {
     return d_cppCallback->getMaxStructures();
   }
-  inline size_t wrapGetNumStructures(unsigned int conjGrpIdx) const {
+  size_t wrapGetNumStructures(unsigned int conjGrpIdx) const {
     return d_cppCallback->getNumStructures(conjGrpIdx);
   }
-  inline size_t wrapGetNumDiverseStructures(unsigned int conjGrpIdx) const {
+  size_t wrapGetNumDiverseStructures(unsigned int conjGrpIdx) const {
     return d_cppCallback->getNumDiverseStructures(conjGrpIdx);
   }
-  inline python::object getCallbackOverride() const {
+  python::object getCallbackOverride() const {
     return get_override("__call__");
   }
   bool operator()() override { return getCallbackOverride()(); }
