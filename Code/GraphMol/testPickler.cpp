@@ -1289,8 +1289,8 @@ void testEnhancedStereoChemistry() {
 
   std::unique_ptr<RWMol> roundTripped(new RWMol(pkl));
 
-  auto &ref_groups = m.getStereoGroups();
-  auto &new_groups = roundTripped->getStereoGroups();
+  const auto &ref_groups = m.getStereoGroups();
+  const auto &new_groups = roundTripped->getStereoGroups();
   TEST_ASSERT(ref_groups.size() == new_groups.size());
   for (unsigned i = 0u; i < 3; ++i) {
     TEST_ASSERT(ref_groups[i].getGroupType() == new_groups[i].getGroupType());
@@ -1523,10 +1523,10 @@ void testPropertyOptions() {
   for (auto conf = m1.beginConformers(); conf != m1.endConformers(); ++conf) {
     (*conf)->setProp("intp", 1);
   }
-  for (const auto atom : m1.atoms()) {
+  for (auto *const atom : m1.atoms()) {
     atom->setProp("intp", 1);
   }
-  for (const auto bond : m1.bonds()) {
+  for (auto *const bond : m1.bonds()) {
     bond->setProp("intp", 1);
   }
   // reading when properties are present
@@ -1549,11 +1549,11 @@ void testPropertyOptions() {
         TEST_ASSERT((*conf)->getPropIfPresent("intp", ival));
         TEST_ASSERT(ival == 1);
       }
-      for (const auto atom : tm.atoms()) {
+      for (auto *const atom : tm.atoms()) {
         TEST_ASSERT(atom->getPropIfPresent("intp", ival));
         TEST_ASSERT(ival == 1);
       }
-      for (const auto bond : tm.bonds()) {
+      for (auto *const bond : tm.bonds()) {
         TEST_ASSERT(bond->getPropIfPresent("intp", ival));
         TEST_ASSERT(ival == 1);
       }
@@ -1573,10 +1573,10 @@ void testPropertyOptions() {
            ++conf) {
         TEST_ASSERT(!(*conf)->getPropIfPresent("intp", ival));
       }
-      for (const auto atom : tm.atoms()) {
+      for (auto *const atom : tm.atoms()) {
         TEST_ASSERT(!atom->getPropIfPresent("intp", ival));
       }
-      for (const auto bond : tm.bonds()) {
+      for (auto *const bond : tm.bonds()) {
         TEST_ASSERT(!bond->getPropIfPresent("intp", ival));
       }
     }
@@ -1594,10 +1594,10 @@ void testPropertyOptions() {
            ++conf) {
         TEST_ASSERT((*conf)->getPropIfPresent("intp", ival));
       }
-      for (const auto atom : tm.atoms()) {
+      for (auto *const atom : tm.atoms()) {
         TEST_ASSERT(!atom->getPropIfPresent("intp", ival));
       }
-      for (const auto bond : tm.bonds()) {
+      for (auto *const bond : tm.bonds()) {
         TEST_ASSERT(!bond->getPropIfPresent("intp", ival));
       }
     }
@@ -1615,10 +1615,10 @@ void testPropertyOptions() {
            ++conf) {
         TEST_ASSERT(!(*conf)->getPropIfPresent("intp", ival));
       }
-      for (const auto atom : tm.atoms()) {
+      for (auto *const atom : tm.atoms()) {
         TEST_ASSERT(atom->getPropIfPresent("intp", ival));
       }
-      for (const auto bond : tm.bonds()) {
+      for (auto *const bond : tm.bonds()) {
         TEST_ASSERT(!bond->getPropIfPresent("intp", ival));
       }
     }
@@ -1636,10 +1636,10 @@ void testPropertyOptions() {
            ++conf) {
         TEST_ASSERT(!(*conf)->getPropIfPresent("intp", ival));
       }
-      for (const auto atom : tm.atoms()) {
+      for (auto *const atom : tm.atoms()) {
         TEST_ASSERT(!atom->getPropIfPresent("intp", ival));
       }
-      for (const auto bond : tm.bonds()) {
+      for (auto *const bond : tm.bonds()) {
         TEST_ASSERT(bond->getPropIfPresent("intp", ival));
       }
     }

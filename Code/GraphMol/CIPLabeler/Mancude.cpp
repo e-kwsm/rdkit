@@ -102,7 +102,7 @@ bool SeedTypes(std::vector<Type> &types, const CIPMol &mol) {
 void RelaxTypes(std::vector<Type> &types, const CIPMol &mol) {
   std::list<Atom *> queue;
   auto counts = std::vector<int>(mol.getNumAtoms());
-  for (auto atom : mol.atoms()) {
+  for (auto *atom : mol.atoms()) {
     const auto aidx = atom->getIdx();
     for (const auto &nbr : mol.getNeighbors(atom)) {
       if (types[nbr->getIdx()] != Type::Other) {
@@ -142,7 +142,7 @@ void VisitPart(std::vector<int> &parts, const std::vector<Type> &types,
         continue;
       }
 
-      auto nbr = bond->getOtherAtom(atom);
+      auto *nbr = bond->getOtherAtom(atom);
       int aidx = nbr->getIdx();
 
       if (parts[aidx] == 0 && types[aidx] != Type::Other) {
@@ -202,7 +202,7 @@ std::vector<boost::rational<int>> calcFracAtomNums(const CIPMol &mol) {
         if (parts[i] == 0) {
           continue;
         }
-        auto atom = mol.getAtom(i);
+        auto *atom = mol.getAtom(i);
 
         // Find resonant structures caused by relocation of a negative charge.
         if (types[i] == Type::Cv3D3Minus || types[i] == Type::Nv2D2Minus) {
@@ -254,9 +254,9 @@ std::vector<boost::rational<int>> calcFracAtomNums(const CIPMol &mol) {
             }
 
             ++denominator;
-            auto atom = mol.getAtom(i);
+            auto *atom = mol.getAtom(i);
             for (auto &bond : mol.getBonds(atom)) {
-              auto nbr = bond->getOtherAtom(atom);
+              auto *nbr = bond->getOtherAtom(atom);
               int bord = mol.getBondOrder(bond);
               if (bord > 1 && parts[nbr->getIdx()] == part) {
                 numerator += (bord - 1) * nbr->getAtomicNum();

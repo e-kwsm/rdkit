@@ -2111,7 +2111,7 @@ void testGithub4019() {
     ROMOL_SPTR core(SmartsToMol("n1ccc2ccccc12"));
     ROMOL_SPTR molNoSidechain(replaceSidechains(*mol, *core));
     bool hasDummy = false;
-    for (auto a : molNoSidechain->atoms()) {
+    for (auto *a : molNoSidechain->atoms()) {
       if (a->getAtomicNum() == 0) {
         hasDummy = true;
         TEST_ASSERT(!a->getIsAromatic());
@@ -2128,7 +2128,7 @@ void testGithub4019() {
     ROMOL_SPTR core(SmartsToMol("c1ccccc1"));
     ROMOL_SPTR molNoSidechain(replaceSidechains(*mol, *core));
     unsigned int nDummies = 0;
-    for (auto a : molNoSidechain->atoms()) {
+    for (auto *a : molNoSidechain->atoms()) {
       if (a->getAtomicNum() == 0) {
         ++nDummies;
         TEST_ASSERT(!a->getIsAromatic());
@@ -2136,7 +2136,7 @@ void testGithub4019() {
       }
     }
     TEST_ASSERT(nDummies == 2);
-    for (auto b : molNoSidechain->bonds()) {
+    for (auto *b : molNoSidechain->bonds()) {
       if (b->getBeginAtom()->getAtomicNum() == 0 ||
           b->getEndAtom()->getAtomicNum() == 0) {
         TEST_ASSERT(!b->getIsAromatic());
@@ -2149,7 +2149,7 @@ void testGithub4019() {
     ROMOL_SPTR core(SmartsToMol("c1ccccc1C"));
     ROMOL_SPTR molNoSidechain(replaceSidechains(*mol, *core));
     std::vector<unsigned int> dummies;
-    for (auto a : molNoSidechain->atoms()) {
+    for (auto *a : molNoSidechain->atoms()) {
       if (a->getAtomicNum() == 0) {
         dummies.push_back(a->getIdx());
         TEST_ASSERT(!a->getIsAromatic());
