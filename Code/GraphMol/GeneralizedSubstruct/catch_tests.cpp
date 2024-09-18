@@ -43,7 +43,7 @@ TEST_CASE("molecule basics") {
   SECTION("substructure matching and serialization") {
     ExtendedQueryMol xqm2(xqm.toBinary());
     ExtendedQueryMol xqm3(xqm.toJSON(), true);
-    for (const auto xq : {&xqm, &xqm2, &xqm3}) {
+    for (auto *const xq : {&xqm, &xqm2, &xqm3}) {
       CHECK(SubstructMatch(*"CCc1n[nH]c(F)c1"_smiles, *xq).size() == 1);
       CHECK(SubstructMatch(*"CCc1[nH]nc(F)c1"_smiles, *xq).empty());
       CHECK(hasSubstructMatch(*"CCc1n[nH]c(F)c1"_smiles, *xq));
@@ -62,7 +62,7 @@ TEST_CASE("enumeration basics") {
     ExtendedQueryMol xqm2(xqm.toBinary());
     ExtendedQueryMol xqm3(xqm.toJSON(), true);
 
-    for (const auto xq : {&xqm, &xqm2, &xqm3}) {
+    for (auto *const xq : {&xqm, &xqm2, &xqm3}) {
       CHECK(SubstructMatch(*"COCC"_smiles, *xq).size() == 1);
       CHECK(SubstructMatch(*"COOCC"_smiles, *xq).size() == 1);
       CHECK(SubstructMatch(*"COOOCC"_smiles, *xq).size() == 1);
@@ -84,7 +84,7 @@ TEST_CASE("result counts") {
     ExtendedQueryMol xqm3(xqm.toJSON(), true);
     SubstructMatchParameters ps;
     ps.uniquify = false;
-    for (const auto xq : {&xqm, &xqm2, &xqm3}) {
+    for (auto *const xq : {&xqm, &xqm2, &xqm3}) {
       CHECK(SubstructMatch(*"COCC"_smiles, *xq, ps).size() == 2);
       CHECK(SubstructMatch(*"COOCC"_smiles, *xq, ps).size() == 2);
       CHECK(SubstructMatch(*"COOOCC"_smiles, *xq, ps).size() == 2);
@@ -105,7 +105,7 @@ TEST_CASE("tautomer basics") {
   SECTION("substructure matching and serialization") {
     ExtendedQueryMol xqm2(xqm.toBinary());
     ExtendedQueryMol xqm3(xqm.toJSON(), true);
-    for (const auto xq : {&xqm, &xqm2, &xqm3}) {
+    for (auto *const xq : {&xqm, &xqm2, &xqm3}) {
       CHECK(SubstructMatch(*"CCc1n[nH]c(F)c1"_smiles, *xq).size() == 1);
       CHECK(SubstructMatch(*"CCc1[nH]nc(F)c1"_smiles, *xq).size() == 1);
       CHECK(SubstructMatch(*"CCc1[nH]ncc1"_smiles, *xq).empty());
@@ -132,7 +132,7 @@ TEST_CASE("tautomer bundle basics") {
   SECTION("substructure matching and serialization") {
     ExtendedQueryMol xqm2(xqm.toBinary());
     ExtendedQueryMol xqm3(xqm.toJSON(), true);
-    for (const auto xq : {&xqm, &xqm2, &xqm3}) {
+    for (auto *const xq : {&xqm, &xqm2, &xqm3}) {
       CHECK(SubstructMatch(*"CCc1n[nH]c(F)c1"_smiles, *xq).size() == 1);
       CHECK(SubstructMatch(*"CCc1[nH]nc(F)c1"_smiles, *xq).size() == 1);
       CHECK(SubstructMatch(*"CCc1[nH]ncc1F"_smiles, *xq).size() == 1);

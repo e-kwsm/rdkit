@@ -39,9 +39,9 @@ ClusNode calcMolMolSimilarity(
         const RascalOptions *, const RascalClusterOptions *> &toDo) {
   auto i = std::get<0>(toDo);
   auto j = std::get<1>(toDo);
-  auto mols = std::get<2>(toDo);
-  auto opts = std::get<3>(toDo);
-  auto clusOpts = std::get<4>(toDo);
+  const auto *mols = std::get<2>(toDo);
+  const auto *opts = std::get<3>(toDo);
+  const auto *clusOpts = std::get<4>(toDo);
   auto res = rascalMCES(*(*mols)[i], *(*mols)[j], *opts);
   ClusNode cn;
   cn.d_mol1Num = i;

@@ -70,9 +70,9 @@ unsigned int SynthonShapeInput::getNumDummyAtoms() const {
 
 void SynthonShapeInput::buildDummyAtomsAndNbrs() {
   auto tmpMol = d_shapes->shapeToMol(false, true);
-  for (auto atom : tmpMol->atoms()) {
+  for (auto *atom : tmpMol->atoms()) {
     if (!atom->getAtomicNum()) {
-      for (auto nbr : tmpMol->atomNeighbors(atom)) {
+      for (auto *nbr : tmpMol->atomNeighbors(atom)) {
         d_dummyAtomsAndNbrs.emplace_back(atom->getIdx(), nbr->getIdx());
       }
     }

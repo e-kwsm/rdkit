@@ -112,7 +112,7 @@ bool SeedTypes(std::vector<Type> &types, const CIPMol &mol) {
 void RelaxTypes(std::vector<Type> &types, const CIPMol &mol) {
   std::list<Atom *> queue;
   std::vector<int> counts(mol.getNumAtoms(), 0);
-  for (auto atom : mol.atoms()) {
+  for (auto *atom : mol.atoms()) {
     const auto aidx = atom->getIdx();
     if (types[aidx] == Type::Other) {
       // This is already Type::Other, no need to reset it!
@@ -123,7 +123,7 @@ void RelaxTypes(std::vector<Type> &types, const CIPMol &mol) {
         // No non-ring bonds are Type::Other already
         continue;
       }
-      const auto nbr = bond->getOtherAtom(atom);
+      auto *const nbr = bond->getOtherAtom(atom);
       if (types[nbr->getIdx()] != Type::Other) {
         ++counts[aidx];
       }
@@ -137,7 +137,7 @@ void RelaxTypes(std::vector<Type> &types, const CIPMol &mol) {
   }
 
   while (!queue.empty()) {
-    const auto atom = queue.front();
+    auto *const atom = queue.front();
     queue.pop_front();
 
     const auto aidx = atom->getIdx();
@@ -156,7 +156,7 @@ void RelaxTypes(std::vector<Type> &types, const CIPMol &mol) {
       if (!mol.isInRing(bond)) {
         continue;
       }
-      const auto nbr = bond->getOtherAtom(atom);
+      auto *const nbr = bond->getOtherAtom(atom);
       const auto nbridx = nbr->getIdx();
       if (types[nbridx] == Type::Other) {
         continue;
@@ -181,7 +181,7 @@ void VisitPart(std::vector<int> &parts, const std::vector<Type> &types,
         continue;
       }
 
-      auto nbr = bond->getOtherAtom(atom);
+      auto *nbr = bond->getOtherAtom(atom);
       int aidx = nbr->getIdx();
 
       if (parts[aidx] == 0 && types[aidx] != Type::Other) {
@@ -201,7 +201,7 @@ void VisitPart(std::vector<int> &parts, const std::vector<Type> &types,
 int VisitParts(std::vector<int> &parts, const std::vector<Type> &types,
                const CIPMol &mol) {
   int numparts = 0;
-  for (auto &atom : mol.atoms()) {
+  for (const auto &atom : mol.atoms()) {
     int aidx = atom->getIdx();
     if (parts[aidx] == 0 && types[aidx] != Type::Other) {
       parts[aidx] = ++numparts;
@@ -252,7 +252,7 @@ std::vector<FractionalAtomicNum> calcFracAtomNums(const CIPMol &mol) {
     if (parts[i] == 0) {
       continue;
     }
-    auto atom = mol.getAtom(i);
+    auto *atom = mol.getAtom(i);
 
     // Find resonant structures caused by relocation of a negative charge.
     if (types[i] == Type::Cv3D3Minus || types[i] == Type::Nv2D2Minus) {
@@ -288,9 +288,9 @@ std::vector<FractionalAtomicNum> calcFracAtomNums(const CIPMol &mol) {
     }
 
     ++denominators[part];
-    const auto atom = mol.getAtom(i);
+    auto *const atom = mol.getAtom(i);
     for (const auto &bond : mol.getBonds(atom)) {
-      const auto nbr = bond->getOtherAtom(atom);
+      auto *const nbr = bond->getOtherAtom(atom);
       const auto bord = mol.getBondOrder(bond);
       if (bord > 1 && parts[nbr->getIdx()] == part) {
         numerators[part] += (bord - 1) * nbr->getAtomicNum();

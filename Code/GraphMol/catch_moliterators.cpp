@@ -23,7 +23,7 @@ TEST_CASE("mol.atoms()") {
   const auto m = "CC(C)CO"_smiles;
   REQUIRE(m);
   unsigned int ccount = 0;
-  for (const auto atom : m->atoms()) {
+  for (auto *const atom : m->atoms()) {
     if (atom->getAtomicNum() == 6) {
       ++ccount;
     }
@@ -52,7 +52,7 @@ TEST_CASE("mol.checkedAtoms()") {
   const auto m = "CC(C)CO"_smiles;
   REQUIRE(m);
   unsigned int ccount = 0;
-  for (const auto atom : m->checkedAtoms()) {
+  for (auto *const atom : m->checkedAtoms()) {
     if (atom->getAtomicNum() == 6) {
       ++ccount;
     }
@@ -71,7 +71,7 @@ TEST_CASE("mol.checkedAtoms()") {
     auto beg = atoms.begin();
     // with checked atom iterators we can safely delete bonds
     m2.removeBond(1, 2);
-    auto at = *beg;
+    auto *at = *beg;
     CHECK(at->getAtomicNum() == 6);
   }
 }
@@ -80,7 +80,7 @@ TEST_CASE("mol.bonds()") {
   const auto m = "OC(=O)C(=O)O"_smiles;
   REQUIRE(m);
   unsigned int doubleBondCount = 0;
-  for (const auto bond : m->bonds()) {
+  for (auto *const bond : m->bonds()) {
     if (bond->getBondType() == Bond::DOUBLE) {
       ++doubleBondCount;
     }
@@ -109,7 +109,7 @@ TEST_CASE("mol.checkedBonds()") {
   const auto m = "OC(=O)C(=O)O"_smiles;
   REQUIRE(m);
   unsigned int doubleBondCount = 0;
-  for (const auto bond : m->checkedBonds()) {
+  for (auto *const bond : m->checkedBonds()) {
     if (bond->getBondType() == Bond::DOUBLE) {
       ++doubleBondCount;
     }
@@ -125,11 +125,11 @@ TEST_CASE("mol.atomNeighbors()") {
   const auto m = "CC(C)CO"_smiles;
   REQUIRE(m);
   unsigned int count = 0;
-  for (const auto atom : m->atomNeighbors(m->getAtomWithIdx(1))) {
+  for (auto *const atom : m->atomNeighbors(m->getAtomWithIdx(1))) {
     count += atom->getDegree();
   }
   CHECK(count == 4);
-  for (auto atom : m->atomNeighbors(m->getAtomWithIdx(1))) {
+  for (auto *atom : m->atomNeighbors(m->getAtomWithIdx(1))) {
     atom->setAtomicNum(7);
   }
   MolOps::sanitizeMol(*m);
@@ -140,7 +140,7 @@ TEST_CASE("mol.checkedAtomNeighbors()") {
   const auto m = "CC(C)CO"_smiles;
   REQUIRE(m);
   unsigned int count = 0;
-  for (const auto atom : m->checkedAtomNeighbors(m->getAtomWithIdx(1))) {
+  for (auto *const atom : m->checkedAtomNeighbors(m->getAtomWithIdx(1))) {
     count += atom->getDegree();
   }
   CHECK(count == 4);
@@ -165,11 +165,11 @@ TEST_CASE("mol.atomBonds()") {
   const auto m = "CC(=C)CO"_smiles;
   REQUIRE(m);
   double count = 0;
-  for (const auto bond : m->atomBonds(m->getAtomWithIdx(1))) {
+  for (auto *const bond : m->atomBonds(m->getAtomWithIdx(1))) {
     count += bond->getBondTypeAsDouble();
   }
   CHECK(count == 4);
-  for (auto bond : m->atomBonds(m->getAtomWithIdx(1))) {
+  for (auto *bond : m->atomBonds(m->getAtomWithIdx(1))) {
     bond->setBondType(Bond::BondType::SINGLE);
   }
   MolOps::sanitizeMol(*m);
@@ -180,7 +180,7 @@ TEST_CASE("mol.checkedAtomBonds()") {
   const auto m = "CC(=C)CO"_smiles;
   REQUIRE(m);
   double count = 0;
-  for (const auto bond : m->checkedAtomBonds(m->getAtomWithIdx(1))) {
+  for (auto *const bond : m->checkedAtomBonds(m->getAtomWithIdx(1))) {
     count += bond->getBondTypeAsDouble();
   }
   CHECK(count == 4);

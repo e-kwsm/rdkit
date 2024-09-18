@@ -3824,7 +3824,7 @@ void testGitHubIssue3723() {
       << "Github #3723: Fingerprint crash for mols with Zero order bonds"
       << std::endl;
 
-  auto molblock = R"CTAB(mol
+  const auto *molblock = R"CTAB(mol
      RDKit          3D
 
   7  6  0  0  0  0  0  0  0  0999 V2000

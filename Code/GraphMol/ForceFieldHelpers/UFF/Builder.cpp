@@ -34,7 +34,7 @@ void addBonds(const ROMol &mol, const AtomicParamVect &params,
   PRECONDITION(mol.getNumAtoms() == params.size(), "bad parameters");
   PRECONDITION(field, "bad forcefield");
 
-  for (const auto bond : mol.bonds()) {
+  for (auto *const bond : mol.bonds()) {
     int idx1 = bond->getBeginAtomIdx();
     int idx2 = bond->getEndAtomIdx();
 
@@ -95,14 +95,14 @@ boost::shared_array<std::uint8_t> buildNeighborMatrix(const ROMol &mol) {
   unsigned nTwoBitCells = (nAtoms * (nAtoms + 1) - 1) / 8 + 1;
   boost::shared_array<std::uint8_t> res(new std::uint8_t[nTwoBitCells]);
   std::memset(res.get(), RELATION_1_X_INIT, nTwoBitCells);
-  for (const auto bondi : mol.bonds()) {
+  for (auto *const bondi : mol.bonds()) {
     setTwoBitCell(
         res,
         twoBitCellPos(nAtoms, bondi->getBeginAtomIdx(), bondi->getEndAtomIdx()),
         RELATION_1_2);
     unsigned int bondiBeginAtomIdx = bondi->getBeginAtomIdx();
     unsigned int bondiEndAtomIdx = bondi->getEndAtomIdx();
-    for (const auto bondj : mol.bonds()) {
+    for (auto *const bondj : mol.bonds()) {
       if (bondj == bondi) {
         continue;
       }

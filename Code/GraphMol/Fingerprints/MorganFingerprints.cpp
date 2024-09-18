@@ -106,7 +106,7 @@ SparseIntVect<uint32_t> *getHashedFingerprint(
     ao.allocateBitInfoMap();
   }
 
-  auto res = fpgen->getCountFingerprint(mol, args).release();
+  auto *res = fpgen->getCountFingerprint(mol, args).release();
 
   if (atomsSettingBits) {
     atomsSettingBits->clear();
@@ -142,7 +142,7 @@ ExplicitBitVect *getFingerprintAsBitVect(
     ao.allocateBitInfoMap();
   }
 
-  auto res = fpgen->getFingerprint(mol, args).release();
+  auto *res = fpgen->getFingerprint(mol, args).release();
 
   if (atomsSettingBits) {
     atomsSettingBits->clear();

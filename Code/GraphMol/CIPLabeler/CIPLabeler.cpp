@@ -66,7 +66,7 @@ ConfigList findConfigs(CIPMol &mol, const boost::dynamic_bitset<> &atoms,
   // All configurations are required here, including unselected ones: they may
   // provide auxiliary descriptors needed to label a selected configuration.
   for (unsigned int index = 0; index < mol.getNumAtoms(); ++index) {
-    auto atom = mol.getAtom(index);
+    auto *atom = mol.getAtom(index);
     auto chiraltag = atom->getChiralTag();
     if (chiraltag == Atom::CHI_TETRAHEDRAL_CW ||
         chiraltag == Atom::CHI_TETRAHEDRAL_CCW) {
@@ -78,7 +78,7 @@ ConfigList findConfigs(CIPMol &mol, const boost::dynamic_bitset<> &atoms,
   }
 
   for (unsigned int index = 0; index < mol.getNumBonds(); ++index) {
-    auto bond = mol.getBond(index);
+    auto *bond = mol.getBond(index);
 
     auto bond_cfg = bond->getStereo();
     switch (bond_cfg) {
@@ -146,7 +146,7 @@ bool labelAux(ConfigList &configs, const Rules &rules, ConfigEntry &center) {
       if (node->isDuplicate()) {
         continue;
       }
-      auto low = node;
+      auto *low = node;
       if (foci.size() == 2) {
         for (const auto &edge : node->getEdges(foci[1])) {
           const auto &other_node = edge->getOther(node);
@@ -323,10 +323,10 @@ void clearSelectedCIPProperties(ROMol &mol,
   mol.clearProp(common_properties::_CIPComputed);
 
   if (fullSelection) {
-    for (auto atom : mol.atoms()) {
+    for (auto *atom : mol.atoms()) {
       clearCIPProperties(atom);
     }
-    for (auto bond : mol.bonds()) {
+    for (auto *bond : mol.bonds()) {
       clearCIPProperties(bond);
     }
     return;

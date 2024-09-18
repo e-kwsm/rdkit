@@ -145,7 +145,7 @@ ChiralityLabelStatus parseChiralityLabel(RWMol &mol,
     return ChiralityLabelStatus::INVALID;
   }
 
-  auto chiral_atom = mol.getAtomWithIdx(chiral_idx);
+  auto *chiral_atom = mol.getAtomWithIdx(chiral_idx);
   unsigned nSwaps = 2;
   const char rotation_direction = (++tItr)->back();
   switch (rotation_direction) {
@@ -164,7 +164,7 @@ ChiralityLabelStatus parseChiralityLabel(RWMol &mol,
   INT_LIST bond_indexes;
   for (++tItr; tItr != tokenizer.end(); ++tItr) {
     const int nbr_idx = FileParserUtils::toInt(*tItr) - 1;
-    if (auto bond = mol.getBondBetweenAtoms(chiral_idx, nbr_idx); bond) {
+    if (auto *bond = mol.getBondBetweenAtoms(chiral_idx, nbr_idx); bond) {
       bond_indexes.push_back(bond->getIdx());
     } else {
       return ChiralityLabelStatus::INVALID;
@@ -369,7 +369,7 @@ void addAtoms(const mae::IndexedBlock &atom_block, RWMol &mol,
 
   // atomic numbers, and x, y, and z coordinates
   const auto size = atomicNumbers->size();
-  auto conf = new RDKit::Conformer(size);
+  auto *conf = new RDKit::Conformer(size);
   conf->setId(0);
 
   PDBInfo pdb_info(atom_block);
@@ -432,7 +432,7 @@ void addBonds(const mae::IndexedBlock &bond_block, RWMol &mol) {
     const auto from_atom = from_atoms->at(i) - 1;
     const auto to_atom = to_atoms->at(i) - 1;
     const auto order = bolookup.find(orders->at(i))->second;
-    if (auto bond = mol.getBondBetweenAtoms(from_atom, to_atom);
+    if (auto *bond = mol.getBondBetweenAtoms(from_atom, to_atom);
         bond != nullptr) {
       if (order != bond->getBondType()) {
         BOOST_LOG(rdWarningLog)
@@ -443,7 +443,7 @@ void addBonds(const mae::IndexedBlock &bond_block, RWMol &mol) {
       continue;  // Maestro files may double-list some bonds
     }
 
-    auto bond = new Bond(order);
+    auto *bond = new Bond(order);
     bond->setOwningMol(mol);
     bond->setBeginAtomIdx(from_atom);
     bond->setEndAtomIdx(to_atom);

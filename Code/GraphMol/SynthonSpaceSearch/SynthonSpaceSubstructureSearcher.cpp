@@ -133,7 +133,7 @@ std::vector<boost::dynamic_bitset<>> screenSynthonsWithFPs(
     const auto &synthonSet = reaction.getSynthons()[synthonOrder[i]];
 
     for (size_t j = 0; j < synthonSet.size(); ++j) {
-      if (auto &synthon = synthonSet[j].second;
+      if (const auto &synthon = synthonSet[j].second;
           pattFPs[i]->getNumOnBits() <= synthon->getPattFP()->getNumOnBits() &&
           AllProbeBitsMatch(*pattFPs[i], *synthon->getPattFP())) {
         passedFPs[synthonOrder[i]][j] = true;

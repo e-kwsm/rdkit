@@ -239,7 +239,7 @@ inline bool rdvalue_tostring(RDValue_cast_t val, std::string &res) {
       try {
         res = std::any_cast<std::string>(rdvalue_cast<std::any &>(val));
       } catch (const std::bad_any_cast &) {
-        auto &rdtype = rdvalue_cast<std::any &>(val).type();
+        const auto &rdtype = rdvalue_cast<std::any &>(val).type();
         if (rdtype == typeid(long)) {
           res = boost::lexical_cast<std::string>(
               std::any_cast<long>(rdvalue_cast<std::any &>(val)));

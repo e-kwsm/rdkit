@@ -379,7 +379,7 @@ RWMOL_SPTR reapplyWedging(RWMOL_SPTR mol, PipelineResult &result,
   // settings.
   using BondInfo = std::tuple<Bond::BondType, Bond::BondDir, Bond::BondStereo>;
   std::map<unsigned int, BondInfo> oldBonds;
-  for (auto bond : mol->bonds()) {
+  for (auto *bond : mol->bonds()) {
     oldBonds[bond->getIdx()] = {bond->getBondType(), bond->getBondDir(),
                                 bond->getStereo()};
   }
@@ -390,15 +390,15 @@ RWMOL_SPTR reapplyWedging(RWMOL_SPTR mol, PipelineResult &result,
   // 2) revert the changes related to double bonds with stereo type "either":
   //    restore the STEREOANY direction of double bonds that have a substituent
   //    with direction UNKNOWN and are now STEREONONE
-  for (auto bond : mol->bonds()) {
+  for (auto *bond : mol->bonds()) {
     if (bond->getBondType() != Bond::DOUBLE) {
       continue;
     }
     Bond::BondStereo oldStereo = std::get<2>(oldBonds[bond->getIdx()]);
     Bond::BondStereo newStereo = bond->getStereo();
     bool hasAdjacentWavy{false};
-    for (auto atom : {bond->getBeginAtom(), bond->getEndAtom()}) {
-      for (auto adjacentBond : mol->atomBonds(atom)) {
+    for (auto *atom : {bond->getBeginAtom(), bond->getEndAtom()}) {
+      for (auto *adjacentBond : mol->atomBonds(atom)) {
         if (adjacentBond == bond) {
           continue;
         }
@@ -418,7 +418,7 @@ RWMOL_SPTR reapplyWedging(RWMOL_SPTR mol, PipelineResult &result,
   }
 
   // 3) set the bond direction to NONE for bonds with direction UNKNOWN
-  for (auto bond : mol->bonds()) {
+  for (auto *bond : mol->bonds()) {
     if (bond->getBondDir() != Bond::UNKNOWN) {
       continue;
     }
@@ -459,13 +459,13 @@ RWMOL_SPTR cleanup2D(RWMOL_SPTR mol, PipelineResult & /*result*/,
 namespace {
 void replaceDativeBonds(RWMOL_SPTR mol) {
   bool modified{false};
-  for (auto bond : mol->bonds()) {
+  for (auto *bond : mol->bonds()) {
     if (bond->getBondType() != Bond::BondType::DATIVE) {
       continue;
     }
-    auto donor = bond->getBeginAtom();
+    auto *donor = bond->getBeginAtom();
     donor->setFormalCharge(donor->getFormalCharge() + 1);
-    auto acceptor = bond->getEndAtom();
+    auto *acceptor = bond->getEndAtom();
     acceptor->setFormalCharge(acceptor->getFormalCharge() - 1);
     bond->setBondType(Bond::BondType::SINGLE);
     modified = true;
@@ -477,11 +477,11 @@ void replaceDativeBonds(RWMOL_SPTR mol) {
 
 void removeHsAtProtonatedSites(RWMOL_SPTR mol) {
   boost::dynamic_bitset<> protons{mol->getNumAtoms(), 0};
-  for (auto atom : mol->atoms()) {
+  for (auto *atom : mol->atoms()) {
     if (atom->getAtomicNum() != 1 || atom->getDegree() != 1) {
       continue;
     }
-    for (auto neighbor : mol->atomNeighbors(atom)) {
+    for (auto *neighbor : mol->atomNeighbors(atom)) {
       if (neighbor->getFormalCharge() > 0) {
         protons.set(atom->getIdx());
       }
@@ -492,9 +492,9 @@ void removeHsAtProtonatedSites(RWMOL_SPTR mol) {
       if (!protons[idx]) {
         continue;
       }
-      auto atom = mol->getAtomWithIdx(idx);
-      for (auto bond : mol->atomBonds(atom)) {
-        auto neighbor = bond->getOtherAtom(atom);
+      auto *atom = mol->getAtomWithIdx(idx);
+      for (auto *bond : mol->atomBonds(atom)) {
+        auto *neighbor = bond->getOtherAtom(atom);
         neighbor->setNumExplicitHs(neighbor->getNumExplicitHs() + 1);
         break;  // there are no other bonds anyways
       }
@@ -549,12 +549,12 @@ RWMOL_SPTR_PAIR makeParent(RWMOL_SPTR mol, PipelineResult &result,
 
   // Check if `mol` was submitted in a suitable ionization state
   int parentCharge{};
-  for (auto atom : parent->atoms()) {
+  for (auto *atom : parent->atoms()) {
     parentCharge += atom->getFormalCharge();
   }
 
   int molCharge{};
-  for (auto atom : mol->atoms()) {
+  for (auto *atom : mol->atoms()) {
     molCharge += atom->getFormalCharge();
   }
 
