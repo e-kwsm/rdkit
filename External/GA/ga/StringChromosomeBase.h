@@ -20,10 +20,10 @@
 
 #include "../util/RandomUtil.h"
 #include <cassert>
-#include <string>
-#include <sstream>
-#include <typeinfo>
 #include <memory>
+#include <sstream>
+#include <string>
+#include <typeinfo>
 
 namespace GapeGa {
 
