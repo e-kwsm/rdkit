@@ -11,10 +11,10 @@
 #ifndef BINARYSTRINGCHROMOSOME_H_
 #define BINARYSTRINGCHROMOSOME_H_
 
-#include "StringChromosomeBase.h"
+#include "../util/export.h"
 #include "BinaryStringChromosomePolicy.h"
 #include "IntegerStringChromosomePolicy.h"
-#include "../util/export.h"
+#include "StringChromosomeBase.h"
 
 namespace GapeGa {
 
