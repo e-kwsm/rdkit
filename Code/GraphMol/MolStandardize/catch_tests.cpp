@@ -1871,7 +1871,7 @@ M  END
   REQUIRE_NOTHROW(canon.reset(te.canonicalize(*mol)));
   REQUIRE(canon);
   CHECK(MolToSmiles(*canon) == "CCC=NC(C)=O");
-  for (const auto bond : canon->bonds()) {
+  for (auto *const bond : canon->bonds()) {
     if (bond->getBondType() != Bond::DOUBLE) {
       continue;
     }

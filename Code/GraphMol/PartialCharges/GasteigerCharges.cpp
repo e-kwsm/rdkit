@@ -28,22 +28,22 @@ using namespace RDKit;
  */
 void splitChargeConjugated(const ROMol &mol, DOUBLE_VECT &charges) {
   INT_VECT marker;
-  for (const auto at : mol.atoms()) {
+  for (auto *const at : mol.atoms()) {
     auto aix = at->getIdx();
     double formal = at->getFormalCharge();
     // std::cout << aix << " formal charges:" << formal << "\n";
     marker.resize(0);
     if ((fabs(formal) > EPS_DOUBLE) && (fabs(charges[aix]) < EPS_DOUBLE)) {
       marker.push_back(aix);
-      for (const auto bnd1 : mol.atomBonds(at)) {
+      for (auto *const bnd1 : mol.atomBonds(at)) {
         if (bnd1->getIsConjugated()) {
           auto aax = bnd1->getOtherAtomIdx(aix);
-          auto aat = mol.getAtomWithIdx(aax);
-          for (const auto bnd2 : mol.atomBonds(aat)) {
+          const auto *aat = mol.getAtomWithIdx(aax);
+          for (auto *const bnd2 : mol.atomBonds(aat)) {
             if (bnd1 != bnd2) {
               if (bnd2->getIsConjugated()) {
                 auto yax = bnd2->getOtherAtomIdx(aax);
-                auto yat = mol.getAtomWithIdx(yax);
+                const auto *yat = mol.getAtomWithIdx(yax);
                 if (at->getAtomicNum() == yat->getAtomicNum()) {
                   formal += yat->getFormalCharge();
                   marker.push_back(yax);
@@ -106,7 +106,7 @@ void computeGasteigerCharges(const ROMol &mol, std::vector<double> &charges,
   // same type in each conjugated system
   Gasteiger::splitChargeConjugated(mol, charges);
 
-  for (const auto atom : mol.atoms()) {
+  for (auto *const atom : mol.atoms()) {
     const std::string elem = table->getElementSymbol(atom->getAtomicNum());
     std::string mode;
 
@@ -128,7 +128,7 @@ void computeGasteigerCharges(const ROMol &mol, std::vector<double> &charges,
           // we have a sulfur atom with no hybridization information
           // check how many oxygens we have on the sulfur
           int no = 0;
-          for (const auto nbrAt : mol.atomNeighbors(atom)) {
+          for (auto *const nbrAt : mol.atomNeighbors(atom)) {
             if (nbrAt->getAtomicNum() == 8) {
               no++;
             }
@@ -170,10 +170,10 @@ void computeGasteigerCharges(const ROMol &mol, std::vector<double> &charges,
       energ[aix] = enr;
     }
 
-    for (const auto atom : mol.atoms()) {
+    for (auto *const atom : mol.atoms()) {
       const auto aix = atom->getIdx();
       double dq = 0.0;
-      for (const auto nbrAt : mol.atomNeighbors(atom)) {
+      for (auto *const nbrAt : mol.atomNeighbors(atom)) {
         const auto nbr = nbrAt->getIdx();
         const auto dx = energ[nbr] - energ[aix];
         int sgn;
@@ -212,7 +212,7 @@ void computeGasteigerCharges(const ROMol &mol, std::vector<double> &charges,
     damp *= DAMP_SCALE;
   }
 
-  for (auto atom : mol.atoms()) {
+  for (auto *atom : mol.atoms()) {
     const auto aix = atom->getIdx();
     // set the charge on the heavy atom
     atom->setProp(common_properties::_GasteigerCharge, charges[aix], true);

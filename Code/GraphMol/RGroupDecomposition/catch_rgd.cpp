@@ -289,7 +289,7 @@ TEST_CASE("jm200186n Snippet") {
 std::vector<ROMOL_SPTR> smisToMols(const std::vector<std::string> &smis) {
   std::vector<ROMOL_SPTR> mols;
   for (const auto &smi : smis) {
-    auto m = SmilesToMol(smi);
+    auto *m = SmilesToMol(smi);
     assert(m);
     mols.emplace_back(m);
   }

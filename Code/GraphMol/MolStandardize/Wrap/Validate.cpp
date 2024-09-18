@@ -66,7 +66,7 @@ MolStandardize::AllowedAtomsValidation *getAllowedAtomsValidation(
     throw_value_error("allowedAtoms argument must be non-empty");
   }
   std::vector<std::shared_ptr<Atom>> satoms;
-  for (auto ap : *p_atomList) {
+  for (auto *ap : *p_atomList) {
     satoms.push_back(std::shared_ptr<Atom>(ap->copy()));
   }
   return new MolStandardize::AllowedAtomsValidation(satoms);
@@ -79,7 +79,7 @@ MolStandardize::DisallowedAtomsValidation *getDisallowedAtomsValidation(
     throw_value_error("disallowedAtoms must be non-empty");
   }
   std::vector<std::shared_ptr<Atom>> satoms;
-  for (auto ap : *p_atomList) {
+  for (auto *ap : *p_atomList) {
     satoms.push_back(std::shared_ptr<Atom>(ap->copy()));
   }
   return new MolStandardize::DisallowedAtomsValidation(satoms);

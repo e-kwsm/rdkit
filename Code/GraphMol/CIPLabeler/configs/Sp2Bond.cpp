@@ -96,7 +96,7 @@ bool Sp2Bond::hasPrimaryLabel() const {
 
 Descriptor Sp2Bond::label(const Rules &comp) {
   auto &digraph = getDigraph();
-  auto root1 = digraph.getOriginalRoot();
+  auto *root1 = digraph.getOriginalRoot();
   if (digraph.getCurrentRoot() != root1) {
     digraph.changeRoot(root1);
   }
