@@ -154,7 +154,7 @@ void Synthon::finishInitialization() {
 
 std::unique_ptr<ROMol> getConnRegion(const ROMol &mol) {
   boost::dynamic_bitset<> inFrag(mol.getNumAtoms());
-  for (const auto a : mol.atoms()) {
+  for (auto *const a : mol.atoms()) {
     if (!a->getAtomicNum() && a->getIsotope()) {
       inFrag[a->getIdx()] = true;
       for (const auto &n1 : mol.atomNeighbors(a)) {
@@ -174,7 +174,7 @@ std::unique_ptr<ROMol> getConnRegion(const ROMol &mol) {
 
   std::unique_ptr<RWMol> molCp(new RWMol(mol));
   molCp->beginBatchEdit();
-  for (const auto aCp : molCp->atoms()) {
+  for (auto *const aCp : molCp->atoms()) {
     if (!inFrag[aCp->getIdx()]) {
       molCp->removeAtom(aCp);
     } else {

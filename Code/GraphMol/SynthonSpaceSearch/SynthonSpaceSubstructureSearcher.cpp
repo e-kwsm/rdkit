@@ -125,7 +125,7 @@ std::vector<boost::dynamic_bitset<>> screenSynthonsWithFPs(
   for (size_t i = 0; i < synthonOrder.size(); ++i) {
     const auto &synthonSet = reaction->getSynthons()[synthonOrder[i]];
     for (size_t j = 0; j < synthonSet.size(); ++j) {
-      if (auto &synthon = synthonSet[j];
+      if (const auto &synthon = synthonSet[j];
           AllProbeBitsMatch(*pattFPs[i], *synthon->getPattFP())) {
         passedFPs[synthonOrder[i]][j] = true;
         fragsMatched[i] = true;
@@ -173,7 +173,7 @@ std::vector<std::vector<size_t>> getHitSynthons(
     bool fragMatched = false;
     for (size_t j = 0; j < synthonsSet.size(); ++j) {
       if (passedScreensSet[j]) {
-        if (auto &synthon = synthonsSet[j];
+        if (const auto &synthon = synthonsSet[j];
             SubstructMatch(*synthon->getSearchMol(), *molFrags[i], dontCare)) {
           synthonsToUse[synthonOrder[i]][j] = true;
           fragMatched = true;
