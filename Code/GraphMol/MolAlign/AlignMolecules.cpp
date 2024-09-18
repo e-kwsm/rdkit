@@ -77,7 +77,7 @@ void getAllMatchesPrbRef(const ROMol &prbMol, const ROMol &refMol,
 
   std::unique_ptr<RWMol> prbMolSymm;
   if (symmetrizeConjugatedTerminalGroups) {
-    prbMolSymm.reset(new RWMol(prbMol));
+    prbMolSymm = std::make_unique<RWMol>(prbMol);
     details::symmetrizeTerminalAtoms(*prbMolSymm);
   }
   const auto &prbMolForMatch = prbMolSymm ? *prbMolSymm : prbMol;

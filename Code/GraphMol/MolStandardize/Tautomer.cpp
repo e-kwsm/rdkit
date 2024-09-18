@@ -38,7 +38,7 @@ int scoreRings(const ROMol &mol) {
   auto ringInfo = mol.getRingInfo();
   std::unique_ptr<ROMol> cp;
   if (!ringInfo->isSymmSssr()) {
-    cp.reset(new ROMol(mol));
+    cp = std::make_unique<ROMol>(mol);
     MolOps::symmetrizeSSSR(*cp);
     ringInfo = cp->getRingInfo();
   }

@@ -11,7 +11,6 @@
 #include <RDGeneral/Invariant.h>
 #include <RDGeneral/RDLog.h>
 #include <GraphMol/RDKitBase.h>
-#include <memory>
 #include <string>
 #include <iostream>
 #include <GraphMol/FileParsers/MolWriters.h>
@@ -1774,7 +1773,8 @@ M  END
     trans.SetRotation(0.5 * M_PI, RDGeom::Z_Axis);
     MolTransforms::transformConformer(cpSittingOnHorizontalBond->getConformer(),
                                       trans);
-    cpSittingOnHorizontalBondCopy.reset(new RWMol(*cpSittingOnHorizontalBond));
+    cpSittingOnHorizontalBondCopy =
+        std::make_unique<RWMol>(*cpSittingOnHorizontalBond);
     RDDepict::straightenDepiction(*cpSittingOnHorizontalBond);
     TEST_ASSERT(MolAlign::CalcRMS(*cpSittingOnHorizontalBond,
                                   *cpSittingOnHorizontalBondCopy) < 1.e-3);
