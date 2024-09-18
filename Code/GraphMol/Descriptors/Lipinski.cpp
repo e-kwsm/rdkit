@@ -76,7 +76,7 @@ namespace Descriptors {
 
 unsigned int calcLipinskiHBA(const ROMol &mol) {
   unsigned int res = 0;
-  for (const auto atom : mol.atoms()) {
+  for (auto *const atom : mol.atoms()) {
     if (atom->getAtomicNum() == 7 || atom->getAtomicNum() == 8) {
       ++res;
     }
@@ -86,7 +86,7 @@ unsigned int calcLipinskiHBA(const ROMol &mol) {
 
 unsigned int calcLipinskiHBD(const ROMol &mol) {
   unsigned int res = 0;
-  for (const auto atom : mol.atoms()) {
+  for (auto *const atom : mol.atoms()) {
     if (atom->getAtomicNum() == 7 || atom->getAtomicNum() == 8) {
       res += atom->getTotalNumHs(true);
     }

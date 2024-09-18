@@ -91,7 +91,7 @@ unsigned int countSwapsToInterconvert(const T &ref, T probe) {
 RDKIT_RDGENERAL_EXPORT std::string augmentTagName(const std::string &tag);
 
 inline bool getValFromEnvironment(const char *var, bool defVal) {
-  auto evar = std::getenv(var);
+  auto *evar = std::getenv(var);
   if (evar != nullptr) {
     if (!strcmp(evar, "0")) {
       return false;

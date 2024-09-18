@@ -426,7 +426,7 @@ TEST_CASE("github #5923: add more error checking to substance groups") {
 
 TEST_CASE(
     "github #8031: make sure floating point coords are not incorrectly truncated") {
-  auto mb = R"CTAB(
+  const auto *mb = R"CTAB(
   MJ240300                      
 
   8  8  0  0  0  0  0  0  0  0999 V2000

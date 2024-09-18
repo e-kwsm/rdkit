@@ -12,7 +12,7 @@ using namespace RDKit;
 TEST_CASE("SmilesToMol", "[smiles]") {
   BENCHMARK("SmilesToMol") {
     auto total_atoms = 0;
-    for (auto smiles : bench_common::SAMPLES) {
+    for (const auto *smiles : bench_common::SAMPLES) {
       auto mol = v2::SmilesParse::MolFromSmiles(smiles);
       REQUIRE(mol);
       total_atoms += mol->getNumAtoms();

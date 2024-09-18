@@ -208,7 +208,7 @@ SynthonSpaceFingerprintSearcher::searchFragSet(
 
   std::vector<ExplicitBitVect *> fragFPs;
   fragFPs.reserve(fragSet.size());
-  for (auto &frag : fragSet) {
+  for (const auto &frag : fragSet) {
     std::pair<void *, ExplicitBitVect *> tmp{frag.get(), nullptr};
     const auto it = std::ranges::lower_bound(
         d_fragFPs, tmp, [](const auto &p1, const auto &p2) -> bool {
@@ -256,7 +256,7 @@ double SynthonSpaceFingerprintSearcher::approxSimilarity(
     const std::vector<size_t> &synthNums) const {
   // The hitsets produced by the fingerprint searcher are SynthonSpaceFPHitSets,
   // which have the synthon fps as well.
-  const auto hs = dynamic_cast<const SynthonSpaceFPHitSet *>(hitset);
+  const auto *const hs = dynamic_cast<const SynthonSpaceFPHitSet *>(hitset);
   // Make an approximate fingerprint by combining the FPs for
   // these synthons.
   ExplicitBitVect fullFP(*hs->synthonFPs[0][synthNums[0]]);

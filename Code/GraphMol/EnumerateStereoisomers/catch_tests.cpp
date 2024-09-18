@@ -289,7 +289,7 @@ TEST_CASE("Issue 3231") {
         if (si.specified == Chirality::StereoSpecified::Unspecified) {
           result.push_back(std::make_pair(si.centeredOn, "?"));
         } else {
-          auto atom = mol.getAtomWithIdx(si.centeredOn);
+          auto *atom = mol.getAtomWithIdx(si.centeredOn);
           auto cipLabel =
               atom->getProp<std::string>(common_properties::_CIPCode);
           result.push_back(std::make_pair(si.centeredOn, cipLabel));
@@ -333,7 +333,7 @@ TEST_CASE("Issue 3505") {
     std::string prop;
     CHECK(isomer->getPropIfPresent<std::string>("_MolFileChiralFlag", prop));
     CHECK(prop == "1");
-    auto at = isomer->getAtomWithIdx(2);
+    auto *at = isomer->getAtomWithIdx(2);
     CHECK((at->getChiralTag() == Atom::ChiralType::CHI_TETRAHEDRAL_CW ||
            at->getChiralTag() == Atom::ChiralType::CHI_TETRAHEDRAL_CCW));
     CHECK(at->hasProp("_ChiralityPossible"));

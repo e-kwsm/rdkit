@@ -122,8 +122,8 @@ void MolDebug(const ROMol &mol, bool useStdout) {
 QueryAtomIterSeq *MolGetAromaticAtoms(const ROMOL_SPTR &mol) {
   auto *qa = new QueryAtom();
   qa->setQuery(makeAtomAromaticQuery());
-  auto res = new QueryAtomIterSeq(mol, mol->beginQueryAtoms(qa),
-                                  mol->endQueryAtoms(), AtomCountFunctor(mol));
+  auto *res = new QueryAtomIterSeq(mol, mol->beginQueryAtoms(qa),
+                                   mol->endQueryAtoms(), AtomCountFunctor(mol));
   return res;
 }
 QueryAtomIterSeq *MolGetQueryAtoms(const ROMOL_SPTR &mol, QueryAtom *qa) {
@@ -135,13 +135,13 @@ QueryAtomIterSeq *MolGetQueryAtoms(const ROMOL_SPTR &mol, QueryAtom *qa) {
     detail::MatchSubqueries(*mol, qa->getQuery(), params, subqueryMap,
                             locker.locked);
   }
-  auto res = new QueryAtomIterSeq(mol, mol->beginQueryAtoms(qa),
-                                  mol->endQueryAtoms(), AtomCountFunctor(mol));
+  auto *res = new QueryAtomIterSeq(mol, mol->beginQueryAtoms(qa),
+                                   mol->endQueryAtoms(), AtomCountFunctor(mol));
   return res;
 }
 
 ConformerIterSeq *GetMolConformers(const ROMOL_SPTR &mol) {
-  auto res =
+  auto *res =
       new ConformerIterSeq(mol, mol->beginConformers(), mol->endConformers(),
                            ConformerCountFunctor(mol));
   return res;
@@ -211,7 +211,7 @@ class ReadWriteMol : public RWMol {
     std::vector<StereoGroup> groups;
     pythonObjectToVect<StereoGroup>(stereo_groups, groups);
     for (const auto &group : groups) {
-      for (const auto atom : group.getAtoms()) {
+      for (auto *const atom : group.getAtoms()) {
         if (!atom) {
           throw_value_error("NULL atom in StereoGroup");
         }

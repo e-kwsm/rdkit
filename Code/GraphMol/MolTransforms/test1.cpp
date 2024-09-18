@@ -370,7 +370,7 @@ void testGithub4302() {
   while (!reader.atEnd()) {
     std::unique_ptr<RDKit::ROMol> mol(reader.next());
     const RDKit::Conformer &conf = mol->getConformer();
-    auto canonConf = new RDKit::Conformer(conf);
+    auto *canonConf = new RDKit::Conformer(conf);
     auto cid = mol->addConformer(canonConf, true);
     canonicalizeConformer(*canonConf);
     // the native RDKit eigensolver comes up with non-canonical
@@ -395,13 +395,13 @@ void testWeightedCentroid() {
     const RDKit::Conformer &conf = mol->getConformer();
     std::vector<double> weights;
     weights.reserve(mol->getNumAtoms());
-    for (const auto a : mol->atoms()) {
+    for (auto *const a : mol->atoms()) {
       weights.push_back(
           PeriodicTable::getTable()->getAtomicWeight(a->getAtomicNum()));
     }
     RDGeom::Point3D ctd;
     double totalMass = 0.0;
-    for (const auto a : mol->atoms()) {
+    for (auto *const a : mol->atoms()) {
       auto atomicMass =
           PeriodicTable::getTable()->getAtomicWeight(a->getAtomicNum());
       totalMass += atomicMass;

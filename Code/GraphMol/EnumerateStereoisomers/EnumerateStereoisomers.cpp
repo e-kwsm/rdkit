@@ -30,10 +30,10 @@ StereoisomerEnumerator::StereoisomerEnumerator(
   }
   buildFlippers();
   // Clear unhelpful stuff out
-  for (auto atom : d_mol.atoms()) {
+  for (auto *atom : d_mol.atoms()) {
     atom->clearProp("_CIPCode");
   }
-  for (auto bond : d_mol.bonds()) {
+  for (auto *bond : d_mol.bonds()) {
     if (bond->getBondDir() == Bond::BondDir::EITHERDOUBLE ||
         bond->getBondDir() == Bond::BondDir::UNKNOWN) {
       bond->setBondDir(Bond::BondDir::NONE);
@@ -140,7 +140,7 @@ std::unique_ptr<ROMol> StereoisomerEnumerator::generateRandomIsomer() {
       MolOps::setDoubleBondNeighborDirections(*isomer);
       isomer->clearComputedProps(false);
       std::vector<std::pair<unsigned int, Bond::BondStereo>> atropStereo;
-      for (const auto bond : isomer->bonds()) {
+      for (auto *const bond : isomer->bonds()) {
         if (bond->getStereo() == Bond::BondStereo::STEREOATROPCW ||
             bond->getStereo() == Bond::BondStereo::STEREOATROPCCW) {
           atropStereo.emplace_back(bond->getIdx(), bond->getStereo());

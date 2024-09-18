@@ -34,7 +34,7 @@ double getExactMolWt(const ROMol &mol, bool onlyHeavy) {
   double res = 0.0;
   int nHsToCount = 0;
   const PeriodicTable *table = PeriodicTable::getTable();
-  for (auto atom : mol.atoms()) {
+  for (auto *atom : mol.atoms()) {
     auto atNum = atom->getAtomicNum();
     if (atNum != 1 || !onlyHeavy) {
       if (!atom->getIsotope()) {
@@ -108,7 +108,7 @@ std::string getMolFormula(const ROMol &mol, bool separateIsotopes,
   int charge = 0;
   unsigned int nHs = 0;
   const PeriodicTable *table = PeriodicTable::getTable();
-  for (const auto atom : mol.atoms()) {
+  for (auto *const atom : mol.atoms()) {
     int atNum = atom->getAtomicNum();
     std::pair<unsigned int, std::string> key =
         std::make_pair(0, table->getElementSymbol(atNum));

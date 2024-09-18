@@ -81,7 +81,7 @@ void finalizeQueryMol(ROMol *mol, bool mergeHs) {
 
   // do we need to remove the Hs from the molecule?
   if (mergeHs) {
-    for (auto atom : mol->atoms()) {
+    for (auto *atom : mol->atoms()) {
       // set a query for the H count:
       if (atom->getNumExplicitHs()) {
         atom->expandQuery(makeAtomHCountQuery(atom->getNumExplicitHs()));
@@ -94,7 +94,7 @@ void finalizeQueryMol(ROMol *mol, bool mergeHs) {
   VECT_INT_VECT sssr;
   MolOps::symmetrizeSSSR(*mol, sssr);
   int rootIdx = -1;
-  for (auto atom : mol->atoms()) {
+  for (auto *atom : mol->atoms()) {
     SLNParse::parseFinalAtomAttribs(atom, true);
     if (atom->hasProp(common_properties::_starred)) {
       if (rootIdx > -1) {
@@ -204,7 +204,7 @@ RWMol *SLNToMol(const std::string &sln, bool sanitize, int debugParse) {
 
   RWMol *res = SLNParse::toMol(sln, false, debugParse);
   if (res) {
-    for (auto atom : res->atoms()) {
+    for (auto *atom : res->atoms()) {
       SLNParse::parseFinalAtomAttribs(atom, false);
     }
     if (sanitize) {

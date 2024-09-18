@@ -75,7 +75,7 @@ FragmentRemover::FragmentRemover(std::istream &fragmentStream, bool leave_last,
 FragmentRemover::~FragmentRemover() { delete d_fcat; };
 
 ROMol *FragmentRemover::remove(const ROMol &mol) {
-  auto molcp = new RWMol(mol);
+  auto *molcp = new RWMol(mol);
   removeInPlace(*molcp);
   return static_cast<ROMol *>(molcp);
 }
@@ -99,7 +99,7 @@ void FragmentRemover::removeInPlace(RWMol &mol) {
     frags.emplace_back(frag, frags.size());
   }
 
-  for (auto &fgci : fgrps) {
+  for (const auto &fgci : fgrps) {
     size_t oCount = frags.size();
     if (!oCount) {
       break;
@@ -179,7 +179,7 @@ LargestFragmentChooser::LargestFragmentChooser(
 }
 
 ROMol *LargestFragmentChooser::choose(const ROMol &mol) const {
-  auto res = new RWMol(mol);
+  auto *res = new RWMol(mol);
   chooseInPlace(*res);
   // resanitize the molecule
   MolOps::sanitizeMol(*res);
@@ -239,7 +239,7 @@ void LargestFragmentChooser::chooseInPlace(RWMol &mol) const {
     // Skip this fragment if equal number of atoms but weight is lower
     double weight = 0.0;
     for (auto idx : frag) {
-      const auto atom = mol.getAtomWithIdx(idx);
+      auto *const atom = mol.getAtomWithIdx(idx);
       // it's not important to be perfect here
       weight += 100 * atom->getAtomicNum() + atom->getIsotope() -
                 atom->getFormalCharge() * .1;

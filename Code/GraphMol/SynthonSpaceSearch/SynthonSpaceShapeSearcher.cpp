@@ -167,8 +167,8 @@ SynthonSpaceShapeSearcher::searchFragSet(
   // Collect the ShapeSets for the fragSet
   std::vector<SynthonShapeInput *> fragShapes;
   fragShapes.reserve(fragSet.size());
-  for (auto &frag : fragSet) {
-    auto shape = getFragShape(frag.get());
+  for (const auto &frag : fragSet) {
+    auto *shape = getFragShape(frag.get());
     fragShapes.push_back(shape);
   }
 
@@ -236,7 +236,7 @@ std::unique_ptr<SynthonShapeInput> generateShapes(
   std::vector<unsigned int> fragAtoms;
   fragAtoms.reserve(frag.getNumAtoms());
   boost::dynamic_bitset<> inFrag(queryCp.getNumAtoms());
-  for (const auto atom : frag.atoms()) {
+  for (auto *const atom : frag.atoms()) {
     if (unsigned int origIdx;
         atom->getPropIfPresent<unsigned int>("ORIG_IDX", origIdx)) {
       fragAtoms.emplace_back(origIdx);
@@ -247,13 +247,13 @@ std::unique_ptr<SynthonShapeInput> generateShapes(
   fragAtoms.erase(std::unique(fragAtoms.begin(), fragAtoms.end()),
                   fragAtoms.end());
   std::vector<std::pair<unsigned int, double>> dummyRadii;
-  for (const auto atom : frag.atoms()) {
+  for (auto *const atom : frag.atoms()) {
     if (atom->getAtomicNum() == 0 && atom->getIsotope() >= 1 &&
         atom->getIsotope() <= MAX_CONNECTOR_NUM) {
-      const auto nbr = *frag.atomNeighbors(atom).begin();
-      const auto origNbr =
+      auto *const nbr = *frag.atomNeighbors(atom).begin();
+      auto *const origNbr =
           queryCp.getAtomWithIdx(nbr->getProp<unsigned int>("ORIG_IDX"));
-      for (const auto nbrNbr : queryCp.atomNeighbors(origNbr)) {
+      for (auto *const nbrNbr : queryCp.atomNeighbors(origNbr)) {
         if (!inFrag[nbrNbr->getIdx()]) {
           dummyRadii.emplace_back(nbrNbr->getIdx(), 2.16);
           // notColorAtoms.emplace_back(nbrNbr->getIdx());
@@ -279,7 +279,7 @@ std::unique_ptr<SynthonShapeInput> generateShapes(
   opts.atomRadii = dummyRadii;
   // Break any dummy-dummy bonds
   queryCp.beginBatchEdit();
-  for (const auto bond : queryCp.bonds()) {
+  for (auto *const bond : queryCp.bonds()) {
     if (!bond->getBeginAtom()->getAtomicNum() &&
         !bond->getEndAtom()->getAtomicNum()) {
       queryCp.removeBond(bond->getBeginAtomIdx(), bond->getEndAtomIdx());
@@ -322,8 +322,8 @@ std::map<std::string, std::vector<ROMol *>> mapFragsByAtoms(
     const std::vector<std::vector<std::shared_ptr<ROMol>>> &fragSets,
     bool &cancelled) {
   std::map<std::string, std::vector<ROMol *>> atomsToFrags;
-  for (auto &fragSet : fragSets) {
-    for (auto &frag : fragSet) {
+  for (const auto &fragSet : fragSets) {
+    for (const auto &frag : fragSet) {
       if (ControlCHandler::getGotSignal()) {
         cancelled = true;
         return atomsToFrags;
@@ -335,7 +335,7 @@ std::map<std::string, std::vector<ROMol *>> mapFragsByAtoms(
       }
       std::vector<unsigned int> atIdxs;
       unsigned int dummyIdx = 10000;
-      for (const auto a : frag->atoms()) {
+      for (auto *const a : frag->atoms()) {
         if (unsigned int origIdx;
             a->getPropIfPresent<unsigned int>("ORIG_IDX", origIdx)) {
           atIdxs.push_back(origIdx);
@@ -366,7 +366,7 @@ bool SynthonSpaceShapeSearcher::extraSearchSetup(
     const TimePoint *endTime) {
   // Use the given conformer unless it looks like a
   // 2D molecule.
-  auto &queryMol = getQuery();
+  const auto &queryMol = getQuery();
   if (!queryMol.getNumConformers() || !queryMol.getConformer().is3D()) {
     BOOST_LOG(rdErrorLog) << "The query molecule needs a 3D conformer."
                           << std::endl;
@@ -514,9 +514,9 @@ bool checkDummies(const double *fragDummyPos, const double *fragDummyNbrPos,
                   const unsigned int synthDummyIdx,
                   const unsigned int synthDummyNbrIdx, double distThresholdSq,
                   const double angleThreshold) {
-  const auto synthShapeDummy =
+  const auto *const synthShapeDummy =
       synthShape.getCoords().data() + 3 * synthDummyIdx;
-  const auto synthShapeDummyNbr =
+  const auto *const synthShapeDummyNbr =
       synthShape.getCoords().data() + 3 * synthDummyNbrIdx;
 
   const RDGeom::Point3D fd{fragDummyPos[0], fragDummyPos[1], fragDummyPos[2]};
@@ -546,7 +546,7 @@ SynthonOverlay bestSimSynthonOntoFragment(
     double threshold,
     const GaussianShape::ShapeOverlayOptions &shapeOverlayOpts) {
   // This should only be called if the synthon has shapes.
-  auto synthShapes = synthon->getShapes().get();
+  auto *synthShapes = synthon->getShapes().get();
   if (fragShape.getShapes().maxPossibleSimilarity(synthShapes->getShapes()) <
       threshold) {
     return SynthonOverlay{-1.0, 0, nullptr};
@@ -593,9 +593,9 @@ SynthonOverlay bestSimSynthonOntoFragment(
   double bestScore = 0.0;
   for (const auto &[fragDummyIdx, fragDummyNbrIdx] :
        fragShapeCp.getDummyAtomsAndNbrs()) {
-    auto fragDummy =
+    const auto *fragDummy =
         fragShapeCp.getShapes().getCoords().data() + 3 * fragDummyIdx;
-    auto fragDummyNbr =
+    const auto *fragDummyNbr =
         fragShapeCp.getShapes().getCoords().data() + 3 * fragDummyNbrIdx;
     // Set the alpha values of the other dummies -ve so they are ignored.
     for (const auto &[otherFragDummyIdx, otherFragDummyNbr] :
@@ -611,15 +611,16 @@ SynthonOverlay bestSimSynthonOntoFragment(
            synthShapes->getDummyAtomsAndNbrs()) {
         // Fresh working copy every time.
         GaussianShape::ShapeInput singleShape(synthShapes->getShapes(), ssn);
-        auto synthDummy = singleShape.getCoords().data() + 3 * synthDummyIdx;
-        auto synthDummyNbr =
+        const auto *synthDummy =
+            singleShape.getCoords().data() + 3 * synthDummyIdx;
+        const auto *synthDummyNbr =
             singleShape.getCoords().data() + 3 * synthDummyNbrIdx;
         RDGeom::Transform3D xform;
         alignDummies(fragDummy, fragDummyNbr, synthDummy, synthDummyNbr, xform);
         singleShape.transformCoords(xform);
-        auto singleShapeDummy =
+        const auto *singleShapeDummy =
             singleShape.getCoords().data() + 3 * synthDummyIdx;
-        auto singleShapeDummyNbr =
+        const auto *singleShapeDummyNbr =
             singleShape.getCoords().data() + 3 * synthDummyNbrIdx;
         RDGeom::Point3D rotAxis =
             RDGeom::Point3D(
@@ -815,7 +816,7 @@ double SynthonSpaceShapeSearcher::approxSimilarity(
     const SynthonSpaceHitSet *hitset,
     const std::vector<size_t> &synthNums) const {
   // If this doesn't work, there's something so wrong an abort is necessary.
-  const auto hs = dynamic_cast<const SynthonSpaceShapeHitSet *>(hitset);
+  const auto *const hs = dynamic_cast<const SynthonSpaceShapeHitSet *>(hitset);
   PRECONDITION(hs, "Couldn't cast the hitset to shape hitset in buildHit");
 
   const auto &sso = hs->synthonSetOrder;
@@ -826,7 +827,7 @@ double SynthonSpaceShapeSearcher::approxSimilarity(
     double totVol = 0.0;
     std::vector<double> synthVols(synthNums.size(), 0.0);
     std::vector<double> scores(synthNums.size(), 0.0);
-    auto &m = getParams().shapeOverlayOptions.optParam;
+    const auto &m = getParams().shapeOverlayOptions.optParam;
 
     // Not all fragShapes will have a matching synthon.  For example,
     // if a 2 fragment split matched 2 synthons from a 3 synthon SynthonSet.
@@ -926,7 +927,7 @@ unsigned int calcNumClashes(const ROMol &mol,
       4 * GaussianShape::CARBON_RAD * GaussianShape::CARBON_RAD;
   const auto shpCoords = excVol.getCoords();
   boost::dynamic_bitset<> clashAtoms(mol.getNumAtoms());
-  for (const auto atom : mol.atoms()) {
+  for (auto *const atom : mol.atoms()) {
     auto aPos = mol.getConformer().getAtomPos(atom->getIdx());
     for (unsigned int i = 0; i < shpCoords.size(); i += 3) {
       const RDGeom::Point3D sPos{shpCoords[i], shpCoords[i + 1],
@@ -1031,7 +1032,7 @@ std::unique_ptr<ROMol> SynthonSpaceShapeSearcher::buildHit(
     const SynthonSpaceHitSet *hitset, const std::vector<size_t> &synthNums,
     std::vector<const std::string *> &synthNames) const {
   // If this doesn't work, there's something so wrong an abort is necessary.
-  const auto hs = dynamic_cast<const SynthonSpaceShapeHitSet *>(hitset);
+  const auto *const hs = dynamic_cast<const SynthonSpaceShapeHitSet *>(hitset);
   PRECONDITION(hs, "Couldn't cast the hitset to shape hitset in buildHit");
   // shapeSynths is a molecule produced by shapeFromMol, with coords.
   std::vector<const ROMol *> shapeSynths(synthNums.size());
@@ -1108,7 +1109,7 @@ bool checkBondLengths(const ROMol &mol) {
   // DetermineBonds::connectivityVdw uses a covalent factor of 1.3.
   static constexpr double radFactor = 1.3;
   const auto conf = mol.getConformer();
-  for (const auto bond : mol.bonds()) {
+  for (auto *const bond : mol.bonds()) {
     if (!bond->getBeginAtom()->getAtomicNum() ||
         !bond->getEndAtom()->getAtomicNum()) {
       continue;

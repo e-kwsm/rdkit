@@ -212,7 +212,7 @@ ExplicitBitVect *RDKFingerprintMol(
     ao.allocateBitPaths();
   }
 
-  auto res = fpgen->getFingerprint(mol, args).release();
+  auto *res = fpgen->getFingerprint(mol, args).release();
 
   if (atomBits) {
     atomBits->clear();

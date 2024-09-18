@@ -55,10 +55,10 @@ void test1() {
 void test2() {
   std::string smi = "CCC";
   auto m = std::unique_ptr<ROMol>(SmilesToMol(smi));
-  for (const auto at : m->atoms()) {
+  for (auto *const at : m->atoms()) {
     TEST_ASSERT(at->getAtomicNum() == 6);
   }
-  for (const auto bnd : m->bonds()) {
+  for (auto *const bnd : m->bonds()) {
     TEST_ASSERT(bnd->getBondType() == Bond::SINGLE);
   }
 }

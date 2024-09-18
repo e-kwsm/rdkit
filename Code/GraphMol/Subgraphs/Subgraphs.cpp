@@ -305,7 +305,7 @@ PATH_LIST findAllSubgraphsOfLengthN(const ROMol &mol, unsigned int targetLen,
   boost::dynamic_bitset<> forbidden(mol.getNumBonds());
   // if there are any ignore atoms, mark any bonds involving them as forbidden
   if (ignoreAtoms) {
-    for (const auto bond : mol.bonds()) {
+    for (auto *const bond : mol.bonds()) {
       if (ignoreAtoms->test(bond->getBeginAtomIdx()) ||
           ignoreAtoms->test(bond->getEndAtomIdx())) {
         forbidden[bond->getIdx()] = 1;
@@ -326,7 +326,7 @@ PATH_LIST findAllSubgraphsOfLengthN(const ROMol &mol, unsigned int targetLen,
     if (forbidden[i]) {
       continue;
     }
-    auto bi = mol.getBondWithIdx(i);
+    const auto *bi = mol.getBondWithIdx(i);
 
     // if we're only returning paths rooted at a particular atom, check now
     // that this bond involves that atom:
@@ -366,7 +366,7 @@ INT_PATH_LIST_MAP findAllSubgraphsOfLengthsMtoN(
   boost::dynamic_bitset<> forbidden(mol.getNumBonds());
   // if there are any ignore atoms, mark any bonds involving them as forbidden
   if (ignoreAtoms) {
-    for (const auto bond : mol.bonds()) {
+    for (auto *const bond : mol.bonds()) {
       if (ignoreAtoms->test(bond->getBeginAtomIdx()) ||
           ignoreAtoms->test(bond->getEndAtomIdx())) {
         forbidden[bond->getIdx()] = 1;
@@ -487,7 +487,7 @@ findAllPathsOfLengthsMtoN(const ROMol &mol, unsigned int lowerLen,
 
   if (!distMat) {
     // generate the adjacency matrix by hand by looping over the bonds
-    for (const auto bond : mol.bonds()) {
+    for (auto *const bond : mol.bonds()) {
       Atom *beg = bond->getBeginAtom();
       Atom *end = bond->getEndAtom();
       // check for H, which we might be skipping
@@ -636,7 +636,7 @@ PATH_TYPE findAtomEnvironmentOfRadiusN(
         // if we're going to do another iteration, then push the neighbors from
         // this round onto the stack
         if (i < radius - 1) {
-          for (const auto bond : mol.atomBonds(mol.getAtomWithIdx(oAtom))) {
+          for (auto *const bond : mol.atomBonds(mol.getAtomWithIdx(oAtom))) {
             if (!bondsIn.test(bond->getIdx())) {
               if (useHs || mol.getAtomWithIdx(bond->getOtherAtomIdx(oAtom))
                                    ->getAtomicNum() != 1) {

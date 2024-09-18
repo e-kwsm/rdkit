@@ -144,7 +144,7 @@ TEST_CASE("Shape Callback Version") {
   std::set<std::string> resSmi;
   SearchResultCallback cb =
       [&resSmi](const std::vector<std::unique_ptr<ROMol>> &r) {
-        for (auto &elem : r) {
+        for (const auto &elem : r) {
           resSmi.insert(MolToSmiles(*elem));
         }
         return false;
@@ -166,7 +166,7 @@ TEST_CASE("Shape DB Writer") {
   shapeBuildParams.timeOut = 0;
   synthonspace.buildSynthonShapes(cancelled, shapeBuildParams);
 
-  auto spaceName = std::tmpnam(nullptr);
+  auto *spaceName = std::tmpnam(nullptr);
   synthonspace.writeDBFile(spaceName);
 
   SynthonSpace newsynthonspace;
@@ -192,8 +192,10 @@ TEST_CASE("Shape DB Writer") {
                                  ->getShapes()
                                  .getNumShapes();
            ++k) {
-        const auto ishape = irxn->getSynthons()[i][j].second->getShapes().get();
-        const auto oshape = orxn->getSynthons()[i][j].second->getShapes().get();
+        auto *const ishape =
+            irxn->getSynthons()[i][j].second->getShapes().get();
+        auto *const oshape =
+            orxn->getSynthons()[i][j].second->getShapes().get();
         CHECK_THAT(fabs(ishape->getShapes().getShapeVolume(k) -
                         oshape->getShapes().getShapeVolume(k)),
                    Catch::Matchers::WithinAbs(0.0, 1.0e-6));
@@ -271,7 +273,7 @@ TEST_CASE("Shape Best Hit Found") {
   REQUIRE(mol);
   auto results = space.shapeSearch(*mol, params);
   CHECK(results.getHitMolecules().empty());
-  auto &bestHit = results.getBestHit();
+  const auto &bestHit = results.getBestHit();
   CHECK(bestHit);
   CHECK_NOTHROW(bestHit->getProp<std::string>(common_properties::_Name));
   CHECK(bestHit->getProp<double>("Similarity") < 1.0);
@@ -300,7 +302,7 @@ TEST_CASE("Two piece query") {
   CHECK(results.getHitMolecules().size() == 2);
   std::vector<double> expScores{0.715, 0.715};
   for (unsigned int i = 0; i < results.getHitMolecules().size(); ++i) {
-    auto &mol = results.getHitMolecules()[i];
+    const auto &mol = results.getHitMolecules()[i];
     CHECK_THAT(mol->getProp<double>("Similarity"),
                Catch::Matchers::WithinAbs(expScores[i], 0.005));
   }
@@ -430,7 +432,7 @@ unsigned int calcNumClashes(const ROMol &mol,
   // std::cout << MolToSmiles(mol) << std::endl;
   const auto shpCoords = excVol.getCoords();
   boost::dynamic_bitset<> clashAtoms(mol.getNumAtoms());
-  for (const auto atom : mol.atoms()) {
+  for (auto *const atom : mol.atoms()) {
     auto aPos = mol.getConformer().getAtomPos(atom->getIdx());
     for (unsigned int i = 0; i < shpCoords.size(); i += 3) {
       const RDGeom::Point3D sPos{shpCoords[i], shpCoords[i + 1],

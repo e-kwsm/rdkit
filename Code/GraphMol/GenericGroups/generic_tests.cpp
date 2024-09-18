@@ -75,7 +75,7 @@ TEST_CASE("Setting generic queries", "[substructure][generics]") {
   SECTION("cxsmiles") {
     auto m = "CO* |$;foo_p;ARY_p$|"_smiles;
     REQUIRE(m);
-    auto atm = m->getAtomWithIdx(2);
+    auto *atm = m->getAtomWithIdx(2);
     CHECK(atm->hasProp(common_properties::atomLabel));
     GenericGroups::setGenericQueriesFromProperties(*m);
     CHECK(atm->hasProp(common_properties::_QueryAtomGenericLabel));
@@ -139,7 +139,7 @@ M  V30 END CTAB
 M  END
 )CTAB"_ctab;
     REQUIRE(m);
-    auto atm = m->getAtomWithIdx(6);
+    auto *atm = m->getAtomWithIdx(6);
     CHECK(getSubstanceGroups(*m).size() == 3);
     GenericGroups::setGenericQueriesFromProperties(*m);
     CHECK(atm->hasProp(common_properties::_QueryAtomGenericLabel));
@@ -863,7 +863,7 @@ M  END)CTAB"_ctab;
   TEST_ASSERT(t);
 
   MolOps::AdjustQueryParameters params;
-  auto m = new RWMol(*query);
+  auto *m = new RWMol(*query);
 
   TEST_ASSERT(m);
 
