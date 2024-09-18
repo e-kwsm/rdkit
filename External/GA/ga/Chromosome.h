@@ -11,8 +11,8 @@
 #ifndef CHROMOSOME_H_
 #define CHROMOSOME_H_
 
-#include <string>
 #include "../util/export.h"
+#include <string>
 
 namespace GapeGa {
 
