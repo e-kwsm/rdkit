@@ -777,7 +777,7 @@ TEST_CASE("github #3320: incorrect bond properties from CXSMILES",
     std::vector<std::pair<unsigned, unsigned>> bonds = {
         {0, 1}, {3, 1}, {2, 1}, {6, 1}};
     for (const auto &pr : bonds) {
-      auto bnd = m->getBondBetweenAtoms(pr.first, pr.second);
+      auto *bnd = m->getBondBetweenAtoms(pr.first, pr.second);
       REQUIRE(bnd);
       CHECK(bnd->getBondType() == Bond::BondType::DATIVE);
       CHECK(bnd->getBeginAtomIdx() == pr.first);
@@ -789,7 +789,7 @@ TEST_CASE("github #3320: incorrect bond properties from CXSMILES",
     std::vector<std::pair<unsigned, unsigned>> bonds = {
         {0, 1}, {3, 1}, {2, 1}, {12, 1}};
     for (const auto &pr : bonds) {
-      auto bnd = m->getBondBetweenAtoms(pr.first, pr.second);
+      auto *bnd = m->getBondBetweenAtoms(pr.first, pr.second);
       REQUIRE(bnd);
       CHECK(bnd->getBondType() == Bond::BondType::DATIVE);
       CHECK(bnd->getBeginAtomIdx() == pr.first);
@@ -1693,7 +1693,7 @@ TEST_CASE("Github #4582: double bonds and ring closures") {
  20 21  1  0
 M  END)CTAB"_ctab;
   REQUIRE(mol);
-  auto dbond = mol->getBondBetweenAtoms(1, 19);
+  auto *dbond = mol->getBondBetweenAtoms(1, 19);
   REQUIRE(dbond);
   CHECK(dbond->getBondType() == Bond::BondType::DOUBLE);
   if (useLegacy) {
@@ -2339,14 +2339,14 @@ TEST_CASE(
   SECTION("'w:' label") {
     auto m = "CC1CN1C=CC1CC1 |w:4.5|"_smiles;
     REQUIRE(m);
-    auto b = m->getBondWithIdx(4);
+    auto *b = m->getBondWithIdx(4);
     REQUIRE(b->getBondType() == Bond::BondType::DOUBLE);
     CHECK(b->getBondDir() == Bond::BondDir::UNKNOWN);
   }
   SECTION("'ctu:' label") {
     auto m = "CC1CN1C=CC1CC1 |ctu:5|"_smiles;
     REQUIRE(m);
-    auto b = m->getBondWithIdx(4);
+    auto *b = m->getBondWithIdx(4);
     REQUIRE(b->getBondType() == Bond::BondType::DOUBLE);
     CHECK(b->getStereo() == Bond::STEREOANY);
   }
@@ -2355,7 +2355,7 @@ TEST_CASE(
 
     auto m = "CC1CN1C=CC1CC1 |c:5|"_smiles;
     REQUIRE(m);
-    auto b = m->getBondWithIdx(4);
+    auto *b = m->getBondWithIdx(4);
     REQUIRE(b->getBondType() == Bond::BondType::DOUBLE);
     CHECK(b->getStereo() == Bond::STEREOCIS);
   }
@@ -2364,7 +2364,7 @@ TEST_CASE(
 
     auto m = "CC1CN1C=CC1CC1 |t:5|"_smiles;
     REQUIRE(m);
-    auto b = m->getBondWithIdx(4);
+    auto *b = m->getBondWithIdx(4);
     REQUIRE(b->getBondType() == Bond::BondType::DOUBLE);
     CHECK(b->getStereo() == Bond::STEREOTRANS);
   }
@@ -2379,7 +2379,7 @@ TEST_CASE("Github #5683: SMARTS bond ordering should be the same as SMILES") {
     CHECK(m->getBondBetweenAtoms(0, 3)->getIdx() == 2);
   }
   SECTION("as reported: SMARTS which should generate an exception") {
-    auto sma = "O=C(C=CCC1CCCCC1)N1N=Cc2ccccc2C1c1ccccc1 |w:3.1|";
+    const auto *sma = "O=C(C=CCC1CCCCC1)N1N=Cc2ccccc2C1c1ccccc1 |w:3.1|";
     CHECK_THROWS_AS(SmartsToMol(sma), SmilesParseException);
   }
 }
@@ -2423,7 +2423,7 @@ TEST_CASE("smilesSymbol in SMARTS", "[smarts][smilesSymbol]") {
   SECTION("smilesSymbol with additional queries") {
     auto m = "[#6]C[#6]"_smarts;
     REQUIRE(m);
-    auto atom = m->getAtomWithIdx(1);
+    auto *atom = m->getAtomWithIdx(1);
 
     atom->expandQuery(makeAtomExplicitDegreeQuery(3), Queries::COMPOSITE_AND);
     atom->expandQuery(makeAtomTotalValenceQuery(4), Queries::COMPOSITE_AND);
@@ -2912,7 +2912,7 @@ TEST_CASE("CX_BOND_ATROPISOMER option requires ring info", "[bug][cxsmiles]") {
   auto m = v2::FileParsers::MolFromMolFile(fName);
   REQUIRE(m);
 
-  auto atropBond = m->getBondWithIdx(3);
+  auto *atropBond = m->getBondWithIdx(3);
   REQUIRE(atropBond->getStereo() == Bond::STEREOATROPCW);
 
   // Clear ring info to check that atropisomer wedging doesn't fail
@@ -2956,7 +2956,7 @@ TEST_CASE("Github #7372: SMILES output option to disable dative bonds") {
 }
 
 void strip_atom_properties(RWMol *molecule) {
-  for (auto atom : molecule->atoms()) {
+  for (auto *atom : molecule->atoms()) {
     for (auto property : atom->getPropList(false, false)) {
       atom->clearProp(property);
     }
@@ -3066,7 +3066,7 @@ TEST_CASE("trimethylcyclohexane") {
   SECTION("Basic") {
     UseLegacyStereoPerceptionFixture useLegacy(false);
 
-    auto smi = "C[C@H]1C[C@@H](C)C[C@@H](C)C1";
+    const auto *smi = "C[C@H]1C[C@@H](C)C[C@@H](C)C1";
     RDKit::v2::SmilesParse::SmilesParserParams smilesParserParams;
     auto m1 = RDKit::v2::SmilesParse::MolFromSmiles(smi, smilesParserParams);
     auto smiOut = RDKit::MolToCXSmiles(*m1);
@@ -3075,7 +3075,7 @@ TEST_CASE("trimethylcyclohexane") {
   SECTION("WithEnhancedStereo") {
     UseLegacyStereoPerceptionFixture useLegacy(false);
 
-    auto smi = "C[C@H]1C[C@@H](C)C[C@@H](C)C1 |o1:1,o2:6,o3:3|";
+    const auto *smi = "C[C@H]1C[C@@H](C)C[C@@H](C)C1 |o1:1,o2:6,o3:3|";
     RDKit::v2::SmilesParse::SmilesParserParams smilesParserParams;
     auto m1 = RDKit::v2::SmilesParse::MolFromSmiles(smi, smilesParserParams);
     auto smiOut = RDKit::MolToCXSmiles(*m1);
