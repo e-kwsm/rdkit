@@ -67,7 +67,7 @@ int calcOxidationNumberByEN(const Atom *atom) {
         bond->getBondType() == Bond::ZERO) {
       continue;
     }
-    auto otherAtom = bond->getOtherAtom(atom);
+    auto *otherAtom = bond->getOtherAtom(atom);
     if (otherAtom->getAtomicNum() > 1) {
       float en_diff = parEN - get_en(otherAtom->getAtomicNum());
       double bondType = bond->getBondTypeAsDouble();
@@ -92,7 +92,7 @@ void calcOxidationNumbers(const ROMol &mol) {
   RWMol molCp(mol);
   RDKit::MolOps::Kekulize(molCp);
   for (const auto &atom : mol.atoms()) {
-    auto cpAtom = molCp.getAtomWithIdx(atom->getIdx());
+    auto *cpAtom = molCp.getAtomWithIdx(atom->getIdx());
     int oxNum = calcOxidationNumberByEN(cpAtom);
     atom->setProp<int>(common_properties::OxidationNumber, oxNum);
   }

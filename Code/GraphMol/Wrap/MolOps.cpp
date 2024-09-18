@@ -197,7 +197,7 @@ ROMol *renumberAtomsHelper(const ROMol &mol, python::object &pyNewOrder) {
 
 namespace {
 std::string getResidue(const ROMol &, const Atom *at) {
-  auto monomerInfo = at->getMonomerInfo();
+  const auto *monomerInfo = at->getMonomerInfo();
   if (!monomerInfo ||
       monomerInfo->getMonomerType() != AtomMonomerInfo::PDBRESIDUE) {
     return "";
@@ -205,7 +205,7 @@ std::string getResidue(const ROMol &, const Atom *at) {
   return static_cast<const AtomPDBResidueInfo *>(monomerInfo)->getResidueName();
 }
 std::string getChainId(const ROMol &, const Atom *at) {
-  auto monomerInfo = at->getMonomerInfo();
+  const auto *monomerInfo = at->getMonomerInfo();
   if (!monomerInfo ||
       monomerInfo->getMonomerType() != AtomMonomerInfo::PDBRESIDUE) {
     return "";
@@ -935,7 +935,7 @@ ROMol *replaceCoreHelper(const ROMol &mol, const ROMol &core,
   unsigned int length = python::len(match);
   for (unsigned int i = 0; i < length; ++i) {
     // This is what boost::python::len() does internally
-    auto pyObj = static_cast<python::object>(match[i]).ptr();
+    auto *pyObj = static_cast<python::object>(match[i]).ptr();
     unsigned int sz = PyObject_Length(pyObj);
     if (PyErr_Occurred()) {
       PyErr_Clear();
@@ -1075,10 +1075,10 @@ void _testSetProps(RDProps &props, const std::string &prefix) {
 
 void testSetProps(ROMol &mol) {
   _testSetProps(mol, "mol_");
-  for (auto &atom : mol.atoms()) {
+  for (const auto &atom : mol.atoms()) {
     _testSetProps(*atom, std::string("atom_") + std::to_string(atom->getIdx()));
   }
-  for (auto &bond : mol.bonds()) {
+  for (const auto &bond : mol.bonds()) {
     _testSetProps(*bond, std::string("bond_") + std::to_string(bond->getIdx()));
   }
   for (unsigned conf_idx = 0; conf_idx < mol.getNumConformers(); ++conf_idx) {

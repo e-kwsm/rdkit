@@ -1537,7 +1537,7 @@ TEST_CASE("NeedsClean hydrogens") {
     CHECK(MolToSmiles(mol) == "CNC(=O)OC");
 
     unsigned int nitrogens = 0;
-    for (const auto atom : mol.atoms()) {
+    for (auto *const atom : mol.atoms()) {
       if (atom->getSymbol() == "N") {
         ++nitrogens;
         CHECK(atom->getNumRadicalElectrons() == 0);
@@ -1558,7 +1558,7 @@ TEST_CASE("NeedsClean hydrogens") {
     CHECK(MolToSmiles(mol) == "C[N]C(=O)OC");
 
     unsigned int nitrogens = 0;
-    for (const auto atom : mol.atoms()) {
+    for (auto *const atom : mol.atoms()) {
       if (atom->getSymbol() == "N") {
         ++nitrogens;
         CHECK(atom->getNumRadicalElectrons() == 1);
@@ -1617,7 +1617,7 @@ TEST_CASE("Abnormal valence") {
     auto &mol = *mols[0];
 
     unsigned int radicalAtoms = 0;
-    for (const auto atom : mol.atoms()) {
+    for (auto *const atom : mol.atoms()) {
       if (atom->getNumRadicalElectrons() == 2) {
         ++radicalAtoms;
         CHECK(atom->getNoImplicit());

@@ -84,7 +84,7 @@ void adjustConjugatedFiveRings(RWMol &mol) {
     }
     unsigned int nconj = 0;
     for (auto bi : ring) {
-      const auto bond = mol.getBondWithIdx(bi);
+      auto *const bond = mol.getBondWithIdx(bi);
       if (bond->getIsConjugated()) {
         ++nconj;
         if (nconj >= 3) {
@@ -99,7 +99,7 @@ void adjustConjugatedFiveRings(RWMol &mol) {
     QueryBond qb;
     qb.setQuery(makeSingleOrDoubleOrAromaticBondQuery());
     for (auto bi : ring) {
-      const auto bond = mol.getBondWithIdx(bi);
+      auto *const bond = mol.getBondWithIdx(bi);
       bond->getBeginAtom()->setProp(conjugatedOrAromatic, 1, true);
       bond->getEndAtom()->setProp(conjugatedOrAromatic, 1, true);
       if (std::find(bondTypesToModify.begin(), bondTypesToModify.end(),
@@ -137,9 +137,9 @@ void adjustSingleBondsFromAromaticAtoms(RWMol &mol, bool toDegreeOneNeighbors,
   if (!mol.getRingInfo()->isSymmSssr()) {
     MolOps::symmetrizeSSSR(mol);
   }
-  for (auto bond : mol.bonds()) {
-    const auto bAt = bond->getBeginAtom();
-    const auto eAt = bond->getEndAtom();
+  for (auto *bond : mol.bonds()) {
+    auto *const bAt = bond->getBeginAtom();
+    auto *const eAt = bond->getEndAtom();
     if (!bond->hasQuery() && bond->getBondType() == Bond::BondType::SINGLE) {
       auto bAtIsAromatic = isAromaticOrConjugated(*bAt);
       auto eAtIsAromatic = isAromaticOrConjugated(*eAt);
@@ -181,7 +181,7 @@ void setMDLAromaticity(RWMol &mol) {
     size_t dummy = ring.size() + 1;
     for (size_t i = 0; i < ring.size(); ++i) {
       auto ai = ring[i];
-      const auto atom = mol.getAtomWithIdx(ai);
+      auto *const atom = mol.getAtomWithIdx(ai);
       if (!atom->getIsAromatic()) {
         // we only do fully aromatic rings:
         keepIt = false;
@@ -205,7 +205,7 @@ void setMDLAromaticity(RWMol &mol) {
       if (i > 0) {
         oidx = ring[i - 1];
       }
-      auto bond = mol.getBondBetweenAtoms(ring[i], oidx);
+      auto *bond = mol.getBondBetweenAtoms(ring[i], oidx);
       ASSERT_INVARIANT(bond, "expected bond not found");
       if (bond->hasQuery()) {
         keepIt = false;
@@ -254,7 +254,7 @@ void setMDLAromaticity(RWMol &mol) {
       }
       for (auto ai : l1) {
         // l0 - l1 bonds:
-        auto bond = mol.getBondBetweenAtoms(ai, l0);
+        auto *bond = mol.getBondBetweenAtoms(ai, l0);
         ASSERT_INVARIANT(bond, "expected l0-l1 bond not found");
         mol.replaceBond(bond->getIdx(), &qbSingleAromatic);
         // l1 - l2 bonds:
@@ -266,7 +266,7 @@ void setMDLAromaticity(RWMol &mol) {
         mol.replaceBond(bond->getIdx(), &qbDoubleAromatic);
       }
       // l2 - l2 bond:
-      auto bond = mol.getBondBetweenAtoms(l2[0], l2[1]);
+      auto *bond = mol.getBondBetweenAtoms(l2[0], l2[1]);
       ASSERT_INVARIANT(bond, "expected l2-l2 bond not found");
       mol.replaceBond(bond->getIdx(), &qbSingleAromatic);
     }
@@ -349,7 +349,7 @@ void adjustQueryProperties(RWMol &mol, const AdjustQueryParameters *inParams) {
   if (inParams) {
     params = *inParams;
   }
-  const auto ringInfo = mol.getRingInfo();
+  auto *const ringInfo = mol.getRingInfo();
 
   if (params.aromatizeIfPossible) {
     unsigned int failed;
@@ -364,7 +364,7 @@ void adjustQueryProperties(RWMol &mol, const AdjustQueryParameters *inParams) {
 
   std::vector<int> origAtomicNums;
   origAtomicNums.reserve(mol.getNumAtoms());
-  for (const auto atom : mol.atoms()) {
+  for (auto *const atom : mol.atoms()) {
     origAtomicNums.push_back(atom->getAtomicNum());
   }
 
@@ -499,7 +499,7 @@ void adjustQueryProperties(RWMol &mol, const AdjustQueryParameters *inParams) {
     }  // end of adjust ring chain
   }  // end of loop over atoms
   if (params.useStereoCareForBonds) {
-    for (auto bnd : mol.bonds()) {
+    for (auto *bnd : mol.bonds()) {
       if (bnd->getBondType() == Bond::BondType::DOUBLE) {
         if (bnd->getStereo() > Bond::BondStereo::STEREOANY) {
           bool preserve = false;
@@ -529,7 +529,7 @@ void adjustQueryProperties(RWMol &mol, const AdjustQueryParameters *inParams) {
         params.adjustSingleBondsBetweenAromaticAtoms);
   }
   if (params.setMDLFiveRingAromaticity) {
-    for (auto atom : mol.atoms()) {
+    for (auto *atom : mol.atoms()) {
       atom->clearProp(conjugatedOrAromatic);
     }
   }

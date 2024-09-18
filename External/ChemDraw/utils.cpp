@@ -298,7 +298,7 @@ bool getStereoAtomsFromGeometry(const Bond *bond, Bond::BondStereo stereo,
 
 bool hasAtropStereoBond(const Atom *atom) {
   PRECONDITION(atom, "bad atom");
-  for (const auto bond : atom->getOwningMol().atomBonds(atom)) {
+  for (auto *const bond : atom->getOwningMol().atomBonds(atom)) {
     const auto stereo = bond->getStereo();
     if (stereo == Bond::BondStereo::STEREOATROPCW ||
         stereo == Bond::BondStereo::STEREOATROPCCW) {

@@ -58,19 +58,19 @@ void ExtendedQueryMol::initFromOther(const ExtendedQueryMol &other) {
 std::unique_ptr<ExplicitBitVect> ExtendedQueryMol::patternFingerprintQuery(
     unsigned fpSize) const {
   if (std::holds_alternative<RWMol_T>(xqmol)) {
-    const auto raw = PatternFingerprintMol(*std::get<RWMol_T>(xqmol), fpSize,
-                                           nullptr, nullptr, true);
+    auto *const raw = PatternFingerprintMol(*std::get<RWMol_T>(xqmol), fpSize,
+                                            nullptr, nullptr, true);
     std::unique_ptr<ExplicitBitVect> ptr(raw);
     return ptr;
   }
   if (std::holds_alternative<MolBundle_T>(xqmol)) {
-    const auto raw = PatternFingerprintMol(*std::get<MolBundle_T>(xqmol),
-                                           fpSize, nullptr, true);
+    auto *const raw = PatternFingerprintMol(*std::get<MolBundle_T>(xqmol),
+                                            fpSize, nullptr, true);
     std::unique_ptr<ExplicitBitVect> ptr(raw);
     return ptr;
   }
   if (std::holds_alternative<TautomerQuery_T>(xqmol)) {
-    const auto raw =
+    auto *const raw =
         std::get<TautomerQuery_T>(xqmol)->patternFingerprintTemplate(fpSize);
     std::unique_ptr<ExplicitBitVect> ptr(raw);
     return ptr;
@@ -79,7 +79,7 @@ std::unique_ptr<ExplicitBitVect> ExtendedQueryMol::patternFingerprintQuery(
     const auto &tautomerBundle = std::get<TautomerBundle_T>(xqmol);
     ExplicitBitVect *res = nullptr;
     for (const auto &tautomer : *tautomerBundle) {
-      const auto molfp = tautomer->patternFingerprintTemplate(fpSize);
+      auto *const molfp = tautomer->patternFingerprintTemplate(fpSize);
       if (!res) {
         res = molfp;
       } else {
@@ -163,7 +163,7 @@ ExtendedQueryMol createExtendedQueryMol(const RWMol &mol, bool doEnumeration,
     }
   } else {
     MolBundle lbndl;
-    for (auto &bmol : bndl.getMols()) {
+    for (const auto &bmol : bndl.getMols()) {
       if (adjustQueryProperties) {
         boost::shared_ptr<ROMol> lmol(
             MolOps::adjustQueryProperties(*bmol, &params));
@@ -196,7 +196,7 @@ ExtendedQueryMol createExtendedQueryMol(const RWMol &mol, bool doEnumeration,
 
 std::unique_ptr<ExplicitBitVect> patternFingerprintTargetMol(const ROMol &mol,
                                                              unsigned fpSize) {
-  const auto raw = PatternFingerprintMol(mol, fpSize, nullptr, nullptr, true);
+  auto *const raw = PatternFingerprintMol(mol, fpSize, nullptr, nullptr, true);
   std::unique_ptr<ExplicitBitVect> ptr(raw);
   return ptr;
 }

@@ -32,7 +32,7 @@ std::vector<std::uint32_t> *AtomPairAtomInvGenerator::getAtomInvariants(
     const ROMol &mol) const {
   auto *atomInvariants = new std::vector<std::uint32_t>(mol.getNumAtoms());
 
-  for (const auto atom : mol.atoms()) {
+  for (auto *const atom : mol.atoms()) {
     (*atomInvariants)[atom->getIdx()] =
         getAtomCode(atom, 0, df_includeChirality) -
         (df_topologicalTorsionCorrection ? 2 : 0);

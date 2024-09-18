@@ -52,12 +52,12 @@ namespace detail {
 const std::string idxPropName = "_enumeratorOrigIdx";
 void preserveOrigIndices(ROMol &mol) {
   mol.setProp(idxPropName, 1);
-  for (auto atom : mol.atoms()) {
+  for (auto *atom : mol.atoms()) {
     atom->setProp(idxPropName, atom->getIdx());
   }
 }
 void removeOrigIndices(ROMol &mol) {
-  for (auto atom : mol.atoms()) {
+  for (auto *atom : mol.atoms()) {
     atom->clearProp(idxPropName);
   }
   mol.clearProp(idxPropName);
@@ -68,7 +68,7 @@ namespace {
 void clearReactionProps(ROMol &mol) {
   bool includeRings = false;
   mol.clearComputedProps(includeRings);
-  for (auto atom : mol.atoms()) {
+  for (auto *atom : mol.atoms()) {
     atom->clearProp(common_properties::reactantAtomIdx);
     atom->clearProp(common_properties::reactantIdx);
     atom->clearProp("was_dummy");
@@ -126,7 +126,7 @@ MolBundle enumerate(const ROMol &mol, size_t maxPerOperation) {
 
   // position variation first
   MolEnumerator::MolEnumeratorParams posVariationParams;
-  auto pvOp = new MolEnumerator::PositionVariationOp();
+  auto *pvOp = new MolEnumerator::PositionVariationOp();
   posVariationParams.dp_operation =
       std::shared_ptr<MolEnumerator::MolEnumeratorOp>(pvOp);
   if (maxPerOperation > 0) {
@@ -136,7 +136,7 @@ MolBundle enumerate(const ROMol &mol, size_t maxPerOperation) {
 
   // now repeat units
   MolEnumerator::MolEnumeratorParams repeatUnitParams;
-  auto sruOp = new MolEnumerator::RepeatUnitOp();
+  auto *sruOp = new MolEnumerator::RepeatUnitOp();
   repeatUnitParams.dp_operation =
       std::shared_ptr<MolEnumerator::MolEnumeratorOp>(sruOp);
   if (maxPerOperation > 0) {
@@ -148,7 +148,7 @@ MolBundle enumerate(const ROMol &mol, size_t maxPerOperation) {
   // linknodes last because we can only enumerate mols with a single
   // fragment
   MolEnumerator::MolEnumeratorParams linkParams;
-  auto lpOp = new MolEnumerator::LinkNodeOp();
+  auto *lpOp = new MolEnumerator::LinkNodeOp();
   linkParams.dp_operation =
       std::shared_ptr<MolEnumerator::MolEnumeratorOp>(lpOp);
   if (maxPerOperation > 0) {

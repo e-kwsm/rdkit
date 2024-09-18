@@ -26,7 +26,7 @@ void PositionVariationOp::initFromMol() {
   if (!dp_mol->hasProp(detail::idxPropName)) {
     detail::preserveOrigIndices(*dp_mol);
   }
-  for (const auto bond : dp_mol->bonds()) {
+  for (auto *const bond : dp_mol->bonds()) {
     std::string endpts;
     std::string attach;
     if (bond->getPropIfPresent(common_properties::_MolFileBondEndPts, endpts) &&
@@ -63,7 +63,7 @@ void PositionVariationOp::initFromMol() {
         --oat;
         // github #4381: if we're connecting to an aromatic heteroatom which
         // has implicit Hs, we should remove those
-        auto attachAtom = dp_mol->getAtomWithIdx(oat);
+        auto *attachAtom = dp_mol->getAtomWithIdx(oat);
         if (attachAtom->getIsAromatic() && attachAtom->getAtomicNum() != 6) {
           attachAtom->setNumExplicitHs(0);
         }

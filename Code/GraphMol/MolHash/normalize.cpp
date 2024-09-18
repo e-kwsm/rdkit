@@ -20,7 +20,7 @@ void Strip(RWMol *mol, unsigned int striptype) {
   //   use case
 
   if (striptype & static_cast<unsigned>(StripType::AtomStereo)) {
-    for (auto aptr : mol->atoms()) {
+    for (auto *aptr : mol->atoms()) {
       aptr->setChiralTag(RDKit::Atom::CHI_UNSPECIFIED);
     }
     if (!mol->getStereoGroups().empty()) {
@@ -29,19 +29,19 @@ void Strip(RWMol *mol, unsigned int striptype) {
     }
   }
   if (striptype & static_cast<unsigned>(StripType::BondStereo)) {
-    for (auto bptr : mol->bonds()) {
+    for (auto *bptr : mol->bonds()) {
       if (bptr->getStereo() > RDKit::Bond::STEREOANY) {
         bptr->setStereo(RDKit::Bond::STEREOANY);
       }
     }
   }
   if (striptype & static_cast<unsigned>(StripType::Isotope)) {
-    for (auto aptr : mol->atoms()) {
+    for (auto *aptr : mol->atoms()) {
       aptr->setIsotope(0);
     }
   }
   if (striptype & static_cast<unsigned>(StripType::AtomMap)) {
-    for (auto aptr : mol->atoms()) {
+    for (auto *aptr : mol->atoms()) {
       aptr->setAtomMapNum(0);
     }
   }

@@ -70,12 +70,12 @@ struct PageData {
   void clearCDXProps() {
     for (auto &mol : mols) {
       mol->clearProp(CDXML_SANITIZATION_HINTS);
-      for (auto atom : mol->atoms()) {
+      for (auto *atom : mol->atoms()) {
         atom->clearProp(CDX_ATOM_ID);
         atom->clearProp(CDX_BOND_ORDERING);
         atom->clearProp(CDX_CIP);
       }
-      for (auto bond : mol->bonds()) {
+      for (auto *bond : mol->bonds()) {
         bond->clearProp(CDX_BOND_ID);
       }
     }

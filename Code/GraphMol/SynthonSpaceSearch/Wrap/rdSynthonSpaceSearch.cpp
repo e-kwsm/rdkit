@@ -22,7 +22,7 @@ namespace python = boost::python;
 namespace RDKit {
 python::list hitMolecules_helper(const SynthonSpaceSearch::SearchResults &res) {
   python::list pyres;
-  for (auto &r : res.getHitMolecules()) {
+  for (const auto &r : res.getHitMolecules()) {
     pyres.append(boost::make_shared<ROMol>(*r));
   }
   return pyres;
