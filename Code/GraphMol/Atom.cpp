@@ -366,7 +366,7 @@ int calculateExplicitValence(const Atom &atom, bool strict, bool checkIt) {
   // all incoming aromatic bonds are considered to have a bond order
   // of 1.0 (i.e. when the mol is kekulized, they are kekulized to single bonds)
   double minAccum = atom.getNumExplicitHs();
-  for (const auto bnd : atom.getOwningMol().atomBonds(&atom)) {
+  for (auto *const bnd : atom.getOwningMol().atomBonds(&atom)) {
     auto contrib = bnd->getValenceContrib(&atom);
     accum += contrib;
     minAccum += (bnd->getIsAromatic() ? 1.0 : contrib);
@@ -487,7 +487,7 @@ int calculateImplicitValence(const Atom &atom, bool strict, bool checkIt) {
   if (atomicNum == 0) {
     return 0;
   }
-  for (const auto bnd : atom.getOwningMol().atomBonds(&atom)) {
+  for (auto *const bnd : atom.getOwningMol().atomBonds(&atom)) {
     if (QueryOps::hasComplexBondTypeQuery(*bnd)) {
       return 0;
     }
@@ -778,7 +778,7 @@ void Atom::clearPropertyCache() {
 //   getPerturbationOrder([1,2,0,3]) = 2
 int Atom::getPerturbationOrder(const INT_LIST &probe) const {
   INT_LIST ref;
-  for (const auto bnd : getOwningMol().atomBonds(this)) {
+  for (auto *const bnd : getOwningMol().atomBonds(this)) {
     ref.push_back(bnd->getIdx());
   }
   return static_cast<int>(countSwapsToInterconvert(probe, ref));
@@ -961,7 +961,7 @@ unsigned int numPiElectrons(const Atom &atom) {
         static_cast<unsigned int>(atom.getValence(Atom::ValenceType::EXPLICIT));
     unsigned int physical_bonds = atom.getNumExplicitHs();
     const auto &mol = atom.getOwningMol();
-    for (const auto bond : mol.atomBonds(&atom)) {
+    for (auto *const bond : mol.atomBonds(&atom)) {
       if (bond->getValenceContrib(&atom) != 0.0) {
         ++physical_bonds;
       }
@@ -1051,7 +1051,7 @@ std::ostream &operator<<(std::ostream &target, const RDKit::Atom &at) {
     }
     target << " nbrs:[";
     bool first = true;
-    for (const auto nbr : at.getOwningMol().atomNeighbors(&at)) {
+    for (auto *const nbr : at.getOwningMol().atomNeighbors(&at)) {
       if (!first) {
         target << " ";
       } else {

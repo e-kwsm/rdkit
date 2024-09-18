@@ -65,7 +65,7 @@ RDKIT_MOLDRAW2D_EXPORT inline void addAtomIndices(const ROMol &mol) {
   }
   bool computed = true;
   mol.setProp("_atomIndicesAdded", 1, computed);
-  for (auto atom : mol.atoms()) {
+  for (auto *atom : mol.atoms()) {
     auto lab = std::to_string(atom->getIdx());
     if (atom->hasProp(common_properties::atomNote)) {
       lab += "," + atom->getProp<std::string>(common_properties::atomNote);
@@ -83,7 +83,7 @@ RDKIT_MOLDRAW2D_EXPORT inline void addBondIndices(const ROMol &mol) {
   }
   bool computed = true;
   mol.setProp("_bondIndicesAdded", 1, computed);
-  for (auto bond : mol.bonds()) {
+  for (auto *bond : mol.bonds()) {
     auto lab = std::to_string(bond->getIdx());
     if (bond->hasProp(common_properties::bondNote)) {
       lab += "," + bond->getProp<std::string>(common_properties::bondNote);

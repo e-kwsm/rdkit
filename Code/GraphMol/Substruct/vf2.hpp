@@ -138,7 +138,7 @@ node_id *SortNodesByFrequency(const Graph *g) {
   }
   std::sort(vect.begin(), vect.end(), nodeInfoComp2);
 
-  auto nodes = new node_id[vect.size()];
+  auto *nodes = new node_id[vect.size()];
   for (unsigned int i = 0; i < vect.size(); ++i) {
     nodes[i] = vect[i].id;
   }

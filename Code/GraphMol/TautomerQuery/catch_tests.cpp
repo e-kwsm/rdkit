@@ -159,15 +159,15 @@ TEST_CASE("TEST_ENOL") {
   auto hasMatch = SubstructMatch(*target1, *tautomerQuery, matchVect);
   CHECK(hasMatch);
 
-  auto templateFingerpint = tautomerQuery->patternFingerprintTemplate();
+  auto *templateFingerpint = tautomerQuery->patternFingerprintTemplate();
   REQUIRE(templateFingerpint);
 
-  auto target1Fingerprint = TautomerQuery::patternFingerprintTarget(*target1);
+  auto *target1Fingerprint = TautomerQuery::patternFingerprintTarget(*target1);
   REQUIRE(target1Fingerprint);
   CHECK(AllProbeBitsMatch(*templateFingerpint, *target1Fingerprint));
   delete target1Fingerprint;
 
-  auto target2Fingerprint = TautomerQuery::patternFingerprintTarget(*target2);
+  auto *target2Fingerprint = TautomerQuery::patternFingerprintTarget(*target2);
   REQUIRE(target2Fingerprint);
   CHECK(AllProbeBitsMatch(*templateFingerpint, *target2Fingerprint));
   delete target2Fingerprint;
@@ -181,15 +181,15 @@ TEST_CASE("TEST_COMPLEX") {
       std::unique_ptr<TautomerQuery>(TautomerQuery::fromMol(*mol));
   CHECK(15 == tautomerQuery->getTautomers().size());
 
-  auto queryFingerprint = tautomerQuery->patternFingerprintTemplate();
+  auto *queryFingerprint = tautomerQuery->patternFingerprintTemplate();
   REQUIRE(queryFingerprint);
   std::vector<std::string> targetSmis{"CCc1nc2[nH]c(=N)nc(O)c2[nH]1",
                                       "CN1C2=NC=NC2=C(O)N=C1N"};
   for (auto targetSmiles : targetSmis) {
-    auto target = SmilesToMol(targetSmiles);
+    auto *target = SmilesToMol(targetSmiles);
     REQUIRE(target);
     CHECK(tautomerQuery->isSubstructOf(*target));
-    auto targetFingerprint = TautomerQuery::patternFingerprintTarget(*target);
+    auto *targetFingerprint = TautomerQuery::patternFingerprintTarget(*target);
     REQUIRE(targetFingerprint);
     CHECK(AllProbeBitsMatch(*queryFingerprint, *targetFingerprint));
     delete targetFingerprint;
@@ -211,7 +211,7 @@ TEST_CASE("TEST_PICKLE") {
   MolPickler::molFromPickle(pickle, pickleMol);
 
   for (auto modifiedBondIdx : tautomerQuery->getModifiedBonds()) {
-    auto modifiedBond = pickleMol.getBondWithIdx(modifiedBondIdx);
+    auto *modifiedBond = pickleMol.getBondWithIdx(modifiedBondIdx);
     REQUIRE(modifiedBond->hasQuery());
     CHECK(modifiedBond->getQuery()->getDescription() ==
           "SingleOrDoubleOrAromaticBond");
@@ -230,7 +230,7 @@ TEST_CASE("TEST_FINGERPRINT") {
   RWMol molWithoutTautomerBonds(*mol);
   std::vector<std::pair<int, int>> atomIndexes;
   for (auto modifiedBondIdx : tautomerQuery->getModifiedBonds()) {
-    auto queryBond = new QueryBond();
+    auto *queryBond = new QueryBond();
     queryBond->setQuery(makeBondOrderEqualsQuery(Bond::BondType::SINGLE));
     queryBond->expandQuery(makeBondOrderEqualsQuery(Bond::BondType::AROMATIC),
                            Queries::COMPOSITE_OR);
@@ -243,11 +243,11 @@ TEST_CASE("TEST_FINGERPRINT") {
 #ifdef VERBOSE
   std::cout << std::endl << "fingerprinting template" << std::endl;
 #endif
-  auto templateQueryFingerprint = PatternFingerprintMol(templateMol);
+  auto *templateQueryFingerprint = PatternFingerprintMol(templateMol);
 #ifdef VERBOSE
   std::cout << "fingerprinting mol without bonds" << std::endl;
 #endif
-  auto molWithoutTautomerBondsFingerprint =
+  auto *molWithoutTautomerBondsFingerprint =
       PatternFingerprintMol(molWithoutTautomerBonds);
 
   REQUIRE(templateQueryFingerprint);
@@ -288,7 +288,7 @@ TEST_CASE("TEST_FINGERPRINT") {
 
   // The tautomer fingerprint for the template is a subset of the tautomer
   // fingerprint for the original molecule.
-  auto molFingerprint = TautomerQuery::patternFingerprintTarget(*mol);
+  auto *molFingerprint = TautomerQuery::patternFingerprintTarget(*mol);
   CHECK(AllProbeBitsMatch(*templateQueryFingerprint, *molFingerprint));
   // This expected bit count for the template tautomeric fingerprint applies for
   // all queries if there are no bit clashes
@@ -350,15 +350,16 @@ TEST_CASE("Serialization") {
     CHECK(serialized.getTautomers().size() ==
           tautomerQuery->getTautomers().size());
 
-    auto queryFingerprint = serialized.patternFingerprintTemplate();
+    auto *queryFingerprint = serialized.patternFingerprintTemplate();
     REQUIRE(queryFingerprint);
     std::vector<std::string> targetSmis{"CCc1nc2[nH]c(=N)nc(O)c2[nH]1",
                                         "CN1C2=NC=NC2=C(O)N=C1N"};
     for (auto targetSmiles : targetSmis) {
-      auto target = SmilesToMol(targetSmiles);
+      auto *target = SmilesToMol(targetSmiles);
       REQUIRE(target);
       CHECK(serialized.isSubstructOf(*target));
-      auto targetFingerprint = TautomerQuery::patternFingerprintTarget(*target);
+      auto *targetFingerprint =
+          TautomerQuery::patternFingerprintTarget(*target);
       REQUIRE(targetFingerprint);
       CHECK(AllProbeBitsMatch(*queryFingerprint, *targetFingerprint));
       delete targetFingerprint;
@@ -405,7 +406,7 @@ TEST_CASE("GitHub Issue #8492: TautomerQuery drops queries for some atoms") {
 
   check_queries(*mol);
   auto tq = std::unique_ptr<TautomerQuery>(TautomerQuery::fromMol(*mol));
-  auto &mol2 = tq->getTemplateMolecule();
+  const auto &mol2 = tq->getTemplateMolecule();
 
   check_queries(mol2);
 }

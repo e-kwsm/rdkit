@@ -958,7 +958,7 @@ std::string runblock(const std::vector<std::shared_ptr<RWMol>> &mols,
       if (i % count != idx) {
         continue;
       }
-      auto &mol = mols[i];
+      const auto &mol = mols[i];
       DGeomHelpers::EmbedParameters params{
           .maxIterations = 30,
           .randomSeed = 0xFEED,

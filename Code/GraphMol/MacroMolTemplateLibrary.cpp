@@ -101,7 +101,7 @@ std::unique_ptr<RWMol> parseCXSmiles(const std::string &smiles,
   }
   // E/Z labels depend on CIP ranks, which change when dummy atoms are
   // replaced, so express double bond stereo relative to the stereo atoms
-  for (const auto bond : mol->bonds()) {
+  for (auto *const bond : mol->bonds()) {
     if ((bond->getStereo() == Bond::STEREOE ||
          bond->getStereo() == Bond::STEREOZ) &&
         bond->getStereoAtoms().size() == 2) {
@@ -134,7 +134,7 @@ MacroMolLeavingGroup attachRGroup(RWMol &mol, unsigned int coreDummyIdx,
                                   const std::string &name) {
   const auto rGroupLabel = "R" + std::to_string(rGroupNumber);
   const Atom *rGroupDummy = nullptr;
-  for (const auto atom : rGroup.atoms()) {
+  for (auto *const atom : rGroup.atoms()) {
     if (atom->getAtomicNum() == 0) {
       if (rGroupDummy || getRGroupNumber(atom) != rGroupNumber) {
         throw ValueErrorException(
@@ -149,9 +149,9 @@ MacroMolLeavingGroup attachRGroup(RWMol &mol, unsigned int coreDummyIdx,
                               " for monomer " + name +
                               " must have exactly one neighbor");
   }
-  const auto rGroupLeavingAtom = *rGroup.atomNeighbors(rGroupDummy).begin();
+  auto *const rGroupLeavingAtom = *rGroup.atomNeighbors(rGroupDummy).begin();
 
-  const auto coreDummy = mol.getAtomWithIdx(coreDummyIdx);
+  auto *const coreDummy = mol.getAtomWithIdx(coreDummyIdx);
   if (coreDummy->getDegree() != 1) {
     throw ValueErrorException("Attachment point _" + rGroupLabel +
                               " in monomer " + name +
@@ -163,7 +163,7 @@ MacroMolLeavingGroup attachRGroup(RWMol &mol, unsigned int coreDummyIdx,
   newIdxs[rGroupLeavingAtom->getIdx()] = coreDummyIdx;
   mol.replaceAtom(coreDummyIdx, rGroupLeavingAtom);
   std::vector<unsigned int> atomIdxs{coreDummyIdx};
-  for (const auto atom : rGroup.atoms()) {
+  for (auto *const atom : rGroup.atoms()) {
     if (atom != rGroupDummy && atom != rGroupLeavingAtom) {
       newIdxs[atom->getIdx()] = mol.addAtom(atom->copy(), false, true);
       atomIdxs.push_back(newIdxs[atom->getIdx()]);
@@ -174,12 +174,12 @@ MacroMolLeavingGroup attachRGroup(RWMol &mol, unsigned int coreDummyIdx,
     return rGroupIdx == rGroupDummy->getIdx() ? attachAtomIdx
                                               : newIdxs[rGroupIdx];
   };
-  for (const auto bond : rGroup.bonds()) {
+  for (auto *const bond : rGroup.bonds()) {
     if (bond->getBeginAtom() == rGroupDummy ||
         bond->getEndAtom() == rGroupDummy) {
       continue;  // replaced by the core bond to the attachment atom
     }
-    auto newBond = bond->copy();
+    auto *newBond = bond->copy();
     newBond->setBeginAtomIdx(mapIdx(bond->getBeginAtomIdx()));
     newBond->setEndAtomIdx(mapIdx(bond->getEndAtomIdx()));
     for (auto &stereoAtomIdx : newBond->getStereoAtoms()) {
@@ -191,7 +191,7 @@ MacroMolLeavingGroup attachRGroup(RWMol &mol, unsigned int coreDummyIdx,
   // The leaving atom's chiral tag refers to the order of its bonds in the
   // R-group, which differs from the order in the combined molecule (where the
   // bond to the attachment atom comes first), so adjust it for the permutation.
-  const auto leavingAtom = mol.getAtomWithIdx(coreDummyIdx);
+  auto *const leavingAtom = mol.getAtomWithIdx(coreDummyIdx);
   const auto chiralTag = leavingAtom->getChiralTag();
   if (chiralTag != Atom::CHI_UNSPECIFIED) {
     if (chiralTag != Atom::CHI_TETRAHEDRAL_CW &&
@@ -202,7 +202,7 @@ MacroMolLeavingGroup attachRGroup(RWMol &mol, unsigned int coreDummyIdx,
           rGroupLabel + " for monomer " + name);
     }
     INT_LIST bondOrder;
-    for (const auto bond : rGroup.atomBonds(rGroupLeavingAtom)) {
+    for (auto *const bond : rGroup.atomBonds(rGroupLeavingAtom)) {
       const auto otherIdx =
           mapIdx(bond->getOtherAtomIdx(rGroupLeavingAtom->getIdx()));
       bondOrder.push_back(
@@ -236,7 +236,7 @@ std::unique_ptr<MacroMolTemplate> makeTemplate(
 
   auto mol = parseCXSmiles(coreSmiles, "CORE_SMILES", name);
   std::vector<std::pair<unsigned int, int>> coreDummies;
-  for (const auto atom : mol->atoms()) {
+  for (auto *const atom : mol->atoms()) {
     if (const auto rGroupNumber = getRGroupNumber(atom)) {
       coreDummies.emplace_back(atom->getIdx(), rGroupNumber);
     }
@@ -265,7 +265,7 @@ std::unique_ptr<MacroMolTemplate> makeTemplate(
   // The bond directions from the SMILES are incomplete where dummy atoms were
   // replaced, so regenerate them before perceiving the stereochemistry (which
   // uses them with the legacy stereo perception), as parsing SMILES would.
-  for (const auto bond : mol->bonds()) {
+  for (auto *const bond : mol->bonds()) {
     if (bond->getBondDir() == Bond::ENDUPRIGHT ||
         bond->getBondDir() == Bond::ENDDOWNRIGHT) {
       bond->setBondDir(Bond::NONE);

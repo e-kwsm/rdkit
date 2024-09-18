@@ -97,7 +97,7 @@ std::vector<ValidationErrorInfo> FragmentValidation::validate(
   std::vector<ROMOL_SPTR> frags =
       MolOps::getMolFrags(mol, true, &mapping, &atom_mapping);
 
-  for (auto &fgrp : fgrps) {
+  for (const auto &fgrp : fgrps) {
     std::string fname;
     fgrp->getProp(common_properties::_Name, fname);
     std::vector<RDKit::MatchVectType> res;
@@ -165,7 +165,7 @@ std::vector<ValidationErrorInfo> NeutralValidation::validate(
 std::vector<ValidationErrorInfo> IsotopeValidation::validate(
     const ROMol &mol, bool reportAllFailures) const {
   std::vector<ValidationErrorInfo> errors;
-  for (auto atom : mol.atoms()) {
+  for (auto *atom : mol.atoms()) {
     unsigned int isotope = atom->getIsotope();
     if (isotope == 0) {
       continue;
@@ -268,7 +268,7 @@ std::vector<ValidationErrorInfo> DisallowedRadicalValidation::validate(
     const ROMol &mol, bool reportAllFailures) const {
   std::vector<ValidationErrorInfo> errors;
 
-  for (auto atom : mol.atoms()) {
+  for (auto *atom : mol.atoms()) {
     unsigned int numRadicalElectrons = atom->getNumRadicalElectrons();
     if (numRadicalElectrons == 0) {
       continue;
@@ -279,7 +279,7 @@ std::vector<ValidationErrorInfo> DisallowedRadicalValidation::validate(
         degree == 1) {
       unsigned int neighborAtomicNum = 0;
       Bond::BondType bondType = Bond::BondType::UNSPECIFIED;
-      for (auto neighbor : mol.atomNeighbors(atom)) {
+      for (auto *neighbor : mol.atomNeighbors(atom)) {
         // only one iteration is performed, because degree == 1
         neighborAtomicNum = neighbor->getAtomicNum();
         bondType = mol.getBondBetweenAtoms(atom->getIdx(), neighbor->getIdx())
@@ -311,7 +311,7 @@ std::vector<ValidationErrorInfo> FeaturesValidation::validate(
   std::vector<ValidationErrorInfo> errors;
 
   // Optionally disallow query and dummy atoms, and aliases
-  for (auto atom : mol.atoms()) {
+  for (auto *atom : mol.atoms()) {
     if (!allowQueries && atom->hasQuery()) {
       errors.push_back("ERROR: [FeaturesValidation] Query atom " +
                        std::to_string(atom->getIdx()) + " is not allowed");
@@ -339,7 +339,7 @@ std::vector<ValidationErrorInfo> FeaturesValidation::validate(
   }
 
   // Optionally disallow query, aromatic or dative bonds
-  for (auto bond : mol.bonds()) {
+  for (auto *bond : mol.bonds()) {
     if (!allowQueries && bond->hasQuery()) {
       errors.push_back("ERROR: [FeaturesValidation] Query bond " +
                        std::to_string(bond->getIdx()) + " is not allowed");
@@ -532,7 +532,7 @@ std::vector<ValidationErrorInfo> Layout2DValidation::validate(
     }
   }
 
-  for (auto bond : mol.bonds()) {
+  for (auto *bond : mol.bonds()) {
     unsigned int i = bond->getBeginAtomIdx();
     const auto &pi = conf.getAtomPos(i);
     unsigned int j = bond->getEndAtomIdx();
@@ -605,7 +605,7 @@ std::vector<ValidationErrorInfo> Layout2DValidation::validate(
 
 namespace {
 bool hasStereoBond(const ROMol &mol, const Atom *atom) {
-  for (auto bond : mol.atomBonds(atom)) {
+  for (auto *bond : mol.atomBonds(atom)) {
     if (atom != bond->getBeginAtom()) {
       continue;
     }
@@ -639,7 +639,7 @@ struct NeighborsInfo {
 };
 
 NeighborsInfo::NeighborsInfo(const ROMol &mol, const Atom *atom) {
-  for (auto bond : mol.atomBonds(atom)) {
+  for (auto *bond : mol.atomBonds(atom)) {
     BondInfo info;
     info.bond = bond;
     if (bond->getBeginAtom() == atom) {
@@ -679,16 +679,16 @@ NeighborsInfo::NeighborsInfo(const ROMol &mol, const Atom *atom) {
 
   const auto &conf = mol.getConformer();
   const auto &p = conf.getAtomPos(atom->getIdx());
-  const auto bond0 = bonds[0].bond;
-  const auto atom0 = bond0->getOtherAtom(atom);
+  const auto *const bond0 = bonds[0].bond;
+  auto *const atom0 = bond0->getOtherAtom(atom);
   const auto v0 = conf.getAtomPos(atom0->getIdx()) - p;
 
   // sort the neighbors based on the angle they form
   // with the first one
   auto degree = bonds.size();
   for (unsigned int n = 1; n < degree; ++n) {
-    const auto bondn = bonds[n].bond;
-    const auto atomn = bondn->getOtherAtom(atom);
+    const auto *const bondn = bonds[n].bond;
+    auto *const atomn = bondn->getOtherAtom(atom);
     const auto vn = conf.getAtomPos(atomn->getIdx()) - p;
     bonds[n].angle = v0.signedAngleTo(vn);
   }
@@ -718,10 +718,10 @@ void check3CoordinatedStereo(const ROMol &mol, const Atom *atom,
     // check for the colinearity of the stereocenter and the other two ligands.
     const auto &conf = mol.getConformer();
     const auto &p = conf.getAtomPos(atom->getIdx());
-    const auto atoma =
+    auto *const atoma =
         neighborsInfo.bonds[(i + 1) % 3].bond->getOtherAtom(atom);
     const auto va = conf.getAtomPos(atoma->getIdx()) - p;
-    const auto atomb =
+    auto *const atomb =
         neighborsInfo.bonds[(i + 2) % 3].bond->getOtherAtom(atom);
     const auto vb = conf.getAtomPos(atomb->getIdx()) - p;
 
@@ -812,15 +812,15 @@ void check4CoordinatedStereo(const ROMol &mol, const Atom *atom,
         // i.e. form an angle > pi/4 with the stereo bond.
         unsigned int opposed = 0;
         const auto &p = conf.getAtomPos(atom->getIdx());
-        const auto bondi = neighborsInfo.bonds[i].bond;
-        const auto atomi = bondi->getOtherAtom(atom);
+        const auto *const bondi = neighborsInfo.bonds[i].bond;
+        auto *const atomi = bondi->getOtherAtom(atom);
         const auto vi = conf.getAtomPos(atomi->getIdx()) - p;
         for (unsigned int j = 0; j < 4; ++j) {
           if (j == i) {
             continue;
           }
-          const auto bondj = neighborsInfo.bonds[j].bond;
-          const auto atomj = bondj->getOtherAtom(atom);
+          const auto *const bondj = neighborsInfo.bonds[j].bond;
+          auto *const atomj = bondj->getOtherAtom(atom);
           const auto vj = conf.getAtomPos(atomj->getIdx()) - p;
           if (vi.angleTo(vj) > 95. * M_PI / 180.) {
             ++opposed;
@@ -852,9 +852,9 @@ void check4CoordinatedStereo(const ROMol &mol, const Atom *atom,
         auto j = (i + 1) % 4;
         auto k = (i + 2) % 4;
         auto l = (i + 3) % 4;
-        const auto atomj = neighborsInfo.bonds[j].bond->getOtherAtom(atom);
-        const auto atomk = neighborsInfo.bonds[k].bond->getOtherAtom(atom);
-        const auto atoml = neighborsInfo.bonds[l].bond->getOtherAtom(atom);
+        auto *const atomj = neighborsInfo.bonds[j].bond->getOtherAtom(atom);
+        auto *const atomk = neighborsInfo.bonds[k].bond->getOtherAtom(atom);
+        auto *const atoml = neighborsInfo.bonds[l].bond->getOtherAtom(atom);
         const auto &pj = conf.getAtomPos(atomj->getIdx());
         const auto &pk = conf.getAtomPos(atomk->getIdx());
         const auto &pl = conf.getAtomPos(atoml->getIdx());
@@ -924,14 +924,14 @@ void checkStereo(const ROMol &mol, const Atom *atom, bool reportAllFailures,
   // The validation is currently limited to some specific categories of
   // stereocenters
   bool multipleBondFound{}, possibleAllene{};
-  for (auto bond : mol.atomBonds(atom)) {
+  for (auto *bond : mol.atomBonds(atom)) {
     auto bondType = bond->getBondType();
     if (bondType != Bond::BondType::SINGLE) {
       multipleBondFound = true;
       const Atom *otherAtom = bond->getOtherAtom(atom);
       if (otherAtom->getDegree() == 2) {
         int doubleBondCount{};
-        for (auto otherBond : mol.atomBonds(otherAtom)) {
+        for (auto *otherBond : mol.atomBonds(otherAtom)) {
           if (otherBond->getBondType() == Bond::BondType::DOUBLE) {
             ++doubleBondCount;
           }
@@ -981,7 +981,7 @@ std::vector<ValidationErrorInfo> StereoValidation::validate(
     const ROMol &mol, bool reportAllFailures) const {
   std::vector<ValidationErrorInfo> errors;
 
-  for (auto atom : mol.atoms()) {
+  for (auto *atom : mol.atoms()) {
     if (hasStereoBond(mol, atom)) {
       checkStereo(mol, atom, reportAllFailures, errors);
     }

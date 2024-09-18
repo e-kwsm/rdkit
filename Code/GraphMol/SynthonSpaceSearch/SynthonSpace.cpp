@@ -495,7 +495,7 @@ void SynthonSpace::readStream(std::istream &is, bool &cancelled) {
     auto currReaction = addReactionToPool(nextSynthon[3]);
     fixConnectors(nextSynthon[0]);
     auto synthonNum = getSynthonNum(format, nextSynthon[2]);
-    auto newSynth = addSynthonToPool(nextSynthon[0]);
+    auto *newSynth = addSynthonToPool(nextSynthon[0]);
     currReaction->addSynthon(synthonNum, newSynth, nextSynthon[1]);
   }
   // Do some final processing.
@@ -545,12 +545,12 @@ void SynthonSpace::writeDBFile(const std::string &outFilename) const {
     streamWrite(os, p);
   }
   size_t synthonNum = 0;
-  for (auto &[smiles, synthon] : d_synthonPool) {
+  for (const auto &[smiles, synthon] : d_synthonPool) {
     synthonPos[synthonNum++] = os.tellp();
     synthon->writeToDBStream(os);
   }
   size_t reactionNum = 0;
-  for (auto &[id, reaction] : d_reactions) {
+  for (const auto &[id, reaction] : d_reactions) {
     reactionPos[reactionNum++] = os.tellp();
     reaction->writeToDBStream(os);
   }
@@ -1011,7 +1011,7 @@ Synthon *SynthonSpace::addSynthonToPool(const std::string &smiles) {
     return it->second.get();
   } else {
     tmp.second.reset(new Synthon(smiles));
-    auto retVal = tmp.second.get();
+    auto *retVal = tmp.second.get();
     d_synthonPool.insert(it, std::move(tmp));
     return retVal;
   }
@@ -1171,14 +1171,14 @@ void SynthonSpace::buildSynthonSampleMolecules(
     std::vector<std::vector<std::unique_ptr<SampleMolRec>>> &sampleMols) const {
   sampleMols.reserve(d_synthonReactions.size());
   for (const auto &[synthonSmiles, reactions] : d_synthonReactions) {
-    auto synthon = getSynthonFromPool(synthonSmiles);
+    auto *synthon = getSynthonFromPool(synthonSmiles);
     if ((maxSynthonAtoms && synthon->getNumHeavyAtoms() > maxSynthonAtoms) ||
         (synthon->getShapes())) {
       continue;
     }
     std::vector<std::unique_ptr<SampleMolRec>> theseSamples;
     theseSamples.reserve(reactions.size());
-    for (auto &reaction : reactions) {
+    for (const auto &reaction : reactions) {
       theseSamples.push_back(reaction->makeSampleMolecule(synthon));
       // In the unlikely event that we didn't get anything, drop it.
       if (!theseSamples.back()->d_numAtoms) {

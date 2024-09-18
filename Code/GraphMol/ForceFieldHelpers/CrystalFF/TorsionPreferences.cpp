@@ -217,7 +217,7 @@ ExpTorsionAngleCollection<T>::ExpTorsionAngleCollection(
   requires std::is_same_v<T, GaussianExpTorsionAngle>
 {
   for (std::size_t i = 0; i < paramData.size(); ++i) {
-    auto &param = paramData[i];
+    const auto &param = paramData[i];
     GaussianExpTorsionAngle angle;
     angle.torsionIdx = i;
     angle.smarts = std::get<0>(param);
@@ -377,7 +377,7 @@ void getExperimentalTorsionsImpl(
         aid2 = match[param.idx[1]].second;
         aid3 = match[param.idx[2]].second;
         aid4 = match[param.idx[3]].second;
-        const auto bnd = mol.getBondBetweenAtoms(aid2, aid3);
+        const auto *const bnd = mol.getBondBetweenAtoms(aid2, aid3);
         CHECK_INVARIANT(bnd, "bond between central atoms not found")
         bid2 = bnd->getIdx();
 
@@ -458,7 +458,7 @@ void getExperimentalTorsionsImpl(
             mol.getAtomDegree(atom2) == 3) {
           unsigned int i = 0;
           unsigned int isBoundToSP2O = 0;  // false
-          for (const auto atomX : mol.atomNeighbors(atom2)) {
+          for (auto *const atomX : mol.atomNeighbors(atom2)) {
             atoms[i] = atomX->getIdx();
             // if the central atom is sp2 carbon and is bound to sp2 oxygen,
             // set a flag
@@ -608,9 +608,9 @@ void populateRefTable(CrystalFFDetails &details) {
     // Unpack Gaussian parameters for energy/gradient evaluation.
     const auto &gaussianParams =
         std::get<GaussianExp_T>(details.expTorsionAngles[termIdx]);
-    auto &heights = std::get<0>(gaussianParams);
-    auto &positions = std::get<1>(gaussianParams);
-    auto &widths = std::get<2>(gaussianParams);
+    const auto &heights = std::get<0>(gaussianParams);
+    const auto &positions = std::get<1>(gaussianParams);
+    const auto &widths = std::get<2>(gaussianParams);
 
     // Evaluate energy and gradient across the grid range [0, pi].
     for (std::size_t gridPoint = 0; gridPoint < lookup_grid_size; ++gridPoint) {
