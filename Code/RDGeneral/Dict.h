@@ -39,8 +39,8 @@ class RDKIT_RDGENERAL_EXPORT Dict {
     std::string key;
     RDValue val;
 
-    Pair() : key(), val() {}
-    explicit Pair(std::string s) : key(std::move(s)), val() {}
+    Pair() {}
+    explicit Pair(std::string s) : key(std::move(s)) {}
     Pair(std::string s, const RDValue &v) : key(std::move(s)), val(v) {}
     // In the case you are holding onto an rdvalue outside of a dictionary
     //  or other container, you kust call cleanup to release non POD memory.
@@ -340,7 +340,7 @@ class RDKIT_RDGENERAL_EXPORT Dict {
   }
 
  private:
-  DataType _data{};            //!< the actual dictionary
+  DataType _data;              //!< the actual dictionary
   bool _hasNonPodData{false};  // if true, need a deep copy
                                //  (copy_rdvalue)
 };
