@@ -910,7 +910,7 @@ void testUFFParams() {
   std::cerr << "-------------------------------------" << std::endl;
   std::cerr << " Test UFF Parameter objects" << std::endl;
 
-  auto params = ForceFields::UFF::ParamCollection::getParams();
+  const auto *params = ForceFields::UFF::ParamCollection::getParams();
   TEST_ASSERT(params);
 
   const ForceFields::UFF::AtomicParams *ptr;
@@ -948,7 +948,7 @@ void testUFF8() {
   ps.push_back(&p5);
   ps.push_back(&p6);
 
-  auto params = ForceFields::UFF::ParamCollection::getParams();
+  const auto *params = ForceFields::UFF::ParamCollection::getParams();
   const ForceFields::UFF::AtomicParams *param1, *param2;
 
   // C_2 (sp2 carbon):
@@ -1088,7 +1088,7 @@ void testUFFTorsionConflict() {
   ps.push_back(&p6);
   ps.push_back(&p7);
 
-  auto params = ForceFields::UFF::ParamCollection::getParams();
+  const auto *params = ForceFields::UFF::ParamCollection::getParams();
   const ForceFields::UFF::AtomicParams *param1, *param2, *param3;
 
   // C_2 (sp2 carbon):
@@ -1240,7 +1240,7 @@ void testUFFDistanceConstraints() {
   ff.initialize();
 
   // C_3 - C_3, r0=1.514, k01=699.5918
-  auto distContribs = new ForceFields::DistanceConstraintContribs(&ff);
+  auto *distContribs = new ForceFields::DistanceConstraintContribs(&ff);
   distContribs->addContrib(0, 1, 1.35, 1.55, 1000.0);
   ff.contribs().emplace_back(distContribs);
   double E;
@@ -1511,7 +1511,7 @@ void testUFFCopy() {
     ForceFields::ForceField *field = RDKit::UFF::constructForceField(*mol);
     TEST_ASSERT(field);
     field->initialize();
-    auto dc = new ForceFields::DistanceConstraintContribs(field);
+    auto *dc = new ForceFields::DistanceConstraintContribs(field);
     dc->addContrib(1, 3, 2.0, 2.0, 1.0e5);
     field->contribs().emplace_back(dc);
     field->minimize();
@@ -1551,7 +1551,7 @@ void testUFFButaneScan() {
   std::cerr << "-------------------------------------" << std::endl;
   std::cerr << "Unit test for UFF butane scan." << std::endl;
 
-  auto molblock = R"(
+  const auto *molblock = R"(
      RDKit          3D
 
  14 13  0  0  0  0  0  0  0  0999 V2000

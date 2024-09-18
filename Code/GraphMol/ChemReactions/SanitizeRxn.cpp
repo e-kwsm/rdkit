@@ -44,7 +44,7 @@ T getMaxProp(ChemicalReaction &rxn, const std::string_view &prop) {
   T max_atom = (T)0;
   for (auto it = rxn.beginReactantTemplates(); it != rxn.endReactantTemplates();
        ++it) {
-    for (auto atom : (*it)->atoms()) {
+    for (auto *atom : (*it)->atoms()) {
       T map;
       if (atom->getPropIfPresent<T>(prop, map)) {
         if (map > max_atom) {
@@ -56,7 +56,7 @@ T getMaxProp(ChemicalReaction &rxn, const std::string_view &prop) {
 
   for (auto it = rxn.beginAgentTemplates(); it != rxn.endAgentTemplates();
        ++it) {
-    for (auto atom : (*it)->atoms()) {
+    for (auto *atom : (*it)->atoms()) {
       T map;
       if (atom->getPropIfPresent<T>(prop, map)) {
         if (map > max_atom) {
@@ -68,7 +68,7 @@ T getMaxProp(ChemicalReaction &rxn, const std::string_view &prop) {
 
   for (auto it = rxn.beginProductTemplates(); it != rxn.endProductTemplates();
        ++it) {
-    for (auto atom : (*it)->atoms()) {
+    for (auto *atom : (*it)->atoms()) {
       T map;
       if (atom->getPropIfPresent<T>(prop, map)) {
         if (map > max_atom) {
@@ -177,7 +177,7 @@ void fixRGroups(ChemicalReaction &rxn) {
   unsigned int templateIdx = 0;
   for (auto it = rxn.beginReactantTemplates(); it != rxn.endReactantTemplates();
        ++it, ++templateIdx) {
-    for (auto atom : (*it)->atoms()) {
+    for (auto *atom : (*it)->atoms()) {
       AtomInfo at(atom, templateIdx);
       if (at.NeedsRLabel()) {
         reactantAtomsToFix.push_back(at);
@@ -188,7 +188,7 @@ void fixRGroups(ChemicalReaction &rxn) {
   templateIdx = 0;
   for (auto it = rxn.beginProductTemplates(); it != rxn.endProductTemplates();
        ++it, ++templateIdx) {
-    for (auto atom : (*it)->atoms()) {
+    for (auto *atom : (*it)->atoms()) {
       AtomInfo at(atom, templateIdx);
       if (at.NeedsRLabel()) {
         productAtomsToFix.push_back(at);
@@ -259,7 +259,7 @@ void fixAtomMaps(ChemicalReaction &rxn) {
 
   for (auto it = rxn.beginReactantTemplates(); it != rxn.endReactantTemplates();
        ++it, ++templateIdx) {
-    for (auto atom : (*it)->atoms()) {
+    for (auto *atom : (*it)->atoms()) {
       AtomInfo at(atom, templateIdx);
       if (at.rlabel && !at.atomMap) {
         if (potential_mappings.find(at.rlabel) != potential_mappings.end()) {
@@ -279,7 +279,7 @@ void fixAtomMaps(ChemicalReaction &rxn) {
   templateIdx = 0;
   for (auto it = rxn.beginProductTemplates(); it != rxn.endProductTemplates();
        ++it, ++templateIdx) {
-    for (auto atom : (*it)->atoms()) {
+    for (auto *atom : (*it)->atoms()) {
       AtomInfo at(atom, templateIdx);
       if (at.rlabel) {
         if (!at.atomMap) {
@@ -319,7 +319,7 @@ void fixHs(ChemicalReaction &rxn) {
     for (auto it = rxn.beginProductTemplates(); it != rxn.endProductTemplates();
          ++it) {
       int atomMap = 0;
-      for (auto atom : (*it)->atoms()) {
+      for (auto *atom : (*it)->atoms()) {
         if (atom->getAtomicNum() != 1) {  // hydrogen
           if (atom->getPropIfPresent(common_properties::molAtomMapNumber,
                                      atomMap)) {
@@ -334,7 +334,7 @@ void fixHs(ChemicalReaction &rxn) {
     for (auto it = rxn.beginReactantTemplates();
          it != rxn.endReactantTemplates(); ++it) {
       int atomMap = 0;
-      for (auto atom : (*it)->atoms()) {
+      for (auto *atom : (*it)->atoms()) {
         if (atom->getAtomicNum() == 1) {  // hydrogen
           if (atom->getPropIfPresent(common_properties::molAtomMapNumber,
                                      atomMap)) {
@@ -368,7 +368,7 @@ void fixHs(ChemicalReaction &rxn) {
 
 void adjustTemplates(const MOL_SPTR_VECT &templates,
                      const MolOps::AdjustQueryParameters &params) {
-  for (auto &templ : templates) {
+  for (const auto &templ : templates) {
     auto *rw = dynamic_cast<RWMol *>(templ.get());
     if (rw) {
       adjustQueryProperties(*rw, &params);
@@ -413,17 +413,17 @@ void sanitizeRxn(ChemicalReaction &rxn,
 }
 
 void sanitizeRxnAsMols(ChemicalReaction &rxn, unsigned int sanitizeOps) {
-  for (auto &mol : rxn.getReactants()) {
+  for (const auto &mol : rxn.getReactants()) {
     unsigned int operationThatFailed;
     MolOps::sanitizeMol(*dynamic_cast<RWMol *>(mol.get()), operationThatFailed,
                         sanitizeOps);
   }
-  for (auto &mol : rxn.getAgents()) {
+  for (const auto &mol : rxn.getAgents()) {
     unsigned int operationThatFailed;
     MolOps::sanitizeMol(*dynamic_cast<RWMol *>(mol.get()), operationThatFailed,
                         sanitizeOps);
   }
-  for (auto &mol : rxn.getProducts()) {
+  for (const auto &mol : rxn.getProducts()) {
     unsigned int operationThatFailed;
     MolOps::sanitizeMol(*dynamic_cast<RWMol *>(mol.get()), operationThatFailed,
                         sanitizeOps);

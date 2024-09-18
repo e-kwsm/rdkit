@@ -703,7 +703,7 @@ void testMorganCodeHashChargeShift() {
   auto m = "Cc1ccccc1"_smiles;
   TEST_ASSERT(m);
 
-  auto at = m->getAtomWithIdx(0);
+  auto *at = m->getAtomWithIdx(0);
   std::vector<unsigned long long> hashes;
   for (auto charge : {-2, -1, 0, 1, 2}) {
     at->setFormalCharge(charge);
