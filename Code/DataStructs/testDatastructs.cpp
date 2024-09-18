@@ -1516,7 +1516,7 @@ void test15RealVectDists() {
     v2.setVal(i, i / 10.0);
   }
 
-  TEST_ASSERT(feq(computeL1Norm(v1, v2), 43.5))
+  TEST_ASSERT(feq(computeL1Norm(v1, v2), 43.5));
 }
 
 void test16RealVectPickles() {
