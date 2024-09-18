@@ -45,7 +45,7 @@ void tagAtoms(std::shared_ptr<ROMol> mol, const Bond *bond,
     if (connect == "HH") {
       bond->getBeginAtom()->setProp(headheadmarker, 1);
     }
-    auto frameAtom = mol->getAtomWithIdx(bond->getEndAtomIdx());
+    auto *frameAtom = mol->getAtomWithIdx(bond->getEndAtomIdx());
     std::vector<unsigned int> vs;
     frameAtom->getPropIfPresent(framemarker, vs);
     vs.push_back(index);
@@ -55,7 +55,7 @@ void tagAtoms(std::shared_ptr<ROMol> mol, const Bond *bond,
     if (connect == "HH") {
       bond->getEndAtom()->setProp(headheadmarker, 1);
     }
-    auto frameAtom = mol->getAtomWithIdx(bond->getBeginAtomIdx());
+    auto *frameAtom = mol->getAtomWithIdx(bond->getBeginAtomIdx());
     std::vector<unsigned int> vs;
     frameAtom->getPropIfPresent(framemarker, vs);
     vs.push_back(index);
@@ -90,7 +90,7 @@ void RepeatUnitOp::initFromMol(const ROMol &mol) {
     return default_repeat_counts;
   }
 
-  auto end = sru_label.data() + sru_label.size();
+  const auto *end = sru_label.data() + sru_label.size();
 
   size_t min_repeats = 0;
   auto status = std::from_chars(sru_label.data(), end, min_repeats);
@@ -258,7 +258,7 @@ std::vector<size_t> RepeatUnitOp::getVariationCounts() const {
 namespace {
 void flipHeadHeadGroups(unsigned int origAtomCount, RWMol &mol) {
   for (auto aidx = origAtomCount; aidx < mol.getNumAtoms(); ++aidx) {
-    auto atom = mol.getAtomWithIdx(aidx);
+    auto *atom = mol.getAtomWithIdx(aidx);
     if (atom->hasProp(headheadmarker)) {
       if (atom->hasProp(headmarker)) {
         atom->setProp(tailmarker, atom->getProp<unsigned>(headmarker));
@@ -285,12 +285,12 @@ void flipHeadHeadGroups(unsigned int origAtomCount, RWMol &mol) {
 void connectRepeatAtomsAndRemoveExtras(unsigned int origAtomCount, RWMol &mol) {
   mol.beginBatchEdit();
   for (auto aidx1 = 0u; aidx1 < origAtomCount; ++aidx1) {
-    auto at1 = mol.getAtomWithIdx(aidx1);
+    auto *at1 = mol.getAtomWithIdx(aidx1);
     unsigned tailIdx;
     if (at1->getPropIfPresent(tailmarker, tailIdx)) {
       bool connected = false;
       for (auto aidx2 = origAtomCount; aidx2 < mol.getNumAtoms(); ++aidx2) {
-        auto at2 = mol.getAtomWithIdx(aidx2);
+        auto *at2 = mol.getAtomWithIdx(aidx2);
         unsigned int headIdx;
         if (at2->getPropIfPresent(headmarker, headIdx) && tailIdx == headIdx) {
           connected = true;
@@ -299,7 +299,7 @@ void connectRepeatAtomsAndRemoveExtras(unsigned int origAtomCount, RWMol &mol) {
           // repeat unit
           for (const auto &nbri :
                boost::make_iterator_range(mol.getAtomNeighbors(at2))) {
-            auto nbr = mol[nbri];
+            auto *nbr = mol[nbri];
             if (!nbr->hasProp(polymarker)) {
               mol.removeAtom(nbr);
             }
@@ -315,7 +315,7 @@ void connectRepeatAtomsAndRemoveExtras(unsigned int origAtomCount, RWMol &mol) {
         // repeat unit
         for (const auto &nbri :
              boost::make_iterator_range(mol.getAtomNeighbors(at1))) {
-          auto nbr = mol[nbri];
+          auto *nbr = mol[nbri];
           if (!nbr->hasProp(polymarker)) {
             mol.removeAtom(nbr);
           }
@@ -332,7 +332,7 @@ void connectRepeatToFrame(unsigned int nOrigAtoms, RWMol &mol,
                           std::map<unsigned, Atom *> &headMap,
                           std::map<unsigned, Atom *> &tailMap) {
   for (auto aidx = nOrigAtoms; aidx < mol.getNumAtoms(); ++aidx) {
-    auto sruAtom = mol.getAtomWithIdx(aidx);
+    auto *sruAtom = mol.getAtomWithIdx(aidx);
     unsigned int val;
     if (sruAtom->getPropIfPresent(headmarker, val)) {
       if (tailMap.find(val) != tailMap.end()) {
@@ -368,7 +368,7 @@ void connectRepeatToFrame(unsigned int nOrigAtoms, RWMol &mol,
 
 void constructHeadAndTailMaps(RWMol &mol, std::map<unsigned, Atom *> &headMap,
                               std::map<unsigned, Atom *> &tailMap) {
-  for (auto atom : mol.atoms()) {
+  for (auto *atom : mol.atoms()) {
     std::vector<unsigned int> vals;
     if (atom->getPropIfPresent(headmarker_frame, vals)) {
       for (auto val : vals) {
