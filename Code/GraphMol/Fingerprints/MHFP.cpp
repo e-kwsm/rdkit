@@ -67,7 +67,7 @@ std::vector<uint32_t> MHFPEncoder::FromStringArray(
     const std::vector<std::string> &vec) {
   std::vector<uint32_t> mh(n_permutations_, max_hash_);
 
-  for (const auto& i : vec) {
+  for (const auto &i : vec) {
     auto hashi = FNV::hash(i);
     for (size_t j = 0; j < n_permutations_; j++) {
       uint32_t tmp =
@@ -106,7 +106,7 @@ std::vector<std::string> MHFPEncoder::CreateShingling(
   if (rings) {
     const VECT_INT_VECT bonds_vect = tmol.getRingInfo()->bondRings();
 
-    for (const auto& i : bonds_vect) {
+    for (const auto &i : bonds_vect) {
       std::unique_ptr<ROMol> m(Subgraphs::pathToSubmol(tmol, i));
       shingling.emplace_back(MolToSmiles(*m));
     }
