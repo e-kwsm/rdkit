@@ -146,13 +146,13 @@ RDKIT_FMCS_EXPORT bool MCSProgressCallbackTimeout(const MCSProgressData &stat,
 
 struct RDKIT_FMCS_EXPORT MCSParameters {
   MCSParameters() = default;
-  MCSParameters(const MCSParameters* other) : MCSParameters() {
+  MCSParameters(const MCSParameters *other) : MCSParameters() {
     if (other) {
       *this = *other;
     }
   }
-  MCSParameters(const MCSParameters& other) = default;
-  MCSParameters& operator=(const MCSParameters& other) = default;
+  MCSParameters(const MCSParameters &other) = default;
+  MCSParameters &operator=(const MCSParameters &other) = default;
   virtual ~MCSParameters() = default;
   bool StoreAll = false;
   bool MaximizeBonds = true;
@@ -186,7 +186,7 @@ namespace detail {
 struct MCSParametersInternal : public MCSParameters {
   MCSParametersInternal() = default;
   ~MCSParametersInternal() = default;
-  MCSParametersInternal(const MCSParameters* params);
+  MCSParametersInternal(const MCSParameters *params);
   MCSFinalMatchCheckFunction UserFinalMatchChecker = nullptr;
 };
 }  // end namespace detail
