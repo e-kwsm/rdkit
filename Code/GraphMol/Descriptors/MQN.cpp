@@ -198,4 +198,4 @@ std::vector<unsigned int> calcMQNs(const ROMol &mol, bool) {
 
   return res;
 }
-} // XXX
+}  // namespace RDKit::Descriptors

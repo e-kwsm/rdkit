@@ -122,6 +122,6 @@ getTopologicalTorsionGenerator(
     bool countSimulation = true, std::uint32_t fpSize = 2048,
     std::vector<std::uint32_t> countBounds = {1, 2, 4, 8},
     bool ownsAtomInvGen = false);
-}//XXX
+}  // namespace RDKit::TopologicalTorsion
 
 #endif
