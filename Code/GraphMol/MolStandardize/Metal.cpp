@@ -55,10 +55,8 @@ MetalDisconnector::MetalDisconnector(const MetalDisconnectorOptions &options)
 };
 
 MetalDisconnector::MetalDisconnector(const MetalDisconnector &other)
-    : dp_metal_nof(other.dp_metal_nof),
-      dp_metal_non(other.dp_metal_non),
-      dp_metalDummy(other.dp_metalDummy),
-      d_options(other.d_options) {};
+
+    = default;
 
 MetalDisconnector::~MetalDisconnector() = default;
 
