@@ -239,7 +239,7 @@ struct WeightedBond {
   const Bond *BondPtr{nullptr};
   unsigned int Weight{0};
   WeightedBond() = default;
-  WeightedBond(const Bond* bond) : BondPtr(bond), Weight(0) {
+  WeightedBond(const Bond *bond) : BondPtr(bond), Weight(0) {
     const auto ringInfo = bond->getOwningMol().getRingInfo();
     // score ((bond.is_in_ring + atom1.is_in_ring + atom2.is_in_ring)
     if (ringInfo->numBondRings(bond->getIdx())) {

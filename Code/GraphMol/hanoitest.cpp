@@ -47,7 +47,7 @@ class int_compare_ftor {
 
  public:
   int_compare_ftor() = default;
-  int_compare_ftor(const int *ints) : dp_ints(ints){};
+  int_compare_ftor(const int *ints) : dp_ints(ints) {};
   int operator()(int i, int j) const {
     PRECONDITION(dp_ints, "no ints");
     unsigned int ivi = dp_ints[i];
@@ -134,7 +134,7 @@ class atomcomparefunctor {
 
  public:
   atomcomparefunctor() = default;
-  atomcomparefunctor(Canon::canon_atom *atoms) : d_atoms(atoms){};
+  atomcomparefunctor(Canon::canon_atom *atoms) : d_atoms(atoms) {};
   int operator()(int i, int j) const {
     PRECONDITION(d_atoms, "no atoms");
     unsigned int ivi, ivj;
@@ -164,7 +164,7 @@ class atomcomparefunctor2 {
 
  public:
   atomcomparefunctor2() = default;
-  atomcomparefunctor2(Canon::canon_atom *atoms) : d_atoms(atoms){};
+  atomcomparefunctor2(Canon::canon_atom *atoms) : d_atoms(atoms) {};
   int operator()(int i, int j) const {
     PRECONDITION(d_atoms, "no atoms");
     unsigned int ivi, ivj;

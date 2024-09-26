@@ -244,7 +244,7 @@ enum class WedgeInfoType {
 
 class WedgeInfoBase {
  public:
-  WedgeInfoBase(int idxInit) : idx(idxInit){};
+  WedgeInfoBase(int idxInit) : idx(idxInit) {};
   virtual ~WedgeInfoBase() = default;
 
   virtual WedgeInfoType getType() const = 0;
@@ -258,7 +258,7 @@ class WedgeInfoBase {
 
 class WedgeInfoChiral : public WedgeInfoBase {
  public:
-  WedgeInfoChiral(int atomId) : WedgeInfoBase(atomId){};
+  WedgeInfoChiral(int atomId) : WedgeInfoBase(atomId) {};
   ~WedgeInfoChiral() = default;
 
   WedgeInfoType getType() const override {

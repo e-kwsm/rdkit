@@ -26,8 +26,8 @@ struct TargetMatch {
   boost::dynamic_bitset<> VisitedTargetAtoms;  // for checking rings
  public:
   TargetMatch() = default;
-  TargetMatch(const TargetMatch& src) { *this = src; }
-  TargetMatch& operator=(const TargetMatch& src) {
+  TargetMatch(const TargetMatch &src) { *this = src; }
+  TargetMatch &operator=(const TargetMatch &src) {
     Empty = src.Empty;
     if (!Empty) {
       MatchedAtomSize = src.MatchedAtomSize;
