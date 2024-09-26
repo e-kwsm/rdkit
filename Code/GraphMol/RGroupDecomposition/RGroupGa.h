@@ -92,7 +92,7 @@ struct GaResult {
 
   GaResult(const double score, const vector<vector<size_t>> &permutations)
       : rGroupScorer(RGroupScorer(permutations, score)) {}
-  GaResult(const GaResult& other) = default;
+  GaResult(const GaResult &other) = default;
 
   GaResult() = default;
 
