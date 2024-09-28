@@ -299,8 +299,7 @@ ShapeInput PrepareConformer(const ROMol &mol, int confId, bool useColors) {
   // feature
   for (unsigned i = 0; i < feature_idx_type.size(); ++i) {
     RDGeom::Point3D floc;
-    for (unsigned int j = 0; j < feature_idx_type[i].first.size(); ++j) {
-      unsigned int idx = feature_idx_type[i].first[j];
+    for (unsigned int idx : feature_idx_type[i].first) {
       if (idx >= nAtoms || mol.getAtomWithIdx(idx)->getAtomicNum() <= 1) {
         throw ValueErrorException("Invalid feature atom index");
       }
