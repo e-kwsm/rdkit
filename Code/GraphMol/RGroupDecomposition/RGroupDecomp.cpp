@@ -741,18 +741,18 @@ RGroupRows RGroupDecomposition::getRGroupsAsRows() const {
 
   auto usedLabelMap = UsedLabelMap(data->finalRlabelMapping);
 
-  for (auto it = permutation.begin(); it != permutation.end(); ++it) {
+  for (auto &it : permutation) {
     auto Rs_seen(usedLabelMap);
     // make a new rgroup entry
     groups.push_back(RGroupRow());
     RGroupRow &out_rgroups = groups.back();
     if (data->params.includeTargetMolInResults) {
       out_rgroups.emplace(RGroupData::getMolLabel(),
-                          it->getTargetMoleculeForHighlights(
+                          it.getTargetMoleculeForHighlights(
                               data->params.removeHydrogensPostMatch));
     }
 
-    const R_DECOMP &in_rgroups = it->rgroups;
+    const R_DECOMP &in_rgroups = it.rgroups;
 
     for (const auto &rgroup : in_rgroups) {
       const auto realLabel = data->finalRlabelMapping.find(rgroup.first);
@@ -764,7 +764,7 @@ RGroupRows RGroupDecomposition::getRGroupsAsRows() const {
     }
 
     out_rgroups.emplace(RGroupData::getCoreLabel(),
-                        outputCoreMolecule(*it, Rs_seen));
+                        outputCoreMolecule(it, Rs_seen));
   }
   return groups;
 }
