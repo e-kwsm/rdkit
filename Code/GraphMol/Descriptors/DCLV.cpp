@@ -198,9 +198,9 @@ static int within(const AtomRecord &src, const AtomRecord *dst, double dist) {
 }
 
 static void checkResidue(const AtomRecord *ptr, unsigned int count) {
-  for (unsigned int i = 0; i < CHECKMAX; i++) {
-    if (ptr->resName.compare(0, 3, residueCheck[i].name, 0, 3) == 0) {
-      if (residueCheck[i].count != count) {
+  for (auto i : residueCheck) {
+    if (ptr->resName.compare(0, 3, i.name, 0, 3) == 0) {
+      if (i.count != count) {
         std::cout << "Warning: Atom Count for residue " + ptr->resName +
                          std::to_string(ptr->resSerNo) + ptr->chain +
                          " does not match expected count"
@@ -358,11 +358,11 @@ struct State {
   }
 
   void freeGrid() {
-    for (unsigned int x = 0; x < VOXORDER; x++) {
-      for (unsigned int y = 0; y < VOXORDER; y++) {
-        for (unsigned int z = 0; z < VOXORDER; z++) {
-          freeAtomList(grid[x][y][z]);
-          grid[x][y][z] = nullptr;
+    for (auto &x : grid) {
+      for (auto &y : x) {
+        for (auto &z : y) {
+          freeAtomList(z);
+          z = nullptr;
         }
       }
     }
@@ -527,9 +527,8 @@ struct State {
     standardDots.count = 0;
 
     standardArea = 0.0;
-    for (unsigned int i = 0; i < 20; i++)
-      tesselate(Vertices[Faces[i][0]], Vertices[Faces[i][1]],
-                Vertices[Faces[i][2]], depth);
+    for (auto Face : Faces)
+      tesselate(Vertices[Face[0]], Vertices[Face[1]], Vertices[Face[2]], depth);
   }
 
   void generateSurfacePoints(int depth, bool typeFlag, double probeRadius,
@@ -561,10 +560,10 @@ struct State {
     maxx = maxy = maxz = -std::numeric_limits<double>::infinity();
 
     freeList = nullptr;
-    for (unsigned int x = 0; x < VOXORDER; x++) {
-      for (unsigned int y = 0; y < VOXORDER; y++) {
-        for (unsigned int z = 0; z < VOXORDER; z++) {
-          grid[x][y][z] = nullptr;
+    for (auto &x : grid) {
+      for (auto &y : x) {
+        for (auto &z : y) {
+          z = nullptr;
         }
       }
     }
