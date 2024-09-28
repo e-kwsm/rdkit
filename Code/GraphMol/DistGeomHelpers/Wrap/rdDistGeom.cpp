@@ -34,7 +34,7 @@ struct PyEmbedParameters
   void setCoordMap(const python::dict &cmap) {
     // the EmbedParameters object doesn't own the memory for the coordMap, so we
     // have to take ownership here.
-    d_coordMap = std::make_unique<std::map<int, RDGeom::Point3D>>();
+    d_coordMap.reset(new std::map<int, RDGeom::Point3D>());
     for (unsigned int i = 0;
          i < python::extract<unsigned int>(cmap.keys().attr("__len__")());
          ++i) {
@@ -43,63 +43,62 @@ struct PyEmbedParameters
     }
     coordMap = d_coordMap.get();
   }
-  coordMap = d_coordMap.get();
-} python::tuple getFailureCounts() {
-  python::list lst;
-  for (auto failure : failures) {
-    lst.append(failure);
+  python::tuple getFailureCounts() {
+    python::list lst;
+    for (auto failure : failures) {
+      lst.append(failure);
+    }
+    return python::tuple(lst);
   }
-  return python::tuple(lst);
-}
-void setCPCI(const python::dict &CPCIdict) {
-  // CPCI has the atom pair tuple as key and charge product as value
-  CPCI =
-      std::shared_ptr<std::map<std::pair<unsigned int, unsigned int>, double>>(
-          new std::map<std::pair<unsigned int, unsigned int>, double>);
+  void setCPCI(const python::dict &CPCIdict) {
+    // CPCI has the atom pair tuple as key and charge product as value
+    CPCI = std::shared_ptr<
+        std::map<std::pair<unsigned int, unsigned int>, double>>(
+        new std::map<std::pair<unsigned int, unsigned int>, double>);
 
-  python::list ks = CPCIdict.keys();
-  unsigned int nKeys = python::extract<unsigned int>(ks.attr("__len__")());
+    python::list ks = CPCIdict.keys();
+    unsigned int nKeys = python::extract<unsigned int>(ks.attr("__len__")());
 
-  for (unsigned int i = 0; i < nKeys; ++i) {
-    python::tuple id = python::extract<python::tuple>(ks[i]);
-    unsigned int a = python::extract<unsigned int>(id[0]);
-    unsigned int b = python::extract<unsigned int>(id[1]);
-    (*CPCI)[std::make_pair(a, b)] = python::extract<double>(CPCIdict[id]);
-  }
-}
-
-void setBoundsMatrix(const python::object &boundsMatArg) {
-  PyObject *boundsMatObj = boundsMatArg.ptr();
-  if (!PyArray_Check(boundsMatObj)) {
-    throw_value_error("Argument isn't an array");
+    for (unsigned int i = 0; i < nKeys; ++i) {
+      python::tuple id = python::extract<python::tuple>(ks[i]);
+      unsigned int a = python::extract<unsigned int>(id[0]);
+      unsigned int b = python::extract<unsigned int>(id[1]);
+      (*CPCI)[std::make_pair(a, b)] = python::extract<double>(CPCIdict[id]);
+    }
   }
 
-  auto *boundsMat = reinterpret_cast<PyArrayObject *>(boundsMatObj);
-  // get the dimensions of the array
-  int nrows = PyArray_DIM(boundsMat, 0);
-  int ncols = PyArray_DIM(boundsMat, 1);
-  if (nrows != ncols) {
-    throw_value_error("The array has to be square");
-  }
-  if (nrows <= 0) {
-    throw_value_error("The array has to have a nonzero size");
-  }
-  if (PyArray_DESCR(boundsMat)->type_num != NPY_DOUBLE) {
-    throw_value_error("Only double arrays are currently supported");
+  void setBoundsMatrix(const python::object &boundsMatArg) {
+    PyObject *boundsMatObj = boundsMatArg.ptr();
+    if (!PyArray_Check(boundsMatObj)) {
+      throw_value_error("Argument isn't an array");
+    }
+
+    auto *boundsMat = reinterpret_cast<PyArrayObject *>(boundsMatObj);
+    // get the dimensions of the array
+    int nrows = PyArray_DIM(boundsMat, 0);
+    int ncols = PyArray_DIM(boundsMat, 1);
+    if (nrows != ncols) {
+      throw_value_error("The array has to be square");
+    }
+    if (nrows <= 0) {
+      throw_value_error("The array has to have a nonzero size");
+    }
+    if (PyArray_DESCR(boundsMat)->type_num != NPY_DOUBLE) {
+      throw_value_error("Only double arrays are currently supported");
+    }
+
+    unsigned int dSize = nrows * nrows;
+    auto *cData = new double[dSize];
+    auto *inData = reinterpret_cast<double *>(PyArray_DATA(boundsMat));
+    memcpy(static_cast<void *>(cData), static_cast<const void *>(inData),
+           dSize * sizeof(double));
+    DistGeom::BoundsMatrix::DATA_SPTR sdata(cData);
+    this->boundsMat = boost::shared_ptr<const DistGeom::BoundsMatrix>(
+        new DistGeom::BoundsMatrix(nrows, sdata));
   }
 
-  unsigned int dSize = nrows * nrows;
-  auto *cData = new double[dSize];
-  auto *inData = reinterpret_cast<double *>(PyArray_DATA(boundsMat));
-  memcpy(static_cast<void *>(cData), static_cast<const void *>(inData),
-         dSize * sizeof(double));
-  DistGeom::BoundsMatrix::DATA_SPTR sdata(cData);
-  this->boundsMat = boost::shared_ptr<const DistGeom::BoundsMatrix>(
-      new DistGeom::BoundsMatrix(nrows, sdata));
-}
-
-private:
-std::unique_ptr<std::map<int, RDGeom::Point3D>> d_coordMap;
+ private:
+  std::unique_ptr<std::map<int, RDGeom::Point3D>> d_coordMap;
 };
 }  // namespace
 
