@@ -4217,7 +4217,7 @@ MarvinRectangle::MarvinRectangle(const std::vector<MarvinRectangle> &rects) {
   lowerRight.x = -DBL_MAX;
   lowerRight.y = DBL_MAX;
 
-  for (auto rect : rects) {
+  for (const auto &rect : rects) {
     this->extend(rect);
   }
 }

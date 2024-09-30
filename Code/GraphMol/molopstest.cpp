@@ -354,7 +354,7 @@ TEST_CASE("test3") {
   // won't find any extra rings, and we keep the ones from the SSSR.
   bfs = MolOps::symmetrizeSSSR(*m, bfrs);
   REQUIRE(bfs == 8);
-  for (auto bring : bfrs) {
+  for (const auto &bring : bfrs) {
     REQUIRE(bring.size() < 6);
   }
   delete m;
