@@ -224,7 +224,7 @@ TEST_CASE("createAtomPropertyLists", "[atom_list_properties]") {
     REQUIRE(m->hasProp("atom.prop.foo1"));
     std::string ps = m->getProp<std::string>("atom.prop.foo1");
     CHECK(ps.length() > 240);
-    CHECK(ps.find("\n") != std::string::npos);
+    CHECK(ps.find('\n') != std::string::npos);
     for (auto &atom : m->atoms()) {
       atom->clearProp("foo1");
     }
