@@ -204,7 +204,7 @@ std::vector<std::vector<unsigned int>> makeSubClusters(
       if (results.empty() || results.front().getBondMatches().empty()) {
         continue;
       }
-      auto res = results.front();
+      const auto &res = results.front();
       auto g_12_13 =
           g_ij(res.getMcesMol(), clusOpts.a, clusOpts.b, clusOpts.minFragSize);
       double sim = g_12_13 / std::min(g_12, g_13);

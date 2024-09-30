@@ -862,12 +862,12 @@ TEST_CASE("Github #2788: doKekule=true should kekulize the molecule",
     bool doIsomeric = true;
     bool doKekule = false;
     {
-      RWMol tm(*m);
+      const RWMol &tm(*m);
       CHECK(MolToSmiles(tm, doIsomeric, doKekule) == "c1ccnc1");
     }
     doKekule = true;
     {
-      RWMol tm(*m);
+      const RWMol &tm(*m);
       CHECK_THROWS_AS(MolToSmiles(tm, doIsomeric, doKekule), KekulizeException);
     }
   }
