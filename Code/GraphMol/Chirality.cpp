@@ -211,8 +211,9 @@ void updateDoubleBondNeighbors(ROMol &mol, Bond *dblBond, const Conformer *conf,
 
   bool sameTorsionDir = false;
   if (conf) {
-    RDGeom::Point3D beginP = conf->getAtomPos(dblBond->getBeginAtomIdx());
-    RDGeom::Point3D endP = conf->getAtomPos(dblBond->getEndAtomIdx());
+    const RDGeom::Point3D &beginP =
+        conf->getAtomPos(dblBond->getBeginAtomIdx());
+    const RDGeom::Point3D &endP = conf->getAtomPos(dblBond->getEndAtomIdx());
     RDGeom::Point3D bond1P =
         conf->getAtomPos(bond1->getOtherAtomIdx(dblBond->getBeginAtomIdx()));
     RDGeom::Point3D bond2P =
@@ -3203,7 +3204,7 @@ static bool assignNontetrahedralChiralTypeFrom3D(ROMol &mol,
       return false;
     }
   }
-  RDGeom::Point3D cen = conf.getAtomPos(atom->getIdx());
+  const RDGeom::Point3D &cen = conf.getAtomPos(atom->getIdx());
   RDGeom::Point3D v[6];
   unsigned int count = 0;
 
@@ -3213,7 +3214,7 @@ static bool assignNontetrahedralChiralTypeFrom3D(ROMol &mol,
     if (count == 6) {
       return false;
     }
-    RDGeom::Point3D p = conf.getAtomPos(*nbrIdx);
+    const RDGeom::Point3D &p = conf.getAtomPos(*nbrIdx);
     v[count] = cen.directionVector(p);
     ++count;
     ++nbrIdx;

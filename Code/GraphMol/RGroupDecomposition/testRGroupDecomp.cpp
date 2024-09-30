@@ -1206,7 +1206,7 @@ Cn1cnc2cc(Oc3cc(N4CCN(Cc5ccccc5-c5ccc(Cl)cc5)CC4)ccc3C(=O)NS(=O)(=O)c3ccc(NCCCN4
   tokenizer tokens(smis, sep);
   for (tokenizer::iterator token = tokens.begin(); token != tokens.end();
        ++token) {
-    std::string smi = *token;
+    const std::string &smi = *token;
     RWMol *m = SmilesToMol(smi);
     REQUIRE(m);
     ms.push_back(ROMOL_SPTR(m));

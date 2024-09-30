@@ -497,17 +497,17 @@ std::ostream &operator<<(std::ostream &target,
   target << sgroup.getIndexInMol() << ' '
          << sgroup.getProp<std::string>("TYPE");
 
-  auto brackets = sgroup.getBrackets();
+  const auto &brackets = sgroup.getBrackets();
   if (!brackets.empty()) {
     target << " Brk: " << brackets.size();
   }
 
-  auto cstates = sgroup.getCStates();
+  const auto &cstates = sgroup.getCStates();
   if (!cstates.empty()) {
     target << " CSt: " << cstates.size();
   }
 
-  auto attachpts = sgroup.getAttachPoints();
+  const auto &attachpts = sgroup.getAttachPoints();
   if (!attachpts.empty()) {
     target << " AtPt: " << attachpts.size();
   }
