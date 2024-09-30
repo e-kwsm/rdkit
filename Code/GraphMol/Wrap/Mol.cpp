@@ -28,6 +28,7 @@
 #include <RDBoost/pyint_api.h>
 #include <boost/python/copy_non_const_reference.hpp>
 #include <boost/python/iterator.hpp>
+#include <utility>
 
 namespace python = boost::python;
 
@@ -70,7 +71,7 @@ struct mol_pickle_suite : rdkit_pickle_suite {
   };
 };
 
-bool HasSubstructMatchStr(std::string pkl, const ROMol &query,
+bool HasSubstructMatchStr(const std::string &pkl, const ROMol &query,
                           bool recursionPossible = true,
                           bool useChirality = false,
                           bool useQueryQueryMatches = false) {
@@ -169,7 +170,7 @@ class pyobjFunctor {
 };
 void setSubstructMatchFinalCheck(SubstructMatchParameters &ps,
                                  python::object func) {
-  ps.extraFinalCheck = pyobjFunctor(func);
+  ps.extraFinalCheck = pyobjFunctor(std::move(func));
 }
 
 }  // namespace
@@ -227,8 +228,8 @@ class ReadWriteMol : public RWMol {
     beginBatchEdit();
     return this;
   }
-  bool exit(python::object exc_type, python::object exc_val,
-            python::object traceback) {
+  bool exit(const python::object &exc_type, const python::object &exc_val,
+            const python::object &traceback) {
     RDUNUSED_PARAM(exc_val);
     RDUNUSED_PARAM(traceback);
     if (exc_type != python::object()) {
