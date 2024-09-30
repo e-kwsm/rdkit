@@ -3153,7 +3153,7 @@ void testMultipleGroupsToUnlabelledCoreAtom() {
     params.matchingStrategy = Exhaustive;
     params.scoreMethod = FingerprintVariance;
     RGroupDecomposition decomp(*core, params);
-    for (auto smiles : smilesVec) {
+    for (const auto &smiles : smilesVec) {
       auto mol = SmilesToMol(smiles);
       auto result = decomp.add(*mol);
       TEST_ASSERT(result > -1);
@@ -3214,7 +3214,7 @@ void testMultipleGroupsToUnlabelledCoreAtom() {
     params.matchingStrategy = Exhaustive;
     params.scoreMethod = FingerprintVariance;
     RGroupDecomposition decomp(*core, params);
-    for (auto smiles : smilesVec) {
+    for (const auto &smiles : smilesVec) {
       auto mol = SmilesToMol(smiles);
       auto result = decomp.add(*mol);
       TEST_ASSERT(result > -1);
