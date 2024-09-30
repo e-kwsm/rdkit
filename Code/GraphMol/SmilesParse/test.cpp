@@ -4040,7 +4040,7 @@ void testIsomericSmilesIsDefault() {
     auto m = SmilesToMol(smi);
     TEST_ASSERT(m)
     auto csmi = MolToSmiles(*m);
-    TEST_ASSERT(csmi.find("@") != std::string::npos);
+    TEST_ASSERT(csmi.find('@') != std::string::npos);
     delete m;
   }
   BOOST_LOG(rdInfoLog) << "done" << std::endl;
