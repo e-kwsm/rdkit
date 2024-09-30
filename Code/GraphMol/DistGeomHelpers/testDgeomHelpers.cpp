@@ -58,7 +58,7 @@ void test1() {
   tokenizer tokens(smiString, spaceSep);
   for (tokenizer::iterator token = tokens.begin(); token != tokens.end();
        ++token) {
-    std::string smi = *token;
+    const std::string &smi = *token;
     RWMol *m = SmilesToMol(smi, 0, 1);
     int cid = DGeomHelpers::EmbedMolecule(*m, 10, 1, true, false, 2, true, 1,
                                           nullptr, 1e-2);
@@ -840,7 +840,7 @@ void testRandomCoords() {
   tokenizer tokens(smiString, spaceSep);
   for (tokenizer::iterator token = tokens.begin(); token != tokens.end();
        ++token) {
-    std::string smi = *token;
+    const std::string &smi = *token;
     // std::cerr << "SMI: " << smi << std::endl;
     ROMol *m = SmilesToMol(smi, 0, 1);
     auto *m2 = (RWMol *)MolOps::addHs(*m);
@@ -1583,8 +1583,8 @@ void compareConfs(const ROMol *m, const ROMol *expected, int molConfId = -1,
     TEST_ASSERT(m->getAtomWithIdx(i)->getAtomicNum() ==
                 expected->getAtomWithIdx(i)->getAtomicNum());
 
-    RDGeom::Point3D pt1i = conf1.getAtomPos(i);
-    RDGeom::Point3D pt2i = conf2.getAtomPos(i);
+    const RDGeom::Point3D &pt1i = conf1.getAtomPos(i);
+    const RDGeom::Point3D &pt2i = conf2.getAtomPos(i);
     TEST_ASSERT((pt1i - pt2i).length() < 0.05);
   }
 }

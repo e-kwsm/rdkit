@@ -234,7 +234,7 @@ MolChemicalFeatureDef *parseFeatureDef(
         CommaTokenizer commaTok(*tokIt);
         for (CommaTokenizer::const_iterator commaTokIt = commaTok.begin();
              commaTokIt != commaTok.end(); commaTokIt++) {
-          std::string number = *commaTokIt;
+          const std::string &number = *commaTokIt;
           try {
             weights.push_back(boost::lexical_cast<double>(number));
           } catch (boost::bad_lexical_cast &) {
