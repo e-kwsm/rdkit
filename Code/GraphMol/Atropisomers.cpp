@@ -312,7 +312,7 @@ bool DetectAtropisomerChiralityOneBond(Bond *bond, ROMol &mol,
 
   // make sure we do not have wiggle bonds
 
-  for (auto atomAndBondVec : atomAndBondVecs) {
+  for (const auto &atomAndBondVec : atomAndBondVecs) {
     for (auto endBond : atomAndBondVec.second) {
       if (endBond->getBondDir() == Bond::UNKNOWN) {
         return false;  // not an atropisomer
@@ -486,7 +486,7 @@ bool DetectAtropisomerChiralityOneBond(Bond *bond, ROMol &mol,
 
 void cleanupAtropisomerStereoGroups(ROMol &mol) {
   std::vector<StereoGroup> newsgs;
-  for (auto sg : mol.getStereoGroups()) {
+  for (const auto &sg : mol.getStereoGroups()) {
     std::vector<Atom *> okatoms;
     std::vector<Bond *> okbonds;
 
@@ -614,7 +614,7 @@ bool WedgeBondFromAtropisomerOneBondNoConf(
 
   //  make sure we do not have wiggle bonds
 
-  for (auto atomAndBondVec : atomAndBondVecs) {
+  for (const auto &atomAndBondVec : atomAndBondVecs) {
     for (auto endBond : atomAndBondVec.second) {
       if (endBond->getBondDir() == Bond::UNKNOWN) {
         return false;  // not an atropisomer)
@@ -777,7 +777,7 @@ bool WedgeBondFromAtropisomerOneBond2d(
 
   //  make sure we do not have wiggle bonds
 
-  for (auto atomAndBondVec : atomAndBondVecs) {
+  for (const auto &atomAndBondVec : atomAndBondVecs) {
     for (auto endBond : atomAndBondVec.second) {
       if (endBond->getBondDir() == Bond::UNKNOWN) {
         return false;  // not an atropisomer)
@@ -998,7 +998,7 @@ bool WedgeBondFromAtropisomerOneBond3d(
 
   //  make sure we do not have wiggle bonds
 
-  for (auto atomAndBondVecs : atomAndBondVecs) {
+  for (const auto &atomAndBondVecs : atomAndBondVecs) {
     for (auto endBond : atomAndBondVecs.second) {
       if (endBond->getBondDir() == Bond::UNKNOWN) {
         return false;  // not an atropisomer)
