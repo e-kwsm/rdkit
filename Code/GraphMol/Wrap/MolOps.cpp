@@ -44,7 +44,7 @@ using boost_adaptbx::python::streambuf;
 namespace RDKit {
 
 python::tuple fragmentOnSomeBondsHelper(const ROMol &mol,
-                                        python::object pyBondIndices,
+                                        const python::object &pyBondIndices,
                                         unsigned int nToBreak, bool addDummies,
                                         python::object pyDummyLabels,
                                         python::object pyBondTypes,
@@ -117,7 +117,8 @@ python::tuple getShortestPathHelper(const ROMol &mol, int aid1, int aid2) {
   return static_cast<python::tuple>(MolOps::getShortestPath(mol, aid1, aid2));
 }
 
-ROMol *fragmentOnBondsHelper(const ROMol &mol, python::object pyBondIndices,
+ROMol *fragmentOnBondsHelper(const ROMol &mol,
+                             const python::object &pyBondIndices,
                              bool addDummies, python::object pyDummyLabels,
                              python::object pyBondTypes,
                              python::list pyCutsPerAtom) {
@@ -248,7 +249,8 @@ python::dict splitMolByPDBChainId(const ROMol &mol, python::object pyWhiteList,
 }
 
 python::dict parseQueryDefFileHelper(python::object &input, bool standardize,
-                                     std::string delimiter, std::string comment,
+                                     const std::string &delimiter,
+                                     const std::string &comment,
                                      unsigned int nameColumn,
                                      unsigned int smartsColumn) {
   python::extract<std::string> get_filename(input);
@@ -274,8 +276,8 @@ python::dict parseQueryDefFileHelper(python::object &input, bool standardize,
   return res;
 }
 
-void addRecursiveQueriesHelper(ROMol &mol, python::dict replDict,
-                               std::string propName) {
+void addRecursiveQueriesHelper(ROMol &mol, const python::dict &replDict,
+                               const std::string &propName) {
   std::map<std::string, ROMOL_SPTR> replacements;
   const auto items = replDict.items();
   for (unsigned int i = 0; i < python::len(items); ++i) {
@@ -289,7 +291,7 @@ void addRecursiveQueriesHelper(ROMol &mol, python::dict replDict,
 }
 
 ROMol *addHs2(const ROMol &orig, MolOps::AddHsParameters params,
-              python::object onlyOnAtoms) {
+              const python::object &onlyOnAtoms) {
   std::unique_ptr<std::vector<unsigned int>> onlyOn;
   if (onlyOnAtoms) {
     onlyOn = pythonObjectToVect(onlyOnAtoms, orig.getNumAtoms());
@@ -614,7 +616,7 @@ ExplicitBitVect *wrapLayeredFingerprint(
     const ROMol &mol, unsigned int layerFlags, unsigned int minPath,
     unsigned int maxPath, unsigned int fpSize, python::list atomCounts,
     ExplicitBitVect *includeOnlyBits, bool branchedPaths,
-    python::object fromAtoms) {
+    const python::object &fromAtoms) {
   std::unique_ptr<std::vector<unsigned int>> lFromAtoms =
       pythonObjectToVect(fromAtoms, mol.getNumAtoms());
   std::unique_ptr<std::vector<unsigned int>> atomCountsV;
@@ -687,8 +689,9 @@ ExplicitBitVect *wrapRDKFingerprintMol(
     const ROMol &mol, unsigned int minPath, unsigned int maxPath,
     unsigned int fpSize, unsigned int nBitsPerHash, bool useHs,
     double tgtDensity, unsigned int minSize, bool branchedPaths,
-    bool useBondOrder, python::object atomInvariants, python::object fromAtoms,
-    python::object atomBits, python::object bitInfo) {
+    bool useBondOrder, const python::object &atomInvariants,
+    const python::object &fromAtoms, python::object atomBits,
+    python::object bitInfo) {
   std::unique_ptr<std::vector<unsigned int>> lAtomInvariants =
       pythonObjectToVect<unsigned int>(atomInvariants);
   std::unique_ptr<std::vector<unsigned int>> lFromAtoms =
@@ -743,8 +746,9 @@ ExplicitBitVect *wrapRDKFingerprintMol(
 
 SparseIntVect<boost::uint64_t> *wrapUnfoldedRDKFingerprintMol(
     const ROMol &mol, unsigned int minPath, unsigned int maxPath, bool useHs,
-    bool branchedPaths, bool useBondOrder, python::object atomInvariants,
-    python::object fromAtoms, python::object atomBits, python::object bitInfo) {
+    bool branchedPaths, bool useBondOrder, const python::object &atomInvariants,
+    const python::object &fromAtoms, python::object atomBits,
+    python::object bitInfo) {
   std::unique_ptr<std::vector<unsigned int>> lAtomInvariants =
       pythonObjectToVect<unsigned int>(atomInvariants);
   std::unique_ptr<std::vector<unsigned int>> lFromAtoms =
@@ -866,7 +870,8 @@ ROMol *pathToSubmolHelper(const ROMol &mol, python::object &path, bool useQuery,
   return result;
 }
 
-ROMol *adjustQueryPropertiesHelper(const ROMol &mol, python::object pyparams) {
+ROMol *adjustQueryPropertiesHelper(const ROMol &mol,
+                                   const python::object &pyparams) {
   MolOps::AdjustQueryParameters params;
   if (pyparams != python::object()) {
     params = python::extract<MolOps::AdjustQueryParameters>(pyparams);
@@ -874,8 +879,8 @@ ROMol *adjustQueryPropertiesHelper(const ROMol &mol, python::object pyparams) {
   return MolOps::adjustQueryProperties(mol, &params);
 }
 
-ROMol *adjustQueryPropertiesWithGenericGroupsHelper(const ROMol &mol,
-                                                    python::object pyparams) {
+ROMol *adjustQueryPropertiesWithGenericGroupsHelper(
+    const ROMol &mol, const python::object &pyparams) {
   MolOps::AdjustQueryParameters params;
   if (pyparams != python::object()) {
     params = python::extract<MolOps::AdjustQueryParameters>(pyparams);
@@ -952,7 +957,8 @@ ROMol *replaceCoreHelper(const ROMol &mol, const ROMol &core,
                      requireDummyMatch);
 }
 
-void setDoubleBondNeighborDirectionsHelper(ROMol &mol, python::object confObj) {
+void setDoubleBondNeighborDirectionsHelper(ROMol &mol,
+                                           const python::object &confObj) {
   Conformer *conf = nullptr;
   if (confObj) {
     conf = python::extract<Conformer *>(confObj);
@@ -986,7 +992,7 @@ ROMol *molzipHelper(python::object &pmols, const MolzipParams &p) {
   return molzip(*mols, p).release();
 }
 
-ROMol *rgroupRowZipHelper(python::dict row, const MolzipParams &p) {
+ROMol *rgroupRowZipHelper(const python::dict &row, const MolzipParams &p) {
   std::map<std::string, ROMOL_SPTR> rgroup_row;
   python::list items = row.items();
   for (size_t i = 0; i < (size_t)python::len(items); ++i) {
