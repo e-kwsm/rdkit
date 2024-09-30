@@ -136,7 +136,7 @@ class RDKIT_FINGERPRINTS_EXPORT MorganArguments : public FingerprintArguments {
                   const std::vector<std::uint32_t> &countBounds = {1, 2, 4, 8},
                   std::uint32_t fpSize = 2048,
                   bool includeRedundantEnvironments = false)
-      : FingerprintArguments(countSimulation, std::move(countBounds), fpSize, 1,
+      : FingerprintArguments(countSimulation, countBounds, fpSize, 1,
                              includeChirality),
         df_onlyNonzeroInvariants(onlyNonzeroInvariants),
         d_radius(radius),
