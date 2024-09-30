@@ -41,7 +41,7 @@ class RDKIT_FINGERPRINTS_EXPORT TopologicalTorsionArguments
   TopologicalTorsionArguments(const bool includeChirality,
                               const uint32_t torsionAtomCount,
                               const bool countSimulation,
-                              const std::vector<std::uint32_t> countBounds,
+                              const std::vector<std::uint32_t> &countBounds,
                               const std::uint32_t fpSize);
 };
 
