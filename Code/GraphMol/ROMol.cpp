@@ -620,7 +620,7 @@ const Conformer &ROMol::getConformer(int id) const {
     return *(d_confs.front());
   }
   auto cid = (unsigned int)id;
-  for (auto conf : d_confs) {
+  for (const auto &conf : d_confs) {
     if (conf->getId() == cid) {
       return *conf;
     }
