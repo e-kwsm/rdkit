@@ -15,6 +15,7 @@
 #include <GraphMol/MolStandardize/MolStandardize.h>
 #include <GraphMol/MolStandardize/Tautomer.h>
 #include <sstream>
+#include <utility>
 
 namespace python = boost::python;
 using namespace RDKit;
@@ -229,7 +230,7 @@ ROMol *canonicalizeHelper(const MolStandardize::TautomerEnumerator &self,
 
 ROMol *canonicalizeHelper2(const MolStandardize::TautomerEnumerator &self,
                            const ROMol &mol, python::object scoreFunc) {
-  pyobjFunctor ftor(scoreFunc);
+  pyobjFunctor ftor(std::move(scoreFunc));
   return self.canonicalize(mol, ftor);
 }
 
@@ -255,7 +256,7 @@ ROMol *pickCanonicalHelper(const MolStandardize::TautomerEnumerator &self,
 
 ROMol *pickCanonicalHelper2(const MolStandardize::TautomerEnumerator &self,
                             const python::object &o, python::object scoreFunc) {
-  pyobjFunctor ftor(scoreFunc);
+  pyobjFunctor ftor(std::move(scoreFunc));
   python::extract<PyTautomerEnumeratorResult *> e(o);
   if (e.check()) {
     return self.pickCanonical(*e()->get(), ftor);
