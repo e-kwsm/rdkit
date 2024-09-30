@@ -115,7 +115,7 @@ int main(int argc, char *argv[]) {
       if (count > start + batch) {
         break;
       }
-      int pos = line.find_last_of("\t");
+      int pos = line.find_last_of('\t');
       auto smiles = line.substr(pos + 1);
       shared_ptr<ROMol> mol(SmilesToMol(smiles));
       molecules.push_back(mol);
