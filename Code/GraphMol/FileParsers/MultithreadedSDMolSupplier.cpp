@@ -166,8 +166,8 @@ void MultithreadedSDMolSupplier::readMolProps(RWMol &mol,
         hasProp = true;
         warningIssued = false;
         tempStr.erase(0, 1);            // remove the first ">" sign
-        size_t sl = tempStr.find("<");  // begin datalabel
-        size_t se = tempStr.find(">");  // end datalabel
+        size_t sl = tempStr.find('<');  // begin datalabel
+        size_t se = tempStr.find('>');  // end datalabel
         if ((sl == std::string::npos) || (se == std::string::npos) ||
             (se == (sl + 1))) {
           // we either do not have a data label or the label is empty
