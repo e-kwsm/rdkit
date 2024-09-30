@@ -1986,7 +1986,7 @@ M  END)CTAB"_ctab;
     REQUIRE(m);
     m->clearConformers();
     auto smi = MolToCXSmiles(*m);
-    CHECK(smi.find("$") == std::string::npos);
+    CHECK(smi.find('$') == std::string::npos);
   }
 }
 
