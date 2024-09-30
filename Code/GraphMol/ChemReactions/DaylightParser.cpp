@@ -143,7 +143,7 @@ std::unique_ptr<ChemicalReaction> parseReaction(
   std::string text = origText;
   std::string cxPart;
   if (params.allowCXSMILES) {
-    auto sidx = origText.find_first_of("|");
+    auto sidx = origText.find_first_of('|');
     if (sidx != std::string::npos && sidx != 0) {
       text = origText.substr(0, sidx);
       cxPart = boost::trim_copy(origText.substr(sidx, origText.size() - sidx));

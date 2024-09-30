@@ -188,7 +188,7 @@ unsigned int readGromosTrajectory(const std::string &fName, Trajectory &traj) {
           throw ValueErrorException("Wrong number of coordinates");
         }
         // ignore comments
-        if (tempStr.find("#") != std::string::npos) {
+        if (tempStr.find('#') != std::string::npos) {
           continue;
         }
         std::stringstream ls(tempStr);

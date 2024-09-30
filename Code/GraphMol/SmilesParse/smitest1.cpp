@@ -3588,7 +3588,7 @@ TEST_CASE("Testing that isomeric SMILES is now the default output") {
   auto m = SmilesToMol(smi);
   REQUIRE(m);
   auto csmi = MolToSmiles(*m);
-  REQUIRE(csmi.find("@") != std::string::npos);
+  REQUIRE(csmi.find('@') != std::string::npos);
   delete m;
 }
 
