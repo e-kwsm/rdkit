@@ -784,7 +784,7 @@ void cleanSmarts(std::string &smarts, const std::string &equivalentAtoms) {
   std::string start_smt = "";
   while (start_smt != smarts) {
     start_smt = smarts;
-    for (auto [patt, repl] : repls) {
+    for (const auto &[patt, repl] : repls) {
       smarts = std::regex_replace(smarts, patt, repl);
     }
   }
