@@ -366,7 +366,7 @@ M  END
   mol.reset(MolBlockToMol(mblock, false, false));
   errout = features.validate(*mol, true);
   TEST_ASSERT(errout.size() == 1);
-  for (auto msg : errout) {
+  for (const auto &msg : errout) {
     cerr << msg << endl;
   }
   errmsg = errout[0];
@@ -400,7 +400,7 @@ M  END
   mol->getAtomWithIdx(0)->setAtomicNum(0);
   errout = features.validate(*mol, true);
   TEST_ASSERT(errout.size() == 1);
-  for (auto msg : errout) {
+  for (const auto &msg : errout) {
     cerr << msg << endl;
   }
   errmsg = errout[0];
@@ -433,7 +433,7 @@ M  END
   mol.reset(MolBlockToMol(mblock, false, false));
   errout = features.validate(*mol, true);
   TEST_ASSERT(errout.size() == 1);
-  for (auto msg : errout) {
+  for (const auto &msg : errout) {
     cerr << msg << endl;
   }
   errmsg = errout[0];
@@ -477,7 +477,7 @@ M  END
   mol.reset(MolBlockToMol(mblock, false, false));
   errout = features.validate(*mol, true);
   TEST_ASSERT(errout.size() == 6);
-  for (auto msg : errout) {
+  for (const auto &msg : errout) {
     cerr << msg << endl;
   }
   errmsg = errout[0];
@@ -517,7 +517,7 @@ M  END
   mol.reset(MolBlockToMol(mblock, false, false));
   errout = features.validate(*mol, true);
   TEST_ASSERT(errout.size() == 2);
-  for (auto msg : errout) {
+  for (const auto &msg : errout) {
     cerr << msg << endl;
   }
   errmsg = errout[0];
@@ -548,7 +548,7 @@ M  END
   mol.reset(MolBlockToMol(mblock, false, false));
   errout = features.validate(*mol, true);
   TEST_ASSERT(errout.size() == 1);
-  for (auto msg : errout) {
+  for (const auto &msg : errout) {
     cerr << msg << endl;
   }
   errmsg = errout[0];
@@ -589,7 +589,7 @@ M  END
   mol.reset(MolBlockToMol(mblock, false, false));
   errout = features.validate(*mol, true);
   TEST_ASSERT(errout.size() == 1);
-  for (auto msg : errout) {
+  for (const auto &msg : errout) {
     cerr << msg << endl;
   }
   errmsg = errout[0];
@@ -1330,7 +1330,7 @@ M  END
   mol.reset(MolBlockToMol(mblock, false, false));
   Chirality::reapplyMolBlockWedging(*mol);
   errout = stereo.validate(*mol, true);
-  for (auto msg : errout) {
+  for (const auto &msg : errout) {
     cerr << msg << endl;
   }
   TEST_ASSERT(errout.size() == 0);
@@ -1367,7 +1367,7 @@ M  END
   mol.reset(MolBlockToMol(mblock, false, false));
   Chirality::reapplyMolBlockWedging(*mol);
   errout = stereo.validate(*mol, true);
-  for (auto msg : errout) {
+  for (const auto &msg : errout) {
     cerr << msg << endl;
   }
   TEST_ASSERT(errout.size() == 1);
@@ -1405,7 +1405,7 @@ M  END
   Chirality::reapplyMolBlockWedging(*mol);
   errout = stereo.validate(*mol, true);
   cerr << "here" << endl;
-  for (auto msg : errout) {
+  for (const auto &msg : errout) {
     cerr << msg << endl;
   }
   cerr << "there" << endl;
@@ -1450,7 +1450,7 @@ M  END
   mol.reset(MolBlockToMol(mblock, false, false));
   Chirality::reapplyMolBlockWedging(*mol);
   errout = stereo.validate(*mol, true);
-  for (auto msg : errout) {
+  for (const auto &msg : errout) {
     cerr << msg << endl;
   }
   TEST_ASSERT(errout.size() == 1);
@@ -1556,7 +1556,7 @@ M  END
   Chirality::reapplyMolBlockWedging(*mol);
   errout = stereo.validate(*mol, true);
 
-  for (auto msg : errout) {
+  for (const auto &msg : errout) {
     cerr << msg << endl;
   }
 
@@ -1605,7 +1605,7 @@ M  END
   Chirality::reapplyMolBlockWedging(*mol);
   errout = stereo.validate(*mol, true);
 
-  for (auto msg : errout) {
+  for (const auto &msg : errout) {
     cerr << msg << endl;
   }
 
