@@ -630,7 +630,7 @@ void addTorsions(const ROMol &mol, MMFFMolProperties *mmffMolProperties,
   bool contribAdded = false;
 
   for (unsigned int i = 0; i < nHits; ++i) {
-    MatchVectType match = matchVect[i];
+    const MatchVectType &match = matchVect[i];
     TEST_ASSERT(match.size() == 2);
     int idx2 = match[0].second;
     int idx3 = match[1].second;
