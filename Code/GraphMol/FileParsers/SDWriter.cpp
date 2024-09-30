@@ -91,7 +91,7 @@ void _writePropToStream(std::ostream *dp_ostream, const ROMol &mol,
   }
 
   // warn and skip if we include a new line
-  if (name.find("\n") != std::string::npos) {
+  if (name.find('\n') != std::string::npos) {
     BOOST_LOG(rdWarningLog)
         << "WARNING: Skipping property " << name
         << " because the name includes a newline" << std::endl;

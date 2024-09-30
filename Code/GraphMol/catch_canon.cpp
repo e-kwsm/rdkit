@@ -1503,7 +1503,7 @@ static void checkSmilesRoundtrip(const std::string &smiles,
 
   auto getStrings = [&ps, &fields](const ROMol &m) {
     const auto cxsmiles = MolToCXSmiles(m, ps, fields);
-    auto pos = cxsmiles.find(" ");
+    auto pos = cxsmiles.find(' ');
     const std::string smiles(cxsmiles.data(), pos);
 
     return std::make_pair(smiles, cxsmiles);

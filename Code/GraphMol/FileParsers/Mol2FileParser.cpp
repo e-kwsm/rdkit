@@ -112,7 +112,7 @@ void readFormalChargesFromAttr(std::istream *inStream, RWMol *res) {
         // FIX:what if an atom has multiple properties? Seems like they might be
         // separated
         // with ";" ... need to look at that in more detail!
-        if ((*itemIt).find("=") == std::string::npos) {
+        if ((*itemIt).find('=') == std::string::npos) {
           try {
             formCharge = boost::lexical_cast<int>(*itemIt);
           } catch (boost::bad_lexical_cast &) {
