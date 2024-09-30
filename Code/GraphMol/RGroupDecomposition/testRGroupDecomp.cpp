@@ -1862,7 +1862,7 @@ void testMultipleCoreRelabellingIssues() {
     getline(fh, line);
 
     while (getline(fh, line)) {
-      int pos = line.find_last_of("\t");
+      int pos = line.find_last_of('\t');
       auto smiles = line.substr(pos + 1);
       std::shared_ptr<ROMol> mol(SmilesToMol(smiles));
       molecules.push_back(mol);
