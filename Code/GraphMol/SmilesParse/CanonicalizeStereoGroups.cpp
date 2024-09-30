@@ -637,7 +637,7 @@ void canonicalizeStereoGroups_internal(
     boost::dynamic_bitset<> atomIndicesInStereoGroups(newMol->getNumAtoms());
     boost::dynamic_bitset<> bondIndicesInStereoGroups(newMol->getNumBonds());
 
-    for (auto grp : newMol->getStereoGroups()) {
+    for (const auto &grp : newMol->getStereoGroups()) {
       for (auto atomPtr : grp.getAtoms()) {
         atomIndicesInStereoGroups.set(atomPtr->getIdx());
       }
@@ -838,7 +838,7 @@ void canonicalizeStereoGroups_internal(
   // routine for the other kind of stereo groups.
 
   if (!bestNewMol->getStereoGroups().empty()) {
-    for (auto grp : bestNewMol->getStereoGroups()) {
+    for (const auto &grp : bestNewMol->getStereoGroups()) {
       newGroups.push_back(grp);
     }
   }
