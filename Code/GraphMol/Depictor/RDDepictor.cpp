@@ -1165,12 +1165,12 @@ void generateDepictionMatching3DStructure(RDKit::ROMol &mol,
     if (-1 == mol_to_ref[i]) {
       continue;
     }
-    RDGeom::Point3D cds_i = conf.getAtomPos(i);
+    const RDGeom::Point3D &cds_i = conf.getAtomPos(i);
     for (unsigned int j = i + 1; j < num_ats; ++j) {
       if (-1 == mol_to_ref[j]) {
         continue;
       }
-      RDGeom::Point3D cds_j = conf.getAtomPos(mol_to_ref[j]);
+      const RDGeom::Point3D &cds_j = conf.getAtomPos(mol_to_ref[j]);
       dmat[(j * (j - 1) / 2) + i] = (cds_i - cds_j).length();
     }
   }

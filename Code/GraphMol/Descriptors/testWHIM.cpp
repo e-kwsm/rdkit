@@ -152,8 +152,8 @@ void testWHIM() {
     m->getProp("_Name", nm);
     std::vector<double> dwhim;
     RDKit::Descriptors::WHIM(*m, dwhim, -1, 0.01);
-    std::vector<std::string> myrow = data[nDone];
-    std::string inm = myrow[0];
+    const std::vector<std::string> &myrow = data[nDone];
+    const std::string &inm = myrow[0];
     TEST_ASSERT(inm == nm);
     // outstrm << nm;
     for (int i = 0; i < 114; i++) {
