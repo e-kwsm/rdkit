@@ -96,13 +96,13 @@ CDXMLDataStreamToChemicalReactions(std::istream &inStream, bool sanitize,
         add_template("CDX_PRODUCT_ID", product_templates, mols[idx]);
       }
     }
-    for (auto reactant : reactant_templates) {
+    for (const auto &reactant : reactant_templates) {
       res->addReactantTemplate(reactant.second);
     }
-    for (auto reactant : agent_templates) {
+    for (const auto &reactant : agent_templates) {
       res->addAgentTemplate(reactant.second);
     }
-    for (auto reactant : product_templates) {
+    for (const auto &reactant : product_templates) {
       res->addProductTemplate(reactant.second);
     }
     updateProductsStereochem(res);

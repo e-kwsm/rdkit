@@ -399,7 +399,7 @@ TEST_CASE("testAddPatterns", "[substruct]") {
   boost::shared_ptr<CachedSmilesMolHolder> holder =
       boost::make_shared<CachedSmilesMolHolder>();
 
-  for (auto s : pdb_ligands) {
+  for (const auto &s : pdb_ligands) {
     holder->addSmiles(s);
   }
 

@@ -40,7 +40,7 @@ void DrawAnnotation::findExtremes(double &xmin, double &xmax, double &ymin,
     return;
   }
   Point2D tl, tr, br, bl, otrans;
-  for (auto r : rects_) {
+  for (const auto &r : rects_) {
     otrans = r->trans_;
     r->trans_ += pos_;
     r->calcCorners(tl, tr, br, bl, padding);
