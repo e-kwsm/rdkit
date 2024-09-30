@@ -19,6 +19,8 @@
 #include <RDGeneral/Invariant.h>
 #include <utility>
 
+#include <utility>
+
 namespace python = boost::python;
 
 //! \brief Class to hold sequences (lists, tuples, arrays, etc.)
