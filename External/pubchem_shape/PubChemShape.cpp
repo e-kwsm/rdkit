@@ -237,7 +237,7 @@ std::vector<std::pair<std::vector<unsigned int>, unsigned int>> extractFeatures(
       for (const auto &patts : *pattVects) {
         for (const auto patt : patts) {
           auto matches = SubstructMatch(mol, *patt);
-          for (auto match : matches) {
+          for (const auto &match : matches) {
             std::vector<unsigned int> ats;
             ats.reserve(match.size());
             for (const auto &pr : match) {
