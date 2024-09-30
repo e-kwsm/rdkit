@@ -210,7 +210,7 @@ std::vector<AbbreviationMatch> findApplicableAbbreviationMatches(
   for (const auto &itm : tres) {
     // if the dummy in this wasn't a first atom anywhere
     if (!firstAts[itm.match[0].second]) {
-      res.push_back(std::move(itm));
+      res.push_back(itm);
     }
   }
 

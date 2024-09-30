@@ -191,7 +191,7 @@ VectMatchVectType getReactantMatchesToTemplate(
       }
     }
     if (keep) {
-      res.push_back(std::move(match));
+      res.push_back(match);
     }
   }
   return res;
