@@ -7163,7 +7163,7 @@ void testFragmentation(const FragTest &fragTest) {
 
   unsigned int largestFragSize = 0;
   ROMol *largestFrag = nullptr;
-  for (auto frag : frags) {
+  for (const auto &frag : frags) {
     if (frag->getNumAtoms() > largestFragSize) {
       largestFragSize = frag->getNumAtoms();
       largestFrag = frag.get();
@@ -7215,7 +7215,7 @@ TEST_CASE("FragmentSgroupTest", "[bug][reader]") {
         FragTest("Sgroup_MUL_ParentInMiddle.sdf", true, true, 1, 1),
         FragTest("modification_sgroup.sdf", true, true, 2, 1),
     };
-    for (auto test : tests) {
+    for (const auto &test : tests) {
       testFragmentation(test);
     }
   };
