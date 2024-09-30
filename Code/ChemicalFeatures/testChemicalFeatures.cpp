@@ -47,7 +47,7 @@ void test1() {
   TEST_ASSERT(RDKit::feq(f3.getPos().y, 1.0));
   TEST_ASSERT(RDKit::feq(f3.getPos().z, 1.0));
 
-  FreeChemicalFeature f4(f2);
+  const FreeChemicalFeature &f4(f2);
   TEST_ASSERT(f4.getId() == 123);
   TEST_ASSERT(f4.getFamily() == "foo");
   TEST_ASSERT(f4.getType() == "bar");
