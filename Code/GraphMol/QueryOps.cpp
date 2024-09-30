@@ -647,8 +647,8 @@ const std::vector<std::string> bondOrderQueryFunctions{
     std::string("SingleOrDoubleOrAromaticBond")};
 RDKIT_GRAPHMOL_EXPORT bool hasBondTypeQuery(
     const Queries::Query<int, Bond const *, true> &qry) {
-  const auto df = qry.getDescription();
-  const auto dt = qry.getTypeLabel();
+  const auto &df = qry.getDescription();
+  const auto &dt = qry.getTypeLabel();
   // is this a bond order query?
   if (dt == "BondOrder" ||
       (dt.empty() &&
@@ -668,7 +668,7 @@ RDKIT_GRAPHMOL_EXPORT bool hasBondTypeQuery(
 namespace {
 bool hasComplexBondTypeQueryHelper(
     const Queries::Query<int, Bond const *, true> &qry, bool seenBondOrder) {
-  const auto df = qry.getDescription();
+  const auto &df = qry.getDescription();
   bool isBondOrder = (df == "BondOrder");
   // is this a bond order query?
   if (std::find(bondOrderQueryFunctions.begin(), bondOrderQueryFunctions.end(),
@@ -816,7 +816,7 @@ bool _complexQueryHelper(Atom::QUERYATOM_QUERY const *query, bool &hasAtNum) {
   if (query->getNegation()) {
     return true;
   }
-  std::string descr = query->getDescription();
+  const std::string &descr = query->getDescription();
   // std::cerr<<" |"<<descr;
   if (descr == "AtomAtomicNum" || descr == "AtomType") {
     hasAtNum = true;
@@ -892,7 +892,7 @@ void getAtomListQueryVals(const Atom::QUERYATOM_QUERY *q,
                           std::vector<int> &vals) {
   // list queries are series of nested ors of AtomAtomicNum queries
   PRECONDITION(q, "bad query");
-  auto descr = q->getDescription();
+  const auto &descr = q->getDescription();
   if (descr == "AtomOr") {
     for (const auto &child :
          boost::make_iterator_range(q->beginChildren(), q->endChildren())) {

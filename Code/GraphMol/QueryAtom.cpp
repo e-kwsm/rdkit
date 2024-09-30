@@ -101,8 +101,8 @@ bool queriesMatch(QueryAtom::QUERYATOM_QUERY const *q1,
                                                   "AtomInNRings"};
 
   bool res = false;
-  std::string d1 = q1->getDescription();
-  std::string d2 = q2->getDescription();
+  const std::string &d1 = q1->getDescription();
+  const std::string &d2 = q2->getDescription();
   if (d1 == "AtomNull" || d2 == "AtomNull") {
     res = true;
   } else if (d1 == "AtomOr") {

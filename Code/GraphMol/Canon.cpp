@@ -38,7 +38,7 @@ bool hasSingleHQuery(const Atom::QUERYATOM_QUERY *q) {
   // list queries are series of nested ors of AtomAtomicNum queries
   PRECONDITION(q, "bad query");
   bool res = false;
-  std::string descr = q->getDescription();
+  const std::string &descr = q->getDescription();
   if (descr == "AtomAnd") {
     for (auto cIt = q->beginChildren(); cIt != q->endChildren(); ++cIt) {
       auto cDescr = (*cIt)->getDescription();

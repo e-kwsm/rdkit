@@ -42,7 +42,7 @@ TEST_CASE("FreeChemicalFeature Tests") {
   REQUIRE_THAT(f3.getPos().y, Catch::Matchers::WithinAbs(1.0, 1e-6));
   REQUIRE_THAT(f3.getPos().z, Catch::Matchers::WithinAbs(1.0, 1e-6));
 
-  FreeChemicalFeature f4(f2);
+  const FreeChemicalFeature &f4(f2);
   REQUIRE(f4.getId() == 123);
   REQUIRE(f4.getFamily() == "foo");
   REQUIRE(f4.getType() == "bar");

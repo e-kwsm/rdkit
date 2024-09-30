@@ -4086,11 +4086,11 @@ M  END
         CHECK(sg.getAtoms() == atoms);
         CHECK(sg.getBonds() == bonds);
 
-        auto cstates = sg.getCStates();
+        const auto &cstates = sg.getCStates();
         REQUIRE(cstates.size() == 1);
         CHECK(cstates[0].bondIdx == cstateBond);
 
-        auto saps = sg.getAttachPoints();
+        const auto &saps = sg.getAttachPoints();
         REQUIRE(saps.size() == 1);
         CHECK(saps[0].aIdx == attachPtAtoms.first);
         CHECK(saps[0].lvIdx == attachPtAtoms.second);

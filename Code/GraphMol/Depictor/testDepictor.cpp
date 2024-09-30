@@ -47,7 +47,7 @@ void _compareCoords(const ROMol *mol1, unsigned int cid1, const ROMol *mol2,
   const RDKit::Conformer &conf2 = mol2->getConformer(cid2);
 
   for (unsigned int i = 0; i < nat; i++) {
-    RDGeom::Point3D pt1 = conf1.getAtomPos(i);
+    const RDGeom::Point3D &pt1 = conf1.getAtomPos(i);
     RDGeom::Point3D pt2 = conf2.getAtomPos(i);
     pt2 -= pt1;
 
@@ -124,7 +124,7 @@ void test1() {
   tokenizer tokens(smiString, spaceSep);
   for (tokenizer::iterator token = tokens.begin(); token != tokens.end();
        ++token) {
-    std::string smi = *token;
+    const std::string &smi = *token;
     std::unique_ptr<RWMol> m{SmilesToMol(smi)};
     TEST_ASSERT(m)
     RDDepict::compute2DCoords(*m);
@@ -157,7 +157,7 @@ void testCollisions() {
   tokenizer tokens(smiString, spaceSep);
   for (tokenizer::iterator token = tokens.begin(); token != tokens.end();
        ++token) {
-    std::string smi = *token;
+    const std::string &smi = *token;
     RWMol *m = SmilesToMol(smi, 0, 1);
     TEST_ASSERT(m);
     unsigned int confId = RDDepict::compute2DCoords(*m);
@@ -383,7 +383,7 @@ void testIssue248() {
   tokenizer tokens(smiString, spaceSep);
   for (tokenizer::iterator token = tokens.begin(); token != tokens.end();
        ++token) {
-    std::string smi = *token;
+    const std::string &smi = *token;
     RWMol *m = SmilesToMol(smi, 0, 1);
     unsigned int confId = RDDepict::compute2DCoords(*m);
     // check that there are no collisions in the molecules
@@ -415,7 +415,7 @@ void testQueries() {
   tokenizer tokens(smaString, spaceSep);
   for (tokenizer::iterator token = tokens.begin(); token != tokens.end();
        ++token) {
-    std::string sma = *token;
+    const std::string &sma = *token;
     RWMol *m = SmartsToMol(sma);
     unsigned int confId = RDDepict::compute2DCoords(*m);
     // check that there are no collisions in the molecules

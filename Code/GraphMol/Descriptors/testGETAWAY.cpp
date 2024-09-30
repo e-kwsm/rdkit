@@ -65,8 +65,8 @@ void testGETAWAY() {
 
     RDKit::Descriptors::GETAWAY(*m, dgetaway);
 
-    std::vector<std::string> myrow = data[nDone];
-    std::string inm = myrow[0];
+    const std::vector<std::string> &myrow = data[nDone];
+    const std::string &inm = myrow[0];
     TEST_ASSERT(inm == nm);
     // std::cout <<  "\n";
     // int numAtoms = m->getNumAtoms();

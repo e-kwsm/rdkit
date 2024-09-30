@@ -505,7 +505,7 @@ unsigned int getAtomParityFlag(const Atom *atom, const Conformer *conf) {
   }
 
   const ROMol &mol = atom->getOwningMol();
-  RDGeom::Point3D pos = conf->getAtomPos(atom->getIdx());
+  const RDGeom::Point3D &pos = conf->getAtomPos(atom->getIdx());
   std::vector<std::pair<unsigned int, RDGeom::Point3D>> vs;
   ROMol::ADJ_ITER nbrIdx, endNbrs;
   boost::tie(nbrIdx, endNbrs) = mol.getAtomNeighbors(atom);
@@ -577,7 +577,7 @@ void GetMolFileAtomProperties(const Atom *atom, const Conformer *conf,
   }
 
   if (conf) {
-    const RDGeom::Point3D pos = conf->getAtomPos(atom->getIdx());
+    const RDGeom::Point3D &pos = conf->getAtomPos(atom->getIdx());
     x = pos.x;
     y = pos.y;
     z = pos.z;

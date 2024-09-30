@@ -1765,7 +1765,7 @@ TEST_CASE("Github #6211: substructmatchparams for chemical reactions") {
         }
       }
       // make sure the parameters are copied
-      ChemicalReaction cpy(*rxn);
+      const ChemicalReaction &cpy(*rxn);
       for (const auto &[inSmi, outSmi] : data) {
         INFO(inSmi);
         MOL_SPTR_VECT reacts = {ROMOL_SPTR(SmilesToMol(inSmi))};
@@ -1911,7 +1911,7 @@ TEST_CASE("Github #7028: Spacing bug in compute2DCoordsForReaction") {
       std::pair<double, double> bounds = {1e8, -1e8};
       auto conf = reactant->getConformer();
       for (unsigned int i = 0; i < conf.getNumAtoms(); ++i) {
-        auto pos = conf.getAtomPos(i);
+        const auto &pos = conf.getAtomPos(i);
         bounds.first = std::min(bounds.first, pos.x);
         bounds.second = std::max(bounds.second, pos.x);
       }
@@ -1922,7 +1922,7 @@ TEST_CASE("Github #7028: Spacing bug in compute2DCoordsForReaction") {
       std::pair<double, double> bounds = {1e8, -1e8};
       auto conf = product->getConformer();
       for (unsigned int i = 0; i < conf.getNumAtoms(); ++i) {
-        auto pos = conf.getAtomPos(i);
+        const auto &pos = conf.getAtomPos(i);
         bounds.first = std::min(bounds.first, pos.x);
         bounds.second = std::max(bounds.second, pos.x);
       }
