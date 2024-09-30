@@ -11,6 +11,7 @@
 #define NO_IMPORT_ARRAY
 #include <RDBoost/python.h>
 #include <string>
+#include <utility>
 
 // ours
 #include <GraphMol/FileParsers/MolWriters.h>
@@ -33,7 +34,7 @@ SDWriter *getSDWriter(python::object &fileobj) {
 void SetSDWriterProps(SDWriter &writer, python::object props) {
   // convert the python list to a STR_VECT
   STR_VECT propNames;
-  PySequenceHolder<std::string> seq(props);
+  PySequenceHolder<std::string> seq(std::move(props));
   for (unsigned int i = 0; i < seq.size(); i++) {
     propNames.push_back(seq[i]);
   }
