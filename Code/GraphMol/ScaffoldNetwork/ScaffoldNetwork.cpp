@@ -30,7 +30,7 @@ ScaffoldNetworkParams::ScaffoldNetworkParams(
     const std::vector<std::string> &bondBreakersSmarts) {
   bondBreakersRxns.clear();
   bondBreakersRxns.reserve(bondBreakersSmarts.size());
-  for (auto sma : bondBreakersSmarts) {
+  for (const auto &sma : bondBreakersSmarts) {
     std::shared_ptr<ChemicalReaction> rxn(RxnSmartsToChemicalReaction(sma));
     if (rxn.get() == nullptr) {
       throw ValueErrorException("could not parse reaction smarts: " + sma);
@@ -140,7 +140,7 @@ std::vector<std::pair<std::string, ROMOL_SPTR>> getMolFragments(
     auto wmol = stack.front();
     stack.pop_front();
     auto parentSmi = MolToSmiles(*wmol);
-    for (auto rxn : params.bondBreakersRxns) {
+    for (const auto &rxn : params.bondBreakersRxns) {
       auto ps = rxn->runReactant(wmol, 0);
       for (auto p : ps) {
         if (!params.includeScaffoldsWithAttachments) {
@@ -258,7 +258,7 @@ void addMolToNetwork(const ROMol &mol, ScaffoldNetwork &network,
   }
 
   auto frags = getMolFragments(*fmol, params);
-  for (auto frag : frags) {
+  for (const auto &frag : frags) {
     auto smi = frag.first;
     ROMOL_SPTR fragMol = frag.second;
 

@@ -117,13 +117,13 @@ class MarvinCMLReader {
     }
 
     // convert atoms to queries:
-    for (auto mol : rxn->getReactants()) {
+    for (const auto &mol : rxn->getReactants()) {
       for (auto atom : mol->atoms()) {
         QueryOps::replaceAtomWithQueryAtom(static_cast<RWMol *>(mol.get()),
                                            atom);
       }
     }
-    for (auto mol : rxn->getProducts()) {
+    for (const auto &mol : rxn->getProducts()) {
       for (auto atom : mol->atoms()) {
         QueryOps::replaceAtomWithQueryAtom(static_cast<RWMol *>(mol.get()),
                                            atom);

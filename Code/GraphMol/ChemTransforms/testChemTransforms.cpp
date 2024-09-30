@@ -1893,7 +1893,7 @@ void testGithubIssue429() {
     TEST_ASSERT(frags.size() == 2);
     std::vector<std::vector<int>> fragMap;
 
-    for (auto romol : frags) {
+    for (const auto &romol : frags) {
       auto *rwmol = (RWMol *)(romol.get());
       MolOps::sanitizeMol(*rwmol);
     }

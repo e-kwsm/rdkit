@@ -46,7 +46,7 @@ TEST_CASE("xyz file parser") {
     REQUIRE(conf->getNumAtoms() == 7);
 
     ind = 0;
-    for (auto p : positions) {
+    for (const auto &p : positions) {
       CHECK(conf->getAtomPos(ind).x == Catch::Approx(p.x).margin(1e-6));
       CHECK(conf->getAtomPos(ind).y == Catch::Approx(p.y).margin(1e-6));
       CHECK(conf->getAtomPos(ind).z == Catch::Approx(p.z).margin(1e-6));
@@ -86,7 +86,7 @@ TEST_CASE("xyz file parser") {
     REQUIRE(conf->getNumAtoms() == 8);
 
     ind = 0;
-    for (auto p : positions) {
+    for (const auto &p : positions) {
       CHECK(conf->getAtomPos(ind).x == Catch::Approx(p.x).margin(1e-6));
       CHECK(conf->getAtomPos(ind).y == Catch::Approx(p.y).margin(1e-6));
       CHECK(conf->getAtomPos(ind).z == Catch::Approx(p.z).margin(1e-6));
@@ -149,7 +149,7 @@ TEST_CASE("xyz block parser") {
     REQUIRE(conf->getNumAtoms() == 5);
 
     ind = 0;
-    for (auto p : positions) {
+    for (const auto &p : positions) {
       CHECK(conf->getAtomPos(ind).x == Catch::Approx(p.x).margin(1e-6));
       CHECK(conf->getAtomPos(ind).y == Catch::Approx(p.y).margin(1e-6));
       CHECK(conf->getAtomPos(ind).z == Catch::Approx(p.z).margin(1e-6));
