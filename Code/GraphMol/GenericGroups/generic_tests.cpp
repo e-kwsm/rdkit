@@ -190,7 +190,7 @@ TEST_CASE("generics are compatible with extraFinalChecks",
     auto query = "O=C*"_smarts;
     REQUIRE(query);
     std::vector<std::string> labels = {"Heteroaryl", "HAR"};
-    for (auto label : labels) {
+    for (const auto &label : labels) {
       query->getAtomWithIdx(2)->setProp(
           common_properties::_QueryAtomGenericLabel, label);
       std::vector<std::pair<std::string, unsigned>> tests = {

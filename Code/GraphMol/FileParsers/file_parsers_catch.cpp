@@ -4941,7 +4941,7 @@ M  END)CTAB";
     };
     auto pos = molb.find(ptrn);
     REQUIRE(pos != std::string::npos);
-    for (auto alternative : alternatives) {
+    for (const auto &alternative : alternatives) {
       auto mb2 = molb.replace(pos, ptrn.size(), alternative);
       std::unique_ptr<RWMol> m(MolBlockToMol(mb2));
       REQUIRE(m);
@@ -7369,7 +7369,7 @@ void testFragmentation(const std::string &fileName,
 
   unsigned int largestFragSize = 0;
   ROMol *largestFrag = nullptr;
-  for (auto frag : frags) {
+  for (const auto &frag : frags) {
     if (frag->getNumAtoms() > largestFragSize) {
       largestFragSize = frag->getNumAtoms();
       largestFrag = frag.get();

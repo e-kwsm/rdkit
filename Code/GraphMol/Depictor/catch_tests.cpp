@@ -329,7 +329,7 @@ TEST_CASE("find core rings") {
   // expected number of core rings
   std::map<std::string, unsigned int> examples = {
       {"C1CCC2CC3CCCCC3CC2C1", 1u}, {"C1CC2CCCC3C2C(C1)CCC3", 3u}};
-  for (auto example : examples) {
+  for (const auto &example : examples) {
     auto mol = v2::SmilesParse::MolFromSmiles(example.first);
     RDKit::VECT_INT_VECT arings;
     bool includeDativeBonds = true;
