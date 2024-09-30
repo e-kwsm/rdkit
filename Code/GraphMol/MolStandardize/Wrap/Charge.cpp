@@ -28,8 +28,8 @@ ROMol *reionizeHelper(MolStandardize::Reionizer &self, const ROMol &mol) {
 void reionizeInPlaceHelper(MolStandardize::Reionizer &self, ROMol &mol) {
   self.reionizeInPlace(static_cast<RWMol &>(mol));
 }
-MolStandardize::Reionizer *reionizerFromData(const std::string &data,
-                                             python::object chargeCorrections) {
+MolStandardize::Reionizer *reionizerFromData(
+    const std::string &data, const python::object &chargeCorrections) {
   std::istringstream sstr(data);
   auto corrections =
       pythonObjectToVect<MolStandardize::ChargeCorrection>(chargeCorrections);
