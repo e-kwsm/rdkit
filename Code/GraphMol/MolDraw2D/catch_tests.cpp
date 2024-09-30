@@ -5650,7 +5650,7 @@ M  END
       auto match_end = std::sregex_iterator();
       std::vector<Point2D> ends;
       for (std::sregex_iterator i = match_begin; i != match_end; ++i) {
-        std::smatch match = *i;
+        const std::smatch &match = *i;
         ends.push_back(Point2D(std::stod(match[1]), std::stod(match[2])));
         ends.push_back(Point2D(std::stod(match[3]), std::stod(match[4])));
       }
@@ -5956,7 +5956,7 @@ TEST_CASE("Bond Highlights", "") {
       // with this result, match[0] is the whole string that matched,
       // match[1] is the 1st float (the x coord of the M), match[2]
       // is the 2nd float, etc.
-      std::smatch match = *i;
+      const std::smatch &match = *i;
       ends.push_back(Point2D(std::stod(match[1]), std::stod(match[2])));
       ends.push_back(Point2D(std::stod(match[3]), std::stod(match[4])));
       ends.push_back(Point2D(std::stod(match[5]), std::stod(match[6])));
@@ -6041,7 +6041,7 @@ M  END)CTAB"_ctab;
         auto match_end = std::sregex_iterator();
         std::vector<Point2D> ends;
         for (std::sregex_iterator i = match_begin; i != match_end; ++i) {
-          std::smatch match = *i;
+          const std::smatch &match = *i;
           ends.push_back(Point2D(std::stod(match[1]), std::stod(match[2])));
           ends.push_back(Point2D(std::stod(match[3]), std::stod(match[4])));
         }
@@ -6411,7 +6411,7 @@ TEST_CASE("Github5947: Ellipse extremes not calculated correctly.") {
   auto match_begin = std::sregex_iterator(text.begin(), text.end(), r1);
   auto match_end = std::sregex_iterator();
   for (std::sregex_iterator i = match_begin; i != match_end; ++i) {
-    std::smatch match = *i;
+    const std::smatch &match = *i;
     CHECK_THAT(stod(match[1]), Catch::Matchers::WithinAbs(72.0, 0.1));
     CHECK_THAT(stod(match[2]), Catch::Matchers::WithinAbs(72.0, 0.1));
   }
@@ -6488,7 +6488,7 @@ M  END
     auto match_begin = std::sregex_iterator(text.begin(), text.end(), r);
     auto match_end = std::sregex_iterator();
     for (std::sregex_iterator i = match_begin; i != match_end; ++i) {
-      std::smatch match = *i;
+      const std::smatch &match = *i;
       CHECK_THAT(stod(match[1]), Catch::Matchers::WithinAbs(25.0, 0.1));
       CHECK_THAT(stod(match[2]), Catch::Matchers::WithinAbs(25.0, 0.1));
     }
@@ -6557,7 +6557,7 @@ M  END
       auto match_begin = std::sregex_iterator(text.begin(), text.end(), r);
       auto match_end = std::sregex_iterator();
       for (std::sregex_iterator i = match_begin; i != match_end; ++i) {
-        std::smatch match = *i;
+        const std::smatch &match = *i;
         ends.push_back(Point2D(std::stod(match[1]), std::stod(match[2])));
         ends.push_back(Point2D(std::stod(match[3]), std::stod(match[4])));
         ends.push_back(Point2D(std::stod(match[5]), std::stod(match[6])));
@@ -6644,7 +6644,7 @@ TEST_CASE("Github5963: bond end wrong on wedge") {
         " L\\s+(\\d+\\.\\d+),(\\d+\\.\\d+)'");
     // only 1 bond8 match
     auto bond8_match = std::sregex_iterator(text.begin(), text.end(), bond8);
-    std::smatch match8 = *bond8_match;
+    const std::smatch &match8 = *bond8_match;
     // the middle point of the triangle should be the same as the start of the
     // line
     Point2D midtri(std::stod(match7[3]), std::stod(match7[4]));
@@ -6761,7 +6761,7 @@ M  END
       auto match_begin = std::sregex_iterator(text.begin(), text.end(), r);
       auto match_end = std::sregex_iterator();
       for (std::sregex_iterator i = match_begin; i != match_end; ++i) {
-        std::smatch match = *i;
+        const std::smatch &match = *i;
         CHECK(stod(match[1]) > 0.0);
         CHECK(stod(match[3]) > 0.0);
       }
@@ -6846,7 +6846,7 @@ M  END
     auto match_end = std::sregex_iterator();
     std::vector<float> ys;
     for (std::sregex_iterator i = match_begin; i != match_end; ++i) {
-      std::smatch match = *i;
+      const std::smatch &match = *i;
       ys.push_back(stod(match[2]));
       ys.push_back(stod(match[4]));
       CHECK(match[1] == match[3]);
@@ -6881,7 +6881,7 @@ M  END
     auto match_end = std::sregex_iterator();
     std::vector<Point2D> points;
     for (std::sregex_iterator i = match_begin; i != match_end; ++i) {
-      std::smatch match = *i;
+      const std::smatch &match = *i;
       points.push_back(Point2D(stod(match[4]), stod(match[2])));
       points.push_back(Point2D(stod(match[3]), stod(match[4])));
     }
@@ -7377,7 +7377,7 @@ TEST_CASE("ACS1996 mode crops small molecules - Github 6111") {
     // check that selected y coords don't go outside of the viewBox.
     std::regex vbox(R"(viewBox='(\d+)\s+(\d+)\s+(\d+)\s+(\d+)'>)");
     auto match1_begin = std::sregex_iterator(text.begin(), text.end(), vbox);
-    std::smatch match = *match1_begin;
+    const std::smatch &match = *match1_begin;
     auto ymin = std::stod(match[2]);
     auto ymax = std::stod(match[4]);
 
@@ -7385,7 +7385,7 @@ TEST_CASE("ACS1996 mode crops small molecules - Github 6111") {
     auto match2_begin = std::sregex_iterator(text.begin(), text.end(), atom0);
     auto match2_end = std::sregex_iterator();
     for (std::sregex_iterator i = match2_begin; i != match2_end; ++i) {
-      std::smatch match = *i;
+      const std::smatch &match = *i;
       auto y = std::stod(match[2]);
       CHECK((y >= ymin && y <= ymax));
     }
@@ -7444,7 +7444,7 @@ TEST_CASE("Bad double bond - Github 6160") {
     auto match_end = std::sregex_iterator();
     std::vector<Point2D> points;
     for (std::sregex_iterator i = match_begin; i != match_end; ++i) {
-      std::smatch match = *i;
+      const std::smatch &match = *i;
       points.push_back(Point2D(stod(match[1]), stod(match[2])));
       points.push_back(Point2D(stod(match[3]), stod(match[4])));
     }
@@ -7489,7 +7489,7 @@ M  END
     auto match_end = std::sregex_iterator();
     std::vector<Point2D> points;
     for (std::sregex_iterator i = match_begin; i != match_end; ++i) {
-      std::smatch match = *i;
+      const std::smatch &match = *i;
       points.push_back(Point2D(stod(match[1]), stod(match[2])));
       points.push_back(Point2D(stod(match[3]), stod(match[4])));
     }
@@ -7586,7 +7586,7 @@ TEST_CASE(
     auto match_end = std::sregex_iterator();
     // Check that the lengths of the lines in the arc are the correct size.
     for (std::sregex_iterator i = match_begin; i != match_end; ++i) {
-      std::smatch match = *i;
+      const std::smatch &match = *i;
       auto p1 = Point2D(stod(match[1]), stod(match[2]));
       auto p2 = Point2D(stod(match[3]), stod(match[4]));
       auto p3 = Point2D(stod(match[5]), stod(match[6]));
@@ -7872,7 +7872,7 @@ TEST_CASE("Github 6397 - chiral tag overlapping atom label") {
                       std::sregex_iterator()));
     CHECK(match_count == expCount);
     auto match_begin = std::sregex_iterator(text.begin(), text.end(), absA);
-    std::smatch match = *match_begin;
+    const std::smatch &match = *match_begin;
     double x = stod(match[1]);
     CHECK_THAT(x, Catch::Matchers::WithinAbs(expX, 0.1));
     double y = stod(match[2]);
@@ -8134,7 +8134,7 @@ M  END
     auto match_end = std::sregex_iterator();
     std::vector<Point2D> points;
     for (std::sregex_iterator i = match_begin; i != match_end; ++i) {
-      std::smatch match = *i;
+      const std::smatch &match = *i;
       points.push_back(Point2D(stod(match[1]), stod(match[2])));
       points.push_back(Point2D(stod(match[3]), stod(match[4])));
     }
@@ -8312,7 +8312,7 @@ TEST_CASE("Lasso highlights") {
                       std::sregex_iterator()));
     CHECK(match_count == 1);
     auto a16reg = std::sregex_iterator(text.begin(), text.end(), a16);
-    auto dat1 = *a16reg;
+    const auto &dat1 = *a16reg;
 #ifdef RDK_BUILD_FREETYPE_SUPPORT
     CHECK_THAT(stod(dat1[1]), Catch::Matchers::WithinAbs(273.1, 0.1));
     CHECK_THAT(stod(dat1[2]), Catch::Matchers::WithinAbs(131.2, 0.1));
@@ -8365,7 +8365,7 @@ TEST_CASE("Lasso highlights") {
                       std::sregex_iterator()));
     CHECK(match_count == 1);
     auto a0reg = std::sregex_iterator(text.begin(), text.end(), a0);
-    auto dat1 = *a0reg;
+    const auto &dat1 = *a0reg;
     CHECK_THAT(stod(dat1[1]), Catch::Matchers::WithinAbs(389.5, 0.1));
     CHECK_THAT(stod(dat1[2]), Catch::Matchers::WithinAbs(214.4, 0.1));
     CHECK_THAT(stod(dat1[3]), Catch::Matchers::WithinAbs(390.2, 0.1));
@@ -8963,7 +8963,7 @@ TEST_CASE("Github 6685 - flexicanvas cuts off bottom of reaction") {
       match_begin = std::sregex_iterator(text.begin(), text.end(), reg);
       auto match_end = std::sregex_iterator();
       for (std::sregex_iterator i = match_begin; i != match_end; ++i) {
-        std::smatch match = *i;
+        const std::smatch &match = *i;
         auto x1 = stod(match[1]);
         auto y1 = stod(match[2]);
         auto x2 = stod(match[3]);
@@ -9477,7 +9477,7 @@ TEST_CASE("Github6968 - bad bond highlights with triple bonds") {
       auto match_begin = std::sregex_iterator(text.begin(), text.end(), bond);
       auto match_end = std::sregex_iterator();
       for (std::sregex_iterator i = match_begin; i != match_end; ++i) {
-        std::smatch match = *i;
+        const std::smatch &match = *i;
         std::vector<Point2D> pts;
         for (int j = 4; j < 12; j += 2) {
           pts.push_back(Point2D(stod(match[j]), stod(match[j + 1])));
@@ -9600,7 +9600,7 @@ M  END)CTAB"_ctab;
   auto match3_end = std::sregex_iterator();
   std::vector<Point2D> pts3;
   for (std::sregex_iterator i = match3_begin; i != match3_end; ++i) {
-    std::smatch match = *i;
+    const std::smatch &match = *i;
     pts3.push_back(Point2D(stod(match[1]), stod(match[2])));
     pts3.push_back(Point2D(stod(match[3]), stod(match[4])));
   }
@@ -9609,7 +9609,7 @@ M  END)CTAB"_ctab;
       "<path class='bond-8 atom-5 atom-10' d='M (-?\\d+.\\d+),(-?\\d+.\\d+)"
       " L (-?\\d+.\\d+),(-?\\d+.\\d+)' style=");
   auto match_begin8 = std::sregex_iterator(text.begin(), text.end(), bond8);
-  std::smatch match8 = *match_begin8;
+  const std::smatch &match8 = *match_begin8;
   std::vector<Point2D> pts8;
   pts8.push_back(Point2D(stod(match8[1]), stod(match8[2])));
   pts8.push_back(Point2D(stod(match8[3]), stod(match8[4])));
@@ -10745,7 +10745,7 @@ TEST_CASE("Solid arrowhead in wrong place (Github 8500)") {
       {51.0, 249.0},
   };
   for (int i = 0; i < 4; ++i, ++match_begin) {
-    std::smatch match = *match_begin;
+    const std::smatch &match = *match_begin;
     CHECK_THAT(std::stod(match[3]),
                Catch::Matchers::WithinAbs(expVals[i].first, 1.0e-4));
     CHECK_THAT(std::stod(match[4]),
