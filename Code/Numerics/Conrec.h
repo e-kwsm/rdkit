@@ -258,7 +258,7 @@ connectLineSegments(const std::vector<ConrecSegment> &segments,
     while (1) {
       segmentsDone.set(segId, true);
       // move onto the next segment
-      const auto seg = segments[segId];
+      const auto &seg = segments[segId];
       auto k1 = makePointKey(seg.p1, seg.isoVal);
       auto k2 = makePointKey(seg.p2, seg.isoVal);
       auto endPtKey = k2;
