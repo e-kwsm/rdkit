@@ -431,7 +431,7 @@ class RDKIT_GRAPHMOL_EXPORT ROMol : public RDProps {
 
   ROMol(ROMol &&o) noexcept
       : RDProps(std::move(o)),
-        d_graph(std::move(o.d_graph)),
+        d_graph(o.d_graph),
         d_atomBookmarks(std::move(o.d_atomBookmarks)),
         d_bondBookmarks(std::move(o.d_bondBookmarks)),
         d_confs(std::move(o.d_confs)),
@@ -461,7 +461,7 @@ class RDKIT_GRAPHMOL_EXPORT ROMol : public RDProps {
       return *this;
     }
     RDProps::operator=(std::move(o));
-    d_graph = std::move(o.d_graph);
+    d_graph = o.d_graph;
     d_atomBookmarks = std::move(o.d_atomBookmarks);
     d_bondBookmarks = std::move(o.d_bondBookmarks);
     if (dp_ringInfo) {
