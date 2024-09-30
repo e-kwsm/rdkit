@@ -76,7 +76,7 @@ SubstructTerm::SubstructTerm(std::string aname, std::string asmarts, int ascore)
     : name(std::move(aname)), smarts(std::move(asmarts)), score(ascore) {
   std::unique_ptr<ROMol> pattern(SmartsToMol(smarts));
   if (pattern) {
-    matcher = std::move(*pattern);
+    matcher = *pattern;
   }
 }
 
