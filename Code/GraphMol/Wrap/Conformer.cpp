@@ -31,7 +31,7 @@ namespace np = boost::python::numpy;
 
 namespace RDKit {
 RDGeom::Point3D GetAtomPos(const Conformer *conf, unsigned int aid) {
-  RDGeom::Point3D res = conf->getAtomPos(aid);
+  const RDGeom::Point3D &res = conf->getAtomPos(aid);
   return res;
 }
 

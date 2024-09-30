@@ -68,8 +68,8 @@ void testRDFcustom() {
     const std::string atomprop = "_GasteigerCharge";
     RDKit::Descriptors::RDF(*m, drdf, -1, atomprop);
 
-    std::vector<std::string> myrow = data[nDone];
-    std::string inm = myrow[0];
+    const std::vector<std::string> &myrow = data[nDone];
+    const std::string &inm = myrow[0];
     TEST_ASSERT(inm == nm);
 
     // std::cerr << inm << ",";
@@ -134,8 +134,8 @@ void testMORSEcustom() {
     const std::string atomprop = "_GasteigerCharge";
     RDKit::Descriptors::MORSE(*m, dmorse, -1, atomprop);
 
-    std::vector<std::string> myrow = data[nDone];
-    std::string inm = myrow[0];
+    const std::vector<std::string> &myrow = data[nDone];
+    const std::string &inm = myrow[0];
     TEST_ASSERT(inm == nm);
 
     // std::cerr << inm << ",";
@@ -201,8 +201,8 @@ void testAUTOCORR3Dcustom() {
     const std::string atomprop = "_GasteigerCharge";
     RDKit::Descriptors::AUTOCORR3D(*m, dauto3d, -1, atomprop);
 
-    std::vector<std::string> myrow = data[nDone];
-    std::string inm = myrow[0];
+    const std::vector<std::string> &myrow = data[nDone];
+    const std::string &inm = myrow[0];
     TEST_ASSERT(inm == nm);
 
     // std::cerr << inm << ",";
@@ -274,8 +274,8 @@ void testWHIMcustom() {
         }
         std::cerr << "\n";
     */
-    std::vector<std::string> myrow = data[nDone];
-    std::string inm = myrow[0];
+    const std::vector<std::string> &myrow = data[nDone];
+    const std::string &inm = myrow[0];
     TEST_ASSERT(inm == nm);
 
     // std::cerr << inm << ",";
@@ -343,8 +343,8 @@ void testWHIMcustom1() {
     const std::string atomprop = "_MyCharge";
     RDKit::Descriptors::WHIM(*m, dwhim, -1, 0.01, atomprop);
 
-    std::vector<std::string> myrow = data[nDone];
-    std::string inm = myrow[0];
+    const std::vector<std::string> &myrow = data[nDone];
+    const std::string &inm = myrow[0];
     TEST_ASSERT(inm == nm);
 
     // std::cerr << inm << ",";
@@ -416,8 +416,8 @@ void testGETAWAYcustom() {
      */
     RDKit::Descriptors::GETAWAY(*m, dgetaway, -1, 0U, atomprop);
 
-    std::vector<std::string> myrow = data[nDone];
-    std::string inm = myrow[0];
+    const std::vector<std::string> &myrow = data[nDone];
+    const std::string &inm = myrow[0];
     TEST_ASSERT(inm == nm);
 
     // std::cerr << inm << ",";
