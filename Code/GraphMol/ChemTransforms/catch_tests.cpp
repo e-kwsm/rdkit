@@ -487,8 +487,8 @@ TEST_CASE("Molzip with 2D coordinates", "[molzip]") {
     const auto zippedMatches = SubstructMatch(*zippedMol, *query);
     REQUIRE(molMatches.size() == 1);
     REQUIRE(zippedMatches.size() == 1);
-    const auto molMatch = molMatches[0];
-    const auto zippedMatch = zippedMatches[0];
+    const auto &molMatch = molMatches[0];
+    const auto &zippedMatch = zippedMatches[0];
     for (size_t j = 0; j < molMatch.size(); j++) {
       const auto &position1 = molConformer.getAtomPos(molMatch[i].second);
       const auto &position2 = zippedConformer.getAtomPos(zippedMatch[i].second);

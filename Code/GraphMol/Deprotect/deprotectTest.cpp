@@ -20,7 +20,7 @@
 using namespace RDKit;
 using namespace RDKit::Deprotect;
 TEST_CASE("Deprotection basics", "[deprotect]") {
-  const auto dps = getDeprotections();
+  const auto &dps = getDeprotections();
   DeprotectData cp = dps[0];
   CHECK(cp == dps[0]);
   CHECK(dps[0] == cp);
