@@ -1036,7 +1036,7 @@ bool parse_variable_attachments(Iterator &first, Iterator last,
     }
     if (VALID_ATIDX(at1idx)) {
       std::string endPts = "(" + std::to_string(others.size());
-      for (auto idx : others) {
+      for (const auto &idx : others) {
         endPts += " " + idx;
       }
       endPts += ")";
@@ -2246,7 +2246,7 @@ std::string get_bond_config_block(
   }
   std::string res = "";
 
-  for (auto wPart : wParts) {
+  for (const auto &wPart : wParts) {
     if (res != "") {
       res += ",";
     }
