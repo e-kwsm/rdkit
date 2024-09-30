@@ -254,7 +254,7 @@ std::string BuildV2000SMTLine(const int idx, const SubstanceGroup &sgroup) {
 std::string BuildV2000SDILine(const int idx, const SubstanceGroup &sgroup) {
   std::ostringstream ret;
 
-  const std::vector<SubstanceGroup::Bracket> brackets = sgroup.getBrackets();
+  const std::vector<SubstanceGroup::Bracket> &brackets = sgroup.getBrackets();
 
   for (const auto &bracket : brackets) {
     ret << "M  SDI" << FormatV2000IntField(idx)
@@ -362,7 +362,7 @@ std::string BuildV2000SAPLines(const int idx, const SubstanceGroup &sgroup) {
   std::ostringstream ret;
   std::ostringstream temp;
 
-  const std::vector<SubstanceGroup::AttachPoint> saps =
+  const std::vector<SubstanceGroup::AttachPoint> &saps =
       sgroup.getAttachPoints();
 
   unsigned int count = 0;
@@ -555,7 +555,7 @@ std::string FormatV3000CompNoBlock(const SubstanceGroup &sgroup) {
 }
 
 std::string FormatV3000BracketBlock(
-    const std::vector<SubstanceGroup::Bracket> brackets) {
+    const std::vector<SubstanceGroup::Bracket> &brackets) {
   std::ostringstream ret;
 
   for (const auto &bracket : brackets) {
@@ -626,7 +626,7 @@ std::string FormatV3000AttachPointBlock(
 }
 
 namespace {
-void addBlockToSGroupString(std::string block, std::string &currentLine,
+void addBlockToSGroupString(const std::string &block, std::string &currentLine,
                             std::ostringstream &os) {
   if (block.empty()) {
     return;

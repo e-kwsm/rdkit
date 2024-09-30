@@ -49,7 +49,7 @@ class RDKIT_FINGERPRINTS_EXPORT RDKitFPArguments : public FingerprintArguments {
    */
   RDKitFPArguments(unsigned int minPath, unsigned int maxPath, bool useHs,
                    bool branchedPaths, bool useBondOrder, bool countSimulation,
-                   const std::vector<std::uint32_t> countBounds,
+                   const std::vector<std::uint32_t> &countBounds,
                    std::uint32_t fpSize, std::uint32_t numBitsPerFeature);
 };
 

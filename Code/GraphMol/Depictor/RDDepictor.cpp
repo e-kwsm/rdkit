@@ -524,7 +524,7 @@ unsigned int copyCoordinate(RDKit::ROMol &mol, std::list<EmbeddedFrag> &efrags,
   return confId;
 }
 
-void setRingSystemTemplates(const std::string template_path) {
+void setRingSystemTemplates(const std::string &template_path) {
   // CoordinateTemplates is a singleton that holds all the templates, starting
   // with the default templates if different templates are set using
   // `RDDepictor::SetRingSystemTemplates`, the default templates are replaced by
@@ -534,7 +534,7 @@ void setRingSystemTemplates(const std::string template_path) {
   coordinate_templates.setRingSystemTemplates(template_path);
 }
 
-void addRingSystemTemplates(const std::string template_path) {
+void addRingSystemTemplates(const std::string &template_path) {
   CoordinateTemplates &coordinate_templates =
       CoordinateTemplates::getRingSystemTemplates();
   coordinate_templates.addRingSystemTemplates(template_path);
@@ -1164,12 +1164,12 @@ void generateDepictionMatching3DStructure(RDKit::ROMol &mol,
     if (-1 == mol_to_ref[i]) {
       continue;
     }
-    RDGeom::Point3D cds_i = conf.getAtomPos(i);
+    const RDGeom::Point3D &cds_i = conf.getAtomPos(i);
     for (unsigned int j = i + 1; j < num_ats; ++j) {
       if (-1 == mol_to_ref[j]) {
         continue;
       }
-      RDGeom::Point3D cds_j = conf.getAtomPos(mol_to_ref[j]);
+      const RDGeom::Point3D &cds_j = conf.getAtomPos(mol_to_ref[j]);
       dmat[(j * (j - 1) / 2) + i] = (cds_i - cds_j).length();
     }
   }
