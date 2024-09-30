@@ -1110,7 +1110,7 @@ void addHapticBond(RWMol &mol, unsigned int metalIdx,
     auto &conf = mol.getConformer(i);
     RDGeom::Point3D dummyPos;
     for (auto ha : hapticAtoms) {
-      auto haPos = conf.getAtomPos(ha);
+      const auto &haPos = conf.getAtomPos(ha);
       dummyPos += haPos;
     }
     dummyPos /= hapticAtoms.size();
