@@ -3310,7 +3310,7 @@ M  END
     REQUIRE(m);
     auto sgs = getSubstanceGroups(*m);
     REQUIRE(sgs.size() == 1);
-    auto sg = sgs[0];
+    const auto &sg = sgs[0];
     CHECK(sg.getProp<std::string>("FIELDINFO") == "\"");
     CHECK(sg.getProp<std::string>("QUERYOP") == "\"\"");
     auto mb = MolToV3KMolBlock(*m);
@@ -3342,7 +3342,7 @@ M  END
     REQUIRE(m);
     auto sgs = getSubstanceGroups(*m);
     REQUIRE(sgs.size() == 1);
-    auto sg = sgs[0];
+    const auto &sg = sgs[0];
     CHECK(sg.getProp<std::string>("FIELDINFO") == "foo\"");
     CHECK(sg.getProp<std::string>("QUERYOP") == "(bar)");
     auto mb = MolToV3KMolBlock(*m);

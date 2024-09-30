@@ -1710,7 +1710,7 @@ void testBoostSerialization() {
   }
 
   {  // test RWMol
-    RWMol m3(*m1);
+    const RWMol &m3(*m1);
     std::stringstream ss;
     {
       boost::archive::text_oarchive ar(ss);
