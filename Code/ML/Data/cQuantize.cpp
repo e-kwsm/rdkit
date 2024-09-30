@@ -222,10 +222,10 @@ double RecurseHelper(double *vals, int nVals, long int *cuts, int nCuts,
     - this is a drop-in replacement for *ML.Data.Quantize._PyRecurseBounds*
 
  ***********************************************/
-static python::tuple cQuantize_RecurseOnBounds(python::object vals,
+static python::tuple cQuantize_RecurseOnBounds(const python::object &vals,
                                                python::list pyCuts, int which,
                                                python::list pyStarts,
-                                               python::object results,
+                                               const python::object &results,
                                                int nPossibleRes) {
   PyArrayObject *contigVals, *contigResults;
   long int *cuts, *starts;
@@ -287,8 +287,8 @@ static python::tuple cQuantize_RecurseOnBounds(python::object vals,
   return python::make_tuple(gain, cutObj);
 }
 
-static python::list cQuantize_FindStartPoints(python::object values,
-                                              python::object results,
+static python::list cQuantize_FindStartPoints(const python::object &values,
+                                              const python::object &results,
                                               int nData) {
   python::list startPts;
 
