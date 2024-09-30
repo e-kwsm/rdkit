@@ -23,7 +23,7 @@ namespace {
 class PyTautomerEnumeratorResult {
  public:
   PyTautomerEnumeratorResult(const MolStandardize::TautomerEnumeratorResult &tr)
-      : d_tr(new MolStandardize::TautomerEnumeratorResult(std::move(tr))) {
+      : d_tr(new MolStandardize::TautomerEnumeratorResult(tr)) {
     python::list atList;
     python::list bndList;
     for (unsigned int i = 0; i < d_tr->modifiedAtoms().size(); ++i) {

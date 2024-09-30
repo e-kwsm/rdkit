@@ -134,7 +134,7 @@ UFFVdWaals::UFFVdWaals(const RDKit::ROMol &mol, int confId,
     throw ValueErrorException(
         "No UFF atom types available for at least one atom in molecule.");
   }
-  d_params = std::move(params);
+  d_params = params;
   fillVectors();
 }
 
