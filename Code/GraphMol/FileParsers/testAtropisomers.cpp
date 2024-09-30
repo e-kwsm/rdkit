@@ -455,7 +455,7 @@ class MolAtropTest {
           MolTest("macrocycle-5-ortho-broken-hash.sdf", true, 20, 21),
       };
 
-      for (auto sdfTest : sdfTests) {
+      for (const auto &sdfTest : sdfTests) {
         BOOST_LOG(rdInfoLog) << "Test: " << sdfTest.fileName << std::endl;
 
         testMolFiles(&sdfTest);
