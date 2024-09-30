@@ -152,7 +152,7 @@ TEST_CASE("createExtendedQueryMol and copy ctors") {
     auto mol = "COCC"_smiles;
     REQUIRE(mol);
     auto txqm = createExtendedQueryMol(*mol);
-    ExtendedQueryMol xqm1(txqm);
+    const ExtendedQueryMol &xqm1(txqm);
     ExtendedQueryMol xqm2(std::make_unique<RWMol>(*mol));
     xqm2 = txqm;
 
@@ -168,7 +168,7 @@ TEST_CASE("createExtendedQueryMol and copy ctors") {
     auto mol = "COCC |LN:1:1.3|"_smiles;
     REQUIRE(mol);
     auto txqm = createExtendedQueryMol(*mol);
-    ExtendedQueryMol xqm1(txqm);
+    const ExtendedQueryMol &xqm1(txqm);
     ExtendedQueryMol xqm2(std::make_unique<RWMol>(*mol));
     xqm2 = txqm;
 
@@ -187,7 +187,7 @@ TEST_CASE("createExtendedQueryMol and copy ctors") {
     auto mol1 = "CC1OC(N)=N1"_smiles;
     REQUIRE(mol1);
     auto txqm = createExtendedQueryMol(*mol1);
-    ExtendedQueryMol xqm1(txqm);
+    const ExtendedQueryMol &xqm1(txqm);
     ExtendedQueryMol xqm2(std::make_unique<RWMol>(*mol1));
     xqm2 = txqm;
 
@@ -207,7 +207,7 @@ TEST_CASE("createExtendedQueryMol and copy ctors") {
     auto mol1 = "COCC1OC(N)=N1 |LN:1:1.3|"_smiles;
     REQUIRE(mol1);
     auto txqm = createExtendedQueryMol(*mol1);
-    ExtendedQueryMol xqm1(txqm);
+    const ExtendedQueryMol &xqm1(txqm);
     ExtendedQueryMol xqm2(std::make_unique<RWMol>(*mol1));
     xqm2 = txqm;
 

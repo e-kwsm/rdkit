@@ -65,7 +65,7 @@ void test2() {
 
 void testCopyConstructor() {
   RDKit::RWMol mol1;
-  RDKit::RWMol mol2(mol1);
+  const RDKit::RWMol &mol2(mol1);
   RDKit::RWMol mol3;
   mol3 = mol2;
 }

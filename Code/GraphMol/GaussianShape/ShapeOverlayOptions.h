@@ -18,6 +18,7 @@
 #include <RDGeneral/export.h>
 
 namespace RDKit {
+class ROMol;
 namespace GaussianShape {
 
 enum class RDKIT_GAUSSIANSHAPE_EXPORT StartMode {

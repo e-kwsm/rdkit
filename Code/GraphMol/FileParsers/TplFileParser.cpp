@@ -58,7 +58,7 @@ void ParseTPLAtomLine(std::string text, unsigned int lineNum, RWMol *mol,
   // the only remaining info we care about is stereochem, and then only if
   // the number of bonds is 4:
   if (nBonds == 4 && splitLine.size() > 8 + nBonds) {
-    std::string stereoChem = splitLine[8 + nBonds];
+    const std::string &stereoChem = splitLine[8 + nBonds];
     atom->setProp("TPLStereoFlag", stereoChem);
   }
 }

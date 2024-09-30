@@ -174,7 +174,7 @@ double getBestRMSInternal(const ROMol &prbMol, const ROMol &refMol, int prbCid,
     for (auto ti = 0u; ti < numThreads; ++ti) {
       auto func = [&](unsigned int tidx) {
         for (auto midx = tidx; midx < matches.size(); midx += numThreads) {
-          auto matche = matches[midx];
+          const auto &matche = matches[midx];
           RDGeom::Transform3D tmpTrans;
           auto msd = trans
                          ? alignConfsOnAtomMap(prbCnf, refCnf, matche, tmpTrans,

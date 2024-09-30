@@ -242,7 +242,7 @@ void SubSearcher(const Query &in_query, const Bits &bits,
                "bad searchOrder data");
   // we copy the query so that we don't end up with lock contention for
   // recursive matchers when using multiple threads
-  Query query(in_query);
+  const Query &query(in_query);
   for (unsigned int idx = start; idx < end; idx += numThreads) {
     unsigned int sidx = idx;
     if (!searchOrder.empty()) {
