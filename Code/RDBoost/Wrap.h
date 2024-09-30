@@ -38,16 +38,16 @@ namespace python = boost::python;
 RDKIT_RDBOOST_EXPORT void throw_index_error(
     int key);  //!< construct and throw an \c IndexError
 RDKIT_RDBOOST_EXPORT void throw_value_error(
-    const std::string err);  //!< construct and throw a \c ValueError
+    const std::string &err);  //!< construct and throw a \c ValueError
 RDKIT_RDBOOST_EXPORT void throw_key_error(
-    const std::string key);  //!< construct and throw a \c KeyError
+    const std::string &key);  //!< construct and throw a \c KeyError
 RDKIT_RDBOOST_EXPORT void translate_index_error(IndexErrorException const &e);
 RDKIT_RDBOOST_EXPORT void translate_value_error(ValueErrorException const &e);
 RDKIT_RDBOOST_EXPORT void translate_key_error(KeyErrorException const &e);
 
 #ifdef INVARIANT_EXCEPTION_METHOD
 RDKIT_RDBOOST_EXPORT void throw_runtime_error(
-    const std::string err);  //!< construct and throw a \c ValueError
+    const std::string &err);  //!< construct and throw a \c ValueError
 RDKIT_RDBOOST_EXPORT void translate_invariant_error(Invar::Invariant const &e);
 #endif
 
