@@ -4110,7 +4110,7 @@ void testdoRandomSmileGeneration() {
         "c1(CC)nccc(OC)c1C",   "C(c1nccc(OC)c1C)C",   "CCc1nccc(OC)c1C",
         "c1(C)c(OC)ccnc1CC",   "Cc1c(OC)ccnc1CC"};
 
-    for (const auto &bz : benzenes) {
+    for (auto bz : benzenes) {
       ROMol *m = SmilesToMol(bz);
       TEST_ASSERT(m);
       TEST_ASSERT(m->getNumAtoms() == 11);
@@ -4283,7 +4283,7 @@ void testOSSFuzzFailures() {
 
   {  // examples that should produce no molecule
     std::vector<std::string> failing_examples = {"C)"};
-    for (const auto &smi : failing_examples) {
+    for (auto smi : failing_examples) {
       const auto mol = std::unique_ptr<ROMol>(SmilesToMol(smi));
       // output which molecule is failing
       if (mol) {
