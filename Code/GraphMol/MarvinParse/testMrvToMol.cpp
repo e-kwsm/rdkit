@@ -406,21 +406,21 @@ class MrvTests {
 
       // make sure the Rxn is kekule'ed
 
-      for (auto mol : rxn->getReactants()) {
+      for (const auto &mol : rxn->getReactants()) {
         auto rwMol = (RWMol *)mol.get();
         if (rwMol->needsUpdatePropertyCache()) {
           rwMol->updatePropertyCache(false);
         }
         MolOps::Kekulize(*rwMol);
       }
-      for (auto mol : rxn->getAgents()) {
+      for (const auto &mol : rxn->getAgents()) {
         auto rwMol = (RWMol *)mol.get();
         if (rwMol->needsUpdatePropertyCache()) {
           rwMol->updatePropertyCache(false);
         }
         MolOps::Kekulize(*rwMol);
       }
-      for (auto mol : rxn->getProducts()) {
+      for (const auto &mol : rxn->getProducts()) {
         auto rwMol = (RWMol *)mol.get();
         if (rwMol->needsUpdatePropertyCache()) {
           rwMol->updatePropertyCache(false);
@@ -791,21 +791,21 @@ class MrvTests {
 
       // // make sure the Rxn is kekule'ed
 
-      for (auto mol : rxn->getReactants()) {
+      for (const auto &mol : rxn->getReactants()) {
         auto rwMol = (RWMol *)mol.get();
         if (rwMol->needsUpdatePropertyCache()) {
           rwMol->updatePropertyCache(false);
         }
         MolOps::Kekulize(*rwMol);
       }
-      for (auto mol : rxn->getAgents()) {
+      for (const auto &mol : rxn->getAgents()) {
         auto rwMol = (RWMol *)mol.get();
         if (rwMol->needsUpdatePropertyCache()) {
           rwMol->updatePropertyCache(false);
         }
         MolOps::Kekulize(*rwMol);
       }
-      for (auto mol : rxn->getProducts()) {
+      for (const auto &mol : rxn->getProducts()) {
         auto rwMol = (RWMol *)mol.get();
         if (rwMol->needsUpdatePropertyCache()) {
           rwMol->updatePropertyCache(false);
@@ -883,7 +883,7 @@ class MrvTests {
           RxnTest("rxnStereoMarkedCrossed.mrv", true, 1, 0, 1, 2, 0),
       };
 
-      for (auto rxnMolTest : rxnMolTests) {
+      for (const auto &rxnMolTest : rxnMolTests) {
         BOOST_LOG(rdInfoLog) << "Test: " << rxnMolTest.fileName << std::endl;
 
         printf("Test\n\n %s\n\n", rxnMolTest.fileName.c_str());
@@ -922,7 +922,7 @@ class MrvTests {
           MolTest("TestBond1.mol", true, 10, 10),
           MolTest("Sgroup_MUL_ParentInMiddle.sdf", true, 17, 16)};
 
-      for (auto sdfTest : sdfTests) {
+      for (const auto &sdfTest : sdfTests) {
         BOOST_LOG(rdInfoLog) << "Test: " << sdfTest.fileName << std::endl;
 
         printf("Test\n\n %s\n\n", sdfTest.fileName.c_str());
@@ -937,7 +937,7 @@ class MrvTests {
           RxnTest("BadRxn.rxn", true, 2, 0, 1, 3, 0),
       };
 
-      for (auto rxnFileTest : rxnFileTests) {
+      for (const auto &rxnFileTest : rxnFileTests) {
         printf("Test\n\n %s\n\n", rxnFileTest.fileName.c_str());
         testRxn(&rxnFileTest);
       }
@@ -1059,7 +1059,7 @@ class MrvTests {
           MolTest("MarvinBadSupMissingAttachOrder.mrv", false, 9, 9),
           MolTest("marvin03.mrv", false, 1, 1)};  // should fail
 
-      for (auto molFileTest : molFileTests) {
+      for (const auto &molFileTest : molFileTests) {
         BOOST_LOG(rdInfoLog) << "Test: " << molFileTest.fileName << std::endl;
 
         printf("Test\n\n %s\n\n", molFileTest.fileName.c_str());
@@ -1324,7 +1324,7 @@ class MrvTests {
           RxnTest("aspirineSynthesisWithAttributes.mrv", true, 2, 0, 1, 3, 0),
           RxnTest("marvin01.mrv", false, 2, 1, 1, 3, 0)};  // should fail
 
-      for (auto rxnFileTest : mrvRxnFileTests) {
+      for (const auto &rxnFileTest : mrvRxnFileTests) {
         printf("Test\n\n %s\n\n", rxnFileTest.fileName.c_str());
         testMarvinRxn(&rxnFileTest);
       }
