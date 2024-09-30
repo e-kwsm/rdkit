@@ -4309,7 +4309,7 @@ void testGithub3305() {
                             const std::vector<Point2D> &expected) -> void {
       auto match_begin = std::sregex_iterator(text.begin(), text.end(), regex);
       std::vector<Point2D> actual;
-      std::smatch match = *match_begin;
+      const std::smatch &match = *match_begin;
       actual.push_back(Point2D(std::stod(match[1]), std::stod(match[2])));
       actual.push_back(Point2D(std::stod(match[3]), std::stod(match[4])));
       actual.push_back(Point2D(std::stod(match[5]), std::stod(match[6])));
