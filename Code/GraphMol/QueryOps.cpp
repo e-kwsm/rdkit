@@ -647,8 +647,8 @@ const std::vector<std::string> bondOrderQueryFunctions{
     std::string("SingleOrDoubleOrAromaticBond")};
 RDKIT_GRAPHMOL_EXPORT bool hasBondTypeQuery(
     const Queries::Query<int, Bond const *, true> &qry) {
-  const auto df = qry.getDescription();
-  const auto dt = qry.getTypeLabel();
+  const auto &df = qry.getDescription();
+  const auto &dt = qry.getTypeLabel();
   // is this a bond order query?
   if (dt == "BondOrder" ||
       (dt.empty() &&
@@ -668,7 +668,7 @@ RDKIT_GRAPHMOL_EXPORT bool hasBondTypeQuery(
 namespace {
 bool hasComplexBondTypeQueryHelper(
     const Queries::Query<int, Bond const *, true> &qry, bool seenBondOrder) {
-  const auto df = qry.getDescription();
+  const auto &df = qry.getDescription();
   bool isBondOrder = (df == "BondOrder");
   // is this a bond order query?
   if (std::find(bondOrderQueryFunctions.begin(), bondOrderQueryFunctions.end(),

@@ -37,7 +37,8 @@ FeatSPtrList MolChemicalFeatureFactory::getFeaturesForMol(
   MatchSetCollection matchSets;
   for (auto featDefIt = beginFeatureDefs(); featDefIt != endFeatureDefs();
        featDefIt++) {
-    MolChemicalFeatureDef::CollectionType::value_type featDef = *featDefIt;
+    const MolChemicalFeatureDef::CollectionType::value_type &featDef =
+        *featDefIt;
     if (limits == "" || limits == featDef->getFamily()) {
       std::vector<MatchVectType> matches;
 #ifdef USE_VFLIB

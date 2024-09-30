@@ -84,7 +84,7 @@ GasteigerParams::GasteigerParams(std::string paramData) {
   istr.imbue(std::locale("C"));
   for (tokenizer::iterator lineIter = lines.begin(); lineIter != lines.end();
        ++lineIter) {
-    std::string dataLine = *lineIter;
+    const std::string &dataLine = *lineIter;
     tokenizer tokens(dataLine, spaceSep);
     if (tokens.begin() != tokens.end()) {
       tokenizer::iterator tokIter = tokens.begin();

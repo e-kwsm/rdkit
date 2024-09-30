@@ -402,7 +402,7 @@ void setACS1996Options(MolDrawOptions &opts, double meanBondLen) {
 double meanBondLength(const ROMol &mol, int confId) {
   double bondLen = 0.0;
   if (mol.getNumBonds()) {
-    auto conf = mol.getConformer(confId);
+    const auto &conf = mol.getConformer(confId);
     for (auto bond : mol.bonds()) {
       bondLen += MolTransforms::getBondLength(conf, bond->getBeginAtomIdx(),
                                               bond->getEndAtomIdx());

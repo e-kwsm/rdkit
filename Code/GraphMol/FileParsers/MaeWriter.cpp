@@ -327,7 +327,7 @@ void mapAtom(
     const std::function<void(const std::string &, unsigned,
                              const std::string &)> &stringSetter) {
   auto idx = atom.getIdx();
-  auto coordinates = conformer.getAtomPos(idx);
+  const auto &coordinates = conformer.getAtomPos(idx);
 
   // Required properties
   setPropertyValue(atomBlock, mae::ATOM_X_COORD, numAtoms, idx, coordinates.x);
@@ -379,7 +379,7 @@ void mapAtom(
 void mapAtoms(const ROMol &mol, const STR_VECT &propNames, int confId,
               mae::IndexedBlockMap &indexedBlockMap) {
   auto atomBlock = std::make_shared<mae::IndexedBlock>(mae::ATOM_BLOCK);
-  auto conformer = mol.getConformer(confId);
+  const auto &conformer = mol.getConformer(confId);
   auto numAtoms = mol.getNumAtoms();
 
   auto boolSetter = [&atomBlock, &numAtoms](const std::string &prop,
