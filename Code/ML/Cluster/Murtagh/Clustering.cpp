@@ -117,8 +117,8 @@ void distclusterit(real *dists, boost::int64_t n, boost::int64_t iopt,
   distdriver_(&n, &len, dists, &iopt, ia, ib, crit);
 };
 
-static PyObject *Clustering_MurtaghDistCluster(python::object data, int nPts,
-                                               int option) {
+static PyObject *Clustering_MurtaghDistCluster(const python::object &data,
+                                               int nPts, int option) {
   PyArrayObject *dataContig;
   boost::int64_t *ia, *ib;
   real *crit;
