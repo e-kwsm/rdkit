@@ -1094,7 +1094,7 @@ TEST_CASE("testAtropisomersInCXSmiles") {
         SmilesTest("Mrtx1719_atropBad1.cxsmi", true, 33, 37),
     };
 
-    for (auto smiTest : smiTests) {
+    for (const auto &smiTest : smiTests) {
       printf("Test\n\n %s\n\n", smiTest.fileName.c_str());
       // RDDepict::preferCoordGen = true;
       testOneAtropisomers(&smiTest);
@@ -1112,7 +1112,7 @@ TEST_CASE("testAtropisomersInCXSmilesCanon") {
         SmilesTest("AtropCanon3.cxsmi", true, 15, 16),
     };
 
-    for (auto smiTest : smiTests) {
+    for (const auto &smiTest : smiTests) {
       printf("Test\n\n %s\n\n", smiTest.fileName.c_str());
       testOneAtropisomersCanon(&smiTest);
     }
@@ -1128,7 +1128,7 @@ TEST_CASE("test3DChiral") {
       SmilesTest("BMS-986142_3d.cxsmi", true, 72, 77),
   };
 
-  for (auto smiTest : smiTests) {
+  for (const auto &smiTest : smiTests) {
     printf("Test\n\n %s\n\n", smiTest.fileName.c_str());
     // RDDepict::preferCoordGen = true;
     testOne3dChiral(&smiTest);
@@ -1173,7 +1173,7 @@ void testSmilesCanonicalization(const std::string &smiles,
     unsigned int randomSeed = 0xf00d;
     auto smiV = MolToRandomSmilesVect(*smilesMol, 100, randomSeed);
 
-    for (auto smi : smiV) {
+    for (const auto &smi : smiV) {
       testOneSmilesCanonicalization(smi, expectedStr);
     }
 
