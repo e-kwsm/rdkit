@@ -1580,7 +1580,7 @@ void EmbedMultipleConfs(ROMol &mol, INT_VECT &res, unsigned int numConfs,
   // we will generate conformations for each fragment in the molecule
   // separately, so loop over them:
   for (unsigned int fragIdx = 0; fragIdx < molFrags.size(); ++fragIdx) {
-    ROMOL_SPTR piece = molFrags[fragIdx];
+    const ROMOL_SPTR &piece = molFrags[fragIdx];
     unsigned int nAtoms = piece->getNumAtoms();
 
     ForceFields::CrystalFF::CrystalFFDetails etkdgDetails;
