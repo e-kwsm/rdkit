@@ -152,7 +152,7 @@ void Reionizer::reionizeInPlace(RWMol &mol) {
         unsigned int ppos = res->first;
         std::vector<unsigned int> poccur = res->second;
         std::string abname;
-        std::pair<ROMOL_SPTR, ROMOL_SPTR> abpair = abpairs[ppos];
+        const std::pair<ROMOL_SPTR, ROMOL_SPTR> &abpair = abpairs[ppos];
         (abpair.first)->getProp(common_properties::_Name, abname);
         BOOST_LOG(rdInfoLog) << "Ionizing " << abname
                              << " to balance previous charge corrections\n";
@@ -203,8 +203,8 @@ void Reionizer::reionizeInPlace(RWMol &mol) {
         already_moved.insert(key);
 
         std::string prot_name, ionized_name;
-        std::pair<ROMOL_SPTR, ROMOL_SPTR> prot_pair = abpairs[ppos];
-        std::pair<ROMOL_SPTR, ROMOL_SPTR> ionized_pair = abpairs[ipos];
+        const std::pair<ROMOL_SPTR, ROMOL_SPTR> &prot_pair = abpairs[ppos];
+        const std::pair<ROMOL_SPTR, ROMOL_SPTR> &ionized_pair = abpairs[ipos];
         (prot_pair.first)->getProp(common_properties::_Name, prot_name);
         (ionized_pair.first)->getProp(common_properties::_Name, ionized_name);
 

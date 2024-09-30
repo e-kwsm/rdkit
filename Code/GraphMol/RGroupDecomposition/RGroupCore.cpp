@@ -353,7 +353,7 @@ ROMOL_SPTR RCore::replaceCoreAtomsWithMolMatches(
     const auto &molConformer = mol.getConformer();
 
     for (const auto &p : match) {
-      auto molPoint = molConformer.getAtomPos(p.second);
+      const auto &molPoint = molConformer.getAtomPos(p.second);
       replacedConformer.setAtomPos(p.first, molPoint);
     }
   } else {

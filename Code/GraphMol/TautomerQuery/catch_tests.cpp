@@ -331,7 +331,7 @@ TEST_CASE("github #3821 check TAUTOMERQUERY_OPERATOR= does a deep copy") {
   auto mol = "c1ccccc1"_smiles;
   auto tautomerQuery =
       std::unique_ptr<TautomerQuery>(TautomerQuery::fromMol(*mol));
-  auto tautomerQueryAssigned = *tautomerQuery;
+  const auto &tautomerQueryAssigned = *tautomerQuery;
   CHECK(&(tautomerQuery->getTemplateMolecule()) !=
         &tautomerQueryAssigned.getTemplateMolecule());
 }

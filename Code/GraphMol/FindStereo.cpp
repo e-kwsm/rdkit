@@ -186,7 +186,7 @@ StereoInfo getStereoInfo(const Bond *bond) {
         stereo = Chirality::translateEZLabelToCisTrans(stereo);
       }
       sinfo.specified = Chirality::StereoSpecified::Specified;
-      const auto satoms = bond->getStereoAtoms();
+      const auto &satoms = bond->getStereoAtoms();
       if (satoms.size() != 2) {
         throw ValueErrorException("only can support 2 stereo neighbors");
       }

@@ -163,8 +163,8 @@ RGroupGa::RGroupGa(const RGroupDecompData &rGroupData,
 void RGroupGa::rGroupMutateOperation(
     const std::vector<std::shared_ptr<RGroupDecompositionChromosome>> &parents,
     std::vector<std::shared_ptr<RGroupDecompositionChromosome>> &children) {
-  auto parent = parents[0];
-  auto child = children[0];
+  const auto &parent = parents[0];
+  const auto &child = children[0];
   child->copyGene(*parent);
   child->mutate();
   child->setOperationName(RgroupMutate);
@@ -216,10 +216,10 @@ void RGroupGa::rGroupMutateOperation(
 void RGroupGa::rGroupCrossoverOperation(
     const std::vector<std::shared_ptr<RGroupDecompositionChromosome>> &parents,
     std::vector<std::shared_ptr<RGroupDecompositionChromosome>> &children) {
-  auto parent1 = parents[0];
-  auto child1 = children[0];
-  auto parent2 = parents[1];
-  auto child2 = children[1];
+  const auto &parent1 = parents[0];
+  const auto &child1 = children[0];
+  const auto &parent2 = parents[1];
+  const auto &child2 = children[1];
 
   child1->setOperationName(Crossover);
   child2->setOperationName(Crossover);

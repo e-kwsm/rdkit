@@ -189,7 +189,7 @@ TEST_CASE("getAllConformerBestRMS") {
       std::cerr << (finish - start).count() << std::endl;
 
       ROMol refMol(*mol);
-      ROMol prbMol(*mol);
+      const ROMol &prbMol(*mol);
       auto refVal = MolAlign::getBestRMS(refMol, prbMol, 1, 0);
       CHECK(rmsds[0] == Catch::Approx(refVal).epsilon(0.00001));
     }

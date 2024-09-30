@@ -353,7 +353,7 @@ void MolDraw2DSVG::addMoleculeMetadata(const ROMol &mol, int confId) const {
     auto tag = boost::str(boost::format("_atomdrawpos_%d") % confId);
 
     const Conformer &conf = mol.getConformer(confId);
-    RDGeom::Point3D pos = conf.getAtomPos(atom->getIdx());
+    const RDGeom::Point3D &pos = conf.getAtomPos(atom->getIdx());
 
     Point2D dpos(pos.x, pos.y);
     if (atom->hasProp(tag)) {
