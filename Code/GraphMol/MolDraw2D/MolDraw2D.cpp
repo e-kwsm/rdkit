@@ -286,7 +286,7 @@ void MolDraw2D::drawReaction(
   std::vector<std::shared_ptr<MolDraw2D_detail::DrawMol>> agents;
 
   // Copy the reaction because processing for drawing alters it.
-  ChemicalReaction nrxn(rxn);
+  const ChemicalReaction &nrxn(rxn);
   int plusWidth;
   getReactionDrawMols(nrxn, highlightByReactant, highlightColorsReactants,
                       confIds, reagents, products, agents, plusWidth);
@@ -825,8 +825,6 @@ void MolDraw2D::getReactionDrawMols(
     std::vector<std::shared_ptr<MolDraw2D_detail::DrawMol>> &products,
     std::vector<std::shared_ptr<MolDraw2D_detail::DrawMol>> &agents,
     int &plusWidth) {
-  ChemicalReaction nrxn(rxn);
-
   const double agentFrac = 0.4;
   double minScale = std::numeric_limits<double>::max(), minFontScale;
 

@@ -515,7 +515,7 @@ void addTorsions(const ROMol &mol, const AtomicParamVect &params,
   }
 
   for (unsigned int i = 0; i < nHits; i++) {
-    MatchVectType match = matchVect[i];
+    const MatchVectType &match = matchVect[i];
     TEST_ASSERT(match.size() == 2);
     int idx1 = match[0].second;
     int idx2 = match[1].second;
