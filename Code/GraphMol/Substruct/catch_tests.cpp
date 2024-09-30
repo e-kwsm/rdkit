@@ -1008,8 +1008,8 @@ TEST_CASE("extra atom and bond queries") {
                           const Atom &targetAtom) -> bool {
         auto qconf = queryAtom.getOwningMol().getConformer();
         auto tconf = targetAtom.getOwningMol().getConformer();
-        auto qpos = qconf.getAtomPos(queryAtom.getIdx());
-        auto tpos = tconf.getAtomPos(targetAtom.getIdx());
+        const auto &qpos = qconf.getAtomPos(queryAtom.getIdx());
+        const auto &tpos = tconf.getAtomPos(targetAtom.getIdx());
         auto dist = (qpos - tpos).length();
         return dist < 0.1;
       };

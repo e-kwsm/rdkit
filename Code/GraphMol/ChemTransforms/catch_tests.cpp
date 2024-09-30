@@ -487,8 +487,8 @@ TEST_CASE("Molzip with 2D coordinates", "[molzip]") {
     const auto zippedMatches = SubstructMatch(*zippedMol, *query);
     REQUIRE(molMatches.size() == 1);
     REQUIRE(zippedMatches.size() == 1);
-    const auto molMatch = molMatches[0];
-    const auto zippedMatch = zippedMatches[0];
+    const auto &molMatch = molMatches[0];
+    const auto &zippedMatch = zippedMatches[0];
     for (size_t j = 0; j < molMatch.size(); j++) {
       const auto &position1 = molConformer.getAtomPos(molMatch[i].second);
       const auto &position2 = zippedConformer.getAtomPos(zippedMatch[i].second);
@@ -730,9 +730,9 @@ O      3.100000    0.000000    0.000000
     auto resconf = res->getConformer();
     // check that we don't have overlapping atoms:
     for (unsigned int i = 0; i < res->getNumAtoms(); ++i) {
-      auto api = resconf.getAtomPos(i);
+      const auto &api = resconf.getAtomPos(i);
       for (unsigned int j = i + 1; j < res->getNumAtoms(); ++j) {
-        auto apj = resconf.getAtomPos(j);
+        const auto &apj = resconf.getAtomPos(j);
         CHECK((api - apj).length() > 1.0);
       }
     }
@@ -749,7 +749,7 @@ O      3.100000    0.000000    0.000000
     auto molconf = m3->getConformer();
     for (unsigned int i = 0; i < 6; ++i) {
       auto rap = resconf.getAtomPos(i);
-      auto map = molconf.getAtomPos(i + 1);
+      const auto &map = molconf.getAtomPos(i + 1);
       CHECK_THAT(rap.x, Catch::Matchers::WithinAbs(map.x, 1e-4));
       CHECK_THAT(rap.y, Catch::Matchers::WithinAbs(map.y, 1e-4));
       CHECK_THAT(rap.z, Catch::Matchers::WithinAbs(map.z, 1e-4));

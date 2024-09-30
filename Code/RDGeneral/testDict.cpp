@@ -589,7 +589,7 @@ TEST_CASE("testUpdate") {
     }
 
     {
-      Dict d2(d);
+      const Dict &d2(d);
       REQUIRE(d.getVal<double>("foo2") == d2.getVal<double>("foo2"));
       REQUIRE(d.getVal<std::vector<int>>("foo3") ==
               d2.getVal<std::vector<int>>("foo3"));

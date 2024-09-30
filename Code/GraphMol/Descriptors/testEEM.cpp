@@ -59,8 +59,8 @@ void testEEM1() {
     m->getProp("_Name", nm);
     int errorAtoms = 0;
 
-    std::vector<std::string> myrow = data[nDone];
-    std::string inm = myrow[0];
+    const std::vector<std::string> &myrow = data[nDone];
+    const std::string &inm = myrow[0];
 
     TEST_ASSERT(inm == nm);
 
@@ -142,8 +142,8 @@ void testEEM2() {
     m->getProp("_Name", nm);
     int errorAtoms = 0;
 
-    std::vector<std::string> myrow = data[nDone];
-    std::string inm = myrow[0];
+    const std::vector<std::string> &myrow = data[nDone];
+    const std::string &inm = myrow[0];
 
     TEST_ASSERT(inm == nm);
 

@@ -92,44 +92,12 @@ RDKIT_GAUSSIANSHAPE_EXPORT std::array<double, 3> AlignMolecule(
     const ShapeOverlayOptions &overlayOpts = ShapeOverlayOptions(),
     int refConfId = -1, int fitConfId = -1);
 
-//! Calculate scores for the alignment of all conformers of one molecule
-//! onto another.  Returns a matrix of the combination scores, the conformer
-//! numbers of the two molecules that gave the best overlay and the
-//! transformation matrix for that overlay if requested.  The molecules
-//! themselves are not altered.  scores[0][1] is the score of aligning
-//! fit conformer 1 onto ref conformer 0
-/*!
-  \param ref           the reference molecule
-  \param fit           the molecule to align
-  \param refConfId     returns the reference conformer for the best scoring
-                       overlay
-  \param fitConfId     returns the fit conformer for the best scoring overlay
-  \param combScores    the scores for all the overlays.  Will be returned sized
-                       by the number of conformers of the ref and fit molecules.
-                       combScores[i][j] will be the score for the jth fit
-                       conformer onto the ith ref conformer.
-  \param refOpts       the options for creating the ref shape
-  \param fitOpts       the options for creating the fit shape
-  \param overlayOpts   options for setting up and running the overlay
-  \param xform         if passed in as non-null, will be populated with the
-                       transformation matrix that gives the best-scoring
-                       overlay.
- */
-RDKIT_GAUSSIANSHAPE_EXPORT void ScoreMoleculeAllConformers(
-    const ROMol &ref, const ROMol &fit, int &refConfId, int &fitConfId,
-    std::vector<std::vector<double>> &combScores,
-    const ShapeInputOptions &refOpts = ShapeInputOptions(),
-    const ShapeInputOptions &fitOpts = ShapeInputOptions(),
-    const ShapeOverlayOptions &overlayOpts = ShapeOverlayOptions(),
-    RDGeom::Transform3D *xform = nullptr);
-
 //! Score the overlap of a shape to a reference shape without moving
 //  either.
 /*!
   \param refShape      the reference shape
   \param fitShape      the shape to score
   \param overlayOpts   options for controlling the volume calculation
-  \param overlapVols  if not-null, is filled with the raw overlap volumes
 
 \return an array of the combination score of the shape Tversky value and the
   color Tversky value (zero if colors not used) and the individual values.  If
@@ -137,19 +105,17 @@ RDKIT_GAUSSIANSHAPE_EXPORT void ScoreMoleculeAllConformers(
 */
 RDKIT_GAUSSIANSHAPE_EXPORT std::array<double, 3> ScoreShape(
     const ShapeInput &refShape, const ShapeInput &fitShape,
-    const ShapeOverlayOptions &overlayOpts = ShapeOverlayOptions(),
-    std::pair<double, double> *overlapVols = nullptr);
+    const ShapeOverlayOptions &overlayOpts = ShapeOverlayOptions());
 
 //! Score the overlap of a molecule to a reference shape without moving
 //  either.
 /*!
-  \param refShape      the reference shape
+  \param ref           the reference shape
   \param fit           the molecule to score
   \param fitOpts       the options for creating the fit shape
   \param overlayOpts   options for controlling the volume calculation
   \param fitConfId     (optional) the conformer to use for the fit
                        molecule
-  \param overlapVols  if not-null, is filled with the raw overlap volumes
 
 \return an array of the combination score of the shape Tversky value and the
   color Tversky value (zero if colors not used) and the individual values.  If
@@ -159,8 +125,7 @@ RDKIT_GAUSSIANSHAPE_EXPORT std::array<double, 3> ScoreMolecule(
     const ShapeInput &refShape, const ROMol &fit,
     const ShapeInputOptions &fitOpts = ShapeInputOptions(),
     const ShapeOverlayOptions &overlayOpts = ShapeOverlayOptions(),
-    int fitConfId = -1,
-    std::pair<double, double> *overlapVols = nullptr);
+    int fitConfId = -1);
 
 //! Score the overlap of a molecule to a reference molecule without moving
 //  either.
@@ -174,7 +139,6 @@ RDKIT_GAUSSIANSHAPE_EXPORT std::array<double, 3> ScoreMolecule(
                        molecule
   \param fitConfId     (optional) the conformer to use for the fit
                        molecule
-  \param overlapVols  if not-null, is filled with the raw overlap volumes
 
 \return an array of the combination score of the shape Tverksy value and the
   color Tversky value (zero if colors not used) and the individual values.  If
@@ -185,8 +149,7 @@ RDKIT_GAUSSIANSHAPE_EXPORT std::array<double, 3> ScoreMolecule(
     const ShapeInputOptions &refOpts = ShapeInputOptions(),
     const ShapeInputOptions &fitOpts = ShapeInputOptions(),
     const ShapeOverlayOptions &overlayOpts = ShapeOverlayOptions(),
-    int refConfId = -1, int fitConfId = -1,
-    std::pair<double, double> *overlapVols = nullptr);
+    int refConfId = -1, int fitConfId = -1);
 
 }  // namespace GaussianShape
 }  // namespace RDKit
