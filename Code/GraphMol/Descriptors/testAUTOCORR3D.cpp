@@ -62,8 +62,8 @@ void testautocorrelation() {
 
     RDKit::Descriptors::AUTOCORR3D(*m, da3d, -1);
 
-    std::vector<std::string> myrow = data[nDone];
-    std::string inm = myrow[0];
+    const std::vector<std::string> &myrow = data[nDone];
+    const std::string &inm = myrow[0];
 
     TEST_ASSERT(inm == nm);
 
