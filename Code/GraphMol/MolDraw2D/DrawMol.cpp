@@ -1871,7 +1871,7 @@ void DrawMol::extractLegend() {
 
   Point2D loc(drawWidth_ / 2 + xOffset_ + width_ * marginPadding_,
               marginPadding_ * height_ + drawHeight_ + yOffset_);
-  for (auto bit : legend_bits) {
+  for (const auto &bit : legend_bits) {
     DrawAnnotation *da =
         new DrawAnnotation(bit, TextAlignType::MIDDLE, "legend", relFontScale,
                            loc, drawOptions_.legendColour, textDrawer_);
