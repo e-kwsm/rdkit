@@ -2929,7 +2929,7 @@ TEST_CASE("testMultipleGroupsToUnlabelledCoreAtom", "[RGroupDecomp]") {
     params.matchingStrategy = Exhaustive;
     params.scoreMethod = FingerprintVariance;
     RGroupDecomposition decomp(*core, params);
-    for (auto smiles : smilesVec) {
+    for (const auto &smiles : smilesVec) {
       auto mol = SmilesToMol(smiles);
       auto result = decomp.add(*mol);
       REQUIRE(result > -1);
@@ -2990,7 +2990,7 @@ TEST_CASE("testMultipleGroupsToUnlabelledCoreAtom", "[RGroupDecomp]") {
     params.matchingStrategy = Exhaustive;
     params.scoreMethod = FingerprintVariance;
     RGroupDecomposition decomp(*core, params);
-    for (auto smiles : smilesVec) {
+    for (const auto &smiles : smilesVec) {
       auto mol = SmilesToMol(smiles);
       auto result = decomp.add(*mol);
       REQUIRE(result > -1);
