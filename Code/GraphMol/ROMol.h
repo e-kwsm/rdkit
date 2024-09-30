@@ -444,7 +444,7 @@ class RDKIT_GRAPHMOL_EXPORT ROMol : public RDProps {
     for (auto bond : bonds()) {
       bond->setOwningMol(this);
     }
-    for (auto conf : d_confs) {
+    for (const auto &conf : d_confs) {
       conf->setOwningMol(this);
     }
     for (auto &sg : d_sgroups) {
@@ -483,7 +483,7 @@ class RDKIT_GRAPHMOL_EXPORT ROMol : public RDProps {
     for (auto bond : bonds()) {
       bond->setOwningMol(this);
     }
-    for (auto conf : d_confs) {
+    for (const auto &conf : d_confs) {
       conf->setOwningMol(this);
     }
     for (auto &sg : d_sgroups) {
