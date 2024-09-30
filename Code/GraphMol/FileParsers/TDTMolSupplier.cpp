@@ -185,8 +185,8 @@ void TDTMolSupplier::reset() {
 std::unique_ptr<RWMol> TDTMolSupplier::parseMol(std::string inLine) {
   PRECONDITION(dp_inStream, "no stream");
   Utils::LocaleSwitcher ls;
-  std::size_t startP = inLine.find("<");
-  std::size_t endP = inLine.find_last_of(">");
+  std::size_t startP = inLine.find('<');
+  std::size_t endP = inLine.find_last_of('>');
   std::string smiles = inLine.substr(startP + 1, endP - startP - 1);
   auto res = v2::SmilesParse::MolFromSmiles(smiles, d_params.parseParameters);
 
@@ -196,8 +196,8 @@ std::unique_ptr<RWMol> TDTMolSupplier::parseMol(std::string inLine) {
     d_line++;
     std::getline(*dp_inStream, inLine);
     while (!dp_inStream->eof() && !dp_inStream->fail() &&
-           inLine.find("|") != 0) {
-      endP = inLine.find("<");
+           inLine.find('|') != 0) {
+      endP = inLine.find('<');
       std::string propName = inLine.substr(0, endP);
       boost::trim_if(propName, boost::is_any_of(" \t"));
       startP = endP + 1;
@@ -239,7 +239,7 @@ std::unique_ptr<RWMol> TDTMolSupplier::parseMol(std::string inLine) {
         }
         res->addConformer(conf, false);
       } else {
-        endP = inLine.find_last_of(">");
+        endP = inLine.find_last_of('>');
         if (endP == std::string::npos) {
           std::ostringstream errout;
           errout << "no end tag found for property" << propName;
@@ -295,7 +295,7 @@ std::unique_ptr<RWMol> TDTMolSupplier::next() {
       BOOST_LOG(rdErrorLog) << "ERROR: " << se.what() << "\n";
       std::string tempStr;
       while (!dp_inStream->eof() && !dp_inStream->fail() &&
-             tempStr.find("|") != 0) {
+             tempStr.find('|') != 0) {
         d_line++;
         std::getline(*dp_inStream, tempStr);
       }
@@ -354,7 +354,7 @@ void TDTMolSupplier::moveTo(unsigned int idx) {
       d_line++;
       std::getline(*dp_inStream, tempStr);
 
-      if (tempStr.find("|") == 0) {
+      if (tempStr.find('|') == 0) {
         d_molpos.push_back(dp_inStream->tellg());
         d_last++;
       }
