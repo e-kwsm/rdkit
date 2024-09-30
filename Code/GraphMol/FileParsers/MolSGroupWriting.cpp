@@ -254,7 +254,7 @@ std::string BuildV2000SMTLine(const int idx, const SubstanceGroup &sgroup) {
 std::string BuildV2000SDILine(const int idx, const SubstanceGroup &sgroup) {
   std::ostringstream ret;
 
-  const std::vector<SubstanceGroup::Bracket> brackets = sgroup.getBrackets();
+  const std::vector<SubstanceGroup::Bracket> &brackets = sgroup.getBrackets();
 
   for (const auto &bracket : brackets) {
     ret << "M  SDI" << FormatV2000IntField(idx)
@@ -362,7 +362,7 @@ std::string BuildV2000SAPLines(const int idx, const SubstanceGroup &sgroup) {
   std::ostringstream ret;
   std::ostringstream temp;
 
-  const std::vector<SubstanceGroup::AttachPoint> saps =
+  const std::vector<SubstanceGroup::AttachPoint> &saps =
       sgroup.getAttachPoints();
 
   unsigned int count = 0;
