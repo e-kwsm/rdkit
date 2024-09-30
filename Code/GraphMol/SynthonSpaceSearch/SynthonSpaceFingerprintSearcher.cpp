@@ -185,7 +185,7 @@ SynthonSpaceFingerprintSearcher::searchFragSet(
   }
 
   const auto connPatterns = details::getConnectorPatterns(fragSet);
-  const auto synthConnPatts = reaction.getSynthonConnectorPatterns();
+  const auto &synthConnPatts = reaction.getSynthonConnectorPatterns();
 
   // Get all the possible permutations of connector numbers compatible with
   // the number of synthon sets in this reaction.  So if the
