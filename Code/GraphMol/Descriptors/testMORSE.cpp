@@ -61,8 +61,8 @@ void testMORSE() {
 
     RDKit::Descriptors::MORSE(*m, dmorse, -1);
 
-    std::vector<std::string> myrow = data[nDone];
-    std::string inm = myrow[0];
+    const std::vector<std::string> &myrow = data[nDone];
+    const std::string &inm = myrow[0];
     TEST_ASSERT(inm == nm);
 
     for (size_t i = 0; i < dmorse.size(); i++) {

@@ -415,7 +415,7 @@ std::string getBondSmartsSimple(const Bond *bond,
 
   auto *equery = dynamic_cast<const BOND_EQUALS_QUERY *>(bquery);
 
-  std::string descrip = bquery->getDescription();
+  const std::string &descrip = bquery->getDescription();
   std::string res = "";
   if (descrip == "BondNull") {
     res += "~";
