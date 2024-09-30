@@ -1097,8 +1097,8 @@ void testRingDblBondStereochem() {
   TEST_ASSERT(m1);
 
   smi = MolToSmiles(*m1, true);
-  TEST_ASSERT(smi.find("/", 0) == std::string::npos);
-  TEST_ASSERT(smi.find("\\", 0) == std::string::npos);
+  TEST_ASSERT(smi.find('/', 0) == std::string::npos);
+  TEST_ASSERT(smi.find('\\', 0) == std::string::npos);
   delete m1;
 
   fName = rdbase + "badringstereochem2.mol";
@@ -1106,8 +1106,8 @@ void testRingDblBondStereochem() {
   TEST_ASSERT(m1);
 
   smi = MolToSmiles(*m1, true);
-  TEST_ASSERT(smi.find("/", 0) == std::string::npos);
-  TEST_ASSERT(smi.find("\\", 0) == std::string::npos);
+  TEST_ASSERT(smi.find('/', 0) == std::string::npos);
+  TEST_ASSERT(smi.find('\\', 0) == std::string::npos);
   delete m1;
 
   fName = rdbase + "badringstereochem.mol";
@@ -1115,8 +1115,8 @@ void testRingDblBondStereochem() {
   TEST_ASSERT(m1);
 
   smi = MolToSmiles(*m1, true);
-  TEST_ASSERT(smi.find("/", 0) == std::string::npos);
-  TEST_ASSERT(smi.find("\\", 0) == std::string::npos);
+  TEST_ASSERT(smi.find('/', 0) == std::string::npos);
+  TEST_ASSERT(smi.find('\\', 0) == std::string::npos);
   delete m1;
 
   BOOST_LOG(rdInfoLog) << "done" << std::endl;
@@ -5045,7 +5045,7 @@ void testMolBlockChirality() {
     TEST_ASSERT(mol2);
     auto csmi1 = MolToSmiles(*mol, true);
     auto csmi2 = MolToSmiles(*mol2, true);
-    TEST_ASSERT(csmi1.find("@") != std::string::npos);
+    TEST_ASSERT(csmi1.find('@') != std::string::npos);
     TEST_ASSERT(csmi1 == csmi2);
     delete mol;
     delete mol2;
@@ -5068,7 +5068,7 @@ void testMolBlock3DStereochem() {
     TEST_ASSERT(m2);
     auto csmi1 = MolToSmiles(*m1, true);
     auto csmi2 = MolToSmiles(*m2, true);
-    TEST_ASSERT(csmi1.find("@") != std::string::npos);
+    TEST_ASSERT(csmi1.find('@') != std::string::npos);
     TEST_ASSERT(csmi1 == csmi2);
     delete m1;
     delete m2;
@@ -5082,7 +5082,7 @@ void testMolBlock3DStereochem() {
     TEST_ASSERT(m2);
     auto csmi1 = MolToSmiles(*m1, true);
     auto csmi2 = MolToSmiles(*m2, true);
-    TEST_ASSERT(csmi1.find("@") != std::string::npos);
+    TEST_ASSERT(csmi1.find('@') != std::string::npos);
     TEST_ASSERT(csmi1 == csmi2);
     delete m1;
     delete m2;
@@ -5096,7 +5096,7 @@ void testMolBlock3DStereochem() {
     TEST_ASSERT(m2);
     auto csmi1 = MolToSmiles(*m1, true);
     auto csmi2 = MolToSmiles(*m2, true);
-    TEST_ASSERT(csmi1.find("@") != std::string::npos);
+    TEST_ASSERT(csmi1.find('@') != std::string::npos);
     TEST_ASSERT(csmi1 == csmi2);
     delete m1;
     delete m2;
@@ -5110,7 +5110,7 @@ void testMolBlock3DStereochem() {
     TEST_ASSERT(m2);
     auto csmi1 = MolToSmiles(*m1, true);
     auto csmi2 = MolToSmiles(*m2, true);
-    TEST_ASSERT(csmi1.find("@") == std::string::npos);
+    TEST_ASSERT(csmi1.find('@') == std::string::npos);
     TEST_ASSERT(csmi1 == csmi2);
     delete m1;
     delete m2;
@@ -5124,7 +5124,7 @@ void testMolBlock3DStereochem() {
     TEST_ASSERT(m2);
     auto csmi1 = MolToSmiles(*m1, true);
     auto csmi2 = MolToSmiles(*m2, true);
-    TEST_ASSERT(csmi1.find("/") != std::string::npos);
+    TEST_ASSERT(csmi1.find('/') != std::string::npos);
     TEST_ASSERT(csmi1 == csmi2);
     delete m1;
     delete m2;
@@ -5138,8 +5138,8 @@ void testMolBlock3DStereochem() {
     TEST_ASSERT(m2);
     auto csmi1 = MolToSmiles(*m1, true);
     auto csmi2 = MolToSmiles(*m2, true);
-    TEST_ASSERT(csmi1.find("/") != std::string::npos);
-    TEST_ASSERT(csmi1.find("\\") != std::string::npos);
+    TEST_ASSERT(csmi1.find('/') != std::string::npos);
+    TEST_ASSERT(csmi1.find('\\') != std::string::npos);
     TEST_ASSERT(csmi1 == csmi2);
     delete m1;
     delete m2;
@@ -5154,8 +5154,8 @@ void testMolBlock3DStereochem() {
     TEST_ASSERT(m2);
     auto csmi1 = MolToSmiles(*m1, true);
     auto csmi2 = MolToSmiles(*m2, true);
-    TEST_ASSERT(csmi1.find("/") == std::string::npos);
-    TEST_ASSERT(csmi1.find("\\") == std::string::npos);
+    TEST_ASSERT(csmi1.find('/') == std::string::npos);
+    TEST_ASSERT(csmi1.find('\\') == std::string::npos);
     TEST_ASSERT(csmi1 == csmi2);
     delete m1;
     delete m2;
