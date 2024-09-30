@@ -1151,7 +1151,7 @@ template <class Q>
 std::pair<bool, bool> queryHasHs(Q queryAtom, bool inor = false) {
   for (auto childit = queryAtom->beginChildren();
        childit != queryAtom->endChildren(); ++childit) {
-    QueryAtom::QUERYATOM_QUERY::CHILD_TYPE query = *childit;
+    const QueryAtom::QUERYATOM_QUERY::CHILD_TYPE &query = *childit;
     if (query->getDescription() == "AtomOr") {
       return queryHasHs(query, true);
     } else if (query->getDescription() == "AtomAtomicNum") {

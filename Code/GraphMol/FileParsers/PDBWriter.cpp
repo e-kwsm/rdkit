@@ -109,7 +109,7 @@ std::string GetPDBAtomLine(const Atom *atom, const Conformer *conf,
   }
 
   if (conf) {
-    const RDGeom::Point3D pos = conf->getAtomPos(atom->getIdx());
+    const RDGeom::Point3D &pos = conf->getAtomPos(atom->getIdx());
     ss << boost::format("%8.3f%8.3f%8.3f") % pos.x % pos.y % pos.z;
   } else {
     ss << "   0.000   0.000   0.000";
