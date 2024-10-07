@@ -4106,7 +4106,9 @@ M  END
   }
 }
 
-TEST_CASE("Github Issue #7782: insertMol should not create an empty STEREO_ABSOLUTE group", "[RWMol]") {
+TEST_CASE(
+    "Github Issue #7782: insertMol should not create an empty STEREO_ABSOLUTE group",
+    "[RWMol]") {
   {
     auto mol = "C1CC1"_smiles;
     REQUIRE(mol);
