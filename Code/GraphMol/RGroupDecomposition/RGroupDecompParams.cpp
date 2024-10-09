@@ -395,7 +395,7 @@ void RGroupDecompositionParameters::checkNonTerminal(const Atom &atom) const {
 }
 
 void RGroupDecompositionParameters::addDummyAtomsToUnlabelledCoreAtoms(
-    RWMol &core) const {
+    RWMol &core) {
   if (!allowMultipleRGroupsOnUnlabelled) {
     return;
   }

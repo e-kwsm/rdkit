@@ -212,7 +212,7 @@ double fingerprintVarianceScore(
 }
 
 // calculates fingerprint variance score from rgroup bit counts
-double FingerprintVarianceScoreData::fingerprintVarianceGroupScore() const {
+double FingerprintVarianceScoreData::fingerprintVarianceGroupScore() {
   // arithmetic mean of scores for each label
 #ifdef DEBUG
   std::cerr << "fingerprint variance score: ";
