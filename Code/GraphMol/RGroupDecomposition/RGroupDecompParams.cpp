@@ -155,7 +155,8 @@ void updateRGroupDecompositionParametersFromJSON(
   }
 }
 
-unsigned int RGroupDecompositionParameters::autoGetLabels(const RWMol &core) {
+unsigned int RGroupDecompositionParameters::autoGetLabels(
+    const RWMol &core) const {
   unsigned int autoLabels = 0;
   if (!onlyMatchAtRGroups) {
     autoLabels = AtomIndexLabels;
@@ -395,7 +396,7 @@ void RGroupDecompositionParameters::checkNonTerminal(const Atom &atom) const {
 }
 
 void RGroupDecompositionParameters::addDummyAtomsToUnlabelledCoreAtoms(
-    RWMol &core) {
+    RWMol &core) const {
   if (!allowMultipleRGroupsOnUnlabelled) {
     return;
   }
