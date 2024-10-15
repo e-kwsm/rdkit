@@ -1615,7 +1615,7 @@ void testHasValenceViolation() {
            "*C |$_AP1;$|]",  // attachment point
            "[*] |$_R1$|",    // rgroup
        }) {
-    auto *mol = to_mol(smiles);
+    auto mol = to_mol(smiles);
     for (auto *atom : mol->atoms()) {
       TEST_ASSERT(!atom->hasValenceViolation());
     }
@@ -1646,7 +1646,7 @@ void testHasValenceViolation() {
            // "[F+2]",
            "[Lv-4]",
        }) {
-    auto *mol = to_mol(smiles);
+    auto mol = to_mol(smiles);
     auto *atom = mol->getAtomWithIdx(0);
     TEST_ASSERT(atom->hasValenceViolation());
   }
@@ -1661,7 +1661,7 @@ void testHasValenceViolation() {
            "[#6&R](-[#6])=[#6]",         // advanced query features
        }) {
     auto mol = v2::SmilesParse::MolFromSmarts(smarts);
-    for (auto atom : mol->atoms()) {
+    for (auto *atom : mol->atoms()) {
       TEST_ASSERT(!atom->hasValenceViolation());
     }
   }
