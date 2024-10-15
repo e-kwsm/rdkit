@@ -159,7 +159,7 @@ void MarvinMolBase::parseAtomsAndBonds(ptree &molTree) {
       }
 
       mrvAtom->radical = v.second.get<std::string>("<xmlattr>.radical", "");
-      if (mrvAtom->radical != "") {
+      if (!mrvAtom->radical.empty()) {
         if (std::find(marvinRadicalVals.begin(), marvinRadicalVals.end(),
                       mrvAtom->radical) == marvinRadicalVals.end()) {
           std::ostringstream err;
@@ -491,7 +491,7 @@ void MarvinMolBase::parseAtomsAndBonds(ptree &molTree) {
       }
 
       mrvBond->order = v.second.get<std::string>("<xmlattr>.order", "");
-      if (mrvBond->order != "") {
+      if (!mrvBond->order.empty()) {
         if (std::find(marvinBondOrders.begin(), marvinBondOrders.end(),
                       mrvBond->order) == marvinBondOrders.end()) {
           std::ostringstream err;
@@ -503,7 +503,7 @@ void MarvinMolBase::parseAtomsAndBonds(ptree &molTree) {
       }
 
       mrvBond->queryType = v.second.get<std::string>("<xmlattr>.queryType", "");
-      if (mrvBond->queryType != "") {
+      if (!mrvBond->queryType.empty()) {
         if (std::find(marvinQueryBondsTypes.begin(),
                       marvinQueryBondsTypes.end(),
                       mrvBond->queryType) == marvinQueryBondsTypes.end()) {
@@ -517,7 +517,7 @@ void MarvinMolBase::parseAtomsAndBonds(ptree &molTree) {
 
       mrvBond->convention =
           v.second.get<std::string>("<xmlattr>.convention", "");
-      if (mrvBond->convention != "") {
+      if (!mrvBond->convention.empty()) {
         if (std::find(marvinConventionTypes.begin(),
                       marvinConventionTypes.end(),
                       mrvBond->convention) == marvinConventionTypes.end()) {
@@ -3510,9 +3510,9 @@ MarvinMolBase *MarvinSuperatomSgroupExpanded::convertToOneSuperAtom() {
   }
 
   if (coordsExist) {
-    if (marvinSuperatomSgroup->attachmentPoints.size() >
-        0)  // Any attachment points?  if so we use the center of the
-            // attached atoms in the supergroup
+    if (!marvinSuperatomSgroup->attachmentPoints
+             .empty())  // Any attachment points?  if so we use the center of
+                        // the attached atoms in the supergroup
     {
       // put the new dummy atom at the center of the removed group
 
