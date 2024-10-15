@@ -166,8 +166,8 @@ class ChiralBondItem {
   }
 
   bool operator==(const ChiralBondItem &other) const {
-    return !(atomId1 != other.atomId1 || atomId2 != other.atomId2 ||
-             stereoType != other.stereoType);
+    return atomId1 == other.atomId1 && atomId2 == other.atomId2 &&
+           stereoType == other.stereoType;
   }
 
   bool operator!=(const ChiralBondItem &other) const {
