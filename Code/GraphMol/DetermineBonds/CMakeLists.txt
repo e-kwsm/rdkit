@@ -14,4 +14,4 @@ rdkit_catch_test(determineBondsCatchTest catch_tests.cpp
 
 if(RDK_BUILD_PYTHON_WRAPPERS)
 add_subdirectory(Wrap)
-endif()           
+endif()
