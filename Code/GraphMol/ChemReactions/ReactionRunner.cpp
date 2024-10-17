@@ -1261,8 +1261,8 @@ void copyEnhancedStereoGroups(const ROMol &reactant, RWMOL_SPTR product,
         continue;
       }
 
-      for (auto &productAtomIdx : productAtoms->second) {
-        auto productAtom = product->getAtomWithIdx(productAtomIdx);
+      for (const auto &productAtomIdx : productAtoms->second) {
+        auto *productAtom = product->getAtomWithIdx(productAtomIdx);
         // If chirality destroyed by the reaction, skip the atom
         if (productAtom->getChiralTag() == Atom::CHI_UNSPECIFIED) {
           continue;
@@ -1423,7 +1423,7 @@ void copyTemplateStereoGroupsToMol(const ROMol &templateMol,
     std::vector<Atom *> atoms;
     for (const auto &atom : sg.getAtoms()) {
       if (auto mapNum = atom->getAtomMapNum()) {
-        for (auto productAtom : product->atoms()) {
+        for (auto *productAtom : product->atoms()) {
           int oldMapNum = 0;
           if (productAtom->getPropIfPresent(common_properties::reactionMapNum,
                                             oldMapNum) &&
@@ -1449,7 +1449,7 @@ void copyTemplateStereoGroupsToMol(const ROMol &templateMol,
     // that overlap with the added ones
     for (const auto &productSG : product->getStereoGroups()) {
       unsigned int nOverlappingAtoms = 0;
-      for (const auto atom : productSG.getAtoms()) {
+      for (auto *const atom : productSG.getAtoms()) {
         if (atomsInTemplateStereoGroups[atom->getIdx()]) {
           ++nOverlappingAtoms;
         }
@@ -1461,7 +1461,7 @@ void copyTemplateStereoGroupsToMol(const ROMol &templateMol,
         // some of the atoms in the stereo group are not already there
         // in the product, we need to split the stereo group
         std::vector<Atom *> newAtoms;
-        for (const auto atom : productSG.getAtoms()) {
+        for (auto *const atom : productSG.getAtoms()) {
           if (!atomsInTemplateStereoGroups[atom->getIdx()]) {
             newAtoms.push_back(atom);
           }
