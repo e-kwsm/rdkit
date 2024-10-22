@@ -75,7 +75,7 @@ void ReportParseError(const char *message, bool throwIt) {
 void CleanupAfterParseError(RWMol *mol) {
   PRECONDITION(mol, "no molecule");
   // blow out any partial bonds:
-  for (const auto &markI : *mol->getBondBookmarks()) {
+  for (auto markI : *mol->getBondBookmarks()) {
     RWMol::BOND_PTR_LIST &bonds = markI.second;
     for (auto &bond : bonds) {
       delete bond;
@@ -175,7 +175,7 @@ void AddFragToMol(RWMol *mol, RWMol *frag, Bond::BondType bondOrder,
   // We deal with this by copying in the bookmarks and partial bonds
   // that exist in the fragment
   //
-  for (const auto &atIt : *frag->getAtomBookmarks()) {
+  for (auto atIt : *frag->getAtomBookmarks()) {
     // don't bother even considering bookmarks outside
     // the range used for cycles
     if (couldBeRingClosure(atIt.first)) {
@@ -654,7 +654,7 @@ void CleanupAfterParsing(RWMol *mol) {
     bond->clearProp(common_properties::_unspecifiedOrder);
     bond->clearProp("_cxsmilesBondIdx");
   }
-  for (const auto &sg : RDKit::getSubstanceGroups(*mol)) {
+  for (auto sg : RDKit::getSubstanceGroups(*mol)) {
     sg.clearProp("_cxsmilesindex");
   }
   if (!Chirality::getAllowNontetrahedralChirality()) {
