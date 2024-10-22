@@ -19,24 +19,24 @@ namespace RDKit {
 
 struct MCSParameters;
 
-using AtomComparator = enum {
+typedef enum {
   AtomCompareAny,
   AtomCompareElements,
   AtomCompareIsotopes,
   AtomCompareAnyHeavyAtom
-};
+} AtomComparator;
 
-using BondComparator = enum {
+typedef enum {
   BondCompareAny,
   BondCompareOrder,
   BondCompareOrderExact
-};
+} BondComparator;
 
-using RingComparator = enum {
+typedef enum {
   IgnoreRingFusion,
   PermissiveRingFusion,
   StrictRingFusion
-};
+} RingComparator;
 
 struct RDKIT_FMCS_EXPORT MCSAtomCompareParameters {
   bool MatchValences = false;
@@ -56,21 +56,21 @@ struct RDKIT_FMCS_EXPORT MCSBondCompareParameters {
   bool MatchStereo = false;
 };
 
-using MCSAtomCompareFunction = bool (*)(const MCSAtomCompareParameters &,
-                                        const ROMol &, unsigned int,
-                                        const ROMol &, unsigned int, void *);
-using MCSBondCompareFunction = bool (*)(const MCSBondCompareParameters &,
-                                        const ROMol &, unsigned int,
-                                        const ROMol &, unsigned int, void *);
-using MCSAcceptanceFunction = bool (*)(const ROMol &, const ROMol &,
-                                       const std::vector<std::pair<int, int>> &,
-                                       const std::vector<std::pair<int, int>> &,
-                                       const MCSParameters *);
-using MCSFinalMatchCheckFunction = bool (*)(const std::uint32_t[],
-                                            const std::uint32_t[],
-                                            const ROMol &, const FMCS::Graph &,
-                                            const ROMol &, const FMCS::Graph &,
-                                            const MCSParameters *);
+typedef bool (*MCSAtomCompareFunction)(const MCSAtomCompareParameters &,
+                                       const ROMol &, unsigned int,
+                                       const ROMol &, unsigned int, void *);
+typedef bool (*MCSBondCompareFunction)(const MCSBondCompareParameters &,
+                                       const ROMol &, unsigned int,
+                                       const ROMol &, unsigned int, void *);
+typedef bool (*MCSAcceptanceFunction)(const ROMol &, const ROMol &,
+                                      const std::vector<std::pair<int, int>> &,
+                                      const std::vector<std::pair<int, int>> &,
+                                      const MCSParameters *);
+typedef bool (*MCSFinalMatchCheckFunction)(const std::uint32_t[],
+                                           const std::uint32_t[], const ROMol &,
+                                           const FMCS::Graph &, const ROMol &,
+                                           const FMCS::Graph &,
+                                           const MCSParameters *);
 
 // Some predefined functors:
 RDKIT_FMCS_EXPORT bool checkAtomRingMatch(const MCSAtomCompareParameters &p,
@@ -137,9 +137,9 @@ struct RDKIT_FMCS_EXPORT MCSProgressData {
   MCSProgressData() {}
 };
 
-using MCSProgressCallback = bool (*)(const MCSProgressData &stat,
-                                     const MCSParameters &params,
-                                     void *userData);
+typedef bool (*MCSProgressCallback)(const MCSProgressData &stat,
+                                    const MCSParameters &params,
+                                    void *userData);
 RDKIT_FMCS_EXPORT bool MCSProgressCallbackTimeout(const MCSProgressData &stat,
                                                   const MCSParameters &params,
                                                   void *userData);
