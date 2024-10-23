@@ -19,20 +19,16 @@ namespace RDKit {
 
 struct MCSParameters;
 
-using AtomComparator = enum {
+enum AtomComparator {
   AtomCompareAny,
   AtomCompareElements,
   AtomCompareIsotopes,
   AtomCompareAnyHeavyAtom
 };
 
-using BondComparator = enum {
-  BondCompareAny,
-  BondCompareOrder,
-  BondCompareOrderExact
-};
+enum BondComparator { BondCompareAny, BondCompareOrder, BondCompareOrderExact };
 
-using RingComparator = enum {
+enum RingComparator {
   IgnoreRingFusion,
   PermissiveRingFusion,
   StrictRingFusion
