@@ -1411,7 +1411,7 @@ void addReactantAtomsAndBonds(const ChemicalReaction &rxn,
 
 namespace {
 void copyTemplateStereoGroupsToMol(const ROMol &templateMol,
-                                   RWMOL_SPTR product) {
+                                   const RWMOL_SPTR &product) {
   const auto &stereoGroups = templateMol.getStereoGroups();
   if (stereoGroups.empty()) {
     return;
