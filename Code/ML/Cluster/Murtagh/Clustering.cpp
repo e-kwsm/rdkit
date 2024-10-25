@@ -59,7 +59,7 @@ static void capsule_cleanup(PyObject *capsule) {
   free(ptr);
 }
 
-static PyObject *Clustering_MurtaghCluster(python::object data, int nPts,
+static PyObject *Clustering_MurtaghCluster(const python::object &data, int nPts,
                                            int sz, int option) {
   PyArrayObject *dataContig;
   boost::int64_t *ia, *ib;
