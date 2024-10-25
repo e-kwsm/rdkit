@@ -130,9 +130,9 @@ SparseBitVect *getSparseFingerprint(
   std::unique_ptr<std::vector<std::uint32_t>> ignoreAtoms;
   std::unique_ptr<std::vector<std::uint32_t>> customAtomInvariants;
   std::unique_ptr<std::vector<std::uint32_t>> customBondInvariants;
-  convertPyArguments(py_fromAtoms, py_ignoreAtoms, py_atomInvs, py_bondInvs,
-                     fromAtoms, ignoreAtoms, customAtomInvariants,
-                     customBondInvariants);
+  convertPyArguments(std::move(py_fromAtoms), std::move(py_ignoreAtoms),
+                     std::move(py_atomInvs), std::move(py_bondInvs), fromAtoms,
+                     ignoreAtoms, customAtomInvariants, customBondInvariants);
   AdditionalOutput *additionalOutput = nullptr;
   if (!py_additionalOutput.is_none()) {
     additionalOutput = python::extract<AdditionalOutput *>(py_additionalOutput);
@@ -156,9 +156,9 @@ SparseIntVect<std::uint32_t> *getCountFingerprint(
   std::unique_ptr<std::vector<std::uint32_t>> ignoreAtoms;
   std::unique_ptr<std::vector<std::uint32_t>> customAtomInvariants;
   std::unique_ptr<std::vector<std::uint32_t>> customBondInvariants;
-  convertPyArguments(py_fromAtoms, py_ignoreAtoms, py_atomInvs, py_bondInvs,
-                     fromAtoms, ignoreAtoms, customAtomInvariants,
-                     customBondInvariants);
+  convertPyArguments(std::move(py_fromAtoms), std::move(py_ignoreAtoms),
+                     std::move(py_atomInvs), std::move(py_bondInvs), fromAtoms,
+                     ignoreAtoms, customAtomInvariants, customBondInvariants);
   AdditionalOutput *additionalOutput = nullptr;
   if (!py_additionalOutput.is_none()) {
     additionalOutput = python::extract<AdditionalOutput *>(py_additionalOutput);
@@ -183,9 +183,9 @@ ExplicitBitVect *getFingerprint(const FingerprintGenerator<OutputType> *fpGen,
   std::unique_ptr<std::vector<std::uint32_t>> ignoreAtoms;
   std::unique_ptr<std::vector<std::uint32_t>> customAtomInvariants;
   std::unique_ptr<std::vector<std::uint32_t>> customBondInvariants;
-  convertPyArguments(py_fromAtoms, py_ignoreAtoms, py_atomInvs, py_bondInvs,
-                     fromAtoms, ignoreAtoms, customAtomInvariants,
-                     customBondInvariants);
+  convertPyArguments(std::move(py_fromAtoms), std::move(py_ignoreAtoms),
+                     std::move(py_atomInvs), std::move(py_bondInvs), fromAtoms,
+                     ignoreAtoms, customAtomInvariants, customBondInvariants);
   AdditionalOutput *additionalOutput = nullptr;
   if (!py_additionalOutput.is_none()) {
     additionalOutput = python::extract<AdditionalOutput *>(py_additionalOutput);
