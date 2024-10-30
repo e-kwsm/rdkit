@@ -87,7 +87,7 @@ TEST_CASE("CubeFiles") {
   Point3D o(0.0, 0.0, 0.0);
   UniformRealValueGrid3D grd(5.0, 5.0, 5.0, 1.0, &o, &data);
   for (unsigned int i = 0; i < grd.getSize(); i++) {
-    grd.setVal(i, double(i / 10.0));
+    grd.setVal(i, i / 10.0);
   }
   writeToCubeFile(grd, path + "test3.cube", mol.get());
   UniformRealValueGrid3D grd2;
