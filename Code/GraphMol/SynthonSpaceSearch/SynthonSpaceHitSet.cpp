@@ -31,7 +31,7 @@ SynthonSpaceHitSet::SynthonSpaceHitSet(
       [](const std::unique_ptr<ROMol> &f) -> ROMol * { return f.get(); });
 
   numHits = std::accumulate(
-      stu.begin(), stu.end(), size_t(1),
+      stu.begin(), stu.end(), static_cast<size_t>(1),
       [](const int prevRes, const std::vector<size_t> &s2) -> size_t {
         return prevRes * s2.size();
       });
