@@ -76,16 +76,17 @@ static PyObject *Clustering_MurtaghCluster(python::object data, int nPts,
     return nullptr;
   }
 
-  ia = (boost::int64_t *)calloc(nPts, sizeof(boost::int64_t));
+  ia = static_cast<boost::int64_t *>(calloc(nPts, sizeof(boost::int64_t)));
   auto ia_capsule = PyCapsule_New(ia, nullptr, capsule_cleanup);
 
-  ib = (boost::int64_t *)calloc(nPts, sizeof(boost::int64_t));
+  ib = static_cast<boost::int64_t *>(calloc(nPts, sizeof(boost::int64_t)));
   auto ib_capsule = PyCapsule_New(ib, nullptr, capsule_cleanup);
 
-  crit = (real *)calloc(nPts, sizeof(real));
+  crit = static_cast<real *>(calloc(nPts, sizeof(real)));
   auto crit_capsule = PyCapsule_New(crit, nullptr, capsule_cleanup);
 
-  clusterit((real *)PyArray_DATA(dataContig), nPts, sz, option, ia, ib, crit);
+  clusterit(static_cast<real *>(PyArray_DATA(dataContig)), nPts, sz, option, ia,
+            ib, crit);
 
   dims[0] = nPts;
   res = PyTuple_New(3);
@@ -95,16 +96,16 @@ static PyObject *Clustering_MurtaghCluster(python::object data, int nPts,
   //  Python will take care of it for us.
   //
   tmp = PyArray_SimpleNewFromData(1, dims, NPY_LONG, (void *)ia);
-  PyArray_SetBaseObject((PyArrayObject *)tmp, ia_capsule);
-  PyTuple_SetItem(res, 0, (PyObject *)tmp);
+  PyArray_SetBaseObject(reinterpret_cast<PyArrayObject *>(tmp), ia_capsule);
+  PyTuple_SetItem(res, 0, tmp);
 
   tmp = PyArray_SimpleNewFromData(1, dims, NPY_LONG, (void *)ib);
-  PyArray_SetBaseObject((PyArrayObject *)tmp, ib_capsule);
-  PyTuple_SetItem(res, 1, (PyObject *)tmp);
+  PyArray_SetBaseObject(reinterpret_cast<PyArrayObject *>(tmp), ib_capsule);
+  PyTuple_SetItem(res, 1, tmp);
 
   tmp = PyArray_SimpleNewFromData(1, dims, NPY_DOUBLE, (void *)crit);
-  PyArray_SetBaseObject((PyArrayObject *)tmp, crit_capsule);
-  PyTuple_SetItem(res, 2, (PyObject *)tmp);
+  PyArray_SetBaseObject(reinterpret_cast<PyArrayObject *>(tmp), crit_capsule);
+  PyTuple_SetItem(res, 2, tmp);
 
   return res;
 };
@@ -134,16 +135,17 @@ static PyObject *Clustering_MurtaghDistCluster(python::object data, int nPts,
     return nullptr;
   }
 
-  ia = (boost::int64_t *)calloc(nPts, sizeof(boost::int64_t));
+  ia = static_cast<boost::int64_t *>(calloc(nPts, sizeof(boost::int64_t)));
   auto ia_capsule = PyCapsule_New(ia, nullptr, capsule_cleanup);
 
-  ib = (boost::int64_t *)calloc(nPts, sizeof(boost::int64_t));
+  ib = static_cast<boost::int64_t *>(calloc(nPts, sizeof(boost::int64_t)));
   auto ib_capsule = PyCapsule_New(ib, nullptr, capsule_cleanup);
 
-  crit = (real *)calloc(nPts, sizeof(real));
+  crit = static_cast<real *>(calloc(nPts, sizeof(real)));
   auto crit_capsule = PyCapsule_New(crit, nullptr, capsule_cleanup);
 
-  distclusterit((real *)PyArray_DATA(dataContig), nPts, option, ia, ib, crit);
+  distclusterit(static_cast<real *>(PyArray_DATA(dataContig)), nPts, option, ia,
+                ib, crit);
 
   dims[0] = nPts;
 
@@ -153,15 +155,15 @@ static PyObject *Clustering_MurtaghDistCluster(python::object data, int nPts,
   //  Python will take care of it for us.
   //
   tmp = PyArray_SimpleNewFromData(1, dims, NPY_LONG, (void *)ia);
-  PyArray_SetBaseObject((PyArrayObject *)tmp, ia_capsule);
+  PyArray_SetBaseObject(reinterpret_cast<PyArrayObject *>(tmp), ia_capsule);
   PyTuple_SetItem(res, 0, tmp);
 
   tmp = PyArray_SimpleNewFromData(1, dims, NPY_LONG, (void *)ib);
-  PyArray_SetBaseObject((PyArrayObject *)tmp, ib_capsule);
+  PyArray_SetBaseObject(reinterpret_cast<PyArrayObject *>(tmp), ib_capsule);
   PyTuple_SetItem(res, 1, tmp);
 
   tmp = PyArray_SimpleNewFromData(1, dims, NPY_DOUBLE, (void *)crit);
-  PyArray_SetBaseObject((PyArrayObject *)tmp, crit_capsule);
+  PyArray_SetBaseObject(reinterpret_cast<PyArrayObject *>(tmp), crit_capsule);
   PyTuple_SetItem(res, 2, tmp);
 
   return res;
