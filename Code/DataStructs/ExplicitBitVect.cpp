@@ -97,7 +97,7 @@ bool ExplicitBitVect::unsetBit(const unsigned int which) {
   if (which >= d_size) {
     throw IndexErrorException(which);
   }
-  if ((bool)(*dp_bits)[which]) {
+  if (static_cast<bool>((*dp_bits)[which])) {
     (*dp_bits)[which] = 0;
     --d_numOnBits;
     return true;
