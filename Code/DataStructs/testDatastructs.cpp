@@ -1466,7 +1466,7 @@ void test14RealVect() {
 
   RealValueVect vect2(30);
   for (i = 0; i < vect2.getLength(); ++i) {
-    vect2.setVal(i, double(1.0 / (i + 1.0)));
+    vect2.setVal(i, 1.0 / (i + 1.0));
   }
 
   TEST_ASSERT(vect2.getLength() == 30);
