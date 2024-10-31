@@ -142,7 +142,8 @@ TEST_CASE("test3SquareMatrix") {
   A.setVal(0, 1, 2.0);
   A.setVal(1, 0, 3.0);
   A.setVal(1, 1, 4.0);
-  SquareMatrix<double> B(A), C(2);
+  SquareMatrix<double> B(A);
+  SquareMatrix<double> C(2);
 
   multiply(A, B, C);
   REQUIRE_THAT(C.getVal(0, 0), Catch::Matchers::WithinAbs(7.0, 1e-4));
@@ -165,7 +166,8 @@ TEST_CASE("test3SquareMatrix") {
   SquareMatrix<double> E(*D);
   multiply((*D), E, A);
 
-  unsigned int i, j;
+  unsigned int i;
+  unsigned int j;
   for (i = 0; i < 2; i++) {
     for (j = 0; j < 2; j++) {
       REQUIRE_THAT(B.getVal(i, j),
@@ -198,7 +200,8 @@ TEST_CASE("test4SymmMatrix") {
   multiply(A, B, C);
 
   B *= A;
-  unsigned int i, j;
+  unsigned int i;
+  unsigned int j;
   for (i = 0; i < 3; i++) {
     for (j = 0; j < 3; j++) {
       REQUIRE_THAT(B.getVal(i, j),
@@ -206,7 +209,8 @@ TEST_CASE("test4SymmMatrix") {
     }
   }
 
-  Vector<double> x(3), y(3);
+  Vector<double> x(3);
+  Vector<double> y(3);
   x.setVal(0, 1.0);
   x.setVal(1, 2.0);
   x.setVal(2, 3.0);
