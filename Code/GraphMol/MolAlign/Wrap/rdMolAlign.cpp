@@ -132,7 +132,9 @@ PyObject *generateRmsdTransMatchPyTuple(double rmsd,
   dims[1] = 4;
   auto *res = (PyArrayObject *)PyArray_SimpleNew(2, dims, NPY_DOUBLE);
   auto *resData = reinterpret_cast<double *>(PyArray_DATA(res));
-  unsigned int i, j, itab;
+  unsigned int i;
+  unsigned int j;
+  unsigned int itab;
   const double *tdata = trans.getData();
   for (i = 0; i < trans.numRows(); ++i) {
     itab = i * 4;
