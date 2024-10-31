@@ -23,7 +23,13 @@ void testReionizer() {
   BOOST_LOG(rdDebugLog) << "-----------------------\n test reionizer"
                         << std::endl;
 
-  std::string smi1, smi2, smi3, smi4, smi5, smi6, smi7;
+  std::string smi1;
+  std::string smi2;
+  std::string smi3;
+  std::string smi4;
+  std::string smi5;
+  std::string smi6;
+  std::string smi7;
 
   Reionizer reionizer;
 
