@@ -796,7 +796,8 @@ TEST_CASE("testSmilesWriter") {
   int i = 0;
   mol = nSup->next();
   while (mol) {
-    std::string mname, pval;
+    std::string mname;
+    std::string pval;
     mol->getProp(common_properties::_Name, mname);
     mol->getProp("Column_2", pval);
     REQUIRE(mname == names[i]);
@@ -1082,7 +1083,8 @@ TEST_CASE("testTDTSupplier2") {
   std::string fname =
       rdbase + "/Code/GraphMol/FileParsers/test_data/acd_few.tdt";
   int i;
-  std::string prop1, prop2;
+  std::string prop1;
+  std::string prop2;
 
   TDTMolSupplier suppl(fname, "PN", 2);
   i = 0;
@@ -1114,7 +1116,8 @@ TEST_CASE("testTDTSupplier2") {
 
 TEST_CASE("testTDTSupplier3") {
   int i;
-  std::string prop1, prop2;
+  std::string prop1;
+  std::string prop2;
 
   TDTMolSupplier suppl;
 
