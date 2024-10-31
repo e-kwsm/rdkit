@@ -25,8 +25,12 @@ TEST_CASE("Conrec basics", "[conrec]") {
     auto grid = std::make_unique<double[]>(gridSz * gridSz);
     double xps[gridSz];
     double yps[gridSz];
-    double x1 = -4, y1 = -4, x2 = 6, y2 = 6;
-    double dx = (x2 - x1) / gridSz, dy = (y2 - y1) / gridSz;
+    double x1 = -4;
+    double y1 = -4;
+    double x2 = 6;
+    double y2 = 6;
+    double dx = (x2 - x1) / gridSz;
+    double dy = (y2 - y1) / gridSz;
     double maxV = 0.0;
     for (size_t ix = 0; ix < gridSz; ++ix) {
       auto px = x1 + ix * dx;
@@ -92,8 +96,12 @@ TEST_CASE("connectLineSegments", "[conrec]") {
     auto grid = std::make_unique<double[]>(gridSz * gridSz);
     double xps[gridSz];
     double yps[gridSz];
-    double x1 = -4, y1 = -4, x2 = 6, y2 = 6;
-    double dx = (x2 - x1) / gridSz, dy = (y2 - y1) / gridSz;
+    double x1 = -4;
+    double y1 = -4;
+    double x2 = 6;
+    double y2 = 6;
+    double dx = (x2 - x1) / gridSz;
+    double dy = (y2 - y1) / gridSz;
     double maxV = 0.0;
     for (size_t ix = 0; ix < gridSz; ++ix) {
       auto px = x1 + ix * dx;
@@ -167,8 +175,12 @@ TEST_CASE("super chunky", "[conrec]") {
     auto grid = std::make_unique<double[]>(gridSz * gridSz);
     double xps[gridSz];
     double yps[gridSz];
-    double x1 = -4, y1 = -4, x2 = 6, y2 = 6;
-    double dx = (x2 - x1) / gridSz, dy = (y2 - y1) / gridSz;
+    double x1 = -4;
+    double y1 = -4;
+    double x2 = 6;
+    double y2 = 6;
+    double dx = (x2 - x1) / gridSz;
+    double dy = (y2 - y1) / gridSz;
     double maxV = 0.0;
     for (size_t ix = 0; ix < gridSz; ++ix) {
       auto px = x1 + ix * dx;
