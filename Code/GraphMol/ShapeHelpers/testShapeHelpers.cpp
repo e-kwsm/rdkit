@@ -94,7 +94,8 @@ TEST_CASE("GitHub #4364", "[shapehelpers]") {
   auto m2 = v2::FileParsers::MolFromMolFile(fname2);
   REQUIRE(m2);
   MolTransforms::canonicalizeMol(*m2);
-  int cid1 = -1, cid2 = -1;
+  int cid1 = -1;
+  int cid2 = -1;
   auto dist = MolShapes::tanimotoDistance(*m, *m2, cid1, cid2);
   CHECK_THAT(dist, Catch::Matchers::WithinAbs(0.31, 0.01));
   double gridSpacing = 1.0;
