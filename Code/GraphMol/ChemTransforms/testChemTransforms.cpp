@@ -25,9 +25,13 @@
 using namespace RDKit;
 
 void testDeleteSubstruct() {
-  ROMol *mol1 = nullptr, *mol2 = nullptr, *matcher1 = nullptr,
-        *matcher2 = nullptr, *matcher3 = nullptr;
-  std::string smi, sma;
+  ROMol *mol1 = nullptr;
+  ROMol *mol2 = nullptr;
+  ROMol *matcher1 = nullptr;
+  ROMol *matcher2 = nullptr;
+  ROMol *matcher3 = nullptr;
+  std::string smi;
+  std::string sma;
 
   BOOST_LOG(rdInfoLog) << "-------------------------------------" << std::endl;
   BOOST_LOG(rdInfoLog) << "Testing deleteSubstruct" << std::endl;
@@ -138,8 +142,11 @@ void testDeleteSubstruct() {
 }
 
 void testReplaceSubstructs() {
-  ROMol *mol1 = nullptr, *matcher1 = nullptr, *frag = nullptr;
-  std::string smi, sma;
+  ROMol *mol1 = nullptr;
+  ROMol *matcher1 = nullptr;
+  ROMol *frag = nullptr;
+  std::string smi;
+  std::string sma;
   std::vector<ROMOL_SPTR> vect;
 
   BOOST_LOG(rdInfoLog) << "-------------------------------------" << std::endl;
@@ -306,8 +313,11 @@ void testReplaceSubstructs2() {
 }
 
 void testReplaceSidechains() {
-  ROMol *mol1 = nullptr, *mol2 = nullptr, *matcher1 = nullptr;
-  std::string smi, sma;
+  ROMol *mol1 = nullptr;
+  ROMol *mol2 = nullptr;
+  ROMol *matcher1 = nullptr;
+  std::string smi;
+  std::string sma;
 
   BOOST_LOG(rdInfoLog) << "-------------------------------------" << std::endl;
   BOOST_LOG(rdInfoLog) << "Testing replaceSidechains" << std::endl;
@@ -388,8 +398,11 @@ void testReplaceSidechains() {
 }
 
 void testReplaceCore() {
-  ROMol *mol1 = nullptr, *mol2 = nullptr, *matcher1 = nullptr;
-  std::string smi, sma;
+  ROMol *mol1 = nullptr;
+  ROMol *mol2 = nullptr;
+  ROMol *matcher1 = nullptr;
+  std::string smi;
+  std::string sma;
 
   BOOST_LOG(rdInfoLog) << "-------------------------------------" << std::endl;
   BOOST_LOG(rdInfoLog) << "Testing replaceCore" << std::endl;
@@ -871,8 +884,11 @@ void testReplaceCoreLabels() {
 }
 
 void testReplaceCoreCrash() {
-  ROMol *mol1 = nullptr, *mol2 = nullptr, *matcher1 = nullptr;
-  std::string smi, sma;
+  ROMol *mol1 = nullptr;
+  ROMol *mol2 = nullptr;
+  ROMol *matcher1 = nullptr;
+  std::string smi;
+  std::string sma;
 
   BOOST_LOG(rdInfoLog) << "-------------------------------------" << std::endl;
   BOOST_LOG(rdInfoLog) << "Testing a former crash in replaceCore" << std::endl;
@@ -900,8 +916,11 @@ void testReplaceCoreCrash() {
 }
 
 void testReplaceCorePositions() {
-  ROMol *mol1 = nullptr, *mol2 = nullptr, *matcher1 = nullptr;
-  std::string smi, sma;
+  ROMol *mol1 = nullptr;
+  ROMol *mol2 = nullptr;
+  ROMol *matcher1 = nullptr;
+  std::string smi;
+  std::string sma;
 
   BOOST_LOG(rdInfoLog) << "-------------------------------------" << std::endl;
   BOOST_LOG(rdInfoLog)
@@ -922,7 +941,8 @@ void testReplaceCorePositions() {
   TEST_ASSERT(mol2);
   TEST_ASSERT(mol2->getNumAtoms() == 4);
 
-  RDGeom::Point3D op, np;
+  RDGeom::Point3D op;
+  RDGeom::Point3D np;
   op = mol1->getConformer().getAtomPos(6);
   np = mol2->getConformer().getAtomPos(0);
   TEST_ASSERT(feq(op.x, np.x));
@@ -956,7 +976,8 @@ void testReplaceCoreMatchVectMultipleMappingToCore() {
                           "dummy target atoms mapping to single core atom"
                        << std::endl;
 
-  std::unique_ptr<RWMol> core, mol;
+  std::unique_ptr<RWMol> core;
+  std::unique_ptr<RWMol> mol;
 
   // 2 dummies in core map to single N in molecule
   core = "C1([*:1])C([*:2])CC1"_smiles;
@@ -1184,8 +1205,11 @@ void testReplaceCoreRequireDummies() {
 }
 
 void testIssue3453144() {
-  ROMol *mol1 = nullptr, *matcher1 = nullptr, *replacement = nullptr;
-  std::string smi, sma;
+  ROMol *mol1 = nullptr;
+  ROMol *matcher1 = nullptr;
+  ROMol *replacement = nullptr;
+  std::string smi;
+  std::string sma;
 
   BOOST_LOG(rdInfoLog) << "-------------------------------------" << std::endl;
   BOOST_LOG(rdInfoLog)
@@ -1215,7 +1239,8 @@ void testIssue3453144() {
 
   TEST_ASSERT(rs[0]->getNumConformers() == mol1->getNumConformers());
 
-  RDGeom::Point3D op, np;
+  RDGeom::Point3D op;
+  RDGeom::Point3D np;
   op = mol1->getConformer().getAtomPos(0);
   np = rs[0]->getConformer().getAtomPos(0);
   TEST_ASSERT(feq(op.x, np.x));
@@ -1234,7 +1259,8 @@ void testIssue3453144() {
 }
 
 void testIssue3537675() {
-  std::string smi, sma;
+  std::string smi;
+  std::string sma;
 
   BOOST_LOG(rdInfoLog) << "-------------------------------------" << std::endl;
   BOOST_LOG(rdInfoLog)
