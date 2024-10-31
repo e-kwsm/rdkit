@@ -24,7 +24,8 @@ typedef ROMol Mol;
 
 void testPass() {
   int i = 0;
-  ROMol *mol, *mol2;
+  ROMol *mol;
+  ROMol *mol2;
   BOOST_LOG(rdInfoLog) << "-------------------------------------" << std::endl;
   BOOST_LOG(rdInfoLog) << "Testing molecules which should parse." << std::endl;
   string smis[] = {
@@ -231,7 +232,8 @@ void testProblems() {
 
 void testBasicCanon() {
   Mol *mol;
-  std::string smi, refSmi;
+  std::string smi;
+  std::string refSmi;
 
   BOOST_LOG(rdInfoLog) << "-------------------------------------" << std::endl;
   BOOST_LOG(rdInfoLog) << "Testing basic SMILES canonicalization" << std::endl;
@@ -335,7 +337,9 @@ void testLeak() {
 
 void testStereochem() {
   Mol *mol;
-  std::string smi, refSmi, cip;
+  std::string smi;
+  std::string refSmi;
+  std::string cip;
 
   BOOST_LOG(rdInfoLog) << "-------------------------------------" << std::endl;
   BOOST_LOG(rdInfoLog) << "Testing handling of stereochemical smiles"
@@ -822,8 +826,11 @@ void testStereochem() {
 }
 
 void testIssue127() {
-  Mol *mol, *mol2;
-  std::string smi, refSmi, tempStr;
+  Mol *mol;
+  Mol *mol2;
+  std::string smi;
+  std::string refSmi;
+  std::string tempStr;
 
   BOOST_LOG(rdInfoLog) << "-------------------------------------" << std::endl;
   BOOST_LOG(rdInfoLog) << "Testing Issue 127 (chiral smiles with fused rings)"
@@ -858,7 +865,9 @@ void testIssue127() {
 
 void testIssue143() {
   Mol *mol;
-  std::string smi, refSmi, tempStr;
+  std::string smi;
+  std::string refSmi;
+  std::string tempStr;
 
   BOOST_LOG(rdInfoLog) << "-------------------------------------" << std::endl;
   BOOST_LOG(rdInfoLog)
@@ -883,8 +892,11 @@ void testIssue143() {
 }
 
 void testIssue151() {
-  Mol *mol, *mol2;
-  std::string smi, refSmi, tempStr;
+  Mol *mol;
+  Mol *mol2;
+  std::string smi;
+  std::string refSmi;
+  std::string tempStr;
 
   BOOST_LOG(rdInfoLog) << "-------------------------------------" << std::endl;
   BOOST_LOG(rdInfoLog) << "Testing Issue 151 (Chiral centers in rings with "
@@ -983,8 +995,11 @@ void testIssue151() {
 
 void testIssue153() {
   std::string code;
-  Mol *mol, *mol2;
-  std::string smi, refSmi, tempStr;
+  Mol *mol;
+  Mol *mol2;
+  std::string smi;
+  std::string refSmi;
+  std::string tempStr;
 
   BOOST_LOG(rdInfoLog) << "-------------------------------------" << std::endl;
   BOOST_LOG(rdInfoLog)
@@ -1056,8 +1071,11 @@ void testIssue153() {
 
 void testIssue157() {
   std::string code;
-  Mol *mol, *mol2;
-  std::string smi, refSmi, tempStr;
+  Mol *mol;
+  Mol *mol2;
+  std::string smi;
+  std::string refSmi;
+  std::string tempStr;
 
   BOOST_LOG(rdInfoLog) << "-------------------------------------" << std::endl;
   BOOST_LOG(rdInfoLog) << "Testing Issue 157 (Symmetric molecules with "
@@ -1143,7 +1161,9 @@ void testIssue157() {
 
 void testIssue159() {
   Mol *mol;
-  std::string smi, refSmi, tempStr;
+  std::string smi;
+  std::string refSmi;
+  std::string tempStr;
 
   BOOST_LOG(rdInfoLog) << "-------------------------------------" << std::endl;
   BOOST_LOG(rdInfoLog)
@@ -1321,7 +1341,9 @@ void testIssue159() {
 
 void testIssue175() {
   Mol *mol;
-  std::string smi, refSmi, tempStr;
+  std::string smi;
+  std::string refSmi;
+  std::string tempStr;
 
   BOOST_LOG(rdInfoLog) << "-------------------------------------" << std::endl;
   BOOST_LOG(rdInfoLog) << "Testing Issue 175 (cis/trans wrong on ring closures)"
@@ -1350,7 +1372,9 @@ void testIssue175() {
 
 void testIssue176() {
   Mol *mol;
-  std::string smi, refSmi, tempStr;
+  std::string smi;
+  std::string refSmi;
+  std::string tempStr;
 
   BOOST_LOG(rdInfoLog) << "-------------------------------------" << std::endl;
   BOOST_LOG(rdInfoLog)
@@ -1387,7 +1411,8 @@ void testIssue176() {
 
 void testIssue180() {
   Mol *mol;
-  std::string smi, refSmi;
+  std::string smi;
+  std::string refSmi;
 
   BOOST_LOG(rdInfoLog) << "-------------------------------------" << std::endl;
   BOOST_LOG(rdInfoLog) << "Testing Issue 180: Z/E problems" << std::endl;
@@ -1414,7 +1439,8 @@ void testIssue180() {
 
 void testIssue184() {
   Mol *mol;
-  std::string smi, refSmi;
+  std::string smi;
+  std::string refSmi;
 
   BOOST_LOG(rdInfoLog) << "-------------------------------------" << std::endl;
   BOOST_LOG(rdInfoLog)
@@ -1450,7 +1476,8 @@ void testIssue184() {
 
 void testIssue185() {
   Mol *mol;
-  std::string smi, refSmi;
+  std::string smi;
+  std::string refSmi;
 
   BOOST_LOG(rdInfoLog) << "-------------------------------------" << std::endl;
   BOOST_LOG(rdInfoLog)
@@ -1523,7 +1550,8 @@ void testIssue185() {
 
 void testIssue191() {
   Mol *mol;
-  std::string smi, refSmi;
+  std::string smi;
+  std::string refSmi;
   int numE = 0;
 
   BOOST_LOG(rdInfoLog) << "-------------------------------------" << std::endl;
@@ -1914,7 +1942,8 @@ void testBug1844617() {
       << "Testing SF.net bug 1844617: oscillating chirality in canonical smiles"
       << std::endl;
   RWMol *mol;
-  std::string smi, smi2;
+  std::string smi;
+  std::string smi2;
   std::string label;
 
   smi = "O=C1CC[C@@]2(O)[C@@H]3N(C)CC[C@]22[C@H]1OC[C@H]2CC3";
@@ -2019,7 +2048,8 @@ void testBug1844959() {
       << "Testing SF.net bug 1844959: bad handling of Hs in chiral smiles"
       << std::endl;
   RWMol *mol;
-  std::string smi, smi2;
+  std::string smi;
+  std::string smi2;
   std::string label;
 
   // ----------------------
@@ -3894,7 +3924,9 @@ void testGithub1219() {
     bool doIsomericSmiles = true;
     bool doKekule = false;
     int rootedAtAtom = -1;
-    bool canonical = true, allBondsExplicit = false, allHsExplicit = true;
+    bool canonical = true;
+    bool allBondsExplicit = false;
+    bool allHsExplicit = true;
     std::string csmi = MolToSmiles(*m, doIsomericSmiles, doKekule, rootedAtAtom,
                                    canonical, allBondsExplicit, allHsExplicit);
     TEST_ASSERT(csmi == "[CH3][C@H]([F])[Cl]");
