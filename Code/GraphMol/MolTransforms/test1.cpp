@@ -134,7 +134,8 @@ void test1Canonicalization() {
   canonicalizeConformer(conf1);
 
   Conformer &conf2 = mol2->getConformer();
-  unsigned int i, nats = mol->getNumAtoms();
+  unsigned int i;
+  unsigned int nats = mol->getNumAtoms();
   for (i = 0; i < nats; ++i) {
     CHECK_INVARIANT(comparePts(conf1.getAtomPos(i), conf2.getAtomPos(i)), "");
   }
@@ -257,7 +258,8 @@ void _calcAxesAndMoments(RWMol *m, Eigen::Matrix3d &axes,
     weights[(*cai)->getIdx()] = (*cai)->getMass();
   }
 
-  bool ignoreHs = false, force = true;
+  bool ignoreHs = false;
+  bool force = true;
   computePrincipalAxesAndMoments(conf, axes, moments, ignoreHs, force,
                                  &weights);
 }
