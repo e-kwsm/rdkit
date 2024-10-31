@@ -59,7 +59,9 @@ long int *GenVarTable(double *vals, int nVals, long int *cuts, int nCuts,
                       long int *varTable) {
   RDUNUSED_PARAM(vals);
   int nBins = nCuts + 1;
-  int idx, i, iTab;
+  int idx;
+  int i;
+  int iTab;
 
   memset(varTable, 0, nBins * nPossibleRes * sizeof(long int));
   idx = 0;
@@ -125,11 +127,14 @@ double RecurseHelper(double *vals, int nVals, long int *cuts, int nCuts,
                      long int *results, int nPossibleRes) {
   PRECONDITION(vals, "bad vals pointer");
 
-  double maxGain = -1e6, gainHere;
-  long int *bestCuts, *tCuts;
+  double maxGain = -1e6;
+  double gainHere;
+  long int *bestCuts;
+  long int *tCuts;
   long int *varTable = nullptr;
   int highestCutHere = nStarts - nCuts + which;
-  int i, nBounds = nCuts;
+  int i;
+  int nBounds = nCuts;
 
   varTable = (long int *)calloc((nCuts + 1) * nPossibleRes, sizeof(long int));
   bestCuts = (long int *)calloc(nCuts, sizeof(long int));
@@ -160,7 +165,8 @@ double RecurseHelper(double *vals, int nVals, long int *cuts, int nCuts,
     // update this cut
     int oldCut = cuts[which];
     cuts[which] += 1;
-    int top, bot;
+    int top;
+    int bot;
     bot = starts[oldCut];
     if (oldCut + 1 < nStarts) {
       top = starts[oldCut + 1];
@@ -227,8 +233,10 @@ static python::tuple cQuantize_RecurseOnBounds(python::object vals,
                                                python::list pyStarts,
                                                python::object results,
                                                int nPossibleRes) {
-  PyArrayObject *contigVals, *contigResults;
-  long int *cuts, *starts;
+  PyArrayObject *contigVals;
+  PyArrayObject *contigResults;
+  long int *cuts;
+  long int *starts;
 
   /*
     -------
@@ -313,7 +321,8 @@ static python::list cQuantize_FindStartPoints(python::object values,
   long *res = (long *)PyArray_DATA(contigResults);
 
   bool firstBlock = true;
-  long lastBlockAct = -2, blockAct = res[0];
+  long lastBlockAct = -2;
+  long blockAct = res[0];
   int lastDiv = -1;
   double tol = 1e-8;
 
