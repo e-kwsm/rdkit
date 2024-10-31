@@ -316,7 +316,7 @@ class RDKIT_MOLINTERACTIONFIELDS_EXPORT VdWaals {
 
  protected:
   void fillVectors();
-  virtual double calcEnergy(double, double, double) const = 0;
+  [[nodiscard]] virtual double calcEnergy(double, double, double) const = 0;
   virtual void fillVdwParamVectors(unsigned int atomIdx) = 0;
   double d_cutoff = 1.0;
   unsigned int d_nAtoms = 0;
