@@ -21,7 +21,8 @@ TEST_CASE("MultiFPBReader Basics") {
   pathName += "/Code/DataStructs/testData/";
   {
     std::string filename = pathName + "zim.head100.fpb";
-    FPBReader fps1(filename), fps2(filename);
+    FPBReader fps1(filename);
+    FPBReader fps2(filename);
     std::vector<FPBReader *> rdrs;
     rdrs.push_back(&fps1);
     rdrs.push_back(&fps2);
@@ -33,7 +34,8 @@ TEST_CASE("MultiFPBReader Basics") {
   }
   {
     std::string filename = pathName + "zim.head100.fpb";
-    FPBReader fps1(filename), fps2(filename);
+    FPBReader fps1(filename);
+    FPBReader fps2(filename);
     MultiFPBReader mfps;
     REQUIRE(mfps.addReader(&fps1) == 1);
     REQUIRE(mfps.addReader(&fps2) == 2);
@@ -51,7 +53,8 @@ TEST_CASE("MultiFPBReader Tanimoto") {
   pathName += "/Code/DataStructs/testData/";
   {
     std::string filename = pathName + "zim.head100.fpb";
-    FPBReader fps1(filename), fps2(filename);
+    FPBReader fps1(filename);
+    FPBReader fps2(filename);
     std::vector<FPBReader *> rdrs;
     rdrs.push_back(&fps1);
     rdrs.push_back(&fps2);
@@ -112,7 +115,8 @@ TEST_CASE("MultiFPBReader Tversky") {
   pathName += "/Code/DataStructs/testData/";
   {
     std::string filename = pathName + "zim.head100.fpb";
-    FPBReader fps1(filename), fps2(filename);
+    FPBReader fps1(filename);
+    FPBReader fps2(filename);
     std::vector<FPBReader *> rdrs;
     rdrs.push_back(&fps1);
     rdrs.push_back(&fps2);
@@ -173,7 +177,8 @@ TEST_CASE("MultiFPBReader Contains") {
   pathName += "/Code/DataStructs/testData/";
   {
     std::string filename = pathName + "zim.head100.fpb";
-    FPBReader fps1(filename), fps2(filename);
+    FPBReader fps1(filename);
+    FPBReader fps2(filename);
     std::vector<FPBReader *> rdrs;
     rdrs.push_back(&fps1);
     rdrs.push_back(&fps2);
