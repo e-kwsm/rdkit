@@ -923,7 +923,8 @@ void checkStereo(const ROMol &mol, const Atom *atom, bool reportAllFailures,
 
   // The validation is currently limited to some specific categories of
   // stereocenters
-  bool multipleBondFound{}, possibleAllene{};
+  bool multipleBondFound{};
+  bool possibleAllene{};
   for (auto bond : mol.atomBonds(atom)) {
     auto bondType = bond->getBondType();
     if (bondType != Bond::BondType::SINGLE) {
