@@ -384,7 +384,8 @@ class MrvTests {
 
       // check for errors
 
-      unsigned int nWarn = 0, nError = 0;
+      unsigned int nWarn = 0;
+      unsigned int nError = 0;
 
       TEST_ASSERT(rxn != nullptr);
 
@@ -769,7 +770,8 @@ class MrvTests {
 
       // check for errors
 
-      unsigned int nWarn = 0, nError = 0;
+      unsigned int nWarn = 0;
+      unsigned int nError = 0;
 
       TEST_ASSERT(rxn != nullptr);
 
