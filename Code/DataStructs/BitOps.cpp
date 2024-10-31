@@ -143,7 +143,9 @@ template <typename T1>
 bool AllProbeBitsMatch(const T1 &probe, const std::string &pkl) {
   const char *text = pkl.c_str();
   int format = 0;
-  int nOn = 0, size, version = 0;
+  int nOn = 0;
+  int size;
+  int version = 0;
   size = EndianSwapBytes<LITTLE_ENDIAN_ORDER, HOST_ENDIAN_ORDER>(*(int *)text);
   text += sizeof(size);
   if (size < 0) {
