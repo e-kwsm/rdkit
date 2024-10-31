@@ -48,9 +48,11 @@ class SynthonSpaceSearcher {
 
   SearchResults search();
 
-  SynthonSpace &getSpace() const { return d_space; }
-  const ROMol &getQuery() const { return d_query; }
-  const SynthonSpaceSearchParams &getParams() const { return d_params; }
+  [[nodiscard]] SynthonSpace &getSpace() const { return d_space; }
+  [[nodiscard]] const ROMol &getQuery() const { return d_query; }
+  [[nodiscard]] const SynthonSpaceSearchParams &getParams() const {
+    return d_params;
+  }
 
   // Do the search of this fragSet against the SynthonSet in the
   // appropriate way, for example by substructure or fingerprint
