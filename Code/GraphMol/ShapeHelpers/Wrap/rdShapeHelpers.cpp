@@ -46,7 +46,8 @@ void _copyTransform(const PyArrayObject *transMat, RDGeom::Transform3D &trans) {
 python::tuple getConformerDimsAndOffset(const Conformer &conf,
                                         python::object trans = python::object(),
                                         double padding = 2.5) {
-  RDGeom::Point3D dims, offSet;
+  RDGeom::Point3D dims;
+  RDGeom::Point3D offSet;
   PyObject *transObj = trans.ptr();
   if (PyArray_Check(transObj)) {
     auto *transMat = reinterpret_cast<PyArrayObject *>(transObj);
@@ -64,7 +65,8 @@ python::tuple getConformerDimsAndOffset(const Conformer &conf,
 python::tuple getConfBox(const Conformer &conf,
                          python::object trans = python::object(),
                          double padding = 2.5) {
-  RDGeom::Point3D lowerCorner, upperCorner;
+  RDGeom::Point3D lowerCorner;
+  RDGeom::Point3D upperCorner;
   PyObject *transObj = trans.ptr();
   if (PyArray_Check(transObj)) {
     auto *transMat = reinterpret_cast<PyArrayObject *>(transObj);
@@ -92,7 +94,8 @@ python::tuple getUnionOfTwoBox(python::tuple box1, python::tuple box2) {
   RDGeom::Point3D lC2 = python::extract<RDGeom::Point3D>(box2[0]);
   RDGeom::Point3D uC2 = python::extract<RDGeom::Point3D>(box2[1]);
 
-  RDGeom::Point3D lowerCorner, upperCorner;
+  RDGeom::Point3D lowerCorner;
+  RDGeom::Point3D upperCorner;
   MolShapes::computeUnionBox(lC1, uC1, lC2, uC2, lowerCorner, upperCorner);
   python::tuple res = python::make_tuple(lowerCorner, upperCorner);
   return res;
