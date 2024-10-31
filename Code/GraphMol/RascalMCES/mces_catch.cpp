@@ -58,11 +58,13 @@ TEST_CASE("Very small test", "[basics]") {
   REQUIRE(m2);
 
   RascalOptions opts;
-  std::map<int, std::vector<std::pair<int, int>>> degSeqs1, degSeqs2;
+  std::map<int, std::vector<std::pair<int, int>>> degSeqs1;
+  std::map<int, std::vector<std::pair<int, int>>> degSeqs2;
   auto tier1_sim = tier1Sim(*m1, *m2, degSeqs1, degSeqs2);
   REQUIRE_THAT(tier1_sim, Catch::Matchers::WithinAbs(1.0000, 0.0001));
 
-  std::vector<unsigned int> bondLabels1, bondLabels2;
+  std::vector<unsigned int> bondLabels1;
+  std::vector<unsigned int> bondLabels2;
   getBondLabels(*m1, *m2, opts, bondLabels1, bondLabels2);
   auto tier2_sim =
       tier2Sim(*m1, *m2, degSeqs1, degSeqs2, bondLabels1, bondLabels2);
@@ -104,12 +106,14 @@ TEST_CASE("Juglone vs Scopoletin test", "[basics]") {
   auto m2 = "O1C(=O)C=Cc2cc(OC)c(O)cc12"_smiles;
   REQUIRE(m2);
 
-  std::map<int, std::vector<std::pair<int, int>>> degSeqs1, degSeqs2;
+  std::map<int, std::vector<std::pair<int, int>>> degSeqs1;
+  std::map<int, std::vector<std::pair<int, int>>> degSeqs2;
   auto tier1_sim = tier1Sim(*m1, *m2, degSeqs1, degSeqs2);
   REQUIRE_THAT(tier1_sim, Catch::Matchers::WithinAbs(0.8633, 0.0001));
 
   RascalOptions opts;
-  std::vector<unsigned int> bondLabels1, bondLabels2;
+  std::vector<unsigned int> bondLabels1;
+  std::vector<unsigned int> bondLabels2;
   getBondLabels(*m1, *m2, opts, bondLabels1, bondLabels2);
   auto tier2_sim =
       tier2Sim(*m1, *m2, degSeqs1, degSeqs2, bondLabels1, bondLabels2);
@@ -146,11 +150,13 @@ TEST_CASE("Methadone vs mepiridine test", "[basics]") {
   REQUIRE(m2);
 
   // It's a general requirement that the first mol is smaller than the second.
-  std::map<int, std::vector<std::pair<int, int>>> degSeqs1, degSeqs2;
+  std::map<int, std::vector<std::pair<int, int>>> degSeqs1;
+  std::map<int, std::vector<std::pair<int, int>>> degSeqs2;
   auto tier1_sim = tier1Sim(*m1, *m2, degSeqs1, degSeqs2);
   REQUIRE_THAT(tier1_sim, Catch::Matchers::WithinAbs(0.7044, 0.0001));
 
-  std::vector<unsigned int> bondLabels1, bondLabels2;
+  std::vector<unsigned int> bondLabels1;
+  std::vector<unsigned int> bondLabels2;
   RascalOptions opts;
   getBondLabels(*m1, *m2, opts, bondLabels1, bondLabels2);
   auto tier2_sim =
@@ -303,11 +309,13 @@ TEST_CASE("Symmetrical esters test", "[basics]") {
   REQUIRE(m2);
 
   // It's a general requirement that the first mol is smaller than the second.
-  std::map<int, std::vector<std::pair<int, int>>> degSeqs1, degSeqs2;
+  std::map<int, std::vector<std::pair<int, int>>> degSeqs1;
+  std::map<int, std::vector<std::pair<int, int>>> degSeqs2;
   auto tier1_sim = tier1Sim(*m1, *m2, degSeqs1, degSeqs2);
   REQUIRE_THAT(tier1_sim, Catch::Matchers::WithinAbs(0.9701, 0.0001));
 
-  std::vector<unsigned int> bondLabels1, bondLabels2;
+  std::vector<unsigned int> bondLabels1;
+  std::vector<unsigned int> bondLabels2;
   RascalOptions opts;
   getBondLabels(*m1, *m2, opts, bondLabels1, bondLabels2);
   auto tier2_sim =
