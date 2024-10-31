@@ -532,9 +532,13 @@ void test7() {
   std::string rdbase = getenv("RDBASE");
   rdbase += "/Code/GraphMol/FileParsers/";
 
-  RWMol *m, *m2;
+  RWMol *m;
+  RWMol *m2;
   std::string fName;
-  std::string smi, molBlock, smi2, cip;
+  std::string smi;
+  std::string molBlock;
+  std::string smi2;
+  std::string cip;
 
   fName = rdbase + "test_data/chiral1.mol";
   m = MolFileToMol(fName);
@@ -724,7 +728,9 @@ void test8() {
 
   RWMol *m;
   std::string fName;
-  std::string smi, molBlock, smi2;
+  std::string smi;
+  std::string molBlock;
+  std::string smi2;
 
   // in this case the test means to not remove Hs:
   fName = rdbase + "test_data/unsanitary.mol";
@@ -754,9 +760,12 @@ void testIssue145() {
   std::string rdbase = getenv("RDBASE");
   rdbase += "/Code/GraphMol/FileParsers/";
 
-  RWMol *m, *m2;
+  RWMol *m;
+  RWMol *m2;
   std::string fName;
-  std::string smi, molBlock, smi2;
+  std::string smi;
+  std::string molBlock;
+  std::string smi2;
 
   fName = rdbase + "test_data/issue145.mol";
   m = MolFileToMol(fName);
@@ -794,7 +803,9 @@ void testIssue148() {
 
   RWMol *m;
   std::string fName;
-  std::string smi, molBlock, smi2;
+  std::string smi;
+  std::string molBlock;
+  std::string smi2;
 
   fName = rdbase + "test_data/issue148.mol";
   m = MolFileToMol(fName);
@@ -837,8 +848,10 @@ void testIssue264() {
   std::string rdbase = getenv("RDBASE");
   rdbase += "/Code/GraphMol/FileParsers/";
 
-  RWMol *m1, *m2;
-  std::string smi1, smi2;
+  RWMol *m1;
+  RWMol *m2;
+  std::string smi1;
+  std::string smi2;
   std::string fName;
 
   fName = rdbase + "test_data/Issue264-1.mol";
@@ -871,7 +884,8 @@ void testIssue399() {
   rdbase += "/Code/GraphMol/FileParsers/test_data/";
 
   RWMol *m1;
-  std::string smi1, smi2;
+  std::string smi1;
+  std::string smi2;
   std::string fName;
 
   fName = rdbase + "Issue399a.mol";
@@ -1030,7 +1044,8 @@ void testSymmetricDblBondStereochem() {
   rdbase += "/Code/GraphMol/FileParsers/test_data/";
 
   RWMol *m1;
-  std::string fName, smi;
+  std::string fName;
+  std::string smi;
 
   fName = rdbase + "cistrans.1a.mol";
   m1 = MolFileToMol(fName);
@@ -1090,7 +1105,8 @@ void testRingDblBondStereochem() {
   rdbase += "/Code/GraphMol/FileParsers/test_data/";
 
   RWMol *m1;
-  std::string fName, smi;
+  std::string fName;
+  std::string smi;
 
   fName = rdbase + "badringstereochem3.mol";
   m1 = MolFileToMol(fName);
@@ -1979,7 +1995,8 @@ void testMolFileAtomValues() {
 
   {
     RWMol *m;
-    std::string fName, val;
+    std::string fName;
+    std::string val;
 
     fName = rdbase + "test_data/AtomProps1.mol";
     m = MolFileToMol(fName);
@@ -2026,7 +2043,8 @@ void testMolFileAtomValues() {
 
   {
     RWMol *m;
-    std::string fName, val;
+    std::string fName;
+    std::string val;
 
     fName = rdbase + "test_data/AtomProps2.mol";
     m = MolFileToMol(fName);
@@ -4706,8 +4724,10 @@ void testParseCHG() {
   // easier
   bool forceV3000(true);
   std::string out = MolToMolBlock(*m, true, -1, true, forceV3000);
-  std::regex chg_all("CHG="), chg_m1("CHG=-1"), chg_p1("CHG=1"),
-      chg_p4("CHG=4");
+  std::regex chg_all("CHG=");
+  std::regex chg_m1("CHG=-1");
+  std::regex chg_p1("CHG=1");
+  std::regex chg_p4("CHG=4");
   TEST_ASSERT(
       std::distance(std::sregex_iterator(out.begin(), out.end(), chg_all),
                     std::sregex_iterator()) == 24);
@@ -4981,7 +5001,8 @@ void testGithub1029() {
   rdbase += "/Code/GraphMol/FileParsers/test_data/";
   {  // the original bug report
     std::string fName = rdbase + "github1029.1.pdb";
-    bool sanitize = true, removeHs = false;
+    bool sanitize = true;
+    bool removeHs = false;
     ROMol *m = PDBFileToMol(fName, sanitize, removeHs);
     TEST_ASSERT(m);
     TEST_ASSERT(m->getNumAtoms() == 3268);
@@ -4994,7 +5015,8 @@ void testGithub1029() {
   }
   {  // a second report that came in
     std::string fName = rdbase + "github1029.1jld_chaina.pdb";
-    bool sanitize = false, removeHs = false;
+    bool sanitize = false;
+    bool removeHs = false;
     ROMol *m = PDBFileToMol(fName, sanitize, removeHs);
     TEST_ASSERT(m);
     TEST_ASSERT(m->getNumAtoms() == 1533);
@@ -5015,7 +5037,8 @@ void testGithub1340() {
   rdbase += "/Code/GraphMol/FileParsers/test_data/";
   {  // a second report that came in
     std::string fName = rdbase + "github1340.1jld_snip.pdb";
-    bool sanitize = true, removeHs = false;
+    bool sanitize = true;
+    bool removeHs = false;
     ROMol *m = PDBFileToMol(fName, sanitize, removeHs);
     TEST_ASSERT(m);
     TEST_ASSERT(m->getNumAtoms() == 37);
@@ -5220,7 +5243,9 @@ void testGithub1689() {
       "\n"
       "M  END\n";
   {
-    bool sanitize = true, removeHs = true, strictParsing = false;
+    bool sanitize = true;
+    bool removeHs = true;
+    bool strictParsing = false;
     ROMol *m = MolBlockToMol(molb, sanitize, removeHs, strictParsing);
     TEST_ASSERT(m);
     TEST_ASSERT(m->getNumAtoms() == 2);
@@ -5228,7 +5253,9 @@ void testGithub1689() {
     delete m;
   }
   {
-    bool sanitize = true, removeHs = true, strictParsing = true;
+    bool sanitize = true;
+    bool removeHs = true;
+    bool strictParsing = true;
     bool ok = false;
     try {
       MolBlockToMol(molb, sanitize, removeHs, strictParsing);
@@ -5245,7 +5272,8 @@ void testWedgeBondToDoublebond() {
   rdbase += "/Code/GraphMol/FileParsers/test_data/";
   {  // a second report that came in
     std::string fName = rdbase + "wedged_single_to_double_bond.mol";
-    bool sanitize = false, removeHs = false;
+    bool sanitize = false;
+    bool removeHs = false;
     ROMol *m = MolFileToMol(fName, sanitize, removeHs);
     TEST_ASSERT(m);
     TEST_ASSERT(m->getNumAtoms() == 49);
