@@ -122,7 +122,8 @@ void test2() {
   BOOST_LOG(rdErrorLog) << "-------------------------------------" << std::endl;
   BOOST_LOG(rdErrorLog) << "FeatureDefinition parser testing." << std::endl;
 
-  std::string inText, inLine;
+  std::string inText;
+  std::string inLine;
   std::istringstream ss;
   MolChemicalFeatureDef *featDef;
   bool ok;
@@ -222,7 +223,8 @@ void test3() {
   // std::string pathName=getenv("RDBASE");
   // pathName +=
   // "/Code/GraphMol/MolChemicalFeatures/test_data/smallsample.feats";
-  std::string inText, inLine;
+  std::string inText;
+  std::string inLine;
   std::istringstream ss;
   int res;
   MolChemicalFeatureDef::CollectionType featureDefs;
@@ -480,7 +482,8 @@ void testIssue224() {
   BOOST_LOG(rdErrorLog) << "-------------------------------------" << std::endl;
   BOOST_LOG(rdErrorLog) << "Testing Issue 224." << std::endl;
 
-  std::string inText, inLine;
+  std::string inText;
+  std::string inLine;
   std::istringstream ss;
   MolChemicalFeatureDef *featDef;
 
