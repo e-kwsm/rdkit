@@ -146,7 +146,8 @@ void testMMFFBuilder1() {
   BOOST_LOG(rdErrorLog) << "-------------------------------------" << std::endl;
   BOOST_LOG(rdErrorLog) << "    Testing MMFF builder tools." << std::endl;
 
-  ROMol *mol, *mol2;
+  ROMol *mol;
+  ROMol *mol2;
 
   ForceFields::ForceField *field;
   boost::shared_array<std::uint8_t> nbrMat;
@@ -444,7 +445,8 @@ void testIssue239() {
   int needMore;
   (void)needMore;  // Add test later
   ForceFields::ForceField *field;
-  double e1, e2;
+  double e1;
+  double e2;
 
   std::string pathName = getenv("RDBASE");
   pathName += "/Code/GraphMol/ForceFieldHelpers/MMFF/test_data";
@@ -474,7 +476,9 @@ void testCalcEnergyPassedCoords() {
 
   RWMol *mol;
   ForceFields::ForceField *field;
-  double e1, e2, e3;
+  double e1;
+  double e2;
+  double e3;
 
   std::string pathName = getenv("RDBASE");
   pathName += "/Code/GraphMol/ForceFieldHelpers/MMFF/test_data";
@@ -572,12 +576,16 @@ void testIssue242() {
   BOOST_LOG(rdErrorLog) << "-------------------------------------" << std::endl;
   BOOST_LOG(rdErrorLog) << "    Testing Issue242." << std::endl;
 
-  RWMol *mol, *mol2;
+  RWMol *mol;
+  RWMol *mol2;
   int needMore;
   (void)needMore;  // add test later
-  ForceFields::ForceField *field = nullptr, *field2 = nullptr;
-  std::string mb1, mb2;
-  double e1, e2;
+  ForceFields::ForceField *field = nullptr;
+  ForceFields::ForceField *field2 = nullptr;
+  std::string mb1;
+  std::string mb2;
+  double e1;
+  double e2;
 
   std::string pathName = getenv("RDBASE");
   pathName += "/Code/GraphMol/ForceFieldHelpers/MMFF/test_data";
