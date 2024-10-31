@@ -533,8 +533,9 @@ unsigned int getChiralPermutation(const Atom *cen, const INT_LIST &probe,
   }
 
   // Missing (implicit) neighbors are at the end when in storage order
-  if (nbrPerm.size() < nbrIdx)
+  if (nbrPerm.size() < nbrIdx) {
     nbrPerm.insert(nbrPerm.end(), nbrIdx - nbrPerm.size(), -1);
+  }
 
   CHECK_INVARIANT(nbrPerm.size() == probePerm.size(),
                   "probe vector size does not match");
