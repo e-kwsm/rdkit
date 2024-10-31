@@ -70,7 +70,8 @@ void test2() {
 
   std::string rdbase = getenv("RDBASE");
   std::string fName = rdbase + "/Code/GraphMol/FileParsers/test_data/cmpd1.tpl";
-  RWMol *m, *m2;
+  RWMol *m;
+  RWMol *m2;
   Conformer conf;
   std::string propVal;
 
