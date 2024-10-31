@@ -248,9 +248,12 @@ void testIssue220() {
 void testQueries() {
   BOOST_LOG(rdErrorLog) << "-------------------------------------" << std::endl;
   BOOST_LOG(rdErrorLog) << "Testing query serialization." << std::endl;
-  std::string smi, pickle, smi2;
+  std::string smi;
+  std::string pickle;
+  std::string smi2;
   int tmpInt;
-  ROMol *m1, *m2;
+  ROMol *m1;
+  ROMol *m2;
   MatchVectType matchV;
 
   // start simple : atom map numbers
@@ -1405,7 +1408,8 @@ void testGithubIssue2510() {
   ROMol *m1 = SmilesToMol(smi);
   TEST_ASSERT(m1);
   std::string pickle;
-  ROMol *m2, *m3;
+  ROMol *m2;
+  ROMol *m3;
   MolPickler::pickleMol(*m1, pickle);
   m2 = new ROMol();
   MolPickler::molFromPickle(pickle, *m2);
