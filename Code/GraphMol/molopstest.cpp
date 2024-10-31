@@ -539,7 +539,9 @@ void test5() {
 void test8() {
   BOOST_LOG(rdInfoLog) << "-----------------------\n Testing Hydrogen Ops"
                        << std::endl;
-  ROMol *m, *m2, *m3;
+  ROMol *m;
+  ROMol *m2;
+  ROMol *m3;
   INT_VECT tree;
 
   std::string smi = "CCC";
@@ -944,7 +946,8 @@ void test10() {
   ranks.resize(m->getNumAtoms());
   Chirality::assignAtomCIPRanks(*m, ranks);
 
-  unsigned int cip1, cip2;
+  unsigned int cip1;
+  unsigned int cip2;
   TEST_ASSERT(m->getAtomWithIdx(0)->hasProp(common_properties::_CIPRank));
   m->getAtomWithIdx(0)->getProp(common_properties::_CIPRank, cip1);
   TEST_ASSERT(cip1 == ranks[0]);
@@ -1541,7 +1544,8 @@ void testIssue183() {
 
   BOOST_LOG(rdInfoLog) << "-----------------------\n Testing Issue 183\n"
                        << std::endl;
-  RWMol *m, *m2;
+  RWMol *m;
+  RWMol *m2;
   std::string smi;
   std::string refSmi;
 
@@ -1561,7 +1565,9 @@ void testIssue183() {
   BOOST_LOG(rdInfoLog) << "smi: " << smi << std::endl;
   TEST_ASSERT(refSmi == smi);
 
-  int nEs = 0, nZs = 0, nDbl = 0;
+  int nEs = 0;
+  int nZs = 0;
+  int nDbl = 0;
   for (RWMol::BondIterator bondIt = m->beginBonds(); bondIt != m->endBonds();
        bondIt++) {
     if ((*bondIt)->getBondType() == Bond::DOUBLE) {
@@ -1589,7 +1595,9 @@ void testIssue188() {
       << std::endl;
   ROMol *m;
   std::string smi;
-  unsigned int cip1, cip2, cip3;
+  unsigned int cip1;
+  unsigned int cip2;
+  unsigned int cip3;
 
   smi = "OC[C@H](C=C)C";
   m = SmilesToMol(smi);
@@ -1631,7 +1639,8 @@ void testIssue189() {
                           "BondDirs not getting properly cleared."
                        << std::endl;
   ROMol *m;
-  std::string smi, refSmi;
+  std::string smi;
+  std::string refSmi;
   int count;
 
   smi = "C(=S)/N=c(/n1C)scc1";
@@ -1687,7 +1696,8 @@ void testIssue190() {
                           "BondDirs incorrectly cleared."
                        << std::endl;
   ROMol *m;
-  std::string smi, refSmi;
+  std::string smi;
+  std::string refSmi;
   int count;
 
   smi = "O\\N=C\\NC(\\C)=N/OC";
@@ -1880,7 +1890,8 @@ void testShortestPath() {
 void testIssue210() {
   BOOST_LOG(rdInfoLog) << "-----------------------\n Testing Issue 210"
                        << std::endl;
-  ROMol *m, *m2;
+  ROMol *m;
+  ROMol *m2;
 
   std::string smi = "C1CC1";
   m = SmilesToMol(smi);
@@ -1917,8 +1928,10 @@ void testIssue211() {
 void testIssue212() {
   BOOST_LOG(rdInfoLog) << "-----------------------\n Testing Issue 212"
                        << std::endl;
-  ROMol *m, *m2;
-  std::string smi, mb;
+  ROMol *m;
+  ROMol *m2;
+  std::string smi;
+  std::string mb;
   smi = "C";
   m = SmilesToMol(smi);
   TEST_ASSERT(m);
@@ -1944,7 +1957,8 @@ void testAddHsCoords() {
   BOOST_LOG(rdInfoLog)
       << "-----------------------\n Testing AddHs with coordinates"
       << std::endl;
-  ROMol *m, *m2;
+  ROMol *m;
+  ROMol *m2;
   RDGeom::Point3D v;
   double bondLength = PeriodicTable::getTable()->getRb0(1) +
                       PeriodicTable::getTable()->getRb0(6);
@@ -2157,7 +2171,8 @@ void testSanitOps() {
   BOOST_LOG(rdInfoLog) << "-----------------------\n Sanitization special cases"
                        << std::endl;
   ROMol *m;
-  std::string smi, pathName;
+  std::string smi;
+  std::string pathName;
 
   smi = "CN(=O)=O";
   m = SmilesToMol(smi);
@@ -2712,9 +2727,11 @@ void testChiralityAndRemoveHs() {
   BOOST_LOG(rdInfoLog)
       << "-----------------------\n Testing impact of removeHs on chirality"
       << std::endl;
-  ROMol *m, *m2;
+  ROMol *m;
+  ROMol *m2;
 
-  std::string smi, code;
+  std::string smi;
+  std::string code;
 
   smi = "F[C@]([H])(Cl)Br";
   m = SmilesToMol(smi, false, false);
@@ -2887,7 +2904,8 @@ void testSFIssue1894348() {
   BOOST_LOG(rdInfoLog) << "-----------------------\n Testing SFIssue1894348 "
                           "(impact of removeHs on bond stereo atoms)"
                        << std::endl;
-  RWMol *m, *m2;
+  RWMol *m;
+  RWMol *m2;
 
   std::string smi;
 
@@ -7249,7 +7267,8 @@ void testGithubIssue1021() {
     TEST_ASSERT(m->getAtomWithIdx(9)->getChiralTag() != Atom::CHI_UNSPECIFIED);
 
     m->clearComputedProps();
-    bool cleanit = true, force = true;
+    bool cleanit = true;
+    bool force = true;
     MolOps::assignStereochemistry(*m, cleanit, force);
     TEST_ASSERT(m->getAtomWithIdx(1)->getChiralTag() != Atom::CHI_UNSPECIFIED);
     TEST_ASSERT(m->getAtomWithIdx(9)->getChiralTag() != Atom::CHI_UNSPECIFIED);
@@ -7629,7 +7648,8 @@ void testGithub1614() {
 
     {
       RWMol nm(m);
-      bool force = true, cleanIt = true;
+      bool force = true;
+      bool cleanIt = true;
       MolOps::setDoubleBondNeighborDirections(nm);
 
       MolOps::assignStereochemistry(nm, cleanIt, force);
@@ -7642,7 +7662,8 @@ void testGithub1614() {
     {
       RWMol nm(m);
       MolOps::addHs(nm);
-      bool force = true, cleanIt = true;
+      bool force = true;
+      bool cleanIt = true;
       MolOps::setDoubleBondNeighborDirections(nm);
       MolOps::assignStereochemistry(nm, cleanIt, force);
       // nm.debugMol(std::cerr);
@@ -7668,7 +7689,8 @@ void testGithub1614() {
 
     {
       RWMol nm(m);
-      bool force = true, cleanIt = true;
+      bool force = true;
+      bool cleanIt = true;
       MolOps::setDoubleBondNeighborDirections(nm);
 
       MolOps::assignStereochemistry(nm, cleanIt, force);
@@ -7694,7 +7716,8 @@ void testGithub1614() {
 
     {
       RWMol nm(m);
-      bool force = true, cleanIt = true;
+      bool force = true;
+      bool cleanIt = true;
       MolOps::setDoubleBondNeighborDirections(nm);
 
       MolOps::assignStereochemistry(nm, cleanIt, force);
@@ -7726,7 +7749,8 @@ void testGithub1614() {
 
     {
       RWMol nm(m);
-      bool force = true, cleanIt = true;
+      bool force = true;
+      bool cleanIt = true;
       MolOps::setDoubleBondNeighborDirections(nm);
 
       MolOps::assignStereochemistry(nm, cleanIt, force);
@@ -7746,7 +7770,8 @@ void testGithub1614() {
       RWMol nm(*m);
       MolOps::setDoubleBondNeighborDirections(nm);
       // nm.debugMol(std::cerr);
-      bool force = true, cleanIt = true;
+      bool force = true;
+      bool cleanIt = true;
       MolOps::assignStereochemistry(nm, cleanIt, force);
       // nm.debugMol(std::cerr);
       TEST_ASSERT(nm.getBondBetweenAtoms(4, 5)->getStereo() == Bond::STEREOE);
@@ -7769,7 +7794,8 @@ void testGithub1614() {
       RWMol nm(*m);
       MolOps::setDoubleBondNeighborDirections(nm);
       // nm.debugMol(std::cerr);
-      bool force = true, cleanIt = true;
+      bool force = true;
+      bool cleanIt = true;
       MolOps::assignStereochemistry(nm, cleanIt, force);
       TEST_ASSERT(nm.getBondBetweenAtoms(4, 5)->getStereo() == Bond::STEREOE);
       TEST_ASSERT(nm.getBondBetweenAtoms(8, 9)->getStereo() == Bond::STEREOZ);
@@ -7786,7 +7812,8 @@ void testGithub1614() {
     {
       RWMol nm(*m);
       MolOps::setDoubleBondNeighborDirections(nm);
-      bool force = true, cleanIt = true;
+      bool force = true;
+      bool cleanIt = true;
       MolOps::assignStereochemistry(nm, cleanIt, force);
       TEST_ASSERT(nm.getBondBetweenAtoms(4, 5)->getStereo() == Bond::STEREOE);
       TEST_ASSERT(nm.getBondBetweenAtoms(8, 9)->getStereo() == Bond::STEREOZ);
@@ -7806,7 +7833,8 @@ void testGithub1614() {
     {
       RWMol nm(*m);
       MolOps::setDoubleBondNeighborDirections(nm);
-      bool force = true, cleanIt = true;
+      bool force = true;
+      bool cleanIt = true;
       MolOps::assignStereochemistry(nm, cleanIt, force);
       TEST_ASSERT(nm.getBondBetweenAtoms(4, 5)->getStereo() == Bond::STEREOE);
       TEST_ASSERT(nm.getBondBetweenAtoms(8, 9)->getStereo() == Bond::STEREOZ);
