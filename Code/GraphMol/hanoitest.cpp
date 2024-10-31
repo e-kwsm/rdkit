@@ -136,7 +136,8 @@ class atomcomparefunctor {
   atomcomparefunctor(Canon::canon_atom *atoms) : d_atoms(atoms) {};
   int operator()(int i, int j) const {
     PRECONDITION(d_atoms, "no atoms");
-    unsigned int ivi, ivj;
+    unsigned int ivi;
+    unsigned int ivj;
 
     // always start with the current class:
     ivi = d_atoms[i].index;
@@ -166,7 +167,8 @@ class atomcomparefunctor2 {
   atomcomparefunctor2(Canon::canon_atom *atoms) : d_atoms(atoms) {};
   int operator()(int i, int j) const {
     PRECONDITION(d_atoms, "no atoms");
-    unsigned int ivi, ivj;
+    unsigned int ivi;
+    unsigned int ivj;
 
     // always start with the current class:
     ivi = d_atoms[i].index;
@@ -350,7 +352,8 @@ class atomcomparefunctor3 {
     const Atom *at = dp_mol->getAtomWithIdx(i);
     std::vector<unsigned int> nbrs(at->getDegree());
     unsigned int nbridx = 0;
-    ROMol::OEDGE_ITER beg, end;
+    ROMol::OEDGE_ITER beg;
+    ROMol::OEDGE_ITER end;
     boost::tie(beg, end) = dp_mol->getAtomBonds(at);
     while (beg != end) {
       const Bond *bond = (*dp_mol)[*beg];
@@ -368,7 +371,8 @@ class atomcomparefunctor3 {
   }
   int basecomp(int i, int j) const {
     PRECONDITION(dp_atoms, "no atoms");
-    unsigned int ivi, ivj;
+    unsigned int ivi;
+    unsigned int ivj;
 
     // always start with the current class:
     ivi = dp_atoms[i].index;
@@ -412,7 +416,8 @@ class atomcomparefunctor3 {
     if (v) {
       return v;
     }
-    unsigned int ivi, ivj;
+    unsigned int ivi;
+    unsigned int ivj;
     if (df_useNbrs) {
       ivi = dp_atoms[i].index + 1 + getAtomNeighborhood(i);
       ivj = dp_atoms[j].index + 1 + getAtomNeighborhood(j);
@@ -926,7 +931,8 @@ void test7a() {
   BOOST_LOG(rdInfoLog) << "testing some specific ordering problems"
                        << std::endl;
   std::string rdbase = getenv("RDBASE");
-  std::string smi1, smi2;
+  std::string smi1;
+  std::string smi2;
   {
     std::string fName = rdbase + "/Code/GraphMol/test_data/canon_reorder1.mol";
     RWMol *m = MolFileToMol(fName, false, false);
