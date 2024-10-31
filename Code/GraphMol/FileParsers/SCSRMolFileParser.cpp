@@ -43,11 +43,13 @@ class SCSRMol {
     p_templates.push_back(std::move(templateMol));
   }
 
-  unsigned int getTemplateCount() const { return p_templates.size(); }
+  [[nodiscard]] unsigned int getTemplateCount() const {
+    return p_templates.size();
+  }
 
   ROMol *getTemplate(unsigned int index) { return p_templates[index].get(); };
 
-  const ROMol *getMol() const { return p_mol.get(); }
+  [[nodiscard]] const ROMol *getMol() const { return p_mol.get(); }
 
   ROMol *getMol() { return p_mol.get(); }
 
@@ -347,8 +349,8 @@ class MolFromSCSRMolConverter {
     std::string attachLabel;
 
    public:
-    unsigned int getMainAtomIdx() const { return mainAtomIdx; }
-    std::string getAttachLabel() const { return attachLabel; }
+    [[nodiscard]] unsigned int getMainAtomIdx() const { return mainAtomIdx; }
+    [[nodiscard]] std::string getAttachLabel() const { return attachLabel; }
 
     bool operator<(const OriginAtomConnection &other) const {
       if (mainAtomIdx != other.getMainAtomIdx()) {

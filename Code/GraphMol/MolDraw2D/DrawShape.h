@@ -78,7 +78,8 @@ class DrawShapeArrow : public DrawShape {
                     double &ymax) const override;
   void scale(const Point2D &scale_factor) override;
   void move(const Point2D &trans) override;
-  bool doesRectClash(const StringRect &rect, double padding) const override;
+  [[nodiscard]] bool doesRectClash(const StringRect &rect,
+                                   double padding) const override;
 
   double frac_;
   double angle_;

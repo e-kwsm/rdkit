@@ -45,9 +45,10 @@ class RDKIT_TAUTOMERQUERY_EXPORT TautomerQuery {
   std::vector<size_t> d_modifiedBonds;
 
   // tests if a match to the template matches a specific tautomer
-  bool matchTautomer(const ROMol &mol, const ROMol &tautomer,
-                     const std::span<const unsigned int> &match,
-                     const SubstructMatchParameters &params) const;
+  [[nodiscard]] bool matchTautomer(
+      const ROMol &mol, const ROMol &tautomer,
+      const std::span<const unsigned int> &match,
+      const SubstructMatchParameters &params) const;
 
  public:
   TautomerQuery(std::vector<ROMOL_SPTR> tautomers,
