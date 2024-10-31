@@ -274,7 +274,8 @@ void test1() {
   for (size_t r = 0; r < sizeof(fs) / sizeof(fs[0]); r++) {
     //        strcpy(fs[r], fs1[r]);
     // MolToSmiles() fails with new RDKit version in DEBUG Build
-    char core[256] = "", side[256];
+    char core[256] = "";
+    char side[256];
     if (fs_sm[2 * r][0]) {
       RWMol *m = SmilesToMol(fs_sm[2 * r]);
       strcpy(core, MolToSmiles(*m, true).c_str());
