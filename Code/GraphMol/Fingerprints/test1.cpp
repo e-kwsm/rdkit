@@ -201,7 +201,8 @@ void test3() {
 
   RWMol *m = SmilesToMol("CCCOC");
 
-  ExplicitBitVect *fp1, *fp2;
+  ExplicitBitVect *fp1;
+  ExplicitBitVect *fp2;
   fp2 = RDKFingerprintMol(*m, 1, 4, 2048, 4, false, 0.3, 256);
   TEST_ASSERT(fp2->getNumBits() == 256);
 
@@ -290,9 +291,11 @@ void test2alg2() {
 void test4Trends() {
   BOOST_LOG(rdInfoLog) << "testing similarity trends" << std::endl;
 
-  double sim1, sim2;
+  double sim1;
+  double sim2;
   RWMol *m;
-  ExplicitBitVect *fp1, *fp2;
+  ExplicitBitVect *fp1;
+  ExplicitBitVect *fp2;
 
   m = SmilesToMol("CCC");
   fp1 = RDKFingerprintMol(*m);
@@ -931,8 +934,10 @@ void test1MorganFPs() {
   {
     // test that the results aren't order dependent, i.e. that we're
     // "canonicalizing" the fps correctly
-    ROMol *mol, *mol2;
-    SparseIntVect<std::uint32_t> *fp, *fp2;
+    ROMol *mol;
+    ROMol *mol2;
+    SparseIntVect<std::uint32_t> *fp;
+    SparseIntVect<std::uint32_t> *fp2;
 
     mol = SmilesToMol("O=C(O)CC1CC1");
     mol2 = SmilesToMol("OC(=O)CC1CC1");
@@ -1204,8 +1209,10 @@ void test5MorganFPs() {
                         << std::endl;
 
   {
-    ROMol *m1, *m2;
-    ExplicitBitVect *fp1, *fp2;
+    ROMol *m1;
+    ROMol *m2;
+    ExplicitBitVect *fp1;
+    ExplicitBitVect *fp2;
     std::vector<std::uint32_t> invars(3);
     invars[0] = 1;
     invars[1] = 1;
@@ -1246,8 +1253,12 @@ void test5MorganFPs() {
   }
 
   {
-    ROMol *m1, *m2, *m3;
-    ExplicitBitVect *fp1, *fp2, *fp3;
+    ROMol *m1;
+    ROMol *m2;
+    ROMol *m3;
+    ExplicitBitVect *fp1;
+    ExplicitBitVect *fp2;
+    ExplicitBitVect *fp3;
 
     m1 = SmilesToMol("C[C@H](F)Cl");
     TEST_ASSERT(m1);
@@ -1294,7 +1305,8 @@ void testIssue2875658() {
   BOOST_LOG(rdInfoLog) << "testing issue 2875658" << std::endl;
 
   RWMol *m;
-  ExplicitBitVect *fp1, *fp2;
+  ExplicitBitVect *fp1;
+  ExplicitBitVect *fp2;
 
   m = SmilesToMol("c1ccccc1");
   fp1 = RDKFingerprintMol(*m, 1, 7, 2048, 4);
@@ -1390,7 +1402,9 @@ void testAtomPairs() {
   ROMol *mol;
   SparseIntVect<std::int32_t> *fp;
   std::uint32_t tgt;
-  std::uint32_t c1, c2, c3;
+  std::uint32_t c1;
+  std::uint32_t c2;
+  std::uint32_t c3;
 
   mol = SmilesToMol("CCCCC");
   c1 = AtomPairs::getAtomCode(mol->getAtomWithIdx(0));
@@ -1514,7 +1528,10 @@ void testTorsions() {
   ROMol *mol;
   SparseIntVect<boost::int64_t> *fp;
   boost::uint64_t tgt;
-  boost::uint64_t c1, c2, c3, c4;
+  boost::uint64_t c1;
+  boost::uint64_t c2;
+  boost::uint64_t c3;
+  boost::uint64_t c4;
   std::vector<std::uint32_t> codes;
 
   mol = SmilesToMol("CCCC");
@@ -1624,7 +1641,8 @@ void testRootedAtomPairs() {
   BOOST_LOG(rdErrorLog) << "    Test Rooted Atom Pairs." << std::endl;
 
   ROMol *mol;
-  SparseIntVect<std::int32_t> *fp1, *fp2;
+  SparseIntVect<std::int32_t> *fp1;
+  SparseIntVect<std::int32_t> *fp2;
   std::vector<std::uint32_t> roots;
 
   mol = SmilesToMol("OCCCCC");
@@ -1658,7 +1676,8 @@ void testIgnoreAtomPairs() {
 
   {
     ROMol *mol;
-    SparseIntVect<std::int32_t> *fp1, *fp2;
+    SparseIntVect<std::int32_t> *fp1;
+    SparseIntVect<std::int32_t> *fp2;
     std::vector<std::uint32_t> roots;
 
     mol = SmilesToMol("OCCCCC");
@@ -1698,7 +1717,8 @@ void testIgnoreAtomPairs() {
 
   {
     ROMol *mol;
-    SparseIntVect<std::int32_t> *fp1, *fp2;
+    SparseIntVect<std::int32_t> *fp1;
+    SparseIntVect<std::int32_t> *fp2;
     std::vector<std::uint32_t> roots;
 
     mol = SmilesToMol("OCCCCC");
@@ -1731,7 +1751,8 @@ void testRootedTorsions() {
   BOOST_LOG(rdErrorLog) << "    Test Rooted Topological Torsions." << std::endl;
 
   ROMol *mol;
-  SparseIntVect<boost::int64_t> *fp1, *fp2;
+  SparseIntVect<boost::int64_t> *fp1;
+  SparseIntVect<boost::int64_t> *fp2;
   std::vector<std::uint32_t> roots;
 
   mol = SmilesToMol("OCCCC");
@@ -1765,7 +1786,8 @@ void testIgnoreTorsions() {
 
   {
     ROMol *mol;
-    SparseIntVect<boost::int64_t> *fp1, *fp2;
+    SparseIntVect<boost::int64_t> *fp1;
+    SparseIntVect<boost::int64_t> *fp2;
     std::vector<std::uint32_t> roots;
 
     mol = SmilesToMol("OCCCC");
@@ -1916,7 +1938,8 @@ void testMorganAtomInfo() {
   {  // this was github issue #295
 
     ROMol *mol;
-    MorganFingerprints::BitInfoMap bitInfo1, bitInfo2;
+    MorganFingerprints::BitInfoMap bitInfo1;
+    MorganFingerprints::BitInfoMap bitInfo2;
 
     mol = SmilesToMol("CCCCC");
 
@@ -2436,7 +2459,9 @@ void testChiralPairs() {
   BOOST_LOG(rdErrorLog) << "    Test Atom Pairs including info about chirality."
                         << std::endl;
 
-  ROMol *m1, *m2, *m3;
+  ROMol *m1;
+  ROMol *m2;
+  ROMol *m3;
 
   m1 = SmilesToMol("CC[CH](F)Cl");
   TEST_ASSERT(m1);
@@ -2446,7 +2471,9 @@ void testChiralPairs() {
   TEST_ASSERT(m1);
 
   {
-    SparseIntVect<int> *fp1, *fp2, *fp3;
+    SparseIntVect<int> *fp1;
+    SparseIntVect<int> *fp2;
+    SparseIntVect<int> *fp3;
     fp1 = AtomPairs::getAtomPairFingerprint(*m1, 1, 5);
     TEST_ASSERT(fp1->getTotalVal() == 10);
     TEST_ASSERT(fp1->getNonzeroElements().size() == 10);
@@ -2488,7 +2515,9 @@ void testChiralPairs() {
   }
 
   {
-    SparseIntVect<int> *fp1, *fp2, *fp3;
+    SparseIntVect<int> *fp1;
+    SparseIntVect<int> *fp2;
+    SparseIntVect<int> *fp3;
     fp1 = AtomPairs::getHashedAtomPairFingerprint(*m1, 4096, 1, 5);
     TEST_ASSERT(fp1->getTotalVal() == 10);
     TEST_ASSERT(fp1->getNonzeroElements().size() == 10);
@@ -2540,7 +2569,9 @@ void testChiralTorsions() {
       << "    Test Topological Torsions including info about chirality."
       << std::endl;
 
-  ROMol *m1, *m2, *m3;
+  ROMol *m1;
+  ROMol *m2;
+  ROMol *m3;
 
   m1 = SmilesToMol("CC[CH](F)Cl");
   TEST_ASSERT(m1);
@@ -2550,7 +2581,9 @@ void testChiralTorsions() {
   TEST_ASSERT(m1);
 
   {
-    SparseIntVect<boost::int64_t> *fp1, *fp2, *fp3;
+    SparseIntVect<boost::int64_t> *fp1;
+    SparseIntVect<boost::int64_t> *fp2;
+    SparseIntVect<boost::int64_t> *fp3;
     fp1 = AtomPairs::getTopologicalTorsionFingerprint(*m1);
     TEST_ASSERT(fp1->getTotalVal() == 2);
     TEST_ASSERT(fp1->getNonzeroElements().size() == 2);
@@ -2592,7 +2625,9 @@ void testChiralTorsions() {
   }
 
   {
-    SparseIntVect<boost::int64_t> *fp1, *fp2, *fp3;
+    SparseIntVect<boost::int64_t> *fp1;
+    SparseIntVect<boost::int64_t> *fp2;
+    SparseIntVect<boost::int64_t> *fp3;
     fp1 = AtomPairs::getHashedTopologicalTorsionFingerprint(*m1, 4096);
     TEST_ASSERT(fp1->getTotalVal() == 2);
     TEST_ASSERT(fp1->getNonzeroElements().size() == 2);
@@ -3227,7 +3262,8 @@ void testGitHubIssue811() {
     ROMol *m2 = MolFileToMol(dirName + "github811b.mol");
     TEST_ASSERT(m2);
 
-    SparseIntVect<boost::int64_t> *fp1, *fp2;
+    SparseIntVect<boost::int64_t> *fp1;
+    SparseIntVect<boost::int64_t> *fp2;
 
     std::vector<std::uint32_t> roots;
     roots.push_back(1);
@@ -3635,7 +3671,8 @@ void testGitHubIssue1993() {
     }
     {  // ap, no chirality
       bool useChirality = false;
-      unsigned int minLength = 1, maxLength = 10;
+      unsigned int minLength = 1;
+      unsigned int maxLength = 10;
       std::unique_ptr<SparseIntVect<std::int32_t>> fp1(
           AtomPairs::getHashedAtomPairFingerprint(*m1, 2048, minLength,
                                                   maxLength, nullptr, nullptr,
@@ -3658,7 +3695,8 @@ void testGitHubIssue1993() {
     }
     {  // ap, with chirality
       bool useChirality = true;
-      unsigned int minLength = 1, maxLength = 10;
+      unsigned int minLength = 1;
+      unsigned int maxLength = 10;
       std::unique_ptr<SparseIntVect<std::int32_t>> fp1(
           AtomPairs::getHashedAtomPairFingerprint(*m1, 2048, minLength,
                                                   maxLength, nullptr, nullptr,

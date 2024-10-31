@@ -115,7 +115,8 @@ python::list computeCrippenContribs(
 python::tuple calcCrippenDescriptors(const RDKit::ROMol &mol,
                                      bool includeHs = true,
                                      bool force = false) {
-  double logp, mr;
+  double logp;
+  double mr;
   RDKit::Descriptors::calcCrippenDescriptors(mol, logp, mr, includeHs, force);
   return python::make_tuple(logp, mr);
 }
