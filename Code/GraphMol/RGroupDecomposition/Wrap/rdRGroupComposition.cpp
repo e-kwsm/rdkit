@@ -64,7 +64,8 @@ class RGroupDecompositionHelper {
       decomp.reset(new RGroupDecomposition(isROMol(), params));
     } else {
       MOL_SPTR_VECT coreMols;
-      python::stl_input_iterator<ROMOL_SPTR> iter(cores), end;
+      python::stl_input_iterator<ROMOL_SPTR> iter(cores);
+      python::stl_input_iterator<ROMOL_SPTR> end;
       while (iter != end) {
         if (!*iter) {
           throw_value_error("reaction called with None reactants");
@@ -165,7 +166,8 @@ python::object RGroupDecomp(python::object cores, python::object mols,
   RGroupDecompositionHelper decomp(cores, options);
   python::list unmatched;
 
-  python::stl_input_iterator<ROMOL_SPTR> iter(mols), end;
+  python::stl_input_iterator<ROMOL_SPTR> iter(mols);
+  python::stl_input_iterator<ROMOL_SPTR> end;
   unsigned int idx = 0;
   while (iter != end) {
     if (!*iter) {
