@@ -933,7 +933,8 @@ ROMol *replaceCoreHelper(const ROMol &mol, const ROMol &core,
       sz = 1;
     }
 
-    int v1, v2;
+    int v1;
+    int v2;
     switch (sz) {
       case 1:
         if (length != core.getNumAtoms()) {
