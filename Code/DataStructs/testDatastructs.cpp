@@ -182,7 +182,8 @@ template <typename T>
 void ProbeTest(T &arg) {
   (void)arg;  // unused var
   int sz = 1000;
-  T t1(sz), t2(sz);
+  T t1(sz);
+  T t2(sz);
   for (int i = 0; i < sz; i += 2) {
     t1.setBit(i);
     if (i < 3 * sz / 4) {
@@ -510,7 +511,8 @@ TEST_CASE("test6SparseIntVect") {
   }
 
   {  // iV1 &= iV2
-    SparseIntVect<int> iV1(5), iV2(5);
+    SparseIntVect<int> iV1(5);
+    SparseIntVect<int> iV2(5);
     iV1.setVal(0, 2);
     iV1.setVal(2, 1);
     iV1.setVal(3, 4);
@@ -554,7 +556,9 @@ TEST_CASE("test6SparseIntVect") {
   }
 
   {  // iV3 = iv1&iV2
-    SparseIntVect<int> iV1(5), iV2(5), iV3(5);
+    SparseIntVect<int> iV1(5);
+    SparseIntVect<int> iV2(5);
+    SparseIntVect<int> iV3(5);
     iV1.setVal(0, 2);
     iV1.setVal(2, 1);
     iV1.setVal(3, 4);
@@ -586,7 +590,8 @@ TEST_CASE("test6SparseIntVect") {
   }
 
   {  // iV2 &= iV1
-    SparseIntVect<int> iV1(5), iV2(5);
+    SparseIntVect<int> iV1(5);
+    SparseIntVect<int> iV2(5);
     iV1.setVal(0, 2);
     iV1.setVal(2, 1);
     iV1.setVal(3, 4);
@@ -613,7 +618,8 @@ TEST_CASE("test6SparseIntVect") {
   }
 
   {  // iV1 |= iV2
-    SparseIntVect<int> iV1(5), iV2(5);
+    SparseIntVect<int> iV1(5);
+    SparseIntVect<int> iV2(5);
     iV1.setVal(0, 2);
     iV1.setVal(2, 1);
     iV1.setVal(3, 4);
@@ -641,7 +647,9 @@ TEST_CASE("test6SparseIntVect") {
   }
 
   {  // iV3 = iv1 |iV2
-    SparseIntVect<int> iV1(5), iV2(5), iV3(5);
+    SparseIntVect<int> iV1(5);
+    SparseIntVect<int> iV2(5);
+    SparseIntVect<int> iV3(5);
     iV1.setVal(0, 2);
     iV1.setVal(2, 1);
     iV1.setVal(3, 4);
@@ -673,7 +681,8 @@ TEST_CASE("test6SparseIntVect") {
   }
 
   {  // iV2 |= iV1
-    SparseIntVect<int> iV1(5), iV2(5);
+    SparseIntVect<int> iV1(5);
+    SparseIntVect<int> iV2(5);
     iV1.setVal(0, 2);
     iV1.setVal(2, 1);
     iV1.setVal(3, 4);
@@ -699,7 +708,8 @@ TEST_CASE("test6SparseIntVect") {
   }
 
   {  // iV1 += iV2
-    SparseIntVect<int> iV1(5), iV2(5);
+    SparseIntVect<int> iV1(5);
+    SparseIntVect<int> iV2(5);
     iV1.setVal(0, 2);
     iV1.setVal(2, 1);
     iV1.setVal(3, 4);
@@ -724,7 +734,9 @@ TEST_CASE("test6SparseIntVect") {
     REQUIRE(iV2[4] == 6);
   }
   {  // iV3 = IV1 + iV2
-    SparseIntVect<int> iV1(5), iV2(5), iV3(5);
+    SparseIntVect<int> iV1(5);
+    SparseIntVect<int> iV2(5);
+    SparseIntVect<int> iV3(5);
     iV1.setVal(2, 1);
     iV1.setVal(0, 2);
     iV1.setVal(4, 4);
@@ -755,7 +767,8 @@ TEST_CASE("test6SparseIntVect") {
   }
 
   {  // iV1 -= iV2
-    SparseIntVect<int> iV1(5), iV2(5);
+    SparseIntVect<int> iV1(5);
+    SparseIntVect<int> iV2(5);
     iV1.setVal(0, 2);
     iV1.setVal(2, 1);
     iV1.setVal(3, 4);
@@ -780,7 +793,9 @@ TEST_CASE("test6SparseIntVect") {
     REQUIRE(iV2[3] == 4);
   }
   {  // iV3 = IV1 - iV2
-    SparseIntVect<int> iV1(5), iV2(5), iV3(5);
+    SparseIntVect<int> iV1(5);
+    SparseIntVect<int> iV2(5);
+    SparseIntVect<int> iV3(5);
     iV1.setVal(0, 2);
     iV1.setVal(2, 1);
     iV1.setVal(3, 4);
@@ -811,7 +826,10 @@ TEST_CASE("test6SparseIntVect") {
   }
 
   {  // operator== and operator!=
-    SparseIntVect<int> iV1(5), iV2(5), iV3(3), iV4(5);
+    SparseIntVect<int> iV1(5);
+    SparseIntVect<int> iV2(5);
+    SparseIntVect<int> iV3(3);
+    SparseIntVect<int> iV4(5);
     iV1.setVal(0, 2);
     iV1.setVal(2, 1);
     iV1.setVal(3, 4);
@@ -840,7 +858,8 @@ TEST_CASE("test6SparseIntVect") {
   }
 
   {  // test negative values (was sf.net Issue 3295215)
-    SparseIntVect<int> iV1(5), iV2(5);
+    SparseIntVect<int> iV1(5);
+    SparseIntVect<int> iV2(5);
     iV1.setVal(0, -2);
     iV1.setVal(2, 1);
     iV1.setVal(3, -4);
@@ -858,7 +877,8 @@ TEST_CASE("test6SparseIntVect") {
 
 TEST_CASE("test7SparseIntVectPickles") {
   {
-    SparseIntVect<int> iV1(5), iV2(3);
+    SparseIntVect<int> iV1(5);
+    SparseIntVect<int> iV2(3);
     iV1.setVal(0, 2);
     iV1.setVal(2, 1);
     iV1.setVal(3, 4);
@@ -944,7 +964,8 @@ TEST_CASE("test9BitVectFPS") {
     REQUIRE(fps == "03008280");
   }
   {
-    ExplicitBitVect bv(32), bv2(32);
+    ExplicitBitVect bv(32);
+    ExplicitBitVect bv2(32);
     std::string fps;
 
     fps = BitVectToFPSText(bv);
@@ -977,7 +998,8 @@ TEST_CASE("test9BitVectFPS") {
     REQUIRE(fps == "0100000001");
   }
   {
-    ExplicitBitVect bv(33), bv2(33);
+    ExplicitBitVect bv(33);
+    ExplicitBitVect bv2(33);
     std::string fps;
 
     fps = BitVectToFPSText(bv);
@@ -1021,7 +1043,8 @@ TEST_CASE("test10BitVectBinaryText") {
     }
   }
   {
-    ExplicitBitVect bv(32), bv2(32);
+    ExplicitBitVect bv(32);
+    ExplicitBitVect bv2(32);
     std::string fps;
 
     fps = BitVectToBinaryText(bv);
@@ -1065,7 +1088,8 @@ TEST_CASE("test10BitVectBinaryText") {
     REQUIRE(fps[fps.size() - 1] != 0);
   }
   {
-    ExplicitBitVect bv(33), bv2(33);
+    ExplicitBitVect bv(33);
+    ExplicitBitVect bv2(33);
     std::string fps;
 
     fps = BitVectToBinaryText(bv);
@@ -1535,7 +1559,10 @@ TEST_CASE("old main") {
   }
 
   stringstream ss(ios_base::binary | ios_base::out | ios_base::in);
-  int v1 = 4, v2 = 5, v3, v4;
+  int v1 = 4;
+  int v2 = 5;
+  int v3;
+  int v4;
 
   ss.write((const char *)&v1, sizeof(v1));
   ss.write((const char *)&v2, sizeof(v2));
