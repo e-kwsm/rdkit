@@ -460,7 +460,10 @@ class streambuf : public std::basic_streambuf<char> {
     boost::optional<off_type> const failure = off_type(-1);
 
     // Buffer range and current position
-    off_type buf_begin, buf_end, buf_cur, upper_bound;
+    off_type buf_begin;
+    off_type buf_end;
+    off_type buf_cur;
+    off_type upper_bound;
     off_type pos_of_buffer_end_in_py_file;
     if (which == std::ios_base::in) {
       pos_of_buffer_end_in_py_file = pos_of_read_buffer_end_in_py_file;
