@@ -64,7 +64,8 @@ void test2() {
   BOOST_LOG(rdErrorLog) << "    Test Crippen calculation." << std::endl;
 
   ROMol *mol;
-  double logp, mr;
+  double logp;
+  double mr;
 
   mol = SmilesToMol("C");
   TEST_ASSERT(mol);
@@ -146,10 +147,14 @@ void testIssue262() {
       << "    Test Issue262: problems with Crippen calculation from pickles."
       << std::endl;
 
-  ROMol *mol, *mol2;
+  ROMol *mol;
+  ROMol *mol2;
   RWMol *mol3;
   std::string pkl;
-  double rlogp, rmr, logp, mr;
+  double rlogp;
+  double rmr;
+  double logp;
+  double mr;
 
   mol = SmilesToMol("c1ncccc1");
   TEST_ASSERT(mol);
@@ -182,7 +187,8 @@ void test3() {
   BOOST_LOG(rdErrorLog) << "-------------------------------------" << std::endl;
   BOOST_LOG(rdErrorLog) << "    Test AMW calculation." << std::endl;
 
-  ROMol *mol, *mol2;
+  ROMol *mol;
+  ROMol *mol2;
   double amw;
 
   mol = SmilesToMol("C");
@@ -221,7 +227,8 @@ void test3a() {
   BOOST_LOG(rdErrorLog) << "-------------------------------------" << std::endl;
   BOOST_LOG(rdErrorLog) << "    Test Exact MW calculation." << std::endl;
 
-  ROMol *mol, *mol2;
+  ROMol *mol;
+  ROMol *mol2;
   double mw;
 
   mol = SmilesToMol("C");
@@ -391,7 +398,8 @@ void testLipinski1() {
       continue;
     }
 
-    unsigned int oVal, nVal;
+    unsigned int oVal;
+    unsigned int nVal;
     std::string foo;
 
     mol->getProp("NUM_HACCEPTORS", foo);
@@ -633,7 +641,8 @@ void testMolFormula() {
   BOOST_LOG(rdErrorLog) << "    Test molecular formula calculation."
                         << std::endl;
 
-  ROMol *mol, *mol2;
+  ROMol *mol;
+  ROMol *mol2;
   std::string formula;
 
   mol = SmilesToMol("C");
@@ -811,7 +820,8 @@ void testIssue3433771() {
       << std::endl;
 
   ROMol *mol;
-  double logp, mr;
+  double logp;
+  double mr;
 
   mol = SmilesToMol("O=C(NC)n1cccc1");
   TEST_ASSERT(mol);
@@ -852,7 +862,8 @@ void runblock(const std::vector<ROMol *> &mols, unsigned int count,
 
       unsigned int nAmide = calcNumAmideBonds(*mol);
       (void)nAmide;
-      double logp, mr;
+      double logp;
+      double mr;
       calcCrippenDescriptors(*mol, logp, mr);
     }
   }
