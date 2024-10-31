@@ -65,9 +65,12 @@ double grad2(double *v, double *grad) {
 
 TEST_CASE("testLinearSearch") {
   int dim = 2;
-  double oLoc[2], oVal;
-  double grad[2], dir[2];
-  double nLoc[2], nVal;
+  double oLoc[2];
+  double oVal;
+  double grad[2];
+  double dir[2];
+  double nLoc[2];
+  double nVal;
   int resCode;
   double (*func)(double *);
   double (*gradFunc)(double *, double *);
@@ -123,7 +126,8 @@ TEST_CASE("testLinearSearch") {
 
 TEST_CASE("testBFGSOptimization") {
   unsigned int dim = 2;
-  double oLoc[2], oVal;
+  double oLoc[2];
+  double oVal;
   double nVal;
   unsigned int nIters;
   double (*func)(double *);
