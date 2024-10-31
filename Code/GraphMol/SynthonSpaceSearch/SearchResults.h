@@ -35,14 +35,15 @@ class RDKIT_SYNTHONSPACESEARCH_EXPORT SearchResults {
    *
    * @return int
    */
-  size_t getMaxNumResults() const { return d_maxNumResults; }
+  [[nodiscard]] size_t getMaxNumResults() const { return d_maxNumResults; }
   /*!
    * Returns the hits from the search. Not necessarily all those possible,
    * just the maximum number requested.
    *
    * @return std::vector<std::unique_ptr<ROMol>>
    */
-  const std::vector<std::unique_ptr<ROMol>> &getHitMolecules() const {
+  [[nodiscard]] const std::vector<std::unique_ptr<ROMol>> &getHitMolecules()
+      const {
     return d_hitMolecules;
   }
 
@@ -50,12 +51,12 @@ class RDKIT_SYNTHONSPACESEARCH_EXPORT SearchResults {
    * Returns whether the search timed out or not,
    * @return bool
    */
-  bool getTimedOut() const { return d_timedOut; }
+  [[nodiscard]] bool getTimedOut() const { return d_timedOut; }
   /*!
    * Returns whether the search was cancelled or not,
    * @return bool
    */
-  bool getCancelled() const { return d_cancelled; }
+  [[nodiscard]] bool getCancelled() const { return d_cancelled; }
 
  private:
   std::vector<std::unique_ptr<ROMol>> d_hitMolecules;
