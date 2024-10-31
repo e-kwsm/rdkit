@@ -28,8 +28,17 @@ using namespace MolStandardize;
 
 void test2() {
   BOOST_LOG(rdDebugLog) << "-----------------------\n test2" << std::endl;
-  std::string smi1, smi2, smi3, smi4, smi5, smi6, smi8, smi9, smi10, smi11,
-      smi12;
+  std::string smi1;
+  std::string smi2;
+  std::string smi3;
+  std::string smi4;
+  std::string smi5;
+  std::string smi6;
+  std::string smi8;
+  std::string smi9;
+  std::string smi10;
+  std::string smi11;
+  std::string smi12;
 
   FragmentRemover fragremover;
 
@@ -112,8 +121,18 @@ void test_largest_fragment() {
   BOOST_LOG(rdDebugLog) << "-----------------------\n test largest fragment"
                         << std::endl;
 
-  std::string smi1, smi2, smi3, smi4, smi5, smi6, smi7, smi8, smi9, smi10,
-      smi11, smi12;
+  std::string smi1;
+  std::string smi2;
+  std::string smi3;
+  std::string smi4;
+  std::string smi5;
+  std::string smi6;
+  std::string smi7;
+  std::string smi8;
+  std::string smi9;
+  std::string smi10;
+  std::string smi11;
+  std::string smi12;
   LargestFragmentChooser lfragchooser;
   LargestFragmentChooser lfrag_preferOrg(true);
   MolStandardize::CleanupParameters params =
