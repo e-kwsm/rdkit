@@ -61,7 +61,8 @@ void testSubgraphs() {
   // same answer
   INT_PATH_LIST_MAP tmpm;
   tmpm = findAllSubgraphsOfLengthsMtoN(mol, 1, 6);
-  int newTot, idx;
+  int newTot;
+  int idx;
   newTot = 0;
   for (idx = 1; idx <= 6; idx++) {
     newTot += tmpm[idx].size();
