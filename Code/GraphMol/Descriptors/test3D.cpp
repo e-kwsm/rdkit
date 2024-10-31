@@ -68,7 +68,12 @@ void testPMI1() {
     instrm >> inm;
     TEST_ASSERT(inm == nm);
     double val;
-    double pmi1_m, pmi2_m, pmi3_m, pmi1_nom, pmi2_nom, pmi3_nom;
+    double pmi1_m;
+    double pmi2_m;
+    double pmi3_m;
+    double pmi1_nom;
+    double pmi2_nom;
+    double pmi3_nom;
     instrm >> pmi1_m;
     instrm >> pmi2_m;
     instrm >> pmi3_m;
@@ -217,7 +222,8 @@ void testPMI2() {
   while (!reader.atEnd()) {
     RDKit::ROMol *mnoh = reader.next();
     TEST_ASSERT(mnoh);
-    bool explicitOnly = false, addCoords = true;
+    bool explicitOnly = false;
+    bool addCoords = true;
     RDKit::ROMol *m = MolOps::addHs(*mnoh, explicitOnly, addCoords);
     delete mnoh;
     double pmi1 = RDKit::Descriptors::PMI1(*m);
@@ -257,7 +263,12 @@ void testNPR1() {
     m->getProp("_Name", nm);
 
     double val;
-    double pmi1_m, pmi2_m, pmi3_m, pmi1_nom, pmi2_nom, pmi3_nom;
+    double pmi1_m;
+    double pmi2_m;
+    double pmi3_m;
+    double pmi1_nom;
+    double pmi2_nom;
+    double pmi3_nom;
     pmi1_m = RDKit::Descriptors::PMI1(*m);
     pmi2_m = RDKit::Descriptors::PMI2(*m);
     pmi3_m = RDKit::Descriptors::PMI3(*m);
@@ -496,7 +507,8 @@ void testInertialShapeFactor() {
     std::string pathName = getenv("RDBASE");
     std::string sdfName =
         pathName + "/Code/GraphMol/Descriptors/test_data/doravirine.mol";
-    bool sanitize = true, removeHs = false;
+    bool sanitize = true;
+    bool removeHs = false;
     std::unique_ptr<RDKit::ROMol> m(MolFileToMol(sdfName, sanitize, removeHs));
     TEST_ASSERT(m);
 
