@@ -108,7 +108,8 @@ void testSmiProperties() {
   std::string rdbase = getenv("RDBASE");
   std::string fname =
       rdbase + "/Code/GraphMol/FileParsers/test_data/fewSmi.2.csv";
-  std::vector<std::string> nameVector, tpsaVector;
+  std::vector<std::string> nameVector;
+  std::vector<std::string> tpsaVector;
   std::string tempStr;
   SmilesMolSupplier sup(fname, ",", 1, 0, true);
   MultithreadedSmilesMolSupplier multiSup(fname, ",", 1, 0, true);
