@@ -28,7 +28,13 @@ using namespace MolStandardize;
 
 void test1() {
   BOOST_LOG(rdInfoLog) << "-----------------------\n test1" << std::endl;
-  std::string smi1, smi2, smi3, smi4, smi5, smi6, smi7;
+  std::string smi1;
+  std::string smi2;
+  std::string smi3;
+  std::string smi4;
+  std::string smi5;
+  std::string smi6;
+  std::string smi7;
 
   Normalizer normalizer;
   auto normalize = [&normalizer](const std::string &smiles) -> std::string {
