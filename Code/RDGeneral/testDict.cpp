@@ -203,7 +203,8 @@ void testRDAny() {
   }
   {
     std::clock_t clock1 = std::clock();
-    std::any *v = nullptr, *vv;
+    std::any *v = nullptr;
+    std::any *vv;
     for (int i = 0; i < loops; ++i) {
       vv = new std::any(v ? std::any_cast<int>(*v) + i : i);
       delete v;
@@ -231,7 +232,8 @@ void testRDAny() {
 
   {
     std::clock_t clock1 = std::clock();
-    RDAny *v = nullptr, *vv;
+    RDAny *v = nullptr;
+    RDAny *vv;
     for (int i = 0; i < loops; ++i) {
       vv = new RDAny(v ? rdany_cast<int>(*v) + i : i);
       delete v;
@@ -522,7 +524,8 @@ void testConstReturns() {
     RDAny anyv(v);
     d.setVal("foo", v);
 
-    std::clock_t start, end;
+    std::clock_t start;
+    std::clock_t end;
 
     double ls = 0;
     BOOST_LOG(rdErrorLog) << "any cast" << std::endl;
@@ -737,7 +740,8 @@ int main() {
   d.setVal("foo", x);
   TEST_ASSERT(d.hasVal("foo"));
   TEST_ASSERT(!d.hasVal("bar"));
-  int v, v2;
+  int v;
+  int v2;
   d.getVal("foo", v);
   TEST_ASSERT(v == 1);
   v2 = d.getVal<int>("foo");
@@ -747,7 +751,8 @@ int main() {
   TEST_ASSERT(v == 1);
   v2 = d.getVal<int>("foo");
   TEST_ASSERT(v2 == v);
-  INT_VECT fooV2, fooV3;
+  INT_VECT fooV2;
+  INT_VECT fooV3;
   d.getVal("bar", fooV2);
   fooV3 = d.getVal<INT_VECT>("bar");
   TEST_ASSERT(fooV == fooV2);
