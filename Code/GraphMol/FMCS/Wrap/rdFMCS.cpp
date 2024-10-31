@@ -143,7 +143,9 @@ struct PyMCSAtomCompare : public PyMCSWrapper {
       const ROMol &mol2, unsigned int atom2) const {
     return RDKit::checkAtomChirality(p, mol1, atom1, mol2, atom2);
   }
-  inline const char *subclassName() const override { return "MCSAtomCompare"; }
+  [[nodiscard]] inline const char *subclassName() const override {
+    return "MCSAtomCompare";
+  }
   virtual bool operator()(const MCSAtomCompareParameters &, const ROMol &,
                           unsigned int, const ROMol &, unsigned int) const {
     errorNotOverridden();
@@ -185,7 +187,9 @@ struct PyMCSBondCompare : public PyMCSWrapper {
                                  const ROMol &mol2, unsigned int bond2) {
     return RDKit::checkBondRingMatch(p, mol1, bond1, mol2, bond2);
   }
-  inline const char *subclassName() const override { return "MCSBondCompare"; }
+  [[nodiscard]] inline const char *subclassName() const override {
+    return "MCSBondCompare";
+  }
   virtual bool operator()(const MCSBondCompareParameters &, const ROMol &,
                           unsigned int, const ROMol &, unsigned int) const {
     errorNotOverridden();
@@ -225,14 +229,16 @@ struct PyMCSProgress : public PyMCSWrapper {
   PyMCSProgress() {}
   PyMCSProgress(PyObject *obj) : PyMCSWrapper(obj) { extractPyMCSWrapper(); }
   ~PyMCSProgress() override {}
-  PyMCSProgress *extractPyObject() const {
+  [[nodiscard]] PyMCSProgress *extractPyObject() const {
     auto res = dynamic_cast<PyMCSProgress *>(pyObjectExtract());
     if (!res) {
       failedToExtractPyObject();
     }
     return res;
   }
-  inline const char *subclassName() const override { return "MCSProgress"; }
+  [[nodiscard]] inline const char *subclassName() const override {
+    return "MCSProgress";
+  }
   virtual bool operator()(const MCSProgressData &,
                           const MCSParameters &) const {
     errorNotOverridden();
@@ -266,14 +272,14 @@ struct PyMCSFinalMatchCheck : public PyMCSWrapper {
     extractPyMCSWrapper();
   }
   ~PyMCSFinalMatchCheck() override {}
-  PyMCSFinalMatchCheck *extractPyObject() const {
+  [[nodiscard]] PyMCSFinalMatchCheck *extractPyObject() const {
     auto res = dynamic_cast<PyMCSFinalMatchCheck *>(pyObjectExtract());
     if (!res) {
       failedToExtractPyObject();
     }
     return res;
   }
-  inline const char *subclassName() const override {
+  [[nodiscard]] inline const char *subclassName() const override {
     return "MCSFinalMatchCheck";
   }
   virtual bool operator()() const {
@@ -286,7 +292,7 @@ struct PyMCSAcceptance : public PyMCSWrapper {
   PyMCSAcceptance() {}
   PyMCSAcceptance(PyObject *obj) : PyMCSWrapper(obj) { extractPyMCSWrapper(); }
   ~PyMCSAcceptance() override {}
-  PyMCSAcceptance *extractPyObject() const {
+  [[nodiscard]] PyMCSAcceptance *extractPyObject() const {
     auto res = dynamic_cast<PyMCSAcceptance *>(pyObjectExtract());
     if (!res) {
       failedToExtractPyObject();

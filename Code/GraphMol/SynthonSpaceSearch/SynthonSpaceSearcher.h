@@ -49,16 +49,18 @@ class SynthonSpaceSearcher {
   SearchResults search();
   void search(const SearchResultCallback &cb);
 
-  SynthonSpace &getSpace() const { return d_space; }
-  const ROMol &getQuery() const { return d_query; }
-  const SynthonSpaceSearchParams &getParams() const { return d_params; }
+  [[nodiscard]] SynthonSpace &getSpace() const { return d_space; }
+  [[nodiscard]] const ROMol &getQuery() const { return d_query; }
+  [[nodiscard]] const SynthonSpaceSearchParams &getParams() const {
+    return d_params;
+  }
 
   // Do the search of this fragSet against the SynthonSet in the
   // appropriate way, for example by substructure or fingerprint
   // similarity.
-  virtual std::vector<std::unique_ptr<SynthonSpaceHitSet>> searchFragSet(
-      const std::vector<std::unique_ptr<ROMol>> &fragSet,
-      const SynthonSet &reaction) const = 0;
+  [[nodiscard]] virtual std::vector<std::unique_ptr<SynthonSpaceHitSet>>
+  searchFragSet(const std::vector<std::unique_ptr<ROMol>> &fragSet,
+                const SynthonSet &reaction) const = 0;
 
   // Make the hit, constructed from a specific combination of
   // synthons in the hitset, and verify that it matches the
@@ -134,7 +136,7 @@ class SynthonSpaceSearcher {
 
   // get the subset of synthons for the given reaction to use for this
   // enumeration.
-  std::vector<std::vector<ROMol *>> getSynthonsToUse(
+  [[nodiscard]] std::vector<std::vector<ROMol *>> getSynthonsToUse(
       const std::vector<boost::dynamic_bitset<>> &synthonsToUse,
       const std::string &reaction_id) const;
 };

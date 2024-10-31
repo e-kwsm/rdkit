@@ -60,9 +60,9 @@ class RDKIT_FORCEFIELD_EXPORT AngleBendContrib : public ForceFieldContrib {
   int d_at3Idx{-1};
   unsigned int d_order{0};
   double d_forceConstant, d_C0, d_C1, d_C2, d_theta0;
-  
-  double getEnergyTerm(double cosTheta, double sinThetaSq) const;
-  double getThetaDeriv(double cosTheta, double sinTheta) const;
+
+  [[nodiscard]] double getEnergyTerm(double cosTheta, double sinThetaSq) const;
+  [[nodiscard]] double getThetaDeriv(double cosTheta, double sinTheta) const;
 };
 
 namespace Utils {
