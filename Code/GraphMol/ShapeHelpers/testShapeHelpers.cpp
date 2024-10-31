@@ -95,7 +95,8 @@ void testGithub4364() {
       rdbase + "/Code/GraphMol/ShapeHelpers/test_data/1oir_conf.mol";
   std::unique_ptr<RWMol> m2(MolFileToMol(fname2));
   MolTransforms::canonicalizeMol(*m2);
-  int cid1 = -1, cid2 = -1;
+  int cid1 = -1;
+  int cid2 = -1;
   auto dist = MolShapes::tanimotoDistance(*m, *m2, cid1, cid2);
   TEST_ASSERT(RDKit::feq(dist, 0.31, 0.01));
   double gridSpacing = 1.0;
