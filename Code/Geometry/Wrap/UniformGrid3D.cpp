@@ -64,7 +64,9 @@ python::tuple computeGridCentroidWrap(const UniformGrid3D &grid,
   return python::make_tuple(weightSum, centroid);
 }
 python::tuple getGridIndicesWrap(const UniformGrid3D &grid, unsigned int idx) {
-  unsigned int xi, yi, zi;
+  unsigned int xi;
+  unsigned int yi;
+  unsigned int zi;
   grid.getGridIndices(idx, xi, yi, zi);
   python::list pyRes;
   pyRes.append(xi);
