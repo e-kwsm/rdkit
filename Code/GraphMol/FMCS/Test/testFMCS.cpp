@@ -129,7 +129,8 @@ void testFileMCSB(const char *test, unsigned int timeout = 30,
   std::vector<ROMOL_SPTR> mols;  // IT CAN OCCUPY A LOT OF MEMORY. store SMILES
                                  // only to reduce memory usage.
   char str[4096];
-  std::string molFile, id;
+  std::string molFile;
+  std::string id;
   std::map<std::string, size_t> molIdMap;
   std::vector<std::string> smilesList;
   std::list<std::vector<std::string>> testCase;
@@ -149,7 +150,11 @@ void testFileMCSB(const char *test, unsigned int timeout = 30,
 
   std::string outSmilesFile(test);
   outSmilesFile += ".smiles";
-  unsigned int n = 0, passed = 0, failed = 0, failed_less = 0, timedout = 0;
+  unsigned int n = 0;
+  unsigned int passed = 0;
+  unsigned int failed = 0;
+  unsigned int failed_less = 0;
+  unsigned int timedout = 0;
   double secTotal = 0.;
 
   std::vector<MCSResult> referenceResults;
@@ -204,7 +209,8 @@ void testFileMCSB(const char *test, unsigned int timeout = 30,
       if ('#' != str[0]) {
         // str= "1 CHEMBL526291 CHEMBL498211 ..."
         char name[256];
-        unsigned int nn, len;
+        unsigned int nn;
+        unsigned int len;
         n++;
         testCase.emplace_back();
         sscanf(str, "%u%n", &nn, &len);
