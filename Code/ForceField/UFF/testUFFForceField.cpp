@@ -40,7 +40,10 @@ void test1() {
   ForceFields::ForceField ff;
   TEST_ASSERT(ff.dimension() == 3);
 
-  RDGeom::Point3D p1(0, 0, 0), p2(1, 0, 0), p3(2, 0, 0), p4(0, 1, 0);
+  RDGeom::Point3D p1(0, 0, 0);
+  RDGeom::Point3D p2(1, 0, 0);
+  RDGeom::Point3D p3(2, 0, 0);
+  RDGeom::Point3D p4(0, 1, 0);
   RDGeom::PointPtrVect &ps = ff.positions();
   ps.push_back(&p1);
   ps.push_back(&p2);
@@ -70,8 +73,10 @@ void testUFF1() {
   std::cerr << "-------------------------------------" << std::endl;
   std::cerr << "Unit tests for basics of UFF bond-stretch terms." << std::endl;
 
-  ForceFields::UFF::AtomicParams p1, p2;
-  double restLen, forceConstant;
+  ForceFields::UFF::AtomicParams p1;
+  ForceFields::UFF::AtomicParams p2;
+  double restLen;
+  double forceConstant;
 
   // sp3 carbon:
   p1.r1 = .757;
@@ -137,7 +142,8 @@ void testUFF2() {
   std::cerr << "Unit tests for UFF bond-stretch terms." << std::endl;
 
   ForceFields::ForceField ff;
-  RDGeom::Point3D p1(0, 0, 0), p2(1.514, 0, 0);
+  RDGeom::Point3D p1(0, 0, 0);
+  RDGeom::Point3D p2(1.514, 0, 0);
   RDGeom::PointPtrVect &ps = ff.positions();
   ps.push_back(&p1);
   ps.push_back(&p2);
@@ -154,7 +160,8 @@ void testUFF2() {
   ff.contribs().push_back(ForceFields::ContribPtr(bs));
   ff.initialize();
 
-  double *p, *g;
+  double *p;
+  double *g;
   p = new double[6];
   g = new double[6];
   for (int i = 0; i < 6; i++) {
@@ -245,8 +252,11 @@ void testUFF3() {
   std::cerr << "-------------------------------------" << std::endl;
   std::cerr << "Unit tests for basics of UFF angle terms." << std::endl;
 
-  ForceFields::UFF::AtomicParams p1, p2, p3;
-  double restLen, forceConstant;
+  ForceFields::UFF::AtomicParams p1;
+  ForceFields::UFF::AtomicParams p2;
+  ForceFields::UFF::AtomicParams p3;
+  double restLen;
+  double forceConstant;
 
   // sp3 carbon:
   p3.r1 = .757;
@@ -292,7 +302,9 @@ void testUFF4() {
   std::cerr << "Unit tests for UFF angle-bend terms." << std::endl;
 
   ForceFields::ForceField ff;
-  RDGeom::Point3D p1(1.514, 0, 0), p2(0, 0, 0), p3(0.1, 1.5, 0);
+  RDGeom::Point3D p1(1.514, 0, 0);
+  RDGeom::Point3D p2(0, 0, 0);
+  RDGeom::Point3D p3(0.1, 1.5, 0);
   RDGeom::PointPtrVect &ps = ff.positions();
   ps.push_back(&p1);
   ps.push_back(&p2);
@@ -318,7 +330,9 @@ void testUFF4() {
                                                    &param1, &param1);
   ff.contribs().push_back(ForceFields::ContribPtr(contrib));
 
-  RDGeom::Point3D d, v1, v2;
+  RDGeom::Point3D d;
+  RDGeom::Point3D v1;
+  RDGeom::Point3D v2;
   double theta;
   // ------- ------- ------- ------- ------- ------- -------
   // try a bit of minimization
@@ -506,7 +520,12 @@ void testUFF5() {
   std::cerr << " Test Simple UFF molecule optimizations." << std::endl;
 
   ForceFields::ForceField ff;
-  RDGeom::Point3D p1, p2, p3, p4, p5, p6;
+  RDGeom::Point3D p1;
+  RDGeom::Point3D p2;
+  RDGeom::Point3D p3;
+  RDGeom::Point3D p4;
+  RDGeom::Point3D p5;
+  RDGeom::Point3D p6;
   RDGeom::PointPtrVect &ps = ff.positions();
   ps.push_back(&p1);
   ps.push_back(&p2);
@@ -515,7 +534,8 @@ void testUFF5() {
   ps.push_back(&p5);
   ps.push_back(&p6);
 
-  ForceFields::UFF::AtomicParams param1, param2;
+  ForceFields::UFF::AtomicParams param1;
+  ForceFields::UFF::AtomicParams param2;
   // sp2 carbon:
   param1.r1 = .732;
   param1.Z1 = 1.912;
@@ -592,7 +612,9 @@ void testUFF5() {
   p6.y = -0.20;
   p6.z = 0.0;
 
-  RDGeom::Point3D d, v1, v2;
+  RDGeom::Point3D d;
+  RDGeom::Point3D v1;
+  RDGeom::Point3D v2;
   double theta;
   // ------- ------- ------- ------- ------- ------- -------
   // try a bit of minimization
@@ -631,7 +653,8 @@ void testUFF6() {
   std::cerr << "Unit tests for UFF nonbonded terms." << std::endl;
 
   ForceFields::ForceField ff;
-  RDGeom::Point3D p1(0, 0, 0), p2(0.0, 0, 0);
+  RDGeom::Point3D p1(0, 0, 0);
+  RDGeom::Point3D p2(0.0, 0, 0);
   RDGeom::PointPtrVect &ps = ff.positions();
   ps.push_back(&p1);
   ps.push_back(&p2);
@@ -686,7 +709,10 @@ void testUFF7() {
   std::cerr << " Test UFF torsional terms." << std::endl;
 
   ForceFields::ForceField ff;
-  RDGeom::Point3D p1, p2, p3, p4;
+  RDGeom::Point3D p1;
+  RDGeom::Point3D p2;
+  RDGeom::Point3D p3;
+  RDGeom::Point3D p4;
   RDGeom::PointPtrVect &ps = ff.positions();
   ps.push_back(&p1);
   ps.push_back(&p2);
@@ -703,7 +729,9 @@ void testUFF7() {
   param1.V1 = 2.119;
   param1.U1 = 2.0;
 
-  RDGeom::Point3D d, v1, v2;
+  RDGeom::Point3D d;
+  RDGeom::Point3D v1;
+  RDGeom::Point3D v2;
   double cosPhi;
 
   ForceFields::ForceFieldContrib *contrib;
@@ -940,7 +968,12 @@ void testUFF8() {
   std::cerr << " Test Simple UFF molecule optimization, part 2." << std::endl;
 
   ForceFields::ForceField ff;
-  RDGeom::Point3D p1, p2, p3, p4, p5, p6;
+  RDGeom::Point3D p1;
+  RDGeom::Point3D p2;
+  RDGeom::Point3D p3;
+  RDGeom::Point3D p4;
+  RDGeom::Point3D p5;
+  RDGeom::Point3D p6;
   RDGeom::PointPtrVect &ps = ff.positions();
   ps.push_back(&p1);
   ps.push_back(&p2);
@@ -950,7 +983,8 @@ void testUFF8() {
   ps.push_back(&p6);
 
   auto params = ForceFields::UFF::ParamCollection::getParams();
-  const ForceFields::UFF::AtomicParams *param1, *param2;
+  const ForceFields::UFF::AtomicParams *param1;
+  const ForceFields::UFF::AtomicParams *param2;
 
   // C_2 (sp2 carbon):
   param1 = (*params)("C_2");
@@ -1040,7 +1074,9 @@ void testUFF8() {
   p6.y = -0.20;
   p6.z = 0.0;
 
-  RDGeom::Point3D d, v1, v2;
+  RDGeom::Point3D d;
+  RDGeom::Point3D v1;
+  RDGeom::Point3D v2;
   double theta;
   // ------- ------- ------- ------- ------- ------- -------
   // try a bit of minimization
@@ -1079,7 +1115,13 @@ void testUFFTorsionConflict() {
   std::cerr << " Test UFF Torsion Conflicts." << std::endl;
 
   ForceFields::ForceField ff;
-  RDGeom::Point3D p1, p2, p3, p4, p5, p6, p7;
+  RDGeom::Point3D p1;
+  RDGeom::Point3D p2;
+  RDGeom::Point3D p3;
+  RDGeom::Point3D p4;
+  RDGeom::Point3D p5;
+  RDGeom::Point3D p6;
+  RDGeom::Point3D p7;
   RDGeom::PointPtrVect &ps = ff.positions();
   ps.push_back(&p1);
   ps.push_back(&p2);
@@ -1090,7 +1132,9 @@ void testUFFTorsionConflict() {
   ps.push_back(&p7);
 
   auto params = ForceFields::UFF::ParamCollection::getParams();
-  const ForceFields::UFF::AtomicParams *param1, *param2, *param3;
+  const ForceFields::UFF::AtomicParams *param1;
+  const ForceFields::UFF::AtomicParams *param2;
+  const ForceFields::UFF::AtomicParams *param3;
 
   // C_2 (sp2 carbon):
   param1 = (*params)("C_2");
@@ -1200,7 +1244,9 @@ void testUFFTorsionConflict() {
   p7.y = 1.8185;
   p7.z = -0.8983;
 
-  RDGeom::Point3D d, v1, v2;
+  RDGeom::Point3D d;
+  RDGeom::Point3D v1;
+  RDGeom::Point3D v2;
   // ------- ------- ------- ------- ------- ------- -------
   // try a bit of minimization
   ff.initialize();
@@ -1223,12 +1269,14 @@ void testUFFDistanceConstraints() {
   std::cerr << "Unit tests for UFF distance constraint terms." << std::endl;
 
   ForceFields::ForceField ff;
-  RDGeom::Point3D p1(0, 0, 0), p2(1.514, 0, 0);
+  RDGeom::Point3D p1(0, 0, 0);
+  RDGeom::Point3D p2(1.514, 0, 0);
   RDGeom::PointPtrVect &ps = ff.positions();
   ps.push_back(&p1);
   ps.push_back(&p2);
 
-  double *p, *g;
+  double *p;
+  double *g;
   p = new double[6];
   g = new double[6];
   for (int i = 0; i < 6; i++) {
