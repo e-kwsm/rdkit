@@ -316,7 +316,7 @@ class RDKIT_MOLINTERACTIONFIELDS_EXPORT VdWaals {
 
  protected:
   void fillVectors();
-  virtual double calcEnergy(double, double, double) const = 0;
+  [[nodiscard]] virtual double calcEnergy(double, double, double) const = 0;
   virtual void fillVdwParamVectors(unsigned int atomIdx) = 0;
   double d_cutoff = 1.0;
   unsigned int d_nAtoms = 0;
@@ -349,7 +349,8 @@ class RDKIT_MOLINTERACTIONFIELDS_EXPORT MMFFVdWaals : public VdWaals {
   ~MMFFVdWaals() = default;
 
  private:
-  double calcEnergy(double, double, double) const;  // MMFF energy function
+  [[nodiscard]] double calcEnergy(double, double,
+                                  double) const;  // MMFF energy function
   void fillVdwParamVectors(unsigned int atomIdx);
   bool d_scaling;
   std::unique_ptr<RDKit::MMFF::MMFFMolProperties> d_props;
@@ -377,7 +378,8 @@ class RDKIT_MOLINTERACTIONFIELDS_EXPORT UFFVdWaals : public VdWaals {
   ~UFFVdWaals() = default;
 
  private:
-  double calcEnergy(double, double, double) const;  // UFF energy function
+  [[nodiscard]] double calcEnergy(double, double,
+                                  double) const;  // UFF energy function
   void fillVdwParamVectors(unsigned int atomIdx);
   const ForceFields::UFF::ParamCollection *d_uffParamColl;
   const ForceFields::UFF::AtomicParams *d_probeParams;

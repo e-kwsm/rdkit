@@ -866,8 +866,8 @@ class HasPropWithValueQueryBase {
  public:
   HasPropWithValueQueryBase() = default;
   virtual ~HasPropWithValueQueryBase() = default;
-  virtual PairHolder getPair() const = 0;
-  virtual double getTolerance() const = 0;
+  [[nodiscard]] virtual PairHolder getPair() const = 0;
+  [[nodiscard]] virtual double getTolerance() const = 0;
 };
 
 template <class TargetPtr, class T>
