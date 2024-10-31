@@ -101,7 +101,8 @@ class Matrix {
   }
 
   //! returns a particular element of the matrix
-  inline virtual TYPE getValUnchecked(unsigned int i, unsigned int j) const {
+  [[nodiscard]] inline virtual TYPE getValUnchecked(unsigned int i,
+                                                    unsigned int j) const {
     unsigned int id = i * d_nCols + j;
     return d_data[id];
   }

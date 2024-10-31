@@ -147,29 +147,29 @@ class RDKIT_SYNTHONSPACESEARCH_EXPORT SynthonSpace {
    *
    * @return int
    */
-  size_t getNumReactions() const;
+  [[nodiscard]] size_t getNumReactions() const;
   /*!
    * Get a list of the names of all the reactions in the SynthonSpace.
    *
    * @return
    */
-  std::vector<std::string> getReactionNames() const;
+  [[nodiscard]] std::vector<std::string> getReactionNames() const;
   const std::shared_ptr<SynthonSet> getReaction(std::string reactionName);
   // The Synthons have a PatternFingerprint for screening in substructure
   // searches.  It's important that the screening process creates ones
   // of the same size, so this finds out what size that is.
-  unsigned int getPatternFPSize() const;
+  [[nodiscard]] unsigned int getPatternFPSize() const;
   // Likewise for the fingerprints used for similarity searching
-  unsigned int getFPSize() const;
+  [[nodiscard]] unsigned int getFPSize() const;
 
-  std::string getInputFileName() const;
+  [[nodiscard]] std::string getInputFileName() const;
 
   /*!
    * Get the total number of products that the SynthonSpace could produce.
    *
    * @return std::int64_t
    */
-  std::uint64_t getNumProducts() const;
+  [[nodiscard]] std::uint64_t getNumProducts() const;
 
   /*!
    * Get the info string for the fingerprint generator used to
@@ -178,7 +178,9 @@ class RDKIT_SYNTHONSPACESEARCH_EXPORT SynthonSpace {
    *
    * @return
    */
-  std::string getSynthonFingerprintType() const { return d_fpType; }
+  [[nodiscard]] std::string getSynthonFingerprintType() const {
+    return d_fpType;
+  }
 
   /*!
    * Perform a substructure search with the given query molecule across
@@ -379,11 +381,13 @@ class RDKIT_SYNTHONSPACESEARCH_EXPORT SynthonSpace {
       const FingerprintGenerator<std::uint64_t> &fpGen);
 
  protected:
-  unsigned int getMaxNumSynthons() const { return d_maxNumSynthons; }
+  [[nodiscard]] unsigned int getMaxNumSynthons() const {
+    return d_maxNumSynthons;
+  }
 
-  bool hasFingerprints() const;
+  [[nodiscard]] bool hasFingerprints() const;
 
-  bool hasAddAndSubstractFingerprints() const;
+  [[nodiscard]] bool hasAddAndSubstractFingerprints() const;
 
   // Take the SMILES for a Synthon and if it's not in
   // d_synthonPool make it and add it.  If it is in the pool,
@@ -394,7 +398,7 @@ class RDKIT_SYNTHONSPACESEARCH_EXPORT SynthonSpace {
       const std::string &reactionName);
 
   // Just do the lookup, and return nullptr if not found.
-  Synthon *getSynthonFromPool(const std::string &smiles) const;
+  [[nodiscard]] Synthon *getSynthonFromPool(const std::string &smiles) const;
 
  private:
   std::string d_fileName;
