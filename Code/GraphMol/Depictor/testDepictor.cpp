@@ -335,8 +335,11 @@ void test4() {
 
 void tempTest() {
   int i;
-  RDGeom::Point3D pt1, pt2, pt3;
-  double cosT, sinT;
+  RDGeom::Point3D pt1;
+  RDGeom::Point3D pt2;
+  RDGeom::Point3D pt3;
+  double cosT;
+  double sinT;
   RDGeom::Transform3D trans;
   RDGeom::Point3D rotnAxis;
   double dt;
@@ -388,7 +391,8 @@ void testIssue248() {
     unsigned int confId = RDDepict::compute2DCoords(*m);
     // check that there are no collisions in the molecules
     int natms = m->getNumAtoms();
-    int i, j;
+    int i;
+    int j;
     for (i = 0; i < natms; i++) {
       const Conformer &conf = m->getConformer(confId);
       RDGeom::Point3D loci = conf.getAtomPos(i);
@@ -420,7 +424,8 @@ void testQueries() {
     unsigned int confId = RDDepict::compute2DCoords(*m);
     // check that there are no collisions in the molecules
     int natms = m->getNumAtoms();
-    int i, j;
+    int i;
+    int j;
     for (i = 0; i < natms; i++) {
       const Conformer &conf = m->getConformer(confId);
       RDGeom::Point3D loci = conf.getAtomPos(i);
@@ -505,7 +510,8 @@ void testIssue2821647() {
     std::string smi = "CCCCC";
     RWMol *m1 = SmilesToMol(smi);
     unsigned int cid1 = RDDepict::compute2DCoords(*m1, nullptr, true);
-    double xx = 0, yy = 0;
+    double xx = 0;
+    double yy = 0;
     for (unsigned int i = 0; i < m1->getNumAtoms(); i++) {
       const Conformer &conf = m1->getConformer(cid1);
       RDGeom::Point3D loci = conf.getAtomPos(i);
@@ -519,7 +525,8 @@ void testIssue2821647() {
     std::string smi = "c1ccccc1CCCCCC1CC1";
     RWMol *m1 = SmilesToMol(smi);
     unsigned int cid1 = RDDepict::compute2DCoords(*m1, nullptr, true);
-    double xx = 0, yy = 0;
+    double xx = 0;
+    double yy = 0;
     for (unsigned int i = 0; i < m1->getNumAtoms(); i++) {
       const Conformer &conf = m1->getConformer(cid1);
       RDGeom::Point3D loci = conf.getAtomPos(i);
@@ -533,7 +540,8 @@ void testIssue2821647() {
     std::string smi = "c1ccc2c(c1)oc1c3ccccc3oc21";
     RWMol *m1 = SmilesToMol(smi);
     unsigned int cid1 = RDDepict::compute2DCoords(*m1, nullptr, true);
-    double xx = 0, yy = 0;
+    double xx = 0;
+    double yy = 0;
     for (unsigned int i = 0; i < m1->getNumAtoms(); i++) {
       const Conformer &conf = m1->getConformer(cid1);
       RDGeom::Point3D loci = conf.getAtomPos(i);
@@ -547,7 +555,8 @@ void testIssue2821647() {
     std::string smi = "[H]n1c2ccccc2c2n([H])c3ccccc3c12";
     RWMol *m1 = SmilesToMol(smi);
     unsigned int cid1 = RDDepict::compute2DCoords(*m1, nullptr, true);
-    double xx = 0, yy = 0;
+    double xx = 0;
+    double yy = 0;
     for (unsigned int i = 0; i < m1->getNumAtoms(); i++) {
       const Conformer &conf = m1->getConformer(cid1);
       RDGeom::Point3D loci = conf.getAtomPos(i);
@@ -691,7 +700,8 @@ void testIssue3487469() {
     RDGeom::Point3D p1 = conf.getAtomPos(1);
     RDGeom::Point3D p2 = conf.getAtomPos(2);
 
-    RDGeom::Point3D v1 = p0 - p1, v2 = p2 - p1;
+    RDGeom::Point3D v1 = p0 - p1;
+    RDGeom::Point3D v2 = p2 - p1;
     v1.normalize();
     v2.normalize();
     TEST_ASSERT(feq(v1.dotProduct(v2), -0.5, .01))
