@@ -31,7 +31,8 @@ StereoGroup *createStereoGroup(StereoGroupType typ, ROMol &mol,
                                python::object atomIds, python::object bondIds, unsigned readId) {
   std::vector<Atom *> cppAtoms;
   std::vector<Bond *> cppBonds;
-  python::stl_input_iterator<unsigned int> beg(atomIds), end;
+  python::stl_input_iterator<unsigned int> beg(atomIds);
+  python::stl_input_iterator<unsigned int> end;
   while (beg != end) {
     unsigned int v = *beg;
     if (v >= mol.getNumAtoms()) {
