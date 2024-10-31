@@ -188,7 +188,8 @@ TEST_CASE("testRDValue") {
   }
   {
     std::clock_t clock1 = std::clock();
-    std::any *v = nullptr, *vv;
+    std::any *v = nullptr;
+    std::any *vv;
     for (int i = 0; i < loops; ++i) {
       vv = new std::any(v ? std::any_cast<int>(*v) + i : i);
       delete v;
@@ -216,7 +217,8 @@ TEST_CASE("testRDValue") {
 
   {
     std::clock_t clock1 = std::clock();
-    RDAny *v = nullptr, *vv;
+    RDAny *v = nullptr;
+    RDAny *vv;
     for (int i = 0; i < loops; ++i) {
       vv = new RDAny(v ? rdany_cast<int>(*v) + i : i);
       delete v;
@@ -473,7 +475,8 @@ TEST_CASE("testConstReturns") {
     RDAny anyv(v);
     d.setVal("foo", v);
 
-    std::clock_t start, end;
+    std::clock_t start;
+    std::clock_t end;
 
     double ls = 0;
     start = std::clock();
