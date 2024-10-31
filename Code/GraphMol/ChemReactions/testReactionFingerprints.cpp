@@ -49,8 +49,10 @@ void testStructuralFingerprintsReaction() {
   BOOST_LOG(rdErrorLog) << "    Test Reaction StructuralFingerprint"
                         << std::endl;
   {
-    std::string reaction, reactionq;
-    ChemicalReaction *rxn, *rxnq;
+    std::string reaction;
+    std::string reactionq;
+    ChemicalReaction *rxn;
+    ChemicalReaction *rxnq;
 
     reaction = "C1CCCCC1>>C1CCNCC1";
     reactionq = "C1CCCCC1>>C1CCNCC1";
@@ -89,8 +91,10 @@ void testStructuralFingerprintsReaction() {
     delete rxnqFP;
   }
   {
-    std::string reaction, reactionq;
-    ChemicalReaction *rxn, *rxnq;
+    std::string reaction;
+    std::string reactionq;
+    ChemicalReaction *rxn;
+    ChemicalReaction *rxnq;
 
     reaction = "C1CCCCC1>>C1CCNCC1";
     reactionq = "C1CCCCC1>>C1CCOCC1";
@@ -131,8 +135,12 @@ void testStructuralFingerprintsReaction() {
     delete rxnqFP;
   }
   {
-    std::string reaction, reactionq, reactionq2;
-    ChemicalReaction *rxn, *rxnq, *rxnq2;
+    std::string reaction;
+    std::string reactionq;
+    std::string reactionq2;
+    ChemicalReaction *rxn;
+    ChemicalReaction *rxnq;
+    ChemicalReaction *rxnq2;
 
     reaction = "C1CCCCC1>>C1CCNCC1";
     reactionq = ">>C1CCNCC1";
@@ -183,8 +191,12 @@ void testStructuralFingerprintsReaction() {
     delete rxnq2FP;
   }
   {
-    std::string reaction, reactionq, reactionq2;
-    ChemicalReaction *rxn, *rxnq, *rxnq2;
+    std::string reaction;
+    std::string reactionq;
+    std::string reactionq2;
+    ChemicalReaction *rxn;
+    ChemicalReaction *rxnq;
+    ChemicalReaction *rxnq2;
 
     reaction = "C1CCCCC1>>C1CCNCC1";
     reactionq = "C1CCCCC1>>";
@@ -233,8 +245,12 @@ void testStructuralFingerprintsReaction() {
     delete rxnq2FP;
   }
   {
-    std::string reaction, reactionq, reactionq2;
-    ChemicalReaction *rxn, *rxnq, *rxnq2;
+    std::string reaction;
+    std::string reactionq;
+    std::string reactionq2;
+    ChemicalReaction *rxn;
+    ChemicalReaction *rxnq;
+    ChemicalReaction *rxnq2;
 
     reaction = "C1CCCCC1>>C1CCNCC1";
     reactionq = "CCC>>CNC";
@@ -292,8 +308,12 @@ void testStructuralFingerprintsReaction() {
     delete rxnq2FP;
   }
   {
-    std::string reaction, reactionq, reactionq2;
-    ChemicalReaction *rxn, *rxnq, *rxnq2;
+    std::string reaction;
+    std::string reactionq;
+    std::string reactionq2;
+    ChemicalReaction *rxn;
+    ChemicalReaction *rxnq;
+    ChemicalReaction *rxnq2;
     reaction = "C1CCCCC1>>C1CCNCC1";
     reactionq = "CCC>>CNC";
     reactionq2 = "CCCCC>>CCCCN";
@@ -328,8 +348,12 @@ void testStructuralFingerprintsReaction() {
     delete rxnq2FP;
   }
   {
-    std::string reaction, reactionq, reactionq2;
-    ChemicalReaction *rxn, *rxnq, *rxnq2;
+    std::string reaction;
+    std::string reactionq;
+    std::string reactionq2;
+    ChemicalReaction *rxn;
+    ChemicalReaction *rxnq;
+    ChemicalReaction *rxnq2;
 
     reaction = "C1CCCCC1>>C1CCNCC1";
     reactionq = "C1CCCCC1>>C1CCNCC1";
@@ -362,8 +386,12 @@ void testStructuralFingerprintsReaction() {
     delete rxnq2FP;
   }
   {
-    std::string reaction, reactionq, reactionq2;
-    ChemicalReaction *rxn, *rxnq, *rxnq2;
+    std::string reaction;
+    std::string reactionq;
+    std::string reactionq2;
+    ChemicalReaction *rxn;
+    ChemicalReaction *rxnq;
+    ChemicalReaction *rxnq2;
 
     reaction = "C1CCCCC1>>C1CCNCC1";
     reactionq = "C1CCCCC1>>C1CCNCC1";
@@ -395,8 +423,12 @@ void testStructuralFingerprintsReaction() {
     delete rxnq2FP;
   }
   {
-    std::string reaction, reactionq, reactionq2;
-    ChemicalReaction *rxn, *rxnq, *rxnq2;
+    std::string reaction;
+    std::string reactionq;
+    std::string reactionq2;
+    ChemicalReaction *rxn;
+    ChemicalReaction *rxnq;
+    ChemicalReaction *rxnq2;
 
     reaction = "C1CCCCC1>>C1CCNCC1";
     reactionq = "C1CCCCC1>>C1CCNCC1";
@@ -429,8 +461,12 @@ void testStructuralFingerprintsReaction() {
     delete rxnq2FP;
   }
   {
-    std::string reaction, reactionq, reactionq2;
-    ChemicalReaction *rxn, *rxnq, *rxnq2;
+    std::string reaction;
+    std::string reactionq;
+    std::string reactionq2;
+    ChemicalReaction *rxn;
+    ChemicalReaction *rxnq;
+    ChemicalReaction *rxnq2;
 
     reaction = "C1CCCCC1>>C1CCNCC1";
     reactionq = "C1CCCCC1>>C1CCNCC1";
@@ -463,8 +499,12 @@ void testStructuralFingerprintsReaction() {
     delete rxnq2FP;
   }
   {
-    std::string reaction, reactionq, reactionq2;
-    ChemicalReaction *rxn, *rxnq, *rxnq2;
+    std::string reaction;
+    std::string reactionq;
+    std::string reactionq2;
+    ChemicalReaction *rxn;
+    ChemicalReaction *rxnq;
+    ChemicalReaction *rxnq2;
 
     reaction = "C1CCCCC1>>C1CCNCC1";
     reactionq = "C1CCCCC1>>C1CCNCC1";
@@ -497,8 +537,12 @@ void testStructuralFingerprintsReaction() {
     delete rxnq2FP;
   }
   {
-    std::string reaction, reactionq, reactionq2;
-    ChemicalReaction *rxn, *rxnq, *rxnq2;
+    std::string reaction;
+    std::string reactionq;
+    std::string reactionq2;
+    ChemicalReaction *rxn;
+    ChemicalReaction *rxnq;
+    ChemicalReaction *rxnq2;
 
     reaction = "C1CCCCC1>C(=O)O.[Na]>C1CCNCC1";
     reactionq = "C1CCCCC1>C(=O)O.[Na]>C1CCNCC1";
@@ -529,8 +573,12 @@ void testStructuralFingerprintsReaction() {
     delete rxnq2FP;
   }
   {
-    std::string reaction, reactionq, reactionq2;
-    ChemicalReaction *rxn, *rxnq, *rxnq2;
+    std::string reaction;
+    std::string reactionq;
+    std::string reactionq2;
+    ChemicalReaction *rxn;
+    ChemicalReaction *rxnq;
+    ChemicalReaction *rxnq2;
 
     reaction = "C1CCCCC1>[Na]>C1CCNCC1";
     reactionq = "C1CCCCC1>C(=O)O.[Na]>C1CCNCC1";
@@ -567,8 +615,10 @@ void testDifferenceFingerprintsReaction() {
   BOOST_LOG(rdErrorLog) << "    Test Reaction DifferenceFingerprint"
                         << std::endl;
   {
-    std::string reaction1, reaction2;
-    ChemicalReaction *rxn1, *rxn2;
+    std::string reaction1;
+    std::string reaction2;
+    ChemicalReaction *rxn1;
+    ChemicalReaction *rxn2;
 
     reaction1 = "C1CCCCC1>>C1CCCCC1";
     reaction2 = "C1CCCCC1>>C1CCNCC1";
@@ -592,8 +642,10 @@ void testDifferenceFingerprintsReaction() {
     delete rxn2FP;
   }
   {
-    std::string reaction1, reaction2;
-    ChemicalReaction *rxn1, *rxn2;
+    std::string reaction1;
+    std::string reaction2;
+    ChemicalReaction *rxn1;
+    ChemicalReaction *rxn2;
 
     reaction1 = "C1CCCCC1>>C1CCOCC1";
     reaction2 = "C1CCCCC1>>C1CCNCC1";
@@ -617,8 +669,10 @@ void testDifferenceFingerprintsReaction() {
     delete rxn2FP;
   }
   {
-    std::string reaction1, reaction2;
-    ChemicalReaction *rxn1, *rxn2;
+    std::string reaction1;
+    std::string reaction2;
+    ChemicalReaction *rxn1;
+    ChemicalReaction *rxn2;
 
     reaction1 = "c1ccccc1>>c1ccncn1";
     reaction2 = "c1ccccc1>>c1ccncc1";
@@ -641,8 +695,10 @@ void testDifferenceFingerprintsReaction() {
     delete rxn2FP;
   }
   {
-    std::string reaction1, reaction2;
-    ChemicalReaction *rxn1, *rxn2;
+    std::string reaction1;
+    std::string reaction2;
+    ChemicalReaction *rxn1;
+    ChemicalReaction *rxn2;
 
     reaction1 = "c1ccccc1>>c1ccncn1";
     reaction2 = "c1ccccc1>>c1ccncc1";
@@ -668,8 +724,10 @@ void testDifferenceFingerprintsReaction() {
     delete rxn2FP;
   }
   {
-    std::string reaction1, reaction2;
-    ChemicalReaction *rxn1, *rxn2;
+    std::string reaction1;
+    std::string reaction2;
+    ChemicalReaction *rxn1;
+    ChemicalReaction *rxn2;
 
     reaction1 = "c1ccccc1>>c1ccncn1";
     reaction2 = "c1ccccc1>>c1ccncc1";
