@@ -36,7 +36,8 @@ void testDetermineFormat() {
   std::string fname6 = "checkCaseSensitiveFormat.sDf.Gz";
   std::string fname7 = "something.sdfgz";
 
-  std::string fileFormat, compressionFormat;
+  std::string fileFormat;
+  std::string compressionFormat;
 
   determineFormat(fname1, fileFormat, compressionFormat);
   TEST_ASSERT(fileFormat == "mae");
@@ -245,7 +246,8 @@ void testTdt() {
   while (!suppl->atEnd()) {
     auto nmol = suppl->next();
     if (nmol) {
-      std::string prop1, prop2;
+      std::string prop1;
+      std::string prop2;
       TEST_ASSERT(nmol->getNumAtoms() > 0);
       TEST_ASSERT(nmol->hasProp("PN"));
       TEST_ASSERT(nmol->hasProp(common_properties::_Name));
