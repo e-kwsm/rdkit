@@ -130,7 +130,8 @@ void check_file_hash(const std::string &filename,
 void drawit(ChemicalReaction *rxn, std::string nameBase,
             bool highlight_map = false,
             const std::vector<DrawColour> *highlight_colors = nullptr) {
-  double panex = 200, paney = 150;
+  double panex = 200;
+  double paney = 150;
   double width = panex * (rxn->getNumReactantTemplates() +
                           rxn->getNumProductTemplates() + 1);
   double height = paney;
