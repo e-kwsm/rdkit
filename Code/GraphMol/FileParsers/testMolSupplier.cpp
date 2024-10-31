@@ -826,7 +826,8 @@ void testSmilesWriter() {
   // BOOST_LOG(rdErrorLog) << "WRITING" << std::endl;
   while (mol) {
     // BOOST_LOG(rdErrorLog) << "MOL: " << MolToSmiles(*mol) << std::endl;
-    std::string mname, pval;
+    std::string mname;
+    std::string pval;
     mol->getProp(common_properties::_Name, mname);
     mol->getProp("Column_2", pval);
     names.push_back(mname);
@@ -847,7 +848,8 @@ void testSmilesWriter() {
   int i = 0;
   mol = nSup->next();
   while (mol) {
-    std::string mname, pval;
+    std::string mname;
+    std::string pval;
     mol->getProp(common_properties::_Name, mname);
     mol->getProp("Column_2", pval);
     CHECK_INVARIANT(mname == names[i], "");
@@ -1156,7 +1158,8 @@ int testTDTSupplier1() {
     while (!suppl.atEnd()) {
       ROMol *nmol = suppl.next();
       if (nmol) {
-        std::string prop1, prop2;
+        std::string prop1;
+        std::string prop2;
         TEST_ASSERT(nmol->getNumAtoms() > 0);
         TEST_ASSERT(nmol->hasProp("PN"));
         TEST_ASSERT(nmol->hasProp(common_properties::_Name));
@@ -1184,7 +1187,8 @@ int testTDTSupplier1() {
     while (!suppl.atEnd()) {
       ROMol *nmol = suppl.next();
       if (nmol) {
-        std::string prop1, prop2;
+        std::string prop1;
+        std::string prop2;
         TEST_ASSERT(nmol->getNumAtoms() > 0);
         TEST_ASSERT(nmol->hasProp("PN"));
         TEST_ASSERT(nmol->hasProp(common_properties::_Name));
@@ -1212,7 +1216,8 @@ int testTDTSupplier2() {
   std::string fname =
       rdbase + "/Code/GraphMol/FileParsers/test_data/acd_few.tdt";
   int i;
-  std::string prop1, prop2;
+  std::string prop1;
+  std::string prop2;
 
   TDTMolSupplier suppl(fname, "PN", 2);
   i = 0;
@@ -1245,7 +1250,8 @@ int testTDTSupplier2() {
 int testTDTSupplier3() {
   std::string data;
   int i;
-  std::string prop1, prop2;
+  std::string prop1;
+  std::string prop2;
 
   TDTMolSupplier suppl;
 
@@ -2017,8 +2023,10 @@ void testGetItemText() {
   std::string rdbase = getenv("RDBASE");
   std::string fname;
 
-  ROMol *mol1, *mol2;
-  std::string molB, smiles;
+  ROMol *mol1;
+  ROMol *mol2;
+  std::string molB;
+  std::string smiles;
   bool ok;
 
   {
