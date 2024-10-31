@@ -34,7 +34,11 @@ static void clusterit(real *dataP, boost::int64_t n, boost::int64_t m,
   real *dists;
   boost::int64_t len;
   boost::int64_t pos = 0;
-  boost::int64_t i, j, k, iTab, jTab;
+  boost::int64_t i;
+  boost::int64_t j;
+  boost::int64_t k;
+  boost::int64_t iTab;
+  boost::int64_t jTab;
   double tmp;
   len = (n * (n - 1)) / 2;
   dists = (real *)calloc(len, sizeof(real));
@@ -62,7 +66,8 @@ static void capsule_cleanup(PyObject *capsule) {
 static PyObject *Clustering_MurtaghCluster(python::object data, int nPts,
                                            int sz, int option) {
   PyArrayObject *dataContig;
-  boost::int64_t *ia, *ib;
+  boost::int64_t *ia;
+  boost::int64_t *ib;
   real *crit;
   PyObject *res;
   PyObject *tmp;
@@ -120,7 +125,8 @@ void distclusterit(real *dists, boost::int64_t n, boost::int64_t iopt,
 static PyObject *Clustering_MurtaghDistCluster(python::object data, int nPts,
                                                int option) {
   PyArrayObject *dataContig;
-  boost::int64_t *ia, *ib;
+  boost::int64_t *ia;
+  boost::int64_t *ib;
   real *crit;
   PyObject *res = PyTuple_New(3);
   PyObject *tmp;
