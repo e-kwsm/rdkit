@@ -43,7 +43,8 @@ class PointVectManager {
 void GetPointsFromPythonSequence(python::object &points,
                                  RDGeom::Point3DConstPtrVect &pts) {
   PyObject *pyObj = points.ptr();
-  unsigned int nrows, ncols;
+  unsigned int nrows;
+  unsigned int ncols;
   double *data;
   if (PyArray_Check(pyObj)) {
     // get the dimensions of the array
@@ -106,7 +107,8 @@ PyObject *AlignPointPairs(python::object refPoints, python::object probePoints,
   // 2. A list of doubles of size N
 
   // first deal with situation where we have Numerics arrays
-  PointVectManager refPts, probePts;
+  PointVectManager refPts;
+  PointVectManager probePts;
 
   GetPointsFromPythonSequence(refPoints, refPts.getVect());
   GetPointsFromPythonSequence(probePoints, probePts.getVect());
