@@ -43,7 +43,8 @@ void testSmilesWriter() {
   STR_VECT props;
   ROMol *mol = nSup->next();
   while (mol) {
-    std::string mname, pval;
+    std::string mname;
+    std::string pval;
     mol->getProp(common_properties::_Name, mname);
     mol->getProp("Column_2", pval);
     names.push_back(mname);
@@ -65,7 +66,8 @@ void testSmilesWriter() {
   int i = 0;
   mol = nSup->next();
   while (mol) {
-    std::string mname, pval;
+    std::string mname;
+    std::string pval;
     mol->getProp(common_properties::_Name, mname);
     mol->getProp("Column_2", pval);
     CHECK_INVARIANT(mname == names[i], "");
@@ -84,7 +86,9 @@ void testSmilesWriter() {
 void testSmilesWriter2() {
   {
     std::stringstream ss;
-    bool takeOwnership = false, includeHeader = false, isomericSmiles = false;
+    bool takeOwnership = false;
+    bool includeHeader = false;
+    bool isomericSmiles = false;
     SmilesWriter *writer = new SmilesWriter(&ss, " ", "Name", takeOwnership,
                                             includeHeader, isomericSmiles);
     RWMol *mol;
@@ -103,7 +107,9 @@ void testSmilesWriter2() {
   }
   {
     std::stringstream ss;
-    bool takeOwnership = false, includeHeader = false, isomericSmiles = true;
+    bool takeOwnership = false;
+    bool includeHeader = false;
+    bool isomericSmiles = true;
     SmilesWriter *writer = new SmilesWriter(&ss, " ", "Name", takeOwnership,
                                             includeHeader, isomericSmiles);
     RWMol *mol;
@@ -138,7 +144,8 @@ void testSmilesWriterNoNames() {
   STR_VECT props;
   ROMol *mol = nSup->next();
   while (mol) {
-    std::string mname, pval;
+    std::string mname;
+    std::string pval;
     mol->getProp("Column_2", pval);
     mol->setProp(common_properties::_Name, "bogus");
     props.push_back(pval);
@@ -158,7 +165,8 @@ void testSmilesWriterNoNames() {
   int i = 0;
   mol = nSup->next();
   while (mol) {
-    std::string mname, pval;
+    std::string mname;
+    std::string pval;
     mol->getProp(common_properties::_Name, mname);
     mol->getProp("Column_2", pval);
     delete mol;
@@ -193,7 +201,8 @@ void testSmilesWriterClose() {
   STR_VECT props;
   ROMol *mol = nSup->next();
   while (mol) {
-    std::string mname, pval;
+    std::string mname;
+    std::string pval;
     mol->getProp("Column_2", pval);
     mol->setProp(common_properties::_Name, "bogus");
     props.push_back(pval);
@@ -213,7 +222,8 @@ void testSmilesWriterClose() {
   int i = 0;
   mol = nSup->next();
   while (mol) {
-    std::string mname, pval;
+    std::string mname;
+    std::string pval;
     mol->getProp(common_properties::_Name, mname);
     mol->getProp("Column_2", pval);
     delete mol;
@@ -348,7 +358,8 @@ void testSmilesWriterStrm() {
   STR_VECT props;
   ROMol *mol = nSup->next();
   while (mol) {
-    std::string mname, pval;
+    std::string mname;
+    std::string pval;
     mol->getProp(common_properties::_Name, mname);
     mol->getProp("Column_2", pval);
     names.push_back(mname);
@@ -371,7 +382,8 @@ void testSmilesWriterStrm() {
   int i = 0;
   mol = nSup->next();
   while (mol) {
-    std::string mname, pval;
+    std::string mname;
+    std::string pval;
     mol->getProp(common_properties::_Name, mname);
     mol->getProp("Column_2", pval);
     CHECK_INVARIANT(mname == names[i], "");
