@@ -50,7 +50,9 @@ void testAtomPairFP() {
 
   ROMol *mol;
   SparseIntVect<std::uint32_t> *fp;
-  std::uint32_t c1, c2, c3;
+  std::uint32_t c1;
+  std::uint32_t c2;
+  std::uint32_t c3;
 
   FingerprintGenerator<std::uint32_t> *atomPairGenerator =
       AtomPair::getAtomPairGenerator<std::uint32_t>();
@@ -94,7 +96,9 @@ void testAtomPairArgs() {
 
   ROMol *mol;
   SparseIntVect<std::uint32_t> *fp;
-  std::uint32_t c1, c2, c3;
+  std::uint32_t c1;
+  std::uint32_t c2;
+  std::uint32_t c3;
 
   FingerprintGenerator<std::uint32_t> *atomPairGenerator =
       AtomPair::getAtomPairGenerator<std::uint32_t>(2);
@@ -168,7 +172,8 @@ void testAtomPairOld() {
                         << std::endl;
   {
     ROMol *mol;
-    SparseIntVect<std::int32_t> *fp1, *fp2;
+    SparseIntVect<std::int32_t> *fp1;
+    SparseIntVect<std::int32_t> *fp2;
     SparseIntVect<std::uint32_t> *fpu;
 
     FingerprintGenerator<std::uint32_t> *atomPairGenerator =
@@ -371,7 +376,8 @@ void testRootedAtomPairs() {
   FingerprintGenerator<std::uint32_t> *generator =
       AtomPair::getAtomPairGenerator<std::uint32_t>();
   ROMol *mol;
-  SparseIntVect<std::uint32_t> *fp1, *fp2;
+  SparseIntVect<std::uint32_t> *fp1;
+  SparseIntVect<std::uint32_t> *fp2;
   std::vector<std::uint32_t> roots;
 
   mol = SmilesToMol("OCCCCC");
@@ -410,7 +416,8 @@ void testIgnoreAtomPairs() {
 
   {
     ROMol *mol;
-    SparseIntVect<std::uint32_t> *fp1, *fp2;
+    SparseIntVect<std::uint32_t> *fp1;
+    SparseIntVect<std::uint32_t> *fp2;
     std::vector<std::uint32_t> roots;
 
     mol = SmilesToMol("OCCCCC");
@@ -450,7 +457,8 @@ void testIgnoreAtomPairs() {
 
   {
     ROMol *mol;
-    SparseIntVect<std::uint32_t> *fp1, *fp2;
+    SparseIntVect<std::uint32_t> *fp1;
+    SparseIntVect<std::uint32_t> *fp2;
     std::vector<std::uint32_t> roots;
 
     mol = SmilesToMol("OCCCCC");
@@ -489,7 +497,9 @@ void testChiralPairs() {
   FingerprintGenerator<std::uint32_t> *generatorChirality =
       AtomPair::getAtomPairGenerator<std::uint32_t>(1, 5, true, true, nullptr,
                                                     true, 4096);
-  ROMol *m1, *m2, *m3;
+  ROMol *m1;
+  ROMol *m2;
+  ROMol *m3;
 
   m1 = SmilesToMol("CC[CH](F)Cl");
   TEST_ASSERT(m1);
@@ -499,7 +509,9 @@ void testChiralPairs() {
   TEST_ASSERT(m1);
 
   {
-    SparseIntVect<std::uint32_t> *fp1, *fp2, *fp3;
+    SparseIntVect<std::uint32_t> *fp1;
+    SparseIntVect<std::uint32_t> *fp2;
+    SparseIntVect<std::uint32_t> *fp3;
     fp1 = generator->getSparseCountFingerprint(*m1);
     TEST_ASSERT(fp1->getTotalVal() == 10);
     TEST_ASSERT(fp1->getNonzeroElements().size() == 10);
@@ -538,7 +550,9 @@ void testChiralPairs() {
   }
 
   {
-    SparseIntVect<std::uint32_t> *fp1, *fp2, *fp3;
+    SparseIntVect<std::uint32_t> *fp1;
+    SparseIntVect<std::uint32_t> *fp2;
+    SparseIntVect<std::uint32_t> *fp3;
     fp1 = generator->getCountFingerprint(*m1);
     TEST_ASSERT(fp1->getTotalVal() == 10);
     TEST_ASSERT(fp1->getNonzeroElements().size() == 10);
@@ -589,7 +603,8 @@ void testMorganFPOld() {
   BOOST_LOG(rdErrorLog) << "Test morgan fp generator" << std::endl;
 
   ROMol *mol;
-  SparseIntVect<std::uint32_t> *fp, *fpOld;
+  SparseIntVect<std::uint32_t> *fp;
+  SparseIntVect<std::uint32_t> *fpOld;
   int radius = 3;
 
   FingerprintGenerator<std::uint32_t> *morganGenerator =
@@ -691,8 +706,10 @@ void testMorganFP() {
   {
     // test that the results aren't order dependent, i.e. that we're
     // "canonicalizing" the fps correctly
-    ROMol *mol, *mol2;
-    SparseIntVect<std::uint32_t> *fp, *fp2;
+    ROMol *mol;
+    ROMol *mol2;
+    SparseIntVect<std::uint32_t> *fp;
+    SparseIntVect<std::uint32_t> *fp2;
     FingerprintGenerator<std::uint32_t> *morganGenerator;
 
     mol = SmilesToMol("O=C(O)CC1CC1");
@@ -1019,8 +1036,10 @@ void testMorganFPOptions() {
                         << std::endl;
 
   {
-    ROMol *m1, *m2;
-    ExplicitBitVect *fp1, *fp2;
+    ROMol *m1;
+    ROMol *m2;
+    ExplicitBitVect *fp1;
+    ExplicitBitVect *fp2;
     FingerprintGenerator<std::uint32_t> *generator =
         MorganFingerprint::getMorganGenerator<std::uint32_t>(2);
     FingerprintGenerator<std::uint32_t> *generatorNoBoundType =
@@ -1068,8 +1087,12 @@ void testMorganFPOptions() {
   }
 
   {
-    ROMol *m1, *m2, *m3;
-    ExplicitBitVect *fp1, *fp2, *fp3;
+    ROMol *m1;
+    ROMol *m2;
+    ROMol *m3;
+    ExplicitBitVect *fp1;
+    ExplicitBitVect *fp2;
+    ExplicitBitVect *fp3;
     FingerprintGenerator<std::uint32_t> *generator =
         MorganFingerprint::getMorganGenerator<std::uint32_t>(2);
     FingerprintGenerator<std::uint32_t> *generatorChirality =
@@ -1389,7 +1412,8 @@ void testCustomInvariants() {
   BOOST_LOG(rdErrorLog) << "Test invariant overriding" << std::endl;
 
   ROMol *mol;
-  SparseIntVect<std::uint32_t> *fp1, *fp2;
+  SparseIntVect<std::uint32_t> *fp1;
+  SparseIntVect<std::uint32_t> *fp2;
   int radius = 3;
 
   AtomInvariantsGenerator *atomInvariantsGenerator =
@@ -1427,7 +1451,9 @@ void testRDKitFP() {
   BOOST_LOG(rdErrorLog) << "Test RDKit fp generator" << std::endl;
 
   ROMol *mol;
-  SparseIntVect<std::uint64_t> *fp, *fpTemp, *fpOld;
+  SparseIntVect<std::uint64_t> *fp;
+  SparseIntVect<std::uint64_t> *fpTemp;
+  SparseIntVect<std::uint64_t> *fpOld;
 
   // I won't lie: having to do this makes my head hurt, but fixing it to create
   // a ctor that takes a Parameters object is more effort than I can devote at
@@ -1577,7 +1603,8 @@ void testTopologicalTorsionFPOld() {
 
   ROMol *mol;
   SparseIntVect<std::int64_t> *fpSigned;
-  SparseIntVect<std::uint64_t> *fp, *fpOld;
+  SparseIntVect<std::uint64_t> *fp;
+  SparseIntVect<std::uint64_t> *fpOld;
 
   FingerprintGenerator<std::uint64_t> *fpGenerator =
       TopologicalTorsion::getTopologicalTorsionGenerator<std::uint64_t>();
@@ -1725,7 +1752,8 @@ void testRootedTorsions() {
   BOOST_LOG(rdErrorLog) << "    Test Rooted Topological Torsions." << std::endl;
 
   ROMol *mol;
-  SparseIntVect<std::uint64_t> *fp1, *fp2;
+  SparseIntVect<std::uint64_t> *fp1;
+  SparseIntVect<std::uint64_t> *fp2;
   std::vector<std::uint32_t> roots;
   FingerprintGenerator<std::uint64_t> *generator =
       TopologicalTorsion::getTopologicalTorsionGenerator<std::uint64_t>();
@@ -1764,7 +1792,8 @@ void testIgnoreTorsions() {
       TopologicalTorsion::getTopologicalTorsionGenerator<std::uint64_t>();
   {
     ROMol *mol;
-    SparseIntVect<std::uint64_t> *fp1, *fp2;
+    SparseIntVect<std::uint64_t> *fp1;
+    SparseIntVect<std::uint64_t> *fp2;
     std::vector<std::uint32_t> roots;
 
     mol = SmilesToMol("OCCCC");
@@ -1867,7 +1896,8 @@ void testPairsAndTorsionsOptions() {
     smi = "C1=CC=CC=N1";
     RWMol *m2 = SmilesToMol(smi);
     TEST_ASSERT(m2);
-    SparseIntVect<std::uint32_t> *fp1, *fp2;
+    SparseIntVect<std::uint32_t> *fp1;
+    SparseIntVect<std::uint32_t> *fp2;
     fp1 = generator->getCountFingerprint(*m1);
     fp2 = generator->getCountFingerprint(*m2);
     TEST_ASSERT(*fp1 != *fp2);
@@ -1897,7 +1927,8 @@ void testPairsAndTorsionsOptions() {
     smi = "C1=CC=CC=N1";
     RWMol *m2 = SmilesToMol(smi);
     TEST_ASSERT(m2);
-    ExplicitBitVect *fp1, *fp2;
+    ExplicitBitVect *fp1;
+    ExplicitBitVect *fp2;
     fp1 = generator->getFingerprint(*m1);
     fp2 = generator->getFingerprint(*m2);
     TEST_ASSERT(*fp1 != *fp2);
@@ -1926,7 +1957,8 @@ void testPairsAndTorsionsOptions() {
     smi = "C1=CC=CC=N1";
     RWMol *m2 = SmilesToMol(smi);
     TEST_ASSERT(m2);
-    SparseIntVect<std::uint64_t> *fp1, *fp2;
+    SparseIntVect<std::uint64_t> *fp1;
+    SparseIntVect<std::uint64_t> *fp2;
     fp1 = generator->getSparseCountFingerprint(*m1);
     fp2 = generator->getSparseCountFingerprint(*m2);
     TEST_ASSERT(*fp1 != *fp2);
@@ -1955,7 +1987,8 @@ void testPairsAndTorsionsOptions() {
     smi = "C1=CC=CC=N1";
     RWMol *m2 = SmilesToMol(smi);
     TEST_ASSERT(m2);
-    SparseIntVect<std::uint32_t> *fp1, *fp2;
+    SparseIntVect<std::uint32_t> *fp1;
+    SparseIntVect<std::uint32_t> *fp2;
     fp1 = generator->getCountFingerprint(*m1);
     fp2 = generator->getCountFingerprint(*m2);
     TEST_ASSERT(*fp1 != *fp2);
@@ -1984,7 +2017,8 @@ void testPairsAndTorsionsOptions() {
     smi = "C1=CC=CC=N1";
     RWMol *m2 = SmilesToMol(smi);
     TEST_ASSERT(m2);
-    ExplicitBitVect *fp1, *fp2;
+    ExplicitBitVect *fp1;
+    ExplicitBitVect *fp2;
     fp1 = generator->getFingerprint(*m1);
     fp2 = generator->getFingerprint(*m2);
     TEST_ASSERT(*fp1 != *fp2);
@@ -2081,7 +2115,9 @@ void testChiralTorsions() {
       TopologicalTorsion::getTopologicalTorsionGenerator<std::uint64_t>(
           true, 4, nullptr, true, 4096, {1, 2, 4, 8});
 
-  ROMol *m1, *m2, *m3;
+  ROMol *m1;
+  ROMol *m2;
+  ROMol *m3;
 
   m1 = SmilesToMol("CC[CH](F)Cl");
   TEST_ASSERT(m1);
@@ -2091,7 +2127,9 @@ void testChiralTorsions() {
   TEST_ASSERT(m1);
 
   {
-    SparseIntVect<std::uint64_t> *fp1, *fp2, *fp3;
+    SparseIntVect<std::uint64_t> *fp1;
+    SparseIntVect<std::uint64_t> *fp2;
+    SparseIntVect<std::uint64_t> *fp3;
     fp1 = generator->getSparseCountFingerprint(*m1);
     TEST_ASSERT(fp1->getTotalVal() == 2);
     TEST_ASSERT(fp1->getNonzeroElements().size() == 2);
@@ -2130,7 +2168,9 @@ void testChiralTorsions() {
   }
 
   {
-    SparseIntVect<std::uint32_t> *fp1, *fp2, *fp3;
+    SparseIntVect<std::uint32_t> *fp1;
+    SparseIntVect<std::uint32_t> *fp2;
+    SparseIntVect<std::uint32_t> *fp3;
     fp1 = generator->getCountFingerprint(*m1);
     TEST_ASSERT(fp1->getTotalVal() == 2);
     TEST_ASSERT(fp1->getNonzeroElements().size() == 2);
@@ -2328,7 +2368,8 @@ void testGitHubIssue811() {
     ROMol *m2 = MolFileToMol(dirName + "github811b.mol");
     TEST_ASSERT(m2);
 
-    SparseIntVect<std::uint64_t> *fp1, *fp2;
+    SparseIntVect<std::uint64_t> *fp1;
+    SparseIntVect<std::uint64_t> *fp2;
 
     std::vector<std::uint32_t> roots;
     roots.push_back(1);
