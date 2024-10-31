@@ -805,7 +805,7 @@ namespace {
 template <class Char>
 class MyFacet : public std::numpunct<Char> {
  public:
-  std::string do_grouping() const override { return "\3"; }
+  [[nodiscard]] std::string do_grouping() const override { return "\3"; }
   Char do_thousands_sep() const override { return ' '; }
 };
 }  // namespace
