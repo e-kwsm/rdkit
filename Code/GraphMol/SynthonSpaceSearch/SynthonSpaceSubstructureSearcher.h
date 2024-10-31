@@ -31,7 +31,7 @@ class SynthonSpaceSubstructureSearcher : public SynthonSpaceSearcher {
       : SynthonSpaceSearcher(query, params, space),
         d_matchParams(matchParams) {}
 
-  std::vector<std::unique_ptr<SynthonSpaceHitSet>> searchFragSet(
+  [[nodiscard]] std::vector<std::unique_ptr<SynthonSpaceHitSet>> searchFragSet(
       const std::vector<std::unique_ptr<ROMol>> &fragSet,
       const SynthonSet &reaction) const override;
 

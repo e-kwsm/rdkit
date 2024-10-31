@@ -29,7 +29,7 @@ class RDKIT_FORCEFIELD_EXPORT NonbondedContrib : public ForceFieldContrib {
                double chargeTerm, std::uint8_t dielModel, bool is1_4);
   double getEnergy(double *pos) const override;
   void getGrad(double *pos, double *grad) const override;
-  NonbondedContrib *copy() const override {
+  [[nodiscard]] NonbondedContrib *copy() const override {
     return new NonbondedContrib(*this);
   }
 

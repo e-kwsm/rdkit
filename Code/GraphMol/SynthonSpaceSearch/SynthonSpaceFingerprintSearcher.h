@@ -27,7 +27,7 @@ class SynthonSpaceFingerprintSearcher : public SynthonSpaceSearcher {
       const ROMol &query, const FingerprintGenerator<std::uint64_t> &fpGen,
       const SynthonSpaceSearchParams &params, SynthonSpace &space);
 
-  std::vector<std::unique_ptr<SynthonSpaceHitSet>> searchFragSet(
+  [[nodiscard]] std::vector<std::unique_ptr<SynthonSpaceHitSet>> searchFragSet(
       const std::vector<std::unique_ptr<ROMol>> &fragSet,
       const SynthonSet &reaction) const override;
 

@@ -866,8 +866,8 @@ class HasPropWithValueQueryBase {
  public:
   HasPropWithValueQueryBase() = default;
   virtual ~HasPropWithValueQueryBase() = default;
-  virtual PairHolder getPair() const = 0;
-  virtual double getTolerance() const = 0;
+  [[nodiscard]] virtual PairHolder getPair() const = 0;
+  [[nodiscard]] virtual double getTolerance() const = 0;
 };
 
 template <class TargetPtr, class T>
@@ -886,7 +886,7 @@ class HasPropWithValueQuery
     this->setDataFunc(0);
   }
 
-  PairHolder getPair() const override {
+  [[nodiscard]] PairHolder getPair() const override {
     return PairHolder(Dict::Pair(propname, val));
   }
 
@@ -970,7 +970,7 @@ class HasPropWithValueQuery<TargetPtr, std::string>
     this->setDataFunc(nullptr);
   }
 
-  PairHolder getPair() const override {
+  [[nodiscard]] PairHolder getPair() const override {
     return PairHolder(Dict::Pair(propname, val));
   }
 
@@ -1044,7 +1044,7 @@ class HasPropWithValueQuery<TargetPtr, ExplicitBitVect>
     this->setDataFunc(nullptr);
   }
 
-  PairHolder getPair() const override {
+  [[nodiscard]] PairHolder getPair() const override {
     return PairHolder(Dict::Pair(propname, val));
   }
 
