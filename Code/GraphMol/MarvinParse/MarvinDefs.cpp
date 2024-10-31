@@ -4074,7 +4074,10 @@ MarvinReaction::~MarvinReaction() {}
 void MarvinReaction::prepSgroupsForRDKit() {
   // This routine converts all the mols in the rxn to be ready for
   // conversion to RDKIT mols
-  int molCount = 0, atomCount = 0, bondCount = 0, sgCount = 0;
+  int molCount = 0;
+  int atomCount = 0;
+  int bondCount = 0;
+  int sgCount = 0;
 
   std::map<std::string, std::string> sgMap;
   std::map<std::string, std::string> atomMap;
