@@ -151,7 +151,10 @@ std::vector<MatchVectType> _checkMatches(std::string smarts, std::string smiles,
   //  lenFirst : length of the first match
   //
   // Return the list of all matches just in case want to do additional testing
-  ROMol *mol, *mol2, *matcher, *matcher2;
+  ROMol *mol;
+  ROMol *mol2;
+  ROMol *matcher;
+  ROMol *matcher2;
   bool matches;
   unsigned int matchCount;
   std::string pickle;
@@ -203,7 +206,9 @@ std::vector<MatchVectType> _checkMatches(std::string smarts, std::string smiles,
 
 void _checkNoMatches(std::string smarts, std::string smiles,
                      bool addHs = false) {
-  ROMol *mol, *matcher, *matcher2;
+  ROMol *mol;
+  ROMol *matcher;
+  ROMol *matcher2;
   std::string pickle;
   bool matches;
   MatchVectType mV;
@@ -718,8 +723,10 @@ void testSmartsWrite() {
 
   std::vector<std::string>::const_iterator dsmi;
   i = 0;
-  MatchVectType mV1, mV2;
-  bool mts1, mts2;
+  MatchVectType mV1;
+  MatchVectType mV2;
+  bool mts1;
+  bool mts2;
   while (smiles[i] != "EOS") {
     ROMol *nmol = SmilesToMol(smiles[i]);
     TEST_ASSERT(nmol);
@@ -746,8 +753,10 @@ void testSmartsWrite() {
 }
 
 void testIssue196() {
-  ROMol *mol1 = nullptr, *matcher1 = nullptr;
-  std::string smi, sma;
+  ROMol *mol1 = nullptr;
+  ROMol *matcher1 = nullptr;
+  std::string smi;
+  std::string sma;
 
   BOOST_LOG(rdInfoLog) << "-------------------------------------" << std::endl;
   BOOST_LOG(rdInfoLog) << "Testing Issue 196: Smarts handling of 'aa' incorrect"
@@ -772,9 +781,12 @@ void testIssue196() {
 }
 
 void testIssue254() {
-  ROMol *mol1, *mol2;
-  ROMol *matcher1, *matcher2;
-  std::string smi, sma;
+  ROMol *mol1;
+  ROMol *mol2;
+  ROMol *matcher1;
+  ROMol *matcher2;
+  std::string smi;
+  std::string sma;
   MatchVectType mV;
   bool mts;
 
@@ -836,7 +848,8 @@ void testIssue254() {
 
 void testIssue330() {
   ROMol *matcher1;
-  std::string sma, wsma;
+  std::string sma;
+  std::string wsma;
   BOOST_LOG(rdInfoLog) << "-------------------------------------" << std::endl;
   BOOST_LOG(rdInfoLog)
       << "Testing Issue 330: problems writing some recursive smarts."
@@ -976,7 +989,8 @@ void testIssue1804420() {
 
 void testSmartsSmiles() {
   RWMol *mol;
-  std::string sma, smi;
+  std::string sma;
+  std::string smi;
 
   BOOST_LOG(rdInfoLog) << "-------------------------------------" << std::endl;
   BOOST_LOG(rdInfoLog) << "Testing cleaner SMARTS -> SMILES " << std::endl;
@@ -1000,7 +1014,8 @@ void testSmartsSmiles() {
 
 void testSmilesSmarts() {
   RWMol *mol;
-  std::string sma, smi;
+  std::string sma;
+  std::string smi;
 
   BOOST_LOG(rdInfoLog) << "-------------------------------------" << std::endl;
   BOOST_LOG(rdInfoLog) << "Testing SMILES -> SMARTS" << std::endl;
@@ -1190,7 +1205,8 @@ void testIssue2884178_part1() {
 
   {
     // part one of the problem: number of unique matches incorrect
-    RWMol *patt, *mol;
+    RWMol *patt;
+    RWMol *mol;
     std::string sma;
     sma = "*~1~*~*~*~*~*~*~*~*~*~*~*~*~*1";
     patt = SmartsToMol(sma);
@@ -1215,7 +1231,8 @@ void testIssue2884178_part2() {
                        << std::endl;
 
   {
-    RWMol *patt, *mol;
+    RWMol *patt;
+    RWMol *mol;
     std::string sma;
     sma = "C~1~C~C~1";
     patt = SmartsToMol(sma);
@@ -1251,7 +1268,8 @@ void testIssue2884178_part2() {
     delete mol;
   }
   {
-    RWMol *patt, *mol;
+    RWMol *patt;
+    RWMol *mol;
     std::string sma;
     sma = "C~1~C~C1";
     unsigned int count;
@@ -1287,7 +1305,8 @@ void testIssue2884178_part2() {
     delete mol;
   }
   {
-    RWMol *patt, *mol;
+    RWMol *patt;
+    RWMol *mol;
     std::string sma;
     unsigned int count;
 
