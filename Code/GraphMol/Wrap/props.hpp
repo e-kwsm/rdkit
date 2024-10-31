@@ -322,7 +322,7 @@ struct return_pyobject_passthrough {
 
       PyObject *operator()(PyObject *inner) const { return inner; }
 #ifndef BOOST_PYTHON_NO_PY_SIGNATURES
-      PyTypeObject const *get_pytype() const {
+      [[nodiscard]] PyTypeObject const *get_pytype() const {
         return boost::python::converter::expected_pytype_for_arg<
             T>::get_pytype();
       }
