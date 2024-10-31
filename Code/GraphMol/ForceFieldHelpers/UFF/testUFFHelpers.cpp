@@ -140,7 +140,8 @@ void testUFFTyper2() {
   BOOST_LOG(rdErrorLog) << "-------------------------------------" << std::endl;
   BOOST_LOG(rdErrorLog) << "    Test UFF atom typer." << std::endl;
 
-  ROMol *mol, *mol2;
+  ROMol *mol;
+  ROMol *mol2;
   std::string key;
 
   mol = SmilesToMol("[SiH3]CC(=O)NC");
@@ -210,7 +211,8 @@ void testUFFBuilder1() {
   BOOST_LOG(rdErrorLog) << "-------------------------------------" << std::endl;
   BOOST_LOG(rdErrorLog) << "    Testing UFF builder tools." << std::endl;
 
-  ROMol *mol, *mol2;
+  ROMol *mol;
+  ROMol *mol2;
   std::string key;
 
   UFF::AtomicParamVect types;
@@ -630,7 +632,8 @@ void testUFFBuilderSpecialCases() {
   RWMol *mol;
   std::string key;
   int needMore;
-  RDGeom::Point3D v1, v2;
+  RDGeom::Point3D v1;
+  RDGeom::Point3D v2;
   ForceFields::ForceField *field;
 
   std::string pathName = getenv("RDBASE");
@@ -690,7 +693,8 @@ void testIssue239() {
   int needMore;
   (void)needMore;  // add test later
   ForceFields::ForceField *field;
-  double e1, e2;
+  double e1;
+  double e2;
 
   std::string pathName = getenv("RDBASE");
   pathName += "/Code/GraphMol/ForceFieldHelpers/UFF/test_data";
@@ -721,7 +725,9 @@ void testCalcEnergyPassedCoords() {
 
   RWMol *mol;
   ForceFields::ForceField *field;
-  double e1, e2, e3;
+  double e1;
+  double e2;
+  double e3;
 
   std::string pathName = getenv("RDBASE");
   pathName += "/Code/GraphMol/ForceFieldHelpers/MMFF/test_data";
