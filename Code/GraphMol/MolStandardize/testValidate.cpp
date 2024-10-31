@@ -24,7 +24,10 @@ void testRDKitValidation() {
   BOOST_LOG(rdInfoLog) << "-----------------------\n Testing RDKit validation"
                        << std::endl;
 
-  string smi1, smi2, smi3, smi4;
+  string smi1;
+  string smi2;
+  string smi3;
+  string smi4;
   RDKitValidation vm;
 
   // testing RDKitDefault
@@ -86,7 +89,12 @@ void testRDKitValidation() {
 void testMolVSValidation() {
   BOOST_LOG(rdInfoLog) << "-----------------------\n Testing MolVS validation"
                        << std::endl;
-  string smi1, smi2, smi3, smi4, smi5, smi6;
+  string smi1;
+  string smi2;
+  string smi3;
+  string smi4;
+  string smi5;
+  string smi6;
   MolVSValidation vm;
 
   // testing MolVSDefault
@@ -289,7 +297,12 @@ void testFragment() {
   BOOST_LOG(rdInfoLog)
       << "-----------------------\n Testing fragment validation" << std::endl;
 
-  string smi1, smi2, smi3, smi4, smi5, smi6;
+  string smi1;
+  string smi2;
+  string smi3;
+  string smi4;
+  string smi5;
+  string smi6;
   MolVSValidation vm;
 
   // testing MolVSValidation fragmentValidation
@@ -318,7 +331,8 @@ void testFeaturesValidation() {
 
   unique_ptr<ROMol> mol;
   FeaturesValidation features;
-  string mblock, errmsg;
+  string mblock;
+  string errmsg;
   vector<ValidationErrorInfo> errout;
 
   mblock = R"(
@@ -609,7 +623,8 @@ void testDisallowedRadicalValidation() {
 
   unique_ptr<ROMol> mol;
   DisallowedRadicalValidation radicalValidation;
-  string mblock, errmsg;
+  string mblock;
+  string errmsg;
   vector<ValidationErrorInfo> errout;
 
   mblock = R"(
@@ -667,7 +682,8 @@ void testIs2DValidation() {
 
   unique_ptr<ROMol> mol;
   Is2DValidation is2D;
-  string mblock, errmsg;
+  string mblock;
+  string errmsg;
   vector<ValidationErrorInfo> errout;
 
   mblock = R"(
@@ -750,7 +766,8 @@ void testLayout2DValidation() {
 
   unique_ptr<ROMol> mol;
   Layout2DValidation layout2D;
-  string mblock, errmsg;
+  string mblock;
+  string errmsg;
   vector<ValidationErrorInfo> errout;
 
   mblock = R"(
@@ -960,7 +977,8 @@ void testValidateStereo() {
 
   unique_ptr<ROMol> mol;
   StereoValidation stereo;
-  string mblock, errmsg;
+  string mblock;
+  string errmsg;
   vector<ValidationErrorInfo> errout;
 
   // 4 ligands - no issues
