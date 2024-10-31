@@ -67,7 +67,9 @@ void testTraingle() {
   RDGeom::Transform3D trans;
   double ssr = AlignPoints(rpts, qpts, trans);
   CHECK_INVARIANT(RDKit::feq(ssr, 3.0), "");
-  RDGeom::Point3D nqpt1, nqpt2, nqpt3;
+  RDGeom::Point3D nqpt1;
+  RDGeom::Point3D nqpt2;
+  RDGeom::Point3D nqpt3;
   nqpt1 = qpt1;
   nqpt2 = qpt2;
   nqpt3 = qpt3;
