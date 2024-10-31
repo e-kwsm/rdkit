@@ -175,7 +175,8 @@ bool RunReactantInPlace(ChemicalReaction *self, ROMol *reactant,
 
 python::tuple ValidateReaction(const ChemicalReaction *self,
                                bool silent = false) {
-  unsigned int numWarn, numError;
+  unsigned int numWarn;
+  unsigned int numError;
   self->validate(numWarn, numError, silent);
   return python::make_tuple(numWarn, numError);
 }
@@ -447,7 +448,8 @@ python::object PreprocessReaction(ChemicalReaction &reaction,
 
   unsigned int nReactants = reaction.getNumReactantTemplates();
   unsigned int nProducts = reaction.getNumProductTemplates();
-  unsigned int nWarn, nError;
+  unsigned int nWarn;
+  unsigned int nError;
   reaction.validate(nWarn, nError);
   std::vector<std::vector<std::pair<unsigned int, std::string>>> labels;
 
