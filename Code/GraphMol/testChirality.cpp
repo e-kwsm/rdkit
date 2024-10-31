@@ -33,7 +33,8 @@ void testMol1() {
   BOOST_LOG(rdInfoLog) << "CIP codes from a mol file (1)" << std::endl;
   std::string rdbase = getenv("RDBASE");
   RWMol *m;
-  std::string fName, smi;
+  std::string fName;
+  std::string smi;
   std::string cip;
 
   // start with SMILES:
@@ -122,7 +123,9 @@ void testRoundTrip() {
                        << std::endl;
   std::string rdbase = getenv("RDBASE");
   RWMol *m;
-  std::string fName, smi, smi2;
+  std::string fName;
+  std::string smi;
+  std::string smi2;
   std::string cip;
 
   // start with SMILES:
@@ -268,7 +271,8 @@ void testMol2() {
   BOOST_LOG(rdInfoLog) << "CIP codes from a mol file (2)" << std::endl;
   std::string rdbase = getenv("RDBASE");
   RWMol *m;
-  std::string fName, smi;
+  std::string fName;
+  std::string smi;
   std::string cip;
 
   // start with SMILES:
@@ -333,7 +337,8 @@ void testMol2() {
 
 void testSmiles1() {
   ROMol *mol;
-  std::string smi, cip;
+  std::string smi;
+  std::string cip;
 
   BOOST_LOG(rdInfoLog) << "-------------------------------------" << std::endl;
   BOOST_LOG(rdInfoLog) << "CIP codes from SMILES" << std::endl;
@@ -594,7 +599,8 @@ void testSmiles1() {
 }
 
 void testChiralityCleanup() {
-  std::string smi, cip;
+  std::string smi;
+  std::string cip;
 
   BOOST_LOG(rdInfoLog) << "-------------------------------------" << std::endl;
   BOOST_LOG(rdInfoLog) << "chirality cleanup" << std::endl;
@@ -973,7 +979,8 @@ void testChiralityFrom3D() {
 
   std::string rdbase = getenv("RDBASE");
   RWMol *m;
-  std::string fName, smi;
+  std::string fName;
+  std::string smi;
   std::string cip;
 
   fName = rdbase + "/Code/GraphMol/test_data/chi3d_r1.mol";
