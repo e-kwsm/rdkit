@@ -371,9 +371,11 @@ void test4() {
 
 void test5() {
   std::string pval;
-  RDKit::RWMol *patt, *mol;
+  RDKit::RWMol *patt;
+  RDKit::RWMol *mol;
   std::vector<RDKit::MatchVectType> mV;
-  std::string sln, smi;
+  std::string sln;
+  std::string smi;
 
   BOOST_LOG(rdInfoLog) << "-------------------------------------" << std::endl;
   BOOST_LOG(rdInfoLog) << "Test5: basic queries " << std::endl;
@@ -593,9 +595,11 @@ void test5() {
 
 void test6() {
   std::string pval;
-  RDKit::RWMol *patt, *mol;
+  RDKit::RWMol *patt;
+  RDKit::RWMol *mol;
   std::vector<RDKit::MatchVectType> mV;
-  std::string sln, smi;
+  std::string sln;
+  std::string smi;
 
   BOOST_LOG(rdInfoLog) << "-------------------------------------" << std::endl;
   BOOST_LOG(rdInfoLog) << "Test6: ring queries " << std::endl;
@@ -746,9 +750,11 @@ void test6() {
 
 void test7() {
   std::string pval;
-  RDKit::RWMol *patt, *mol;
+  RDKit::RWMol *patt;
+  RDKit::RWMol *mol;
   std::vector<RDKit::MatchVectType> mV;
-  std::string sln, smi;
+  std::string sln;
+  std::string smi;
 
   BOOST_LOG(rdInfoLog) << "-------------------------------------" << std::endl;
   BOOST_LOG(rdInfoLog) << "Test7: qualified queries " << std::endl;
@@ -911,9 +917,11 @@ void test7() {
 
 void test8() {
   std::string pval;
-  RDKit::RWMol *patt, *mol;
+  RDKit::RWMol *patt;
+  RDKit::RWMol *mol;
   std::vector<RDKit::MatchVectType> mV;
-  std::string sln, smi;
+  std::string sln;
+  std::string smi;
 
   BOOST_LOG(rdInfoLog) << "-------------------------------------" << std::endl;
   BOOST_LOG(rdInfoLog) << "Test8: more complex atom properties " << std::endl;
@@ -1074,9 +1082,11 @@ void test8() {
 
 void test9() {
   std::string pval;
-  RDKit::RWMol *patt, *mol;
+  RDKit::RWMol *patt;
+  RDKit::RWMol *mol;
   std::vector<RDKit::MatchVectType> mV;
-  std::string sln, smi;
+  std::string sln;
+  std::string smi;
 
   BOOST_LOG(rdInfoLog) << "-------------------------------------" << std::endl;
   BOOST_LOG(rdInfoLog) << "Test9: recursive SLNs " << std::endl;
@@ -1191,9 +1201,11 @@ void test9() {
 
 void test10() {
   std::string pval;
-  RDKit::RWMol *patt, *mol;
+  RDKit::RWMol *patt;
+  RDKit::RWMol *mol;
   std::vector<RDKit::MatchVectType> mV;
-  std::string sln, smi;
+  std::string sln;
+  std::string smi;
 
   BOOST_LOG(rdInfoLog) << "-------------------------------------" << std::endl;
   BOOST_LOG(rdInfoLog) << "Test10: nested recursive SLNs " << std::endl;
@@ -1269,10 +1281,12 @@ void test10() {
 }
 
 void test11() {
-  std::string pval, cip;
+  std::string pval;
+  std::string cip;
   RDKit::RWMol *mol;
   std::vector<RDKit::MatchVectType> mV;
-  std::string sln, smi;
+  std::string sln;
+  std::string smi;
 
   BOOST_LOG(rdInfoLog) << "-------------------------------------" << std::endl;
   BOOST_LOG(rdInfoLog) << "Test11: chiral SLNs " << std::endl;
@@ -1355,9 +1369,11 @@ void test11() {
 }
 
 void test12() {
-  RDKit::RWMol *patt, *mol;
+  RDKit::RWMol *patt;
+  RDKit::RWMol *mol;
   std::vector<RDKit::MatchVectType> mV;
-  std::string sln, smi;
+  std::string sln;
+  std::string smi;
 
   BOOST_LOG(rdInfoLog) << "-------------------------------------" << std::endl;
   BOOST_LOG(rdInfoLog) << "Test12: bond queries and properties " << std::endl;
