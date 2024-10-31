@@ -488,7 +488,9 @@ struct State {
   }
 
   void determineCentreOfGravity(std::vector<AtomRecord> &memberAtoms) {
-    double cx, cy, cz;
+    double cx;
+    double cy;
+    double cz;
 
     cx = cy = cz = 0.0;
     for (const AtomRecord &atom : memberAtoms) {
@@ -561,8 +563,12 @@ struct State {
   }
 
   void createVoxelGrid(int mask, std::vector<AtomRecord> &memberAtoms) {
-    double minx, miny, minz;
-    double maxx, maxy, maxz;
+    double minx;
+    double miny;
+    double minz;
+    double maxx;
+    double maxy;
+    double maxz;
 
     minx = miny = minz = std::numeric_limits<double>::infinity();
     maxx = maxy = maxz = -std::numeric_limits<double>::infinity();
