@@ -104,8 +104,10 @@ void computeDistMat(const RDGeom::PointPtrVect &origCoords,
                     RDNumeric::DoubleSymmMatrix &distMat) {
   unsigned int N = origCoords.size();
   CHECK_INVARIANT(N == distMat.numRows(), "");
-  unsigned int i, j;
-  RDGeom::Point3D pti, ptj;
+  unsigned int i;
+  unsigned int j;
+  RDGeom::Point3D pti;
+  RDGeom::Point3D ptj;
   double d;
   for (i = 1; i < N; i++) {
     pti = *(RDGeom::Point3D *)origCoords[i];
@@ -120,7 +122,8 @@ void computeDistMat(const RDGeom::PointPtrVect &origCoords,
 
 void computeMolDmat(ROMol &mol, RDNumeric::DoubleSymmMatrix &distMat) {
   RDGeom::PointPtrVect origCoords;
-  unsigned int i, nat = mol.getNumAtoms();
+  unsigned int i;
+  unsigned int nat = mol.getNumAtoms();
   Conformer &conf = mol.getConformer(0);
   for (i = 0; i < nat; i++) {
     origCoords.push_back(&conf.getAtomPos(i));
@@ -298,13 +301,16 @@ void test3() {
       rdbase + "/Code/GraphMol/DistGeomHelpers/test_data/combi_coords.sdf";
   SDMolSupplier sdsup(fname);
 
-  unsigned int i, j, nat;
+  unsigned int i;
+  unsigned int j;
+  unsigned int nat;
   bool gotCoords;
   while (!sdsup.atEnd()) {
     ROMol *mol = sdsup.next();
     std::string mname;
     mol->getProp(common_properties::_Name, mname);
-    RDGeom::PointPtrVect origCoords, newCoords;
+    RDGeom::PointPtrVect origCoords;
+    RDGeom::PointPtrVect newCoords;
     nat = mol->getNumAtoms();
     Conformer &conf = mol->getConformer(0);
     for (i = 0; i < nat; i++) {
@@ -454,7 +460,8 @@ void testTemp() {
         delete ff;
       }
     }
-    double mean, stdDev;
+    double mean;
+    double stdDev;
     _computeStats(energies, mean, stdDev);
     std::string mname;
     cnt++;
