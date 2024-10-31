@@ -13,7 +13,9 @@ using namespace RDKit;
 //! method for testing basic ConcurrentQueue operations
 void testPushAndPop() {
   ConcurrentQueue<int> *q = new ConcurrentQueue<int>(4);
-  int e1, e2, e3;
+  int e1;
+  int e2;
+  int e3;
   TEST_ASSERT(q->isEmpty());
 
   q->push(1);
