@@ -36,7 +36,8 @@ void test1() {
   std::vector<MatchVectType> matches;
   unsigned int n;
 
-  RWMol *m, *q1;
+  RWMol *m;
+  RWMol *q1;
   bool updateLabel = true;
   bool takeOwnership = true;
   m = new RWMol();
@@ -106,7 +107,8 @@ void test2() {
   std::vector<MatchVectType> matches;
   unsigned int n;
 
-  RWMol *m, *q1;
+  RWMol *m;
+  RWMol *q1;
   m = new RWMol();
   bool updateLabel = true;
   bool takeOwnership = true;
@@ -169,7 +171,8 @@ void test3() {
   std::vector<MatchVectType> matches;
   unsigned int n;
 
-  RWMol *m, *q1;
+  RWMol *m;
+  RWMol *q1;
   m = new RWMol();
   bool updateLabel = true;
   bool takeOwnership = true;
@@ -245,7 +248,9 @@ void test4() {
   bool updateLabel = true;
   bool takeOwnership = true;
 
-  RWMol *m, *q1, *q2;
+  RWMol *m;
+  RWMol *q1;
+  RWMol *q2;
   auto *a6 = new Atom(6);
   auto *a8 = new Atom(8);
   m = new RWMol();
@@ -306,7 +311,9 @@ void test5() {
   bool updateLabel = true;
   bool takeOwnership = true;
 
-  RWMol *m, *q1, *q2;
+  RWMol *m;
+  RWMol *q1;
+  RWMol *q2;
   auto *a6 = new Atom(6);
   auto *a8 = new Atom(8);
   // CC(OC)C
@@ -357,7 +364,9 @@ void test5QueryRoot() {
   bool updateLabel = true;
   bool takeOwnership = true;
 
-  RWMol *m, *q1, *q2;
+  RWMol *m;
+  RWMol *q1;
+  RWMol *q2;
   auto *a6 = new Atom(6);
   auto *a8 = new Atom(8);
   // CC(OC)C
@@ -410,7 +419,8 @@ void test6() {
   bool updateLabel = true;
   bool takeOwnership = true;
 
-  RWMol *m, *q1;
+  RWMol *m;
+  RWMol *q1;
   auto *a6 = new Atom(6);
 
   m = new RWMol();
@@ -455,7 +465,8 @@ void test7() {
   MatchVectType matchV;
   int n;
 
-  RWMol *m, *q1;
+  RWMol *m;
+  RWMol *q1;
   auto *a6 = new Atom(6);
   bool updateLabel = true;
   bool takeOwnership = true;
@@ -542,7 +553,8 @@ void test9() {
   std::vector<MatchVectType> matches;
   int n;
 
-  RWMol *m, *q1;
+  RWMol *m;
+  RWMol *q1;
   auto *a6 = new Atom(6);
 
   m = new RWMol();
@@ -614,7 +626,9 @@ void testRecursiveSerialNumbers() {
   bool updateLabel = true;
   bool takeOwnership = true;
 
-  RWMol *m, *q1, *q2;
+  RWMol *m;
+  RWMol *q1;
+  RWMol *q2;
   auto *a6 = new Atom(6);
   auto *a8 = new Atom(8);
   m = new RWMol();
