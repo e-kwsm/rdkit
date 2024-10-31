@@ -1374,8 +1374,10 @@ void testGithub2034() {
   }
   {
     // set it:
-    bool maximizeBonds = true, verbose = false, matchValences = false,
-         ringMatchesRingOnly = true;
+    bool maximizeBonds = true;
+    bool verbose = false;
+    bool matchValences = false;
+    bool ringMatchesRingOnly = true;
     double threshold = 1.0;
     unsigned int timeout = 3000;
     MCSResult res = findMCS(mols, maximizeBonds, threshold, timeout, verbose,
