@@ -57,7 +57,8 @@ class BitCorrMatGenerator {
    */
   void setBitIdList(const RDKit::INT_VECT &bitIdList) {
     d_descs = bitIdList;
-    int i, nd = d_descs.size();
+    int i;
+    int nd = d_descs.size();
     int nelem = nd * (nd - 1) / 2;
     delete[] dp_corrMat;
 
