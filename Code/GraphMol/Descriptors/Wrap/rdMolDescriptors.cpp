@@ -901,7 +901,7 @@ struct PythonPropertyFunctor : public RDKit::Descriptors::PropertyFunctor {
   }
 };
 
-int registerPropertyHelper(python::object o) {
+int registerPropertyHelper(const python::object &o) {
   // We increase the refcount to make sure the original Python object
   // does not get cleaned up (we don't want that to happen once it's
   // registered, we may need to use its __call__() method; note there's
