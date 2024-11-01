@@ -12,6 +12,8 @@
 #include <GraphMol/Fingerprints/FingerprintUtil.h>
 #include <GraphMol/Fingerprints/AtomPairGenerator.h>
 
+#include <utility>
+
 namespace RDKit {
 namespace TopologicalTorsion {
 
@@ -19,7 +21,7 @@ using namespace AtomPairs;
 
 TopologicalTorsionArguments::TopologicalTorsionArguments(
     const bool includeChirality, const uint32_t torsionAtomCount,
-    const bool countSimulation, const std::vector<std::uint32_t> countBounds,
+    const bool countSimulation, const std::vector<std::uint32_t> &countBounds,
     const std::uint32_t fpSize)
     : FingerprintArguments(countSimulation, countBounds, fpSize, 1,
                            includeChirality),
@@ -204,7 +206,8 @@ FingerprintGenerator<OutputType> *getTopologicalTorsionGenerator(
     std::uint32_t fpSize, std::vector<std::uint32_t> countBounds,
     bool ownsAtomInvGen) {
   TopologicalTorsionArguments arguments(includeChirality, torsionAtomCount,
-                                        countSimulation, countBounds, fpSize);
+                                        countSimulation, std::move(countBounds),
+                                        fpSize);
   return getTopologicalTorsionGenerator<OutputType>(
       arguments, atomInvariantsGenerator, ownsAtomInvGen);
 };
