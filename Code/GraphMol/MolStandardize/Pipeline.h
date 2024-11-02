@@ -173,7 +173,7 @@ RDKIT_MOLSTANDARDIZE_EXPORT RWMOL_SPTR_PAIR makeParent(
 RDKIT_MOLSTANDARDIZE_EXPORT RWMOL_SPTR parse(const std::string &molblock,
                                              PipelineResult &result,
                                              const PipelineOptions &options);
-RDKIT_MOLSTANDARDIZE_EXPORT void serialize(const RWMOL_SPTR_PAIR &output,
+RDKIT_MOLSTANDARDIZE_EXPORT void serialize(RWMOL_SPTR_PAIR output,
                                            PipelineResult &result,
                                            const PipelineOptions &options);
 
