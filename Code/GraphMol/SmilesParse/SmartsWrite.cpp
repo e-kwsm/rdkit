@@ -110,7 +110,12 @@ std::string getAtomSmartsSimple(const QueryAtom *qatom,
 
   std::string descrip = query->getDescription();
   bool hasVal = false;
-  enum class Modifiers : std::uint8_t { NONE, RANGE, LESS, GREATER };
+  enum class Modifiers : std::uint8_t {
+    NONE,
+    RANGE,
+    LESS,
+    GREATER
+  };
   Modifiers mods = Modifiers::NONE;
   if (boost::starts_with(descrip, "range_")) {
     mods = Modifiers::RANGE;
