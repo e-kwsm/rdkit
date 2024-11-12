@@ -22,8 +22,18 @@ namespace RDKit {
 
 namespace MolDraw2D_detail {
 // for aligning the drawing of text to the passed in coords.
-enum class OrientType : unsigned char { C = 0, N, E, S, W };
-enum class TextAlignType : unsigned char { MIDDLE = 0, START, END };
+enum class OrientType : unsigned char {
+  C = 0,
+  N,
+  E,
+  S,
+  W
+};
+enum class TextAlignType : unsigned char {
+  MIDDLE = 0,
+  START,
+  END
+};
 }  // namespace MolDraw2D_detail
 
 struct DrawColour {
@@ -143,7 +153,10 @@ inline void assignBWPalette(ColourPalette &palette) {
   palette[-1] = DrawColour(0, 0, 0);
 };
 
-enum class MultiColourHighlightStyle { CIRCLEANDLINE, LASSO };
+enum class MultiColourHighlightStyle {
+  CIRCLEANDLINE,
+  LASSO
+};
 
 struct RDKIT_MOLDRAW2D_EXPORT MolDrawOptions {
   bool atomLabelDeuteriumTritium =

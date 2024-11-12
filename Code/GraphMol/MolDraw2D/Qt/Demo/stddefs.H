@@ -22,7 +22,11 @@
 
 // ****************************************************************************
 // cactvs also define YES and NO!
-typedef enum { DAC_YES, DAC_NO, DAC_PASS } DAC_YES_NO;
+typedef enum {
+  DAC_YES,
+  DAC_NO,
+  DAC_PASS
+} DAC_YES_NO;
 
 namespace DACLIB {
 

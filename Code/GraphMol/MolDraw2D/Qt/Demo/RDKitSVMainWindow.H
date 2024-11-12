@@ -35,7 +35,11 @@ class RDKitSVMainWindow : public QMainWindow {
   RDKitSVMainWindow(int argc, char **argv);
   ~RDKitSVMainWindow() = default;
 
-  typedef enum { SMILES, SDF, UNKNOWN } FILE_TYPE;
+  typedef enum {
+    SMILES,
+    SDF,
+    UNKNOWN
+  } FILE_TYPE;
 
  private:
   QAction *file_exit_, *file_read_mols_, *file_read_smarts_;
