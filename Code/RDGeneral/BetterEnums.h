@@ -15,7 +15,11 @@
 #define BETTER_ENUM_CLASS BETTER_ENUM
 #else
 #define BETTER_ENUM(Enum, Underlying, ...) \
-  enum Enum : Underlying { __VA_ARGS__ }
+  enum Enum : Underlying {                 \
+    __VA_ARGS__                            \
+  }
 #define BETTER_ENUM_CLASS(Enum, Underlying, ...) \
-  enum class Enum : Underlying { __VA_ARGS__ }
+  enum class Enum : Underlying {                 \
+    __VA_ARGS__                                  \
+  }
 #endif
