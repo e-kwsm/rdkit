@@ -293,7 +293,7 @@ typedef short yytype_int16;
 #endif
 #endif
 
-#define YYSIZE_MAXIMUM ((YYSIZE_T)-1)
+#define YYSIZE_MAXIMUM ((YYSIZE_T) - 1)
 
 #ifndef YY_
 #if defined YYENABLE_NLS && YYENABLE_NLS
@@ -423,7 +423,7 @@ void *malloc(YYSIZE_T); /* INFRINGES ON USER NAME SPACE */
 #ifndef YYFREE
 #define YYFREE free
 #if !defined free && !defined EXIT_SUCCESS
-void free(void *);      /* INFRINGES ON USER NAME SPACE */
+void free(void *); /* INFRINGES ON USER NAME SPACE */
 #endif
 #endif
 #endif
@@ -953,7 +953,9 @@ static int yysyntax_error(YYSIZE_T *yymsg_alloc, char **yymsg,
                           yytype_int16 *yyssp, int yytoken) {
   YYSIZE_T yysize0 = yytnamerr(YY_NULLPTR, yytname[yytoken]);
   YYSIZE_T yysize = yysize0;
-  enum { YYERROR_VERBOSE_ARGS_MAXIMUM = 5 };
+  enum {
+    YYERROR_VERBOSE_ARGS_MAXIMUM = 5
+  };
   /* Internationalized format string. */
   const char *yyformat = YY_NULLPTR;
   /* Arguments of yyformat. */
