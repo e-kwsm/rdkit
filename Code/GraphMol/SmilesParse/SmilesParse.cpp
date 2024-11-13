@@ -147,7 +147,7 @@ int smiles_parse_helper(const std::string &inp,
   }
 
   if (!branchPoints.empty()) {
-    auto input_smiles = inp.c_str() + ltrim;
+    const auto *input_smiles = inp.c_str() + ltrim;
     // If there are multiple unclosed brackets, we want to report them all at
     // once. e.g. CC(CC(CC
     for (auto [_, open_bracket_position] : branchPoints) {
