@@ -204,7 +204,7 @@ class MolAtropTest {
       TEST_ASSERT(expectedSmi == smilesOut);
 
     } catch (const std::exception &e) {
-      if (expectedResult != false) {
+      if (expectedResult) {
         throw;
       }
       return;
