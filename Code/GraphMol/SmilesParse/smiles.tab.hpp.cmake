@@ -80,7 +80,7 @@ extern int yysmiles_debug;
     BAD_CHARACTER = 281,           /* BAD_CHARACTER  */
     EOS_TOKEN = 282                /* EOS_TOKEN  */
   };
-  typedef enum yytokentype yytoken_kind_t;
+  using yytoken_kind_t = yytokentype;
 #endif
 
 /* Value type.  */
