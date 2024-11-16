@@ -401,7 +401,7 @@ RDKIT_GRAPHMOL_EXPORT void mergeQueryHs(RWMol &mol,
 */
 RDKIT_GRAPHMOL_EXPORT std::pair<bool, bool> hasQueryHs(const ROMol &mol);
 
-using AdjustQueryWhichFlags = enum {
+enum AdjustQueryWhichFlags {
   ADJUST_IGNORENONE = 0x0,
   ADJUST_IGNORECHAINS = 0x1,
   ADJUST_IGNORERINGS = 0x4,
@@ -522,7 +522,7 @@ RDKIT_GRAPHMOL_EXPORT ROMol *renumberAtoms(
 //! \name Sanitization
 /// {
 
-using SanitizeFlags = enum {
+enum SanitizeFlags {
   SANITIZE_NONE = 0x0,
   SANITIZE_CLEANUP = 0x1,
   SANITIZE_PROPERTIES = 0x2,
@@ -617,7 +617,7 @@ does not consider the outer envelope of fused rings)
 - \c AROMATICIT_MMFF94 the aromaticity model used by the MMFF94 force field
 - \c AROMATICITY_CUSTOM uses a caller-provided function
 */
-using AromaticityModel = enum {
+enum AromaticityModel {
   AROMATICITY_DEFAULT = 0x0,  ///< future proofing
   AROMATICITY_RDKIT = 0x1,
   AROMATICITY_SIMPLE = 0x2,
