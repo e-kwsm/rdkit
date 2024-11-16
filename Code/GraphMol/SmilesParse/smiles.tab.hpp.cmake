@@ -79,7 +79,7 @@ extern int yysmiles_debug;
     ATOM_CLOSE_TOKEN = 280,        /* ATOM_CLOSE_TOKEN  */
     EOS_TOKEN = 281                /* EOS_TOKEN  */
   };
-  typedef enum yytokentype yytoken_kind_t;
+  using yytoken_kind_t = yytokentype;
 #endif
 
 /* Value type.  */
