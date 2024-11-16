@@ -18,10 +18,12 @@
 #ifndef __BGL_VF2_SUB_STATE_H__
 #define __BGL_VF2_SUB_STATE_H__
 //#define RDK_VF2_PRUNING
-#define RDK_ADJ_ITER typename Graph::adjacency_iterator
 
 namespace boost {
 namespace detail {
+template <class Graph>
+using RDK_ADJ_ITER = typename Graph::adjacency_iterator;
+
 using node_id = std::uint32_t;
 const node_id NULL_NODE = 0xFFFFFFFF;
 struct NodeInfo {
@@ -34,7 +36,7 @@ template <class Graph>
 struct Pair {
   node_id n1, n2;
   bool hasiter{false};
-  RDK_ADJ_ITER nbrbeg, nbrend;
+  RDK_ADJ_ITER<Graph> nbrbeg, nbrend;
 
   Pair() : n1(NULL_NODE), n2(NULL_NODE) {}
 };
@@ -298,7 +300,7 @@ class VF2SubState {
        * since it must also be adajcent to this mapped atom!
        */
       if (!pair.hasiter) {
-        RDK_ADJ_ITER n1iter_beg, n1iter_end;
+        RDK_ADJ_ITER<Graph> n1iter_beg, n1iter_end;
         boost::tie(n1iter_beg, n1iter_end) =
             boost::adjacent_vertices(pair.n1, *g1);
 
@@ -679,4 +681,3 @@ bool vf2_all(const Graph &g1, const Graph &g2, VertexLabeling &vertex_labeling,
 #endif
 
 #undef RDK_VF2_PRUNING
-#undef RDK_ADJ_ITER
