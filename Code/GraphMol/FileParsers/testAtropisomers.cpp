@@ -78,8 +78,8 @@ class MolAtropTest {
           expectedResult(expectedResultInit) {};
   };
 
-  void generateNewExpectedFilesIfSoSpecified(std::string filename,
-                                             std::string dataToWrite) {
+  void generateNewExpectedFilesIfSoSpecified(const std::string &filename,
+                                             const std::string &dataToWrite) {
     if (generateExpectedFiles) {
       std::ofstream out;
       out.open(filename);
