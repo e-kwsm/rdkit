@@ -321,7 +321,7 @@ TEST_CASE("testRDValue") {
 
   {
     // check shared ptrs -- std::any deletes these :)
-    typedef boost::shared_ptr<std::vector<int>> vptr;
+    using vptr = boost::shared_ptr<std::vector<int>>;
     vptr p(new std::vector<int>());
     p->push_back(100);
     RDAny v(p);
