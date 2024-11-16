@@ -216,7 +216,7 @@ enum yysymbol_kind_t
   YYSYMBOL_nonzero_number = 42,            /* nonzero_number  */
   YYSYMBOL_digit = 43                      /* digit  */
 };
-typedef enum yysymbol_kind_t yysymbol_kind_t;
+using yysymbol_kind_t = enum yysymbol_kind_t;
 
 
 
