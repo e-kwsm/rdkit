@@ -76,8 +76,8 @@ class MolAtropTest {
           expectedResult(expectedResultInit) {};
   };
 
-  void generateNewExpectedFilesIfSoSpecified(std::string filename,
-                                             std::string dataToWrite) {
+  void generateNewExpectedFilesIfSoSpecified(const std::string &filename,
+                                             const std::string &dataToWrite) {
     if (generateExpectedFiles) {
       std::ofstream out;
       out.open(filename);
@@ -176,7 +176,7 @@ class MolAtropTest {
     return;
   }
 
-  void testKekuleWedgeError(RWMol *mol, std::string expectedSmi,
+  void testKekuleWedgeError(RWMol *mol, const std::string &expectedSmi,
                             bool expectedResult, unsigned int expectedAtomCount,
                             unsigned int expectedBondCount) {
     BOOST_LOG(rdInfoLog) << "testing aromatic atropisomers" << std::endl;
