@@ -236,7 +236,7 @@ typedef enum yysymbol_kind_t yysymbol_kind_t;
    helps avoid bugs in integer arithmetic.  */
 
 #ifdef __INT_LEAST8_MAX__
-typedef __INT_LEAST8_TYPE__ yytype_int8;
+using yytype_int8 = signed char;
 #elif defined YY_STDINT_H
 typedef int_least8_t yytype_int8;
 #else
@@ -244,7 +244,7 @@ typedef signed char yytype_int8;
 #endif
 
 #ifdef __INT_LEAST16_MAX__
-typedef __INT_LEAST16_TYPE__ yytype_int16;
+using yytype_int16 = short;
 #elif defined YY_STDINT_H
 typedef int_least16_t yytype_int16;
 #else
@@ -264,7 +264,7 @@ typedef short yytype_int16;
 #endif
 
 #if defined __UINT_LEAST8_MAX__ && __UINT_LEAST8_MAX__ <= __INT_MAX__
-typedef __UINT_LEAST8_TYPE__ yytype_uint8;
+using yytype_uint8 = unsigned char;
 #elif (!defined __UINT_LEAST8_MAX__ && defined YY_STDINT_H \
        && UINT_LEAST8_MAX <= INT_MAX)
 typedef uint_least8_t yytype_uint8;
@@ -275,7 +275,7 @@ typedef short yytype_uint8;
 #endif
 
 #if defined __UINT_LEAST16_MAX__ && __UINT_LEAST16_MAX__ <= __INT_MAX__
-typedef __UINT_LEAST16_TYPE__ yytype_uint16;
+using yytype_uint16 = unsigned short;
 #elif (!defined __UINT_LEAST16_MAX__ && defined YY_STDINT_H \
        && UINT_LEAST16_MAX <= INT_MAX)
 typedef uint_least16_t yytype_uint16;
@@ -324,10 +324,10 @@ typedef int yytype_uint16;
 
 
 /* Stored state numbers (used for stacks). */
-typedef yytype_int8 yy_state_t;
+using yy_state_t = yytype_int8;
 
 /* State numbers in computations.  */
-typedef int yy_state_fast_t;
+using yy_state_fast_t = int;
 
 #ifndef YY_
 # if defined YYENABLE_NLS && YYENABLE_NLS
