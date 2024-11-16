@@ -238,17 +238,17 @@ using yysymbol_kind_t = enum yysymbol_kind_t;
 #ifdef __INT_LEAST8_MAX__
 using yytype_int8 = signed char;
 #elif defined YY_STDINT_H
-typedef int_least8_t yytype_int8;
+using yytype_int8 = int_least8_t;
 #else
-typedef signed char yytype_int8;
+using yytype_int8 = signed char;
 #endif
 
 #ifdef __INT_LEAST16_MAX__
 using yytype_int16 = short;
 #elif defined YY_STDINT_H
-typedef int_least16_t yytype_int16;
+using yytype_int16 = int_least16_t;
 #else
-typedef short yytype_int16;
+using yytype_int16 = short;
 #endif
 
 /* Work around bug in HP-UX 11.23, which defines these macros
