@@ -272,7 +272,7 @@ PyTautomerEnumeratorResult *enumerateHelper(
 std::vector<MolStandardize::TautomerScoringFunctions::SubstructTerm>
 GetDefaultTautomerSubstructsHelper() {
   std::vector<MolStandardize::TautomerScoringFunctions::SubstructTerm> terms;
-  for (auto term : MolStandardize::TautomerScoringFunctions::
+  for (const auto &term : MolStandardize::TautomerScoringFunctions::
            getDefaultTautomerScoreSubstructs()) {
     terms.emplace_back(term);
   }
