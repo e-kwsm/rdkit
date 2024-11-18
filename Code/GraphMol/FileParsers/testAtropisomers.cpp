@@ -490,7 +490,7 @@ class MolAtropTest {
               true, 29, 32),
       };
 
-      for (auto kekuleTest : kekuleTests) {
+      for (const auto &kekuleTest : kekuleTests) {
         BOOST_LOG(rdInfoLog) << "Test: " << kekuleTest.smiles << std::endl;
 
         testKekuleWedgeErrorSmiles(&kekuleTest);
@@ -503,7 +503,7 @@ class MolAtropTest {
           MolTest("atropWedgeError.mol", true, 29, 32),
       };
 
-      for (auto kekuleTest : kekuleTests) {
+      for (const auto &kekuleTest : kekuleTests) {
         BOOST_LOG(rdInfoLog) << "Test: " << kekuleTest.fileName << std::endl;
 
         testKekuleWedgeErrorMol(&kekuleTest);
