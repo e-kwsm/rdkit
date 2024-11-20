@@ -12,10 +12,7 @@
 
 #include <RDGeneral/RDLog.h>
 
-namespace RDKit {
-
-namespace v2 {
-namespace FileParsers {
+namespace RDKit::v2::FileParsers {
 
 void MultithreadedMolSupplier::close() {
   df_forceStop = true;
@@ -188,7 +185,6 @@ std::string MultithreadedMolSupplier::getLastItemText() const {
 void MultithreadedMolSupplier::reset() {
   UNDER_CONSTRUCTION("reset() not supported for MultithreadedMolSupplier();");
 }
-}  // namespace FileParsers
-}  // namespace v2
-}  // namespace RDKit
+}  // namespace RDKit::v2::FileParsers
+
 #endif
