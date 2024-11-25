@@ -99,9 +99,9 @@ class RDKIT_SYNTHONSPACESEARCH_EXPORT SynthonSpace {
    *
    * @return int
    */
-  size_t getNumReactions() const { return d_reactions.size(); }
-  const std::map<std::string, std::unique_ptr<SynthonSet>> &getReactions()
-      const {
+  [[nodiscard]] size_t getNumReactions() const { return d_reactions.size(); }
+  [[nodiscard]] const std::map<std::string, std::unique_ptr<SynthonSet>> &
+  getReactions() const {
     return d_reactions;
   }
 
@@ -110,7 +110,7 @@ class RDKIT_SYNTHONSPACESEARCH_EXPORT SynthonSpace {
    *
    * @return std::int64_t
    */
-  std::int64_t getNumProducts() const;
+  [[nodiscard]] std::int64_t getNumProducts() const;
 
   std::string getSynthonFingerprintType() const { return d_fpType; }
 
