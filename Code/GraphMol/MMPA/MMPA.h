@@ -14,9 +14,7 @@
 #include <stdexcept>
 #include "../RDKitBase.h"
 
-namespace RDKit {
-
-namespace MMPA {
+namespace RDKit::MMPA {
 
 namespace detail {
 RDKIT_MMPA_EXPORT unsigned long long computeMorganCodeHash(const ROMol &mol);
@@ -82,5 +80,4 @@ RDKIT_MMPA_EXPORT bool fragmentMol(
     const std::vector<unsigned int> &bondsToCut, unsigned int minCuts = 1,
     unsigned int maxCuts = 3);
 
-}  // namespace MMPA
-}  // namespace RDKit
+}  // namespace RDKit::MMPA
