@@ -13,8 +13,7 @@
 #include <GraphMol/FileParsers/PNGParser.h>
 #include <GraphMol/MolOps.h>
 
-namespace RDKit {
-namespace MinimalLib {
+namespace RDKit::MinimalLib {
 
 void updatePropertyPickleOptionsFromJSON(unsigned int &propFlags,
                                          const char *details_json);
@@ -25,5 +24,5 @@ void updateSanitizeFlagsFromJSON(unsigned int &sanitizeFlags,
 void updateRemoveHsParametersFromJSON(MolOps::RemoveHsParameters &ps,
                                       bool &sanitize, const char *details_json);
 
-}  // end namespace MinimalLib
-}  // end namespace RDKit
+}  // namespace RDKit::MinimalLib
+   // end namespace RDKit
