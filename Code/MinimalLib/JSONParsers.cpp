@@ -18,8 +18,7 @@
 #include <boost/property_tree/json_parser.hpp>
 #include <RDGeneral/BoostEndInclude.h>
 
-namespace RDKit {
-namespace MinimalLib {
+namespace RDKit::MinimalLib {
 
 void updatePropertyPickleOptionsFromJSON(unsigned int &propFlags,
                                          const char *details_json) {
@@ -99,5 +98,5 @@ void updateRemoveHsParametersFromJSON(MolOps::RemoveHsParameters &ps,
   }
 }
 
-}  // end namespace MinimalLib
-}  // end namespace RDKit
+}  // namespace RDKit::MinimalLib
+   // end namespace RDKit
