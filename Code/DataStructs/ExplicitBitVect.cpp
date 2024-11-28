@@ -87,11 +87,10 @@ bool ExplicitBitVect::setBit(const unsigned int which) {
   }
   if ((bool)(*dp_bits)[which]) {
     return true;
-  } else {
+  }
     (*dp_bits)[which] = 1;
     ++d_numOnBits;
     return false;
-  }
 }
 bool ExplicitBitVect::unsetBit(const unsigned int which) {
   if (which >= d_size) {
@@ -101,9 +100,8 @@ bool ExplicitBitVect::unsetBit(const unsigned int which) {
     (*dp_bits)[which] = 0;
     --d_numOnBits;
     return true;
-  } else {
-    return false;
   }
+    return false;
 }
 bool ExplicitBitVect::getBit(const unsigned int which) const {
   if (which >= d_size) {
