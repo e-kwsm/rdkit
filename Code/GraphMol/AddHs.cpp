@@ -1154,7 +1154,8 @@ std::pair<bool, bool> queryHasHs(Q queryAtom, bool inor = false) {
     QueryAtom::QUERYATOM_QUERY::CHILD_TYPE query = *childit;
     if (query->getDescription() == "AtomOr") {
       return queryHasHs(query, true);
-    } else if (query->getDescription() == "AtomAtomicNum") {
+    }
+    if (query->getDescription() == "AtomAtomicNum") {
       if (static_cast<ATOM_EQUALS_QUERY *>(query.get())->getVal() == 1 &&
           !query->getNegation()) {
         return std::make_pair(true, inor);
