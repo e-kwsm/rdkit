@@ -706,12 +706,12 @@ void printSyntaxErrorMessage(std::string_view input,
   static auto truncate_input = [=](const auto &input, const unsigned int pos) {
     if ((pos >= prefix_size) && (pos + prefix_size) < input.size()) {
       return input.substr(pos - prefix_size, error_size);
-    } else if (pos >= prefix_size) {
+    }
+    if (pos >= prefix_size) {
       return input.substr(pos - prefix_size);
-    } else {
+    }
       return input.substr(
           0, std::min(input.size(), static_cast<size_t>(error_size)));
-    }
   };
 
   size_t num_dashes =
