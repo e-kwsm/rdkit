@@ -92,13 +92,15 @@ class ChiralAtomItem {
   bool operator<(const ChiralAtomItem &other) const {
     if (atomId < other.atomId) {
       return true;
-    } else if (atomId > other.atomId) {
+    }
+    if (atomId > other.atomId) {
       return false;
     }
     // note:  CCW is considered less that CW
     if (chiralType < other.chiralType) {
       return true;
-    } else if (chiralType > other.chiralType) {
+    }
+    if (chiralType > other.chiralType) {
       return false;
     }
     return false;
@@ -148,17 +150,21 @@ class ChiralBondItem {
   bool operator<(const ChiralBondItem &other) const {
     if (atomId1 < other.atomId1) {
       return true;
-    } else if (atomId1 > other.atomId1) {
+    }
+    if (atomId1 > other.atomId1) {
       return false;
-    } else if (atomId2 < other.atomId2) {
+    }
+    if (atomId2 < other.atomId2) {
       return true;
-    } else if (atomId2 > other.atomId2) {
+    }
+    if (atomId2 > other.atomId2) {
       return false;
     }
 
     if (stereoType < other.stereoType) {
       return true;
-    } else if (stereoType > other.stereoType) {
+    }
+    if (stereoType > other.stereoType) {
       return false;
     }
 
@@ -217,13 +223,15 @@ class RankedValue {
   bool operator<(const RankedValue &other) const {
     if (chiralAtomItems.size() < other.chiralAtomItems.size()) {
       return true;
-    } else if (chiralAtomItems.size() > other.chiralAtomItems.size()) {
+    }
+    if (chiralAtomItems.size() > other.chiralAtomItems.size()) {
       return false;
     }
 
     if (chiralBondItems.size() < other.chiralBondItems.size()) {
       return true;
-    } else if (chiralBondItems.size() > other.chiralBondItems.size()) {
+    }
+    if (chiralBondItems.size() > other.chiralBondItems.size()) {
       return false;
     }
 
@@ -231,7 +239,8 @@ class RankedValue {
          it != chiralAtomItems.end(); ++it, ++it2) {
       if (*it < *it2) {
         return true;
-      } else if (*it2 < *it) {
+      }
+      if (*it2 < *it) {
         return false;
       }
     }
@@ -240,7 +249,8 @@ class RankedValue {
          it != chiralBondItems.end(); ++it, ++it2) {
       if (*it < *it2) {
         return true;
-      } else if (*it2 < *it) {
+      }
+      if (*it2 < *it) {
         return false;
       }
     }
