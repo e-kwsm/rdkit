@@ -1133,7 +1133,6 @@ std::pair<bool, bool> queryHasHs(Q queryAtom, bool inor = false) {
     }
   }
   return std::make_pair(false, inor);
-  ;
 }
 
 HydrogenType isQueryH(const Atom *atom) {
