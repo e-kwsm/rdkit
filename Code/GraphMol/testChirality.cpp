@@ -1056,8 +1056,8 @@ void testIterativeChirality() {
 
   std::string rdbase = getenv("RDBASE");
 
-// unless otherwise noted, the R/S and Z/E assignments here
-// match Marvin and ChemDraw.
+  // unless otherwise noted, the R/S and Z/E assignments here
+  // match Marvin and ChemDraw.
   {  // atom-chirality -> atom-chirality
     std::string cip;
 

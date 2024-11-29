@@ -59,8 +59,7 @@ void testPass() {
       "[D{1-3}]",  // cactvs range queries
       "[D{-3}]", "[D{1-}]", "[z{1-3}]", "[Z{1-3}]",
       "[2H,13C]",  // github #1719
-      "[+{0-3}]",
-      "[-{0-3}]", "[-{0-3},C]",
+      "[+{0-3}]", "[-{0-3}]", "[-{0-3},C]",
       "[-{0-3},D{1-3}]",       // github #2709
       "C%(1000)CCC%(1000)",    // github #2909
       "C%(1000)CC(C%(1000))",  // github #2909
@@ -474,7 +473,7 @@ void testProblems() {
   // nested recursion (yick!)
   _checkNoMatches("[O]-[!$(*=O)]", "CC(=O)O");
 
-// BOOST_LOG(rdInfoLog) << "-*-*-*-*-*-*-*-*-" << std::endl;
+  // BOOST_LOG(rdInfoLog) << "-*-*-*-*-*-*-*-*-" << std::endl;
   _checkNoMatches("[$([O]-[!$(*=O)])]", "CC(=O)O");
 
   // ISSUE 78
