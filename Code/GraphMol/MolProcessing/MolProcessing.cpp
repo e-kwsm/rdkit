@@ -78,9 +78,7 @@ std::vector<std::unique_ptr<T>> worker(v2::FileParsers::MolSupplier *suppl,
       dynamic_cast<v2::FileParsers::MultithreadedMolSupplier *>(suppl);
   if (tsuppl) {
     return mtWorker(tsuppl, func);
-  } else {
-#else
-  {
+  }
 #endif
     // otherwise we just loop through the molecules
     std::vector<std::unique_ptr<T>> results;
@@ -94,7 +92,6 @@ std::vector<std::unique_ptr<T>> worker(v2::FileParsers::MolSupplier *suppl,
       }
     }
     return results;
-  }
 }
 }  // namespace
 
