@@ -168,7 +168,7 @@ inline std::unique_ptr<FileParsers::MolSupplier> getSupplier(
                                                             parseParams);
   }
 #ifdef RDK_BUILD_MAEPARSER_SUPPORT
-  else if (fileFormat == "mae") {
+  if (fileFormat == "mae") {
     FileParsers::MaeMolSupplierParams parseParams;
     parseParams.sanitize = opt.sanitize;
     parseParams.removeHs = opt.removeHs;
