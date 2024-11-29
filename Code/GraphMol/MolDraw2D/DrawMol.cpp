@@ -1737,10 +1737,9 @@ OrientType DrawMol::getAtomOrientation(const RDKit::Atom &atom) const {
             if (bond_vec.y > 0.0) {
               orient = OrientType::S;
               break;
-            } else {
+            }
               orient = OrientType::N;
               break;
-            }
           }
           double ang = atan(bond_vec.y / bond_vec.x) * 180.0 / M_PI;
           if (ang > 80.0 && ang < 100.0 && orient == OrientType::S) {
