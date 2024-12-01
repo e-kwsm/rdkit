@@ -32,12 +32,13 @@ class RDKIT_SYNTHONSPACESEARCH_EXPORT Synthon {
   Synthon &operator=(const Synthon &other);
   Synthon &operator=(Synthon &&other) = default;
 
-  const std::string &getSmiles() const { return d_smiles; }
-  const std::string &getId() const { return d_id; }
-  const std::unique_ptr<ROMol> &getOrigMol() const;
-  const std::unique_ptr<ROMol> &getSearchMol() const;
-  const std::unique_ptr<ExplicitBitVect> &getPattFP() const;
-  const std::vector<std::shared_ptr<ROMol>> &getConnRegions() const;
+  [[nodiscard]] const std::string &getSmiles() const { return d_smiles; }
+  [[nodiscard]] const std::string &getId() const { return d_id; }
+  [[nodiscard]] const std::unique_ptr<ROMol> &getOrigMol() const;
+  [[nodiscard]] const std::unique_ptr<ROMol> &getSearchMol() const;
+  [[nodiscard]] const std::unique_ptr<ExplicitBitVect> &getPattFP() const;
+  [[nodiscard]] const std::vector<std::shared_ptr<ROMol>> &getConnRegions()
+      const;
   void setSearchMol(std::unique_ptr<RWMol> mol);
 
   // Writes to/reads from a binary stream.
