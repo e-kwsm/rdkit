@@ -550,10 +550,10 @@ unsigned int RWMol::addBond(Atom *atom1, Atom *atom2, Bond::BondType bondType) {
   return addBond(atom1->getIdx(), atom2->getIdx(), bondType);
 }
 
-void RWMol::removeBond(unsigned int aid1, unsigned int aid2) {
-  URANGE_CHECK(aid1, getNumAtoms());
-  URANGE_CHECK(aid2, getNumAtoms());
-  auto *bnd = getBondBetweenAtoms(aid1, aid2);
+void RWMol::removeBond(unsigned int beginAtomIdx, unsigned int endAtomIdx) {
+  URANGE_CHECK(beginAtomIdx, getNumAtoms());
+  URANGE_CHECK(endAtomIdx, getNumAtoms());
+  auto *bnd = getBondBetweenAtoms(beginAtomIdx, endAtomIdx);
   if (!bnd) {
     return;
   }
