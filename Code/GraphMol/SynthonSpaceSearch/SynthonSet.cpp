@@ -209,12 +209,12 @@ void fixSynthonAtomAndBond(const Atom *sampleMolAtom, const Bond *bond,
                            RWMol &synthCp) {
   PRECONDITION(sampleMolAtom, "No atom passed in.");
   PRECONDITION(bond, "No bond passed in.");
-  const auto synthAt =
+  auto *const synthAt =
       synthCp.getAtomWithIdx(sampleMolAtom->getProp<int>("idx"));
-  for (const auto nbor : synthCp.atomNeighbors(synthAt)) {
+  for (auto *const nbor : synthCp.atomNeighbors(synthAt)) {
     if (!nbor->getAtomicNum() && nbor->getIsotope() <= MAX_CONNECTOR_NUM) {
       nbor->setIsAromatic(sampleMolAtom->getIsAromatic());
-      const auto synthBond =
+      auto *const synthBond =
           synthCp.getBondBetweenAtoms(synthAt->getIdx(), nbor->getIdx());
       synthBond->setIsAromatic(bond->getIsAromatic());
       synthBond->setBondType(bond->getBondType());
@@ -270,7 +270,7 @@ void SynthonSet::transferProductBondsToSynthons() {
           if (const int molNum = bond->getProp<int>("molNum");
               static_cast<size_t>(molNum) == synthSetNum) {
             const int bondIdx = bond->getProp<int>("idx");
-            const auto sbond = synthCp->getBondWithIdx(bondIdx);
+            auto *const sbond = synthCp->getBondWithIdx(bondIdx);
             sbond->setIsAromatic(bond->getIsAromatic());
             sbond->setBondType(bond->getBondType());
           }
@@ -410,7 +410,7 @@ std::unique_ptr<ROMol> SynthonSet::buildProduct(
 
 void SynthonSet::tagSynthonAtomsAndBonds() const {
   for (size_t i = 0; i < d_synthons.size(); ++i) {
-    for (auto &syn : d_synthons[i]) {
+    for (const auto &syn : d_synthons[i]) {
       syn->tagAtomsAndBonds(static_cast<int>(i));
     }
   }
