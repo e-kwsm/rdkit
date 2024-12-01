@@ -101,12 +101,15 @@ bool forward_checking(const Graph& g1, const Graph& g2, UblasMatrix& M,
   size_t cero_row(0);
   for (size_t k = 0; k < num_vert_g1; ++k) {
     for (size_t l = 0; l < num_vert_g2; ++l) {
-      if (M(k, l))
+      if (M(k, l)) {
         break;
-      else
+      } else {
         ++cero_row;
+      }
     }
-    if (cero_row == num_vert_g2) return false;  // if there is a cero row
+    if (cero_row == num_vert_g2) {
+      return false;  // if there is a cero row
+    }
     cero_row = 0;
   }
   return true;
