@@ -148,7 +148,7 @@ void SynthonSpaceSearcher::buildAllHits(
     synthonNums.reserve(synthonsToUse.size());
     std::vector<size_t> numSynthons;
     numSynthons.reserve(synthonsToUse.size());
-    for (auto &stu : synthonsToUse) {
+    for (const auto &stu : synthonsToUse) {
       numSynthons.push_back(stu.count());
       synthonNums.emplace_back();
       synthonNums.back().reserve(stu.count());
