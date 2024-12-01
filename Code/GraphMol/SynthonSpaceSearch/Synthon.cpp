@@ -174,7 +174,7 @@ std::unique_ptr<ROMol> getConnRegion(const ROMol &mol) {
 
   std::unique_ptr<RWMol> molCp(new RWMol(mol));
   molCp->beginBatchEdit();
-  for (const auto aCp : molCp->atoms()) {
+  for (auto *const aCp : molCp->atoms()) {
     if (!inFrag[aCp->getIdx()]) {
       molCp->removeAtom(aCp);
     } else {
