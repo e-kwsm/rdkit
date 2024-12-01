@@ -46,9 +46,11 @@ class SynthonSpaceSearcher {
 
   SearchResults search();
 
-  SynthonSpace &getSpace() const { return d_space; }
-  const ROMol &getQuery() const { return d_query; }
-  const SynthonSpaceSearchParams &getParams() const { return d_params; }
+  [[nodiscard]] SynthonSpace &getSpace() const { return d_space; }
+  [[nodiscard]] const ROMol &getQuery() const { return d_query; }
+  [[nodiscard]] const SynthonSpaceSearchParams &getParams() const {
+    return d_params;
+  }
 
  private:
   std::unique_ptr<boost::mt19937> d_randGen;
@@ -102,7 +104,7 @@ class SynthonSpaceSearcher {
                        std::vector<std::unique_ptr<ROMol>> &results) const;
   // get the subset of synthons for the given reaction to use for this
   // enumeration.
-  std::vector<std::vector<ROMol *>> getSynthonsToUse(
+  [[nodiscard]] std::vector<std::vector<ROMol *>> getSynthonsToUse(
       const std::vector<boost::dynamic_bitset<>> &synthonsToUse,
       const std::string &reaction_id) const;
 };

@@ -30,7 +30,7 @@ class SynthonSpaceSubstructureSearcher : public SynthonSpaceSearcher {
  private:
   std::vector<SynthonSpaceHitSet> searchFragSet(
       std::vector<std::unique_ptr<ROMol>> &fragSet) const override;
-  bool verifyHit(const ROMol &hit) const override;
+  [[nodiscard]] bool verifyHit(const ROMol &hit) const override;
 };
 
 }  // namespace RDKit::SynthonSpaceSearch

@@ -131,7 +131,9 @@ class RDKIT_SYNTHONSPACESEARCH_EXPORT SynthonSpace {
    */
   [[nodiscard]] std::int64_t getNumProducts() const;
 
-  std::string getSynthonFingerprintType() const { return d_fpType; }
+  [[nodiscard]] std::string getSynthonFingerprintType() const {
+    return d_fpType;
+  }
 
   // Perform a substructure search with the given query molecule across
   // the synthonspace library.  Duplicate SMILES strings produced by different
@@ -221,7 +223,7 @@ class RDKIT_SYNTHONSPACESEARCH_EXPORT SynthonSpace {
    */
   void writeEnumeratedFile(const std::string &outFilename) const;
 
-  bool hasFingerprints() const;
+  [[nodiscard]] bool hasFingerprints() const;
   // Create the fingerprints for the synthons ready for fingerprint searches.
   // Will be done by the fingerprint search if not done ahead of time.
   void buildSynthonFingerprints(
