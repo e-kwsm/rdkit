@@ -90,8 +90,9 @@ bool forward_checking(const Graph& g1, const Graph& g2, UblasMatrix& M,
           M(k, l) = 1;
         } else if (!flag1_1 && !flag2_1) {  // or both edges are not present
           M(k, l) = 1;
-        } else
+        } else {
           M(k, l) = 0;  // if not, there's no mapping
+        }
         ++fi;
       }
     }
@@ -208,8 +209,9 @@ void prepareM(const Graph& g1, const Graph& g2, VertexLabeling& vertex_labeling,
     for (size_t j = 0; j < cols; ++j) {
       if (out_degree(j, g2) >= out_degree(i, g1) && vertex_labeling(i, j)) {
         M(i, j) = 1;
-      } else
+      } else {
         M(i, j) = 0;
+      }
     }
   }
 }
