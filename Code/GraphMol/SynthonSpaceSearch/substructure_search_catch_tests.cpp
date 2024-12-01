@@ -79,7 +79,7 @@ TEST_CASE("Enumerate") {
       fName + "/Code/GraphMol/SynthonSpaceSearch/data/triazole_space.txt";
   SynthonSpace synthonspace;
   synthonspace.readTextFile(libName);
-  auto testName = std::tmpnam(nullptr);
+  auto *testName = std::tmpnam(nullptr);
   std::cout << "enumerating to " << testName << std::endl;
   synthonspace.writeEnumeratedFile(testName);
 
