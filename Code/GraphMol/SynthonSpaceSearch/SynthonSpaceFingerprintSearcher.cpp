@@ -79,7 +79,7 @@ std::vector<SynthonSpaceHitSet> SynthonSpaceFingerprintSearcher::searchFragSet(
 
   const auto connPatterns = details::getConnectorPatterns(fragSet);
   boost::dynamic_bitset<> conns(MAX_CONNECTOR_NUM + 1);
-  for (auto &connPattern : connPatterns) {
+  for (const auto &connPattern : connPatterns) {
     conns |= connPattern;
   }
 
