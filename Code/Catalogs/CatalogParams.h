@@ -9,7 +9,7 @@
 //
 #include <RDGeneral/export.h>
 #ifndef __RD_CATALOGPARAMS_H__
-#define __RD_CATALOGPARAMS_H__
+#define RD_CATALOGPARAMS_H_
 
 #include <string>
 
