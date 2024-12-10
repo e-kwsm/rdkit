@@ -25,7 +25,7 @@ LDFLAGS := \
 
 LDLIBS := \
 	-lrdkitCatch \
-	-lCatch2 \
+	-lCatch2d \
 	-lRDKitFileParsers \
 	-lRDKitGraphMol \
 	-lRDKitRDGeometryLib \
@@ -41,16 +41,24 @@ CMAKE_CXX_CLANG_TIDY := clang-tidy --fix --header-filter=! \
 .PHONY: all
 all: a.out file_parsers_catch.out rdmolfiles.so
 a.out: main.o CMLReader.o
+	$(MAKE) dep
 	$(CXX) -o $@ $^ $(LDFLAGS) $(LDLIBS)
 
 file_parsers_catch.out: file_parsers_catch.o CMLReader.o
+	$(MAKE) dep
 	$(CXX) -o $@ $^ $(LDFLAGS) $(LDLIBS)
 
 rdmolfiles.so: rdmolfiles.o CMLReader.o
+	$(MAKE) dep
 	$(CXX) -shared -fPIC -o $@ $^ $(LDFLAGS) $(LDLIBS)
 
 %.o: %.cpp
+	$(MAKE) dep
 	$(CXX) $(CXXFLAGS) $(CPPFLAGS) -o $@ -c $^
+
+.PHONY: dep
+dep:
+	cmake --build ../build -j 1 -- librdkitCatch.a libRDKitGraphMol.so
 
 .PHONY: clang-format
 clang-format:
