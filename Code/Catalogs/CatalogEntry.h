@@ -9,7 +9,7 @@
 //
 #include <RDGeneral/export.h>
 #ifndef __RD_CATALOGENTRY_H__
-#define __RD_CATALOGENTRY_H__
+#define RD_CATALOGENTRY_H_
 
 #include <string>
 
