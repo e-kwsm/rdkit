@@ -36,22 +36,26 @@ class RDKIT_SYNTHONSPACESEARCH_EXPORT SynthonSet {
   SynthonSet(const SynthonSet &rhs) = delete;
   SynthonSet(SynthonSet &&rhs) = delete;
 
-  const std::string &getId() const { return d_id; }
-  const std::vector<std::vector<std::unique_ptr<Synthon>>> &getSynthons()
-      const {
+  [[nodiscard]] const std::string &getId() const { return d_id; }
+  [[nodiscard]] const std::vector<std::vector<std::unique_ptr<Synthon>>> &
+  getSynthons() const {
     return d_synthons;
   }
-  const boost::dynamic_bitset<> &getConnectors() const { return d_connectors; }
-  const std::vector<boost::dynamic_bitset<>> &getSynthonConnectorPatterns()
-      const {
+  [[nodiscard]] const boost::dynamic_bitset<> &getConnectors() const {
+    return d_connectors;
+  }
+  [[nodiscard]] const std::vector<boost::dynamic_bitset<>> &
+  getSynthonConnectorPatterns() const {
     return d_synthConnPatts;
   }
-  const std::vector<std::shared_ptr<ROMol>> &getConnectorRegions() const;
+  [[nodiscard]] const std::vector<std::shared_ptr<ROMol>> &getConnectorRegions()
+      const;
 
-  const std::unique_ptr<ExplicitBitVect> &getConnRegFP() const;
-  const std::vector<int> &getNumConnectors() const;
-  bool hasFingerprints() const;
-  const std::vector<std::vector<std::unique_ptr<ExplicitBitVect>>> &
+  [[nodiscard]] const std::unique_ptr<ExplicitBitVect> &getConnRegFP() const;
+  [[nodiscard]] const std::vector<int> &getNumConnectors() const;
+  [[nodiscard]] bool hasFingerprints() const;
+  [[nodiscard]] const std::vector<
+      std::vector<std::unique_ptr<ExplicitBitVect>>> &
   getSynthonFPs() const;
 
   // Writes to/reads from a binary stream.
@@ -90,11 +94,12 @@ class RDKIT_SYNTHONSPACESEARCH_EXPORT SynthonSet {
   // Return the molecules for synthons for which the bits are true.
   // Obviously requires that reqSynths is the same dimensions as
   // d_synthons.
-  std::vector<std::vector<ROMol *>> getSynthons(
+  [[nodiscard]] std::vector<std::vector<ROMol *>> getSynthons(
       const std::vector<boost::dynamic_bitset<>> &reqSynths) const;
 
-  std::string buildProductName(const std::vector<size_t> &synthNums) const;
-  std::unique_ptr<ROMol> buildProduct(
+  [[nodiscard]] std::string buildProductName(
+      const std::vector<size_t> &synthNums) const;
+  [[nodiscard]] std::unique_ptr<ROMol> buildProduct(
       const std::vector<size_t> &synthNums) const;
 
  private:
