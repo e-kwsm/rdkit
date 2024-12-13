@@ -53,7 +53,6 @@ rdmolfiles.so: rdmolfiles.o CMLReader.o
 	$(CXX) -shared -fPIC -o $@ $^ $(LDFLAGS) $(LDLIBS)
 
 %.o: %.cpp
-	$(MAKE) dep
 	$(CXX) $(CXXFLAGS) $(CPPFLAGS) -o $@ -c $^
 
 .PHONY: dep
