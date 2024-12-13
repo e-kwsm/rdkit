@@ -1174,9 +1174,8 @@ HydrogenType isQueryH(const Atom *atom) {
                "be merged"
             << std::endl;
         return HydrogenType::UnMergableQueryHydrogen;
-      } else {
-        return HydrogenType::QueryHydrogen;
       }
+        return HydrogenType::QueryHydrogen;
     }
   }
   return HydrogenType::NotAHydrogen;
