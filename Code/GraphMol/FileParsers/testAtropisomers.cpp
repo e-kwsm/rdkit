@@ -71,8 +71,8 @@ class MolAtropTest {
                bool expectedResultInit, int atomCountInit, int bondCountInit)
         : atomCount(atomCountInit),
           bondCount(bondCountInit),
-          smiles(smilesInit),
-          expectedOutput(nameInit),
+          smiles(std::move(smilesInit)),
+          expectedOutput(std::move(nameInit)),
           expectedResult(expectedResultInit) {};
   };
 
