@@ -261,8 +261,8 @@ inline std::string MolFragmentToSmiles(
 }
 
 BETTER_ENUM(RestoreBondDirOption, unsigned int,
-  RestoreBondDirOptionTrue = 0,  //<!DO restore bond dirs
-  RestoreBondDirOptionClear = 1  //<!clear all bond dir information
+            RestoreBondDirOptionTrue = 0,  ///<!DO restore bond dirs
+            RestoreBondDirOptionClear = 1  ///<!clear all bond dir information
 );
 
 //! \brief returns canonical CXSMILES for a molecule
