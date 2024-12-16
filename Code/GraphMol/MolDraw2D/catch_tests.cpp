@@ -10133,7 +10133,7 @@ TEST_CASE("Atom abbreviations clash") {
   // If this wasn't a test, this would probably be done more elegantly.
   {
     const static std::regex text8(
-        "<text x='(\\d+\\.\\d+)' y='(\\d+\\.\\d+)' class='atom-8'.*</text>");
+        R"(<text x='(\d+\.\d+)' y='(\d+\.\d+)' class='atom-8'.*</text>)");
     std::ptrdiff_t const match_count(
         std::distance(std::sregex_iterator(text.begin(), text.end(), text8),
                       std::sregex_iterator()));
@@ -10151,7 +10151,7 @@ TEST_CASE("Atom abbreviations clash") {
   }
   {
     const static std::regex text14(
-        "<text x='(\\d+\\.\\d+)' y='(\\d+\\.\\d+)' class='atom-14'.*</text>");
+        R"(<text x='(\d+\.\d+)' y='(\d+\.\d+)' class='atom-14'.*</text>)");
     std::ptrdiff_t const match_count(
         std::distance(std::sregex_iterator(text.begin(), text.end(), text14),
                       std::sregex_iterator()));
@@ -10169,7 +10169,7 @@ TEST_CASE("Atom abbreviations clash") {
   }
   {
     const static std::regex text22(
-        "<text x='(\\d+\\.\\d+)' y='(\\d+\\.\\d+)' class='atom-22'.*</text>");
+        R"(<text x='(\d+\.\d+)' y='(\d+\.\d+)' class='atom-22'.*</text>)");
     std::ptrdiff_t const match_count(
         std::distance(std::sregex_iterator(text.begin(), text.end(), text22),
                       std::sregex_iterator()));
