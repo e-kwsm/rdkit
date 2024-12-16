@@ -47,8 +47,8 @@ RDGeom::UniformRealValueGrid3D *constructGridHelper(const RDKit::ROMol &mol,
 std::pair<std::vector<double>, std::vector<RDGeom::Point3D>>
 extractChargesAndPositions(const python::object &charges,
                            const python::object &positions) {
-  const auto pyPos = positions.ptr();
-  const auto pyCharges = charges.ptr();
+  auto *const pyPos = positions.ptr();
+  auto *const pyCharges = charges.ptr();
   if (!pyPos || !PySequence_Check(pyPos)) {
     throw_value_error("positions argument must be a sequence");
   }
@@ -62,7 +62,7 @@ extractChargesAndPositions(const python::object &charges,
   std::vector<RDGeom::Point3D> pos(nrows);
   std::vector<double> ch(nrows);
   for (unsigned int i = 0; i < nrows; ++i) {
-    const auto pyXyz = PySequence_GetItem(pyPos, i);
+    auto *const pyXyz = PySequence_GetItem(pyPos, i);
     if (!pyXyz || !PySequence_Check(pyXyz) || PySequence_Size(pyXyz) != 3) {
       throw_value_error(
           "all elements in positions argument must be x,y,z sequences");
