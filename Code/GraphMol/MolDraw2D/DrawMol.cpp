@@ -1033,7 +1033,7 @@ bool orientAtomLabel(int atIdx,
       break;
   }
   bool ok = false;
-  for (auto &orient1 : newOrients[pref]) {
+  for (const auto &orient1 : newOrients[pref]) {
     atomLabels[atIdx]->orient_ = orient1;
     atomLabels[atIdx]->recalculateRects();
     if (!doesLabelClashWithLabels(atIdx, atomLabels) &&
@@ -1054,9 +1054,9 @@ bool orientAtomLabel(int atIdx,
 
 // ****************************************************************************
 void DrawMol::resolveAtomSymbolClashes() {
-  for (auto at1 : drawMol_->atoms()) {
+  for (auto *at1 : drawMol_->atoms()) {
     const auto atIdx1 = at1->getIdx();
-    for (auto at2 : drawMol_->atoms()) {
+    for (auto *at2 : drawMol_->atoms()) {
       const auto atIdx2 = at2->getIdx();
       if (atIdx1 >= atIdx2) {
         continue;
