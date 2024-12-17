@@ -27,7 +27,8 @@ MolCatalogEntry::MolCatalogEntry(const ROMol *omol) {
   d_order = 0;
 }
 
-MolCatalogEntry::MolCatalogEntry(const MolCatalogEntry &other) {
+MolCatalogEntry::MolCatalogEntry(const MolCatalogEntry &other)
+    : CatalogEntry(other) {
   setBitId(other.getBitId());
   d_descrip = other.d_descrip;
   dp_props = nullptr;
