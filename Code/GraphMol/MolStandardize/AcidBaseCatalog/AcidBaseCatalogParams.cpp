@@ -38,8 +38,8 @@ AcidBaseCatalogParams::AcidBaseCatalogParams(
   d_pairs = readPairs(data);
 }
 
-AcidBaseCatalogParams::AcidBaseCatalogParams(
-    const AcidBaseCatalogParams &other) {
+AcidBaseCatalogParams::AcidBaseCatalogParams(const AcidBaseCatalogParams &other)
+    : CatalogParams(other) {
   d_typeStr = other.d_typeStr;
   d_pairs.clear();
 
