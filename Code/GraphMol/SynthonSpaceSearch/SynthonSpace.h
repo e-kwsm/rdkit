@@ -121,9 +121,9 @@ class RDKIT_SYNTHONSPACESEARCH_EXPORT SynthonSpace {
   // reactions will be returned.
   /*!
    *
-   * @param query : query molecule
-   * @param params : (optional) settings for the search
-   * @return : the hits as a SearchResults object.
+   * @param query query molecule
+   * @param params (optional) settings for the search
+   * @return the hits as a SearchResults object.
    */
   SearchResults substructureSearch(
       const ROMol &query,
@@ -134,11 +134,11 @@ class RDKIT_SYNTHONSPACESEARCH_EXPORT SynthonSpace {
   // different reactions will be returned.
   /*!
    *
-   * @param query : query molecule
-   * @param fpGen: a FingerprintGenerator object that will provide the
+   * @param query query molecule
+   * @param fpGen a FingerprintGenerator object that will provide the
    *               fingerprints for the similarity calculation
-   * @param params : (optional) settings for the search
-   * @return : the hits as a SearchResults object.
+   * @param params (optional) settings for the search
+   * @return the hits as a SearchResults object.
    */
   SearchResults fingerprintSearch(
       const ROMol &query, const FingerprintGenerator<std::uint64_t> &fpGen,
@@ -146,7 +146,7 @@ class RDKIT_SYNTHONSPACESEARCH_EXPORT SynthonSpace {
 
   /*!
    *
-   * @param inFilename: name of the file containing the synthon-based library.
+   * @param inFilename name of the file containing the synthon-based library.
    *
    * The original format is:
    * all lines are tab-separated
@@ -181,26 +181,26 @@ class RDKIT_SYNTHONSPACESEARCH_EXPORT SynthonSpace {
   // Writes to/reads from a binary DB File in our format.
   /*!
    *
-   * @param outFilename: the name of the file to write.
+   * @param outFilename the name of the file to write.
    */
   void writeDBFile(const std::string &outFilename) const;
   /*!
    *
-   * @param inFilename: the name of the file to read.
+   * @param inFilename the name of the file to read.
    */
   void readDBFile(const std::string &inFilename);
 
   // Write a summary of the SynthonSpace to given stream.
   /*!
    *
-   * @param os: stream
+   * @param os stream
    */
   void summarise(std::ostream &os) const;
 
   // Writes the enumerated library to file in SMILES format (1 compound
   // per line, SMILES name
   /*!
-  @param outFilename: name of the file to write
+  @param outFilename name of the file to write
    */
   void writeEnumeratedFile(const std::string &outFilename) const;
 
