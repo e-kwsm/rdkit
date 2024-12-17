@@ -39,7 +39,8 @@ TransformCatalogParams::TransformCatalogParams(
 };
 
 TransformCatalogParams::TransformCatalogParams(
-    const TransformCatalogParams &other) {
+    const TransformCatalogParams &other)
+    : CatalogParams(other) {
   d_typeStr = other.d_typeStr;
   d_transformations.clear();
 
