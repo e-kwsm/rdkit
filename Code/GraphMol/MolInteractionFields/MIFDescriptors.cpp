@@ -513,9 +513,8 @@ double cos_2(double t, double, double) {
     double temp = cos(t);
     temp *= temp;
     return temp;
-  } else {
-    return 0.0;
   }
+    return 0.0;
 };
 
 double cos_2_0(double t, double t_0 = 0.0, double t_i = 1.0) {
@@ -524,13 +523,13 @@ double cos_2_0(double t, double t_0 = 0.0, double t_i = 1.0) {
     temp = cos(t_0);
     temp *= temp;
     return temp;
-  } else if (t_i < M_PI_2) {
+  }
+  if (t_i < M_PI_2) {
     temp = cos(t);
     temp *= temp;
     return temp;
-  } else {
-    return 0.0;
   }
+    return 0.0;
 };
 
 double cos_2_rot(double t, double, double) {
@@ -539,9 +538,8 @@ double cos_2_rot(double t, double, double) {
     double temp = cos(t);
     temp *= temp;
     return temp;
-  } else {
-    return 0.0;
   }
+    return 0.0;
 };
 
 double cos_4(double t, double, double) {
@@ -550,9 +548,8 @@ double cos_4(double t, double, double) {
     temp *= temp;
     temp *= temp;
     return temp;
-  } else {
-    return 0.0;
   }
+    return 0.0;
 };
 
 double cos_4_rot(double t, double, double) {
@@ -562,9 +559,8 @@ double cos_4_rot(double t, double, double) {
     temp *= temp;
     temp *= temp;
     return temp;
-  } else {
-    return 0.0;
   }
+    return 0.0;
 };
 
 double cos_6(double t, double, double) {
@@ -573,9 +569,8 @@ double cos_6(double t, double, double) {
     temp *= temp;
     temp *= temp * temp;
     return temp;
-  } else {
-    return 0.0;
   }
+    return 0.0;
 };
 
 double cos_6_rot(double t, double, double) {
@@ -585,9 +580,8 @@ double cos_6_rot(double t, double, double) {
     temp *= temp;
     temp *= temp * temp;
     return temp;
-  } else {
-    return 0.0;
   }
+    return 0.0;
 };
 
 double cos_acc(double, double t_0, double t_i) {
@@ -595,16 +589,16 @@ double cos_acc(double, double t_0, double t_i) {
   if (t_i < M_PI_2) {
     temp = cos(t_0) * (0.9 + 0.1 * sin(2 * t_i));
     return temp;
-  } else if (t_i < M_110D) {
+  }
+  if (t_i < M_110D) {
     temp = cos(t_i);
     temp *= temp;
     temp = K2 - temp;
     temp *= temp * temp;
     temp *= cos(t_0) * K1;
     return temp;
-  } else {
-    return 0.0;
   }
+    return 0.0;
 };
 
 double no_dep(double, double, double) { return 1.0; };
@@ -1935,13 +1929,13 @@ std::unique_ptr<RDKit::RWMol> readFromCubeStream(
     std::ostringstream errout;
     errout << "Same spacing in all directions needed";
     throw RDKit::FileParseException(errout.str());
-  } else {
+  }
     spacingX *= bohr;
     grd = RDGeom::UniformRealValueGrid3D(spacingX * static_cast<double>(dimX),
                                          spacingX * static_cast<double>(dimY),
                                          spacingX * static_cast<double>(dimZ),
                                          spacingX, &offSet);
-  }
+
   std::unique_ptr<RDKit::RWMol> molecule;
   if (nAtoms) {
     molecule.reset(new RDKit::RWMol());
