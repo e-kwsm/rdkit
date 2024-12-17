@@ -529,7 +529,7 @@ class RDKIT_GRAPHMOL_EXPORT ROMol : public RDProps {
     resulting ROMol will contain only the specified conformer from \c other.
   */
   ROMol(const ROMol &other, bool quickCopy = false, int confId = -1)
-      : RDProps() {
+      : RDProps(other) {
     dp_ringInfo = nullptr;
     initFromOther(other, quickCopy, confId);
     numBonds = rdcast<unsigned int>(boost::num_edges(d_graph));
