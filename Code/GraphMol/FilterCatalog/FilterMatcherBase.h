@@ -84,7 +84,7 @@ class RDKIT_FILTERCATALOG_EXPORT FilterMatcherBase
         d_filterName(std::move(name)) {}
 
   FilterMatcherBase(const FilterMatcherBase &rhs)
-      : boost::enable_shared_from_this<FilterMatcherBase>(),
+      : boost::enable_shared_from_this<FilterMatcherBase>(rhs),
         d_filterName(rhs.d_filterName) {}
 
   virtual ~FilterMatcherBase() {}
