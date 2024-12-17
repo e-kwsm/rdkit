@@ -37,8 +37,8 @@ FragmentCatalogParams::FragmentCatalogParams(
   d_funcGroups = readFuncGroups(data);
 };
 
-FragmentCatalogParams::FragmentCatalogParams(
-    const FragmentCatalogParams &other) {
+FragmentCatalogParams::FragmentCatalogParams(const FragmentCatalogParams &other)
+    : CatalogParams(other) {
   d_typeStr = other.d_typeStr;
   d_funcGroups.clear();
 
