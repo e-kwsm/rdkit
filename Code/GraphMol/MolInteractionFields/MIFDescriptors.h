@@ -115,7 +115,7 @@ class RDKIT_MOLINTERACTIONFIELDS_EXPORT Coulomb {
   //! \brief constructs Coulomb object from vectors of charges and positions
   /*!
    \param charges     vector of charges [e]
-   \param pos         vector of postions [A]
+   \param positions   vector of postions [A]
    \param probeCharge charge of probe [e] (default: 1.0)
    \param absVal      if true, negative (favored) values of interactions are
    calculated (default: false)
