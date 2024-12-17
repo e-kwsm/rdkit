@@ -219,7 +219,7 @@ void Atom::initFromOther(const Atom &other) {
   d_flags = other.d_flags;
 }
 
-Atom::Atom(const Atom &other) : RDProps() { initFromOther(other); }
+Atom::Atom(const Atom &other) : RDProps(other) { initFromOther(other); }
 
 Atom &Atom::operator=(const Atom &other) {
   if (this == &other) {
