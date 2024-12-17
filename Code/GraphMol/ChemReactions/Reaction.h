@@ -149,7 +149,9 @@ class RDKIT_CHEMREACTIONS_EXPORT ChemicalReaction : public RDProps {
   ChemicalReaction() : RDProps() {}
   //! construct a reaction from a pickle string
   ChemicalReaction(const std::string &binStr);
-  ChemicalReaction(const ChemicalReaction &other) : RDProps() { copy(other); }
+  ChemicalReaction(const ChemicalReaction &other) : RDProps(other) {
+    copy(other);
+  }
   ChemicalReaction &operator=(const ChemicalReaction &other) {
     if (this != &other) {
       copy(other);
