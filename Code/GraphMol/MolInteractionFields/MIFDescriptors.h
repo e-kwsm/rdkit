@@ -218,7 +218,7 @@ class RDKIT_MOLINTERACTIONFIELDS_EXPORT CoulombDielectric {
   //! positions
   /*!
    \param charges     vector of charges [e]
-   \param pos         vector of postions [A]
+   \param positions   vector of postions [A]
    \param probeCharge charge of probe [e] (default: 1.0)
    \param absVal      if true, negative (favored) values of interactions are
    calculated (default: false)
@@ -262,7 +262,9 @@ class RDKIT_MOLINTERACTIONFIELDS_EXPORT CoulombDielectric {
   //! \brief returns the electrostatic interaction at point \c pt in the
   //! molecule's field in [kJ mol^-1]
   /*!
-   \param x, y, z     coordinates at which the interaction is calculated
+   \param x           coordinates at which the interaction is calculated
+   \param y           coordinates at which the interaction is calculated
+   \param z           coordinates at which the interaction is calculated
    \param thres       squared threshold distance
 
    \return electrostatic interaction energy in [kJ mol^-1]
@@ -307,7 +309,9 @@ class RDKIT_MOLINTERACTIONFIELDS_EXPORT VdWaals {
   //! \brief returns the VdW interaction at point \c pt in the molecules field
   //! in [kJ mol^-1]
   /*!
-   \param x, y, z     coordinates at which the interaction is calculated
+   \param x           coordinates at which the interaction is calculated
+   \param y           coordinates at which the interaction is calculated
+   \param z           coordinates at which the interaction is calculated
    \param thres       squared max distance until interactions are calc.
 
    \return vdW interaction energy in [kJ mol^-1]
@@ -432,7 +436,9 @@ class RDKIT_MOLINTERACTIONFIELDS_EXPORT HBond {
   //! \brief returns the hydrogen bonding interaction at point \c pt in the
   //! molecules field in [kJ mol^-1]
   /*!
-   \param x, y, z     coordinates at which the interaction is calculated
+   \param x           coordinates at which the interaction is calculated
+   \param y           coordinates at which the interaction is calculated
+   \param z           coordinates at which the interaction is calculated
    \param thres       squared max distance until interactions are calc.
 
    \return hydrogen bonding interaction energy in [kJ mol^-1]
