@@ -32,8 +32,8 @@ TautomerCatalogParams::TautomerCatalogParams(
   d_transforms = readTautomers(data);
 }
 
-TautomerCatalogParams::TautomerCatalogParams(
-    const TautomerCatalogParams &other) {
+TautomerCatalogParams::TautomerCatalogParams(const TautomerCatalogParams &other)
+    : CatalogParams(other) {
   d_typeStr = other.d_typeStr;
   d_transforms.clear();
 
