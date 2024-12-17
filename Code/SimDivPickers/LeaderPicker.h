@@ -61,12 +61,6 @@ class LeaderPicker : public DistPicker {
   RDKit::INT_VECT lazyPick(T &func, unsigned int poolSize,
                            unsigned int pickSize) const;
 
-  /*!
-   *   \param firstPicks - (optional)the first items in the pick list
-   *
-   *   \param seed - (optional) seed for the random number generator. If this is
-   * < 0 the generator will be seeded with a random number.
-   */
   template <typename T>
   RDKit::INT_VECT lazyPick(T &func, unsigned int poolSize,
                            unsigned int pickSize, double threshold) const;
