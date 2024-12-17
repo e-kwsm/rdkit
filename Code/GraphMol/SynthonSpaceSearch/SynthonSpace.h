@@ -121,7 +121,7 @@ class RDKIT_SYNTHONSPACESEARCH_EXPORT SynthonSpace {
    *
    * @param query query molecule
    * @param params (optional) settings for the search
-   * @return : the hits as a SubstructureResults object.
+   * @return the hits as a SubstructureResults object.
    */
   SearchResults substructureSearch(
       const ROMol &query,
