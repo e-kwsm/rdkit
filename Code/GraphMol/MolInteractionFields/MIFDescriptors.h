@@ -153,7 +153,9 @@ class RDKIT_MOLINTERACTIONFIELDS_EXPORT Coulomb {
   //! \brief calculated the electrostatic interaction at point \c pt in the
   //! molecules field in [kJ mol^-1]
   /*!
-   \param x, y, z     coordinates at which the interaction is calculated
+   \param x           coordinates at which the interaction is calculated
+   \param y           coordinates at which the interaction is calculated
+   \param z           coordinates at which the interaction is calculated
    \param thres       squared max distance until interactions are calc.
 
    \return electrostatic interaction energy in [kJ mol^-1]
