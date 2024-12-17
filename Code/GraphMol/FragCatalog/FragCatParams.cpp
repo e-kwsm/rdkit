@@ -30,7 +30,8 @@ FragCatParams::FragCatParams(unsigned int lLen, unsigned int uLen,
   d_funcGroups = readFuncGroups(fgroupFile);
 }
 
-FragCatParams::FragCatParams(const FragCatParams &other) {
+FragCatParams::FragCatParams(const FragCatParams &other)
+    : CatalogParams(other) {
   d_funcGroups.clear();
   // copy consttructor
   d_typeStr = other.getTypeStr();
