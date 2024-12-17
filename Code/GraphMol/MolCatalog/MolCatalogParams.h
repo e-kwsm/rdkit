@@ -19,7 +19,7 @@ class RDKIT_MOLCATALOG_EXPORT MolCatalogParams
   ~MolCatalogParams() override;
 
   //! copy constructor
-  MolCatalogParams(const MolCatalogParams &other) {
+  MolCatalogParams(const MolCatalogParams &other) : CatalogParams(other) {
     d_typeStr = other.d_typeStr;
   }
   //! construct from a pickle string (serialized representation)
