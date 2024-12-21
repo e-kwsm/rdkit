@@ -1015,7 +1015,7 @@ M  END
     auto mol = std::unique_ptr<RWMol>(MolBlockToMol(molBlock, true, false));
     RDKit::CIPLabeler::assignCIPLabels(*mol);
 
-    auto atom = mol->getBondWithIdx(0);
+    auto *atom = mol->getBondWithIdx(0);
     std::string thisVal;
     if (atom->hasProp(common_properties::_CIPCode)) {
       thisVal = atom->getProp<std::string>(common_properties::_CIPCode);
@@ -1196,7 +1196,7 @@ M  END
     auto mol = std::unique_ptr<RWMol>(MolBlockToMol(molBlock, true, false));
     RDKit::CIPLabeler::assignCIPLabels(*mol);
 
-    auto atom = mol->getBondWithIdx(6);
+    auto *atom = mol->getBondWithIdx(6);
     std::string thisVal;
     if (atom->hasProp(common_properties::_CIPCode)) {
       thisVal = atom->getProp<std::string>(common_properties::_CIPCode);
@@ -1215,7 +1215,7 @@ M  END
     auto mol2 = std::unique_ptr<RWMol>(MolBlockToMol(molBlock2, true, false));
     RDKit::CIPLabeler::assignCIPLabels(*mol2);
 
-    auto atom2 = mol2->getBondWithIdx(6);
+    auto *atom2 = mol2->getBondWithIdx(6);
     if (atom2->hasProp(common_properties::_CIPCode)) {
       thisVal = atom2->getProp<std::string>(common_properties::_CIPCode);
     }

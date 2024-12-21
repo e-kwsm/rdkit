@@ -244,7 +244,7 @@ M  END
   SECTION("degree 2, aligned 2nd neighbors") {
     // This looks like a weird mol, but it's an intermediate
     // state in AddHs.
-    auto mb = R"CTAB(
+    const auto *mb = R"CTAB(
   Mrv1908 06032010402D
 
   0  0  0     0  0            999 V3000

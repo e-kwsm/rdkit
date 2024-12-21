@@ -4726,7 +4726,7 @@ TEST_CASE("Github #7873: monomer info segfaults and mem leaks", "[PDB]") {
 
     // make sure that the Monomer is delated when setting to nullptr
     bool was_deleted = false;
-    auto res = new FakeAtomMonomerInfo(&was_deleted);
+    auto *res = new FakeAtomMonomerInfo(&was_deleted);
     mol->getAtomWithIdx(0)->setMonomerInfo(res);
     mol->getAtomWithIdx(0)->setMonomerInfo(nullptr);
     CHECK(was_deleted == true);
