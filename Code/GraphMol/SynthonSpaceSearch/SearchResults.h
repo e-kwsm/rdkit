@@ -51,7 +51,7 @@ class RDKIT_SYNTHONSPACESEARCH_EXPORT SearchResults {
    * Returns whether the search timed out or not,
    * @return bool
    */
-  bool getTimedOut() const { return d_timedOut; }
+  [[nodiscard]] bool getTimedOut() const { return d_timedOut; }
 
  private:
   std::vector<std::unique_ptr<ROMol>> d_hitMolecules;
