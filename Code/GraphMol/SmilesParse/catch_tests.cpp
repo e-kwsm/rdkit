@@ -2935,7 +2935,7 @@ TEST_CASE("Github #7372: SMILES output option to disable dative bonds") {
 }
 
 void strip_atom_properties(RWMol *molecule) {
-  for (auto atom : molecule->atoms()) {
+  for (auto *atom : molecule->atoms()) {
     for (auto property : atom->getPropList(false, false)) {
       atom->clearProp(property);
     }
