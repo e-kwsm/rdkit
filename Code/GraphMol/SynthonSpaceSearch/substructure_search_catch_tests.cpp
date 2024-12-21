@@ -79,7 +79,7 @@ TEST_CASE("Enumerate") {
       fName + "/Code/GraphMol/SynthonSpaceSearch/data/triazole_space.txt";
   SynthonSpace synthonspace;
   synthonspace.readTextFile(libName);
-  auto testName = std::tmpnam(nullptr);
+  auto *testName = std::tmpnam(nullptr);
   BOOST_LOG(rdInfoLog) << "Enumerating to " << testName << std::endl;
   synthonspace.writeEnumeratedFile(testName);
 
@@ -302,7 +302,7 @@ TEST_CASE("DB Writer") {
       MorganFingerprint::getMorganGenerator<std::uint64_t>(2));
   synthonspace.buildSynthonFingerprints(*fpGen);
 
-  auto spaceName = std::tmpnam(nullptr);
+  auto *spaceName = std::tmpnam(nullptr);
 
   synthonspace.writeDBFile(spaceName);
 
