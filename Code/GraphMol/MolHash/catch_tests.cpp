@@ -993,7 +993,7 @@ M  END)CTAB"_ctab;
         MolHash::MolHash(mol2.get(), MolHash::HashFunction::HetAtomTautomerv2);
     CHECK(hsh1 == hsh2);
     // make sure the chirality wasn't destroyed
-    CHECK(hsh1.find("@") != std::string::npos);
+    CHECK(hsh1.find('@') != std::string::npos);
   }
   SECTION("tests for the same issue from #8320 report") {
     std::vector<std::string> smileses = {
@@ -1007,7 +1007,7 @@ M  END)CTAB"_ctab;
       auto hsh =
           MolHash::MolHash(m.get(), MolHash::HashFunction::HetAtomTautomerv2);
       INFO(hsh);
-      CHECK(hsh.find("@") != std::string::npos);
+      CHECK(hsh.find('@') != std::string::npos);
     }
   }
 }
