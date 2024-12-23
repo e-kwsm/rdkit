@@ -196,7 +196,8 @@ class MolAtropTest {
     testAromAtropMol(mol.get(), molFileTest->expectedResult, fName);
   }
 
-  void testAromAtropMol(RWMol *mol, bool expectedResult, std::string fName) {
+  void testAromAtropMol(RWMol *mol, bool expectedResult,
+                        const std::string &fName) {
     try {
       RDKit::Chirality::removeNonExplicit3DChirality(*mol);
 
@@ -254,7 +255,7 @@ class MolAtropTest {
     TEST_ASSERT(expectedResult == true);
   }
 
-  void testKekuleWedgeError(RWMol *mol, std::string expectedSmi,
+  void testKekuleWedgeError(RWMol *mol, const std::string &expectedSmi,
                             bool expectedResult, unsigned int expectedAtomCount,
                             unsigned int expectedBondCount) {
     BOOST_LOG(rdInfoLog) << "testing aromatic atropisomers" << std::endl;
