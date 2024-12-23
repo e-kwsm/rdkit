@@ -85,8 +85,8 @@ TEST_CASE("substructure parameters", "[substruct]") {
     RWMol mol2(*mol1);
     MolOps::Kekulize(mol2);
     SubstructMatchParameters ps;
-    CHECK(SubstructMatch(*mol1, mol2, ps).size() == 0);
-    CHECK(SubstructMatch(mol2, *mol1, ps).size() == 0);
+    CHECK(SubstructMatch(*mol1, mol2, ps).empty());
+    CHECK(SubstructMatch(mol2, *mol1, ps).empty());
 
     ps.aromaticMatchesConjugated = true;
     CHECK(SubstructMatch(*mol1, mol2, ps).size() == 1);
@@ -177,9 +177,9 @@ TEST_CASE("substructure parameters", "[substruct]") {
     ps.bondProperties = {"test_prop"};
     CHECK(SubstructMatch(*m, *q, ps).size() == 7);
     CHECK(SubstructMatch(*m_with_prop, *q_with_prop, ps).size() == 1);
-    CHECK(SubstructMatch(*m_with_prop, *q_with_prop2, ps).size() == 0);
+    CHECK(SubstructMatch(*m_with_prop, *q_with_prop2, ps).empty());
     CHECK(SubstructMatch(*m_with_prop, *q, ps).size() == 6);
-    CHECK(SubstructMatch(*m, *q_with_prop, ps).size() == 0);
+    CHECK(SubstructMatch(*m, *q_with_prop, ps).empty());
 
     // now check with bond and atom properties
     m_with_prop->getAtomWithIdx(0)->setProp("test_prop", "1");
@@ -187,9 +187,9 @@ TEST_CASE("substructure parameters", "[substruct]") {
 
     ps.atomProperties = {"test_prop"};
     CHECK(SubstructMatch(*m_with_prop, *q_with_prop, ps).size() == 1);
-    CHECK(SubstructMatch(*m_with_prop, *q_with_prop2, ps).size() == 0);
+    CHECK(SubstructMatch(*m_with_prop, *q_with_prop2, ps).empty());
     CHECK(SubstructMatch(*m_with_prop, *q, ps).size() == 6);
-    CHECK(SubstructMatch(*m, *q_with_prop, ps).size() == 0);
+    CHECK(SubstructMatch(*m, *q_with_prop, ps).empty());
 
     // Currently, a property set as an int will match to a property
     // set as a different type if they cast to the same value
@@ -225,7 +225,7 @@ TEST_CASE("providing a final match function", "[substruct]") {
     SubstructMatchParameters ps;
     CHECK(SubstructMatch(*mol1, *mol2, ps).size() == 1);
     ps.extraFinalCheck = &no_match;
-    CHECK(SubstructMatch(*mol1, *mol2, ps).size() == 0);
+    CHECK(SubstructMatch(*mol1, *mol2, ps).empty());
     ps.extraFinalCheck = &always_match;
     CHECK(SubstructMatch(*mol1, *mol2, ps).size() == 1);
   }
@@ -563,14 +563,14 @@ TEST_CASE("pickling HasPropWithValue queries") {
     mol3.getAtomWithIdx(0)->expandQuery(makePropQuery<Atom, int>("foo", 2, 0));
     mol3.getBondWithIdx(0)->expandQuery(makePropQuery<Bond, int>("bar", 2, 0));
 
-    CHECK(SubstructMatch(*target, *mol, ps).size() == 0);
-    CHECK(SubstructMatch(*target, mol2, ps).size() == 0);
-    CHECK(SubstructMatch(*target, mol3, ps).size() == 0);
+    CHECK(SubstructMatch(*target, *mol, ps).empty());
+    CHECK(SubstructMatch(*target, mol2, ps).empty());
+    CHECK(SubstructMatch(*target, mol3, ps).empty());
     target->getAtomWithIdx(0)->setProp<int>("foo", 2);
     target->getBondWithIdx(0)->setProp<int>("bar", 1);
     CHECK(SubstructMatch(*target, *mol, ps).size() == 1);
-    CHECK(SubstructMatch(*target, mol2, ps).size() == 0);
-    CHECK(SubstructMatch(*target, mol3, ps).size() == 0);
+    CHECK(SubstructMatch(*target, mol2, ps).empty());
+    CHECK(SubstructMatch(*target, mol3, ps).empty());
 
     {
       std::string pkl;
@@ -588,9 +588,9 @@ TEST_CASE("pickling HasPropWithValue queries") {
       RWMol pklmol(pkl);
       REQUIRE(pklmol.getAtomWithIdx(0)->hasQuery());
       REQUIRE(pklmol.getAtomWithIdx(0)->hasQuery());
-      CHECK(SubstructMatch(*target, pklmol, ps).size() == 0);
+      CHECK(SubstructMatch(*target, pklmol, ps).empty());
       // make sure we are idempotent in pickling
-      CHECK(SubstructMatch(*target, mol2, ps).size() == 0);
+      CHECK(SubstructMatch(*target, mol2, ps).empty());
     }
     {
       std::string pkl;
@@ -598,9 +598,9 @@ TEST_CASE("pickling HasPropWithValue queries") {
       RWMol pklmol(pkl);
       REQUIRE(pklmol.getAtomWithIdx(0)->hasQuery());
       REQUIRE(pklmol.getAtomWithIdx(0)->hasQuery());
-      CHECK(SubstructMatch(*target, pklmol, ps).size() == 0);
+      CHECK(SubstructMatch(*target, pklmol, ps).empty());
       // make sure we are idempotent in pickling
-      CHECK(SubstructMatch(*target, mol3, ps).size() == 0);
+      CHECK(SubstructMatch(*target, mol3, ps).empty());
     }
   }
   SECTION("basics string") {
@@ -626,14 +626,14 @@ TEST_CASE("pickling HasPropWithValue queries") {
     mol3.getBondWithIdx(0)->expandQuery(
         makePropQuery<Bond, std::string>("bar", "dsafasdf"));
 
-    CHECK(SubstructMatch(*target, *mol, ps).size() == 0);
-    CHECK(SubstructMatch(*target, mol2, ps).size() == 0);
-    CHECK(SubstructMatch(*target, mol3, ps).size() == 0);
+    CHECK(SubstructMatch(*target, *mol, ps).empty());
+    CHECK(SubstructMatch(*target, mol2, ps).empty());
+    CHECK(SubstructMatch(*target, mol3, ps).empty());
     target->getAtomWithIdx(0)->setProp<std::string>("foo", "asdfs");
     target->getBondWithIdx(0)->setProp<std::string>("bar", "dsafasdf");
     CHECK(SubstructMatch(*target, *mol, ps).size() == 1);
-    CHECK(SubstructMatch(*target, mol2, ps).size() == 0);
-    CHECK(SubstructMatch(*target, mol3, ps).size() == 0);
+    CHECK(SubstructMatch(*target, mol2, ps).empty());
+    CHECK(SubstructMatch(*target, mol3, ps).empty());
 
     {
       std::string pkl;
@@ -651,9 +651,9 @@ TEST_CASE("pickling HasPropWithValue queries") {
       RWMol pklmol(pkl);
       REQUIRE(pklmol.getAtomWithIdx(0)->hasQuery());
       REQUIRE(pklmol.getBondWithIdx(0)->hasQuery());
-      CHECK(SubstructMatch(*target, pklmol, ps).size() == 0);
+      CHECK(SubstructMatch(*target, pklmol, ps).empty());
       // make sure we are idempotent in pickling
-      CHECK(SubstructMatch(*target, mol2, ps).size() == 0);
+      CHECK(SubstructMatch(*target, mol2, ps).empty());
     }
     {
       std::string pkl;
@@ -661,9 +661,9 @@ TEST_CASE("pickling HasPropWithValue queries") {
       RWMol pklmol(pkl);
       REQUIRE(pklmol.getAtomWithIdx(0)->hasQuery());
       REQUIRE(pklmol.getBondWithIdx(0)->hasQuery());
-      CHECK(SubstructMatch(*target, pklmol, ps).size() == 0);
+      CHECK(SubstructMatch(*target, pklmol, ps).empty());
       // make sure we are idempotent in pickling
-      CHECK(SubstructMatch(*target, mol3, ps).size() == 0);
+      CHECK(SubstructMatch(*target, mol3, ps).empty());
     }
   }
   SECTION("basics EBV") {
@@ -694,15 +694,15 @@ TEST_CASE("pickling HasPropWithValue queries") {
     mol3.getBondWithIdx(0)->expandQuery(
         makePropQuery<Bond, ExplicitBitVect>("bar", bv2, 0.0));
 
-    CHECK(SubstructMatch(*target, *mol, ps).size() == 0);
-    CHECK(SubstructMatch(*target, mol2, ps).size() == 0);
-    CHECK(SubstructMatch(*target, mol3, ps).size() == 0);
+    CHECK(SubstructMatch(*target, *mol, ps).empty());
+    CHECK(SubstructMatch(*target, mol2, ps).empty());
+    CHECK(SubstructMatch(*target, mol3, ps).empty());
 
     target->getAtomWithIdx(0)->setProp<ExplicitBitVect>("foo", bv);
     target->getBondWithIdx(0)->setProp<ExplicitBitVect>("bar", bv);
     CHECK(SubstructMatch(*target, *mol, ps).size() == 1);
-    CHECK(SubstructMatch(*target, mol2, ps).size() == 0);
-    CHECK(SubstructMatch(*target, mol3, ps).size() == 0);
+    CHECK(SubstructMatch(*target, mol2, ps).empty());
+    CHECK(SubstructMatch(*target, mol3, ps).empty());
     {
       std::string pkl;
       MolPickler::pickleMol(*mol, pkl);
@@ -719,9 +719,9 @@ TEST_CASE("pickling HasPropWithValue queries") {
       RWMol pklmol(pkl);
       REQUIRE(pklmol.getAtomWithIdx(0)->hasQuery());
       REQUIRE(pklmol.getBondWithIdx(0)->hasQuery());
-      CHECK(SubstructMatch(*target, pklmol, ps).size() == 0);
+      CHECK(SubstructMatch(*target, pklmol, ps).empty());
       // make sure we are idempotent in pickling
-      CHECK(SubstructMatch(*target, mol2, ps).size() == 0);
+      CHECK(SubstructMatch(*target, mol2, ps).empty());
     }
     {
       std::string pkl;
@@ -729,9 +729,9 @@ TEST_CASE("pickling HasPropWithValue queries") {
       RWMol pklmol(pkl);
       REQUIRE(pklmol.getAtomWithIdx(0)->hasQuery());
       REQUIRE(pklmol.getBondWithIdx(0)->hasQuery());
-      CHECK(SubstructMatch(*target, pklmol, ps).size() == 0);
+      CHECK(SubstructMatch(*target, pklmol, ps).empty());
       // make sure we are idempotent in pickling
-      CHECK(SubstructMatch(*target, mol3, ps).size() == 0);
+      CHECK(SubstructMatch(*target, mol3, ps).empty());
     }
   }
 }
