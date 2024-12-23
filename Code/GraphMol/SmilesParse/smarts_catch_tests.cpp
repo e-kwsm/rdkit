@@ -37,7 +37,7 @@ TEST_CASE("Github #8424: direction on aromatic bonds in SMARTS") {
     REQUIRE(m);
     auto smarts = MolToSmarts(*m);
     // should have slashes in both directions
-    CHECK(smarts.find("/") != std::string::npos);
-    CHECK(smarts.find("\\") != std::string::npos);
+    CHECK(smarts.find('/') != std::string::npos);
+    CHECK(smarts.find('\\') != std::string::npos);
   }
 }
