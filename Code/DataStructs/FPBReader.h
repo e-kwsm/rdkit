@@ -150,7 +150,7 @@ class RDKIT_DATASTRUCTS_EXPORT FPBReader {
   double getTanimoto(unsigned int idx, const std::uint8_t *bv) const;
   //! \overload
   double getTanimoto(unsigned int idx,
-                     const boost::shared_array<std::uint8_t> &bv) const {
+                     boost::shared_array<std::uint8_t> bv) const {
     return getTanimoto(idx, bv.get());
   }
   //! \overload
@@ -173,7 +173,7 @@ class RDKIT_DATASTRUCTS_EXPORT FPBReader {
       bool usePopcountScreen = true) const;
   //! \overload
   std::vector<std::pair<double, unsigned int>> getTanimotoNeighbors(
-      const boost::shared_array<std::uint8_t> &bv, double threshold = 0.7,
+      boost::shared_array<std::uint8_t> bv, double threshold = 0.7,
       bool usePopcountScreen = true) const {
     return getTanimotoNeighbors(bv.get(), threshold, usePopcountScreen);
   }
@@ -195,9 +195,8 @@ class RDKIT_DATASTRUCTS_EXPORT FPBReader {
   double getTversky(unsigned int idx, const std::uint8_t *bv, double ca,
                     double cb) const;
   //! \overload
-  double getTversky(unsigned int idx,
-                    const boost::shared_array<std::uint8_t> &bv, double ca,
-                    double cb) const {
+  double getTversky(unsigned int idx, boost::shared_array<std::uint8_t> bv,
+                    double ca, double cb) const {
     return getTversky(idx, bv.get(), ca, cb);
   }
   //! \overload
@@ -223,7 +222,7 @@ class RDKIT_DATASTRUCTS_EXPORT FPBReader {
       bool usePopcountScreen = true) const;
   //! \overload
   std::vector<std::pair<double, unsigned int>> getTverskyNeighbors(
-      const boost::shared_array<std::uint8_t> &bv, double ca, double cb,
+      boost::shared_array<std::uint8_t> bv, double ca, double cb,
       double threshold = 0.7, bool usePopcountScreen = true) const {
     return getTverskyNeighbors(bv.get(), ca, cb, threshold, usePopcountScreen);
   }
@@ -240,7 +239,7 @@ class RDKIT_DATASTRUCTS_EXPORT FPBReader {
       const std::uint8_t *bv) const;
   //! \overload
   std::vector<unsigned int> getContainingNeighbors(
-      const boost::shared_array<std::uint8_t> &bv) const {
+      boost::shared_array<std::uint8_t> bv) const {
     return getContainingNeighbors(bv.get());
   }
   //! \overload
