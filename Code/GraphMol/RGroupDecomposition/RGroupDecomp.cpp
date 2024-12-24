@@ -304,7 +304,7 @@ int RGroupDecomposition::getMatchingCoreInternal(
       }
 
       if (passes_filter) {
-        tmatches_filtered.push_back(mv);
+        tmatches_filtered.push_back(std::move(mv));
       }
       ++i;
     }
