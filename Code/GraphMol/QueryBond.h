@@ -43,14 +43,14 @@ class RDKIT_GRAPHMOL_EXPORT QueryBond : public Bond {
     }
   }
   QueryBond(QueryBond &&other) noexcept : Bond(std::move(other)) {
-    dp_query = other.dp_query;
+    dp_query = std::move(other.dp_query);
   }
   QueryBond &operator=(QueryBond &&other) noexcept {
     if (this == &other) {
       return *this;
     }
     QueryBond::operator=(std::move(other));
-    dp_query = other.dp_query;
+    dp_query = std::move(other.dp_query);
     return *this;
   }
 
