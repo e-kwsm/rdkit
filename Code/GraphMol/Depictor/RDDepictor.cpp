@@ -997,7 +997,7 @@ RDKit::MatchVectType generateDepictionMatching2DStructure(
             if (refIdx == -1) {
               continue;
             }
-            prunedMatch.push_back(pair);
+            prunedMatch.push_back(std::move(pair));
           }
           if (nMatchedHeavies < maxMatchedHeavies) {
             break;
@@ -1069,7 +1069,7 @@ RDKit::MatchVectType generateDepictionMatching2DStructure(
              getMostSubstitutedCoreMatch(*prbMol, *queryAdj, matches)) {
           if (pair.second < numMolAtoms &&
               patternToRefMapping.at(pair.first) != -1) {
-            matchVect.push_back(pair);
+            matchVect.push_back(std::move(pair));
           }
         }
       }

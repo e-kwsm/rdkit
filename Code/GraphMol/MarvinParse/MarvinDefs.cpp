@@ -1089,7 +1089,7 @@ void MarvinMolBase::pushOwnedAtom(MarvinAtom *atom) {
 void MarvinMolBase::pushOwnedBond(MarvinBond *bond) {
   PRECONDITION(bond, "bad bond");
   PRECONDITION(this->parent, "only sgroups should call the base class version");
-  this->parent->pushOwnedBond(bond);
+  this->parent->pushOwnedBond(std::move(bond));
 }
 
 void MarvinMolBase::removeOwnedAtom(MarvinAtom *atom) {
