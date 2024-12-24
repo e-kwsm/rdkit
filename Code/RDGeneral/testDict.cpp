@@ -650,7 +650,7 @@ void testUpdate() {
     }
 
     {
-      const Dict &d2(d);
+      Dict d2(d);
       TEST_ASSERT(d.getVal<double>("foo2") == d2.getVal<double>("foo2"));
       TEST_ASSERT(d.getVal<std::vector<int>>("foo3") ==
                   d2.getVal<std::vector<int>>("foo3"));
