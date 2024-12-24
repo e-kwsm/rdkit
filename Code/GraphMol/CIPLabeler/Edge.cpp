@@ -45,7 +45,7 @@ bool Edge::isBeg(const Node *node) const { return node == dp_beg; }
 
 bool Edge::isEnd(const Node *node) const { return node == dp_end; }
 
-void Edge::setAux(Descriptor aux) { d_aux = aux; }
+void Edge::setAux(Descriptor aux) { d_aux = std::move(aux); }
 
 void Edge::flip() { std::swap(dp_beg, dp_end); }
 
