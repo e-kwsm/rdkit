@@ -55,8 +55,8 @@ StereoGroup::StereoGroup(StereoGroupType grouptype,
                          const std::vector<Atom *> &atoms,
                          const std::vector<Bond *> &bonds, unsigned readId)
     : d_grouptype(grouptype),
-      d_atoms(atoms),
-      d_bonds(bonds),
+      d_atoms(std::move(atoms)),
+      d_bonds(std::move(bonds)),
       d_readId{readId} {}
 
 StereoGroupType StereoGroup::getGroupType() const { return d_grouptype; }
