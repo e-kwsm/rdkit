@@ -345,7 +345,7 @@ void readSubstanceGroups(RWMol *mol, const rj::Value &sgVals) {
           }
           RDGeom::Point3D loc(pta[0].GetDouble(), pta[1].GetDouble(),
                               pta[2].GetDouble());
-          bracket[idx++] = loc;
+          bracket[idx++] = std::move(loc);
         }
         sg.getBrackets().push_back(std::move(bracket));
       }
@@ -364,7 +364,7 @@ void readSubstanceGroups(RWMol *mol, const rj::Value &sgVals) {
           }
           RDGeom::Point3D loc(pta[0].GetDouble(), pta[1].GetDouble(),
                               pta[2].GetDouble());
-          cstate.vector = loc;
+          cstate.vector = std::move(loc);
         }
         sg.getCStates().push_back(std::move(cstate));
       }
