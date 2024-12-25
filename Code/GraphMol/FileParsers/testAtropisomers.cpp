@@ -286,8 +286,6 @@ class MolAtropTest {
       return;
     }
     TEST_ASSERT(expectedResult == true);
-
-    return;
   }
 
   void testKekuleWedgeErrorSmiles(const KekuleTest *kekuleTest) {
