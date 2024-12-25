@@ -5183,11 +5183,11 @@ TEST_CASE(
     ROMol m2(*m1);
     CIPLabeler::assignCIPLabels(m2);
 
-    std::string absLabel = "";
+    std::string absLabel;
     std::string orLabel = "o{id} ({cip})";
     std::string andLabel = "&{id} ({cip})";
     std::string cipLabel = "[{cip}]";
-    std::string bondLabel = "";
+    std::string bondLabel;
     Chirality::addStereoAnnotations(m2, absLabel, orLabel, andLabel, cipLabel,
                                     bondLabel);
 
