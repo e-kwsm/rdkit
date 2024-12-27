@@ -210,7 +210,7 @@ class RDKIT_MOLSTANDARDIZE_EXPORT Pipeline {
 
  public:
   Pipeline() = default;
-  explicit Pipeline(const PipelineOptions &o) : options(o) {};
+  explicit Pipeline(PipelineOptions o) : options(std::move(o)) {}
   ~Pipeline() = default;
 
   PipelineResult run(const std::string &molblock) const;
