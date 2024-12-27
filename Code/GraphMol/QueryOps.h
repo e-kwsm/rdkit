@@ -1033,11 +1033,11 @@ class HasPropWithValueQuery<TargetPtr, ExplicitBitVect>
     this->setDataFunc(0);
   }
 
-  explicit HasPropWithValueQuery(std::string prop, const ExplicitBitVect &v,
+  explicit HasPropWithValueQuery(std::string prop, ExplicitBitVect v,
                                  double tol = 0.0)
       : Queries::EqualityQuery<int, TargetPtr, true>(),
         propname(std::move(prop)),
-        val(v),
+        val(std::move(v)),
         tol(tol) {
     this->setDescription("HasPropWithValue");
     this->setDataFunc(nullptr);
