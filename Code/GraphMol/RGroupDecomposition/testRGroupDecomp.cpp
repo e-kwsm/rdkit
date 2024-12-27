@@ -3851,7 +3851,7 @@ M  END
   decomp.process();
   auto rows = decomp.getRGroupsAsRows();
   int i = 0;
-  for (auto it = rows.cbegin(); it != rows.cend(); ++it, ++i) {
+  for (auto it = rows.begin(); it != rows.end(); ++it, ++i) {
     TEST_ASSERT(i < 2);
     CHECK_RGROUP(it, expected[i]);
   }
@@ -3889,7 +3889,7 @@ void testTautomerCore() {
   decomp1.process();
   auto rows = decomp1.getRGroupsAsRows();
   int i = 0;
-  for (auto it = rows.cbegin(); it != rows.cend(); ++it, ++i) {
+  for (auto it = rows.begin(); it != rows.end(); ++it, ++i) {
     TEST_ASSERT(i < 2);
     CHECK_RGROUP(it, expected1[i]);
   }
@@ -3902,7 +3902,7 @@ void testTautomerCore() {
   decomp2.process();
   rows = decomp2.getRGroupsAsRows();
   i = 0;
-  for (auto it = rows.cbegin(); it != rows.cend(); ++it, ++i) {
+  for (auto it = rows.begin(); it != rows.end(); ++it, ++i) {
     TEST_ASSERT(i < 2);
     CHECK_RGROUP(it, expected2[i]);
   }
@@ -3941,7 +3941,7 @@ M  END
   decomp3.process();
   rows = decomp3.getRGroupsAsRows();
   i = 0;
-  for (auto it = rows.cbegin(); it != rows.cend(); ++it, ++i) {
+  for (auto it = rows.begin(); it != rows.end(); ++it, ++i) {
     TEST_ASSERT(i < 2);
     CHECK_RGROUP(it, expected2[i]);
   }
@@ -4094,7 +4094,7 @@ void testNotEnumeratedCore() {
   decomp.process();
   auto rows = decomp.getRGroupsAsRows();
   TEST_ASSERT(rows.size() == 1);
-  auto it = rows.cbegin();
+  auto it = rows.begin();
   CHECK_RGROUP(it, expected);
 }
 
