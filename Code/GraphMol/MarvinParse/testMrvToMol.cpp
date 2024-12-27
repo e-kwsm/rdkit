@@ -27,6 +27,7 @@
 #include <string>
 #include <fstream>
 #include <filesystem>
+#include <utility>
 
 using namespace RDKit;
 using namespace v2::FileParsers;
@@ -57,7 +58,7 @@ class MrvTests {
             bool reapplyMolBlockWedgingInit = true)
         : atomCount(atomCountInit),
           bondCount(bondCountInit),
-          fileName(fileNameInit),
+          fileName(std::move(fileNameInit)),
           expectedResult(expectedResultInit),
           sanitizeFlag(sanitizeFlagInit),
           reapplyMolBlockWedging(reapplyMolBlockWedgingInit) {};
@@ -96,7 +97,7 @@ class MrvTests {
     RxnTest(std::string fileNameInit, bool expectedResultInit,
             int reactantCountInit, int agentCountInit, int productCountInit,
             int warnInit, int errorInit)
-        : fileName(fileNameInit),
+        : fileName(std::move(fileNameInit)),
           expectedResult(expectedResultInit),
           reactantCount(reactantCountInit),
           agentCount(agentCountInit),
@@ -117,8 +118,8 @@ class MrvTests {
     SmilesTest(std::string nameInit, std::string smilesInit,
                bool expectedResultInit, int atomCountInit, int bondCountInit,
                bool sanitizeFlagInit)
-        : name(nameInit),
-          smiles(smilesInit),
+        : name(std::move(nameInit)),
+          smiles(std::move(smilesInit)),
           expectedResult(expectedResultInit),
           sanitizeFlag(sanitizeFlagInit),
           atomCount(atomCountInit),
@@ -126,8 +127,8 @@ class MrvTests {
 
     SmilesTest(std::string nameInit, std::string smilesInit,
                bool expectedResultInit, int atomCountInit, int bondCountInit)
-        : name(nameInit),
-          smiles(smilesInit),
+        : name(std::move(nameInit)),
+          smiles(std::move(smilesInit)),
           expectedResult(expectedResultInit),
           sanitizeFlag(true),
           atomCount(atomCountInit),
