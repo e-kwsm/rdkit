@@ -1655,7 +1655,7 @@ extern "C" CBfp makeAvalonBFP(CROMol data, bool isQuery,
   }
 #else
   elog(ERROR, "Avalon support not enabled");
-  return NULL;
+  return nullptr;
 #endif
 }
 
