@@ -12,6 +12,7 @@
 #ifndef RD_TORSIONANGLECONTRIBS_H
 #define RD_TORSIONANGLECONTRIBS_H
 #include <ForceField/Contrib.h>
+#include <utility>
 #include <vector>
 
 namespace RDGeom {
@@ -43,8 +44,8 @@ struct RDKIT_FORCEFIELDHELPERS_EXPORT TorsionAngleContribsParams {
         idx2(idx2),
         idx3(idx3),
         idx4(idx4),
-        forceConstants(forceConstants),
-        signs(signs) {}
+        forceConstants(std::move(forceConstants)),
+        signs(std::move(signs)) {}
 };
 
 class RDKIT_FORCEFIELDHELPERS_EXPORT TorsionAngleContribs
@@ -57,7 +58,7 @@ class RDKIT_FORCEFIELDHELPERS_EXPORT TorsionAngleContribs
     \param owner  pointer to the owning ForceField
   */
   TorsionAngleContribs(ForceField *owner);
-  ~TorsionAngleContribs() = default;
+  ~TorsionAngleContribs() override = default;
   //! Add contribution to this collection.
   /*!
     \param idx1           index of atom1 in the ForceField's positions
