@@ -29,6 +29,7 @@
 #include <fstream>
 #include <boost/lexical_cast.hpp>
 #include <filesystem>
+#include <utility>
 using namespace RDKit;
 
 class MolAtropTest {
@@ -54,7 +55,7 @@ class MolAtropTest {
             int atomCountInit, int bondCountInit)
         : atomCount(atomCountInit),
           bondCount(bondCountInit),
-          fileName(fileNameInit),
+          fileName(std::move(fileNameInit)),
           expectedResult(expectedResultInit) {};
   };
 
@@ -70,8 +71,8 @@ class MolAtropTest {
                bool expectedResultInit, int atomCountInit, int bondCountInit)
         : atomCount(atomCountInit),
           bondCount(bondCountInit),
-          smiles(smilesInit),
-          expectedOutput(nameInit),
+          smiles(std::move(smilesInit)),
+          expectedOutput(std::move(nameInit)),
           expectedResult(expectedResultInit) {};
   };
 
@@ -245,7 +246,7 @@ class MolAtropTest {
 
       BOOST_LOG(rdInfoLog) << "done" << std::endl;
     } catch (const std::exception &e) {
-      if (expectedResult != false) {
+      if (expectedResult) {
         throw;
       }
       return;
