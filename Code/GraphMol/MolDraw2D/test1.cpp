@@ -3644,8 +3644,8 @@ void testGithub2931() {
     std::vector<MatchVectType> hits_vect;
     SubstructMatch(mol, *query, hits_vect);
     for (auto &i : hits_vect) {
-      for (size_t j = 0; j < i.size(); ++j) {
-        hit_atoms.push_back(i[j].second);
+      for (auto &j : i) {
+        hit_atoms.push_back(j.second);
       }
     }
     delete query;
