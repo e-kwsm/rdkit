@@ -357,7 +357,7 @@ void copyVarianceData(const FingerprintVarianceScoreData &fromData,
     if (df == to.end()) {
       to.emplace(it.first, make_shared<VarianceDataForLabel>(*it.second));
     } else {
-      auto &fromData = it->second;
+      auto &fromData = it.second;
       auto &toData = df->second;
       toData->numberFingerprints = fromData->numberFingerprints;
       toData->bitCounts.assign(fromData->bitCounts.cbegin(),
