@@ -198,9 +198,9 @@ static int within(const AtomRecord &src, const AtomRecord *dst, double dist) {
 }
 
 static void checkResidue(const AtomRecord *ptr, unsigned int count) {
-  for (unsigned int i = 0; i < CHECKMAX; i++) {
-    if (ptr->resName.compare(0, 3, residueCheck[i].name, 0, 3) == 0) {
-      if (residueCheck[i].count != count) {
+  for (auto i : residueCheck) {
+    if (ptr->resName.compare(0, 3, i.name, 0, 3) == 0) {
+      if (i.count != count) {
         std::cout << "Warning: Atom Count for residue " + ptr->resName +
                          std::to_string(ptr->resSerNo) + ptr->chain +
                          " does not match expected count"
@@ -369,9 +369,9 @@ struct State {
   void freeGrid() {
     for (auto& x : grid) {
       for (auto& y : x) {
-        for (unsigned int z = 0; z < VOXORDER; z++) {
-          freeAtomList(y[z]);
-          y[z] = nullptr;
+        for (auto &z : y) {
+          freeAtomList(z);
+          z = nullptr;
         }
       }
     }
@@ -573,8 +573,8 @@ struct State {
     freeList = nullptr;
     for (auto& x : grid) {
       for (auto& y : x) {
-        for (unsigned int z = 0; z < VOXORDER; z++) {
-          y[z] = nullptr;
+        for (auto &z : y) {
+          z = nullptr;
         }
       }
     }
