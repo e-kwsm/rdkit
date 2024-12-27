@@ -58,7 +58,7 @@ INT_VECT addConformersFromList(ROMol &mol,
     if (coords[i].size() != numCoordPerConf) {
       throw ValueErrorException("Wrong number of coordinates");
     }
-    RDKit::Conformer *conf = new RDKit::Conformer(numAtomsPerConf);
+    auto *conf = new RDKit::Conformer(numAtomsPerConf);
     // loop over atoms
     for (unsigned int atom = 0; atom < numAtomsPerConf; ++atom) {
       // RDGeom::Point3D p(coords[i][3*atom], coords[i][3*atom+1],
