@@ -26,7 +26,7 @@ namespace SynthonSpaceSearch {
 class RDKIT_SYNTHONSPACESEARCH_EXPORT Synthon {
  public:
   Synthon() = default;
-  Synthon(const std::string &smi, const std::string &id);
+  Synthon(std::string smi, std::string id);
   Synthon(const Synthon &other);
   Synthon(Synthon &&other) = default;
   Synthon &operator=(const Synthon &other);

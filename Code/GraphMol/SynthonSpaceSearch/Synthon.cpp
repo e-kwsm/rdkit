@@ -15,11 +15,12 @@
 #include <GraphMol/SynthonSpaceSearch/Synthon.h>
 #include <GraphMol/SmilesParse/SmilesParse.h>
 #include <GraphMol/SmilesParse/SmilesWrite.h>
+#include <utility>
 
 namespace RDKit::SynthonSpaceSearch {
 
-Synthon::Synthon(const std::string &smi, const std::string &id)
-    : d_smiles(smi), d_id(id) {
+Synthon::Synthon(std::string smi, std::string id)
+    : d_smiles(std::move(smi)), d_id(std::move(id)) {
   v2::SmilesParse::SmilesParserParams params;
   params.sanitize = false;
   dp_origMol = v2::SmilesParse::MolFromSmiles(d_smiles, params);
