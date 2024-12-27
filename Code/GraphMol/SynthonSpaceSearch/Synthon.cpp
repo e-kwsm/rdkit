@@ -21,6 +21,7 @@
 #include <GraphMol/SmilesParse/SmilesParse.h>
 #include <GraphMol/SmilesParse/SmartsWrite.h>
 #include <GraphMol/SmilesParse/SmilesWrite.h>
+#include <utility>
 
 namespace RDKit::SynthonSpaceSearch {
 
