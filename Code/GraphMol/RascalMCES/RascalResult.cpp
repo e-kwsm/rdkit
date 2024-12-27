@@ -13,6 +13,7 @@
 
 #include <boost/dynamic_bitset.hpp>
 #include <boost/algorithm/string.hpp>
+#include <utility>
 
 #include <GraphMol/MolOps.h>
 #include <GraphMol/QueryAtom.h>
@@ -37,15 +38,14 @@ RascalResult::RascalResult(const RDKit::ROMol &mol1, const RDKit::ROMol &mol2,
                            double tier2Sim, bool ringMatchesRingOnly,
                            bool singleLargestFrag, int maxFragSep,
                            bool exactConnectionsMatch,
-                           const std::string &equivalentAtoms,
-                           bool ignoreBondOrders)
+                           std::string equivalentAtoms, bool ignoreBondOrders)
     : d_timedOut(timedOut),
       d_tier1Sim(tier1Sim),
       d_tier2Sim(tier2Sim),
       d_ringMatchesRingOnly(ringMatchesRingOnly),
       d_maxFragSep(maxFragSep),
       d_exactConnectionsMatch(exactConnectionsMatch),
-      d_equivalentAtoms(equivalentAtoms),
+      d_equivalentAtoms(std::move(equivalentAtoms)),
       d_ignoreBondOrders(ignoreBondOrders) {
   const std::vector<std::vector<int>> *mol1AdjMatrix;
   if (swapped) {
