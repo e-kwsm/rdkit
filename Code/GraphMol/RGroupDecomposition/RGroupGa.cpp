@@ -372,8 +372,8 @@ void copyVarianceData(const FingerprintVarianceScoreData &fromData,
 void clearVarianceData(
     FingerprintVarianceScoreData &fingerprintVarianceScoreData) {
   auto &data = fingerprintVarianceScoreData.labelsToVarianceData;
-  for (auto it = data.begin(); it != data.end(); ++it) {
-    auto d = it->second;
+  for (auto &it : data) {
+    auto d = it.second;
     d->numberFingerprints = 0;
     d->bitCounts.assign(d->bitCounts.size(), 0.0);
   }
