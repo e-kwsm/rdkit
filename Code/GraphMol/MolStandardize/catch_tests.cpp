@@ -1740,7 +1740,7 @@ TEST_CASE("Custom Scoring Functions") {
     REQUIRE(MolStandardize::TautomerScoringFunctions::scoreSubstructs(*mol) ==
             6);
 
-    auto terms = MolStandardize::TautomerScoringFunctions::
+    const auto &terms = MolStandardize::TautomerScoringFunctions::
         getDefaultTautomerScoreSubstructs();
     REQUIRE(terms.size() == 12);
   }
