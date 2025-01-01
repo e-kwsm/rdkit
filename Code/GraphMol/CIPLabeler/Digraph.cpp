@@ -36,7 +36,8 @@ const int MAX_NODE_DIST = 0;
 
 Node &Digraph::addNode(std::vector<char> &&visit, Atom *atom,
                        boost::rational<int> &&frac, int dist, int flags) {
-  d_nodes.emplace_back(this, std::move(visit), atom, frac, dist, flags);
+  d_nodes.emplace_back(this, std::move(visit), atom, std::move(frac), dist,
+                       flags);
   return d_nodes.back();
 }
 
