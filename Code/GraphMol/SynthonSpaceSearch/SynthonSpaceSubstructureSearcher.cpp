@@ -147,8 +147,8 @@ std::vector<boost::dynamic_bitset<>> screenSynthonsWithFPs(
   }
   // If all the fragments had a match, these results are valid.
   if (fragsMatched.count() != fragsMatched.size()) {
-    for (size_t i = 0; i < passedFPs.size(); ++i) {
-      passedFPs[i].reset();
+    for (auto &passedFP : passedFPs) {
+      passedFP.reset();
     }
   }
 
