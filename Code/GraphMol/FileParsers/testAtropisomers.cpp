@@ -253,9 +253,10 @@ class MolAtropTest {
     TEST_ASSERT(expectedResult == true);
   }
 
-  void testKekuleWedgeError(RWMol *mol, std::string expectedSmi,
-                            bool expectedResult, unsigned int expectedAtomCount,
-                            unsigned int expectedBondCount) {
+  static void testKekuleWedgeError(RWMol *mol, std::string expectedSmi,
+                                   bool expectedResult,
+                                   unsigned int expectedAtomCount,
+                                   unsigned int expectedBondCount) {
     BOOST_LOG(rdInfoLog) << "testing aromatic atropisomers" << std::endl;
 
     TEST_ASSERT(mol != nullptr);
@@ -292,7 +293,7 @@ class MolAtropTest {
     return;
   }
 
-  void testKekuleWedgeErrorSmiles(const KekuleTest *kekuleTest) {
+  static void testKekuleWedgeErrorSmiles(const KekuleTest *kekuleTest) {
     BOOST_LOG(rdInfoLog) << "testing aromatic atropisomers" << std::endl;
 
     UseLegacyStereoPerceptionFixture useLegacy(false);
@@ -317,7 +318,7 @@ class MolAtropTest {
                          kekuleTest->bondCount);
   }
 
-  void testKekuleWedgeErrorMol(const MolTest *kekuleTest) {
+  static void testKekuleWedgeErrorMol(const MolTest *kekuleTest) {
     BOOST_LOG(rdInfoLog) << "testing aromatic atropisomers" << std::endl;
 
     UseLegacyStereoPerceptionFixture useLegacy(false);
