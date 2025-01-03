@@ -852,7 +852,8 @@ void clearBondDirs(ROMol &mol, Bond *refBond, const Atom *fromAtom,
   PRECONDITION(fromAtom, "bad atom");
   PRECONDITION(&fromAtom->getOwningMol() == &mol, "bad bond");
 
-  ROMol::OEDGE_ITER beg, end;
+  ROMol::OEDGE_ITER beg;
+  ROMol::OEDGE_ITER end;
   boost::tie(beg, end) = mol.getAtomBonds(fromAtom);
   bool nbrPossible = false;
   bool adjusted = false;
