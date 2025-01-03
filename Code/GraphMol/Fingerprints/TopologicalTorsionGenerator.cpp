@@ -135,8 +135,7 @@ TopologicalTorsionEnvGenerator<OutputType>::getEnvironments(
   PATH_LIST paths = findAllPathsOfLengthN(
       mol, topologicalTorsionArguments->d_torsionAtomCount, useBonds, useHs,
       rootedAtAtom, topologicalTorsionArguments->df_onlyShortestPaths);
-  for (PATH_LIST::const_iterator pathIt = paths.begin(); pathIt != paths.end();
-       ++pathIt) {
+  for (auto(); pathIt != paths.end(); ++pathIt) {
     bool keepIt = true;
     if (fromAtomsBV) {
       keepIt = false;
