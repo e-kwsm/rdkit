@@ -558,7 +558,7 @@ std::unique_ptr<ROMol> SynthonSet::buildProduct(
   mzparams.label = MolzipLabel::Isotope;
 
   auto prodMol = std::make_unique<ROMol>(
-      *d_synthons.front()[synthNums.front()]->getOrigMol().get());
+      *d_synthons.front()[synthNums.front()]->getOrigMol());
   for (size_t i = 1; i < synthNums.size(); ++i) {
     prodMol.reset(
         combineMols(*prodMol, *d_synthons[i][synthNums[i]]->getOrigMol()));
