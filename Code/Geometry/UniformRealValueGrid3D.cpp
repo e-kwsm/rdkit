@@ -275,7 +275,9 @@ void UniformRealValueGrid3D::initFromText(const char *pkl,
   streamRead(ss, tInt);
   d_numZ = tInt;
   streamRead(ss, d_spacing);
-  double oX, oY, oZ;
+  double oX;
+  double oY;
+  double oZ;
   streamRead(ss, oX);
   streamRead(ss, oY);
   streamRead(ss, oZ);
