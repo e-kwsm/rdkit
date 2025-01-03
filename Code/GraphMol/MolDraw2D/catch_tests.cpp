@@ -620,7 +620,10 @@ TEST_CASE("contour data", "[drawing][conrec]") {
     std::vector<double> xps(gridSz);
     std::vector<double> yps(gridSz);
 
-    double minX = 1000, minY = 1000, maxX = -1000, maxY = -1000;
+    double minX = 1000;
+    double minY = 1000;
+    double maxX = -1000;
+    double maxY = -1000;
     const auto conf = m1->getConformer();
     for (size_t i = 0; i < conf.getNumAtoms(); ++i) {
       minX = std::min(minX, conf.getAtomPos(i).x);
@@ -628,8 +631,12 @@ TEST_CASE("contour data", "[drawing][conrec]") {
       maxX = std::max(maxX, conf.getAtomPos(i).x);
       maxY = std::max(maxY, conf.getAtomPos(i).y);
     }
-    double x1 = minX - 0.5, y1 = minY - 0.5, x2 = maxX + 0.5, y2 = maxY + 0.5;
-    double dx = (x2 - x1) / gridSz, dy = (y2 - y1) / gridSz;
+    double x1 = minX - 0.5;
+    double y1 = minY - 0.5;
+    double x2 = maxX + 0.5;
+    double y2 = maxY + 0.5;
+    double dx = (x2 - x1) / gridSz;
+    double dy = (y2 - y1) / gridSz;
     double maxV = 0.0;
     for (size_t ix = 0; ix < gridSz; ++ix) {
       auto px = x1 + ix * dx;
