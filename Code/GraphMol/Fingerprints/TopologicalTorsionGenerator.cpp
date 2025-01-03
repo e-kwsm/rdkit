@@ -135,12 +135,14 @@ TopologicalTorsionEnvGenerator<OutputType>::getEnvironments(
   PATH_LIST paths = findAllPathsOfLengthN(
       mol, topologicalTorsionArguments->d_torsionAtomCount, useBonds, useHs,
       rootedAtAtom, topologicalTorsionArguments->df_onlyShortestPaths);
-  for (auto pathIt = paths.begin(); pathIt != paths.end(); ++pathIt) {
+  for (PATH_LIST::const_iterator pathIt = paths.begin(); pathIt != paths.end();
+       ++pathIt) {
     bool keepIt = true;
     if (fromAtomsBV) {
       keepIt = false;
     }
     std::vector<std::uint32_t> pathCodes;
+    const PATH_TYPE &path = *pathIt;
     if (fromAtomsBV) {
       if (fromAtomsBV->test(static_cast<std::uint32_t>(path.front())) ||
           fromAtomsBV->test(static_cast<std::uint32_t>(path.back()))) {
