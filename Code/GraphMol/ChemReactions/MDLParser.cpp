@@ -286,11 +286,12 @@ void ParseV3000RxnBlock(std::istream &inStream, unsigned int &line,
   }
   for (unsigned int i = 0; i < nAgents; ++i) {
     RWMol *agent;
-    unsigned int natoms, nbonds;
     bool chiralityPossible = false;
     Conformer *conf = nullptr;
     agent = new RWMol();
     try {
+      unsigned int natoms;
+      unsigned int nbonds;
       FileParserUtils::ParseV3000CTAB(&inStream, line, agent, conf,
                                       chiralityPossible, natoms, nbonds, true,
                                       false);
