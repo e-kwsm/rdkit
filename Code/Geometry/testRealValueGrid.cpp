@@ -61,45 +61,65 @@ TEST_CASE("test2UniformRealValueGrid3DPickling") {
 TEST_CASE("test3UniformRealValueGrid3DIndexing") {
   RDGeom::UniformRealValueGrid3D grd(5.0, 5.0, 5.0, 0.1);
   {
-    unsigned int xi = 3, yi = 3, zi = 3;
+    unsigned int xi = 3;
+    unsigned int yi = 3;
+    unsigned int zi = 3;
     unsigned int idx = grd.getGridIndex(xi, yi, zi);
-    unsigned int nxi, nyi, nzi;
+    unsigned int nxi;
+    unsigned int nyi;
+    unsigned int nzi;
     grd.getGridIndices(idx, nxi, nyi, nzi);
     REQUIRE(nxi == xi);
     REQUIRE(nyi == yi);
     REQUIRE(nzi == zi);
   }
   {
-    unsigned int xi = 3, yi = 3, zi = 5;
+    unsigned int xi = 3;
+    unsigned int yi = 3;
+    unsigned int zi = 5;
     unsigned int idx = grd.getGridIndex(xi, yi, zi);
-    unsigned int nxi, nyi, nzi;
+    unsigned int nxi;
+    unsigned int nyi;
+    unsigned int nzi;
     grd.getGridIndices(idx, nxi, nyi, nzi);
     REQUIRE(nxi == xi);
     REQUIRE(nyi == yi);
     REQUIRE(nzi == zi);
   }
   {
-    unsigned int xi = 3, yi = 6, zi = 3;
+    unsigned int xi = 3;
+    unsigned int yi = 6;
+    unsigned int zi = 3;
     unsigned int idx = grd.getGridIndex(xi, yi, zi);
-    unsigned int nxi, nyi, nzi;
+    unsigned int nxi;
+    unsigned int nyi;
+    unsigned int nzi;
     grd.getGridIndices(idx, nxi, nyi, nzi);
     REQUIRE(nxi == xi);
     REQUIRE(nyi == yi);
     REQUIRE(nzi == zi);
   }
   {
-    unsigned int xi = 0, yi = 0, zi = 0;
+    unsigned int xi = 0;
+    unsigned int yi = 0;
+    unsigned int zi = 0;
     unsigned int idx = grd.getGridIndex(xi, yi, zi);
-    unsigned int nxi, nyi, nzi;
+    unsigned int nxi;
+    unsigned int nyi;
+    unsigned int nzi;
     grd.getGridIndices(idx, nxi, nyi, nzi);
     REQUIRE(nxi == xi);
     REQUIRE(nyi == yi);
     REQUIRE(nzi == zi);
   }
   {
-    unsigned int xi = 8, yi = 2, zi = 1;
+    unsigned int xi = 8;
+    unsigned int yi = 2;
+    unsigned int zi = 1;
     unsigned int idx = grd.getGridIndex(xi, yi, zi);
-    unsigned int nxi, nyi, nzi;
+    unsigned int nxi;
+    unsigned int nyi;
+    unsigned int nzi;
     grd.getGridIndices(idx, nxi, nyi, nzi);
     REQUIRE(nxi == xi);
     REQUIRE(nyi == yi);
