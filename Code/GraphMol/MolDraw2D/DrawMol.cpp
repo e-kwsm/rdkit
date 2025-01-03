@@ -3818,7 +3818,8 @@ DrawColour DrawMol::getColour(int atom_idx) const {
     // if only some of the bonds are highlighted, IMO.
     if (!highlightedAtom) {
       const auto *atomPtr = drawMol_->getAtomWithIdx(atom_idx);
-      int numBonds = 0, numHighBonds = 0;
+      int numBonds = 0;
+      int numHighBonds = 0;
       std::unique_ptr<DrawColour> highCol;
       for (const auto &nbri :
            boost::make_iterator_range(drawMol_->getAtomBonds(atomPtr))) {
