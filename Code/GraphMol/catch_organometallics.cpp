@@ -30,7 +30,8 @@ TEST_CASE("convert haptic bond to explicit dative bonds") {
       std::unique_ptr<RWMol> mol(MolFileToMol(pathName + std::get<0>(td)));
       REQUIRE(mol);
       MolOps::hapticBondsToDative(*mol);
-      int numDats = 0, numMetDats = 0;
+      int numDats = 0;
+      int numMetDats = 0;
       for (const auto &b : mol->bonds()) {
         if (b->getBondType() == Bond::DATIVE) {
           ++numDats;
@@ -49,7 +50,8 @@ TEST_CASE("convert haptic bond to explicit dative bonds") {
       std::unique_ptr<ROMol> mol(MolFileToMol(pathName + std::get<0>(td)));
       REQUIRE(mol);
       std::unique_ptr<ROMol> newMol(MolOps::hapticBondsToDative(*mol));
-      int numDats = 0, numMetDats = 0;
+      int numDats = 0;
+      int numMetDats = 0;
       for (const auto &b : newMol->bonds()) {
         if (b->getBondType() == Bond::DATIVE) {
           ++numDats;

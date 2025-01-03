@@ -32,7 +32,9 @@ TEST_CASE("UniformGrid getGridIndex") {
   CHECK(grd.getGridIndex(100, 1, 1) == -1);
   CHECK(grd.getGridIndex(1, 100, 1) == -1);
   CHECK(grd.getGridIndex(1, 1, 100) == -1);
-  unsigned int x, y, z;
+  unsigned int x;
+  unsigned int y;
+  unsigned int z;
   CHECK_THROWS_AS(grd.getGridIndices(960, x, y, z), IndexErrorException);
   CHECK_THROWS_AS(grd.getGridPointLoc(960), IndexErrorException);
 }
