@@ -443,6 +443,7 @@ python::list BCUT(const RDKit::ROMol &mol) {
 std::pair<double, double> BCUT2D_list(const RDKit::ROMol &m,
                                       python::list atomprops) {
   std::vector<double> dvec;
+  dvec.reserve(len(atomprops));
   for (int i = 0; i < len(atomprops); ++i) {
     dvec.push_back(boost::python::extract<double>(atomprops[i]));
   }
@@ -452,6 +453,7 @@ std::pair<double, double> BCUT2D_list(const RDKit::ROMol &m,
 std::pair<double, double> BCUT2D_tuple(const RDKit::ROMol &m,
                                        python::tuple atomprops) {
   std::vector<double> dvec;
+  dvec.reserve(len(atomprops));
   for (int i = 0; i < len(atomprops); ++i) {
     dvec.push_back(boost::python::extract<double>(atomprops[i]));
   }

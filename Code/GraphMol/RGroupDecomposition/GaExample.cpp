@@ -124,6 +124,7 @@ int main(int argc, char *argv[]) {
   cerr << "Read " << molecules.size() << endl;
 
   std::vector<ROMOL_SPTR> cores;
+  cores.reserve(coreSmiles.size());
   for (const auto &s : coreSmiles) {
     cores.emplace_back(SmartsToMol(s));
   }

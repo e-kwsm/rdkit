@@ -208,6 +208,7 @@ python::tuple mtgetFingerprints(FuncType func, python::object mols,
                                 int numThreads) {
   unsigned int nmols = python::len(mols);
   std::vector<const ROMol *> tmols;
+  tmols.reserve(nmols);
   for (auto i = 0u; i < nmols; ++i) {
     tmols.push_back(python::extract<const ROMol *>(mols[i])());
   }

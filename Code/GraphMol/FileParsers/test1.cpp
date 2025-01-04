@@ -5573,6 +5573,7 @@ void testMultiThreadedSwitcher() {
 
   std::vector<std::future<void>> tg;
   unsigned int count = 100;
+  tg.reserve(count);
   for (unsigned int i = 0; i < count; ++i) {
     tg.emplace_back(std::async(std::launch::async, runblock));
   }
