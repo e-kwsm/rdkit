@@ -1385,7 +1385,7 @@ std::vector<std::unique_ptr<RWMol>> MolsFromCDXMLDataStream(
               << "CDXMLParser: Schema " << scheme.scheme_id << " step "
               << scheme.step_id
               << " ReactionStepAtomMap has odd number of entries, skipping schema..."
-              << std::endl;
+              << '\n';
           continue;
         }
         CHECK_INVARIANT(sz % 2 == 0, "bad size");
@@ -1399,7 +1399,7 @@ std::vector<std::unique_ptr<RWMol>> MolsFromCDXMLDataStream(
                 << "CDXMLParser: Schema " << scheme.scheme_id << " step "
                 << scheme.step_id
                 << " ReactionStepAtomMap cannot find atom with node id " << idx1
-                << "skipping schema..." << std::endl;
+                << "skipping schema..." << '\n';
           }
           if (atoms.find(idx2) != atoms.end()) {
             atoms[idx2]->setAtomMapNum(i + 1);
@@ -1409,7 +1409,7 @@ std::vector<std::unique_ptr<RWMol>> MolsFromCDXMLDataStream(
                 << "CDXMLParser: Schema " << scheme.scheme_id << " step "
                 << scheme.step_id
                 << " ReactionStepAtomMap cannot find atom with node id " << idx2
-                << " skipping schema..." << std::endl;
+                << " skipping schema..." << '\n';
           }
         }
       }
