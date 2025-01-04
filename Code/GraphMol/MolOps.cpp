@@ -358,6 +358,7 @@ void cleanUpOrganometallics(RWMol &mol) {
   std::vector<unsigned int> ranks(mol.getNumAtoms());
   RDKit::Canon::rankMolAtoms(mol, ranks);
   std::vector<std::pair<int, int>> atom_ranks;
+  atom_ranks.reserve(ranks.size());
   for (size_t i = 0; i < ranks.size(); ++i) {
     atom_ranks.push_back(std::make_pair(i, ranks[i]));
   }
