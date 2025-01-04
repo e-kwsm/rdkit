@@ -196,6 +196,7 @@ void SynthonSet::readFromDBStream(std::istream &is, std::uint32_t version) {
 
 void SynthonSet::enumerateToStream(std::ostream &os) const {
   std::vector<size_t> numSynthons;
+  numSynthons.reserve(d_synthons.size());
   for (const auto &synths : d_synthons) {
     numSynthons.push_back(synths.size());
   }
