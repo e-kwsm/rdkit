@@ -869,7 +869,7 @@ ROMol *combineMols(const ROMol &mol1, const ROMol &mol2,
     if (mol1.getNumConformers() != mol2.getNumConformers()) {
       BOOST_LOG(rdWarningLog)
           << "combineMols: molecules have unequal numbers of conformers"
-          << std::endl;
+          << '\n';
     }
     for (auto conf1It = res->beginConformers(); conf1It != res->endConformers();
          ++conf1It) {
@@ -1012,7 +1012,7 @@ void parseQueryDefFile(std::istream *inStream,
     }
     if (!m) {
       BOOST_LOG(rdWarningLog) << "cannot convert SMARTS " << qval
-                              << " to molecule at line " << line << std::endl;
+                              << " to molecule at line " << line << '\n';
       continue;
     }
     ROMOL_SPTR msptr(m);
