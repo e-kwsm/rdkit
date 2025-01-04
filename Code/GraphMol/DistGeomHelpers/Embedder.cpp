@@ -1650,6 +1650,7 @@ void EmbedMultipleConfs(ROMol &mol, INT_VECT &res, unsigned int numConfs,
 #ifdef RDK_BUILD_THREADSAFE_SSS
     else {
       std::vector<std::future<void>> tg;
+      tg.reserve(numThreads);
       for (int tid = 0; tid < numThreads; ++tid) {
         tg.emplace_back(std::async(std::launch::async, detail::embedHelper_,
                                    tid, numThreads, &eargs, &params, end_time));
