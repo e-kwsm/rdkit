@@ -203,7 +203,7 @@ void guessFormalCharges(RWMol *res) {
             << nm
             << ": warning - aromatic N with 3 aromatic bonds - "
                "skipping charge guess for this atom"
-            << std::endl;
+            << '\n';
         continue;
       }
 
@@ -761,7 +761,7 @@ void ParseMol2AtomBlock(std::istream *inStream, RWMol *res, unsigned int nAtoms,
                             << ": Warning - no explicit hydrogens in "
                                "mol2 file but needed for formal charge "
                                "estimation."
-                            << std::endl;
+                            << '\n';
   }
   // create conformer based on 3DPoints and add to RWMol
   auto *conf = new Conformer(nAtoms - nLP);
