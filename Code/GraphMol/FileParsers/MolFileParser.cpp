@@ -153,7 +153,7 @@ std::string getV3000Line(std::istream *inStream, unsigned int &line) {
   std::string_view tempStr = inl;
   if (tempStr.size() < 7 || tempStr.substr(0, 7) != "M  V30 ") {
     std::ostringstream errout;
-    errout << "Line " << line << " does not start with 'M  V30 '" << std::endl;
+    errout << "Line " << line << " does not start with 'M  V30 '\n";
     throw FileParseException(errout.str());
   }
   // FIX: do we need to handle trailing whitespace after a -?
@@ -166,8 +166,7 @@ std::string getV3000Line(std::istream *inStream, unsigned int &line) {
     tempStr = inl;
     if (tempStr.size() < 7 || tempStr.substr(0, 7) != "M  V30 ") {
       std::ostringstream errout;
-      errout << "Line " << line << " does not start with 'M  V30 '"
-             << std::endl;
+      errout << "Line " << line << " does not start with 'M  V30 '\n";
       throw FileParseException(errout.str());
     }
   }
@@ -450,7 +449,7 @@ void ParseRadicalLine(RWMol *mol, const std::string &text, bool firstCall,
           break;
         default:
           errout << "Unrecognized radical value " << rad << " for atom "
-                 << aid - 1 << " on line " << line << std::endl;
+                 << aid - 1 << " on line " << line << '\n';
           throw FileParseException(errout.str());
       }
     } catch (boost::bad_lexical_cast &) {
