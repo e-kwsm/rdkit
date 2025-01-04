@@ -657,7 +657,7 @@ int BFSWorkspace::smallestRingsBfs(const ROMol &mol, int root,
       std::string msg =
           "Maximum BFS search size exceeded.\nThis is likely due to a highly "
           "symmetric fused ring system.";
-      BOOST_LOG(rdErrorLog) << msg << std::endl;
+      BOOST_LOG(rdErrorLog) << msg << '\n';
       throw ValueErrorException(msg);
     }
 
@@ -747,7 +747,7 @@ bool _atomSearchBFS(const ROMol &tMol, unsigned int startAtomIdx,
       std::string msg =
           "Maximum BFS search size exceeded.\nThis is likely due to a highly "
           "symmetric fused ring system.";
-      BOOST_LOG(rdErrorLog) << msg << std::endl;
+      BOOST_LOG(rdErrorLog) << msg << '\n';
       throw ValueErrorException(msg);
     }
     tv = bfsq.front();
@@ -1040,7 +1040,7 @@ int findSSSR(const ROMol &mol, VECT_INT_VECT &res, bool includeDativeBonds,
         BOOST_LOG(rdWarningLog)
             << "WARNING: could not find number of expected rings. Switching to "
                "an approximate ring finding algorithm."
-            << std::endl;
+            << '\n';
         mol.getRingInfo()->reset();
         fastFindRings(mol);
         res.clear();
