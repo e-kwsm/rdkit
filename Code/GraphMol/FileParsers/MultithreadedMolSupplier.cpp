@@ -75,7 +75,7 @@ void MultithreadedMolSupplier::reader() {
         record = readCallback(record, index);
       } catch (std::exception &e) {
         BOOST_LOG(rdErrorLog)
-            << "Read callback exception: " << e.what() << std::endl;
+            << "Read callback exception: " << e.what() << '\n';
       }
     }
     auto r = std::make_tuple(record, lineNum, index);

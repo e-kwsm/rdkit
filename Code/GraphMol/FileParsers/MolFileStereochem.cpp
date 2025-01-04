@@ -151,7 +151,7 @@ void addWavyBondsForStereoAny(ROMol &mol, bool clearDoubleBondFlags,
                    StereoBondThresholds::DBL_BOND_NO_STEREO) {
           BOOST_LOG(rdWarningLog)
               << "Setting wavy bond flag on bond " << std::get<2>(tpl)
-              << " which may make other stereo info ambiguous" << std::endl;
+              << " which may make other stereo info ambiguous" << '\n';
         }
         mol.getBondWithIdx(std::get<2>(tpl))
             ->setBondDir(Bond::BondDir::UNKNOWN);
@@ -175,7 +175,7 @@ void addWavyBondsForStereoAny(ROMol &mol, bool clearDoubleBondFlags,
           sstr << " " << i;
         }
       }
-      BOOST_LOG(rdWarningLog) << sstr.str() << std::endl;
+      BOOST_LOG(rdWarningLog) << sstr.str() << '\n';
     }
   }
 }
