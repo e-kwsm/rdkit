@@ -157,7 +157,7 @@ bool parse_fragment(RWMol &mol, ptree &frag,
     // ChemDraw simply assigns a new one
     BOOST_LOG(rdWarningLog)
         << "Invalid or missing fragment id from CDXML fragment, assigning new one..."
-        << std::endl;
+        << '\n';
     frag_id = missing_frag_id;
     missing_frag_id--;
   }
@@ -194,7 +194,7 @@ bool parse_fragment(RWMol &mol, ptree &frag,
             atom_id = stoi(attr.second.data());
             if (ids.find(atom_id) != ids.end()) {
               BOOST_LOG(rdErrorLog) << "Warning, duplicated atom id " << atom_id
-                                    << " skipping fragment" << std::endl;
+                                    << " skipping fragment" << '\n';
               skip_fragment = true;
               break;
             }
@@ -271,14 +271,14 @@ bool parse_fragment(RWMol &mol, ptree &frag,
             } else {
               BOOST_LOG(rdWarningLog)
                   << "Unhandled enhanced stereo type " << stereo_type
-                  << " ignoring" << std::endl;
+                  << " ignoring" << '\n';
             }
           }
         } catch (...) {
           BOOST_LOG(rdErrorLog)
               << "Failed to parse XML fragment " << frag_id
               << " node: " << node.first << " attribute: " << attr.first << ": "
-              << attr.second.data() << std::endl;
+              << attr.second.data() << '\n';
           return false;
         }
       }
@@ -314,7 +314,7 @@ bool parse_fragment(RWMol &mol, ptree &frag,
         } else if (query_label == "ElementList") {
           if (!elementlist.size()) {
             BOOST_LOG(rdWarningLog)
-                << "ElementList is empty, ignoring..." << std::endl;
+                << "ElementList is empty, ignoring..." << '\n';
           } else {
             auto *q = new ATOM_OR_QUERY;
             q->setDescription("AtomOr");
@@ -401,7 +401,7 @@ bool parse_fragment(RWMol &mol, ptree &frag,
           BOOST_LOG(rdErrorLog)
               << "Failed to parse XML fragment " << frag_id
               << " node: " << node.first << " attribute: " << attr.first << ": "
-              << attr.second.data() << std::endl;
+              << attr.second.data() << '\n';
           return false;
         }
       }
@@ -410,7 +410,7 @@ bool parse_fragment(RWMol &mol, ptree &frag,
       BondInfo bond{bond_id, start_atom, end_atom, order, display};
       if (!bond.validate(ids, mol.getNumAtoms())) {
         BOOST_LOG(rdErrorLog) << "Bad bond in CDXML skipping fragment "
-                              << frag_id << "..." << std::endl;
+                              << frag_id << "..." << '\n';
         ;
         skip_fragment =
             true;  // ChemDraw doesn't skip, it just ignores bad bonds...
@@ -476,7 +476,7 @@ bool parse_fragment(RWMol &mol, ptree &frag,
           default:
             BOOST_LOG(rdWarningLog)
                 << "ignoring Wavy bond set on a non double bond id: "
-                << bond.bond_id << std::endl;
+                << bond.bond_id << '\n';
         }
       }
     }
@@ -513,7 +513,7 @@ void set_reaction_data(
       BOOST_LOG(rdWarningLog)
           << "CDXMLParser: Schema " << scheme.scheme_id << " step "
           << scheme.step_id << " " << type << " reaction fragment " << idx
-          << " not found in document." << std::endl;
+          << " not found in document." << '\n';
       continue;
     }
     for (auto reaction_fragment_id : iter->second) {
@@ -522,7 +522,7 @@ void set_reaction_data(
         BOOST_LOG(rdWarningLog)
             << "CDXMLParser: Schema " << scheme.scheme_id << " step "
             << scheme.step_id << " " << type << " fragment " << idx
-            << " not found in document." << std::endl;
+            << " not found in document." << '\n';
         continue;
       }
       auto &mol = mols[fragment->second];
@@ -585,7 +585,7 @@ void visit_children(
           fused = molzip(*mol, molzip_params);
         } catch (Invar::Invariant &) {
           BOOST_LOG(rdWarningLog) << "Failed fusion of fragment skipping... "
-                                  << frag_id << std::endl;
+                                  << frag_id << '\n';
           // perhaps have an option to extract all fragments?
           // mols.push_back(std::move(mol));
           continue;
@@ -657,7 +657,7 @@ void visit_children(
         } catch (...) {
           BOOST_LOG(rdWarningLog)
               << "CDXMLParser: failed sanitizing skipping fragment " << frag_id
-              << std::endl;
+              << '\n';
           mols.pop_back();
           continue;
         }
