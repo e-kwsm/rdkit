@@ -389,9 +389,8 @@ void writeGridToStream(const UniformGrid3D &grid, std::ostream &outStrm) {
   Point3D offSet = grid.getOffset();
   offSet /= spacing;
   outStrm << "Grid file representing a Shape \n\n";
-  outStrm << lenX << " " << lenY << " " << lenZ << " 90.0 90.0 90.0"
-          << std::endl;
-  outStrm << dimX - 1 << " " << dimY - 1 << " " << dimZ - 1 << std::endl;
+  outStrm << lenX << " " << lenY << " " << lenZ << " 90.0 90.0 90.0" << '\n';
+  outStrm << dimX - 1 << " " << dimY - 1 << " " << dimZ - 1 << '\n';
 
   int outX1 = static_cast<int>(floor(offSet.x + 0.5));
   int outX2 =
@@ -415,7 +414,7 @@ void writeGridToStream(const UniformGrid3D &grid, std::ostream &outStrm) {
           << outZ1 << " " << outZ2 << "\n";
   unsigned int i, nPts = grid.getSize();
   for (i = 0; i < nPts; i++) {
-    outStrm << static_cast<double>(grid.getVal(i)) << std::endl;
+    outStrm << static_cast<double>(grid.getVal(i)) << '\n';
   }
 }
 
