@@ -512,8 +512,9 @@ TEST_CASE("Hydrophilic") {
   HBond hbondOH(*mol, 0, "OH");
   HBond hbondO(*mol, 0, "O");
 
-  double hyd = hydro(0.0, 0.0, 0.0, 1000), hOH = hbondOH(0.0, 0.0, 0.0, 1000),
-         hO = hbondO(0.0, 0.0, 0.0, 1000);
+  double hyd = hydro(0.0, 0.0, 0.0, 1000);
+  double hOH = hbondOH(0.0, 0.0, 0.0, 1000);
+  double hO = hbondO(0.0, 0.0, 0.0, 1000);
   CHECK(feq(std::min(hOH, hO), hyd));
 
   hyd = hydro(1.0, 1.5, 2.0, 1000);
