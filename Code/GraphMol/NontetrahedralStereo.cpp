@@ -300,7 +300,7 @@ unsigned int getMaxNbors(const Atom::ChiralType tag) {
     default:
       BOOST_LOG(rdWarningLog)
           << "Warning: unexpected chiral tag getMaxNbors(): " << tag
-          << std::endl;
+          << '\n';
       return 0;
   }
 }
