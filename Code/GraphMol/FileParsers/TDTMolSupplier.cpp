@@ -291,7 +291,7 @@ std::unique_ptr<RWMol> TDTMolSupplier::next() {
       // move to
       BOOST_LOG(rdErrorLog)
           << "ERROR: Could not sanitize molecule ending on line " << d_line
-          << std::endl;
+          << '\n';
       BOOST_LOG(rdErrorLog) << "ERROR: " << se.what() << "\n";
       std::string tempStr;
       while (!dp_inStream->eof() && !dp_inStream->fail() &&
