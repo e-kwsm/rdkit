@@ -137,7 +137,8 @@ TEST_CASE("testRDValue") {
 
   {
     std::vector<int> v;
-    for (int i = 0; i < 4; ++i) {
+    v.reserve(4);
+for (int i = 0; i < 4; ++i) {
       v.push_back(i);
     }
 
