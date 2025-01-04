@@ -170,7 +170,7 @@ BBS removeNonmatchingReagents(const ChemicalReaction &rxn, BBS bbs,
     if (removedCount) {
       BOOST_LOG(rdInfoLog) << "Removed " << removedCount
                            << " non matching reagents at template "
-                           << reactant_idx << std::endl;
+                           << reactant_idx << '\n';
     }
   }
   return result;
