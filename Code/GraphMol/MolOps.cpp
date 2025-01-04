@@ -475,7 +475,7 @@ void assignRadicals(RWMol &mol) {
           nValence = 0;
           BOOST_LOG(rdWarningLog)
               << "Unusual charge on atom " << atom->getIdx()
-              << " number of radical electrons set to zero" << std::endl;
+              << " number of radical electrons set to zero" << '\n';
         }
         atom->setNumRadicalElectrons(nValence % 2);
       }
@@ -1280,7 +1280,7 @@ void expandAttachmentPoints(RWMol &mol, bool addAsQueries, bool addCoords) {
         BOOST_LOG(rdWarningLog)
             << "Invalid value for molAttachPoint: " << value << " on atom "
             << atom->getIdx() << ". Not expanding this atttachment point."
-            << std::endl;
+            << '\n';
         continue;
       }
       for (auto tval : tgtVals) {
@@ -1303,7 +1303,7 @@ void collapseAttachmentPoints(RWMol &mol, bool markedOnly) {
       if (markedOnly && (value < 0 || value > 2)) {
         BOOST_LOG(rdWarningLog)
             << "Invalid value for _fromAttachPoint: " << value << " on atom "
-            << atom->getIdx() << ". Not collapsing this atom" << std::endl;
+            << atom->getIdx() << ". Not collapsing this atom" << '\n';
         continue;
       }
       if (!markedOnly && !value) {
@@ -1323,7 +1323,7 @@ void collapseAttachmentPoints(RWMol &mol, bool markedOnly) {
           BOOST_LOG(rdWarningLog)
               << "More than two attachment points on atom " << oAtomIdx
               << ". Attachment point " << atom->getIdx()
-              << " will not be collapsed." << std::endl;
+              << " will not be collapsed." << '\n';
           continue;
         }
       }
