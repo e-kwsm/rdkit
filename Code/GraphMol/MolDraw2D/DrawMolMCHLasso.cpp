@@ -705,6 +705,7 @@ void DrawMolMCHLasso::orderAtomLines(
                   });
     std::sort(bondAngles.begin(), bondAngles.end());
     std::vector<LinePair> newAtomLine;
+    newAtomLine.reserve(bondAngles.size());
     for (auto &ba : bondAngles) {
       newAtomLine.push_back(atomLines[i][ba.second]);
     }
