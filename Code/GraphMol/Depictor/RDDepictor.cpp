@@ -308,7 +308,7 @@ void embedCisTransSystems(const RDKit::ROMol &mol,
       if (bond->getStereoAtoms().size() != 2) {
         BOOST_LOG(rdWarningLog)
             << "WARNING: bond found with stereo spec but no stereo atoms"
-            << std::endl;
+            << '\n';
         continue;
       }
       EmbeddedFrag efrag(bond);
