@@ -721,7 +721,7 @@ void KekulizeFragment(RWMol &mol, const boost::dynamic_bitset<> &atomsToUse,
       errout << "Kekulization somehow screwed up valence on " << atom->getIdx()
              << ": " << val << "!=" << valences[atom->getIdx()] << std::endl;
       auto msg = errout.str();
-      BOOST_LOG(rdErrorLog) << msg << std::endl;
+      BOOST_LOG(rdErrorLog) << msg << '\n';
       throw AtomKekulizeException(msg, atom->getIdx());
     }
   }
