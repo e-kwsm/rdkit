@@ -521,7 +521,7 @@ void forwardReactantBondStereo(ReactantProductAtomMapping *mapping, Bond *pBond,
     BOOST_LOG(rdWarningLog)
         << "WARNING: neither stereo atoms nor CIP codes found for double bond. "
            "Stereochemistry info will not be propagated to product."
-        << std::endl;
+        << '\n';
     pBond->setStereo(Bond::BondStereo::STEREONONE);
     return;
   }

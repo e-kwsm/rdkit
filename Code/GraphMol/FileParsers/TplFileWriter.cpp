@@ -81,9 +81,9 @@ void writeBond(const ROMol &mol, unsigned int bondId,
     default:
       BOOST_LOG(rdWarningLog) << "TPL files only support single, double, "
                                  "aromatic, and triple bonds."
-                              << std::endl;
+                              << '\n';
       BOOST_LOG(rdWarningLog) << "Bond of with type " << bond->getBondType()
-                              << " written as single in output." << std::endl;
+                              << " written as single in output." << '\n';
       bondLabel = "1.0";
   }
   dest << " " << bondLabel;

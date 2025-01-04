@@ -157,7 +157,7 @@ std::unique_ptr<RWMol> SmilesMolSupplier::processLine(std::string inLine) {
     } else {
       if (d_params.nameColumn >= static_cast<int>(recs.size())) {
         BOOST_LOG(rdWarningLog)
-            << "WARNING: no name column found on line " << d_line << std::endl;
+            << "WARNING: no name column found on line " << d_line << '\n';
       } else {
         res->setProp(common_properties::_Name, recs[d_params.nameColumn]);
       }
@@ -196,13 +196,13 @@ std::unique_ptr<RWMol> SmilesMolSupplier::processLine(std::string inLine) {
     // We couldn't sanitize the molecule
     //  write out an error message
     BOOST_LOG(rdErrorLog) << "ERROR: Could not sanitize molecule on line "
-                          << d_line << std::endl;
+                          << d_line << '\n';
     BOOST_LOG(rdErrorLog) << "ERROR: " << se.what() << "\n";
     res.reset();
   } catch (...) {
     //  write out an error message
     BOOST_LOG(rdErrorLog) << "ERROR: Could not process molecule on line "
-                          << d_line << std::endl;
+                          << d_line << '\n';
     res.reset();
   }
 
