@@ -46,7 +46,7 @@ void SGroupWarnOrThrow(bool strictParsing, const std::string &msg) {
   if (strictParsing) {
     throw Exc(msg);
   } else {
-    BOOST_LOG(rdWarningLog) << msg << std::endl;
+    BOOST_LOG(rdWarningLog) << msg << '\n';
   }
 }
 
