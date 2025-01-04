@@ -251,6 +251,7 @@ TEST_CASE("multithreaded fp generation") {
   SECTION("getFingerprints") {
     std::vector<std::unique_ptr<ExplicitBitVect>> ovs;
     FingerprintFuncArguments args;
+    ovs.reserve(mols.size());
     for (const auto mp : mols) {
       ovs.emplace_back(fpgen->getFingerprint(*mp, args));
     }
@@ -273,6 +274,7 @@ TEST_CASE("multithreaded fp generation") {
   SECTION("getSparseFingerprints") {
     std::vector<std::unique_ptr<SparseBitVect>> ovs;
     FingerprintFuncArguments args;
+    ovs.reserve(mols.size());
     for (const auto mp : mols) {
       ovs.emplace_back(fpgen->getSparseFingerprint(*mp, args));
     }
@@ -295,6 +297,7 @@ TEST_CASE("multithreaded fp generation") {
   SECTION("getCountFingerprints") {
     std::vector<std::unique_ptr<SparseIntVect<std::uint32_t>>> ovs;
     FingerprintFuncArguments args;
+    ovs.reserve(mols.size());
     for (const auto mp : mols) {
       ovs.emplace_back(fpgen->getCountFingerprint(*mp, args));
     }
@@ -317,6 +320,7 @@ TEST_CASE("multithreaded fp generation") {
   SECTION("getSparseCountFingerprints") {
     std::vector<std::unique_ptr<SparseIntVect<std::uint32_t>>> ovs;
     FingerprintFuncArguments args;
+    ovs.reserve(mols.size());
     for (const auto mp : mols) {
       ovs.emplace_back(fpgen->getSparseCountFingerprint(*mp, args));
     }
