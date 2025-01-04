@@ -1355,7 +1355,7 @@ std::string ParseV3000SGroupsBlock(std::istream *inStream, unsigned int &line,
   if (sGroupMap.size() != nSgroups) {
     std::ostringstream errout;
     errout << "Found " << sGroupMap.size() << " SGroups when " << nSgroups
-           << " were expected." << std::endl;
+           << " were expected.\n";
     if (strictParsing) {
       throw FileParseException(errout.str());
     } else {
