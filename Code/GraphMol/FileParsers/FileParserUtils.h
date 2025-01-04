@@ -135,7 +135,7 @@ void applyMolListProp(ROMol &mol, const std::string &pn,
   }
   if (mv.empty()) {
     BOOST_LOG(rdWarningLog) << "Missing value marker for property " << pn
-                            << " is empty." << std::endl;
+                            << " is empty." << '\n';
   }
   for (size_t i = first_token; i < tokens.size(); ++i) {
     if (tokens[i] != mv) {
