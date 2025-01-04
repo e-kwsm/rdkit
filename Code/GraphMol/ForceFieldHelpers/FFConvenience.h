@@ -49,7 +49,7 @@ inline void OptimizeMoleculeConfsMT(ROMol &mol,
                                     int numThreads, int maxIters) {
   std::vector<std::thread> tg;
   tg.reserve(numThreads);
-for (int ti = 0; ti < numThreads; ++ti) {
+  for (int ti = 0; ti < numThreads; ++ti) {
     tg.emplace_back(std::thread(detail::OptimizeMoleculeConfsHelper_, ff, &mol,
                                 &res, ti, numThreads, maxIters));
   }
