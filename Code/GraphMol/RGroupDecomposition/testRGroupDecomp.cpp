@@ -1015,6 +1015,7 @@ void testRowColumnAlignmentProblem() {
                        << std::endl;
   std::vector<std::string> csmiles = {"c1c([*:1])cncn1", "c1c([*:1])cccn1"};
   std::vector<ROMOL_SPTR> cores;
+  cores.reserve(csmiles.size());
   for (auto smi : csmiles) {
     cores.emplace_back(SmilesToMol(smi));
   }
@@ -1022,6 +1023,7 @@ void testRowColumnAlignmentProblem() {
   std::vector<std::string> msmiles = {"c1c(F)cccn1", "c1c(F)cncn1",
                                       "c1c(Cl)cccn1"};
   std::vector<std::unique_ptr<RWMol>> mols;
+  mols.reserve(msmiles.size());
   for (auto smi : msmiles) {
     mols.emplace_back(SmilesToMol(smi));
   }
@@ -1883,6 +1885,7 @@ void testMultipleCoreRelabellingIssues() {
   std::vector<RGroupScore> matchtypes{Match, FingerprintVariance};
   for (auto match : matchtypes) {
     std::vector<ROMOL_SPTR> cores;
+    cores.reserve(smi.size());
     for (const auto &s : smi) {
       cores.emplace_back(SmartsToMol(s));
     }
@@ -1928,6 +1931,7 @@ void testUnprocessedMapping() {
   std::vector<RGroupScore> matchtypes{Match, FingerprintVariance};
   for (auto match : matchtypes) {
     std::vector<ROMOL_SPTR> cores;
+    cores.reserve(coreSmi.size());
     for (const auto &s : coreSmi) {
       cores.emplace_back(SmartsToMol(s));
     }
