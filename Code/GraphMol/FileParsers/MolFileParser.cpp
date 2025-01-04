@@ -1134,7 +1134,7 @@ void ParseNewAtomList(RWMol *mol, const std::string &text, unsigned int line) {
 
   if (!nQueries) {
     BOOST_LOG(rdWarningLog) << "Empty atom list: '" << text << "' on line "
-                            << line << "." << std::endl;
+                            << line << "." << '\n';
     return;
   }
 
@@ -1546,7 +1546,7 @@ Atom *ParseMolFileAtomLine(const std::string_view text, RDGeom::Point3D &pos,
     if (dIso < 0) {
       BOOST_LOG(rdWarningLog)
           << " atom " << res->getIdx()
-          << " has a negative isotope offset. line:  " << line << std::endl;
+          << " has a negative isotope offset. line:  " << line << '\n';
     }
     res->setIsotope(dIso);
   }
@@ -1715,7 +1715,7 @@ Bond *ParseMolFileBondLine(const std::string_view text, unsigned int line) {
       res = new Bond;
       BOOST_LOG(rdWarningLog)
           << "bond with order 0 found on line " << line
-          << ". This is not part of the MDL specification." << std::endl;
+          << ". This is not part of the MDL specification." << '\n';
       break;
     default:
       type = Bond::UNSPECIFIED;
@@ -1740,7 +1740,7 @@ Bond *ParseMolFileBondLine(const std::string_view text, unsigned int line) {
         res->setQuery(q);
         BOOST_LOG(rdWarningLog)
             << "unrecognized query bond type, " << bType << ", found on line "
-            << line << ". Using an \"any\" query." << std::endl;
+            << line << ". Using an \"any\" query." << '\n';
       }
       break;
   }
@@ -1894,7 +1894,7 @@ bool checkAttachmentPointsAreValid(
     if (attachPoint.lvIdx == nAtoms) {
       BOOST_LOG(rdWarningLog)
           << "Could not infer missing lvIdx on malformed SAP line for SGroup "
-          << sgroup.first << std::endl;
+          << sgroup.first << '\n';
       res = false;
     }
   }
@@ -1948,7 +1948,7 @@ bool ParseMolBlockProperties(std::istream *inStream, unsigned int &line,
     } else if (tempStr[0] == 'G') {
       BOOST_LOG(rdWarningLog)
           << " deprecated group abbreviation ignored on line " << line
-          << std::endl;
+          << '\n';
       // we need to skip the next line, which holds the abbreviation:
       line++;
       tempStr = getLine(inStream);
@@ -2065,7 +2065,7 @@ bool ParseMolBlockProperties(std::istream *inStream, unsigned int &line,
           throw FileParseException(errout.str());
         } else {
           BOOST_LOG(rdWarningLog)
-              << errout.str() << " and will be ignored" << std::endl;
+              << errout.str() << " and will be ignored" << '\n';
         }
       }
     }
@@ -2370,7 +2370,7 @@ void ParseV3000AtomProps(RWMol *mol, Atom *&atom, typename T::iterator &token,
           if (strictParsing) {
             throw FileParseException(errout.str());
           } else {
-            BOOST_LOG(rdWarningLog) << errout.str() << std::endl;
+            BOOST_LOG(rdWarningLog) << errout.str() << '\n';
             errout.str(std::string());
           }
         } else {
@@ -2508,7 +2508,7 @@ bool calculate3dFlag(const RWMol &mol, const Conformer &conf,
     BOOST_LOG(rdWarningLog)
         << "Warning: molecule is tagged as 2D, but at least one Z coordinate is not zero. "
            "Marking the mol as 3D."
-        << std::endl;
+        << '\n';
     return true;
   }
 
@@ -2707,7 +2707,7 @@ void ParseV3000BondBlock(std::istream *inStream, unsigned int &line,
         bond = new Bond(Bond::UNSPECIFIED);
         BOOST_LOG(rdWarningLog)
             << "bond with order 0 found on line " << line
-            << ". This is not part of the MDL specification." << std::endl;
+            << ". This is not part of the MDL specification." << '\n';
         break;
       default:
         // it's a query bond of some type
@@ -2731,7 +2731,7 @@ void ParseV3000BondBlock(std::istream *inStream, unsigned int &line,
           bond->setQuery(q);
           BOOST_LOG(rdWarningLog)
               << "unrecognized query bond type, " << bType << ", found on line "
-              << line << ". Using an \"any\" query." << std::endl;
+              << line << ". Using an \"any\" query." << '\n';
         }
         break;
     }
@@ -2846,7 +2846,7 @@ void processMrvCoordinateBond(RWMol &mol, const SubstanceGroup &sg) {
     if (dataFields.empty()) {
       BOOST_LOG(rdWarningLog)
           << "ignoring MRV_COORDINATE_BOND_TYPE SGroup without data fields."
-          << std::endl;
+          << '\n';
       return;
     }
 
@@ -2856,7 +2856,7 @@ void processMrvCoordinateBond(RWMol &mol, const SubstanceGroup &sg) {
     if (dataFields.size() > 1) {
       BOOST_LOG(rdWarningLog) << "ignoring extra data fields in "
                                  "MRV_COORDINATE_BOND_TYPE SGroup for bond "
-                              << coordinate_bond_idx << '.' << std::endl;
+                              << coordinate_bond_idx << '.' << '\n';
     }
 
     Bond *old_bond = nullptr;
@@ -2866,7 +2866,7 @@ void processMrvCoordinateBond(RWMol &mol, const SubstanceGroup &sg) {
       BOOST_LOG(rdWarningLog)
           << "molecule does not contain a bond matching the "
              "MRV_COORDINATE_BOND_TYPE SGroup for bond "
-          << coordinate_bond_idx << ", ignoring." << std::endl;
+          << coordinate_bond_idx << ", ignoring." << '\n';
       return;
     }
 
@@ -2874,7 +2874,7 @@ void processMrvCoordinateBond(RWMol &mol, const SubstanceGroup &sg) {
       BOOST_LOG(rdWarningLog)
           << "MRV_COORDINATE_BOND_TYPE SGroup with value "
           << coordinate_bond_idx
-          << " does not reference a query bond, ignoring." << std::endl;
+          << " does not reference a query bond, ignoring." << '\n';
       return;
     }
 
