@@ -185,7 +185,7 @@ class RDKIT_RDGENERAL_EXPORT CaptureErrorLog : public CaptureLog {
 };
 
 inline void deprecationWarning(const std::string &message) {
-  BOOST_LOG(rdWarningLog) << "DEPRECATION WARNING: " << message << std::endl;
+  BOOST_LOG(rdWarningLog) << "DEPRECATION WARNING: " << message << '\n' << std::flush;
 }
 
 }  // namespace RDLog
