@@ -254,7 +254,7 @@ std::string parseEnhancedStereo(std::istream *inStream, unsigned int &line,
       // is MDLV30/HILITE
       BOOST_LOG(rdWarningLog) << "Skipping unrecognized collection type at "
                                  "line "
-                              << line << ": " << tempStr << std::endl;
+                              << line << ": " << tempStr << '\n';
     }
     tempStr = getV3000Line(inStream, line);
   }
@@ -505,7 +505,7 @@ void ParseIsotopeLine(RWMol *mol, const std::string &text, unsigned int line) {
         if (isotope < 0) {
           BOOST_LOG(rdErrorLog)
               << " atom " << aid
-              << " has a negative isotope value. line:  " << line << std::endl;
+              << " has a negative isotope value. line:  " << line << '\n';
         } else {
           atom->setIsotope(isotope);
         }
@@ -985,7 +985,7 @@ void ParseAttachPointLine(RWMol *mol, const std::string &text,
             if (strictParsing) {
               throw FileParseException(errout.str());
             } else {
-              BOOST_LOG(rdWarningLog) << errout.str() << std::endl;
+              BOOST_LOG(rdWarningLog) << errout.str() << '\n';
             }
           } else {
             atom->setProp(common_properties::molAttachPoint, val);
