@@ -205,7 +205,7 @@ void fixRGroups(ChemicalReaction &rxn) {
     str << "Mismatched potential rlabels: " << reactantAtomsToFix.size()
         << " unmapped reactant dummy atom rlabels," << productAtomsToFix.size()
         << " unmappped product dummy atom rlabels";
-    BOOST_LOG(rdWarningLog) << str.str() << std::endl;
+    BOOST_LOG(rdWarningLog) << str.str() << '\n';
   }
 
   auto max_rlabel =
@@ -243,7 +243,7 @@ void fixRGroups(ChemicalReaction &rxn) {
     if (!found) {
       BOOST_LOG(rdWarningLog)
           << "Could not find RLabel mapping for atom: " << rat.atom->getIdx()
-          << " in template: " << rat.templateIdx << std::endl;
+          << " in template: " << rat.templateIdx << '\n';
     }
   }
   return;
@@ -346,7 +346,7 @@ void fixHs(ChemicalReaction &rxn) {
                 BOOST_LOG(rdWarningLog)
                     << "Reaction has explicit hydrogens, reactants will need "
                        "explicit hydrogens (addHs)"
-                    << std::endl;
+                    << '\n';
               }
             }
           }
