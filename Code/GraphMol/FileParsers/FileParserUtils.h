@@ -129,7 +129,7 @@ void applyMolListProp(ROMol &mol, const std::string &pn,
   }
   if (mv.empty()) {
     BOOST_LOG(rdWarningLog) << "Missing value marker for property " << pn
-                            << " is empty." << std::endl;
+                            << " is empty." << '\n';
   }
   if(tokens.size() - first_token != nItems) {
     BOOST_LOG(rdWarningLog) << "Property list " << pn << " has incompatible size, "
