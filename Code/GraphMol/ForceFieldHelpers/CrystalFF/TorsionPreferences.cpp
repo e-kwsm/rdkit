@@ -258,7 +258,7 @@ void getExperimentalTorsions(
               sstr << "(" << param.signs[i] << " " << param.V[i] << "), ";
             }
             sstr << "(" << param.signs.back() << " " << param.V.back() << ")] ";
-            BOOST_LOG(rdInfoLog) << sstr.str() << std::endl;
+            BOOST_LOG(rdInfoLog) << sstr.str() << '\n';
           }
         }  // if not donePaths
       }  // end loop over matches
