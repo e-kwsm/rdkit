@@ -90,7 +90,7 @@ int CIPMol::getBondOrder(Bond *bond) const {
     case Bond::AROMATIC:
       BOOST_LOG(rdWarningLog)
           << "non kekulizable aromatic bond being treated as bond order 1"
-          << std::endl;
+          << '\n';
       return 1;
     case Bond::DOUBLE:
       return 2;
