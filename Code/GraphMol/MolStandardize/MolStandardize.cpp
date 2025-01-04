@@ -145,6 +145,7 @@ void standardizeMultipleMolsInPlace(FuncType sfunc, std::vector<RWMol *> &mols,
       }
     };
     std::vector<std::thread> threads;
+    threads.reserve(numThreadsToUse);
     for (auto tidx = 0u; tidx < numThreadsToUse; ++tidx) {
       threads.emplace_back(func, tidx);
     }
