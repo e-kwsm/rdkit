@@ -2759,7 +2759,8 @@ TEST_CASE("multiple molecules in the PNG", "[writer][PNG]") {
 
   std::vector<std::string> smiles = {"c1ccccc1", "CCCOC", "c1ncccc1"};
   std::vector<std::unique_ptr<ROMol>> mols;
-  for (const auto &smi : smiles) {
+  mols.reserve(smiles.size());
+for (const auto &smi : smiles) {
     mols.emplace_back(SmilesToMol(smi));
   }
   SECTION("pickles") {
@@ -2812,7 +2813,8 @@ TEST_CASE("multiple molecules in the PNG, second example", "[writer][PNG]") {
 
   std::vector<std::string> smiles = {"c1ccccc1", "CCO", "CC(=O)O", "c1ccccn1"};
   std::vector<std::unique_ptr<ROMol>> mols;
-  for (const auto &smi : smiles) {
+  mols.reserve(smiles.size());
+for (const auto &smi : smiles) {
     mols.emplace_back(SmilesToMol(smi));
   }
 #ifdef RDK_USE_BOOST_IOSTREAMS
