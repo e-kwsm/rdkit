@@ -35,7 +35,7 @@ void ParseTPLAtomLine(std::string text, unsigned int lineNum, RWMol *mol,
   if (splitLine.size() < 8) {
     std::ostringstream errout;
     errout << "Atom line " << lineNum << " only has " << splitLine.size()
-           << " tokens. 8 are required." << std::endl;
+           << " tokens. 8 are required.\n";
     throw FileParseException(errout.str());
   }
   auto *atom = new Atom(splitLine[1]);
@@ -72,7 +72,7 @@ void ParseTPLBondLine(std::string text, unsigned int lineNum, RWMol *mol) {
   if (splitLine.size() < 5) {
     std::ostringstream errout;
     errout << "Bond line " << lineNum << " only has " << splitLine.size()
-           << " tokens. 5 are required." << std::endl;
+           << " tokens. 5 are required.\n";
     throw FileParseException(errout.str());
   }
 
@@ -89,7 +89,7 @@ void ParseTPLBondLine(std::string text, unsigned int lineNum, RWMol *mol) {
   } else {
     std::ostringstream errout;
     errout << "Bond line " << lineNum << " has unknown order: " << tplOrder
-           << std::endl;
+           << '\n';
     throw FileParseException(errout.str());
   }
   unsigned int idx1, idx2;
@@ -121,7 +121,7 @@ Conformer *ParseConfData(std::istream &inStream, unsigned int &line, RWMol *mol,
   if (splitLine[0] != "NAME") {
     std::ostringstream errout;
     errout << "Did not find NAME tag on line " << line
-           << " while reading conformer  " << confId << std::endl;
+           << " while reading conformer  " << confId << '\n';
     throw FileParseException(errout.str());
   }
   std::ostringstream propName;
@@ -136,7 +136,7 @@ Conformer *ParseConfData(std::istream &inStream, unsigned int &line, RWMol *mol,
     if (inStream.eof()) {
       delete conf;
       std::ostringstream errout;
-      errout << "EOF hit while reading conformer  " << confId << std::endl;
+      errout << "EOF hit while reading conformer  " << confId << '\n';
       throw FileParseException(errout.str());
     }
     boost::trim(tempStr);
@@ -146,7 +146,7 @@ Conformer *ParseConfData(std::istream &inStream, unsigned int &line, RWMol *mol,
       delete conf;
       std::ostringstream errout;
       errout << "Did not find enough fields on line " << line
-             << " while reading conformer  " << confId << std::endl;
+             << " while reading conformer  " << confId << '\n';
       throw FileParseException(errout.str());
     }
     auto xp = FileParserUtils::stripSpacesAndCast<double>(splitLine[0]);
