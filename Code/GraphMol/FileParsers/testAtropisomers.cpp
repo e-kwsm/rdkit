@@ -466,7 +466,7 @@ class MolAtropTest {
           MolTest("BMS-986142_3d.sdf", true, 72, 77),
       };
 
-      for (auto sdfTest : sdfTests) {
+      for (const auto &sdfTest : sdfTests) {
         BOOST_LOG(rdInfoLog) << "Test: " << sdfTest.fileName << std::endl;
 
         testAromAtropMolFile(&sdfTest);
