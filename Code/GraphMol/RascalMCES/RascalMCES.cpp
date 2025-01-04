@@ -640,6 +640,7 @@ bool deltaYInClique(const std::vector<unsigned int> &clique, const ROMol &mol1,
   // if they are involved in the clique.  When sorted, they will be the same
   // if no delta-y exchange has occurred.
   std::vector<std::pair<int, int>> bondMatches;
+  bondMatches.reserve(clique.size());
   for (auto mem : clique) {
     bondMatches.push_back(
         std::make_pair(vtxPairs[mem].first, vtxPairs[mem].second));
@@ -1124,6 +1125,7 @@ std::vector<RascalResult> findMCES(RascalStartPoint &starter,
     timedOut = true;
   }
   std::vector<RascalResult> results;
+  results.reserve(maxCliques.size());
   for (const auto &c : maxCliques) {
     results.push_back(
         RascalResult(*starter.d_mol1, *starter.d_mol2, starter.d_adjMatrix1,
