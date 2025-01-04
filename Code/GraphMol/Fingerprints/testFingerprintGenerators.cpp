@@ -2400,6 +2400,7 @@ void testBulkFP() {
 
     std::vector<SparseIntVect<std::uint64_t> *> compareRes;
 
+    compareRes.reserve(molVect.size());
     for (const auto &m : molVect) {
       compareRes.push_back(it.first->getSparseCountFingerprint(*m));
     }
