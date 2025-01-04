@@ -85,7 +85,7 @@ RDKit::SparseIntVect<std::uint32_t> *generateFingerprint(
     } break;
     default:
       std::stringstream err;
-      err << ">> unsupported fingerprint type" << std::endl;
+      err << ">> unsupported fingerprint type\n";
       throw RDKit::ChemicalReactionException(err.str());
   }
   return res;
@@ -138,7 +138,7 @@ ExplicitBitVect *generateFingerprintAsBitVect(RDKit::ROMol &mol,
       break;
     default:
       std::stringstream err;
-      err << ">> unsupported fingerprint type" << std::endl;
+      err << ">> unsupported fingerprint type\n";
       throw RDKit::ChemicalReactionException(err.str());
   }
   return res;
