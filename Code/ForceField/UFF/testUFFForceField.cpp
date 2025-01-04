@@ -33,8 +33,8 @@
 using namespace RDKit;
 
 void test1() {
-  std::cerr << "-------------------------------------" << std::endl;
-  std::cerr << "Unit tests for force field basics." << std::endl;
+  std::cerr << "-------------------------------------\n";
+  std::cerr << "Unit tests for force field basics.\n";
 
   ForceFields::ForceField ff;
   TEST_ASSERT(ff.dimension() == 3);
@@ -62,12 +62,12 @@ void test1() {
   TEST_ASSERT(RDKit::feq(ff.distance(1, 2), 1.0));
   TEST_ASSERT(RDKit::feq(ff.distance(2, 1), 1.0));
 
-  std::cerr << "  done" << std::endl;
+  std::cerr << "  done\n";
 }
 
 void testUFF1() {
-  std::cerr << "-------------------------------------" << std::endl;
-  std::cerr << "Unit tests for basics of UFF bond-stretch terms." << std::endl;
+  std::cerr << "-------------------------------------\n";
+  std::cerr << "Unit tests for basics of UFF bond-stretch terms.\n";
 
   ForceFields::UFF::AtomicParams p1, p2;
   double restLen, forceConstant;
@@ -128,12 +128,12 @@ void testUFF1() {
       ForceFields::UFF::Utils::calcBondForceConstant(restLen, &p1, &p2);
   TEST_ASSERT(RDKit::feq(forceConstant, 1293., 1));  // NOTE: the paper has 1293
 
-  std::cerr << "  done" << std::endl;
+  std::cerr << "  done\n";
 }
 
 void testUFF2() {
-  std::cerr << "-------------------------------------" << std::endl;
-  std::cerr << "Unit tests for UFF bond-stretch terms." << std::endl;
+  std::cerr << "-------------------------------------\n";
+  std::cerr << "Unit tests for UFF bond-stretch terms.\n";
 
   ForceFields::ForceField ff;
   RDGeom::Point3D p1(0, 0, 0), p2(1.514, 0, 0);
@@ -237,12 +237,12 @@ void testUFF2() {
 
   delete[] p;
   delete[] g;
-  std::cerr << "  done" << std::endl;
+  std::cerr << "  done\n";
 }
 
 void testUFF3() {
-  std::cerr << "-------------------------------------" << std::endl;
-  std::cerr << "Unit tests for basics of UFF angle terms." << std::endl;
+  std::cerr << "-------------------------------------\n";
+  std::cerr << "Unit tests for basics of UFF angle terms.\n";
 
   ForceFields::UFF::AtomicParams p1, p2, p3;
   double restLen, forceConstant;
@@ -283,12 +283,12 @@ void testUFF3() {
       p2.theta0, ForceFields::UFF::Params::amideBondOrder, 1, &p1, &p2, &p3);
   TEST_ASSERT(RDKit::feq(forceConstant, 211.0, 1e-1));  //  paper has 105.5
 
-  std::cerr << "  done" << std::endl;
+  std::cerr << "  done\n";
 }
 
 void testUFF4() {
-  std::cerr << "-------------------------------------" << std::endl;
-  std::cerr << "Unit tests for UFF angle-bend terms." << std::endl;
+  std::cerr << "-------------------------------------\n";
+  std::cerr << "Unit tests for UFF angle-bend terms.\n";
 
   ForceFields::ForceField ff;
   RDGeom::Point3D p1(1.514, 0, 0), p2(0, 0, 0), p3(0.1, 1.5, 0);
