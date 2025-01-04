@@ -60,7 +60,7 @@ inline std::vector<LinkNode> getMolLinkNodes(
       if (strict) {
         throw ValueErrorException(errout.str());
       } else {
-        BOOST_LOG(rdWarningLog) << errout.str() << std::endl;
+        BOOST_LOG(rdWarningLog) << errout.str() << '\n';
         continue;
       }
     }
@@ -72,7 +72,7 @@ inline std::vector<LinkNode> getMolLinkNodes(
       if (strict) {
         throw ValueErrorException(errout.str());
       } else {
-        BOOST_LOG(rdWarningLog) << errout.str() << std::endl;
+        BOOST_LOG(rdWarningLog) << errout.str() << '\n';
         continue;
       }
     }
@@ -85,7 +85,7 @@ inline std::vector<LinkNode> getMolLinkNodes(
       if (strict) {
         throw ValueErrorException(errout.str());
       } else {
-        BOOST_LOG(rdWarningLog) << errout.str() << std::endl;
+        BOOST_LOG(rdWarningLog) << errout.str() << '\n';
         continue;
       }
     }
@@ -97,7 +97,7 @@ inline std::vector<LinkNode> getMolLinkNodes(
       } else {
         BOOST_LOG(rdWarningLog)
             << "only link nodes with 2 bonds are currently supported"
-            << std::endl;
+            << '\n';
         continue;
       }
     }
@@ -109,7 +109,7 @@ inline std::vector<LinkNode> getMolLinkNodes(
       if (strict) {
         throw ValueErrorException(errout.str());
       } else {
-        BOOST_LOG(rdWarningLog) << errout.str() << std::endl;
+        BOOST_LOG(rdWarningLog) << errout.str() << '\n';
         continue;
       }
     }
@@ -126,7 +126,7 @@ inline std::vector<LinkNode> getMolLinkNodes(
           if (strict) {
             throw ValueErrorException(errout.str());
           } else {
-            BOOST_LOG(rdWarningLog) << errout.str() << std::endl;
+            BOOST_LOG(rdWarningLog) << errout.str() << '\n';
             continue;
           }
         } else {
@@ -148,7 +148,7 @@ inline std::vector<LinkNode> getMolLinkNodes(
       if (strict) {
         throw ValueErrorException(errout.str());
       } else {
-        BOOST_LOG(rdWarningLog) << errout.str() << std::endl;
+        BOOST_LOG(rdWarningLog) << errout.str() << '\n';
         continue;
       }
     }
