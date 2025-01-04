@@ -108,7 +108,7 @@ void adjustConjugatedFiveRings(RWMol &mol) {
           BOOST_LOG(rdWarningLog)
               << "adjustConjugatedFiveRings: replacing a bond "
                  "that already has a query"
-              << std::endl;
+              << '\n';
         }
         mol.replaceBond(bi, &qb);
       }
