@@ -233,14 +233,14 @@ bool getAtropIsomerEndVect(const AtropAtomAndBondVec &atomAndBondVec,
       // negative (or at least zero)
       BOOST_LOG(rdWarningLog)
           << "Both bonds on one end of an atropisomer are on the same side - atoms is : "
-          << atomAndBondVec.first->getIdx() << std::endl;
+          << atomAndBondVec.first->getIdx() << '\n';
       return false;
     }
   }
   if (bondVec.length() < REALLY_SMALL_BOND_LEN) {
     BOOST_LOG(rdWarningLog)
         << "Could not find a bond on one end of an atropisomer that is not co-linear - atoms are : "
-        << atomAndBondVec.first->getIdx() << std::endl;
+        << atomAndBondVec.first->getIdx() << '\n';
     return false;
   }
 
@@ -273,7 +273,7 @@ std::pair<bool, Bond::BondDir> getBondDir(
       bond1Dir == bond2Dir) {
     BOOST_LOG(rdWarningLog)
         << "The bonds on one end of an atropisomer are both UP or both DOWN - atoms are: "
-        << bond->getBeginAtomIdx() << " " << bond->getEndAtomIdx() << std::endl;
+        << bond->getBeginAtomIdx() << " " << bond->getEndAtomIdx() << '\n';
     return {false, Bond::BondDir::NONE};
   }
 

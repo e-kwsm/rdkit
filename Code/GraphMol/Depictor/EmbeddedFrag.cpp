@@ -792,7 +792,7 @@ void EmbeddedFrag::reflectIfNecessaryCisTrans(EmbeddedFrag &embFrag,
       // FIX: this is a work-around arising from issue 3135833
       BOOST_LOG(rdWarningLog) << "Warning: stereochemistry around double bond "
                                  "may be incorrect in depiction."
-                              << std::endl;
+                              << '\n';
       return;
     }
   } else {
