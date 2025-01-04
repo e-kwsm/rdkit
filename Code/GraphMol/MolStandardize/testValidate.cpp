@@ -57,6 +57,7 @@ void testRDKitValidation() {
       "greater than permitted",
       "INFO: [ValenceValidation] Explicit valence for atom # 5 N, 5, is "
       "greater than permitted"};
+  msgs1.reserve(errout3.size());
   for (const auto &msg : errout3) {
     msgs1.push_back(msg);
   }
@@ -71,6 +72,7 @@ void testRDKitValidation() {
   std::vector<string> ans2 = {
       "INFO: [ValenceValidation] Explicit valence for atom # 1 O, 3, is "
       "greater than permitted"};
+  msgs2.reserve(errout4.size());
   for (const auto &msg : errout4) {
     msgs2.push_back(msg);
   }
