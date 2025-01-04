@@ -121,7 +121,7 @@ void applyMolListPropToAtoms(ROMol &mol, const std::string &pn,
   if (tokens.size() < mol.getNumAtoms()) {
     BOOST_LOG(rdWarningLog)
         << "Property list " << pn << " too short, only " << tokens.size()
-        << " elements found. Ignoring it." << std::endl;
+        << " elements found. Ignoring it." << '\n';
     return;
   }
   std::string mv = missingValueMarker;
@@ -133,7 +133,7 @@ void applyMolListPropToAtoms(ROMol &mol, const std::string &pn,
   }
   if (mv.empty()) {
     BOOST_LOG(rdWarningLog) << "Missing value marker for property " << pn
-                            << " is empty." << std::endl;
+                            << " is empty." << '\n';
   }
   for (size_t i = first_token; i < tokens.size(); ++i) {
     if (tokens[i] != mv) {
@@ -144,7 +144,7 @@ void applyMolListPropToAtoms(ROMol &mol, const std::string &pn,
       } catch (const boost::bad_lexical_cast &) {
         BOOST_LOG(rdWarningLog)
             << "Value " << tokens[i] << " for property " << pn << " of atom "
-            << atomid << " can not be parsed. Ignoring it." << std::endl;
+            << atomid << " can not be parsed. Ignoring it." << '\n';
       }
     }
   }
