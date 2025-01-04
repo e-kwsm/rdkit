@@ -230,14 +230,14 @@ bool getAtropIsomerEndVect(const AtropAtomAndBondVec &atomAndBondVec,
       // negative (or at least zero)
       BOOST_LOG(rdWarningLog)
           << "Both bonds on one end of an atropisomer are on the same side - atoms is : "
-          << atomAndBondVec.first->getIdx() << std::endl;
+          << atomAndBondVec.first->getIdx() << '\n';
       return false;
     }
   }
   if (bondVec.length() < REALLY_SMALL_BOND_LEN) {
     BOOST_LOG(rdWarningLog)
         << "Could not find a bond on one end of an atropisomer that is not co-linear - atoms are : "
-        << atomAndBondVec.first->getIdx() << std::endl;
+        << atomAndBondVec.first->getIdx() << '\n';
     return false;
   }
 
@@ -270,7 +270,7 @@ std::pair<bool, Bond::BondDir> getBondDir(
       bond1Dir == bond2Dir) {
     BOOST_LOG(rdWarningLog)
         << "The bonds on one end of an atropisomer are both UP or both DOWN - atoms are: "
-        << bond->getBeginAtomIdx() << " " << bond->getEndAtomIdx() << std::endl;
+        << bond->getBeginAtomIdx() << " " << bond->getEndAtomIdx() << '\n';
     return {false, Bond::BondDir::NONE};
   }
 
@@ -352,7 +352,7 @@ bool DetectAtropisomerChiralityOneBond(Bond *bond, ROMol &mol,
       BOOST_LOG(rdWarningLog)
           << "inconsistent bond wedging for an atropisomer.  Atoms are: "
           << bond->getBeginAtomIdx() << " " << bond->getEndAtomIdx()
-          << std::endl;
+          << '\n';
       return false;
     }
 
@@ -374,7 +374,7 @@ bool DetectAtropisomerChiralityOneBond(Bond *bond, ROMol &mol,
     // connot percieve atroisomer
     BOOST_LOG(rdWarningLog)
         << "Failed to get a frame of reference along an atropisomer bond - atoms are: "
-        << bond->getBeginAtomIdx() << " " << bond->getEndAtomIdx() << std::endl;
+        << bond->getBeginAtomIdx() << " " << bond->getEndAtomIdx() << '\n';
     return false;
   }
   RDGeom::Point3D bondVecs[2];  // one bond vector from each end of the
@@ -452,7 +452,7 @@ bool DetectAtropisomerChiralityOneBond(Bond *bond, ROMol &mol,
           BOOST_LOG(rdWarningLog)
               << "Both bonds on one end of an atropisomer are on the same side - atoms are: "
               << bond->getBeginAtomIdx() << " " << bond->getEndAtomIdx()
-              << std::endl;
+              << '\n';
           return false;
         }
       }
@@ -461,7 +461,7 @@ bool DetectAtropisomerChiralityOneBond(Bond *bond, ROMol &mol,
         BOOST_LOG(rdWarningLog)
             << "Failed to find a bond on one end of an atropisomer that is NOT co-linear - atoms are: "
             << bond->getBeginAtomIdx() << " " << bond->getEndAtomIdx()
-            << std::endl;
+            << '\n';
         return false;
       }
     }
@@ -476,7 +476,7 @@ bool DetectAtropisomerChiralityOneBond(Bond *bond, ROMol &mol,
   } else {
     BOOST_LOG(rdWarningLog)
         << "The 2 defining bonds for an atropisomer are co-planar - atoms are: "
-        << bond->getBeginAtomIdx() << " " << bond->getEndAtomIdx() << std::endl;
+        << bond->getBeginAtomIdx() << " " << bond->getEndAtomIdx() << '\n';
     return false;
   }
 
@@ -684,7 +684,7 @@ bool WedgeBondFromAtropisomerOneBondNoConf(
           BOOST_LOG(rdWarningLog)
               << "Wedge or hash bond found on atropisomer where not expected - atoms are: "
               << bond->getBeginAtomIdx() << " " << bond->getEndAtomIdx()
-              << std::endl;
+              << '\n';
           return false;
         } else {
           continue;  // wedge or hash bond affecting the OTHER atom
@@ -754,7 +754,7 @@ bool WedgeBondFromAtropisomerOneBondNoConf(
   } else {
     BOOST_LOG(rdWarningLog)
         << "Failed to find a good bond to set as UP or DOWN for an atropisomer - atoms are: "
-        << bond->getBeginAtomIdx() << " " << bond->getEndAtomIdx() << std::endl;
+        << bond->getBeginAtomIdx() << " " << bond->getEndAtomIdx() << '\n';
     return false;
   }
 
@@ -791,7 +791,7 @@ bool WedgeBondFromAtropisomerOneBond2d(
 
     BOOST_LOG(rdWarningLog)
         << "Cound not get a frame of reference for an atropisomer bond - atoms are: "
-        << bond->getBeginAtomIdx() << " " << bond->getEndAtomIdx() << std::endl;
+        << bond->getBeginAtomIdx() << " " << bond->getEndAtomIdx() << '\n';
     return false;
   }
 
@@ -814,7 +814,7 @@ bool WedgeBondFromAtropisomerOneBond2d(
       BOOST_LOG(rdWarningLog)
           << "Failed to get a representative vector for the defining bond of an atropisomer - atoms are: "
           << bond->getBeginAtomIdx() << " " << bond->getEndAtomIdx()
-          << std::endl;
+          << '\n';
       return false;
     }
   }
@@ -892,7 +892,7 @@ bool WedgeBondFromAtropisomerOneBond2d(
             BOOST_LOG(rdWarningLog)
                 << "Wedge or hash bond found on atropisomer where not expected - atoms are: "
                 << bond->getBeginAtomIdx() << " " << bond->getEndAtomIdx()
-                << std::endl;
+                << '\n';
             return false;
           } else {
             continue;  // probably a slash up or down for a double bond
@@ -975,7 +975,7 @@ bool WedgeBondFromAtropisomerOneBond2d(
   } else {
     BOOST_LOG(rdWarningLog)
         << "Failed to find a good bond to set as UP or DOWN for an atropisomer - atoms are: "
-        << bond->getBeginAtomIdx() << " " << bond->getEndAtomIdx() << std::endl;
+        << bond->getBeginAtomIdx() << " " << bond->getEndAtomIdx() << '\n';
     return false;
   }
 
@@ -1077,7 +1077,7 @@ bool WedgeBondFromAtropisomerOneBond3d(
           BOOST_LOG(rdWarningLog)
               << "Wedge or hash bond found on atropisomer where not expected - atoms are: "
               << bond->getBeginAtomIdx() << " " << bond->getEndAtomIdx()
-              << std::endl;
+              << '\n';
           return false;
         } else {
           continue;  // wedge or hash bond affecting the OTHER atom
@@ -1152,7 +1152,7 @@ bool WedgeBondFromAtropisomerOneBond3d(
   } else {
     BOOST_LOG(rdWarningLog)
         << "Failed to find a good bond to set as UP or DOWN for an atropisomer - atoms are: "
-        << bond->getBeginAtomIdx() << " " << bond->getEndAtomIdx() << std::endl;
+        << bond->getBeginAtomIdx() << " " << bond->getEndAtomIdx() << '\n';
     return false;
   }
 
