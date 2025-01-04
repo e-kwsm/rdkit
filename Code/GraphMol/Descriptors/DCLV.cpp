@@ -532,8 +532,9 @@ struct State {
     standardDots.count = 0;
 
     standardArea = 0.0;
-    for (auto Face : Faces)
+    for (auto Face : Faces) {
       tesselate(Vertices[Face[0]], Vertices[Face[1]], Vertices[Face[2]], depth);
+    }
   }
 
   void generateSurfacePoints(int depth, bool typeFlag, double probeRadius,
