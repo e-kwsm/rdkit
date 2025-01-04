@@ -54,6 +54,7 @@ void internalAddPatterns(SubstructLibrary &sslib, int numThreads,
 #ifdef RDK_BUILD_THREADSAFE_SSS
   unsigned int startIdx = 0;
   std::vector<std::future<void>> thread_group;
+  thread_group.reserve(numThreads);
   for (int thread_group_idx = 0; thread_group_idx < numThreads;
        ++thread_group_idx) {
     // need to use std::ref otherwise things are passed by value
