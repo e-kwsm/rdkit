@@ -371,7 +371,7 @@ void applyHuckelToFused(
       if ((curSize == 2) && (nrings > 300)) {
         BOOST_LOG(rdWarningLog)
             << "Aromaticity detection halted on some rings due to ring system size."
-            << std::endl;
+            << '\n';
         break;
       }
 
