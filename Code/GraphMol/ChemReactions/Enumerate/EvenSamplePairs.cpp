@@ -255,7 +255,7 @@ std::string EvenSamplePairsStrategy::stats() const {
           ss << boost::format("\t%lu|%lu") % l % n;
         }
       }
-      ss << std::endl;
+      ss << '\n';
     }
   }
   ss << "#END# BBSTAT\n";
@@ -301,11 +301,10 @@ std::string EvenSamplePairsStrategy::stats() const {
   }
   ss << "#END# PAIRSTAT\n";
 
-  ss << "Rejected Period: " << rejected_period << std::endl;
-  ss << "Rejected (dupes): " << rejected_unique << std::endl;
-  ss << "Rejected Slack Conditions: " << rejected_slack_condition << std::endl;
-  ss << "Rejected Pair Sampling: " << rejected_bb_sampling_condition
-     << std::endl;
+  ss << "Rejected Period: " << rejected_period << '\n';
+  ss << "Rejected (dupes): " << rejected_unique << '\n';
+  ss << "Rejected Slack Conditions: " << rejected_slack_condition << '\n';
+  ss << "Rejected Pair Sampling: " << rejected_bb_sampling_condition << '\n';
   return ss.str();
 }
 }  // namespace RDKit
