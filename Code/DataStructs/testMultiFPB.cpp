@@ -23,7 +23,7 @@ using namespace RDKit;
 void test1MultiFPBReaderBasics() {
   BOOST_LOG(rdInfoLog)
       << "-----------------------\n Testing MultiFPBReader basics "
-      << std::endl;
+      << '\n';
   std::string pathName = getenv("RDBASE");
   pathName += "/Code/DataStructs/testData/";
   {
@@ -51,12 +51,12 @@ void test1MultiFPBReaderBasics() {
     TEST_ASSERT(mfps.getReader(0));
     TEST_ASSERT(mfps.getReader(0)->nBits() == mfps.nBits());
   }
-  BOOST_LOG(rdInfoLog) << "Finished" << std::endl;
+  BOOST_LOG(rdInfoLog) << "Finished" << '\n';
 }
 void test2MultiFPBReaderTanimoto() {
   BOOST_LOG(rdInfoLog)
       << "-----------------------\n Testing MultiFPBReader Tanimoto "
-      << std::endl;
+      << '\n';
   std::string pathName = getenv("RDBASE");
   pathName += "/Code/DataStructs/testData/";
   {
@@ -115,13 +115,13 @@ void test2MultiFPBReaderTanimoto() {
       TEST_ASSERT(std::get<2>(nbrs[2]) == 0);
     }
   }
-  BOOST_LOG(rdInfoLog) << "Finished" << std::endl;
+  BOOST_LOG(rdInfoLog) << "Finished" << '\n';
 }
 
 void test3MultiFPBReaderTversky() {
   BOOST_LOG(rdInfoLog)
       << "-----------------------\n Testing MultiFPBReader Tversky "
-      << std::endl;
+      << '\n';
   std::string pathName = getenv("RDBASE");
   pathName += "/Code/DataStructs/testData/";
   {
@@ -180,13 +180,13 @@ void test3MultiFPBReaderTversky() {
       TEST_ASSERT(std::get<2>(nbrs[2]) == 0);
     }
   }
-  BOOST_LOG(rdInfoLog) << "Finished" << std::endl;
+  BOOST_LOG(rdInfoLog) << "Finished" << '\n';
 }
 
 void test4MultiFPBReaderContains() {
   BOOST_LOG(rdInfoLog)
       << "-----------------------\n Testing MultiFPBReader contains search"
-      << std::endl;
+      << '\n';
   std::string pathName = getenv("RDBASE");
   pathName += "/Code/DataStructs/testData/";
   {
@@ -227,13 +227,13 @@ void test4MultiFPBReaderContains() {
       TEST_ASSERT(nbrs[7].first == 4);
     }
   }
-  BOOST_LOG(rdInfoLog) << "Finished" << std::endl;
+  BOOST_LOG(rdInfoLog) << "Finished" << '\n';
 }
 
 void test5MultiFPBReaderThreaded() {
   BOOST_LOG(rdInfoLog)
       << "-----------------------\n Testing MultiFPBReader Similarity Threaded"
-      << std::endl;
+      << '\n';
   std::string pathName = getenv("RDBASE");
   pathName += "/Code/DataStructs/testData/";
   {
@@ -337,13 +337,13 @@ void test5MultiFPBReaderThreaded() {
 
 #endif
   }
-  BOOST_LOG(rdInfoLog) << "Finished" << std::endl;
+  BOOST_LOG(rdInfoLog) << "Finished" << '\n';
 }
 
 void test6MultiFPBReaderContainsThreaded() {
   BOOST_LOG(rdInfoLog)
       << "-----------------------\n Testing MultiFPBReader Contains Threaded"
-      << std::endl;
+      << '\n';
   std::string pathName = getenv("RDBASE");
   pathName += "/Code/DataStructs/testData/";
   {
@@ -531,13 +531,13 @@ void test6MultiFPBReaderContainsThreaded() {
 #endif
   }
 
-  BOOST_LOG(rdInfoLog) << "Finished" << std::endl;
+  BOOST_LOG(rdInfoLog) << "Finished" << '\n';
 }
 
 void test7MultiFPBReaderEdges() {
   BOOST_LOG(rdInfoLog)
       << "-----------------------\n Testing MultiFPBReader edge cases "
-      << std::endl;
+      << '\n';
   std::string pathName = getenv("RDBASE");
   pathName += "/Code/DataStructs/testData/";
   {
@@ -561,7 +561,7 @@ void test7MultiFPBReaderEdges() {
       TEST_ASSERT(nbrs.size() == 0);
     }
   }
-  BOOST_LOG(rdInfoLog) << "Finished" << std::endl;
+  BOOST_LOG(rdInfoLog) << "Finished" << '\n';
 }
 
 int main() {
