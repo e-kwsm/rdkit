@@ -303,7 +303,7 @@ bool cleanUpMol2Substructures(RWMol *res) {
       // phosphates,
       if (at->getDegree() != 1) {
         BOOST_LOG(rdWarningLog)
-            << "Warning - O.co2 with degree >1." << std::endl;
+            << "Warning - O.co2 with degree >1." << '\n';
         return false;
       }
       auto nbrs = res->atomNeighbors(at);
@@ -358,7 +358,7 @@ bool cleanUpMol2Substructures(RWMol *res) {
         res->getProp(common_properties::_Name, nm);
         BOOST_LOG(rdWarningLog)
             << nm << ": warning - O.co2 with non C.2 or S.o2 neighbor."
-            << std::endl;
+            << '\n';
         return false;
       }
     } else if (tAT == "C.cat") {
@@ -392,7 +392,7 @@ bool cleanUpMol2Substructures(RWMol *res) {
         res->getProp(common_properties::_Name, nm);
         BOOST_LOG(rdWarningLog)
             << nm << ": Error - C.Cat with bad number of N neighbors."
-            << std::endl;
+            << '\n';
         return false;
       } else if (noNNeighbors == 2) {
         // the idea is that we assign the positive charge according to the
@@ -420,7 +420,7 @@ bool cleanUpMol2Substructures(RWMol *res) {
               res->getProp(common_properties::_Name, nm);
               BOOST_LOG(rdWarningLog)
                   << nm << ": warning - charged amidine and isFixed atom."
-                  << std::endl;
+                  << '\n';
             }
             isFixed[*nbrIdxIt] = 1;
             if (firstIdent) {
@@ -711,7 +711,7 @@ Bond *ParseMol2FileBondLine(const std::string bondLine,
     // "nc" - not connected ...
     // but why would anyone specify a bond which is not connected?
     BOOST_LOG(rdWarningLog) << "Warning - unsupported bond type: " << tBType
-                            << " ignored!" << std::endl;
+                            << " ignored!" << '\n';
     return nullptr;
   }
   auto *res = new Bond(type);
