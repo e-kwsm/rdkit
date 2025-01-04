@@ -442,7 +442,7 @@ int calculateExplicitValence(const Atom &atom, bool strict, bool checkIt) {
                       atom.getAtomicNum())
                << ", " << res << ", is greater than permitted";
         std::string msg = errout.str();
-        BOOST_LOG(rdErrorLog) << msg << std::endl;
+        BOOST_LOG(rdErrorLog) << msg << '\n';
         throw AtomValenceException(msg, atom.getIdx());
       } else {
         return -1;
@@ -487,7 +487,7 @@ int calculateImplicitValence(const Atom &atom, bool strict, bool checkIt) {
         errout << "Unreasonable formal charge on atom # " << atom.getIdx()
                << ".";
         std::string msg = errout.str();
-        BOOST_LOG(rdErrorLog) << msg << std::endl;
+        BOOST_LOG(rdErrorLog) << msg << '\n';
         throw AtomValenceException(msg, atom.getIdx());
       } else if (checkIt) {
         return -1;
@@ -573,7 +573,7 @@ int calculateImplicitValence(const Atom &atom, bool strict, bool checkIt) {
           errout << "Explicit valence for aromatic atom # " << atom.getIdx()
                  << " not equal to any accepted valence\n";
           std::string msg = errout.str();
-          BOOST_LOG(rdErrorLog) << msg << std::endl;
+          BOOST_LOG(rdErrorLog) << msg << '\n';
           throw AtomValenceException(msg, atom.getIdx());
         } else {
           return -1;
@@ -603,7 +603,7 @@ int calculateImplicitValence(const Atom &atom, bool strict, bool checkIt) {
                  << PeriodicTable::getTable()->getElementSymbol(atomicNum)
                  << " greater than permitted";
           std::string msg = errout.str();
-          BOOST_LOG(rdErrorLog) << msg << std::endl;
+          BOOST_LOG(rdErrorLog) << msg << '\n';
           throw AtomValenceException(msg, atom.getIdx());
         } else {
           return -1;
