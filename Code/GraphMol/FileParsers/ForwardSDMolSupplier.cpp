@@ -164,12 +164,12 @@ void ForwardSDMolSupplier::readMolProps(ROMol &mol) {
             if (hasProp) {
               BOOST_LOG(rdWarningLog)
                   << "Property <" << dlabel << "> will be truncated after "
-                  << "the first blank line" << std::endl;
+                  << "the first blank line" << '\n';
             } else {
               BOOST_LOG(rdWarningLog)
                   << "Spurious data before the first property will be "
                      "ignored"
-                  << std::endl;
+                  << '\n';
             }
             warningIssued = true;
           }
@@ -235,7 +235,7 @@ std::unique_ptr<RWMol> ForwardSDMolSupplier::_next() {
     // advance forward in the stream until we hit the next record and then
     // rethrow
     // the exception. This should allow us to read the next molecule.
-    BOOST_LOG(rdErrorLog) << "ERROR: " << fe.what() << std::endl;
+    BOOST_LOG(rdErrorLog) << "ERROR: " << fe.what() << '\n';
     BOOST_LOG(rdErrorLog)
         << "ERROR: moving to the beginning of the next molecule\n";
 
@@ -257,7 +257,7 @@ std::unique_ptr<RWMol> ForwardSDMolSupplier::_next() {
     // the beginning of the next molecule
     BOOST_LOG(rdErrorLog)
         << "ERROR: Could not sanitize molecule ending on line " << d_line
-        << std::endl;
+        << '\n';
     BOOST_LOG(rdErrorLog) << "ERROR: " << se.what() << "\n";
 
     d_line++;
@@ -280,7 +280,7 @@ std::unique_ptr<RWMol> ForwardSDMolSupplier::_next() {
     }
 
     BOOST_LOG(rdErrorLog) << "Unexpected error hit on line " << d_line
-                          << std::endl;
+                          << '\n';
     BOOST_LOG(rdErrorLog)
         << "ERROR: moving to the beginning of the next molecule\n";
     d_line++;

@@ -167,7 +167,7 @@ RWMol *MultithreadedSmilesMolSupplier::processMoleculeRecord(
   } else {
     if (d_parseParams.nameColumn >= static_cast<int>(recs.size())) {
       BOOST_LOG(rdWarningLog)
-          << "WARNING: no name column found on line " << lineNum << std::endl;
+          << "WARNING: no name column found on line " << lineNum << '\n';
     } else {
       res->setProp(common_properties::_Name, recs[d_parseParams.nameColumn]);
     }

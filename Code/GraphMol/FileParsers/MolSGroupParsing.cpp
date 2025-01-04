@@ -50,7 +50,7 @@ unsigned int ParseSGroupIntField(bool &ok, bool strictParsing,
       throw;
     } else {
       ok = false;
-      BOOST_LOG(rdWarningLog) << e.what() << std::endl;
+      BOOST_LOG(rdWarningLog) << e.what() << '\n';
     }
   }
   return res;
@@ -88,7 +88,7 @@ double ParseSGroupDoubleField(bool &ok, bool strictParsing,
       throw;
     } else {
       ok = false;
-      BOOST_LOG(rdWarningLog) << e.what() << std::endl;
+      BOOST_LOG(rdWarningLog) << e.what() << '\n';
     }
   }
   return res;
@@ -99,7 +99,7 @@ SubstanceGroup *FindSgIdx(IDX_TO_SGROUP_MAP &sGroupMap, int sgIdx,
   auto sgIt = sGroupMap.find(sgIdx);
   if (sgIt == sGroupMap.end()) {
     BOOST_LOG(rdWarningLog) << "SGroup " << sgIdx << " referenced on line "
-                            << line << " not found." << std::endl;
+                            << line << " not found." << '\n';
     return nullptr;
   }
   return &sgIt->second;
@@ -662,7 +662,7 @@ void ParseSGroupV2000SCDSEDLine(IDX_TO_SGROUP_MAP &sGroupMap,
     // so let's just issue a warning and accept it.
     BOOST_LOG(rdWarningLog)
         << "Found a SCD/SED line with missing/empty SDT specification at line "
-        << line << std::endl;
+        << line << '\n';
   }
 
   if (strictParsing) {
@@ -807,7 +807,7 @@ void ParseSGroupV2000SAPLine(IDX_TO_SGROUP_MAP &sGroupMap, RWMol *mol,
       if (strictParsing) {
         throw FileParseException(errout.str());
       } else {
-        BOOST_LOG(rdWarningLog) << errout.str() << std::endl;
+        BOOST_LOG(rdWarningLog) << errout.str() << '\n';
         if (text.size() < pos + 4) {
           sgroup->setIsValid(false);
           return;
@@ -939,7 +939,7 @@ std::vector<T> ParseV3000Array(std::stringstream &stream, int maxV,
   auto paren = stream.get();  // discard parentheses
   if (paren != '(') {
     BOOST_LOG(rdWarningLog)
-        << "WARNING: first character of V3000 array is not '('" << std::endl;
+        << "WARNING: first character of V3000 array is not '('" << '\n';
   }
 
   unsigned int count = 0;
@@ -959,7 +959,7 @@ std::vector<T> ParseV3000Array(std::stringstream &stream, int maxV,
   paren = stream.get();  // discard parentheses
   if (paren != ')') {
     BOOST_LOG(rdWarningLog)
-        << "WARNING: final character of V3000 array is not ')'" << std::endl;
+        << "WARNING: final character of V3000 array is not ')'" << '\n';
   }
   return values;
 }
@@ -1257,7 +1257,7 @@ std::string ParseV3000SGroupsBlock(std::istream *inStream, unsigned int &line,
         if (strictParsing) {
           throw FileParseException(errout.str());
         } else {
-          BOOST_LOG(rdWarningLog) << errout.str() << std::endl;
+          BOOST_LOG(rdWarningLog) << errout.str() << '\n';
           sgroup.setIsValid(false);
         }
       }
@@ -1279,7 +1279,7 @@ std::string ParseV3000SGroupsBlock(std::istream *inStream, unsigned int &line,
         if (strictParsing) {
           throw FileParseException(errout.str());
         } else {
-          BOOST_LOG(rdWarningLog) << errout.str() << std::endl;
+          BOOST_LOG(rdWarningLog) << errout.str() << '\n';
           sgroup.setIsValid(false);
           continue;
         }
@@ -1309,7 +1309,7 @@ std::string ParseV3000SGroupsBlock(std::istream *inStream, unsigned int &line,
         if (strictParsing) {
           throw FileParseException(errout.str());
         } else {
-          BOOST_LOG(rdWarningLog) << errout.str() << std::endl;
+          BOOST_LOG(rdWarningLog) << errout.str() << '\n';
           sgroup.setIsValid(false);
           continue;
         }
@@ -1328,7 +1328,7 @@ std::string ParseV3000SGroupsBlock(std::istream *inStream, unsigned int &line,
           if (strictParsing) {
             throw FileParseException(errout.str());
           } else {
-            BOOST_LOG(rdWarningLog) << errout.str() << std::endl;
+            BOOST_LOG(rdWarningLog) << errout.str() << '\n';
             sgroup.setIsValid(false);
             continue;
           }
@@ -1359,7 +1359,7 @@ std::string ParseV3000SGroupsBlock(std::istream *inStream, unsigned int &line,
     if (strictParsing) {
       throw FileParseException(errout.str());
     } else {
-      BOOST_LOG(rdWarningLog) << errout.str() << std::endl;
+      BOOST_LOG(rdWarningLog) << errout.str() << '\n';
     }
   }
   // SGroups successfully parsed, now add them to the molecule
@@ -1368,7 +1368,7 @@ std::string ParseV3000SGroupsBlock(std::istream *inStream, unsigned int &line,
       addSubstanceGroup(*mol, sg.second);
     } else {
       BOOST_LOG(rdWarningLog) << "SGroup " << sg.first
-                              << " is invalid and will be ignored" << std::endl;
+                              << " is invalid and will be ignored" << '\n';
     }
   }
   return tempStr;
