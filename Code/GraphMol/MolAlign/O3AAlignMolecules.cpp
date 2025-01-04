@@ -1704,6 +1704,7 @@ void getO3AForProbeConfs(ROMol &prbMol, const ROMol &refMol, void *prbProp,
     detail::O3AHelperArgs_ args = {atomTypes,        refCid,  reflect,
                                    maxIters,         options, constraintMap,
                                    constraintWeights};
+    tg.reserve(numThreads);
     for (int ti = 0; ti < numThreads; ++ti) {
       tg.emplace_back(std::async(std::launch::async, detail::O3AHelper_,
                                  &prbMol, &refMol, prbProp, refProp, &res, ti,

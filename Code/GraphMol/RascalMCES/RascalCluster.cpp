@@ -187,6 +187,7 @@ std::vector<std::vector<unsigned int>> makeSubClusters(
   std::vector<std::vector<unsigned int>> subClusters;
 
   std::vector<const ClusNode *> tmpNbors;
+  tmpNbors.reserve(nbors.size());
   for (const auto &n : nbors) {
     tmpNbors.push_back(&n);
   }
