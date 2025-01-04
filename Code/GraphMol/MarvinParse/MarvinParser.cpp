@@ -568,6 +568,7 @@ class MarvinCMLReader {
       for (auto groupPtr : stereoGroups) {
         std::vector<Atom *> atoms;
         std::vector<Bond *> bonds;
+        atoms.reserve(groupPtr->atoms.size());
         for (auto atomPtr : groupPtr->atoms) {
           atoms.push_back(mol->getAtomWithIdx(atomPtr));
         }
