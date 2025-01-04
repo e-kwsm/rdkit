@@ -1141,7 +1141,7 @@ void ParseNewAtomList(RWMol *mol, const std::string &text, unsigned int line) {
   if (nQueries < 0) {
     std::ostringstream errout;
     errout << "negative length atom list: '" << text << "' on line " << line
-           << "." << std::endl;
+           << ".\n";
     throw FileParseException(errout.str());
   }
   QueryAtom *a = nullptr;
@@ -2242,7 +2242,7 @@ void ParseV3000AtomProps(RWMol *mol, Atom *&atom, typename T::iterator &token,
           break;
         default:
           errout << "Unrecognized RAD value " << val << " for atom "
-                 << atom->getIdx() + 1 << " on line " << line << std::endl;
+                 << atom->getIdx() + 1 << " on line " << line << '\n';
           throw FileParseException(errout.str());
       }
     } else if (prop == "MASS") {
@@ -2264,7 +2264,7 @@ void ParseV3000AtomProps(RWMol *mol, Atom *&atom, typename T::iterator &token,
       }
       if (v < 0) {
         errout << "Bad value for MASS :" << val << " for atom "
-               << atom->getIdx() + 1 << " on line " << line << std::endl;
+               << atom->getIdx() + 1 << " on line " << line << '\n';
         throw FileParseException(errout.str());
       } else {
         if (!atom->hasQuery()) {
@@ -2285,7 +2285,7 @@ void ParseV3000AtomProps(RWMol *mol, Atom *&atom, typename T::iterator &token,
           break;
         default:
           errout << "Unrecognized CFG value : " << val << " for atom "
-                 << atom->getIdx() + 1 << " on line " << line << std::endl;
+                 << atom->getIdx() + 1 << " on line " << line << '\n';
           throw FileParseException(errout.str());
       }
     } else if (prop == "HCOUNT") {
