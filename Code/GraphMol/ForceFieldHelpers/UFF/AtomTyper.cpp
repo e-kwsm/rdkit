@@ -40,7 +40,7 @@ void addAtomChargeFlags(const Atom *atom, std::string &atomKey,
       } else {
         BOOST_LOG(rdErrorLog)
             << "UFFTYPER: Unrecognized charge state for atom: "
-            << atom->getIdx() << std::endl;
+            << atom->getIdx() << '\n';
       }
       break;
 
@@ -59,7 +59,7 @@ void addAtomChargeFlags(const Atom *atom, std::string &atomKey,
       } else {
         BOOST_LOG(rdErrorLog)
             << "UFFTYPER: Unrecognized charge state for atom: "
-            << atom->getIdx() << std::endl;
+            << atom->getIdx() << '\n';
       }
       break;
 
@@ -83,7 +83,7 @@ void addAtomChargeFlags(const Atom *atom, std::string &atomKey,
       } else {
         BOOST_LOG(rdErrorLog)
             << "UFFTYPER: Unrecognized charge state for atom: "
-            << atom->getIdx() << std::endl;
+            << atom->getIdx() << '\n';
       }
       break;
 
@@ -104,7 +104,7 @@ void addAtomChargeFlags(const Atom *atom, std::string &atomKey,
       } else {
         BOOST_LOG(rdErrorLog)
             << "UFFTYPER: Unrecognized charge state for atom: "
-            << atom->getIdx() << std::endl;
+            << atom->getIdx() << '\n';
       }
       break;
 
@@ -118,7 +118,7 @@ void addAtomChargeFlags(const Atom *atom, std::string &atomKey,
       } else {
         BOOST_LOG(rdErrorLog)
             << "UFFTYPER: Unrecognized charge state for atom: "
-            << atom->getIdx() << std::endl;
+            << atom->getIdx() << '\n';
       }
       break;
 
@@ -129,7 +129,7 @@ void addAtomChargeFlags(const Atom *atom, std::string &atomKey,
       } else {
         BOOST_LOG(rdErrorLog)
             << "UFFTYPER: Unrecognized charge state for atom: "
-            << atom->getIdx() << std::endl;
+            << atom->getIdx() << '\n';
       }
       break;
 
