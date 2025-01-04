@@ -413,7 +413,7 @@ const Atom *findHighestCIPNeighbor(const Atom *atom, const Atom *skipAtom) {
       // (also not sure if that's possible).
       BOOST_LOG(rdWarningLog)
           << "Warning: duplicate CIP ranks found in findHighestCIPNeighbor()"
-          << std::endl;
+          << '\n';
       bestCipRankedAtom = nullptr;
     }
   }
@@ -512,7 +512,7 @@ std::optional<Atom::ChiralType> atomChiralTypeFromBondDirPseudo3D(
       if ((centerLoc - tmpPt).lengthSq() < zeroTol) {
         BOOST_LOG(rdWarningLog)
             << "Warning: ambiguous stereochemistry - zero-length (or near zero-length) bond - at atom "
-            << atom->getIdx() << " ignored." << std::endl;
+            << atom->getIdx() << " ignored." << '\n';
         return std::nullopt;
       }
     }
@@ -550,7 +550,7 @@ std::optional<Atom::ChiralType> atomChiralTypeFromBondDirPseudo3D(
       if ((bondVects[i] - bondVects[j]).lengthSq() < zeroTol) {
         BOOST_LOG(rdWarningLog)
             << "Warning: ambiguous stereochemistry - overlapping neighbors  - at atom "
-            << atom->getIdx() << " ignored" << std::endl;
+            << atom->getIdx() << " ignored" << '\n';
         return std::nullopt;
       }
     }
@@ -706,7 +706,7 @@ std::optional<Atom::ChiralType> atomChiralTypeFromBondDirPseudo3D(
             }
             BOOST_LOG(rdWarningLog)
                 << "Warning: ambiguous stereochemistry - opposing bonds have opposite wedging - at atom "
-                << atom->getIdx() << " ignored." << std::endl;
+                << atom->getIdx() << " ignored." << '\n';
             return std::nullopt;
           }
         }
@@ -743,7 +743,7 @@ std::optional<Atom::ChiralType> atomChiralTypeFromBondDirPseudo3D(
       if (conflict) {
         BOOST_LOG(rdWarningLog)
             << "Warning: conflicting stereochemistry - bond wedging contradiction - at atom "
-            << atom->getIdx() << " ignored" << std::endl;
+            << atom->getIdx() << " ignored" << '\n';
         return std::nullopt;
       }
     }
@@ -803,7 +803,7 @@ std::optional<Atom::ChiralType> atomChiralTypeFromBondDirPseudo3D(
         if (fabs(vol2) < zeroTol) {
           BOOST_LOG(rdWarningLog)
               << "Warning: ambiguous stereochemistry - no chiral volume - at atom "
-              << atom->getIdx() << " ignored" << std::endl;
+              << atom->getIdx() << " ignored" << '\n';
           return std::nullopt;
         }
         vol = vol2;
@@ -835,7 +835,7 @@ std::optional<Atom::ChiralType> atomChiralTypeFromBondDirPseudo3D(
     } else {
       BOOST_LOG(rdWarningLog)
           << "Warning: ambiguous stereochemistry - zero final chiral volume - at atom "
-          << atom->getIdx() << " ignored" << std::endl;
+          << atom->getIdx() << " ignored" << '\n';
       return std::nullopt;
     }
   }
@@ -962,7 +962,7 @@ void debugVect(const std::vector<T> arg) {
   for (viIt = arg.begin(); viIt != arg.end(); viIt++) {
     outS << *viIt << " ";
   }
-  BOOST_LOG(rdDebugLog) << outS.str() << std::endl;
+  BOOST_LOG(rdDebugLog) << outS.str() << '\n';
 }
 
 // --------------------------------------------------
@@ -1902,10 +1902,10 @@ std::pair<bool, bool> assignBondStereoCodes(ROMol &mol, UINT_VECT &ranks) {
               dblBond->setStereo(Bond::STEREONONE);
               BOOST_LOG(rdWarningLog) << "Conflicting single bond directions "
                                          "around double bond at index "
-                                      << dblBond->getIdx() << "." << std::endl;
+                                      << dblBond->getIdx() << "." << '\n';
               BOOST_LOG(rdWarningLog) << "  BondStereo set to STEREONONE and "
                                          "single bond directions set to NONE."
-                                      << std::endl;
+                                      << '\n';
               assignedABond = true;
               if (conflictingBegin) {
                 bondsToClear[mol.getBondBetweenAtoms(begAtomNeighbors[0].first,
@@ -2169,7 +2169,7 @@ INT_VECT findStereoAtoms(const Bond *bond) {
     return {startStereoAtomIdx, endStereoAtomIdx};
   } else {
     BOOST_LOG(rdWarningLog) << "Unable to assign stereo atoms for bond "
-                            << bond->getIdx() << std::endl;
+                            << bond->getIdx() << '\n';
     return {};
   }
 }
@@ -2506,7 +2506,7 @@ void updateDoubleBondStereo(ROMol &mol, const std::vector<StereoInfo> &sinfo,
             break;
           default:
             BOOST_LOG(rdWarningLog)
-                << "unrecognized bond stereo type" << std::endl;
+                << "unrecognized bond stereo type" << '\n';
         }
       } else if (si.specified == Chirality::StereoSpecified::Unknown) {
         // in cases like imines without explicit Hs, we have double bonds with
@@ -2798,7 +2798,7 @@ void addStereoAnnotations(ROMol &mol, std::string absLabel, std::string orLabel,
         BOOST_LOG(rdWarningLog) << "Warning: atom " << atom->getIdx()
                                 << " is in more than one stereogroup. Only the "
                                    "label from the first group will be used."
-                                << std::endl;
+                                << '\n';
         continue;
       }
       std::string cip;
