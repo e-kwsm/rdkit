@@ -763,7 +763,7 @@ void UpdateBitVectFromFPSText(T1 &bv1, const std::string &fps) {
     } catch (...) {
       std::ostringstream errout;
       errout << "Cannot convert FPS word: " << fps.substr(i, 2) << " to int";
-      std::cerr << errout.str() << std::endl;
+      std::cerr << errout.str() << '\n';
       throw ValueErrorException(errout.str());
     }
     for (unsigned int bit = 0; bit < 8 && bitIdx < bv1.getNumBits();
