@@ -628,7 +628,7 @@ void addHs(RWMol &mol, const AddHsParameters &params,
     newAt->updatePropertyCache(false);
     if (isoH != isoHs.end()) {
       BOOST_LOG(rdWarningLog) << "extra H isotope information found on atom "
-                              << newAt->getIdx() << std::endl;
+                              << newAt->getIdx() << '\n';
     }
   }
   // take care of AtomPDBResidueInfo for Hs if root atom has it
@@ -846,7 +846,7 @@ bool shouldRemoveH(const RWMol &mol, const Atom *atom,
     if (ps.showWarnings) {
       BOOST_LOG(rdWarningLog)
           << "WARNING: not removing hydrogen atom without neighbors"
-          << std::endl;
+          << '\n';
     }
     return false;
   }
@@ -916,7 +916,7 @@ bool shouldRemoveH(const RWMol &mol, const Atom *atom,
         if (ps.showWarnings) {
           BOOST_LOG(rdWarningLog) << "WARNING: not removing hydrogen atom "
                                      "with dummy atom neighbors"
-                                  << std::endl;
+                                  << '\n';
         }
         return false;
       }
@@ -927,7 +927,7 @@ bool shouldRemoveH(const RWMol &mol, const Atom *atom,
           BOOST_LOG(rdWarningLog)
               << "WARNING: not removing hydrogen atom "
                  "with neighbor that has non-tetrahedral stereochemistry"
-              << std::endl;
+              << '\n';
         }
         return false;
       }
@@ -941,7 +941,7 @@ bool shouldRemoveH(const RWMol &mol, const Atom *atom,
           if (ps.showWarnings) {
             BOOST_LOG(rdWarningLog) << "WARNING: not removing hydrogen atom "
                                        "with wedged bond"
-                                    << std::endl;
+                                    << '\n';
           }
           return false;
         }
@@ -1189,7 +1189,7 @@ HydrogenType isQueryH(const Atom *atom) {
             << "WARNING: merging explicit H queries involved "
                "in ORs is not supported. This query will not "
                "be merged"
-            << std::endl;
+            << '\n';
         return HydrogenType::UnMergableQueryHydrogen;
       } else {
         return HydrogenType::QueryHydrogen;
