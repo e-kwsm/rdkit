@@ -610,7 +610,7 @@ void FPBReader::init() {
         // currently ignored
       } else {
         BOOST_LOG(rdWarningLog)
-            << "Unknown chunk: " << chunkNm << " ignored." << std::endl;
+            << "Unknown chunk: " << chunkNm << " ignored." << '\n';
       }
       delete[] chunk;
     } else {
