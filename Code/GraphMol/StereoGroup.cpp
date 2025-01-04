@@ -25,7 +25,7 @@ void storeIdsInUse(boost::dynamic_bitset<> &ids, StereoGroup &sg) {
     BOOST_LOG(rdWarningLog)
         << "StereoGroup ID " << groupId
         << " is used by more than one group, and will be reassined"
-        << std::endl;
+        << '\n';
     sg.setWriteId(0);
   } else {
     ids[groupId] = true;
