@@ -34,7 +34,7 @@ void ptreeToMol(RWMol *mol, const pt::ptree &molE) {
       Atom *atom = SmilesToAtom(asmi);
       if (!atom) {
         BOOST_LOG(rdWarningLog) << " Could not convert SMILES '" << asmi
-                                << "' to a atom. Ignoring it." << std::endl;
+                                << "' to a atom. Ignoring it." << '\n';
         continue;
       }
 
@@ -55,7 +55,7 @@ void ptreeToMol(RWMol *mol, const pt::ptree &molE) {
       Bond *bond = SmilesToBond(asmi);
       if (!bond) {
         BOOST_LOG(rdWarningLog) << " Could not convert SMILES '" << asmi
-                                << "' to a bond. Ignoring it." << std::endl;
+                                << "' to a bond. Ignoring it." << '\n';
         continue;
       }
       bond->setBeginAtomIdx(atE.second.get<int>("<xmlattr>.begin-atom-idx") -
