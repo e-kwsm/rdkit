@@ -851,6 +851,7 @@ TEST_CASE("atropisomers bulk") {
       for (auto cid : cids) {
         const auto conf = mol->getConformer(cid);
         std::vector<RDGeom::Point3D> pts;
+        pts.reserve(atropAtoms.size());
         for (auto idx : atropAtoms) {
           pts.push_back(conf.getAtomPos(idx));
         }
@@ -874,6 +875,7 @@ TEST_CASE("atropisomers bulk") {
       for (auto cid : cids) {
         const auto conf = mol->getConformer(cid);
         std::vector<RDGeom::Point3D> pts;
+        pts.reserve(atropAtoms.size());
         for (auto idx : atropAtoms) {
           pts.push_back(conf.getAtomPos(idx));
         }
