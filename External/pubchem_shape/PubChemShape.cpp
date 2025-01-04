@@ -234,6 +234,7 @@ ShapeInput PrepareConformer(const ROMol &mol, int confId, bool useColors) {
           auto matches = SubstructMatch(mol, *patt);
           for (auto match : matches) {
             std::vector<unsigned int> ats;
+            ats.reserve(match.size());
             for (const auto &pr : match) {
               ats.push_back(pr.second);
             }
