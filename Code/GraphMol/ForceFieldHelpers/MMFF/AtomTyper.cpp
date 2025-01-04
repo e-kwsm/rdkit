@@ -2350,7 +2350,7 @@ MMFFMolProperties::MMFFMolProperties(ROMol &mol, const std::string &mmffVariant,
   if (MolOps::needsHs(mol)) {
     BOOST_LOG(rdWarningLog)
         << "Molecule does not have explicit Hs. Consider calling AddHs()"
-        << std::endl;
+        << '\n';
   }
   if (!mol.hasProp(common_properties::_MMFFSanitized)) {
     bool isAromaticSet = false;
