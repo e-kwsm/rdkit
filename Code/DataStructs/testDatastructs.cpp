@@ -55,7 +55,7 @@ void Test(T arg) {
   t1.getOnBits(onBits);
   std::copy(onBits.begin(), onBits.end(),
             std::ostream_iterator<int>(std::cout, ", "));
-  std::cout << std::endl;
+  std::cout << '\n';
 
   T t2(t1);
   // onBits = t2.getOnBits();
@@ -77,48 +77,48 @@ void Test(T arg) {
   t1.getOnBits(onBits);
   std::copy(onBits.begin(), onBits.end(),
             std::ostream_iterator<int>(std::cout, ", "));
-  std::cout << std::endl;
+  std::cout << '\n';
 
   std::cout << "t2: ";
   t2.getOnBits(onBits);
   std::copy(onBits.begin(), onBits.end(),
             std::ostream_iterator<int>(std::cout, ", "));
-  std::cout << std::endl;
+  std::cout << '\n';
 
   std::cout << "t1|t2: ";
   T t3 = t1 | t2;
   t3.getOnBits(onBits);
   std::copy(onBits.begin(), onBits.end(),
             std::ostream_iterator<int>(std::cout, ", "));
-  std::cout << std::endl;
+  std::cout << '\n';
 
   std::cout << "t1&t2: ";
   t3 = t1 & t2;
   t3.getOnBits(onBits);
   std::copy(onBits.begin(), onBits.end(),
             std::ostream_iterator<int>(std::cout, ", "));
-  std::cout << std::endl;
+  std::cout << '\n';
 
   std::cout << "t1^t2: ";
   t3 = t1 ^ t2;
   t3.getOnBits(onBits);
   std::copy(onBits.begin(), onBits.end(),
             std::ostream_iterator<int>(std::cout, ", "));
-  std::cout << std::endl;
+  std::cout << '\n';
 
   std::cout << "~t1: ";
   t3 = ~t1;
   t3.getOnBits(onBits);
   std::copy(onBits.begin(), onBits.end(),
             std::ostream_iterator<int>(std::cout, ", "));
-  std::cout << std::endl;
+  std::cout << '\n';
 
   try {
     t3.getBit(4000);
   } catch (IndexErrorException &) {
-    std::cout << " except " << endl;
+    std::cout << " except " << '\n';
   } catch (...) {
-    std::cout << " ERROR EXCEPT " << endl;
+    std::cout << " ERROR EXCEPT " << '\n';
   }
 
   T t4(t1.toString());
