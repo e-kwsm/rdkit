@@ -58,6 +58,7 @@ TEST_CASE("testCoresLabelledProperly", "[RGroupInternals]") {
                                       "C1([*:1])CCC([*:2])CC1"};
 
   std::vector<ROMOL_SPTR> cores;
+  cores.reserve(coreSmi.size());
   for (const auto &s : coreSmi) {
     cores.emplace_back(SmartsToMol(s));
   }
