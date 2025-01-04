@@ -127,6 +127,7 @@ int Properties::registerProperty(PropertyFunctor *prop) {
 std::vector<std::string> Properties::getAvailableProperties() {
   registerDescriptors();
   std::vector<std::string> names;
+  names.reserve(Properties::registry.size());
   for (auto prop : Properties::registry) {
     names.push_back(prop->getName());
   }
@@ -160,6 +161,7 @@ Properties::Properties(const std::vector<std::string> &propNames) {
 
 std::vector<std::string> Properties::getPropertyNames() const {
   std::vector<std::string> names;
+  names.reserve(m_properties.size());
   for (auto prop : m_properties) {
     names.push_back(prop->getName());
   }
