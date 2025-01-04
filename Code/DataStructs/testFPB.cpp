@@ -80,7 +80,7 @@ void _basicsTest(FPBReader &fps) {
 
 void test1FPBReaderBasics() {
   BOOST_LOG(rdInfoLog) << "-----------------------\n Testing FPBReader basics "
-                       << std::endl;
+                       << '\n';
   std::string pathName = getenv("RDBASE");
   pathName += "/Code/DataStructs/testData/";
   {
@@ -89,13 +89,13 @@ void test1FPBReaderBasics() {
     _basicsTest(fps);
     fps.cleanup();  // make sure this doesn't cause problems
   }
-  BOOST_LOG(rdInfoLog) << "Finished" << std::endl;
+  BOOST_LOG(rdInfoLog) << "Finished" << '\n';
 }
 
 void test9LazyFPBReaderBasics() {
   BOOST_LOG(rdInfoLog)
       << "-----------------------\n Testing Lazy FPBReader basics "
-      << std::endl;
+      << '\n';
   std::string pathName = getenv("RDBASE");
   pathName += "/Code/DataStructs/testData/";
   {
@@ -104,12 +104,12 @@ void test9LazyFPBReaderBasics() {
     _basicsTest(fps);
     fps.cleanup();  // make sure this doesn't cause problems
   }
-  BOOST_LOG(rdInfoLog) << "Finished" << std::endl;
+  BOOST_LOG(rdInfoLog) << "Finished" << '\n';
 }
 
 void test2FPBReaderTanimoto() {
   BOOST_LOG(rdInfoLog)
-      << "-----------------------\n Testing FPBReader tanimoto " << std::endl;
+      << "-----------------------\n Testing FPBReader tanimoto " << '\n';
   std::string pathName = getenv("RDBASE");
   pathName += "/Code/DataStructs/testData/";
   {
@@ -132,13 +132,13 @@ void test2FPBReaderTanimoto() {
       TEST_ASSERT(feq(fps.getTanimoto(5, bytes), 0.2903));
     }
   }
-  BOOST_LOG(rdInfoLog) << "Finished" << std::endl;
+  BOOST_LOG(rdInfoLog) << "Finished" << '\n';
 }
 
 void test3FPBReaderTanimotoNeighbors() {
   BOOST_LOG(rdInfoLog)
       << "-----------------------\n Testing FPBReader tanimoto neighbors"
-      << std::endl;
+      << '\n';
   std::string pathName = getenv("RDBASE");
   pathName += "/Code/DataStructs/testData/";
   {
@@ -189,13 +189,13 @@ void test3FPBReaderTanimotoNeighbors() {
       TEST_ASSERT(nbrs[1].second == 89);
     }
   }
-  BOOST_LOG(rdInfoLog) << "Finished" << std::endl;
+  BOOST_LOG(rdInfoLog) << "Finished" << '\n';
 }
 
 void test4LazyFPBReaderBasics() {
   BOOST_LOG(rdInfoLog)
       << "-----------------------\n Testing Lazy FPBReader basics "
-      << std::endl;
+      << '\n';
   std::string pathName = getenv("RDBASE");
   pathName += "/Code/DataStructs/testData/";
   {
@@ -258,13 +258,13 @@ void test4LazyFPBReaderBasics() {
       TEST_ASSERT(nm == "ZINC04803506");
     }
   }
-  BOOST_LOG(rdInfoLog) << "Finished" << std::endl;
+  BOOST_LOG(rdInfoLog) << "Finished" << '\n';
 }
 
 void test5LazyFPBReaderTanimoto() {
   BOOST_LOG(rdInfoLog)
       << "-----------------------\n Testing Lazy FPBReader tanimoto "
-      << std::endl;
+      << '\n';
   std::string pathName = getenv("RDBASE");
   pathName += "/Code/DataStructs/testData/";
   {
@@ -293,13 +293,13 @@ void test5LazyFPBReaderTanimoto() {
       TEST_ASSERT(feq(fps.getTanimoto(5, bytes), 0.2903));
     }
   }
-  BOOST_LOG(rdInfoLog) << "Finished" << std::endl;
+  BOOST_LOG(rdInfoLog) << "Finished" << '\n';
 }
 
 void test6LazyFPBReaderTanimotoNeighbors() {
   BOOST_LOG(rdInfoLog)
       << "-----------------------\n Testing Lazy FPBReader tanimoto neighbors"
-      << std::endl;
+      << '\n';
   std::string pathName = getenv("RDBASE");
   pathName += "/Code/DataStructs/testData/";
   {
@@ -350,7 +350,7 @@ void test6LazyFPBReaderTanimotoNeighbors() {
       TEST_ASSERT(nbrs[1].second == 89);
     }
   }
-  BOOST_LOG(rdInfoLog) << "Finished" << std::endl;
+  BOOST_LOG(rdInfoLog) << "Finished" << '\n';
 }
 
 // need forward declarations of some of the detail functions (doesn't make sense
@@ -366,7 +366,7 @@ std::uint8_t *bitsetToBytes(const boost::dynamic_bitset<> &bitset);
 void test7BitsetDetails() {
   BOOST_LOG(rdInfoLog)
       << "-----------------------\n Testing some internal bitset details"
-      << std::endl;
+      << '\n';
   std::string pathName = getenv("RDBASE");
   pathName += "/Code/DataStructs/testData/";
   {  // test round-tripping bytes -> dynamic_bitest -> bytes
@@ -404,13 +404,13 @@ void test7BitsetDetails() {
       delete[] newBytes;
     }
   }
-  BOOST_LOG(rdInfoLog) << "Finished" << std::endl;
+  BOOST_LOG(rdInfoLog) << "Finished" << '\n';
 }
 
 void test8FPBReaderContains() {
   BOOST_LOG(rdInfoLog)
       << "-----------------------\n Testing FPBReader contains search"
-      << std::endl;
+      << '\n';
   std::string pathName = getenv("RDBASE");
   pathName += "/Code/DataStructs/testData/";
   {
@@ -464,12 +464,12 @@ void test8FPBReaderContains() {
       TEST_ASSERT(nbrs[3] == 88);
     }
   }
-  BOOST_LOG(rdInfoLog) << "Finished" << std::endl;
+  BOOST_LOG(rdInfoLog) << "Finished" << '\n';
 }
 
 void test9FPBReaderTversky() {
   BOOST_LOG(rdInfoLog) << "-----------------------\n Testing FPBReader Tversky "
-                       << std::endl;
+                       << '\n';
   std::string pathName = getenv("RDBASE");
   pathName += "/Code/DataStructs/testData/";
   {
@@ -492,13 +492,13 @@ void test9FPBReaderTversky() {
       TEST_ASSERT(feq(fps.getTversky(5, bytes, 1., 1.), 0.2903));
     }
   }
-  BOOST_LOG(rdInfoLog) << "Finished" << std::endl;
+  BOOST_LOG(rdInfoLog) << "Finished" << '\n';
 }
 
 void test10FPBReaderTverskyNeighbors() {
   BOOST_LOG(rdInfoLog)
       << "-----------------------\n Testing FPBReader Tversky neighbors"
-      << std::endl;
+      << '\n';
   std::string pathName = getenv("RDBASE");
   pathName += "/Code/DataStructs/testData/";
   {
@@ -560,14 +560,14 @@ void test10FPBReaderTverskyNeighbors() {
       TEST_ASSERT(nbrs[1].second == 1);
     }
   }
-  BOOST_LOG(rdInfoLog) << "Finished" << std::endl;
+  BOOST_LOG(rdInfoLog) << "Finished" << '\n';
 }
 
 void testGithub1118() {
   BOOST_LOG(rdInfoLog) << "-----------------------\n Testing github issue "
                           "1118: deleting non-initialized FPBReader causes seg "
                           "fault"
-                       << std::endl;
+                       << '\n';
   std::string pathName = getenv("RDBASE");
   pathName += "/Code/DataStructs/testData/";
   {
@@ -585,7 +585,7 @@ void testGithub1118() {
     auto *fps = new FPBReader(&ifs, false);
     delete fps;
   }
-  BOOST_LOG(rdInfoLog) << "Finished" << std::endl;
+  BOOST_LOG(rdInfoLog) << "Finished" << '\n';
 }
 
 int main() {
