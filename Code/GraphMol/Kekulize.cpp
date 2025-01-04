@@ -496,7 +496,7 @@ void kekulizeFused(RWMol &mol, const VECT_INT_VECT &arings,
       }
     }
     std::string msg = errout.str();
-    BOOST_LOG(rdErrorLog) << msg << std::endl;
+    BOOST_LOG(rdErrorLog) << msg << '\n';
     throw KekulizeException(msg, problemAtoms);
   }
 }
@@ -692,7 +692,7 @@ void KekulizeFragment(RWMol &mol, const boost::dynamic_bitset<> &atomsToUse,
           std::ostringstream errout;
           errout << "non-ring atom " << atom->getIdx() << " marked aromatic";
           auto msg = errout.str();
-          BOOST_LOG(rdErrorLog) << msg << std::endl;
+          BOOST_LOG(rdErrorLog) << msg << '\n';
           throw AtomKekulizeException(msg, atom->getIdx());
         }
         atom->setIsAromatic(false);
