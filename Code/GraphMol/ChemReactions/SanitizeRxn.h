@@ -90,7 +90,7 @@ inline const MolOps::AdjustQueryParameters DefaultRxnAdjustParams() {
 inline const MolOps::AdjustQueryParameters ChemDrawRxnAdjustParams() {
   BOOST_LOG(rdWarningLog)
       << " deprecated -- please use MatchOnlyAtRgroupsAdjustParams instead"
-      << std::endl;
+      << '\n';
   MolOps::AdjustQueryParameters params;
   params.adjustDegree = true;
   params.adjustDegreeFlags = MolOps::ADJUST_IGNOREDUMMIES;
