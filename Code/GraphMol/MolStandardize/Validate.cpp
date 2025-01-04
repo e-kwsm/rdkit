@@ -107,6 +107,7 @@ std::vector<ValidationErrorInfo> FragmentValidation::validate(
       VECT_INT_VECT substructmap;  // store idxs of frag from substructmatch
       for (const auto &match : res) {
         std::vector<int> vec;
+        vec.reserve(match.size());
         for (const auto &pair : match) {
           vec.push_back(pair.second);
         }
