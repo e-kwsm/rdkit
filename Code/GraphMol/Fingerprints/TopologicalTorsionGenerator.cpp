@@ -201,7 +201,7 @@ template <typename OutputType>
 FingerprintGenerator<OutputType> *getTopologicalTorsionGenerator(
     bool includeChirality, uint32_t torsionAtomCount,
     AtomInvariantsGenerator *atomInvariantsGenerator, bool countSimulation,
-    std::uint32_t fpSize, std::vector<std::uint32_t> countBounds,
+    std::uint32_t fpSize, const std::vector<std::uint32_t> &countBounds,
     bool ownsAtomInvGen) {
   TopologicalTorsionArguments arguments(includeChirality, torsionAtomCount,
                                         countSimulation, std::move(countBounds),
