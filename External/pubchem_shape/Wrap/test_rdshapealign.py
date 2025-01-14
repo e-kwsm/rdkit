@@ -28,7 +28,7 @@ class TestCase(unittest.TestCase):
 
   def test3_FromShape(self):
     shp = rdShapeAlign.PrepareConformer(self.ref)
-    self.assertTrue(type(shp) == rdShapeAlign.ShapeInput)
+    self.assertIsInstance(shp, rdShapeAlign.ShapeInput)
     tpl = rdShapeAlign.AlignMol(shp, self.probe, opt_param=0.5, max_preiters=3, max_postiters=16)
     self.assertAlmostEqual(tpl[0], 0.773, places=3)
     self.assertAlmostEqual(tpl[1], 0.305, places=3)
