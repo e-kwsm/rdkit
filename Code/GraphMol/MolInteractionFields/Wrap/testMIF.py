@@ -249,7 +249,7 @@ class TestCase(unittest.TestCase):
     for i in range(grd.GetSize()):
       grd.SetVal(i, 1.0)
     rdMIF.CalculateDescriptors(grd, hbonddes)
-    self.assertTrue(not grd.CompareGrids(grd1))
+    self.assertFalse(grd.CompareGrids(grd1))
     self.assertTrue(
       abs(int((grd.GetOccupancyVect() - grd1.GetOccupancyVect()).GetTotalVal())) == grd.GetSize())
 
