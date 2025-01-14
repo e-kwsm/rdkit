@@ -94,12 +94,8 @@ M  END
       for x in range(3):
         self.assertAlmostEqual(axes[y][x], axesRef[y][x], 3)
       self.assertAlmostEqual(moments[y], momentsRef[y], 3)
-    failed = False
-    try:
+    with self.assertRaises(Exception):
       axes, moments = rdmt.ComputePrincipalAxesAndMoments(m.GetConformer(), weights=(0.5, 0.5))
-    except Exception:
-      failed = True
-    self.assertTrue(failed)
     axesWeightedRef = ((-0.9998, -0.0114, -0.0189), (-0.0153, 0.9744, 0.2245), (0.0158, 0.2247,
                                                                                 -0.9743))
     momentsWeightedRef = (0.5496, 1.5559, 1.9361)
@@ -139,13 +135,9 @@ M  END
       for x in range(3):
         self.assertAlmostEqual(axes[y][x], axesRef[y][x], 3)
       self.assertAlmostEqual(moments[y], momentsRef[y], 3)
-    failed = False
-    try:
+    with self.assertRaises(Exception):
       axes, moments = rdmt.ComputePrincipalAxesAndMomentsFromGyrationMatrix(
         m.GetConformer(), weights=(0.5, 0.5))
-    except Exception:
-      failed = True
-    self.assertTrue(failed)
     axesWeightedRef = ((0.0189, -0.0114, 0.9998), (-0.2245, 0.9744, 0.0153), (0.9743, 0.2247,
                                                                               -0.0158))
     momentsWeightedRef = (0.0847, 0.4649, 1.4712)
@@ -230,12 +222,8 @@ M  END
     self.assertAlmostEqual(dihedral, 180.0, 1)
     dist3 = rdmt.GetBondLength(conf, 6, 9)
     self.assertNotAlmostEqual(dist, dist3, 1)
-    exceptionRaised = False
-    try:
+    with self.assertRaises(ValueError):
       rdmt.SetDihedralDeg(conf, 6, 0, 3, 9, 0.0)
-    except ValueError:
-      exceptionRaised = True
-    self.assertTrue(exceptionRaised)
 
   def testEigen3CanonicalTransformAgainstNumpy(self):
 
