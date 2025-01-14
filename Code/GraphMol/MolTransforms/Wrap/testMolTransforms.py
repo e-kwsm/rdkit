@@ -42,7 +42,7 @@ class TestCase(unittest.TestCase):
     trans2 = rdmt.ComputeCanonicalTransform(m.GetConformer())
     for i in range(4):
       for j in range(4):
-        self.assertTrue(feq(trans[i, j], trans2[i, j]))
+        self.assertAlmostEqual(trans[i, j], trans2[i, j], delta=1.0e-4)
     rdmt.TransformConformer(m.GetConformer(), trans2)
     m2 = Chem.MolFromMolFile(fileN)
     rdmt.CanonicalizeConformer(m2.GetConformer())
@@ -52,9 +52,9 @@ class TestCase(unittest.TestCase):
     for i in range(nats):
       p1 = list(cnf1.GetAtomPosition(i))
       p2 = list(cnf2.GetAtomPosition(i))
-      self.assertTrue(feq(p1[0], p2[0]))
-      self.assertTrue(feq(p1[1], p2[1]))
-      self.assertTrue(feq(p1[2], p2[2]))
+      self.assertAlmostEqual(p1[0], p2[0], delta=1.0e-4)
+      self.assertAlmostEqual(p1[1], p2[1], delta=1.0e-4)
+      self.assertAlmostEqual(p1[2], p2[2], delta=1.0e-4)
 
     m3 = Chem.MolFromMolFile(fileN)
     rdmt.CanonicalizeMol(m3)
@@ -63,9 +63,9 @@ class TestCase(unittest.TestCase):
     for i in range(nats):
       p1 = list(cnf1.GetAtomPosition(i))
       p2 = list(cnf2.GetAtomPosition(i))
-      self.assertTrue(feq(p1[0], p2[0]))
-      self.assertTrue(feq(p1[1], p2[1]))
-      self.assertTrue(feq(p1[2], p2[2]))
+      self.assertAlmostEqual(p1[0], p2[0], delta=1.0e-4)
+      self.assertAlmostEqual(p1[1], p2[1], delta=1.0e-4)
+      self.assertAlmostEqual(p1[2], p2[2], delta=1.0e-4)
 
   def testComputePrincipalAxesAndMoments(self):
     if (not hasattr(rdmt, 'ComputePrincipalAxesAndMoments')):
