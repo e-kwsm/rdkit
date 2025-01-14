@@ -213,7 +213,7 @@ class TestCase(unittest.TestCase):
     vdw = rdMIF.MMFFVdWaals(mol, confId=0, probeAtomType=6, scaling=False, cutoff=1.0)
 
     self.assertLess(vdw(-5.0, 0, 0, 1000), 0)
-    self.assertTrue(vdw(-1.68, 0, 0, 1000) > vdw(-5.0, 0, 0, 1000))
+    self.assertGreater(vdw(-1.68, 0, 0, 1000), vdw(-5.0, 0, 0, 1000))
     self.assertLess(vdw(-5.0, 0, 0, 1000), vdw(-10.0, 0, 0, 1000))
 
     mol2 = AllChem.MolFromMolFile(
@@ -222,12 +222,12 @@ class TestCase(unittest.TestCase):
     vdw = rdMIF.MMFFVdWaals(mol2, scaling=False)
     vdw2 = rdMIF.MMFFVdWaals(mol2, scaling=True)
 
-    self.assertTrue(abs(vdw2(-3.0, 0, 0, 1000) - vdw(-3.0, 0, 0, 1000)) > 0.0001)
+    self.assertGreater(abs(vdw2(-3.0, 0, 0, 1000) - vdw(-3.0, 0, 0, 1000)), 0.0001)
 
     vdw3 = rdMIF.UFFVdWaals(mol, confId=0, probeAtomType="O_3", cutoff=1.0)
 
     self.assertLess(vdw3(-5.0, 0, 0, 1000), 0)
-    self.assertTrue(vdw3(-1.68, 0, 0, 1000) > vdw3(-5.0, 0, 0, 1000))
+    self.assertGreater(vdw3(-1.68, 0, 0, 1000), vdw3(-5.0, 0, 0, 1000))
     self.assertLess(vdw3(-5.0, 0, 0, 1000), vdw3(-10.0, 0, 0, 1000))
 
   def test6HBond(self):
@@ -266,7 +266,7 @@ class TestCase(unittest.TestCase):
     rdMIF.CalculateDescriptors(grd, hbonddes1)
 
     hbonddes2 = rdMIF.HBond(mol, probeAtomType="O", fixed=False)
-    self.assertTrue(hbonddes1(4.0, 0.0, 1.0, 1000) > hbonddes2(4.0, 0.0, 1.0, 1000))
+    self.assertGreater(hbonddes1(4.0, 0.0, 1.0, 1000), hbonddes2(4.0, 0.0, 1.0, 1000))
 
     hbonddes3 = rdMIF.HBond(mol, probeAtomType="NH")
     self.assertLess(hbonddes(2.0, 2.0, 1.0, 1000), hbonddes3(2.0, 2.0, 1.0, 1000))
