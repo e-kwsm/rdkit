@@ -176,14 +176,14 @@ class TestCase(unittest.TestCase):
 
     # with reordering
     cs = Butina.ClusterData(dists, nPts, 2.1, isDistData=1, reordering=True)
-    self.assertTrue(len(cs) == 2)
-    self.assertTrue(cs[0] == (4, 3, 5, 6))
-    self.assertTrue(cs[1] == (1, 0, 2))
+    self.assertEqual(len(cs), 2)
+    self.assertEqual(cs[0], (4, 3, 5, 6))
+    self.assertEqual(cs[1], (1, 0, 2))
   
   def test9_empty_input(self):
     # " edge case: empty input "
     cs = Butina.ClusterData([], 0, 2, isDistData=1, reordering=True)
-    self.assertTrue(len(cs) == 0)
+    self.assertEqual(len(cs), 0)
 
   def test10_error_messages(self):
     # " error case: mismatched data dimension and nPts "
