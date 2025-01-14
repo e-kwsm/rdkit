@@ -241,7 +241,7 @@ class TestCase(unittest.TestCase):
 
     hbonddes = rdMIF.HBond(mol)
     rdMIF.CalculateDescriptors(grd, hbonddes)
-    self.assertTrue(not grd.CompareGrids(grd1))
+    self.assertFalse(grd.CompareGrids(grd1))
     self.assertTrue(
       abs(int((grd.GetOccupancyVect() - grd1.GetOccupancyVect()).GetTotalVal())) == grd.GetSize())
 
