@@ -44,7 +44,8 @@ std::map<std::string, std::string> sgroupTypemap = {
     {"alt", "COP"}, {"ran", "COP"}, {"blk", "COP"}};
 
 template <typename Q>
-void addquery(Q *qry, std::string symbol, RDKit::RWMol &mol, unsigned int idx) {
+void addquery(Q *qry, const std::string &symbol, RDKit::RWMol &mol,
+              unsigned int idx) {
   PRECONDITION(qry, "bad query");
   auto *qa = new QueryAtom(0);
   qa->setQuery(qry);
@@ -156,7 +157,8 @@ bool read_int_pair(Iterator &first, Iterator last, unsigned int &n1,
 }
 
 template <typename Iterator>
-std::string read_text_to(Iterator &first, Iterator last, std::string delims) {
+std::string read_text_to(Iterator &first, Iterator last,
+                         const std::string &delims) {
   std::string res = "";
   Iterator start = first;
   // EFF: there are certainly faster ways to do this
