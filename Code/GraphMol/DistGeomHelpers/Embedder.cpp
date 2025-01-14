@@ -1219,7 +1219,7 @@ void findChiralSets(const ROMol &mol, DistGeom::VECT_CHIRALSET &chiralCenters,
 }
 
 void adjustBoundsMatFromCoordMap(
-    const DistGeom::BoundsMatPtr &mmat, unsigned int,
+    DistGeom::BoundsMatPtr mmat, unsigned int,
     const std::map<int, RDGeom::Point3D> *coordMap) {
   for (auto iIt = coordMap->begin(); iIt != coordMap->end(); ++iIt) {
     unsigned int iIdx = iIt->first;
@@ -1253,7 +1253,7 @@ void initETKDG(ROMol *mol, const EmbedParameters &params,
 }
 
 bool setupInitialBoundsMatrix(
-    ROMol *mol, const DistGeom::BoundsMatPtr &mmat,
+    ROMol *mol, DistGeom::BoundsMatPtr mmat,
     const std::map<int, RDGeom::Point3D> *coordMap,
     const EmbedParameters &params,
     ForceFields::CrystalFF::CrystalFFDetails &etkdgDetails) {
@@ -1650,7 +1650,6 @@ void EmbedMultipleConfs(ROMol &mol, INT_VECT &res, unsigned int numConfs,
 #ifdef RDK_BUILD_THREADSAFE_SSS
     else {
       std::vector<std::future<void>> tg;
-      tg.reserve(numThreads);
       for (int tid = 0; tid < numThreads; ++tid) {
         tg.emplace_back(std::async(std::launch::async, detail::embedHelper_,
                                    tid, numThreads, &eargs, &params, end_time));
