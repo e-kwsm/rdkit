@@ -385,7 +385,7 @@ For example, to test the `GetMolDescriptors()` function:
     def testcase1(self):
       mol = Chem.MolFromSmiles('CCCO')
       descs = Descriptors.CalcMolDescriptors(mol)
-      self.assertTrue('MolLogP' in descs)
+      self.assertIn('MolLogP', descs)
       self.assertEqual(descs['NumHDonors'], 1)
   ```
 
