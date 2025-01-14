@@ -586,9 +586,10 @@ class TestCase(unittest.TestCase):
 
       conf1 = m1.GetConformer()
       conf2 = m2.GetConformer()
-      self.assertTrue((conf2.GetAtomPosition(3) -
-                       conf2.GetAtomPosition(0)).Length() > (conf1.GetAtomPosition(3) -
-                                                             conf1.GetAtomPosition(0)).Length())
+      self.assertGreater((conf2.GetAtomPosition(3) -
+                          conf2.GetAtomPosition(0)).Length(),
+                         (conf1.GetAtomPosition(3) -
+                          conf1.GetAtomPosition(0)).Length())
 
   def testScaleBoundsMatForce(self):
     """
