@@ -36,7 +36,7 @@ class TestCase(unittest.TestCase):
     grd = rdMIF.ConstructGrid(mol, margin=5.0, spacing=0.5)
 
     bond = mol.GetConformer().GetAtomPosition(1) - mol.GetConformer().GetAtomPosition(0)
-    self.assertTrue(feq(grd.GetSpacing(), 0.5))
+    self.assertAlmostEqual(grd.GetSpacing(), 0.5, delta=1.0e-4)
     self.assertTrue(grd.GetNumX() == int((abs(bond.x) + 10.0) / 0.5 + 0.5))
     self.assertTrue(grd.GetNumY() == int((abs(bond.y) + 10.0) / 0.5 + 0.5))
     self.assertTrue(grd.GetNumZ() == int((abs(bond.z) + 10.0) / 0.5 + 0.5))
@@ -63,22 +63,22 @@ class TestCase(unittest.TestCase):
     self.assertTrue(grd.GetSize() == grd2.GetSize())
 
     for i in range(grd.GetSize()):
-      self.assertTrue(feq(grd2.GetVal(i), float(i / 10.0)))
+      self.assertAlmostEqual(grd2.GetVal(i), float(i / 10.0), delta=1.0e-4)
 
     self.assertTrue(grd.CompareGrids(grd2))
     self.assertTrue(mol.GetNumAtoms() == mol2.GetNumAtoms())
 
     for i in range(mol.GetNumAtoms()):
       self.assertTrue(mol.GetAtomWithIdx(i).GetAtomicNum() == mol2.GetAtomWithIdx(i).GetAtomicNum())
-      self.assertTrue(
-        feq(mol.GetConformer().GetAtomPosition(i).x,
-            mol2.GetConformer().GetAtomPosition(i).x))
-      self.assertTrue(
-        feq(mol.GetConformer().GetAtomPosition(i).y,
-            mol2.GetConformer().GetAtomPosition(i).y))
-      self.assertTrue(
-        feq(mol.GetConformer().GetAtomPosition(i).z,
-            mol2.GetConformer().GetAtomPosition(i).z))
+      self.assertAlmostEqual(
+        mol.GetConformer().GetAtomPosition(i).x,
+        mol2.GetConformer().GetAtomPosition(i).x, delta=1.0e-4)
+      self.assertAlmostEqual(
+        mol.GetConformer().GetAtomPosition(i).y,
+        mol2.GetConformer().GetAtomPosition(i).y, delta=1.0e-4)
+      self.assertAlmostEqual(
+        mol.GetConformer().GetAtomPosition(i).z,
+        mol2.GetConformer().GetAtomPosition(i).z), delta=1.0e-4)
 
     rdMIF.WriteToCubeFile(
       grd,
@@ -92,7 +92,7 @@ class TestCase(unittest.TestCase):
     self.assertTrue(grd.GetSize() == grd3.GetSize())
 
     for i in range(grd.GetSize()):
-      self.assertTrue(feq(grd3.GetVal(i), float(i / 10.0)))
+      self.assertAlmostEqual(grd3.GetVal(i), float(i / 10.0), delta=1.0e-4)
 
     self.assertTrue(grd.CompareGrids(grd3))
     self.assertIsNone(mol3)
@@ -121,7 +121,7 @@ class TestCase(unittest.TestCase):
     self.assertTrue(grd.CompareParams(grd2))
     self.assertTrue(grd.CompareVectors(grd2))
     self.assertTrue(grd.CompareGrids(grd2))
-    self.assertTrue(feq(coul(0.0, 0.0, 0.0, 1000), 0.0))
+    self.assertAlmostEqual(coul(0.0, 0.0, 0.0, 1000), 0.0, delta=1.0e-4)
     self.assertTrue(coul(2.0, 0.0, 0.0, 1000) < 0)
     self.assertTrue(coul(-2.0, 0.0, 0.0, 1000) > 0)
 
@@ -165,7 +165,7 @@ class TestCase(unittest.TestCase):
     rdMIF.CalculateDescriptors(grd2, couldiele1)
 
     self.assertTrue(grd.CompareGrids(grd2))
-    self.assertTrue(feq(couldiele(0.0, 0.0, 0.0, 1000), 0.0))
+    self.assertAlmostEqual(couldiele(0.0, 0.0, 0.0, 1000), 0.0, delta=1.0e-4)
     self.assertTrue(couldiele(2.0, 0.0, 0.0, 1000) < 0)
     self.assertTrue(couldiele(-2.0, 0.0, 0.0, 1000) > 0)
 
@@ -286,67 +286,67 @@ class TestCase(unittest.TestCase):
     hyd = hydro(pt.x, pt.y, pt.z, 1000)
     hOH = hbondOH(pt.x, pt.y, pt.z, 1000)
     hO = hbondO(pt.x, pt.y, pt.z, 1000)
-    self.assertTrue(feq(min(hOH, hO), hyd))
+    self.assertAlmostEqual(min(hOH, hO), hyd, delta=1.0e-4)
 
     pt = geom.Point3D(1.0, 1.5, 2.0)
     hyd = hydro(pt.x, pt.y, pt.z, 1000)
     hOH = hbondOH(pt.x, pt.y, pt.z, 1000)
     hO = hbondO(pt.x, pt.y, pt.z, 1000)
-    self.assertTrue(feq(min(hOH, hO), hyd))
+    self.assertAlmostEqual(min(hOH, hO), hyd, delta=1.0e-4)
 
     pt = geom.Point3D(2.0, 1.5, -3.0)
     hyd = hydro(pt.x, pt.y, pt.z, 1000)
     hOH = hbondOH(pt.x, pt.y, pt.z, 1000)
     hO = hbondO(pt.x, pt.y, pt.z, 1000)
-    self.assertTrue(feq(min(hOH, hO), hyd))
+    self.assertAlmostEqual(min(hOH, hO), hyd, delta=1.0e-4)
 
     pt = geom.Point3D(-2.5, 0.5, 3.0)
     hyd = hydro(pt.x, pt.y, pt.z, 1000)
     hOH = hbondOH(pt.x, pt.y, pt.z, 1000)
     hO = hbondO(pt.x, pt.y, pt.z, 1000)
-    self.assertTrue(feq(min(hOH, hO), hyd))
+    self.assertAlmostEqual(min(hOH, hO), hyd, delta=1.0e-4)
 
     pt = geom.Point3D(10.0, 1.5, 1.0)
     hyd = hydro(pt.x, pt.y, pt.z, 1000)
     hOH = hbondOH(pt.x, pt.y, pt.z, 1000)
     hO = hbondO(pt.x, pt.y, pt.z, 1000)
-    self.assertTrue(feq(min(hOH, hO), hyd))
+    self.assertAlmostEqual(min(hOH, hO), hyd, delta=1.0e-4)
 
     pt = geom.Point3D(6.0, -5.0, 0.0)
     hyd = hydro(pt.x, pt.y, pt.z, 1000)
     hOH = hbondOH(pt.x, pt.y, pt.z, 1000)
     hO = hbondO(pt.x, pt.y, pt.z, 1000)
-    self.assertTrue(feq(min(hOH, hO), hyd))
+    self.assertAlmostEqual(min(hOH, hO), hyd, delta=1.0e-4)
 
     pt = geom.Point3D(-3.0, -3.0, 7.0)
     hyd = hydro(pt.x, pt.y, pt.z, 1000)
     hOH = hbondOH(pt.x, pt.y, pt.z, 1000)
     hO = hbondO(pt.x, pt.y, pt.z, 1000)
-    self.assertTrue(feq(min(hOH, hO), hyd))
+    self.assertAlmostEqual(min(hOH, hO), hyd, delta=1.0e-4)
 
     pt = geom.Point3D(1.0, 0.0, 0.0)
     hyd = hydro(pt.x, pt.y, pt.z, 1000)
     hOH = hbondOH(pt.x, pt.y, pt.z, 1000)
     hO = hbondO(pt.x, pt.y, pt.z, 1000)
-    self.assertTrue(feq(min(hOH, hO), hyd))
+    self.assertAlmostEqual(min(hOH, hO), hyd, delta=1.0e-4)
 
     pt = geom.Point3D(0.0, 2.0, 2.0)
     hyd = hydro(pt.x, pt.y, pt.z, 1000)
     hOH = hbondOH(pt.x, pt.y, pt.z, 1000)
     hO = hbondO(pt.x, pt.y, pt.z, 1000)
-    self.assertTrue(feq(min(hOH, hO), hyd))
+    self.assertAlmostEqual(min(hOH, hO), hyd, delta=1.0e-4)
 
     pt = geom.Point3D(2.0, -2.0, 0.0)
     hyd = hydro(pt.x, pt.y, pt.z, 1000)
     hOH = hbondOH(pt.x, pt.y, pt.z, 1000)
     hO = hbondO(pt.x, pt.y, pt.z, 1000)
-    self.assertTrue(feq(min(hOH, hO), hyd))
+    self.assertAlmostEqual(min(hOH, hO), hyd, delta=1.0e-4)
 
     pt = geom.Point3D(2.0, -2.0, -3.0)
     hyd = hydro(pt.x, pt.y, pt.z, 1000)
     hOH = hbondOH(pt.x, pt.y, pt.z, 1000)
     hO = hbondO(pt.x, pt.y, pt.z, 1000)
-    self.assertTrue(feq(min(hOH, hO), hyd))
+    self.assertAlmostEqual(min(hOH, hO), hyd, delta=1.0e-4)
 
 
 if __name__ == '__main__':
