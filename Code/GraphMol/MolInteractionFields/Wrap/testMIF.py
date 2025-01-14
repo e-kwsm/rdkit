@@ -37,9 +37,9 @@ class TestCase(unittest.TestCase):
 
     bond = mol.GetConformer().GetAtomPosition(1) - mol.GetConformer().GetAtomPosition(0)
     self.assertTrue(feq(grd.GetSpacing(), 0.5))
-    self.assertTrue(grd.GetNumX() == int((abs(bond.x) + 10.0) / 0.5 + 0.5))
-    self.assertTrue(grd.GetNumY() == int((abs(bond.y) + 10.0) / 0.5 + 0.5))
-    self.assertTrue(grd.GetNumZ() == int((abs(bond.z) + 10.0) / 0.5 + 0.5))
+    self.assertEqual(grd.GetNumX(), int((abs(bond.x) + 10.0) / 0.5 + 0.5))
+    self.assertEqual(grd.GetNumY(), int((abs(bond.y) + 10.0) / 0.5 + 0.5))
+    self.assertEqual(grd.GetNumZ(), int((abs(bond.z) + 10.0) / 0.5 + 0.5))
 
   def test2CubeFiles(self):
     mol = AllChem.MolFromMolFile(
@@ -60,16 +60,16 @@ class TestCase(unittest.TestCase):
       os.path.join(RDConfig.RDBaseDir,
                    'Code/GraphMol/MolInteractionFields/Wrap/testData/test3.cube'))
 
-    self.assertTrue(grd.GetSize() == grd2.GetSize())
+    self.assertEqual(grd.GetSize(), grd2.GetSize())
 
     for i in range(grd.GetSize()):
       self.assertTrue(feq(grd2.GetVal(i), float(i / 10.0)))
 
     self.assertTrue(grd.CompareGrids(grd2))
-    self.assertTrue(mol.GetNumAtoms() == mol2.GetNumAtoms())
+    self.assertEqual(mol.GetNumAtoms(), mol2.GetNumAtoms())
 
     for i in range(mol.GetNumAtoms()):
-      self.assertTrue(mol.GetAtomWithIdx(i).GetAtomicNum() == mol2.GetAtomWithIdx(i).GetAtomicNum())
+      self.assertEqual(mol.GetAtomWithIdx(i).GetAtomicNum(), mol2.GetAtomWithIdx(i).GetAtomicNum())
       self.assertTrue(
         feq(mol.GetConformer().GetAtomPosition(i).x,
             mol2.GetConformer().GetAtomPosition(i).x))
@@ -89,7 +89,7 @@ class TestCase(unittest.TestCase):
       os.path.join(RDConfig.RDBaseDir,
                    'Code/GraphMol/MolInteractionFields/Wrap/testData/test4.cube'))
 
-    self.assertTrue(grd.GetSize() == grd3.GetSize())
+    self.assertEqual(grd.GetSize(), grd3.GetSize())
 
     for i in range(grd.GetSize()):
       self.assertTrue(feq(grd3.GetVal(i), float(i / 10.0)))
