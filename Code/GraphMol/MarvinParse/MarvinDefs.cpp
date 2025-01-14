@@ -64,7 +64,7 @@ void MarvinMolBase::addSgroupsToPtree(ptree &out) const {
 }
 
 template <typename T>
-bool getCleanNumber(std::string strToParse, T &outVal) {
+bool getCleanNumber(const std::string &strToParse, T &outVal) {
   if (boost::algorithm::trim_copy(strToParse) !=
       strToParse) {  // should be no white space
     return false;
