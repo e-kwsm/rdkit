@@ -122,26 +122,26 @@ class TestCase(unittest.TestCase):
     self.assertTrue(grd.CompareVectors(grd2))
     self.assertTrue(grd.CompareGrids(grd2))
     self.assertTrue(feq(coul(0.0, 0.0, 0.0, 1000), 0.0))
-    self.assertTrue(coul(2.0, 0.0, 0.0, 1000) < 0)
-    self.assertTrue(coul(-2.0, 0.0, 0.0, 1000) > 0)
+    self.assertLess(coul(2.0, 0.0, 0.0, 1000), 0)
+    self.assertGreater(coul(-2.0, 0.0, 0.0, 1000), 0)
 
     rdMIF.CalculateDescriptors(grd, rdMIF.Coulomb(mol, absVal=True))
 
     for i in range(grd.GetSize()):
-      self.assertTrue(grd.GetVal(i) <= 0.0)
+      self.assertLessEqual(grd.GetVal(i), 0.0)
 
     coul1 = rdMIF.Coulomb(mol, probeCharge=-1.0)
-    self.assertTrue(coul1(-2.0, 0.0, 0.0, 1000) < 0)
-    self.assertTrue(coul1(2.0, 0.0, 0.0, 1000) > 0)
+    self.assertLess(coul1(-2.0, 0.0, 0.0, 1000), 0)
+    self.assertGreater(coul1(2.0, 0.0, 0.0, 1000), 0)
 
     coul2 = rdMIF.Coulomb(mol, probeCharge=-.5)
-    self.assertTrue(coul1(-2.0, 0.0, 0.0, 1000) < coul2(-2.0, 0.0, 0.0, 1000))
+    self.assertLess(coul1(-2.0, 0.0, 0.0, 1000), coul2(-2.0, 0.0, 0.0, 1000))
 
     coul3 = rdMIF.Coulomb(mol, confId=0, probeCharge=1.0, absVal=False,
                           chargeKey="_GasteigerCharge", softcoreParam=0.01, cutoff=1.0)
-    self.assertTrue(coul3(0.0, 0.0, 0.0, 1000) > coul3(0.1, 0.0, 0.0, 1000))
-    self.assertTrue(coul3(0.66, 0.0, 0.0, 1000) > coul3(0.68, 0.0, 0.0, 1000))
-    self.assertTrue(coul3(0.70, 0.0, 0.0, 1000) > coul3(0.68, 0.0, 0.0, 1000))
+    self.assertGreater(coul3(0.0, 0.0, 0.0, 1000), coul3(0.1, 0.0, 0.0, 1000))
+    self.assertGreater(coul3(0.66, 0.0, 0.0, 1000), coul3(0.68, 0.0, 0.0, 1000))
+    self.assertGreater(coul3(0.70, 0.0, 0.0, 1000), coul3(0.68, 0.0, 0.0, 1000))
 
   def test4CoulombDielectric(self):
     mol = AllChem.MolFromMolFile(
@@ -166,27 +166,27 @@ class TestCase(unittest.TestCase):
 
     self.assertTrue(grd.CompareGrids(grd2))
     self.assertTrue(feq(couldiele(0.0, 0.0, 0.0, 1000), 0.0))
-    self.assertTrue(couldiele(2.0, 0.0, 0.0, 1000) < 0)
-    self.assertTrue(couldiele(-2.0, 0.0, 0.0, 1000) > 0)
+    self.assertLess(couldiele(2.0, 0.0, 0.0, 1000), 0)
+    self.assertGreater(couldiele(-2.0, 0.0, 0.0, 1000), 0)
 
     rdMIF.CalculateDescriptors(grd, rdMIF.CoulombDielectric(mol, absVal=True))
 
     for i in range(grd.GetSize()):
-      self.assertTrue(grd.GetVal(i) <= 0.0)
+      self.assertLessEqual(grd.GetVal(i), 0.0)
 
     couldiele1 = rdMIF.CoulombDielectric(mol, probeCharge=-1.0)
-    self.assertTrue(couldiele1(-2.0, 0.0, 0.0, 1000) < 0)
-    self.assertTrue(couldiele1(2.0, 0.0, 0.0, 1000) > 0)
+    self.assertLess(couldiele1(-2.0, 0.0, 0.0, 1000), 0)
+    self.assertGreater(couldiele1(2.0, 0.0, 0.0, 1000), 0)
 
     couldiele2 = rdMIF.CoulombDielectric(mol, probeCharge=-.5)
-    self.assertTrue(couldiele1(-2.0, 0.0, 0.0, 1000) < couldiele2(-2.0, 0.0, 0.0, 1000))
+    self.assertLess(couldiele1(-2.0, 0.0, 0.0, 1000), couldiele2(-2.0, 0.0, 0.0, 1000))
 
     couldiele3 = rdMIF.CoulombDielectric(mol, confId=0, probeCharge=1.0, absVal=False,
                                          chargeKey="_GasteigerCharge", softcoreParam=0.01,
                                          cutoff=1.0)
-    self.assertTrue(couldiele3(0.0, 0.0, 0.0, 1000) > couldiele3(0.1, 0.0, 0.0, 1000))
-    self.assertTrue(couldiele3(0.66, 0.0, 0.0, 1000) > couldiele3(0.68, 0.0, 0.0, 1000))
-    self.assertTrue(couldiele3(0.70, 0.0, 0.0, 1000) > couldiele3(0.68, 0.0, 0.0, 1000))
+    self.assertGreater(couldiele3(0.0, 0.0, 0.0, 1000), couldiele3(0.1, 0.0, 0.0, 1000))
+    self.assertGreater(couldiele3(0.66, 0.0, 0.0, 1000), couldiele3(0.68, 0.0, 0.0, 1000))
+    self.assertGreater(couldiele3(0.70, 0.0, 0.0, 1000), couldiele3(0.68, 0.0, 0.0, 1000))
 
     mol = AllChem.MolFromMolFile(
       os.path.join(RDConfig.RDBaseDir,
@@ -203,8 +203,8 @@ class TestCase(unittest.TestCase):
                                          chargeKey="_GasteigerCharge", softcoreParam=0.01,
                                          cutoff=1.0, epsilon=80.0, xi=10.0)
 
-    self.assertTrue(couldiele5(-1.0, 0.0, 0.0, 1000) < couldiele4(-1.0, 0.0, 0.0, 1000))
-    self.assertTrue(couldiele6(-1.0, 0.0, 0.0, 1000) < couldiele4(-1.0, 0.0, 0.0, 1000))
+    self.assertLess(couldiele5(-1.0, 0.0, 0.0, 1000), couldiele4(-1.0, 0.0, 0.0, 1000))
+    self.assertLess(couldiele6(-1.0, 0.0, 0.0, 1000), couldiele4(-1.0, 0.0, 0.0, 1000))
 
   def test5VdWaals(self):
     mol = AllChem.MolFromMolFile(
@@ -212,9 +212,9 @@ class TestCase(unittest.TestCase):
       removeHs=False)
     vdw = rdMIF.MMFFVdWaals(mol, confId=0, probeAtomType=6, scaling=False, cutoff=1.0)
 
-    self.assertTrue(vdw(-5.0, 0, 0, 1000) < 0)
-    self.assertTrue(vdw(-1.68, 0, 0, 1000) > vdw(-5.0, 0, 0, 1000))
-    self.assertTrue(vdw(-5.0, 0, 0, 1000) < vdw(-10.0, 0, 0, 1000))
+    self.assertLess(vdw(-5.0, 0, 0, 1000), 0)
+    self.assertGreater(vdw(-1.68, 0, 0, 1000), vdw(-5.0, 0, 0, 1000))
+    self.assertLess(vdw(-5.0, 0, 0, 1000), vdw(-10.0, 0, 0, 1000))
 
     mol2 = AllChem.MolFromMolFile(
       os.path.join(RDConfig.RDBaseDir, 'Code/GraphMol/MolInteractionFields/Wrap/testData/h2o.mol'),
@@ -222,13 +222,13 @@ class TestCase(unittest.TestCase):
     vdw = rdMIF.MMFFVdWaals(mol2, scaling=False)
     vdw2 = rdMIF.MMFFVdWaals(mol2, scaling=True)
 
-    self.assertTrue(abs(vdw2(-3.0, 0, 0, 1000) - vdw(-3.0, 0, 0, 1000)) > 0.0001)
+    self.assertGreater(abs(vdw2(-3.0, 0, 0, 1000) - vdw(-3.0, 0, 0, 1000)), 0.0001)
 
     vdw3 = rdMIF.UFFVdWaals(mol, confId=0, probeAtomType="O_3", cutoff=1.0)
 
-    self.assertTrue(vdw3(-5.0, 0, 0, 1000) < 0)
-    self.assertTrue(vdw3(-1.68, 0, 0, 1000) > vdw3(-5.0, 0, 0, 1000))
-    self.assertTrue(vdw3(-5.0, 0, 0, 1000) < vdw3(-10.0, 0, 0, 1000))
+    self.assertLess(vdw3(-5.0, 0, 0, 1000), 0)
+    self.assertGreater(vdw3(-1.68, 0, 0, 1000), vdw3(-5.0, 0, 0, 1000))
+    self.assertLess(vdw3(-5.0, 0, 0, 1000), vdw3(-10.0, 0, 0, 1000))
 
   def test6HBond(self):
     mol = AllChem.MolFromMolFile(
@@ -266,13 +266,13 @@ class TestCase(unittest.TestCase):
     rdMIF.CalculateDescriptors(grd, hbonddes1)
 
     hbonddes2 = rdMIF.HBond(mol, probeAtomType="O", fixed=False)
-    self.assertTrue(hbonddes1(4.0, 0.0, 1.0, 1000) > hbonddes2(4.0, 0.0, 1.0, 1000))
+    self.assertGreater(hbonddes1(4.0, 0.0, 1.0, 1000), hbonddes2(4.0, 0.0, 1.0, 1000))
 
     hbonddes3 = rdMIF.HBond(mol, probeAtomType="NH")
-    self.assertTrue(hbonddes(2.0, 2.0, 1.0, 1000) < hbonddes3(2.0, 2.0, 1.0, 1000))
+    self.assertLess(hbonddes(2.0, 2.0, 1.0, 1000), hbonddes3(2.0, 2.0, 1.0, 1000))
 
     hbonddes4 = rdMIF.HBond(mol, probeAtomType="N")
-    self.assertTrue(hbonddes1(3.0, 0.0, 0.0, 1000) < hbonddes4(3.0, 0.0, 0.0, 1000))
+    self.assertLess(hbonddes1(3.0, 0.0, 0.0, 1000), hbonddes4(3.0, 0.0, 0.0, 1000))
 
   def test7Hydrophilic(self):
     mol = AllChem.MolFromMolFile(
