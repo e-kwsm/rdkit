@@ -231,7 +231,7 @@ FingerprintGenerator<OutputType> *getAtomPairGenerator(
     const bool includeChirality, const bool use2D,
     AtomInvariantsGenerator *atomInvariantsGenerator,
     const bool useCountSimulation, const std::uint32_t fpSize,
-    const std::vector<std::uint32_t> countBounds, const bool ownsAtomInvGen) {
+    const std::vector<std::uint32_t> &countBounds, const bool ownsAtomInvGen) {
   AtomPair::AtomPairArguments arguments(useCountSimulation, includeChirality,
                                         use2D, minDistance, maxDistance,
                                         countBounds, fpSize);
