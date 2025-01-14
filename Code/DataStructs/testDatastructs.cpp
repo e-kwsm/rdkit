@@ -39,7 +39,7 @@ bool feq(double v1, double v2, double tol = 1e-4) {
 }
 
 template <typename T>
-void Test(T arg) {
+void Test(const T &arg) {
   (void)arg;
   T t1(20);
   TXTMSG("Set 10:", t1.setBit(10));
