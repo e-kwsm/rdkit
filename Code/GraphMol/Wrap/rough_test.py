@@ -4025,7 +4025,7 @@ CAS<~>
     inf = gzip.open(fileN)
     suppl = Chem.ForwardSDMolSupplier(inf)
     m0 = next(suppl)
-    self.assertIsNot(m0, None)
+    self.assertIsNotNone(m0)
     inf.close()
     del suppl
 
