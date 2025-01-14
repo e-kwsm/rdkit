@@ -1006,10 +1006,9 @@ M  END
         self.assertEqual(templateRefAtomIdx, i)
         self.assertEqual(molAtomIdx, expectedMolIndices[i])
       self.assertEqual(Chem.MolToSmiles(mol), "C1CC2CCC1N2C1CNC1N1C2CCC1CC2")
-      self.assertTrue(
-        all((mol.GetConformer().GetAtomPosition(molAtomIdx) -
-             template_ref.GetConformer().GetAtomPosition(templateRefAtomIdx)).LengthSq() < 1.e-4
-            for templateRefAtomIdx, molAtomIdx in res))
+      for templateRefAtomIdx, molAtomIdx in res:
+        self.assertLess((mol.GetConformer().GetAtomPosition(molAtomIdx)
+                         - template_ref.GetConformer().GetAtomPosition(templateRefAtomIdx)).LengthSq(), 1.e-4)
       bondLengthAli11_12 = rdMolTransforms.GetBondLength(mol.GetConformer(), 11, 12)
       bondLengthAli5_6 = rdMolTransforms.GetBondLength(mol.GetConformer(), 5, 6)
       self.assertLess(abs(bondLengthAli11_12 - bondLengthAli5_6), 1.e-4)
