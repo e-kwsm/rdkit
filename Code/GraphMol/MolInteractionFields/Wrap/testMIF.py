@@ -242,16 +242,16 @@ class TestCase(unittest.TestCase):
     hbonddes = rdMIF.HBond(mol)
     rdMIF.CalculateDescriptors(grd, hbonddes)
     self.assertFalse(grd.CompareGrids(grd1))
-    self.assertTrue(
-      abs(int((grd.GetOccupancyVect() - grd1.GetOccupancyVect()).GetTotalVal())) == grd.GetSize())
+    self.assertEqual(
+      abs(int((grd.GetOccupancyVect() - grd1.GetOccupancyVect()).GetTotalVal())), grd.GetSize())
 
     hbonddes = rdMIF.HBond(mol, probeAtomType='O')
     for i in range(grd.GetSize()):
       grd.SetVal(i, 1.0)
     rdMIF.CalculateDescriptors(grd, hbonddes)
     self.assertFalse(grd.CompareGrids(grd1))
-    self.assertTrue(
-      abs(int((grd.GetOccupancyVect() - grd1.GetOccupancyVect()).GetTotalVal())) == grd.GetSize())
+    self.assertEqual(
+      abs(int((grd.GetOccupancyVect() - grd1.GetOccupancyVect()).GetTotalVal())), grd.GetSize())
 
     mol = AllChem.MolFromMolFile(
       os.path.join(RDConfig.RDBaseDir,
