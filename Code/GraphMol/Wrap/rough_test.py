@@ -5286,18 +5286,18 @@ M  END"""
     b = Chem.BondFromSmiles("=")
     self.assertEqual(b.GetBondType(), Chem.BondType.DOUBLE)
     a = Chem.AtomFromSmiles("error")
-    self.assertIs(a, None)
+    self.assertIsNone(a)
     b = Chem.BondFromSmiles("d")
-    self.assertIs(b, None)
+    self.assertIsNone(b)
 
     a = Chem.AtomFromSmarts("C")
     self.assertEqual(a.GetAtomicNum(), 6)
     b = Chem.BondFromSmarts("=")
     self.assertEqual(b.GetBondType(), Chem.BondType.DOUBLE)
     a = Chem.AtomFromSmarts("error")
-    self.assertIs(a, None)
+    self.assertIsNone(a)
     b = Chem.BondFromSmarts("d")
-    self.assertIs(b, None)
+    self.assertIsNone(b)
 
   def testSVGParsing(self):
     svg = """<?xml version='1.0' encoding='iso-8859-1'?>
