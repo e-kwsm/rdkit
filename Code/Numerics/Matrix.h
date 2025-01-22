@@ -100,14 +100,13 @@ class Matrix {
   }
 
   //! returns a particular element of the matrix
-  inline virtual TYPE getValUnchecked(unsigned int i, unsigned int j) const {
+  virtual TYPE getValUnchecked(unsigned int i, unsigned int j) const {
     unsigned int id = i * d_nCols + j;
     return d_data[id];
   }
 
   //! sets a particular element of the matrix
-  inline virtual void setValUnchecked(unsigned int i, unsigned int j,
-                                      TYPE val) {
+  virtual void setValUnchecked(unsigned int i, unsigned int j, TYPE val) {
     unsigned int id = i * d_nCols + j;
 
     d_data[id] = val;
