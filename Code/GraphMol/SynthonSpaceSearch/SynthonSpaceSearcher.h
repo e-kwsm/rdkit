@@ -77,12 +77,12 @@ class SynthonSpaceSearcher {
   // check on whether this set of synthons can match the query without having to
   // build the full molecule from the synthons.  They will over-ride this
   // function which by default passes everything.
-  virtual bool quickVerify(
+  [[nodiscard]] virtual bool quickVerify(
       [[maybe_unused]] const std::unique_ptr<SynthonSet> &reaction,
       [[maybe_unused]] const std::vector<size_t> &synthNums) const {
     return true;
   }
-  virtual bool verifyHit(const ROMol &mol) const = 0;
+  [[nodiscard]] virtual bool verifyHit(const ROMol &mol) const = 0;
 
   // Build the molecules from the synthons identified in reagentsToUse.
   // There should be bitset in reagentsToUse for each reagent set.

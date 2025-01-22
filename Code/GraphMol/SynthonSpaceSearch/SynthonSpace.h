@@ -229,7 +229,7 @@ class RDKIT_SYNTHONSPACESEARCH_EXPORT SynthonSpace {
   void buildSynthonFingerprints(
       const FingerprintGenerator<std::uint64_t> &fpGen);
 
-  bool hasAddAndSubstractFingerprints() const;
+  [[nodiscard]] bool hasAddAndSubstractFingerprints() const;
   // Create the add and substract fingerprints for the SynthonSets.
   // Will be done by the fingerprint search if not done ahead of time.
   void buildAddAndSubstractFingerprints(
