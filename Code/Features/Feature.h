@@ -11,6 +11,7 @@
 #ifndef __FEATURE_H_30112004_1121__
 #define __FEATURE_H_30112004_1121__
 
+#include <utility>
 #include <vector>
 #include <Geometry/point.h>
 
@@ -20,11 +21,10 @@ template <typename FAMILYMARKER, typename TYPEMARKER = FAMILYMARKER,
 class ExplicitFeature {
  public:
   ExplicitFeature() {}
-  explicit ExplicitFeature(const FAMILYMARKER &f, const TYPEMARKER &t)
-      : d_family(f), d_type(t) {}
-  ExplicitFeature(const FAMILYMARKER &f, const TYPEMARKER &t,
-                  const LOCTYPE &loc)
-      : d_family(f), d_type(t), d_loc(loc) {}
+  explicit ExplicitFeature(FAMILYMARKER f, TYPEMARKER t)
+      : d_family(std::move(f)), d_type(std::move(t)) {}
+  ExplicitFeature(FAMILYMARKER f, TYPEMARKER t, const LOCTYPE &loc)
+      : d_family(std::move(f)), d_type(std::move(t)), d_loc(loc) {}
 
   const FAMILYMARKER &getFamily() const { return d_family; }
   void setFamily(const FAMILYMARKER &f) { d_family = f; }
