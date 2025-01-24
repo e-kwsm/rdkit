@@ -1410,6 +1410,7 @@ void ResonanceMolSupplier::enumerate() {
     auto functor = [this](unsigned int ti, unsigned int d_numThreads) -> void {
       mainLoop(ti, d_numThreads);
     };
+    tg.reserve(d_numThreads);
     for (unsigned int ti = 0; ti < d_numThreads; ++ti) {
       tg.emplace_back(
           std::async(std::launch::async, functor, ti, d_numThreads));
