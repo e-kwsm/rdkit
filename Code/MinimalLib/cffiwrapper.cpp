@@ -1072,14 +1072,14 @@ extern "C" void free_mol_array(char ***pkl_array, size_t **pkl_sz_array) {
   if (pkl_array && *pkl_array) {
     for (size_t i = 0; (*pkl_array)[i]; ++i) {
       free((*pkl_array)[i]);
-      (*pkl_array)[i] = NULL;
+      (*pkl_array)[i] = nullptr;
     }
     free(*pkl_array);
-    *pkl_array = NULL;
+    *pkl_array = nullptr;
   }
   if (pkl_sz_array && *pkl_sz_array) {
     free(*pkl_sz_array);
-    *pkl_sz_array = NULL;
+    *pkl_sz_array = nullptr;
   }
 }
 
