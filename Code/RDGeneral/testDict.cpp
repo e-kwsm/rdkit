@@ -170,6 +170,7 @@ void testRDAny() {
 
   {
     std::vector<double> v;
+    v.reserve(4);
     for (double i = 0; i < 4; ++i) {
       v.push_back(i);
     }
