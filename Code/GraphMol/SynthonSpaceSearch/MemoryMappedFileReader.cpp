@@ -81,7 +81,7 @@ MemoryMappedFileReader::MemoryMappedFileReader(const std::string &filePath) {
 
   // Memory map the file
   d_mappedMemory =
-      static_cast<char *>(mmap(NULL, d_size, PROT_READ, MAP_SHARED, fd, 0));
+      static_cast<char *>(mmap(nullptr, d_size, PROT_READ, MAP_SHARED, fd, 0));
   if (d_mappedMemory == MAP_FAILED) {
     BOOST_LOG(rdErrorLog) << "Error mapping file.\n";
     close(fd);
