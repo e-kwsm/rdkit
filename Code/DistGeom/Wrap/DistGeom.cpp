@@ -102,6 +102,7 @@ PyObject *embedBoundsMatrix(python::object boundsMatArg, int maxIters = 10,
 
   std::unique_ptr<RDGeom::Point3D[]> positions(new RDGeom::Point3D[nrows]);
   std::vector<RDGeom::Point *> posPtrs;
+  posPtrs.reserve(nrows);
   for (unsigned int i = 0; i < nrows; i++) {
     posPtrs.push_back(&positions[i]);
   }
