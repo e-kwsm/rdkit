@@ -54,6 +54,7 @@ void testMMFFMultiThread() {
   SDMolSupplier suppl(pathName + "/bulk.sdf");
   unsigned int count = 24;
   std::vector<std::vector<ROMol *>> mols;
+  mols.reserve(count);
   for (unsigned int i = 0; i < count; ++i) {
     mols.emplace_back();
   }
