@@ -10,6 +10,7 @@
 /*=================================================================*/
 #define _USE_MATH_DEFINES
 
+#include <algorithm>
 #include <limits>
 #include <string>
 #include <list>
