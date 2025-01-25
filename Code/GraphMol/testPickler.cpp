@@ -168,7 +168,7 @@ void testIssue164() {
 
   // the issue had to do with number of atoms, so let's make an enormous
   // molecule and try again:
-  auto *m3 = static_cast<RWMol *>(SmilesToMol(smi));
+  auto *m3 = SmilesToMol(smi);
   m3->insertMol(*m1);
   m3->insertMol(*m1);
   MolOps::sanitizeMol(*m3);
