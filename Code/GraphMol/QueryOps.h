@@ -162,10 +162,10 @@ static inline int queryAtomIsotope(Atom const *at) {
   return static_cast<int>(at->getIsotope());
 };
 static inline int queryAtomFormalCharge(Atom const *at) {
-  return static_cast<int>(at->getFormalCharge());
+  return at->getFormalCharge();
 };
 static inline int queryAtomNegativeFormalCharge(Atom const *at) {
-  return static_cast<int>(-1 * at->getFormalCharge());
+  return (-1 * at->getFormalCharge());
 };
 static inline int queryAtomHybridization(Atom const *at) {
   return at->getHybridization();
