@@ -16,6 +16,7 @@
 #include <RDGeneral/types.h>
 
 #include <RDGeneral/BoostStartInclude.h>
+#include <algorithm>
 #include <boost/dynamic_bitset.hpp>
 #include <boost/flyweight.hpp>
 #include <boost/flyweight/key_value.hpp>
@@ -155,15 +156,11 @@ unsigned int calcNumRotatableBonds(const ROMol &mol,
 
     // remove symmetrical rings:
     res -= symRings_matcher.get().countMatches(mol);
-    if (res < 0) {
-      res = 0;
-    }
+    res = std::max(res, 0);
 
     // remove triple bonds
     res -= terminalTripleBonds_matcher.get().countMatches(mol);
-    if (res < 0) {
-      res = 0;
-    }
+    res = std::max(res, 0);
 
     // removing amides is more complex
     boost::dynamic_bitset<> atomsSeen(mol.getNumAtoms());
@@ -181,9 +178,7 @@ unsigned int calcNumRotatableBonds(const ROMol &mol,
       }
     }
 
-    if (res < 0) {
-      res = 0;
-    }
+    res = std::max(res, 0);
     return static_cast<unsigned int>(res);
   }
 }
