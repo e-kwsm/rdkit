@@ -694,7 +694,7 @@ void MolDraw2D::setScale(int width, int height, const Point2D &minv,
   double drawWidth = width * (1 - 2 * drawOptions().padding);
   double drawHeight = height * (1 - 2 * drawOptions().padding);
 
-  scale_ = std::min(double(drawWidth) / x_range, double(drawHeight) / y_range);
+  scale_ = std::min(drawWidth / x_range, drawHeight / y_range);
   // Absent any other information, we'll have to go with fontScale_ the
   // same as scale_.
   if (!setFontScale) {
