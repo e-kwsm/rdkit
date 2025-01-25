@@ -8,6 +8,7 @@
 //  of the RDKit source tree.
 //
 
+#include <algorithm>
 #include <regex>
 #include <set>
 
@@ -393,9 +394,7 @@ void RascalResult::applyMaxFragSep() {
       for (auto at2 : frag2->atoms()) {
         int at2Idx = at2->getProp<int>("ORIG_INDEX");
         int dist = std::nearbyint(pathMatrix[at1Idx * num_atoms + at2Idx]);
-        if (dist < minDist) {
-          minDist = dist;
-        }
+        minDist = std::min(dist, minDist);
       }
     }
     return minDist;
@@ -585,9 +584,7 @@ int RascalResult::calcMaxDeltaAtomAtomDistScore() const {
       auto d2 = dist(d_atomMatches[i].second, d_atomMatches[j].second,
                      mol2Dists, d_mol2->getNumAtoms());
       auto deltaDist = abs(d1 - d2);
-      if (deltaDist > score) {
-        score = deltaDist;
-      }
+      score = std::max(deltaDist, score);
     }
   }
   return score;
