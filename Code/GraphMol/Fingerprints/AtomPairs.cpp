@@ -43,7 +43,7 @@ void setAtomPairBit(std::uint32_t i, std::uint32_t j, std::uint32_t nAtoms,
   if (dist >= minLength && dist <= maxLength) {
     std::uint32_t bitId =
         getAtomPairCode(atomCodes[i], atomCodes[j], dist, includeChirality);
-    updateElement(*bv, static_cast<std::uint32_t>(bitId));
+    updateElement(*bv, bitId);
   }
 }
 
