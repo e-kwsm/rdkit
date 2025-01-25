@@ -125,9 +125,7 @@ std::vector<const Bond *> getContiguousAromaticBonds(const ROMol &mol,
 std::vector<std::vector<std::unique_ptr<ROMol>>> splitMolecule(
     const ROMol &query, unsigned int maxBondSplits, std::uint64_t maxNumFrags,
     TimePoint *endTime, bool &timedOut) {
-  if (maxBondSplits < 1) {
-    maxBondSplits = 1;
-  }
+  maxBondSplits = std::max<unsigned int>(maxBondSplits, 1);
   maxBondSplits =
       std::min({maxBondSplits, MAX_CONNECTOR_NUM, query.getNumBonds()});
   const auto ringInfo = query.getRingInfo();
