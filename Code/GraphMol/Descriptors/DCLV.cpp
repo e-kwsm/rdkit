@@ -10,6 +10,7 @@
 /*=================================================================*/
 #define _USE_MATH_DEFINES
 
+#include <algorithm>
 #include <iostream>
 #include <limits>
 #include <string>
@@ -403,17 +404,11 @@ struct State {
     double maxDist = range + maxRadius;
 
     int lx = voxX * (atom.pos.x - maxDist - voxU);
-    if (lx < 0) {
-      lx = 0;
-    }
+    lx = std::max(lx, 0);
     int ly = voxY * (atom.pos.y - maxDist - voxV);
-    if (ly < 0) {
-      ly = 0;
-    }
+    ly = std::max(ly, 0);
     int lz = voxZ * (atom.pos.z - maxDist - voxW);
-    if (lz < 0) {
-      lz = 0;
-    }
+    lz = std::max(lz, 0);
 
     int ux = voxX * (atom.pos.x + maxDist - voxU);
     if (ux >= VOXORDER) {
@@ -830,9 +825,7 @@ DoubleCubicLatticeVolume::DoubleCubicLatticeVolume(const ROMol &mol,
     throw std::range_error("Error: supplied density exceeds maximum");
   }
 
-  if (depth < 0) {
-    depth = 0;
-  }
+  depth = std::max(depth, 0);
 
   if (probeRadius < 0.0) {
     probeRadius = (isProtein) ? 1.4 : 1.2;

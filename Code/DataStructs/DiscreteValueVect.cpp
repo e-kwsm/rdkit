@@ -14,6 +14,7 @@
 #include "DatastructsException.h"
 #include "DiscreteDistMat.h"
 #include <RDGeneral/Exceptions.h>
+#include <algorithm>
 #include <cstdint>
 #include <algorithm>
 
@@ -221,9 +222,7 @@ DiscreteValueVect DiscreteValueVect::operator&(
     const DiscreteValueVect &other) const {
   PRECONDITION(other.d_length == d_length, "length mismatch");
   DiscreteValueType typ = d_type;
-  if (other.d_type < typ) {
-    typ = other.d_type;
-  }
+  typ = std::min(other.d_type, typ);
   DiscreteValueVect ans(typ, d_length);
   for (unsigned int i = 0; i < d_length; ++i) {
     unsigned int v1 = getVal(i);
@@ -237,9 +236,7 @@ DiscreteValueVect DiscreteValueVect::operator|(
     const DiscreteValueVect &other) const {
   PRECONDITION(other.d_length == d_length, "length mismatch");
   DiscreteValueType typ = d_type;
-  if (other.d_type > typ) {
-    typ = other.d_type;
-  }
+  typ = std::max(other.d_type, typ);
   DiscreteValueVect ans(typ, d_length);
   for (unsigned int i = 0; i < d_length; ++i) {
     unsigned int v1 = getVal(i);
