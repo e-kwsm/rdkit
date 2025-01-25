@@ -91,7 +91,7 @@ TEST_CASE("testRDValue") {
     bool a = true;
     RDValue v(a);
     REQUIRE(rdvalue_cast<bool>(v) == true);
-    v = (int)10;
+    v = 10;
     REQUIRE(rdvalue_cast<int>(v) == 10);
   }
 

@@ -525,7 +525,7 @@ M  END
     REQUIRE(m);
     m->updatePropertyCache();
     MolStandardize::Uncharger uc;
-    std::unique_ptr<ROMol> res((ROMol *)uc.uncharge(*m));
+    std::unique_ptr<ROMol> res(uc.uncharge(*m));
     REQUIRE(res);
     CHECK(res->getAtomWithIdx(1)->getFormalCharge() == 0);
     CHECK(res->getAtomWithIdx(1)->getTotalNumHs() == 2);
