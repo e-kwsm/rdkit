@@ -10,6 +10,7 @@
 // Original author: David Cosgrove (CozChemIx Limited)
 //
 
+#include <algorithm>
 #include <cmath>
 
 #include <GraphMol/MolDraw2D/MolDraw2DDetails.h>
@@ -583,9 +584,7 @@ void DrawShapeDashedWedge::buildLines() {
   // There should be at least 3 dashes so we can see which way the wedge
   // is going (Github6041b).
   unsigned int numDashesNeeded = oneLessDash_ ? 4 : 3;
-  if (nDashes < numDashesNeeded) {
-    nDashes = numDashesNeeded;
-  }
+  nDashes = std::max(nDashes, numDashesNeeded);
   if (!nDashes) {
     points_.push_back(end1Cds_);
     points_.push_back(end2Cds_);

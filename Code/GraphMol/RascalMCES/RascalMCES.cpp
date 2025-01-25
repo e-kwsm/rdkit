@@ -15,6 +15,7 @@
 // 'The Computer Journal', 45, 631-644 (2002).
 // https://eprints.whiterose.ac.uk/3568/1/willets3.pdf
 
+#include <algorithm>
 #include <chrono>
 #include <functional>
 #include <map>
@@ -585,9 +586,7 @@ unsigned int calcLowerBound(const ROMol &mol1, const ROMol &mol2,
   lb = lb * simThresh - mol1.getNumAtoms() + deltaVg1;
   lb = lb < 0 ? 0 : lb;
   unsigned int ilb(lb);
-  if (ilb < 1) {
-    ilb = 1;
-  }
+  ilb = std::max<unsigned int>(ilb, 1);
   return ilb;
 }
 

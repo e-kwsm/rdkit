@@ -98,9 +98,7 @@ class DuplicatedSeedCache {
   }
 
   void add(const TKey &key, TValue found = true) {
-    if (key.getNumAtoms() > MaxAtoms) {
-      MaxAtoms = key.getNumAtoms();
-    }
+    MaxAtoms = std::max(key.getNumAtoms(), MaxAtoms);
 
     Index.insert(std::pair<TKey, bool>(key, found));
   }

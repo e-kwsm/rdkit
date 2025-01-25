@@ -13,6 +13,7 @@
 #include <RDGeneral/RDLog.h>
 #include "MolSupplier.h"
 #include "FileParsers.h"
+#include <algorithm>
 #include <boost/tokenizer.hpp>
 typedef boost::tokenizer<boost::char_separator<char>> tokenizer;
 
@@ -407,9 +408,7 @@ void SmilesMolSupplier::moveTo(unsigned int idx) {
 std::unique_ptr<RWMol> SmilesMolSupplier::next() {
   PRECONDITION(dp_inStream, "no stream");
 
-  if (d_next < 0) {
-    d_next = 0;
-  }
+  d_next = std::max<long>(d_next, 0);
 
   // This throws an exception if it fails:
   moveTo(d_next);

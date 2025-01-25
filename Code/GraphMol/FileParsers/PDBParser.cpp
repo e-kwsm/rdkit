@@ -7,6 +7,7 @@
 //  which is included in the file license.txt, found at the root
 //  of the RDKit source tree.
 //
+#include <algorithm>
 #include <cstring>
 #include <cstdio>
 #include <string>
@@ -330,9 +331,7 @@ void PDBBondLine(RWMol *mol, const char *ptr, unsigned int len,
   }
 
   if (!fail) {
-    if (len > 41) {
-      len = 41;
-    }
+    len = std::min<unsigned int>(len, 41);
     for (unsigned int pos = 11; pos + 5 <= len; pos += 5) {
       if (!memcmp(ptr + pos, "     ", 5)) {
         break;
