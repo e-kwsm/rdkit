@@ -13,6 +13,7 @@
 
 #include <RDGeneral/Invariant.h>
 #include <Numerics/Optimizer/BFGSOpt.h>
+#include <algorithm>
 
 namespace RDKit {
 namespace ForceFieldsHelper {
@@ -123,9 +124,7 @@ class calcGradient {
     for (unsigned int i = 0;
          i < mp_ffHolder->numPoints() * mp_ffHolder->dimension(); i++) {
       grad[i] *= gradScale;
-      if (grad[i] > maxGrad) {
-        maxGrad = grad[i];
-      }
+      maxGrad = std::max(grad[i], maxGrad);
     }
     // this is a continuation of the same hack to avoid
     // some potential numeric instabilities:

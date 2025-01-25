@@ -594,9 +594,7 @@ double MolDraw2D::getDrawLineWidth() const {
   if (drawOptions().scaleBondWidth) {
     // lineWidthScaleFactor is defined in MolDraw2DHelpers.h
     width *= scale() * lineWidthScaleFactor;
-    if (width < 0.0) {
-      width = 0.0;
-    }
+    width = std::max(width, 0.0);
   }
   return width;
 }
@@ -745,9 +743,7 @@ void MolDraw2D::getLabelSize(const string &label,
     double height, width;
     for (auto bit : sym_bits) {
       getStringSize(bit, width, height);
-      if (width > label_width) {
-        label_width = width;
-      }
+      label_width = std::max(width, label_width);
       label_height += height;
     }
   } else {
