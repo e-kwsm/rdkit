@@ -8,6 +8,7 @@
 //  of the RDKit source tree.
 //
 
+#include <algorithm>
 #include <ctime>
 #include <limits>
 #ifdef RDK_BUILD_THREADSAFE_SSS
@@ -120,9 +121,7 @@ RGroupGa::RGroupGa(const RGroupDecompData &rGroupData,
 
   // TODO refine these settings
   auto popsize = 100 + chromLength / 10;
-  if (popsize > 200) {
-    popsize = 200;
-  }
+  popsize = std::min(popsize, 200);
   const auto &params = rGroupData.params;
   if (params.gaPopulationSize > 0) {
     popsize = params.gaPopulationSize;

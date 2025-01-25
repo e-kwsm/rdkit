@@ -10,6 +10,7 @@
 /*=================================================================*/
 #define _USE_MATH_DEFINES
 
+#include <algorithm>
 #include <limits>
 #include <string>
 #include <list>
@@ -171,18 +172,12 @@ struct State {
       const double maxDist = range + maxRadius;
 
       int lx = voxX * (pos.x - maxDist - voxU);
-      if (lx < 0) {
-        lx = 0;
-      }
+      lx = std::max(lx, 0);
 
       int ly = voxY * (pos.y - maxDist - voxV);
-      if (ly < 0) {
-        ly = 0;
-      }
+      ly = std::max(ly, 0);
       int lz = voxZ * (pos.z - maxDist - voxW);
-      if (lz < 0) {
-        lz = 0;
-      }
+      lz = std::max(lz, 0);
 
       int ux = voxX * (pos.x + maxDist - voxU);
       if (ux >= VOXORDER) {
