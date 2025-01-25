@@ -9,6 +9,7 @@
 //
 #include <RDGeneral/export.h>
 #pragma once
+#include <algorithm>
 #include <list>
 #include <vector>
 #include <string>
@@ -51,9 +52,7 @@ class RDKIT_FMCS_EXPORT SubstructureCache {
       std::vector<unsigned long> currCodes(nv);
       std::vector<unsigned long> prevCodes(nv);
       size_t nIterations = seed.getNumBonds();
-      if (nIterations > 5) {
-        nIterations = 5;
-      }
+      nIterations = std::min<size_t>(nIterations, 5);
 
       for (unsigned int seedAtomIdx = 0; seedAtomIdx < seed.getNumAtoms();
            ++seedAtomIdx) {

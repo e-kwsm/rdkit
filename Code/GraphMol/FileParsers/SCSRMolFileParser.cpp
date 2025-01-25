@@ -17,6 +17,8 @@
 #include <RDGeneral/FileParseException.h>
 #include <RDGeneral/BadFileException.h>
 
+#include <algorithm>
+
 using namespace RDKit::SGroupParsing;
 
 namespace RDKit {
@@ -902,35 +904,17 @@ class MolFromSCSRMolConverter {
           auto atomCoord = templateConf->getAtomPos(atomIdx);
           sumOfCoords += atomCoord;
 
-          if (atomCoord.x > maxCoord.x) {
-            maxCoord.x = atomCoord.x;
-          }
-          if (atomCoord.y > maxCoord.y) {
-            maxCoord.y = atomCoord.y;
-          }
-          if (atomCoord.z > maxCoord.z) {
-            maxCoord.z = atomCoord.z;
-          }
-          if (atomCoord.x < minCoord.x) {
-            minCoord.x = atomCoord.x;
-          }
-          if (atomCoord.y < minCoord.y) {
-            minCoord.y = atomCoord.y;
-          }
-          if (atomCoord.z < minCoord.z) {
-            minCoord.z = atomCoord.z;
-          }
+          maxCoord.x = std::max(atomCoord.x, maxCoord.x);
+          maxCoord.y = std::max(atomCoord.y, maxCoord.y);
+          maxCoord.z = std::max(atomCoord.z, maxCoord.z);
+          minCoord.x = std::min(atomCoord.x, minCoord.x);
+          minCoord.y = std::min(atomCoord.y, minCoord.y);
+          minCoord.z = std::min(atomCoord.z, minCoord.z);
         }
         templateCentroids.push_back(sumOfCoords / templateMol->getNumAtoms());
-        if (maxCoord.x - minCoord.x > maxSize) {
-          maxSize = maxCoord.x - minCoord.x;
-        }
-        if (maxCoord.y - minCoord.y > maxSize) {
-          maxSize = maxCoord.y - minCoord.y;
-        }
-        if (maxCoord.z - minCoord.z > maxSize) {
-          maxSize = maxCoord.z - minCoord.z;
-        }
+        maxSize = std::max(maxCoord.x - minCoord.x, maxSize);
+        maxSize = std::max(maxCoord.y - minCoord.y, maxSize);
+        maxSize = std::max(maxCoord.z - minCoord.z, maxSize);
       }
     }
 

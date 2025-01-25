@@ -90,9 +90,7 @@ void linearSearch(unsigned int dim, double *oldPt, double oldVal, double *grad,
   test = 0.0;
   for (unsigned int i = 0; i < dim; i++) {
     double temp = fabs(dir[i]) / std::max(fabs(oldPt[i]), 1.0);
-    if (temp > test) {
-      test = temp;
-    }
+    test = std::max(temp, test);
   }
 
   lambdaMin = MOVETOL / test;
@@ -139,9 +137,7 @@ void linearSearch(unsigned int dim, double *oldPt, double oldVal, double *grad,
           tmpLambda = -slope / (b + sqrt(disc));
         }
       }
-      if (tmpLambda > 0.5 * lambda) {
-        tmpLambda = 0.5 * lambda;
-      }
+      tmpLambda = std::min(tmpLambda, 0.5 * lambda);
     }
     lambda2 = lambda;
     val2 = newVal;
@@ -232,9 +228,7 @@ int minimize(unsigned int dim, double *pos, double gradTol,
       xi[i] = newPos[i] - pos[i];
       pos[i] = newPos[i];
       double temp = fabs(xi[i]) / std::max(fabs(pos[i]), 1.0);
-      if (temp > test) {
-        test = temp;
-      }
+      test = std::max(temp, test);
       dGrad[i] = grad[i];
     }
     // std::cerr<<"      iter: "<<iter<<" "<<fp<<" "<<test<<"

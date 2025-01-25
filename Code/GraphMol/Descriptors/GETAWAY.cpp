@@ -46,6 +46,7 @@
 #include <Numerics/Matrix.h>
 #include <Numerics/SquareMatrix.h>
 #include <Numerics/SymmMatrix.h>
+#include <algorithm>
 #include <cmath>
 #include <Eigen/Dense>
 #include <Eigen/SVD>
@@ -362,9 +363,7 @@ double getMax(const double *Rk) {
   PRECONDITION(Rk != nullptr, "bad rK");
   double RTp = 0;
   for (int j = 0; j < 8; j++) {
-    if (Rk[j] > RTp) {
-      RTp = Rk[j];
-    }
+    RTp = std::max(Rk[j], RTp);
   }
   return RTp;
 }
@@ -528,9 +527,7 @@ void getGETAWAYDescCustom(MatrixXd H, MatrixXd R, MatrixXd Adj, int numAtoms,
 
             R0c += tmpc;
 
-            if (tmpc > Rkmaxc) {
-              Rkmaxc = tmpc;
-            }
+            Rkmaxc = std::max(tmpc, Rkmaxc);
           }
         }
       }
@@ -926,27 +923,13 @@ void getGETAWAYDesc(MatrixXd H, MatrixXd R, MatrixXd Adj, int numAtoms,
             R0p += tmpp;
             R0i += tmpi;
             R0s += tmps;
-            if (tmpu > Rkmaxu) {
-              Rkmaxu = tmpu;
-            }
-            if (tmpm > Rkmaxm) {
-              Rkmaxm = tmpm;
-            }
-            if (tmpv > Rkmaxv) {
-              Rkmaxv = tmpv;
-            }
-            if (tmpe > Rkmaxe) {
-              Rkmaxe = tmpe;
-            }
-            if (tmpp > Rkmaxp) {
-              Rkmaxp = tmpp;
-            }
-            if (tmpi > Rkmaxi) {
-              Rkmaxi = tmpi;
-            }
-            if (tmps > Rkmaxs) {
-              Rkmaxs = tmps;
-            }
+            Rkmaxu = std::max(tmpu, Rkmaxu);
+            Rkmaxm = std::max(tmpm, Rkmaxm);
+            Rkmaxv = std::max(tmpv, Rkmaxv);
+            Rkmaxe = std::max(tmpe, Rkmaxe);
+            Rkmaxp = std::max(tmpp, Rkmaxp);
+            Rkmaxi = std::max(tmpi, Rkmaxi);
+            Rkmaxs = std::max(tmps, Rkmaxs);
           }
         }
       }
