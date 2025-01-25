@@ -151,7 +151,7 @@ void extractArena(FPBReader_impl *dp_impl, boost::uint64_t sz,
   dp_impl->numBytesStoredPerFingerprint =
       *reinterpret_cast<const boost::uint32_t *>(chunk);
   chunk += sizeof(boost::uint32_t);
-  boost::uint8_t spacer = *reinterpret_cast<const boost::uint8_t *>(chunk);
+  boost::uint8_t spacer = *chunk;
   chunk += 1;
   // now move forward the length of the spacer
   chunk += spacer;
