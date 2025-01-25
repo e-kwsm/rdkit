@@ -27,6 +27,7 @@
 #include <GraphMol/ForceFieldHelpers/CrystalFF/PlanarityContribs.h>
 #include <boost/dynamic_bitset.hpp>
 #include <ForceField/MMFF/Nonbonded.h>
+#include <algorithm>
 
 namespace DistGeom {
 constexpr double EIGVAL_TOL = 0.001;
@@ -60,9 +61,7 @@ double pickRandomDistMat(const BoundsMatrix &mmat,
       // std::cerr<<i<<"-"<<j<<": "<<rval<<std::endl;
       double d = lb + (rval) * (ub - lb);
       ddata[id + j] = d;
-      if (d > largestVal) {
-        largestVal = d;
-      }
+      largestVal = std::max(largestVal, d);
     }
   }
   return largestVal;

@@ -222,9 +222,7 @@ DiscreteValueVect DiscreteValueVect::operator&(
     const DiscreteValueVect &other) const {
   PRECONDITION(other.d_length == d_length, "length mismatch");
   DiscreteValueType typ = d_type;
-  if (other.d_type < typ) {
-    typ = other.d_type;
-  }
+  typ = std::min(typ, other.d_type);
   DiscreteValueVect ans(typ, d_length);
   for (unsigned int i = 0; i < d_length; ++i) {
     unsigned int v1 = getVal(i);
@@ -238,9 +236,7 @@ DiscreteValueVect DiscreteValueVect::operator|(
     const DiscreteValueVect &other) const {
   PRECONDITION(other.d_length == d_length, "length mismatch");
   DiscreteValueType typ = d_type;
-  if (other.d_type > typ) {
-    typ = other.d_type;
-  }
+  typ = std::max(typ, other.d_type);
   DiscreteValueVect ans(typ, d_length);
   for (unsigned int i = 0; i < d_length; ++i) {
     unsigned int v1 = getVal(i);
