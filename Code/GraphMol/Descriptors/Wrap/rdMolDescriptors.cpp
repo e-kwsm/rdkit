@@ -399,14 +399,13 @@ MorganFingerprintHelper(const RDKit::ROMol &mol, unsigned int radius, int nBits,
   RDKit::SparseIntVect<std::uint32_t> *res;
   if (nBits < 0) {
     res = RDKit::MorganFingerprints::getFingerprint(
-        mol, static_cast<unsigned int>(radius), invars, froms, useChirality,
-        useBondTypes, useCounts, false, bitInfoMap,
-        includeRedundantEnvironments);
+        mol, radius, invars, froms, useChirality, useBondTypes, useCounts,
+        false, bitInfoMap, includeRedundantEnvironments);
   } else {
     res = RDKit::MorganFingerprints::getHashedFingerprint(
-        mol, static_cast<unsigned int>(radius),
-        static_cast<unsigned int>(nBits), invars, froms, useChirality,
-        useBondTypes, false, bitInfoMap, includeRedundantEnvironments);
+        mol, radius, static_cast<unsigned int>(nBits), invars, froms,
+        useChirality, useBondTypes, false, bitInfoMap,
+        includeRedundantEnvironments);
   }
   if (bitInfoMap) {
     bitInfo.attr("clear")();

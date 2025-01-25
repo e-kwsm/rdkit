@@ -164,7 +164,7 @@ inline boost::uint32_t readPackedIntFromStream(std::stringstream &ss) {
   if ((val & 1) == 0) {
     shift = 1;
   } else if ((val & 3) == 1) {
-    ss.read((char *)&tmp, sizeof(tmp));
+    ss.read((&tmp), sizeof(tmp));
     if (ss.fail()) {
       throw std::runtime_error("failed to read from stream");
     }
@@ -173,13 +173,13 @@ inline boost::uint32_t readPackedIntFromStream(std::stringstream &ss) {
     shift = 2;
     offset = (1 << 7);
   } else if ((val & 7) == 3) {
-    ss.read((char *)&tmp, sizeof(tmp));
+    ss.read((&tmp), sizeof(tmp));
     if (ss.fail()) {
       throw std::runtime_error("failed to read from stream");
     }
 
     val |= (UCHAR(tmp) << 8);
-    ss.read((char *)&tmp, sizeof(tmp));
+    ss.read((&tmp), sizeof(tmp));
     if (ss.fail()) {
       throw std::runtime_error("failed to read from stream");
     }
@@ -188,19 +188,19 @@ inline boost::uint32_t readPackedIntFromStream(std::stringstream &ss) {
     shift = 3;
     offset = (1 << 7) + (1 << 14);
   } else {
-    ss.read((char *)&tmp, sizeof(tmp));
+    ss.read((&tmp), sizeof(tmp));
     if (ss.fail()) {
       throw std::runtime_error("failed to read from stream");
     }
 
     val |= (UCHAR(tmp) << 8);
-    ss.read((char *)&tmp, sizeof(tmp));
+    ss.read((&tmp), sizeof(tmp));
     if (ss.fail()) {
       throw std::runtime_error("failed to read from stream");
     }
 
     val |= (UCHAR(tmp) << 16);
-    ss.read((char *)&tmp, sizeof(tmp));
+    ss.read((&tmp), sizeof(tmp));
     if (ss.fail()) {
       throw std::runtime_error("failed to read from stream");
     }

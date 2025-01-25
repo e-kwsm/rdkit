@@ -936,8 +936,7 @@ unsigned int numPiElectrons(const Atom &atom) {
   if (atom.getIsAromatic()) {
     res = 1;
   } else if (atom.getHybridization() != Atom::SP3) {
-    auto val =
-        static_cast<unsigned int>(atom.getValence(Atom::ValenceType::EXPLICIT));
+    auto val = atom.getValence(Atom::ValenceType::EXPLICIT);
     unsigned int physical_bonds = atom.getNumExplicitHs();
     const auto &mol = atom.getOwningMol();
     for (const auto bond : mol.atomBonds(&atom)) {
