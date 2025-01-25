@@ -394,8 +394,7 @@ void writeGridToStream(const UniformGrid3D &grid, std::ostream &outStrm) {
   outStrm << dimX - 1 << " " << dimY - 1 << " " << dimZ - 1 << std::endl;
 
   int outX1 = static_cast<int>(floor(offSet.x + 0.5));
-  int outX2 =
-      static_cast<int>(floor(offSet.x + 0.5)) + static_cast<int>(dimX - 1);
+  int outX2 = static_cast<int>(floor(offSet.x + 0.5)) + (dimX - 1);
   // REVIEW: ok - here is a fix to try and make the grid closer to the molecule
   // when displayed
   // (at least in PyMol). The difference between the pair of values (outX1,
@@ -406,9 +405,9 @@ void writeGridToStream(const UniformGrid3D &grid, std::ostream &outStrm) {
   // almost always we get a
   // better display in PyMol.
   int outY1 = static_cast<int>(floor(offSet.y + 0.5));
-  int outY2 = static_cast<int>(floor(offSet.y + 0.5)) + static_cast<int>(dimY);
+  int outY2 = static_cast<int>(floor(offSet.y + 0.5)) + dimY;
   int outZ1 = static_cast<int>(floor(offSet.z + 0.5));
-  int outZ2 = static_cast<int>(floor(offSet.z + 0.5)) + static_cast<int>(dimZ);
+  int outZ2 = static_cast<int>(floor(offSet.z + 0.5)) + dimZ;
 
   outStrm << "1"
           << " " << outX1 << " " << outX2 << " " << outY1 << " " << outY2 << " "

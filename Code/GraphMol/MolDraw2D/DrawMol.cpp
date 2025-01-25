@@ -1856,7 +1856,7 @@ void DrawMol::extractLegend() {
     auto adjLegHt = drawHeight_ * drawOptions_.legendFraction;
     // subtract off space for the padding.
     if (total_height > adjLegHt) {
-      relFontScale *= double(adjLegHt) / total_height;
+      relFontScale *= adjLegHt / total_height;
       calc_legend_height(legend_bits, relFontScale, total_width, total_height);
     }
   } else {

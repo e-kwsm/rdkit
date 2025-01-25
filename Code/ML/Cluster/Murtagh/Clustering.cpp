@@ -96,15 +96,15 @@ static PyObject *Clustering_MurtaghCluster(python::object data, int nPts,
   //
   tmp = PyArray_SimpleNewFromData(1, dims, NPY_LONG, (void *)ia);
   PyArray_SetBaseObject((PyArrayObject *)tmp, ia_capsule);
-  PyTuple_SetItem(res, 0, (PyObject *)tmp);
+  PyTuple_SetItem(res, 0, tmp);
 
   tmp = PyArray_SimpleNewFromData(1, dims, NPY_LONG, (void *)ib);
   PyArray_SetBaseObject((PyArrayObject *)tmp, ib_capsule);
-  PyTuple_SetItem(res, 1, (PyObject *)tmp);
+  PyTuple_SetItem(res, 1, tmp);
 
   tmp = PyArray_SimpleNewFromData(1, dims, NPY_DOUBLE, (void *)crit);
   PyArray_SetBaseObject((PyArrayObject *)tmp, crit_capsule);
-  PyTuple_SetItem(res, 2, (PyObject *)tmp);
+  PyTuple_SetItem(res, 2, tmp);
 
   return res;
 };
