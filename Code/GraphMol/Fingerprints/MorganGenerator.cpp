@@ -162,7 +162,7 @@ std::vector<std::uint32_t> *MorganBondInvGenerator::getBondInvariants(
             bondStereo;
       }
     }
-    (*result)[bond->getIdx()] = static_cast<int32_t>(bondInvariant);
+    (*result)[bond->getIdx()] = bondInvariant;
   }
   return result;
 }

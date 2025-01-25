@@ -1887,8 +1887,7 @@ void writeToCubeStream(const RDGeom::UniformRealValueGrid3D &grd,
     for (auto yi = 0u; yi < grd.getNumY(); ++yi) {
       for (auto zi = 0u; zi < grd.getNumZ(); ++zi) {
         outStrm << std::setw(20) << std::setprecision(6) << std::left
-                << static_cast<double>(
-                       grd.getVal(grd.getGridIndex(xi, yi, zi)));
+                << grd.getVal(grd.getGridIndex(xi, yi, zi));
         // grd->d_numX-xi-1, grd->d_numY-yi-1, grd->d_numZ-zi-1
         if ((zi + 1) % 8 == 0) {
           outStrm << std::endl;
