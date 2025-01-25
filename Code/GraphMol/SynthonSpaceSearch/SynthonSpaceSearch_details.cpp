@@ -539,9 +539,7 @@ std::vector<std::vector<std::unique_ptr<ROMol>>> splitMolecule(
     const ROMol &query, unsigned int maxNumFrags,
     const std::uint64_t maxNumFragSets, const TimePoint *endTime,
     const int numThreads, bool &timedOut) {
-  if (maxNumFrags < 1) {
-    maxNumFrags = 1;
-  }
+  maxNumFrags = std::max<unsigned int>(maxNumFrags, 1);
   maxNumFrags =
       std::min({maxNumFrags, MAX_CONNECTOR_NUM, query.getNumBonds() + 1});
 

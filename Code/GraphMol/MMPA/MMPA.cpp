@@ -35,9 +35,7 @@ unsigned long long computeMorganCodeHash(const ROMol &mol) {
   currCodes.reserve(nv);
   std::vector<unsigned long> prevCodes;
   auto nIterations = mol.getNumBonds();
-  if (nIterations > 5) {
-    nIterations = 5;
-  }
+  nIterations = std::min<unsigned int>(nIterations, 5);
 
   for (const auto a : mol.atoms()) {
     auto atomCode = a->getAtomicNum();
@@ -240,9 +238,7 @@ static void addResult(std::vector<std::pair<ROMOL_SPTR, ROMOL_SPTR>>
           frags[i].begin(), frags[i].end(), [&isotope_track](int ai) {
             return isotope_track.end() != isotope_track.find(ai);
           });
-      if (maxAttachments < nAttachments) {
-        maxAttachments = nAttachments;
-      }
+      maxAttachments = std::max(maxAttachments, nAttachments);
       if (1 == nAttachments) {  // build side-chain set of molecules from
                                 // selected fragment
         detail::extractAtoms(*fragmentedMol, *side_chains, frags[i]);
