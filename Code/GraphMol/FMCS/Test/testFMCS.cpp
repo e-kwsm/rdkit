@@ -39,6 +39,7 @@
 #include <sys/resource.h>
 #endif
 
+#include <algorithm>
 #include <cstdio>
 #include <cstring>
 #include <ctime>
@@ -1341,9 +1342,7 @@ void testFileSDF_RandomSet(const char *test = "chembl13-10000-random-pairs.sdf",
         t0 = nanoClock();
         MCSResult res = findMCS(mols, &p);
         double t = (nanoClock() - t0) / 1000000.;
-        if (t < 0.00001) {
-          t = 0.00001;  // avoid division by zero
-        }
+        t = std::max(t, 0.00001);
         printTime();
         std::cout << n << " MCS: " << res.SmartsString << " " << res.NumAtoms
                   << " atoms, " << res.NumBonds << " bonds\n";
@@ -1356,9 +1355,7 @@ void testFileSDF_RandomSet(const char *test = "chembl13-10000-random-pairs.sdf",
         t0 = nanoClock();
         MCSResult res = findMCS(mols, &p);
         double t = (nanoClock() - t0) / 1000000.;
-        if (t < 0.00001) {
-          t = 0.00001;  // avoid division by zero
-        }
+        t = std::max(t, 0.00001);
         printTime();
         std::cout << n << " MCS: " << res.SmartsString << " " << res.NumAtoms
                   << " atoms, " << res.NumBonds << " bonds\n";
@@ -1394,9 +1391,7 @@ void testFileSDF_RandomSet(const char *test = "chembl13-10000-random-pairs.sdf",
       t0 = nanoClock();
       MCSResult res = findMCS(mols, &p);
       double t = (nanoClock() - t0) / 1000000.;
-      if (t < 0.00001) {
-        t = 0.00001;  // avoid division by zero
-      }
+      t = std::max(t, 0.00001);
       printTime();
       std::cout << n << " MCS: " << res.SmartsString << " " << res.NumAtoms
                 << " atoms, " << res.NumBonds << " bonds\n";
@@ -1409,9 +1404,7 @@ void testFileSDF_RandomSet(const char *test = "chembl13-10000-random-pairs.sdf",
       t0 = nanoClock();
       MCSResult res = findMCS(mols, &p);
       double t = (nanoClock() - t0) / 1000000.;
-      if (t < 0.00001) {
-        t = 0.00001;  // avoid division by zero
-      }
+      t = std::max(t, 0.00001);
       printTime();
       std::cout << n << " MCS: " << res.SmartsString << " " << res.NumAtoms
                 << " atoms, " << res.NumBonds << " bonds\n";
@@ -1428,9 +1421,7 @@ void testFileSDF_RandomSet(const char *test = "chembl13-10000-random-pairs.sdf",
 
   unsigned int maxMol = 0;
   for (auto &all_mol : all_mols) {
-    if (maxMol < all_mol->getNumBonds()) {
-      maxMol = all_mol->getNumBonds();
-    }
+    maxMol = std::max(maxMol, all_mol->getNumBonds());
   }
   const unsigned int N_BigRandomTests =
       all_mols.size() > 2000 ? all_mols.size() / 2 : all_mols.size() * 2;
@@ -1482,9 +1473,7 @@ void testFileSDF_RandomSet(const char *test = "chembl13-10000-random-pairs.sdf",
       t0 = nanoClock();
       res = findMCS(mols, &p);
       double t = (nanoClock() - t0) / 1000000.;
-      if (t < 0.00001) {
-        t = 0.00001;  // avoid division by zero
-      }
+      t = std::max(t, 0.00001);
       printTime();
       std::cout << n << " MCS: " << res.SmartsString << " " << res.NumAtoms
                 << " atoms, " << res.NumBonds << " bonds\n";
@@ -1513,9 +1502,7 @@ void testFileSDF_RandomSet(const char *test = "chembl13-10000-random-pairs.sdf",
       t0 = nanoClock();
       res = findMCS(mols, &p);
       double t = (nanoClock() - t0) / 1000000.;
-      if (t < 0.00001) {
-        t = 0.00001;  // avoid division by zero
-      }
+      t = std::max(t, 0.00001);
       printTime();
       std::cout << n << " MCS: " << res.SmartsString << " " << res.NumAtoms
                 << " atoms, " << res.NumBonds << " bonds\n";
