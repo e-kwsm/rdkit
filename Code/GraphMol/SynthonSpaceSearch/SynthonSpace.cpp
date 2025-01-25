@@ -299,9 +299,8 @@ void SynthonSpace::readStream(std::istream &is, bool &cancelled) {
     reaction->buildConnectorRegions();
     reaction->assignConnectorsUsed();
     d_numProducts += reaction->getNumProducts();
-    if (reaction->getSynthons().size() > d_maxNumSynthons) {
-      d_maxNumSynthons = reaction->getSynthons().size();
-    }
+    d_maxNumSynthons =
+        std::max<std::size_t>(reaction->getSynthons().size(), d_maxNumSynthons);
   }
 }
 
@@ -360,9 +359,7 @@ void readSynthons(
     const size_t startNum, size_t endNum, const char *fileMap,
     const std::vector<std::uint64_t> &synthonPos, std::uint32_t version,
     std::vector<std::pair<std::string, std::unique_ptr<Synthon>>> &synthons) {
-  if (endNum > synthons.size()) {
-    endNum = synthons.size();
-  }
+  endNum = std::min(endNum, synthons.size());
   for (size_t i = startNum; i < endNum; i++) {
     std::string view(fileMap + synthonPos[i],
                      synthonPos[i + 1] - synthonPos[i]);
@@ -398,9 +395,7 @@ void readReactions(
     std::uint32_t version,
     std::vector<std::pair<std::string, std::shared_ptr<SynthonSet>>>
         &reactions) {
-  if (endNum > reactions.size()) {
-    endNum = reactions.size();
-  }
+  endNum = std::min(endNum, reactions.size());
   for (size_t i = startNum; i < endNum; i++) {
     std::string view(fileMap + reactionPos[i],
                      reactionPos[i + 1] - reactionPos[i]);
@@ -542,9 +537,8 @@ void SynthonSpace::readDBFile(const std::string &inFilename,
                   -> bool { return p1.first < p2.first; });
   }
   for (const auto &[id, reaction] : d_reactions) {
-    if (reaction->getSynthons().size() > d_maxNumSynthons) {
-      d_maxNumSynthons = reaction->getSynthons().size();
-    }
+    d_maxNumSynthons =
+        std::max<std::size_t>(reaction->getSynthons().size(), d_maxNumSynthons);
   }
 }
 
