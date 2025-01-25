@@ -30,6 +30,8 @@
 #include <boost/flyweight/no_tracking.hpp>
 #include <RDGeneral/BoostEndInclude.h>
 
+#include <algorithm>
+
 #ifdef RDK_HAS_EIGEN3
 #include <Eigen/Dense>
 #endif
@@ -568,9 +570,7 @@ double ShapeInput::maxPossibleSimilarity(
                                 d_selfOverlapShapeVols[i],
                                 fitShape.d_selfOverlapColorVols[j],
                                 d_selfOverlapColorVols[i], overlayOpts);
-      if (sim > maxSim) {
-        maxSim = sim;
-      }
+      maxSim = std::max(maxSim, sim);
     }
   }
   return maxSim;

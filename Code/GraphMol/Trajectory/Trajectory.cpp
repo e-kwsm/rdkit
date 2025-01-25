@@ -12,6 +12,7 @@
 #include <RDGeneral/BadFileException.h>
 #include <GraphMol/ROMol.h>
 #include <GraphMol/Conformer.h>
+#include <algorithm>
 #include <fstream>
 #include <sstream>
 #include <set>
@@ -94,9 +95,7 @@ unsigned int Trajectory::addConformersToMol(ROMol &mol, int from, int to) {
                "Number of atom mismatch between ROMol and Trajectory");
   PRECONDITION(from < static_cast<int>(size()), "from must be < size()");
   PRECONDITION(to < static_cast<int>(size()), "to must be < size()");
-  if (from < 0) {
-    from = 0;
-  }
+  from = std::max(from, 0);
   if (to < 0) {
     to = size() - 1;
   }
