@@ -30,6 +30,7 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 #include "EvenSamplePairs.h"
+#include <algorithm>
 #include <boost/format.hpp>
 #include <cstdint>
 
@@ -238,9 +239,7 @@ std::string EvenSamplePairsStrategy::stats() const {
       continue;
     }
     for (j = 0; j < nvars[i]; j++) {
-      if (maxcount < var_used[i][j]) {
-        maxcount = var_used[i][j];
-      }
+      maxcount = std::max(maxcount, var_used[i][j]);
     }
     ss << boost::format("%lu\t%lu\t%6.2f") % (i + 1) % nvars[i] %
               ((double)m_numPermutationsProcessed / nvars[i]);
@@ -275,9 +274,7 @@ std::string EvenSamplePairsStrategy::stats() const {
       }
       for (ii = 0; ii < nvars[i]; ii++) {
         for (jj = 0; jj < nvars[j]; jj++) {
-          if (maxcount < pair_used[ii + ioffset][jj + joffset]) {
-            maxcount = pair_used[ii + ioffset][jj + joffset];
-          }
+          maxcount = std::max(maxcount, pair_used[ii + ioffset][jj + joffset]);
         }
       }
       ss << boost::format("%lu\t%lu\t%lu\t%lu\t%6.2f") % (i + 1) % (j + 1) %
