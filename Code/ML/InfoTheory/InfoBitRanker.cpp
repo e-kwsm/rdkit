@@ -11,6 +11,7 @@
 #include "InfoBitRanker.h"
 #include "InfoGainFuncs.h"
 #include <RDGeneral/Invariant.h>
+#include <algorithm>
 #include <iostream>
 #include <iomanip>
 #include <fstream>
@@ -75,10 +76,7 @@ bool InfoBitRanker::BiasCheckBit(RDKit::USHORT *resMat) const {
     if (std::find(d_biasList.begin(), d_biasList.end(), i) ==
         d_biasList.end()) {
       // if not in the biasList
-      if (fracs[i] > maxCor) {
-        // if this is fraction is greater than the previously known maximum
-        maxCor = fracs[i];
-      }
+      maxCor = std::max(fracs[i], maxCor);
     }
   }
 
