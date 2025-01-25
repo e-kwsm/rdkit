@@ -222,8 +222,7 @@ void testAtomPairNonSparseBitvector() {
     std::map<std::uint32_t, int> nz = fp1->getNonzeroElements();
     for (const auto &it : nz) {
       for (unsigned int i = 0; i < defaultCountBounds.size(); ++i) {
-        bool isSet = static_cast<bool>(
-            fp2->getBit(it.first * defaultCountBounds.size() + i));
+        bool isSet = fp2->getBit(it.first * defaultCountBounds.size() + i);
         TEST_ASSERT(isSet ==
                     (it.second >= static_cast<long>(defaultCountBounds[i])));
       }
@@ -240,8 +239,7 @@ void testAtomPairNonSparseBitvector() {
     nz = fp1->getNonzeroElements();
     for (const auto &it : nz) {
       for (unsigned int i = 0; i < defaultCountBounds.size(); ++i) {
-        bool isSet = static_cast<bool>(
-            fp2->getBit(it.first * defaultCountBounds.size() + i));
+        bool isSet = fp2->getBit(it.first * defaultCountBounds.size() + i);
         TEST_ASSERT(isSet ==
                     (it.second >= static_cast<long>(defaultCountBounds[i])));
       }
