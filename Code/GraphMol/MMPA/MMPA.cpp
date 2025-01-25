@@ -7,6 +7,7 @@
 //  which is included in the file license.txt, found at the root
 //  of the RDKit source tree.
 //
+#include <algorithm>
 #include <map>
 #include <vector>
 #include <algorithm>
@@ -35,9 +36,7 @@ unsigned long long computeMorganCodeHash(const ROMol &mol) {
   std::vector<unsigned long> currCodes(nv);
   std::vector<unsigned long> prevCodes(nv);
   size_t nIterations = mol.getNumBonds();
-  if (nIterations > 5) {
-    nIterations = 5;
-  }
+  nIterations = std::min<size_t>(nIterations, 5);
 
   for (unsigned ai = 0; ai < nv; ai++) {
     const Atom &a = *mol.getAtomWithIdx(ai);
@@ -207,9 +206,7 @@ static void addResult(std::vector<std::pair<ROMOL_SPTR, ROMOL_SPTR>>
           ++nAttachments;
         }
       }
-      if (maxAttachments < nAttachments) {
-        maxAttachments = nAttachments;
-      }
+      maxAttachments = std::max(maxAttachments, nAttachments);
       if (1 == nAttachments) {  // build side-chain set of molecules from
                                 // selected fragment
         std::map<unsigned, unsigned>

@@ -24,6 +24,7 @@
 #include <ForceField/UFF/Inversions.h>
 #include <GraphMol/ForceFieldHelpers/CrystalFF/TorsionPreferences.h>
 #include <GraphMol/ForceFieldHelpers/CrystalFF/TorsionAngleContribs.h>
+#include <algorithm>
 #include <boost/dynamic_bitset.hpp>
 #include <ForceField/MMFF/Nonbonded.h>
 
@@ -59,9 +60,7 @@ double pickRandomDistMat(const BoundsMatrix &mmat,
       // std::cerr<<i<<"-"<<j<<": "<<rval<<std::endl;
       double d = lb + (rval) * (ub - lb);
       ddata[id + j] = d;
-      if (d > largestVal) {
-        largestVal = d;
-      }
+      largestVal = std::max(d, largestVal);
     }
   }
   return largestVal;
