@@ -331,7 +331,7 @@ void mapAtom(
   setPropertyValue(atomBlock, mae::ATOM_Y_COORD, numAtoms, idx, coordinates.y);
   setPropertyValue(atomBlock, mae::ATOM_Z_COORD, numAtoms, idx, coordinates.z);
 
-  auto atomicNum = static_cast<int>(atom.getAtomicNum());
+  auto atomicNum = atom.getAtomicNum();
   if (atomicNum == 0) {
     // Maestro files use atomic number -2 to indicate a dummy atom.
     atomicNum = -2;
