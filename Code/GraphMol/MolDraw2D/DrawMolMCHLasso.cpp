@@ -12,6 +12,7 @@
 // followed to any great extent) is at
 // https://github.com/c-feldmann/lassohighlight
 
+#include <algorithm>
 #include <vector>
 
 #include <GraphMol/RWMol.h>
@@ -692,9 +693,7 @@ void DrawMolMCHLasso::orderAtomLines(
                           atCds_[oatom], atomLines[i][j].angle1,
                           atomLines[i][j].angle2, bang, swapped);
       bondAngles.push_back(std::pair(bang, j));
-      if (bang < minBondAngle) {
-        minBondAngle = bang;
-      }
+      minBondAngle = std::min(bang, minBondAngle);
       if (swapped) {
         std::swap(atomLines[i][j].line1, atomLines[i][j].line2);
       }
