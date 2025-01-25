@@ -10,6 +10,7 @@
 #define _CRT_SECURE_NO_WARNINGS
 #endif
 
+#include <algorithm>
 #include <cstring>
 #include <cstdlib>
 #include <cstdio>
@@ -1474,33 +1475,15 @@ std::string ArthorSubOrderHash(RWMol *mol) {
     }
   }
 
-  if (acount > 0xffff) {
-    acount = 0xffff;
-  }
-  if (bcount > 0xffff) {
-    bcount = 0xffff;
-  }
-  if (pcount > 0xff) {
-    pcount = 0xff;
-  }
-  if (ccount > 0xffff) {
-    ccount = 0xffff;
-  }
-  if (ocount > 0xffff) {
-    ocount = 0xffff;
-  }
-  if (zcount > 0xffffff) {
-    zcount = 0xffffff;
-  }
-  if (rcount > 0xff) {
-    rcount = 0xff;
-  }
-  if (qcount > 0xff) {
-    qcount = 0xff;
-  }
-  if (icount > 0xff) {
-    icount = 0xff;
-  }
+  acount = std::min(acount, 0xffffu);
+  bcount = std::min(bcount, 0xffffu);
+  pcount = std::min(pcount, 0xffu);
+  ccount = std::min(ccount, 0xffffu);
+  ocount = std::min(ocount, 0xffffu);
+  zcount = std::min(zcount, 0xffffffu);
+  rcount = std::min(rcount, 0xffu);
+  qcount = std::min(qcount, 0xffu);
+  icount = std::min(icount, 0xffu);
 
   sprintf(buffer, "%04x%04x%02x%04x%04x%06x%02x%02x%02x", acount, bcount,
           pcount, ccount, ocount, zcount, rcount, qcount, icount);

@@ -1154,9 +1154,7 @@ void DrawMol::calculateScale() {
     if (drawOptions_.fixedScale > 0.0) {
       fix_scale = widthForScale * drawOptions_.fixedScale;
     }
-    if (newScale > fix_scale) {
-      newScale = fix_scale;
-    }
+    newScale = std::min(newScale, fix_scale);
   }
   double scale_mult = newScale / scale_;
   scale_ *= scale_mult;
@@ -2604,9 +2602,7 @@ std::pair<DrawColour, DrawColour> DrawMol::getBondColours(Bond *bond) {
 // ****************************************************************************
 void DrawMol::makeContinuousHighlights(double scale) {
   double tgt_lw = getHighlightBondWidth(drawOptions_, -1, nullptr);
-  if (tgt_lw < 2.0) {
-    tgt_lw = 2.0;
-  }
+  tgt_lw = std::max(tgt_lw, 2.0);
   if (!drawOptions_.continuousHighlight) {
     tgt_lw /= 4.0;
   }
@@ -4175,9 +4171,7 @@ double getHighlightBondWidth(
   // if we're not doing filled highlights, the lines need to be narrower
   if (!drawOptions.fillHighlights) {
     bwm /= 2;
-    if (bwm < 1) {
-      bwm = 1;
-    }
+    bwm = std::max(bwm, 1);
   }
 
   if (highlight_linewidth_multipliers &&

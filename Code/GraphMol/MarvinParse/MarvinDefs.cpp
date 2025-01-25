@@ -11,6 +11,7 @@
 #include <RDGeneral/RDLog.h>
 #include "MarvinDefs.h"
 #include <RDGeneral/BoostStartInclude.h>
+#include <algorithm>
 #include <boost/algorithm/string.hpp>
 #include <RDGeneral/BoostEndInclude.h>
 
@@ -2800,9 +2801,7 @@ void MarvinMultipleSgroup::expandOneMultipleSgroup() {
   int highestIndex = 0;
   for (MarvinAtom *atomPtr : this->atoms) {
     int thisIndex = actualParent->getAtomIndex(atomPtr->id);
-    if (thisIndex > highestIndex) {
-      highestIndex = thisIndex;
-    }
+    highestIndex = std::max(highestIndex, thisIndex);
   }
   MarvinAtom *lastAtomInGroupPtr = actualParent->atoms[highestIndex];
 
@@ -4223,19 +4222,11 @@ MarvinRectangle::MarvinRectangle(const std::vector<MarvinRectangle> &rects) {
 }
 
 void MarvinRectangle::extend(const MarvinRectangle &otherRectangle) {
-  if (otherRectangle.upperLeft.x < upperLeft.x) {
-    upperLeft.x = otherRectangle.upperLeft.x;
-  }
-  if (otherRectangle.lowerRight.x > lowerRight.x) {
-    lowerRight.x = otherRectangle.lowerRight.x;
-  }
+  upperLeft.x = std::min(upperLeft.x, otherRectangle.upperLeft.x);
+  lowerRight.x = std::max(lowerRight.x, otherRectangle.lowerRight.x);
 
-  if (otherRectangle.upperLeft.y > upperLeft.y) {
-    upperLeft.y = otherRectangle.upperLeft.y;
-  }
-  if (otherRectangle.lowerRight.y < lowerRight.y) {
-    lowerRight.y = otherRectangle.lowerRight.y;
-  }
+  upperLeft.y = std::max(upperLeft.y, otherRectangle.upperLeft.y);
+  lowerRight.y = std::min(lowerRight.y, otherRectangle.lowerRight.y);
 
   centerIsStale = true;
 }
