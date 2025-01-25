@@ -95,9 +95,7 @@ std::vector<std::vector<ClusNode>> buildProximityGraph(
     if (start > toDo.size()) {
       return;
     }
-    if (finish > toDo.size()) {
-      finish = toDo.size();
-    }
+    finish = std::min(finish, toDo.size());
     std::transform(toDo.begin() + start, toDo.begin() + finish,
                    molSims.begin() + start, calcMolMolSimilarity);
   };
