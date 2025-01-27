@@ -21,7 +21,7 @@
 using namespace std;
 using namespace RDKit;
 
-std::string canon(const std::string &smiles) {
+std::string canon(std::string smiles) {
   unique_ptr<ROMol> m(SmilesToMol(smiles));
   const bool useStereo = true;
   return MolToSmiles(*m, useStereo);

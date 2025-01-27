@@ -24,7 +24,7 @@ namespace MolStandardize {
 class AcidBaseCatalogParams;
 
 RDKIT_MOLSTANDARDIZE_EXPORT std::vector<std::pair<ROMOL_SPTR, ROMOL_SPTR>>
-readPairs(const std::string &fileName);
+readPairs(std::string fileName);
 RDKIT_MOLSTANDARDIZE_EXPORT std::vector<std::pair<ROMOL_SPTR, ROMOL_SPTR>>
 readPairs(std::istream &inStream, int nToRead = -1);
 RDKIT_MOLSTANDARDIZE_EXPORT std::vector<std::pair<ROMOL_SPTR, ROMOL_SPTR>>

@@ -10,7 +10,6 @@
 #define NO_IMPORT_ARRAY
 #include <RDBoost/python.h>
 #include <string>
-#include <utility>
 
 // ours
 #include <GraphMol/FileParsers/MolWriters.h>
@@ -25,8 +24,8 @@ namespace python = boost::python;
 namespace RDKit {
 using boost_adaptbx::python::streambuf;
 SmilesWriter *getSmilesWriter(python::object &fileobj,
-                              const std::string &delimiter = " ",
-                              const std::string &nameHeader = "Name",
+                              std::string delimiter = " ",
+                              std::string nameHeader = "Name",
                               bool includeHeader = true,
                               bool isomericSmiles = true,
                               bool kekuleSmiles = false) {
@@ -40,7 +39,7 @@ void SetSmiWriterProps(SmilesWriter &writer, python::object props) {
   // convert the python list to a STR_VECT
   STR_VECT propNames;
 
-  PySequenceHolder<std::string> seq(std::move(props));
+  PySequenceHolder<std::string> seq(props);
   for (unsigned int i = 0; i < seq.size(); i++) {
     propNames.push_back(seq[i]);
   }

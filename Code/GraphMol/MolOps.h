@@ -1169,7 +1169,7 @@ RDKIT_GRAPHMOL_EXPORT void assignChiralTypesFromMolParity(
 
 //! returns the number of atoms which have a particular property set
 RDKIT_GRAPHMOL_EXPORT unsigned getNumAtomsWithDistinctProperty(
-    const ROMol &mol, const std::string &prop);
+    const ROMol &mol, std::string prop);
 
 //! returns whether or not a molecule needs to have Hs added to it.
 RDKIT_GRAPHMOL_EXPORT bool needsHs(const ROMol &mol);

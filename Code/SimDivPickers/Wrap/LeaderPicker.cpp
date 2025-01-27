@@ -53,18 +53,18 @@ RDKit::INT_VECT LazyVectorLeaderPicks(LeaderPicker *picker, python::object objs,
   }
   pyBVFunctor<ExplicitBitVect> functor(bvs, TANIMOTO);
   RDKit::INT_VECT res;
-  LazyLeaderHelper(picker, functor, poolSize, threshold, pickSize,
-                   std::move(firstPicks), res, numThreads);
+  LazyLeaderHelper(picker, functor, poolSize, threshold, pickSize, firstPicks,
+                   res, numThreads);
   return res;
 }
 
 RDKit::INT_VECT LazyLeaderPicks(LeaderPicker *picker, python::object distFunc,
                                 int poolSize, double threshold, int pickSize,
                                 python::object firstPicks, int numThreads) {
-  pyobjFunctor functor(std::move(distFunc));
+  pyobjFunctor functor(distFunc);
   RDKit::INT_VECT res;
-  LazyLeaderHelper(picker, functor, poolSize, threshold, pickSize,
-                   std::move(firstPicks), res, numThreads);
+  LazyLeaderHelper(picker, functor, poolSize, threshold, pickSize, firstPicks,
+                   res, numThreads);
   return res;
 }
 

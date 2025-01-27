@@ -2379,7 +2379,7 @@ RWMOL_SPTR smilesParse(const std::string &smiles,
   return mol;
 }
 
-void smilesSerialize(const MolStandardize::RWMOL_SPTR_PAIR &output,
+void smilesSerialize(MolStandardize::RWMOL_SPTR_PAIR output,
                      MolStandardize::PipelineResult &result,
                      const MolStandardize::PipelineOptions &) {
   const ROMol &outputMol = *output.first;

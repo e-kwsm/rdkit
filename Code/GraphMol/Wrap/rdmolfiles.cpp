@@ -12,7 +12,6 @@
 #include <RDGeneral/BoostStartInclude.h>
 #include <RDBoost/python.h>
 #include <boost/dynamic_bitset.hpp>
-#include <utility>
 #include <RDGeneral/BoostStartInclude.h>
 
 #include <RDGeneral/types.h>
@@ -53,7 +52,7 @@ void rdFileParseExceptionTranslator(RDKit::FileParseException const &x) {
 }
 
 namespace RDKit {
-std::string pyObjectToString(const python::object &input) {
+std::string pyObjectToString(python::object input) {
   python::extract<std::string> ex(input);
   if (ex.check()) {
     return ex();
@@ -62,8 +61,8 @@ std::string pyObjectToString(const python::object &input) {
   return std::string(ws.begin(), ws.end());
 }
 
-ROMol *MolFromSmiles(const python::object &ismiles, bool sanitize,
-                     const python::dict &replDict) {
+ROMol *MolFromSmiles(python::object ismiles, bool sanitize,
+                     python::dict replDict) {
   std::map<std::string, std::string> replacements;
   for (unsigned int i = 0;
        i < python::extract<unsigned int>(replDict.keys().attr("__len__")());
@@ -72,7 +71,7 @@ ROMol *MolFromSmiles(const python::object &ismiles, bool sanitize,
         python::extract<std::string>(replDict.values()[i]);
   }
   RWMol *newM;
-  std::string smiles = pyObjectToString(std::move(ismiles));
+  std::string smiles = pyObjectToString(ismiles);
   try {
     newM = SmilesToMol(smiles, 0, sanitize, &replacements);
   } catch (...) {
@@ -81,8 +80,8 @@ ROMol *MolFromSmiles(const python::object &ismiles, bool sanitize,
   return static_cast<ROMol *>(newM);
 }
 
-ROMol *MolFromSmarts(const python::object &ismarts, bool mergeHs,
-                     const python::dict &replDict) {
+ROMol *MolFromSmarts(python::object ismarts, bool mergeHs,
+                     python::dict replDict) {
   std::map<std::string, std::string> replacements;
   for (unsigned int i = 0;
        i < python::extract<unsigned int>(replDict.keys().attr("__len__")());
@@ -90,7 +89,7 @@ ROMol *MolFromSmarts(const python::object &ismarts, bool mergeHs,
     replacements[python::extract<std::string>(replDict.keys()[i])] =
         python::extract<std::string>(replDict.values()[i]);
   }
-  std::string smarts = pyObjectToString(std::move(ismarts));
+  std::string smarts = pyObjectToString(ismarts);
 
   RWMol *newM;
   try {
@@ -114,9 +113,9 @@ ROMol *MolFromTPLFile(const std::string &filename, bool sanitize = true,
   return static_cast<ROMol *>(newM);
 }
 
-ROMol *MolFromTPLBlock(const python::object &itplBlock, bool sanitize = true,
+ROMol *MolFromTPLBlock(python::object itplBlock, bool sanitize = true,
                        bool skipFirstConf = false) {
-  std::istringstream inStream(pyObjectToString(std::move(itplBlock)));
+  std::istringstream inStream(pyObjectToString(itplBlock));
   unsigned int line = 0;
   RWMol *newM;
   try {
@@ -142,9 +141,9 @@ ROMol *MolFromMolFileHelper(const std::string &molFilename, bool sanitize,
   return static_cast<ROMol *>(newM);
 }
 
-ROMol *MolFromMolBlock(const python::object &imolBlock, bool sanitize,
-                       bool removeHs, bool strictParsing) {
-  std::istringstream inStream(pyObjectToString(std::move(imolBlock)));
+ROMol *MolFromMolBlock(python::object imolBlock, bool sanitize, bool removeHs,
+                       bool strictParsing) {
+  std::istringstream inStream(pyObjectToString(imolBlock));
   unsigned int line = 0;
   RWMol *newM = nullptr;
   try {
@@ -186,9 +185,8 @@ ROMol *MolFromMrvFile(const std::string &molFilename, bool sanitize, bool remove
   return static_cast<ROMol *>(newM);
 }
 
-ROMol *MolFromMrvBlock(const python::object &imolBlock, bool sanitize,
-                       bool removeHs) {
-  std::istringstream inStream(pyObjectToString(std::move(imolBlock)));
+ROMol *MolFromMrvBlock(python::object imolBlock, bool sanitize, bool removeHs) {
+  std::istringstream inStream(pyObjectToString(imolBlock));
   RWMol *newM = nullptr;
   try {
     newM = MrvDataStreamToMol(inStream, sanitize, removeHs);
@@ -210,8 +208,8 @@ ROMol *MolFromXYZFile(const char *xyzFilename) {
   return static_cast<ROMol *>(newM);
 }
 
-ROMol *MolFromXYZBlock(const python::object &ixyzBlock) {
-  std::istringstream inStream(pyObjectToString(std::move(ixyzBlock)));
+ROMol *MolFromXYZBlock(python::object ixyzBlock) {
+  std::istringstream inStream(pyObjectToString(ixyzBlock));
   RWMol *newM = nullptr;
   try {
     newM = XYZDataStreamToMol(inStream);
@@ -222,11 +220,9 @@ ROMol *MolFromXYZBlock(const python::object &ixyzBlock) {
   return static_cast<ROMol *>(newM);
 }
 
-ROMol *MolFromSVG(const python::object &imolBlock, bool sanitize,
-                  bool removeHs) {
+ROMol *MolFromSVG(python::object imolBlock, bool sanitize, bool removeHs) {
   RWMol *res = nullptr;
-  res =
-      RDKitSVGToMol(pyObjectToString(std::move(imolBlock)), sanitize, removeHs);
+  res = RDKitSVGToMol(pyObjectToString(imolBlock), sanitize, removeHs);
   return static_cast<ROMol *>(res);
 }
 
@@ -245,7 +241,7 @@ ROMol *MolFromMol2File(const std::string &molFilename, bool sanitize = true,
   return static_cast<ROMol *>(newM);
 }
 
-ROMol *MolFromMol2Block(const std::string &mol2Block, bool sanitize = true,
+ROMol *MolFromMol2Block(std::string mol2Block, bool sanitize = true,
                         bool removeHs = true,
                         bool cleanupSubstructures = true) {
   std::istringstream inStream(mol2Block);
@@ -274,10 +270,9 @@ ROMol *MolFromPDBFile(const std::string &filename, bool sanitize, bool removeHs,
   return static_cast<ROMol *>(newM);
 }
 
-ROMol *MolFromPDBBlock(const python::object &molBlock, bool sanitize,
-                       bool removeHs, unsigned int flavor,
-                       bool proximityBonding) {
-  std::istringstream inStream(pyObjectToString(std::move(molBlock)));
+ROMol *MolFromPDBBlock(python::object molBlock, bool sanitize, bool removeHs,
+                       unsigned int flavor, bool proximityBonding) {
+  std::istringstream inStream(pyObjectToString(molBlock));
   RWMol *newM = nullptr;
   try {
     newM = PDBDataStreamToMol(inStream, sanitize, removeHs, flavor,
@@ -289,30 +284,30 @@ ROMol *MolFromPDBBlock(const python::object &molBlock, bool sanitize,
   return static_cast<ROMol *>(newM);
 }
 
-ROMol *MolFromSequence(const python::object &seq, bool sanitize, int flavor) {
+ROMol *MolFromSequence(python::object seq, bool sanitize, int flavor) {
   RWMol *newM = nullptr;
   try {
-    newM = SequenceToMol(pyObjectToString(std::move(seq)), sanitize, flavor);
+    newM = SequenceToMol(pyObjectToString(seq), sanitize, flavor);
   } catch (RDKit::FileParseException &e) {
     BOOST_LOG(rdWarningLog) << e.what() << std::endl;
   } catch (...) {
   }
   return static_cast<ROMol *>(newM);
 }
-ROMol *MolFromFASTA(const python::object &seq, bool sanitize, int flavor) {
+ROMol *MolFromFASTA(python::object seq, bool sanitize, int flavor) {
   RWMol *newM = nullptr;
   try {
-    newM = FASTAToMol(pyObjectToString(std::move(seq)), sanitize, flavor);
+    newM = FASTAToMol(pyObjectToString(seq), sanitize, flavor);
   } catch (RDKit::FileParseException &e) {
     BOOST_LOG(rdWarningLog) << e.what() << std::endl;
   } catch (...) {
   }
   return static_cast<ROMol *>(newM);
 }
-ROMol *MolFromHELM(const python::object &seq, bool sanitize) {
+ROMol *MolFromHELM(python::object seq, bool sanitize) {
   RWMol *newM = nullptr;
   try {
-    newM = HELMToMol(pyObjectToString(std::move(seq)), sanitize);
+    newM = HELMToMol(pyObjectToString(seq), sanitize);
   } catch (RDKit::FileParseException &e) {
     BOOST_LOG(rdWarningLog) << e.what() << std::endl;
   } catch (...) {
@@ -320,9 +315,8 @@ ROMol *MolFromHELM(const python::object &seq, bool sanitize) {
   return static_cast<ROMol *>(newM);
 }
 
-std::string molFragmentToSmarts(const ROMol &mol,
-                                const python::object &atomsToUse,
-                                const python::object &bondsToUse,
+std::string molFragmentToSmarts(const ROMol &mol, python::object atomsToUse,
+                                python::object bondsToUse,
                                 bool doIsomericSmarts = true) {
   auto atomIndices =
       pythonObjectToVect(atomsToUse, static_cast<int>(mol.getNumAtoms()));
@@ -335,9 +329,8 @@ std::string molFragmentToSmarts(const ROMol &mol,
                                     doIsomericSmarts);
 }
 
-std::string molFragmentToCXSmarts(const ROMol &mol,
-                                  const python::object &atomsToUse,
-                                  const python::object &bondsToUse,
+std::string molFragmentToCXSmarts(const ROMol &mol, python::object atomsToUse,
+                                  python::object bondsToUse,
                                   bool doIsomericSmarts = true) {
   auto atomIndices =
       pythonObjectToVect(atomsToUse, static_cast<int>(mol.getNumAtoms()));
@@ -432,11 +425,10 @@ std::vector<unsigned int> CanonicalRankAtoms(
 }
 
 std::vector<int> CanonicalRankAtomsInFragment(
-    const ROMol &mol, const python::object &atomsToUse,
-    const python::object &bondsToUse, const python::object &atomSymbols,
-    bool breakTies = true, bool includeChirality = true,
-    bool includeIsotopes = true, bool includeAtomMaps = true,
-    bool includeChiralPresence = false) {
+    const ROMol &mol, python::object atomsToUse, python::object bondsToUse,
+    python::object atomSymbols, bool breakTies = true,
+    bool includeChirality = true, bool includeIsotopes = true,
+    bool includeAtomMaps = true, bool includeChiralPresence = false) {
   std::unique_ptr<std::vector<int>> avect =
       pythonObjectToVect(atomsToUse, static_cast<int>(mol.getNumAtoms()));
   if (!avect.get() || !(avect->size())) {
@@ -478,9 +470,9 @@ std::vector<int> CanonicalRankAtomsInFragment(
   return resRanks;
 }
 
-ROMol *MolFromSmilesHelper(const python::object &ismiles,
+ROMol *MolFromSmilesHelper(python::object ismiles,
                            const SmilesParserParams &params) {
-  std::string smiles = pyObjectToString(std::move(ismiles));
+  std::string smiles = pyObjectToString(ismiles);
 
   try {
     return SmilesToMol(smiles, params);
@@ -489,9 +481,9 @@ ROMol *MolFromSmilesHelper(const python::object &ismiles,
   }
 }
 
-ROMol *MolFromSmartsHelper(const python::object &ismiles,
+ROMol *MolFromSmartsHelper(python::object ismiles,
                            const SmartsParserParams &params) {
-  std::string smiles = pyObjectToString(std::move(ismiles));
+  std::string smiles = pyObjectToString(ismiles);
 
   try {
     return SmartsToMol(smiles, params);
@@ -514,7 +506,7 @@ python::list MolToRandomSmilesHelper(const ROMol &mol, unsigned int numSmiles,
   return pyres;
 }
 
-ROMol *MolFromPNGFile(const std::string &filename, const python::object &pyParams) {
+ROMol *MolFromPNGFile(const std::string &filename, python::object pyParams) {
   SmilesParserParams params;
   if (pyParams) {
     params = python::extract<SmilesParserParams>(pyParams);
@@ -532,15 +524,14 @@ ROMol *MolFromPNGFile(const std::string &filename, const python::object &pyParam
   return newM;
 }
 
-ROMol *MolFromPNGString(const python::object &png,
-                        const python::object &pyParams) {
+ROMol *MolFromPNGString(python::object png, python::object pyParams) {
   SmilesParserParams params;
   if (pyParams) {
     params = python::extract<SmilesParserParams>(pyParams);
   }
   ROMol *newM = nullptr;
   try {
-    newM = PNGStringToMol(pyObjectToString(std::move(png)), params);
+    newM = PNGStringToMol(pyObjectToString(png), params);
   } catch (RDKit::FileParseException &e) {
     BOOST_LOG(rdWarningLog) << e.what() << std::endl;
   } catch (...) {
@@ -548,8 +539,7 @@ ROMol *MolFromPNGString(const python::object &png,
   return newM;
 }
 
-python::object addMolToPNGFileHelper(const ROMol &mol,
-                                     const python::object &fname,
+python::object addMolToPNGFileHelper(const ROMol &mol, python::object fname,
                                      bool includePkl, bool includeSmiles,
                                      bool includeMol) {
   std::string cstr = python::extract<std::string>(fname);
@@ -561,8 +551,7 @@ python::object addMolToPNGFileHelper(const ROMol &mol,
   return retval;
 }
 
-python::object addMolToPNGStringHelper(const ROMol &mol,
-                                       const python::object &png,
+python::object addMolToPNGStringHelper(const ROMol &mol, python::object png,
                                        bool includePkl, bool includeSmiles,
                                        bool includeMol) {
   std::string cstr = python::extract<std::string>(png);
@@ -575,8 +564,8 @@ python::object addMolToPNGStringHelper(const ROMol &mol,
   return retval;
 }
 
-python::object addMetadataToPNGFileHelper(const python::dict &pymetadata,
-                                          const python::object &fname) {
+python::object addMetadataToPNGFileHelper(python::dict pymetadata,
+                                          python::object fname) {
   std::string cstr = python::extract<std::string>(fname);
 
   std::vector<std::pair<std::string, std::string>> metadata;
@@ -595,8 +584,8 @@ python::object addMetadataToPNGFileHelper(const python::dict &pymetadata,
   return retval;
 }
 
-python::object addMetadataToPNGStringHelper(const python::dict &pymetadata,
-                                            const python::object &png) {
+python::object addMetadataToPNGStringHelper(python::dict pymetadata,
+                                            python::object png) {
   std::string cstr = python::extract<std::string>(png);
 
   std::vector<std::pair<std::string, std::string>> metadata;
@@ -616,7 +605,7 @@ python::object addMetadataToPNGStringHelper(const python::dict &pymetadata,
 }
 
 python::object MolsFromPNGFile(const std::string &filename, const std::string &tag,
-                               const python::object &pyParams) {
+                               python::object pyParams) {
   SmilesParserParams params;
   if (pyParams) {
     params = python::extract<SmilesParserParams>(pyParams);
@@ -640,14 +629,13 @@ python::object MolsFromPNGFile(const std::string &filename, const std::string &t
   return python::tuple(res);
 }
 
-python::tuple MolsFromPNGString(const python::object &png,
-                                const std::string &tag,
-                                const python::object &pyParams) {
+python::tuple MolsFromPNGString(python::object png, const std::string &tag,
+                                python::object pyParams) {
   SmilesParserParams params;
   if (pyParams) {
     params = python::extract<SmilesParserParams>(pyParams);
   }
-  auto mols = PNGStringToMols(pyObjectToString(std::move(png)), tag, params);
+  auto mols = PNGStringToMols(pyObjectToString(png), tag, params);
   python::list res;
   for (auto &mol : mols) {
     // take ownership of the data from the unique_ptr
@@ -678,10 +666,9 @@ python::object MolsFromCDXMLFile(const std::string &filename, bool sanitize,
   return python::tuple(res);
 }
 
-python::tuple MolsFromCDXML(const python::object &cdxml, bool sanitize,
+python::tuple MolsFromCDXML(python::object cdxml, bool sanitize,
                             bool removeHs) {
-  auto mols =
-      CDXMLToMols(pyObjectToString(std::move(cdxml)), sanitize, removeHs);
+  auto mols = CDXMLToMols(pyObjectToString(cdxml), sanitize, removeHs);
   python::list res;
   for (auto &mol : mols) {
     // take ownership of the data from the unique_ptr
@@ -707,13 +694,13 @@ python::dict translateMetadata(
 }
 
 }  // namespace
-python::dict MetadataFromPNGFile(const python::object &fname) {
+python::dict MetadataFromPNGFile(python::object fname) {
   std::string cstr = python::extract<std::string>(fname);
   auto metadata = PNGFileToMetadata(cstr);
   return translateMetadata(metadata);
 }
 
-python::dict MetadataFromPNGString(const python::object &png) {
+python::dict MetadataFromPNGString(python::object png) {
   std::string cstr = python::extract<std::string>(png);
   auto metadata = PNGStringToMetadata(cstr);
   return translateMetadata(metadata);
@@ -723,8 +710,8 @@ void CanonicalizeEnhancedStereo(ROMol &mol) {
   Canon::canonicalizeEnhancedStereo(mol);
 }
 
-std::string MolToV2KMolBlockHelper(const ROMol &mol,
-                                   const python::object &pyParams, int confId) {
+std::string MolToV2KMolBlockHelper(const ROMol &mol, python::object pyParams,
+                                   int confId) {
   MolWriterParams params;
   if (pyParams) {
     params = python::extract<MolWriterParams>(pyParams);

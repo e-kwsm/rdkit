@@ -38,7 +38,6 @@
 #include <string>
 #include <cmath>
 #include <chrono>
-#include <utility>
 
 #include <RDGeneral/Exceptions.h>
 #include <GraphMol/SmilesParse/SmilesWrite.h>
@@ -57,7 +56,7 @@ class RGroupDecompositionHelper {
   std::unique_ptr<RGroupDecomposition> decomp;
 
  public:
-  RGroupDecompositionHelper(const python::object &cores,
+  RGroupDecompositionHelper(python::object cores,
                             const RGroupDecompositionParameters &params =
                                 RGroupDecompositionParameters()) {
     python::extract<ROMol> isROMol(cores);
@@ -158,13 +157,12 @@ class RGroupDecompositionHelper {
   }
 };
 
-python::object RGroupDecomp(const python::object &cores,
-                            const python::object &mols, bool asSmiles = false,
-                            bool asRows = true,
+python::object RGroupDecomp(python::object cores, python::object mols,
+                            bool asSmiles = false, bool asRows = true,
                             const RGroupDecompositionParameters &options =
                                 RGroupDecompositionParameters()) {
   auto t0 = std::chrono::steady_clock::now();
-  RGroupDecompositionHelper decomp(std::move(cores), options);
+  RGroupDecompositionHelper decomp(cores, options);
   python::list unmatched;
 
   python::stl_input_iterator<ROMOL_SPTR> iter(mols), end;

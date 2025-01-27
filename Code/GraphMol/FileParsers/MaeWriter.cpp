@@ -16,7 +16,6 @@
 #include <regex>
 #include <sstream>
 #include <string>
-#include <utility>
 #include <vector>
 
 #include <maeparser/MaeBlock.hpp>
@@ -129,12 +128,11 @@ getIndexedProperty<std::string>(mae::IndexedBlock &indexedBlock,
 
 void copyProperties(
     const RDProps &origin, const STR_VECT &propNames, unsigned idx,
-    const std::function<void(const std::string &, unsigned, bool)> &boolSetter,
-    const std::function<void(const std::string &, unsigned, int)> &intSetter,
-    const std::function<void(const std::string &, unsigned, double)>
-        &realSetter,
-    const std::function<void(const std::string &, unsigned,
-                             const std::string &)> &stringSetter) {
+    std::function<void(const std::string &, unsigned, bool)> boolSetter,
+    std::function<void(const std::string &, unsigned, int)> intSetter,
+    std::function<void(const std::string &, unsigned, double)> realSetter,
+    std::function<void(const std::string &, unsigned, const std::string &)>
+        stringSetter) {
   // Map other properties, but first clear out the computed ones,
   // since we don't want to export these.
   origin.clearComputedProps();
@@ -326,12 +324,11 @@ void mapMolProperties(const ROMol &mol, const STR_VECT &propNames,
 void mapAtom(
     const Conformer &conformer, const Atom &atom, const STR_VECT &propNames,
     mae::IndexedBlock &atomBlock, size_t numAtoms,
-    const std::function<void(const std::string &, unsigned, bool)> &boolSetter,
-    const std::function<void(const std::string &, unsigned, int)> &intSetter,
-    const std::function<void(const std::string &, unsigned, double)>
-        &realSetter,
-    const std::function<void(const std::string &, unsigned,
-                             const std::string &)> &stringSetter) {
+    std::function<void(const std::string &, unsigned, bool)> boolSetter,
+    std::function<void(const std::string &, unsigned, int)> intSetter,
+    std::function<void(const std::string &, unsigned, double)> realSetter,
+    std::function<void(const std::string &, unsigned, const std::string &)>
+        stringSetter) {
   auto idx = atom.getIdx();
   auto coordinates = conformer.getAtomPos(idx);
 
@@ -377,9 +374,8 @@ void mapAtom(
   }
 
   // Custom properties
-  copyProperties(atom, propNames, idx, std::move(boolSetter),
-                 std::move(intSetter), std::move(realSetter),
-                 std::move(stringSetter));
+  copyProperties(atom, propNames, idx, boolSetter, intSetter, realSetter,
+                 stringSetter);
 }
 
 void mapAtoms(const ROMol &mol, const STR_VECT &propNames, int confId,
@@ -419,12 +415,11 @@ void mapBond(
     const Bond &bond,
     std::shared_ptr<mae::IndexedProperty<mae::BoolProperty>> &dativeBondMark,
     const STR_VECT &propNames, mae::IndexedBlock &bondBlock, size_t numBonds,
-    const std::function<void(const std::string &, unsigned, bool)> &boolSetter,
-    const std::function<void(const std::string &, unsigned, int)> &intSetter,
-    const std::function<void(const std::string &, unsigned, double)>
-        &realSetter,
-    const std::function<void(const std::string &, unsigned,
-                             const std::string &)> &stringSetter) {
+    std::function<void(const std::string &, unsigned, bool)> boolSetter,
+    std::function<void(const std::string &, unsigned, int)> intSetter,
+    std::function<void(const std::string &, unsigned, double)> realSetter,
+    std::function<void(const std::string &, unsigned, const std::string &)>
+        stringSetter) {
   auto idx = bond.getIdx();
 
   // Indexes in the atom block are 1-based
@@ -453,9 +448,8 @@ void mapBond(
   }
 
   // Custom properties
-  copyProperties(bond, propNames, idx, std::move(boolSetter),
-                 std::move(intSetter), std::move(realSetter),
-                 std::move(stringSetter));
+  copyProperties(bond, propNames, idx, boolSetter, intSetter, realSetter,
+                 stringSetter);
 }
 
 void mapBonds(const ROMol &mol, const STR_VECT &propNames,

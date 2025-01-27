@@ -88,7 +88,7 @@ TEST_CASE("Enumerate") {
       fName + "/Code/GraphMol/SynthonSpaceSearch/data/triazole_space_enum.smi";
 
   auto loadLibrary =
-      [](const std::string &inFilename) -> std::map<std::string, std::string> {
+      [](const std::string inFilename) -> std::map<std::string, std::string> {
     v2::FileParsers::SmilesMolSupplierParams params;
     params.titleLine = false;
     v2::FileParsers::SmilesMolSupplier suppl(inFilename, params);

@@ -61,8 +61,8 @@ class LocalForwardSDMolSupplier : public RDKit::ForwardSDMolSupplier {
         new RDKit::v2::FileParsers::ForwardSDMolSupplier(sbis, owner, params));
     POSTCONDITION(sbis, "bad instream");
   }
-  LocalForwardSDMolSupplier(const std::string &filename, bool sanitize,
-                            bool removeHs, bool strictParsing) {
+  LocalForwardSDMolSupplier(std::string filename, bool sanitize, bool removeHs,
+                            bool strictParsing) {
     std::istream *tmpStream = nullptr;
     tmpStream = static_cast<std::istream *>(
         new std::ifstream(filename.c_str(), std::ios_base::binary));

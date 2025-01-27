@@ -17,8 +17,6 @@
 #include <GraphMol/RascalMCES/RascalOptions.h>
 #include <GraphMol/RascalMCES/RascalResult.h>
 
-#include <utility>
-
 namespace python = boost::python;
 
 namespace {
@@ -131,7 +129,7 @@ python::list rascalClusterWrapper(python::object mols,
   if (!py_opts.is_none()) {
     opts = python::extract<RascalMCES::RascalClusterOptions>(py_opts);
   }
-  auto cmols = extractMols(std::move(mols));
+  auto cmols = extractMols(mols);
   std::vector<RDKit::UINT_VECT> clusters;
   {
     NOGIL gil;
@@ -146,7 +144,7 @@ python::list rascalButinaClusterWrapper(python::object mols,
   if (!py_opts.is_none()) {
     opts = python::extract<RascalMCES::RascalClusterOptions>(py_opts);
   }
-  auto cmols = extractMols(std::move(mols));
+  auto cmols = extractMols(mols);
   std::vector<RDKit::UINT_VECT> clusters;
   {
     NOGIL gil;

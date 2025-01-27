@@ -12,7 +12,6 @@
 #include <string>
 #include <sstream>
 #include <streambuf>
-#include <utility>
 
 #include "RDGeneral/test.h"
 #include <catch2/catch_all.hpp>
@@ -7153,7 +7152,7 @@ class FragTest {
   FragTest(std::string fileNameInit, bool expectedResultInit,
            bool reapplyMolBlockWedgingInit, unsigned int origSgroupCountInit,
            unsigned int newSgroupCountInit)
-      : fileName(std::move(fileNameInit)),
+      : fileName(fileNameInit),
         expectedResult(expectedResultInit),
         reapplyMolBlockWedging(reapplyMolBlockWedgingInit),
         origSgroupCount(origSgroupCountInit),
