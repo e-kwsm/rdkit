@@ -64,12 +64,12 @@ class RDKIT_MOLSTANDARDIZE_EXPORT TautomerTransform {
 };
 
 RDKIT_MOLSTANDARDIZE_EXPORT std::vector<Bond::BondType> stringToBondType(
-    const std::string &bond_str);
+    std::string bond_str);
 RDKIT_MOLSTANDARDIZE_EXPORT std::vector<int> stringToCharge(
-    const std::string &charge_str);
+    std::string charge_str);
 
 RDKIT_MOLSTANDARDIZE_EXPORT std::vector<TautomerTransform> readTautomers(
-    const std::string &fileName);
+    std::string fileName);
 RDKIT_MOLSTANDARDIZE_EXPORT std::vector<TautomerTransform> readTautomers(
     std::istream &inStream, int nToRead = -1);
 RDKIT_MOLSTANDARDIZE_EXPORT std::vector<TautomerTransform> readTautomers(

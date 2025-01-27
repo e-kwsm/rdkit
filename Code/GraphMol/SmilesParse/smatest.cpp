@@ -139,8 +139,7 @@ void testFail() {
   BOOST_LOG(rdInfoLog) << "\tdone" << std::endl;
 }
 
-std::vector<MatchVectType> _checkMatches(const std::string &smarts,
-                                         const std::string &smiles,
+std::vector<MatchVectType> _checkMatches(std::string smarts, std::string smiles,
                                          unsigned int nMatches,
                                          unsigned int lenFirst,
                                          bool addHs = false) {
@@ -202,7 +201,7 @@ std::vector<MatchVectType> _checkMatches(const std::string &smarts,
   return mVV;
 }
 
-void _checkNoMatches(const std::string &smarts, const std::string &smiles,
+void _checkNoMatches(std::string smarts, std::string smiles,
                      bool addHs = false) {
   ROMol *mol, *matcher, *matcher2;
   std::string pickle;

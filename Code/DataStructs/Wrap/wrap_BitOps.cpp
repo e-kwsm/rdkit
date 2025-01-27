@@ -12,8 +12,6 @@
 #include <DataStructs/BitVects.h>
 #include <DataStructs/BitOps.h>
 
-#include <utility>
-
 namespace python = boost::python;
 
 namespace {
@@ -145,7 +143,7 @@ template <typename T>
 python::list BulkTverskySimilarity(const T *bv1, python::object bvs, double a,
                                    double b, bool returnDistance) {
   return BulkWrapper(
-      bv1, std::move(bvs), a, b,
+      bv1, bvs, a, b,
       (double (*)(const T &, const T &, double, double))TverskySimilarity,
       returnDistance);
 }

@@ -20,8 +20,6 @@
 #include <DataStructs/BitVects.h>
 #include <RDBoost/PySequenceHolder.h>
 
-#include <utility>
-
 namespace python = boost::python;
 
 namespace RDInfoTheory {
@@ -38,8 +36,7 @@ PyObject *getTopNbits(InfoBitRanker *ranker,
   return PyArray_Return(res);
 }
 
-void AccumulateVotes(InfoBitRanker *ranker, const python::object &bitVect,
-                     int label) {
+void AccumulateVotes(InfoBitRanker *ranker, python::object bitVect, int label) {
   python::extract<ExplicitBitVect> ebvWorks(bitVect);
   python::extract<SparseBitVect> sbvWorks(bitVect);
   if (ebvWorks.check()) {
@@ -56,7 +53,7 @@ void AccumulateVotes(InfoBitRanker *ranker, const python::object &bitVect,
 
 void SetBiasList(InfoBitRanker *ranker, python::object classList) {
   RDKit::INT_VECT cList;
-  PySequenceHolder<int> bList(std::move(classList));
+  PySequenceHolder<int> bList(classList);
   cList.reserve(bList.size());
   for (unsigned int i = 0; i < bList.size(); i++) {
     cList.push_back(bList[i]);
@@ -66,7 +63,7 @@ void SetBiasList(InfoBitRanker *ranker, python::object classList) {
 
 void SetMaskBits(InfoBitRanker *ranker, python::object maskBits) {
   RDKit::INT_VECT cList;
-  PySequenceHolder<int> bList(std::move(maskBits));
+  PySequenceHolder<int> bList(maskBits);
   cList.reserve(bList.size());
   for (unsigned int i = 0; i < bList.size(); i++) {
     cList.push_back(bList[i]);
@@ -74,7 +71,7 @@ void SetMaskBits(InfoBitRanker *ranker, python::object maskBits) {
   ranker->setMaskBits(cList);
 }
 
-void tester(InfoBitRanker *, const python::object &bitVect) {
+void tester(InfoBitRanker *, python::object bitVect) {
   python::extract<SparseBitVect> sbvWorks(bitVect);
   if (sbvWorks.check()) {
     SparseBitVect sv = python::extract<SparseBitVect>(bitVect);

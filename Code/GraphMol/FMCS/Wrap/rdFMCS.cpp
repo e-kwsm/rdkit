@@ -13,8 +13,6 @@
 #include <RDBoost/Wrap.h>
 #include <GraphMol/FMCS/FMCS.h>
 
-#include <utility>
-
 #define COMPARE_FUNC_NAME "__call__"
 #define CALLBACK_FUNC_NAME "__call__"
 
@@ -599,7 +597,7 @@ MCSResult *FindMCSWrapper(python::object mols, bool maximizeBonds,
   p.MaximizeBonds = maximizeBonds;
   p.Timeout = timeout;
   p.Verbose = verbose;
-  p.InitialSeed = std::move(seedSmarts);
+  p.InitialSeed = seedSmarts;
   p.AtomCompareParameters.MatchValences = matchValences;
   p.AtomCompareParameters.MatchChiralTag = matchChiralTag;
   p.AtomCompareParameters.RingMatchesRingOnly = ringMatchesRingOnly;

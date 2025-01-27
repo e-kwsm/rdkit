@@ -27,7 +27,6 @@
 #include <GraphMol/ChemReactions/ReactionParser.h>
 
 #include <string>
-#include <utility>
 
 using namespace RDKit;
 
@@ -41,7 +40,7 @@ class MolTest {
 
   MolTest(std::string fileNameInit, bool expectedResultInit, int atomCountInit,
           int bondCountInit)
-      : fileName(std::move(fileNameInit)),
+      : fileName(fileNameInit),
         expectedResult(expectedResultInit),
         atomCount(atomCountInit),
         bondCount(bondCountInit) {};

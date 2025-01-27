@@ -50,8 +50,7 @@ python::object UFFConfsHelper(ROMol &mol, int numThreads, int maxIters,
 }
 
 python::object MMFFConfsHelper(ROMol &mol, int numThreads, int maxIters,
-                               const std::string &mmffVariant,
-                               double nonBondedThresh,
+                               std::string mmffVariant, double nonBondedThresh,
                                bool ignoreInterfragInteractions) {
   std::vector<std::pair<int, double>> res;
   {
@@ -112,7 +111,7 @@ bool UFFHasAllMoleculeParams(const ROMol &mol) {
   return foundAll;
 }
 
-int MMFFOptimizeMolecule(ROMol &mol, const std::string &mmffVariant = "MMFF94",
+int MMFFOptimizeMolecule(ROMol &mol, std::string mmffVariant = "MMFF94",
                          int maxIters = 200, double nonBondedThresh = 100.0,
                          int confId = -1,
                          bool ignoreInterfragInteractions = true) {
@@ -136,7 +135,7 @@ unsigned int SanitizeMMFFMol(ROMol &mol) {
 };
 
 ForceFields::PyMMFFMolProperties *GetMMFFMolProperties(
-    ROMol &mol, const std::string &mmffVariant = "MMFF94",
+    ROMol &mol, std::string mmffVariant = "MMFF94",
     unsigned int mmffVerbosity = MMFF::MMFF_VERBOSITY_NONE) {
   auto *mmffMolProperties =
       new MMFF::MMFFMolProperties(mol, mmffVariant, mmffVerbosity);

@@ -10,7 +10,6 @@
 #include <catch2/catch_all.hpp>
 #include <RDGeneral/test.h>
 #include <string>
-#include <utility>
 #include <vector>
 #include <GraphMol/RDKitBase.h>
 #include <GraphMol/test_fixtures.h>
@@ -673,7 +672,7 @@ class SmilesTest {
 
   SmilesTest(std::string fileNameInit, bool expectedResultInit,
              int atomCountInit, int bondCountInit)
-      : fileName(std::move(fileNameInit)),
+      : fileName(fileNameInit),
         expectedResult(expectedResultInit),
         atomCount(atomCountInit),
         bondCount(bondCountInit){};
@@ -681,7 +680,7 @@ class SmilesTest {
   bool isRxnTest() const { return false; }
 };
 
-std::string getExpectedValue(const std::string &expectedFileName) {
+std::string getExpectedValue(std::string expectedFileName) {
   std::stringstream expectedMolStr;
   std::ifstream in;
   in.open(expectedFileName);
@@ -689,8 +688,8 @@ std::string getExpectedValue(const std::string &expectedFileName) {
   return expectedMolStr.str();
 }
 
-void generateNewExpectedFilesIfSoSpecified(const std::string &filename,
-                                           const std::string &dataToWrite) {
+void generateNewExpectedFilesIfSoSpecified(std::string filename,
+                                           std::string dataToWrite) {
   if (GenerateExpectedFiles) {
     std::ofstream out;
     out.open(filename);
@@ -1137,7 +1136,7 @@ TEST_CASE("test3DChiral") {
   BOOST_LOG(rdInfoLog) << "done" << std::endl;
 }
 
-void testOneSmilesCanonicalization(const std::string &smiles,
+void testOneSmilesCanonicalization(std::string smiles,
                                    std::string &expectedStr) {
   SmilesParserParams smilesParserParams;
   smilesParserParams.sanitize = true;
@@ -1157,7 +1156,7 @@ void testOneSmilesCanonicalization(const std::string &smiles,
   CHECK(expectedStr == smilesOut);
 }
 
-void testSmilesCanonicalization(const std::string &smiles,
+void testSmilesCanonicalization(std::string smiles,
                                 std::string expectedStr = "") {
   BOOST_LOG(rdInfoLog) << "testing smiles canonicalization " << std::endl;
 
@@ -1184,8 +1183,7 @@ void testSmilesCanonicalization(const std::string &smiles,
   }
 }
 
-void testMolCanonicalization(const std::string &fileName1,
-                             const std::string &fileName2,
+void testMolCanonicalization(std::string fileName1, std::string fileName2,
                              unsigned int atomIndexToMark1,
                              Atom::ChiralType chiralType1,
                              unsigned int atomIndexToMark2,
@@ -1218,8 +1216,7 @@ void testMolCanonicalization(const std::string &fileName1,
   }
 }
 
-std::vector<std::string> splitOnString(std::string s,
-                                       const std::string &delim) {
+std::vector<std::string> splitOnString(std::string s, const std::string delim) {
   CHECK(s.size() > 0);
   auto delimSize = delim.size();
   CHECK(delimSize > 0);
@@ -1242,8 +1239,8 @@ std::vector<std::string> splitOnString(std::string s,
 
   return res;
 }
-void testMolCanonicalizationAtrop(const std::string &fileName1,
-                                  const std::string &fileName2) {
+void testMolCanonicalizationAtrop(std::string fileName1,
+                                  std::string fileName2) {
   BOOST_LOG(rdInfoLog) << "testing mol canonicalization " << std::endl;
   std::string rdbase = getenv("RDBASE");
   std::string fName1 =

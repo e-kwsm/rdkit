@@ -31,7 +31,6 @@
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
-#include <utility>
 #include <GraphMol/MolPickler.h>
 #include <GraphMol/Wrap/props.hpp>
 #include <RDBoost/python.h>
@@ -69,7 +68,7 @@ void rdChemicalReactionExceptionTranslator(
 }
 
 namespace RDKit {
-std::string pyObjectToString(const python::object &input) {
+std::string pyObjectToString(python::object input) {
   python::extract<std::string> ex(input);
   if (ex.check()) {
     return ex();
@@ -134,7 +133,7 @@ PyObject *RunReactants(ChemicalReaction *self, T reactants,
   return res;
 }
 
-PyObject *RunReactant(ChemicalReaction *self, const python::object &reactant,
+PyObject *RunReactant(ChemicalReaction *self, python::object reactant,
                       unsigned int reactionIdx) {
   auto react = python::extract<ROMOL_SPTR>(reactant);
 
@@ -212,7 +211,7 @@ ROMol *GetAgentTemplate(const ChemicalReaction *self, unsigned int which) {
 void RemoveUnmappedReactantTemplates(ChemicalReaction *self,
                                      double thresholdUnmappedAtoms,
                                      bool moveToAgentTemplates,
-                                     const python::object &targetList) {
+                                     python::object targetList) {
   if (targetList == python::object()) {
     self->removeUnmappedReactantTemplates(thresholdUnmappedAtoms,
                                           moveToAgentTemplates);
@@ -232,7 +231,7 @@ void RemoveUnmappedReactantTemplates(ChemicalReaction *self,
 void RemoveUnmappedProductTemplates(ChemicalReaction *self,
                                     double thresholdUnmappedAtoms,
                                     bool moveToAgentTemplates,
-                                    const python::object &targetList) {
+                                    python::object targetList) {
   if (targetList == python::object()) {
     self->removeUnmappedProductTemplates(thresholdUnmappedAtoms,
                                          moveToAgentTemplates);
@@ -249,8 +248,7 @@ void RemoveUnmappedProductTemplates(ChemicalReaction *self,
   }
 }
 
-void RemoveAgentTemplates(ChemicalReaction &self,
-                          const python::object &targetList) {
+void RemoveAgentTemplates(ChemicalReaction &self, python::object targetList) {
   if (targetList == python::object()) {
     self.removeAgentTemplates();
   } else {
@@ -299,8 +297,7 @@ bool IsMoleculeAgentOfReaction(const ChemicalReaction &rxn, const ROMol &mol) {
   return isMoleculeAgentOfReaction(rxn, mol, which);
 }
 
-ChemicalReaction *ReactionFromSmarts(const char *smarts,
-                                     const python::dict &replDict,
+ChemicalReaction *ReactionFromSmarts(const char *smarts, python::dict replDict,
                                      bool useSmiles) {
   PRECONDITION(smarts, "null SMARTS string");
   std::map<std::string, std::string> replacements;
@@ -330,9 +327,9 @@ ChemicalReaction *ReactionFromMrvFile(const char *rxnFilename, bool sanitize,
   return newR;
 }
 
-ChemicalReaction *ReactionFromMrvBlock(const python::object &imolBlock,
-                                       bool sanitize, bool removeHs) {
-  std::istringstream inStream(pyObjectToString(std::move(imolBlock)));
+ChemicalReaction *ReactionFromMrvBlock(python::object imolBlock, bool sanitize,
+                                       bool removeHs) {
+  std::istringstream inStream(pyObjectToString(imolBlock));
   ChemicalReaction *newR = nullptr;
   try {
     newR = MrvDataStreamToChemicalReaction(inStream, sanitize, removeHs);
@@ -363,9 +360,9 @@ python::object ReactionsFromCDXMLFile(const char *filename, bool sanitize,
   return python::tuple(res);
 }
 
-python::object ReactionsFromCDXMLBlock(const python::object &imolBlock,
-                                       bool sanitize, bool removeHs) {
-  std::istringstream inStream(pyObjectToString(std::move(imolBlock)));
+python::object ReactionsFromCDXMLBlock(python::object imolBlock, bool sanitize,
+                                       bool removeHs) {
+  std::istringstream inStream(pyObjectToString(imolBlock));
   std::vector<std::unique_ptr<ChemicalReaction>> rxns;
   try {
     rxns = CDXMLDataStreamToChemicalReactions(inStream, sanitize, removeHs);
@@ -392,8 +389,8 @@ python::object GetReactingAtoms(const ChemicalReaction &self,
 }
 
 python::object AddRecursiveQueriesToReaction(ChemicalReaction &self,
-                                             const python::dict &queryDict,
-                                             const std::string &propName,
+                                             python::dict queryDict,
+                                             std::string propName,
                                              bool getLabels = false) {
   // transform dictionary into map
   std::map<std::string, ROMOL_SPTR> queries;
@@ -430,8 +427,8 @@ python::object AddRecursiveQueriesToReaction(ChemicalReaction &self,
 }
 
 python::object PreprocessReaction(ChemicalReaction &reaction,
-                                  const python::dict &queryDict,
-                                  const std::string &propName) {
+                                  python::dict queryDict,
+                                  std::string propName) {
   // transform dictionary into map
   std::map<std::string, ROMOL_SPTR> queries;
   unsigned int size =
@@ -491,8 +488,8 @@ RxnOps::SanitizeRxnFlags sanitizeReaction(
 }
 
 python::object addReactionToPNGStringHelper(const ChemicalReaction &rxn,
-                                            const python::object &png,
-                                            bool includePkl, bool includeSmiles,
+                                            python::object png, bool includePkl,
+                                            bool includeSmiles,
                                             bool includeSmarts,
                                             bool includeRxn) {
   std::string cstr = python::extract<std::string>(png);
@@ -505,8 +502,8 @@ python::object addReactionToPNGStringHelper(const ChemicalReaction &rxn,
   return retval;
 }
 python::object addReactionToPNGFileHelper(const ChemicalReaction &rxn,
-                                          const python::object &fname,
-                                          bool includePkl, bool includeSmiles,
+                                          python::object fname, bool includePkl,
+                                          bool includeSmiles,
                                           bool includeSmarts, bool includeRxn) {
   std::string cstr = python::extract<std::string>(fname);
 

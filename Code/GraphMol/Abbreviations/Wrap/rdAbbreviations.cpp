@@ -20,7 +20,7 @@ using namespace RDKit;
 namespace {
 
 ROMol *condenseMolAbbreviationsHelper(const ROMol *mol,
-                                      const python::object &pyabbrevs,
+                                      python::object pyabbrevs,
                                       double maxCoverage, bool sanitize) {
   RWMol *res = new RWMol(*mol);
   auto abbrevs =
@@ -38,8 +38,7 @@ ROMol *condenseAbbreviationSGroupHelper(const ROMol *mol) {
   return rdcast<ROMol *>(res);
 }
 
-ROMol *labelMolAbbreviationsHelper(const ROMol *mol,
-                                   const python::object &pyabbrevs,
+ROMol *labelMolAbbreviationsHelper(const ROMol *mol, python::object pyabbrevs,
                                    double maxCoverage) {
   RWMol *res = new RWMol(*mol);
   auto abbrevs =

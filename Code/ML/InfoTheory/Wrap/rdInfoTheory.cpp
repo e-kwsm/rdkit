@@ -17,7 +17,7 @@ namespace python = boost::python;
 using namespace RDInfoTheory;
 
 namespace RDInfoTheory {
-double infoEntropy(const python::object &resArr) {
+double infoEntropy(python::object resArr) {
   PyObject *matObj = resArr.ptr();
   if (!PyArray_Check(matObj)) {
     throw_value_error("Expecting a Numeric array object");
@@ -46,7 +46,7 @@ double infoEntropy(const python::object &resArr) {
   return res;
 }
 
-double infoGain(const python::object &resArr) {
+double infoGain(python::object resArr) {
   PyObject *matObj = resArr.ptr();
   if (!PyArray_Check(matObj)) {
     throw_value_error("Expecting a Numeric array object");
@@ -77,7 +77,7 @@ double infoGain(const python::object &resArr) {
   return res;
 }
 
-double chiSquare(const python::object &resArr) {
+double chiSquare(python::object resArr) {
   PyObject *matObj = resArr.ptr();
   if (!PyArray_Check(matObj)) {
     throw_value_error("Expecting a Numeric array object");

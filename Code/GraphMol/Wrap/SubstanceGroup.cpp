@@ -11,7 +11,6 @@
 #define NO_IMPORT_ARRAY
 #include <boost/python.hpp>
 #include <string>
-#include <utility>
 
 // ours
 #include <GraphMol/RDKitBase.h>
@@ -41,7 +40,7 @@ void clearMolSubstanceGroups(ROMol &mol) {
   sgs.clear();
 }
 
-SubstanceGroup *createMolSubstanceGroup(ROMol &mol, const std::string &type) {
+SubstanceGroup *createMolSubstanceGroup(ROMol &mol, std::string type) {
   SubstanceGroup sg(&mol, type);
   addSubstanceGroup(mol, sg);
   return &(getSubstanceGroups(mol).back());
@@ -50,8 +49,8 @@ SubstanceGroup *createMolSubstanceGroup(ROMol &mol, const std::string &type) {
 SubstanceGroup *createMolDataSubstanceGroup(ROMol &mol, std::string fieldName,
                                             std::string value) {
   SubstanceGroup sg(&mol, "DAT");
-  sg.setProp("FIELDNAME", std::move(fieldName));
-  STR_VECT dataFields{std::move(value)};
+  sg.setProp("FIELDNAME", fieldName);
+  STR_VECT dataFields{value};
   sg.setProp("DATAFIELDS", dataFields);
   addSubstanceGroup(mol, sg);
   return &(getSubstanceGroups(mol).back());

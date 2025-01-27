@@ -51,7 +51,7 @@ class RDKIT_CHEMREACTIONS_EXPORT ChemicalReactionException
   //! construct with an error message
   explicit ChemicalReactionException(const char *msg) : _msg(msg) {}
   //! construct with an error message
-  explicit ChemicalReactionException(const std::string &msg) : _msg(msg) {}
+  explicit ChemicalReactionException(const std::string msg) : _msg(msg) {}
   //! get the error message
   const char *what() const noexcept override { return _msg.c_str(); }
   ~ChemicalReactionException() noexcept override = default;
@@ -161,7 +161,7 @@ class RDKIT_CHEMREACTIONS_EXPORT ChemicalReaction : public RDProps {
     \return the number of reactants
 
   */
-  unsigned int addReactantTemplate(const ROMOL_SPTR &mol) {
+  unsigned int addReactantTemplate(ROMOL_SPTR mol) {
     this->df_needsInit = true;
     this->m_reactantTemplates.push_back(mol);
     return rdcast<unsigned int>(this->m_reactantTemplates.size());
@@ -172,7 +172,7 @@ class RDKIT_CHEMREACTIONS_EXPORT ChemicalReaction : public RDProps {
     \return the number of agent
 
   */
-  unsigned int addAgentTemplate(const ROMOL_SPTR &mol) {
+  unsigned int addAgentTemplate(ROMOL_SPTR mol) {
     this->m_agentTemplates.push_back(mol);
     return rdcast<unsigned int>(this->m_agentTemplates.size());
   }
@@ -182,7 +182,7 @@ class RDKIT_CHEMREACTIONS_EXPORT ChemicalReaction : public RDProps {
     \return the number of products
 
   */
-  unsigned int addProductTemplate(const ROMOL_SPTR &mol) {
+  unsigned int addProductTemplate(ROMOL_SPTR mol) {
     this->m_productTemplates.push_back(mol);
     return rdcast<unsigned int>(this->m_productTemplates.size());
   }
@@ -229,7 +229,7 @@ class RDKIT_CHEMREACTIONS_EXPORT ChemicalReaction : public RDProps {
     result sets.
   */
   std::vector<MOL_SPTR_VECT> runReactants(
-      const MOL_SPTR_VECT &reactants, unsigned int numProducts = 1000) const;
+      const MOL_SPTR_VECT reactants, unsigned int numProducts = 1000) const;
 
   //! Runs a single reactant against a single reactant template
   /*!
@@ -238,7 +238,7 @@ class RDKIT_CHEMREACTIONS_EXPORT ChemicalReaction : public RDProps {
      \param reactantTemplateIdx the reactant template to target in the reaction
   */
   std::vector<MOL_SPTR_VECT> runReactant(
-      const ROMOL_SPTR &reactant, unsigned int reactantTemplateIdx) const;
+      ROMOL_SPTR reactant, unsigned int reactantTemplateIdx) const;
 
   //! Runs a single reactant in place (the reactant is modified)
   /*!

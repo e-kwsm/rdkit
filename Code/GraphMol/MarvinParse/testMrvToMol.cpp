@@ -26,7 +26,6 @@
 #include <string>
 #include <fstream>
 #include <filesystem>
-#include <utility>
 
 using namespace RDKit;
 
@@ -54,7 +53,7 @@ class MrvTests {
             bool reapplyMolBlockWedgingInit = true)
         : atomCount(atomCountInit),
           bondCount(bondCountInit),
-          fileName(std::move(fileNameInit)),
+          fileName(fileNameInit),
           expectedResult(expectedResultInit),
           sanitizeFlag(sanitizeFlagInit),
           reapplyMolBlockWedging(reapplyMolBlockWedgingInit) {};
@@ -73,7 +72,7 @@ class MrvTests {
     RxnTest(std::string fileNameInit, bool expectedResultInit,
             int reactantCountInit, int agentCountInit, int productCountInit,
             int warnInit, int errorInit)
-        : fileName(std::move(fileNameInit)),
+        : fileName(fileNameInit),
           expectedResult(expectedResultInit),
           reactantCount(reactantCountInit),
           agentCount(agentCountInit),
@@ -94,8 +93,8 @@ class MrvTests {
     SmilesTest(std::string nameInit, std::string smilesInit,
                bool expectedResultInit, int atomCountInit, int bondCountInit,
                bool sanitizeFlagInit)
-        : name(std::move(nameInit)),
-          smiles(std::move(smilesInit)),
+        : name(nameInit),
+          smiles(smilesInit),
           expectedResult(expectedResultInit),
           sanitizeFlag(sanitizeFlagInit),
           atomCount(atomCountInit),
@@ -103,8 +102,8 @@ class MrvTests {
 
     SmilesTest(std::string nameInit, std::string smilesInit,
                bool expectedResultInit, int atomCountInit, int bondCountInit)
-        : name(std::move(nameInit)),
-          smiles(std::move(smilesInit)),
+        : name(nameInit),
+          smiles(smilesInit),
           expectedResult(expectedResultInit),
           sanitizeFlag(true),
           atomCount(atomCountInit),
@@ -169,7 +168,7 @@ class MrvTests {
     throw BadFileException("Could not parse the MRV block");
   }
 
-  std::string GetExpectedValue(const std::string &expectedFileName) {
+  std::string GetExpectedValue(std::string expectedFileName) {
     std::stringstream expectedMolStr;
     std::ifstream in;
     in.open(expectedFileName);
@@ -177,8 +176,8 @@ class MrvTests {
     return expectedMolStr.str();
   }
 
-  void generateNewExpectedFilesIfSoSpecified(const std::string &filename,
-                                             const std::string &dataToWrite) {
+  void generateNewExpectedFilesIfSoSpecified(std::string filename,
+                                             std::string dataToWrite) {
     if (generateExpectedFiles) {
       std::ofstream out;
       out.open(filename);
