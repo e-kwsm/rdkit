@@ -713,7 +713,7 @@ void testUFF7() {
   contrib = new ForceFields::UFF::TorsionAngleContrib(
       &ff, 0, 1, 2, 3, 1, 6, 6, RDKit::Atom::SP3, RDKit::Atom::SP3, &param1,
       &param1);
-  ff.contribs().push_back(ForceFields::ContribPtr(contrib));
+  ff.contribs().emplace_back(contrib);
   p1.x = 0;
   p1.y = 1.5;
   p1.z = 0;
@@ -1142,7 +1142,7 @@ void testUFFTorsionConflict() {
   ff.contribs().emplace_back(contrib);
   contrib = new ForceFields::UFF::AngleBendContrib(&ff, 2, 1, 3, 1.0, 1.0,
                                                    param3, param1, param2);
-  ff.contribs().push_back(ForceFields::ContribPtr(contrib));
+  ff.contribs().emplace_back(contrib);
 
   // DIHEDRALS:
   contrib = new ForceFields::UFF::TorsionAngleContrib(
