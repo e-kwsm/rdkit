@@ -259,8 +259,8 @@ class MolAtropTest {
     BOOST_LOG(rdInfoLog) << "testing aromatic atropisomers" << std::endl;
 
     TEST_ASSERT(mol != nullptr);
-    TEST_ASSERT(mol->getNumAtoms() == expectedAtomCount)
-    TEST_ASSERT(mol->getNumBonds() == expectedBondCount)
+    TEST_ASSERT(mol->getNumAtoms() == expectedAtomCount);
+    TEST_ASSERT(mol->getNumBonds() == expectedBondCount);
 
     try {
       SmilesWriteParams ps;
