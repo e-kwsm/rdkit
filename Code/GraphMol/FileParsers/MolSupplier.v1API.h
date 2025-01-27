@@ -10,6 +10,8 @@
 #ifndef RD_MOLSUPPLIER_v1_H
 #define RD_MOLSUPPLIER_v1_H
 
+#include <utility>
+
 namespace RDKit {
 inline namespace v1 {
 /*!
@@ -426,7 +428,7 @@ class RDKIT_FILEPARSERS_EXPORT MaeMolSupplier : public MolSupplier {
     v2::FileParsers::MaeMolSupplierParams params;
     params.sanitize = sanitize;
     params.removeHs = removeHs;
-    dp_supplier.reset(new ContainedType(inStream, params));
+    dp_supplier.reset(new ContainedType(std::move(inStream), params));
   }
 
   explicit MaeMolSupplier(std::istream *inStream, bool takeOwnership = true,
