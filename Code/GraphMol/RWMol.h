@@ -45,13 +45,13 @@ class RDKIT_GRAPHMOL_EXPORT RWMol : public ROMol {
 
     note:  this will eventually become explicit to prevent
            void foo(const RWMol &m);
-	   from implicitly making a copy when called with an ROMol.
-	   
-	   To prevent this, RWMol is designed to be statically cast from an
-	   ROMol, so you can call with:
+           from implicitly making a copy when called with an ROMol.
 
-	     foo(static_cast<RWMol&>(mol));
-	     foo(*static_cast<RWMol*>(mol));
+           To prevent this, RWMol is designed to be statically cast from an
+           ROMol, so you can call with:
+
+             foo(static_cast<RWMol&>(mol));
+             foo(*static_cast<RWMol*>(mol));
   */
   RWMol(const ROMol &other, bool quickCopy = false, int confId = -1)
       : ROMol(other, quickCopy, confId) {}
