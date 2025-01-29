@@ -306,7 +306,7 @@ TEST_CASE("cleanuporganometallics and carbon") {
              {{0, 5}, {1, 5}, {2, 5}, {3, 5}, {4, 5}}},
             {"[CH]12=[CH]3[CH]4=[CH]5[NH]16.[Fe]23456",
              {{0, 5}, {1, 5}, {2, 5}, {3, 5}, {4, 5}}},
-        };
+    };
     for (const auto &pr : data) {
       INFO(pr.first);
       auto mol = v2::SmilesParse::MolFromSmiles(pr.first);

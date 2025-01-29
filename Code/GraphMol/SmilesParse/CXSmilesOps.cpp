@@ -2090,7 +2090,7 @@ std::string get_bond_config_block(
     const std::vector<unsigned int> &bondOrder, bool coordsIncluded,
     std::map<int, std::unique_ptr<RDKit::Chirality::WedgeInfoBase>> &wedgeBonds,
     bool atropisomerOnly = false) {
-  std::map<std::string, std ::vector<std::string>> wParts;
+  std::map<std::string, std::vector<std::string>> wParts;
   for (unsigned int i = 0; i < bondOrder.size(); ++i) {
     auto idx = bondOrder[i];
     const auto bond = mol.getBondWithIdx(idx);
