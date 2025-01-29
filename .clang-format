@@ -16,6 +16,10 @@ AllowShortEnumsOnASingleLine: false
 AlwaysBreakAfterDefinitionReturnType: false
 AlwaysBreakTemplateDeclarations: true
 AlwaysBreakBeforeMultilineStrings: true
+AttributeMacros:
+  - RDKIT_DEPICTOR_EXPORT
+  - RDKIT_RDGENERAL_EXPORT
+  - RDUNUSED
 BreakBeforeBinaryOperators: None
 BreakBeforeTernaryOperators: true
 BreakConstructorInitializersBeforeComma: false
