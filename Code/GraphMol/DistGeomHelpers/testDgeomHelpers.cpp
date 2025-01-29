@@ -620,8 +620,9 @@ TEST_CASE("testIssue355") {
   }
 
   SECTION("2") {
-    // If the central carbon is not bonded to another carbon, it's no longer considered
-    // to be an aminde. Thus cases 2 and 3 are no longer forced to be trans
+    // If the central carbon is not bonded to another carbon, it's no longer
+    // considered to be an aminde. Thus cases 2 and 3 are no longer forced to be
+    // trans
     const std::string smi = "CNC(=O)NC";
     const auto bm = _getBoundsMatrix(smi);
     CHECK(bm->getLowerBound(0, 3) < 3.0);

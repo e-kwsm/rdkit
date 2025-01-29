@@ -38,7 +38,6 @@ std::vector<T> sequenceToVector(const nb::object &sequence) {
 
 }  // namespace
 
-
 static nb::tuple cQuantize_RecurseOnBounds(nb::object vals, nb::list pyCuts,
                                            int which, nb::list pyStarts,
                                            nb::object results,

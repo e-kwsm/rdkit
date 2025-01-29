@@ -18,8 +18,8 @@
 namespace DistGeom {
 
 enum class ChiralSetStructureFlags : std::uint64_t {
-  IN_FUSED_SMALL_RINGS =
-      1 << 0,  // a chiral center involved in fusing 2 or more small rings
+  IN_FUSED_SMALL_RINGS = 1
+      << 0,  // a chiral center involved in fusing 2 or more small rings
 };
 
 /*! \brief Class used to store a quartet of points and chiral volume bounds on

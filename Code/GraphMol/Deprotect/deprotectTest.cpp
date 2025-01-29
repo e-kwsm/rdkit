@@ -38,7 +38,7 @@ TEST_CASE("Standard deprotections", "[deprotect]") {
     CHECK(res->getProp<std::vector<std::string>>("DEPROTECTIONS") == expected);
 
     ROMol test_m(*m);
-    auto res2 = deprotect(test_m); // should fail?
+    auto res2 = deprotect(test_m);  // should fail?
   }
   SECTION("test deprotection examples") {
     for (auto &data : getDeprotections()) {

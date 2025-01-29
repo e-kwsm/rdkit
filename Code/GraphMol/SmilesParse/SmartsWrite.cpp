@@ -111,7 +111,8 @@ std::string getAtomSmartsSimple(const QueryAtom *qatom,
 
   std::string descrip = query->getDescription();
   bool hasVal = false;
-  QueryOps::detail::RangeQueryType mods = QueryOps::detail::parseRangeQueryType(descrip);
+  QueryOps::detail::RangeQueryType mods =
+      QueryOps::detail::parseRangeQueryType(descrip);
   std::stringstream res;
   if (descrip == "AtomImplicitHCount") {
     res << "h";
@@ -171,7 +172,8 @@ std::string getAtomSmartsSimple(const QueryAtom *qatom,
     needParen = true;
   } else if (descrip == "AtomInNRings") {
     res << "R";
-    if (mods == QueryOps::detail::RangeQueryType::EQUAL && equery && equery->getVal() >= 0) {
+    if (mods == QueryOps::detail::RangeQueryType::EQUAL && equery &&
+        equery->getVal() >= 0) {
       hasVal = true;
     }
     needParen = true;
@@ -406,7 +408,8 @@ std::string getBondSmartsSimple(const Bond *bond,
   auto *equery = dynamic_cast<const BOND_EQUALS_QUERY *>(bquery);
 
   std::string descrip = bquery->getDescription();
-  QueryOps::detail::RangeQueryType bmods = QueryOps::detail::parseRangeQueryType(descrip);
+  QueryOps::detail::RangeQueryType bmods =
+      QueryOps::detail::parseRangeQueryType(descrip);
   std::string res = "";
   if (descrip == "BondNull") {
     res += "~";
@@ -426,9 +429,9 @@ std::string getBondSmartsSimple(const Bond *bond,
           break;
         }
         case QueryOps::detail::RangeQueryType::RANGE: {
-          const auto *rquery =
-              dynamic_cast<const BOND_RANGE_QUERY *>(bquery);
-          CHECK_INVARIANT(rquery, "query could not be converted to range query");
+          const auto *rquery = dynamic_cast<const BOND_RANGE_QUERY *>(bquery);
+          CHECK_INVARIANT(rquery,
+                          "query could not be converted to range query");
           res += std::to_string(rquery->getLower()) + "-" +
                  std::to_string(rquery->getUpper());
           break;
@@ -660,7 +663,7 @@ std::string _recurseBondSmarts(const Bond *bond,
     // child two is a composite node - recurse
     bool nneg = (negate) ^ (child2->getNegation());
     csmarts2 = _recurseBondSmarts(bond, child2, nneg, atomToLeftIdx,
-                                   child2Features, params);
+                                  child2Features, params);
   }
 
   // ok if we have a negation and we have to change the underlying logic,

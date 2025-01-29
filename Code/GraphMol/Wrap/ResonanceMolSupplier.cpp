@@ -279,7 +279,7 @@ struct resmolsup_wrap {
              "Returns true if resonance structure enumeration has already "
              "happened.\n")
         .def("GetSubstructMatch",
-             (PyObject * (*)(ResonanceMolSupplier & m, const ROMol &query, bool,
+             (PyObject * (*)(ResonanceMolSupplier &m, const ROMol &query, bool,
                              bool)) GetSubstructMatch,
              (python::arg("self"), python::arg("query"),
               python::arg("useChirality") = false,

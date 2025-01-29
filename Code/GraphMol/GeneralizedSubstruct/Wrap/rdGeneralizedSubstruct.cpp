@@ -90,7 +90,7 @@ ExtendedQueryMol *createExtendedQueryMolHelper(
     ps = &defaults;
   }
   // try to prevent a copy if necessary
-  const RWMol &wmol = static_cast<const RWMol&>(mol);
+  const RWMol &wmol = static_cast<const RWMol &>(mol);
   return new ExtendedQueryMol(createExtendedQueryMol(
       wmol, doEnumeration, doTautomers, adjustQueryProperties, *ps));
 }
