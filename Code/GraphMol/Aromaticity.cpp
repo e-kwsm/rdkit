@@ -268,7 +268,7 @@ bool incidentMultipleBond(const Atom *at) {
   PRECONDITION(at, "bad atom");
   const auto &mol = at->getOwningMol();
   auto deg = at->getDegree() + at->getNumExplicitHs();
-  for (const auto bond : mol.atomBonds(at)) {
+  for (auto *const bond : mol.atomBonds(at)) {
     if (!std::lround(bond->getValenceContrib(at))) {
       --deg;
     }
