@@ -538,7 +538,7 @@ void detectAtropisomerChirality(ROMol &mol, const Conformer *conf) {
   }
 
   bool foundAtrop = false;
-  for (auto bondToTry : bondsToTry) {
+  for (auto *bondToTry : bondsToTry) {
     if (bondToTry->getBeginAtom()->needsUpdatePropertyCache()) {
       bondToTry->getBeginAtom()->updatePropertyCache(false);
     }
