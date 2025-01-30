@@ -1285,9 +1285,9 @@ std::string outputMolToMolBlock(const RWMol &tmol, int confId,
 
   if (whichFormat == MolFileFormat::V2000 && coordMagnitudeTooLargeForV2K) {
     throw ValueErrorException(
-			      "V2000 format does not support atom positions <= " +
-			      std::to_string((int)MIN_V2000_COORD) +
-			      " or >= " + std::to_string((int)MAX_V2000_COORD) );
+        "V2000 format does not support atom positions <= " +
+        std::to_string(static_cast<int>(MIN_V2000_COORD)) +
+        " or >= " + std::to_string(static_cast<int>(MAX_V2000_COORD)));
   }
 
   
