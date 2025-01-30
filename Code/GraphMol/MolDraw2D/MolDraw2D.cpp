@@ -1050,8 +1050,7 @@ void MolDraw2D::calcReactionOffsets(
     plusWidth = (*maxWidthIt)->width_ / 4;
     plusWidth = plusWidth > widthToUse / 20 ? widthToUse / 20 : plusWidth;
     auto oldTotWidth = totWidth;
-    auto stretch =
-        double(widthToUse * (1 - 2.0 * drawOptions().padding)) / totWidth;
+    auto stretch = (widthToUse * (1 - 2.0 * drawOptions().padding)) / totWidth;
     // If stretch < 1, we need to shrink the DrawMols to fit.  This isn't
     // necessary if we're just stretching them along the panel as they already
     // fit for height.
