@@ -217,8 +217,8 @@ void EleContrib::getGrad(double *pos, double *grad) const {
     double corr_dist = dist + 0.05;
     corr_dist *= ((d_dielModel == RDKit::MMFF::DISTANCE) ? corr_dist * corr_dist
                                                          : corr_dist);
-    double dE_dr = -332.0716 * (double)(d_dielModel)*d_chargeTerm / corr_dist *
-                   (d_is1_4 ? 0.75 : 1.0);
+    double dE_dr = -332.0716 * static_cast<double>(d_dielModel) * d_chargeTerm /
+                   corr_dist * (d_is1_4 ? 0.75 : 1.0);
     for (unsigned int i = 0; i < 3; ++i) {
       double dGrad;
       dGrad = ((dist > 0.0) ? (dE_dr * (at1Coords[i] - at2Coords[i]) / dist)
