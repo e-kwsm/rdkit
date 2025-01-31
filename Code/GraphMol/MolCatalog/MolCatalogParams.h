@@ -3,7 +3,7 @@
 //
 #include <RDGeneral/export.h>
 #ifndef _RD_MOL_CATALOG_PARAMS_H_
-#define _RD_MOL_CATALOG_PARAMS_H_
+#define RD_MOL_CATALOG_PARAMS_H_
 
 #include <Catalogs/CatalogParams.h>
 #include <string>
