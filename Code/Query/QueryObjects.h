@@ -15,7 +15,7 @@
 
 #include <RDGeneral/export.h>
 #ifndef __RD_QUERYOBJECTS_H__
-#define __RD_QUERYOBJECTS_H__
+#define RD_QUERYOBJECTS_H_
 
 #include "Query.h"
 
