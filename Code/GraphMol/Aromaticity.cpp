@@ -189,7 +189,7 @@ void markAtomsBondsArom(ROMol &mol, const INT_VECT &unon,
   for (const auto &bci : bndCntr) {
     // std::cerr << " " << bci->first << "(" << bci->second << ")";
     if (bci.second == 1) {
-      auto bond = bondsByIdx[bci.first];
+      auto *bond = bondsByIdx[bci.first];
       if (!activeAtoms[bond->getBeginAtomIdx()] ||
           !activeAtoms[bond->getEndAtomIdx()]) {
         continue;
