@@ -10290,7 +10290,7 @@ TEST_CASE("Github8209 - Reaction products not having bond corners smoothed") {
   outs << text;
   outs.close();
   std::regex path(
-      "<path d='M (\\d+\\.\\d+),(\\d+\\.\\d+) L (\\d+\\.\\d+),(\\d+\\.\\d+) L (\\d+\\.\\d+),(\\d+\\.\\d+)' style='fill:none;stroke:#000000");
+      R"(<path d='M (\d+\.\d+),(\d+\.\d+) L (\d+\.\d+),(\d+\.\d+) L (\d+\.\d+),(\d+\.\d+)' style='fill:none;stroke:#000000)");
   size_t nOccurrences =
       std::distance(std::sregex_token_iterator(text.begin(), text.end(), path),
                     std::sregex_token_iterator());
@@ -10390,7 +10390,7 @@ TEST_CASE("Github8213 - Reaction rendering ignores panels") {
   outs << text;
   outs.close();
   const static std::regex atom0(
-      "<text x='(\\d+\\.\\d+)' y='(\\d+\\.\\d+)' class='atom-0'.*</text>");
+      R"(<text x='(\d+\.\d+)' y='(\d+\.\d+)' class='atom-0'.*</text>)");
   std::ptrdiff_t const match_count(
       std::distance(std::sregex_iterator(text.begin(), text.end(), atom0),
                     std::sregex_iterator()));
