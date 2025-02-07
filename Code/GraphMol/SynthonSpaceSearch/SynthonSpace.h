@@ -21,6 +21,7 @@
 
 #include <map>
 #include <string>
+#include <utility>
 #include <vector>
 
 #include <boost/dynamic_bitset.hpp>
@@ -103,9 +104,9 @@ struct RDKIT_SYNTHONSPACESEARCH_EXPORT SynthonSpaceSearchParams {
 // by making all combinations of synthons, one taken from each synthon set.
 struct RDKIT_SYNTHONSPACESEARCH_EXPORT SynthonSpaceHitSet {
   SynthonSpaceHitSet() = delete;
-  SynthonSpaceHitSet(const std::string &id,
+  SynthonSpaceHitSet(std::string id,
                      const std::vector<std::vector<size_t>> &stu)
-      : reactionId(id), synthonsToUse(stu) {
+      : reactionId(std::move(id)), synthonsToUse(stu) {
     numHits = std::accumulate(
         synthonsToUse.begin(), synthonsToUse.end(), size_t(1),
         [](const int prevRes, const std::vector<size_t> &s2) -> size_t {
