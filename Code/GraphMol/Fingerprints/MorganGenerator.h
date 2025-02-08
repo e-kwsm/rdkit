@@ -14,6 +14,7 @@
 
 #include <GraphMol/Fingerprints/FingerprintGenerator.h>
 #include <cstdint>
+#include <utility>
 
 namespace RDKit {
 
@@ -138,7 +139,7 @@ class RDKIT_FINGERPRINTS_EXPORT MorganArguments : public FingerprintArguments {
                   std::uint32_t fpSize = 2048,
                   bool includeRedundantEnvironments = false,
                   bool useBondTypes = true)
-      : FingerprintArguments(countSimulation, countBounds, fpSize, 1,
+      : FingerprintArguments(countSimulation, std::move(countBounds), fpSize, 1,
                              includeChirality),
         df_onlyNonzeroInvariants(onlyNonzeroInvariants),
         d_radius(radius),
@@ -325,7 +326,7 @@ FingerprintGenerator<OutputType> *getMorganGenerator(
   return getMorganGenerator<OutputType>(
       radius, countSimulation, includeChirality, useBondTypes,
       onlyNonzeroInvariants, false, atomInvariantsGenerator,
-      bondInvariantsGenerator, fpSize, countBounds, ownsAtomInvGen,
+      bondInvariantsGenerator, fpSize, std::move(countBounds), ownsAtomInvGen,
       ownsBondInvGen);
 };
 
