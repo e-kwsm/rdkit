@@ -19,6 +19,7 @@
 #include <cstdlib>
 #include <cstring>
 #include <ctime>
+#include <utility>
 #include <boost/random.hpp>
 #include <boost/smart_ptr.hpp>
 
@@ -58,7 +59,7 @@ class Vector {
   */
   Vector(unsigned int N, DATA_SPTR data) {  // TYPE *data) {
     d_size = N;
-    d_data = data;
+    d_data = std::move(data);
   }
 
   //! copy constructor

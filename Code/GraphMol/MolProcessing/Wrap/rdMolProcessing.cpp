@@ -19,7 +19,7 @@ using namespace RDKit;
 namespace {
 template <typename OutputType>
 python::tuple getFingerprintsHelper(
-    const std::string &fileName, python::object pyGenerator,
+    const std::string &fileName, const python::object &pyGenerator,
     const GeneralMolSupplier::SupplierOptions &options) {
   FingerprintGenerator<OutputType> *generator = nullptr;
   if (pyGenerator) {
