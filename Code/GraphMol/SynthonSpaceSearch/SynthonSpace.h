@@ -107,7 +107,7 @@ struct RDKIT_SYNTHONSPACESEARCH_EXPORT SynthonSpaceHitSet {
                      const std::vector<std::vector<size_t>> &stu)
       : reactionId(id), synthonsToUse(stu) {
     numHits = std::accumulate(
-        synthonsToUse.begin(), synthonsToUse.end(), size_t(1),
+        synthonsToUse.begin(), synthonsToUse.end(), static_cast<size_t>(1),
         [](const int prevRes, const std::vector<size_t> &s2) -> size_t {
           return prevRes * s2.size();
         });
