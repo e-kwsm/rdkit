@@ -613,9 +613,9 @@ void contourAndDrawGridHelper(RDKit::MolDraw2D &drawer, python::object &data,
   if (mol) {
     mol_p = python::extract<RDKit::ROMol *>(mol);
   }
-  MolDraw2DUtils::contourAndDrawGrid(drawer, (double *)PyArray_DATA(dataArr),
-                                     *xcoords, *ycoords, nContours, *levels,
-                                     params, mol_p);
+  MolDraw2DUtils::contourAndDrawGrid(
+      drawer, static_cast<double *>(PyArray_DATA(dataArr)), *xcoords, *ycoords,
+      nContours, *levels, params, mol_p);
 
   Py_DECREF(dataArr);
 }
@@ -1114,8 +1114,9 @@ BOOST_PYTHON_MODULE(rdMolDraw2D) {
       .def("FillPolys", &RDKit::MolDraw2D::fillPolys, python::args("self"),
            "returns whether or not polygons are being filled")
       .def("DrawLine",
-           (void(RDKit::MolDraw2D::*)(const Point2D &, const Point2D &, bool)) &
-               RDKit::MolDraw2D::drawLine,
+           static_cast<void (RDKit::MolDraw2D::*)(const Point2D &,
+                                                  const Point2D &, bool)>(
+               &RDKit::MolDraw2D::drawLine),
            (python::arg("self"), python::arg("cds1"), python::arg("cds2"),
             python::arg("rawCoords") = false),
            "draws a line with the current drawing style. The coordinates "
@@ -1152,9 +1153,9 @@ BOOST_PYTHON_MODULE(rdMolDraw2D) {
            "defined by the two points. The coordinates "
            "are in the molecule frame")
       .def("DrawArc",
-           (void(RDKit::MolDraw2D::*)(const Point2D &, double, double, double,
-                                      bool)) &
-               RDKit::MolDraw2D::drawArc,
+           static_cast<void (RDKit::MolDraw2D::*)(const Point2D &, double,
+                                                  double, double, bool)>(
+               &RDKit::MolDraw2D::drawArc),
            (python::arg("self"), python::arg("center"), python::arg("radius"),
             python::arg("angle1"), python::arg("angle2"),
             python::arg("rawCoords") = false),
@@ -1175,9 +1176,9 @@ BOOST_PYTHON_MODULE(rdMolDraw2D) {
            "draw a line indicating the presence of an attachment point "
            "(normally a squiggle line perpendicular to a bond)")
       .def("DrawString",
-           (void(RDKit::MolDraw2D::*)(const std::string &,
-                                      const RDGeom::Point2D &, bool)) &
-               RDKit::MolDraw2D::drawString,
+           static_cast<void (RDKit::MolDraw2D::*)(
+               const std::string &, const RDGeom::Point2D &, bool)>(
+               &RDKit::MolDraw2D::drawString),
            (python::arg("self"), python::arg("string"), python::arg("pos"),
             python::arg("rawCoords") = false),
            "add text to the canvas")
@@ -1186,24 +1187,24 @@ BOOST_PYTHON_MODULE(rdMolDraw2D) {
             python::arg("align"), python::arg("rawCoords") = false),
            "add aligned text to the canvas. The align argument can be 0 "
            "(=MIDDLE), 1 (=START), or 2 (=END)")
+      .def(
+          "GetDrawCoords",
+          static_cast<RDGeom::Point2D (RDKit::MolDraw2D::*)(
+              const RDGeom::Point2D &) const>(&RDKit::MolDraw2D::getDrawCoords),
+          (python::arg("self"), python::arg("point")),
+          "get the coordinates in drawing space for a particular point in "
+          "molecule space")
       .def("GetDrawCoords",
-           (RDGeom::Point2D(RDKit::MolDraw2D::*)(const RDGeom::Point2D &)
-                const) &
-               RDKit::MolDraw2D::getDrawCoords,
-           (python::arg("self"), python::arg("point")),
-           "get the coordinates in drawing space for a particular point in "
-           "molecule space")
-      .def("GetDrawCoords",
-           (RDGeom::Point2D(RDKit::MolDraw2D::*)(int) const) &
-               RDKit::MolDraw2D::getDrawCoords,
+           static_cast<RDGeom::Point2D (RDKit::MolDraw2D::*)(int) const>(
+               &RDKit::MolDraw2D::getDrawCoords),
            (python::arg("self"), python::arg("atomIndex")),
            "get the coordinates in drawing space for a particular atom")
       .def("ClearDrawing", &RDKit::MolDraw2D::clearDrawing,
            (python::arg("self")),
            "clears the drawing by filling it with the background color")
       .def("drawOptions",
-           (RDKit::MolDrawOptions & (RDKit::MolDraw2D::*)()) &
-               RDKit::MolDraw2D::drawOptions,
+           static_cast<RDKit::MolDrawOptions &(RDKit::MolDraw2D::*)()>(
+               &RDKit::MolDraw2D::drawOptions),
            python::return_internal_reference<
                1, python::with_custodian_and_ward_postcall<0, 1>>(),
            python::args("self"),
@@ -1224,8 +1225,8 @@ BOOST_PYTHON_MODULE(rdMolDraw2D) {
            python::args("self"),
            "add the last bits of SVG to finish the drawing")
       .def("AddMoleculeMetadata",
-           (void(RDKit::MolDraw2DSVG::*)(const RDKit::ROMol &, int) const) &
-               RDKit::MolDraw2DSVG::addMoleculeMetadata,
+           static_cast<void (RDKit::MolDraw2DSVG::*)(const RDKit::ROMol &, int)
+                           const>(&RDKit::MolDraw2DSVG::addMoleculeMetadata),
            ((python::arg("self"), python::arg("mol")),
             python::arg("confId") = -1),
            "add RDKit-specific information to the bottom of the drawing")
@@ -1457,11 +1458,12 @@ https://en.wikipedia.org/wiki/Wikipedia:Manual_of_Style/Chemistry/Structure_draw
   python::def("MeanBondLength", &RDKit::MolDraw2DUtils::meanBondLength,
               (python::arg("mol"), python::arg("confId") = -1),
               "Calculate the mean bond length for the molecule.");
+  python::def(
+      "SetDarkMode",
+      static_cast<void (*)(RDKit::MolDrawOptions &)>(&RDKit::setDarkMode),
+      python::args("d2d"), "set dark mode for a MolDrawOptions object");
   python::def("SetDarkMode",
-              (void (*)(RDKit::MolDrawOptions &)) & RDKit::setDarkMode,
-              python::args("d2d"), "set dark mode for a MolDrawOptions object");
-  python::def("SetDarkMode",
-              (void (*)(RDKit::MolDraw2D &)) & RDKit::setDarkMode,
+              static_cast<void (*)(RDKit::MolDraw2D &)>(&RDKit::setDarkMode),
               python::args("d2d"), "set dark mode for a MolDraw2D object");
   python::def("SetMonochromeMode", RDKit::setMonochromeMode_helper1,
               (python::arg("options"), python::arg("fgColour"),
