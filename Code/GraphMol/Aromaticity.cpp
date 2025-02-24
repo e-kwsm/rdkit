@@ -697,7 +697,7 @@ namespace RDKit {
 namespace MolOps {
 bool isBondOrderQuery(const Bond *bond) {
   if (bond->hasQuery()) {
-    auto q = dynamic_cast<const QueryBond *>(bond)->getQuery();
+    auto *q = dynamic_cast<const QueryBond *>(bond)->getQuery();
     // complex bond type queries are also bond order queries!
     if (q->getTypeLabel() == "BondOrder" ||
         QueryOps::hasComplexBondTypeQuery(*q)) {
