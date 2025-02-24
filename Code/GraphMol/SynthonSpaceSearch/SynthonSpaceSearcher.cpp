@@ -181,7 +181,7 @@ void SynthonSpaceSearcher::buildAllHits(
   for (const auto &[reactionId, synthonsToUse, numHits] : hitsets) {
     std::vector<size_t> numSynthons;
     numSynthons.reserve(synthonsToUse.size());
-    for (auto &stu : synthonsToUse) {
+    for (const auto &stu : synthonsToUse) {
       numSynthons.push_back(stu.size());
     }
     const auto &reaction = getSpace().getReactions().find(reactionId)->second;
