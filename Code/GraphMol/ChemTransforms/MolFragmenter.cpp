@@ -389,7 +389,7 @@ void checkChiralityPostMove(const ROMol &mol, const Atom *oAt, Atom *nAt,
       }
     }
   } else {
-    for (auto obond : mol.atomBonds(oAt)) {
+    for (auto *obond : mol.atomBonds(oAt)) {
       if (obond != bond) {
         newOrder.push_back(obond->getIdx());
       }
@@ -417,7 +417,7 @@ std::vector<std::pair<Bond *, std::vector<int>>> getNbrBondStereo(
   auto *const bgn = bnd->getBeginAtom();
   auto *const end = bnd->getEndAtom();
   for (const auto *atom : {bgn, end}) {
-    for (auto obnd : mol.atomBonds(atom)) {
+    for (auto *obnd : mol.atomBonds(atom)) {
       if (obnd->getIdx() != bnd->getIdx() && !obnd->getStereoAtoms().empty()) {
         res.emplace_back(obnd, obnd->getStereoAtoms());
       }
