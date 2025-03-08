@@ -764,7 +764,7 @@ struct ZipBond {
         CHECK_INVARIANT(
             bnd != nullptr,
             "molzip: begin atom and specified dummy atom connection "
-            "are not bonded.")
+            "are not bonded.");
         auto bond_type_a = bnd->getBondType();
         auto bond_dir_a = bnd->getBondDir();
         auto a_is_start = bnd->getBeginAtom() == a;
