@@ -153,7 +153,7 @@ void DrawMolMCHCircleAndLine::makeBondHighlights(
 // ****************************************************************************
 void DrawMolMCHCircleAndLine::makeAtomHighlights(
     std::vector<std::unique_ptr<DrawShape>> &atomHighlights) {
-  for (auto &ha : mcHighlightAtomMap_) {
+  for (const auto &ha : mcHighlightAtomMap_) {
     if (ha.first < 0 ||
         static_cast<unsigned>(ha.first) >= drawMol_->getNumAtoms()) {
       throw ValueErrorException("Atom index out of range");
