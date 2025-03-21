@@ -1304,7 +1304,7 @@ double normalizeDepiction(RDKit::ROMol &mol, int confId, int canonicalize,
       *canonTrans *= rotate90;
     }
   } else {
-    canonTrans.reset(new RDGeom::Transform3D());
+    canonTrans = std::make_unique<RDGeom::Transform3D>();
     canonTrans->SetTranslation(-ctd);
   }
   bool isScaleFactorSane = (scaleFactor > SCALE_FACTOR_THRESHOLD);
