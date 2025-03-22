@@ -186,9 +186,9 @@ class RDKIT_SYNTHONSPACESEARCH_EXPORT SynthonSpace {
    * the synthonspace library.  Duplicate SMILES strings produced by
    * different reactions will be returned.
    *
-   * @param query query molecule
-   * @param params (optional) settings for the search
-   * @return the hits as a SearchResults object.
+   * @param query : query molecule
+   * @param params : (optional) settings for the search
+   * @return : the hits as a SearchResults object.
    */
   SearchResults substructureSearch(
       const ROMol &query,
@@ -217,7 +217,6 @@ class RDKIT_SYNTHONSPACESEARCH_EXPORT SynthonSpace {
    * molecule across the synthonspace library.  Duplicate SMILES strings
    * produced by different reactions will be returned.
    *
-<<<<<<< HEAD
    * @param query : query molecule
    * @param params : (optional) settings for the search
    * @return : the hits as a SearchResults object.
@@ -233,16 +232,9 @@ class RDKIT_SYNTHONSPACESEARCH_EXPORT SynthonSpace {
    * different reactions will be returned.
    * @param query : query molecule
    * @param fpGen: a FingerprintGenerator object that will provide the
-||||||| parent of 95f67eb84d0d (Code/GraphMol/SynthonSpaceSearch/SynthonSpace.h)
-   * @param query : query molecule
-   * @param fpGen: a FingerprintGenerator object that will provide the
-=======
-   * @param query query molecule
-   * @param fpGen a FingerprintGenerator object that will provide the
->>>>>>> 95f67eb84d0d (Code/GraphMol/SynthonSpaceSearch/SynthonSpace.h)
    *               fingerprints for the similarity calculation
-   * @param params (optional) settings for the search
-   * @return the hits as a SearchResults object.
+   * @param params : (optional) settings for the search
+   * @return : the hits as a SearchResults object.
    */
   SearchResults fingerprintSearch(
       const ROMol &query, const FingerprintGenerator<std::uint64_t> &fpGen,
@@ -310,7 +302,7 @@ class RDKIT_SYNTHONSPACESEARCH_EXPORT SynthonSpace {
       const SynthonSpaceSearchParams &params = SynthonSpaceSearchParams());
   /*!
    *
-   * @param inFilename name of the file containing the synthon-based library.
+   * @param inFilename: name of the file containing the synthon-based library.
    *
    * The original format is:
    * all lines are tab-separated
@@ -348,44 +340,32 @@ class RDKIT_SYNTHONSPACESEARCH_EXPORT SynthonSpace {
   /*!
    * Writes to a binary DB File in our format.
    *
-   * @param outFilename the name of the file to write.
+   * @param outFilename: the name of the file to write.
    */
   void writeDBFile(const std::string &outFilename) const;
 
   /*!
    * Reads from a binary DB File in our format.
    *
-<<<<<<< HEAD
    * @param inFilename: the name of the file to read.
    * @param numThreads: number of threads to use in reading.  If negative,
    *                    adds the number to the number of hardware threads
    *                    available.
-||||||| parent of 95f67eb84d0d (Code/GraphMol/SynthonSpaceSearch/SynthonSpace.h)
-   * @param inFilename: the name of the file to read.
-=======
-   * @param inFilename the name of the file to read.
->>>>>>> 95f67eb84d0d (Code/GraphMol/SynthonSpaceSearch/SynthonSpace.h)
    */
   void readDBFile(const std::string &inFilename, int numThreads = 1);
 
   /*!
    * Write a summary of the SynthonSpace to given stream.
    *
-   * @param os stream
+   * @param os: stream
    */
   void summarise(std::ostream &os);
 
   /*!
-<<<<<<< HEAD
    * Writes the enumerated library to file in SMILES format
    * (1 compound per line, SMILES name)
    *
    * @param outFilename: name of the file to write
-||||||| parent of 95f67eb84d0d (Code/GraphMol/SynthonSpaceSearch/SynthonSpace.h)
-  @param outFilename: name of the file to write
-=======
-  @param outFilename name of the file to write
->>>>>>> 95f67eb84d0d (Code/GraphMol/SynthonSpaceSearch/SynthonSpace.h)
    */
   void writeEnumeratedFile(const std::string &outFilename) const;
   void enumerateToStream(std::ostream &os) const;
