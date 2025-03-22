@@ -186,8 +186,8 @@ class RDKIT_SYNTHONSPACESEARCH_EXPORT SynthonSpace {
    * the synthonspace library.  Duplicate SMILES strings produced by
    * different reactions will be returned.
    *
-   * @param query : query molecule
-   * @param params : (optional) settings for the search
+   * @param query query molecule
+   * @param params (optional) settings for the search
    * @return : the hits as a SearchResults object.
    */
   SearchResults substructureSearch(
@@ -217,8 +217,8 @@ class RDKIT_SYNTHONSPACESEARCH_EXPORT SynthonSpace {
    * molecule across the synthonspace library.  Duplicate SMILES strings
    * produced by different reactions will be returned.
    *
-   * @param query : query molecule
-   * @param params : (optional) settings for the search
+   * @param query query molecule
+   * @param params (optional) settings for the search
    * @return : the hits as a SearchResults object.
    */
   SearchResults substructureSearch(
@@ -230,10 +230,10 @@ class RDKIT_SYNTHONSPACESEARCH_EXPORT SynthonSpace {
    * Perform a fingerprint similarity search with the given query molecule
    * across the synthonspace library.  Duplicate SMILES strings produced by
    * different reactions will be returned.
-   * @param query : query molecule
-   * @param fpGen: a FingerprintGenerator object that will provide the
-   *               fingerprints for the similarity calculation
-   * @param params : (optional) settings for the search
+   * @param query query molecule
+   * @param fpGen a FingerprintGenerator object that will provide the
+   *              fingerprints for the similarity calculation
+   * @param params (optional) settings for the search
    * @return : the hits as a SearchResults object.
    */
   SearchResults fingerprintSearch(
@@ -265,14 +265,14 @@ class RDKIT_SYNTHONSPACESEARCH_EXPORT SynthonSpace {
   // different reactions will be returned.
   /*!
    *
-   * @param query : query molecule
-   * @param rascalOptions: RASCAL options.  The similarityThreshold value
-   *                       in the rascalOptions will be used rather than
-   *                       params.similarityCutoff,
-   *                       but params.fragSimilarityAdjuster will be used
-   *                       to adjust the threshold for the fragment
-   *                       comparisons.
-   * @param params : (optional) settings for the search
+   * @param query query molecule
+   * @param rascalOptions RASCAL options.  The similarityThreshold value
+   *                      in the rascalOptions will be used rather than
+   *                      params.similarityCutoff,
+   *                      but params.fragSimilarityAdjuster will be used
+   *                      to adjust the threshold for the fragment
+   *                      comparisons.
+   * @param params (optional) settings for the search
    * @return : the hits as a SearchResults object.
    */
   SearchResults rascalSearch(
@@ -302,7 +302,7 @@ class RDKIT_SYNTHONSPACESEARCH_EXPORT SynthonSpace {
       const SynthonSpaceSearchParams &params = SynthonSpaceSearchParams());
   /*!
    *
-   * @param inFilename: name of the file containing the synthon-based library.
+   * @param inFilename name of the file containing the synthon-based library.
    *
    * The original format is:
    * all lines are tab-separated
@@ -340,24 +340,24 @@ class RDKIT_SYNTHONSPACESEARCH_EXPORT SynthonSpace {
   /*!
    * Writes to a binary DB File in our format.
    *
-   * @param outFilename: the name of the file to write.
+   * @param outFilename the name of the file to write.
    */
   void writeDBFile(const std::string &outFilename) const;
 
   /*!
    * Reads from a binary DB File in our format.
    *
-   * @param inFilename: the name of the file to read.
-   * @param numThreads: number of threads to use in reading.  If negative,
-   *                    adds the number to the number of hardware threads
-   *                    available.
+   * @param inFilename the name of the file to read.
+   * @param numThreads number of threads to use in reading.  If negative,
+   *                   adds the number to the number of hardware threads
+   *                   available.
    */
   void readDBFile(const std::string &inFilename, int numThreads = 1);
 
   /*!
    * Write a summary of the SynthonSpace to given stream.
    *
-   * @param os: stream
+   * @param os stream
    */
   void summarise(std::ostream &os);
 
@@ -365,7 +365,7 @@ class RDKIT_SYNTHONSPACESEARCH_EXPORT SynthonSpace {
    * Writes the enumerated library to file in SMILES format
    * (1 compound per line, SMILES name)
    *
-   * @param outFilename: name of the file to write
+   * @param outFilename name of the file to write
    */
   void writeEnumeratedFile(const std::string &outFilename) const;
   void enumerateToStream(std::ostream &os) const;
@@ -374,7 +374,7 @@ class RDKIT_SYNTHONSPACESEARCH_EXPORT SynthonSpace {
    * Create the fingerprints for the synthons ready for fingerprint searches.
    * Will be done by the fingerprint search if not done ahead of time.
    *
-   * @param fpGen: a fingerprint generator of the appropriate type
+   * @param fpGen a fingerprint generator of the appropriate type
    */
   void buildSynthonFingerprints(
       const FingerprintGenerator<std::uint64_t> &fpGen);
