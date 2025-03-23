@@ -26,7 +26,7 @@
 
 namespace RDKit::SynthonSpaceSearch {
 
-Synthon::Synthon(const std::string &smi) : d_smiles(smi) {
+Synthon::Synthon(std::string smi) : d_smiles(std::move(smi)) {
   v2::SmilesParse::SmilesParserParams params;
   params.sanitize = false;
   dp_origMol = v2::SmilesParse::MolFromSmiles(d_smiles, params);
