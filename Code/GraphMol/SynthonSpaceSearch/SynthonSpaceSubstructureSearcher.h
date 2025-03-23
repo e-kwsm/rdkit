@@ -14,6 +14,7 @@
 #ifndef SYNTHONSPACESUBSTRUCTURESEARCHER_H
 #define SYNTHONSPACESUBSTRUCTURESEARCHER_H
 
+#include <utility>
 #include <RDGeneral/export.h>
 #include <GraphMol/SynthonSpaceSearch/SynthonSpaceSearcher.h>
 
@@ -25,11 +26,11 @@ class SynthonSpaceSubstructureSearcher : public SynthonSpaceSearcher {
  public:
   SynthonSpaceSubstructureSearcher() = delete;
   SynthonSpaceSubstructureSearcher(const ROMol &query,
-                                   const SubstructMatchParameters &matchParams,
+                                   SubstructMatchParameters matchParams,
                                    const SynthonSpaceSearchParams &params,
                                    SynthonSpace &space)
       : SynthonSpaceSearcher(query, params, space),
-        d_matchParams(matchParams) {}
+        d_matchParams(std::move(matchParams)) {}
 
   std::vector<std::unique_ptr<SynthonSpaceHitSet>> searchFragSet(
       const std::vector<std::unique_ptr<ROMol>> &fragSet,
