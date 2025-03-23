@@ -275,7 +275,7 @@ RDKIT_GRAPHMOL_EXPORT void setTerminalAtomCoords(ROMol &mol, unsigned int idx,
     \param updateExplicitCount  (optional) If this is \c true, when explicit
    Hs are removed from the graph, the heavy atom to which they are bound will
    have its counter of explicit Hs increased.
-    \param sanitize:  (optional) If this is \c true, the final molecule will be
+    \param sanitize  (optional) If this is \c true, the final molecule will be
    sanitized
 
     \return the new molecule
@@ -559,17 +559,17 @@ BETTER_ENUM(SanitizeFlags, unsigned int,
      -# MolOps::adjustHs()
      -# mol.updatePropertyCache()
 
-   \param mol : the RWMol to be cleaned
+   \param mol the RWMol to be cleaned
 
-   \param operationThatFailed : the first (if any) sanitization operation that
-                                fails is set here.
-                                The values are taken from the \c SanitizeFlags
-                                enum. On success, the value is \c
-                                SanitizeFlags::SANITIZE_NONE
+   \param operationThatFailed the first (if any) sanitization operation that
+                              fails is set here.
+                              The values are taken from the \c SanitizeFlags
+                              enum. On success, the value is \c
+                              SanitizeFlags::SANITIZE_NONE
 
-   \param sanitizeOps : the bits here are used to set which sanitization
-                        operations are carried out. The elements of the \c
-                        SanitizeFlags enum define the operations.
+   \param sanitizeOps the bits here are used to set which sanitization
+                      operations are carried out. The elements of the \c
+                      SanitizeFlags enum define the operations.
 
    <b>Notes:</b>
     - If there is a failure in the sanitization, a \c MolSanitizeException
@@ -596,11 +596,11 @@ RDKIT_GRAPHMOL_EXPORT void sanitizeMol(RWMol &mol);
      -# MolOps::Kekulize()  : Unkekulizable ring systems, aromatic atoms not
    in rings, aromatic bonds to non-aromatic atoms.
 
-   \param mol : the ROMol to be cleaned
+   \param mol the ROMol to be cleaned
 
-   \param sanitizeOps : the bits here are used to set which sanitization
-                        operations are carried out. The elements of the \c
-                        SanitizeFlags enum define the operations.
+   \param sanitizeOps the bits here are used to set which sanitization
+                      operations are carried out. The elements of the \c
+                      SanitizeFlags enum define the operations.
 
    \return a vector of \c MolSanitizeException values that indicate what
            problems were encountered
