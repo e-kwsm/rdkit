@@ -30,7 +30,7 @@ inline constexpr unsigned int PATT_FP_NUM_BITS = 1024;
 class RDKIT_SYNTHONSPACESEARCH_EXPORT Synthon {
  public:
   Synthon() = default;
-  Synthon(const std::string &smi);
+  Synthon(std::string smi);
   Synthon(const Synthon &other);
   Synthon(Synthon &&other) = default;
   Synthon &operator=(const Synthon &other);
