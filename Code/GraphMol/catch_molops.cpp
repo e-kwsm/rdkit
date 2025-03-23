@@ -331,7 +331,7 @@ TEST_CASE("cleanuporganometallics and carbon") {
       INFO(smiles);
       auto mol = v2::SmilesParse::MolFromSmiles(smiles);
       REQUIRE(mol);
-      for (const auto bond : mol->bonds()) {
+      for (auto *const bond : mol->bonds()) {
         CHECK(bond->getBondType() != Bond::BondType::DATIVE);
       }
     }

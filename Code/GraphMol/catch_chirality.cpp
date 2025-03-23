@@ -6062,7 +6062,7 @@ M  V30 END COLLECTION
 M  V30 END CTAB
 M  END)CTAB"_ctab;
     REQUIRE(m);
-    auto &sgs = m->getStereoGroups();
+    const auto &sgs = m->getStereoGroups();
     REQUIRE(sgs.size() == 1);
     CHECK(sgs[0].getGroupType() == StereoGroupType::STEREO_ABSOLUTE);
     CHECK(sgs[0].getAtoms().size() == 1);
@@ -6117,9 +6117,9 @@ $$$$
     pathName += "/Code/GraphMol/test_data/Github8323.sdf";
     SDMolSupplier suppl(pathName);
     while (!suppl.atEnd()) {
-      auto mol = suppl.next();
+      auto *mol = suppl.next();
       REQUIRE(mol);
-      auto &sgs = mol->getStereoGroups();
+      const auto &sgs = mol->getStereoGroups();
       REQUIRE(sgs.size() == 1);
       REQUIRE(mol->hasProp("StereoGroupOnAtom"));
       auto aid = std::stoul(mol->getProp<std::string>("StereoGroupOnAtom"));
