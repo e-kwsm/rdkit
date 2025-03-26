@@ -21,7 +21,7 @@ namespace DistGeom {
 struct FourthDimContribsParams {
   unsigned int idx{0};
   double weight{0.0};
-  FourthDimContribsParams(unsigned int idx, double w) : idx(idx), weight(w) {};
+  FourthDimContribsParams(unsigned int idx, double w) : idx(idx), weight(w) {}
 };
 
 //! A term used in penalizing the 4th dimension in order to move from 4D->3D
