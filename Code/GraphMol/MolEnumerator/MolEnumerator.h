@@ -170,12 +170,12 @@ class RDKIT_MOLENUMERATOR_EXPORT LinkNodeOp : public MolEnumeratorOp {
  */
 class RDKIT_MOLENUMERATOR_EXPORT RepeatUnitOp : public MolEnumeratorOp {
  public:
-  RepeatUnitOp() {};
+  RepeatUnitOp() {}
   RepeatUnitOp(const std::shared_ptr<ROMol> mol) : dp_mol(mol) {
     PRECONDITION(mol, "bad molecule");
     initFromMol();
-  };
-  RepeatUnitOp(const ROMol &mol) : dp_mol(new ROMol(mol)) { initFromMol(); };
+  }
+  RepeatUnitOp(const ROMol &mol) : dp_mol(new ROMol(mol)) { initFromMol(); }
   RepeatUnitOp(const RepeatUnitOp &other)
       : d_maxNumRounds(other.d_maxNumRounds),
         dp_mol(other.dp_mol),
@@ -186,7 +186,7 @@ class RDKIT_MOLENUMERATOR_EXPORT RepeatUnitOp : public MolEnumeratorOp {
         d_pointRanges(other.d_pointRanges),
         d_isotopeMap(other.d_isotopeMap),
         d_atomMap(other.d_atomMap),
-        d_minRepeatCounts(other.d_minRepeatCounts) {};
+        d_minRepeatCounts(other.d_minRepeatCounts) {}
   RepeatUnitOp &operator=(const RepeatUnitOp &other) {
     if (&other == this) {
       return *this;
@@ -202,7 +202,7 @@ class RDKIT_MOLENUMERATOR_EXPORT RepeatUnitOp : public MolEnumeratorOp {
     d_maxNumRounds = other.d_maxNumRounds;
     d_minRepeatCounts = other.d_minRepeatCounts;
     return *this;
-  };
+  }
   //! \override
   std::vector<size_t> getVariationCounts() const override;
 
