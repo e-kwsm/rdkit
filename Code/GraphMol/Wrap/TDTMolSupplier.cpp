@@ -82,7 +82,7 @@ struct tdtmolsup_wrap {
         .def("GetItemText", &TDTMolSupplier::getItemText,
              "returns the text for an item",
              (python::arg("self"), python::arg("index")));
-  };
+  }
 };
 }  // namespace RDKit
 
