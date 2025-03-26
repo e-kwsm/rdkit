@@ -223,6 +223,6 @@ class RDKIT_GRAPHMOL_EXPORT RWMol : public ROMol {
 using RWMOL_SPTR = boost::shared_ptr<RWMol>;
 using RWMOL_SPTR_VECT = std::vector<RWMOL_SPTR>;
 
-};  // namespace RDKit
+}  // namespace RDKit
 
 #endif

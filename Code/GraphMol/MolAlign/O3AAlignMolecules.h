@@ -38,7 +38,7 @@ struct RDKIT_MOLALIGN_EXPORT O3AFuncData {
 };
 inline bool isDoubleZero(const double x) {
   return ((x < 1.0e-10) && (x > -1.0e-10));
-};
+}
 
 class O3AConstraintVect;
 

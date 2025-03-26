@@ -106,7 +106,7 @@ struct HierarchCP_wrap {
         .value("GOWER", HierarchicalClusterPicker::GOWER)
         .value("CENTROID", HierarchicalClusterPicker::CENTROID)
         .export_values();
-  };
+  }
 };
 }  // namespace RDPickers
 

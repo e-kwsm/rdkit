@@ -144,7 +144,7 @@ struct tautomerquery_pickle_suite : rdkit_pickle_suite {
     auto res = self.serialize();
     return python::make_tuple(python::object(python::handle<>(
         PyBytes_FromStringAndSize(res.c_str(), res.length()))));
-  };
+  }
 };
 
 void toStream(const TautomerQuery &tq, python::object &fileobj) {

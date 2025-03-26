@@ -92,7 +92,7 @@ std::uint32_t getAtomCode(const Atom *atom, unsigned int branchSubtract,
                            1 << (codeSize + (includeChirality ? 2 : 0))),
                 "code exceeds number of bits");
   return code;
-};
+}
 
 std::uint32_t getAtomPairCode(std::uint32_t codeI, std::uint32_t codeJ,
                               unsigned int dist, bool includeChirality) {
@@ -190,12 +190,12 @@ $([N;H0&+0]([C;!$(C(=O))])([C;!$(C(=O))])[C;!$(C(=O))])]",  // Basic
 
 const RDKit::ROMol *ss_matcher::getMatcher() const { return m_matcher.get(); }
 
-ss_matcher::ss_matcher() {};
+ss_matcher::ss_matcher() {}
 ss_matcher::ss_matcher(const std::string &pattern) {
   RDKit::RWMol *p = RDKit::SmartsToMol(pattern);
   TEST_ASSERT(p);
   m_matcher.reset(p);
-};
+}
 
 typedef boost::flyweight<boost::flyweights::key_value<std::string, ss_matcher>,
                          boost::flyweights::no_tracking>

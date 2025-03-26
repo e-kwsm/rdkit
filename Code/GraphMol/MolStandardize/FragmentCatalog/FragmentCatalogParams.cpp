@@ -35,7 +35,7 @@ FragmentCatalogParams::FragmentCatalogParams(
     const std::vector<std::pair<std::string, std::string>> &data) {
   d_funcGroups.clear();
   d_funcGroups = readFuncGroups(data);
-};
+}
 
 FragmentCatalogParams::FragmentCatalogParams(
     const FragmentCatalogParams &other) {
