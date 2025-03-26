@@ -1022,11 +1022,11 @@ class Hybridizations {
  public:
   Hybridizations() {
     throw FileParseException("not to be called without a mol parameter");
-  };
+  }
   Hybridizations(const ROMol &mol);
   Hybridizations(const Hybridizations &) {
     throw FileParseException("not to be called without a mol parameter");
-  };
+  }
 
   ~Hybridizations() = default;
 
