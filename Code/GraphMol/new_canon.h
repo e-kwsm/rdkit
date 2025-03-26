@@ -879,7 +879,7 @@ inline void rankFragmentAtoms(
   rankFragmentAtoms(mol, res, atomsInPlay, bondsInPlay, atomSymbols, nullptr,
                     breakTies, includeChirality, includeIsotopes,
                     includeAtomMaps, includeChiralPresence, includeRingStereo);
-};
+}
 
 RDKIT_GRAPHMOL_EXPORT void chiralRankMolAtoms(const ROMol &mol,
                                               std::vector<unsigned int> &res);

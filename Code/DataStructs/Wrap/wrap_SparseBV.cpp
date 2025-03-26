@@ -23,7 +23,7 @@ struct sbv_pickle_suite : rdkit_pickle_suite {
     python::object retval = python::object(
         python::handle<>(PyBytes_FromStringAndSize(res.c_str(), res.length())));
     return python::make_tuple(retval);
-  };
+  }
 };
 
 python::list SparseToList(const SparseBitVect &sv) {

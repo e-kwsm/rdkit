@@ -806,7 +806,7 @@ void testSmilesSupFromText() {
     delete mol;
   }
   TEST_ASSERT(nDone == nSup2.length());
-};
+}
 
 void testSmilesWriter() {
   std::string rdbase = getenv("RDBASE");

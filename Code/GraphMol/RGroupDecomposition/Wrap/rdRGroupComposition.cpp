@@ -445,7 +445,7 @@ struct rgroupdecomp_wrapper {
                      AtomMap | Isotope | MDLRGroup),
                  python::arg("outputLabels") = MDLRGroup),
                 docString.c_str());
-  };
+  }
 };
 }  // namespace RDKit
 

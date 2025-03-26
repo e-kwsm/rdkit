@@ -135,7 +135,7 @@ struct ringinfo_wrapper {
              (python::arg("self"), python::arg("atomIds"),
               python::arg("bondIds")),
              "Adds a ring to the set. Be very careful with this operation.");
-  };
+  }
 };
 }  // namespace RDKit
 void wrap_ringinfo() { RDKit::ringinfo_wrapper::wrap(); }
