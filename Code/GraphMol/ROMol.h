@@ -148,7 +148,7 @@ struct CXXAtomIterator {
     vend = vs.second;
   }
   CXXAtomIterator(Graph *graph, Iterator start, Iterator end)
-      : graph(graph), vstart(start), vend(end) {};
+      : graph(graph), vstart(start), vend(end) {}
   CXXAtomIter begin() { return {graph, vstart}; }
   CXXAtomIter end() { return {graph, vend}; }
 };
@@ -191,7 +191,7 @@ struct CXXBondIterator {
     vend = vs.second;
   }
   CXXBondIterator(Graph *graph, Iterator start, Iterator end)
-      : graph(graph), vstart(start), vend(end) {};
+      : graph(graph), vstart(start), vend(end) {}
   CXXBondIter begin() { return {graph, vstart}; }
   CXXBondIter end() { return {graph, vend}; }
 };
