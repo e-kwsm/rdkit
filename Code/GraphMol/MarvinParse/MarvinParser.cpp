@@ -743,7 +743,7 @@ class MarvinCMLReader {
 
       throw;
     }
-  };
+  }
 
   MarvinReaction *parseMarvinReaction(
       boost::property_tree::ptree rxnTree,
