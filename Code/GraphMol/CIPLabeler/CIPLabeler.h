@@ -37,7 +37,7 @@ class RDKIT_CIPLABELER_EXPORT MaxIterationsExceeded
  public:
   explicit MaxIterationsExceeded()
       : std::runtime_error("Max Iterations Exceeded in CIP label calculation") {
-        };
+  }
 };
 
 /**
