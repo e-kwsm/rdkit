@@ -68,7 +68,7 @@ int scoreRings(const ROMol &mol) {
     }
   }
   return score;
-};
+}
 
 SubstructTerm::SubstructTerm(std::string aname, std::string asmarts, int ascore,
                              std::vector<int> reqElements,
