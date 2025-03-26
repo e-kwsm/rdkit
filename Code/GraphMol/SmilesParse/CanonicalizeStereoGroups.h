@@ -38,7 +38,7 @@ enum class StereoGroupAbsOptions {
 class RigorousEnhancedStereoException : public std::runtime_error {
  public:
   explicit RigorousEnhancedStereoException(std::string message)
-      : std::runtime_error(message) {};
+      : std::runtime_error(message) {}
 };
 
 RDKIT_SMILESPARSE_EXPORT void canonicalizeStereoGroups(
