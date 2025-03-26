@@ -331,6 +331,6 @@ QueryDetails getQueryDetails(const Queries::Query<int, T const *, true> *query);
 
 }  // namespace PicklerOps
 
-};  // namespace RDKit
+}  // namespace RDKit
 
 #endif

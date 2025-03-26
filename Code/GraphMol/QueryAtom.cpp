@@ -16,7 +16,7 @@ namespace RDKit {
 QueryAtom::~QueryAtom() {
   delete dp_query;
   dp_query = nullptr;
-};
+}
 
 Atom *QueryAtom::copy() const {
   auto *res = new QueryAtom(*this);
@@ -192,4 +192,4 @@ bool QueryAtom::QueryMatch(QueryAtom const *what) const {
   }
 }
 
-};  // namespace RDKit
+}  // namespace RDKit

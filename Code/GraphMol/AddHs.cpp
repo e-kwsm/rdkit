@@ -1096,7 +1096,7 @@ void removeHs(RWMol &mol, bool implicitOnly, bool updateExplicitCount,
   ps.removeNonimplicit = !implicitOnly;
   ps.updateExplicitCount = updateExplicitCount;
   removeHs(mol, ps, sanitize);
-};
+}
 ROMol *removeHs(const ROMol &mol, bool implicitOnly, bool updateExplicitCount,
                 bool sanitize) {
   auto *res = new RWMol(mol);
@@ -1128,7 +1128,7 @@ void removeAllHs(RWMol &mol, bool sanitize) {
   ps.removeHydrides = true;
   ps.removeNontetrahedralNeighbors = true;
   removeHs(mol, ps, sanitize);
-};
+}
 ROMol *removeAllHs(const ROMol &mol, bool sanitize) {
   auto *res = new RWMol(mol);
   try {
@@ -1329,13 +1329,13 @@ void mergeQueryHs(RWMol &mol, bool mergeUnmappedOnly, bool mergeIsotopes) {
     mol.removeAtom(aidx);
   }
   mol.commitBatchEdit();
-};
+}
 ROMol *mergeQueryHs(const ROMol &mol, bool mergeUnmappedOnly,
                     bool mergeIsotopes) {
   auto *res = new RWMol(mol);
   mergeQueryHs(*res, mergeUnmappedOnly, mergeIsotopes);
   return static_cast<ROMol *>(res);
-};
+}
 
 bool needsHs(const ROMol &mol) {
   for (const auto atom : mol.atoms()) {

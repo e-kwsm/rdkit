@@ -80,7 +80,7 @@ std::string RealValueVect::toString() const {
 #endif
   ss.write(reinterpret_cast<const char *>(data), d_length * sizeof(double));
   return ss.str();
-};
+}
 
 void RealValueVect::initFromText(const char *pkl, const unsigned int len) {
   std::stringstream ss(std::ios_base::binary | std::ios_base::in |
@@ -104,7 +104,7 @@ void RealValueVect::initFromText(const char *pkl, const unsigned int len) {
     return EndianSwapBytes<LITTLE_ENDIAN_ORDER, HOST_ENDIAN_ORDER>(v);
   });
 #endif
-};
+}
 
 template <typename O>
 RealValueVect &RealValueVect::applyBinaryOp(const RealValueVect &other, O op) {
@@ -153,12 +153,12 @@ RealValueVect operator|(const RealValueVect &p1, const RealValueVect &p2) {
   RealValueVect res(p1);
   res |= p2;
   return res;
-};
+}
 
 RealValueVect operator&(const RealValueVect &p1, const RealValueVect &p2) {
   RealValueVect res(p1);
   res &= p2;
   return res;
-};
+}
 
 }  // end of namespace RDKit
