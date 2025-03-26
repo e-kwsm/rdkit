@@ -401,7 +401,7 @@ void MolDraw2DSVG::addMoleculeMetadata(const std::vector<ROMol *> &mols,
     setActiveMolIdx(i);
     addMoleculeMetadata(*(mols[i]), confId);
   }
-};
+}
 
 // ****************************************************************************
 void MolDraw2DSVG::tagAtoms(const ROMol &mol, double radius,
