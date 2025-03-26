@@ -26,7 +26,7 @@ struct DistViolationContribsParams {
   double weight{1.0};     //!< used to adjust relative contribution weights
   DistViolationContribsParams(unsigned int i1, unsigned int i2, double u,
                               double l, double w = 1.0)
-      : idx1(i1), idx2(i2), ub(u), lb(l), ub2(u * u), lb2(l * l), weight(w) {};
+      : idx1(i1), idx2(i2), ub(u), lb(l), ub2(u * u), lb2(l * l), weight(w) {}
 };
 //! A term to capture all violations of the upper and lower bounds by
 //! distance between two points
