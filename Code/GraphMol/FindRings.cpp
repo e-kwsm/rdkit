@@ -1074,7 +1074,7 @@ int symmetrizeSSSR(ROMol &mol, bool includeDativeBonds,
                    bool includeHydrogenBonds) {
   VECT_INT_VECT tmp;
   return symmetrizeSSSR(mol, tmp, includeDativeBonds, includeHydrogenBonds);
-};
+}
 
 int symmetrizeSSSR(ROMol &mol, VECT_INT_VECT &res, bool includeDativeBonds,
                    bool includeHydrogenBonds) {

@@ -55,7 +55,7 @@ class MolAtropTest {
         : atomCount(atomCountInit),
           bondCount(bondCountInit),
           fileName(fileNameInit),
-          expectedResult(expectedResultInit) {};
+          expectedResult(expectedResultInit) {}
   };
 
   class KekuleTest {
@@ -72,7 +72,7 @@ class MolAtropTest {
           bondCount(bondCountInit),
           smiles(smilesInit),
           expectedOutput(nameInit),
-          expectedResult(expectedResultInit) {};
+          expectedResult(expectedResultInit) {}
   };
 
   void generateNewExpectedFilesIfSoSpecified(std::string filename,
