@@ -132,7 +132,7 @@ int MMFFOptimizeMolecule(ROMol &mol, std::string mmffVariant = "MMFF94",
 
 unsigned int SanitizeMMFFMol(ROMol &mol) {
   return MMFF::sanitizeMMFFMol((RWMol &)mol);
-};
+}
 
 ForceFields::PyMMFFMolProperties *GetMMFFMolProperties(
     ROMol &mol, std::string mmffVariant = "MMFF94",
@@ -176,7 +176,7 @@ bool MMFFHasAllMoleculeParams(const ROMol &mol) {
 
   return mmffMolProperties.isValid();
 }
-};  // namespace RDKit
+}  // namespace RDKit
 
 namespace ForceFields {
 PyObject *getUFFBondStretchParams(const RDKit::ROMol &mol,
@@ -191,7 +191,7 @@ PyObject *getUFFBondStretchParams(const RDKit::ROMol &mol,
     PyTuple_SetItem(res, 1, PyFloat_FromDouble(uffBondStretchParams.r0));
   }
   return res;
-};
+}
 
 PyObject *getUFFAngleBendParams(const RDKit::ROMol &mol,
                                 const unsigned int idx1,
@@ -206,7 +206,7 @@ PyObject *getUFFAngleBendParams(const RDKit::ROMol &mol,
     PyTuple_SetItem(res, 1, PyFloat_FromDouble(uffAngleBendParams.theta0));
   }
   return res;
-};
+}
 
 PyObject *getUFFTorsionParams(const RDKit::ROMol &mol, const unsigned int idx1,
                               const unsigned int idx2, const unsigned int idx3,
@@ -218,7 +218,7 @@ PyObject *getUFFTorsionParams(const RDKit::ROMol &mol, const unsigned int idx1,
     res = PyFloat_FromDouble(uffTorsionParams.V);
   }
   return res;
-};
+}
 
 PyObject *getUFFInversionParams(const RDKit::ROMol &mol,
                                 const unsigned int idx1,
@@ -232,7 +232,7 @@ PyObject *getUFFInversionParams(const RDKit::ROMol &mol,
     res = PyFloat_FromDouble(uffInversionParams.K);
   }
   return res;
-};
+}
 
 PyObject *getUFFVdWParams(const RDKit::ROMol &mol, const unsigned int idx1,
                           const unsigned int idx2) {
@@ -244,7 +244,7 @@ PyObject *getUFFVdWParams(const RDKit::ROMol &mol, const unsigned int idx1,
     PyTuple_SetItem(res, 1, PyFloat_FromDouble(uffVdWParams.D_ij));
   }
   return res;
-};
+}
 }  // namespace ForceFields
 
 BOOST_PYTHON_MODULE(rdForceFieldHelpers) {

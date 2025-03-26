@@ -221,7 +221,7 @@ static bool sameResidue(const AtomRecord *ptr1, const AtomRecord *ptr2) {
 
 static double calculateCompactness(double d_surfaceArea, double d_totalVolume) {
   return d_surfaceArea / cbrt(36.0 * M_PI * d_totalVolume * d_totalVolume);
-};
+}
 
 struct State {
   ElemStruct elemA;  // Alpha Carbon               //
