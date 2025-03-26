@@ -99,7 +99,7 @@ class RDKIT_FILEPARSERS_EXPORT ForwardSDMolSupplier : public MolSupplier {
     params.strictParsing = strictParsing;
     dp_supplier.reset(new v2::FileParsers::ForwardSDMolSupplier(
         inStream, takeOwnership, params));
-  };
+  }
 
   ~ForwardSDMolSupplier() override {}
 
