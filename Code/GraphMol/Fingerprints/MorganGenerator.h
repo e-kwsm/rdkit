@@ -151,7 +151,7 @@ class RDKIT_FINGERPRINTS_EXPORT MorganArguments : public FingerprintArguments {
         df_onlyNonzeroInvariants(onlyNonzeroInvariants),
         d_radius(radius),
         df_includeRedundantEnvironments(includeRedundantEnvironments),
-        df_useBondTypes(useBondTypes) {};
+        df_useBondTypes(useBondTypes) {}
 };
 
 /**
