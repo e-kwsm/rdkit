@@ -210,8 +210,7 @@ class Configuration {
   std::vector<Atom *> d_carriers;
 
   Digraph d_digraph;
-
-};  // namespace CIPLabeler
+};
 
 }  // namespace CIPLabeler
 }  // namespace RDKit

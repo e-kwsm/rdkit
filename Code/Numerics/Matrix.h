@@ -296,7 +296,7 @@ Matrix<TYPE> &multiply(const Matrix<TYPE> &A, const Matrix<TYPE> &B,
     }
   }
   return C;
-};
+}
 
 //! Matrix-Vector multiplication
 /*!
@@ -333,10 +333,10 @@ Vector<TYPE> &multiply(const Matrix<TYPE> &A, const Vector<TYPE> &x,
     }
   }
   return y;
-};
+}
 
 typedef Matrix<double> DoubleMatrix;
-};  // namespace RDNumeric
+}  // namespace RDNumeric
 
 //! ostream operator for Matrix's
 template <class TYPE>

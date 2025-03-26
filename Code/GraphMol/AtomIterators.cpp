@@ -17,13 +17,13 @@ AtomIterator_<Atom_, Mol_>::AtomIterator_(Mol_ *mol) {
   _mol = mol;
   _pos = 0;
   _max = mol->getNumAtoms();
-};
+}
 template <class Atom_, class Mol_>
 AtomIterator_<Atom_, Mol_>::AtomIterator_(Mol_ *mol, int pos) {
   _mol = mol;
   _pos = pos;
   _max = mol->getNumAtoms();
-};
+}
 template <class Atom_, class Mol_>
 AtomIterator_<Atom_, Mol_>::AtomIterator_(
     const AtomIterator_<Atom_, Mol_> &other) {
@@ -168,14 +168,14 @@ HeteroatomIterator_<Atom_, Mol_>::HeteroatomIterator_(Mol_ *mol) {
   _qA->getQuery()->setNegation(true);
   _end = mol->getNumAtoms();
   _pos = _findNext(0);
-};
+}
 template <class Atom_, class Mol_>
 HeteroatomIterator_<Atom_, Mol_>::HeteroatomIterator_(Mol_ *mol, int pos) {
   _mol = mol;
   _qA = new QueryAtom(6);
   _end = mol->getNumAtoms();
   _pos = pos;
-};
+}
 
 template <class Atom_, class Mol_>
 HeteroatomIterator_<Atom_, Mol_>::~HeteroatomIterator_() {
@@ -280,13 +280,13 @@ AromaticAtomIterator_<Atom_, Mol_>::AromaticAtomIterator_(Mol_ *mol) {
   _mol = mol;
   _end = mol->getNumAtoms();
   _pos = _findNext(0);
-};
+}
 template <class Atom_, class Mol_>
 AromaticAtomIterator_<Atom_, Mol_>::AromaticAtomIterator_(Mol_ *mol, int pos) {
   _mol = mol;
   _end = mol->getNumAtoms();
   _pos = pos;
-};
+}
 
 template <class Atom_, class Mol_>
 AromaticAtomIterator_<Atom_, Mol_>::~AromaticAtomIterator_() {}
@@ -392,14 +392,14 @@ QueryAtomIterator_<Atom_, Mol_>::QueryAtomIterator_(Mol_ *mol,
   _qA = static_cast<QueryAtom *>(what->copy());
   _end = mol->getNumAtoms();
   _pos = _findNext(0);
-};
+}
 template <class Atom_, class Mol_>
 QueryAtomIterator_<Atom_, Mol_>::QueryAtomIterator_(Mol_ *mol, int pos) {
   _mol = mol;
   _qA = nullptr;
   _end = mol->getNumAtoms();
   _pos = pos;
-};
+}
 template <class Atom_, class Mol_>
 QueryAtomIterator_<Atom_, Mol_>::~QueryAtomIterator_() {
   delete _qA;
@@ -520,14 +520,14 @@ MatchingAtomIterator_<Atom_, Mol_>::MatchingAtomIterator_(Mol_ *mol,
   _qF = fn;
   _end = mol->getNumAtoms();
   _pos = _findNext(0);
-};
+}
 template <class Atom_, class Mol_>
 MatchingAtomIterator_<Atom_, Mol_>::MatchingAtomIterator_(Mol_ *mol, int pos) {
   _mol = mol;
   _qF = nullptr;
   _end = mol->getNumAtoms();
   _pos = pos;
-};
+}
 
 template <class Atom_, class Mol_>
 MatchingAtomIterator_<Atom_, Mol_>::~MatchingAtomIterator_() {}
@@ -640,4 +640,4 @@ template class QueryAtomIterator_<const Atom, const ROMol>;
 template class MatchingAtomIterator_<Atom, ROMol>;
 template class MatchingAtomIterator_<const Atom, const ROMol>;
 
-};  // namespace RDKit
+}  // namespace RDKit

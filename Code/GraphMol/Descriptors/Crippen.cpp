@@ -118,7 +118,7 @@ void calcCrippenDescriptors(const ROMol &mol, double &logp, double &mr,
 
   mol.setProp(common_properties::_crippenLogP, logp, true);
   mol.setProp(common_properties::_crippenMR, mr, true);
-};
+}
 
 double calcClogP(const ROMol &mol) {
   double clogp, mr;
