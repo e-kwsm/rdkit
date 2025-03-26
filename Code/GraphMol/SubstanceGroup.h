@@ -235,7 +235,7 @@ class RDKIT_GRAPHMOL_EXPORT SubstanceGroup : public RDProps {
   std::vector<Bracket> d_brackets;
   std::vector<CState> d_cstates;
   std::vector<AttachPoint> d_saps;
-};  // namespace RDKit
+};
 
 namespace SubstanceGroupChecks {
 

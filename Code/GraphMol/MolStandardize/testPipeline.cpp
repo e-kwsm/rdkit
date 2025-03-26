@@ -2373,12 +2373,12 @@ RWMOL_SPTR chargeParentLocal(RWMOL_SPTR mol, MolStandardize::PipelineResult &,
                              const MolStandardize::PipelineOptions &) {
   RWMOL_SPTR res{MolStandardize::chargeParent(*mol)};
   return res;
-};
+}
 MolStandardize::RWMOL_SPTR_PAIR parentNoOp(
     RWMOL_SPTR mol, MolStandardize::PipelineResult &,
     const MolStandardize::PipelineOptions &) {
   return {mol, mol};
-};
+}
 
 RWMOL_SPTR smilesParse(const std::string &smiles,
                        MolStandardize::PipelineResult &,

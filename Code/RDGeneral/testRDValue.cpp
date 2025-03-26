@@ -178,7 +178,7 @@ void testProp(T val) {
     streamReadProps(ss, p2);
     TEST_ASSERT(p2.getProp<T>("foo") == val);
   }
-};
+}
 
 TEST_CASE("testPropertyPickler") {
   testProp<int>(1234);

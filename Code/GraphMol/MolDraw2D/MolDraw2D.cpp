@@ -387,7 +387,7 @@ void MolDraw2D::drawTriangle(const Point2D &cds1, const Point2D &cds2,
     std::move(lpts.begin(), lpts.end(), std::back_inserter(pts));
   }
   drawPolygon(pts, rawCoords);
-};
+}
 
 // ****************************************************************************
 void MolDraw2D::drawEllipse(const Point2D &cds1, const Point2D &cds2,

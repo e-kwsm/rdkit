@@ -1397,7 +1397,7 @@ void runblock(std::vector<const PeriodicTable *> *pts, int idx) {
   TEST_ASSERT(pt->getAtomicNumber("C") == 6);
   TEST_ASSERT(pt->getAtomicNumber("N") == 7);
   TEST_ASSERT(pt->getAtomicNumber("O") == 8);
-};
+}
 }  // namespace
 void testGithub381() {
   BOOST_LOG(rdErrorLog) << "-------------------------------------" << std::endl;

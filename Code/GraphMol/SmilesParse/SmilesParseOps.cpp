@@ -196,7 +196,7 @@ void AddFragToMol(RWMol *mol, RWMol *frag, Bond::BondType bondOrder,
 
   frag->clearAllAtomBookmarks();
   frag->clearAllBondBookmarks();
-};
+}
 
 typedef std::pair<size_t, int> SIZET_PAIR;
 typedef std::pair<int, int> INT_PAIR;
@@ -630,7 +630,7 @@ void CloseMolRings(RWMol *mol, bool toleratePartials) {
       ++bookmarkIt;
     }
   }
-};
+}
 
 void CleanupAfterParsing(RWMol *mol) {
   PRECONDITION(mol, "no molecule");

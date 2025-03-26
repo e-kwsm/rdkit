@@ -118,7 +118,7 @@ struct sdmolsup_wrap {
              python::args("self", "val"),
              "sets whether or not any property lists that are present will be "
              "processed when reading molecules");
-  };
+  }
 };
 }  // namespace RDKit
 

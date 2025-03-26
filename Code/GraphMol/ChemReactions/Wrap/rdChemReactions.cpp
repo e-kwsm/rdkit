@@ -95,7 +95,7 @@ python::object ReactionToBinary(const ChemicalReaction &self) {
 struct reaction_pickle_suite : rdkit_pickle_suite {
   static python::tuple getinitargs(const ChemicalReaction &self) {
     return python::make_tuple(ReactionToBinary(self));
-  };
+  }
 };
 
 template <typename T>
