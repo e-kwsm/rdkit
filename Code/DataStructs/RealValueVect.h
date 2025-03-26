@@ -40,16 +40,16 @@ class RDKIT_DATASTRUCTS_EXPORT RealValueVect {
   //! constructor from a pickle
   RealValueVect(const std::string &pkl) {
     initFromText(pkl.c_str(), pkl.size());
-  };
+  }
 
   //! constructor from a pickle
-  RealValueVect(const char *pkl, unsigned int len) { initFromText(pkl, len); };
+  RealValueVect(const char *pkl, unsigned int len) { initFromText(pkl, len); }
 
   //! return the value at an index
   double getVal(unsigned int i) const;
 
   //! support indexing using []
-  double operator[](unsigned int idx) const { return getVal(idx); };
+  double operator[](unsigned int idx) const { return getVal(idx); }
 
   //! set the value at an index
   void setVal(unsigned int i, double val);
@@ -58,10 +58,10 @@ class RDKIT_DATASTRUCTS_EXPORT RealValueVect {
   double getTotalVal() const;
 
   //! returns the length
-  unsigned int getLength() const { return d_length; };
+  unsigned int getLength() const { return d_length; }
 
   //! returns the length
-  unsigned int size() const { return getLength(); };
+  unsigned int size() const { return getLength(); }
 
   //! compares 2 vectors and returns false if different
   bool compareVectors(const RealValueVect &other) const;
