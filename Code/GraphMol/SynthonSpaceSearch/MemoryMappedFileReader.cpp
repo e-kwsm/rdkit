@@ -126,4 +126,4 @@ MemoryMappedFileReader &MemoryMappedFileReader::operator=(
   }
   return *this;
 }
-};  // namespace RDKit::SynthonSpaceSearch::details
+}  // namespace RDKit::SynthonSpaceSearch::details

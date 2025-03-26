@@ -1656,7 +1656,7 @@ void initBoundsMat(DistGeom::BoundsMatrix *mmat, double defaultMin,
 void initBoundsMat(DistGeom::BoundsMatPtr mmat, double defaultMin,
                    double defaultMax) {
   initBoundsMat(mmat.get(), defaultMin, defaultMax);
-};
+}
 
 void setTopolBounds(const ROMol &mol, DistGeom::BoundsMatPtr mmat,
                     bool set15bounds, bool scaleVDW, bool useMacrocycle14config,

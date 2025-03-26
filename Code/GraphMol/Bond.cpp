@@ -15,12 +15,12 @@
 
 namespace RDKit {
 
-Bond::Bond() : RDProps() { initBond(); };
+Bond::Bond() : RDProps() { initBond(); }
 
 Bond::Bond(BondType bT) : RDProps() {
   initBond();
   d_bondType = bT;
-};
+}
 
 Bond::Bond(const Bond &other) : RDProps(other) {
   // NOTE: we do *not* copy ownership!
@@ -94,14 +94,14 @@ void Bond::setBeginAtomIdx(unsigned int what) {
     URANGE_CHECK(what, getOwningMol().getNumAtoms());
   }
   d_beginAtomIdx = what;
-};
+}
 
 void Bond::setEndAtomIdx(unsigned int what) {
   if (dp_mol) {
     URANGE_CHECK(what, getOwningMol().getNumAtoms());
   }
   d_endAtomIdx = what;
-};
+}
 
 void Bond::setBeginAtom(Atom *at) {
   PRECONDITION(dp_mol != nullptr, "no owning molecule for bond");
@@ -115,16 +115,16 @@ void Bond::setEndAtom(Atom *at) {
 Atom *Bond::getBeginAtom() const {
   PRECONDITION(dp_mol != nullptr, "no owning molecule for bond");
   return dp_mol->getAtomWithIdx(d_beginAtomIdx);
-};
+}
 Atom *Bond::getEndAtom() const {
   PRECONDITION(dp_mol != nullptr, "no owning molecule for bond");
   return dp_mol->getAtomWithIdx(d_endAtomIdx);
-};
+}
 Atom *Bond::getOtherAtom(Atom const *what) const {
   PRECONDITION(dp_mol != nullptr, "no owning molecule for bond");
 
   return dp_mol->getAtomWithIdx(getOtherAtomIdx(what->getIdx()));
-};
+}
 
 double Bond::getBondTypeAsDouble() const {
   double res;
@@ -214,7 +214,7 @@ void Bond::setQuery(QUERYBOND_QUERY *) {
 Bond::QUERYBOND_QUERY *Bond::getQuery() const {
   PRECONDITION(0, "plain bonds have no Query");
   return nullptr;
-};
+}
 
 bool Bond::Match(Bond const *what) const {
   bool res;
@@ -225,12 +225,12 @@ bool Bond::Match(Bond const *what) const {
     res = getBondType() == what->getBondType();
   }
   return res;
-};
+}
 
 void Bond::expandQuery(Bond::QUERYBOND_QUERY *, Queries::CompositeQueryType,
                        bool) {
   PRECONDITION(0, "plain bonds have no query");
-};
+}
 
 void Bond::initBond() {
   d_bondType = UNSPECIFIED;
@@ -243,7 +243,7 @@ void Bond::initBond() {
   d_index = 0;
   df_isConjugated = 0;
   dp_stereoAtoms = nullptr;
-};
+}
 
 void Bond::setStereoAtoms(unsigned int bgnIdx, unsigned int endIdx) {
   PRECONDITION(
@@ -257,7 +257,7 @@ void Bond::setStereoAtoms(unsigned int bgnIdx, unsigned int endIdx) {
   atoms.clear();
   atoms.push_back(bgnIdx);
   atoms.push_back(endIdx);
-};
+}
 
 uint8_t getTwiceBondType(const Bond &b) {
   switch (b.getBondType()) {
@@ -331,7 +331,7 @@ bool Bond::invertChirality() {
   return false;
 }
 
-};  // namespace RDKit
+}  // namespace RDKit
 
 namespace {
 constexpr const char *bondTypeToString(RDKit::Bond::BondType d) {
