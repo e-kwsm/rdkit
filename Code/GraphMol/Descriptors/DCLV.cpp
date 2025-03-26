@@ -124,7 +124,7 @@ class AtomRecord {
     } else if (hetAtmFlag) {
       flag |= HetAtmFlag;
     }
-  };
+  }
 
   // constructor to populate record
   AtomRecord(const Atom &atm, const Conformer cnf) {
@@ -744,7 +744,7 @@ struct State {
       }
     }
     return totalArea;
-  };
+  }
 
   double partialVolume(const AtomRecord &atom, const double solvrad) {
     double rad = atom.elem->radius + solvrad;
