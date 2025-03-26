@@ -193,7 +193,7 @@ class PropTracker {
     for (const auto &pr : explicitBondProps) {
       ignoreBondProps.insert(pr.first);
     }
-  };
+  }
 };
 
 bool pickleAtomProperties(std::ostream &ss, const RDProps &props,
