@@ -184,27 +184,27 @@ class AtomElectrons {
   AtomElectrons(ConjElectrons *parent, const AtomElectrons &ae);
   ~AtomElectrons() = default;
   std::uint8_t findAllowedBonds(unsigned int bi);
-  bool hasOctet() const { return ((d_nb + d_tv * 2) == 8); };
-  bool isLastBond() const { return (d_flags & LAST_BOND); };
-  void setLastBond() { d_flags |= LAST_BOND; };
-  bool isDefinitive() const { return (d_flags & DEFINITIVE); };
-  void setDefinitive() { d_flags |= DEFINITIVE; };
-  bool hasMultipleBond() const { return (d_flags & HAS_MULTIPLE_BOND); };
-  void setHasMultipleBond() { d_flags |= HAS_MULTIPLE_BOND; };
-  bool isStacked() const { return (d_flags & STACKED); };
-  void setStacked() { d_flags |= STACKED; };
-  void clearStacked() { d_flags &= ~STACKED; };
+  bool hasOctet() const { return ((d_nb + d_tv * 2) == 8); }
+  bool isLastBond() const { return (d_flags & LAST_BOND); }
+  void setLastBond() { d_flags |= LAST_BOND; }
+  bool isDefinitive() const { return (d_flags & DEFINITIVE); }
+  void setDefinitive() { d_flags |= DEFINITIVE; }
+  bool hasMultipleBond() const { return (d_flags & HAS_MULTIPLE_BOND); }
+  void setHasMultipleBond() { d_flags |= HAS_MULTIPLE_BOND; }
+  bool isStacked() const { return (d_flags & STACKED); }
+  void setStacked() { d_flags |= STACKED; }
+  void clearStacked() { d_flags &= ~STACKED; }
   int conjGrpIdx() const {
     return d_parent->parent()->getAtomConjGrpIdx(d_atom->getIdx());
-  };
+  }
   void finalizeAtom();
-  unsigned int nb() const { return d_nb; };
-  unsigned int tv() const { return d_tv; };
+  unsigned int nb() const { return d_nb; }
+  unsigned int tv() const { return d_tv; }
   unsigned int oe() const {
     return PeriodicTable::getTable()->getNouterElecs(d_atom->getAtomicNum());
-  };
-  int fc() const { return d_fc; };
-  void tvIncr(unsigned int i) { d_tv += i; };
+  }
+  int fc() const { return d_fc; }
+  void tvIncr(unsigned int i) { d_tv += i; }
   unsigned int neededNbForOctet() const { return (8 - (2 * d_tv + d_nb)); }
   const Atom *atom() { return d_atom; }
   void initTvNbFcFromAtom();
@@ -231,16 +231,16 @@ class BondElectrons {
   BondElectrons(ConjElectrons *parent, const Bond *b);
   BondElectrons(ConjElectrons *parent, const BondElectrons &be);
   ~BondElectrons() = default;
-  bool isDefinitive() const { return (d_flags & DEFINITIVE); };
-  void setDefinitive() { d_flags |= DEFINITIVE; };
+  bool isDefinitive() const { return (d_flags & DEFINITIVE); }
+  void setDefinitive() { d_flags |= DEFINITIVE; }
   int conjGrpIdx() const {
     return d_parent->parent()->getBondConjGrpIdx(d_bond->getIdx());
-  };
+  }
   void setOrder(unsigned int bo);
-  unsigned int order() const { return d_bo; };
+  unsigned int order() const { return d_bo; }
   unsigned int orderFromBond();
-  void initOrderFromBond() { d_bo = orderFromBond(); };
-  const Bond *bond() { return d_bond; };
+  void initOrderFromBond() { d_bo = orderFromBond(); }
+  const Bond *bond() { return d_bond; }
   BondElectrons &operator=(const BondElectrons &) = delete;
   BondElectrons(const BondElectrons &) = delete;
 
