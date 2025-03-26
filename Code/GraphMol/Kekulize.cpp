@@ -400,7 +400,7 @@ bool kekulizeWorker(RWMol &mol, const INT_VECT &allAtms,
 class QuestionEnumerator {
  public:
   QuestionEnumerator(INT_VECT questions)
-      : d_questions(std::move(questions)), d_pos(1) {};
+      : d_questions(std::move(questions)), d_pos(1) {}
   INT_VECT next() {
     INT_VECT res;
     if (d_pos >= (0x1u << d_questions.size())) {
@@ -413,7 +413,7 @@ class QuestionEnumerator {
     }
     ++d_pos;
     return res;
-  };
+  }
 
  private:
   INT_VECT d_questions;
