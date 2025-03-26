@@ -65,7 +65,7 @@ boost::dynamic_bitset<> runTest(SubstructLibrary &ssslib, const ROMol &pattern,
     CHECK(hasMatch[i] == matched);
   }
   return hasMatch;
-};
+}
 
 void runTest(SubstructLibrary &ssslib, const ROMol &pattern, int nThreads,
              const boost::dynamic_bitset<> &hasMatch) {
@@ -83,7 +83,7 @@ void runTest(SubstructLibrary &ssslib, const ROMol &pattern, int nThreads,
     //           << " " << matched << std::endl;
     CHECK(hasMatch[i] == matched);
   }
-};
+}
 
 }  // namespace
 

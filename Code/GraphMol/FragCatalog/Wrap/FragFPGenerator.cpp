@@ -22,7 +22,7 @@ struct fragFPgen_wrapper {
         .def("GetFPForMol", &FragFPGenerator::getFPForMol,
              python::return_value_policy<python::manage_new_object>(),
              python::args("self", "mol", "fcat"));
-  };
+  }
 };
 }  // namespace RDKit
 

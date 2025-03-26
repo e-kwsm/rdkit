@@ -805,7 +805,7 @@ void ParseMol2BondBlock(std::istream *inStream, RWMol *res, unsigned int nBonds,
                 "Wrong number of atoms in molecule");
 }
 
-};  // end of anonymous namespace
+}  // end of anonymous namespace
 
 namespace v2 {
 namespace FileParsers {
@@ -990,7 +990,7 @@ std::unique_ptr<RWMol> MolFromMol2DataStream(std::istream &inStream,
   }
 
   return res;
-};
+}
 
 //------------------------------------------------
 //

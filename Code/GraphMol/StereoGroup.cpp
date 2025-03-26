@@ -30,7 +30,7 @@ void storeIdsInUse(boost::dynamic_bitset<> &ids, StereoGroup &sg) {
   } else {
     ids[groupId] = true;
   }
-};
+}
 
 void assignMissingIds(const boost::dynamic_bitset<> &ids, unsigned &nextId,
                       StereoGroup &sg) {
@@ -41,6 +41,7 @@ void assignMissingIds(const boost::dynamic_bitset<> &ids, unsigned &nextId,
     }
     sg.setWriteId(nextId);
   }
+<<<<<<< HEAD
 };
 
 template <typename T>
@@ -52,6 +53,11 @@ void checkForDupes(const std::vector<T *> &vec, const std::string &typeName) {
   }
 }
 
+||||||| parent of db7feff64 (Code/GraphMol/MolDraw2D/MolDraw2D.h)
+};
+=======
+}
+>>>>>>> db7feff64 (Code/GraphMol/MolDraw2D/MolDraw2D.h)
 }  // namespace
 
 StereoGroup::StereoGroup(StereoGroupType grouptype, std::vector<Atom *> &&atoms,

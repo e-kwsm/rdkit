@@ -150,12 +150,12 @@ int getExplicitValenceHelper(const Atom *atom) {
   RDLog::deprecationWarning(
       "please use GetValence(Chem.ValenceType.EXPLICIT) instead");
   return atom->getValence(Atom::ValenceType::EXPLICIT);
-};
+}
 int getImplicitValenceHelper(const Atom *atom) {
   RDLog::deprecationWarning(
       "please use GetValence(Chem.ValenceType.IMPLICIT) instead");
   return atom->getValence(Atom::ValenceType::IMPLICIT);
-};
+}
 }  // namespace
 
 struct MDLDummy {};
