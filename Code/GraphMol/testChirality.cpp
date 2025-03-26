@@ -114,7 +114,7 @@ void testMol1() {
   delete m;
 
   BOOST_LOG(rdInfoLog) << "done" << std::endl;
-};
+}
 
 void testRoundTrip() {
   BOOST_LOG(rdInfoLog) << "-------------------------------------" << std::endl;
@@ -261,7 +261,7 @@ void testRoundTrip() {
 
   delete m;
   BOOST_LOG(rdInfoLog) << "done" << std::endl;
-};
+}
 
 void testMol2() {
   BOOST_LOG(rdInfoLog) << "-------------------------------------" << std::endl;
@@ -329,7 +329,7 @@ void testMol2() {
 
   delete m;
   BOOST_LOG(rdInfoLog) << "done" << std::endl;
-};
+}
 
 void testSmiles1() {
   BOOST_LOG(rdInfoLog) << "-------------------------------------" << std::endl;

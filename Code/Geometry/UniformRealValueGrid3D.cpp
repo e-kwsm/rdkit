@@ -293,27 +293,27 @@ UniformRealValueGrid3D operator&(const UniformRealValueGrid3D &grd1,
   UniformRealValueGrid3D ans(grd1);
   ans &= grd2;
   return ans;
-};
+}
 
 UniformRealValueGrid3D operator|(const UniformRealValueGrid3D &grd1,
                                  const UniformRealValueGrid3D &grd2) {
   UniformRealValueGrid3D ans(grd1);
   ans |= grd2;
   return ans;
-};
+}
 
 UniformRealValueGrid3D operator+(const UniformRealValueGrid3D &grd1,
                                  const UniformRealValueGrid3D &grd2) {
   UniformRealValueGrid3D ans(grd1);
   ans += grd2;
   return ans;
-};
+}
 
 UniformRealValueGrid3D operator-(const UniformRealValueGrid3D &grd1,
                                  const UniformRealValueGrid3D &grd2) {
   UniformRealValueGrid3D ans(grd1);
   ans -= grd2;
   return ans;
-};
+}
 
 }  // namespace RDGeom

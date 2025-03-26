@@ -89,7 +89,7 @@ double getAlpha(const Atom &atom, bool &found) {
         default:
           res = 0.00;
           found = true;
-      };
+      }
       break;
     case 7:
       switch (atom.getHybridization()) {
@@ -105,7 +105,7 @@ double getAlpha(const Atom &atom, bool &found) {
           res = -0.04;
           found = true;
           break;
-      };
+      }
       break;
     case 8:
       switch (atom.getHybridization()) {
@@ -117,7 +117,7 @@ double getAlpha(const Atom &atom, bool &found) {
           res = -0.04;
           found = true;
           break;
-      };
+      }
       break;
     case 9:
       res = -0.07;
@@ -133,7 +133,7 @@ double getAlpha(const Atom &atom, bool &found) {
           res = 0.43;
           found = true;
           break;
-      };
+      }
       break;
     case 16:
       switch (atom.getHybridization()) {
@@ -145,7 +145,7 @@ double getAlpha(const Atom &atom, bool &found) {
           res = 0.35;
           found = true;
           break;
-      };
+      }
       break;
     case 17:
       res = 0.29;
@@ -210,7 +210,7 @@ double calcChi0v(const ROMol &mol, bool force) {
   std::vector<double> hkDs(mol.getNumAtoms());
   detail::hkDeltas(mol, hkDs, force);
   return std::accumulate(hkDs.begin(), hkDs.end(), 0.0);
-};
+}
 double calcChi1v(const ROMol &mol, bool force) {
   std::vector<double> hkDs(mol.getNumAtoms());
   detail::hkDeltas(mol, hkDs, force);
@@ -224,22 +224,22 @@ double calcChi1v(const ROMol &mol, bool force) {
     ++firstB;
   }
   return res;
-};
+}
 double calcChi2v(const ROMol &mol, bool force) {
   return calcChiNv(mol, 2, force);
-};
+}
 double calcChi3v(const ROMol &mol, bool force) {
   return calcChiNv(mol, 3, force);
-};
+}
 double calcChi4v(const ROMol &mol, bool force) {
   return calcChiNv(mol, 4, force);
-};
+}
 
 double calcChi0n(const ROMol &mol, bool force) {
   std::vector<double> nVs(mol.getNumAtoms());
   detail::nVals(mol, nVs, force);
   return std::accumulate(nVs.begin(), nVs.end(), 0.0);
-};
+}
 double calcChi1n(const ROMol &mol, bool force) {
   std::vector<double> nVs(mol.getNumAtoms());
   detail::nVals(mol, nVs, force);
@@ -253,16 +253,16 @@ double calcChi1n(const ROMol &mol, bool force) {
     ++firstB;
   }
   return res;
-};
+}
 double calcChi2n(const ROMol &mol, bool force) {
   return calcChiNn(mol, 2, force);
-};
+}
 double calcChi3n(const ROMol &mol, bool force) {
   return calcChiNn(mol, 3, force);
-};
+}
 double calcChi4n(const ROMol &mol, bool force) {
   return calcChiNn(mol, 4, force);
-};
+}
 
 double calcHallKierAlpha(const ROMol &mol, std::vector<double> *atomContribs) {
   PRECONDITION(!atomContribs || atomContribs->size() >= mol.getNumAtoms(),
@@ -291,7 +291,7 @@ double calcHallKierAlpha(const ROMol &mol, std::vector<double> *atomContribs) {
     }
   }
   return alphaSum;
-};
+}
 
 namespace {
 double kappa1Helper(double P1, double A, double alpha) {

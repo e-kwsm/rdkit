@@ -271,13 +271,13 @@ void RingInfo::initFusedRings() {
 unsigned int RingInfo::numRingFamilies() const {
   PRECONDITION(df_init, "RingInfo not initialized");
   return d_atomRingFamilies.size();
-};
+}
 
 unsigned int RingInfo::numRelevantCycles() const {
   PRECONDITION(df_init, "RingInfo not initialized");
   PRECONDITION(dp_urfData, "Ring families not initialized");
   return rdcast<unsigned int>(RDL_getNofRC(dp_urfData.get()));
-};
+}
 
 unsigned int RingInfo::addRingFamily(const INT_VECT &atomIndices,
                                      const INT_VECT &bondIndices) {
@@ -299,7 +299,7 @@ void RingInfo::resetRingFamilies() {
 void RingInfo::initialize(RDKit::FIND_RING_TYPE ringType) {
   df_init = true;
   df_find_type_type = ringType;
-};
+}
 void RingInfo::reset() {
   if (!df_init) {
     return;

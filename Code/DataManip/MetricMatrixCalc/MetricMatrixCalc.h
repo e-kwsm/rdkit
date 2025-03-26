@@ -100,6 +100,6 @@ class MetricMatrixCalc {
    */
   double (*dp_metricFunc)(const entryType &, const entryType &, unsigned int);
 };
-};  // namespace RDDataManip
+}  // namespace RDDataManip
 
 #endif
