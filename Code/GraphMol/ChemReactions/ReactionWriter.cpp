@@ -144,28 +144,27 @@ namespace RDKit {
 std::string ChemicalReactionToRxnSmarts(const ChemicalReaction &rxn,
                                         const SmilesWriteParams &params) {
   return chemicalReactionToRxnToString(rxn, false, params, false);
-};
+}
 
 //! returns the reaction SMILES for a reaction
 std::string ChemicalReactionToRxnSmiles(const ChemicalReaction &rxn,
                                         const SmilesWriteParams &params) {
   return chemicalReactionToRxnToString(rxn, true, params, false);
-};
-
+}
 
 //! returns the reaction SMARTS for a reaction with CX extension
 std::string ChemicalReactionToCXRxnSmarts(const ChemicalReaction &rxn,
                                         const SmilesWriteParams &params,
                                         std::uint32_t flags) {
   return chemicalReactionToRxnToString(rxn, false, params, true, flags);
-};
+}
 
 //! returns the reaction SMILES for a reaction with CX extension
 std::string ChemicalReactionToCXRxnSmiles(const ChemicalReaction &rxn,
                                         const SmilesWriteParams &params,
                                         std::uint32_t flags) {
   return chemicalReactionToRxnToString(rxn, true, params, true, flags);
-};
+}
 
 //! returns an RXN block for a reaction
 std::string ChemicalReactionToV3KRxnBlock(const ChemicalReaction &rxn,
@@ -257,7 +256,7 @@ std::string ChemicalReactionToRxnBlock(const ChemicalReaction &rxn,
     }
   }
   return res.str();
-};
+}
 
 //! returns a ROMol with RXNMolRole used for a reaction
 ROMol *ChemicalReactionToRxnMol(const ChemicalReaction &rxn) {

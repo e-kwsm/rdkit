@@ -34,7 +34,7 @@ template <typename IndexType>
 struct siv_pickle_suite : rdkit_pickle_suite {
   static python::tuple getinitargs(const SparseIntVect<IndexType> &self) {
     return python::make_tuple(SIVToBinaryText(self));
-  };
+  }
 };
 
 namespace {

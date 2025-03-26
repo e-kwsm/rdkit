@@ -114,8 +114,7 @@ class RDKIT_FINGERPRINTS_EXPORT RDKitFPEnvGenerator
 
   std::string infoString() const override;
   OutputType getResultSize() const override;
-
-};  // namespace RDKitFP
+};
 
 /**
  \brief Get a RDKit fingerprint generator with given parameters
