@@ -104,13 +104,13 @@ class MolBundle : public RDProps {
     boost::archive::text_oarchive ar(ss);
     ar << *this;
 #endif
-  };
+  }
   //! returns a string with a serialized (pickled) representation
   std::string serialize() const {
     std::stringstream ss;
     toStream(ss);
     return ss.str();
-  };
+  }
   //! initializes from a stream pickle
   void initFromStream(std::istream &ss) {
 #ifndef RDK_USE_BOOST_SERIALIZATION
@@ -120,12 +120,12 @@ class MolBundle : public RDProps {
     boost::archive::text_iarchive ar(ss);
     ar >> *this;
 #endif
-  };
+  }
   //! initializes from a string pickle
   void initFromString(const std::string &text) {
     std::stringstream ss(text);
     initFromStream(ss);
-  };
+  }
 
 #ifdef RDK_USE_BOOST_SERIALIZATION
   // FIX: we don't currently serialize properties
