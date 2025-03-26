@@ -94,7 +94,7 @@ class RDKIT_RASCALMCES_EXPORT RascalResult {
 
   std::string getSmarts() const;
   const std::shared_ptr<ROMol> getMcesMol() const;
-  bool getTimedOut() const { return d_timedOut; };
+  bool getTimedOut() const { return d_timedOut; }
 
   double getTier1Sim() const { return d_tier1Sim; }
   double getTier2Sim() const { return d_tier2Sim; }
