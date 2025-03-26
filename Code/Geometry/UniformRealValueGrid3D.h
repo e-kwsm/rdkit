@@ -20,7 +20,7 @@ namespace RDGeom {
 class RDKIT_RDGEOMETRYLIB_EXPORT UniformRealValueGrid3D
     : public Grid3D<RDKit::RealValueVect, double, double> {
  public:
-  UniformRealValueGrid3D() { initGrid(1.0, 1.0, 1.0, 1.0, RDGeom::Point3D()); };
+  UniformRealValueGrid3D() { initGrid(1.0, 1.0, 1.0, 1.0, RDGeom::Point3D()); }
   //! \brief ctor
   /*
       \param dimX:    the x dimension of the grid, in Angstroms
@@ -81,7 +81,7 @@ class RDKIT_RDGEOMETRYLIB_EXPORT UniformRealValueGrid3D
   void setVal(unsigned int pointId, double val) override;
 
   //! \brief get the size of the grid (number of grid points)
-  unsigned int getSize() const override { return d_numX * d_numY * d_numZ; };
+  unsigned int getSize() const override { return d_numX * d_numY * d_numZ; }
 
   //! \brief get the index of the grid point given the x, y, z indices
   //!
@@ -94,24 +94,24 @@ class RDKIT_RDGEOMETRYLIB_EXPORT UniformRealValueGrid3D
                       unsigned int &zi) const;
 
   //! \brief get the number of grid points along x-axis
-  unsigned int getNumX() const { return d_numX; };
+  unsigned int getNumX() const { return d_numX; }
 
   //! \brief get the number of grid points along y-axis
-  unsigned int getNumY() const { return d_numY; };
+  unsigned int getNumY() const { return d_numY; }
 
   //! \brief get the number of grid points along z-axis
-  unsigned int getNumZ() const { return d_numZ; };
+  unsigned int getNumZ() const { return d_numZ; }
 
   //! \brief get the grid's offset
-  const RDGeom::Point3D &getOffset() const { return d_offSet; };
+  const RDGeom::Point3D &getOffset() const { return d_offSet; }
 
   //! \brief get the grid's spacing
-  double getSpacing() const { return d_spacing; };
+  double getSpacing() const { return d_spacing; }
 
   //! \brief return a \b const pointer to our occupancy vector
   const RDKit::RealValueVect *getOccupancyVect() const override {
     return &d_storage;
-  };
+  }
 
   //! brief returns raw vector
   const std::vector<double> &getData() const { return d_storage.getData(); }
