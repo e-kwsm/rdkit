@@ -298,7 +298,7 @@ struct FingerprintFuncArguments {
         confId(confId_arg),
         additionalOutput(additionalOutput_arg),
         customAtomInvariants(customAtomInvariants_arg),
-        customBondInvariants(customBondInvariants_arg) {};
+        customBondInvariants(customBondInvariants_arg) {}
 };
 
 /*!
@@ -330,10 +330,10 @@ class RDKIT_FINGERPRINTS_EXPORT FingerprintGenerator
 
   ~FingerprintGenerator();
 
-  FingerprintArguments *getOptions() { return dp_fingerprintArguments; };
+  FingerprintArguments *getOptions() { return dp_fingerprintArguments; }
   const FingerprintArguments *getOptions() const {
     return dp_fingerprintArguments;
-  };
+  }
 
   std::unique_ptr<SparseIntVect<OutputType>> getSparseCountFingerprint(
       const ROMol &mol, FingerprintFuncArguments &args) const;
@@ -371,7 +371,7 @@ class RDKIT_FINGERPRINTS_EXPORT FingerprintGenerator
                                  additionalOutput, customAtomInvariants,
                                  customBondInvariants);
     return getSparseCountFingerprint(mol, ffa).release();
-  };
+  }
 
   SparseBitVect *getSparseFingerprint(
       const ROMol &mol, const std::vector<std::uint32_t> *fromAtoms = nullptr,
@@ -383,7 +383,7 @@ class RDKIT_FINGERPRINTS_EXPORT FingerprintGenerator
                                  additionalOutput, customAtomInvariants,
                                  customBondInvariants);
     return getSparseFingerprint(mol, ffa).release();
-  };
+  }
 
   SparseIntVect<std::uint32_t> *getCountFingerprint(
       const ROMol &mol, const std::vector<std::uint32_t> *fromAtoms = nullptr,
@@ -395,7 +395,7 @@ class RDKIT_FINGERPRINTS_EXPORT FingerprintGenerator
                                  additionalOutput, customAtomInvariants,
                                  customBondInvariants);
     return getCountFingerprint(mol, ffa).release();
-  };
+  }
 
   ExplicitBitVect *getFingerprint(
       const ROMol &mol, const std::vector<std::uint32_t> *fromAtoms = nullptr,
@@ -407,7 +407,7 @@ class RDKIT_FINGERPRINTS_EXPORT FingerprintGenerator
                                  additionalOutput, customAtomInvariants,
                                  customBondInvariants);
     return getFingerprint(mol, ffa).release();
-  };
+  }
 
   std::string infoString() const;
 };
