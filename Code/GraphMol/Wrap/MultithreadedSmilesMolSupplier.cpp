@@ -123,7 +123,7 @@ struct multiSmiMolSup_wrap {
                  MultithreadedSmilesMolSupplier *))&MTMolSupplLastItem,
              python::args("self"),
              "Returns the text for the last extracted item.\n");
-  };
+  }
 };
 }  // namespace RDKit
 

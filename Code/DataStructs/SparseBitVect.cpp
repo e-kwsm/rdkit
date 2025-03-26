@@ -260,7 +260,7 @@ void SparseBitVect::getOnBits(IntVect &v) const {
   v.reserve(nOn);
   v.resize(nOn);
   std::copy(dp_bits->begin(), dp_bits->end(), v.begin());
-};
+}
 
 // """ -------------------------------------------------------
 //
@@ -312,4 +312,4 @@ void SparseBitVect::_initForSize(unsigned int size) {
   d_size = size;
   delete dp_bits;
   dp_bits = new IntSet;
-};
+}

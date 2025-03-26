@@ -60,7 +60,7 @@ class MrvTests {
           fileName(fileNameInit),
           expectedResult(expectedResultInit),
           sanitizeFlag(sanitizeFlagInit),
-          reapplyMolBlockWedging(reapplyMolBlockWedgingInit) {};
+          reapplyMolBlockWedging(reapplyMolBlockWedgingInit) {}
   };
 
   class ScsrMolTest {
@@ -102,7 +102,7 @@ class MrvTests {
           agentCount(agentCountInit),
           productCount(productCountInit),
           warnings(warnInit),
-          errors(errorInit) {};
+          errors(errorInit) {}
   };
 
   class SmilesTest {
@@ -122,7 +122,7 @@ class MrvTests {
           expectedResult(expectedResultInit),
           sanitizeFlag(sanitizeFlagInit),
           atomCount(atomCountInit),
-          bondCount(bondCountInit) {};
+          bondCount(bondCountInit) {}
 
     SmilesTest(std::string nameInit, std::string smilesInit,
                bool expectedResultInit, int atomCountInit, int bondCountInit)
@@ -131,7 +131,7 @@ class MrvTests {
           expectedResult(expectedResultInit),
           sanitizeFlag(true),
           atomCount(atomCountInit),
-          bondCount(bondCountInit) {};
+          bondCount(bondCountInit) {}
   };
 
   RWMol *GetMolv1(const MolTest *molTest) {

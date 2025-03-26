@@ -2980,7 +2980,7 @@ void runblock(const std::vector<ROMol *> &mols, unsigned int count,
       delete lbv;
     }
   }
-};
+}
 }  // namespace
 #include <thread>
 #include <future>

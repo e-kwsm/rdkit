@@ -51,7 +51,7 @@ struct filtercatalog_pickle_suite : rdkit_pickle_suite {
     res = self.Serialize();
     return python::make_tuple(python::object(python::handle<>(
         PyBytes_FromStringAndSize(res.c_str(), res.length()))));
-  };
+  }
 };
 
 template <typename T>
@@ -146,7 +146,7 @@ class PythonFilterMatch : public FilterMatcherBase {
   PythonFilterMatch(PyObject *callback)
       : FilterMatcherBase("Python Filter Matcher"),
         functor(callback),
-        incref(false) {};
+        incref(false) {}
 
   // ONLY CALLED FROM C++ from the copy operation
   PythonFilterMatch(const PythonFilterMatch &rhs)
@@ -602,7 +602,7 @@ struct filtercat_wrapper {
 
     python::class_<FilterMatchOps::Not, python::bases<FilterMatcherBase>>(
         "Not", python::init<FilterMatcherBase &>(python::args("self", "arg1")));
-  };
+  }
 };
 
 }  // namespace RDKit

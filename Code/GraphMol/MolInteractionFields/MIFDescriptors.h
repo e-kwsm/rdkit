@@ -408,7 +408,7 @@ class RDKIT_MOLINTERACTIONFIELDS_EXPORT UFFVdWaals : public VdWaals {
  */
 class RDKIT_MOLINTERACTIONFIELDS_EXPORT HBond {
  public:
-  HBond() : d_cutoff(1.0), d_probetype(O), d_nInteract(0) {};
+  HBond() : d_cutoff(1.0), d_probetype(O), d_nInteract(0) {}
 
   //! \brief constructs HBond object from a molecule object
   /*!
@@ -512,7 +512,7 @@ class RDKIT_MOLINTERACTIONFIELDS_EXPORT Hydrophilic {
    */
   Hydrophilic(const RDKit::ROMol &mol, int confId = -1, bool fixed = true,
               double cutoff = 1.0);
-  ~Hydrophilic() {};
+  ~Hydrophilic() {}
 
   double operator()(double x, double y, double z, double thres) const;
 

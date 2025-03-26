@@ -135,7 +135,7 @@ struct maemolsup_wrap {
               python::arg("sanitize") = true, python::arg("removeHs") = true))
         .def("atEnd", &MaeMolSupplier::atEnd, python::args("self"),
              "Returns whether or not we have hit EOF.\n");
-  };
+  }
 };
 }  // namespace RDKit
 
