@@ -454,7 +454,7 @@ RDKIT_GRAPHMOL_EXPORT bool isEarlyAtom(int atomicNum);
 RDKIT_GRAPHMOL_EXPORT bool isAromaticAtom(const Atom &atom);
 //! returns the number of pi electrons on the atom
 RDKIT_GRAPHMOL_EXPORT unsigned int numPiElectrons(const Atom &atom);
-};  // namespace RDKit
+}  // namespace RDKit
 
 //! allows Atom objects to be dumped to streams
 RDKIT_GRAPHMOL_EXPORT std::ostream &operator<<(std::ostream &target,

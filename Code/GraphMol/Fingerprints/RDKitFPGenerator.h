@@ -122,8 +122,7 @@ class RDKIT_FINGERPRINTS_EXPORT RDKitFPEnvGenerator
   void fromJSON(const boost::property_tree::ptree &pt) override;
 
   OutputType getResultSize() const override;
-
-};  // namespace RDKitFP
+};
 
 /**
  \brief Get a RDKit fingerprint generator with given parameters

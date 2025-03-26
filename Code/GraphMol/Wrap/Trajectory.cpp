@@ -156,7 +156,7 @@ struct Trajectory_wrapper {
                 "reads coordinates from a GROMOS trajectory file into the "
                 "Trajectory object; "
                 "returns the number of Snapshot objects read in\n");
-  };
+  }
 };
 }  // namespace RDKit
 

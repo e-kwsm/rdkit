@@ -120,7 +120,7 @@ struct wrap_maewriter {
         .staticmethod("GetText");
 
     iterable_converter().from_python<std::vector<std::string>>();
-  };
+  }
 };
 }  // namespace RDKit
 
