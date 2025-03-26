@@ -86,7 +86,7 @@ python::object getProgressCallbackHelper(const ResonanceMolSupplier &suppl) {
     res = cppCallback->getPyCallbackObject();
   }
   return res;
-};
+}
 
 void setProgressCallbackHelper(ResonanceMolSupplier &suppl,
                                PyObject *callback) {
@@ -344,7 +344,7 @@ struct resmolsup_wrap {
              "atom in\n"
              "         this molecule that matches the first atom in the "
              "query.\n");
-  };
+  }
 };
 }  // namespace RDKit
 

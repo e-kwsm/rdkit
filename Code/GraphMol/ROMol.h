@@ -1082,5 +1082,5 @@ using MOL_SPTR_VECT = std::vector<ROMOL_SPTR>;
 
 using MOL_PTR_VECT_CI = MOL_PTR_VECT::const_iterator;
 using MOL_PTR_VECT_I = MOL_PTR_VECT::iterator;
-};  // namespace RDKit
+}  // namespace RDKit
 #endif

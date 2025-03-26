@@ -157,5 +157,5 @@ ROMol *renumberAtoms(const ROMol &mol,
   return dynamic_cast<ROMol *>(res);
 }  // namespace
 
-};  // end of namespace MolOps
-};  // end of namespace RDKit
+}  // end of namespace MolOps
+}  // end of namespace RDKit

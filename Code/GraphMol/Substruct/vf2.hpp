@@ -618,7 +618,7 @@ bool match(node_id c1[], node_id c2[], SubState &s,
   s.MatchAll(c1, c2, res, max_results);
   return !res.empty();
 }
-};  // end of namespace detail
+}  // end of namespace detail
 
 template <
     class Graph, class VertexLabeling  // binary predicate
@@ -660,7 +660,7 @@ bool vf2(const Graph &g1, const Graph &g2, VertexLabeling &vertex_labeling,
   delete[] ni2;
 
   return !F.empty();
-};
+}
 template <class Graph, class VertexLabeling  // binary predicate
           ,
           class EdgeLabeling  // binary predicate
@@ -691,7 +691,7 @@ bool vf2_all(const Graph &g1, const Graph &g2, VertexLabeling &vertex_labeling,
   }
 
   return !F.empty();
-};
+}
 }  // end of namespace boost
 #endif
 
