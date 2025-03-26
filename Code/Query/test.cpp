@@ -152,7 +152,7 @@ void test5() {
   delete q;
 }
 
-int foofun(double bar) { return int(floor(bar)); };
+int foofun(double bar) { return int(floor(bar)); }
 
 void test6() {
   cout << "pointer and copy foo" << endl;
@@ -270,7 +270,7 @@ void basics2() {
   TEST_ASSERT(!q7.Match(5));
 }
 
-int convFunc(const char *arg) { return boost::lexical_cast<int>(arg); };
+int convFunc(const char *arg) { return boost::lexical_cast<int>(arg); }
 
 void test7() {
   cout << "Set2" << endl;

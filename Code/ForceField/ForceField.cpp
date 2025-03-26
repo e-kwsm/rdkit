@@ -167,7 +167,7 @@ ForceField::ForceField(const ForceField &other)
     ncontrib->dp_forceField = this;
     d_contribs.push_back(ContribPtr(ncontrib));
   }
-};
+}
 
 double ForceField::distance(unsigned int i, unsigned int j, double *pos) {
   PRECONDITION(df_init, "not initialized");

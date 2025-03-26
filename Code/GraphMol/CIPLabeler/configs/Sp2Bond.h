@@ -34,8 +34,7 @@ class Sp2Bond : public Configuration {
   // bond->getStereo() can return both E/Z or CIS/TRANS,
   // so we cache CIS/TRANS we found.
   Bond::BondStereo d_cfg;
-
-};  // namespace CIPLabeler
+};
 
 }  // namespace CIPLabeler
 }  // namespace RDKit

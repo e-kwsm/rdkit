@@ -18,7 +18,7 @@ struct molcatalog_pickle_suite : rdkit_pickle_suite {
     res = self.Serialize();
     return python::make_tuple(python::object(python::handle<>(
         PyBytes_FromStringAndSize(res.c_str(), res.length()))));
-  };
+  }
 };
 
 struct molcatalogentry_pickle_suite : rdkit_pickle_suite {
@@ -27,7 +27,7 @@ struct molcatalogentry_pickle_suite : rdkit_pickle_suite {
     res = self.Serialize();
     return python::make_tuple(python::object(python::handle<>(
         PyBytes_FromStringAndSize(res.c_str(), res.length()))));
-  };
+  }
 };
 
 unsigned int GetBitEntryId(const MolCatalog *self, unsigned int idx) {
@@ -107,7 +107,7 @@ struct MolCatalog_wrapper {
         .def_pickle(molcatalog_pickle_suite());
     python::def("CreateMolCatalog", createMolCatalog,
                 python::return_value_policy<python::manage_new_object>());
-  };
+  }
 };
 struct MolCatalogEntry_wrapper {
   static void wrap() {
@@ -129,7 +129,7 @@ struct MolCatalogEntry_wrapper {
         .def_pickle(molcatalogentry_pickle_suite())
 
         ;
-  };
+  }
 };
 }  // namespace
 
