@@ -787,7 +787,7 @@ struct State {
     totalvol *= ((4.0 / 3) * M_PI) / standardDots.count;
 
     return totalvol;
-  };
+  }
 };
 
 // constructor definition
