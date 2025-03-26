@@ -833,7 +833,7 @@ python::object findAllSubgraphsOfLengthsMtoNHelper(const ROMol &mol,
     res.append(tmp);
   }
   return python::tuple(res);
-};
+}
 
 PATH_TYPE findAtomEnvironmentOfRadiusNHelper(const ROMol &mol,
                                              unsigned int radius,

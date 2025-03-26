@@ -171,7 +171,7 @@ unsigned int ROMol::getAtomDegree(const Atom *at) const {
   PRECONDITION(&at->getOwningMol() == this,
                "atom not associated with this molecule");
   return rdcast<unsigned int>(boost::out_degree(at->getIdx(), d_graph));
-};
+}
 
 unsigned int ROMol::getNumAtoms(bool onlyExplicit) const {
   int res = rdcast<int>(boost::num_vertices(d_graph));
@@ -183,7 +183,7 @@ unsigned int ROMol::getNumAtoms(bool onlyExplicit) const {
     }
   }
   return res;
-};
+}
 unsigned int ROMol::getNumHeavyAtoms() const {
   unsigned int res = 0;
   for (const auto atom : atoms()) {
@@ -192,7 +192,7 @@ unsigned int ROMol::getNumHeavyAtoms() const {
     }
   }
   return res;
-};
+}
 
 Atom *ROMol::getAtomWithIdx(unsigned int idx) {
   URANGE_CHECK(idx, getNumAtoms());
@@ -219,14 +219,14 @@ Atom *ROMol::getAtomWithBookmark(int mark) {
   PRECONDITION((lu != d_atomBookmarks.end() && !lu->second.empty()),
                "atom bookmark not found");
   return lu->second.front();
-};
+}
 
 // returns all atoms with the given bookmark
 ROMol::ATOM_PTR_LIST &ROMol::getAllAtomsWithBookmark(int mark) {
   auto lu = d_atomBookmarks.find(mark);
   PRECONDITION(lu != d_atomBookmarks.end(), "atom bookmark not found");
   return lu->second;
-};
+}
 
 // returns the unique atom with the given bookmark
 Atom *ROMol::getUniqueAtomWithBookmark(int mark) {
@@ -241,14 +241,14 @@ Bond *ROMol::getBondWithBookmark(int mark) {
   PRECONDITION((lu != d_bondBookmarks.end() && !lu->second.empty()),
                "bond bookmark not found");
   return lu->second.front();
-};
+}
 
 // returns all bonds with the given bookmark
 ROMol::BOND_PTR_LIST &ROMol::getAllBondsWithBookmark(int mark) {
   auto lu = d_bondBookmarks.find(mark);
   PRECONDITION(lu != d_bondBookmarks.end(), "bond bookmark not found");
   return lu->second;
-};
+}
 
 // returns the unique bond with the given bookmark
 Bond *ROMol::getUniqueBondWithBookmark(int mark) {
@@ -354,7 +354,7 @@ ROMol::ADJ_ITER_PAIR ROMol::getAtomNeighbors(Atom const *at) const {
   PRECONDITION(&at->getOwningMol() == this,
                "atom not associated with this molecule");
   return boost::adjacent_vertices(at->getIdx(), d_graph);
-};
+}
 
 ROMol::OBOND_ITER_PAIR ROMol::getAtomBonds(Atom const *at) const {
   PRECONDITION(at, "no atom");
@@ -394,7 +394,7 @@ unsigned int ROMol::addAtom(Atom *atom_pin, bool updateLabel,
     conf->setAtomPos(which, RDGeom::Point3D(0.0, 0.0, 0.0));
   }
   return rdcast<unsigned int>(which);
-};
+}
 
 unsigned int ROMol::addBond(Bond *bond_pin, bool takeOwnership) {
   PRECONDITION(bond_pin, "null bond passed in");

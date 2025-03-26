@@ -47,7 +47,7 @@ template <typename T>
 void streamWrite(std::ostream &ss, MolPickler::Tags tag, const T &what) {
   streamWrite(ss, tag);
   streamWrite(ss, what);
-};
+}
 
 void streamRead(std::istream &ss, MolPickler::Tags &tag, int version) {
   if (version < 7000) {
@@ -2708,4 +2708,4 @@ void MolPickler::_addBondFromPickleV1(std::istream &ss, ROMol *mol) {
   }
   mol->addBond(bond, true);
 }
-};  // namespace RDKit
+}  // namespace RDKit

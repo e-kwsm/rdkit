@@ -267,7 +267,7 @@ int numDativeBonds(const Atom *atom) {
 bool noDative(const Atom *a) {
   static const std::set<int> noD{1, 2, 9, 10};
   return (noD.find(a->getAtomicNum()) != noD.end());
-};
+}
 
 void metalBondCleanup(RWMol &mol, Atom *atom,
                       const std::vector<unsigned int> &ranks) {
@@ -844,7 +844,7 @@ unsigned int getMolFrags(const ROMol &mol, INT_VECT &mapping) {
   mapping.resize(natms);
   return natms ? boost::connected_components(mol.getTopology(), &mapping[0])
                : 0;
-};
+}
 
 unsigned int getMolFrags(const ROMol &mol, VECT_INT_VECT &frags) {
   frags.clear();
@@ -1007,7 +1007,7 @@ int getFormalCharge(const ROMol &mol) {
     accum += (*atomIt)->getFormalCharge();
   }
   return accum;
-};
+}
 
 unsigned getNumAtomsWithDistinctProperty(const ROMol &mol,
                                          const std::string_view &prop) {
