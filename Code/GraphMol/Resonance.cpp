@@ -47,7 +47,7 @@ class CEMetrics {
   friend class ConjElectrons;
 
  public:
-  CEMetrics() {};
+  CEMetrics() {}
   bool operator==(const CEMetrics &other) const {
     return (d_hash == other.d_hash);
   }
@@ -89,29 +89,29 @@ class ConjElectrons {
   ConjElectrons(ResonanceMolSupplier *parent, unsigned int groupIdx);
   ConjElectrons(const ConjElectrons &ce);
   ~ConjElectrons();
-  unsigned int groupIdx() const { return d_groupIdx; };
-  unsigned int currElectrons() const { return d_currElectrons; };
-  unsigned int totalElectrons() const { return d_totalElectrons; };
+  unsigned int groupIdx() const { return d_groupIdx; }
+  unsigned int currElectrons() const { return d_currElectrons; }
+  unsigned int totalElectrons() const { return d_totalElectrons; }
   void decrCurrElectrons(unsigned int d);
   AtomElectrons *getAtomElectronsWithIdx(unsigned int ai);
   BondElectrons *getBondElectronsWithIdx(unsigned int bi);
   void pushToBeginStack(unsigned int ai);
   bool popFromBeginStack(unsigned int &ai);
-  bool isBeginStackEmpty() { return d_beginAIStack.empty(); };
-  int allowedChgLeftOfN() const { return d_allowedChgLeftOfN; };
-  void decrAllowedChgLeftOfN(int d) { d_allowedChgLeftOfN -= d; };
-  int totalFormalCharge() const { return d_totalFormalCharge; };
+  bool isBeginStackEmpty() { return d_beginAIStack.empty(); }
+  int allowedChgLeftOfN() const { return d_allowedChgLeftOfN; }
+  void decrAllowedChgLeftOfN(int d) { d_allowedChgLeftOfN -= d; }
+  int totalFormalCharge() const { return d_totalFormalCharge; }
   bool hasCationRightOfN() const {
     return static_cast<bool>(d_flags & HAVE_CATION_RIGHT_OF_N);
-  };
+  }
   bool hasChargeSeparation() const {
     return static_cast<bool>((d_flags & HAVE_CATION) && (d_flags & HAVE_ANION));
-  };
+  }
   unsigned int absFormalCharges() const {
     return d_ceMetrics.d_absFormalCharges;
-  };
-  unsigned int fcSameSignDist() const { return d_ceMetrics.d_fcSameSignDist; };
-  unsigned int fcOppSignDist() const { return d_ceMetrics.d_fcOppSignDist; };
+  }
+  unsigned int fcSameSignDist() const { return d_ceMetrics.d_fcSameSignDist; }
+  unsigned int fcOppSignDist() const { return d_ceMetrics.d_fcOppSignDist; }
   unsigned int nbMissing() const { return d_ceMetrics.d_nbMissing; }
   unsigned int sumFormalChargeIdxs() const {
     return d_ceMetrics.d_sumFormalChargeIdxs;
@@ -120,7 +120,7 @@ class ConjElectrons {
     return d_ceMetrics.d_sumMultipleBondIdxs;
   }
   std::size_t hash() { return d_ceMetrics.d_hash; }
-  int wtdFormalCharges() const { return d_ceMetrics.d_wtdFormalCharges; };
+  int wtdFormalCharges() const { return d_ceMetrics.d_wtdFormalCharges; }
   void enumerateNonBonded(CEMap &ceMap, CEDegCount &ceDegCount,
                           CEStats &ceStats);
   void initCeFromMol();
@@ -137,7 +137,7 @@ class ConjElectrons {
   std::size_t computeFP(unsigned int flags);
   inline bool haveFP(CESet &ceSet, unsigned int flags);
   inline bool storeFP(CEMap &ceMap, unsigned int flags);
-  ResonanceMolSupplier *parent() const { return d_parent; };
+  ResonanceMolSupplier *parent() const { return d_parent; }
 
  private:
   unsigned int d_groupIdx;
