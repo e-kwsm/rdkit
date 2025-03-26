@@ -389,7 +389,7 @@ struct substructlibrary_pickle_suite : rdkit_pickle_suite {
     res = self.ss.Serialize();
     return python::make_tuple(python::object(python::handle<>(
         PyBytes_FromStringAndSize(res.c_str(), res.length()))));
-  };
+  }
 };
 
 void toStream(const SubstructLibraryWrap &cat, python::object &fileobj) {
