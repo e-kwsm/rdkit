@@ -327,7 +327,7 @@ FingerprintGenerator<OutputType> *getMorganGenerator(
       onlyNonzeroInvariants, false, atomInvariantsGenerator,
       bondInvariantsGenerator, fpSize, countBounds, ownsAtomInvGen,
       ownsBondInvGen);
-};
+}
 
 }  // namespace MorganFingerprint
 }  // namespace RDKit

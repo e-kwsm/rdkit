@@ -328,7 +328,7 @@ If the atom already has a query, nothing will be changed.)DOC";
         "ReplaceAtomWithQueryAtom", replaceAtomWithQueryAtomHelper,
         (python::arg("mol"), python::arg("atom")), docString.c_str(),
         python::return_value_policy<python::reference_existing_object>());
-  };
+  }
 };
 }  // namespace RDKit
 
