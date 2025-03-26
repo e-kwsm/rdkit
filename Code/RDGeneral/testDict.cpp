@@ -345,13 +345,13 @@ TEST_CASE("testRDValue") {
 
 class DictCon {
  public:
-  DictCon() { d.reset(); };
-  DictCon(const DictCon &other) { d = other.d; };
+  DictCon() { d.reset(); }
+  DictCon(const DictCon &other) { d = other.d; }
   DictCon &operator=(const DictCon &other) {
     d = other.d;
     return *this;
-  };
-  Dict *getDict() { return &d; };
+  }
+  Dict *getDict() { return &d; }
 
  private:
   Dict d;

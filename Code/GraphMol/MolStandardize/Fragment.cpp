@@ -72,7 +72,7 @@ FragmentRemover::FragmentRemover(std::istream &fragmentStream, bool leave_last,
 }
 
 // Destructor
-FragmentRemover::~FragmentRemover() { delete d_fcat; };
+FragmentRemover::~FragmentRemover() { delete d_fcat; }
 
 ROMol *FragmentRemover::remove(const ROMol &mol) {
   auto molcp = new RWMol(mol);

@@ -111,7 +111,7 @@ class SubstructLibraryWrap {
     return ss.getMatches(query, startIdx, endIdx, recursionPossible,
                          useChirality, useQueryQueryMatches, numThreads,
                          maxResults);
-  };
+  }
 
   template <class Query>
   std::vector<unsigned int> getMatches(const Query &query,
@@ -152,7 +152,7 @@ class SubstructLibraryWrap {
     NOGIL h;
     return ss.countMatches(query, startIdx, endIdx, recursionPossible,
                            useChirality, useQueryQueryMatches, numThreads);
-  };
+  }
 
   template <class Query>
   unsigned int countMatches(const Query &query, unsigned int startIdx,
@@ -185,7 +185,7 @@ class SubstructLibraryWrap {
     NOGIL h;
     return ss.hasMatch(query, startIdx, endIdx, recursionPossible, useChirality,
                        useQueryQueryMatches, numThreads);
-  };
+  }
 
   template <class Query>
   bool hasMatch(const Query &query, unsigned int startIdx, unsigned int endIdx,
@@ -389,7 +389,7 @@ struct substructlibrary_pickle_suite : rdkit_pickle_suite {
     res = self.ss.Serialize();
     return python::make_tuple(python::object(python::handle<>(
         PyBytes_FromStringAndSize(res.c_str(), res.length()))));
-  };
+  }
 };
 
 void toStream(const SubstructLibraryWrap &cat, python::object &fileobj) {

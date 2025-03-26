@@ -91,7 +91,7 @@ void _registerDescriptors() {
   REGISTER_DESCRIPTOR(kappa2, calcKappa2);
   REGISTER_DESCRIPTOR(kappa3, calcKappa3);
   REGISTER_DESCRIPTOR(Phi, calcPhi);
-};
+}
 }  // namespace
 
 void registerDescriptors() {
