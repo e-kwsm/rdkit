@@ -32,7 +32,7 @@ struct AngleConstraintContribsParams {
         idx3(idx3),
         minAngle(minAngle),
         maxAngle(maxAngle),
-        forceConstant(forceConstant) {};
+        forceConstant(forceConstant) {}
 };
 
 //! A term to capture all flat bottom angle constraint potentials.
