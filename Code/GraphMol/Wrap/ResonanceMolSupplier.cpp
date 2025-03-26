@@ -345,7 +345,7 @@ struct resmolsup_wrap {
              "atom in\n"
              "         this molecule that matches the first atom in the "
              "query.\n");
-  };
+  }
 };
 }  // namespace RDKit
 
