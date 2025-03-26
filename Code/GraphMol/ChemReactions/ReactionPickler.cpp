@@ -35,7 +35,7 @@ template <typename T>
 void streamWrite(std::ostream &ss, ReactionPickler::Tags tag, const T &what) {
   streamWrite(ss, tag);
   streamWrite(ss, what);
-};
+}
 
 void streamRead(std::istream &ss, ReactionPickler::Tags &tag) {
   int32_t tmp;
@@ -309,4 +309,4 @@ void ReactionPickler::_depickle(std::istream &ss, ChemicalReaction *rxn,
   rxn->df_needsInit = flag & 0x2;
 
 }  // end of _depickle
-};  // namespace RDKit
+}  // namespace RDKit

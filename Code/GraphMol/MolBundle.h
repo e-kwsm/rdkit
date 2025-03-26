@@ -49,7 +49,7 @@ inline bool MolBundleCanSerialize() {
 #else
   return false;
 #endif
-};
+}
 
 //! MolBundle contains a collection of related ROMols
 /*!
@@ -201,5 +201,5 @@ class FixedMolSizeMolBundle : public MolBundle {
   }
 };
 
-};  // namespace RDKit
+}  // namespace RDKit
 #endif

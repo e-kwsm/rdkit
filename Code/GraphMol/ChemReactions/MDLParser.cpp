@@ -368,14 +368,14 @@ std::unique_ptr<ChemicalReaction> ReactionFromRxnDataStream(
   // RXN-based reactions do not have implicit properties
   res->setImplicitPropertiesFlag(false);
   return res;
-};
+}
 
 std::unique_ptr<ChemicalReaction> ReactionFromRxnBlock(
     const std::string &rxnBlock, const MolFileParserParams &params) {
   std::istringstream inStream(rxnBlock);
   unsigned int line = 0;
   return ReactionFromRxnDataStream(inStream, line, params);
-};
+}
 
 std::unique_ptr<ChemicalReaction> ReactionFromRxnFile(
     const std::string &fName, const MolFileParserParams &params) {
@@ -385,7 +385,7 @@ std::unique_ptr<ChemicalReaction> ReactionFromRxnFile(
   }
   unsigned int line = 0;
   return ReactionFromRxnDataStream(inStream, line, params);
-};
+}
 }  // namespace ReactionParser
 }  // namespace v2
 }  // namespace RDKit

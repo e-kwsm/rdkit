@@ -454,7 +454,7 @@ void ResSubstructMatchHelper_(const ResSubstructMatchHelperArgs_ &args,
       }
     }
   }
-};
+}
 
 struct RecursiveLocker {
   std::vector<RecursiveStructureQuery *> locked;

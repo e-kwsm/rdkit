@@ -30,7 +30,7 @@ void storeIdsInUse(boost::dynamic_bitset<> &ids, StereoGroup &sg) {
   } else {
     ids[groupId] = true;
   }
-};
+}
 
 void assignMissingIds(const boost::dynamic_bitset<> &ids, unsigned &nextId,
                       StereoGroup &sg) {
@@ -41,7 +41,7 @@ void assignMissingIds(const boost::dynamic_bitset<> &ids, unsigned &nextId,
     }
     sg.setWriteId(nextId);
   }
-};
+}
 }  // namespace
 
 StereoGroup::StereoGroup(StereoGroupType grouptype, std::vector<Atom *> &&atoms,

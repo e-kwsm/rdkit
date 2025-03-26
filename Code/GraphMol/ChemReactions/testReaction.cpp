@@ -6973,7 +6973,7 @@ ROMOL_SPTR run_simple_reaction(const std::string &reaction,
   TEST_ASSERT(prods[0].size() == 1);
 
   return prods[0][0];
-};
+}
 
 void run_gist_reaction_tests(const std::vector<RWMOL_SPTR> &mols) {
   TEST_ASSERT(check_bond_stereo(mols[0], 1, 0, 3, Bond::BondStereo::STEREOE));

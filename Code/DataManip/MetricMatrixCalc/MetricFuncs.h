@@ -24,7 +24,7 @@ double EuclideanDistanceMetric(const T1 &v1, const T2 &v2, unsigned int dim) {
     dist += (diff * diff);
   }
   return sqrt(dist);
-};
+}
 
 // FIX: there's no reason to have this tied to TanimotoSimilarity... could
 // include
@@ -39,7 +39,7 @@ double TanimotoDistanceMetric(const T1 &bv1, const T2 &bv2, unsigned int dim) {
   return (1.0 - SimilarityWrapper(
                     bv1, bv2,
                     (double (*)(const T1 &, const T2 &))TanimotoSimilarity));
-};
+}
 
 //! return the Tanimoto similarity between two bit vectors
 template <typename T1, typename T2>
@@ -48,7 +48,7 @@ double TanimotoSimilarityMetric(const T1 &bv1, const T2 &bv2,
   RDUNUSED_PARAM(dim);
   return SimilarityWrapper(
       bv1, bv2, (double (*)(const T1 &, const T2 &))TanimotoSimilarity);
-};
+}
 }  // namespace RDDataManip
 
 #endif

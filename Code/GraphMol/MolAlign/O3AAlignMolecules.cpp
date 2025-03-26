@@ -1575,7 +1575,7 @@ double _rmsdMatchVect(ROMol *d_prbMol, const ROMol *d_refMol,
   }
 
   return rmsd;
-};
+}
 
 double O3A::align() {
   double rmsd = 0.0;
@@ -1606,7 +1606,7 @@ double O3A::trans(RDGeom::Transform3D &trans) {
                         d_o3aMatchVect);
 
   return rmsd;
-};
+}
 
 void randomTransform(ROMol &mol, const int cid, const int seed) {
   if (seed > 0) {

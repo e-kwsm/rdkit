@@ -87,7 +87,7 @@ void extractPopCounts(FPBReader_impl *dp_impl, boost::uint64_t sz,
         *reinterpret_cast<const boost::uint32_t *>(chunk));
     chunk += 4;
   }
-};
+}
 
 //-----------------------------------------------------
 //  Arena processing
@@ -158,7 +158,7 @@ void extractArena(FPBReader_impl *dp_impl, boost::uint64_t sz,
 
   dp_impl->dp_fpData = chunk;
   dp_impl->len = (sz - 9 - spacer) / dp_impl->numBytesStoredPerFingerprint;
-};
+}
 
 // if dp_impl->df_lazy is true, we'll use the memory in fpData (should be large
 // enough to hold the result!), otherwise
@@ -183,7 +183,7 @@ void extractBytes(const FPBReader_impl *dp_impl, unsigned int which,
     dp_impl->istrm->read(reinterpret_cast<char *>(fpData),
                          nToRead * dp_impl->numBytesStoredPerFingerprint);
   }
-};
+}
 
 // the caller is responsible for delete[]'ing this
 boost::uint8_t *copyBytes(const FPBReader_impl *dp_impl, unsigned int which) {
@@ -199,7 +199,7 @@ boost::uint8_t *copyBytes(const FPBReader_impl *dp_impl, unsigned int which) {
     extractBytes(dp_impl, which, res);
   }
   return res;
-};
+}
 
 // caller is responsible for delete'ing the result
 RDKIT_DATASTRUCTS_EXPORT boost::dynamic_bitset<> *bytesToBitset(
@@ -242,7 +242,7 @@ ExplicitBitVect *extractFP(const FPBReader_impl *dp_impl, unsigned int which) {
     delete[] fpData;
   }
   return new ExplicitBitVect(resDBS);
-};
+}
 
 double tanimoto(const FPBReader_impl *dp_impl, unsigned int which,
                 const ::boost::uint8_t *bv) {
@@ -262,7 +262,7 @@ double tanimoto(const FPBReader_impl *dp_impl, unsigned int which,
     delete[] fpData;
   }
   return res;
-};
+}
 
 double tversky(const FPBReader_impl *dp_impl, unsigned int which,
                const ::boost::uint8_t *bv, double ca, double cb) {
@@ -282,7 +282,7 @@ double tversky(const FPBReader_impl *dp_impl, unsigned int which,
     delete[] fpData;
   }
   return res;
-};
+}
 
 //-----------------------------------------------------
 //  Id procesing
@@ -340,7 +340,7 @@ void extractIdsDetails(FPBReader_impl *dp_impl, boost::uint64_t sz) {
                           dp_impl->num8ByteElements * 8;
   dp_impl->istrm->seekg(start + static_cast<std::streampos>(sz),
                         std::ios_base::beg);
-};
+}
 
 void extractIds(FPBReader_impl *dp_impl, boost::uint64_t sz,
                 const boost::uint8_t *chunk) {
@@ -352,7 +352,7 @@ void extractIds(FPBReader_impl *dp_impl, boost::uint64_t sz,
   dp_impl->dp_idOffsets = dp_impl->dp_idChunk.get() + sz -
                           (dp_impl->num4ByteElements + 1) * 4 -
                           dp_impl->num8ByteElements * 8;
-};
+}
 
 std::string extractId(const FPBReader_impl *dp_impl, unsigned int which) {
   PRECONDITION(dp_impl, "bad reader pointer");
@@ -422,7 +422,7 @@ std::string extractId(const FPBReader_impl *dp_impl, unsigned int which) {
     res = std::string(reinterpret_cast<const char *>(buff.get()));
   }
   return res;
-};
+}
 
 void tanimotoNeighbors(const FPBReader_impl *dp_impl, const boost::uint8_t *bv,
                        double threshold,
@@ -633,7 +633,7 @@ void FPBReader::init() {
   }
 
   df_init = true;
-};
+}
 
 void FPBReader::destroy() {
   if (dp_impl) {
@@ -645,36 +645,36 @@ void FPBReader::destroy() {
   }
   delete dp_impl;
   dp_impl = nullptr;
-};
+}
 
 boost::shared_ptr<ExplicitBitVect> FPBReader::getFP(unsigned int idx) const {
   PRECONDITION(df_init, "not initialized");
 
   return boost::shared_ptr<ExplicitBitVect>(detail::extractFP(dp_impl, idx));
-};
+}
 boost::shared_array<boost::uint8_t> FPBReader::getBytes(
     unsigned int idx) const {
   PRECONDITION(df_init, "not initialized");
 
   return boost::shared_array<boost::uint8_t>(detail::copyBytes(dp_impl, idx));
-};
+}
 
 std::string FPBReader::getId(unsigned int idx) const {
   PRECONDITION(df_init, "not initialized");
 
   std::string res = detail::extractId(dp_impl, idx);
   return res;
-};
+}
 unsigned int FPBReader::length() const {
   PRECONDITION(df_init, "not initialized");
   PRECONDITION(dp_impl, "no impl");
   return dp_impl->len;
-};
+}
 unsigned int FPBReader::nBits() const {
   PRECONDITION(df_init, "not initialized");
   PRECONDITION(dp_impl, "no impl");
   return dp_impl->nBits;
-};
+}
 std::pair<unsigned int, unsigned int> FPBReader::getFPIdsInCountRange(
     unsigned int minCount, unsigned int maxCount) {
   PRECONDITION(df_init, "not initialized");
@@ -689,7 +689,7 @@ std::pair<unsigned int, unsigned int> FPBReader::getFPIdsInCountRange(
     // FIX: complete this
     return std::make_pair(0, 0);
   }
-};
+}
 double FPBReader::getTanimoto(unsigned int idx,
                               const boost::uint8_t *bv) const {
   PRECONDITION(df_init, "not initialized");

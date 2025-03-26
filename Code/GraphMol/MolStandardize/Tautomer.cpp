@@ -70,7 +70,7 @@ int scoreRings(const ROMol &mol) {
     }
   }
   return score;
-};
+}
 
 SubstructTerm::SubstructTerm(std::string aname, std::string asmarts, int ascore)
     : name(std::move(aname)), smarts(std::move(asmarts)), score(ascore) {

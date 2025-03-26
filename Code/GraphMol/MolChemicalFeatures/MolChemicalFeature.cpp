@@ -17,11 +17,11 @@ namespace RDKit {
 
 const std::string &MolChemicalFeature::getFamily() const {
   return dp_def->getFamily();  // return d_family;
-};
+}
 
 const std::string &MolChemicalFeature::getType() const {
   return dp_def->getType();  // return d_type;
-};
+}
 
 void MolChemicalFeature::setActiveConformer(int confId) {
   PRECONDITION(dp_mol, "bad molecule");

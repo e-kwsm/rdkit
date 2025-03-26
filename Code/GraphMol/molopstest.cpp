@@ -106,7 +106,7 @@ TEST_CASE("test1") {
   REQUIRE(otherFrags[2]->getNumAtoms() == 1);
   REQUIRE(otherFrags[3]->getNumAtoms() == 1);
   delete m;
-};
+}
 
 TEST_CASE("test2") {
   string smi;
@@ -135,7 +135,7 @@ TEST_CASE("test2") {
   REQUIRE_MSG(iv[5] == 0, "bad frag membership");
   REQUIRE_MSG(iv[6] == 1, "bad frag membership");
   delete m;
-};
+}
 
 TEST_CASE("test3") {
   string smi;

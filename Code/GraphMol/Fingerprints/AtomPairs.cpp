@@ -86,7 +86,7 @@ SparseIntVect<std::int32_t> *getAtomPairFingerprint(
   return getAtomPairFingerprint(mol, 1, maxPathLen - 1, fromAtoms, ignoreAtoms,
                                 atomInvariants, includeChirality, use2D,
                                 confId);
-};
+}
 
 SparseIntVect<std::int32_t> *getAtomPairFingerprint(
     const ROMol &mol, unsigned int minLength, unsigned int maxLength,

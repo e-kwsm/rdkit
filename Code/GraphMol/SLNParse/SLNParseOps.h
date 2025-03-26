@@ -108,7 +108,7 @@ int startMol(std::vector<RWMol *> &molList, AtomType *firstAtom,
   int sz = molList.size();
   molList.push_back(mp);
   return sz;
-};
+}
 
 // ------------------------------------------------------------------------------------
 //! adds an atom to a molecule
@@ -184,7 +184,7 @@ void closeRingBond(std::vector<RWMol *> &molList, unsigned int molIdx,
   bond->setBeginAtom(opener);
   bond->setEndAtom(closer);
   addBondToMol(mp, bond);
-};
+}
 //! \overload
 void closeRingBond(std::vector<RWMol *> &molList, unsigned int molIdx,
                    unsigned int ringIdx) {
@@ -195,7 +195,7 @@ void closeRingBond(std::vector<RWMol *> &molList, unsigned int molIdx,
     delete newBond;
     throw;
   }
-};
+}
 
 // ------------------------------------------------------------------------------------
 // NOTE: this takes over responsibility for the bond
@@ -285,7 +285,7 @@ int addBranchToMol(std::vector<RWMol *> &molList, unsigned int molIdx,
     molList.resize(sz - 1);
   }
   return molIdx;
-};
+}
 //! \overload
 int addBranchToMol(std::vector<RWMol *> &molList, unsigned int molIdx,
                    unsigned int branchIdx) {
@@ -298,7 +298,7 @@ int addBranchToMol(std::vector<RWMol *> &molList, unsigned int molIdx,
     throw;
   }
   return ret;
-};
+}
 
 // ------------------------------------------------------------------------------------
 //! adds the atoms and bonds from a fragment to the molecule, sets no bond

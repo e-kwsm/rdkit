@@ -179,7 +179,7 @@ Point2D arcEnd(const DrawShapeArc &arc, double ang) {
   ang *= M_PI / 180.0;
   return Point2D{arc.points_[0].x + arc.points_[1].x * cos(ang),
                  arc.points_[0].y + arc.points_[1].x * sin(ang)};
-};
+}
 
 // given 2 points pt1, pt2, assumed to be either side of the line between
 // points at1 and at2, compute the angle of the line from at1 to pt1 and
