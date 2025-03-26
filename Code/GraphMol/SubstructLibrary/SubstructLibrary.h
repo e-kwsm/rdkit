@@ -326,12 +326,12 @@ class RDKIT_SUBSTRUCTLIBRARY_EXPORT PatternHolder : public FPHolderBase {
   ExplicitBitVect *makeFingerprint(const ROMol &m) const override {
     return PatternFingerprintMol(m, numBits);
   }
-  const unsigned int &getNumBits() const { return numBits; };
-  unsigned int &getNumBits() { return numBits; };
+  const unsigned int &getNumBits() const { return numBits; }
+  unsigned int &getNumBits() { return numBits; }
   static unsigned int defaultNumBits() {
     static const unsigned int DEFAULT_NUM_BITS = 2048;
     return DEFAULT_NUM_BITS;
-  };
+  }
 };
 
 class RDKIT_SUBSTRUCTLIBRARY_EXPORT TautomerPatternHolder
@@ -397,7 +397,7 @@ class RDKIT_SUBSTRUCTLIBRARY_EXPORT KeyFromPropHolder : public KeyHolderBase {
       keys.emplace_back(prefix + boost::lexical_cast<std::string>(keys.size()));
     }
     return keys.size() - 1u;
-  };
+  }
 
   unsigned int addKey(const std::string &key) override {
     keys.push_back(key);
@@ -724,7 +724,7 @@ class RDKIT_SUBSTRUCTLIBRARY_EXPORT SubstructLibrary {
     params.useChirality = useChirality;
     params.useQueryQueryMatches = useQueryQueryMatches;
     return getMatches(query, startIdx, endIdx, params, numThreads, maxResults);
-  };
+  }
   //! overload
   std::vector<unsigned int> getMatches(const ROMol &query,
                                        unsigned int startIdx,
@@ -812,7 +812,7 @@ class RDKIT_SUBSTRUCTLIBRARY_EXPORT SubstructLibrary {
     params.useChirality = useChirality;
     params.useQueryQueryMatches = useQueryQueryMatches;
     return countMatches(query, startIdx, endIdx, params, numThreads);
-  };
+  }
 
   //! overload
   unsigned int countMatches(const ROMol &query, unsigned int startIdx,
@@ -885,7 +885,7 @@ class RDKIT_SUBSTRUCTLIBRARY_EXPORT SubstructLibrary {
     params.useChirality = useChirality;
     params.useQueryQueryMatches = useQueryQueryMatches;
     return hasMatch(query, startIdx, endIdx, params, numThreads);
-  };
+  }
   //! overload
   bool hasMatch(const ROMol &query, unsigned int startIdx, unsigned int endIdx,
                 const SubstructMatchParameters &params,

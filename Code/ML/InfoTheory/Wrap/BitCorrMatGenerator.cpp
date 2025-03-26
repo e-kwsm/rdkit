@@ -88,7 +88,7 @@ struct corrmat_wrap {
         .def("GetCorrMatrix", getCorrMatrix, python::args("self"),
              "Get the correlation matrix following the collection of votes "
              "from a bunch of fingerprints\n");
-  };
+  }
 };
 }  // namespace RDInfoTheory
 

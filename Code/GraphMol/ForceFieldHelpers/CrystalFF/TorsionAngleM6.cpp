@@ -62,7 +62,7 @@ TorsionAngleContribM6::TorsionAngleContribM6(
   URANGE_CHECK(idx2, owner->positions().size());
   URANGE_CHECK(idx3, owner->positions().size());
   URANGE_CHECK(idx4, owner->positions().size());
-};
+}
 
 double TorsionAngleContribM6::getEnergy(double *pos) const {
   PRECONDITION(dp_forceField, "no owner");

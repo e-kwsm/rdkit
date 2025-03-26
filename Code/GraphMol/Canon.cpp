@@ -1363,6 +1363,6 @@ void clearStereoGroups(ROMol &mol) {
   mol.setStereoGroups(sgs);
 }
 
-};  // namespace Canon
+}  // namespace Canon
 
 }  // namespace RDKit
