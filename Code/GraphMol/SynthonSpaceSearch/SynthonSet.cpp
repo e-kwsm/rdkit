@@ -278,7 +278,7 @@ void SynthonSet::makeSynthonSearchMols() {
     synthonMolCopies[i].reserve(d_synthons[i].size());
     for (size_t j = 0; j < d_synthons[i].size(); ++j) {
       synthonMolCopies[i].emplace_back(
-          new RWMol(*d_synthons[i][j].second->getOrigMol().get()));
+          new RWMol(*d_synthons[i][j].second->getOrigMol()));
       for (auto &atom : synthonMolCopies[i][j]->atoms()) {
         atom->setProp<int>("molNum", i);
         atom->setProp<int>("idx", atom->getIdx());
