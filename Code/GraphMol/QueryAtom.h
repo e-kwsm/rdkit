@@ -156,6 +156,6 @@ inline std::string describeQuery(const Atom *atom) {
   return res;
 }
 
-};  // namespace RDKit
+}  // namespace RDKit
 
 #endif

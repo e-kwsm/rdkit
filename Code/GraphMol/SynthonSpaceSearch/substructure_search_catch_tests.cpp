@@ -62,7 +62,7 @@ std::map<std::string, std::string> loadLibrary(const std::string inFilename) {
     }
   }
   return smiles;
-};
+}
 
 TEST_CASE("Test splits 1") {
   const std::vector<std::string> smiles{"c1ccccc1CN1CCN(CC1)C(-O)c1ncc(F)cc1",

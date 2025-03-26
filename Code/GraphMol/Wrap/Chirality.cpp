@@ -58,7 +58,7 @@ struct chirality_wrapper {
         .def_readonly("controllingAtoms",
                       &Chirality::StereoInfo::controllingAtoms,
                       "indices of the atoms controlling the stereo");
-  };
+  }
 };
 }  // namespace RDKit
 

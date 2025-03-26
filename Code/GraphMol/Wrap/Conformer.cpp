@@ -305,7 +305,7 @@ struct conformer_wrapper {
              "properties in the result set.\n"
              "                      Defaults to False.\n\n"
              "  RETURNS: a dictionary\n");
-  };
+  }
 };
 }  // namespace RDKit
 

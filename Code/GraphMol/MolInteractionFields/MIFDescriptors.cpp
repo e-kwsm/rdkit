@@ -517,7 +517,7 @@ double cos_2(double t, double, double) {
   } else {
     return 0.0;
   }
-};
+}
 
 double cos_2_0(double t, double t_0 = 0.0, double t_i = 1.0) {
   double temp;
@@ -532,7 +532,7 @@ double cos_2_0(double t, double t_0 = 0.0, double t_i = 1.0) {
   } else {
     return 0.0;
   }
-};
+}
 
 double cos_2_rot(double t, double, double) {
   t -= M_70_5D;
@@ -543,7 +543,7 @@ double cos_2_rot(double t, double, double) {
   } else {
     return 0.0;
   }
-};
+}
 
 double cos_4(double t, double, double) {
   if (t < M_PI_2) {
@@ -554,7 +554,7 @@ double cos_4(double t, double, double) {
   } else {
     return 0.0;
   }
-};
+}
 
 double cos_4_rot(double t, double, double) {
   t -= M_70_5D;
@@ -566,7 +566,7 @@ double cos_4_rot(double t, double, double) {
   } else {
     return 0.0;
   }
-};
+}
 
 double cos_6(double t, double, double) {
   if (t < M_PI_2) {
@@ -577,7 +577,7 @@ double cos_6(double t, double, double) {
   } else {
     return 0.0;
   }
-};
+}
 
 double cos_6_rot(double t, double, double) {
   t -= M_70_5D;
@@ -589,7 +589,7 @@ double cos_6_rot(double t, double, double) {
   } else {
     return 0.0;
   }
-};
+}
 
 double cos_acc(double, double t_0, double t_i) {
   double temp;
@@ -606,9 +606,9 @@ double cos_acc(double, double t_0, double t_i) {
   } else {
     return 0.0;
   }
-};
+}
 
-double no_dep(double, double, double) { return 1.0; };
+double no_dep(double, double, double) { return 1.0; }
 }  // namespace HBondDetail
 
 HBond::HBond(const RDKit::ROMol &mol, int confId,
@@ -1976,7 +1976,7 @@ std::unique_ptr<RDKit::RWMol> readFromCubeFile(
     std::ostringstream errout;
     errout << "Bad input file " << filename;
     throw RDKit::BadFileException(errout.str());
-  };
+  }
 
   return readFromCubeStream(grd, ifStrm);
 }

@@ -1069,7 +1069,7 @@ int findSSSR(const ROMol &mol, VECT_INT_VECT &res, bool includeDativeBonds) {
 int symmetrizeSSSR(ROMol &mol, bool includeDativeBonds) {
   VECT_INT_VECT tmp;
   return symmetrizeSSSR(mol, tmp, includeDativeBonds);
-};
+}
 
 int symmetrizeSSSR(ROMol &mol, VECT_INT_VECT &res, bool includeDativeBonds) {
   res.clear();

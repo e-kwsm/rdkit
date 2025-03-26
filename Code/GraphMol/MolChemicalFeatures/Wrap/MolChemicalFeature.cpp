@@ -82,7 +82,7 @@ struct feat_wrapper {
              "Sets the conformer to use (must be associated with a molecule).")
         .def("GetActiveConformer", &MolChemicalFeature::getActiveConformer,
              python::args("self"), "Gets the conformer to use.");
-  };
+  }
 };
 }  // namespace RDKit
 void wrap_MolChemicalFeat() { RDKit::feat_wrapper::wrap(); }

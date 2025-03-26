@@ -461,7 +461,7 @@ void ResSubstructMatchHelper_(const ResSubstructMatchHelperArgs_ &args,
     }
     delete mol;
   }
-};
+}
 
 struct RecursiveLocker {
   std::vector<RecursiveStructureQuery *> locked;

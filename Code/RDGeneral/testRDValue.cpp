@@ -187,7 +187,7 @@ void testProp(T val) {
     streamReadProps(ss, p2);
     TEST_ASSERT(p2.getProp<T>("foo") == val);
   }
-};
+}
 
 void testPropertyPickler() {
   BOOST_LOG(rdErrorLog) << "Test Property Pickler" << std::endl;
