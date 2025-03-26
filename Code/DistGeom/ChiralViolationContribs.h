@@ -39,7 +39,7 @@ struct ChiralViolationContribsParams {
         idx4(i4),
         volUpper(u),
         volLower(l),
-        weight(w) {};
+        weight(w) {}
 };
 //! A term to capture the violation of chirality at atom centers
 //!
