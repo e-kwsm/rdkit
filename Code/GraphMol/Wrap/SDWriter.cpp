@@ -122,7 +122,7 @@ struct sdwriter_wrap {
               python::arg("force_v3000") = false, python::arg("molid") = -1),
              "returns the SD text for a molecule")
         .staticmethod("GetText");
-  };
+  }
 };
 }  // namespace RDKit
 

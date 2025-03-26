@@ -23,56 +23,56 @@ namespace RDKit {
 namespace {
 class EditableMol : boost::noncopyable {
  public:
-  EditableMol(const ROMol &m) { dp_mol = new RWMol(m); };
-  ~EditableMol() noexcept { delete dp_mol; };
+  EditableMol(const ROMol &m) { dp_mol = new RWMol(m); }
+  ~EditableMol() noexcept { delete dp_mol; }
 
   void RemoveAtom(unsigned int idx) {
     PRECONDITION(dp_mol, "no molecule");
     dp_mol->removeAtom(idx);
-  };
+  }
   void RemoveBond(unsigned int idx1, unsigned int idx2) {
     PRECONDITION(dp_mol, "no molecule");
     dp_mol->removeBond(idx1, idx2);
-  };
+  }
   int AddBond(unsigned int begAtomIdx, unsigned int endAtomIdx,
               Bond::BondType order = Bond::UNSPECIFIED) {
     PRECONDITION(dp_mol, "no molecule");
     return dp_mol->addBond(begAtomIdx, endAtomIdx, order);
-  };
+  }
   int AddAtom(Atom *atom) {
     PRECONDITION(dp_mol, "no molecule");
     PRECONDITION(atom, "bad atom");
     return dp_mol->addAtom(atom, true, false);
-  };
+  }
   void ReplaceAtom(unsigned int idx, Atom *atom, bool updateLabels,
                    bool preserveProps) {
     PRECONDITION(dp_mol, "no molecule");
     PRECONDITION(atom, "bad atom");
     dp_mol->replaceAtom(idx, atom, updateLabels, preserveProps);
-  };
+  }
   void ReplaceBond(unsigned int idx, Bond *bond, bool preserveProps) {
     PRECONDITION(dp_mol, "no molecule");
     PRECONDITION(bond, "bad bond");
     dp_mol->replaceBond(idx, bond, preserveProps);
-  };
+  }
   void BeginBatchEdit() {
     PRECONDITION(dp_mol, "no molecule");
     dp_mol->beginBatchEdit();
-  };
+  }
   void RollbackBatchEdit() {
     PRECONDITION(dp_mol, "no molecule");
     dp_mol->rollbackBatchEdit();
-  };
+  }
   void CommitBatchEdit() {
     PRECONDITION(dp_mol, "no molecule");
     dp_mol->commitBatchEdit();
-  };
+  }
 
   ROMol *GetMol() const {
     PRECONDITION(dp_mol, "no molecule");
     auto *res = new ROMol(*dp_mol);
     return res;
-  };
+  }
 
  private:
   RWMol *dp_mol;
@@ -147,7 +147,7 @@ struct EditableMol_wrapper {
              "Returns a Mol (a normal molecule)",
              python::return_value_policy<python::manage_new_object>(),
              python::args("self"));
-  };
+  }
 };
 
 }  // namespace RDKit
