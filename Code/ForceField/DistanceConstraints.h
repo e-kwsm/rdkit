@@ -29,7 +29,7 @@ struct DistanceConstraintContribsParams {
         idx2(idx2),
         minLen(minLen),
         maxLen(maxLen),
-        forceConstant(forceConstant) {};
+        forceConstant(forceConstant) {}
 };
 
 //! A term to capture all flat bottom distance constraint potentials.
