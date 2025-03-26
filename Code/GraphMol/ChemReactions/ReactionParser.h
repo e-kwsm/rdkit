@@ -307,7 +307,7 @@ inline std::unique_ptr<ChemicalReaction> ReactionFromPNGString(
     const std::string &data) {
   std::stringstream inStream(data);
   return ReactionFromPNGStream(inStream);
-};
+}
 //! \brief constructs a ChemicalReaction from the metadata in a PNG file
 //! See \c PNGStreamToChemicalReaction() for more details
 inline std::unique_ptr<ChemicalReaction> ReactionFromPNGFile(
@@ -317,7 +317,7 @@ inline std::unique_ptr<ChemicalReaction> ReactionFromPNGFile(
     throw BadFileException((boost::format("Bad input file %s") % fname).str());
   }
   return ReactionFromPNGStream(inStream);
-};
+}
 }  // namespace ReactionParser
 }  // namespace v2
 

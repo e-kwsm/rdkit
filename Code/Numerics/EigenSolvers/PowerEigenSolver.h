@@ -62,7 +62,7 @@ static inline bool powerEigenSolver(unsigned int numEig, DoubleSymmMatrix &mat,
                                     DoubleMatrix &eigenVectors, int seed = -1) {
   return powerEigenSolver(numEig, mat, eigenValues, &eigenVectors, seed);
 }
-};  // namespace EigenSolvers
-};  // namespace RDNumeric
+}  // namespace EigenSolvers
+}  // namespace RDNumeric
 
 #endif

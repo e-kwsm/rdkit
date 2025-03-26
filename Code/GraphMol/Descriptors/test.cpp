@@ -855,7 +855,7 @@ void runblock(const std::vector<ROMol *> &mols, unsigned int count,
       calcCrippenDescriptors(*mol, logp, mr);
     }
   }
-};
+}
 }  // namespace
 #include <thread>
 #include <future>

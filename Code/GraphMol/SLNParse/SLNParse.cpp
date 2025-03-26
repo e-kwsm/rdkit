@@ -193,7 +193,7 @@ RWMol *toMol(std::string inp, bool doQueries, int debugParse) {
   }
 
   return res;
-};
+}
 }  // namespace SLNParse
 
 RWMol *SLNToMol(const std::string &sln, bool sanitize, int debugParse) {
@@ -220,7 +220,7 @@ RWMol *SLNToMol(const std::string &sln, bool sanitize, int debugParse) {
     }
   }
   return res;
-};
+}
 
 RWMol *SLNQueryToMol(const std::string &sln, bool mergeHs, int debugParse) {
   yysln_debug = debugParse;
@@ -231,7 +231,7 @@ RWMol *SLNQueryToMol(const std::string &sln, bool mergeHs, int debugParse) {
     SLNParse::finalizeQueryMol(res, mergeHs);
   }
   return res;
-};
+}
 
 void SLNParse::CleanupAfterParse(RWMol *mol) {
   PRECONDITION(mol, "no molecule");

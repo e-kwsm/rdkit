@@ -95,7 +95,7 @@ ATOM_EQUALS_QUERY *makeAtomRingBondCountQuery(int what) {
   res->setDescription("AtomRingBondCount");
   res->setDataFunc(queryAtomRingBondCount);
   return res;
-};
+}
 
 ATOM_EQUALS_QUERY *makeAtomInRingOfSizeQuery(int tgt) {
   auto *res = new ATOM_EQUALS_QUERY;
@@ -568,7 +568,7 @@ RDKIT_GRAPHMOL_EXPORT BOND_EQUALS_QUERY *makeSingleOrAromaticBondQuery() {
   res->setDescription("SingleOrAromaticBond");
   res->setTypeLabel("BondOrder");
   return res;
-};
+}
 
 RDKIT_GRAPHMOL_EXPORT BOND_EQUALS_QUERY *makeDoubleOrAromaticBondQuery() {
   auto *res = new BOND_EQUALS_QUERY;
@@ -577,7 +577,7 @@ RDKIT_GRAPHMOL_EXPORT BOND_EQUALS_QUERY *makeDoubleOrAromaticBondQuery() {
   res->setDescription("DoubleOrAromaticBond");
   res->setTypeLabel("BondOrder");
   return res;
-};
+}
 
 RDKIT_GRAPHMOL_EXPORT BOND_EQUALS_QUERY *makeSingleOrDoubleBondQuery() {
   auto *res = new BOND_EQUALS_QUERY;
@@ -586,7 +586,7 @@ RDKIT_GRAPHMOL_EXPORT BOND_EQUALS_QUERY *makeSingleOrDoubleBondQuery() {
   res->setDescription("SingleOrDoubleBond");
   res->setTypeLabel("BondOrder");
   return res;
-};
+}
 
 RDKIT_GRAPHMOL_EXPORT BOND_EQUALS_QUERY *
 makeSingleOrDoubleOrAromaticBondQuery() {
@@ -596,7 +596,7 @@ makeSingleOrDoubleOrAromaticBondQuery() {
   res->setDescription("SingleOrDoubleOrAromaticBond");
   res->setTypeLabel("BondOrder");
   return res;
-};
+}
 
 namespace QueryOps {
 // we don't use these anymore but we need to keep them around for backwards
@@ -1170,4 +1170,4 @@ bool isMetal(const Atom &atom) {
 }
 
 }  // namespace QueryOps
-};  // namespace RDKit
+}  // namespace RDKit

@@ -140,7 +140,7 @@ struct monomerinfo_wrapper {
              python::args("self", "val"))
 
         ;
-  };
+  }
 };
 }  // namespace RDKit
 

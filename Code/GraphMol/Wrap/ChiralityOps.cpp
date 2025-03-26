@@ -34,7 +34,7 @@ and results may change in a future release.",
     python::def("CleanupStereoGroups", &Chirality::cleanupStereoGroups,
                 (python::arg("mol")),
                 "removes atoms without specified chirality from stereo groups");
-  };
+  }
 };
 }  // namespace RDKit
 
