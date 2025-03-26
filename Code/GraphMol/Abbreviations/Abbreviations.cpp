@@ -230,7 +230,7 @@ void condenseMolAbbreviations(
       MolOps::symmetrizeSSSR(mol);
     }
   }
-};
+}
 
 void labelMolAbbreviations(RWMol &mol,
                            const std::vector<AbbreviationDefinition> &abbrevs,
@@ -238,7 +238,7 @@ void labelMolAbbreviations(RWMol &mol,
   auto applicable =
       findApplicableAbbreviationMatches(mol, abbrevs, maxCoverage);
   labelMatches(mol, applicable);
-};
+}
 
 RDKIT_ABBREVIATIONS_EXPORT void condenseAbbreviationSubstanceGroups(
     RWMol &mol) {
@@ -303,7 +303,7 @@ RDKIT_ABBREVIATIONS_EXPORT void condenseAbbreviationSubstanceGroups(
   } else {
     BOOST_LOG(rdWarningLog) << "no suitable SubstanceGroups found" << std::endl;
   }
-};  // namespace Abbreviations
+}  // namespace Abbreviations
 
 }  // namespace Abbreviations
 }  // namespace RDKit

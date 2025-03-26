@@ -18,12 +18,12 @@ QueryBond::QueryBond(BondType bT) : Bond(bT) {
   } else {
     dp_query = makeBondNullQuery();
   }
-};
+}
 
 QueryBond::~QueryBond() {
   delete dp_query;
   dp_query = nullptr;
-};
+}
 
 QueryBond &QueryBond::operator=(const QueryBond &other) {
   // FIX: should we copy molecule ownership?  I don't think so.

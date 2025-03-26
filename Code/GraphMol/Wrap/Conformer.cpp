@@ -295,7 +295,7 @@ struct conformer_wrapper {
               python::arg("includeComputed") = false,
               python::arg("autoConvertStrings") = true),
 	     getPropsAsDictDocString.c_str());
-  };
+  }
 };
 }  // namespace RDKit
 

@@ -692,7 +692,7 @@ void runblock(const std::vector<ROMol *> &mols, const ROMol *query,
       TEST_ASSERT(found == hits[i]);
     }
   }
-};
+}
 }  // namespace
 void testMultiThread() {
   BOOST_LOG(rdErrorLog) << "-------------------------------------" << std::endl;

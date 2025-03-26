@@ -715,7 +715,7 @@ std::string MolsToJSONData(const std::vector<T> &mols,
   writer.SetMaxDecimalPlaces(MAX_DECIMAL_PLACES);
   doc.Accept(writer);
   return buffer.GetString();
-};
+}
 
 template RDKIT_MOLINTERCHANGE_EXPORT std::string MolsToJSONData<ROMol *>(
     const std::vector<ROMol *> &, const JSONWriteParameters &);

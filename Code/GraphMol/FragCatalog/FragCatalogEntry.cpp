@@ -89,7 +89,7 @@ void FragCatalogEntry::setDescription(const FragCatParams *params) {
   std::string smi = MolToSmiles(*dp_mol);
   // std::cerr << "----" << smi << "----" << std::endl;
   d_descrip = smi;
-};
+}
 
 bool FragCatalogEntry::match(const FragCatalogEntry *other, double tol) const {
   PRECONDITION(other, "bad fragment to compare");
