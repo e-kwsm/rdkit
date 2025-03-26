@@ -209,7 +209,7 @@ void MultiFPBReader::init() {
     }
   }
   df_init = true;
-};
+}
 
 MultiFPBReader::MultiFPBReader(std::vector<FPBReader *> &readers,
                                bool takeOwnership, bool initOnSearch) {
