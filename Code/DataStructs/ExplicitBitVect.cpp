@@ -155,7 +155,7 @@ ExplicitBitVect ExplicitBitVect::operator~() const {
   *(ans.dp_bits) = ~(*dp_bits);
   ans.d_numOnBits = ans.dp_bits->count();
   return (ans);
-};
+}
 
 ExplicitBitVect &ExplicitBitVect::operator+=(const ExplicitBitVect &other) {
   dp_bits->resize(d_size + other.d_size);
@@ -175,8 +175,8 @@ ExplicitBitVect ExplicitBitVect::operator+(const ExplicitBitVect &other) const {
   return ans += other;
 }
 
-unsigned int ExplicitBitVect::getNumBits() const { return d_size; };
-unsigned int ExplicitBitVect::getNumOnBits() const { return d_numOnBits; };
+unsigned int ExplicitBitVect::getNumBits() const { return d_size; }
+unsigned int ExplicitBitVect::getNumOnBits() const { return d_numOnBits; }
 unsigned int ExplicitBitVect::getNumOffBits() const {
   return d_size - d_numOnBits;
 }

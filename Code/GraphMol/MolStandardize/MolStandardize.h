@@ -102,7 +102,7 @@ RDKIT_MOLSTANDARDIZE_EXPORT RWMol *cleanup(
 inline RWMol *cleanup(const RWMol &mol, const CleanupParameters &params =
                                             defaultCleanupParameters) {
   return cleanup(&mol, params);
-};
+}
 //! Works the same as cleanup(mol)
 RDKIT_MOLSTANDARDIZE_EXPORT void cleanupInPlace(
     RWMol &mol, const CleanupParameters &params = defaultCleanupParameters);
@@ -266,12 +266,12 @@ inline void disconnectOrganometallicsInPlace(
     RWMol &mol, RDKit::MolStandardize::MetalDisconnectorOptions mdo = {
                     true, true, false, true}) {
   disconnectOrganometallics(mol, mdo);
-};
+}
 
 //! TODO
 RDKIT_MOLSTANDARDIZE_EXPORT std::vector<std::string> enumerateTautomerSmiles(
     const std::string &smiles,
     const CleanupParameters &params = defaultCleanupParameters);
-};  // namespace MolStandardize
+}  // namespace MolStandardize
 }  // namespace RDKit
 #endif

@@ -214,7 +214,7 @@ class RDKIT_MOLDRAW2D_EXPORT MolDraw2D {
       initDrawing();
       needs_init_ = false;
     }
-  };
+  }
   //! draws a line from \c cds1 to \c cds2 using the current drawing style
   //! in atom coords.  If rawCoords is passed as true,
   //! the coordinates are used as is, if not they are assumed to be in

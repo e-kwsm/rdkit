@@ -250,7 +250,7 @@ struct MaxMin_wrap {
              "  - firstPicks: (optional) the first items to be picked (seeds "
              "the list)\n"
              "  - seed: (optional) seed for the random number generator\n");
-  };
+  }
 };
 
 void wrap_maxminpick() { MaxMin_wrap::wrap(); }

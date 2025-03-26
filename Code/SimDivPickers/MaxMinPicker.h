@@ -295,6 +295,6 @@ RDKit::INT_VECT MaxMinPicker::lazyPick(T &func, unsigned int poolSize,
   return MaxMinPicker::lazyPick(func, poolSize, pickSize, firstPicks, seed,
                                 threshold);
 }
-};  // namespace RDPickers
+}  // namespace RDPickers
 
 #endif

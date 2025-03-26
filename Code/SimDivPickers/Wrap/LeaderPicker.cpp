@@ -97,7 +97,7 @@ struct LeaderPicker_wrap {
              "Pick a subset of items from a pool of items using the "
              "user-provided function to determine distances. Note that the "
              "numThreads argument is currently ignored.");
-  };
+  }
 };
 
 void wrap_leaderpick() { LeaderPicker_wrap::wrap(); }

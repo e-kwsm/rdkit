@@ -800,7 +800,7 @@ class SVGDrawerFromDetails : public DrawerFromDetails {
   MolDraw2DSVG &drawer() const {
     CHECK_INVARIANT(d_drawer, "d_drawer must not be null");
     return *d_drawer;
-  };
+  }
   void initDrawer(const DrawingDetails &drawingDetails) {
     d_drawer.reset(new MolDraw2DSVG(
         drawingDetails.width, drawingDetails.height, drawingDetails.panelWidth,

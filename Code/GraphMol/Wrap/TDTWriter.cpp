@@ -87,7 +87,7 @@ struct tdtwriter_wrap {
              python::args("self", "numDigits"),
              "sets the number of digits to be written for coordinates")
         .def("GetNumDigits", &TDTWriter::getNumDigits, python::args("self"));
-  };
+  }
 };
 }  // namespace RDKit
 

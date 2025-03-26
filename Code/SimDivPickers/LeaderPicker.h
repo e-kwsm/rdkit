@@ -465,6 +465,6 @@ RDKit::INT_VECT LeaderPicker::lazyPick(T &func, unsigned int poolSize,
                                 default_nthreads);
 }
 
-};  // namespace RDPickers
+}  // namespace RDPickers
 
 #endif

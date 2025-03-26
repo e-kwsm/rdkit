@@ -276,7 +276,7 @@ inline MolBundle enumerate(const ROMol &mol,
                            const MolEnumeratorParams &params) {
   std::vector<MolEnumeratorParams> v = {params};
   return enumerate(mol, v);
-};
+}
 }  // namespace MolEnumerator
 }  // namespace RDKit
 

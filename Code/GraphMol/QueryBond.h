@@ -141,6 +141,6 @@ inline std::string describeQuery(const Bond *bond) {
   }
   return res;
 }
-};  // namespace RDKit
+}  // namespace RDKit
 
 #endif

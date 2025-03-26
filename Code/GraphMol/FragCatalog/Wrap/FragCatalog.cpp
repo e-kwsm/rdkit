@@ -24,7 +24,7 @@ struct fragcatalog_pickle_suite : rdkit_pickle_suite {
     res = self.Serialize();
     return python::make_tuple(python::object(python::handle<>(
         PyBytes_FromStringAndSize(res.c_str(), res.length()))));
-  };
+  }
 };
 unsigned int GetBitEntryId(const FragCatalog *self, unsigned int idx) {
   if (idx > self->getFPLength()) {
@@ -150,7 +150,7 @@ struct fragcat_wrapper {
         .def_pickle(fragcatalog_pickle_suite())
 
         ;
-  };
+  }
 };
 
 }  // namespace RDKit

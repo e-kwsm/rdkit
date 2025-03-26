@@ -216,7 +216,7 @@ PyObject *PyMMFFMolProperties::getMMFFBondStretchParams(
     PyTuple_SetItem(res, 2, PyFloat_FromDouble(mmffBondStretchParams.r0));
   }
   return res;
-};
+}
 
 PyObject *PyMMFFMolProperties::getMMFFAngleBendParams(
     const RDKit::ROMol &mol, const unsigned int idx1, const unsigned int idx2,
@@ -232,7 +232,7 @@ PyObject *PyMMFFMolProperties::getMMFFAngleBendParams(
     PyTuple_SetItem(res, 2, PyFloat_FromDouble(mmffAngleBendParams.theta0));
   }
   return res;
-};
+}
 
 PyObject *PyMMFFMolProperties::getMMFFStretchBendParams(
     const RDKit::ROMol &mol, const unsigned int idx1, const unsigned int idx2,
@@ -251,7 +251,7 @@ PyObject *PyMMFFMolProperties::getMMFFStretchBendParams(
     PyTuple_SetItem(res, 2, PyFloat_FromDouble(mmffStretchBendParams.kbaKJI));
   }
   return res;
-};
+}
 
 PyObject *PyMMFFMolProperties::getMMFFTorsionParams(
     const RDKit::ROMol &mol, const unsigned int idx1, const unsigned int idx2,
@@ -268,7 +268,7 @@ PyObject *PyMMFFMolProperties::getMMFFTorsionParams(
     PyTuple_SetItem(res, 3, PyFloat_FromDouble(mmffTorsionParams.V3));
   }
   return res;
-};
+}
 
 PyObject *PyMMFFMolProperties::getMMFFOopBendParams(
     const RDKit::ROMol &mol, const unsigned int idx1, const unsigned int idx2,
@@ -280,7 +280,7 @@ PyObject *PyMMFFMolProperties::getMMFFOopBendParams(
     res = PyFloat_FromDouble(mmffOopBendParams.koop);
   }
   return res;
-};
+}
 
 PyObject *PyMMFFMolProperties::getMMFFVdWParams(const unsigned int idx1,
                                                 const unsigned int idx2) const {
@@ -295,7 +295,7 @@ PyObject *PyMMFFMolProperties::getMMFFVdWParams(const unsigned int idx1,
     PyTuple_SetItem(res, 3, PyFloat_FromDouble(mmffVdWParams.epsilon));
   }
   return res;
-};
+}
 
 BOOST_PYTHON_MODULE(rdForceField) {
   python::scope().attr("__doc__") = "Exposes the ForceField class";
