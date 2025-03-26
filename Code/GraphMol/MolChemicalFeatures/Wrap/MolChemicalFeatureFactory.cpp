@@ -109,7 +109,7 @@ struct featfactory_wrapper {
              python::with_custodian_and_ward_postcall<
                  0, 2, python::with_custodian_and_ward_postcall<0, 1>>(),
              "returns a particular feature (by index)");
-  };
+  }
 };
 }  // namespace RDKit
 

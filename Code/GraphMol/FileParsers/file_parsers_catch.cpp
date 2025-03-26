@@ -7362,7 +7362,7 @@ class FragTest {
         expectedResult(expectedResultInit),
         reapplyMolBlockWedging(reapplyMolBlockWedgingInit),
         origSgroupCount(origSgroupCountInit),
-        newSgroupCount(newSgroupCountInit){};
+        newSgroupCount(newSgroupCountInit) {}
 };
 
 void testFragmentation(const FragTest &fragTest) {

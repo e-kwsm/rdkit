@@ -167,7 +167,7 @@ std::string SDWriter::getText(const ROMol &mol, int confId, bool kekulize,
   std::stringstream sstr;
   _MolToSDStream(&sstr, mol, confId, kekulize, forceV3000, molid, propNames);
   return sstr.str();
-};
+}
 
 void SDWriter::write(const ROMol &mol, int confId) {
   PRECONDITION(dp_ostream, "no output stream");

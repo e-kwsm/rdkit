@@ -363,7 +363,7 @@ These cannot currently be constructed directly from Python\n";
              "combines the query from other with ours")
         .def("SetQuery", setQuery, (python::arg("self"), python::arg("other")),
              "Replace our query with a copy of the other query");
-  };
+  }
 };
 }  // namespace RDKit
 void wrap_bond() { RDKit::bond_wrapper::wrap(); }

@@ -182,7 +182,7 @@ struct table_wrapper {
         "GetPeriodicTable", GetTable,
         "Returns the application's PeriodicTable instance.\n\n",
         python::return_value_policy<python::reference_existing_object>());
-  };
+  }
 };
 }  // namespace RDKit
 void wrap_table() { RDKit::table_wrapper::wrap(); }
