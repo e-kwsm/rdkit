@@ -18,8 +18,6 @@
 
 #include "SubstructMatch.h"
 #include "SubstructUtils.h"
-#include "SubstructDetails.h"
-
 #include <GraphMol/GenericGroups/GenericGroups.h>
 #include <boost/smart_ptr.hpp>
 #include <map>
@@ -115,11 +113,18 @@ bool enhancedStereoIsOK(
 
 }  // namespace
 
+typedef std::map<unsigned int, QueryAtom::QUERYATOM_QUERY *> SUBQUERY_MAP;
+
 typedef struct {
   ResonanceMolSupplier &resMolSupplier;
   const ROMol &query;
   const SubstructMatchParameters &params;
 } ResSubstructMatchHelperArgs_;
+
+void MatchSubqueries(const ROMol &mol, QueryAtom::QUERYATOM_QUERY *q,
+                     const SubstructMatchParameters &params,
+                     SUBQUERY_MAP &subqueryMap,
+                     std::vector<RecursiveStructureQuery *> &locked);
 
 bool insertIfNeeded(std::set<MatchVectType> &matches, const MatchVectType &m) {
   bool shouldInsert = true;
@@ -382,7 +387,7 @@ class AtomLabelFunctor {
  public:
   AtomLabelFunctor(const ROMol &query, const ROMol &mol,
                    const SubstructMatchParameters &ps)
-      : d_query(query), d_mol(mol), d_params(ps) {};
+      : d_query(query), d_mol(mol), d_params(ps) {}
 
   bool operator()(unsigned int i, unsigned int j) const {
     bool res = false;
@@ -411,7 +416,7 @@ class BondLabelFunctor {
  public:
   BondLabelFunctor(const ROMol &query, const ROMol &mol,
                    const SubstructMatchParameters &ps)
-      : d_query(query), d_mol(mol), d_params(ps) {};
+      : d_query(query), d_mol(mol), d_params(ps) {}
   bool operator()(MolGraph::edge_descriptor i,
                   MolGraph::edge_descriptor j) const {
     if (d_params.useChirality) {
@@ -451,24 +456,23 @@ void ResSubstructMatchHelper_(const ResSubstructMatchHelperArgs_ &args,
   }
 };
 
-std::vector<RecursiveStructureQuery *> locked;
-RecursiveLocker::RecursiveLocker(const size_t numAtoms,
-                                 const bool recursionPossible) {
-  if (recursionPossible) {
-    locked.reserve(numAtoms);
-  }
-}
-
-RecursiveLocker::~RecursiveLocker() {
-  for (auto v : locked) {
-    if (df_clearOnDestruct) {
-      v->clear();
+struct RecursiveLocker {
+  std::vector<RecursiveStructureQuery *> locked;
+  RecursiveLocker(const ROMol &query, const bool recursionPossible) {
+    if (recursionPossible) {
+      locked.reserve(query.getNumAtoms());
     }
-#ifdef RDK_BUILD_THREADSAFE_SSS
-    v->d_mutex.unlock();
-#endif
   }
-}
+
+  ~RecursiveLocker() {
+    for (auto v : locked) {
+      v->clear();
+#ifdef RDK_BUILD_THREADSAFE_SSS
+      v->d_mutex.unlock();
+#endif
+    }
+  }
+};
 
 // A minimal container which satisfies the vf2_all() output-sequence interface
 // but only counts matches instead of storing them.
@@ -502,7 +506,7 @@ std::vector<MatchVectType> SubstructMatch(
     return matches;
   }
 
-  detail::RecursiveLocker locker(query.getNumAtoms(), params.recursionPossible);
+  detail::RecursiveLocker locker(query, params.recursionPossible);
 
   if (params.recursionPossible) {
     detail::SUBQUERY_MAP subqueryMap;
@@ -544,7 +548,7 @@ unsigned int SubstructMatchCount(const ROMol &mol, const ROMol &query,
     return 0;
   }
 
-  detail::RecursiveLocker locker(query.getNumAtoms(), params.recursionPossible);
+  detail::RecursiveLocker locker(query, params.recursionPossible);
 
   if (params.recursionPossible) {
     detail::SUBQUERY_MAP subqueryMap;
@@ -716,7 +720,6 @@ void MatchSubqueries(const ROMol &mol, QueryAtom::QUERYATOM_QUERY *query,
 #endif
     locked.push_back(rsq);
     rsq->clear();
-    rsq->setInitialized(true);
     bool matchDone = false;
     if (rsq->getSerialNumber() &&
         subqueryMap.find(rsq->getSerialNumber()) != subqueryMap.end()) {
@@ -755,6 +758,7 @@ void MatchSubqueries(const ROMol &mol, QueryAtom::QUERYATOM_QUERY *query,
        ++childIt) {
     MatchSubqueries(mol, childIt->get(), params, subqueryMap, locked);
   }
+  // std::cout << "<<- back " << (int)query << std::endl;
 }
 
 }  // end of namespace detail
