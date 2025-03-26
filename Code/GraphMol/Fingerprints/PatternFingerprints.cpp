@@ -38,15 +38,15 @@
 namespace {
 class ss_matcher {
  public:
-  ss_matcher() {};
+  ss_matcher() {}
   ss_matcher(const std::string &pattern) {
     RDKit::RWMol *p = RDKit::SmartsToMol(pattern);
     TEST_ASSERT(p);
     m_matcher.reset(p);
-  };
+  }
 
-  // const RDKit::ROMOL_SPTR &getMatcher() const { return m_matcher; };
-  const RDKit::ROMol *getMatcher() const { return m_matcher.get(); };
+  // const RDKit::ROMOL_SPTR &getMatcher() const { return m_matcher; }
+  const RDKit::ROMol *getMatcher() const { return m_matcher.get(); }
 
  private:
   RDKit::ROMOL_SPTR m_matcher;
