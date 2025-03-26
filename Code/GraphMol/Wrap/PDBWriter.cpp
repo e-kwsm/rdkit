@@ -67,7 +67,7 @@ struct pdbwriter_wrap {
              "after this.\n\n")
         .def("NumMols", &PDBWriter::numMols, python::args("self"),
              "Returns the number of molecules written so far.\n\n");
-  };
+  }
 };
 }  // namespace RDKit
 

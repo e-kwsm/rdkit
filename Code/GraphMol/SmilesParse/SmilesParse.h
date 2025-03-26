@@ -184,7 +184,7 @@ inline RWMol *SmilesToMol(
     params.removeHs = false;
   }
   return RDKit::v2::SmilesParse::MolFromSmiles(smi, params).release();
-};
+}
 
 inline RWMol *SmartsToMol(const std::string &sma,
                           const SmartsParserParams &ps) {
@@ -224,7 +224,7 @@ inline RWMol *SmartsToMol(
     ps.replacements = *replacements;
   }
   return RDKit::v2::SmilesParse::MolFromSmarts(sma, ps).release();
-};
+}
 
 inline Atom *SmartsToAtom(const std::string &sma) {
   return RDKit::v2::SmilesParse::AtomFromSmarts(sma).release();

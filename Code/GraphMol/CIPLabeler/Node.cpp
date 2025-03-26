@@ -86,7 +86,7 @@ int Node::getAtomicNum() const {
     return 1;
   }
   return dp_atom->getAtomicNum();
-};
+}
 
 unsigned Node::getMassNum() const {
   if (dp_atom == nullptr || isDuplicate()) {

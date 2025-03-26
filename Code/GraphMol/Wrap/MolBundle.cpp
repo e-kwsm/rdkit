@@ -26,7 +26,7 @@ struct molbundle_pickle_suite : rdkit_pickle_suite {
     auto res = self.serialize();
     return python::make_tuple(python::object(python::handle<>(
         PyBytes_FromStringAndSize(res.c_str(), res.length()))));
-  };
+  }
 };
 
 python::object BundleToBinary(const RDKit::MolBundle &self) {
@@ -41,7 +41,7 @@ struct molbundle_pickle_suite : rdkit_pickle_suite {
   static python::tuple getinitargs(const RDKit::MolBundle &) {
     throw_runtime_error("Pickling of MolBundle instances is not enabled");
     return python::tuple();  // warning suppression, we never get here
-  };
+  }
 };
 
 python::object BundleToBinary(const RDKit::MolBundle &) {
@@ -333,7 +333,7 @@ struct molbundle_wrap {
     python::def("MolBundleCanSerialize", MolBundleCanSerialize,
                 "Returns True if the MolBundle is serializable "
                 "(requires boost serialization");
-  };
+  }
 };
 }  // namespace RDKit
 

@@ -43,7 +43,7 @@ struct fragparams_wrapper {
              python::return_value_policy<python::reference_existing_object>(),
              python::args("self", "fid"))
         .def("Serialize", &FragCatParams::Serialize, python::args("self"));
-  };
+  }
 };
 }  // namespace RDKit
 

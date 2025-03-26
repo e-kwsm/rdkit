@@ -89,8 +89,8 @@ class ss_matcher {
     RDKit::RWMol *p = RDKit::SmartsToMol(pattern);
     m_matcher = p;
     POSTCONDITION(m_matcher, "no matcher");
-  };
-  const RDKit::ROMol *getMatcher() const { return m_matcher; };
+  }
+  const RDKit::ROMol *getMatcher() const { return m_matcher; }
   unsigned int countMatches(const RDKit::ROMol &mol) const {
     PRECONDITION(m_matcher, "no matcher");
     std::vector<RDKit::MatchVectType> matches;
@@ -106,10 +106,10 @@ class ss_matcher {
     }
     return matches.size();
   }
-  ~ss_matcher() { delete m_matcher; };
+  ~ss_matcher() { delete m_matcher; }
 
  private:
-  ss_matcher() : m_pattern("") {};
+  ss_matcher() : m_pattern("") {}
   std::string m_pattern;
   bool m_needCopies{false};
   const RDKit::ROMol *m_matcher{nullptr};
