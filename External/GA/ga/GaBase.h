@@ -34,8 +34,8 @@ class GA_EXPORT GaBase {
   GaBase &operator=(const GaBase &other) = delete;
 
  public:
-  GaBase() {};
-  virtual ~GaBase() {};
+  GaBase() {}
+  virtual ~GaBase() {}
 
   double getSelectionPressure() const { return selectionPressure; }
 

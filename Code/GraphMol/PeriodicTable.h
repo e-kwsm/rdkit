@@ -344,6 +344,6 @@ class RDKIT_GRAPHMOL_EXPORT PeriodicTable {
   std::vector<atomicData> byanum;
   STR_UINT_MAP byname;
 };
-};  // namespace RDKit
+}  // namespace RDKit
 
 #endif

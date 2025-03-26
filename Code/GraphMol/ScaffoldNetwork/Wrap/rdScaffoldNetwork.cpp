@@ -58,7 +58,7 @@ struct scaffoldnetwork_pickle_suite : rdkit_pickle_suite {
     std::string res = oss.str();
     return python::make_tuple(python::object(python::handle<>(
         PyBytes_FromStringAndSize(res.c_str(), res.length()))));
-  };
+  }
 };
 #else
 struct scaffoldnetwork_pickle_suite : rdkit_pickle_suite {

@@ -155,7 +155,7 @@ python::object getCallbackHelper(const MolStandardize::TautomerEnumerator &te) {
     res = cppCallback->getPyCallbackObject();
   }
   return res;
-};
+}
 
 void setCallbackHelper(MolStandardize::TautomerEnumerator &te,
                        PyObject *callback) {

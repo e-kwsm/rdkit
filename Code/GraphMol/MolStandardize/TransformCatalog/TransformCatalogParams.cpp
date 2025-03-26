@@ -36,7 +36,7 @@ TransformCatalogParams::TransformCatalogParams(
     const std::vector<std::pair<std::string, std::string>> &data) {
   d_transformations.clear();
   d_transformations = readTransformations(data);
-};
+}
 
 TransformCatalogParams::TransformCatalogParams(
     const TransformCatalogParams &other) {

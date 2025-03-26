@@ -26,7 +26,7 @@ struct chemfeat_pickle_suite : rdkit_pickle_suite {
     python::object retval = python::object(
         python::handle<>(PyBytes_FromStringAndSize(res.c_str(), res.length())));
     return python::make_tuple(retval);
-  };
+  }
 };
 
 std::string featClassDoc =
@@ -70,7 +70,7 @@ struct freefeat_wrapper {
         .def("GetPos", &FreeChemicalFeature::getPos, python::args("self"),
              "Get the position of the feature")
         .def_pickle(chemfeat_pickle_suite());
-  };
+  }
 };
 }  // namespace ChemicalFeatures
 

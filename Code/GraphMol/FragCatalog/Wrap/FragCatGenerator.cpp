@@ -21,7 +21,7 @@ struct fragcatgen_wrapper {
                                      python::init<>(python::args("self")))
         .def("AddFragsFromMol", &FragCatGenerator::addFragsFromMol,
              python::args("self", "mol", "fcat"));
-  };
+  }
 };  // end of struct
 }  // namespace RDKit
 
