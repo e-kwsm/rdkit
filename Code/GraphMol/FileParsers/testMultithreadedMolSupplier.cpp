@@ -19,6 +19,7 @@
 #include <boost/dynamic_bitset.hpp>
 #include <boost/iostreams/device/file.hpp>
 #include <boost/iostreams/filtering_stream.hpp>
+#include <utility>
 
 #include "MultithreadedSDMolSupplier.h"
 #include "MultithreadedSmilesMolSupplier.h"
@@ -38,8 +39,8 @@ struct PrintThread : public std::stringstream {
 };
 
 void testSmiConcurrent(std::istream *strm, bool takeOwnership,
-                       std::string delimiter, int smilesColumn, int nameColumn,
-                       bool titleLine, bool sanitize,
+                       const std::string &delimiter, int smilesColumn,
+                       int nameColumn, bool titleLine, bool sanitize,
                        unsigned int numWriterThreads, size_t sizeInputQueue,
                        size_t sizeOutputQueue, unsigned int expectedResult,
                        bool extras = false) {
@@ -71,7 +72,7 @@ void testSmiConcurrent(std::istream *strm, bool takeOwnership,
   TEST_ASSERT(nMols == expectedResult);
 }
 
-void testSmiConcurrent(std::string path, std::string delimiter,
+void testSmiConcurrent(const std::string &path, const std::string &delimiter,
                        int smilesColumn, int nameColumn, bool titleLine,
                        bool sanitize, unsigned int numWriterThreads,
                        size_t sizeInputQueue, size_t sizeOutputQueue,
@@ -79,13 +80,13 @@ void testSmiConcurrent(std::string path, std::string delimiter,
   std::string rdbase = getenv("RDBASE");
   std::string fname = rdbase + path;
   std::istream *strm = new std::ifstream(fname.c_str());
-  testSmiConcurrent(strm, true, delimiter, smilesColumn, nameColumn, titleLine,
-                    sanitize, numWriterThreads, sizeInputQueue, sizeOutputQueue,
-                    expectedResult, extras);
+  testSmiConcurrent(strm, true, std::move(delimiter), smilesColumn, nameColumn,
+                    titleLine, sanitize, numWriterThreads, sizeInputQueue,
+                    sizeOutputQueue, expectedResult, extras);
 }
 
-void testSmiOld(std::string path, std::string delimiter, int smilesColumn,
-                int nameColumn, bool titleLine, bool sanitize,
+void testSmiOld(const std::string &path, const std::string &delimiter,
+                int smilesColumn, int nameColumn, bool titleLine, bool sanitize,
                 unsigned int expectedResult, bool extras = false) {
   unsigned int numMols = 0;
   SmilesMolSupplier sup(path, delimiter, smilesColumn, nameColumn, titleLine,
@@ -201,7 +202,7 @@ void testSDConcurrent(std::istream *strm, bool takeOwnership, bool sanitize,
   TEST_ASSERT(nMols == expectedResult);
 }
 
-void testSDConcurrent(std::string path, bool sanitize, bool removeHs,
+void testSDConcurrent(const std::string &path, bool sanitize, bool removeHs,
                       bool strictParsing, unsigned int numWriterThreads,
                       size_t sizeInputQueue, size_t sizeOutputQueue,
                       unsigned int expectedResult, bool extras = false) {
@@ -244,7 +245,7 @@ void testSDProperties() {
   }
 }
 
-void testSDOld(std::string path, bool sanitize, bool removeHs,
+void testSDOld(const std::string &path, bool sanitize, bool removeHs,
                bool strictParsing, unsigned int expectedResult,
                bool extras = false) {
   unsigned int numMols = 0;
