@@ -94,7 +94,7 @@ void GetPointsFromPythonSequence(python::object &points,
 }
 
 PyObject *AlignPointPairs(python::object refPoints, python::object probePoints,
-                          python::object weights = python::list(),
+                          const python::object &weights = python::list(),
                           bool reflect = false,
                           unsigned int maxIterations = 50) {
   // The reference and probe points can be specified in two formats
