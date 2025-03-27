@@ -565,7 +565,8 @@ ROMol *TautomerEnumerator::pickCanonical(
 }
 
 ROMol *TautomerEnumerator::canonicalize(
-    const ROMol &mol, boost::function<int(const ROMol &mol)> scoreFunc) const {
+    const ROMol &mol,
+    const boost::function<int(const ROMol &mol)> &scoreFunc) const {
   auto thisCopy = TautomerEnumerator(*this);
   thisCopy.setReassignStereo(false);
   auto res = thisCopy.enumerate(mol);
@@ -578,7 +579,7 @@ ROMol *TautomerEnumerator::canonicalize(
 }
 
 void TautomerEnumerator::canonicalizeInPlace(
-    RWMol &mol, boost::function<int(const ROMol &mol)> scoreFunc) const {
+    RWMol &mol, const boost::function<int(const ROMol &mol)> &scoreFunc) const {
   auto thisCopy = TautomerEnumerator(*this);
   thisCopy.setReassignStereo(false);
   auto res = thisCopy.enumerate(mol);
