@@ -79,7 +79,7 @@ bool replaceFragments(RWMol &mol);
 
 // Add a Query to a molecule
 template <typename Q>
-Atom *addquery(Q *qry, std::string symbol, RWMol &mol, unsigned int idx) {
+Atom *addquery(Q *qry, const std::string& symbol, RWMol &mol, unsigned int idx) {
   PRECONDITION(qry, "bad query");
   auto *atm = mol.getAtomWithIdx(idx);
   auto qa = std::make_unique<QueryAtom>(*atm);
