@@ -137,8 +137,8 @@ class SparseIntVect {
       throw ValueErrorException("SparseIntVect size mismatch");
     }
 
-    typename StorageType::iterator iter = d_data.begin();
-    typename StorageType::const_iterator oIter = other.d_data.begin();
+    auto iter = d_data.begin();
+    auto oIter = other.d_data.begin();
     while (iter != d_data.end()) {
       // we're relying on the fact that the maps are sorted:
       while (oIter != other.d_data.end() && oIter->first < iter->first) {
@@ -154,7 +154,7 @@ class SparseIntVect {
       } else {
         // not there; our value is zero, which means
         // we should remove this value:
-        typename StorageType::iterator tmpIter = iter;
+        auto tmpIter = iter;
         ++tmpIter;
         d_data.erase(iter);
         iter = tmpIter;
@@ -176,8 +176,8 @@ class SparseIntVect {
       throw ValueErrorException("SparseIntVect size mismatch");
     }
 
-    typename StorageType::iterator iter = d_data.begin();
-    typename StorageType::const_iterator oIter = other.d_data.begin();
+    auto iter = d_data.begin();
+    auto oIter = other.d_data.begin();
     while (iter != d_data.end()) {
       // we're relying on the fact that the maps are sorted:
       while (oIter != other.d_data.end() && oIter->first < iter->first) {
