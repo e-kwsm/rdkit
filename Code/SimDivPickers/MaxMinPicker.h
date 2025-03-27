@@ -111,7 +111,7 @@ class RDKIT_SIMDIVPICKERS_EXPORT MaxMinPicker : public DistPicker {
    *                 random number.
    */
   RDKit::INT_VECT pick(const double *distMat, unsigned int poolSize,
-                       unsigned int pickSize, RDKit::INT_VECT firstPicks,
+                       unsigned int pickSize, const RDKit::INT_VECT &firstPicks,
                        int seed = -1) const {
     CHECK_INVARIANT(distMat, "Invalid Distance Matrix");
     if (!poolSize) {
