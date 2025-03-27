@@ -297,7 +297,7 @@ bool isLargerSP2Atom(const Atom *atom) {
 }  // namespace
 void _set13BoundsHelper(unsigned int aid1, unsigned int aid, unsigned int aid3,
                         double angle, const ComputedData &accumData,
-                        DistGeom::BoundsMatPtr mmat, const ROMol &mol) {
+                        const DistGeom::BoundsMatPtr &mmat, const ROMol &mol) {
   auto bid1 = mol.getBondBetweenAtoms(aid1, aid)->getIdx();
   auto bid2 = mol.getBondBetweenAtoms(aid, aid3)->getIdx();
   auto dl = RDGeom::compute13Dist(accumData.bondLengths[bid1],
@@ -799,7 +799,8 @@ void _setTwoInSameRing14Bounds(const ROMol &mol, const Bond *bnd1,
 void _setTwoInDiffRing14Bounds(const ROMol &mol, const Bond *bnd1,
                                const Bond *bnd2, const Bond *bnd3,
                                ComputedData &accumData,
-                               DistGeom::BoundsMatPtr mmat, double *dmat) {
+                               const DistGeom::BoundsMatPtr &mmat,
+                               double *dmat) {
   // this turns out to be very similar to all bonds in the same ring
   // situation.
   // There is probably some fine tuning that can be done when the atoms a2
@@ -812,7 +813,8 @@ void _setTwoInDiffRing14Bounds(const ROMol &mol, const Bond *bnd1,
 void _setShareRingBond14Bounds(const ROMol &mol, const Bond *bnd1,
                                const Bond *bnd2, const Bond *bnd3,
                                ComputedData &accumData,
-                               DistGeom::BoundsMatPtr mmat, double *dmat) {
+                               const DistGeom::BoundsMatPtr &mmat,
+                               double *dmat) {
   // once this turns out to be similar to bonds in the same ring
   _setInRing14Bounds(mol, bnd1, bnd2, bnd3, accumData, std::move(mmat), dmat,
                      0);
@@ -970,7 +972,7 @@ bool _checkAmideEster15(const ROMol &mol, const Bond *bnd1, const Bond *bnd3,
 
 void _setChain14Bounds(const ROMol &mol, const Bond *bnd1, const Bond *bnd2,
                        const Bond *bnd3, ComputedData &accumData,
-                       DistGeom::BoundsMatPtr mmat, double *,
+                       const DistGeom::BoundsMatPtr &mmat, double *,
                        bool forceTransAmides) {
   PRECONDITION(bnd1, "");
   PRECONDITION(bnd2, "");
@@ -1338,7 +1340,7 @@ void _setMacrocycleTwoInSameRing14Bounds(const ROMol &mol, const Bond *bnd1,
 void _setMacrocycleAllInSameRing14Bounds(const ROMol &mol, const Bond *bnd1,
                                          const Bond *bnd2, const Bond *bnd3,
                                          ComputedData &accumData,
-                                         DistGeom::BoundsMatPtr mmat,
+                                         const DistGeom::BoundsMatPtr &mmat,
                                          double *) {
   // This is adapted from `_setChain14Bounds`, with changes on how trans amide
   // is handled
