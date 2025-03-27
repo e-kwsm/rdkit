@@ -100,8 +100,7 @@ void set_fuse_label(Atom *atm, unsigned int idx) {
 }
 
 template <typename Q>
-Atom *addquery(Q *qry, const std::string &symbol, RWMol &mol,
-               unsigned int idx) {
+Atom *addquery(Q *qry, std::string symbol, RWMol &mol, unsigned int idx) {
   PRECONDITION(qry, "bad query");
   auto *atm = mol.getAtomWithIdx(idx);
   auto qa = std::make_unique<QueryAtom>(*atm);
@@ -502,7 +501,7 @@ bool parse_fragment(RWMol &mol, ptree &frag,
 }
 
 void set_reaction_data(
-    const std::string &type, const std::string &prop, SchemeInfo &scheme,
+    std::string type, std::string prop, SchemeInfo &scheme,
     const std::vector<unsigned int> &frag_ids,
     const std::map<unsigned int, size_t> &fragments,
     std::map<unsigned int, std::vector<int>> &grouped_fragments,
