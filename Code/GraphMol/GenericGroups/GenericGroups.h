@@ -177,7 +177,7 @@ RDKIT_GENERICGROUPS_EXPORT bool AlkynylHAtomMatcher(
 
 */
 RDKIT_GENERICGROUPS_EXPORT bool CarbocyclicAtomMatcher(
-    const ROMol &mol, const Atom &atom, boost::dynamic_bitset<> ignore);
+    const ROMol &mol, const Atom &atom, const boost::dynamic_bitset<> &ignore);
 
 //! Matches carbocyclic side chains or an H atom
 /*!
@@ -214,7 +214,7 @@ RDKIT_GENERICGROUPS_EXPORT bool CarbocyclicHAtomMatcher(
 
 */
 RDKIT_GENERICGROUPS_EXPORT bool CarbocycloalkylAtomMatcher(
-    const ROMol &mol, const Atom &atom, boost::dynamic_bitset<> ignore);
+    const ROMol &mol, const Atom &atom, const boost::dynamic_bitset<> &ignore);
 
 //! Matches cycloalkyl side chains or an H atom
 /*!
@@ -253,7 +253,7 @@ RDKIT_GENERICGROUPS_EXPORT bool CarbocycloalkylHAtomMatcher(
 
 */
 RDKIT_GENERICGROUPS_EXPORT bool CarbocycloalkenylAtomMatcher(
-    const ROMol &mol, const Atom &atom, boost::dynamic_bitset<> ignore);
+    const ROMol &mol, const Atom &atom, const boost::dynamic_bitset<> &ignore);
 //! Matches cycloalkenyl side chains or an H atom
 /*!
 
@@ -283,7 +283,7 @@ RDKIT_GENERICGROUPS_EXPORT bool CarbocycloalkenylHAtomMatcher(
 
 */
 RDKIT_GENERICGROUPS_EXPORT bool HeterocyclicAtomMatcher(
-    const ROMol &mol, const Atom &atom, boost::dynamic_bitset<> ignore);
+    const ROMol &mol, const Atom &atom, const boost::dynamic_bitset<> &ignore);
 
 //! Matches heterocyclic side chains or an H atom
 /*!
@@ -312,7 +312,7 @@ RDKIT_GENERICGROUPS_EXPORT bool HeterocyclicHAtomMatcher(
 
 */
 RDKIT_GENERICGROUPS_EXPORT bool CarboarylAtomMatcher(
-    const ROMol &mol, const Atom &atom, boost::dynamic_bitset<> ignore);
+    const ROMol &mol, const Atom &atom, const boost::dynamic_bitset<> &ignore);
 
 //! Matches aryl side chains or an H atom
 /*!
@@ -341,7 +341,7 @@ RDKIT_GENERICGROUPS_EXPORT bool CarboarylHAtomMatcher(
 
 */
 RDKIT_GENERICGROUPS_EXPORT bool HeteroarylAtomMatcher(
-    const ROMol &mol, const Atom &atom, boost::dynamic_bitset<> ignore);
+    const ROMol &mol, const Atom &atom, const boost::dynamic_bitset<> &ignore);
 
 //! Matches heteroaryl side chains or an H atom
 /*!
@@ -367,7 +367,7 @@ RDKIT_GENERICGROUPS_EXPORT bool HeteroarylHAtomMatcher(
 
 */
 RDKIT_GENERICGROUPS_EXPORT bool CyclicAtomMatcher(
-    const ROMol &mol, const Atom &atom, boost::dynamic_bitset<> ignore);
+    const ROMol &mol, const Atom &atom, const boost::dynamic_bitset<> &ignore);
 
 //! Matches cyclic side chains or an H atom
 /*!
@@ -503,7 +503,7 @@ RDKIT_GENERICGROUPS_EXPORT bool AlkoxyacyclicHAtomMatcher(
 
 */
 RDKIT_GENERICGROUPS_EXPORT bool NoCarbonRingAtomMatcher(
-    const ROMol &mol, const Atom &atom, boost::dynamic_bitset<> ignore);
+    const ROMol &mol, const Atom &atom, const boost::dynamic_bitset<> &ignore);
 
 //! Matches rings without carbon or just an H
 /*!
