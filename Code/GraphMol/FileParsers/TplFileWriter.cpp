@@ -20,7 +20,7 @@ namespace RDKit {
 namespace TPLWriter {
 void writeAtom(const ROMol &mol, unsigned int atomId,
                ROMol::ConstConformerIterator confIt, std::ostringstream &dest,
-               std::string partialChargeProp) {
+               const std::string &partialChargeProp) {
   const Atom *atom = mol.getAtomWithIdx(atomId);
   dest << atomId + 1;
   dest << " " << atom->getSymbol();

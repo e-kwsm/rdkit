@@ -27,7 +27,7 @@ class Conformer;
 
 namespace FileParserUtils {
 RDKIT_FILEPARSERS_EXPORT inline std::string_view strip(
-    std::string_view orig, std::string stripChars = " \t\r\n") {
+    std::string_view orig, const std::string &stripChars = " \t\r\n") {
   std::string_view res = orig;
   auto start = res.find_first_not_of(stripChars);
   if (start != std::string_view::npos) {
