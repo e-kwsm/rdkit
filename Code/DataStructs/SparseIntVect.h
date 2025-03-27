@@ -79,7 +79,7 @@ class SparseIntVect {
       throw IndexErrorException(static_cast<int>(idx));
     }
     int res = 0;
-    typename StorageType::const_iterator iter = d_data.find(idx);
+    auto iter = d_data.find(idx);
     if (iter != d_data.end()) {
       res = iter->second;
     }
