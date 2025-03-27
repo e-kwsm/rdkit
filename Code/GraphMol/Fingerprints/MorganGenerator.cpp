@@ -19,6 +19,7 @@
 #include <boost/dynamic_bitset.hpp>
 #include <RDGeneral/BoostEndInclude.h>
 #include <tuple>
+#include <utility>
 
 #include <GraphMol/Fingerprints/FingerprintUtil.h>
 #include <GraphMol/Chirality.h>
@@ -442,8 +443,8 @@ FingerprintGenerator<OutputType> *getMorganGenerator(
     std::vector<std::uint32_t> countBounds, bool ownsAtomInvGen,
     bool ownsBondInvGen) {
   MorganArguments arguments(radius, countSimulation, includeChirality,
-                            onlyNonzeroInvariants, countBounds, fpSize,
-                            includeRedundantEnvironments, useBondTypes);
+                            onlyNonzeroInvariants, std::move(countBounds),
+                            fpSize, includeRedundantEnvironments, useBondTypes);
 
   return getMorganGenerator<OutputType>(arguments, atomInvariantsGenerator,
                                         bondInvariantsGenerator, ownsAtomInvGen,
