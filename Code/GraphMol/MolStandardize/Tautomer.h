@@ -441,11 +441,11 @@ class RDKIT_MOLSTANDARDIZE_EXPORT TautomerEnumerator {
 
   */
   ROMol *canonicalize(const ROMol &mol,
-                      boost::function<int(const ROMol &mol)> scoreFunc =
+                      const boost::function<int(const ROMol &mol)> &scoreFunc =
                           TautomerScoringFunctions::scoreTautomer) const;
-  void canonicalizeInPlace(RWMol &mol,
-                           boost::function<int(const ROMol &mol)> scoreFunc =
-                               TautomerScoringFunctions::scoreTautomer) const;
+  void canonicalizeInPlace(
+      RWMol &mol, const boost::function<int(const ROMol &mol)> &scoreFunc =
+                      TautomerScoringFunctions::scoreTautomer) const;
 
  private:
   bool setTautomerStereoAndIsoHs(const ROMol &mol, ROMol &taut,
