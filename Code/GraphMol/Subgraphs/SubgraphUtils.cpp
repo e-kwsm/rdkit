@@ -94,8 +94,8 @@ ROMol *pathToSubmol(const ROMol &mol, const PATH_TYPE &path, bool useQuery,
          ++confIt) {
       auto *conf = new Conformer(subMol->getNumAtoms());
       conf->set3D((*confIt)->is3D());
-      for (INT_MAP_INT::const_iterator mapIt = atomIdxMap.begin();
-           mapIt != atomIdxMap.end(); ++mapIt) {
+      for (auto mapIt = atomIdxMap.begin(); mapIt != atomIdxMap.end();
+           ++mapIt) {
         conf->setAtomPos(mapIt->second, (*confIt)->getAtomPos(mapIt->first));
       }
       conf->setId((*confIt)->getId());
