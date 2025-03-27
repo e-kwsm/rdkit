@@ -33,8 +33,7 @@ struct urvg3d_pickle_suite : rdkit_pickle_suite {
 UniformRealValueGrid3D *makeUniformRealValueGrid3D(
     double dimX, double dimY, double dimZ, double spacing = 0.5,
     const Point3D *offSet = nullptr) {
-  UniformRealValueGrid3D *grd =
-      new UniformRealValueGrid3D(dimX, dimY, dimZ, spacing, offSet);
+  auto *grd = new UniformRealValueGrid3D(dimX, dimY, dimZ, spacing, offSet);
   return grd;
 }
 
