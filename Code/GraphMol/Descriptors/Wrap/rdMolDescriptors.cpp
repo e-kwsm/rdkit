@@ -413,9 +413,7 @@ MorganFingerprintHelper(const RDKit::ROMol &mol, unsigned int radius, int nBits,
   }
   if (bitInfoMap) {
     bitInfo.attr("clear")();
-    for (RDKit::MorganFingerprints::BitInfoMap::const_iterator iter =
-             bitInfoMap->begin();
-         iter != bitInfoMap->end(); ++iter) {
+    for (auto iter = bitInfoMap->begin(); iter != bitInfoMap->end(); ++iter) {
       const std::vector<std::pair<std::uint32_t, std::uint32_t>> &v =
           iter->second;
       python::list localL;
@@ -540,9 +538,7 @@ GetMorganFingerprintBV(const RDKit::ROMol &mol, unsigned int radius,
       false, bitInfoMap, includeRedundantEnvironments);
   if (bitInfoMap) {
     bitInfo.attr("clear")();
-    for (RDKit::MorganFingerprints::BitInfoMap::const_iterator iter =
-             bitInfoMap->begin();
-         iter != bitInfoMap->end(); ++iter) {
+    for (auto iter = bitInfoMap->begin(); iter != bitInfoMap->end(); ++iter) {
       const std::vector<std::pair<std::uint32_t, std::uint32_t>> &v =
           iter->second;
       python::list localL;

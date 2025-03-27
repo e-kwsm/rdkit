@@ -451,8 +451,7 @@ class PyMCSParameters : public boost::noncopyable {
                                    const ROMol &mol2, unsigned int atom2,
                                    void *userData) {
     PRECONDITION(userData, "userData must not be NULL");
-    PyCompareFunctionUserData *cfud =
-        static_cast<PyCompareFunctionUserData *>(userData);
+    auto *cfud = static_cast<PyCompareFunctionUserData *>(userData);
     CHECK_INVARIANT(cfud, "");
     bool res = false;
     {
@@ -468,8 +467,7 @@ class PyMCSParameters : public boost::noncopyable {
                                    const ROMol &mol2, unsigned int bond2,
                                    void *userData) {
     PRECONDITION(userData, "userData must not be NULL");
-    PyCompareFunctionUserData *cfud =
-        static_cast<PyCompareFunctionUserData *>(userData);
+    auto *cfud = static_cast<PyCompareFunctionUserData *>(userData);
     CHECK_INVARIANT(cfud, "");
     bool res = false;
     {
@@ -484,8 +482,7 @@ class PyMCSParameters : public boost::noncopyable {
                                         const MCSParameters &params,
                                         void *userData) {
     PRECONDITION(userData, "userData must not be NULL");
-    PyProgressCallbackUserData *pcud =
-        static_cast<PyProgressCallbackUserData *>(userData);
+    auto *pcud = static_cast<PyProgressCallbackUserData *>(userData);
     bool res = false;
     CHECK_INVARIANT(pcud, "");
     MCSParameters paramsCopy(params);
@@ -507,9 +504,8 @@ class PyMCSParameters : public boost::noncopyable {
       const FMCS::Graph &query, const ROMol &mol2, const FMCS::Graph &target,
       const MCSParameters *params) {
     PRECONDITION(params, "params must not be NULL");
-    PyMCSFinalMatchCheckFunctionUserData *fmud =
-        static_cast<PyMCSFinalMatchCheckFunctionUserData *>(
-            params->FinalMatchCheckerUserData);
+    auto *fmud = static_cast<PyMCSFinalMatchCheckFunctionUserData *>(
+        params->FinalMatchCheckerUserData);
     CHECK_INVARIANT(fmud, "");
     bool res = false;
     {
@@ -555,9 +551,8 @@ class PyMCSParameters : public boost::noncopyable {
       const std::vector<std::pair<int, int>> &bondIdxMatch,
       const MCSParameters *params) {
     PRECONDITION(params, "params must not be NULL");
-    PyMCSAcceptanceFunctionUserData *afud =
-        static_cast<PyMCSAcceptanceFunctionUserData *>(
-            params->ShouldAcceptMCSUserData);
+    auto *afud = static_cast<PyMCSAcceptanceFunctionUserData *>(
+        params->ShouldAcceptMCSUserData);
     CHECK_INVARIANT(afud, "");
     bool res = false;
     {
