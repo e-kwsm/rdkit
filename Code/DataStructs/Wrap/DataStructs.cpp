@@ -57,11 +57,11 @@ void converter(const T &v, const python::object &destArray, U func) {
 }  // namespace
 
 template <typename T>
-void convertToIntNumpyArray(const T &v, python::object destArray) {
+void convertToIntNumpyArray(const T &v, const python::object &destArray) {
   converter(v, std::move(destArray), PyLong_FromLong);
 }
 template <typename T>
-void convertToDoubleNumpyArray(const T &v, python::object destArray) {
+void convertToDoubleNumpyArray(const T &v, const python::object &destArray) {
   converter(v, std::move(destArray), PyFloat_FromDouble);
 }
 
