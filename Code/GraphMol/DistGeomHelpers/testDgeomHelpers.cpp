@@ -751,11 +751,10 @@ void testIssue285() {
   TEST_ASSERT(cids.size() == tgtNumber);
 
   std::vector<std::string> molBlocks;
-  for (INT_VECT_CI cid = cids.cbegin(); cid != cids.cend(); ++cid) {
+  for (auto cid = cids.cbegin(); cid != cids.cend(); ++cid) {
     molBlocks.push_back(MolToMolBlock(*m, true, *cid));
   }
-  for (std::vector<std::string>::const_iterator mbI = molBlocks.cbegin();
-       mbI != molBlocks.cend(); ++mbI) {
+  for (auto mbI = molBlocks.cbegin(); mbI != molBlocks.cend(); ++mbI) {
     for (auto mbJ = mbI + 1; mbJ != molBlocks.end(); ++mbJ) {
       TEST_ASSERT((*mbI) != (*mbJ));
     }
@@ -941,7 +940,7 @@ void testConstrainedEmbedding() {
   }
 
   {
-    RWMol *test = static_cast<RWMol *>(sdsup.next());
+    auto *test = static_cast<RWMol *>(sdsup.next());
     MolOps::addHs(*test);
     std::map<int, RDGeom::Point3D> coords;
     coords[4] = ref->getConformer().getAtomPos(0);

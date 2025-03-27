@@ -149,8 +149,7 @@ void testUFFTyper2() {
   boost::tie(types, foundAll) = UFF::getAtomTypes(*mol);
   TEST_ASSERT(foundAll);
   TEST_ASSERT(types.size() == mol->getNumAtoms());
-  for (UFF::AtomicParamVect::const_iterator it = types.cbegin();
-       it != types.cend(); it++) {
+  for (auto it = types.cbegin(); it != types.cend(); it++) {
     TEST_ASSERT((*it));
   }
   mol2 = MolOps::addHs(*mol);
@@ -158,8 +157,7 @@ void testUFFTyper2() {
   boost::tie(types, foundAll) = UFF::getAtomTypes(*mol2);
   TEST_ASSERT(foundAll);
   TEST_ASSERT(types.size() == mol2->getNumAtoms());
-  for (UFF::AtomicParamVect::const_iterator it = types.cbegin();
-       it != types.cend(); it++) {
+  for (auto it = types.cbegin(); it != types.cend(); it++) {
     TEST_ASSERT((*it));
   }
   delete mol2;
@@ -1006,7 +1004,7 @@ void testGitHubIssue62() {
         38.687, 174.698, 337.986, 115.248, 2.482,   1.918,  10.165,  99.492,
         41.016, 267.236, 15.747,  203.398, 206.852, 20.044, 218.879, 79.614};
     SmilesMolSupplier smiSupplier(pathName + "/Issue62.smi");
-    SDWriter *sdfWriter = new SDWriter(pathName + "/Issue62.sdf");
+    auto *sdfWriter = new SDWriter(pathName + "/Issue62.sdf");
     for (unsigned int i = 0; i < smiSupplier.length(); ++i) {
       auto *tmp = smiSupplier[i];
       ROMol *mol = MolOps::addHs(*tmp);

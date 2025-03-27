@@ -155,7 +155,7 @@ RDKit::INT_VECT MaxMinPicker::lazyPick(T &func, unsigned int poolSize,
 
   RDKit::INT_VECT picks;
 
-  unsigned int memsize = (unsigned int)(poolSize * sizeof(MaxMinPickInfo));
+  auto memsize = (unsigned int)(poolSize * sizeof(MaxMinPickInfo));
   std::unique_ptr<MaxMinPickInfo[]> pinfo(new MaxMinPickInfo[memsize]);
   memset(pinfo.get(), 0, memsize);
 
@@ -185,8 +185,7 @@ RDKit::INT_VECT MaxMinPicker::lazyPick(T &func, unsigned int poolSize,
     picked = 1;
 
   } else {
-    for (RDKit::INT_VECT::const_iterator pIdx = firstPicks.cbegin();
-         pIdx != firstPicks.cend(); ++pIdx) {
+    for (auto pIdx = firstPicks.cbegin(); pIdx != firstPicks.cend(); ++pIdx) {
       pick = static_cast<unsigned int>(*pIdx);
       if (pick >= poolSize) {
         throw ValueErrorException("pick index was larger than the poolSize");

@@ -765,7 +765,7 @@ void ParseMol2AtomBlock(std::istream *inStream, RWMol *res, unsigned int nAtoms,
   }
   // create conformer based on 3DPoints and add to RWMol
   auto *conf = new Conformer(nAtoms - nLP);
-  std::vector<RDGeom::Point3D>::const_iterator threeDPsIt = threeDPs.cbegin();
+  auto threeDPsIt = threeDPs.cbegin();
   for (unsigned int i = 0; i < threeDPs.size(); ++i) {
     conf->setAtomPos(i, *threeDPsIt);
     ++threeDPsIt;

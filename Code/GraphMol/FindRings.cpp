@@ -172,8 +172,7 @@ void findSSSRforDupCands(const ROMol &mol, VECT_INT_VECT &res,
         // now find the smallest ring/s around (*dupi)
         VECT_INT_VECT srings;
         bfs_workspace.smallestRingsBfs(mol, dupCand, srings, activeBondsCopy);
-        for (VECT_INT_VECT_CI sri = srings.cbegin(); sri != srings.cend();
-             ++sri) {
+        for (auto sri = srings.cbegin(); sri != srings.cend(); ++sri) {
           if (sri->size() < minSiz) {
             minSiz = rdcast<unsigned int>(sri->size());
           }
@@ -206,7 +205,7 @@ void removeExtraRings(VECT_INT_VECT &res, unsigned int, const ROMol &mol) {
   RingUtils::convertToBonds(res, brings, mol);
   std::vector<boost::dynamic_bitset<>> bitBrings;
   bitBrings.reserve(brings.size());
-  for (VECT_INT_VECT_CI vivi = brings.cbegin(); vivi != brings.cend(); ++vivi) {
+  for (auto vivi = brings.cbegin(); vivi != brings.cend(); ++vivi) {
     boost::dynamic_bitset<> lring(mol.getNumBonds());
     for (int ivi : *vivi) {
       lring.set(ivi);
@@ -420,7 +419,7 @@ void findRingsD3Node(const ROMol &tMol, VECT_INT_VECT &res,
   BFSWorkspace bfs_workspace;
   nsmall = bfs_workspace.smallestRingsBfs(tMol, cand, srings, activeBonds);
 
-  for (VECT_INT_VECT_CI sri = srings.cbegin(); sri != srings.cend(); ++sri) {
+  for (auto sri = srings.cbegin(); sri != srings.cend(); ++sri) {
     const INT_VECT &nring = (*sri);
     auto invr = RingUtils::computeRingInvariant(nring, tMol.getNumAtoms());
     if (invars.find(invr) == invars.end()) {
@@ -484,8 +483,7 @@ void findRingsD3Node(const ROMol &tMol, VECT_INT_VECT &res,
       INT_VECT forb;
       forb.push_back(f);
       bfs_workspace.smallestRingsBfs(tMol, cand, trings, activeBonds, &forb);
-      for (VECT_INT_VECT_CI sri = trings.cbegin(); sri != trings.cend();
-           ++sri) {
+      for (auto sri = trings.cbegin(); sri != trings.cend(); ++sri) {
         const INT_VECT &nring = (*sri);
         auto invr = RingUtils::computeRingInvariant(nring, tMol.getNumAtoms());
 
@@ -525,8 +523,7 @@ void findRingsD3Node(const ROMol &tMol, VECT_INT_VECT &res,
       INT_VECT forb;
       forb.push_back(f2);
       bfs_workspace.smallestRingsBfs(tMol, cand, trings, activeBonds, &forb);
-      for (VECT_INT_VECT_CI sri = trings.cbegin(); sri != trings.cend();
-           ++sri) {
+      for (auto sri = trings.cbegin(); sri != trings.cend(); ++sri) {
         const INT_VECT &nring = (*sri);
         auto invr = RingUtils::computeRingInvariant(nring, tMol.getNumAtoms());
         if (invars.find(invr) == invars.end()) {
@@ -540,8 +537,7 @@ void findRingsD3Node(const ROMol &tMol, VECT_INT_VECT &res,
       forb.clear();
       forb.push_back(f1);
       bfs_workspace.smallestRingsBfs(tMol, cand, trings, activeBonds, &forb);
-      for (VECT_INT_VECT_CI sri = trings.cbegin(); sri != trings.cend();
-           ++sri) {
+      for (auto sri = trings.cbegin(); sri != trings.cend(); ++sri) {
         const INT_VECT &nring = (*sri);
         auto invr = RingUtils::computeRingInvariant(nring, tMol.getNumAtoms());
         if (invars.find(invr) == invars.end()) {
@@ -973,8 +969,7 @@ int findSSSR(const ROMol &mol, VECT_INT_VECT &res, bool includeDativeBonds,
         // this is brutal - we have no degree 2 nodes - find the first
         // possible degree 3 node
         int cand = -1;
-        for (INT_VECT_CI aidi = curFrag.cbegin(); aidi != curFrag.cend();
-             aidi++) {
+        for (auto aidi = curFrag.cbegin(); aidi != curFrag.cend(); aidi++) {
           unsigned int deg = atomDegrees[*aidi];
           if (deg == 3) {
             cand = (*aidi);
@@ -1059,8 +1054,7 @@ int findSSSR(const ROMol &mol, VECT_INT_VECT &res, bool includeDativeBonds,
     }
 
     res.reserve(res.size() + fragRes.size());
-    for (VECT_INT_VECT::const_iterator iter = fragRes.cbegin();
-         iter != fragRes.cend(); ++iter) {
+    for (auto iter = fragRes.cbegin(); iter != fragRes.cend(); ++iter) {
       res.push_back(*iter);
     }
   }  // done with all fragments

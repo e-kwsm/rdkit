@@ -86,8 +86,7 @@ class PDBInfo {
     if (!m_atom_name || !m_atom_name->isDefined(atom_num)) {
       return;  // Need a PDB atom name to populate info
     }
-    AtomPDBResidueInfo *rd_info =
-        new AtomPDBResidueInfo(m_atom_name->at(atom_num));
+    auto *rd_info = new AtomPDBResidueInfo(m_atom_name->at(atom_num));
 
     atom->setMonomerInfo(rd_info);
 

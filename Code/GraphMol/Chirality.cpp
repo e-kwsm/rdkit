@@ -1616,8 +1616,8 @@ void findChiralAtomSpecialCases(ROMol &mol,
             ringAtomEntry < 0 ? -ringAtomEntry - 1 : ringAtomEntry - 1;
         same[ringAtomIdx] = ringAtomEntry;
       }
-      for (INT_VECT_CI rae = ringStereoAtoms.cbegin();
-           rae != ringStereoAtoms.cend(); ++rae) {
+      for (auto rae = ringStereoAtoms.cbegin(); rae != ringStereoAtoms.cend();
+           ++rae) {
         int ringAtomEntry = *rae;
         int ringAtomIdx =
             ringAtomEntry < 0 ? -ringAtomEntry - 1 : ringAtomEntry - 1;
@@ -1791,8 +1791,7 @@ std::pair<bool, bool> assignAtomChiralCodes(ROMol &mol, UINT_VECT &ranks,
 
         // collect the list of neighbor indices:
         std::list<int> nbrIndices;
-        for (Chirality::INT_PAIR_VECT_CI nbrIt = nbrs.cbegin();
-             nbrIt != nbrs.cend(); ++nbrIt) {
+        for (auto nbrIt = nbrs.cbegin(); nbrIt != nbrs.cend(); ++nbrIt) {
           nbrIndices.push_back((*nbrIt).second);
         }
         // ask the atom how many swaps we have to make:

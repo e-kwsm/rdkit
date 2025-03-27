@@ -175,8 +175,7 @@ bool AllProbeBitsMatch(const T1 &probe, const std::string &pkl) {
 
   // for(int i=0;i<probe.getNumBits();i++){
   //  if(probe.getBit(i)){
-  for (std::vector<int>::const_iterator i = obl.cbegin(); i != obl.cend();
-       i++) {
+  for (auto i = obl.cbegin(); i != obl.cend(); i++) {
     while (currBit < *i && nOn > 0) {
       if (format == 2) {
         currBit++;

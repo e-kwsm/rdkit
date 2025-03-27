@@ -319,8 +319,7 @@ ExplicitBitVect *LayeredFingerprintMol(
         tPaths =
             findAllPathsOfLengthsMtoN(mol, minPath, maxPath, true, false, aidx);
       }
-      for (INT_PATH_LIST_MAP::const_iterator tpit = tPaths.cbegin();
-           tpit != tPaths.cend(); ++tpit) {
+      for (auto tpit = tPaths.cbegin(); tpit != tPaths.cend(); ++tpit) {
         allPaths[tpit->first].insert(allPaths[tpit->first].begin(),
                                      tpit->second.begin(), tpit->second.end());
       }
@@ -329,8 +328,7 @@ ExplicitBitVect *LayeredFingerprintMol(
 
   boost::dynamic_bitset<> atomsInPath(mol.getNumAtoms());
   boost::dynamic_bitset<> bondsInPath(mol.getNumBonds());
-  for (INT_PATH_LIST_MAP_CI paths = allPaths.cbegin(); paths != allPaths.cend();
-       ++paths) {
+  for (auto paths = allPaths.cbegin(); paths != allPaths.cend(); ++paths) {
     for (const auto &path : paths->second) {
 #ifdef VERBOSE_FINGERPRINTING
       std::cerr << "Path: ";

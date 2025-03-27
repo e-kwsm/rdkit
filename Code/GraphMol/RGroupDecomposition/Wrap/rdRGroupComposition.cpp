@@ -140,8 +140,7 @@ class RGroupDecompositionHelper {
 
     RGroupColumns groups = decomp->getRGroupsAsColumns();
 
-    for (RGroupColumns::const_iterator it = groups.cbegin();
-         it != groups.cend(); ++it) {
+    for (auto it = groups.cbegin(); it != groups.cend(); ++it) {
       python::list col;
 
       for (const auto &cit : it->second) {
