@@ -890,7 +890,7 @@ ROMol *_renumber(const ROMol *m, std::vector<unsigned int> &nVect,
   return nm;
 }
 
-void _renumberTest(const ROMol *m, const std::string &inSmiles,
+void _renumberTest(const ROMol *m, std::string inSmiles,
                    unsigned int numRenumbers) {
   PRECONDITION(m, "no molecule");
   //    std::cerr<<">>>>>>>>>>>>>>>>>>>>>>>>>>>"<<std::endl;
@@ -929,7 +929,7 @@ void _renumberTest(const ROMol *m, const std::string &inSmiles,
   }
 }
 
-void _renumberTest2(const ROMol *m, const std::string &inSmiles,
+void _renumberTest2(const ROMol *m, std::string inSmiles,
                     unsigned int numRenumbers) {
   PRECONDITION(m, "no molecule");
 

@@ -1,5 +1,3 @@
-#include <utility>
-
 //
 //  Copyright (C) 2024 greg landrum and other RDKit contributors
 //
@@ -423,12 +421,12 @@ class RDKIT_FILEPARSERS_EXPORT MaeMolSupplier : public MolSupplier {
   using ContainedType = v2::FileParsers::MaeMolSupplier;
   MaeMolSupplier() { dp_supplier.reset(new ContainedType()); }
 
-  explicit MaeMolSupplier(const std::shared_ptr<std::istream> &inStream,
+  explicit MaeMolSupplier(std::shared_ptr<std::istream> inStream,
                           bool sanitize = true, bool removeHs = true) {
     v2::FileParsers::MaeMolSupplierParams params;
     params.sanitize = sanitize;
     params.removeHs = removeHs;
-    dp_supplier.reset(new ContainedType(std::move(inStream), params));
+    dp_supplier.reset(new ContainedType(inStream, params));
   }
 
   explicit MaeMolSupplier(std::istream *inStream, bool takeOwnership = true,
