@@ -100,7 +100,7 @@ class RDKIT_QUERY_EXPORT Query {
   }
 
   //! adds a child to our list of children
-  void addChild(CHILD_TYPE child) { this->d_children.push_back(child); }
+  void addChild(const CHILD_TYPE &child) { this->d_children.push_back(child); }
   //! returns an iterator for the beginning of our child vector
   CHILD_VECT_CI beginChildren() const { return this->d_children.begin(); }
   //! returns an iterator for the end of our child vector
