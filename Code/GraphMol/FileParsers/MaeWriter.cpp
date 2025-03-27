@@ -16,6 +16,7 @@
 #include <regex>
 #include <sstream>
 #include <string>
+#include <utility>
 #include <vector>
 
 #include <maeparser/MaeBlock.hpp>
@@ -128,11 +129,12 @@ getIndexedProperty<std::string>(mae::IndexedBlock &indexedBlock,
 
 void copyProperties(
     const RDProps &origin, const STR_VECT &propNames, unsigned idx,
-    std::function<void(const std::string &, unsigned, bool)> boolSetter,
-    std::function<void(const std::string &, unsigned, int)> intSetter,
-    std::function<void(const std::string &, unsigned, double)> realSetter,
-    std::function<void(const std::string &, unsigned, const std::string &)>
-        stringSetter) {
+    const std::function<void(const std::string &, unsigned, bool)> &boolSetter,
+    const std::function<void(const std::string &, unsigned, int)> &intSetter,
+    const std::function<void(const std::string &, unsigned, double)>
+        &realSetter,
+    const std::function<void(const std::string &, unsigned,
+                             const std::string &)> &stringSetter) {
   // Map other properties, but first clear out the computed ones,
   // since we don't want to export these.
   origin.clearComputedProps();
@@ -368,8 +370,9 @@ void mapAtom(
   }
 
   // Custom properties
-  copyProperties(atom, propNames, idx, boolSetter, intSetter, realSetter,
-                 stringSetter);
+  copyProperties(atom, propNames, idx, std::move(boolSetter),
+                 std::move(intSetter), std::move(realSetter),
+                 std::move(stringSetter));
 }
 
 void mapAtoms(const ROMol &mol, const STR_VECT &propNames, int confId,
@@ -442,8 +445,9 @@ void mapBond(
   }
 
   // Custom properties
-  copyProperties(bond, propNames, idx, boolSetter, intSetter, realSetter,
-                 stringSetter);
+  copyProperties(bond, propNames, idx, std::move(boolSetter),
+                 std::move(intSetter), std::move(realSetter),
+                 std::move(stringSetter));
 }
 
 void mapBonds(const ROMol &mol, const STR_VECT &propNames,
