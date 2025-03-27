@@ -392,7 +392,7 @@ class RDKIT_MOLSTANDARDIZE_EXPORT TautomerEnumerator {
                 !std::is_same<Iterable, TautomerEnumeratorResult>::value,
                 int>::type = 0>
   ROMol *pickCanonical(const Iterable &tautomers,
-                       boost::function<int(const ROMol &mol)> scoreFunc =
+                       const boost::function<int(const ROMol &mol)> &scoreFunc =
                            TautomerScoringFunctions::scoreTautomer) const {
     ROMOL_SPTR bestMol;
     if (tautomers.size() == 1) {
