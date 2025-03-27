@@ -120,20 +120,18 @@ void MolDebug(const ROMol &mol, bool useStdout) {
 QueryAtomIterSeq *MolGetAromaticAtoms(const ROMOL_SPTR &mol) {
   auto *qa = new QueryAtom();
   qa->setQuery(makeAtomAromaticQuery());
-  QueryAtomIterSeq *res =
-      new QueryAtomIterSeq(mol, mol->beginQueryAtoms(qa), mol->endQueryAtoms(),
-                           AtomCountFunctor(mol));
+  auto *res = new QueryAtomIterSeq(mol, mol->beginQueryAtoms(qa),
+                                   mol->endQueryAtoms(), AtomCountFunctor(mol));
   return res;
 }
 QueryAtomIterSeq *MolGetQueryAtoms(const ROMOL_SPTR &mol, QueryAtom *qa) {
-  QueryAtomIterSeq *res =
-      new QueryAtomIterSeq(mol, mol->beginQueryAtoms(qa), mol->endQueryAtoms(),
-                           AtomCountFunctor(mol));
+  auto *res = new QueryAtomIterSeq(mol, mol->beginQueryAtoms(qa),
+                                   mol->endQueryAtoms(), AtomCountFunctor(mol));
   return res;
 }
 
 ConformerIterSeq *GetMolConformers(const ROMOL_SPTR &mol) {
-  ConformerIterSeq *res =
+  auto *res =
       new ConformerIterSeq(mol, mol->beginConformers(), mol->endConformers(),
                            ConformerCountFunctor(mol));
   return res;
