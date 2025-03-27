@@ -978,7 +978,7 @@ void ParseV3000CStateLabel(RWMol *mol, SubstanceGroup &sgroup,
   unsigned int bondMark;
   stream >> count >> bondMark;
 
-  std::string type = sgroup.getProp<std::string>("TYPE");
+  auto type = sgroup.getProp<std::string>("TYPE");
 
   if ((type != "SUP" && count != 1) || (type == "SUP" && count != 4)) {
     std::ostringstream errout;
