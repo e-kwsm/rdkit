@@ -21,8 +21,6 @@
 #include <RDBoost/import_array.h>
 #include <RDBoost/pyint_api.h>
 
-#include <utility>
-
 namespace python = boost::python;
 
 void wrap_SBV();
@@ -36,7 +34,7 @@ void wrap_FPB();
 
 namespace {
 template <typename T, typename U>
-void converter(const T &v, const python::object &destArray, U func) {
+void converter(const T &v, python::object destArray, U func) {
   if (!PyArray_Check(destArray.ptr())) {
     throw_value_error("Expecting a Numeric array object");
   }
@@ -57,12 +55,12 @@ void converter(const T &v, const python::object &destArray, U func) {
 }  // namespace
 
 template <typename T>
-void convertToIntNumpyArray(const T &v, const python::object &destArray) {
-  converter(v, std::move(destArray), PyLong_FromLong);
+void convertToIntNumpyArray(const T &v, python::object destArray) {
+  converter(v, destArray, PyLong_FromLong);
 }
 template <typename T>
-void convertToDoubleNumpyArray(const T &v, const python::object &destArray) {
-  converter(v, std::move(destArray), PyFloat_FromDouble);
+void convertToDoubleNumpyArray(const T &v, python::object destArray) {
+  converter(v, destArray, PyFloat_FromDouble);
 }
 
 BOOST_PYTHON_MODULE(cDataStructs) {

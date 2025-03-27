@@ -113,8 +113,7 @@ void SmilesMolSupplier::reset() {
   }
 }
 
-std::unique_ptr<RWMol> SmilesMolSupplier::processLine(
-    const std::string &inLine) {
+std::unique_ptr<RWMol> SmilesMolSupplier::processLine(std::string inLine) {
   std::unique_ptr<RWMol> res;
 
   try {
