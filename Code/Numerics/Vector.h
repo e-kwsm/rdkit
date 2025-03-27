@@ -20,6 +20,7 @@
 #include <ctime>
 #include <boost/random.hpp>
 #include <boost/smart_ptr.hpp>
+#include <utility>
 
 static constexpr double zero_tolerance = 1.e-16;
 
@@ -57,7 +58,7 @@ class Vector {
   */
   Vector(unsigned int N, DATA_SPTR data) {  // TYPE *data) {
     d_size = N;
-    d_data = data;
+    d_data = std::move(data);
   }
 
   //! copy constructor
