@@ -29,6 +29,7 @@
 #include <fstream>
 #include <boost/lexical_cast.hpp>
 #include <filesystem>
+#include <utility>
 using namespace RDKit;
 
 class MolAtropTest {
@@ -54,7 +55,7 @@ class MolAtropTest {
             int atomCountInit, int bondCountInit)
         : atomCount(atomCountInit),
           bondCount(bondCountInit),
-          fileName(fileNameInit),
+          fileName(std::move(fileNameInit)),
           expectedResult(expectedResultInit) {};
   };
 
@@ -70,13 +71,13 @@ class MolAtropTest {
                bool expectedResultInit, int atomCountInit, int bondCountInit)
         : atomCount(atomCountInit),
           bondCount(bondCountInit),
-          smiles(smilesInit),
-          expectedOutput(nameInit),
+          smiles(std::move(smilesInit)),
+          expectedOutput(std::move(nameInit)),
           expectedResult(expectedResultInit) {};
   };
 
-  void generateNewExpectedFilesIfSoSpecified(std::string filename,
-                                             std::string dataToWrite) {
+  void generateNewExpectedFilesIfSoSpecified(const std::string &filename,
+                                             const std::string &dataToWrite) {
     if (generateExpectedFiles) {
       std::ofstream out;
       out.open(filename);
@@ -84,7 +85,7 @@ class MolAtropTest {
     }
   }
 
-  std::string GetExpectedValue(std::string expectedFileName) {
+  std::string GetExpectedValue(const std::string &expectedFileName) {
     std::stringstream expectedMolStr;
     std::ifstream in;
     in.open(expectedFileName);
@@ -195,7 +196,8 @@ class MolAtropTest {
     testAromAtropMol(mol.get(), molFileTest->expectedResult, fName);
   }
 
-  void testAromAtropMol(RWMol *mol, bool expectedResult, std::string fName) {
+  void testAromAtropMol(RWMol *mol, bool expectedResult,
+                        const std::string &fName) {
     try {
       RDKit::Chirality::removeNonExplicit3DChirality(*mol);
 
@@ -253,7 +255,7 @@ class MolAtropTest {
     TEST_ASSERT(expectedResult == true);
   }
 
-  void testKekuleWedgeError(RWMol *mol, std::string expectedSmi,
+  void testKekuleWedgeError(RWMol *mol, const std::string &expectedSmi,
                             bool expectedResult, unsigned int expectedAtomCount,
                             unsigned int expectedBondCount) {
     BOOST_LOG(rdInfoLog) << "testing aromatic atropisomers" << std::endl;
@@ -509,7 +511,7 @@ class MolAtropTest {
   }
 };
 
-void testLookForAtropisomersInSDdfFiles(std::string fileName,
+void testLookForAtropisomersInSDdfFiles(const std::string &fileName,
                                         unsigned int expectedHits,
                                         unsigned int expectedMisses) {
   BOOST_LOG(rdInfoLog) << "Looking for atropisomers in " << fileName
