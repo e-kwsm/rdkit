@@ -611,12 +611,10 @@ void testSubstructMatchDMAP() {
 }
 
 void setResidueFormalCharge(RWMol *mol, std::vector<RWMol *> &res, int fc) {
-  for (std::vector<RWMol *>::const_iterator it = res.begin(); it != res.end();
-       ++it) {
+  for (auto it = res.begin(); it != res.end(); ++it) {
     std::vector<MatchVectType> matchVect;
     SubstructMatch(*mol, *(*it), matchVect);
-    for (std::vector<MatchVectType>::const_iterator it = matchVect.begin();
-         it != matchVect.end(); ++it) {
+    for (auto it = matchVect.begin(); it != matchVect.end(); ++it) {
       mol->getAtomWithIdx((*it).back().second)->setFormalCharge(fc);
     }
   }
@@ -670,8 +668,7 @@ void testCrambin() {
   TEST_ASSERT(query);
   res.push_back(query);
   setResidueFormalCharge(crambin, res, 1);
-  for (std::vector<RWMol *>::const_iterator it = res.begin(); it != res.end();
-       ++it) {
+  for (auto it = res.begin(); it != res.end(); ++it) {
     delete *it;
   }
   res.clear();
@@ -680,8 +677,7 @@ void testCrambin() {
   TEST_ASSERT(query);
   res.push_back(query);
   setResidueFormalCharge(crambin, res, -1);
-  for (std::vector<RWMol *>::const_iterator it = res.begin(); it != res.end();
-       ++it) {
+  for (auto it = res.begin(); it != res.end(); ++it) {
     delete *it;
   }
   auto *resMolSupplST = new ResonanceMolSupplier((ROMol &)*crambin);
@@ -927,7 +923,7 @@ void testGitHub2597() {
     delete resMolSuppl;
     resMolSuppl = new ResonanceMolSupplier(
         *mol, ResonanceMolSupplier::ALLOW_CHARGE_SEPARATION);
-    MyCallBack *callback = new MyCallBack();
+    auto *callback = new MyCallBack();
     resMolSuppl->setProgressCallback(callback);
     TEST_ASSERT(resMolSuppl->getProgressCallback() == callback);
     TEST_ASSERT(resMolSuppl->length() == 12);
