@@ -859,7 +859,7 @@ ROMol *MurckoDecompose(const ROMol &mol) {
 }
 
 ROMol *combineMols(const ROMol &mol1, const ROMol &mol2,
-                   RDGeom::Point3D offset) {
+                   const RDGeom::Point3D &offset) {
   auto *res = new RWMol(mol1);
   int nAtoms1 = res->getNumAtoms();
   res->insertMol(mol2);
