@@ -164,7 +164,7 @@ std::vector<T> makeVec() {
 }
 
 template <class T>
-void testProp(T val) {
+void testProp(const T &val) {
   std::stringstream ss;
 
   {
