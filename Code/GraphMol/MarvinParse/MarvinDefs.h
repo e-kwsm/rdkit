@@ -53,7 +53,7 @@ enum IsSgroupInAtomSetResult {
 
 class MarvinWriterException : public std::runtime_error {
  public:
-  explicit MarvinWriterException(const std::string &message)
+  explicit MarvinWriterException(std::string message)
       : std::runtime_error(message) {};
 };
 
@@ -265,8 +265,8 @@ class MarvinMolBase {
 
   virtual ~MarvinMolBase();
 
-  int getAtomIndex(const std::string &id) const;
-  int getBondIndex(const std::string &id) const;
+  int getAtomIndex(std::string id) const;
+  int getBondIndex(std::string id) const;
 
   const std::vector<std::string> getBondList() const;
   const std::vector<std::string> getAtomList() const;
@@ -321,8 +321,8 @@ class MarvinMolBase {
   static bool atomRefInAtoms(MarvinAtom *a, std::string b);
   static bool bondRefInBonds(MarvinBond *a, std::string b);
   static bool molIDInSgroups(std::string a, std::string b);
-  MarvinAtom *findAtomByRef(const std::string &atomId);
-  MarvinBond *findBondByRef(const std::string &atomId);
+  MarvinAtom *findAtomByRef(std::string atomId);
+  MarvinBond *findBondByRef(std::string atomId);
 
   void prepSgroupsForRDKit();
   void processSgroupsFromRDKit();
@@ -350,7 +350,7 @@ class MarvinSruCoModSgroup : public MarvinMolBase {
                          // MarvinModificationSgroup
  public:
   MarvinMolBase *copyMol(const std::string &idAppend) const override;
-  MarvinSruCoModSgroup(const std::string &type, MarvinMolBase *parent);
+  MarvinSruCoModSgroup(std::string type, MarvinMolBase *parent);
   MarvinSruCoModSgroup(MarvinMolBase *parent, std::string role, ptree &molTree);
 
   std::string title;
@@ -435,7 +435,7 @@ class MarvinMultipleSgroup : public MarvinMolBase {
 
   void expandOneMultipleSgroup();
   void contractOneMultipleSgroup();
-  int getMatchedOrphanBondIndex(const std::string &atomIdToCheck,
+  int getMatchedOrphanBondIndex(std::string atomIdToCheck,
                                 std::vector<MarvinBond *> &bondsToTry,
                                 std::vector<MarvinBond *> &orphanedBonds) const;
 

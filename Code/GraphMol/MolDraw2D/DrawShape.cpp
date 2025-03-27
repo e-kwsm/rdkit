@@ -11,7 +11,6 @@
 //
 
 #include <cmath>
-#include <utility>
 
 #include <GraphMol/MolDraw2D/MolDraw2DDetails.h>
 #include <GraphMol/MolDraw2D/DrawShape.h>
@@ -247,7 +246,7 @@ DrawShapeSimpleLine::DrawShapeSimpleLine(const std::vector<Point2D> &points,
                                          DashPattern dashPattern)
     : DrawShape(points, lineWidth, scaleLineWidth, lineColour, false, atom1,
                 atom2, bond),
-      dashPattern_(std::move(dashPattern)) {
+      dashPattern_(dashPattern) {
   PRECONDITION(points_.size() == 2, "simple line wrong number of points");
 }
 
@@ -291,7 +290,7 @@ DrawShapePolyLine::DrawShapePolyLine(const std::vector<Point2D> &points,
                                      DashPattern dashPattern)
     : DrawShape(points, lineWidth, scaleLineWidth, lineColour, fill, atom1,
                 atom2, bond),
-      dashPattern_(std::move(dashPattern)) {
+      dashPattern_(dashPattern) {
   PRECONDITION(points_.size() > 2, "polyline not enough points");
 }
 
@@ -315,7 +314,7 @@ bool DrawShapePolyLine::doesRectClash(const StringRect &rect,
 }
 
 // ****************************************************************************
-DrawShapeSolidWedge::DrawShapeSolidWedge(const std::vector<Point2D> &points,
+DrawShapeSolidWedge::DrawShapeSolidWedge(const std::vector<Point2D> points,
                                          const DrawColour &col1,
                                          const DrawColour &col2,
                                          bool splitBonds,
@@ -542,7 +541,7 @@ void DrawShapeSolidWedge::orderOtherBondVecs() {
 }
 
 // ****************************************************************************
-DrawShapeDashedWedge::DrawShapeDashedWedge(const std::vector<Point2D> &points,
+DrawShapeDashedWedge::DrawShapeDashedWedge(const std::vector<Point2D> points,
                                            const DrawColour &col1,
                                            const DrawColour &col2,
                                            bool oneLessDash, double lineWidth,
@@ -671,7 +670,7 @@ bool DrawShapeDashedWedge::doesRectClash(const StringRect &rect,
 }
 
 // ****************************************************************************
-DrawShapeWavyLine::DrawShapeWavyLine(const std::vector<Point2D> &points,
+DrawShapeWavyLine::DrawShapeWavyLine(const std::vector<Point2D> points,
                                      double lineWidth, bool scaleLineWidth,
                                      const DrawColour &col1,
                                      const DrawColour &col2, double offset,
@@ -709,7 +708,7 @@ bool DrawShapeWavyLine::doesRectClash(const StringRect &rect,
 }
 
 // ****************************************************************************
-DrawShapeArc::DrawShapeArc(const std::vector<Point2D> &points, double ang1,
+DrawShapeArc::DrawShapeArc(const std::vector<Point2D> points, double ang1,
                            double ang2, double lineWidth, bool scaleLineWidth,
                            const DrawColour &col1, bool fill, int atom1)
     : DrawShape(points, lineWidth, scaleLineWidth, col1, fill, atom1),

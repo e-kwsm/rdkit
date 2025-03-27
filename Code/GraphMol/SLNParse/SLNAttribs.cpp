@@ -46,7 +46,7 @@
 namespace RDKit {
 namespace SLNParse {
 namespace {
-int parseIntAttribVal(const std::string &attribName, std::string attribVal,
+int parseIntAttribVal(std::string attribName, std::string attribVal,
                       int (*defaultFunc)(Atom const *at) = nullptr,
                       Atom *atom = nullptr) {
   PRECONDITION((!defaultFunc) || atom,
@@ -72,7 +72,7 @@ int parseIntAttribVal(const std::string &attribName, std::string attribVal,
 
 QueryAtom::QUERYATOM_QUERY *makeQueryFromOp(const std::string &op, int val,
                                             int (*func)(Atom const *at),
-                                            const std::string &description) {
+                                            std::string description) {
   PRECONDITION(func, "bad query function");
   QueryAtom::QUERYATOM_QUERY *res = nullptr;
   if (op == "=") {
