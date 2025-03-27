@@ -25,7 +25,6 @@
 #ifndef RDKITMOLDRAW2D_H
 #define RDKITMOLDRAW2D_H
 
-#include <utility>
 #include <vector>
 
 #include <Geometry/point.h>
@@ -439,7 +438,7 @@ class RDKIT_MOLDRAW2D_EXPORT MolDraw2D {
     activeBndIdx_ = (bnd_idx < 0 ? -1 : bnd_idx);
   }
   void setActiveClass(std::string actClass = std::string("")) {
-    d_activeClass = std::move(actClass);
+    d_activeClass = actClass;
   }
   std::string getActiveClass() const { return d_activeClass; }
 

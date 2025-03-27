@@ -55,7 +55,7 @@ class Vector {
   */
   constexpr Vector(unsigned int N, DATA_SPTR data) {
     d_size = N;
-    d_data = std::move(data);
+    d_data = data;
   }
 
   //! copy constructor
