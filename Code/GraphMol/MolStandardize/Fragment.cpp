@@ -32,7 +32,7 @@ FragmentRemover::FragmentRemover() {
 }
 
 // overloaded constructor
-FragmentRemover::FragmentRemover(const std::string fragmentFile,
+FragmentRemover::FragmentRemover(const std::string &fragmentFile,
                                  bool leave_last, bool skip_if_all_match) {
   std::string fname = !fragmentFile.empty()
                           ? fragmentFile
