@@ -401,9 +401,11 @@ RDKIT_GRAPHMOL_EXPORT void GetMolFileBondStereoInfo(
 
  */
 RDKIT_GRAPHMOL_EXPORT void addStereoAnnotations(
-    ROMol &mol, std::string absLabel = "abs ({cip})",
-    std::string orLabel = "or{id}", std::string andLabel = "and{id}",
-    std::string cipLabel = "({cip})", std::string bondLabel = "({cip})");
+    ROMol &mol, const std::string &absLabel = "abs ({cip})",
+    const std::string &orLabel = "or{id}",
+    const std::string &andLabel = "and{id}",
+    const std::string &cipLabel = "({cip})",
+    const std::string &bondLabel = "({cip})");
 
 //! simplifies the stereochemical representation of a molecule where all
 //! specified stereocenters are in the same StereoGroup
