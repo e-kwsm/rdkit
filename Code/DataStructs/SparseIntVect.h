@@ -210,8 +210,8 @@ class SparseIntVect {
     if (other.d_length != d_length) {
       throw ValueErrorException("SparseIntVect size mismatch");
     }
-    typename StorageType::iterator iter = d_data.begin();
-    typename StorageType::const_iterator oIter = other.d_data.begin();
+    auto iter = d_data.begin();
+    auto oIter = other.d_data.begin();
     while (oIter != other.d_data.end()) {
       while (iter != d_data.end() && iter->first < oIter->first) {
         ++iter;
@@ -220,7 +220,7 @@ class SparseIntVect {
         // found it:
         iter->second += oIter->second;
         if (!iter->second) {
-          typename StorageType::iterator tIter = iter;
+          auto tIter = iter;
           ++tIter;
           d_data.erase(iter);
           iter = tIter;
@@ -244,8 +244,8 @@ class SparseIntVect {
     if (other.d_length != d_length) {
       throw ValueErrorException("SparseIntVect size mismatch");
     }
-    typename StorageType::iterator iter = d_data.begin();
-    typename StorageType::const_iterator oIter = other.d_data.begin();
+    auto iter = d_data.begin();
+    auto oIter = other.d_data.begin();
     while (oIter != other.d_data.end()) {
       while (iter != d_data.end() && iter->first < oIter->first) {
         ++iter;
@@ -254,7 +254,7 @@ class SparseIntVect {
         // found it:
         iter->second -= oIter->second;
         if (!iter->second) {
-          typename StorageType::iterator tIter = iter;
+          auto tIter = iter;
           ++tIter;
           d_data.erase(iter);
           iter = tIter;
@@ -274,7 +274,7 @@ class SparseIntVect {
     return res -= other;
   }
   SparseIntVect<IndexType> &operator*=(int v) {
-    typename StorageType::iterator iter = d_data.begin();
+    auto iter = d_data.begin();
     while (iter != d_data.end()) {
       iter->second *= v;
       ++iter;
