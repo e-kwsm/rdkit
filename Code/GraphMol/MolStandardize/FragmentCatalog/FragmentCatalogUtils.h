@@ -22,7 +22,7 @@ namespace MolStandardize {
 class FragmentCatalogParams;
 
 RDKIT_MOLSTANDARDIZE_EXPORT std::vector<std::shared_ptr<ROMol>> readFuncGroups(
-    const std::string &fileName);
+    std::string fileName);
 RDKIT_MOLSTANDARDIZE_EXPORT std::vector<std::shared_ptr<ROMol>> readFuncGroups(
     std::istream &inStream, int nToRead = -1);
 RDKIT_MOLSTANDARDIZE_EXPORT std::vector<std::shared_ptr<ROMol>> readFuncGroups(
