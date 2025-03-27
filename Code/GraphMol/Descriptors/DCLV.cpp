@@ -127,7 +127,7 @@ class AtomRecord {
   };
 
   // constructor to populate record
-  AtomRecord(const Atom &atm, const Conformer &cnf) {
+  AtomRecord(const Atom &atm, const Conformer cnf) {
     const AtomMonomerInfo *info = atm.getMonomerInfo();
     unsigned int i;
     solventFlag = false;
@@ -368,7 +368,7 @@ struct State {
     }
   }
 
-  ElemStruct *getAtomElem(const std::string &atmName, bool typeFlag) {
+  ElemStruct *getAtomElem(std::string atmName, bool typeFlag) {
     const char *name = atmName.c_str();
 
     if (typeFlag) { /* Only Recognise Backbone Atoms! */

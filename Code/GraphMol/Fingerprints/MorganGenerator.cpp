@@ -440,11 +440,11 @@ FingerprintGenerator<OutputType> *getMorganGenerator(
     bool includeRedundantEnvironments,
     AtomInvariantsGenerator *atomInvariantsGenerator,
     BondInvariantsGenerator *bondInvariantsGenerator, std::uint32_t fpSize,
-    const std::vector<std::uint32_t> &countBounds, bool ownsAtomInvGen,
+    std::vector<std::uint32_t> countBounds, bool ownsAtomInvGen,
     bool ownsBondInvGen) {
   MorganArguments arguments(radius, countSimulation, includeChirality,
-                            onlyNonzeroInvariants, std::move(countBounds),
-                            fpSize, includeRedundantEnvironments, useBondTypes);
+                            onlyNonzeroInvariants, countBounds, fpSize,
+                            includeRedundantEnvironments, useBondTypes);
 
   return getMorganGenerator<OutputType>(arguments, atomInvariantsGenerator,
                                         bondInvariantsGenerator, ownsAtomInvGen,
