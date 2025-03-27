@@ -380,7 +380,7 @@ class RDKIT_MOLSTANDARDIZE_EXPORT TautomerEnumerator {
 
   //! returns the canonical tautomer from a \c TautomerEnumeratorResult
   ROMol *pickCanonical(const TautomerEnumeratorResult &tautRes,
-                       boost::function<int(const ROMol &mol)> scoreFunc =
+                       const boost::function<int(const ROMol &mol)> &scoreFunc =
                            TautomerScoringFunctions::scoreTautomer) const;
 
   //! returns the canonical tautomer from an iterable of possible tautomers
@@ -392,7 +392,7 @@ class RDKIT_MOLSTANDARDIZE_EXPORT TautomerEnumerator {
                 !std::is_same<Iterable, TautomerEnumeratorResult>::value,
                 int>::type = 0>
   ROMol *pickCanonical(const Iterable &tautomers,
-                       boost::function<int(const ROMol &mol)> scoreFunc =
+                       const boost::function<int(const ROMol &mol)> &scoreFunc =
                            TautomerScoringFunctions::scoreTautomer) const {
     ROMOL_SPTR bestMol;
     if (tautomers.size() == 1) {
@@ -441,11 +441,11 @@ class RDKIT_MOLSTANDARDIZE_EXPORT TautomerEnumerator {
 
   */
   ROMol *canonicalize(const ROMol &mol,
-                      boost::function<int(const ROMol &mol)> scoreFunc =
+                      const boost::function<int(const ROMol &mol)> &scoreFunc =
                           TautomerScoringFunctions::scoreTautomer) const;
-  void canonicalizeInPlace(RWMol &mol,
-                           boost::function<int(const ROMol &mol)> scoreFunc =
-                               TautomerScoringFunctions::scoreTautomer) const;
+  void canonicalizeInPlace(
+      RWMol &mol, const boost::function<int(const ROMol &mol)> &scoreFunc =
+                      TautomerScoringFunctions::scoreTautomer) const;
 
  private:
   bool setTautomerStereoAndIsoHs(const ROMol &mol, ROMol &taut,
