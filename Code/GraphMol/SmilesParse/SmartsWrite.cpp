@@ -42,9 +42,10 @@ std::string _recurseBondSmarts(const Bond *bond,
                                unsigned int &features,
                                const SmilesWriteParams &params);
 
-std::string _combineChildSmarts(std::string cs1, unsigned int features1,
-                                std::string cs2, unsigned int features2,
-                                std::string descrip, unsigned int &features) {
+std::string _combineChildSmarts(const std::string &cs1, unsigned int features1,
+                                const std::string &cs2, unsigned int features2,
+                                const std::string &descrip,
+                                unsigned int &features) {
   std::string res = "";
   if ((descrip.find("Or") > 0) && (descrip.find("Or") < descrip.length())) {
     // if either of child smarts already have a "," and ";" we can't have one
@@ -91,7 +92,7 @@ std::string _combineChildSmarts(std::string cs1, unsigned int features1,
 }  // namespace
 
 template <typename T>
-void describeQuery(const T *query, std::string leader = "\t") {
+void describeQuery(const T *query, const std::string &leader = "\t") {
   // BOOST_LOG(rdInfoLog) << leader << query->getDescription() << std::endl;
   typename T::CHILD_VECT_CI iter;
   for (iter = query->beginChildren(); iter != query->endChildren(); ++iter) {
