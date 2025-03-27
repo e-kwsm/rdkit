@@ -345,7 +345,7 @@ class SparseIntVect {
     IndexType nEntries = d_data.size();
     streamWrite(ss, nEntries);
 
-    typename StorageType::const_iterator iter = d_data.begin();
+    auto iter = d_data.begin();
     while (iter != d_data.end()) {
       streamWrite(ss, iter->first);
       std::int32_t tInt = iter->second;
