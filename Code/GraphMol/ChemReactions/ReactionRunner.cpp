@@ -879,7 +879,7 @@ Bond *addBondToProduct(const Bond &origB, RWMol &product,
     auto idx = product.addBond(begAtomIdx, endAtomIdx, origB.getBondType());
     return product.getBondWithIdx(idx - 1);
   } else {
-    QueryBond *qbond = new QueryBond(origB.getBondType());
+    auto *qbond = new QueryBond(origB.getBondType());
     qbond->setBeginAtomIdx(begAtomIdx);
     qbond->setEndAtomIdx(endAtomIdx);
     qbond->setQuery(origB.getQuery()->copy());
@@ -1158,7 +1158,7 @@ void checkAndCorrectChiralityOfMatchingAtomsInProduct(
       if (reactantAtom.getDegree() > productAtom->getDegree()) {
         // we lost a bond from the reactant.
         // we can just remove the unmatched reactant bond from the list
-        INT_LIST::iterator rOrderIter = rOrder.begin();
+        auto rOrderIter = rOrder.begin();
         while (rOrderIter != rOrder.end() && rOrder.size() > pOrder.size()) {
           // we may invalidate the iterator so keep track of what comes next:
           auto thisOne = rOrderIter++;
@@ -1307,8 +1307,7 @@ void generateProductConformers(Conformer *productConf, const ROMol &reactant,
   if (reactConf.is3D()) {
     productConf->set3D(true);
   }
-  for (std::map<unsigned int, std::vector<unsigned int>>::const_iterator pr =
-           mapping->reactProdAtomMap.begin();
+  for (auto pr = mapping->reactProdAtomMap.begin();
        pr != mapping->reactProdAtomMap.end(); ++pr) {
     std::vector<unsigned> prodIdxs = pr->second;
     if (prodIdxs.size() > 1) {
@@ -1966,8 +1965,7 @@ std::vector<MOL_SPTR_VECT> run_Reactant(const ChemicalReaction &rxn,
 namespace {
 int getAtomMapNo(ROMol::ATOM_BOOKMARK_MAP *map, Atom *atom) {
   if (map) {
-    for (ROMol::ATOM_BOOKMARK_MAP::const_iterator it = map->begin();
-         it != map->end(); ++it) {
+    for (auto it = map->begin(); it != map->end(); ++it) {
       for (auto ait = it->second.begin(); ait != it->second.end(); ++ait) {
         if (*ait == atom) {
           return it->first;
