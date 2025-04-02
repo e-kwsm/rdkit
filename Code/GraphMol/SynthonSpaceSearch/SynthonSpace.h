@@ -154,7 +154,7 @@ class RDKIT_SYNTHONSPACESEARCH_EXPORT SynthonSpace {
    * @return
    */
   std::vector<std::string> getReactionNames() const;
-  const std::shared_ptr<SynthonSet> getReaction(std::string reactionName);
+  std::shared_ptr<SynthonSet> getReaction(std::string reactionName);
   // The Synthons have a PatternFingerprint for screening in substructure
   // searches.  It's important that the screening process creates ones
   // of the same size, so this finds out what size that is.
