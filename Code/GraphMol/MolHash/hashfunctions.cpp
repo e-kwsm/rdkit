@@ -518,8 +518,8 @@ bool skipNeighborBond(const Atom *atom, const Atom *otherAtom,
 unsigned int getNumConjugatedNeighbors(
     const Atom *atom, const boost::dynamic_bitset<> &startBonds) {
   unsigned int res = 0;
-  for (auto nbr : atom->getOwningMol().atomNeighbors(atom)) {
-    for (auto nbrBond : atom->getOwningMol().atomBonds(nbr)) {
+  for (auto *nbr : atom->getOwningMol().atomNeighbors(atom)) {
+    for (auto *nbrBond : atom->getOwningMol().atomBonds(nbr)) {
       if (nbrBond->getIsConjugated() || startBonds[nbrBond->getIdx()]) {
         ++res;
         break;
@@ -566,12 +566,12 @@ std::string TautomerHashv2(RWMol *mol, bool proto, bool useCXSmiles,
   boost::dynamic_bitset<> bondsConsidered(mol->getNumBonds());
 
   boost::dynamic_bitset<> startBonds(mol->getNumBonds());
-  for (const auto bnd : mol->bonds()) {
+  for (auto *const bnd : mol->bonds()) {
     auto isStartBond = isPossibleStartingBond(bnd, atomFlags, bondFlags);
     startBonds.set(bnd->getIdx(), isStartBond);
   }
   std::vector<unsigned int> numConjugatedNeighbors(mol->getNumAtoms(), 0);
-  for (const auto atm : mol->atoms()) {
+  for (auto *const atm : mol->atoms()) {
     numConjugatedNeighbors[atm->getIdx()] =
         getNumConjugatedNeighbors(atm, startBonds);
   }
@@ -671,7 +671,7 @@ std::string TautomerHashv2(RWMol *mol, bool proto, bool useCXSmiles,
       conjAtoms.set(bnd->getBeginAtomIdx());
       conjAtoms.set(bnd->getEndAtomIdx());
 
-      for (const auto atm :
+      for (const auto *const atm :
            std::vector<const Atom *>{bnd->getBeginAtom(), bnd->getEndAtom()}) {
         if (atomsInSystem[atm->getIdx()]) {
           continue;
@@ -685,7 +685,7 @@ std::string TautomerHashv2(RWMol *mol, bool proto, bool useCXSmiles,
           activeHeteroHs += atm->getTotalNumHs();
           atomsInSystem.set(atm->getIdx());
         }
-        for (auto nbrBnd : mol->atomBonds(atm)) {
+        for (auto *nbrBnd : mol->atomBonds(atm)) {
           if (bondsConsidered[nbrBnd->getIdx()] ||
               std::find(bq.begin(), bq.end(), nbrBnd) != bq.end()) {
             continue;
@@ -732,7 +732,7 @@ std::string TautomerHashv2(RWMol *mol, bool proto, bool useCXSmiles,
       // closure bond, so we explicitly check:
       for (auto i = 0U; i < conjAtoms.size(); i++) {
         if (conjAtoms[i]) {
-          for (const auto bnd : mol->atomBonds(mol->getAtomWithIdx(i))) {
+          for (auto *const bnd : mol->atomBonds(mol->getAtomWithIdx(i))) {
             if (conjAtoms[bnd->getOtherAtomIdx(i)]) {
 #ifdef VERBOSE_HASH
               if (!conjSystem[bnd->getIdx()]) {

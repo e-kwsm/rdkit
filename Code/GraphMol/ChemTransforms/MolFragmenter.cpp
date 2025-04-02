@@ -898,7 +898,7 @@ struct ZipBond {
 
     // check bond stereo
     auto &m = chiral_atom->getOwningMol();
-    for (auto bond : m.atomBonds(chiral_atom)) {
+    for (auto *bond : m.atomBonds(chiral_atom)) {
       if (bond->getStereo() != Bond::BondStereo::STEREONONE) {
         std::string mark = "__molzip_bond_stereo_mark";
         std::vector<Atom *> atoms;
