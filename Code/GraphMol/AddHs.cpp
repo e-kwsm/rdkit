@@ -1322,7 +1322,7 @@ ROMol *mergeQueryHs(const ROMol &mol, bool mergeUnmappedOnly,
 };
 
 bool needsHs(const ROMol &mol) {
-  for (const auto atom : mol.atoms()) {
+  for (auto *const atom : mol.atoms()) {
     bool includeNeighbors = false;
     if (atom->getTotalNumHs(includeNeighbors)) {
       return true;

@@ -371,7 +371,7 @@ static bool checkStereoChemistry(const RDKit::ROMol &mol,
     int atom1_neighbor2 = -1;
     int atom2_neighbor2 = -1;
     if (mol.getAtomWithIdx(atom1)->getDegree() > 2) {
-      for (auto neighbor : mol.atomNeighbors(mol.getAtomWithIdx(atom1))) {
+      for (auto *neighbor : mol.atomNeighbors(mol.getAtomWithIdx(atom1))) {
         if (static_cast<int>(neighbor->getIdx()) != atom1_neighbor1 &&
             static_cast<int>(neighbor->getIdx()) != atom2) {
           atom1_neighbor2 = neighbor->getIdx();
@@ -380,7 +380,7 @@ static bool checkStereoChemistry(const RDKit::ROMol &mol,
       }
     }
     if (mol.getAtomWithIdx(atom2)->getDegree() > 2) {
-      for (auto neighbor : mol.atomNeighbors(mol.getAtomWithIdx(atom2))) {
+      for (auto *neighbor : mol.atomNeighbors(mol.getAtomWithIdx(atom2))) {
         if (static_cast<int>(neighbor->getIdx()) != atom2_neighbor1 &&
             static_cast<int>(neighbor->getIdx()) != atom1) {
           atom2_neighbor2 = neighbor->getIdx();
