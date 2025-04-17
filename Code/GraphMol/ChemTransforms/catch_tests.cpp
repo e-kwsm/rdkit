@@ -197,14 +197,14 @@ TEST_CASE("molzip") {
         for (unsigned int j = 0; j < m->getNumBonds(); ++j) {
           if (i != j) {
             std::vector<unsigned int> bonds{i, j};
-            auto resa = RDKit::MolFragmenter::fragmentOnBonds(*m, bonds);
+            auto *resa = RDKit::MolFragmenter::fragmentOnBonds(*m, bonds);
             MolzipParams p;
             p.label = MolzipLabel::FragmentOnBonds;
             CHECK(MolToSmiles(*molzip(*resa, p)) == MolToSmiles(*m));
             delete resa;
             // Now try using atom labels
-            auto res = RDKit::MolFragmenter::fragmentOnBonds(*m, bonds, true,
-                                                             &dummyLabels);
+            auto *res = RDKit::MolFragmenter::fragmentOnBonds(*m, bonds, true,
+                                                              &dummyLabels);
             for (auto *atom : res->atoms()) {
               if (atom->getIsotope()) {
                 atom->setAtomMapNum(atom->getIsotope());
