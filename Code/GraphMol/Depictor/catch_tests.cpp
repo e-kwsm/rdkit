@@ -2346,7 +2346,7 @@ TEST_CASE(
   auto m = "C=C1C=CC(=O)CC1"_smiles;
   REQUIRE(m);
   CHECK(m->getNumBonds() == 8);
-  auto b = m->getBondWithIdx(0);
+  auto *b = m->getBondWithIdx(0);
   CHECK(b->getBondType() == Bond::DOUBLE);
   b->setStereo(Bond::STEREOZ);
   CHECK(b->getStereoAtoms().empty());

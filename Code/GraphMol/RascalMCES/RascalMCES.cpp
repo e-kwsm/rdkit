@@ -339,8 +339,8 @@ bool checkRings(const ROMol &mol1, std::vector<std::string> &mol1RingSmiles,
                 int mol1BondIdx, const ROMol &mol2,
                 std::vector<std::string> &mol2RingSmiles, int mol2BondIdx,
                 bool aromaticRingsMatchOnly) {
-  auto mol1Bond = mol1.getBondWithIdx(mol1BondIdx);
-  auto mol2Bond = mol2.getBondWithIdx(mol2BondIdx);
+  const auto *mol1Bond = mol1.getBondWithIdx(mol1BondIdx);
+  const auto *mol2Bond = mol2.getBondWithIdx(mol2BondIdx);
   if (aromaticRingsMatchOnly &&
       (!mol1Bond->getIsAromatic() || !mol2Bond->getIsAromatic())) {
     return true;

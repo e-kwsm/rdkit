@@ -786,29 +786,29 @@ std::string TautomerHashv2(RWMol *mol, bool proto, bool useCXSmiles,
    (C3-C2). So we'll flag N5-C4 as being part of the tautomeric system.
 
   */
-  for (const auto bptr : mol->bonds()) {
+  for (auto *const bptr : mol->bonds()) {
     // If this is not a possible starting bond,
     // then skip it
     if (!startBonds[bptr->getIdx()]) {
       continue;
     }
 
-    for (const auto atm :
+    for (const auto *const atm :
          std::vector<const Atom *>{bptr->getBeginAtom(), bptr->getEndAtom()}) {
-      for (const auto nbrBond : mol->atomBonds(atm)) {
+      for (auto *const nbrBond : mol->atomBonds(atm)) {
         if (nbrBond == bptr || bondsToModify[nbrBond->getIdx()]) {
           continue;
         }
-        const auto oatom = nbrBond->getOtherAtom(atm);
+        auto *const oatom = nbrBond->getOtherAtom(atm);
         if (!oatom->getTotalNumHs()) {
           continue;
         }
         unsigned int numModifiedNeighbors = 0;
-        for (const auto nbr : mol->atomNeighbors(oatom)) {
+        for (auto *const nbr : mol->atomNeighbors(oatom)) {
           if (nbr == atm) {
             continue;
           }
-          for (const auto nbnd : mol->atomBonds(nbr)) {
+          for (auto *const nbnd : mol->atomBonds(nbr)) {
             if (bondsToModify[nbnd->getIdx()] || startBonds[nbnd->getIdx()]) {
               ++numModifiedNeighbors;
               break;
