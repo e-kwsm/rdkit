@@ -124,22 +124,22 @@ struct PyMCSAtomCompare : public PyMCSWrapper {
     }
     return res;
   }
-  inline bool checkAtomRingMatch(const MCSAtomCompareParameters &p,
-                                 const ROMol &mol1, unsigned int atom1,
-                                 const ROMol &mol2, unsigned int atom2) const {
+  bool checkAtomRingMatch(const MCSAtomCompareParameters &p, const ROMol &mol1,
+                          unsigned int atom1, const ROMol &mol2,
+                          unsigned int atom2) const {
     return RDKit::checkAtomRingMatch(p, mol1, atom1, mol2, atom2);
   }
-  inline bool checkAtomCharge(const MCSAtomCompareParameters &p,
-                              const ROMol &mol1, unsigned int atom1,
-                              const ROMol &mol2, unsigned int atom2) const {
+  bool checkAtomCharge(const MCSAtomCompareParameters &p, const ROMol &mol1,
+                       unsigned int atom1, const ROMol &mol2,
+                       unsigned int atom2) const {
     return RDKit::checkAtomCharge(p, mol1, atom1, mol2, atom2);
   }
-  inline bool checkAtomChirality(const MCSAtomCompareParameters &p,
-                                 const ROMol &mol1, unsigned int atom1,
-                                 const ROMol &mol2, unsigned int atom2) const {
+  bool checkAtomChirality(const MCSAtomCompareParameters &p, const ROMol &mol1,
+                          unsigned int atom1, const ROMol &mol2,
+                          unsigned int atom2) const {
     return RDKit::checkAtomChirality(p, mol1, atom1, mol2, atom2);
   }
-  inline const char *subclassName() const override { return "MCSAtomCompare"; }
+  const char *subclassName() const override { return "MCSAtomCompare"; }
   virtual bool operator()(const MCSAtomCompareParameters &, const ROMol &,
                           unsigned int, const ROMol &, unsigned int) const {
     errorNotOverridden();
@@ -169,17 +169,17 @@ struct PyMCSBondCompare : public PyMCSWrapper {
     }
     return res;
   }
-  inline bool checkBondStereo(const MCSBondCompareParameters &p,
-                              const ROMol &mol1, unsigned int bond1,
-                              const ROMol &mol2, unsigned int bond2) const {
+  bool checkBondStereo(const MCSBondCompareParameters &p, const ROMol &mol1,
+                       unsigned int bond1, const ROMol &mol2,
+                       unsigned int bond2) const {
     return RDKit::checkBondStereo(p, mol1, bond1, mol2, bond2);
   }
-  inline bool checkBondRingMatch(const MCSBondCompareParameters &p,
-                                 const ROMol &mol1, unsigned int bond1,
-                                 const ROMol &mol2, unsigned int bond2) {
+  bool checkBondRingMatch(const MCSBondCompareParameters &p, const ROMol &mol1,
+                          unsigned int bond1, const ROMol &mol2,
+                          unsigned int bond2) {
     return RDKit::checkBondRingMatch(p, mol1, bond1, mol2, bond2);
   }
-  inline const char *subclassName() const override { return "MCSBondCompare"; }
+  const char *subclassName() const override { return "MCSBondCompare"; }
   virtual bool operator()(const MCSBondCompareParameters &, const ROMol &,
                           unsigned int, const ROMol &, unsigned int) const {
     errorNotOverridden();
@@ -226,7 +226,7 @@ struct PyMCSProgress : public PyMCSWrapper {
     }
     return res;
   }
-  inline const char *subclassName() const override { return "MCSProgress"; }
+  const char *subclassName() const override { return "MCSProgress"; }
   virtual bool operator()(const MCSProgressData &,
                           const MCSParameters &) const {
     errorNotOverridden();
@@ -265,9 +265,7 @@ struct PyMCSFinalMatchCheck : public PyMCSWrapper {
     }
     return res;
   }
-  inline const char *subclassName() const override {
-    return "MCSFinalMatchCheck";
-  }
+  const char *subclassName() const override { return "MCSFinalMatchCheck"; }
   virtual bool operator()() const {
     errorNotOverridden();
     return false;
