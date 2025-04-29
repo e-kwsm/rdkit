@@ -528,7 +528,7 @@ bool parse_zero_bonds(Iterator &first, Iterator last, RDKit::RWMol &mol,
       return false;
     }
     if (VALID_BNDIDX(bondIdx)) {
-      auto bond = get_bond_with_smiles_idx(mol, bondIdx - startBondIdx);
+      auto *bond = get_bond_with_smiles_idx(mol, bondIdx - startBondIdx);
 
       if (!bond) {
         BOOST_LOG(rdWarningLog)
@@ -2284,7 +2284,7 @@ std::string get_zerobonds_block(const ROMol &mol,
   std::string res = "";
   for (unsigned int i = 0; i < bondOrder.size(); ++i) {
     auto idx = bondOrder[i];
-    const auto bond = mol.getBondWithIdx(idx);
+    const auto *const bond = mol.getBondWithIdx(idx);
     if (bond->getBondType() != Bond::BondType::ZERO) {
       continue;
     }
