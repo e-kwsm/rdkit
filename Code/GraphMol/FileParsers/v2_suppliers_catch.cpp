@@ -175,7 +175,7 @@ TEST_CASE("TestParsingInvalidChiralityLabelsWithMaeMolSupplier") {
   constexpr FileParsers::MaeMolSupplierParams params{.sanitize = false};
 
   FileParsers::MaeMolSupplier suppl(iss.release(), takeOwnership, params);
-  auto *mol = suppl.next();
+  auto mol = suppl.next();
 
   REQUIRE(mol);
   CHECK(mol->getNumAtoms() == 5);

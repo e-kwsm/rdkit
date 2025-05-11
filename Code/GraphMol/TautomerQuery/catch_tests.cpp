@@ -406,7 +406,7 @@ TEST_CASE("GitHub Issue #8492: TautomerQuery drops queries for some atoms") {
 
   check_queries(*mol);
   auto tq = std::unique_ptr<TautomerQuery>(TautomerQuery::fromMol(*mol));
-  auto &mol2 = tq->getTemplateMolecule();
+  const auto &mol2 = tq->getTemplateMolecule();
 
   check_queries(mol2);
 }

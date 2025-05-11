@@ -607,7 +607,7 @@ std::string MolToSmiles(const ROMol &mol, const SmilesWriteParams &params,
     // extensions
 
     if (doingCXSmiles) {
-      for (auto bond : tmol->bonds()) {
+      for (auto *bond : tmol->bonds()) {
         if (bond->getBondType() == Bond::HYDROGEN) {
           bond->setBondType(Bond::SINGLE);
         }
