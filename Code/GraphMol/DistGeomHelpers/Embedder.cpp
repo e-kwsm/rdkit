@@ -1043,7 +1043,7 @@ RDKIT_DISTGEOMHELPERS_EXPORT void findDoubleBonds(
           if (nbr == oatm) {
             continue;
           }
-          const auto obnd =
+          const auto *const obnd =
               mol.getBondBetweenAtoms(atm->getIdx(), nbr->getIdx());
           if (!obnd || (obnd->getBondType() != Bond::BondType::SINGLE &&
                         atm->getDegree() == 2)) {
