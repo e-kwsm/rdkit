@@ -3215,7 +3215,7 @@ TEST_CASE("ZOB cx smiles extension", "[smiles][cxsmiles]") {
     auto m = "CC"_smiles;
     REQUIRE(m);
 
-    auto b = m->getBondWithIdx(0);
+    auto *b = m->getBondWithIdx(0);
     b->setBondType(Bond::ZERO);
 
     auto smi = MolToCXSmiles(*m);
@@ -3234,7 +3234,7 @@ TEST_CASE("ZOB cx smiles extension", "[smiles][cxsmiles]") {
     auto m = v2::SmilesParse::MolFromSmiles(smi, p);
     REQUIRE(m);
 
-    auto b = m->getBondWithIdx(15);
+    auto *b = m->getBondWithIdx(15);
     CHECK(b->getBondType() == Bond::BondType::ZERO);
     CHECK(b->getBeginAtom()->getAtomicNum() == 7);
     CHECK(b->getEndAtom()->getAtomicNum() == 5);
