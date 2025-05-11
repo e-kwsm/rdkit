@@ -877,9 +877,9 @@ unsigned int countChiralAtoms(ROMol &mol, unsigned int *numExcDummies) {
   for (auto &si : sis) {
     ++numChiralAtoms;
     if (numExcDummies) {
-      auto atom = mol.getAtomWithIdx(si.centeredOn);
+      auto *atom = mol.getAtomWithIdx(si.centeredOn);
       unsigned int numDummies = 0;
-      for (auto nbr : mol.atomNeighbors(atom)) {
+      for (auto *nbr : mol.atomNeighbors(atom)) {
         if (nbr->getAtomicNum() == 0 &&
             nbr->getIsotope() <= MAX_CONNECTOR_NUM) {
           numDummies++;
