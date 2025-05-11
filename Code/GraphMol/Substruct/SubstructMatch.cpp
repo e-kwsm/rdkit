@@ -58,7 +58,7 @@ bool enhancedStereoIsOK(
     }
     // StereoGroup const* matched_mol_group = nullptr;
     const bool is_and = sg.getGroupType() == StereoGroupType::STEREO_AND;
-    for (const auto a : sg.getAtoms()) {
+    for (auto *const a : sg.getAtoms()) {
       const auto mol_group = molStereoGroups.find(q_to_mol[a->getIdx()]);
       if (mol_group == molStereoGroups.end()) {
         // group matching absolute. not ok.

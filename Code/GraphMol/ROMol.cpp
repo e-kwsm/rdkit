@@ -605,7 +605,7 @@ bool ROMol::needsUpdatePropertyCache() const {
 }
 
 void ROMol::clearPropertyCache() {
-  for (auto atom : atoms()) {
+  for (auto *atom : atoms()) {
     atom->clearPropertyCache();
   }
 }
