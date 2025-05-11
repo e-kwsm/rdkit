@@ -203,14 +203,14 @@ std::ostream &operator<<(std::ostream &target, const RDKit::StereoGroup &stg) {
   target << " wId: " << stg.getWriteId();
   if (!stg.getAtoms().empty()) {
     target << " atoms: { ";
-    for (auto atom : stg.getAtoms()) {
+    for (auto *atom : stg.getAtoms()) {
       target << atom->getIdx() << ' ';
     }
     target << '}';
   }
   if (!stg.getBonds().empty()) {
     target << " bonds: { ";
-    for (auto bond : stg.getBonds()) {
+    for (auto *bond : stg.getBonds()) {
       target << bond->getIdx() << ' ';
     }
     target << '}';

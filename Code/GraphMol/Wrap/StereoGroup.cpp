@@ -65,7 +65,7 @@ python::object getAtomsHelper(StereoGroup &sg) {
 }
 python::object getBondsHelper(StereoGroup &sg) {
   python::list res;
-  for (auto bnd : sg.getBonds()) {
+  for (auto *bnd : sg.getBonds()) {
     res.append(boost::ref(*bnd));
   }
   return python::tuple(res);

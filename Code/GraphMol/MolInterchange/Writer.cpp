@@ -306,7 +306,7 @@ void addStereoGroup(const StereoGroup &sg, rj::Value &rjSG, rj::Document &doc) {
 
   if (!sg.getAtoms().empty()) {
     rj::Value rjAtoms(rj::kArrayType);
-    for (const auto atm : sg.getAtoms()) {
+    for (auto *const atm : sg.getAtoms()) {
       rj::Value v1(static_cast<int>(atm->getIdx()));
       rjAtoms.PushBack(v1, doc.GetAllocator());
     }
@@ -314,7 +314,7 @@ void addStereoGroup(const StereoGroup &sg, rj::Value &rjSG, rj::Document &doc) {
   }
   if (!sg.getBonds().empty()) {
     rj::Value rjBonds(rj::kArrayType);
-    for (const auto bnd : sg.getBonds()) {
+    for (auto *const bnd : sg.getBonds()) {
       rj::Value v1(static_cast<int>(bnd->getIdx()));
       rjBonds.PushBack(v1, doc.GetAllocator());
     }
