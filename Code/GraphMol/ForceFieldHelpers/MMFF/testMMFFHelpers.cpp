@@ -1089,19 +1089,17 @@ void testGithub6728() {
 void testCyclophosphazeneFragmentMapping() {
   BOOST_LOG(rdErrorLog) << "-------------------------------------" << std::endl;
   BOOST_LOG(rdErrorLog)
-      << "    Testing MMFF nonbonded terms for cyclophosphazene."
-      << std::endl;
-  std::unique_ptr<RWMol> mol(
-      SmilesToMol("C1CNP2(=NP=NP=N2)NC1"));
+      << "    Testing MMFF nonbonded terms for cyclophosphazene." << std::endl;
+  std::unique_ptr<RWMol> mol(SmilesToMol("C1CNP2(=NP=NP=N2)NC1"));
   TEST_ASSERT(mol);
   MolOps::addHs(*mol);
   TEST_ASSERT(DGeomHelpers::EmbedMolecule(*mol) >= 0);
 
   MMFF::MMFFMolProperties mmffMolProperties(*mol);
   TEST_ASSERT(mmffMolProperties.isValid());
-  std::unique_ptr<ForceFields::ForceField> field(MMFF::constructForceField(
-      *mol, &mmffMolProperties, 100.0, -1,
-      /*ignoreInterfragInteractions=*/true));
+  std::unique_ptr<ForceFields::ForceField> field(
+      MMFF::constructForceField(*mol, &mmffMolProperties, 100.0, -1,
+                                /*ignoreInterfragInteractions=*/true));
   TEST_ASSERT(field);
   field->initialize();
   TEST_ASSERT(field->minimize(1000) == 0);

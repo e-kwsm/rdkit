@@ -32,10 +32,9 @@ NB_MODULE(rdAbbreviations, m) {
       .def_rw("displayLabelW",
               &Abbreviations::AbbreviationDefinition::displayLabelW,
               "the label in a drawing when the bond comes from the west")
-      .def_rw(
-          "mol", &Abbreviations::AbbreviationDefinition::mol,
-          "the query molecule (should have a dummy as the first atom if "
-          "includesXBonds is true)")
+      .def_rw("mol", &Abbreviations::AbbreviationDefinition::mol,
+              "the query molecule (should have a dummy as the first atom if "
+              "includesXBonds is true)")
       .def_rw("includesXBonds",
               &Abbreviations::AbbreviationDefinition::includesXBonds,
               "whether or not the abbreviation definition includes "
@@ -46,11 +45,10 @@ NB_MODULE(rdAbbreviations, m) {
         "returns a list of the default abbreviation definitions");
   m.def("GetDefaultLinkers", &Abbreviations::Utils::getDefaultLinkers,
         "returns a list of the default linker definitions");
-  m.def(
-      "ParseAbbreviations", &Abbreviations::Utils::parseAbbreviations,
-      nb::arg("text"), nb::arg("removeExtraDummies") = false,
-      nb::arg("allowConnectionToDummies") = false,
-      R"DOC(Returns a set of abbreviation definitions from a string.
+  m.def("ParseAbbreviations", &Abbreviations::Utils::parseAbbreviations,
+        nb::arg("text"), nb::arg("removeExtraDummies") = false,
+        nb::arg("allowConnectionToDummies") = false,
+        R"DOC(Returns a set of abbreviation definitions from a string.
 Format of the text data: A series of lines, each of which contains:
 
 * label

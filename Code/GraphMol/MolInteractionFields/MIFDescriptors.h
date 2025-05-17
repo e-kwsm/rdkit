@@ -559,6 +559,6 @@ RDKIT_MOLINTERACTIONFIELDS_EXPORT std::unique_ptr<RDKit::RWMol>
 readFromCubeFile(RDGeom::UniformRealValueGrid3D &grd,
                  const std::string &filename);
 
-}  // end of namespace RDMIF
+}  // namespace RDMIF
 
 #endif /* RDMIF_DESCRIPTORS_H */

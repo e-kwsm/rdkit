@@ -352,11 +352,14 @@ class RDKIT_DEPICTOR_EXPORT EmbeddedFrag {
                                         double mimicDmatWt = 0.0,
                                         bool permuteDeg4Nodes = false);
 
-  //! Remove collisions in a structure by flipping rotatable bonds and spiro centers
-  //! along the shortest path between two colliding atoms
+  //! Remove collisions in a structure by flipping rotatable bonds and spiro
+  //! centers along the shortest path between two colliding atoms
   void removeCollisionsBondAndSpiroFlip();
-  
-  [[deprecated("please use removeCollisionsBondAndSpiroFlip()")]] void removeCollisionsBondFlip() { removeCollisionsBondAndSpiroFlip(); };
+
+  [[deprecated("please use removeCollisionsBondAndSpiroFlip()")]] void
+  removeCollisionsBondFlip() {
+    removeCollisionsBondAndSpiroFlip();
+  };
 
   //! Remove collision by opening angles at the offending atoms
   void removeCollisionsOpenAngles();
@@ -365,10 +368,10 @@ class RDKIT_DEPICTOR_EXPORT EmbeddedFrag {
   /// atoms
   void removeCollisionsShortenBonds();
 
-  //! Remove collisions by expanding angles along the path between colliding atoms
-  //! Runs after bond flipping, angle opening, and bond shortening.
-  //! Only expands angles where the three atoms (prev-center-next) are NOT all
-  //! in the same ring, preserving ring geometry while allowing ring-chain expansion.
+  //! Remove collisions by expanding angles along the path between colliding
+  //! atoms Runs after bond flipping, angle opening, and bond shortening. Only
+  //! expands angles where the three atoms (prev-center-next) are NOT all in the
+  //! same ring, preserving ring geometry while allowing ring-chain expansion.
   void removeCollisionsPathAngleExpansion();
 
   //! helpers functions to
@@ -396,19 +399,14 @@ class RDKIT_DEPICTOR_EXPORT EmbeddedFrag {
 
   // Helper methods for collision resolution
   bool tryResolvingCollisionWithBondFlip(
-      const std::pair<unsigned int, unsigned int> &cAids,
-      unsigned int ncols,
-      double prevDensity,
-      std::map<int, unsigned int> &doneBonds,
+      const std::pair<unsigned int, unsigned int> &cAids, unsigned int ncols,
+      double prevDensity, std::map<int, unsigned int> &doneBonds,
       const double *dmat);
 
   bool tryResolvingCollisionWithSpiroFlip(
-      const std::pair<unsigned int, unsigned int> &cAids,
-      unsigned int ncols,
-      double prevDensity,
-      std::map<int, unsigned int> &doneSpiros,
-      const boost::dynamic_bitset<> &spiroCenters,
-      const double *dmat);
+      const std::pair<unsigned int, unsigned int> &cAids, unsigned int ncols,
+      double prevDensity, std::map<int, unsigned int> &doneSpiros,
+      const boost::dynamic_bitset<> &spiroCenters, const double *dmat);
 
   // Helper methods for path angle expansion collision resolution
 
@@ -418,8 +416,8 @@ class RDKIT_DEPICTOR_EXPORT EmbeddedFrag {
   //! \param exclude - atom on the opposite side (don't cross to this side)
   //! \return vector of atom indices on the sideStart side
   std::vector<unsigned int> getAtomsOnSide(unsigned int center,
-                                            unsigned int sideStart,
-                                            unsigned int exclude);
+                                           unsigned int sideStart,
+                                           unsigned int exclude);
 
   //! Open an angle by rotating one side around the center atom
   //! Makes the angle LARGER (closer to 180°) to expand the chain
@@ -430,10 +428,8 @@ class RDKIT_DEPICTOR_EXPORT EmbeddedFrag {
   //! \param dmat - distance matrix (for reference)
   //! \return true if a side could be rotated without moving fixed atoms or
   //! distorting a cycle
-  bool openAngleByIncrement(unsigned int prevAtom,
-                            unsigned int centerAtom,
-                            unsigned int nextAtom,
-                            double angleIncrement,
+  bool openAngleByIncrement(unsigned int prevAtom, unsigned int centerAtom,
+                            unsigned int nextAtom, double angleIncrement,
                             const double *dmat);
 
   // returns true if fused rings found a template

@@ -48,8 +48,8 @@ std::unique_ptr<MacroMolTemplate> makeAnnotatedAlanineTemplate() {
     throw ValueErrorException("could not parse alanine template SMILES");
   }
 
-  MacroMolTemplateBuilder builder(*parsed, MonomerClass::AminoAcid, "ALA",
-                                  "A", "[H]N[C@@H](C)C(=O)O");
+  MacroMolTemplateBuilder builder(*parsed, MonomerClass::AminoAcid, "ALA", "A",
+                                  "[H]N[C@@H](C)C(=O)O");
   builder.setMainGroup({1, 2, 3, 4, 5})
       .addLeavingGroup({{0}, 1, 0, 1})
       .addLeavingGroup({{6}, 4, 6, 2});
@@ -110,8 +110,7 @@ TEST_CASE("MacroMolTemplate mirrors typed main and leaving groups") {
   auto templ = makeAnnotatedAlanineTemplate();
 
   CHECK(templ->getMol().getNumAtoms() == 7);
-  CHECK(templ->getMainAtomIdxs() ==
-        std::vector<unsigned int>({1, 2, 3, 4, 5}));
+  CHECK(templ->getMainAtomIdxs() == std::vector<unsigned int>({1, 2, 3, 4, 5}));
   const auto &leavingGroups = templ->getLeavingGroups();
   REQUIRE(leavingGroups.size() == 2);
   CHECK(leavingGroups[0].atomIdxs == std::vector<unsigned int>{0});
@@ -189,8 +188,9 @@ TEST_CASE("MacroMolTemplate supports attachment points without leaving atoms") {
     auto withAtoms = std::unique_ptr<RWMol>(SmilesToMol("CCC"));
     MacroMolTemplateBuilder builder(*withAtoms, MonomerClass::Other, "X", "X",
                                     "CCC");
-    builder.setMainGroup({1}).addLeavingGroup({{0}, 1, -1, 1}).addLeavingGroup(
-        {{2}, 1, 2, 2});
+    builder.setMainGroup({1})
+        .addLeavingGroup({{0}, 1, -1, 1})
+        .addLeavingGroup({{2}, 1, 2, 2});
     CHECK_THROWS_AS(builder.build(), ValueErrorException);
     // the attachment atom must still be in the main group
     CHECK_THROWS_AS(buildWith({{}, 0, -1, 2}), ValueErrorException);
@@ -200,8 +200,7 @@ TEST_CASE("MacroMolTemplate supports attachment points without leaving atoms") {
 TEST_CASE("MacroMolTemplateBuilder validates completed definitions") {
   SECTION("main group can only be set once") {
     auto mol = std::unique_ptr<RWMol>(SmilesToMol("C"));
-    MacroMolTemplateBuilder builder(*mol, MonomerClass::Other, "X", "X",
-                                    "C");
+    MacroMolTemplateBuilder builder(*mol, MonomerClass::Other, "X", "X", "C");
     builder.setMainGroup({0});
     CHECK_THROWS_AS(builder.setMainGroup({0}), Invar::Invariant);
   }
@@ -234,8 +233,7 @@ TEST_CASE("MacroMolTemplateBuilder validates completed definitions") {
     gap.setMainGroup({0, 1});
     CHECK_THROWS_AS(gap.build(), ValueErrorException);
 
-    MacroMolTemplateBuilder overlap(*mol, MonomerClass::Other, "X", "X",
-                                    "CCC");
+    MacroMolTemplateBuilder overlap(*mol, MonomerClass::Other, "X", "X", "CCC");
     overlap.setMainGroup({0, 1}).addLeavingGroup({{1, 2}, 1, 2, 1});
     CHECK_THROWS_AS(overlap.build(), ValueErrorException);
   }
@@ -294,19 +292,15 @@ TEST_CASE("MacroMolTemplateLibrary separates classes and rejects duplicates") {
   library.addTemplate(
       makeTemplate("ADE", "A", "N", {0}, {}, MonomerClass::NucleicAcid));
 
-  CHECK(library.getBySymbol(MonomerClass::AminoAcid, "A")->getName() ==
-        "ALA");
+  CHECK(library.getBySymbol(MonomerClass::AminoAcid, "A")->getName() == "ALA");
   CHECK(library.getBySymbol(MonomerClass::NucleicAcid, "A")->getName() ==
         "ADE");
-  CHECK_THROWS_AS(
-      library.addTemplate(
-          makeTemplate("ALA", "X", "N", {0}, {}, MonomerClass::AminoAcid)),
-      ValueErrorException);
-  CHECK_THROWS_AS(
-      library.addTemplate(
-          makeTemplate("OTHER", "A", "N", {0}, {}, MonomerClass::AminoAcid)),
-      ValueErrorException);
-  CHECK_THROWS_AS(
-      library.addTemplate(std::unique_ptr<MacroMolTemplate>{}),
-      Invar::Invariant);
+  CHECK_THROWS_AS(library.addTemplate(makeTemplate("ALA", "X", "N", {0}, {},
+                                                   MonomerClass::AminoAcid)),
+                  ValueErrorException);
+  CHECK_THROWS_AS(library.addTemplate(makeTemplate("OTHER", "A", "N", {0}, {},
+                                                   MonomerClass::AminoAcid)),
+                  ValueErrorException);
+  CHECK_THROWS_AS(library.addTemplate(std::unique_ptr<MacroMolTemplate>{}),
+                  Invar::Invariant);
 }

@@ -151,8 +151,8 @@ PyObject *embedBoundsMatrix(python::object boundsMatArg, int maxIters = 10,
       weightMap[std::make_pair(idx1, idx2)] = w;
     }
     DistGeom::VECT_CHIRALSET csets;
-    ForceFields::ForceField *field = DistGeom::constructForceField(
-        bm, posPtrs, csets, 0.0, 0.0, &weightMap);
+    ForceFields::ForceField *field =
+        DistGeom::constructForceField(bm, posPtrs, csets, 0.0, 0.0, &weightMap);
     CHECK_INVARIANT(field, "could not build dgeom force field");
     field->initialize();
     if (field->calcEnergy() > 1e-5) {

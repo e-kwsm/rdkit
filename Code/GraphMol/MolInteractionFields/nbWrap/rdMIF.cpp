@@ -37,7 +37,8 @@ extractChargesAndPositions(const nb::object &charges,
   nb::sequence pyCharges = nb::cast<nb::sequence>(charges);
   auto nrows = nb::len(pyPos);
   if (nrows != nb::len(pyCharges)) {
-    throw ValueErrorException("positions and charges must have the same length");
+    throw ValueErrorException(
+        "positions and charges must have the same length");
   }
 
   std::vector<RDGeom::Point3D> pos(nrows);
@@ -76,15 +77,16 @@ NOTE: This functionality is experimental and the API and/or results may change i
   nb::exception<ValueErrorException>(m, "MIFValueError", PyExc_ValueError);
   nb::exception<IndexErrorException>(m, "MIFIndexError", PyExc_IndexError);
 
-  nb::class_<Coulomb>(m, "Coulomb",
-                      R"DOC(Class for calculation of electrostatic interaction (Coulomb energy) between probe and molecule in
+  nb::class_<Coulomb>(
+      m, "Coulomb",
+      R"DOC(Class for calculation of electrostatic interaction (Coulomb energy) between probe and molecule in
         vacuum (no dielectric).
 )DOC")
       .def(nb::init<const RDKit::ROMol &, int, double, bool,
                     const std::string &, double, double>(),
-           "mol"_a, "confId"_a = -1, "probeCharge"_a = 1.0,
-           "absVal"_a = false, "chargeKey"_a = "_GasteigerCharge",
-           "softcoreParam"_a = 0.0, "cutoff"_a = 1.0,
+           "mol"_a, "confId"_a = -1, "probeCharge"_a = 1.0, "absVal"_a = false,
+           "chargeKey"_a = "_GasteigerCharge", "softcoreParam"_a = 0.0,
+           "cutoff"_a = 1.0,
            R"DOC(Constructor for Coulomb class.
 
         ARGUMENTS:
@@ -95,18 +97,19 @@ NOTE: This functionality is experimental and the API and/or results may change i
         - chargeKey      property key for retrieving partial charges of atoms from molecule (defaults to '_GasteigerCharge')
         - softcoreParam  softcore interaction parameter [A^2], if zero, a minimum cutoff distance is used (defaults to 0.0)
         - cutoff         minimum cutoff distance [A] (defaults to 1.0))DOC")
-      .def("__init__",
-           [](Coulomb &self, const nb::object &charges,
-              const nb::object &positions, double probeCharge, bool absVal,
-              double softcoreParam, double cutoff) {
-             const auto [ch, pos] =
-                 extractChargesAndPositions(charges, positions);
-             new (&self) Coulomb(ch, pos, probeCharge, absVal, softcoreParam,
-                                 cutoff);
-           },
-           "charges"_a, "positions"_a, "probeCharge"_a = 1.0,
-           "absVal"_a = false, "softcoreParam"_a = 0.0, "cutoff"_a = 1.0,
-           R"DOC(Alternative constructor for Coulomb class.
+      .def(
+          "__init__",
+          [](Coulomb &self, const nb::object &charges,
+             const nb::object &positions, double probeCharge, bool absVal,
+             double softcoreParam, double cutoff) {
+            const auto [ch, pos] =
+                extractChargesAndPositions(charges, positions);
+            new (&self)
+                Coulomb(ch, pos, probeCharge, absVal, softcoreParam, cutoff);
+          },
+          "charges"_a, "positions"_a, "probeCharge"_a = 1.0, "absVal"_a = false,
+          "softcoreParam"_a = 0.0, "cutoff"_a = 1.0,
+          R"DOC(Alternative constructor for Coulomb class.
 
         ARGUMENTS:
         - charges:       array of partial charges of a molecule's atoms
@@ -115,9 +118,9 @@ NOTE: This functionality is experimental and the API and/or results may change i
         - absVal:        if True, absolute values of interactions are calculated (defaults to False)
         - softcoreParam  softcore interaction parameter [A^2], if zero, a minimum cutoff distance is used (defaults to 0.0)
         - cutoff         minimum cutoff distance [A] (defaults to 1.0))DOC")
-      .def("__call__", &Coulomb::operator(), "x"_a, "y"_a, "z"_a,
-           "threshold"_a,
-           R"DOC(Calculates the electrostatic interaction (Coulomb energy) between probe and molecule in
+      .def(
+          "__call__", &Coulomb::operator(), "x"_a, "y"_a, "z"_a, "threshold"_a,
+          R"DOC(Calculates the electrostatic interaction (Coulomb energy) between probe and molecule in
         vacuum (no dielectric).
 
         ARGUMENTS:
@@ -137,10 +140,9 @@ NOTE: This functionality is experimental and the API and/or results may change i
 )DOC")
       .def(nb::init<const RDKit::ROMol &, int, double, bool,
                     const std::string &, double, double, double, double>(),
-           "mol"_a, "confId"_a = -1, "probeCharge"_a = 1.0,
-           "absVal"_a = false, "chargeKey"_a = "_GasteigerCharge",
-           "softcoreParam"_a = 0.0, "cutoff"_a = 1.0, "epsilon"_a = 80.0,
-           "xi"_a = 4.0,
+           "mol"_a, "confId"_a = -1, "probeCharge"_a = 1.0, "absVal"_a = false,
+           "chargeKey"_a = "_GasteigerCharge", "softcoreParam"_a = 0.0,
+           "cutoff"_a = 1.0, "epsilon"_a = 80.0, "xi"_a = 4.0,
            R"DOC(Constructor for CoulombDielectric class.
 
         ARGUMENTS:
@@ -153,19 +155,20 @@ NOTE: This functionality is experimental and the API and/or results may change i
         - cutoff         minimum cutoff distance [A] (defaults to 1.0)
         - epsilon        relative permittivity of solvent (defaults to 80.0)
         - xi             relative permittivity of solute (defaults to 4.0))DOC")
-      .def("__init__",
-           [](CoulombDielectric &self, const nb::object &charges,
-              const nb::object &positions, double probeCharge, bool absVal,
-              double softcoreParam, double cutoff, double epsilon, double xi) {
-             const auto [ch, pos] =
-                 extractChargesAndPositions(charges, positions);
-             new (&self) CoulombDielectric(ch, pos, probeCharge, absVal,
-                                           softcoreParam, cutoff, epsilon, xi);
-           },
-           "charges"_a, "positions"_a, "probeCharge"_a = 1.0,
-           "absVal"_a = false, "softcoreParam"_a = 0.0, "cutoff"_a = 1.0,
-           "epsilon"_a = 80.0, "xi"_a = 4.0,
-           R"DOC(Alternative constructor for CoulombDielectric class.
+      .def(
+          "__init__",
+          [](CoulombDielectric &self, const nb::object &charges,
+             const nb::object &positions, double probeCharge, bool absVal,
+             double softcoreParam, double cutoff, double epsilon, double xi) {
+            const auto [ch, pos] =
+                extractChargesAndPositions(charges, positions);
+            new (&self) CoulombDielectric(ch, pos, probeCharge, absVal,
+                                          softcoreParam, cutoff, epsilon, xi);
+          },
+          "charges"_a, "positions"_a, "probeCharge"_a = 1.0, "absVal"_a = false,
+          "softcoreParam"_a = 0.0, "cutoff"_a = 1.0, "epsilon"_a = 80.0,
+          "xi"_a = 4.0,
+          R"DOC(Alternative constructor for CoulombDielectric class.
 
       - charges:       array of partial charges of a molecule's atoms
       - positions:     array of positions of a molecule's atoms
@@ -175,9 +178,10 @@ NOTE: This functionality is experimental and the API and/or results may change i
       - cutoff         minimum cutoff distance [A] (defaults to 1.0)
       - epsilon        relative permittivity of solvent (defaults to 80.0)
       - xi             relative permittivity of solute (defaults to 4.0))DOC")
-      .def("__call__", &CoulombDielectric::operator(), "x"_a, "y"_a, "z"_a,
-           "threshold"_a,
-           R"DOC(Calculates the electrostatic interaction (Coulomb energy) between probe and molecule in
+      .def(
+          "__call__", &CoulombDielectric::operator(), "x"_a, "y"_a, "z"_a,
+          "threshold"_a,
+          R"DOC(Calculates the electrostatic interaction (Coulomb energy) between probe and molecule in
         by taking a distance-dependent dielectric into account.
 
         ARGUMENTS:
@@ -191,17 +195,18 @@ NOTE: This functionality is experimental and the API and/or results may change i
       R"DOC(Class for calculating van der Waals interactions between molecule and a probe at a gridpoint        based on the MMFF forcefield.
 )DOC")
       .def(nb::init<const RDKit::ROMol &, int, unsigned int, bool, double>(),
-           "mol"_a, "confId"_a = -1, "probeAtomType"_a = 6,
-           "scaling"_a = false, "cutoff"_a = 1.0,
+           "mol"_a, "confId"_a = -1, "probeAtomType"_a = 6, "scaling"_a = false,
+           "cutoff"_a = 1.0,
            R"DOC(ARGUMENTS:
         - mol           molecule object
         - confId        conformation id which is used to get positions of atoms (default=-1)
         - probeAtomType MMFF94 atom type for the probe atom (default=6, sp3 oxygen)
         - cutoff        minimum cutoff distance [A] (default:1.0)
         - scaling       scaling of VdW parameters to take hydrogen bonds into account (default=False))DOC")
-      .def("__call__", &MMFFVdWaals::operator(), "x"_a, "y"_a, "z"_a,
-           "threshold"_a,
-           R"DOC(Calculates the van der Waals interaction between molecule and a probe at a gridpoint.
+      .def(
+          "__call__", &MMFFVdWaals::operator(), "x"_a, "y"_a, "z"_a,
+          "threshold"_a,
+          R"DOC(Calculates the van der Waals interaction between molecule and a probe at a gridpoint.
 
         ARGUMENTS:
         - x, y, z:   coordinates of probe position for energy calculation
@@ -221,9 +226,10 @@ NOTE: This functionality is experimental and the API and/or results may change i
         - confId        conformation id which is used to get positions of atoms (default=-1)
         - probeAtomType UFF atom type for the probe atom (default='O_3', sp3 oxygen)
         - cutoff        minimum cutoff distance [A] (default:1.0))DOC")
-      .def("__call__", &UFFVdWaals::operator(), "x"_a, "y"_a, "z"_a,
-           "threshold"_a,
-           R"DOC(Calculates the van der Waals interaction between molecule and a probe at a gridpoint.
+      .def(
+          "__call__", &UFFVdWaals::operator(), "x"_a, "y"_a, "z"_a,
+          "threshold"_a,
+          R"DOC(Calculates the van der Waals interaction between molecule and a probe at a gridpoint.
 
         ARGUMENTS:
         - x, y, z:   coordinates of probe position for energy calculation
@@ -231,8 +237,9 @@ NOTE: This functionality is experimental and the API and/or results may change i
         RETURNS:
         - van der Waals potential in [kJ mol^-1])DOC");
 
-  nb::class_<HBond>(m, "HBond",
-                    R"DOC(Class for calculation of hydrogen bonding energy between a probe and a molecule.
+  nb::class_<HBond>(
+      m, "HBond",
+      R"DOC(Class for calculation of hydrogen bonding energy between a probe and a molecule.
 
         Similar to GRID hydrogen bonding descriptors.
         References:
@@ -241,8 +248,8 @@ NOTE: This functionality is experimental and the API and/or results may change i
         - J.Med.Chem. 1993, 36, 148.
 )DOC")
       .def(nb::init<RDKit::ROMol &, int, const std::string &, bool, double>(),
-           "mol"_a, "confId"_a = -1, "probeAtomType"_a = "OH",
-           "fixed"_a = true, "cutoff"_a = 1.0,
+           "mol"_a, "confId"_a = -1, "probeAtomType"_a = "OH", "fixed"_a = true,
+           "cutoff"_a = 1.0,
            R"DOC(Constructor for HBond class.
 
         ARGUMENTS:
@@ -254,9 +261,9 @@ NOTE: This functionality is experimental and the API and/or results may change i
                          into account and one for strictly fixed conformations
                          if True, strictly fixed conformations (defaults to True)
         - cutoff         minimum cutoff distance [A] (defaults to 1.0))DOC")
-      .def("__call__", &HBond::operator(), "x"_a, "y"_a, "z"_a,
-           "threshold"_a,
-           R"DOC(Calculates the hydrogen bonding energy between probe and molecule in
+      .def(
+          "__call__", &HBond::operator(), "x"_a, "y"_a, "z"_a, "threshold"_a,
+          R"DOC(Calculates the hydrogen bonding energy between probe and molecule in
 
         ARGUMENTS:
         - x, y, z:   coordinates of probe position for energy calculation
@@ -388,8 +395,8 @@ NOTE: This functionality is experimental and the API and/or results may change i
 
   m.def(
       "WriteToCubeFile",
-      [](const RDGeom::UniformRealValueGrid3D &grid, const std::string &filename,
-         const nb::object &mol, int confId) {
+      [](const RDGeom::UniformRealValueGrid3D &grid,
+         const std::string &filename, const nb::object &mol, int confId) {
         const RDKit::ROMol *molPtr = nullptr;
         if (!mol.is_none()) {
           molPtr = nb::cast<const RDKit::ROMol *>(mol);
@@ -405,9 +412,8 @@ NOTE: This functionality is experimental and the API and/or results may change i
         - mol:       associated molecule (defaults to None)
         - confId:    the ID of the conformer to be used (defaults to -1))DOC");
 
-  m.def(
-      "ReadFromCubeFile", readCubeFileHelper, "filename"_a,
-      R"DOC(Reads Grid from a file in Gaussian CUBE format.
+  m.def("ReadFromCubeFile", readCubeFileHelper, "filename"_a,
+        R"DOC(Reads Grid from a file in Gaussian CUBE format.
 
         ARGUMENTS:
         - filename:  filename of file to be read
@@ -416,5 +422,5 @@ NOTE: This functionality is experimental and the API and/or results may change i
         the second element is the molecule object associated to the grid
         (only atoms and coordinates, no bonds;
         None if no molecule was associated to the grid))DOC",
-      nb::rv_policy::take_ownership);
+        nb::rv_policy::take_ownership);
 }

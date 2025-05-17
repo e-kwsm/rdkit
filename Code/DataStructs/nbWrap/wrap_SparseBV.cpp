@@ -165,8 +165,9 @@ struct SBV_wrapper {
         .def("GetOnBits", GetOnBits,
              R"DOC(Returns a tuple containing IDs of the on bits.
 )DOC")
-        .def("ToBitString", BitVectToText<SBV>,
-             R"DOC(Returns a string of zeros and ones representing the bit vector.)DOC")
+        .def(
+            "ToBitString", BitVectToText<SBV>,
+            R"DOC(Returns a string of zeros and ones representing the bit vector.)DOC")
         .def("ToBinary", BVToBinary,
              R"DOC(Returns an internal binary representation of the vector.
 )DOC")

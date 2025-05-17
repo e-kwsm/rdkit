@@ -5165,8 +5165,7 @@ TEST_CASE("github #9629: renumberAtoms drops ring families and ring type") {
   std::iota(perm.begin(), perm.end(), 0u);
   std::unique_ptr<ROMol> nmol(MolOps::renumberAtoms(*m, perm));
   REQUIRE(nmol->getRingInfo()->isInitialized());
-  CHECK(nmol->getRingInfo()->getRingType() ==
-        m->getRingInfo()->getRingType());
+  CHECK(nmol->getRingInfo()->getRingType() == m->getRingInfo()->getRingType());
   CHECK(nmol->getRingInfo()->areRingFamiliesInitialized());
   CHECK(nmol->getRingInfo()->numRingFamilies() ==
         m->getRingInfo()->numRingFamilies());

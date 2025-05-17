@@ -22,7 +22,7 @@ using namespace RDKit::StructureCheck;
 
 NB_MODULE(rdStructChecker, m) {
   nb::enum_<StructChecker::StructureFlags>(m, "StructureFlags",
-                                            nb::is_arithmetic())
+                                           nb::is_arithmetic())
       .value("NO_CHANGE", StructChecker::NO_CHANGE)
       .value("BAD_MOLECULE", StructChecker::BAD_MOLECULE)
       .value("ALIAS_CONVERSION_FAILED", StructChecker::ALIAS_CONVERSION_FAILED)
@@ -43,10 +43,12 @@ NB_MODULE(rdStructChecker, m) {
   nb::class_<StructCheckerOptions>(m, "StructCheckerOptions")
       .def(nb::init<>())
       .def_rw("AcidityLimit", &StructCheckerOptions::AcidityLimit)
-      .def_rw("RemoveMinorFragments", &StructCheckerOptions::RemoveMinorFragments)
+      .def_rw("RemoveMinorFragments",
+              &StructCheckerOptions::RemoveMinorFragments)
       .def_rw("DesiredCharge", &StructCheckerOptions::DesiredCharge)
       .def_rw("CheckCollisions", &StructCheckerOptions::CheckCollisions)
-      .def_rw("CollisionLimitPercent", &StructCheckerOptions::CollisionLimitPercent)
+      .def_rw("CollisionLimitPercent",
+              &StructCheckerOptions::CollisionLimitPercent)
       .def_rw("MaxMolSize", &StructCheckerOptions::MaxMolSize)
       .def_rw("ConvertSText", &StructCheckerOptions::ConvertSText)
       .def_rw("StripZeros", &StructCheckerOptions::StripZeros)
@@ -78,8 +80,9 @@ path)DOC");
       .def_static("StructureFlagsToString",
                   &StructChecker::StructureFlagsToString, "flags"_a,
                   "Return the structure flags as a human readable string")
-      .def_static("StringToStructureFlags",
-                  &StructChecker::StringToStructureFlags, "str"_a,
-                  R"DOC(Convert a comma separated string to the appropriate structure
+      .def_static(
+          "StringToStructureFlags", &StructChecker::StringToStructureFlags,
+          "str"_a,
+          R"DOC(Convert a comma separated string to the appropriate structure
 flags)DOC");
 }

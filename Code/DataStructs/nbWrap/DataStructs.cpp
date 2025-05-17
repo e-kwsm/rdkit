@@ -45,9 +45,8 @@ void convertToNumpyArray(const T &v, nb::object destArray) {
   Py_DECREF(resized);
   for (unsigned int i = 0; i < v.size(); ++i) {
     nb::object item = nb::cast(+v[i]);
-    if (PyArray_SETITEM(destP,
-                       static_cast<char *>(PyArray_GETPTR1(destP, i)),
-                       item.ptr()) < 0) {
+    if (PyArray_SETITEM(destP, static_cast<char *>(PyArray_GETPTR1(destP, i)),
+                        item.ptr()) < 0) {
       throw nb::python_error();
     }
   }
@@ -78,22 +77,22 @@ NB_MODULE(cDataStructs, m) {
   wrap_realValVect(m);
   wrap_sparseIntVect(m);
   wrap_FPB(m);
-  m.def("ConvertToNumpyArray",
-        &convertToNumpyArray<RDKit::DiscreteValueVect>, "bv"_a, "destArray"_a);
+  m.def("ConvertToNumpyArray", &convertToNumpyArray<RDKit::DiscreteValueVect>,
+        "bv"_a, "destArray"_a);
   m.def("ConvertToNumpyArray", &convertToNumpyArray<RDKit::RealValueVect>,
         "rvv"_a, "destArray"_a);
-  m.def("ConvertToNumpyArray", &convertToNumpyArray<ExplicitBitVect>,
-        "bv"_a, "destArray"_a);
+  m.def("ConvertToNumpyArray", &convertToNumpyArray<ExplicitBitVect>, "bv"_a,
+        "destArray"_a);
   m.def("ConvertToNumpyArray",
-        &convertToNumpyArray<RDKit::SparseIntVect<std::int32_t>>,
-        "bv"_a, "destArray"_a);
+        &convertToNumpyArray<RDKit::SparseIntVect<std::int32_t>>, "bv"_a,
+        "destArray"_a);
   m.def("ConvertToNumpyArray",
-        &convertToNumpyArray<RDKit::SparseIntVect<boost::int64_t>>,
-        "bv"_a, "destArray"_a);
+        &convertToNumpyArray<RDKit::SparseIntVect<boost::int64_t>>, "bv"_a,
+        "destArray"_a);
   m.def("ConvertToNumpyArray",
-        &convertToNumpyArray<RDKit::SparseIntVect<std::uint32_t>>,
-        "bv"_a, "destArray"_a);
+        &convertToNumpyArray<RDKit::SparseIntVect<std::uint32_t>>, "bv"_a,
+        "destArray"_a);
   m.def("ConvertToNumpyArray",
-        &convertToNumpyArray<RDKit::SparseIntVect<boost::uint64_t>>,
-        "bv"_a, "destArray"_a);
+        &convertToNumpyArray<RDKit::SparseIntVect<boost::uint64_t>>, "bv"_a,
+        "destArray"_a);
 }

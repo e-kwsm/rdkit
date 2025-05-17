@@ -927,7 +927,7 @@ static int byte_popcounts[] = {
     2, 3, 3, 4, 3, 4, 4, 5, 3, 4, 4, 5, 4, 5, 5, 6, 3, 4, 4, 5, 4, 5, 5, 6,
     4, 5, 5, 6, 5, 6, 6, 7, 3, 4, 4, 5, 4, 5, 5, 6, 4, 5, 5, 6, 5, 6, 6, 7,
     4, 5, 5, 6, 5, 6, 6, 7, 5, 6, 6, 7, 6, 7, 7, 8};
-}
+}  // namespace
 unsigned int CalcBitmapPopcount(const unsigned char *afp, unsigned int nBytes) {
   PRECONDITION(afp, "no afp");
   unsigned int popcount = 0;

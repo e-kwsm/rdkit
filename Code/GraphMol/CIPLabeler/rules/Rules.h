@@ -23,7 +23,7 @@ class Rules : public SequenceRule {
  public:
   Rules() = delete;
 
-  Rules(std::initializer_list<SequenceRule *>&& rules) {
+  Rules(std::initializer_list<SequenceRule *> &&rules) {
     for (auto &rule : rules) {
       add(rule);
     }

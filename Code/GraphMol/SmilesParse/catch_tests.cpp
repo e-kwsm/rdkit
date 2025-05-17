@@ -2990,8 +2990,9 @@ TEST_CASE("Remove CX extension from SMILES", "[cxsmiles]") {
   }
 }
 
-TEST_CASE("Github #9701: SMILES round trip preserves pseudoasymmetric ring stereo",
-          "[SMILES][bug]") {
+TEST_CASE(
+    "Github #9701: SMILES round trip preserves pseudoasymmetric ring stereo",
+    "[SMILES][bug]") {
   UseLegacyStereoPerceptionFixture resetStereoPerception(false);
   SmilesWriteParams writeParams;
   writeParams.canonical = GENERATE(true, false);
@@ -3525,25 +3526,30 @@ TEST_CASE(
   SECTION("bridgehead atom opening two ring closures") {
     // the case reported in the issue: an oxanorbornene bridgehead
     RWMol mol;
-    auto tags = std::vector<Atom::ChiralType>{
-        Atom::ChiralType::CHI_UNSPECIFIED, Atom::ChiralType::CHI_UNSPECIFIED,
-        Atom::ChiralType::CHI_TETRAHEDRAL_CCW,
-        Atom::ChiralType::CHI_UNSPECIFIED,
-        Atom::ChiralType::CHI_TETRAHEDRAL_CW,
-        Atom::ChiralType::CHI_TETRAHEDRAL_CW,
-        Atom::ChiralType::CHI_TETRAHEDRAL_CCW};
+    auto tags =
+        std::vector<Atom::ChiralType>{Atom::ChiralType::CHI_UNSPECIFIED,
+                                      Atom::ChiralType::CHI_UNSPECIFIED,
+                                      Atom::ChiralType::CHI_TETRAHEDRAL_CCW,
+                                      Atom::ChiralType::CHI_UNSPECIFIED,
+                                      Atom::ChiralType::CHI_TETRAHEDRAL_CW,
+                                      Atom::ChiralType::CHI_TETRAHEDRAL_CW,
+                                      Atom::ChiralType::CHI_TETRAHEDRAL_CCW};
     auto symbols = std::vector<unsigned int>{6, 6, 6, 8, 6, 6, 6};
     for (unsigned int i = 0; i < symbols.size(); ++i) {
       auto *atom = new Atom(symbols[i]);
       atom->setChiralTag(tags[i]);
       mol.addAtom(atom);
     }
-    for (const auto &bnd : std::vector<std::tuple<unsigned int, unsigned int,
-                                                  Bond::BondType>>{
-             {2, 3, Bond::BondType::SINGLE}, {3, 4, Bond::BondType::SINGLE},
-             {2, 1, Bond::BondType::SINGLE}, {4, 0, Bond::BondType::SINGLE},
-             {1, 0, Bond::BondType::DOUBLE}, {5, 6, Bond::BondType::SINGLE},
-             {2, 6, Bond::BondType::SINGLE}, {4, 5, Bond::BondType::SINGLE}}) {
+    for (const auto &bnd :
+         std::vector<std::tuple<unsigned int, unsigned int, Bond::BondType>>{
+             {2, 3, Bond::BondType::SINGLE},
+             {3, 4, Bond::BondType::SINGLE},
+             {2, 1, Bond::BondType::SINGLE},
+             {4, 0, Bond::BondType::SINGLE},
+             {1, 0, Bond::BondType::DOUBLE},
+             {5, 6, Bond::BondType::SINGLE},
+             {2, 6, Bond::BondType::SINGLE},
+             {4, 5, Bond::BondType::SINGLE}}) {
       mol.addBond(std::get<0>(bnd), std::get<1>(bnd), std::get<2>(bnd));
     }
     MolOps::sanitizeMol(mol);
