@@ -21,16 +21,15 @@ using namespace nb::literals;
 namespace RDInfoTheory {
 
 nb::ndarray<nb::numpy, double, nb::ndim<2>> getTopNbits(InfoBitRanker *ranker,
-                                                         int num) {
+                                                        int num) {
   double *dres = ranker->getTopN(num);
   size_t ncols = ranker->getNumClasses() + 2;
   size_t nrows = (size_t)num;
   auto *data = new double[nrows * ncols];
   memcpy(static_cast<void *>(data), static_cast<void *>(dres),
          nrows * ncols * sizeof(double));
-  nb::capsule owner(data, [](void *f) noexcept {
-    delete[] reinterpret_cast<double *>(f);
-  });
+  nb::capsule owner(
+      data, [](void *f) noexcept { delete[] reinterpret_cast<double *>(f); });
   return nb::ndarray<nb::numpy, double, nb::ndim<2>>(data, {nrows, ncols},
                                                      owner);
 }
@@ -72,7 +71,8 @@ void tester(InfoBitRanker *, nb::object bitVect) {
 }  // namespace RDInfoTheory
 
 void wrap_ranker(nb::module_ &m) {
-  nb::class_<RDInfoTheory::InfoBitRanker>(m, "InfoBitRanker",
+  nb::class_<RDInfoTheory::InfoBitRanker>(
+      m, "InfoBitRanker",
       R"DOC(A class to rank the bits from a series of labelled fingerprints
 A simple demonstration may help clarify what this class does.
 Here's a small set of vectors:
@@ -131,7 +131,8 @@ As is a biased chi squared:
 1 0.000 1 1
 )DOC")
       .def(nb::init<unsigned int, unsigned int>(), "nBits"_a, "nClasses"_a)
-      .def(nb::init<unsigned int, unsigned int, RDInfoTheory::InfoBitRanker::InfoType>(),
+      .def(nb::init<unsigned int, unsigned int,
+                    RDInfoTheory::InfoBitRanker::InfoType>(),
            "nBits"_a, "nClasses"_a, "infoType"_a)
       .def("AccumulateVotes", RDInfoTheory::AccumulateVotes, "bitVect"_a,
            "label"_a,
@@ -142,8 +143,9 @@ ARGUMENTS:
   - bv : bit vector either ExplicitBitVect or SparseBitVect operator
   - label : the class label for the bit vector. It is assumed that 0 <= class < nClasses
 )DOC")
-      .def("SetBiasList", RDInfoTheory::SetBiasList, "classList"_a,
-           R"DOC(Set the classes to which the entropy calculation should be biased
+      .def(
+          "SetBiasList", RDInfoTheory::SetBiasList, "classList"_a,
+          R"DOC(Set the classes to which the entropy calculation should be biased
 
 This list contains a set of class ids used when in the BIASENTROPY mode of ranking bits.
 In this mode, a bit must be correlated higher with one of the biased classes than all the
@@ -169,8 +171,8 @@ ARGUMENTS:
 
   - num : the number of top ranked bits that are required
 )DOC")
-      .def("WriteTopBitsToFile", &RDInfoTheory::InfoBitRanker::writeTopBitsToFile,
-           "fileName"_a,
+      .def("WriteTopBitsToFile",
+           &RDInfoTheory::InfoBitRanker::writeTopBitsToFile, "fileName"_a,
            "Write the bits that have been ranked to a file")
       .def("Tester", RDInfoTheory::tester, "bitVect"_a);
 

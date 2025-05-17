@@ -132,8 +132,7 @@ struct forwardsdmolsup_wrap {
                  MolIOEnter,
              python::return_internal_reference<>())
         .def("__exit__", (bool (*)(LocalForwardSDMolSupplier *, python::object,
-                                   python::object, python::object)) &
-                             MolIOExit)
+                                   python::object, python::object))&MolIOExit)
         .def("__next__",
              (ROMol * (*)(LocalForwardSDMolSupplier *)) & MolForwardSupplNext,
              "Returns the next molecule in the file.  Raises _StopIteration_ "

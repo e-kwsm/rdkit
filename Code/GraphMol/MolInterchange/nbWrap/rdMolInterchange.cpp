@@ -55,8 +55,7 @@ this to False when parsing queries.)DOC");
          const RDKit::MolInterchange::JSONWriteParameters &params) {
         return RDKit::MolInterchange::MolToJSONData(mol, params);
       },
-      "mol"_a,
-      "params"_a = RDKit::MolInterchange::defaultJSONWriteParameters,
+      "mol"_a, "params"_a = RDKit::MolInterchange::defaultJSONWriteParameters,
       R"DOC(Convert a single molecule to JSON
 
 ARGUMENTS:
@@ -74,8 +73,7 @@ RETURNS:
         }
         return RDKit::MolInterchange::MolsToJSONData(mols, params);
       },
-      "mols"_a,
-      "params"_a = RDKit::MolInterchange::defaultJSONWriteParameters,
+      "mols"_a, "params"_a = RDKit::MolInterchange::defaultJSONWriteParameters,
       R"DOC(Convert a set of molecules to JSON
 
 ARGUMENTS:

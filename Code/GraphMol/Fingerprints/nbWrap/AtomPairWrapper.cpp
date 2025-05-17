@@ -55,14 +55,13 @@ void exportAtompair(nb::module_ &m) {
       .def_rw("maxDistance", &AtomPair::AtomPairArguments::d_maxDistance,
               "maximum distance to be included");
 
-  m.def(
-      "GetAtomPairGenerator", &getAtomPairGenerator<std::uint64_t>,
-      "minDistance"_a = 1,
-      "maxDistance"_a = (unsigned int)(AtomPair::maxPathLen - 1),
-      "includeChirality"_a = false, "use2D"_a = true,
-      "countSimulation"_a = true, "countBounds"_a = nb::none(),
-      "fpSize"_a = 2048, "atomInvariantsGenerator"_a = nb::none(),
-      R"DOC(Get an atom pair fingerprint generator
+  m.def("GetAtomPairGenerator", &getAtomPairGenerator<std::uint64_t>,
+        "minDistance"_a = 1,
+        "maxDistance"_a = (unsigned int)(AtomPair::maxPathLen - 1),
+        "includeChirality"_a = false, "use2D"_a = true,
+        "countSimulation"_a = true, "countBounds"_a = nb::none(),
+        "fpSize"_a = 2048, "atomInvariantsGenerator"_a = nb::none(),
+        R"DOC(Get an atom pair fingerprint generator
 
 ARGUMENTS:
     - minDistance: minimum distance between atoms to be considered in a
@@ -85,7 +84,7 @@ This generator supports the following AdditionalOutput types:
 
 RETURNS: FingerprintGenerator
 )DOC",
-      nb::rv_policy::take_ownership);
+        nb::rv_policy::take_ownership);
 
   m.def(
       "GetAtomPairAtomInvGen",

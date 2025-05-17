@@ -152,12 +152,12 @@ nb::ndarray<nb::numpy, double, nb::ndim<2>> embedBoundsMatrix(
 }  // namespace
 
 NB_MODULE(DistGeom, m) {
-  m.doc() = "Module containing functions for basic distance geometry operations";
+  m.doc() =
+      "Module containing functions for basic distance geometry operations";
 
-  m.def(
-      "DoTriangleSmoothing", &doTriangleSmoothing,
-      "boundsMatrix"_a, "tol"_a = 0.,
-      R"DOC(Do triangle smoothing on a bounds matrix
+  m.def("DoTriangleSmoothing", &doTriangleSmoothing, "boundsMatrix"_a,
+        "tol"_a = 0.,
+        R"DOC(Do triangle smoothing on a bounds matrix
 
 ARGUMENTS:
 
@@ -169,11 +169,10 @@ RETURNS:
    a boolean indicating whether or not the smoothing worked.
 )DOC");
 
-  m.def(
-      "EmbedBoundsMatrix", &embedBoundsMatrix,
-      "boundsMatrix"_a, "maxIters"_a = 10, "randomizeOnFailure"_a = false,
-      "numZeroFail"_a = 2, "weights"_a = nb::list(), "randomSeed"_a = -1,
-      R"DOC(Embed a bounds matrix and return the coordinates
+  m.def("EmbedBoundsMatrix", &embedBoundsMatrix, "boundsMatrix"_a,
+        "maxIters"_a = 10, "randomizeOnFailure"_a = false, "numZeroFail"_a = 2,
+        "weights"_a = nb::list(), "randomSeed"_a = -1,
+        R"DOC(Embed a bounds matrix and return the coordinates
 
 ARGUMENTS:
 

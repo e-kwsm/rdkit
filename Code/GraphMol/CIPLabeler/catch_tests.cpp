@@ -202,8 +202,7 @@ TEST_CASE("Mancude fractional atomic numbers", "[accurateCIP]") {
     int bond_duplicates = 0;
     for (const auto edge : negative_node->getEdges()) {
       const auto end = edge->getEnd();
-      if (edge->isBeg(negative_node) &&
-          end->isSet(Node::BOND_DUPLICATE)) {
+      if (edge->isBeg(negative_node) && end->isSet(Node::BOND_DUPLICATE)) {
         ++bond_duplicates;
         CHECK(end->getAtomicNumFraction() == boost::rational<int>(4, 1));
       }

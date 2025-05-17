@@ -372,8 +372,7 @@ void cleanUpOrganometallics(RWMol &mol) {
 }
 
 namespace {
-void adjustHs(RWMol &mol,
-              const boost::dynamic_bitset<> *atomsToAdjust) {
+void adjustHs(RWMol &mol, const boost::dynamic_bitset<> *atomsToAdjust) {
   //
   //  Go through and adjust the number of implicit and explicit Hs
   //  on each atom in the molecule.
@@ -1271,7 +1270,7 @@ std::vector<int> hapticBondEndpoints(const Bond *bond) {
   }
   return oats;
 }
-}  // end of namespace details
+}  // namespace details
 
 namespace details {
 unsigned int addExplicitAttachmentPoint(RWMol &mol, unsigned int atomIdx,
@@ -1457,5 +1456,5 @@ void collapseAttachmentPoints(RWMol &mol, bool markedOnly) {
     mol.commitBatchEdit();
   }
 }
-}  // end of namespace MolOps
-}  // end of namespace RDKit
+}  // namespace MolOps
+}  // namespace RDKit

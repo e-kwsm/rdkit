@@ -12,8 +12,11 @@
 #define __RD_TRANSFORM_H__
 
 namespace RDGeom {
-
-typedef enum { X_Axis, Y_Axis, Z_Axis } AxisType;
-}
+typedef enum {
+  X_Axis,
+  Y_Axis,
+  Z_Axis
+} AxisType;
+}  // namespace RDGeom
 
 #endif

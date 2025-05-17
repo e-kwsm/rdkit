@@ -93,7 +93,8 @@ std::string chemicalReactionTemplatesToString(
 
 std::string chemicalReactionToRxnToString(
     const RDKit::ChemicalReaction &rxn, bool toSmiles,
-    const RDKit::SmilesWriteParams &params, bool includeCX, std::uint32_t flags = RDKit::SmilesWrite::CXSmilesFields::CX_ALL) {
+    const RDKit::SmilesWriteParams &params, bool includeCX,
+    std::uint32_t flags = RDKit::SmilesWrite::CXSmilesFields::CX_ALL) {
   std::string res = "";
   res +=
       chemicalReactionTemplatesToString(rxn, RDKit::Reactant, toSmiles, params);
@@ -102,7 +103,6 @@ std::string chemicalReactionToRxnToString(
   res += ">";
   res +=
       chemicalReactionTemplatesToString(rxn, RDKit::Product, toSmiles, params);
-
 
   if (includeCX) {
     std::vector<RDKit::ROMol *> mols;
@@ -115,7 +115,7 @@ std::string chemicalReactionToRxnToString(
       }
     }
 
-    auto ext = RDKit::SmilesWrite::getCXExtensions(mols, flags); 
+    auto ext = RDKit::SmilesWrite::getCXExtensions(mols, flags);
     if (!ext.empty()) {
       res += " ";
       res += ext;
@@ -152,18 +152,17 @@ std::string ChemicalReactionToRxnSmiles(const ChemicalReaction &rxn,
   return chemicalReactionToRxnToString(rxn, true, params, false);
 };
 
-
 //! returns the reaction SMARTS for a reaction with CX extension
 std::string ChemicalReactionToCXRxnSmarts(const ChemicalReaction &rxn,
-                                        const SmilesWriteParams &params,
-                                        std::uint32_t flags) {
+                                          const SmilesWriteParams &params,
+                                          std::uint32_t flags) {
   return chemicalReactionToRxnToString(rxn, false, params, true, flags);
 };
 
 //! returns the reaction SMILES for a reaction with CX extension
 std::string ChemicalReactionToCXRxnSmiles(const ChemicalReaction &rxn,
-                                        const SmilesWriteParams &params,
-                                        std::uint32_t flags) {
+                                          const SmilesWriteParams &params,
+                                          std::uint32_t flags) {
   return chemicalReactionToRxnToString(rxn, true, params, true, flags);
 };
 

@@ -501,7 +501,7 @@ std::string getAtomLabel(const Atom *atom) {
   addAtomChargeFlags(atom, atomKey);
   return atomKey;
 }
-}  // end of namespace Tools
+}  // namespace Tools
 
 // ---------------------------------------------------------------
 std::pair<AtomicParamVect, bool> getAtomTypes(const ROMol &mol,

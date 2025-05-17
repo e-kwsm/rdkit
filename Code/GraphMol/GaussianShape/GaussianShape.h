@@ -159,8 +159,7 @@ RDKIT_GAUSSIANSHAPE_EXPORT std::array<double, 3> ScoreMolecule(
     const ShapeInput &refShape, const ROMol &fit,
     const ShapeInputOptions &fitOpts = ShapeInputOptions(),
     const ShapeOverlayOptions &overlayOpts = ShapeOverlayOptions(),
-    int fitConfId = -1,
-    std::pair<double, double> *overlapVols = nullptr);
+    int fitConfId = -1, std::pair<double, double> *overlapVols = nullptr);
 
 //! Score the overlap of a molecule to a reference molecule without moving
 //  either.

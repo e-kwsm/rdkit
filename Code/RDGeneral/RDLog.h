@@ -105,7 +105,7 @@ RDKIT_RDGENERAL_EXPORT std::string log_status();
 }  // namespace boost
 namespace RDLog {
 RDKIT_RDGENERAL_EXPORT std::ostream &toStream(std::ostream &);
-}
+}  // namespace RDLog
 #define BOOST_LOG(__arg__)                                      \
   if ((__arg__) && (__arg__->dp_dest) && (__arg__->df_enabled)) \
   RDLog::toStream((__arg__->teestream) ? *(__arg__->teestream)  \

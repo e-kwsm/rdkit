@@ -375,7 +375,7 @@ void getWHIMone(const ROMol &mol, std::vector<double> &res, int confId,
   }
 }
 
-}  // end of anonymous namespace
+}  // namespace
 
 void WHIM(const ROMol &mol, std::vector<double> &res, int confId, double th,
           const std::string &customAtomPropName) {

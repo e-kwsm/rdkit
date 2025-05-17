@@ -64,12 +64,10 @@ TEST_CASE("callbacks SDF") {
   }
   SECTION("nextCallbackException") {
     std::map<unsigned int, unsigned int> callbackNats;
-    auto callback =
-        [&](RWMol &,
-            const v2::FileParsers::MultithreadedMolSupplier &) {
-          throw std::runtime_error(
-              "This is not the callback you are looking for");
-        };
+    auto callback = [&](RWMol &,
+                        const v2::FileParsers::MultithreadedMolSupplier &) {
+      throw std::runtime_error("This is not the callback you are looking for");
+    };
     auto &suppl = sdsuppl;
     suppl.setNextCallback(callback);
     while (!suppl.atEnd()) {

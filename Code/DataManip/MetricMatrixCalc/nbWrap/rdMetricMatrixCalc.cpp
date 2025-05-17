@@ -34,9 +34,7 @@ class NbSequenceHolder {
     return static_cast<unsigned int>(nb::len(d_seq));
   }
 
-  T operator[](unsigned int which) const {
-    return nb::cast<T>(d_seq[which]);
-  }
+  T operator[](unsigned int which) const { return nb::cast<T>(d_seq[which]); }
 
  private:
   nb::object d_seq;
@@ -92,9 +90,9 @@ nb::ndarray<nb::numpy, double, nb::ndim<1>> getEuclideanDistMat(
     nb::dlpack::dtype dtype = maybeArr.dtype();
 
     if (dtype == nb::dtype<double>()) {
-      auto arr2d = nb::cast<
-          nb::ndarray<nb::numpy, double, nb::ndim<2>, nb::c_contig>>(
-          descripMat);
+      auto arr2d =
+          nb::cast<nb::ndarray<nb::numpy, double, nb::ndim<2>, nb::c_contig>>(
+              descripMat);
       const double *desc = arr2d.data();
 
       // here is the 2D array trick so that when the distance calculator
@@ -141,9 +139,8 @@ nb::ndarray<nb::numpy, double, nb::ndim<1>> getEuclideanDistMat(
     }
 
     guard.release();
-    nb::capsule owner(dMat, [](void *p) noexcept {
-      delete[] reinterpret_cast<double *>(p);
-    });
+    nb::capsule owner(
+        dMat, [](void *p) noexcept { delete[] reinterpret_cast<double *>(p); });
     return nb::ndarray<nb::numpy, double, nb::ndim<1>>(dMat, {dMatLen}, owner);
   }  // done with an array input
   else {
@@ -179,9 +176,8 @@ nb::ndarray<nb::numpy, double, nb::ndim<1>> getEuclideanDistMat(
     mmCalc.calcMetricMatrix(dData, nrows, ncols, dMat);
 
     guard.release();
-    nb::capsule owner(dMat, [](void *p) noexcept {
-      delete[] reinterpret_cast<double *>(p);
-    });
+    nb::capsule owner(
+        dMat, [](void *p) noexcept { delete[] reinterpret_cast<double *>(p); });
     return nb::ndarray<nb::numpy, double, nb::ndim<1>>(dMat, {dMatLen}, owner);
   }
 }
@@ -221,9 +217,8 @@ nb::ndarray<nb::numpy, double, nb::ndim<1>> getTanimotoDistMat(
   }
 
   guard.release();
-  nb::capsule owner(sMat, [](void *p) noexcept {
-    delete[] reinterpret_cast<double *>(p);
-  });
+  nb::capsule owner(
+      sMat, [](void *p) noexcept { delete[] reinterpret_cast<double *>(p); });
   return nb::ndarray<nb::numpy, double, nb::ndim<1>>(sMat, {dMatLen}, owner);
 }
 
@@ -263,19 +258,20 @@ nb::ndarray<nb::numpy, double, nb::ndim<1>> getTanimotoSimMat(
   }
 
   guard.release();
-  nb::capsule owner(sMat, [](void *p) noexcept {
-    delete[] reinterpret_cast<double *>(p);
-  });
+  nb::capsule owner(
+      sMat, [](void *p) noexcept { delete[] reinterpret_cast<double *>(p); });
   return nb::ndarray<nb::numpy, double, nb::ndim<1>>(sMat, {dMatLen}, owner);
 }
 }  // namespace RDDataManip
 
 NB_MODULE(rdMetricMatrixCalc, m) {
-  m.doc() = R"DOC(Module containing the calculator for metric matrix calculation,
+  m.doc() =
+      R"DOC(Module containing the calculator for metric matrix calculation,
 e.g. similarity and distance matrices)DOC";
 
-  m.def("GetEuclideanDistMat", RDDataManip::getEuclideanDistMat,
-        R"DOC(Compute the distance matrix from a descriptor matrix using the Euclidean distance metric
+  m.def(
+      "GetEuclideanDistMat", RDDataManip::getEuclideanDistMat,
+      R"DOC(Compute the distance matrix from a descriptor matrix using the Euclidean distance metric
 
 ARGUMENTS:
 
@@ -290,10 +286,11 @@ ARGUMENTS:
 RETURNS:
   A numeric one-dimensional array containing the lower triangle elements of the symmetric distance matrix
 )DOC",
-        "descripMat"_a);
+      "descripMat"_a);
 
-  m.def("GetTanimotoDistMat", RDDataManip::getTanimotoDistMat,
-        R"DOC(Compute the distance matrix from a list of BitVects using the Tanimoto distance metric
+  m.def(
+      "GetTanimotoDistMat", RDDataManip::getTanimotoDistMat,
+      R"DOC(Compute the distance matrix from a list of BitVects using the Tanimoto distance metric
 
 ARGUMENTS:
 
@@ -304,7 +301,7 @@ RETURNS:
   A numeric 1 dimensional array containing the lower triangle elements of the
   symmetric distance matrix
 )DOC",
-        "bitVectList"_a);
+      "bitVectList"_a);
 
   m.def("GetTanimotoSimMat", RDDataManip::getTanimotoSimMat,
         R"DOC(Compute the similarity matrix from a list of BitVects

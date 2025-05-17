@@ -30,8 +30,7 @@
 
 #include <string>
 #include <cmath>
-#include <iostream> 
-
+#include <iostream>
 
 using namespace RDGeom;
 using namespace RDKit;
@@ -245,8 +244,9 @@ M  END
   ff->initialize();
   TEST_ASSERT(ff);
 
-  auto c = std::make_unique<ForceFields::CrystalFF::PlanarityContribs>(ff.get());
-  c->addContrib(1,0,2,3,1.0);
+  auto c =
+      std::make_unique<ForceFields::CrystalFF::PlanarityContribs>(ff.get());
+  c->addContrib(1, 0, 2, 3, 1.0);
   ff->contribs().push_back(std::move(c));
 
   TEST_ASSERT(ff->calcEnergy() > 1.0);

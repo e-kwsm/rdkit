@@ -61,13 +61,13 @@ Hanson, R. M., Musacchio, S., Mayfield, J. W., Vainio, M. J., Yerin, A., Redkin,
 Algorithmic Analysis of Cahn--Ingold--Prelog Rules of Stereochemistry:
 Proposals for Revised Rules and a Guide for Machine Implementation.
 J. Chem. Inf. Model. 2018, 58, 1755-1765.)DOC";
-  nb::exception<RDKit::CIPLabeler::MaxIterationsExceeded>(m, "MaxIterationsExceeded",                                      PyExc_RuntimeError);
+  nb::exception<RDKit::CIPLabeler::MaxIterationsExceeded>(
+      m, "MaxIterationsExceeded", PyExc_RuntimeError);
 
-  m.def(
-      "AssignCIPLabels", assignCIPLabelsHelper, "mol"_a,
-      "atomsToLabel"_a = nb::none(), "bondsToLabel"_a = nb::none(),
-      "maxRecursiveIterations"_a = 0u,
-      R"DOC(New implementation of Stereo assignment using a true CIP ranking.
+  m.def("AssignCIPLabels", assignCIPLabelsHelper, "mol"_a,
+        "atomsToLabel"_a = nb::none(), "bondsToLabel"_a = nb::none(),
+        "maxRecursiveIterations"_a = 0u,
+        R"DOC(New implementation of Stereo assignment using a true CIP ranking.
 On return:  The molecule to contains CIP flags
 Errors:  when maxRecursiveIterations is exceeded, throws a MaxIterationsExceeded error
 ARGUMENTS:

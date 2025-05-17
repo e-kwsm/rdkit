@@ -17,7 +17,11 @@ using namespace RDKit;
 
 namespace {
 
-enum class EnumeratorTypes { LinkNode, PositionVariation, RepeatUnit };
+enum class EnumeratorTypes {
+  LinkNode,
+  PositionVariation,
+  RepeatUnit
+};
 
 std::shared_ptr<MolEnumerator::MolEnumeratorOp> opFromName(
     EnumeratorTypes typ) {
@@ -43,15 +47,16 @@ NB_MODULE(rdMolEnumerator, m) {
       .value("PositionVariation", EnumeratorTypes::PositionVariation)
       .value("RepeatUnit", EnumeratorTypes::RepeatUnit);
 
-  nb::class_<MolEnumerator::MolEnumeratorParams>(m, "MolEnumeratorParams",
-                                                  "Molecular enumerator parameters")
+  nb::class_<MolEnumerator::MolEnumeratorParams>(
+      m, "MolEnumeratorParams", "Molecular enumerator parameters")
       .def(nb::init<>())
-      .def("__init__",
-           [](MolEnumerator::MolEnumeratorParams *self, EnumeratorTypes typ) {
-             new (self) MolEnumerator::MolEnumeratorParams();
-             self->dp_operation = opFromName(typ);
-           },
-           "typ"_a)
+      .def(
+          "__init__",
+          [](MolEnumerator::MolEnumeratorParams *self, EnumeratorTypes typ) {
+            new (self) MolEnumerator::MolEnumeratorParams();
+            self->dp_operation = opFromName(typ);
+          },
+          "typ"_a)
       .def_rw("sanitize", &MolEnumerator::MolEnumeratorParams::sanitize,
               "sanitize molecules after enumeration")
       .def_rw("maxToEnumerate",

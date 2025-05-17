@@ -40,9 +40,8 @@ RDGeom::Point3D computeCentroidHelper(const Conformer &conf, bool ignoreHs,
 auto computeCanonTrans(const Conformer &conf,
                        const RDGeom::Point3D *center = nullptr,
                        bool normalizeCovar = false, bool ignoreHs = true) {
-  RDGeom::Transform3D *trans =
-      MolTransforms::computeCanonicalTransform(conf, center, normalizeCovar,
-                                               ignoreHs);
+  RDGeom::Transform3D *trans = MolTransforms::computeCanonicalTransform(
+      conf, center, normalizeCovar, ignoreHs);
   double *resData = new double[4 * 4];
   const double *tdata = trans->getData();
   memcpy(static_cast<void *>(resData), static_cast<const void *>(tdata),
@@ -91,8 +90,8 @@ nb::object computePrincAxesMomentsHelper(
       double *data = reinterpret_cast<double *>(f);
       delete[] data;
     });
-    auto axesNb =
-        nb::ndarray<nb::numpy, double, nb::ndim<2>>(axesData, {3, 3}, axesOwner);
+    auto axesNb = nb::ndarray<nb::numpy, double, nb::ndim<2>>(axesData, {3, 3},
+                                                              axesOwner);
 
     double *momentsData = new double[3];
     for (size_t y = 0; y < 3; ++y) {
@@ -142,21 +141,21 @@ void transConformer(Conformer &conf,
 }  // namespace
 
 NB_MODULE(rdMolTransforms, m) {
-  m.doc() = R"DOC(Module containing functions to perform 3D operations like rotate and
+  m.doc() =
+      R"DOC(Module containing functions to perform 3D operations like rotate and
 translate conformations)DOC";
 
   m.def(
-      "ComputeCentroid", computeCentroidHelper, "conf"_a,
-      "ignoreHs"_a = true, "weights"_a = nb::none(),
+      "ComputeCentroid", computeCentroidHelper, "conf"_a, "ignoreHs"_a = true,
+      "weights"_a = nb::none(),
       R"DOC(Compute the centroid of the conformation - hydrogens are ignored and no attention
 is paid to the difference in sizes of the heavy atoms; however,
 an optional vector of weights can be passed.)DOC");
 
-  m.def(
-      "ComputeCanonicalTransform", computeCanonTrans, "conf"_a,
-      "center"_a = static_cast<RDGeom::Point3D *>(nullptr),
-      "normalizeCovar"_a = false, "ignoreHs"_a = true,
-      R"DOC(Compute the transformation required to align a conformer so that
+  m.def("ComputeCanonicalTransform", computeCanonTrans, "conf"_a,
+        "center"_a = static_cast<RDGeom::Point3D *>(nullptr),
+        "normalizeCovar"_a = false, "ignoreHs"_a = true,
+        R"DOC(Compute the transformation required to align a conformer so that
 the principal axes align up with the x,y,z axes.
 The conformer itself is left unchanged.
 ARGUMENTS:
@@ -165,10 +164,9 @@ ARGUMENTS:
   - normalizeCovar : optionally normalize the covariance matrix by the number of atoms)DOC");
 
 #ifdef RDK_HAS_EIGEN3
-  m.def(
-      "ComputePrincipalAxesAndMoments", computePrincAxesMoments,
-      "conf"_a, "ignoreHs"_a = true, "weights"_a = nb::none(),
-      R"DOC(Compute principal axes and moments of inertia for a conformer.
+  m.def("ComputePrincipalAxesAndMoments", computePrincAxesMoments, "conf"_a,
+        "ignoreHs"_a = true, "weights"_a = nb::none(),
+        R"DOC(Compute principal axes and moments of inertia for a conformer.
 These values are calculated from the inertia tensor:
   Iij = - sum_{s=1..N}(w_s * r_{si} * r_{sj}) i != j
   Iii = sum_{s=1..N} sum_{j!=i} (w_s * r_{sj} * r_{sj})
@@ -183,8 +181,8 @@ Returns a (principal axes, principal moments) tuple)DOC");
 
   m.def(
       "ComputePrincipalAxesAndMomentsFromGyrationMatrix",
-      computePrincAxesMomentsFromGyrationMatrix, "conf"_a,
-      "ignoreHs"_a = true, "weights"_a = nb::none(),
+      computePrincAxesMomentsFromGyrationMatrix, "conf"_a, "ignoreHs"_a = true,
+      "weights"_a = nb::none(),
       R"DOC(Compute principal axes and moments from the gyration matrix of a conformer.
 These values are calculated from the gyration matrix/tensor:
   Iij = sum_{s=1..N}(w_s * r_{si} * r_{sj}) i != j
@@ -247,21 +245,21 @@ if not specified the centroid of the conformer will be used
         "Sets the angle in degrees between atoms i, j, k; "
         "all atoms bonded to atom k are moved\n");
 
-  m.def("GetDihedralRad", &MolTransforms::getDihedralRad, "conf"_a,
-        "iAtomId"_a, "jAtomId"_a, "kAtomId"_a, "lAtomId"_a,
+  m.def("GetDihedralRad", &MolTransforms::getDihedralRad, "conf"_a, "iAtomId"_a,
+        "jAtomId"_a, "kAtomId"_a, "lAtomId"_a,
         "Returns the dihedral angle in radians between atoms i, j, k, l\n");
 
-  m.def("GetDihedralDeg", &MolTransforms::getDihedralDeg, "conf"_a,
-        "iAtomId"_a, "jAtomId"_a, "kAtomId"_a, "lAtomId"_a,
+  m.def("GetDihedralDeg", &MolTransforms::getDihedralDeg, "conf"_a, "iAtomId"_a,
+        "jAtomId"_a, "kAtomId"_a, "lAtomId"_a,
         "Returns the dihedral angle in degrees between atoms i, j, k, l\n");
 
-  m.def("SetDihedralRad", &MolTransforms::setDihedralRad, "conf"_a,
-        "iAtomId"_a, "jAtomId"_a, "kAtomId"_a, "lAtomId"_a, "value"_a,
+  m.def("SetDihedralRad", &MolTransforms::setDihedralRad, "conf"_a, "iAtomId"_a,
+        "jAtomId"_a, "kAtomId"_a, "lAtomId"_a, "value"_a,
         "Sets the dihedral angle in radians between atoms i, j, k, l; "
         "all atoms bonded to atom l are moved\n");
 
-  m.def("SetDihedralDeg", &MolTransforms::setDihedralDeg, "conf"_a,
-        "iAtomId"_a, "jAtomId"_a, "kAtomId"_a, "lAtomId"_a, "value"_a,
+  m.def("SetDihedralDeg", &MolTransforms::setDihedralDeg, "conf"_a, "iAtomId"_a,
+        "jAtomId"_a, "kAtomId"_a, "lAtomId"_a, "value"_a,
         "Sets the dihedral angle in degrees between atoms i, j, k, l; "
         "all atoms bonded to atom l are moved\n");
 }

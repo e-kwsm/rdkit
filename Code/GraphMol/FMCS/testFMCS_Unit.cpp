@@ -91,7 +91,8 @@ void test1Basics() {
 
   std::vector<ROMOL_SPTR> mols;
   const char *smi[] = {
-      "CC1CCC(N)CC1", "CC1CC(C)CC(C)C1",  // OK test.sdf
+      "CC1CCC(N)CC1",
+      "CC1CC(C)CC(C)C1",  // OK test.sdf
   };
 
   for (auto &i : smi) {
@@ -354,7 +355,10 @@ void testThreshold() {
   std::cout << "\ntestThreshold()\n";
   std::vector<ROMOL_SPTR> mols;
   const char *smi[] = {
-      "CCC", "CCCO", "CCCN", "CC",
+      "CCC",
+      "CCCO",
+      "CCCN",
+      "CC",
       //        "CCC", "CC", //th=0.5
   };
   for (auto &i : smi) {
@@ -689,7 +693,8 @@ void testAtomCompareAnyHeavyAtom() {
   std::cout << "\ntestAtomCompareAnyAtom()\n";
   std::vector<ROMOL_SPTR> mols;
   const char *smi[] = {
-      "[H]c1ccccc1C", "[H]c1ccccc1O",  // H matches H, O matches C
+      "[H]c1ccccc1C",
+      "[H]c1ccccc1O",  // H matches H, O matches C
   };
   for (auto &i : smi) {
     mols.emplace_back(SmilesToMol(getSmilesOnly(i), 0, false));
@@ -711,7 +716,8 @@ void testAtomCompareAnyHeavyAtom1() {
   std::cout << "\ntestAtomCompareAnyAtom()\n";
   std::vector<ROMOL_SPTR> mols;
   const char *smi[] = {
-      "[H]c1ccccc1C", "Oc1ccccc1O",  // O matches C, H does not match O
+      "[H]c1ccccc1C",
+      "Oc1ccccc1O",  // O matches C, H does not match O
   };
   for (auto &i : smi) {
     mols.emplace_back(SmilesToMol(getSmilesOnly(i), 0, false));
@@ -1162,7 +1168,8 @@ void testInitialSeed() {
 
   std::vector<ROMOL_SPTR> mols;
   const char *smi[] = {
-      "CC1CCC(N)CC1", "CC1CC(C)CC(C)C1",  // OK test.sdf
+      "CC1CCC(N)CC1",
+      "CC1CC(C)CC(C)C1",  // OK test.sdf
   };
 
   for (auto &i : smi) {

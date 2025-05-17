@@ -50,8 +50,7 @@ bool isAtomConjugCand(const Atom *at) {
   return res;
 }
 
-void markConjAtomBonds(Atom *at,
-                       const std::span<const ConjAtomInfo> atomInfo) {
+void markConjAtomBonds(Atom *at, const std::span<const ConjAtomInfo> atomInfo) {
   PRECONDITION(at, "bad atom");
   const auto &info = atomInfo[at->getIdx()];
   if (!info.isCandidate) {
@@ -165,7 +164,6 @@ void setConjugation(ROMol &mol) {
             isCandidate};
       });
 
-
   // loop over each atom and check if the bonds connecting to it can
   // be conjugated
   for (auto atom : mol.atoms()) {
@@ -262,5 +260,5 @@ void setHybridization(ROMol &mol) {
     }
   }
 }
-}  // end of namespace MolOps
-}  // end of namespace RDKit
+}  // namespace MolOps
+}  // namespace RDKit
