@@ -19,7 +19,7 @@
 
 namespace RDKit {
 class ROMol;
-}
+}  // namespace RDKit
 
 namespace RDDepict {
 
