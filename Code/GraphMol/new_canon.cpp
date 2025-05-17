@@ -500,8 +500,7 @@ void getBonds(const ROMol &mol, const Atom *at, BondholderVector &nbrs,
   std::sort(nbrs.begin(), nbrs.end(), bondholder::greater);
 }
 
-void getChiralBonds(const ROMol &mol, const Atom *at,
-                    BondholderVector &nbrs) {
+void getChiralBonds(const ROMol &mol, const Atom *at, BondholderVector &nbrs) {
   PRECONDITION(at, "bad pointer");
   ROMol::OEDGE_ITER beg, end;
   boost::tie(beg, end) = mol.getAtomBonds(at);
@@ -586,7 +585,7 @@ void advancedInitCanonAtom(const ROMol &mol, Canon::canon_atom &atom,
       atom.atom->hasProp(common_properties::_ringStereoAtoms);
   atom.hasRingNbr = hasRingNbr(mol, atom.atom);
 }
-}  // end anonymous namespace
+}  // namespace
 
 void initCanonAtoms(const ROMol &mol, std::vector<Canon::canon_atom> &atoms,
                     std::span<int> neighborIds, bool includeChirality,
@@ -740,8 +739,7 @@ void updateAtomNeighborIndexImpl(canon_atom *atoms, Bondholders &nbrs) {
   }
 }
 
-void updateAtomNeighborIndex(canon_atom *atoms,
-                             std::vector<bondholder> &nbrs) {
+void updateAtomNeighborIndex(canon_atom *atoms, std::vector<bondholder> &nbrs) {
   updateAtomNeighborIndexImpl(atoms, nbrs);
 }
 

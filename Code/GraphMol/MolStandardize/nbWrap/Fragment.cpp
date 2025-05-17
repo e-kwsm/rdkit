@@ -54,8 +54,7 @@ void wrap_fragment(nb::module_ &m) {
       .def(nb::init<>())
       .def(nb::init<std::string, bool, bool>(), "fragmentFilename"_a = "",
            "leave_last"_a = true, "skip_if_all_match"_a = false)
-      .def("remove", &removeHelper, "mol"_a, "",
-           nb::rv_policy::take_ownership)
+      .def("remove", &removeHelper, "mol"_a, "", nb::rv_policy::take_ownership)
       .def("removeInPlace", &removeInPlaceHelper, "mol"_a,
            "modifies the molecule in place");
 
@@ -65,11 +64,10 @@ void wrap_fragment(nb::module_ &m) {
         nb::rv_policy::take_ownership);
 
   nb::class_<MolStandardize::LargestFragmentChooser>(m,
-                                                      "LargestFragmentChooser")
+                                                     "LargestFragmentChooser")
       .def(nb::init<bool>(), "preferOrganic"_a = false)
       .def(nb::init<const MolStandardize::CleanupParameters &>(), "params"_a)
-      .def("choose", &chooseHelper, "mol"_a, "",
-           nb::rv_policy::take_ownership)
+      .def("choose", &chooseHelper, "mol"_a, "", nb::rv_policy::take_ownership)
       .def("chooseInPlace", &chooseInPlaceHelper, "mol"_a,
            "modifies the molecule in place");
 }

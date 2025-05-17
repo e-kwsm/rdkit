@@ -1256,8 +1256,6 @@ std::vector<StereoInfo> runCleanup(ROMol &mol, bool flagPossible,
   return res;
 }
 
-//}  // namespace
-
 std::vector<StereoInfo> findPotentialStereo(ROMol &mol, bool cleanIt,
                                             bool findPossible) {
   if (!mol.getRingInfo()->isSymmSssr()) {

@@ -54,9 +54,20 @@ RDKIT_FREESASALIB_EXPORT extern const std::string
 
 namespace FreeSASA {
 struct RDKIT_FREESASALIB_EXPORT SASAOpts {
-  enum Algorithm { LeeRichards = 0, ShrakeRupley = 1 };
-  enum Classifier { Protor = 0, NACCESS = 1, OONS = 2 };
-  enum Classes { Unclassified = 0, APolar = 1, Polar = 2 };
+  enum Algorithm {
+    LeeRichards = 0,
+    ShrakeRupley = 1
+  };
+  enum Classifier {
+    Protor = 0,
+    NACCESS = 1,
+    OONS = 2
+  };
+  enum Classes {
+    Unclassified = 0,
+    APolar = 1,
+    Polar = 2
+  };
 
   Algorithm algorithm;
   Classifier classifier;

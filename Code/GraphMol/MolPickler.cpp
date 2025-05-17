@@ -430,8 +430,8 @@ void pickleQuery(std::ostream &ss, const Query<int, T const *, true> *query) {
         streamWrite(ss, MolPickler::QUERY_VALUE, std::get<1>(v));
       } break;
       case 2: {
-        auto v = std::get<std::tuple<MolPickler::Tags, int32_t, int32_t>>(
-            qdetails);
+        auto v =
+            std::get<std::tuple<MolPickler::Tags, int32_t, int32_t>>(qdetails);
         streamWrite(ss, std::get<0>(v));
         streamWrite(ss, MolPickler::QUERY_VALUE, std::get<1>(v));
         streamWrite(ss, std::get<2>(v));
@@ -447,8 +447,8 @@ void pickleQuery(std::ostream &ss, const Query<int, T const *, true> *query) {
         streamWrite(ss, std::get<4>(v));
       } break;
       case 4: {
-        auto v = std::get<std::tuple<MolPickler::Tags, std::set<int32_t>>>(
-            qdetails);
+        auto v =
+            std::get<std::tuple<MolPickler::Tags, std::set<int32_t>>>(qdetails);
         streamWrite(ss, std::get<0>(v));
         const auto &tset = std::get<1>(v);
         int32_t sz = tset.size();
@@ -459,8 +459,7 @@ void pickleQuery(std::ostream &ss, const Query<int, T const *, true> *query) {
 
       } break;
       case 5: {
-        auto v =
-            std::get<std::tuple<MolPickler::Tags, std::string>>(qdetails);
+        auto v = std::get<std::tuple<MolPickler::Tags, std::string>>(qdetails);
         streamWrite(ss, std::get<0>(v));
         const auto &pval = std::get<1>(v);
         streamWrite(ss, MolPickler::QUERY_VALUE, pval);

@@ -130,10 +130,9 @@ NB_MODULE(rdinchi, m) {
   m.def("InchiToInchiKey", RDKit::InchiToInchiKey, "inchi"_a,
         "return the InChI key for an InChI string");
 
-  m.def(
-      "MolToInchiKey", RDKit::MolToInchiKey, "mol"_a,
-      "options"_a = std::string(),
-      R"DOC(return the InChI key for a ROMol molecule.
+  m.def("MolToInchiKey", RDKit::MolToInchiKey, "mol"_a,
+        "options"_a = std::string(),
+        R"DOC(return the InChI key for a ROMol molecule.
 
   Arguments:
     - mol: the molecule to use.

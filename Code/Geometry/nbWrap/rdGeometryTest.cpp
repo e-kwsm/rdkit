@@ -22,14 +22,12 @@ using namespace nb::literals;
 
 namespace {
 Point2D add(const Point2D &p1, const Point2D &p2) {
-    auto res = p1 + p2;
-    return res;
+  auto res = p1 + p2;
+  return res;
 }
 // for some reason if I use a reference for the argument here, the
 // object is not modified when passed to python. Maybe it's copied?
-void foo(std::function<void(Point2D *)> func, Point2D *pt){
-    func(pt);
-}
+void foo(std::function<void(Point2D *)> func, Point2D *pt) { func(pt); }
 }  // namespace
 
 NB_MODULE(rdGeometryTest, m) {

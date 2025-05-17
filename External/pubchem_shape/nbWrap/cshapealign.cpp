@@ -48,9 +48,8 @@ NB_MODULE(rdShapeAlign, m) {
       .def_rw(
           "useColors", &ShapeInputOptions::useColors,
           "Whether to use colors (pharmacophore features) in the score.  Default=True.")
-      .def_rw(
-          "includeDummies", &ShapeInputOptions::includeDummies,
-          "Whether to use dummy atoms in the alignment. Default=False.")
+      .def_rw("includeDummies", &ShapeInputOptions::includeDummies,
+              "Whether to use dummy atoms in the alignment. Default=False.")
       .def_rw(
           "dummyRadius", &ShapeInputOptions::dummyRadius,
           R"DOC(If using dummy atoms in the alignment, what radius to use for them.
@@ -86,7 +85,8 @@ NB_MODULE(rdShapeAlign, m) {
           [](const ShapeInputOptions &opts) {
             nb::list py_list;
             for (const auto &val : opts.atomRadii) {
-              py_list.append(nb::make_tuple(static_cast<int>(val.first), val.second));
+              py_list.append(
+                  nb::make_tuple(static_cast<int>(val.first), val.second));
             }
             return nb::tuple(py_list);
           },
@@ -212,14 +212,13 @@ Returns
       "AlignMol",
       [](const RDKit::ROMol &ref, RDKit::ROMol &probe,
          const ShapeInputOptions &refShapeOpts,
-         const ShapeInputOptions &probeShapeOpts, int refConfId, int probeConfId,
-         double opt_param, unsigned int max_preiters,
+         const ShapeInputOptions &probeShapeOpts, int refConfId,
+         int probeConfId, double opt_param, unsigned int max_preiters,
          unsigned int max_postiters) {
         std::vector<float> matrix(12, 0.0);
-        auto [nbr_st, nbr_ct] =
-            AlignMolecule(ref, probe, matrix, refShapeOpts, probeShapeOpts,
-                          refConfId, probeConfId, opt_param, max_preiters,
-                          max_postiters);
+        auto [nbr_st, nbr_ct] = AlignMolecule(
+            ref, probe, matrix, refShapeOpts, probeShapeOpts, refConfId,
+            probeConfId, opt_param, max_preiters, max_postiters);
         return nb::make_tuple(nbr_st, nbr_ct);
       },
       "ref"_a, "probe"_a, "refShapeOpts"_a, "probeShapeOpts"_a,
@@ -264,9 +263,9 @@ Returns
          bool useColors, double opt_param, unsigned int max_preiters,
          unsigned int max_postiters, bool applyRefShift) {
         std::vector<float> matrix(12, 0.0);
-        auto [nbr_st, nbr_ct] =
-            AlignMolecule(refShape, probe, matrix, probeConfId, useColors,
-                          opt_param, max_preiters, max_postiters, applyRefShift);
+        auto [nbr_st, nbr_ct] = AlignMolecule(
+            refShape, probe, matrix, probeConfId, useColors, opt_param,
+            max_preiters, max_postiters, applyRefShift);
         return nb::make_tuple(nbr_st, nbr_ct);
       },
       "refShape"_a, "probe"_a, "probeConfId"_a = -1, "useColors"_a = true,
@@ -310,16 +309,16 @@ Returns
       [](const ShapeInput &refShape, ShapeInput &fitShape, double opt_param,
          unsigned int max_preiters, unsigned int max_postiters) {
         std::vector<float> matrix(12, 0.0);
-        auto [nbr_st, nbr_ct] = AlignShape(refShape, fitShape, matrix,
-                                           opt_param, max_preiters, max_postiters);
+        auto [nbr_st, nbr_ct] = AlignShape(
+            refShape, fitShape, matrix, opt_param, max_preiters, max_postiters);
         nb::list pyMatrix;
         for (auto v : matrix) {
           pyMatrix.append(v);
         }
         return nb::make_tuple(nbr_st, nbr_ct, pyMatrix);
       },
-      "refShape"_a, "probeShape"_a, "opt_param"_a = 1.0,
-      "max_preiters"_a = 10, "max_postiters"_a = 30,
+      "refShape"_a, "probeShape"_a, "opt_param"_a = 1.0, "max_preiters"_a = 10,
+      "max_postiters"_a = 30,
       R"DOC(Aligns a probe shape to a reference shape. The probe is modified.
 
 Parameters
@@ -375,7 +374,8 @@ Returns
         }
         TransformConformer(finalTrans, finalRot, matrix, probeShape, probeConf);
       },
-      "finalTrans"_a, "finalRot"_a, "matrix"_a, "probeShape"_a, "probeConformer"_a,
+      "finalTrans"_a, "finalRot"_a, "matrix"_a, "probeShape"_a,
+      "probeConformer"_a,
       R"DOC(Assuming that probeShape has been overlaid onto refShape to give
 the supplied transformation matrix, applies that transformation to the
  given conformer.
@@ -424,8 +424,8 @@ Returns
          const ShapeInputOptions &mol1ShapeOpts,
          const ShapeInputOptions &mol2ShapeOpts, int mol1ConfId,
          int mol2ConfId) {
-        auto [nbr_st, nbr_ct] = ScoreMolecule(mol1, mol2, mol1ShapeOpts,
-                                              mol2ShapeOpts, mol1ConfId, mol2ConfId);
+        auto [nbr_st, nbr_ct] = ScoreMolecule(
+            mol1, mol2, mol1ShapeOpts, mol2ShapeOpts, mol1ConfId, mol2ConfId);
         return nb::make_tuple(nbr_st, nbr_ct);
       },
       "mol1"_a, "mol2"_a, "mol1ShapeOpts"_a, "mol2ShapeOpts"_a,

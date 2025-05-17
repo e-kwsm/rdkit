@@ -562,7 +562,7 @@ ROMol *fragmentOnBonds(
     // keep track of the atoms so that we can adjust H counts later
     atomsToUpdate.insert(bidx);
     atomsToUpdate.insert(eidx);
-}
+  }
   res->commitBatchEdit();
   res->clearComputedProps();
   if (!atomsToUpdate.empty()) {

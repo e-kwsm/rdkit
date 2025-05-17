@@ -26,9 +26,9 @@ TEST_CASE("testBuildMacroMol") {
   auto macro_atom_2 = macro_mol->addMacroAtom("C", MonomerClass::AminoAcid);
   auto macro_atom_3 = macro_mol->addMacroAtom("D", MonomerClass::AminoAcid);
   auto num_bonds_1 = macro_mol->addMacroBond(macro_atom_1, macro_atom_2, 2, 1,
-                                              Bond::BondType::SINGLE);
+                                             Bond::BondType::SINGLE);
   auto num_bonds_2 = macro_mol->addMacroBond(macro_atom_2, macro_atom_3, 2, 1,
-                                              Bond::BondType::SINGLE);
+                                             Bond::BondType::SINGLE);
   auto bond_idx_1 = num_bonds_1 - 1;
   auto bond_idx_2 = num_bonds_2 - 1;
   auto bond_1 = macro_mol->getBondWithIdx(bond_idx_1);
@@ -74,7 +74,7 @@ TEST_CASE("testMultipleConnectionsSameMacroAtoms") {
   auto macro_atom_2 = macro_mol->addMacroAtom("C", MonomerClass::AminoAcid);
   auto num_bonds_1 = macro_mol->addMacroBond(macro_atom_1, macro_atom_2, 2, 1);
   auto num_bonds_2 = macro_mol->addMacroBond(macro_atom_1, macro_atom_2, 3, 3,
-                                            Bond::BondType::DOUBLE);
+                                             Bond::BondType::DOUBLE);
   CHECK(num_bonds_1 == num_bonds_2);
   auto bond_idx = num_bonds_1 - 1;
   CHECK(macro_mol->getNumBonds() == 1);

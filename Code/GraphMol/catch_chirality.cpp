@@ -14,7 +14,6 @@
 
 #include <catch2/catch_all.hpp>
 
-
 #include <GraphMol/RDKitBase.h>
 #include <GraphMol/StereoGroup.h>
 #include <GraphMol/Chirality.h>

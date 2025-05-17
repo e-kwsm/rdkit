@@ -270,7 +270,7 @@ MolChemicalFeatureDef *parseFeatureDef(
 
   return res;
 }
-}  // end of namespace Local
+}  // namespace Local
 
 // ------------------------------------------------------
 int parseFeatureData(const std::string &defnText,

@@ -20,7 +20,7 @@ namespace RDKit {
 namespace DGeomHelpers {
 
 struct Bounds {
-  double lower{1.0}, upper{-1.0}; // we start invalid
+  double lower{1.0}, upper{-1.0};  // we start invalid
   unsigned int aid1{0}, aid4{0};
 
   inline bool valid() const { return lower <= upper; }

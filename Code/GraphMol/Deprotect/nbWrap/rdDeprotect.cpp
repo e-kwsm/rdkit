@@ -23,8 +23,9 @@ NB_MODULE(rdDeprotect, m) {
   m.doc() = R"DOC(Module containing the Deprotect functionality for removing
 protecting groups from molecules.)DOC";
 
-  nb::class_<Deprotect::DeprotectData>(m, "DeprotectData",
-                                       R"DOC(DeprotectData class, contains a single deprotection reaction and information
+  nb::class_<Deprotect::DeprotectData>(
+      m, "DeprotectData",
+      R"DOC(DeprotectData class, contains a single deprotection reaction and information
 
  deprotectdata.deprotection_class - functional group being protected
  deprotectdata.reaction_smarts - reaction smarts used for deprotection

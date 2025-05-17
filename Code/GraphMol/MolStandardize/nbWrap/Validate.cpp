@@ -105,11 +105,11 @@ void wrap_validate(nb::module_ &m) {
       .def("validate", pythonValidateMethod, "mol"_a,
            "reportAllFailures"_a = false, "");
 
-  nb::class_<MolStandardize::RDKitValidation,
-             MolStandardize::ValidationMethod>(m, "RDKitValidation")
+  nb::class_<MolStandardize::RDKitValidation, MolStandardize::ValidationMethod>(
+      m, "RDKitValidation")
       .def(nb::init<bool>(), "allowEmptyMolecules"_a = false)
       .def_rw("allowEmptyMolecules",
-               &MolStandardize::RDKitValidation::allowEmptyMolecules);
+              &MolStandardize::RDKitValidation::allowEmptyMolecules);
 
   nb::class_<MolStandardize::NoAtomValidation,
              MolStandardize::ValidationMethod>(m, "NoAtomValidation")
@@ -128,38 +128,40 @@ void wrap_validate(nb::module_ &m) {
       .def(nb::init<bool>(), "strict"_a = false)
       .def_rw("strict", &MolStandardize::IsotopeValidation::strict);
 
-  nb::class_<MolStandardize::MolVSValidation,
-             MolStandardize::ValidationMethod>(m, "MolVSValidation")
+  nb::class_<MolStandardize::MolVSValidation, MolStandardize::ValidationMethod>(
+      m, "MolVSValidation")
       .def(nb::init<>())
-      .def("__init__",
-           [](MolStandardize::MolVSValidation *self, nb::object validations) {
-             std::unique_ptr<MolStandardize::MolVSValidation> v(
-                 getMolVSValidation(validations));
-             new (self) MolStandardize::MolVSValidation(*v);
-           },
-           "validations"_a);
+      .def(
+          "__init__",
+          [](MolStandardize::MolVSValidation *self, nb::object validations) {
+            std::unique_ptr<MolStandardize::MolVSValidation> v(
+                getMolVSValidation(validations));
+            new (self) MolStandardize::MolVSValidation(*v);
+          },
+          "validations"_a);
 
   nb::class_<MolStandardize::AllowedAtomsValidation,
              MolStandardize::ValidationMethod>(m, "AllowedAtomsValidation")
-      .def("__init__",
-           [](MolStandardize::AllowedAtomsValidation *self,
-              nb::object atoms) {
-             std::unique_ptr<MolStandardize::AllowedAtomsValidation> v(
-                 getAllowedAtomsValidation(atoms));
-             new (self) MolStandardize::AllowedAtomsValidation(*v);
-           },
-           "atoms"_a);
+      .def(
+          "__init__",
+          [](MolStandardize::AllowedAtomsValidation *self, nb::object atoms) {
+            std::unique_ptr<MolStandardize::AllowedAtomsValidation> v(
+                getAllowedAtomsValidation(atoms));
+            new (self) MolStandardize::AllowedAtomsValidation(*v);
+          },
+          "atoms"_a);
 
   nb::class_<MolStandardize::DisallowedAtomsValidation,
              MolStandardize::ValidationMethod>(m, "DisallowedAtomsValidation")
-      .def("__init__",
-           [](MolStandardize::DisallowedAtomsValidation *self,
-              nb::object atoms) {
-             std::unique_ptr<MolStandardize::DisallowedAtomsValidation> v(
-                 getDisallowedAtomsValidation(atoms));
-             new (self) MolStandardize::DisallowedAtomsValidation(*v);
-           },
-           "atoms"_a);
+      .def(
+          "__init__",
+          [](MolStandardize::DisallowedAtomsValidation *self,
+             nb::object atoms) {
+            std::unique_ptr<MolStandardize::DisallowedAtomsValidation> v(
+                getDisallowedAtomsValidation(atoms));
+            new (self) MolStandardize::DisallowedAtomsValidation(*v);
+          },
+          "atoms"_a);
 
   nb::class_<MolStandardize::FeaturesValidation,
              MolStandardize::ValidationMethod>(m, "FeaturesValidation")
@@ -168,25 +170,22 @@ void wrap_validate(nb::module_ &m) {
            "allowDativeBondType"_a = false, "allowQueries"_a = false,
            "allowDummies"_a = false, "allowAtomAliases"_a = false)
       .def_rw("allowEnhancedStereo",
-               &MolStandardize::FeaturesValidation::allowEnhancedStereo)
+              &MolStandardize::FeaturesValidation::allowEnhancedStereo)
       .def_rw("allowAromaticBondType",
-               &MolStandardize::FeaturesValidation::allowAromaticBondType)
+              &MolStandardize::FeaturesValidation::allowAromaticBondType)
       .def_rw("allowDativeBondType",
-               &MolStandardize::FeaturesValidation::allowDativeBondType)
-      .def_rw("allowQueries",
-               &MolStandardize::FeaturesValidation::allowQueries)
-      .def_rw("allowDummies",
-               &MolStandardize::FeaturesValidation::allowDummies)
+              &MolStandardize::FeaturesValidation::allowDativeBondType)
+      .def_rw("allowQueries", &MolStandardize::FeaturesValidation::allowQueries)
+      .def_rw("allowDummies", &MolStandardize::FeaturesValidation::allowDummies)
       .def_rw("allowAtomAliases",
-               &MolStandardize::FeaturesValidation::allowAtomAliases);
+              &MolStandardize::FeaturesValidation::allowAtomAliases);
 
   nb::class_<MolStandardize::DisallowedRadicalValidation,
-             MolStandardize::ValidationMethod>(m,
-                                               "DisallowedRadicalValidation")
+             MolStandardize::ValidationMethod>(m, "DisallowedRadicalValidation")
       .def(nb::init<>());
 
-  nb::class_<MolStandardize::Is2DValidation,
-             MolStandardize::ValidationMethod>(m, "Is2DValidation")
+  nb::class_<MolStandardize::Is2DValidation, MolStandardize::ValidationMethod>(
+      m, "Is2DValidation")
       .def(nb::init<double>(), "threshold"_a = 1e-3)
       .def_rw("threshold", &MolStandardize::Is2DValidation::threshold);
 
@@ -199,14 +198,13 @@ void wrap_validate(nb::module_ &m) {
            "minMedianBondLength"_a = false)
       .def_rw("clashLimit", &MolStandardize::Layout2DValidation::clashLimit)
       .def_rw("bondLengthLimit",
-               &MolStandardize::Layout2DValidation::bondLengthLimit)
+              &MolStandardize::Layout2DValidation::bondLengthLimit)
       .def_rw("allowLongBondsInRings",
-               &MolStandardize::Layout2DValidation::allowLongBondsInRings)
-      .def_rw(
-          "allowAtomBondClashExemption",
-          &MolStandardize::Layout2DValidation::allowAtomBondClashExemption)
+              &MolStandardize::Layout2DValidation::allowLongBondsInRings)
+      .def_rw("allowAtomBondClashExemption",
+              &MolStandardize::Layout2DValidation::allowAtomBondClashExemption)
       .def_rw("minMedianBondLength",
-               &MolStandardize::Layout2DValidation::minMedianBondLength);
+              &MolStandardize::Layout2DValidation::minMedianBondLength);
 
   nb::class_<MolStandardize::StereoValidation,
              MolStandardize::ValidationMethod>(m, "StereoValidation")
