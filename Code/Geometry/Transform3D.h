@@ -1,3 +1,6 @@
+#ifndef HOME_KWSM_GITHUB_E_KWSM_RDKIT_LLVM_HEADER_GUARD_CODE_GEOMETRY_TRANSFORM3D_H
+#define HOME_KWSM_GITHUB_E_KWSM_RDKIT_LLVM_HEADER_GUARD_CODE_GEOMETRY_TRANSFORM3D_H
+
 //
 //   Copyright (C) 2005-2006 Rational Discovery LLC
 //
@@ -96,5 +99,7 @@ RDKIT_RDGEOMETRYLIB_EXPORT RDGeom::Transform3D operator*(
  */
 RDKIT_RDGEOMETRYLIB_EXPORT RDGeom::Point3D operator*(
     const RDGeom::Transform3D &t, const RDGeom::Point3D &pt);
+
+#endif
 
 #endif
