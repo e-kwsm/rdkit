@@ -1,3 +1,6 @@
+#ifndef HOME_KWSM_GITHUB_E_KWSM_RDKIT_LLVM_HEADER_GUARD_CODE_RDGENERAL_RDVALUE_TAGGEDUNION_H
+#define HOME_KWSM_GITHUB_E_KWSM_RDKIT_LLVM_HEADER_GUARD_CODE_RDGENERAL_RDVALUE_TAGGEDUNION_H
+
 //  Copyright (c) 2015, Novartis Institutes for BioMedical Research Inc.
 //  All rights reserved.
 //
@@ -525,4 +528,6 @@ inline bool rdvalue_cast<bool>(RDValue_cast_t v) {
 }
 
 }  // namespace RDKit
+#endif
+
 #endif
