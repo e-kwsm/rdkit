@@ -566,22 +566,18 @@ TEST_CASE("CDXML") {
     // the new cdxml parser handles stereo a lot better
     std::vector<std::string> expected = {
         "CCC/C=C/C=C/C(=O)O[C@H]1/C(=C/C(=O)OC)C[C@H]2C[C@H]([C@@H](C)O)OC(=O)C[C@H](O)C[C@@H]3C[C@H](OC(C)=O)C(C)(C)[C@](O)(C[C@@H]4C/C(=C/C(=O)OC)C[C@H](/C=C/C(C)(C)[C@]1(O)O2)O4)O3",
-        "[B]",
-	"*",
-	"[C]",
+        "[B]", "*", "[C]",
         "Cc1ccc2n1[C@@H]1[C@@H]3O[C@]([C@H](C)O)(C=C2)[C@H]1c1ccc(C)n1[C@@H]3C",
         // this is may or may not be correct, but the structure is drawn
         // incorrectly.
         // There's a test below which fixes this
         "Cc1ccc2n1[C@H](C)C(=O)[C@@H]1[C@H]2C(=O)C=Cc2ccc(C)n21",
-        "Cc1ccc2ccc(=O)ccn12",
-	"Cc1cccn1[C@H](C)C=O",
-        "Cc1ccc2ccc([O-])cc[n+]1-2",
-	"Cc1ccc2ccc(=O)ccn12",
+        "Cc1ccc2ccc(=O)ccn12", "Cc1cccn1[C@H](C)C=O",
+        "Cc1ccc2ccc([O-])cc[n+]1-2", "Cc1ccc2ccc(=O)ccn12",
         "Cc1cccn1[C@H](C)C(C#N)O[Si](C)(C)C",
         "CC1CC[C@]2(O)[C@]3(C)C[C@]4(O)O[C@@]2([C@@H]1O)C1(O)C4(C)C(O)(C(C)C)[C@@H](OC(=O)c2ccc[nH]2)[C@]13O",
         "C=C(C)[C@H]1CC(=O)CC2=C(C1)[C@H]1C(=O)O[C@H]3C[C@@](C)(O)[C@@H](C2=O)[C@@H]13"};
-    
+
 #endif
     CHECK(mols.size() == expected.size());
     int i = 0;
@@ -610,7 +606,7 @@ TEST_CASE("CDXML") {
     //    the rdkit is correct here...
     auto fname = cdxmlbase + "chemdraw_template2.cdxml";
     auto mols = MolsFromCDXMLFile(fname);
-#ifndef RDK_BUILD_CHEMDRAW_SUPPORT    
+#ifndef RDK_BUILD_CHEMDRAW_SUPPORT
     std::vector<std::string> expected = {
         "CCN1CC2(COC)CCC(OC)C34C5CC6C(OC)CC(O)(C(CC23)C14)C5C6O",
         "*",
@@ -684,9 +680,10 @@ TEST_CASE("CDXML") {
         "[2H]"};
 #else
     // The new cdxml parser handles stereo a LOT better
-    std::string talatisamine = "CCN1C[C@]2(COC)CCC(OC)[C@@]34[C@@H]5C[C@@H]6C(OC)C[C@@](O)([C@H]5[C@H]6O)[C@@H](C[C@H]23)[C@H]14";
+    std::string talatisamine =
+        "CCN1C[C@]2(COC)CCC(OC)[C@@]34[C@@H]5C[C@@H]6C(OC)C[C@@](O)([C@H]5[C@H]6O)[C@@H](C[C@H]23)[C@H]14";
     std::vector<std::string> expected = {
-      talatisamine, //0 
+        talatisamine,  // 0
         "*",
         "C",
         "[F]",
@@ -696,17 +693,17 @@ TEST_CASE("CDXML") {
         talatisamine,
         "*",
         "C",
-        "[F]", // 10
+        "[F]",  // 10
         "[B]",
         "[C]",
         "[2H]",
-	talatisamine,
+        talatisamine,
         "*",
         "C",
         "[F]",
         "[B]",
         "[C]",
-        "[2H]", // 20
+        "[2H]",  // 20
         talatisamine,
         "*",
         "C",
@@ -715,8 +712,8 @@ TEST_CASE("CDXML") {
         "[C]",
         "[2H]",
         talatisamine,
-	"CCN1C[C@]2(COC)CC[C@H](OC)[C@]34C1C(C[C@H]23)[C@@]1(O)CC(OC)[C@H]2C[C@@H]4[C@@H]1[C@H]2O",
-        "*", // 30
+        "CCN1C[C@]2(COC)CC[C@H](OC)[C@]34C1C(C[C@H]23)[C@@]1(O)CC(OC)[C@H]2C[C@@H]4[C@@H]1[C@H]2O",
+        "*",  // 30
         "[B]",
         "[C]",
         "[2H]",
@@ -726,7 +723,7 @@ TEST_CASE("CDXML") {
         "C",
         "[F]",
         "[B]",
-        "[C]", // 40
+        "[C]",  // 40
         "[2H]",
         talatisamine,
         "*",
@@ -736,7 +733,7 @@ TEST_CASE("CDXML") {
         "[C]",
         "[2H]",
         talatisamine,
-        "*", // 50
+        "*",  // 50
         "C",
         "[F]",
         "[B]",
@@ -746,7 +743,7 @@ TEST_CASE("CDXML") {
         "CC1=C(C(C)C)[C@@H](O)[C@@]2(O)[C@@]3(C)CC(=O)O[C@@]4([C@H](O)C(C)CC[C@]34O)[C@@]12O",
         "CC1=C[C@@]23OC(=O)C[C@@](C)([C@@]2(O)CC1)[C@]1(O)[C@H](O)C2(C(C)C)OC2(C)[C@@]31O",
         "*",
-        "[B]", // 60
+        "[B]",  // 60
         "[C]",
         "CC1CC[C@@H]2[C@]3(C)C[C@@H]4O[C@@]2(C1)C1[C@@H]3CC(C(C)C)C14C",
         "[2H]",
@@ -863,11 +860,11 @@ TEST_CASE("CDXML") {
       auto mols = MolsFromCDXMLFile(fname);
       CHECK(0);
     } catch (FileParseException &e) {
-#ifndef RDK_BUILD_CHEMDRAW_SUPPORT      
+#ifndef RDK_BUILD_CHEMDRAW_SUPPORT
       CHECK(std::string(e.what()) == "expected > at line: 373");
 #else
-      CHECK(std::string(e.what()).find("Failed parsing XML with error code 5") !=
-	    std::string::npos);
+      CHECK(std::string(e.what()).find(
+                "Failed parsing XML with error code 5") != std::string::npos);
 #endif
     }
   }
@@ -943,10 +940,11 @@ TEST_CASE("CDXML") {
     {
       auto fname = cdxmlbase + "bad-bondorder.cdxml";
       auto mols = MolsFromCDXMLFile(fname);
-#ifndef RDK_BUILD_CHEMDRAW_SUPPORT      
+#ifndef RDK_BUILD_CHEMDRAW_SUPPORT
       CHECK(mols.size() == 0);
-#else      
-      CHECK(mols.size() == 1); // The original chemdraw reader makes unknowns single bonds
+#else
+      CHECK(mols.size() ==
+            1);  // The original chemdraw reader makes unknowns single bonds
 #endif
     }
     {
@@ -965,13 +963,13 @@ TEST_CASE("atropisomers") {
     {
       std::vector<std::string> filenames = {"atrop1.cdxml"};
 
-#ifndef RDK_BUILD_CHEMDRAW_SUPPORT            
+#ifndef RDK_BUILD_CHEMDRAW_SUPPORT
       std::vector<std::string> expected = {
           "C[C]1[C][CH]C(Cl)C(C)=C1c1c(C)ccc(Cl)c1C |(-2.936,-0.12,;-2.936,-1.66,;-1.602,-2.43,;-1.602,-3.97,;-2.936,-4.74,;-2.93,-6.28,;-4.27,-3.97,;-5.603,-4.74,;-4.27,-2.43,;-5.603,-1.66,;-5.603,-0.12,;-4.27,0.64,;-6.937,0.64,;-8.271,-0.12,;-8.271,-1.66,;-9.604,-2.43,;-6.937,-2.43,;-6.937,-3.97,),^1:1,3,^2:2,wU:8.8|"};
 #else
       std::vector<std::string> expected = {
-	"C[C]1[C][CH]C(Cl)C(C)=C1c1c(C)ccc(Cl)c1C |(-2.936,-0.12,;-2.936,-1.66,;-1.602,-2.43,;-1.602,-3.97,;-2.936,-4.74,;-2.93,-6.28,;-4.27,-3.97,;-5.603,-4.74,;-4.27,-2.43,;-5.603,-1.66,;-5.603,-0.12,;-4.27,0.639999,;-6.937,0.639999,;-8.271,-0.12,;-8.271,-1.66,;-9.604,-2.43,;-6.937,-2.43,;-6.937,-3.97,),^1:1,3,^2:2,wU:8.8|"};
-      
+          "C[C]1[C][CH]C(Cl)C(C)=C1c1c(C)ccc(Cl)c1C |(-2.936,-0.12,;-2.936,-1.66,;-1.602,-2.43,;-1.602,-3.97,;-2.936,-4.74,;-2.93,-6.28,;-4.27,-3.97,;-5.603,-4.74,;-4.27,-2.43,;-5.603,-1.66,;-5.603,-0.12,;-4.27,0.639999,;-6.937,0.639999,;-8.271,-0.12,;-8.271,-1.66,;-9.604,-2.43,;-6.937,-2.43,;-6.937,-3.97,),^1:1,3,^2:2,wU:8.8|"};
+
 #endif
       for (auto i = 0u; i < filenames.size(); ++i) {
         auto fname = cdxmlbase + filenames[i];
@@ -1332,7 +1330,7 @@ struct format_check {
 TEST_CASE("CDX and Formats") {
   std::string cdxmlbase =
       std::string(getenv("RDBASE")) + "/Code/GraphMol/test_data/CDXML/";
-  
+
   std::string cdxbase =
       std::string(getenv("RDBASE")) + "/Code/GraphMol/test_data/CDX/";
 
@@ -1344,18 +1342,14 @@ TEST_CASE("CDX and Formats") {
     auto mols2 = MolsFromCDXMLFile(cdxmlfname);
     CHECK(MolToSmiles(*mols1[0]) == MolToSmiles(*mols2[0]));
   }
-  
+
   SECTION("Read CDX Files/Streams") {
-    const std::vector<std::pair<std::string, std::string>> tests {
-      {"structure_1.cdx", "C1CCOC1"},     
-      {"structure_2.cdx", "C1=CCN=C1"},   
-      {"structure_3.cdx", "CS(C)=O"},     
-      {"structure_4.cdx", "CCO"},         
-      {"structure_5.cdx", "c1cc[nH]c1"},  
-      {"structure_6.cdx", "c1ccoc1"}
-    };
-    
-    for(const auto &test :  tests) {
+    const std::vector<std::pair<std::string, std::string>> tests{
+        {"structure_1.cdx", "C1CCOC1"},    {"structure_2.cdx", "C1=CCN=C1"},
+        {"structure_3.cdx", "CS(C)=O"},    {"structure_4.cdx", "CCO"},
+        {"structure_5.cdx", "c1cc[nH]c1"}, {"structure_6.cdx", "c1ccoc1"}};
+
+    for (const auto &test : tests) {
       auto fname = cdxbase + test.first;
       // Read the file
       auto m = MolsFromCDXMLFile(fname);
@@ -1366,7 +1360,7 @@ TEST_CASE("CDX and Formats") {
       std::string content(size, '\0');
       std::ifstream in(fname, std::ios::binary);
       in.read(&content[0], size);
-      
+
       auto m2 = MolsFromCDXML(content);
       CHECK(MolToSmiles(*m2[0]) == test.second);
     }
@@ -1375,7 +1369,7 @@ TEST_CASE("CDX and Formats") {
   SECTION("READ CDX/CDXML Blocks") {
     auto cdxfname = cdxmlbase + "ring-stereo1.cdx";
     auto cdxmlfname = cdxmlbase + "ring-stereo1.cdxml";
-    
+
     auto size = std::filesystem::file_size(cdxfname);
     std::string content(size, '\0');
     std::ifstream in(cdxfname, std::ios::binary);
@@ -1389,49 +1383,53 @@ TEST_CASE("CDX and Formats") {
     auto mols2 = MolsFromCDXML(content2);
     CHECK(MolToSmiles(*mols1[0]) == MolToSmiles(*mols2[0]));
   }
-  
+
   SECTION("Check Formats") {
     auto cdxfilename = cdxmlbase + "ring-stereo1.cdx";
     auto cdxmlfilename = cdxmlbase + "ring-stereo1.cdxml";
-    std::vector<format_check> checks { {cdxfilename, true, true, true, false, false},
-				       {cdxfilename, false, true, true, false, true},
-				       {cdxmlfilename, true, false, false, true, true},
-				       {cdxmlfilename, false, false, false, true, true},
+    std::vector<format_check> checks{
+        {cdxfilename, true, true, true, false, false},
+        {cdxfilename, false, true, true, false, true},
+        {cdxmlfilename, true, false, false, true, true},
+        {cdxmlfilename, false, false, false, true, true},
     };
-    std::vector<CDXMLFormat> formats = { CDXMLFormat::CDX, CDXMLFormat::CDXML, CDXMLFormat::Auto };
+    std::vector<CDXMLFormat> formats = {CDXMLFormat::CDX, CDXMLFormat::CDXML,
+                                        CDXMLFormat::Auto};
 
-    for(auto &check : checks) {
-      if(check.stream) {
+    for (auto &check : checks) {
+      if (check.stream) {
       } else {
-	for(auto format : formats) {
-	  bool hasmols = false;
-	  bool exception = false;
-	  try {
-	    auto mols = MolsFromCDXMLFile(check.filename, CDXMLParserParams(true, true, format));	    
-	    hasmols = mols.size() > 0;
-	    //	    std::cerr << check.filename << " not stream " << (unsigned)format << " hasmols: " << hasmols << std::endl;
+        for (auto format : formats) {
+          bool hasmols = false;
+          bool exception = false;
+          try {
+            auto mols = MolsFromCDXMLFile(
+                check.filename, CDXMLParserParams(true, true, format));
+            hasmols = mols.size() > 0;
+            //	    std::cerr << check.filename << " not stream " <<
+            //(unsigned)format << " hasmols: " << hasmols << std::endl;
 
-	  } catch (...) {
-	    exception = true;
-	    //	    std::cerr << check.filename << " not stream " << (unsigned)format << " exception" << std::endl;
-	  }
+          } catch (...) {
+            exception = true;
+            //	    std::cerr << check.filename << " not stream " <<
+            //(unsigned)format << " exception" << std::endl;
+          }
 
-	  bool expected = false;
-	  if(format == CDXMLFormat::CDX)
-	    expected = check.cdxres;
-	  else if(format == CDXMLFormat::CDXML)
-	    expected = check.cdxmlres;
-	  else
-	    expected = check.autores;
+          bool expected = false;
+          if (format == CDXMLFormat::CDX)
+            expected = check.cdxres;
+          else if (format == CDXMLFormat::CDXML)
+            expected = check.cdxmlres;
+          else
+            expected = check.autores;
 
-	  if (exception)
-	    CHECK(expected == false);
-	  else
-	    CHECK(expected == hasmols);
-	}
+          if (exception)
+            CHECK(expected == false);
+          else
+            CHECK(expected == hasmols);
+        }
       }
     }
   }
 }
 #endif
-	 

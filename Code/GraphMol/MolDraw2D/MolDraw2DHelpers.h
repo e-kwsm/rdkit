@@ -258,9 +258,9 @@ struct RDKIT_MOLDRAW2D_EXPORT MolDrawOptions {
   bool isotopeLabels = true;       // adds isotope to non-dummy atoms.
   bool dummyIsotopeLabels = true;  // adds isotope labels to dummy atoms.
 
-  bool addStereoAnnotation = false;       // adds E/Z and R/S to drawings.
-  bool showAllCIPCodes = false;           // show CIP codes for 'or' & 'and'
-                                          // StereoGroups that are normally hidden
+  bool addStereoAnnotation = false;  // adds E/Z and R/S to drawings.
+  bool showAllCIPCodes = false;      // show CIP codes for 'or' & 'and'
+                                     // StereoGroups that are normally hidden
   bool atomHighlightsAreCircles = false;  // forces atom highlights always to be
                                           // circles. Default (false) is to put
                                           // ellipses round longer labels.

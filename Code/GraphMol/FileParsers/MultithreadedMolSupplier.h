@@ -43,10 +43,9 @@ class RDKIT_FILEPARSERS_EXPORT MultithreadedMolSupplier : public MolSupplier {
 
   MultithreadedMolSupplier() {}
 
-  
   // Derived classes MUST have a destructor that calls close
   //  to properly end threads while the instance is alive
-  virtual ~MultithreadedMolSupplier() {close();}
+  virtual ~MultithreadedMolSupplier() { close(); }
 
   //! shut down the supplier
   virtual void close() override;
@@ -160,7 +159,6 @@ class RDKIT_FILEPARSERS_EXPORT MultithreadedMolSupplier : public MolSupplier {
       writeCallback = nullptr;
   std::function<std::string(const std::string &, unsigned int)> readCallback =
       nullptr;
-
 };
 }  // namespace FileParsers
 }  // namespace v2

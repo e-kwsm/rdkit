@@ -922,8 +922,7 @@ BOOST_PYTHON_MODULE(rdMolDraw2D) {
       .def_readwrite("addStereoAnnotation",
                      &RDKit::MolDrawOptions::addStereoAnnotation,
                      "adds R/S and E/Z to drawings. Default False.")
-      .def_readwrite("showAllCIPCodes",
-                     &RDKit::MolDrawOptions::showAllCIPCodes,
+      .def_readwrite("showAllCIPCodes", &RDKit::MolDrawOptions::showAllCIPCodes,
                      "show all defined CIP codes (no hiding!). Default False.")
       .def_readwrite("addAtomIndices", &RDKit::MolDrawOptions::addAtomIndices,
                      "adds atom indices to drawings. Default False.")
@@ -1123,28 +1122,29 @@ BOOST_PYTHON_MODULE(rdMolDraw2D) {
       .def("FillPolys", &RDKit::MolDraw2D::fillPolys, python::args("self"),
            "returns whether or not polygons are being filled")
       .def("DrawLine",
-           (void(RDKit::MolDraw2D::*)(const Point2D &, const Point2D &, bool)) &
-               RDKit::MolDraw2D::drawLine,
+           (void (RDKit::MolDraw2D::*)(const Point2D &, const Point2D &,
+                                       bool))&RDKit::MolDraw2D::drawLine,
            (python::arg("self"), python::arg("cds1"), python::arg("cds2"),
             python::arg("rawCoords") = false),
            "draws a line with the current drawing style. The coordinates "
            "are in the molecule frame unless rawCoords is true, "
            "in which case the coordinates are in pixels.")
-      .def("DrawArrow", RDKit::drawArrowHelper,
-           (python::arg("self"), python::arg("cds1"), python::arg("cds2"),
-            python::arg("asPolygon") = false, python::arg("frac") = 0.05,
-            python::arg("angle") = M_PI / 6,
-            python::arg("color") = python::object(),
-            python::arg("rawCoords") = false),
-           "draws an arrow with the current drawing style. The coordinates "
-           "are in the molecule frame unless rawCoords is true, "
-           "in which case the coordinates are in pixels. "
-           "If asPolygon is true the head of the "
-           "arrow will be drawn as a triangle, otherwise two lines are used. "
-           "The fraction of the arrow length to use for the head is given by "
-           "frac. The angle of the arrowhead "
-           "(the angle between the main line and each arrowhead line) is given by angle. "
-           "The color is a tuple of 3 floats (0-1) in red, green, blue (RGB) order.")
+      .def(
+          "DrawArrow", RDKit::drawArrowHelper,
+          (python::arg("self"), python::arg("cds1"), python::arg("cds2"),
+           python::arg("asPolygon") = false, python::arg("frac") = 0.05,
+           python::arg("angle") = M_PI / 6,
+           python::arg("color") = python::object(),
+           python::arg("rawCoords") = false),
+          "draws an arrow with the current drawing style. The coordinates "
+          "are in the molecule frame unless rawCoords is true, "
+          "in which case the coordinates are in pixels. "
+          "If asPolygon is true the head of the "
+          "arrow will be drawn as a triangle, otherwise two lines are used. "
+          "The fraction of the arrow length to use for the head is given by "
+          "frac. The angle of the arrowhead "
+          "(the angle between the main line and each arrowhead line) is given by angle. "
+          "The color is a tuple of 3 floats (0-1) in red, green, blue (RGB) order.")
       .def("DrawTriangle", &RDKit::MolDraw2D::drawTriangle,
            (python::arg("self"), python::arg("cds1"), python::arg("cds2"),
             python::arg("cds3"), python::arg("rawCoords") = false),
@@ -1172,9 +1172,8 @@ BOOST_PYTHON_MODULE(rdMolDraw2D) {
            "are in the molecule frame unless rawCoords is true, "
            "in which case the coordinates are in pixels.")
       .def("DrawArc",
-           (void(RDKit::MolDraw2D::*)(const Point2D &, double, double, double,
-                                      bool)) &
-               RDKit::MolDraw2D::drawArc,
+           (void (RDKit::MolDraw2D::*)(const Point2D &, double, double, double,
+                                       bool))&RDKit::MolDraw2D::drawArc,
            (python::arg("self"), python::arg("center"), python::arg("radius"),
             python::arg("angle1"), python::arg("angle2"),
             python::arg("rawCoords") = false),
@@ -1203,9 +1202,9 @@ BOOST_PYTHON_MODULE(rdMolDraw2D) {
            "are in the molecule frame unless rawCoords is true, "
            "in which case the coordinates are in pixels.")
       .def("DrawString",
-           (void(RDKit::MolDraw2D::*)(const std::string &,
-                                      const RDGeom::Point2D &, bool)) &
-               RDKit::MolDraw2D::drawString,
+           (void (RDKit::MolDraw2D::*)(const std::string &,
+                                       const RDGeom::Point2D &,
+                                       bool))&RDKit::MolDraw2D::drawString,
            (python::arg("self"), python::arg("string"), python::arg("pos"),
             python::arg("rawCoords") = false),
            "add text to the canvas. The coordinates "
@@ -1220,14 +1219,14 @@ BOOST_PYTHON_MODULE(rdMolDraw2D) {
            "are in the molecule frame unless rawCoords is true, "
            "in which case the coordinates are in pixels.")
       .def("GetDrawCoords",
-           (RDGeom::Point2D(RDKit::MolDraw2D::*)(const RDGeom::Point2D &)
+           (RDGeom::Point2D (RDKit::MolDraw2D::*)(const RDGeom::Point2D &)
                 const) &
                RDKit::MolDraw2D::getDrawCoords,
            (python::arg("self"), python::arg("point")),
            "get the coordinates in drawing space for a particular point in "
            "molecule space")
       .def("GetDrawCoords",
-           (RDGeom::Point2D(RDKit::MolDraw2D::*)(int) const) &
+           (RDGeom::Point2D (RDKit::MolDraw2D::*)(int) const) &
                RDKit::MolDraw2D::getDrawCoords,
            (python::arg("self"), python::arg("atomIndex")),
            "get the coordinates in drawing space for a particular atom")
@@ -1257,7 +1256,7 @@ BOOST_PYTHON_MODULE(rdMolDraw2D) {
            python::args("self"),
            "add the last bits of SVG to finish the drawing")
       .def("AddMoleculeMetadata",
-           (void(RDKit::MolDraw2DSVG::*)(const RDKit::ROMol &, int) const) &
+           (void (RDKit::MolDraw2DSVG::*)(const RDKit::ROMol &, int) const) &
                RDKit::MolDraw2DSVG::addMoleculeMetadata,
            ((python::arg("self"), python::arg("mol")),
             python::arg("confId") = -1),
@@ -1455,8 +1454,7 @@ BOOST_PYTHON_MODULE(rdMolDraw2D) {
        python::arg("height") = 300,
        python::arg("highlightAtoms") = python::object(),
        python::arg("kekulize") = true, python::arg("lineWidthMult") = 1,
-       python::arg("includeAtomCircles") = true,
-       python::arg("confId") = -1),
+       python::arg("includeAtomCircles") = true, python::arg("confId") = -1),
       docString.c_str());
   docString = "Returns ACS 1996 mode svg for a molecule";
   python::def("MolToACS1996SVG", &RDKit::molToACS1996SVG,

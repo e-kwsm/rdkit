@@ -39,7 +39,10 @@ namespace FileParsers {
 namespace {
 
 // Flag for parsing chirality labels
-enum class [[nodiscard]] ChiralityLabelStatus{VALID, INVALID};
+enum class [[nodiscard]] ChiralityLabelStatus {
+  VALID,
+  INVALID
+};
 
 class PDBInfo {
  public:
