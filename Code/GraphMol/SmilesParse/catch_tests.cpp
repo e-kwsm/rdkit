@@ -2824,8 +2824,9 @@ TEST_CASE("Test rootedAtAtom argument", "[smarts]") {
     ps.rootedAtAtom = 20;
 
     // Fixed by #8328. Multiple fragments are supported now.
-    CHECK(MolToSmiles(*mol1, ps) ==
-          "CCOc1c(Cl)c(C(=O)[O-])c(Cl)c(OCC)c1C(=O)[O-].O=C([O-])C#CC#CC(=O)[O-].[Zn][Zn]");
+    CHECK(
+        MolToSmiles(*mol1, ps) ==
+        "CCOc1c(Cl)c(C(=O)[O-])c(Cl)c(OCC)c1C(=O)[O-].O=C([O-])C#CC#CC(=O)[O-].[Zn][Zn]");
   }
 }
 
@@ -3181,47 +3182,49 @@ TEST_CASE("DnaTestError", "DnaTestError") {
   }
 }
 
-TEST_CASE("Github 8328", "MolToSmiles with rootedAtAtom for multiple fragments") {
-    SECTION("basics") {
-        auto mol = "[C:1][C:2].[N:3]([C:4])=[O:5]"_smiles;
-        auto ps = SmilesWriteParams();
-        ps.rootedAtAtom = 0;
-        CHECK(MolToSmiles(*mol, ps) == "[C:1][C:2].[N:3]([C:4])=[O:5]");
-        ps.rootedAtAtom = 1;
-        CHECK(MolToSmiles(*mol, ps) == "[C:2][C:1].[N:3]([C:4])=[O:5]");
-        ps.rootedAtAtom = 2;
-        CHECK(MolToSmiles(*mol, ps) == "[C:1][C:2].[N:3]([C:4])=[O:5]");
-        ps.rootedAtAtom = 3;
-        CHECK(MolToSmiles(*mol, ps) == "[C:1][C:2].[C:4][N:3]=[O:5]");
-        ps.rootedAtAtom = 4;
-        CHECK(MolToSmiles(*mol, ps) == "[C:1][C:2].[O:5]=[N:3][C:4]");
-        ps.rootedAtAtom = 5;
-        CHECK_THROWS_AS(MolToSmiles(*mol, ps), Invar::Invariant);
-    }
-    SECTION("Compare with and without canonicalization") {
-        auto mol = "[Al+3].[Na+2].[O-]S(=O)(=O)[O-].CC(=O)OCC.NC(=O)Cc1ccccc1"_smiles;
-        auto ps = SmilesWriteParams();
+TEST_CASE("Github 8328",
+          "MolToSmiles with rootedAtAtom for multiple fragments") {
+  SECTION("basics") {
+    auto mol = "[C:1][C:2].[N:3]([C:4])=[O:5]"_smiles;
+    auto ps = SmilesWriteParams();
+    ps.rootedAtAtom = 0;
+    CHECK(MolToSmiles(*mol, ps) == "[C:1][C:2].[N:3]([C:4])=[O:5]");
+    ps.rootedAtAtom = 1;
+    CHECK(MolToSmiles(*mol, ps) == "[C:2][C:1].[N:3]([C:4])=[O:5]");
+    ps.rootedAtAtom = 2;
+    CHECK(MolToSmiles(*mol, ps) == "[C:1][C:2].[N:3]([C:4])=[O:5]");
+    ps.rootedAtAtom = 3;
+    CHECK(MolToSmiles(*mol, ps) == "[C:1][C:2].[C:4][N:3]=[O:5]");
+    ps.rootedAtAtom = 4;
+    CHECK(MolToSmiles(*mol, ps) == "[C:1][C:2].[O:5]=[N:3][C:4]");
+    ps.rootedAtAtom = 5;
+    CHECK_THROWS_AS(MolToSmiles(*mol, ps), Invar::Invariant);
+  }
+  SECTION("Compare with and without canonicalization") {
+    auto mol =
+        "[Al+3].[Na+2].[O-]S(=O)(=O)[O-].CC(=O)OCC.NC(=O)Cc1ccccc1"_smiles;
+    auto ps = SmilesWriteParams();
 
-        ps.canonical = true;
-        ps.rootedAtAtom = -1;
-        CHECK(MolToSmiles(*mol, ps) ==
-              "CCOC(C)=O.NC(=O)Cc1ccccc1.O=S(=O)([O-])[O-].[Al+3].[Na+2]");
+    ps.canonical = true;
+    ps.rootedAtAtom = -1;
+    CHECK(MolToSmiles(*mol, ps) ==
+          "CCOC(C)=O.NC(=O)Cc1ccccc1.O=S(=O)([O-])[O-].[Al+3].[Na+2]");
 
-        ps.canonical = true;
-        ps.rootedAtAtom = 10;
-        CHECK(MolToSmiles(*mol, ps) ==
-              "NC(=O)Cc1ccccc1.O(CC)C(C)=O.O=S(=O)([O-])[O-].[Al+3].[Na+2]");
+    ps.canonical = true;
+    ps.rootedAtAtom = 10;
+    CHECK(MolToSmiles(*mol, ps) ==
+          "NC(=O)Cc1ccccc1.O(CC)C(C)=O.O=S(=O)([O-])[O-].[Al+3].[Na+2]");
 
-        ps.canonical = true;
-        ps.rootedAtAtom = 21;
-        CHECK(MolToSmiles(*mol, ps) ==
-              "CCOC(C)=O.O=S(=O)([O-])[O-].[Al+3].[Na+2].c1cccc(CC(N)=O)c1");
+    ps.canonical = true;
+    ps.rootedAtAtom = 21;
+    CHECK(MolToSmiles(*mol, ps) ==
+          "CCOC(C)=O.O=S(=O)([O-])[O-].[Al+3].[Na+2].c1cccc(CC(N)=O)c1");
 
-        ps.canonical = false;
-        ps.rootedAtAtom = 21;
-        CHECK(MolToSmiles(*mol, ps) ==
-              "[Al+3].[Na+2].[O-]S(=O)(=O)[O-].CC(=O)OCC.c1cccc(CC(N)=O)c1");
-    }
+    ps.canonical = false;
+    ps.rootedAtAtom = 21;
+    CHECK(MolToSmiles(*mol, ps) ==
+          "[Al+3].[Na+2].[O-]S(=O)(=O)[O-].CC(=O)OCC.c1cccc(CC(N)=O)c1");
+  }
 }
 
 TEST_CASE("atoms bound to metals should always have Hs specified") {

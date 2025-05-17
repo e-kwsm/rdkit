@@ -178,6 +178,5 @@ void FragFPGenerator::computeFP(const ROMol &mol, const FragCatalog &fcat,
     // overwrite mapkm1 with mapk before we move on to order k+1
     mapkm1 = mapk;
   }  // end of loop over path order
-
 }
 }  // namespace RDKit
