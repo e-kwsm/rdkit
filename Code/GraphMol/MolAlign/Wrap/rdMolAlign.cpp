@@ -335,8 +335,8 @@ double CalcRMS(ROMol &prbMol, ROMol &refMol, int prbCid, int refCid,
 namespace MolAlign {
 class PyO3A {
  public:
-  PyO3A(O3A *o) : o3a(o){};
-  PyO3A(boost::shared_ptr<O3A> o) : o3a(std::move(o)){};
+  PyO3A(O3A *o) : o3a(o) {};
+  PyO3A(boost::shared_ptr<O3A> o) : o3a(std::move(o)) {};
   ~PyO3A() = default;
   double align() { return o3a.get()->align(); };
   PyObject *trans() {
@@ -674,8 +674,8 @@ python::tuple getCrippenO3AForConfs(
 
   return python::tuple(pyres);
 }
-}  // end of namespace MolAlign
-}  // end of namespace RDKit
+}  // namespace MolAlign
+}  // namespace RDKit
 
 using namespace RDKit;
 

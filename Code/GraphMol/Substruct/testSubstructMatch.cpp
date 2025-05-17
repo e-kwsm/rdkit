@@ -1725,8 +1725,9 @@ TEST_CASE("SubstructMatchCount regression", "[substruct]") {
   }
 
   {
-    // Uniquify=false should still match counts with the full match materializer.
-    // (We don't assert an exact number here because it depends on automorphisms.)
+    // Uniquify=false should still match counts with the full match
+    // materializer. (We don't assert an exact number here because it depends on
+    // automorphisms.)
     auto mol = "c1ccccc1"_smiles;
     REQUIRE(mol);
     std::unique_ptr<ROMol> query{SmartsToMol("c:c")};

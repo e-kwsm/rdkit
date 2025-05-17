@@ -31,7 +31,7 @@
 namespace RDKit {
 namespace detail {
 struct FPBReader_impl;
-}
+}  // namespace detail
 
 //! class for reading and searching FPB files
 /*!

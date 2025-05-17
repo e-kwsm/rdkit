@@ -151,7 +151,8 @@ Descriptor Tetrahedral::label(Node *node, const Rules &comp) {
     }
 
     if (idx < 0 || static_cast<size_t>(idx) >= ordered.size()) {
-      throw std::runtime_error("Could not calculate parity! invalid atom index");
+      throw std::runtime_error(
+          "Could not calculate parity! invalid atom index");
     }
     auto atom = edge->getEnd()->getAtom();
     ordered[idx] = atom;

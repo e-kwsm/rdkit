@@ -54,7 +54,11 @@ struct BondInfo {
     SingleOrAromatic,
     DoubleOrAromatic,
   };
-  enum class TopologyType { None, Ring, Chain };
+  enum class TopologyType {
+    None,
+    Ring,
+    Chain
+  };
 
   int bond_id = -1;
   int start = -1;
@@ -138,23 +142,25 @@ bool isWildcardQueryLabel(const std::string &label) {
   return label == "*" || isRQueryLabel(label);
 }
 
-enum class AtomUnsaturationConstraint { None, MustBeAbsent, MustBePresent };
+enum class AtomUnsaturationConstraint {
+  None,
+  MustBeAbsent,
+  MustBePresent
+};
 
 constexpr auto CDXML_FREE_SITES_PROP = "_cdxmlFreeSites";
-constexpr auto CDXML_RING_BOND_COUNT_AS_DRAWN_PROP = "_cdxmlRingBondCountAsDrawn";
+constexpr auto CDXML_RING_BOND_COUNT_AS_DRAWN_PROP =
+    "_cdxmlRingBondCountAsDrawn";
 constexpr auto CDXML_LINK_NODE_MIN_REP_PROP = "_cdxmlLinkNodeMinRep";
 constexpr auto CDXML_LINK_NODE_MAX_REP_PROP = "_cdxmlLinkNodeMaxRep";
 constexpr auto CDXML_VARIABLE_ATTACHMENT_ENDPOINTS_PROP =
-  "_cdxmlVariableAttachmentEndpoints";
+    "_cdxmlVariableAttachmentEndpoints";
 
-void applyAtomQueryRestrictions(RWMol &mol, Atom *&atom,
-                                const v2::CDXMLParser::CDXMLParserParams &params,
-                                bool restrictImplicitHydrogens,
-                                int ringBondCount,
-                                bool ringBondCountAtLeast,
-                                int substituentCount,
-                                int maxSubstituentCount,
-                                AtomUnsaturationConstraint unsaturation) {
+void applyAtomQueryRestrictions(
+    RWMol &mol, Atom *&atom, const v2::CDXMLParser::CDXMLParserParams &params,
+    bool restrictImplicitHydrogens, int ringBondCount,
+    bool ringBondCountAtLeast, int substituentCount, int maxSubstituentCount,
+    AtomUnsaturationConstraint unsaturation) {
   if (!params.parseQueries) {
     return;
   }
@@ -165,8 +171,8 @@ void applyAtomQueryRestrictions(RWMol &mol, Atom *&atom,
     return;
   }
 
-  auto *queryAtom = static_cast<QueryAtom *>(
-      QueryOps::replaceAtomWithQueryAtom(&mol, atom));
+  auto *queryAtom =
+      static_cast<QueryAtom *>(QueryOps::replaceAtomWithQueryAtom(&mol, atom));
   queryAtom->setNoImplicit(true);
 
   if (restrictImplicitHydrogens) {
@@ -182,9 +188,9 @@ void applyAtomQueryRestrictions(RWMol &mol, Atom *&atom,
     queryAtom->expandQuery(makeAtomExplicitDegreeQuery(substituentCount));
   }
   if (maxSubstituentCount >= 0) {
-    queryAtom->expandQuery(makeAtomRangeQuery(
-        0, maxSubstituentCount, false, false, queryAtomExplicitDegree,
-        "range_AtomExplicitDegree"));
+    queryAtom->expandQuery(makeAtomRangeQuery(0, maxSubstituentCount, false,
+                                              false, queryAtomExplicitDegree,
+                                              "range_AtomExplicitDegree"));
   }
   if (unsaturation != AtomUnsaturationConstraint::None) {
     auto *unsaturationQuery = makeAtomUnsaturatedQuery();
@@ -196,13 +202,13 @@ void applyAtomQueryRestrictions(RWMol &mol, Atom *&atom,
 
   atom = queryAtom;
 }
-  
-void applyDeferredFreeSitesQueryRestrictions(RWMol &mol,
-					     const v2::CDXMLParser::CDXMLParserParams &params) {
+
+void applyDeferredFreeSitesQueryRestrictions(
+    RWMol &mol, const v2::CDXMLParser::CDXMLParserParams &params) {
   if (!params.parseQueries) {
     return;
   }
-  
+
   for (auto atom : mol.atoms()) {
     if (!atom->hasProp(CDXML_FREE_SITES_PROP)) {
       continue;
@@ -215,8 +221,8 @@ void applyDeferredFreeSitesQueryRestrictions(RWMol &mol,
         QueryOps::replaceAtomWithQueryAtom(&mol, atom));
     queryAtom->setNoImplicit(true);
     queryAtom->expandQuery(makeAtomRangeQuery(
-        minDegree, minDegree + freeSites, false, false,
-        queryAtomExplicitDegree, "range_AtomExplicitDegree"));
+        minDegree, minDegree + freeSites, false, false, queryAtomExplicitDegree,
+        "range_AtomExplicitDegree"));
     queryAtom->clearProp(CDXML_FREE_SITES_PROP);
   }
 }
@@ -296,8 +302,8 @@ void applyDeferredLinkNodeProperties(RWMol &mol) {
     if (!linkNodes.empty()) {
       linkNodes += "|";
     }
-    linkNodes += std::to_string(minRep) + " " + std::to_string(maxRep) +
-                 " 2 " + std::to_string(atom->getIdx() + 1) + " " +
+    linkNodes += std::to_string(minRep) + " " + std::to_string(maxRep) + " 2 " +
+                 std::to_string(atom->getIdx() + 1) + " " +
                  std::to_string(neighborIdxs[0] + 1) + " " +
                  std::to_string(atom->getIdx() + 1) + " " +
                  std::to_string(neighborIdxs[1] + 1);
@@ -335,7 +341,7 @@ void applyDeferredVariableAttachmentProperties(RWMol &mol) {
     if (atom->getDegree() != 1) {
       BOOST_LOG(rdWarningLog) << "Only attachment-point nodes with a single "
                                  "substituent bond are supported on atom "
-                             << atom->getIdx() << std::endl;
+                              << atom->getIdx() << std::endl;
       continue;
     }
 
@@ -345,9 +351,8 @@ void applyDeferredVariableAttachmentProperties(RWMol &mol) {
     for (auto attachmentId : attachmentIds) {
       auto mappedIdx = atomIdToIdx.find(attachmentId);
       if (mappedIdx == atomIdToIdx.end()) {
-        BOOST_LOG(rdWarningLog)
-            << "Attachment endpoint " << attachmentId
-            << " not found in molecule" << std::endl;
+        BOOST_LOG(rdWarningLog) << "Attachment endpoint " << attachmentId
+                                << " not found in molecule" << std::endl;
         missingAttachment = true;
         break;
       }
@@ -374,8 +379,9 @@ struct FragmentReplacement {
 
     auto bond_ordering =
         replacement_atom->getProp<std::vector<int>>(CDX_BOND_ORDERING);
-    std::vector<Bond *> replacement_bonds(mol.atomBonds(replacement_atom).begin(),
-                                          mol.atomBonds(replacement_atom).end());
+    std::vector<Bond *> replacement_bonds(
+        mol.atomBonds(replacement_atom).begin(),
+        mol.atomBonds(replacement_atom).end());
 
     std::vector<Bond *> xbonds;
     for (auto bond : replacement_bonds) {
@@ -394,10 +400,11 @@ struct FragmentReplacement {
 
       auto pos = std::distance(bond_ordering.begin(), it);
       if (pos < 0 || static_cast<size_t>(pos) >= fragment_atoms.size()) {
-        BOOST_LOG(rdWarningLog) << "bond ordering and number of atoms in "
-                                   "fragment mismatch, can't attach fragment at "
-                                   "bond:"
-                                << bond_id << std::endl;
+        BOOST_LOG(rdWarningLog)
+            << "bond ordering and number of atoms in "
+               "fragment mismatch, can't attach fragment at "
+               "bond:"
+            << bond_id << std::endl;
         return false;
       }
 
@@ -547,12 +554,12 @@ bool parse_fragment(RWMol &mol, ptree &frag,
       bool ring_bond_count_as_drawn = false;
       int substituent_count = -1;
       int max_substituent_count = -1;
-        int free_sites = -1;
+      int free_sites = -1;
       int link_count_low = -1;
       int link_count_high = -1;
       std::vector<unsigned int> variable_attachment_ids;
-        bool restrict_rxn_change = false;
-        int rxn_stereo = 0;
+      bool restrict_rxn_change = false;
+      int rxn_stereo = 0;
       AtomUnsaturationConstraint unsaturation =
           AtomUnsaturationConstraint::None;
       for (auto &attr : node.second.get_child("<xmlattr>")) {
@@ -663,8 +670,7 @@ bool parse_fragment(RWMol &mol, ptree &frag,
 
           } else if (attr.first == "ImplicitHydrogens") {
             auto value = attr.second.data();
-            restrict_implicit_hydrogens =
-                value == "yes" || value == "true";
+            restrict_implicit_hydrogens = value == "yes" || value == "true";
 
           } else if (attr.first == "RingBondCount") {
             auto value = attr.second.data();
@@ -679,9 +685,8 @@ bool parse_fragment(RWMol &mol, ptree &frag,
             } else if (value == "AsDrawn") {
               ring_bond_count_as_drawn = true;
             } else if (value != "Unspecified") {
-              BOOST_LOG(rdWarningLog)
-                  << "Unhandled RingBondCount query value " << value
-                  << " ignoring" << std::endl;
+              BOOST_LOG(rdWarningLog) << "Unhandled RingBondCount query value "
+                                      << value << " ignoring" << std::endl;
             }
 
           } else if (attr.first == "UnsaturatedBonds") {
@@ -717,9 +722,8 @@ bool parse_fragment(RWMol &mol, ptree &frag,
             } else if (value == "Retention") {
               rxn_stereo = 2;
             } else if (value != "Unspecified") {
-              BOOST_LOG(rdWarningLog)
-                  << "Unhandled RxnStereo query value " << value
-                  << " ignoring" << std::endl;
+              BOOST_LOG(rdWarningLog) << "Unhandled RxnStereo query value "
+                                      << value << " ignoring" << std::endl;
             }
 
           } else if (attr.first == "p") {
@@ -859,8 +863,7 @@ bool parse_fragment(RWMol &mol, ptree &frag,
         for (auto &fragment : node.second) {
           if (fragment.first == "fragment") {
             if (!parse_fragment(mol, fragment.second, ids, missing_frag_id,
-                                params,
-                                atom_id)) {
+                                params, atom_id)) {
               skip_fragment = true;
               break;
             }
@@ -900,26 +903,23 @@ bool parse_fragment(RWMol &mol, ptree &frag,
             } else if (orderTokens.size() == 1 &&
                        (orderText == "hydrogen" || orderText == "Hydrogen")) {
               order = Bond::BondType::HYDROGEN;
-            } else if (
-                orderTokens.size() == 2 &&
-                ((orderTokens[0] == "1" && orderTokens[1] == "2") ||
-                 (orderTokens[0] == "2" && orderTokens[1] == "1"))) {
+            } else if (orderTokens.size() == 2 &&
+                       ((orderTokens[0] == "1" && orderTokens[1] == "2") ||
+                        (orderTokens[0] == "2" && orderTokens[1] == "1"))) {
               order = Bond::BondType::SINGLE;
               queryType = BondInfo::QueryType::SingleOrDouble;
-            } else if (
-                orderTokens.size() == 2 &&
-                ((orderTokens[0] == "1" &&
-                  (orderTokens[1] == "1.5" || orderTokens[1] == "4")) ||
-                 (orderTokens[1] == "1" &&
-                  (orderTokens[0] == "1.5" || orderTokens[0] == "4")))) {
+            } else if (orderTokens.size() == 2 &&
+                       ((orderTokens[0] == "1" &&
+                         (orderTokens[1] == "1.5" || orderTokens[1] == "4")) ||
+                        (orderTokens[1] == "1" &&
+                         (orderTokens[0] == "1.5" || orderTokens[0] == "4")))) {
               order = Bond::BondType::SINGLE;
               queryType = BondInfo::QueryType::SingleOrAromatic;
-            } else if (
-                orderTokens.size() == 2 &&
-                ((orderTokens[0] == "2" &&
-                  (orderTokens[1] == "1.5" || orderTokens[1] == "4")) ||
-                 (orderTokens[1] == "2" &&
-                  (orderTokens[0] == "1.5" || orderTokens[0] == "4")))) {
+            } else if (orderTokens.size() == 2 &&
+                       ((orderTokens[0] == "2" &&
+                         (orderTokens[1] == "1.5" || orderTokens[1] == "4")) ||
+                        (orderTokens[1] == "2" &&
+                         (orderTokens[0] == "1.5" || orderTokens[0] == "4")))) {
               order = Bond::BondType::DOUBLE;
               queryType = BondInfo::QueryType::DoubleOrAromatic;
             } else {
@@ -965,8 +965,8 @@ bool parse_fragment(RWMol &mol, ptree &frag,
       }
       // CHECK_INVARIANT(start_atom>=0 && end_atom>=0 && start_atom != end_atom,
       // "Bad bond in CDXML");
-      BondInfo bond{bond_id, start_atom, end_atom, order, display, queryType,
-                    topology};
+      BondInfo bond{bond_id, start_atom, end_atom, order,
+                    display, queryType,  topology};
       if (!bond.validate(ids, mol.getNumAtoms())) {
         BOOST_LOG(rdErrorLog) << "Bad bond in CDXML skipping fragment "
                               << frag_id << "..." << std::endl;
@@ -1177,12 +1177,13 @@ void visit_children(
         std::unique_ptr<ROMol> fused;
         try {
           if (replaceFragments(*mol)) {
-	    fused = molzip(*mol, molzip_params);
-	  } else {
-	    BOOST_LOG(rdWarningLog) << "Failed replacement of fragment skipping... "
-				    << frag_id << std::endl;
-	    continue;
-	  }
+            fused = molzip(*mol, molzip_params);
+          } else {
+            BOOST_LOG(rdWarningLog)
+                << "Failed replacement of fragment skipping... " << frag_id
+                << std::endl;
+            continue;
+          }
         } catch (Invar::Invariant &) {
           BOOST_LOG(rdWarningLog) << "Failed fusion of fragment skipping... "
                                   << frag_id << std::endl;
@@ -1311,9 +1312,10 @@ std::vector<std::unique_ptr<RWMol>> MolsFromCDXMLDataStream(
     std::istream &inStream, const CDXMLParserParams &params) {
   // populate tree structure pt
   if (params.format == CDXMLFormat::CDX) {
-    throw FileParseException("Full ChemDraw support is not enabled, cannot parse CDX files");
+    throw FileParseException(
+        "Full ChemDraw support is not enabled, cannot parse CDX files");
   }
-  
+
   using boost::property_tree::ptree;
   ptree pt;
   try {
@@ -1434,14 +1436,12 @@ std::vector<std::unique_ptr<RWMol>> MolsFromCDXMLFile(
 
 std::vector<std::unique_ptr<RWMol>> MolsFromCDXML(
     const std::string &cdxml, const CDXMLParserParams &params) {
- 
   std::stringstream iss(cdxml);
   return MolsFromCDXMLDataStream(iss, params);
 }
 
-RDKIT_FILEPARSERS_EXPORT std::string MolToCDXMLBlock(
-    const RWMol &,
-    CDXMLFormat) {
+RDKIT_FILEPARSERS_EXPORT std::string MolToCDXMLBlock(const RWMol &,
+                                                     CDXMLFormat) {
   std::ostringstream errout;
   errout << "RDKit build withoutChemDraw writing support. ";
   throw FileParseException(errout.str());
@@ -1454,17 +1454,16 @@ RDKIT_FILEPARSERS_EXPORT std::string MolToCDXMLBlock(
 #else
 #include <ChemDraw/chemdraw.h>
 #include <RDGeneral/BadFileException.h>
-#include <filesystem> // For std::filesystem::path
-#include <algorithm>  // For std::transform
-#include <cctype>     // For std::tolower
+#include <filesystem>  // For std::filesystem::path
+#include <algorithm>   // For std::transform
+#include <cctype>      // For std::tolower
 
-namespace RDKit{
-
+namespace RDKit {
 
 namespace v2 {
 namespace CDXMLParser {
 bool hasChemDrawCDXSupport() { return true; }
-  
+
 std::vector<std::unique_ptr<RWMol>> MolsFromCDXMLDataStream(
     std::istream &inStream, const CDXMLParserParams &params) {
   // populate tree structure pt
@@ -1473,17 +1472,18 @@ std::vector<std::unique_ptr<RWMol>> MolsFromCDXMLDataStream(
   chemdraw_params.removeHs = params.removeHs;
   chemdraw_params.parseQueries = params.parseQueries;
   chemdraw_params.strictQueryParsing = params.strictQueryParsing;
-  switch(params.format) {
-  case CDXMLFormat::CDX: {
-    chemdraw_params.format = CDXFormat::CDX;
-    break;
-  }
-  case CDXMLFormat::CDXML: {
-    chemdraw_params.format = CDXFormat::CDXML; break;
-  }
-  case CDXMLFormat::Auto:
-    {
-      chemdraw_params.format = CDXFormat::AUTO; break;
+  switch (params.format) {
+    case CDXMLFormat::CDX: {
+      chemdraw_params.format = CDXFormat::CDX;
+      break;
+    }
+    case CDXMLFormat::CDXML: {
+      chemdraw_params.format = CDXFormat::CDXML;
+      break;
+    }
+    case CDXMLFormat::Auto: {
+      chemdraw_params.format = CDXFormat::AUTO;
+      break;
     }
   }
 
@@ -1492,7 +1492,7 @@ std::vector<std::unique_ptr<RWMol>> MolsFromCDXMLDataStream(
 
 std::vector<std::unique_ptr<RWMol>> MolsFromCDXMLFile(
     const std::string &fileName, const CDXMLParserParams &params) {
-  std::ifstream ifs(fileName,  std::ios::binary);
+  std::ifstream ifs(fileName, std::ios::binary);
   if (!ifs || ifs.bad()) {
     std::ostringstream errout;
     errout << "Bad inxput file " << fileName;
@@ -1515,10 +1515,7 @@ std::vector<std::unique_ptr<RWMol>> MolsFromCDXML(
   return MolsFromCDXMLDataStream(iss, params);
 }
 
-std::string MolToCDXMLBlock(
-    const RWMol &mol,
-    CDXMLFormat format) {
-
+std::string MolToCDXMLBlock(const RWMol &mol, CDXMLFormat format) {
   CDXFormat cdx_format = CDXFormat::CDXML;
 
   if (format == CDXMLFormat::CDX) {
@@ -1527,7 +1524,7 @@ std::string MolToCDXMLBlock(
 
   return MolToChemDrawBlock(mol, cdx_format);
 }
-}
-}
-}
+}  // namespace CDXMLParser
+}  // namespace v2
+}  // namespace RDKit
 #endif

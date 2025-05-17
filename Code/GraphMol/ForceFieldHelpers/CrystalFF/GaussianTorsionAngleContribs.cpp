@@ -95,8 +95,10 @@ void GaussianTorsionAngleContribs::addContrib(
   PRECONDITION((idx1 != idx2) && (idx1 != idx3) && (idx1 != idx4) &&
                    (idx2 != idx3) && (idx2 != idx4) && (idx3 != idx4),
                "degenerate points");
-  PRECONDITION(energies.size() >= 2, "Energy lookup table needs to have at least 2 elements.")
-  PRECONDITION(gradients.size() >= 2, "Gradient lookup table needs to have at least 2 elements.")
+  PRECONDITION(energies.size() >= 2,
+               "Energy lookup table needs to have at least 2 elements.")
+  PRECONDITION(gradients.size() >= 2,
+               "Gradient lookup table needs to have at least 2 elements.")
   URANGE_CHECK(idx1, dp_forceField->positions().size());
   URANGE_CHECK(idx2, dp_forceField->positions().size());
   URANGE_CHECK(idx3, dp_forceField->positions().size());

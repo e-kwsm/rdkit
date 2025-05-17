@@ -27,7 +27,9 @@ typedef std::set<unsigned int> UINT_SET;
 //   - a record of the atom indices that are lumped into
 //     that node
 struct FeatTreeNode_t {
-  enum { num = 1027 };
+  enum {
+    num = 1027
+  };
   typedef boost::vertex_property_tag kind;
 };
 typedef boost::property<FeatTreeNode_t, UINT_SET> FeatTreeNode;
@@ -36,7 +38,9 @@ typedef boost::property<FeatTreeNode_t, UINT_SET> FeatTreeNode;
 //   - an indicator of the number of rings at the ends
 //     (0, 1, or 2)
 struct FeatTreeEdge_t {
-  enum { num = 1028 };
+  enum {
+    num = 1028
+  };
   typedef boost::edge_property_tag kind;
 };
 typedef boost::property<FeatTreeEdge_t, unsigned int> FeatTreeEdge;

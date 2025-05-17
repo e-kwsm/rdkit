@@ -26,11 +26,10 @@ using namespace nb::literals;
 namespace RDPickers {
 
 // REVIEW: the poolSize can be pulled from the numeric array
-RDKit::INT_VECT MaxMinPicks(MaxMinPicker *picker,
-                            nb::ndarray<nb::numpy, double, nb::ndim<1>,
-                                        nb::c_contig> distMat,
-                            int poolSize, int pickSize,
-                            nb::object firstPicks, int seed) {
+RDKit::INT_VECT MaxMinPicks(
+    MaxMinPicker *picker,
+    nb::ndarray<nb::numpy, double, nb::ndim<1>, nb::c_contig> distMat,
+    int poolSize, int pickSize, nb::object firstPicks, int seed) {
   if (pickSize >= poolSize) {
     throw nb::value_error("pickSize must be less than poolSize");
   }
@@ -48,8 +47,8 @@ RDKit::INT_VECT MaxMinPicks(MaxMinPicker *picker,
 namespace {
 template <typename T>
 void LazyMaxMinHelper(MaxMinPicker *picker, T functor, unsigned int poolSize,
-                      unsigned int pickSize, nb::object firstPicks,
-                      int seed, RDKit::INT_VECT &res, double &threshold) {
+                      unsigned int pickSize, nb::object firstPicks, int seed,
+                      RDKit::INT_VECT &res, double &threshold) {
   RDKit::INT_VECT firstPickVect;
   auto len = nb::len(firstPicks);
   for (size_t i = 0; i < len; ++i) {
@@ -129,10 +128,10 @@ void wrap_maxminpick(nb::module_ &m) {
       m, "MaxMinPicker",
       "A class for diversity picking of items using the MaxMin Algorithm\n")
       .def(nb::init<>())
-      .def("Pick", RDPickers::MaxMinPicks,
-           "distMat"_a, "poolSize"_a, "pickSize"_a,
-           "firstPicks"_a = nb::tuple(), "seed"_a = -1,
-           R"DOC(Pick a subset of items from a pool of items using the MaxMin Algorithm
+      .def(
+          "Pick", RDPickers::MaxMinPicks, "distMat"_a, "poolSize"_a,
+          "pickSize"_a, "firstPicks"_a = nb::tuple(), "seed"_a = -1,
+          R"DOC(Pick a subset of items from a pool of items using the MaxMin Algorithm
 Ashton, M. et. al., Quant. Struct.-Act. Relat., 21 (2002), 598-604
 
 ARGUMENTS:
@@ -143,11 +142,11 @@ ARGUMENTS:
   - seed: (optional) seed for the random number generator
 )DOC")
 
-      .def("LazyPick", RDPickers::LazyMaxMinPicks,
-           "distFunc"_a, "poolSize"_a, "pickSize"_a,
-           "firstPicks"_a = nb::tuple(), "seed"_a = -1,
-           "useCache"_a = nb::none(),
-           R"DOC(Pick a subset of items from a pool of items using the MaxMin Algorithm
+      .def(
+          "LazyPick", RDPickers::LazyMaxMinPicks, "distFunc"_a, "poolSize"_a,
+          "pickSize"_a, "firstPicks"_a = nb::tuple(), "seed"_a = -1,
+          "useCache"_a = nb::none(),
+          R"DOC(Pick a subset of items from a pool of items using the MaxMin Algorithm
 Ashton, M. et. al., Quant. Struct.-Act. Relat., 21 (2002), 598-604
 ARGUMENTS:
 
@@ -161,11 +160,11 @@ ARGUMENTS:
   - seed: (optional) seed for the random number generator
   - useCache: IGNORED
 )DOC")
-      .def("LazyBitVectorPick", RDPickers::LazyVectorMaxMinPicks,
-           "objects"_a, "poolSize"_a, "pickSize"_a,
-           "firstPicks"_a = nb::tuple(), "seed"_a = -1,
-           "useCache"_a = nb::none(),
-           R"DOC(Pick a subset of items from a pool of bit vectors using the MaxMin Algorithm
+      .def(
+          "LazyBitVectorPick", RDPickers::LazyVectorMaxMinPicks, "objects"_a,
+          "poolSize"_a, "pickSize"_a, "firstPicks"_a = nb::tuple(),
+          "seed"_a = -1, "useCache"_a = nb::none(),
+          R"DOC(Pick a subset of items from a pool of bit vectors using the MaxMin Algorithm
 Ashton, M. et. al., Quant. Struct.-Act. Relat., 21 (2002), 598-604
 ARGUMENTS:
 
@@ -177,11 +176,11 @@ ARGUMENTS:
   - useCache: IGNORED.
 )DOC")
 
-      .def("LazyPickWithThreshold", RDPickers::LazyMaxMinPicksWithThreshold,
-           "distFunc"_a, "poolSize"_a, "pickSize"_a,
-           "threshold"_a,
-           "firstPicks"_a = nb::tuple(), "seed"_a = -1,
-           R"DOC(Pick a subset of items from a pool of items using the MaxMin Algorithm
+      .def(
+          "LazyPickWithThreshold", RDPickers::LazyMaxMinPicksWithThreshold,
+          "distFunc"_a, "poolSize"_a, "pickSize"_a, "threshold"_a,
+          "firstPicks"_a = nb::tuple(), "seed"_a = -1,
+          R"DOC(Pick a subset of items from a pool of items using the MaxMin Algorithm
 Ashton, M. et. al., Quant. Struct.-Act. Relat., 21 (2002), 598-604
 ARGUMENTS:
 
@@ -195,12 +194,12 @@ ARGUMENTS:
   - firstPicks: (optional) the first items to be picked (seeds the list)
   - seed: (optional) seed for the random number generator
 )DOC")
-      .def("LazyBitVectorPickWithThreshold",
-           RDPickers::LazyVectorMaxMinPicksWithThreshold,
-           "objects"_a, "poolSize"_a, "pickSize"_a,
-           "threshold"_a,
-           "firstPicks"_a = nb::tuple(), "seed"_a = -1,
-           R"DOC(Pick a subset of items from a pool of bit vectors using the MaxMin Algorithm
+      .def(
+          "LazyBitVectorPickWithThreshold",
+          RDPickers::LazyVectorMaxMinPicksWithThreshold, "objects"_a,
+          "poolSize"_a, "pickSize"_a, "threshold"_a,
+          "firstPicks"_a = nb::tuple(), "seed"_a = -1,
+          R"DOC(Pick a subset of items from a pool of bit vectors using the MaxMin Algorithm
 Ashton, M. et. al., Quant. Struct.-Act. Relat., 21 (2002), 598-604
 ARGUMENTS:
 

@@ -72,7 +72,7 @@ BETTER_ENUM(CXSmilesFields, uint32_t,  // clang-format off
   CX_ZERO_BONDS = 1 << 13,
   CX_ALL = 0x7fffffff,
   CX_ALL_BUT_COORDS = CX_ALL ^ CX_COORDS
-);
+);  // clang-format on
 
 //! \brief returns the cxsmiles data for a molecule
 RDKIT_SMILESPARSE_EXPORT std::string getCXExtensions(
@@ -80,8 +80,8 @@ RDKIT_SMILESPARSE_EXPORT std::string getCXExtensions(
 
 //! \brief returns the cxsmiles data for a vector of molecules
 RDKIT_SMILESPARSE_EXPORT std::string getCXExtensions(
-  const std::vector<ROMol *> &mols, std::uint32_t flags);
-  
+    const std::vector<ROMol *> &mols, std::uint32_t flags);
+
 //! \brief returns true if the atom number is in the SMILES organic subset
 RDKIT_SMILESPARSE_EXPORT bool inOrganicSubset(int atomicNumber);
 
@@ -146,8 +146,9 @@ inline std::string GetBondSmiles(const Bond *bond, int atomToLeftIdx = -1,
 
 namespace detail {
 RDKIT_SMILESPARSE_EXPORT std::string MolToSmiles(
-    const ROMol &mol, const SmilesWriteParams &params, bool doingCXSmiles, bool includeStereoGroups=true);
-}
+    const ROMol &mol, const SmilesWriteParams &params, bool doingCXSmiles,
+    bool includeStereoGroups = true);
+}  // namespace detail
 
 }  // namespace SmilesWrite
 
@@ -266,8 +267,8 @@ inline std::string MolFragmentToSmiles(
 }
 
 BETTER_ENUM(RestoreBondDirOption, unsigned int,
-  RestoreBondDirOptionTrue = 0,  //<!DO restore bond dirs
-  RestoreBondDirOptionClear = 1  //<!clear all bond dir information
+            RestoreBondDirOptionTrue = 0,  //<!DO restore bond dirs
+            RestoreBondDirOptionClear = 1  //<!clear all bond dir information
 );
 
 //! \brief returns canonical CXSMILES for a molecule

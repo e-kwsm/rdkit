@@ -85,8 +85,9 @@ NB_MODULE(rdGeneralizedSubstruct, m) {
   nb::class_<ExtendedQueryMol>(
       m, "ExtendedQueryMol",
       R"DOC(Extended query molecule for use in generalized substructure searching.)DOC")
-      .def(nb::init<const std::string &, bool>(), "text"_a, "isJSON"_a = false,
-           R"DOC(constructor from either a binary string (from ToBinary()) or a JSON string.)DOC")
+      .def(
+          nb::init<const std::string &, bool>(), "text"_a, "isJSON"_a = false,
+          R"DOC(constructor from either a binary string (from ToBinary()) or a JSON string.)DOC")
       .def(
           "__init__",
           [](ExtendedQueryMol &self, nb::bytes data) {
@@ -124,8 +125,7 @@ NB_MODULE(rdGeneralizedSubstruct, m) {
   m.def(
       "CreateExtendedQueryMol",
       [](const ROMol &mol, bool doEnumeration, bool doTautomers,
-         bool adjustQueryProperties,
-         const MolOps::AdjustQueryParameters &ps) {
+         bool adjustQueryProperties, const MolOps::AdjustQueryParameters &ps) {
         return createExtendedQueryMol(mol, doEnumeration, doTautomers,
                                       adjustQueryProperties, ps);
       },

@@ -25,9 +25,8 @@ nb::ndarray<nb::numpy, double, nb::ndim<1>> getCorrMatrix(
   auto *data = new double[dim];
   memcpy(static_cast<void *>(data), static_cast<void *>(dres),
          dim * sizeof(double));
-  nb::capsule owner(data, [](void *f) noexcept {
-    delete[] reinterpret_cast<double *>(f);
-  });
+  nb::capsule owner(
+      data, [](void *f) noexcept { delete[] reinterpret_cast<double *>(f); });
   return nb::ndarray<nb::numpy, double, nb::ndim<1>>(data, {dim}, owner);
 }
 
@@ -53,7 +52,8 @@ void CollectVotes(BitCorrMatGenerator *cmGen, nb::object bitVect) {
 }  // namespace RDInfoTheory
 
 void wrap_corrmatgen(nb::module_ &m) {
-  nb::class_<RDInfoTheory::BitCorrMatGenerator>(m, "BitCorrMatGenerator",
+  nb::class_<RDInfoTheory::BitCorrMatGenerator>(
+      m, "BitCorrMatGenerator",
       R"DOC(A class to generate a pairwise correlation matrix between a list of bits
 The mode of operation for this class is something like this
 
@@ -76,14 +76,16 @@ ARGUMENTS:
 
   - bitList : an integer list of bit IDs
 )DOC")
-      .def("CollectVotes", RDInfoTheory::CollectVotes, "bitVect"_a,
-           R"DOC(For each pair of on bits (bi, bj) in fp increase the correlation count for the pair by 1
+      .def(
+          "CollectVotes", RDInfoTheory::CollectVotes, "bitVect"_a,
+          R"DOC(For each pair of on bits (bi, bj) in fp increase the correlation count for the pair by 1
 
 ARGUMENTS:
 
   - fp : a bit vector to collect the fingerprints from
 )DOC")
-      .def("GetCorrMatrix", RDInfoTheory::getCorrMatrix,
-           R"DOC(Get the correlation matrix following the collection of votes from a bunch of fingerprints
+      .def(
+          "GetCorrMatrix", RDInfoTheory::getCorrMatrix,
+          R"DOC(Get the correlation matrix following the collection of votes from a bunch of fingerprints
 )DOC");
 }

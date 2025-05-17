@@ -138,7 +138,9 @@ class HierarchCatalog : public Catalog<entryType, paramType> {
  public:
   //! used by the BGL to set up the node properties in our graph
   struct vertex_entry_t {
-    enum { num = 1003 };
+    enum {
+      num = 1003
+    };
     typedef boost::vertex_property_tag kind;
   };
   typedef boost::property<vertex_entry_t, entryType *> EntryProperty;

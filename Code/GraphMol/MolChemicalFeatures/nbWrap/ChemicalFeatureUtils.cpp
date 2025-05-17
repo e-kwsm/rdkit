@@ -45,8 +45,9 @@ nb::list GetAtomMatch(nb::object featMatch, int maxAts = 1024) {
 }  // namespace
 
 void wrap_ChemicalFeatureUtils(nb::module_ &m) {
-  m.def("GetAtomMatch", GetAtomMatch, "featMatch"_a, "maxAts"_a = 1024,
-        R"DOC(Returns an empty list if any of the features passed in share an atom.
+  m.def(
+      "GetAtomMatch", GetAtomMatch, "featMatch"_a, "maxAts"_a = 1024,
+      R"DOC(Returns an empty list if any of the features passed in share an atom.
 Otherwise a list of lists of atom indices is returned.
 )DOC");
 }

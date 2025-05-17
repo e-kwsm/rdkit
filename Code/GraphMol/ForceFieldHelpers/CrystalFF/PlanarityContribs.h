@@ -30,7 +30,7 @@ struct RDKIT_FORCEFIELDHELPERS_EXPORT PlanarityContribsParams {
         idx2(idx2),
         idx3(idx3),
         idx4(idx4),
-        forceConstant(forceConstant){};
+        forceConstant(forceConstant) {};
 };
 //! A term to capture all Inversion Contributionss.
 class RDKIT_FORCEFIELDHELPERS_EXPORT PlanarityContribs
