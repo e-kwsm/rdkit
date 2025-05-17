@@ -17,7 +17,6 @@
 #include <memory>
 #include <string>
 
-
 #ifdef RDK_BUILD_MAEPARSER_SUPPORT
 namespace schrodinger {
 namespace mae {

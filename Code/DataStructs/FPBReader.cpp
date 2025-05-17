@@ -49,8 +49,7 @@ struct FPBReader_impl {
 };
 
 // the caller is responsible for calling delete[] on `data`
-void readChunkDetails(std::istream &istrm, std::string &nm,
-                      std::uint64_t &sz) {
+void readChunkDetails(std::istream &istrm, std::string &nm, std::uint64_t &sz) {
   streamRead(istrm, sz);
   char tag[tagNameSize + 1];
   tag[tagNameSize] = 0;
@@ -369,10 +368,10 @@ std::string extractId(const FPBReader_impl *dp_impl, unsigned int which) {
   std::uint64_t offset = 0, len = 0;
   if (which < dp_impl->num4ByteElements) {
     if (!dp_impl->df_lazy) {
-      offset = *reinterpret_cast<const std::uint32_t *>(
-          dp_impl->dp_idOffsets + which * 4);
+      offset = *reinterpret_cast<const std::uint32_t *>(dp_impl->dp_idOffsets +
+                                                        which * 4);
       len = *reinterpret_cast<const std::uint32_t *>(dp_impl->dp_idOffsets +
-                                                       (which + 1) * 4);
+                                                     (which + 1) * 4);
     } else {
       dp_impl->istrm->seekg(dp_impl->idDataOffset +
                             static_cast<std::streampos>(which * 4));
@@ -382,10 +381,10 @@ std::string extractId(const FPBReader_impl *dp_impl, unsigned int which) {
   } else if (which == dp_impl->num4ByteElements) {
     // FIX: this code path is not yet tested
     if (!dp_impl->df_lazy) {
-      offset = *reinterpret_cast<const std::uint32_t *>(
-          dp_impl->dp_idOffsets + which * 4);
+      offset = *reinterpret_cast<const std::uint32_t *>(dp_impl->dp_idOffsets +
+                                                        which * 4);
       len = *reinterpret_cast<const std::uint64_t *>(dp_impl->dp_idOffsets +
-                                                       (which + 1) * 4);
+                                                     (which + 1) * 4);
     } else {
       dp_impl->istrm->seekg(dp_impl->idDataOffset +
                             static_cast<std::streampos>(which * 4));
@@ -445,8 +444,7 @@ void tanimotoNeighbors(const FPBReader_impl *dp_impl, const std::uint8_t *bv,
     // Searches of Chemical Fingerprints in Linear and Sublinear Time. J. Chem.
     // Inf. Model. 47, 302–317 (2007).
     // http://pubs.acs.org/doi/abs/10.1021/ci600358f
-    auto minDbCount =
-        static_cast<std::uint32_t>(floor(threshold * probeCount));
+    auto minDbCount = static_cast<std::uint32_t>(floor(threshold * probeCount));
     std::uint32_t maxDbCount =
         (threshold > 1e-6)
             ? static_cast<std::uint32_t>(ceil(probeCount / threshold))
@@ -534,8 +532,7 @@ void tverskyNeighbors(const FPBReader_impl *dp_impl, const std::uint8_t *bv,
   }
 }
 
-void containingNeighbors(const FPBReader_impl *dp_impl,
-                         const std::uint8_t *bv,
+void containingNeighbors(const FPBReader_impl *dp_impl, const std::uint8_t *bv,
                          std::vector<unsigned int> &res) {
   PRECONDITION(dp_impl, "bad reader pointer");
   PRECONDITION(bv, "bad bv");
@@ -653,8 +650,7 @@ boost::shared_ptr<ExplicitBitVect> FPBReader::getFP(unsigned int idx) const {
 
   return boost::shared_ptr<ExplicitBitVect>(detail::extractFP(dp_impl, idx));
 };
-boost::shared_array<std::uint8_t> FPBReader::getBytes(
-    unsigned int idx) const {
+boost::shared_array<std::uint8_t> FPBReader::getBytes(unsigned int idx) const {
   PRECONDITION(df_init, "not initialized");
 
   return boost::shared_array<std::uint8_t>(detail::copyBytes(dp_impl, idx));
@@ -691,8 +687,7 @@ std::pair<unsigned int, unsigned int> FPBReader::getFPIdsInCountRange(
     return std::make_pair(0, 0);
   }
 };
-double FPBReader::getTanimoto(unsigned int idx,
-                              const std::uint8_t *bv) const {
+double FPBReader::getTanimoto(unsigned int idx, const std::uint8_t *bv) const {
   PRECONDITION(df_init, "not initialized");
   return detail::tanimoto(dp_impl, idx, bv);
 }

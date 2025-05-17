@@ -30,7 +30,7 @@ class RDKIT_FILEPARSERS_EXPORT MultithreadedSDMolSupplier
       const MolFileParserParams &parseParams = MolFileParserParams());
 
   MultithreadedSDMolSupplier();
-  virtual ~MultithreadedSDMolSupplier() {close();}
+  virtual ~MultithreadedSDMolSupplier() { close(); }
   void init() override {}
 
   void checkForEnd();
@@ -46,8 +46,9 @@ class RDKIT_FILEPARSERS_EXPORT MultithreadedSDMolSupplier
   //! parses the record and returns the resulting molecule
   RWMol *processMoleculeRecord(const std::string &record,
                                unsigned int lineNum) override;
+
  protected:
-    void closeStreams() override;
+  void closeStreams() override;
 
  private:
   void initFromSettings(bool takeOwnership, const Parameters &params,
