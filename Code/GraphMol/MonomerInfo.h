@@ -25,7 +25,11 @@ namespace RDKit {
 //! The abstract base class for atom-level monomer info
 class RDKIT_GRAPHMOL_EXPORT AtomMonomerInfo {
  public:
-  typedef enum { UNKNOWN = 0, PDBRESIDUE, OTHER } AtomMonomerType;
+  typedef enum {
+    UNKNOWN = 0,
+    PDBRESIDUE,
+    OTHER
+  } AtomMonomerType;
 
   virtual ~AtomMonomerInfo() {}
 
@@ -40,12 +44,17 @@ class RDKIT_GRAPHMOL_EXPORT AtomMonomerInfo {
    * \param residueName the residue name (e.g. "ALA")
    * \param resNum the residue number (e.g. 12)
    * \param chainId the chain identifier (e.g. "A", "Heavy", "PEPTIDE1")
-   * \param monomerClass further classification of the monomer (e.g, "LGRP", "LINK")
+   * \param monomerClass further classification of the monomer (e.g, "LGRP",
+   * "LINK")
    */
-  AtomMonomerInfo(AtomMonomerType typ, std::string nm = "", std::string residueName = "",
-                  int resNum = 0, std::string chainId = "", std::string monomerClass = "")
-      : d_monomerType(typ), d_name(std::move(nm)), d_residueNumber(resNum),
-        d_chainId(std::move(chainId)), d_monomerClass(std::move(monomerClass)),
+  AtomMonomerInfo(AtomMonomerType typ, std::string nm = "",
+                  std::string residueName = "", int resNum = 0,
+                  std::string chainId = "", std::string monomerClass = "")
+      : d_monomerType(typ),
+        d_name(std::move(nm)),
+        d_residueNumber(resNum),
+        d_chainId(std::move(chainId)),
+        d_monomerClass(std::move(monomerClass)),
         d_residueName(std::move(residueName)) {}
   AtomMonomerInfo(const AtomMonomerInfo &other) = default;
 
@@ -87,8 +96,8 @@ class RDKIT_GRAPHMOL_EXPORT AtomPDBResidueInfo : public AtomMonomerInfo {
                      unsigned int secondaryStructure = 0,
                      unsigned int segmentNumber = 0,
                      std::string monomerClass = "")
-      : AtomMonomerInfo(PDBRESIDUE, atomName, residueName, residueNumber, chainId,
-                        monomerClass),
+      : AtomMonomerInfo(PDBRESIDUE, atomName, residueName, residueNumber,
+                        chainId, monomerClass),
         d_serialNumber(serialNumber),
         d_altLoc(std::move(altLoc)),
         d_insertionCode(std::move(insertionCode)),

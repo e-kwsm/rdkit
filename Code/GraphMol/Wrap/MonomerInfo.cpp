@@ -25,14 +25,12 @@ struct monomerinfo_wrapper {
         "The class to store monomer information attached to Atoms\n";
     python::class_<AtomMonomerInfo>("AtomMonomerInfo", classDoc.c_str(),
                                     python::init<>(python::args("self")))
-        .def(
-            python::init<AtomMonomerInfo::AtomMonomerType, const std::string &,
-                         const std::string &, int,
-                         const std::string &, const std::string &>(
-                (python::arg("self"), python::arg("type"),
-                 python::arg("name") = "", python::arg("residueName") = "",
-                 python::arg("resNum") = 0, python::arg("chainId") = "",
-                 python::arg("monomerClass") = "")))
+        .def(python::init<AtomMonomerInfo::AtomMonomerType, const std::string &,
+                          const std::string &, int, const std::string &,
+                          const std::string &>(
+            (python::arg("self"), python::arg("type"), python::arg("name") = "",
+             python::arg("residueName") = "", python::arg("resNum") = 0,
+             python::arg("chainId") = "", python::arg("monomerClass") = "")))
         .def("GetName", &AtomMonomerInfo::getName,
              python::return_value_policy<python::copy_const_reference>(),
              python::args("self"))
@@ -42,7 +40,7 @@ struct monomerinfo_wrapper {
              python::return_value_policy<python::copy_const_reference>(),
              python::args("self"))
         .def("GetResidueNumber", &AtomMonomerInfo::getResidueNumber,
-                 python::args("self"))
+             python::args("self"))
         .def("GetChainId", &AtomMonomerInfo::getChainId,
              python::return_value_policy<python::copy_const_reference>(),
              python::args("self"))
@@ -60,8 +58,7 @@ struct monomerinfo_wrapper {
         .def("SetChainId", &AtomMonomerInfo::setChainId,
              python::args("self", "val"))
         .def("SetMonomerClass", &AtomMonomerInfo::setMonomerClass,
-             python::args("self", "val"))
-        ;
+             python::args("self", "val"));
 
     python::enum_<AtomMonomerInfo::AtomMonomerType>("AtomMonomerType")
         .value("UNKNOWN", AtomMonomerInfo::UNKNOWN)

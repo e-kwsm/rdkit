@@ -22,7 +22,7 @@ class ROMol;
 
 namespace CIPLabeler_detail {
 RDKIT_CIPLABELER_EXPORT bool decrementRemainingCallCountAndCheck();
-}
+}  // namespace CIPLabeler_detail
 
 namespace CIPLabeler {
 

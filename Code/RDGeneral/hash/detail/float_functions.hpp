@@ -115,7 +115,7 @@ inline long double call_ldexp(long double v, int exp) {
 #endif
 }
 
-inline float call_frexp(float v, int* exp) {
+inline float call_frexp(float v, int *exp) {
   using namespace std;
 #if defined(BOOST_HASH_USE_OVERLOAD_FLOAT_FUNCS) || \
     defined(BOOST_HASH_C99_NO_FLOAT_FUNCS)
@@ -125,12 +125,12 @@ inline float call_frexp(float v, int* exp) {
 #endif
 }
 
-inline double call_frexp(double v, int* exp) {
+inline double call_frexp(double v, int *exp) {
   using namespace std;
   return frexp(v, exp);
 }
 
-inline long double call_frexp(long double v, int* exp) {
+inline long double call_frexp(long double v, int *exp) {
   using namespace std;
 #if defined(BOOST_HASH_USE_OVERLOAD_FLOAT_FUNCS)
   return frexp(v, exp);

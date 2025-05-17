@@ -17,7 +17,11 @@ namespace python = boost::python;
 using namespace RDKit;
 namespace {
 
-enum class EnumeratorTypes { LinkNode, PositionVariation, RepeatUnit };
+enum class EnumeratorTypes {
+  LinkNode,
+  PositionVariation,
+  RepeatUnit
+};
 
 std::shared_ptr<MolEnumerator::MolEnumeratorOp> opFromName(
     EnumeratorTypes typ) {

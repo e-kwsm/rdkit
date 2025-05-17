@@ -276,10 +276,10 @@ typename boost::enable_if<boost::is_arithmetic<T>, T>::type from_rdvalue(
       res = rdvalue_cast<T>(arg);
     } catch (const std::bad_any_cast &exc) {
       try {
-	std::string val = rdvalue_cast<std::string>(arg);
-	// trim only the right characters, this mimics how SD values
-	//  work on read, they will be trimmed by the MolFile parser
-	boost::trim_right(val);
+        std::string val = rdvalue_cast<std::string>(arg);
+        // trim only the right characters, this mimics how SD values
+        //  work on read, they will be trimmed by the MolFile parser
+        boost::trim_right(val);
         res = boost::lexical_cast<T>(val);
       } catch (...) {
         throw exc;

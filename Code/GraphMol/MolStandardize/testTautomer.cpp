@@ -509,7 +509,8 @@ void testEnumeratorParams() {
           TEST_ASSERT(b->getStereo() <= Bond::STEREOANY);
           const bool inRing = ringInfo && ringInfo->numBondRings(b->getIdx());
 
-          // tautomerism-involved non-ring double bonds must be explicitly undefined (STEREOANY).
+          // tautomerism-involved non-ring double bonds must be explicitly
+          // undefined (STEREOANY).
           if (b->getBondType() == Bond::DOUBLE && !inRing &&
               modifiedBonds.test(b->getIdx())) {
             TEST_ASSERT(b->getStereo() == Bond::STEREOANY);
@@ -570,7 +571,8 @@ void testEnumeratorParams() {
       TautomerEnumeratorResult res = te.enumerate(*zEnol);
       const auto &modifiedBonds = res.modifiedBonds();
       for (const auto &taut : res) {
-        const auto bond = taut->getBondBetweenAtoms(zStereoBondA1, zStereoBondA2);
+        const auto bond =
+            taut->getBondBetweenAtoms(zStereoBondA1, zStereoBondA2);
         TEST_ASSERT(bond);
         TEST_ASSERT((bond->getBondType() == Bond::DOUBLE &&
                      bond->getStereo() == Bond::STEREOANY) ||
@@ -583,7 +585,8 @@ void testEnumeratorParams() {
           TEST_ASSERT(b->getStereo() <= Bond::STEREOANY);
           const bool inRing = ringInfo && ringInfo->numBondRings(b->getIdx());
 
-          // tautomerism-involved non-ring double bonds must be explicitly undefined (STEREOANY).
+          // tautomerism-involved non-ring double bonds must be explicitly
+          // undefined (STEREOANY).
           if (b->getBondType() == Bond::DOUBLE && !inRing &&
               modifiedBonds.test(b->getIdx())) {
             TEST_ASSERT(b->getStereo() == Bond::STEREOANY);
@@ -602,7 +605,8 @@ void testEnumeratorParams() {
       TautomerEnumerator te(params);
       TautomerEnumeratorResult res = te.enumerate(*zEnol);
       for (const auto &taut : res) {
-        const auto bond = taut->getBondBetweenAtoms(zStereoBondA1, zStereoBondA2);
+        const auto bond =
+            taut->getBondBetweenAtoms(zStereoBondA1, zStereoBondA2);
         TEST_ASSERT(bond);
         if (bond->getBondType() == Bond::DOUBLE) {
           if (useLegacy) {
@@ -678,7 +682,8 @@ void testEnumeratorParams() {
           }
         }
         TEST_ASSERT(numStereoBonds <= 1);
-        const auto expectedStereo = useLegacy ? Bond::STEREOE : Bond::STEREOTRANS;
+        const auto expectedStereo =
+            useLegacy ? Bond::STEREOE : Bond::STEREOTRANS;
         TEST_ASSERT(numStereoBonds == 0 ||
                     (stereoBond && stereoBond->getBondType() == Bond::DOUBLE &&
                      stereoBond->getStereo() == expectedStereo));

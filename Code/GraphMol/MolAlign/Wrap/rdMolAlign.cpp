@@ -34,9 +34,9 @@ struct pyBestAlignmentParams : public BestAlignmentParams {
   pyBestAlignmentParams(int maxMatches_, bool symmetrizeTerminalGroups_,
                         bool ignoreHs_, int numThreads_, python::object map_,
                         python::object weights_)
-      : BestAlignmentParams{maxMatches_, symmetrizeTerminalGroups_, ignoreHs_,
-                            numThreads_, std::vector<MatchVectType>(),
-                            nullptr} {
+      : BestAlignmentParams{
+            maxMatches_, symmetrizeTerminalGroups_,    ignoreHs_,
+            numThreads_, std::vector<MatchVectType>(), nullptr} {
     unsigned int nAtms = 0;
     if (map_ != python::object()) {
       map = translateAtomMapSeq(map_);
@@ -656,8 +656,8 @@ python::tuple getCrippenO3AForConfs(
 
   return python::tuple(pyres);
 }
-}  // end of namespace MolAlign
-}  // end of namespace RDKit
+}  // namespace MolAlign
+}  // namespace RDKit
 
 using namespace RDKit;
 

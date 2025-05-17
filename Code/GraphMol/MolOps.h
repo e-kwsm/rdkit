@@ -289,10 +289,9 @@ RDKIT_GRAPHMOL_EXPORT void setTerminalAtomCoords(ROMol &mol, unsigned int idx,
    returns.
 */
 [[deprecated(
-    "Please use the version with RemoveHsParameters")]] RDKIT_GRAPHMOL_EXPORT
-    ROMol *
-    removeHs(const ROMol &mol, bool implicitOnly,
-             bool updateExplicitCount = false, bool sanitize = true);
+    "Please use the version with RemoveHsParameters")]] RDKIT_GRAPHMOL_EXPORT ROMol *
+removeHs(const ROMol &mol, bool implicitOnly, bool updateExplicitCount = false,
+         bool sanitize = true);
 //! \overload
 /// modifies the molecule in place
 [[deprecated(

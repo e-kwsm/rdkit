@@ -219,8 +219,8 @@ int minimize(unsigned int dim, double *pos, double gradTol,
     int status = -1;
 
     // do the line search:
-    linearSearch(dim, pos, fp, grad.data(), xi.data(), newPos.get(), funcVal, func,
-                 maxStep, status);
+    linearSearch(dim, pos, fp, grad.data(), xi.data(), newPos.get(), funcVal,
+                 func, maxStep, status);
     CHECK_INVARIANT(status >= 0, "bad direction in linearSearch");
 
     // save the function value for the next search:
@@ -243,7 +243,7 @@ int minimize(unsigned int dim, double *pos, double gradTol,
       if (snapshotVect && snapshotFreq) {
         RDKit::Snapshot s(boost::shared_array<double>(newPos.release()), fp);
         snapshotVect->push_back(s);
-              }
+      }
       return 0;
     }
 
