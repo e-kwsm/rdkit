@@ -922,13 +922,13 @@ namespace RDKit {
 namespace MolOps {
 
 namespace details {
-  bool ringComparer(const std::vector<int> &v1, const std::vector<int> &v2) {
-    if (v1.size() == v2.size()) {
-      return v1 < v2;
-    }
-    return v1.size() < v2.size();
+bool ringComparer(const std::vector<int> &v1, const std::vector<int> &v2) {
+  if (v1.size() == v2.size()) {
+    return v1 < v2;
   }
+  return v1.size() < v2.size();
 }
+}  // namespace details
 
 void setUseLegacyRingFinding(bool val) {
   if (val) {

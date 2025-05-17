@@ -425,11 +425,11 @@ void getNbrs(const ROMol &mol, const Atom *at, const std::span<int> ids) {
   }
 }
 
-bondholder makeBondHolder(const Bond *bond, unsigned int otherIdx,
-                          bool includeChirality,
-                          const std::vector<Canon::canon_atom> &atoms,
-                          const boost::dynamic_bitset<> *atomsInPlay = nullptr,
-                          const boost::dynamic_bitset<> *bondsInPlay = nullptr) {
+bondholder makeBondHolder(
+    const Bond *bond, unsigned int otherIdx, bool includeChirality,
+    const std::vector<Canon::canon_atom> &atoms,
+    const boost::dynamic_bitset<> *atomsInPlay = nullptr,
+    const boost::dynamic_bitset<> *bondsInPlay = nullptr) {
   PRECONDITION(bond, "bad pointer");
   Bond::BondStereo stereo = Bond::STEREONONE;
   if (includeChirality) {
@@ -469,7 +469,8 @@ bondholder makeBondHolder(const Bond *bond, unsigned int otherIdx,
       }
       if (atomsInPlay && bondsInPlay) {
         for (unsigned int i : {0, 2}) {
-          auto endIdx = i == 0 ? bond->getBeginAtomIdx() : bond->getEndAtomIdx();
+          auto endIdx =
+              i == 0 ? bond->getBeginAtomIdx() : bond->getEndAtomIdx();
           for (auto &ref : std::span(res.controllingAtoms).subspan(i, 2)) {
             if (ref) {
               auto refIdx = ref->atom->getIdx();
@@ -545,8 +546,7 @@ void getBonds(const ROMol &mol, const Atom *at, BondholderVector &nbrs,
   std::sort(nbrs.begin(), nbrs.end(), bondholder::greater);
 }
 
-void getChiralBonds(const ROMol &mol, const Atom *at,
-                    BondholderVector &nbrs) {
+void getChiralBonds(const ROMol &mol, const Atom *at, BondholderVector &nbrs) {
   PRECONDITION(at, "bad pointer");
   ROMol::OEDGE_ITER beg, end;
   boost::tie(beg, end) = mol.getAtomBonds(at);
@@ -611,8 +611,7 @@ void getChiralBonds(const ROMol &mol, const Atom *at,
 }
 
 void basicInitCanonAtom(const ROMol &mol, Canon::canon_atom &atom,
-                        const int &idx,
-                        const std::span<int> neighborIds) {
+                        const int &idx, const std::span<int> neighborIds) {
   atom.atom = mol.getAtomWithIdx(idx);
   atom.index = idx;
   atom.p_symbol = nullptr;
@@ -631,7 +630,7 @@ void advancedInitCanonAtom(const ROMol &mol, Canon::canon_atom &atom,
       atom.atom->hasProp(common_properties::_ringStereoAtoms);
   atom.hasRingNbr = hasRingNbr(mol, atom.atom);
 }
-}  // end anonymous namespace
+}  // namespace
 
 void initCanonAtoms(const ROMol &mol, std::vector<Canon::canon_atom> &atoms,
                     std::span<int> neighborIds, bool includeChirality,
@@ -665,8 +664,7 @@ void initFragmentCanonAtoms(const ROMol &mol,
                             const std::vector<std::string> *bondSymbols,
                             const boost::dynamic_bitset<> &atomsInPlay,
                             const boost::dynamic_bitset<> &bondsInPlay,
-                            std::span<int> neighborIds,
-                            bool needsInit) {
+                            std::span<int> neighborIds, bool needsInit) {
   needsInit = true;
   PRECONDITION(!atomSymbols || atomSymbols->size() == mol.getNumAtoms(),
                "bad atom symbols");
@@ -712,11 +710,11 @@ void initFragmentCanonAtoms(const ROMol &mol,
       begAt.nbrIds[begAt.degree++] = bond->getEndAtomIdx();
       endAt.nbrIds[endAt.degree++] = bond->getBeginAtomIdx();
       begAt.bonds.push_back(makeBondHolder(bond, bond->getEndAtomIdx(),
-                                           includeChirality, atoms, &atomsInPlay,
-                                           &bondsInPlay));
+                                           includeChirality, atoms,
+                                           &atomsInPlay, &bondsInPlay));
       endAt.bonds.push_back(makeBondHolder(bond, bond->getBeginAtomIdx(),
-                                           includeChirality, atoms, &atomsInPlay,
-                                           &bondsInPlay));
+                                           includeChirality, atoms,
+                                           &atomsInPlay, &bondsInPlay));
       if (bondSymbols) {
         begAt.bonds.back().p_symbol = &(*bondSymbols)[bond->getIdx()];
         endAt.bonds.back().p_symbol = &(*bondSymbols)[bond->getIdx()];
@@ -787,8 +785,7 @@ void updateAtomNeighborIndexImpl(canon_atom *atoms, Bondholders &nbrs) {
   }
 }
 
-void updateAtomNeighborIndex(canon_atom *atoms,
-                             std::vector<bondholder> &nbrs) {
+void updateAtomNeighborIndex(canon_atom *atoms, std::vector<bondholder> &nbrs) {
   updateAtomNeighborIndexImpl(atoms, nbrs);
 }
 

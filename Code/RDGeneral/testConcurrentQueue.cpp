@@ -14,9 +14,7 @@ using namespace RDKit;
 namespace {
 volatile std::sig_atomic_t previousSigIntCount = 0;
 
-void countPreviousSigInt(int) {
-  previousSigIntCount = previousSigIntCount + 1;
-}
+void countPreviousSigInt(int) { previousSigIntCount = previousSigIntCount + 1; }
 
 void exerciseControlCHandler(std::atomic<bool> &start) {
   while (!start.load()) {

@@ -263,8 +263,7 @@ struct sgroup_wrap {
         .def(
             "GetProp", GetPyPropOrDefault<SubstanceGroup>,
             (python::arg("self"), python::arg("key"),
-             python::arg("autoConvert") = false,
-             python::arg("default")),
+             python::arg("autoConvert") = false, python::arg("default")),
             "Returns the value of the property.\n\n"
             "  ARGUMENTS:\n"
             "    - key: the name of the property to return (a string).\n\n"
@@ -277,37 +276,41 @@ struct sgroup_wrap {
                  SubstanceGroup::getProp<int>,
              python::args("self", "key"),
              "returns the value of a particular property")
-        .def("GetIntProp", GetPropOrDefault<SubstanceGroup, int>,
-             (python::arg("self"), python::arg("key"), python::arg("default")),
-             "returns the value of a particular property, or default if not present",
-             boost::python::return_value_policy<return_pyobject_passthrough>())
+        .def(
+            "GetIntProp", GetPropOrDefault<SubstanceGroup, int>,
+            (python::arg("self"), python::arg("key"), python::arg("default")),
+            "returns the value of a particular property, or default if not present",
+            boost::python::return_value_policy<return_pyobject_passthrough>())
         .def("GetUnsignedProp",
              (unsigned int (RDProps::*)(const std::string_view) const) &
                  SubstanceGroup::getProp<unsigned int>,
              python::args("self", "key"),
              "returns the value of a particular property")
-        .def("GetUnsignedProp", GetPropOrDefault<SubstanceGroup, unsigned int>,
-             (python::arg("self"), python::arg("key"), python::arg("default")),
-             "returns the value of a particular property, or default if not present",
-             boost::python::return_value_policy<return_pyobject_passthrough>())
+        .def(
+            "GetUnsignedProp", GetPropOrDefault<SubstanceGroup, unsigned int>,
+            (python::arg("self"), python::arg("key"), python::arg("default")),
+            "returns the value of a particular property, or default if not present",
+            boost::python::return_value_policy<return_pyobject_passthrough>())
         .def("GetDoubleProp",
              (double (RDProps::*)(const std::string_view) const) &
                  SubstanceGroup::getProp<double>,
              python::args("self", "key"),
              "returns the value of a particular property")
-        .def("GetDoubleProp", GetPropOrDefault<SubstanceGroup, double>,
-             (python::arg("self"), python::arg("key"), python::arg("default")),
-             "returns the value of a particular property, or default if not present",
-             boost::python::return_value_policy<return_pyobject_passthrough>())
+        .def(
+            "GetDoubleProp", GetPropOrDefault<SubstanceGroup, double>,
+            (python::arg("self"), python::arg("key"), python::arg("default")),
+            "returns the value of a particular property, or default if not present",
+            boost::python::return_value_policy<return_pyobject_passthrough>())
         .def("GetBoolProp",
              (bool (RDProps::*)(const std::string_view) const) &
                  SubstanceGroup::getProp<bool>,
              python::args("self", "key"),
              "returns the value of a particular property")
-        .def("GetBoolProp", GetPropOrDefault<SubstanceGroup, bool>,
-             (python::arg("self"), python::arg("key"), python::arg("default")),
-             "returns the value of a particular property, or default if not present",
-             boost::python::return_value_policy<return_pyobject_passthrough>())
+        .def(
+            "GetBoolProp", GetPropOrDefault<SubstanceGroup, bool>,
+            (python::arg("self"), python::arg("key"), python::arg("default")),
+            "returns the value of a particular property, or default if not present",
+            boost::python::return_value_policy<return_pyobject_passthrough>())
         .def("GetUnsignedVectProp",
              (std::vector<unsigned int> (RDProps::*)(const std::string_view)
                   const) &

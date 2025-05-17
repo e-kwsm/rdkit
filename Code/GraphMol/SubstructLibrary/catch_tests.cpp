@@ -327,7 +327,8 @@ TEST_CASE("ExtendedQueryMol") {
   }
 }
 #endif
-TEST_CASE("github #W9835: ring query inside a recursive SMARTS and TrustedSmilesMolHolder") {
+TEST_CASE(
+    "github #W9835: ring query inside a recursive SMARTS and TrustedSmilesMolHolder") {
   // query_needs_rings() decides whether the holder's molecules need
   // symmetrizeSSSR() before matching.
   //  Previously this only supported RecursiveDescent not AtomAnd/AtomOr/AtomNot

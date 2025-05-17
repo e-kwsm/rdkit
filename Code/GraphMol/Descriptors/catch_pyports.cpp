@@ -60,7 +60,7 @@ std::map<std::string, std::function<double(const ROMol &)>> getFunctions() {
        [](const ROMol &m) { return calcFpDensityMorgan(m, 2); }},
       {"FpDensityMorgan3",
        [](const ROMol &m) { return calcFpDensityMorgan(m, 3); }},
-#ifdef RDK_HAS_EIGEN3      
+#ifdef RDK_HAS_EIGEN3
       {"AvgIpc", [](const ROMol &m) { return calcAvgIpc(m); }},
       {"Ipc", [](const ROMol &m) { return calcIpc(m); }},
 #endif
@@ -158,7 +158,7 @@ TEST_CASE("simple python-ported descriptors") {
     CHECK(calcChi0(m) == 0.0);
     CHECK(calcBalabanJ(m) == 0.0);
     CHECK(calcBertzCT(m) == 0.0);
-#ifdef RDK_HAS_EIGEN3          
+#ifdef RDK_HAS_EIGEN3
     CHECK(calcIpc(m) == 0.0);
 #endif
     CHECK(calcMaxEStateIndex(m) == 0.0);
@@ -192,9 +192,9 @@ TEST_CASE("QED") {
 
 TEST_CASE("EStates") {
   std::vector<std::pair<std::string, double>> data = {
-    {"N=C(CCSCc1csc(N=C(N)N)n1)NS(N)(=O)=O", 0.253},
-    {"CNC(=NCCSCc1nc[nH]c1C)NC#N", 0.234},
-    {"CCCCCNC(=N)NN=Cc1c[nH]c2ccc(CO)cc12", 0.234}};
+      {"N=C(CCSCc1csc(N=C(N)N)n1)NS(N)(=O)=O", 0.253},
+      {"CNC(=NCCSCc1nc[nH]c1C)NC#N", 0.234},
+      {"CCCCCNC(=N)NN=Cc1c[nH]c2ccc(CO)cc12", 0.234}};
   for (const auto &[smi, val] : data) {
     std::unique_ptr<RWMol> m(SmilesToMol(smi));
     auto estate = calcEStates(*m);
@@ -203,7 +203,6 @@ TEST_CASE("EStates") {
     CHECK(estate.maxAbsEState == calcMaxAbsEStateIndex(*m));
     CHECK(estate.minAbsEState == calcMinAbsEStateIndex(*m));
   }
-
 }
 TEST_CASE("fragment descriptors") {
   const auto &names = getFragmentDescriptorNames();
@@ -263,13 +262,13 @@ TEST_CASE("fragment descriptors") {
     CHECK(calcFragmentDescriptor(*m, "fr_benzene") == 1);
     CHECK(calcFragmentDescriptor(*m, "fr_benzene", false) == 12);
     auto all = calcFragmentDescriptors(*m, false);
-    auto idx = std::find(names.begin(), names.end(), "fr_benzene") -
-               names.begin();
+    auto idx =
+        std::find(names.begin(), names.end(), "fr_benzene") - names.begin();
     CHECK(all[idx] == 12);
   }
 }
 
-#ifdef RDK_HAS_EIGEN3      
+#ifdef RDK_HAS_EIGEN3
 TEST_CASE("AvgIpc is stable for long chains") {
   // AvgIpc is the entropy of n+1 coefficients, so it is bounded by
   // log2(n+1), and it can't decrease as a chain grows. The old
@@ -305,8 +304,8 @@ TEST_CASE("AvgIpc is stable for long chains") {
 #endif
 
 TEST_CASE("graph descriptors with a user-supplied distance matrix") {
-  for (const auto smi : {"CCCCC(=O)O", "c1ccccc1CC(N)C(=O)O", "C1CC2CCC1C2",
-                         "CC.O", "C"}) {
+  for (const auto smi :
+       {"CCCCC(=O)O", "c1ccccc1CC(N)C(=O)O", "C1CC2CCC1C2", "CC.O", "C"}) {
     INFO(smi);
     std::unique_ptr<RWMol> m(SmilesToMol(smi));
     REQUIRE(m);
@@ -316,20 +315,19 @@ TEST_CASE("graph descriptors with a user-supplied distance matrix") {
     std::vector<double> topoMat(topo, topo + n * n);
     const double *bal = MolOps::getDistanceMat(*m, true, false, true);
     std::vector<double> balMat(bal, bal + n * n);
-#ifdef RDK_HAS_EIGEN3      
+#ifdef RDK_HAS_EIGEN3
     CHECK(calcIpc(*m, false, topoMat.data()) == calcIpc(*m));
     CHECK(calcAvgIpc(*m, topoMat.data()) == calcAvgIpc(*m));
 #endif
-    
+
     CHECK(calcBalabanJ(*m, balMat.data()) == calcBalabanJ(*m));
     CHECK(calcBertzCT(*m, 100, balMat.data()) == calcBertzCT(*m));
-    if(n>3) {
+    if (n > 3) {
       std::vector<double> balMatZeroed(n * n, 100.0);
       CHECK(calcBertzCT(*m, 100, balMatZeroed.data()) != calcBertzCT(*m));
     }
   }
 
-  
   SECTION("the matrix is used") {
     std::unique_ptr<RWMol> m(SmilesToMol("CCC(=O)O"));
     REQUIRE(m);
@@ -342,7 +340,7 @@ TEST_CASE("graph descriptors with a user-supplied distance matrix") {
     CHECK_THAT(calcBalabanJ(*m, scaled.data()),
                Catch::Matchers::WithinRel(calcBalabanJ(*m, topo) / 2, 1e-12));
     // no entries equal to 1, so there are no edges
-#ifdef RDK_HAS_EIGEN3          
+#ifdef RDK_HAS_EIGEN3
     CHECK(calcIpc(*m, false, scaled.data()) == 0.0);
 #endif
   }

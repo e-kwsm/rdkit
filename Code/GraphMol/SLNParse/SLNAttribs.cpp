@@ -73,7 +73,7 @@ int parseIntAttribVal(std::string attribName, std::string attribVal,
 int queryAtomAllBondProductAsInt(Atom const *atom) {
   return static_cast<int>(queryAtomAllBondProduct(atom));
 }
-}  // end of anonymous namespace
+}  // namespace
 
 QueryAtom::QUERYATOM_QUERY *makeQueryFromOp(const std::string &op, int val,
                                             int (*func)(Atom const *at),

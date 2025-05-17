@@ -154,8 +154,8 @@ SynthonSpaceSearch::SearchResults substructureSearch_helper4(
   SynthonSpaceSearch::SearchResults results;
   {
     NOGIL gil;
-    results = self.substructureSearch(query, smParams, params, startLine,
-                                      finishLine);
+    results =
+        self.substructureSearch(query, smParams, params, startLine, finishLine);
   }
   if (results.getCancelled()) {
     throwCancelled("SubstructureSearch cancelled");
@@ -176,8 +176,8 @@ SynthonSpaceSearch::SearchResults substructureSearch_helper5(
   SynthonSpaceSearch::SearchResults results;
   {
     NOGIL gil;
-    results = self.substructureSearch(query, smParams, params, startLine,
-                                      finishLine);
+    results =
+        self.substructureSearch(query, smParams, params, startLine, finishLine);
   }
   if (results.getCancelled()) {
     throwCancelled("SubstructureSearch cancelled");
@@ -231,8 +231,8 @@ SynthonSpaceSearch::SearchResults fingerprintSearch_helper3(
   SynthonSpaceSearch::SearchResults results;
   {
     NOGIL gil;
-    results = self.fingerprintSearch(query, *fpGen, params, startLine,
-                                    finishLine);
+    results =
+        self.fingerprintSearch(query, *fpGen, params, startLine, finishLine);
   }
   if (results.getCancelled()) {
     throwCancelled("FingerprintSearch cancelled");
@@ -285,8 +285,8 @@ SynthonSpaceSearch::SearchResults rascalSearch_helper3(
   SynthonSpaceSearch::SearchResults results;
   {
     NOGIL gil;
-    results = self.rascalSearch(query, rascalOptions, params, startLine,
-                               finishLine);
+    results =
+        self.rascalSearch(query, rascalOptions, params, startLine, finishLine);
   }
   if (results.getCancelled()) {
     throwCancelled("RascalSearch cancelled");

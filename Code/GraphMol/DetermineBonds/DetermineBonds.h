@@ -19,8 +19,8 @@ class RDKIT_DETERMINEBONDS_EXPORT MaxFindBondOrdersItersExceeded
     : public std::runtime_error {
  public:
   explicit MaxFindBondOrdersItersExceeded()
-      : std::runtime_error(
-            "Max Iterations Exceeded in Determine Bond Orders"){};
+      : std::runtime_error("Max Iterations Exceeded in Determine Bond Orders") {
+        };
 };
 
 // ! assigns atomic connectivity to a molecule using atomic coordinates,

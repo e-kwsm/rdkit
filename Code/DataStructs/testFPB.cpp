@@ -397,8 +397,7 @@ TEST_CASE("Bitset conversions with a non-multiple of 64 bits") {
     CHECK((*dbs)[bit]);
   }
 
-  std::unique_ptr<std::uint8_t[]> roundTrip(
-      RDKit::detail::bitsetToBytes(*dbs));
+  std::unique_ptr<std::uint8_t[]> roundTrip(RDKit::detail::bitsetToBytes(*dbs));
   for (unsigned int i = 0; i < nBits / 8; ++i) {
     CHECK(roundTrip[i] == bytes[i]);
   }

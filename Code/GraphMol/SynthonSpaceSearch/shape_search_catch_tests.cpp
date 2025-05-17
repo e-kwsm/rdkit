@@ -590,7 +590,8 @@ TEST_CASE("Best hits false") {
                                  0.863, 0.856, 0.822, 0.820};
   int i = 0;
   for (const auto &mol : results.getHitMolecules()) {
-    std::cout << mol->getName() << " : " << mol->getProp<double>("Similarity") << " vs " << fullScores[i] << std::endl;
+    std::cout << mol->getName() << " : " << mol->getProp<double>("Similarity")
+              << " vs " << fullScores[i] << std::endl;
     CHECK((mol->getProp<double>("Similarity") <= fullScores[i++]));
     CHECK(std::ranges::find(
               expNames, mol->getProp<std::string>(common_properties::_Name)) !=

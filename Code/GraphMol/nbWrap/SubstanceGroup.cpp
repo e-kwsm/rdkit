@@ -23,8 +23,7 @@
 namespace nb = nanobind;
 using namespace nb::literals;
 
-namespace {
-}  // namespace
+namespace {}  // namespace
 
 namespace RDKit {
 

@@ -73,5 +73,5 @@ FeatTreeGraphSPtr molToBaseTree(const ROMol &mol) {
 
 void baseTreeToFeatTree(FeatTreeGraph &baseTree) {}
 
-}  // end of namespace FeatTrees
+}  // namespace FeatTrees
 }  // namespace RDKit

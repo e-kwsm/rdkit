@@ -267,9 +267,7 @@ const char *CachedTrustedSmilesMolHolderDoc =
     "  AddMol(mol) -> adds a molecule to the molecule holder, returns index of molecule\n"
     "\n"
     "  AddSmiles(smiles) -> adds a smiles string to the molecule holder, returns index of molecule\n"
-    "                     The smiles is stored as-is, no checking is done for validity.\n"
-  ;
-
+    "                     The smiles is stored as-is, no checking is done for validity.\n";
 
 const char *PatternHolderDoc =
     "Holds fingerprints with optional, user-defined number of bits (default: "
@@ -473,7 +471,7 @@ void addPatternsHelper(SubstructLibraryWrap &sslib, int numThreads) {
 
 #define LARGE_DEF(_tname_)                                                     \
   .def("GetMatches",                                                           \
-       (std::vector<unsigned int>(SubstructLibraryWrap::*)(                    \
+       (std::vector<unsigned int> (SubstructLibraryWrap::*)(                   \
            const _tname_ &, bool, bool, bool, int, int) const) &               \
            SubstructLibraryWrap::getMatches,                                   \
        (python::arg("self"), python::arg("query"),                             \
@@ -488,7 +486,7 @@ void addPatternsHelper(SubstructLibraryWrap &sslib, int numThreads) {
        "  - maxResults: maximum number of results to return")                  \
       .def(                                                                    \
           "GetMatches",                                                        \
-          (std::vector<unsigned int>(SubstructLibraryWrap::*)(                 \
+          (std::vector<unsigned int> (SubstructLibraryWrap::*)(                \
               const _tname_ &, unsigned int, unsigned int, bool, bool, bool,   \
               int, int) const) &                                               \
               SubstructLibraryWrap::getMatches,                                \
@@ -535,8 +533,8 @@ void addPatternsHelper(SubstructLibraryWrap &sslib, int numThreads) {
           "  - endIdx:     index (non-inclusize) to search to\n"               \
           "  - numThreads: number of threads to use, -1 means all threads\n")  \
       .def("HasMatch",                                                         \
-           (bool(SubstructLibraryWrap::*)(const _tname_ &, bool, bool, bool,   \
-                                          int) const) &                        \
+           (bool (SubstructLibraryWrap::*)(const _tname_ &, bool, bool, bool,  \
+                                           int) const) &                       \
                SubstructLibraryWrap::hasMatch,                                 \
            (python::arg("self"), python::arg("query"),                         \
             python::arg("recursionPossible") = true,                           \
@@ -549,8 +547,8 @@ void addPatternsHelper(SubstructLibraryWrap &sslib, int numThreads) {
            "  - numThreads: number of threads to use, -1 means all threads\n") \
       .def(                                                                    \
           "HasMatch",                                                          \
-          (bool(SubstructLibraryWrap::*)(const _tname_ &, unsigned int,        \
-                                         unsigned int, bool, bool, bool, int)  \
+          (bool (SubstructLibraryWrap::*)(const _tname_ &, unsigned int,       \
+                                          unsigned int, bool, bool, bool, int) \
                const) &                                                        \
               SubstructLibraryWrap::hasMatch,                                  \
           (python::arg("self"), python::arg("query"), python::arg("startIdx"), \
@@ -565,7 +563,7 @@ void addPatternsHelper(SubstructLibraryWrap &sslib, int numThreads) {
           "  - endIdx:     index (non-inclusize) to search to\n"               \
           "  - numThreads: number of threads to use, -1 means all threads\n")  \
       .def("GetMatches",                                                       \
-           (std::vector<unsigned int>(SubstructLibraryWrap::*)(                \
+           (std::vector<unsigned int> (SubstructLibraryWrap::*)(               \
                const _tname_ &, const SubstructMatchParameters &, int, int)    \
                 const) &                                                       \
                SubstructLibraryWrap::getMatches,                               \
@@ -579,7 +577,7 @@ void addPatternsHelper(SubstructLibraryWrap &sslib, int numThreads) {
            "  - maxResults: maximum number of results to return")              \
       .def(                                                                    \
           "GetMatches",                                                        \
-          (std::vector<unsigned int>(SubstructLibraryWrap::*)(                 \
+          (std::vector<unsigned int> (SubstructLibraryWrap::*)(                \
               const _tname_ &, unsigned int, unsigned int,                     \
               const SubstructMatchParameters &, int, int) const) &             \
               SubstructLibraryWrap::getMatches,                                \
@@ -620,7 +618,7 @@ void addPatternsHelper(SubstructLibraryWrap &sslib, int numThreads) {
            "  - numThreads: number of threads to use, -1 means all threads\n") \
       .def(                                                                    \
           "HasMatch",                                                          \
-          (bool(SubstructLibraryWrap::*)(                                      \
+          (bool (SubstructLibraryWrap::*)(                                     \
               const _tname_ &, const SubstructMatchParameters &, int) const) & \
               SubstructLibraryWrap::hasMatch,                                  \
           (python::arg("self"), python::arg("query"),                          \
@@ -630,7 +628,7 @@ void addPatternsHelper(SubstructLibraryWrap &sslib, int numThreads) {
           "  - query:      substructure query\n"                               \
           "  - numThreads: number of threads to use, -1 means all threads\n")  \
       .def("HasMatch",                                                         \
-           (bool(SubstructLibraryWrap::*)(                                     \
+           (bool (SubstructLibraryWrap::*)(                                    \
                const _tname_ &, unsigned int, unsigned int,                    \
                const SubstructMatchParameters &, int) const) &                 \
                SubstructLibraryWrap::hasMatch,                                 \
@@ -701,8 +699,8 @@ struct substructlibrary_wrapper {
              "Adds a molecule to the fingerprint database, returns the index "
              "of the new pattern")
         .def("AddFingerprint",
-             (unsigned int (FPHolderBase::*)(const ExplicitBitVect &)) &
-                 FPHolderBase::addFingerprint,
+             (unsigned int (FPHolderBase::*)(
+                 const ExplicitBitVect &))&FPHolderBase::addFingerprint,
              python::args("self", "v"),
              "Adds a raw bit vector to the fingerprint database, returns the "
              "index of the supplied pattern")
@@ -861,7 +859,7 @@ struct substructlibrary_wrapper {
                 "(requires boost serialization");
 
     python::def("AddPatterns",
-                (void (*)(SubstructLibraryWrap &, int)) & addPatternsHelper,
+                (void (*)(SubstructLibraryWrap &, int))&addPatternsHelper,
                 "Add pattern fingerprints to the given library, use "
                 "numThreads=-1 to use all available cores",
                 (python::arg("sslib"), python::arg("numThreads") = 1));
@@ -869,8 +867,7 @@ struct substructlibrary_wrapper {
     python::def(
         "AddPatterns",
         (void (*)(SubstructLibraryWrap &, boost::shared_ptr<FPHolderBase>,
-                  int)) &
-            addPatternsHelper,
+                  int))&addPatternsHelper,
         "Add pattern fingerprints to the given library, use numThreads=-1 to "
         "use all available cores",
         (python::arg("sslib"), python::arg("patterns"),

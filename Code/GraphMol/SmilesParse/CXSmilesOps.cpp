@@ -327,7 +327,7 @@ Bond *get_bond_with_smiles_idx(RWMol &mol, unsigned idx) {
   return bondIdx < mol.getNumBonds() ? mol.getBondWithIdx(bondIdx) : nullptr;
 }
 
-}  // end of anonymous namespace
+}  // namespace
 
 // we use this pattern a lot and it's a long function call, but a very short
 // #define
@@ -1563,7 +1563,7 @@ void parseCXExtensions(RDKit::RWMol &mol, const std::string &extText,
   mol.clearProp("_cxsmilesLabelsProcessed");
   mol.clearProp(cxsgTracker);
 }
-}  // end of namespace SmilesParseOps
+}  // namespace SmilesParseOps
 
 namespace RDKit {
 namespace SmilesWrite {

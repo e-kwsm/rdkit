@@ -498,7 +498,7 @@ void applyHuckelToFused(
       std::copy(curRs.begin(), curRs.end(),
                 std::inserter(aromRings, aromRings.begin()));
     }  // end check huckel rule
-  }    // end while(1)
+  }  // end while(1)
   narom += rdcast<int>(aromRings.size());
 }
 

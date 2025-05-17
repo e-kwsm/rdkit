@@ -106,13 +106,13 @@ double calcBertzCT(const ROMol &mol, unsigned int cutoff,
     if (a1 > a2) {
       std::swap(a1, a2);
     }
-     double order;
+    double order;
     if (bond->getIsAromatic()) {
       order = 1.5;
     } else {
       order = bond->getBondTypeAsDouble();
     }
-//double order = bond->getIsAromatic() ? 1.5 : bond->getBondTypeAsDouble();
+    // double order = bond->getIsAromatic() ? 1.5 : bond->getBondTypeAsDouble();
     bondOrders[std::make_pair(a1, a2)] = order;
     if (std::find(nList[a1].begin(), nList[a1].end(), a2) == nList[a1].end()) {
       nList[a1].push_back(a2);
@@ -216,14 +216,14 @@ double calcBertzCT(const ROMol &mol, unsigned int cutoff,
     totConnections += v;
   }
   double connectionIE =
-      totConnections *
-      (RDInfoTheory::InfoEntropy(connectionVals) + std::log(totConnections) / std::log(2.0));
+      totConnections * (RDInfoTheory::InfoEntropy(connectionVals) +
+                        std::log(totConnections) / std::log(2.0));
   double atomTypeIE = numAtoms * RDInfoTheory::InfoEntropy(atomTypeVals);
   return atomTypeIE + connectionIE;
 }
 
 #ifdef RDK_HAS_EIGEN3
-  
+
 namespace {
 // eigenvalues of the symmetric matrix a (n x n, row major)
 std::vector<double> symmetricEigenvalues(std::vector<double> a,
@@ -231,11 +231,11 @@ std::vector<double> symmetricEigenvalues(std::vector<double> a,
   if (n == 0) {
     return {};
   }
-  Eigen::Map<Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic,
-                           Eigen::RowMajor>>
+  Eigen::Map<
+      Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor>>
       m(a.data(), n, n);
-  Eigen::SelfAdjointEigenSolver<Eigen::MatrixXd> solver(
-      m, Eigen::EigenvaluesOnly);
+  Eigen::SelfAdjointEigenSolver<Eigen::MatrixXd> solver(m,
+                                                        Eigen::EigenvaluesOnly);
   const auto &ev = solver.eigenvalues();
   return std::vector<double>(ev.data(), ev.data() + n);
 }
@@ -260,9 +260,8 @@ double calcIpc(const ROMol &mol, bool avg, const double *distMat) {
   // rdkit.Chem.Graphs.CharacteristicPolynomial. The Le Verrier-Faddeev-Frame
   // recursion used before loses all precision beyond about 80 atoms.
   auto roots = symmetricEigenvalues(std::move(adj), nAts);
-  std::sort(roots.begin(), roots.end(), [](double x, double y) {
-    return std::fabs(x) < std::fabs(y);
-  });
+  std::sort(roots.begin(), roots.end(),
+            [](double x, double y) { return std::fabs(x) < std::fabs(y); });
   std::vector<double> cPoly{1.0};
   cPoly.reserve(nAts + 1);
   for (auto r : roots) {

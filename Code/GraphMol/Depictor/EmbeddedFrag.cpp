@@ -37,7 +37,7 @@ unsigned int getDepictDegree(const RDKit::Atom *atom) {
   PRECONDITION(atom, "no atom");
   return atom->getDegree();
 }
-}  // end of anonymous namespace
+}  // namespace
 
 EmbeddedFrag::EmbeddedFrag(unsigned int aid, const RDKit::ROMol *mol) {
   PRECONDITION(mol, "");
@@ -1462,28 +1462,21 @@ double _orientation(const RDGeom::Point2D &a, const RDGeom::Point2D &b,
 
 bool _pointOnSegment(const RDGeom::Point2D &a, const RDGeom::Point2D &b,
                      const RDGeom::Point2D &point) {
-  return std::abs(_orientation(a, b, point)) <=
-             SEGMENT_INTERSECTION_EPSILON &&
+  return std::abs(_orientation(a, b, point)) <= SEGMENT_INTERSECTION_EPSILON &&
          point.x >= std::min(a.x, b.x) - SEGMENT_INTERSECTION_EPSILON &&
          point.x <= std::max(a.x, b.x) + SEGMENT_INTERSECTION_EPSILON &&
          point.y >= std::min(a.y, b.y) - SEGMENT_INTERSECTION_EPSILON &&
          point.y <= std::max(a.y, b.y) + SEGMENT_INTERSECTION_EPSILON;
 }
 
-bool _segmentsIntersect(const RDGeom::Point2D &a,
-                        const RDGeom::Point2D &b,
-                        const RDGeom::Point2D &c,
-                        const RDGeom::Point2D &d) {
+bool _segmentsIntersect(const RDGeom::Point2D &a, const RDGeom::Point2D &b,
+                        const RDGeom::Point2D &c, const RDGeom::Point2D &d) {
   // Axis-aligned bounding boxes are a cheap, geometry-safe prefilter: two
   // intersecting segments must have overlapping projections on both axes.
-  if (std::max(a.x, b.x) + SEGMENT_INTERSECTION_EPSILON <
-          std::min(c.x, d.x) ||
-      std::max(c.x, d.x) + SEGMENT_INTERSECTION_EPSILON <
-          std::min(a.x, b.x) ||
-      std::max(a.y, b.y) + SEGMENT_INTERSECTION_EPSILON <
-          std::min(c.y, d.y) ||
-      std::max(c.y, d.y) + SEGMENT_INTERSECTION_EPSILON <
-          std::min(a.y, b.y)) {
+  if (std::max(a.x, b.x) + SEGMENT_INTERSECTION_EPSILON < std::min(c.x, d.x) ||
+      std::max(c.x, d.x) + SEGMENT_INTERSECTION_EPSILON < std::min(a.x, b.x) ||
+      std::max(a.y, b.y) + SEGMENT_INTERSECTION_EPSILON < std::min(c.y, d.y) ||
+      std::max(c.y, d.y) + SEGMENT_INTERSECTION_EPSILON < std::min(a.y, b.y)) {
     return false;
   }
 
@@ -1494,13 +1487,11 @@ bool _segmentsIntersect(const RDGeom::Point2D &a,
   const bool firstStraddles =
       (o1 > SEGMENT_INTERSECTION_EPSILON &&
        o2 < -SEGMENT_INTERSECTION_EPSILON) ||
-      (o1 < -SEGMENT_INTERSECTION_EPSILON &&
-       o2 > SEGMENT_INTERSECTION_EPSILON);
+      (o1 < -SEGMENT_INTERSECTION_EPSILON && o2 > SEGMENT_INTERSECTION_EPSILON);
   const bool secondStraddles =
       (o3 > SEGMENT_INTERSECTION_EPSILON &&
        o4 < -SEGMENT_INTERSECTION_EPSILON) ||
-      (o3 < -SEGMENT_INTERSECTION_EPSILON &&
-       o4 > SEGMENT_INTERSECTION_EPSILON);
+      (o3 < -SEGMENT_INTERSECTION_EPSILON && o4 > SEGMENT_INTERSECTION_EPSILON);
   if (firstStraddles && secondStraddles) {
     return true;
   }
@@ -1821,8 +1812,7 @@ std::vector<PAIR_I_I> EmbeddedFrag::findCollisions(const double *dmat,
           if ((d_eatoms.find(beg2) != d_eatoms.end()) &&
               (d_eatoms.find(end2) != d_eatoms.end())) {
             if (_segmentsIntersect(d_eatoms[beg1].loc, d_eatoms[end1].loc,
-                                   d_eatoms[beg2].loc,
-                                   d_eatoms[end2].loc)) {
+                                   d_eatoms[beg2].loc, d_eatoms[end2].loc)) {
               // Choose the outermost endpoints of the crossed bonds. The
               // downstream getRotatableBonds() call deliberately skips the
               // two outer bonds on this path, so they will not themselves be
@@ -2457,9 +2447,8 @@ bool EmbeddedFrag::openAngleByIncrement(unsigned int prevAtom,
   }
 
   const auto containsFixedAtom = [&](const auto &atoms) {
-    return std::any_of(atoms.begin(), atoms.end(), [&](auto aid) {
-      return d_eatoms.at(aid).df_fixed;
-    });
+    return std::any_of(atoms.begin(), atoms.end(),
+                       [&](auto aid) { return d_eatoms.at(aid).df_fixed; });
   };
   const auto side1Fixed = containsFixedAtom(atomsSide1);
   const auto side2Fixed = containsFixedAtom(atomsSide2);
@@ -2469,8 +2458,8 @@ bool EmbeddedFrag::openAngleByIncrement(unsigned int prevAtom,
 
   // Prefer the smaller side, unless that would move a coordinate-constrained
   // atom. The center is the pivot and is never moved.
-  bool rotateSide1 = side2Fixed ||
-                     (!side1Fixed && atomsSide1.size() < atomsSide2.size());
+  bool rotateSide1 =
+      side2Fixed || (!side1Fixed && atomsSide1.size() < atomsSide2.size());
   auto &atomsToMove = rotateSide1 ? atomsSide1 : atomsSide2;
 
   const auto vectorLength = [](const auto &v) {
@@ -2481,8 +2470,8 @@ bool EmbeddedFrag::openAngleByIncrement(unsigned int prevAtom,
     if (denominator < 1e-8) {
       return -1.0;
     }
-    const auto cosine = std::clamp((a.x * b.x + a.y * b.y) / denominator,
-                                   -1.0, 1.0);
+    const auto cosine =
+        std::clamp((a.x * b.x + a.y * b.y) / denominator, -1.0, 1.0);
     return std::acos(cosine);
   };
   const auto originalAngle = angleBetween(v1, v2);

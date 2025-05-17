@@ -1981,11 +1981,13 @@ TEST_CASE("Parallel embedding failures keep independent conformer flags") {
   params.maxIterations = 1;
   params.trackFailures = true;
   params.numThreads = 1;
-  const auto serialIds = DGeomHelpers::EmbedMultipleConfs(*mol, numConfs, params);
+  const auto serialIds =
+      DGeomHelpers::EmbedMultipleConfs(*mol, numConfs, params);
   const auto serialFailures = params.failures;
   REQUIRE(serialIds.size() < numConfs);
   params.numThreads = 4;
-  const auto parallelIds = DGeomHelpers::EmbedMultipleConfs(*mol, numConfs, params);
+  const auto parallelIds =
+      DGeomHelpers::EmbedMultipleConfs(*mol, numConfs, params);
   CHECK(parallelIds == serialIds);
   CHECK(params.failures == serialFailures);
 }
@@ -2103,4 +2105,3 @@ TEST_CASE("First parallel embedding resolves shared defaults") {
   }
 }
 #endif
-

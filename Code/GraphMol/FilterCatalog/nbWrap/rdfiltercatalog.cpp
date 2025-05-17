@@ -17,7 +17,8 @@ void wrap_filtercat(nb::module_ &m);
 }
 
 NB_MODULE(rdfiltercatalog, m) {
-  m.doc() = "Module containing FilterCatalog functionality for filtering "
-            "molecules based on structural patterns.";
+  m.doc() =
+      "Module containing FilterCatalog functionality for filtering "
+      "molecules based on structural patterns.";
   RDKit::wrap_filtercat(m);
 }

@@ -1589,8 +1589,9 @@ void findChiralAtomSpecialCases(ROMol &mol,
       }
     }  // end of BFS
     if (!allowPartialGroups && !completeGroup) {
-      // Inverting only part of a coupled ring system can change its stereoisomer.
-      // Discard provisional partner lists as well as any previously cached lists.
+      // Inverting only part of a coupled ring system can change its
+      // stereoisomer. Discard provisional partner lists as well as any
+      // previously cached lists.
       for (const auto taggedAtom : taggedAtoms) {
         taggedAtom->clearProp(common_properties::_ringStereoAtoms);
         possibleSpecialCases.reset(taggedAtom->getIdx());
@@ -2275,7 +2276,7 @@ void detectAtropisomersPostSanitization(ROMol &mol, bool cleanIt) {
     if ((bond->getStereo() == Bond::BondStereo::STEREOATROPCW ||
          bond->getStereo() == Bond::BondStereo::STEREOATROPCCW) &&
         ri->numBondRings(bond->getIdx()) > 0 &&
-        ri->minBondRingSize(bond->getIdx()) < minRingSizeForDoubleBondStereo ) {
+        ri->minBondRingSize(bond->getIdx()) < minRingSizeForDoubleBondStereo) {
       bond->setStereo(Bond::BondStereo::STEREONONE);
       removedAny = true;
     }

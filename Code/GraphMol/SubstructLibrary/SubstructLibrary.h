@@ -215,14 +215,15 @@ class RDKIT_SUBSTRUCTLIBRARY_EXPORT CachedSmilesMolHolder
     fingerprinter.
 
     See RDKit::FPHolder
-	
+
     Note: TrustedSmiles currently does not support CXSmiles
           use CachedSmilesMolHolder::addSmiles for cxsmiles support
-	  or use MolHolder or CachedMolHolder.
-	  
+          or use MolHolder or CachedMolHolder.
+
     Consequences of Trusted smiles:
-      - Because sanitization is not done on the molecule, this means that radical counts,
-         hybridization and conjugation are not supported for query.
+      - Because sanitization is not done on the molecule, this means that
+        radical counts, hybridization and conjugation are not supported for
+        query.
       - In such cases use MolHolder, CachedMolHolder or CachedSmilesMolHolder
 
 

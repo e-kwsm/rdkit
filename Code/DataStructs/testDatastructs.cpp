@@ -1392,7 +1392,8 @@ TEST_CASE("test16BitVectProps") {
   delete handlers[1];
 }
 
-TEST_CASE("ExplicitBitVect round-trips through streamWriteProps/streamReadProps") {
+TEST_CASE(
+    "ExplicitBitVect round-trips through streamWriteProps/streamReadProps") {
   ExplicitBitVect bv(64);
   for (unsigned int i = 0; i < 64; i += 3) {
     bv.setBit(i);

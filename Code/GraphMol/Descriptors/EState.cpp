@@ -93,13 +93,14 @@ std::vector<double> calcEStateIndices(const ROMol &mol) {
 EStates calcEStates(const ROMol &mol) {
   auto estates = calcEStateIndices(mol);
 
-  if(estates.empty()) {
+  if (estates.empty()) {
     return {};
   }
 
-  EStates res { estates, estates[0], estates[0], std::fabs(estates[0]), std::fabs(estates[0]) };
-  
-  for(auto estate : estates) {
+  EStates res{estates, estates[0], estates[0], std::fabs(estates[0]),
+              std::fabs(estates[0])};
+
+  for (auto estate : estates) {
     res.maxEState = std::max(res.maxEState, estate);
     res.minEState = std::min(res.minEState, estate);
     estate = std::fabs(estate);
@@ -108,7 +109,7 @@ EStates calcEStates(const ROMol &mol) {
   }
   return res;
 }
-  
+
 double calcMaxEStateIndex(const ROMol &mol) {
   auto vals = calcEStateIndices(mol);
   if (vals.empty()) {

@@ -43,33 +43,32 @@ unsigned int calcNumRadicalElectrons(const ROMol &mol) {
 }
 
 PartialCharges calcPartialCharges(const ROMol &mol) {
-  if(mol.getNumAtoms() == 0) {
+  if (mol.getNumAtoms() == 0) {
     return {{}, -500, 500, 500, 500};
   }
-  
-  PartialCharges charges { {}, -500, 500, 500, 500 };
+
+  PartialCharges charges{{}, -500, 500, 500, 500};
   std::vector<double> chgs(mol.getNumAtoms(), 0.0);
   computeGasteigerCharges(mol, chgs);
 
   for (auto chg : chgs) {
-    if(!std::isnan(chg)) { // retain nans
+    if (!std::isnan(chg)) {  // retain nans
       charges.minPartialCharge = std::min(charges.minPartialCharge, chg);
-      charges.maxPartialCharge = std::max(charges.maxPartialCharge, chg); 
+      charges.maxPartialCharge = std::max(charges.maxPartialCharge, chg);
     } else {
       charges.minPartialCharge = chg;
       charges.maxPartialCharge = chg;
     }
   }
-  
+
   charges.charges.swap(chgs);
   double v1 = std::fabs(charges.minPartialCharge);
   double v2 = std::fabs(charges.maxPartialCharge);
-  charges.maxAbsPartialCharge = std::max(v1,v2);
-  charges.minAbsPartialCharge = std::min(v1,v2);
+  charges.maxAbsPartialCharge = std::max(v1, v2);
+  charges.minAbsPartialCharge = std::min(v1, v2);
   return charges;
-  
 }
-  
+
 double calcMaxPartialCharge(const ROMol &mol) {
   return calcPartialCharges(mol).maxPartialCharge;
 }
