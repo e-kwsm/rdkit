@@ -28,7 +28,7 @@ RDKIT_GRAPHMOL_EXPORT extern const std::string isotopesAtomData[];
 RDKIT_GRAPHMOL_EXPORT extern const std::vector<std::string> elementNames;
 namespace constants {
 RDKIT_GRAPHMOL_EXPORT extern const double electronMass;
-}
+}  // namespace constants
 class RDKIT_GRAPHMOL_EXPORT atomicData {
  public:
   atomicData(const std::string &dataLine);
