@@ -1,3 +1,6 @@
+#ifndef HOME_KWSM_GITHUB_E_KWSM_RDKIT_LLVM_HEADER_GUARD_CODE_DATASTRUCTS_DATASTRUCTSEXCEPTION_H
+#define HOME_KWSM_GITHUB_E_KWSM_RDKIT_LLVM_HEADER_GUARD_CODE_DATASTRUCTS_DATASTRUCTSEXCEPTION_H
+
 //
 //  Copyright (C) 2005-2006 Rational Discovery LLC
 //
@@ -27,5 +30,7 @@ class RDKIT_DATASTRUCTS_EXPORT DatastructsException : public std::exception {
  private:
   std::string _msg;
 };
+
+#endif
 
 #endif
