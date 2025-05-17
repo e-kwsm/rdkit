@@ -12,4 +12,4 @@
 
 namespace RDCatalog {
 CatalogParams::~CatalogParams() {};
-}
+}  // namespace RDCatalog

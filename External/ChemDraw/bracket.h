@@ -46,7 +46,7 @@
 namespace RDKit {
 namespace ChemDraw {
 bool parseBracket(CDXBracketedGroup &bracket, PageData &pagedata);
-}
+}  // namespace ChemDraw
 }  // namespace RDKit
 
 #endif

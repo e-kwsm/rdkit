@@ -23,7 +23,7 @@ namespace ForceFields {
 class ForceField;
 namespace UFF {
 class AtomicParams;
-}
+}  // namespace UFF
 }  // namespace ForceFields
 
 namespace RDKit {
