@@ -298,7 +298,7 @@ void fixExplicitImplicitHs(ROMol &mol) {
     atom->updatePropertyCache();
   }
 }
-}  // end of namespace ResonanceUtils
+}  // namespace ResonanceUtils
 
 // object constructor
 AtomElectrons::AtomElectrons(ConjElectrons *parent, const Atom *a)

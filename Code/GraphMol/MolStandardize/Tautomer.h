@@ -55,8 +55,7 @@ struct RDKIT_MOLSTANDARDIZE_EXPORT SubstructTerm {
   RWMol connectivityMatcher;
 
   SubstructTerm(std::string aname, std::string asmarts, int ascore,
-                std::vector<int> reqElements = {},
-                std::string connSmarts = "");
+                std::vector<int> reqElements = {}, std::string connSmarts = "");
   SubstructTerm(const SubstructTerm &rhs) = default;
   SubstructTerm &operator=(const SubstructTerm &rhs) = default;
 
@@ -67,8 +66,8 @@ struct RDKIT_MOLSTANDARDIZE_EXPORT SubstructTerm {
 
 //! getDefaultTautomerSubstructs returns the SubstructTerms used in scoring
 /// tautomer forms.  See SubstructTerm for details.
-RDKIT_MOLSTANDARDIZE_EXPORT const std::vector<SubstructTerm>
-    &getDefaultTautomerScoreSubstructs();
+RDKIT_MOLSTANDARDIZE_EXPORT const std::vector<SubstructTerm> &
+getDefaultTautomerScoreSubstructs();
 
 //! Score the rings of the current tautomer
 /// Aromatic rings score 100, all carbon aromatic rings score 250
@@ -95,8 +94,8 @@ RDKIT_MOLSTANDARDIZE_EXPORT int scoreSubstructs(
 ///      doesn't match (since tautomerization doesn't create/destroy bonds)
 /// Returns indices into the terms vector for relevant terms.
 RDKIT_MOLSTANDARDIZE_EXPORT std::vector<size_t> getRelevantSubstructTermIndices(
-    const ROMol &mol,
-    const std::vector<SubstructTerm> &terms = getDefaultTautomerScoreSubstructs());
+    const ROMol &mol, const std::vector<SubstructTerm> &terms =
+                          getDefaultTautomerScoreSubstructs());
 
 //! Score substructures using only the terms at the specified indices.
 /// Uses specialized matchers for simple patterns (C=O, N=O, P=O, methyl, etc.)

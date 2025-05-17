@@ -62,7 +62,7 @@ void MultithreadedSDMolSupplier::closeStreams() {
     df_owner = false;
     dp_inStream = nullptr;
   }
-  df_started = false; // this is in the base constructor
+  df_started = false;  // this is in the base constructor
 }
 
 // ensures that there is a line available to be read

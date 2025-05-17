@@ -972,7 +972,7 @@ void dfsFindCycles(ROMol &mol, int atomIdx, int inBondIdx,
     }
   }
   colors[atomIdx] = BLACK_NODE;
-}  // namespace Canon
+}
 
 void dfsBuildStack(ROMol &mol, int atomIdx, int inBondIdx,
                    std::vector<AtomColors> &colors, const UINT_VECT &ranks,

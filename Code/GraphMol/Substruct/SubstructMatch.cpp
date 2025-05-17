@@ -761,7 +761,7 @@ void MatchSubqueries(const ROMol &mol, QueryAtom::QUERYATOM_QUERY *query,
   // std::cout << "<<- back " << (int)query << std::endl;
 }
 
-}  // end of namespace detail
+}  // namespace detail
 
 bool AtomCoordsMatchFunctor::operator()(const Atom &queryAtom,
                                         const Atom &targetAtom) const {

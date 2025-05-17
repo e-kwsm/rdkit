@@ -172,7 +172,7 @@ return res;
 }
 */
 
-}  // end of anonymous namespace
+}  // namespace
 
 // caller owns the result, it must be deleted
 ExplicitBitVect *RDKFingerprintMol(

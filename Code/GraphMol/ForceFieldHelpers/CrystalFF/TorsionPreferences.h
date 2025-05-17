@@ -54,7 +54,7 @@ constexpr Params Cosine = {.distance = 2.15,
                            .kTermTorsion = 2.15,
                            .etTermScaling = 0.1};
 }  // namespace AIO
-}  // namespace FC
+}  // namespace ETKDGForceConsts
 struct CrystalFFDetails {
   std::vector<std::vector<int>> expTorsionAtoms;
   std::vector<std::pair<std::vector<int>, std::vector<double>>>

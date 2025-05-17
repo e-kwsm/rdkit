@@ -510,8 +510,8 @@ ForceFields::ForceField *construct3DForceField(
   unsigned int N = mmat.numRows();
   PRECONDITION(N == positions.size(), "");
   PRECONDITION(etkdgDetails.expTorsionAtoms.size() ==
-                      etkdgDetails.expTorsionAngles.size(),
-                  "");
+                   etkdgDetails.expTorsionAngles.size(),
+               "");
   auto *field = new ForceFields::ForceField(positions[0]->dimension());
   field->positions().insert(field->positions().begin(), positions.begin(),
                             positions.end());
@@ -560,8 +560,8 @@ ForceFields::ForceField *constructPlain3DForceField(
   unsigned int N = mmat.numRows();
   PRECONDITION(N == positions.size(), "");
   PRECONDITION(etkdgDetails.expTorsionAtoms.size() ==
-                      etkdgDetails.expTorsionAngles.size(),
-                  "");
+                   etkdgDetails.expTorsionAngles.size(),
+               "");
   auto *field = new ForceFields::ForceField(positions[0]->dimension());
   field->positions().insert(field->positions().begin(), positions.begin(),
                             positions.end());
@@ -730,8 +730,8 @@ RDKIT_DISTGEOMETRY_EXPORT ForceFields::ForceField *constructAllInOneForceField(
   const std::size_t N = mmat.numRows();
   PRECONDITION(N == positions.size(), "");
   PRECONDITION(etkdgDetails.expTorsionAtoms.size() ==
-                      etkdgDetails.expTorsionAngles.size(),
-                  "");
+                   etkdgDetails.expTorsionAngles.size(),
+               "");
 
   auto *field = new ForceFields::ForceField(positions[0]->dimension());
   field->positions().insert(field->positions().begin(), positions.begin(),

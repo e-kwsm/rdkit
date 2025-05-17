@@ -281,7 +281,7 @@ class RDKIT_FINGERPRINTS_EXPORT BondInvariantsGenerator
 
   virtual ~BondInvariantsGenerator() {}
   virtual BondInvariantsGenerator *clone() const = 0;
-};  // namespace RDKit
+};
 
 /*!
   \brief struct that makes calling the fingerprint generation functions easier

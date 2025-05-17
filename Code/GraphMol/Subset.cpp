@@ -34,7 +34,7 @@ atomindex_t getOtherAtomIdx(const ROMol &ref_mol, const Bond &ref_bond,
     std::swap(ref_atom, other_atom);
   }
   CHECK_INVARIANT(ref_atom->getIdx() == dblBndAtomIdx,
-                "dblBndAtomIdx should be one of the bond's atoms");
+                  "dblBndAtomIdx should be one of the bond's atoms");
 
   for (auto nbr : ref_mol.atomNeighbors(ref_atom)) {
     auto nbrIdx = nbr->getIdx();

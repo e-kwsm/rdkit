@@ -20,7 +20,7 @@
 
 #include <GraphMol/MolPickler.h>
 
-extern "C" int LLVMFuzzerTestOneInput(const uint8_t* data, size_t size) {
+extern "C" int LLVMFuzzerTestOneInput(const uint8_t *data, size_t size) {
   FuzzedDataProvider fdp(data, size);
 
   std::string serializedMolString = fdp.ConsumeRemainingBytesAsString();

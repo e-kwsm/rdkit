@@ -713,9 +713,10 @@ std::vector<std::unique_ptr<RWMol>> MolsFromCDXMLDataStream(
     std::istream &inStream, const CDXMLParserParams &params) {
   // populate tree structure pt
   if (params.format == CDXMLFormat::CDX) {
-    throw FileParseException("Full ChemDraw support is not enabled, cannot parse CDX files");
+    throw FileParseException(
+        "Full ChemDraw support is not enabled, cannot parse CDX files");
   }
-  
+
   using boost::property_tree::ptree;
   ptree pt;
   try {
@@ -835,54 +836,52 @@ std::vector<std::unique_ptr<RWMol>> MolsFromCDXMLFile(
 
 std::vector<std::unique_ptr<RWMol>> MolsFromCDXML(
     const std::string &cdxml, const CDXMLParserParams &params) {
- 
   std::stringstream iss(cdxml);
   return MolsFromCDXMLDataStream(iss, params);
 }
 
-RDKIT_FILEPARSERS_EXPORT std::string MolToCDXMLBlock(
-    const RWMol &,
-    CDXMLFormat ) {
+RDKIT_FILEPARSERS_EXPORT std::string MolToCDXMLBlock(const RWMol &,
+                                                     CDXMLFormat) {
   std::ostringstream errout;
   errout << "RDKit build withoutChemDraw writing support. ";
   throw FileParseException(errout.str());
   return "";
 }
-  
+
 }  // namespace CDXMLParser
 }  // namespace v2
 }  // namespace RDKit
 #else
 #include <ChemDraw/chemdraw.h>
 #include <RDGeneral/BadFileException.h>
-#include <filesystem> // For std::filesystem::path
-#include <algorithm>  // For std::transform
-#include <cctype>     // For std::tolower
+#include <filesystem>  // For std::filesystem::path
+#include <algorithm>   // For std::transform
+#include <cctype>      // For std::tolower
 
-namespace RDKit{
-
+namespace RDKit {
 
 namespace v2 {
 namespace CDXMLParser {
 bool hasChemDrawCDXSupport() { return true; }
-  
+
 std::vector<std::unique_ptr<RWMol>> MolsFromCDXMLDataStream(
     std::istream &inStream, const CDXMLParserParams &params) {
   // populate tree structure pt
   ChemDrawParserParams chemdraw_params;
   chemdraw_params.sanitize = params.sanitize;
   chemdraw_params.removeHs = params.removeHs;
-  switch(params.format) {
-  case CDXMLFormat::CDX: {
-    chemdraw_params.format = CDXFormat::CDX;
-    break;
-  }
-  case CDXMLFormat::CDXML: {
-    chemdraw_params.format = CDXFormat::CDXML; break;
-  }
-  case CDXMLFormat::Auto:
-    {
-      chemdraw_params.format = CDXFormat::AUTO; break;
+  switch (params.format) {
+    case CDXMLFormat::CDX: {
+      chemdraw_params.format = CDXFormat::CDX;
+      break;
+    }
+    case CDXMLFormat::CDXML: {
+      chemdraw_params.format = CDXFormat::CDXML;
+      break;
+    }
+    case CDXMLFormat::Auto: {
+      chemdraw_params.format = CDXFormat::AUTO;
+      break;
     }
   }
 
@@ -891,7 +890,7 @@ std::vector<std::unique_ptr<RWMol>> MolsFromCDXMLDataStream(
 
 std::vector<std::unique_ptr<RWMol>> MolsFromCDXMLFile(
     const std::string &fileName, const CDXMLParserParams &params) {
-  std::ifstream ifs(fileName,  std::ios::binary);
+  std::ifstream ifs(fileName, std::ios::binary);
   if (!ifs || ifs.bad()) {
     std::ostringstream errout;
     errout << "Bad inxput file " << fileName;
@@ -914,19 +913,16 @@ std::vector<std::unique_ptr<RWMol>> MolsFromCDXML(
   return MolsFromCDXMLDataStream(iss, params);
 }
 
-std::string MolToCDXMLBlock(
-    const RWMol &mol,
-    CDXMLFormat format) {
-  
-    CDXFormat cdx_format = CDXFormat::CDXML;
+std::string MolToCDXMLBlock(const RWMol &mol, CDXMLFormat format) {
+  CDXFormat cdx_format = CDXFormat::CDXML;
 
-    if (format == CDXMLFormat::CDX) {
-      cdx_format = CDXFormat::CDX;
-    }
+  if (format == CDXMLFormat::CDX) {
+    cdx_format = CDXFormat::CDX;
+  }
 
-    return MolToChemDrawBlock(mol, cdx_format);
+  return MolToChemDrawBlock(mol, cdx_format);
 }
-}
-}
-}
+}  // namespace CDXMLParser
+}  // namespace v2
+}  // namespace RDKit
 #endif

@@ -12,4 +12,4 @@
 
 namespace RDKit {
 typedef std::uint32_t atomindex_t;
-}
+}  // namespace RDKit
