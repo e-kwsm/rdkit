@@ -1,3 +1,6 @@
+#ifndef HOME_KWSM_GITHUB_E_KWSM_RDKIT_LLVM_HEADER_GUARD_CODE_RDGENERAL_STREAMOPS_H
+#define HOME_KWSM_GITHUB_E_KWSM_RDKIT_LLVM_HEADER_GUARD_CODE_RDGENERAL_STREAMOPS_H
+
 //
 //  Copyright (C) 2002-2008 Greg Landrum and Rational Discovery LLC
 //
@@ -649,5 +652,7 @@ inline unsigned int streamReadProps(std::istream &ss, RDProps &props,
   return static_cast<unsigned int>(count);
 }
 }  // namespace RDKit
+
+#endif
 
 #endif

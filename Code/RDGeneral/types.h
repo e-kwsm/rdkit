@@ -1,3 +1,6 @@
+#ifndef HOME_KWSM_GITHUB_E_KWSM_RDKIT_LLVM_HEADER_GUARD_CODE_RDGENERAL_TYPES_H
+#define HOME_KWSM_GITHUB_E_KWSM_RDKIT_LLVM_HEADER_GUARD_CODE_RDGENERAL_TYPES_H
+
 //
 //  Copyright 2001-2021 Greg Landrum and other RDKit contributors
 //
@@ -331,5 +334,7 @@ RDKIT_RDGENERAL_EXPORT void Union(const VECT_INT_VECT &rings, INT_VECT &res,
 */
 RDKIT_RDGENERAL_EXPORT int nextCombination(INT_VECT &comb, int tot);
 };  // namespace RDKit
+
+#endif
 
 #endif

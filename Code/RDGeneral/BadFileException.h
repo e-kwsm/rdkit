@@ -1,3 +1,6 @@
+#ifndef HOME_KWSM_GITHUB_E_KWSM_RDKIT_LLVM_HEADER_GUARD_CODE_RDGENERAL_BADFILEEXCEPTION_H
+#define HOME_KWSM_GITHUB_E_KWSM_RDKIT_LLVM_HEADER_GUARD_CODE_RDGENERAL_BADFILEEXCEPTION_H
+
 //
 // Copyright 2003-2006 Greg Landrum and Rational Discovery LLC
 //
@@ -35,5 +38,7 @@ class RDKIT_RDGENERAL_EXPORT BadFileException : public std::runtime_error {
   std::string _msg;
 };
 }  // namespace RDKit
+
+#endif
 
 #endif
