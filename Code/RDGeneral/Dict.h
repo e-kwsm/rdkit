@@ -1,3 +1,6 @@
+#ifndef HOME_KWSM_GITHUB_E_KWSM_RDKIT_LLVM_HEADER_GUARD_CODE_RDGENERAL_DICT_H
+#define HOME_KWSM_GITHUB_E_KWSM_RDKIT_LLVM_HEADER_GUARD_CODE_RDGENERAL_DICT_H
+
 //
 // Copyright (C) 2003-2026 Greg Landrum and other RDKit contributors
 //
@@ -437,4 +440,6 @@ class PairHolder : public Dict::Pair {
   ~PairHolder() { RDValue::cleanup_rdvalue(this->val); }
 };
 }  // namespace RDKit
+#endif
+
 #endif
