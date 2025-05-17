@@ -292,8 +292,7 @@ struct RDValue {
   }
 
   static  // Given a type and an RDAnyValue - delete the appropriate structure
-      inline void
-      cleanup_rdvalue(RDValue &rdvalue) {
+      inline void cleanup_rdvalue(RDValue &rdvalue) {
     rdvalue.destroy();
   }
 };
