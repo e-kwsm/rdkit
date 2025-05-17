@@ -46,13 +46,13 @@
 namespace RDKit {
 namespace v2 {
 struct ChemDrawParserParams;
-}
+}  // namespace v2
 namespace ChemDraw {
 bool parseNode(
     RWMol &mol, unsigned int fragmentId, CDXNode &node, PageData &pagedata,
     std::map<std::pair<int, StereoGroupType>, StereoGroupInfo> &sgroups,
     int &missingFragId, const v2::ChemDrawParserParams &params,
     int externalAttachment);
-}
+}  // namespace ChemDraw
 }  // namespace RDKit
 #endif

@@ -17,7 +17,7 @@
 #include <cstdint>
 namespace std {
 typedef std::uint32_t hash_result_t;
-}
+}  // namespace std
 
 #include <boost/config.hpp>
 #include <cstddef>
