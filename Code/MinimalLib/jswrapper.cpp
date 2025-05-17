@@ -170,7 +170,7 @@ JSMolBase *molzip_rgd_row_helper(const emscripten::val &rgdRow,
   std::map<std::string, ROMOL_SPTR> molzipRow;
   for (const auto &rlabel : rlabels) {
     auto jsMolAsVal = rgdRow[rlabel];
-    if (!jsMolAsVal.instanceof (JSMolObj())) {
+    if (!jsMolAsVal.instanceof(JSMolObj())) {
       return nullptr;
     }
     auto jsMolShared = dynamic_cast<JSMolShared *>(
@@ -195,7 +195,7 @@ JSMolBase *molzip_2params_helper(const emscripten::val &param1,
                                  const emscripten::val &param2) {
   JSMolBase *res = nullptr;
   static const auto JSMOL = emscripten::val::module_property("Mol");
-  if (param1.instanceof (JSMolObj()) && param2.instanceof (JSMolObj())) {
+  if (param1.instanceof(JSMolObj()) && param2.instanceof(JSMolObj())) {
     const auto aJsMolPtr =
         param1.as<JSMolBase *>(emscripten::allow_raw_pointers());
     const auto bJsMolPtr =
@@ -203,8 +203,8 @@ JSMolBase *molzip_2params_helper(const emscripten::val &param1,
     if (aJsMolPtr && bJsMolPtr) {
       res = molzip_no_details_helper(*aJsMolPtr, *bJsMolPtr);
     }
-  } else if (!param1.instanceof
-             (JSMolObj()) && param2.typeOf().as<std::string>() == "string") {
+  } else if (!param1.instanceof(JSMolObj()) &&
+             param2.typeOf().as<std::string>() == "string") {
     auto details_json = param2.as<std::string>();
     res = molzip_rgd_row_helper(param1, details_json);
   }
@@ -341,7 +341,8 @@ emscripten::val get_frags_helper(const JSMolBase &self,
                                  const std::string &details) {
   auto res = self.get_frags(details);
   auto obj = emscripten::val::object();
-  obj.set("molList", emscripten::val(res.first, emscripten::allow_raw_pointers()));
+  obj.set("molList",
+          emscripten::val(res.first, emscripten::allow_raw_pointers()));
   obj.set("mappings", res.second);
   return obj;
 }
@@ -465,13 +466,13 @@ JSRGroupDecomposition *get_rgd_helper(
     const emscripten::val &singleOrMultipleCores,
     const std::string &details_json) {
   JSRGroupDecomposition *res = nullptr;
-  if (singleOrMultipleCores.instanceof (JSMolObj())) {
+  if (singleOrMultipleCores.instanceof(JSMolObj())) {
     const auto jsMolPtr =
         singleOrMultipleCores.as<JSMolBase *>(emscripten::allow_raw_pointers());
     if (jsMolPtr) {
       res = new JSRGroupDecomposition(*jsMolPtr, details_json);
     }
-  } else if (singleOrMultipleCores.instanceof (JSMolListObj())) {
+  } else if (singleOrMultipleCores.instanceof(JSMolListObj())) {
     const auto jsMolListPtr =
         singleOrMultipleCores.as<JSMolList *>(emscripten::allow_raw_pointers());
     if (jsMolListPtr) {

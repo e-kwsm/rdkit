@@ -309,7 +309,7 @@ BOOST_PYTHON_MODULE(rdForceField) {
 
   python::class_<PyForceField>("ForceField", "A force field", python::no_init)
       .def("CalcEnergy",
-           (double(PyForceField::*)(const python::object &) const) &
+           (double (PyForceField::*)(const python::object &) const) &
                PyForceField::calcEnergyWithPos,
            ((python::arg("self"), python::arg("pos") = python::object())),
            "Returns the energy (in kcal/mol) of the current arrangement\n"

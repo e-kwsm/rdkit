@@ -281,7 +281,7 @@ struct atom_wrapper {
         .def("GetBonds", AtomGetBonds, python::args("self"),
              "Returns a read-only sequence of the atom's bonds\n")
 
-        .def("Match", (bool(Atom::*)(const Atom *) const) & Atom::Match,
+        .def("Match", (bool (Atom::*)(const Atom *) const) & Atom::Match,
              python::args("self", "what"),
              "Returns whether or not this atom matches another Atom.\n\n"
              "  Each Atom (or query Atom) has a query function which is\n"
@@ -445,13 +445,12 @@ struct atom_wrapper {
              (python::arg("self"), python::arg("includePrivate") = true,
               python::arg("includeComputed") = true,
               python::arg("autoConvertStrings") = true),
-	     getPropsAsDictDocString.c_str())
+             getPropsAsDictDocString.c_str())
 
         .def("UpdatePropertyCache", &Atom::updatePropertyCache,
              (python::arg("self"), python::arg("strict") = true),
-	     "Regenerates computed properties like implicit valence and ring "
+             "Regenerates computed properties like implicit valence and ring "
              "information.\n\n")
-
 
         .def("NeedsUpdatePropertyCache", &Atom::needsUpdatePropertyCache,
              (python::arg("self")),

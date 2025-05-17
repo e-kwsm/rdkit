@@ -273,9 +273,9 @@ int ForceField::minimize(unsigned int snapshotFreq,
   ForceFieldsHelper::calcEnergy eCalc(this);
   ForceFieldsHelper::calcGradient gCalc(this);
 
-  int res =
-      BFGSOpt::minimize(dim, points.data(), forceTol, numIters, finalForce, eCalc,
-                        gCalc, snapshotFreq, snapshotVect, energyTol, maxIts);
+  int res = BFGSOpt::minimize(dim, points.data(), forceTol, numIters,
+                              finalForce, eCalc, gCalc, snapshotFreq,
+                              snapshotVect, energyTol, maxIts);
   this->gather(points.data());
 
   return res;

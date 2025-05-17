@@ -797,7 +797,7 @@ struct mol_wrapper {
              (python::arg("self"), python::arg("includePrivate") = false,
               python::arg("includeComputed") = false,
               python::arg("autoConvertStrings") = true),
-	     getPropsAsDictDocString.c_str())
+             getPropsAsDictDocString.c_str())
 
         .def("GetAromaticAtoms", MolGetAromaticAtoms,
              python::return_value_policy<
