@@ -309,7 +309,7 @@ RDKIT_ABBREVIATIONS_EXPORT void condenseAbbreviationSubstanceGroups(
   } else {
     BOOST_LOG(rdWarningLog) << "no suitable SubstanceGroups found" << std::endl;
   }
-};  // namespace Abbreviations
+};
 
 }  // namespace Abbreviations
 }  // namespace RDKit

@@ -551,5 +551,5 @@ unsigned int numUnspecifiedAtomStereoCenters(const ROMol &mol) {
   return res;
 }
 
-}  // end of namespace Descriptors
-}  // end of namespace RDKit
+}  // namespace Descriptors
+}  // namespace RDKit

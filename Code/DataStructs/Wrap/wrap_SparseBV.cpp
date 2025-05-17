@@ -63,7 +63,7 @@ struct SBV_wrapper {
         "SparseBitVect", sbvClassDoc.c_str(),
         python::init<unsigned int>(python::args("self", "size")))
         .def(python::init<std::string>(python::args("self", "pkl")))
-        .def("SetBit", (bool(SBV::*)(unsigned int)) & SBV::setBit,
+        .def("SetBit", (bool (SBV::*)(unsigned int))&SBV::setBit,
              python::args("self", "which"),
              "Turns on a particular bit.  Returns the original state of the "
              "bit.\n")
@@ -72,7 +72,7 @@ struct SBV_wrapper {
              python::args("self", "onBitList"),
              "Turns on a set of bits.  The argument should be a tuple or list "
              "of bit ids.\n")
-        .def("UnSetBit", (bool(SBV::*)(unsigned int)) & SBV::unsetBit,
+        .def("UnSetBit", (bool (SBV::*)(unsigned int))&SBV::unsetBit,
              python::args("self", "which"),
              "Turns off a particular bit.  Returns the original state of the "
              "bit.\n")
@@ -81,7 +81,7 @@ struct SBV_wrapper {
              python::args("self", "offBitList"),
              "Turns off a set of bits.  The argument should be a tuple or list "
              "of bit ids.\n")
-        .def("GetBit", (bool(SBV::*)(unsigned int) const) & SBV::getBit,
+        .def("GetBit", (bool (SBV::*)(unsigned int) const) & SBV::getBit,
              python::args("self", "which"), "Returns the value of a bit.\n")
         .def("GetNumBits", &SBV::getNumBits, python::args("self"),
              "Returns the number of bits in the vector (the vector's size).\n")
@@ -94,19 +94,19 @@ struct SBV_wrapper {
              python::args("self", "which"))
         .def("__setitem__", (int (*)(SBV &, int, int))set_VectItem,
              python::args("self", "which", "val"))
-        .def("GetOnBits", (IntVect(*)(const SBV &))GetOnBits,
+        .def("GetOnBits", (IntVect (*)(const SBV &))GetOnBits,
              python::args("self"),
              "Returns a tuple containing IDs of the on bits.\n")
-        .def("ToBinary", (python::object(*)(const SBV &))BVToBinary,
+        .def("ToBinary", (python::object (*)(const SBV &))BVToBinary,
              python::args("self"),
              "Returns an internal binary representation of the vector.\n")
         .def("FromBase64", (void (*)(SBV &, const std::string &))InitFromBase64,
              python::args("self", "inD"),
              "Initializes the vector from a base64 encoded binary string.\n")
-        .def("ToBase64", (std::string(*)(SBV &))ToBase64, python::args("self"),
+        .def("ToBase64", (std::string (*)(SBV &))ToBase64, python::args("self"),
              "Converts the vector to a base64 string (the base64 encoded "
              "version of the results of ToString()).\n")
-        .def("ToList", (python::list(*)(const SBV &))SparseToList,
+        .def("ToList", (python::list (*)(const SBV &))SparseToList,
              python::args("self"), "Return the BitVector as a python list")
         .def(python::self & python::self)
         .def(python::self | python::self)

@@ -252,7 +252,7 @@ OutputType MorganAtomEnv<OutputType>::getBitId(
     const std::uint64_t                  // fpSize
 ) const {
   return d_code;
-}  // namespace MorganFingerprint
+}
 
 template <typename OutputType>
 std::vector<AtomEnvironment<OutputType> *>

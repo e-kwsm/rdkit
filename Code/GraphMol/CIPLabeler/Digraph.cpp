@@ -74,9 +74,9 @@ int Digraph::getNumNodes() const { return d_nodes.size(); }
 
 std::vector<Node *> Digraph::getNodes(Atom *atom) const {
   std::vector<Node *> result;
-  std::vector<Node*> queue = {getCurrentRoot()};
+  std::vector<Node *> queue = {getCurrentRoot()};
 
-  for (size_t i=0; i<queue.size(); ++i) {
+  for (size_t i = 0; i < queue.size(); ++i) {
     auto node = queue[i];
     if (atom == node->getAtom()) {
       result.push_back(node);

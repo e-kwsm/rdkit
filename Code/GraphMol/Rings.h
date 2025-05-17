@@ -21,7 +21,7 @@
 
 namespace RDKit {
 class ROMol;
-};
+}  // namespace RDKit
 
 namespace RingUtils {
 typedef std::vector<int> INT_VECT;

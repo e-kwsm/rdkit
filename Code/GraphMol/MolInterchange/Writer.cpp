@@ -676,5 +676,5 @@ template RDKIT_MOLINTERCHANGE_EXPORT std::string
 MolsToJSONData<std::unique_ptr<RWMol>>(
     const std::vector<std::unique_ptr<RWMol>> &, const JSONWriteParameters &);
 
-}  // end of namespace MolInterchange
-}  // end of namespace RDKit
+}  // namespace MolInterchange
+}  // namespace RDKit

@@ -4107,7 +4107,9 @@ M  V30 1 1 1 2
 M  V30 END BOND
 M  V30 END CTAB
 M  END)CTAB";
-    { REQUIRE_THROWS_AS(MolBlockToMol(ctab), FileParseException); }
+    {
+      REQUIRE_THROWS_AS(MolBlockToMol(ctab), FileParseException);
+    }
     {
       bool sanitize = true;
       bool removeHs = true;

@@ -40,19 +40,17 @@ double calcBondStretchEnergy(const double r0, const double kb,
   return (0.5 * c1 * kb * distTerm2 *
           (1.0 + cs * distTerm + c3 * cs * cs * distTerm2));
 }
-}  // end of namespace Utils
+}  // namespace Utils
 
 BondStretchContrib::BondStretchContrib(ForceField *owner) {
   PRECONDITION(owner, "bad owner");
 
-
   dp_forceField = owner;
-
 }
 
-void BondStretchContrib::addTerm(const unsigned int idx1,
-                                 const unsigned int idx2,
-                                 const ForceFields::MMFF::MMFFBond *mmffBondParams) {
+void BondStretchContrib::addTerm(
+    const unsigned int idx1, const unsigned int idx2,
+    const ForceFields::MMFF::MMFFBond *mmffBondParams) {
   URANGE_CHECK(idx1, dp_forceField->positions().size());
   URANGE_CHECK(idx2, dp_forceField->positions().size());
   PRECONDITION(mmffBondParams, "bond parameters not found");
@@ -69,9 +67,10 @@ double BondStretchContrib::getEnergy(double *pos) const {
 
   const int numTerms = d_at1Idxs.size();
   double energySum = 0.0;
-  for (int i =0; i < numTerms; i++) {
+  for (int i = 0; i < numTerms; i++) {
     energySum += Utils::calcBondStretchEnergy(
-        d_r0[i], d_kb[i], dp_forceField->distance(d_at1Idxs[i], d_at2Idxs[i], pos));
+        d_r0[i], d_kb[i],
+        dp_forceField->distance(d_at1Idxs[i], d_at2Idxs[i], pos));
   }
   return energySum;
 }

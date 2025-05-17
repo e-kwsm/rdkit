@@ -283,6 +283,5 @@ TEST_CASE("testStringToDouble") {
   p.setProp<std::string>("bar", " 123.0 ");
   REQUIRE(p.getProp<double>("foo") == 123.0);
   REQUIRE(p.getProp<float>("foo") == 123.0f);
-  REQUIRE_THROWS_AS(p.getProp<double>("bar"),
-		    std::bad_any_cast);
+  REQUIRE_THROWS_AS(p.getProp<double>("bar"), std::bad_any_cast);
 }

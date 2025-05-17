@@ -393,8 +393,7 @@ static inline void appendBonds(BondVector_t &bonds,
 }
 
 static inline void processCuts(
-    size_t i, size_t minCuts, size_t maxCuts,
-    BondVector_t &bonds_selected,
+    size_t i, size_t minCuts, size_t maxCuts, BondVector_t &bonds_selected,
     const std::vector<BondVector_t> &matching_bonds, const ROMol &mol,
     std::vector<std::pair<ROMOL_SPTR, ROMOL_SPTR>> &res) {
   if (maxCuts < minCuts) {

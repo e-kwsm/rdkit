@@ -28,7 +28,11 @@ typedef boost::shared_array<double> DOUBLE_SMART_PTR;
 //! Class that contains the data for an atoms that has already been embedded
 class RDKIT_DEPICTOR_EXPORT EmbeddedAtom {
  public:
-  typedef enum { UNSPECIFIED = 0, CISTRANS, RING } EAtomType;
+  typedef enum {
+    UNSPECIFIED = 0,
+    CISTRANS,
+    RING
+  } EAtomType;
 
   EmbeddedAtom() { neighs.clear(); }
 

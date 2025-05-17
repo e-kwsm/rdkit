@@ -844,16 +844,16 @@ void pickleAtomPDBResidueInfo(std::ostream &ss,
   }
 }
 
-AtomMonomerInfo* unpickleAtomPDBResidueInfo(std::istream &ss, int version) {
+AtomMonomerInfo *unpickleAtomPDBResidueInfo(std::istream &ss, int version) {
   std::string nm;
   streamRead(ss, nm, version);
   unsigned int typ;
   streamRead(ss, typ, version);
 
-  // As of version 16.3, some member fields from AtomPDBResidueInfo were moved to
-  // the AtomMonomerInfo base class. Pickles made from 16.3+ will use the new tags
-  // and unpickleAtomMonomerInfo to unpickle, but we need to continue to support old
-  // pickles that don't use the new tags.
+  // As of version 16.3, some member fields from AtomPDBResidueInfo were moved
+  // to the AtomMonomerInfo base class. Pickles made from 16.3+ will use the new
+  // tags and unpickleAtomMonomerInfo to unpickle, but we need to continue to
+  // support old pickles that don't use the new tags.
   auto type = static_cast<AtomMonomerInfo::AtomMonomerType>(typ);
   if (type != AtomMonomerInfo::AtomMonomerType::PDBRESIDUE) {
     auto info = new AtomMonomerInfo(type, nm);
@@ -946,8 +946,7 @@ void pickleAtomMonomerInfo(std::ostream &ss, const AtomMonomerInfo *info) {
                 info->getResidueNumber());
   }
   if (!info->getChainId().empty()) {
-    streamWrite(ss, MolPickler::ATOM_MONOMER_INFO_CHAINID,
-                info->getChainId());
+    streamWrite(ss, MolPickler::ATOM_MONOMER_INFO_CHAINID, info->getChainId());
   }
   if (!info->getMonomerClass().empty()) {
     streamWrite(ss, MolPickler::ATOM_MONOMER_INFO_MONOMERCLASS,
@@ -960,7 +959,8 @@ AtomMonomerInfo *unpickleAtomMonomerInfo(std::istream &ss, int version) {
   std::uint8_t typ;
   streamRead(ss, nm, version);
   streamRead(ss, typ, version);
-  auto info = new AtomMonomerInfo(static_cast<RDKit::AtomMonomerInfo::AtomMonomerType>(typ), nm);
+  auto info = new AtomMonomerInfo(
+      static_cast<RDKit::AtomMonomerInfo::AtomMonomerType>(typ), nm);
 
   std::string residueName = "";
   int residueNumber = 0;
@@ -991,8 +991,8 @@ AtomMonomerInfo *unpickleAtomMonomerInfo(std::istream &ss, int version) {
       default:
         // None of the ATOM_PDB_RESIDUE_XXX tags should appear here
         throw MolPicklerException(
-            "unrecognized tag while parsing atom monomer info " + std::to_string(
-                static_cast<int>(tag)));
+            "unrecognized tag while parsing atom monomer info " +
+            std::to_string(static_cast<int>(tag)));
     }
   }
   return info;
@@ -1787,9 +1787,11 @@ void MolPickler::_pickleAtom(std::ostream &ss, const Atom *atom) {
                 atom->getProp<std::string>(common_properties::dummyLabel));
   }
   if (atom->getMonomerInfo()) {
-    if (atom->getMonomerInfo()->getMonomerType() == AtomMonomerInfo::PDBRESIDUE) {
+    if (atom->getMonomerInfo()->getMonomerType() ==
+        AtomMonomerInfo::PDBRESIDUE) {
       streamWrite(ss, BEGIN_PDB_RESIDUE);
-      pickleAtomPDBResidueInfo(ss, static_cast<const AtomPDBResidueInfo*>(atom->getMonomerInfo()));
+      pickleAtomPDBResidueInfo(
+          ss, static_cast<const AtomPDBResidueInfo *>(atom->getMonomerInfo()));
       streamWrite(ss, END_PDB_RESIDUE);
     } else {
       streamWrite(ss, BEGIN_ATOM_MONOMER_INFO);

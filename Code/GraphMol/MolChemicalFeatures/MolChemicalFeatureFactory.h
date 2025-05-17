@@ -72,6 +72,6 @@ RDKIT_MOLCHEMICALFEATURES_EXPORT MolChemicalFeatureFactory *buildFeatureFactory(
 RDKIT_MOLCHEMICALFEATURES_EXPORT MolChemicalFeatureFactory *buildFeatureFactory(
     const std::string &featureData);
 
-}  // end of namespace RDKit
+}  // namespace RDKit
 
 #endif

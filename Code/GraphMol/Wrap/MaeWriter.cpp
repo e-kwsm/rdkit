@@ -96,8 +96,8 @@ struct wrap_maewriter {
             "  ARGUMENTS:\n\n"
             "    - props: a list or tuple of atom and mol property names\n\n")
         .def("write",
-             (void(LocalMaeWriter::*)(const ROMol &, int)) &
-                 LocalMaeWriter::write,
+             (void (LocalMaeWriter::*)(const ROMol &,
+                                       int))&LocalMaeWriter::write,
              (python::arg("self"), python::arg("mol"),
               python::arg("confId") = defaultConfId),
              "Writes a molecule to the output file.\n\n"

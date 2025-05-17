@@ -579,9 +579,8 @@ void testSulfinamideExamplesHaveNoAtropisomers() {
   std::stringstream warningCapture;
   rdWarningLog->SetTee(warningCapture);
   for (const auto &file : controlFiles) {
-    auto fName = rdbase +
-                 "/Code/GraphMol/FileParsers/test_data/atropisomers/" +
-                 file;
+    auto fName =
+        rdbase + "/Code/GraphMol/FileParsers/test_data/atropisomers/" + file;
     BOOST_LOG(rdInfoLog) << "Validating absence of atropisomers in " << file
                          << std::endl;
     auto mol = std::unique_ptr<RWMol>(MolFileToMol(fName, true, false, false));

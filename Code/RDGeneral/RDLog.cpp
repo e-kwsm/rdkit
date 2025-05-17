@@ -28,7 +28,7 @@ namespace {
 const std::vector<RDLogger *> allLogs = {&rdAppLog,     &rdDebugLog,
                                          &rdInfoLog,    &rdErrorLog,
                                          &rdWarningLog, &rdStatusLog};
-}
+}  // namespace
 
 LogStateSetter::LogStateSetter() {
   for (auto i = 0u; i < allLogs.size(); ++i) {

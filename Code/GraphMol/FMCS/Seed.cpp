@@ -223,7 +223,9 @@ void Seed::grow(MaximumCommonSubgraph &mcs) const {
   unsigned int numErasedNewBonds = 0;
   for (auto &newBond : NewBonds) {
 #ifdef VERBOSE_STATISTICS_ON
-    { ++mcs.VerboseStatistics.Seed; }
+    {
+      ++mcs.VerboseStatistics.Seed;
+    }
 #endif
     Seed seed;
     seed.createFromParent(this);
@@ -319,7 +321,9 @@ void Seed::grow(MaximumCommonSubgraph &mcs) const {
       }
 #endif
 #ifdef VERBOSE_STATISTICS_ON
-      { ++mcs.VerboseStatistics.Seed; }
+      {
+        ++mcs.VerboseStatistics.Seed;
+      }
 #endif
       Seed seed;
       seed.createFromParent(this);

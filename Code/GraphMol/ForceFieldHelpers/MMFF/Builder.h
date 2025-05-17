@@ -95,7 +95,12 @@ class RDKIT_FORCEFIELDHELPERS_EXPORT DefaultTorsionBondSmarts
 #endif
 };
 
-enum { RELATION_1_2 = 0, RELATION_1_3 = 1, RELATION_1_4 = 2, RELATION_1_X = 3 };
+enum {
+  RELATION_1_2 = 0,
+  RELATION_1_3 = 1,
+  RELATION_1_4 = 2,
+  RELATION_1_X = 3
+};
 // these functions are primarily exposed so they can be tested.
 RDKIT_FORCEFIELDHELPERS_EXPORT unsigned int twoBitCellPos(unsigned int nAtoms,
                                                           int i, int j);

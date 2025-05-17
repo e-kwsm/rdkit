@@ -1083,7 +1083,7 @@ void addNonbonded(const ROMol &mol, int confId,
   }
 }
 
-}  // end of namespace Tools
+}  // namespace Tools
 
 // ------------------------------------------------------------------------
 //

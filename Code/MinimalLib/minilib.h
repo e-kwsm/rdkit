@@ -27,7 +27,7 @@ class JSMolBase {
  public:
   JSMolBase(const JSMolBase &) = delete;
   JSMolBase &operator=(const JSMolBase &) = delete;
-  virtual ~JSMolBase(){};
+  virtual ~JSMolBase() {}
   virtual const RDKit::RWMol &get() const = 0;
   virtual RDKit::RWMol &get() = 0;
   virtual void reset(RDKit::RWMol *other) = 0;
@@ -249,8 +249,8 @@ class JSMolShared : public JSMolBase {
 class JSMolList {
  public:
   JSMolList(const std::vector<RDKit::ROMOL_SPTR> &mols)
-      : d_mols(mols), d_idx(0){};
-  JSMolList() : d_idx(0){};
+      : d_mols(mols), d_idx(0) {}
+  JSMolList() : d_idx(0) {}
   JSMolBase *next();
   size_t append(const JSMolBase &mol);
   size_t insert(size_t idx, const JSMolBase &mol);
@@ -391,11 +391,11 @@ class JSRGroupDecomposition {
  public:
   JSRGroupDecomposition(const JSMolBase &core, const std::string &details_json);
   JSRGroupDecomposition(const JSMolBase &core)
-      : JSRGroupDecomposition(core, ""){};
+      : JSRGroupDecomposition(core, "") {}
   JSRGroupDecomposition(const JSMolList &cores,
                         const std::string &details_json);
   JSRGroupDecomposition(const JSMolList &cores)
-      : JSRGroupDecomposition(cores, ""){};
+      : JSRGroupDecomposition(cores, "") {}
   int add(const JSMolBase &mol);
   bool process();
   std::map<std::string, std::unique_ptr<JSMolList>> getRGroupsAsColumns() const;
