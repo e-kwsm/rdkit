@@ -1127,21 +1127,22 @@ BOOST_PYTHON_MODULE(rdMolDraw2D) {
            "draws a line with the current drawing style. The coordinates "
            "are in the molecule frame unless rawCoords is true, "
            "in which case the coordinates are in pixels.")
-      .def("DrawArrow", RDKit::drawArrowHelper,
-           (python::arg("self"), python::arg("cds1"), python::arg("cds2"),
-            python::arg("asPolygon") = false, python::arg("frac") = 0.05,
-            python::arg("angle") = M_PI / 6,
-            python::arg("color") = python::object(),
-            python::arg("rawCoords") = false),
-           "draws an arrow with the current drawing style. The coordinates "
-           "are in the molecule frame unless rawCoords is true, "
-           "in which case the coordinates are in pixels. "
-           "If asPolygon is true the head of the "
-           "arrow will be drawn as a triangle, otherwise two lines are used. "
-           "The fraction of the arrow length to use for the head is given by "
-           "frac. The angle of the arrowhead "
-           "(the angle between the main line and each arrowhead line) is given by angle. "
-           "The color is a tuple of 3 floats (0-1) in red, green, blue (RGB) order.")
+      .def(
+          "DrawArrow", RDKit::drawArrowHelper,
+          (python::arg("self"), python::arg("cds1"), python::arg("cds2"),
+           python::arg("asPolygon") = false, python::arg("frac") = 0.05,
+           python::arg("angle") = M_PI / 6,
+           python::arg("color") = python::object(),
+           python::arg("rawCoords") = false),
+          "draws an arrow with the current drawing style. The coordinates "
+          "are in the molecule frame unless rawCoords is true, "
+          "in which case the coordinates are in pixels. "
+          "If asPolygon is true the head of the "
+          "arrow will be drawn as a triangle, otherwise two lines are used. "
+          "The fraction of the arrow length to use for the head is given by "
+          "frac. The angle of the arrowhead "
+          "(the angle between the main line and each arrowhead line) is given by angle. "
+          "The color is a tuple of 3 floats (0-1) in red, green, blue (RGB) order.")
       .def("DrawTriangle", &RDKit::MolDraw2D::drawTriangle,
            (python::arg("self"), python::arg("cds1"), python::arg("cds2"),
             python::arg("cds3"), python::arg("rawCoords") = false),
@@ -1218,14 +1219,13 @@ BOOST_PYTHON_MODULE(rdMolDraw2D) {
            "in which case the coordinates are in pixels.")
       .def("GetDrawCoords",
            (RDGeom::Point2D(RDKit::MolDraw2D::*)(const RDGeom::Point2D &)
-                const) &
-               RDKit::MolDraw2D::getDrawCoords,
+                const)&RDKit::MolDraw2D::getDrawCoords,
            (python::arg("self"), python::arg("point")),
            "get the coordinates in drawing space for a particular point in "
            "molecule space")
       .def("GetDrawCoords",
-           (RDGeom::Point2D(RDKit::MolDraw2D::*)(int) const) &
-               RDKit::MolDraw2D::getDrawCoords,
+           (RDGeom::Point2D(RDKit::MolDraw2D::*)(int)
+                const)&RDKit::MolDraw2D::getDrawCoords,
            (python::arg("self"), python::arg("atomIndex")),
            "get the coordinates in drawing space for a particular atom")
       .def("ClearDrawing", &RDKit::MolDraw2D::clearDrawing,
@@ -1452,8 +1452,7 @@ BOOST_PYTHON_MODULE(rdMolDraw2D) {
        python::arg("height") = 300,
        python::arg("highlightAtoms") = python::object(),
        python::arg("kekulize") = true, python::arg("lineWidthMult") = 1,
-       python::arg("includeAtomCircles") = true,
-       python::arg("confId") = -1),
+       python::arg("includeAtomCircles") = true, python::arg("confId") = -1),
       docString.c_str());
   docString = "Returns ACS 1996 mode svg for a molecule";
   python::def("MolToACS1996SVG", &RDKit::molToACS1996SVG,

@@ -764,7 +764,8 @@ F[2*]	277310376-742385dd	2	fake-chiral
 
 TEST_CASE("Bad Chiral Atom Count") {
   SynthonSpace space;
-  std::istringstream iss(R"(SMILES	synton_id	synton#	reaction_id	release
+  std::istringstream iss(
+      R"(SMILES	synton_id	synton#	reaction_id	release
 C[U]	200011483129	1	4a	2024-09
 c1c/c2n3/c1=C\C1=N/C(=C\c4c(C)c5c(n4[Mg]3)/C(=C3\N=C(\C=2)[C@@H](C)[C@@H]3C)[C@@H](C)C5=[U])C=C1	bad	2	4a	2024-09
 )");

@@ -67,7 +67,8 @@ int CIPMol::getBondOrder(Bond *bond) const {
       MolOps::Kekulize(tmp);
     } catch (const MolSanitizeException &) {
     }
-    auto& bonds = const_cast<std::vector<RDKit::Bond::BondType>&>(d_kekulized_bonds);
+    auto &bonds =
+        const_cast<std::vector<RDKit::Bond::BondType> &>(d_kekulized_bonds);
     bonds.reserve(d_mol.getNumBonds());
     for (const auto &b : tmp.bonds()) {
       bonds.push_back(b->getBondType());
