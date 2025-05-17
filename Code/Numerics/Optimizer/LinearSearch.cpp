@@ -12,4 +12,4 @@
 
 namespace BFGSOpt {
 int REALLY_A_HEADER_ONLY_LIBRARY = 0;
-}
+}  // namespace BFGSOpt

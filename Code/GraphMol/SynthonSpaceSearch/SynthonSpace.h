@@ -45,7 +45,7 @@ class ROMol;
 
 namespace RascalMCES {
 struct RascalOptions;
-}
+}  // namespace RascalMCES
 
 namespace SynthonSpaceSearch {
 

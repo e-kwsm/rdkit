@@ -18,7 +18,7 @@
 namespace ForceFields {
 namespace UFF {
 class AtomicParams;
-}
+}  // namespace UFF
 }  // namespace ForceFields
 namespace RDKit {
 class ROMol;

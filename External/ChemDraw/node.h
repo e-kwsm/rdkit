@@ -49,6 +49,6 @@ bool parseNode(
     RWMol &mol, unsigned int fragmentId, CDXNode &node, PageData &pagedata,
     std::map<std::pair<int, StereoGroupType>, StereoGroupInfo> &sgroups,
     int &missingFragId, int externalAttachment);
-}
+}  // namespace ChemDraw
 }  // namespace RDKit
 #endif

@@ -21,7 +21,7 @@ namespace UFF {
 
 namespace {
 constexpr double ANGLE_CORRECTION_THRESHOLD = 0.8660;
-}
+}  // namespace
 
 namespace Utils {
 double calcAngleForceConstant(double theta0, double bondOrder12,
