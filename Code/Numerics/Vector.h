@@ -1,3 +1,6 @@
+#ifndef HOME_KWSM_GITHUB_E_KWSM_RDKIT_LLVM_HEADER_GUARD_CODE_NUMERICS_VECTOR_H
+#define HOME_KWSM_GITHUB_E_KWSM_RDKIT_LLVM_HEADER_GUARD_CODE_NUMERICS_VECTOR_H
+
 //
 //  Copyright (C) 2004-2008 Greg Landrum and Rational Discovery LLC
 //
@@ -328,5 +331,7 @@ std::ostream &operator<<(std::ostream &target,
   target << "]\n";
   return target;
 }
+
+#endif
 
 #endif
