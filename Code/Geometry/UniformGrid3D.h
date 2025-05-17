@@ -1,3 +1,6 @@
+#ifndef HOME_KWSM_GITHUB_E_KWSM_RDKIT_LLVM_HEADER_GUARD_CODE_GEOMETRY_UNIFORMGRID3D_H
+#define HOME_KWSM_GITHUB_E_KWSM_RDKIT_LLVM_HEADER_GUARD_CODE_GEOMETRY_UNIFORMGRID3D_H
+
 //
 //   Copyright (C) 2005-2013 Greg Landrum and Rational Discovery LLC
 //
@@ -214,5 +217,7 @@ RDKIT_RDGEOMETRYLIB_EXPORT void writeGridToStream(const UniformGrid3D &grid,
 RDKIT_RDGEOMETRYLIB_EXPORT void writeGridToFile(const UniformGrid3D &grid,
                                                 const std::string &filename);
 }  // namespace RDGeom
+
+#endif
 
 #endif

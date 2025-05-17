@@ -1,3 +1,6 @@
+#ifndef HOME_KWSM_GITHUB_E_KWSM_RDKIT_LLVM_HEADER_GUARD_CODE_GEOMETRY_GRID3D_H
+#define HOME_KWSM_GITHUB_E_KWSM_RDKIT_LLVM_HEADER_GUARD_CODE_GEOMETRY_GRID3D_H
+
 //
 //   Copyright (C) 2005-2006 Rational Discovery LLC
 //
@@ -50,5 +53,7 @@ class RDKIT_RDGEOMETRYLIB_EXPORT Grid3D {
   virtual const VectorType *getOccupancyVect() const = 0;
 };
 }  // namespace RDGeom
+
+#endif
 
 #endif

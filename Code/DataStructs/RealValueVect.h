@@ -1,3 +1,6 @@
+#ifndef HOME_KWSM_GITHUB_E_KWSM_RDKIT_LLVM_HEADER_GUARD_CODE_DATASTRUCTS_REALVALUEVECT_H
+#define HOME_KWSM_GITHUB_E_KWSM_RDKIT_LLVM_HEADER_GUARD_CODE_DATASTRUCTS_REALVALUEVECT_H
+
 //
 //  Copyright (c) 2014-2024, Novartis Institutes for BioMedical Research and
 //  other RDKit contributors
@@ -133,5 +136,7 @@ RDKIT_DATASTRUCTS_EXPORT RealValueVect operator&(const RealValueVect &p1,
                                                  const RealValueVect &p2);
 
 }  // end of namespace RDKit
+
+#endif
 
 #endif

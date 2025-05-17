@@ -1,3 +1,6 @@
+#ifndef HOME_KWSM_GITHUB_E_KWSM_RDKIT_LLVM_HEADER_GUARD_CODE_GEOMETRY_POINT_H
+#define HOME_KWSM_GITHUB_E_KWSM_RDKIT_LLVM_HEADER_GUARD_CODE_GEOMETRY_POINT_H
+
 //
 // Copyright (C) 2003-2025 Greg Landrum and other RDKit contributors
 //
@@ -587,5 +590,7 @@ RDKIT_RDGEOMETRYLIB_EXPORT RDGeom::PointND operator*(const RDGeom::PointND &p1,
 RDKIT_RDGEOMETRYLIB_EXPORT RDGeom::PointND operator/(const RDGeom::PointND &p1,
                                                      double v);
 }  // namespace RDGeom
+
+#endif
 
 #endif
