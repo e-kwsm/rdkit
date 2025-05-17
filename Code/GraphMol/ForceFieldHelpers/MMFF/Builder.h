@@ -24,7 +24,7 @@
 
 namespace ForceFields {
 class ForceField;
-}
+}  // namespace ForceFields
 
 namespace RDKit {
 class ROMol;
