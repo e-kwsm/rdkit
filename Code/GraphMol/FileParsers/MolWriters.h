@@ -17,7 +17,6 @@
 #include <memory>
 #include <string>
 
-
 #ifdef RDK_BUILD_MAEPARSER_SUPPORT
 #include <maeparser/Writer.hpp>
 #endif  // RDK_BUILD_MAEPARSER_SUPPORT

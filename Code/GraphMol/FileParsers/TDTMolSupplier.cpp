@@ -66,7 +66,7 @@ void ParseNumberList(std::string inLine, std::vector<T> &res,
   }
 }
 
-}  // end of namespace TDTParseUtils
+}  // namespace TDTParseUtils
 
 namespace v2 {
 namespace FileParsers {

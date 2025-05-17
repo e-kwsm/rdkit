@@ -3584,8 +3584,9 @@ TEST_CASE("github #3912: cannot draw atom lists from SMARTS", "[query][bug]") {
   }
 }
 
-TEST_CASE("github #9607: Depiction code doesn't recognize all atom lists", "[queries]") {
- SECTION("support all atom lists when depicting") {
+TEST_CASE("github #9607: Depiction code doesn't recognize all atom lists",
+          "[queries]") {
+  SECTION("support all atom lists when depicting") {
     auto m1 = R"CTAB(
      RDKit          2D
 
@@ -3605,7 +3606,7 @@ M  V30 END CTAB
 M  END
 $$$$
 )CTAB"_ctab;
-      
+
     CHECK(isAtomListQuery(m1->getAtomWithIdx(1)));
     int panelWidth = -1;
     int panelHeight = -1;
@@ -11719,8 +11720,8 @@ TEST_CASE("colourScheme option from JSON", "[drawing]") {
     setDarkMode(reference);
 
     MolDrawOptions opts;
-    MolDraw2DUtils::updateMolDrawOptionsFromJSON(
-        opts, R"({"colourScheme": "dark"})");
+    MolDraw2DUtils::updateMolDrawOptionsFromJSON(opts,
+                                                 R"({"colourScheme": "dark"})");
     CHECK(opts.backgroundColour == reference.backgroundColour);
     CHECK(opts.backgroundColour != defaults.backgroundColour);
     CHECK(opts.legendColour == reference.legendColour);
@@ -11744,8 +11745,8 @@ TEST_CASE("colourScheme option from JSON", "[drawing]") {
   SECTION("scheme name is case-insensitive and darkmode is an alias") {
     MolDrawOptions reference;
     setDarkMode(reference);
-    for (const auto *json : {R"({"colourScheme": "Dark"})",
-                             R"({"colourScheme": "DARKMODE"})"}) {
+    for (const auto *json :
+         {R"({"colourScheme": "Dark"})", R"({"colourScheme": "DARKMODE"})"}) {
       MolDrawOptions opts;
       MolDraw2DUtils::updateMolDrawOptionsFromJSON(opts, json);
       CHECK(opts.backgroundColour == reference.backgroundColour);
@@ -11759,8 +11760,7 @@ TEST_CASE("colourScheme option from JSON", "[drawing]") {
 
     MolDrawOptions opts;
     MolDraw2DUtils::updateMolDrawOptionsFromJSON(
-        opts,
-        R"({"colourScheme": "dark", "backgroundColour": [0, 0, 1, 1]})");
+        opts, R"({"colourScheme": "dark", "backgroundColour": [0, 0, 1, 1]})");
     CHECK(opts.backgroundColour == blue);
     // everything else still comes from the scheme
     CHECK(opts.legendColour == reference.legendColour);

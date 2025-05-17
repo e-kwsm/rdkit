@@ -25,8 +25,7 @@ void wrap_fragparams(nb::module_ &m) {
   // i.e. one constructed there can be no changes done to the parameter object
   nb::class_<RDKit::FragCatParams>(m, "FragCatParams")
       .def(nb::init<unsigned int, unsigned int, std::string, double>(),
-           "lLen"_a, "uLen"_a,
-           "fgroupFilename"_a, "tol"_a = 1e-8)
+           "lLen"_a, "uLen"_a, "fgroupFilename"_a, "tol"_a = 1e-8)
       .def("GetTypeString", &RDKit::FragCatParams::getTypeStr)
       .def("GetUpperFragLength", &RDKit::FragCatParams::getUpperFragLength)
       .def("GetLowerFragLength", &RDKit::FragCatParams::getLowerFragLength)

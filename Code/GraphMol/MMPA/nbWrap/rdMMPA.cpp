@@ -89,20 +89,17 @@ nb::tuple fragmentMolHelper3(const RDKit::ROMol &mol,
 NB_MODULE(rdMMPA, m) {
   m.doc() = "Module containing a C++ implementation of code for doing MMPA";
 
-  m.def("FragmentMol", fragmentMolHelper,
-        "mol"_a, "maxCuts"_a = 3, "maxCutBonds"_a = 20,
-        "pattern"_a = "[#6+0;!$(*=,#[!#6])]!@!=!#[*]",
+  m.def("FragmentMol", fragmentMolHelper, "mol"_a, "maxCuts"_a = 3,
+        "maxCutBonds"_a = 20, "pattern"_a = "[#6+0;!$(*=,#[!#6])]!@!=!#[*]",
         "resultsAsMols"_a = true,
         R"DOC(Does the fragmentation necessary for an MMPA analysis)DOC");
 
-  m.def("FragmentMol", fragmentMolHelper2,
-        "mol"_a, "minCuts"_a, "maxCuts"_a, "maxCutBonds"_a,
-        "pattern"_a = "[#6+0;!$(*=,#[!#6])]!@!=!#[*]",
+  m.def("FragmentMol", fragmentMolHelper2, "mol"_a, "minCuts"_a, "maxCuts"_a,
+        "maxCutBonds"_a, "pattern"_a = "[#6+0;!$(*=,#[!#6])]!@!=!#[*]",
         "resultsAsMols"_a = true,
         R"DOC(Does the fragmentation necessary for an MMPA analysis)DOC");
 
-  m.def("FragmentMol", fragmentMolHelper3,
-        "mol"_a, "bondsToCut"_a, "minCuts"_a = 1, "maxCuts"_a = 3,
-        "resultsAsMols"_a = true,
+  m.def("FragmentMol", fragmentMolHelper3, "mol"_a, "bondsToCut"_a,
+        "minCuts"_a = 1, "maxCuts"_a = 3, "resultsAsMols"_a = true,
         R"DOC(Does the fragmentation necessary for an MMPA analysis)DOC");
 }

@@ -28,7 +28,8 @@ std::string stereoGroupClassDoc =
     "is a mix\nof diastereomers.\n";
 
 StereoGroup *createStereoGroup(StereoGroupType typ, ROMol &mol,
-                               python::object atomIds, python::object bondIds, unsigned readId) {
+                               python::object atomIds, python::object bondIds,
+                               unsigned readId) {
   std::vector<Atom *> cppAtoms;
   std::vector<Bond *> cppBonds;
   python::stl_input_iterator<unsigned int> beg(atomIds), end;
@@ -50,7 +51,8 @@ StereoGroup *createStereoGroup(StereoGroupType typ, ROMol &mol,
     ++bbeg;
   }
   if (cppAtoms.empty() && cppBonds.empty()) {
-    throw_value_error("New StereoGroup must contain at least one atom or bond.");
+    throw_value_error(
+        "New StereoGroup must contain at least one atom or bond.");
   }
   auto *sg = new StereoGroup(typ, cppAtoms, cppBonds, readId);
   return sg;
@@ -102,7 +104,8 @@ struct stereogroup_wrap {
                 "creates a StereoGroup associated with a molecule from a list "
                 "of atom Ids",
                 (python::arg("stereoGroupType"), python::arg("mol"),
-                 python::arg("atomIds") = boost::python::list(), python::arg("bondIds") = boost::python::list(),
+                 python::arg("atomIds") = boost::python::list(),
+                 python::arg("bondIds") = boost::python::list(),
                  python::arg("readId") = 0),
                 python::return_value_policy<
                     python::manage_new_object,

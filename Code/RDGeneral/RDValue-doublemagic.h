@@ -208,16 +208,14 @@ struct RDValue {
 
   inline RDValue(std::any *pointer) {
     // ensure that the pointer really is only 48 bit
-    assert((reinterpret_cast<std::uint64_t>(pointer) & RDTypeTag::AnyTag) ==
-           0);
+    assert((reinterpret_cast<std::uint64_t>(pointer) & RDTypeTag::AnyTag) == 0);
     otherBits = reinterpret_cast<std::uint64_t>(pointer) | RDTypeTag::AnyTag;
   }
 
   inline RDValue(const std::any &any) {
     // ensure that the pointer really is only 48 bit
     std::any *pointer = new std::any(any);
-    assert((reinterpret_cast<std::uint64_t>(pointer) & RDTypeTag::AnyTag) ==
-           0);
+    assert((reinterpret_cast<std::uint64_t>(pointer) & RDTypeTag::AnyTag) == 0);
     otherBits = reinterpret_cast<std::uint64_t>(pointer) | RDTypeTag::AnyTag;
   }
 
@@ -225,17 +223,15 @@ struct RDValue {
   template <class T>
   inline RDValue(const T &v) {
     std::any *pointer = new std::any(v);
-    assert((reinterpret_cast<std::uint64_t>(pointer) & RDTypeTag::AnyTag) ==
-           0);
+    assert((reinterpret_cast<std::uint64_t>(pointer) & RDTypeTag::AnyTag) == 0);
     otherBits = reinterpret_cast<std::uint64_t>(pointer) | RDTypeTag::AnyTag;
   }
 
   inline RDValue(const std::string &v) {
     std::string *pointer = new std::string(v);
-    assert((reinterpret_cast<std::uint64_t>(pointer) &
-            RDTypeTag::StringTag) == 0);
-    otherBits =
-        reinterpret_cast<std::uint64_t>(pointer) | RDTypeTag::StringTag;
+    assert((reinterpret_cast<std::uint64_t>(pointer) & RDTypeTag::StringTag) ==
+           0);
+    otherBits = reinterpret_cast<std::uint64_t>(pointer) | RDTypeTag::StringTag;
   }
 
   inline RDValue(const std::vector<double> &v) {
@@ -256,18 +252,17 @@ struct RDValue {
 
   inline RDValue(const std::vector<int> &v) {
     std::vector<int> *pointer = new std::vector<int>(v);
-    assert((reinterpret_cast<std::uint64_t>(pointer) &
-            RDTypeTag::VecIntTag) == 0);
-    otherBits =
-        reinterpret_cast<std::uint64_t>(pointer) | RDTypeTag::VecIntTag;
+    assert((reinterpret_cast<std::uint64_t>(pointer) & RDTypeTag::VecIntTag) ==
+           0);
+    otherBits = reinterpret_cast<std::uint64_t>(pointer) | RDTypeTag::VecIntTag;
   }
 
   inline RDValue(const std::vector<unsigned int> &v) {
     std::vector<unsigned int> *pointer = new std::vector<unsigned int>(v);
-    assert((reinterpret_cast<std::uint64_t>(pointer) &
-            RDTypeTag::VecIntTag) == 0);
-    otherBits = reinterpret_cast<std::uint64_t>(pointer) |
-                RDTypeTag::VecUnsignedIntTag;
+    assert((reinterpret_cast<std::uint64_t>(pointer) & RDTypeTag::VecIntTag) ==
+           0);
+    otherBits =
+        reinterpret_cast<std::uint64_t>(pointer) | RDTypeTag::VecUnsignedIntTag;
   }
 
   inline RDValue(const std::vector<std::string> &v) {
@@ -421,7 +416,8 @@ inline T rdvalue_cast(RDValue_cast_t v) {
   static_assert(
       !((std::is_pointer<T>::value &&
          (std::is_integral<typename std::remove_pointer<T>::type>::value ||
-          std::is_floating_point<typename std::remove_pointer<T>::type>::value)) ||
+          std::is_floating_point<
+              typename std::remove_pointer<T>::type>::value)) ||
         (std::is_reference<T>::value &&
          (std::is_integral<typename std::remove_reference<T>::type>::value ||
           std::is_floating_point<

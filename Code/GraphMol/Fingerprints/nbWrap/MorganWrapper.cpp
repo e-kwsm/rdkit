@@ -57,10 +57,9 @@ FingerprintGenerator<OutputType> *getMorganGenerator(
 void exportMorgan(nb::module_ &m) {
   nb::class_<MorganFingerprint::MorganArguments, FingerprintArguments>(
       m, "MorganFingerprintOptions")
-      .def_rw(
-          "onlyNonzeroInvariants",
-          &MorganFingerprint::MorganArguments::df_onlyNonzeroInvariants,
-          "use include atoms which have nonzero invariants")
+      .def_rw("onlyNonzeroInvariants",
+              &MorganFingerprint::MorganArguments::df_onlyNonzeroInvariants,
+              "use include atoms which have nonzero invariants")
       .def_rw("radius", &MorganFingerprint::MorganArguments::d_radius,
               "the radius of the fingerprints to generate")
       .def_rw(
@@ -68,16 +67,14 @@ void exportMorgan(nb::module_ &m) {
           &MorganFingerprint::MorganArguments::df_includeRedundantEnvironments,
           "include redundant environments in the fingerprint");
 
-  m.def(
-      "GetMorganGenerator", getMorganGenerator<std::uint64_t>,
-      "radius"_a = 3, "countSimulation"_a = false,
-      "includeChirality"_a = false, "useBondTypes"_a = true,
-      "onlyNonzeroInvariants"_a = false, "includeRingMembership"_a = true,
-      "countBounds"_a = nb::none(), "fpSize"_a = 2048,
-      "atomInvariantsGenerator"_a = nb::none(),
-      "bondInvariantsGenerator"_a = nb::none(),
-      "includeRedundantEnvironments"_a = false,
-      R"DOC(Get a morgan fingerprint generator
+  m.def("GetMorganGenerator", getMorganGenerator<std::uint64_t>, "radius"_a = 3,
+        "countSimulation"_a = false, "includeChirality"_a = false,
+        "useBondTypes"_a = true, "onlyNonzeroInvariants"_a = false,
+        "includeRingMembership"_a = true, "countBounds"_a = nb::none(),
+        "fpSize"_a = 2048, "atomInvariantsGenerator"_a = nb::none(),
+        "bondInvariantsGenerator"_a = nb::none(),
+        "includeRedundantEnvironments"_a = false,
+        R"DOC(Get a morgan fingerprint generator
 
 ARGUMENTS:
     - radius: the number of iterations to grow the fingerprint
@@ -98,7 +95,7 @@ This generator supports the following AdditionalOutput types:
 
 RETURNS: FingerprintGenerator
 )DOC",
-      nb::rv_policy::take_ownership);
+        nb::rv_policy::take_ownership);
 
   m.def(
       "GetMorganAtomInvGen",
@@ -149,8 +146,7 @@ RETURNS: AtomInvariantsGenerator
         return new MorganFingerprint::MorganBondInvGenerator(useBondTypes,
                                                              useChirality);
       },
-      "useBondTypes"_a = true,
-      "useChirality"_a = false,
+      "useBondTypes"_a = true, "useChirality"_a = false,
       R"DOC(Get a morgan bond invariants generator
 
 ARGUMENTS:

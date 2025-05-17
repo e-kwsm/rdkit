@@ -545,8 +545,7 @@ TEST_CASE("RDKit fingerprinter and ignoreAtoms") {
   std::vector<std::uint32_t> ignoreAtoms = {2};
   RDKit::FingerprintFuncArguments funcArgs;
   funcArgs.ignoreAtoms = &ignoreAtoms;
-  std::unique_ptr<SparseBitVect> fp2{
-      fpg->getSparseFingerprint(*mol, funcArgs)};
+  std::unique_ptr<SparseBitVect> fp2{fpg->getSparseFingerprint(*mol, funcArgs)};
   CHECK(fp2->getNumOnBits() == 1);
   std::vector<int> obl;
   fp2->getOnBits(obl);
@@ -554,7 +553,6 @@ TEST_CASE("RDKit fingerprinter and ignoreAtoms") {
   CHECK((*fp1)[obl[0]] == 1);
   // make sure we continue to ignore the atoms even if they are fromAtoms
   funcArgs.fromAtoms = &ignoreAtoms;
-  std::unique_ptr<SparseBitVect> fp3{
-      fpg->getSparseFingerprint(*mol, funcArgs)};
+  std::unique_ptr<SparseBitVect> fp3{fpg->getSparseFingerprint(*mol, funcArgs)};
   CHECK(fp3->getNumOnBits() == 0);
 }

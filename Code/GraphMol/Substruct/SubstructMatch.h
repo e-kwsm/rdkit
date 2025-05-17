@@ -289,7 +289,9 @@ struct RDKIT_SUBSTRUCTMATCH_EXPORT AtomCoordsMatchFunctor {
   double d_tol2 = 1e-8;  //< squared distance tolerance
   AtomCoordsMatchFunctor(int refConfId = -1, int queryConfId = -1,
                          double tol = 1e-4)
-      : d_refConfId(refConfId), d_queryConfId(queryConfId), d_tol2(tol * tol){};
+      : d_refConfId(refConfId),
+        d_queryConfId(queryConfId),
+        d_tol2(tol * tol) {};
 
   bool operator()(const Atom &queryAtom, const Atom &targetAtom) const;
 };

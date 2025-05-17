@@ -208,8 +208,8 @@ void MacroMolTemplateLibrary::addTemplate(
     std::unique_ptr<MacroMolTemplate> macroMolTemplate) {
   PRECONDITION(macroMolTemplate, "cannot add a null MacroMolTemplate");
 
-  const MacroMolTemplateKey nameKey{
-      macroMolTemplate->getMonomerClass(), macroMolTemplate->getName()};
+  const MacroMolTemplateKey nameKey{macroMolTemplate->getMonomerClass(),
+                                    macroMolTemplate->getName()};
   if (byName.find(nameKey) != byName.end()) {
     throw ValueErrorException(
         "MacroMolTemplateLibrary already contains an entry with the same "

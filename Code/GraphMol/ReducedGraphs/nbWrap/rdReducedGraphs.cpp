@@ -26,9 +26,8 @@ nb::ndarray<nb::numpy, double, nb::ndim<1>> dvToNumpyArray(
   double *data = new double[n];
   memcpy(data, dv->getData(), n * sizeof(double));
   delete dv;
-  nb::capsule owner(data, [](void *p) noexcept {
-    delete[] reinterpret_cast<double *>(p);
-  });
+  nb::capsule owner(
+      data, [](void *p) noexcept { delete[] reinterpret_cast<double *>(p); });
   return nb::ndarray<nb::numpy, double, nb::ndim<1>>(data, {n}, owner);
 }
 
@@ -58,9 +57,8 @@ NB_MODULE(rdReducedGraphs, m) {
           throw std::invalid_argument(
               "specification of atom types not yet supported");
         }
-        auto *dv =
-            RDKit::ReducedGraphs::generateErGFingerprintForReducedGraph(
-                mol, nullptr, fuzzIncrement, minPath, maxPath);
+        auto *dv = RDKit::ReducedGraphs::generateErGFingerprintForReducedGraph(
+            mol, nullptr, fuzzIncrement, minPath, maxPath);
         return dvToNumpyArray(dv);
       },
       "mol"_a, "atomTypes"_a = nb::none(), "fuzzIncrement"_a = 0.3,

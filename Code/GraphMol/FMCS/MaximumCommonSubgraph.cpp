@@ -679,7 +679,7 @@ bool MaximumCommonSubgraph::growSeeds() {
     McsIdx.Targets = Targets;
   }
   return !canceled;
-}  // namespace FMCS
+}
 
 struct AtomMatch {  // for each seed atom (matched)
   unsigned int QueryAtomIdx;

@@ -239,13 +239,15 @@ python::object autoConvertString(const RDOb *ob, const std::string &key) {
     if (ob->getPropIfPresent(key, ivalue)) {
       return python::object(ivalue);
     }
-  } catch (const std::bad_any_cast &) {}
+  } catch (const std::bad_any_cast &) {
+  }
 
   try {
     if (ob->getPropIfPresent(key, dvalue)) {
       return python::object(dvalue);
     }
-  } catch (const std::bad_any_cast &) {}
+  } catch (const std::bad_any_cast &) {
+  }
 
   if (ob->getPropIfPresent(key, svalue)) {
     return python::object(svalue);
@@ -357,7 +359,7 @@ PyObject *GetPyProp(const RDOb *obj, const std::string &key, bool autoConvert) {
 
 template <class RDOb>
 PyObject *GetPyPropOrDefault(const RDOb *obj, const std::string &key,
-                              bool autoConvert, python::object default_val) {
+                             bool autoConvert, python::object default_val) {
   return GetPyPropImpl(obj, key, autoConvert, &default_val);
 }
 

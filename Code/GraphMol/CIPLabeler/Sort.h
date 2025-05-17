@@ -44,7 +44,7 @@ class Sort {
 
   int compareSubstituents(const Node *node, const Edge *a, const Edge *b,
                           bool deep) const;
-};  // namespace CIPLabeler
+};
 
 }  // namespace CIPLabeler
 }  // namespace RDKit

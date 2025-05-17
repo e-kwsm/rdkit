@@ -29,7 +29,8 @@ namespace Chirality {
 
 //! double bond stereo will be ignored/removed for rings smaller than this,
 //! and also atropisomer stereo will be removed for rings smaller than this,
-//! the general logic is that these rings become large enough to contain stereo info
+//! the general logic is that these rings become large enough to contain stereo
+//! info
 constexpr unsigned int minRingSizeForDoubleBondStereo = 8;
 
 constexpr auto nonTetrahedralStereoEnvVar = "RDK_ENABLE_NONTETRAHEDRAL_STEREO";
@@ -241,8 +242,8 @@ enum class WedgeInfoType {
 
 class WedgeInfoBase {
  public:
-  WedgeInfoBase(int idxInit) : idx(idxInit){};
-  virtual ~WedgeInfoBase(){};
+  WedgeInfoBase(int idxInit) : idx(idxInit) {};
+  virtual ~WedgeInfoBase() {};
 
   virtual WedgeInfoType getType() const = 0;
   virtual Bond::BondDir getDir() const = 0;
@@ -255,7 +256,7 @@ class WedgeInfoBase {
 
 class WedgeInfoChiral : public WedgeInfoBase {
  public:
-  WedgeInfoChiral(int atomId) : WedgeInfoBase(atomId){};
+  WedgeInfoChiral(int atomId) : WedgeInfoBase(atomId) {};
   ~WedgeInfoChiral() override {}
 
   WedgeInfoType getType() const override {
