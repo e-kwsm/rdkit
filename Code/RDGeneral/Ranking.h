@@ -1,3 +1,6 @@
+#ifndef HOME_KWSM_GITHUB_E_KWSM_RDKIT_LLVM_HEADER_GUARD_CODE_RDGENERAL_RANKING_H
+#define HOME_KWSM_GITHUB_E_KWSM_RDKIT_LLVM_HEADER_GUARD_CODE_RDGENERAL_RANKING_H
+
 //
 //  Copyright (C) 2004-2015 Greg Landrum and Rational Discovery LLC
 //
@@ -63,4 +66,6 @@ void rankVect(const std::vector<T1> &vect, T2 &res) {
   }
 }
 }  // namespace Rankers
+#endif
+
 #endif

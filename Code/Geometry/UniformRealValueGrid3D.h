@@ -1,3 +1,6 @@
+#ifndef HOME_KWSM_GITHUB_E_KWSM_RDKIT_LLVM_HEADER_GUARD_CODE_GEOMETRY_UNIFORMREALVALUEGRID3D_H
+#define HOME_KWSM_GITHUB_E_KWSM_RDKIT_LLVM_HEADER_GUARD_CODE_GEOMETRY_UNIFORMREALVALUEGRID3D_H
+
 //
 //  Copyright (c) 2014-2024, Novartis Institutes for BioMedical Research and
 //  other RDKit contributors
@@ -197,5 +200,7 @@ RDKIT_RDGEOMETRYLIB_EXPORT UniformRealValueGrid3D operator+(
 RDKIT_RDGEOMETRYLIB_EXPORT UniformRealValueGrid3D operator-(
     const UniformRealValueGrid3D &grd1, const UniformRealValueGrid3D &grd2);
 }  // namespace RDGeom
+
+#endif
 
 #endif

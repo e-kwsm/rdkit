@@ -7,9 +7,9 @@
 //  which is included in the file license.txt, found at the root
 //  of the RDKit source tree.
 //
-#include <RDGeneral/export.h>
 #ifndef RD_FPBREADER_H_DEC2015
 #define RD_FPBREADER_H_DEC2015
+#include <RDGeneral/export.h>
 /*! \file FPBReader.h
 
   \brief contains a simple class for reading and searching FPB files
