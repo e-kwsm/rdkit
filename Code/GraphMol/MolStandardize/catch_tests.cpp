@@ -1833,7 +1833,8 @@ M  END
   }
 }
 
-TEST_CASE("tautomer canonicalize clears invalid bond stereo after bond-order changes") {
+TEST_CASE(
+    "tautomer canonicalize clears invalid bond stereo after bond-order changes") {
   std::string molblock = R"CTAB(
      RDKit          2D
 
@@ -1918,8 +1919,7 @@ TEST_CASE("canonical tautomer keeps stereo on an equal-score tie",
   }
 
   SECTION("open-chain D-fructose keeps all three centres") {
-    std::unique_ptr<RWMol> m{
-        SmilesToMol("O=C(CO)[C@@H](O)[C@H](O)[C@H](O)CO")};
+    std::unique_ptr<RWMol> m{SmilesToMol("O=C(CO)[C@@H](O)[C@H](O)[C@H](O)CO")};
     REQUIRE(m);
     std::unique_ptr<ROMol> canon{te.canonicalize(*m)};
     REQUIRE(canon);

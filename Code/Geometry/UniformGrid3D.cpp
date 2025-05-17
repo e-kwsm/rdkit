@@ -17,7 +17,8 @@
 
 namespace {
 // file-local tolerances; named distinctly from the same-purpose constants in
-// UniformRealValueGrid3D.cpp so the two don't become ambiguous under unity builds
+// UniformRealValueGrid3D.cpp so the two don't become ambiguous under unity
+// builds
 constexpr double GRID_OFFSET_TOL = 1.e-8;
 constexpr double GRID_SPACING_TOL = 1.e-8;
 }  // namespace

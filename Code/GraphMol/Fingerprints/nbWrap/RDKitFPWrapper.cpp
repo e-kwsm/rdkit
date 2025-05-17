@@ -60,14 +60,13 @@ void exportRDKit(nb::module_ &m) {
       .def_rw("useBondOrder", &RDKitFP::RDKitFPArguments::df_useBondOrder,
               "include bond orders in the path hashes");
 
-  m.def(
-      "GetRDKitFPGenerator", &getRDKitFPGenerator<std::uint64_t>,
-      "minPath"_a = 1, "maxPath"_a = 7, "useHs"_a = true,
-      "branchedPaths"_a = true, "useBondOrder"_a = true,
-      "countSimulation"_a = false, "countBounds"_a = nb::none(),
-      "fpSize"_a = 2048, "numBitsPerFeature"_a = 2,
-      "atomInvariantsGenerator"_a = nb::none(),
-      R"DOC(Get an RDKit fingerprint generator
+  m.def("GetRDKitFPGenerator", &getRDKitFPGenerator<std::uint64_t>,
+        "minPath"_a = 1, "maxPath"_a = 7, "useHs"_a = true,
+        "branchedPaths"_a = true, "useBondOrder"_a = true,
+        "countSimulation"_a = false, "countBounds"_a = nb::none(),
+        "fpSize"_a = 2048, "numBitsPerFeature"_a = 2,
+        "atomInvariantsGenerator"_a = nb::none(),
+        R"DOC(Get an RDKit fingerprint generator
 
 ARGUMENTS:
     - minPath: the minimum path length (in bonds) to be included
@@ -89,7 +88,7 @@ This generator supports the following AdditionalOutput types:
 
 RETURNS: FingerprintGenerator
 )DOC",
-      nb::rv_policy::take_ownership);
+        nb::rv_policy::take_ownership);
 
   m.def(
       "GetRDKitAtomInvGen",

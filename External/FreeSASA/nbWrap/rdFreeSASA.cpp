@@ -95,8 +95,8 @@ RETURNS:
         }
         return FreeSASA::calcSASA(mol, vradii, confIdx, atom, opts);
       },
-      "mol"_a, "radii"_a, "confIdx"_a = -1,
-      "query"_a = nb::none(), "opts"_a = FreeSASA::SASAOpts(),
+      "mol"_a, "radii"_a, "confIdx"_a = -1, "query"_a = nb::none(),
+      "opts"_a = FreeSASA::SASAOpts(),
       R"DOC(Compute the Solvent Accessible Surface Area using the FreeSASA library
 ARGUMENTS:
   - mol: The molecule to compute.

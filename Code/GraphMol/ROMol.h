@@ -145,7 +145,7 @@ struct CXXAtomIterator {
       }
     }
 
-    CXXAtomIter(){};
+    CXXAtomIter() {};
 
     CXXAtomIter(Graph *graph, Iterator pos) : graph(graph), pos(pos) {
       if constexpr (CheckedAtoms) {
@@ -237,7 +237,7 @@ struct CXXAtomIterator {
     std::tie(vstart, vend) = boost::vertices(*graph);
   }
   CXXAtomIterator(Graph *graph, Iterator start, Iterator end)
-      : graph(graph), vstart(start), vend(end){};
+      : graph(graph), vstart(start), vend(end) {};
   CXXAtomIter begin() { return {graph, vstart}; }
   CXXAtomIter end() { return {graph, vend}; }
   size_t size() const { return vend - vstart; }
@@ -275,7 +275,7 @@ struct CXXBondIterator {
       }
     }
 
-    CXXBondIter(){};
+    CXXBondIter() {};
 
     CXXBondIter(Graph *graph, Iterator pos) : graph(graph), pos(pos) {
       if constexpr (Checked) {
@@ -324,7 +324,7 @@ struct CXXBondIterator {
     vend = vs.second;
   }
   CXXBondIterator(Graph *graph, Iterator start, Iterator end)
-      : graph(graph), vstart(start), vend(end){};
+      : graph(graph), vstart(start), vend(end) {};
   CXXBondIter begin() { return {graph, vstart}; }
   CXXBondIter end() { return {graph, vend}; }
   size_t size() const {
@@ -1027,8 +1027,8 @@ class RDKIT_GRAPHMOL_EXPORT ROMol : public RDProps {
 
   friend RDKIT_GRAPHMOL_EXPORT std::vector<SubstanceGroup> &getSubstanceGroups(
       ROMol &);
-  friend RDKIT_GRAPHMOL_EXPORT const std::vector<SubstanceGroup>
-      &getSubstanceGroups(const ROMol &);
+  friend RDKIT_GRAPHMOL_EXPORT const std::vector<SubstanceGroup> &
+  getSubstanceGroups(const ROMol &);
   void clearSubstanceGroups() { d_sgroups.clear(); }
 
  protected:

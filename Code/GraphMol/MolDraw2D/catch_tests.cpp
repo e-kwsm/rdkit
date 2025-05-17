@@ -11686,8 +11686,8 @@ TEST_CASE("colourScheme option from JSON", "[drawing]") {
     setDarkMode(reference);
 
     MolDrawOptions opts;
-    MolDraw2DUtils::updateMolDrawOptionsFromJSON(
-        opts, R"({"colourScheme": "dark"})");
+    MolDraw2DUtils::updateMolDrawOptionsFromJSON(opts,
+                                                 R"({"colourScheme": "dark"})");
     CHECK(opts.backgroundColour == reference.backgroundColour);
     CHECK(opts.backgroundColour != defaults.backgroundColour);
     CHECK(opts.legendColour == reference.legendColour);
@@ -11711,8 +11711,8 @@ TEST_CASE("colourScheme option from JSON", "[drawing]") {
   SECTION("scheme name is case-insensitive and darkmode is an alias") {
     MolDrawOptions reference;
     setDarkMode(reference);
-    for (const auto *json : {R"({"colourScheme": "Dark"})",
-                             R"({"colourScheme": "DARKMODE"})"}) {
+    for (const auto *json :
+         {R"({"colourScheme": "Dark"})", R"({"colourScheme": "DARKMODE"})"}) {
       MolDrawOptions opts;
       MolDraw2DUtils::updateMolDrawOptionsFromJSON(opts, json);
       CHECK(opts.backgroundColour == reference.backgroundColour);
@@ -11726,8 +11726,7 @@ TEST_CASE("colourScheme option from JSON", "[drawing]") {
 
     MolDrawOptions opts;
     MolDraw2DUtils::updateMolDrawOptionsFromJSON(
-        opts,
-        R"({"colourScheme": "dark", "backgroundColour": [0, 0, 1, 1]})");
+        opts, R"({"colourScheme": "dark", "backgroundColour": [0, 0, 1, 1]})");
     CHECK(opts.backgroundColour == blue);
     // everything else still comes from the scheme
     CHECK(opts.legendColour == reference.legendColour);

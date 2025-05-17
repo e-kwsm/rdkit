@@ -182,7 +182,7 @@ class ConformerIterSeq {
   std::vector<Conformer *>::iterator begin() { return _confs.begin(); }
   std::vector<Conformer *>::iterator end() { return _confs.end(); }
   Conformer *operator[](int idx) {
-    if(_mol.getNumConformers() != _confs.size()) {
+    if (_mol.getNumConformers() != _confs.size()) {
       throw std::runtime_error("Sequence modified during iteration");
     }
     if (idx < 0 || static_cast<size_t>(idx) >= _confs.size()) {

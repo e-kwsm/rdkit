@@ -20,14 +20,13 @@ using namespace nb::literals;
 namespace {
 
 nb::ndarray<nb::numpy, double, nb::ndim<2>> getMatrixProp(const double *mat,
-                                                           unsigned int dim1,
-                                                           unsigned int dim2) {
+                                                          unsigned int dim1,
+                                                          unsigned int dim2) {
   if (!mat) {
     throw nb::value_error("matrix has not been initialized");
   }
   auto *resData = new double[dim1 * dim2];
-  memcpy(resData, static_cast<const void *>(mat),
-         dim1 * dim2 * sizeof(double));
+  memcpy(resData, static_cast<const void *>(mat), dim1 * dim2 * sizeof(double));
   nb::capsule owner(resData, [](void *f) noexcept {
     delete[] reinterpret_cast<double *>(f);
   });
@@ -35,8 +34,8 @@ nb::ndarray<nb::numpy, double, nb::ndim<2>> getMatrixProp(const double *mat,
                                                      owner);
 }
 
-nb::ndarray<nb::numpy, double, nb::ndim<1>> getSymmMatrixProp(
-    const double *mat, unsigned int sz) {
+nb::ndarray<nb::numpy, double, nb::ndim<1>> getSymmMatrixProp(const double *mat,
+                                                              unsigned int sz) {
   if (!mat) {
     throw nb::value_error("matrix has not been initialized");
   }
@@ -50,7 +49,7 @@ nb::ndarray<nb::numpy, double, nb::ndim<1>> getSymmMatrixProp(
 }
 
 nb::ndarray<nb::numpy, double, nb::ndim<1>> getVectorProp(const double *mat,
-                                                           unsigned int sz) {
+                                                          unsigned int sz) {
   if (!mat) {
     throw nb::value_error("vector has not been initialized");
   }
@@ -85,8 +84,8 @@ change from one release to the next.)DOC";
       .def(
           "GetReducedOverlapPopulationMatrix",
           [](RDKit::EHTTools::EHTResults &self) {
-            return getSymmMatrixProp(
-                self.reducedOverlapPopulationMatrix.get(), self.numAtoms);
+            return getSymmMatrixProp(self.reducedOverlapPopulationMatrix.get(),
+                                     self.numAtoms);
           },
           "returns the reduced overlap population matrix")
       .def(
@@ -104,8 +103,8 @@ change from one release to the next.)DOC";
                   "keepOverlapAndHamiltonianMatrices=True "
                   "to preserve it.");
             }
-            return getMatrixProp(self.hamiltonianMatrix.get(),
-                                 self.numOrbitals, self.numOrbitals);
+            return getMatrixProp(self.hamiltonianMatrix.get(), self.numOrbitals,
+                                 self.numOrbitals);
           },
           "returns the symmetric Hamiltonian matrix")
       .def(
@@ -135,11 +134,10 @@ change from one release to the next.)DOC";
         auto *eRes = new RDKit::EHTTools::EHTResults();
         bool ok = RDKit::EHTTools::runMol(mol, *eRes, confId,
                                           keepOverlapAndHamiltonianMatrices);
-        return nb::make_tuple(
-            ok, nb::cast(eRes, nb::rv_policy::take_ownership));
+        return nb::make_tuple(ok,
+                              nb::cast(eRes, nb::rv_policy::take_ownership));
       },
-      "mol"_a, "confId"_a = -1,
-      "keepOverlapAndHamiltonianMatrices"_a = false,
+      "mol"_a, "confId"_a = -1, "keepOverlapAndHamiltonianMatrices"_a = false,
       R"DOC(Runs an extended Hueckel calculation for a molecule.
 The molecule should have at least one conformation
 

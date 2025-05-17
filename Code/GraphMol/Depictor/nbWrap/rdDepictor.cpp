@@ -42,8 +42,9 @@ static unsigned int compute2DCoordsHelper(RDKit::ROMol &mol, bool canonOrient,
                                           bool clearConfs, nb::dict coordMap,
                                           unsigned int nFlipsPerSample,
                                           unsigned int nSamples, int sampleSeed,
-                                          int permuteDeg4Nodes, double bondLength,
-                                          bool forceRDKit, bool useRingTemplates) {
+                                          int permuteDeg4Nodes,
+                                          double bondLength, bool forceRDKit,
+                                          bool useRingTemplates) {
   RDGeom::INT_POINT2D_MAP cMap;
   cMap.clear();
   for (auto item : coordMap) {
@@ -57,10 +58,9 @@ static unsigned int compute2DCoordsHelper(RDKit::ROMol &mol, bool canonOrient,
   if (bondLength > 0) {
     RDDepict::BOND_LEN = bondLength;
   }
-  unsigned int res =
-      RDDepict::compute2DCoords(mol, &cMap, canonOrient, clearConfs,
-                                nFlipsPerSample, nSamples, sampleSeed,
-                                (bool)permuteDeg4Nodes, forceRDKit, useRingTemplates);
+  unsigned int res = RDDepict::compute2DCoords(
+      mol, &cMap, canonOrient, clearConfs, nFlipsPerSample, nSamples,
+      sampleSeed, (bool)permuteDeg4Nodes, forceRDKit, useRingTemplates);
   if (bondLength > 0) {
     RDDepict::BOND_LEN = oBondLen;
   }
@@ -68,11 +68,10 @@ static unsigned int compute2DCoordsHelper(RDKit::ROMol &mol, bool canonOrient,
 }
 
 static unsigned int compute2DCoordsMimicDistmatHelper(
-    RDKit::ROMol &mol,
-    nb::ndarray<nb::numpy, double, nb::ndim<1>> distMat, bool canonOrient,
-    bool clearConfs, double weightDistMat, unsigned int nFlipsPerSample,
-    unsigned int nSamples, int sampleSeed, bool permuteDeg4Nodes,
-    double bondLength, bool forceRDKit) {
+    RDKit::ROMol &mol, nb::ndarray<nb::numpy, double, nb::ndim<1>> distMat,
+    bool canonOrient, bool clearConfs, double weightDistMat,
+    unsigned int nFlipsPerSample, unsigned int nSamples, int sampleSeed,
+    bool permuteDeg4Nodes, double bondLength, bool forceRDKit) {
   unsigned int na = mol.getNumAtoms();
   unsigned int nitems = na * (na - 1) / 2;
 
@@ -126,17 +125,16 @@ static nb::tuple generate2DStructureWithParamsHelper(
 }
 
 static void generate2DStructureAtomMapHelper(
-    RDKit::ROMol &mol, const RDKit::ROMol &reference,
-    const nb::object &atomMap, int confId,
-    const ConstrainedDepictionParams &params) {
+    RDKit::ROMol &mol, const RDKit::ROMol &reference, const nb::object &atomMap,
+    int confId, const ConstrainedDepictionParams &params) {
   std::unique_ptr<RDKit::MatchVectType> matchVect(translateAtomMap(atomMap));
   RDDepict::generateDepictionMatching2DStructure(mol, reference, *matchVect,
                                                  confId, params);
 }
 
 static void generate2DStructureAtomMapWithParamsHelper(
-    RDKit::ROMol &mol, const RDKit::ROMol &reference,
-    const nb::object &atomMap, int confId, const nb::object &pyParams) {
+    RDKit::ROMol &mol, const RDKit::ROMol &reference, const nb::object &atomMap,
+    int confId, const nb::object &pyParams) {
   ConstrainedDepictionParams params;
   if (!pyParams.is_none()) {
     params = nb::cast<ConstrainedDepictionParams>(pyParams);
@@ -145,19 +143,16 @@ static void generate2DStructureAtomMapWithParamsHelper(
 }
 
 static void generate2DStructureAtomMapForceRDKitHelper(
-    RDKit::ROMol &mol, const RDKit::ROMol &reference,
-    const nb::object &atomMap, int confId, bool forceRDKit) {
+    RDKit::ROMol &mol, const RDKit::ROMol &reference, const nb::object &atomMap,
+    int confId, bool forceRDKit) {
   ConstrainedDepictionParams params;
   params.forceRDKit = forceRDKit;
   generate2DStructureAtomMapHelper(mol, reference, atomMap, confId, params);
 }
 
-static void generateDepictionMatching3DStructureHelper(RDKit::ROMol &mol,
-                                                 RDKit::ROMol &reference,
-                                                 int confId,
-                                                 nb::object refPatt,
-                                                 bool acceptFailure,
-                                                 bool forceRDKit) {
+static void generateDepictionMatching3DStructureHelper(
+    RDKit::ROMol &mol, RDKit::ROMol &reference, int confId, nb::object refPatt,
+    bool acceptFailure, bool forceRDKit) {
   RDKit::ROMol *referencePattern = nullptr;
   if (!refPatt.is_none()) {
     referencePattern = nb::cast<RDKit::ROMol *>(refPatt);
@@ -211,7 +206,8 @@ NB_MODULE(rdDepictor, m) {
   m.doc() =
       R"DOC(Module containing the functionality to compute 2D coordinates for a molecule)DOC";
 
-  nb::exception<RDDepict::DepictException>(m, "DepictException", PyExc_ValueError);
+  nb::exception<RDDepict::DepictException>(m, "DepictException",
+                                           PyExc_ValueError);
 
   m.def("IsCoordGenSupportAvailable", isCoordGenSupportAvailable,
         "Returns whether RDKit was built with CoordGen support.");
@@ -225,19 +221,17 @@ NB_MODULE(rdDepictor, m) {
 #endif
   );
 
-  m.def(
-      "SetRingSystemTemplates", RDDepict::setRingSystemTemplates,
-      "templatePath"_a,
-      R"DOC(Loads the ring system templates from the specified file to be
+  m.def("SetRingSystemTemplates", RDDepict::setRingSystemTemplates,
+        "templatePath"_a,
+        R"DOC(Loads the ring system templates from the specified file to be
 used in 2D coordinate generation. Each template must be a single
 line in the file represented using CXSMILES, and the structure should
 be a single ring system. Throws a DepictException if any templates
 are invalid.)DOC");
 
-  m.def(
-      "AddRingSystemTemplates", RDDepict::addRingSystemTemplates,
-      "templatePath"_a,
-      R"DOC(Adds the ring system templates from the specified file to be
+  m.def("AddRingSystemTemplates", RDDepict::addRingSystemTemplates,
+        "templatePath"_a,
+        R"DOC(Adds the ring system templates from the specified file to be
 used in 2D coordinate generation. If there are duplicates, the most
 recently added template will be used. Each template must be a single
 line in the file represented using CXSMILES, and the structure should
@@ -263,12 +257,12 @@ are invalid.)DOC");
       "Context manager to temporarily set CoordGen library preference in RDKit depiction.")
       .def(nb::init<bool>(), "temp_state"_a, "Constructor")
       .def("__enter__", &UsingCoordGen::enter)
-      .def("__exit__", &UsingCoordGen::exit,
-           "exc_type"_a = nb::none(), "exc_val"_a = nb::none(),
-           "traceback"_a = nb::none());
+      .def("__exit__", &UsingCoordGen::exit, "exc_type"_a = nb::none(),
+           "exc_val"_a = nb::none(), "traceback"_a = nb::none());
 
-  nb::class_<ConstrainedDepictionParams>(m, "ConstrainedDepictionParams",
-                                         "Parameters controlling constrained depiction")
+  nb::class_<ConstrainedDepictionParams>(
+      m, "ConstrainedDepictionParams",
+      "Parameters controlling constrained depiction")
       .def(nb::init<>())
       .def_rw(
           "acceptFailure", &ConstrainedDepictionParams::acceptFailure,
@@ -279,9 +273,8 @@ if True, an unconstrained depiction will be generated)DOC")
           "forceRDKit", &ConstrainedDepictionParams::forceRDKit,
           R"DOC(if True, use RDKit to generate coordinates even if preferCoordGen
 is set to True; defaults to False)DOC")
-      .def_rw(
-          "allowRGroups", &ConstrainedDepictionParams::allowRGroups,
-          R"DOC(if True, terminal dummy atoms in the reference are ignored
+      .def_rw("allowRGroups", &ConstrainedDepictionParams::allowRGroups,
+              R"DOC(if True, terminal dummy atoms in the reference are ignored
 if they match an implicit hydrogen in the molecule or if they are
 attached top a query atom; defaults to False)DOC")
       .def_rw(
@@ -293,30 +286,27 @@ from conformation existingConfId are preserved (if they exist)
 or generated without constraints (if they do not exist), then
 the conformation is rigid-body aligned to the reference)DOC")
       .def_rw("adjustMolBlockWedging",
-               &ConstrainedDepictionParams::adjustMolBlockWedging,
-               R"DOC(if True (default), existing wedging information
+              &ConstrainedDepictionParams::adjustMolBlockWedging,
+              R"DOC(if True (default), existing wedging information
 will be updated or cleared as required; if False,
 existing molblock wedging information will
 always be preserved)DOC")
-      .def_rw(
-          "existingConfId", &ConstrainedDepictionParams::existingConfId,
-          R"DOC(conformation id whose 2D coordinates should be
+      .def_rw("existingConfId", &ConstrainedDepictionParams::existingConfId,
+              R"DOC(conformation id whose 2D coordinates should be
 rigid-body aligned to the reference (if alignOnly is True),
 or used to determine whether existing molblock wedging information
 can be preserved following the constrained depiction (if
 adjustMolBlockWedging is True)DOC")
-      .def_rw(
-          "useRingTemplates", &ConstrainedDepictionParams::useRingTemplates,
-          "use templates to generate coordinates of complex ring systems")
+      .def_rw("useRingTemplates", &ConstrainedDepictionParams::useRingTemplates,
+              "use templates to generate coordinates of complex ring systems")
       .def("__setattr__", &safeSetattr);
 
-  m.def(
-      "Compute2DCoords", compute2DCoordsHelper,
-      "mol"_a, "canonOrient"_a = true, "clearConfs"_a = true,
-      "coordMap"_a = nb::dict(), "nFlipsPerSample"_a = 0, "nSample"_a = 0,
-      "sampleSeed"_a = 0, "permuteDeg4Nodes"_a = 0, "bondLength"_a = -1.0,
-      "forceRDKit"_a = false, "useRingTemplates"_a = false,
-      R"DOC(Compute 2D coordinates for a molecule.
+  m.def("Compute2DCoords", compute2DCoordsHelper, "mol"_a,
+        "canonOrient"_a = true, "clearConfs"_a = true,
+        "coordMap"_a = nb::dict(), "nFlipsPerSample"_a = 0, "nSample"_a = 0,
+        "sampleSeed"_a = 0, "permuteDeg4Nodes"_a = 0, "bondLength"_a = -1.0,
+        "forceRDKit"_a = false, "useRingTemplates"_a = false,
+        R"DOC(Compute 2D coordinates for a molecule.
   The resulting coordinates are stored on each atom of the molecule
 
   ARGUMENTS:
@@ -344,13 +334,12 @@ adjustMolBlockWedging is True)DOC")
 
      ID of the conformation added to the molecule)DOC");
 
-  m.def(
-      "Compute2DCoordsMimicDistmat", compute2DCoordsMimicDistmatHelper,
-      "mol"_a, "distMat"_a, "canonOrient"_a = false, "clearConfs"_a = true,
-      "weightDistMat"_a = 0.5, "nFlipsPerSample"_a = 3, "nSample"_a = 100,
-      "sampleSeed"_a = 100, "permuteDeg4Nodes"_a = true, "bondLength"_a = -1.0,
-      "forceRDKit"_a = false,
-      R"DOC(Compute 2D coordinates for a molecule such
+  m.def("Compute2DCoordsMimicDistmat", compute2DCoordsMimicDistmatHelper,
+        "mol"_a, "distMat"_a, "canonOrient"_a = false, "clearConfs"_a = true,
+        "weightDistMat"_a = 0.5, "nFlipsPerSample"_a = 3, "nSample"_a = 100,
+        "sampleSeed"_a = 100, "permuteDeg4Nodes"_a = true,
+        "bondLength"_a = -1.0, "forceRDKit"_a = false,
+        R"DOC(Compute 2D coordinates for a molecule such
   that the inter-atom distances mimic those in a user-provided
   distance matrix.
   The resulting coordinates are stored on each atom of the molecule
@@ -382,12 +371,10 @@ adjustMolBlockWedging is True)DOC")
 
      ID of the conformation added to the molecule)DOC");
 
-  m.def(
-      "GenerateDepictionMatching2DStructure",
-      generate2DStructureWithParamsHelper,
-      "mol"_a, "reference"_a, "confId"_a = -1, "refPatt"_a = nb::none(),
-      "params"_a = nb::none(),
-      R"DOC(Generate a depiction for a molecule where a piece of the
+  m.def("GenerateDepictionMatching2DStructure",
+        generate2DStructureWithParamsHelper, "mol"_a, "reference"_a,
+        "confId"_a = -1, "refPatt"_a = nb::none(), "params"_a = nb::none(),
+        R"DOC(Generate a depiction for a molecule where a piece of the
   molecule is constrained to have the same coordinates as a reference.
 
   The constraint can be hard (default) or soft.
@@ -446,7 +433,7 @@ adjustMolBlockWedging is True)DOC")
         params.forceRDKit = forceRDKit;
         params.allowRGroups = allowRGroups;
         return generate2DStructureHelper(mol, reference, confId, refPatt,
-                                        params);
+                                         params);
       },
       "mol"_a, "reference"_a, "confId"_a = -1, "refPatt"_a = nb::none(),
       "acceptFailure"_a = false, "forceRDKit"_a = false,
@@ -479,12 +466,10 @@ adjustMolBlockWedging is True)DOC")
            indices in mol constrained to have the same coordinates as atom
            indices in reference.)DOC");
 
-  m.def(
-      "GenerateDepictionMatching2DStructure",
-      generate2DStructureAtomMapWithParamsHelper,
-      "mol"_a, "reference"_a, "atomMap"_a, "confId"_a = -1,
-      "params"_a = nb::none(),
-      R"DOC(Generate a depiction for a molecule where a piece of the
+  m.def("GenerateDepictionMatching2DStructure",
+        generate2DStructureAtomMapWithParamsHelper, "mol"_a, "reference"_a,
+        "atomMap"_a, "confId"_a = -1, "params"_a = nb::none(),
+        R"DOC(Generate a depiction for a molecule where a piece of the
   molecule is constrained to have the same coordinates as a reference.
 
   This is useful for, for example, generating depictions of SAR data
@@ -502,11 +487,10 @@ adjustMolBlockWedging is True)DOC")
   confId -       (optional) the id of the reference conformation to use
   params -       (optional) an instance of ConstrainedDepictionParams)DOC");
 
-  m.def(
-      "GenerateDepictionMatching2DStructure",
-      generate2DStructureAtomMapForceRDKitHelper,
-      "mol"_a, "reference"_a, "atomMap"_a, "confId"_a, "forceRDKit"_a,
-      R"DOC(Generate a depiction for a molecule where a piece of the
+  m.def("GenerateDepictionMatching2DStructure",
+        generate2DStructureAtomMapForceRDKitHelper, "mol"_a, "reference"_a,
+        "atomMap"_a, "confId"_a, "forceRDKit"_a,
+        R"DOC(Generate a depiction for a molecule where a piece of the
   molecule is constrained to have the same coordinates as a reference.
 
   This is useful for, for example, generating depictions of SAR data
@@ -525,12 +509,11 @@ adjustMolBlockWedging is True)DOC")
   forceRDKit -   use RDKit to generate coordinates even if
                  preferCoordGen is set to true)DOC");
 
-  m.def(
-      "GenerateDepictionMatching3DStructure",
-      generateDepictionMatching3DStructureHelper,
-      "mol"_a, "reference"_a, "confId"_a = -1, "refPatt"_a = nb::none(),
-      "acceptFailure"_a = false, "forceRDKit"_a = false,
-      R"DOC(Generate a depiction for a molecule where a piece of the molecule
+  m.def("GenerateDepictionMatching3DStructure",
+        generateDepictionMatching3DStructureHelper, "mol"_a, "reference"_a,
+        "confId"_a = -1, "refPatt"_a = nb::none(), "acceptFailure"_a = false,
+        "forceRDKit"_a = false,
+        R"DOC(Generate a depiction for a molecule where a piece of the molecule
   is constrained to have coordinates similar to those of a 3D reference
   structure.
   ARGUMENTS:
@@ -550,10 +533,9 @@ adjustMolBlockWedging is True)DOC")
   forceRDKit -    (optional) use RDKit to generate coordinates even if
                   preferCoordGen is set to true)DOC");
 
-  m.def(
-      "StraightenDepiction", RDDepict::straightenDepiction,
-      "mol"_a, "confId"_a = -1, "minimizeRotation"_a = false,
-      R"DOC(Rotate the 2D depiction such that the majority of bonds have a
+  m.def("StraightenDepiction", RDDepict::straightenDepiction, "mol"_a,
+        "confId"_a = -1, "minimizeRotation"_a = false,
+        R"DOC(Rotate the 2D depiction such that the majority of bonds have a
   30-degree angle with the X axis.
   ARGUMENTS:
 
@@ -567,10 +549,9 @@ adjustMolBlockWedging is True)DOC")
                      with the goal of altering the initial orientation as
                      little as possible .)DOC");
 
-  m.def(
-      "NormalizeDepiction", RDDepict::normalizeDepiction,
-      "mol"_a, "confId"_a = -1, "canonicalize"_a = 1, "scaleFactor"_a = -1.,
-      R"DOC(Normalizes the 2D depiction.
+  m.def("NormalizeDepiction", RDDepict::normalizeDepiction, "mol"_a,
+        "confId"_a = -1, "canonicalize"_a = 1, "scaleFactor"_a = -1.,
+        R"DOC(Normalizes the 2D depiction.
 If canonicalize is != 0, the depiction is subjected to a canonical
 transformation such that its main axis is aligned along the X axis
 (canonicalize >0, the default) or the Y axis (canonicalize <0).

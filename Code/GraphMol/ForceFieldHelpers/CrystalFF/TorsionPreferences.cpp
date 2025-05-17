@@ -316,8 +316,8 @@ void getExperimentalTorsions(
           BOOST_LOG(rdInfoLog) << sstr.str() << std::endl;
         }
       }  // end loop over matches
-    }    // end loop over patterns
-  }      // end if experimentalTorsions
+    }  // end loop over patterns
+  }  // end if experimentalTorsions
   if (useBasicKnowledge) {
     boost::dynamic_bitset<> doneAtoms(na);
 
@@ -408,7 +408,7 @@ void getExperimentalTorsions(
         }
 
       }  // loop over atoms in ring
-    }    // loop over rings
+    }  // loop over rings
   }
 }  // end function
 
