@@ -24,7 +24,9 @@ namespace Queries {
 //! class to allow integer values to pick templates
 template <int v>
 class Int2Type {
-  enum { value = v };
+  enum {
+    value = v
+  };
 };
 
 //! Base class for all queries

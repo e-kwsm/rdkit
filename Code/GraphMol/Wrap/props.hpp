@@ -175,7 +175,7 @@ PyObject *rawPy(T &&thing) {
 }
 
 template <class RDOb, class T>
-PyObject* GetProp(const RDOb *ob, const std::string &key) {
+PyObject *GetProp(const RDOb *ob, const std::string &key) {
   T res;
   try {
     if (!ob->getPropIfPresent(key, res)) {
@@ -183,9 +183,8 @@ PyObject* GetProp(const RDOb *ob, const std::string &key) {
       return nullptr;
     }
   } catch (const std::exception &e) {
-    auto msg = std::string("key `") + key +
-                              "` exists but does not result in " +
-                              GetTypeName<T>() + " reason: " + e.what();
+    auto msg = std::string("key `") + key + "` exists but does not result in " +
+               GetTypeName<T>() + " reason: " + e.what();
     PyErr_SetString(PyExc_ValueError, msg.c_str());
     return nullptr;
   }
@@ -207,8 +206,6 @@ python::object autoConvertString(const RDOb *ob, const std::string &key) {
 
   return python::object();
 }
-
-
 
 template <class RDOb>
 PyObject *GetPyProp(const RDOb *obj, const std::string &key, bool autoConvert) {

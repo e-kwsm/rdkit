@@ -1181,7 +1181,7 @@ BOOST_PYTHON_MODULE(rdmolfiles) {
       .def_readwrite(
           "precision", &RDKit::MolWriterParams::precision,
           "precision of coordinates (only available in V3000)(default=false)")
-      .def("__setattr__",&safeSetattr);
+      .def("__setattr__", &safeSetattr);
 
   python::class_<RDKit::v2::FileParsers::MolFromSCSRParams, boost::noncopyable>(
       "MolFromSCSRParams",
@@ -1260,8 +1260,8 @@ BOOST_PYTHON_MODULE(rdmolfiles) {
 \n";
   python::def(
       "MolToMolBlock",
-      (std::string(*)(const ROMol &, const MolWriterParams &,
-                      int))RDKit::MolToMolBlock,
+      (std::string (*)(const ROMol &, const MolWriterParams &,
+                       int))RDKit::MolToMolBlock,
       (python::arg("mol"), python::arg("params"), python::arg("confId") = -1),
       docString.c_str());
 
@@ -1283,8 +1283,8 @@ BOOST_PYTHON_MODULE(rdmolfiles) {
     a string\n\
 \n";
   python::def("MolToMolBlock",
-              (std::string(*)(const ROMol &, bool, int, bool,
-                              bool))RDKit::MolToMolBlock,
+              (std::string (*)(const ROMol &, bool, int, bool,
+                               bool))RDKit::MolToMolBlock,
               (python::arg("mol"), python::arg("includeStereo") = true,
                python::arg("confId") = -1, python::arg("kekulize") = true,
                python::arg("forceV3000") = false),
@@ -1304,8 +1304,8 @@ BOOST_PYTHON_MODULE(rdmolfiles) {
 \n ";
   python::def(
       "MolToV3KMolBlock",
-      (std::string(*)(const ROMol &, const MolWriterParams &,
-                      int))RDKit::MolToV3KMolBlock,
+      (std::string (*)(const ROMol &, const MolWriterParams &,
+                       int))RDKit::MolToV3KMolBlock,
       (python::arg("mol"), python::arg("params"), python::arg("confId") = -1),
       docString.c_str());
 
@@ -1327,7 +1327,7 @@ BOOST_PYTHON_MODULE(rdmolfiles) {
 
   python::def(
       "MolToV3KMolBlock",
-      (std::string(*)(const ROMol &, bool, int, bool))RDKit::MolToV3KMolBlock,
+      (std::string (*)(const ROMol &, bool, int, bool))RDKit::MolToV3KMolBlock,
       (python::arg("mol"), python::arg("includeStereo") = true,
        python::arg("confId") = -1, python::arg("kekulize") = true),
       docString.c_str());
@@ -1443,8 +1443,8 @@ BOOST_PYTHON_MODULE(rdmolfiles) {
     a string\n\
 \n";
   python::def("MolToMrvBlock",
-              (std::string(*)(const ROMol &, bool, int, bool,
-                              bool))RDKit::MolToMrvBlock,
+              (std::string (*)(const ROMol &, bool, int, bool,
+                               bool))RDKit::MolToMrvBlock,
               (python::arg("mol"), python::arg("includeStereo") = true,
                python::arg("confId") = -1, python::arg("kekulize") = true,
                python::arg("prettyPrint") = false),
@@ -1464,8 +1464,8 @@ BOOST_PYTHON_MODULE(rdmolfiles) {
 \n";
   python::def(
       "MolToMrvBlock",
-      (std::string(*)(const ROMol &, const MrvWriterParams &,
-                      int))RDKit::MolToMrvBlock,
+      (std::string (*)(const ROMol &, const MrvWriterParams &,
+                       int))RDKit::MolToMrvBlock,
       (python::arg("mol"), python::arg("params"), python::arg("confId") = -1),
       docString.c_str());
 
@@ -1741,15 +1741,14 @@ BOOST_PYTHON_MODULE(rdmolfiles) {
       .def_readwrite(
           "includeDativeBonds", &RDKit::SmilesWriteParams::includeDativeBonds,
           "include the RDKit extension for dative bonds. Otherwise dative bonds will be written as single bonds")
-      .def_readwrite(
-          "ignoreAtomMapNumbers",
-          &RDKit::SmilesWriteParams::ignoreAtomMapNumbers,
-          "ignore atom map numbers when canonicalizing the molecule")
+      .def_readwrite("ignoreAtomMapNumbers",
+                     &RDKit::SmilesWriteParams::ignoreAtomMapNumbers,
+                     "ignore atom map numbers when canonicalizing the molecule")
       .def("__setattr__", &safeSetattr);
 
   python::def("MolToSmiles",
-              (std::string(*)(const ROMol &,
-                              const SmilesWriteParams &))RDKit::MolToSmiles,
+              (std::string (*)(const ROMol &,
+                               const SmilesWriteParams &))RDKit::MolToSmiles,
               (python::arg("mol"), python::arg("params")),
               "Returns the canonical SMILES string for a molecule");
 
@@ -1783,8 +1782,8 @@ BOOST_PYTHON_MODULE(rdmolfiles) {
 \n";
   python::def(
       "MolToSmiles",
-      (std::string(*)(const ROMol &, bool, bool, int, bool, bool, bool, bool,
-                      bool))RDKit::MolToSmiles,
+      (std::string (*)(const ROMol &, bool, bool, int, bool, bool, bool, bool,
+                       bool))RDKit::MolToSmiles,
       (python::arg("mol"), python::arg("isomericSmiles") = true,
        python::arg("kekuleSmiles") = false, python::arg("rootedAtAtom") = -1,
        python::arg("canonical") = true, python::arg("allBondsExplicit") = false,
@@ -1906,8 +1905,8 @@ BOOST_PYTHON_MODULE(rdmolfiles) {
 
   python::def(
       "MolToCXSmiles",
-      (std::string(*)(const ROMol &, const SmilesWriteParams &, std::uint32_t,
-                      RestoreBondDirOption))RDKit::MolToCXSmiles,
+      (std::string (*)(const ROMol &, const SmilesWriteParams &, std::uint32_t,
+                       RestoreBondDirOption))RDKit::MolToCXSmiles,
       (python::arg("mol"), python::arg("params"),
        python::arg("flags") = RDKit::SmilesWrite::CXSmilesFields::CX_ALL,
        python::arg("restoreBondDirs") =
@@ -1941,8 +1940,8 @@ BOOST_PYTHON_MODULE(rdmolfiles) {
 \n";
   python::def(
       "MolToCXSmiles",
-      (std::string(*)(const ROMol &, bool, bool, int, bool, bool, bool,
-                      bool))RDKit::MolToCXSmiles,
+      (std::string (*)(const ROMol &, bool, bool, int, bool, bool, bool,
+                       bool))RDKit::MolToCXSmiles,
       (python::arg("mol"), python::arg("isomericSmiles") = true,
        python::arg("kekuleSmiles") = false, python::arg("rootedAtAtom") = -1,
        python::arg("canonical") = true, python::arg("allBondsExplicit") = false,
@@ -2030,7 +2029,7 @@ BOOST_PYTHON_MODULE(rdmolfiles) {
     a string\n\
 \n";
   python::def("MolToSmarts",
-              (std::string(*)(const ROMol &, bool, int))RDKit::MolToSmarts,
+              (std::string (*)(const ROMol &, bool, int))RDKit::MolToSmarts,
               (python::arg("mol"), python::arg("isomericSmiles") = true,
                python::arg("rootedAtAtom") = -1),
               docString.c_str());
@@ -2047,8 +2046,8 @@ BOOST_PYTHON_MODULE(rdmolfiles) {
     a string\n\
 \n";
   python::def("MolToSmarts",
-              (std::string(*)(const ROMol &,
-                              const SmilesWriteParams &))RDKit::MolToSmarts,
+              (std::string (*)(const ROMol &,
+                               const SmilesWriteParams &))RDKit::MolToSmarts,
               (python::arg("mol"), python::arg("params")), docString.c_str());
 
   docString =
@@ -2084,7 +2083,7 @@ BOOST_PYTHON_MODULE(rdmolfiles) {
     a string\n\
 \n";
   python::def("MolToCXSmarts",
-              (std::string(*)(const ROMol &, bool))RDKit::MolToCXSmarts,
+              (std::string (*)(const ROMol &, bool))RDKit::MolToCXSmarts,
               (python::arg("mol"), python::arg("isomericSmiles") = true),
               docString.c_str());
 

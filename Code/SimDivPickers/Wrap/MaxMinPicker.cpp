@@ -75,7 +75,7 @@ void LazyMaxMinHelper(MaxMinPicker *picker, T functor, unsigned int poolSize,
   res = picker->lazyPick(functor, poolSize, pickSize, firstPickVect, seed,
                          threshold);
 }
-}  // end of anonymous namespace
+}  // namespace
 
 RDKit::INT_VECT LazyMaxMinPicks(MaxMinPicker *picker, python::object distFunc,
                                 int poolSize, int pickSize,
@@ -138,7 +138,7 @@ python::tuple LazyVectorMaxMinPicksWithThreshold(
   return python::make_tuple(res, threshold);
 }
 
-}  // end of namespace RDPickers
+}  // namespace RDPickers
 
 struct MaxMin_wrap {
   static void wrap() {
