@@ -58,20 +58,23 @@ results (and execution time) it's important to keep an eye on this.)DOC")
 
   nb::class_<StereoisomerEnumerator>(m, "StereoisomerEnumerator",
                                      "Stereoisomer enumerator.")
-      .def("__init__",
-           [](StereoisomerEnumerator *self, const ROMol &mol, bool verbose) {
-             new (self)
-                 StereoisomerEnumerator(mol, StereoEnumerationOptions(), verbose);
-           },
-           "mol"_a, "verbose"_a = false)
-      .def("__init__",
-           [](StereoisomerEnumerator *self, const ROMol &mol,
-              const StereoEnumerationOptions &options, bool verbose) {
-             new (self) StereoisomerEnumerator(mol, options, verbose);
-           },
-           "mol"_a, "options"_a, "verbose"_a = false)
+      .def(
+          "__init__",
+          [](StereoisomerEnumerator *self, const ROMol &mol, bool verbose) {
+            new (self) StereoisomerEnumerator(mol, StereoEnumerationOptions(),
+                                              verbose);
+          },
+          "mol"_a, "verbose"_a = false)
+      .def(
+          "__init__",
+          [](StereoisomerEnumerator *self, const ROMol &mol,
+             const StereoEnumerationOptions &options, bool verbose) {
+            new (self) StereoisomerEnumerator(mol, options, verbose);
+          },
+          "mol"_a, "options"_a, "verbose"_a = false)
       .def("next", &StereoisomerEnumerator::next,
            "Get next isomer in the sequence, or None if at the end.")
-      .def("GetStereoisomerCount", &StereoisomerEnumerator::getStereoisomerCount,
+      .def("GetStereoisomerCount",
+           &StereoisomerEnumerator::getStereoisomerCount,
            "Get the number of stereoisomers.");
 }

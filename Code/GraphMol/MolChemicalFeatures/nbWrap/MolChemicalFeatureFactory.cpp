@@ -24,8 +24,7 @@ using namespace RDKit;
 
 namespace {
 int getNumMolFeatures(const MolChemicalFeatureFactory &factory,
-                      const ROMol &mol,
-                      const std::string &includeOnly = "") {
+                      const ROMol &mol, const std::string &includeOnly = "") {
   FeatSPtrList feats = factory.getFeaturesForMol(mol, includeOnly.c_str());
   return feats.size();
 }
@@ -52,8 +51,8 @@ std::shared_ptr<MolChemicalFeature> getMolFeature(
 
 nb::tuple getFeatureFamilies(const MolChemicalFeatureFactory &factory) {
   std::vector<std::string> fams;
-  for (auto iter = factory.beginFeatureDefs();
-       iter != factory.endFeatureDefs(); ++iter) {
+  for (auto iter = factory.beginFeatureDefs(); iter != factory.endFeatureDefs();
+       ++iter) {
     std::string fam = (*iter)->getFamily();
     if (std::find(fams.begin(), fams.end(), fam) == fams.end()) {
       fams.push_back(fam);
@@ -68,8 +67,8 @@ nb::tuple getFeatureFamilies(const MolChemicalFeatureFactory &factory) {
 
 nb::dict getFeatureDefs(const MolChemicalFeatureFactory &factory) {
   nb::dict res;
-  for (auto iter = factory.beginFeatureDefs();
-       iter != factory.endFeatureDefs(); ++iter) {
+  for (auto iter = factory.beginFeatureDefs(); iter != factory.endFeatureDefs();
+       ++iter) {
     std::string key = (*iter)->getFamily() + "." + (*iter)->getType();
     res[key.c_str()] = (*iter)->getSmarts();
   }
@@ -80,8 +79,7 @@ nb::dict getFeatureDefs(const MolChemicalFeatureFactory &factory) {
 void wrap_factory(nb::module_ &m) {
   nb::class_<MolChemicalFeatureFactory>(m, "MolChemicalFeatureFactory",
                                         "Class to featurize a molecule")
-      .def("GetNumFeatureDefs",
-           &MolChemicalFeatureFactory::getNumFeatureDefs,
+      .def("GetNumFeatureDefs", &MolChemicalFeatureFactory::getNumFeatureDefs,
            "Get the number of feature definitions")
       .def("GetFeatureFamilies", getFeatureFamilies,
            "Get a tuple of feature types")

@@ -17,7 +17,8 @@ void wrap_fragcatgen(nb::module_ &m);
 void wrap_fragFPgen(nb::module_ &m);
 
 NB_MODULE(rdfragcatalog, m) {
-  m.doc() = R"DOC(Module containing FragCatalog, FragCatParams, FragCatGenerator,
+  m.doc() =
+      R"DOC(Module containing FragCatalog, FragCatParams, FragCatGenerator,
 and FragFPGenerator classes for fragment-based catalog generation and
 fingerprinting.)DOC";
   wrap_fragcat(m);

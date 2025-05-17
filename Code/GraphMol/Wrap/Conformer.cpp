@@ -243,8 +243,7 @@ struct conformer_wrapper {
         .def(
             "GetProp", GetPyPropOrDefault<Conformer>,
             (python::arg("self"), python::arg("key"),
-             python::arg("autoConvert") = false,
-             python::arg("default")),
+             python::arg("autoConvert") = false, python::arg("default")),
             "Returns the value of the property.\n\n"
             "  ARGUMENTS:\n"
             "    - key: the name of the property to return (a string).\n\n"
@@ -261,14 +260,15 @@ struct conformer_wrapper {
              "  NOTE:\n"
              "    - If the property has not been set, a KeyError exception "
              "will be raised.\n")
-        .def("GetDoubleProp", GetPropOrDefault<Conformer, double>,
-             (python::arg("self"), python::arg("key"), python::arg("default")),
-             "Returns the double value of the property if possible.\n\n"
-             "  ARGUMENTS:\n"
-             "    - key: the name of the property to return (a string).\n\n"
-             "    - default: value to return if the property is not present.\n\n"
-             "  RETURNS: a double, or default if the property is not present.\n",
-             boost::python::return_value_policy<return_pyobject_passthrough>())
+        .def(
+            "GetDoubleProp", GetPropOrDefault<Conformer, double>,
+            (python::arg("self"), python::arg("key"), python::arg("default")),
+            "Returns the double value of the property if possible.\n\n"
+            "  ARGUMENTS:\n"
+            "    - key: the name of the property to return (a string).\n\n"
+            "    - default: value to return if the property is not present.\n\n"
+            "  RETURNS: a double, or default if the property is not present.\n",
+            boost::python::return_value_policy<return_pyobject_passthrough>())
         .def("GetIntProp", GetProp<Conformer, int>, python::args("self", "key"),
              "Returns the integer value of the property if possible.\n\n"
              "  ARGUMENTS:\n"
@@ -277,14 +277,15 @@ struct conformer_wrapper {
              "  NOTE:\n"
              "    - If the property has not been set, a KeyError exception "
              "will be raised.\n")
-        .def("GetIntProp", GetPropOrDefault<Conformer, int>,
-             (python::arg("self"), python::arg("key"), python::arg("default")),
-             "Returns the integer value of the property if possible.\n\n"
-             "  ARGUMENTS:\n"
-             "    - key: the name of the property to return (a string).\n\n"
-             "    - default: value to return if the property is not present.\n\n"
-             "  RETURNS: an integer, or default if the property is not present.\n",
-             boost::python::return_value_policy<return_pyobject_passthrough>())
+        .def(
+            "GetIntProp", GetPropOrDefault<Conformer, int>,
+            (python::arg("self"), python::arg("key"), python::arg("default")),
+            "Returns the integer value of the property if possible.\n\n"
+            "  ARGUMENTS:\n"
+            "    - key: the name of the property to return (a string).\n\n"
+            "    - default: value to return if the property is not present.\n\n"
+            "  RETURNS: an integer, or default if the property is not present.\n",
+            boost::python::return_value_policy<return_pyobject_passthrough>())
         .def("GetUnsignedProp", GetProp<Conformer, unsigned int>,
              python::args("self", "key"),
              "Returns the unsigned int value of the property if possible.\n\n"
@@ -294,14 +295,15 @@ struct conformer_wrapper {
              "  NOTE:\n"
              "    - If the property has not been set, a KeyError exception "
              "will be raised.\n")
-        .def("GetUnsignedProp", GetPropOrDefault<Conformer, unsigned int>,
-             (python::arg("self"), python::arg("key"), python::arg("default")),
-             "Returns the unsigned int value of the property if possible.\n\n"
-             "  ARGUMENTS:\n"
-             "    - key: the name of the property to return (a string).\n\n"
-             "    - default: value to return if the property is not present.\n\n"
-             "  RETURNS: an unsigned integer, or default if the property is not present.\n",
-             boost::python::return_value_policy<return_pyobject_passthrough>())
+        .def(
+            "GetUnsignedProp", GetPropOrDefault<Conformer, unsigned int>,
+            (python::arg("self"), python::arg("key"), python::arg("default")),
+            "Returns the unsigned int value of the property if possible.\n\n"
+            "  ARGUMENTS:\n"
+            "    - key: the name of the property to return (a string).\n\n"
+            "    - default: value to return if the property is not present.\n\n"
+            "  RETURNS: an unsigned integer, or default if the property is not present.\n",
+            boost::python::return_value_policy<return_pyobject_passthrough>())
         .def("GetBoolProp", GetProp<Conformer, bool>,
              python::args("self", "key"),
              "Returns the Bool value of the property if possible.\n\n"
@@ -311,14 +313,15 @@ struct conformer_wrapper {
              "  NOTE:\n"
              "    - If the property has not been set, a KeyError exception "
              "will be raised.\n")
-        .def("GetBoolProp", GetPropOrDefault<Conformer, bool>,
-             (python::arg("self"), python::arg("key"), python::arg("default")),
-             "Returns the Bool value of the property if possible.\n\n"
-             "  ARGUMENTS:\n"
-             "    - key: the name of the property to return (a string).\n\n"
-             "    - default: value to return if the property is not present.\n\n"
-             "  RETURNS: a bool, or default if the property is not present.\n",
-             boost::python::return_value_policy<return_pyobject_passthrough>())
+        .def(
+            "GetBoolProp", GetPropOrDefault<Conformer, bool>,
+            (python::arg("self"), python::arg("key"), python::arg("default")),
+            "Returns the Bool value of the property if possible.\n\n"
+            "  ARGUMENTS:\n"
+            "    - key: the name of the property to return (a string).\n\n"
+            "    - default: value to return if the property is not present.\n\n"
+            "  RETURNS: a bool, or default if the property is not present.\n",
+            boost::python::return_value_policy<return_pyobject_passthrough>())
         .def("ClearProp", MolClearProp<Conformer>, python::args("self", "key"),
              "Removes a property from the conformer.\n\n"
              "  ARGUMENTS:\n"

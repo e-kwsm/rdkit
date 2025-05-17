@@ -33,15 +33,14 @@ class RDKIT_FORCEFIELD_EXPORT OopBendContrib : public ForceFieldContrib {
     \param idx3        index of atom3 in the ForceField's positions
     \param idx4        index of atom4 in the ForceField's positions
   */
-  void addTerm(unsigned int idx1, unsigned int idx2,
-               unsigned int idx3, unsigned int idx4,
-               const MMFFOop *mmffOopParams);
+  void addTerm(unsigned int idx1, unsigned int idx2, unsigned int idx3,
+               unsigned int idx4, const MMFFOop *mmffOopParams);
 
   double getEnergy(double *pos) const override;
   void getGrad(double *pos, double *grad) const override;
   OopBendContrib *copy() const override { return new OopBendContrib(*this); }
 
-  void getSingleGrad(double* pos, double* grad, unsigned int termIdx) const;
+  void getSingleGrad(double *pos, double *grad, unsigned int termIdx) const;
 
  private:
   std::vector<int> d_at1Idxs, d_at2Idxs, d_at3Idxs, d_at4Idxs;

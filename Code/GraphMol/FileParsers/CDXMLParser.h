@@ -40,12 +40,12 @@ struct RDKIT_FILEPARSERS_EXPORT CDXMLParserParams {
 
   CDXMLParserParams() = default;
   CDXMLParserParams(bool sanitize, bool removeHs, CDXMLFormat format,
-		    bool parseQueries = false, bool strictQueryParsing = false)
-     : sanitize(sanitize),
-       removeHs(removeHs),
-       format(format),
-       parseQueries(parseQueries),
-       strictQueryParsing(strictQueryParsing) {}
+                    bool parseQueries = false, bool strictQueryParsing = false)
+      : sanitize(sanitize),
+        removeHs(removeHs),
+        format(format),
+        parseQueries(parseQueries),
+        strictQueryParsing(strictQueryParsing) {}
 };
 
 //! \brief construct molecules from a CDXML file
@@ -101,7 +101,8 @@ RDKIT_FILEPARSERS_EXPORT std::vector<std::unique_ptr<RWMol>> MolsFromCDXML(
 //!   Note that the CDXML format is large and complex, the RDKit doesn't
 //!   support full functionality, just the base ones required for molecule and
 //!   reaction parsing.
-//! Note: If the ChemDraw extensions are unavailable, an exception will be thrown
+//! Note: If the ChemDraw extensions are unavailable, an exception will be
+//! thrown
 //!  please use the support function hasChemDrawCDXSupport() to check
 //!  whether ChemDraw writing support is enabled.
 //! Note: For CDXML the contents of the std::string are UTF-8
@@ -111,8 +112,7 @@ RDKIT_FILEPARSERS_EXPORT std::vector<std::unique_ptr<RWMol>> MolsFromCDXML(
  *   \param format - CDXMLFormat to use, CDX or CDXML (default)
  */
 RDKIT_FILEPARSERS_EXPORT std::string MolToCDXMLBlock(
-    const RWMol &mol,
-    CDXMLFormat format = CDXMLFormat::CDXML);
+    const RWMol &mol, CDXMLFormat format = CDXMLFormat::CDXML);
 }  // namespace CDXMLParser
 }  // namespace v2
 

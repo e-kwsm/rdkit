@@ -1,5 +1,6 @@
 //
-//  Copyright (C) 2023-2026 Novartis Biomedical Research and other RDKit contributors
+//  Copyright (C) 2023-2026 Novartis Biomedical Research and other RDKit
+//  contributors
 //
 //   @@ All Rights Reserved @@
 //  This file is part of the RDKit.
@@ -31,42 +32,41 @@ using namespace RDKit;
 void wrap_pipeline(nb::module_ &m) {
   nb::class_<MolStandardize::PipelineOptions>(m, "PipelineOptions")
       .def(nb::init<>())
-      .def_rw("strictParsing",
-               &MolStandardize::PipelineOptions::strictParsing)
+      .def_rw("strictParsing", &MolStandardize::PipelineOptions::strictParsing)
       .def_rw("reportAllFailures",
-               &MolStandardize::PipelineOptions::reportAllFailures)
+              &MolStandardize::PipelineOptions::reportAllFailures)
       .def_rw("allowEmptyMolecules",
-               &MolStandardize::PipelineOptions::allowEmptyMolecules)
+              &MolStandardize::PipelineOptions::allowEmptyMolecules)
       .def_rw("allowEnhancedStereo",
-               &MolStandardize::PipelineOptions::allowEnhancedStereo)
+              &MolStandardize::PipelineOptions::allowEnhancedStereo)
       .def_rw("allowAromaticBondType",
-               &MolStandardize::PipelineOptions::allowAromaticBondType)
+              &MolStandardize::PipelineOptions::allowAromaticBondType)
       .def_rw("allowDativeBondType",
-               &MolStandardize::PipelineOptions::allowDativeBondType)
+              &MolStandardize::PipelineOptions::allowDativeBondType)
       .def_rw("is2DZeroThreshold",
-               &MolStandardize::PipelineOptions::is2DZeroThreshold)
+              &MolStandardize::PipelineOptions::is2DZeroThreshold)
       .def_rw("atomClashLimit",
-               &MolStandardize::PipelineOptions::atomClashLimit)
+              &MolStandardize::PipelineOptions::atomClashLimit)
       .def_rw("minMedianBondLength",
-               &MolStandardize::PipelineOptions::minMedianBondLength)
+              &MolStandardize::PipelineOptions::minMedianBondLength)
       .def_rw("bondLengthLimit",
-               &MolStandardize::PipelineOptions::bondLengthLimit)
+              &MolStandardize::PipelineOptions::bondLengthLimit)
       .def_rw("allowLongBondsInRings",
-               &MolStandardize::PipelineOptions::allowLongBondsInRings)
+              &MolStandardize::PipelineOptions::allowLongBondsInRings)
       .def_rw("allowAtomBondClashExemption",
-               &MolStandardize::PipelineOptions::allowAtomBondClashExemption)
+              &MolStandardize::PipelineOptions::allowAtomBondClashExemption)
       .def_rw("metalNof", &MolStandardize::PipelineOptions::metalNof)
       .def_rw("metalNon", &MolStandardize::PipelineOptions::metalNon)
       .def_rw("normalizerData",
-               &MolStandardize::PipelineOptions::normalizerData)
+              &MolStandardize::PipelineOptions::normalizerData)
       .def_rw("normalizerMaxRestarts",
-               &MolStandardize::PipelineOptions::normalizerMaxRestarts)
+              &MolStandardize::PipelineOptions::normalizerMaxRestarts)
       .def_rw("scaledMedianBondLength",
-               &MolStandardize::PipelineOptions::scaledMedianBondLength)
+              &MolStandardize::PipelineOptions::scaledMedianBondLength)
       .def_rw("outputV2000", &MolStandardize::PipelineOptions::outputV2000);
 
   nb::enum_<MolStandardize::PipelineStatus>(m, "PipelineStatus",
-                                             nb::is_arithmetic(), nb::is_flag())
+                                            nb::is_arithmetic(), nb::is_flag())
       .value("NO_EVENT", MolStandardize::PipelineStatus::NO_EVENT)
       .value("INPUT_ERROR", MolStandardize::PipelineStatus::INPUT_ERROR)
       .value("PREPARE_FOR_VALIDATION_ERROR",
@@ -87,9 +87,8 @@ void wrap_pipeline(nb::module_ &m) {
              MolStandardize::PipelineStatus::PREPARE_FOR_STANDARDIZATION_ERROR)
       .value("METAL_STANDARDIZATION_ERROR",
              MolStandardize::PipelineStatus::METAL_STANDARDIZATION_ERROR)
-      .value(
-          "NORMALIZER_STANDARDIZATION_ERROR",
-          MolStandardize::PipelineStatus::NORMALIZER_STANDARDIZATION_ERROR)
+      .value("NORMALIZER_STANDARDIZATION_ERROR",
+             MolStandardize::PipelineStatus::NORMALIZER_STANDARDIZATION_ERROR)
       .value("FRAGMENT_STANDARDIZATION_ERROR",
              MolStandardize::PipelineStatus::FRAGMENT_STANDARDIZATION_ERROR)
       .value("CHARGE_STANDARDIZATION_ERROR",
@@ -107,8 +106,7 @@ void wrap_pipeline(nb::module_ &m) {
       .value("PROTONATION_CHANGED",
              MolStandardize::PipelineStatus::PROTONATION_CHANGED)
       .value("STRUCTURE_MODIFICATION",
-             MolStandardize::PipelineStatus::STRUCTURE_MODIFICATION)
-;
+             MolStandardize::PipelineStatus::STRUCTURE_MODIFICATION);
 
   nb::enum_<MolStandardize::PipelineStage>(m, "PipelineStage")
       .value("PARSING_INPUT", MolStandardize::PipelineStage::PARSING_INPUT)
@@ -117,8 +115,7 @@ void wrap_pipeline(nb::module_ &m) {
       .value("VALIDATION", MolStandardize::PipelineStage::VALIDATION)
       .value("PREPARE_FOR_STANDARDIZATION",
              MolStandardize::PipelineStage::PREPARE_FOR_STANDARDIZATION)
-      .value("STANDARDIZATION",
-             MolStandardize::PipelineStage::STANDARDIZATION)
+      .value("STANDARDIZATION", MolStandardize::PipelineStage::STANDARDIZATION)
       .value("SERIALIZING_OUTPUT",
              MolStandardize::PipelineStage::SERIALIZING_OUTPUT)
       .value("COMPLETED", MolStandardize::PipelineStage::COMPLETED);
@@ -131,17 +128,15 @@ void wrap_pipeline(nb::module_ &m) {
 
   nb::class_<MolStandardize::PipelineResult>(m, "PipelineResult")
       .def_ro("status", &MolStandardize::PipelineResult::status)
-      .def_prop_ro("stage",
-                   [](const MolStandardize::PipelineResult &self) {
-                     return static_cast<MolStandardize::PipelineStage>(
-                         self.stage);
-                   })
+      .def_prop_ro(
+          "stage",
+          [](const MolStandardize::PipelineResult &self) {
+            return static_cast<MolStandardize::PipelineStage>(self.stage);
+          })
       .def_ro("log", &MolStandardize::PipelineResult::log)
       .def_ro("inputMolData", &MolStandardize::PipelineResult::inputMolData)
-      .def_ro("outputMolData",
-               &MolStandardize::PipelineResult::outputMolData)
-      .def_ro("parentMolData",
-               &MolStandardize::PipelineResult::parentMolData);
+      .def_ro("outputMolData", &MolStandardize::PipelineResult::outputMolData)
+      .def_ro("parentMolData", &MolStandardize::PipelineResult::parentMolData);
 
   nb::class_<MolStandardize::Pipeline>(m, "Pipeline")
       .def(nb::init<>())

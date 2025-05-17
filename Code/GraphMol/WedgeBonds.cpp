@@ -62,8 +62,8 @@ struct RingSystemInfo {
 // RingInfo identifies rings that share at least one bond, but it does not
 // distinguish a single fused bond from a longer shared path. Return true when
 // two rings share adjacent bonds: their common atom is an interior bridge atom.
-bool ringsSharePathWithInteriorAtom(
-    const ROMol &mol, const INT_VECT &firstRing, const INT_VECT &secondRing) {
+bool ringsSharePathWithInteriorAtom(const ROMol &mol, const INT_VECT &firstRing,
+                                    const INT_VECT &secondRing) {
   // Count only bonds that belong to both rings. Two such bonds incident on the
   // same atom are consecutive and make that atom interior to the shared path.
   std::vector<unsigned int> numIncidentSharedBonds(mol.getNumAtoms());
@@ -517,23 +517,21 @@ int pickBondToWedgeImpl(
         getRingSystemInfo(mol, nbrScores.front().bondIdx, conf);
     const auto allCandidatesAreInRingSystem = std::all_of(
         nbrScores.begin(), nbrScores.end(), [&](const auto &candidate) {
-          const auto &candidateRings =
-              ringInfo->bondMembers(candidate.bondIdx);
+          const auto &candidateRings = ringInfo->bondMembers(candidate.bondIdx);
           CHECK_INVARIANT(!candidateRings.empty(),
                           "ring bond has no ring membership");
-          return std::any_of(
-              candidateRings.begin(), candidateRings.end(),
-              [&](const auto ringIdx) {
-                return std::find(ringSystem.ringIndices.begin(),
-                                 ringSystem.ringIndices.end(),
-                                 ringIdx) != ringSystem.ringIndices.end();
-              });
+          return std::any_of(candidateRings.begin(), candidateRings.end(),
+                             [&](const auto ringIdx) {
+                               return std::find(ringSystem.ringIndices.begin(),
+                                                ringSystem.ringIndices.end(),
+                                                ringIdx) !=
+                                      ringSystem.ringIndices.end();
+                             });
         });
 
     // Spiro atoms have candidates in more than one fused ring system. There is
     // no common center for those systems, so retain the established scoring.
-    if (allCandidatesAreInRingSystem &&
-        ringSystem.hasBridgeWithInteriorAtom) {
+    if (allCandidatesAreInRingSystem && ringSystem.hasBridgeWithInteriorAtom) {
       for (auto &candidate : nbrScores) {
         candidate.isInBridgedRingSystem = true;
         candidate.distanceToRingCenter = bondMidpointDistanceToPoint(
@@ -542,8 +540,7 @@ int pickBondToWedgeImpl(
     }
   }
   const auto minPr = std::min_element(
-      nbrScores.begin(), nbrScores.end(),
-      [](const auto &lhs, const auto &rhs) {
+      nbrScores.begin(), nbrScores.end(), [](const auto &lhs, const auto &rhs) {
         // Preserve the established scoring unless all candidates belong to a
         // single bridged ring system, where inner bonds are preferred.
         if (lhs.isInBridgedRingSystem != rhs.isInBridgedRingSystem) {
@@ -781,8 +778,7 @@ bool wedgingHasChirality(const ROMol &mol, const Bond *b) {
   return false;
 }
 
-void reapplyMolBlockWedging(ROMol &mol, bool allBondTypes,
-                            bool verify) {
+void reapplyMolBlockWedging(ROMol &mol, bool allBondTypes, bool verify) {
   MolOps::clearDirFlags(mol, true);
   for (auto b : mol.bonds()) {
     int explicit_unknown_stereo = -1;
@@ -796,8 +792,7 @@ void reapplyMolBlockWedging(ROMol &mol, bool allBondTypes,
     // atropisomer bond AND if the start atom  is not chiral, we will skip it -
     // it should not have a wedge or dash
 
-    if (verify &&
-        (!canHaveDirection(*b) || !wedgingHasChirality(mol, b))) {
+    if (verify && (!canHaveDirection(*b) || !wedgingHasChirality(mol, b))) {
       continue;
     }
 

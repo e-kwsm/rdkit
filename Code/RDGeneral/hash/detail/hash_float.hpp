@@ -78,7 +78,7 @@ struct limits<long double> : std::numeric_limits<long double> {
 };
 #endif  // __OpenBSD__
 
-inline void hash_float_combine(std::hash_result_t& seed,
+inline void hash_float_combine(std::hash_result_t &seed,
                                std::hash_result_t value) {
   seed ^= value + (seed << 6) + (seed >> 2);
 }
@@ -86,23 +86,23 @@ inline void hash_float_combine(std::hash_result_t& seed,
 // A simple, non-portable hash algorithm for x86.
 #if defined(GBOOST_HASH_USE_x86_BINARY_HASH)
 inline std::hash_result_t float_hash_impl(float v) {
-  std::uint32_t* ptr = (std::uint32_t*)&v;
+  std::uint32_t *ptr = (std::uint32_t *)&v;
   std::hash_result_t seed = *ptr;
   return seed;
 }
 
 inline std::hash_result_t float_hash_impl(double v) {
-  std::uint32_t* ptr = (std::uint32_t*)&v;
+  std::uint32_t *ptr = (std::uint32_t *)&v;
   std::hash_result_t seed = *ptr++;
   hash_float_combine(seed, *ptr);
   return seed;
 }
 
 inline std::hash_result_t float_hash_impl(long double v) {
-  std::uint32_t* ptr = (std::uint32_t*)&v;
+  std::uint32_t *ptr = (std::uint32_t *)&v;
   std::hash_result_t seed = *ptr++;
   hash_float_combine(seed, *ptr++);
-  hash_float_combine(seed, *(std::uint16_t*)ptr);
+  hash_float_combine(seed, *(std::uint16_t *)ptr);
   return seed;
 }
 

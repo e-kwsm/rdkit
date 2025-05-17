@@ -1213,8 +1213,7 @@ TEST_CASE("Multiple Core Hits") {
 TEST_CASE("includeTargetMolInResults with Multiple Core Hits") {
   std::vector<ROMOL_SPTR> cores{"[*:1]c1c([*:2])cccc1"_smarts};
   REQUIRE(cores.front());
-  std::vector<ROMOL_SPTR> mols{"c1ccc(C)c(N)c1"_smiles,
-                               "c1ccc(F)c(O)c1"_smiles,
+  std::vector<ROMOL_SPTR> mols{"c1ccc(C)c(N)c1"_smiles, "c1ccc(F)c(O)c1"_smiles,
                                "c1ccc(c2ccccc2)c(N)c1"_smiles};
   bool areMolsNonNull = std::all_of(mols.begin(), mols.end(),
                                     [](const auto &mol) { return mol; });

@@ -106,8 +106,7 @@ inline signed char EndianSwapBytes(signed char value) {
 // --------------------------------------
 
 //! Packs an integer and outputs it to a stream
-inline void appendPackedIntToStream(std::stringstream &ss,
-                                    std::uint32_t num) {
+inline void appendPackedIntToStream(std::stringstream &ss, std::uint32_t num) {
   int nbytes, bix;
   unsigned int val, res;
   char tc;

@@ -74,17 +74,15 @@ presentation from the 2019 RDKit UGM:
 https://github.com/rdkit/UGM_2019/raw/master/Presentations/Sayle_Clustering.pdf
 )DOC")
       .def(nb::init<>())
-      .def("LazyBitVectorPick", RDPickers::LazyVectorLeaderPicks,
-           "objects"_a, "poolSize"_a, "threshold"_a,
-           "pickSize"_a = 0, "firstPicks"_a = nb::tuple(),
-           "numThreads"_a = 1,
+      .def("LazyBitVectorPick", RDPickers::LazyVectorLeaderPicks, "objects"_a,
+           "poolSize"_a, "threshold"_a, "pickSize"_a = 0,
+           "firstPicks"_a = nb::tuple(), "numThreads"_a = 1,
            "Pick a subset of items from a collection of bit vectors using "
            "Tanimoto distance. The threshold value is a "
            "*distance* (i.e. 1-similarity). Note that the numThreads "
            "argument is currently ignored.")
-      .def("LazyPick", RDPickers::LazyLeaderPicks,
-           "distFunc"_a, "poolSize"_a, "threshold"_a,
-           "pickSize"_a = 0, "firstPicks"_a = nb::tuple(),
+      .def("LazyPick", RDPickers::LazyLeaderPicks, "distFunc"_a, "poolSize"_a,
+           "threshold"_a, "pickSize"_a = 0, "firstPicks"_a = nb::tuple(),
            "numThreads"_a = 1,
            "Pick a subset of items from a pool of items using the "
            "user-provided function to determine distances. Note that the "

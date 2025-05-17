@@ -85,6 +85,6 @@ calcInversionCoefficientsAndForceConstant(int at2AtomicNum, bool isCBoundToO) {
   return std::make_tuple(res, C0, C1, C2);
 }
 
-}  // end of namespace Utils
+}  // namespace Utils
 }  // namespace UFF
 }  // namespace ForceFields

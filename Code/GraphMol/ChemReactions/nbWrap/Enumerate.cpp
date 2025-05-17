@@ -51,7 +51,8 @@ nb::tuple EnumerateLibraryBase__next__(RDKit::EnumerateLibraryBase *base) {
   for (const auto &mol_vec : mols) {
     nb::list inner;
     for (const auto &mol : mol_vec) {
-      inner.append(std::shared_ptr<RDKit::ROMol>(mol.get(), [b = mol](RDKit::ROMol *) {}));
+      inner.append(std::shared_ptr<RDKit::ROMol>(mol.get(),
+                                                 [b = mol](RDKit::ROMol *) {}));
     }
     res.append(nb::tuple(inner));
   }
@@ -91,12 +92,13 @@ Note that the position in the library is serialized as well.  Care should
 be taken when serializing.  See GetState/SetState for position manipulation.)DOC")
       .def("InitFromString", &RDKit::EnumerateLibraryBase::initFromString,
            "data"_a, "Initialize the library from a binary string")
-      .def("InitFromString",
-           [](RDKit::EnumerateLibraryBase &self, nb::bytes data) {
-             self.initFromString(std::string(
-                 static_cast<const char *>(data.data()), data.size()));
-           },
-           "data"_a, "Initialize the library from a binary string")
+      .def(
+          "InitFromString",
+          [](RDKit::EnumerateLibraryBase &self, nb::bytes data) {
+            self.initFromString(std::string(
+                static_cast<const char *>(data.data()), data.size()));
+          },
+          "data"_a, "Initialize the library from a binary string")
       .def(
           "GetPosition", &RDKit::EnumerateLibraryBase::getPosition,
           nb::rv_policy::reference_internal,
@@ -207,24 +209,24 @@ for result in itertools.islice(libary2, 1000):
     # do something with the next 1000 samples
 )DOC")
       .def(nb::init<>())
-      .def("__init__",
-           [](RDKit::EnumerateLibrary *self,
-              const RDKit::ChemicalReaction &rxn, nb::object bbs,
-              const RDKit::EnumerationParams &params) {
-             new (self)
-                 RDKit::EnumerateLibrary(rxn, RDKit::ConvertToVect(bbs), params);
-           },
-           "rxn"_a, "reagents"_a, "params"_a = RDKit::EnumerationParams())
-      .def("__init__",
-           [](RDKit::EnumerateLibrary *self,
-              const RDKit::ChemicalReaction &rxn, nb::object bbs,
-              const RDKit::EnumerationStrategyBase &enumerator,
-              const RDKit::EnumerationParams &params) {
-             new (self) RDKit::EnumerateLibrary(
-                 rxn, RDKit::ConvertToVect(bbs), enumerator, params);
-           },
-           "rxn"_a, "reagents"_a, "enumerator"_a,
-           "params"_a = RDKit::EnumerationParams())
+      .def(
+          "__init__",
+          [](RDKit::EnumerateLibrary *self, const RDKit::ChemicalReaction &rxn,
+             nb::object bbs, const RDKit::EnumerationParams &params) {
+            new (self)
+                RDKit::EnumerateLibrary(rxn, RDKit::ConvertToVect(bbs), params);
+          },
+          "rxn"_a, "reagents"_a, "params"_a = RDKit::EnumerationParams())
+      .def(
+          "__init__",
+          [](RDKit::EnumerateLibrary *self, const RDKit::ChemicalReaction &rxn,
+             nb::object bbs, const RDKit::EnumerationStrategyBase &enumerator,
+             const RDKit::EnumerationParams &params) {
+            new (self) RDKit::EnumerateLibrary(rxn, RDKit::ConvertToVect(bbs),
+                                               enumerator, params);
+          },
+          "rxn"_a, "reagents"_a, "enumerator"_a,
+          "params"_a = RDKit::EnumerationParams())
       .def(
           "GetReagents",
           [](const RDKit::EnumerateLibrary &lib) {
@@ -232,7 +234,8 @@ for result in itertools.islice(libary2, 1000):
             for (const auto &inner_vec : lib.getReagents()) {
               nb::list inner;
               for (const auto &mol : inner_vec) {
-                inner.append(std::shared_ptr<RDKit::ROMol>(mol.get(), [b = mol](RDKit::ROMol *) {}));
+                inner.append(std::shared_ptr<RDKit::ROMol>(
+                    mol.get(), [b = mol](RDKit::ROMol *) {}));
               }
               outer.append(inner);
             }
@@ -249,15 +252,17 @@ be smaller than the input reagent sets.)DOC");
            })
       .def("Type", &RDKit::EnumerationStrategyBase::type,
            "Returns the enumeration strategy type as a string.")
-      .def("Skip", &RDKit::EnumerationStrategyBase::skip, "skipCount"_a,
-           R"DOC(Skip the next Nth results. note: this may be an expensive operation
+      .def(
+          "Skip", &RDKit::EnumerationStrategyBase::skip, "skipCount"_a,
+          R"DOC(Skip the next Nth results. note: this may be an expensive operation
 depending on the enumeration strategy used. It is recommended to use
 the enumerator state to advance to a known position)DOC")
-      .def("__copy__",
-           [](const RDKit::EnumerationStrategyBase &self) {
-             return self.copy();
-           },
-           nb::rv_policy::take_ownership)
+      .def(
+          "__copy__",
+          [](const RDKit::EnumerationStrategyBase &self) {
+            return self.copy();
+          },
+          nb::rv_policy::take_ownership)
       .def(
           "GetNumPermutations",
           &RDKit::EnumerationStrategyBase::getNumPermutations,
@@ -277,43 +282,42 @@ with the reaction.)DOC")
            "Return the next indices into the arrays of reagents")
       .def("Initialize", &RDKit::ToBBS, "rxn"_a, "ob"_a);
 
-  nb::class_<RDKit::CartesianProductStrategy,
-             RDKit::EnumerationStrategyBase>(
+  nb::class_<RDKit::CartesianProductStrategy, RDKit::EnumerationStrategyBase>(
       m, "CartesianProductStrategy",
       R"DOC(CartesianProductStrategy produces a standard walk through all possible
 reagent combinations:
 
 (0,0,0), (1,0,0), (2,0,0) ...)DOC")
       .def(nb::init<>())
-      .def("__copy__",
-           [](const RDKit::CartesianProductStrategy &self) {
-             return self.copy();
-           },
-           nb::rv_policy::take_ownership);
+      .def(
+          "__copy__",
+          [](const RDKit::CartesianProductStrategy &self) {
+            return self.copy();
+          },
+          nb::rv_policy::take_ownership);
 
   nb::class_<RDKit::RandomSampleStrategy, RDKit::EnumerationStrategyBase>(
       m, "RandomSampleStrategy",
       "RandomSampleStrategy simply randomly samples from the reagent sets.\n"
       "Note that this strategy never halts and can produce duplicates.")
       .def(nb::init<>())
-      .def("__copy__",
-           [](const RDKit::RandomSampleStrategy &self) {
-             return self.copy();
-           },
-           nb::rv_policy::take_ownership);
+      .def(
+          "__copy__",
+          [](const RDKit::RandomSampleStrategy &self) { return self.copy(); },
+          nb::rv_policy::take_ownership);
 
-  nb::class_<RDKit::RandomSampleAllBBsStrategy,
-             RDKit::EnumerationStrategyBase>(
+  nb::class_<RDKit::RandomSampleAllBBsStrategy, RDKit::EnumerationStrategyBase>(
       m, "RandomSampleAllBBsStrategy",
       R"DOC(RandomSampleAllBBsStrategy randomly samples from the reagent sets
 with the constraint that all building blocks are samples as early as possible.
 Note that this strategy never halts and can produce duplicates.)DOC")
       .def(nb::init<>())
-      .def("__copy__",
-           [](const RDKit::RandomSampleAllBBsStrategy &self) {
-             return self.copy();
-           },
-           nb::rv_policy::take_ownership);
+      .def(
+          "__copy__",
+          [](const RDKit::RandomSampleAllBBsStrategy &self) {
+            return self.copy();
+          },
+          nb::rv_policy::take_ownership);
 
   nb::class_<RDKit::EvenSamplePairsStrategy, RDKit::EnumerationStrategyBase>(
       m, "EvenSamplePairsStrategy",
@@ -325,11 +329,12 @@ number of samples, this method performs progressively worse as the
 number of samples gets larger.
 See EnumerationStrategyBase for more details.)DOC")
       .def(nb::init<>())
-      .def("__copy__",
-           [](const RDKit::EvenSamplePairsStrategy &self) {
-             return self.copy();
-           },
-           nb::rv_policy::take_ownership)
+      .def(
+          "__copy__",
+          [](const RDKit::EvenSamplePairsStrategy &self) {
+            return self.copy();
+          },
+          nb::rv_policy::take_ownership)
       .def("Stats", &RDKit::EvenSamplePairsStrategy::stats,
            "Return the statistics log of the pairs used in the current "
            "enumeration.");

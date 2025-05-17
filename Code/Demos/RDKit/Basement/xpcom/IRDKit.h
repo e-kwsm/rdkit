@@ -17,12 +17,8 @@
 /* starting interface:    IRDMolecule */
 #define IRDMOLECULE_IID_STR "2fd55049-0125-48be-88e6-270b1b83a8a8"
 
-#define IRDMOLECULE_IID                              \
-  {                                                  \
-    0x2fd55049, 0x0125, 0x48be, {                    \
-      0x88, 0xe6, 0x27, 0x0b, 0x1b, 0x83, 0xa8, 0xa8 \
-    }                                                \
-  }
+#define IRDMOLECULE_IID \
+  {0x2fd55049, 0x0125, 0x48be, {0x88, 0xe6, 0x27, 0x0b, 0x1b, 0x83, 0xa8, 0xa8}}
 
 class NS_NO_VTABLE IRDMolecule : public nsISupports {
  public:
@@ -102,12 +98,8 @@ class NS_NO_VTABLE IRDMolecule : public nsISupports {
 /* starting interface:    IRDMolSupplier */
 #define IRDMOLSUPPLIER_IID_STR "056a8da1-7820-41d7-b254-5ef7dd1693ce"
 
-#define IRDMOLSUPPLIER_IID                           \
-  {                                                  \
-    0x056a8da1, 0x7820, 0x41d7, {                    \
-      0xb2, 0x54, 0x5e, 0xf7, 0xdd, 0x16, 0x93, 0xce \
-    }                                                \
-  }
+#define IRDMOLSUPPLIER_IID \
+  {0x056a8da1, 0x7820, 0x41d7, {0xb2, 0x54, 0x5e, 0xf7, 0xdd, 0x16, 0x93, 0xce}}
 
 class NS_NO_VTABLE IRDMolSupplier : public nsISupports {
  public:
@@ -144,12 +136,8 @@ class NS_NO_VTABLE IRDMolSupplier : public nsISupports {
 /* starting interface:    IRDKit */
 #define IRDKIT_IID_STR "bfb9acf3-9349-47ec-8984-f6f8e2f02f65"
 
-#define IRDKIT_IID                                   \
-  {                                                  \
-    0xbfb9acf3, 0x9349, 0x47ec, {                    \
-      0x89, 0x84, 0xf6, 0xf8, 0xe2, 0xf0, 0x2f, 0x65 \
-    }                                                \
-  }
+#define IRDKIT_IID \
+  {0xbfb9acf3, 0x9349, 0x47ec, {0x89, 0x84, 0xf6, 0xf8, 0xe2, 0xf0, 0x2f, 0x65}}
 
 class NS_NO_VTABLE IRDKit : public nsISupports {
  public:

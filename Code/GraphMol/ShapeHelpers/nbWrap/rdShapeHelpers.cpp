@@ -48,7 +48,8 @@ static void copyTransform(
 }  // namespace
 
 NB_MODULE(rdShapeHelpers, m) {
-  m.doc() = R"DOC(Module containing functions to encode and compare the shapes of molecules)DOC";
+  m.doc() =
+      R"DOC(Module containing functions to encode and compare the shapes of molecules)DOC";
 
   m.def(
       "EncodeShape",
@@ -95,9 +96,8 @@ ARGUMENTS:
                         double, int, bool>(&MolShapes::tverskyIndex),
       "mol1"_a, "mol2"_a, "alpha"_a, "beta"_a, "confId1"_a = -1,
       "confId2"_a = -1, "gridSpacing"_a = 0.5,
-      "bitsPerPoint"_a = DiscreteValueVect::TWOBITVALUE,
-      "vdwScale"_a = 0.8, "stepSize"_a = 0.25, "maxLayers"_a = -1,
-      "ignoreHs"_a = true,
+      "bitsPerPoint"_a = DiscreteValueVect::TWOBITVALUE, "vdwScale"_a = 0.8,
+      "stepSize"_a = 0.25, "maxLayers"_a = -1, "ignoreHs"_a = true,
       R"DOC(Compute the shape tversky index between two molecule based on a predefined alignment
 
 ARGUMENTS:
@@ -125,8 +125,7 @@ ARGUMENTS:
                         DiscreteValueVect::DiscreteValueType, double, double,
                         int, bool>(&MolShapes::tanimotoDistance),
       "mol1"_a, "mol2"_a, "confId1"_a = -1, "confId2"_a = -1,
-      "gridSpacing"_a = 0.5,
-      "bitsPerPoint"_a = DiscreteValueVect::TWOBITVALUE,
+      "gridSpacing"_a = 0.5, "bitsPerPoint"_a = DiscreteValueVect::TWOBITVALUE,
       "vdwScale"_a = 0.8, "stepSize"_a = 0.25, "maxLayers"_a = -1,
       "ignoreHs"_a = true,
       R"DOC(Compute the shape tanimoto distance between two molecule based on a predefined alignment
@@ -154,8 +153,7 @@ ARGUMENTS:
                         DiscreteValueVect::DiscreteValueType, double, double,
                         int, bool, bool>(&MolShapes::protrudeDistance),
       "mol1"_a, "mol2"_a, "confId1"_a = -1, "confId2"_a = -1,
-      "gridSpacing"_a = 0.5,
-      "bitsPerPoint"_a = DiscreteValueVect::TWOBITVALUE,
+      "gridSpacing"_a = 0.5, "bitsPerPoint"_a = DiscreteValueVect::TWOBITVALUE,
       "vdwScale"_a = 0.8, "stepSize"_a = 0.25, "maxLayers"_a = -1,
       "ignoreHs"_a = true, "allowReordering"_a = true,
       R"DOC(Compute the shape protrude distance between two molecule based on a predefined alignment

@@ -402,9 +402,10 @@ void testDisableCleanup(std::string rdbase) {
 
 void testGithub9634(std::string rdbase) {
   BOOST_LOG(rdInfoLog) << "-----------------------------------" << std::endl;
-  BOOST_LOG(rdInfoLog) << "-- testing GitHub issue #9634: UNITY_ATOM_ATTR without "
-                          "formal charges --"
-                       << std::endl;
+  BOOST_LOG(rdInfoLog)
+      << "-- testing GitHub issue #9634: UNITY_ATOM_ATTR without "
+         "formal charges --"
+      << std::endl;
   BOOST_LOG(rdInfoLog) << "-----------------------------------" << std::endl;
 
   {

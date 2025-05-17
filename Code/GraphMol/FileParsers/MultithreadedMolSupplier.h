@@ -113,7 +113,7 @@ class RDKIT_FILEPARSERS_EXPORT MultithreadedMolSupplier : public MolSupplier {
   void setReadCallback(readCallBackFn_t cb) { readCallback = cb; }
 
   //! not yet implemented
-  void init() final{};
+  void init() final {};
 
   //! not yet implemented
   void reset() final;

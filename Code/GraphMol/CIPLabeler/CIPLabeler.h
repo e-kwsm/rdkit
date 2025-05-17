@@ -22,7 +22,7 @@ class ROMol;
 
 namespace CIPLabeler_detail {
 RDKIT_CIPLABELER_EXPORT bool decrementRemainingCallCountAndCheck();
-}
+}  // namespace CIPLabeler_detail
 
 namespace CIPLabeler {
 
@@ -38,8 +38,8 @@ class RDKIT_CIPLABELER_EXPORT MaxIterationsExceeded
     : public std::runtime_error {
  public:
   explicit MaxIterationsExceeded()
-      : std::runtime_error(
-            "Max Iterations Exceeded in CIP label calculation"){};
+      : std::runtime_error("Max Iterations Exceeded in CIP label calculation") {
+        };
 };
 
 /**

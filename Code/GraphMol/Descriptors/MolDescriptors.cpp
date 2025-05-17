@@ -46,5 +46,5 @@ std::string calcMolFormula(const ROMol &mol, bool separateIsotopes,
   return MolOps::getMolFormula(mol, separateIsotopes, abbreviateHIsotopes);
 }
 
-}  // end of namespace Descriptors
-}  // end of namespace RDKit
+}  // namespace Descriptors
+}  // namespace RDKit

@@ -54,8 +54,8 @@ NB_MODULE(rdConformerParser, m) {
         std::vector<std::vector<double>> coords;
         RDKit::ConformerParser::readAmberTrajectory(fName, coords,
                                                     mol.getNumAtoms());
-        RDKit::INT_VECT res =
-            RDKit::ConformerParser::addConformersFromList(mol, coords, numConfs);
+        RDKit::INT_VECT res = RDKit::ConformerParser::addConformersFromList(
+            mol, coords, numConfs);
         if (numConfs < 0) {
           numConfs = coords.size();
         }

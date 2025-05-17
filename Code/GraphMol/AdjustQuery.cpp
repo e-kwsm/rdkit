@@ -330,7 +330,7 @@ void parseAdjustQueryParametersFromJSON(MolOps::AdjustQueryParameters &p,
   if (!which.empty()) {
     p.adjustRingChainFlags = parseWhichString(which);
   }
-}  // namespace MolOps
+}
 
 ROMol *adjustQueryProperties(const ROMol &mol,
                              const AdjustQueryParameters *params) {
