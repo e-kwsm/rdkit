@@ -203,14 +203,16 @@ bool TautomerEnumerator::setTautomerStereoAndIsoHs(
     if (tautBond->getBondType() != Bond::DOUBLE || d_removeBondStereo) {
       // When bond stereo is being removed for bonds involved in tautomerism,
       // use STEREOANY (for *non-ring* double bonds) instead of STEREONONE.
-      // This prevents downstream tools (notably InChI) from inferring a specific E/Z
-      // assignment from 2D coordinates after bond orders have been changed.
+      // This prevents downstream tools (notably InChI) from inferring a
+      // specific E/Z assignment from 2D coordinates after bond orders have been
+      // changed.
       bool isRingBond = false;
       if (tautBond->getBondType() == Bond::DOUBLE) {
         auto ringInfo = taut.getRingInfo();
         // We only need to know whether the bond is in a ring; avoid forcing
         // SymmSSSR here since that has a performance cost.
-        // this might be not precise enough for large rings like 9-or-more macrocycles
+        // this might be not precise enough for large rings like 9-or-more
+        // macrocycles
         if (!ringInfo || !ringInfo->isFindFastOrBetter()) {
           MolOps::fastFindRings(taut);
           ringInfo = taut.getRingInfo();
@@ -228,10 +230,10 @@ bool TautomerEnumerator::setTautomerStereoAndIsoHs(
           isRingBond = bondInRing || (beginInRing && endInRing);
         }
       }
-      const auto targetStereo = (tautBond->getBondType() == Bond::DOUBLE &&
-                                 !isRingBond)
-                                    ? Bond::STEREOANY
-                                    : Bond::STEREONONE;
+      const auto targetStereo =
+          (tautBond->getBondType() == Bond::DOUBLE && !isRingBond)
+              ? Bond::STEREOANY
+              : Bond::STEREONONE;
       modified |= (tautBond->getStereo() != targetStereo);
       tautBond->setStereo(targetStereo);
       tautBond->getStereoAtoms().clear();
@@ -264,7 +266,8 @@ bool TautomerEnumerator::setTautomerStereoAndIsoHs(
     if (d_removeBondStereo) {
       auto ringInfo = taut.getRingInfo();
       if (!ringInfo || !ringInfo->isFindFastOrBetter()) {
-        // might prefer more expensive calc here to better support 9-or-more macrocycles
+        // might prefer more expensive calc here to better support 9-or-more
+        // macrocycles
         MolOps::fastFindRings(taut);
         ringInfo = taut.getRingInfo();
       }

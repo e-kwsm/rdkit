@@ -428,7 +428,8 @@ void RCore::buildMatchingMol() {
           //  If we are were set as an RLABEL of type Isotope we probably
           //   have a query of named "AtomIsotope"
           //   we DO strip these unless they have an additional query
-          if (q != "AtomIsotope" || !atom->getPropIfPresent(RLABEL_TYPE, type) ||
+          if (q != "AtomIsotope" ||
+              !atom->getPropIfPresent(RLABEL_TYPE, type) ||
               type != RGroupLabels::IsotopeLabels) {
             continue;
           }
