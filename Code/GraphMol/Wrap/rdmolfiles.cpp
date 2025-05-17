@@ -1152,7 +1152,7 @@ BOOST_PYTHON_MODULE(rdmolfiles) {
       .def_readwrite(
           "precision", &RDKit::MolWriterParams::precision,
           "precision of coordinates (only available in V3000)(default=false)")
-      .def("__setattr__",&safeSetattr);
+      .def("__setattr__", &safeSetattr);
 
   python::class_<RDKit::v2::FileParsers::MolFromSCSRParams, boost::noncopyable>(
       "MolFromSCSRParams",
@@ -1712,10 +1712,9 @@ BOOST_PYTHON_MODULE(rdmolfiles) {
       .def_readwrite(
           "includeDativeBonds", &RDKit::SmilesWriteParams::includeDativeBonds,
           "include the RDKit extension for dative bonds. Otherwise dative bonds will be written as single bonds")
-      .def_readwrite(
-          "ignoreAtomMapNumbers",
-          &RDKit::SmilesWriteParams::ignoreAtomMapNumbers,
-          "ignore atom map numbers when canonicalizing the molecule")
+      .def_readwrite("ignoreAtomMapNumbers",
+                     &RDKit::SmilesWriteParams::ignoreAtomMapNumbers,
+                     "ignore atom map numbers when canonicalizing the molecule")
       .def("__setattr__", &safeSetattr);
 
   python::def("MolToSmiles",
