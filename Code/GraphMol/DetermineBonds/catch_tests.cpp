@@ -595,9 +595,7 @@ H  4.0267964193309700  0.6022588431824700  -0.6752319773888000
   REQUIRE(m);
 
   // one thread for determineBonds
-  std::thread cgThread([&m]() {
-    determineBonds(*m);
-  });
+  std::thread cgThread([&m]() { determineBonds(*m); });
   // another thread to raise SIGINT
   std::thread interruptThread([]() {
     // sleep for a bit to allow for a few iterations, but not enough to

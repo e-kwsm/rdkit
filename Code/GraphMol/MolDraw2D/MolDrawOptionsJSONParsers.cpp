@@ -191,7 +191,8 @@ void updateMolDrawOptionsFromJSON(MolDrawOptions &opts,
   const auto drawingExtentsIncludeIt = pt.find("drawingExtentsInclude");
   if (drawingExtentsIncludeIt != pt.not_found()) {
     bool haveDrawElementFlags = false;
-    auto drawingExtentsInclude = flagsFromJson<DrawElement>(drawingExtentsIncludeIt->second, &haveDrawElementFlags);
+    auto drawingExtentsInclude = flagsFromJson<DrawElement>(
+        drawingExtentsIncludeIt->second, &haveDrawElementFlags);
     if (haveDrawElementFlags) {
       opts.drawingExtentsInclude = drawingExtentsInclude;
     }
