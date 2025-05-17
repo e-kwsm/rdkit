@@ -16,7 +16,7 @@
 
 namespace RDGeom {
 class Point3D;
-}
+}  // namespace RDGeom
 
 namespace ForceFields {
 class ForceField;
