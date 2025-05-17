@@ -84,10 +84,12 @@ void removeAtomFromGroups(const Atom *atom, std::vector<StereoGroup> &groups) {
     }
   }
   // now remove any empty groups:
-  groups.erase(
-      std::remove_if(groups.begin(), groups.end(),
-                     [](const auto &gp) { return gp.getAtoms().empty() && gp.getBonds().empty(); }),
-      groups.end());
+  groups.erase(std::remove_if(groups.begin(), groups.end(),
+                              [](const auto &gp) {
+                                return gp.getAtoms().empty() &&
+                                       gp.getBonds().empty();
+                              }),
+               groups.end());
 }
 
 void removeGroupsWithBond(const Bond *bond, std::vector<StereoGroup> &groups) {

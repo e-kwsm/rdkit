@@ -480,7 +480,7 @@ std::string FragmentSmilesConstruct(
   return res.str();
 }
 
-}  // end of namespace SmilesWrite
+}  // namespace SmilesWrite
 
 static bool SortBasedOnFirstElement(
     const std::pair<std::string, std::vector<unsigned int>> &a,
@@ -519,7 +519,7 @@ std::string MolToSmiles(const ROMol &mol, const SmilesWriteParams &params,
 
     rootedAtAtom = -1;
     if (params.rootedAtAtom >= 0 && atsPresent[params.rootedAtAtom]) {
-        rootedAtAtom = params.rootedAtAtom - atsPresent.find_first();
+      rootedAtAtom = params.rootedAtAtom - atsPresent.find_first();
     }
     fragsRootedAtAtom.push_back(rootedAtAtom);
 
@@ -601,7 +601,6 @@ std::string MolToSmiles(const ROMol &mol, const SmilesWriteParams &params,
       }
     }
 
-
     // if we are doing CXSMILES, Hydrogen bonds are shown as single bonds
     // in the smiles part, and are indicated with the H: block of the CX
     // extensions
@@ -613,7 +612,6 @@ std::string MolToSmiles(const ROMol &mol, const SmilesWriteParams &params,
         }
       }
     }
-
 
     rootedAtAtom = fragsRootedAtAtom[fragIdx];
 
@@ -633,11 +631,8 @@ std::string MolToSmiles(const ROMol &mol, const SmilesWriteParams &params,
       const bool breakTies = true;
       const bool includeChiralPresence = false;
       const bool includeIsotopes = params.doIsomericSmiles;
-      ;
       const bool includeChirality = params.doIsomericSmiles;
-      ;
       const bool includeStereoGroups = params.doIsomericSmiles;
-      ;
       const bool useNonStereoRanks = false;
       const bool includeAtomMaps = true;
 

@@ -188,14 +188,16 @@ struct resmolsup_wrap {
              python::args("self"),
              "Get the number of conjugated groups this molecule has.\n")
         .def("GetNumStructures",
-             (size_t(PyResonanceMolSupplierCallback::*)(unsigned int)) &
-                 PyResonanceMolSupplierCallback::wrapGetNumStructures,
+             (size_t(PyResonanceMolSupplierCallback::*)(
+                 unsigned int))&PyResonanceMolSupplierCallback::
+                 wrapGetNumStructures,
              python::args("self", "conjGrpIdx"),
              "Get the number of resonance structures generated so far "
              "for the passed conjugated group index.\n")
         .def("GetNumDiverseStructures",
-             (size_t(PyResonanceMolSupplierCallback::*)(unsigned int)) &
-                 PyResonanceMolSupplierCallback::wrapGetNumDiverseStructures,
+             (size_t(PyResonanceMolSupplierCallback::*)(
+                 unsigned int))&PyResonanceMolSupplierCallback::
+                 wrapGetNumDiverseStructures,
              python::args("self", "conjGrpIdx"),
              "Get the number of non-degenrate resonance structures "
              "generated so far for the passed conjugated group index.\n")
@@ -237,13 +239,13 @@ struct resmolsup_wrap {
              "Returns the number of individual conjugated groups in the "
              "molecule.\n")
         .def("GetBondConjGrpIdx",
-             (int (ResonanceMolSupplier::*)(unsigned int)) &
+             (int(ResonanceMolSupplier::*)(unsigned int)) &
                  ResonanceMolSupplier::getBondConjGrpIdx,
              python::args("self", "bi"),
              "Given a bond index, it returns the index of the conjugated group"
              "the bond belongs to, or -1 if it is not conjugated.\n")
         .def("GetAtomConjGrpIdx",
-             (int (ResonanceMolSupplier::*)(unsigned int)) &
+             (int(ResonanceMolSupplier::*)(unsigned int)) &
                  ResonanceMolSupplier::getAtomConjGrpIdx,
              python::args("self", "ai"),
              "Given an atom index, it returns the index of the conjugated group"

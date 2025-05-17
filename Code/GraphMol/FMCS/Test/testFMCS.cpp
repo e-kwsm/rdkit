@@ -1687,7 +1687,8 @@ int main(int argc, const char *argv[]) {
   _CrtMemCheckpoint(&_ms);
 #endif
   // while(1)   // check memory leaks in TaskManager or 'top -p ...'
-  {}
+  {
+  }
 #ifdef _DEBUG  // check memory leaks
   _CrtMemDumpAllObjectsSince(&_ms);
 #endif
