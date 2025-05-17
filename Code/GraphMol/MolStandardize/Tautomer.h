@@ -58,8 +58,8 @@ struct RDKIT_MOLSTANDARDIZE_EXPORT SubstructTerm {
 
 //! getDefaultTautomerSubstructs returns the SubstructTerms used in scoring
 /// tautomer forms.  See SubstructTerm for details.
-RDKIT_MOLSTANDARDIZE_EXPORT const std::vector<SubstructTerm>
-    &getDefaultTautomerScoreSubstructs();
+RDKIT_MOLSTANDARDIZE_EXPORT const std::vector<SubstructTerm> &
+getDefaultTautomerScoreSubstructs();
 
 //! Score the rings of the current tautomer
 /// Aromatic rings score 100, all carbon aromatic rings score 250

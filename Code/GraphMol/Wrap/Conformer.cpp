@@ -95,15 +95,18 @@ void SetPos(Conformer *conf, np::ndarray const &array) {
   RDGeom::POINT3D_VECT &pos = conf->getPositions();
   if (array.shape(1) == 2) {
     for (size_t i = 0; i < conf->getNumAtoms(); ++i) {
-      pos[i].x = * reinterpret_cast<const double *>(dataptr + i * stride_atom);
-      pos[i].y = * reinterpret_cast<const double *>(dataptr + i * stride_atom + stride_dim);
+      pos[i].x = *reinterpret_cast<const double *>(dataptr + i * stride_atom);
+      pos[i].y = *reinterpret_cast<const double *>(dataptr + i * stride_atom +
+                                                   stride_dim);
       pos[i].z = 0.0;
     }
   } else {
     for (size_t i = 0; i < conf->getNumAtoms(); ++i) {
-      pos[i].x = * reinterpret_cast<const double *>(dataptr + i * stride_atom);
-      pos[i].y = * reinterpret_cast<const double *>(dataptr + i * stride_atom + stride_dim);
-      pos[i].z = * reinterpret_cast<const double *>(dataptr + i * stride_atom + 2 * stride_dim);
+      pos[i].x = *reinterpret_cast<const double *>(dataptr + i * stride_atom);
+      pos[i].y = *reinterpret_cast<const double *>(dataptr + i * stride_atom +
+                                                   stride_dim);
+      pos[i].z = *reinterpret_cast<const double *>(dataptr + i * stride_atom +
+                                                   2 * stride_dim);
     }
   }
 }
@@ -154,8 +157,8 @@ struct conformer_wrapper {
         .def("SetAtomPosition", SetAtomPos, python::args("self", "aid", "loc"),
              "Set the position of the specified atom\n")
         .def("SetAtomPosition",
-             (void(Conformer::*)(unsigned int, const RDGeom::Point3D &)) &
-                 Conformer::setAtomPos,
+             (void (Conformer::*)(
+                 unsigned int, const RDGeom::Point3D &))&Conformer::setAtomPos,
              python::args("self", "atomId", "position"),
              "Set the position of the specified atom\n")
 

@@ -122,7 +122,7 @@ struct bond_wrapper {
              "stereochemistry.\n")
 
         .def("GetValenceContrib",
-             (double(Bond::*)(const Atom *) const) & Bond::getValenceContrib,
+             (double (Bond::*)(const Atom *) const) & Bond::getValenceContrib,
              python::args("self", "at"),
              "Returns the contribution of the bond to the valence of an "
              "Atom.\n\n"
@@ -162,7 +162,7 @@ struct bond_wrapper {
              "Given one of the bond's atoms, returns the other one.\n")
 
         // FIX: query stuff
-        .def("Match", (bool(Bond::*)(const Bond *) const) & Bond::Match,
+        .def("Match", (bool (Bond::*)(const Bond *) const) & Bond::Match,
              python::args("self", "what"),
              "Returns whether or not this bond matches another Bond.\n\n"
              "  Each Bond (or query Bond) has a query function which is\n"
