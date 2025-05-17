@@ -1,3 +1,6 @@
+#ifndef HOME_KWSM_GITHUB_E_KWSM_RDKIT_LLVM_HEADER_GUARD_CODE_DATASTRUCTS_BASE64_H
+#define HOME_KWSM_GITHUB_E_KWSM_RDKIT_LLVM_HEADER_GUARD_CODE_DATASTRUCTS_BASE64_H
+
 //
 // Copyright (C) 2002-2008 Greg Landrum and Rational Discovery LLC
 //
@@ -37,5 +40,7 @@ RDKIT_DATASTRUCTS_EXPORT char *Base64Encode(const char *, const unsigned int);
      char array returned by this function.
  */
 RDKIT_DATASTRUCTS_EXPORT char *Base64Decode(const char *, unsigned int *);
+
+#endif
 
 #endif

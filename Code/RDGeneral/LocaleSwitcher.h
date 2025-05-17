@@ -1,3 +1,6 @@
+#ifndef HOME_KWSM_GITHUB_E_KWSM_RDKIT_LLVM_HEADER_GUARD_CODE_RDGENERAL_LOCALESWITCHER_H
+#define HOME_KWSM_GITHUB_E_KWSM_RDKIT_LLVM_HEADER_GUARD_CODE_RDGENERAL_LOCALESWITCHER_H
+
 //  Copyright (c) 2016, Novartis Institutes for BioMedical Research Inc.
 //  All rights reserved.
 //
@@ -50,5 +53,7 @@ class RDKIT_RDGENERAL_EXPORT LocaleSwitcher {
 };
 }  // namespace Utils
 }  // namespace RDKit
+
+#endif
 
 #endif

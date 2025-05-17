@@ -1,3 +1,6 @@
+#ifndef HOME_KWSM_GITHUB_E_KWSM_RDKIT_LLVM_HEADER_GUARD_CODE_DATASTRUCTS_BITVECT_H
+#define HOME_KWSM_GITHUB_E_KWSM_RDKIT_LLVM_HEADER_GUARD_CODE_DATASTRUCTS_BITVECT_H
+
 //
 // Copyright (c) 2003-2008 greg Landrum and Rational Discovery LLC
 //
@@ -64,5 +67,7 @@ class RDKIT_DATASTRUCTS_EXPORT BitVect {
  private:
   virtual void _initForSize(const unsigned int size) = 0;
 };
+
+#endif
 
 #endif
