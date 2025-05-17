@@ -46,7 +46,7 @@
 namespace RDKit {
 namespace v2 {
 struct ChemDrawParserParams;
-}
+}  // namespace v2
 namespace ChemDraw {
 inline constexpr auto CDXML_FREE_SITES_PROP = "_cdxmlFreeSites";
 inline constexpr auto CDXML_RING_BOND_COUNT_AS_DRAWN_PROP =
@@ -61,6 +61,6 @@ bool parseNode(
     std::map<std::pair<int, StereoGroupType>, StereoGroupInfo> &sgroups,
     int &missingFragId, const v2::ChemDrawParserParams &params,
     int externalAttachment);
-}
+}  // namespace ChemDraw
 }  // namespace RDKit
 #endif

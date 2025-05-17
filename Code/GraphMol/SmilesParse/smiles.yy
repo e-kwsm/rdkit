@@ -34,7 +34,7 @@ namespace {
   molList->clear();
   molList->resize(0);
  }
-}
+} // namespace
 
 
 void

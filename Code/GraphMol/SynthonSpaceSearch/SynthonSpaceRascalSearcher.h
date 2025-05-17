@@ -21,7 +21,7 @@
 
 namespace RDKit::RascalMCES {
 struct RascalOptions;
-}
+}  // namespace RDKit::RascalMCES
 
 namespace RDKit::SynthonSpaceSearch {
 

@@ -29,7 +29,7 @@ namespace MolProcessing {
 namespace details {
 RDKIT_MOLPROCESSING_EXPORT extern GeneralMolSupplier::SupplierOptions
     defaultSupplierOptions;
-}
+}  // namespace details
 template <typename OutputType = std::uint32_t>
 std::vector<std::unique_ptr<ExplicitBitVect>> getFingerprintsForMolsInFile(
     const std::string &fileName,

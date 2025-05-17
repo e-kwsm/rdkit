@@ -147,7 +147,7 @@ inline std::string GetBondSmiles(const Bond *bond, int atomToLeftIdx = -1,
 namespace detail {
 RDKIT_SMILESPARSE_EXPORT std::string MolToSmiles(
     const ROMol &mol, const SmilesWriteParams &params, bool doingCXSmiles, bool includeStereoGroups=true);
-}
+} // namespace detail
 
 }  // namespace SmilesWrite
 

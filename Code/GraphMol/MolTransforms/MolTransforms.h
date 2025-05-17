@@ -29,7 +29,7 @@ class Conformer;
 
 namespace RDGeom {
 class Transform3D;
-}
+}  // namespace RDGeom
 
 namespace MolTransforms {
 RDKIT_MOLTRANSFORMS_EXPORT void transformMolsAtoms(RDKit::ROMol *mol,
