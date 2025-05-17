@@ -1487,8 +1487,9 @@ bool atomIsCandidateForRingStereochem(
           ringNbrRanks.insert(atomRanks[nbr->getIdx()]);
         }
       }
-      // std::cerr << "!!!! " << atom->getIdx() << " " << ringNbrRanks.size() << " "
-      //           << ringNbrs.size() << " " << nonRingNbrs.size() << std::endl;
+      // std::cerr << "!!!! " << atom->getIdx() << " " << ringNbrRanks.size()
+      //           << " " << ringNbrs.size() << " " << nonRingNbrs.size()
+      //           << std::endl;
       switch (nonRingNbrs.size()) {
         case 2:
           // the ranks of the non ring neighbors must be different AND

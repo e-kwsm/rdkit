@@ -4153,14 +4153,13 @@ void testSmartsOnDummyAtoms() {
       << "Test we can reconstruct rgroup decomps that break rings" << std::endl;
 
   const auto core = "[$([1C]):1]C[$([2C]):2]"_smarts;
-    
+
   const auto mol1 = "N[1C]C[2C]"_smiles;
   const auto mol2 = "N[2C]C[1C]"_smiles;
 
   const std::vector<std::string> expected = {
-    "Core:C([*:1])[*:2] R1:N[1C][*:1] R2:[2C][*:2]",
-    "Core:C([*:1])[*:2] R1:[1C][*:1] R2:N[2C][*:2]"
-  };
+      "Core:C([*:1])[*:2] R1:N[1C][*:1] R2:[2C][*:2]",
+      "Core:C([*:1])[*:2] R1:[1C][*:1] R2:N[2C][*:2]"};
 
   RGroupDecomposition decomp(*core);
   auto add11 = decomp.add(*mol1);

@@ -101,8 +101,8 @@ void processCXSmilesLabels(RWMol &mol) {
                       symb.substr(0, symb.size() - 2));
         atom->clearProp(common_properties::atomLabel);
       }
-    } else if (atom->getAtomicNum() == 0 && !atom->hasQuery() && !atom->getIsotope() &&
-               atom->getSymbol() == "*") {
+    } else if (atom->getAtomicNum() == 0 && !atom->hasQuery() &&
+               !atom->getIsotope() && atom->getSymbol() == "*") {
       addquery(makeAAtomQuery(), "", mol, atom->getIdx());
     }
   }
@@ -320,7 +320,7 @@ Bond *get_bond_with_smiles_idx(const ROMol &mol, unsigned idx) {
   return nullptr;
 }
 
-}  // end of anonymous namespace
+}  // namespace
 
 // we use this pattern a lot and it's a long function call, but a very short
 // #define
@@ -1549,7 +1549,7 @@ void parseCXExtensions(RDKit::RWMol &mol, const std::string &extText,
   mol.clearProp("_cxsmilesLabelsProcessed");
   mol.clearProp(cxsgTracker);
 }
-}  // end of namespace SmilesParseOps
+}  // namespace SmilesParseOps
 
 namespace RDKit {
 namespace SmilesWrite {
