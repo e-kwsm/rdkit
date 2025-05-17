@@ -1,3 +1,6 @@
+#ifndef HOME_KWSM_GITHUB_E_KWSM_RDKIT_LLVM_HEADER_GUARD_CODE_RDGENERAL_RDTHREADS_H
+#define HOME_KWSM_GITHUB_E_KWSM_RDKIT_LLVM_HEADER_GUARD_CODE_RDGENERAL_RDTHREADS_H
+
 //
 // Copyright (C) 2015-2018 Greg Landrum
 //
@@ -39,6 +42,8 @@ inline unsigned int getNumThreadsToUse(int target) {
   return 1;
 }
 }  // namespace RDKit
+#endif
+
 #endif
 
 #endif
