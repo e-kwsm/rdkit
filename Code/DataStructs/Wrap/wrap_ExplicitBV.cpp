@@ -70,7 +70,7 @@ struct EBV_wrapper {
         .def(python::init<std::string>(python::args("self", "pkl")))
         .def(python::init<unsigned int, bool>(
             python::args("self", "size", "bitsSet")))
-        .def("SetBit", (bool(EBV::*)(unsigned int)) & EBV::setBit,
+        .def("SetBit", (bool (EBV::*)(unsigned int))&EBV::setBit,
              python::args("self", "which"),
              "Turns on a particular bit.  Returns the original state of the "
              "bit.\n")
@@ -79,7 +79,7 @@ struct EBV_wrapper {
              python::args("self", "onBitList"),
              "Turns on a set of bits.  The argument should be a tuple or list "
              "of bit ids.\n")
-        .def("UnSetBit", (bool(EBV::*)(unsigned int)) & EBV::unsetBit,
+        .def("UnSetBit", (bool (EBV::*)(unsigned int))&EBV::unsetBit,
              python::args("self", "which"),
              "Turns off a particular bit.  Returns the original state of the "
              "bit.\n")
@@ -88,7 +88,7 @@ struct EBV_wrapper {
              python::args("self", "offBitList"),
              "Turns off a set of bits.  The argument should be a tuple or list "
              "of bit ids.\n")
-        .def("GetBit", (bool(EBV::*)(unsigned int) const) & EBV::getBit,
+        .def("GetBit", (bool (EBV::*)(unsigned int) const) & EBV::getBit,
              python::args("self", "which"), "Returns the value of a bit.\n")
         .def("GetNumBits", &EBV::getNumBits, python::args("self"),
              "Returns the number of bits in the vector (the vector's size).\n")
@@ -101,19 +101,19 @@ struct EBV_wrapper {
              python::args("self", "which"))
         .def("__setitem__", (int (*)(EBV &, int, int))set_VectItem,
              python::args("self", "which", "val"))
-        .def("GetOnBits", (IntVect(*)(const EBV &))GetOnBits,
+        .def("GetOnBits", (IntVect (*)(const EBV &))GetOnBits,
              python::args("self"),
              "Returns a tuple containing IDs of the on bits.\n")
-        .def("ToBinary", (python::object(*)(const EBV &))BVToBinary,
+        .def("ToBinary", (python::object (*)(const EBV &))BVToBinary,
              python::args("self"),
              "Returns an internal binary representation of the vector.\n")
         .def("FromBase64", (void (*)(EBV &, const std::string &))InitFromBase64,
              python::args("self", "inD"),
              "Initializes the vector from a base64 encoded binary string.\n")
-        .def("ToBase64", (std::string(*)(EBV &))ToBase64, python::args("self"),
+        .def("ToBase64", (std::string (*)(EBV &))ToBase64, python::args("self"),
              "Converts the vector to a base64 string (the base64 encoded "
              "version of the results of ToString()).\n")
-        .def("ToList", (python::list(*)(const EBV &))ExplicitToList,
+        .def("ToList", (python::list (*)(const EBV &))ExplicitToList,
              python::args("self"),
              "Return the Bitvector as a python list (faster than list(vect))")
         .def(python::self & python::self)

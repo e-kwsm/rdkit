@@ -19,7 +19,7 @@
 double standardArea = 12.3298;
 double dotArea = 0.03853087;
 
-// static const float standardDots[NUMDOTS][3] 
+// static const float standardDots[NUMDOTS][3]
 static const RDGeom::Point3D standardDots[NUMDOTS] = {
     {-0.577350f, -0.577350f, -0.577350f}, {-0.448278f, -0.547076f, -0.706934f},
     {-0.706934f, -0.448278f, -0.547076f}, {-0.547076f, -0.706934f, -0.448278f},

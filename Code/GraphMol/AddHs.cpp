@@ -154,7 +154,7 @@ bool may_need_extra_H(const ROMol &mol, const Atom *atom) {
          atom->getTotalValence() == 3;
 }
 
-}  // end of unnamed namespace
+}  // namespace
 
 namespace MolOps {
 
@@ -1003,7 +1003,7 @@ void filter_sgroup_emptying_hydrogens(const ROMol &mol,
   }
 }
 
-}  // end of anonymous namespace
+}  // namespace
 
 void removeHs(RWMol &mol, const RemoveHsParameters &ps, bool sanitize) {
   if (ps.removeAndTrackIsotopes) {
@@ -1169,7 +1169,6 @@ std::pair<bool, bool> queryHasHs(Q queryAtom, bool inor = false) {
     }
   }
   return std::make_pair(false, inor);
-  ;
 }
 
 HydrogenType isQueryH(const Atom *atom) {

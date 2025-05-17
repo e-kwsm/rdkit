@@ -169,7 +169,7 @@ BETTER_ENUM(DrawElement, uint32_t,  // clang-format off
   RADICALS = 1 << 5,
   POSTSHAPES = 1 << 6,
   ALL = 0x7fffffff
-);
+);  // clang-format on
 
 struct RDKIT_MOLDRAW2D_EXPORT MolDrawOptions {
   bool atomLabelDeuteriumTritium =
@@ -271,9 +271,9 @@ struct RDKIT_MOLDRAW2D_EXPORT MolDrawOptions {
   bool isotopeLabels = true;       // adds isotope to non-dummy atoms.
   bool dummyIsotopeLabels = true;  // adds isotope labels to dummy atoms.
 
-  bool addStereoAnnotation = false;       // adds E/Z and R/S to drawings.
-  bool showAllCIPCodes = false;           // show CIP codes for 'or' & 'and'
-                                          // StereoGroups that are normally hidden
+  bool addStereoAnnotation = false;  // adds E/Z and R/S to drawings.
+  bool showAllCIPCodes = false;      // show CIP codes for 'or' & 'and'
+                                     // StereoGroups that are normally hidden
   bool atomHighlightsAreCircles = false;  // forces atom highlights always to be
                                           // circles. Default (false) is to put
                                           // ellipses round longer labels.
@@ -282,8 +282,8 @@ struct RDKIT_MOLDRAW2D_EXPORT MolDrawOptions {
   bool centreMoleculesBeforeDrawing = false;  // moves the centre of the drawn
                                               // molecule to (0,0)
   std::uint32_t drawingExtentsInclude =
-      DrawElement::ALL;  // which elements should be included
-                         // when computing drawing extents
+      DrawElement::ALL;         // which elements should be included
+                                // when computing drawing extents
   bool explicitMethyl = false;  // draw terminal methyl and related as CH3
   bool includeRadicals =
       true;  // include radicals in the drawing (it can be useful to turn this

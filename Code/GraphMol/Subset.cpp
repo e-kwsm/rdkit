@@ -51,10 +51,11 @@ static void copySelectedAtomsAndBonds(RWMol &extracted_mol,
       continue;
     }
     if (atomMapping.find(ref_bond->getBeginAtomIdx()) == atomMapping.end() ||
-	atomMapping.find(ref_bond->getEndAtomIdx()) == atomMapping.end()) {
-      throw ValueErrorException("copyMolSubset: subset bonds contain atoms not contained in subset atoms");
+        atomMapping.find(ref_bond->getEndAtomIdx()) == atomMapping.end()) {
+      throw ValueErrorException(
+          "copyMolSubset: subset bonds contain atoms not contained in subset atoms");
     }
-	
+
     std::unique_ptr<Bond> extracted_bond{
         options.copyAsQuery ? new QueryBond(*ref_bond) : ref_bond->copy()};
 
