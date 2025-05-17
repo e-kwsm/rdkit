@@ -1,3 +1,6 @@
+#ifndef HOME_KWSM_GITHUB_E_KWSM_RDKIT_LLVM_HEADER_GUARD_CODE_NUMERICS_SQUAREMATRIX_H
+#define HOME_KWSM_GITHUB_E_KWSM_RDKIT_LLVM_HEADER_GUARD_CODE_NUMERICS_SQUAREMATRIX_H
+
 //
 //  Copyright (C) 2004-2006 Rational Discovery LLC
 //
@@ -85,5 +88,7 @@ class SquareMatrix : public Matrix<TYPE> {
 };
 typedef SquareMatrix<double> DoubleSquareMatrix;
 }  // namespace RDNumeric
+
+#endif
 
 #endif
