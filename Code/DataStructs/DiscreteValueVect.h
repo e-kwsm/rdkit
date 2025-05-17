@@ -1,3 +1,6 @@
+#ifndef HOME_KWSM_GITHUB_E_KWSM_RDKIT_LLVM_HEADER_GUARD_CODE_DATASTRUCTS_DISCRETEVALUEVECT_H
+#define HOME_KWSM_GITHUB_E_KWSM_RDKIT_LLVM_HEADER_GUARD_CODE_DATASTRUCTS_DISCRETEVALUEVECT_H
+
 //
 //  Copyright (C) 2004-2008 Greg Landrum and Rational Discovery LLC
 //
@@ -142,5 +145,7 @@ operator+(const DiscreteValueVect &p1, const DiscreteValueVect &p2);
 RDKIT_DATASTRUCTS_EXPORT DiscreteValueVect
 operator-(const DiscreteValueVect &p1, const DiscreteValueVect &p2);
 }  // namespace RDKit
+
+#endif
 
 #endif

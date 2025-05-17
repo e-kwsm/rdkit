@@ -1,3 +1,6 @@
+#ifndef HOME_KWSM_GITHUB_E_KWSM_RDKIT_LLVM_HEADER_GUARD_CODE_DATASTRUCTS_EXPLICITBITVECT_H
+#define HOME_KWSM_GITHUB_E_KWSM_RDKIT_LLVM_HEADER_GUARD_CODE_DATASTRUCTS_EXPLICITBITVECT_H
+
 //
 // Copyright (c) 2003-208 greg Landrum and Rational Discovery LLC
 //  Copyright (c) 2014, Novartis Institutes for BioMedical Research Inc.
@@ -95,5 +98,7 @@ class RDKIT_DATASTRUCTS_EXPORT ExplicitBitVect : public BitVect {
   unsigned int d_numOnBits{0};
   void _initForSize(const unsigned int size) override;
 };
+
+#endif
 
 #endif
