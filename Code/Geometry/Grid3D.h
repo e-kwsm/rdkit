@@ -16,7 +16,7 @@
 
 namespace RDKit {
 class DiscreteValueVect;
-}
+}  // namespace RDKit
 namespace RDGeom {
 class Point3D;
 

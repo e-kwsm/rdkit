@@ -34,5 +34,5 @@
 
 namespace Queries {
 typedef enum { COMPOSITE_AND, COMPOSITE_OR, COMPOSITE_XOR } CompositeQueryType;
-}
+}  // namespace Queries
 #endif

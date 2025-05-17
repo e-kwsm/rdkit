@@ -22,7 +22,7 @@ namespace RDKit {
 
 namespace detail {
 std::uint8_t *bitsetToBytes(const boost::dynamic_bitset<> &bitset);
-}
+}  // namespace detail
 
 namespace {
 auto tplSorter = [](const MultiFPBReader::ResultTuple &v1,

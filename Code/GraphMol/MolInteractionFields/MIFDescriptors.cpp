@@ -179,7 +179,7 @@ double MMFFVdWaals::calcEnergy(double dist2, double R_star_ij,
 namespace CoulombDetail {
 constexpr double prefactor =
     1 / (4.0 * 3.141592 * 8.854188) * 1.602 * 1.602 * 6.02214129 * 10000;
-}
+}  // namespace CoulombDetail
 
 Coulomb::Coulomb(const std::vector<double> &charges,
                  const std::vector<RDGeom::Point3D> &positions,
