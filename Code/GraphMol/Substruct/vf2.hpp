@@ -17,7 +17,7 @@
 
 #ifndef __BGL_VF2_SUB_STATE_H__
 #define __BGL_VF2_SUB_STATE_H__
-//#define RDK_VF2_PRUNING
+// #define RDK_VF2_PRUNING
 #define RDK_ADJ_ITER typename Graph::adjacency_iterator
 
 namespace boost {
@@ -616,7 +616,7 @@ bool match(node_id c1[], node_id c2[], SubState &s,
   s.MatchAll(c1, c2, res, max_results);
   return !res.empty();
 }
-};  // end of namespace detail
+};  // namespace detail
 
 template <
     class Graph, class VertexLabeling  // binary predicate
@@ -675,7 +675,7 @@ bool vf2_all(const Graph &g1, const Graph &g2, VertexLabeling &vertex_labeling,
 
   return !F.empty();
 };
-}  // end of namespace boost
+}  // namespace boost
 #endif
 
 #undef RDK_VF2_PRUNING
