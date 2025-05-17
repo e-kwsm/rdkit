@@ -417,18 +417,21 @@ void MaximumCommonSubgraph::makeInitialSeeds() {
         if (!QueryMoleculeSingleMatchedAtom) {
           QueryMoleculeSingleMatchedAtom = candQueryMoleculeSingleMatchedAtom;
         } else {
-          QueryMoleculeSingleMatchedAtom = (std::max)(
-              candQueryMoleculeSingleMatchedAtom,
-              QueryMoleculeSingleMatchedAtom, [](const Atom *a, const Atom *b) {
-                if (a->getDegree() != b->getDegree()) {
-                  return (a->getDegree() < b->getDegree());
-                } else if (a->getFormalCharge() != b->getFormalCharge()) {
-                  return (a->getFormalCharge() < b->getFormalCharge());
-                } else if (a->getAtomicNum() != b->getAtomicNum()) {
-                  return (a->getAtomicNum() < b->getAtomicNum());
-                }
-                return (a->getIdx() < b->getIdx());
-              });
+          QueryMoleculeSingleMatchedAtom =
+              (std::max)(candQueryMoleculeSingleMatchedAtom,
+                         QueryMoleculeSingleMatchedAtom,
+                         [](const Atom *a, const Atom *b) {
+                           if (a->getDegree() != b->getDegree()) {
+                             return (a->getDegree() < b->getDegree());
+                           } else if (a->getFormalCharge() !=
+                                      b->getFormalCharge()) {
+                             return (a->getFormalCharge() <
+                                     b->getFormalCharge());
+                           } else if (a->getAtomicNum() != b->getAtomicNum()) {
+                             return (a->getAtomicNum() < b->getAtomicNum());
+                           }
+                           return (a->getIdx() < b->getIdx());
+                         });
         }
       }
     }
@@ -675,7 +678,7 @@ bool MaximumCommonSubgraph::growSeeds() {
     McsIdx.Targets = Targets;
   }
   return !canceled;
-}  // namespace FMCS
+}
 
 struct AtomMatch {  // for each seed atom (matched)
   unsigned int QueryAtomIdx;
@@ -1246,7 +1249,9 @@ bool MaximumCommonSubgraph::match(Seed &seed) {
   for (const auto &tag : Targets) {
     unsigned int itarget = &tag - &Targets.front();
 #ifdef VERBOSE_STATISTICS_ON
-    { ++VerboseStatistics.MatchCall; }
+    {
+      ++VerboseStatistics.MatchCall;
+    }
 #endif
     bool target_matched = false;
     if (!seed.MatchResult.empty() && !seed.MatchResult.at(itarget).empty()) {
@@ -1297,7 +1302,9 @@ bool MaximumCommonSubgraph::matchIncrementalFast(Seed &seed,
                                                  unsigned int itarget) {
 // use and update results of previous match stored in the seed
 #ifdef VERBOSE_STATISTICS_ON
-  { ++VerboseStatistics.FastMatchCall; }
+  {
+    ++VerboseStatistics.FastMatchCall;
+  }
 #endif
   const auto &target = Targets.at(itarget);
   auto &match = seed.MatchResult.at(itarget);
