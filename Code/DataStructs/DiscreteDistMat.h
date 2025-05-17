@@ -1,3 +1,6 @@
+#ifndef HOME_KWSM_GITHUB_E_KWSM_RDKIT_LLVM_HEADER_GUARD_CODE_DATASTRUCTS_DISCRETEDISTMAT_H
+#define HOME_KWSM_GITHUB_E_KWSM_RDKIT_LLVM_HEADER_GUARD_CODE_DATASTRUCTS_DISCRETEDISTMAT_H
+
 //
 //  Copyright (C) 2004-2006 Rational Discovery LLC
 //
@@ -27,4 +30,6 @@ class RDKIT_DATASTRUCTS_EXPORT DiscreteDistMat {
 };
 extern DiscreteDistMat *getDiscreteDistMat();
 }  // namespace RDKit
+#endif
+
 #endif

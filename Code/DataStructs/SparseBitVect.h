@@ -1,3 +1,6 @@
+#ifndef HOME_KWSM_GITHUB_E_KWSM_RDKIT_LLVM_HEADER_GUARD_CODE_DATASTRUCTS_SPARSEBITVECT_H
+#define HOME_KWSM_GITHUB_E_KWSM_RDKIT_LLVM_HEADER_GUARD_CODE_DATASTRUCTS_SPARSEBITVECT_H
+
 //
 //  Copyright (C) 2007-2024 Greg Landrum and other RDKit contributors
 //
@@ -106,5 +109,7 @@ class RDKIT_DATASTRUCTS_EXPORT SparseBitVect : public BitVect {
     return *which >= 0 && static_cast<unsigned int>(*which) < d_size;
   }
 };
+
+#endif
 
 #endif

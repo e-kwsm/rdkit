@@ -1,3 +1,6 @@
+#ifndef HOME_KWSM_GITHUB_E_KWSM_RDKIT_LLVM_HEADER_GUARD_CODE_RDGENERAL_EXCEPTIONS_H
+#define HOME_KWSM_GITHUB_E_KWSM_RDKIT_LLVM_HEADER_GUARD_CODE_RDGENERAL_EXCEPTIONS_H
+
 //
 // Copyright (c) 2003-2005 greg Landrum and Rational Discovery LLC
 //
@@ -74,5 +77,7 @@ class RDKIT_RDGENERAL_EXPORT KeyErrorException : public std::runtime_error {
   std::string _key;
   std::string _msg;
 };
+
+#endif
 
 #endif
