@@ -13,4 +13,4 @@
 
 namespace BFGSOpt {
 int HEAD_ONLY_LIBRARY = 0;
-}
+}  // namespace BFGSOpt

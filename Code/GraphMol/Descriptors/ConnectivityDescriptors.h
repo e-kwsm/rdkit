@@ -203,7 +203,7 @@ const std::string PhiVersion = "1.0.0";
 namespace detail {
 RDKIT_DESCRIPTORS_EXPORT void hkDeltas(const ROMol &mol,
                                        std::vector<double> &deltas, bool force);
-}
+}  // namespace detail
 
 }  // end of namespace Descriptors
 }  // namespace RDKit

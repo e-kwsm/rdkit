@@ -20,7 +20,7 @@ namespace MMPA {
 
 namespace detail {
 RDKIT_MMPA_EXPORT unsigned long long computeMorganCodeHash(const ROMol &mol);
-}
+}  // namespace detail
 
 //! fragments a Molecule for processing with the Matched Molecular Pairs
 //!  MMPA algorithm (Hussain et al)

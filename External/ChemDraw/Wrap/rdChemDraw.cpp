@@ -138,7 +138,7 @@ python::object ReactionsFromChemDrawBlockHelper(python::object imolBlock, bool s
   }
   return python::tuple(res);
 }
-}
+}  // namespace
 
 BOOST_PYTHON_MODULE(rdChemDraw) {
   python::scope().attr("__doc__") =

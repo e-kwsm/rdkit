@@ -1245,7 +1245,7 @@ RDKIT_DISTGEOMHELPERS_EXPORT void findDoubleBonds(
         &doubleBondEnds,
     std::vector<std::pair<std::vector<unsigned int>, int>> &stereoDoubleBonds,
     const std::map<int, RDGeom::Point3D> *coordMap);
-}
+}  // namespace EmbeddingOps
 }  // namespace DGeomHelpers
 }  // namespace RDKit
 

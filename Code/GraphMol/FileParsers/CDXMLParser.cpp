@@ -904,7 +904,7 @@ std::vector<std::unique_ptr<RWMol>> MolsFromCDXML(
   std::stringstream iss(cdxml);
   return MolsFromCDXMLDataStream(iss, params);
 }
-}
-}
-}
+}  // namespace CDXMLParser
+}  // namespace v2
+}  // namespace RDKit
 #endif
