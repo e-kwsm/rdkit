@@ -2584,7 +2584,7 @@ BOOST_PYTHON_MODULE(rdmolfiles) {
           "restoreBondDirs", &RDKit::PNGMetadataParams::restoreBondDirs,
           "choose what to do with bond dirs in the CXSMILES string (default=rdkit.Chem.rdmolfiles.RestoreBondDirOption.RestoreBondDirOptionClear)")
       .def("__setattr__", &safeSetattr);
-      
+
   docString =
       R"DOC(Construct a molecule from metadata in a PNG string.
 

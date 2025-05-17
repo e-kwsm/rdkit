@@ -104,7 +104,7 @@ void remove_hs_common(RWMol &mol, const std::string &details_json) {
     MolOps::removeHs(mol, ps, sanitize);
   }
 }
-}  // end of anonymous namespace
+}  // namespace
 
 std::string JSMolBase::get_smiles() const { return MolToSmiles(get()); }
 std::string JSMolBase::get_smiles(const std::string &details) const {
@@ -601,7 +601,7 @@ bool mmpaFragmentMol(const ROMol &mol, std::vector<RDKit::ROMOL_SPTR> &cores,
   }
   return true;
 }
-}  // end of anonymous namespace
+}  // namespace
 
 std::pair<JSMolList *, JSMolList *> JSMolBase::get_mmpa_frags(
     unsigned int minCuts, unsigned int maxCuts,

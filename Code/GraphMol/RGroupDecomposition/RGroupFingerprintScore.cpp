@@ -62,9 +62,8 @@ void addFingerprintToRGroupData(RGroupData *rgroupData) {
     try {
       MolOps::sanitizeMol(mol);
     } catch (MolSanitizeException &) {
-      BOOST_LOG(rdDebugLog)
-          << "Failed to sanitize RGroup fingerprint mol for "
-          << rgroupData->smiles << std::endl;
+      BOOST_LOG(rdDebugLog) << "Failed to sanitize RGroup fingerprint mol for "
+                            << rgroupData->smiles << std::endl;
     }
 #ifdef DEBUG
     std::cerr << "Fingerprint mol smiles " << MolToSmiles(mol) << " ";
