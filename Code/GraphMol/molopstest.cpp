@@ -4954,7 +4954,9 @@ TEST_CASE("Testing github issue 418: removeHs not updating H count") {
     REQUIRE(m->getAtomWithIdx(0)->getNumExplicitHs() == 4);
     delete m;
   }
-  { REQUIRE_THROWS_AS(SmilesToMol("[H]N([H])([H])[H]"), MolSanitizeException); }
+  {
+    REQUIRE_THROWS_AS(SmilesToMol("[H]N([H])([H])[H]"), MolSanitizeException);
+  }
 }
 
 TEST_CASE(
@@ -6992,8 +6994,7 @@ TEST_CASE(
 }
 
 TEST_CASE("adjustHs preserves hydrogens lost during aromaticity perception") {
-  std::unique_ptr<RWMol> mol{
-      SmilesToMol("O=C1NC=CC2=C1C=CC=C2", 0, false)};
+  std::unique_ptr<RWMol> mol{SmilesToMol("O=C1NC=CC2=C1C=CC=C2", 0, false)};
   REQUIRE(mol);
 
   MolOps::sanitizeMol(*mol);

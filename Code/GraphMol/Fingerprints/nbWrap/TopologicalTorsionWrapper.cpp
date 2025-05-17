@@ -54,16 +54,16 @@ void exportTopologicalTorsion(nb::module_ &m) {
           "number of atoms to be included in the paths")
       .def_rw(
           "onlyShortestPaths",
-          &TopologicalTorsion::TopologicalTorsionArguments::df_onlyShortestPaths,
+          &TopologicalTorsion::TopologicalTorsionArguments::
+              df_onlyShortestPaths,
           R"DOC(whether or not to only include paths which are the shortest path between the start and end atoms)DOC");
 
-  m.def(
-      "GetTopologicalTorsionGenerator",
-      &getTopologicalTorsionFPGenerator<std::uint64_t>,
-      "includeChirality"_a = false, "torsionAtomCount"_a = 4,
-      "countSimulation"_a = true, "countBounds"_a = nb::none(),
-      "fpSize"_a = 2048, "atomInvariantsGenerator"_a = nb::none(),
-      R"DOC(Get an atom pair fingerprint generator
+  m.def("GetTopologicalTorsionGenerator",
+        &getTopologicalTorsionFPGenerator<std::uint64_t>,
+        "includeChirality"_a = false, "torsionAtomCount"_a = 4,
+        "countSimulation"_a = true, "countBounds"_a = nb::none(),
+        "fpSize"_a = 2048, "atomInvariantsGenerator"_a = nb::none(),
+        R"DOC(Get an atom pair fingerprint generator
 
 ARGUMENTS:
     - includeChirality: includeChirality argument for both the default
@@ -82,7 +82,7 @@ This generator supports the following AdditionalOutput types:
 
 RETURNS: FingerprintGenerator
 )DOC",
-      nb::rv_policy::take_ownership);
+        nb::rv_policy::take_ownership);
 }
 }  // namespace TopologicalTorsionWrapper
 

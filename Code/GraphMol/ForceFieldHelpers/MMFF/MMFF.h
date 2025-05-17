@@ -99,5 +99,5 @@ inline void MMFFOptimizeMoleculeConfs(ROMol &mol,
   }
 }
 }  // namespace MMFF
-}  // end of namespace RDKit
+}  // namespace RDKit
 #endif

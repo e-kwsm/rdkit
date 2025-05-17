@@ -22,7 +22,7 @@ namespace RDKit {
 
 namespace detail {
 std::uint8_t *bitsetToBytes(const boost::dynamic_bitset<> &bitset);
-}
+}  // namespace detail
 
 namespace {
 auto tplSorter = [](const MultiFPBReader::ResultTuple &v1,
@@ -194,7 +194,7 @@ void get_containing_nbrs(
   std::sort(res.begin(), res.end(), pairSorter);
 }
 
-}  // end of anonymous namespace
+}  // namespace
 
 void MultiFPBReader::init() {
   unsigned int nBits = 0;

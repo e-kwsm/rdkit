@@ -274,7 +274,10 @@ class RDKIT_MOLALIGN_EXPORT SDM {
 class RDKIT_MOLALIGN_EXPORT O3A {
  public:
   //! pre-defined atom typing schemes
-  typedef enum { MMFF94 = 0, CRIPPEN } AtomTypeScheme;
+  typedef enum {
+    MMFF94 = 0,
+    CRIPPEN
+  } AtomTypeScheme;
   O3A(ROMol &prbMol, const ROMol &refMol, void *prbProp, void *refProp,
       AtomTypeScheme atomTypes = MMFF94, const int prbCid = -1,
       const int refCid = -1, const bool reflect = false,

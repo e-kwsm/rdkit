@@ -572,10 +572,10 @@ void getExperimentalTorsions(const RDKit::ROMol &mol, CrystalFFDetails &details,
 }
 
 void populateRefTable(CrystalFFDetails &details) {
-  // Deduplicate torsion patterns to compute lookup tables (energies & gradients) 
-  // only once per unique pattern, while preserving evaluation order from `getExperimentalTorsions`.
-  // Keeping the order intact is crucial, since otherwise this would break the
-  // way trans amides are currently handled.
+  // Deduplicate torsion patterns to compute lookup tables (energies &
+  // gradients) only once per unique pattern, while preserving evaluation order
+  // from `getExperimentalTorsions`. Keeping the order intact is crucial, since
+  // otherwise this would break the way trans amides are currently handled.
 
   // Sort and deduplicate the original torsion indices.
   std::vector<std::size_t> sorted = details.torsionIdx;
@@ -584,7 +584,7 @@ void populateRefTable(CrystalFFDetails &details) {
   auto [first, last] = std::ranges::unique(sorted);
   sorted.erase(first, last);
 
-  // Map each original torsion index in `details.torsionIdx` 
+  // Map each original torsion index in `details.torsionIdx`
   // to its 0-based rank inside `sorted`.
   std::ranges::transform(
       details.torsionIdx, details.torsionIdx.begin(), [&sorted](int x) {
@@ -598,8 +598,8 @@ void populateRefTable(CrystalFFDetails &details) {
                            std::vector<double>(lookup_grid_size));
 
   for (std::size_t torsionIdx = 0; torsionIdx < sorted.size(); ++torsionIdx) {
-    // Find the first matching occurrence of `torsionIdx` to locate its parameters
-    // inside `expTorsionAngles`.
+    // Find the first matching occurrence of `torsionIdx` to locate its
+    // parameters inside `expTorsionAngles`.
     auto it = std::ranges::find(details.torsionIdx, torsionIdx);
     std::size_t termIdx = std::distance(details.torsionIdx.begin(), it);
 

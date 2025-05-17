@@ -273,7 +273,7 @@ OutputType MorganAtomEnv<OutputType>::getBitId(
     const std::uint64_t                  // fpSize
 ) const {
   return d_code;
-}  // namespace MorganFingerprint
+}
 
 template <typename OutputType>
 std::vector<AtomEnvironment<OutputType> *>
@@ -564,12 +564,12 @@ FingerprintGenerator<OutputType> *getMorganGenerator(
                                         ownsBondInvGen);
 }
 
-template RDKIT_FINGERPRINTS_EXPORT FingerprintGenerator<std::uint32_t>
-    *getMorganGenerator(const MorganArguments &, AtomInvariantsGenerator *,
-                        BondInvariantsGenerator *, bool, bool);
-template RDKIT_FINGERPRINTS_EXPORT FingerprintGenerator<std::uint64_t>
-    *getMorganGenerator(const MorganArguments &, AtomInvariantsGenerator *,
-                        BondInvariantsGenerator *, bool, bool);
+template RDKIT_FINGERPRINTS_EXPORT FingerprintGenerator<std::uint32_t> *
+getMorganGenerator(const MorganArguments &, AtomInvariantsGenerator *,
+                   BondInvariantsGenerator *, bool, bool);
+template RDKIT_FINGERPRINTS_EXPORT FingerprintGenerator<std::uint64_t> *
+getMorganGenerator(const MorganArguments &, AtomInvariantsGenerator *,
+                   BondInvariantsGenerator *, bool, bool);
 
 template RDKIT_FINGERPRINTS_EXPORT FingerprintGenerator<std::uint32_t> *
 getMorganGenerator(unsigned int radius, bool countSimulation,

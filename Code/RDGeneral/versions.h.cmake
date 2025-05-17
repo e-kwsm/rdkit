@@ -21,7 +21,7 @@
   RDKIT_VERSION_CHECK(@RDKit_Year @, @RDKit_intMonth @, @RDKit_Revision @)
 
 namespace RDKit {
-RDKIT_RDGENERAL_EXPORT extern const char* rdkitVersion;
-RDKIT_RDGENERAL_EXPORT extern const char* boostVersion;
-RDKIT_RDGENERAL_EXPORT extern const char* rdkitBuild;
+RDKIT_RDGENERAL_EXPORT extern const char *rdkitVersion;
+RDKIT_RDGENERAL_EXPORT extern const char *boostVersion;
+RDKIT_RDGENERAL_EXPORT extern const char *rdkitBuild;
 }  // namespace RDKit

@@ -1758,10 +1758,10 @@ void testAtomMonomerInfoFields() {
     m->getAtomWithIdx(0)->setMonomerInfo(new AtomMonomerInfo(
         AtomMonomerInfo::OTHER, "CA", "ALA", 42, "A", "PEPTIDE"));
 
-    // Create AtomPDBResidueInfo which should also preserve the base class fields
-    m->getAtomWithIdx(1)->setMonomerInfo(
-        new AtomPDBResidueInfo("CB", 123, "A", "GLY", 43, "B", "1", 1.0, 25.5,
-                               false, 0, 0, "LINK"));
+    // Create AtomPDBResidueInfo which should also preserve the base class
+    // fields
+    m->getAtomWithIdx(1)->setMonomerInfo(new AtomPDBResidueInfo(
+        "CB", 123, "A", "GLY", 43, "B", "1", 1.0, 25.5, false, 0, 0, "LINK"));
 
     // Create AtomMonomerInfo with partial fields (test defaults)
     m->getAtomWithIdx(2)->setMonomerInfo(

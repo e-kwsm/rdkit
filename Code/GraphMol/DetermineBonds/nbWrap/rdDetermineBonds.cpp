@@ -91,9 +91,9 @@ Args:
       [](ROMol &mol, bool useHueckel, int charge, double covFactor,
          bool allowChargedFragments, bool embedChiral, bool useAtomMap,
          bool useVdw, size_t maxIterations) {
-        determineBonds(static_cast<RWMol &>(mol), useHueckel, charge,
-                       covFactor, allowChargedFragments, embedChiral,
-                       useAtomMap, useVdw, maxIterations);
+        determineBonds(static_cast<RWMol &>(mol), useHueckel, charge, covFactor,
+                       allowChargedFragments, embedChiral, useAtomMap, useVdw,
+                       maxIterations);
         if (ControlCHandler::getGotSignal()) {
           PyErr_SetString(PyExc_KeyboardInterrupt,
                           "Determine Bond Orders cancelled");
@@ -102,8 +102,7 @@ Args:
       },
       "mol"_a, "useHueckel"_a = false, "charge"_a = 0, "covFactor"_a = 1.3,
       "allowChargedFragments"_a = true, "embedChiral"_a = true,
-      "useAtomMap"_a = false, "useVdw"_a = false,
-      "maxIterations"_a = size_t(0),
+      "useAtomMap"_a = false, "useVdw"_a = false, "maxIterations"_a = size_t(0),
       R"DOC(Assigns atomic connectivity to a molecule using atomic coordinates,
 disregarding pre-existing bonds
 

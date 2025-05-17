@@ -23,8 +23,7 @@ bool isMacroAtom(const Atom *atom) {
 }  // namespace
 
 MacroMol::MacroMol()
-    : dp_localTemplateLibrary(
-          std::make_unique<MacroMolTemplateLibrary>()) {}
+    : dp_localTemplateLibrary(std::make_unique<MacroMolTemplateLibrary>()) {}
 
 MacroMol::MacroMol(
     std::unique_ptr<MacroMolTemplateLibrary> localTemplateLibrary)

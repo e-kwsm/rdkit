@@ -180,10 +180,8 @@ nb::object getUFFAngleBendParams(const RDKit::ROMol &mol,
                                  const unsigned int idx1,
                                  const unsigned int idx2,
                                  const unsigned int idx3);
-nb::object getUFFTorsionParams(const RDKit::ROMol &mol,
-                               const unsigned int idx1,
-                               const unsigned int idx2,
-                               const unsigned int idx3,
+nb::object getUFFTorsionParams(const RDKit::ROMol &mol, const unsigned int idx1,
+                               const unsigned int idx2, const unsigned int idx3,
                                const unsigned int idx4);
 nb::object getUFFInversionParams(const RDKit::ROMol &mol,
                                  const unsigned int idx1,

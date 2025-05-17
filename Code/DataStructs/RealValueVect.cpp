@@ -161,4 +161,4 @@ RealValueVect operator&(const RealValueVect &p1, const RealValueVect &p2) {
   return res;
 };
 
-}  // end of namespace RDKit
+}  // namespace RDKit

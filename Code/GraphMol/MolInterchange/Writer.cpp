@@ -155,8 +155,8 @@ void addQuery(const Q &query, bj::object &bjQuery,
         bjQuery["val"] = std::get<1>(v);
       } break;
       case 2: {
-        auto v = std::get<std::tuple<MolPickler::Tags, int32_t, int32_t>>(
-            qdetails);
+        auto v =
+            std::get<std::tuple<MolPickler::Tags, int32_t, int32_t>>(qdetails);
         bjQuery["tag"] = std::get<0>(v);
         bjQuery["val"] = std::get<1>(v);
         if (std::get<2>(v)) {
@@ -176,8 +176,8 @@ void addQuery(const Q &query, bj::object &bjQuery,
         bjQuery["ends"] = std::get<4>(v);
       } break;
       case 4: {
-        auto v = std::get<std::tuple<MolPickler::Tags, std::set<int32_t>>>(
-            qdetails);
+        auto v =
+            std::get<std::tuple<MolPickler::Tags, std::set<int32_t>>>(qdetails);
         bjQuery["tag"] = std::get<0>(v);
         const auto &tset = std::get<1>(v);
         bj::array sval;
@@ -676,5 +676,5 @@ template RDKIT_MOLINTERCHANGE_EXPORT std::string
 MolsToJSONData<std::unique_ptr<RWMol>>(
     const std::vector<std::unique_ptr<RWMol>> &, const JSONWriteParameters &);
 
-}  // end of namespace MolInterchange
-}  // end of namespace RDKit
+}  // namespace MolInterchange
+}  // namespace RDKit

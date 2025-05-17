@@ -15,23 +15,21 @@
 
 #include <RDGeneral/export.h>
 
-namespace RDKit::SynthonSpaceSearch::details
-{
-  struct RDKIT_SYNTHONSPACESEARCH_EXPORT MemoryMappedFileReader
-  {
-    MemoryMappedFileReader() = delete;
-    MemoryMappedFileReader(const std::string& filePath);
-    MemoryMappedFileReader(const MemoryMappedFileReader&) = delete;
-    MemoryMappedFileReader(MemoryMappedFileReader&& other);
+namespace RDKit::SynthonSpaceSearch::details {
+struct RDKIT_SYNTHONSPACESEARCH_EXPORT MemoryMappedFileReader {
+  MemoryMappedFileReader() = delete;
+  MemoryMappedFileReader(const std::string &filePath);
+  MemoryMappedFileReader(const MemoryMappedFileReader &) = delete;
+  MemoryMappedFileReader(MemoryMappedFileReader &&other);
 
-    ~MemoryMappedFileReader();
+  ~MemoryMappedFileReader();
 
-    MemoryMappedFileReader& operator=(const MemoryMappedFileReader&) = delete;
-    MemoryMappedFileReader& operator=(MemoryMappedFileReader&& other);
+  MemoryMappedFileReader &operator=(const MemoryMappedFileReader &) = delete;
+  MemoryMappedFileReader &operator=(MemoryMappedFileReader &&other);
 
-    char* d_mappedMemory{nullptr};
-    size_t d_size{0};
-  };
-} // namespace RDKit::SynthonSpaceSearch::details
+  char *d_mappedMemory{nullptr};
+  size_t d_size{0};
+};
+}  // namespace RDKit::SynthonSpaceSearch::details
 
 #endif  // MEMORYMAPPEDFILEREADER_H
