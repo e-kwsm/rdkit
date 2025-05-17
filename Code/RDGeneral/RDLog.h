@@ -1,3 +1,6 @@
+#ifndef HOME_KWSM_GITHUB_E_KWSM_RDKIT_LLVM_HEADER_GUARD_CODE_RDGENERAL_RDLOG_H
+#define HOME_KWSM_GITHUB_E_KWSM_RDKIT_LLVM_HEADER_GUARD_CODE_RDGENERAL_RDLOG_H
+
 //
 // Copyright (C)  2005-2022 Greg Landrum and other RDKit contributors
 //
@@ -153,4 +156,6 @@ inline void deprecationWarning(const std::string &message) {
 }
 
 }  // namespace RDLog
+#endif
+
 #endif
