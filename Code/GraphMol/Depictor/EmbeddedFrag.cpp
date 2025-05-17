@@ -34,7 +34,7 @@ unsigned int getDepictDegree(const RDKit::Atom *atom) {
   PRECONDITION(atom, "no atom");
   return atom->getDegree();
 }
-}  // end of anonymous namespace
+}  // namespace
 
 EmbeddedFrag::EmbeddedFrag(unsigned int aid, const RDKit::ROMol *mol) {
   PRECONDITION(mol, "");

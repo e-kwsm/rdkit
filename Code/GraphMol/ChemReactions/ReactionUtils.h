@@ -38,7 +38,11 @@
 
 namespace RDKit {
 
-enum ReactionMoleculeType { Reactant, Product, Agent };
+enum ReactionMoleculeType {
+  Reactant,
+  Product,
+  Agent
+};
 
 RDKIT_CHEMREACTIONS_EXPORT MOL_SPTR_VECT::const_iterator getStartIterator(
     const ChemicalReaction &rxn, ReactionMoleculeType t);

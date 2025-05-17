@@ -169,7 +169,7 @@ BETTER_ENUM(DrawElement, uint32_t,  // clang-format off
   RADICALS = 1 << 5,
   POSTSHAPES = 1 << 6,
   ALL = 0x7fffffff
-);
+);  // clang-format on
 
 struct RDKIT_MOLDRAW2D_EXPORT MolDrawOptions {
   bool atomLabelDeuteriumTritium =
@@ -217,7 +217,12 @@ struct RDKIT_MOLDRAW2D_EXPORT MolDrawOptions {
                           0};  // color to be used for the legend (if present)
   //! Legend position relative to the molecule (only Bottom supported in
   //! drawMolecules grid; all four work for single-molecule drawing).
-  enum class LegendPosition { Bottom, Top, Left, Right };
+  enum class LegendPosition {
+    Bottom,
+    Top,
+    Left,
+    Right
+  };
   LegendPosition legendPosition = LegendPosition::Bottom;
   //! When legend is Left or Right, draw text vertically (one character per
   //! line). Ignored for Top/Bottom.
@@ -278,9 +283,9 @@ struct RDKIT_MOLDRAW2D_EXPORT MolDrawOptions {
   bool isotopeLabels = true;       // adds isotope to non-dummy atoms.
   bool dummyIsotopeLabels = true;  // adds isotope labels to dummy atoms.
 
-  bool addStereoAnnotation = false;       // adds E/Z and R/S to drawings.
-  bool showAllCIPCodes = false;           // show CIP codes for 'or' & 'and'
-                                          // StereoGroups that are normally hidden
+  bool addStereoAnnotation = false;  // adds E/Z and R/S to drawings.
+  bool showAllCIPCodes = false;      // show CIP codes for 'or' & 'and'
+                                     // StereoGroups that are normally hidden
   bool atomHighlightsAreCircles = false;  // forces atom highlights always to be
                                           // circles. Default (false) is to put
                                           // ellipses round longer labels.
@@ -289,8 +294,8 @@ struct RDKIT_MOLDRAW2D_EXPORT MolDrawOptions {
   bool centreMoleculesBeforeDrawing = false;  // moves the centre of the drawn
                                               // molecule to (0,0)
   std::uint32_t drawingExtentsInclude =
-      DrawElement::ALL;  // which elements should be included
-                         // when computing drawing extents
+      DrawElement::ALL;         // which elements should be included
+                                // when computing drawing extents
   bool explicitMethyl = false;  // draw terminal methyl and related as CH3
   bool includeRadicals =
       true;  // include radicals in the drawing (it can be useful to turn this
@@ -313,10 +318,14 @@ struct RDKIT_MOLDRAW2D_EXPORT MolDrawOptions {
       false;  // if all specified stereocenters are in a single StereoGroup,
               // show a molecule-level annotation instead of the individual
               // labels
-  std::string stereoGroupAndLabel = "and"; // String to use for enhanced stereo 'AND' groups
-  std::string stereoGroupOrLabel  = "or";  // String to use for enhanced stereo 'OR' groups
-  std::string stereoGroupAbsLabel = "abs"; // String to use for enhanced stereo 'ABS' groups
-  bool addStereoGroupAnnotation = true; // Whether to add the enhanced stereo labels.
+  std::string stereoGroupAndLabel =
+      "and";  // String to use for enhanced stereo 'AND' groups
+  std::string stereoGroupOrLabel =
+      "or";  // String to use for enhanced stereo 'OR' groups
+  std::string stereoGroupAbsLabel =
+      "abs";  // String to use for enhanced stereo 'ABS' groups
+  bool addStereoGroupAnnotation =
+      true;  // Whether to add the enhanced stereo labels.
   bool unspecifiedStereoIsUnknown = false;  // if true, double bonds with
                                             // unspecified stereo are drawn
                                             // crossed, potential stereocenters

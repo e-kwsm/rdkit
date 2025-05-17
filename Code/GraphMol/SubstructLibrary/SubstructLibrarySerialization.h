@@ -218,8 +218,8 @@ void load(Archive &ar, RDKit::SubstructLibrary &slib,
   slib.resetHolders();
 }
 
-}  // end namespace serialization
-}  // end namespace boost
+}  // namespace serialization
+}  // namespace boost
 
 BOOST_CLASS_VERSION(RDKit::MolHolder, 2);
 BOOST_CLASS_VERSION(RDKit::CachedMolHolder, 1);

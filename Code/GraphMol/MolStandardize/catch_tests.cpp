@@ -1833,7 +1833,8 @@ M  END
   }
 }
 
-TEST_CASE("tautomer canonicalize clears invalid bond stereo after bond-order changes") {
+TEST_CASE(
+    "tautomer canonicalize clears invalid bond stereo after bond-order changes") {
   std::string molblock = R"CTAB(
      RDKit          2D
 

@@ -344,7 +344,7 @@ void AdjustAtomChiralityFlags(RWMol *mol) {
                     Chirality::getChiralPermutation(atom, bonds, true));
     }
   }
-}  // namespace SmilesParseOps
+}
 
 Bond::BondType GetUnspecifiedBondType(const RWMol *mol, const Atom *atom1,
                                       const Atom *atom2) {
@@ -720,12 +720,12 @@ void printSyntaxErrorMessage(std::string_view input,
 
   BOOST_LOG(rdErrorLog) << input_type << " Parse Error: " << err_message
                         << " while parsing: " << input << std::endl;
-  BOOST_LOG(rdErrorLog)
-      << input_type << " Parse Error: check for mistakes around position "
-      << bad_token_position << ":" << std::endl;
+  BOOST_LOG(rdErrorLog) << input_type
+                        << " Parse Error: check for mistakes around position "
+                        << bad_token_position << ":" << std::endl;
   BOOST_LOG(rdErrorLog) << truncate_input(input, bad_token_position - 1)
                         << std::endl;
   BOOST_LOG(rdErrorLog) << std::string(num_dashes, '~') << "^" << std::endl;
 }
 }  // namespace detail
-}  // end of namespace SmilesParseOps
+}  // namespace SmilesParseOps
