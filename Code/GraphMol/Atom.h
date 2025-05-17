@@ -25,7 +25,7 @@
 
 namespace RDKit {
 class Atom;
-}
+}  // namespace RDKit
 //! allows Atom objects to be dumped to streams
 RDKIT_GRAPHMOL_EXPORT std::ostream &operator<<(std::ostream &target,
                                                const RDKit::Atom &at);
