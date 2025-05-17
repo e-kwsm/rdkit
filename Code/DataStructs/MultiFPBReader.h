@@ -1,3 +1,6 @@
+#ifndef HOME_KWSM_GITHUB_E_KWSM_RDKIT_LLVM_HEADER_GUARD_CODE_DATASTRUCTS_MULTIFPBREADER_H
+#define HOME_KWSM_GITHUB_E_KWSM_RDKIT_LLVM_HEADER_GUARD_CODE_DATASTRUCTS_MULTIFPBREADER_H
+
 //
 // Copyright (c) 2016-2022 Greg Landrum
 //
@@ -210,4 +213,6 @@ class RDKIT_DATASTRUCTS_EXPORT MultiFPBReader {
   MultiFPBReader &operator=(const MultiFPBReader &);
 };
 }  // namespace RDKit
+#endif
+
 #endif
