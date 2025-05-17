@@ -94,8 +94,7 @@ std::vector<unsigned int> possibleValences(
 }
 
 LazyCartesianProduct<unsigned int> getValenceCombinations(
-    const RDKit::RWMol &mol,
-    size_t iterations = 100) {
+    const RDKit::RWMol &mol, size_t iterations = 100) {
   auto numAtoms = mol.getNumAtoms();
   const std::unordered_map<int, std::vector<unsigned int>> atomicValence = {
       {1, {1}},  {5, {3, 4}}, {6, {4}},     {7, {3, 4}},     {8, {2, 1, 3}},
@@ -131,7 +130,8 @@ LazyCartesianProduct<unsigned int> getValenceCombinations(
         auto *neighbor = bond->getOtherAtom(atom);
         auto neighIdx = neighbor->getIdx();
         auto neighDegree = neighbor->getDegree();
-        auto maxPos = *std::max_element(curPossible[neighIdx].begin(), curPossible[neighIdx].end());
+        auto maxPos = *std::max_element(curPossible[neighIdx].begin(),
+                                        curPossible[neighIdx].end());
         availBonds += maxPos - neighDegree;
       }
 
@@ -144,9 +144,9 @@ LazyCartesianProduct<unsigned int> getValenceCombinations(
 
       if (newPossible[i].empty()) {
         std::stringstream ss;
-        ss << "Unable to determine valence of atom " << i << " with atomic number "
-           << atom->getAtomicNum() << " and " << atom->getDegree()
-           << " bonds. Check the input molecules bonding.";
+        ss << "Unable to determine valence of atom " << i
+           << " with atomic number " << atom->getAtomicNum() << " and "
+           << atom->getDegree() << " bonds. Check the input molecules bonding.";
         throw ValueErrorException(ss.str());
       }
     }
@@ -156,7 +156,7 @@ LazyCartesianProduct<unsigned int> getValenceCombinations(
     } else {
       curPossible = newPossible;
       std::for_each(newPossible.begin(), newPossible.end(),
-                [](auto& x) { x.clear(); });
+                    [](auto &x) { x.clear(); });
     }
 
     if (--iterations == 0) {
