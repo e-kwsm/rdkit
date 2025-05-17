@@ -1,3 +1,6 @@
+#ifndef HOME_KWSM_GITHUB_E_KWSM_RDKIT_LLVM_HEADER_GUARD_CODE_RDGENERAL_RDPROPS_H
+#define HOME_KWSM_GITHUB_E_KWSM_RDKIT_LLVM_HEADER_GUARD_CODE_RDGENERAL_RDPROPS_H
+
 //  This file is part of the RDKit.
 //  The contents are covered by the terms of the BSD license
 //  which is included in the file license.txt, found at the root
@@ -169,4 +172,6 @@ class RDProps {
   }
 };
 }  // namespace RDKit
+#endif
+
 #endif

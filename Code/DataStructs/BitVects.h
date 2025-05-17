@@ -1,3 +1,6 @@
+#ifndef HOME_KWSM_GITHUB_E_KWSM_RDKIT_LLVM_HEADER_GUARD_CODE_DATASTRUCTS_BITVECTS_H
+#define HOME_KWSM_GITHUB_E_KWSM_RDKIT_LLVM_HEADER_GUARD_CODE_DATASTRUCTS_BITVECTS_H
+
 //
 // Copyright (c) 2001-2006 greg Landrum and Rational Discovery LLC
 //
@@ -21,5 +24,7 @@
 #include "SparseBitVect.h"
 typedef SparseBitVect SBV;
 typedef ExplicitBitVect EBV;
+
+#endif
 
 #endif
