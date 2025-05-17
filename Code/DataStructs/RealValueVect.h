@@ -18,7 +18,7 @@
 
 namespace RDGeom {
 class UniformRealValueGrid3D;
-}
+}  // namespace RDGeom
 namespace RDKit {
 
 //! a class for efficiently storing vectors of double values
