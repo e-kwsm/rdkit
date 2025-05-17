@@ -1,3 +1,6 @@
+#ifndef HOME_KWSM_GITHUB_E_KWSM_RDKIT_LLVM_HEADER_GUARD_CODE_DATASTRUCTS_BITVECTUTILS_H
+#define HOME_KWSM_GITHUB_E_KWSM_RDKIT_LLVM_HEADER_GUARD_CODE_DATASTRUCTS_BITVECTUTILS_H
+
 //
 // Copyright (c) 2002-2006 greg Landrum, Rational Discovery LLC
 //
@@ -32,4 +35,6 @@ RDKIT_DATASTRUCTS_EXPORT void FromBitString(T &sbv, const std::string &s);
  */
 RDKIT_DATASTRUCTS_EXPORT ExplicitBitVect *convertToExplicit(
     const SparseBitVect *sbv);
+#endif
+
 #endif
