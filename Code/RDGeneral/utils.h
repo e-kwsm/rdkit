@@ -1,3 +1,6 @@
+#ifndef HOME_KWSM_GITHUB_E_KWSM_RDKIT_LLVM_HEADER_GUARD_CODE_RDGENERAL_UTILS_H
+#define HOME_KWSM_GITHUB_E_KWSM_RDKIT_LLVM_HEADER_GUARD_CODE_RDGENERAL_UTILS_H
+
 //
 //  Copyright (C) 2002-2020 Greg Landrum and Rational Discovery LLC
 //
@@ -102,5 +105,7 @@ template <>
 inline double int_pow<1>(double x) {
   return x;  // this does a series of muls
 }
+
+#endif
 
 #endif
