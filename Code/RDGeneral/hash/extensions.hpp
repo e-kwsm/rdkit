@@ -24,7 +24,7 @@ template <bool IsArray>
 struct call_hash_impl {
   template <class T>
   struct inner {
-    static std::hash_result_t call(T const& v) {
+    static std::hash_result_t call(T const &v) {
       using namespace boost;
       return hash_value(v);
     }
@@ -36,9 +36,9 @@ struct call_hash_impl<true> {
   template <class Array>
   struct inner {
 #if !BOOST_WORKAROUND(BOOST_MSVC, < 1300)
-    static std::hash_result_t call(Array const& v)
+    static std::hash_result_t call(Array const &v)
 #else
-    static std::hash_result_t call(Array& v)
+    static std::hash_result_t call(Array &v)
 #endif
     {
       const int size = sizeof(v) / sizeof(*v);
@@ -59,9 +59,9 @@ struct call_hash
 template <class T>
 struct hash : boost::functional::detail::unary_function<T, std::hash_result_t> {
 #if !defined(BOOST_NO_FUNCTION_TEMPLATE_ORDERING)
-  std::hash_result_t operator()(T const& val) const { return hash_value(val); }
+  std::hash_result_t operator()(T const &val) const { return hash_value(val); }
 #else
-  std::hash_result_t operator()(T const& val) const {
+  std::hash_result_t operator()(T const &val) const {
     return hash_detail::call_hash<T>::call(val);
   }
 #endif
@@ -71,7 +71,7 @@ struct hash : boost::functional::detail::unary_function<T, std::hash_result_t> {
 template <class T, unsigned int n>
 struct hash<T[n]>
     : boost::functional::detail::unary_function<T[n], std::hash_result_t> {
-  std::hash_result_t operator()(const T* val) const {
+  std::hash_result_t operator()(const T *val) const {
     return gboost::hash_range(val, val + n);
   }
 };
@@ -95,11 +95,11 @@ struct hash_impl<false> {
   struct inner
       : boost::functional::detail::unary_function<T, std::hash_result_t> {
 #if !defined(BOOST_NO_FUNCTION_TEMPLATE_ORDERING)
-    std::hash_result_t operator()(T const& val) const {
+    std::hash_result_t operator()(T const &val) const {
       return hash_value(val);
     }
 #else
-    std::hash_result_t operator()(T const& val) const {
+    std::hash_result_t operator()(T const &val) const {
       return hash_detail::call_hash<T>::call(val);
     }
 #endif
@@ -117,11 +117,11 @@ struct hash_impl_msvc {
   struct inner
       : public boost::functional::detail::unary_function<T,
                                                          std::hash_result_t> {
-    std::hash_result_t operator()(T const& val) const {
+    std::hash_result_t operator()(T const &val) const {
       return hash_detail::call_hash<T const>::call(val);
     }
 
-    std::hash_result_t operator()(T& val) const {
+    std::hash_result_t operator()(T &val) const {
       return hash_detail::call_hash<T>::call(val);
     }
   };
@@ -133,7 +133,7 @@ struct hash_impl_msvc<true> {
   struct inner
       : public boost::functional::detail::unary_function<T,
                                                          std::hash_result_t> {
-    std::hash_result_t operator()(T& val) const {
+    std::hash_result_t operator()(T &val) const {
       return hash_detail::call_hash<T>::call(val);
     }
   };

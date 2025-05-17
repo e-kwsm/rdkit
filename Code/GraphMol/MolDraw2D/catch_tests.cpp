@@ -10754,7 +10754,7 @@ TEST_CASE("Solid arrowhead in wrong place (Github 8500)") {
 }
 
 TEST_CASE("Show all CIP codes (Github 8561)") {
-    auto m = R"CTAB(
+  auto m = R"CTAB(
      RDKit          2D
 
   0  0  0  0  0  0  0  0  0  0999 V3000
@@ -10810,40 +10810,34 @@ M  V30 END COLLECTION
 M  V30 END CTAB
 M  END
 )CTAB"_ctab;
-    REQUIRE(m);
-    CIPLabeler::assignCIPLabels(*m);
-    MolDraw2DSVG drawer(350, 300);
-    drawer.drawOptions().addStereoAnnotation = true;
-    drawer.drawOptions().showAllCIPCodes = true;
-    drawer.drawMolecule(*m);
-    drawer.finishDrawing();
-    auto text = drawer.getDrawingText();
-    std::ofstream outs("testShowAllCIPLabels.svg");
-    outs << text;
-    outs.close();
+  REQUIRE(m);
+  CIPLabeler::assignCIPLabels(*m);
+  MolDraw2DSVG drawer(350, 300);
+  drawer.drawOptions().addStereoAnnotation = true;
+  drawer.drawOptions().showAllCIPCodes = true;
+  drawer.drawMolecule(*m);
+  drawer.finishDrawing();
+  auto text = drawer.getDrawingText();
+  std::ofstream outs("testShowAllCIPLabels.svg");
+  outs << text;
+  outs.close();
 
-    // Check for Blue (M) CIP label on Bond
-    TEST_ASSERT(
-        text.find("class='CIP_Code'") !=
-        std::string::npos);
+  // Check for Blue (M) CIP label on Bond
+  TEST_ASSERT(text.find("class='CIP_Code'") != std::string::npos);
 
-    //try again, this tiem using JSON to set options
-    const char *json =
-      "{\"addStereoAnnotation\":true, \"showAllCIPCodes\":true}";
-    MolDraw2DSVG drawer2(350, 300);
-    MolDrawOptions opts;
-    MolDraw2DUtils::updateMolDrawOptionsFromJSON(opts, json);
-    drawer2.drawOptions() = opts;
-    drawer2.drawMolecule(*m);
-    drawer2.finishDrawing();
-    auto text2 = drawer2.getDrawingText();
-    std::ofstream outs2("testShowAllCIPLabels2.svg");
-    outs2 << text2;
-    outs2.close();
+  // try again, this tiem using JSON to set options
+  const char *json = "{\"addStereoAnnotation\":true, \"showAllCIPCodes\":true}";
+  MolDraw2DSVG drawer2(350, 300);
+  MolDrawOptions opts;
+  MolDraw2DUtils::updateMolDrawOptionsFromJSON(opts, json);
+  drawer2.drawOptions() = opts;
+  drawer2.drawMolecule(*m);
+  drawer2.finishDrawing();
+  auto text2 = drawer2.getDrawingText();
+  std::ofstream outs2("testShowAllCIPLabels2.svg");
+  outs2 << text2;
+  outs2.close();
 
-    // Check for Blue (M) CIP label on Bond
-    TEST_ASSERT(
-        text2.find("class='CIP_Code'") !=
-        std::string::npos);
-  }
-
+  // Check for Blue (M) CIP label on Bond
+  TEST_ASSERT(text2.find("class='CIP_Code'") != std::string::npos);
+}

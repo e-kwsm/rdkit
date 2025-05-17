@@ -840,7 +840,7 @@ std::vector<std::unique_ptr<RWMol>> MolsFromCDXML(
 #include <ChemDraw/chemdraw.h>
 #include <RDGeneral/BadFileException.h>
 
-namespace RDKit{
+namespace RDKit {
 namespace v2 {
 namespace CDXMLParser {
 
@@ -869,7 +869,7 @@ std::vector<std::unique_ptr<RWMol>> MolsFromCDXML(
   std::stringstream iss(cdxml);
   return MolsFromCDXMLDataStream(iss, params);
 }
-}
-}
-}
+}  // namespace CDXMLParser
+}  // namespace v2
+}  // namespace RDKit
 #endif
