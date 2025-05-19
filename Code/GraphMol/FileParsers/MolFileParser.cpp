@@ -2391,7 +2391,7 @@ void ParseV3000AtomProps(RWMol *mol, Atom *&atom, typename T::iterator &token,
         boost::split(splitToken, val, boost::is_any_of(" \t"));
 
         unsigned int itemCount = 0;
-        if (splitToken.size() > 0) {
+        if (!splitToken.empty()) {
           itemCount = FileParserUtils::toInt(splitToken[0]);
         }
 
