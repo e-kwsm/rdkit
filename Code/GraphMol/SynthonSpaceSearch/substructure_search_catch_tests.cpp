@@ -758,5 +758,5 @@ F[2*]	277310376-742385dd	2	fake-chiral
 
   sparams.maxHitChiralAtoms = 0;
   auto res4 = space.substructureSearch(*qmol, mparams, sparams);
-  CHECK(res4.getHitMolecules().size() == 0);
+  CHECK(res4.getHitMolecules().empty());
 }
