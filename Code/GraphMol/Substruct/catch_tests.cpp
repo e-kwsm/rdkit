@@ -855,7 +855,7 @@ TEST_CASE("Github #7295", "CIS/TRANS in aromatic ring") {
     CHECK(SubstructMatch(*mol, *query, ps).size() == 1);
     auto mol2 =
         "[O:1]=[c:2]1\\[c:3](=[CH:4]/[c:5]2[cH:6][cH:7][cH:8][cH:9][cH:10]2)[s:11][c:12]2[n:13]1[NH:14][C:15]1([CH2:16][CH2:17][CH2:18][CH2:19]1)[NH:20][N:21]=2"_smiles;
-    CHECK(SubstructMatch(*mol2, *query, ps).size() == 0);
+    CHECK(SubstructMatch(*mol2, *query, ps).empty());
   }
 }
 
