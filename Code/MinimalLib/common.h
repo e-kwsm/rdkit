@@ -695,7 +695,7 @@ void get_sss_json(const ROMol &d_mol, const ROMol &q_mol,
   for (const auto &pair : match) {
     invMatch[pair.first] = &pair - &match.front();
   }
-  for (const auto qbond : q_mol.bonds()) {
+  for (auto *const qbond : q_mol.bonds()) {
     auto beginIdx = invMatch.at(qbond->getBeginAtomIdx());
     auto endIdx = invMatch.at(qbond->getEndAtomIdx());
     if (beginIdx == -1 || endIdx == -1) {
@@ -703,7 +703,7 @@ void get_sss_json(const ROMol &d_mol, const ROMol &q_mol,
     }
     unsigned int idx1 = match.at(beginIdx).second;
     unsigned int idx2 = match.at(endIdx).second;
-    const auto bond = d_mol.getBondBetweenAtoms(idx1, idx2);
+    const auto *const bond = d_mol.getBondBetweenAtoms(idx1, idx2);
     if (bond != nullptr) {
       rjBonds.PushBack(bond->getIdx(), doc.GetAllocator());
     }
@@ -796,7 +796,7 @@ bool invertWedgingIfMolHasFlipped(ROMol &mol,
 }  // namespace
 
 std::unique_ptr<RWMol> do_cleanup(RWMol &mol, const std::string &details_json) {
-  auto molp = &mol;
+  auto *molp = &mol;
   return standardize_func(
       molp, details_json,
       static_cast<RWMol *(*)(const RWMol *,
@@ -806,13 +806,13 @@ std::unique_ptr<RWMol> do_cleanup(RWMol &mol, const std::string &details_json) {
 
 std::unique_ptr<RWMol> do_normalize(RWMol &mol,
                                     const std::string &details_json) {
-  auto molp = &mol;
+  auto *molp = &mol;
   return standardize_func(molp, details_json, MolStandardize::normalize);
 }
 
 std::unique_ptr<RWMol> do_reionize(RWMol &mol,
                                    const std::string &details_json) {
-  auto molp = &mol;
+  auto *molp = &mol;
   return standardize_func(molp, details_json, MolStandardize::reionize);
 }
 
@@ -953,8 +953,8 @@ std::unique_ptr<ExplicitBitVect> pattern_fp_as_bitvect(
     LPT_OPT_GET(nBits);
     LPT_OPT_GET(tautomericFingerprint);
   }
-  auto fp = PatternFingerprintMol(mol, nBits, nullptr, nullptr,
-                                  tautomericFingerprint);
+  auto *fp = PatternFingerprintMol(mol, nBits, nullptr, nullptr,
+                                   tautomericFingerprint);
   return std::unique_ptr<ExplicitBitVect>{fp};
 }
 
@@ -1010,7 +1010,7 @@ std::unique_ptr<ExplicitBitVect> atom_pair_fp_as_bitvect(
 }
 
 std::unique_ptr<ExplicitBitVect> maccs_fp_as_bitvect(const RWMol &mol) {
-  auto fp = MACCSFingerprints::getFingerprintAsBitVect(mol);
+  auto *fp = MACCSFingerprints::getFingerprintAsBitVect(mol);
   return std::unique_ptr<ExplicitBitVect>{fp};
 }
 
@@ -1228,7 +1228,7 @@ class LoggerStateSingletons {
   }
   static bool enable(const char *logNameCStr, bool enabled) {
     std::string inputLogName(logNameCStr ? logNameCStr : defaultLogName());
-    auto loggerStates = get(inputLogName);
+    auto *loggerStates = get(inputLogName);
     if (!loggerStates) {
       return false;
     }
@@ -1254,7 +1254,7 @@ class LoggerStateSingletons {
              {"rdApp.error", rdErrorLog},
          }) {
       d_singletonLoggerStates.emplace_back(new LoggerState(logName, logger));
-      auto loggerState = d_singletonLoggerStates.back().get();
+      auto *loggerState = d_singletonLoggerStates.back().get();
       CHECK_INVARIANT(loggerState, "loggerState must not be nullptr");
       d_map[logName].push_back(loggerState);
       d_map[defaultLogName()].push_back(loggerState);
@@ -1313,7 +1313,7 @@ class LogHandle {
   }
   void open() {
     // this is called under mutex lock
-    auto loggerStates = LoggerStateSingletons::get(d_logName);
+    auto *loggerStates = LoggerStateSingletons::get(d_logName);
     CHECK_INVARIANT(loggerStates, "loggerStates must not be nullptr");
     for (auto &loggerState : *loggerStates) {
       CHECK_INVARIANT(loggerState->setLock(), "Failed to acquire lock");
@@ -1327,7 +1327,7 @@ class LogHandle {
   }
   void close() {
     // this is called under mutex lock
-    auto loggerStates = LoggerStateSingletons::get(d_logName);
+    auto *loggerStates = LoggerStateSingletons::get(d_logName);
     CHECK_INVARIANT(loggerStates, "loggerStates must not be nullptr");
     for (const auto &loggerState : *loggerStates) {
       if (d_isTee) {
@@ -1347,7 +1347,7 @@ class LogHandle {
 #ifdef RDK_BUILD_THREADSAFE_SSS
     std::lock_guard<std::mutex> lock(getLoggerMutex());
 #endif
-    auto loggerStates = LoggerStateSingletons::get(logName);
+    auto *loggerStates = LoggerStateSingletons::get(logName);
     if (loggerStates && std::none_of(loggerStates->begin(), loggerStates->end(),
                                      [](const auto &loggerState) {
                                        return loggerState->hasLock();
