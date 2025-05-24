@@ -4829,12 +4829,12 @@ TEST_CASE("clearPropertyCache") {
   auto m = "CC"_smiles;
   REQUIRE(m);
   CHECK(!m->needsUpdatePropertyCache());
-  for (const auto atom : m->atoms()) {
+  for (auto *const atom : m->atoms()) {
     CHECK(!atom->needsUpdatePropertyCache());
   }
   m->clearPropertyCache();
   CHECK(m->needsUpdatePropertyCache());
-  for (const auto atom : m->atoms()) {
+  for (auto *const atom : m->atoms()) {
     CHECK(atom->needsUpdatePropertyCache());
   }
 }

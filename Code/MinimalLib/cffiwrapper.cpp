@@ -754,7 +754,7 @@ extern "C" short add_hs(char **mol_pkl, size_t *mol_pkl_sz) {
   auto mol = mol_from_pkl(*mol_pkl, *mol_pkl_sz);
   MolOps::addHs(mol);
   // we don't need the properties that sets:
-  for (auto atom : mol.atoms()) {
+  for (auto *atom : mol.atoms()) {
     if (atom->getAtomicNum() == 1) {
       atom->clearProp(common_properties::isImplicit);
     }
@@ -887,7 +887,7 @@ extern "C" short destroy_log_handle(void **log_handle) {
   if (!log_handle || !*log_handle) {
     return 0;
   }
-  auto lh = reinterpret_cast<MinimalLib::LogHandle *>(*log_handle);
+  auto *lh = reinterpret_cast<MinimalLib::LogHandle *>(*log_handle);
   delete lh;
   *log_handle = nullptr;
   return 1;
