@@ -729,13 +729,13 @@ std::vector<std::unique_ptr<ROMol>> getTheFrags(
           // doesn't seem like this should be necessary, but in case
           // we ever need stereogroups where the atoms aren't marked
           // with stereo...
-          for (auto atom : stereoGroup.getAtoms()) {
+          for (auto *atom : stereoGroup.getAtoms()) {
             if (atomsInFrag[atom->getIdx()]) {
               return true;
             }
           }
           // same check for stereo groups involving bonds:
-          for (auto bond : stereoGroup.getBonds()) {
+          for (auto *bond : stereoGroup.getBonds()) {
             if (atomsInFrag[bond->getBeginAtomIdx()] &&
                 atomsInFrag[bond->getEndAtomIdx()]) {
               return true;
