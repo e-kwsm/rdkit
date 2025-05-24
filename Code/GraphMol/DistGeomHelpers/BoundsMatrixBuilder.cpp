@@ -1527,7 +1527,7 @@ void set14Bounds(const ROMol &mol, DistGeom::BoundsMatPtr mmat,
     throw ValueErrorException(
         "Too many bonds in the molecule, cannot compute 1-4 bounds");
   }
-  const auto rinfo = mol.getRingInfo();  // FIX: make sure we have ring info
+  auto *const rinfo = mol.getRingInfo();  // FIX: make sure we have ring info
   CHECK_INVARIANT(rinfo, "");
   const auto &bondRings = rinfo->bondRings();
 
@@ -1573,14 +1573,14 @@ void set14Bounds(const ROMol &mol, DistGeom::BoundsMatPtr mmat,
       bid1 = bid2;
     }  // loop over bonds in the ring
   }  // end of all rings
-  for (const auto bond : mol.bonds()) {
+  for (auto *const bond : mol.bonds()) {
     auto bid2 = bond->getIdx();
     auto aid2 = bond->getBeginAtomIdx();
     auto aid3 = bond->getEndAtomIdx();
-    for (const auto bnd1 : mol.atomBonds(mol.getAtomWithIdx(aid2))) {
+    for (auto *const bnd1 : mol.atomBonds(mol.getAtomWithIdx(aid2))) {
       auto bid1 = bnd1->getIdx();
       if (bid1 != bid2) {
-        for (const auto bnd3 : mol.atomBonds(mol.getAtomWithIdx(aid3))) {
+        for (auto *const bnd3 : mol.atomBonds(mol.getAtomWithIdx(aid3))) {
           auto bid3 = bnd3->getIdx();
           if (bid3 != bid2) {
             auto id1 = bid1 * nb * nb + bid2 * nb + bid3;
