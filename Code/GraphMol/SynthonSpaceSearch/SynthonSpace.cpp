@@ -383,9 +383,8 @@ void threadedReadSynthons(
   size_t start = 0;
   std::vector<std::thread> threads;
   for (unsigned int i = 0U; i < numThreads; ++i, start += eachThread) {
-    threads.push_back(std::thread(readSynthons, start, start + eachThread,
-                                  fileMap, std::ref(synthonPos), version,
-                                  std::ref(synthons)));
+    threads.emplace_back(readSynthons, start, start + eachThread, fileMap,
+                         std::ref(synthonPos), version, std::ref(synthons));
   }
   for (auto &t : threads) {
     t.join();
