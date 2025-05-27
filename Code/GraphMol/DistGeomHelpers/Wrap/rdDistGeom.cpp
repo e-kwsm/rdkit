@@ -22,8 +22,6 @@
 #include <GraphMol/DistGeomHelpers/BoundsMatrixBuilder.h>
 #include <GraphMol/DistGeomHelpers/Embedder.h>
 
-#include <memory>
-
 namespace python = boost::python;
 
 namespace {
