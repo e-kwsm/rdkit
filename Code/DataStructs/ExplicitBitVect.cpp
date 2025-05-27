@@ -13,7 +13,6 @@
 #include "ExplicitBitVect.h"
 #include <RDGeneral/StreamOps.h>
 #include "base64.h"
-#include <memory>
 #include <sstream>
 #include <limits>
 #ifdef WIN32
