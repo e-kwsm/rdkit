@@ -1528,7 +1528,7 @@ void test12() {
       TEST_ASSERT(m2->getBondWithIdx(1)->getStereoAtoms()[1] == 3);
     }
 
-    m2.reset(new RWMol());
+    m2 = std::make_unique<RWMol>();
     m2->addAtom(new Atom(9), true, true);
     m2->addAtom(new Atom(6), true, true);
     m2->addAtom(new Atom(6), true, true);

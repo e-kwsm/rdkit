@@ -896,7 +896,7 @@ python::tuple detectChemistryProblemsHelper(const ROMol &mol,
 ROMol *canonicalizeStereoGroupsHelper(
     ROMol &mol, RDKit::StereoGroupAbsOptions stereoGroupAbsOptions,
     unsigned int maxStereoGroups) {
-  auto mol_uptr = std::unique_ptr<ROMol>(new ROMol(mol));
+  auto mol_uptr = std::make_unique<ROMol>(mol);
 
   RDKit::canonicalizeStereoGroups(mol_uptr, stereoGroupAbsOptions,
                                   maxStereoGroups);
