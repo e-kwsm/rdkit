@@ -16,7 +16,6 @@
 #include <GraphMol/Chirality.h>
 #include <GraphMol/RDKitQueries.h>
 
-#include <memory>
 #include <vector>
 #include <algorithm>
 
