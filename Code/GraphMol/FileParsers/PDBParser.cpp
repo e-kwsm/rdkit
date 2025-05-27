@@ -9,7 +9,6 @@
 //
 #include <cstring>
 #include <cstdio>
-#include <memory>
 #include <string>
 #include <fstream>
 #include <RDGeneral/BoostStartInclude.h>
