@@ -2199,7 +2199,7 @@ Atom *ParseV3000AtomSymbol(std::string_view token, unsigned int &line,
       res->setProp(common_properties::atomLabel, std::string(token));
     } else {
       std::string tcopy(token);
-      res.reset(new Atom(0));
+      res = std::make_unique<Atom>(0);
       lookupAtomicNumber(res.get(), tcopy, strictParsing);
     }
   }
