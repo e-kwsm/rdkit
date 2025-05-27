@@ -19,8 +19,6 @@
 
 #include <Numerics/Alignment/AlignPoints.h>
 
-#include <memory>
-
 namespace python = boost::python;
 
 namespace RDNumeric {
