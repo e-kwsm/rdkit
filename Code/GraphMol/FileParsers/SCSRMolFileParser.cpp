@@ -69,7 +69,7 @@ static std::unique_ptr<SCSRMol> SCSRMolFromSCSRDataStream(
   if (inStream.eof()) {
     return nullptr;
   }
-  auto res = std::unique_ptr<SCSRMol>(new SCSRMol());
+  auto res = std::make_unique<SCSRMol>();
   auto localParams = params;
   localParams.parsingSCSRMol = true;
   res->setMol(RDKit::v2::FileParsers::MolFromMolDataStream(inStream, line,
@@ -113,7 +113,7 @@ static std::unique_ptr<SCSRMol> SCSRMolFromSCSRDataStream(
       throw FileParseException(errout.str());
     }
 
-    res->addTemplate(std::unique_ptr<ROMol>(new ROMol()));
+    res->addTemplate(std::make_unique<ROMol>());
     auto templateMol = (RWMol *)res->getTemplate(res->getTemplateCount() - 1);
 
     templateMol->setProp(common_properties::natReplace, natReplace);
@@ -768,7 +768,7 @@ class MolFromSCSRMolConverter {
         molFromSCSRParams(molFromSCSRParamsInit) {}
 
   std::unique_ptr<RDKit::RWMol> convert() {
-    resMol.reset(new RWMol());
+    resMol = std::make_unique<RWMol>();
     mol = scsrMol->getMol();
 
     // first get some information from the templates to be used when
@@ -783,7 +783,7 @@ class MolFromSCSRMolConverter {
     std::unique_ptr<Conformer> newConf(nullptr);
     if (mol->getNumConformers() != 0) {
       conf = &mol->getConformer(0);
-      newConf.reset(new Conformer(scsrMol->getMol()->getNumAtoms()));
+      newConf = std::make_unique<Conformer>(scsrMol->getMol()->getNumAtoms());
       newConf->set3D(conf->is3D());
 
       for (unsigned int templateIdx = 0;
