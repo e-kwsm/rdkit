@@ -26,14 +26,8 @@
 /*  F. Murtagh, ESA/ESO/STECF, Garching, February 1986.       C */
 /*                                                            C */
 /* ------------------------------------------------------------C */
-/* Subroutine */ int hc_(n, len, iopt, ia, ib, crit, membr, nn, disnn, flag__,
-                         diss)
-integer *n, *len, *iopt, *ia, *ib;
-doublereal *crit, *membr;
-integer *nn;
-doublereal *disnn;
-logical *flag__;
-doublereal *diss;
+/* Subroutine */ int hc_(integer *n, integer *len, integer *iopt, integer *ia, integer *ib, doublereal *crit, doublereal *membr, integer *nn, doublereal *disnn, logical *flag__,
+                         doublereal *diss)
 {
   /* Initialized data */
 
@@ -269,8 +263,7 @@ L400:
   return 0;
 } /* hc_ */
 
-integer ioffset_(n, i__, j)
-integer *n, *i__, *j;
+integer ioffset_(integer *n, integer *i__, integer *j)
 {
   /* System generated locals */
   integer ret_val;
