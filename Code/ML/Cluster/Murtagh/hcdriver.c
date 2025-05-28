@@ -7,11 +7,7 @@
 
 #include "f2c.h"
 
-int distdriver_(n, len, d__, iopt, ia, ib, crit)
-integer *n, *len;
-doublereal *d__;
-integer *iopt, *ia, *ib;
-doublereal *crit;
+int distdriver_(integer *n, integer *len, doublereal *d__, integer *iopt, integer *ia, integer *ib, doublereal *crit)
 {
   static logical *flag__;
   static doublereal *membr, *disnn;
