@@ -20,7 +20,7 @@ namespace RDKit {
 void MolToCJSONBlock(std::ostream &os, const ROMol &mol, int confId,
                      bool kekulize) {
   const Conformer *conf =
-      mol.getNumConformers() ? conf = &mol.getConformer(confId) : nullptr;
+      mol.getNumConformers() ? &mol.getConformer(confId) : nullptr;
   const bool is3D = conf && conf->is3D();
 
   const auto nAtoms = mol.getNumAtoms();
