@@ -1,1 +1,1 @@
-Code/GraphMol/FileParsers/CJson.cpp
+../Code/GraphMol/FileParsers/CJson.cpp
