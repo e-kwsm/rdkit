@@ -15,6 +15,7 @@
 #include <GraphMol/FileParsers/MolFileStereochem.h>
 #include <fstream>
 #include <sstream>
+#include <string>
 #include <boost/json/src.hpp>
 #include <RDGeneral/Invariant.h>
 
@@ -69,6 +70,9 @@ void MolToCJSONBlock(std::ostream &os, const ROMol &mol, int confId,
 
       const auto btype = bptr->getBondType();
       switch (btype) {
+        case Bond::ZERO:
+          bond_orders.push_back(0);
+          break;
         case Bond::SINGLE:
           bond_orders.push_back(1);
           break;
@@ -78,8 +82,14 @@ void MolToCJSONBlock(std::ostream &os, const ROMol &mol, int confId,
         case Bond::TRIPLE:
           bond_orders.push_back(3);
           break;
-        case Bond::AROMATIC:
-          bond_orders.push_back(1.5);
+        case Bond::QUADRUPLE:
+          bond_orders.push_back(4);
+          break;
+        case Bond::QUINTUPLE:
+          bond_orders.push_back(5);
+          break;
+        case Bond::HEXTUPLE:
+          bond_orders.push_back(6);
           break;
 
         case Bond::DATIVE:
@@ -90,19 +100,13 @@ void MolToCJSONBlock(std::ostream &os, const ROMol &mol, int confId,
           bond_orders.push_back(1);
           break;
 
-        case Bond::DATIVEONE:
-          bond_orders.push_back(0.5);
+        // MUST BE INTEGER
+        case Bond::AROMATIC:
+          bond_orders.push_back(1.5);
           break;
 
-          // XXX RDKit extension: bond orders greater than 3
-        case Bond::QUADRUPLE:
-          bond_orders.push_back(4);
-          break;
-        case Bond::QUINTUPLE:
-          bond_orders.push_back(5);
-          break;
-        case Bond::HEXTUPLE:
-          bond_orders.push_back(6);
+        case Bond::DATIVEONE:
+          bond_orders.push_back(0.5);
           break;
 
         // XXX RDKit extension: half-integer orders
@@ -125,10 +129,6 @@ void MolToCJSONBlock(std::ostream &os, const ROMol &mol, int confId,
           bond_orders.push_back(5.5);
           break;
 
-        case Bond::ZERO:
-          bond_orders.push_back(0);
-          break;
-
           // default:
           //   BOOST_LOG(rdInfoLog)
           //       << boost::format{"CMLWriter: Unsupported BondType %1%\n"} %
@@ -138,6 +138,9 @@ void MolToCJSONBlock(std::ostream &os, const ROMol &mol, int confId,
     }
   }
 
+  std::string name;
+  mol.getPropIfPresent(common_properties::_Name, name);
+
   boost::json::object atoms;
   atoms["coords"].emplace_object()["3d"] = coords_3d;
   atoms["elements"].emplace_object()["number"] = elements_number;
@@ -145,15 +148,19 @@ void MolToCJSONBlock(std::ostream &os, const ROMol &mol, int confId,
 
   boost::json::object bonds;
   bonds["connections"].emplace_object()["index"] = bond_indices;
+  bonds["order"] = bond_orders;
 
   boost::json::object properties;
   properties["totalCharge"] = totalCharge;
-  properties["totalSpinMultiplicity"] = 1u;
+  // properties["totalSpinMultiplicity"] = 1u;
 
   boost::json::object root;
+  if (!name.empty()) {
+    root["Name"]= name;
+  }
   root["atoms"] = atoms;
   root["bonds"] = bonds;
-  root["chemicalJson"] = 1;
+  root["chemicalJson"] = 1;  // VERSION
   root["properties"] = properties;
   os << root;
 }
