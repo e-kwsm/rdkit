@@ -1,4 +1,5 @@
 #include "CJson.h"
+#include <iostream>
 #include "GraphMol/FileParsers/FileParsers.h"
 
 int main() {
@@ -28,4 +29,7 @@ int main() {
 M  CHG  2   4  -1   5   1
 M  END
 )");
+
+  RDKit::MolToCJSONBlock(std::cout, *mol);
+  std::cout << std::endl;
 }
