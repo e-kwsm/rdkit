@@ -62,7 +62,7 @@ void MolToCJSONBlock(std::ostream &os, const ROMol &mol, int confId,
 
   boost::json::object root;
   root["atoms"] = atoms;
-  root["atoms"] = bonds;
+  root["bonds"] = bonds;
   root["chemicalJson"] = 1;
   root["properties"] = properties;
   os << root;
