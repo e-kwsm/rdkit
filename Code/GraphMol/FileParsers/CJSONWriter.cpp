@@ -19,6 +19,16 @@
 #include <RDGeneral/Invariant.h>
 
 namespace RDKit {
+void MolToCJSONBlock(std::ostream &os, const ROMol &mol, int confId,
+                   bool kekulize) {
+  auto pt = molToPTree(mol, confId, kekulize);
+  if (pt.empty()) {
+    return;
+  }
+  boost::property_tree::write_xml(
+      os, pt,
+      boost::property_tree::xml_writer_make_settings<std::string>(' ', 2));
+}
 
 std::string MolToCJSONBlock(const ROMol &mol, int confId, bool kekulize) {
   std::ostringstream ss;
