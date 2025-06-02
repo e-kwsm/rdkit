@@ -23,9 +23,10 @@ void MolToCJSONBlock(std::ostream &os, const ROMol &mol, int confId,
                      bool kekulize) {
   const Conformer *conf =
       mol.getNumConformers() ? &mol.getConformer(confId) : nullptr;
-  const bool is3D = conf && conf->is3D();
+  const auto is3D = conf != nullptr && conf->is3D();
 
   const auto nAtoms = mol.getNumAtoms();
+  int totalCharge = 0;
 
   boost::json::array coords_3d;
   boost::json::array elements_number;
@@ -41,6 +42,7 @@ void MolToCJSONBlock(std::ostream &os, const ROMol &mol, int confId,
     elements_number.push_back(atom->getAtomicNum());
     const auto charge = atom->getFormalCharge();
     formalCharges.push_back(charge);
+    totalCharge += charge;
     if (conf) {
       const auto &pos = conf->getAtomPos(i);
       coords_3d.push_back(pos.x);
@@ -57,7 +59,7 @@ void MolToCJSONBlock(std::ostream &os, const ROMol &mol, int confId,
   boost::json::object bonds;
 
   boost::json::object properties;
-  properties["totalCharge"] = 0;
+  properties["totalCharge"] = totalCharge;
   properties["totalSpinMultiplicity"] = 1u;
 
   boost::json::object root;
