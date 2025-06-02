@@ -39,6 +39,8 @@ void MolToCJSONBlock(std::ostream &os, const ROMol &mol, int confId,
   for (auto i = 0u; i < nAtoms; i++) {
     const auto &atom = mol.getAtomWithIdx(i);
     elements_number.push_back(atom->getAtomicNum());
+    const auto charge = atom->getFormalCharge();
+    formalCharges.push_back(charge);
     if (conf) {
       const auto &pos = conf->getAtomPos(i);
       coords_3d.push_back(pos.x);
@@ -49,6 +51,8 @@ void MolToCJSONBlock(std::ostream &os, const ROMol &mol, int confId,
 
   boost::json::object atoms;
   atoms["coords"].emplace_object()["3d"] = coords_3d;
+  atoms["elements"].emplace_object()["number"] = elements_number;
+  atoms["formalCharges"] = formalCharges;
 
   boost::json::object root;
   root["atoms"] = atoms;
