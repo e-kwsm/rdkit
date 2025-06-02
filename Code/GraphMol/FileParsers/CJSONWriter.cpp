@@ -54,8 +54,17 @@ void MolToCJSONBlock(std::ostream &os, const ROMol &mol, int confId,
   atoms["elements"].emplace_object()["number"] = elements_number;
   atoms["formalCharges"] = formalCharges;
 
+  boost::json::object bonds;
+
+  boost::json::object properties;
+  properties["totalCharge"] = 0;
+  properties["totalSpinMultiplicity"] = 1u;
+
   boost::json::object root;
   root["atoms"] = atoms;
+  root["atoms"] = bonds;
+  root["chemicalJson"] = 1;
+  root["properties"] = properties;
   os << root;
 }
 
