@@ -31,6 +31,7 @@ void MolToCJSONBlock(std::ostream &os, const ROMol &mol, int confId,
   boost::json::array coords_3d;
   boost::json::array elements_number;
   boost::json::array formalCharges;
+  boost::json::array bond_indices, bond_orders;
   if (is3D) {
     coords_3d.reserve(3u * nAtoms);
   }
@@ -51,12 +52,98 @@ void MolToCJSONBlock(std::ostream &os, const ROMol &mol, int confId,
     }
   }
 
+  for (auto atom_itr = mol.beginAtoms(), atom_itr_end = mol.endAtoms();
+       atom_itr != atom_itr_end; ++atom_itr) {
+    const auto &atom = *atom_itr;
+    const auto src = atom->getIdx();
+    for (auto bond_itrs = mol.getAtomBonds(atom);
+         bond_itrs.first != bond_itrs.second; ++bond_itrs.first) {
+      auto *bptr = mol[*bond_itrs.first];
+      auto *nptr = bptr->getOtherAtom(atom);
+      const auto dst = nptr->getIdx();
+      if (dst < src) {
+        continue;
+      }
+      bond_indices.push_back(src);
+      bond_indices.push_back(dst);
+
+      const auto btype = bptr->getBondType();
+      switch (btype) {
+        case Bond::SINGLE:
+          bond_orders.push_back(1);
+          break;
+        case Bond::DOUBLE:
+          bond_orders.push_back(2);
+          break;
+        case Bond::TRIPLE:
+          bond_orders.push_back(3);
+          break;
+        case Bond::AROMATIC:
+          bond_orders.push_back(1.5);
+          break;
+
+        case Bond::DATIVE:
+          [[fallthrough]];
+        case Bond::DATIVEL:
+          [[fallthrough]];
+        case Bond::DATIVER:
+          bond_orders.push_back(1);
+          break;
+
+        case Bond::DATIVEONE:
+          bond_orders.push_back(0.5);
+          break;
+
+                  // XXX RDKit extension: bond orders greater than 3
+        case Bond::QUADRUPLE:
+          bond_orders.push_back(4);
+          break;
+        case Bond::QUINTUPLE:
+          bond_orders.push_back(5);
+          break;
+        case Bond::HEXTUPLE:
+          bond_orders.push_back(6);
+          break;
+
+        // XXX RDKit extension: half-integer orders
+        case Bond::THREECENTER:
+          bond_orders.push_back(0.5);
+          break;
+        case Bond::ONEANDAHALF:
+          bond_orders.push_back(1.5);
+          break;
+        case Bond::TWOANDAHALF:
+          bond_orders.push_back(2.5);
+          break;
+        case Bond::THREEANDAHALF:
+          bond_orders.push_back(3.5);
+          break;
+        case Bond::FOURANDAHALF:
+          bond_orders.push_back(4.5);
+          break;
+        case Bond::FIVEANDAHALF:
+          bond_orders.push_back(5.5);
+          break;
+
+                  case Bond::ZERO:
+          bond_orders.push_back(0);
+          break;
+
+        //default:
+        //  BOOST_LOG(rdInfoLog)
+        //      << boost::format{"CMLWriter: Unsupported BondType %1%\n"} % btype;
+        //  bond.put("<xmlattr>.order", "unknown");
+      }
+    }
+  }
+
   boost::json::object atoms;
   atoms["coords"].emplace_object()["3d"] = coords_3d;
   atoms["elements"].emplace_object()["number"] = elements_number;
   atoms["formalCharges"] = formalCharges;
 
   boost::json::object bonds;
+  bonds["connections"].emplace_object()["index"] = bond_indices;
 
   boost::json::object properties;
   properties["totalCharge"] = totalCharge;
