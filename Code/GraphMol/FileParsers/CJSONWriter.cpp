@@ -94,7 +94,7 @@ void MolToCJSONBlock(std::ostream &os, const ROMol &mol, int confId,
           bond_orders.push_back(0.5);
           break;
 
-                  // XXX RDKit extension: bond orders greater than 3
+          // XXX RDKit extension: bond orders greater than 3
         case Bond::QUADRUPLE:
           bond_orders.push_back(4);
           break;
@@ -125,14 +125,15 @@ void MolToCJSONBlock(std::ostream &os, const ROMol &mol, int confId,
           bond_orders.push_back(5.5);
           break;
 
-                  case Bond::ZERO:
+        case Bond::ZERO:
           bond_orders.push_back(0);
           break;
 
-        //default:
-        //  BOOST_LOG(rdInfoLog)
-        //      << boost::format{"CMLWriter: Unsupported BondType %1%\n"} % btype;
-        //  bond.put("<xmlattr>.order", "unknown");
+          // default:
+          //   BOOST_LOG(rdInfoLog)
+          //       << boost::format{"CMLWriter: Unsupported BondType %1%\n"} %
+          //       btype;
+          //   bond.put("<xmlattr>.order", "unknown");
       }
     }
   }
