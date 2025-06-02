@@ -15,6 +15,7 @@ endif()
 
 rdkit_library(FileParsers
     CDXMLParser.cpp
+    CJSONWriter.cpp
     Mol2FileParser.cpp MolFileParser.cpp 
     SCSRMolFileParser.cpp
     MolSGroupParsing.cpp MolSGroupWriting.cpp
