@@ -162,7 +162,7 @@ void MolToCJSONBlock(std::ostream &os, const ROMol &mol, int confId,
   root["bonds"] = bonds;
   root["chemicalJson"] = chemicalJson;
   root["properties"] = properties;
-  os << root;
+  os << root << '\n';
 }
 
 std::string MolToCJSONBlock(const ROMol &mol, int confId, bool kekulize) {
