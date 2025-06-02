@@ -9,6 +9,8 @@
 //  of the RDKit source tree.
 //
 
+#include "CJson.h"
+//
 #include "FileParsers.h"
 #include <GraphMol/FileParsers/MolFileStereochem.h>
 #include <fstream>
@@ -45,10 +47,12 @@ void MolToCJSONBlock(std::ostream &os, const ROMol &mol, int confId,
     }
   }
 
-  boost::json::object coords;
-  coords["3d"].emplace_array();
+  boost::json::object atoms;
+  atoms["coords"].emplace_object()["3d"] = coords_3d;
+
   boost::json::object root;
-  root["atoms"] = nullptr;
+  root["atoms"] = atoms;
+  os << root;
 }
 
 std::string MolToCJSONBlock(const ROMol &mol, int confId, bool kekulize) {
