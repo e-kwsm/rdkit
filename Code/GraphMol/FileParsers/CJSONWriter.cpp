@@ -22,6 +22,7 @@
 namespace RDKit {
 void MolToCJSONBlock(std::ostream &os, const ROMol &mol, int confId,
                      bool kekulize) {
+  constexpr auto chemicalJson = 1;  // version
   const Conformer *conf =
       mol.getNumConformers() ? &mol.getConformer(confId) : nullptr;
   const auto is3D = conf != nullptr && conf->is3D();
@@ -100,7 +101,7 @@ void MolToCJSONBlock(std::ostream &os, const ROMol &mol, int confId,
           bond_orders.push_back(1);
           break;
 
-        // MUST BE INTEGER
+        // XXX MUST BE INTEGER
         case Bond::AROMATIC:
           bond_orders.push_back(1.5);
           break;
@@ -109,7 +110,6 @@ void MolToCJSONBlock(std::ostream &os, const ROMol &mol, int confId,
           bond_orders.push_back(0.5);
           break;
 
-        // XXX RDKit extension: half-integer orders
         case Bond::THREECENTER:
           bond_orders.push_back(0.5);
           break;
@@ -160,7 +160,7 @@ void MolToCJSONBlock(std::ostream &os, const ROMol &mol, int confId,
   }
   root["atoms"] = atoms;
   root["bonds"] = bonds;
-  root["chemicalJson"] = 1;  // VERSION
+  root["chemicalJson"] = chemicalJson;
   root["properties"] = properties;
   os << root;
 }
