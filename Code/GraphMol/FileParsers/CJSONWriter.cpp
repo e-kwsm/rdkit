@@ -181,12 +181,12 @@ void MolToCJSONBlock(std::ostream &os, const ROMol &mol,
   // properties["totalSpinMultiplicity"] = 1u;
 
   boost::json::object root;
+  root["chemicalJson"] = chemicalJson;
   if (!name.empty()) {
     root["Name"]= name;
   }
   root["atoms"] = atoms;
   root["bonds"] = bonds;
-  root["chemicalJson"] = chemicalJson;
   root["properties"] = properties;
   os << root << '\n';
 }
