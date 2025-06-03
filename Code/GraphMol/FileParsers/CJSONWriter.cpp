@@ -74,7 +74,7 @@ void MolToCJSONBlock(std::ostream &os, const ROMol &mol,
   if (params.kekulize) {
     for (const auto bond : rwmol.bonds()){
       if(bond->getIsAromatic()){
-        aromaticBonds.set(bond->getIdx());
+        // aromaticBonds.set(bond->getIdx());
       }
       MolOps::Kekulize(rwmol);
     }
