@@ -18,15 +18,11 @@
 #include <sstream>
 #include <string>
 #include <boost/json/src.hpp>
-#include <RDGeneral/Invariant.h>
+// #include <RDGeneral/Invariant.h>
 
 namespace RDKit {
-struct RDKIT_FILEPARSERS_EXPORT CJSONWriterParams {
-  bool kekulize = true;
-};
-
-void MolToCJSONBlock(std::ostream &os, const ROMol &mol, int confId,
-                     bool kekulize) {
+void MolToCJSONBlock(std::ostream &os, const ROMol &mol,
+                     const CJSONWriterParams &params, int confId) {
   constexpr auto chemicalJson = 1;  // version
   const Conformer *conf =
       mol.getNumConformers() ? &mol.getConformer(confId) : nullptr;
@@ -170,15 +166,16 @@ void MolToCJSONBlock(std::ostream &os, const ROMol &mol, int confId,
   os << root << '\n';
 }
 
-std::string MolToCJSONBlock(const ROMol &mol, int confId, bool kekulize) {
+std::string MolToCJSONBlock(const ROMol &mol, const CJSONWriterParams &params,
+                            int confId) {
   std::ostringstream ss;
-  MolToCJSONBlock(ss, mol, confId, kekulize);
+  MolToCJSONBlock(ss, mol, params, confId);
   return ss.str();
 }
 
-void MolToCJSONFile(const ROMol &mol, const std::string &fName, int confId,
-                    bool kekulize) {
+void MolToCJSONFile(const ROMol &mol, const std::string &fName,
+                    const CJSONWriterParams &params, int confId) {
   std::ofstream ofs{fName};
-  MolToCJSONBlock(ofs, mol, confId, kekulize);
+  MolToCJSONBlock(ofs, mol, params, confId);
 }
 }  // namespace RDKit
