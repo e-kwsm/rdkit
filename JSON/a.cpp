@@ -3,9 +3,12 @@
 #include "GraphMol/FileParsers/FileParsers.h"
 
 int main() {
-    const RDKit::v2::FileParsers::MolFileParserParams params{.sanitize = false,
+  const RDKit::v2::FileParsers::MolFileParserParams params{.sanitize = false,
                                                            .removeHs = false};
-      auto mol = RDKit::v2::FileParsers::MolFromMolBlock(R"(
+
+  auto mol = RDKit::v2::FileParsers::MolFromMolBlock(
+#if 1
+      R"(
  OpenBabel06022510293D
 
  10  9  0  0  0  0  0  0  0  0999 V2000
@@ -30,7 +33,10 @@ int main() {
   5 10  1  0  0  0  0
 M  CHG  2   4  -1   5   1
 M  END
-)",params);
+)"
+#endif
+      ,
+      params);
 
   // RDKit::MolToCJSONBlock(std::cout, *mol);
   // std::cout << std::endl;
