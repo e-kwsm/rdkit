@@ -21,6 +21,10 @@
 #include <RDGeneral/Invariant.h>
 
 namespace RDKit {
+struct RDKIT_FILEPARSERS_EXPORT CJSONWriterParams {
+  bool kekulize = true;
+};
+
 void MolToCJSONBlock(std::ostream &os, const ROMol &mol, int confId,
                      bool kekulize) {
   constexpr auto chemicalJson = 1;  // version
