@@ -1,6 +1,7 @@
 //  Copyright (C) 2025 Eisuke Kawashima
 //
-//  XXX Chemical JSON
+//  Chemical JSON
+//  https://github.com/OpenChemistry/chemicaljson
 //
 //   @@ All Rights Reserved @@
 //  This file is part of the RDKit.
