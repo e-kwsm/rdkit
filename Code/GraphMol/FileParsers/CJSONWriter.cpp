@@ -60,19 +60,33 @@ void MolToCJSONBlock(std::ostream &os, const ROMol &mol,
           throw std::invalid_argument{
               "atoms.coords.3dFractional is not supported yet"};
         case CJSONCoords::_3dSets:
-          throw std::invalid_argument{
-              "atoms.coords.3dSets is not supported yet"};
+          // TODO
+          coords_3d.push_back(pos.x);
+          coords_3d.push_back(pos.y);
+          coords_3d.push_back(pos.z);
+          break;
       }
     }
   }
 
-  for (auto atom_itr = mol.beginAtoms(), atom_itr_end = mol.endAtoms();
+  RWMol rwmol{mol};
+  boost::dynamic_bitset<>aromaticBonds;
+  if (params.kekulize) {
+    for (const auto bond : rwmol.bonds()){
+      if(bond->getIsAromatic()){
+        aromaticBonds.set(bond->getIdx());
+      }
+      MolOps::Kekulize(rwmol);
+    }
+  }
+
+  for (auto atom_itr = rwmol.beginAtoms(), atom_itr_end = rwmol.endAtoms();
        atom_itr != atom_itr_end; ++atom_itr) {
     const auto &atom = *atom_itr;
     const auto src = atom->getIdx();
-    for (auto bond_itrs = mol.getAtomBonds(atom);
+    for (auto bond_itrs = rwmol.getAtomBonds(atom);
          bond_itrs.first != bond_itrs.second; ++bond_itrs.first) {
-      auto *bptr = mol[*bond_itrs.first];
+      auto *bptr = rwmol[*bond_itrs.first];
       auto *nptr = bptr->getOtherAtom(atom);
       const auto dst = nptr->getIdx();
       if (dst < src) {
