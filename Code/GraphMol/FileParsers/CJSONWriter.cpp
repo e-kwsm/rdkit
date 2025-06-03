@@ -21,6 +21,7 @@
 // #include <RDGeneral/Invariant.h>
 
 namespace RDKit {
+
 void MolToCJSONBlock(std::ostream &os, const ROMol &mol,
                      const CJSONWriterParams &params, int confId) {
   constexpr auto chemicalJson = 1;  // version
@@ -56,9 +57,11 @@ void MolToCJSONBlock(std::ostream &os, const ROMol &mol,
           coords_3d.push_back(pos.z);
           break;
         case CJSONCoords::_3dFractional:
-          throw std::value_error{"coords.3dFractional is not supported yet"};
+          throw std::invalid_argument{
+              "atoms.coords.3dFractional is not supported yet"};
         case CJSONCoords::_3dSets:
-          throw std::value_error{"coords.3dFractional is not supported yet"};
+          throw std::invalid_argument{
+              "atoms.coords.3dSets is not supported yet"};
       }
     }
   }
