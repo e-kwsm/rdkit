@@ -49,9 +49,17 @@ void MolToCJSONBlock(std::ostream &os, const ROMol &mol,
     totalCharge += charge;
     if (conf) {
       const auto &pos = conf->getAtomPos(i);
-      coords_3d.push_back(pos.x);
-      coords_3d.push_back(pos.y);
-      coords_3d.push_back(pos.z);
+      switch (params.coords) {
+        case CJSONCoords::_3d:
+          coords_3d.push_back(pos.x);
+          coords_3d.push_back(pos.y);
+          coords_3d.push_back(pos.z);
+          break;
+        case CJSONCoords::_3dFractional:
+          throw std::value_error{"coords.3dFractional is not supported yet"};
+        case CJSONCoords::_3dSets:
+          throw std::value_error{"coords.3dFractional is not supported yet"};
+      }
     }
   }
 
