@@ -3,10 +3,12 @@
 
 namespace RDKit {
 class ROMol;
+
+//! specify format of `coords`
 enum class CJSONCoords {
-  _3d,            //!< `[x, y, z, x, y, z, …]`
+  _3d,            //!< `[x, y, z, x, y, z, …]` in Å
   _3dFractional,  //!< `[x, y, z, x, y, z, …]`, fractional
-  _3dSets         //!< `[[x, y, z], [x, y, z], …]`
+  _3dSets         //!< `[[x, y, z], [x, y, z], …]` in Å
 };
 
 struct RDKIT_FILEPARSERS_EXPORT CJSONWriterParams {
