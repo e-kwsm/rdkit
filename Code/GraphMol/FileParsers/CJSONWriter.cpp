@@ -70,10 +70,10 @@ void MolToCJSONBlock(std::ostream &os, const ROMol &mol,
   }
 
   RWMol rwmol{mol};
-  boost::dynamic_bitset<>aromaticBonds;
+  boost::dynamic_bitset<> aromaticBonds;
   if (params.kekulize) {
-    for (const auto bond : rwmol.bonds()){
-      if(bond->getIsAromatic()){
+    for (const auto bond : rwmol.bonds()) {
+      if (bond->getIsAromatic()) {
         // aromaticBonds.set(bond->getIdx());
       }
       MolOps::Kekulize(rwmol);
@@ -183,7 +183,7 @@ void MolToCJSONBlock(std::ostream &os, const ROMol &mol,
   boost::json::object root;
   root["chemicalJson"] = chemicalJson;
   if (!name.empty()) {
-    root["Name"]= name;
+    root["name"] = name;
   }
   root["atoms"] = atoms;
   root["bonds"] = bonds;
