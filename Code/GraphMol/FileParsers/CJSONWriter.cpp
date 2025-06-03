@@ -69,7 +69,7 @@ void MolToCJSONBlock(std::ostream &os, const ROMol &mol,
   }
 
   RWMol rwmol{mol};
-  boost::dynamic_bitset<> aromaticBonds;
+  // boost::dynamic_bitset<> aromaticBonds;
   if (params.kekulize) {
     for (const auto bond : rwmol.bonds()) {
       if (bond->getIsAromatic()) {
