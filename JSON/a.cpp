@@ -3,7 +3,7 @@
 #include "GraphMol/FileParsers/FileParsers.h"
 
 int main() {
-  const RDKit::v2::FileParsers::MolFileParserParams params{.sanitize = false,
+  const RDKit::v2::FileParsers::MolFileParserParams params{.sanitize = true,
                                                            .removeHs = false};
 
   auto mol = RDKit::v2::FileParsers::MolFromMolBlock(
