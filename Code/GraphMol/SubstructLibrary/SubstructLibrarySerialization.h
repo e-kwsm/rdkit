@@ -41,6 +41,9 @@
 #include <boost/archive/archive_exception.hpp>
 #include <RDGeneral/BoostEndInclude.h>
 
+#pragma GCC diagnostic push
+#pragma GCC diagnostic warning "-Wextra-semi"
+
 BOOST_SERIALIZATION_ASSUME_ABSTRACT(RDKit::MolHolderBase)
 BOOST_SERIALIZATION_ASSUME_ABSTRACT(RDKit::FPHolderBase)
 
@@ -234,4 +237,5 @@ BOOST_SERIALIZATION_SPLIT_FREE(RDKit::FPHolderBase);
 BOOST_SERIALIZATION_SPLIT_FREE(RDKit::SubstructLibrary);
 
 #endif
+#pragma GCC diagnostic pop
 #endif
