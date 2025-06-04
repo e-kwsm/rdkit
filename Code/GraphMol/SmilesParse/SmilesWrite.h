@@ -27,6 +27,9 @@ class ROMol;
 
 typedef std::vector<boost::shared_ptr<ROMol>> MOL_SPTR_VECT;
 
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wextra-semi"
+
 struct RDKIT_SMILESPARSE_EXPORT SmilesWriteParams {
   bool doIsomericSmiles =
       true;              /**< include stereochemistry and isotope information */
@@ -361,4 +364,5 @@ inline std::string MolFragmentToCXSmiles(
 }
 
 }  // namespace RDKit
+#pragma GCC diagnostic pop
 #endif
