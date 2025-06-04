@@ -2175,7 +2175,7 @@ static int yy_get_next_buffer (yyscan_t yyscanner)
 					/* Reset buffer status. */
 					yyrestart( yyin , yyscanner);
 
-					/*FALLTHROUGH*/
+					[[fallthrough]];
 
 				case EOB_ACT_END_OF_FILE:
 					{
