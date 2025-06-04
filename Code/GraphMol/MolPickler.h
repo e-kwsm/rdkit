@@ -31,6 +31,9 @@
 #include <cstdint>
 #include <RDGeneral/BetterEnums.h>
 
+#pragma GCC diagnostic push
+#pragma GCC diagnostic warning "-Wextra-semi"
+
 namespace RDKit {
 class ROMol;
 class RingInfo;
@@ -326,4 +329,5 @@ QueryDetails getQueryDetails(const Queries::Query<int, T const *, true> *query);
 
 }  // namespace RDKit
 
+#pragma GCC diagnostic pop
 #endif
