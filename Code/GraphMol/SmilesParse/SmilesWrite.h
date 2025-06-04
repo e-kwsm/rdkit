@@ -28,7 +28,7 @@ class ROMol;
 typedef std::vector<boost::shared_ptr<ROMol>> MOL_SPTR_VECT;
 
 #pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wextra-semi"
+#pragma GCC diagnostic warning "-Wextra-semi"
 
 struct RDKIT_SMILESPARSE_EXPORT SmilesWriteParams {
   bool doIsomericSmiles =
