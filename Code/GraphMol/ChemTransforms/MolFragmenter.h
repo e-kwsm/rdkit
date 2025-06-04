@@ -15,6 +15,9 @@
 #include <GraphMol/ROMol.h>
 #include <RDGeneral/BetterEnums.h>
 
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wextra-semi"
+
 namespace RDKit {
 namespace MolFragmenter {
 struct RDKIT_CHEMTRANSFORMS_EXPORT FragmenterBondType {
@@ -172,4 +175,5 @@ RDKIT_CHEMTRANSFORMS_EXPORT std::unique_ptr<ROMol> molzip(
     const MolzipParams &params = MolzipParams());
 
 }  // namespace RDKit
+#pragma GCC diagnostic pop
 #endif
