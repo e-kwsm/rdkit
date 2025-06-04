@@ -22,12 +22,6 @@
 #include <boost/property_tree/xml_parser.hpp>
 #include <RDGeneral/Invariant.h>
 
-#if __cplusplus >= 201402L && __has_cpp_attribute(fallthrough)
-#define FALLTHROUGH [[fallthrough]]
-#else
-#define FALLTHROUGH
-#endif
-
 namespace RDKit {
 namespace {
 boost::property_tree::ptree molToPTree(const ROMol &mol, int confId,
@@ -192,11 +186,11 @@ boost::property_tree::ptree molToPTree(const ROMol &mol, int confId,
           bond.put("<xmlattr>.order", 'A');
           break;
         case Bond::DATIVEONE:
-          FALLTHROUGH;
+          [[fallthrough]];
         case Bond::DATIVE:
-          FALLTHROUGH;
+          [[fallthrough]];
         case Bond::DATIVEL:
-          FALLTHROUGH;
+          [[fallthrough]];
         case Bond::DATIVER:
           bond.put("<xmlattr>.order", 'S');
           break;
