@@ -45,6 +45,9 @@
 #include <RDGeneral/BoostEndInclude.h>
 #endif
 
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wextra-semi"
+
 namespace RDKit {
 
 namespace {
@@ -576,5 +579,5 @@ BOOST_CLASS_VERSION(RDKit::SmartsMatcher, 1)
 BOOST_CLASS_VERSION(RDKit::ExclusionList, 1)
 BOOST_CLASS_VERSION(RDKit::FilterHierarchyMatcher, 1)
 #endif
-
+#pragma GCC diagnostic pop
 #endif
