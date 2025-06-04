@@ -44,7 +44,7 @@
 #include <GraphMol/MolPickler.h>
 
 #pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wextra-semi"
+#pragma GCC diagnostic warning "-Wextra-semi"
 
 namespace RDKit {
 //! Base class for enumerating chemical reactions from collections of
