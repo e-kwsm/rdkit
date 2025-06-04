@@ -34,6 +34,9 @@
 #define __RD_FILTER_CATALOG_H__
 #include <utility>
 
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wextra-semi"
+
 #include <RDGeneral/types.h>  // For Dict
 #include <GraphMol/RDKitBase.h>
 #include <GraphMol/Substruct/SubstructMatch.h>
@@ -270,5 +273,5 @@ class RDKIT_FILTERCATALOG_EXPORT FilterCatalogEntry
 #ifdef RDK_USE_BOOST_SERIALIZATION
 BOOST_CLASS_VERSION(RDKit::FilterCatalogEntry, 1);
 #endif
-
+#pragma GCC diagnostic pop
 #endif  //__RD_FILTER_CATALOG_H__
