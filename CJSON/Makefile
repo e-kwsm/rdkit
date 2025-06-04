@@ -14,10 +14,10 @@ LDLIBS := \
 .PHONY: all
 all: zzz.cjson
 
-a.out: a.o CJSONWriter.o
+a.out: a.o CJSONReader.o
 	$(CXX) -o $@ $^ $(LDFLAGS) $(LDLIBS)
 
-CJSONWriter.o: CJson.h
+CJSONReader.o: cjson.h
 
 zzz.json: a.out
 	./$<
