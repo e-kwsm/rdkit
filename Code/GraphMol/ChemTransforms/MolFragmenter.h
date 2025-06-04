@@ -16,7 +16,7 @@
 #include <RDGeneral/BetterEnums.h>
 
 #pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wextra-semi"
+#pragma GCC diagnostic warning "-Wextra-semi"
 
 namespace RDKit {
 namespace MolFragmenter {
