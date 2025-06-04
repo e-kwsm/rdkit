@@ -1345,7 +1345,7 @@ void DrawMol::drawRadicals(MolDraw2D &drawer) const {
           ncds.x = cds.x + 0.6 * width - spot_rad;
         }
         draw_spot(ncds);
-        /* fallthrough */
+        [[fallthrough]];
       case 1:
         draw_spot(cds);
         break;
@@ -1362,7 +1362,7 @@ void DrawMol::drawRadicals(MolDraw2D &drawer) const {
           ncds.x = cds.x - 6.0 * spot_rad;
         }
         draw_spot(ncds);
-        /* fallthrough */
+        [[fallthrough]];
       case 2:
         if (dir) {
           ncds.y = cds.y + 2.0 * spot_rad;
