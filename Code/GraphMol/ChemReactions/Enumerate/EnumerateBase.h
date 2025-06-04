@@ -43,6 +43,9 @@
 #include "../ReactionPickler.h"
 #include <GraphMol/MolPickler.h>
 
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wextra-semi"
+
 namespace RDKit {
 //! Base class for enumerating chemical reactions from collections of
 /// building blocks and reagents.
@@ -199,4 +202,5 @@ class RDKIT_CHEMREACTIONS_EXPORT EnumerateLibraryBase {
 BOOST_SERIALIZATION_ASSUME_ABSTRACT(EnumerateLibraryBase)
 #endif
 }  // namespace RDKit
+#pragma GCC diagnostic pop
 #endif
