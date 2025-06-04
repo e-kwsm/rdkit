@@ -18,6 +18,9 @@
 
 namespace RDKit {
 
+#pragma GCC diagnostic push
+#pragma GCC diagnostic warning "-Wextra-semi"
+
 BETTER_ENUM(RGroupLabels, unsigned int,
   IsotopeLabels = 0x01,
   AtomMapLabels = 0x02,
@@ -128,4 +131,5 @@ struct RDKIT_RGROUPDECOMPOSITION_EXPORT RGroupDecompositionParameters {
 
 }  // namespace RDKit
 
+#pragma GCC diagnostic pop
 #endif  // RDKIT_RGROUPDECOMPPARAMS_H
