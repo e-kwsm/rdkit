@@ -49,6 +49,9 @@ namespace RDKit {
     return res;                                                            \
   }
 
+#pragma GCC diagnostic push
+#pragma GCC diagnostic warning "-Wextra-semi"
+
 #define QAFUNC2(_funcname_, _func_, _typ_)          \
   QueryAtom *_funcname_(bool negate) {              \
     QueryAtom *res = new QueryAtom();               \
@@ -331,5 +334,6 @@ If the atom already has a query, nothing will be changed.)DOC";
   }
 };
 }  // namespace RDKit
+#pragma GCC diagnostic pop
 
 void wrap_queries() { RDKit::queries_wrapper::wrap(); }
