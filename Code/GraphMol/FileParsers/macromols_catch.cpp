@@ -64,7 +64,7 @@ class ScsiMolTest {
           totalQueryBondCount(totalQueryBondCountInit),
           querySgroupCount(querySgroupCountInit),
           scsrExpandResult(scsrExpandResult),
-          scsrBaseHbondOptions(scsrBaseHbondOptions) {};
+          scsrBaseHbondOptions(scsrBaseHbondOptions) {}
   };
 
   void testScsiFiles(const ScsiTest *scsiTest) {
@@ -172,7 +172,7 @@ class ScsiMolTest {
     CHECK(mol2->getNumAtoms() == scsiTest->totalQueryAtomCount);
     CHECK(mol2->getNumBonds() == scsiTest->totalQueryBondCount);
     CHECK(getSubstanceGroups(*mol2).size() == scsiTest->querySgroupCount);
-  };
+  }
 };
 
 TEST_CASE("scsiTests", "scsiTests") {
