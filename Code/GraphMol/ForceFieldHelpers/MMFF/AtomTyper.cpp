@@ -2271,7 +2271,7 @@ void MMFFMolProperties::setMMFFHydrogenType(const Atom *atom) {
               atomType = 33;
               break;
             }
-            /* FALLTHRU */
+            [[fallthrough]];
           default:
             // HO
             // Generic hydroxyl hydrogen
