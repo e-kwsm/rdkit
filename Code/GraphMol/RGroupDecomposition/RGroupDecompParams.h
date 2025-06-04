@@ -16,6 +16,9 @@
 #include <GraphMol/Substruct/SubstructMatch.h>
 #include <RDGeneral/BetterEnums.h>
 
+#pragma GCC diagnostic push
+#pragma GCC diagnostic warning "-Wextra-semi"
+
 namespace RDKit {
 
 BETTER_ENUM(
@@ -114,4 +117,5 @@ struct RDKIT_RGROUPDECOMPOSITION_EXPORT RGroupDecompositionParameters {
 
 }  // namespace RDKit
 
+#pragma GCC diagnostic pop
 #endif  // RDKIT_RGROUPDECOMPPARAMS_H
