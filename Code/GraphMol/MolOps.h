@@ -23,6 +23,9 @@
 #include "SanitException.h"
 #include <RDGeneral/FileParseException.h>
 
+#pragma GCC diagnostic push
+#pragma GCC diagnostic warning "-Wextra-semi"
+
 RDKIT_GRAPHMOL_EXPORT extern const int ci_LOCAL_INF;
 namespace RDKit {
 class ROMol;
@@ -1430,4 +1433,5 @@ RDKIT_GRAPHMOL_EXPORT bool isAttachmentPoint(const Atom *atom,
 }  // namespace MolOps
 }  // namespace RDKit
 
+#pragma GCC diagnostic pop
 #endif
