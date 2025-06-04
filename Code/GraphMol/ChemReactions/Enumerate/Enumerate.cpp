@@ -49,6 +49,8 @@
 #endif
 #include <RDGeneral/BoostEndInclude.h>
 
+#pragma GCC diagnostic ignored "-Wextra-semi"
+
 #ifdef RDK_USE_BOOST_SERIALIZATION
 // Since we are exporting the classes for serialization,
 //  we should declare the archives types used here
