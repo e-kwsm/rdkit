@@ -36,7 +36,7 @@
 #include <utility>
 
 #pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wextra-semi"
+#pragma GCC diagnostic warning "-Wextra-semi"
 
 #include <RDGeneral/types.h>  // For Dict
 #include <GraphMol/RDKitBase.h>
