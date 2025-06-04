@@ -72,7 +72,7 @@ class ScsiMolTest {
           scsrExpandResult(scsrExpandResult),
           scsrBaseHbondOptions(scsrBaseHbondOptions),
           chiralChecks(chiralChecksInit),
-          chiralChecksQuery(chiralChecksQueryInit) {};
+          chiralChecksQuery(chiralChecksQueryInit) {}
   };
 
   void testScsiFiles(const ScsiTest *scsiTest) {
@@ -190,7 +190,7 @@ class ScsiMolTest {
     CHECK(mol2->getNumAtoms() == scsiTest->totalQueryAtomCount);
     CHECK(mol2->getNumBonds() == scsiTest->totalQueryBondCount);
     CHECK(getSubstanceGroups(*mol2).size() == scsiTest->querySgroupCount);
-  };
+  }
 };
 
 TEST_CASE("scsiTests", "scsiTests") {
