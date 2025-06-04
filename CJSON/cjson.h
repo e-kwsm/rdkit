@@ -7,7 +7,12 @@ namespace RDKit {
 class RWMol;
 namespace v2 {
 namespace FileParsers {
-struct RDKIT_FILEPARSERS_EXPORT CJSONParserParams{};
+struct RDKIT_FILEPARSERS_EXPORT CJSONParserParams {
+  bool sanitize = true;
+  bool removeHs = true;
+  // bool strictParsing = true;
+};
+
 RDKIT_FILEPARSERS_EXPORT std::unique_ptr<RWMol> MolFromCJSONDataStream(
     std::istream &inStream, unsigned int &line,
     const CJSONParserParams &params = {});
