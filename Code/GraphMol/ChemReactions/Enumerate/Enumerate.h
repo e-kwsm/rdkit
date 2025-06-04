@@ -43,6 +43,9 @@ future releases.
 
 */
 
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wextra-semi"
+
 namespace RDKit {
 
 //! This is a class for providing enumeration options that control
@@ -184,4 +187,5 @@ class RDKIT_CHEMREACTIONS_EXPORT EnumerateLibrary
 RDKIT_CHEMREACTIONS_EXPORT bool EnumerateLibraryCanSerialize();
 
 }  // namespace RDKit
+#pragma GCC diagnostic pop
 #endif
