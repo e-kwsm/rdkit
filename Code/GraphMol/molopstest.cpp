@@ -5582,7 +5582,7 @@ void testGetMolFrags() {
     VECT_INT_VECT fragsMolAtomMapping;
     std::vector<ROMOL_SPTR> frags =
         MolOps::getMolFrags(*m, false, &fragsMapping, &fragsMolAtomMapping);
-    TEST_ASSERT(frags.size() == 2)
+    TEST_ASSERT(frags.size() == 2);
     TEST_ASSERT(fragsMapping.size() == m->getNumAtoms());
 
     for (const auto &frag : frags) {
