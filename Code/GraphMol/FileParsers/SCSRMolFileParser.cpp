@@ -30,7 +30,7 @@ class SCSRMol {
   std::vector<std::unique_ptr<ROMol>> p_templates;
 
  public:
-  SCSRMol() {};
+  SCSRMol() {}
   SCSRMol(const SCSRMol &other) = delete;
   SCSRMol(SCSRMol &&other) noexcept = delete;
   SCSRMol &operator=(SCSRMol &&other) noexcept = delete;
@@ -45,7 +45,7 @@ class SCSRMol {
 
   unsigned int getTemplateCount() const { return p_templates.size(); }
 
-  ROMol *getTemplate(unsigned int index) { return p_templates[index].get(); };
+  ROMol *getTemplate(unsigned int index) { return p_templates[index].get(); }
 
   const ROMol *getMol() const { return p_mol.get(); }
 
