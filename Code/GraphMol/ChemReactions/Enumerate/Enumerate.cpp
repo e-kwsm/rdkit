@@ -49,7 +49,7 @@
 #endif
 #include <RDGeneral/BoostEndInclude.h>
 
-#pragma GCC diagnostic ignored "-Wextra-semi"
+#pragma GCC diagnostic warning "-Wextra-semi"
 
 #ifdef RDK_USE_BOOST_SERIALIZATION
 // Since we are exporting the classes for serialization,
