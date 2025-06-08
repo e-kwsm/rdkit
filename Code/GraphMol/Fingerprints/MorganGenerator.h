@@ -66,7 +66,7 @@ class RDKIT_FINGERPRINTS_EXPORT MorganFeatureAtomInvGenerator
    */
   MorganFeatureAtomInvGenerator(
       const std::vector<const ROMol *> *patterns = nullptr);
-  ~MorganFeatureAtomInvGenerator();
+  ~MorganFeatureAtomInvGenerator() override;
 
   std::vector<std::uint32_t> *getAtomInvariants(
       const ROMol &mol) const override;
