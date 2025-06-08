@@ -65,7 +65,7 @@ class RDKIT_FORCEFIELDHELPERS_EXPORT GaussianTorsionAngleContribs
     \param owner  pointer to the owning ForceField
   */
   GaussianTorsionAngleContribs(ForceField *owner);
-  ~GaussianTorsionAngleContribs() = default;
+  ~GaussianTorsionAngleContribs() override = default;
   //! Add contribution to this collection.
   //! The caller is responsible that the energies and gradient lookuptables
   //! have at least to elements each!
