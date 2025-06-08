@@ -24,7 +24,7 @@ class pyFunctor {
 class pyFinalMatchFunctor : public pyFunctor {
  public:
   pyFinalMatchFunctor(python::object obj) : dp_obj(std::move(obj)) {}
-  ~pyFinalMatchFunctor() = default;
+  ~pyFinalMatchFunctor() override = default;
   bool operator()(const ROMol &m, std::span<const unsigned int> match) {
     // grab the GIL
     PyGILStateHolder h;
@@ -41,7 +41,7 @@ template <typename T>
 class pyMatchFunctor : public pyFunctor {
  public:
   pyMatchFunctor(python::object obj) : dp_obj(std::move(obj)) {}
-  ~pyMatchFunctor() = default;
+  ~pyMatchFunctor() override = default;
   bool operator()(const T &a1, const T &a2) {
     // grab the GIL
     PyGILStateHolder h;

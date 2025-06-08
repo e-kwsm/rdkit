@@ -31,7 +31,7 @@ class SquareMatrix : public Matrix<TYPE> {
   SquareMatrix(SquareMatrix<TYPE> &&B) = default;
   SquareMatrix &operator=(const SquareMatrix<TYPE> &B) = default;
   SquareMatrix &operator=(SquareMatrix<TYPE> &&B) = default;
-  ~SquareMatrix() = default;
+  ~SquareMatrix() override = default;
 
   SquareMatrix<TYPE> &operator*=(TYPE scale) override {
     Matrix<TYPE>::operator*=(scale);
