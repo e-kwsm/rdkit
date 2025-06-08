@@ -28,7 +28,7 @@ class RDKIT_FILEPARSERS_EXPORT MultithreadedSmilesMolSupplier
       const Parameters &params = Parameters(),
       const SmilesMolSupplierParams &parseParams = SmilesMolSupplierParams());
   MultithreadedSmilesMolSupplier();
-  virtual ~MultithreadedSmilesMolSupplier() {close();};
+  ~MultithreadedSmilesMolSupplier() override { close(); }
 
   void init() override {}
   //! returns df_end

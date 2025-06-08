@@ -46,7 +46,7 @@ class RDKIT_RDGEOMETRYLIB_EXPORT Transform3D
   }
   Transform3D(const Transform3D &t) = default;
   Transform3D(Transform3D &&t) = default;
-  ~Transform3D() = default;
+  ~Transform3D() override = default;
 
   Transform3D &operator=(const Transform3D &t) = default;
   Transform3D &operator=(Transform3D &&t) = default;
