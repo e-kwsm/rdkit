@@ -1788,7 +1788,7 @@ void _recurseDegTwoRingAtoms(unsigned int aid, const RDKit::ROMol *mol,
   }
 }
 
-unsigned int _anyNonRingBonds(unsigned int aid, RDKit::INT_LIST path,
+unsigned int _anyNonRingBonds(unsigned int aid, const RDKit::INT_LIST &path,
                               const RDKit::ROMol *mol) {
   PRECONDITION(mol, "");
   // check if there are any non-ring bonds on the path starting at aid
