@@ -10744,7 +10744,7 @@ TEST_CASE("Solid arrowhead in wrong place (Github 8500)") {
       {51.0, 249.0},
   };
   for (int i = 0; i < 4; ++i, ++match_begin) {
-    std::smatch match = *match_begin;
+    const std::smatch &match = *match_begin;
     CHECK_THAT(std::stod(match[3]),
                Catch::Matchers::WithinAbs(expVals[i].first, 1.0e-4));
     CHECK_THAT(std::stod(match[4]),
