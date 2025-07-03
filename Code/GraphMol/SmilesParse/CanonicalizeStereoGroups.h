@@ -33,7 +33,7 @@ enum class StereoGroupAbsOptions {
 
 class RigorousEnhancedStereoException : public std::runtime_error {
  public:
-  explicit RigorousEnhancedStereoException(std::string message)
+  explicit RigorousEnhancedStereoException(const std::string &message)
       : std::runtime_error(message) {};
 };
 
