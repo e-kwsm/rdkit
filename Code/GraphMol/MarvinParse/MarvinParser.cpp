@@ -172,6 +172,9 @@ class MarvinCMLReader {
           query->setProp(common_properties::molFileAlias, marvinAtom->mrvAlias);
         }
         query->setQuery(makeAtomNullQuery());
+        query->setIsotope(marvinAtom->rgroupRef);
+        query->setProp(common_properties::_MolFileRLabel,
+                       static_cast<unsigned int>(marvinAtom->rgroupRef));
       }
 
       else if (symb.size() <= 2) {
@@ -639,7 +642,7 @@ class MarvinCMLReader {
           unsigned int failedOp = 0;
           MolOps::sanitizeMol(*mol, failedOp, MolOps::SANITIZE_CLEANUP);
           MolOps::detectBondStereochemistry(*mol);
-          MolOps::removeHs(*mol, false, false);
+          MolOps::removeHs(*mol);
         } else {
           MolOps::sanitizeMol(*mol);
           MolOps::detectBondStereochemistry(*mol);
@@ -675,7 +678,7 @@ class MarvinCMLReader {
 
   MarvinMolBase *parseMarvinMolecule(
       boost::property_tree::ptree molTree,
-      MarvinMol *parentMol = nullptr)  // parent is for sub-mols
+      MarvinMolBase *parentMol = nullptr)  // parent is for sub-mols
   {
     MarvinMolBase *res = nullptr;
 
@@ -732,8 +735,7 @@ class MarvinCMLReader {
 
       for (auto &v : molTree) {
         if (v.first == "molecule") {
-          MarvinMolBase *subMol =
-              parseMarvinMolecule(v.second, (MarvinMol *)res);
+          auto *subMol = parseMarvinMolecule(v.second, res);
           res->sgroups.push_back(std::unique_ptr<MarvinMolBase>(subMol));
         }
       }
