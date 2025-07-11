@@ -145,8 +145,6 @@ Neutral carbons with radicals, however, are still considered:
   1
 
 
-
-
 The Simple Aromaticity Model
 ----------------------------
 
@@ -167,6 +165,7 @@ This isn't well documented (at least not publicly), so we tried to reproduce wha
 
 
 **Note:** For reasons of computational expediency, aromaticity perception is only done for fused-ring systems where all members are at most 24 atoms in size.
+
 
 SMILES Support and Extensions
 =============================
@@ -200,7 +199,7 @@ Here's an example of a bipy-copper complex:
   >>> bipycu.GetBondBetweenAtoms(4,12).GetBondType()
   rdkit.Chem.rdchem.BondType.DATIVE
   >>> Chem.MolToSmiles(bipycu)
-  'Cl[Cu]1(Cl)<-n2ccccc2-c2ccccn->12'
+  '[Cl][Cu]1([Cl])<-[n]2ccccc2-c2cccc[n]->12'
 
 Dative bonds have the special characteristic that they don't affect the valence on the start atom, but do affect
 the end atom. So in this case, the N atoms involved in the dative bond have the valence of 3 that we expect from bipy,
@@ -251,7 +250,9 @@ The features which are parsed include:
 - atomic labels/aliases ``$`` (recognized aliases are ``_AP``, ``star_e``,
   ``Q_e``, ``QH_p``, ``AH_P``, ``X_p``, ``XH_p``, ``M_p``, ``MH_p``, ``*``)
 - atomic properties ``atomprop``
-- coordinate bonds ``C`` (these are translated into double bonds)
+- coordinate/dative bonds ``C`` (these are translated into dative bonds)
+- hydrogen bonds ``H``
+- zero order bonds bonds ``Z`` (custom extension, same syntax as c/t/ctu below)
 - radicals ``^``
 - enhanced stereo (these are converted into ``StereoGroups``)
 - linknodes ``LN``
@@ -274,6 +275,7 @@ The features which are written by :py:func:`rdkit.Chem.rdmolfiles.MolToCXSmiles`
 - atomic values
 - atomic labels
 - atomic properties
+- dative bonds (only if dative bonds are not also being written to the SMILES/SMARTS)
 - radicals
 - enhanced stereo
 - linknodes
@@ -292,8 +294,9 @@ The features which are written by :py:func:`rdkit.Chem.rdmolfiles.MolToCXSmiles`
   >>> m.GetAtomWithIdx(1).SetProp('p2','A1')
   >>> m.GetAtomWithIdx(0).SetProp('atomLabel','O1')
   >>> m.GetAtomWithIdx(1).SetProp('atomLabel','C2')
+  >>> m.GetBondWithIdx(0).SetBondType(Chem.BondType.ZERO)
   >>> Chem.MolToCXSmiles(m)
-  'CO |$C2;O1$,atomProp:0.p1.5:0.p2.A1:1.p1.2|'
+  'C~O |$C2;O1$,atomProp:0.p1.5:0.p2.A1:1.p1.2,Z:0|'
 
 Reading molecule names
 ----------------------
@@ -438,7 +441,8 @@ SMARTS Reference
 escape special characters. This is a wart from the documentation system we are using.
 Please ignore those characters.
 
-**Atoms**
+Atoms
+^^^^^
 
 =========  ==========================================  ===============  ======  =========
 Primitive                  Property                    "Default value"  Range?    Notes
@@ -470,8 +474,8 @@ Z          "number of aliphatic heteroatom neighbors"  >0               Y       
 =========  ==========================================  ===============  ======  =========
 
 
-
-**Bonds**
+Bonds
+^^^^^
 
 =========  ====================  ===================
 Primitive        Property               Notes
@@ -489,6 +493,44 @@ Primitive        Property               Notes
 <-         "dative left"         extension
 =========  ====================  ===================
 
+Hs in SMARTS
+^^^^^^^^^^^^
+
+Hs in SMARTS are interpreted as hydrogen atoms if the equivalent atom expression would also be a valid SMILES; otherwise they are interpreted as a query for any atom with a single attached hydrogen.
+
+Some examples:
+
+======  ==============
+SMARTS  Interpretation
+======  ==============  
+[H]     [#1]
+[H+]    [#1+]
+[H,Cl]  [\*H1,Cl]
+[HH]    [\*H1;\*H1]
+======  ==============
+
+This is somewhat confusing, but is consistent with the Daylight documentation (https://www.daylight.com/dayhtml/doc/theory/theory.smirks.html):
+  
+  Hence, a single change to SMARTS interpretation, for expressions of the form:
+  [<weight>H<charge><map>]. In SMARTS, these expressions now are interpreted as
+  a hydrogen atom, rather than as any atom with one hydrogen attached. All other
+  SMARTS hydrogen expressions retain their pre-4.51 meanings.
+
+It's always possible to see the RDKit's interpretation of a SMARTS using the ``DescribeQuery()`` function::
+
+  >>> print(Chem.AtomFromSmarts('[H,Cl]').DescribeQuery())
+  AtomOr
+    AtomHCount 1 = val
+    AtomType 17 = val
+
+  >>> print(Chem.AtomFromSmarts('[2H+]').DescribeQuery())
+  AtomAnd
+    AtomAnd
+      AtomAtomicNum 1 = val
+      AtomIsotope 2 = val
+    AtomFormalCharge 1 = val
+
+The safest (and clearest) way to incorporate H atoms into your queries is to use the atomic number primitive `[#1]` instead of `[H]`.
 
 Mol/SDF Support and Extensions
 ==============================
@@ -630,8 +672,9 @@ The following atom types are potential tetrahedral stereogenic atoms:
   - atoms with degree 4
   - atoms with degree 3 and one implicit H
   - P or As with degree 3 or 4
-  - N with degree 3 which is in a ring of size 3 or which is shared between at
-    least 3 rings (this last condition is an extension to the InChI rules) 
+  - An SP3 hybridized N with degree 3 that is not involved in any conjugated
+    bonds and that is in a ring of size 3 or that is shared between at least 3
+    rings (this last condition is an extension to the InChI rules).
   - S or Se with degree 3 and a total valence of 4 or a total valence of 3 and a
     net charge of +1.
 
@@ -1661,13 +1704,36 @@ Here are the steps involved, in order.
       example is the nitrogen atom in pyrrole.
 
   13. ``updatePropertyCache``: re-calculates the explicit and implicit valences on
-     all atoms. This generates exceptions for atoms in higher-than-allowed
-     valence states. This step is required to catch some edge cases where input 
-     atoms with non-physical valences are accepted if they are flagged as aromatic.
+      all atoms. This generates exceptions for atoms in higher-than-allowed
+      valence states. This step is required to catch some edge cases where input 
+      atoms with non-physical valences are accepted if they are flagged as aromatic.
 
 
 The individual steps can be toggled on or off when calling
 ``MolOps::sanitizeMol`` or ``Chem.SanitizeMol``.
+
+Valence calculation and allowed valences
+========================================
+
+The RDKit is, by default, fairly strict in the way it enforces allowed valences when sanitizing structures (this is done during the `updatePropertyCache` step of sanitization): atoms which have an explicit valence (sum of the specified bond orders + specified H count) exceeding the maximum allowed valence for the element will raise an exception. 
+
+Allowed valences of the elements (as of 2024.09.1):
+
+  =======  =======  =====  ======  ======  ========  ========  ==========
+  H 1                                                          He 0 
+  Li 1 -1  Be 2     B 3    C 4     N 3     O 2       F 1       Ne 0      
+  Na 1,-1  Mg 2,-1  Al 3   Si 4    P 3,5   S 2,4,6   Cl 1      Ar 0      
+  K  1,-1  Ca 2,-1  Ga 3   Ge 4    As 3,5  Se 2,4,6  Br 1      Kr 0      
+  Rb 1,-1  Sr 2,-1  In 3   Sn 2,4  Sb 3,5  Te 2,4,6  I  1,3,5  Xe 0,2,4,6
+  Cs 1,-1  Ba 2,-1  Tl -1  Pb 2,4  Bi 3,5  Po 2,4,6  At 1,3,5  Rn 0
+  =======  =======  =====  ======  ======  ========  ========  ==========
+
+Elements not listed in the table have a valence of `-1`.
+
+An allowed valence of `-1` indicates that the element can have any valence value. Implicit Hs will not be added to atoms with a possible valence of `-1` when the explicit valence exceeds the highest specified value. So, for example, an Mg atom with a single bond to it (explicit valence = 1) will have one implicit H added to it, while an Mg atom with three bonds to it will have no implicit Hs added. Atoms where the only allowed valence is `-1` will never have implicit Hs added.
+
+The allowed valences of charged atoms are calculated by looking at the isoelectronic element's allowed valences. For example, `N+` has the same allowed valences as `C`, while `N-` has the same allowed valences as `O`. `P-2`, `S-`, `As-2`, and `Se-` are special cases: they all have allowed valences of 1, 3 and 5.
+
 
 JSON Support
 ************
@@ -2061,10 +2127,14 @@ correspond to specific molecules:
 
 .. doctest ::
 
-  >>> m = Chem.MolFromSmiles('C[C@H](F)C[C@H](O)Cl |&1:1|')
+  >>> m = Chem.MolFromSmiles('C[C@H](F)C[C@H](O)Cl |a:4,&1:1|')
   >>> m.GetStereoGroups()[0].GetGroupType()
-  rdkit.Chem.rdchem.StereoGroupType.STEREO_AND
+  rdkit.Chem.rdchem.StereoGroupType.STEREO_ABSOLUTE
   >>> [x.GetIdx() for x in m.GetStereoGroups()[0].GetAtoms()]
+  [4]
+  >>> m.GetStereoGroups()[1].GetGroupType()
+  rdkit.Chem.rdchem.StereoGroupType.STEREO_AND
+  >>> [x.GetIdx() for x in m.GetStereoGroups()[1].GetAtoms()]
   [1]
   >>> from rdkit.Chem.EnumerateStereoisomers import EnumerateStereoisomers
   >>> [Chem.MolToCXSmiles(x) for x in EnumerateStereoisomers(m)]
@@ -2084,7 +2154,26 @@ Reactions also preserve ``StereoGroup``s. Product atoms are included in the ``St
   >>> ps=rxn.RunReactants([m])
   >>> clearAllAtomProps(ps[0][0])
   >>> Chem.MolToCXSmiles(ps[0][0])
-  'C[C@H](Br)C[C@H](O)Cl |&1:1|'
+  'C[C@H](Br)C[C@H](O)Cl |a:4,&1:1|'
+
+  Stereo Groups can be canonicalized.
+
+.. doctest ::
+  
+  >>> m = Chem.MolFromSmiles('CC(C)[C@H]1CCCCN1C(=O)[C@H]1CC[C@@H](C)CC1 |a:3,o1:11,o2:14|')
+  >>> mOut = Chem.CanonicalizeStereoGroups(m, Chem.StereoGroupAbsOptions.NeverInclude)
+  >>> Chem.MolToCXSmiles(mOut)
+  'CC(C)[C@H]1CCCCN1C(=O)[C@H]1CC[C@H](C)CC1 |o1:14|'
+  >>> mOut = Chem.CanonicalizeStereoGroups(m, Chem.StereoGroupAbsOptions.AlwaysInclude)
+  >>> Chem.MolToCXSmiles(mOut)
+  'CC(C)[C@H]1CCCCN1C(=O)[C@H]1CC[C@H](C)CC1 |a:3,11,o1:14|'
+  >>> mOut = Chem.CanonicalizeStereoGroups(m, Chem.StereoGroupAbsOptions.OnlyIncludeWhenOtherGroupsExist)
+  >>> Chem.MolToCXSmiles(mOut)
+  'CC(C)[C@H]1CCCCN1C(=O)[C@H]1CC[C@H](C)CC1 |a:3,11,o1:14|'
+  >>> m = Chem.MolFromSmiles('CC(C)[C@H]1CCCCN1C(=O)[C@H]1CC[C@@H](C)CC1 |a:3|')
+  >>> mOut = Chem.CanonicalizeStereoGroups(m, Chem.StereoGroupAbsOptions.OnlyIncludeWhenOtherGroupsExist)
+  >>> Chem.MolToCXSmiles(mOut)
+  'CC(C)[C@H]1CCCCN1C(=O)[C@H]1CC[C@@H](C)CC1'
 
 .. |EnhancedSSS_A|  image:: ./images/EnhancedStereoSSS_molA.png
    :scale: 75%
@@ -2173,10 +2262,11 @@ a restricted rotation bond.
 
 The requirements for a bond to be eligible for atropisomerism in the RDKit are:
 
-- It bond must be a single bond between SP2 hybridized atoms.
+- The bond must be a single bond between SP2 hybridized atoms.
 - The neighboring bonds must be single, double or aromatic. 
 - If there are two groups on either end, those groups must be different as per CIP rules. 
-- Currently the RDKit does not consider ring bonds as potential atropisomer bonds. 
+- Currently RDKit considers ring bonds as potential atropisomer bonds only if the
+  ring in which the bond appears is 8 atoms or larger (thus allowing macrocycles).
 - The molecule must have coordinates for atropisomer bonds to be interpreted.
 
 The definition of potential atropisomer bonds is based on the wedging of
@@ -2233,6 +2323,46 @@ Note: the RDKit software makes no attempt to determine if the bond is actually
 rotationally constrained. If the bond meets the requirements above, it is
 marked as an atropisomer.
 
+Internal Representation of Atropisomers
+=======================================
+
+To help with the rest of the explanation, we include the bond indices in the molecule drawing:
+
+.. testsetup::
+
+  'CC1=CC=CC(I)=C1N1C(C)=CC=C1Br |wU:7.7,(18.31,-9.57,;17.45,-9.08,;17.44,-8.08,;16.58,-7.58,;15.71,-8.08,;15.71,-9.08,;14.84,-9.58,;16.58,-9.58,;16.58,-10.58,;17.38,-11.17,;18.34,-10.87,;17.08,-12.12,;16.07,-12.12,;15.77,-11.17,;14.81,-10.87,)|'
+  
+.. image:: images/atrop_representation1.png
+
+Here's part of the Debug output for that molecule::
+
+  Atoms:
+    ...
+    1 6 C chg: 0  deg: 3 exp: 4 imp: 0 hyb: SP2 arom?: 1
+    ...
+    5 6 C chg: 0  deg: 3 exp: 4 imp: 0 hyb: SP2 arom?: 1
+    ...
+    7 6 C chg: 0  deg: 3 exp: 4 imp: 0 hyb: SP2 arom?: 1
+    8 7 N chg: 0  deg: 3 exp: 3 imp: 0 hyb: SP2 arom?: 1
+    9 6 C chg: 0  deg: 3 exp: 4 imp: 0 hyb: SP2 arom?: 1
+    ...
+    13 6 C chg: 0  deg: 3 exp: 4 imp: 0 hyb: SP2 arom?: 1
+    ...
+  Bonds:
+    ...
+    6 5->7 order: a conj?: 1 aromatic?: 1
+    7 7->8 order: 1 stereo: CCW bonds: (14 6 8 15) conj?: 1
+    8 8->9 order: a conj?: 1 aromatic?: 1
+    ...
+    14 7->1 order: a dir: wedge conj?: 1 aromatic?: 1
+    15 13->8 order: a conj?: 1 aromatic?: 1
+
+This tells us that bond 7 is atropisomeric and that when looking down the bond
+(from atom C7 to atom N8), the rotation direction between bonds 14 and 8 (these
+are the bonds to the lowest numbered atoms on each of the atropisomeric bond) is
+counterclockwise (CCW).
+
+
 Formats supporting atropisomers
 ===============================
 
@@ -2279,6 +2409,54 @@ an atropisomer bond, the actual stereochemistry of the bond is determined by the
 .. image:: images/atrop_example5.png
 
 
+Interpreting atropisomers without coordinates
+=============================================
+
+Just as it is possible to interpret atomic and double bond stereochemistry from
+SMILES without providing atomic coordinates, the RDKit adopts (starting with the
+2024.03.2 release) a convention for interpreting bond wedge information in
+CXSMILES that do not have coordinates provided.
+
+In order to understand how this representation works, a quick digression is necessary to explain the difference in the way bonds are numbered in CXSMILES and the RDKit.
+In the RDKit ring closure bonds are added last; they are the highest numbered bonds in the molecule. In CXSMILES, the ring closure bonds are added immediately upon closing the ring.
+Here's an illustration of this for the SMILES ``CC1=CC=CC(I)=C1N1C(C)=CC=C1Br``; the RDKit bond numbering (what we saw above) is shown first and the CXSMILES numbering is shown second.
+
+.. testsetup::
+
+  'CC1=CC=CC(I)=C1N1C(C)=CC=C1Br |wU:7.7|'
+  
+.. image:: images/atrop_representation2.png
+
+To describe this atropisomer in CXSMILES without using coordinates, we adopt the convention that the atropisomeric bond's stereochemistry is ``CCW`` when the bond to the lowest-numbered neighbor of the start atom 
+(in this case the neighbor connected via bond 7) is wedged and write the CXSMILES for this molecule as ``CC1=CC=CC(I)=C1N1C(C)=CC=C1Br |wU:7.7||``. The stereo values for all possible combinations are shown here:
+
+
++-------+----+-------+-------+--------+------------+
+|       |    | bond  |       |        |            |
+| from  | to | index | type  | stereo |            |
++=======+====+=======+=======+========+============+
+| 7     | 1  | 7     | wedge | CCW    | ``wU7.7``  |
++-------+----+-------+-------+--------+------------+
+| 7     | 5  | 6     | wedge | CW     | ``wU7.6``  |
++-------+----+-------+-------+--------+------------+
+| 8     | 9  | 9     | wedge | CW     | ``wU8.9``  |
++-------+----+-------+-------+--------+------------+
+| 8     | 13 | 14    | wedge | CCW    | ``wU8.14`` |
++-------+----+-------+-------+--------+------------+
+| 7     | 1  | 7     | dash  | CW     | ``wD7.7``  |
++-------+----+-------+-------+--------+------------+
+| 7     | 5  | 6     | dash  | CCW    | ``wD7.6``  |
++-------+----+-------+-------+--------+------------+
+| 8     | 9  | 9     | dash  | CCW    | ``wD8.9``  |
++-------+----+-------+-------+--------+------------+
+| 8     | 13 | 14    | dash  | CW     | ``wD8.14`` |
++-------+----+-------+-------+--------+------------+
+
+
+It's also possible to wedge multiple neighbor bonds around an atropisomeric bond, but the wedging must be consistent based on the table above; 
+so the CXSMILES ``CC1=CC=CC(I)=C1N1C(C)=CC=C1Br |wD:7.7,wU:8.9|`` is valid, but ``CC1=CC=CC(I)=C1N1C(C)=CC=C1Br |wD:7.7,wU:8.14|`` is not.
+
+
 Validation of Atropisomers
 ==========================
 
@@ -2291,7 +2469,6 @@ Searching and Canonicalization
 
 Atropisomers are supported in the canonicalization algorithm of RDKit. They are ignored in 
 substructure searching and similarity searching at this time.
-
 
 
 Query Features in Molecule Drawings
@@ -2527,6 +2704,208 @@ path) enumeration algorithm used in the RDKit fingerprint. After a subgraph has
 been generated, it is used to set multiple bits based on different atom and bond
 type definitions.
 
+Self-Contained Structure Representations (SCSR) for Macromolecules
+*******************
+
+The SCSR support added to RDKit follows the description in the BIOVIA document “biovia_ctfileformats_2020.pdf” available from 
+“CTfile Formats - Dassault Systèmes”.  That document does not provide any real detail for that format, and contains one example file.
+
+In addition, Biovia Draw supports reading and writing this format.  As much as possible, the RDKit support allows the functionality
+supported by Biovia Draw.  One exception is the RDKit treatment of hydrogen bonds in SCSR files/blocks (vide infra).
+
+Representation
+==============
+
+Main mol
+--------
+An SCSR file contains a mol with a CTAB in v3000 format.   That CTAB can contain elemental atoms and macro atoms corresponding to amino acids (AA), RNA, and DNA elements.  
+The RNA and DNA elements are represented by three parts – a phosphate group, a sugar, and a base.  
+
+Each atom line in the CTAB can refer to an elemental atom or a macro atom.  Macro atom lines have a text description of the macro name and must have a CLASS and an
+ATTCHORD attributed.  They can also have an optional SEQID attribute.  
+
+According to the Biovia doc, the CLASS attribute must have a value that is one of:  AA, dAA, DNA, RNA, SUGAR, BASE, PHOSPHATE, LINKER, CHEM, LGRP, MODAA, MODdAA, MODDNA, MODRNA, XLINKAA, XLINKdAA, XLINKDNA, XLINKRNA.   
+For an SCSR mol block, (and for any SGROUP), RDKit requires that the CLASS attribute be one of these values.
+
+The SEQID is a sequential integer and is ignored by this treatment.  Typically, the three parts of an RNA or DNA element have the same SEQID.
+
+The ATTCHORD attribute must have a specification for each bond that comes from the macro atom.   The specification is contained between parentheses, and the first 
+character is a integer that indicates the number of items that follow.  Each connection is specified with the atom ID (1 offset) for the connected atom in the main
+CTAB, and a string that indicates the attachment point for this macro atom.   The attachment point string is always two characters.  
+The first indicates the order, and is a capital letter starting at A.  The second char is one of “l” (left), “r” (right), “x” (cross connections – e.g. for cysteine).  
+In this implementation, the second character can also be “h” for hydrogen bond.   
+Thus, the attach connections are almost always in the list: “Al”, “Br”, “Cx” or “Ch”.   For example::
+
+    ATTCHORD=(6 15 Br 13 Al 21 Cx)
+
+Templates
+---------
+
+Template Header
+^^^^^^^^^^^^^^^
+
+In addition to the CTAB for the main molecule, each macro atom is detailed automatically in a TEMPLATE.  The TEMPLATES are numbered and appear between a 
+BEGIN TEMPLATES line and an END TEMPLATES line. Each template starts with a TEMPLATE line that indicates the template number (1 to n), the template Class and 
+Name, and the NATREPLACE attribute.
+
+The Class and Name consists of three (or more) parts separated by forward slashes.  The first part is the CLASS, and must match the CLASS attribute in 
+one or more of the atoms in the main CTAB.  The second and third (and subsequent) items are choices for names of the macro atom template.  Typically, the 
+first name is the long form and second is the short form, as in “AA/Ala/A” for alanine.  This treatment does not enforce any restrictions on the name lengths.    
+The name given the macro atom in the main CTAB must match one of the names in one of the templates with the correct class.
+The NATREPLACE attribute specifies the natural replacement for this macro atom, and is ignored by this treatment.  Example::
+
+    M  V30 TEMPLATE 1 SUGAR/Rib/R NATREPLACE=SUGAR/R
+
+Main Template CTAB and SGROUPs
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+After the TEMPLATE is a full CTAB with the atoms and bonds of the template.   Each CTAB must contain an SGROUP for the main macro definition atoms and bonds, 
+and one for each leaving group.  The main SGROUP for the template must have a LABEL attribute that is the same as one of the names in the TEMPLATE line, and 
+it must have a CLASS attribute that matches the TEMPLATE line class.
+
+In addition, the main SGROUP must have ATOMS, XBONDS, NATREPLACE attributes.  ATOMS is a list of all atom IDs (1-offset).  XBONDS are the IDs of the connecting 
+bonds.   NATRELACE is the natural replacement as discussed above.  The XBONDS and NATREPLACE attributes are ignored by this treatment.  
+
+The main SGROUP must also contain a list of SAP (SGROUP attachment points) attributes.  Each one is enclosed in parentheses, and starts with a “3”.  
+That is followed by two atom IDs of a bond that starts in this SGROUP and goes to an atom NOT in this SGROUP,  and this is followed by a string indicating 
+the connection name.  The connection name, as discussed above, is usually one of “Al”, “Br”, “Cx” or “Ch”.  SAPs “Al”, “Br”, “Cx” will have one SAP, and 
+“Ch” will typically have two or three distinct SAP attributes.  The order of the SAP attributes for hydrogen bonds (“Ch”) matters, and should go from the H-bond 
+atom nearest to the connecting “Al” atom to the most distant.  Hydrogen bonds do not have a leaving group, so the second ID of the designation is “0”.
+
+Example::
+
+    M  V30 2 SUP 2 ATOMS=(8 1 2 3 4 5 6 7 8) XBONDS=(1 7)-
+    M  V30 LABEL=U CLASS=BASE SAP=(3 4 9 Al) SAP=(3 8 0 Ch) SAP=(3 6 0 Ch) SAP=(3 7 0 Ch)-
+    NATREPLACE=BASE/U
+
+In addition to the main SGROUP, there will be an SGROUP that identifies each leaving group.  Most leaving groups have one atom, but they could have multiple 
+atoms.  The leaving group SGROUPS have ATOMS, XBONDS, LABEL, and CLASS attributes.   The XBONDS attribute is ignored in this treatment.   LABEL must be 
+“LGRP” (leaving group).
+
+Example::
+
+    M  V30 1 SUP 1 ATOMS=(1 11) XBONDS=(1 11) LABEL=H CLASS=LGRP
+
+ 
+Parsing SCSR files and text blocks
+==================================
+
+RDKit converts the SCSR data into a fully atomistic representation. 
+
+An SGROUP is produced in the resulting RWMol for each template and retained leaving group from the SCSRMol.  The name of each SGROUP is derived from the 
+template name, the sequence number if present, and, for leaving groups, the leaving group SAP ID (e.g. “Al”, “Br”, “Cx” or “Ch”).
+
+The following calls parse the SCSR mol or block produces a fully atomistic RDKit mol.: 
+
+  * MolFromSCSRDataStream  (stream to mol)
+  * MolFromSCSRBlock  (SCSR text block to mol)
+  * MolFromSCSRFile  (SCSR file to mol)
+
+These functions all take, in addition to the strean, text block, or file name, a MolFileParserParams and a MolFromSCSRParams parameter.  
+The MolFileParserParams parameter is used to control the parsing of the SCSR data, as is describe elsewhere in this document.  
+The MolFromSCSRParams parameter is used to control the conversion of the SCSR data into a full atomistic representation.
+
+MolFromScsrParams has three properties: 
+
+    * The “ScsrTemplateNames” property controls how the Sgoups of the expanded file are generated, and must be one of: ScsrTemplateNamesAsEntered, 
+    ScsrTemplateNamesUseFirstName, or ScsrTemplateNamesUseLastName.   If ScsrTemplateNamesAsEntered is specified, the name as referenced in the main 
+    SCSR CTAB will be used.  
+
+    * The ”includeLeavingGroups” property controls whether leaving groups that are not replaced in the main CTAB are included in the resulting atomistic file.   
+    The leaving groups that are so retained become end caps and caps on unused cross-link sites.    Setting this property to “false” causes the end caps and cross-link caps to remain unsubstituted.  This allows the results to be used as a full atom query for the sub-units from the SCSR mol.
+
+    * The "SCSRBaseHbondOptions" property controls the treatment of hydrogen bonds in the SCSR file.  This is described in the following section.
+
+Hydrogen Bonds
+-------
+
+For sense-antisense pairings in DNA and RNA, the hydrogen bonds are represented as a single hydrogen bond in the SCSR representation.   
+When converted to a full atomistic representation, each such hydrogen bond can represent up to 3 hydrogen bonds between the full-atomistic representations of 
+the Base groups.  
+
+The processing of H-bonds is contorlled by the ScsrBaseHbondOptions
+member of the ScsrMolFileParserParams parameter.  The options are:
+
+ 1. ScsrBaseHbondOptionsIgnore - if this is selected, all H-bonds are
+    ignored and not processed.
+
+ 2. ScsrBaseHbondOptionsUseSapAll = 1
+    If this is selected, all SAPs
+    for the hbond are used.  They must be defined in the template in the
+    correct order, which starts with the first atom nearest the "Al"
+    connection, and continues sequentially
+
+    If there are 3 sites on each side and they are complimentary (the
+    donors match acceptors and vice versa), we add the bonds. and
+    we are done.  THis is the standard Watson-Crick binding (“https://water.lsbu.ac.uk/water/nucleic_acid_hydration.html”)
+
+    If not, we check to check to see if they comply to a wobble bond
+    configuration. There are four generally accepted wobble bonds, and we
+    deal with these four types only.  The four known wobble bonds are:
+
+     1. I-C
+     2. I-U
+     3. I-A
+     4. G-U
+
+    "I" stands for inosine - it has only two available hbond sites . The
+    pair G-U has three sites on each end, but they are not complimentary.
+    (https://en.wikipedia.org/wiki/Wobble_base_pair#:~:text=A%20wobble%20base%20pair%20is,hypoxanthine%2Dcytosine%20(I%2DC).
+
+    For pairs that have I (inosine) or something like it, the configuration must be
+    DA, so those two atoms form the two H bonds. The other side (C,U or A)
+    has confiuration of AAD (C), ADA (U), or DAD (A). For C-type bases and
+    A type bases, the second and third atoms are used (AD), and for U
+    types, the first two atoms are used (AD).
+
+    For the GU pair, both sides have 3 atoms, but they are not
+    complimentary.  The second and third sites on the G side are used (DA),
+    and the first two sites on the U side are used (AD).
+
+    In any other case, we punt and add just one bond between the first
+    hydrogen-bond atom on both sides even if they are NOT complemenary.  This just
+    indicates that the sides are h-bonded somehow and keeps the overall
+    pairing straight.
+
+ 3. ScsrBaseHbondOptionsUseSapOne
+    If this is selected, only one SAP hbond per base is used.
+    If multiple SAPs are defined, the first hbond site is used
+    even if it is not the best.  No attempt is made to match the Donor/Acceptor 
+    status of the chosen bond sites.
+    (this just maintains the relationship between
+    the to base pairs)
+
+ 4. ScsrBaseHbondOptionsAuto
+    For bases that are C,G,A,T,U,In (and
+    derivatives) the standard Watson-Crick
+    Hbonding is used, and is determined by substructure matching.
+    No Hbond SAPs ("Ch") need to be defined in the template, and if
+    defined, they are ignored.
+
+    Processing of the H-bond sites so determined is done just as it is when ScsrBaseHbondOptionsUseSapAll is selected.
+    (see above).
+    
+Example of Peptide conversion:
+
+.. image:: images/PeptideConversion.png
+ 
+Example of DNA-RNA paired strands conversion: 
+
+.. image:: images/DnaDoubleStrand.png
+ 
+Example of “Wobble” pairing conversion:  
+
+.. image:: images/WobbleRna.png
+ 
+ Full Example of SCSR files:
+===========================
+
+ Here are two examples of SCSR files:
+
+`DnaTest3 <https://github.com/rdkit/rdkit/blob/master/Docs/Book/data/DnaTest3.mol>`_.
+
+`CrossLink.mol <https://github.com/rdkit/rdkit/blob/master/Docs/Book/data/CrossLink.mol>`_.
+
 
 Feature Flags: global variables affecting RDKit behavior
 ********************************************************
@@ -2603,3 +2982,4 @@ To view a copy of this license, visit http://creativecommons.org/licenses/by-sa/
 
 The intent of this license is similar to that of the RDKit itself.
 In simple words: “Do whatever you want with it, but please give us some credit.”
+

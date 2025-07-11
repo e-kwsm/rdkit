@@ -357,13 +357,13 @@ double hkAlphaHelper(const RDKit::ROMol &mol, python::object atomContribs) {
   return kappaHelper(RDKit::Descriptors::calcHallKierAlpha, mol, atomContribs);
 }
 
-[[deprecated("please use MorganGenerator")]] RDKit::SparseIntVect<std::uint32_t>
-    *MorganFingerprintHelper(const RDKit::ROMol &mol, unsigned int radius,
-                             int nBits, python::object invariants,
-                             python::object fromAtoms, bool useChirality,
-                             bool useBondTypes, bool useFeatures,
-                             bool useCounts, python::object bitInfo,
-                             bool includeRedundantEnvironments) {
+[[deprecated(
+    "please use MorganGenerator")]] RDKit::SparseIntVect<std::uint32_t> *
+MorganFingerprintHelper(const RDKit::ROMol &mol, unsigned int radius, int nBits,
+                        python::object invariants, python::object fromAtoms,
+                        bool useChirality, bool useBondTypes, bool useFeatures,
+                        bool useCounts, python::object bitInfo,
+                        bool includeRedundantEnvironments) {
   RDLog::deprecationWarning("please use MorganGenerator");
   std::vector<boost::uint32_t> *invars = nullptr;
   if (invariants) {
@@ -652,9 +652,7 @@ python::list GetUSRDistributionsFromPoints(python::object coords,
   }
   RDGeom::Point3DConstPtrVect c(numCoords);
   for (unsigned int i = 0; i < numCoords; ++i) {
-    auto *pt = new RDGeom::Point3D;
-    *pt = python::extract<RDGeom::Point3D>(coords[i]);
-    c[i] = pt;
+    c[i] = python::extract<RDGeom::Point3D *>(coords[i]);
   }
   std::vector<RDGeom::Point3D> p(numPts);
   if (numPts == 0) {
@@ -673,9 +671,7 @@ python::list GetUSRDistributionsFromPoints(python::object coords,
     }
     pyDist.append(pytmp);
   }
-  for (const auto *pt : c) {
-    delete pt;
-  }
+
   return pyDist;
 }
 
@@ -902,16 +898,25 @@ struct PythonPropertyFunctor : public RDKit::Descriptors::PropertyFunctor {
   //  we can't use python props in functions.
   PythonPropertyFunctor(PyObject *self, const std::string &name,
                         const std::string &version)
-      : PropertyFunctor(name, version), self(self) {
-    python::incref(self);
-  }
-
-  ~PythonPropertyFunctor() override { python::decref(self); }
+      : PropertyFunctor(name, version), self(self) {}
 
   double operator()(const RDKit::ROMol &mol) const override {
     return python::call_method<double>(self, "__call__", boost::ref(mol));
   }
 };
+
+int registerPropertyHelper(python::object o) {
+  // We increase the refcount to make sure the original Python object
+  // does not get cleaned up (we don't want that to happen once it's
+  // registered, we may need to use its __call__() method; note there's
+  // no matching decref). We register the shared_ptr so that Python
+  // and the (static) registry can share ownership.
+
+  python::incref(o.ptr());
+  python::extract<boost::shared_ptr<PythonPropertyFunctor>> ptr(o);
+  return RDKit::Descriptors::Properties::registerProperty(ptr());
+}
+
 }  // namespace
 
 BOOST_PYTHON_MODULE(rdMolDescriptors) {
@@ -1021,7 +1026,6 @@ BOOST_PYTHON_MODULE(rdMolDescriptors) {
        python::arg("includeChirality") = false),
       docString.c_str(),
       python::return_value_policy<python::manage_new_object>());
-
   docString = "Returns a Morgan fingerprint for a molecule";
   python::def(
       "GetMorganFingerprint", GetMorganFingerprint,
@@ -1558,7 +1562,6 @@ BOOST_PYTHON_MODULE(rdMolDescriptors) {
       "See rdkit.Chem.rdMolDescriptor.Properties.GetProperty and \n"
       "rdkit.Chem.Descriptor.Properties.PropertyFunctor for creating new ones";
   python::class_<RDKit::Descriptors::PropertyFunctor,
-                 RDKit::Descriptors::PropertyFunctor *,
                  boost::shared_ptr<RDKit::Descriptors::PropertyFunctor>,
                  boost::noncopyable>("PropertyFunctor", docString.c_str(),
                                      python::no_init)
@@ -1589,7 +1592,7 @@ BOOST_PYTHON_MODULE(rdMolDescriptors) {
       "";
 
   python::class_<RDKit::Descriptors::Properties,
-                 RDKit::Descriptors::Properties *>(
+                 boost::shared_ptr<RDKit::Descriptors::Properties>>(
       "Properties", docString.c_str(), python::init<>(python::args("self")))
       .def(python::init<const std::vector<std::string> &>(
           python::args("self", "propNames")))
@@ -1617,8 +1620,7 @@ BOOST_PYTHON_MODULE(rdMolDescriptors) {
       .def("GetProperty", &RDKit::Descriptors::Properties::getProperty,
            python::arg("propName"), "Return the named property if it exists")
       .staticmethod("GetProperty")
-      .def("RegisterProperty",
-           &RDKit::Descriptors::Properties::registerProperty,
+      .def("RegisterProperty", &registerPropertyHelper,
            python::arg("propertyFunctor"),
            "Register a new property object (not thread safe)")
       .staticmethod("RegisterProperty");
@@ -1627,7 +1629,7 @@ BOOST_PYTHON_MODULE(rdMolDescriptors) {
                  python::bases<RDKit::Descriptors::PropertyFunctor>>(
       "PythonPropertyFunctor", "",
       python::init<PyObject *, const std::string &, const std::string &>(
-          python::args("self", "name", "version")))
+          python::args("self", "callback", "name", "version")))
       .def("__call__", &PythonPropertyFunctor::operator(),
            python::args("self", "mol"),
            "Compute the property for the specified molecule");
@@ -1657,10 +1659,10 @@ BOOST_PYTHON_MODULE(rdMolDescriptors) {
   docString =
       R"DOC(ARGUMENTS:
       "   - mol: molecule or protein under consideration
-      "   - isProtein: flag to indicate if the input is a protein (default=True). NOTE that results with isProtein=False are currently not correct.
-      "   - includeLigand: flag to include or exclude a bound ligand when input is a protein (default=False)
-      "   - probeRadius: radius of the solvent probe (default=1.4)
-      "   - depth: control of number of dots per atom (default=2)
+      "   - isProtein: flag to indicate if the input is a protein (default=False, free ligand).
+      "   - includeLigand: flag to include or exclude a bound ligand when input is a protein (default=True)
+      "   - probeRadius: radius of the solvent probe (default=1.2)
+      "   - depth: control of number of dots per atom (default=4)
       "   - dotDensity: control of accuracy (default=0)
       ")DOC";
   python::class_<RDKit::Descriptors::DoubleCubicLatticeVolume>(
@@ -1668,9 +1670,9 @@ BOOST_PYTHON_MODULE(rdMolDescriptors) {
       "Class for the Double Cubic Lattice Volume method",
       python::init<const RDKit::ROMol &,
                    python::optional<bool, bool, double, int, int>>(
-          (python::args("self", "mol"), python::args("isProtein") = true,
-           python::args("includeLigand") = false,
-           python::args("probeRadius") = 1.4, python::args("depth") = 2,
+          (python::args("self", "mol"), python::args("isProtein") = false,
+           python::args("includeLigand") = true,
+           python::args("probeRadius") = 1.2, python::args("depth") = 4,
            python::args("dotDensity") = 0),
           docString.c_str()))
       .def("GetSurfaceArea",

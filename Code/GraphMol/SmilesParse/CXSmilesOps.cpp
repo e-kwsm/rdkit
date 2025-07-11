@@ -510,6 +510,42 @@ bool parse_coordinate_bonds(Iterator &first, Iterator last, RDKit::RWMol &mol,
 }
 
 template <typename Iterator>
+bool parse_zero_bonds(Iterator &first, Iterator last, RDKit::RWMol &mol,
+                      unsigned int, unsigned int startBondIdx) {
+  // these look like: C1CCCCC~CCCC1 |Z:5|
+  if (first >= last || *first != 'Z') {
+    return false;
+  }
+  ++first;
+  if (first >= last || *first != ':') {
+    return false;
+  }
+  ++first;
+
+  while (first < last && *first >= '0' && *first <= '9') {
+    unsigned int bondIdx;
+    if (!read_int(first, last, bondIdx)) {
+      return false;
+    }
+    if (VALID_BNDIDX(bondIdx)) {
+      auto bond = get_bond_with_smiles_idx(mol, bondIdx - startBondIdx);
+
+      if (!bond) {
+        BOOST_LOG(rdWarningLog)
+            << "bond " << bondIdx
+            << " not found, cannot mark as zero order bond." << std::endl;
+        return false;
+      }
+      bond->setBondType(Bond::ZERO);
+    }
+    if (first < last && *first == ',') {
+      ++first;
+    }
+  }
+  return true;
+}
+
+template <typename Iterator>
 bool parse_unsaturation(Iterator &first, Iterator last, RDKit::RWMol &mol,
                         unsigned int startAtomIdx) {
   if (first + 1 >= last || *first != 'u') {
@@ -692,6 +728,7 @@ template <typename Iterator>
 void parse_data_sgroup_attr(Iterator &first, Iterator last,
                             SubstanceGroup &sgroup, bool keepSGroup,
                             std::string fieldName, bool fieldIsArray = false) {
+  PRECONDITION(first < last, "parse_data_sgroup_attr: first >= last");
   if (first != last && *first != '|') {
     std::string data = read_text_to(first, last, ":");
     ++first;
@@ -735,7 +772,6 @@ bool parse_data_sgroup(Iterator &first, Iterator last, RDKit::RWMol &mol,
     }
   }
   ++first;
-
   parse_data_sgroup_attr(first, last, sgroup, keepSGroup, "FIELDNAME");
 
   // FIX:
@@ -1097,7 +1133,9 @@ bool parse_wedged_bonds(Iterator &first, Iterator last, RDKit::RWMol &mol,
         if (atom->getIdx() != bond->getEndAtomIdx()) {
           BOOST_LOG(rdWarningLog)
               << "atom " << atomIdx << " is not associated with bond "
-              << bondIdx << " in w block" << std::endl;
+              << bondIdx << "(" << bond->getBeginAtomIdx() + startAtomIdx << "-"
+              << bond->getEndAtomIdx() + startAtomIdx << ")"
+              << " in w block" << std::endl;
           return false;
         }
         auto eidx = bond->getBeginAtomIdx();
@@ -1151,7 +1189,8 @@ bool parse_doublebond_stereo(Iterator &first, Iterator last, RDKit::RWMol &mol,
         return false;
       }
 
-      Chirality::detail::setStereoForBond(mol, bond, stereo);
+      bool useCXOrdering = true;
+      Chirality::detail::setStereoForBond(mol, bond, stereo, useCXOrdering);
     }
     if (first < last && *first == ',') {
       ++first;
@@ -1402,6 +1441,10 @@ bool parse_it(Iterator &first, Iterator last, RDKit::RWMol &mol,
     } else if (*first == 'H') {
       if (!parse_coordinate_bonds(first, last, mol, Bond::HYDROGEN,
                                   startAtomIdx, startBondIdx)) {
+        return false;
+      }
+    } else if (*first == 'Z') {
+      if (!parse_zero_bonds(first, last, mol, startAtomIdx, startBondIdx)) {
         return false;
       }
     } else if (*first == '^') {
@@ -2038,23 +2081,96 @@ std::string get_bond_config_block(
         bd = Bond::BondDir::NONE;
     }
 
-    if (atropisomerOnly) {
-      // on of the bonds on the beging atom of this bond must be an atropisomer
+    if (atropisomerOnly && bd == Bond::BondDir::NONE) {
+      continue;
+    }
 
-      if (bd == Bond::BondDir::NONE) {
-        continue;
-      }
-      bool foundAtropisomer = false;
+    // see if this one is an atropisomer
 
-      const Atom *firstAtom = bond->getBeginAtom();
+    bool isAnAtropisomer = false;
+
+    const Atom *firstAtom = bond->getBeginAtom();
+    if (bd == Bond::BondDir::BEGINDASH || bd == Bond::BondDir::BEGINWEDGE) {
       for (auto bondNbr : mol.atomBonds(firstAtom)) {
+        if (bondNbr->getIdx() == bond->getIdx()) {
+          continue;  // a bond is not its own neighbor
+        }
         if (bondNbr->getStereo() == Bond::BondStereo::STEREOATROPCW ||
             bondNbr->getStereo() == Bond::BondStereo::STEREOATROPCCW) {
-          foundAtropisomer = true;
+          isAnAtropisomer = true;
+
+          // if it is for an atropisomer and there are no coords, check to see
+          // if the wedge needs to be flipped based on the smiles reordering
+          if (!coordsIncluded && isAnAtropisomer) {
+            Atropisomers::AtropAtomAndBondVec atomAndBondVecs[2];
+            if (!Atropisomers::getAtropisomerAtomsAndBonds(
+                    bondNbr, atomAndBondVecs, mol)) {
+              throw ValueErrorException("Internal error - should not occur");
+              // should not happend
+            } else {
+              unsigned int swaps = 0;
+
+              unsigned int firstReorderedIdx =
+                  std::find(atomOrder.begin(), atomOrder.end(),
+                            bondNbr->getBeginAtom()->getIdx()) -
+                  atomOrder.begin();
+              unsigned int secondReorderedIdx =
+                  std::find(atomOrder.begin(), atomOrder.end(),
+                            bondNbr->getEndAtom()->getIdx()) -
+                  atomOrder.begin();
+              if (firstReorderedIdx > secondReorderedIdx) {
+                ++swaps;
+              }
+
+              for (unsigned int bondAtomIndex = 0; bondAtomIndex < 2;
+                   ++bondAtomIndex) {
+                if (atomAndBondVecs[bondAtomIndex].first == firstAtom)
+                  continue;  // swapped atoms on the side where the wedge bond
+                             // is does NOT change the wedge bond
+                if (atomAndBondVecs[bondAtomIndex].second.size() == 2) {
+                  unsigned int firstOtherAtomIdx =
+                      atomAndBondVecs[bondAtomIndex]
+                          .second[0]
+                          ->getOtherAtom(atomAndBondVecs[bondAtomIndex].first)
+                          ->getIdx();
+                  unsigned int secondOtherAtomIdx =
+                      atomAndBondVecs[bondAtomIndex]
+                          .second[1]
+                          ->getOtherAtom(atomAndBondVecs[bondAtomIndex].first)
+                          ->getIdx();
+
+                  unsigned int firstReorderedAtomIdx =
+                      std::find(atomOrder.begin(), atomOrder.end(),
+                                firstOtherAtomIdx) -
+                      atomOrder.begin();
+                  unsigned int secondReorderedAtomIdx =
+                      std::find(atomOrder.begin(), atomOrder.end(),
+                                secondOtherAtomIdx) -
+                      atomOrder.begin();
+
+                  if (firstReorderedAtomIdx > secondReorderedAtomIdx) {
+                    ++swaps;
+                  }
+                }
+              }
+              if (swaps % 2) {
+                bd = (bd == Bond::BondDir::BEGINWEDGE)
+                         ? Bond::BondDir::BEGINDASH
+                         : Bond::BondDir::BEGINWEDGE;
+              }
+            }
+          }
+
           break;
         }
       }
-      if (!foundAtropisomer) {
+    }
+
+    if (atropisomerOnly) {
+      // one of the bonds on the beginning atom of this bond must be an
+      // atropisomer
+
+      if (!isAnAtropisomer) {
         continue;
       }
     } else {  //  atropisomeronly is FALSE - check for a wedging caused by
@@ -2082,7 +2198,7 @@ std::string get_bond_config_block(
         int dirCode;
         bool reverse;
         Chirality::GetMolFileBondStereoInfo(
-            bond, wedgeBonds, &mol.getConformer(0), dirCode, reverse);
+            bond, wedgeBonds, &mol.getConformer(), dirCode, reverse);
         switch (dirCode) {
           case 1:
             bd = Bond::BondDir::BEGINWEDGE;
@@ -2109,8 +2225,9 @@ std::string get_bond_config_block(
     std::string wType = "";
     if (bd == Bond::BondDir::UNKNOWN) {
       wType = "w";
-    } else if (coordsIncluded) {
+    } else if (coordsIncluded || isAnAtropisomer) {
       // we only do wedgeUp and wedgeDown if coordinates are being output
+      // or its an atropisomer
       if (bd == Bond::BondDir::BEGINWEDGE) {
         wType = "wU";
       } else if (bd == Bond::BondDir::BEGINDASH) {
@@ -2135,6 +2252,50 @@ std::string get_bond_config_block(
     res += wPart.first + ":" + boost::algorithm::join(wPart.second, ",");
   }
 
+  return res;
+}
+
+std::string get_coord_or_hydrogen_bonds_block(
+    const ROMol &mol, Bond::BondType bondType, std::string symbol,
+    const std::vector<unsigned int> &atomOrder,
+    const std::vector<unsigned int> &bondOrder) {
+  std::string res = "";
+  for (unsigned int i = 0; i < bondOrder.size(); ++i) {
+    auto idx = bondOrder[i];
+    const auto bond = mol.getBondWithIdx(idx);
+    if (bond->getBondType() != bondType) {
+      continue;
+    }
+    auto begAtomOrder =
+        std::find(atomOrder.begin(), atomOrder.end(), bond->getBeginAtomIdx()) -
+        atomOrder.begin();
+    if (!res.empty()) {
+      res += ",";
+    } else {
+      res = symbol + ":";
+    }
+    res += boost::str(boost::format("%d.%d") % begAtomOrder % i);
+  }
+  return res;
+}
+
+std::string get_zerobonds_block(const ROMol &mol,
+                                const std::vector<unsigned int> &,
+                                const std::vector<unsigned int> &bondOrder) {
+  std::string res = "";
+  for (unsigned int i = 0; i < bondOrder.size(); ++i) {
+    auto idx = bondOrder[i];
+    const auto bond = mol.getBondWithIdx(idx);
+    if (bond->getBondType() != Bond::BondType::ZERO) {
+      continue;
+    }
+    if (!res.empty()) {
+      res += ",";
+    } else {
+      res = "Z:";
+    }
+    res += boost::str(boost::format("%d") % i);
+  }
   return res;
 }
 
@@ -2272,15 +2433,83 @@ void appendToCXExtension(const std::string &addition, std::string &base) {
 }
 
 }  // namespace
+
+void checkCXFeatures(const ROMol &mol) {
+  std::string lns;
+  if (mol.getPropIfPresent(common_properties::molFileLinkNodes, lns)) {
+    BOOST_LOG(rdWarningLog)
+        << "CX Extensions: mol has link nodes which are not currently supported"
+        << std::endl;
+  }
+  const auto &sgs = getSubstanceGroups(mol);
+  auto parent_check =
+      std::any_of(sgs.cbegin(), sgs.cend(), [&](const SubstanceGroup &sg) {
+        if (sg.hasProp("PARENT")) {
+          return true;
+        }
+        return false;
+      });
+  if (parent_check) {
+    BOOST_LOG(rdWarningLog)
+        << "CX Extensions: Substance group hierarchy is not always preserved."
+        << std::endl;
+  }
+}
+
+std::string getCXExtensions(const std::vector<ROMol *> &mols,
+                            std::uint32_t flags) {
+  for (const auto &mol : mols) {
+    checkCXFeatures(*mol);
+    if (!mol->hasProp(RDKit::common_properties::_smilesAtomOutputOrder) ||
+        !mol->hasProp(RDKit::common_properties::_smilesBondOutputOrder)) {
+      throw ValueErrorException(
+          "Input molecule does not have the required "
+          "smiles ordering properties set");
+    }
+  }
+  RDKit::RWMol rwmol;
+
+  std::vector<unsigned int> atomOrdering;
+  std::vector<unsigned int> bondOrdering;
+
+  for (const auto &mol : mols) {
+    const auto at_count = rwmol.getNumAtoms();
+    const auto bond_count = rwmol.getNumBonds();
+
+    std::vector<unsigned int> prevAtomOrdering;
+    std::vector<unsigned int> prevBondOrdering;
+
+    rwmol.insertMol(*mol);
+
+    mol->getProp(RDKit::common_properties::_smilesAtomOutputOrder,
+                 prevAtomOrdering);
+    mol->getProp(RDKit::common_properties::_smilesBondOutputOrder,
+                 prevBondOrdering);
+    for (auto i : prevAtomOrdering) {
+      atomOrdering.push_back(i + at_count);
+    }
+    for (auto i : prevBondOrdering) {
+      bondOrdering.push_back(i + bond_count);
+    }
+  }
+
+  rwmol.setProp(RDKit::common_properties::_smilesAtomOutputOrder, atomOrdering,
+                true);
+  rwmol.setProp(RDKit::common_properties::_smilesBondOutputOrder, bondOrdering,
+                true);
+
+  return getCXExtensions(rwmol, flags);
+}
+
 std::string getCXExtensions(const ROMol &mol, std::uint32_t flags) {
   std::string res = "|";
-  // we will need atom and bond orderings. Get them now:
   const std::vector<unsigned int> &atomOrder =
       mol.getProp<std::vector<unsigned int>>(
           common_properties::_smilesAtomOutputOrder);
   const std::vector<unsigned int> &bondOrder =
       mol.getProp<std::vector<unsigned int>>(
           common_properties::_smilesBondOutputOrder);
+
   bool needLabels = false;
   bool needValues = false;
   for (auto idx : atomOrder) {
@@ -2333,7 +2562,7 @@ std::string getCXExtensions(const ROMol &mol, std::uint32_t flags) {
   }
 
   const Conformer *conf = nullptr;
-  if (mol.getNumConformers()) {
+  if (mol.getNumConformers() && (flags & SmilesWrite::CX_COORDS)) {
     conf = &mol.getConformer();
   }
 
@@ -2354,15 +2583,27 @@ std::string getCXExtensions(const ROMol &mol, std::uint32_t flags) {
   // do the CX_BOND_ATROPISOMER only if CX_BOND_CFG s not done.  CX_BOND_CFG
   // includes the atropisomer wedging
   else if (flags & SmilesWrite::CXSmilesFields::CX_BOND_ATROPISOMER) {
-    if (conf) {
-      Atropisomers::wedgeBondsFromAtropisomers(mol, conf, wedgeBonds);
-    }
-
-    bool includeCoords = flags & SmilesWrite::CXSmilesFields::CX_COORDS &&
-                         mol.getNumConformers();
+    Atropisomers::wedgeBondsFromAtropisomers(mol, conf, wedgeBonds);
     const auto cfgblock = get_bond_config_block(
-        mol, atomOrder, bondOrder, includeCoords, wedgeBonds, true);
+        mol, atomOrder, bondOrder, conf != nullptr, wedgeBonds, true);
     appendToCXExtension(cfgblock, res);
+  }
+
+  if (flags & SmilesWrite::CXSmilesFields::CX_COORDINATE_BONDS) {
+    const auto block = get_coord_or_hydrogen_bonds_block(
+        mol, Bond::BondType::DATIVE, "C", atomOrder, bondOrder);
+    appendToCXExtension(block, res);
+  }
+
+  if (flags & SmilesWrite::CXSmilesFields::CX_HYDROGEN_BONDS) {
+    const auto block = get_coord_or_hydrogen_bonds_block(
+        mol, Bond::BondType::HYDROGEN, "H", atomOrder, bondOrder);
+    appendToCXExtension(block, res);
+  }
+
+  if (flags & SmilesWrite::CXSmilesFields::CX_ZERO_BONDS) {
+    const auto block = get_zerobonds_block(mol, atomOrder, bondOrder);
+    appendToCXExtension(block, res);
   }
 
   if (flags & SmilesWrite::CXSmilesFields::CX_LINKNODES) {

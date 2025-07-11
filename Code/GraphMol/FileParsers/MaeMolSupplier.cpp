@@ -10,7 +10,8 @@
 #include <cstring>
 #include <iostream>
 #include <fstream>
-#include <map>
+
+#include <boost/unordered_set.hpp>
 
 #include <RDGeneral/BadFileException.h>
 #include <RDGeneral/FileParseException.h>
@@ -18,6 +19,7 @@
 #include <GraphMol/MolOps.h>
 #include <GraphMol/MonomerInfo.h>
 #include <GraphMol/RWMol.h>
+#include <GraphMol/FileParsers/MaestroProperties.h>
 #include <GraphMol/FileParsers/MolSupplier.h>
 #include <GraphMol/FileParsers/FileParserUtils.h>
 
@@ -27,6 +29,7 @@
 #include <maeparser/Reader.hpp>
 
 using namespace schrodinger;
+using namespace RDKit::FileParsers::schrodinger;
 using RDKit::MolInterchange::bolookup;
 
 namespace RDKit {
@@ -35,13 +38,8 @@ namespace v2 {
 namespace FileParsers {
 namespace {
 
-const std::string PDB_ATOM_NAME = "s_m_pdb_atom_name";
-const std::string PDB_RESIDUE_NAME = "s_m_pdb_residue_name";
-const std::string PDB_CHAIN_NAME = "s_m_chain_name";
-const std::string PDB_INSERTION_CODE = "s_m_insertion_code";
-const std::string PDB_RESIDUE_NUMBER = "i_m_residue_number";
-const std::string PDB_OCCUPANCY = "r_m_pdb_occupancy";
-const std::string PDB_TFACTOR = "r_m_pdb_tfactor";
+// Flag for parsing chirality labels
+enum class [[nodiscard]] ChiralityLabelStatus{VALID, INVALID};
 
 class PDBInfo {
  public:
@@ -133,16 +131,19 @@ bool streamIsGoodOrExhausted(std::istream *stream) {
   return stream->good() || (stream->eof() && stream->fail() && !stream->bad());
 }
 
-void parseChiralityLabel(RWMol &mol, const std::string &stereo_prop) {
+ChiralityLabelStatus parseChiralityLabel(RWMol &mol,
+                                         const std::string &stereo_prop) {
   boost::char_separator<char> sep{"_"};
   boost::tokenizer<boost::char_separator<char>> tokenizer{stereo_prop, sep};
 
   auto tItr = tokenizer.begin();
 
   const int chiral_idx = FileParserUtils::toInt(*tItr) - 1;
-  Atom *chiral_atom = mol.getAtomWithIdx(chiral_idx);
-  CHECK_INVARIANT(chiral_atom != nullptr, "bad prop value");
+  if (chiral_idx < 0 || chiral_idx >= static_cast<int>(mol.getNumAtoms())) {
+    return ChiralityLabelStatus::INVALID;
+  }
 
+  auto chiral_atom = mol.getAtomWithIdx(chiral_idx);
   unsigned nSwaps = 2;
   const char rotation_direction = (++tItr)->back();
   switch (rotation_direction) {
@@ -153,21 +154,24 @@ void parseChiralityLabel(RWMol &mol, const std::string &stereo_prop) {
       nSwaps = 1;
       break;
     case '?':  // Undefined
-      return;
+      return ChiralityLabelStatus::VALID;
     default:
-      break;
+      return ChiralityLabelStatus::INVALID;
   }
-  CHECK_INVARIANT(nSwaps < 2, "bad prop value");
 
   INT_LIST bond_indexes;
   for (++tItr; tItr != tokenizer.end(); ++tItr) {
     const int nbr_idx = FileParserUtils::toInt(*tItr) - 1;
-    const Bond *bnd = mol.getBondBetweenAtoms(chiral_idx, nbr_idx);
-    CHECK_INVARIANT(bnd, "bad chiral bond");
-    bond_indexes.push_back(bnd->getIdx());
+    if (auto bond = mol.getBondBetweenAtoms(chiral_idx, nbr_idx); bond) {
+      bond_indexes.push_back(bond->getIdx());
+    } else {
+      return ChiralityLabelStatus::INVALID;
+    }
   }
-  CHECK_INVARIANT(bond_indexes.size() == chiral_atom->getDegree(),
-                  "bad prop value");
+
+  if (bond_indexes.size() != chiral_atom->getDegree()) {
+    return ChiralityLabelStatus::INVALID;
+  }
 
   nSwaps += chiral_atom->getPerturbationOrder(bond_indexes);
   switch (nSwaps % 2) {
@@ -178,6 +182,7 @@ void parseChiralityLabel(RWMol &mol, const std::string &stereo_prop) {
       chiral_atom->setChiralTag(Atom::CHI_TETRAHEDRAL_CCW);
       break;
   }
+  return ChiralityLabelStatus::VALID;
 }
 
 void parseStereoBondLabel(RWMol &mol, const std::string &stereo_prop) {
@@ -212,38 +217,74 @@ void parseStereoBondLabel(RWMol &mol, const std::string &stereo_prop) {
 }
 
 std::string strip_prefix_from_mae_property(const std::string &propName) {
-  const char &first = propName[0];
-  if ((first == 'b' || first == 'i' || first == 'r' || first == 's') &&
-      (strncmp(&propName.c_str()[1], "_rdk_", 5) == 0)) {
-    return propName.substr(6);
+  const char *propNamePtr = propName.c_str();
+  if (*propNamePtr == 'b' || *propNamePtr == 'i' || *propNamePtr == 'r' ||
+      *propNamePtr == 's') {
+    ++propNamePtr;
+    if (strncmp(propNamePtr, "_rdk_", 5) == 0) {
+      return propName.substr(6);
+    } else if (strncmp(propNamePtr, "_rdkit_", 7) == 0) {
+      return propName.substr(8);
+    }
   }
   return propName;
 }
 
+bool is_ignored_property(const std::string &prop) {
+  static const boost::unordered_set<std::string> ignored_properties = {
+      MAE_ENHANCED_STEREO_STATUS,
+      MAE_STEREO_STATUS,
+  };
+
+  return ignored_properties.find(prop) != ignored_properties.end();
+}
+
 //! Copy over the structure properties, including stereochemistry.
 void set_mol_properties(RWMol &mol, const mae::Block &ct_block) {
-  for (const auto &prop : ct_block.getProperties<std::string>()) {
-    if (prop.first == mae::CT_TITLE) {
-      mol.setProp(common_properties::_Name, prop.second);
-    } else if (prop.first.find(mae::CT_CHIRALITY_PROP_PREFIX) == 0 ||
-               prop.first.find(mae::CT_PSEUDOCHIRALITY_PROP_PREFIX) == 0) {
-      parseChiralityLabel(mol, prop.second);
-    } else if (prop.first.find(mae::CT_EZ_PROP_PREFIX) == 0) {
-      parseStereoBondLabel(mol, prop.second);
+  for (const auto &[prop_name, value] : ct_block.getProperties<std::string>()) {
+    if (is_ignored_property(prop_name)) {
+      continue;
+    }
+
+    if (prop_name == mae::CT_TITLE) {
+      mol.setProp(common_properties::_Name, value);
+    } else if (prop_name.find(mae::CT_CHIRALITY_PROP_PREFIX) == 0 ||
+               prop_name.find(mae::CT_PSEUDOCHIRALITY_PROP_PREFIX) == 0) {
+      // Not stopping if we see a "bad" label since the log can be helpful
+      if (parseChiralityLabel(mol, value) == ChiralityLabelStatus::INVALID) {
+        BOOST_LOG(rdWarningLog)
+            << "Ignoring invalid chirality label: '" << value << "'\n";
+      }
+
+    } else if (prop_name.find(mae::CT_EZ_PROP_PREFIX) == 0) {
+      parseStereoBondLabel(mol, value);
     } else {
-      auto propName = strip_prefix_from_mae_property(prop.first);
-      mol.setProp(propName, prop.second);
+      auto propName = strip_prefix_from_mae_property(prop_name);
+      mol.setProp(propName, value);
     }
   }
+
   for (const auto &prop : ct_block.getProperties<double>()) {
+    if (is_ignored_property(prop.first)) {
+      continue;
+    }
+
     auto propName = strip_prefix_from_mae_property(prop.first);
     mol.setProp(propName, prop.second);
   }
   for (const auto &prop : ct_block.getProperties<int>()) {
+    if (is_ignored_property(prop.first)) {
+      continue;
+    }
+
     auto propName = strip_prefix_from_mae_property(prop.first);
     mol.setProp(propName, prop.second);
   }
   for (const auto &prop : ct_block.getProperties<mae::BoolProperty>()) {
+    if (is_ignored_property(prop.first)) {
+      continue;
+    }
+
     auto propName = strip_prefix_from_mae_property(prop.first);
     mol.setProp(propName, static_cast<bool>(prop.second));
   }
@@ -297,6 +338,10 @@ void set_atom_properties(Atom &atom, const mae::IndexedBlock &atom_block,
     if (prop.first == mae::ATOM_FORMAL_CHARGE) {
       // Formal charge has a specific setter
       atom.setFormalCharge(prop.second->at(i));
+    } else if (prop.first == MAE_RGROUP_LABEL) {
+      // Schrodinger adopted RDKit's Group label property,
+      // but with a "i_sd_" prefix instead of the usual "i_rdkit_"
+      atom.setProp(common_properties::_MolFileRLabel, prop.second->at(i));
     } else {
       auto propName = strip_prefix_from_mae_property(prop.first);
       atom.setProp(propName, prop.second->at(i));
@@ -438,7 +483,7 @@ void build_mol(RWMol &mol, mae::Block &structure_block, bool sanitize,
       unsigned int failedOp = 0;
       MolOps::sanitizeMol(mol, failedOp, MolOps::SANITIZE_CLEANUP);
       MolOps::detectBondStereochemistry(mol);
-      MolOps::removeHs(mol, false, false);
+      MolOps::removeHs(mol);
     } else {
       MolOps::sanitizeMol(mol);
       MolOps::detectBondStereochemistry(mol, replaceExistingTags);

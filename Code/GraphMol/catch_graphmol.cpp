@@ -14,6 +14,7 @@
 #include <limits>
 #include <fstream>
 #include <random>
+#include <string>
 #include <boost/format.hpp>
 
 #include <GraphMol/RDKitBase.h>
@@ -31,7 +32,6 @@
 #include <GraphMol/test_fixtures.h>
 
 using namespace RDKit;
-#if 1
 TEST_CASE("SMILES Parsing works", "[molops]") {
   std::unique_ptr<RWMol> mol(SmilesToMol("C1CC1"));
   REQUIRE(mol);
@@ -1150,7 +1150,7 @@ TEST_CASE("RemoveHsParameters", "[molops]") {
     }
   }
 }
-#endif
+
 TEST_CASE("github #2895: acepentalene aromaticity perception ",
           "[molops][bug][aromaticity]") {
   SECTION("acepentalene") {
@@ -1503,6 +1503,24 @@ TEST_CASE("needsHs function", "[chemistry]") {
     REQUIRE(m);
     CHECK(!MolOps::needsHs(*m));
   }
+  SECTION("edges") {
+    v2::SmilesParse::SmilesParserParams params;
+    params.removeHs = false;
+    {
+      const std::string smiles = "[H]OC([H])[H]";
+      auto m = v2::SmilesParse::MolFromSmiles(smiles, params);
+      REQUIRE(m);
+      CHECK(m->getNumAtoms() == 5);
+      CHECK(MolOps::needsHs(*m));
+    }
+    {
+      const std::string smiles = "C([H])([H])[H]";
+      auto m = v2::SmilesParse::MolFromSmiles(smiles, params);
+      REQUIRE(m);
+      CHECK(m->getNumAtoms() == 4);
+      CHECK(MolOps::needsHs(*m));
+    }
+  }
 }
 
 TEST_CASE(
@@ -1678,7 +1696,7 @@ M  END)CTAB"_ctab;
   }
   SECTION("a simpler system") {
     auto m = R"CTAB(
-  Mrv2014 03092106042D          
+  Mrv2014 03092106042D
 
   0  0  0     0  0            999 V3000
 M  V30 BEGIN CTAB
@@ -2203,7 +2221,7 @@ TEST_CASE("valence edge") {
     m->getAtomWithIdx(0)->setNoImplicit(false);
     m->updatePropertyCache(false);
     CHECK(m->getAtomWithIdx(0)->getFormalCharge() == -2);
-    CHECK(m->getAtomWithIdx(0)->getImplicitValence() == 0);
+    CHECK(m->getAtomWithIdx(0)->getValence(Atom::ValenceType::IMPLICIT) == 0);
   }
   {
     SmilesParserParams ps;
@@ -2572,7 +2590,7 @@ void check_dest(RWMol *m1, const ROMol &m2) {
 }  // namespace
 TEST_CASE("moves") {
   auto m1 =
-      "C[C@H](O)[C@H](F)[C@@H](C)O |o2:1,5,&1:3,SgD:4:atom_data:foo::::|"_smiles;
+      "C[C@H](O)[C@H](F)[C@@H](C)F |o2:1,5,&1:3,SgD:4:atom_data:foo::::|"_smiles;
   REQUIRE(m1);
   CHECK(m1->getStereoGroups().size() == 2);
   m1->setProp("foo", 1u);
@@ -2606,7 +2624,7 @@ TEST_CASE("query moves") {
 
 TEST_CASE("moves with conformer") {
   auto m1 = R"CTAB(
-  Mrv2108 01192209042D          
+  Mrv2108 01192209042D
 
   0  0  0     0  0            999 V3000
 M  V30 BEGIN CTAB
@@ -2618,7 +2636,7 @@ M  V30 3 O -0 2.6674 0 0
 M  V30 4 C 2.31 1.3337 0 0 CFG=1
 M  V30 5 F 3.85 1.3337 0 0
 M  V30 6 C 1.54 0 0 0 CFG=2
-M  V30 7 C 2.31 -1.3337 0 0
+M  V30 7 F 2.31 -1.3337 0 0
 M  V30 8 O 0 0 0 0
 M  V30 END ATOM
 M  V30 BEGIN BOND
@@ -2962,11 +2980,11 @@ TEST_CASE("molecules with single bond to metal atom use dative instead") {
   // Counting from 1, 4th mol is one that gave other problems during testing.
   std::vector<std::pair<std::string, std::string>> test_vals{
       {"CC1=C(CCC(O)=O)C2=[N]3C1=Cc1c(C)c(C=C)c4C=C5C(C)=C(C=C)C6=[N]5[Fe]3(n14)n1c(=C6)c(C)c(CCC(O)=O)c1=C2",
-       "C=CC1=C(C)C2=Cc3c(C=C)c(C)c4n3[Fe]35<-N2=C1C=c1c(C)c(CCC(=O)O)c(n13)=CC1=N->5C(=C4)C(C)=C1CCC(=O)O"},
+       "C=CC1=C(C)C2=Cc3c(C=C)c(C)c4[n]3[Fe]35<-[N]2=C1C=c1c(C)c(CCC(=O)O)c([n]13)=CC1=[N]->5C(=C4)C(C)=C1CCC(=O)O"},
       {"CC1=C(CCC([O-])=O)C2=[N+]3C1=Cc1c(C)c(C=C)c4C=C5C(C)=C(C=C)C6=[N+]5[Fe--]3(n14)n1c(=C6)c(C)c(CCC([O-])=O)c1=C2",
-       "C=CC1=C(C)C2=Cc3c(C=C)c(C)c4n3[Fe-2]35n6c(c(C)c(CCC(=O)[O-])c6=CC6=[N+]3C(=C4)C(C)=C6CCC(=O)[O-])=CC1=[N+]25"},
+       "C=CC1=C(C)C2=Cc3c(C=C)c(C)c4[n]3[Fe-2]35[n]6c(c(C)c(CCC(=O)[O-])c6=CC6=[N+]3C(=C4)C(C)=C6CCC(=O)[O-])=CC1=[N+]25"},
       {"CC1=C(CCC(O)=O)C2=[N+]3C1=Cc1c(C)c(C=C)c4C=C5C(C)=C(C=C)C6=[N+]5[Fe--]3(n14)n1c(=C6)c(C)c(CCC(O)=O)c1=C2",
-       "C=CC1=C(C)C2=Cc3c(C=C)c(C)c4n3[Fe-2]35n6c(c(C)c(CCC(=O)O)c6=CC6=[N+]3C(=C4)C(C)=C6CCC(=O)O)=CC1=[N+]25"},
+       "C=CC1=C(C)C2=Cc3c(C=C)c(C)c4[n]3[Fe-2]35[n]6c(c(C)c(CCC(=O)O)c6=CC6=[N+]3C(=C4)C(C)=C6CCC(=O)O)=CC1=[N+]25"},
       {"CCC1=[O+][Cu]2([O+]=C(CC)C1)[O+]=C(CC)CC(CC)=[O+]2",
        "CCC1=[O+][Cu]2([O+]=C(CC)C1)[O+]=C(CC)CC(CC)=[O+]2"}};
   for (size_t i = 0; i < test_vals.size(); ++i) {
@@ -2987,8 +3005,10 @@ TEST_CASE("molecules with single bond to metal atom use dative instead") {
 TEST_CASE(
     "cleanUpOrganometallics should produce canonical output.  cf PR6292") {
   std::vector<std::pair<std::string, std::string>> test_vals{
-      {"F[Pd](Cl)(Cl1)Cl[Pd]1(Cl)Cl", "F[Pd]1(Cl)<-Cl[Pd](Cl)(Cl)<-Cl1"},
-      {"F[Pt]1(F)[35Cl][Pt]([Cl]1)(F)Br", "F[Pt]1(Br)<-Cl[Pt](F)(F)<-[35Cl]1"},
+      {"F[Pd](Cl)(Cl1)Cl[Pd]1(Cl)Cl",
+       "[F][Pd]1([Cl])<-[Cl][Pd]([Cl])([Cl])<-[Cl]1"},
+      {"F[Pt]1(F)[35Cl][Pt]([Cl]1)(F)Br",
+       "[F][Pt]1([Br])<-[Cl][Pt]([F])([F])<-[35Cl]1"},
   };
 
   for (size_t j = 0; j < test_vals.size(); ++j) {
@@ -3476,6 +3496,19 @@ TEST_CASE(
 }
 
 TEST_CASE(
+    "github #7044: canonicalization error when allenes have specified stereo") {
+  SECTION("basics") {
+    auto m = "CC=C=CC"_smiles;
+    REQUIRE(m);
+    m->getBondWithIdx(2)->setStereoAtoms(1, 4);
+    m->getBondWithIdx(2)->setStereo(Bond::STEREOCIS);
+
+    auto smi = MolToSmiles(*m);
+    CHECK(smi == "CC=C=CC");
+  }
+}
+
+TEST_CASE(
     "Github Issue #7128: ReplaceBond may cause valence issues in specific edge cases",
     "[bug][RWMol]") {
   auto m = R"CTAB(
@@ -3518,7 +3551,8 @@ $$$$
   bool strict_valences = false;
 
   SECTION("replace with a double bond") {
-    m->replaceBond(1, new Bond(Bond::BondType::DOUBLE));
+    auto b = Bond(Bond::BondType::DOUBLE);
+    m->replaceBond(1, &b);
     m->updatePropertyCache(strict_valences);
     CHECK(begin_atom->getNumExplicitHs() == 0);
     CHECK(begin_atom->getTotalValence() == 4);
@@ -3526,7 +3560,8 @@ $$$$
     CHECK(end_atom->getTotalValence() == 4);
   }
   SECTION("replace with a triple bond") {
-    m->replaceBond(1, new Bond(Bond::BondType::TRIPLE));
+    auto b = Bond(Bond::BondType::TRIPLE);
+    m->replaceBond(1, &b);
     m->updatePropertyCache(strict_valences);
     CHECK(begin_atom->getNumExplicitHs() == 0);
     CHECK(begin_atom->getTotalValence() == 5);  // Yeah, this is expected
@@ -3534,7 +3569,8 @@ $$$$
     CHECK(end_atom->getTotalValence() == 4);
   }
   SECTION("replace with a dative bond") {
-    m->replaceBond(1, new Bond(Bond::BondType::DATIVE));
+    auto b = Bond(Bond::BondType::DATIVE);
+    m->replaceBond(1, &b);
     m->updatePropertyCache(strict_valences);
     CHECK(begin_atom->getNumExplicitHs() == 1);
     CHECK(begin_atom->getTotalValence() == 4);
@@ -3888,13 +3924,16 @@ TEST_CASE("atom output") {
     ss.str("");
   }
   SECTION("chirality 2") {
+    // same as
+    // C[Pt@SP2]([H])(F)Cl which is stored internally as
+    // C[Pt@SP3](F)(Cl)[H]
     auto m = "C[Pt@SP2H](F)Cl"_smiles;
     REQUIRE(m);
     std::stringstream ss;
     ss << *m->getAtomWithIdx(1);
     CHECK(
         ss.str() ==
-        "1 78 Pt chg: 0  deg: 3 exp: 4 imp: 0 hyb: SP2D chi: SqP(2) nbrs:[0 2 3]");
+        "1 78 Pt chg: 0  deg: 3 exp: 4 imp: 0 hyb: SP2D chi: SqP(3) nbrs:[0 2 3]");
     ss.str("");
   }
 }
@@ -3904,7 +3943,7 @@ TEST_CASE(
     "[RWMol]") {
   // This mols is made up, it probably doesn't make sense at all.
   auto m1 = R"CTAB(
-  Mrv2311 02062417062D          
+  Mrv2311 02062417062D
 
   0  0  0     0  0            999 V3000
 M  V30 BEGIN CTAB
@@ -4083,5 +4122,718 @@ M  END
     checkSubstanceGroup(sgs2, 0, {7, 8, 9, 10, 11, 12, 13}, {8}, 8, {12, 5});
     checkSubstanceGroup(sgs2, 1, {41, 42, 43, 44, 45, 46, 47}, {43}, 43,
                         {46, 39});
+  }
+}
+
+TEST_CASE(
+    "Github Issue #7782: insertMol should not create an empty STEREO_ABSOLUTE group",
+    "[RWMol]") {
+  {
+    auto mol = "C1CC1"_smiles;
+    REQUIRE(mol);
+    CHECK(mol->getStereoGroups().empty());
+    auto other = "C1CNC1"_smiles;
+    CHECK(other->getStereoGroups().empty());
+    REQUIRE(other);
+    mol->insertMol(*other);
+    CHECK(mol->getStereoGroups().empty());
+    auto molblock = MolToMolBlock(*mol);
+    auto molblockV3k = MolToV3KMolBlock(*mol);
+    CHECK(molblock.find("V2000") != std::string::npos);
+    CHECK(molblockV3k.find("V3000") != std::string::npos);
+    CHECK(molblockV3k.find("STEABS ATOMS=(0)") == std::string::npos);
+  }
+  {
+    auto mol = "CC[C@H](C)N |&1:2,r,lp:4:1|"_smiles;
+    REQUIRE(mol);
+    CHECK(!mol->getStereoGroups().empty());
+    auto other = "CC[C@H](C)O |o1:2,r,lp:4:2|"_smiles;
+    CHECK(!other->getStereoGroups().empty());
+    REQUIRE(other);
+    mol->insertMol(*other);
+    CHECK(!mol->getStereoGroups().empty());
+    auto molblock = MolToMolBlock(*mol);
+    CHECK(molblock.find("V2000") == std::string::npos);
+    CHECK(molblock.find("V3000") != std::string::npos);
+    CHECK(molblock.find("STERAC1 ATOMS=(1 3)") != std::string::npos);
+    CHECK(molblock.find("STEREL1 ATOMS=(1 8)") != std::string::npos);
+    CHECK(molblock.find("STEABS ATOMS=(0)") == std::string::npos);
+  }
+}
+
+TEST_CASE("Hybridization of dative bonded atoms") {
+  const std::vector<Atom::HybridizationType> ref_hybridizations = {
+      Atom::HybridizationType::SP3, Atom::HybridizationType::SP3,
+      Atom::HybridizationType::SP2, Atom::HybridizationType::SP2,
+      Atom::HybridizationType::SP2, Atom::HybridizationType::SP3D2};
+
+  SECTION("Base mol") {
+    auto m = "CCC(=O)O"_smiles;
+    REQUIRE(m);
+
+    for (unsigned int i = 0; i < m->getNumAtoms(); ++i) {
+      CHECK(m->getAtomWithIdx(i)->getHybridization() == ref_hybridizations[i]);
+    }
+  }
+  SECTION("Dative bonded") {
+    auto m = "CCC(=O)O->[Cu]"_smiles;
+    REQUIRE(m);
+
+    auto dBond = m->getBondWithIdx(4);
+    REQUIRE(dBond->getBondType() == Bond::BondType::DATIVE);
+
+    for (unsigned int i = 0; i < m->getNumAtoms(); ++i) {
+      CHECK(m->getAtomWithIdx(i)->getHybridization() == ref_hybridizations[i]);
+    }
+  }
+}
+
+TEST_CASE(
+    "GitHub Issue #7375: DetectChemistryProblems fails with traceback when run on mols coming from aromatic SMARTS",
+    "[bug][molops]") {
+  auto m = "c"_smarts;
+  REQUIRE(m);
+
+  auto res = MolOps::detectChemistryProblems(*m);
+
+  REQUIRE(res.size() == 1);
+  CHECK(dynamic_cast<AtomKekulizeException *>(res[0].get()) != nullptr);
+  CHECK(std::string{"non-ring atom 0 marked aromatic"} == res[0]->what());
+}
+
+TEST_CASE("Try not to set wedged bonds as double in the kekulization") {
+  SECTION("basics") {
+    auto m = "c1nccc(C)c1-c1c(C)cccc1"_smiles;
+    REQUIRE(m);
+    m->getBondBetweenAtoms(7, 8)->setBondDir(Bond::BondDir::BEGINWEDGE);
+    MolOps::Kekulize(*m);
+    CHECK(m->getBondBetweenAtoms(7, 8)->getBondType() ==
+          Bond::BondType::SINGLE);
+    CHECK(m->getBondBetweenAtoms(7, 13)->getBondType() ==
+          Bond::BondType::DOUBLE);
+  }
+  SECTION("preserve wedged bonds from ctab input") {
+    // consider two equivalent structures, with the same numbering
+    // of atoms and bonds, but different arrangement of single and
+    // double bonds in the aromatic ring that includes a wedged bond.
+    // verify that in both cases the kekulization results in assigning
+    // a single bond order to the wedged bonds.
+    auto mblock1 = R"(
+  Mrv2311 05242408112D
+
+  0  0  0     0  0            999 V3000
+M  V30 BEGIN CTAB
+M  V30 COUNTS 14 15 0 0 0
+M  V30 BEGIN ATOM
+M  V30 1 C 2.0006 -1.54 0 0
+M  V30 2 N 2.0006 -3.08 0 0
+M  V30 3 C 0.6669 -3.85 0 0
+M  V30 4 C -0.6668 -3.08 0 0
+M  V30 5 C -0.6668 -1.54 0 0
+M  V30 6 C -2.0006 -0.77 0 0
+M  V30 7 C 0.6669 -0.77 0 0
+M  V30 8 C 0.6669 0.77 0 0
+M  V30 9 C -0.6668 1.54 0 0
+M  V30 10 C -2.0006 0.77 0 0
+M  V30 11 C -0.6668 3.08 0 0
+M  V30 12 C 0.6669 3.85 0 0
+M  V30 13 C 2.0006 3.08 0 0
+M  V30 14 C 2.0006 1.54 0 0
+M  V30 END ATOM
+M  V30 BEGIN BOND
+M  V30 1 2 1 2
+M  V30 2 1 2 3
+M  V30 3 2 3 4
+M  V30 4 1 4 5
+M  V30 5 1 5 6
+M  V30 6 2 5 7
+M  V30 7 1 7 1 CFG=1
+M  V30 8 1 7 8
+M  V30 9 2 8 9
+M  V30 10 1 9 10
+M  V30 11 1 9 11
+M  V30 12 2 11 12
+M  V30 13 1 12 13
+M  V30 14 2 13 14
+M  V30 15 1 8 14
+M  V30 END BOND
+M  V30 END CTAB
+M  END
+)";
+    std::unique_ptr<RWMol> m1(MolBlockToMol(mblock1));
+    REQUIRE(m1);
+    Chirality::reapplyMolBlockWedging(*m1);
+    MolOps::Kekulize(*m1);
+    CHECK(m1->getBondBetweenAtoms(0, 6)->getBondType() ==
+          Bond::BondType::SINGLE);
+    CHECK(m1->getBondBetweenAtoms(0, 6)->getBondDir() ==
+          Bond::BondDir::BEGINWEDGE);
+    CHECK(m1->getBondBetweenAtoms(4, 6)->getBondType() ==
+          Bond::BondType::DOUBLE);
+
+    auto mblock2 = R"(
+  Mrv2311 05242408162D
+
+  0  0  0     0  0            999 V3000
+M  V30 BEGIN CTAB
+M  V30 COUNTS 14 15 0 0 0
+M  V30 BEGIN ATOM
+M  V30 1 C 2.0006 -1.54 0 0
+M  V30 2 N 2.0006 -3.08 0 0
+M  V30 3 C 0.6669 -3.85 0 0
+M  V30 4 C -0.6668 -3.08 0 0
+M  V30 5 C -0.6668 -1.54 0 0
+M  V30 6 C -2.0006 -0.77 0 0
+M  V30 7 C 0.6669 -0.77 0 0
+M  V30 8 C 0.6669 0.77 0 0
+M  V30 9 C -0.6668 1.54 0 0
+M  V30 10 C -2.0006 0.77 0 0
+M  V30 11 C -0.6668 3.08 0 0
+M  V30 12 C 0.6669 3.85 0 0
+M  V30 13 C 2.0006 3.08 0 0
+M  V30 14 C 2.0006 1.54 0 0
+M  V30 END ATOM
+M  V30 BEGIN BOND
+M  V30 1 1 1 2
+M  V30 2 2 2 3
+M  V30 3 1 3 4
+M  V30 4 2 4 5
+M  V30 5 1 5 6
+M  V30 6 1 7 5 CFG=3
+M  V30 7 2 7 1
+M  V30 8 1 7 8
+M  V30 9 2 8 9
+M  V30 10 1 9 10
+M  V30 11 1 9 11
+M  V30 12 2 11 12
+M  V30 13 1 12 13
+M  V30 14 2 13 14
+M  V30 15 1 8 14
+M  V30 END BOND
+M  V30 END CTAB
+M  END
+)";
+    std::unique_ptr<RWMol> m2(MolBlockToMol(mblock2));
+    REQUIRE(m2);
+    Chirality::reapplyMolBlockWedging(*m2);
+    MolOps::Kekulize(*m2);
+    CHECK(m2->getBondBetweenAtoms(0, 6)->getBondType() ==
+          Bond::BondType::DOUBLE);
+    CHECK(m2->getBondBetweenAtoms(4, 6)->getBondType() ==
+          Bond::BondType::SINGLE);
+    CHECK(m2->getBondBetweenAtoms(4, 6)->getBondDir() ==
+          Bond::BondDir::BEGINDASH);
+  }
+  SECTION("preserve wedged bonds from ctab input - fused rings") {
+    // consider two equivalent structures, with the same numbering
+    // of atoms and bonds, but different arrangement of single and
+    // double bonds in the aromatic ring that includes a wedged bond.
+    // verify that in both cases the kekulization results in assigning
+    // a single bond order to the wedged bonds.
+    //
+    // similar to the previous test case, but adding fused rings and
+    // an O atom that wouldn't accept double bonds
+    auto mblock1 = R"(
+  Mrv2311 05282412322D
+
+  0  0  0     0  0            999 V3000
+M  V30 BEGIN CTAB
+M  V30 COUNTS 17 19 0 0 0
+M  V30 BEGIN ATOM
+M  V30 1 C -13.0418 12.1443 0 0
+M  V30 2 C -14.3753 11.3743 0 0
+M  V30 3 C -14.3753 9.8341 0 0
+M  V30 4 C -13.0418 9.0641 0 0
+M  V30 5 C -11.708 9.8341 0 0
+M  V30 6 C -11.708 11.3743 0 0
+M  V30 7 C -13.0418 7.5241 0 0
+M  V30 8 C -10.3744 9.0641 0 0
+M  V30 9 C -14.3754 6.7541 0 0
+M  V30 10 C -14.3754 5.2139 0 0
+M  V30 11 C -13.0419 4.4439 0 0
+M  V30 12 C -11.7081 5.2138 0 0
+M  V30 13 C -11.7081 6.754 0 0
+M  V30 14 C -15.8399 7.2302 0 0
+M  V30 15 C -16.7452 5.9844 0 0
+M  V30 16 O -15.8402 4.7385 0 0
+M  V30 17 C -10.3744 7.524 0 0
+M  V30 END ATOM
+M  V30 BEGIN BOND
+M  V30 1 2 1 2
+M  V30 2 1 2 3
+M  V30 3 2 3 4
+M  V30 4 1 4 5
+M  V30 5 2 5 6
+M  V30 6 1 6 1
+M  V30 7 1 4 7
+M  V30 8 1 5 8
+M  V30 9 1 9 10
+M  V30 10 2 10 11
+M  V30 11 1 11 12
+M  V30 12 2 12 13
+M  V30 13 2 7 9
+M  V30 14 1 7 13 CFG=1
+M  V30 15 2 14 15
+M  V30 16 1 9 14
+M  V30 17 1 13 17
+M  V30 18 1 15 16
+M  V30 19 1 10 16
+M  V30 END BOND
+M  V30 END CTAB
+M  END
+)";
+    std::unique_ptr<RWMol> m1(MolBlockToMol(mblock1));
+    REQUIRE(m1);
+    Chirality::reapplyMolBlockWedging(*m1);
+    MolOps::Kekulize(*m1);
+    CHECK(m1->getBondBetweenAtoms(6, 12)->getBondType() ==
+          Bond::BondType::SINGLE);
+    CHECK(m1->getBondBetweenAtoms(6, 12)->getBondDir() ==
+          Bond::BondDir::BEGINWEDGE);
+    CHECK(m1->getBondBetweenAtoms(6, 8)->getBondType() ==
+          Bond::BondType::DOUBLE);
+
+    auto mblock2 = R"(
+  Mrv2311 05282412342D
+
+  0  0  0     0  0            999 V3000
+M  V30 BEGIN CTAB
+M  V30 COUNTS 17 19 0 0 0
+M  V30 BEGIN ATOM
+M  V30 1 C -13.0418 12.1443 0 0
+M  V30 2 C -14.3753 11.3743 0 0
+M  V30 3 C -14.3753 9.8341 0 0
+M  V30 4 C -13.0418 9.0641 0 0
+M  V30 5 C -11.708 9.8341 0 0
+M  V30 6 C -11.708 11.3743 0 0
+M  V30 7 C -13.0418 7.5241 0 0
+M  V30 8 C -10.3744 9.0641 0 0
+M  V30 9 C -14.3754 6.7541 0 0
+M  V30 10 C -14.3754 5.2139 0 0
+M  V30 11 C -13.0419 4.4439 0 0
+M  V30 12 C -11.7081 5.2138 0 0
+M  V30 13 C -11.7081 6.754 0 0
+M  V30 14 C -15.8399 7.2302 0 0
+M  V30 15 C -16.7452 5.9844 0 0
+M  V30 16 O -15.8402 4.7385 0 0
+M  V30 17 C -10.3744 7.524 0 0
+M  V30 END ATOM
+M  V30 BEGIN BOND
+M  V30 1 2 1 2
+M  V30 2 1 2 3
+M  V30 3 2 3 4
+M  V30 4 1 4 5
+M  V30 5 2 5 6
+M  V30 6 1 6 1
+M  V30 7 1 4 7
+M  V30 8 1 5 8
+M  V30 9 2 9 10
+M  V30 10 1 10 11
+M  V30 11 2 11 12
+M  V30 12 1 12 13
+M  V30 13 1 7 9 CFG=3
+M  V30 14 2 7 13
+M  V30 15 2 14 15
+M  V30 16 1 9 14
+M  V30 17 1 13 17
+M  V30 18 1 15 16
+M  V30 19 1 10 16
+M  V30 END BOND
+M  V30 END CTAB
+M  END
+)";
+    std::unique_ptr<RWMol> m2(MolBlockToMol(mblock2));
+    REQUIRE(m2);
+    Chirality::reapplyMolBlockWedging(*m2);
+    MolOps::Kekulize(*m2);
+    CHECK(m2->getBondBetweenAtoms(6, 12)->getBondType() ==
+          Bond::BondType::DOUBLE);
+    CHECK(m2->getBondBetweenAtoms(6, 8)->getBondType() ==
+          Bond::BondType::SINGLE);
+    CHECK(m2->getBondBetweenAtoms(6, 8)->getBondDir() ==
+          Bond::BondDir::BEGINDASH);
+  }
+
+  SECTION("bulk") {
+    std::string pathName = getenv("RDBASE");
+    pathName += "/Code/GraphMol/FileParsers/test_data/atropisomers/";
+
+    std::vector<std::pair<std::string, int>> prs = {
+        {"BMS-986142_atrop8.sdf", 8},
+        {"Mrtx1719_atrop3.sdf", 21},
+        {"AtropManyChiralsEnhanced2.sdf", 7},
+        {"JDQ443_atrop2.sdf", 26},
+        {"BMS-986142_atrop2.sdf", 8},
+        {"macrocycle-6-meta-broken-hash.sdf", 14},
+        {"BMS-986142_3d.sdf", 8},
+        {"Mrtx1719_atrop2.sdf", 21},
+        {"Sotorasib_atrop3.sdf", 12},
+        {"macrocycle-5-meta-Cl-ortho-wedge.sdf", 15},
+        {"ZM374979_atrop2.sdf", 33},
+        {"RP-6306_3d.sdf", 3},
+        {"macrocycle-5-meta-Cl-ortho-hash.sdf", 15},
+        {"macrocycle-6-meta-hash.sdf", 15},
+        {"macrocycle-8-ortho-broken-wedge.sdf", 14},
+        {"RP-6306_atrop2.sdf", 3},
+        {"Sotorasib_3d.sdf", 12},
+        {"RP-6306_atrop5.sdf", 3},
+        {"AtropManyChiralsEnhanced.sdf", 7},
+        {"RP-6306_atrop4.sdf", 3},
+        {"BMS-986142_atrop3.sdf", 8},
+        {"BMS-986142_atrop7.sdf", 8},
+        {"Sotorasib_atrop1.sdf", 12},
+        {"Mrtx1719_3d.sdf", 21},
+        {"Sotorasib_atrop2.sdf", 12},
+        {"Sotorasib_atrop5.sdf", 12},
+        {"AtropManyChirals.sdf", 7},
+        {"BMS-986142_atrop5.sdf", 8},
+        {"macrocycle-7-meta-Cl-ortho-hash.sdf", 15},
+        {"RP-6306_atrop1.sdf", 3},
+        {"BMS-986142_3d_chiral.sdf", 8},
+        {"Mrtx1719_atrop1.sdf", 21},
+        {"macrocycle-9-meta-Cl-ortho-wedge.sdf", 15},
+        {"macrocycle-8-ortho-wedge.sdf", 15},
+        {"TestMultInSDF.sdf_1.sdf", 33},
+        {"macrocycle-9-ortho-broken-wedge.sdf", 14},
+        {"Sotorasib_atrop4.sdf", 12},
+        {"macrocycle-8-meta-Cl-ortho-hash.sdf", 15},
+        {"macrocycle-6-meta-Cl-ortho-wedge.sdf", 15},
+        {"macrocycle-9-ortho-wedge.sdf", 15},
+        {"BMS-986142_atrop6.sdf", 8},
+        {"ZM374979_atrop1.sdf", 33},
+        {"macrocycle-6-meta-Cl-ortho-hash.sdf", 15},
+        {"macrocycle-6-meta-wedge.sdf", 15},
+        {"macrocycle-9-meta-Cl-ortho-hash.sdf", 15},
+        {"BMS-986142_atrop4.sdf", 8},
+        {"macrocycle-8-meta-Cl-ortho-wedge.sdf", 15},
+        {"macrocycle-9-ortho-broken-hash.sdf", 14},
+        {"JDQ443_atrop1.sdf", 26},
+        {"macrocycle-9-ortho-hash.sdf", 15},
+        {"macrocycle-7-meta-Cl-ortho-wedge.sdf", 15},
+        {"ZM374979_atrop3.sdf", 33},
+        {"BMS-986142_atrop1.sdf", 8},
+        {"macrocycle-6-meta-broken-wedge.sdf", 14},
+        {"macrocycle-8-ortho-hash.sdf", 15},
+        {"RP-6306_atrop3.sdf", 3},
+        {"macrocycle-8-ortho-broken-hash.sdf", 14},
+        {"JDQ443_atrop3.sdf", 26},
+        {"JDQ443_3d.sdf", 26},
+        // keep
+    };
+    for (const auto &[nm, idx] : prs) {
+      INFO(nm);
+      auto m = v2::FileParsers::MolFromMolFile(pathName + nm);
+      REQUIRE(m);
+      const auto bnd = m->getBondWithIdx(idx);
+      REQUIRE((bnd->getStereo() == Bond::BondStereo::STEREOATROPCCW ||
+               bnd->getStereo() == Bond::BondStereo::STEREOATROPCW));
+      Chirality::wedgeMolBonds(*m, &m->getConformer());
+      bool clearAromaticFlags = false;
+      MolOps::Kekulize(*m, clearAromaticFlags);
+      // m->debugMol(std::cerr);
+      Bond *wedgedBond = nullptr;
+      Bond *dblBond = nullptr;
+      for (auto atm : {bnd->getBeginAtom(), bnd->getEndAtom()}) {
+        if (!atm->getIsAromatic()) {
+          continue;
+        }
+        for (auto nbrBnd : m->atomBonds(atm)) {
+          if (nbrBnd->getBondType() == Bond::BondType::DOUBLE) {
+            dblBond = nbrBnd;
+            CHECK(nbrBnd->getBondDir() == Bond::BondDir::NONE);
+            if (nbrBnd->getBondDir() != Bond::BondDir::NONE) {
+              m->debugMol(std::cerr);
+            }
+          } else if (nbrBnd->getBondDir() != Bond::BondDir::NONE) {
+            wedgedBond = nbrBnd;
+          }
+        }
+      }
+      // if we aren't in a five-ring (where the results of kekulize are normally
+      // fixed), wedge the double bond and flatten the other one
+      if (wedgedBond && dblBond &&
+          !m->getRingInfo()->isBondInRingOfSize(dblBond->getIdx(), 5) &&
+          !m->getRingInfo()->isBondInRingOfSize(wedgedBond->getIdx(), 5)) {
+        if (wedgedBond->getBondDir() == Bond::BondDir::BEGINWEDGE) {
+          dblBond->setBondDir(Bond::BondDir::BEGINDASH);
+        } else {
+          dblBond->setBondDir(Bond::BondDir::BEGINWEDGE);
+        }
+        wedgedBond->setBondDir(Bond::BondDir::NONE);
+        // re-aromatize:
+        for (auto bnd : m->bonds()) {
+          if (bnd->getIsAromatic()) {
+            bnd->setBondType(Bond::BondType::AROMATIC);
+          }
+          // }
+          // std::cerr << "\n\nbefore kekulize:" << std::endl;
+          // m->debugMol(std::cerr);
+          // kekulize again now that we wedged the bonds that were set to double
+          // before
+          MolOps::Kekulize(*m, clearAromaticFlags);
+          // and make sure that those didn't end up double again:
+          for (auto atm : {bnd->getBeginAtom(), bnd->getEndAtom()}) {
+            if (!atm->getIsAromatic()) {
+              continue;
+            }
+            for (auto nbrBnd : m->atomBonds(atm)) {
+              if (nbrBnd->getBondType() == Bond::BondType::DOUBLE) {
+                CHECK(nbrBnd->getBondDir() == Bond::BondDir::NONE);
+                if (nbrBnd->getBondDir() != Bond::BondDir::NONE) {
+                  // m->debugMol(std::cerr);
+                  // std::cerr << MolToV3KMolBlock(*m);
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+TEST_CASE("getMaxAtomicNumber") {
+  CHECK(PeriodicTable::getTable()->getMaxAtomicNumber() == 118);
+}
+
+TEST_CASE("explicit valence handling of transition metals") {
+  SECTION("basics") {
+    // some of these examples are quite silly
+    std::vector<std::string> smileses = {"[Ti]C", "[Ti+2]C", "[Ti+4]C",
+                                         "[Ti+5]C"};
+    for (const auto &smiles : smileses) {
+      auto m = v2::SmilesParse::MolFromSmiles(smiles);
+      REQUIRE(m);
+      CHECK(m->getAtomWithIdx(0)->getValence(Atom::ValenceType::EXPLICIT) == 1);
+      CHECK(m->getAtomWithIdx(0)->getValence(Atom::ValenceType::IMPLICIT) == 0);
+    }
+  }
+}
+
+TEST_CASE("valence handling of atoms with multiple possible valence states") {
+  SECTION("basics") {
+    // some of these examples are quite silly
+    std::vector<std::pair<std::string, unsigned int>> smileses = {
+        {"C[S-](=O)=O", 5},
+        {"C[P-2](C)C", 3},
+        {"C[Se-](=O)=O", 5},
+        {"C[As-2](C)C", 3},
+    };
+    for (const auto &[smiles, val] : smileses) {
+      INFO(smiles);
+      auto m = v2::SmilesParse::MolFromSmiles(smiles);
+      CHECK(m);
+      CHECK(val ==
+            m->getAtomWithIdx(1)->getValence(Atom::ValenceType::EXPLICIT));
+      // now try figuring out the implicit valence
+      m->getAtomWithIdx(1)->setNoImplicit(false);
+      m->getAtomWithIdx(1)->calcImplicitValence(true);  // <- should not throw
+      CHECK(!m->getAtomWithIdx(1)->hasValenceViolation());
+    }
+  }
+  SECTION("mols which should fail") {
+    // some of these examples are quite silly
+    std::vector<std::string> smileses = {
+        "C[S-2](=O)=O",
+        "C[P-3](C)(C)(C)C",
+        "C[Se-2](=O)=O",
+        "C[As-3](C)(C)(C)C",
+    };
+    for (const auto &smiles : smileses) {
+      INFO(smiles);
+      v2::SmilesParse::SmilesParserParams ps;
+      ps.sanitize = false;
+      auto m = v2::SmilesParse::MolFromSmiles(smiles, ps);
+      CHECK(m);
+      m->getAtomWithIdx(1)->setNoImplicit(false);
+      CHECK(m->getAtomWithIdx(1)->hasValenceViolation());
+    }
+  }
+}
+
+TEST_CASE(
+    "testing for valence states which were removed when introducing the isoelectronic valence calculation") {
+  SECTION("mols which should pass") {
+    std::vector<std::pair<std::string, unsigned int>> smileses = {
+        {"F[Si-2](F)(F)(F)(F)F", 0},
+        {"F[P-](F)(F)(F)(F)F", 0},
+        {"F[As-](F)(F)(F)(F)F", 0},
+    };
+    for (const auto &[smiles, val] : smileses) {
+      INFO(smiles);
+      auto m = v2::SmilesParse::MolFromSmiles(smiles);
+      CHECK(m);
+      // now try figuring out the implicit valence
+      m->getAtomWithIdx(1)->setNoImplicit(false);
+      m->getAtomWithIdx(1)->calcImplicitValence(true);  // <- should not throw
+      CHECK(!m->getAtomWithIdx(1)->hasValenceViolation());
+      CHECK(m->getAtomWithIdx(1)->getTotalNumHs() == val);
+    }
+  }
+  SECTION("mols which should fail") {
+    std::vector<std::string> smileses = {
+        "F[Al](F)(F)(F)(F)F",
+        "F[Si](F)(F)(F)(F)F",
+        "F[P](F)(F)(F)(F)(F)F",
+        "F[As](F)(F)(F)(F)(F)F",
+    };
+    for (const auto &smiles : smileses) {
+      INFO(smiles);
+      v2::SmilesParse::SmilesParserParams ps;
+      ps.sanitize = false;
+      auto m = v2::SmilesParse::MolFromSmiles(smiles, ps);
+      CHECK(m);
+      m->getAtomWithIdx(1)->setNoImplicit(false);
+      CHECK(m->getAtomWithIdx(1)->hasValenceViolation());
+    }
+  }
+}
+
+TEST_CASE("Valences on Al, Si, P, As, Sb, Bi") {
+  // tests added by Paolo Tosco in a separate PR
+  SECTION("Should fail with AtomValenceException") {
+    std::vector<std::pair<std::string, unsigned int>> smiles = {
+        {"[Al](Cl)(Cl)(Cl)(Cl)(Cl)Cl", 0}, {"F[Si](F)(F)(F)(F)F", 1},
+        {"[P](F)(F)(F)(F)(F)F", 0},        {"P(=O)(O)(O)(O)(O)O", 0},
+        {"F[As](F)(F)(F)(F)F", 1},         {"O[As](=O)(O)(O)(O)O", 1},
+        {"[Sb](F)(F)(F)(F)(F)F", 0},       {"[Sb](=O)(O)(O)(O)(O)O", 0},
+        {"F[Bi](F)(F)(F)(F)F", 1},         {"O[Bi](=O)(O)(O)(O)(O)O", 1},
+    };
+    for (auto &[smi, idx] : smiles) {
+      INFO(smi);
+      CHECK_THROWS_AS(SmilesToMol(smi), AtomValenceException);
+      try {
+        ROMOL_SPTR m(SmilesToMol(smi));
+        RDUNUSED_PARAM(m);
+      } catch (const AtomValenceException &e) {
+        CHECK(e.getType() == "AtomValenceException");
+        CHECK(e.getAtomIdx() == idx);
+      }
+    }
+  }
+  SECTION("Should not fail") {
+    std::vector<std::string> smiles = {
+        "[Al-3](Cl)(Cl)(Cl)(Cl)(Cl)Cl", "F[Si-2](F)(F)(F)(F)F",
+        "[P-](F)(F)(F)(F)(F)F",         "F[As-](F)(F)(F)(F)F",
+        "F[Sb-](F)(F)(F)(F)F",          "[Bi-](F)(F)(F)(F)(F)F",
+    };
+    for (auto smi : smiles) {
+      ROMOL_SPTR m(SmilesToMol(smi));
+      CHECK(m);
+    }
+  }
+}
+
+TEST_CASE("Github #7873: monomer info segfaults and mem leaks", "[PDB]") {
+  SECTION("basics") {
+    class FakeAtomMonomerInfo : public AtomMonomerInfo {
+     public:
+      bool *deleted;
+      FakeAtomMonomerInfo(bool *was_deleted) : deleted(was_deleted) {}
+      ~FakeAtomMonomerInfo() override { *deleted = true; }
+    };
+
+    bool sanitize = true;
+    int flavor = 0;
+    std::unique_ptr<RWMol> mol(SequenceToMol("KY", sanitize, flavor));
+    REQUIRE(mol);
+    REQUIRE(mol->getAtomWithIdx(0)->getMonomerInfo());
+    mol->getAtomWithIdx(0)->setMonomerInfo(nullptr);
+    CHECK(mol->getAtomWithIdx(0)->getMonomerInfo() == nullptr);
+
+    // make sure that the Monomer is delated when setting to nullptr
+    bool was_deleted = false;
+    auto res = new FakeAtomMonomerInfo(&was_deleted);
+    mol->getAtomWithIdx(0)->setMonomerInfo(res);
+    mol->getAtomWithIdx(0)->setMonomerInfo(nullptr);
+    CHECK(was_deleted == true);
+  }
+}
+
+TEST_CASE("Github #8304: addHs should ignore queries") {
+  SECTION("queryAtoms") {
+    auto m1 = "CC"_smiles;
+    REQUIRE(m1);
+    MolOps::addHs(*m1);
+    CHECK(m1->getNumAtoms() == 8);
+    std::vector<std::tuple<std::string, unsigned int, unsigned int>> data = {
+        {"CC", 2, 2},
+        {"[CH3]C", 5, 2},
+        {"[CH3][CH3]", 8, 2},
+    };
+    for (const auto &[sma, def, noq] : data) {
+      INFO(sma);
+      auto m2 = v2::SmilesParse::MolFromSmarts(sma);
+      REQUIRE(m2);
+      m2->updatePropertyCache(false);
+      // by default we addHs:
+      {
+        RWMol m3(*m2);
+        MolOps::addHs(m3);
+        CHECK(m3.getNumAtoms() == def);
+      }
+      // but we can change that:
+      MolOps::AddHsParameters ps;
+      ps.skipQueries = true;
+      {
+        RWMol m3(*m2);
+        MolOps::addHs(m3, ps);
+        CHECK(m3.getNumAtoms() == noq);
+      }
+    }
+  }
+  SECTION("queryBonds make their atoms queries") {
+    auto m1 = "CC"_smiles;
+    REQUIRE(m1);
+    auto qb = v2::SmilesParse::BondFromSmarts("!@");
+    REQUIRE(qb);
+    m1->replaceBond(0, qb.get());
+    // by default we addHs:
+    {
+      RWMol m2(*m1);
+      MolOps::addHs(m2);
+      CHECK(m2.getNumAtoms() == 8);
+    }
+    // but we can change that:
+    MolOps::AddHsParameters ps;
+    ps.skipQueries = true;
+    {
+      RWMol m2(*m1);
+      MolOps::addHs(m2, ps);
+      CHECK(m2.getNumAtoms() == 2);
+    }
+  }
+}
+
+TEST_CASE("stereogroups operator<<") {
+  SECTION("atoms and bonds in one") {
+    auto m = "Oc1cccc(C)c1-c1c(C)nccc1[C@H](F)Cl |wU:8.9,&1:8,15|"_smiles;
+    REQUIRE(m);
+    REQUIRE(m->getStereoGroups().size() == 1);
+    std::ostringstream oss;
+    oss << m->getStereoGroups()[0];
+    CHECK(oss.str() == "AND rId: 0 wId: 0 atoms: { 15 } bonds: { 7 }");
+  }
+  SECTION("just bonds in one") {
+    auto m = "Oc1cccc(C)c1-c1c(C)nccc1[C@H](F)Cl |wU:8.9,&1:8|"_smiles;
+    REQUIRE(m);
+    REQUIRE(m->getStereoGroups().size() == 1);
+    std::ostringstream oss;
+    oss << m->getStereoGroups()[0];
+    CHECK(oss.str() == "AND rId: 0 wId: 0 bonds: { 7 }");
+  }
+}
+
+TEST_CASE("clearPropertyCache") {
+  auto m = "CC"_smiles;
+  REQUIRE(m);
+  CHECK(!m->needsUpdatePropertyCache());
+  for (const auto atom : m->atoms()) {
+    CHECK(!atom->needsUpdatePropertyCache());
+  }
+  m->clearPropertyCache();
+  CHECK(m->needsUpdatePropertyCache());
+  for (const auto atom : m->atoms()) {
+    CHECK(atom->needsUpdatePropertyCache());
   }
 }

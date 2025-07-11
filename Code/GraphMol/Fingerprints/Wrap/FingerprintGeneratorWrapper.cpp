@@ -14,6 +14,7 @@
 #include <boost/python.hpp>
 #include <RDBoost/boost_numpy.h>
 #include <numpy/npy_common.h>
+#include <numpy/ndarrayobject.h>
 #include <RDBoost/import_array.h>
 #include <GraphMol/RDKitBase.h>
 #include <GraphMol/Fingerprints/FingerprintGenerator.h>
@@ -35,18 +36,18 @@ namespace np = boost::python::numpy;
 namespace RDKit {
 namespace FingerprintWrapper {
 
-void convertPyArguments(python::object py_fromAtoms,
-                        python::object py_ignoreAtoms,
-                        python::object py_atomInvs, python::object py_bondInvs,
-                        std::vector<std::uint32_t> *&fromAtoms,
-                        std::vector<std::uint32_t> *&ignoreAtoms,
-                        std::vector<std::uint32_t> *&customAtomInvariants,
-                        std::vector<std::uint32_t> *&customBondInvariants) {
+void convertPyArguments(
+    python::object py_fromAtoms, python::object py_ignoreAtoms,
+    python::object py_atomInvs, python::object py_bondInvs,
+    std::unique_ptr<std::vector<std::uint32_t>> &fromAtoms,
+    std::unique_ptr<std::vector<std::uint32_t>> &ignoreAtoms,
+    std::unique_ptr<std::vector<std::uint32_t>> &customAtomInvariants,
+    std::unique_ptr<std::vector<std::uint32_t>> &customBondInvariants) {
   if (!py_fromAtoms.is_none()) {
     unsigned int len =
         python::extract<unsigned int>(py_fromAtoms.attr("__len__")());
     if (len) {
-      fromAtoms = new std::vector<std::uint32_t>();
+      fromAtoms.reset(new std::vector<std::uint32_t>());
       fromAtoms->reserve(len);
       for (unsigned int i = 0; i < len; ++i) {
         fromAtoms->push_back(python::extract<std::uint32_t>(py_fromAtoms[i]));
@@ -58,7 +59,7 @@ void convertPyArguments(python::object py_fromAtoms,
     unsigned int len =
         python::extract<unsigned int>(py_ignoreAtoms.attr("__len__")());
     if (len) {
-      ignoreAtoms = new std::vector<std::uint32_t>();
+      ignoreAtoms.reset(new std::vector<std::uint32_t>());
       ignoreAtoms->reserve(len);
       for (unsigned int i = 0; i < len; ++i) {
         ignoreAtoms->push_back(
@@ -71,7 +72,7 @@ void convertPyArguments(python::object py_fromAtoms,
     unsigned int len =
         python::extract<unsigned int>(py_atomInvs.attr("__len__")());
     if (len) {
-      customAtomInvariants = new std::vector<std::uint32_t>();
+      customAtomInvariants.reset(new std::vector<std::uint32_t>());
       customAtomInvariants->reserve(len);
       for (unsigned int i = 0; i < len; ++i) {
         customAtomInvariants->push_back(
@@ -84,7 +85,7 @@ void convertPyArguments(python::object py_fromAtoms,
     unsigned int len =
         python::extract<unsigned int>(py_bondInvs.attr("__len__")());
     if (len) {
-      customBondInvariants = new std::vector<std::uint32_t>();
+      customBondInvariants.reset(new std::vector<std::uint32_t>());
       customBondInvariants->reserve(len);
       for (unsigned int i = 0; i < len; ++i) {
         customBondInvariants->push_back(
@@ -102,10 +103,10 @@ SparseIntVect<OutputType> *getSparseCountFingerprint(
     python::object py_fromAtoms, python::object py_ignoreAtoms,
     const int confId, python::object py_atomInvs, python::object py_bondInvs,
     python::object py_additionalOutput) {
-  std::vector<std::uint32_t> *fromAtoms = nullptr;
-  std::vector<std::uint32_t> *ignoreAtoms = nullptr;
-  std::vector<std::uint32_t> *customAtomInvariants = nullptr;
-  std::vector<std::uint32_t> *customBondInvariants = nullptr;
+  std::unique_ptr<std::vector<std::uint32_t>> fromAtoms;
+  std::unique_ptr<std::vector<std::uint32_t>> ignoreAtoms;
+  std::unique_ptr<std::vector<std::uint32_t>> customAtomInvariants;
+  std::unique_ptr<std::vector<std::uint32_t>> customBondInvariants;
 
   convertPyArguments(py_fromAtoms, py_ignoreAtoms, py_atomInvs, py_bondInvs,
                      fromAtoms, ignoreAtoms, customAtomInvariants,
@@ -115,13 +116,10 @@ SparseIntVect<OutputType> *getSparseCountFingerprint(
     additionalOutput = python::extract<AdditionalOutput *>(py_additionalOutput);
   }
 
-  FingerprintFuncArguments args(fromAtoms, ignoreAtoms, confId,
-                                additionalOutput, customAtomInvariants,
-                                customBondInvariants);
+  FingerprintFuncArguments args(fromAtoms.get(), ignoreAtoms.get(), confId,
+                                additionalOutput, customAtomInvariants.get(),
+                                customBondInvariants.get());
   auto result = fpGen->getSparseCountFingerprint(mol, args);
-
-  delete fromAtoms;
-  delete ignoreAtoms;
 
   return result.release();
 }
@@ -132,10 +130,10 @@ SparseBitVect *getSparseFingerprint(
     python::object py_fromAtoms, python::object py_ignoreAtoms,
     const int confId, python::object py_atomInvs, python::object py_bondInvs,
     python::object py_additionalOutput) {
-  std::vector<std::uint32_t> *fromAtoms = nullptr;
-  std::vector<std::uint32_t> *ignoreAtoms = nullptr;
-  std::vector<std::uint32_t> *customAtomInvariants = nullptr;
-  std::vector<std::uint32_t> *customBondInvariants = nullptr;
+  std::unique_ptr<std::vector<std::uint32_t>> fromAtoms;
+  std::unique_ptr<std::vector<std::uint32_t>> ignoreAtoms;
+  std::unique_ptr<std::vector<std::uint32_t>> customAtomInvariants;
+  std::unique_ptr<std::vector<std::uint32_t>> customBondInvariants;
   convertPyArguments(py_fromAtoms, py_ignoreAtoms, py_atomInvs, py_bondInvs,
                      fromAtoms, ignoreAtoms, customAtomInvariants,
                      customBondInvariants);
@@ -144,13 +142,10 @@ SparseBitVect *getSparseFingerprint(
     additionalOutput = python::extract<AdditionalOutput *>(py_additionalOutput);
   }
 
-  FingerprintFuncArguments args(fromAtoms, ignoreAtoms, confId,
-                                additionalOutput, customAtomInvariants,
-                                customBondInvariants);
+  FingerprintFuncArguments args(fromAtoms.get(), ignoreAtoms.get(), confId,
+                                additionalOutput, customAtomInvariants.get(),
+                                customBondInvariants.get());
   auto result = fpGen->getSparseFingerprint(mol, args);
-
-  delete fromAtoms;
-  delete ignoreAtoms;
 
   return result.release();
 }
@@ -161,10 +156,10 @@ SparseIntVect<std::uint32_t> *getCountFingerprint(
     python::object py_fromAtoms, python::object py_ignoreAtoms,
     const int confId, python::object py_atomInvs, python::object py_bondInvs,
     python::object py_additionalOutput) {
-  std::vector<std::uint32_t> *fromAtoms = nullptr;
-  std::vector<std::uint32_t> *ignoreAtoms = nullptr;
-  std::vector<std::uint32_t> *customAtomInvariants = nullptr;
-  std::vector<std::uint32_t> *customBondInvariants = nullptr;
+  std::unique_ptr<std::vector<std::uint32_t>> fromAtoms;
+  std::unique_ptr<std::vector<std::uint32_t>> ignoreAtoms;
+  std::unique_ptr<std::vector<std::uint32_t>> customAtomInvariants;
+  std::unique_ptr<std::vector<std::uint32_t>> customBondInvariants;
   convertPyArguments(py_fromAtoms, py_ignoreAtoms, py_atomInvs, py_bondInvs,
                      fromAtoms, ignoreAtoms, customAtomInvariants,
                      customBondInvariants);
@@ -173,13 +168,10 @@ SparseIntVect<std::uint32_t> *getCountFingerprint(
     additionalOutput = python::extract<AdditionalOutput *>(py_additionalOutput);
   }
 
-  FingerprintFuncArguments args(fromAtoms, ignoreAtoms, confId,
-                                additionalOutput, customAtomInvariants,
-                                customBondInvariants);
+  FingerprintFuncArguments args(fromAtoms.get(), ignoreAtoms.get(), confId,
+                                additionalOutput, customAtomInvariants.get(),
+                                customBondInvariants.get());
   auto result = fpGen->getCountFingerprint(mol, args);
-
-  delete fromAtoms;
-  delete ignoreAtoms;
 
   return result.release();
 }
@@ -191,10 +183,10 @@ ExplicitBitVect *getFingerprint(const FingerprintGenerator<OutputType> *fpGen,
                                 python::object py_atomInvs,
                                 python::object py_bondInvs,
                                 python::object py_additionalOutput) {
-  std::vector<std::uint32_t> *fromAtoms = nullptr;
-  std::vector<std::uint32_t> *ignoreAtoms = nullptr;
-  std::vector<std::uint32_t> *customAtomInvariants = nullptr;
-  std::vector<std::uint32_t> *customBondInvariants = nullptr;
+  std::unique_ptr<std::vector<std::uint32_t>> fromAtoms;
+  std::unique_ptr<std::vector<std::uint32_t>> ignoreAtoms;
+  std::unique_ptr<std::vector<std::uint32_t>> customAtomInvariants;
+  std::unique_ptr<std::vector<std::uint32_t>> customBondInvariants;
   convertPyArguments(py_fromAtoms, py_ignoreAtoms, py_atomInvs, py_bondInvs,
                      fromAtoms, ignoreAtoms, customAtomInvariants,
                      customBondInvariants);
@@ -203,13 +195,10 @@ ExplicitBitVect *getFingerprint(const FingerprintGenerator<OutputType> *fpGen,
     additionalOutput = python::extract<AdditionalOutput *>(py_additionalOutput);
   }
 
-  FingerprintFuncArguments args(fromAtoms, ignoreAtoms, confId,
-                                additionalOutput, customAtomInvariants,
-                                customBondInvariants);
+  FingerprintFuncArguments args(fromAtoms.get(), ignoreAtoms.get(), confId,
+                                additionalOutput, customAtomInvariants.get(),
+                                customBondInvariants.get());
   auto result = fpGen->getFingerprint(mol, args);
-
-  delete fromAtoms;
-  delete ignoreAtoms;
 
   return result.release();
 }
@@ -657,7 +646,8 @@ void wrapGenerator(const std::string &nm) {
            "generator\n\n"
            "  RETURNS: an information string\n\n")
       .def("GetOptions", getOptions<T>,
-           python::return_value_policy<python::reference_existing_object>(),
+           python::return_internal_reference<
+               1, python::with_custodian_and_ward_postcall<0, 1>>(),
            python::args("self"), "return the fingerprint options object");
 }
 
@@ -720,8 +710,8 @@ BOOST_PYTHON_MODULE(rdFingerprintGenerator) {
       .def("SetCountBounds", &setCountBoundsHelper,
            python::args("self", "bounds"), "set the bins for the count bounds");
 
-  wrapGenerator<std::uint32_t>("FingeprintGenerator32");
-  wrapGenerator<std::uint64_t>("FingeprintGenerator64");
+  wrapGenerator<std::uint32_t>("FingerprintGenerator32");
+  wrapGenerator<std::uint64_t>("FingerprintGenerator64");
 
   python::enum_<FPType>("FPType")
       .value("RDKitFP", FPType::RDKitFP)

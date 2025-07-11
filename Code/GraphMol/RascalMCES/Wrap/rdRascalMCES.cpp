@@ -168,14 +168,30 @@ BOOST_PYTHON_MODULE(rdRascalMCES) {
       .def_readwrite(
           "singleLargestFrag",
           &RDKit::RascalMCES::RascalOptions::singleLargestFrag,
-          "Return the just single largest fragment of the MCES.  This is equivalent to running with allBestMCEs=True, finding the result with the largest largestFragmentSize, and calling its largestFragmentOnly method.")
+          "Return the just single largest fragment of the MCES. It is"
+          " equivalent to running with allBestMCEs=True, finding the result"
+          " with the largest largestFragmentSize, and calling its"
+          " largestFragmentOnly method.  This option may not produce the largest"
+          " possible single fragment that the molecules have in common. If you"
+          " definitely want that you may be better off using rdFMCS.")
       .def_readwrite(
           "completeAromaticRings",
           &RDKit::RascalMCES::RascalOptions::completeAromaticRings,
           "If True (default), partial aromatic rings won't be returned.")
-      .def_readwrite("ringMatchesRingOnly",
-                     &RDKit::RascalMCES::RascalOptions::ringMatchesRingOnly,
-                     "If True (default), ring bonds won't match ring bonds.")
+      .def_readwrite(
+          "ringMatchesRingOnly",
+          &RDKit::RascalMCES::RascalOptions::ringMatchesRingOnly,
+          "If True (default is False), ring bonds won't match non-ring bonds.")
+      .def_readwrite(
+          "completeSmallestRings",
+          &RDKit::RascalMCES::RascalOptions::completeSmallestRings,
+          "If True (default is False), only complete rings present in both input molecule's RingInfo will be returned. Implies completeAromaticRings and ringMatchesRingOnly.")
+      .def_readwrite(
+          "exactConnectionsMatch",
+          &RDKit::RascalMCES::RascalOptions::exactConnectionsMatch,
+          "If True (default is False), atoms will only match atoms if they have the same\n"
+          " number of explicit connections.  E.g. the central atom of\n"
+          " C(C)(C) won't match either atom in CC")
       .def_readwrite(
           "minFragSize", &RDKit::RascalMCES::RascalOptions::minFragSize,
           "Imposes a minimum on the number of atoms in a fragment that may be part of the MCES.  Default -1 means no minimum.")
@@ -198,7 +214,32 @@ BOOST_PYTHON_MODULE(rdRascalMCES) {
           &RDKit::RascalMCES::RascalOptions::maxBondMatchPairs,
           "Too many matching bond (vertex) pairs can cause the process to run out of memory."
           "  The default of 1000 is fairly safe.  Increase with caution, as memory use increases"
-          " with the square of this number.  ");
+          " with the square of this number.  ")
+      .def_readwrite("equivalentAtoms",
+                     &RDKit::RascalMCES::RascalOptions::equivalentAtoms,
+                     "SMARTS strings defining atoms that should"
+                     "be considered equivalent. e.g."
+                     "[F,Cl,Br,I] so all halogens will match each other."
+                     "Space-separated list allowing more than 1"
+                     "class of equivalent atoms.")
+      .def_readwrite("ignoreBondOrders",
+                     &RDKit::RascalMCES::RascalOptions::ignoreBondOrders,
+                     "If True, will treat all bonds as the same,"
+                     " irrespective of order.  Default=False.")
+      .def_readwrite("ignoreAtomAromaticity",
+                     &RDKit::RascalMCES::RascalOptions::ignoreAtomAromaticity,
+                     "If True, matches atoms solely on atomic number."
+                     "  If False, will treat aromatic and aliphatic atoms"
+                     " as different.  Default=True.")
+      .def_readwrite("minCliqueSize",
+                     &RDKit::RascalMCES::RascalOptions::minCliqueSize,
+                     "Normally, the minimum clique size is specified"
+                     " via the similarityThreshold.  Sometimes it's"
+                     " more convenient to specify it directly.  If this"
+                     " is > 0, it will over-ride the"
+                     " similarityThreshold."
+                     "  Note that this refers to the"
+                     " minimum number of BONDS in the MCES. Default=0.");
 
   docString =
       "Find one or more MCESs between the 2 molecules given.  Returns a list of "

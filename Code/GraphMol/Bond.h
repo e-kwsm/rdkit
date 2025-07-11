@@ -373,23 +373,27 @@ class RDKIT_GRAPHMOL_EXPORT Bond : public RDProps {
   /// void setOwningMol(ROMol *other);
   //! sets our owning molecule
   /// void setOwningMol(ROMol &other) { setOwningMol(&other); }
+  ROMol *dp_mol;
+  INT_VECT *dp_stereoAtoms;
+  atomindex_t d_index;
+  atomindex_t d_beginAtomIdx, d_endAtomIdx;
   bool df_isAromatic;
   bool df_isConjugated;
   std::uint8_t d_bondType;
   std::uint8_t d_dirTag;
   std::uint8_t d_stereo;
-  atomindex_t d_index;
-  atomindex_t d_beginAtomIdx, d_endAtomIdx;
-  ROMol *dp_mol;
-  INT_VECT *dp_stereoAtoms;
 
   void initBond();
 };
 
-inline bool isDative(const Bond &bond) {
-  auto bt = bond.getBondType();
+inline bool isDative(const Bond::BondType bt) {
   return bt == Bond::BondType::DATIVE || bt == Bond::BondType::DATIVEL ||
          bt == Bond::BondType::DATIVER || bt == Bond::BondType::DATIVEONE;
+}
+
+inline bool isDative(const Bond &bond) {
+  auto bt = bond.getBondType();
+  return isDative(bt);
 }
 
 inline bool canSetDoubleBondStereo(const Bond &bond) {

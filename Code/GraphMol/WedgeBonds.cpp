@@ -52,12 +52,6 @@ std::tuple<unsigned int, unsigned int, unsigned int> getDoubleBondPresence(
 namespace detail {
 
 std::pair<bool, INT_VECT> countChiralNbrs(const ROMol &mol, int noNbrs) {
-  // we need ring information; make sure findSSSR has been called before
-  // if not call now
-  if (!mol.getRingInfo()->isSssrOrBetter()) {
-    MolOps::findSSSR(mol);
-  }
-
   INT_VECT nChiralNbrs(mol.getNumAtoms(), noNbrs);
 
   // start by looking for bonds that are already wedged
@@ -145,7 +139,15 @@ Bond::BondDir determineBondWedgeState(const Bond *bond,
   auto tmpPt = conf->getAtomPos(bondAtom->getIdx());
   centerLoc.z = 0.0;
   tmpPt.z = 0.0;
-  RDGeom::Point3D refVect = centerLoc.directionVector(tmpPt);
+
+  RDGeom::Point3D refVect;
+  try {
+    refVect = centerLoc.directionVector(tmpPt);
+  } catch (const std::runtime_error &) {
+    // we have a problem with the reference bond;
+    // it's probably that the center and the tmp atom overlap
+    return res;
+  }
 
   neighborBondIndices.push_back(bond->getIdx());
   neighborBondAngles.push_back(0.0);
@@ -154,7 +156,14 @@ Bond::BondDir determineBondWedgeState(const Bond *bond,
     if (nbrBond != bond) {
       tmpPt = conf->getAtomPos(otherAtom->getIdx());
       tmpPt.z = 0.0;
-      auto tmpVect = centerLoc.directionVector(tmpPt);
+      RDGeom::Point3D tmpVect;
+      try {
+        tmpVect = centerLoc.directionVector(tmpPt);
+      } catch (const std::runtime_error &) {
+        // we have a problem with the tmp bond;
+        // it's probably that the atoms overlap
+        return res;
+      }
       auto angle = refVect.signedAngleTo(tmpVect);
       if (angle < 0.0) {
         angle += 2. * M_PI;
@@ -273,6 +282,12 @@ int pickBondToWedge(
   // we use the orders calculated above to determine which order to do the
   // wedging
 
+  // we need ring information; make sure findSSSR has been called before
+  // if not call now
+  if (!mol.getRingInfo()->isSssrOrBetter()) {
+    MolOps::findSSSR(mol);
+  }
+
   std::vector<std::pair<int, int>> nbrScores;
   for (const auto bond : mol.atomBonds(atom)) {
     // can only wedge single bonds:
@@ -341,6 +356,17 @@ int pickBondToWedge(
 
 // returns map of bondIdx -> bond begin atom for those bonds that
 // need wedging.
+
+std::map<int, std::unique_ptr<Chirality::WedgeInfoBase>> pickBondsToWedge(
+    const ROMol &mol, const BondWedgingParameters *params) {
+  const Conformer *conf = nullptr;
+  if (mol.getNumConformers()) {
+    conf = &mol.getConformer();
+  }
+
+  return pickBondsToWedge(mol, params, conf);
+}
+
 std::map<int, std::unique_ptr<Chirality::WedgeInfoBase>> pickBondsToWedge(
     const ROMol &mol, const BondWedgingParameters *params,
     const Conformer *conf) {
@@ -357,16 +383,6 @@ std::map<int, std::unique_ptr<Chirality::WedgeInfoBase>> pickBondsToWedge(
                 return nChiralNbrs[i1] < nChiralNbrs[i2];
               });
   }
-#if 0
-  std::cerr << "  nbrs: ";
-  std::copy(nChiralNbrs.begin(), nChiralNbrs.end(),
-            std::ostream_iterator<int>(std::cerr, " "));
-  std::cerr << std::endl;
-  std::cerr << "  order: ";
-  std::copy(indices.begin(), indices.end(),
-            std::ostream_iterator<int>(std::cerr, " "));
-  std::cerr << std::endl;
-#endif
   std::map<int, std::unique_ptr<Chirality::WedgeInfoBase>> wedgeInfo;
   for (auto idx : indices) {
     if (nChiralNbrs[idx] > noNbrs) {
@@ -388,15 +404,7 @@ std::map<int, std::unique_ptr<Chirality::WedgeInfoBase>> pickBondsToWedge(
       wedgeInfo[bnd1] = std::move(wi);
     }
   }
-
-  if (conf == nullptr) {
-    if (mol.getNumConformers()) {
-      conf = &mol.getConformer();
-    }
-  }
-  if (conf) {
-    RDKit::Atropisomers::wedgeBondsFromAtropisomers(mol, conf, wedgeInfo);
-  }
+  RDKit::Atropisomers::wedgeBondsFromAtropisomers(mol, conf, wedgeInfo);
 
   return wedgeInfo;
 }
@@ -472,7 +480,7 @@ void wedgeMolBonds(ROMol &mol, const Conformer *conf,
     MolOps::findSSSR(mol);
   }
 
-  auto wedgeBonds = Chirality::pickBondsToWedge(mol, params);
+  auto wedgeBonds = Chirality::pickBondsToWedge(mol, params, conf);
 
   // loop over the bonds we need to wedge:
   for (const auto &[wbi, wedgeInfo] : wedgeBonds) {
@@ -540,7 +548,7 @@ void wedgeBond(Bond *bond, unsigned int fromAtomIdx, const Conformer *conf) {
   }
 }
 
-void reapplyMolBlockWedging(ROMol &mol) {
+void reapplyMolBlockWedging(ROMol &mol, bool allBondTypes) {
   MolOps::clearDirFlags(mol, true);
   for (auto b : mol.bonds()) {
     int explicit_unknown_stereo = -1;
@@ -552,7 +560,7 @@ void reapplyMolBlockWedging(ROMol &mol) {
     int bond_dir = -1;
     if (b->getPropIfPresent<int>(common_properties::_MolFileBondStereo,
                                  bond_dir)) {
-      if (canHaveDirection(*b)) {
+      if (allBondTypes || canHaveDirection(*b)) {
         if (bond_dir == 1) {
           b->setBondDir(Bond::BEGINWEDGE);
         } else if (bond_dir == 6) {
@@ -573,7 +581,7 @@ void reapplyMolBlockWedging(ROMol &mol) {
     b->getPropIfPresent<int>(common_properties::_MolFileBondCfg, cfg);
     switch (cfg) {
       case 1:
-        if (canHaveDirection(*b)) {
+        if (allBondTypes || canHaveDirection(*b)) {
           b->setBondDir(Bond::BEGINWEDGE);
         }
         break;
@@ -586,7 +594,7 @@ void reapplyMolBlockWedging(ROMol &mol) {
         }
         break;
       case 3:
-        if (canHaveDirection(*b)) {
+        if (allBondTypes || canHaveDirection(*b)) {
           b->setBondDir(Bond::BEGINDASH);
         }
         break;

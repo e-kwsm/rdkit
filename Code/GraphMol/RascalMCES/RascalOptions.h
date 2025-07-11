@@ -7,6 +7,7 @@
 //  which is included in the file license.txt, found at the root
 //  of the RDKit source tree.
 //
+#include <string>
 #include <RDGeneral/export.h>
 
 #ifndef RASCALOPTIONS_H
@@ -23,9 +24,23 @@ struct RDKIT_RASCALMCES_EXPORT RascalOptions {
       true;  // if true, partial aromatic rings won't be returned
   bool ringMatchesRingOnly =
       false;  // if true, ring bonds won't match non-ring bonds
+  bool completeSmallestRings =
+      false;  // if true, only complete rings present in both input molecule's
+              // RingInfo will be returned. Implies completeAromaticRings and
+              // ringMatchesRingOnly.
+  bool exactConnectionsMatch =
+      false; /* if true, atoms will only match atoms if they have the same
+                number of explicit connections.  E.g. the central atom of
+                C(C)(C) won't match either atom in CC */
   bool singleLargestFrag =
       false; /* if true, only return a single fragment for the MCES. Default
-                is to produce multiple matching fragments if necessary. */
+                is to produce multiple matching fragments if necessary.  This
+                works by finding the largest MCES and keeping just the largest
+                fragment.  It is equivalent to running a normal MCES search
+                and using the largestFragOnly() method on the results. This
+                option may not produce the largest possible single fragment
+                that the molecules have in common. If you definitely want that
+                you may be better off using rdFMCS. */
   int minFragSize =
       -1; /* minimum number of atoms in any fragment - -1 means no minimum */
   int maxFragSeparation = -1; /* biggest through-bond distance that bonds can
@@ -43,6 +58,23 @@ struct RDKIT_RASCALMCES_EXPORT RascalOptions {
   unsigned int maxBondMatchPairs = 1000; /* Too many matching bond (vertex)
                                    pairs can cause it to run out of memory. This
                                    is a reasonable default for my Mac. */
+  std::string equivalentAtoms = ""; /* SMARTS strings defining atoms that should
+                                       be considered equivalent. e.g.
+                                       [F,Cl,Br,I] so all halogens will match
+                                       each other. Space-separated list allowing
+                                       more than 1 class of equivalent atoms.*/
+  bool ignoreBondOrders = false; /* If true, will treat all bonds as the same,
+                                    irrespective of order. */
+  bool ignoreAtomAromaticity = true; /* If true, atoms are matched just on
+                                        atomic number; if false, will treat
+                                        aromatic and aliphatic as different. */
+  unsigned int minCliqueSize = 0;    /* Normally, the minimum clique size is
+                                        specified via the similarityThreshold.
+                                        Sometimes it's more convenient to
+                                        specify it directly.  If this is > 0,
+                                        it will over-ride the similarityThreshold.
+                                        Note that this refers to the minimum
+                                        number of BONDS in the MCES. */
 };
 }  // namespace RascalMCES
 }  // namespace RDKit

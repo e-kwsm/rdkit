@@ -19,6 +19,7 @@
 #include <GraphMol/MolStandardize/Fragment.h>
 #include <GraphMol/MolStandardize/Charge.h>
 #include <GraphMol/MolStandardize/Tautomer.h>
+#include <GraphMol/MolStandardize/Validate.h>
 
 #include <iostream>
 #include <fstream>
@@ -93,20 +94,30 @@ TEST_CASE("symmetry in the uncharger", "[uncharger]") {
 
 TEST_CASE("uncharger 'force' option") {
   SECTION("force=false (default)") {
-    auto m = "C[N+](C)(C)CC([O-])C[O-]"_smiles;
-    REQUIRE(m);
     MolStandardize::Uncharger uncharger;
-    std::unique_ptr<ROMol> outm(uncharger.uncharge(*m));
-    REQUIRE(outm);
-    CHECK(MolToSmiles(*outm) == "C[N+](C)(C)CC([O-])CO");
+    auto m1 = "C[N+](C)(C)CC([O-])C[O-]"_smiles;
+    REQUIRE(m1);
+    std::unique_ptr<ROMol> outm1(uncharger.uncharge(*m1));
+    REQUIRE(outm1);
+    CHECK(MolToSmiles(*outm1) == "C[N+](C)(C)CC([O-])CO");
+    auto m2 = "C[B-](C)(C)CC([NH3+])C[NH3+]"_smiles;
+    REQUIRE(m2);
+    std::unique_ptr<ROMol> outm2(uncharger.uncharge(*m2));
+    REQUIRE(outm2);
+    CHECK(MolToSmiles(*outm2) == "C[B-](C)(C)CC(N)C[NH3+]");
   }
   SECTION("force=true") {
-    auto m = "C[N+](C)(C)CC([O-])C[O-]"_smiles;
-    REQUIRE(m);
     MolStandardize::Uncharger uncharger(false, true);
-    std::unique_ptr<ROMol> outm(uncharger.uncharge(*m));
-    REQUIRE(outm);
-    CHECK(MolToSmiles(*outm) == "C[N+](C)(C)CC(O)CO");
+    auto m1 = "C[N+](C)(C)CC([O-])C[O-]"_smiles;
+    REQUIRE(m1);
+    std::unique_ptr<ROMol> outm1(uncharger.uncharge(*m1));
+    REQUIRE(outm1);
+    CHECK(MolToSmiles(*outm1) == "C[N+](C)(C)CC(O)CO");
+    auto m2 = "C[B-](C)(C)CC([NH3+])C[NH3+]"_smiles;
+    REQUIRE(m2);
+    std::unique_ptr<ROMol> outm2(uncharger.uncharge(*m2));
+    REQUIRE(outm2);
+    CHECK(MolToSmiles(*outm2) == "C[B-](C)(C)CC(N)CN");
   }
   SECTION("force=true doesn't alter nitro groups") {
     auto m = "CCC[N+](=O)[O-]"_smiles;
@@ -298,7 +309,10 @@ TEST_CASE(
     CHECK(MolToSmiles(*outm) == "F[B-](F)(F)F.NCC=C[NH3+]");
   }
   SECTION("make sure we don't go too far") {
-    auto m = "F[B-](F)(F)F.[NH4+2]CCC"_smiles;  // totally bogus structure
+    v2::SmilesParse::SmilesParserParams ps;
+    ps.sanitize = false;
+    auto m = v2::SmilesParse::MolFromSmiles("F[B-](F)(F)F.[NH4+2]CCC",
+                                            ps);  // totally bogus structure
     REQUIRE(m);
     bool canonicalOrdering = true;
     MolStandardize::Uncharger uncharger(canonicalOrdering);
@@ -467,7 +481,9 @@ M  END
     m->updatePropertyCache();
     MolOps::fastFindRings(*m);
     MolOps::setBondStereoFromDirections(*m);
-    MolOps::removeHs(*m, false, false, false);
+    MolOps::RemoveHsParameters rhp;
+    bool sanitize = false;
+    MolOps::removeHs(*m, rhp, sanitize);
     std::unique_ptr<RWMol> res((RWMol *)nrml.normalize(*m));
     REQUIRE(res);
     MolOps::sanitizeMol(*res);
@@ -1665,4 +1681,77 @@ TEST_CASE("superParent with multiple mols") {
     }
   }
 #endif
+}
+
+TEST_CASE(
+    "github #7642: Multithreaded InPlace standardization functions seg fault if there's a duplicate molecule") {
+  auto mol = "CC"_smiles;
+  REQUIRE(mol);
+  std::vector<RWMol *> mols{mol.get(), mol.get()};
+  int numThreads = 1;
+  CHECK_THROWS_AS(MolStandardize::cleanupInPlace(mols, numThreads),
+                  ValueErrorException);
+  CHECK_THROWS_AS(MolStandardize::normalizeInPlace(mols, numThreads),
+                  ValueErrorException);
+  CHECK_THROWS_AS(MolStandardize::reionizeInPlace(mols, numThreads),
+                  ValueErrorException);
+  CHECK_THROWS_AS(MolStandardize::removeFragmentsInPlace(mols, numThreads),
+                  ValueErrorException);
+  CHECK_THROWS_AS(MolStandardize::tautomerParentInPlace(mols, numThreads),
+                  ValueErrorException);
+  CHECK_THROWS_AS(MolStandardize::fragmentParentInPlace(mols, numThreads),
+                  ValueErrorException);
+  CHECK_THROWS_AS(MolStandardize::stereoParentInPlace(mols, numThreads),
+                  ValueErrorException);
+  CHECK_THROWS_AS(MolStandardize::isotopeParentInPlace(mols, numThreads),
+                  ValueErrorException);
+  CHECK_THROWS_AS(MolStandardize::chargeParentInPlace(mols, numThreads),
+                  ValueErrorException);
+  CHECK_THROWS_AS(MolStandardize::superParentInPlace(mols, numThreads),
+                  ValueErrorException);
+}
+
+TEST_CASE("github #7689 RDKitValidation does not catch some valence issues") {
+  SECTION("basics") {
+    std::string mb = R"CTAB(foo
+  MJ240300                      
+
+  2  1  0  0  0  0  0  0  0  0999 V2000
+   -4.8993    1.8410    0.0000 Br  0  5  0  0  0  0  0  0  0  0  0  0
+   -5.6138    1.4285    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+  2  1  1  0  0  0  0
+M  END)CTAB";
+    v2::FileParsers::MolFileParserParams ps;
+    ps.sanitize = false;
+    auto mol = v2::FileParsers::MolFromMolBlock(mb, ps);
+    REQUIRE(mol);
+    MolStandardize::RDKitValidation validator;
+    auto res = validator.validate(*mol, true);
+    REQUIRE(res.size() == 1);
+    CHECK(res[0].find(
+              "INFO: [ValenceValidation] Explicit valence for atom # 0 Br") ==
+          0);
+  }
+}
+
+TEST_CASE("Custom Scoring Functions") {
+  SECTION("basics") {
+    auto mol = "CC\\C=C(/O)[C@@H](C)C(C)=O"_smiles;
+    REQUIRE(MolStandardize::TautomerScoringFunctions::scoreRings(*mol) == 0);
+    REQUIRE(MolStandardize::TautomerScoringFunctions::scoreHeteroHs(*mol) == 0);
+    REQUIRE(MolStandardize::TautomerScoringFunctions::scoreSubstructs(*mol) ==
+            6);
+
+    auto terms = MolStandardize::TautomerScoringFunctions::
+        getDefaultTautomerScoreSubstructs();
+    REQUIRE(terms.size() == 12);
+  }
+
+  SECTION("Override default tautomer scoring functions") {
+    auto mol = "CC\\C=C(/O)[C@@H](C)C(C)=O"_smiles;
+    std::vector<MolStandardize::TautomerScoringFunctions::SubstructTerm> terms =
+        {{"C=O", "[#6]=,:[#8]", 1000}};
+    REQUIRE(MolStandardize::TautomerScoringFunctions::scoreSubstructs(
+                *mol, terms) == 1000);
+  }
 }

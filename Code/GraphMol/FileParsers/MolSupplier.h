@@ -108,7 +108,6 @@ class RDKIT_FILEPARSERS_EXPORT MolSupplier {
       delete strm;
       throw BadFileException(errout.str());
     }
-
     strm->peek();
     if (strm->bad() || strm->eof()) {
       std::ostringstream errout;
@@ -399,24 +398,6 @@ class RDKIT_FILEPARSERS_EXPORT TDTMolSupplier : public MolSupplier {
   TDTMolSupplierParams d_params;
 };
 
-//! Deprecated, will be removed in 2024.09 release
-class RDKIT_FILEPARSERS_EXPORT PDBMolSupplier : public MolSupplier {
- public:
-  explicit PDBMolSupplier(std::istream *inStream, bool takeOwnership = true,
-                          const PDBParserParams &params = PDBParserParams());
-  explicit PDBMolSupplier(const std::string &fname,
-                          const PDBParserParams &params = PDBParserParams());
-
-  ~PDBMolSupplier() override { close(); }
-
-  void init() override;
-  void reset() override;
-  std::unique_ptr<RWMol> next() override;
-  bool atEnd() override;
-
- protected:
-  PDBParserParams d_params;
-};
 #ifdef RDK_BUILD_MAEPARSER_SUPPORT
 struct MaeMolSupplierParams {
   bool sanitize = true;

@@ -20,31 +20,27 @@
 #include <GraphMol/Descriptors/OxidationNumbers.h>
 #include <GraphMol/Descriptors/PMI.h>
 #include <GraphMol/Descriptors/DCLV.h>
+#include <GraphMol/Descriptors/BCUT.h>
 
 using namespace RDKit;
 
 TEST_CASE("Kier kappa2", "[2D]") {
   SECTION("values from https://doi.org/10.1002/qsar.19860050103") {
     std::vector<std::pair<std::string, double>> data = {
-      // Table 5 from the paper
-      {"c1ccccc15.Cl5", 1.987},
-      {"c1ccccc15.F5", 1.735},
-      {"c1ccccc15.[N+]5(=O)O", 2.259},
-      {"c1ccccc15.C5(=O)C", 2.444},
-#if 0
-      // expected values from paper (differences are due to hybridization mismatches)
-        {"c1ccccc15.N5(C)C", 2.646},
-        {"c1ccccc15.C5(=O)N", 2.416},
-        {"c1ccccc15.C5(=O)O", 2.416},
-        {"c1ccccc15.S5(=O)(=O)C", 2.617},
-        {"c1ccccc15.O5", 1.756},
-#else
-      {"c1ccccc15.N5(C)C", 2.53},
-      {"c1ccccc15.C5(=O)N", 2.31},
-      {"c1ccccc15.C5(=O)O", 2.31},
-      {"c1ccccc15.S5(=O)(=O)C", 2.42},
-      {"c1ccccc15.O5", 1.65},
-#endif
+        // Table 5 from the paper
+        {"c1ccccc15.Cl5", 1.987},        {"c1ccccc15.F5", 1.735},
+        {"c1ccccc15.[N+]5(=O)O", 2.259}, {"c1ccccc15.C5(=O)C", 2.444},
+        /* expected values from paper (differences are due to hybridization
+           mismatches)
+          {"c1ccccc15.N5(C)C", 2.646},
+          {"c1ccccc15.C5(=O)N", 2.416},
+          {"c1ccccc15.C5(=O)O", 2.416},
+          {"c1ccccc15.S5(=O)(=O)C", 2.617},
+          {"c1ccccc15.O5", 1.756},
+        */
+        {"c1ccccc15.N5(C)C", 2.53},      {"c1ccccc15.C5(=O)N", 2.31},
+        {"c1ccccc15.C5(=O)O", 2.31},     {"c1ccccc15.S5(=O)(=O)C", 2.42},
+        {"c1ccccc15.O5", 1.65},
     };
     for (const auto &pr : data) {
       std::unique_ptr<ROMol> m(SmilesToMol(pr.first));
@@ -58,54 +54,52 @@ TEST_CASE("Kier kappa2", "[2D]") {
 TEST_CASE("Kier Phi", "[2D]") {
   SECTION("regression-test values from the paper") {
     std::vector<std::pair<std::string, double>> data = {
-      // Table 1 from the paper
-      {"CCCCCC", 5.00},
-      {"CCCCCCC", 6.00},
-      {"CCCCCCCC", 7.00},
-      {"CCC(C)CC", 3.20},
-      {"CC(C)C(C)C", 2.22},
-      {"CC(C)(C)CC", 1.63},
-      {"C1CCCC1", 0.92},
-      {"C1CCCCC1", 1.54},
-      {"C1CCCCCC1", 2.25},
-      {"CCCCC=C", 4.53},
-      {"C=CCCC=C", 4.07},
-      {"C#CCCCC", 4.21},
-      {"c1ccccc1", 0.91},
-      // additional from Table 2
-      {"C=CCC=CC", 4.09},
-      {"CC=CC=CC", 4.09},
-      {"C1=CCCCC1", 1.31},
-      {"C1=CC=CCC1", 1.1},
-      {"C1=CCC=CC1", 1.1},
-      // additional from Table 3
-      {"CCCCCCCCCC", 9.00},
-      {"CC(C)CCCCC", 5.14},
-      {"CCC(C)CCCC", 5.14},
-      {"CC(C)CCCC", 4.17},
-      {"CCC(C)CCC", 4.17},
-      {"CCC(CC)CCC", 5.14},
-      {"CCC(CC)CC", 4.17},
-      {"CC(C)(C)CCC", 2.34},
-      {"CC(C)C(C)CC", 3.06},
-      {"CCC(C)(C)CC", 2.34},
-      {"CC(C)(C)C(C)C", 1.85},
-      // additional from table 4
-      {"CCOCC", 3.93},
-      {"CCC(=O)CC", 2.73},
-      {"CCc1ccc(CC)cc1", 2.49},
-      {"CCC(O)CC", 3.14},
-      {"CCCC(Cl)(Cl)CCC", 4.69},
-      {"CCC(F)C(F)CC", 3.75},
-#if 0
-      // expected values from paper (differences are due to hybridization mismatches)
-        {"CCOC(=O)CC", 3.61},
-        {"CCC(=O)Nc1ccc(CC)cc1", 3.65},
-#else
-      {"CCOC(=O)CC", 3.38},
-      {"CCC(=O)Nc1ccc(CC)cc1", 3.50},
-#endif
-
+        // Table 1 from the paper
+        {"CCCCCC", 5.00},
+        {"CCCCCCC", 6.00},
+        {"CCCCCCCC", 7.00},
+        {"CCC(C)CC", 3.20},
+        {"CC(C)C(C)C", 2.22},
+        {"CC(C)(C)CC", 1.63},
+        {"C1CCCC1", 0.92},
+        {"C1CCCCC1", 1.54},
+        {"C1CCCCCC1", 2.25},
+        {"CCCCC=C", 4.53},
+        {"C=CCCC=C", 4.07},
+        {"C#CCCCC", 4.21},
+        {"c1ccccc1", 0.91},
+        // additional from Table 2
+        {"C=CCC=CC", 4.09},
+        {"CC=CC=CC", 4.09},
+        {"C1=CCCCC1", 1.31},
+        {"C1=CC=CCC1", 1.1},
+        {"C1=CCC=CC1", 1.1},
+        // additional from Table 3
+        {"CCCCCCCCCC", 9.00},
+        {"CC(C)CCCCC", 5.14},
+        {"CCC(C)CCCC", 5.14},
+        {"CC(C)CCCC", 4.17},
+        {"CCC(C)CCC", 4.17},
+        {"CCC(CC)CCC", 5.14},
+        {"CCC(CC)CC", 4.17},
+        {"CC(C)(C)CCC", 2.34},
+        {"CC(C)C(C)CC", 3.06},
+        {"CCC(C)(C)CC", 2.34},
+        {"CC(C)(C)C(C)C", 1.85},
+        // additional from table 4
+        {"CCOCC", 3.93},
+        {"CCC(=O)CC", 2.73},
+        {"CCc1ccc(CC)cc1", 2.49},
+        {"CCC(O)CC", 3.14},
+        {"CCCC(Cl)(Cl)CCC", 4.69},
+        {"CCC(F)C(F)CC", 3.75},
+        /* expected values from paper (differences are due to hybridization
+          mismatches)
+          {"CCOC(=O)CC", 3.61},
+          {"CCC(=O)Nc1ccc(CC)cc1", 3.65},
+        */
+        {"CCOC(=O)CC", 3.38},
+        {"CCC(=O)Nc1ccc(CC)cc1", 3.50},
     };
     for (const auto &pr : data) {
       std::unique_ptr<ROMol> m(SmilesToMol(pr.first));
@@ -557,7 +551,9 @@ TEST_CASE("DCLV") {
   auto m = v2::FileParsers::MolFromPDBFile(pdbName);
   REQUIRE(m);
   SECTION("defaults") {
-    Descriptors::DoubleCubicLatticeVolume dclv(*m);
+    bool isProtein = true;
+    bool includeLigand = false;
+    Descriptors::DoubleCubicLatticeVolume dclv(*m, isProtein, includeLigand);
     CHECK(dclv.getSurfaceArea() == Catch::Approx(8330.59).epsilon(0.05));
     CHECK(dclv.getVolume() == Catch::Approx(31789.6).epsilon(0.05));
     CHECK(dclv.getVDWVolume() == Catch::Approx(15355.3).epsilon(0.05));
@@ -598,8 +594,39 @@ TEST_CASE("DCLV") {
     // Original did not return surface area for Ligand only
     // so no check for Surface Area or Compactness
 
-    CHECK(dclv.getVolume() == Catch::Approx(1048.53).epsilon(0.05));
-    CHECK(dclv.getVDWVolume() == Catch::Approx(231.971).epsilon(0.05));
-    CHECK(dclv.getPackingDensity() == Catch::Approx(0.221234).epsilon(0.05));
+    CHECK(dclv.getSurfaceArea() == Catch::Approx(296.466).epsilon(0.05));
+    CHECK(dclv.getVolume() == Catch::Approx(411.972).epsilon(0.05));
+    CHECK(dclv.getVDWVolume() == Catch::Approx(139.97).epsilon(0.05));
+  }
+}
+
+TEST_CASE("Github #7364: BCUT descriptors failing for moleucles with Hs") {
+  SECTION("as reported") {
+    auto m = "CCOC#CCC(C(=O)c1ccc(C)cc1)N1CCCC1"_smiles;
+    REQUIRE(m);
+    RWMol m2 = *m;
+    MolOps::addHs(m2);
+    auto ref = Descriptors::BCUT2D(*m);
+    auto val = Descriptors::BCUT2D(m2);
+    CHECK(ref.size() == val.size());
+    CHECK(ref == val);
+  }
+}
+
+TEST_CASE(
+    "Github #6757: numAtomStereoCenters fails if molecule is sanitized a second time") {
+  SECTION("as reported") {
+    auto m = "C[C@H](F)Cl"_smiles;
+    REQUIRE(m);
+    CHECK(Descriptors::numAtomStereoCenters(*m) == 1);
+    CHECK(Descriptors::numUnspecifiedAtomStereoCenters(*m) == 0);
+    MolOps::sanitizeMol(*m);
+    CHECK(Descriptors::numAtomStereoCenters(*m) == 1);
+  }
+  SECTION("expanded") {
+    auto m = "C[C@H](F)C(O)Cl"_smiles;
+    REQUIRE(m);
+    CHECK(Descriptors::numAtomStereoCenters(*m) == 2);
+    CHECK(Descriptors::numUnspecifiedAtomStereoCenters(*m) == 1);
   }
 }
