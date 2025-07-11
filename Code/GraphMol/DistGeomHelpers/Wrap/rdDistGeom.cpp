@@ -1,5 +1,5 @@
 //
-//  Copyright (C) 2004-2017 Greg Landrum and Rational Discovery LLC
+//  Copyright (C) 2004-2025 Greg Landrum and other RDKit contributors
 //
 //   @@ All Rights Reserved @@
 //  This file is part of the RDKit.
@@ -17,6 +17,7 @@
 
 #include <GraphMol/GraphMol.h>
 #include <RDBoost/Wrap.h>
+#include <RDGeneral/ControlCHandler.h>
 
 #include <GraphMol/DistGeomHelpers/BoundsMatrixBuilder.h>
 #include <GraphMol/DistGeomHelpers/Embedder.h>
@@ -141,6 +142,10 @@ int EmbedMolecule(ROMol &mol, unsigned int maxAttempts, int seed,
     NOGIL gil;
     res = DGeomHelpers::EmbedMolecule(mol, params);
   }
+  if (ControlCHandler::getGotSignal()) {
+    PyErr_SetString(PyExc_KeyboardInterrupt, "Embedding cancelled");
+    boost::python::throw_error_already_set();
+  }
   return res;
 }
 
@@ -149,6 +154,10 @@ int EmbedMolecule2(ROMol &mol, DGeomHelpers::EmbedParameters &params) {
   {
     NOGIL gil;
     res = DGeomHelpers::EmbedMolecule(mol, params);
+  }
+  if (ControlCHandler::getGotSignal()) {
+    PyErr_SetString(PyExc_KeyboardInterrupt, "Embedding cancelled");
+    boost::python::throw_error_already_set();
   }
   return res;
 }
@@ -188,6 +197,12 @@ INT_VECT EmbedMultipleConfs(
     NOGIL gil;
     DGeomHelpers::EmbedMultipleConfs(mol, res, numConfs, params);
   }
+
+  if (ControlCHandler::getGotSignal()) {
+    PyErr_SetString(PyExc_KeyboardInterrupt, "Embedding cancelled");
+    boost::python::throw_error_already_set();
+  }
+
   return res;
 }
 
@@ -197,6 +212,10 @@ INT_VECT EmbedMultipleConfs2(ROMol &mol, unsigned int numConfs,
   {
     NOGIL gil;
     DGeomHelpers::EmbedMultipleConfs(mol, res, numConfs, params);
+  }
+  if (ControlCHandler::getGotSignal()) {
+    PyErr_SetString(PyExc_KeyboardInterrupt, "Embedding cancelled");
+    boost::python::throw_error_already_set();
   }
   return res;
 }
@@ -244,6 +263,9 @@ getsrETKDGv3() {  //! Parameters corresponding improved ETKDG by Wang, Witek,
 PyEmbedParameters *getKDG() { return new PyEmbedParameters(DGeomHelpers::KDG); }
 PyEmbedParameters *getETDG() {
   return new PyEmbedParameters(DGeomHelpers::ETDG);
+}
+PyEmbedParameters *getETDGv2() {
+  return new PyEmbedParameters(DGeomHelpers::ETDGv2);
 }
 
 python::tuple getExpTorsHelper(const RDKit::ROMol &mol, bool useExpTorsions,
@@ -468,6 +490,9 @@ BOOST_PYTHON_MODULE(rdDistGeom) {
       .def_readwrite(
           "numThreads", &PyEmbedParameters::numThreads,
           "number of threads to use when embedding multiple conformations")
+      .def_readwrite("timeout", &RDKit::DGeomHelpers::EmbedParameters::timeout,
+                     "maximum time in seconds to generate a conformer for a "
+                     "single molecule fragment. If set to 0, no timeout is set")
       .def_readwrite("randomSeed", &PyEmbedParameters::randomSeed,
                      "seed for the random number generator")
       .def_readwrite("clearConfs", &PyEmbedParameters::clearConfs,
@@ -487,6 +512,8 @@ BOOST_PYTHON_MODULE(rdDistGeom) {
       .def_readwrite("optimizerForceTol", &PyEmbedParameters::optimizerForceTol,
                      "the tolerance to be used during the distance-geometry "
                      "force field minimization")
+      .def_readwrite("basinThresh", &PyEmbedParameters::basinThresh,
+                     "set the basin threshold for the DGeom force field.")
       .def_readwrite("ignoreSmoothingFailures",
                      &PyEmbedParameters::ignoreSmoothingFailures,
                      "try and embed the molecule if if triangle smoothing of "
@@ -554,7 +581,8 @@ BOOST_PYTHON_MODULE(rdDistGeom) {
           &PyEmbedParameters::symmetrizeConjugatedTerminalGroupsForPruning,
           "symmetrize terminal conjugated groups for RMSD pruning")
       .def("SetCoordMap", &PyEmbedParameters::setCoordMap, python::args("self"),
-           "sets the coordmap to be used");
+           "sets the coordmap to be used")
+      .def("__setattr__", &safeSetattr);
 
   docString =
       "Use distance geometry to obtain multiple sets of \n\
@@ -604,6 +632,10 @@ BOOST_PYTHON_MODULE(rdDistGeom) {
   python::def("ETDG", RDKit::getETDG,
               "Returns an EmbedParameters object for the ETDG method.",
               python::return_value_policy<python::manage_new_object>());
+  python::def(
+      "ETDGv2", RDKit::getETDGv2,
+      "Returns an EmbedParameters object for the ETDG method - version 2.",
+      python::return_value_policy<python::manage_new_object>());
   python::def("KDG", RDKit::getKDG,
               "Returns an EmbedParameters object for the KDG method.",
               python::return_value_policy<python::manage_new_object>());

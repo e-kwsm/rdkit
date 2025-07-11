@@ -301,13 +301,15 @@ def EnumerateStereoisomers(m, options=StereoEnumerationOptions(), verbose=False)
   for atom in tm.GetAtoms():
     atom.ClearProp("_CIPCode")
   for bond in tm.GetBonds():
-    if bond.GetBondDir() == Chem.BondDir.EITHERDOUBLE:
+    if bond.GetBondDir() == Chem.BondDir.EITHERDOUBLE or bond.GetBondDir() == Chem.BondDir.UNKNOWN:
       bond.SetBondDir(Chem.BondDir.NONE)
   flippers = _getFlippers(tm, options)
   nCenters = len(flippers)
   if not nCenters:
     yield tm
     return
+
+  tm.SetProp('_MolFileChiralFlag', '1')
 
   if (options.maxIsomers == 0 or 2**nCenters <= options.maxIsomers):
     bitsource = _RangeBitsGenerator(nCenters)

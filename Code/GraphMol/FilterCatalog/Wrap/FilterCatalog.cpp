@@ -405,7 +405,8 @@ struct filtercat_wrapper {
              python::args("self", "base"),
              "Add a FilterMatcherBase that should not appear in a molecule");
 
-    python::class_<FilterHierarchyMatcher, FilterHierarchyMatcher *,
+    python::class_<FilterHierarchyMatcher,
+                   boost::shared_ptr<FilterHierarchyMatcher>,
                    python::bases<FilterMatcherBase>>(
         "FilterHierarchyMatcher", FilterHierarchyMatcherDoc,
         python::init<>(python::args("self")))
@@ -420,12 +421,16 @@ struct filtercat_wrapper {
              python::args("self", "hierarchy"),
              "Add a child node to this hierarchy.");
 
-    python::register_ptr_to_python<boost::shared_ptr<FilterHierarchyMatcher>>();
+    if (!is_python_converter_registered<
+            boost::shared_ptr<const FilterHierarchyMatcher>>()) {
+      python::register_ptr_to_python<
+          boost::shared_ptr<FilterHierarchyMatcher>>();
+    }
 
     bool noproxy = true;
     RegisterVectorConverter<RDKit::ROMol *>("MolList", noproxy);
 
-    python::class_<FilterCatalogEntry, FilterCatalogEntry *,
+    python::class_<FilterCatalogEntry, boost::shared_ptr<FilterCatalogEntry>,
                    boost::shared_ptr<const FilterCatalogEntry>>(
         "FilterCatalogEntry", FilterCatalogEntryDoc,
         python::init<>(python::args("self")))
@@ -462,9 +467,6 @@ struct filtercat_wrapper {
                  FilterCatalogEntry::clearProp,
              python::args("self", "key"));
 
-    python::register_ptr_to_python<boost::shared_ptr<FilterCatalogEntry>>();
-    python::register_ptr_to_python<
-        boost::shared_ptr<const FilterCatalogEntry>>();
     python::def(
         "GetFunctionalGroupHierarchy", GetFunctionalGroupHierarchy,
         "Returns the functional group hierarchy filter catalog",
@@ -492,7 +494,8 @@ struct filtercat_wrapper {
 
     {
       python::scope in_FilterCatalogParams =
-          python::class_<FilterCatalogParams, FilterCatalogParams *>(
+          python::class_<FilterCatalogParams,
+                         boost::shared_ptr<FilterCatalogParams>>(
               "FilterCatalogParams", python::init<>(python::args("self")))
               .def(python::init<FilterCatalogParams::FilterCatalogs>(
                   python::args("self", "catalogs"),

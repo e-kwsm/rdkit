@@ -58,7 +58,7 @@ class RDKIT_GRAPHMOL_EXPORT StereoGroup {
   StereoGroup(StereoGroupType grouptype, std::vector<Atom *> &&atoms,
               std::vector<Bond *> &&bonds, unsigned readId = 0);
   StereoGroup(StereoGroupType grouptype, const std::vector<Atom *> &atoms,
-              std::vector<Bond *> &bonds, unsigned readId = 0);
+              const std::vector<Bond *> &bonds, unsigned readId = 0);
 
   StereoGroup(const StereoGroup &other) = default;
   StereoGroup &operator=(const StereoGroup &other) = default;
@@ -85,9 +85,13 @@ class RDKIT_GRAPHMOL_EXPORT StereoGroup {
   }
   friend RDKIT_GRAPHMOL_EXPORT void removeAtomFromGroups(
       const Atom *atom, std::vector<StereoGroup> &groups);
+  friend RDKIT_GRAPHMOL_EXPORT void removeBondFromGroups(
+      const Bond *bond, std::vector<StereoGroup> &groups);
 };
 RDKIT_GRAPHMOL_EXPORT void removeAtomFromGroups(
     const Atom *atom, std::vector<StereoGroup> &groups);
+RDKIT_GRAPHMOL_EXPORT void removeBondFromGroups(
+    const Bond *bond, std::vector<StereoGroup> &groups);
 RDKIT_GRAPHMOL_EXPORT void removeGroupsWithAtom(
     const Atom *atom, std::vector<StereoGroup> &groups);
 RDKIT_GRAPHMOL_EXPORT void removeGroupsWithAtoms(
