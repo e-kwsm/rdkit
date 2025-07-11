@@ -1995,7 +1995,7 @@ case YY_STATE_EOF(IN_ATOM_STATE):
 	YY_BREAK
 case 182:
 YY_RULE_SETUP
-return yytext[0];
+return BAD_CHARACTER;
 	YY_BREAK
 case 183:
 YY_RULE_SETUP

@@ -52,12 +52,6 @@ std::tuple<unsigned int, unsigned int, unsigned int> getDoubleBondPresence(
 namespace detail {
 
 std::pair<bool, INT_VECT> countChiralNbrs(const ROMol &mol, int noNbrs) {
-  // we need ring information; make sure findSSSR has been called before
-  // if not call now
-  if (!mol.getRingInfo()->isSssrOrBetter()) {
-    MolOps::findSSSR(mol);
-  }
-
   INT_VECT nChiralNbrs(mol.getNumAtoms(), noNbrs);
 
   // start by looking for bonds that are already wedged
@@ -288,6 +282,12 @@ int pickBondToWedge(
   // we use the orders calculated above to determine which order to do the
   // wedging
 
+  // we need ring information; make sure findSSSR has been called before
+  // if not call now
+  if (!mol.getRingInfo()->isSssrOrBetter()) {
+    MolOps::findSSSR(mol);
+  }
+
   std::vector<std::pair<int, int>> nbrScores;
   for (const auto bond : mol.atomBonds(atom)) {
     // can only wedge single bonds:
@@ -383,16 +383,6 @@ std::map<int, std::unique_ptr<Chirality::WedgeInfoBase>> pickBondsToWedge(
                 return nChiralNbrs[i1] < nChiralNbrs[i2];
               });
   }
-#if 0
-  std::cerr << "  nbrs: ";
-  std::copy(nChiralNbrs.begin(), nChiralNbrs.end(),
-            std::ostream_iterator<int>(std::cerr, " "));
-  std::cerr << std::endl;
-  std::cerr << "  order: ";
-  std::copy(indices.begin(), indices.end(),
-            std::ostream_iterator<int>(std::cerr, " "));
-  std::cerr << std::endl;
-#endif
   std::map<int, std::unique_ptr<Chirality::WedgeInfoBase>> wedgeInfo;
   for (auto idx : indices) {
     if (nChiralNbrs[idx] > noNbrs) {

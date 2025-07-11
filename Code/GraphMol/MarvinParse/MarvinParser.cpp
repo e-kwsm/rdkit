@@ -172,6 +172,9 @@ class MarvinCMLReader {
           query->setProp(common_properties::molFileAlias, marvinAtom->mrvAlias);
         }
         query->setQuery(makeAtomNullQuery());
+        query->setIsotope(marvinAtom->rgroupRef);
+        query->setProp(common_properties::_MolFileRLabel,
+                       static_cast<unsigned int>(marvinAtom->rgroupRef));
       }
 
       else if (symb.size() <= 2) {
@@ -639,7 +642,7 @@ class MarvinCMLReader {
           unsigned int failedOp = 0;
           MolOps::sanitizeMol(*mol, failedOp, MolOps::SANITIZE_CLEANUP);
           MolOps::detectBondStereochemistry(*mol);
-          MolOps::removeHs(*mol, false, false);
+          MolOps::removeHs(*mol);
         } else {
           MolOps::sanitizeMol(*mol);
           MolOps::detectBondStereochemistry(*mol);
