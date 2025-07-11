@@ -51,6 +51,9 @@ namespace RDKit {
 //*************************************
 
 namespace {
+// V2000 atom coordinate limits
+constexpr double MAX_V2000_COORD = 100000.;
+constexpr double MIN_V2000_COORD = -10000.;
 
 int getQueryBondTopology(const Bond *bond) {
   PRECONDITION(bond, "no bond");
@@ -546,9 +549,10 @@ bool hasNonDefaultValence(const Atom *atom) {
       SmilesWrite ::inOrganicSubset(atom->getAtomicNum())) {
     // for the ones we "know", we may have to specify the valence if it's
     // not the default value
+    auto effAtomicNum = atom->getAtomicNum() - atom->getFormalCharge();
     return atom->getNoImplicit() &&
-           (atom->getExplicitValence() !=
-            PeriodicTable::getTable()->getDefaultValence(atom->getAtomicNum()));
+           (static_cast<int>(atom->getValence(Atom::ValenceType::EXPLICIT)) !=
+            PeriodicTable::getTable()->getDefaultValence(effAtomicNum));
   }
   return true;
 }
@@ -582,6 +586,7 @@ void GetMolFileAtomProperties(const Atom *atom, const Conformer *conf,
       parityFlag = getAtomParityFlag(atom, conf);
     }
   }
+  
   if (hasNonDefaultValence(atom)) {
     if (atom->getTotalDegree() == 0) {
       // Specify zero valence for elements/metals without neighbors
@@ -604,6 +609,12 @@ const std::string GetMolFileAtomLine(const Atom *atom, const Conformer *conf,
   GetMolFileAtomProperties(atom, conf, totValence, atomMapNumber, parityFlag, x,
                            y, z);
 
+  if( (x >= MAX_V2000_COORD || x <= MIN_V2000_COORD) ||
+      (y >= MAX_V2000_COORD || y <= MIN_V2000_COORD) ||
+      (z >= MAX_V2000_COORD || z <= MIN_V2000_COORD) ) {
+    throw ValueErrorException("MolFile coordinates must be in (-100000, 1000000)");
+  }
+  
   int massDiff, chg, stereoCare, hCount, rxnComponentType, rxnComponentNumber,
       inversionFlag, exactChangeFlag;
   massDiff = 0;
@@ -620,16 +631,6 @@ const std::string GetMolFileAtomLine(const Atom *atom, const Conformer *conf,
                          rxnComponentNumber);
 
   std::string symbol = AtomGetMolFileSymbol(atom, true, queryListAtoms);
-#if 0
-  const boost::format fmter(
-      "%10.4f%10.4f%10.4f %3s%2d%3d%3d%3d%3d%3d  0%3d%3d%3d%3d%3d");
-  std::stringstream ss;
-  ss << boost::format(fmter) % x % y % z % symbol.c_str() % massDiff % chg %
-            parityFlag % hCount % stereoCare % totValence % rxnComponentType %
-            rxnComponentNumber % atomMapNumber % inversionFlag %
-            exactChangeFlag;
-  res += ss.str();
-#else
   // it feels ugly to use snprintf instead of boost::format, but at least of the
   // time of this writing (with boost 1.55), the snprintf version runs in 20% of
   // the time.
@@ -653,7 +654,6 @@ const std::string GetMolFileAtomLine(const Atom *atom, const Conformer *conf,
 
 #endif
   res += dest;
-#endif
   return res;
 };
 
@@ -704,13 +704,17 @@ int BondGetMolFileSymbol(const Bond *bond) {
 const std::string GetMolFileBondLine(
     const Bond *bond,
     const std::map<int, std::unique_ptr<Chirality::WedgeInfoBase>> &wedgeBonds,
-    const Conformer *conf) {
+    const Conformer *conf, bool wasAromatic) {
   PRECONDITION(bond, "");
 
-  int dirCode;
-  bool reverse;
+  int dirCode = 0;
+  bool reverse = false;
   RDKit::Chirality::GetMolFileBondStereoInfo(bond, wedgeBonds, conf, dirCode,
                                              reverse);
+  // do not cross bonds which were aromatic before kekulization
+  if (wasAromatic && dirCode == 3) {
+    dirCode = 0;
+  }
   int symbol = BondGetMolFileSymbol(bond);
 
   std::stringstream ss;
@@ -856,6 +860,10 @@ const std::string GetV3000MolFileAtomLine(
     if (atom->getPropIfPresent(common_properties::molSubstCount, iprop) &&
         iprop) {
       ss << " SUBST=" << iprop;
+    }
+    if (atom->getPropIfPresent(common_properties::molRingBondCount, iprop) &&
+        iprop) {
+      ss << " RBCNT=" << iprop;
     }
   }
   {
@@ -1040,13 +1048,17 @@ void moveAdditionalPropertiesToSGroups(RWMol &mol) {
 const std::string GetV3000MolFileBondLine(
     const Bond *bond,
     const std::map<int, std::unique_ptr<Chirality::WedgeInfoBase>> &wedgeBonds,
-    const Conformer *conf) {
+    const Conformer *conf, bool wasAromatic) {
   PRECONDITION(bond, "");
 
-  int dirCode;
-  bool reverse;
+  int dirCode = 0;
+  bool reverse = false;
   RDKit::Chirality::GetMolFileBondStereoInfo(bond, wedgeBonds, conf, dirCode,
                                              reverse);
+  // do not cross bonds which were aromatic before kekulization
+  if (wasAromatic && dirCode == 3) {
+    dirCode = 0;
+  }
 
   std::stringstream ss;
   ss << "M  V30 " << bond->getIdx() + 1;
@@ -1144,7 +1156,8 @@ void appendEnhancedStereoGroups(
   }
 }
 namespace FileParserUtils {
-std::string getV3000CTAB(const ROMol &tmol, int confId,
+std::string getV3000CTAB(const ROMol &tmol,
+                         const boost::dynamic_bitset<> &wasAromatic, int confId,
                          unsigned int precision) {
   auto nAtoms = tmol.getNumAtoms();
   auto nBonds = tmol.getNumBonds();
@@ -1180,9 +1193,9 @@ std::string getV3000CTAB(const ROMol &tmol, int confId,
   if (tmol.getNumBonds()) {
     res += "M  V30 BEGIN BOND\n";
 
-    for (ROMol::ConstBondIterator bondIt = tmol.beginBonds();
-         bondIt != tmol.endBonds(); ++bondIt) {
-      res += GetV3000MolFileBondLine(*bondIt, wedgeBonds, conf);
+    for (const auto bond : tmol.bonds()) {
+      res += GetV3000MolFileBondLine(bond, wedgeBonds, conf,
+                                     wasAromatic[bond->getIdx()]);
       res += "\n";
     }
     res += "M  V30 END BOND\n";
@@ -1212,17 +1225,21 @@ std::string getV3000CTAB(const ROMol &tmol, int confId,
   return res;
 }
 }  // namespace FileParserUtils
+enum class MolFileFormat {
+  V2000,
+  V3000,
+  unspecified
+};
+
 //------------------------------------------------
 //
 //  gets a mol block as a string
 //
 //------------------------------------------------
-
-enum class MolFileFormat { V2000, V3000, unspecified };
-
 std::string outputMolToMolBlock(const RWMol &tmol, int confId,
                                 MolFileFormat whichFormat,
-                                unsigned int precision) {
+                                unsigned int precision,
+                                const boost::dynamic_bitset<> &aromaticBonds) {
   std::string res;
   unsigned int nAtoms, nBonds, nLists, chiralFlag, nsText, nRxnComponents;
   unsigned int nReactants, nProducts, nIntermediates;
@@ -1255,6 +1272,25 @@ std::string outputMolToMolBlock(const RWMol &tmol, int confId,
     conf = &(tmol.getConformer(confId));
   }
 
+  bool coordMagnitudeTooLargeForV2K = false;
+  if(conf) {
+    for(auto &pos : conf->getPositions()) {
+      if( (pos.x >= MAX_V2000_COORD || pos.x <= MIN_V2000_COORD) ||
+	        (pos.y >= MAX_V2000_COORD || pos.y <= MIN_V2000_COORD) ||
+	        (pos.z >= MAX_V2000_COORD || pos.z <= MIN_V2000_COORD) ) {
+	          coordMagnitudeTooLargeForV2K = true;
+      }
+    }
+  }
+
+  if (whichFormat == MolFileFormat::V2000 && coordMagnitudeTooLargeForV2K) {
+    throw ValueErrorException(
+			      "V2000 format does not support atom positions <= " +
+			      std::to_string((int)MIN_V2000_COORD) +
+			      " or >= " + std::to_string((int)MAX_V2000_COORD) );
+  }
+
+  
   std::string text;
   if (tmol.getPropIfPresent(common_properties::_Name, text)) {
     res += text;
@@ -1296,7 +1332,7 @@ std::string outputMolToMolBlock(const RWMol &tmol, int confId,
   if (whichFormat == MolFileFormat::V3000) {
     isV3000 = true;
   } else if (whichFormat == MolFileFormat::unspecified &&
-             (hasDative || nAtoms > 999 || nBonds > 999 || nSGroups > 999 ||
+             (coordMagnitudeTooLargeForV2K || hasDative || nAtoms > 999 || nBonds > 999 || nSGroups > 999 ||
               !tmol.getStereoGroups().empty())) {
     isV3000 = true;
   }
@@ -1342,9 +1378,9 @@ std::string outputMolToMolBlock(const RWMol &tmol, int confId,
 
     auto wedgeBonds = Chirality::pickBondsToWedge(tmol, nullptr, conf);
 
-    for (ROMol::ConstBondIterator bondIt = tmol.beginBonds();
-         bondIt != tmol.endBonds(); ++bondIt) {
-      res += GetMolFileBondLine(*bondIt, wedgeBonds, conf);
+    for (const auto bond : tmol.bonds()) {
+      res += GetMolFileBondLine(bond, wedgeBonds, conf,
+                                aromaticBonds[bond->getIdx()]);
       res += "\n";
     }
 
@@ -1360,19 +1396,26 @@ std::string outputMolToMolBlock(const RWMol &tmol, int confId,
     // FIX: R-group logic, SGroups and 3D features etc.
   } else {
     // V3000 output.
-    res += FileParserUtils::getV3000CTAB(tmol, confId, precision);
+    res +=
+        FileParserUtils::getV3000CTAB(tmol, aromaticBonds, confId, precision);
   }
   res += "M  END\n";
   return res;
 }
 
-void prepareMol(RWMol &trwmol, const MolWriterParams &params) {
+void prepareMol(RWMol &trwmol, const MolWriterParams &params,
+                boost::dynamic_bitset<> &aromaticBonds) {
   // NOTE: kekulize the molecule before writing it out
   // because of the way mol files handle aromaticity
   if (trwmol.needsUpdatePropertyCache()) {
     trwmol.updatePropertyCache(false);
   }
   if (params.kekulize && trwmol.getNumBonds()) {
+    for (const auto bond : trwmol.bonds()) {
+      if (bond->getIsAromatic()) {
+        aromaticBonds.set(bond->getIdx());
+      }
+    }
     MolOps::Kekulize(trwmol);
   }
 
@@ -1387,19 +1430,22 @@ std::string MolToMolBlock(const ROMol &mol, const MolWriterParams &params,
                           int confId) {
   RDKit::Utils::LocaleSwitcher switcher;
   RWMol trwmol(mol);
-  prepareMol(trwmol, params);
+  boost::dynamic_bitset<> aromaticBonds(trwmol.getNumBonds());
+  prepareMol(trwmol, params, aromaticBonds);
   MolFileFormat whichFormat =
       params.forceV3000 ? MolFileFormat::V3000 : MolFileFormat::unspecified;
-  return outputMolToMolBlock(trwmol, confId, whichFormat, params.precision);
+  return outputMolToMolBlock(trwmol, confId, whichFormat, params.precision,
+                             aromaticBonds);
 }
 
 std::string MolToV2KMolBlock(const ROMol &mol, const MolWriterParams &params,
                              int confId) {
   RDKit::Utils::LocaleSwitcher switcher;
   RWMol trwmol(mol);
-  prepareMol(trwmol, params);
+  boost::dynamic_bitset<> aromaticBonds(trwmol.getNumBonds());
+  prepareMol(trwmol, params, aromaticBonds);
   return outputMolToMolBlock(trwmol, confId, MolFileFormat::V2000,
-                             params.precision);
+                             params.precision, aromaticBonds);
 }
 
 //------------------------------------------------

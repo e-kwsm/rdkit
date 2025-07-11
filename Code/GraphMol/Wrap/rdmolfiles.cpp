@@ -99,7 +99,7 @@ ROMol *MolFromSmarts(python::object ismarts, bool mergeHs,
   }
   return static_cast<ROMol *>(newM);
 }
-ROMol *MolFromTPLFile(const char *filename, bool sanitize = true,
+ROMol *MolFromTPLFile(const std::string &filename, bool sanitize = true,
                       bool skipFirstConf = false) {
   RWMol *newM;
   try {
@@ -126,7 +126,7 @@ ROMol *MolFromTPLBlock(python::object itplBlock, bool sanitize = true,
   return static_cast<ROMol *>(newM);
 }
 
-ROMol *MolFromMolFileHelper(const char *molFilename, bool sanitize,
+ROMol *MolFromMolFileHelper(const std::string &molFilename, bool sanitize,
                             bool removeHs, bool strictParsing) {
   RWMol *newM = nullptr;
   try {
@@ -156,8 +156,8 @@ ROMol *MolFromMolBlock(python::object imolBlock, bool sanitize, bool removeHs,
   return static_cast<ROMol *>(newM);
 }
 
-ROMol *MolFromMolFile(const char *molFilename, bool sanitize, bool removeHs,
-                      bool strictParsing) {
+ROMol *MolFromMolFile(const std::string &molFilename, bool sanitize,
+                      bool removeHs, bool strictParsing) {
   RWMol *newM = nullptr;
   try {
     newM = MolFileToMol(molFilename, sanitize, removeHs, strictParsing);
@@ -171,7 +171,61 @@ ROMol *MolFromMolFile(const char *molFilename, bool sanitize, bool removeHs,
   return static_cast<ROMol *>(newM);
 }
 
-ROMol *MolFromMrvFile(const char *molFilename, bool sanitize, bool removeHs) {
+RDKit::ROMol *MolFromSCSRBlock(const std::string &molBlock, bool sanitize,
+                               bool removeHs, python::object pyParams) {
+  RDKit::v2::FileParsers::MolFromSCSRParams scsrParams;
+  if (pyParams) {
+    scsrParams =
+        python::extract<RDKit::v2::FileParsers::MolFromSCSRParams>(pyParams);
+  }
+  std::istringstream inStream(molBlock);
+  unsigned int line = 0;
+  try {
+    RDKit::v2::FileParsers::MolFileParserParams params;
+    params.sanitize = sanitize;
+    params.removeHs = removeHs;
+    params.strictParsing = false;
+    auto mol = RDKit::v2::FileParsers::MolFromSCSRDataStream(
+        inStream, line, params, scsrParams);
+
+    return static_cast<ROMol *>(mol.release());
+
+  } catch (RDKit::FileParseException &e) {
+    BOOST_LOG(rdWarningLog) << e.what() << std::endl;
+  } catch (...) {
+  }
+  return static_cast<ROMol *>(nullptr);
+}
+
+RDKit::ROMol *MolFromSCSRFile(const std::string &molFilename, bool sanitize,
+                              bool removeHs, python::object pyParams) {
+  RDKit::v2::FileParsers::MolFromSCSRParams scsrParams;
+  if (pyParams) {
+    scsrParams =
+        python::extract<RDKit::v2::FileParsers::MolFromSCSRParams>(pyParams);
+  }
+  try {
+    RDKit::v2::FileParsers::MolFileParserParams params;
+    params.sanitize = sanitize;
+    params.removeHs = removeHs;
+    params.strictParsing = false;
+    auto mol = RDKit::v2::FileParsers::MolFromSCSRFile(molFilename, params,
+                                                       scsrParams);
+
+    return static_cast<ROMol *>(mol.release());
+
+  } catch (RDKit::BadFileException &e) {
+    PyErr_SetString(PyExc_IOError, e.what());
+    throw python::error_already_set();
+  } catch (RDKit::FileParseException &e) {
+    BOOST_LOG(rdWarningLog) << e.what() << std::endl;
+  } catch (...) {
+  }
+  return static_cast<ROMol *>(nullptr);
+}
+
+ROMol *MolFromMrvFile(const std::string &molFilename, bool sanitize,
+                      bool removeHs) {
   RWMol *newM = nullptr;
   try {
     newM = MrvFileToMol(molFilename, sanitize, removeHs);
@@ -226,7 +280,7 @@ ROMol *MolFromSVG(python::object imolBlock, bool sanitize, bool removeHs) {
   return static_cast<ROMol *>(res);
 }
 
-ROMol *MolFromMol2File(const char *molFilename, bool sanitize = true,
+ROMol *MolFromMol2File(const std::string &molFilename, bool sanitize = true,
                        bool removeHs = true, bool cleanupSubstructures = true) {
   RWMol *newM;
   try {
@@ -255,7 +309,7 @@ ROMol *MolFromMol2Block(std::string mol2Block, bool sanitize = true,
   return static_cast<ROMol *>(newM);
 }
 
-ROMol *MolFromPDBFile(const char *filename, bool sanitize, bool removeHs,
+ROMol *MolFromPDBFile(const std::string &filename, bool sanitize, bool removeHs,
                       unsigned int flavor, bool proximityBonding) {
   RWMol *newM = nullptr;
   try {
@@ -415,8 +469,12 @@ std::vector<unsigned int> CanonicalRankAtoms(
     bool includeIsotopes = true, bool includeAtomMaps = true,
     bool includeChiralPresence = false) {
   std::vector<unsigned int> ranks(mol.getNumAtoms());
+  const bool includeStereoGroups = true;
+  const bool useNonStereoRanks = false;
+
   Canon::rankMolAtoms(mol, ranks, breakTies, includeChirality, includeIsotopes,
-                      includeAtomMaps, includeChiralPresence);
+                      includeAtomMaps, includeChiralPresence,
+                      includeStereoGroups, useNonStereoRanks);
   return ranks;
 }
 
@@ -502,7 +560,7 @@ python::list MolToRandomSmilesHelper(const ROMol &mol, unsigned int numSmiles,
   return pyres;
 }
 
-ROMol *MolFromPNGFile(const char *filename, python::object pyParams) {
+ROMol *MolFromPNGFile(const std::string &filename, python::object pyParams) {
   SmilesParserParams params;
   if (pyParams) {
     params = python::extract<SmilesParserParams>(pyParams);
@@ -600,7 +658,8 @@ python::object addMetadataToPNGStringHelper(python::dict pymetadata,
   return retval;
 }
 
-python::object MolsFromPNGFile(const char *filename, const std::string &tag,
+python::object MolsFromPNGFile(const std::string &filename,
+                               const std::string &tag,
                                python::object pyParams) {
   SmilesParserParams params;
   if (pyParams) {
@@ -641,7 +700,7 @@ python::tuple MolsFromPNGString(python::object png, const std::string &tag,
   return python::tuple(res);
 }
 
-python::object MolsFromCDXMLFile(const char *filename, bool sanitize,
+python::object MolsFromCDXMLFile(const std::string &filename, bool sanitize,
                                  bool removeHs) {
   std::vector<std::unique_ptr<RWMol>> mols;
   try {
@@ -782,7 +841,7 @@ BOOST_PYTHON_MODULE(rdmolfiles) {
       "Construct a molecule from a TPL block.\n\n\
   ARGUMENTS:\n\
 \n\
-    - fileName: name of the file to read\n\
+    - tplBlock: string containing the TPL block\n\
 \n\
     - sanitize: (optional) toggles sanitization of the molecule.\n\
       Defaults to True.\n\
@@ -908,7 +967,7 @@ BOOST_PYTHON_MODULE(rdmolfiles) {
       "Construct a molecule from an XYZ file.\n\n\
   ARGUMENTS:\n\
 \n\
-    - xyzname: name of the file to read\n\
+    - xyzFileName: name of the file to read\n\
 \n\
   RETURNS:\n\
 \n\
@@ -929,7 +988,7 @@ BOOST_PYTHON_MODULE(rdmolfiles) {
     a Mol object, None on failure.\n\
 \n";
   python::def("MolFromXYZBlock", RDKit::MolFromXYZBlock,
-              (python::arg("xyzFileName")), docString.c_str(),
+              (python::arg("xyzBlock")), docString.c_str(),
               python::return_value_policy<python::manage_new_object>());
 
   docString =
@@ -952,7 +1011,7 @@ BOOST_PYTHON_MODULE(rdmolfiles) {
   NOTE: this functionality should be considered beta.\n\
 \n";
   python::def("MolFromRDKitSVG", RDKit::MolFromSVG,
-              (python::arg("molBlock"), python::arg("sanitize") = true,
+              (python::arg("svg"), python::arg("sanitize") = true,
                python::arg("removeHs") = true),
               docString.c_str(),
               python::return_value_policy<python::manage_new_object>());
@@ -966,7 +1025,7 @@ BOOST_PYTHON_MODULE(rdmolfiles) {
 \n\
   ARGUMENTS:\n                                  \
 \n\
-    - fileName: name of the file to read\n\
+    - mol2FileName: name of the file to read\n\
 \n\
     - sanitize: (optional) toggles sanitization of the molecule.\n\
       Defaults to true.\n\
@@ -984,11 +1043,12 @@ BOOST_PYTHON_MODULE(rdmolfiles) {
     a Mol object, None on failure.\n\
 \n";
   python::def("MolFromMol2File", RDKit::MolFromMol2File,
-              (python::arg("molFileName"), python::arg("sanitize") = true,
+              (python::arg("mol2FileName"), python::arg("sanitize") = true,
                python::arg("removeHs") = true,
                python::arg("cleanupSubstructures") = true),
               docString.c_str(),
               python::return_value_policy<python::manage_new_object>());
+
   docString =
       "Construct a molecule from a Tripos Mol2 block.\n\n\
   NOTE:\n\
@@ -1016,7 +1076,7 @@ BOOST_PYTHON_MODULE(rdmolfiles) {
     a Mol object, None on failure.\n\
 \n";
   python::def("MolFromMol2Block", RDKit::MolFromMol2Block,
-              (python::arg("molBlock"), python::arg("sanitize") = true,
+              (python::arg("mol2Block"), python::arg("sanitize") = true,
                python::arg("removeHs") = true,
                python::arg("cleanupSubstructures") = true),
               docString.c_str(),
@@ -1026,7 +1086,7 @@ BOOST_PYTHON_MODULE(rdmolfiles) {
       "Construct a molecule from a Mol file.\n\n\
   ARGUMENTS:\n\
 \n\
-    - fileName: name of the file to read\n\
+    - molFileName: name of the file to read\n\
 \n\
     - sanitize: (optional) toggles sanitization of the molecule.\n\
       Defaults to true.\n\
@@ -1091,7 +1151,72 @@ BOOST_PYTHON_MODULE(rdmolfiles) {
           "force generation a V3000 mol block (happens automatically with more than 999 atoms or bonds)(default=False)")
       .def_readwrite(
           "precision", &RDKit::MolWriterParams::precision,
-          "precision of coordinates (only available in V3000)(default=false)");
+          "precision of coordinates (only available in V3000)(default=false)")
+      .def("__setattr__",&safeSetattr);
+
+  python::class_<RDKit::v2::FileParsers::MolFromSCSRParams, boost::noncopyable>(
+      "MolFromSCSRParams",
+      "Parameters controlling conversion of an SCSRMol to a Mol")
+      .def_readwrite(
+          "includeLeavingGroups",
+          &RDKit::v2::FileParsers::MolFromSCSRParams::includeLeavingGroups,
+          "include leaving groups atoms if not substited at that position")
+      .def_readwrite(
+          "scsrTemplateNames",
+          &RDKit::v2::FileParsers::MolFromSCSRParams::scsrTemplateNames,
+          "If True, the first template name in the Sgroup is used as the Sgroup label")
+      .def_readwrite(
+          "scsrBaseHbondOptions",
+          &RDKit::v2::FileParsers::MolFromSCSRParams::scsrBaseHbondOptions,
+          "One of Ignore, UseSapAll(default) , UseSapOne, Auto");
+
+  docString =
+      "Construct a molecule from an SCSR Mol block.\n\n\
+      ARGUMENTS:\n\
+    \n\
+        - molBlock: string containing the SCSR Mol block\n\
+    \n\
+        - sanitize: (optional) toggles sanitization of the molecule.\n\
+          Defaults to True.\n\
+    \n\
+        - removeHs: (optional) toggles removing hydrogens from the molecule.\n\
+          This only make sense when sanitization is done.\n\
+          Defaults to true.\n\
+    \n\
+        - molFromSCSRParams : MolFromSCSRParams to control conversion\n\
+    \n RETURNS :\n\
+    \n a Mol object, None on failure.\n\
+    \n ";
+  python::def("MolFromSCSRBlock", RDKit::MolFromSCSRBlock,
+              (python::arg("molBlock"), python::arg("sanitize") = true,
+               python::arg("removeHs") = true,
+               python::arg("molFromSCSRParams") = python::object()),
+              docString.c_str(),
+              python::return_value_policy<python::manage_new_object>());
+
+  docString =
+      "Construct a molecule from an SCSR Mol block.\n\n\
+      ARGUMENTS:\n\
+    \n\
+        - filename: string containing the SCSR filename\n\
+    \n\
+        - sanitize: (optional) toggles sanitization of the molecule.\n\
+          Defaults to True.\n\
+    \n\
+        - removeHs: (optional) toggles removing hydrogens from the molecule.\n\
+          This only make sense when sanitization is done.\n\
+          Defaults to true.\n\
+    \n\
+        - molFromSCSRParams : MolFromSCSRParams to control conversion\n\
+    \n RETURNS :\n\
+    \n a Mol object, None on failure.\n\
+    \n ";
+  python::def("MolFromSCSRFile", RDKit::MolFromSCSRFile,
+              (python::arg("filename"), python::arg("sanitize") = true,
+               python::arg("removeHs") = true,
+               python::arg("molFromSCSRParams") = python::object()),
+              docString.c_str(),
+              python::return_value_policy<python::manage_new_object>());
 
   docString =
       "Returns a Mol block for a molecule\n\
@@ -1318,7 +1443,7 @@ BOOST_PYTHON_MODULE(rdmolfiles) {
   docString =
       "Writes a Marvin (MRV) file for a molecule\n\
    ARGUMENTS:\n\
- \n\
+\n\
      - mol: the molecule\n\
      - filename: the file to write to\n\
      - includeStereo: (optional) toggles inclusion of stereochemical\n\
@@ -1326,11 +1451,7 @@ BOOST_PYTHON_MODULE(rdmolfiles) {
      - confId: (optional) selects which conformation to output (-1 = default)\n\
      - kekulize: (optional) triggers kekulization of the molecule before it's written.\n\
      - prettyPrint: (optional) makes the output more human readable.\n\
- \n\
-   RETURNS:\n\
- \n\
-     a string\n\
- \n";
+\n";
   python::def(
       "MolToMrvFile",
       (void (*)(const ROMol &, const std::string &, bool, int, bool,
@@ -1348,10 +1469,6 @@ BOOST_PYTHON_MODULE(rdmolfiles) {
     - filename: the file to write to\n\
     - params: marvin write params\n\
     - confId: (optional) selects which conformation to output (-1 = default)\n\
-\n\
-  RETURNS:\n\
-\n\
-    a string\n\
 \n";
   python::def("MolToMrvFile",
               (void (*)(const ROMol &, const std::string &,
@@ -1438,7 +1555,8 @@ BOOST_PYTHON_MODULE(rdmolfiles) {
                      "being returned")
       .def_readwrite("removeHs", &RDKit::SmilesParserParams::removeHs,
                      "controls whether or not Hs are removed before the "
-                     "molecule is returned");
+                     "molecule is returned")
+      .def("__setattr__", &safeSetattr);
   python::class_<RDKit::SmartsParserParams, boost::noncopyable>(
       "SmartsParserParams", "Parameters controlling SMARTS Parsing")
       .def_readwrite("debugParse", &RDKit::SmartsParserParams::debugParse,
@@ -1454,19 +1572,21 @@ BOOST_PYTHON_MODULE(rdmolfiles) {
                      "causes molecule parsing to fail")
       .def_readwrite(
           "mergeHs", &RDKit::SmartsParserParams::mergeHs,
-          "toggles merging H atoms in the SMARTS into neighboring atoms");
+          "toggles merging H atoms in the SMARTS into neighboring atoms")
+      .def("__setattr__", &safeSetattr);
+
   docString =
       "Construct a molecule from a SMILES string.\n\n\
      ARGUMENTS:\n\
-   \n\
+\n\
        - SMILES: the smiles string\n\
-   \n\
+\n\
        - params: used to provide optional parameters for the SMILES parsing\n\
-   \n\
+\n\
      RETURNS:\n\
-   \n\
+\n\
        a Mol object, None on failure.\n\
-   \n";
+\n";
   python::def("MolFromSmiles", MolFromSmilesHelper,
               (python::arg("SMILES"), python::arg("params")), docString.c_str(),
               python::return_value_policy<python::manage_new_object>());
@@ -1491,9 +1611,9 @@ BOOST_PYTHON_MODULE(rdmolfiles) {
    in the input SMILES. The set of substitutions is repeatedly looped through until \n\
    the string no longer changes. It is the responsibility of the caller to make sure \n\
    that substitutions results in legal and sensible SMILES. \n\
- \n\
+\n\
    Examples of replacements: \n\
- \n\
+\n\
      CC{Q}C with {'{Q}':'OCCO'} -> CCOCCOC  \n\n\
      C{A}C{Q}C with {'{Q}':'OCCO', '{A}':'C1(CC1)'} -> CC1(CC1)COCCOC  \n\n\
      C{A}C{Q}C with {'{Q}':'{X}CC{X}', '{A}':'C1CC1', '{X}':'N'} -> CC1CC1CNCCNC  \n\n\
@@ -1503,10 +1623,12 @@ BOOST_PYTHON_MODULE(rdmolfiles) {
                python::arg("replacements") = python::dict()),
               docString.c_str(),
               python::return_value_policy<python::manage_new_object>());
+
   docString = "Construct an atom from a SMILES string";
   python::def("AtomFromSmiles", SmilesToAtom, python::arg("SMILES"),
               docString.c_str(),
               python::return_value_policy<python::manage_new_object>());
+
   docString = "Construct a bond from a SMILES string";
   python::def("BondFromSmiles", SmilesToBond, python::arg("SMILES"),
               docString.c_str(),
@@ -1534,10 +1656,12 @@ BOOST_PYTHON_MODULE(rdmolfiles) {
                python::arg("replacements") = python::dict()),
               docString.c_str(),
               python::return_value_policy<python::manage_new_object>());
+
   docString = "Construct an atom from a SMARTS string";
   python::def("AtomFromSmarts", SmartsToAtom, python::arg("SMARTS"),
               docString.c_str(),
               python::return_value_policy<python::manage_new_object>());
+
   docString = "Construct a bond from a SMARTS string";
   python::def("BondFromSmarts", SmartsToBond, python::arg("SMILES"),
               docString.c_str(),
@@ -1546,15 +1670,15 @@ BOOST_PYTHON_MODULE(rdmolfiles) {
   docString =
       "Construct a molecule from a SMARTS string.\n\n\
      ARGUMENTS:\n\
-   \n\
+\n\
        - SMARTS: the smarts string\n\
-   \n\
+\n\
        - params: used to provide optional parameters for the SMARTS parsing\n\
-   \n\
+\n\
      RETURNS:\n\
-   \n\
+\n\
        a Mol object, None on failure.\n\
-   \n";
+\n";
   python::def("MolFromSmarts", MolFromSmartsHelper,
               (python::arg("SMARTS"), python::arg("params")), docString.c_str(),
               python::return_value_policy<python::manage_new_object>());
@@ -1571,6 +1695,9 @@ BOOST_PYTHON_MODULE(rdmolfiles) {
           "this will thrown an exception if the molecule cannot be kekulized")
       .def_readwrite("canonical", &RDKit::SmilesWriteParams::canonical,
                      "generate canonical SMILES")
+      .def_readwrite(
+          "cleanStereo", &RDKit::SmilesWriteParams::cleanStereo,
+          "chiral centers are removed if they have duplicate sidechains")
       .def_readwrite("allBondsExplicit",
                      &RDKit::SmilesWriteParams::allBondsExplicit,
                      "include symbols for all bonds")
@@ -1584,7 +1711,12 @@ BOOST_PYTHON_MODULE(rdmolfiles) {
                      "resulting SMILES is not canonical")
       .def_readwrite(
           "includeDativeBonds", &RDKit::SmilesWriteParams::includeDativeBonds,
-          "include the RDKit extension for dative bonds. Otherwise dative bonds will be written as single bonds");
+          "include the RDKit extension for dative bonds. Otherwise dative bonds will be written as single bonds")
+      .def_readwrite(
+          "ignoreAtomMapNumbers",
+          &RDKit::SmilesWriteParams::ignoreAtomMapNumbers,
+          "ignore atom map numbers when canonicalizing the molecule")
+      .def("__setattr__", &safeSetattr);
 
   python::def("MolToSmiles",
               (std::string(*)(const ROMol &,
@@ -1602,7 +1734,8 @@ BOOST_PYTHON_MODULE(rdmolfiles) {
     - kekuleSmiles: (optional) use the Kekule form (no aromatic bonds) in\n\
       the SMILES.  Defaults to false.\n\
     - rootedAtAtom: (optional) if non-negative, this forces the SMILES \n\
-      to start at a particular atom. Defaults to -1.\n\
+      to start at a particular atom. Defaults to -1.  If not -1, overrides\n\
+      canonical setting.\n\
     - canonical: (optional) if false no attempt will be made to canonicalize\n\
       the molecule. Defaults to true.\n\
     - allBondsExplicit: (optional) if true, all bond orders will be explicitly indicated\n\
@@ -1610,7 +1743,10 @@ BOOST_PYTHON_MODULE(rdmolfiles) {
     - allHsExplicit: (optional) if true, all H counts will be explicitly indicated\n\
       in the output SMILES. Defaults to false.\n\
     - doRandom: (optional) if true, randomize the traversal of the molecule graph,\n\
-      so we can generate random smiles. Defaults to false.\n\
+      so we can generate random smiles. Defaults to false.  If true, overrides\n\
+      canonical setting.\n\
+    - ignoreAtomMapNumbers (optional) if true, ignores any atom map numbers when\n\
+      canonicalizing the molecule \n\
 \n\
   RETURNS:\n\
 \n\
@@ -1618,12 +1754,13 @@ BOOST_PYTHON_MODULE(rdmolfiles) {
 \n";
   python::def(
       "MolToSmiles",
-      (std::string(*)(const ROMol &, bool, bool, int, bool, bool, bool,
+      (std::string(*)(const ROMol &, bool, bool, int, bool, bool, bool, bool,
                       bool))RDKit::MolToSmiles,
       (python::arg("mol"), python::arg("isomericSmiles") = true,
        python::arg("kekuleSmiles") = false, python::arg("rootedAtAtom") = -1,
        python::arg("canonical") = true, python::arg("allBondsExplicit") = false,
-       python::arg("allHsExplicit") = false, python::arg("doRandom") = false),
+       python::arg("allHsExplicit") = false, python::arg("doRandom") = false,
+       python::arg("ignoreAtomMapNumbers") = false),
       docString.c_str());
 
   docString =
@@ -1669,7 +1806,8 @@ BOOST_PYTHON_MODULE(rdmolfiles) {
     - kekuleSmiles: (optional) use the Kekule form (no aromatic bonds) in\n\
       the SMILES.  Defaults to false.\n\
     - rootedAtAtom: (optional) if non-negative, this forces the SMILES \n\
-      to start at a particular atom. Defaults to -1.\n\
+      to start at a particular atom. Defaults to -1.  If not -1, over-rides\n\
+      setting for canonical.\n\
     - canonical: (optional) if false no attempt will be made to canonicalize\n\
       the molecule. Defaults to true.\n\
     - allBondsExplicit: (optional) if true, all bond orders will be explicitly indicated\n\
@@ -1710,9 +1848,26 @@ BOOST_PYTHON_MODULE(rdmolfiles) {
              RDKit::SmilesWrite::CXSmilesFields::CX_BOND_ATROPISOMER)
       .value("CX_COORDINATE_BONDS",
              RDKit::SmilesWrite::CXSmilesFields::CX_COORDINATE_BONDS)
+      .value("CX_ZERO_BONDS", RDKit::SmilesWrite::CXSmilesFields::CX_ZERO_BONDS)
       .value("CX_ALL", RDKit::SmilesWrite::CXSmilesFields::CX_ALL)
       .value("CX_ALL_BUT_COORDS",
              RDKit::SmilesWrite::CXSmilesFields::CX_ALL_BUT_COORDS);
+
+  python::enum_<RDKit::v2::FileParsers::SCSRBaseHbondOptions>(
+      "SCSRBaseHbondOptions")
+      .value("Ignore", RDKit::v2::FileParsers::SCSRBaseHbondOptions::Ignore)
+      .value("UseSapAll",
+             RDKit::v2::FileParsers::SCSRBaseHbondOptions::UseSapAll)
+      .value("UseSapOne",
+             RDKit::v2::FileParsers::SCSRBaseHbondOptions::UseSapOne)
+      .value("Auto", RDKit::v2::FileParsers::SCSRBaseHbondOptions::Auto);
+
+  python::enum_<RDKit::v2::FileParsers::SCSRTemplateNames>("SCSRTemplateNames")
+      .value("UseFirstName",
+             RDKit::v2::FileParsers::SCSRTemplateNames::UseFirstName)
+      .value("UseSecondName",
+             RDKit::v2::FileParsers::SCSRTemplateNames::UseSecondName)
+      .value("AsEntered", RDKit::v2::FileParsers::SCSRTemplateNames::AsEntered);
 
   python::enum_<RDKit::RestoreBondDirOption>("RestoreBondDirOption")
       .value("RestoreBondDirOptionClear",
@@ -1747,8 +1902,9 @@ BOOST_PYTHON_MODULE(rdmolfiles) {
       in the output SMILES. Defaults to false.\n\
     - allHsExplicit: (optional) if true, all H counts will be explicitly indicated\n\
       in the output SMILES. Defaults to false.\n\
-    - doRandom: (optional) if true, randomized the trasversal of the molecule graph,\n\
-      so we can generate random smiles. Defaults to false.\n\
+    - doRandom: (optional) if true, randomizes the traversal of the molecule graph,\n\
+      so we can generate random smiles. Defaults to false.  If true, overrides\n\
+      canonical setting.\n\
 \n\
   RETURNS:\n\
 \n\
@@ -1789,6 +1945,7 @@ BOOST_PYTHON_MODULE(rdmolfiles) {
                python::arg("atomsToUse"), python::arg("bondsToUse") = 0,
                python::arg("atomSymbols") = 0, python::arg("bondSymbols") = 0),
               docString.c_str());
+
   docString =
       "Returns the CXSMILES string for a fragment of a molecule\n\
   ARGUMENTS:\n\
@@ -1807,7 +1964,8 @@ BOOST_PYTHON_MODULE(rdmolfiles) {
     - kekuleSmiles: (optional) use the Kekule form (no aromatic bonds) in\n\
       the SMILES.  Defaults to false.\n\
     - rootedAtAtom: (optional) if non-negative, this forces the SMILES \n\
-      to start at a particular atom. Defaults to -1.\n\
+      to start at a particular atom. Defaults to -1.  If not -1, overrides\n\
+      canonical setting.\n\
     - canonical: (optional) if false no attempt will be made to canonicalize\n\
       the molecule. Defaults to true.\n\
     - allBondsExplicit: (optional) if true, all bond orders will be explicitly indicated\n\
@@ -1847,6 +2005,7 @@ BOOST_PYTHON_MODULE(rdmolfiles) {
               (python::arg("mol"), python::arg("isomericSmiles") = true,
                python::arg("rootedAtAtom") = -1),
               docString.c_str());
+
   docString =
       "Returns a SMARTS string for a molecule\n\
   ARGUMENTS:\n\
@@ -1882,6 +2041,7 @@ BOOST_PYTHON_MODULE(rdmolfiles) {
       (python::arg("mol"), python::arg("atomsToUse"),
        python::arg("bondsToUse") = 0, python::arg("isomericSmarts") = true),
       docString.c_str());
+
   docString =
       "Returns a SMARTS string for a molecule\n\
   ARGUMENTS:\n\
@@ -1962,7 +2122,7 @@ BOOST_PYTHON_MODULE(rdmolfiles) {
       "Construct a molecule from a PDB file.\n\n\
   ARGUMENTS:\n\
 \n\
-    - fileName: name of the file to read\n\
+    - pdbFileName: name of the file to read\n\
 \n\
     - sanitize: (optional) toggles sanitization of the molecule.\n\
       Defaults to true.\n\
@@ -1980,7 +2140,7 @@ BOOST_PYTHON_MODULE(rdmolfiles) {
     a Mol object, None on failure.\n\
 \n";
   python::def("MolFromPDBFile", RDKit::MolFromPDBFile,
-              (python::arg("molFileName"), python::arg("sanitize") = true,
+              (python::arg("pdbFileName"), python::arg("sanitize") = true,
                python::arg("removeHs") = true, python::arg("flavor") = 0,
                python::arg("proximityBonding") = true),
               docString.c_str(),
@@ -2036,6 +2196,7 @@ BOOST_PYTHON_MODULE(rdmolfiles) {
               (python::arg("mol"), python::arg("confId") = -1,
                python::arg("flavor") = 0),
               docString.c_str());
+
   docString =
       "Writes a PDB file for a molecule\n\
   ARGUMENTS:\n\
@@ -2050,10 +2211,6 @@ BOOST_PYTHON_MODULE(rdmolfiles) {
             - flavor & 8 : Don't use multiple CONECTs to encode bond order \n\
             - flavor & 16 : Write MASTER record \n\
             - flavor & 32 : Write TER record \n\
-\n\
-  RETURNS:\n\
-\n\
-    a string\n\
 \n";
   python::def("MolToPDBFile", RDKit::MolToPDBFile,
               (python::arg("mol"), python::arg("filename"),
@@ -2061,7 +2218,7 @@ BOOST_PYTHON_MODULE(rdmolfiles) {
               docString.c_str());
 
   docString =
-      "Construct a molecule from a sequence string (currently only supports peptides).\n\n\
+      "Construct a molecule from a sequence string (currently supports standard amino acids, DNA and RNA bases).\n\n\
   ARGUMENTS:\n\
 \n\
     - text: string containing the sequence\n\
@@ -2090,6 +2247,7 @@ BOOST_PYTHON_MODULE(rdmolfiles) {
                python::arg("flavor") = 0),
               docString.c_str(),
               python::return_value_policy<python::manage_new_object>());
+
   docString =
       "Returns the sequence string for a molecule\n\
   ARGUMENTS:\n\
@@ -2106,7 +2264,7 @@ BOOST_PYTHON_MODULE(rdmolfiles) {
               docString.c_str());
 
   docString =
-      "Construct a molecule from a FASTA string (currently only supports peptides).\n\n\
+      "Construct a molecule from a FASTA string (currently supports standard amino acids, DNA and RNA bases).\n\n\
   ARGUMENTS:\n\
 \n\
     - text: string containing the FASTA\n\
@@ -2134,6 +2292,7 @@ BOOST_PYTHON_MODULE(rdmolfiles) {
                python::arg("flavor") = 0),
               docString.c_str(),
               python::return_value_policy<python::manage_new_object>());
+
   docString =
       "Returns the FASTA string for a molecule\n\
   ARGUMENTS:\n\
@@ -2150,7 +2309,7 @@ BOOST_PYTHON_MODULE(rdmolfiles) {
               docString.c_str());
 
   docString =
-      "Construct a molecule from a HELM string (currently only supports peptides).\n\n\
+      "Construct a molecule from a HELM string (currently supports standard amino acids, DNA and RNA bases).\n\n\
   ARGUMENTS:\n\
 \n\
     - text: string containing the HELM\n\
@@ -2166,6 +2325,7 @@ BOOST_PYTHON_MODULE(rdmolfiles) {
               (python::arg("text"), python::arg("sanitize") = true),
               docString.c_str(),
               python::return_value_policy<python::manage_new_object>());
+
   docString =
       "Returns the HELM string for a molecule\n\
   ARGUMENTS:\n\
@@ -2293,6 +2453,7 @@ BOOST_PYTHON_MODULE(rdmolfiles) {
        python::arg("allBondsExplicit") = false,
        python::arg("allHsExplicit") = false),
       "returns a list of SMILES generated using the randomSmiles algorithm");
+
 #ifdef RDK_USE_BOOST_IOSTREAMS
   docString =
       R"DOC(Construct a molecule from metadata in a PNG string.
@@ -2353,6 +2514,7 @@ BOOST_PYTHON_MODULE(rdmolfiles) {
        - filename: the cdxml filename
 
        - sanitize: if True, sanitize the molecules [default True]
+
        - removeHs: if True, convert explicit Hs into implicit Hs. [default True]
 
      RETURNS:
@@ -2372,11 +2534,11 @@ BOOST_PYTHON_MODULE(rdmolfiles) {
 
      ARGUMENTS:
 
-       - filename: the cdxml string
+       - cdxml: the cdxml string
 
        - sanitize: if True, sanitize the molecules [default True]
-       - removeHs: if True, convert explicit Hs into implicit Hs. [default True]
 
+       - removeHs: if True, convert explicit Hs into implicit Hs. [default True]
 
      RETURNS:
        an iterator of parsed Mol objects.)DOC";
