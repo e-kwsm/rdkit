@@ -192,6 +192,7 @@
 %include "enums.swg"
 %javaconst(1);
 #endif
+%include <RDGeneral/BetterEnums.h>
 %include <GraphMol/MolPickler.h>
 #ifdef SWIGJAVA
 %javaconst(0);
@@ -434,8 +435,8 @@ unsigned int getDefaultPickleProperties();
     RDKit::Chirality::pickBondsToWedge(*($self));
   };
   
-  void ClearSingleBondDirFlags() {
-    RDKit::ClearSingleBondDirFlags(*($self));
+  void ClearSingleBondDirFlags(bool onlyWedgeFlags=false) {
+  RDKit::MolOps::clearSingleBondDirFlags(*($self), onlyWedgeFlags);
   };
 
   void reapplyMolBlockWedging() {

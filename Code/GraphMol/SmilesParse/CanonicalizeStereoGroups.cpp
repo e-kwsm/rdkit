@@ -443,21 +443,10 @@ unsigned int countSwaps(std::vector<unsigned int> &nbrs) {
 
 void getAtomsToInvert2(const RDKit::ROMol &mol,
                        const std::vector<unsigned int> &newOrder,
+                       const std::vector<int> &reversedOrder,
                        std::vector<unsigned int> &atomsToInvert) {
   unsigned int nAts = mol.getNumAtoms();
   PRECONDITION(newOrder.size() == nAts, "bad newOrder size");
-
-  std::vector<unsigned int> revOrder(nAts);
-  for (unsigned int nIdx = 0; nIdx < nAts; ++nIdx) {
-    unsigned int oIdx = newOrder[nIdx];
-    if (oIdx > nAts) {
-      throw ValueErrorException("idx value exceeds numAtoms");
-    }
-    revOrder[oIdx] = nIdx;
-  }
-
-  // newOrder[i] : which atom should be in position i of the new mol
-  // revOrder[i] : where atom i of the original mol landed in the new mol
 
   // copy over the atoms:
   for (unsigned int nIdx = 0; nIdx < nAts; ++nIdx) {
@@ -471,10 +460,9 @@ void getAtomsToInvert2(const RDKit::ROMol &mol,
       nbrs.reserve(oAtom->getDegree());
 
       for (const auto &nbr : mol.atomNeighbors(oAtom)) {
-        nbrs.push_back(revOrder[nbr->getIdx()]);
+        nbrs.push_back(reversedOrder[nbr->getIdx()]);
       }
-
-      if ((RDKit::countSwaps(nbrs)) % 2) {
+      if (RDKit::countSwaps(nbrs) % 2) {
         atomsToInvert.push_back(nIdx);
       }
     }
@@ -519,7 +507,8 @@ void clearStereoGroups(ROMol &mol) {
 
 void canonicalizeStereoGroups_internal(
     std::unique_ptr<RDKit::ROMol> &mol, RDKit::StereoGroupType stereoGroupType,
-    RDKit::StereoGroupAbsOptions outputAbsoluteGroups) {
+    RDKit::StereoGroupAbsOptions outputAbsoluteGroups,
+    unsigned int maxStereoGroups) {
   // this expands a mol with stereo groups to a vector of values that are the
   // result of expanding the stereo groups, then determines the stereo groups
   // from that set
@@ -542,6 +531,12 @@ void canonicalizeStereoGroups_internal(
       andGroupsToKeep);  // these groups might be empty, especially if we
                          // are PROCESSING AND groups
   std::unique_ptr<RDKit::ROMol> bestNewMol;
+
+  if (maxStereoGroups > 0 && groupsToProcess.size() > maxStereoGroups) {
+    throw RDKit::RigorousEnhancedStereoException(
+        "too many enhanced stereo groups");
+  }
+
   auto newMolCount = std::pow(2, groupsToProcess.size());
 
   for (unsigned int molIndex = 0; molIndex < newMolCount; ++molIndex) {
@@ -577,11 +572,11 @@ void canonicalizeStereoGroups_internal(
     if (!andGroupsToKeep.empty()) {
       canonicalizeStereoGroups_internal(
           newMol, RDKit::StereoGroupType::STEREO_AND,
-          RDKit::StereoGroupAbsOptions::NeverInclude);
+          RDKit::StereoGroupAbsOptions::NeverInclude, maxStereoGroups);
     }
     std::vector<unsigned int> ranks(mol->getNumAtoms());
 
-    const bool breakTies = false;
+    const bool breakTies = true;
     const bool includeChirality = true;
     const bool includeIsotopes = false;
     const bool includeAtomMaps = true;
@@ -631,7 +626,8 @@ void canonicalizeStereoGroups_internal(
     // inverted in a smiles string
 
     std::vector<unsigned int> atomsToInvert;
-    RDKit::getAtomsToInvert2(*newMol.get(), chosenOrder, atomsToInvert);
+    RDKit::getAtomsToInvert2(*newMol.get(), chosenOrder, reversedOrder,
+                             atomsToInvert);
 
     newMol.reset((RDKit::RWMol *)RDKit::MolOps::renumberAtoms(*newMol.get(),
                                                               chosenOrder));
@@ -654,7 +650,6 @@ void canonicalizeStereoGroups_internal(
     // groups
 
     for (auto atom : newMol->atoms()) {
-      // if (atom->getChiralTag() != RDKit::Atom::CHI_UNSPECIFIED &&
       if ((atom->getChiralTag() == RDKit::Atom::CHI_TETRAHEDRAL_CCW ||
            atom->getChiralTag() == RDKit::Atom::CHI_TETRAHEDRAL_CW) &&
           !atomIndicesInStereoGroups[atom->getIdx()]) {
@@ -663,7 +658,6 @@ void canonicalizeStereoGroups_internal(
     }
 
     for (auto bond : newMol->bonds()) {
-      // if (bond->getStereo() != RDKit::Bond::STEREONONE &&
       if ((bond->getStereo() == RDKit::Bond::BondStereo::STEREOATROPCCW ||
            bond->getStereo() == RDKit::Bond::BondStereo::STEREOATROPCW) &&
           !bondIndicesInStereoGroups[bond->getIdx()]) {
@@ -875,7 +869,8 @@ void canonicalizeStereoGroups_internal(
   return;
 }
 void canonicalizeStereoGroups(std::unique_ptr<ROMol> &mol,
-                              StereoGroupAbsOptions outputAbsoluteGroups) {
+                              StereoGroupAbsOptions outputAbsoluteGroups,
+                              unsigned int maxStereoGroups) {
   // this returns a mol that has a caononical rep for the enhanced stereo
   // groups it expands the given mol to all possible non-stereo-group mols,
   // then determines a single set of stereo groups that uniquely represent
@@ -989,13 +984,17 @@ void canonicalizeStereoGroups(std::unique_ptr<ROMol> &mol,
   try {
     if (!foundOrGroup) {
       RDKit::canonicalizeStereoGroups_internal(mol, StereoGroupType::STEREO_AND,
-                                               outputAbsoluteGroups);
+                                               outputAbsoluteGroups,
+                                               maxStereoGroups);
     } else {
       RDKit::canonicalizeStereoGroups_internal(mol, StereoGroupType::STEREO_OR,
-                                               outputAbsoluteGroups);
+                                               outputAbsoluteGroups,
+                                               maxStereoGroups);
     }
 
     // Fix up the mol - round trip through smiles
+
+    mol->clearComputedProps();
 
     SmilesWriteParams wp;
     wp.canonical = false;

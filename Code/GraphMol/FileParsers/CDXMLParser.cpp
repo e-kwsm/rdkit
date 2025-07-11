@@ -8,6 +8,10 @@
 //  of the RDKit source tree.
 //
 #include "CDXMLParser.h"
+#include <GraphMol/RDKitBase.h>
+#include <GraphMol/RWMol.h>
+
+#ifndef RDK_BUILD_CHEMDRAW_SUPPORT
 #include <boost/property_tree/xml_parser.hpp>
 #include <boost/property_tree/ptree.hpp>
 #include <GraphMol/MolOps.h>
@@ -29,7 +33,6 @@ namespace RDKit {
 namespace {
 const std::string NEEDS_FUSE("CDXML_NEEDS_FUSE");
 const std::string CDXML_FRAG_ID("CDXML_FRAG_ID");
-const std::string CDXML_GROUP_ID("CDXML_GROUP_ID");
 const std::string FUSE_LABEL("CDXML_NODE_ID");
 const std::string CDX_SCHEME_ID("CDX_SCHEME_ID");
 const std::string CDX_STEP_ID("CDX_STEP_ID");
@@ -39,7 +42,6 @@ const std::string CDX_AGENT_ID("CDX_AGENT_ID");
 const std::string CDX_ATOM_POS("CDX_ATOM_POS");
 const std::string CDX_ATOM_ID("_CDX_ATOM_ID");
 const std::string CDX_BOND_ID("_CDX_BOND_ID");
-const std::string CDX_BOND_ORDERING("CDXML_BOND_ORDERING");
 
 constexpr double RDKIT_DEPICT_BONDLENGTH = 1.5;
 
@@ -454,7 +456,7 @@ bool parse_fragment(RWMol &mol, ptree &frag,
         ids[bond.end]->setIsAromatic(true);
         ids[bond.start]->setIsAromatic(true);
       }
-      bnd->setProp("CDX_BOND_ID", bond.bond_id);
+      bnd->setProp(CDX_BOND_ID, bond.bond_id);
       if (bond.display == "WedgeBegin") {
         bnd->setBondDir(Bond::BondDir::BEGINWEDGE);
         bnd->setProp(common_properties::_MolFileBondCfg, 1);
@@ -647,7 +649,7 @@ void visit_children(
             unsigned int failedOp = 0;
             MolOps::sanitizeMol(*res, failedOp, MolOps::SANITIZE_CLEANUP);
             MolOps::detectBondStereochemistry(*res);
-            MolOps::removeHs(*res, false, false);
+            MolOps::removeHs(*res);
           } else {
             MolOps::sanitizeMol(*res);
             MolOps::detectBondStereochemistry(*res);
@@ -834,3 +836,40 @@ std::vector<std::unique_ptr<RWMol>> MolsFromCDXML(
 }  // namespace CDXMLParser
 }  // namespace v2
 }  // namespace RDKit
+#else
+#include <ChemDraw/chemdraw.h>
+#include <RDGeneral/BadFileException.h>
+
+namespace RDKit{
+namespace v2 {
+namespace CDXMLParser {
+
+std::vector<std::unique_ptr<RWMol>> MolsFromCDXMLDataStream(
+    std::istream &inStream, const CDXMLParserParams &params) {
+  // populate tree structure pt
+  ChemDrawParserParams chemdraw_params;
+  chemdraw_params.sanitize = params.sanitize;
+  chemdraw_params.removeHs = params.removeHs;
+  return MolsFromChemDrawDataStream(inStream, chemdraw_params);
+}
+
+std::vector<std::unique_ptr<RWMol>> MolsFromCDXMLFile(
+    const std::string &fileName, const CDXMLParserParams &params) {
+  std::ifstream ifs(fileName);
+  if (!ifs || ifs.bad()) {
+    std::ostringstream errout;
+    errout << "Bad input file " << fileName;
+    throw BadFileException(errout.str());
+  }
+  return MolsFromCDXMLDataStream(ifs, params);
+}
+
+std::vector<std::unique_ptr<RWMol>> MolsFromCDXML(
+    const std::string &cdxml, const CDXMLParserParams &params) {
+  std::stringstream iss(cdxml);
+  return MolsFromCDXMLDataStream(iss, params);
+}
+}
+}
+}
+#endif
