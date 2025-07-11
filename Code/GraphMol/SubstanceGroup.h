@@ -171,11 +171,9 @@ class RDKIT_GRAPHMOL_EXPORT SubstanceGroup : public RDProps {
   const std::vector<unsigned int> &getParentAtoms() const { return d_patoms; }
   const std::vector<unsigned int> &getBonds() const { return d_bonds; }
 
-  void setAtoms(std::vector<unsigned int> atoms) { d_atoms = std::move(atoms); }
-  void setParentAtoms(std::vector<unsigned int> patoms) {
-    d_patoms = std::move(patoms);
-  }
-  void setBonds(std::vector<unsigned int> bonds) { d_bonds = std::move(bonds); }
+  void setAtoms(std::vector<unsigned int> atoms);
+  void setParentAtoms(std::vector<unsigned int> patoms);
+  void setBonds(std::vector<unsigned int> bonds);
 
   const std::vector<Bracket> &getBrackets() const { return d_brackets; }
   const std::vector<CState> &getCStates() const { return d_cstates; }
@@ -252,12 +250,19 @@ const std::vector<std::string> sGroupTypes = {
 
 const std::vector<std::string> sGroupSubtypes = {"ALT", "RAN", "BLO"};
 const std::vector<std::string> sGroupConnectTypes = {"HH", "HT", "EU"};
+const std::vector<std::string> sGroupClasses = {
+    "AA",        "dAA",    "DNA",     "RNA",      "SUGAR",    "BASE",
+    "PHOSPHATE", "LINKER", "CHEM",    "LGRP",     "MODAA",    "MODdAA",
+    "MODDNA",    "MODRNA", "XLINKAA", "XLINKdAA", "XLINKDNA", "XLINKRNA",
+};
 
 RDKIT_GRAPHMOL_EXPORT bool isValidType(const std::string &type);
 
 RDKIT_GRAPHMOL_EXPORT bool isValidSubType(const std::string &type);
 
 RDKIT_GRAPHMOL_EXPORT bool isValidConnectType(const std::string &type);
+
+RDKIT_GRAPHMOL_EXPORT bool isValidClass(const std::string &sgroupClass);
 
 RDKIT_GRAPHMOL_EXPORT bool isSubstanceGroupIdFree(const ROMol &mol,
                                                   unsigned int id);

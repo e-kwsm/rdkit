@@ -84,7 +84,7 @@ Datum mol_out(PG_FUNCTION_ARGS) {
   fcinfo->flinfo->fn_extra =
       searchMolCache(fcinfo->flinfo->fn_extra, fcinfo->flinfo->fn_mcxt,
                      PG_GETARG_DATUM(0), NULL, &mol, NULL);
-  str = makeMolText(mol, &len, false, true);
+  str = makeMolText(mol, &len, false, true, true);
 
   PG_RETURN_CSTRING(pnstrdup(str, len));
 }
@@ -112,10 +112,15 @@ PG_FUNCTION_INFO_V1(mol_from_ctab);
 Datum mol_from_ctab(PG_FUNCTION_ARGS) {
   char *data = PG_GETARG_CSTRING(0);
   bool keepConformer = PG_GETARG_BOOL(1);
+  bool sanitize =  PG_GETARG_BOOL(2);
+  bool removeHs =  PG_GETARG_BOOL(3);
   CROMol mol;
   Mol *res;
 
-  mol = parseMolCTAB(data, keepConformer, true, false);
+  
+  bool warnOnFail =  true;
+  bool asQuery =  false;
+  mol = parseMolCTAB(data, keepConformer, warnOnFail, asQuery, sanitize, removeHs);
   if (!mol) {
     PG_RETURN_NULL();
   }
@@ -130,10 +135,14 @@ PG_FUNCTION_INFO_V1(qmol_from_ctab);
 Datum qmol_from_ctab(PG_FUNCTION_ARGS) {
   char *data = PG_GETARG_CSTRING(0);
   bool keepConformer = PG_GETARG_BOOL(1);
+  bool removeHs =  PG_GETARG_BOOL(2);
   CROMol mol;
   Mol *res;
 
-  mol = parseMolCTAB(data, keepConformer, true, true);
+  bool warnOnFail =  true;
+  bool asQuery =  true;
+  bool sanitize = false;
+  mol = parseMolCTAB(data, keepConformer, warnOnFail, asQuery, sanitize, removeHs);
   if (!mol) {
     PG_RETURN_NULL();
   }
@@ -242,7 +251,8 @@ Datum mol_to_smiles(PG_FUNCTION_ARGS) {
   fcinfo->flinfo->fn_extra =
       searchMolCache(fcinfo->flinfo->fn_extra, fcinfo->flinfo->fn_mcxt,
                      PG_GETARG_DATUM(0), NULL, &mol, NULL);
-  str = makeMolText(mol, &len, false, false);
+  bool doIsomeric = PG_GETARG_BOOL(1);
+  str = makeMolText(mol, &len, false, false, doIsomeric);
 
   PG_RETURN_CSTRING(pnstrdup(str, len));
 }
@@ -257,7 +267,8 @@ Datum mol_to_cxsmiles(PG_FUNCTION_ARGS) {
   fcinfo->flinfo->fn_extra =
       searchMolCache(fcinfo->flinfo->fn_extra, fcinfo->flinfo->fn_mcxt,
                      PG_GETARG_DATUM(0), NULL, &mol, NULL);
-  str = makeMolText(mol, &len, false, true);
+  bool doIsomeric = PG_GETARG_BOOL(1);
+  str = makeMolText(mol, &len, false, true, doIsomeric);
 
   PG_RETURN_CSTRING(pnstrdup(str, len));
 }
@@ -272,7 +283,8 @@ Datum mol_to_smarts(PG_FUNCTION_ARGS) {
   fcinfo->flinfo->fn_extra =
       searchMolCache(fcinfo->flinfo->fn_extra, fcinfo->flinfo->fn_mcxt,
                      PG_GETARG_DATUM(0), NULL, &mol, NULL);
-  str = makeMolText(mol, &len, true, false);
+  bool dummy = false; // arg is ignored by makeMolText for smarts output
+  str = makeMolText(mol, &len, true, false, dummy);
 
   PG_RETURN_CSTRING(pnstrdup(str, len));
 }
@@ -287,7 +299,8 @@ Datum mol_to_cxsmarts(PG_FUNCTION_ARGS) {
   fcinfo->flinfo->fn_extra =
       searchMolCache(fcinfo->flinfo->fn_extra, fcinfo->flinfo->fn_mcxt,
                      PG_GETARG_DATUM(0), NULL, &mol, NULL);
-  str = makeMolText(mol, &len, true, true);
+  bool dummy = true; // arg is ignored by makeMolText for cxsmarts output
+  str = makeMolText(mol, &len, true, true, dummy);
 
   PG_RETURN_CSTRING(pnstrdup(str, len));
 }
@@ -392,10 +405,82 @@ Datum qmol_out(PG_FUNCTION_ARGS) {
   fcinfo->flinfo->fn_extra =
       searchMolCache(fcinfo->flinfo->fn_extra, fcinfo->flinfo->fn_mcxt,
                      PG_GETARG_DATUM(0), NULL, &mol, NULL);
-  str = makeMolText(mol, &len, true, false);
+  bool dummy = false; // arg is ignored by makeMolText for smarts output
+  str = makeMolText(mol, &len, true, false, dummy);
 
   PG_RETURN_CSTRING(pnstrdup(str, len));
 }
+
+
+/* xqmols */
+PGDLLEXPORT Datum xqmol_in(PG_FUNCTION_ARGS);
+PG_FUNCTION_INFO_V1(xqmol_in);
+Datum xqmol_in(PG_FUNCTION_ARGS) {
+  char *data = PG_GETARG_CSTRING(0);
+  CXQMol mol;
+  XQMol *res;
+
+  mol = parseXQMolText(data);
+  if (!mol) {
+    ereport(ERROR, (errcode(ERRCODE_DATA_EXCEPTION),
+                    errmsg("could not construct extended query molecule")));
+  }
+  res = deconstructXQMol(mol);
+  freeCXQMol(mol);
+
+  PG_RETURN_XQMOL_P(res);
+}
+
+PGDLLEXPORT Datum xqmol_recv(PG_FUNCTION_ARGS);
+PG_FUNCTION_INFO_V1(xqmol_recv);
+Datum xqmol_recv(PG_FUNCTION_ARGS) {
+  bytea *data = PG_GETARG_BYTEA_P(0);
+  int len = VARSIZE(data) - VARHDRSZ;
+  CXQMol mol;
+  XQMol *res;
+  mol = parseXQMolBlob(VARDATA(data), len);
+  res = deconstructXQMol(mol);
+  freeCXQMol(mol);
+
+  PG_FREE_IF_COPY(data, 0);
+
+  PG_RETURN_XQMOL_P(res);
+}
+
+PGDLLEXPORT Datum xqmol_out(PG_FUNCTION_ARGS);
+PG_FUNCTION_INFO_V1(xqmol_out);
+Datum xqmol_out(PG_FUNCTION_ARGS) {
+  CXQMol mol;
+  char *str;
+  int len;
+
+  fcinfo->flinfo->fn_extra =
+      searchXQMolCache(fcinfo->flinfo->fn_extra, fcinfo->flinfo->fn_mcxt,
+                     PG_GETARG_DATUM(0), NULL, &mol, NULL);
+  str = makeXQMolText(mol, &len);
+
+  PG_RETURN_CSTRING(pnstrdup(str, len));
+}
+
+PGDLLEXPORT Datum xqmol_send(PG_FUNCTION_ARGS);
+PG_FUNCTION_INFO_V1(xqmol_send);
+Datum xqmol_send(PG_FUNCTION_ARGS) {
+  CXQMol mol;
+  bytea *res;
+  char *str;
+  int len;
+
+  fcinfo->flinfo->fn_extra =
+      searchXQMolCache(fcinfo->flinfo->fn_extra, fcinfo->flinfo->fn_mcxt,
+                     PG_GETARG_DATUM(0), NULL, &mol, NULL);
+  str = makeXQMolBlob(mol, &len);
+  res = (bytea *)palloc(len + VARHDRSZ);
+  SET_VARSIZE(res, len + VARHDRSZ);
+  memcpy(VARDATA(res), str, len);
+  PG_RETURN_BYTEA_P(res);
+}
+
+
 
 PGDLLEXPORT Datum bfp_in(PG_FUNCTION_ARGS);
 PG_FUNCTION_INFO_V1(bfp_in);

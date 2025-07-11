@@ -8,7 +8,7 @@
 //  of the RDKit source tree.
 //
 
-#include "catch.hpp"
+#include <catch2/catch_all.hpp>
 #ifdef RDK_BUILD_THREADSAFE_SSS
 #include <future>
 #include <thread>
@@ -20,6 +20,7 @@
 #include <GraphMol/QueryBond.h>
 #include <GraphMol/QueryOps.h>
 #include <GraphMol/Chirality.h>
+#include <GraphMol/test_fixtures.h>
 #include <GraphMol/Canon.h>
 #include <GraphMol/SmilesParse/SmilesParse.h>
 #include <GraphMol/SmilesParse/SmilesWrite.h>
@@ -27,6 +28,8 @@
 #include <GraphMol/Substruct/SubstructMatch.h>
 #include <GraphMol/FileParsers/FileParsers.h>
 #include <GraphMol/FileParsers/MolFileStereochem.h>
+#include <GraphMol/SmilesParse/CanonicalizeStereoGroups.h>
+#include <GraphMol/MolOps.h>
 
 using namespace RDKit;
 
@@ -211,7 +214,7 @@ TEST_CASE("github #2257: writing cxsmiles", "[smiles][cxsmiles]") {
     CHECK(mol->getAtomWithIdx(3)->getNumRadicalElectrons() == 1);
 
     auto smi = MolToCXSmiles(*mol);
-    CHECK(smi == "[O]N([O])[Fe] |^1:0,2|");
+    CHECK(smi == "[O][N]([O])[Fe] |^1:0,2|");
   }
   SECTION("radicals2") {
     auto mol = "[CH]C[CH2] |^1:2,^2:0|"_smiles;
@@ -363,11 +366,20 @@ TEST_CASE("Github #2148", "[bug][Smiles][Smarts]") {
   }
 
   SECTION("Writing SMILES") {
+    const auto useLegacy = GENERATE(true, false);
+    CAPTURE(useLegacy);
+    UseLegacyStereoPerceptionFixture fx(useLegacy);
     auto mol = "C/C=c1/ncc(=C)cc1"_smiles;
     REQUIRE(mol);
     REQUIRE(mol->getBondBetweenAtoms(1, 2));
     CHECK(mol->getBondBetweenAtoms(1, 2)->getBondType() == Bond::DOUBLE);
-    CHECK(mol->getBondBetweenAtoms(1, 2)->getStereo() == Bond::STEREOE);
+    if (useLegacy) {
+      CHECK(mol->getBondBetweenAtoms(1, 2)->getStereo() == Bond::STEREOE);
+    } else {
+      CHECK(mol->getBondBetweenAtoms(1, 2)->getStereo() == Bond::STEREOTRANS);
+      CHECK(mol->getBondBetweenAtoms(1, 2)->getStereoAtoms() ==
+            std::vector<int>{0, 3});
+    }
     auto smi = MolToSmiles(*mol);
     CHECK(smi == "C=c1cc/c(=C\\C)nc1");
   }
@@ -524,7 +536,7 @@ TEST_CASE("github #2604: support range-based charge queries from SMARTS",
       CHECK(SubstructMatch(*m1, *query).size() == 1);
     }
     {
-      auto m1 = "C[NH4+2]"_smiles;
+      auto m1 = "C[NH2+2]"_smiles;
       REQUIRE(m1);
       CHECK(SubstructMatch(*m1, *query).empty());
     }
@@ -792,13 +804,13 @@ TEST_CASE("github #3774: MolToSmarts inverts direction of dative bond",
       auto m = "N->[Cu+]"_smiles;
       REQUIRE(m);
       CHECK(MolToSmarts(*m) == "[#7]->[Cu+]");
-      CHECK(MolToSmiles(*m) == "N->[Cu+]");
+      CHECK(MolToSmiles(*m) == "[NH3]->[Cu+]");
     }
     {
       auto m = "N<-[Cu+]"_smiles;
       REQUIRE(m);
       CHECK(MolToSmarts(*m) == "[#7]<-[Cu+]");
-      CHECK(MolToSmiles(*m) == "N<-[Cu+]");
+      CHECK(MolToSmiles(*m) == "[NH2]<-[Cu+]");
     }
   }
   SECTION("from smarts") {
@@ -1625,6 +1637,9 @@ TEST_CASE(
 }
 
 TEST_CASE("Github #4582: double bonds and ring closures") {
+  const auto useLegacy = GENERATE(true, false);
+  CAPTURE(useLegacy);
+  UseLegacyStereoPerceptionFixture fxn(useLegacy);
   auto mol = R"CTAB(CHEMBL409450
      RDKit          2D
 
@@ -1681,9 +1696,13 @@ M  END)CTAB"_ctab;
   auto dbond = mol->getBondBetweenAtoms(1, 19);
   REQUIRE(dbond);
   CHECK(dbond->getBondType() == Bond::BondType::DOUBLE);
-  CHECK((dbond->getStereo() == Bond::BondStereo::STEREOE ||
-         dbond->getStereo() == Bond::BondStereo::STEREOTRANS));
-  CHECK(dbond->getStereoAtoms() == std::vector<int>{8, 20});
+  if (useLegacy) {
+    CHECK(dbond->getStereo() == Bond::BondStereo::STEREOE);
+    CHECK(dbond->getStereoAtoms() == std::vector<int>{8, 20});
+  } else {
+    CHECK(dbond->getStereo() == Bond::BondStereo::STEREOCIS);
+    CHECK(dbond->getStereoAtoms() == std::vector<int>{0, 20});
+  }
   auto csmiles = MolToSmiles(*mol);
   CHECK(csmiles == "O=C1Nc2cc(Br)ccc2/C1=C1/Nc2ccccc2/C1=N\\O");
 
@@ -2058,15 +2077,17 @@ TEST_CASE("wiggly and wedged bonds in CXSMILES") {
   SECTION("basic reading/writing") {
     auto m = "CC(O)F |w:1.2|"_smiles;
     REQUIRE(m);
-    unsigned int bondcfg;
+    unsigned int bondcfg = 0;
     CHECK(m->getBondWithIdx(2)->getPropIfPresent("_MolFileBondCfg", bondcfg));
     CHECK(bondcfg == 2);
     // make sure we end up with a wiggly bond in output mol blocks:
-    reapplyMolBlockWedging(*m);
+    Chirality::reapplyMolBlockWedging(*m);
     auto mb = MolToV3KMolBlock(*m);
     CHECK(mb.find("CFG=2") != std::string::npos);
     // make sure we end up with the wiggly bond in the output CXSMILES:
-    auto cxsmi = MolToCXSmiles(*m);
+    auto cxsmi = MolToCXSmiles(*m, SmilesWriteParams(),
+                               SmilesWrite::CXSmilesFields::CX_ALL,
+                               RestoreBondDirOptionTrue);
     CHECK(cxsmi == "CC(O)F |w:1.2|");
     // but we can turn that off
     SmilesWriteParams ps;
@@ -2078,25 +2099,27 @@ TEST_CASE("wiggly and wedged bonds in CXSMILES") {
   SECTION("CXSMILES wiggly bond over-rides atomic stereo") {
     auto m = "C[C@H](O)F |w:1.2|"_smiles;
     REQUIRE(m);
-    unsigned int bondcfg;
+    unsigned int bondcfg = 0;
     CHECK(m->getBondWithIdx(2)->getPropIfPresent("_MolFileBondCfg", bondcfg));
     CHECK(bondcfg == 2);
     CHECK(m->getAtomWithIdx(1)->getChiralTag() ==
           Atom::ChiralType::CHI_UNSPECIFIED);
 
     // make sure we end up with a wiggly bond in output mol blocks:
-    reapplyMolBlockWedging(*m);
+    Chirality::reapplyMolBlockWedging(*m);
     auto mb = MolToV3KMolBlock(*m);
     CHECK(mb.find("CFG=2") != std::string::npos);
     // make sure we end up with the wiggly bond in the output CXSMILES:
-    auto cxsmi = MolToCXSmiles(*m);
+    auto cxsmi = MolToCXSmiles(*m, SmilesWriteParams(),
+                               SmilesWrite::CXSmilesFields::CX_ALL,
+                               RestoreBondDirOptionTrue);
     CHECK(cxsmi == "CC(O)F |w:1.2|");
   }
   SECTION("make sure order gets reversed when needed") {
     auto m = "CC(O)Cl |w:1.0|"_smiles;
     REQUIRE(m);
     CHECK(m->getBondWithIdx(0)->getBeginAtomIdx() == 1);
-    unsigned int bondcfg;
+    unsigned int bondcfg = 0;
     CHECK(m->getBondWithIdx(0)->getPropIfPresent("_MolFileBondCfg", bondcfg));
     CHECK(bondcfg == 2);
   }
@@ -2105,7 +2128,7 @@ TEST_CASE("wiggly and wedged bonds in CXSMILES") {
     auto m =
         "CC(O)Cl |(-3.9163,5.4767,;-3.9163,3.9367,;-2.5826,3.1667,;-5.25,3.1667,),wU:1.0|"_smiles;
     REQUIRE(m);
-    unsigned int bondcfg;
+    unsigned int bondcfg = 0;
     CHECK(m->getBondWithIdx(0)->getPropIfPresent("_MolFileBondCfg", bondcfg));
     CHECK(bondcfg == 1);
     CHECK(m->getAtomWithIdx(1)->getChiralTag() ==
@@ -2119,21 +2142,21 @@ TEST_CASE("wiggly and wedged bonds in CXSMILES") {
     invertMolBlockWedgingInfo(*m);
     CHECK(m->getBondWithIdx(0)->getPropIfPresent("_MolFileBondCfg", bondcfg));
     CHECK(bondcfg == 1);
-    reapplyMolBlockWedging(*m);
+    Chirality::reapplyMolBlockWedging(*m);
     MolOps::assignChiralTypesFromBondDirs(*m);
     CHECK(m->getAtomWithIdx(1)->getChiralTag() ==
           Atom::ChiralType::CHI_TETRAHEDRAL_CW);
     invertMolBlockWedgingInfo(*m);
     CHECK(m->getBondWithIdx(0)->getPropIfPresent("_MolFileBondCfg", bondcfg));
     CHECK(bondcfg == 3);
-    reapplyMolBlockWedging(*m);
+    Chirality::reapplyMolBlockWedging(*m);
     MolOps::assignChiralTypesFromBondDirs(*m);
     CHECK(m->getAtomWithIdx(1)->getChiralTag() ==
           Atom::ChiralType::CHI_TETRAHEDRAL_CCW);
-    clearMolBlockWedgingInfo(*m);
+    Chirality::clearMolBlockWedgingInfo(*m);
     m->getAtomWithIdx(1)->setChiralTag(Atom::ChiralType::CHI_UNSPECIFIED);
     CHECK(!m->getBondWithIdx(0)->getPropIfPresent("_MolFileBondCfg", bondcfg));
-    reapplyMolBlockWedging(*m);
+    Chirality::reapplyMolBlockWedging(*m);
     MolOps::assignChiralTypesFromBondDirs(*m);
     CHECK(m->getAtomWithIdx(1)->getChiralTag() ==
           Atom::ChiralType::CHI_UNSPECIFIED);
@@ -2145,13 +2168,17 @@ TEST_CASE("wiggly and wedged bonds in CXSMILES") {
     {
       ROMol nm(*m);
       nm.getBondWithIdx(1)->setBondDir(Bond::BondDir::UNKNOWN);
-      auto cxsmi = MolToCXSmiles(nm);
+      auto cxsmi = MolToCXSmiles(nm, SmilesWriteParams(),
+                                 SmilesWrite::CXSmilesFields::CX_ALL,
+                                 RestoreBondDirOptionTrue);
       CHECK(cxsmi == "CC(O)Cl |w:1.0|");
     }
     {
       ROMol nm(*m);
       nm.getBondWithIdx(1)->setProp(common_properties::_MolFileBondCfg, 2);
-      auto cxsmi = MolToCXSmiles(nm);
+      auto cxsmi = MolToCXSmiles(nm, SmilesWriteParams(),
+                                 SmilesWrite::CXSmilesFields::CX_ALL,
+                                 RestoreBondDirOptionClear);
       CHECK(cxsmi == "CC(O)Cl |w:1.0|");
     }
   }
@@ -2187,18 +2214,23 @@ M  END
     // change the bond dir. This also tests that the wedging overrides the
     // CFG property
     m->getBondWithIdx(2)->setBondDir(Bond::BondDir::BEGINDASH);
-    cxsmi = MolToCXSmiles(*m);
-    CHECK(cxsmi.find("wD:1.0") != std::string::npos);
+    cxsmi = MolToCXSmiles(*m, SmilesWriteParams(),
+                          SmilesWrite::CXSmilesFields::CX_ALL,
+                          RestoreBondDirOptionTrue);
+    CHECK(cxsmi.find("wU:1.0") != std::string::npos);
     cxsmi =
         MolToCXSmiles(*m, ps, SmilesWrite::CXSmilesFields::CX_ALL_BUT_COORDS);
-    CHECK(cxsmi.find("wD:1.0") == std::string::npos);
+    CHECK(cxsmi.find("wU:1.0") == std::string::npos);
     m->getBondWithIdx(2)->setBondDir(Bond::BondDir::UNKNOWN);
-    cxsmi = MolToCXSmiles(*m);
-    CHECK(cxsmi.find("w:1.0") != std::string::npos);
+    cxsmi = MolToCXSmiles(*m, SmilesWriteParams(),
+                          SmilesWrite::CXSmilesFields::CX_ALL,
+                          RestoreBondDirOptionTrue);
+    CHECK(cxsmi.find("wU:1.0") != std::string::npos);
     // wiggly bonds get written even if we don't output coords:
     cxsmi =
-        MolToCXSmiles(*m, ps, SmilesWrite::CXSmilesFields::CX_ALL_BUT_COORDS);
-    CHECK(cxsmi.find("w:1.0") != std::string::npos);
+        MolToCXSmiles(*m, ps, SmilesWrite::CXSmilesFields::CX_ALL_BUT_COORDS,
+                      RestoreBondDirOptionClear);
+    CHECK(cxsmi.find("w:1.0") == std::string::npos);
   }
 
   SECTION("double bond stereo") {
@@ -2225,7 +2257,7 @@ M  END
     REQUIRE(m_from_ctab);
     auto m = "CC=CC |w:2.2|"_smiles;
     REQUIRE(m);
-    unsigned int bondcfg;
+    unsigned int bondcfg = 0;
     CHECK(m->getBondWithIdx(2)->getPropIfPresent("_MolFileBondCfg", bondcfg));
     CHECK(bondcfg == 2);
   }
@@ -2241,8 +2273,7 @@ M  END
 }
 
 TEST_CASE("ring bond stereochemistry in CXSMILES") {
-  auto oval = Chirality::getUseLegacyStereoPerception();
-  Chirality::setUseLegacyStereoPerception(false);
+  UseLegacyStereoPerceptionFixture useLegacy(false);
   SECTION("basic reading") {
     std::vector<std::pair<std::string, Bond::BondStereo>> tests = {
         {"C1CCCC/C=C/CCC1 |t:5|", Bond::BondStereo::STEREOTRANS},
@@ -2287,8 +2318,8 @@ TEST_CASE("ring bond stereochemistry in CXSMILES") {
         {"C1CCCCC=CCCC1 |c:5|", "C1=C\\CCCCCCCC/1 |c:0|"},
         {"C1CCCC/C=C/CCC1 |c:5|", "C1=C\\CCCCCCCC/1 |c:0|"},
         {"C1=CCCCCCCCC1 |ctu:0|", "C1=CCCCCCCCC1 |ctu:0|"},
-        {"C=CCCCCCCCC |ctu:0|",
-         "C=CCCCCCCCC"}  // we don't write the markers for non-ring bonds
+        {"C=CCCCCCCCC |ctu:0|", "C=CCCCCCCCC"}
+        // we don't write the markers for non-ring bonds
     };
     for (const auto &[smi, val] : tests) {
       std::unique_ptr<RWMol> m{SmilesToMol(smi)};
@@ -2300,7 +2331,6 @@ TEST_CASE("ring bond stereochemistry in CXSMILES") {
       CHECK(cxsmi == val);
     }
   }
-  Chirality::setUseLegacyStereoPerception(oval);
 }
 
 TEST_CASE(
@@ -2321,28 +2351,22 @@ TEST_CASE(
     CHECK(b->getStereo() == Bond::STEREOANY);
   }
   SECTION("'c:' label") {
-    auto oval = Chirality::getUseLegacyStereoPerception();
-    Chirality::setUseLegacyStereoPerception(false);
+    UseLegacyStereoPerceptionFixture useLegacy(false);
 
     auto m = "CC1CN1C=CC1CC1 |c:5|"_smiles;
     REQUIRE(m);
     auto b = m->getBondWithIdx(4);
     REQUIRE(b->getBondType() == Bond::BondType::DOUBLE);
     CHECK(b->getStereo() == Bond::STEREOCIS);
-
-    Chirality::setUseLegacyStereoPerception(oval);
   }
   SECTION("'t:' label") {
-    auto oval = Chirality::getUseLegacyStereoPerception();
-    Chirality::setUseLegacyStereoPerception(false);
+    UseLegacyStereoPerceptionFixture useLegacy(false);
 
     auto m = "CC1CN1C=CC1CC1 |t:5|"_smiles;
     REQUIRE(m);
     auto b = m->getBondWithIdx(4);
     REQUIRE(b->getBondType() == Bond::BondType::DOUBLE);
     CHECK(b->getStereo() == Bond::STEREOTRANS);
-
-    Chirality::setUseLegacyStereoPerception(oval);
   }
 }
 
@@ -2423,6 +2447,97 @@ TEST_CASE("smilesSymbol in SMARTS", "[smarts][smilesSymbol]") {
   }
 }
 
+TEST_CASE("Atropisomer output in CXSMILES", "[SMILES]") {
+  SECTION("'WithChiralAtom' label") {
+    auto mol =
+        "CC1=C(N2C=CC=C2[C@H](C)Cl)C(C)CCC1 |(2.679,0.4142,;1.3509,1.181,;0.0229,0.4141,;0.0229,-1.1195,;1.2645,-2.0302,;0.7901,-3.4813,;-0.7446,-3.4813,;-1.219,-2.0302,;-2.679,-1.5609,;-3.0039,-0.0556,;-3.8202,-2.595,;-1.3054,1.1809,;-2.6335,0.4141,;-1.3054,2.7145,;0.0229,3.4813,;1.3509,2.7146,),wD:2.11,wU:8.10,&1:8|"_smiles;
+    REQUIRE(mol);
+    CHECK(mol->getNumConformers() == 1);
+
+    RDKit::SmilesWriteParams ps;
+    ps.canonical = false;
+    unsigned int flags = SmilesWrite::CXSmilesFields::CX_COORDS |
+                         SmilesWrite::CXSmilesFields::CX_MOLFILE_VALUES |
+                         SmilesWrite::CXSmilesFields::CX_ATOM_PROPS |
+                         SmilesWrite::CXSmilesFields::CX_BOND_CFG |
+                         SmilesWrite::CXSmilesFields::CX_ENHANCEDSTEREO;
+
+    auto smi = MolToCXSmiles(*mol, ps, flags,
+                             RestoreBondDirOption::RestoreBondDirOptionTrue);
+
+    CHECK(
+        smi ==
+        "CC1=C(n2cccc2[C@H](C)Cl)C(C)CCC1 |(2.679,0.4142,;1.3509,1.181,;0.0229,0.4141,;0.0229,-1.1195,;1.2645,-2.0302,;0.7901,-3.4813,;-0.7446,-3.4813,;-1.219,-2.0302,;-2.679,-1.5609,;-3.0039,-0.0556,;-3.8202,-2.595,;-1.3054,1.1809,;-2.6335,0.4141,;-1.3054,2.7145,;0.0229,3.4813,;1.3509,2.7146,),wD:2.11,wU:8.10,&1:8|");
+
+    flags = SmilesWrite::CXSmilesFields::CX_COORDS |
+            SmilesWrite::CXSmilesFields::CX_MOLFILE_VALUES |
+            SmilesWrite::CXSmilesFields::CX_ATOM_PROPS |
+            SmilesWrite::CXSmilesFields::CX_BOND_ATROPISOMER |
+            SmilesWrite::CXSmilesFields::CX_ENHANCEDSTEREO;
+
+    smi = MolToCXSmiles(*mol, ps, flags,
+                        RestoreBondDirOption::RestoreBondDirOptionTrue);
+
+    CHECK(
+        smi ==
+        "CC1=C(n2cccc2[C@H](C)Cl)C(C)CCC1 |(2.679,0.4142,;1.3509,1.181,;0.0229,0.4141,;0.0229,-1.1195,;1.2645,-2.0302,;0.7901,-3.4813,;-0.7446,-3.4813,;-1.219,-2.0302,;-2.679,-1.5609,;-3.0039,-0.0556,;-3.8202,-2.595,;-1.3054,1.1809,;-2.6335,0.4141,;-1.3054,2.7145,;0.0229,3.4813,;1.3509,2.7146,),wD:2.11,&1:8|");
+
+    flags = SmilesWrite::CXSmilesFields::CX_COORDS |
+            SmilesWrite::CXSmilesFields::CX_MOLFILE_VALUES |
+            SmilesWrite::CXSmilesFields::CX_ATOM_PROPS |
+            SmilesWrite::CXSmilesFields::CX_ENHANCEDSTEREO;
+
+    smi = MolToCXSmiles(*mol, ps, flags,
+                        RestoreBondDirOption::RestoreBondDirOptionTrue);
+
+    CHECK(
+        smi ==
+        "CC1=C(n2cccc2[C@H](C)Cl)C(C)CCC1 |(2.679,0.4142,;1.3509,1.181,;0.0229,0.4141,;0.0229,-1.1195,;1.2645,-2.0302,;0.7901,-3.4813,;-0.7446,-3.4813,;-1.219,-2.0302,;-2.679,-1.5609,;-3.0039,-0.0556,;-3.8202,-2.595,;-1.3054,1.1809,;-2.6335,0.4141,;-1.3054,2.7145,;0.0229,3.4813,;1.3509,2.7146,),&1:8|");
+  }
+}
+
+TEST_CASE("Dative  bond in cxsmiles double double def", "[bug][cxsmiles]") {
+  SECTION("basics") {
+    SmilesParserParams smilesParserParams;
+    smilesParserParams.sanitize = true;
+    smilesParserParams.allowCXSMILES = true;
+
+    std::unique_ptr<RWMol> smilesMol(
+        SmilesToMol("C1CCC2=[N]1[Fe](\\[O]=C(\\C)/C=C/C1CCCC1)[N]1=C(CCC1)C2",
+                    smilesParserParams));
+    RDKit::Chirality::reapplyMolBlockWedging(*smilesMol);
+    {
+      SmilesWriteParams ps;
+      ps.canonical = true;
+
+      std::string smilesOut = MolToSmiles(*smilesMol, ps);
+
+      CHECK(smilesOut ==
+            "CC(/C=C/C1CCCC1)=[O]->[Fe]1<-[N]2=C(CC3=[N]->1CCC3)CCC2");
+    }
+  }
+}
+
+TEST_CASE("Fieldname not found in SuperatomSgroup in CXSmiles",
+          "[bug][cxsmiles]") {
+  SECTION("basics") {
+    SmilesParserParams smilesParserParams;
+    smilesParserParams.sanitize = true;
+    smilesParserParams.allowCXSMILES = true;
+
+    std::unique_ptr<RWMol> smilesMol(
+        SmilesToMol("CC |SgD:0:::|", smilesParserParams));
+    RDKit::Chirality::reapplyMolBlockWedging(*smilesMol);
+    {
+      SmilesWriteParams ps;
+      ps.canonical = true;
+
+      std::string smilesOut = MolToCXSmiles(*smilesMol, ps);
+
+      CHECK(smilesOut == "CC |SgD:0::::::|");
+    }
+  }
+}
 TEST_CASE("ensure unused features are not used") {
   SECTION("isotopes") {
     auto mol1 = "FOCN[15F]"_smiles;
@@ -2487,11 +2602,10 @@ TEST_CASE("ensure unused features are not used") {
   SECTION("enhanced stereo") {
     // if we aren't doing CXSMILES then the enhanced stereo shouldn't enter into
     // consideration in canonicalization
-    auto mol1 = "F[C@H](Cl)NCO[C@H](F)Cl |&1:6|"_smiles;
+    std::unique_ptr<ROMol> mol1 = "F[C@H](Cl)NCO[C@H](F)Cl |&1:6|"_smiles;
     REQUIRE(mol1);
-    auto mol2 = "F[C@H](Cl)OCN[C@H](F)Cl |&1:6|"_smiles;
+    std::unique_ptr<ROMol> mol2 = "F[C@H](Cl)OCN[C@H](F)Cl |&1:6|"_smiles;
     REQUIRE(mol2);
-    std::vector<unsigned int> ranks;
     SmilesWriteParams ps;
     ps.doIsomericSmiles = true;
     auto smiles = MolToSmiles(*mol1, ps);
@@ -2518,6 +2632,92 @@ TEST_CASE("ensure unused features are not used") {
     Canon::canonicalizeEnhancedStereo(*mol1);
     auto smiles = MolToSmiles(*mol1);
     CHECK(smiles == "C[C@H]1C[CH]CC(C[C@@H](C)[C@@H](C)O)C1");
+  }
+}
+TEST_CASE("enhanced stereo canonicalized") {
+  SECTION("case takes forever") {
+    std::unique_ptr<RDKit::ROMol> m1 =
+        "C[C@H]1CC[C@]2(NC1)O[C@H]1C[C@H]3[C@H]4CC=C5C[C@H](O[C@H]6O[C@H](CO)[C@H](O[C@H]7O[C@H](C)[C@H](O)[C@H](O)[C@H]7O)[C@H](O)[C@H]6O[C@H]6O[C@H](C)[C@H](O)[C@H](O)[C@H]6O)CC[C@]5(C)[C@H]4CC[C@]3(C)[C@H]1[C@H]2C "
+        "|&1:1,&2:4,&3:8,&4:10,&5:11,&6:16,&7:18,&8:20,&9:23,&10:25,&11:27,&12:29,&13:31,&14:33,&15:35,&16:37,&17:39,&18:41,&19:43,&20:45,&21:47,&22:51,&23:53,&24:56,&25:58,&26:59|"_smiles;
+    REQUIRE(m1);
+    std::unique_ptr<RDKit::ROMol> m2 =
+        "C[C@@H]1CC[C@]2(NC1)O[C@H]1C[C@H]3[C@H]4CC=C5C[C@H](O[C@H]6O[C@H](CO)[C@H](O[C@H]7O[C@H](C)[C@H](O)[C@H](O)[C@H]7O)[C@H](O)[C@H]6O[C@H]6O[C@H](C)[C@H](O)[C@H](O)[C@H]6O)CC[C@]5(C)[C@H]4CC[C@]3(C)[C@H]1[C@H]2C "
+        "|&1:1,&2:4,&3:8,&4:10,&5:11,&6:16,&7:18,&8:20,&9:23,&10:25,&11:27,&12:29,&13:31,&14:33,&15:35,&16:37,&17:39,&18:41,&19:43,&20:45,&21:47,&22:51,&23:53,&24:56,&25:58,&26:59|"_smiles;
+    REQUIRE(m2);
+    RDKit::canonicalizeStereoGroups(m1);
+    RDKit::canonicalizeStereoGroups(m2);
+
+    CHECK(MolToCXSmiles(*m1) == MolToCXSmiles(*m2));
+  }
+
+  SECTION("case takes long but not forever") {
+    std::unique_ptr<RDKit::ROMol> m1 =
+        "C[C@H]1CC[C@]2(NC1)O[C@H]1C[C@H]3[C@H]4CC=C5C[C@H](O[C@H]6O[C@H](CO)[C@H](O[C@H]7O[C@H](C)[C@H](O)[C@H](O)[C@H]7O)[C@H](O)[C@H]6O[C@H]6O[C@H](C)[C@H](O)[C@H](O)[C@H]6O)CC[C@]5(C)[C@H]4CC[C@]3(C)[C@H]1[C@H]2C "
+        "|&1:1,&2:4,&3:8,&4:10,&5:11,&6:16,&7:18,&8:20,&9:23,&10:25,&11:27,&12:29|"_smiles;
+    REQUIRE(m1);
+    std::unique_ptr<RDKit::ROMol> m2 =
+        "C[C@@H]1CC[C@]2(NC1)O[C@H]1C[C@H]3[C@H]4CC=C5C[C@H](O[C@H]6O[C@H](CO)[C@H](O[C@H]7O[C@H](C)[C@H](O)[C@H](O)[C@H]7O)[C@H](O)[C@H]6O[C@H]6O[C@H](C)[C@H](O)[C@H](O)[C@H]6O)CC[C@]5(C)[C@H]4CC[C@]3(C)[C@H]1[C@H]2C "
+        "|&1:1,&2:4,&3:8,&4:10,&5:11,&6:16,&7:18,&8:20,&9:23,&10:25,&11:27,&12:29|"_smiles;
+    REQUIRE(m2);
+    RDKit::canonicalizeStereoGroups(m1);
+    RDKit::canonicalizeStereoGroups(m2);
+
+    CHECK(MolToCXSmiles(*m1) == MolToCXSmiles(*m2));
+  }
+
+  SECTION("basic") {
+    std::unique_ptr<ROMol> mol1 = "F[C@H](Cl)NCO[C@H](F)Cl |&1:6|"_smiles;
+    REQUIRE(mol1);
+    std::unique_ptr<ROMol> mol2 = "F[C@H](Cl)OCN[C@H](F)Cl |&1:6|"_smiles;
+    REQUIRE(mol2);
+
+    SmilesWriteParams ps;
+    ps.doIsomericSmiles = true;
+
+    RDKit::canonicalizeStereoGroups(mol1);
+    RDKit::canonicalizeStereoGroups(mol2);
+
+    auto smiles = MolToCXSmiles(*mol1, ps);
+    CHECK(smiles == "F[C@H](Cl)NCO[C@H](F)Cl |a:1,&1:6|");
+    smiles = MolToCXSmiles(*mol2, ps);
+    CHECK(smiles == "F[C@H](Cl)OCN[C@H](F)Cl |a:1,&1:6|");
+  }
+
+  SECTION("trimethylcyclohexane") {
+    std::unique_ptr<ROMol> mol1 =
+        "C[C@H]1C[C@@H](C)C[C@@H](C)C1 |o1:1,o2:6,o3:3|"_smiles;
+    std::unique_ptr<ROMol> mol2 = "C[C@H]1C[C@@H](C)C[C@@H](C)C1 |o1:1|"_smiles;
+    std::unique_ptr<ROMol> mol3 =
+        "C[C@@H]1C[C@H](C)C[C@H](C)C1 |o1:1,o2:6,o3:3|"_smiles;
+    REQUIRE(mol1);
+    REQUIRE(mol2);
+    REQUIRE(mol3);
+
+    SmilesWriteParams ps;
+    RDKit::canonicalizeStereoGroups(mol1);
+    auto smiles = MolToCXSmiles(*mol1, ps);
+    CHECK(smiles == "C[C@H]1C[C@H](C)C[C@H](C)C1 |a:1,o1:3,6|");
+
+    RDKit::canonicalizeStereoGroups(mol2);
+    smiles = MolToCXSmiles(*mol2, ps);
+    CHECK(smiles == "C[C@H]1C[C@H](C)C[C@H](C)C1 |a:1,o1:3,6|");
+
+    RDKit::canonicalizeStereoGroups(mol3);
+    smiles = MolToCXSmiles(*mol3, ps);
+    CHECK(smiles == "C[C@H]1C[C@H](C)C[C@H](C)C1 |a:1,o1:3,6|");
+  }
+
+  SECTION("multiFrag test") {
+    std::unique_ptr<ROMol> mol1 =
+        "C[C@H]1C[C@@H](C)C[C@@H](C)C1.F[C@H](Cl)NCO[C@H](F)Cl |o1:6,o2:3,o3:1,o4:15|"_smiles;
+    REQUIRE(mol1);
+
+    SmilesWriteParams ps;
+    RDKit::canonicalizeStereoGroups(mol1);
+    auto smiles = MolToCXSmiles(*mol1, ps);
+    CHECK(
+        smiles ==
+        "C[C@H]1C[C@H](C)C[C@H](C)C1.F[C@H](Cl)NCO[C@H](F)Cl |a:1,10,o1:3,6,o2:15|");
   }
 }
 
@@ -2548,9 +2748,9 @@ TEST_CASE("Test rootedAtAtom argument", "[smarts]") {
     CHECK(SubstructMatch(*mol1, *qmol1, sssparams).size() == 1);
     CHECK(SubstructMatch(*mol2, *qmol2, sssparams).size() == 1);
     CHECK(SubstructMatch(*mol2, *qmol1, sssparams).size() ==
-          !sssparams.useChirality);
+          static_cast<size_t>(static_cast<size_t>(!sssparams.useChirality)));
     CHECK(SubstructMatch(*mol1, *qmol2, sssparams).size() ==
-          !sssparams.useChirality);
+          static_cast<size_t>(static_cast<size_t>(!sssparams.useChirality)));
   }
 
   SECTION("chiral center w/ implicit H in linear mol") {
@@ -2569,9 +2769,9 @@ TEST_CASE("Test rootedAtAtom argument", "[smarts]") {
     CHECK(SubstructMatch(*mol1, *qmol1, sssparams).size() == 1);
     CHECK(SubstructMatch(*mol2, *qmol2, sssparams).size() == 1);
     CHECK(SubstructMatch(*mol2, *qmol1, sssparams).size() ==
-          !sssparams.useChirality);
+          static_cast<size_t>(static_cast<size_t>(!sssparams.useChirality)));
     CHECK(SubstructMatch(*mol1, *qmol2, sssparams).size() ==
-          !sssparams.useChirality);
+          static_cast<size_t>(static_cast<size_t>(!sssparams.useChirality)));
   }
 
   SECTION("fully substituted, asymmetric chiral atoms (2) in ring") {
@@ -2590,9 +2790,9 @@ TEST_CASE("Test rootedAtAtom argument", "[smarts]") {
     CHECK(SubstructMatch(*mol1, *qmol1, sssparams).size() == 1);
     CHECK(SubstructMatch(*mol2, *qmol2, sssparams).size() == 1);
     CHECK(SubstructMatch(*mol2, *qmol1, sssparams).size() ==
-          !sssparams.useChirality);
+          static_cast<size_t>(!sssparams.useChirality));
     CHECK(SubstructMatch(*mol1, *qmol2, sssparams).size() ==
-          !sssparams.useChirality);
+          static_cast<size_t>(!sssparams.useChirality));
   }
 
   SECTION("partially substituted, asymmetric chiral atoms (2) in ring") {
@@ -2611,8 +2811,481 @@ TEST_CASE("Test rootedAtAtom argument", "[smarts]") {
     CHECK(SubstructMatch(*mol1, *qmol1, sssparams).size() == 1);
     CHECK(SubstructMatch(*mol2, *qmol2, sssparams).size() == 1);
     CHECK(SubstructMatch(*mol2, *qmol1, sssparams).size() ==
-          !sssparams.useChirality);
+          static_cast<size_t>(!sssparams.useChirality));
     CHECK(SubstructMatch(*mol1, *qmol2, sssparams).size() ==
-          !sssparams.useChirality);
+          static_cast<size_t>(!sssparams.useChirality));
+  }
+
+  SECTION("Issue #7572: prevent rootAtAtom if more than one fragment exists.") {
+    auto mol1 =
+        "C(C)Oc1c(Cl)c(C(=O)[O-])c(Cl)c(OCC)c1C(=O)[O-].O=C([O-])C#CC#CC(=O)[O-].[Zn][Zn]"_smiles;
+    REQUIRE(mol1);
+    auto ps = SmilesWriteParams();
+    ps.rootedAtAtom = 20;
+
+    // Fixed by #8328. Multiple fragments are supported now.
+    CHECK(MolToSmiles(*mol1, ps) ==
+          "CCOc1c(Cl)c(C(=O)[O-])c(Cl)c(OCC)c1C(=O)[O-].O=C([O-])C#CC#CC(=O)[O-].[Zn][Zn]");
+  }
+}
+
+TEST_CASE(
+    "Github #5499: STEREOANY bonds lead to non-stable SMILES/SMARTS strings") {
+  SECTION("as reported") {
+    std::string mb = R"CTAB(7643724
+     RDKit          2D
+
+  0  0  0  0  0  0  0  0  0  0999 V3000
+M  V30 BEGIN CTAB
+M  V30 COUNTS 14 15 0 0 0
+M  V30 BEGIN ATOM
+M  V30 1 N 2.776307 0.296081 0.000000 0
+M  V30 2 N 2.708144 -1.320684 0.000000 0
+M  V30 3 N 2.976836 -2.283790 0.000000 0
+M  V30 4 N 4.328520 -0.579106 0.000000 0
+M  V30 5 C 1.812993 0.027197 0.000000 0
+M  V30 6 C 1.770944 -0.971719 0.000000 0
+M  V30 7 C 3.329205 -0.537040 0.000000 0
+M  V30 8 C 3.124872 1.233298 0.000000 0
+M  V30 9 C 0.968792 0.563284 0.000000 0
+M  V30 10 C 0.884677 -1.434947 0.000000 0
+M  V30 11 C 0.082334 0.100263 0.000000 0
+M  V30 12 C 0.040268 -0.899052 0.000000 0
+M  V30 13 C 2.487521 2.003850 0.000000 0
+M  V30 14 C 2.836086 2.941066 0.000000 0
+M  V30 END ATOM
+M  V30 BEGIN BOND
+M  V30 1 1 1 5
+M  V30 2 1 1 7
+M  V30 3 1 1 8
+M  V30 4 1 2 3
+M  V30 5 1 2 6
+M  V30 6 1 2 7
+M  V30 7 2 4 7 CFG=2
+M  V30 8 2 5 6
+M  V30 9 1 5 9
+M  V30 10 1 6 10
+M  V30 11 1 8 13
+M  V30 12 2 9 11
+M  V30 13 2 10 12
+M  V30 14 1 11 12
+M  V30 15 2 13 14
+M  V30 END BOND
+M  V30 END CTAB
+M  END)CTAB";
+    auto params = v2::FileParsers::MolFileParserParams();
+    params.sanitize = false;
+    auto m = v2::FileParsers::MolFromMolBlock(mb, params);
+    REQUIRE(m);
+    auto osmi = MolToSmiles(*m);
+    auto smiparams = v2::SmilesParse::SmilesParserParams();
+    smiparams.sanitize = false;
+    auto m2 = v2::SmilesParse::MolFromSmiles(osmi, smiparams);
+    REQUIRE(m2);
+    CHECK(MolToSmiles(*m2) == osmi);
+  }
+}
+
+TEST_CASE("leaks on unclosed rings") {
+  // These are Ok except for the unmatched ring closures
+  SECTION("Ok SMARTS") {
+    auto m = "C1.C2.C3.C4.C5"_smarts;
+    REQUIRE(!m);
+  }
+  SECTION("Ok SMILES") {
+    auto m = "C1.C2.C3.C4.C5"_smiles;
+    REQUIRE(!m);
+  }
+  // These are bogus, but fail parsing AFTER we've seen
+  // the unmatched ring closure
+  SECTION("Bad SMARTS") {
+    auto m = "C1C)foo"_smarts;
+    REQUIRE(!m);
+  }
+  SECTION("Bad SMILES") {
+    auto m = "C1C)foo"_smiles;
+    REQUIRE(!m);
+  }
+}
+
+TEST_CASE("Github #7295") {
+  SECTION("basics") {
+    auto m = "C[C@@H]1CC[C@@H](C(=O)O)CC1.Cl"_smiles;
+    REQUIRE(m);
+    auto smi1 = MolToSmiles(*m);
+    m->clearComputedProps();
+    auto smi2 = MolToSmiles(*m);
+    CHECK(smi1 == smi2);
+    auto m2(*m);
+    bool cleanIt = true;
+    MolOps::assignStereochemistry(m2, cleanIt);
+    auto smi3 = MolToSmiles(m2);
+    CHECK(smi1 == smi3);
+  }
+}
+
+TEST_CASE("simpleSmiles") {
+  SECTION("basics") {
+    auto m = "CCN(CCO)CCCCC[C@H]1CC[C@H](N(C)C(=O)Oc2ccc(Cl)cc2)CC1.Cl"_smiles;
+    REQUIRE(m);
+    CHECK(MolToSmiles(*m) ==
+          "CCN(CCO)CCCCC[C@H]1CC[C@H](N(C)C(=O)Oc2ccc(Cl)cc2)CC1.Cl");
+  }
+}
+
+TEST_CASE("CX_BOND_ATROPISOMER option requires ring info", "[bug][cxsmiles]") {
+  std::string rdbase = getenv("RDBASE");
+  std::string fName =
+      rdbase +
+      "/Code/GraphMol/FileParsers/test_data/atropisomers/RP-6306_atrop1.sdf";
+
+  auto m = v2::FileParsers::MolFromMolFile(fName);
+  REQUIRE(m);
+
+  auto atropBond = m->getBondWithIdx(3);
+  REQUIRE(atropBond->getStereo() == Bond::STEREOATROPCW);
+
+  // Clear ring info to check that atropisomer wedging doesn't fail
+  // if the info is not present
+  bool includeRingInfo = true;
+  m->clearComputedProps(includeRingInfo);
+
+  auto ps = SmilesWriteParams();
+  auto flags = SmilesWrite::CXSmilesFields::CX_BOND_ATROPISOMER;
+
+  // This will fail if there's no ring information
+  auto smi = MolToCXSmiles(*m, ps, flags);
+  CHECK(smi == "Cc1cc2c(C(N)=O)c(N)n(-c3c(C)ccc(O)c3C)c2nc1C |wD:10.9|");
+}
+
+TEST_CASE("Github #7372: SMILES output option to disable dative bonds") {
+  SECTION("basics") {
+    auto m = "[NH3]->[Fe]-[NH2]"_smiles;
+    REQUIRE(m);
+    auto smi = MolToSmiles(*m);
+    CHECK(smi == "[NH2][Fe]<-[NH3]");
+    SmilesWriteParams ps;
+    ps.includeDativeBonds = false;
+    auto newSmi = MolToSmiles(*m, ps);
+    CHECK(newSmi == "[NH2][Fe][NH3]");
+    // ensure that representation round trips:
+    auto m2 = v2::SmilesParse::MolFromSmiles(newSmi);
+    REQUIRE(m2);
+    CHECK(MolToSmiles(*m2) == smi);
+  }
+  SECTION("SMARTS basics") {
+    auto m = "[NH3]->[Fe]-[NH2]"_smiles;
+    REQUIRE(m);
+    auto smi = MolToSmarts(*m);
+    CHECK(smi == "[#7H3]->[Fe]-[#7H2]");
+    SmilesWriteParams ps;
+    ps.includeDativeBonds = false;
+    auto newSmi = MolToSmarts(*m, ps);
+    CHECK(newSmi == "[#7H3]-[Fe]-[#7H2]");
+  }
+}
+
+void strip_atom_properties(RWMol *molecule) {
+  for (auto atom : molecule->atoms()) {
+    for (auto property : atom->getPropList(false, false)) {
+      atom->clearProp(property);
+    }
+  }
+
+  // return molecule;
+}
+
+TEST_CASE("Remove CX extension from SMILES", "[cxsmiles]") {
+  SECTION("basics") {
+    std::unique_ptr<RWMol> molecule(RDKit::SmilesToMol(
+        "N[C@@H]([O-])C1=[CH:1]C(=[13CH]C(=C1)N(=O)=O)C(N)[O-] |$_AV:;bar;;foo;;;;;;;;;;;$,c:5,7,t:3|",
+        0, false));
+    REQUIRE(molecule);
+    strip_atom_properties(molecule.get());
+    std::string stripped_smiles = RDKit::MolToCXSmiles(*molecule);
+
+    CHECK(stripped_smiles ==
+          "NC([O-])C1=[13CH]C(N(=O)=O)=CC([C@@H](N)[O-])=C1");
+  }
+}
+
+TEST_CASE("Canonicalization of meso structures") {
+  SECTION("basics") {
+    std::vector<std::pair<std::vector<std::string>, std::string>> data = {
+        {{"N[C@H]1CC[C@@H](O)CC1", "N[C@@H]1CC[C@H](O)CC1"},
+         "N[C@H]1CC[C@@H](O)CC1"},
+        {{"C[C@@H](Cl)C[C@H](C)Cl", "Cl[C@H](C)C[C@H](C)Cl",
+          "C[C@@H](Cl)C[C@@H](Cl)C", "C[C@H](Cl)C[C@@H](C)Cl"},
+         "C[C@H](Cl)C[C@@H](C)Cl"},
+    };
+    for (const auto &[smileses, expected] : data) {
+      for (const auto &smi : smileses) {
+        auto m = v2::SmilesParse::MolFromSmiles(smi);
+        REQUIRE(m);
+        auto osmi = MolToSmiles(*m);
+        INFO(smi);
+        CHECK(osmi == expected);
+      }
+    }
+  }
+}
+
+TEST_CASE("Ignore atom map numbers") {
+  SmilesWriteParams params;
+  auto m1 = "[NH2:1]c1ccccc1"_smiles;
+  CHECK(MolToSmiles(*m1, params) == "c1ccc([NH2:1])cc1");
+  params.ignoreAtomMapNumbers = true;
+  CHECK(MolToSmiles(*m1, params) == "[NH2:1]c1ccccc1");
+  auto m2 = "Nc1ccccc1"_smiles;
+  m1->getAtomWithIdx(0)->setAtomMapNum(0);
+  CHECK(MolToSmiles(*m1, params) == MolToSmiles(*m2, params));
+  CHECK(MolToSmiles(*m1, true, false, -1, true, false, false, false, true) ==
+        MolToSmiles(*m2, true, false, -1, true, false, false, false, true));
+}
+
+TEST_CASE("Github #7340", "[Reaction][CX][CXSmiles]") {
+  SECTION("Test getCXExtensions with a Vector") {
+    // Create the MOL_SPTR_VECT to hold the molecular pointers
+    const auto mols = {
+        "CCO* |$;;;_R1$(0,0,0;1.5,0,0;1.5,1.5,0;0,1.5,0)|"_smiles,
+        "C1CCCCC1 |$;label2;$|"_smiles,
+        "CC(=O)O |$;label1;$|"_smiles,
+        "*-C-* |$star_e;;star_e$,Sg:n:1::ht|"_smiles,
+    };
+
+    std::vector<ROMol *> mol_vect;
+    mol_vect.reserve(mols.size());
+    for (const auto &mol : mols) {
+      mol_vect.push_back(mol.get());
+    }
+
+    // Write to smiles to populate atom and bond output order properties
+    for (const auto &entry : mol_vect) {
+      MolToSmiles(*entry);
+    }
+
+    std::string cxExt = SmilesWrite::getCXExtensions(
+        mol_vect, RDKit::SmilesWrite::CXSmilesFields::CX_ALL);
+
+    CHECK(
+        cxExt ==
+        "|(0,1.5,;1.5,1.5,;1.5,0,;0,0,;0,0,;0,0,;0,0,;0,0,;0,0,;0,0,;0,0,;0,0,;0,0,;0,0,;0,0,;0,0,;0,0,),$_R1;;;;;label2;;;;;;label1;;;star_e;;star_e$,Sg:n:15::ht:::|");
+  }
+
+  SECTION("Expects an error") {
+    const auto mols = {
+        "CCO* |$;;;_R1$(0,0,0;1.5,0,0;1.5,1.5,0;0,1.5,0)|"_smiles,
+        "C1CCCCC1 |$;label2;$|"_smiles,
+        "CC(=O)O |$;label1;$|"_smiles,
+        "*-C-* |$star_e;;star_e$,Sg:n:1::ht|"_smiles,
+    };
+
+    std::vector<ROMol *> mol_vect;
+    mol_vect.reserve(mols.size());
+    for (const auto &mol : mols) {
+      mol_vect.push_back(mol.get());
+    }
+
+    CHECK_THROWS_AS(SmilesWrite::getCXExtensions(
+                        mol_vect, RDKit::SmilesWrite::CXSmilesFields::CX_ALL),
+                    ValueErrorException);
+  }
+}
+
+TEST_CASE("trimethylcyclohexane") {
+  SECTION("Basic") {
+    UseLegacyStereoPerceptionFixture useLegacy(false);
+
+    auto smi = "C[C@H]1C[C@@H](C)C[C@@H](C)C1";
+    RDKit::v2::SmilesParse::SmilesParserParams smilesParserParams;
+    auto m1 = RDKit::v2::SmilesParse::MolFromSmiles(smi, smilesParserParams);
+    auto smiOut = RDKit::MolToCXSmiles(*m1);
+    CHECK(smiOut == "C[C@@H]1C[C@H](C)C[C@H](C)C1");
+  }
+  SECTION("WithEnhancedStereo") {
+    UseLegacyStereoPerceptionFixture useLegacy(false);
+
+    auto smi = "C[C@H]1C[C@@H](C)C[C@@H](C)C1 |o1:1,o2:6,o3:3|";
+    RDKit::v2::SmilesParse::SmilesParserParams smilesParserParams;
+    auto m1 = RDKit::v2::SmilesParse::MolFromSmiles(smi, smilesParserParams);
+    auto smiOut = RDKit::MolToCXSmiles(*m1);
+    CHECK(smiOut == "C[C@H]1C[C@H](C)C[C@H](C)C1 |o1:1,o2:3,o3:6|");
+  }
+}
+
+TEST_CASE("DnaTestError", "DnaTestError") {
+  SECTION("basics") {
+    auto smi =
+        "[H]OC[C@H]1O[C@@H]2[C@H](O)[C@@H]1OP(=O)(O)OC[C@H]1O[C@@H]3[C@H](O)[C@@H]1OP(=O)(O)OC[C@H]1O[C@@H]4[C@H](O)[C@@H]1OP(=O)(O)OC[C@H]1O[C@@H]5[C@H](O)[C@@H]1OP(=O)(O)OC[C@H]1O[C@@H]6[C@H](O)[C@@H]1OP(=O)(O)OC[C@H]1O[C@H]([C@H](O)[C@@H]1O[H])N1C=CC7=N8~N9C(=NC%10=C(N=CN%10[C@@H]%10O[C@H](COP(=O)(O)O[C@H]%11[C@@H](O)[C@@H](O[C@@H]%11COP(=O)(O)O[C@H]%11[C@@H](O)[C@@H](O[C@@H]%11COP(=O)(O)O[C@H]%11[C@@H](O)[C@@H](O[C@@H]%11COP(=O)(O)O[C@H]%11[C@@H](O)[C@@H](O[C@@H]%11COP(=O)(O)O[C@H]%11[C@@H](O)[C@@H](O[C@@H]%11CO[H])N%11C=NC%12=C%11N=C%11~O=C%13N2C=CC2=O~NC%12=N%11~N2%13)N2C=NC%11=C2N=C2N~O=C%12N3C=CC3=N%12~N2C%11=O~N3)N2C=CC3=N%11~N%12C(=NC%13=C(N=CN%134)C%12=O~N3)N~O=C2%11)N2C=C(C)C3=O~NC4=N%11~N3C2=O~C%11=NC2=C4N=CN25)N2C=NC3=C2N=C2~O=C4N6C=CC5=O~NC3=N2~N54)[C@@H](O[H])[C@H]%10O)C9=O~N7)N~O=C18 |(4.67218,-35.5914,;5.34598,-36.5843,;6.84288,-36.4764,;7.68418,-37.7162,;7.17218,-39.1261,;8.35478,-40.0487,;9.59778,-39.2091,;10.7257,-39.6187,;9.18338,-37.7674,;10.1024,-36.5843,;17.9626,-38.0598,;18.5623,-39.0992,;18.5623,-37.0204,;25.2033,-36.5843,;26.7002,-36.4764,;27.5415,-37.7162,;27.0295,-39.1261,;28.2121,-40.0487,;29.4551,-39.2091,;30.583,-39.6187,;29.0407,-37.7674,;29.9597,-36.5843,;37.8199,-38.0598,;38.4196,-39.0992,;38.4196,-37.0204,;45.0606,-36.5843,;46.5575,-36.4764,;47.3988,-37.7162,;46.8868,-39.1261,;48.0694,-40.0487,;49.3124,-39.2091,;50.4403,-39.6187,;48.898,-37.7674,;49.817,-36.5843,;57.6772,-38.0598,;58.2769,-39.0992,;58.2769,-37.0204,;64.9179,-36.5843,;66.4148,-36.4764,;67.2561,-37.7162,;66.7441,-39.1261,;67.9267,-40.0487,;69.1697,-39.2091,;70.2976,-39.6187,;68.7553,-37.7674,;69.6743,-36.5843,;77.5345,-38.0598,;78.1342,-39.0992,;78.1342,-37.0204,;84.7752,-36.5843,;86.2721,-36.4764,;87.1134,-37.7162,;86.6014,-39.1261,;87.784,-40.0487,;89.027,-39.2091,;90.1549,-39.6187,;88.6126,-37.7674,;89.5316,-36.5843,;97.3918,-38.0598,;97.9915,-39.0992,;97.9915,-37.0204,;104.632,-36.5843,;106.129,-36.4764,;106.971,-37.7162,;106.459,-39.1261,;107.641,-40.0487,;108.884,-39.2091,;110.012,-39.6187,;108.47,-37.7674,;109.389,-36.5843,;110.578,-36.7473,;106.21,-27.8713,;106.96,-26.5723,;108.46,-26.5724,;109.21,-27.8714,;108.46,-29.1704,;109.007,-16.4468,;107.581,-15.9834,;106.466,-16.9872,;106.778,-18.4544,;108.205,-18.9178,;108.205,-20.417,;106.778,-20.8806,;105.897,-19.6672,;107.641,-10.2628,;106.459,-9.34016,;106.971,-7.93026,;106.129,-6.69046,;104.632,-6.79836,;97.3918,-8.27388,;97.9915,-9.31328,;97.9915,-7.23447,;89.5316,-6.79836,;88.6126,-7.98146,;89.027,-9.42316,;90.1549,-9.83276,;87.784,-10.2628,;86.6014,-9.34016,;87.1134,-7.93026,;86.2721,-6.69046,;84.7752,-6.79836,;77.5345,-8.27388,;78.1342,-9.31328,;78.1342,-7.23447,;69.6743,-6.79836,;68.7553,-7.98146,;69.1697,-9.42316,;70.2976,-9.83276,;67.9267,-10.2628,;66.7441,-9.34016,;67.2561,-7.93026,;66.4148,-6.69046,;64.9179,-6.79836,;57.6772,-8.27388,;58.2769,-9.31328,;58.2769,-7.23447,;49.817,-6.79836,;48.898,-7.98146,;49.3124,-9.42316,;50.4403,-9.83276,;48.0694,-10.2628,;46.8868,-9.34016,;47.3988,-7.93026,;46.5575,-6.69046,;45.0606,-6.79836,;37.8199,-8.27388,;38.4196,-9.31328,;38.4196,-7.23447,;29.9597,-6.79836,;29.0407,-7.98146,;29.4551,-9.42316,;30.583,-9.83276,;28.2121,-10.2628,;27.0295,-9.34016,;27.5415,-7.93026,;26.7002,-6.69046,;25.2033,-6.79836,;17.9626,-8.27388,;18.5623,-9.31328,;18.5623,-7.23447,;10.1024,-6.79836,;9.18338,-7.98146,;9.59778,-9.42316,;10.7257,-9.83276,;8.35478,-10.2628,;7.17218,-9.34016,;7.68418,-7.93026,;6.84288,-6.69046,;5.34598,-6.79836,;4.67218,-5.80546,;6.58934,-19.3588,;7.47114,-20.5722,;8.89774,-20.1086,;8.89724,-18.6094,;7.47074,-18.146,;7.15874,-16.6788,;8.27334,-15.675,;7.07393,-26.0527,;7.67393,-27.0919,;6.92393,-28.3909,;7.67383,-29.69,;9.17383,-29.69,;9.92383,-28.391,;11.1239,-28.391,;11.1532,-17.9763,;10.0118,-17.6056,;9.69994,-16.1384,;9.17383,-27.092,;26.4675,-19.6672,;27.3493,-20.8806,;28.7759,-20.417,;28.7754,-18.9178,;27.3489,-18.4544,;27.0369,-16.9872,;28.1515,-15.9834,;27.9019,-14.8096,;26.9311,-30.2096,;27.5312,-29.1704,;26.7813,-27.8713,;27.5313,-26.5723,;29.0312,-26.5724,;29.7812,-27.8714,;29.0312,-29.1704,;29.5781,-16.4468,;29.89,-17.914,;31.0314,-18.2847,;30.9813,-27.8714,;46.6386,-17.9427,;47.3886,-16.6437,;48.8885,-16.6438,;49.6385,-17.9428,;48.8885,-19.2418,;49.4354,-26.3755,;48.0088,-25.9121,;46.8942,-26.9159,;47.2062,-28.3831,;48.6327,-28.8465,;48.6332,-30.3457,;47.2066,-30.8093,;46.3248,-29.5959,;49.7473,-27.8427,;50.8887,-28.2134,;50.8386,-17.9428,;47.7592,-24.7383,;46.7884,-20.281,;47.3885,-19.2418,;66.3458,-18.2025,;67.0957,-19.5016,;68.5957,-19.5016,;69.1957,-20.5409,;69.3457,-18.2026,;70.5458,-18.2026,;70.7251,-27.9049,;69.5837,-27.5342,;69.2718,-26.067,;68.5957,-16.9036,;67.0958,-16.9035,;66.4958,-15.8643,;67.8452,-25.6036,;66.7306,-26.6074,;67.0426,-28.0746,;68.4691,-28.538,;68.4696,-30.0372,;67.043,-30.5008,;66.1612,-29.2874,;86.0185,-19.3588,;86.9003,-20.5722,;88.3269,-20.1086,;88.3264,-18.6094,;86.8999,-18.146,;86.5879,-16.6788,;87.7025,-15.675,;86.5031,-26.0527,;87.1031,-27.0919,;86.3531,-28.3909,;87.103,-29.69,;88.603,-29.69,;89.353,-28.391,;90.5531,-28.391,;90.5824,-17.9763,;89.441,-17.6056,;89.1291,-16.1384,;88.603,-27.092,;108.47,-7.98146,;109.389,-6.79836,;110.578,-6.96136,;108.884,-9.42316,;110.012,-9.83276,;109.319,-17.914,;110.461,-18.2847,;110.41,-27.8714,;107.331,-14.8096,;106.36,-30.2096,;106.96,-29.1704,),wD:3.2,15.15,27.28,39.41,51.54,63.67,65.76,84.90,86.93,96.103,98.106,108.116,110.119,120.129,122.132,132.142,134.145,144.155,146.158,wU:5.4,6.6,8.9,17.17,18.19,20.22,29.30,30.32,32.35,41.43,42.45,44.48,53.56,54.58,56.61,66.71,68.74,93.99,94.101,105.112,106.114,117.125,118.127,129.138,130.140,141.151,142.153,243.285,246.289,H:76.81,156.169,164.177,166.182,175.194,183.203,185.208,191.215,202.228,204.231,211.241,215.244,217.249,231.268,239.276,241.281,249.293,251.296,a:3,5,6,8,15,17,18,20,27,29,30,32,39,41,42,44,51,53,54,56,63,65,66,68,84,86,93,94,96,98,105,106,108,110,117,118,120,122,129,130,132,134,141,142,144,146,243,246|";
+    RDKit::v2::SmilesParse::SmilesParserParams sp;
+    sp.sanitize = false;
+    sp.removeHs = false;
+    sp.strictCXSMILES = false;
+    sp.removeHs = false;
+
+    auto mol = MolFromSmiles(smi, sp);
+    RDKit::Chirality::removeNonExplicit3DChirality(*(mol.get()));
+
+    CHECK(mol);
+    CHECK(mol->getNumAtoms() == 254);
+    CHECK(mol->getNumBonds() == 300);
+
+    // do the operations to the mol
+
+    unsigned int operationThatFailed = 0;
+    const unsigned int sanitizeOps = RDKit::MolOps::SANITIZE_ALL ^
+                                     RDKit::MolOps::SANITIZE_CLEANUP ^
+                                     RDKit::MolOps::SANITIZE_PROPERTIES;
+
+    RDKit::MolOps::sanitizeMol(*mol, operationThatFailed, sanitizeOps);
+
+    RDKit::MolOps::RemoveHsParameters removeParams;
+    removeParams.removeHydrides = true;
+    removeParams.removeInSGroups = true;
+    removeParams.removeMapped = true;
+    removeParams.removeNonimplicit = true;
+    removeParams.removeWithWedgedBond = true;
+
+    RDKit::MolOps::removeHs(*mol, removeParams, false);
+
+    // 2nd sanitize pass
+
+    RDKit::MolOps::sanitizeMol(*mol, operationThatFailed, sanitizeOps);
+
+    std::string expectedOutSmi =
+        "Cc1cn2[C@@H]3O[C@@H]4COP(=O)(O)O[C@H]5[C@@H](O)[C@@H]6n7ccc8NO=c9c%10ncn([C@@H]%11O[C@H](COP(=O)(O)O[C@H]%12[C@@H](O)[C@@H]%13n%14ccc%15NO=c%16c%17ncn([C@@H]%18O[C@H](COP(=O)(O)O[C@H]%19[C@@H](O)[C@H](n%20cnc%21c%22NO=c%23ccn([C@@H]%24O[C@H](CO)[C@@H](OP(=O)(O)OC[C@H]%12O%13)[C@H]%24O)c%12=Oc(nc%21%20)n%22-[nH]%23%12)O[C@@H]%19CO)[C@@H](OP(=O)(O)OC[C@H]5O6)[C@H]%18O)c%17nc5NO=c%14n%15-[nH]5%16)[C@@H](OP(=O)(O)OC[C@H]5O[C@@H](n6cnc%12c%13NO=c1[nH]1-n%13c(O=c21)nc%126)[C@H](O)[C@@H]5OP(=O)(O)OC[C@H]1O[C@H]2n5ccc6=ONc%12c%13ncn([C@@H]%14O[C@H](COP(=O)(O)O[C@H]4[C@H]3O)[C@@H](OP(=O)(O)OC[C@H]3O[C@@H](n4cnc%15c%16=ONc%17ccn([C@@H]%18O[C@H](COP(=O)(O)O[C@H]1[C@H]2O)[C@@H](O)[C@H]%18O)c1=ONc(nc%154)[nH]%16-n%171)[C@H](O)[C@@H]3O)[C@H]%14O)c%13nc1O=c5[nH]6-n%121)[C@H]%11O)c%10nc1NO=c7n8-[nH]19 |(69.1957,-20.5409,;68.5957,-19.5016,;67.0957,-19.5016,;66.3458,-18.2025,;67.9267,-10.2628,;66.7441,-9.34016,;67.2561,-7.93026,;66.4148,-6.69046,;64.9179,-6.79836,;57.6772,-8.27388,;58.2769,-9.31328,;58.2769,-7.23447,;49.817,-6.79836,;48.898,-7.98146,;49.3124,-9.42316,;50.4403,-9.83276,;48.0694,-10.2628,;46.6386,-17.9427,;47.3886,-16.6437,;48.8885,-16.6438,;49.6385,-17.9428,;50.8386,-17.9428,;50.8887,-28.2134,;49.7473,-27.8427,;48.6327,-28.8465,;48.6332,-30.3457,;47.2066,-30.8093,;46.3248,-29.5959,;48.0694,-40.0487,;46.8868,-39.1261,;47.3988,-37.7162,;46.5575,-36.4764,;45.0606,-36.5843,;37.8199,-38.0598,;38.4196,-39.0992,;38.4196,-37.0204,;29.9597,-36.5843,;29.0407,-37.7674,;29.4551,-39.2091,;30.583,-39.6187,;28.2121,-40.0487,;26.7813,-27.8713,;27.5313,-26.5723,;29.0312,-26.5724,;29.7812,-27.8714,;30.9813,-27.8714,;31.0314,-18.2847,;29.89,-17.914,;28.7754,-18.9178,;28.7759,-20.417,;27.3493,-20.8806,;26.4675,-19.6672,;28.2121,-10.2628,;27.0295,-9.34016,;27.5415,-7.93026,;26.7002,-6.69046,;25.2033,-6.79836,;17.9626,-8.27388,;18.5623,-9.31328,;18.5623,-7.23447,;10.1024,-6.79836,;9.18338,-7.98146,;9.59778,-9.42316,;10.7257,-9.83276,;8.35478,-10.2628,;6.58934,-19.3588,;7.47114,-20.5722,;8.89774,-20.1086,;8.89724,-18.6094,;10.0118,-17.6056,;11.1532,-17.9763,;11.1239,-28.391,;9.92383,-28.391,;9.17383,-29.69,;7.67383,-29.69,;6.92393,-28.3909,;8.35478,-40.0487,;7.17218,-39.1261,;7.68418,-37.7162,;6.84288,-36.4764,;5.34598,-36.5843,;9.18338,-37.7674,;10.1024,-36.5843,;17.9626,-38.0598,;18.5623,-39.0992,;18.5623,-37.0204,;25.2033,-36.5843,;26.7002,-36.4764,;27.5415,-37.7162,;27.0295,-39.1261,;9.59778,-39.2091,;10.7257,-39.6187,;7.67393,-27.0919,;7.07393,-26.0527,;8.27334,-15.675,;7.15874,-16.6788,;7.47074,-18.146,;9.69994,-16.1384,;9.17383,-27.092,;7.17218,-9.34016,;7.68418,-7.93026,;6.84288,-6.69046,;5.34598,-6.79836,;29.0407,-7.98146,;29.9597,-6.79836,;37.8199,-8.27388,;38.4196,-9.31328,;38.4196,-7.23447,;45.0606,-6.79836,;46.5575,-6.69046,;47.3988,-7.93026,;46.8868,-9.34016,;29.4551,-9.42316,;30.583,-9.83276,;27.3489,-18.4544,;27.0369,-16.9872,;28.1515,-15.9834,;27.9019,-14.8096,;26.9311,-30.2096,;27.5312,-29.1704,;29.0312,-29.1704,;29.5781,-16.4468,;48.898,-37.7674,;49.817,-36.5843,;57.6772,-38.0598,;58.2769,-39.0992,;58.2769,-37.0204,;64.9179,-36.5843,;66.4148,-36.4764,;67.2561,-37.7162,;66.7441,-39.1261,;67.9267,-40.0487,;66.1612,-29.2874,;67.043,-30.5008,;68.4696,-30.0372,;68.4691,-28.538,;69.5837,-27.5342,;70.7251,-27.9049,;70.5458,-18.2026,;69.3457,-18.2026,;68.5957,-16.9036,;69.2718,-26.067,;67.8452,-25.6036,;66.4958,-15.8643,;67.0958,-16.9035,;66.7306,-26.6074,;67.0426,-28.0746,;69.1697,-39.2091,;70.2976,-39.6187,;68.7553,-37.7674,;69.6743,-36.5843,;77.5345,-38.0598,;78.1342,-39.0992,;78.1342,-37.0204,;84.7752,-36.5843,;86.2721,-36.4764,;87.1134,-37.7162,;86.6014,-39.1261,;87.784,-40.0487,;86.3531,-28.3909,;87.103,-29.69,;88.603,-29.69,;89.353,-28.391,;90.5531,-28.391,;90.5824,-17.9763,;89.441,-17.6056,;88.3264,-18.6094,;88.3269,-20.1086,;86.9003,-20.5722,;86.0185,-19.3588,;87.784,-10.2628,;86.6014,-9.34016,;87.1134,-7.93026,;86.2721,-6.69046,;84.7752,-6.79836,;77.5345,-8.27388,;78.1342,-9.31328,;78.1342,-7.23447,;69.6743,-6.79836,;68.7553,-7.98146,;69.1697,-9.42316,;70.2976,-9.83276,;88.6126,-7.98146,;89.5316,-6.79836,;97.3918,-8.27388,;97.9915,-9.31328,;97.9915,-7.23447,;104.632,-6.79836,;106.129,-6.69046,;106.971,-7.93026,;106.459,-9.34016,;107.641,-10.2628,;105.897,-19.6672,;106.778,-20.8806,;108.205,-20.417,;108.205,-18.9178,;109.319,-17.914,;110.461,-18.2847,;110.41,-27.8714,;109.21,-27.8714,;108.46,-26.5724,;106.96,-26.5723,;106.21,-27.8713,;107.641,-40.0487,;106.459,-39.1261,;106.971,-37.7162,;106.129,-36.4764,;104.632,-36.5843,;97.3918,-38.0598,;97.9915,-39.0992,;97.9915,-37.0204,;89.5316,-36.5843,;88.6126,-37.7674,;89.027,-39.2091,;90.1549,-39.6187,;108.47,-37.7674,;109.389,-36.5843,;108.884,-39.2091,;110.012,-39.6187,;106.96,-29.1704,;106.36,-30.2096,;107.331,-14.8096,;107.581,-15.9834,;106.466,-16.9872,;106.778,-18.4544,;109.007,-16.4468,;108.46,-29.1704,;108.884,-9.42316,;110.012,-9.83276,;108.47,-7.98146,;109.389,-6.79836,;89.027,-9.42316,;90.1549,-9.83276,;86.8999,-18.146,;86.5879,-16.6788,;87.7025,-15.675,;86.5031,-26.0527,;87.1031,-27.0919,;88.603,-27.092,;89.1291,-16.1384,;49.3124,-39.2091,;50.4403,-39.6187,;47.2062,-28.3831,;46.8942,-26.9159,;48.0088,-25.9121,;47.7592,-24.7383,;46.7884,-20.281,;47.3885,-19.2418,;48.8885,-19.2418,;49.4354,-26.3755,),wD:4.4,6.6,30.30,52.52,54.54,78.78,88.87,64.106,100.109,110.118,16.121,129.145,156.179,170.194,172.196,189.214,191.217,203.228,205.231,wU:13.12,14.14,28.28,37.36,38.38,61.60,62.62,76.76,81.81,40.90,90.93,103.112,112.124,122.139,131.147,147.170,149.173,158.181,179.202,180.206,182.208,212.237,213.241,215.243,217.246,227.261,229.264,231.267,240.282,H:21.21,46.45,70.70,94.96,97.103,117.130,121.135,138.154,140.158,143.161,164.187,197.223,221.249,225.257,235.272,239.277,246.288,248.293,a:4,6,13,14,16,28,30,37,38,40,52,54,61,62,64,76,78,81,88,90,100,103,110,112,122,129,131,147,149,156,158,170,172,179,180,182,189,191,203,205,212,213,215,217,227,229,231,240|";
+    std::string outMolSmi = "";
+    RDKit::SmilesWriteParams swp;
+
+    swp.doIsomericSmiles = true;
+    swp.doKekule = false;
+    swp.canonical = true;
+    swp.cleanStereo = true;
+    swp.allBondsExplicit = false;
+    swp.allHsExplicit = false;
+    swp.doRandom = false;
+    swp.rootedAtAtom = -1;
+    swp.includeDativeBonds = true;
+    swp.ignoreAtomMapNumbers = false;
+
+    try {
+      outMolSmi =
+          MolToCXSmiles(*mol, swp, RDKit::SmilesWrite::CXSmilesFields::CX_ALL,
+                        RestoreBondDirOption::RestoreBondDirOptionTrue);
+
+    } catch (const RDKit::KekulizeException &) {
+      outMolSmi = "";
+    }
+
+    CHECK(expectedOutSmi == outMolSmi);
+  }
+}
+
+TEST_CASE("Github 8328", "MolToSmiles with rootedAtAtom for multiple fragments") {
+    SECTION("basics") {
+        auto mol = "[C:1][C:2].[N:3]([C:4])=[O:5]"_smiles;
+        auto ps = SmilesWriteParams();
+        ps.rootedAtAtom = 0;
+        CHECK(MolToSmiles(*mol, ps) == "[C:1][C:2].[N:3]([C:4])=[O:5]");
+        ps.rootedAtAtom = 1;
+        CHECK(MolToSmiles(*mol, ps) == "[C:2][C:1].[N:3]([C:4])=[O:5]");
+        ps.rootedAtAtom = 2;
+        CHECK(MolToSmiles(*mol, ps) == "[C:1][C:2].[N:3]([C:4])=[O:5]");
+        ps.rootedAtAtom = 3;
+        CHECK(MolToSmiles(*mol, ps) == "[C:1][C:2].[C:4][N:3]=[O:5]");
+        ps.rootedAtAtom = 4;
+        CHECK(MolToSmiles(*mol, ps) == "[C:1][C:2].[O:5]=[N:3][C:4]");
+        ps.rootedAtAtom = 5;
+        CHECK_THROWS_AS(MolToSmiles(*mol, ps), Invar::Invariant);
+    }
+    SECTION("Compare with and without canonicalization") {
+        auto mol = "[Al+3].[Na+2].[O-]S(=O)(=O)[O-].CC(=O)OCC.NC(=O)Cc1ccccc1"_smiles;
+        auto ps = SmilesWriteParams();
+
+        ps.canonical = true;
+        ps.rootedAtAtom = -1;
+        CHECK(MolToSmiles(*mol, ps) ==
+              "CCOC(C)=O.NC(=O)Cc1ccccc1.O=S(=O)([O-])[O-].[Al+3].[Na+2]");
+
+        ps.canonical = true;
+        ps.rootedAtAtom = 10;
+        CHECK(MolToSmiles(*mol, ps) ==
+              "NC(=O)Cc1ccccc1.O(CC)C(C)=O.O=S(=O)([O-])[O-].[Al+3].[Na+2]");
+
+        ps.canonical = true;
+        ps.rootedAtAtom = 21;
+        CHECK(MolToSmiles(*mol, ps) ==
+              "CCOC(C)=O.O=S(=O)([O-])[O-].[Al+3].[Na+2].c1cccc(CC(N)=O)c1");
+
+        ps.canonical = false;
+        ps.rootedAtAtom = 21;
+        CHECK(MolToSmiles(*mol, ps) ==
+              "[Al+3].[Na+2].[O-]S(=O)(=O)[O-].CC(=O)OCC.c1cccc(CC(N)=O)c1");
+    }
+}
+
+TEST_CASE("atoms bound to metals should always have Hs specified") {
+  SECTION("basics") {
+    std::vector<std::pair<std::string, std::string>> smileses = {
+        {"Cl[Pt](F)([NH2])[OH]", "[NH2][Pt]([OH])([F])[Cl]"},
+        {"Cl[Pt](F)(<-[NH3])[OH]", "[NH3]->[Pt]([OH])([F])[Cl]"},
+    };
+    for (const auto &[smi, expected] : smileses) {
+      auto m = v2::SmilesParse::MolFromSmiles(smi);
+      REQUIRE(m);
+      auto osmi = MolToSmiles(*m);
+      INFO(smi);
+      CHECK(osmi == expected);
+    }
+  }
+}
+
+TEST_CASE("ZOB cx smiles extension", "[smiles][cxsmiles]") {
+  SECTION("basics") {
+    auto m = "CC"_smiles;
+    REQUIRE(m);
+
+    auto b = m->getBondWithIdx(0);
+    b->setBondType(Bond::ZERO);
+
+    auto smi = MolToCXSmiles(*m);
+    REQUIRE(smi == "C~C |Z:0|");
+
+    auto m2 = RDKit::v2::SmilesParse::MolFromSmiles(smi);
+    REQUIRE(m2);
+
+    CHECK(m2->getBondWithIdx(0)->getBondType() == Bond::ZERO);
+  }
+  SECTION("Reverse") {
+    constexpr const char *smi = "FB1(F)N2CCCC/C2=N/C2=[NH+]~1CCC=C2 |Z:12|";
+
+    auto p = v2::SmilesParse::SmilesParserParams();
+    p.sanitize = false;
+    auto m = v2::SmilesParse::MolFromSmiles(smi, p);
+    REQUIRE(m);
+
+    auto b = m->getBondWithIdx(15);
+    CHECK(b->getBondType() == Bond::BondType::ZERO);
+    CHECK(b->getBeginAtom()->getAtomicNum() == 7);
+    CHECK(b->getEndAtom()->getAtomicNum() == 5);
+
+    REQUIRE(MolToCXSmiles(*m) == smi);
+  }
+}
+
+TEST_CASE("github #8471: fail on bad characters in SMILES") {
+  SECTION("as reported") {
+    v2::SmilesParse::SmilesParserParams sp;
+    std::vector<std::string> badSmiles = {
+        "CCl₂O",
+        "CCl₂OZr"
+        "₂CClO",
+    };
+    for (const auto &smi : badSmiles) {
+      auto m = v2::SmilesParse::MolFromSmiles(smi, sp);
+      REQUIRE(!m);
+      m = v2::SmilesParse::MolFromSmarts(smi);
+      REQUIRE(!m);
+    }
   }
 }

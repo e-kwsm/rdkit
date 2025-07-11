@@ -101,7 +101,7 @@ RWMol buildSampleMolecule() {
     // Vector should not be parsed (not a SUP group)
     sg.addCState(2, RDGeom::Point3D());
 
-    sg.setProp("CLASS", "TEST CLASS");
+    sg.setProp("CLASS", "DNA");
 
     sg.addAttachPoint(0, 0, "XX");
 
@@ -209,7 +209,7 @@ void checkSampleMolecule(const RWMol &mol) {
     TEST_ASSERT(cstates[0].vector.y == 0.);
     TEST_ASSERT(cstates[0].vector.z == 0.);
 
-    TEST_ASSERT(sg.getProp<std::string>("CLASS") == "TEST CLASS");
+    TEST_ASSERT(sg.getProp<std::string>("CLASS") == "DNA");
 
     auto ap = sg.getAttachPoints();
     TEST_ASSERT(ap.size() == 1);
@@ -371,7 +371,7 @@ void testParseSubstanceGroups(const std::string &rdbase) {
     const auto sgroup = sgroups.at(0);
 
     TEST_ASSERT(sgroup.getProp<std::string>("TYPE") == "SUP");
-    TEST_ASSERT(sgroup.getProp<std::string>("CLASS") == "DEMOCLASS");
+    TEST_ASSERT(sgroup.getProp<std::string>("CLASS") == "AA");
     TEST_ASSERT(sgroup.getProp<std::string>("LABEL") == "abbrev");
 
     std::vector<unsigned int> atoms_reference = {6, 7, 8, 9, 11, 12};
@@ -475,13 +475,13 @@ void testModifyMol() {
   const auto &sgroups = getSubstanceGroups(mol);
   TEST_ASSERT(sgroups.size() == 3);
 
-  {  // insertion does not affect SubstanceGroups
+  {  // insertion also inserts SubstanceGroups
     const auto &sgroups = getSubstanceGroups(mol_copy);
     TEST_ASSERT(sgroups.size() == 3);
 
     mol_copy.insertMol(mol);
 
-    TEST_ASSERT(sgroups.size() == 3);
+    TEST_ASSERT(sgroups.size() == 6);
   }
   {
     // adding an atom does not affect SubstanceGroups

@@ -10,15 +10,22 @@
 
 #include "DetermineBonds.h"
 #include <GraphMol/RDKitBase.h>
+#ifdef RDK_BUILD_YAEHMOP_SUPPORT
 #include <YAeHMOP/EHTTools.h>
-#include <iostream>
+#endif
+#include <limits>
 #include <vector>
 #include <numeric>
 #include <cmath>
 #include <unordered_map>
+
+#include <RDGeneral/BoostStartInclude.h>
 #include <boost/graph/adjacency_list.hpp>
 #include <boost/graph/max_cardinality_matching.hpp>
 #include <boost/multiprecision/cpp_int.hpp>
+#include <RDGeneral/BoostEndInclude.h>
+#include <GraphMol/FileParsers/ProximityBonds.h>
+#include <RDGeneral/ControlCHandler.h>
 
 typedef boost::adjacency_list<boost::vecS, boost::vecS, boost::undirectedS>
     Graph;
@@ -69,18 +76,22 @@ std::vector<T> LazyCartesianProduct<T>::entryAt(uint1024_t pos) const {
 std::vector<unsigned int> possibleValences(
     const RDKit::Atom *atom,
     const std::unordered_map<int, std::vector<unsigned int>> &atomicValence) {
-  auto atomNum = atom->getAtomicNum();
+  auto atomNum = atom->getAtomicNum() - atom->getFormalCharge();
   auto numBonds = atom->getDegree();
 
+  std::vector<unsigned int> avalences;
   auto valences = atomicValence.find(atomNum);
-  if (valences == atomicValence.end()) {
-    std::stringstream ss;
-    ss << "determineBondOrdering() does not work with element "
-       << RDKit::PeriodicTable::getTable()->getElementSymbol(atomNum);
-    throw ValueErrorException(ss.str());
+  if (valences != atomicValence.end()) {
+    avalences = valences->second;
+  } else {
+    for (auto v : RDKit::PeriodicTable::getTable()->getValenceList(atomNum)) {
+      if (v >= 0) {
+        avalences.push_back(v);
+      }
+    }
   }
   std::vector<unsigned int> possible;
-  for (const auto &valence : valences->second) {
+  for (const auto &valence : avalences) {
     if (numBonds <= valence) {
       possible.push_back(valence);
     }
@@ -117,6 +128,7 @@ LazyCartesianProduct<unsigned int> getValenceCombinations(
 
 namespace RDKit {
 
+#ifdef RDK_BUILD_YAEHMOP_SUPPORT
 void connectivityHueckel(RWMol &mol, int charge) {
   auto numAtoms = mol.getNumAtoms();
   mol.getAtomWithIdx(0)->setFormalCharge(charge);
@@ -136,6 +148,11 @@ void connectivityHueckel(RWMol &mol, int charge) {
     }
   }
 }  // connectivityHueckel()
+#else
+void connectivityHueckel(RWMol &, int) {
+  CHECK_INVARIANT(0, "YAeHMOP support not available");
+}
+#endif
 
 void connectivityVdW(RWMol &mol, double covFactor) {
   auto numAtoms = mol.getNumAtoms();
@@ -156,19 +173,29 @@ void connectivityVdW(RWMol &mol, double covFactor) {
 }  // connectivityVdW()
 
 void determineConnectivity(RWMol &mol, bool useHueckel, int charge,
-                           double covFactor) {
-  auto numAtoms = mol.getNumAtoms();
-  for (unsigned int i = 0; i < numAtoms; i++) {
-    for (unsigned int j = i + 1; j < numAtoms; j++) {
-      mol.removeBond(i, j);
-      mol.getAtomWithIdx(i)->setNoImplicit(true);
-      mol.getAtomWithIdx(j)->setNoImplicit(true);
-    }
+                           double covFactor, bool useVdw) {
+#ifndef RDK_BUILD_YAEHMOP_SUPPORT
+  if (useHueckel) {
+    throw ValueErrorException(
+        "The RDKit was not compiled with YAeHMOP support");
+  }
+#endif
+  // remove all bonds
+  mol.beginBatchEdit();
+  for (auto bond : mol.bonds()) {
+    mol.removeBond(bond->getBeginAtomIdx(), bond->getEndAtomIdx());
+  }
+  mol.commitBatchEdit();
+  // set all atoms to noImplicit
+  for (auto atom : mol.atoms()) {
+    atom->setNoImplicit(true);
   }
   if (useHueckel) {
     connectivityHueckel(mol, charge);
-  } else {
+  } else if (useVdw) {
     connectivityVdW(mol, covFactor);
+  } else {
+    ConnectTheDots(&mol, ctdQUICKREMOVE_H_H_CONTACTS);
   }
 }  // determineConnectivity()
 
@@ -244,7 +271,8 @@ void setAtomicCharges(RWMol &mol, const std::vector<unsigned int> &valency,
   int molCharge = 0;
   for (unsigned int i = 0; i < mol.getNumAtoms(); i++) {
     auto atom = mol.getAtomWithIdx(i);
-    int atomCharge = getAtomicCharge(atom->getAtomicNum(), valency[i]);
+    int atomCharge = getAtomicCharge(
+        atom->getAtomicNum() - atom->getFormalCharge(), valency[i]);
     molCharge += atomCharge;
     if (atom->getAtomicNum() == 6) {
       if (atom->getDegree() == 2 && valency[i] == 2) {
@@ -274,9 +302,12 @@ void setAtomicRadicals(RWMol &mol, const std::vector<unsigned int> &valency,
 
 bool checkSaturation(const std::vector<unsigned int> &order,
                      const std::vector<unsigned int> &valency) {
-  std::vector<unsigned int> unsat;
-  getUnsaturated(order, valency, unsat);
-  return unsat.empty();
+  for (unsigned int i = 0; i < order.size(); i++) {
+    if (order[i] > valency[i]) {
+      return false;
+    }
+  }
+  return true;
 }
 
 void setAtomMap(RWMol &mol) {
@@ -301,8 +332,10 @@ void addBondOrdering(RWMol &mol,
 
   for (unsigned int i = 0; i < numAtoms; i++) {
     for (unsigned int j = i + 1; j < numAtoms; j++) {
-      if (ordMat[i][j] == 0 || ordMat[i][j] == 1) {
+      if (ordMat[i][j] == 0) {
         continue;
+      } else if (ordMat[i][j] == 1) {
+        mol.getBondBetweenAtoms(i, j)->setBondType(Bond::BondType::SINGLE);
       } else if (ordMat[i][j] == 2) {
         mol.getBondBetweenAtoms(i, j)->setBondType(Bond::BondType::DOUBLE);
       } else if (ordMat[i][j] == 3) {
@@ -321,7 +354,9 @@ void addBondOrdering(RWMol &mol,
 
   if (MolOps::getFormalCharge(mol) != charge) {
     std::stringstream ss;
-    ss << "Final molecular charge does not match input; could not find valid bond ordering";
+    ss << "Final molecular charge (" << charge << ") does not match input ("
+       << MolOps::getFormalCharge(mol)
+       << "); could not find valid bond ordering";
     throw ValueErrorException(ss.str());
   }
 
@@ -335,20 +370,29 @@ void addBondOrdering(RWMol &mol,
 }
 
 void determineBondOrders(RWMol &mol, int charge, bool allowChargedFragments,
-                         bool embedChiral, bool useAtomMap) {
+                         bool embedChiral, bool useAtomMap, size_t iterations) {
+  if (iterations == 0) {
+    // LazyCartesianProduct allows up to uint1024_t::max iterations,
+    // but it's unlikely we'll even get to size_t::max
+    iterations = std::numeric_limits<size_t>::max();
+  }
+
   auto numAtoms = mol.getNumAtoms();
 
   std::vector<std::vector<unsigned int>> conMat(
       numAtoms, std::vector<unsigned int>(numAtoms, 0));
   std::vector<unsigned int> origValency(numAtoms, 0);
-  for (unsigned int i = 0; i < numAtoms; i++) {
-    for (unsigned int j = i + 1; j < numAtoms; j++) {
-      if (mol.getBondBetweenAtoms(i, j)) {
-        conMat[i][j]++;
-        origValency[i]++;
-        origValency[j]++;
-      }
+
+  for (const auto bond : mol.bonds()) {
+    auto i = bond->getBeginAtomIdx();
+    auto j = bond->getEndAtomIdx();
+    // conMat is symmetric
+    if (i > j) {
+      std::swap(i, j);
     }
+    conMat[i][j]++;
+    origValency[i]++;
+    origValency[j]++;
   }
 
   std::vector<std::vector<unsigned int>> best(conMat);
@@ -361,8 +405,20 @@ void determineBondOrders(RWMol &mol, int charge, bool allowChargedFragments,
   bool chargeValid = false;
   bool saturationValid = false;
 
+  ControlCHandler::reset();
+
   while (!valenceCombos.atEnd()) {
+    if (--iterations == 0) {
+      throw MaxFindBondOrdersItersExceeded();
+    }
+    if (ControlCHandler::getGotSignal()) {
+      BOOST_LOG(rdWarningLog)
+          << "Interrupted, cancelling determine Bond Orders" << std::endl;
+      return;
+    }
+
     auto order = valenceCombos.next();
+
     std::vector<unsigned int> unsat;
     getUnsaturated(order, origValency, unsat);
     // checks whether the atomic connectivity is valid for the current set of
@@ -409,7 +465,7 @@ void determineBondOrders(RWMol &mol, int charge, bool allowChargedFragments,
         }
       }
 
-    } while (newBonds == true);
+    } while (newBonds);
 
     valencyValid = checkValency(order, valency);
     chargeValid = checkCharge(mol, valency, charge);
@@ -422,7 +478,6 @@ void determineBondOrders(RWMol &mol, int charge, bool allowChargedFragments,
         return;
       } else {
         int sum = std::accumulate(valency.begin(), valency.end(), 0);
-        ;
         if (sum > bestSum) {
           best = ordMat;
           bestSum = sum;
@@ -439,13 +494,13 @@ void determineBondOrders(RWMol &mol, int charge, bool allowChargedFragments,
 
 void determineBonds(RWMol &mol, bool useHueckel, int charge, double covFactor,
                     bool allowChargedFragments, bool embedChiral,
-                    bool useAtomMap) {
+                    bool useAtomMap, bool useVdw, size_t maxIterations) {
   if (mol.getNumAtoms() <= 1) {
     return;
   }
-  determineConnectivity(mol, useHueckel, charge, covFactor);
+  determineConnectivity(mol, useHueckel, charge, covFactor, useVdw);
   determineBondOrders(mol, charge, allowChargedFragments, embedChiral,
-                      useAtomMap);
+                      useAtomMap, maxIterations);
 }  // determineBonds()
 
 }  // namespace RDKit

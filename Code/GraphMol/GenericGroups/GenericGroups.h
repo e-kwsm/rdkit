@@ -16,6 +16,7 @@
 #include <vector>
 #include <functional>
 #include <map>
+#include <span>
 #include <boost/dynamic_bitset.hpp>
 
 namespace RDKit {
@@ -592,19 +593,18 @@ const static std::map<
         {"NoCarbonRing", Matchers::NoCarbonRingAtomMatcher},
         {"CXX", Matchers::NoCarbonRingAtomMatcher},
         {"NoCarbonRingH", Matchers::NoCarbonRingHAtomMatcher},
-        {"CXH", Matchers::NoCarbonRingHAtomMatcher}
-};
+        {"CXH", Matchers::NoCarbonRingHAtomMatcher}};
 
-// This is an extension of adjustQueryProperties from GraphMol that allows the search of generic groups 
+// This is an extension of adjustQueryProperties from GraphMol that allows the
+// search of generic groups
 RDKIT_GENERICGROUPS_EXPORT ROMol *adjustQueryPropertiesWithGenericGroups(
-    const ROMol &mol,
-    const MolOps::AdjustQueryParameters *inParams=nullptr);
+    const ROMol &mol, const MolOps::AdjustQueryParameters *inParams = nullptr);
 
 //! returns false if any of the molecule's generic atoms are not satisfied in
 /// the current match
 RDKIT_GENERICGROUPS_EXPORT bool genericAtomMatcher(
     const ROMol &mol, const ROMol &query,
-    const std::vector<unsigned int> &match);
+    const std::span<const unsigned int> &match);
 //! sets the apropriate generic query tags based on atom labels and/or SGroups
 /*
 

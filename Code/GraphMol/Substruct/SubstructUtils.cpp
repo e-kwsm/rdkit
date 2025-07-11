@@ -1,6 +1,5 @@
 //
-//  Copyright (C) 2003-2021 Greg Landrum and Rational Discovery LLC
-//
+//  Copyright (C) 2003-2025 Greg Landrum and other RDKit contributors
 //   @@ All Rights Reserved @@
 //  This file is part of the RDKit.
 //  The contents are covered by the terms of the BSD license
@@ -104,22 +103,22 @@ class ScoreMatchesByDegreeOfCoreSubstitution {
 }  // namespace detail
 
 bool propertyCompat(const RDProps *r1, const RDProps *r2,
-                    const std::vector<std::string>& properties) {
-  PRECONDITION(r1,"bad RDProps");
-  PRECONDITION(r2,"bad RDProps");
-  
+                    const std::vector<std::string> &properties) {
+  PRECONDITION(r1, "bad RDProps");
+  PRECONDITION(r2, "bad RDProps");
+
   for (const auto &prop : properties) {
     std::string prop1;
     bool hasprop1 = r1->getPropIfPresent<std::string>(prop, prop1);
     std::string prop2;
     bool hasprop2 = r2->getPropIfPresent<std::string>(prop, prop2);
     if (hasprop1 && hasprop2) {
-        if (prop1 != prop2) {
-            return false;
-        }
-    } else if (hasprop1 || hasprop2) {
-        // only one has the property
+      if (prop1 != prop2) {
         return false;
+      }
+    } else if (hasprop1 || hasprop2) {
+      // only one has the property
+      return false;
     }
   }
   return true;
@@ -146,6 +145,7 @@ bool atomCompat(const Atom *a1, const Atom *a2,
 }
 
 bool chiralAtomCompat(const Atom *&a1, const Atom *&a2) {
+  /// DEPRECATED
   PRECONDITION(a1, "bad atom");
   PRECONDITION(a2, "bad atom");
   bool res = a1->Match(a2);
@@ -168,6 +168,16 @@ bool bondCompat(const Bond *b1, const Bond *b2,
   PRECONDITION(b1, "bad bond");
   PRECONDITION(b2, "bad bond");
   bool res;
+
+  auto isConjugatedSingleOrDoubleBond([](const Bond *bond) {
+    return bond->getIsConjugated() && (bond->getBondType() == Bond::SINGLE ||
+                                       bond->getBondType() == Bond::DOUBLE);
+  });
+  auto isSingleOrDoubleBond([](const Bond *bond) {
+    return (bond->getBondType() == Bond::SINGLE ||
+            bond->getBondType() == Bond::DOUBLE);
+  });
+
   if (ps.useQueryQueryMatches && b1->hasQuery() && b2->hasQuery()) {
     res = static_cast<const QueryBond *>(b1)->QueryMatch(
         static_cast<const QueryBond *>(b2));
@@ -175,8 +185,19 @@ bool bondCompat(const Bond *b1, const Bond *b2,
              !b2->hasQuery() &&
              ((b1->getBondType() == Bond::AROMATIC &&
                b2->getBondType() == Bond::AROMATIC) ||
-              (b1->getBondType() == Bond::AROMATIC && b2->getIsConjugated()) ||
-              (b2->getBondType() == Bond::AROMATIC && b1->getIsConjugated()))) {
+              (b1->getBondType() == Bond::AROMATIC &&
+               isConjugatedSingleOrDoubleBond(b2)) ||
+              (b2->getBondType() == Bond::AROMATIC &&
+               isConjugatedSingleOrDoubleBond(b1)))) {
+    res = true;
+  } else if (ps.aromaticMatchesSingleOrDouble && !b1->hasQuery() &&
+             !b2->hasQuery() &&
+             ((b1->getBondType() == Bond::AROMATIC &&
+               b2->getBondType() == Bond::AROMATIC) ||
+              (b1->getBondType() == Bond::AROMATIC &&
+               isSingleOrDoubleBond(b2)) ||
+              (b2->getBondType() == Bond::AROMATIC &&
+               isSingleOrDoubleBond(b1)))) {
     res = true;
   } else {
     res = b1->Match(b2);
@@ -211,18 +232,18 @@ void removeDuplicates(std::vector<MatchVectType> &matches,
   //  that the 4 paths are equivalent in the semantics of the query.
   //  Also, OELib returns the same results
   //
-  std::set<boost::dynamic_bitset<>> seen;
+  std::unordered_set<std::string> seen;
   std::vector<MatchVectType> res;
   res.reserve(matches.size());
-  for (auto &&match : matches) {
-    boost::dynamic_bitset<> val(nAtoms);
+  seen.reserve(matches.size());
+  for (const auto &match : matches) {
+    std::string val(nAtoms, '0');
     for (const auto &ci : match) {
-      val.set(ci.second);
+      val[ci.second] = '1';
     }
-    auto pos = seen.lower_bound(val);
-    if (pos == seen.end() || *pos != val) {
-      res.push_back(std::move(match));
-      seen.insert(pos, std::move(val));
+    const bool inserted = seen.insert(std::move(val)).second;
+    if (inserted) {
+      res.push_back(match);
     }
   }
   res.shrink_to_fit();
@@ -246,11 +267,10 @@ std::vector<MatchVectType> sortMatchesByDegreeOfCoreSubstitution(
 }
 
 bool isAtomTerminalRGroupOrQueryHydrogen(const Atom *atom) {
-  return atom->getDegree() == 1 &&
-         (atom->getAtomicNum() == 0 ||
-          (atom->hasQuery() &&
-           describeQuery(atom).find("AtomAtomicNum 1 = val") !=
-               std::string::npos));
+  return (atom->getDegree() == 1 && isAtomDummy(atom)) ||
+         (atom->hasQuery() &&
+          describeQuery(atom).find("AtomAtomicNum 1 = val") !=
+              std::string::npos);
 }
 
 #define PT_OPT_GET(opt) params.opt = pt.get(#opt, params.opt)
@@ -272,7 +292,10 @@ void updateSubstructMatchParamsFromJSON(SubstructMatchParameters &params,
   PT_OPT_GET(recursionPossible);
   PT_OPT_GET(uniquify);
   PT_OPT_GET(maxMatches);
+  PT_OPT_GET(maxRecursiveMatches);
   PT_OPT_GET(numThreads);
+  PT_OPT_GET(specifiedStereoQueryMatchesUnspecified);
+  PT_OPT_GET(aromaticMatchesSingleOrDouble);
 }
 
 std::string substructMatchParamsToJSON(const SubstructMatchParameters &params) {
@@ -285,7 +308,10 @@ std::string substructMatchParamsToJSON(const SubstructMatchParameters &params) {
   PT_OPT_PUT(recursionPossible);
   PT_OPT_PUT(uniquify);
   PT_OPT_PUT(maxMatches);
+  PT_OPT_PUT(maxRecursiveMatches);
   PT_OPT_PUT(numThreads);
+  PT_OPT_PUT(specifiedStereoQueryMatchesUnspecified);
+  PT_OPT_PUT(aromaticMatchesSingleOrDouble);
 
   std::stringstream ss;
   boost::property_tree::json_parser::write_json(ss, pt);

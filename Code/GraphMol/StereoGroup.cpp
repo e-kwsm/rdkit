@@ -2,7 +2,9 @@
 #include <utility>
 #include <vector>
 
+#include <RDGeneral/BoostStartInclude.h>
 #include <boost/dynamic_bitset.hpp>
+#include <RDGeneral/BoostEndInclude.h>
 
 #include "StereoGroup.h"
 #include "Atom.h"
@@ -43,15 +45,24 @@ void assignMissingIds(const boost::dynamic_bitset<> &ids, unsigned &nextId,
 }  // namespace
 
 StereoGroup::StereoGroup(StereoGroupType grouptype, std::vector<Atom *> &&atoms,
-                         unsigned readId)
-    : d_grouptype(grouptype), d_atoms(atoms), d_readId{readId} {}
+                         std::vector<Bond *> &&bonds, unsigned readId)
+    : d_grouptype(grouptype),
+      d_atoms(atoms),
+      d_bonds(bonds),
+      d_readId{readId} {}
+
 StereoGroup::StereoGroup(StereoGroupType grouptype,
-                         const std::vector<Atom *> &atoms, unsigned readId)
-    : d_grouptype(grouptype), d_atoms(std::move(atoms)), d_readId{readId} {}
+                         const std::vector<Atom *> &atoms,
+                         const std::vector<Bond *> &bonds, unsigned readId)
+    : d_grouptype(grouptype),
+      d_atoms(std::move(atoms)),
+      d_bonds(std::move(bonds)),
+      d_readId{readId} {}
 
 StereoGroupType StereoGroup::getGroupType() const { return d_grouptype; }
 
 const std::vector<Atom *> &StereoGroup::getAtoms() const { return d_atoms; }
+const std::vector<Bond *> &StereoGroup::getBonds() const { return d_bonds; }
 
 void removeGroupsWithAtom(const Atom *atom, std::vector<StereoGroup> &groups) {
   auto containsAtom = [atom](const StereoGroup &group) {
@@ -59,6 +70,53 @@ void removeGroupsWithAtom(const Atom *atom, std::vector<StereoGroup> &groups) {
                      atom) != group.getAtoms().cend();
   };
   groups.erase(std::remove_if(groups.begin(), groups.end(), containsAtom),
+               groups.end());
+}
+
+void removeAtomFromGroups(const Atom *atom, std::vector<StereoGroup> &groups) {
+  auto findAtom = [atom](StereoGroup &group) {
+    return std::find(group.getAtoms().begin(), group.getAtoms().end(), atom);
+  };
+  for (auto &group : groups) {
+    auto atomPos = findAtom(group);
+    if (atomPos != group.d_atoms.end()) {
+      group.d_atoms.erase(atomPos);
+    }
+  }
+  // now remove any empty groups:
+  groups.erase(std::remove_if(groups.begin(), groups.end(),
+                              [](const auto &gp) {
+                                return gp.getAtoms().empty() &&
+                                       gp.getBonds().empty();
+                              }),
+               groups.end());
+}
+
+void removeBondFromGroups(const Bond *bond, std::vector<StereoGroup> &groups) {
+  auto findBond = [bond](StereoGroup &group) {
+    return std::find(group.getBonds().begin(), group.getBonds().end(), bond);
+  };
+  for (auto &group : groups) {
+    auto bondPos = findBond(group);
+    if (bondPos != group.d_bonds.end()) {
+      group.d_bonds.erase(bondPos);
+    }
+  }
+  // now remove any empty groups:
+  groups.erase(std::remove_if(groups.begin(), groups.end(),
+                              [](const auto &gp) {
+                                return gp.getAtoms().empty() &&
+                                       gp.getBonds().empty();
+                              }),
+               groups.end());
+}
+
+void removeGroupsWithBond(const Bond *bond, std::vector<StereoGroup> &groups) {
+  auto containsBond = [bond](const StereoGroup &group) {
+    return std::find(group.getBonds().cbegin(), group.getBonds().cend(),
+                     bond) != group.getBonds().cend();
+  };
+  groups.erase(std::remove_if(groups.begin(), groups.end(), containsBond),
                groups.end());
 }
 
@@ -74,6 +132,21 @@ void removeGroupsWithAtoms(const std::vector<Atom *> &atoms,
     return false;
   };
   groups.erase(std::remove_if(groups.begin(), groups.end(), containsAnyAtom),
+               groups.end());
+}
+
+void removeGroupsWithBonds(const std::vector<Bond *> &bonds,
+                           std::vector<StereoGroup> &groups) {
+  auto containsAnyBond = [&bonds](const StereoGroup &group) {
+    for (auto bond : bonds) {
+      if (std::find(group.getBonds().cbegin(), group.getBonds().cend(), bond) !=
+          group.getBonds().cend()) {
+        return true;
+      }
+    }
+    return false;
+  };
+  groups.erase(std::remove_if(groups.begin(), groups.end(), containsAnyBond),
                groups.end());
 }
 
@@ -99,7 +172,7 @@ void assignStereoGroupIds(std::vector<StereoGroup> &groups) {
     if (sg.getGroupType() == StereoGroupType::STEREO_AND) {
       assignMissingIds(andIds, andId, sg);
     } else if (sg.getGroupType() == StereoGroupType::STEREO_OR) {
-      assignMissingIds(andIds, orId, sg);
+      assignMissingIds(orIds, orId, sg);
     }
   }
 }
@@ -127,12 +200,21 @@ std::ostream &operator<<(std::ostream &target, const RDKit::StereoGroup &stg) {
       break;
   }
   target << " rId: " << stg.getReadId();
-  target << " wRd: " << stg.getWriteId();
-  target << " atoms: { ";
-  for (auto atom : stg.getAtoms()) {
-    target << atom->getIdx() << ' ';
+  target << " wId: " << stg.getWriteId();
+  if (!stg.getAtoms().empty()) {
+    target << " atoms: { ";
+    for (auto atom : stg.getAtoms()) {
+      target << atom->getIdx() << ' ';
+    }
+    target << '}';
   }
-  target << '}';
+  if (!stg.getBonds().empty()) {
+    target << " bonds: { ";
+    for (auto bond : stg.getBonds()) {
+      target << bond->getIdx() << ' ';
+    }
+    target << '}';
+  }
 
   return target;
 }

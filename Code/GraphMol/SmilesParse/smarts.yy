@@ -72,8 +72,10 @@ yysmarts_error( const char *input,
 %parse-param {int& start_token}
 
 %code provides {
+#ifndef YY_DECL
 #define YY_DECL int yylex \
                (YYSTYPE * yylval_param , yyscan_t yyscanner, int& start_token)
+#endif
 }
 
 %union {
@@ -105,6 +107,7 @@ yysmarts_error( const char *input,
 %type <atom> atom_expr point_query atom_query recursive_query possible_range_query
 %type <ival> ring_number nonzero_number number charge_spec digit
 %type <bond> bondd bond_expr bond_query
+%token BAD_CHARACTER
 %token EOS_TOKEN
 
 %left SEMI_TOKEN
@@ -145,6 +148,11 @@ START_MOL mol {
 | START_BOND {
   YYABORT;
 }
+| meta_start BAD_CHARACTER {
+  yyerrok;
+  yyErrorCleanup(molList);
+  YYABORT;
+}
 | meta_start error EOS_TOKEN{
   yyerrok;
   yyErrorCleanup(molList);
@@ -176,6 +184,7 @@ mol: atomd {
   int sz     = molList->size();
   molList->resize( sz + 1);
   (*molList)[ sz ] = new RWMol();
+  $1->setProp(RDKit::common_properties::_SmilesStart,1);
   (*molList)[ sz ]->addAtom($1,true,true);
   //delete $1;
   $$ = sz;
@@ -217,6 +226,7 @@ mol: atomd {
 
 | mol SEPARATOR_TOKEN atomd {
   RWMol *mp = (*molList)[$$];
+  $3->setProp(RDKit::common_properties::_SmilesStart,1,true);
   mp->addAtom($3,true,true);
 }
 

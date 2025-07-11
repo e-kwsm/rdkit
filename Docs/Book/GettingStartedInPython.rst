@@ -37,6 +37,7 @@ Reading single molecules
   IPythonConsole.UninstallIPythonRenderer()
   from rdkit.Chem import rdDepictor
   rdDepictor.SetPreferCoordGen(False)
+  
 
 The majority of the basic molecular functionality is found in module :py:mod:`rdkit.Chem`:
 
@@ -322,25 +323,27 @@ molecule before generating the conformer. This is essential to get good structur
 .. doctest::
 
   >>> m3 = Chem.AddHs(m2)
-  >>> AllChem.EmbedMolecule(m3,randomSeed=0xf00d)   # optional random seed for reproducibility)
+  >>> params = AllChem.ETKDGv3()
+  >>> params.randomSeed = 0xf00d # optional random seed for reproducibility
+  >>> AllChem.EmbedMolecule(m3, params)   
   0
   >>> print(Chem.MolToMolBlock(m3))    # doctest: +NORMALIZE_WHITESPACE
   cyclobutane
        RDKit          3D
   <BLANKLINE>
    12 12  0  0  0  0  0  0  0  0999 V2000
-      1.0256    0.2491   -0.0964 C   0  0  0  0  0  0  0  0  0  0  0  0
+      1.0257    0.2442   -0.0991 C   0  0  0  0  0  0  0  0  0  0  0  0
      -0.2041    0.9236    0.4320 C   0  0  0  0  0  0  0  0  0  0  0  0
-     -1.0435   -0.2466   -0.0266 C   0  0  0  0  0  0  0  0  0  0  0  0
-      0.2104   -0.9922   -0.3417 C   0  0  0  0  0  0  0  0  0  0  0  0
-      1.4182    0.7667   -0.9782 H   0  0  0  0  0  0  0  0  0  0  0  0
+     -1.0443   -0.2424   -0.0253 C   0  0  0  0  0  0  0  0  0  0  0  0
+      0.2102   -0.9939   -0.3417 C   0  0  0  0  0  0  0  0  0  0  0  0
+      1.4192    0.7683   -0.9787 H   0  0  0  0  0  0  0  0  0  0  0  0
       1.8181    0.1486    0.6820 H   0  0  0  0  0  0  0  0  0  0  0  0
      -0.1697    1.0826    1.5236 H   0  0  0  0  0  0  0  0  0  0  0  0
-     -0.5336    1.8391   -0.1051 H   0  0  0  0  0  0  0  0  0  0  0  0
+     -0.5360    1.8377   -0.1050 H   0  0  0  0  0  0  0  0  0  0  0  0
      -1.6809   -0.0600   -0.8987 H   0  0  0  0  0  0  0  0  0  0  0  0
-     -1.6501   -0.6194    0.8220 H   0  0  0  0  0  0  0  0  0  0  0  0
+     -1.6510   -0.6193    0.8225 H   0  0  0  0  0  0  0  0  0  0  0  0
       0.4659   -1.7768    0.3858 H   0  0  0  0  0  0  0  0  0  0  0  0
-      0.3439   -1.3147   -1.3988 H   0  0  0  0  0  0  0  0  0  0  0  0
+      0.3467   -1.3126   -1.3975 H   0  0  0  0  0  0  0  0  0  0  0  0
     1  2  1  0
     2  3  1  0
     3  4  1  0
@@ -354,7 +357,8 @@ molecule before generating the conformer. This is essential to get good structur
     4 11  1  0
     4 12  1  0
   M  END
-<BLANKLINE>
+  <BLANKLINE>
+
 
 If we don't want the Hs in our later analysis, they are easy to remove:
 
@@ -363,13 +367,13 @@ If we don't want the Hs in our later analysis, they are easy to remove:
   >>> m3 = Chem.RemoveHs(m3)
   >>> print(Chem.MolToMolBlock(m3))    # doctest: +NORMALIZE_WHITESPACE
   cyclobutane
-       RDKit          3D
+        RDKit          3D
   <BLANKLINE>
     4  4  0  0  0  0  0  0  0  0999 V2000
-      1.0256    0.2491   -0.0964 C   0  0  0  0  0  0  0  0  0  0  0  0
+      1.0257    0.2442   -0.0991 C   0  0  0  0  0  0  0  0  0  0  0  0
      -0.2041    0.9236    0.4320 C   0  0  0  0  0  0  0  0  0  0  0  0
-     -1.0435   -0.2466   -0.0266 C   0  0  0  0  0  0  0  0  0  0  0  0
-      0.2104   -0.9922   -0.3417 C   0  0  0  0  0  0  0  0  0  0  0  0
+     -1.0443   -0.2424   -0.0253 C   0  0  0  0  0  0  0  0  0  0  0  0
+      0.2102   -0.9939   -0.3417 C   0  0  0  0  0  0  0  0  0  0  0  0
     1  2  1  0
     2  3  1  0
     3  4  1  0
@@ -401,7 +405,7 @@ An SDWriter can also be initialized using a file-like object:
 
 .. doctest::
 
-  >>> from rdkit.six import StringIO
+  >>> from io import StringIO
   >>> sio = StringIO()
   >>> with Chem.SDWriter(sio) as w:
   ...   for m in mols: 
@@ -690,7 +694,8 @@ minimisation step to clean up the structures.
 More detailed information about the conformer generator and the parameters
 controlling it can be found in the "RDKit Book".
 
-Since the 2018.09 release of the RDKit, ETKDG is the default conformer generation method.
+Since the 2018.09 release of the RDKit, ETKDG is the default conformer
+generation method. Since the 2024.03 release ETKDGv3 is the default.
 
 The full process of embedding a molecule is easier than all the above verbiage makes it sound:
 
@@ -770,7 +775,9 @@ via the `numThreads` argument:
 
 .. doctest::
 
-  >>> cids = AllChem.EmbedMultipleConfs(m2, numThreads=0)
+  >>> params = AllChem.ETKDGv3()
+  >>> params.numThreads = 0
+  >>> cids = AllChem.EmbedMultipleConfs(m2, 10, params)
   >>> res = AllChem.MMFFOptimizeMoleculeConfs(m2, numThreads=0)
 
 Setting `numThreads` to zero causes the software to use the maximum number
@@ -962,7 +969,7 @@ sequence numbers.
 
 .. doctest::
    
-   >>> mol = Chem.MolFromSmiles('Cl[C@H](F)NC\C=C\C')
+   >>> mol = Chem.MolFromSmiles(r'Cl[C@H](F)NC\C=C\C')
    >>> d = rdMolDraw2D.MolDraw2DCairo(250, 200) # or MolDraw2DSVG to get SVGs
    >>> mol.GetAtomWithIdx(2).SetProp('atomNote', 'foo')
    >>> mol.GetBondWithIdx(0).SetProp('bondNote', 'bar')
@@ -1042,6 +1049,7 @@ metadata about the molecule(s) or chemical reaction included in the drawing.
 This metadata can be used later to reconstruct the molecule(s) or reaction.
 
 .. doctest::
+  :skipif: not hasattr(Chem,'MolFromPNGString')
 
   >>> template = Chem.MolFromSmiles('c1nccc2n1ccc2')
   >>> AllChem.Compute2DCoords(template)
@@ -1065,6 +1073,7 @@ If the PNG contains multiple molecules we can retrieve them all at once using
 `Chem.MolsFromPNGString()`:
 
 .. doctest::
+  :skipif: not hasattr(Chem,'MolsFromPNGString')
 
   >>> from rdkit.Chem import Draw
   >>> png = Draw.MolsToGridImage(ms,returnPNG=True)
@@ -1417,8 +1426,38 @@ or into a generic framework:
 Maximum Common Substructure
 ***************************
 
-The FindMCS function find a maximum common substructure (MCS) of two
-or more molecules:
+There are 2 methods for finding maximum common substructures.  The first, FindMCS,
+finds a single fragment maximum common substructure (MCS) of two or more molecules:
+The second, RascalMCES, finds the maximum common edge substructure (MCES) between two
+molecules and can return a multi-fragment MCES.  The difference is demonstrated with the
+following pair of molecules:
+
++-------------------------------------+
+| .. image:: images/mcs_example_1.png |
++-------------------------------------+
+| .. image:: images/mcs_example_2.png |
++-------------------------------------+
+
+FMCS gives this maximum common substructure:
+
++-------------------------------------+
+| .. image:: images/mcs_example_3.png |
++-------------------------------------+
+| .. image:: images/mcs_example_4.png |
++-------------------------------------+
+
+Whereas RascalMCES gives:
+
++-------------------------------------+
+| .. image:: images/mcs_example_5.png |
++-------------------------------------+
+| .. image:: images/mcs_example_6.png |
++-------------------------------------+
+
+FindMCS
+=======
+
+FindMCS operates on 2 or more molecules:
 
 .. doctest::
 
@@ -1523,7 +1562,7 @@ requirement.
   >>> rdFMCS.FindMCS(mols).smartsString
   '[#6]1-[#6]-[#6](-[#6]-1-[#6])-[#6]'
   >>> rdFMCS.FindMCS(mols, ringMatchesRingOnly=True).smartsString
-  '[#6&R](-&@[#6&R]-&@[#6&R]-&@[#6&R]-&@[#6&R])-&@[#6&R]'
+  '[#6]1-&@[#6]-&@[#6](-&@[#6]-&@1)-&@[#6&R]'
   >>> rdFMCS.FindMCS(mols, completeRingsOnly=True).smartsString
   '[#6]1-&@[#6]-&@[#6]-&@[#6]-&@1'
 
@@ -1554,6 +1593,162 @@ return the best match found in that time. If timeout is reached then the
   True
 
 (The MCS after 50 seconds contained 511 atoms.)
+
+RascalMCES
+==========
+
+RascalMCES can only work on 2 molecules at a time:
+
+.. doctest::
+
+  >>> from rdkit.Chem import rdRascalMCES
+  >>> mol1 = Chem.MolFromSmiles("CN(C)c1ccc(CC(=O)NCCCCCCCCCCNC23CC4CC(C2)CC(C3)C4)cc1 CHEMBL153934")
+  >>> mol2 = Chem.MolFromSmiles("CN(C)c1ccc(CC(=O)NCCCCCCCNC23CC4CC(C2)CC(C3)C4)cc1 CHEMBL152361")
+  >>> res = rdRascalMCES.FindMCES(mol1, mol2)
+  >>> res[0].smartsString
+  'CN(-C)-c1:c:c:c(-CC(=O)-NCCCCCCC):c:c:1.NC12CC3CC(-C1)-CC(-C2)-C3'
+  >>> len(res[0].bondMatches())
+  33
+
+It returns a list of RascalResult objects.  Each RascalResult contains the 2 molecules that
+the result pertains to, the SMARTS string of the MCES, the lists of atoms and bonds in the
+two molecules that match, the Johnson similarity between the 2 molecules, the number of
+fragments in the MCES, the number of atoms in the largest fragment and whether the run
+timed out or not.  There is also the method largestFragmentOnly(), which cuts the MCES
+down to the largest single fragment.  This is a non-reversible change, so if you want both
+results, take a copy first.
+
+By default, the MCES algorithm returns the first result it finds of maximum size.  Because of
+symmetry, there may be other equivalent solutions with the same number of atoms and bonds,
+but with different equivalent bonds matched to each other.  If you want to see all MCESs of
+maximum size, you can use the option allBestMCESs = True.  This will increase the run time,
+partly because more branches in the search tree must be examined, but mostly because sorting
+the multiple results is quite time-consuming.  The results are returned in a consistent order
+sorted by number of bond matches, then number of fragments (fewer first), then largest
+fragment size and so on.  Some of these aren't trivial to compute.  The adamantane example
+above is particularly extreme because not only is there extensive symmetry about the
+adamantane end and 2-fold symmetry at the phenyl end but also several points of breaking the
+matching alkyl chain all of which give rise to valid MCESs of the same size.  In this case,
+sorting into a consistent order takes significantly longer than determining the MCESs in the
+first place.
+
+The MCES differs from a conventional MCS in that it is the maximum common substructure based
+on bonds rather than atoms.  Often the result is the same, but not always.
+
+The Johnson similarity is akin to a Tanimoto similarity, but expressed in terms of the
+atoms and bonds in the MCES.  It is the square of the sum of the number of atoms and bonds
+in the MCES divided by the product of the sums of the numbers of atoms and bonds in the
+2 input molecules.  It has values between 0.0 (no MCES between the molecules) and 1.0 (the
+molecules are identical).  A key source of efficiency in the RASCAL algorithm is a fast and
+correct prediction of a maximum value for the Johnson similarity between 2 molecules and
+hence the maximum size of the MCES.  The first step in the algorithm is then a screening,
+whereby the full MCES determination is not performed if the predicted similarity is less
+than some desired threshold.  The final similarity between the 2 molecules may be less
+than the threshold, but it will never be higher than the predicted upper bound.  RASCAL
+stems from RApid Similarity CALulation.
+
+The default settings for RascalMCES are good for general use, but they may be altered
+by passing an optional RascalOptions object:
+
+.. doctest::
+
+  >>> mol1 = Chem.MolFromSmiles('Oc1cccc2C(=O)C=CC(=O)c12')
+  >>> mol2 = Chem.MolFromSmiles('O1C(=O)C=Cc2cc(OC)c(O)cc12')
+  >>> results = rdRascalMCES.FindMCES(mol1, mol2)
+  >>> len(results)
+  0
+  >>> opts = rdRascalMCES.RascalOptions()
+  >>> opts.similarityThreshold = 0.5
+  >>> results = rdRascalMCES.FindMCES(mol1, mol2, opts)
+  >>> len(results)
+  1
+  >>> f'{results[0].similarity:.2f}'
+  '0.37'
+  >>> results[0].smartsString
+  'Oc1:c:c:c:c:c:1.[#6]=O'
+  >>> opts.minFragSize = 3
+  >>> results = rdRascalMCES.FindMCES(mol1, mol2, opts)
+  >>> len(results)
+  1
+  >>> f'{results[0].similarity:.2f}'
+  '0.25'
+  >>> results[0].smartsString
+  'Oc1:c:c:c:c:c:1'
+
+In this case, the upper bound on the similarity score is below the default threshold
+of 0.7, so no results are returned.  Setting the threshold to 0.5 produces the second
+result although, as can be seen, the final similarity is substantially below the
+threshold.  This example also shows a disadvantage of the MCES method, which is that
+it can produce small fragments in the MCES which are rarely helpful.  The option
+minFragSize can be used to over-ride the default value of -1, which means no minimum
+size.
+
+Like FindMCS, there is a ringMatchesRingOnly option, and also there's
+completeAromaticRings, which is True by default, and means that MCESs won't be returned
+with partial aromatic rings matching:
+
+.. doctest::
+
+  >>> mol1 = Chem.MolFromSmiles('C1CCCC1c1ccncc1')
+  >>> mol2 = Chem.MolFromSmiles('C1CCCC1c1ccccc1')
+  >>> results = rdRascalMCES.FindMCES(mol1, mol2, opts)
+  >>> f'{results[0].similarity:.2f}'
+  '0.27'
+  >>> results[0].smartsString
+  'C1CCCC1-c'
+  >>> opts.completeAromaticRings = False
+  >>> results = rdRascalMCES.FindMCES(mol1, mol2, opts)
+  >>> f'{results[0].similarity:.2f}'
+  '0.76'
+  >>> results[0].smartsString
+  'C1CCCC1-c(:c:c):c:c'
+
+This result may look a bit odd, with a single aromatic carbon in the first SMARTS
+string.  This is a consequence of the fact that the MCES works on matching bonds.
+A better, atom-centric, representation might be C1CCC[$(C-c)]1.  When the
+completeAromaticRings option is set to False, a larger MCES is found, with just
+the pyridine nitrogen atom not matching the corresponding phenyl carbon atom.
+
+There are 2 ways of getting an MCES that is just a single fragment.  The first is
+to use the option `opts.singleLargestFrag = True`.  The second is to use the method
+`opts.allBestMCESs`, find the result with the largest single fragment and use
+its `largestFragmentOnly`.  The two methods are equivalent - the first
+option does this internally.
+
+The result of the singleLargestFrag option may not be the largest single possible
+fragment in common between the two molecules.  For example, consider the 2 molecules
+
+.. image:: images/rascal_1.png
+
+There are 8 multi-fragment MCESs, all with 12 bonds, of which one of the ones with
+the largest single fragment is
+
+.. image:: images/rascal_2.png
+
+The single largest fragment is thus the 3-propylpiperidine.  However, if you use
+rdFMCS with the same pair of molecules, you get
+
+.. image:: images/rascal_3.png
+
+Which has a 10 atom, 9 bond fragment which cannot be part of a fragmented MCES of
+12 bonds, so doesn't appear in the Rascal results set.  If you are sure you will
+only ever be interested in the single largest fragment in common, you should use
+rdFMCS.
+
+
+Clustering with Rascal
+======================
+
+There are 2 clustering methods available using the Johnson metric.  The first,
+RascalCluster, is a fuzzy method described in 'A Line Graph Algorithm for
+Clustering Chemical Structures Based on Common Substructural Cores', JW Raymond,
+PW Willett
+(https://match.pmf.kg.ac.rs/electronic_versions/Match48/match48_197-207.pdf also
+available at https://eprints.whiterose.ac.uk/77598/).
+The second, RascalButinaCluster, uses the Butina sphere-exclusion algorithm
+(Butina JCICS 39 747-750 (1999)).  Because of the time-consuming nature of the MCES
+determination, these clustering methods can be slow to run, so are best used
+on small sets (no more than a few hundred molecules) of small molecules.
 
 
 Fingerprinting and Molecular Similarity
@@ -2129,7 +2324,8 @@ specification of the fingerprint function and optionally the similarity metric.
 The default for the latter is the Dice similarity. Using all the default arguments
 of the Morgan fingerprint function, the similarity map can be generated like this:
 
-  >>> fig, maxweight = SimilarityMaps.GetSimilarityMapForFingerprint(refmol, mol, SimilarityMaps.GetMorganFingerprint)
+  >>> d2d = Draw.MolDraw2DCairo(400, 400)
+  >>> _, maxweight = SimilarityMaps.GetSimilarityMapForFingerprint(refmol, mol, SimilarityMaps.GetMorganFingerprint, d2d)
 
 Producing this image:
 
@@ -2139,7 +2335,7 @@ For a different type of Morgan (e.g. count) and radius = 1 instead of 2, as well
 similarity metric (e.g. Tanimoto), the call becomes:
 
   >>> from rdkit import DataStructs
-  >>> fig, maxweight = SimilarityMaps.GetSimilarityMapForFingerprint(refmol, mol, lambda m,idx: SimilarityMaps.GetMorganFingerprint(m, atomId=idx, radius=1, fpType='count'), metric=DataStructs.TanimotoSimilarity)
+  >>> _, maxweight = SimilarityMaps.GetSimilarityMapForFingerprint(refmol, mol, lambda m,idx: SimilarityMaps.GetMorganFingerprint(m, atomId=idx, radius=1, fpType='count'), d2d, metric=DataStructs.TanimotoSimilarity)
 
 Producing this image:
 
@@ -2157,7 +2353,7 @@ If one does not want the normalisation step, the map can be created like:
   >>> weights = SimilarityMaps.GetAtomicWeightsForFingerprint(refmol, mol, SimilarityMaps.GetMorganFingerprint)
   >>> print(["%.2f " % w for w in weights])
   ['0.05 ', ...
-  >>> fig = SimilarityMaps.GetSimilarityMapFromWeights(mol, weights)
+  >>> _ = SimilarityMaps.GetSimilarityMapFromWeights(mol, weights, d2d)
 
 Producing this image:
 
@@ -2232,11 +2428,13 @@ The Gasteiger partial charges can be visualized as (using a different color sche
 
 .. doctest::
 
+  >>> from rdkit.Chem import Draw
   >>> from rdkit.Chem.Draw import SimilarityMaps
   >>> mol = Chem.MolFromSmiles('COc1cccc2cc(C(=O)NCCCCN3CCN(c4cccc5nccnc54)CC3)oc21')
   >>> AllChem.ComputeGasteigerCharges(mol)
   >>> contribs = [mol.GetAtomWithIdx(i).GetDoubleProp('_GasteigerCharge') for i in range(mol.GetNumAtoms())]
-  >>> fig = SimilarityMaps.GetSimilarityMapFromWeights(mol, contribs, colorMap='jet', contourLines=10)
+  >>> d2d = Draw.MolDraw2DCairo(400, 400)
+  >>> _ = SimilarityMaps.GetSimilarityMapFromWeights(mol, contribs, d2d, colorMap='jet', contourLines=10)
 
 Producing this image:
 
@@ -2248,7 +2446,7 @@ Or for the Crippen contributions to logP:
 
   >>> from rdkit.Chem import rdMolDescriptors
   >>> contribs = rdMolDescriptors._CalcCrippenContribs(mol)
-  >>> fig = SimilarityMaps.GetSimilarityMapFromWeights(mol,[x for x,y in contribs], colorMap='jet', contourLines=10)
+  >>> _ = SimilarityMaps.GetSimilarityMapFromWeights(mol,[x for x,y in contribs], d2d, colorMap='jet', contourLines=10)
 
 Producing this image:
 
@@ -2379,6 +2577,7 @@ As of the 2020.09 release, PNG images of reactions include metadata allowing the
 reaction to be reconstructed:
 
 .. doctest::
+  :skipif: not hasattr(AllChem,'ReactionFromPNGString')
 
   >>> newRxn = AllChem.ReactionFromPNGString(png)
   >>> AllChem.ReactionToSmarts(newRxn)
@@ -2568,10 +2767,12 @@ The molecules have not been sanitized, so it's a good idea to at least update th
   ...     prod.UpdatePropertyCache(strict=False)
   ...  
   >>> Chem.MolToSmiles(prods[0],True)
-  'CC(C)C(=O)N/C=C1\\C(=O)Nc2ccc3ncsc3c21'
+  '[H]/N=C(\\N)NC(=O)C(C)C'
   >>> Chem.MolToSmiles(prods[1],True)
-  'CC(C)C(=O)N/C=C1\\C(=O)Nc2ccccc21'
+  'CC(C)C(=O)N/C=C1\\C(=O)Nc2ccc3ncsc3c21'
   >>> Chem.MolToSmiles(prods[2],True)
+  'CC(C)C(=O)N/C=C1\\C(=O)Nc2ccccc21'
+  >>> Chem.MolToSmiles(prods[3],True)
   'CNC(=O)C(C)C'
 
 
@@ -3058,6 +3259,177 @@ out the code will automatically assign labels:
 R-group decomposition is actually pretty complex, so there's a lot more there.
 Hopefully this is enough to get you started. 
 
+
+Searching Synthon Spaces
+************************
+
+A number of companies, notably `Enamine <https://enamine.net>`_ and `ChemSpace <https://chem-space.com>`_,
+provide very large libraries of compounds in synthon form.  Enumerating and searching them is infeasible due
+to their enormous sizes, on the order of 10s of billions of compounds.  They can, however, be searched efficiently in
+synthon form.  Currently the RDKit can be used to query these libraries by substructure (returning those products
+that match a SMARTS string or MOL query) or fingerprint Tanimoto similarity (returning products which match a query
+molecule within a given Tanimoto similarity) using any of the available fingerprint generators.
+
+How It Works
+============
+
+The synthon space is provided in a format similar to: ::
+
+    SMILES	synton_id	synton#	reaction_id
+    c1ccccc1C(=O)[1*]	1-1	0	amide-1
+    C1CCCCC1C(=O)[1*]	1-2	0	amide-1
+    Clc1ccccc1C(=O)[1*]	1-3	0	amide-1
+    CCCCC(=O)[1*]	1-4	0	amide-1
+    [1*]N1CCCC1		2-1	1	amide-1
+    [1*]NCCCCC		2-2	1	amide-1
+    [1*]NCC1CC1		2-3	1	amide-1
+
+which describes a library of amides built from 2 synthons.  There are 4 examples for the first synthon and
+3 for the second, giving a total of 12 products.  Each product is formed by taking a synthon from the first
+set and another from the second and combining them by removing the attachment atoms ([1*] in this case),
+and adding a bond between the atoms the attachment atoms were bonded to.  Both Enamine and ChemSpace use
+transuranic elements (uranium, neptunium, plutonium and americium) as the attachment atoms.  Libraries with
+up to 4 synthons per product are supported.
+
+In order to perform the search, the query molecule is fragmented by cutting all combinations of bonds that give rise
+to a maximum number of fragments.  The maximum is the largest number of synthon sets in any reaction in the space,
+and will most likely be between 2 and 4.  There is not a maximum on the number of bonds used in the cutting, because
+2 non-ring bonds will give rise to 3 fragments, but 4 ring bonds may also do so, 2 splitting one ring and the other 2
+a different ring in the query.
+This produces a large number of fragment sets, where each set is produced by cutting one particular combination
+of bonds.  Each fragment in the set is compared with synthons in one column of the synthons for each reaction
+thus identifying combinations of synthons that might match the query.  These combinations are enumerated and
+a final comparison with the query performed to select the hit set.  The algorithm is largely similar to that
+described by `Liphardt and Sander <https://doi.org/10.1021/acs.jcim.3c00290>`_.
+
+Database Preparation
+====================
+
+The databases are normally supplied in text form, and can be used as such:
+
+.. doctest::
+
+  >>> from rdkit import Chem
+  >>> from rdkit.Chem import rdSynthonSpaceSearch, rdFingerprintGenerator
+  >>> import os
+  >>> RDBASE = os.environ["RDBASE"]
+  >>> synthonspace = rdSynthonSpaceSearch.SynthonSpace()
+  >>> textFile = f"{RDBASE}/Code/GraphMol/SynthonSpaceSearch/data/amide_space.txt"
+  >>> synthonspace.ReadTextFile(textFile)
+  >>> print(f"Number of reactions : {synthonspace.GetNumReactions()}")
+  Number of reactions : 1
+  >>> print(f"Number of products : {synthonspace.GetNumProducts()}")
+  Number of products : 12
+
+However, a large amount of pre-processing is required before the data are searchable which can be time consuming.
+For example, preparing the current REAL database (2024-09) of 70 billion compounds can take several hours.  It is
+therefore strongly recommended that a binary database is created before use.
+
+The fingerprints are written to the DB file, which means that the file must be searched using exactly the same type
+in order to get meaningful results.  This will be checked at runtime.  You may need to keep several versions of the
+database, labelled accordingly.
+
+.. doctest::
+
+  >>> fpgen = rdFingerprintGenerator.GetRDKitFPGenerator(fpSize=2048)
+  >>> synthonspace.BuildSynthonFingerprints(fpgen)
+  >>> dbFile = "amide_library_rdkit.spc"
+  >>> synthonspace.WriteDBFile(dbFile)
+
+There is also a convenience function for performing the conversion in one go:
+
+.. doctest::
+
+  >>> fpgen = rdFingerprintGenerator.GetMorganGenerator(fpSize=2048)
+  >>> rdSynthonSpaceSearch.ConvertTextToDBFile(textFile, dbFile, fpgen)
+
+although under the hood it does exactly the same steps.
+
+The binary database is read using the appropriate function:
+
+.. doctest::
+
+  >>> synthonspace.ReadDBFile(f"{RDBASE}/Code/GraphMol/SynthonSpaceSearch/data/idorsia_toy_space_a.spc")
+
+
+Memory Usage
+============
+
+The 2024-09 REAL database requires about 10GB of RAM, FreedomSpace 2024-09 about 3.5GB.  They should both therefore
+be searchable on an average laptop.
+
+Substructure Searching
+======================
+
+Any query molecule can be used for substructure searching.  The full set of query features supported by the RDKit is
+allowed.  However, queries that use recursive SMARTS or other more complicated features may be noticeably slower.
+Results are returned in a `rdSynthonSpaceSearch.SearchResults` object.
+
+.. doctest::
+
+  >>> spc = rdSynthonSpaceSearch.SynthonSpace()
+  >>> spc.ReadDBFile(f"{RDBASE}/Code/GraphMol/SynthonSpaceSearch/data/idorsia_toy_space_a.spc")
+  >>> qmol = Chem.MolFromSmarts("s1cccc1C(=O)Cn1nn(c(-c)c1)")
+  >>> results = spc.SubstructureSearch(qmol)
+  >>> print(f"Number of hits : {len(results.GetHitMolecules())}")
+  Number of hits : 50
+
+Substructure searches should take no more than a few seconds on a machine with average performance, although this will
+depend on the generality and complexity of the query and the number of hits returned.
+
+The search can be given an optional parameters object that can control various aspects of the search:
+
+.. doctest::
+
+  >>> params = rdSynthonSpaceSearch.SynthonSpaceSearchParams()
+  >>> params.maxHits = 10
+  >>> params.timeOut = 10
+  >>> results = spc.SubstructureSearch(qmol, params=params)
+  >>> print(f"Number of hits : {len(results.GetHitMolecules())}")
+  Number of hits : 10
+
+The timeout is specified in seconds; if the given time is exceeded all results found thus far will be returned.  The method
+`results.GetTimedOut()` will report whether or not that has occurred.  The `maxHits` parameter defaults to 1000.  If
+set to -1, all hits will be returned.  It can happen that having looked at the first 1000 hits, you may wish to examine
+the following 1000 in the hit list.  The parameter `hitStart` allows this.
+
+As well as returning the first hits, the parameter `randomSample`, if set True, will return a random sampling of the
+possible hits.
+
+Similarity Searching
+====================
+
+The synthon space can also be searched by fingerprint similarity.  The fingerprint generator used to make the query
+fingerprints must be exactly the same as that used to create the DB file.  The SynthonSpace can report the infoString
+of the fingerprint generator it was used with, which will help if there is a mismatch.  At present there is no way
+of using the infoString directly to create a fingerprint generator, so it must be examined visually.
+
+.. doctest::
+
+  >>> print(spc.GetSynthonFingerprintType())
+  Common arguments : countSimulation=0 fpSize=2048 bitsPerFeature=2 includeChirality=0 --- RDKitFPArguments minPath=1 maxPath=7 useHs=1 branchedPaths=1 useBondOrder=1 --- RDKitFPEnvGenerator --- RDKitFPAtomInvGenerator --- No bond invariants generator
+
+The similarity metric is hard-coded to use the Tanimoto coefficient.  The default similarity cutoff for the search
+is 0.5, which is a reasonable starting value for a Morgan fingerprint of radius 2.  Note that in the similarity search,
+you will get the first `maxHits` hits that pass the threshold, not necessarily the best hits.  The search attempts to
+bring the most similar matches towards the start of the hit list by ordering the synthons that match a fragment in
+descending order of similarity, but this does not always bring the most similar products to the fore.
+
+Once the search has assembled a set of likely synthon combinations that might match the query by similarity, a two stage
+screen is used.  The fingerprints of the synthons are added together and the Tanimoto similarity to the query fingerprint
+calculated.  If this is above the threshold then the hit molecule is made, a fingerprint generated and that compared with
+the query fingerprint.  If that similarity passes the threshold, the hit is accepted.  The first, approximate,
+comparison may cause genuine hits to be missed, so there is a parameter `approxSimilarityAdjuster` that lowers the
+threshold for the first test.  It defaults to 0.1.  The higher the value the fewer hits will be missed, but at the
+expense of longer search times.
+
+Limiting Hits
+=============
+
+The sizes of the hits can be limited by setting appropriate values to the SynthonSpaceSearchParams object.  Maximum and
+minimum values can be set for the number of heavy atoms, the number of chiral atoms and the molecular weight.
+
+
 Non-Chemical Functionality
 **************************
 
@@ -3103,7 +3475,7 @@ These are accessible using Python's help command:
   Help on method GetNumAtoms:
   <BLANKLINE>
   GetNumAtoms(...) method of rdkit.Chem.rdchem.Mol instance
-      GetNumAtoms( (Mol)arg1 [, (int)onlyHeavy=-1 [, (bool)onlyExplicit=True]]) -> int :
+      GetNumAtoms( (Mol)self [, (int)onlyHeavy=-1 [, (bool)onlyExplicit=True]]) -> int :
           Returns the number of atoms in the molecule.
   <BLANKLINE>
             ARGUMENTS:
@@ -3357,6 +3729,8 @@ List of Available Descriptors
 +-----------------------------------------------------+------------------------------------------------------------+----------+
 |NumAmideBonds                                        |                                                            | C++      |
 +-----------------------------------------------------+------------------------------------------------------------+----------+
+|NumHeterocycles                                      |                                                            | C++      |
++-----------------------------------------------------+------------------------------------------------------------+----------+
 |Num{Aromatic,Saturated,Aliphatic}Rings               |                                                            | C++      |
 +-----------------------------------------------------+------------------------------------------------------------+----------+
 |Num{Aromatic,Saturated,Aliphatic}{Hetero,Carbo}cycles|                                                            | C++      |
@@ -3372,6 +3746,10 @@ List of Available Descriptors
 |NumBridgeheadAtoms                                   |Number of bridgehead atoms                                  | C++      |
 |                                                     |(atoms shared between rings that share                      |          |
 |                                                     |at least two bonds)                                         |          |
++-----------------------------------------------------+------------------------------------------------------------+----------+
+|NumAtomStereoCenters                                 |                                                            | C++      |
++-----------------------------------------------------+------------------------------------------------------------+----------+
+|NumAtomUnspecifiedStereoCenters                      |                                                            | C++      |
 +-----------------------------------------------------+------------------------------------------------------------+----------+
 |TPSA                                                 |*J. Med. Chem.*                                             | C++      |
 |                                                     |**43**:3714\-7,                                             |          |
@@ -3486,6 +3864,10 @@ These all require the molecule to have a 3D conformer.
 |                                                     |reproduce values from DRAGON for these descriptors. We       |          |
 |                                                     |believe that this is close.                                  |          |
 +-----------------------------------------------------+-------------------------------------------------------------+----------+
+|DCLV                                                 |New in 2024.03 release.  Eisenhaber et al.                   | C++      |
+|                                                     |J. of Comp. Chem, Vol. 16, pp. 273-284, 1995.                |          |
+|                                                     |https://doi.org/10.1002/jcc.540160303                        |          |
++-----------------------------------------------------+-------------------------------------------------------------+----------+
 
 
 
@@ -3550,8 +3932,8 @@ Lipinski Rule of 5
 Lipinski's "Rule of 5" [#lipinski]_ was introduced to estimate the oral bioavailability of molecules. Poor absorption is likely if the molecule violates more than one of the following conditions: 
 
 * Molecular Weight <= 500 Da
-* No. Hydrogen Bond Donors <= 10
-* No. Hydrogen Bond Acceptors <= 5
+* No. Hydrogen Bond Donors <= 5
+* No. Hydrogen Bond Acceptors <= 10
 * LogP <= 5
 
 .. doctest::

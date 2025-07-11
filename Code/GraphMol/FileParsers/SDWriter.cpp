@@ -13,7 +13,9 @@
 #include <sstream>
 #include <string>
 
+#include <RDGeneral/BoostStartInclude.h>
 #include <boost/any.hpp>
+#include <RDGeneral/BoostEndInclude.h>
 
 #include <RDGeneral/BadFileException.h>
 #include <RDGeneral/FileParseException.h>
@@ -85,7 +87,7 @@ void _writePropToStream(std::ostream *dp_ostream, const ROMol &mol,
   std::string pval;
   try {
     mol.getProp(name, pval);
-  } catch (boost::bad_any_cast &) {
+  } catch (std::bad_any_cast &) {
     return;
   }
 

@@ -9,12 +9,13 @@
 //
 
 #include <RDGeneral/test.h>
+#include <GraphMol/test_fixtures.h>
+
 #include <GraphMol/RDKitBase.h>
 #include <GraphMol/MonomerInfo.h>
 #include <GraphMol/RDKitQueries.h>
 #include <RDGeneral/types.h>
 #include <RDGeneral/RDLog.h>
-//#include <boost/log/functions.hpp>
 #include <GraphMol/FileParsers/FileParsers.h>
 #include <GraphMol/FileParsers/MolWriters.h>
 #include <GraphMol/SmilesParse/SmilesParse.h>
@@ -22,6 +23,7 @@
 #include <GraphMol/SmilesParse/SmartsWrite.h>
 #include <sstream>
 #include <iostream>
+#include <boost/format.hpp>
 #include <boost/range/iterator_range.hpp>
 
 using namespace std;
@@ -258,7 +260,7 @@ void testAtomProps() {
   TEST_ASSERT(a1->hasProp("dprop"));
   try {
     a1->getProp<int>("dprop");
-  } catch (const boost::bad_any_cast &) {
+  } catch (const std::bad_any_cast &) {
     ok = true;
   }
   TEST_ASSERT(ok);
@@ -267,7 +269,7 @@ void testAtomProps() {
   ok = false;
   try {
     a1->getProp<double>("iprop");
-  } catch (const boost::bad_any_cast &) {
+  } catch (const std::bad_any_cast &) {
     ok = true;
   }
   TEST_ASSERT(ok);
@@ -634,7 +636,8 @@ void testIssue2381580() {
     m->addBond(0, 3, Bond::SINGLE);
     MolOps::sanitizeMol(*m);
     TEST_ASSERT(m->getAtomWithIdx(0)->getFormalCharge() == 0);
-    TEST_ASSERT(m->getAtomWithIdx(0)->getExplicitValence() == 3);
+    TEST_ASSERT(m->getAtomWithIdx(0)->getValence(Atom::ValenceType::EXPLICIT) ==
+                3);
     TEST_ASSERT(m->getAtomWithIdx(0)->getNumImplicitHs() == 0);
     delete m;
   }
@@ -653,7 +656,8 @@ void testIssue2381580() {
     m->getAtomWithIdx(0)->setFormalCharge(-1);
     MolOps::sanitizeMol(*m);
     TEST_ASSERT(m->getAtomWithIdx(0)->getFormalCharge() == -1);
-    TEST_ASSERT(m->getAtomWithIdx(0)->getExplicitValence() == 4);
+    TEST_ASSERT(m->getAtomWithIdx(0)->getValence(Atom::ValenceType::EXPLICIT) ==
+                4);
     TEST_ASSERT(m->getAtomWithIdx(0)->getNumImplicitHs() == 0);
     delete m;
   }
@@ -711,7 +715,8 @@ void testIssue2381580() {
     m->getAtomWithIdx(0)->setFormalCharge(+1);
     MolOps::sanitizeMol(*m);
     TEST_ASSERT(m->getAtomWithIdx(0)->getFormalCharge() == 1);
-    TEST_ASSERT(m->getAtomWithIdx(0)->getExplicitValence() == 2);
+    TEST_ASSERT(m->getAtomWithIdx(0)->getValence(Atom::ValenceType::EXPLICIT) ==
+                2);
     TEST_ASSERT(m->getAtomWithIdx(0)->getNumImplicitHs() == 0);
     delete m;
   }
@@ -728,20 +733,25 @@ void testIssue2381580() {
     m->getAtomWithIdx(0)->setFormalCharge(-1);
     MolOps::sanitizeMol(*m);
     TEST_ASSERT(m->getAtomWithIdx(0)->getFormalCharge() == -1);
-    TEST_ASSERT(m->getAtomWithIdx(0)->getExplicitValence() == 3);
+    TEST_ASSERT(m->getAtomWithIdx(0)->getValence(Atom::ValenceType::EXPLICIT) ==
+                3);
     TEST_ASSERT(m->getAtomWithIdx(0)->getNumImplicitHs() == 1);
-    TEST_ASSERT(m->getAtomWithIdx(0)->getExplicitValence() +
-                    m->getAtomWithIdx(0)->getImplicitValence() ==
-                rdcast<int>(m->getAtomWithIdx(0)->getTotalValence()));
-    TEST_ASSERT(m->getAtomWithIdx(1)->getExplicitValence() +
-                    m->getAtomWithIdx(1)->getImplicitValence() ==
-                rdcast<int>(m->getAtomWithIdx(1)->getTotalValence()));
-    TEST_ASSERT(m->getAtomWithIdx(2)->getExplicitValence() +
-                    m->getAtomWithIdx(2)->getImplicitValence() ==
-                rdcast<int>(m->getAtomWithIdx(2)->getTotalValence()));
-    TEST_ASSERT(m->getAtomWithIdx(3)->getExplicitValence() +
-                    m->getAtomWithIdx(3)->getImplicitValence() ==
-                rdcast<int>(m->getAtomWithIdx(3)->getTotalValence()));
+    TEST_ASSERT(
+        m->getAtomWithIdx(0)->getValence(Atom::ValenceType::EXPLICIT) +
+            m->getAtomWithIdx(0)->getValence(Atom::ValenceType::IMPLICIT) ==
+        m->getAtomWithIdx(0)->getTotalValence());
+    TEST_ASSERT(
+        m->getAtomWithIdx(1)->getValence(Atom::ValenceType::EXPLICIT) +
+            m->getAtomWithIdx(1)->getValence(Atom::ValenceType::IMPLICIT) ==
+        m->getAtomWithIdx(1)->getTotalValence());
+    TEST_ASSERT(
+        m->getAtomWithIdx(2)->getValence(Atom::ValenceType::EXPLICIT) +
+            m->getAtomWithIdx(2)->getValence(Atom::ValenceType::IMPLICIT) ==
+        m->getAtomWithIdx(2)->getTotalValence());
+    TEST_ASSERT(
+        m->getAtomWithIdx(3)->getValence(Atom::ValenceType::EXPLICIT) +
+            m->getAtomWithIdx(3)->getValence(Atom::ValenceType::IMPLICIT) ==
+        m->getAtomWithIdx(3)->getTotalValence());
     delete m;
   }
 
@@ -1025,7 +1035,8 @@ void testIssue267() {
     m.addAtom(new Atom(0), true, true);
     m.updatePropertyCache();
 
-    TEST_ASSERT(m.getAtomWithIdx(0)->getImplicitValence() == 0);
+    TEST_ASSERT(m.getAtomWithIdx(0)->getValence(Atom::ValenceType::IMPLICIT) ==
+                0);
   }
   {
     RWMol m;
@@ -1122,7 +1133,8 @@ void testNeedsUpdatePropertyCache() {
     TEST_ASSERT(m.needsUpdatePropertyCache() == true);
     m.updatePropertyCache();
 
-    TEST_ASSERT(m.getAtomWithIdx(0)->getImplicitValence() == 0);
+    TEST_ASSERT(m.getAtomWithIdx(0)->getValence(Atom::ValenceType::IMPLICIT) ==
+                0);
     TEST_ASSERT(m.needsUpdatePropertyCache() == false);
   }
   {
@@ -1245,8 +1257,8 @@ void testAtomListLineWithOtherQueries() {
   4  1  1  0  0  0  8
 M  CHG  2   1   1   4  -1
 M  SUB  1   4   1
-M  ALS   2  2 F O   S   
-M  ALS   4  2 F O   S   
+M  ALS   2  2 F O   S   0
+M  ALS   4  2 F O   S   0
 M  END
 )MOL",
                                          R"MOL(
@@ -1261,8 +1273,8 @@ M  END
   1  3  1  0  0  0  2
   4  1  1  0  0  0  8
 M  CHG  2   1   1   4  -1
-M  ALS   2  2 F O   S   
-M  ALS   4  2 F O   S   
+M  ALS   2  2 F O   S   0
+M  ALS   4  2 F O   S   0
 M  SUB  1   4   1
 M  END
   )MOL"};
@@ -1331,24 +1343,40 @@ void testGithub608() {
   }
 
   {
-    INT_VECT nAtoms;
-    RWMol *m = SmilesToMol("N1NN1");
-    TEST_ASSERT(m);
-    TEST_ASSERT(m->getNumAtoms() == 3);
-    RWMol *f = SmilesToMol("C[C@]1(F)CC[C@](Cl)(Br)CC1");
-    TEST_ASSERT(f);
-    TEST_ASSERT(f->getNumAtoms() == 10);
-    TEST_ASSERT(f->getAtomWithIdx(1)->getPropIfPresent(
-        common_properties::_ringStereoAtoms, nAtoms));
-    TEST_ASSERT(std::find(nAtoms.begin(), nAtoms.end(), 6) != nAtoms.end());
-    m->insertMol(*f);
-    TEST_ASSERT(m->getNumAtoms() == 13);
-    TEST_ASSERT(m->getAtomWithIdx(4)->getPropIfPresent(
-        common_properties::_ringStereoAtoms, nAtoms));
-    TEST_ASSERT(std::find(nAtoms.begin(), nAtoms.end(), 9) != nAtoms.end());
+    for (const bool useLegacy : {true, false}) {
+      // when useLegacy is false, this tests #8379
+      UseLegacyStereoPerceptionFixture fx(useLegacy);
 
-    delete m;
-    delete f;
+      INT_VECT nAtoms;
+      auto m = v2::SmilesParse::MolFromSmiles("N1NN1");
+      TEST_ASSERT(m);
+      TEST_ASSERT(m->getNumAtoms() == 3);
+      auto f = v2::SmilesParse::MolFromSmiles("C[C@]1(F)CC[C@](Cl)(Br)CC1");
+      TEST_ASSERT(f);
+      TEST_ASSERT(f->getNumAtoms() == 10);
+      if (useLegacy) {
+        TEST_ASSERT(f->getAtomWithIdx(1)->getPropIfPresent(
+            common_properties::_ringStereoAtoms, nAtoms));
+        TEST_ASSERT(std::find(nAtoms.begin(), nAtoms.end(), 6) != nAtoms.end());
+      } else {
+        unsigned int oatom = 0;
+        TEST_ASSERT(f->getAtomWithIdx(1)->getPropIfPresent(
+            common_properties::_ringStereoOtherAtom, oatom));
+        TEST_ASSERT(oatom == 5);
+      }
+      m->insertMol(*f);
+      TEST_ASSERT(m->getNumAtoms() == 13);
+      if (useLegacy) {
+        TEST_ASSERT(m->getAtomWithIdx(4)->getPropIfPresent(
+            common_properties::_ringStereoAtoms, nAtoms));
+        TEST_ASSERT(std::find(nAtoms.begin(), nAtoms.end(), 9) != nAtoms.end());
+      } else {
+        unsigned oatom = 0;
+        TEST_ASSERT(m->getAtomWithIdx(4)->getPropIfPresent(
+            common_properties::_ringStereoOtherAtom, oatom));
+        TEST_ASSERT(oatom == 8);
+      }
+    }
   }
   BOOST_LOG(rdInfoLog) << "Finished" << std::endl;
 }
@@ -1574,11 +1602,158 @@ void testGithub1843() {
   BOOST_LOG(rdErrorLog) << "Finished" << std::endl;
 }
 
+void testHasValenceViolation() {
+  BOOST_LOG(rdInfoLog) << " ----------> Testing Atom::hasValenceViolation()"
+                       << std::endl;
+
+  auto to_mol = [](const auto &smiles) {
+    int debugParse = 0;
+    bool sanitize = false;
+    std::unique_ptr<RWMol> mol(
+        RDKit::SmilesToMol(smiles, debugParse, sanitize));
+    TEST_ASSERT(mol != nullptr);
+    mol->updatePropertyCache(false);
+    return mol;
+  };
+
+  //  All valid atoms
+  for (const auto &smiles : {
+           "C",
+           "C(C)(C)(C)C",
+           "S(C)(C)(C)(C)(C)C",
+           "O(C)C",
+           "[H]",
+           "[H+]",  // proton
+           "[H-]",
+           "[HH]",
+           "[He]",
+           "[C][C] |^5:0,1|",
+           "[H][Si] |^5:1|",
+           "[CH3+]",
+           "[CH3-]",
+           "[NH4+]",
+           "[Na]",
+           "[Na][H]",
+           "[Na]([H])[H]",
+           "[Og][Og]([Og])([Og])([Og])([Og])([Og])[Og]",
+           "[Lv-2]",
+           "[Lv+4]",
+           "[Lv+8]"
+           "*",              // dummy atom, which also accounts for wildcards
+           "*C |$_AP1;$|]",  // attachment point
+           "[*] |$_R1$|",    // rgroup
+       }) {
+    auto mol = to_mol(smiles);
+    for (auto atom : mol->atoms()) {
+      TEST_ASSERT(!atom->hasValenceViolation());
+    }
+  }
+
+  // First atom has a valence error!
+  for (const auto &smiles : {
+           // FIXME: commented out cases do not raise AtomValenceException
+           // when passing through the valence calculation code; will file
+           // RDKit issues to address within the valence code separately.
+           // "[C+5]",
+           "C(C)(C)(C)(C)C",
+           "S(C)(C)(C)(C)(C)(C)C",
+           // "[C+](C)(C)(C)C",
+           "[C-](C)(C)(C)C",
+           // "[C](C)(C)(C)C |^1:0|",  //  pentavalent due to unpaired electron
+           "O(C)=C",
+           // "[H+] |^1:0|",  // same as [H]
+           // "[H+] |^2:0|",  // non-physical radical count
+           "[H+2]",
+           // "[H-2]",
+           // "[He+]",
+           // "[He+2]",
+           // "[He][He]",
+           "[O-3]",
+           // "[O+7]",
+           "[F-2]",
+           // "[F+2]",
+           "[Lv-4]",
+       }) {
+    auto mol = to_mol(smiles);
+    auto atom = mol->getAtomWithIdx(0);
+    TEST_ASSERT(atom->hasValenceViolation());
+  }
+
+  // Queries never have valence errors
+  for (const auto &smarts : {
+           "[#6](C)(C)(C)(C)C",          // query pentavalent carbon
+           "[#8](-,=[#6])=[#6]",         // S/D query bond present
+           "[!#6&!#1](-[#6])=[#6]",      // Q query atom
+           "[#6,#7,#8](-[#6])=[#6]",     // allowed list
+           "[!#6&!#7&!#8](-[#6])=[#6]",  // disallowed list
+           "[#6&R](-[#6])=[#6]",         // advanced query features
+       }) {
+    auto mol = v2::SmilesParse::MolFromSmarts(smarts);
+    for (auto atom : mol->atoms()) {
+      TEST_ASSERT(!atom->hasValenceViolation());
+    }
+  }
+  BOOST_LOG(rdInfoLog) << "Finished" << std::endl;
+}
+
+void testGithub6370() {
+  BOOST_LOG(rdErrorLog) << "-------------------------------------" << std::endl;
+  BOOST_LOG(rdErrorLog)
+      << "    Test Github 6370: non-physical radical counts being preserved"
+      << std::endl;
+
+  auto testRadicalsForSingleAtom = [](const std::string &element, int valence) {
+    for (int explicitHCount = 0; explicitHCount <= valence; explicitHCount++) {
+      for (int radicalType = 1; radicalType <= 7; radicalType++) {
+        std::string smi;
+        if (explicitHCount == 0) {
+          smi = (boost::format("[%s] |^%d:0|") % element % radicalType).str();
+        } else {
+          smi = (boost::format("[%sH%d] |^%d:0|") % element % explicitHCount %
+                 radicalType)
+                    .str();
+        }
+        auto m = v2::SmilesParse::MolFromSmiles(smi);
+        TEST_ASSERT(
+            static_cast<int>(m->getAtomWithIdx(0)->getNumRadicalElectrons()) ==
+            valence - explicitHCount);
+      }
+    }
+  };
+
+  // Checks CXSMILES in the form of [XHn] |^m:0|
+  // where X is the element symbol,
+  // n = 0, ..., valence,
+  // m = 1, ..., 7 denotes the radical type
+  for (int atomicNum = 2; atomicNum <= 118; atomicNum++) {
+    const auto &defaultVs =
+        PeriodicTable::getTable()->getValenceList(atomicNum);
+    if (defaultVs.size() != 1) {
+      // Skips elements with multiple valences, e.g., transition metals
+      continue;
+    }
+    int valence = defaultVs[0];
+    std::string element =
+        PeriodicTable::getTable()->getElementSymbol(atomicNum);
+    testRadicalsForSingleAtom(element, valence);
+  }
+
+  // Checks CXSMILES in the form of [NH4+] |^m:0|
+  // where m = 1, ..., 7 denotes the radical type
+  for (int radicalType = 1; radicalType <= 7; radicalType++) {
+    std::string smi = (boost::format("[NH4+] |^%d:0|") % radicalType).str();
+    auto m = v2::SmilesParse::MolFromSmiles(smi);
+    TEST_ASSERT(
+        static_cast<int>(m->getAtomWithIdx(0)->getNumRadicalElectrons()) == 0);
+  }
+
+  BOOST_LOG(rdErrorLog) << "Finished" << std::endl;
+}
+
 // -------------------------------------------------------------------
 int main() {
   RDLog::InitLogs();
-// boost::logging::enable_logs("rdApp.info");
-#if 1
+  boost::logging::enable_logs("rdApp.info");
   test1();
   testPropLeak();
   testMolProps();
@@ -1604,10 +1779,10 @@ int main() {
   testRanges();
   testGithub1642();
   testGithub1843();
-#endif
+  testGithub6370();
   testAtomListLineRoundTrip();
   testAtomListLineWithOtherQueries();
   testReplaceChargedAtomWithQueryAtom();
-
+  testHasValenceViolation();
   return 0;
 }

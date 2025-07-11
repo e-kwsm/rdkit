@@ -11,12 +11,17 @@
 #include <algorithm>
 #include <memory>
 
-#include <GraphMol/RDKitBase.h>
+#include <boost/algorithm/string.hpp>
+
+#include "GraphMol/Chirality.h"
+#include "GraphMol/RDKitBase.h"
+#include <RDGeneral/ControlCHandler.h>
 
 #include "CIPLabeler.h"
 #include "CIPMol.h"
 #include "configs/Sp2Bond.h"
 #include "configs/Tetrahedral.h"
+#include "configs/AtropisomerBond.h"
 
 #include "rules/Rules.h"
 #include "rules/Rule1a.h"
@@ -61,23 +66,35 @@ std::vector<std::unique_ptr<Configuration>> findConfigs(
        index = bonds.find_next(index)) {
     auto bond = mol.getBond(index);
 
-    auto bond_cfg = Bond::STEREONONE;
-    switch (bond->getStereo()) {
+    auto bond_cfg = bond->getStereo();
+    switch (bond_cfg) {
       case Bond::STEREOE:
-      case Bond::STEREOTRANS:
         bond_cfg = Bond::STEREOTRANS;
         break;
       case Bond::STEREOZ:
-      case Bond::STEREOCIS:
         bond_cfg = Bond::STEREOCIS;
         break;
       default:
-        continue;
+        break;
     }
+    switch (bond_cfg) {
+      case Bond::STEREOTRANS:
+      case Bond::STEREOCIS: {
+        std::unique_ptr<Sp2Bond> cfg(new Sp2Bond(
+            mol, bond, bond->getBeginAtom(), bond->getEndAtom(), bond_cfg));
+        configs.push_back(std::move(cfg));
+      } break;
 
-    std::unique_ptr<Sp2Bond> cfg(new Sp2Bond(mol, bond, bond->getBeginAtom(),
-                                             bond->getEndAtom(), bond_cfg));
-    configs.push_back(std::move(cfg));
+      case Bond::STEREOATROPCCW:
+      case Bond::STEREOATROPCW: {
+        std::unique_ptr<AtropisomerBond> cfgAtrop(new AtropisomerBond(
+            mol, bond, bond->getBeginAtom(), bond->getEndAtom(), bond_cfg));
+        configs.push_back(std::move(cfgAtrop));
+      } break;
+
+      default:
+        break;
+    }
   }
 
   return configs;
@@ -146,8 +163,48 @@ bool labelAux(std::vector<std::unique_ptr<Configuration>> &configs,
   return true;
 }
 
-void label(std::vector<std::unique_ptr<Configuration>> &configs) {
+thread_local unsigned int remainingCallCount = 0;
+
+// The chiral centers in current rdkit examples that can be resolved using only
+// the constitutional rules average about 8 iterations (the highest count is
+// 1039, in one of the examples in the CIP validation suite). We use 2000 as
+// threshold to allow some margin.
+constexpr unsigned int constitutionalRuleTimeout = 2000;
+
+void label(std::vector<std::unique_ptr<Configuration>> &configs,
+           unsigned int maxRecursiveIterations) {
+  // First, if the specified number of iterations allows it, run all centers
+  // through a fast pass with the constitutional rules allow easy stuff to be
+  // resolved.
+  for (auto &conf : configs) {
+    // Make sure this stereo center has no label
+    conf->getFocus()->clearProp(common_properties::_CIPCode);
+
+    remainingCallCount = constitutionalRuleTimeout;
+    try {
+      auto desc = conf->label(constitutional_rules);
+      if (desc != Descriptor::UNKNOWN) {
+        conf->setPrimaryLabel(desc);
+      }
+    } catch (const MaxIterationsExceeded &) {
+    }
+  }
+
+  // Now, retry everything that hasn't been solved with a more generous
+  // threshold
+  if (maxRecursiveIterations != 0) {
+    remainingCallCount = maxRecursiveIterations;
+  } else {
+    remainingCallCount = UINT_MAX;  // really big - will never be hit
+  }
+
+  // try again on everything that hasn't been resolved yet
   for (const auto &conf : configs) {
+    if (conf->getFocus()->hasProp(common_properties::_CIPCode)) {
+      // already resolved!
+      continue;
+    }
+
     auto desc = conf->label(constitutional_rules);
     if (desc != Descriptor::UNKNOWN) {
       conf->setPrimaryLabel(desc);
@@ -163,22 +220,30 @@ void label(std::vector<std::unique_ptr<Configuration>> &configs) {
   }
 }
 
-thread_local unsigned int remainingCallCount = 0;
-
 }  // namespace
 
 void assignCIPLabels(ROMol &mol, const boost::dynamic_bitset<> &atoms,
                      const boost::dynamic_bitset<> &bonds,
                      unsigned int maxRecursiveIterations) {
-  if (maxRecursiveIterations != 0) {
-    remainingCallCount = maxRecursiveIterations;
-  } else {
-    remainingCallCount = UINT_MAX;  // really big - will never be hit
-  }
+  ControlCHandler::reset();
 
+  // reset the mark, for the case that this fails
+  mol.clearProp(common_properties::_CIPComputed);
   CIPMol cipmol{mol};
   auto configs = findConfigs(cipmol, atoms, bonds);
-  label(configs);
+
+  try {
+    label(configs, maxRecursiveIterations);
+  } catch (const ControlCCaught &) {
+  }
+  if (ControlCHandler::getGotSignal()) {
+    BOOST_LOG(rdWarningLog)
+        << "Interrupted, cancelling CIP label calculation" << std::endl;
+    return;
+  }
+
+  const bool computed = true;
+  mol.setProp(common_properties::_CIPComputed, true, computed);
 }
 
 void assignCIPLabels(ROMol &mol, unsigned int maxRecursiveIterations) {

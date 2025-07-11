@@ -1,5 +1,5 @@
 //
-//  Copyright (c) 2019-2021 Greg Landrum
+//  Copyright (c) 2019-2025 Greg Landrum and other RDKit contributors
 //
 //   @@ All Rights Reserved @@
 //  This file is part of the RDKit.
@@ -7,9 +7,10 @@
 //  which is included in the file license.txt, found at the root
 //  of the RDKit source tree.
 ///
-#include "catch.hpp"
+#include <catch2/catch_all.hpp>
 
 #include <GraphMol/RDKitBase.h>
+#include <GraphMol/test_fixtures.h>
 #include <GraphMol/SmilesParse/SmilesParse.h>
 #include <GraphMol/SmilesParse/SmilesWrite.h>
 #include <GraphMol/ChemTransforms/ChemTransforms.h>
@@ -23,7 +24,9 @@
 using namespace RDKit;
 using std::unique_ptr;
 
-TEST_CASE("Github #1039", "[]") {
+TEST_CASE("Github #1039") {
+  const auto useLegacy = GENERATE(true, false);
+  UseLegacyStereoPerceptionFixture fx(useLegacy);
   SECTION("double bond") {
     auto m1 = "C/C=C/C=C/C"_smiles;
     REQUIRE(m1);
@@ -80,8 +83,12 @@ TEST_CASE("Github #1039", "[]") {
     auto resa = RDKit::MolFragmenter::fragmentOnBonds(*m, bonds);
     CHECK(MolToSmiles(*resa) == "*/C(O)=N/C=C.[1*]C");
     // make sure we still have stereo atoms
-    std::vector<std::vector<int>> expected_stereo_atoms{{}, {2, 4}, {},
-                                                        {}, {},     {}};
+    std::vector<std::vector<int>> expected_stereo_atoms;
+    if (useLegacy) {
+      expected_stereo_atoms = {{}, {2, 4}, {}, {}, {}, {}};
+    } else {
+      expected_stereo_atoms = {{}, {6, 4}, {}, {}, {}, {}};
+    }
     std::vector<std::vector<int>> received_stereo;
     for (auto *bond : resa->bonds()) {
       received_stereo.push_back(bond->getStereoAtoms());
@@ -125,117 +132,91 @@ TEST_CASE("Github #1039", "[]") {
   }
 }
 
-TEST_CASE("molzip", "[]") {
+TEST_CASE("molzip") {
+  const auto useLegacy = GENERATE(true, false);
+  CAPTURE(useLegacy);
+  UseLegacyStereoPerceptionFixture fx(useLegacy);
   SECTION("basic tests") {
-    auto a = "C[*:1]"_smiles;
-    auto b = "N[*:1]"_smiles;
-    auto mol = molzip(*a, *b);
-    CHECK(MolToSmiles(*mol) == "CN");
-  }
-  {
-    // 0 isotopes aren't mapped
-    auto a = "C[*]"_smiles;
-    auto b = "N[*]"_smiles;
-    MolzipParams p;
-    auto mol = molzip(*a, *b, p);
-    CHECK(MolToSmiles(*mol) == "*C.*N");
-  }
-  {
-    // 0 isotopes aren't mapped
-    auto a = "C[*]"_smiles;
-    auto b = "N[*]"_smiles;
-    MolzipParams p;
-    p.label = MolzipLabel::Isotope;
-    auto mol = molzip(*a, *b, p);
-    CHECK(MolToSmiles(*mol) == "*C.*N");
-  }
-  {
-    // 0 isotopes aren't mapped
-    auto a = "C[1*]"_smiles;
-    auto b = "N[1*]"_smiles;
-    MolzipParams p;
-    p.label = MolzipLabel::Isotope;
-    auto mol = molzip(*a, *b, p);
-    CHECK(MolToSmiles(*mol) == "CN");
-  }
-  {
-    auto a = "[C@H](Br)([*:1])F"_smiles;
-    auto b = "[*:1]N"_smiles;
-    auto mol = molzip(*a, *b);
-    CHECK(MolToSmiles(*mol) == "N[C@@H](F)Br");
-  }
-  {
-    auto b = "[C@H](Br)([*:1])F"_smiles;
-    auto a = "[*:1]N"_smiles;
-    auto mol = molzip(*a, *b);
-    CHECK(MolToSmiles(*mol) == "N[C@@H](F)Br");
-  }
-  {
-    auto a = "[C@H]([*:1])(Br)F"_smiles;
-    auto b = "[*:1]N"_smiles;
-    auto mol = molzip(*a, *b);
-    CHECK(MolToSmiles(*mol) == "N[C@H](F)Br");
-  }
+    {
+      auto a = "C[*:1]"_smiles;
+      auto b = "N[*:1]"_smiles;
+      auto mol = molzip(*a, *b);
+      CHECK(MolToSmiles(*mol) == "CN");
+    }
+    {
+      // 0 isotopes aren't mapped
+      auto a = "C[*]"_smiles;
+      auto b = "N[*]"_smiles;
+      MolzipParams p;
+      auto mol = molzip(*a, *b, p);
+      CHECK(MolToSmiles(*mol) == "*C.*N");
+    }
+    {
+      auto a = "C[1*]"_smiles;
+      auto b = "N[1*]"_smiles;
+      MolzipParams p;
+      p.label = MolzipLabel::Isotope;
+      auto mol = molzip(*a, *b, p);
+      CHECK(MolToSmiles(*mol) == "CN");
+    }
+    {
+      auto a = "[C@H](Br)([*:1])F"_smiles;
+      auto b = "[*:1]N"_smiles;
+      auto mol = molzip(*a, *b);
+      CHECK(MolToSmiles(*mol) == "N[C@@H](F)Br");
+    }
+    {
+      auto a = "[C@H]([*:1])(Br)F"_smiles;
+      auto b = "[*:1]N"_smiles;
+      auto mol = molzip(*a, *b);
+      CHECK(MolToSmiles(*mol) == "N[C@H](F)Br");
+    }
 
-  {
-    auto b = "[C@H]([*:1])(Br)F"_smiles;
-    auto a = "[*:1]N"_smiles;
-    auto mol = molzip(*a, *b);
-    CHECK(MolToSmiles(*mol) == "N[C@H](F)Br");
-  }
+    {
+      auto a = "[C@H]([*:1])(F)([*:2])"_smiles;
+      auto b = "[*:1]N.[*:2]I"_smiles;
+      auto mol = molzip(*a, *b);
+      REQUIRE(MolToSmiles(*mol) == "N[C@@H](F)I");
+    }
 
-  {
-    auto a = "[C@H]([*:1])(F)([*:2])"_smiles;
-    auto b = "[*:1]N.[*:2]I"_smiles;
-    auto mol = molzip(*a, *b);
-    CHECK(MolToSmiles(*mol) == "N[C@@H](F)I");
-  }
+    {
+      auto a = "[C@H]([Xe])(F)([V])"_smiles;
+      auto b = "[Xe]N.[V]I"_smiles;
+      MolzipParams params;
+      params.label = MolzipLabel::AtomType;
+      params.atomSymbols = {"Xe", "V"};
+      auto mol = molzip(*a, *b, params);
+      CHECK(MolToSmiles(*mol) == "N[C@@H](F)I");
+    }
 
-  {
-    auto b = "[C@H]([*:1])(F)([*:2])"_smiles;
-    auto a = "[*:1]N.[*:2]I"_smiles;
-    auto mol = molzip(*a, *b);
-    CHECK(MolToSmiles(*mol) == "N[C@@H](F)I");
-  }
-
-  {
-    auto a = "[C@H]([Xe])(F)([V])"_smiles;
-    auto b = "[Xe]N.[V]I"_smiles;
-    MolzipParams params;
-    params.label = MolzipLabel::AtomType;
-    params.atomSymbols = {"Xe", "V"};
-    auto mol = molzip(*a, *b, params);
-    CHECK(MolToSmiles(*mol) == "N[C@@H](F)I");
-  }
-
-  {
-    auto m = "OOO[C@](F)(I)N"_smiles;
-    std::vector<std::pair<unsigned int, unsigned int>> dummyLabels{{1, 1},
-                                                                   {2, 2}};
-    for (unsigned int i = 0; i < m->getNumBonds(); ++i) {
-      for (unsigned int j = 0; j < m->getNumBonds(); ++j) {
-        if (i != j) {
-          std::vector<unsigned int> bonds{i, j};
-          auto resa = RDKit::MolFragmenter::fragmentOnBonds(*m, bonds);
-          MolzipParams p;
-          p.label = MolzipLabel::FragmentOnBonds;
-          CHECK(MolToSmiles(*molzip(*resa, p)) == MolToSmiles(*m));
-          delete resa;
-          // Now try using atom labels
-          auto res = RDKit::MolFragmenter::fragmentOnBonds(*m, bonds, true,
-                                                           &dummyLabels);
-          for (auto *atom : res->atoms()) {
-            if (atom->getIsotope()) {
-              atom->setAtomMapNum(atom->getIsotope());
+    {
+      auto m = "OOO[C@](F)(I)N"_smiles;
+      std::vector<std::pair<unsigned int, unsigned int>> dummyLabels{{1, 1},
+                                                                     {2, 2}};
+      for (unsigned int i = 0; i < m->getNumBonds(); ++i) {
+        for (unsigned int j = 0; j < m->getNumBonds(); ++j) {
+          if (i != j) {
+            std::vector<unsigned int> bonds{i, j};
+            auto resa = RDKit::MolFragmenter::fragmentOnBonds(*m, bonds);
+            MolzipParams p;
+            p.label = MolzipLabel::FragmentOnBonds;
+            CHECK(MolToSmiles(*molzip(*resa, p)) == MolToSmiles(*m));
+            delete resa;
+            // Now try using atom labels
+            auto res = RDKit::MolFragmenter::fragmentOnBonds(*m, bonds, true,
+                                                             &dummyLabels);
+            for (auto *atom : res->atoms()) {
+              if (atom->getIsotope()) {
+                atom->setAtomMapNum(atom->getIsotope());
+              }
             }
+            CHECK(MolToSmiles(*molzip(*res)) == MolToSmiles(*m));
+            delete res;
           }
-          CHECK(MolToSmiles(*molzip(*res)) == MolToSmiles(*m));
-          delete res;
         }
       }
     }
   }
-
   SECTION("use atom property as label") {
     auto a = "[C@H]([*])(F)([*])"_smiles;
     auto b = "[*]N.[*]I"_smiles;
@@ -247,109 +228,73 @@ TEST_CASE("molzip", "[]") {
     p.label = MolzipLabel::AtomProperty;
     p.atomProperty = "foo";
     auto mol = molzip(*a, *b, p);
-    // chirality is "lost" here because [C@H]([*])(F)([*]) is considered achiral
+    // chirality is "lost" here because [C@H]([*])(F)([*]) is considered
+    // achiral
     CHECK(MolToSmiles(*mol) == "NC(F)I");
   }
 
   SECTION("test bond stereo") {
-    auto a = "F/C=C/[*:1]"_smiles;
-    auto b = "[*:1]F"_smiles;
-    auto mol = molzip(*a, *b);
-    CHECK(MolToSmiles(*mol) == "F/C=C/F");
-  }
-  {
-    auto b = "F/C=C/[*:1]"_smiles;
-    auto a = "[*:1]F"_smiles;
-    auto mol = molzip(*a, *b);
-    CHECK(MolToSmiles(*mol) == "F/C=C/F");
-  }
+    {
+      auto a = "F/C=C/[*:1]"_smiles;
+      auto b = "[*:1]F"_smiles;
+      auto mol = molzip(*a, *b);
+      CHECK(MolToSmiles(*mol) == "F/C=C/F");
+    }
 
-  {
-    auto a = "O/C=N/[*:1]"_smiles;
-    auto b = "[*:1]C=C"_smiles;
-    auto mol = molzip(*a, *b);
-    CHECK(MolToSmiles(*mol) == "C=C/N=C/O");
-  }
-  {
-    auto b = "O/C=N/[*:1]"_smiles;
-    auto a = "[*:1]C=C"_smiles;
-    auto mol = molzip(*a, *b);
-    CHECK(MolToSmiles(*mol) == "C=C/N=C/O");
-  }
+    {
+      auto a = "C=C/N=C/[*:1]"_smiles;
+      auto b = "O[*:1]"_smiles;
+      auto mol = molzip(*a, *b);
+      CHECK(MolToSmiles(*mol) == "C=C/N=C/O");
+    }
 
-  {
-    auto a = "C=C/N=C/[*:1]"_smiles;
-    auto b = "O[*:1]"_smiles;
-    auto mol = molzip(*a, *b);
-    CHECK(MolToSmiles(*mol) == "C=C/N=C/O");
-  }
-
-  {
-    auto b = "C=C/N=C/[*:1]"_smiles;
-    auto a = "O[*:1]"_smiles;
-    auto mol = molzip(*a, *b);
-    CHECK(MolToSmiles(*mol) == "C=C/N=C/O");
-  }
-  {
-    auto a = "C=C[*:1]"_smiles;
-    auto b = "O/C=N/[*:1]"_smiles;
-    auto mol = molzip(*a, *b);
-    CHECK(MolToSmiles(*mol) == "C=C/N=C/O");
-  }
-  {
-    auto b = "C=C[*:1]"_smiles;
-    auto a = "O/C=N/[*:1]"_smiles;
-    auto mol = molzip(*a, *b);
-    CHECK(MolToSmiles(*mol) == "C=C/N=C/O");
-  }
-
-  {
-    auto a = "C=C[*:1].O/C=N/[*:1]"_smiles;
-    auto mol = molzip(*a);
-    CHECK(MolToSmiles(*mol) == "C=C/N=C/O");
-  }
-  {  // test single mol isotope labels
-    auto a = "C=C[1*].O/C=N/[1*]"_smiles;
-    MolzipParams p;
-    p.label = MolzipLabel::Isotope;
-    auto mol = molzip(*a, p);
-    CHECK(MolToSmiles(*mol) == "C=C/N=C/O");
-  }
-  {
-    // double bondd stereo not handled
-    // auto m =  "O/C=N/C=C/F"_smiles;
-    auto m = "O/C=N/C=C"_smiles;
-    std::vector<std::pair<unsigned int, unsigned int>> dummyLabels{{1, 1}};
-    for (unsigned int i = 0; i < m->getNumBonds(); ++i) {
-      std::vector<unsigned int> bonds{i};
-      {
-        std::unique_ptr<ROMol> resa{
-            RDKit::MolFragmenter::fragmentOnBonds(*m, bonds)};
-        auto smiles = MolToSmiles(*resa);
-
-        if (std::count(smiles.begin(), smiles.end(), '/') != 2) {
-          continue;  // we removed bond stereo in fragment to bonds!
-        }
-        MolzipParams p;
-        p.label = MolzipLabel::FragmentOnBonds;
-        CHECK(MolToSmiles(*molzip(*resa, p)) == MolToSmiles(*m));
-      }
-      {
-        // Now try using atom labels
-        std::unique_ptr<ROMol> res{RDKit::MolFragmenter::fragmentOnBonds(
-            *m, bonds, true, &dummyLabels)};
-        auto smiles = MolToSmiles(*res);
-
-        if (std::count(smiles.begin(), smiles.end(), '/') != 2) {
-          continue;  // we removed bond stereo in fragment to bonds!
-        }
-        for (auto *atom : res->atoms()) {
-          if (atom->getIsotope()) {
-            atom->setAtomMapNum(atom->getIsotope());
+    {
+      auto a = "C=C[*:1].O/C=N/[*:1]"_smiles;
+      auto mol = molzip(*a);
+      CHECK(MolToSmiles(*mol) == "C=C/N=C/O");
+    }
+    {  // test single mol isotope labels
+      auto a = "C=C[1*].O/C=N/[1*]"_smiles;
+      MolzipParams p;
+      p.label = MolzipLabel::Isotope;
+      auto mol = molzip(*a, p);
+      CHECK(MolToSmiles(*mol) == "C=C/N=C/O");
+    }
+    {
+      // double bondd stereo not handled
+      // auto m =  "O/C=N/C=C/F"_smiles;
+      auto m = "O/C=N/C=C"_smiles;
+      std::vector<std::pair<unsigned int, unsigned int>> dummyLabels{{1, 1}};
+      for (unsigned int i = 0; i < m->getNumBonds(); ++i) {
+        std::vector<unsigned int> bonds{i};
+        {
+          std::unique_ptr<ROMol> resa{
+              RDKit::MolFragmenter::fragmentOnBonds(*m, bonds)};
+          auto smiles = MolToSmiles(*resa);
+          if (std::count(smiles.begin(), smiles.end(), '/') != 2) {
+            continue;  // we removed bond stereo in fragment to bonds!
           }
+          MolzipParams p;
+          p.label = MolzipLabel::FragmentOnBonds;
+          CHECK(MolToSmiles(*molzip(*resa, p)) == MolToSmiles(*m));
         }
+        {
+          // Now try using atom labels
+          std::unique_ptr<ROMol> res{RDKit::MolFragmenter::fragmentOnBonds(
+              *m, bonds, true, &dummyLabels)};
+          auto smiles = MolToSmiles(*res);
 
-        CHECK(MolToSmiles(*molzip(*res)) == MolToSmiles(*m));
+          if (std::count(smiles.begin(), smiles.end(), '/') != 2) {
+            continue;  // we removed bond stereo in fragment to bonds!
+          }
+          for (auto *atom : res->atoms()) {
+            if (atom->getIsotope()) {
+              atom->setAtomMapNum(atom->getIsotope());
+            }
+          }
+
+          CHECK(MolToSmiles(*molzip(*res)) == MolToSmiles(*m));
+        }
       }
     }
   }
@@ -506,8 +451,7 @@ TEST_CASE(
 }
 
 TEST_CASE(
-    "ReplaceCore handles chiral center with multiple bonds from core to chiral center",
-    "[]") {
+    "ReplaceCore handles chiral center with multiple bonds from core to chiral center") {
   auto structure = "C1CSCN[C@@]12(NCCCO2)"_smiles;
   auto core = "NCSCC"_smarts;
   std::unique_ptr<ROMol> res{replaceCore(*structure, *core, true, true)};
@@ -556,6 +500,17 @@ TEST_CASE("Molzip with 2D coordinates", "[molzip]") {
   }
 }
 
+TEST_CASE("Molzip with split rings from rgroup", "[molzip]") {
+  std::vector<std::string> frags = {"[*:1]CC[*:2]", "[*:1]NN[*:2]",
+                                    "[*:1]NN[*:2]"};
+  std::vector<ROMOL_SPTR> mols;
+  for (auto smi : frags) {
+    mols.push_back(ROMOL_SPTR(SmilesToMol(smi)));
+  }
+  const auto zippedMol = molzip(mols);
+  CHECK(MolToSmiles(*zippedMol) == "C1CNN1");
+}
+
 TEST_CASE("Github #6034: FragmentOnBonds may create unexpected radicals") {
   auto m = "C[C@H](Cl)c1ccccc1"_smiles;
 
@@ -580,5 +535,53 @@ TEST_CASE("Github #6034: FragmentOnBonds may create unexpected radicals") {
       CHECK(at->getNoImplicit() == (at->getIdx() == 1));
       CHECK(at->getTotalValence() == 4);
     }
+  }
+}
+
+TEST_CASE(
+    "GitHub #7327: SaltRemover may clear computed properties even if no atoms are removed",
+    "[bug]") {
+  auto m = "C=CC=O"_smiles;
+  REQUIRE(m);
+  REQUIRE(m->getRingInfo()->isSymmSssr());
+
+  auto q = "[O,N]"_smarts;
+  REQUIRE(q);
+
+  bool onlyFrags = true;
+  std::unique_ptr<ROMol> m2{deleteSubstructs(*m, *q, onlyFrags)};
+  REQUIRE(m2);
+  CHECK(m2->getNumAtoms() == m->getNumAtoms());  // No atoms removed
+  CHECK(m2->getRingInfo()->isSymmSssr());
+}
+
+TEST_CASE(
+    "Github #8288: molzip add linker bond functionality (fixes memory issue)",
+    "[feature,bug]") {
+  auto m = "[*:1][*:2].C[*:1].S[*:2]"_smiles;
+  auto res = molzip(*m);
+  CHECK(MolToSmiles(*res) == "CS");
+}
+
+TEST_CASE(
+    "Github #8389: FragmentOnBonds does not preserve bond stereo when useLegacy=False") {
+  auto useLegacy = GENERATE(true, false);
+  CAPTURE(useLegacy);
+  UseLegacyStereoPerceptionFixture fx(useLegacy);
+  SECTION("as reported ") {
+    auto m = "CC/C=C/N"_smiles;
+    REQUIRE(m);
+    std::unique_ptr<ROMol> res(
+        MolFragmenter::fragmentOnBonds(*m, std::vector<unsigned int>{1}));
+    REQUIRE(res);
+    CHECK(res->getBondWithIdx(1)->getBondType() == Bond::BondType::DOUBLE);
+    if (useLegacy) {
+      CHECK(res->getBondWithIdx(1)->getStereo() == Bond::BondStereo::STEREOE);
+    } else {
+      CHECK(res->getBondWithIdx(1)->getStereo() ==
+            Bond::BondStereo::STEREOTRANS);
+    }
+
+    CHECK(MolToSmiles(*res) == "[1*]/C=C/N.[2*]CC");
   }
 }
