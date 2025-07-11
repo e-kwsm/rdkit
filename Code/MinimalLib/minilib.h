@@ -17,6 +17,9 @@
 #ifdef RDK_BUILD_MINIMAL_LIB_MMPA
 #include <GraphMol/MMPA/MMPA.h>
 #endif
+#ifdef RDK_BUILD_MINIMAL_LIB_RGROUPDECOMP
+#include <GraphMol/RGroupDecomposition/RGroupDecomp.h>
+#endif
 
 class JSMolList;
 
@@ -39,7 +42,8 @@ class JSMolBase {
   std::string get_molblock() const { return get_molblock("{}"); }
   std::string get_v3Kmolblock(const std::string &details) const;
   std::string get_v3Kmolblock() const { return get_v3Kmolblock("{}"); }
-  std::string get_pickle() const;
+  std::string get_pickle(const std::string &details) const;
+  std::string get_pickle() const { return get_pickle(""); };
 #ifdef RDK_BUILD_INCHI_SUPPORT
   std::string get_inchi(const std::string &options) const;
   std::string get_inchi() const { return get_inchi(""); }
@@ -138,8 +142,10 @@ class JSMolBase {
   }
   std::string get_prop(const std::string &key) const;
   bool clear_prop(const std::string &key);
-  std::string remove_hs() const;
-  bool remove_hs_in_place();
+  std::string remove_hs(const std::string &details_json) const;
+  std::string remove_hs() const { return remove_hs(""); }
+  bool remove_hs_in_place(const std::string &details_json);
+  bool remove_hs_in_place() { return remove_hs_in_place(""); }
   std::string add_hs() const;
   bool add_hs_in_place();
   double normalize_depiction(int canonicalize, double scaleFactor);
@@ -240,7 +246,7 @@ class JSMolList {
 
 namespace RDKit {
 namespace MinimalLib {
-struct LogHandle;
+class LogHandle;
 }
 }  // namespace RDKit
 
@@ -341,8 +347,8 @@ std::string version();
 void prefer_coordgen(bool prefer);
 bool use_legacy_stereo_perception(bool value);
 bool allow_non_tetrahedral_chirality(bool value);
-void enable_logging();
-void disable_logging();
+bool enable_logging(const std::string &logName);
+bool disable_logging(const std::string &logName);
 JSLog *set_log_tee(const std::string &log_name);
 JSLog *set_log_capture(const std::string &log_name);
 #ifdef RDK_BUILD_MINIMAL_LIB_MCS
@@ -352,4 +358,31 @@ std::string get_mcs_as_smarts(const JSMolList &mols,
                               const std::string &details_json);
 JSMolBase *get_mcs_as_mol(const JSMolList &mols,
                           const std::string &details_json);
+#endif
+
+#ifdef RDK_BUILD_MINIMAL_LIB_RGROUPDECOMP
+class JSRGroupDecomposition {
+ public:
+  JSRGroupDecomposition(const JSMolBase &core, const std::string &details_json);
+  JSRGroupDecomposition(const JSMolBase &core)
+      : JSRGroupDecomposition(core, ""){};
+  JSRGroupDecomposition(const JSMolList &cores,
+                        const std::string &details_json);
+  JSRGroupDecomposition(const JSMolList &cores)
+      : JSRGroupDecomposition(cores, ""){};
+  int add(const JSMolBase &mol);
+  bool process();
+  std::map<std::string, std::unique_ptr<JSMolList>> getRGroupsAsColumns() const;
+  std::vector<std::map<std::string, std::unique_ptr<JSMolBase>>>
+  getRGroupsAsRows() const;
+
+ private:
+  std::unique_ptr<RDKit::RGroupDecomposition> d_decomp;
+  std::vector<unsigned int> d_unmatched;
+};
+#endif
+
+#ifdef RDK_BUILD_MINIMAL_LIB_MOLZIP
+JSMolBase *molzip(const JSMolBase &a, const JSMolBase &b,
+                  const std::string &details_json);
 #endif
