@@ -22,8 +22,18 @@ namespace RDKit {
 
 namespace MolDraw2D_detail {
 // for aligning the drawing of text to the passed in coords.
-enum class OrientType : unsigned char { C = 0, N, E, S, W };
-enum class TextAlignType : unsigned char { MIDDLE = 0, START, END };
+enum class OrientType : unsigned char {
+  C = 0,
+  N,
+  E,
+  S,
+  W
+};
+enum class TextAlignType : unsigned char {
+  MIDDLE = 0,
+  START,
+  END
+};
 }  // namespace MolDraw2D_detail
 
 struct DrawColour {
@@ -143,6 +153,11 @@ inline void assignBWPalette(ColourPalette &palette) {
   palette[-1] = DrawColour(0, 0, 0);
 };
 
+enum class MultiColourHighlightStyle {
+  CIRCLEANDLINE,
+  LASSO
+};
+
 struct RDKIT_MOLDRAW2D_EXPORT MolDrawOptions {
   bool atomLabelDeuteriumTritium =
       false;  // toggles replacing 2H with D and 3H with T
@@ -151,7 +166,7 @@ struct RDKIT_MOLDRAW2D_EXPORT MolDrawOptions {
   bool splitBonds = false;             // split bonds into per atom segments
                             // most useful for dynamic manipulation of drawing
                             // especially for svg
-  DrawColour highlightColour{1, 0.5, 0.5, 1.0};  // default highlight color
+  DrawColour highlightColour{1.0, 0.5, 0.5, 1.0};  // default highlight color
   bool continuousHighlight = true;  // highlight by drawing an outline
                                     // *underneath* the molecule
   bool fillHighlights = true;     // fill the areas used to highlight atoms and
@@ -166,7 +181,9 @@ struct RDKIT_MOLDRAW2D_EXPORT MolDrawOptions {
   bool clearBackground = true;  // toggles clearing the background before
                                 // drawing a molecule
   DrawColour backgroundColour{
-      1, 1, 1, 1};          // color to be used while clearing the background
+      1.0, 1.0, 1.0, 1.0};  // color to be used while clearing the background
+  DrawColour queryColour{0.5, 0.5, 0.5,
+                         1.0};  // color to be used for query bonds
   int legendFontSize = 16;  // font size (in pixels) to be used for the legend
                             // (if present)
   double legendFraction =
@@ -190,6 +207,8 @@ struct RDKIT_MOLDRAW2D_EXPORT MolDrawOptions {
                                      // mean bond length
   double padding =
       0.05;  // fraction of empty space to leave around the molecule
+  double componentPadding = 0.0;  // fraction of empty space to leave around
+                                  // each component in a reaction drawing
   double additionalAtomLabelPadding = 0.0;  // additional padding to leave
                                             // around atom labels. Expressed as
                                             // a fraction of the font size.
@@ -198,8 +217,14 @@ struct RDKIT_MOLDRAW2D_EXPORT MolDrawOptions {
       false;  // disables inclusion of atom labels in the rendering
   std::vector<std::vector<int>> atomRegions;  // regions
   DrawColour symbolColour{
-      0, 0, 0, 1};  // color to be used for the symbols and arrows in reactions
-  DrawColour annotationColour{0, 0, 0, 1};  // color to be used for annotations
+      0.0, 0.0, 0.0,
+      1.0};  // color to be used for the symbols and arrows in reactions
+  DrawColour annotationColour{0.0, 0.0, 0.0,
+                              1.0};  // color to be used for annotations
+  DrawColour atomNoteColour{
+      0.0, 0.0, 0.0, 1.0};  // color to be used for atom indices and notes
+  DrawColour bondNoteColour{
+      0.5, 0.5, 1.0, 1.0};      // color to be used for bond indices and notes
   double bondLineWidth = 2.0;   // default line width when drawing bonds
   bool scaleBondWidth = false;  // whether to apply scale() to the bond width
   bool scaleHighlightBondWidth = true;   // likewise with bond highlights.
@@ -237,6 +262,8 @@ struct RDKIT_MOLDRAW2D_EXPORT MolDrawOptions {
   bool atomHighlightsAreCircles = false;  // forces atom highlights always to be
                                           // circles. Default (false) is to put
                                           // ellipses round longer labels.
+  MultiColourHighlightStyle multiColourHighlightStyle =
+      MultiColourHighlightStyle::CIRCLEANDLINE;
   bool centreMoleculesBeforeDrawing = false;  // moves the centre of the drawn
                                               // molecule to (0,0)
   bool explicitMethyl = false;  // draw terminal methyl and related as CH3
@@ -282,6 +309,16 @@ struct RDKIT_MOLDRAW2D_EXPORT MolDrawOptions {
   bool drawMolsSameScale = true;  // when drawing multiple molecules with
                                   // DrawMolecules, forces them to use the same
                                   // scale.  Default is true.
+  bool useComplexQueryAtomSymbols =
+      true;  // replace any atom, any hetero, any halo queries
+             // with complex query symbols A, Q, X, M, optionally followed
+             // by H if hydrogen is included (except for AH, which stays *).
+             // Default is true.
+  bool bracketsAroundAtomLists = true;  // If true, puts brackets round atom
+                                        // lists in query atoms.
+  bool standardColoursForHighlightedAtoms =
+      false;  // If true, highlighted hetero atoms are drawn in standard colours
+              // rather than black.
 
   MolDrawOptions() {
     highlightColourPalette.emplace_back(

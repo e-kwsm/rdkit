@@ -138,6 +138,7 @@ struct CXXAtomIterator {
       ++pos;
       return *this;
     }
+    bool operator==(const CXXAtomIter &it) const { return pos == it.pos; }
     bool operator!=(const CXXAtomIter &it) const { return pos != it.pos; }
   };
 
@@ -147,7 +148,7 @@ struct CXXAtomIterator {
     vend = vs.second;
   }
   CXXAtomIterator(Graph *graph, Iterator start, Iterator end)
-      : graph(graph), vstart(start), vend(end){};
+      : graph(graph), vstart(start), vend(end) {};
   CXXAtomIter begin() { return {graph, vstart}; }
   CXXAtomIter end() { return {graph, vend}; }
 };
@@ -180,6 +181,7 @@ struct CXXBondIterator {
       ++pos;
       return *this;
     }
+    bool operator==(const CXXBondIter &it) const { return pos == it.pos; }
     bool operator!=(const CXXBondIter &it) const { return pos != it.pos; }
   };
 
@@ -189,7 +191,7 @@ struct CXXBondIterator {
     vend = vs.second;
   }
   CXXBondIterator(Graph *graph, Iterator start, Iterator end)
-      : graph(graph), vstart(start), vend(end){};
+      : graph(graph), vstart(start), vend(end) {};
   CXXBondIter begin() { return {graph, vstart}; }
   CXXBondIter end() { return {graph, vend}; }
 };
@@ -359,6 +361,9 @@ class RDKIT_GRAPHMOL_EXPORT ROMol : public RDProps {
     for (auto conf : d_confs) {
       conf->setOwningMol(this);
     }
+    for (auto &sg : d_sgroups) {
+      sg.setOwningMol(this);
+    }
     o.d_graph.clear();
     o.numBonds = 0;
     dp_ringInfo = std::exchange(o.dp_ringInfo, nullptr);
@@ -394,6 +399,9 @@ class RDKIT_GRAPHMOL_EXPORT ROMol : public RDProps {
     }
     for (auto conf : d_confs) {
       conf->setOwningMol(this);
+    }
+    for (auto &sg : d_sgroups) {
+      sg.setOwningMol(this);
     }
 
     o.d_graph.clear();
@@ -710,6 +718,9 @@ class RDKIT_GRAPHMOL_EXPORT ROMol : public RDProps {
   //! \overload
   ConstHeteroatomIterator endHeteros() const;
 
+  //! if the Mol has any Query atoms or bonds
+  bool hasQuery() const;
+
   //! get an AtomIterator pointing at our first Atom that matches \c query
   QueryAtomIterator beginQueryAtoms(QueryAtom const *query);
   //! \overload
@@ -754,6 +765,7 @@ class RDKIT_GRAPHMOL_EXPORT ROMol : public RDProps {
   void updatePropertyCache(bool strict = true);
 
   bool needsUpdatePropertyCache() const;
+  void clearPropertyCache();
 
   //! @}
 
@@ -813,8 +825,8 @@ class RDKIT_GRAPHMOL_EXPORT ROMol : public RDProps {
 
   friend RDKIT_GRAPHMOL_EXPORT std::vector<SubstanceGroup> &getSubstanceGroups(
       ROMol &);
-  friend RDKIT_GRAPHMOL_EXPORT const std::vector<SubstanceGroup>
-      &getSubstanceGroups(const ROMol &);
+  friend RDKIT_GRAPHMOL_EXPORT const std::vector<SubstanceGroup> &
+  getSubstanceGroups(const ROMol &);
   void clearSubstanceGroups() { d_sgroups.clear(); }
 
  protected:
@@ -833,7 +845,7 @@ class RDKIT_GRAPHMOL_EXPORT ROMol : public RDProps {
     atom
                          instead of copying it.
 
-    \return the new number of atoms
+    \return the index of the new atom
   */
   unsigned int addAtom(Atom *atom, bool updateLabel = true,
                        bool takeOwnership = false);

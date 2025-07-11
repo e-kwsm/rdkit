@@ -1,5 +1,5 @@
 //
-//  Copyright (C) 2018 Boran Adas, Google Summer of Code
+//  Copyright (C) 2018-2025 Boran Adas and other RDKit contributors
 //
 //   @@ All Rights Reserved @@
 //  This file is part of the RDKit.
@@ -17,6 +17,8 @@
 #include <GraphMol/RDKitBase.h>
 #include <GraphMol/SmilesParse/SmilesParse.h>
 #include <GraphMol/Substruct/SubstructMatch.h>
+#include <GraphMol/Chirality.h>
+#include <GraphMol/CIPLabeler/CIPLabeler.h>
 #include <boost/dynamic_bitset.hpp>
 #include <algorithm>
 #include <RDGeneral/BoostStartInclude.h>
@@ -39,27 +41,6 @@
 
 namespace RDKit {
 namespace AtomPairs {
-unsigned int numPiElectrons(const Atom *atom) {
-  PRECONDITION(atom, "no atom");
-  unsigned int res = 0;
-  if (atom->getIsAromatic()) {
-    res = 1;
-  } else if (atom->getHybridization() != Atom::SP3) {
-    auto val = static_cast<unsigned int>(atom->getExplicitValence());
-    unsigned int physical_bonds = atom->getNumExplicitHs();
-    const auto &mol = atom->getOwningMol();
-    for (const auto &bndi :
-         boost::make_iterator_range(mol.getAtomBonds(atom))) {
-      if (mol[bndi]->getValenceContrib(atom) != 0.0) {
-        ++physical_bonds;
-      }
-    }
-    CHECK_INVARIANT(val >= physical_bonds,
-                    "explicit valence exceeds atom degree");
-    res = val - physical_bonds;
-  }
-  return res;
-}
 
 std::uint32_t getAtomCode(const Atom *atom, unsigned int branchSubtract,
                           bool includeChirality) {
@@ -72,7 +53,7 @@ std::uint32_t getAtomCode(const Atom *atom, unsigned int branchSubtract,
   }
 
   code = numBranches % maxNumBranches;
-  unsigned int nPi = numPiElectrons(atom) % maxNumPi;
+  unsigned int nPi = numPiElectrons(*atom) % maxNumPi;
   code |= nPi << numBranchBits;
 
   unsigned int typeIdx = 0;
@@ -93,6 +74,12 @@ std::uint32_t getAtomCode(const Atom *atom, unsigned int branchSubtract,
   }
   code |= typeIdx << (numBranchBits + numPiBits);
   if (includeChirality) {
+    // if we aren't using legacy stereo, we need to compute the CIP codes
+    if (!Chirality::getUseLegacyStereoPerception() &&
+        atom->getChiralTag() != Atom::CHI_UNSPECIFIED &&
+        !atom->getOwningMol().hasProp(common_properties::_CIPComputed)) {
+      CIPLabeler::assignCIPLabels(atom->getOwningMol());
+    }
     std::string cipCode;
     if (atom->getPropIfPresent(common_properties::_CIPCode, cipCode)) {
       std::uint32_t offset = numBranchBits + numPiBits + numTypeBits;
@@ -205,7 +192,7 @@ $([N;H0&+0]([C;!$(C(=O))])([C;!$(C(=O))])[C;!$(C(=O))])]",  // Basic
 
 const RDKit::ROMol *ss_matcher::getMatcher() const { return m_matcher.get(); }
 
-ss_matcher::ss_matcher(){};
+ss_matcher::ss_matcher() {};
 ss_matcher::ss_matcher(const std::string &pattern) {
   RDKit::RWMol *p = RDKit::SmartsToMol(pattern);
   TEST_ASSERT(p);

@@ -4,7 +4,6 @@
 #
 #
 
-
 _version = "0.3.2"
 
 _usage = """
@@ -13,9 +12,10 @@ _usage = """
   if "-" is provided as a filename, data will be read from stdin (the console)
 """
 
-_welcomeMessage = "This is ShowFeats version %s" % (_version)
+_welcomeMessage = f"This is ShowFeats version {_version}"
 
 import math
+
 #set up the logger:
 from rdkit import RDLogger as logging
 
@@ -95,10 +95,14 @@ def _cgoArrowhead(viewer, tail, head, radius, color, label, headFrac=0.3, nSteps
 
   normal *= headFrac * aspect
 
-  cgo = [BEGIN, TRIANGLE_FAN, COLOR, color[0], color[1], color[2], NORMAL, dv.x, dv.y, dv.z, VERTEX,
-         head.x + dv.x, head.y + dv.y, head.z + dv.z]
-  base = [BEGIN, TRIANGLE_FAN, COLOR, color[0], color[1], color[2], NORMAL, -dv.x, -dv.y, -dv.z,
-          VERTEX, head.x, head.y, head.z]
+  cgo = [
+    BEGIN, TRIANGLE_FAN, COLOR, color[0], color[1], color[2], NORMAL, dv.x, dv.y, dv.z, VERTEX,
+    head.x + dv.x, head.y + dv.y, head.z + dv.z
+  ]
+  base = [
+    BEGIN, TRIANGLE_FAN, COLOR, color[0], color[1], color[2], NORMAL, -dv.x, -dv.y, -dv.z, VERTEX,
+    head.x, head.y, head.z
+  ]
   v = startP + normal
   cgo.extend([NORMAL, normal.x, normal.y, normal.z])
   cgo.extend([VERTEX, v.x, v.y, v.z])
@@ -127,20 +131,22 @@ def ShowArrow(viewer, tail, head, radius, color, label, transparency=0, includeA
     _globalArrowCGO.extend([ALPHA, 1 - transparency])
   else:
     _globalArrowCGO.extend([ALPHA, 1])
-  _globalArrowCGO.extend([CYLINDER,
-                          tail.x,
-                          tail.y,
-                          tail.z,
-                          head.x,
-                          head.y,
-                          head.z,
-                          radius * .10,
-                          color[0],
-                          color[1],
-                          color[2],
-                          color[0],
-                          color[1],
-                          color[2], ])
+  _globalArrowCGO.extend([
+    CYLINDER,
+    tail.x,
+    tail.y,
+    tail.z,
+    head.x,
+    head.y,
+    head.z,
+    radius * .10,
+    color[0],
+    color[1],
+    color[2],
+    color[0],
+    color[1],
+    color[2],
+  ])
 
   if includeArrowhead:
     _cgoArrowhead(viewer, tail, head, radius, color, label)
@@ -181,27 +187,30 @@ def ShowMolFeats(mol, factory, viewer, radius=0.5, confId=-1, showOnly=True, nam
       _globalSphereCGO.extend([ALPHA, 1 - transparency])
     else:
       _globalSphereCGO.extend([ALPHA, 1])
-    _globalSphereCGO.extend([COLOR, color[0], color[1], color[2], 
-                             SPHERE, pos.x, pos.y, pos.z, radius])
+    _globalSphereCGO.extend(
+      [COLOR, color[0], color[1], color[2], SPHERE, pos.x, pos.y, pos.z, radius])
     if writeFeats:
       aidText = ' '.join([str(x + 1) for x in feat.GetAtomIds()])
       print(f'{family}\t{pos.x:.3f}\t{pos.y:.3f}\t{pos.z:.3f}\t1.0\t# {aidText}')
 
     if featMapFile:
-      print(f"  family={family} pos=({pos.x:.3f}, {pos.y:.3f}, {pos.z:.3f}) weight=1.0", 
-            end='', file=featMapFile)
-      
+      print(f"  family={family} pos=({pos.x:.3f}, {pos.y:.3f}, {pos.z:.3f}) weight=1.0", end='',
+            file=featMapFile)
+
     if useFeatDirs:
       ps = []
       if family == 'Aromatic':
-        ps, _ = FeatDirUtils.GetAromaticFeatVects(mol.GetConformer(confId), feat.GetAtomIds(), pos, scale=1.0)
-      
+        ps, _ = FeatDirUtils.GetAromaticFeatVects(mol.GetConformer(confId), feat.GetAtomIds(), pos,
+                                                  scale=1.0)
+
       elif family == 'Donor':
         aids = feat.GetAtomIds()
         if len(aids) == 1:
-          FeatVectsDictMethod = {1: FeatDirUtils.GetDonor1FeatVects,
-                                 2: FeatDirUtils.GetDonor2FeatVects,
-                                 3: FeatDirUtils.GetDonor3FeatVects, }
+          FeatVectsDictMethod = {
+            1: FeatDirUtils.GetDonor1FeatVects,
+            2: FeatDirUtils.GetDonor2FeatVects,
+            3: FeatDirUtils.GetDonor3FeatVects,
+          }
           featAtom = mol.GetAtomWithIdx(aids[0])
           numHvyNbrs = len([1 for x in featAtom.GetNeighbors() if x.GetAtomicNum() > 1])
           ps, _ = FeatVectsDictMethod[numHvyNbrs](mol.GetConformer(confId), aids, scale=1.0)
@@ -209,9 +218,11 @@ def ShowMolFeats(mol, factory, viewer, radius=0.5, confId=-1, showOnly=True, nam
       elif family == 'Acceptor':
         aids = feat.GetAtomIds()
         if len(aids) == 1:
-          FeatVectsDictMethod = {1: FeatDirUtils.GetDonor1FeatVects,
-                                 2: FeatDirUtils.GetDonor2FeatVects,
-                                 3: FeatDirUtils.GetDonor3FeatVects, }
+          FeatVectsDictMethod = {
+            1: FeatDirUtils.GetDonor1FeatVects,
+            2: FeatDirUtils.GetDonor2FeatVects,
+            3: FeatDirUtils.GetDonor3FeatVects,
+          }
           featAtom = mol.GetAtomWithIdx(aids[0])
           numHvyNbrs = len([x for x in featAtom.GetNeighbors() if x.GetAtomicNum() > 1])
           ps, _ = FeatVectsDictMethod[numHvyNbrs](mol.GetConformer(confId), aids, scale=1.0)
@@ -227,10 +238,14 @@ def ShowMolFeats(mol, factory, viewer, radius=0.5, confId=-1, showOnly=True, nam
       aidText = ' '.join([str(x + 1) for x in feat.GetAtomIds()])
       print(f'# {aidText}', file=featMapFile)
 
+
+import os
 # --- ----  --- ----  --- ----  --- ----  --- ----  --- ----
-import sys, os
-from rdkit import RDConfig
+import sys
 from optparse import OptionParser
+
+from rdkit import RDConfig
+
 parser = OptionParser(_usage, version='%prog ' + _version)
 
 parser.add_option('-x', '--exclude', default='',
@@ -263,8 +278,10 @@ if __name__ == '__main__':
   try:
     v = MolViewer()
   except Exception:
+    import traceback
+    traceback.print_exc()
     logger.error(
-      'Unable to connect to PyMol server.\nPlease run ~landrgr1/extern/PyMol/launch.sh to start it.')
+      'Unable to connect to PyMol server.\nPlease start PyMol with the -R argument provided.')
     sys.exit(1)
   if options.clearAll:
     v.DeleteAll()
@@ -272,7 +289,7 @@ if __name__ == '__main__':
   try:
     fdef = open(options.fdef, 'r').read()
   except IOError:
-    logger.error('ERROR: Could not open fdef file %s' % options.fdef)
+    logger.error(f'ERROR: Could not open fdef file {options.fdef}')
     sys.exit(1)
 
   factory = AllChem.BuildFeatureFactoryFromString(fdef)
@@ -284,20 +301,20 @@ if __name__ == '__main__':
     if options.featMapFile == '-':
       options.featMapFile = sys.stdout
     else:
-      options.featMapFile = file(options.featMapFile, 'w+')
-    print('# Feature map generated by ShowFeats v%s' % _version, file=options.featMapFile)
+      options.featMapFile = open(options.featMapFile, 'w+')
+    print(f'# Feature map generated by ShowFeats v{_version}', file=options.featMapFile)
     print("ScoreMode=All", file=options.featMapFile)
     print("DirScoreMode=Ignore", file=options.featMapFile)
     print("BeginParams", file=options.featMapFile)
     for family in factory.GetFeatureFamilies():
-      print("   family=%s width=1.0 radius=3.0" % family, file=options.featMapFile)
+      print(f"   family={family} width=1.0 radius=3.0", file=options.featMapFile)
     print("EndParams", file=options.featMapFile)
     print("BeginPoints", file=options.featMapFile)
 
   i = 1
   for midx, molN in enumerate(args):
     if molN != '-':
-      featLabel = f'{molN}_Feats' % molN
+      featLabel = f'{molN}_Feats'
     else:
       featLabel = f'Mol{midx + 1}_Feats'
 
@@ -314,7 +331,7 @@ if __name__ == '__main__':
       try:
         ms = Chem.SDMolSupplier(molN)
       except Exception:
-        logger.error('Problems reading input file: %s' % molN)
+        logger.error(f'Problems reading input file: {molN}')
         ms = []
     else:
       ms = Chem.SDMolSupplier()
@@ -337,7 +354,7 @@ if __name__ == '__main__':
       i += 1
       if not i % 100:
         logger.info(f"Done {i} poses")
-    
+
     if ms:
       v.server.renderCGO(_globalSphereCGO, featLabel, 1)
       if options.useDirs:

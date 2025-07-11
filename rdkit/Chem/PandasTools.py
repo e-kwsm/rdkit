@@ -33,19 +33,20 @@ Importing pandasTools enables several features that allow for using RDKit molecu
 Pandas dataframe.
 If the dataframe is containing a molecule format in a column (e.g. smiles), like in this example:
 
->>> from rdkit.Chem import PandasTools
 >>> import pandas as pd
+>>> from rdkit.Chem import PandasTools
+>>> PandasTools.InstallPandasTools() # <- only necessary during testing, you don't need to do this
 >>> import os
 >>> from rdkit import RDConfig
 >>> antibiotics = pd.DataFrame(columns=['Name','Smiles'])
->>> antibiotics = antibiotics.append({'Smiles':'CC1(C(N2C(S1)C(C2=O)NC(=O)CC3=CC=CC=C3)C(=O)O)C',
-...   'Name':'Penicilline G'}, ignore_index=True)#Penicilline G
->>> antibiotics = antibiotics.append({
+>>> antibiotics = pd.concat([antibiotics, pd.DataFrame.from_records([{'Smiles':'CC1(C(N2C(S1)C(C2=O)NC(=O)CC3=CC=CC=C3)C(=O)O)C',
+...   'Name':'Penicilline G'}])], ignore_index=True) #Penicilline G
+>>> antibiotics = pd.concat([antibiotics,pd.DataFrame.from_records([{
 ...   'Smiles':'CC1(C2CC3C(C(=O)C(=C(C3(C(=O)C2=C(C4=C1C=CC=C4O)O)O)O)C(=O)N)N(C)C)O',
-...   'Name':'Tetracycline'}, ignore_index=True)#Tetracycline
->>> antibiotics = antibiotics.append({
+...   'Name':'Tetracycline'}])], ignore_index=True) #Tetracycline
+>>> antibiotics = pd.concat([antibiotics,pd.DataFrame.from_records([{
 ...   'Smiles':'CC1(C(N2C(S1)C(C2=O)NC(=O)C(C3=CC=CC=C3)N)C(=O)O)C',
-...   'Name':'Ampicilline'}, ignore_index=True)#Ampicilline
+...   'Name':'Ampicilline'}])], ignore_index=True) #Ampicilline
 >>> print([str(x) for x in  antibiotics.columns])
 ['Name', 'Smiles']
 >>> print(antibiotics)
@@ -66,7 +67,7 @@ because the ">=" operator has been modified to work as a substructure check.
 Such the antibiotics containing the beta-lactam ring "C1C(=O)NC1" can be obtained by
 
 >>> beta_lactam = Chem.MolFromSmiles('C1C(=O)NC1')
->>> beta_lactam_antibiotics = antibiotics[antibiotics['Molecule'] >= beta_lactam]
+>>> beta_lactam_antibiotics = antibiotics[antibiotics['Molecule'] >= beta_lactam] 
 >>> print(beta_lactam_antibiotics[['Name','Smiles']])
             Name                                             Smiles
 0  Penicilline G    CC1(C(N2C(S1)C(C2=O)NC(=O)CC3=CC=CC=C3)C(=O)O)C
@@ -112,29 +113,30 @@ The standard ForwardSDMolSupplier keywords are also available:
 
 Conversion to html is quite easy:
 
->>> htm = frame.to_html() # doctest:
+>>> PandasTools.molRepresentation = 'svg' #< the default is 'png', for png representation
+>>> htm = frame.to_html()
 ...
 >>> str(htm[:36])
 '<table border="1" class="dataframe">'
+>>> PandasTools.molRepresentation = 'png' #< switch back to the default
+
 
 In order to support rendering the molecules as images in the HTML export of the
 dataframe, we use a custom formatter for columns containing RDKit molecules,
 and also disable escaping of HTML where needed.
 '''
 
-from base64 import b64encode
-import sys
 import logging
+import sys
+from base64 import b64encode
 
 import numpy as np
+
 import rdkit
-from rdkit import Chem
-from rdkit import DataStructs
-from rdkit.Chem import AllChem
-from rdkit.Chem import Draw
-from rdkit.Chem import SDWriter
-from rdkit.Chem import rdchem
+from rdkit import Chem, DataStructs
+from rdkit.Chem import AllChem, Draw, SDWriter, rdchem
 from rdkit.Chem.Scaffolds import MurckoScaffold
+
 InteractiveRenderer = None
 drawOptions = None
 if hasattr(rdkit, 'IPythonConsole'):
@@ -176,6 +178,7 @@ def _molge(x, y):
     return True
   else:
     return False
+
 
 def PrintAsImageString(x):
   """Returns the molecules as base64 encoded PNG image or as SVG"""
@@ -235,11 +238,14 @@ else:
 
   def LoadSDF(filename, idName='ID', molColName='ROMol', includeFingerprints=False,
               isomericSmiles=True, smilesName=None, embedProps=False, removeHs=True,
-              strictParsing=True):
+              strictParsing=True, sanitize=True):
     '''Read file in SDF format and return as Pandas data frame.
       If embedProps=True all properties also get embedded in Mol objects in the molecule column.
       If molColName=None molecules would not be present in resulting DataFrame (only properties
       would be read).
+      
+      Sanitize boolean is passed on to Chem.ForwardSDMolSupplier sanitize. 
+      If neither molColName nor smilesName are set, sanitize=false.
       '''
     if isinstance(filename, str):
       if filename.lower()[-3:] == ".gz":
@@ -253,7 +259,8 @@ else:
       close = None  # don't close an open file that was passed in
     records = []
     indices = []
-    sanitize = bool(molColName is not None or smilesName is not None)
+    if molColName is None and smilesName is None:
+      sanitize = False
     for i, mol in enumerate(
         Chem.ForwardSDMolSupplier(f, sanitize=sanitize, removeHs=removeHs,
                                   strictParsing=strictParsing)):
@@ -395,7 +402,8 @@ def ChangeMoleculeRendering(frame=None, renderer='image'):
     log.warning("Failed to patch pandas - unable to change molecule rendering")
 
 
-def WriteSDF(df, out, molColName='ROMol', idName=None, properties=None, allNumeric=False):
+def WriteSDF(df, out, molColName='ROMol', idName=None, properties=None, allNumeric=False,
+             forceV3000=False):
   '''Write an SD file for the molecules in the dataframe. Dataframe columns can be exported as
     SDF tags if specified in the "properties" list. "properties=list(df.columns)" would export
     all columns.
@@ -412,6 +420,9 @@ def WriteSDF(df, out, molColName='ROMol', idName=None, properties=None, allNumer
       close = out.close
 
   writer = SDWriter(out)
+  if forceV3000:
+    writer.SetForceV3000(True)
+
   if properties is None:
     properties = []
   else:
@@ -511,7 +522,7 @@ def SaveXlsxFromFrame(frame, outFile, molCol='ROMol', size=(300, 300), formats=N
   import xlsxwriter  # don't want to make this a RDKit dependency
 
   cols = list(frame.columns)
-  if isinstance(molCol, Chem.Mol):
+  if isinstance(molCol, str):
     molCol = [molCol]
   molCol = list(set(molCol))
   dataTypes = dict(frame.dtypes)
@@ -540,13 +551,16 @@ def SaveXlsxFromFrame(frame, outFile, molCol='ROMol', size=(300, 300), formats=N
       if col_idx in molCol_indices:
         image_data = BytesIO()
         m = row[col]
-        img = Draw.MolToImage(m if isinstance(m, Chem.Mol) else Chem.Mol(), size=size)
+        img = Draw.MolToImage(m if isinstance(m, Chem.Mol) else Chem.Mol(), size=size,
+                              options=drawOptions)
         img.save(image_data, format='PNG')
         worksheet.insert_image(row_idx_actual, col_idx, "f", {'image_data': image_data})
-        worksheet.set_column(col_idx, col_idx, width=size[0] / 6.)  # looks like height is not in px?
+        worksheet.set_column(col_idx, col_idx,
+                             width=size[0] / 6.)  # looks like height is not in px?
       elif str(dataTypes[col]) == "object":
         # string length is limited in xlsx
-        worksheet.write_string(row_idx_actual, col_idx, str(row[col])[:32000], cell_formats['write_string'])
+        worksheet.write_string(row_idx_actual, col_idx,
+                               str(row[col])[:32000], cell_formats['write_string'])
       elif ('float' in str(dataTypes[col])) or ('int' in str(dataTypes[col])):
         if (row[col] != np.nan) or (row[col] != np.inf):
           worksheet.write_number(row_idx_actual, col_idx, row[col], cell_formats['write_number'])
@@ -555,6 +569,7 @@ def SaveXlsxFromFrame(frame, outFile, molCol='ROMol', size=(300, 300), formats=N
 
   workbook.close()
   image_data.close()
+
 
 def FrameToGridImage(frame, column='ROMol', legendsCol=None, **kwargs):
   '''
@@ -642,12 +657,32 @@ def _runDoctests(verbose=None):  # pragma: nocover
 
 InstallPandasTools()
 
+try:
+  import xlsxwriter
+except ImportError:
+  xlsxwriter = None
+import unittest
+
+
+class TestCase(unittest.TestCase):
+
+  @unittest.skipIf(xlsxwriter is None or pd is None, 'pandas/xlsxwriter not installed')
+  def testGithub1507(self):
+    import os
+    from rdkit import RDConfig
+    sdfFile = os.path.join(RDConfig.RDDataDir, 'NCI/first_200.props.sdf')
+    frame = LoadSDF(sdfFile)
+    SaveXlsxFromFrame(frame, 'foo.xlsx', formats={'write_string': {'text_wrap': True}})
+
+  @unittest.skipIf(pd is None, 'pandas not installed')
+  def testGithub3701(self):
+    ' problem with update to pandas v1.2.0 '
+    df = pd.DataFrame({"name": ["ethanol", "furan"], "smiles": ["CCO", "c1ccoc1"]})
+    AddMoleculeColumnToFrame(df, 'smiles', 'molecule')
+    self.assertEqual(len(df.molecule), 2)
+
+
 if __name__ == '__main__':  # pragma: nocover
-  import unittest
-  try:
-    import xlsxwriter
-  except ImportError:
-    xlsxwriter = None
   try:
     import pandas as pd
 
@@ -668,10 +703,11 @@ if __name__ == '__main__':  # pragma: nocover
     @unittest.skipIf(xlsxwriter is None or pd is None, 'pandas/xlsxwriter not installed')
     def testGithub1507(self):
       import os
+
       from rdkit import RDConfig
       sdfFile = os.path.join(RDConfig.RDDataDir, 'NCI/first_200.props.sdf')
       frame = LoadSDF(sdfFile)
-      SaveXlsxFromFrame(frame, 'foo.xlsx', formats={ 'write_string': {'text_wrap': True} })
+      SaveXlsxFromFrame(frame, 'foo.xlsx', formats={'write_string': {'text_wrap': True}})
 
     @unittest.skipIf(pd is None, 'pandas not installed')
     def testGithub3701(self):

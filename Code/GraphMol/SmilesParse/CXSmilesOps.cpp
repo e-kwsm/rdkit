@@ -14,6 +14,10 @@
 #include <RDGeneral/BoostEndInclude.h>
 #include <GraphMol/RDKitBase.h>
 #include <GraphMol/RDKitQueries.h>
+#include <GraphMol/FileParsers/MolFileStereochem.h>
+#include <GraphMol/Atropisomers.h>
+#include <GraphMol/Chirality.h>
+
 #include <iostream>
 #include <algorithm>
 #include "SmilesWrite.h"
@@ -21,11 +25,13 @@
 #include "SmilesParseOps.h"
 #include <GraphMol/MolEnumerator/LinkNode.h>
 #include <GraphMol/Chirality.h>
+#include <map>
 
 namespace SmilesParseOps {
 using namespace RDKit;
 
 const std::string cxsmilesindex = "_cxsmilesindex";
+const std::string cxsgTracker = "_sgTracker";
 
 // FIX: once this can be automated using constexpr, do so
 const std::vector<std::string_view> pseudoatoms{"Pol", "Mod"};
@@ -58,6 +64,7 @@ void processCXSmilesLabels(RWMol &mol) {
   for (auto atom : mol.atoms()) {
     std::string symb = "";
     if (atom->getPropIfPresent(common_properties::atomLabel, symb)) {
+      atom->clearProp(common_properties::dummyLabel);
       if (symb == "star_e") {
         /* according to the MDL spec, these match anything, but in MARVIN they
         are "unspecified end groups" for polymers */
@@ -411,13 +418,14 @@ bool parse_atom_labels(Iterator &first, Iterator last, RDKit::RWMol &mol,
 
 template <typename Iterator>
 bool parse_coords(Iterator &first, Iterator last, RDKit::RWMol &mol,
-                  unsigned int startAtomIdx) {
+                  unsigned int startAtomIdx, unsigned int confIdx) {
   if (first >= last || *first != '(') {
     return false;
   }
 
   auto *conf = new Conformer(mol.getNumAtoms());
   mol.addConformer(conf);
+  conf->setId(confIdx);
   ++first;
   unsigned int atIdx = 0;
   bool is3D = false;
@@ -493,6 +501,42 @@ bool parse_coordinate_bonds(Iterator &first, Iterator last, RDKit::RWMol &mol,
       }
     } else {
       return false;
+    }
+    if (first < last && *first == ',') {
+      ++first;
+    }
+  }
+  return true;
+}
+
+template <typename Iterator>
+bool parse_zero_bonds(Iterator &first, Iterator last, RDKit::RWMol &mol,
+                      unsigned int, unsigned int startBondIdx) {
+  // these look like: C1CCCCC~CCCC1 |Z:5|
+  if (first >= last || *first != 'Z') {
+    return false;
+  }
+  ++first;
+  if (first >= last || *first != ':') {
+    return false;
+  }
+  ++first;
+
+  while (first < last && *first >= '0' && *first <= '9') {
+    unsigned int bondIdx;
+    if (!read_int(first, last, bondIdx)) {
+      return false;
+    }
+    if (VALID_BNDIDX(bondIdx)) {
+      auto bond = get_bond_with_smiles_idx(mol, bondIdx - startBondIdx);
+
+      if (!bond) {
+        BOOST_LOG(rdWarningLog)
+            << "bond " << bondIdx
+            << " not found, cannot mark as zero order bond." << std::endl;
+        return false;
+      }
+      bond->setBondType(Bond::ZERO);
     }
     if (first < last && *first == ',') {
       ++first;
@@ -681,6 +725,25 @@ bool parse_linknodes(Iterator &first, Iterator last, RDKit::RWMol &mol,
 }
 
 template <typename Iterator>
+void parse_data_sgroup_attr(Iterator &first, Iterator last,
+                            SubstanceGroup &sgroup, bool keepSGroup,
+                            std::string fieldName, bool fieldIsArray = false) {
+  PRECONDITION(first < last, "parse_data_sgroup_attr: first >= last");
+  if (first != last && *first != '|') {
+    std::string data = read_text_to(first, last, ":");
+    ++first;
+    if (!data.empty() && keepSGroup) {
+      if (fieldIsArray) {
+        std::vector<std::string> dataFields = {data};
+        sgroup.setProp(fieldName, dataFields);
+      } else {
+        sgroup.setProp(fieldName, data);
+      }
+    }
+  }
+}
+
+template <typename Iterator>
 bool parse_data_sgroup(Iterator &first, Iterator last, RDKit::RWMol &mol,
                        unsigned int startAtomIdx, unsigned int nSGroups) {
   // these look like: |SgD:2,1:FIELD:info::::|
@@ -709,40 +772,21 @@ bool parse_data_sgroup(Iterator &first, Iterator last, RDKit::RWMol &mol,
     }
   }
   ++first;
-  std::string name = read_text_to(first, last, ":");
-  ++first;
-  if (keepSGroup && !name.empty()) {
-    sgroup.setProp("FIELDNAME", name);
-  }
+  parse_data_sgroup_attr(first, last, sgroup, keepSGroup, "FIELDNAME");
+
   // FIX:
   if (keepSGroup) {
     sgroup.setProp("FIELDDISP", "    0.0000    0.0000    DR    ALL  0       0");
   }
 
-  std::string data = read_text_to(first, last, ":");
-  ++first;
-  if (!data.empty() && keepSGroup) {
-    std::vector<std::string> dataFields = {data};
-    sgroup.setProp("DATAFIELDS", dataFields);
-  }
+  parse_data_sgroup_attr(first, last, sgroup, keepSGroup, "DATAFIELDS", true);
 
-  std::string oper = read_text_to(first, last, ":");
-  ++first;
-  if (!oper.empty() && keepSGroup) {
-    sgroup.setProp("QUERYOP", oper);
-  }
-  std::string unit = read_text_to(first, last, ":");
-  ++first;
-  if (!unit.empty() && keepSGroup) {
-    sgroup.setProp("FIELDINFO", unit);
-  }
-  std::string tag = read_text_to(first, last, ":");
-  ++first;
-  if (!tag.empty() && keepSGroup) {
-    // not actually part of what ends up in the output, but
-    // it is part of CXSMARTS
-    sgroup.setProp("FIELDTAG", tag);
-  }
+  parse_data_sgroup_attr(first, last, sgroup, keepSGroup, "QUERYOP");
+
+  parse_data_sgroup_attr(first, last, sgroup, keepSGroup, "FIELDINFO");
+
+  parse_data_sgroup_attr(first, last, sgroup, keepSGroup, "FIELDTAG");
+
   if (first < last && *first == '(') {
     // FIX
     std::string coords = read_text_to(first, last, ")");
@@ -1089,7 +1133,9 @@ bool parse_wedged_bonds(Iterator &first, Iterator last, RDKit::RWMol &mol,
         if (atom->getIdx() != bond->getEndAtomIdx()) {
           BOOST_LOG(rdWarningLog)
               << "atom " << atomIdx << " is not associated with bond "
-              << bondIdx << " in w block" << std::endl;
+              << bondIdx << "(" << bond->getBeginAtomIdx() + startAtomIdx << "-"
+              << bond->getEndAtomIdx() + startAtomIdx << ")"
+              << " in w block" << std::endl;
           return false;
         }
         auto eidx = bond->getBeginAtomIdx();
@@ -1098,12 +1144,11 @@ bool parse_wedged_bonds(Iterator &first, Iterator last, RDKit::RWMol &mol,
       }
       bond->setProp(common_properties::_MolFileBondCfg, cfg);
       bond->setBondDir(state);
-      if (cfg == 2 && bond->getBondType() == Bond::BondType::SINGLE) {
+      if (cfg == 2 && canHaveDirection(*bond)) {
         bond->getBeginAtom()->setChiralTag(Atom::ChiralType::CHI_UNSPECIFIED);
         mol.setProp(detail::_needsDetectBondStereo, 1);
       }
-      if ((cfg == 1 || cfg == 3) &&
-          bond->getBondType() == Bond::BondType::SINGLE) {
+      if ((cfg == 1 || cfg == 3) && canHaveDirection(*bond)) {
         mol.setProp(detail::_needsDetectAtomStereo, 1);
       }
     }
@@ -1144,37 +1189,8 @@ bool parse_doublebond_stereo(Iterator &first, Iterator last, RDKit::RWMol &mol,
         return false;
       }
 
-      // the cis/trans/unknown marker is relative to the lowest numbered atom
-      // connected to the lowest numbered double bond atom and the
-      // highest-numbered atom connected to the highest-numbered double bond
-      // atom find those
-      auto begAtom = bond->getBeginAtom();
-      auto endAtom = bond->getEndAtom();
-      if (begAtom->getIdx() > endAtom->getIdx()) {
-        std::swap(begAtom, endAtom);
-      }
-      if (begAtom->getDegree() > 1 && endAtom->getDegree() > 1) {
-        unsigned int begControl = mol.getNumAtoms();
-        for (auto nbr : mol.atomNeighbors(begAtom)) {
-          if (nbr == endAtom) {
-            continue;
-          }
-          begControl = std::min(nbr->getIdx(), begControl);
-        }
-        unsigned int endControl = 0;
-        for (auto nbr : mol.atomNeighbors(endAtom)) {
-          if (nbr == begAtom) {
-            continue;
-          }
-          endControl = std::max(nbr->getIdx(), endControl);
-        }
-        if (begAtom != bond->getBeginAtom()) {
-          std::swap(begControl, endControl);
-        }
-        bond->setStereoAtoms(begControl, endControl);
-        bond->setStereo(stereo);
-        mol.setProp(SmilesParseOps::detail::_needsDetectBondStereo, 1);
-      }
+      bool useCXOrdering = true;
+      Chirality::detail::setStereoForBond(mol, bond, stereo, useCXOrdering);
     }
     if (first < last && *first == ',') {
       ++first;
@@ -1320,8 +1336,8 @@ bool parse_enhanced_stereo(Iterator &first, Iterator last, RDKit::RWMol &mol,
   ++first;
 
   // OR and AND groups carry a group number
+  unsigned int group_id = 0;
   if (group_type != StereoGroupType::STEREO_ABSOLUTE) {
-    unsigned int group_id = 0;
     read_int(first, last, group_id);
   }
 
@@ -1331,6 +1347,8 @@ bool parse_enhanced_stereo(Iterator &first, Iterator last, RDKit::RWMol &mol,
   ++first;
 
   std::vector<Atom *> atoms;
+  std::vector<Bond *> bonds;
+
   while (first <= last && *first >= '0' && *first <= '9') {
     unsigned int aidx;
     if (read_int(first, last, aidx)) {
@@ -1352,8 +1370,31 @@ bool parse_enhanced_stereo(Iterator &first, Iterator last, RDKit::RWMol &mol,
     }
   }
   if (!atoms.empty()) {
+    // we need to do a bit of work to check whether or not we've already seen
+    // this particular StereoGroup (was Github #6050)
+    const auto group_hash =
+        10 * group_id + static_cast<unsigned int>(group_type);
+    std::vector<unsigned int> sgTracker;
+    mol.getPropIfPresent(cxsgTracker, sgTracker);
     std::vector<StereoGroup> mol_stereo_groups(mol.getStereoGroups());
-    mol_stereo_groups.emplace_back(group_type, std::move(atoms));
+    TEST_ASSERT(mol_stereo_groups.size() == sgTracker.size());
+
+    auto iter = std::find(sgTracker.begin(), sgTracker.end(), group_hash);
+    if (iter != sgTracker.end()) {
+      auto index = iter - sgTracker.begin();
+      auto gAtoms = mol_stereo_groups[index].getAtoms();
+      gAtoms.insert(gAtoms.end(), atoms.begin(), atoms.end());
+      mol_stereo_groups[index] =
+          StereoGroup(mol_stereo_groups[index].getGroupType(),
+                      std::move(gAtoms), std::move(bonds), group_id);
+    } else {
+      // not seen this before, create a new stereogroup
+      mol_stereo_groups.emplace_back(group_type, std::move(atoms),
+                                     std::move(bonds), group_id);
+      sgTracker.push_back(group_hash);
+      mol.setProp(cxsgTracker, sgTracker);
+    }
+
     mol.setStereoGroups(std::move(mol_stereo_groups));
   }
 
@@ -1368,10 +1409,11 @@ bool parse_it(Iterator &first, Iterator last, RDKit::RWMol &mol,
   }
   ++first;
   unsigned int nSGroups = 0;
+  unsigned int confIndex = 0;
   while (first < last && *first != '|') {
     typename Iterator::difference_type length = std::distance(first, last);
     if (*first == '(') {
-      if (!parse_coords(first, last, mol, startAtomIdx)) {
+      if (!parse_coords(first, last, mol, startAtomIdx, confIndex++)) {
         return false;
       }
     } else if (*first == '$') {
@@ -1399,6 +1441,10 @@ bool parse_it(Iterator &first, Iterator last, RDKit::RWMol &mol,
     } else if (*first == 'H') {
       if (!parse_coordinate_bonds(first, last, mol, Bond::HYDROGEN,
                                   startAtomIdx, startBondIdx)) {
+        return false;
+      }
+    } else if (*first == 'Z') {
+      if (!parse_zero_bonds(first, last, mol, startAtomIdx, startBondIdx)) {
         return false;
       }
     } else if (*first == '^') {
@@ -1496,12 +1542,73 @@ void parseCXExtensions(RDKit::RWMol &mol, const std::string &extText,
   }
   processCXSmilesLabels(mol);
   mol.clearProp("_cxsmilesLabelsProcessed");
+  mol.clearProp(cxsgTracker);
 }
 }  // end of namespace SmilesParseOps
 
 namespace RDKit {
 namespace SmilesWrite {
 namespace {
+
+std::vector<unsigned> getSortedMappedIndexes(
+    const std::vector<unsigned int> &atomIds,
+    const std::vector<unsigned> &revOrder) {
+  std::vector<unsigned> res;
+  res.reserve(atomIds.size());
+  for (auto atomId : atomIds) {
+    res.push_back(revOrder[atomId]);
+  }
+  std::sort(res.begin(), res.end());
+  return res;
+}
+
+std::pair<std::vector<StereoGroup>, std::vector<std::vector<unsigned>>>
+getSortedStereoGroupsAndIndices(
+    const ROMol &mol, const std::vector<unsigned int> &revOrder,
+    std::map<int, std::unique_ptr<RDKit::Chirality::WedgeInfoBase>>
+        &wedgeBonds) {
+  using StGrpIdxPair = std::pair<StereoGroup, std::vector<unsigned>>;
+
+  auto &groups = mol.getStereoGroups();
+
+  std::vector<StGrpIdxPair> sortingGroups;
+  sortingGroups.reserve(groups.size());
+
+  for (const auto &sg : groups) {
+    std::vector<unsigned int> atomIds;
+    Atropisomers::getAllAtomIdsForStereoGroup(mol, sg, atomIds, wedgeBonds);
+    const auto newAtomIndexes = getSortedMappedIndexes(atomIds, revOrder);
+    if (!newAtomIndexes.empty()) {
+      sortingGroups.emplace_back(sg, newAtomIndexes);
+    }
+  }
+
+  // sort by 1) StereoGroup type; 2) StereoGroup id; 3) atom indexes
+  std::sort(sortingGroups.begin(), sortingGroups.end(),
+            [](const StGrpIdxPair &a, const StGrpIdxPair &b) {
+              const auto &[sgA, idxsA] = a;
+              const auto &[sgB, idxsB] = b;
+              if (sgA.getGroupType() == sgB.getGroupType()) {
+                if (sgA.getWriteId() == sgB.getWriteId()) {
+                  return idxsA < idxsB;
+                }
+                return sgA.getWriteId() < sgB.getWriteId();
+              }
+              return sgA.getGroupType() < sgB.getGroupType();
+            });
+
+  std::vector<StereoGroup> sgs;
+  std::vector<std::vector<unsigned>> sgAtomIdxs;
+  sgs.reserve(sortingGroups.size());
+  sgAtomIdxs.reserve(sortingGroups.size());
+
+  for (auto &&p : sortingGroups) {
+    sgs.push_back(std::move(p.first));
+    sgAtomIdxs.push_back(std::move(p.second));
+  }
+  return {std::move(sgs), std::move(sgAtomIdxs)};
+}
+
 std::string quote_string(const std::string &txt) {
   // FIX
   return txt;
@@ -1521,7 +1628,9 @@ std::string quote_atomprop_string(const std::string &txt) {
 }
 
 std::string get_enhanced_stereo_block(
-    const ROMol &mol, const std::vector<unsigned int> &atomOrder) {
+    const ROMol &mol, const std::vector<unsigned int> &atomOrder,
+    std::map<int, std::unique_ptr<RDKit::Chirality::WedgeInfoBase>>
+        &wedgeBonds) {
   if (mol.getStereoGroups().empty()) {
     return "";
   }
@@ -1531,58 +1640,32 @@ std::string get_enhanced_stereo_block(
   for (unsigned i = 0; i < atomOrder.size(); ++i) {
     revOrder[atomOrder[i]] = i;
   }
-  std::vector<unsigned int> absAts;
-  std::vector<std::vector<unsigned int>> orGps;
-  std::vector<std::vector<unsigned int>> andGps;
 
-  // we want this to be canonical (future proofing)
-  for (const auto &sg : mol.getStereoGroups()) {
-    std::vector<unsigned int> aids;
-    aids.reserve(sg.getAtoms().size());
-    for (const auto at : sg.getAtoms()) {
-      aids.push_back(revOrder[at->getIdx()]);
-    }
-    switch (sg.getGroupType()) {
+  auto [groups, groupsAtoms] =
+      getSortedStereoGroupsAndIndices(mol, revOrder, wedgeBonds);
+
+  assignStereoGroupIds(groups);
+
+  auto grpAtomsItr = groupsAtoms.begin();
+  for (auto sgItr = groups.begin(); sgItr != groups.end();
+       ++sgItr, ++grpAtomsItr) {
+    switch (sgItr->getGroupType()) {
       case StereoGroupType::STEREO_ABSOLUTE:
-        absAts.insert(absAts.end(), aids.begin(), aids.end());
+        res << "a:";
         break;
       case StereoGroupType::STEREO_OR:
-        std::sort(aids.begin(), aids.end());
-        orGps.push_back(aids);
+        res << "o" << sgItr->getWriteId() << ":";
         break;
       case StereoGroupType::STEREO_AND:
-        std::sort(aids.begin(), aids.end());
-        andGps.push_back(aids);
+        res << "&" << sgItr->getWriteId() << ":";
         break;
     }
-  }
-  if (!absAts.empty()) {
-    res << "a:";
-    std::sort(absAts.begin(), absAts.end());
-    for (auto aid : absAts) {
+
+    for (const auto &aid : *grpAtomsItr) {
       res << aid << ",";
     }
   }
-  if (!orGps.empty()) {
-    std::sort(orGps.begin(), orGps.end());
-    unsigned int gIdx = 1;
-    for (const auto &gp : orGps) {
-      res << "o" << gIdx++ << ":";
-      for (auto aid : gp) {
-        res << aid << ",";
-      }
-    }
-  }
-  if (!andGps.empty()) {
-    std::sort(andGps.begin(), andGps.end());
-    unsigned int gIdx = 1;
-    for (const auto &gp : andGps) {
-      res << "&" << gIdx++ << ":";
-      for (auto aid : gp) {
-        res << aid << ",";
-      }
-    }
-  }
+
   std::string resStr = res.str();
   if (!resStr.empty() && resStr.back() == ',') {
     resStr.pop_back();
@@ -1827,6 +1910,7 @@ std::string get_atomlabel_block(const ROMol &mol,
       res += ";";
     }
     std::string lbl;
+    int val;
     const auto atom = mol.getAtomWithIdx(idx);
     if (atom->getPropIfPresent(common_properties::_QueryAtomGenericLabel,
                                lbl)) {
@@ -1837,6 +1921,11 @@ std::string get_atomlabel_block(const ROMol &mol,
                          SmilesParseOps::pseudoatoms.end(),
                          lbl) != SmilesParseOps::pseudoatoms.end()) {
       res += quote_string(lbl + "_p");
+    } else if (!atom->getAtomicNum() &&
+               atom->getPropIfPresent(common_properties::_fromAttachPoint,
+                                      val) &&
+               (val == 1 || val == 2)) {
+      res += quote_string("_AP" + std::to_string(val));
     } else if (atom->getPropIfPresent(common_properties::atomLabel, lbl)) {
       res += quote_string(lbl);
     }
@@ -1940,15 +2029,18 @@ std::string get_atom_props_block(const ROMol &mol,
   unsigned int which = 0;
   for (auto idx : atomOrder) {
     const auto atom = mol.getAtomWithIdx(idx);
+    bool isAttachmentPoint = !atom->getAtomicNum() &&
+                             atom->hasProp(common_properties::_fromAttachPoint);
     bool includePrivate = false, includeComputed = false;
     for (const auto &pn : atom->getPropList(includePrivate, includeComputed)) {
       if (std::find(skip.begin(), skip.end(), pn) == skip.end()) {
         std::string pv = atom->getProp<std::string>(pn);
         if (pn == "dummyLabel" &&
-            std::find(SmilesParseOps::pseudoatoms.begin(),
-                      SmilesParseOps::pseudoatoms.end(),
-                      pv) != SmilesParseOps::pseudoatoms.end()) {
-          // it's a pseudoatom, skip it
+            (isAttachmentPoint ||
+             std::find(SmilesParseOps::pseudoatoms.begin(),
+                       SmilesParseOps::pseudoatoms.end(),
+                       pv) != SmilesParseOps::pseudoatoms.end())) {
+          // it's a pseudoatom or attachment point, skip it
           continue;
         }
         if (res.empty()) {
@@ -1964,14 +2056,20 @@ std::string get_atom_props_block(const ROMol &mol,
   return res;
 }
 
-std::string get_bond_config_block(const ROMol &mol,
-                                  const std::vector<unsigned int> &atomOrder,
-                                  const std::vector<unsigned int> &bondOrder,
-                                  bool coordsIncluded) {
-  std::string w = "", wU = "", wD = "";
+std::string get_bond_config_block(
+    const ROMol &mol, const std::vector<unsigned int> &atomOrder,
+    const std::vector<unsigned int> &bondOrder, bool coordsIncluded,
+    std::map<int, std::unique_ptr<RDKit::Chirality::WedgeInfoBase>> &wedgeBonds,
+    bool atropisomerOnly = false) {
+  std::map<std::string, std ::vector<std::string>> wParts;
   for (unsigned int i = 0; i < bondOrder.size(); ++i) {
     auto idx = bondOrder[i];
     const auto bond = mol.getBondWithIdx(idx);
+    unsigned int wedgeStartAtomIdx = bond->getBeginAtomIdx();
+
+    if (!canHaveDirection(*bond)) {
+      continue;
+    }
     // when figuring out what to output for the bond, favor the wedge state:
     Bond::BondDir bd = bond->getBondDir();
     switch (bd) {
@@ -1982,46 +2080,223 @@ std::string get_bond_config_block(const ROMol &mol,
       default:
         bd = Bond::BondDir::NONE;
     }
-    unsigned int cfg = 0;
-    if (bd == Bond::BondDir::NONE) {
-      bond->getPropIfPresent(common_properties::_MolFileBondCfg, cfg);
+
+    if (atropisomerOnly && bd == Bond::BondDir::NONE) {
+      continue;
     }
-    if (cfg == 2 || bd == Bond::BondDir::UNKNOWN) {
-      auto begAtomOrder = std::find(atomOrder.begin(), atomOrder.end(),
-                                    bond->getBeginAtomIdx()) -
-                          atomOrder.begin();
-      if (w.empty()) {
-        w += "w:";
-      } else {
-        w += ",";
+
+    // see if this one is an atropisomer
+
+    bool isAnAtropisomer = false;
+
+    const Atom *firstAtom = bond->getBeginAtom();
+    if (bd == Bond::BondDir::BEGINDASH || bd == Bond::BondDir::BEGINWEDGE) {
+      for (auto bondNbr : mol.atomBonds(firstAtom)) {
+        if (bondNbr->getIdx() == bond->getIdx()) {
+          continue;  // a bond is not its own neighbor
+        }
+        if (bondNbr->getStereo() == Bond::BondStereo::STEREOATROPCW ||
+            bondNbr->getStereo() == Bond::BondStereo::STEREOATROPCCW) {
+          isAnAtropisomer = true;
+
+          // if it is for an atropisomer and there are no coords, check to see
+          // if the wedge needs to be flipped based on the smiles reordering
+          if (!coordsIncluded && isAnAtropisomer) {
+            Atropisomers::AtropAtomAndBondVec atomAndBondVecs[2];
+            if (!Atropisomers::getAtropisomerAtomsAndBonds(
+                    bondNbr, atomAndBondVecs, mol)) {
+              throw ValueErrorException("Internal error - should not occur");
+              // should not happend
+            } else {
+              unsigned int swaps = 0;
+
+              unsigned int firstReorderedIdx =
+                  std::find(atomOrder.begin(), atomOrder.end(),
+                            bondNbr->getBeginAtom()->getIdx()) -
+                  atomOrder.begin();
+              unsigned int secondReorderedIdx =
+                  std::find(atomOrder.begin(), atomOrder.end(),
+                            bondNbr->getEndAtom()->getIdx()) -
+                  atomOrder.begin();
+              if (firstReorderedIdx > secondReorderedIdx) {
+                ++swaps;
+              }
+
+              for (unsigned int bondAtomIndex = 0; bondAtomIndex < 2;
+                   ++bondAtomIndex) {
+                if (atomAndBondVecs[bondAtomIndex].first == firstAtom)
+                  continue;  // swapped atoms on the side where the wedge bond
+                             // is does NOT change the wedge bond
+                if (atomAndBondVecs[bondAtomIndex].second.size() == 2) {
+                  unsigned int firstOtherAtomIdx =
+                      atomAndBondVecs[bondAtomIndex]
+                          .second[0]
+                          ->getOtherAtom(atomAndBondVecs[bondAtomIndex].first)
+                          ->getIdx();
+                  unsigned int secondOtherAtomIdx =
+                      atomAndBondVecs[bondAtomIndex]
+                          .second[1]
+                          ->getOtherAtom(atomAndBondVecs[bondAtomIndex].first)
+                          ->getIdx();
+
+                  unsigned int firstReorderedAtomIdx =
+                      std::find(atomOrder.begin(), atomOrder.end(),
+                                firstOtherAtomIdx) -
+                      atomOrder.begin();
+                  unsigned int secondReorderedAtomIdx =
+                      std::find(atomOrder.begin(), atomOrder.end(),
+                                secondOtherAtomIdx) -
+                      atomOrder.begin();
+
+                  if (firstReorderedAtomIdx > secondReorderedAtomIdx) {
+                    ++swaps;
+                  }
+                }
+              }
+              if (swaps % 2) {
+                bd = (bd == Bond::BondDir::BEGINWEDGE)
+                         ? Bond::BondDir::BEGINDASH
+                         : Bond::BondDir::BEGINWEDGE;
+              }
+            }
+          }
+
+          break;
+        }
       }
-      w += boost::str(boost::format("%d.%d") % begAtomOrder % i);
-    } else if (coordsIncluded) {
+    }
+
+    if (atropisomerOnly) {
+      // one of the bonds on the beginning atom of this bond must be an
+      // atropisomer
+
+      if (!isAnAtropisomer) {
+        continue;
+      }
+    } else {  //  atropisomeronly is FALSE - check for a wedging caused by
+              //  chiral atom
+      unsigned int cfg = 0;
+      if (bd == Bond::BondDir::NONE &&
+          bond->getPropIfPresent(common_properties::_MolFileBondCfg, cfg)) {
+        switch (cfg) {
+          case 1:
+            bd = Bond::BondDir::BEGINWEDGE;
+            break;
+          case 2:
+            bd = Bond::BondDir::UNKNOWN;
+            break;
+          case 3:
+            bd = Bond::BondDir::BEGINDASH;
+            break;
+
+          default:
+            bd = Bond::BondDir::NONE;
+        }
+      }
+
+      if (bd == Bond::BondDir::NONE && coordsIncluded) {
+        int dirCode;
+        bool reverse;
+        Chirality::GetMolFileBondStereoInfo(
+            bond, wedgeBonds, &mol.getConformer(), dirCode, reverse);
+        switch (dirCode) {
+          case 1:
+            bd = Bond::BondDir::BEGINWEDGE;
+            break;
+          case 3:
+            bd = Bond::BondDir::UNKNOWN;
+            break;
+          case 6:
+            bd = Bond::BondDir::BEGINDASH;
+            break;
+          default:
+            bd = Bond::BondDir::NONE;
+        }
+        if (reverse) {
+          wedgeStartAtomIdx = bond->getEndAtomIdx();
+        }
+      }
+    }
+
+    auto begAtomOrder =
+        std::find(atomOrder.begin(), atomOrder.end(), wedgeStartAtomIdx) -
+        atomOrder.begin();
+
+    std::string wType = "";
+    if (bd == Bond::BondDir::UNKNOWN) {
+      wType = "w";
+    } else if (coordsIncluded || isAnAtropisomer) {
       // we only do wedgeUp and wedgeDown if coordinates are being output
-      if (cfg == 1 || bd == Bond::BondDir::BEGINWEDGE) {
-        auto begAtomOrder = std::find(atomOrder.begin(), atomOrder.end(),
-                                      bond->getBeginAtomIdx()) -
-                            atomOrder.begin();
-        if (wU.empty()) {
-          wU += "wU:";
-        } else {
-          wU += ",";
-        }
-        wU += boost::str(boost::format("%d.%d") % begAtomOrder % i);
-      } else if (cfg == 3 || bd == Bond::BondDir::BEGINDASH) {
-        auto begAtomOrder = std::find(atomOrder.begin(), atomOrder.end(),
-                                      bond->getBeginAtomIdx()) -
-                            atomOrder.begin();
-        if (wD.empty()) {
-          wD += "wD:";
-        } else {
-          wD += ",";
-        }
-        wD += boost::str(boost::format("%d.%d") % begAtomOrder % i);
+      // or its an atropisomer
+      if (bd == Bond::BondDir::BEGINWEDGE) {
+        wType = "wU";
+      } else if (bd == Bond::BondDir::BEGINDASH) {
+        wType = "wD";
       }
+    }
+
+    if (wType != "") {
+      if (wParts.find(wType) == wParts.end()) {
+        wParts[wType] = std::vector<std::string>();
+      }
+      wParts[wType].push_back(
+          boost::str(boost::format("%d.%d") % begAtomOrder % i));
     }
   }
-  return w + wU + wD;
+  std::string res = "";
+
+  for (auto wPart : wParts) {
+    if (res != "") {
+      res += ",";
+    }
+    res += wPart.first + ":" + boost::algorithm::join(wPart.second, ",");
+  }
+
+  return res;
+}
+
+std::string get_coord_or_hydrogen_bonds_block(
+    const ROMol &mol, Bond::BondType bondType, std::string symbol,
+    const std::vector<unsigned int> &atomOrder,
+    const std::vector<unsigned int> &bondOrder) {
+  std::string res = "";
+  for (unsigned int i = 0; i < bondOrder.size(); ++i) {
+    auto idx = bondOrder[i];
+    const auto bond = mol.getBondWithIdx(idx);
+    if (bond->getBondType() != bondType) {
+      continue;
+    }
+    auto begAtomOrder =
+        std::find(atomOrder.begin(), atomOrder.end(), bond->getBeginAtomIdx()) -
+        atomOrder.begin();
+    if (!res.empty()) {
+      res += ",";
+    } else {
+      res = symbol + ":";
+    }
+    res += boost::str(boost::format("%d.%d") % begAtomOrder % i);
+  }
+  return res;
+}
+
+std::string get_zerobonds_block(const ROMol &mol,
+                                const std::vector<unsigned int> &,
+                                const std::vector<unsigned int> &bondOrder) {
+  std::string res = "";
+  for (unsigned int i = 0; i < bondOrder.size(); ++i) {
+    auto idx = bondOrder[i];
+    const auto bond = mol.getBondWithIdx(idx);
+    if (bond->getBondType() != Bond::BondType::ZERO) {
+      continue;
+    }
+    if (!res.empty()) {
+      res += ",";
+    } else {
+      res = "Z:";
+    }
+    res += boost::str(boost::format("%d") % i);
+  }
+  return res;
 }
 
 std::string get_ringbond_cistrans_block(
@@ -2158,22 +2433,91 @@ void appendToCXExtension(const std::string &addition, std::string &base) {
 }
 
 }  // namespace
+
+void checkCXFeatures(const ROMol &mol) {
+  std::string lns;
+  if (mol.getPropIfPresent(common_properties::molFileLinkNodes, lns)) {
+    BOOST_LOG(rdWarningLog)
+        << "CX Extensions: mol has link nodes which are not currently supported"
+        << std::endl;
+  }
+  const auto &sgs = getSubstanceGroups(mol);
+  auto parent_check =
+      std::any_of(sgs.cbegin(), sgs.cend(), [&](const SubstanceGroup &sg) {
+        if (sg.hasProp("PARENT")) {
+          return true;
+        }
+        return false;
+      });
+  if (parent_check) {
+    BOOST_LOG(rdWarningLog)
+        << "CX Extensions: Substance group hierarchy is not always preserved."
+        << std::endl;
+  }
+}
+
+std::string getCXExtensions(const std::vector<ROMol *> &mols,
+                            std::uint32_t flags) {
+  for (const auto &mol : mols) {
+    checkCXFeatures(*mol);
+    if (!mol->hasProp(RDKit::common_properties::_smilesAtomOutputOrder) ||
+        !mol->hasProp(RDKit::common_properties::_smilesBondOutputOrder)) {
+      throw ValueErrorException(
+          "Input molecule does not have the required "
+          "smiles ordering properties set");
+    }
+  }
+  RDKit::RWMol rwmol;
+
+  std::vector<unsigned int> atomOrdering;
+  std::vector<unsigned int> bondOrdering;
+
+  for (const auto &mol : mols) {
+    const auto at_count = rwmol.getNumAtoms();
+    const auto bond_count = rwmol.getNumBonds();
+
+    std::vector<unsigned int> prevAtomOrdering;
+    std::vector<unsigned int> prevBondOrdering;
+
+    rwmol.insertMol(*mol);
+
+    mol->getProp(RDKit::common_properties::_smilesAtomOutputOrder,
+                 prevAtomOrdering);
+    mol->getProp(RDKit::common_properties::_smilesBondOutputOrder,
+                 prevBondOrdering);
+    for (auto i : prevAtomOrdering) {
+      atomOrdering.push_back(i + at_count);
+    }
+    for (auto i : prevBondOrdering) {
+      bondOrdering.push_back(i + bond_count);
+    }
+  }
+
+  rwmol.setProp(RDKit::common_properties::_smilesAtomOutputOrder, atomOrdering,
+                true);
+  rwmol.setProp(RDKit::common_properties::_smilesBondOutputOrder, bondOrdering,
+                true);
+
+  return getCXExtensions(rwmol, flags);
+}
+
 std::string getCXExtensions(const ROMol &mol, std::uint32_t flags) {
   std::string res = "|";
-  // we will need atom and bond orderings. Get them now:
   const std::vector<unsigned int> &atomOrder =
       mol.getProp<std::vector<unsigned int>>(
           common_properties::_smilesAtomOutputOrder);
   const std::vector<unsigned int> &bondOrder =
       mol.getProp<std::vector<unsigned int>>(
           common_properties::_smilesBondOutputOrder);
+
   bool needLabels = false;
   bool needValues = false;
   for (auto idx : atomOrder) {
     const auto at = mol.getAtomWithIdx(idx);
     if (at->hasProp(common_properties::atomLabel) ||
         at->hasProp(common_properties::_QueryAtomGenericLabel) ||
-        at->hasProp(common_properties::dummyLabel)) {
+        at->hasProp(common_properties::dummyLabel) ||
+        at->hasProp(common_properties::_fromAttachPoint)) {
       needLabels = true;
     }
     if (at->hasProp(common_properties::molFileValue)) {
@@ -2217,15 +2561,49 @@ std::string getCXExtensions(const ROMol &mol, std::uint32_t flags) {
     appendToCXExtension(atomblock, res);
   }
 
+  const Conformer *conf = nullptr;
+  if (mol.getNumConformers() && (flags & SmilesWrite::CX_COORDS)) {
+    conf = &mol.getConformer();
+  }
+
+  std::map<int, std::unique_ptr<RDKit::Chirality::WedgeInfoBase>> wedgeBonds;
   if (flags & SmilesWrite::CXSmilesFields::CX_BOND_CFG) {
+    wedgeBonds = Chirality::pickBondsToWedge(mol, nullptr, conf);
+
     bool includeCoords = flags & SmilesWrite::CXSmilesFields::CX_COORDS &&
                          mol.getNumConformers();
-    const auto cfgblock =
-        get_bond_config_block(mol, atomOrder, bondOrder, includeCoords);
+    const auto cfgblock = get_bond_config_block(mol, atomOrder, bondOrder,
+                                                includeCoords, wedgeBonds);
     appendToCXExtension(cfgblock, res);
     const auto cistransblock =
         get_ringbond_cistrans_block(mol, atomOrder, bondOrder);
     appendToCXExtension(cistransblock, res);
+  }
+
+  // do the CX_BOND_ATROPISOMER only if CX_BOND_CFG s not done.  CX_BOND_CFG
+  // includes the atropisomer wedging
+  else if (flags & SmilesWrite::CXSmilesFields::CX_BOND_ATROPISOMER) {
+    Atropisomers::wedgeBondsFromAtropisomers(mol, conf, wedgeBonds);
+    const auto cfgblock = get_bond_config_block(
+        mol, atomOrder, bondOrder, conf != nullptr, wedgeBonds, true);
+    appendToCXExtension(cfgblock, res);
+  }
+
+  if (flags & SmilesWrite::CXSmilesFields::CX_COORDINATE_BONDS) {
+    const auto block = get_coord_or_hydrogen_bonds_block(
+        mol, Bond::BondType::DATIVE, "C", atomOrder, bondOrder);
+    appendToCXExtension(block, res);
+  }
+
+  if (flags & SmilesWrite::CXSmilesFields::CX_HYDROGEN_BONDS) {
+    const auto block = get_coord_or_hydrogen_bonds_block(
+        mol, Bond::BondType::HYDROGEN, "H", atomOrder, bondOrder);
+    appendToCXExtension(block, res);
+  }
+
+  if (flags & SmilesWrite::CXSmilesFields::CX_ZERO_BONDS) {
+    const auto block = get_zerobonds_block(mol, atomOrder, bondOrder);
+    appendToCXExtension(block, res);
   }
 
   if (flags & SmilesWrite::CXSmilesFields::CX_LINKNODES) {
@@ -2233,7 +2611,8 @@ std::string getCXExtensions(const ROMol &mol, std::uint32_t flags) {
     appendToCXExtension(linknodeblock, res);
   }
   if (flags & SmilesWrite::CXSmilesFields::CX_ENHANCEDSTEREO) {
-    const auto stereoblock = get_enhanced_stereo_block(mol, atomOrder);
+    const auto stereoblock =
+        get_enhanced_stereo_block(mol, atomOrder, wedgeBonds);
     appendToCXExtension(stereoblock, res);
   }
   if (flags & SmilesWrite::CXSmilesFields::CX_SGROUPS) {

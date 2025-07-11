@@ -1,5 +1,5 @@
 //
-//  Copyright (C) 2001-2020 Greg Landrum and Rational Discovery LLC
+//  Copyright (C) 2001-2025 Greg Landrum and other RDKit contributors
 //
 //   @@ All Rights Reserved @@
 //  This file is part of the RDKit.
@@ -13,11 +13,20 @@
 
 // std bits
 #include <vector>
+
+#include <unordered_set>
 #include <functional>
 #include <unordered_map>
 #include <cstdint>
-#include "GraphMol/StereoGroup.h"
 #include <string>
+#include <span>
+
+#include <boost/dynamic_bitset.hpp>
+#if BOOST_VERSION >= 107100
+#define RDK_INTERNAL_BITSET_HAS_HASH
+#endif
+
+#include <GraphMol/StereoGroup.h>
 
 namespace RDKit {
 class ROMol;
@@ -49,16 +58,29 @@ struct RDKIT_SUBSTRUCTMATCH_EXPORT SubstructMatchParameters {
                        //!< concurrent threads supported by the hardware
                        //!< negative values are added to the number of
                        //!< concurrent threads supported by the hardware
+  std::vector<std::string> atomProperties;  //!< atom properties that must be
+                                            //!< equivalent in order to match
+  std::vector<std::string> bondProperties;  //!< bond properties that must be
+                                            //!< equivalent in order to match
   std::function<bool(const ROMol &mol,
-                     const std::vector<unsigned int> &match)>
+                     std::span<const unsigned int> match)>
       extraFinalCheck;  //!< a function to be called at the end to validate a
                         //!< match
-
+  unsigned int maxRecursiveMatches =
+      1000;  //!< maximum number of matches that the recursive substructure
+  //!< matching should return
+  bool specifiedStereoQueryMatchesUnspecified =
+      false;  //!< If set, query atoms and bonds with specified stereochemistry
+              //!< will match atoms and bonds with unspecified stereochemistry
+  bool aromaticMatchesSingleOrDouble = false;  //!< Aromatic bonds match single
+                                               //!< or double bonds
   SubstructMatchParameters() {}
 };
 
 RDKIT_SUBSTRUCTMATCH_EXPORT void updateSubstructMatchParamsFromJSON(
     SubstructMatchParameters &params, const std::string &json);
+RDKIT_SUBSTRUCTMATCH_EXPORT std::string substructMatchParamsToJSON(
+    const SubstructMatchParameters &params);
 
 //! Find a substructure match for a query in a molecule
 /*!
@@ -218,13 +240,21 @@ class RDKIT_SUBSTRUCTMATCH_EXPORT MolMatchFinalCheckFunctor {
   MolMatchFinalCheckFunctor(const ROMol &query, const ROMol &mol,
                             const SubstructMatchParameters &ps);
 
-  bool operator()(const std::uint32_t q_c[], const std::uint32_t m_c[]) const;
+  bool operator()(const std::uint32_t q_c[], const std::uint32_t m_c[]);
 
  private:
   const ROMol &d_query;
   const ROMol &d_mol;
   const SubstructMatchParameters &d_params;
   std::unordered_map<unsigned int, StereoGroup const *> d_molStereoGroups;
+#ifdef RDK_INTERNAL_BITSET_HAS_HASH
+  // Boost 1.71 added support for std::hash with dynamic_bitset.
+  using HashedStorageType = boost::dynamic_bitset<>;
+#else
+  // otherwise we use a less elegant solution
+  using HashedStorageType = std::string;
+#endif
+  std::unordered_set<HashedStorageType> matchesSeen;
 };
 
 }  // namespace RDKit

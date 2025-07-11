@@ -35,6 +35,9 @@ package org.RDKit;
 
 import static org.junit.Assert.*;
 import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.BufferedReader;
 import java.util.Arrays;
 
 import org.junit.Test;
@@ -149,6 +152,7 @@ public class Chemv2Tests extends GraphMolTest {
 
         // System.out.print(template.MolToMolBlock());
         // System.out.print(m.MolToMolBlock());
+        assertEquals(template.MolToMolBlock(), RDKFuncs.MolToMolBlock(template));
         Conformer c1 = template.getConformer();
         Conformer c2 = m.getConformer();
         assertEquals(c1.getAtomPos(0).getX(), c2.getAtomPos(6).getX(), defaultDoubleTol);
@@ -496,7 +500,8 @@ public class Chemv2Tests extends GraphMolTest {
     }
 
     @Test
-    public void testStrictParsing() {
+    public void testStrictParsingAndLogging() {
+        RDKFuncs.InitLogs();
         String badMolBlock = "\n" +
             "  MJ201100                      \n" +
             "\n" +
@@ -528,11 +533,23 @@ public class Chemv2Tests extends GraphMolTest {
         assertTrue(exceptionThrown);
         assertFalse(molIsValid);
         exceptionThrown = false;
+        BufferedReader reader = null;
         try {
+            String filename = "java_warning_log.txt";
+            RDKFuncs.getRdWarningLog().SetTee(filename);
             mol = RWMol.MolFromMolBlock(badMolBlock, true, true, false);
+            reader = new BufferedReader(new FileReader(filename));
+            String line = reader.readLine();
+            assertTrue(line != null);
+            assertTrue(line.contains("SGroup SAP line too short"));
         } catch(Exception e) {
             exceptionThrown = true;
         } finally {
+            if (reader != null) {
+                try {
+                    reader.close();
+                } catch (IOException e) {}
+            }
             if (mol != null) {
                 molIsValid = true;
                 mol.delete();
@@ -620,6 +637,110 @@ public class Chemv2Tests extends GraphMolTest {
         phenyl.delete();
     }
 
+    @Test
+    public void testStereoChemFunctions() {
+        boolean useLegacyStereo = RDKFuncs.getUseLegacyStereoPerception();
+        boolean allowNonTetrahedralChirality = RDKFuncs.getAllowNontetrahedralChirality();
+        try {
+            RWMol m = RWMol.MolFromSmiles("CC(O)Cl |(-3.9163,5.4767,;-3.9163,3.9367,;-2.5826,3.1667,;-5.25,3.1667,),wU:1.0|");
+            assertTrue(m != null);
+            assertEquals(m.getBondWithIdx(0).getProp("_MolFileBondCfg"), "1");
+            assertEquals(m.getAtomWithIdx(1).getChiralTag(), Atom.ChiralType.CHI_TETRAHEDRAL_CW);
+            m.delete();
+            m = RWMol.MolFromSmiles("CC(O)Cl |(-3.9163,5.4767,;-3.9163,3.9367,;-2.5826,3.1667,;-5.25,3.1667,),wD:1.0|");
+            assertTrue(m != null);
+            assertEquals(m.getBondWithIdx(0).getProp("_MolFileBondCfg"), "3");
+            assertEquals(m.getAtomWithIdx(1).getChiralTag(), Atom.ChiralType.CHI_TETRAHEDRAL_CCW);
+            m.invertMolBlockWedgingInfo();
+            assertEquals(m.getBondWithIdx(0).getProp("_MolFileBondCfg"), "1");
+            m.reapplyMolBlockWedging();
+            RDKFuncs.assignChiralTypesFromBondDirs(m);
+            assertEquals(m.getAtomWithIdx(1).getChiralTag(), Atom.ChiralType.CHI_TETRAHEDRAL_CW);
+            m.invertMolBlockWedgingInfo();
+            assertEquals(m.getBondWithIdx(0).getProp("_MolFileBondCfg"), "3");
+            m.reapplyMolBlockWedging();
+            RDKFuncs.assignChiralTypesFromBondDirs(m);
+            assertEquals(m.getAtomWithIdx(1).getChiralTag(), Atom.ChiralType.CHI_TETRAHEDRAL_CCW);
+            m.clearMolBlockWedgingInfo();
+            m.getAtomWithIdx(1).setChiralTag(Atom.ChiralType.CHI_UNSPECIFIED);
+            assertFalse(m.getBondWithIdx(0).hasProp("_MolFileBondCfg"));
+            m.reapplyMolBlockWedging();
+            RDKFuncs.assignChiralTypesFromBondDirs(m);
+            assertEquals(m.getAtomWithIdx(1).getChiralTag(), Atom.ChiralType.CHI_UNSPECIFIED);
+            m.delete();
+            RDKFuncs.setUseLegacyStereoPerception(true);
+            m = RWMol.MolFromSmiles("O[C@@]1(C)C/C(/C1)=C(/C)\\CC");
+            assertTrue(m != null);
+            assertEquals(m.MolToSmiles(), "CCC(C)=C1CC(C)(O)C1");
+            m.delete();
+            RDKFuncs.setUseLegacyStereoPerception(false);
+            m = RWMol.MolFromSmiles("O[C@@]1(C)C/C(/C1)=C(/C)\\CC");
+            assertTrue(m != null);
+            assertEquals(m.MolToSmiles(), "CC/C(C)=C1\\C[C@](C)(O)C1");
+            m.delete();
+            RDKFuncs.setUseLegacyStereoPerception(useLegacyStereo);
+            String ctab = "\n" +
+                "  Mrv2108 09132105183D          \n" +
+                "\n" +
+                "  5  4  0  0  0  0            999 V2000\n" +
+                "   -1.2500    1.4518    0.0000 Pt  0  0  0  0  0  0  0  0  0  0  0  0\n" +
+                "   -1.2500    2.2768    0.0000 F   0  0  0  0  0  0  0  0  0  0  0  0\n" +
+                "   -0.4250    1.4518    0.0000 Cl  0  0  0  0  0  0  0  0  0  0  0  0\n" +
+                "   -2.0750    1.4518    0.0000 F   0  0  0  0  0  0  0  0  0  0  0  0\n" +
+                "   -1.2500    0.6268    0.0000 Cl  0  0  0  0  0  0  0  0  0  0  0  0\n" +
+                "  1  2  1  0  0  0  0\n" +
+                "  1  3  1  0  0  0  0\n" +
+                "  1  4  1  0  0  0  0\n" +
+                "  1  5  1  0  0  0  0\n" +
+                "M  END\n";
+            RDKFuncs.setAllowNontetrahedralChirality(true);
+            m = RWMol.MolFromMolBlock(ctab);
+            assertTrue(m != null);
+            assertEquals(m.MolToSmiles(), "[F][Pt@SP3]([F])([Cl])[Cl]");
+            m.delete();
+            RDKFuncs.setAllowNontetrahedralChirality(false);
+            m = RWMol.MolFromMolBlock(ctab);
+            assertTrue(m != null);
+            assertEquals(m.MolToSmiles(), "[F][Pt]([F])([Cl])[Cl]");
+            m.delete();
+            RDKFuncs.setAllowNontetrahedralChirality(allowNonTetrahedralChirality);
+        } finally {
+            RDKFuncs.setUseLegacyStereoPerception(useLegacyStereo);
+            RDKFuncs.setAllowNontetrahedralChirality(allowNonTetrahedralChirality);
+        }
+    }
+    
+    @Test
+    public void testClearSingleBondDirFlagsOnlyWedgeFlags() {
+        RWMol m = null;
+        RWMol m2 = null;
+        RWMol m3 = null;
+        try {
+            m = RWMol.MolFromSmiles("Cl[C@H](C)/C=C/CC");
+            m2 = new RWMol(m);
+            m2.compute2DCoords();
+            m2.ClearSingleBondDirFlags();
+            m2.WedgeMolBonds(m2.getConformer());
+            RDKFuncs.assignStereochemistry(m2, true, true);
+            assertEquals(m2.MolToSmiles(), "CCC=C[C@@H](C)Cl");
+            m3 = new RWMol(m);
+            m3.compute2DCoords();
+            m3.ClearSingleBondDirFlags(true);
+            m3.WedgeMolBonds(m3.getConformer());
+            RDKFuncs.assignStereochemistry(m3, true, true);
+            assertEquals(m3.MolToSmiles(), "CC/C=C/[C@@H](C)Cl");
+        } finally {
+            if (m != null) {
+                m.delete();
+            }
+            if (m2 != null) {
+                m2.delete();
+            }
+            if (m3 != null) {
+                m3.delete();
+            }
+        }
+    }
 
     public static void main(String args[]) {
         org.junit.runner.JUnitCore.main("org.RDKit.Chemv2Tests");

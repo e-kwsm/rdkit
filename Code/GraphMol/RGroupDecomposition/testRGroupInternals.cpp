@@ -40,6 +40,7 @@
 #define private public
 #include <GraphMol/RGroupDecomposition/RGroupDecomp.h>
 #include <GraphMol/RGroupDecomposition/RGroupDecompData.h>
+#include <GraphMol/RGroupDecomposition/RGroupGa.h>
 
 using namespace RDKit;
 
@@ -64,7 +65,7 @@ void testCoresLabelledProperly() {
   }
 
   RGroupDecompositionParameters params;
-  params.alignment = RGroupCoreAlignment::None;
+  params.alignment = RGroupCoreAlignment::NoAlignment;
   params.scoreMethod = FingerprintVariance;
   RGroupDecomposition decomposition(cores, params);
 

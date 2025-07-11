@@ -16,6 +16,7 @@
 #include <GraphMol/ROMol.h>
 #include <GraphMol/MolPickler.h>
 #include <vector>
+#include <span>
 #include <GraphMol/Substruct/SubstructMatch.h>
 #include <DataStructs/ExplicitBitVect.h>
 
@@ -45,7 +46,7 @@ class RDKIT_TAUTOMERQUERY_EXPORT TautomerQuery {
 
   // tests if a match to the template matches a specific tautomer
   bool matchTautomer(const ROMol &mol, const ROMol &tautomer,
-                     const std::vector<unsigned int> &match,
+                     const std::span<const unsigned int> &match,
                      const SubstructMatchParameters &params) const;
 
  public:
@@ -122,12 +123,12 @@ class RDKIT_TAUTOMERQUERY_EXPORT TautomerQuery {
     std::vector<std::string> pkls;
     for (const auto &taut : d_tautomers) {
       std::string pkl;
-      MolPickler::pickleMol(*taut, pkl);
+      MolPickler::pickleMol(*taut, pkl, PicklerOps::AllProps);
       pkls.push_back(pkl);
     }
     ar << pkls;
     std::string molpkl;
-    MolPickler::pickleMol(*d_templateMolecule, molpkl);
+    MolPickler::pickleMol(*d_templateMolecule, molpkl, PicklerOps::AllProps);
     ar << molpkl;
     ar << d_modifiedAtoms;
     ar << d_modifiedBonds;

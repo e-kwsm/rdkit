@@ -7,18 +7,25 @@
 //  which is included in the file license.txt, found at the root
 //  of the RDKit source tree.
 //
-#include <RDGeneral/BadFileException.h>
-#include <RDGeneral/FileParseException.h>
-#include <RDGeneral/RDLog.h>
-
-#include "MolWriters.h"
-#include "FileParsers.h"
 
 #include <fstream>
 #include <iostream>
 #include <sstream>
 #include <string>
+
+#include <RDGeneral/BoostStartInclude.h>
 #include <boost/any.hpp>
+#include <RDGeneral/BoostEndInclude.h>
+
+#include <RDGeneral/BadFileException.h>
+#include <RDGeneral/FileParseException.h>
+#include <RDGeneral/RDLog.h>
+
+#ifdef RDK_BUILD_MAEPARSER_SUPPORT
+#undef RDK_BUILD_MAEPARSER_SUPPORT
+#endif
+#include "MolWriters.h"
+#include "FileParsers.h"
 
 namespace RDKit {
 SDWriter::SDWriter(const std::string &fileName) {
@@ -80,7 +87,7 @@ void _writePropToStream(std::ostream *dp_ostream, const ROMol &mol,
   std::string pval;
   try {
     mol.getProp(name, pval);
-  } catch (boost::bad_any_cast &) {
+  } catch (std::bad_any_cast &) {
     return;
   }
 

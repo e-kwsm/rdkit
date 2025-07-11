@@ -40,7 +40,6 @@
 #include <map>
 #include <algorithm>
 #include <GraphMol/ChemTransforms/ChemTransforms.h>
-#include <GraphMol/Descriptors/MolDescriptors.h>
 #include <GraphMol/SmilesParse/SmilesWrite.h>
 #include <GraphMol/ChemReactions/ReactionUtils.h>
 #include "GraphMol/ChemReactions/ReactionRunner.h"
@@ -57,12 +56,13 @@ std::vector<MOL_SPTR_VECT> ChemicalReaction::runReactant(
   return run_Reactant(*this, reactant, reactionTemplateIdx);
 }
 
-bool ChemicalReaction::runReactant(RWMol &reactant) const {
+bool ChemicalReaction::runReactant(RWMol &reactant,
+                                   bool removeUnmatchedAtoms) const {
   if (getReactants().size() != 1 || getProducts().size() != 1) {
     throw ChemicalReactionException(
         "Only single reactant - single product reactions can be run in place.");
   }
-  return run_Reactant(*this, reactant);
+  return run_Reactant(*this, reactant, removeUnmatchedAtoms);
 }
 
 ChemicalReaction::ChemicalReaction(const std::string &pickle) {
@@ -343,8 +343,8 @@ bool isMoleculeReactantOfReaction(const ChemicalReaction &rxn, const ROMol &mol,
   unsigned int reactant_template_idx = 0;
   for (auto iter = rxn.beginReactantTemplates();
        iter != rxn.endReactantTemplates(); ++iter, ++reactant_template_idx) {
-    MatchVectType tvect;
-    if (SubstructMatch(mol, **iter, tvect)) {
+    auto tvect = SubstructMatch(mol, **iter, rxn.getSubstructParams());
+    if (!tvect.empty()) {
       which.push_back(reactant_template_idx);
       if (stopAtFirstMatch) {
         return true;
@@ -383,8 +383,8 @@ bool isMoleculeProductOfReaction(const ChemicalReaction &rxn, const ROMol &mol,
   unsigned int product_template_idx = 0;
   for (auto iter = rxn.beginProductTemplates();
        iter != rxn.endProductTemplates(); ++iter, ++product_template_idx) {
-    MatchVectType tvect;
-    if (SubstructMatch(mol, **iter, tvect)) {
+    auto tvect = SubstructMatch(mol, **iter, rxn.getSubstructParams());
+    if (!tvect.empty()) {
       which.push_back(product_template_idx);
       if (stopAtFirstMatch) {
         return true;
@@ -419,27 +419,24 @@ bool isMoleculeAgentOfReaction(const ChemicalReaction &rxn, const ROMol &mol,
         "initReactantMatchers() must be called first");
   }
   which = 0;
-  for (auto iter = rxn.beginAgentTemplates(); iter != rxn.endAgentTemplates();
-       ++iter, ++which) {
-    if (iter->get()->getNumHeavyAtoms() != mol.getNumHeavyAtoms()) {
+  for (auto templ : rxn.getAgents()) {
+    if (templ->getNumHeavyAtoms() != mol.getNumHeavyAtoms()) {
+      ++which;
       continue;
     }
-    if (iter->get()->getNumBonds() != mol.getNumBonds()) {
+    if (templ->getNumBonds() != mol.getNumBonds()) {
+      ++which;
       continue;
     }
-    // not possible, update property cache not possible for const molecules
-    //      if(iter->get()->getRingInfo()->numRings() !=
-    //      mol.getRingInfo()->numRings()){
-    //          return false;
-    //      }
-    if (RDKit::Descriptors::calcAMW(*iter->get()) !=
-        RDKit::Descriptors::calcAMW(mol)) {
+    if (MolOps::getAvgMolWt(*templ) != MolOps::getAvgMolWt(mol)) {
+      ++which;
       continue;
     }
-    MatchVectType tvect;
-    if (SubstructMatch(mol, **iter, tvect)) {
+    auto tvect = SubstructMatch(mol, *templ, rxn.getSubstructParams());
+    if (!tvect.empty()) {
       return true;
     }
+    ++which;
   }
   return false;
 }
@@ -494,26 +491,6 @@ int numComplexQueries(
   }
   return res;
 }
-#if 0
-// FIX: this is adapted from Fingerprints.cpp and we really should have code
-// like this centralized
-bool isComplexQuery(const Atom &a) {
-  if (!a.hasQuery()) return false;
-  // negated things are always complex:
-  if (a.getQuery()->getNegation()) return true;
-  std::string descr = a.getQuery()->getDescription();
-  if (descr == "AtomAtomicNum") return false;
-  if (descr == "AtomOr" || descr == "AtomXor") return true;
-  if (descr == "AtomAnd") {
-    auto childIt = a.getQuery()->beginChildren();
-    int ncq = numComplexQueries(childIt, a.getQuery()->endChildren());
-    if (ncq == 1) {
-      return false;
-    }
-  }
-  return true;
-}
-#endif
 bool isChangedAtom(const Atom &rAtom, const Atom &pAtom, int mapNum,
                    const std::map<int, const Atom *> &mappedProductAtoms) {
   PRECONDITION(mappedProductAtoms.find(mapNum) != mappedProductAtoms.end(),

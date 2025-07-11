@@ -1,5 +1,6 @@
 #
-#  Copyright (c) 2011, Novartis Institutes for BioMedical Research Inc.
+#  Copyright (c) 2011-2025, Novartis Institutes for BioMedical Research Inc.
+#   and other RDKit contributors
 #  All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -32,19 +33,17 @@
 import gzip
 import io
 import os
+import pickle
 import re
 import unittest
 
-from rdkit import RDConfig
-from rdkit.Chem import rdDepictor
-from rdkit import RDLogger
-import pickle
-from rdkit.Chem import MolFromSmiles, MolToSmiles, ForwardSDMolSupplier, SanitizeMol
-from rdkit.Chem import MolFromMolBlock, MolToMolBlock
-from rdkit.Chem import INCHI_AVAILABLE
+from rdkit import RDConfig, RDLogger
+from rdkit.Chem import (INCHI_AVAILABLE, ForwardSDMolSupplier, MolFromMolBlock, MolFromSmiles,
+                        MolToMolBlock, MolToSmiles, SanitizeMol, rdDepictor)
+
 if INCHI_AVAILABLE:
-  from rdkit.Chem import InchiReadWriteError
-  from rdkit.Chem import MolToInchi, MolBlockToInchi, MolFromInchi, InchiToInchiKey, MolToInchiKey
+  from rdkit.Chem import (InchiReadWriteError, InchiToInchiKey, MolBlockToInchi, MolFromInchi,
+                          MolToInchi, MolToInchiKey, GetInchiVersion)
 
 COLOR_RED = '\033[31m'
 COLOR_GREEN = '\033[32m'
@@ -206,11 +205,11 @@ class TestCase(unittest.TestCase):
           # InChI messed up the radical?
           unsanitizedInchiMol = MolFromInchi(x, sanitize=False)
           if sum([
-              a.GetNumRadicalElectrons() * a.GetAtomicNum()
-              for a in m.GetAtoms() if a.GetNumRadicalElectrons() != 0
+              a.GetNumRadicalElectrons() * a.GetAtomicNum() for a in m.GetAtoms()
+              if a.GetNumRadicalElectrons() != 0
           ]) != sum([
-              a.GetNumRadicalElectrons() * a.GetAtomicNum()
-              for a in unsanitizedInchiMol.GetAtoms() if a.GetNumRadicalElectrons() != 0
+              a.GetNumRadicalElectrons() * a.GetAtomicNum() for a in unsanitizedInchiMol.GetAtoms()
+              if a.GetNumRadicalElectrons() != 0
           ]):
             reasonable += 1
             continue
@@ -325,6 +324,11 @@ M  END"""
 M  END"""
     inchi2 = MolBlockToInchi(mb2, options="/FixedH")
     self.assertEqual(inchi2, "InChI=1/C8H8N2/c1-6-7-4-2-3-5-8(7)10-9-6/h2-5H,1H3,(H,9,10)/f/h10H")
+
+  def test6GetInchiVersion(self):
+    version = GetInchiVersion()
+    self.assertIsInstance(version, str)
+    self.assertGreaterEqual(version, "1.07.2")
 
 
 if __name__ == '__main__':  # pragma: nocover
