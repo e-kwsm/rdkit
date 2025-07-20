@@ -1399,7 +1399,7 @@ $$$$
   REQUIRE_THROWS_AS(CIPLabeler::assignCIPLabels(*mol, 1000),
                     CIPLabeler::MaxIterationsExceeded);
 
-  auto at = mol->getAtomWithIdx(22);
+  auto *at = mol->getAtomWithIdx(22);
   REQUIRE(at->getChiralTag() == Atom::ChiralType::CHI_TETRAHEDRAL_CW);
 
   // This will fail if this chiral center is not resolved first (which
