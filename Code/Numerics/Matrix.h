@@ -287,7 +287,7 @@ Matrix<TYPE> &multiply(const Matrix<TYPE> &A, const Matrix<TYPE> &B,
     idA = i * aCols;
     for (j = 0; j < cCols; j++) {
       idCt = idC + j;
-      cData[idCt] = (TYPE)0.0;
+      cData[idCt] = static_cast<TYPE>(0.0);
       for (k = 0; k < aCols; k++) {
         idAt = idA + k;
         idB = k * bCols + j;
