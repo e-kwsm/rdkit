@@ -51,7 +51,7 @@ class SquareMatrix : public Matrix<TYPE> {
       idC = idA;
       for (j = 0; j < this->d_nCols; j++) {
         idCt = idC + j;
-        newData[idCt] = (TYPE)(0.0);
+        newData[idCt] = static_cast<TYPE>(0.0);
         for (k = 0; k < this->d_nCols; k++) {
           idAt = idA + k;
           idB = k * this->d_nRows + j;
