@@ -25,9 +25,9 @@
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/json_parser.hpp>
 #ifdef RDK_USE_BOOST_IOSTREAMS
+#include <boost/iostreams/filtering_streambuf.hpp>
 #include <boost/iostreams/copy.hpp>
 #include <boost/iostreams/filter/zlib.hpp>
-#include <boost/iostreams/filtering_streambuf.hpp>
 #endif
 #include <RDGeneral/BoostEndInclude.h>
 #if !defined(RDK_USE_BOOST_IOSTREAMS) && defined(RDK_USE_STANDALONE_ZLIB)
