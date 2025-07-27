@@ -992,7 +992,7 @@ extern "C" short add_mol_to_png_blob(char **png_blob, size_t *png_blob_sz,
   try {
     auto mol = mol_from_pkl(pkl, pkl_sz);
     auto updatedPngString = addMolToPNGString(mol, pngString, params);
-    auto updated_png_blob =
+    auto *updated_png_blob =
         static_cast<char *>(malloc(updatedPngString.size()));
     if (!updated_png_blob) {
       return 0;

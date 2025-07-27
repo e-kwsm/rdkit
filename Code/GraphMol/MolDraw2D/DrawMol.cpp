@@ -476,17 +476,17 @@ void DrawMol::extractCIPCodes(bool showAllCIPCodes) {
       stereoGroupType = group.getGroupType();
       if(stereoGroupType == RDKit::StereoGroupType::STEREO_OR || \
          stereoGroupType == RDKit::StereoGroupType::STEREO_AND ) {
-        for (const auto atom : group.getAtoms()) {
+        for (auto *const atom : group.getAtoms()) {
           maskedAtoms.set(atom->getIdx());
         }
-        for (const auto bond : group.getBonds()) {
+        for (auto *const bond : group.getBonds()) {
           maskedBonds.set(bond->getIdx());
         }
       }
     }
   }
 
-  for (auto atom : drawMol_->atoms()) {
+  for (auto *atom : drawMol_->atoms()) {
     std::string cip;
     if (!maskedAtoms[atom->getIdx()] &&
         atom->getPropIfPresent(common_properties::_CIPCode, cip)) {
@@ -500,7 +500,7 @@ void DrawMol::extractCIPCodes(bool showAllCIPCodes) {
     }
   }
 
-  for (auto bond : drawMol_->bonds()) {
+  for (auto *bond : drawMol_->bonds()) {
     std::string cip;
     // Add E or Z CIP codes if missing to be compatible with previous
     // implemtnation. In future, user should be responsible for calling
