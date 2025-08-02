@@ -944,7 +944,7 @@ TEST_CASE("CDXML") {
       auto fname = cdxmlbase + "bad-bondorder.cdxml";
       auto mols = MolsFromCDXMLFile(fname);
 #ifndef RDK_BUILD_CHEMDRAW_SUPPORT      
-      CHECK(mols.size() == 0);
+      CHECK(mols.empty());
 #else      
       CHECK(mols.size() == 1); // The original chemdraw reader makes unknowns single bonds
 #endif
