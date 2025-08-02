@@ -1035,10 +1035,10 @@ M  END
       }
     }
 
-    if (testToRun == "" || testToRun == "testMarvinRgroupError") {
+    if (testToRun.empty() || testToRun == "testMarvinRgroupError") {
       testMarvinRgroupError();
     }
-    if (testToRun == "" || testToRun == "testMarvinRgroupError2") {
+    if (testToRun.empty() || testToRun == "testMarvinRgroupError2") {
       testMarvinRgroupError2();
     }
 
