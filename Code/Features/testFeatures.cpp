@@ -34,7 +34,7 @@ TEST_CASE("Basics for ExplicitFeatures") {
   REQUIRE_THAT(f1.getLoc().x, Catch::Matchers::WithinAbs(0.0, 1e-4));
   REQUIRE_THAT(f1.getLoc().y, Catch::Matchers::WithinAbs(0.0, 1e-4));
   REQUIRE_THAT(f1.getLoc().z, Catch::Matchers::WithinAbs(0.0, 1e-4));
-  REQUIRE(f1.getDirs().size() == 0);
+  REQUIRE(f1.getDirs().empty());
 
   f1 = ExplicitFeature<TypeMarker>(barType, fooType);
   REQUIRE(f1.getFamily() == barType);
@@ -42,7 +42,7 @@ TEST_CASE("Basics for ExplicitFeatures") {
   REQUIRE_THAT(f1.getLoc().x, Catch::Matchers::WithinAbs(0.0, 1e-4));
   REQUIRE_THAT(f1.getLoc().y, Catch::Matchers::WithinAbs(0.0, 1e-4));
   REQUIRE_THAT(f1.getLoc().z, Catch::Matchers::WithinAbs(0.0, 1e-4));
-  REQUIRE(f1.getDirs().size() == 0);
+  REQUIRE(f1.getDirs().empty());
 
   f1 = ExplicitFeature<TypeMarker>(barType, fooType, Point3D(1.0, 2.0, 3.0));
   REQUIRE(f1.getFamily() == barType);
@@ -50,13 +50,13 @@ TEST_CASE("Basics for ExplicitFeatures") {
   REQUIRE_THAT(f1.getLoc().x, Catch::Matchers::WithinAbs(1.0, 1e-4));
   REQUIRE_THAT(f1.getLoc().y, Catch::Matchers::WithinAbs(2.0, 1e-4));
   REQUIRE_THAT(f1.getLoc().z, Catch::Matchers::WithinAbs(3.0, 1e-4));
-  REQUIRE(f1.getDirs().size() == 0);
+  REQUIRE(f1.getDirs().empty());
 
   f1.setLoc(Point3D(-1.0, -2.0, -3.0));
   REQUIRE_THAT(f1.getLoc().x, Catch::Matchers::WithinAbs(-1.0, 1e-4));
   REQUIRE_THAT(f1.getLoc().y, Catch::Matchers::WithinAbs(-2.0, 1e-4));
   REQUIRE_THAT(f1.getLoc().z, Catch::Matchers::WithinAbs(-3.0, 1e-4));
-  REQUIRE(f1.getDirs().size() == 0);
+  REQUIRE(f1.getDirs().empty());
 }
 
 TEST_CASE("Basics for ImplicitFeatures") {
@@ -68,7 +68,7 @@ TEST_CASE("Basics for ImplicitFeatures") {
   REQUIRE_THAT(f1.getLoc().x, Catch::Matchers::WithinAbs(0.0, 1e-4));
   REQUIRE_THAT(f1.getLoc().y, Catch::Matchers::WithinAbs(0.0, 1e-4));
   REQUIRE_THAT(f1.getLoc().z, Catch::Matchers::WithinAbs(0.0, 1e-4));
-  REQUIRE(f1.getDirs().size() == 0);
+  REQUIRE(f1.getDirs().empty());
 
   f1 = ImplicitFeature<TypeMarker>(barType, fooType);
   REQUIRE(f1.getFamily() == barType);
@@ -76,7 +76,7 @@ TEST_CASE("Basics for ImplicitFeatures") {
   REQUIRE_THAT(f1.getLoc().x, Catch::Matchers::WithinAbs(0.0, 1e-4));
   REQUIRE_THAT(f1.getLoc().y, Catch::Matchers::WithinAbs(0.0, 1e-4));
   REQUIRE_THAT(f1.getLoc().z, Catch::Matchers::WithinAbs(0.0, 1e-4));
-  REQUIRE(f1.getDirs().size() == 0);
+  REQUIRE(f1.getDirs().empty());
 
   Point3D p1(0, 0, 0), p2(1, 0, 0), p3(0, 1, 0);
   f1.addPoint(&p1);
@@ -105,24 +105,24 @@ TEST_CASE("ExplicitFeatures 2D, string type.") {
   REQUIRE(f1.getFamily() == "foob");
   REQUIRE_THAT(f1.getLoc().x, Catch::Matchers::WithinAbs(0.0, 1e-4));
   REQUIRE_THAT(f1.getLoc().y, Catch::Matchers::WithinAbs(0.0, 1e-4));
-  REQUIRE(f1.getDirs().size() == 0);
+  REQUIRE(f1.getDirs().empty());
 
   f1 = LocalFeature("foo", "bar");
   REQUIRE(f1.getFamily() == "foo");
   REQUIRE(f1.getType() == "bar");
   REQUIRE_THAT(f1.getLoc().x, Catch::Matchers::WithinAbs(0.0, 1e-4));
   REQUIRE_THAT(f1.getLoc().y, Catch::Matchers::WithinAbs(0.0, 1e-4));
-  REQUIRE(f1.getDirs().size() == 0);
+  REQUIRE(f1.getDirs().empty());
 
   f1 = LocalFeature("grm", "grn", Point2D(1.0, 2.0));
   REQUIRE(f1.getFamily() == "grm");
   REQUIRE(f1.getType() == "grn");
   REQUIRE_THAT(f1.getLoc().x, Catch::Matchers::WithinAbs(1.0, 1e-4));
   REQUIRE_THAT(f1.getLoc().y, Catch::Matchers::WithinAbs(2.0, 1e-4));
-  REQUIRE(f1.getDirs().size() == 0);
+  REQUIRE(f1.getDirs().empty());
 
   f1.setLoc(Point2D(-1.0, -2.0));
   REQUIRE_THAT(f1.getLoc().x, Catch::Matchers::WithinAbs(-1.0, 1e-4));
   REQUIRE_THAT(f1.getLoc().y, Catch::Matchers::WithinAbs(-2.0, 1e-4));
-  REQUIRE(f1.getDirs().size() == 0);
+  REQUIRE(f1.getDirs().empty());
 }
