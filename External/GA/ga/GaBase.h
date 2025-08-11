@@ -37,9 +37,11 @@ class GA_EXPORT GaBase {
   GaBase() {};
   virtual ~GaBase() {};
 
-  double getSelectionPressure() const { return selectionPressure; }
+  [[nodiscard]] double getSelectionPressure() const {
+    return selectionPressure;
+  }
 
-  size_t getPopsize() const { return popsize; }
+  [[nodiscard]] size_t getPopsize() const { return popsize; }
 
   GarethUtil::RandomUtil &getRng() { return rng; }
 
