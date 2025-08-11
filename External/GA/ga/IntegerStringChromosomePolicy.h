@@ -22,8 +22,8 @@ class GA_EXPORT IntegerStringChromosomePolicy {
   IntegerStringChromosomePolicy(GarethUtil::RandomUtil &rng_, int s);
   virtual ~IntegerStringChromosomePolicy();
 
-  int mutate(int pos, int currentValue) const;
-  int initialize(int pos) const;
+  [[nodiscard]] int mutate(int pos, int currentValue) const;
+  [[nodiscard]] int initialize(int pos) const;
   bool isAllowSwitch() { return false; }
 
   void setMax(int max);
@@ -31,7 +31,7 @@ class GA_EXPORT IntegerStringChromosomePolicy {
   void setAllowNulls(bool allow);
   void setAllowNulls(int pos, bool allow);
 
-  int getSize() const { return size; }
+  [[nodiscard]] int getSize() const { return size; }
 
  private:
   GarethUtil::RandomUtil &rng;

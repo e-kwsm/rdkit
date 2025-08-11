@@ -39,8 +39,10 @@ class GA_EXPORT StringChromosome<bool, BinaryStringChromosomePolicy>
     ;
   }
 
-  int decodeToInt(int start, int nBits) const;
-  int decodeByte(int byteNo) const { return decodeToInt(byteNo * 8, 8); }
+  [[nodiscard]] int decodeToInt(int start, int nBits) const;
+  [[nodiscard]] int decodeByte(int byteNo) const {
+    return decodeToInt(byteNo * 8, 8);
+  }
 };
 
 using IntegerStringChromosome =

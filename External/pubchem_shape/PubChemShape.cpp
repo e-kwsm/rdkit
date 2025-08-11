@@ -90,8 +90,8 @@ class ss_matcher {
     m_matcher = p;
     POSTCONDITION(m_matcher, "no matcher");
   };
-  const RDKit::ROMol *getMatcher() const { return m_matcher; };
-  unsigned int countMatches(const RDKit::ROMol &mol) const {
+  [[nodiscard]] const RDKit::ROMol *getMatcher() const { return m_matcher; };
+  [[nodiscard]] unsigned int countMatches(const RDKit::ROMol &mol) const {
     PRECONDITION(m_matcher, "no matcher");
     std::vector<RDKit::MatchVectType> matches;
     // This is an ugly one. Recursive queries aren't thread safe.
