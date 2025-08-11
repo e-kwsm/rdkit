@@ -49,13 +49,7 @@ struct ChemDrawParserParams;
 }
 namespace ChemDraw {
 struct PageData {
-  PageData()
-      : atomIds(),
-        bondIds(),
-        mols(),
-        fragmentLookup(),
-        groupedFragments(),
-        schemes() {}
+  PageData() = default;
 
   PageData(const PageData &) = delete;
 
