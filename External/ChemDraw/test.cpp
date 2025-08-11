@@ -1322,12 +1322,12 @@ TEST_CASE("Round TRIP") {
         if (mol) {
           // CDX doesn't support atom map numbers apparently
           total++;
-          for (auto atom : mol->atoms()) {
+          for (auto *atom : mol->atoms()) {
             atom->setAtomMapNum(0);
           }
           // CDXML doesn't support ZERO bonds
           bool haszerobond = false;
-          for (auto bond : mol->bonds()) {
+          for (auto *bond : mol->bonds()) {
             if (bond->getBondType() == Bond::BondType::ZERO) {
               haszerobond = true;
               break;
