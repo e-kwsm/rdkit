@@ -34,7 +34,7 @@ struct RDKIT_PUBCHEMSHAPE_EXPORT ShapeInput {
   ShapeInput &operator=(ShapeInput &&other) = default;
   ~ShapeInput() = default;
 
-  std::string toString() const {
+  [[nodiscard]] std::string toString() const {
 #ifndef RDK_USE_BOOST_SERIALIZATION
     PRECONDITION(0, "Boost SERIALIZATION is not enabled")
 #else
