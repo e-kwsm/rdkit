@@ -36,11 +36,11 @@ class GaOperation {
         opfunction(opfunction_) {}
   virtual ~GaOperation() {}
 
-  size_t getnChildren() const { return nChildren; }
+  [[nodiscard]] size_t getnChildren() const { return nChildren; }
 
-  size_t getnParents() const { return nParents; }
+  [[nodiscard]] size_t getnParents() const { return nParents; }
 
-  double getWeight() const { return weight; }
+  [[nodiscard]] double getWeight() const { return weight; }
 
   void (*getOpfunction())(
       const std::vector<std::shared_ptr<Chromosome>> &parents,
