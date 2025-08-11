@@ -44,23 +44,23 @@ class GA_EXPORT Chromosome {
   /*
    * Return true if two chromosmes are equal at the Genetic level.
    */
-  virtual bool equals(const Chromosome &c) const = 0;
+  [[nodiscard]] virtual bool equals(const Chromosome &c) const = 0;
 
   /*
    * Return a distance measure for two chromosomes
    */
-  virtual double distance(const Chromosome &c) const = 0;
+  [[nodiscard]] virtual double distance(const Chromosome &c) const = 0;
 
   /*
    * Return true if the two chromosomes share a niche.
    */
-  virtual bool sameNiche(const Chromosome &c) const = 0;
+  [[nodiscard]] virtual bool sameNiche(const Chromosome &c) const = 0;
 
   /*
    * Return false if the chromosome is invalid. For example the chromosome
    * cannot be decoded.
    */
-  virtual bool ok() const = 0;
+  [[nodiscard]] virtual bool ok() const = 0;
 
   /*
    * The genetic information in Chromosome c is copied to this chromosome.
@@ -70,19 +70,19 @@ class GA_EXPORT Chromosome {
   /*
    * Return a summary of the fitness.
    */
-  virtual std::string fitnessInfo() const = 0;
+  [[nodiscard]] virtual std::string fitnessInfo() const = 0;
 
   /*
    * Return a summary of the gene.
    */
-  virtual std::string geneInfo() const = 0;
+  [[nodiscard]] virtual std::string geneInfo() const = 0;
 
   /*
    * Determine the fitness of the chromosome
    */
   virtual void calculateFitness() = 0;
 
-  double getFitness() const { return fitness; }
+  [[nodiscard]] double getFitness() const { return fitness; }
 
   void setFitness(double fitness) { this->fitness = fitness; }
 };
