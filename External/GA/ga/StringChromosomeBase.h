@@ -54,7 +54,7 @@ class StringChromosomeBase {
   virtual ~StringChromosomeBase() {}
 
   void initialize();
-  bool equals(const StringChromosomeBase &other) const;
+  [[nodiscard]] bool equals(const StringChromosomeBase &other) const;
   virtual void copyGene(const StringChromosomeBase &other);
   void mutate(double pMutate = -1);
   void twoPointCrossover(const StringChromosomeBase &parent2,
@@ -63,12 +63,14 @@ class StringChromosomeBase {
   void onePointCrossover(const StringChromosomeBase &parent2,
                          StringChromosomeBase &child1,
                          StringChromosomeBase &child2) const;
-  std::string geneInfo() const;
-  const T getValue(int pos) const;
-  T *getString() const;
-  int getLength() const { return length; }
-  RandomUtil &getRng() const { return rng; }
-  ChromosomePolicy &getChromosomePolicy() const { return chromosomePolicy; }
+  [[nodiscard]] std::string geneInfo() const;
+  [[nodiscard]] const T getValue(int pos) const;
+  [[nodiscard]] T *getString() const;
+  [[nodiscard]] int getLength() const { return length; }
+  [[nodiscard]] RandomUtil &getRng() const { return rng; }
+  [[nodiscard]] ChromosomePolicy &getChromosomePolicy() const {
+    return chromosomePolicy;
+  }
 };
 
 /**

@@ -81,12 +81,12 @@ class LinkedPopLinearSel {
   void create();
   void iterate();
   void rebuild();
-  std::string info() const;
+  [[nodiscard]] std::string info() const;
   const std::shared_ptr<Chromosome> &getBest() const;
   const std::vector<std::shared_ptr<Chromosome>> getTiedBest(
       double tolerance = 1e-6) const;
-  std::string populationInfo() const;
-  double getBestScore() const { return bestScore; }
+  [[nodiscard]] std::string populationInfo() const;
+  [[nodiscard]] double getBestScore() const { return bestScore; }
 };
 
 /**
