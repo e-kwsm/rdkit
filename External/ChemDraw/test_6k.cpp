@@ -175,7 +175,8 @@ TEST_CASE("Round TRIP") {
       "INDMUMLL1117_2025-01-24-17-29-09_14897.cdxml" // RDKit just gets very different stereo chem, no idea why
     };
 
-    for (auto p : {failpath, nomolpath, badparsepath, sanitizationpath}) {
+    for (const auto &p :
+         {failpath, nomolpath, badparsepath, sanitizationpath}) {
       if (std::filesystem::exists(p)) {
         std::filesystem::remove_all(p);
       }
