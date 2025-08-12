@@ -219,7 +219,8 @@ TEST_CASE("Round TRIP") {
                                                          // chem, no idea why
     };
 
-    for (auto p : {failpath, nomolpath, badparsepath, sanitizationpath}) {
+    for (const auto &p :
+         {failpath, nomolpath, badparsepath, sanitizationpath}) {
       if (std::filesystem::exists(p)) {
         std::filesystem::remove_all(p);
       }
