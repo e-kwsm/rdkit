@@ -195,7 +195,7 @@ double angle_deg_between_vectors(double *v1, double *v2) {
                    (v2[0] * v2[0] + v2[1] * v2[1])));
 }
 
-void test_io() {
+void test_io(void) {
   char *pkl;
   size_t pkl_size;
   size_t pkl2_size;
@@ -413,7 +413,7 @@ M  END",
   printf("--------------------------\n");
 }
 
-void test_svg() {
+void test_svg(void) {
   char *pkl;
   size_t pkl_size;
 
@@ -504,7 +504,7 @@ unsigned int count_occurrences(const char *str, const char *substr) {
   return count;
 }
 
-void test_rxn_svg() {
+void test_rxn_svg(void) {
   char *pkl;
   size_t pkl_size;
 
@@ -563,7 +563,7 @@ M  END",
   printf("--------------------------\n");
 }
 
-void test_flexicanvas() {
+void test_flexicanvas(void) {
   char *pkl;
   size_t pkl_size;
 
@@ -586,7 +586,7 @@ void test_flexicanvas() {
   printf("--------------------------\n");
 }
 
-void test_substruct() {
+void test_substruct(void) {
   printf("--------------------------\n");
   printf("  test_substruct\n");
 
@@ -624,7 +624,7 @@ void test_substruct() {
   printf("--------------------------\n");
 }
 
-void test_descriptors() {
+void test_descriptors(void) {
   printf("--------------------------\n");
   printf("  test_descriptors\n");
 
@@ -645,7 +645,7 @@ void test_descriptors() {
   printf("--------------------------\n");
 }
 
-void test_fingerprints() {
+void test_fingerprints(void) {
   printf("--------------------------\n");
   printf("  test_fingerprints\n");
 
@@ -759,7 +759,7 @@ void test_fingerprints() {
   printf("--------------------------\n");
 }
 
-void test_modifications() {
+void test_modifications(void) {
   printf("--------------------------\n");
   printf("  test_modifications\n");
   char *mpkl;
@@ -870,7 +870,7 @@ float _sq_dist(float *xyz1, float *xyz2) {
   return sqd;
 }
 
-void test_coords() {
+void test_coords(void) {
   printf("--------------------------\n");
   printf("  test_coords\n");
   char *mpkl;
@@ -1270,7 +1270,7 @@ M  END\n",
   printf("--------------------------\n");
 }
 
-void test_standardize() {
+void test_standardize(void) {
   printf("--------------------------\n");
   printf("  test_standardize\n");
   disable_logging();
@@ -1336,7 +1336,7 @@ void test_standardize() {
   printf("--------------------------\n");
 }
 
-void test_get_mol_frags() {
+void test_get_mol_frags(void) {
   printf("--------------------------\n");
   printf("  test_get_mol_frags\n");
   char *mpkl;
@@ -1542,7 +1542,7 @@ M  END\n",
   assert(*inverted_wedges);
 }
 
-void test_wedging_all_within_scaffold() {
+void test_wedging_all_within_scaffold(void) {
   printf("--------------------------\n");
   printf("  test_wedging_all_within_scaffold\n");
   char *mpkl;
@@ -1682,7 +1682,7 @@ M  END\n",
   free(tpkl);
 }
 
-void test_wedging_outside_scaffold() {
+void test_wedging_outside_scaffold(void) {
   printf("--------------------------\n");
   printf("  test_wedging_outside_scaffold\n");
   char *mpkl;
@@ -1813,7 +1813,7 @@ M  END\n",
   free(tpkl);
 }
 
-void test_wedging_if_no_match() {
+void test_wedging_if_no_match(void) {
   printf("--------------------------\n");
   printf("  test_wedging_if_no_match\n");
   char *mpkl;
@@ -1964,7 +1964,7 @@ M  END\n",
   free(tpkl);
 }
 
-void test_removehs() {
+void test_removehs(void) {
   printf("--------------------------\n");
   printf("  test_removehs\n");
   size_t mpkl_size;
@@ -1977,7 +1977,7 @@ void test_removehs() {
   free(mpkl);
 }
 
-void test_use_legacy_stereo() {
+void test_use_legacy_stereo(void) {
   printf("--------------------------\n");
   printf("  test_use_legacy_stereo\n");
   short orig_setting = use_legacy_stereo_perception(1);
@@ -2001,7 +2001,7 @@ void test_use_legacy_stereo() {
   use_legacy_stereo_perception(orig_setting);
 }
 
-void test_allow_non_tetrahedral_chirality() {
+void test_allow_non_tetrahedral_chirality(void) {
   printf("--------------------------\n");
   printf("  test_allow_non_tetrahedral_chirality\n");
   char ctab[] =
@@ -2040,7 +2040,7 @@ M  END\n";
   allow_non_tetrahedral_chirality(orig_setting);
 }
 
-void test_query_colour() {
+void test_query_colour(void) {
   printf("--------------------------\n");
   printf("  test_queryColour\n");
   char smarts[] = "c1ccc2nc([*:1])nc([*:2])c2c1";
@@ -2061,7 +2061,7 @@ void test_query_colour() {
   free(pkl);
 }
 
-void test_alignment_r_groups_aromatic_ring() {
+void test_alignment_r_groups_aromatic_ring(void) {
   printf("--------------------------\n");
   printf("  test_alignment_r_groups_aromatic_ring\n");
   char *mpkl;
@@ -2148,7 +2148,7 @@ M  END\n",
   free(tpkl);
 }
 
-void test_partial_sanitization() {
+void test_partial_sanitization(void) {
   printf("--------------------------\n");
   printf("  test_partial_sanitization\n");
   char *mpkl;
@@ -2375,7 +2375,7 @@ char *get_stderr_buf(CapturedStreams *captured_streams, unsigned int buf_size) {
   return _get_capture_buf(captured_streams->stderr_pipes, buf_size);
 }
 
-void test_capture_logs() {
+void test_capture_logs(void) {
   printf("--------------------------\n");
   printf("  test_capture_logs\n");
   char *mpkl;
@@ -2497,7 +2497,7 @@ void test_capture_logs() {
   release_streams(&captured_streams);
 }
 
-void test_relabel_mapped_dummies() {
+void test_relabel_mapped_dummies(void) {
   printf("--------------------------\n");
   printf("  test_relabel_mapped_dummies\n");
   char *mpkl;
@@ -2536,7 +2536,7 @@ unsigned int count_matches(const char *svg, const char **stereo_array,
   return i;
 }
 
-void test_assign_cip_labels() {
+void test_assign_cip_labels(void) {
   printf("--------------------------\n");
   printf("  test_assign_cip_labels\n");
   char *mpkl;
@@ -2571,7 +2571,7 @@ void test_assign_cip_labels() {
   use_legacy_stereo_perception(orig_setting);
 }
 
-void test_assign_chiral_tags_from_mol_parity() {
+void test_assign_chiral_tags_from_mol_parity(void) {
   printf("--------------------------\n");
   printf("  test_assign_chiral_tags_from_mol_parity\n");
   char *mpkl;
@@ -2644,7 +2644,7 @@ M  END\n\
   free(mpkl);
 }
 
-void test_make_dummies_queries() {
+void test_make_dummies_queries(void) {
   printf("--------------------------\n");
   printf("  test_make_dummies_queries\n");
   char *mpkl;
@@ -2669,7 +2669,7 @@ void test_make_dummies_queries() {
   free(mpkl);
 }
 
-void test_smiles_smarts_params() {
+void test_smiles_smarts_params(void) {
   printf("--------------------------\n");
   printf("  test_smiles_smarts_params\n");
   const char *amoxicillin_pub_chem =
@@ -2843,7 +2843,7 @@ M  END\n\
   free(mpkl);
 }
 
-void test_wedged_bond_atropisomer() {
+void test_wedged_bond_atropisomer(void) {
   printf("--------------------------\n");
   printf("  test_wedged_bond_atropisomer\n");
   const char *atropisomer =
@@ -2917,7 +2917,7 @@ M  END\n";
   free(mpkl);
 }
 
-void test_get_molblock_use_molblock_wedging() {
+void test_get_molblock_use_molblock_wedging(void) {
   printf("--------------------------\n");
   printf("  test_get_molblock_use_molblock_wedging\n");
   const char *mb =
@@ -2973,7 +2973,7 @@ M  END\n\
   free(mpkl_copy);
 }
 
-void test_multi_highlights() {
+void test_multi_highlights(void) {
   printf("--------------------------\n");
   printf("  test_multi_highlights\n");
   const char *smi =
@@ -3003,7 +3003,7 @@ void test_multi_highlights() {
   free(mpkl);
 }
 
-void test_bw_palette() {
+void test_bw_palette(void) {
   printf("--------------------------\n");
   printf("  bw palette\n");
   const char *smi = "N";
@@ -3025,7 +3025,7 @@ void test_bw_palette() {
   free(mpkl);
 }
 
-void test_custom_palette() {
+void test_custom_palette(void) {
   printf("--------------------------\n");
   printf("  custom palette\n");
   const char *smi = "N";
@@ -3047,7 +3047,7 @@ void test_custom_palette() {
   free(mpkl);
 }
 
-void test_props() {
+void test_props(void) {
   printf("--------------------------\n");
   printf("  mol props\n");
   const char *smi = "c1ccccn1";
@@ -3116,7 +3116,7 @@ void test_props() {
   free(mpkl);
 }
 
-void test_get_mol_remove_hs() {
+void test_get_mol_remove_hs(void) {
   printf("--------------------------\n");
   printf("  get_mol removeHs parameter\n");
   const char *mb_in =
@@ -3244,7 +3244,7 @@ size_t _write_png_blob(FILE *hnd, char *png_blob, size_t png_blob_sz) {
   return fwrite(png_blob, 1, png_blob_sz, hnd);
 }
 
-void test_png_metadata() {
+void test_png_metadata(void) {
   printf("--------------------------\n");
   printf("  test_png_metadata\n");
 #ifdef WIN32
@@ -3898,7 +3898,7 @@ M  END\n";
   free(png_no_metadata_blob2);
 }
 
-void test_drawing_extents_include() {
+void test_drawing_extents_include(void) {
   const char *mb =
       "\n\
      RDKit          2D\n\
@@ -3980,7 +3980,7 @@ M  END\n";
   free(pkl);
 }
 
-int main() {
+int main(void) {
   enable_logging();
   char *vers = version();
   printf("hello %s\n", vers);
