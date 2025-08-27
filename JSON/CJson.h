@@ -8,12 +8,11 @@ class ROMol;
 enum class CJSONCoords {
   _3d,            //!< `[x, y, z, x, y, z, …]` in Å
   _3dFractional,  //!< `[x, y, z, x, y, z, …]`, fractional
-  _3dSets         //!< `[[x, y, z], [x, y, z], …]` in Å
 };
 
 struct RDKIT_FILEPARSERS_EXPORT CJSONWriterParams {
   bool kekulize = true;
-  CJSONCoords coords = CJSONCoords::_3dSets;
+  CJSONCoords coords = CJSONCoords::_3d;
 };
 
 void MolToCJSONBlock(std::ostream &os, const ROMol &mol,

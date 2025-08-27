@@ -24,7 +24,7 @@ namespace RDKit {
 
 void MolToCJSONBlock(std::ostream &os, const ROMol &mol,
                      const CJSONWriterParams &params, int confId) {
-  constexpr auto chemicalJson = 1;  // version
+  constexpr unsigned chemicalJson = 1;  // version
   const Conformer *conf =
       mol.getNumConformers() ? &mol.getConformer(confId) : nullptr;
   const auto is3D = conf != nullptr && conf->is3D();
@@ -32,13 +32,12 @@ void MolToCJSONBlock(std::ostream &os, const ROMol &mol,
   const auto nAtoms = mol.getNumAtoms();
   int totalCharge = 0;
 
-  boost::json::array coords_3d_or_3dSets;
+  boost::json::array coords_3d;
   boost::json::array elements_number;
   boost::json::array formalCharges;
   boost::json::array bond_indices, bond_orders;
   if (is3D) {
-    coords_3d_or_3dSets.reserve(
-        (params.coords != CJSONCoords::_3dSets ? 3u : 1u) * nAtoms);
+    coords_3d.reserve(3u * nAtoms);
   }
   elements_number.reserve(nAtoms);
   formalCharges.reserve(nAtoms);
@@ -53,17 +52,13 @@ void MolToCJSONBlock(std::ostream &os, const ROMol &mol,
       const auto &pos = conf->getAtomPos(i);
       switch (params.coords) {
         case CJSONCoords::_3d:
-          coords_3d_or_3dSets.push_back(pos.x);
-          coords_3d_or_3dSets.push_back(pos.y);
-          coords_3d_or_3dSets.push_back(pos.z);
+          coords_3d.push_back(pos.x);
+          coords_3d.push_back(pos.y);
+          coords_3d.push_back(pos.z);
           break;
         case CJSONCoords::_3dFractional:
           throw std::invalid_argument{
               "atoms.coords.3dFractional is not supported yet"};
-        case CJSONCoords::_3dSets:
-          coords_3d_or_3dSets.push_back(
-              boost::json::array{pos.x, pos.y, pos.z});
-          break;
       }
     }
   }
@@ -167,7 +162,7 @@ void MolToCJSONBlock(std::ostream &os, const ROMol &mol,
   mol.getPropIfPresent(common_properties::_Name, name);
 
   boost::json::object atoms;
-  atoms["coords"].emplace_object()["3d"] = coords_3d_or_3dSets;
+  atoms["coords"].emplace_object()["3d"] = coords_3d;
   atoms["elements"].emplace_object()["number"] = elements_number;
   atoms["formalCharges"] = formalCharges;
 
