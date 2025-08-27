@@ -25,7 +25,7 @@ namespace RDKit {
 void MolToCJSONBlock(std::ostream &os, const ROMol &mol,
                      const CJSONWriterParams &params, int confId) {
   constexpr unsigned chemicalJson = 1;  // version
-  const Conformer *conf =
+  const Conformer *const conf =
       mol.getNumConformers() ? &mol.getConformer(confId) : nullptr;
   const auto is3D = conf != nullptr && conf->is3D();
 
@@ -73,8 +73,8 @@ void MolToCJSONBlock(std::ostream &os, const ROMol &mol,
     const auto src = atom->getIdx();
     for (auto bond_itrs = rwmol.getAtomBonds(atom);
          bond_itrs.first != bond_itrs.second; ++bond_itrs.first) {
-      auto *bptr = rwmol[*bond_itrs.first];
-      auto *nptr = bptr->getOtherAtom(atom);
+      const auto *const bptr = rwmol[*bond_itrs.first];
+      const auto *const nptr = bptr->getOtherAtom(atom);
       const auto dst = nptr->getIdx();
       if (dst < src) {
         continue;
