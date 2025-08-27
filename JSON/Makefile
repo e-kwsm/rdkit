@@ -25,3 +25,7 @@ zzz.json: a.out
 %.cjson: %.json
 	bat $<
 	python3 -m json.tool --indent 2 $< $@
+
+.PHONY: clean
+clean:
+	rm -f CJSONWriter.o a.out
