@@ -5,11 +5,11 @@ CPPFLAGS := -I../Code -I../Code/GraphMol/FileParsers
 LDFLAGS := -L../build/lib '-Wl,-rpath=$$ORIGIN/../build/lib'
 
 LDLIBS := \
-        -g \
-        -lRDKitFileParsers \
-        -lRDKitGraphMol \
-        -lRDKitRDGeneral \
-        -lRDKitMolHash \
+	  -g \
+	  -lRDKitFileParsers \
+	  -lRDKitGraphMol \
+	  -lRDKitRDGeneral \
+	  -lRDKitMolHash \
 
 .PHONY: all
 all: zzz.cjson
