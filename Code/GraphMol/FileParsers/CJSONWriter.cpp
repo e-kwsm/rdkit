@@ -142,7 +142,7 @@ void MolToCJSONBlock(std::ostream &os, const ROMol &mol,
           bond_orders.push_back(5.5);
           break;
 
-          // default:
+        default:
           //   BOOST_LOG(rdInfoLog)
           //       << boost::format{"CMLWriter: Unsupported BondType %1%\n"} %
           //       btype;
