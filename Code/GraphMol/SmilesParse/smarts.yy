@@ -302,7 +302,7 @@ mol: atomd {
   newB->setOwningMol(mp);
   newB->setBeginAtomIdx(atom->getIdx());
   mp->setBondBookmark(newB, $2);
-  if(!(mp->getAllBondsWithBookmark($2).size()%2)){
+  if(!(mp->getAllBondsWithBookmark($2).size() % 2)){
     newB->setProp("_cxsmilesBondIdx", numBondsParsed++);
   }
   mp->setAtomBookmark(atom, $2);
