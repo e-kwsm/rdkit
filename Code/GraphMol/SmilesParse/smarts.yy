@@ -245,12 +245,12 @@ ATOM_OPEN_TOKEN bad_atom_def
 /* --------------------------------------------------------------- */
 // FIX: mol MINUS DIGIT
 mol: atomd {
-  int sz     = molList->size();
+  int sz = molList->size();
   molList->resize(sz + 1);
   (*molList)[sz] = new RWMol();
   $1->setProp(RDKit::common_properties::_SmilesStart, 1);
   (*molList)[sz]->addAtom($1, true, true);
-  //delete $1;
+  // delete $1;
   $$ = sz;
 }
 | mol atomd       {
@@ -259,7 +259,8 @@ mol: atomd {
   int atomIdx1 = a1->getIdx();
   int atomIdx2 = mp->addAtom($2, true, true);
 
-  QueryBond *newB = SmilesParseOps::getUnspecifiedQueryBond(a1, mp->getAtomWithIdx(atomIdx2));
+  QueryBond *newB = SmilesParseOps::getUnspecifiedQueryBond(
+      a1, mp->getAtomWithIdx(atomIdx2));
   newB->setOwningMol(mp);
   newB->setBeginAtomIdx(atomIdx1);
   newB->setEndAtomIdx(atomIdx2);
