@@ -60,9 +60,9 @@ extern "C" int fileno(FILE*);
 
 using namespace RDKit;
 
-void setup_sln_string(const std::string &text,yyscan_t yyscanner){
-  YY_BUFFER_STATE buff=yysln__scan_string(text.c_str(),yyscanner);
-  POSTCONDITION(buff,"invalid buffer");
+void setup_sln_string(const std::string &text, yyscan_t yyscanner){
+  YY_BUFFER_STATE buff=yysln__scan_string(text.c_str(), yyscanner);
+  POSTCONDITION(buff, "invalid buffer");
 }
 
 #define YY_FATAL_ERROR(msg) sln_lexer_error(msg)
@@ -234,9 +234,9 @@ void sln_lexer_error(const char *msg) {
 <INITIAL,IN_RECURSE_STATE>Hal {
   yylval->atom_T = new QueryAtom();
   yylval->atom_T->setQuery(makeAtomNumQuery(9));
-  yylval->atom_T->expandQuery(makeAtomNumQuery(17),Queries::COMPOSITE_OR,true);
-  yylval->atom_T->expandQuery(makeAtomNumQuery(35),Queries::COMPOSITE_OR,true);
-  yylval->atom_T->expandQuery(makeAtomNumQuery(53),Queries::COMPOSITE_OR,true);
+  yylval->atom_T->expandQuery(makeAtomNumQuery(17), Queries::COMPOSITE_OR, true);
+  yylval->atom_T->expandQuery(makeAtomNumQuery(35), Queries::COMPOSITE_OR, true);
+  yylval->atom_T->expandQuery(makeAtomNumQuery(53), Queries::COMPOSITE_OR, true);
 
   // SLN has no concept of implicit Hs... they're either in the SLN or they don't exist:        
   yylval->atom_T->setNoImplicit(true);
@@ -245,7 +245,7 @@ void sln_lexer_error(const char *msg) {
 <INITIAL,IN_RECURSE_STATE>Het {
   yylval->atom_T = new QueryAtom();
   yylval->atom_T->setQuery(makeAtomNumQuery(6));
-  yylval->atom_T->expandQuery(makeAtomNumQuery(1),Queries::COMPOSITE_OR,true);
+  yylval->atom_T->expandQuery(makeAtomNumQuery(1), Queries::COMPOSITE_OR, true);
   yylval->atom_T->getQuery()->setNegation(true);
 
   // SLN has no concept of implicit Hs... they're either in the SLN or they don't exist:        
@@ -253,14 +253,14 @@ void sln_lexer_error(const char *msg) {
   return ATOM_TOKEN;
 }
 
-<INITIAL,IN_RECURSE_STATE>H\[ { yy_push_state(IN_SLN_PARAM_STATE,yyscanner); return H_BRACKET_TOKEN; }
+<INITIAL,IN_RECURSE_STATE>H\[ { yy_push_state(IN_SLN_PARAM_STATE, yyscanner); return H_BRACKET_TOKEN; }
 <INITIAL,IN_RECURSE_STATE>H\* { return H_ASTERIX_TOKEN; }
 <INITIAL,IN_RECURSE_STATE>H { return H_TOKEN; }
 
 <IN_SLN_PARAM_STATE>is\= |
 <IN_SLN_PARAM_STATE>Is\= |
 <IN_SLN_PARAM_STATE>iS\= |
-<IN_SLN_PARAM_STATE>IS\= { yy_push_state(IN_RECURSE_STATE,yyscanner); return RECURSE_TOKEN; }
+<IN_SLN_PARAM_STATE>IS\= { yy_push_state(IN_RECURSE_STATE, yyscanner); return RECURSE_TOKEN; }
 <IN_SLN_PARAM_STATE>not\= | 
 <IN_SLN_PARAM_STATE>Not\= |
 <IN_SLN_PARAM_STATE>nOt\= |
@@ -268,7 +268,7 @@ void sln_lexer_error(const char *msg) {
 <IN_SLN_PARAM_STATE>NOt\= |
 <IN_SLN_PARAM_STATE>NoT\= |
 <IN_SLN_PARAM_STATE>nOT\= |
-<IN_SLN_PARAM_STATE>NOT\= { yy_push_state(IN_RECURSE_STATE,yyscanner); return NEG_RECURSE_TOKEN; }
+<IN_SLN_PARAM_STATE>NOT\= { yy_push_state(IN_RECURSE_STATE, yyscanner); return NEG_RECURSE_TOKEN; }
 
 
 \-                      { return MINUS_TOKEN; }
@@ -287,24 +287,24 @@ void sln_lexer_error(const char *msg) {
 <IN_SLN_PARAM_STATE>\= |
 <IN_SLN_PARAM_STATE>\> |
 <IN_SLN_PARAM_STATE>\< {
-  yy_push_state(IN_PROP_VAL_STATE,yyscanner);
+  yy_push_state(IN_PROP_VAL_STATE, yyscanner);
   yylval->text_T=new std::string(yytext);
   return COMPARE_TOKEN; 
 }
 
 <IN_CTAB_PARAM_NAME_STATE>\= {
   yy_pop_state(yyscanner);
-  yy_push_state(IN_CTAB_PARAM_VAL_STATE,yyscanner);
+  yy_push_state(IN_CTAB_PARAM_VAL_STATE, yyscanner);
   return EQUALS_TOKEN; 
 }
 <IN_CTAB_PARAM_NAME_STATE>\:\= {
   yy_pop_state(yyscanner);
-  yy_push_state(IN_CTAB_PARAM_VAL_STATE,yyscanner);
+  yy_push_state(IN_CTAB_PARAM_VAL_STATE, yyscanner);
   return COLON_EQUALS_TOKEN; 
 }
 <IN_CTAB_PARAM_NAME_STATE>\^\= {
   yy_pop_state(yyscanner);
-  yy_push_state(IN_CTAB_PARAM_VAL_STATE,yyscanner);
+  yy_push_state(IN_CTAB_PARAM_VAL_STATE, yyscanner);
   return CARET_EQUALS_TOKEN; 
 }
 
@@ -330,12 +330,12 @@ void sln_lexer_error(const char *msg) {
  }
 <IN_CTAB_PARAM_VAL_STATE>\; {
  yy_pop_state(yyscanner);
- yy_push_state(IN_CTAB_PARAM_NAME_STATE,yyscanner);
+ yy_push_state(IN_CTAB_PARAM_NAME_STATE, yyscanner);
  return SEMI_TOKEN; 
 }
 <IN_CTAB_PARAM_VAL_STATE>\& {
  yy_pop_state(yyscanner);
- yy_push_state(IN_CTAB_PARAM_NAME_STATE,yyscanner);
+ yy_push_state(IN_CTAB_PARAM_NAME_STATE, yyscanner);
  return AND_TOKEN; 
 }
 
@@ -362,7 +362,7 @@ void sln_lexer_error(const char *msg) {
 }
 
 
-\[                      { yy_push_state(IN_SLN_PARAM_STATE,yyscanner); return OPEN_BRACKET_TOKEN; }
+\[                      { yy_push_state(IN_SLN_PARAM_STATE, yyscanner); return OPEN_BRACKET_TOKEN; }
 
 <IN_RECURSE_STATE>\]           {
 	// we're closing a recursive definition, which means we should also be
@@ -387,7 +387,7 @@ void sln_lexer_error(const char *msg) {
 
 <IN_SLN_PARAM_STATE>\]          { yy_pop_state(yyscanner); return CLOSE_BRACKET_TOKEN; }
 
-\<                      { yy_push_state(IN_CTAB_PARAM_NAME_STATE,yyscanner); return OPEN_ANGLE_TOKEN; }
+\<                      { yy_push_state(IN_CTAB_PARAM_NAME_STATE, yyscanner); return OPEN_ANGLE_TOKEN; }
 <IN_CTAB_PARAM_NAME_STATE>\> { yy_pop_state(yyscanner); return CLOSE_ANGLE_TOKEN; }
 <IN_CTAB_PARAM_VAL_STATE>\> { yy_pop_state(yyscanner); return CLOSE_ANGLE_TOKEN; }
 <IN_PROP_VAL_STATE>\>   { 
