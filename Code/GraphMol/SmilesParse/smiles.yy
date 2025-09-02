@@ -96,11 +96,11 @@ yysmiles_error( const char *input,
 }
 
 %union {
-  int                      moli;
-  RDKit::Atom * atom;
-  RDKit::Bond * bond;
+  int moli;
+  RDKit::Atom *atom;
+  RDKit::Bond *bond;
   RDKit::Atom::ChiralType chiraltype;
-  int                      ival;
+  int ival;
 }
 
 %token START_MOL START_ATOM START_BOND;
