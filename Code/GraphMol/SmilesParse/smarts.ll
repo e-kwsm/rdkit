@@ -97,8 +97,7 @@ size_t setup_smarts_string(const std::string &text, yyscan_t yyscanner){
 %%
 
 %{
-  if (start_token)
-    {
+    if (start_token) {
       int t = start_token;
       start_token = 0;
       return t;
