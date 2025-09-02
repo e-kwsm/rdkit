@@ -400,15 +400,16 @@ bond: primbond
 
 primbond: onebond
 | primbond onebond {
-	if (!doQueries) {
-        yysln_error(input, molList, doQueries, 0, "sequential bonds not allowed in non-queries");
+  if (!doQueries) {
+    yysln_error(input, molList, doQueries, 0,
+                "sequential bonds not allowed in non-queries");
     YYABORT;
-	} else {
-	  RDKit::QueryBond *b1 = static_cast<RDKit::QueryBond *>($1);
-	  RDKit::QueryBond *b2 = static_cast<RDKit::QueryBond *>($2);
-	  b1->expandQuery(b2->getQuery()->copy(), Queries::COMPOSITE_OR, true);
-		delete b2;
-	}
+  } else {
+    RDKit::QueryBond *b1 = static_cast<RDKit::QueryBond *>($1);
+    RDKit::QueryBond *b2 = static_cast<RDKit::QueryBond *>($2);
+    b1->expandQuery(b2->getQuery()->copy(), Queries::COMPOSITE_OR, true);
+    delete b2;
+  }
 }
 ;
 
@@ -545,7 +546,8 @@ recursivequery: RECURSE_TOKEN cmpd {
    RDKit::ROMol *mol = (*molList)[$2];
    molList->resize(sz - 1);
    SLNParse::finalizeQueryMol(mol, true);
-   RDKit::RecursiveStructureQuery *rsq = new RDKit::RecursiveStructureQuery(mol);
+   RDKit::RecursiveStructureQuery *rsq =
+       new RDKit::RecursiveStructureQuery(mol);
    RDKit::ATOM_OR_QUERY *orq = new RDKit::ATOM_OR_QUERY();
    orq->addChild(RDKit::ATOM_OR_QUERY::CHILD_TYPE(rsq));
    $$ = new SLNParse::AttribType();
@@ -559,7 +561,8 @@ recursivequery: RECURSE_TOKEN cmpd {
    RDKit::ROMol *mol = (*molList)[$2];
    molList->resize(sz - 1);
    SLNParse::finalizeQueryMol(mol, true);
-   RDKit::RecursiveStructureQuery *rsq = new RDKit::RecursiveStructureQuery(mol);
+   RDKit::RecursiveStructureQuery *rsq =
+       new RDKit::RecursiveStructureQuery(mol);
    RDKit::ATOM_OR_QUERY *orq = new RDKit::ATOM_OR_QUERY();
    orq->addChild(RDKit::ATOM_OR_QUERY::CHILD_TYPE(rsq));
    orq->setNegation(true);
