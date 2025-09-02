@@ -347,7 +347,8 @@ mol: atomd {
   int atomIdx1 = a1->getIdx();
   int atomIdx2 = mp->addAtom($3, true, true);
 
-  QueryBond *newB = SmilesParseOps::getUnspecifiedQueryBond(a1, mp->getAtomWithIdx(atomIdx2));
+  QueryBond *newB = SmilesParseOps::getUnspecifiedQueryBond(
+      a1, mp->getAtomWithIdx(atomIdx2));
   newB->setOwningMol(mp);
   newB->setBeginAtomIdx(atomIdx1);
   newB->setEndAtomIdx(atomIdx2);
@@ -362,11 +363,11 @@ mol: atomd {
   RWMol *mp = (*molList)[$$];
   int atomIdx1 = mp->getActiveAtom()->getIdx();
   int atomIdx2 = mp->addAtom($4, true, true);
-  if ( $3->getBondType() == Bond::DATIVER ) {
+  if ($3->getBondType() == Bond::DATIVER) {
     $3->setBeginAtomIdx(atomIdx1);
     $3->setEndAtomIdx(atomIdx2);
     $3->setBondType(Bond::DATIVE);
-  } else if ( $3->getBondType() == Bond::DATIVEL ) {
+  } else if ($3->getBondType() == Bond::DATIVEL) {
     $3->setBeginAtomIdx(atomIdx2);
     $3->setEndAtomIdx(atomIdx1);
     $3->setBondType(Bond::DATIVE);
