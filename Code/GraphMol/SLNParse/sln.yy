@@ -359,7 +359,7 @@ primatom: ATOM_TOKEN
   $$->setProp(RDKit::common_properties::_starred, 1, true);
 }
 | primatom OPEN_BRACKET_TOKEN number CLOSE_BRACKET_TOKEN {
-  $1->setProp(RDKit::common_properties::_AtomID,static_cast<unsigned int>($3));
+  $1->setProp(RDKit::common_properties::_AtomID, static_cast<unsigned int>($3));
   $$ = $1;
 }
 | primatom OPEN_BRACKET_TOKEN number COLON_TOKEN attriblist CLOSE_BRACKET_TOKEN {
@@ -406,7 +406,7 @@ primbond: onebond
 	} else {
 	  RDKit::QueryBond *b1 = static_cast<RDKit::QueryBond *>($1);
 	  RDKit::QueryBond *b2 = static_cast<RDKit::QueryBond *>($2);
-	  b1->expandQuery(b2->getQuery()->copy(),Queries::COMPOSITE_OR,true);
+	  b1->expandQuery(b2->getQuery()->copy(), Queries::COMPOSITE_OR, true);
 		delete b2;
 	}
 }
@@ -543,8 +543,8 @@ attrib: TEXT_BLOCK {
 recursivequery: RECURSE_TOKEN cmpd {
    int sz = molList->size();
    RDKit::ROMol *mol = (*molList)[$2];
-   molList->resize( sz - 1 );
-   SLNParse::finalizeQueryMol(mol,true);
+   molList->resize(sz - 1);
+   SLNParse::finalizeQueryMol(mol, true);
    RDKit::RecursiveStructureQuery *rsq = new RDKit::RecursiveStructureQuery(mol);
    RDKit::ATOM_OR_QUERY *orq = new RDKit::ATOM_OR_QUERY();
    orq->addChild(RDKit::ATOM_OR_QUERY::CHILD_TYPE(rsq));
@@ -557,8 +557,8 @@ recursivequery: RECURSE_TOKEN cmpd {
 | NEG_RECURSE_TOKEN cmpd {
    int sz = molList->size();
    RDKit::ROMol *mol = (*molList)[$2];
-   molList->resize( sz - 1 );
-   SLNParse::finalizeQueryMol(mol,true);
+   molList->resize(sz - 1);
+   SLNParse::finalizeQueryMol(mol, true);
    RDKit::RecursiveStructureQuery *rsq = new RDKit::RecursiveStructureQuery(mol);
    RDKit::ATOM_OR_QUERY *orq = new RDKit::ATOM_OR_QUERY();
    orq->addChild(RDKit::ATOM_OR_QUERY::CHILD_TYPE(rsq));
@@ -573,8 +573,8 @@ recursivequery: RECURSE_TOKEN cmpd {
 | recursivequery COMMA_TOKEN cmpd {
    int sz = molList->size();
    RDKit::ROMol *mol = (*molList)[$3];
-   molList->resize( sz - 1 );
-   SLNParse::finalizeQueryMol(mol,true);
+   molList->resize(sz - 1);
+   SLNParse::finalizeQueryMol(mol, true);
    RDKit::RecursiveStructureQuery *rsq = new RDKit::RecursiveStructureQuery(mol);
 
    RDKit::ATOM_OR_QUERY *orq = static_cast<RDKit::ATOM_OR_QUERY *>($1->structQuery);
