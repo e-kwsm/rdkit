@@ -450,31 +450,31 @@ hydrogen_atom:	ATOM_OPEN_TOKEN H_TOKEN ATOM_CLOSE_TOKEN
 /* --------------------------------------------------------------- */
 atom_expr: atom_expr AND_TOKEN atom_expr {
   $1->expandQuery($3->getQuery()->copy(),Queries::COMPOSITE_AND,true);
-  if($1->getChiralTag()==Atom::CHI_UNSPECIFIED) $1->setChiralTag($3->getChiralTag());
+  if($1->getChiralTag() == Atom::CHI_UNSPECIFIED) $1->setChiralTag($3->getChiralTag());
   SmilesParseOps::ClearAtomChemicalProps($1);
   delete $3;
 }
 | atom_expr OR_TOKEN atom_expr {
   $1->expandQuery($3->getQuery()->copy(),Queries::COMPOSITE_OR,true);
-  if($1->getChiralTag()==Atom::CHI_UNSPECIFIED) $1->setChiralTag($3->getChiralTag());
+  if($1->getChiralTag() == Atom::CHI_UNSPECIFIED) $1->setChiralTag($3->getChiralTag());
   SmilesParseOps::ClearAtomChemicalProps($1);
   $1->setAtomicNum(0);
   delete $3;
 }
 | atom_expr SEMI_TOKEN atom_expr {
   $1->expandQuery($3->getQuery()->copy(),Queries::COMPOSITE_AND,true);
-  if($1->getChiralTag()==Atom::CHI_UNSPECIFIED) $1->setChiralTag($3->getChiralTag());
+  if($1->getChiralTag() == Atom::CHI_UNSPECIFIED) $1->setChiralTag($3->getChiralTag());
   SmilesParseOps::ClearAtomChemicalProps($1);
   delete $3;
 }
 | atom_expr point_query {
   $1->expandQuery($2->getQuery()->copy(),Queries::COMPOSITE_AND,true);
-  if($1->getChiralTag()==Atom::CHI_UNSPECIFIED) $1->setChiralTag($2->getChiralTag());
+  if($1->getChiralTag() == Atom::CHI_UNSPECIFIED) $1->setChiralTag($2->getChiralTag());
   if($2->getNumExplicitHs()){
     if(!$1->getNumExplicitHs()){
       $1->setNumExplicitHs($2->getNumExplicitHs());
       $1->setNoImplicit(true);
-    } else if($1->getNumExplicitHs()!=$2->getNumExplicitHs()){
+    } else if($1->getNumExplicitHs() != $2->getNumExplicitHs()){
       // conflicting queries...
       $1->setNumExplicitHs(0);
       $1->setNoImplicit(false);
@@ -483,7 +483,7 @@ atom_expr: atom_expr AND_TOKEN atom_expr {
   if($2->getFormalCharge()){
     if(!$1->getFormalCharge()){
       $1->setFormalCharge($2->getFormalCharge());
-    } else if($1->getFormalCharge()!=$2->getFormalCharge()){
+    } else if($1->getFormalCharge() != $2->getFormalCharge()){
       // conflicting queries...
       $1->setFormalCharge(0);
     }
@@ -516,7 +516,7 @@ recursive_query: BEGIN_RECURSE mol END_RECURSE {
   qA->setQuery(new RecursiveStructureQuery(molP));
   //std::cout << "qA: " << qA << " " << qA->getQuery() << std::endl;
   int sz = molList->size();
-  if ( sz==$2+1) {
+  if ( sz == $2+1) {
     molList->resize( sz-1 );
   }
   $$ = qA;
@@ -537,7 +537,7 @@ recursive_query: BEGIN_RECURSE mol END_RECURSE {
   qA->setQuery(new RecursiveStructureQuery(molP,$5));
   //std::cout << "qA: " << qA << " " << qA->getQuery() << std::endl;
   int sz = molList->size();
-  if ( sz==$2+1) {
+  if ( sz == $2+1) {
     molList->resize( sz-1 );
   }
   $$ = qA;
