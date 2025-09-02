@@ -239,11 +239,11 @@ mol: atomd {
   RWMol *mp = (*molList)[$$];
   int atomIdx1 = mp->getActiveAtom()->getIdx();
   int atomIdx2 = mp->addAtom($3, true, true);
-  if( $2->getBondType() == Bond::DATIVER ){
+  if ( $2->getBondType() == Bond::DATIVER ) {
     $2->setBeginAtomIdx(atomIdx1);
     $2->setEndAtomIdx(atomIdx2);
     $2->setBondType(Bond::DATIVE);
-  }else if ( $2->getBondType() == Bond::DATIVEL ){
+  } else if ( $2->getBondType() == Bond::DATIVEL ) {
     $2->setBeginAtomIdx(atomIdx2);
     $2->setEndAtomIdx(atomIdx1);
     $2->setBondType(Bond::DATIVE);
@@ -270,7 +270,7 @@ mol: atomd {
   newB->setOwningMol(mp);
   newB->setBeginAtomIdx(atom->getIdx());
   mp->setBondBookmark(newB, $2);
-  if(!(mp->getAllBondsWithBookmark($2).size() % 2)){
+  if (!(mp->getAllBondsWithBookmark($2).size() % 2)) {
     newB->setProp("_cxsmilesBondIdx", numBondsParsed++);
   }
   mp->setAtomBookmark(atom, $2);
@@ -278,7 +278,7 @@ mol: atomd {
   SmilesParseOps::CheckRingClosureBranchStatus(atom, mp);
 
   INT_VECT tmp;
-  if(atom->hasProp(RDKit::common_properties::_RingClosures)){
+  if (atom->hasProp(RDKit::common_properties::_RingClosures)) {
     atom->getProp(RDKit::common_properties::_RingClosures, tmp);
   }
   tmp.push_back(-($2 + 1));
@@ -299,7 +299,7 @@ mol: atomd {
   SmilesParseOps::CheckRingClosureBranchStatus(atom, mp);
 
   INT_VECT tmp;
-  if(atom->hasProp(RDKit::common_properties::_RingClosures)){
+  if (atom->hasProp(RDKit::common_properties::_RingClosures)) {
     atom->getProp(RDKit::common_properties::_RingClosures, tmp);
   }
   tmp.push_back(-($3 + 1));
@@ -328,11 +328,11 @@ mol: atomd {
   RWMol *mp = (*molList)[$$];
   int atomIdx1 = mp->getActiveAtom()->getIdx();
   int atomIdx2 = mp->addAtom($4, true, true);
-  if( $3->getBondType() == Bond::DATIVER ){
+  if ( $3->getBondType() == Bond::DATIVER ) {
     $3->setBeginAtomIdx(atomIdx1);
     $3->setEndAtomIdx(atomIdx2);
     $3->setBondType(Bond::DATIVE);
-  }else if ( $3->getBondType() == Bond::DATIVEL ){
+  } else if ( $3->getBondType() == Bond::DATIVEL ) {
     $3->setBeginAtomIdx(atomIdx2);
     $3->setEndAtomIdx(atomIdx1);
     $3->setBondType(Bond::DATIVE);
@@ -348,7 +348,7 @@ mol: atomd {
 
 
 | mol GROUP_CLOSE_TOKEN {
-  if(branchPoints.empty()){
+  if (branchPoints.empty()) {
      yyerror(input, molList, branchPoints, scanner, start_token, current_token_position, "extra close parentheses");
      yyErrorCleanup(molList);
      YYABORT;
@@ -451,40 +451,40 @@ hydrogen_atom:	ATOM_OPEN_TOKEN H_TOKEN ATOM_CLOSE_TOKEN
 /* --------------------------------------------------------------- */
 atom_expr: atom_expr AND_TOKEN atom_expr {
   $1->expandQuery($3->getQuery()->copy(),Queries::COMPOSITE_AND,true);
-  if($1->getChiralTag() == Atom::CHI_UNSPECIFIED) $1->setChiralTag($3->getChiralTag());
+  if ($1->getChiralTag() == Atom::CHI_UNSPECIFIED) $1->setChiralTag($3->getChiralTag());
   SmilesParseOps::ClearAtomChemicalProps($1);
   delete $3;
 }
 | atom_expr OR_TOKEN atom_expr {
   $1->expandQuery($3->getQuery()->copy(),Queries::COMPOSITE_OR,true);
-  if($1->getChiralTag() == Atom::CHI_UNSPECIFIED) $1->setChiralTag($3->getChiralTag());
+  if ($1->getChiralTag() == Atom::CHI_UNSPECIFIED) $1->setChiralTag($3->getChiralTag());
   SmilesParseOps::ClearAtomChemicalProps($1);
   $1->setAtomicNum(0);
   delete $3;
 }
 | atom_expr SEMI_TOKEN atom_expr {
   $1->expandQuery($3->getQuery()->copy(),Queries::COMPOSITE_AND,true);
-  if($1->getChiralTag() == Atom::CHI_UNSPECIFIED) $1->setChiralTag($3->getChiralTag());
+  if ($1->getChiralTag() == Atom::CHI_UNSPECIFIED) $1->setChiralTag($3->getChiralTag());
   SmilesParseOps::ClearAtomChemicalProps($1);
   delete $3;
 }
 | atom_expr point_query {
   $1->expandQuery($2->getQuery()->copy(),Queries::COMPOSITE_AND,true);
-  if($1->getChiralTag() == Atom::CHI_UNSPECIFIED) $1->setChiralTag($2->getChiralTag());
-  if($2->getNumExplicitHs()){
-    if(!$1->getNumExplicitHs()){
+  if ($1->getChiralTag() == Atom::CHI_UNSPECIFIED) $1->setChiralTag($2->getChiralTag());
+  if ($2->getNumExplicitHs()) {
+    if (!$1->getNumExplicitHs()) {
       $1->setNumExplicitHs($2->getNumExplicitHs());
       $1->setNoImplicit(true);
-    } else if($1->getNumExplicitHs() != $2->getNumExplicitHs()){
+    } else if ($1->getNumExplicitHs() != $2->getNumExplicitHs()) {
       // conflicting queries...
       $1->setNumExplicitHs(0);
       $1->setNoImplicit(false);
     }
   }
-  if($2->getFormalCharge()){
-    if(!$1->getFormalCharge()){
+  if ($2->getFormalCharge()) {
+    if (!$1->getFormalCharge()) {
       $1->setFormalCharge($2->getFormalCharge());
-    } else if($1->getFormalCharge() != $2->getFormalCharge()){
+    } else if ($1->getFormalCharge() != $2->getFormalCharge()) {
       // conflicting queries...
       $1->setFormalCharge(0);
     }
@@ -807,8 +807,8 @@ number:  ZERO_TOKEN
 /* --------------------------------------------------------------- */
 nonzero_number:  NONZERO_DIGIT_TOKEN
 | nonzero_number digit {
-    if($1 >= std::numeric_limits<std::int32_t>::max() / 10 ||
-     $1 * 10 >= std::numeric_limits<std::int32_t>::max() - $2 ){
+    if ($1 >= std::numeric_limits<std::int32_t>::max() / 10 ||
+     $1 * 10 >= std::numeric_limits<std::int32_t>::max() - $2 ) {
      yysmarts_error(input,molList,lastAtom,lastBond,numAtomsParsed,numBondsParsed,branchPoints,scanner,start_token, current_token_position, "number too large");
      YYABORT;
   }
