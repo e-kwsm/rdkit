@@ -35,7 +35,6 @@ using namespace RDKit;
 #undef YY_USER_ACTION
 #define YY_USER_ACTION current_token_position += yyleng;
 
-
 #define YY_FATAL_ERROR(msg) smiles_lexer_error(msg)
 
 void smiles_lexer_error(const char *msg) {
@@ -74,7 +73,7 @@ size_t setup_smiles_string(const std::string &text, yyscan_t yyscanner) {
 
   b = yysmiles__scan_buffer(buf, n, yyscanner);
   if (!b) {
-    smiles_lexer_error( "bad buffer in yysmiles__scan_bytes()" );
+    smiles_lexer_error("bad buffer in yysmiles__scan_bytes()");
   }
 
   /* It's okay to grow etc. this buffer, and we should throw it
@@ -91,8 +90,7 @@ size_t setup_smiles_string(const std::string &text, yyscan_t yyscanner) {
 %%
 
 %{
-  if (start_token)
-    {
+    if (start_token) {
       int t = start_token;
       start_token = 0;
       return t;
