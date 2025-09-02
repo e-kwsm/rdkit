@@ -460,4 +460,5 @@ A			{
 %%
 
 #undef yysmarts_wrap
-int yysmarts_wrap( void ) { return 1; }
+int yysmarts_wrap(void) { return 1; }
+
