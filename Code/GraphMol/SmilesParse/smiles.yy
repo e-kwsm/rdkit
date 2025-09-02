@@ -418,9 +418,9 @@ chiral_element:	 element
 
 /* --------------------------------------------------------------- */
 element:	simple_atom
-		|	number simple_atom { $2->setIsotope( $1 ); $$ = $2; }
+		|	number simple_atom { $2->setIsotope($1); $$ = $2; }
 		|	ATOM_TOKEN
-		|	number ATOM_TOKEN	   { $2->setIsotope( $1 ); $$ = $2; }
+		|	number ATOM_TOKEN	   { $2->setIsotope($1); $$ = $2; }
 		|	HASH_TOKEN	number   { $$ = new Atom($2); }
 		|	number HASH_TOKEN	number   { $$ = new Atom($3); $$->setIsotope($1); }
 		;
