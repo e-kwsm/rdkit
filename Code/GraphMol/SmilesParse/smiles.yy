@@ -255,7 +255,7 @@ mol: atomd {
 				     Bond::UNSPECIFIED);
   mp->setBondBookmark(newB, $2);
   newB->setProp(RDKit::common_properties::_unspecifiedOrder, 1);
-  if(!(mp->getAllBondsWithBookmark($2).size()%2)){
+  if(!(mp->getAllBondsWithBookmark($2).size() % 2)){
     newB->setProp("_cxsmilesBondIdx", numBondsParsed++);
   }
 
@@ -278,7 +278,7 @@ mol: atomd {
   newB->setBondDir($2->getBondDir());
   mp->setAtomBookmark(atom, $3);
   mp->setBondBookmark(newB, $3);
-  if(!(mp->getAllBondsWithBookmark($3).size()%2)){
+  if(!(mp->getAllBondsWithBookmark($3).size() % 2)){
     newB->setProp("_cxsmilesBondIdx", numBondsParsed++);
   }
 
@@ -298,7 +298,7 @@ mol: atomd {
 				     Bond::SINGLE);
   mp->setAtomBookmark(atom, $3);
   mp->setBondBookmark(newB, $3);
-  if(!(mp->getAllBondsWithBookmark($3).size()%2)){
+  if(!(mp->getAllBondsWithBookmark($3).size() % 2)){
     newB->setProp("_cxsmilesBondIdx", numBondsParsed++);
   }
 
