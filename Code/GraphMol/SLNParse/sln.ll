@@ -61,7 +61,7 @@ extern "C" int fileno(FILE*);
 using namespace RDKit;
 
 void setup_sln_string(const std::string &text, yyscan_t yyscanner){
-  YY_BUFFER_STATE buff=yysln__scan_string(text.c_str(), yyscanner);
+  YY_BUFFER_STATE buff = yysln__scan_string(text.c_str(), yyscanner);
   POSTCONDITION(buff, "invalid buffer");
 }
 
@@ -83,22 +83,22 @@ void sln_lexer_error(const char *msg) {
 %%
 
 <IN_PROP_VAL_STATE>[^\;\]\>\&\|\!]* {
-  yylval->text_T=new std::string(yytext);
+  yylval->text_T = new std::string(yytext);
   return TEXT_BLOCK; 
 }
 
 <IN_SLN_PARAM_STATE>[a-zA-Z]+[a-zA-Z0-9_\-,]* { 
-  yylval->text_T=new std::string(yytext);
+  yylval->text_T = new std::string(yytext);
   return TEXT_BLOCK; 
 }
 
 <IN_CTAB_PARAM_VAL_STATE>[\"]?[a-zA-Z0-9_\-,\ \.\(\)]+[\"]? { 
-  yylval->text_T=new std::string(yytext);
+  yylval->text_T = new std::string(yytext);
   return TEXT_BLOCK; 
 }
 
 <IN_CTAB_PARAM_NAME_STATE>[a-zA-Z]+[a-zA-Z0-9_\.]* { 
-  yylval->text_T=new std::string(yytext);
+  yylval->text_T = new std::string(yytext);
   return TEXT_BLOCK; 
 }
 
@@ -288,7 +288,7 @@ void sln_lexer_error(const char *msg) {
 <IN_SLN_PARAM_STATE>\> |
 <IN_SLN_PARAM_STATE>\< {
   yy_push_state(IN_PROP_VAL_STATE, yyscanner);
-  yylval->text_T=new std::string(yytext);
+  yylval->text_T = new std::string(yytext);
   return COMPARE_TOKEN; 
 }
 
