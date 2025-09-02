@@ -217,62 +217,62 @@ size_t setup_smarts_string(const std::string &text, yyscan_t yyscanner) {
 				return ATOM_TOKEN;
 			}
 <IN_ATOM_STATE>D {
-	yylval->atom = new QueryAtom();
-	yylval->atom->setQuery(makeAtomExplicitDegreeQuery(1));
-	return COMPLEX_ATOM_QUERY_TOKEN;
+  yylval->atom = new QueryAtom();
+  yylval->atom->setQuery(makeAtomExplicitDegreeQuery(1));
+  return COMPLEX_ATOM_QUERY_TOKEN;
 }
 <IN_ATOM_STATE>d {
-	yylval->atom = new QueryAtom();
-	yylval->atom->setQuery(makeAtomNonHydrogenDegreeQuery(1));
-	return COMPLEX_ATOM_QUERY_TOKEN;
+  yylval->atom = new QueryAtom();
+  yylval->atom->setQuery(makeAtomNonHydrogenDegreeQuery(1));
+  return COMPLEX_ATOM_QUERY_TOKEN;
 }
 
 <IN_ATOM_STATE>X {
-	yylval->atom = new QueryAtom();
-	yylval->atom->setQuery(makeAtomTotalDegreeQuery(1));
-	return COMPLEX_ATOM_QUERY_TOKEN;
+  yylval->atom = new QueryAtom();
+  yylval->atom->setQuery(makeAtomTotalDegreeQuery(1));
+  return COMPLEX_ATOM_QUERY_TOKEN;
 }
 
 <IN_ATOM_STATE>x {
-	yylval->atom = new QueryAtom();
-	yylval->atom->setQuery(makeAtomHasRingBondQuery());
-	return RINGBOND_ATOM_QUERY_TOKEN;
+  yylval->atom = new QueryAtom();
+  yylval->atom->setQuery(makeAtomHasRingBondQuery());
+  return RINGBOND_ATOM_QUERY_TOKEN;
 }
 
 <IN_ATOM_STATE>v {
-	yylval->atom = new QueryAtom();
-	yylval->atom->setQuery(makeAtomTotalValenceQuery(1));
-	return COMPLEX_ATOM_QUERY_TOKEN;
+  yylval->atom = new QueryAtom();
+  yylval->atom->setQuery(makeAtomTotalValenceQuery(1));
+  return COMPLEX_ATOM_QUERY_TOKEN;
 }
 
 <IN_ATOM_STATE>z {
-	yylval->atom = new QueryAtom();
-	yylval->atom->setQuery(makeAtomHasHeteroatomNbrsQuery());
-	return HETERONEIGHBOR_ATOM_QUERY_TOKEN;
+  yylval->atom = new QueryAtom();
+  yylval->atom->setQuery(makeAtomHasHeteroatomNbrsQuery());
+  return HETERONEIGHBOR_ATOM_QUERY_TOKEN;
 }
 
 <IN_ATOM_STATE>Z {
-	yylval->atom = new QueryAtom();
-	yylval->atom->setQuery(makeAtomHasAliphaticHeteroatomNbrsQuery());
-	return ALIPHATICHETERONEIGHBOR_ATOM_QUERY_TOKEN;
+  yylval->atom = new QueryAtom();
+  yylval->atom->setQuery(makeAtomHasAliphaticHeteroatomNbrsQuery());
+  return ALIPHATICHETERONEIGHBOR_ATOM_QUERY_TOKEN;
 }
 
 <IN_ATOM_STATE>h {
-	yylval->atom = new QueryAtom();
-        yylval->atom->setQuery(makeAtomHasImplicitHQuery());
-	return IMPLICIT_H_ATOM_QUERY_TOKEN;
+  yylval->atom = new QueryAtom();
+  yylval->atom->setQuery(makeAtomHasImplicitHQuery());
+  return IMPLICIT_H_ATOM_QUERY_TOKEN;
 }
 
 <IN_ATOM_STATE>R {
-	yylval->atom = new QueryAtom();
-	yylval->atom->setQuery(new AtomRingQuery(-1));
-	return COMPLEX_ATOM_QUERY_TOKEN;
+  yylval->atom = new QueryAtom();
+  yylval->atom->setQuery(new AtomRingQuery(-1));
+  return COMPLEX_ATOM_QUERY_TOKEN;
 }
 
 <IN_ATOM_STATE>r {
-	yylval->atom = new QueryAtom();
-	yylval->atom->setQuery(makeAtomInRingQuery());
-	return RINGSIZE_ATOM_QUERY_TOKEN;
+  yylval->atom = new QueryAtom();
+  yylval->atom->setQuery(makeAtomInRingQuery());
+  return RINGSIZE_ATOM_QUERY_TOKEN;
 }
 
 H			{  return H_TOKEN;  }
@@ -322,22 +322,22 @@ s			{  yylval->ival = 16;  return AROMATIC_ATOM_TOKEN;  }
 
 
 \*			{
-	yylval->atom = new QueryAtom();
-	yylval->atom->setQuery(makeAtomNullQuery());
-	return SIMPLE_ATOM_QUERY_TOKEN;
+  yylval->atom = new QueryAtom();
+  yylval->atom->setQuery(makeAtomNullQuery());
+  return SIMPLE_ATOM_QUERY_TOKEN;
 }
 
 a			{
-	yylval->atom = new QueryAtom();
-	yylval->atom->setQuery(makeAtomAromaticQuery());
-	yylval->atom->setIsAromatic(true);
-	return SIMPLE_ATOM_QUERY_TOKEN;
+  yylval->atom = new QueryAtom();
+  yylval->atom->setQuery(makeAtomAromaticQuery());
+  yylval->atom->setIsAromatic(true);
+  return SIMPLE_ATOM_QUERY_TOKEN;
 }
 
 A			{
-	yylval->atom = new QueryAtom();
-	yylval->atom->setQuery(makeAtomAliphaticQuery());
-	return SIMPLE_ATOM_QUERY_TOKEN;
+  yylval->atom = new QueryAtom();
+  yylval->atom->setQuery(makeAtomAliphaticQuery());
+  return SIMPLE_ATOM_QUERY_TOKEN;
 }
 
 
@@ -420,37 +420,37 @@ A			{
 \,			{ return OR_TOKEN; }
 
 \^0		{
-	yylval->atom = new QueryAtom();
-	yylval->atom->setQuery(makeAtomHybridizationQuery(Atom::S));
-	return HYB_TOKEN;
+  yylval->atom = new QueryAtom();
+  yylval->atom->setQuery(makeAtomHybridizationQuery(Atom::S));
+  return HYB_TOKEN;
 }
 
 \^1		{
-	yylval->atom = new QueryAtom();
-	yylval->atom->setQuery(makeAtomHybridizationQuery(Atom::SP));
-	return HYB_TOKEN;
+  yylval->atom = new QueryAtom();
+  yylval->atom->setQuery(makeAtomHybridizationQuery(Atom::SP));
+  return HYB_TOKEN;
 }
 
 \^2		{
-	yylval->atom = new QueryAtom();
-	yylval->atom->setQuery(makeAtomHybridizationQuery(Atom::SP2));
-	return HYB_TOKEN;
+  yylval->atom = new QueryAtom();
+  yylval->atom->setQuery(makeAtomHybridizationQuery(Atom::SP2));
+  return HYB_TOKEN;
 }
 
 \^3		{
-	yylval->atom = new QueryAtom();
-	yylval->atom->setQuery(makeAtomHybridizationQuery(Atom::SP3));
-	return HYB_TOKEN;
+  yylval->atom = new QueryAtom();
+  yylval->atom->setQuery(makeAtomHybridizationQuery(Atom::SP3));
+  return HYB_TOKEN;
 }
 \^4		{
-	yylval->atom = new QueryAtom();
-	yylval->atom->setQuery(makeAtomHybridizationQuery(Atom::SP3D));
-	return HYB_TOKEN;
+  yylval->atom = new QueryAtom();
+  yylval->atom->setQuery(makeAtomHybridizationQuery(Atom::SP3D));
+  return HYB_TOKEN;
 }
 \^5		{
-	yylval->atom = new QueryAtom();
-	yylval->atom->setQuery(makeAtomHybridizationQuery(Atom::SP3D2));
-	return HYB_TOKEN;
+  yylval->atom = new QueryAtom();
+  yylval->atom->setQuery(makeAtomHybridizationQuery(Atom::SP3D2));
+  return HYB_TOKEN;
 }
 \n		return EOS_TOKEN;
 
