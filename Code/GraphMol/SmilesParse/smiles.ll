@@ -58,10 +58,10 @@ size_t setup_smiles_string(const std::string &text, yyscan_t yyscanner){
 
   // ltrim
 
-  for(start = 0 ; start < _yybytes_len; ++start) {
+  for (start = 0 ; start < _yybytes_len; ++start) {
     if (yybytes[start] > 32) break;
   }
-  for(end = _yybytes_len ; end > start; --end) {
+  for (end = _yybytes_len ; end > start; --end) {
     if (yybytes[end] > 32) break;
   }
 
