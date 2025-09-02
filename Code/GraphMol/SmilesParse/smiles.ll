@@ -52,17 +52,17 @@ size_t setup_smiles_string(const std::string &text, yyscan_t yyscanner) {
   yy_size_t _yybytes_len = text.size(), n, start, end;
   /* Get memory for full buffer, including space for trailing EOB's. */
   n = _yybytes_len + 2;
-  buf = (char *) yysmiles_alloc(n, yyscanner);
+  buf = (char *)yysmiles_alloc(n, yyscanner);
   if (!buf) {
-    smiles_lexer_error( "out of dynamic memory in yysmiles__scan_bytes()" );
+    smiles_lexer_error("out of dynamic memory in yysmiles__scan_bytes()");
   }
 
   // ltrim
 
-  for (start = 0 ; start < _yybytes_len; ++start) {
+  for (start = 0; start < _yybytes_len; ++start) {
     if (yybytes[start] > 32) break;
   }
-  for (end = _yybytes_len ; end > start; --end) {
+  for (end = _yybytes_len; end > start; --end) {
     if (yybytes[end] > 32) break;
   }
 
@@ -70,22 +70,20 @@ size_t setup_smiles_string(const std::string &text, yyscan_t yyscanner) {
   n = _yybytes_len + 2;
   memcpy(buf, yybytes + start, _yybytes_len);
 
-
   buf[_yybytes_len] = buf[_yybytes_len + 1] = YY_END_OF_BUFFER_CHAR;
 
   b = yysmiles__scan_buffer(buf, n, yyscanner);
-  if ( ! b )
+  if (!b) {
     smiles_lexer_error( "bad buffer in yysmiles__scan_bytes()" );
+  }
 
   /* It's okay to grow etc. this buffer, and we should throw it
    * away when we're done.
    */
   b->yy_is_our_buffer = 1;
 
-
   POSTCONDITION(b, "invalid buffer");
   return start;
-
 }
 %}
 
