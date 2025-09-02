@@ -263,7 +263,7 @@ mol: atomd {
 
   INT_VECT tmp;
   atom->getPropIfPresent(RDKit::common_properties::_RingClosures, tmp);
-  tmp.push_back(-($2+1));
+  tmp.push_back(-($2 + 1));
   atom->setProp(RDKit::common_properties::_RingClosures, tmp);
 }
 
@@ -286,7 +286,7 @@ mol: atomd {
 
   INT_VECT tmp;
   atom->getPropIfPresent(RDKit::common_properties::_RingClosures, tmp);
-  tmp.push_back(-($3+1));
+  tmp.push_back(-($3 + 1));
   atom->setProp(RDKit::common_properties::_RingClosures, tmp);
   delete $2;
 }
@@ -306,7 +306,7 @@ mol: atomd {
 
   INT_VECT tmp;
   atom->getPropIfPresent(RDKit::common_properties::_RingClosures, tmp);
-  tmp.push_back(-($3+1));
+  tmp.push_back(-($3 + 1));
   atom->setProp(RDKit::common_properties::_RingClosures, tmp);
 }
 
@@ -441,12 +441,12 @@ simple_atom:       ORGANIC_ATOM_TOKEN
 
 /* --------------------------------------------------------------- */
 ring_number:  digit
-| PERCENT_TOKEN NONZERO_DIGIT_TOKEN digit { $$ = $2*10+$3; }
+| PERCENT_TOKEN NONZERO_DIGIT_TOKEN digit { $$ = $2*10 + $3; }
 | PERCENT_TOKEN GROUP_OPEN_TOKEN digit GROUP_CLOSE_TOKEN { $$ = $3; }
-| PERCENT_TOKEN GROUP_OPEN_TOKEN digit digit GROUP_CLOSE_TOKEN { $$ = $3*10+$4; }
-| PERCENT_TOKEN GROUP_OPEN_TOKEN digit digit digit GROUP_CLOSE_TOKEN { $$ = $3*100+$4*10+$5; }
-| PERCENT_TOKEN GROUP_OPEN_TOKEN digit digit digit digit GROUP_CLOSE_TOKEN { $$ = $3*1000+$4*100+$5*10+$6; }
-| PERCENT_TOKEN GROUP_OPEN_TOKEN digit digit digit digit digit GROUP_CLOSE_TOKEN { $$ = $3*10000+$4*1000+$5*100+$6*10+$7; }
+| PERCENT_TOKEN GROUP_OPEN_TOKEN digit digit GROUP_CLOSE_TOKEN { $$ = $3*10 + $4; }
+| PERCENT_TOKEN GROUP_OPEN_TOKEN digit digit digit GROUP_CLOSE_TOKEN { $$ = $3*100 + $4*10 + $5; }
+| PERCENT_TOKEN GROUP_OPEN_TOKEN digit digit digit digit GROUP_CLOSE_TOKEN { $$ = $3*1000 + $4*100 + $5*10 + $6; }
+| PERCENT_TOKEN GROUP_OPEN_TOKEN digit digit digit digit digit GROUP_CLOSE_TOKEN { $$ = $3*10000 + $4*1000 + $5*100 + $6*10 + $7; }
 ;
 
 /* --------------------------------------------------------------- */
@@ -458,7 +458,7 @@ number:  ZERO_TOKEN
 nonzero_number:  NONZERO_DIGIT_TOKEN
 | nonzero_number digit {
   if($1 >= std::numeric_limits<std::int32_t>::max()/10 ||
-     $1*10 >= std::numeric_limits<std::int32_t>::max()-$2 ){
+     $1*10 >= std::numeric_limits<std::int32_t>::max() - $2 ){
      yyerror(input, molList, branchPoints, scanner, start_token, current_token_position, "number too large");
      yyErrorCleanup(molList);
      YYABORT;
