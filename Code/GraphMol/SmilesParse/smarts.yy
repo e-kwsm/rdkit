@@ -399,13 +399,15 @@ hydrogen_atom:	ATOM_OPEN_TOKEN H_TOKEN ATOM_CLOSE_TOKEN
 | ATOM_OPEN_TOKEN H_TOKEN charge_spec ATOM_CLOSE_TOKEN {
   QueryAtom *newQ = new QueryAtom(1);
   newQ->setFormalCharge($3);
-  newQ->expandQuery(makeAtomFormalChargeQuery($3), Queries::COMPOSITE_AND, true);
+  newQ->expandQuery(makeAtomFormalChargeQuery($3), Queries::COMPOSITE_AND,
+                    true);
   $$ = newQ;
 }
 | ATOM_OPEN_TOKEN H_TOKEN charge_spec COLON_TOKEN number ATOM_CLOSE_TOKEN {
   QueryAtom *newQ = new QueryAtom(1);
   newQ->setFormalCharge($3);
-  newQ->expandQuery(makeAtomFormalChargeQuery($3), Queries::COMPOSITE_AND, true);
+  newQ->expandQuery(makeAtomFormalChargeQuery($3), Queries::COMPOSITE_AND,
+                    true);
   newQ->setProp(RDKit::common_properties::molAtomMapNumber, $5);
 
   $$ = newQ;
@@ -415,7 +417,8 @@ hydrogen_atom:	ATOM_OPEN_TOKEN H_TOKEN ATOM_CLOSE_TOKEN
   newQ->setIsotope($2);
   newQ->setFormalCharge($4);
   newQ->expandQuery(makeAtomIsotopeQuery($2), Queries::COMPOSITE_AND, true);
-  newQ->expandQuery(makeAtomFormalChargeQuery($4), Queries::COMPOSITE_AND, true);
+  newQ->expandQuery(makeAtomFormalChargeQuery($4), Queries::COMPOSITE_AND,
+                    true);
   $$ = newQ;
 }
 | ATOM_OPEN_TOKEN number H_TOKEN charge_spec COLON_TOKEN number ATOM_CLOSE_TOKEN {
