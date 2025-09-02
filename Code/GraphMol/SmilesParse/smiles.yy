@@ -308,7 +308,8 @@ mol: atomd {
   int atomIdx1 = a1->getIdx();
   int atomIdx2 = mp->addAtom($3, true, true);
   mp->addBond(atomIdx1, atomIdx2,
-	      SmilesParseOps::GetUnspecifiedBondType(mp, a1, mp->getAtomWithIdx(atomIdx2)));
+              SmilesParseOps::GetUnspecifiedBondType(
+                  mp, a1, mp->getAtomWithIdx(atomIdx2)));
   ++numBondsParsed;
   branchPoints.push_back({atomIdx1, $2});
 }
