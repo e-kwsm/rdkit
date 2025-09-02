@@ -82,8 +82,9 @@ void yysmiles_error(const char *input, std::vector<RDKit::RWMol *> *ms,
 %parse-param {unsigned int &current_token_position}
 
 %code provides {
-#define YY_DECL int yylex \
-               (YYSTYPE *yylval_param , yyscan_t yyscanner, int &start_token, unsigned int &current_token_position)
+#define YY_DECL                                                          \
+  int yylex(YYSTYPE *yylval_param, yyscan_t yyscanner, int &start_token, \
+            unsigned int &current_token_position)
 }
 
 %union {
