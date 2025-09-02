@@ -547,12 +547,12 @@ recursive_query: BEGIN_RECURSE mol END_RECURSE {
   // close any rings in the molecule:
   SmilesParseOps::CloseMolRings(molP, 0);
 
-  //molP->debugMol(std::cout);
+  // molP->debugMol(std::cout);
   qA->setQuery(new RecursiveStructureQuery(molP));
-  //std::cout << "qA: " << qA << " " << qA->getQuery() << std::endl;
+  // std::cout << "qA: " << qA << " " << qA->getQuery() << std::endl;
   int sz = molList->size();
-  if ( sz == $2 + 1) {
-    molList->resize( sz - 1 );
+  if (sz == $2 + 1) {
+    molList->resize(sz - 1);
   }
   $$ = qA;
 }
@@ -568,12 +568,12 @@ recursive_query: BEGIN_RECURSE mol END_RECURSE {
   // close any rings in the molecule:
   SmilesParseOps::CloseMolRings(molP, 0);
 
-  //molP->debugMol(std::cout);
+  // molP->debugMol(std::cout);
   qA->setQuery(new RecursiveStructureQuery(molP, $5));
-  //std::cout << "qA: " << qA << " " << qA->getQuery() << std::endl;
+  // std::cout << "qA: " << qA << " " << qA->getQuery() << std::endl;
   int sz = molList->size();
-  if ( sz == $2 + 1) {
-    molList->resize( sz - 1 );
+  if (sz == $2 + 1) {
+    molList->resize(sz - 1);
   }
   $$ = qA;
 }
