@@ -67,7 +67,7 @@ void setup_sln_string(const std::string &text, yyscan_t yyscanner){
 
 #define YY_FATAL_ERROR(msg) sln_lexer_error(msg)
 void sln_lexer_error(const char *msg) {
-     BOOST_LOG(rdErrorLog) << msg<<std::endl;
+     BOOST_LOG(rdErrorLog) << msg << std::endl;
      throw ValueErrorException(msg);
 }
 
@@ -369,7 +369,7 @@ void sln_lexer_error(const char *msg) {
 	//  closing a parameter block:
   yy_pop_state(yyscanner);
 	if(YY_START != IN_SLN_PARAM_STATE){
-		std::cerr << " after closing a recursion, we were not in the appropriate state."  <<std::endl;
+		std::cerr << " after closing a recursion, we were not in the appropriate state." << std::endl;
 	} else {
     yy_pop_state(yyscanner);
   }

@@ -39,7 +39,7 @@ using namespace RDKit;
 #define YY_FATAL_ERROR(msg) smiles_lexer_error(msg)
 
 void smiles_lexer_error(const char *msg) {
-     BOOST_LOG(rdErrorLog) << msg<<std::endl;
+     BOOST_LOG(rdErrorLog) << msg << std::endl;
      throw ValueErrorException(msg);
 }
 
