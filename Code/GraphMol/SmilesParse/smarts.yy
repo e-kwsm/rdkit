@@ -633,15 +633,15 @@ atom_query:	simple_atom
 }
 | possible_range_query RANGE_OPEN_TOKEN MINUS_TOKEN number RANGE_CLOSE_TOKEN {
   ATOM_EQUALS_QUERY *oq = static_cast<ATOM_EQUALS_QUERY *>($1->getQuery());
-  ATOM_GREATEREQUAL_QUERY *nq = makeAtomSimpleQuery<ATOM_GREATEREQUAL_QUERY>($4, oq->getDataFunc(),
-    std::string("greater_") + oq->getDescription());
+  ATOM_GREATEREQUAL_QUERY *nq = makeAtomSimpleQuery<ATOM_GREATEREQUAL_QUERY>(
+      $4, oq->getDataFunc(), std::string("greater_") + oq->getDescription());
   $1->setQuery(nq);
   $$ = $1;
 }
 | possible_range_query RANGE_OPEN_TOKEN number MINUS_TOKEN RANGE_CLOSE_TOKEN {
   ATOM_EQUALS_QUERY *oq = static_cast<ATOM_EQUALS_QUERY *>($1->getQuery());
-  ATOM_LESSEQUAL_QUERY *nq = makeAtomSimpleQuery<ATOM_LESSEQUAL_QUERY>($3, oq->getDataFunc(),
-    std::string("less_") + oq->getDescription());
+  ATOM_LESSEQUAL_QUERY *nq = makeAtomSimpleQuery<ATOM_LESSEQUAL_QUERY>(
+      $3, oq->getDataFunc(), std::string("less_") + oq->getDescription());
   $1->setQuery(nq);
   $$ = $1;
 }
