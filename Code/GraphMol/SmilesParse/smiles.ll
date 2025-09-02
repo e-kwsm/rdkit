@@ -51,7 +51,7 @@ size_t setup_smiles_string(const std::string &text, yyscan_t yyscanner) {
   yy_size_t _yybytes_len = text.size(), n, start, end;
   /* Get memory for full buffer, including space for trailing EOB's. */
   n = _yybytes_len + 2;
-  buf = (char *) yysmiles_alloc(n, yyscanner);
+  buf = (char *)yysmiles_alloc(n, yyscanner);
   if (!buf) {
     smiles_lexer_error("out of dynamic memory in yysmiles__scan_bytes()");
   }
@@ -87,7 +87,6 @@ size_t setup_smiles_string(const std::string &text, yyscan_t yyscanner) {
 
   POSTCONDITION(b, "invalid buffer");
   return start;
-
 }
 %}
 
