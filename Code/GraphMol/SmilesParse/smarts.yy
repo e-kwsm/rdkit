@@ -246,12 +246,12 @@ ATOM_OPEN_TOKEN bad_atom_def
 /* --------------------------------------------------------------- */
 // FIX: mol MINUS DIGIT
 mol: atomd {
-  int sz     = molList->size();
-  molList->resize( sz + 1);
-  (*molList)[ sz ] = new RWMol();
+  int sz = molList->size();
+  molList->resize(sz + 1);
+  (*molList)[sz] = new RWMol();
   $1->setProp(RDKit::common_properties::_SmilesStart, 1);
-  (*molList)[ sz ]->addAtom($1, true, true);
-  //delete $1;
+  (*molList)[sz]->addAtom($1, true, true);
+  // delete $1;
   $$ = sz;
 }
 | mol atomd       {
@@ -260,7 +260,8 @@ mol: atomd {
   int atomIdx1 = a1->getIdx();
   int atomIdx2 = mp->addAtom($2, true, true);
 
-  QueryBond *newB = SmilesParseOps::getUnspecifiedQueryBond(a1, mp->getAtomWithIdx(atomIdx2));
+  QueryBond *newB = SmilesParseOps::getUnspecifiedQueryBond(
+      a1, mp->getAtomWithIdx(atomIdx2));
   newB->setOwningMol(mp);
   newB->setBeginAtomIdx(atomIdx1);
   newB->setEndAtomIdx(atomIdx2);
@@ -272,11 +273,11 @@ mol: atomd {
   RWMol *mp = (*molList)[$$];
   int atomIdx1 = mp->getActiveAtom()->getIdx();
   int atomIdx2 = mp->addAtom($3, true, true);
-  if ( $2->getBondType() == Bond::DATIVER ) {
+  if ($2->getBondType() == Bond::DATIVER) {
     $2->setBeginAtomIdx(atomIdx1);
     $2->setEndAtomIdx(atomIdx2);
     $2->setBondType(Bond::DATIVE);
-  } else if ( $2->getBondType() == Bond::DATIVEL ) {
+  } else if ($2->getBondType() == Bond::DATIVEL) {
     $2->setBeginAtomIdx(atomIdx2);
     $2->setEndAtomIdx(atomIdx1);
     $2->setBondType(Bond::DATIVE);
@@ -296,7 +297,7 @@ mol: atomd {
 }
 
 | mol ring_number {
-  RWMol * mp = (*molList)[$$];
+  RWMol *mp = (*molList)[$$];
   Atom *atom = mp->getActiveAtom();
 
   QueryBond *newB = SmilesParseOps::getUnspecifiedQueryBond(atom, nullptr);
@@ -320,7 +321,7 @@ mol: atomd {
 }
 
 | mol bond_expr ring_number {
-  RWMol * mp = (*molList)[$$];
+  RWMol *mp = (*molList)[$$];
   Atom *atom = mp->getActiveAtom();
 
   mp->setBondBookmark($2, $3);
