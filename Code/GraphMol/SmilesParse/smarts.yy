@@ -34,7 +34,8 @@ namespace {
   molList->clear();
   molList->resize(0);
  }
-}
+}  // namespace
+
 void
 yysmarts_error( const char *input,
                 std::vector<RDKit::RWMol *> *ms,
