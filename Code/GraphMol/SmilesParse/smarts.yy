@@ -384,9 +384,10 @@ mol: atomd {
 
 | mol GROUP_CLOSE_TOKEN {
   if (branchPoints.empty()) {
-     yyerror(input, molList, branchPoints, scanner, start_token, current_token_position, "extra close parentheses");
-     yyErrorCleanup(molList);
-     YYABORT;
+    yyerror(input, molList, branchPoints, scanner, start_token,
+            current_token_position, "extra close parentheses");
+    yyErrorCleanup(molList);
+    YYABORT;
   }
   RWMol *mp = (*molList)[$$];
   mp->setActiveAtom(branchPoints.back().first);
