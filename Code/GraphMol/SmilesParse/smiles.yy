@@ -27,7 +27,7 @@ extern int yysmiles_lex(YYSTYPE *, void *, int &, unsigned int&);
 using namespace RDKit;
 namespace {
  void yyErrorCleanup(std::vector<RDKit::RWMol *> *molList){
-  for(std::vector<RDKit::RWMol *>::iterator iter=molList->begin();
+  for(std::vector<RDKit::RWMol *>::iterator iter = molList->begin();
       iter != molList->end(); ++iter){
       SmilesParseOps::CleanupAfterParseError(*iter);
       delete *iter;
@@ -202,8 +202,8 @@ mol: atomd {
 | mol atomd       {
   RWMol *mp = (*molList)[$$];
   Atom *a1 = mp->getActiveAtom();
-  int atomIdx1=a1->getIdx();
-  int atomIdx2=mp->addAtom($2, true, true);
+  int atomIdx1 = a1->getIdx();
+  int atomIdx2 = mp->addAtom($2, true, true);
   mp->addBond(atomIdx1, atomIdx2,
 	      SmilesParseOps::GetUnspecifiedBondType(mp, a1, mp->getAtomWithIdx(atomIdx2)));
   mp->getBondBetweenAtoms(atomIdx1, atomIdx2)->setProp("_cxsmilesBondIdx", numBondsParsed++);
@@ -248,7 +248,7 @@ mol: atomd {
 
 | mol ring_number {
   RWMol * mp = (*molList)[$$];
-  Atom *atom=mp->getActiveAtom();
+  Atom *atom = mp->getActiveAtom();
   mp->setAtomBookmark(atom, $2);
 
   Bond *newB = mp->createPartialBond(atom->getIdx(),
@@ -269,7 +269,7 @@ mol: atomd {
 
 | mol BOND_TOKEN ring_number {
   RWMol * mp = (*molList)[$$];
-  Atom *atom=mp->getActiveAtom();
+  Atom *atom = mp->getActiveAtom();
   Bond *newB = mp->createPartialBond(atom->getIdx(),
 				     $2->getBondType());
   if($2->hasProp(RDKit::common_properties::_unspecifiedOrder)){
@@ -293,7 +293,7 @@ mol: atomd {
 
 | mol MINUS_TOKEN ring_number {
   RWMol * mp = (*molList)[$$];
-  Atom *atom=mp->getActiveAtom();
+  Atom *atom = mp->getActiveAtom();
   Bond *newB = mp->createPartialBond(atom->getIdx(),
 				     Bond::SINGLE);
   mp->setAtomBookmark(atom, $3);
@@ -313,8 +313,8 @@ mol: atomd {
 | mol branch_open_token atomd {
   RWMol *mp = (*molList)[$$];
   Atom *a1 = mp->getActiveAtom();
-  int atomIdx1=a1->getIdx();
-  int atomIdx2=mp->addAtom($3, true, true);
+  int atomIdx1 = a1->getIdx();
+  int atomIdx2 = mp->addAtom($3, true, true);
   mp->addBond(atomIdx1, atomIdx2,
 	      SmilesParseOps::GetUnspecifiedBondType(mp, a1, mp->getAtomWithIdx(atomIdx2)));
   mp->getBondBetweenAtoms(atomIdx1, atomIdx2)->setProp("_cxsmilesBondIdx", numBondsParsed++);
