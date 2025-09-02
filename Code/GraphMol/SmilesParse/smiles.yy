@@ -37,21 +37,15 @@ namespace {
 }
 }  // namespace
 
-
-void
-yysmiles_error( const char *input,
-                std::vector<RDKit::RWMol *> *ms,
-                RDKit::Atom* &,
-                RDKit::Bond* &,
-                unsigned int &, unsigned int &,
-                std::vector<std::pair<unsigned int, unsigned int>>&,
-		void *, int, unsigned int bad_token_position, const char * msg )
-{
+void yysmiles_error(const char *input, std::vector<RDKit::RWMol *> *ms,
+                    RDKit::Atom *&, RDKit::Bond *&, unsigned int &,
+                    unsigned int &,
+                    std::vector<std::pair<unsigned int, unsigned int>> &,
+                    void *, int, unsigned int bad_token_position,
+                    const char *msg) {
   yyErrorCleanup(ms);
-  SmilesParseOps::detail::printSyntaxErrorMessage(input,
-                                                  msg,
-                                                  bad_token_position,
-                                                  "SMILES");
+  SmilesParseOps::detail::printSyntaxErrorMessage(input, msg,
+                                                  bad_token_position, "SMILES");
 }
 
 void
