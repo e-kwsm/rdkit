@@ -38,12 +38,12 @@ using namespace RDKit;
 #define YY_FATAL_ERROR(msg) smiles_lexer_error(msg)
 
 void smiles_lexer_error(const char *msg) {
-     BOOST_LOG(rdErrorLog) << msg << std::endl;
-     throw ValueErrorException(msg);
+  BOOST_LOG(rdErrorLog) << msg << std::endl;
+  throw ValueErrorException(msg);
 }
 
-size_t setup_smiles_string(const std::string &text, yyscan_t yyscanner){
-//  YY_BUFFER_STATE buff=yysmiles__scan_string(text.c_str()+pos,yyscanner);
+size_t setup_smiles_string(const std::string &text, yyscan_t yyscanner) {
+  //  YY_BUFFER_STATE buff=yysmiles__scan_string(text.c_str()+pos,yyscanner);
   // Faster implementation of yysmiles__scan_string that handles trimming
   YY_BUFFER_STATE b;
   char *buf;
