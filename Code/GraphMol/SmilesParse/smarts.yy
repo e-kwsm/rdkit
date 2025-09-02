@@ -63,7 +63,6 @@ void yysmarts_error(const char *input, std::vector<RDKit::RWMol *> *ms,
                                                   bad_token_position, "SMARTS");
 }
 
-
 %}
 
 %define api.pure full
