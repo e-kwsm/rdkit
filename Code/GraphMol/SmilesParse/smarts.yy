@@ -89,11 +89,11 @@ void yysmarts_error(const char *input, std::vector<RDKit::RWMol *> *ms,
 }
 
 %union {
-  int                      moli;
-  RDKit::QueryAtom * atom;
-  RDKit::QueryBond * bond;
+  int moli;
+  RDKit::QueryAtom *atom;
+  RDKit::QueryBond *bond;
   RDKit::Atom::ChiralType chiraltype;
-  int                      ival;
+  int ival;
 }
 
 %token START_MOL START_ATOM START_BOND;
