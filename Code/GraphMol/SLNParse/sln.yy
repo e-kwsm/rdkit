@@ -62,7 +62,7 @@ yysln_error( const char *input,
   RDUNUSED_PARAM(ms);
   RDUNUSED_PARAM(doQ);
   RDUNUSED_PARAM(scanner);
-  BOOST_LOG(rdErrorLog)<<"SLN Parse Error: "<<msg<<" while parsing: "<<input<<std::endl;
+  BOOST_LOG(rdErrorLog) << "SLN Parse Error: " << msg << " while parsing: " << input << std::endl;
 
   for(auto& m : *ms) {
     SLNParse::CleanupAfterParse(m);
