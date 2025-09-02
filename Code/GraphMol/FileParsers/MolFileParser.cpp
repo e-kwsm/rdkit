@@ -34,6 +34,7 @@
 #include <RDGeneral/FileParseException.h>
 #include <RDGeneral/BadFileException.h>
 #include <RDGeneral/LocaleSwitcher.h>
+#include <ranges>
 #include <typeinfo>
 #include <exception>
 #include <charconv>
@@ -3129,8 +3130,8 @@ void processSGroups(RWMol *mol) {
   // now remove the S groups we processed, we saved indices so do this in
   // backwards
   auto &sgs = getSubstanceGroups(*mol);
-  for (auto it = sgsToRemove.rbegin(); it != sgsToRemove.rend(); ++it) {
-    sgs.erase(sgs.begin() + *it);
+  for (unsigned int &it : std::ranges::reverse_view(sgsToRemove)) {
+    sgs.erase(sgs.begin() + it);
   }
 }
 
