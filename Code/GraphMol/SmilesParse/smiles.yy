@@ -325,7 +325,7 @@ mol: atomd {
     $3->setBeginAtomIdx(atomIdx1);
     $3->setEndAtomIdx(atomIdx2);
     $3->setBondType(Bond::DATIVE);
-  }else if ( $3->getBondType() == Bond::DATIVEL ){
+  } else if ($3->getBondType() == Bond::DATIVEL) {
     $3->setBeginAtomIdx(atomIdx2);
     $3->setEndAtomIdx(atomIdx1);
     $3->setBondType(Bond::DATIVE);
@@ -343,14 +343,16 @@ mol: atomd {
   int atomIdx1 = mp->getActiveAtom()->getIdx();
   int atomIdx2 = mp->addAtom($4, true, true);
   mp->addBond(atomIdx1, atomIdx2, Bond::SINGLE);
-  mp->getBondBetweenAtoms(atomIdx1, atomIdx2)->setProp("_cxsmilesBondIdx", numBondsParsed++);
+  mp->getBondBetweenAtoms(atomIdx1, atomIdx2)
+      ->setProp("_cxsmilesBondIdx", numBondsParsed++);
   branchPoints.push_back({atomIdx1, $2});
 }
 | mol GROUP_CLOSE_TOKEN {
   if (branchPoints.empty()) {
-     yyerror(input, molList, branchPoints, scanner, start_token, current_token_position, "extra close parentheses");
-     yyErrorCleanup(molList);
-     YYABORT;
+    yyerror(input, molList, branchPoints, scanner, start_token,
+            current_token_position, "extra close parentheses");
+    yyErrorCleanup(molList);
+    YYABORT;
   }
   RWMol *mp = (*molList)[$$];
 
