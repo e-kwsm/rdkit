@@ -116,7 +116,8 @@ inline std::vector<std::unique_ptr<RWMol>> CDXMLDataStreamToMols(
 //! full functionality, just the base ones required for molecule and
 //! reaction parsing.
 //! Note: If the ChemDraw extensions are available,
-//!   This function uses the file extension to determine the file type, .cdx or .cdxml
+//!   This function uses the file extension to determine the file type, .cdx or
+//!   .cdxml
 //!   If not, it defaults to CDXML
 /*!
  *   \param filename - cdxml fileName
