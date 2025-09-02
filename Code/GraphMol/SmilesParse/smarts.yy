@@ -63,7 +63,7 @@ namespace {
     }
   }
 
-}
+}  // namespace
 void
 yysmarts_error( const char *input,
                 std::vector<RDKit::RWMol *> *ms,
