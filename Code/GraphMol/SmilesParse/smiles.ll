@@ -229,16 +229,16 @@ size_t setup_smiles_string(const std::string &text, yyscan_t yyscanner){
 <IN_ATOM_STATE>Uus	{ yylval->atom = new Atom(117); return ATOM_TOKEN; }
 <IN_ATOM_STATE>Uuo	{ yylval->atom = new Atom(118); return ATOM_TOKEN; }
 
-B  { yylval->atom = new Atom(5);return ORGANIC_ATOM_TOKEN; }
-C  { yylval->atom = new Atom(6);return ORGANIC_ATOM_TOKEN; }
-N  { yylval->atom = new Atom(7);return ORGANIC_ATOM_TOKEN; }
-O  { yylval->atom = new Atom(8);return ORGANIC_ATOM_TOKEN; }
-P  { yylval->atom = new Atom(15);return ORGANIC_ATOM_TOKEN; }
-S  { yylval->atom = new Atom(16);return ORGANIC_ATOM_TOKEN; }
-F  { yylval->atom = new Atom(9);return ORGANIC_ATOM_TOKEN; }
-Cl { yylval->atom = new Atom(17);return ORGANIC_ATOM_TOKEN; }
-Br { yylval->atom = new Atom(35);return ORGANIC_ATOM_TOKEN; }
-I  { yylval->atom = new Atom(53);return ORGANIC_ATOM_TOKEN; }
+B  { yylval->atom = new Atom(5); return ORGANIC_ATOM_TOKEN; }
+C  { yylval->atom = new Atom(6); return ORGANIC_ATOM_TOKEN; }
+N  { yylval->atom = new Atom(7); return ORGANIC_ATOM_TOKEN; }
+O  { yylval->atom = new Atom(8); return ORGANIC_ATOM_TOKEN; }
+P  { yylval->atom = new Atom(15); return ORGANIC_ATOM_TOKEN; }
+S  { yylval->atom = new Atom(16); return ORGANIC_ATOM_TOKEN; }
+F  { yylval->atom = new Atom(9); return ORGANIC_ATOM_TOKEN; }
+Cl { yylval->atom = new Atom(17); return ORGANIC_ATOM_TOKEN; }
+Br { yylval->atom = new Atom(35); return ORGANIC_ATOM_TOKEN; }
+I  { yylval->atom = new Atom(53); return ORGANIC_ATOM_TOKEN; }
 
 H			{
 				return H_TOKEN;
@@ -334,17 +334,17 @@ s		    {	yylval->atom = new Atom( 16 );
 	  return BOND_TOKEN; }
 \~	{ yylval->bond = new QueryBond();
 	  yylval->bond->setQuery(makeBondNullQuery());
-	  return BOND_TOKEN;  }
+	  return BOND_TOKEN; }
 
 [\\]{1,2}    { yylval->bond = new Bond(Bond::UNSPECIFIED);
 	yylval->bond->setProp(RDKit::common_properties::_unspecifiedOrder, 1);
 	yylval->bond->setBondDir(Bond::ENDDOWNRIGHT);
-	return BOND_TOKEN;  }
+	return BOND_TOKEN; }
 
 [\/]    { yylval->bond = new Bond(Bond::UNSPECIFIED);
 	yylval->bond->setProp(RDKit::common_properties::_unspecifiedOrder, 1);
 	yylval->bond->setBondDir(Bond::ENDUPRIGHT);
-	return BOND_TOKEN;  }
+	return BOND_TOKEN; }
 
 \-			{ return MINUS_TOKEN; }
 
