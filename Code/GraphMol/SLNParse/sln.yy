@@ -176,7 +176,7 @@ mol: primmol
 
 primmol: H_TOKEN {
   RDKit::Atom *newAtom;
-  if(!doQueries){
+  if (!doQueries) {
     newAtom = new RDKit::Atom(1);
   } else {
     newAtom = new RDKit::QueryAtom(1);
@@ -224,7 +224,7 @@ primmol: H_TOKEN {
 }
 | primmol bond H_TOKEN {
   RDKit::Atom *newAtom;
-  if(!doQueries){
+  if (!doQueries) {
     newAtom = new RDKit::Atom(1);
   } else {
     newAtom = new RDKit::QueryAtom(1);
@@ -236,7 +236,7 @@ primmol: H_TOKEN {
 | primmol AT_TOKEN number H_TOKEN {
   SLNParse::closeRingBond(*molList, $$, $3);
   RDKit::Atom *newAtom;
-  if(!doQueries){
+  if (!doQueries) {
     newAtom = new RDKit::Atom(1);
   } else {
     newAtom = new RDKit::QueryAtom(1);
@@ -249,7 +249,7 @@ primmol: H_TOKEN {
   // closeRingBond() takes ownership of the bond
   SLNParse::closeRingBond(*molList, $$, $4, $2);
   RDKit::Atom *newAtom;
-  if(!doQueries){
+  if (!doQueries) {
     newAtom = new RDKit::Atom(1);
   } else {
     newAtom = new RDKit::QueryAtom(1);
@@ -261,7 +261,7 @@ primmol: H_TOKEN {
 | primmol OPEN_PAREN_TOKEN primmol CLOSE_PAREN_TOKEN H_TOKEN {
   SLNParse::addBranchToMol(*molList, $$, $3);
   RDKit::Atom *newAtom;
-  if(!doQueries){
+  if (!doQueries) {
     newAtom = new RDKit::Atom(1);
   } else {
     newAtom = new RDKit::QueryAtom(1);
@@ -275,7 +275,7 @@ primmol: H_TOKEN {
   // branch, so no leaks here'
   SLNParse::addBranchToMol(*molList, $$, $4, $3);
   RDKit::Atom *newAtom;
-  if(!doQueries){
+  if (!doQueries) {
     newAtom = new RDKit::Atom(1);
   } else {
     newAtom = new RDKit::QueryAtom(1);
@@ -287,7 +287,7 @@ primmol: H_TOKEN {
 | primmol OPEN_PAREN_TOKEN AT_TOKEN number CLOSE_PAREN_TOKEN H_TOKEN {
   SLNParse::closeRingBond(*molList, $$, $4);
   RDKit::Atom *newAtom;
-  if(!doQueries){
+  if (!doQueries) {
     newAtom = new RDKit::Atom(1);
   } else {
     newAtom = new RDKit::QueryAtom(1);
@@ -299,7 +299,7 @@ primmol: H_TOKEN {
 | primmol OPEN_PAREN_TOKEN bond AT_TOKEN number CLOSE_PAREN_TOKEN H_TOKEN {
   SLNParse::closeRingBond(*molList, $$, $5, $3);
   RDKit::Atom *newAtom;
-  if(!doQueries){
+  if (!doQueries) {
     newAtom = new RDKit::Atom(1);
   } else {
     newAtom = new RDKit::QueryAtom(1);
@@ -323,7 +323,7 @@ atom: hatom
 ;
 
 hatom: H_ASTERIX_TOKEN {
-  if(!doQueries){
+  if (!doQueries) {
     $$ = new RDKit::Atom(1);
   } else {
     $$ = new RDKit::QueryAtom(1);
@@ -331,7 +331,7 @@ hatom: H_ASTERIX_TOKEN {
   $$->setProp(RDKit::common_properties::_starred, 1, true);
 }
 | H_BRACKET_TOKEN  number CLOSE_BRACKET_TOKEN {
-  if(!doQueries){
+  if (!doQueries) {
     $$ = new RDKit::Atom(1);
   } else {
     $$ = new RDKit::QueryAtom(1);
@@ -339,7 +339,7 @@ hatom: H_ASTERIX_TOKEN {
   $$->setProp(RDKit::common_properties::_AtomID, static_cast<unsigned int>($2));
 }
 | H_BRACKET_TOKEN number COLON_TOKEN attriblist CLOSE_BRACKET_TOKEN {
-  if(!doQueries){
+  if (!doQueries) {
     $$ = new RDKit::Atom(1);
   } else {
     $$ = new RDKit::QueryAtom(1);
@@ -349,7 +349,7 @@ hatom: H_ASTERIX_TOKEN {
   delete $4;
 }
 | H_BRACKET_TOKEN attriblist CLOSE_BRACKET_TOKEN {
-  if(!doQueries){
+  if (!doQueries) {
     $$ = new RDKit::Atom(1);
   } else {
     $$ = new RDKit::QueryAtom(1);
@@ -405,7 +405,7 @@ bond: primbond
 
 primbond: onebond
 | primbond onebond {
-	if(!doQueries){
+	if (!doQueries) {
         yysln_error(input, molList, doQueries, 0, "sequential bonds not allowed in non-queries");
     YYABORT;
 	} else {
@@ -419,7 +419,7 @@ primbond: onebond
 
 onebond: MINUS_TOKEN {
   RDKit::Bond *bond;
-  if(doQueries){
+  if (doQueries) {
     bond = new RDKit::QueryBond(RDKit::Bond::SINGLE);
   } else {
     bond = new RDKit::Bond(RDKit::Bond::SINGLE);
@@ -428,7 +428,7 @@ onebond: MINUS_TOKEN {
 }
 | EQUALS_TOKEN {
   RDKit::Bond *bond;
-  if(doQueries){
+  if (doQueries) {
     bond = new RDKit::QueryBond(RDKit::Bond::DOUBLE);
   } else {
     bond = new RDKit::Bond(RDKit::Bond::DOUBLE);
@@ -437,7 +437,7 @@ onebond: MINUS_TOKEN {
 }
 | HASH_TOKEN {
   RDKit::Bond *bond;
-  if(doQueries){
+  if (doQueries) {
     bond = new RDKit::QueryBond(RDKit::Bond::TRIPLE);
   } else {
     bond = new RDKit::Bond(RDKit::Bond::TRIPLE);
@@ -447,7 +447,7 @@ onebond: MINUS_TOKEN {
 }
 | COLON_TOKEN {
   RDKit::Bond *bond;
-  if(doQueries){
+  if (doQueries) {
     bond = new RDKit::QueryBond(RDKit::Bond::AROMATIC);
   } else {
     bond = new RDKit::Bond(RDKit::Bond::AROMATIC);
