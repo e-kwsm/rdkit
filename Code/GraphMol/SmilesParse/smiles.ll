@@ -65,12 +65,12 @@ size_t setup_smiles_string(const std::string &text, yyscan_t yyscanner){
     if (yybytes[end] > 32) break;
   }
 
-  _yybytes_len = end-start+1;
+  _yybytes_len = end - start + 1;
   n = _yybytes_len + 2;
-  memcpy(buf, yybytes+start, _yybytes_len);
+  memcpy(buf, yybytes + start, _yybytes_len);
 
 
-  buf[_yybytes_len] = buf[_yybytes_len+1] = YY_END_OF_BUFFER_CHAR;
+  buf[_yybytes_len] = buf[_yybytes_len + 1] = YY_END_OF_BUFFER_CHAR;
 
   b = yysmiles__scan_buffer(buf, n, yyscanner);
   if ( ! b )
