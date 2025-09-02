@@ -43,7 +43,7 @@ void smiles_lexer_error(const char *msg) {
      throw ValueErrorException(msg);
 }
 
-size_t setup_smiles_string(const std::string &text,yyscan_t yyscanner){
+size_t setup_smiles_string(const std::string &text, yyscan_t yyscanner){
 //  YY_BUFFER_STATE buff=yysmiles__scan_string(text.c_str()+pos,yyscanner);
   // Faster implementation of yysmiles__scan_string that handles trimming
   YY_BUFFER_STATE b;
@@ -52,7 +52,7 @@ size_t setup_smiles_string(const std::string &text,yyscan_t yyscanner){
   yy_size_t _yybytes_len=text.size(), n, start, end;
   /* Get memory for full buffer, including space for trailing EOB's. */
   n = _yybytes_len + 2;
-  buf = (char *) yysmiles_alloc(n ,yyscanner );
+  buf = (char *) yysmiles_alloc(n, yyscanner );
   if ( ! buf )
     smiles_lexer_error( "out of dynamic memory in yysmiles__scan_bytes()" );
 
@@ -72,7 +72,7 @@ size_t setup_smiles_string(const std::string &text,yyscan_t yyscanner){
 
   buf[_yybytes_len] = buf[_yybytes_len+1] = YY_END_OF_BUFFER_CHAR;
 
-  b = yysmiles__scan_buffer(buf,n ,yyscanner);
+  b = yysmiles__scan_buffer(buf, n, yyscanner);
   if ( ! b )
     smiles_lexer_error( "bad buffer in yysmiles__scan_bytes()" );
 
@@ -82,7 +82,7 @@ size_t setup_smiles_string(const std::string &text,yyscan_t yyscanner){
   b->yy_is_our_buffer = 1;
 
 
-  POSTCONDITION(b,"invalid buffer");
+  POSTCONDITION(b, "invalid buffer");
   return start;
 
 }
@@ -335,12 +335,12 @@ s		    {	yylval->atom = new Atom( 16 );
 	  return BOND_TOKEN;  }
 
 [\\]{1,2}    { yylval->bond = new Bond(Bond::UNSPECIFIED);
-	yylval->bond->setProp(RDKit::common_properties::_unspecifiedOrder,1);
+	yylval->bond->setProp(RDKit::common_properties::_unspecifiedOrder, 1);
 	yylval->bond->setBondDir(Bond::ENDDOWNRIGHT);
 	return BOND_TOKEN;  }
 
 [\/]    { yylval->bond = new Bond(Bond::UNSPECIFIED);
-	yylval->bond->setProp(RDKit::common_properties::_unspecifiedOrder,1);
+	yylval->bond->setProp(RDKit::common_properties::_unspecifiedOrder, 1);
 	yylval->bond->setBondDir(Bond::ENDUPRIGHT);
 	return BOND_TOKEN;  }
 

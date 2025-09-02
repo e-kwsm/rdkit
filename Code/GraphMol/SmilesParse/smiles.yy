@@ -22,7 +22,7 @@
 #define YYDEBUG 1
 #include "smiles.tab.hpp"
 
-extern int yysmiles_lex(YYSTYPE *,void *,int &, unsigned int&);
+extern int yysmiles_lex(YYSTYPE *, void *, int &, unsigned int&);
 
 using namespace RDKit;
 namespace {
@@ -43,9 +43,9 @@ yysmiles_error( const char *input,
                 std::vector<RDKit::RWMol *> *ms,
                 RDKit::Atom* &,
                 RDKit::Bond* &,
-                unsigned int &,unsigned int &,
+                unsigned int &, unsigned int &,
                 std::vector<std::pair<unsigned int, unsigned int>>&,
-		void *,int, unsigned int bad_token_position, const char * msg )
+		void *, int, unsigned int bad_token_position, const char * msg )
 {
   yyErrorCleanup(ms);
   SmilesParseOps::detail::printSyntaxErrorMessage(input,
@@ -58,7 +58,7 @@ void
 yysmiles_error( const char *input,
                 std::vector<RDKit::RWMol *> *ms,
                 std::vector<std::pair<unsigned int, unsigned int>>&,
-		void *,int, unsigned int bad_token_position, const char * msg )
+		void *, int, unsigned int bad_token_position, const char * msg )
 {
   yyErrorCleanup(ms);
   SmilesParseOps::detail::printSyntaxErrorMessage(input,
@@ -193,7 +193,7 @@ mol: atomd {
   molList->resize( sz + 1);
   (*molList)[ sz ] = new RWMol();
   RDKit::RWMol *curMol = (*molList)[ sz ];
-  $1->setProp(RDKit::common_properties::_SmilesStart,1);
+  $1->setProp(RDKit::common_properties::_SmilesStart, 1);
   curMol->addAtom($1, true, true);
   //delete $1;
   $$ = sz;
@@ -203,17 +203,17 @@ mol: atomd {
   RWMol *mp = (*molList)[$$];
   Atom *a1 = mp->getActiveAtom();
   int atomIdx1=a1->getIdx();
-  int atomIdx2=mp->addAtom($2,true,true);
-  mp->addBond(atomIdx1,atomIdx2,
-	      SmilesParseOps::GetUnspecifiedBondType(mp,a1,mp->getAtomWithIdx(atomIdx2)));
-  mp->getBondBetweenAtoms(atomIdx1,atomIdx2)->setProp("_cxsmilesBondIdx",numBondsParsed++);
+  int atomIdx2=mp->addAtom($2, true, true);
+  mp->addBond(atomIdx1, atomIdx2,
+	      SmilesParseOps::GetUnspecifiedBondType(mp, a1, mp->getAtomWithIdx(atomIdx2)));
+  mp->getBondBetweenAtoms(atomIdx1, atomIdx2)->setProp("_cxsmilesBondIdx", numBondsParsed++);
   //delete $2;
 }
 
 | mol BOND_TOKEN atomd  {
   RWMol *mp = (*molList)[$$];
   int atomIdx1 = mp->getActiveAtom()->getIdx();
-  int atomIdx2 = mp->addAtom($3,true,true);
+  int atomIdx2 = mp->addAtom($3, true, true);
   if( $2->getBondType() == Bond::DATIVER ){
     $2->setBeginAtomIdx(atomIdx1);
     $2->setEndAtomIdx(atomIdx2);
@@ -226,45 +226,45 @@ mol: atomd {
     $2->setBeginAtomIdx(atomIdx1);
     $2->setEndAtomIdx(atomIdx2);
   }
-  $2->setProp("_cxsmilesBondIdx",numBondsParsed++);
-  mp->addBond($2,true);
+  $2->setProp("_cxsmilesBondIdx", numBondsParsed++);
+  mp->addBond($2, true);
   //delete $3;
 }
 
 | mol MINUS_TOKEN atomd {
   RWMol *mp = (*molList)[$$];
   int atomIdx1 = mp->getActiveAtom()->getIdx();
-  int atomIdx2 = mp->addAtom($3,true,true);
-  mp->addBond(atomIdx1,atomIdx2,Bond::SINGLE);
-  mp->getBondBetweenAtoms(atomIdx1,atomIdx2)->setProp("_cxsmilesBondIdx",numBondsParsed++);
+  int atomIdx2 = mp->addAtom($3, true, true);
+  mp->addBond(atomIdx1, atomIdx2, Bond::SINGLE);
+  mp->getBondBetweenAtoms(atomIdx1, atomIdx2)->setProp("_cxsmilesBondIdx", numBondsParsed++);
   //delete $3;
 }
 
 | mol SEPARATOR_TOKEN atomd {
   RWMol *mp = (*molList)[$$];
-  $3->setProp(RDKit::common_properties::_SmilesStart,1,true);
-  mp->addAtom($3,true,true);
+  $3->setProp(RDKit::common_properties::_SmilesStart, 1, true);
+  mp->addAtom($3, true, true);
 }
 
 | mol ring_number {
   RWMol * mp = (*molList)[$$];
   Atom *atom=mp->getActiveAtom();
-  mp->setAtomBookmark(atom,$2);
+  mp->setAtomBookmark(atom, $2);
 
   Bond *newB = mp->createPartialBond(atom->getIdx(),
 				     Bond::UNSPECIFIED);
-  mp->setBondBookmark(newB,$2);
-  newB->setProp(RDKit::common_properties::_unspecifiedOrder,1);
+  mp->setBondBookmark(newB, $2);
+  newB->setProp(RDKit::common_properties::_unspecifiedOrder, 1);
   if(!(mp->getAllBondsWithBookmark($2).size()%2)){
-    newB->setProp("_cxsmilesBondIdx",numBondsParsed++);
+    newB->setProp("_cxsmilesBondIdx", numBondsParsed++);
   }
 
-  SmilesParseOps::CheckRingClosureBranchStatus(atom,mp);
+  SmilesParseOps::CheckRingClosureBranchStatus(atom, mp);
 
   INT_VECT tmp;
-  atom->getPropIfPresent(RDKit::common_properties::_RingClosures,tmp);
+  atom->getPropIfPresent(RDKit::common_properties::_RingClosures, tmp);
   tmp.push_back(-($2+1));
-  atom->setProp(RDKit::common_properties::_RingClosures,tmp);
+  atom->setProp(RDKit::common_properties::_RingClosures, tmp);
 }
 
 | mol BOND_TOKEN ring_number {
@@ -273,21 +273,21 @@ mol: atomd {
   Bond *newB = mp->createPartialBond(atom->getIdx(),
 				     $2->getBondType());
   if($2->hasProp(RDKit::common_properties::_unspecifiedOrder)){
-    newB->setProp(RDKit::common_properties::_unspecifiedOrder,1);
+    newB->setProp(RDKit::common_properties::_unspecifiedOrder, 1);
   }
   newB->setBondDir($2->getBondDir());
-  mp->setAtomBookmark(atom,$3);
-  mp->setBondBookmark(newB,$3);
+  mp->setAtomBookmark(atom, $3);
+  mp->setBondBookmark(newB, $3);
   if(!(mp->getAllBondsWithBookmark($3).size()%2)){
-    newB->setProp("_cxsmilesBondIdx",numBondsParsed++);
+    newB->setProp("_cxsmilesBondIdx", numBondsParsed++);
   }
 
-  SmilesParseOps::CheckRingClosureBranchStatus(atom,mp);
+  SmilesParseOps::CheckRingClosureBranchStatus(atom, mp);
 
   INT_VECT tmp;
-  atom->getPropIfPresent(RDKit::common_properties::_RingClosures,tmp);
+  atom->getPropIfPresent(RDKit::common_properties::_RingClosures, tmp);
   tmp.push_back(-($3+1));
-  atom->setProp(RDKit::common_properties::_RingClosures,tmp);
+  atom->setProp(RDKit::common_properties::_RingClosures, tmp);
   delete $2;
 }
 
@@ -296,34 +296,34 @@ mol: atomd {
   Atom *atom=mp->getActiveAtom();
   Bond *newB = mp->createPartialBond(atom->getIdx(),
 				     Bond::SINGLE);
-  mp->setAtomBookmark(atom,$3);
-  mp->setBondBookmark(newB,$3);
+  mp->setAtomBookmark(atom, $3);
+  mp->setBondBookmark(newB, $3);
   if(!(mp->getAllBondsWithBookmark($3).size()%2)){
-    newB->setProp("_cxsmilesBondIdx",numBondsParsed++);
+    newB->setProp("_cxsmilesBondIdx", numBondsParsed++);
   }
 
-  SmilesParseOps::CheckRingClosureBranchStatus(atom,mp);
+  SmilesParseOps::CheckRingClosureBranchStatus(atom, mp);
 
   INT_VECT tmp;
-  atom->getPropIfPresent(RDKit::common_properties::_RingClosures,tmp);
+  atom->getPropIfPresent(RDKit::common_properties::_RingClosures, tmp);
   tmp.push_back(-($3+1));
-  atom->setProp(RDKit::common_properties::_RingClosures,tmp);
+  atom->setProp(RDKit::common_properties::_RingClosures, tmp);
 }
 
 | mol branch_open_token atomd {
   RWMol *mp = (*molList)[$$];
   Atom *a1 = mp->getActiveAtom();
   int atomIdx1=a1->getIdx();
-  int atomIdx2=mp->addAtom($3,true,true);
-  mp->addBond(atomIdx1,atomIdx2,
-	      SmilesParseOps::GetUnspecifiedBondType(mp,a1,mp->getAtomWithIdx(atomIdx2)));
-  mp->getBondBetweenAtoms(atomIdx1,atomIdx2)->setProp("_cxsmilesBondIdx",numBondsParsed++);
+  int atomIdx2=mp->addAtom($3, true, true);
+  mp->addBond(atomIdx1, atomIdx2,
+	      SmilesParseOps::GetUnspecifiedBondType(mp, a1, mp->getAtomWithIdx(atomIdx2)));
+  mp->getBondBetweenAtoms(atomIdx1, atomIdx2)->setProp("_cxsmilesBondIdx", numBondsParsed++);
   branchPoints.push_back({atomIdx1, $2});
 }
 | mol branch_open_token BOND_TOKEN atomd  {
   RWMol *mp = (*molList)[$$];
   int atomIdx1 = mp->getActiveAtom()->getIdx();
-  int atomIdx2 = mp->addAtom($4,true,true);
+  int atomIdx2 = mp->addAtom($4, true, true);
   if( $3->getBondType() == Bond::DATIVER ){
     $3->setBeginAtomIdx(atomIdx1);
     $3->setEndAtomIdx(atomIdx2);
@@ -336,22 +336,22 @@ mol: atomd {
     $3->setBeginAtomIdx(atomIdx1);
     $3->setEndAtomIdx(atomIdx2);
   }
-  $3->setProp("_cxsmilesBondIdx",numBondsParsed++);
-  mp->addBond($3,true);
+  $3->setProp("_cxsmilesBondIdx", numBondsParsed++);
+  mp->addBond($3, true);
 
   branchPoints.push_back({atomIdx1, $2});
 }
 | mol branch_open_token MINUS_TOKEN atomd {
   RWMol *mp = (*molList)[$$];
   int atomIdx1 = mp->getActiveAtom()->getIdx();
-  int atomIdx2 = mp->addAtom($4,true,true);
-  mp->addBond(atomIdx1,atomIdx2,Bond::SINGLE);
-  mp->getBondBetweenAtoms(atomIdx1,atomIdx2)->setProp("_cxsmilesBondIdx",numBondsParsed++);
+  int atomIdx2 = mp->addAtom($4, true, true);
+  mp->addBond(atomIdx1, atomIdx2, Bond::SINGLE);
+  mp->getBondBetweenAtoms(atomIdx1, atomIdx2)->setProp("_cxsmilesBondIdx", numBondsParsed++);
   branchPoints.push_back({atomIdx1, $2});
 }
 | mol GROUP_CLOSE_TOKEN {
   if(branchPoints.empty()){
-     yyerror(input,molList,branchPoints,scanner,start_token,current_token_position,"extra close parentheses");
+     yyerror(input, molList, branchPoints, scanner, start_token, current_token_position, "extra close parentheses");
      yyErrorCleanup(molList);
      YYABORT;
   }
@@ -378,7 +378,7 @@ atomd:	simple_atom
 {
   $$ = $2;
   $$->setNoImplicit(true);
-  $$->setProp(RDKit::common_properties::molAtomMapNumber,$4);
+  $$->setProp(RDKit::common_properties::molAtomMapNumber, $4);
 }
 | ATOM_OPEN_TOKEN charge_element ATOM_CLOSE_TOKEN
 {
@@ -413,16 +413,16 @@ h_element:      H_TOKEN { $$ = new Atom(1); }
 chiral_element:	 element
 | element AT_TOKEN { $1->setChiralTag(Atom::CHI_TETRAHEDRAL_CCW); }
 | element AT_TOKEN AT_TOKEN { $1->setChiralTag(Atom::CHI_TETRAHEDRAL_CW); }
-| element CHI_CLASS_TOKEN { $1->setChiralTag($2); $1->setProp(common_properties::_chiralPermutation,0); }
+| element CHI_CLASS_TOKEN { $1->setChiralTag($2); $1->setProp(common_properties::_chiralPermutation, 0); }
 | element CHI_CLASS_TOKEN number { 
     if($3==0){
-      yyerror(input,molList,branchPoints,scanner,start_token, current_token_position,
+      yyerror(input, molList, branchPoints, scanner, start_token, current_token_position,
             "chiral permutation cannot be zero");
       yyErrorCleanup(molList);
       delete $1;
       YYABORT;
     }
-    $1->setChiralTag($2); $1->setProp(common_properties::_chiralPermutation,$3); 
+    $1->setChiralTag($2); $1->setProp(common_properties::_chiralPermutation, $3); 
 };
 
 /* --------------------------------------------------------------- */
@@ -459,7 +459,7 @@ nonzero_number:  NONZERO_DIGIT_TOKEN
 | nonzero_number digit {
   if($1 >= std::numeric_limits<std::int32_t>::max()/10 ||
      $1*10 >= std::numeric_limits<std::int32_t>::max()-$2 ){
-     yyerror(input,molList,branchPoints,scanner,start_token,current_token_position,"number too large");
+     yyerror(input, molList, branchPoints, scanner, start_token, current_token_position, "number too large");
      yyErrorCleanup(molList);
      YYABORT;
   }
