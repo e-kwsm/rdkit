@@ -87,7 +87,6 @@ size_t setup_smarts_string(const std::string &text, yyscan_t yyscanner) {
 
   POSTCONDITION(b, "invalid buffer");
   return start;
-
 }
 
 %}
