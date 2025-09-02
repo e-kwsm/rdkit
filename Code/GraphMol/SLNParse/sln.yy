@@ -54,15 +54,13 @@ int yysln_lex(YYSTYPE *, void *);
 
 namespace SLNParse = RDKit::SLNParse;
 
-void
-yysln_error(const char *input,
-            std::vector<RDKit::RWMol *> *ms, bool doQ,
-            void *scanner, const char *msg)
-{
+void yysln_error(const char *input, std::vector<RDKit::RWMol *> *ms, bool doQ,
+                 void *scanner, const char *msg) {
   RDUNUSED_PARAM(ms);
   RDUNUSED_PARAM(doQ);
   RDUNUSED_PARAM(scanner);
-  BOOST_LOG(rdErrorLog) << "SLN Parse Error: " << msg << " while parsing: " << input << std::endl;
+  BOOST_LOG(rdErrorLog) << "SLN Parse Error: " << msg
+                        << " while parsing: " << input << std::endl;
 
   for (auto &m : *ms) {
     SLNParse::CleanupAfterParse(m);
@@ -72,15 +70,14 @@ yysln_error(const char *input,
   ms->resize(0);
 }
 
-#define YYPRINT(file, type, value)   yyprint (file, type, value)
+#define YYPRINT(file, type, value) yyprint(file, type, value)
 
-static void
-yyprint (FILE *file, int type, YYSTYPE value)
+static void yyprint(FILE *file, int type, YYSTYPE value)
 {
   if (type == TEXT_BLOCK) {
-    fprintf (file, " %s", value.text_T->c_str());
+    fprintf(file, " %s", value.text_T->c_str());
   } else {
-    fprintf (file, " %d", type);
+    fprintf(file, " %d", type);
   }
 }
 
@@ -94,14 +91,14 @@ yyprint (FILE *file, int type, YYSTYPE value)
 %parse-param {void *scanner}
 
 %union {
-  int                      mol_T;
-  RDKit::Atom             *atom_T;
-  RDKit::Bond             *bond_T;
-  int                      ival_T;
-  std::string             *text_T;
-  char                     char_T;
-  RDKit::SLNParse::AttribType       *attrib_T;
-  RDKit::SLNParse::AttribListType   *attriblist_T;
+  int mol_T;
+  RDKit::Atom *atom_T;
+  RDKit::Bond *bond_T;
+  int ival_T;
+  std::string *text_T;
+  char char_T;
+  RDKit::SLNParse::AttribType *attrib_T;
+  RDKit::SLNParse::AttribListType *attriblist_T;
 }
 
 %type <atom_T> atom primatom hatom
