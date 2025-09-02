@@ -487,14 +487,14 @@ hydrogen_atom:	ATOM_OPEN_TOKEN H_TOKEN ATOM_CLOSE_TOKEN
 /* --------------------------------------------------------------- */
 atom_expr: atom_expr AND_TOKEN atom_expr {
   $1->expandQuery($3->getQuery()->copy(), Queries::COMPOSITE_AND, true);
-  if($1->getChiralTag()==Atom::CHI_UNSPECIFIED) $1->setChiralTag($3->getChiralTag());
+  if($1->getChiralTag() == Atom::CHI_UNSPECIFIED) $1->setChiralTag($3->getChiralTag());
   SmilesParseOps::ClearAtomChemicalProps($1);
   delete $3;
   $$ = $1;
 }
 | atom_expr OR_TOKEN atom_expr {
   $1->expandQuery($3->getQuery()->copy(), Queries::COMPOSITE_OR, true);
-  if($1->getChiralTag()==Atom::CHI_UNSPECIFIED) $1->setChiralTag($3->getChiralTag());
+  if($1->getChiralTag() == Atom::CHI_UNSPECIFIED) $1->setChiralTag($3->getChiralTag());
   SmilesParseOps::ClearAtomChemicalProps($1);
   $1->setAtomicNum(0);
   delete $3;
@@ -502,7 +502,7 @@ atom_expr: atom_expr AND_TOKEN atom_expr {
 }
 | atom_expr SEMI_TOKEN atom_expr {
   $1->expandQuery($3->getQuery()->copy(), Queries::COMPOSITE_AND, true);
-  if($1->getChiralTag()==Atom::CHI_UNSPECIFIED) $1->setChiralTag($3->getChiralTag());
+  if($1->getChiralTag() == Atom::CHI_UNSPECIFIED) $1->setChiralTag($3->getChiralTag());
   SmilesParseOps::ClearAtomChemicalProps($1);
   delete $3;
   $$ = $1;
@@ -543,7 +543,7 @@ recursive_query: BEGIN_RECURSE mol END_RECURSE {
   qA->setQuery(new RecursiveStructureQuery(molP));
   //std::cout << "qA: " << qA << " " << qA->getQuery() << std::endl;
   int sz = molList->size();
-  if ( sz==$2+1) {
+  if ( sz == $2+1) {
     molList->resize( sz-1 );
   }
   $$ = qA;
@@ -564,7 +564,7 @@ recursive_query: BEGIN_RECURSE mol END_RECURSE {
   qA->setQuery(new RecursiveStructureQuery(molP, $5));
   //std::cout << "qA: " << qA << " " << qA->getQuery() << std::endl;
   int sz = molList->size();
-  if ( sz==$2+1) {
+  if ( sz == $2+1) {
     molList->resize( sz-1 );
   }
   $$ = qA;
@@ -706,7 +706,7 @@ atom_query:	simple_atom
   $$=newQ;
 }
 | CHI_CLASS_TOKEN number {
-  if($2==0){
+  if($2 == 0){
     yyerror(input, molList, branchPoints, scanner, start_token, current_token_position,
             "chiral permutation cannot be zero");
     yyErrorCleanup(molList);
