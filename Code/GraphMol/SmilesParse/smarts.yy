@@ -313,7 +313,7 @@ mol: atomd {
   if(atom->hasProp(RDKit::common_properties::_RingClosures)){
     atom->getProp(RDKit::common_properties::_RingClosures, tmp);
   }
-  tmp.push_back(-($2+1));
+  tmp.push_back(-($2 + 1));
   atom->setProp(RDKit::common_properties::_RingClosures, tmp);
 
 }
@@ -334,7 +334,7 @@ mol: atomd {
   if(atom->hasProp(RDKit::common_properties::_RingClosures)){
     atom->getProp(RDKit::common_properties::_RingClosures, tmp);
   }
-  tmp.push_back(-($3+1));
+  tmp.push_back(-($3 + 1));
   atom->setProp(RDKit::common_properties::_RingClosures, tmp);
 
 }
@@ -543,8 +543,8 @@ recursive_query: BEGIN_RECURSE mol END_RECURSE {
   qA->setQuery(new RecursiveStructureQuery(molP));
   //std::cout << "qA: " << qA << " " << qA->getQuery() << std::endl;
   int sz = molList->size();
-  if ( sz == $2+1) {
-    molList->resize( sz-1 );
+  if ( sz == $2 + 1) {
+    molList->resize( sz - 1 );
   }
   $$ = qA;
 }
@@ -564,8 +564,8 @@ recursive_query: BEGIN_RECURSE mol END_RECURSE {
   qA->setQuery(new RecursiveStructureQuery(molP, $5));
   //std::cout << "qA: " << qA << " " << qA->getQuery() << std::endl;
   int sz = molList->size();
-  if ( sz == $2+1) {
-    molList->resize( sz-1 );
+  if ( sz == $2 + 1) {
+    molList->resize( sz - 1 );
   }
   $$ = qA;
 }
@@ -623,14 +623,14 @@ atom_query:	simple_atom
 | possible_range_query RANGE_OPEN_TOKEN MINUS_TOKEN number RANGE_CLOSE_TOKEN {
   ATOM_EQUALS_QUERY *oq = static_cast<ATOM_EQUALS_QUERY *>($1->getQuery());
   ATOM_GREATEREQUAL_QUERY *nq = makeAtomSimpleQuery<ATOM_GREATEREQUAL_QUERY>($4, oq->getDataFunc(),
-    std::string("greater_")+oq->getDescription());
+    std::string("greater_") + oq->getDescription());
   $1->setQuery(nq);
   $$ = $1;
 }
 | possible_range_query RANGE_OPEN_TOKEN number MINUS_TOKEN RANGE_CLOSE_TOKEN {
   ATOM_EQUALS_QUERY *oq = static_cast<ATOM_EQUALS_QUERY *>($1->getQuery());
   ATOM_LESSEQUAL_QUERY *nq = makeAtomSimpleQuery<ATOM_LESSEQUAL_QUERY>($3, oq->getDataFunc(),
-    std::string("less_")+oq->getDescription());
+    std::string("less_") + oq->getDescription());
   $1->setQuery(nq);
   $$ = $1;
 }
@@ -638,7 +638,7 @@ atom_query:	simple_atom
   ATOM_EQUALS_QUERY *oq = static_cast<ATOM_EQUALS_QUERY *>($1->getQuery());
   ATOM_RANGE_QUERY *nq = makeAtomRangeQuery($3, $5, false, false,
     oq->getDataFunc(),
-    std::string("range_")+oq->getDescription());
+    std::string("range_") + oq->getDescription());
   $1->setQuery(nq);
   $$ = $1;
 }
@@ -851,12 +851,12 @@ charge_spec: PLUS_TOKEN PLUS_TOKEN { $$ = 2; }
 
 /* --------------------------------------------------------------- */
 ring_number:  digit
-| PERCENT_TOKEN NONZERO_DIGIT_TOKEN digit { $$ = $2*10+$3; }
+| PERCENT_TOKEN NONZERO_DIGIT_TOKEN digit { $$ = $2*10 + $3; }
 | PERCENT_TOKEN GROUP_OPEN_TOKEN digit GROUP_CLOSE_TOKEN { $$ = $3; }
-| PERCENT_TOKEN GROUP_OPEN_TOKEN digit digit GROUP_CLOSE_TOKEN { $$ = $3*10+$4; }
-| PERCENT_TOKEN GROUP_OPEN_TOKEN digit digit digit GROUP_CLOSE_TOKEN { $$ = $3*100+$4*10+$5; }
-| PERCENT_TOKEN GROUP_OPEN_TOKEN digit digit digit digit GROUP_CLOSE_TOKEN { $$ = $3*1000+$4*100+$5*10+$6; }
-| PERCENT_TOKEN GROUP_OPEN_TOKEN digit digit digit digit digit GROUP_CLOSE_TOKEN { $$ = $3*10000+$4*1000+$5*100+$6*10+$7; }
+| PERCENT_TOKEN GROUP_OPEN_TOKEN digit digit GROUP_CLOSE_TOKEN { $$ = $3*10 + $4; }
+| PERCENT_TOKEN GROUP_OPEN_TOKEN digit digit digit GROUP_CLOSE_TOKEN { $$ = $3*100 + $4*10 + $5; }
+| PERCENT_TOKEN GROUP_OPEN_TOKEN digit digit digit digit GROUP_CLOSE_TOKEN { $$ = $3*1000 + $4*100 + $5*10 + $6; }
+| PERCENT_TOKEN GROUP_OPEN_TOKEN digit digit digit digit digit GROUP_CLOSE_TOKEN { $$ = $3*10000 + $4*1000 + $5*100 + $6*10 + $7; }
 ;
 
 
@@ -869,7 +869,7 @@ number:  ZERO_TOKEN
 nonzero_number:  NONZERO_DIGIT_TOKEN
 | nonzero_number digit {
     if($1 >= std::numeric_limits<std::int32_t>::max()/10 ||
-     $1*10 >= std::numeric_limits<std::int32_t>::max()-$2 ){
+     $1*10 >= std::numeric_limits<std::int32_t>::max() - $2 ){
      yysmarts_error(input, molList, lastAtom, lastBond, numAtomsParsed, numBondsParsed, branchPoints, scanner, start_token, current_token_position, "number too large");
      YYABORT;
   }
