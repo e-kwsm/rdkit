@@ -222,7 +222,7 @@ mol: atomd {
   }
   ++numBondsParsed;
   mp->addBond($2, true);
-  //delete $3;
+  // delete $3;
 }
 
 | mol MINUS_TOKEN atomd {
@@ -231,7 +231,7 @@ mol: atomd {
   int atomIdx2 = mp->addAtom($3, true, true);
   mp->addBond(atomIdx1, atomIdx2, Bond::SINGLE);
   ++numBondsParsed;
-  //delete $3;
+  // delete $3;
 }
 
 | mol SEPARATOR_TOKEN atomd {
