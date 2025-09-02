@@ -20,7 +20,7 @@
 #define YYDEBUG 1
 #include "smarts.tab.hpp"
 
-extern int yysmarts_lex(YYSTYPE *, void *, int &, unsigned int&);
+extern int yysmarts_lex(YYSTYPE *, void *, int &, unsigned int &);
 
 using namespace RDKit;
 namespace {
