@@ -210,11 +210,11 @@ mol: atomd {
   RWMol *mp = (*molList)[$$];
   int atomIdx1 = mp->getActiveAtom()->getIdx();
   int atomIdx2 = mp->addAtom($3, true, true);
-  if ( $2->getBondType() == Bond::DATIVER ) {
+  if ($2->getBondType() == Bond::DATIVER) {
     $2->setBeginAtomIdx(atomIdx1);
     $2->setEndAtomIdx(atomIdx2);
     $2->setBondType(Bond::DATIVE);
-  } else if ( $2->getBondType() == Bond::DATIVEL ) {
+  } else if ($2->getBondType() == Bond::DATIVEL) {
     $2->setBeginAtomIdx(atomIdx2);
     $2->setEndAtomIdx(atomIdx1);
     $2->setBondType(Bond::DATIVE);
@@ -224,7 +224,7 @@ mol: atomd {
   }
   $2->setProp("_cxsmilesBondIdx", numBondsParsed++);
   mp->addBond($2, true);
-  //delete $3;
+  // delete $3;
 }
 
 | mol MINUS_TOKEN atomd {
@@ -232,8 +232,9 @@ mol: atomd {
   int atomIdx1 = mp->getActiveAtom()->getIdx();
   int atomIdx2 = mp->addAtom($3, true, true);
   mp->addBond(atomIdx1, atomIdx2, Bond::SINGLE);
-  mp->getBondBetweenAtoms(atomIdx1, atomIdx2)->setProp("_cxsmilesBondIdx", numBondsParsed++);
-  //delete $3;
+  mp->getBondBetweenAtoms(atomIdx1, atomIdx2)
+      ->setProp("_cxsmilesBondIdx", numBondsParsed++);
+  // delete $3;
 }
 
 | mol SEPARATOR_TOKEN atomd {
