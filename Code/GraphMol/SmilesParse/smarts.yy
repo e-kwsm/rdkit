@@ -24,17 +24,18 @@ extern int yysmarts_lex(YYSTYPE *, void *, int &, unsigned int&);
 
 using namespace RDKit;
 namespace {
- void yyErrorCleanup(std::vector<RDKit::RWMol *> *molList){
+void yyErrorCleanup(std::vector<RDKit::RWMol *> *molList){
   for (std::vector<RDKit::RWMol *>::iterator iter = molList->begin();
-      iter != molList->end(); ++iter) {
-     SmilesParseOps::CleanupAfterParseError(*iter);
-     delete *iter;
+       iter != molList->end(); ++iter) {
+    SmilesParseOps::CleanupAfterParseError(*iter);
+    delete *iter;
   }
   molList->clear();
   molList->resize(0);
- }
-  const std::uint64_t SMARTS_H_MASK = 0x1;
-  const std::uint64_t SMARTS_CHARGE_MASK = 0x2;
+}
+
+const std::uint64_t SMARTS_H_MASK = 0x1;
+const std::uint64_t SMARTS_CHARGE_MASK = 0x2;
 
   void atom_expr_and_point_query(QueryAtom *atom_expr, QueryAtom *point_query) {
     atom_expr->expandQuery(point_query->getQuery()->copy(), Queries::COMPOSITE_AND, true);
