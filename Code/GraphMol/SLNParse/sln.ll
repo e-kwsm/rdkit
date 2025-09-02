@@ -368,7 +368,7 @@ void sln_lexer_error(const char *msg) {
 	// we're closing a recursive definition, which means we should also be
 	//  closing a parameter block:
   yy_pop_state(yyscanner);
-	if(YY_START!=IN_SLN_PARAM_STATE){
+	if(YY_START != IN_SLN_PARAM_STATE){
 		std::cerr << " after closing a recursion, we were not in the appropriate state."  <<std::endl;
 	} else {
     yy_pop_state(yyscanner);
@@ -379,7 +379,7 @@ void sln_lexer_error(const char *msg) {
   // if we're currently in an SLN property block (e.g. in []'s), we need
   // to pop both the prop_val state and the property block state:
   yy_pop_state(yyscanner);
-  if(YY_START==IN_SLN_PARAM_STATE) {
+  if(YY_START == IN_SLN_PARAM_STATE) {
     yy_pop_state(yyscanner);
   } 
   return CLOSE_BRACKET_TOKEN;
@@ -394,7 +394,7 @@ void sln_lexer_error(const char *msg) {
   // if we're currently in a CTAB property block (e.g. in <>'s), we need
   // to pop both the prop_val state and the property block state:
   yy_pop_state(yyscanner);
-  if(YY_START==IN_CTAB_PARAM_VAL_STATE) {
+  if(YY_START == IN_CTAB_PARAM_VAL_STATE) {
     yy_pop_state(yyscanner);
   } 
   return CLOSE_ANGLE_TOKEN; 
