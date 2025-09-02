@@ -213,7 +213,7 @@ size_t setup_smarts_string(const std::string &text, yyscan_t yyscanner) {
 <IN_ATOM_STATE>Uut |
 <IN_ATOM_STATE>Fl |
 <IN_ATOM_STATE>Uup |
-<IN_ATOM_STATE>Lv	{   yylval->atom = new QueryAtom( PeriodicTable::getTable()->getAtomicNumber( yytext ) );
+<IN_ATOM_STATE>Lv	{   yylval->atom = new QueryAtom(PeriodicTable::getTable()->getAtomicNumber(yytext));
 				return ATOM_TOKEN;
 			}
 <IN_ATOM_STATE>D {
