@@ -290,8 +290,7 @@ mol: atomd {
 | mol MINUS_TOKEN ring_number {
   RWMol *mp = (*molList)[$$];
   Atom *atom = mp->getActiveAtom();
-  Bond *newB = mp->createPartialBond(atom->getIdx(),
-				     Bond::SINGLE);
+  Bond *newB = mp->createPartialBond(atom->getIdx(), Bond::SINGLE);
   mp->setAtomBookmark(atom, $3);
   mp->setBondBookmark(newB, $3);
   if (!(mp->getAllBondsWithBookmark($3).size() % 2)) {
