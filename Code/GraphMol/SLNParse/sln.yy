@@ -629,7 +629,7 @@ ctabattrib: TEXT_BLOCK {
 ;
 
 number:  DIGIT_TOKEN
-| number DIGIT_TOKEN { $$ = $1*10 + $2; }
+| number DIGIT_TOKEN { $$ = $1 * 10 + $2; }
 ;
 %%
 
