@@ -256,7 +256,8 @@ void sln_lexer_error(const char *msg) {
   yylval->atom_T->expandQuery(makeAtomNumQuery(1), Queries::COMPOSITE_OR, true);
   yylval->atom_T->getQuery()->setNegation(true);
 
-  // SLN has no concept of implicit Hs... they're either in the SLN or they don't exist:
+  // SLN has no concept of implicit Hs... they're either in the SLN or they
+  // don't exist:
   yylval->atom_T->setNoImplicit(true);
   return ATOM_TOKEN;
 }
