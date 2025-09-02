@@ -275,49 +275,49 @@ size_t setup_smarts_string(const std::string &text, yyscan_t yyscanner) {
   return RINGSIZE_ATOM_QUERY_TOKEN;
 }
 
-H			{  return H_TOKEN;  }
+H			{  return H_TOKEN; }
 
 
-B			{  yylval->ival = 5;  return ORGANIC_ATOM_TOKEN;  }
+B			{  yylval->ival = 5; return ORGANIC_ATOM_TOKEN; }
 
-C			{  yylval->ival = 6;  return ORGANIC_ATOM_TOKEN;  }
+C			{  yylval->ival = 6; return ORGANIC_ATOM_TOKEN; }
 
-N			{  yylval->ival = 7;  return ORGANIC_ATOM_TOKEN;  }
+N			{  yylval->ival = 7; return ORGANIC_ATOM_TOKEN; }
 
-O			{  yylval->ival = 8;  return ORGANIC_ATOM_TOKEN;  }
+O			{  yylval->ival = 8; return ORGANIC_ATOM_TOKEN; }
 
-F			{  yylval->ival = 9;  return ORGANIC_ATOM_TOKEN;  }
+F			{  yylval->ival = 9; return ORGANIC_ATOM_TOKEN; }
 
-P			{  yylval->ival = 15;  return ORGANIC_ATOM_TOKEN;  }
+P			{  yylval->ival = 15; return ORGANIC_ATOM_TOKEN; }
 
-S			{  yylval->ival = 16;  return ORGANIC_ATOM_TOKEN;  }
+S			{  yylval->ival = 16; return ORGANIC_ATOM_TOKEN; }
 
-Cl			{  yylval->ival = 17;  return ORGANIC_ATOM_TOKEN;  }
+Cl			{  yylval->ival = 17; return ORGANIC_ATOM_TOKEN; }
 
-Br			{  yylval->ival = 35;  return ORGANIC_ATOM_TOKEN;  }
+Br			{  yylval->ival = 35; return ORGANIC_ATOM_TOKEN; }
 
-I			{  yylval->ival = 53;  return ORGANIC_ATOM_TOKEN;  }
+I			{  yylval->ival = 53; return ORGANIC_ATOM_TOKEN; }
 
 
-b			{  yylval->ival = 5;  return AROMATIC_ATOM_TOKEN;  }
+b			{  yylval->ival = 5; return AROMATIC_ATOM_TOKEN; }
 
-c			{  yylval->ival = 6;  return AROMATIC_ATOM_TOKEN;  }
+c			{  yylval->ival = 6; return AROMATIC_ATOM_TOKEN; }
 
-n			{  yylval->ival = 7;  return AROMATIC_ATOM_TOKEN;  }
+n			{  yylval->ival = 7; return AROMATIC_ATOM_TOKEN; }
 
-o			{  yylval->ival = 8;  return AROMATIC_ATOM_TOKEN;  }
+o			{  yylval->ival = 8; return AROMATIC_ATOM_TOKEN; }
 
-p			{  yylval->ival = 15;  return AROMATIC_ATOM_TOKEN;  }
+p			{  yylval->ival = 15; return AROMATIC_ATOM_TOKEN; }
 
-s			{  yylval->ival = 16;  return AROMATIC_ATOM_TOKEN;  }
+s			{  yylval->ival = 16; return AROMATIC_ATOM_TOKEN; }
 
-<IN_ATOM_STATE>si	{  yylval->ival = 14;  return AROMATIC_ATOM_TOKEN;  }
+<IN_ATOM_STATE>si	{  yylval->ival = 14; return AROMATIC_ATOM_TOKEN; }
 
-<IN_ATOM_STATE>as	{  yylval->ival = 33;  return AROMATIC_ATOM_TOKEN;  }
+<IN_ATOM_STATE>as	{  yylval->ival = 33; return AROMATIC_ATOM_TOKEN; }
 
-<IN_ATOM_STATE>se	{  yylval->ival = 34;  return AROMATIC_ATOM_TOKEN;  }
+<IN_ATOM_STATE>se	{  yylval->ival = 34; return AROMATIC_ATOM_TOKEN; }
 
-<IN_ATOM_STATE>te	{  yylval->ival = 52;  return AROMATIC_ATOM_TOKEN;  }
+<IN_ATOM_STATE>te	{  yylval->ival = 52; return AROMATIC_ATOM_TOKEN; }
 
 
 
@@ -349,11 +349,11 @@ A			{
 
 \=	{ yylval->bond = new QueryBond(Bond::DOUBLE);
 	yylval->bond->setQuery(makeBondOrderEqualsQuery(Bond::DOUBLE));
-	return BOND_TOKEN;  }
+	return BOND_TOKEN; }
 
 \~	{ yylval->bond = new QueryBond();
 	yylval->bond->setQuery(makeBondNullQuery());
-	return BOND_TOKEN;  }
+	return BOND_TOKEN; }
 
 \$	{ yylval->bond = new QueryBond(Bond::QUADRUPLE);
 	yylval->bond->setQuery(makeBondOrderEqualsQuery(Bond::QUADRUPLE));
@@ -362,12 +362,12 @@ A			{
 [\\]{1,2}    { yylval->bond = new QueryBond(Bond::SINGLE);
 	yylval->bond->setBondDir(Bond::ENDDOWNRIGHT);
 	yylval->bond->setQuery(makeSingleOrAromaticBondQuery());
-	return BOND_TOKEN;  }
+	return BOND_TOKEN; }
 
 [\/]    { yylval->bond = new QueryBond(Bond::SINGLE);
 	yylval->bond->setBondDir(Bond::ENDUPRIGHT);
 	yylval->bond->setQuery(makeSingleOrAromaticBondQuery());
-	return BOND_TOKEN;  }
+	return BOND_TOKEN; }
 
 \-\> {
     yylval->bond = new QueryBond(Bond::DATIVER);
@@ -408,8 +408,8 @@ A			{
 
 \%              { return PERCENT_TOKEN; }
 
-[0]		{ yylval->ival = 0;  return ZERO_TOKEN; }
-[1-9]		{ yylval->ival = yytext[0] - '0';  return NONZERO_DIGIT_TOKEN; }
+[0]		{ yylval->ival = 0; return ZERO_TOKEN; }
+[1-9]		{ yylval->ival = yytext[0] - '0'; return NONZERO_DIGIT_TOKEN; }
 
 \!			{ return NOT_TOKEN; }
 
