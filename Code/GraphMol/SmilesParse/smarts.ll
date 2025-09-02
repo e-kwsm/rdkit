@@ -43,7 +43,7 @@ void smarts_lexer_error(const char *msg) {
      throw ValueErrorException(msg);
 }
 
-size_t setup_smarts_string(const std::string &text,yyscan_t yyscanner){
+size_t setup_smarts_string(const std::string &text, yyscan_t yyscanner){
 //  YY_BUFFER_STATE buff=yysmarts__scan_string(text.c_str()+pos,yyscanner);
   // Faster implementation of yysmarts__scan_string that handles trimming
   YY_BUFFER_STATE b;
@@ -52,7 +52,7 @@ size_t setup_smarts_string(const std::string &text,yyscan_t yyscanner){
   yy_size_t _yybytes_len=text.size(), n, start, end;
   /* Get memory for full buffer, including space for trailing EOB's. */
   n = _yybytes_len + 2;
-  buf = (char *) yysmarts_alloc(n ,yyscanner );
+  buf = (char *) yysmarts_alloc(n, yyscanner );
   if ( ! buf )
     smarts_lexer_error( "out of dynamic memory in yysmarts__scan_bytes()" );
 
@@ -72,7 +72,7 @@ size_t setup_smarts_string(const std::string &text,yyscan_t yyscanner){
 
   buf[_yybytes_len] = buf[_yybytes_len+1] = YY_END_OF_BUFFER_CHAR;
 
-  b = yysmarts__scan_buffer(buf,n ,yyscanner);
+  b = yysmarts__scan_buffer(buf, n, yyscanner);
   if ( ! b )
     smarts_lexer_error( "bad buffer in yysmarts__scan_bytes()" );
 
@@ -82,7 +82,7 @@ size_t setup_smarts_string(const std::string &text,yyscan_t yyscanner){
   b->yy_is_our_buffer = 1;
 
 
-  POSTCONDITION(b,"invalid buffer");
+  POSTCONDITION(b, "invalid buffer");
   return start;
 
 }
@@ -385,9 +385,9 @@ A			{
 
 \+			{ return PLUS_TOKEN; }
 
-<IN_ATOM_STATE>\$\(              { yy_push_state(IN_RECURSION_STATE,yyscanner); return BEGIN_RECURSE; }
+<IN_ATOM_STATE>\$\(              { yy_push_state(IN_RECURSION_STATE, yyscanner); return BEGIN_RECURSE; }
 
-\(       	{ yy_push_state(IN_BRANCH_STATE,yyscanner); return GROUP_OPEN_TOKEN; }
+\(       	{ yy_push_state(IN_BRANCH_STATE, yyscanner); return GROUP_OPEN_TOKEN; }
 <IN_BRANCH_STATE>\)       	{ yy_pop_state(yyscanner); return GROUP_CLOSE_TOKEN; }
 <IN_RECURSION_STATE>\)       	{ yy_pop_state(yyscanner); return END_RECURSE; }
 
@@ -396,7 +396,7 @@ A			{
 
 
 
-\[			{ yy_push_state(IN_ATOM_STATE,yyscanner); return ATOM_OPEN_TOKEN; }
+\[			{ yy_push_state(IN_ATOM_STATE, yyscanner); return ATOM_OPEN_TOKEN; }
 <IN_ATOM_STATE>\]	{ yy_pop_state(yyscanner); return ATOM_CLOSE_TOKEN; }
 \]			{ /* FIX: ???
                            This rule is here because otherwise recursive SMARTS queries like:
