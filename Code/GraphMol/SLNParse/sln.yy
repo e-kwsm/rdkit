@@ -575,7 +575,8 @@ recursivequery: RECURSE_TOKEN cmpd {
    RDKit::ROMol *mol = (*molList)[$3];
    molList->resize(sz - 1);
    SLNParse::finalizeQueryMol(mol, true);
-   RDKit::RecursiveStructureQuery *rsq = new RDKit::RecursiveStructureQuery(mol);
+   RDKit::RecursiveStructureQuery *rsq =
+       new RDKit::RecursiveStructureQuery(mol);
 
    RDKit::ATOM_OR_QUERY *orq = static_cast<RDKit::ATOM_OR_QUERY *>($1->structQuery);
    orq->addChild(RDKit::ATOM_OR_QUERY::CHILD_TYPE(rsq));
