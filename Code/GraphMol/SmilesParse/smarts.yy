@@ -117,7 +117,6 @@ yysmarts_error( const char *input,
                                                   "SMARTS");
 }
 
-
 %}
 
 %define api.pure full
