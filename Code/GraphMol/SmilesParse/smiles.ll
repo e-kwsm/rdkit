@@ -39,22 +39,23 @@ using namespace RDKit;
 #define YY_FATAL_ERROR(msg) smiles_lexer_error(msg)
 
 void smiles_lexer_error(const char *msg) {
-     BOOST_LOG(rdErrorLog) << msg << std::endl;
-     throw ValueErrorException(msg);
+  BOOST_LOG(rdErrorLog) << msg << std::endl;
+  throw ValueErrorException(msg);
 }
 
-size_t setup_smiles_string(const std::string &text, yyscan_t yyscanner){
-//  YY_BUFFER_STATE buff=yysmiles__scan_string(text.c_str()+pos,yyscanner);
+size_t setup_smiles_string(const std::string &text, yyscan_t yyscanner) {
+  //  YY_BUFFER_STATE buff=yysmiles__scan_string(text.c_str()+pos,yyscanner);
   // Faster implementation of yysmiles__scan_string that handles trimming
   YY_BUFFER_STATE b;
   char *buf;
-  yyconst char * yybytes = text.c_str();
+  yyconst char *yybytes = text.c_str();
   yy_size_t _yybytes_len = text.size(), n, start, end;
   /* Get memory for full buffer, including space for trailing EOB's. */
   n = _yybytes_len + 2;
-  buf = (char *) yysmiles_alloc(n, yyscanner );
-  if ( ! buf )
+  buf = (char *) yysmiles_alloc(n, yyscanner);
+  if (!buf) {
     smiles_lexer_error( "out of dynamic memory in yysmiles__scan_bytes()" );
+  }
 
   // ltrim
 
@@ -372,4 +373,4 @@ s		    {	yylval->atom = new Atom( 16 );
 %%
 
 #undef yysmiles_wrap
-int yysmiles_wrap( void ) { return 1; }
+int yysmiles_wrap(void) { return 1; }
