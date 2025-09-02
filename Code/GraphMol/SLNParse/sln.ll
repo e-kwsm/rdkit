@@ -60,15 +60,15 @@ extern "C" int fileno(FILE *);
 
 using namespace RDKit;
 
-void setup_sln_string(const std::string &text, yyscan_t yyscanner){
+void setup_sln_string(const std::string &text, yyscan_t yyscanner) {
   YY_BUFFER_STATE buff = yysln__scan_string(text.c_str(), yyscanner);
   POSTCONDITION(buff, "invalid buffer");
 }
 
 #define YY_FATAL_ERROR(msg) sln_lexer_error(msg)
 void sln_lexer_error(const char *msg) {
-     BOOST_LOG(rdErrorLog) << msg << std::endl;
-     throw ValueErrorException(msg);
+  BOOST_LOG(rdErrorLog) << msg << std::endl;
+  throw ValueErrorException(msg);
 }
 
 %}
@@ -204,11 +204,14 @@ void sln_lexer_error(const char *msg) {
 <INITIAL,IN_RECURSE_STATE>Br |
 <INITIAL,IN_RECURSE_STATE>I  {
   if ((bool)yyextra) {
-          yylval->atom_T = new QueryAtom(PeriodicTable::getTable()->getAtomicNumber(yytext));
-        } else {
-          yylval->atom_T = new Atom(PeriodicTable::getTable()->getAtomicNumber(yytext));
-        }
-  // SLN has no concept of implicit Hs... they're either in the SLN or they don't exist:
+    yylval->atom_T =
+        new QueryAtom(PeriodicTable::getTable()->getAtomicNumber(yytext));
+  } else {
+    yylval->atom_T =
+        new Atom(PeriodicTable::getTable()->getAtomicNumber(yytext));
+  }
+  // SLN has no concept of implicit Hs... they're either in the SLN or they
+  // don't exist:
   yylval->atom_T->setNoImplicit(true);
 
   return ATOM_TOKEN;
@@ -216,7 +219,8 @@ void sln_lexer_error(const char *msg) {
 <INITIAL,IN_RECURSE_STATE>Any {
   yylval->atom_T = new QueryAtom();
   yylval->atom_T->setQuery(makeAtomNullQuery());
-  // SLN has no concept of implicit Hs... they're either in the SLN or they don't exist:
+  // SLN has no concept of implicit Hs... they're either in the SLN or they
+  // don't exist:
   yylval->atom_T->setNoImplicit(true);
   return ATOM_TOKEN;
 }
@@ -226,18 +230,23 @@ void sln_lexer_error(const char *msg) {
   // FIX: are 2H or 3H heavy atoms or Hs?
   yylval->atom_T->getQuery()->setNegation(true);
 
-  // SLN has no concept of implicit Hs... they're either in the SLN or they don't exist:
+  // SLN has no concept of implicit Hs... they're either in the SLN or they
+  // don't exist:
   yylval->atom_T->setNoImplicit(true);
   return ATOM_TOKEN;
 }
 <INITIAL,IN_RECURSE_STATE>Hal {
   yylval->atom_T = new QueryAtom();
   yylval->atom_T->setQuery(makeAtomNumQuery(9));
-  yylval->atom_T->expandQuery(makeAtomNumQuery(17), Queries::COMPOSITE_OR, true);
-  yylval->atom_T->expandQuery(makeAtomNumQuery(35), Queries::COMPOSITE_OR, true);
-  yylval->atom_T->expandQuery(makeAtomNumQuery(53), Queries::COMPOSITE_OR, true);
+  yylval->atom_T->expandQuery(makeAtomNumQuery(17), Queries::COMPOSITE_OR,
+                              true);
+  yylval->atom_T->expandQuery(makeAtomNumQuery(35), Queries::COMPOSITE_OR,
+                              true);
+  yylval->atom_T->expandQuery(makeAtomNumQuery(53), Queries::COMPOSITE_OR,
+                              true);
 
-  // SLN has no concept of implicit Hs... they're either in the SLN or they don't exist:
+  // SLN has no concept of implicit Hs... they're either in the SLN or they
+  // don't exist:
   yylval->atom_T->setNoImplicit(true);
   return ATOM_TOKEN;
 }
@@ -360,15 +369,17 @@ void sln_lexer_error(const char *msg) {
 \[                      { yy_push_state(IN_SLN_PARAM_STATE, yyscanner); return OPEN_BRACKET_TOKEN; }
 
 <IN_RECURSE_STATE>\]           {
-	// we're closing a recursive definition, which means we should also be
-	//  closing a parameter block:
+  // we're closing a recursive definition, which means we should also be
+  // closing a parameter block:
   yy_pop_state(yyscanner);
-	if (YY_START != IN_SLN_PARAM_STATE) {
-		std::cerr << " after closing a recursion, we were not in the appropriate state." << std::endl;
-	} else {
+  if (YY_START != IN_SLN_PARAM_STATE) {
+    std::cerr
+        << " after closing a recursion, we were not in the appropriate state."
+        << std::endl;
+  } else {
     yy_pop_state(yyscanner);
   }
-	return CLOSE_BRACKET_TOKEN;
+  return CLOSE_BRACKET_TOKEN;
 }
 <IN_PROP_VAL_STATE>\]           {
   // if we're currently in an SLN property block (e.g. in []'s), we need
