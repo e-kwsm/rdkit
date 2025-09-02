@@ -482,7 +482,8 @@ hydrogen_atom:	ATOM_OPEN_TOKEN H_TOKEN ATOM_CLOSE_TOKEN
   newQ->setFormalCharge($4);
   newQ->getFlags() |= SMARTS_CHARGE_MASK;
   newQ->expandQuery(makeAtomIsotopeQuery($2), Queries::COMPOSITE_AND, true);
-  newQ->expandQuery(makeAtomFormalChargeQuery($4), Queries::COMPOSITE_AND, true);
+  newQ->expandQuery(makeAtomFormalChargeQuery($4), Queries::COMPOSITE_AND,
+                    true);
   newQ->setProp(RDKit::common_properties::molAtomMapNumber, $6);
 
   $$ = newQ;
