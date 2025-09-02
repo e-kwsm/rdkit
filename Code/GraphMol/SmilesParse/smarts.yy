@@ -24,7 +24,7 @@ extern int yysmarts_lex(YYSTYPE *, void *, int &, unsigned int &);
 
 using namespace RDKit;
 namespace {
-void yyErrorCleanup(std::vector<RDKit::RWMol *> *molList){
+void yyErrorCleanup(std::vector<RDKit::RWMol *> *molList) {
   for (std::vector<RDKit::RWMol *>::iterator iter = molList->begin();
        iter != molList->end(); ++iter) {
     SmilesParseOps::CleanupAfterParseError(*iter);
