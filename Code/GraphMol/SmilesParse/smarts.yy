@@ -346,7 +346,8 @@ mol: atomd {
   int atomIdx1 = a1->getIdx();
   int atomIdx2 = mp->addAtom($3, true, true);
 
-  QueryBond *newB = SmilesParseOps::getUnspecifiedQueryBond(a1, mp->getAtomWithIdx(atomIdx2));
+  QueryBond *newB = SmilesParseOps::getUnspecifiedQueryBond(
+      a1, mp->getAtomWithIdx(atomIdx2));
   newB->setOwningMol(mp);
   newB->setBeginAtomIdx(atomIdx1);
   newB->setEndAtomIdx(atomIdx2);
