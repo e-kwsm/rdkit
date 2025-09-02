@@ -257,7 +257,8 @@ void sln_lexer_error(const char *msg) {
   yylval->atom_T->expandQuery(makeAtomNumQuery(1), Queries::COMPOSITE_OR, true);
   yylval->atom_T->getQuery()->setNegation(true);
 
-  // SLN has no concept of implicit Hs... they're either in the SLN or they don't exist:        
+  // SLN has no concept of implicit Hs... they're either in the SLN or they
+  // don't exist:
   yylval->atom_T->setNoImplicit(true);
   return ATOM_TOKEN;
 }
@@ -392,7 +393,7 @@ void sln_lexer_error(const char *msg) {
   yy_pop_state(yyscanner);
   if (YY_START == IN_SLN_PARAM_STATE) {
     yy_pop_state(yyscanner);
-  } 
+  }
   return CLOSE_BRACKET_TOKEN;
 }
 
@@ -407,7 +408,7 @@ void sln_lexer_error(const char *msg) {
   yy_pop_state(yyscanner);
   if (YY_START == IN_CTAB_PARAM_VAL_STATE) {
     yy_pop_state(yyscanner);
-  } 
+  }
   return CLOSE_ANGLE_TOKEN;
 }
 
