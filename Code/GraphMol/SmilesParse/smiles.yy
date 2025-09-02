@@ -248,8 +248,7 @@ mol: atomd {
   Atom *atom = mp->getActiveAtom();
   mp->setAtomBookmark(atom, $2);
 
-  Bond *newB = mp->createPartialBond(atom->getIdx(),
-				     Bond::UNSPECIFIED);
+  Bond *newB = mp->createPartialBond(atom->getIdx(), Bond::UNSPECIFIED);
   mp->setBondBookmark(newB, $2);
   newB->setProp(RDKit::common_properties::_unspecifiedOrder, 1);
   if (!(mp->getAllBondsWithBookmark($2).size() % 2)) {
