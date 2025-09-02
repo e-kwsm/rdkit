@@ -215,11 +215,11 @@ mol: atomd {
   RWMol *mp = (*molList)[$$];
   int atomIdx1 = mp->getActiveAtom()->getIdx();
   int atomIdx2 = mp->addAtom($3, true, true);
-  if( $2->getBondType() == Bond::DATIVER ){
+  if ( $2->getBondType() == Bond::DATIVER ) {
     $2->setBeginAtomIdx(atomIdx1);
     $2->setEndAtomIdx(atomIdx2);
     $2->setBondType(Bond::DATIVE);
-  }else if ( $2->getBondType() == Bond::DATIVEL ){
+  } else if ( $2->getBondType() == Bond::DATIVEL ) {
     $2->setBeginAtomIdx(atomIdx2);
     $2->setEndAtomIdx(atomIdx1);
     $2->setBondType(Bond::DATIVE);
@@ -256,7 +256,7 @@ mol: atomd {
 				     Bond::UNSPECIFIED);
   mp->setBondBookmark(newB, $2);
   newB->setProp(RDKit::common_properties::_unspecifiedOrder, 1);
-  if(!(mp->getAllBondsWithBookmark($2).size() % 2)){
+  if (!(mp->getAllBondsWithBookmark($2).size() % 2)) {
     newB->setProp("_cxsmilesBondIdx", numBondsParsed++);
   }
 
@@ -273,13 +273,13 @@ mol: atomd {
   Atom *atom = mp->getActiveAtom();
   Bond *newB = mp->createPartialBond(atom->getIdx(),
 				     $2->getBondType());
-  if($2->hasProp(RDKit::common_properties::_unspecifiedOrder)){
+  if ($2->hasProp(RDKit::common_properties::_unspecifiedOrder)) {
     newB->setProp(RDKit::common_properties::_unspecifiedOrder, 1);
   }
   newB->setBondDir($2->getBondDir());
   mp->setAtomBookmark(atom, $3);
   mp->setBondBookmark(newB, $3);
-  if(!(mp->getAllBondsWithBookmark($3).size() % 2)){
+  if (!(mp->getAllBondsWithBookmark($3).size() % 2)) {
     newB->setProp("_cxsmilesBondIdx", numBondsParsed++);
   }
 
@@ -299,7 +299,7 @@ mol: atomd {
 				     Bond::SINGLE);
   mp->setAtomBookmark(atom, $3);
   mp->setBondBookmark(newB, $3);
-  if(!(mp->getAllBondsWithBookmark($3).size() % 2)){
+  if (!(mp->getAllBondsWithBookmark($3).size() % 2)) {
     newB->setProp("_cxsmilesBondIdx", numBondsParsed++);
   }
 
@@ -325,7 +325,7 @@ mol: atomd {
   RWMol *mp = (*molList)[$$];
   int atomIdx1 = mp->getActiveAtom()->getIdx();
   int atomIdx2 = mp->addAtom($4, true, true);
-  if( $3->getBondType() == Bond::DATIVER ){
+  if ( $3->getBondType() == Bond::DATIVER ) {
     $3->setBeginAtomIdx(atomIdx1);
     $3->setEndAtomIdx(atomIdx2);
     $3->setBondType(Bond::DATIVE);
@@ -351,7 +351,7 @@ mol: atomd {
   branchPoints.push_back({atomIdx1, $2});
 }
 | mol GROUP_CLOSE_TOKEN {
-  if(branchPoints.empty()){
+  if (branchPoints.empty()) {
      yyerror(input, molList, branchPoints, scanner, start_token, current_token_position, "extra close parentheses");
      yyErrorCleanup(molList);
      YYABORT;
@@ -450,8 +450,8 @@ number:  ZERO_TOKEN
 /* --------------------------------------------------------------- */
 nonzero_number:  NONZERO_DIGIT_TOKEN
 | nonzero_number digit {
-  if($1 >= std::numeric_limits<std::int32_t>::max() / 10 ||
-     $1 * 10 >= std::numeric_limits<std::int32_t>::max() - $2 ){
+  if ($1 >= std::numeric_limits<std::int32_t>::max() / 10 ||
+     $1 * 10 >= std::numeric_limits<std::int32_t>::max() - $2 ) {
      yyerror(input, molList, branchPoints, scanner, start_token, current_token_position, "number too large");
      yyErrorCleanup(molList);
      YYABORT;
