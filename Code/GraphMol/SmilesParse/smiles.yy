@@ -48,12 +48,10 @@ void yysmiles_error(const char *input, std::vector<RDKit::RWMol *> *ms,
                                                   bad_token_position, "SMILES");
 }
 
-void
-yysmiles_error( const char *input,
-                std::vector<RDKit::RWMol *> *ms,
-                std::vector<std::pair<unsigned int, unsigned int>>&,
-		void *, int, unsigned int bad_token_position, const char * msg )
-{
+void yysmiles_error(const char *input, std::vector<RDKit::RWMol *> *ms,
+                    std::vector<std::pair<unsigned int, unsigned int>> &,
+                    void *, int, unsigned int bad_token_position,
+                    const char *msg) {
   yyErrorCleanup(ms);
   SmilesParseOps::detail::printSyntaxErrorMessage(input,
                                                   msg,
@@ -61,11 +59,8 @@ yysmiles_error( const char *input,
                                                   "SMILES");
 }
 
-void
-yysmiles_error( const char *input,
-                std::vector<RDKit::RWMol *> *ms,
-                unsigned int bad_token_position, const char * msg )
-{
+void yysmiles_error(const char *input, std::vector<RDKit::RWMol *> *ms,
+                    unsigned int bad_token_position, const char *msg) {
   yyErrorCleanup(ms);
   SmilesParseOps::detail::printSyntaxErrorMessage(input,
                                                   msg,
