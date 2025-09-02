@@ -244,12 +244,11 @@ mol: atomd {
 }
 
 | mol ring_number {
-  RWMol * mp = (*molList)[$$];
+  RWMol *mp = (*molList)[$$];
   Atom *atom = mp->getActiveAtom();
   mp->setAtomBookmark(atom, $2);
 
-  Bond *newB = mp->createPartialBond(atom->getIdx(),
-				     Bond::UNSPECIFIED);
+  Bond *newB = mp->createPartialBond(atom->getIdx(), Bond::UNSPECIFIED);
   mp->setBondBookmark(newB, $2);
   newB->setProp(RDKit::common_properties::_unspecifiedOrder, 1);
   if (!(mp->getAllBondsWithBookmark($2).size() % 2)) {
