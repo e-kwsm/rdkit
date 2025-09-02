@@ -549,7 +549,7 @@ attrib: TEXT_BLOCK {
 recursivequery: RECURSE_TOKEN cmpd {
    int sz = molList->size();
    RDKit::ROMol *mol = (*molList)[$2];
-   molList->resize( sz-1 );
+   molList->resize( sz - 1 );
    SLNParse::finalizeQueryMol(mol, true);
    RDKit::RecursiveStructureQuery *rsq = new RDKit::RecursiveStructureQuery(mol);
    RDKit::ATOM_OR_QUERY *orq = new RDKit::ATOM_OR_QUERY();
@@ -563,7 +563,7 @@ recursivequery: RECURSE_TOKEN cmpd {
 | NEG_RECURSE_TOKEN cmpd {
    int sz = molList->size();
    RDKit::ROMol *mol = (*molList)[$2];
-   molList->resize( sz-1 );
+   molList->resize( sz - 1 );
    SLNParse::finalizeQueryMol(mol, true);
    RDKit::RecursiveStructureQuery *rsq = new RDKit::RecursiveStructureQuery(mol);
    RDKit::ATOM_OR_QUERY *orq = new RDKit::ATOM_OR_QUERY();
@@ -579,7 +579,7 @@ recursivequery: RECURSE_TOKEN cmpd {
 | recursivequery COMMA_TOKEN cmpd {
    int sz = molList->size();
    RDKit::ROMol *mol = (*molList)[$3];
-   molList->resize( sz-1 );
+   molList->resize( sz - 1 );
    SLNParse::finalizeQueryMol(mol, true);
    RDKit::RecursiveStructureQuery *rsq = new RDKit::RecursiveStructureQuery(mol);
 
