@@ -321,7 +321,7 @@ mol: atomd {
   RWMol *mp = (*molList)[$$];
   int atomIdx1 = mp->getActiveAtom()->getIdx();
   int atomIdx2 = mp->addAtom($4, true, true);
-  if ( $3->getBondType() == Bond::DATIVER ) {
+  if ($3->getBondType() == Bond::DATIVER) {
     $3->setBeginAtomIdx(atomIdx1);
     $3->setEndAtomIdx(atomIdx2);
     $3->setBondType(Bond::DATIVE);
@@ -455,7 +455,7 @@ number:  ZERO_TOKEN
 nonzero_number:  NONZERO_DIGIT_TOKEN
 | nonzero_number digit {
   if ($1 >= std::numeric_limits<std::int32_t>::max() / 10 ||
-     $1 * 10 >= std::numeric_limits<std::int32_t>::max() - $2 ) {
+      $1 * 10 >= std::numeric_limits<std::int32_t>::max() - $2 ) {
      yyerror(input, molList, branchPoints, scanner, start_token, current_token_position, "number too large");
      yyErrorCleanup(molList);
      YYABORT;
