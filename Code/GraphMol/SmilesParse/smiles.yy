@@ -199,9 +199,11 @@ mol: atomd {
   int atomIdx1 = a1->getIdx();
   int atomIdx2 = mp->addAtom($2, true, true);
   mp->addBond(atomIdx1, atomIdx2,
-	      SmilesParseOps::GetUnspecifiedBondType(mp, a1, mp->getAtomWithIdx(atomIdx2)));
-  mp->getBondBetweenAtoms(atomIdx1, atomIdx2)->setProp("_cxsmilesBondIdx", numBondsParsed++);
-  //delete $2;
+              SmilesParseOps::GetUnspecifiedBondType(
+                  mp, a1, mp->getAtomWithIdx(atomIdx2)));
+  mp->getBondBetweenAtoms(atomIdx1, atomIdx2)
+      ->setProp("_cxsmilesBondIdx", numBondsParsed++);
+  // delete $2;
 }
 
 | mol BOND_TOKEN atomd  {
