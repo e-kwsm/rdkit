@@ -15,7 +15,7 @@
 
 #if defined(__CYGWIN__) && !defined(fileno)
 // -std=c++11 turns off recent posix features
-extern "C" int fileno(FILE*);
+extern "C" int fileno(FILE *);
 #endif
 
 #include <cstdio>
@@ -35,33 +35,33 @@ using namespace RDKit;
 #undef YY_USER_ACTION
 #define YY_USER_ACTION current_token_position += yyleng;
 
-
 #define YY_FATAL_ERROR(msg) smarts_lexer_error(msg)
 
 void smarts_lexer_error(const char *msg) {
-     BOOST_LOG(rdErrorLog) << msg << std::endl;
-     throw ValueErrorException(msg);
+  BOOST_LOG(rdErrorLog) << msg << std::endl;
+  throw ValueErrorException(msg);
 }
 
-size_t setup_smarts_string(const std::string &text, yyscan_t yyscanner){
-//  YY_BUFFER_STATE buff=yysmarts__scan_string(text.c_str()+pos,yyscanner);
+size_t setup_smarts_string(const std::string &text, yyscan_t yyscanner) {
+  //  YY_BUFFER_STATE buff=yysmarts__scan_string(text.c_str()+pos,yyscanner);
   // Faster implementation of yysmarts__scan_string that handles trimming
   YY_BUFFER_STATE b;
   char *buf;
-  yyconst char * yybytes = text.c_str();
+  yyconst char *yybytes = text.c_str();
   yy_size_t _yybytes_len = text.size(), n, start, end;
   /* Get memory for full buffer, including space for trailing EOB's. */
   n = _yybytes_len + 2;
-  buf = (char *) yysmarts_alloc(n, yyscanner );
-  if ( ! buf )
-    smarts_lexer_error( "out of dynamic memory in yysmarts__scan_bytes()" );
+  buf = (char *)yysmarts_alloc(n, yyscanner);
+  if (!buf) {
+    smarts_lexer_error("out of dynamic memory in yysmarts__scan_bytes()");
+  }
 
   // ltrim
 
-  for (start = 0 ; start < _yybytes_len; ++start) {
+  for (start = 0; start < _yybytes_len; ++start) {
     if (yybytes[start] > 32) break;
   }
-  for (end = _yybytes_len ; end > start; --end) {
+  for (end = _yybytes_len; end > start; --end) {
     if (yybytes[end] > 32) break;
   }
 
@@ -73,8 +73,9 @@ size_t setup_smarts_string(const std::string &text, yyscan_t yyscanner){
   buf[_yybytes_len] = buf[_yybytes_len + 1] = YY_END_OF_BUFFER_CHAR;
 
   b = yysmarts__scan_buffer(buf, n, yyscanner);
-  if ( ! b )
+  if (!b) {
     smarts_lexer_error( "bad buffer in yysmarts__scan_bytes()" );
+  }
 
   /* It's okay to grow etc. this buffer, and we should throw it
    * away when we're done.
