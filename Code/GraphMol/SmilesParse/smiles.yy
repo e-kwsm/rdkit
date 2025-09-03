@@ -448,7 +448,7 @@ nonzero_number:  NONZERO_DIGIT_TOKEN
     YYABORT;
   }
   $$ = $1 * 10 + $2;
-  }
+}
 ;
 
 digit: NONZERO_DIGIT_TOKEN
