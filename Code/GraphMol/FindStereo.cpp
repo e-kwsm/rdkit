@@ -1245,7 +1245,7 @@ std::vector<StereoInfo> runCleanup(ROMol &mol, bool flagPossible,
   boost::dynamic_bitset<> possibleSpecialCases(mol.getNumAtoms());
   findChiralAtomSpecialCases(mol, possibleSpecialCases, aranks);
 
-  for (const auto atom : mol.atoms()) {
+  for (auto *const atom : mol.atoms()) {
     atom->setProp<unsigned int>(common_properties::_ChiralAtomRank,
                                 aranks[atom->getIdx()], true);
   }
