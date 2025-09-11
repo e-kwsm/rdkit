@@ -116,15 +116,17 @@ void InversionContrib::getGrad(double *pos, double *grad) const {
   RDGeom::Point3D t3 = rJK.crossProduct(rJI);
   double term1 = sinY * sinTheta;
   double term2 = cosY / (sinY * sinThetaSq);
-  double tg1[3] = {(t1.x / term1 - (rJI.x - rJK.x * cosTheta) * term2) / dJI,
-                   (t1.y / term1 - (rJI.y - rJK.y * cosTheta) * term2) / dJI,
-                   (t1.z / term1 - (rJI.z - rJK.z * cosTheta) * term2) / dJI};
-  double tg3[3] = {(t2.x / term1 - (rJK.x - rJI.x * cosTheta) * term2) / dJK,
-                   (t2.y / term1 - (rJK.y - rJI.y * cosTheta) * term2) / dJK,
-                   (t2.z / term1 - (rJK.z - rJI.z * cosTheta) * term2) / dJK};
-  double tg4[3] = {(t3.x / term1 - rJL.x * cosY / sinY) / dJL,
-                   (t3.y / term1 - rJL.y * cosY / sinY) / dJL,
-                   (t3.z / term1 - rJL.z * cosY / sinY) / dJL};
+  std::array<double, 3> tg1 = {
+      (t1.x / term1 - (rJI.x - rJK.x * cosTheta) * term2) / dJI,
+      (t1.y / term1 - (rJI.y - rJK.y * cosTheta) * term2) / dJI,
+      (t1.z / term1 - (rJI.z - rJK.z * cosTheta) * term2) / dJI};
+  std::array<double, 3> tg3 = {
+      (t2.x / term1 - (rJK.x - rJI.x * cosTheta) * term2) / dJK,
+      (t2.y / term1 - (rJK.y - rJI.y * cosTheta) * term2) / dJK,
+      (t2.z / term1 - (rJK.z - rJI.z * cosTheta) * term2) / dJK};
+  std::array<double, 3> tg4 = {(t3.x / term1 - rJL.x * cosY / sinY) / dJL,
+                               (t3.y / term1 - rJL.y * cosY / sinY) / dJL,
+                               (t3.z / term1 - rJL.z * cosY / sinY) / dJL};
   for (unsigned int i = 0; i < 3; ++i) {
     g1[i] += dE_dW * tg1[i];
     g2[i] += -dE_dW * (tg1[i] + tg3[i] + tg4[i]);
