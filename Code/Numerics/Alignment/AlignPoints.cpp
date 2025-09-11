@@ -308,13 +308,13 @@ double AlignPoints(const RDGeom::Point3DConstPtrVect &refPoints,
   jacobi(quad, eigenVals, eigenVecs, maxIterations);
 
   // get the quaternion
-  double quater[4];
+  std::array<double, 4> quater;
   quater[0] = eigenVecs[0][0];
   quater[1] = eigenVecs[1][0];
   quater[2] = eigenVecs[2][0];
   quater[3] = eigenVecs[3][0];
 
-  trans.SetRotationFromQuaternion(quater);
+  trans.SetRotationFromQuaternion(quater.data());
   if (reflect) {
     // put the flip in the rotation matrix
     trans.Reflect();
