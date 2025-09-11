@@ -128,7 +128,7 @@ ExplicitBitVect *getHashedAtomPairFingerprintAsBitVect(
   PRECONDITION(minLength <= maxLength, "bad lengths provided");
   PRECONDITION(!atomInvariants || atomInvariants->size() >= mol.getNumAtoms(),
                "bad atomInvariants size");
-  static int bounds[4] = {1, 2, 4, 8};
+  static std::array<int, 4> bounds = {1, 2, 4, 8};
 
   unsigned int blockLength = nBits / nBitsPerEntry;
   SparseIntVect<std::int32_t> *sres = getHashedAtomPairFingerprint(
@@ -318,7 +318,7 @@ ExplicitBitVect *getHashedTopologicalTorsionFingerprintAsBitVect(
   RDLog::deprecationWarning("please use TopologicalTorsionGenerator");
   PRECONDITION(!atomInvariants || atomInvariants->size() >= mol.getNumAtoms(),
                "bad atomInvariants size");
-  static int bounds[4] = {1, 2, 4, 8};
+  static std::array<int, 4> bounds = {1, 2, 4, 8};
   unsigned int blockLength = nBits / nBitsPerEntry;
   auto *sres = new SparseIntVect<boost::int64_t>(blockLength);
   TorsionFpCalc(sres, mol, blockLength, targetSize, fromAtoms, ignoreAtoms,

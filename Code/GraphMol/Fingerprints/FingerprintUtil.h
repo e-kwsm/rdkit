@@ -26,7 +26,7 @@
 namespace RDKit {
 namespace AtomPairs {
 const unsigned int numTypeBits = 4;
-const unsigned int atomNumberTypes[1 << numTypeBits] = {
+const std::array<unsigned int, 1 << numTypeBits> atomNumberTypes = {
     5, 6, 7, 8, 9, 14, 15, 16, 17, 33, 34, 35, 51, 52, 53};
 const unsigned int numPiBits = 2;
 const unsigned int maxNumPi = (1 << numPiBits) - 1;
