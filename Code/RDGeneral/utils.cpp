@@ -48,7 +48,7 @@ double computeIntVectPrimesProduct(const INT_VECT &vect) {
   return invr;
 }
 
-int firstThousandPrimes[NUM_PRIMES_AVAIL] = {
+std::array<int, NUM_PRIMES_AVAIL> firstThousandPrimes = {
     2,    3,    5,    7,    11,   13,   17,   19,   23,   29,   31,   37,
     41,   43,   47,   53,   59,   61,   67,   71,   73,   79,   83,   89,
     97,   101,  103,  107,  109,  113,  127,  131,  137,  139,  149,  151,
