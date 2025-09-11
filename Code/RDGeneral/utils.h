@@ -21,7 +21,8 @@
 namespace RDKit {
 const int NUM_PRIMES_AVAIL =
     1000;  //!< the number of primes available and stored
-RDKIT_RDGENERAL_EXPORT extern int firstThousandPrimes[NUM_PRIMES_AVAIL];
+RDKIT_RDGENERAL_EXPORT extern std::array<int, NUM_PRIMES_AVAIL>
+    firstThousandPrimes;
 
 const int FILE_MAXLINE =
     256;  //!< an assumed maximum length for lines read from files
