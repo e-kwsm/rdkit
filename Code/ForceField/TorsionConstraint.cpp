@@ -122,12 +122,13 @@ void TorsionConstraintContrib::getGrad(double *pos, double *grad) const {
   double *g[4] = {&(grad[3 * d_at1Idx]), &(grad[3 * d_at2Idx]),
                   &(grad[3 * d_at3Idx]), &(grad[3 * d_at4Idx])};
 
-  RDGeom::Point3D r[4];
-  RDGeom::Point3D t[2];
-  double d[2];
+  std::array<RDGeom::Point3D, 4> r;
+  std::array<RDGeom::Point3D, 2> t;
+  std::array<double, 2> d;
   double dihedral;
-  RDKit::ForceFieldsHelper::computeDihedral(
-      pos, d_at1Idx, d_at2Idx, d_at3Idx, d_at4Idx, &dihedral, nullptr, r, t, d);
+  RDKit::ForceFieldsHelper::computeDihedral(pos, d_at1Idx, d_at2Idx, d_at3Idx,
+                                            d_at4Idx, &dihedral, nullptr,
+                                            r.data(), t.data(), d.data());
   dihedral *= RAD2DEG;
   double dihedralTerm = computeDihedralTerm(dihedral);
   double dE_dPhi = 2.0 * RAD2DEG * d_forceConstant * dihedralTerm;
@@ -140,11 +141,12 @@ void TorsionConstraintContrib::getGrad(double *pos, double *grad) const {
                       pos[3 * d_at4Idx + 1] - pos[3 * d_at2Idx + 1],
                       pos[3 * d_at4Idx + 2] - pos[3 * d_at2Idx + 2]);
   double prefactor = dE_dPhi / d23;
-  RDGeom::Point3D tt[2] = {r[0].crossProduct(r[1]), r[2].crossProduct(r[3])};
-  RDGeom::Point3D dedt[2] = {
+  std::array<RDGeom::Point3D, 2> tt = {r[0].crossProduct(r[1]),
+                                       r[2].crossProduct(r[3])};
+  std::array<RDGeom::Point3D, 2> dedt = {
       tt[0].crossProduct(r[2]) / tt[0].lengthSq() * prefactor,
       tt[1].crossProduct(r[1]) / tt[1].lengthSq() * prefactor};
-  RDGeom::Point3D dedp[4] = {
+  std::array<RDGeom::Point3D, 4> dedp = {
       r[2].crossProduct(dedt[0]),
       r31.crossProduct(dedt[0]) - r[3].crossProduct(dedt[1]),
       r[0].crossProduct(dedt[0]) + r42.crossProduct(dedt[1]),
