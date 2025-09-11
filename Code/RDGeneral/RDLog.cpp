@@ -10,6 +10,7 @@
 #include "RDLog.h"
 
 #if 1
+#include <array>
 #include <iomanip>
 #include <string>
 #include <ctime>
@@ -150,16 +151,16 @@ void InitLogs() {
 }
 
 std::ostream &toStream(std::ostream &logstrm) {
-  char buffer[16];
+  std::array<char, 16> buffer;
   time_t t = time(nullptr);
 // localtime() is thread safe on windows, but not on *nix
 #ifdef WIN32
-  strftime(buffer, 16, "[%T] ", localtime(&t));
+  strftime(buffer.data(), 16, "[%T] ", localtime(&t));
 #else
   struct tm buf;
-  strftime(buffer, 16, "[%T] ", localtime_r(&t, &buf));
+  strftime(buffer.data(), 16, "[%T] ", localtime_r(&t, &buf));
 #endif
-  return logstrm << buffer;
+  return logstrm << buffer.data();
 }
 }  // namespace RDLog
 
