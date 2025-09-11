@@ -35,7 +35,8 @@
 namespace RDKit {
 
 namespace SmilesWrite {
-const int atomicSmiles[] = {0, 5, 6, 7, 8, 9, 15, 16, 17, 35, 53, -1};
+const std::vector<int> atomicSmiles = {0,  5,  6,  7,  8,  9,
+                                       15, 16, 17, 35, 53, -1};
 bool inOrganicSubset(int atomicNumber) {
   unsigned int idx = 0;
   while (atomicSmiles[idx] < atomicNumber && atomicSmiles[idx] != -1) {
