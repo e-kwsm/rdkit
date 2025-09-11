@@ -312,7 +312,7 @@ atomicData::atomicData(const std::string &dataLine) {
 // another joy of VC++ "compiler limit: string exceeds 65535 bytes in length"
 // compels us to
 // break this into pieces
-const std::string isotopesAtomData[] = {
+const std::vector<std::string> isotopesAtomData = {
     R"DAT(1	H	1	1.007825032	99.9885 \n \
 1	H	2	2.014101778	0.0115 \n \
 1	H	3	3.016049278	0 \n \
