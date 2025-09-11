@@ -55,7 +55,7 @@ unsigned int getEffectiveAtomicNum(const Atom &atom, bool checkValue) {
 
 // Determine whether or not an element is to the left of carbon.
 bool isEarlyAtom(int atomicNum) {
-  static const bool table[119] = {
+  static const std::array<bool, 119> table = {
       false,  // #0 *
       false,  // #1 H
       false,  // #2 He
@@ -763,7 +763,7 @@ int Atom::getPerturbationOrder(const INT_LIST &probe) const {
   return static_cast<int>(countSwapsToInterconvert(probe, ref));
 }
 
-static const unsigned char octahedral_invert[31] = {
+static const std::array<unsigned char, 31> octahedral_invert = {
     0,   //  0 -> 0
     2,   //  1 -> 2
     1,   //  2 -> 1
@@ -797,7 +797,7 @@ static const unsigned char octahedral_invert[31] = {
     25   // 30 -> 25
 };
 
-static const unsigned char trigonalbipyramidal_invert[21] = {
+static const std::array<unsigned char, 21> trigonalbipyramidal_invert = {
     0,   //  0 -> 0
     2,   //  1 -> 2
     1,   //  2 -> 1
