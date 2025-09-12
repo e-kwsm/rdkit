@@ -231,14 +231,14 @@ std::string NMMolecularFormula(RWMol *mol, bool sep = false) {
   }
 
   auto size = (unsigned int)(acount * sizeof(int));
-  auto *parts = (unsigned int *)malloc(size);
-  unsigned int pcount = NMDetermineComponents(mol, parts, acount);
+  std::vector<unsigned int> parts(size);
+  unsigned int pcount = NMDetermineComponents(mol, parts.data(), acount);
 
   std::string result;
   if (pcount > 1) {
     std::vector<std::string> vmf;
     for (unsigned int i = 1; i <= pcount; i++) {
-      vmf.push_back(NMMolecularFormula(mol, parts, i));
+      vmf.push_back(NMMolecularFormula(mol, parts.data(), i));
     }
 
     // sort
@@ -248,9 +248,8 @@ std::string NMMolecularFormula(RWMol *mol, bool sep = false) {
       result += vmf[i];
     }
   } else {  // pcount == 1
-    result = NMMolecularFormula(mol, parts, 1);
+    result = NMMolecularFormula(mol, parts.data(), 1);
   }
-  free(parts);
   return result;
 }
 
@@ -1280,12 +1279,8 @@ std::string ArthorSubOrderHash(RWMol *mol) {
 
   unsigned int pcount = 1;
   unsigned int size = 4 * mol->getNumAtoms() + 4;
-  auto *parts = (unsigned int *)malloc(size);
-  if (parts) {
-    memset(parts, 0, size);
-    pcount = NMDetermineComponents(mol, parts, acount);
-    free(parts);
-  }
+  std::vector<unsigned int> parts(size, 0);
+  pcount = NMDetermineComponents(mol, parts.data(), acount);
 
   unsigned int ccount = 0;
   unsigned int ocount = 0;
