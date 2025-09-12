@@ -132,26 +132,24 @@ double RecurseHelper(double *vals, int nVals, long int *cuts, int nCuts,
   std::vector<long int> varTable((nCuts + 1) * nPossibleRes, 0);
   std::vector<long int> bestCuts(nCuts, 0);
   std::vector<long int> tCuts(nCuts, 0);
-  CHECK_INVARIANT(varTable, "failed to allocate memory");
-  CHECK_INVARIANT(bestCuts, "failed to allocate memory");
-  CHECK_INVARIANT(tCuts, "failed to allocate memory");
   GenVarTable(vals, nVals, cuts, nCuts, starts, results, nPossibleRes,
-              varTable);
+              varTable.data());
   while (cuts[which] <= highestCutHere) {
-    gainHere = RDInfoTheory::InfoEntropyGain(varTable, nCuts + 1, nPossibleRes);
+    gainHere =
+        RDInfoTheory::InfoEntropyGain(varTable.data(), nCuts + 1, nPossibleRes);
     if (gainHere > maxGain) {
       maxGain = gainHere;
-      memcpy(bestCuts, cuts, nCuts * sizeof(long int));
+      bestCuts.assign(cuts, cuts + nCuts);
     }
 
     // recurse on the next vars if needed
     if (which < nBounds - 1) {
-      memcpy(tCuts, cuts, nCuts * sizeof(long int));
-      gainHere = RecurseHelper(vals, nVals, tCuts, nCuts, which + 1, starts,
-                               nStarts, results, nPossibleRes);
+      tCuts.assign(cuts, cuts + nCuts);
+      gainHere = RecurseHelper(vals, nVals, tCuts.data(), nCuts, which + 1,
+                               starts, nStarts, results, nPossibleRes);
       if (gainHere > maxGain) {
         maxGain = gainHere;
-        memcpy(bestCuts, tCuts, nCuts * sizeof(long int));
+        bestCuts = tCuts;
       }
     }
 
@@ -176,10 +174,7 @@ double RecurseHelper(double *vals, int nVals, long int *cuts, int nCuts,
       }
     }
   }
-  memcpy(cuts, bestCuts, nCuts * sizeof(long int));
-  free(tCuts);
-  free(bestCuts);
-  free(varTable);
+  memcpy(cuts, bestCuts.data(), nCuts * sizeof(long int));
   return maxGain;
 }
 
@@ -248,7 +243,6 @@ static python::tuple cQuantize_RecurseOnBounds(python::object vals,
 
   python::ssize_t nCuts = python::len(pyCuts);
   std::vector<long int> cuts(nCuts, 0);
-  CHECK_INVARIANT(cuts, "failed to allocate memory");
   for (python::ssize_t i = 0; i < nCuts; i++) {
     python::object elem = pyCuts[i];
     cuts[i] = python::extract<long int>(elem);
@@ -256,7 +250,6 @@ static python::tuple cQuantize_RecurseOnBounds(python::object vals,
 
   python::ssize_t nStarts = python::len(pyStarts);
   std::vector<long int> starts(nStarts, 0);
-  CHECK_INVARIANT(starts, "failed to allocate memory");
   for (python::ssize_t i = 0; i < nStarts; i++) {
     python::object elem = pyStarts[i];
     starts[i] = python::extract<long int>(elem);
@@ -264,9 +257,9 @@ static python::tuple cQuantize_RecurseOnBounds(python::object vals,
 
   // do the real work
   double gain = RecurseHelper(
-      (double *)PyArray_DATA(contigVals), PyArray_DIM(contigVals, 0), cuts,
-      nCuts, which, starts, nStarts, (long int *)PyArray_DATA(contigResults),
-      nPossibleRes);
+      (double *)PyArray_DATA(contigVals), PyArray_DIM(contigVals, 0),
+      cuts.data(), nCuts, which, starts.data(), nStarts,
+      (long int *)PyArray_DATA(contigResults), nPossibleRes);
 
   /*
     -------
@@ -279,8 +272,6 @@ static python::tuple cQuantize_RecurseOnBounds(python::object vals,
   for (python::ssize_t i = 0; i < nCuts; i++) {
     cutObj.append(cuts[i]);
   }
-  free(cuts);
-  free(starts);
   return python::make_tuple(gain, cutObj);
 }
 
