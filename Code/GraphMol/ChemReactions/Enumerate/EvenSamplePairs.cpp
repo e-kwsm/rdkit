@@ -44,36 +44,36 @@ void EvenSamplePairsStrategy::initializeStrategy(const ChemicalReaction &,
       m_numPermutations != EnumerationStrategyBase::EnumerationOverflow,
       "Cannot represent all permutations for the even sampler");
 
-  boost::uint64_t npos = bbs.size();
+  std::uint64_t npos = bbs.size();
   used_count.resize(npos);
   std::fill(used_count.begin(), used_count.end(), 0);
 
   var_used.resize(npos);
-  for (boost::uint64_t i = 0; i < npos; ++i) {
+  for (std::uint64_t i = 0; i < npos; ++i) {
     var_used[i].resize(m_permutationSizes[i]);
     std::fill(var_used[i].begin(), var_used[i].end(), 0);
   }
 
-  boost::uint64_t nmonomers = 0;
-  for (boost::uint64_t i = 0; i < bbs.size(); ++i) {
+  std::uint64_t nmonomers = 0;
+  for (std::uint64_t i = 0; i < bbs.size(); ++i) {
     nmonomers += m_permutationSizes[i];
   }
 
   pair_used.resize(nmonomers);
-  for (boost::uint64_t i = 0; i < nmonomers; ++i) {
+  for (std::uint64_t i = 0; i < nmonomers; ++i) {
     pair_used[i].resize(nmonomers);
     std::fill(pair_used[i].begin(), pair_used[i].end(), 0);
   }
 
   pair_counts.resize(npos);
-  for (boost::uint64_t i = 0; i < npos; i++) {
+  for (std::uint64_t i = 0; i < npos; i++) {
     pair_counts[i].resize(npos);
     std::fill(pair_counts[i].begin(), pair_counts[i].end(), 0);
   }
 
   /* Initialize random number generator */
   /* Find modulus */
-  for (M = 1; M < rdcast<boost::uint64_t>(m_numPermutations); M = 2 * M) {
+  for (M = 1; M < rdcast<std::uint64_t>(m_numPermutations); M = 2 * M) {
     ;
   }
   /* Set factor */
@@ -99,13 +99,13 @@ void EvenSamplePairsStrategy::initializeStrategy(const ChemicalReaction &,
 //  This is fairly suboptimal for large collections
 //  of building blocks and may take a while to
 //  terminate...
-bool EvenSamplePairsStrategy::try_add(boost::uint64_t iseed) {
+bool EvenSamplePairsStrategy::try_add(std::uint64_t iseed) {
   const RGROUPS &digits = decode(iseed);
   const RGROUPS &rgroups = m_permutationSizes;
-  boost::uint64_t islack = 0;
-  boost::uint64_t num_rgroups = m_permutationSizes.size();
+  std::uint64_t islack = 0;
+  std::uint64_t num_rgroups = m_permutationSizes.size();
 
-  for (boost::uint64_t i = 0; i < num_rgroups; ++i) {
+  for (std::uint64_t i = 0; i < num_rgroups; ++i) {
     if (var_used[i][digits[i]]) {
       islack += var_used[i][digits[i]];
     }
@@ -117,16 +117,16 @@ bool EvenSamplePairsStrategy::try_add(boost::uint64_t iseed) {
   }
 
   islack = 0;
-  boost::uint64_t ioffset = 0;
+  std::uint64_t ioffset = 0;
   // check that building block pairs get evenly sampled
-  for (boost::uint64_t i = 0; i < num_rgroups; ++i) {
-    boost::uint64_t joffset = 0;
-    for (boost::uint64_t j = 0; j < num_rgroups; ++j) {
+  for (std::uint64_t i = 0; i < num_rgroups; ++i) {
+    std::uint64_t joffset = 0;
+    for (std::uint64_t j = 0; j < num_rgroups; ++j) {
       if (j == i) {
         continue;
       }
-      boost::uint64_t ii = digits[i] + ioffset;
-      boost::uint64_t jj = digits[j] + joffset;
+      std::uint64_t ii = digits[i] + ioffset;
+      std::uint64_t jj = digits[j] + joffset;
       if (pair_used[ii][jj] > 0) {
         auto numer = (double)pair_used[ii][jj];
         double denom = sqrt((double)(rgroups[i]) * (double)(rgroups[j]));
@@ -143,19 +143,19 @@ bool EvenSamplePairsStrategy::try_add(boost::uint64_t iseed) {
   }
 
   // keep track of bb usage
-  for (boost::uint64_t i = 0; i < num_rgroups; ++i) {
+  for (std::uint64_t i = 0; i < num_rgroups; ++i) {
     if (var_used[i][digits[i]] == 0) {
       used_count[i]++;
     }
     var_used[i][digits[i]] += 1;
-    if (used_count[i] == rdcast<boost::int64_t>(rgroups[i])) {
+    if (used_count[i] == rdcast<std::int64_t>(rgroups[i])) {
       // complete variable scan => initialize
       if (nslack > min_nslack && rgroups[i] > 1) {  // cleared slack on i
         nslack = min_nslack;
       }
 
       used_count[i] = 0;
-      for (boost::uint64_t j = 0; j < rgroups[i]; ++j) {
+      for (std::uint64_t j = 0; j < rgroups[i]; ++j) {
         var_used[i][j]--;
         if (var_used[i][j] > 0) {
           used_count[i]++;
@@ -166,14 +166,14 @@ bool EvenSamplePairsStrategy::try_add(boost::uint64_t iseed) {
 
   // keep track of BB Pair usage
   ioffset = 0;
-  for (boost::uint64_t i = 0; i < num_rgroups; ioffset += rgroups[i], ++i) {
-    boost::uint64_t joffset = 0;
-    for (boost::uint64_t j = 0; j < num_rgroups; joffset += rgroups[j], ++j) {
+  for (std::uint64_t i = 0; i < num_rgroups; ioffset += rgroups[i], ++i) {
+    std::uint64_t joffset = 0;
+    for (std::uint64_t j = 0; j < num_rgroups; joffset += rgroups[j], ++j) {
       if (j == i) {
         continue;
       }
-      boost::uint64_t ii = digits[i] + ioffset;
-      boost::uint64_t jj = digits[j] + joffset;
+      std::uint64_t ii = digits[i] + ioffset;
+      std::uint64_t jj = digits[j] + joffset;
       if (pair_used[ii][jj] == 0) {
         pair_counts[i][j]++;
       }
@@ -183,8 +183,8 @@ bool EvenSamplePairsStrategy::try_add(boost::uint64_t iseed) {
           nslack = min_nslack;
         }
         pair_counts[i][j] = 0;
-        for (boost::uint64_t ii = 0; ii < rgroups[i]; ++ii) {
-          for (boost::uint64_t jj = 0; jj < rgroups[j]; ++jj) {
+        for (std::uint64_t ii = 0; ii < rgroups[i]; ++ii) {
+          for (std::uint64_t jj = 0; jj < rgroups[j]; ++jj) {
             pair_used[ioffset + ii][joffset + jj]--;
             if (pair_used[ioffset + ii][joffset + jj] > 0) {
               pair_counts[i][j]++;
@@ -202,10 +202,10 @@ bool EvenSamplePairsStrategy::try_add(boost::uint64_t iseed) {
 const RGROUPS &EvenSamplePairsStrategy::next() {
   nslack = 0;
   while (m_numPermutationsProcessed <
-         rdcast<boost::uint64_t>(m_numPermutations)) {
-    for (boost::uint64_t l = 0; l < M; ++l) {
+         rdcast<std::uint64_t>(m_numPermutations)) {
+    for (std::uint64_t l = 0; l < M; ++l) {
       seed = ((seed * a + b) % M);
-      if (seed > rdcast<boost::uint64_t>(m_numPermutations)) {
+      if (seed > rdcast<std::uint64_t>(m_numPermutations)) {
         rejected_period += 1;
         continue;
       } else if (selected.find(seed) != selected.end()) {
@@ -228,12 +228,12 @@ const RGROUPS &EvenSamplePairsStrategy::next() {
 std::string EvenSamplePairsStrategy::stats() const {
   std::ostringstream ss;
 
-  boost::uint64_t npos = m_permutationSizes.size();
+  std::uint64_t npos = m_permutationSizes.size();
   const RGROUPS &nvars = m_permutationSizes;
-  boost::uint64_t i, l, j, ii, jj, ioffset, joffset;
+  std::uint64_t i, l, j, ii, jj, ioffset, joffset;
   ss << "#BEGIN# BBSTAT\n";
   for (i = 0; i < npos; i++) {
-    boost::uint64_t maxcount = 0;
+    std::uint64_t maxcount = 0;
     if (nvars[i] == 1) {
       continue;
     }
@@ -246,7 +246,7 @@ std::string EvenSamplePairsStrategy::stats() const {
               ((double)m_numPermutationsProcessed / nvars[i]);
 
     for (l = 0; l <= maxcount; l++) {
-      boost::uint64_t n = 0;
+      std::uint64_t n = 0;
       for (j = 0; j < nvars[i]; j++) {
         if (var_used[i][j] == l) {
           n++;
@@ -266,7 +266,7 @@ std::string EvenSamplePairsStrategy::stats() const {
       continue;
     }
     for (j = 0, joffset = 0; j < npos; joffset += nvars[j], j++) {
-      boost::uint64_t maxcount = 0;
+      std::uint64_t maxcount = 0;
       if (nvars[j] == 1) {
         continue;
       }
