@@ -195,7 +195,7 @@ getHashedAtomPairFingerprintAsBitVect(
 
 */
 [[deprecated("please use TopologicalTorsionGenerator")]]
-RDKIT_FINGERPRINTS_EXPORT SparseIntVect<boost::int64_t> *
+RDKIT_FINGERPRINTS_EXPORT SparseIntVect<std::int64_t> *
 getTopologicalTorsionFingerprint(
     const ROMol &mol, unsigned int targetSize = 4,
     const std::vector<std::uint32_t> *fromAtoms = nullptr,
@@ -230,7 +230,7 @@ getTopologicalTorsionFingerprint(
 
 */
 [[deprecated("please use TopologicalTorsionGenerator")]]
-RDKIT_FINGERPRINTS_EXPORT SparseIntVect<boost::int64_t> *
+RDKIT_FINGERPRINTS_EXPORT SparseIntVect<std::int64_t> *
 getHashedTopologicalTorsionFingerprint(
     const ROMol &mol, unsigned int nBits = 2048, unsigned int targetSize = 4,
     const std::vector<std::uint32_t> *fromAtoms = nullptr,
