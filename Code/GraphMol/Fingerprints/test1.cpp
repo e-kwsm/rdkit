@@ -1512,9 +1512,9 @@ void testTorsions() {
   BOOST_LOG(rdErrorLog) << "    Test Topological Torsions." << std::endl;
 
   ROMol *mol;
-  SparseIntVect<boost::int64_t> *fp;
-  boost::uint64_t tgt;
-  boost::uint64_t c1, c2, c3, c4;
+  SparseIntVect<std::int64_t> *fp;
+  std::uint64_t tgt;
+  std::uint64_t c1, c2, c3, c4;
   std::vector<std::uint32_t> codes;
 
   mol = SmilesToMol("CCCC");
@@ -1559,9 +1559,9 @@ void testHashedTorsions() {
   {
     ROMol *mol;
     mol = SmilesToMol("c1ccccc1");
-    SparseIntVect<boost::int64_t> *fp1;
+    SparseIntVect<std::int64_t> *fp1;
     fp1 = AtomPairs::getHashedTopologicalTorsionFingerprint(*mol);
-    SparseIntVect<boost::int64_t> *fp2;
+    SparseIntVect<std::int64_t> *fp2;
     fp2 = AtomPairs::getHashedTopologicalTorsionFingerprint(*mol);
     TEST_ASSERT(DiceSimilarity(*fp1, *fp2) == 1.0);
     TEST_ASSERT(*fp1 == *fp2);
@@ -1580,9 +1580,9 @@ void testHashedTorsions() {
   {
     ROMol *mol;
     mol = SmilesToMol("c1ccccc1");
-    SparseIntVect<boost::int64_t> *fp1;
+    SparseIntVect<std::int64_t> *fp1;
     fp1 = AtomPairs::getHashedTopologicalTorsionFingerprint(*mol, 2048, 6);
-    SparseIntVect<boost::int64_t> *fp2;
+    SparseIntVect<std::int64_t> *fp2;
     fp2 = AtomPairs::getHashedTopologicalTorsionFingerprint(*mol, 2048, 6);
     TEST_ASSERT(DiceSimilarity(*fp1, *fp2) == 1.0);
     TEST_ASSERT(*fp1 == *fp2);
@@ -1610,7 +1610,7 @@ void testBulkTorsions() {
   SDMolSupplier suppl(fName);
   while (!suppl.atEnd()) {
     ROMol *mol = suppl.next();
-    SparseIntVect<boost::int64_t> *fp;
+    SparseIntVect<std::int64_t> *fp;
     fp = AtomPairs::getTopologicalTorsionFingerprint(*mol);
     TEST_ASSERT(fp->getTotalVal() > 1);
     delete mol;
@@ -1731,22 +1731,22 @@ void testRootedTorsions() {
   BOOST_LOG(rdErrorLog) << "    Test Rooted Topological Torsions." << std::endl;
 
   ROMol *mol;
-  SparseIntVect<boost::int64_t> *fp1, *fp2;
+  SparseIntVect<std::int64_t> *fp1, *fp2;
   std::vector<std::uint32_t> roots;
 
   mol = SmilesToMol("OCCCC");
   roots.push_back(0);
 
   fp1 = AtomPairs::getTopologicalTorsionFingerprint(*mol);
-  SparseIntVect<boost::int64_t>::StorageType nz1 = fp1->getNonzeroElements();
+  SparseIntVect<std::int64_t>::StorageType nz1 = fp1->getNonzeroElements();
   TEST_ASSERT(nz1.size() > 0);
 
   fp2 = AtomPairs::getTopologicalTorsionFingerprint(*mol, 4, &roots);
-  SparseIntVect<boost::int64_t>::StorageType nz2 = fp2->getNonzeroElements();
+  SparseIntVect<std::int64_t>::StorageType nz2 = fp2->getNonzeroElements();
   TEST_ASSERT(nz2.size() > 0);
   TEST_ASSERT(nz2.size() < nz1.size());
 
-  for (SparseIntVect<boost::int64_t>::StorageType::const_iterator bIt =
+  for (SparseIntVect<std::int64_t>::StorageType::const_iterator bIt =
            nz2.begin();
        bIt != nz2.end(); ++bIt) {
     TEST_ASSERT(bIt->second <= fp2->getVal(bIt->first));
@@ -1765,21 +1765,21 @@ void testIgnoreTorsions() {
 
   {
     ROMol *mol;
-    SparseIntVect<boost::int64_t> *fp1, *fp2;
+    SparseIntVect<std::int64_t> *fp1, *fp2;
     std::vector<std::uint32_t> roots;
 
     mol = SmilesToMol("OCCCC");
     roots.push_back(0);
 
     fp1 = AtomPairs::getTopologicalTorsionFingerprint(*mol);
-    SparseIntVect<boost::int64_t>::StorageType nz1 = fp1->getNonzeroElements();
+    SparseIntVect<std::int64_t>::StorageType nz1 = fp1->getNonzeroElements();
     TEST_ASSERT(nz1.size() == 2);
 
     fp2 = AtomPairs::getTopologicalTorsionFingerprint(*mol, 4, nullptr, &roots);
-    SparseIntVect<boost::int64_t>::StorageType nz2 = fp2->getNonzeroElements();
+    SparseIntVect<std::int64_t>::StorageType nz2 = fp2->getNonzeroElements();
     TEST_ASSERT(nz2.size() == 1);
 
-    for (SparseIntVect<boost::int64_t>::StorageType::const_iterator bIt =
+    for (SparseIntVect<std::int64_t>::StorageType::const_iterator bIt =
              nz2.begin();
          bIt != nz2.end(); ++bIt) {
       TEST_ASSERT(bIt->second <= fp2->getVal(bIt->first));
@@ -1791,14 +1791,14 @@ void testIgnoreTorsions() {
   }
   {
     ROMol *mol;
-    SparseIntVect<boost::int64_t> *fp2;
+    SparseIntVect<std::int64_t> *fp2;
     std::vector<std::uint32_t> roots;
 
     mol = SmilesToMol("OCCCC");
     roots.push_back(1);
 
     fp2 = AtomPairs::getTopologicalTorsionFingerprint(*mol, 4, nullptr, &roots);
-    SparseIntVect<boost::int64_t>::StorageType nz2 = fp2->getNonzeroElements();
+    SparseIntVect<std::int64_t>::StorageType nz2 = fp2->getNonzeroElements();
     TEST_ASSERT(nz2.size() == 0);
 
     delete mol;
@@ -1807,14 +1807,14 @@ void testIgnoreTorsions() {
 
   {
     ROMol *mol;
-    SparseIntVect<boost::int64_t> *fp2;
+    SparseIntVect<std::int64_t> *fp2;
     std::vector<std::uint32_t> roots;
 
     mol = SmilesToMol("OCCCC");
     roots.push_back(0);
 
     fp2 = AtomPairs::getTopologicalTorsionFingerprint(*mol, 4, &roots, &roots);
-    SparseIntVect<boost::int64_t>::StorageType nz2 = fp2->getNonzeroElements();
+    SparseIntVect<std::int64_t>::StorageType nz2 = fp2->getNonzeroElements();
     TEST_ASSERT(nz2.size() == 0);
 
     delete mol;
@@ -2131,9 +2131,9 @@ void testPairsAndTorsionsOptions() {
     smi = "C1=CC=CC=N1";
     RWMol *m2 = SmilesToMol(smi);
     TEST_ASSERT(m2);
-    SparseIntVect<boost::int64_t> *fp1 =
+    SparseIntVect<std::int64_t> *fp1 =
         AtomPairs::getTopologicalTorsionFingerprint(*m1);
-    SparseIntVect<boost::int64_t> *fp2 =
+    SparseIntVect<std::int64_t> *fp2 =
         AtomPairs::getTopologicalTorsionFingerprint(*m2);
     TEST_ASSERT(*fp1 != *fp2);
     delete fp1;
@@ -2160,9 +2160,9 @@ void testPairsAndTorsionsOptions() {
     smi = "C1=CC=CC=N1";
     RWMol *m2 = SmilesToMol(smi);
     TEST_ASSERT(m2);
-    SparseIntVect<boost::int64_t> *fp1 =
+    SparseIntVect<std::int64_t> *fp1 =
         AtomPairs::getHashedTopologicalTorsionFingerprint(*m1);
-    SparseIntVect<boost::int64_t> *fp2 =
+    SparseIntVect<std::int64_t> *fp2 =
         AtomPairs::getHashedTopologicalTorsionFingerprint(*m2);
 
     TEST_ASSERT(*fp1 != *fp2);
@@ -2550,7 +2550,7 @@ void testChiralTorsions() {
   TEST_ASSERT(m1);
 
   {
-    SparseIntVect<boost::int64_t> *fp1, *fp2, *fp3;
+    SparseIntVect<std::int64_t> *fp1, *fp2, *fp3;
     fp1 = AtomPairs::getTopologicalTorsionFingerprint(*m1);
     TEST_ASSERT(fp1->getTotalVal() == 2);
     TEST_ASSERT(fp1->getNonzeroElements().size() == 2);
@@ -2592,7 +2592,7 @@ void testChiralTorsions() {
   }
 
   {
-    SparseIntVect<boost::int64_t> *fp1, *fp2, *fp3;
+    SparseIntVect<std::int64_t> *fp1, *fp2, *fp3;
     fp1 = AtomPairs::getHashedTopologicalTorsionFingerprint(*m1, 4096);
     TEST_ASSERT(fp1->getTotalVal() == 2);
     TEST_ASSERT(fp1->getNonzeroElements().size() == 2);
@@ -2648,7 +2648,7 @@ void testGitHubIssue25() {
   {
     ROMol *m1 = SmilesToMol("CCCCO");
     TEST_ASSERT(m1);
-    SparseIntVect<boost::int64_t> *fp1;
+    SparseIntVect<std::int64_t> *fp1;
     fp1 = AtomPairs::getTopologicalTorsionFingerprint(*m1);
     TEST_ASSERT(fp1);
     TEST_ASSERT(fp1->getTotalVal() == 2);
@@ -2661,7 +2661,7 @@ void testGitHubIssue25() {
   {
     ROMol *m1 = SmilesToMol("CCCCO");
     TEST_ASSERT(m1);
-    SparseIntVect<boost::int64_t> *fp1;
+    SparseIntVect<std::int64_t> *fp1;
     fp1 = AtomPairs::getHashedTopologicalTorsionFingerprint(*m1, 1000);
     TEST_ASSERT(fp1);
     TEST_ASSERT(fp1->getTotalVal() == 2);
@@ -3078,13 +3078,13 @@ void testGitHubIssue334() {
   {
     ROMol *m1 = SmilesToMol("N#C");
     TEST_ASSERT(m1);
-    SparseIntVect<boost::int64_t> *fp1;
+    SparseIntVect<std::int64_t> *fp1;
     fp1 = AtomPairs::getTopologicalTorsionFingerprint(*m1);
     TEST_ASSERT(fp1);
     delete m1;
 
     m1 = SmilesToMol("N#[CH]");
-    SparseIntVect<boost::int64_t> *fp2;
+    SparseIntVect<std::int64_t> *fp2;
     fp2 = AtomPairs::getTopologicalTorsionFingerprint(*m1);
     TEST_ASSERT(fp2);
     delete m1;
@@ -3227,16 +3227,16 @@ void testGitHubIssue811() {
     ROMol *m2 = MolFileToMol(dirName + "github811b.mol");
     TEST_ASSERT(m2);
 
-    SparseIntVect<boost::int64_t> *fp1, *fp2;
+    SparseIntVect<std::int64_t> *fp1, *fp2;
 
     std::vector<std::uint32_t> roots;
     roots.push_back(1);
 
     fp1 = AtomPairs::getTopologicalTorsionFingerprint(*m1, 7, &roots);
-    SparseIntVect<boost::int64_t>::StorageType nz1 = fp1->getNonzeroElements();
+    SparseIntVect<std::int64_t>::StorageType nz1 = fp1->getNonzeroElements();
     TEST_ASSERT(nz1.size() == 4);
     fp2 = AtomPairs::getTopologicalTorsionFingerprint(*m2, 7, &roots);
-    SparseIntVect<boost::int64_t>::StorageType nz2 = fp2->getNonzeroElements();
+    SparseIntVect<std::int64_t>::StorageType nz2 = fp2->getNonzeroElements();
     TEST_ASSERT(nz2.size() == 4);
 
     TEST_ASSERT(*fp1 == *fp2);
@@ -3250,10 +3250,10 @@ void testGitHubIssue811() {
     ROMol *m1 = SmilesToMol("C1CC1");
     TEST_ASSERT(m1);
 
-    SparseIntVect<boost::int64_t> *fp1;
+    SparseIntVect<std::int64_t> *fp1;
 
     fp1 = AtomPairs::getTopologicalTorsionFingerprint(*m1);
-    SparseIntVect<boost::int64_t>::StorageType nz1 = fp1->getNonzeroElements();
+    SparseIntVect<std::int64_t>::StorageType nz1 = fp1->getNonzeroElements();
     TEST_ASSERT(nz1.size() == 1);
     delete fp1;
     delete m1;
@@ -3267,8 +3267,8 @@ void testRDKFPUnfolded() {
   {
     ROMol *m1 = SmilesToMol("c1ccccc1N");
     TEST_ASSERT(m1);
-    SparseIntVect<boost::uint64_t> *fp1;
-    SparseIntVect<boost::uint64_t>::StorageType::const_iterator iter;
+    SparseIntVect<std::uint64_t> *fp1;
+    SparseIntVect<std::uint64_t>::StorageType::const_iterator iter;
 
     fp1 = getUnfoldedRDKFingerprintMol(*m1);
     TEST_ASSERT(fp1);
@@ -3291,8 +3291,8 @@ void testRDKFPUnfolded() {
   {
     ROMol *m1 = SmilesToMol("Cl");
     TEST_ASSERT(m1);
-    SparseIntVect<boost::uint64_t> *fp1;
-    SparseIntVect<boost::uint64_t>::StorageType::const_iterator iter;
+    SparseIntVect<std::uint64_t> *fp1;
+    SparseIntVect<std::uint64_t>::StorageType::const_iterator iter;
 
     fp1 = getUnfoldedRDKFingerprintMol(*m1);
     TEST_ASSERT(fp1);
@@ -3303,10 +3303,10 @@ void testRDKFPUnfolded() {
   {
     ROMol *m1 = SmilesToMol("CCCO");
     TEST_ASSERT(m1);
-    SparseIntVect<boost::uint64_t> *fp1;
-    SparseIntVect<boost::uint64_t>::StorageType::const_iterator iter;
-    std::map<boost::uint64_t, std::vector<std::vector<int>>> bitInfo;
-    std::map<boost::uint64_t, std::vector<std::vector<int>>>::const_iterator
+    SparseIntVect<std::uint64_t> *fp1;
+    SparseIntVect<std::uint64_t>::StorageType::const_iterator iter;
+    std::map<std::uint64_t, std::vector<std::vector<int>>> bitInfo;
+    std::map<std::uint64_t, std::vector<std::vector<int>>>::const_iterator
         iter2;
 
     fp1 = getUnfoldedRDKFingerprintMol(*m1, 1, 7, true, true, true, nullptr,
@@ -3682,15 +3682,15 @@ void testGitHubIssue1993() {
 
     {  // tt, no chirality
       bool useChirality = false;
-      std::unique_ptr<SparseIntVect<boost::int64_t>> fp1(
+      std::unique_ptr<SparseIntVect<std::int64_t>> fp1(
           AtomPairs::getTopologicalTorsionFingerprint(*m1, 4, nullptr, nullptr,
                                                       nullptr, useChirality));
       TEST_ASSERT(fp1);
-      std::unique_ptr<SparseIntVect<boost::int64_t>> fp2(
+      std::unique_ptr<SparseIntVect<std::int64_t>> fp2(
           AtomPairs::getTopologicalTorsionFingerprint(*m2, 4, nullptr, nullptr,
                                                       nullptr, useChirality));
       TEST_ASSERT(fp2);
-      std::unique_ptr<SparseIntVect<boost::int64_t>> fp3(
+      std::unique_ptr<SparseIntVect<std::int64_t>> fp3(
           AtomPairs::getTopologicalTorsionFingerprint(*m3, 4, nullptr, nullptr,
                                                       nullptr, useChirality));
       TEST_ASSERT(fp3);
@@ -3701,15 +3701,15 @@ void testGitHubIssue1993() {
     }
     {  // tt, with chirality
       bool useChirality = true;
-      std::unique_ptr<SparseIntVect<boost::int64_t>> fp1(
+      std::unique_ptr<SparseIntVect<std::int64_t>> fp1(
           AtomPairs::getTopologicalTorsionFingerprint(*m1, 4, nullptr, nullptr,
                                                       nullptr, useChirality));
       TEST_ASSERT(fp1);
-      std::unique_ptr<SparseIntVect<boost::int64_t>> fp2(
+      std::unique_ptr<SparseIntVect<std::int64_t>> fp2(
           AtomPairs::getTopologicalTorsionFingerprint(*m2, 4, nullptr, nullptr,
                                                       nullptr, useChirality));
       TEST_ASSERT(fp2);
-      std::unique_ptr<SparseIntVect<boost::int64_t>> fp3(
+      std::unique_ptr<SparseIntVect<std::int64_t>> fp3(
           AtomPairs::getTopologicalTorsionFingerprint(*m3, 4, nullptr, nullptr,
                                                       nullptr, useChirality));
       TEST_ASSERT(fp3);
@@ -3720,15 +3720,15 @@ void testGitHubIssue1993() {
     }
     {  // tt, no chirality
       bool useChirality = false;
-      std::unique_ptr<SparseIntVect<boost::int64_t>> fp1(
+      std::unique_ptr<SparseIntVect<std::int64_t>> fp1(
           AtomPairs::getHashedTopologicalTorsionFingerprint(
               *m1, 2048, 4, nullptr, nullptr, nullptr, useChirality));
       TEST_ASSERT(fp1);
-      std::unique_ptr<SparseIntVect<boost::int64_t>> fp2(
+      std::unique_ptr<SparseIntVect<std::int64_t>> fp2(
           AtomPairs::getHashedTopologicalTorsionFingerprint(
               *m2, 2048, 4, nullptr, nullptr, nullptr, useChirality));
       TEST_ASSERT(fp2);
-      std::unique_ptr<SparseIntVect<boost::int64_t>> fp3(
+      std::unique_ptr<SparseIntVect<std::int64_t>> fp3(
           AtomPairs::getHashedTopologicalTorsionFingerprint(
               *m3, 2048, 4, nullptr, nullptr, nullptr, useChirality));
       TEST_ASSERT(fp3);
@@ -3739,15 +3739,15 @@ void testGitHubIssue1993() {
     }
     {  // tt, with chirality
       bool useChirality = true;
-      std::unique_ptr<SparseIntVect<boost::int64_t>> fp1(
+      std::unique_ptr<SparseIntVect<std::int64_t>> fp1(
           AtomPairs::getHashedTopologicalTorsionFingerprint(
               *m1, 2048, 4, nullptr, nullptr, nullptr, useChirality));
       TEST_ASSERT(fp1);
-      std::unique_ptr<SparseIntVect<boost::int64_t>> fp2(
+      std::unique_ptr<SparseIntVect<std::int64_t>> fp2(
           AtomPairs::getHashedTopologicalTorsionFingerprint(
               *m2, 2048, 4, nullptr, nullptr, nullptr, useChirality));
       TEST_ASSERT(fp2);
-      std::unique_ptr<SparseIntVect<boost::int64_t>> fp3(
+      std::unique_ptr<SparseIntVect<std::int64_t>> fp3(
           AtomPairs::getHashedTopologicalTorsionFingerprint(
               *m3, 2048, 4, nullptr, nullptr, nullptr, useChirality));
       TEST_ASSERT(fp3);

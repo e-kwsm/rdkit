@@ -405,7 +405,7 @@ void reapplyWedging(ROMol &mol, bool allBondTypes) {
   RDKit::Chirality::reapplyMolBlockWedging(wmol, allBondTypes);
 }
 
-MolOps::SanitizeFlags sanitizeMol(ROMol &mol, boost::uint64_t sanitizeOps,
+MolOps::SanitizeFlags sanitizeMol(ROMol &mol, std::uint64_t sanitizeOps,
                                   bool catchErrors) {
   auto &wmol = static_cast<RWMol &>(mol);
   unsigned int operationThatFailed;
@@ -754,7 +754,7 @@ ExplicitBitVect *wrapRDKFingerprintMol(
   return res;
 }
 
-SparseIntVect<boost::uint64_t> *wrapUnfoldedRDKFingerprintMol(
+SparseIntVect<std::uint64_t> *wrapUnfoldedRDKFingerprintMol(
     const ROMol &mol, unsigned int minPath, unsigned int maxPath, bool useHs,
     bool branchedPaths, bool useBondOrder, python::object atomInvariants,
     python::object fromAtoms, python::object atomBits, python::object bitInfo) {
@@ -762,19 +762,18 @@ SparseIntVect<boost::uint64_t> *wrapUnfoldedRDKFingerprintMol(
       pythonObjectToVect<unsigned int>(atomInvariants);
   std::unique_ptr<std::vector<unsigned int>> lFromAtoms =
       pythonObjectToVect(fromAtoms, mol.getNumAtoms());
-  std::vector<std::vector<boost::uint64_t>> *lAtomBits = nullptr;
-  std::map<boost::uint64_t, std::vector<std::vector<int>>> *lBitInfo = nullptr;
+  std::vector<std::vector<std::uint64_t>> *lAtomBits = nullptr;
+  std::map<std::uint64_t, std::vector<std::vector<int>>> *lBitInfo = nullptr;
 
   // if(!(atomBits.is_none())){
   if (atomBits != python::object()) {
-    lAtomBits =
-        new std::vector<std::vector<boost::uint64_t>>(mol.getNumAtoms());
+    lAtomBits = new std::vector<std::vector<std::uint64_t>>(mol.getNumAtoms());
   }
   if (bitInfo != python::object()) {
-    lBitInfo = new std::map<boost::uint64_t, std::vector<std::vector<int>>>;
+    lBitInfo = new std::map<std::uint64_t, std::vector<std::vector<int>>>;
   }
 
-  SparseIntVect<boost::uint64_t> *res;
+  SparseIntVect<std::uint64_t> *res;
   res = getUnfoldedRDKFingerprintMol(
       mol, minPath, maxPath, useHs, branchedPaths, useBondOrder,
       lAtomInvariants.get(), lFromAtoms.get(), lAtomBits, lBitInfo);

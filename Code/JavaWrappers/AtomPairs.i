@@ -32,7 +32,7 @@
 */
 
 %{
-#include <boost/cstdint.hpp>
+#include <cstdint>
 #include <DataStructs/BitVects.h>
 #include <DataStructs/SparseIntVect.h>
 #include <GraphMol/Fingerprints/AtomPairs.h>
@@ -40,47 +40,47 @@
 %include <DataStructs/BitVects.h>
 %include <DataStructs/SparseIntVect.h>
 
-%rename(eq) RDKit::SparseIntVect<boost::uint32_t>::operator==;
-%rename(ne) RDKit::SparseIntVect<boost::uint32_t>::operator!=;
-%rename(eq) RDKit::SparseIntVect<boost::int32_t>::operator==;
-%rename(ne) RDKit::SparseIntVect<boost::int32_t>::operator!=;
-%rename(eq) RDKit::SparseIntVect<boost::int64_t>::operator==;
-%rename(ne) RDKit::SparseIntVect<boost::int64_t>::operator!=;
+%rename(eq) RDKit::SparseIntVect<std::uint32_t>::operator==;
+%rename(ne) RDKit::SparseIntVect<std::uint32_t>::operator!=;
+%rename(eq) RDKit::SparseIntVect<std::int32_t>::operator==;
+%rename(ne) RDKit::SparseIntVect<std::int32_t>::operator!=;
+%rename(eq) RDKit::SparseIntVect<std::int64_t>::operator==;
+%rename(ne) RDKit::SparseIntVect<std::int64_t>::operator!=;
 
-%template(SparseIntVectu32) RDKit::SparseIntVect<boost::uint32_t>;
-%template(SparseIntVect32) RDKit::SparseIntVect<boost::int32_t>;
-%template(SparseIntVect64) RDKit::SparseIntVect<boost::int64_t>;
+%template(SparseIntVectu32) RDKit::SparseIntVect<std::uint32_t>;
+%template(SparseIntVect32) RDKit::SparseIntVect<std::int32_t>;
+%template(SparseIntVect64) RDKit::SparseIntVect<std::int64_t>;
 
-%ignore RDKit::SparseIntVect<boost::uint32_t>::getNonzeroElements const;
-%ignore RDKit::SparseIntVect<boost::int32_t>::getNonzeroElements const;
-%ignore RDKit::SparseIntVect<boost::int64_t>::getNonzeroElements const;
+%ignore RDKit::SparseIntVect<std::uint32_t>::getNonzeroElements const;
+%ignore RDKit::SparseIntVect<std::int32_t>::getNonzeroElements const;
+%ignore RDKit::SparseIntVect<std::int64_t>::getNonzeroElements const;
 
-%extend RDKit::SparseIntVect<boost::uint32_t> {
-  std::vector<std::pair<boost::uint32_t, int> > getNonzero() const{
-    std::vector<std::pair<boost::uint32_t, int> > res;
-    for(std::map<boost::uint32_t,int>::const_iterator es=$self->getNonzeroElements().begin();
+%extend RDKit::SparseIntVect<std::uint32_t> {
+  std::vector<std::pair<std::uint32_t, int> > getNonzero() const{
+    std::vector<std::pair<std::uint32_t, int> > res;
+    for(std::map<std::uint32_t,int>::const_iterator es=$self->getNonzeroElements().begin();
         es!=$self->getNonzeroElements().end();++es){
-      res.push_back(std::make_pair((boost::uint32_t)es->first,(int)es->second));
+      res.push_back(std::make_pair((std::uint32_t)es->first,(int)es->second));
     }
     return res;
   }
 }
-%extend RDKit::SparseIntVect<boost::int32_t> {
-  std::vector<std::pair<boost::int32_t, int> > getNonzero() const{
-    std::vector<std::pair<boost::int32_t, int> > res;
-    for(std::map<boost::int32_t,int>::const_iterator es=$self->getNonzeroElements().begin();
+%extend RDKit::SparseIntVect<std::int32_t> {
+  std::vector<std::pair<std::int32_t, int> > getNonzero() const{
+    std::vector<std::pair<std::int32_t, int> > res;
+    for(std::map<std::int32_t,int>::const_iterator es=$self->getNonzeroElements().begin();
         es!=$self->getNonzeroElements().end();++es){
-      res.push_back(std::make_pair((boost::int32_t)es->first,(int)es->second));
+      res.push_back(std::make_pair((std::int32_t)es->first,(int)es->second));
     }
     return res;
   }
 }
-%extend RDKit::SparseIntVect<boost::int64_t> {
-  std::vector<std::pair<boost::int64_t, int> > getNonzero() const{
-    std::vector<std::pair<boost::int64_t, int> > res;
-    for(std::map<boost::int64_t,int>::const_iterator es=$self->getNonzeroElements().begin();
+%extend RDKit::SparseIntVect<std::int64_t> {
+  std::vector<std::pair<std::int64_t, int> > getNonzero() const{
+    std::vector<std::pair<std::int64_t, int> > res;
+    for(std::map<std::int64_t,int>::const_iterator es=$self->getNonzeroElements().begin();
         es!=$self->getNonzeroElements().end();++es){
-      res.push_back(std::make_pair((boost::int64_t)es->first,(int)es->second));
+      res.push_back(std::make_pair((std::int64_t)es->first,(int)es->second));
     }
     return res;
   }
