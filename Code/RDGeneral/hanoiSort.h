@@ -17,6 +17,7 @@
 #include <iostream>
 #include <cassert>
 #include <cstdlib>
+#include <vector>
 
 #if defined(_MSC_VER)
 #pragma warning(push, 1)
@@ -151,12 +152,10 @@ template <typename CompareFunc>
 void hanoisort(int *base, int nel, int *count, int *changed,
                CompareFunc compar) {
   assert(base);
-  int *temp = (int *)malloc(nel * sizeof(int));
-  assert(temp);
-  if (hanoi(base, nel, temp, count, changed, compar)) {
-    memmove(base, temp, nel * sizeof(int));
+  std::vector<int> temp(nel);
+  if (hanoi(base, nel, temp.data(), count, changed, compar)) {
+    memmove(base, temp.data(), nel * sizeof(int));
   }
-  free(temp);
 }
 }  // namespace RDKit
 
