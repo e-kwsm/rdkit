@@ -108,10 +108,11 @@ void TorsionAngleContribs::getGrad(double *pos, double *grad) const {
     double *g[4] = {&(grad[3 * contrib.idx1]), &(grad[3 * contrib.idx2]),
                     &(grad[3 * contrib.idx3]), &(grad[3 * contrib.idx4])};
 
-    RDGeom::Point3D r[4] = {iPoint - jPoint, kPoint - jPoint, jPoint - kPoint,
-                            lPoint - kPoint};
-    RDGeom::Point3D t[2] = {r[0].crossProduct(r[1]), r[2].crossProduct(r[3])};
-    double d[2] = {t[0].length(), t[1].length()};
+    std::array<RDGeom::Point3D, 4> r = {iPoint - jPoint, kPoint - jPoint,
+                                        jPoint - kPoint, lPoint - kPoint};
+    std::array<RDGeom::Point3D, 2> t = {r[0].crossProduct(r[1]),
+                                        r[2].crossProduct(r[3])};
+    std::array<double, 2> d = {t[0].length(), t[1].length()};
     if (MMFF::isDoubleZero(d[0]) || MMFF::isDoubleZero(d[1])) {
       return;
     }
@@ -146,7 +147,8 @@ void TorsionAngleContribs::getGrad(double *pos, double *grad) const {
     double sinTerm = -dE_dPhi * (MMFF::isDoubleZero(sinPhi) ? (1.0 / cosPhi)
                                                             : (1.0 / sinPhi));
 
-    MMFF::Utils::calcTorsionGrad(r, t, d, g, sinTerm, cosPhi);
+    MMFF::Utils::calcTorsionGrad(r.data(), t.data(), d.data(), g, sinTerm,
+                                 cosPhi);
   }
 }
 
