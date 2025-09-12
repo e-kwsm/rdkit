@@ -54,19 +54,19 @@ namespace RDKit {
 
 class RDKIT_CHEMREACTIONS_EXPORT EvenSamplePairsStrategy
     : public EnumerationStrategyBase {
-  boost::uint64_t m_numPermutationsProcessed{};
+  std::uint64_t m_numPermutationsProcessed{};
 
-  std::vector<boost::int64_t> used_count;
-  std::vector<std::vector<boost::uint64_t>> var_used;
-  std::vector<std::vector<boost::uint64_t>> pair_used;
-  std::vector<std::vector<boost::uint64_t>> pair_counts;
-  std::set<boost::uint64_t> selected;
+  std::vector<std::int64_t> used_count;
+  std::vector<std::vector<std::uint64_t>> var_used;
+  std::vector<std::vector<std::uint64_t>> pair_used;
+  std::vector<std::vector<std::uint64_t>> pair_counts;
+  std::set<std::uint64_t> selected;
 
-  boost::uint64_t seed{};         // last seed for permutation (starts at 0)
-  boost::uint64_t M{}, a{}, b{};  // random number stuff
-  boost::uint64_t nslack{}, min_nslack{};
-  boost::uint64_t rejected_period{}, rejected_unique{};
-  boost::uint64_t rejected_slack_condition{}, rejected_bb_sampling_condition{};
+  std::uint64_t seed{};         // last seed for permutation (starts at 0)
+  std::uint64_t M{}, a{}, b{};  // random number stuff
+  std::uint64_t nslack{}, min_nslack{};
+  std::uint64_t rejected_period{}, rejected_unique{};
+  std::uint64_t rejected_slack_condition{}, rejected_bb_sampling_condition{};
 
  public:
   EvenSamplePairsStrategy()
@@ -111,7 +111,7 @@ class RDKIT_CHEMREACTIONS_EXPORT EvenSamplePairsStrategy
 
     EvenSamplePairsStrategy rgroups;
     rgroups.initialize(rxn, bbs);
-    for(boost::uint64_t i=0; i<num_samples && rgroups; ++i) {
+    for(std::uint64_t i=0; i<num_samples && rgroups; ++i) {
       MOL_SPTR_VECT rvect = getReactantsFromRGroups(bbs, rgroups.next());
       std::vector<MOL_SPTR_VECT> lprops = rxn.RunReactants(rvect);
       ...
@@ -126,7 +126,7 @@ class RDKIT_CHEMREACTIONS_EXPORT EvenSamplePairsStrategy
   //! The current permutation {r1, r2, ...}
   const EnumerationTypes::RGROUPS &next() override;
 
-  boost::uint64_t getPermutationIdx() const override {
+  std::uint64_t getPermutationIdx() const override {
     return m_numPermutationsProcessed;
   }
 
@@ -142,15 +142,15 @@ class RDKIT_CHEMREACTIONS_EXPORT EvenSamplePairsStrategy
   friend class boost::serialization::access;
 
   // decode a packed integer into an RGroup selection
-  const EnumerationTypes::RGROUPS &decode(boost::uint64_t seed) {
-    for (boost::int64_t j = m_permutationSizes.size() - 1; j >= 0; j--) {
+  const EnumerationTypes::RGROUPS &decode(std::uint64_t seed) {
+    for (std::int64_t j = m_permutationSizes.size() - 1; j >= 0; j--) {
       m_permutation[j] = seed % m_permutationSizes[j];
       seed /= m_permutationSizes[j];
     }
     return m_permutation;
   }
 
-  bool try_add(boost::uint64_t seed);
+  bool try_add(std::uint64_t seed);
 
  public:
 #ifdef RDK_USE_BOOST_SERIALIZATION

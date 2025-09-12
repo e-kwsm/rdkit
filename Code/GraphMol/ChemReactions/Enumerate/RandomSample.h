@@ -64,7 +64,7 @@ namespace RDKit {
 */
 class RDKIT_CHEMREACTIONS_EXPORT RandomSampleStrategy
     : public EnumerationStrategyBase {
-  boost::uint64_t m_numPermutationsProcessed{};
+  std::uint64_t m_numPermutationsProcessed{};
   boost::minstd_rand m_rng;
   std::vector<boost::random::uniform_int_distribution<>> m_distributions;
 
@@ -104,7 +104,7 @@ class RDKIT_CHEMREACTIONS_EXPORT RandomSampleStrategy
     return m_permutation;
   }
 
-  boost::uint64_t getPermutationIdx() const override {
+  std::uint64_t getPermutationIdx() const override {
     return m_numPermutationsProcessed;
   }
 

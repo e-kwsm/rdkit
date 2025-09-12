@@ -1559,11 +1559,11 @@ extern "C" CSfp makeTopologicalTorsionSFP(CROMol data) {
 
 #ifdef UNHASHED_PAIR_FPS
   try {
-    SparseIntVect<boost::int64_t> *afp =
+    SparseIntVect<std::int64_t> *afp =
         RDKit::AtomPairs::getHashedTopologicalTorsionFingerprint(
-            *mol, boost::integer_traits<std::uint32_t>::const_max);
-    res = new SparseFP(boost::integer_traits<std::uint32_t>::const_max);
-    for (SparseIntVect<boost::int64_t>::StorageType::const_iterator iter =
+            *mol, std::integer_traits<std::uint32_t>::const_max);
+    res = new SparseFP(std::integer_traits<std::uint32_t>::const_max);
+    for (SparseIntVect<std::int64_t>::StorageType::const_iterator iter =
              afp->getNonzeroElements().begin();
          iter != afp->getNonzeroElements().end(); ++iter) {
       res->setVal(iter->first, iter->second);
@@ -1574,7 +1574,7 @@ extern "C" CSfp makeTopologicalTorsionSFP(CROMol data) {
   }
 #else
   try {
-    SparseIntVect<boost::int64_t> *afp =
+    SparseIntVect<std::int64_t> *afp =
         RDKit::AtomPairs::getHashedTopologicalTorsionFingerprint(
             *mol, getHashedTorsionFpSize());
     res = new SparseFP(getHashedTorsionFpSize());
