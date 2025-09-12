@@ -1752,7 +1752,7 @@ inline void ResonanceMolSupplier::storeCEMap(const CEMap &ceMap,
 void ResonanceMolSupplier::setResonanceMolSupplierLength() {
   for (unsigned int i = 0; (d_length < d_maxStructs) && (i < d_ceVect3.size());
        ++i) {
-    boost::uint64_t p = d_length * d_ceVect3[i]->ceCount();
+    std::uint64_t p = d_length * d_ceVect3[i]->ceCount();
     d_length =
         ((p < d_maxStructs) ? static_cast<unsigned int>(p) : d_maxStructs);
   }
