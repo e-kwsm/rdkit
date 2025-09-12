@@ -708,10 +708,10 @@ TEST_CASE(
   REQUIRE(m1);
   auto m2 = "CCCC"_smiles;
   REQUIRE(m2);
-  std::unique_ptr<SparseIntVect<boost::uint64_t>> fp1{
+  std::unique_ptr<SparseIntVect<std::uint64_t>> fp1{
       getUnfoldedRDKFingerprintMol(*m1)};
   REQUIRE(fp1);
-  std::unique_ptr<SparseIntVect<boost::uint64_t>> fp2{
+  std::unique_ptr<SparseIntVect<std::uint64_t>> fp2{
       getUnfoldedRDKFingerprintMol(*m2)};
   REQUIRE(fp2);
   CHECK(fp1->getLength() == fp2->getLength());

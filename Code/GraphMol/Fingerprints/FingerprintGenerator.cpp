@@ -416,7 +416,7 @@ FingerprintGenerator<OutputType>::getFingerprintHelper(
     if (dp_fingerprintArguments->d_numBitsPerFeature > 1) {
       generator->seed(static_cast<rng_type::result_type>(seed));
 
-      for (boost::uint32_t bitN = 1;
+      for (std::uint32_t bitN = 1;
            bitN < dp_fingerprintArguments->d_numBitsPerFeature; ++bitN) {
         bitId = (*randomSource)();
         if (fpSize != 0) {
