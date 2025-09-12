@@ -28,22 +28,19 @@ RDKit::VECT_INT_VECT HierarchicalClusterPicker::cluster(
   // Do the clustering
   auto method = (long int)d_method;
   long int len = poolSize * (poolSize - 1);
-  auto *ia = (long int *)calloc(poolSize, sizeof(long int));
-  auto *ib = (long int *)calloc(poolSize, sizeof(long int));
-  real *crit = (real *)calloc(poolSize, sizeof(real));
-  CHECK_INVARIANT(ia, "failed to allocate memory");
-  CHECK_INVARIANT(ib, "failed to allocate memory");
-  CHECK_INVARIANT(crit, "failed to allocate memory");
+  std::vector<long int> ia(poolSize, 0);
+  std::vector<long int> ib(poolSize, 0);
+  std::vector<real> crit(poolSize, 0);
   auto poolSize2 = static_cast<long int>(poolSize);
 
   distdriver_(&poolSize2,       // number of items in the pool
               &len,             // number of entries in the distance matrix
               (real *)distMat,  // distance matrix
               &method,          // the clustering method (ward, slink etc.)
-              ia,               // int vector with clustering history
-              ib,               // one more clustering history matrix
-              crit  // I believe this is a vector the difference in heights of
-                    // two clusters
+              ia.data(),        // int vector with clustering history
+              ib.data(),        // one more clustering history matrix
+              crit.data()       // I believe this is a vector the difference in
+                                // heights of two clusters
   );
 
   // we have the clusters now merge then until the number of clusters is same
@@ -78,9 +75,6 @@ RDKit::VECT_INT_VECT HierarchicalClusterPicker::cluster(
     // mark the second cluster as removed
     removed.push_back(cx2);
   }
-  free(ia);
-  free(ib);
-  free(crit);
 
   // sort removed so that looping will be easier later
   std::sort(removed.begin(), removed.end());
