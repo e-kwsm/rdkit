@@ -20,7 +20,7 @@ typedef std::vector<std::string> STR_VECT;
 %include "std_string.i"
 
 
-%template(SparseIntVect64) RDKit::SparseIntVect<boost::int64_t>;
+%template(SparseIntVect64) RDKit::SparseIntVect<std::int64_t>;
 
 
 %template(ROMol_Vect) std::vector<boost::shared_ptr<RDKit::ROMol>>;

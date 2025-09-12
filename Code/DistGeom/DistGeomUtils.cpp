@@ -531,7 +531,7 @@ ForceFields::ForceField *construct3DForceField(
 
   bool is1_4 = false;
   // double dielConst = 1.0;
-  boost::uint8_t dielModel = 1;
+  std::uint8_t dielModel = 1;
   auto *contrib = new ForceFields::MMFF::EleContrib(field);
   field->contribs().emplace_back(contrib);
   for (const auto &charge : CPCI) {
