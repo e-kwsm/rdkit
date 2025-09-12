@@ -252,7 +252,8 @@ class RDKIT_SUBSTRUCTMATCH_EXPORT MolMatchFinalCheckFunctor {
   MolMatchFinalCheckFunctor(const ROMol &query, const ROMol &mol,
                             const SubstructMatchParameters &ps);
 
-  bool operator()(const std::uint32_t q_c[], const std::uint32_t m_c[]);
+  bool operator()(std::span<const std::uint32_t> q_c,
+                  std::span<const std::uint32_t> m_c);
 
  private:
   const ROMol &d_query;
