@@ -247,7 +247,7 @@ RDKit::SparseIntVect<std::int32_t> *GetHashedAtomPairFingerprint(
   return res;
 }
 
-RDKit::SparseIntVect<boost::int64_t> *GetTopologicalTorsionFingerprint(
+RDKit::SparseIntVect<std::int64_t> *GetTopologicalTorsionFingerprint(
     const RDKit::ROMol &mol, unsigned int targetSize, python::object fromAtoms,
     python::object ignoreAtoms, python::object atomInvariants,
     bool includeChirality) {
@@ -265,14 +265,14 @@ RDKit::SparseIntVect<boost::int64_t> *GetTopologicalTorsionFingerprint(
     throw_value_error(errout.str());
   }
 
-  RDKit::SparseIntVect<boost::int64_t> *res;
+  RDKit::SparseIntVect<std::int64_t> *res;
   res = RDKit::AtomPairs::getTopologicalTorsionFingerprint(
       mol, targetSize, fvect.get(), ivect.get(), invvect.get(),
       includeChirality);
   return res;
 }
 
-RDKit::SparseIntVect<boost::int64_t> *GetHashedTopologicalTorsionFingerprint(
+RDKit::SparseIntVect<std::int64_t> *GetHashedTopologicalTorsionFingerprint(
     const RDKit::ROMol &mol, unsigned int nBits, unsigned int targetSize,
     python::object fromAtoms, python::object ignoreAtoms,
     python::object atomInvariants, bool includeChirality) {
@@ -283,7 +283,7 @@ RDKit::SparseIntVect<boost::int64_t> *GetHashedTopologicalTorsionFingerprint(
   std::unique_ptr<std::vector<std::uint32_t>> invvect = pythonObjectToVect(
       atomInvariants,
       static_cast<unsigned int>(1 << RDKit::AtomPairs::codeSize));
-  RDKit::SparseIntVect<boost::int64_t> *res;
+  RDKit::SparseIntVect<std::int64_t> *res;
   res = RDKit::AtomPairs::getHashedTopologicalTorsionFingerprint(
       mol, nBits, targetSize, fvect.get(), ivect.get(), invvect.get(),
       includeChirality);
@@ -364,7 +364,7 @@ MorganFingerprintHelper(const RDKit::ROMol &mol, unsigned int radius, int nBits,
                         bool useCounts, python::object bitInfo,
                         bool includeRedundantEnvironments) {
   RDLog::deprecationWarning("please use MorganGenerator");
-  std::vector<boost::uint32_t> *invars = nullptr;
+  std::vector<std::uint32_t> *invars = nullptr;
   if (invariants) {
     unsigned int nInvar = python::len(invariants);
     if (nInvar) {
@@ -505,7 +505,7 @@ GetMorganFingerprintBV(const RDKit::ROMol &mol, unsigned int radius,
                        python::object bitInfo,
                        bool includeRedundantEnvironments) {
   RDLog::deprecationWarning("please use MorganGenerator");
-  std::vector<boost::uint32_t> *invars = nullptr;
+  std::vector<std::uint32_t> *invars = nullptr;
   if (invariants) {
     unsigned int nInvar = python::len(invariants);
     if (nInvar) {

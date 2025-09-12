@@ -106,8 +106,8 @@ const std::string morganFingerprintVersion = "1.0.0";
 */
 RDKIT_FINGERPRINTS_EXPORT SparseIntVect<std::uint32_t> *getFingerprint(
     const ROMol &mol, unsigned int radius,
-    std::vector<boost::uint32_t> *invariants = nullptr,
-    const std::vector<boost::uint32_t> *fromAtoms = nullptr,
+    std::vector<std::uint32_t> *invariants = nullptr,
+    const std::vector<std::uint32_t> *fromAtoms = nullptr,
     bool useChirality = false, bool useBondTypes = true, bool useCounts = true,
     bool onlyNonzeroInvariants = false, BitInfoMap *atomsSettingBits = nullptr,
     bool includeRedundantEnvironments = false);
@@ -158,8 +158,8 @@ RDKIT_FINGERPRINTS_EXPORT SparseIntVect<std::uint32_t> *getFingerprint(
 */
 RDKIT_FINGERPRINTS_EXPORT SparseIntVect<std::uint32_t> *getHashedFingerprint(
     const ROMol &mol, unsigned int radius, unsigned int nBits = 2048,
-    std::vector<boost::uint32_t> *invariants = nullptr,
-    const std::vector<boost::uint32_t> *fromAtoms = nullptr,
+    std::vector<std::uint32_t> *invariants = nullptr,
+    const std::vector<std::uint32_t> *fromAtoms = nullptr,
     bool useChirality = false, bool useBondTypes = true,
     bool onlyNonzeroInvariants = false, BitInfoMap *atomsSettingBits = nullptr,
     bool includeRedundantEnvironments = false);

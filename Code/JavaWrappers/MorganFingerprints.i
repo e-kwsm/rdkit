@@ -33,7 +33,7 @@
 
 
 %{
-#include <boost/cstdint.hpp>
+#include <cstdint>
 #include <DataStructs/SparseIntVect.h>
 #include <GraphMol/Fingerprints/MorganFingerprints.h>
 #include <MorganFingerprints.h>
@@ -56,15 +56,15 @@ SWIG_STD_VECTOR_SPECIALIZE_MINIMUM(UInt_Pair_Vect, std::vector< std::pair<unsign
 %include <DataStructs/BitOps.h>
 %template(TanimotoSimilarityEBV) TanimotoSimilarity<ExplicitBitVect,ExplicitBitVect>;
 %template(DiceSimilarity) DiceSimilarity<ExplicitBitVect,ExplicitBitVect>;
-%template(DiceSimilarity) RDKit::DiceSimilarity<boost::uint32_t>;
-%template(DiceSimilarity) RDKit::DiceSimilarity<boost::int32_t>;
-%template(DiceSimilarity) RDKit::DiceSimilarity<boost::int64_t>;
-%template(TanimotoSimilaritySIVu32) RDKit::TanimotoSimilarity<boost::uint32_t>;
-%template(TanimotoSimilaritySIVi32) RDKit::TanimotoSimilarity<boost::int32_t>;
-%template(TanimotoSimilaritySIVi64) RDKit::TanimotoSimilarity<boost::int64_t>;
-%template(TverskySimilarity) RDKit::TverskySimilarity<boost::uint32_t>;
-%template(TverskySimilarity) RDKit::TverskySimilarity<boost::int32_t>;
-%template(TverskySimilarity) RDKit::TverskySimilarity<boost::int64_t>;
+%template(DiceSimilarity) RDKit::DiceSimilarity<std::uint32_t>;
+%template(DiceSimilarity) RDKit::DiceSimilarity<std::int32_t>;
+%template(DiceSimilarity) RDKit::DiceSimilarity<std::int64_t>;
+%template(TanimotoSimilaritySIVu32) RDKit::TanimotoSimilarity<std::uint32_t>;
+%template(TanimotoSimilaritySIVi32) RDKit::TanimotoSimilarity<std::int32_t>;
+%template(TanimotoSimilaritySIVi64) RDKit::TanimotoSimilarity<std::int64_t>;
+%template(TverskySimilarity) RDKit::TverskySimilarity<std::uint32_t>;
+%template(TverskySimilarity) RDKit::TverskySimilarity<std::int32_t>;
+%template(TverskySimilarity) RDKit::TverskySimilarity<std::int64_t>;
 
 
 %include "MorganFingerprints.h"
