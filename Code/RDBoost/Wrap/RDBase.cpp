@@ -324,7 +324,7 @@ BOOST_PYTHON_MODULE(rdBase) {
   RegisterVectorConverter<int>();
   RegisterVectorConverter<unsigned>();
   RegisterVectorConverter<size_t>("UnsignedLong_Vect");
-  RegisterVectorConverter<boost::uint64_t>("VectSizeT");
+  RegisterVectorConverter<std::uint64_t>("VectSizeT");
 
   RegisterVectorConverter<double>();
   RegisterVectorConverter<std::string>(1);
