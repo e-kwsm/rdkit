@@ -167,7 +167,8 @@ static void ConnectTheDots_Large(RWMol *mol, unsigned int flags) {
   memset(HashTable, -1, sizeof(HashTable));
 
   unsigned int count = mol->getNumAtoms();
-  std::vector<ProximityEntry> tmp = (count);
+  auto *tmp = (ProximityEntry *)malloc(count * sizeof(ProximityEntry));
+  CHECK_INVARIANT(tmp, "bad allocation");
   PeriodicTable *table = PeriodicTable::getTable();
   Conformer *conf = &mol->getConformer();
 
@@ -175,7 +176,7 @@ static void ConnectTheDots_Large(RWMol *mol, unsigned int flags) {
     Atom *atom = mol->getAtomWithIdx(i);
     unsigned int elem = atom->getAtomicNum();
     RDGeom::Point3D p = conf->getAtomPos(i);
-    ProximityEntry *tmpi = tmp[i];
+    ProximityEntry *tmpi = tmp + i;
     tmpi->x = (float)p.x;
     tmpi->y = (float)p.y;
     tmpi->z = (float)p.z;
