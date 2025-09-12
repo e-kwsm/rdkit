@@ -152,15 +152,14 @@ RDKIT_FINGERPRINTS_EXPORT ExplicitBitVect *PatternFingerprintMol(
     const MolBundle &bundle, unsigned int fpSize = 2048,
     ExplicitBitVect *setOnlyBits = nullptr, bool tautomericFingerprint = false);
 
-RDKIT_FINGERPRINTS_EXPORT SparseIntVect<boost::uint64_t> *
+RDKIT_FINGERPRINTS_EXPORT SparseIntVect<std::uint64_t> *
 getUnfoldedRDKFingerprintMol(
     const ROMol &mol, unsigned int minPath = 1, unsigned int maxPath = 7,
     bool useHs = true, bool branchedPaths = true, bool useBondOrder = true,
     std::vector<std::uint32_t> *atomInvariants = nullptr,
     const std::vector<std::uint32_t> *fromAtoms = nullptr,
-    std::vector<std::vector<boost::uint64_t>> *atomBits = nullptr,
-    std::map<boost::uint64_t, std::vector<std::vector<int>>> *bitInfo =
-        nullptr);
+    std::vector<std::vector<std::uint64_t>> *atomBits = nullptr,
+    std::map<std::uint64_t, std::vector<std::vector<int>>> *bitInfo = nullptr);
 
 }  // namespace RDKit
 

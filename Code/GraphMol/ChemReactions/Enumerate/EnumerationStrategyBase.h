@@ -103,7 +103,7 @@ getReactantsFromRGroups(const std::vector<MOL_SPTR_VECT> &bbs,
 //!   number will not fit into the machines integer type.
 //!   n.b. An overflow simply means there are a lot of products
 //!     not that they cannot be enumerated
-RDKIT_CHEMREACTIONS_EXPORT boost::uint64_t computeNumProducts(
+RDKIT_CHEMREACTIONS_EXPORT std::uint64_t computeNumProducts(
     const EnumerationTypes::RGROUPS &sizes);
 
 //! Base Class for enumeration strategies
@@ -125,12 +125,12 @@ class RDKIT_CHEMREACTIONS_EXPORT EnumerationStrategyBase {
   EnumerationTypes::RGROUPS m_permutation;  // where are we currently?
   EnumerationTypes::RGROUPS
       m_permutationSizes;  // m_permutationSizes num bbs per group
-  boost::uint64_t
+  std::uint64_t
       m_numPermutations{};  // total number of permutations for this group
                             //  -1 if > ssize_t::max
  public:
-  static const boost::uint64_t EnumerationOverflow =
-      static_cast<boost::uint64_t>(-1);
+  static const std::uint64_t EnumerationOverflow =
+      static_cast<std::uint64_t>(-1);
   EnumerationStrategyBase() : m_permutation(), m_permutationSizes() {}
 
   virtual ~EnumerationStrategyBase() {}
@@ -182,15 +182,15 @@ class RDKIT_CHEMREACTIONS_EXPORT EnumerationStrategyBase {
   //! a result of EnumerationOverflow indicates that the number of
   //!  permutations is not computable with the current
   //!  rdlonglong size.
-  boost::uint64_t getNumPermutations() const { return m_numPermutations; }
+  std::uint64_t getNumPermutations() const { return m_numPermutations; }
 
   //! Returns how many permutations have been processed by this strategy
-  virtual boost::uint64_t getPermutationIdx() const = 0;
+  virtual std::uint64_t getPermutationIdx() const = 0;
 
   //! Skip the specified number of permutations (useful for
   //!  resetting state to a known position)
-  bool skip(boost::uint64_t skipCount) {
-    for (boost::uint64_t i = 0; i < skipCount; ++i) {
+  bool skip(std::uint64_t skipCount) {
+    for (std::uint64_t i = 0; i < skipCount; ++i) {
       next();
     }
     return true;
