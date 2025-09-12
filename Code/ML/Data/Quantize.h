@@ -119,26 +119,24 @@ inline double RecurseHelper(double *vals, int nVals, long int *cuts, int nCuts,
   std::vector<long int> varTable = calloc((nCuts + 1) * nPossibleRes, 0);
   std::vector<long int> bestCuts = calloc(nCuts, 0);
   std::vector<long int> tCuts = (nCuts, 0);
-  CHECK_INVARIANT(varTable, "failed to allocate memory");
-  CHECK_INVARIANT(bestCuts, "failed to allocate memory");
-  CHECK_INVARIANT(tCuts, "failed to allocate memory");
   GenVarTable(vals, nVals, cuts, nCuts, starts, results, nPossibleRes,
-              varTable);
+              varTable.data());
   while (cuts[which] <= highestCutHere) {
-    gainHere = RDInfoTheory::InfoEntropyGain(varTable, nCuts + 1, nPossibleRes);
+    gainHere =
+        RDInfoTheory::InfoEntropyGain(varTable.data(), nCuts + 1, nPossibleRes);
     if (gainHere > maxGain) {
       maxGain = gainHere;
-      memcpy(bestCuts, cuts, nCuts * sizeof(long int));
+      bestCuts.assign(cuts, cuts + nCuts);
     }
 
     // recurse on the next vars if needed
     if (which < nBounds - 1) {
-      memcpy(tCuts, cuts, nCuts * sizeof(long int));
-      gainHere = RecurseHelper(vals, nVals, tCuts, nCuts, which + 1, starts,
-                               nStarts, results, nPossibleRes);
+      tCuts.assign(cuts, cuts + nCuts);
+      gainHere = RecurseHelper(vals, nVals, tCuts.data(), nCuts, which + 1,
+                               starts, nStarts, results, nPossibleRes);
       if (gainHere > maxGain) {
         maxGain = gainHere;
-        memcpy(bestCuts, tCuts, nCuts * sizeof(long int));
+        bestCuts = tCuts;
       }
     }
 
@@ -163,7 +161,6 @@ inline double RecurseHelper(double *vals, int nVals, long int *cuts, int nCuts,
       }
     }
   }
-  memcpy(cuts, bestCuts, nCuts * sizeof(long int));
-  free(varTable);
+  memcpy(cuts, bestCuts.data(), nCuts * sizeof(long int));
   return maxGain;
 }

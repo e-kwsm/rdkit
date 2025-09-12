@@ -79,7 +79,6 @@ static python::tuple cQuantize_RecurseOnBounds(python::object vals,
 
   python::ssize_t nCuts = python::len(pyCuts);
   std::vector<long int> cuts(nCuts, 0);
-  CHECK_INVARIANT(cuts, "failed to allocate memory");
   for (python::ssize_t i = 0; i < nCuts; i++) {
     python::object elem = pyCuts[i];
     cuts[i] = python::extract<long int>(elem);
@@ -87,7 +86,6 @@ static python::tuple cQuantize_RecurseOnBounds(python::object vals,
 
   python::ssize_t nStarts = python::len(pyStarts);
   std::vector<long int> starts(nStarts, 0);
-  CHECK_INVARIANT(starts, "failed to allocate memory");
   for (python::ssize_t i = 0; i < nStarts; i++) {
     python::object elem = pyStarts[i];
     starts[i] = python::extract<long int>(elem);
@@ -95,9 +93,9 @@ static python::tuple cQuantize_RecurseOnBounds(python::object vals,
 
   // do the real work
   double gain = RecurseHelper(
-      (double *)PyArray_DATA(contigVals), PyArray_DIM(contigVals, 0), cuts,
-      nCuts, which, starts, nStarts, (long int *)PyArray_DATA(contigResults),
-      nPossibleRes);
+      (double *)PyArray_DATA(contigVals), PyArray_DIM(contigVals, 0),
+      cuts.data(), nCuts, which, starts.data(), nStarts,
+      (long int *)PyArray_DATA(contigResults), nPossibleRes);
 
   /*
     -------
@@ -110,8 +108,6 @@ static python::tuple cQuantize_RecurseOnBounds(python::object vals,
   for (python::ssize_t i = 0; i < nCuts; i++) {
     cutObj.append(cuts[i]);
   }
-  free(cuts);
-  free(starts);
   return python::make_tuple(gain, cutObj);
 }
 
