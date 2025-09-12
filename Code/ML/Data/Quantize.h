@@ -113,14 +113,12 @@ inline double RecurseHelper(double *vals, int nVals, long int *cuts, int nCuts,
   PRECONDITION(vals, "bad vals pointer");
 
   double maxGain = -1e6, gainHere;
-  long int *bestCuts, *tCuts;
-  long int *varTable = nullptr;
   int highestCutHere = nStarts - nCuts + which;
   int i, nBounds = nCuts;
 
-  varTable = (long int *)calloc((nCuts + 1) * nPossibleRes, sizeof(long int));
-  bestCuts = (long int *)calloc(nCuts, sizeof(long int));
-  tCuts = (long int *)calloc(nCuts, sizeof(long int));
+  std::vector<long int> varTable = calloc((nCuts + 1) * nPossibleRes, 0);
+  std::vector<long int> bestCuts = calloc(nCuts, 0);
+  std::vector<long int> tCuts = (nCuts, 0);
   CHECK_INVARIANT(varTable, "failed to allocate memory");
   CHECK_INVARIANT(bestCuts, "failed to allocate memory");
   CHECK_INVARIANT(tCuts, "failed to allocate memory");
@@ -166,8 +164,6 @@ inline double RecurseHelper(double *vals, int nVals, long int *cuts, int nCuts,
     }
   }
   memcpy(cuts, bestCuts, nCuts * sizeof(long int));
-  free(tCuts);
-  free(bestCuts);
   free(varTable);
   return maxGain;
 }

@@ -57,7 +57,6 @@ static python::tuple cQuantize_RecurseOnBounds(python::object vals,
                                                python::object results,
                                                int nPossibleRes) {
   PyArrayObject *contigVals, *contigResults;
-  long int *cuts, *starts;
 
   /*
     -------
@@ -79,7 +78,7 @@ static python::tuple cQuantize_RecurseOnBounds(python::object vals,
   }
 
   python::ssize_t nCuts = python::len(pyCuts);
-  cuts = (long int *)calloc(nCuts, sizeof(long int));
+  std::vector<long int> cuts(nCuts, 0);
   CHECK_INVARIANT(cuts, "failed to allocate memory");
   for (python::ssize_t i = 0; i < nCuts; i++) {
     python::object elem = pyCuts[i];
@@ -87,7 +86,7 @@ static python::tuple cQuantize_RecurseOnBounds(python::object vals,
   }
 
   python::ssize_t nStarts = python::len(pyStarts);
-  starts = (long int *)calloc(nStarts, sizeof(long int));
+  std::vector<long int> starts(nStarts, 0);
   CHECK_INVARIANT(starts, "failed to allocate memory");
   for (python::ssize_t i = 0; i < nStarts; i++) {
     python::object elem = pyStarts[i];
