@@ -191,11 +191,10 @@ MolMatchFinalCheckFunctor::MolMatchFinalCheckFunctor(
   }
 }
 
-bool MolMatchFinalCheckFunctor::operator()(std::span<const std::uint32_t> q_c,
-                                           std::span<const std::uint32_t> m_c) {
+bool MolMatchFinalCheckFunctor::operator()(const std::uint32_t q_c[],
+                                           const std::uint32_t m_c[]) {
   if (d_params.extraFinalCheck || d_params.useGenericMatchers) {
-    const std::span<const std::uint32_t> aids =
-        m_c.subspan(0, d_query.getNumAtoms());
+    const std::span<const std::uint32_t> aids(m_c, d_query.getNumAtoms());
     if (d_params.useGenericMatchers &&
         !GenericGroups::genericAtomMatcher(d_mol, d_query, aids)) {
       return false;
