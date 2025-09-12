@@ -521,13 +521,13 @@ ExplicitBitVect *LayeredFingerprintMol(
 ///////////////////////////////////////////////////////////////////////////////
 
 // caller owns the result, it must be deleted
-SparseIntVect<boost::uint64_t> *getUnfoldedRDKFingerprintMol(
+SparseIntVect<std::uint64_t> *getUnfoldedRDKFingerprintMol(
     const ROMol &mol, unsigned int minPath, unsigned int maxPath, bool useHs,
     bool branchedPaths, bool useBondOrder,
     std::vector<std::uint32_t> *atomInvariants,
     const std::vector<std::uint32_t> *fromAtoms,
-    std::vector<std::vector<boost::uint64_t>> *atomBits,
-    std::map<boost::uint64_t, std::vector<std::vector<int>>> *bitInfo) {
+    std::vector<std::vector<std::uint64_t>> *atomBits,
+    std::map<std::uint64_t, std::vector<std::vector<int>>> *bitInfo) {
   PRECONDITION(minPath != 0, "minPath==0");
   PRECONDITION(maxPath >= minPath, "maxPath<minPath");
   PRECONDITION(!atomInvariants || atomInvariants->size() >= mol.getNumAtoms(),

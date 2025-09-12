@@ -227,25 +227,25 @@ void EnumerateLibrary::initFromStream(std::istream &ss) {
 #endif
 }
 
-boost::uint64_t computeNumProducts(const RGROUPS &sizes) {
+std::uint64_t computeNumProducts(const RGROUPS &sizes) {
 #ifdef RDK_HAVE_MULTIPREC
   boost::multiprecision::cpp_int myint = 1;
 
-  for (boost::uint64_t size : sizes) {
+  for (std::uint64_t size : sizes) {
     myint *= size;
   }
 
-  if (myint < std::numeric_limits<boost::uint64_t>::max()) {
-    return myint.convert_to<boost::uint64_t>();
+  if (myint < std::numeric_limits<std::uint64_t>::max()) {
+    return myint.convert_to<std::uint64_t>();
   } else {
     return EnumerationStrategyBase::EnumerationOverflow;
   }
 #else
-  boost::uint64_t myint = 1;
+  std::uint64_t myint = 1;
 
   for (size_t i = 0; i < sizes.size(); ++i) {
     if (sizes[i] &&
-        (std::numeric_limits<boost::uint64_t>::max() / sizes[i]) < myint) {
+        (std::numeric_limits<std::uint64_t>::max() / sizes[i]) < myint) {
       return EnumerationStrategyBase::EnumerationOverflow;
     }
     myint *= sizes[i];
