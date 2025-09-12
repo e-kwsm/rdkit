@@ -442,7 +442,7 @@ class RDKIT_MOLINTERACTIONFIELDS_EXPORT HBond {
   unsigned int getNumInteractions() const { return d_nInteract; }
 
  private:
-  boost::uint8_t d_DAprop;
+  std::uint8_t d_DAprop;
 
   enum atomtype {
     N,

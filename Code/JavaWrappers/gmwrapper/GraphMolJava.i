@@ -239,13 +239,13 @@ typedef unsigned long long int	uintmax_t;
 %template(TanimotoSimilarityEBV) TanimotoSimilarity<ExplicitBitVect,ExplicitBitVect>;
 %template(DiceSimilarityEBV) DiceSimilarity<ExplicitBitVect,ExplicitBitVect>;
 */
-%template(DiceSimilarity) RDKit::DiceSimilarity<boost::uint32_t>;
+%template(DiceSimilarity) RDKit::DiceSimilarity<std::uint32_t>;
 
 /* vector */
 %template(Int_Vect) std::vector<int>;
 %template(Byte_Vect) std::vector<signed char>;
 %template(Double_Vect) std::vector<double>;
-%template(UInt_Vect) std::vector<boost::uint32_t>;
+%template(UInt_Vect) std::vector<std::uint32_t>;
 %template(Str_Vect)  std::vector<std::string> ;
 %template(Point_Vect) std::vector<RDGeom::Point *>;
 %template(Point2D_Vect) std::vector<RDGeom::Point2D *>;
@@ -253,10 +253,10 @@ typedef unsigned long long int	uintmax_t;
 %template(Atomic_Params_Vect) std::vector<const ForceFields::UFF::AtomicParams *>;
 
 /* pair */
-%template(Int_Pair) std::pair<boost::int32_t, int >;
+%template(Int_Pair) std::pair<std::int32_t, int >;
 %template(Double_Pair) std::pair<double,double>;
-%template(UInt_Pair) std::pair<boost::uint32_t, int >;
-%template(Long_Pair) std::pair<boost::int64_t,int>;
+%template(UInt_Pair) std::pair<std::uint32_t, int >;
+%template(Long_Pair) std::pair<std::int64_t,int>;
 
 /* map */
 %template(String_String_Map) std::map<std::string,std::string>;
@@ -266,9 +266,9 @@ typedef unsigned long long int	uintmax_t;
 %template(Int_Int_Vect_List_Map) std::map<int,std::list<std::vector<int> > >;
 
 /* vector pair */
-%template(UInt_Pair_Vect) std::vector<std::pair<boost::uint32_t,int> >;
-%template(Match_Vect) std::vector<std::pair<boost::int32_t,int> >;
-%template(Long_Pair_Vect) std::vector<std::pair<boost::int64_t,int> >;
+%template(UInt_Pair_Vect) std::vector<std::pair<std::uint32_t,int> >;
+%template(Match_Vect) std::vector<std::pair<std::int32_t,int> >;
+%template(Long_Pair_Vect) std::vector<std::pair<std::int64_t,int> >;
 
 /* vector vector */
 %template(Int_Vect_Vect) std::vector<std::vector<int> >;

@@ -94,7 +94,7 @@ class RDKIT_CHEMREACTIONS_EXPORT CartesianProductStrategy
     return m_permutation;
   }
 
-  boost::uint64_t getPermutationIdx() const override {
+  std::uint64_t getPermutationIdx() const override {
     return m_numPermutationsProcessed;
   }
 

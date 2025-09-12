@@ -67,7 +67,7 @@ namespace RDKit {
 
 class RDKIT_CHEMREACTIONS_EXPORT RandomSampleAllBBsStrategy
     : public EnumerationStrategyBase {
-  boost::uint64_t m_numPermutationsProcessed{0};
+  std::uint64_t m_numPermutationsProcessed{0};
   size_t m_offset{0};
   size_t m_maxoffset{0};
 
@@ -120,7 +120,7 @@ class RDKIT_CHEMREACTIONS_EXPORT RandomSampleAllBBsStrategy
     return m_permutation;
   }
 
-  boost::uint64_t getPermutationIdx() const override {
+  std::uint64_t getPermutationIdx() const override {
     return m_numPermutationsProcessed;
   }
 
