@@ -1521,7 +1521,7 @@ void set14Bounds(const ROMol &mol, DistGeom::BoundsMatPtr mmat,
   CHECK_INVARIANT(npt == mol.getNumAtoms(), "Wrong size metric matrix");
   // this is 2.6 million bonds, so it's extremly unlikely to ever occur, but we
   // might as well check:
-  const size_t MAX_NUM_BONDS = static_cast<size_t>(
+  const auto MAX_NUM_BONDS = static_cast<size_t>(
       std::pow(std::numeric_limits<std::uint64_t>::max(), 1. / 3));
   if (mol.getNumBonds() >= MAX_NUM_BONDS) {
     throw ValueErrorException(
@@ -1669,7 +1669,7 @@ void setTopolBounds(const ROMol &mol, DistGeom::BoundsMatPtr mmat,
   }
   // this is 2.6 million bonds, so it's extremly unlikely to ever occur, but we
   // might as well check:
-  const size_t MAX_NUM_BONDS = static_cast<size_t>(
+  const auto MAX_NUM_BONDS = static_cast<size_t>(
       std::pow(std::numeric_limits<std::uint64_t>::max(), 1. / 3));
   if (mol.getNumBonds() >= MAX_NUM_BONDS) {
     throw ValueErrorException(

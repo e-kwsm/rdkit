@@ -490,12 +490,12 @@ void DrawMol::extractCIPCodes(bool showAllCIPCodes) {
     if (!maskedAtoms[atom->getIdx()] &&
         atom->getPropIfPresent(common_properties::_CIPCode, cip)) {
         cip = "(" + cip + ")";
-        DrawAnnotation *annot = new DrawAnnotation(
-          cip, TextAlignType::MIDDLE, "CIP_Code",
-          drawOptions_.annotationFontScale, Point2D(0.0, 0.0),
-          drawOptions_.atomNoteColour, textDrawer_);
-      calcAnnotationPosition(atom, *annot);
-      annotations_.emplace_back(annot);
+        auto *annot = new DrawAnnotation(
+            cip, TextAlignType::MIDDLE, "CIP_Code",
+            drawOptions_.annotationFontScale, Point2D(0.0, 0.0),
+            drawOptions_.atomNoteColour, textDrawer_);
+        calcAnnotationPosition(atom, *annot);
+        annotations_.emplace_back(annot);
     }
   }
 
@@ -515,12 +515,12 @@ void DrawMol::extractCIPCodes(bool showAllCIPCodes) {
       }
       if (!cip.empty()) {
         cip = "(" + cip + ")";
-        DrawAnnotation *annot = new DrawAnnotation(
-          cip, TextAlignType::MIDDLE, "CIP_Code",
-          drawOptions_.annotationFontScale, Point2D(0.0, 0.0),
-          drawOptions_.bondNoteColour, textDrawer_);
-      calcAnnotationPosition(bond, *annot);
-      annotations_.emplace_back(annot);
+        auto *annot = new DrawAnnotation(
+            cip, TextAlignType::MIDDLE, "CIP_Code",
+            drawOptions_.annotationFontScale, Point2D(0.0, 0.0),
+            drawOptions_.bondNoteColour, textDrawer_);
+        calcAnnotationPosition(bond, *annot);
+        annotations_.emplace_back(annot);
       }
     }
   }
