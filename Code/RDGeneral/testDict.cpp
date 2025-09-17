@@ -108,7 +108,7 @@ TEST_CASE("testRDValue") {
     d.setVal(RDKit::detail::computedPropName, computed);
     computed.push_back("foo");
     d.setVal(RDKit::detail::computedPropName, computed);
-    STR_VECT computed2 = d.getVal<STR_VECT>(RDKit::detail::computedPropName);
+    auto computed2 = d.getVal<STR_VECT>(RDKit::detail::computedPropName);
     REQUIRE(computed2[0] == "foo");
     Dict d2(d);
     computed2 = d2.getVal<STR_VECT>(RDKit::detail::computedPropName);
