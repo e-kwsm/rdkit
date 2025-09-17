@@ -35,7 +35,7 @@ TEST_CASE("test1Vector") {
   data[1] = 2.0;
   data[2] = 3.0;
   Vector<double>::DATA_SPTR sdata(data);
-  Vector<double> *v2 = new Vector<double>(3, sdata);
+  auto *v2 = new Vector<double>(3, sdata);
   REQUIRE_THAT(v2->normL1(), Catch::Matchers::WithinAbs(6.0, 1e-4));
   Vector<double> v3(v1);
   unsigned int i;
@@ -79,7 +79,7 @@ TEST_CASE("test2Matrix") {
   REQUIRE_THAT(v2.getVal(1), Catch::Matchers::WithinAbs(11.5, 1e-4));
 
   data = new double[6];
-  Matrix<double> *B = new Matrix<double>(2, 3, Matrix<double>::DATA_SPTR(data));
+  auto *B = new Matrix<double>(2, 3, Matrix<double>::DATA_SPTR(data));
   Matrix<double> E(A);
   multiply(E, v1, v2);
   REQUIRE_THAT(v2.getVal(0), Catch::Matchers::WithinAbs(11.0, 1e-4));

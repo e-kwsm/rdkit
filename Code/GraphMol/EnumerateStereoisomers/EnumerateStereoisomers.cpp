@@ -170,7 +170,7 @@ bool StereoisomerEnumerator::embeddable(ROMol &isomer) {
   std::unique_ptr<ROMol> isomerWithHs(MolOps::addHs(isomer));
   auto cid = DGeomHelpers::EmbedMolecule(*isomerWithHs);
   if (cid >= 0) {
-    Conformer *conf = new Conformer(isomer.getNumAtoms());
+    auto *conf = new Conformer(isomer.getNumAtoms());
     for (unsigned int i = 0; i < isomer.getNumAtoms(); i++) {
       conf->setAtomPos(i, isomerWithHs->getConformer().getAtomPos(i));
     }

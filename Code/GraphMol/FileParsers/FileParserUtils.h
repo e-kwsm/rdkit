@@ -116,7 +116,7 @@ void applyMolListProp(ROMol &mol, const std::string &pn,
                       const std::string &missingValueMarker, size_t nItems,
                       U getter) {
   std::string itempn = pn.substr(prefix.size());
-  std::string strVect = mol.getProp<std::string>(pn);
+  auto strVect = mol.getProp<std::string>(pn);
   std::vector<std::string> tokens;
   boost::split(tokens, strVect, boost::is_any_of(" \t\n"),
                boost::token_compress_on);
