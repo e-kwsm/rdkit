@@ -1407,11 +1407,13 @@ TEST_CASE("CDX and Formats") {
 	  bool hasmols = false;
 	  bool exception = false;
 	  try {
-	    auto mols = MolsFromCDXMLFile(check.filename, CDXMLParserParams(true, true, format));	    
-	    hasmols = mols.size() > 0;
-	    //	    std::cerr << check.filename << " not stream " << (unsigned)format << " hasmols: " << hasmols << std::endl;
+            auto mols = MolsFromCDXMLFile(
+                check.filename, CDXMLParserParams(true, true, format));
+            hasmols = !mols.empty();
+            //	    std::cerr << check.filename << " not stream " <<
+            //(unsigned)format << " hasmols: " << hasmols << std::endl;
 
-	  } catch (...) {
+          } catch (...) {
 	    exception = true;
 	    //	    std::cerr << check.filename << " not stream " << (unsigned)format << " exception" << std::endl;
 	  }
