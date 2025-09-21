@@ -472,8 +472,8 @@ SynthonSpaceSubstructureSearcher::searchFragSet(
     // Find all synthons that match the fragments with each connector
     // combination.
     for (const auto &connComb : connCombs) {
-      for (size_t i = 0; i < connComb.size(); ++i) {
-        for (const auto &[atom, isotopeNum] : connComb[i]) {
+      for (const auto &i : connComb) {
+        for (const auto &[atom, isotopeNum] : i) {
           atom->setIsotope(isotopeNum);
           if (atom->hasQuery()) {
             atom->setQuery(makeAtomTypeQuery(0, false));
