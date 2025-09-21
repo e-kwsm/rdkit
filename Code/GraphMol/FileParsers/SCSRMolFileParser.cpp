@@ -313,7 +313,7 @@ static std::unique_ptr<SCSRMol> SCSRMolFromSCSRFile(
     unsigned int line = 0;
     return SCSRMolFromSCSRDataStream(inStream, line, params);
   } else {
-    return std::unique_ptr<SCSRMol>();
+    return {};
   }
 }
 
