@@ -2996,18 +2996,18 @@ TEST_CASE("molecules with single bond to metal atom use dative instead") {
        "C=CC1=C(C)C2=Cc3c(C=C)c(C)c4[n]3[Fe-2]35[n]6c(c(C)c(CCC(=O)O)c6=CC6=[N+]3C(=C4)C(C)=C6CCC(=O)O)=CC1=[N+]25"},
       {"CCC1=[O+][Cu]2([O+]=C(CC)C1)[O+]=C(CC)CC(CC)=[O+]2",
        "CCC1=[O+][Cu]2([O+]=C(CC)C1)[O+]=C(CC)CC(CC)=[O+]2"}};
-  for (size_t i = 0; i < test_vals.size(); ++i) {
-    INFO(test_vals[i].first);
-    RWMOL_SPTR m(RDKit::SmilesToMol(test_vals[i].first));
-    CHECK(MolToSmiles(*m) == test_vals[i].second);
+  for (auto &test_val : test_vals) {
+    INFO(test_val.first);
+    RWMOL_SPTR m(RDKit::SmilesToMol(test_val.first));
+    CHECK(MolToSmiles(*m) == test_val.second);
   }
   // make sure we can call cleanupOrganometallics() on non-sanitized molecules
-  for (size_t i = 0; i < test_vals.size(); ++i) {
-    INFO(test_vals[i].first);
+  for (auto &test_val : test_vals) {
+    INFO(test_val.first);
     bool sanitize = false;
-    RWMOL_SPTR m(RDKit::SmilesToMol(test_vals[i].first, 0, sanitize));
+    RWMOL_SPTR m(RDKit::SmilesToMol(test_val.first, 0, sanitize));
     MolOps::cleanUpOrganometallics(*m);
-    CHECK(MolToSmiles(*m) == test_vals[i].second);
+    CHECK(MolToSmiles(*m) == test_val.second);
   }
 }
 
@@ -3020,9 +3020,9 @@ TEST_CASE(
        "[F][Pt]1([Br])<-[Cl][Pt]([F])([F])<-[35Cl]1"},
   };
 
-  for (size_t j = 0; j < test_vals.size(); ++j) {
-    std::string &smi = test_vals[j].first;
-    std::string &canon_smi = test_vals[j].second;
+  for (auto &test_val : test_vals) {
+    std::string &smi = test_val.first;
+    std::string &canon_smi = test_val.second;
     RWMOL_SPTR m(RDKit::SmilesToMol(smi));
     CHECK(MolToSmiles(*m) == canon_smi);
 
