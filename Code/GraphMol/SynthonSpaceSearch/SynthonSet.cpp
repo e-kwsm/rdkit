@@ -430,8 +430,8 @@ void SynthonSet::buildSynthonFingerprints(
   // The synthons should have had transferProductBondsToSynthons
   // applied to them by now, so that they have a searchMol.
 
-  for (size_t synthSetNum = 0; synthSetNum < d_synthons.size(); ++synthSetNum) {
-    for (const auto &synth : d_synthons[synthSetNum]) {
+  for (auto &d_synthon : d_synthons) {
+    for (const auto &synth : d_synthon) {
       if (ControlCHandler::getGotSignal()) {
         return;
       }
