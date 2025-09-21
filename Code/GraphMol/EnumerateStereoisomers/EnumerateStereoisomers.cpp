@@ -69,7 +69,7 @@ std::uint64_t StereoisomerEnumerator::getStereoisomerCount() const {
 
 std::unique_ptr<ROMol> StereoisomerEnumerator::next() {
   if (d_numReturned == d_numToReturn) {
-    return std::unique_ptr<ROMol>();
+    return {};
   }
   if (d_flippers.empty()) {
     ++d_numReturned;
@@ -163,7 +163,7 @@ std::unique_ptr<ROMol> StereoisomerEnumerator::generateRandomIsomer() {
       }
     }
   }
-  return std::unique_ptr<ROMol>();
+  return {};
 }
 
 bool StereoisomerEnumerator::embeddable(ROMol &isomer) {

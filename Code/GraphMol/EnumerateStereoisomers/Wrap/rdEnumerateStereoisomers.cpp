@@ -40,7 +40,7 @@ class LocalStereoEnumerator {
   boost::shared_ptr<RDKit::ROMol> next() {
     auto iso = dp_enumerator->next();
     if (!iso) {
-      return boost::shared_ptr<RDKit::ROMol>();
+      return {};
     }
     return boost::shared_ptr<RDKit::ROMol>(iso.release());
   }
