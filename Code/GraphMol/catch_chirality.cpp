@@ -6330,7 +6330,7 @@ TEST_CASE("extra ring stereo with new stereo perception") {
     // }
     for (auto idx : {2, 3, 4}) {
       INFO(idx);
-      const auto atm = m->getAtomWithIdx(idx);
+      auto *const atm = m->getAtomWithIdx(idx);
       REQUIRE(atm);
       CHECK(atm->getChiralTag() != Atom::ChiralType::CHI_UNSPECIFIED);
       CHECK(!atm->hasProp(common_properties::_ringStereoAtoms));
@@ -6349,7 +6349,7 @@ TEST_CASE("extra ring stereo with new stereo perception") {
     // }
     for (auto idx : {1, 4}) {
       INFO(idx);
-      const auto atm = m->getAtomWithIdx(idx);
+      auto *const atm = m->getAtomWithIdx(idx);
       REQUIRE(atm);
       CHECK(atm->getChiralTag() != Atom::ChiralType::CHI_UNSPECIFIED);
       CHECK(atm->hasProp(common_properties::_ringStereoAtoms));
