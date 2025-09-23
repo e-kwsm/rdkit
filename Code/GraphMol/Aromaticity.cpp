@@ -178,7 +178,7 @@ void markAtomsBondsArom(const VECT_INT_VECT &brings, const INT_VECT &ringIds,
   // connect as aromatic
   for (const auto &bci : bndCntr) {
     if (bci.second == 1) {
-      auto bond = bondsByIdx[bci.first];
+      auto *bond = bondsByIdx[bci.first];
       bond->setIsAromatic(true);
       switch (bond->getBondType()) {
         case Bond::SINGLE:
