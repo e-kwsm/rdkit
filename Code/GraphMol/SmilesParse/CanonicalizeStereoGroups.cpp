@@ -629,8 +629,8 @@ void canonicalizeStereoGroups_internal(
     RDKit::getAtomsToInvert2(*newMol.get(), chosenOrder, reversedOrder,
                              atomsToInvert);
 
-    newMol.reset((RDKit::RWMol *)RDKit::MolOps::renumberAtoms(*newMol.get(),
-                                                              chosenOrder));
+    newMol.reset(dynamic_cast<RDKit::RWMol *>(
+        RDKit::MolOps::renumberAtoms(*newMol.get(), chosenOrder)));
 
     RDKit::RankedValue newRankedValue;
 
