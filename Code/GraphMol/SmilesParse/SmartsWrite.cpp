@@ -297,8 +297,9 @@ std::string getAtomSmartsSimple(const QueryAtom *qatom,
       case Modifiers::RANGE:
         rquery = dynamic_cast<const ATOM_RANGE_QUERY *>(query);
         CHECK_INVARIANT(rquery, "query could not be converted to range query");
-        res << ((const ATOM_RANGE_QUERY *)query)->getLower() << "-"
-            << ((const ATOM_RANGE_QUERY *)query)->getUpper();
+        res << (dynamic_cast<const ATOM_RANGE_QUERY *>(query))->getLower()
+            << "-"
+            << (dynamic_cast<const ATOM_RANGE_QUERY *>(query))->getUpper();
         break;
       case Modifiers::GREATER:
         res << "-" << equery->getVal();
