@@ -666,7 +666,7 @@ void MatchSubqueries(const ROMol &mol, QueryAtom::QUERYATOM_QUERY *query,
                      std::vector<RecursiveStructureQuery *> &locked) {
   PRECONDITION(query, "bad query");
   if (query->getDescription() == "RecursiveStructure") {
-    auto *rsq = (RecursiveStructureQuery *)query;
+    auto *rsq = dynamic_cast<RecursiveStructureQuery *>(query);
 #ifdef RDK_BUILD_THREADSAFE_SSS
     rsq->d_mutex.lock();
 #endif
@@ -678,8 +678,8 @@ void MatchSubqueries(const ROMol &mol, QueryAtom::QUERYATOM_QUERY *query,
       // we've matched an equivalent serial number before, just
       // copy in the matches:
       matchDone = true;
-      auto orsq =
-          (const RecursiveStructureQuery *)subqueryMap[rsq->getSerialNumber()];
+      auto orsq = dynamic_cast<const RecursiveStructureQuery *>(
+          subqueryMap[rsq->getSerialNumber()]);
       for (auto setIter = orsq->beginSet(); setIter != orsq->endSet();
            ++setIter) {
         rsq->insert(*setIter);
