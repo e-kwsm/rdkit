@@ -50,8 +50,8 @@ void AssignHsResidueInfo(RWMol &mol) {
   int max_serial = 0;
   unsigned int stopIdx = mol.getNumAtoms();
   for (unsigned int aidx = 0; aidx < stopIdx; ++aidx) {
-    auto *info =
-        (AtomPDBResidueInfo *)(mol.getAtomWithIdx(aidx)->getMonomerInfo());
+    auto *info = dynamic_cast<AtomPDBResidueInfo *>(
+        mol.getAtomWithIdx(aidx)->getMonomerInfo());
     if (info && info->getMonomerType() == AtomMonomerInfo::PDBRESIDUE &&
         info->getSerialNumber() > max_serial) {
       max_serial = info->getSerialNumber();
@@ -62,7 +62,7 @@ void AssignHsResidueInfo(RWMol &mol) {
   int current_h_id = 0;
   for (unsigned int aidx = 0; aidx < stopIdx; ++aidx) {
     Atom *newAt = mol.getAtomWithIdx(aidx);
-    auto *info = (AtomPDBResidueInfo *)(newAt->getMonomerInfo());
+    auto *info = dynamic_cast<AtomPDBResidueInfo *>(newAt->getMonomerInfo());
     if (info && info->getMonomerType() == AtomMonomerInfo::PDBRESIDUE) {
       ROMol::ADJ_ITER begin, end;
       boost::tie(begin, end) = mol.getAtomNeighbors(newAt);
@@ -71,8 +71,8 @@ void AssignHsResidueInfo(RWMol &mol) {
           // Make all Hs unique - increment id even for existing
           ++current_h_id;
           // skip if hydrogen already has PDB info
-          auto *h_info = (AtomPDBResidueInfo *)mol.getAtomWithIdx(*begin)
-                             ->getMonomerInfo();
+          auto *h_info = dynamic_cast<AtomPDBResidueInfo *>(
+              mol.getAtomWithIdx(*begin)->getMonomerInfo());
           if (h_info &&
               h_info->getMonomerType() == AtomMonomerInfo::PDBRESIDUE) {
             continue;
