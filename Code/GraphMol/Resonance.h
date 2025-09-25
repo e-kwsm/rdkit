@@ -210,7 +210,7 @@ class RDKIT_GRAPHMOL_EXPORT ResonanceMolSupplier {
   bool d_isEnumerated;
   bool d_wasCanceled;
   CEVect3 d_ceVect3;
-  const ROMol *d_mol;
+  ROMol *d_mol;
   std::vector<int> d_bondConjGrpIdx;
   std::vector<int> d_atomConjGrpIdx;
   std::vector<size_t> d_enumIdx;
