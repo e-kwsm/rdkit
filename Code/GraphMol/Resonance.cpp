@@ -1365,7 +1365,7 @@ ResonanceMolSupplier::ResonanceMolSupplier(ROMol &mol, unsigned int flags,
   d_mol = new ROMol(mol);
   // call here to avoid a race condition in threads
   MolOps::getDistanceMat(*d_mol);
-  MolOps::Kekulize((RWMol &)*d_mol, false);
+  MolOps::Kekulize(dynamic_cast<RWMol &>(*d_mol), false);
   // identify conjugate substructures
   assignConjGrpIdx();
 }
@@ -1833,7 +1833,7 @@ ROMol *ResonanceMolSupplier::assignBondsFormalCharges(
   auto *mol = new ROMol(this->mol());
   assignBondsFormalChargesHelper(*mol, c);
   ResonanceUtils::fixExplicitImplicitHs(*mol);
-  ResonanceUtils::sanitizeMol((RWMol &)*mol);
+  ResonanceUtils::sanitizeMol(dynamic_cast<RWMol &>(*mol));
   return mol;
 }
 }  // namespace RDKit
