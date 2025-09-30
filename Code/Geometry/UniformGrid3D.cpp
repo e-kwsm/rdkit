@@ -71,12 +71,11 @@ void UniformGrid3D::initGrid(
   }
 }
 
-UniformGrid3D::UniformGrid3D(const std::string &pkl) {
-  dp_storage = nullptr;
+UniformGrid3D::UniformGrid3D(const std::string &pkl) : dp_storage(nullptr) {
   initFromText(pkl.c_str(), pkl.size());
 }
-UniformGrid3D::UniformGrid3D(const char *pkl, const unsigned int len) {
-  dp_storage = nullptr;
+UniformGrid3D::UniformGrid3D(const char *pkl, const unsigned int len)
+    : dp_storage(nullptr) {
   initFromText(pkl, len);
 }
 

@@ -42,10 +42,9 @@ class RDKIT_DEPICTOR_EXPORT EmbeddedAtom {
         CisTransNbr(-1),
         ccw(true),
         rotDir(0),
+        loc(pos),
         d_density(-1.0),
-        df_fixed(false) {
-    loc = pos;
-  }
+        df_fixed(false) {}
 
   EmbeddedAtom &operator=(const EmbeddedAtom &other) {
     if (this == &other) {

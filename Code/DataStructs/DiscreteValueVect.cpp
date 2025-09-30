@@ -20,13 +20,13 @@
 namespace RDKit {
 const int ci_DISCRETEVALUEVECTPICKLE_VERSION = 0x1;
 
-DiscreteValueVect::DiscreteValueVect(const DiscreteValueVect &other) {
-  d_type = other.getValueType();
-  d_bitsPerVal = other.getNumBitsPerVal();
-  d_numInts = other.getNumInts();
-  d_length = other.getLength();
-  d_valsPerInt = other.d_valsPerInt;
-  d_mask = other.d_mask;
+DiscreteValueVect::DiscreteValueVect(const DiscreteValueVect &other)
+    : d_type(other.getValueType()),
+      d_bitsPerVal(other.getNumBitsPerVal()),
+      d_numInts(other.getNumInts()),
+      d_length(other.getLength()),
+      d_valsPerInt(other.d_valsPerInt),
+      d_mask(other.d_mask) {
   const std::uint32_t *odata = other.getData();
   auto *data = new std::uint32_t[d_numInts];
   memcpy(static_cast<void *>(data), static_cast<const void *>(odata),
