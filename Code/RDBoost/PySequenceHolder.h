@@ -31,7 +31,7 @@ namespace python = boost::python;
 template <typename T>
 class PySequenceHolder {
  public:
-  PySequenceHolder(python::object seq) { d_seq = seq; }
+  PySequenceHolder(python::object seq) : d_seq(seq) {}
 
   // --------------------------------------------------
   //! \brief Returns the size of the contained sequence.

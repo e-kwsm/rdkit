@@ -226,7 +226,7 @@ const std::vector<std::string> elementNames = {
     "Copernicium",   "Nihonium",    "Flerovium",    "Moscovium",
     "Livermorium",   "Tennessine",  "Oganesson"};
 
-atomicData::atomicData(const std::string &dataLine) {
+atomicData::atomicData(const std::string &dataLine) : name(elementNames[anum]) {
   boost::char_separator<char> spaceSep(" \t");
   tokenizer tokens(dataLine, spaceSep);
   tokenizer::iterator token = tokens.begin();
@@ -240,7 +240,6 @@ atomicData::atomicData(const std::string &dataLine) {
   ++token;
 
   // use atomic number to set element name
-  name = elementNames[anum];
 
   // element symbol
   symb = *token;

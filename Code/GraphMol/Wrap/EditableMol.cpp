@@ -23,7 +23,7 @@ namespace RDKit {
 namespace {
 class EditableMol : boost::noncopyable {
  public:
-  EditableMol(const ROMol &m) { dp_mol = new RWMol(m); };
+  EditableMol(const ROMol &m) : dp_mol(new RWMol(m)) {};
   ~EditableMol() noexcept { delete dp_mol; };
 
   void RemoveAtom(unsigned int idx) {

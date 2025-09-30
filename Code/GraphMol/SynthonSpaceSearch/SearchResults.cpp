@@ -15,8 +15,10 @@ SearchResults::SearchResults(std::vector<std::unique_ptr<ROMol>> &&mols,
                              std::unique_ptr<ROMol> &&bestHitFound,
                              const std::uint64_t maxNumRes, bool timedOut,
                              bool cancelled)
-    : d_maxNumResults(maxNumRes), d_timedOut(timedOut), d_cancelled(cancelled) {
-  d_hitMolecules = std::move(mols);
+    : d_hitMolecules(std::move(mols)),
+      d_maxNumResults(maxNumRes),
+      d_timedOut(timedOut),
+      d_cancelled(cancelled) {
   mols.clear();
   d_bestHitFound = std::move(bestHitFound);
   bestHitFound.reset();

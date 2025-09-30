@@ -25,11 +25,9 @@ class RDKIT_FRAGCATALOG_EXPORT FragCatParams : public RDCatalog::CatalogParams {
   // FIX: this container is still missing all the CASE-type functional groups
   // stuff
  public:
-  FragCatParams() {
+  FragCatParams() : d_lowerFragLen(0), d_upperFragLen(0), d_tolerance(1e-8) {
     d_typeStr = "Fragment Catalog Parameters";
-    d_lowerFragLen = 0;
-    d_upperFragLen = 0;
-    d_tolerance = 1e-8;
+
     d_funcGroups.clear();
   }
   //! construct from a function-group file

@@ -24,8 +24,7 @@ namespace MolStandardize {
 class RDKIT_MOLSTANDARDIZE_EXPORT TransformCatalogEntry
     : public RDCatalog::CatalogEntry {
  public:
-  TransformCatalogEntry() : d_descrip("") {
-    dp_props = new Dict();
+  TransformCatalogEntry() : dp_props(new Dict()), d_descrip("") {
     setBitId(-1);
   }
 

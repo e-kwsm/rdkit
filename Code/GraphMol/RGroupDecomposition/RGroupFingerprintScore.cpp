@@ -255,8 +255,8 @@ VarianceDataForLabel::VarianceDataForLabel(const int &label,
       numberFingerprints(numberFingerprints),
       bitCounts(std::move(bitCounts)) {}
 
-VarianceDataForLabel::VarianceDataForLabel(const int &label) : label(label) {
-  numberFingerprints = 0;
+VarianceDataForLabel::VarianceDataForLabel(const int &label)
+    : label(label), numberFingerprints(0) {
   bitCounts = std::vector<int>(fingerprintSize, 0.0);
 }
 
