@@ -160,7 +160,7 @@ struct State {
     std::vector<std::vector<unsigned int>> nbrs;
     std::vector<unsigned int> atomNeighbours;
 
-    for (const auto atom : mol.atoms()) {
+    for (auto *const atom : mol.atoms()) {
       atomNeighbours.clear();
       const auto atm_idx = atom->getIdx();
       if (radii_[atm_idx] == 0.0) {
@@ -269,7 +269,7 @@ DoubleCubicLatticeVolume::DoubleCubicLatticeVolume(
 
   bool init = false;
 
-  for (const auto atom : mol.atoms()) {
+  for (auto *const atom : mol.atoms()) {
     const unsigned int atomIdx = atom->getIdx();
     numAtoms++;
 
@@ -389,7 +389,7 @@ double DoubleCubicLatticeVolume::getSurfaceArea() {
     return surfaceArea;
   }
 
-  for (const auto atom : mol.atoms()) {
+  for (auto *const atom : mol.atoms()) {
     const auto atomIdx = atom->getIdx();
     if (radii_[atomIdx] != 0.0) {
       surfaceArea += getAtomSurfaceArea(atomIdx);
@@ -404,7 +404,7 @@ double DoubleCubicLatticeVolume::getPartialSurfaceArea(
   // input is a set of indexes to include
 
   double area = 0.0;
-  for (const auto atom : mol.atoms()) {
+  for (auto *const atom : mol.atoms()) {
     const auto atomIdx = atom->getIdx();
     bool incAtom = incAtoms[atomIdx];
     if (incAtom && radii_[atomIdx] != 0.0) {
@@ -417,7 +417,7 @@ double DoubleCubicLatticeVolume::getPartialSurfaceArea(
 double DoubleCubicLatticeVolume::getPolarSurfaceArea(bool includeSandP,
                                                      bool includeHs) {
   boost::dynamic_bitset<> polarAtoms(mol.getNumAtoms());
-  for (const auto atom : mol.atoms()) {
+  for (auto *const atom : mol.atoms()) {
     if (includeAsPolar(atom, mol, includeSandP, includeHs)) {
       polarAtoms.set(atom->getIdx());
     }
@@ -431,7 +431,7 @@ DoubleCubicLatticeVolume::getSurfacePoints() {
     return surfacePoints;
   }
 
-  for (const auto atom : mol.atoms()) {
+  for (auto *const atom : mol.atoms()) {
     const auto atomIdx = atom->getIdx();
     if (radii_[atomIdx] != 0.0) {
       const Point3D &pos = positions[atomIdx];
@@ -493,7 +493,7 @@ double DoubleCubicLatticeVolume::getVolume() {
     return totalVolume;
   }
 
-  for (const auto atom : mol.atoms()) {
+  for (auto *const atom : mol.atoms()) {
     const unsigned int atomIdx = atom->getIdx();
     if (radii_[atomIdx] != 0.0) {
       totalVolume += getAtomVolume(atomIdx, probeRadius);
@@ -510,7 +510,7 @@ double DoubleCubicLatticeVolume::getVDWVolume() {
   }
 
   // function to return VDW volume (probe radius == 0)
-  for (const auto atom : mol.atoms()) {
+  for (auto *const atom : mol.atoms()) {
     const unsigned int atomIdx = atom->getIdx();
     if (radii_[atomIdx] != 0.0) {
       vdwVolume += getAtomVolume(atomIdx, 0.0);
@@ -526,7 +526,7 @@ double DoubleCubicLatticeVolume::getPartialVolume(
   // input is a set of indexes to include
 
   double vol = 0.0;
-  for (const auto atom : mol.atoms()) {
+  for (auto *const atom : mol.atoms()) {
     const auto atomIdx = atom->getIdx();
     bool incAtom = incAtoms[atomIdx];
     if (incAtom && radii_[atomIdx] != 0.0) {
@@ -539,7 +539,7 @@ double DoubleCubicLatticeVolume::getPartialVolume(
 double DoubleCubicLatticeVolume::getPolarVolume(bool includeSandP,
                                                 bool includeHs) {
   boost::dynamic_bitset<> polarAtoms(mol.getNumAtoms());
-  for (const auto atom : mol.atoms()) {
+  for (auto *const atom : mol.atoms()) {
     if (includeAsPolar(atom, mol, includeSandP, includeHs)) {
       polarAtoms.set(atom->getIdx());
     }
