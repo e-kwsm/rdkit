@@ -38,10 +38,7 @@ class MrvTests {
   std::string testToRun;
   bool generateExpectedFiles;
 
-  MrvTests() {
-    testToRun = "";
-    generateExpectedFiles = false;
-  }
+  MrvTests() : testToRun(""), generateExpectedFiles(false) {}
 
   class MolTest {
    public:

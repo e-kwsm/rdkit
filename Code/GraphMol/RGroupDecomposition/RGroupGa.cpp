@@ -99,11 +99,12 @@ RGroupGa::RGroupGa(const RGroupDecompData &rGroupData,
                    const chrono::steady_clock::time_point *const t0)
     : rGroupData(rGroupData),
       chromosomePolicy(getRng(), rGroupData.matches.size()),
+      numPermutations(1L),
       t0(t0) {
   setSelectionPressure(1.0001);
 
   const auto &matches = rGroupData.matches;
-  numPermutations = 1L;
+
   auto pos = 0;
   for (auto m : matches) {
     if (m.size() == 1) {

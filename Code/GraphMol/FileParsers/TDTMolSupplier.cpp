@@ -73,8 +73,8 @@ namespace FileParsers {
 TDTMolSupplier::TDTMolSupplier() { init(); }
 
 TDTMolSupplier::TDTMolSupplier(const std::string &fileName,
-                               const TDTMolSupplierParams &params) {
-  d_params = params;
+                               const TDTMolSupplierParams &params)
+    : d_params(params) {
   init();
   dp_inStream = openAndCheckStream(fileName);
   df_owner = true;

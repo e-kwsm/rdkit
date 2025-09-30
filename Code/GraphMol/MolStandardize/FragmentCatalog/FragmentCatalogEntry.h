@@ -23,10 +23,7 @@ namespace MolStandardize {
 class RDKIT_MOLSTANDARDIZE_EXPORT FragmentCatalogEntry
     : public RDCatalog::CatalogEntry {
  public:
-  FragmentCatalogEntry() : d_descrip("") {
-    dp_props = new Dict();
-    setBitId(-1);
-  }
+  FragmentCatalogEntry() : dp_props(new Dict()), d_descrip("") { setBitId(-1); }
 
   //		FragmentCatalogEntry(const ROMol *omol, const PATH_TYPE &path);
   //		FragmentCatalogEntry(const std::string &pickle);

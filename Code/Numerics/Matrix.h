@@ -54,9 +54,10 @@ class Matrix {
     if you delete the data externally, this Matrix will be sad.
   */
   Matrix(unsigned int nRows, unsigned int nCols, DATA_SPTR data)
-      : d_nRows(nRows), d_nCols(nCols), d_dataSize(nRows * nCols) {
-    d_data = data;
-  }
+      : d_nRows(nRows),
+        d_nCols(nCols),
+        d_dataSize(nRows * nCols),
+        d_data(data) {}
 
   //! copy constructor
   /*! We make a copy of the other vector's data.

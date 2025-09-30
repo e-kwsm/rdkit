@@ -210,9 +210,8 @@ class RDKIT_MOLINTERACTIONFIELDS_EXPORT CoulombDielectric {
         d_probe(1),
         d_epsilon(1.0),
         d_xi(1.0),
-        d_alpha(0.0) {
-    d_dielectric = (d_xi - d_epsilon) / (d_xi + d_epsilon);
-  }
+        d_alpha(0.0),
+        d_dielectric((d_xi - d_epsilon) / (d_xi + d_epsilon)) {}
 
   //! \brief constructs CoulombDielectric object from vectors of charges and
   //! positions

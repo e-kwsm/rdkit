@@ -549,11 +549,11 @@ MaeMolSupplier::MaeMolSupplier(std::istream *inStream, bool takeOwnership,
 }
 
 MaeMolSupplier::MaeMolSupplier(const std::string &fileName,
-                               const MaeMolSupplierParams &params) {
+                               const MaeMolSupplierParams &params)
+    : d_params(params) {
   df_owner = true;
   dp_inStream = openAndCheckStream(fileName);
   dp_sInStream.reset(dp_inStream);
-  d_params = params;
 
   init();
 }
