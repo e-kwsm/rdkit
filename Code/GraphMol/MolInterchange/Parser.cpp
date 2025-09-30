@@ -733,7 +733,7 @@ void readQueries(RWMol *mol, const bj::value &repVal,
         qatom.setQuery(nullptr);
         mol->replaceAtom(idx, &qatom);
         atom = mol->getAtomWithIdx(idx);
-        static_cast<QueryAtom *>(atom)->setQuery(
+        dynamic_cast<QueryAtom *>(atom)->setQuery(
             readQuery(atom, val, atomDefaults, bondDefaults, params));
         ++idx;
       }
@@ -760,7 +760,7 @@ void readQueries(RWMol *mol, const bj::value &repVal,
         qbond.setQuery(nullptr);
         mol->replaceBond(idx, &qbond);
         bond = mol->getBondWithIdx(idx);
-        static_cast<QueryBond *>(bond)->setQuery(
+        dynamic_cast<QueryBond *>(bond)->setQuery(
             readQuery(bond, val, atomDefaults, bondDefaults, params));
         ++idx;
       }
