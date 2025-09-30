@@ -36,11 +36,12 @@ class RDKIT_DATASTRUCTS_EXPORT DiscreteValueVect {
 
   //! initialize with a particular type and size
   DiscreteValueVect(DiscreteValueType valType, unsigned int length)
-      : d_type(valType), d_length(length) {
-    d_bitsPerVal = (1 << static_cast<unsigned int>(valType));
-    d_valsPerInt = BITS_PER_INT / d_bitsPerVal;
-    d_numInts = (length + d_valsPerInt - 1) / d_valsPerInt;
-    d_mask = ((1 << d_bitsPerVal) - 1);
+      : d_type(valType),
+        d_bitsPerVal(1 << static_cast<unsigned int>(valType)),
+        d_valsPerInt(BITS_PER_INT / d_bitsPerVal),
+        d_numInts((length + d_valsPerInt - 1) / d_valsPerInt),
+        d_length(length),
+        d_mask((1 << d_bitsPerVal) - 1) {
     auto *data = new std::uint32_t[d_numInts];
     memset(static_cast<void *>(data), 0, d_numInts * sizeof(std::uint32_t));
     d_data.reset(data);

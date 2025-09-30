@@ -273,9 +273,9 @@ class WedgeInfoChiral : public WedgeInfoBase {
 class WedgeInfoAtropisomer : public WedgeInfoBase {
  public:
   WedgeInfoAtropisomer(int bondId, RDKit::Bond::BondDir dirInit)
-      : WedgeInfoBase(bondId) {
-    dir = dirInit;
-  };
+      : WedgeInfoBase(bondId), dir(dirInit) {
+
+        };
   ~WedgeInfoAtropisomer() override {}
 
   RDKit::Bond::BondDir dir = RDKit::Bond::BondDir::NONE;

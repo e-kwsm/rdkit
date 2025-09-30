@@ -179,10 +179,9 @@ std::unique_ptr<double[]> getBVector(const ROMol &mol, unsigned int n,
   return std::unique_ptr<double[]>(b);
 }
 
-EEM_arrays::EEM_arrays(const ROMol &mol, unsigned int sz) : n(sz) {
+EEM_arrays::EEM_arrays(const ROMol &mol, unsigned int sz)
+    : n(sz), Atomindex(new unsigned int[n]), EEMatomtype(new unsigned int[n]) {
   /* Fill vector b i.e. -A */
-  Atomindex = new unsigned int[n];
-  EEMatomtype = new unsigned int[n];
 
   for (unsigned int j = 0; j < n; j++) {
     EEMatomtype[j] = getAtomtype(mol, mol.getAtomWithIdx(j));

@@ -48,11 +48,12 @@ class PyResonanceMolSupplierCallback
       public python::wrapper<ResonanceMolSupplierCallback> {
  public:
   PyResonanceMolSupplierCallback() {}
-  PyResonanceMolSupplierCallback(const python::object &pyCallbackObject) {
+  PyResonanceMolSupplierCallback(const python::object &pyCallbackObject)
+      : d_pyCallbackObject(pyCallbackObject) {
     PyResonanceMolSupplierCallback *pyCallback =
         python::extract<PyResonanceMolSupplierCallback *>(pyCallbackObject);
     *this = *pyCallback;
-    d_pyCallbackObject = pyCallbackObject;
+
     pyCallback->d_cppCallback = this;
   }
   inline unsigned int wrapGetNumConjGrps() const {

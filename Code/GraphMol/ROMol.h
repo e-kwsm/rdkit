@@ -333,10 +333,10 @@ class RDKIT_GRAPHMOL_EXPORT ROMol : public RDProps {
          the specified conformer from \c other.
   */
   ROMol(const ROMol &other, bool quickCopy = false, int confId = -1)
-      : RDProps() {
-    dp_ringInfo = nullptr;
+      : RDProps(),
+        dp_ringInfo(nullptr),
+        numBonds(rdcast<unsigned int>(boost::num_edges(d_graph))) {
     initFromOther(other, quickCopy, confId);
-    numBonds = rdcast<unsigned int>(boost::num_edges(d_graph));
   }
   //! construct a molecule from a pickle string
   ROMol(const std::string &binStr);

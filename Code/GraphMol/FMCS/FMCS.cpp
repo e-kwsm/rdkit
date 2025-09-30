@@ -1007,8 +1007,7 @@ bool FinalChiralityCheckFunction_1(const short unsigned int c1[],
 
 namespace detail {
 MCSParametersInternal::MCSParametersInternal(const MCSParameters *params)
-    : MCSParameters(params) {
-  UserFinalMatchChecker = FinalMatchChecker;
+    : MCSParameters(params), UserFinalMatchChecker(FinalMatchChecker) {
   FinalMatchChecker = FinalMatchCheckFunction;
 }
 }  // end namespace detail

@@ -54,8 +54,8 @@ class RDKIT_RDGENERAL_EXPORT Dict {
 
   Dict() {}
 
-  Dict(const Dict &other) : _data(other._data) {
-    _hasNonPodData = other._hasNonPodData;
+  Dict(const Dict &other)
+      : _data(other._data), _hasNonPodData(other._hasNonPodData) {
     if (other._hasNonPodData) {  // other has non pod data, need to copy
       std::vector<Pair> data(other._data.size());
       _data.swap(data);

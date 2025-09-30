@@ -221,20 +221,18 @@ class VF2SubState {
         mc(state.mc),
         n1(state.n1),
         n2(state.n2),
+        core_len(state.core_len),
+        t1_len(state.t1_len),
+        t2_len(state.t2_len),
+        core_1(state.core_1),
+        core_2(state.core_2),
+        term_1(state.term_1),
+        term_2(state.term_2),
         order(state.order),
+        share_count(state.share_count),
         vs_compared(state.vs_compared)
   // es_compared(state.es_compared)
   {
-    core_len = state.core_len;
-    t1_len = state.t1_len;
-    t2_len = state.t2_len;
-
-    core_1 = state.core_1;
-    core_2 = state.core_2;
-    term_1 = state.term_1;
-    term_2 = state.term_2;
-    share_count = state.share_count;
-
     ++(*share_count);
   }
 

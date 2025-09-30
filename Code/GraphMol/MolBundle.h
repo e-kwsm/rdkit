@@ -61,7 +61,7 @@ class MolBundle : public RDProps {
   MolBundle() : RDProps() {}
 
   //! copy constructor
-  MolBundle(const MolBundle &other) : RDProps(other) { d_mols = other.d_mols; }
+  MolBundle(const MolBundle &other) : RDProps(other), d_mols(other.d_mols) {}
   MolBundle(const std::string &pkl) { initFromString(pkl); }
   virtual ~MolBundle() {}
 

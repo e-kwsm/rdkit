@@ -98,14 +98,15 @@ class RDKIT_GRAPHMOL_EXPORT SubstanceGroup : public RDProps {
   SubstanceGroup(const SubstanceGroup &other) = default;
   SubstanceGroup &operator=(const SubstanceGroup &other) = default;
 
-  SubstanceGroup(SubstanceGroup &&other) noexcept : RDProps(std::move(other)) {
+  SubstanceGroup(SubstanceGroup &&other) noexcept
+      : RDProps(std::move(other)),
+        d_atoms(std::move(other.d_atoms)),
+        d_patoms(std::move(other.d_patoms)),
+        d_bonds(std::move(other.d_bonds)),
+        d_brackets(std::move(other.d_brackets)),
+        d_cstates(std::move(other.d_cstates)),
+        d_saps(std::move(other.d_saps)) {
     dp_mol = std::exchange(other.dp_mol, nullptr);
-    d_atoms = std::move(other.d_atoms);
-    d_patoms = std::move(other.d_patoms);
-    d_bonds = std::move(other.d_bonds);
-    d_brackets = std::move(other.d_brackets);
-    d_cstates = std::move(other.d_cstates);
-    d_saps = std::move(other.d_saps);
   }
 
   SubstanceGroup &operator=(SubstanceGroup &&other) noexcept {

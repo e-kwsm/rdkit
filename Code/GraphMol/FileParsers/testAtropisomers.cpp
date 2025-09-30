@@ -39,10 +39,7 @@ class MolAtropTest {
   std::string testToRun;
   bool generateExpectedFiles;
 
-  MolAtropTest() {
-    testToRun = "";
-    generateExpectedFiles = false;
-  }
+  MolAtropTest() : testToRun(""), generateExpectedFiles(false) {}
 
  public:
   class MolTest {

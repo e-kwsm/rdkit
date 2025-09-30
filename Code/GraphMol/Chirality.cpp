@@ -1035,11 +1035,9 @@ struct SortableCIPReference {
       : cip(cipRef), atomIdx(atomIdx) {
     CHECK_INVARIANT(cip != nullptr, "null CIP entry");
   }
-  SortableCIPReference(SortableCIPReference &&other) noexcept {
-    cip = other.cip;
-    atomIdx = other.atomIdx;
+  SortableCIPReference(SortableCIPReference &&other) noexcept
+      : cip(other.cip), atomIdx(other.atomIdx), currRank(other.currRank) {
     other.cip = nullptr;
-    currRank = other.currRank;
   }
   SortableCIPReference &operator=(SortableCIPReference &&other) noexcept {
     if (this == &other) {

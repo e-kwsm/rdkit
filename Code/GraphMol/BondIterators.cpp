@@ -12,23 +12,15 @@
 
 namespace RDKit {
 
-BondIterator_::BondIterator_(ROMol *mol) {
-  _mol = mol;
+BondIterator_::BondIterator_(ROMol *mol) : _mol(mol), _pos(_beg) {
   boost::tie(_beg, _end) = mol->getEdges();
-  _pos = _beg;
 };
-BondIterator_::BondIterator_(ROMol *mol, ROMol::EDGE_ITER pos) {
-  _mol = mol;
+BondIterator_::BondIterator_(ROMol *mol, ROMol::EDGE_ITER pos)
+    : _mol(mol), _pos(pos) {
   boost::tie(_beg, _end) = mol->getEdges();
-
-  _pos = pos;
 };
-BondIterator_::BondIterator_(const BondIterator_ &other) {
-  _mol = other._mol;
-  _pos = other._pos;
-  _beg = other._beg;
-  _end = other._end;
-}
+BondIterator_::BondIterator_(const BondIterator_ &other)
+    : _mol(other._mol), _pos(other._pos), _beg(other._beg), _end(other._end) {}
 
 BondIterator_ &BondIterator_::operator=(const BondIterator_ &other) {
   _mol = other._mol;
@@ -78,23 +70,16 @@ BondIterator_ BondIterator_::operator--(int) {
 }
 
 // CONST
-ConstBondIterator_::ConstBondIterator_(ROMol const *mol) {
-  _mol = mol;
+ConstBondIterator_::ConstBondIterator_(ROMol const *mol)
+    : _mol(mol), _pos(_beg) {
   boost::tie(_beg, _end) = mol->getEdges();
-  _pos = _beg;
 };
-ConstBondIterator_::ConstBondIterator_(ROMol const *mol, ROMol::EDGE_ITER pos) {
-  _mol = mol;
+ConstBondIterator_::ConstBondIterator_(ROMol const *mol, ROMol::EDGE_ITER pos)
+    : _mol(mol), _pos(pos) {
   boost::tie(_beg, _end) = mol->getEdges();
-
-  _pos = pos;
 };
-ConstBondIterator_::ConstBondIterator_(const ConstBondIterator_ &other) {
-  _mol = other._mol;
-  _pos = other._pos;
-  _beg = other._beg;
-  _end = other._end;
-}
+ConstBondIterator_::ConstBondIterator_(const ConstBondIterator_ &other)
+    : _mol(other._mol), _pos(other._pos), _beg(other._beg), _end(other._end) {}
 ConstBondIterator_ &ConstBondIterator_::operator=(
     const ConstBondIterator_ &other) {
   _mol = other._mol;
