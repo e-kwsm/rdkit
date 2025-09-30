@@ -28,11 +28,10 @@ MolCatalogEntry::MolCatalogEntry(const ROMol *omol) {
   d_order = 0;
 }
 
-MolCatalogEntry::MolCatalogEntry(const MolCatalogEntry &other) {
+MolCatalogEntry::MolCatalogEntry(const MolCatalogEntry &other)
+    : d_descrip(other.d_descrip), dp_props(nullptr), dp_mol(nullptr) {
   setBitId(other.getBitId());
-  d_descrip = other.d_descrip;
-  dp_props = nullptr;
-  dp_mol = nullptr;
+
   if (other.dp_props) {
     dp_props = new Dict(*other.dp_props);
   }

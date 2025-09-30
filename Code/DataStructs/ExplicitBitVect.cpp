@@ -20,34 +20,26 @@
 #endif
 #include <cstdint>
 
-ExplicitBitVect::ExplicitBitVect(unsigned int size, bool bitsSet) {
-  d_size = 0;
-  dp_bits = nullptr;
-  d_numOnBits = 0;
+ExplicitBitVect::ExplicitBitVect(unsigned int size, bool bitsSet)
+    : d_size(0), dp_bits(nullptr), d_numOnBits(0) {
   _initForSize(size);
   if (bitsSet) {
     dp_bits->set();  // set all bits to 1
     d_numOnBits = size;
   }
 }
-ExplicitBitVect::ExplicitBitVect(const std::string &s) {
-  d_size = 0;
-  dp_bits = nullptr;
-  d_numOnBits = 0;
+ExplicitBitVect::ExplicitBitVect(const std::string &s)
+    : d_size(0), dp_bits(nullptr), d_numOnBits(0) {
   initFromText(s.c_str(), s.length());
 }
-ExplicitBitVect::ExplicitBitVect(const char *data, const unsigned int dataLen) {
-  d_size = 0;
-  dp_bits = nullptr;
-  d_numOnBits = 0;
+ExplicitBitVect::ExplicitBitVect(const char *data, const unsigned int dataLen)
+    : d_size(0), dp_bits(nullptr), d_numOnBits(0) {
   initFromText(data, dataLen);
 }
 
 ExplicitBitVect::ExplicitBitVect(const ExplicitBitVect &other)
-    : BitVect(other) {
-  d_size = other.d_size;
+    : BitVect(other), d_size(other.d_size), d_numOnBits(other.d_numOnBits) {
   dp_bits.reset(new boost::dynamic_bitset<>(*(other.dp_bits)));
-  d_numOnBits = other.d_numOnBits;
 }
 
 ExplicitBitVect::ExplicitBitVect(ExplicitBitVect &&other) noexcept
