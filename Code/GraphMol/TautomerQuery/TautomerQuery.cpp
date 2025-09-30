@@ -170,7 +170,8 @@ TautomerQuery *TautomerQuery::fromMol(
 
     // Forward original queries
     if (atom->hasQuery()) {
-      auto originalAtomQuery = static_cast<const QueryAtom *>(atom)->getQuery();
+      auto originalAtomQuery =
+          dynamic_cast<const QueryAtom *>(atom)->getQuery();
       queryAtom->setQuery(originalAtomQuery->copy());
     }
 

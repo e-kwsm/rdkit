@@ -216,7 +216,7 @@ std::vector<ROMOL_SPTR> replaceSubstructs(
     if (!replaceAll || !res.size()) {
       res.push_back(ROMOL_SPTR(new ROMol(mol, false)));
     }
-    RWMol *newMol = static_cast<RWMol *>(res.rbegin()->get());
+    RWMol *newMol = dynamic_cast<RWMol *>(res.rbegin()->get());
 
     // we need a tab to the orig number of atoms because the
     // new molecule will start numbered above this:
@@ -261,7 +261,7 @@ std::vector<ROMOL_SPTR> replaceSubstructs(
   if (delList.size()) {
     if (replaceAll) {
       // remove the atoms from the delList:
-      auto *newMol = static_cast<RWMol *>(res[0].get());
+      auto *newMol = dynamic_cast<RWMol *>(res[0].get());
       newMol->beginBatchEdit();
       for (auto idx : delList) {
         removedAtoms.set(idx);
@@ -962,7 +962,7 @@ void addRecursiveQueries(
     if (!at->hasQuery()) {
       QueryAtom qAt(*at);
       unsigned int idx = at->getIdx();
-      static_cast<RWMol &>(mol).replaceAtom(idx, &qAt);
+      dynamic_cast<RWMol &>(mol).replaceAtom(idx, &qAt);
       at = mol.getAtomWithIdx(idx);
     }
     at->expandQuery(qToAdd, Queries::COMPOSITE_AND);

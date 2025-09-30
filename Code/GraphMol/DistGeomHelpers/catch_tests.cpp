@@ -967,7 +967,7 @@ TEST_CASE("atropisomers bulk") {
   params.useLegacyImplementation = legacyETKDG;
 
   for (auto i = 0u; i < sdsup.length(); ++i) {
-    std::unique_ptr<RWMol> mol(static_cast<RWMol *>(sdsup[i]));
+    std::unique_ptr<RWMol> mol(dynamic_cast<RWMol *>(sdsup[i]));
     REQUIRE(mol);
     auto bondIdx = mol->getProp<unsigned int>("atrop bond");
     REQUIRE((mol->getBondWithIdx(bondIdx)->getStereo() ==
