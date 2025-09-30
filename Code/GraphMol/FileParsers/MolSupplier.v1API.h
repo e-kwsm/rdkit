@@ -105,12 +105,12 @@ class RDKIT_FILEPARSERS_EXPORT ForwardSDMolSupplier : public MolSupplier {
 
   void setProcessPropertyLists(bool val) {
     PRECONDITION(dp_supplier, "no supplier");
-    static_cast<ContainedType *>(dp_supplier.get())
+    dynamic_cast<ContainedType *>(dp_supplier.get())
         ->setProcessPropertyLists(val);
   }
   bool getProcessPropertyLists() const {
     if (dp_supplier) {
-      return static_cast<ContainedType *>(dp_supplier.get())
+      return dynamic_cast<ContainedType *>(dp_supplier.get())
           ->getProcessPropertyLists();
     }
     return false;
@@ -118,7 +118,8 @@ class RDKIT_FILEPARSERS_EXPORT ForwardSDMolSupplier : public MolSupplier {
 
   bool getEOFHitOnRead() const {
     if (dp_supplier) {
-      return static_cast<ContainedType *>(dp_supplier.get())->getEOFHitOnRead();
+      return dynamic_cast<ContainedType *>(dp_supplier.get())
+          ->getEOFHitOnRead();
     }
     return false;
   }
@@ -173,11 +174,11 @@ class RDKIT_FILEPARSERS_EXPORT SDMolSupplier : public ForwardSDMolSupplier {
 
   void moveTo(unsigned int idx) {
     PRECONDITION(dp_supplier, "no supplier");
-    static_cast<ContainedType *>(dp_supplier.get())->moveTo(idx);
+    dynamic_cast<ContainedType *>(dp_supplier.get())->moveTo(idx);
   }
   ROMol *operator[](unsigned int idx) {
     PRECONDITION(dp_supplier, "no supplier");
-    return static_cast<ContainedType *>(dp_supplier.get())
+    return dynamic_cast<ContainedType *>(dp_supplier.get())
         ->operator[](idx)
         .release();
   }
@@ -187,11 +188,11 @@ class RDKIT_FILEPARSERS_EXPORT SDMolSupplier : public ForwardSDMolSupplier {
    */
   std::string getItemText(unsigned int idx) {
     PRECONDITION(dp_supplier, "no supplier");
-    return static_cast<ContainedType *>(dp_supplier.get())->getItemText(idx);
+    return dynamic_cast<ContainedType *>(dp_supplier.get())->getItemText(idx);
   }
   unsigned int length() {
     PRECONDITION(dp_supplier, "no supplier");
-    return static_cast<ContainedType *>(dp_supplier.get())->length();
+    return dynamic_cast<ContainedType *>(dp_supplier.get())->length();
   }
   void setData(const std::string &text, bool sanitize = true,
                bool removeHs = true) {
@@ -199,7 +200,7 @@ class RDKIT_FILEPARSERS_EXPORT SDMolSupplier : public ForwardSDMolSupplier {
     v2::FileParsers::MolFileParserParams params;
     params.sanitize = sanitize;
     params.removeHs = removeHs;
-    static_cast<ContainedType *>(dp_supplier.get())->setData(text, params);
+    dynamic_cast<ContainedType *>(dp_supplier.get())->setData(text, params);
   }
   void setData(const std::string &text, bool sanitize, bool removeHs,
                bool strictParsing) {
@@ -207,7 +208,7 @@ class RDKIT_FILEPARSERS_EXPORT SDMolSupplier : public ForwardSDMolSupplier {
     params.sanitize = sanitize;
     params.removeHs = removeHs;
     params.strictParsing = strictParsing;
-    static_cast<ContainedType *>(dp_supplier.get())->setData(text, params);
+    dynamic_cast<ContainedType *>(dp_supplier.get())->setData(text, params);
   }
   /*! Resets our internal state and sets the indices of molecules in the stream.
    *  The client should be *very* careful about calling this method, as it's
@@ -223,7 +224,7 @@ class RDKIT_FILEPARSERS_EXPORT SDMolSupplier : public ForwardSDMolSupplier {
    */
   void setStreamIndices(const std::vector<std::streampos> &locs) {
     PRECONDITION(dp_supplier, "no supplier");
-    static_cast<ContainedType *>(dp_supplier.get())->setStreamIndices(locs);
+    dynamic_cast<ContainedType *>(dp_supplier.get())->setStreamIndices(locs);
   }
 };
 
@@ -299,15 +300,15 @@ class RDKIT_FILEPARSERS_EXPORT SmilesMolSupplier : public MolSupplier {
     params.nameColumn = nameColumn;
     params.titleLine = titleLine;
     params.parseParameters.sanitize = sanitize;
-    static_cast<ContainedType *>(dp_supplier.get())->setData(text, params);
+    dynamic_cast<ContainedType *>(dp_supplier.get())->setData(text, params);
   }
   void moveTo(unsigned int idx) {
     PRECONDITION(dp_supplier, "no supplier");
-    static_cast<ContainedType *>(dp_supplier.get())->moveTo(idx);
+    dynamic_cast<ContainedType *>(dp_supplier.get())->moveTo(idx);
   }
   ROMol *operator[](unsigned int idx) {
     PRECONDITION(dp_supplier, "no supplier");
-    return static_cast<ContainedType *>(dp_supplier.get())
+    return dynamic_cast<ContainedType *>(dp_supplier.get())
         ->operator[](idx)
         .release();
   }
@@ -317,11 +318,11 @@ class RDKIT_FILEPARSERS_EXPORT SmilesMolSupplier : public MolSupplier {
    */
   std::string getItemText(unsigned int idx) {
     PRECONDITION(dp_supplier, "no supplier");
-    return static_cast<ContainedType *>(dp_supplier.get())->getItemText(idx);
+    return dynamic_cast<ContainedType *>(dp_supplier.get())->getItemText(idx);
   }
   unsigned int length() {
     PRECONDITION(dp_supplier, "no supplier")
-    return static_cast<ContainedType *>(dp_supplier.get())->length();
+    return dynamic_cast<ContainedType *>(dp_supplier.get())->length();
   }
 };
 
@@ -382,15 +383,15 @@ class RDKIT_FILEPARSERS_EXPORT TDTMolSupplier : public MolSupplier {
     params.confId2D = confId2D;
     params.confId3D = confId3D;
     params.parseParameters.sanitize = sanitize;
-    static_cast<ContainedType *>(dp_supplier.get())->setData(text, params);
+    dynamic_cast<ContainedType *>(dp_supplier.get())->setData(text, params);
   }
   void moveTo(unsigned int idx) {
     PRECONDITION(dp_supplier, "no supplier");
-    static_cast<ContainedType *>(dp_supplier.get())->moveTo(idx);
+    dynamic_cast<ContainedType *>(dp_supplier.get())->moveTo(idx);
   }
   ROMol *operator[](unsigned int idx) {
     PRECONDITION(dp_supplier, "no supplier");
-    return static_cast<ContainedType *>(dp_supplier.get())
+    return dynamic_cast<ContainedType *>(dp_supplier.get())
         ->operator[](idx)
         .release();
   }
@@ -400,11 +401,11 @@ class RDKIT_FILEPARSERS_EXPORT TDTMolSupplier : public MolSupplier {
    */
   std::string getItemText(unsigned int idx) {
     PRECONDITION(dp_supplier, "no supplier");
-    return static_cast<ContainedType *>(dp_supplier.get())->getItemText(idx);
+    return dynamic_cast<ContainedType *>(dp_supplier.get())->getItemText(idx);
   }
   unsigned int length() {
     PRECONDITION(dp_supplier, "no supplier");
-    return static_cast<ContainedType *>(dp_supplier.get())->length();
+    return dynamic_cast<ContainedType *>(dp_supplier.get())->length();
   }
 };
 
@@ -446,17 +447,17 @@ class RDKIT_FILEPARSERS_EXPORT MaeMolSupplier : public MolSupplier {
   }
   void moveTo(unsigned int idx) {
     PRECONDITION(dp_supplier, "no supplier");
-    static_cast<ContainedType *>(dp_supplier.get())->moveTo(idx);
+    dynamic_cast<ContainedType *>(dp_supplier.get())->moveTo(idx);
   }
   RWMol *operator[](unsigned int idx) {
     PRECONDITION(dp_supplier, "no supplier");
-    return static_cast<ContainedType *>(dp_supplier.get())
+    return dynamic_cast<ContainedType *>(dp_supplier.get())
         ->operator[](idx)
         .release();
   }
   unsigned int length() {
     PRECONDITION(dp_supplier, "no supplier");
-    return static_cast<ContainedType *>(dp_supplier.get())->length();
+    return dynamic_cast<ContainedType *>(dp_supplier.get())->length();
   }
 
   void setData(const std::string &text, bool sanitize = true,
@@ -465,7 +466,7 @@ class RDKIT_FILEPARSERS_EXPORT MaeMolSupplier : public MolSupplier {
     v2::FileParsers::MaeMolSupplierParams params;
     params.sanitize = sanitize;
     params.removeHs = removeHs;
-    static_cast<ContainedType *>(dp_supplier.get())->setData(text, params);
+    dynamic_cast<ContainedType *>(dp_supplier.get())->setData(text, params);
   }
 };
 #endif  // RDK_BUILD_MAEPARSER_SUPPORT

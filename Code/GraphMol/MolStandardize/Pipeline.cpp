@@ -320,7 +320,7 @@ RWMOL_SPTR standardize(RWMOL_SPTR mol, PipelineResult &result,
     // normalizeInPlace() may return an ill-formed molecule if
     // the sanitization of a transformed structure failed
     // => use normalize() instead (also see GitHub #7189)
-    mol.reset(static_cast<RWMol *>(normalizer->normalize(*mol)));
+    mol.reset(dynamic_cast<RWMol *>(normalizer->normalize(*mol)));
     mol->updatePropertyCache(false);
   } catch (...) {
     result.append(

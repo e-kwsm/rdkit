@@ -22,7 +22,7 @@ void RGroupData::mergeIntoCombinedMol(const ROMOL_SPTR &mol) {
   if (!combinedMol) {
     combinedMol = RWMOL_SPTR(new RWMol(*mol));
   } else {
-    combinedMol.reset(static_cast<RWMol *>(combineMols(*combinedMol, *mol)));
+    combinedMol.reset(dynamic_cast<RWMol *>(combineMols(*combinedMol, *mol)));
     single_fragment = false;
   }
   smiles = getSmiles();
