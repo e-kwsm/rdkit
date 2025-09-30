@@ -51,9 +51,8 @@ MorganAtomInvGenerator *MorganAtomInvGenerator::clone() const {
 }
 
 MorganFeatureAtomInvGenerator::MorganFeatureAtomInvGenerator(
-    std::vector<const ROMol *> *patterns) {
-  dp_patterns = patterns;
-}
+    std::vector<const ROMol *> *patterns)
+    : dp_patterns(patterns) {}
 
 std::string MorganFeatureAtomInvGenerator::infoString() const {
   return "MorganFeatureInvariantGenerator";

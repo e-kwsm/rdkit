@@ -28,8 +28,9 @@
 namespace {
 class ss_matcher {
  public:
-  ss_matcher(const std::string &pattern) : m_pattern(pattern) {
-    m_needCopies = (pattern.find_first_of("$") != std::string::npos);
+  ss_matcher(const std::string &pattern)
+      : m_pattern(pattern),
+        m_needCopies(pattern.find_first_of("$") != std::string::npos) {
     RDKit::RWMol *p = RDKit::SmartsToMol(pattern);
     m_matcher = p;
     POSTCONDITION(m_matcher, "no matcher");

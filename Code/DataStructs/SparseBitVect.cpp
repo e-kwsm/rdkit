@@ -26,9 +26,8 @@
 //   the format produced by SparseBitVect::toString
 //
 // """ -------------------------------------------------------
-SparseBitVect::SparseBitVect(const std::string &s) {
-  d_size = 0;
-  dp_bits = nullptr;
+SparseBitVect::SparseBitVect(const std::string &s)
+    : d_size(0), dp_bits(nullptr) {
   initFromText(s.c_str(), s.length());
 }
 
@@ -39,9 +38,8 @@ SparseBitVect::SparseBitVect(const std::string &s) {
 //   the format produced by SparseBitVect::toString
 //
 // """ -------------------------------------------------------
-SparseBitVect::SparseBitVect(const char *data, const unsigned int dataLen) {
-  d_size = 0;
-  dp_bits = nullptr;
+SparseBitVect::SparseBitVect(const char *data, const unsigned int dataLen)
+    : d_size(0), dp_bits(nullptr) {
   initFromText(data, dataLen);
 }
 
