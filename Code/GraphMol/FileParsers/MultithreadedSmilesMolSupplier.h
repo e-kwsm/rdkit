@@ -112,7 +112,8 @@ class RDKIT_FILEPARSERS_EXPORT MultithreadedSmilesMolSupplier
   //! included for the interface, always returns false
   bool getEOFHitOnRead() const {
     if (dp_supplier) {
-      return static_cast<ContainedType *>(dp_supplier.get())->getEOFHitOnRead();
+      return dynamic_cast<ContainedType *>(dp_supplier.get())
+          ->getEOFHitOnRead();
     }
     return false;
   }
@@ -123,12 +124,12 @@ class RDKIT_FILEPARSERS_EXPORT MultithreadedSmilesMolSupplier
   //! record
   unsigned int getLastRecordId() const {
     PRECONDITION(dp_supplier, "no supplier");
-    return static_cast<ContainedType *>(dp_supplier.get())->getLastRecordId();
+    return dynamic_cast<ContainedType *>(dp_supplier.get())->getLastRecordId();
   }
   //! returns the text block for the last extracted item
   std::string getLastItemText() const {
     PRECONDITION(dp_supplier, "no supplier");
-    return static_cast<ContainedType *>(dp_supplier.get())->getLastItemText();
+    return dynamic_cast<ContainedType *>(dp_supplier.get())->getLastItemText();
   }
 };
 }  // namespace v1

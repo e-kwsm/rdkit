@@ -188,7 +188,7 @@ HeteroatomIterator_<Atom_, Mol_>::HeteroatomIterator_(const ThisType &other) {
   _mol = other._mol;
   _end = other._end;
   _pos = other._pos;
-  _qA = static_cast<QueryAtom *>(other._qA->copy());
+  _qA = dynamic_cast<QueryAtom *>(other._qA->copy());
 }
 
 template <class Atom_, class Mol_>
@@ -197,7 +197,7 @@ HeteroatomIterator_<Atom_, Mol_> &HeteroatomIterator_<Atom_, Mol_>::operator=(
   _mol = other._mol;
   _end = other._end;
   _pos = other._pos;
-  _qA = static_cast<QueryAtom *>(other._qA->copy());
+  _qA = dynamic_cast<QueryAtom *>(other._qA->copy());
   return *this;
 }
 
@@ -389,7 +389,7 @@ QueryAtomIterator_<Atom_, Mol_>::QueryAtomIterator_(Mol_ *mol,
                                                     QueryAtom const *what) {
   PRECONDITION(what, "bad query atom");
   _mol = mol;
-  _qA = static_cast<QueryAtom *>(what->copy());
+  _qA = dynamic_cast<QueryAtom *>(what->copy());
   _end = mol->getNumAtoms();
   _pos = _findNext(0);
 };
@@ -412,7 +412,7 @@ QueryAtomIterator_<Atom_, Mol_>::QueryAtomIterator_(
   _pos = other._pos;
   _end = other._end;
   if (other._qA) {
-    _qA = static_cast<QueryAtom *>(other._qA->copy());
+    _qA = dynamic_cast<QueryAtom *>(other._qA->copy());
   } else {
     _qA = nullptr;
   }
@@ -427,7 +427,7 @@ QueryAtomIterator_<Atom_, Mol_> &QueryAtomIterator_<Atom_, Mol_>::operator=(
     _end = other._end;
     delete _qA;
     if (other._qA) {
-      _qA = static_cast<QueryAtom *>(other._qA->copy());
+      _qA = dynamic_cast<QueryAtom *>(other._qA->copy());
     } else {
       _qA = nullptr;
     }

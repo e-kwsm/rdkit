@@ -1264,7 +1264,7 @@ bool isAttachmentPoint(const Atom *atom, bool markedOnly) {
     // a * from CXSMILES
     if (atom->getQuery()->getNegation() &&
         atom->getQuery()->getDescription() == "AtomAtomicNum" &&
-        static_cast<ATOM_EQUALS_QUERY *>(atom->getQuery())->getVal() == 1) {
+        dynamic_cast<ATOM_EQUALS_QUERY *>(atom->getQuery())->getVal() == 1) {
       return true;
     }
     return false;

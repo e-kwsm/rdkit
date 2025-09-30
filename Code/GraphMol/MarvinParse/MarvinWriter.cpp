@@ -98,7 +98,7 @@ class MarvinCMLWriter {
              atom->getQuery()->getTypeLabel() == "" ||
              (atom->getQuery()->getNegation() &&
               atom->getQuery()->getDescription() == "AtomAtomicNum" &&
-              static_cast<ATOM_EQUALS_QUERY *>(atom->getQuery())->getVal() ==
+              dynamic_cast<ATOM_EQUALS_QUERY *>(atom->getQuery())->getVal() ==
                   1))) {
           marvinAtom->elementType = "*";
         } else if (atom->hasQuery() &&
@@ -110,12 +110,12 @@ class MarvinCMLWriter {
                          2 &&
                      (*atom->getQuery()->beginChildren())->getDescription() ==
                          "AtomAtomicNum" &&
-                     static_cast<ATOM_EQUALS_QUERY *>(
+                     dynamic_cast<ATOM_EQUALS_QUERY *>(
                          (*atom->getQuery()->beginChildren()).get())
                              ->getVal() == 6 &&
                      (*++(atom->getQuery()->beginChildren()))
                              ->getDescription() == "AtomAtomicNum" &&
-                     static_cast<ATOM_EQUALS_QUERY *>(
+                     dynamic_cast<ATOM_EQUALS_QUERY *>(
                          (*++(atom->getQuery()->beginChildren())).get())
                              ->getVal() == 1))) {
           throw MarvinWriterException(
@@ -259,8 +259,8 @@ class MarvinCMLWriter {
               (*child2)->getDescription() == "BondOrder" &&
               !(*child2)->getNegation()) {
             // ok, it's a bond query we have a chance of dealing with
-            int t1 = static_cast<BOND_EQUALS_QUERY *>(child1->get())->getVal();
-            int t2 = static_cast<BOND_EQUALS_QUERY *>(child2->get())->getVal();
+            int t1 = dynamic_cast<BOND_EQUALS_QUERY *>(child1->get())->getVal();
+            int t2 = dynamic_cast<BOND_EQUALS_QUERY *>(child2->get())->getVal();
             if (t1 > t2) {
               std::swap(t1, t2);
             }
