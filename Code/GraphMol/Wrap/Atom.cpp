@@ -100,7 +100,7 @@ std::string AtomGetSmarts(const Atom *atom, bool doKekule, bool allHsExplicit,
                           bool isomericSmiles) {
   std::string res;
   if (atom->hasQuery()) {
-    res = SmartsWrite::GetAtomSmarts(static_cast<const QueryAtom *>(atom));
+    res = SmartsWrite::GetAtomSmarts(dynamic_cast<const QueryAtom *>(atom));
   } else {
     // FIX: this should not be necessary
     res = SmilesWrite::GetAtomSmiles(atom, doKekule, nullptr, allHsExplicit,

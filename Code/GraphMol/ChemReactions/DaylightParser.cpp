@@ -265,21 +265,21 @@ std::unique_ptr<ChemicalReaction> parseReaction(
     unsigned int startBondIdx = 0;
     for (auto &mol : boost::make_iterator_range(rxn->beginReactantTemplates(),
                                                 rxn->endReactantTemplates())) {
-      SmilesParseOps::parseCXExtensions(*static_cast<RWMol *>(mol.get()),
+      SmilesParseOps::parseCXExtensions(*dynamic_cast<RWMol *>(mol.get()),
                                         cxPart, startAtomIdx, startBondIdx);
       startAtomIdx += mol->getNumAtoms();
       startBondIdx += mol->getNumBonds();
     }
     for (auto &mol : boost::make_iterator_range(rxn->beginAgentTemplates(),
                                                 rxn->endAgentTemplates())) {
-      SmilesParseOps::parseCXExtensions(*static_cast<RWMol *>(mol.get()),
+      SmilesParseOps::parseCXExtensions(*dynamic_cast<RWMol *>(mol.get()),
                                         cxPart, startAtomIdx, startBondIdx);
       startAtomIdx += mol->getNumAtoms();
       startBondIdx += mol->getNumBonds();
     }
     for (auto &mol : boost::make_iterator_range(rxn->beginProductTemplates(),
                                                 rxn->endProductTemplates())) {
-      SmilesParseOps::parseCXExtensions(*static_cast<RWMol *>(mol.get()),
+      SmilesParseOps::parseCXExtensions(*dynamic_cast<RWMol *>(mol.get()),
                                         cxPart, startAtomIdx, startBondIdx);
       startAtomIdx += mol->getNumAtoms();
       startBondIdx += mol->getNumBonds();
@@ -289,15 +289,15 @@ std::unique_ptr<ChemicalReaction> parseReaction(
   // final cleanups:
   for (auto &mol : boost::make_iterator_range(rxn->beginReactantTemplates(),
                                               rxn->endReactantTemplates())) {
-    SmilesParseOps::CleanupAfterParsing(static_cast<RWMol *>(mol.get()));
+    SmilesParseOps::CleanupAfterParsing(dynamic_cast<RWMol *>(mol.get()));
   }
   for (auto &mol : boost::make_iterator_range(rxn->beginAgentTemplates(),
                                               rxn->endAgentTemplates())) {
-    SmilesParseOps::CleanupAfterParsing(static_cast<RWMol *>(mol.get()));
+    SmilesParseOps::CleanupAfterParsing(dynamic_cast<RWMol *>(mol.get()));
   }
   for (auto &mol : boost::make_iterator_range(rxn->beginProductTemplates(),
                                               rxn->endProductTemplates())) {
-    SmilesParseOps::CleanupAfterParsing(static_cast<RWMol *>(mol.get()));
+    SmilesParseOps::CleanupAfterParsing(dynamic_cast<RWMol *>(mol.get()));
   }
 
   // "SMARTS"-based reactions have implicit properties

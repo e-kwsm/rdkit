@@ -382,10 +382,10 @@ std::string FragmentSmilesConstruct(
                "bad bondSymbols");
   if (params.doKekule) {
     if (atomsInPlay && bondsInPlay) {
-      MolOps::details::KekulizeFragment(static_cast<RWMol &>(mol), *atomsInPlay,
-                                        *bondsInPlay);
+      MolOps::details::KekulizeFragment(dynamic_cast<RWMol &>(mol),
+                                        *atomsInPlay, *bondsInPlay);
     } else {
-      MolOps::Kekulize(static_cast<RWMol &>(mol));
+      MolOps::Kekulize(dynamic_cast<RWMol &>(mol));
     }
   }
 

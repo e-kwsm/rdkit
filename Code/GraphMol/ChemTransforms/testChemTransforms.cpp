@@ -1106,7 +1106,7 @@ void testMurckoDecomp() {
     delete mol;
     if (tgt != "") {
       TEST_ASSERT(nMol->getNumAtoms());
-      MolOps::sanitizeMol(static_cast<RWMol &>(*nMol));
+      MolOps::sanitizeMol(dynamic_cast<RWMol &>(*nMol));
       smi = MolToSmiles(*nMol, true);
       mol = SmilesToMol(tgt);
       TEST_ASSERT(mol);
@@ -1776,7 +1776,7 @@ void testFragmentOnBRICSBonds() {
     TEST_ASSERT(nmol->getNumAtoms() == 20);
     smi = MolToSmiles(*nmol, true);
     TEST_ASSERT(smi == "[16*]c1ccccc1.[3*]O[3*].[4*]CCC.[4*]CCC([6*])=O");
-    MolOps::sanitizeMol(static_cast<RWMol &>(*nmol));
+    MolOps::sanitizeMol(dynamic_cast<RWMol &>(*nmol));
     smi = MolToSmiles(*nmol, true);
     TEST_ASSERT(smi == "[16*]c1ccccc1.[3*]O[3*].[4*]CCC.[4*]CCC([6*])=O");
 
@@ -1798,7 +1798,7 @@ void testFragmentOnBRICSBonds() {
     TEST_ASSERT(smi ==
                 "Cl.[1*]C(C)=O.[15*]C1([15*])CCN(C)[C@H]2CCCC[C@@H]21.[16*]"
                 "c1ccccc1.[3*]O[3*]");
-    MolOps::sanitizeMol(static_cast<RWMol &>(*nmol));
+    MolOps::sanitizeMol(dynamic_cast<RWMol &>(*nmol));
     smi = MolToSmiles(*nmol, true);
     TEST_ASSERT(smi ==
                 "Cl.[1*]C(C)=O.[15*]C1([15*])CCN(C)[C@H]2CCCC[C@@H]21.[16*]"
