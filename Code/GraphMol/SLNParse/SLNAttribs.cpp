@@ -358,7 +358,7 @@ void parseFinalAtomAttribs(Atom *atom, bool doingQuery) {
     if (description.size() > 5 && description.substr(0, 5) == "_SLN_") {
       boost::erase_head(description, 5);
       query->setDescription(description);
-      static_cast<ATOM_EQUALS_QUERY *>(query)->setVal(
+      dynamic_cast<ATOM_EQUALS_QUERY *>(query)->setVal(
           (int)(query->getDataFunc()(atom)));
     }
     // now add the query's children to the queue and continue:
@@ -416,7 +416,7 @@ void parseBondAttribs(Bond *bond, AttribListType attribs, bool doingQuery) {
           query->setNegation(!query->getNegation());
         }
         if (seenTypeQuery) {
-          static_cast<RDKit::QueryBond *>(bond)->expandQuery(query, how, true);
+          dynamic_cast<RDKit::QueryBond *>(bond)->expandQuery(query, how, true);
         } else {
           // if this is the first type query, we need to replace any existing
           // bond order queries:
@@ -438,7 +438,7 @@ void parseBondAttribs(Bond *bond, AttribListType attribs, bool doingQuery) {
         if (attribPtr->negated) {
           query->setNegation(true);
         }
-        static_cast<QueryBond *>(bond)->expandQuery(query, how);
+        dynamic_cast<QueryBond *>(bond)->expandQuery(query, how);
       }
     } else {
       // anything we don't know how to deal with we'll just store in raw form:
