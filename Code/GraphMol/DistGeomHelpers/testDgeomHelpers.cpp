@@ -354,7 +354,7 @@ void test5() {
   int cid;
   while (1) {
     try {
-      std::unique_ptr<RWMol> mol{static_cast<RWMol *>(smiSup.next())};
+      std::unique_ptr<RWMol> mol{dynamic_cast<RWMol *>(smiSup.next())};
       MolOps::addHs(*mol);
       cid = DGeomHelpers::EmbedMolecule(*mol, 10, 1);  // getCoords(*mol, iter);
       TEST_ASSERT(cid > -1);
@@ -851,7 +851,7 @@ void testRandomCoords() {
     CHECK_INVARIANT(cid >= 0, "");
     // writer.write(*m);
     // writer.flush();
-    m2 = static_cast<RWMol *>(sdsup.next());
+    m2 = dynamic_cast<RWMol *>(sdsup.next());
     // ROMol *m2 = NULL;
     if (m2) {
       TEST_ASSERT(m->getNumAtoms() == m2->getNumAtoms());
@@ -941,7 +941,7 @@ void testConstrainedEmbedding() {
   }
 
   {
-    RWMol *test = static_cast<RWMol *>(sdsup.next());
+    RWMol *test = dynamic_cast<RWMol *>(sdsup.next());
     MolOps::addHs(*test);
     std::map<int, RDGeom::Point3D> coords;
     coords[4] = ref->getConformer().getAtomPos(0);

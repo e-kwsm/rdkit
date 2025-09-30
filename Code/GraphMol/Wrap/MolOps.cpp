@@ -202,7 +202,8 @@ std::string getResidue(const ROMol &, const Atom *at) {
       monomerInfo->getMonomerType() != AtomMonomerInfo::PDBRESIDUE) {
     return "";
   }
-  return static_cast<const AtomPDBResidueInfo *>(monomerInfo)->getResidueName();
+  return dynamic_cast<const AtomPDBResidueInfo *>(monomerInfo)
+      ->getResidueName();
 }
 std::string getChainId(const ROMol &, const Atom *at) {
   auto monomerInfo = at->getMonomerInfo();
@@ -210,7 +211,7 @@ std::string getChainId(const ROMol &, const Atom *at) {
       monomerInfo->getMonomerType() != AtomMonomerInfo::PDBRESIDUE) {
     return "";
   }
-  return static_cast<const AtomPDBResidueInfo *>(monomerInfo)->getChainId();
+  return dynamic_cast<const AtomPDBResidueInfo *>(monomerInfo)->getChainId();
 }
 }  // namespace
 python::dict splitMolByPDBResidues(const ROMol &mol, python::object pyWhiteList,
@@ -389,7 +390,7 @@ void addRecursiveQuery(ROMol &mol, const ROMol &query, unsigned int atomIdx,
   Atom *oAt = mol.getAtomWithIdx(atomIdx);
   if (!oAt->hasQuery()) {
     QueryAtom qAt(*oAt);
-    static_cast<RWMol &>(mol).replaceAtom(atomIdx, &qAt);
+    dynamic_cast<RWMol &>(mol).replaceAtom(atomIdx, &qAt);
     oAt = mol.getAtomWithIdx(atomIdx);
   }
 
@@ -407,7 +408,7 @@ void reapplyWedging(ROMol &mol, bool allBondTypes, bool verify) {
 
 MolOps::SanitizeFlags sanitizeMol(ROMol &mol, boost::uint64_t sanitizeOps,
                                   bool catchErrors) {
-  auto &wmol = static_cast<RWMol &>(mol);
+  auto &wmol = dynamic_cast<RWMol &>(mol);
   unsigned int operationThatFailed;
   if (catchErrors) {
     try {
@@ -435,36 +436,36 @@ ROMol *getNormal(const RWMol &mol) {
 }
 
 void kekulizeMol(ROMol &mol, bool clearAromaticFlags = false) {
-  auto &wmol = static_cast<RWMol &>(mol);
+  auto &wmol = dynamic_cast<RWMol &>(mol);
   MolOps::Kekulize(wmol, clearAromaticFlags);
 }
 void kekulizeMolIfPossible(ROMol &mol, bool clearAromaticFlags = false) {
-  auto &wmol = static_cast<RWMol &>(mol);
+  auto &wmol = dynamic_cast<RWMol &>(mol);
   MolOps::KekulizeIfPossible(wmol, clearAromaticFlags);
 }
 
 void cleanupMol(ROMol &mol) {
-  auto &rwmol = static_cast<RWMol &>(mol);
+  auto &rwmol = dynamic_cast<RWMol &>(mol);
   MolOps::cleanUp(rwmol);
 }
 
 void cleanUpOrganometallicsMol(ROMol &mol) {
-  auto &rwmol = static_cast<RWMol &>(mol);
+  auto &rwmol = dynamic_cast<RWMol &>(mol);
   MolOps::cleanUpOrganometallics(rwmol);
 }
 
 void setAromaticityMol(ROMol &mol, MolOps::AromaticityModel model) {
-  auto &wmol = static_cast<RWMol &>(mol);
+  auto &wmol = dynamic_cast<RWMol &>(mol);
   MolOps::setAromaticity(wmol, model);
 }
 
 void setConjugationMol(ROMol &mol) {
-  auto &wmol = static_cast<RWMol &>(mol);
+  auto &wmol = dynamic_cast<RWMol &>(mol);
   MolOps::setConjugation(wmol);
 }
 
 void assignRadicalsMol(ROMol &mol) {
-  auto &wmol = static_cast<RWMol &>(mol);
+  auto &wmol = dynamic_cast<RWMol &>(mol);
   MolOps::assignRadicals(wmol);
 }
 namespace {
@@ -479,17 +480,17 @@ ROMol *dativeBondsToHapticHelper(const ROMol &mol) {
 }  // namespace
 
 void setHybridizationMol(ROMol &mol) {
-  auto &wmol = static_cast<RWMol &>(mol);
+  auto &wmol = dynamic_cast<RWMol &>(mol);
   MolOps::setHybridization(wmol);
 }
 
 void cleanupChiralityMol(ROMol &mol) {
-  auto &rwmol = static_cast<RWMol &>(mol);
+  auto &rwmol = dynamic_cast<RWMol &>(mol);
   MolOps::cleanupChirality(rwmol);
 }
 
 void cleanupAtropisomersMol(ROMol &mol) {
-  auto &rwmol = static_cast<RWMol &>(mol);
+  auto &rwmol = dynamic_cast<RWMol &>(mol);
   MolOps::cleanupAtropisomers(rwmol);
 }
 
@@ -1080,12 +1081,12 @@ void testSetProps(ROMol &mol) {
 
 void expandAttachmentPointsHelper(ROMol &mol, bool addAsQueries,
                                   bool addCoords) {
-  MolOps::expandAttachmentPoints(static_cast<RWMol &>(mol), addAsQueries,
+  MolOps::expandAttachmentPoints(dynamic_cast<RWMol &>(mol), addAsQueries,
                                  addCoords);
 }
 
 void collapseAttachmentPointsHelper(ROMol &mol, bool markedOnly) {
-  MolOps::collapseAttachmentPoints(static_cast<RWMol &>(mol), markedOnly);
+  MolOps::collapseAttachmentPoints(dynamic_cast<RWMol &>(mol), markedOnly);
 }
 
 python::object findMesoHelper(const ROMol &mol, bool includeIsotopes,

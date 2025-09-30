@@ -136,8 +136,8 @@ bool atomCompat(const Atom *a1, const Atom *a2,
   }
   bool res;
   if (ps.useQueryQueryMatches && a1->hasQuery() && a2->hasQuery()) {
-    res = static_cast<const QueryAtom *>(a1)->QueryMatch(
-        static_cast<const QueryAtom *>(a2));
+    res = dynamic_cast<const QueryAtom *>(a1)->QueryMatch(
+        dynamic_cast<const QueryAtom *>(a2));
   } else {
     res = a1->Match(a2);
   }
@@ -196,8 +196,8 @@ bool bondCompat(const Bond *b1, const Bond *b2,
   });
 
   if (ps.useQueryQueryMatches && b1->hasQuery() && b2->hasQuery()) {
-    res = static_cast<const QueryBond *>(b1)->QueryMatch(
-        static_cast<const QueryBond *>(b2));
+    res = dynamic_cast<const QueryBond *>(b1)->QueryMatch(
+        dynamic_cast<const QueryBond *>(b2));
   } else if (ps.aromaticMatchesConjugated && !b1->hasQuery() &&
              !b2->hasQuery() &&
              ((b1->getBondType() == Bond::AROMATIC &&

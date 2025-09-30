@@ -75,7 +75,7 @@ void SynthonSpaceRascalSearcher::extraSearchSetup(
   for (const auto &fragSet : fragSets) {
     for (const auto &frag : fragSet) {
       unsigned int otf;
-      sanitizeMol(*static_cast<RWMol *>(frag.get()), otf,
+      sanitizeMol(*dynamic_cast<RWMol *>(frag.get()), otf,
                   MolOps::SANITIZE_SYMMRINGS);
     }
   }

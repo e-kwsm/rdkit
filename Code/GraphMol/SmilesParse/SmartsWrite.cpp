@@ -615,7 +615,7 @@ std::string _recurseBondSmarts(const Bond *bond,
 
   if ((dsc1 != "BondOr") && (dsc1 != "BondAnd")) {
     // child1 is  simple node get the smarts directly
-    const auto *tchild = static_cast<const BOND_EQUALS_QUERY *>(child1);
+    const auto *tchild = dynamic_cast<const BOND_EQUALS_QUERY *>(child1);
     csmarts1 = getBondSmartsSimple(bond, tchild, atomToLeftIdx, params);
     bool nneg = (negate) ^ (tchild->getNegation());
     if (nneg) {
@@ -631,7 +631,7 @@ std::string _recurseBondSmarts(const Bond *bond,
   // now deal with the second child
   if ((dsc2 != "BondOr") && (dsc2 != "BondAnd")) {
     // child 2 is a simple node
-    const auto *tchild = static_cast<const BOND_EQUALS_QUERY *>(child2);
+    const auto *tchild = dynamic_cast<const BOND_EQUALS_QUERY *>(child2);
     csmarts2 = getBondSmartsSimple(bond, tchild, atomToLeftIdx, params);
     bool nneg = (negate) ^ (tchild->getNegation());
     if (nneg) {

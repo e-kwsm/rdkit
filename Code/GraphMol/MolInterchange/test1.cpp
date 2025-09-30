@@ -264,7 +264,7 @@ void benchmarking() {
     std::vector<RWMol *> mols;
     auto smir_t1 = std::chrono::system_clock::now();
     while (mols.size() < 20000) {
-      mols.push_back(static_cast<RWMol *>(suppl.next()));
+      mols.push_back(dynamic_cast<RWMol *>(suppl.next()));
     }
     auto smir_t2 = std::chrono::system_clock::now();
     std::cerr << "construction of " << mols.size() << " took "

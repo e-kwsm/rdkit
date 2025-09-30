@@ -29,10 +29,10 @@ void computeDihedral(const RDGeom::PointPtrVect &pos, unsigned int idx1,
                      unsigned int idx2, unsigned int idx3, unsigned int idx4,
                      double *dihedral, double *cosPhi, RDGeom::Point3D r[4],
                      RDGeom::Point3D t[2], double d[2]) {
-  computeDihedral(static_cast<RDGeom::Point3D *>(pos[idx1]),
-                  static_cast<RDGeom::Point3D *>(pos[idx2]),
-                  static_cast<RDGeom::Point3D *>(pos[idx3]),
-                  static_cast<RDGeom::Point3D *>(pos[idx4]), dihedral, cosPhi,
+  computeDihedral(dynamic_cast<RDGeom::Point3D *>(pos[idx1]),
+                  dynamic_cast<RDGeom::Point3D *>(pos[idx2]),
+                  dynamic_cast<RDGeom::Point3D *>(pos[idx3]),
+                  dynamic_cast<RDGeom::Point3D *>(pos[idx4]), dihedral, cosPhi,
                   r, t, d);
 }
 

@@ -169,8 +169,8 @@ bool queriesMatch(QueryAtom::QUERYATOM_QUERY const *q1,
   } else if (d1 == d2) {
     if (std::find(&equalityQueries[0], &equalityQueries[nQueries], d1) !=
         &equalityQueries[nQueries]) {
-      res = localMatch(static_cast<ATOM_EQUALS_QUERY const *>(q1),
-                       static_cast<ATOM_EQUALS_QUERY const *>(q2));
+      res = localMatch(dynamic_cast<ATOM_EQUALS_QUERY const *>(q1),
+                       dynamic_cast<ATOM_EQUALS_QUERY const *>(q2));
     }
   } else {
   }

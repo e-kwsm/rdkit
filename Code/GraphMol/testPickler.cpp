@@ -916,7 +916,7 @@ void testAtomResidues() {
     TEST_ASSERT(m2->getAtomWithIdx(0)->getMonomerInfo()->getName() == "m1");
     TEST_ASSERT((m2->getAtomWithIdx(1)->getMonomerInfo()));
     TEST_ASSERT(m2->getAtomWithIdx(1)->getMonomerInfo()->getName() == "Ca");
-    TEST_ASSERT(static_cast<const AtomPDBResidueInfo *>(
+    TEST_ASSERT(dynamic_cast<const AtomPDBResidueInfo *>(
                     m2->getAtomWithIdx(1)->getMonomerInfo())
                     ->getSerialNumber() == 3);
     TEST_ASSERT(!(m2->getAtomWithIdx(2)->getMonomerInfo()));
