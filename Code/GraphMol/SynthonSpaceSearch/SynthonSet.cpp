@@ -384,7 +384,7 @@ void SynthonSet::makeSynthonSearchMols() {
       MolOps::getMolFrags(*fragMol, molFrags, false);
       int fragWeWant = findMolNumFrag(molFrags, synthSetNum);
       unsigned int otf;
-      sanitizeMol(*static_cast<RWMol *>(molFrags[fragWeWant].get()), otf,
+      sanitizeMol(*dynamic_cast<RWMol *>(molFrags[fragWeWant].get()), otf,
                   MolOps::SANITIZE_SYMMRINGS);
       d_synthons[synthSetNum][j].second->setSearchMol(
           std::move(molFrags[fragWeWant]));

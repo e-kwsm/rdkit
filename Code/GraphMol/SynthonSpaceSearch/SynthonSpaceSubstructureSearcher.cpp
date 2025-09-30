@@ -394,7 +394,8 @@ bool SynthonSpaceSubstructureSearcher::extraSearchSetup(
     // query atoms.
     for (const auto &frag : frags) {
       unsigned int otf;
-      sanitizeMol(*static_cast<RWMol *>(frag), otf, MolOps::SANITIZE_SYMMRINGS);
+      sanitizeMol(*dynamic_cast<RWMol *>(frag), otf,
+                  MolOps::SANITIZE_SYMMRINGS);
 
       // Query atoms may define the environment of the fragment (via recursive
       // SMARTS, for example) that a potentially matching synthon may not
@@ -407,7 +408,7 @@ bool SynthonSpaceSubstructureSearcher::extraSearchSetup(
       // combined with a synthon such as [*1]ccccc[*3].  The downside is that
       // the fragment will become less discriminating leading to more false
       // positives in the initial screenout, hence the warning.
-      if (details::removeQueryAtoms(*static_cast<RWMol *>(frag)) &&
+      if (details::removeQueryAtoms(*dynamic_cast<RWMol *>(frag)) &&
           !saidSomething) {
         saidSomething = true;
         BOOST_LOG(rdInfoLog) << "Complex queries can be slow." << std::endl;

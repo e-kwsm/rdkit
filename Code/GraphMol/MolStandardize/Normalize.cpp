@@ -242,7 +242,7 @@ SmilesMolPair Normalizer::applyTransform(const ROMOL_SPTR &mol,
       // std::endl;
       unsigned int failed;
       try {
-        auto *tmol = static_cast<RWMol *>(pdt.front().get());
+        auto *tmol = dynamic_cast<RWMol *>(pdt.front().get());
         // we'll allow atoms with a valence that's too high to make it
         // through, but we should fail if we just created something that
         // can't, for example, be kekulized.

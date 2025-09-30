@@ -29,7 +29,7 @@ RDKit::ROMol *msHelper(const RDKit::ROMol *mol, python::object params,
     ps = python::extract<RDKit::MolStandardize::CleanupParameters *>(params);
   }
   return static_cast<RDKit::ROMol *>(
-      func(static_cast<const RDKit::RWMol *>(mol), *ps));
+      func(dynamic_cast<const RDKit::RWMol *>(mol), *ps));
 }
 
 RDKit::ROMol *cleanupHelper(const RDKit::ROMol *mol, python::object params) {
@@ -69,7 +69,7 @@ void inPlaceHelper(RDKit::ROMol *mol, python::object params, FUNCTYPE func) {
   if (params) {
     ps = python::extract<RDKit::MolStandardize::CleanupParameters *>(params);
   }
-  func(*static_cast<RDKit::RWMol *>(mol), *ps);
+  func(*dynamic_cast<RDKit::RWMol *>(mol), *ps);
 }
 
 template <typename FUNCTYPE>
@@ -83,7 +83,7 @@ void inPlaceHelper2(RDKit::ROMol *mol, python::object params,
   if (params) {
     ps = python::extract<RDKit::MolStandardize::CleanupParameters *>(params);
   }
-  func(*static_cast<RDKit::RWMol *>(mol), *ps, skip_standardize);
+  func(*dynamic_cast<RDKit::RWMol *>(mol), *ps, skip_standardize);
 }
 void cleanupInPlaceHelper(RDKit::ROMol *mol, python::object params) {
   inPlaceHelper(
@@ -182,7 +182,7 @@ void mtinPlaceHelper(python::object pymols, int numThreads,
   unsigned int nmols = python::len(pymols);
   std::vector<RDKit::RWMol *> mols(nmols);
   for (auto i = 0u; i < nmols; ++i) {
-    auto mol = static_cast<RDKit::RWMol *>(
+    auto mol = dynamic_cast<RDKit::RWMol *>(
         python::extract<RDKit::ROMol *>(pymols[i])());
     mols[i] = mol;
   }
@@ -202,7 +202,7 @@ void mtinPlaceHelper2(python::object pymols, int numThreads,
   unsigned int nmols = python::len(pymols);
   std::vector<RDKit::RWMol *> mols(nmols);
   for (auto i = 0u; i < nmols; ++i) {
-    auto mol = static_cast<RDKit::RWMol *>(
+    auto mol = dynamic_cast<RDKit::RWMol *>(
         python::extract<RDKit::ROMol *>(pymols[i])());
     mols[i] = mol;
   }
@@ -317,7 +317,7 @@ RDKit::ROMol *parentHelper(const RDKit::ROMol *mol, python::object params,
     ps = python::extract<RDKit::MolStandardize::CleanupParameters *>(params);
   }
   return static_cast<RDKit::ROMol *>(
-      func(static_cast<const RDKit::RWMol &>(*mol), *ps, skip_standardize));
+      func(dynamic_cast<const RDKit::RWMol &>(*mol), *ps, skip_standardize));
 }
 
 RDKit::ROMol *tautomerParentHelper(const RDKit::ROMol *mol,
@@ -371,10 +371,10 @@ void disconnectOrganometallicsInPlaceHelper(RDKit::ROMol *mol,
         python::extract<RDKit::MolStandardize::MetalDisconnectorOptions *>(
             params);
     return RDKit::MolStandardize::disconnectOrganometallicsInPlace(
-        *static_cast<RDKit::RWMol *>(mol), *mdo);
+        *dynamic_cast<RDKit::RWMol *>(mol), *mdo);
   } else {
     return RDKit::MolStandardize::disconnectOrganometallicsInPlace(
-        *static_cast<RDKit::RWMol *>(mol));
+        *dynamic_cast<RDKit::RWMol *>(mol));
   }
 }
 

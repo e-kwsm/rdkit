@@ -39,7 +39,7 @@ TEST_CASE("Github #1632", "[Reaction][PDB][bug]") {
     std::unique_ptr<RWMol> mol(SequenceToMol("K", sanitize, flavor));
     REQUIRE(mol);
     REQUIRE(mol->getAtomWithIdx(0)->getMonomerInfo());
-    auto res = static_cast<AtomPDBResidueInfo *>(
+    auto res = dynamic_cast<AtomPDBResidueInfo *>(
         mol->getAtomWithIdx(0)->getMonomerInfo());
     CHECK(res->getResidueNumber() == 1);
     std::unique_ptr<ChemicalReaction> rxn(RxnSmartsToChemicalReaction(
@@ -54,7 +54,7 @@ TEST_CASE("Github #1632", "[Reaction][PDB][bug]") {
     auto p = prods[0][0];
     CHECK(p->getNumAtoms() == mol->getNumAtoms() + 1);
     REQUIRE(p->getAtomWithIdx(0)->getMonomerInfo());
-    auto pres = static_cast<AtomPDBResidueInfo *>(
+    auto pres = dynamic_cast<AtomPDBResidueInfo *>(
         p->getAtomWithIdx(0)->getMonomerInfo());
     CHECK(pres->getResidueNumber() == 1);
     REQUIRE(!p->getAtomWithIdx(4)->getMonomerInfo());
@@ -187,7 +187,7 @@ TEST_CASE("negative charge queries. Part of testing changes for github #2604",
     // we don't have a way to directly create NegativeFormalCharge queries, so
     // make one by hand
     REQUIRE(rxn->getProducts()[0]->getAtomWithIdx(0)->hasQuery());
-    static_cast<QueryAtom *>(rxn->getProducts()[0]->getAtomWithIdx(0))
+    dynamic_cast<QueryAtom *>(rxn->getProducts()[0]->getAtomWithIdx(0))
         ->expandQuery(makeAtomNegativeFormalChargeQuery(1));
     unsigned nWarnings = 0;
     unsigned nErrors = 0;
@@ -203,7 +203,7 @@ TEST_CASE("negative charge queries. Part of testing changes for github #2604",
     // we don't have a way to directly create NegativeFormalCharge queries, so
     // make one by hand
     REQUIRE(rxn->getProducts()[0]->getAtomWithIdx(0)->hasQuery());
-    static_cast<QueryAtom *>(rxn->getProducts()[0]->getAtomWithIdx(0))
+    dynamic_cast<QueryAtom *>(rxn->getProducts()[0]->getAtomWithIdx(0))
         ->expandQuery(makeAtomNegativeFormalChargeQuery(
             -1));  // a bit kludgy, but we need to check
     unsigned nWarnings = 0;
@@ -220,7 +220,7 @@ TEST_CASE("negative charge queries. Part of testing changes for github #2604",
     // we don't have a way to directly create NegativeFormalCharge queries, so
     // make one by hand
     REQUIRE(rxn->getProducts()[0]->getAtomWithIdx(0)->hasQuery());
-    static_cast<QueryAtom *>(rxn->getProducts()[0]->getAtomWithIdx(0))
+    dynamic_cast<QueryAtom *>(rxn->getProducts()[0]->getAtomWithIdx(0))
         ->expandQuery(makeAtomNegativeFormalChargeQuery(2));
     unsigned nWarnings = 0;
     unsigned nErrors = 0;
