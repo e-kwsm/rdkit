@@ -48,9 +48,7 @@ class SymmMatrix {
   }
 
   SymmMatrix(unsigned int N, DATA_SPTR data)
-      : d_size(N), d_dataSize(N * (N + 1) / 2) {
-    d_data = data;
-  }
+      : d_size(N), d_dataSize(N * (N + 1) / 2), d_data(data) {}
 
   SymmMatrix(const SymmMatrix<TYPE> &other)
       : d_size(other.numRows()), d_dataSize(other.getDataSize()) {

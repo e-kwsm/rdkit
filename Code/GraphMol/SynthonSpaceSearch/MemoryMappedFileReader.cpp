@@ -92,10 +92,10 @@ MemoryMappedFileReader::MemoryMappedFileReader(const std::string &filePath) {
 #endif
 }
 
-MemoryMappedFileReader::MemoryMappedFileReader(MemoryMappedFileReader &&other) {
-  d_mappedMemory = other.d_mappedMemory;
+MemoryMappedFileReader::MemoryMappedFileReader(MemoryMappedFileReader &&other)
+    : d_mappedMemory(other.d_mappedMemory), d_size(other.d_size) {
   other.d_mappedMemory = nullptr;
-  d_size = other.d_size;
+
   other.d_size = 0;
 }
 
