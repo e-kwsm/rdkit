@@ -40,7 +40,7 @@ static bool checkExcludedAtoms(const Atom *atm, bool includeLigand) {
   const auto *info = atm->getMonomerInfo();
   if (info) {
     const std::string &resName =
-        static_cast<const AtomPDBResidueInfo *>(info)->getResidueName();
+        dynamic_cast<const AtomPDBResidueInfo *>(info)->getResidueName();
 
     switch (resName[0]) {
       case 'D':
@@ -76,9 +76,9 @@ static bool checkExcludedAtoms(const Atom *atm, bool includeLigand) {
     }
 
     if (!includeLigand &&
-        static_cast<const AtomPDBResidueInfo *>(info)->getIsHeteroAtom()) {
+        dynamic_cast<const AtomPDBResidueInfo *>(info)->getIsHeteroAtom()) {
       return true;
-    } 
+    }
   }
 
   return false;

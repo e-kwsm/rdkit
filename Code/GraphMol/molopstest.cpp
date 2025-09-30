@@ -591,7 +591,7 @@ void test8() {
   CHECK_INVARIANT(m3->getNumAtoms() == 5, "");
   // BOOST_LOG(rdInfoLog) << "7" << std::endl;
   // remove all after removing only implicit
-  MolOps::removeHs(static_cast<RWMol &>(*m3), false);
+  MolOps::removeHs(dynamic_cast<RWMol &>(*m3), false);
   CHECK_INVARIANT(m3->getNumAtoms() == 4, "");
   delete m2;
   delete m3;
@@ -675,14 +675,14 @@ void test8() {
   TEST_ASSERT(m);
   TEST_ASSERT(m->getNumAtoms() == 2);
   sma = SmartsWrite::GetAtomSmarts(
-      static_cast<const QueryAtom *>(m->getAtomWithIdx(0)));
+      dynamic_cast<const QueryAtom *>(m->getAtomWithIdx(0)));
   TEST_ASSERT(sma == "C");
 
   // BOOST_LOG(rdInfoLog) << "16" << std::endl;
   m2 = MolOps::addHs(*m);
   TEST_ASSERT(m2->getNumAtoms() == 8);
   sma = SmartsWrite::GetAtomSmarts(
-      static_cast<const QueryAtom *>(m2->getAtomWithIdx(0)));
+      dynamic_cast<const QueryAtom *>(m2->getAtomWithIdx(0)));
   TEST_ASSERT(sma == "C");
   delete m;
 
@@ -690,7 +690,7 @@ void test8() {
   m = MolOps::mergeQueryHs(*m2);
   TEST_ASSERT(m->getNumAtoms() == 2);
   sma = SmartsWrite::GetAtomSmarts(
-      static_cast<const QueryAtom *>(m->getAtomWithIdx(0)));
+      dynamic_cast<const QueryAtom *>(m->getAtomWithIdx(0)));
   // BOOST_LOG(rdInfoLog) << "sma: " << sma<<std::endl;
   // this was sf.net issue 3415204:
   TEST_ASSERT(sma == "[C&!H0&!H1&!H2]");
@@ -755,7 +755,7 @@ void test8() {
   m2 = MolOps::mergeQueryHs(*m);
   TEST_ASSERT(m2->getNumAtoms() == 2);
   sma = SmartsWrite::GetAtomSmarts(
-      static_cast<const QueryAtom *>(m2->getAtomWithIdx(1)));
+      dynamic_cast<const QueryAtom *>(m2->getAtomWithIdx(1)));
   // BOOST_LOG(rdInfoLog) << "sma: " << sma<<std::endl;
   TEST_ASSERT(sma == "[#8&!H0]");
   delete m;
@@ -768,7 +768,7 @@ void test8() {
   m2 = MolOps::mergeQueryHs(*m);
   TEST_ASSERT(m2->getNumAtoms() == 2);
   sma = SmartsWrite::GetAtomSmarts(
-      static_cast<const QueryAtom *>(m2->getAtomWithIdx(1)));
+      dynamic_cast<const QueryAtom *>(m2->getAtomWithIdx(1)));
   // BOOST_LOG(rdInfoLog) << "sma: " << sma<<std::endl;
   TEST_ASSERT(sma == "[#7&!H0&!H1]");
   delete m;
@@ -2953,7 +2953,7 @@ void testSFIssue1894348() {
   TEST_ASSERT(m->getBondWithIdx(2)->getStereoAtoms()[0] == 0);
   TEST_ASSERT(m->getBondWithIdx(2)->getStereoAtoms()[1] == 4);
   // we remove an H attached to a stereo bond
-  m2 = static_cast<RWMol *>(MolOps::removeHs(static_cast<const ROMol &>(*m)));
+  m2 = dynamic_cast<RWMol *>(MolOps::removeHs(static_cast<const ROMol &>(*m)));
   TEST_ASSERT(m->getBondWithIdx(2)->getStereoAtoms().size() == 2);
   TEST_ASSERT(m->getBondWithIdx(2)->getStereoAtoms()[0] == 0);
   TEST_ASSERT(m->getBondWithIdx(2)->getStereoAtoms()[1] == 4);
@@ -2973,7 +2973,7 @@ void testSFIssue1894348() {
   TEST_ASSERT(m);
   MolOps::sanitizeMol(*m);
   TEST_ASSERT(m->getBondWithIdx(2)->getStereoAtoms().size() == 0);
-  m2 = static_cast<RWMol *>(MolOps::removeHs(static_cast<const ROMol &>(*m)));
+  m2 = dynamic_cast<RWMol *>(MolOps::removeHs(static_cast<const ROMol &>(*m)));
   // if we don't assign stereocodes in the original we shouldn't have them here:
   TEST_ASSERT(m2->getBondWithIdx(1)->getStereoAtoms().size() == 0);
   delete m;

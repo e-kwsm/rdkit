@@ -419,8 +419,8 @@ void test4MultipleProducts() {
   prods = rxn.runReactants(reacts);
   TEST_ASSERT(prods.size() == 1);
   TEST_ASSERT(prods[0].size() == 2);
-  MolOps::sanitizeMol(*(static_cast<RWMol *>(prods[0][0].get())));
-  MolOps::sanitizeMol(*(static_cast<RWMol *>(prods[0][1].get())));
+  MolOps::sanitizeMol(*(dynamic_cast<RWMol *>(prods[0][0].get())));
+  MolOps::sanitizeMol(*(dynamic_cast<RWMol *>(prods[0][1].get())));
   std::cerr << "1: " << MolToSmiles(*prods[0][0]) << std::endl;
   std::cerr << "2: " << MolToSmiles(*prods[0][1]) << std::endl;
   TEST_ASSERT(prods[0][0]->getNumAtoms() == 8);
@@ -1647,7 +1647,7 @@ void test15Issue1882749() {
   TEST_ASSERT(prods[0].size() == 1);
   TEST_ASSERT(prods[0][0]->getNumAtoms() == 3);
 
-  MolOps::sanitizeMol(*(static_cast<RWMol *>(prods[0][0].get())));
+  MolOps::sanitizeMol(*(dynamic_cast<RWMol *>(prods[0][0].get())));
   TEST_ASSERT(prods[0][0]->getAtomWithIdx(1)->getIsotope() == 3);
   TEST_ASSERT(feq(prods[0][0]->getAtomWithIdx(1)->getMass(), 0.000));
   TEST_ASSERT(MolToSmiles(*prods[0][0], true) == "[3*]OC");
@@ -1743,7 +1743,7 @@ void test17Issue1920627() {
   TEST_ASSERT(prods.size() == 1);
   TEST_ASSERT(prods[0].size() == 1);
   prod = prods[0][0];
-  MolOps::sanitizeMol(*(static_cast<RWMol *>(prod.get())));
+  MolOps::sanitizeMol(*(dynamic_cast<RWMol *>(prod.get())));
   MolOps::assignStereochemistry(*prod);
   TEST_ASSERT(prod->getNumAtoms() == 10);
   TEST_ASSERT(prod->getAtomWithIdx(4)->hasProp(common_properties::_CIPCode));
@@ -1764,7 +1764,7 @@ void test17Issue1920627() {
   TEST_ASSERT(prods.size() == 1);
   TEST_ASSERT(prods[0].size() == 1);
   prod = prods[0][0];
-  MolOps::sanitizeMol(*(static_cast<RWMol *>(prod.get())));
+  MolOps::sanitizeMol(*(dynamic_cast<RWMol *>(prod.get())));
   MolOps::assignStereochemistry(*prod);
   TEST_ASSERT(prod->getNumAtoms() == 9);
   TEST_ASSERT(prod->getAtomWithIdx(4)->hasProp(common_properties::_CIPCode));
@@ -1786,7 +1786,7 @@ void test17Issue1920627() {
   TEST_ASSERT(prods.size() == 1);
   TEST_ASSERT(prods[0].size() == 1);
   prod = prods[0][0];
-  MolOps::sanitizeMol(*(static_cast<RWMol *>(prod.get())));
+  MolOps::sanitizeMol(*(dynamic_cast<RWMol *>(prod.get())));
   MolOps::assignStereochemistry(*prod);
   TEST_ASSERT(prod->getNumAtoms() == 10);
   TEST_ASSERT(prod->getAtomWithIdx(4)->hasProp(common_properties::_CIPCode));
@@ -1806,7 +1806,7 @@ void test17Issue1920627() {
   TEST_ASSERT(prods.size() == 1);
   TEST_ASSERT(prods[0].size() == 1);
   prod = prods[0][0];
-  MolOps::sanitizeMol(*(static_cast<RWMol *>(prod.get())));
+  MolOps::sanitizeMol(*(dynamic_cast<RWMol *>(prod.get())));
   MolOps::assignStereochemistry(*prod);
   TEST_ASSERT(prod->getNumAtoms() == 9);
   TEST_ASSERT(prod->getAtomWithIdx(4)->hasProp(common_properties::_CIPCode));
@@ -1828,7 +1828,7 @@ void test17Issue1920627() {
   TEST_ASSERT(prods.size() == 1);
   TEST_ASSERT(prods[0].size() == 1);
   prod = prods[0][0];
-  MolOps::sanitizeMol(*(static_cast<RWMol *>(prod.get())));
+  MolOps::sanitizeMol(*(dynamic_cast<RWMol *>(prod.get())));
   MolOps::assignStereochemistry(*prod);
   TEST_ASSERT(prod->getNumAtoms() == 10);
   TEST_ASSERT(prod->getAtomWithIdx(4)->hasProp(common_properties::_CIPCode));
@@ -1849,7 +1849,7 @@ void test17Issue1920627() {
   TEST_ASSERT(prods.size() == 1);
   TEST_ASSERT(prods[0].size() == 1);
   prod = prods[0][0];
-  MolOps::sanitizeMol(*(static_cast<RWMol *>(prod.get())));
+  MolOps::sanitizeMol(*(dynamic_cast<RWMol *>(prod.get())));
   MolOps::assignStereochemistry(*prod);
   TEST_ASSERT(prod->getNumAtoms() == 9);
   TEST_ASSERT(prod->getAtomWithIdx(4)->hasProp(common_properties::_CIPCode));
@@ -1870,7 +1870,7 @@ void test17Issue1920627() {
   TEST_ASSERT(prods.size() == 1);
   TEST_ASSERT(prods[0].size() == 1);
   prod = prods[0][0];
-  MolOps::sanitizeMol(*(static_cast<RWMol *>(prod.get())));
+  MolOps::sanitizeMol(*(dynamic_cast<RWMol *>(prod.get())));
   MolOps::assignStereochemistry(*prod);
   TEST_ASSERT(prod->getNumAtoms() == 7);
   TEST_ASSERT(prod->getAtomWithIdx(3)->hasProp(common_properties::_CIPCode));
@@ -1891,7 +1891,7 @@ void test17Issue1920627() {
   TEST_ASSERT(prods.size() == 1);
   TEST_ASSERT(prods[0].size() == 1);
   prod = prods[0][0];
-  MolOps::sanitizeMol(*(static_cast<RWMol *>(prod.get())));
+  MolOps::sanitizeMol(*(dynamic_cast<RWMol *>(prod.get())));
   MolOps::assignStereochemistry(*prod);
   TEST_ASSERT(prod->getNumAtoms() == 7);
   TEST_ASSERT(prod->getAtomWithIdx(3)->hasProp(common_properties::_CIPCode));
@@ -2140,8 +2140,8 @@ void test19Issue2050085() {
   prods = rxn->runReactants(reacts);
   TEST_ASSERT(prods.size() == 2);
   TEST_ASSERT(prods[0].size() == 2);
-  MolOps::sanitizeMol(*(static_cast<RWMol *>(prods[0][0].get())));
-  MolOps::sanitizeMol(*(static_cast<RWMol *>(prods[0][1].get())));
+  MolOps::sanitizeMol(*(dynamic_cast<RWMol *>(prods[0][0].get())));
+  MolOps::sanitizeMol(*(dynamic_cast<RWMol *>(prods[0][1].get())));
 
   prod = prods[0][0];
   TEST_ASSERT(prod->getNumAtoms() == 4);
@@ -2179,7 +2179,7 @@ void test20BondQueriesInProduct() {
   prods = rxn->runReactants(reacts);
   TEST_ASSERT(prods.size() == 1);
   TEST_ASSERT(prods[0].size() == 1);
-  MolOps::sanitizeMol(*(static_cast<RWMol *>(prods[0][0].get())));
+  MolOps::sanitizeMol(*(dynamic_cast<RWMol *>(prods[0][0].get())));
 
   prod = prods[0][0];
   TEST_ASSERT(prod->getNumAtoms() == 3);
@@ -2194,7 +2194,7 @@ void test20BondQueriesInProduct() {
   prods = rxn->runReactants(reacts);
   TEST_ASSERT(prods.size() == 1);
   TEST_ASSERT(prods[0].size() == 1);
-  MolOps::sanitizeMol(*(static_cast<RWMol *>(prods[0][0].get())));
+  MolOps::sanitizeMol(*(dynamic_cast<RWMol *>(prods[0][0].get())));
 
   prod = prods[0][0];
   TEST_ASSERT(prod->getNumAtoms() == 3);
@@ -2217,7 +2217,7 @@ void test20BondQueriesInProduct() {
   prods = rxn->runReactants(reacts);
   TEST_ASSERT(prods.size() == 1);
   TEST_ASSERT(prods[0].size() == 1);
-  MolOps::sanitizeMol(*(static_cast<RWMol *>(prods[0][0].get())));
+  MolOps::sanitizeMol(*(dynamic_cast<RWMol *>(prods[0][0].get())));
 
   prod = prods[0][0];
   TEST_ASSERT(prod->getNumAtoms() == 3);
@@ -2232,7 +2232,7 @@ void test20BondQueriesInProduct() {
   prods = rxn->runReactants(reacts);
   TEST_ASSERT(prods.size() == 1);
   TEST_ASSERT(prods[0].size() == 1);
-  MolOps::sanitizeMol(*(static_cast<RWMol *>(prods[0][0].get())));
+  MolOps::sanitizeMol(*(dynamic_cast<RWMol *>(prods[0][0].get())));
 
   prod = prods[0][0];
   TEST_ASSERT(prod->getNumAtoms() == 3);
@@ -2269,7 +2269,7 @@ void test21Issue2540021() {
     TEST_ASSERT(prods[0].size() == 1);
 
     ROMOL_SPTR prod = prods[0][0];
-    MolOps::sanitizeMol(*(static_cast<RWMol *>(prod.get())));
+    MolOps::sanitizeMol(*(dynamic_cast<RWMol *>(prod.get())));
     TEST_ASSERT(prod->getNumAtoms() == 6);
     TEST_ASSERT(prod->getAtomWithIdx(0)->getAtomicNum() == 7);
     TEST_ASSERT(
@@ -2303,7 +2303,7 @@ void test21Issue2540021() {
     TEST_ASSERT(prods[0].size() == 1);
 
     ROMOL_SPTR prod = prods[0][0];
-    MolOps::sanitizeMol(*(static_cast<RWMol *>(prod.get())));
+    MolOps::sanitizeMol(*(dynamic_cast<RWMol *>(prod.get())));
     TEST_ASSERT(prod->getNumAtoms() == 6);
     TEST_ASSERT(prod->getAtomWithIdx(2)->getAtomicNum() == 7);
     TEST_ASSERT(prod->getAtomWithIdx(2)->getNumExplicitHs() == 1);
@@ -2348,7 +2348,7 @@ void test22DotsToRemoveBonds() {
     TEST_ASSERT(prods[0].size() == 1);
 
     ROMOL_SPTR prod = prods[0][0];
-    MolOps::sanitizeMol(*(static_cast<RWMol *>(prod.get())));
+    MolOps::sanitizeMol(*(dynamic_cast<RWMol *>(prod.get())));
     TEST_ASSERT(prod->getNumAtoms() == 3);
     TEST_ASSERT(prod->getAtomWithIdx(0)->getAtomicNum() == 6);
     TEST_ASSERT(prod->getAtomWithIdx(1)->getAtomicNum() == 8);
@@ -2403,7 +2403,7 @@ void test23Pickling() {
     TEST_ASSERT(prods[0].size() == 1);
 
     ROMOL_SPTR prod = prods[0][0];
-    MolOps::sanitizeMol(*(static_cast<RWMol *>(prod.get())));
+    MolOps::sanitizeMol(*(dynamic_cast<RWMol *>(prod.get())));
     TEST_ASSERT(prod->getNumAtoms() == 3);
     TEST_ASSERT(prod->getAtomWithIdx(0)->getAtomicNum() == 6);
     TEST_ASSERT(prod->getAtomWithIdx(1)->getAtomicNum() == 8);
@@ -2420,7 +2420,7 @@ void test23Pickling() {
     TEST_ASSERT(prods.size() == 1);
     TEST_ASSERT(prods[0].size() == 1);
     prod = prods[0][0];
-    MolOps::sanitizeMol(*(static_cast<RWMol *>(prod.get())));
+    MolOps::sanitizeMol(*(dynamic_cast<RWMol *>(prod.get())));
     TEST_ASSERT(prod->getNumAtoms() == 3);
     TEST_ASSERT(prod->getAtomWithIdx(0)->getAtomicNum() == 6);
     TEST_ASSERT(prod->getAtomWithIdx(1)->getAtomicNum() == 8);
@@ -2987,7 +2987,7 @@ void test28RxnDepictor() {
     TEST_ASSERT(prods[0].size() == 1);
 
     ROMOL_SPTR prod = prods[0][0];
-    MolOps::sanitizeMol(*(static_cast<RWMol *>(prod.get())));
+    MolOps::sanitizeMol(*(dynamic_cast<RWMol *>(prod.get())));
     TEST_ASSERT(prod->getNumAtoms() == 6);
     TEST_ASSERT(prod->getAtomWithIdx(0)->getAtomicNum() == 7);
     TEST_ASSERT(
@@ -4023,7 +4023,7 @@ void test41Github233() {
     TEST_ASSERT(prods.size() == 1);
     TEST_ASSERT(prods[0].size() == 1);
 
-    MolOps::sanitizeMol(*(static_cast<RWMol *>(prods[0][0].get())));
+    MolOps::sanitizeMol(*(dynamic_cast<RWMol *>(prods[0][0].get())));
     smi = MolToSmiles(*prods[0][0], true);
     TEST_ASSERT(smi == "O[C@H](Br)CC(F)Cl");
     delete rxn;
@@ -4806,7 +4806,7 @@ void test49ParensInProducts2() {
     TEST_ASSERT(prods[0][0]->getNumBonds() == 11);
 
     smi = "CCCOc1ccn(NC)c1";
-    auto *p00 = static_cast<RWMol *>(prods[0][0].get());
+    auto *p00 = dynamic_cast<RWMol *>(prods[0][0].get());
     MolOps::sanitizeMol(*p00);
     TEST_ASSERT(MolToSmiles(*p00) == smi);
 
@@ -5130,7 +5130,7 @@ void test54RedundantProductMappingNumbersAndRSChirality() {
     TEST_ASSERT(MolToSmiles(*prods[0][0], true) == smi);
 
     ROMOL_SPTR prod = prods[0][0];
-    MolOps::sanitizeMol(*(static_cast<RWMol *>(prod.get())));
+    MolOps::sanitizeMol(*(dynamic_cast<RWMol *>(prod.get())));
     MolOps::assignStereochemistry(*prod);
     TEST_ASSERT(prod->getAtomWithIdx(0)->getAtomicNum() == 6);
     TEST_ASSERT(prod->getAtomWithIdx(0)->hasProp(common_properties::_CIPCode));
@@ -5173,7 +5173,7 @@ void test54RedundantProductMappingNumbersAndRSChirality() {
     TEST_ASSERT(MolToSmiles(*prods[0][0], true) == smi);
 
     ROMOL_SPTR prod = prods[0][0];
-    MolOps::sanitizeMol(*(static_cast<RWMol *>(prod.get())));
+    MolOps::sanitizeMol(*(dynamic_cast<RWMol *>(prod.get())));
     MolOps::assignStereochemistry(*prod);
     TEST_ASSERT(prod->getAtomWithIdx(0)->getAtomicNum() == 6);
     TEST_ASSERT(prod->getAtomWithIdx(0)->hasProp(common_properties::_CIPCode));
@@ -5220,7 +5220,7 @@ void test54RedundantProductMappingNumbersAndRSChirality() {
     TEST_ASSERT(MolToSmiles(*prods[0][0], true) == smi);
 
     ROMOL_SPTR prod = prods[0][0];
-    MolOps::sanitizeMol(*(static_cast<RWMol *>(prod.get())));
+    MolOps::sanitizeMol(*(dynamic_cast<RWMol *>(prod.get())));
     MolOps::assignStereochemistry(*prod);
     TEST_ASSERT(prod->getAtomWithIdx(1)->hasProp(common_properties::_CIPCode));
     prod->getAtomWithIdx(1)->getProp(common_properties::_CIPCode, cip);
@@ -5266,7 +5266,7 @@ void test54RedundantProductMappingNumbersAndRSChirality() {
     TEST_ASSERT(MolToSmiles(*prods[0][0], true) == smi);
 
     ROMOL_SPTR prod = prods[0][0];
-    MolOps::sanitizeMol(*(static_cast<RWMol *>(prod.get())));
+    MolOps::sanitizeMol(*(dynamic_cast<RWMol *>(prod.get())));
     MolOps::assignStereochemistry(*prod);
     TEST_ASSERT(prod->getAtomWithIdx(1)->hasProp(common_properties::_CIPCode));
     prod->getAtomWithIdx(1)->getProp(common_properties::_CIPCode, cip);
@@ -5312,7 +5312,7 @@ void test54RedundantProductMappingNumbersAndRSChirality() {
     TEST_ASSERT(MolToSmiles(*prods[0][0], true) == smi);
 
     ROMOL_SPTR prod = prods[0][0];
-    MolOps::sanitizeMol(*(static_cast<RWMol *>(prod.get())));
+    MolOps::sanitizeMol(*(dynamic_cast<RWMol *>(prod.get())));
     MolOps::assignStereochemistry(*prod);
     TEST_ASSERT(prod->getAtomWithIdx(1)->hasProp(common_properties::_CIPCode));
     prod->getAtomWithIdx(1)->getProp(common_properties::_CIPCode, cip);
@@ -5358,7 +5358,7 @@ void test54RedundantProductMappingNumbersAndRSChirality() {
     TEST_ASSERT(MolToSmiles(*prods[0][0], true) == smi);
 
     ROMOL_SPTR prod = prods[0][0];
-    MolOps::sanitizeMol(*(static_cast<RWMol *>(prod.get())));
+    MolOps::sanitizeMol(*(dynamic_cast<RWMol *>(prod.get())));
     MolOps::assignStereochemistry(*prod);
     TEST_ASSERT(prod->getAtomWithIdx(1)->hasProp(common_properties::_CIPCode));
     prod->getAtomWithIdx(1)->getProp(common_properties::_CIPCode, cip);
@@ -5413,7 +5413,7 @@ void test55RedundantProductMappingNumbersAndEZStereochemistry() {
     TEST_ASSERT(MolToSmiles(*prods[1][0], true) == smi);
 
     ROMOL_SPTR prod = prods[0][0];
-    MolOps::sanitizeMol(*(static_cast<RWMol *>(prod.get())));
+    MolOps::sanitizeMol(*(dynamic_cast<RWMol *>(prod.get())));
 
     Bond *stereoBond = prod->getBondWithIdx(1);
     INT_VECT stereoAtomsRef{{0, 3}};
@@ -5426,7 +5426,7 @@ void test55RedundantProductMappingNumbersAndEZStereochemistry() {
     TEST_ASSERT(stereoBond->getStereo() == Bond::STEREOTRANS);
 
     prod = prods[1][0];
-    MolOps::sanitizeMol(*(static_cast<RWMol *>(prod.get())));
+    MolOps::sanitizeMol(*(dynamic_cast<RWMol *>(prod.get())));
 
     stereoBond = prod->getBondWithIdx(1);
     stereoAtomsRef = {0, 3};
@@ -5474,7 +5474,7 @@ void test55RedundantProductMappingNumbersAndEZStereochemistry() {
     TEST_ASSERT(MolToSmiles(*prods[1][0], true) == smi);
 
     ROMOL_SPTR prod = prods[0][0];
-    MolOps::sanitizeMol(*(static_cast<RWMol *>(prod.get())));
+    MolOps::sanitizeMol(*(dynamic_cast<RWMol *>(prod.get())));
 
     Bond *stereoBond = prod->getBondWithIdx(1);
     INT_VECT stereoAtomsRef{{0, 3}};
@@ -5487,7 +5487,7 @@ void test55RedundantProductMappingNumbersAndEZStereochemistry() {
     TEST_ASSERT(stereoBond->getStereo() == Bond::STEREOCIS);
 
     prod = prods[1][0];
-    MolOps::sanitizeMol(*(static_cast<RWMol *>(prod.get())));
+    MolOps::sanitizeMol(*(dynamic_cast<RWMol *>(prod.get())));
 
     stereoBond = prod->getBondWithIdx(1);
     stereoAtomsRef = {0, 3};
@@ -5534,7 +5534,7 @@ void test55RedundantProductMappingNumbersAndEZStereochemistry() {
     TEST_ASSERT(MolToSmiles(*prods[1][0], true) == smi);
 
     ROMOL_SPTR prod = prods[0][0];
-    MolOps::sanitizeMol(*(static_cast<RWMol *>(prod.get())));
+    MolOps::sanitizeMol(*(dynamic_cast<RWMol *>(prod.get())));
 
     Bond *stereoBond = prod->getBondWithIdx(1);
     INT_VECT stereoAtomsRef{{0, 3}};
@@ -5547,7 +5547,7 @@ void test55RedundantProductMappingNumbersAndEZStereochemistry() {
     TEST_ASSERT(stereoBond->getStereo() == Bond::STEREOTRANS);
 
     prod = prods[1][0];
-    MolOps::sanitizeMol(*(static_cast<RWMol *>(prod.get())));
+    MolOps::sanitizeMol(*(dynamic_cast<RWMol *>(prod.get())));
 
     stereoBond = prod->getBondWithIdx(1);
     stereoAtomsRef = {0, 3};

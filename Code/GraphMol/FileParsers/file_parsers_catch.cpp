@@ -1345,7 +1345,7 @@ M  END
     bool sanitize = false;
     std::unique_ptr<ROMol> mol(MolBlockToMol(molblock, sanitize));
     REQUIRE(mol);
-    auto *at = static_cast<QueryAtom *>(mol->getAtomWithIdx(1));
+    auto *at = dynamic_cast<QueryAtom *>(mol->getAtomWithIdx(1));
     REQUIRE(at->hasQuery());
     CHECK(at->getQuery()->getDescription() == "AtomNull");
   }
@@ -4412,7 +4412,7 @@ M  END)CTAB"_ctab;
     REQUIRE(m);
     REQUIRE(m->getAtomWithIdx(1)->hasQuery());
     CHECK(SmartsWrite::GetAtomSmarts(
-              static_cast<QueryAtom *>(m->getAtomWithIdx(1))) == "[#6&R]");
+              dynamic_cast<QueryAtom *>(m->getAtomWithIdx(1))) == "[#6&R]");
     CHECK(getSubstanceGroups(*m).empty());
   }
   SECTION("ensure bad SMARTS don't break things") {
@@ -4513,7 +4513,7 @@ M  V30 END CTAB
 M  END)CTAB"_ctab;
     REQUIRE(m);
     REQUIRE(m->getAtomWithIdx(1)->hasQuery());
-    CHECK(SmartsWrite::GetAtomSmarts(static_cast<QueryAtom *>(
+    CHECK(SmartsWrite::GetAtomSmarts(dynamic_cast<QueryAtom *>(
               m->getAtomWithIdx(1))) == "[$([#6&R]-[#8])]");
     CHECK(getSubstanceGroups(*m).empty());
   }
@@ -4541,7 +4541,7 @@ M  END)CTAB"_ctab;
     REQUIRE(m);
     REQUIRE(m->getAtomWithIdx(1)->hasQuery());
     CHECK(SmartsWrite::GetAtomSmarts(
-              static_cast<QueryAtom *>(m->getAtomWithIdx(1))) == "[#6&R]");
+              dynamic_cast<QueryAtom *>(m->getAtomWithIdx(1))) == "[#6&R]");
     CHECK(getSubstanceGroups(*m).empty());
   }
   SECTION("parsing v2000") {
@@ -4562,7 +4562,7 @@ M  END
     REQUIRE(m);
     REQUIRE(m->getAtomWithIdx(1)->hasQuery());
     CHECK(SmartsWrite::GetAtomSmarts(
-              static_cast<QueryAtom *>(m->getAtomWithIdx(1))) == "[#6&R]");
+              dynamic_cast<QueryAtom *>(m->getAtomWithIdx(1))) == "[#6&R]");
     CHECK(getSubstanceGroups(*m).empty());
   }
 }

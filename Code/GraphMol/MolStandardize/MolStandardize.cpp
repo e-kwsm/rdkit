@@ -364,13 +364,13 @@ RWMol *superParent(const RWMol &mol, const CleanupParameters &params,
 RWMol *normalize(const RWMol *mol, const CleanupParameters &params) {
   PRECONDITION(mol, "bad molecule");
   std::unique_ptr<Normalizer> normalizer{normalizerFromParams(params)};
-  return static_cast<RWMol *>(normalizer->normalize(*mol));
+  return dynamic_cast<RWMol *>(normalizer->normalize(*mol));
 }
 
 RWMol *reionize(const RWMol *mol, const CleanupParameters &params) {
   PRECONDITION(mol, "bad molecule");
   std::unique_ptr<Reionizer> reionizer{reionizerFromParams(params)};
-  return static_cast<RWMol *>(reionizer->reionize(*mol));
+  return dynamic_cast<RWMol *>(reionizer->reionize(*mol));
 }
 
 void normalizeInPlace(RWMol &mol, const CleanupParameters &params) {
@@ -405,7 +405,7 @@ void reionizeInPlace(std::vector<RWMol *> &mols, int numThreads,
 RWMol *removeFragments(const RWMol *mol, const CleanupParameters &params) {
   PRECONDITION(mol, "bad molecule");
   std::unique_ptr<FragmentRemover> remover{fragmentRemoverFromParams(params)};
-  return static_cast<RWMol *>(remover->remove(*mol));
+  return dynamic_cast<RWMol *>(remover->remove(*mol));
 }
 
 void removeFragmentsInPlace(RWMol &mol, const CleanupParameters &params) {
@@ -426,7 +426,7 @@ void removeFragmentsInPlace(std::vector<RWMol *> &mols, int numThreads,
 RWMol *canonicalTautomer(const RWMol *mol, const CleanupParameters &params) {
   PRECONDITION(mol, "bad molecule");
   std::unique_ptr<TautomerEnumerator> te{tautomerEnumeratorFromParams(params)};
-  return static_cast<RWMol *>(te->canonicalize(*mol));
+  return dynamic_cast<RWMol *>(te->canonicalize(*mol));
 }
 void canonicalTautomerInPlace(RWMol &mol, const CleanupParameters &params) {
   std::unique_ptr<TautomerEnumerator> te{tautomerEnumeratorFromParams(params)};

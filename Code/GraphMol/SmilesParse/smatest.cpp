@@ -1759,7 +1759,7 @@ void testGithub544() {
     TEST_ASSERT(p->getNumAtoms() == 1);
     TEST_ASSERT(p->getAtomWithIdx(0)->hasQuery());
     smiles = SmartsWrite::GetAtomSmarts(
-        static_cast<QueryAtom *>(p->getAtomWithIdx(0)));
+        dynamic_cast<QueryAtom *>(p->getAtomWithIdx(0)));
     TEST_ASSERT(smiles == "[$([#6]-[#7]),$([#6]-[#1])]");
 
     // std::cerr<<"--------------------------"<<std::endl;
@@ -1767,7 +1767,7 @@ void testGithub544() {
     TEST_ASSERT(p->getNumAtoms() == 1);
     TEST_ASSERT(p->getAtomWithIdx(0)->hasQuery());
     smiles = SmartsWrite::GetAtomSmarts(
-        static_cast<QueryAtom *>(p->getAtomWithIdx(0)));
+        dynamic_cast<QueryAtom *>(p->getAtomWithIdx(0)));
     TEST_ASSERT(smiles == "[$([#6]-[#7]),$([#6&!H0])]");
 
     delete p;
@@ -1783,7 +1783,7 @@ void testGithub544() {
     TEST_ASSERT(p->getNumAtoms() == 1);
     TEST_ASSERT(p->getAtomWithIdx(0)->hasQuery());
     smiles = SmartsWrite::GetAtomSmarts(
-        static_cast<QueryAtom *>(p->getAtomWithIdx(0)));
+        dynamic_cast<QueryAtom *>(p->getAtomWithIdx(0)));
     // std::cerr<<smiles<<std::endl;
     TEST_ASSERT(smiles == "[$([#6]-[#7]),$([#6]-[#1]),$([#6])]");
 
@@ -1792,7 +1792,7 @@ void testGithub544() {
     TEST_ASSERT(p->getNumAtoms() == 1);
     TEST_ASSERT(p->getAtomWithIdx(0)->hasQuery());
     smiles = SmartsWrite::GetAtomSmarts(
-        static_cast<QueryAtom *>(p->getAtomWithIdx(0)));
+        dynamic_cast<QueryAtom *>(p->getAtomWithIdx(0)));
     // std::cerr<<smiles<<std::endl;
     TEST_ASSERT(smiles == "[$([#6]-[#7]),$([#6&!H0]),$([#6])]");
 
@@ -1982,7 +1982,7 @@ void testGithub1338() {
     p = SmartsToMol(sma);
     TEST_ASSERT(p);
     std::string asma = SmartsWrite::GetAtomSmarts(
-        static_cast<QueryAtom *>(p->getAtomWithIdx(0)));
+        dynamic_cast<QueryAtom *>(p->getAtomWithIdx(0)));
     // std::cerr << "  SMA: " << asma << std::endl;
     TEST_ASSERT(asma == "[N&H1&+]");
     delete p;
@@ -1993,7 +1993,7 @@ void testGithub1338() {
     p = SmartsToMol(sma);
     TEST_ASSERT(p);
     std::string asma = SmartsWrite::GetAtomSmarts(
-        static_cast<QueryAtom *>(p->getAtomWithIdx(0)));
+        dynamic_cast<QueryAtom *>(p->getAtomWithIdx(0)));
     // std::cerr << "  SMA: " << asma << std::endl;
     TEST_ASSERT(asma == "[N&H1&+]");
     delete p;
@@ -2004,7 +2004,7 @@ void testGithub1338() {
     p = SmartsToMol(sma);
     TEST_ASSERT(p);
     std::string asma = SmartsWrite::GetAtomSmarts(
-        static_cast<QueryAtom *>(p->getAtomWithIdx(0)));
+        dynamic_cast<QueryAtom *>(p->getAtomWithIdx(0)));
     // std::cerr << "  SMA: " << asma << std::endl;
     TEST_ASSERT(asma == "[N&H1]");
     delete p;
@@ -2015,7 +2015,7 @@ void testGithub1338() {
     p = SmartsToMol(sma);
     TEST_ASSERT(p);
     std::string asma = SmartsWrite::GetAtomSmarts(
-        static_cast<QueryAtom *>(p->getAtomWithIdx(0)));
+        dynamic_cast<QueryAtom *>(p->getAtomWithIdx(0)));
     // std::cerr << "  SMA: " << asma << std::endl;
     TEST_ASSERT(asma == "[N&H1&+]");
     delete p;
@@ -2026,7 +2026,7 @@ void testGithub1338() {
     p = SmartsToMol(sma);
     TEST_ASSERT(p);
     std::string asma = SmartsWrite::GetAtomSmarts(
-        static_cast<QueryAtom *>(p->getAtomWithIdx(0)));
+        dynamic_cast<QueryAtom *>(p->getAtomWithIdx(0)));
     // std::cerr << "  SMA: " << asma << std::endl;
     TEST_ASSERT(asma == "[N&H1]");
     delete p;
@@ -2037,7 +2037,7 @@ void testGithub1338() {
     p = SmartsToMol(sma);
     TEST_ASSERT(p);
     std::string asma = SmartsWrite::GetAtomSmarts(
-        static_cast<QueryAtom *>(p->getAtomWithIdx(0)));
+        dynamic_cast<QueryAtom *>(p->getAtomWithIdx(0)));
     // std::cerr << "  SMA: " << asma << std::endl;
     TEST_ASSERT(asma == "[N&2*&H1&+]");
     delete p;
@@ -2056,7 +2056,7 @@ void testGithub1472() {
     p = SmartsToMol(smi);
     TEST_ASSERT(p);
     std::string asma = SmartsWrite::GetAtomSmarts(
-        static_cast<QueryAtom *>(p->getAtomWithIdx(0)));
+        dynamic_cast<QueryAtom *>(p->getAtomWithIdx(0)));
     TEST_ASSERT(asma == "[*:1]");
 
     delete p;
@@ -2067,7 +2067,7 @@ void testGithub1472() {
     p = SmilesToMol(smi);
     TEST_ASSERT(p);
     std::string asma = SmartsWrite::GetAtomSmarts(
-        static_cast<QueryAtom *>(p->getAtomWithIdx(0)));
+        dynamic_cast<QueryAtom *>(p->getAtomWithIdx(0)));
     TEST_ASSERT(asma == "[*:1]");
 
     delete p;
@@ -2078,7 +2078,7 @@ void testGithub1472() {
     p = SmilesToMol(smi);
     TEST_ASSERT(p);
     std::string asma = SmartsWrite::GetAtomSmarts(
-        static_cast<QueryAtom *>(p->getAtomWithIdx(0)));
+        dynamic_cast<QueryAtom *>(p->getAtomWithIdx(0)));
     TEST_ASSERT(asma == "[3*]");
 
     delete p;
@@ -2089,7 +2089,7 @@ void testGithub1472() {
     p = SmilesToMol(smi);
     TEST_ASSERT(p);
     std::string asma = SmartsWrite::GetAtomSmarts(
-        static_cast<QueryAtom *>(p->getAtomWithIdx(0)));
+        dynamic_cast<QueryAtom *>(p->getAtomWithIdx(0)));
     TEST_ASSERT(asma == "[13#6H3-:1]");
 
     delete p;
@@ -2107,7 +2107,7 @@ void testCactvsExtensions() {
       ROMol *p = SmartsToMol("[z2]");
       TEST_ASSERT(p);
       std::string asma = SmartsWrite::GetAtomSmarts(
-          static_cast<QueryAtom *>(p->getAtomWithIdx(0)));
+          dynamic_cast<QueryAtom *>(p->getAtomWithIdx(0)));
       TEST_ASSERT(asma == "[z2]");
 
       std::vector<MatchVectType> mVV;
@@ -2122,7 +2122,7 @@ void testCactvsExtensions() {
       ROMol *p = SmartsToMol("[z]");
       TEST_ASSERT(p);
       std::string asma = SmartsWrite::GetAtomSmarts(
-          static_cast<QueryAtom *>(p->getAtomWithIdx(0)));
+          dynamic_cast<QueryAtom *>(p->getAtomWithIdx(0)));
       TEST_ASSERT(asma == "[z]");
 
       std::vector<MatchVectType> mVV;
@@ -2138,7 +2138,7 @@ void testCactvsExtensions() {
       ROMol *p = SmartsToMol("[z{1-2}]");
       TEST_ASSERT(p);
       std::string asma = SmartsWrite::GetAtomSmarts(
-          static_cast<QueryAtom *>(p->getAtomWithIdx(0)));
+          dynamic_cast<QueryAtom *>(p->getAtomWithIdx(0)));
       TEST_ASSERT(asma == "[z{1-2}]");
 
       std::vector<MatchVectType> mVV;
@@ -2154,7 +2154,7 @@ void testCactvsExtensions() {
       ROMol *p = SmartsToMol("[z{2-}]");
       TEST_ASSERT(p);
       std::string asma = SmartsWrite::GetAtomSmarts(
-          static_cast<QueryAtom *>(p->getAtomWithIdx(0)));
+          dynamic_cast<QueryAtom *>(p->getAtomWithIdx(0)));
       TEST_ASSERT(asma == "[z{2-}]");
 
       std::vector<MatchVectType> mVV;
@@ -2169,7 +2169,7 @@ void testCactvsExtensions() {
       ROMol *p = SmartsToMol("[D{2-3}]");
       TEST_ASSERT(p);
       std::string asma = SmartsWrite::GetAtomSmarts(
-          static_cast<QueryAtom *>(p->getAtomWithIdx(0)));
+          dynamic_cast<QueryAtom *>(p->getAtomWithIdx(0)));
       TEST_ASSERT(asma == "[D{2-3}]");
 
       std::vector<MatchVectType> mVV;
@@ -2185,7 +2185,7 @@ void testCactvsExtensions() {
       ROMol *p = SmartsToMol("[D{2-}]");
       TEST_ASSERT(p);
       std::string asma = SmartsWrite::GetAtomSmarts(
-          static_cast<QueryAtom *>(p->getAtomWithIdx(0)));
+          dynamic_cast<QueryAtom *>(p->getAtomWithIdx(0)));
       TEST_ASSERT(asma == "[D{2-}]");
 
       std::vector<MatchVectType> mVV;
@@ -2201,7 +2201,7 @@ void testCactvsExtensions() {
       ROMol *p = SmartsToMol("[D{-2}]");
       TEST_ASSERT(p);
       std::string asma = SmartsWrite::GetAtomSmarts(
-          static_cast<QueryAtom *>(p->getAtomWithIdx(0)));
+          dynamic_cast<QueryAtom *>(p->getAtomWithIdx(0)));
       TEST_ASSERT(asma == "[D{-2}]");
 
       std::vector<MatchVectType> mVV;
@@ -2226,7 +2226,7 @@ void testCactvsExtensions() {
       ROMol *p = SmartsToMol("[r{3-5}]");
       TEST_ASSERT(p);
       std::string asma = SmartsWrite::GetAtomSmarts(
-          static_cast<QueryAtom *>(p->getAtomWithIdx(0)));
+          dynamic_cast<QueryAtom *>(p->getAtomWithIdx(0)));
       TEST_ASSERT(asma == "[r{3-5}]");
 
       std::vector<MatchVectType> mVV;
@@ -2239,7 +2239,7 @@ void testCactvsExtensions() {
       ROMol *p = SmartsToMol("[r{4-5}]");
       TEST_ASSERT(p);
       std::string asma = SmartsWrite::GetAtomSmarts(
-          static_cast<QueryAtom *>(p->getAtomWithIdx(0)));
+          dynamic_cast<QueryAtom *>(p->getAtomWithIdx(0)));
       TEST_ASSERT(asma == "[r{4-5}]");
 
       std::vector<MatchVectType> mVV;
@@ -2252,7 +2252,7 @@ void testCactvsExtensions() {
       ROMol *p = SmartsToMol("[r{3-}]");
       TEST_ASSERT(p);
       std::string asma = SmartsWrite::GetAtomSmarts(
-          static_cast<QueryAtom *>(p->getAtomWithIdx(0)));
+          dynamic_cast<QueryAtom *>(p->getAtomWithIdx(0)));
       TEST_ASSERT(asma == "[r{3-}]");
 
       std::vector<MatchVectType> mVV;
@@ -2265,7 +2265,7 @@ void testCactvsExtensions() {
       ROMol *p = SmartsToMol("[r{-5}]");
       TEST_ASSERT(p);
       std::string asma = SmartsWrite::GetAtomSmarts(
-          static_cast<QueryAtom *>(p->getAtomWithIdx(0)));
+          dynamic_cast<QueryAtom *>(p->getAtomWithIdx(0)));
       TEST_ASSERT(asma == "[r{-5}]");
 
       std::vector<MatchVectType> mVV;
@@ -2284,7 +2284,7 @@ void testCactvsExtensions() {
       ROMol *p = SmartsToMol("[Z2]");
       TEST_ASSERT(p);
       std::string asma = SmartsWrite::GetAtomSmarts(
-          static_cast<QueryAtom *>(p->getAtomWithIdx(0)));
+          dynamic_cast<QueryAtom *>(p->getAtomWithIdx(0)));
       TEST_ASSERT(asma == "[Z2]");
 
       std::vector<MatchVectType> mVV;
@@ -2299,7 +2299,7 @@ void testCactvsExtensions() {
       ROMol *p = SmartsToMol("[Z]");
       TEST_ASSERT(p);
       std::string asma = SmartsWrite::GetAtomSmarts(
-          static_cast<QueryAtom *>(p->getAtomWithIdx(0)));
+          dynamic_cast<QueryAtom *>(p->getAtomWithIdx(0)));
       TEST_ASSERT(asma == "[Z]");
 
       std::vector<MatchVectType> mVV;
@@ -2582,8 +2582,9 @@ void testGithub2142() {
     std::string sma2 = "[C]";
     std::unique_ptr<ROMol> m2(SmartsToMol(sma2));
     TEST_ASSERT(m2);
-    auto *qa = static_cast<QueryAtom *>(m2->getAtomWithIdx(0));
-    const auto q1 = static_cast<QueryAtom *>(m1->getAtomWithIdx(0))->getQuery();
+    auto *qa = dynamic_cast<QueryAtom *>(m2->getAtomWithIdx(0));
+    const auto q1 =
+        dynamic_cast<QueryAtom *>(m1->getAtomWithIdx(0))->getQuery();
     qa->expandQuery(q1->copy(), Queries::COMPOSITE_OR);
     bool ok = true;
     try {

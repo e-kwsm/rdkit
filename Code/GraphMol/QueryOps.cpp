@@ -794,9 +794,9 @@ bool isComplexQuery(const Bond *b) {
             (*child)->getNegation()) {
           return true;
         }
-        if (static_cast<BOND_EQUALS_QUERY *>(child->get())->getVal() !=
+        if (dynamic_cast<BOND_EQUALS_QUERY *>(child->get())->getVal() !=
                 Bond::SINGLE &&
-            static_cast<BOND_EQUALS_QUERY *>(child->get())->getVal() !=
+            dynamic_cast<BOND_EQUALS_QUERY *>(child->get())->getVal() !=
                 Bond::AROMATIC) {
           return true;
         }
@@ -899,9 +899,10 @@ void getAtomListQueryVals(const Atom::QUERYATOM_QUERY *q,
       if (descr == "AtomOr") {
         getAtomListQueryVals(child.get(), vals);
       } else if (descr == "AtomAtomicNum") {
-        vals.push_back(static_cast<ATOM_EQUALS_QUERY *>(child.get())->getVal());
+        vals.push_back(
+            dynamic_cast<ATOM_EQUALS_QUERY *>(child.get())->getVal());
       } else if (descr == "AtomType") {
-        auto v = static_cast<ATOM_EQUALS_QUERY *>(child.get())->getVal();
+        auto v = dynamic_cast<ATOM_EQUALS_QUERY *>(child.get())->getVal();
         // aromatic AtomType queries add 1000 to the atomic number;
         // correct for that:
         if (v >= 1000) {
@@ -911,9 +912,9 @@ void getAtomListQueryVals(const Atom::QUERYATOM_QUERY *q,
       }
     }
   } else if (descr == "AtomAtomicNum") {
-    vals.push_back(static_cast<const ATOM_EQUALS_QUERY *>(q)->getVal());
+    vals.push_back(dynamic_cast<const ATOM_EQUALS_QUERY *>(q)->getVal());
   } else if (descr == "AtomType") {
-    auto v = static_cast<const ATOM_EQUALS_QUERY *>(q)->getVal();
+    auto v = dynamic_cast<const ATOM_EQUALS_QUERY *>(q)->getVal();
     // aromatic AtomType queries add 1000 to the atomic number;
     // correct for that:
     if (v >= 1000) {
@@ -974,7 +975,7 @@ bool isAtomAromatic(const Atom *a) {
       }
     } else if (descr == "AtomType") {
       res = getAtomTypeIsAromatic(
-          static_cast<ATOM_EQUALS_QUERY *>(a->getQuery())->getVal());
+          dynamic_cast<ATOM_EQUALS_QUERY *>(a->getQuery())->getVal());
       if (a->getQuery()->getNegation()) {
         res = !res;
       }
@@ -1058,7 +1059,7 @@ void finalizeQueryFromDescription(
     query->setDataFunc(queryAtomHasRingBond);
   } else if (descr == "AtomRingSize") {
     tmpQuery = makeAtomInRingOfSizeQuery(
-        static_cast<ATOM_EQUALS_QUERY *>(query)->getVal());
+        dynamic_cast<ATOM_EQUALS_QUERY *>(query)->getVal());
     query->setDataFunc(tmpQuery->getDataFunc());
     delete tmpQuery;
   } else if (descr == "AtomMinRingSize") {
@@ -1137,7 +1138,7 @@ void finalizeQueryFromDescription(
   Queries::Query<int, Bond const *, true> *tmpQuery;
   if (descr == "BondRingSize") {
     tmpQuery = makeBondInRingOfSizeQuery(
-        static_cast<BOND_EQUALS_QUERY *>(query)->getVal());
+        dynamic_cast<BOND_EQUALS_QUERY *>(query)->getVal());
     query->setDataFunc(tmpQuery->getDataFunc());
     delete tmpQuery;
   } else if (descr == "BondMinRingSize") {
