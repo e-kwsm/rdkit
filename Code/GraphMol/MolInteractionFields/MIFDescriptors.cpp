@@ -71,9 +71,10 @@ std::unique_ptr<RDGeom::UniformRealValueGrid3D> constructGrid(
   return res;
 }
 
-VdWaals::VdWaals(const RDKit::ROMol &mol, int confId, double cutoff) {
+VdWaals::VdWaals(const RDKit::ROMol &mol, int confId, double cutoff)
+    : d_nAtoms(mol.getNumAtoms()) {
   d_cutoff = std::max(cutoff * cutoff, MIN_CUTOFF_VAL);
-  d_nAtoms = mol.getNumAtoms();
+
   d_pos.reserve(3 * d_nAtoms);
   d_R_star_ij.reserve(d_nAtoms);
   d_wellDepth.reserve(d_nAtoms);
@@ -126,9 +127,10 @@ void MMFFVdWaals::fillVdwParamVectors(unsigned int atomIdx) {
 
 UFFVdWaals::UFFVdWaals(const RDKit::ROMol &mol, int confId,
                        const std::string &probeAtomType, double cutoff)
-    : VdWaals::VdWaals(mol, confId, cutoff) {
+    : VdWaals::VdWaals(mol, confId, cutoff),
+      d_probeParams((*d_uffParamColl)(probeAtomType)) {
   d_uffParamColl = ForceFields::UFF::ParamCollection::getParams();
-  d_probeParams = (*d_uffParamColl)(probeAtomType);
+
   const auto [params, haveParams] = RDKit::UFF::getAtomTypes(mol);
   if (!haveParams) {
     throw ValueErrorException(

@@ -44,9 +44,9 @@ class RDKIT_MOLSTANDARDIZE_EXPORT TautomerTransform {
         Charges(std::move(charges)) {}
 
   TautomerTransform(const TautomerTransform &other)
-      : BondTypes(other.BondTypes), Charges(other.Charges) {
-    Mol = new ROMol(*other.Mol);
-  }
+      : Mol(new ROMol(*other.Mol)),
+        BondTypes(other.BondTypes),
+        Charges(other.Charges) {}
 
   TautomerTransform &operator=(const TautomerTransform &other) {
     if (this != &other) {

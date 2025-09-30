@@ -14,8 +14,10 @@ namespace RDKit::SynthonSpaceSearch {
 SearchResults::SearchResults(std::vector<std::unique_ptr<ROMol>> &&mols,
                              const std::uint64_t maxNumRes, bool timedOut,
                              bool cancelled)
-    : d_maxNumResults(maxNumRes), d_timedOut(timedOut), d_cancelled(cancelled) {
-  d_hitMolecules = std::move(mols);
+    : d_hitMolecules(std::move(mols)),
+      d_maxNumResults(maxNumRes),
+      d_timedOut(timedOut),
+      d_cancelled(cancelled) {
   mols.clear();
 }
 

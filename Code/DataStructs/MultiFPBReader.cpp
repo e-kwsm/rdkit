@@ -212,14 +212,14 @@ void MultiFPBReader::init() {
 };
 
 MultiFPBReader::MultiFPBReader(std::vector<FPBReader *> &readers,
-                               bool takeOwnership, bool initOnSearch) {
-  df_init = false;
-  df_takeOwnership = takeOwnership;
-  df_initOnSearch = initOnSearch;
+                               bool takeOwnership, bool initOnSearch)
+    : df_init(false),
+      df_takeOwnership(takeOwnership),
+      df_initOnSearch(initOnSearch),
+      d_readers(readers) {
   for (auto *rdr : readers) {
     PRECONDITION(rdr != nullptr, "bad reader");
   }
-  d_readers = readers;
 }
 
 FPBReader *MultiFPBReader::getReader(unsigned int which) {
