@@ -24,11 +24,7 @@ namespace MolStandardize {
 class RDKIT_MOLSTANDARDIZE_EXPORT AcidBaseCatalogEntry
     : public RDCatalog::CatalogEntry {
  public:
-  AcidBaseCatalogEntry() {
-    d_descrip = "";
-    dp_props = new Dict();
-    setBitId(-1);
-  }
+  AcidBaseCatalogEntry() : d_descrip(""), dp_props(new Dict()) { setBitId(-1); }
 
   ~AcidBaseCatalogEntry() override {
     delete dp_props;

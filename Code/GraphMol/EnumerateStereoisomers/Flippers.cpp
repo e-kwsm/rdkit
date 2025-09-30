@@ -17,9 +17,7 @@ namespace RDKit {
 namespace EnumerateStereoisomers {
 namespace details {
 AtomFlipper::AtomFlipper(RWMol &mol, const Chirality::StereoInfo &si)
-    : Flipper() {
-  dp_atom = mol.getAtomWithIdx(si.centeredOn);
-}
+    : Flipper(), dp_atom(mol.getAtomWithIdx(si.centeredOn)) {}
 
 void AtomFlipper::flip(bool flag) {
   if (flag) {
@@ -30,8 +28,7 @@ void AtomFlipper::flip(bool flag) {
 }
 
 BondFlipper::BondFlipper(RWMol &mol, const Chirality::StereoInfo &si)
-    : Flipper() {
-  dp_bond = mol.getBondWithIdx((si.centeredOn));
+    : Flipper(), dp_bond(mol.getBondWithIdx((si.centeredOn))) {
   auto stereoAtoms = dp_bond->getStereoAtoms();
   if (stereoAtoms.empty()) {
     if (si.controllingAtoms[0] != Atom::NOATOM &&
@@ -74,8 +71,8 @@ void StereoGroupFlipper::flip(bool flag) {
 }
 
 AtropisomerFlipper::AtropisomerFlipper(RWMol &mol,
-                                       const Chirality::StereoInfo &si) {
-  dp_bond = mol.getBondWithIdx(si.centeredOn);
+                                       const Chirality::StereoInfo &si)
+    : dp_bond(mol.getBondWithIdx(si.centeredOn)) {
   d_ctrlAtoms =
       std::vector<unsigned int>{si.controllingAtoms[0], si.controllingAtoms[1],
                                 si.controllingAtoms[2], si.controllingAtoms[3]};

@@ -24,10 +24,8 @@ namespace MolStandardize {
 class RDKIT_MOLSTANDARDIZE_EXPORT TautomerCatalogEntry
     : public RDCatalog::CatalogEntry {
  public:
-  TautomerCatalogEntry() {
-    dp_transform = nullptr;
-    d_descrip = "";
-    dp_props = new Dict();
+  TautomerCatalogEntry()
+      : dp_transform(nullptr), d_descrip(""), dp_props(new Dict()) {
     setBitId(-1);
   }
 

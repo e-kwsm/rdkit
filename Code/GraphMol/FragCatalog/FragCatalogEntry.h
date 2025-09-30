@@ -28,10 +28,7 @@ namespace RDKit {
 class RDKIT_FRAGCATALOG_EXPORT FragCatalogEntry
     : public RDCatalog::CatalogEntry {
  public:
-  FragCatalogEntry() : d_descrip("") {
-    dp_props = new Dict();
-    setBitId(-1);
-  }
+  FragCatalogEntry() : dp_props(new Dict()), d_descrip("") { setBitId(-1); }
 
   FragCatalogEntry(const ROMol *omol, const PATH_TYPE &path,
                    const MatchVectType &aidToFid);
