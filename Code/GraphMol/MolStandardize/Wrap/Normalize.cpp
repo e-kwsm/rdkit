@@ -23,7 +23,7 @@ ROMol *normalizeHelper(MolStandardize::Normalizer &self, const ROMol &mol) {
 }
 
 void normalizeInPlaceHelper(MolStandardize::Normalizer &self, ROMol &mol) {
-  self.normalizeInPlace(static_cast<RWMol &>(mol));
+  self.normalizeInPlace(dynamic_cast<RWMol &>(mol));
 }
 
 MolStandardize::Normalizer *normalizerFromDataAndParams(
