@@ -41,9 +41,8 @@ class RDKIT_DATASTRUCTS_EXPORT SparseBitVect : public BitVect {
   }
 
   //! copy constructor
-  SparseBitVect(const SparseBitVect &other) : BitVect(other) {
-    d_size = 0;
-    dp_bits = nullptr;
+  SparseBitVect(const SparseBitVect &other)
+      : BitVect(other), d_size(0), dp_bits(nullptr) {
     _initForSize(other.getNumBits());
     IntSet *bv = other.dp_bits;
     std::copy(bv->begin(), bv->end(), std::inserter(*dp_bits, dp_bits->end()));

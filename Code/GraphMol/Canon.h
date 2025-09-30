@@ -47,10 +47,7 @@ typedef union {
 class RDKIT_GRAPHMOL_EXPORT MolStackElem {
  public:
   //! construct an Atom node
-  explicit MolStackElem(Atom *at) {
-    type = MOL_STACK_ATOM;
-    obj.atom = at;
-  }
+  explicit MolStackElem(Atom *at) : type(MOL_STACK_ATOM) { obj.atom = at; }
   //! construct a bond node
   /*!
 
@@ -58,16 +55,12 @@ class RDKIT_GRAPHMOL_EXPORT MolStackElem {
      \param idx   index of the Atom traversed before this Bond
        (beginAtom in the canonical traversal order)
   */
-  explicit MolStackElem(Bond *bond, int idx) {
-    type = MOL_STACK_BOND;
+  explicit MolStackElem(Bond *bond, int idx)
+      : type(MOL_STACK_BOND), number(idx) {
     obj.bond = bond;
-    number = idx;
   }
   //! construct for a ring closure
-  explicit MolStackElem(int idx) {
-    type = MOL_STACK_RING;
-    number = idx;
-  }
+  explicit MolStackElem(int idx) : type(MOL_STACK_RING), number(idx) {}
   //! construct for a branch opening or closing
   explicit MolStackElem(const char *chr, int idx) {
     switch (chr[0]) {
