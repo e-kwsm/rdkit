@@ -4172,24 +4172,22 @@ ptree MarvinReaction::toPtree() const {
 }
 
 MarvinRectangle::MarvinRectangle(double left, double right, double top,
-                                 double bottom) {
+                                 double bottom)
+    : centerIsStale(true) {
   upperLeft.x = left;
   upperLeft.y = top;
   lowerRight.x = right;
   lowerRight.y = bottom;
-  centerIsStale = true;
 }
 
 MarvinRectangle::MarvinRectangle(const RDGeom::Point3D &upperLeftInit,
-                                 const RDGeom::Point3D &lowerRightInit) {
-  upperLeft = upperLeftInit;
-  lowerRight = lowerRightInit;
-  centerIsStale = true;
-}
+                                 const RDGeom::Point3D &lowerRightInit)
+    : upperLeft(upperLeftInit),
+      lowerRight(lowerRightInit),
+      centerIsStale(true) {}
 
-MarvinRectangle::MarvinRectangle(const std::vector<MarvinAtom *> &atoms) {
-  centerIsStale = true;
-
+MarvinRectangle::MarvinRectangle(const std::vector<MarvinAtom *> &atoms)
+    : centerIsStale(true) {
   if (atoms.size() == 0) {
     return;
   }
@@ -4206,9 +4204,8 @@ MarvinRectangle::MarvinRectangle(const std::vector<MarvinAtom *> &atoms) {
   }
 }
 
-MarvinRectangle::MarvinRectangle(const std::vector<MarvinRectangle> &rects) {
-  centerIsStale = true;
-
+MarvinRectangle::MarvinRectangle(const std::vector<MarvinRectangle> &rects)
+    : centerIsStale(true) {
   if (rects.size() == 0) {
     return;
   }
@@ -4278,8 +4275,6 @@ bool MarvinRectangle::compareRectanglesByYReverse(MarvinRectangle &r1,
 }
 
 MarvinStereoGroup::MarvinStereoGroup(StereoGroupType grouptypeInit,
-                                     int groupNumberInit) {
-  groupType = grouptypeInit;
-  groupNumber = groupNumberInit;
-}
+                                     int groupNumberInit)
+    : groupType(grouptypeInit), groupNumber(groupNumberInit) {}
 }  // namespace RDKit

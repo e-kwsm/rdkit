@@ -220,18 +220,16 @@ struct State {
 };
 
 // constructor definition
-DoubleCubicLatticeVolume::DoubleCubicLatticeVolume(const ROMol &mol,
-                                                   std::vector<double> radii,
-                                                   bool isProtein,
-                                                   bool includeLigand,
-                                                   double probeRadius,
-                                                   int confId)
+DoubleCubicLatticeVolume::DoubleCubicLatticeVolume(
+    const ROMol &mol, std::vector<double> radii, bool isProtein,
+    bool includeLigand, double probeRadius, int confId)
     : mol(mol),
       radii_(std::move(radii)),
       isProtein(isProtein),
       includeLigand(includeLigand),
       probeRadius(probeRadius),
-      confId(confId) {
+      confId(confId),
+      positions(mol.getConformer(confId).getPositions()) {
   //! Class for calculation of the Shrake and Rupley surface area and volume
   //! using the Double Cubic Lattice Method.
   //!
@@ -257,7 +255,6 @@ DoubleCubicLatticeVolume::DoubleCubicLatticeVolume(const ROMol &mol,
     object
   */
 
-  positions = mol.getConformer(confId).getPositions();
   maxRadius = *std::max_element(radii_.begin(), radii_.end());
 
   // total x,y,z centres
