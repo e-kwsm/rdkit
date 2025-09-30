@@ -114,8 +114,8 @@ int getQueryBondSymbol(const Bond *bond) {
             (*child2)->getDescription() == "BondOrder" &&
             !(*child2)->getNegation()) {
           // ok, it's a bond query we have a chance of dealing with
-          int t1 = static_cast<BOND_EQUALS_QUERY *>(child1->get())->getVal();
-          int t2 = static_cast<BOND_EQUALS_QUERY *>(child2->get())->getVal();
+          int t1 = dynamic_cast<BOND_EQUALS_QUERY *>(child1->get())->getVal();
+          int t2 = dynamic_cast<BOND_EQUALS_QUERY *>(child2->get())->getVal();
           if (t1 > t2) {
             std::swap(t1, t2);
           }
@@ -250,7 +250,7 @@ const std::string GetMolFileQueryInfo(
     if (!listQs[atom->getIdx()] && !queryListAtoms[atom->getIdx()] &&
         hasComplexQuery(atom)) {
       std::string sma =
-          SmartsWrite::GetAtomSmarts(static_cast<const QueryAtom *>(atom));
+          SmartsWrite::GetAtomSmarts(dynamic_cast<const QueryAtom *>(atom));
       ss << "V  " << std::setw(3) << atom->getIdx() + 1 << " " << sma << "\n";
       wrote_query = true;
     }
@@ -406,7 +406,7 @@ const std::string AtomGetMolFileSymbol(
           (atom->getQuery()->getTypeLabel() == "A" ||
            (atom->getQuery()->getNegation() &&
             atom->getQuery()->getDescription() == "AtomAtomicNum" &&
-            static_cast<ATOM_EQUALS_QUERY *>(atom->getQuery())->getVal() ==
+            dynamic_cast<ATOM_EQUALS_QUERY *>(atom->getQuery())->getVal() ==
                 1))) {
         res = "A";
         queryListAtoms.set(atom->getIdx());
@@ -419,12 +419,12 @@ const std::string AtomGetMolFileSymbol(
                        2 &&
                    (*atom->getQuery()->beginChildren())->getDescription() ==
                        "AtomAtomicNum" &&
-                   static_cast<ATOM_EQUALS_QUERY *>(
+                   dynamic_cast<ATOM_EQUALS_QUERY *>(
                        (*atom->getQuery()->beginChildren()).get())
                            ->getVal() == 6 &&
                    (*++(atom->getQuery()->beginChildren()))->getDescription() ==
                        "AtomAtomicNum" &&
-                   static_cast<ATOM_EQUALS_QUERY *>(
+                   dynamic_cast<ATOM_EQUALS_QUERY *>(
                        (*++(atom->getQuery()->beginChildren())).get())
                            ->getVal() == 1))) {
         res = "Q";
@@ -981,7 +981,7 @@ void createSMARTSQSubstanceGroups(ROMol &mol) {
           !boost::starts_with(atom->getQuery()->getDescription(),
                               "AtomAtomicNum") &&
           !isRedundantQuery(atom->getQuery())) {
-        sma = SmartsWrite::GetAtomSmarts(static_cast<const QueryAtom *>(atom));
+        sma = SmartsWrite::GetAtomSmarts(dynamic_cast<const QueryAtom *>(atom));
       }
       if (!sma.empty()) {
         SubstanceGroup sg(&mol, "DAT");

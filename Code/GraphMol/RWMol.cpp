@@ -345,7 +345,7 @@ void RWMol::removeAtom(unsigned int idx) { removeAtom(getAtomWithIdx(idx)); }
 
 void RWMol::removeAtom(Atom *atom, bool clearProps) {
   PRECONDITION(atom, "NULL atom provided");
-  PRECONDITION(static_cast<RWMol *>(&atom->getOwningMol()) == this,
+  PRECONDITION(dynamic_cast<RWMol *>(&atom->getOwningMol()) == this,
                "atom not owned by this molecule");
   unsigned int idx = atom->getIdx();
 
