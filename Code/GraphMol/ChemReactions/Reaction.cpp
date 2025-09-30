@@ -232,7 +232,7 @@ bool ChemicalReaction::validate(unsigned int &numWarnings,
             if ((*atomIt)->getPropIfPresent(
                     common_properties::_QueryFormalCharge, qval) &&
                 (neg * qval) !=
-                    static_cast<const ATOM_EQUALS_QUERY *>(query)->getVal()) {
+                    dynamic_cast<const ATOM_EQUALS_QUERY *>(query)->getVal()) {
               if (!silent) {
                 BOOST_LOG(rdWarningLog)
                     << "atom " << (*atomIt)->getIdx() << " in product "
@@ -246,14 +246,14 @@ bool ChemicalReaction::validate(unsigned int &numWarnings,
               (*atomIt)->setProp(
                   common_properties::_QueryFormalCharge,
                   neg *
-                      static_cast<const ATOM_EQUALS_QUERY *>(query)->getVal());
+                      dynamic_cast<const ATOM_EQUALS_QUERY *>(query)->getVal());
             }
           } else if (query->getDescription() == "AtomHCount") {
             int qval;
             if ((*atomIt)->getPropIfPresent(common_properties::_QueryHCount,
                                             qval) &&
                 qval !=
-                    static_cast<const ATOM_EQUALS_QUERY *>(query)->getVal()) {
+                    dynamic_cast<const ATOM_EQUALS_QUERY *>(query)->getVal()) {
               if (!silent) {
                 BOOST_LOG(rdWarningLog)
                     << "atom " << (*atomIt)->getIdx() << " in product "
@@ -263,14 +263,14 @@ bool ChemicalReaction::validate(unsigned int &numWarnings,
             } else {
               (*atomIt)->setProp(
                   common_properties::_QueryHCount,
-                  static_cast<const ATOM_EQUALS_QUERY *>(query)->getVal());
+                  dynamic_cast<const ATOM_EQUALS_QUERY *>(query)->getVal());
             }
           } else if (query->getDescription() == "AtomMass") {
             int qval;
             if ((*atomIt)->getPropIfPresent(common_properties::_QueryMass,
                                             qval) &&
                 qval !=
-                    static_cast<const ATOM_EQUALS_QUERY *>(query)->getVal()) {
+                    dynamic_cast<const ATOM_EQUALS_QUERY *>(query)->getVal()) {
               if (!silent) {
                 BOOST_LOG(rdWarningLog)
                     << "atom " << (*atomIt)->getIdx() << " in product "
@@ -280,7 +280,7 @@ bool ChemicalReaction::validate(unsigned int &numWarnings,
             } else {
               (*atomIt)->setProp(
                   common_properties::_QueryMass,
-                  static_cast<const ATOM_EQUALS_QUERY *>(query)->getVal() /
+                  dynamic_cast<const ATOM_EQUALS_QUERY *>(query)->getVal() /
                       massIntegerConversionFactor);
             }
           } else if (query->getDescription() == "AtomIsotope") {
@@ -288,7 +288,7 @@ bool ChemicalReaction::validate(unsigned int &numWarnings,
             if ((*atomIt)->getPropIfPresent(common_properties::_QueryIsotope,
                                             qval) &&
                 qval !=
-                    static_cast<const ATOM_EQUALS_QUERY *>(query)->getVal()) {
+                    dynamic_cast<const ATOM_EQUALS_QUERY *>(query)->getVal()) {
               if (!silent) {
                 BOOST_LOG(rdWarningLog)
                     << "atom " << (*atomIt)->getIdx() << " in product "
@@ -298,7 +298,7 @@ bool ChemicalReaction::validate(unsigned int &numWarnings,
             } else {
               (*atomIt)->setProp(
                   common_properties::_QueryIsotope,
-                  static_cast<const ATOM_EQUALS_QUERY *>(query)->getVal());
+                  dynamic_cast<const ATOM_EQUALS_QUERY *>(query)->getVal());
             }
           }
         }
@@ -560,8 +560,9 @@ bool isChangedAtom(const Atom &rAtom, const Atom &pAtom, int mapNum,
             if (rBond->getBondType() == pBond->getBondType() &&
                 rBond->getQuery()->getDescription() == "BondOrder" &&
                 pBond->getQuery()->getDescription() == "BondOrder" &&
-                static_cast<BOND_EQUALS_QUERY *>(rBond->getQuery())->getVal() ==
-                    static_cast<BOND_EQUALS_QUERY *>(pBond->getQuery())
+                dynamic_cast<BOND_EQUALS_QUERY *>(rBond->getQuery())
+                        ->getVal() ==
+                    dynamic_cast<BOND_EQUALS_QUERY *>(pBond->getQuery())
                         ->getVal()) {
               // bond order queries with equal orders also match
             } else {
