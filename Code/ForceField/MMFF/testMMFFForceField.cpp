@@ -1854,7 +1854,7 @@ M  END
     auto posns = localFF->positions();
     for (unsigned int i = 0; i < localFF->numPoints(); ++i) {
       for (unsigned int j = 0; j < 3; ++j) {
-        pos[i * 3 + j] = (*static_cast<RDGeom::Point3D *>(posns.at(i)))[j];
+        pos[i * 3 + j] = (*dynamic_cast<RDGeom::Point3D *>(posns.at(i)))[j];
       }
     }
     auto diheOut =

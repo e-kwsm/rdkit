@@ -146,7 +146,7 @@ Ret *PropQueryWithTol(const std::string &propname, const ExplicitBitVect &v,
 
 namespace {
 Atom *replaceAtomWithQueryAtomHelper(ROMol &mol, Atom &atom) {
-  return QueryOps::replaceAtomWithQueryAtom(static_cast<RWMol *>(&mol), &atom);
+  return QueryOps::replaceAtomWithQueryAtom(dynamic_cast<RWMol *>(&mol), &atom);
 }
 }  // namespace
 
