@@ -45,7 +45,7 @@ class MetalDisconnectorWrap {
     return md_->disconnect(mol);
   }
   void disconnectInPlace(RDKit::ROMol &mol) {
-    return md_->disconnectInPlace(static_cast<RDKit::RWMol &>(mol));
+    return md_->disconnectInPlace(dynamic_cast<RDKit::RWMol &>(mol));
   }
 
  private:
