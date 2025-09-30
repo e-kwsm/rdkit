@@ -79,7 +79,7 @@ INT_VECT getBondStereoAtoms(const Bond *bond) { return bond->getStereoAtoms(); }
 std::string BondGetSmarts(const Bond *bond, bool allBondsExplicit) {
   std::string res;
   if (bond->hasQuery()) {
-    res = SmartsWrite::GetBondSmarts(static_cast<const QueryBond *>(bond));
+    res = SmartsWrite::GetBondSmarts(dynamic_cast<const QueryBond *>(bond));
   } else {
     res = SmilesWrite::GetBondSmiles(bond, -1, false, allBondsExplicit);
   }

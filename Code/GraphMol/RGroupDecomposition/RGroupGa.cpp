@@ -82,7 +82,7 @@ void RGroupDecompositionChromosome::copyGene(
     const StringChromosomeBase<int, IntegerStringChromosomePolicy> &other) {
   StringChromosomeBase<int, IntegerStringChromosomePolicy>::copyGene(other);
   const auto &parent =
-      static_cast<const RGroupDecompositionChromosome &>(other);
+      dynamic_cast<const RGroupDecompositionChromosome &>(other);
   copyVarianceData(parent.fingerprintVarianceScoreData,
                    fingerprintVarianceScoreData);
 }

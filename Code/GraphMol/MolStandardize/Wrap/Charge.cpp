@@ -26,7 +26,7 @@ ROMol *reionizeHelper(MolStandardize::Reionizer &self, const ROMol &mol) {
 }
 
 void reionizeInPlaceHelper(MolStandardize::Reionizer &self, ROMol &mol) {
-  self.reionizeInPlace(static_cast<RWMol &>(mol));
+  self.reionizeInPlace(dynamic_cast<RWMol &>(mol));
 }
 MolStandardize::Reionizer *reionizerFromData(const std::string &data,
                                              python::object chargeCorrections) {
@@ -44,7 +44,7 @@ MolStandardize::Reionizer *reionizerFromData(const std::string &data,
 }
 
 void unchargeInPlaceHelper(MolStandardize::Uncharger &self, ROMol &mol) {
-  self.unchargeInPlace(static_cast<RWMol &>(mol));
+  self.unchargeInPlace(dynamic_cast<RWMol &>(mol));
 }
 
 }  // namespace

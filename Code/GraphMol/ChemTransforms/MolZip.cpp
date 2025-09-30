@@ -411,7 +411,7 @@ std::unique_ptr<ROMol> molzip(
   }
   std::unique_ptr<RWMol> newmol;
   if (b.getNumAtoms()) {
-    newmol.reset(static_cast<RWMol *>(combineMols(a, b)));
+    newmol.reset(dynamic_cast<RWMol *>(combineMols(a, b)));
   } else {
     newmol.reset(new RWMol(a));
   }
