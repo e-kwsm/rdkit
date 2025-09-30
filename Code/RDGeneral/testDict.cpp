@@ -346,7 +346,7 @@ TEST_CASE("testRDValue") {
 class DictCon {
  public:
   DictCon() { d.reset(); };
-  DictCon(const DictCon &other) { d = other.d; };
+  DictCon(const DictCon &other) : d(other.d) {};
   DictCon &operator=(const DictCon &other) {
     d = other.d;
     return *this;

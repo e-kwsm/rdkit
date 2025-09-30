@@ -29,13 +29,13 @@ FragCatParams::FragCatParams(unsigned int lLen, unsigned int uLen,
   d_funcGroups = readFuncGroups(fgroupFile);
 }
 
-FragCatParams::FragCatParams(const FragCatParams &other) {
+FragCatParams::FragCatParams(const FragCatParams &other)
+    : d_lowerFragLen(other.getLowerFragLength()),
+      d_upperFragLen(other.getUpperFragLength()),
+      d_tolerance(other.getTolerance()) {
   d_funcGroups.clear();
 
   d_typeStr = other.getTypeStr();
-  d_lowerFragLen = other.getLowerFragLength();
-  d_upperFragLen = other.getUpperFragLength();
-  d_tolerance = other.getTolerance();
 
   const MOL_SPTR_VECT &ofgrps = other.getFuncGroups();
   for (auto fgi : ofgrps) {

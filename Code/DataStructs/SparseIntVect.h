@@ -35,8 +35,8 @@ class SparseIntVect {
   SparseIntVect(IndexType length) : d_length(length) {}
 
   //! Copy constructor
-  SparseIntVect(const SparseIntVect<IndexType> &other) {
-    d_length = other.d_length;
+  SparseIntVect(const SparseIntVect<IndexType> &other)
+      : d_length(other.d_length) {
     d_data.clear();
     d_data.insert(other.d_data.begin(), other.d_data.end());
   }

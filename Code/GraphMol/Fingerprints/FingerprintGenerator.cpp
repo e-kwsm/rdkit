@@ -93,15 +93,14 @@ FingerprintGenerator<OutputType>::FingerprintGenerator(
     AtomInvariantsGenerator *atomInvariantsGenerator,
     BondInvariantsGenerator *bondInvariantsGenerator, bool ownsAtomInvGenerator,
     bool ownsBondInvGenerator)
-    : df_ownsAtomInvGenerator(ownsAtomInvGenerator),
+    : dp_atomEnvironmentGenerator(atomEnvironmentGenerator),
+      dp_fingerprintArguments(fingerprintArguments),
+      dp_atomInvariantsGenerator(atomInvariantsGenerator),
+      dp_bondInvariantsGenerator(bondInvariantsGenerator),
+      df_ownsAtomInvGenerator(ownsAtomInvGenerator),
       df_ownsBondInvGenerator(ownsBondInvGenerator) {
-  this->dp_atomEnvironmentGenerator = atomEnvironmentGenerator;
   this->dp_atomEnvironmentGenerator->dp_fingerprintArguments =
       fingerprintArguments;
-
-  this->dp_fingerprintArguments = fingerprintArguments;
-  this->dp_atomInvariantsGenerator = atomInvariantsGenerator;
-  this->dp_bondInvariantsGenerator = bondInvariantsGenerator;
 }
 
 template FingerprintGenerator<std::uint32_t>::FingerprintGenerator(

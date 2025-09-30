@@ -43,49 +43,47 @@ typedef boost::flyweight<
     param_data_flyweight;
 
 // constructor
-Reionizer::Reionizer() {
+Reionizer::Reionizer() : d_ccs(CHARGE_CORRECTIONS) {
   const AcidBaseCatalogParams *abparams =
       &(param_filename_flyweight(defaultCleanupParameters.acidbaseFile).get());
   this->d_abcat = new AcidBaseCatalog(abparams);
-  this->d_ccs = CHARGE_CORRECTIONS;
 }
 
-Reionizer::Reionizer(const std::string acidbaseFile) {
+Reionizer::Reionizer(const std::string acidbaseFile)
+    : d_ccs(CHARGE_CORRECTIONS) {
   const AcidBaseCatalogParams *abparams =
       &(param_filename_flyweight(acidbaseFile).get());
   this->d_abcat = new AcidBaseCatalog(abparams);
-  this->d_ccs = CHARGE_CORRECTIONS;
 }
 
 Reionizer::Reionizer(
-    const std::vector<std::tuple<std::string, std::string, std::string>>
-        &data) {
+    const std::vector<std::tuple<std::string, std::string, std::string>> &data)
+    : d_ccs(CHARGE_CORRECTIONS) {
   const AcidBaseCatalogParams *abparams = &(param_data_flyweight(data).get());
   this->d_abcat = new AcidBaseCatalog(abparams);
-  this->d_ccs = CHARGE_CORRECTIONS;
 }
 
 Reionizer::Reionizer(
     const std::vector<std::tuple<std::string, std::string, std::string>> &data,
-    const std::vector<ChargeCorrection> ccs) {
+    const std::vector<ChargeCorrection> ccs)
+    : d_ccs(ccs) {
   const AcidBaseCatalogParams *abparams = &(param_data_flyweight(data).get());
   this->d_abcat = new AcidBaseCatalog(abparams);
-  this->d_ccs = ccs;
 }
 
 Reionizer::Reionizer(const std::string acidbaseFile,
-                     const std::vector<ChargeCorrection> ccs) {
+                     const std::vector<ChargeCorrection> ccs)
+    : d_ccs(ccs) {
   const AcidBaseCatalogParams *abparams =
       &(param_filename_flyweight(acidbaseFile).get());
   this->d_abcat = new AcidBaseCatalog(abparams);
-  this->d_ccs = ccs;
 }
 
 Reionizer::Reionizer(std::istream &acidbaseStream,
-                     const std::vector<ChargeCorrection> ccs) {
+                     const std::vector<ChargeCorrection> ccs)
+    : d_ccs(ccs) {
   AcidBaseCatalogParams abparams(acidbaseStream);
   this->d_abcat = new AcidBaseCatalog(&abparams);
-  this->d_ccs = ccs;
 }
 
 Reionizer::~Reionizer() { delete d_abcat; }

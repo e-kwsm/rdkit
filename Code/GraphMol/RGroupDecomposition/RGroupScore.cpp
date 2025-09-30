@@ -176,8 +176,8 @@ double RGroupScorer::matchScore(
 }
 
 RGroupScorer::RGroupScorer(const std::vector<std::vector<size_t>> &permutations,
-                           double score) {
-  d_bestScore = score;
+                           double score)
+    : d_bestScore(score) {
   for (const auto &permutation : permutations) {
     pushTieToStore(permutation);
   }

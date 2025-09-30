@@ -17,19 +17,18 @@ namespace RDKit {
 
 Bond::Bond() : RDProps() { initBond(); };
 
-Bond::Bond(BondType bT) : RDProps() {
-  initBond();
-  d_bondType = bT;
-};
+Bond::Bond(BondType bT) : RDProps(), d_bondType(bT) { initBond(); };
 
-Bond::Bond(const Bond &other) : RDProps(other) {
+Bond::Bond(const Bond &other)
+    : RDProps(other),
+      dp_mol(nullptr),
+      d_bondType(other.d_bondType),
+      d_beginAtomIdx(other.d_beginAtomIdx),
+      d_endAtomIdx(other.d_endAtomIdx),
+      d_dirTag(other.d_dirTag),
+      d_stereo(other.d_stereo) {
   // NOTE: we do *not* copy ownership!
-  dp_mol = nullptr;
-  d_bondType = other.d_bondType;
-  d_beginAtomIdx = other.d_beginAtomIdx;
-  d_endAtomIdx = other.d_endAtomIdx;
-  d_dirTag = other.d_dirTag;
-  d_stereo = other.d_stereo;
+
   if (other.dp_stereoAtoms) {
     dp_stereoAtoms = new INT_VECT(*other.dp_stereoAtoms);
   } else {
