@@ -343,7 +343,7 @@ void mapAtom(
 
   // Residue information
   auto monomerInfo =
-      static_cast<const AtomPDBResidueInfo *>(atom.getMonomerInfo());
+      dynamic_cast<const AtomPDBResidueInfo *>(atom.getMonomerInfo());
   if (monomerInfo != nullptr) {
     setPropertyValue(atomBlock, PDB_ATOM_NAME, numAtoms, idx,
                      monomerInfo->getName());

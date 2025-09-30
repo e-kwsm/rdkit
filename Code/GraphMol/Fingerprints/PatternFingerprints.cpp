@@ -93,7 +93,7 @@ void getAtomNumbers(const Atom *a, std::vector<int> &atomNums) {
   std::string descr = a->getQuery()->getDescription();
   if (descr == "AtomAtomicNum") {
     atomNums.push_back(
-        static_cast<ATOM_EQUALS_QUERY *>(a->getQuery())->getVal());
+        dynamic_cast<ATOM_EQUALS_QUERY *>(a->getQuery())->getVal());
   } else if (descr == "AtomXor") {
     return;
   } else if (descr == "AtomAnd") {
@@ -103,7 +103,7 @@ void getAtomNumbers(const Atom *a, std::vector<int> &atomNums) {
          (*(childIt + 1))->getDescription() == "AtomIsAromatic") &&
         (childIt + 2) == a->getQuery()->endChildren()) {
       atomNums.push_back(
-          static_cast<ATOM_EQUALS_QUERY *>((*childIt).get())->getVal());
+          dynamic_cast<ATOM_EQUALS_QUERY *>((*childIt).get())->getVal());
       return;
     }
   } else if (descr == "AtomOr") {
@@ -111,7 +111,7 @@ void getAtomNumbers(const Atom *a, std::vector<int> &atomNums) {
     while (childIt != a->getQuery()->endChildren()) {
       if ((*childIt)->getDescription() == "AtomAtomicNum") {
         atomNums.push_back(
-            static_cast<ATOM_EQUALS_QUERY *>((*childIt).get())->getVal());
+            dynamic_cast<ATOM_EQUALS_QUERY *>((*childIt).get())->getVal());
       } else if ((*childIt)->getDescription() == "AtomAnd") {
         auto childIt2 = (*childIt)->beginChildren();
         if ((*childIt2)->getDescription() == "AtomAtomicNum" &&
@@ -119,7 +119,7 @@ void getAtomNumbers(const Atom *a, std::vector<int> &atomNums) {
              (*(childIt2 + 1))->getDescription() == "AtomIsAromatic") &&
             (childIt2 + 2) == (*childIt)->endChildren()) {
           atomNums.push_back(
-              static_cast<ATOM_EQUALS_QUERY *>((*childIt2).get())->getVal());
+              dynamic_cast<ATOM_EQUALS_QUERY *>((*childIt2).get())->getVal());
         } else {
           atomNums.clear();
           return;

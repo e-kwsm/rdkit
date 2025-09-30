@@ -410,8 +410,8 @@ primbond: onebond
         yysln_error(input,molList,doQueries,0,"sequential bonds not allowed in non-queries");
     YYABORT;
 	} else {
-	  RDKit::QueryBond *b1=static_cast<RDKit::QueryBond *>($1);
-	  RDKit::QueryBond *b2=static_cast<RDKit::QueryBond *>($2);
+	  RDKit::QueryBond *b1 = dynamic_cast<RDKit::QueryBond *>($1);
+	  RDKit::QueryBond *b2 = dynamic_cast<RDKit::QueryBond *>($2);
 	  b1->expandQuery(b2->getQuery()->copy(),Queries::COMPOSITE_OR,true);
 		delete b2;
 	}

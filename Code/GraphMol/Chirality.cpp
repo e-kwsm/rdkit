@@ -3836,7 +3836,7 @@ void removeStereochemistry(ROMol &mol) {
     }
   }
   std::vector<StereoGroup> sgs;
-  static_cast<RWMol &>(mol).setStereoGroups(std::move(sgs));
+  dynamic_cast<RWMol &>(mol).setStereoGroups(std::move(sgs));
 }
 
 }  // namespace MolOps
