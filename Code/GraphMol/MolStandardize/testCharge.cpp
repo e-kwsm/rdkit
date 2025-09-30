@@ -232,7 +232,7 @@ void testChargedAromatics() {
     std::unique_ptr<ROMol> res(uncharger.uncharge(*cyclopentadienyl));
     TEST_ASSERT(res.get());
     TEST_ASSERT(MolToSmiles(*res) == "c1cccc1");
-    MolOps::sanitizeMol(*static_cast<RWMol *>(res.get()));
+    MolOps::sanitizeMol(*dynamic_cast<RWMol *>(res.get()));
     TEST_ASSERT(MolToSmiles(*res) == "C1=CCC=C1");
   }
   {
@@ -243,7 +243,7 @@ void testChargedAromatics() {
     std::unique_ptr<ROMol> res(uncharger.uncharge(*tropylium));
     TEST_ASSERT(res.get());
     TEST_ASSERT(MolToSmiles(*res) == "c1cccccc1");
-    MolOps::sanitizeMol(*static_cast<RWMol *>(res.get()));
+    MolOps::sanitizeMol(*dynamic_cast<RWMol *>(res.get()));
     TEST_ASSERT(MolToSmiles(*res) == "C1=CC=CCC=C1");
   }
   {
@@ -254,7 +254,7 @@ void testChargedAromatics() {
     std::unique_ptr<ROMol> res(uncharger.uncharge(*azolium));
     TEST_ASSERT(res.get());
     TEST_ASSERT(MolToSmiles(*res) == "C1=CNC=C1");
-    MolOps::sanitizeMol(*static_cast<RWMol *>(res.get()));
+    MolOps::sanitizeMol(*dynamic_cast<RWMol *>(res.get()));
     TEST_ASSERT(MolToSmiles(*res) == "c1cc[nH]c1");
   }
 

@@ -421,10 +421,10 @@ void adjustQueryProperties(RWMol &mol, const AdjustQueryParameters *inParams) {
         constexpr bool updateLabel = false;
         constexpr bool preserveProps = true;
         mol.replaceAtom(i, &atQueryAtom, updateLabel, preserveProps);
-        qa = static_cast<QueryAtom *>(mol.getAtomWithIdx(i));
+        qa = dynamic_cast<QueryAtom *>(mol.getAtomWithIdx(i));
         at = static_cast<Atom *>(qa);
       } else {
-        qa = static_cast<QueryAtom *>(at);
+        qa = dynamic_cast<QueryAtom *>(at);
       }
       qa->expandQuery(makeAtomExplicitDegreeQuery(qa->getDegree()));
     }  // end of adjust degree
@@ -443,10 +443,10 @@ void adjustQueryProperties(RWMol &mol, const AdjustQueryParameters *inParams) {
         constexpr bool updateLabel = false;
         constexpr bool preserveProps = true;
         mol.replaceAtom(i, &atQueryAtom, updateLabel, preserveProps);
-        qa = static_cast<QueryAtom *>(mol.getAtomWithIdx(i));
+        qa = dynamic_cast<QueryAtom *>(mol.getAtomWithIdx(i));
         at = static_cast<Atom *>(qa);
       } else {
-        qa = static_cast<QueryAtom *>(at);
+        qa = dynamic_cast<QueryAtom *>(at);
       }
       qa->expandQuery(makeAtomHeavyAtomDegreeQuery(qa->getTotalDegree() -
                                                    qa->getTotalNumHs(true)));
@@ -465,10 +465,10 @@ void adjustQueryProperties(RWMol &mol, const AdjustQueryParameters *inParams) {
         constexpr bool updateLabel = false;
         constexpr bool preserveProps = true;
         mol.replaceAtom(i, &atQueryAtom, updateLabel, preserveProps);
-        qa = static_cast<QueryAtom *>(mol.getAtomWithIdx(i));
+        qa = dynamic_cast<QueryAtom *>(mol.getAtomWithIdx(i));
         at = static_cast<Atom *>(qa);
       } else {
-        qa = static_cast<QueryAtom *>(at);
+        qa = dynamic_cast<QueryAtom *>(at);
       }
       qa->expandQuery(makeAtomInNRingsQuery(nRings));
     }  // end of adjust ring count
@@ -486,10 +486,10 @@ void adjustQueryProperties(RWMol &mol, const AdjustQueryParameters *inParams) {
         constexpr bool updateLabel = false;
         constexpr bool preserveProps = true;
         mol.replaceAtom(i, &atQueryAtom, updateLabel, preserveProps);
-        qa = static_cast<QueryAtom *>(mol.getAtomWithIdx(i));
+        qa = dynamic_cast<QueryAtom *>(mol.getAtomWithIdx(i));
         at = static_cast<Atom *>(qa);
       } else {
-        qa = static_cast<QueryAtom *>(at);
+        qa = dynamic_cast<QueryAtom *>(at);
       }
       ATOM_EQUALS_QUERY *nq = makeAtomInRingQuery();
       if (!nRings) {

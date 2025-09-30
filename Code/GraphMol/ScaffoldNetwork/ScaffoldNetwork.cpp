@@ -102,7 +102,7 @@ ROMol *flattenMol(const ROMol &mol, const ScaffoldNetworkParams &params) {
   RWMol *res;
   if (params.flattenKeepLargest) {
     MolStandardize::LargestFragmentChooser fragmenter;
-    res = static_cast<RWMol *>(fragmenter.choose(mol));
+    res = dynamic_cast<RWMol *>(fragmenter.choose(mol));
   } else {
     res = new RWMol(mol);
   }
@@ -149,7 +149,7 @@ std::vector<std::pair<std::string, ROMOL_SPTR>> getMolFragments(
           p[0].reset(removeAttachmentPoints(*p[0], params));
         }
 
-        updateMolProps(*static_cast<RWMol *>(p[0].get()));
+        updateMolProps(*dynamic_cast<RWMol *>(p[0].get()));
         auto tsmi0 = MolToSmiles(*p[0]);
         if (std::find(seen.begin(), seen.end(), tsmi0) == seen.end()) {
           stack.push_back(p[0]);
@@ -162,7 +162,7 @@ std::vector<std::pair<std::string, ROMOL_SPTR>> getMolFragments(
             // go ahead and remove attachment points here
             p[1].reset(removeAttachmentPoints(*p[1], params));
           }
-          updateMolProps(*static_cast<RWMol *>(p[1].get()));
+          updateMolProps(*dynamic_cast<RWMol *>(p[1].get()));
           auto tsmi1 = MolToSmiles(*p[1]);
           if (std::find(seen.begin(), seen.end(), tsmi1) == seen.end()) {
             stack.push_back(p[1]);
