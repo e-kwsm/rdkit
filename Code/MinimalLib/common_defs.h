@@ -189,7 +189,7 @@ class DrawerFromDetails {
       rjDrawCoords.PushBack(rjXY, doc.GetAllocator());
     }
     doc.AddMember("drawCoords", rjDrawCoords, doc.GetAllocator());
-    const auto drawingResultKey = getDrawingResultKey();
+    const auto *const drawingResultKey = getDrawingResultKey();
     if (drawingResultKey) {
       doc.AddMember(rj::StringRef(drawingResultKey),
                     rj::Value(res.c_str(), doc.GetAllocator()),
