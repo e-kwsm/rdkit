@@ -556,7 +556,7 @@ TEST_CASE("DCLV") {
       pathName + "/Code/GraphMol/Descriptors/test_data/1mup.pdb";
   auto m = v2::FileParsers::MolFromPDBFile(pdbName);
   std::vector<double> radii;
-  for (const auto atom : m->atoms()) {
+  for (auto *const atom : m->atoms()) {
     radii.push_back(tbl->getRvdw(atom->getAtomicNum()));
   }
   REQUIRE(m);
@@ -610,7 +610,7 @@ TEST_CASE("DCLV") {
         pathName + "/Code/GraphMol/Descriptors/test_data/TZL_model.sdf";
     auto m = v2::FileParsers::MolFromMolFile(sdfName);
     std::vector<double> radii;
-    for (const auto atom : m->atoms()) {
+    for (auto *const atom : m->atoms()) {
       radii.push_back(tbl->getRvdw(atom->getAtomicNum()));
     }
     REQUIRE(m);
