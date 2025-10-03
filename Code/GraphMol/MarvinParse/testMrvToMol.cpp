@@ -436,7 +436,7 @@ class MrvTests {
 
       BOOST_LOG(rdInfoLog) << "done" << std::endl;
     } catch (const std::exception &) {
-      if (scsrMolTest->expectedResult != false) {
+      if (scsrMolTest->expectedResult) {
         throw;
       }
       return;
