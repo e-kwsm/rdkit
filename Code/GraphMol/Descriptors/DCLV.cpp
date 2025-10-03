@@ -376,9 +376,9 @@ double DoubleCubicLatticeVolume::getAtomSurfaceArea(unsigned int atomIdx) {
 
   // standard dots has fixed NUMDOTS entries
   // using precomputed dots in DCLV_dots.h
-  for (int i = 0; i < NUMDOTS; i++) {
+  for (const auto &standardDot : standardDots) {
     const Point3D &dots =
-        Point3D(standardDots[i][0], standardDots[i][1], standardDots[i][2]);
+        Point3D(standardDot[0], standardDot[1], standardDot[2]);
     const auto vect = pos + dots * factor;
     surfacePoints[atomIdx].push_back(vect);
 
@@ -447,9 +447,9 @@ DoubleCubicLatticeVolume::getSurfacePoints() {
 
       // standard dots has fixed NUMDOTS entries
       // using precomputed dots in DCLV_dots.h
-      for (int i = 0; i < NUMDOTS; i++) {
+      for (const auto &standardDot : standardDots) {
         const Point3D &dots =
-            Point3D(standardDots[i][0], standardDots[i][1], standardDots[i][2]);
+            Point3D(standardDot[0], standardDot[1], standardDot[2]);
         const auto vect = pos + dots * factor;
         surfacePoints[atomIdx].push_back(vect);
       }
