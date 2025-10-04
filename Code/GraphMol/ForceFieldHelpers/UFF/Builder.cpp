@@ -42,7 +42,7 @@ void addBonds(const ROMol &mol, const AtomicParamVect &params,
     // FIX: recognize amide bonds here.
 
     if (params[idx1] && params[idx2]) {
-      BondStretchContrib *contrib;
+      BondStretchContrib *contrib = nullptr;
       contrib = new BondStretchContrib(field, idx1, idx2,
                                        (*bi)->getBondTypeAsDouble(),
                                        params[idx1], params[idx2]);
@@ -177,7 +177,7 @@ void addAngles(const ROMol &mol, const AtomicParamVect &params,
           const Bond *b1 = mol.getBondBetweenAtoms(i, j);
           const Bond *b2 = mol.getBondBetweenAtoms(k, j);
           // FIX: recognize amide bonds here.
-          AngleBendContrib *contrib;
+          AngleBendContrib *contrib = nullptr;
           int order = 0;
           switch (atomJ->getHybridization()) {
             case Atom::SP:
@@ -314,9 +314,9 @@ void addTrigonalBipyramidAngles(const Atom *atom, const ROMol &mol, int confId,
 
   //------------------------------------------------------------
   // alright, add the angles:
-  AngleBendContrib *contrib;
+  AngleBendContrib *contrib = nullptr;
   int atomIdx = atom->getIdx();
-  int i, j;
+  int i = 0, j = 0;
 
   // Axial-Axial
   i = ax1->getOtherAtomIdx(atomIdx);
@@ -459,7 +459,7 @@ void addNonbonded(const ROMol &mol, int confId, const AtomicParamVect &params,
         double dist = (conf.getAtomPos(i) - conf.getAtomPos(j)).length();
         if (dist < vdwThresh *
                        UFF::Utils::calcNonbondedMinimum(params[i], params[j])) {
-          vdWContrib *contrib;
+          vdWContrib *contrib = nullptr;
           contrib = new vdWContrib(field, i, j, params[i], params[j]);
           field->contribs().push_back(ForceFields::ContribPtr(contrib));
         }
@@ -548,7 +548,7 @@ void addTorsions(const ROMol &mol, const AtomicParamVect &params,
               if (eIdx != bIdx) {
                 // we now have a torsion involving atoms (bonds):
                 //  bIdx - (tBond1) - idx1 - (bond) - idx2 - (tBond2) - eIdx
-                TorsionAngleContrib *contrib;
+                TorsionAngleContrib *contrib = nullptr;
 
                 // if either of the end atoms is SP2 hybridized, set a flag
                 // here.
@@ -657,7 +657,7 @@ void addInversions(const ROMol &mol, const AtomicParamVect &params,
           n[3] = 0;
           break;
       }
-      InversionContrib *contrib;
+      InversionContrib *contrib = nullptr;
       contrib = new InversionContrib(field, idx[n[0]], idx[n[1]], idx[n[2]],
                                      idx[n[3]], at2AtomicNum, isBoundToSP2O);
       field->contribs().push_back(ForceFields::ContribPtr(contrib));
@@ -712,7 +712,7 @@ ForceFields::ForceField *constructForceField(ROMol &mol,
 ForceFields::ForceField *constructForceField(ROMol &mol, double vdwThresh,
                                              int confId,
                                              bool ignoreInterfragInteractions) {
-  bool foundAll;
+  bool foundAll = false;
   AtomicParamVect params;
   boost::tie(params, foundAll) = getAtomTypes(mol);
   return constructForceField(mol, params, vdwThresh, confId,

@@ -56,7 +56,7 @@ void addBonds(const ROMol &mol, MMFFMolProperties *mmffMolProperties,
        ++bi) {
     unsigned int idx1 = (*bi)->getBeginAtomIdx();
     unsigned int idx2 = (*bi)->getEndAtomIdx();
-    unsigned int bondType;
+    unsigned int bondType = 0;
     MMFFBond mmffBondParams;
     if (mmffMolProperties->getMMFFBondStretchParams(mol, idx1, idx2, bondType,
                                                     mmffBondParams)) {
@@ -214,7 +214,7 @@ void addAngles(const ROMol &mol, MMFFMolProperties *mmffMolProperties,
         }
         const Atom *kAtom = mol[*nbr2Idx];
         idx[2] = kAtom->getIdx();
-        unsigned int angleType;
+        unsigned int angleType = 0;
         MMFFAngle mmffAngleParams;
         if (mmffMolProperties->getMMFFAngleBendParams(
                 mol, idx[0], idx[1], idx[2], angleType, mmffAngleParams)) {
@@ -339,7 +339,7 @@ void addStretchBend(const ROMol &mol, MMFFMolProperties *mmffMolProperties,
         }
         idx[0] = iAtom->getIdx();
         idx[2] = kAtom->getIdx();
-        unsigned int stretchBendType;
+        unsigned int stretchBendType = 0;
         MMFFStbn mmffStbnParams;
         MMFFBond mmffBondParams[2];
         MMFFAngle mmffAngleParams;
@@ -658,7 +658,7 @@ void addTorsions(const ROMol &mol, MMFFMolProperties *mmffMolProperties,
               if (idx4 != idx1) {
                 // we now have a torsion involving atoms (bonds):
                 //  bIdx - (tBond1) - idx1 - (bond) - idx2 - (tBond2) - eIdx
-                unsigned int torType;
+                unsigned int torType = 0;
                 MMFFTor mmffTorParams;
                 if (mmffMolProperties->getMMFFTorsionParams(
                         mol, idx1, idx2, idx3, idx4, torType, mmffTorParams)) {
