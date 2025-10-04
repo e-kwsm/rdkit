@@ -44,7 +44,7 @@ class Vector {
     d_size = N;
     TYPE *data = new TYPE[N];
 
-    unsigned int i;
+    unsigned int i = 0;
     for (i = 0; i < N; i++) {
       data[i] = val;
     }
@@ -126,7 +126,7 @@ class Vector {
     PRECONDITION(d_size == other.size(), "Size mismatch in vector addition");
     const TYPE *otherData = other.getData();
     TYPE *data = d_data.get();
-    unsigned int i;
+    unsigned int i = 0;
     for (i = 0; i < d_size; i++) {
       data[i] += otherData[i];
     }
@@ -138,7 +138,7 @@ class Vector {
     PRECONDITION(d_size == other.size(), "Size mismatch in vector subtraction");
     const TYPE *otherData = other.getData();
     TYPE *data = d_data.get();
-    unsigned int i;
+    unsigned int i = 0;
     for (i = 0; i < d_size; i++) {
       data[i] -= otherData[i];
     }
@@ -147,7 +147,7 @@ class Vector {
 
   //! multiplication by a scalar
   Vector<TYPE> &operator*=(TYPE scale) {
-    unsigned int i;
+    unsigned int i = 0;
     for (i = 0; i < d_size; i++) {
       d_data[i] *= scale;
     }
@@ -156,7 +156,7 @@ class Vector {
 
   //! division by a scalar
   Vector<TYPE> &operator/=(TYPE scale) {
-    unsigned int i;
+    unsigned int i = 0;
     for (i = 0; i < d_size; i++) {
       d_data[i] /= scale;
     }
@@ -166,7 +166,7 @@ class Vector {
   //! L2 norm squared
   inline TYPE normL2Sq() const {
     TYPE res = (TYPE)0.0;
-    unsigned int i;
+    unsigned int i = 0;
     TYPE *data = d_data.get();
     for (i = 0; i < d_size; i++) {
       res += data[i] * data[i];
@@ -180,7 +180,7 @@ class Vector {
   //! L1 norm
   inline TYPE normL1() const {
     TYPE res = (TYPE)0.0;
-    unsigned int i;
+    unsigned int i = 0;
     TYPE *data = d_data.get();
     for (i = 0; i < d_size; i++) {
       res += fabs(data[i]);
@@ -191,7 +191,7 @@ class Vector {
   //! L-infinity norm
   inline TYPE normLinfinity() const {
     TYPE res = (TYPE)(-1.0);
-    unsigned int i;
+    unsigned int i = 0;
     TYPE *data = d_data.get();
     for (i = 0; i < d_size; i++) {
       if (fabs(data[i]) > res) {
@@ -205,7 +205,7 @@ class Vector {
   //! i.e. the entry being used for the L-infinity norm
   inline unsigned int largestAbsValId() const {
     TYPE res = (TYPE)(-1.0);
-    unsigned int i, id = d_size;
+    unsigned int i = 0, id = d_size;
     TYPE *data = d_data.get();
     for (i = 0; i < d_size; i++) {
       if (fabs(data[i]) > res) {
@@ -219,7 +219,7 @@ class Vector {
   //! \brief Gets the ID of the entry that has the largest value
   inline unsigned int largestValId() const {
     TYPE res = (TYPE)(-1.e8);
-    unsigned int i, id = d_size;
+    unsigned int i = 0, id = d_size;
     TYPE *data = d_data.get();
     for (i = 0; i < d_size; i++) {
       if (data[i] > res) {
@@ -233,7 +233,7 @@ class Vector {
   //! \brief Gets the ID of the entry that has the smallest value
   inline unsigned int smallestValId() const {
     TYPE res = (TYPE)(1.e8);
-    unsigned int i, id = d_size;
+    unsigned int i = 0, id = d_size;
     TYPE *data = d_data.get();
     for (i = 0; i < d_size; i++) {
       if (data[i] < res) {
@@ -249,7 +249,7 @@ class Vector {
     PRECONDITION(d_size == other.size(),
                  "Size mismatch in vector doct product");
     const TYPE *oData = other.getData();
-    unsigned int i;
+    unsigned int i = 0;
     TYPE res = (TYPE)(0.0);
     TYPE *data = d_data.get();
     for (i = 0; i < d_size; i++) {
@@ -283,7 +283,7 @@ class Vector {
       generator.seed(clock() + 1);
     }
 
-    unsigned int i;
+    unsigned int i = 0;
     TYPE *data = d_data.get();
     for (i = 0; i < d_size; i++) {
       data[i] = randSource();
@@ -320,7 +320,7 @@ std::ostream &operator<<(std::ostream &target,
                          const RDNumeric::Vector<TYPE> &vec) {
   unsigned int siz = vec.size();
   target << "Size: " << siz << " [";
-  unsigned int i;
+  unsigned int i = 0;
   for (i = 0; i < siz; i++) {
     target << std::setw(7) << std::setprecision(3) << vec.getVal(i) << ", ";
   }
