@@ -12,6 +12,7 @@
 #include <ForceField/ForceField.h>
 #include <RDGeneral/Invariant.h>
 #include <RDGeneral/utils.h>
+#include <math.h>
 
 namespace ForceFields {
 namespace MMFF {
@@ -100,7 +101,7 @@ void BondStretchContrib::getGrad(double *pos, double *grad) const {
     double dE_dr =
         c1 * d_kb[termIdx] * distTerm *
         (1.0 + 1.5 * cs * distTerm + 2.0 * c3 * cs * cs * distTerm * distTerm);
-    double dGrad;
+    double dGrad = NAN;
     for (unsigned int i = 0; i < 3; ++i) {
       dGrad = ((dist > 0.0) ? (dE_dr * (at1Coords[i] - at2Coords[i]) / dist)
                             : d_kb[termIdx] * 0.01);
