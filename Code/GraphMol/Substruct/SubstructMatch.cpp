@@ -635,7 +635,7 @@ unsigned int RecursiveMatcher(const ROMol &mol, const ROMol &query,
       if (!query.hasProp(common_properties::_queryRootAtom)) {
         matches.push_back(pairs.begin()->second);
       } else {
-        int rootIdx;
+        int rootIdx = 0;
         query.getProp(common_properties::_queryRootAtom, rootIdx);
         bool found = false;
         for (const auto &pairIter : pairs) {
