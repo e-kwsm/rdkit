@@ -380,7 +380,7 @@ class VF2SubState {
       return false;
     }
 
-    unsigned int other1, other2;
+    unsigned int other1 = 0, other2 = 0;
 #ifdef RDK_VF2_PRUNING
     unsigned int term1 = 0, term2 = 0;
     unsigned int new1 = 0, new2 = 0;
@@ -394,7 +394,7 @@ class VF2SubState {
       if (core_1[other1] != NULL_NODE) {
         other2 = core_1[other1];
         typename Graph::edge_descriptor oEdge;
-        bool found;
+        bool found = false;
         boost::tie(oEdge, found) = boost::edge(node2, other2, *g2);
         if (!found || !ec(*bNbrs, oEdge)) {
           // std::cerr<<"  short2"<<std::endl;
@@ -477,7 +477,7 @@ class VF2SubState {
     }
   }
   void GetCoreSet(node_id c1[], node_id c2[]) {
-    unsigned int i, j;
+    unsigned int i = 0, j = 0;
     for (i = 0, j = 0; i < n1; ++i) {
       if (core_1[i] != NULL_NODE) {
         c1[j] = i;
