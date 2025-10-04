@@ -25,6 +25,7 @@
 #include <boost/range/adaptor/reversed.hpp>
 #include <boost/dynamic_bitset.hpp>
 #include <GraphMol/Substruct/SubstructMatch.h>
+#include <math.h>
 constexpr double NEIGH_RADIUS = 2.5;
 
 namespace RDDepict {
@@ -109,7 +110,7 @@ void EmbeddedFrag::computeNbrsAndAng(unsigned int aid,
   // we will find all the inter nbr angles, pick the one with the largest angle
   // make those neighbors the nbr1 and nbr2 of aid
   std::list<DOUBLE_INT_PAIR> anglePairs;
-  double ang;
+  double ang = NAN;
   for (auto nbi1 = doneNbrs.begin(); nbi1 != doneNbrs.end(); ++nbi1) {
     auto nbi3 = nbi1;
     for (auto nbi2 = nbi3++; nbi2 != doneNbrs.end(); ++nbi2) {
@@ -675,7 +676,7 @@ void EmbeddedFrag::embedFusedRings(const RDKit::VECT_INT_VECT &fusedRings,
   // the order is determined by how many atoms a ring has in common with
   // the atoms already embedded
   while (d_eatoms.size() < funion.size()) {  // ) {
-    int nextId;
+    int nextId = 0;
     // we will take the ring with maximum number of common atoms with
     // with atoms already done
     auto commonAtomIds = findNextRingToEmbed(doneRings, fusedRings, nextId);
@@ -1488,7 +1489,7 @@ void EmbeddedFrag::computeDistMat(DOUBLE_SMART_PTR &dmat) {
 
 double EmbeddedFrag::mimicDistMatAndDensityCostFunc(
     const DOUBLE_SMART_PTR *dmat, double mimicDmatWt) {
-  const double *ddata;
+  const double *ddata = nullptr;
   if (dmat) {
     ddata = dmat->get();
   } else {
@@ -1686,7 +1687,7 @@ std::vector<PAIR_I_I> EmbeddedFrag::findCollisions(const double *dmat,
   // if we a re dealing with non carbon atoms we will increase the collision
   // threshold. This is because only hetero atoms are typically drawn in a
   // depiction.
-  double atomTypeFactor1, atomTypeFactor2;
+  double atomTypeFactor1 = NAN, atomTypeFactor2 = NAN;
   for (auto efi = d_eatoms.begin(); efi != d_eatoms.end(); ++efi) {
     atomTypeFactor1 = 1.0;
     if (dp_mol->getAtomWithIdx(efi->first)->getAtomicNum() != 6) {
@@ -1920,8 +1921,8 @@ void EmbeddedFrag::openAngles(const double *dmat, unsigned int aid1,
   if ((deg1 > 1 || fixed1) && (deg2 > 1 || fixed2)) {
     return;
   }
-  unsigned int aidA;
-  unsigned int aidB;
+  unsigned int aidA = 0;
+  unsigned int aidB = 0;
   int type = 0;
   if ((deg1 == 1 && !fixed1) && (deg2 == 1 && !fixed2)) {
     aidA = _findDeg1Neighbor(dp_mol, aid1);
@@ -1940,7 +1941,7 @@ void EmbeddedFrag::openAngles(const double *dmat, unsigned int aid1,
   auto v2 = d_eatoms.at(aid1).loc - d_eatoms.at(aidA).loc;
   auto v1 = d_eatoms.at(aidB).loc - d_eatoms.at(aidA).loc;
   auto cross = (v1.x) * (v2.y) - (v1.y) * (v2.x);
-  double angle;
+  double angle = NAN;
   RDGeom::Transform2D trans1, trans2;
   switch (type) {
     case 1:
