@@ -20,6 +20,7 @@
 #include <ForceField/MMFF/Nonbonded.h>
 #include <ForceField/UFF/Nonbonded.h>
 #include <ForceField/UFF/Params.h>
+#include <math.h>
 #include <vector>
 #include <fstream>
 
@@ -237,7 +238,7 @@ Coulomb::Coulomb(const RDKit::ROMol &mol, int confId, double probeCharge,
 }
 
 double Coulomb::operator()(double x, double y, double z, double thres) const {
-  double res = 0.0, dist2, temp;
+  double res = 0.0, dist2 = NAN, temp = NAN;
   if (d_softcore) {
     for (unsigned int i = 0, j = 0; i < d_nAtoms; i++) {
       temp = x - d_pos[j++];
@@ -519,7 +520,7 @@ double cos_2(double t, double, double) {
 };
 
 double cos_2_0(double t, double t_0 = 0.0, double t_i = 1.0) {
-  double temp;
+  double temp = NAN;
   if (t_i < M_55D) {
     temp = cos(t_0);
     temp *= temp;
@@ -591,7 +592,7 @@ double cos_6_rot(double t, double, double) {
 };
 
 double cos_acc(double, double t_0, double t_i) {
-  double temp;
+  double temp = NAN;
   if (t_i < M_PI_2) {
     temp = cos(t_0) * (0.9 + 0.1 * sin(2 * t_i));
     return temp;
@@ -687,7 +688,7 @@ unsigned int HBond::findSpecials(const RDKit::ROMol &mol, int confId,
   RDKit::MatchVectType matches;
   RDKit::ROMol::ADJ_ITER nbrIdx, endNbrs;
   RDGeom::Point3D pos, dir, hbonddir, plane, bondDirection[12];
-  unsigned int nbrs;
+  unsigned int nbrs = 0;
   unsigned int match = 0, nMatches = 0;
 
   const RDKit::Conformer &conf = mol.getConformer(confId);
@@ -785,9 +786,9 @@ unsigned int HBond::findAcceptors(const RDKit::ROMol &mol, int confId,
   RDKit::ROMol::ADJ_ITER nbrIdx, endNbrs;
   RDKit::ROMol::ADJ_ITER secnbrIdx, secendNbrs;
   RDGeom::Point3D pos, dir, plane, bondDirection[12];
-  unsigned int nbrs;          // no of neigbors
+  unsigned int nbrs = 0;      // no of neigbors
   unsigned int interact = 0;  // no of interactions
-  bool aromaticnbr;           // aromatic neighbor atom?
+  bool aromaticnbr = false;   // aromatic neighbor atom?
 
   for (unsigned int i = 0; i < d_nInteract; i++) {  // loop over all atoms
     if (std::find(specials.begin(), specials.end(), i) !=
@@ -963,10 +964,10 @@ unsigned int HBond::findAcceptorsUnfixed(
   RDKit::ROMol::ADJ_ITER nbrIdx, endNbrs;
   RDKit::ROMol::ADJ_ITER secnbrIdx, secendNbrs;
   RDGeom::Point3D pos, dir, plane, bondDirection[12];
-  unsigned int nbrs,
-      nonhnbrs;               // no of neighbors, no of nonhydrogen - neighbors
+  unsigned int nbrs = 0,
+               nonhnbrs = 0;  // no of neighbors, no of nonhydrogen - neighbors
   unsigned int interact = 0;  // no of interactions
-  bool aromaticnbr;           // aromatic neighbor atom?
+  bool aromaticnbr = false;   // aromatic neighbor atom?
 
   for (unsigned int i = 0; i < d_nInteract; i++) {  // loop over all atoms
     if (std::find(specials.begin(), specials.end(), i) !=
@@ -1286,9 +1287,10 @@ unsigned int HBond::findDonorsUnfixed(
   const auto &conf = mol.getConformer(confId);  // get conformer of molecule
   RDKit::ROMol::ADJ_ITER nbrIdx, endNbrs;
   RDGeom::Point3D pos, hbonddir, dir, plane;
-  unsigned int nbrs, nonhnbrs;  // no of neighbors, no of non hydrogen neighbors
+  unsigned int nbrs = 0,
+               nonhnbrs = 0;  // no of neighbors, no of non hydrogen neighbors
   unsigned int interact = 0;
-  bool aromaticnbr;
+  bool aromaticnbr = false;
 
   for (unsigned int i = 0; i < d_nInteract; i++) {  // loop over all atoms
     if (std::find(specials.begin(), specials.end(), i) !=
@@ -1608,7 +1610,7 @@ double HBond::operator()(double x, double y, double z, double thres) const {
             em[d_probetype][d_targettypes[i]];  // multiplication with em
         d_eneContrib[i] = eneTerm2;
 
-        double t0, ti;
+        double t0 = NAN, ti = NAN;
         if (d_function[i] == &cos_acc ||
             d_function[i] == &cos_2_0) {  // only if dependent of ti and t0
           double dotProd = d_vectTargetProbe[j] * d_plane[j] +
@@ -1832,7 +1834,7 @@ Hydrophilic::Hydrophilic(const RDKit::ROMol &mol, int confId, bool fixed,
 
 double Hydrophilic::operator()(double x, double y, double z,
                                double thres) const {
-  double hbondO, hbondOH;
+  double hbondO = NAN, hbondOH = NAN;
   hbondO = d_hbondO(x, y, z, thres);
   hbondOH = d_hbondOH(x, y, z, thres);
   return std::min(hbondO, hbondOH);
@@ -1916,16 +1918,17 @@ std::unique_ptr<RDKit::RWMol> readFromCubeStream(
     return nullptr;
   }
   std::string string;
-  int nAtoms;
+  int nAtoms = 0;
   std::getline(inStrm, string);
   std::getline(inStrm, string);
   inStrm >> nAtoms;
-  double x, y, z;
+  double x = NAN, y = NAN, z = NAN;
   inStrm >> x >> y >> z;
   const RDGeom::Point3D offSet(x * bohr, y * bohr, z * bohr);
 
-  int dimX, dimY, dimZ;
-  double spacingX, spacingY, spacingZ, temp1, temp2;
+  int dimX = 0, dimY = 0, dimZ = 0;
+  double spacingX = NAN, spacingY = NAN, spacingZ = NAN, temp1 = NAN,
+         temp2 = NAN;
   inStrm >> dimX >> spacingX >> temp1 >> temp2;
   inStrm >> dimY >> temp1 >> spacingY >> temp2;
   inStrm >> dimZ >> temp1 >> temp2 >> spacingZ;
@@ -1946,7 +1949,7 @@ std::unique_ptr<RDKit::RWMol> readFromCubeStream(
   if (nAtoms) {
     molecule.reset(new RDKit::RWMol());
     std::unique_ptr<RDKit::Conformer> conf(new RDKit::Conformer(nAtoms));
-    int atomNum;
+    int atomNum = 0;
     for (auto i = 0; i < nAtoms; ++i) {
       inStrm >> atomNum >> temp1 >> x >> y >> z;
       RDKit::Atom atom(atomNum);
@@ -1959,7 +1962,7 @@ std::unique_ptr<RDKit::RWMol> readFromCubeStream(
   for (auto xi = 0; xi < dimX; ++xi) {
     for (auto yi = 0; yi < dimY; ++yi) {
       for (auto zi = 0; zi < dimZ; ++zi) {
-        double tempVal;
+        double tempVal = NAN;
         inStrm >> tempVal;
         grd.setVal(grd.getGridIndex(xi, yi, zi), tempVal);
       }
