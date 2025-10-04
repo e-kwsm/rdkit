@@ -19,14 +19,15 @@
 #include <GraphMol/Subgraphs/Subgraphs.h>
 #include <GraphMol/SmilesParse/SmilesWrite.h>
 #include <GraphMol/SmilesParse/SmilesParse.h>
+#include <math.h>
 
 namespace RDKit {
 unsigned int addOrder1Paths(PATH_LIST &paths, const ROMol &mol,
                             FragCatalog *fcat, DOUBLE_INT_MAP &mapkm1,
                             const MatchVectType &aidToFid) {
   PRECONDITION(fcat, "");
-  bool found;
-  const FragCatalogEntry *entry;
+  bool found = false;
+  const FragCatalogEntry *entry = nullptr;
   // INT_VECT o1entries;
   const FragCatParams *fparams = fcat->getCatalogParams();
 
@@ -38,8 +39,8 @@ unsigned int addOrder1Paths(PATH_LIST &paths, const ROMol &mol,
 
   PATH_LIST_CI pi;
   INT_VECT_CI eti;
-  double invar;
-  int vid;
+  double invar = NAN;
+  int vid = 0;
   for (pi = paths.begin(); pi != paths.end(); pi++) {
     auto *nent = new FragCatalogEntry(&mol, (*pi), aidToFid);
     // loop over each order 1 path
@@ -101,11 +102,11 @@ unsigned int addHigherOrderPaths(const INT_PATH_LIST_MAP &allPaths,
 
   PATH_LIST paths;
   PATH_LIST_CI pi;
-  bool found;
-  double invar, sinvar;
-  int entId;
+  bool found = false;
+  double invar = NAN, sinvar = NAN;
+  int entId = 0;
   DOUBLE_INT_MAP mapk;
-  int mEntId, vid;
+  int mEntId = 0, vid = 0;
   const FragCatParams *fparams = fcat->getCatalogParams();
 
   unsigned int lLen = fparams->getLowerFragLength();
@@ -113,7 +114,7 @@ unsigned int addHigherOrderPaths(const INT_PATH_LIST_MAP &allPaths,
   double tol = fparams->getTolerance();
   unsigned int nrem =
       0;  // counter for number of fragments added to the catalog
-  const FragCatalogEntry *entry;
+  const FragCatalogEntry *entry = nullptr;
 
   INT_PATH_LIST_MAP_CI ordi;
   for (ordi = allPaths.begin(); ordi != allPaths.end(); ordi++) {
