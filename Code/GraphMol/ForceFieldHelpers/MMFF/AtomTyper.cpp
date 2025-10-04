@@ -17,6 +17,7 @@
 #include <boost/dynamic_bitset.hpp>
 
 #include <GraphMol/QueryOps.h>
+#include <math.h>
 #include "AtomTyper.h"
 #include <cstdarg>
 
@@ -369,7 +370,7 @@ unsigned int isAngleInRingOfSize3or4(const ROMol &mol, const unsigned int idx1,
       std::vector<int> intersect;
       ROMol::ADJ_ITER nbrIdx;
       ROMol::ADJ_ITER endNbrs;
-      unsigned int newIdx;
+      unsigned int newIdx = 0;
       boost::tie(nbrIdx, endNbrs) =
           mol.getAtomNeighbors(mol.getAtomWithIdx(idx1));
       for (; nbrIdx != endNbrs; ++nbrIdx) {
@@ -418,7 +419,7 @@ unsigned int isTorsionInRingOfSize4or5(const ROMol &mol,
       std::vector<int> intersect;
       ROMol::ADJ_ITER nbrIdx;
       ROMol::ADJ_ITER endNbrs;
-      unsigned int newIdx;
+      unsigned int newIdx = 0;
       boost::tie(nbrIdx, endNbrs) =
           mol.getAtomNeighbors(mol.getAtomWithIdx(idx1));
       for (; nbrIdx != endNbrs; ++nbrIdx) {
@@ -449,10 +450,10 @@ unsigned int isTorsionInRingOfSize4or5(const ROMol &mol,
 // return true if atoms are in the same ring of size ringSize
 bool areAtomsInSameRingOfSize(const ROMol &mol, const unsigned int ringSize,
                               const unsigned int numAtoms, ...) {
-  unsigned int i;
+  unsigned int i = 0;
   bool areInSameRingOfSize = false;
   const VECT_INT_VECT &atomRings = mol.getRingInfo()->atomRings();
-  unsigned int idx;
+  unsigned int idx = 0;
   va_list atomIdxs;
 
   for (i = 0; (!areInSameRingOfSize) && (i < atomRings.size()); ++i) {
@@ -475,8 +476,8 @@ bool areAtomsInSameRingOfSize(const ROMol &mol, const unsigned int ringSize,
 // return true if atoms are in the same aromatic ring
 bool areAtomsInSameAromaticRing(const ROMol &mol, const unsigned int idx1,
                                 const unsigned int idx2) {
-  unsigned int i;
-  unsigned int j;
+  unsigned int i = 0;
+  unsigned int j = 0;
   bool areInSameAromatic = false;
   const VECT_INT_VECT &atomRings = mol.getRingInfo()->atomRings();
 
@@ -504,8 +505,8 @@ bool areAtomsInSameAromaticRing(const ROMol &mol, const unsigned int idx1,
 void MMFFMolProperties::setMMFFHeavyAtomType(const RingMembershipSize &rmSize,
                                              const Atom *atom) {
   unsigned int atomType = 0;
-  unsigned int i;
-  unsigned int j;
+  unsigned int i = 0;
+  unsigned int j = 0;
   unsigned int nTermObondedToN = 0;
   bool alphaOrBetaInSameRing = false;
   bool isAlphaOS = false;
@@ -2578,8 +2579,8 @@ MMFFMolProperties::getMMFFBondStretchEmpiricalRuleParams(const ROMol &,
                                                          const Bond *bond) {
   PRECONDITION(this->isValid(), "missing atom types - invalid force-field");
 
-  const MMFFBond *mmffBndkParams;
-  const MMFFHerschbachLaurie *mmffHerschbachLaurieParams;
+  const MMFFBond *mmffBndkParams = nullptr;
+  const MMFFHerschbachLaurie *mmffHerschbachLaurieParams = nullptr;
   const MMFFProp *mmffAtomPropParams[2];
   const MMFFCovRadPauEle *mmffAtomCovRadPauEleParams[2];
   const MMFFBndkCollection *mmffBndk = DefaultParameters::getMMFFBndk();
@@ -3071,11 +3072,11 @@ MMFFMolProperties::getMMFFTorsionEmpiricalRuleParams(const ROMol &mol,
 void MMFFMolProperties::computeMMFFCharges(const ROMol &mol) {
   PRECONDITION(this->isValid(), "missing atom types - invalid force-field");
 
-  unsigned int idx;
-  unsigned int i;
-  unsigned int j;
-  unsigned int atomType;
-  unsigned int nbrAtomType;
+  unsigned int idx = 0;
+  unsigned int i = 0;
+  unsigned int j = 0;
+  unsigned int atomType = 0;
+  unsigned int nbrAtomType = 0;
   unsigned int nConj = 0;
   unsigned int old_nConj = 0;
   double pChg = 0.0;
@@ -3430,7 +3431,7 @@ void MMFFMolProperties::computeMMFFCharges(const ROMol &mol) {
     double v = (*mmffPBCI)(atomType)->fcadj;
     double sumFormalCharge = 0.0;
     double sumPartialCharge = 0.0;
-    double nbrFormalCharge;
+    double nbrFormalCharge = NAN;
     std::pair<int, const MMFFChg *> mmffChgParams;
 
     if (isDoubleZero(v)) {
@@ -3531,7 +3532,7 @@ bool MMFFMolProperties::getMMFFAngleBendParams(const ROMol &mol,
     unsigned int idx[3] = {idx1, idx2, idx3};
     MMFFBond mmffBondParams[2];
     unsigned int atomType[3];
-    unsigned int i;
+    unsigned int i = 0;
     angleType = getMMFFAngleType(mol, idx1, idx2, idx3);
     bool areMMFFAngleParamsEmpirical = false;
     for (i = 0; i < 3; ++i) {
@@ -3544,7 +3545,7 @@ bool MMFFMolProperties::getMMFFAngleBendParams(const ROMol &mol,
     if ((!mmffAngleParams) || (isDoubleZero(mmffAngleParams->ka))) {
       areMMFFAngleParamsEmpirical = true;
       for (i = 0; areMMFFAngleParamsEmpirical && (i < 2); ++i) {
-        unsigned int bondType;
+        unsigned int bondType = 0;
         areMMFFAngleParamsEmpirical = getMMFFBondStretchParams(
             mol, idx[i], idx[i + 1], bondType, mmffBondParams[i]);
       }
@@ -3578,7 +3579,7 @@ bool MMFFMolProperties::getMMFFStretchBendParams(
     unsigned int idx[3] = {idx1, idx2, idx3};
     unsigned int atomType[3];
     unsigned int bondType[2];
-    unsigned int angleType;
+    unsigned int angleType = 0;
     const MMFFProp *mmffPropParamsCentralAtom =
         (*mmffProp)(getMMFFAtomType(idx[1]));
     if (!(mmffPropParamsCentralAtom->linh)) {
@@ -3634,7 +3635,7 @@ bool MMFFMolProperties::getMMFFTorsionParams(
   if (isValid() && mol.getBondBetweenAtoms(idx1, idx2) &&
       mol.getBondBetweenAtoms(idx2, idx3) &&
       mol.getBondBetweenAtoms(idx3, idx4)) {
-    unsigned int i;
+    unsigned int i = 0;
     unsigned int idx[4] = {idx1, idx2, idx3, idx4};
     unsigned int atomType[4];
     const MMFFTorCollection *mmffTor =
@@ -3679,7 +3680,7 @@ bool MMFFMolProperties::getMMFFOopBendParams(const ROMol &mol,
   if (isValid() && mol.getBondBetweenAtoms(idx1, idx2) &&
       mol.getBondBetweenAtoms(idx2, idx3) &&
       mol.getBondBetweenAtoms(idx2, idx4)) {
-    unsigned int i;
+    unsigned int i = 0;
     unsigned int idx[4] = {idx1, idx2, idx3, idx4};
     unsigned int atomType[4];
 
