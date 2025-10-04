@@ -75,7 +75,7 @@ int generic_parse_helper(T parser,
                          int start_tok,
                          const std::string& input_type) {
   std::vector<std::pair<unsigned int, unsigned int>> branchPoints;
-  void *scanner;
+  void *scanner = nullptr;
   int res = 1;  // initialize with fail code
 
   TEST_ASSERT(!lex_init(&scanner));

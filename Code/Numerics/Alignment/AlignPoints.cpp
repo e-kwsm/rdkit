@@ -12,6 +12,7 @@
 #include <Geometry/point.h>
 #include <Geometry/Transform3D.h>
 #include <Numerics/Vector.h>
+#include <math.h>
 
 constexpr double TOLERANCE = 1.e-6;
 
@@ -98,25 +99,20 @@ void _covertCovMatToQuad(const double covMat[3][3],
                          const RDGeom::Point3D &rptSum,
                          const RDGeom::Point3D &pptSum, double wtsSum,
                          double quad[4][4]) {
-  double PxRx, PxRy, PxRz;
-  double PyRx, PyRy, PyRz;
-  double PzRx, PzRy, PzRz;
-  double temp;
-
-  temp = pptSum.x / wtsSum;
-  PxRx = covMat[0][0] - temp * rptSum.x;
-  PxRy = covMat[0][1] - temp * rptSum.y;
-  PxRz = covMat[0][2] - temp * rptSum.z;
+  double temp = pptSum.x / wtsSum;
+  double PxRx = covMat[0][0] - temp * rptSum.x;
+  double PxRy = covMat[0][1] - temp * rptSum.y;
+  double PxRz = covMat[0][2] - temp * rptSum.z;
 
   temp = pptSum.y / wtsSum;
-  PyRx = covMat[1][0] - temp * rptSum.x;
-  PyRy = covMat[1][1] - temp * rptSum.y;
-  PyRz = covMat[1][2] - temp * rptSum.z;
+  double PyRx = covMat[1][0] - temp * rptSum.x;
+  double PyRy = covMat[1][1] - temp * rptSum.y;
+  double PyRz = covMat[1][2] - temp * rptSum.z;
 
   temp = pptSum.z / wtsSum;
-  PzRx = covMat[2][0] - temp * rptSum.x;
-  PzRy = covMat[2][1] - temp * rptSum.y;
-  PzRz = covMat[2][2] - temp * rptSum.z;
+  double PzRx = covMat[2][0] - temp * rptSum.x;
+  double PzRy = covMat[2][1] - temp * rptSum.y;
+  double PzRz = covMat[2][2] - temp * rptSum.z;
 
   quad[0][0] = -2.0 * (PxRx + PyRy + PzRz);
   quad[1][1] = -2.0 * (PxRx - PyRy - PzRz);
@@ -162,15 +158,12 @@ void _covertCovMatToQuad(const double covMat[3][3],
 
 unsigned int jacobi(double quad[4][4], double eigenVals[4],
                     double eigenVecs[4][4], unsigned int maxIter) {
-  double offDiagNorm, diagNorm;
-  double b, dma, q, t, c, s;
-  double atemp, vtemp, dtemp;
-  int i, j, k;
-  unsigned int l;
+  double b = NAN, dma = NAN, q = NAN, t = NAN;
+  unsigned int l = 0;
 
   // initialize the eigen vector to Identity
-  for (j = 0; j <= 3; j++) {
-    for (i = 0; i <= 3; i++) {
+  for (int j = 0; j <= 3; j++) {
+    for (int i = 0; i <= 3; i++) {
       eigenVecs[i][j] = 0.0;
     }
     eigenVecs[j][j] = 1.0;
@@ -178,19 +171,19 @@ unsigned int jacobi(double quad[4][4], double eigenVals[4],
   }
 
   for (l = 0; l < maxIter; l++) {
-    diagNorm = 0.0;
-    offDiagNorm = 0.0;
-    for (j = 0; j <= 3; j++) {
+    double diagNorm = 0.0;
+    double offDiagNorm = 0.0;
+    for (int j = 0; j <= 3; j++) {
       diagNorm += fabs(eigenVals[j]);
-      for (i = 0; i <= j - 1; i++) {
+      for (int i = 0; i <= j - 1; i++) {
         offDiagNorm += fabs(quad[i][j]);
       }
     }
     if (fabs(diagNorm) > 1.e-16 && (offDiagNorm / diagNorm) <= TOLERANCE) {
       goto Exit_now;
     }
-    for (j = 1; j <= 3; j++) {
-      for (i = 0; i <= j - 1; i++) {
+    for (int j = 1; j <= 3; j++) {
+      for (int i = 0; i <= j - 1; i++) {
         b = quad[i][j];
         if (fabs(b) > 0.0) {
           dma = eigenVals[j] - eigenVals[i];
@@ -203,30 +196,31 @@ unsigned int jacobi(double quad[4][4], double eigenVals[4],
               t = -t;
             }
           }
-          c = 1.0 / sqrt(t * t + 1.0);
-          s = t * c;
+          double c = 1.0 / sqrt(t * t + 1.0);
+          double s = t * c;
           quad[i][j] = 0.0;
-          for (k = 0; k <= i - 1; k++) {
-            atemp = c * quad[k][i] - s * quad[k][j];
+          for (int k = 0; k <= i - 1; k++) {
+            double atemp = c * quad[k][i] - s * quad[k][j];
             quad[k][j] = s * quad[k][i] + c * quad[k][j];
             quad[k][i] = atemp;
           }
-          for (k = i + 1; k <= j - 1; k++) {
-            atemp = c * quad[i][k] - s * quad[k][j];
+          for (int k = i + 1; k <= j - 1; k++) {
+            double atemp = c * quad[i][k] - s * quad[k][j];
             quad[k][j] = s * quad[i][k] + c * quad[k][j];
             quad[i][k] = atemp;
           }
-          for (k = j + 1; k <= 3; k++) {
-            atemp = c * quad[i][k] - s * quad[j][k];
+          for (int k = j + 1; k <= 3; k++) {
+            double atemp = c * quad[i][k] - s * quad[j][k];
             quad[j][k] = s * quad[i][k] + c * quad[j][k];
             quad[i][k] = atemp;
           }
-          for (k = 0; k <= 3; k++) {
-            vtemp = c * eigenVecs[k][i] - s * eigenVecs[k][j];
+          for (int k = 0; k <= 3; k++) {
+            double vtemp = c * eigenVecs[k][i] - s * eigenVecs[k][j];
             eigenVecs[k][j] = s * eigenVecs[k][i] + c * eigenVecs[k][j];
             eigenVecs[k][i] = vtemp;
           }
-          dtemp = c * c * eigenVals[i] + s * s * eigenVals[j] - 2.0 * c * s * b;
+          double dtemp =
+              c * c * eigenVals[i] + s * s * eigenVals[j] - 2.0 * c * s * b;
           eigenVals[j] =
               s * s * eigenVals[i] + c * c * eigenVals[j] + 2.0 * c * s * b;
           eigenVals[i] = dtemp;
@@ -237,10 +231,10 @@ unsigned int jacobi(double quad[4][4], double eigenVals[4],
 
 Exit_now:
 
-  for (j = 0; j <= 2; j++) {
-    k = j;
-    dtemp = eigenVals[k];
-    for (i = j + 1; i <= 3; i++) {
+  for (int j = 0; j <= 2; j++) {
+    int k = j;
+    double dtemp = eigenVals[k];
+    for (int i = j + 1; i <= 3; i++) {
       if (eigenVals[i] < dtemp) {
         k = i;
         dtemp = eigenVals[k];
@@ -250,7 +244,7 @@ Exit_now:
     if (k > j) {
       eigenVals[k] = eigenVals[j];
       eigenVals[j] = dtemp;
-      for (i = 0; i <= 3; i++) {
+      for (int i = 0; i <= 3; i++) {
         dtemp = eigenVecs[i][k];
         eigenVecs[i][k] = eigenVecs[i][j];
         eigenVecs[i][j] = dtemp;
@@ -261,7 +255,7 @@ Exit_now:
 }
 
 void reflectCovMat(double covMat[3][3]) {
-  unsigned int i, j;
+  unsigned int i = 0, j = 0;
   for (i = 0; i < 3; i++) {
     for (j = 0; j < 3; j++) {
       covMat[i][j] = -covMat[i][j];
