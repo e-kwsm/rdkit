@@ -233,8 +233,8 @@ void markUnspecifiedStereoAsUnknown(ROMol &mol, int confId) {
   auto wedgeBonds = RDKit::Chirality::pickBondsToWedge(mol, nullptr, &conf);
   for (auto b : mol.bonds()) {
     if (b->getBondType() == Bond::DOUBLE) {
-      int dirCode;
-      bool reverse;
+      int dirCode = 0;
+      bool reverse = false;
       RDKit::Chirality::GetMolFileBondStereoInfo(b, wedgeBonds, &conf, dirCode,
                                                  reverse);
       if (dirCode == 3) {
