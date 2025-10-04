@@ -297,7 +297,7 @@ void fixAtomMaps(ChemicalReaction &rxn) {
 
 // might throw mol sanitization exception??? wrap in RxnSanitize?
 void fixReactantTemplateAromaticity(ChemicalReaction &rxn) {
-  unsigned int ops;
+  unsigned int ops = 0;
   for (auto it = rxn.beginReactantTemplates(); it != rxn.endReactantTemplates();
        ++it) {
     auto *rw = dynamic_cast<RWMol *>(it->get());
@@ -414,17 +414,17 @@ void sanitizeRxn(ChemicalReaction &rxn,
 
 void sanitizeRxnAsMols(ChemicalReaction &rxn, unsigned int sanitizeOps) {
   for (auto &mol : rxn.getReactants()) {
-    unsigned int operationThatFailed;
+    unsigned int operationThatFailed = 0;
     MolOps::sanitizeMol(*dynamic_cast<RWMol *>(mol.get()), operationThatFailed,
                         sanitizeOps);
   }
   for (auto &mol : rxn.getAgents()) {
-    unsigned int operationThatFailed;
+    unsigned int operationThatFailed = 0;
     MolOps::sanitizeMol(*dynamic_cast<RWMol *>(mol.get()), operationThatFailed,
                         sanitizeOps);
   }
   for (auto &mol : rxn.getProducts()) {
-    unsigned int operationThatFailed;
+    unsigned int operationThatFailed = 0;
     MolOps::sanitizeMol(*dynamic_cast<RWMol *>(mol.get()), operationThatFailed,
                         sanitizeOps);
   }
