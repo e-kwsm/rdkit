@@ -108,9 +108,9 @@ inline signed char EndianSwapBytes(signed char value) {
 //! Packs an integer and outputs it to a stream
 inline void appendPackedIntToStream(std::stringstream &ss,
                                     boost::uint32_t num) {
-  int nbytes, bix;
-  unsigned int val, res;
-  char tc;
+  int nbytes = 0, bix = 0;
+  unsigned int val = 0, res = 0;
+  char tc = 0;
 
   res = num;
   while (1) {
@@ -151,9 +151,9 @@ inline void appendPackedIntToStream(std::stringstream &ss,
 
 //! Reads an integer from a stream in packed format and returns the result.
 inline boost::uint32_t readPackedIntFromStream(std::stringstream &ss) {
-  boost::uint32_t val, num;
-  int shift, offset;
-  char tmp;
+  boost::uint32_t val = 0, num = 0;
+  int shift = 0, offset = 0;
+  char tmp = 0;
   ss.read(&tmp, sizeof(tmp));
   if (ss.fail()) {
     throw std::runtime_error("failed to read from stream");
@@ -217,9 +217,9 @@ inline boost::uint32_t readPackedIntFromStream(std::stringstream &ss) {
 //! Reads an integer from a char * in packed format and returns the result.
 //!  The argument is advanced
 inline boost::uint32_t pullPackedIntFromString(const char *&text) {
-  boost::uint32_t val, num;
-  int shift, offset;
-  char tmp;
+  boost::uint32_t val = 0, num = 0;
+  int shift = 0, offset = 0;
+  char tmp = 0;
   tmp = *text;
   text++;
   val = UCHAR(tmp);
@@ -301,7 +301,7 @@ void streamRead(std::istream &ss, T &obj, int version) {
 
 inline void streamRead(std::istream &ss, std::string &what, int version) {
   RDUNUSED_PARAM(version);
-  unsigned int l;
+  unsigned int l = 0;
   streamRead(ss, l);
   auto buff = std::make_unique<char[]>(l);
   ss.read(buff.get(), sizeof(char) * l);
@@ -313,7 +313,7 @@ inline void streamRead(std::istream &ss, std::string &what, int version) {
 
 template <class T>
 void streamReadVec(std::istream &ss, T &val) {
-  boost::uint64_t size;
+  boost::uint64_t size = 0;
   streamRead(ss, size);
   val.resize(boost::numeric_cast<size_t>(size));
 
@@ -324,7 +324,7 @@ void streamReadVec(std::istream &ss, T &val) {
 
 inline void streamReadStringVec(std::istream &ss, std::vector<std::string> &val,
                                 int version) {
-  boost::uint64_t size;
+  boost::uint64_t size = 0;
   streamRead(ss, size);
   val.resize(size);
 
@@ -564,7 +564,7 @@ inline bool streamReadProp(std::istream &ss, Dict::Pair &pair,
   int version = 0;
   streamRead(ss, pair.key, version);
 
-  unsigned char type;
+  unsigned char type = 0;
   streamRead(ss, type);
   switch (type) {
     case DTags::IntTag:

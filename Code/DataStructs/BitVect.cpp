@@ -25,8 +25,8 @@ void BitVect::initFromText(const char *data, const unsigned int dataLen,
   std::stringstream ss(std::ios_base::binary | std::ios_base::in |
                        std::ios_base::out);
   if (isBase64) {
-    unsigned int actualLen;
-    char *decoded;
+    unsigned int actualLen = 0;
+    char *decoded = nullptr;
     decoded = Base64Decode((const char *)data, &actualLen);
     ss.write(decoded, actualLen);
     delete[] decoded;
@@ -37,7 +37,7 @@ void BitVect::initFromText(const char *data, const unsigned int dataLen,
   std::int32_t format = 0;
   std::int32_t version = 0;
   std::uint32_t nOn = 0;
-  std::int32_t size;
+  std::int32_t size = 0;
 
   // earlier versions of the code did not have the version number encoded, so
   //  we'll use that to distinguish version 0
@@ -66,13 +66,13 @@ void BitVect::initFromText(const char *data, const unsigned int dataLen,
   // if the either have older version or or version 16 with ints for on bits
   if ((format == 0) ||
       ((format == 1) && (size >= std::numeric_limits<unsigned short>::max()))) {
-    std::uint32_t tmp;
+    std::uint32_t tmp = 0;
     for (unsigned int i = 0; i < nOn; i++) {
       RDKit::streamRead(ss, tmp);
       setBit(tmp);
     }
   } else if (format == 1) {  // version 16 and on bits stored as short ints
-    std::uint16_t tmp;
+    std::uint16_t tmp = 0;
     for (unsigned int i = 0; i < nOn; i++) {
       RDKit::streamRead(ss, tmp);
       setBit(tmp);
