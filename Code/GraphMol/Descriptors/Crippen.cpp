@@ -27,6 +27,7 @@ typedef boost::tokenizer<boost::char_separator<char>> tokenizer;
 #include <boost/flyweight/key_value.hpp>
 #include <boost/flyweight/no_tracking.hpp>
 #include <RDGeneral/BoostEndInclude.h>
+#include <math.h>
 
 namespace RDKit {
 namespace Descriptors {
@@ -121,13 +122,13 @@ void calcCrippenDescriptors(const ROMol &mol, double &logp, double &mr,
 };
 
 double calcClogP(const ROMol &mol) {
-  double clogp, mr;
+  double clogp = NAN, mr = NAN;
   calcCrippenDescriptors(mol, clogp, mr);
   return clogp;
 }
 
 double calcMR(const ROMol &mol) {
-  double clogp, mr;
+  double clogp = NAN, mr = NAN;
   calcCrippenDescriptors(mol, clogp, mr);
   return mr;
 }
