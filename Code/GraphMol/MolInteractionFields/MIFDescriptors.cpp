@@ -20,7 +20,7 @@
 #include <ForceField/MMFF/Nonbonded.h>
 #include <ForceField/UFF/Nonbonded.h>
 #include <ForceField/UFF/Params.h>
-#include <math.h>
+#include <cmath>
 #include <vector>
 #include <fstream>
 
