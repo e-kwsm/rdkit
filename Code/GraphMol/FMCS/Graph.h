@@ -34,7 +34,7 @@ class RDKIT_FMCS_EXPORT Graph : public Graph_t {
   }
   void addBond(unsigned int bond, unsigned int beginAtom,
                unsigned int endAtom) {
-    bool res;
+    bool res = false;
     Graph_t::edge_descriptor which;
     boost::tie(which, res) = boost::add_edge(beginAtom, endAtom, *this);
     (*this)[which] = bond;
