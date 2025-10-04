@@ -109,7 +109,7 @@ class RDKIT_QUERY_EXPORT Query {
   //! returns whether or not we match the argument
   virtual bool Match(const DataFuncArgType arg) const {
     MatchFuncArgType mfArg = TypeConvert(arg, Int2Type<needsConversion>());
-    bool tRes;
+    bool tRes = false;
     if (this->d_matchFunc) {
       tRes = this->d_matchFunc(mfArg);
     } else {
