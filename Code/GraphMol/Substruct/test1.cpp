@@ -35,9 +35,9 @@ void test1() {
   std::cout << " ----------------- Test 1" << std::endl;
   MatchVectType matchV;
   std::vector<MatchVectType> matches;
-  unsigned int n;
+  unsigned int n = 0;
 
-  RWMol *m, *q1;
+  RWMol *m = nullptr, *q1 = nullptr;
   bool updateLabel = true;
   bool takeOwnership = true;
   m = new RWMol();
@@ -105,9 +105,9 @@ void test2() {
   std::cout << " ----------------- Test 2" << std::endl;
   MatchVectType matchV;
   std::vector<MatchVectType> matches;
-  unsigned int n;
+  unsigned int n = 0;
 
-  RWMol *m, *q1;
+  RWMol *m = nullptr, *q1 = nullptr;
   m = new RWMol();
   bool updateLabel = true;
   bool takeOwnership = true;
@@ -168,9 +168,9 @@ void test3() {
   std::cout << " ----------------- Test 3" << std::endl;
   MatchVectType matchV;
   std::vector<MatchVectType> matches;
-  unsigned int n;
+  unsigned int n = 0;
 
-  RWMol *m, *q1;
+  RWMol *m = nullptr, *q1 = nullptr;
   m = new RWMol();
   bool updateLabel = true;
   bool takeOwnership = true;
@@ -242,11 +242,11 @@ void test4() {
   std::cout << " ----------------- Test 4" << std::endl;
   MatchVectType matchV;
   std::vector<MatchVectType> matches;
-  int n;
+  int n = 0;
   bool updateLabel = true;
   bool takeOwnership = true;
 
-  RWMol *m, *q1, *q2;
+  RWMol *m = nullptr, *q1 = nullptr, *q2 = nullptr;
   auto *a6 = new Atom(6);
   auto *a8 = new Atom(8);
   m = new RWMol();
@@ -303,11 +303,11 @@ void test5() {
   std::cout << " ----------------- Test 5" << std::endl;
   MatchVectType matchV;
   std::vector<MatchVectType> matches;
-  int n;
+  int n = 0;
   bool updateLabel = true;
   bool takeOwnership = true;
 
-  RWMol *m, *q1, *q2;
+  RWMol *m = nullptr, *q1 = nullptr, *q2 = nullptr;
   auto *a6 = new Atom(6);
   auto *a8 = new Atom(8);
   // CC(OC)C
@@ -354,11 +354,11 @@ void test5QueryRoot() {
   std::cout << " ----------------- Test 5 QueryRoot" << std::endl;
   MatchVectType matchV;
   std::vector<MatchVectType> matches;
-  int n;
+  int n = 0;
   bool updateLabel = true;
   bool takeOwnership = true;
 
-  RWMol *m, *q1, *q2;
+  RWMol *m = nullptr, *q1 = nullptr, *q2 = nullptr;
   auto *a6 = new Atom(6);
   auto *a8 = new Atom(8);
   // CC(OC)C
@@ -407,11 +407,11 @@ void test6() {
   std::cout << " ----------------- Test 6 (Issue71 related)" << std::endl;
   MatchVectType matchV;
   std::vector<MatchVectType> matches;
-  int n;
+  int n = 0;
   bool updateLabel = true;
   bool takeOwnership = true;
 
-  RWMol *m, *q1;
+  RWMol *m = nullptr, *q1 = nullptr;
   auto *a6 = new Atom(6);
 
   m = new RWMol();
@@ -454,9 +454,9 @@ void test6() {
 void test7() {
   std::cout << " ----------------- Test 7 (leak check)" << std::endl;
   MatchVectType matchV;
-  int n;
+  int n = 0;
 
-  RWMol *m, *q1;
+  RWMol *m = nullptr, *q1 = nullptr;
   auto *a6 = new Atom(6);
   bool updateLabel = true;
   bool takeOwnership = true;
@@ -541,9 +541,9 @@ void test9() {
   std::cout << " ----------------- Test 9 (chiral searches)" << std::endl;
   MatchVectType matchV;
   std::vector<MatchVectType> matches;
-  int n;
+  int n = 0;
 
-  RWMol *m, *q1;
+  RWMol *m = nullptr, *q1 = nullptr;
   auto *a6 = new Atom(6);
 
   m = new RWMol();
@@ -577,7 +577,7 @@ void test9() {
   MolOps::sanitizeMol(*q1);
   MolOps::assignStereochemistry(*q1);
 
-  bool found;
+  bool found = false;
   // test with default options (no chirality):
   found = SubstructMatch(*m, *q1, matchV);
   TEST_ASSERT(found);
@@ -611,11 +611,11 @@ void testRecursiveSerialNumbers() {
             << std::endl;
   MatchVectType matchV;
   std::vector<MatchVectType> matches;
-  int n;
+  int n = 0;
   bool updateLabel = true;
   bool takeOwnership = true;
 
-  RWMol *m, *q1, *q2;
+  RWMol *m = nullptr, *q1 = nullptr, *q2 = nullptr;
   auto *a6 = new Atom(6);
   auto *a8 = new Atom(8);
   m = new RWMol();
