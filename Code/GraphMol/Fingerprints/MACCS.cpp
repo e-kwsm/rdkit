@@ -325,7 +325,7 @@ void GenerateFP(const RDKit::ROMol &mol, ExplicitBitVect &fp) {
   std::vector<RDKit::MatchVectType> matches;
   RDKit::RWMol::ConstAtomIterator atom;
   RDKit::MatchVectType match;
-  unsigned int count;
+  unsigned int count = 0;
 
   for (atom = mol.beginAtoms(); atom != mol.endAtoms(); ++atom) {
     switch ((*atom)->getAtomicNum()) {
