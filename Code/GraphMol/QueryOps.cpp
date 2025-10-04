@@ -545,7 +545,7 @@ ATOM_OR_QUERY *makeMHAtomQuery() {
 }
 
 ATOM_EQUALS_QUERY *makeAtomInNRingsQuery(int what) {
-  ATOM_EQUALS_QUERY *res;
+  ATOM_EQUALS_QUERY *res = nullptr;
   res = makeAtomSimpleQuery<ATOM_EQUALS_QUERY>(what, queryIsAtomInNRings);
   res->setDescription("AtomInNRings");
   return res;
@@ -1058,7 +1058,7 @@ void finalizeQueryFromDescription(
     descr = descr.substr(8);
   }
 
-  Queries::Query<int, Atom const *, true> *tmpQuery;
+  Queries::Query<int, Atom const *, true> *tmpQuery = nullptr;
   if (descr == "AtomRingBondCount") {
     query->setDataFunc(queryAtomRingBondCount);
   } else if (descr == "AtomHasRingBond") {
@@ -1141,7 +1141,7 @@ void finalizeQueryFromDescription(
 void finalizeQueryFromDescription(
     Queries::Query<int, Bond const *, true> *query, Bond const *) {
   std::string descr = query->getDescription();
-  Queries::Query<int, Bond const *, true> *tmpQuery;
+  Queries::Query<int, Bond const *, true> *tmpQuery = nullptr;
   if (descr == "BondRingSize") {
     tmpQuery = makeBondInRingOfSizeQuery(
         static_cast<BOND_EQUALS_QUERY *>(query)->getVal());
