@@ -226,7 +226,7 @@ inline int EmbedMolecule(ROMol &mol, EmbedParameters &params) {
   INT_VECT confIds;
   EmbedMultipleConfs(mol, confIds, 1, params);
 
-  int res;
+  int res = 0;
   if (confIds.size()) {
     res = confIds[0];
   } else {

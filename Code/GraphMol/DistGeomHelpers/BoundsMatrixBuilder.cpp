@@ -20,6 +20,7 @@
 #include <RDGeneral/Exceptions.h>
 #include <Numerics/SymmMatrix.h>
 #include <DistGeom/TriangleSmooth.h>
+#include <math.h>
 #include <boost/dynamic_bitset.hpp>
 #include <algorithm>
 #include <unordered_set>
@@ -370,8 +371,8 @@ void set13Bounds(const ROMol &mol, DistGeom::BoundsMatPtr mmat,
   const auto rinfo = mol.getRingInfo();
   CHECK_INVARIANT(rinfo, "");
 
-  unsigned int aid2, aid1, aid3, bid1, bid2;
-  double angle;
+  unsigned int aid2 = 0, aid1 = 0, aid3 = 0, bid1 = 0, bid2 = 0;
+  double angle = NAN;
 
   auto atomRings = rinfo->atomRings();
   std::sort(atomRings.begin(), atomRings.end(), lessVector);
@@ -597,7 +598,7 @@ void _setInRing14Bounds(const ROMol &mol, const Bond *bnd1, const Bond *bnd2,
   PRECONDITION(bnd1, "");
   PRECONDITION(bnd2, "");
   PRECONDITION(bnd3, "");
-  unsigned int bid1, bid2, bid3;
+  unsigned int bid1 = 0, bid2 = 0, bid3 = 0;
   bid1 = bnd1->getIdx();
   bid2 = bnd2->getIdx();
   bid3 = bnd3->getIdx();
@@ -628,7 +629,7 @@ void _setInRing14Bounds(const ROMol &mol, const Bond *bnd1, const Bond *bnd2,
 
   CHECK_INVARIANT(ba12 > 0.0, "");
   CHECK_INVARIANT(ba23 > 0.0, "");
-  double dl, du;
+  double dl = NAN, du = NAN;
   unsigned int nb = mol.getNumBonds();
   // several special cases here
   Path14Configuration path14;
@@ -712,7 +713,7 @@ void _setTwoInSameRing14Bounds(const ROMol &mol, const Bond *bnd1,
   PRECONDITION(bnd1, "");
   PRECONDITION(bnd2, "");
   PRECONDITION(bnd3, "");
-  unsigned int bid1, bid2, bid3;
+  unsigned int bid1 = 0, bid2 = 0, bid3 = 0;
   bid1 = bnd1->getIdx();
   bid2 = bnd2->getIdx();
   bid3 = bnd3->getIdx();
@@ -751,7 +752,7 @@ void _setTwoInSameRing14Bounds(const ROMol &mol, const Bond *bnd1,
   double ba23 = accumData.bondAngles->getVal(bid2, bid3);
   CHECK_INVARIANT(ba12 > 0.0, "");
   CHECK_INVARIANT(ba23 > 0.0, "");
-  double dl, du;
+  double dl = NAN, du = NAN;
   Path14Configuration path14;
   unsigned int nb = mol.getNumBonds();
 
@@ -971,7 +972,7 @@ void _setChain14Bounds(const ROMol &mol, const Bond *bnd1, const Bond *bnd2,
   PRECONDITION(bnd1, "");
   PRECONDITION(bnd2, "");
   PRECONDITION(bnd3, "");
-  unsigned int bid1, bid2, bid3;
+  unsigned int bid1 = 0, bid2 = 0, bid3 = 0;
   bid1 = bnd1->getIdx();
   bid2 = bnd2->getIdx();
   bid3 = bnd3->getIdx();
@@ -1250,7 +1251,7 @@ void _setMacrocycleTwoInSameRing14Bounds(const ROMol &mol, const Bond *bnd1,
   PRECONDITION(bnd1, "");
   PRECONDITION(bnd2, "");
   PRECONDITION(bnd3, "");
-  unsigned int bid1, bid2, bid3;
+  unsigned int bid1 = 0, bid2 = 0, bid3 = 0;
   bid1 = bnd1->getIdx();
   bid2 = bnd2->getIdx();
   bid3 = bnd3->getIdx();
@@ -1288,7 +1289,7 @@ void _setMacrocycleTwoInSameRing14Bounds(const ROMol &mol, const Bond *bnd1,
   double ba23 = accumData.bondAngles->getVal(bid2, bid3);
   CHECK_INVARIANT(ba12 > 0.0, "");
   CHECK_INVARIANT(ba23 > 0.0, "");
-  double dl, du;
+  double dl = NAN, du = NAN;
   Path14Configuration path14;
   unsigned int nb = mol.getNumBonds();
 
@@ -1341,7 +1342,7 @@ void _setMacrocycleAllInSameRing14Bounds(const ROMol &mol, const Bond *bnd1,
   PRECONDITION(bnd1, "");
   PRECONDITION(bnd2, "");
   PRECONDITION(bnd3, "");
-  unsigned int bid1, bid2, bid3;
+  unsigned int bid1 = 0, bid2 = 0, bid3 = 0;
   bid1 = bnd1->getIdx();
   bid2 = bnd2->getIdx();
   bid3 = bnd3->getIdx();
@@ -1950,8 +1951,9 @@ void _set15BoundsHelper(const ROMol &mol, unsigned int bid1, unsigned int bid2,
                         unsigned int bid3, unsigned int type,
                         ComputedData &accumData, DistGeom::BoundsMatPtr mmat,
                         double *dmat) {
-  unsigned int i, aid1, aid2, aid3, aid4, aid5;
-  double d1, d2, d3, d4, ang12, ang23, ang34, du, dl, vw1, vw5;
+  unsigned int i = 0, aid1 = 0, aid2 = 0, aid3 = 0, aid4 = 0, aid5 = 0;
+  double d1 = NAN, d2 = NAN, d3 = NAN, d4 = NAN, ang12 = NAN, ang23 = NAN,
+         ang34 = NAN, du = NAN, dl = NAN, vw1 = NAN, vw5 = NAN;
   unsigned int nb = mol.getNumBonds();
   unsigned int na = mol.getNumAtoms();
 
@@ -2069,7 +2071,7 @@ void _set15BoundsHelper(const ROMol &mol, unsigned int bid1, unsigned int bid2,
 void set15Bounds(const ROMol &mol, DistGeom::BoundsMatPtr mmat,
                  ComputedData &accumData, double *distMatrix) {
   PATH14_VECT_CI pti;
-  unsigned int bid1, bid2, bid3, type;
+  unsigned int bid1 = 0, bid2 = 0, bid3 = 0, type = 0;
   for (pti = accumData.paths14.begin(); pti != accumData.paths14.end(); pti++) {
     bid1 = pti->bid1;
     bid2 = pti->bid2;
