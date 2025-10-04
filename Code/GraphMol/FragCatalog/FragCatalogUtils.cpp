@@ -109,7 +109,7 @@ MatchVectType findFuncGroupsOnMol(const ROMol &mol, const FragCatParams *params,
   std::vector<MatchVectType> fgpMatches;
   std::vector<MatchVectType>::const_iterator mati;
   MatchVectType::const_iterator mi;
-  int aid;
+  int aid = 0;
   // const ROMol *fgrp;
 
   INT_VECT_CI bi;
@@ -185,7 +185,7 @@ ROMol *prepareMol(const ROMol &mol, const FragCatParams *fparams,
   // without the functional groups). This basically the part of the molecule
   // that does not contain the function group bonds given by "fgBonds"
   INT_VECT cBonds;
-  int bid, nbds = mol.getNumBonds();
+  int bid = 0, nbds = mol.getNumBonds();
 
   for (bid = 0; bid < nbds; bid++) {
     if (std::find(fgBonds.begin(), fgBonds.end(), bid) == fgBonds.end()) {
@@ -201,7 +201,7 @@ ROMol *prepareMol(const ROMol &mol, const FragCatParams *fparams,
   // now map the functional groups on mol to coreMol using aIdxMap
   MatchVectType::iterator mati;
 
-  int newID;
+  int newID = 0;
   for (mati = aidToFid.begin(); mati != aidToFid.end(); mati++) {
     newID = aIdxMap[mati->first];
     aToFmap.push_back(std::pair<int, int>(newID, mati->second));
