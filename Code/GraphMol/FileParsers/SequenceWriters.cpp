@@ -443,7 +443,7 @@ static bool FindHELMAtom(std::vector<AtomPDBResidueInfo *> *seq,
                          AtomPDBResidueInfo *info, std::string &id,
                          std::string &pos) {
   char buffer[32];
-  char ch;
+  char ch = 0;
 
   const char *ptr = info->getName().c_str();
   if (ptr[0] == ' ' && ptr[1] == 'S' && ptr[2] == 'G' && ptr[3] == ' ') {

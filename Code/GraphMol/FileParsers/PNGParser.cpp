@@ -49,7 +49,7 @@ namespace {
 std::vector<unsigned char> pngHeader = {137, 80, 78, 71, 13, 10, 26, 10};
 bool checkPNGHeader(std::istream &inStream) {
   for (auto byte : pngHeader) {
-    unsigned char ibyte;
+    unsigned char ibyte = 0;
     inStream.read((char *)&ibyte, 1);
     if (ibyte != byte) {
       return false;
@@ -160,7 +160,7 @@ std::vector<std::pair<std::string, std::string>> PNGStreamToMetadata(
   // block FIX: at some point we'll want to also include zEXt here, but that
   // requires zlib
   while (inStream) {
-    std::uint32_t blockLen;
+    std::uint32_t blockLen = 0;
     inStream.read((char *)&blockLen, sizeof(blockLen));
     if (inStream.fail()) {
       throw FileParseException("error when reading from PNG");
@@ -247,9 +247,9 @@ std::string addMetadataToPNGStream(
 
   // copy over everything up to IEND
   bool foundEnd = false;
-  std::uint32_t finalCRC;
+  std::uint32_t finalCRC = 0;
   while (inStream) {
-    std::uint32_t blockLen;
+    std::uint32_t blockLen = 0;
     inStream.read((char *)&blockLen, sizeof(blockLen));
     char bytes[4];
     inStream.read(bytes, 4);
