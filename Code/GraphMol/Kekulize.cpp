@@ -38,7 +38,7 @@ void backTrack(RWMol &mol, INT_INT_DEQ_MAP &, int lastOpt, INT_VECT &done,
   }
 
   // remove any double bonds that were add since we passed through lastOpt
-  Bond *bnd;
+  Bond *bnd = nullptr;
   unsigned int nbnds = mol.getNumBonds();
   for (unsigned int bi = 0; bi < nbnds; ++bi) {
     if (dBndAdds[bi]) {
@@ -271,7 +271,7 @@ bool kekulizeWorker(RWMol &mol, const INT_VECT &allAtms,
     if (dBndCands[curr]) {
       cCand = true;
     }
-    int ncnd;
+    int ncnd = 0;
     // if we are here because of backtracking
     if (options.find(curr) != options.end()) {
       opts = options[curr];
@@ -660,7 +660,7 @@ void KekulizeFragment(RWMol &mol, const boost::dynamic_bitset<> &atomsToUse,
       std::transform(fused.begin(), fused.end(), frings.begin(),
                      [&arings](const int ri) { return arings[ri]; });
       kekulizeFused(mol, frings, maxBackTracks);
-      int rix;
+      int rix = 0;
       for (rix = 0; rix < cnrs; ++rix) {
         if (!fusDone[rix]) {
           curr = rix;

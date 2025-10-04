@@ -58,7 +58,7 @@ void pickFusedRings(int curr, const INT_INT_VECT_MAP &neighMap, INT_VECT &res,
 bool checkFused(const INT_VECT &rids, INT_INT_VECT_MAP &ringNeighs) {
   auto nrings = rdcast<int>(ringNeighs.size());
   boost::dynamic_bitset<> done(nrings);
-  int rid;
+  int rid = 0;
   INT_VECT fused;
 
   // mark all rings in the system other than those in rids as done
@@ -83,7 +83,7 @@ void makeRingNeighborMap(const VECT_INT_VECT &brings,
                          INT_INT_VECT_MAP &neighMap, unsigned int maxSize,
                          unsigned int maxOverlapSize) {
   auto nrings = rdcast<int>(brings.size());
-  int i, j;
+  int i = 0, j = 0;
   INT_VECT ring1;
 
   for (i = 0; i < nrings; ++i) {
@@ -266,7 +266,7 @@ bool applyHuckel(ROMol &, const INT_VECT &ring, const VECT_EDON_TYPE &edon,
   if (ring.size() < minRingSize) {
     return false;
   }
-  int atlw, atup, rlw, rup, rie;
+  int atlw = 0, atup = 0, rlw = 0, rup = 0, rie = 0;
   bool aromatic = false;
   rlw = 0;
   rup = 0;
@@ -318,11 +318,11 @@ void applyHuckelToFused(
   INT_VECT curRs;
   curRs.push_back(fused.front());
   int pos = -1;
-  unsigned int i;
+  unsigned int i = 0;
   unsigned int curSize = 0;
   INT_VECT comb;
 
-  size_t nRingBonds;
+  size_t nRingBonds = 0;
   {
     boost::dynamic_bitset<> fusedBonds(mol.getNumBonds());
     for (auto ridx : fused) {
@@ -746,7 +746,7 @@ int mdlAromaticityHelper(RWMol &mol, const VECT_INT_VECT &srings) {
     applyHuckelToFused(mol, cRings, brings, fused, edon, neighMap, narom,
                        maxFused, bondsByIdx, minRingSize);
 
-    int rix;
+    int rix = 0;
     for (rix = 0; rix < cnrs; ++rix) {
       if (!fusDone[rix]) {
         curr = rix;
@@ -896,7 +896,7 @@ int aromaticityHelper(RWMol &mol, const VECT_INT_VECT &srings,
       applyHuckelToFused(mol, cRings, brings, fused, edon, neighMap, narom, 6,
                          bondsByIdx);
 
-      int rix;
+      int rix = 0;
       for (rix = 0; rix < cnrs; ++rix) {
         if (!fusDone[rix]) {
           curr = rix;
@@ -923,15 +923,15 @@ void setMMFFAromaticity(RWMol &mol) {
   bool aromRingsAllSet = false;
   bool exoDoubleBond = false;
   bool canBeAromatic = false;
-  unsigned int i;
-  unsigned int j;
-  unsigned int nextInRing;
+  unsigned int i = 0;
+  unsigned int j = 0;
+  unsigned int nextInRing = 0;
   unsigned int pi_e = 0;
   int nAromSet = 0;
   int old_nAromSet = -1;
   RingInfo *ringInfo = mol.getRingInfo();
-  Atom *atom;
-  Bond *bond;
+  Atom *atom = nullptr;
+  Bond *bond = nullptr;
   const VECT_INT_VECT &atomRings = ringInfo->atomRings();
   ROMol::ADJ_ITER nbrIdx;
   ROMol::ADJ_ITER endNbrs;
@@ -1103,7 +1103,7 @@ int setAromaticity(RWMol &mol, AromaticityModel model, int (*func)(RWMol &)) {
     MolOps::symmetrizeSSSR(mol, srings);
   }
 
-  int res;
+  int res = 0;
   switch (model) {
     case AROMATICITY_DEFAULT:
     case AROMATICITY_RDKIT:
