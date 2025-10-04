@@ -462,7 +462,7 @@ ROMol *fragmentOnBonds(
     unsigned int eidx = bond->getEndAtomIdx();
     Bond::BondType bT = bond->getBondType();
     Bond::BondDir bD = bond->getBondDir();
-    unsigned int bondidx;
+    unsigned int bondidx = 0;
     auto nbr_bond_stereo = getNbrBondStereo(*res, bond);
     res->removeBond(bidx, eidx);
     if (nCutsPerAtom) {
@@ -470,7 +470,7 @@ ROMol *fragmentOnBonds(
       (*nCutsPerAtom)[eidx] += 1;
     }
     if (addDummies) {
-      Atom *at1, *at2;
+      Atom *at1 = nullptr, *at2 = nullptr;
       at1 = new Atom(0);
       at2 = new Atom(0);
       if (dummyLabels) {
@@ -994,7 +994,7 @@ std::unique_ptr<ROMol> molzip(
         mappings_by_atom[atom].push_back(&bond);
         deletions.push_back(atom);
         if (attachmentMapping) {
-          if (int otherIndex, dummyIndex;
+          if (int otherIndex = 0, dummyIndex = 0;
               atom->getPropIfPresent(indexPropName, dummyIndex) &&
               bond.b->getPropIfPresent(indexPropName, otherIndex)) {
             (*attachmentMapping)[dummyIndex] = otherIndex;
@@ -1105,12 +1105,12 @@ std::unique_ptr<ROMol> molzip(
 
           mappings_by_atom[bond.a].push_back(&bond);
           if (attachmentMapping) {
-            if (int otherIndex, dummyIndex;
+            if (int otherIndex = 0, dummyIndex = 0;
                 bond.a_dummy->getPropIfPresent(indexPropName, dummyIndex) &&
                 bond.b->getPropIfPresent(indexPropName, otherIndex)) {
               (*attachmentMapping)[dummyIndex] = otherIndex;
             }
-            if (int otherIndex, dummyIndex;
+            if (int otherIndex = 0, dummyIndex = 0;
                 bond.b_dummy->getPropIfPresent(indexPropName, dummyIndex) &&
                 bond.a->getPropIfPresent(indexPropName, otherIndex)) {
               (*attachmentMapping)[dummyIndex] = otherIndex;
