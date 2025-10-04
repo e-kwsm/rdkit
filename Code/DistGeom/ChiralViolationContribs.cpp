@@ -11,7 +11,7 @@
 #include "ChiralViolationContribs.h"
 #include "ChiralSet.h"
 #include <ForceField/ForceField.h>
-#include <math.h>
+#include <cmath>
 
 namespace DistGeom {
 double calcChiralVolume(const unsigned int idx1, const unsigned int idx2,

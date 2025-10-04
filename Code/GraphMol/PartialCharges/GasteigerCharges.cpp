@@ -13,7 +13,7 @@
 #include <GraphMol/RDKitBase.h>
 #include <GraphMol/ROMol.h>
 #include <GraphMol/MolOps.h>
-#include <math.h>
+#include <cmath>
 #include "GasteigerParams.h"
 
 namespace Gasteiger {
