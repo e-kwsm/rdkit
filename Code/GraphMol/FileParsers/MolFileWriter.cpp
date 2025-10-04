@@ -35,6 +35,7 @@
 #include <GraphMol/SmilesParse/SmartsWrite.h>
 #include <GraphMol/Depictor/RDDepictor.h>
 #include <GraphMol/GenericGroups/GenericGroups.h>
+#include <math.h>
 
 #include <boost/algorithm/string.hpp>
 
@@ -287,7 +288,7 @@ const std::string GetMolFileRGroupInfo(const RWMol &mol) {
   unsigned int nEntries = 0;
   for (ROMol::ConstAtomIterator atomIt = mol.beginAtoms();
        atomIt != mol.endAtoms(); ++atomIt) {
-    unsigned int lbl;
+    unsigned int lbl = 0;
     if ((*atomIt)->getPropIfPresent(common_properties::_MolFileRLabel, lbl)) {
       ss << " " << std::setw(3) << (*atomIt)->getIdx() + 1 << " "
          << std::setw(3) << lbl;
@@ -521,7 +522,7 @@ unsigned int getAtomParityFlag(const Atom *atom, const Conformer *conf) {
     ++nbrIdx;
   }
   std::sort(vs.begin(), vs.end(), Rankers::pairLess);
-  double vol;
+  double vol = NAN;
   if (vs.size() == 4) {
     vol = vs[0].second.crossProduct(vs[1].second).dotProduct(vs[3].second);
   } else {
@@ -604,9 +605,9 @@ const std::string GetMolFileAtomLine(const Atom *atom, const Conformer *conf,
                                      boost::dynamic_bitset<> &queryListAtoms) {
   PRECONDITION(atom, "");
   std::string res;
-  int totValence, atomMapNumber;
-  unsigned int parityFlag;
-  double x, y, z;
+  int totValence = 0, atomMapNumber = 0;
+  unsigned int parityFlag = 0;
+  double x = NAN, y = NAN, z = NAN;
   GetMolFileAtomProperties(atom, conf, totValence, atomMapNumber, parityFlag, x,
                            y, z);
 
@@ -745,9 +746,9 @@ const std::string GetV3000MolFileAtomLine(
     const Atom *atom, const Conformer *conf,
     boost::dynamic_bitset<> &queryListAtoms, unsigned int precision) {
   PRECONDITION(atom, "");
-  int totValence, atomMapNumber;
-  unsigned int parityFlag;
-  double x, y, z;
+  int totValence = 0, atomMapNumber = 0;
+  unsigned int parityFlag = 0;
+  double x = NAN, y = NAN, z = NAN;
   GetMolFileAtomProperties(atom, conf, totValence, atomMapNumber, parityFlag, x,
                            y, z);
 
@@ -832,7 +833,7 @@ const std::string GetV3000MolFileAtomLine(
   }
 
   {
-    int iprop;
+    int iprop = 0;
     if (atom->getPropIfPresent(common_properties::molAttachOrder, iprop) &&
         iprop) {
       ss << " ATTCHORD=" << iprop;
@@ -1090,7 +1091,7 @@ const std::string GetV3000MolFileBondLine(
   }
 
   {
-    int iprop;
+    int iprop = 0;
     if (bond->getPropIfPresent(common_properties::molReactStatus, iprop) &&
         iprop) {
       ss << " RXCTR=" << iprop;
@@ -1249,8 +1250,9 @@ std::string outputMolToMolBlock(const RWMol &tmol, int confId,
                                 unsigned int precision,
                                 const boost::dynamic_bitset<> &aromaticBonds) {
   std::string res;
-  unsigned int nAtoms, nBonds, nLists, chiralFlag, nsText, nRxnComponents;
-  unsigned int nReactants, nProducts, nIntermediates;
+  unsigned int nAtoms = 0, nBonds = 0, nLists = 0, chiralFlag = 0, nsText = 0,
+               nRxnComponents = 0;
+  unsigned int nReactants = 0, nProducts = 0, nIntermediates = 0;
   nAtoms = tmol.getNumAtoms();
   nBonds = tmol.getNumBonds();
   nLists = 0;
@@ -1273,7 +1275,7 @@ std::string outputMolToMolBlock(const RWMol &tmol, int confId,
 
   tmol.getPropIfPresent(common_properties::_MolFileChiralFlag, chiralFlag);
 
-  const Conformer *conf;
+  const Conformer *conf = nullptr;
   if (confId < 0 && tmol.getNumConformers() == 0) {
     conf = nullptr;
   } else {
