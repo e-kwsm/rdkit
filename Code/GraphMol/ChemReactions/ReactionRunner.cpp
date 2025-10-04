@@ -303,14 +303,14 @@ bool updatePropsFromImplicitProps(Atom *templateAtom, Atom *atom) {
   PRECONDITION(templateAtom, "no atom");
   PRECONDITION(atom, "no atom");
   bool res = false;
-  int val;
+  int val = 0;
   if (templateAtom->getPropIfPresent(common_properties::_QueryFormalCharge,
                                      val) &&
       val != atom->getFormalCharge()) {
     atom->setFormalCharge(val);
     res = true;
   }
-  unsigned int uval;
+  unsigned int uval = 0;
   if (templateAtom->getPropIfPresent(common_properties::_QueryHCount, uval)) {
     if (!atom->getNoImplicit() || atom->getNumExplicitHs() != uval) {
       atom->setNumExplicitHs(uval);
@@ -345,7 +345,7 @@ RWMOL_SPTR convertTemplateToMol(const ROMOL_SPTR prodTemplateSptr) {
     const Atom *oAtom = (*prodTemplate)[*(atItP.first++)];
     auto *newAtom = new Atom(*oAtom);
     res->addAtom(newAtom, false, true);
-    int mapNum;
+    int mapNum = 0;
     if (newAtom->getPropIfPresent(common_properties::molAtomMapNumber,
                                   mapNum)) {
       // set bookmarks for the mapped atoms:
@@ -360,7 +360,7 @@ RWMOL_SPTR convertTemplateToMol(const ROMOL_SPTR prodTemplateSptr) {
     // if the product-template atom has the inversion flag set
     // to 4 (=SET), then bring its stereochem over, otherwise we'll
     // ignore it:
-    int iFlag;
+    int iFlag = 0;
     if (oAtom->getPropIfPresent(common_properties::molInversionFlag, iFlag)) {
       if (iFlag == 4) {
         newAtom->setChiralTag(oAtom->getChiralTag());
@@ -374,7 +374,7 @@ RWMOL_SPTR convertTemplateToMol(const ROMOL_SPTR prodTemplateSptr) {
   ROMol::BOND_ITER_PAIR bondItP = prodTemplate->getEdges();
   while (bondItP.first != bondItP.second) {
     const Bond *oldB = (*prodTemplate)[*(bondItP.first++)];
-    unsigned int bondIdx;
+    unsigned int bondIdx = 0;
     bondIdx = res->addBond(oldB->getBeginAtomIdx(), oldB->getEndAtomIdx(),
                            oldB->getBondType()) -
               1;
@@ -458,7 +458,7 @@ ReactantProductAtomMapping *getAtomMappingsReactantProduct(
 
   for (const auto &i : match) {
     const Atom *templateAtom = reactantTemplate.getAtomWithIdx(i.first);
-    int molAtomMapNumber;
+    int molAtomMapNumber = 0;
     if (templateAtom->getPropIfPresent(common_properties::molAtomMapNumber,
                                        molAtomMapNumber)) {
       if (product->hasAtomBookmark(molAtomMapNumber)) {
@@ -777,7 +777,7 @@ void setReactantBondPropertiesToProduct(RWMOL_SPTR product,
 
 void checkProductChirality(Atom::ChiralType reactantChirality,
                            Atom *productAtom) {
-  int flagVal;
+  int flagVal = 0;
   productAtom->getProp(common_properties::molInversionFlag, flagVal);
   switch (flagVal) {
     case 0:
@@ -1175,7 +1175,7 @@ void checkAndCorrectChiralityOfMatchingAtomsInProduct(
       if (nSwaps % 2) {
         invert = true;
       }
-      int inversionFlag;
+      int inversionFlag = 0;
       if (productAtom->getPropIfPresent(common_properties::molInversionFlag,
                                         inversionFlag) &&
           inversionFlag == 1) {
@@ -1229,7 +1229,7 @@ void checkAndCorrectChiralityOfProduct(
           CHECK_INVARIANT(mapping->reactProdAtomMap.find(oAtomIdx) !=
                               mapping->reactProdAtomMap.end(),
                           "other atom from bond not mapped.");
-          const Bond *productBond;
+          const Bond *productBond = nullptr;
           unsigned neighborBondIdx = mapping->reactProdAtomMap[oAtomIdx][i];
           productBond = product->getBondBetweenAtoms(productAtom->getIdx(),
                                                      neighborBondIdx);
@@ -1673,7 +1673,7 @@ bool updateAtomsModifiedByReaction(
       molModified = true;
     }
     // check if we need to modify stereo
-    int molInversionFlag;
+    int molInversionFlag = 0;
     if (pAtom->getPropIfPresent(common_properties::molInversionFlag,
                                 molInversionFlag)) {
       auto atomTag = atom->getChiralTag();
