@@ -44,7 +44,7 @@ void testSMILES() {
   RWMol *m2 = SmilesToMol(smi);
   m2 = SmilesToMol(smi, 0, false);
   m2 = SmilesToMol(smi, 0, false);
-  unsigned int failed;
+  unsigned int failed = 0;
   MolOps::sanitizeMol(*m2, failed,
                       MolOps::SANITIZE_CLEANUP | MolOps::SANITIZE_PROPERTIES);
   m2 = SmilesToMol(smi, 0, false);
