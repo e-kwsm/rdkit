@@ -99,7 +99,7 @@ ROMol *pruneMol(const ROMol &mol, const ScaffoldNetworkParams &) {
 }
 
 ROMol *flattenMol(const ROMol &mol, const ScaffoldNetworkParams &params) {
-  RWMol *res;
+  RWMol *res = nullptr;
   if (params.flattenKeepLargest) {
     MolStandardize::LargestFragmentChooser fragmenter;
     res = static_cast<RWMol *>(fragmenter.choose(mol));
@@ -180,7 +180,7 @@ template <typename T, typename V>
 size_t addEntryIfMissing(T &vect, const V &e,
                          std::vector<unsigned> *counts = nullptr) {
   auto viter = std::find(vect.begin(), vect.end(), e);
-  size_t res;
+  size_t res = 0;
   if (viter == vect.end()) {
     vect.push_back(e);
     res = vect.size() - 1;
