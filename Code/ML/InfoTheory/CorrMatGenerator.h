@@ -57,7 +57,7 @@ class BitCorrMatGenerator {
    */
   void setBitIdList(const RDKit::INT_VECT &bitIdList) {
     d_descs = bitIdList;
-    int i, nd = d_descs.size();
+    int i = 0, nd = d_descs.size();
     int nelem = nd * (nd - 1) / 2;
     delete[] dp_corrMat;
 
@@ -85,7 +85,7 @@ class BitCorrMatGenerator {
     unsigned int nd = d_descs.size();
     // use a temporary bit vector to first mask the fingerprint
     ExplicitBitVect ebv(nd);
-    int bi;
+    int bi = 0;
     for (unsigned int i = 0; i < nd; i++) {
       bi = d_descs[i];
       if (fp[bi]) {

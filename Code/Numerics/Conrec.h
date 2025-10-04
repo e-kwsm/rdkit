@@ -17,6 +17,7 @@
 #include <boost/dynamic_bitset.hpp>
 #include <boost/functional/hash.hpp>
 #include <RDGeneral/BoostEndInclude.h>
+#include <math.h>
 
 namespace conrec {
 struct ConrecSegment {
@@ -51,10 +52,10 @@ inline void Contour(const double *d, size_t ilb, size_t iub, size_t jlb,
   PRECONDITION(iub > ilb, "bad bounds");
   PRECONDITION(jub > jlb, "bad bounds");
 
-  int m1, m2, m3, case_value;
-  double dmin, dmax, x1 = 0, x2 = 0, y1 = 0, y2 = 0;
-  int i, j, m;
-  size_t k;
+  int m1 = 0, m2 = 0, m3 = 0, case_value = 0;
+  double dmin = NAN, dmax = NAN, x1 = 0, x2 = 0, y1 = 0, y2 = 0;
+  int i = 0, j = 0, m = 0;
+  size_t k = 0;
   double h[5];
   int sh[5];
   double xh[5], yh[5];
@@ -62,7 +63,7 @@ inline void Contour(const double *d, size_t ilb, size_t iub, size_t jlb,
   int castab[3][3][3] = {{{0, 0, 8}, {0, 2, 5}, {7, 6, 9}},
                          {{0, 3, 4}, {1, 3, 1}, {4, 3, 0}},
                          {{9, 6, 7}, {5, 2, 0}, {8, 0, 0}}};
-  double temp1, temp2;
+  double temp1 = NAN, temp2 = NAN;
   size_t ny = jub - jlb + 1;
 
   auto xsect = [&](int p1, int p2) {

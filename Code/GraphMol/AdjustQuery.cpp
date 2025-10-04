@@ -352,7 +352,7 @@ void adjustQueryProperties(RWMol &mol, const AdjustQueryParameters *inParams) {
   const auto ringInfo = mol.getRingInfo();
 
   if (params.aromatizeIfPossible) {
-    unsigned int failed;
+    unsigned int failed = 0;
     sanitizeMol(mol, failed, SANITIZE_SYMMRINGS | SANITIZE_SETAROMATICITY);
   } else {
     if (!ringInfo->isSymmSssr()) {
@@ -415,7 +415,7 @@ void adjustQueryProperties(RWMol &mol, const AdjustQueryParameters *inParams) {
         !((params.adjustDegreeFlags & ADJUST_IGNOREDUMMIES) && !atomicNum) &&
         !((params.adjustDegreeFlags & ADJUST_IGNORENONDUMMIES) && atomicNum) &&
         !((params.adjustDegreeFlags & ADJUST_IGNOREMAPPED) && isMapped(at))) {
-      QueryAtom *qa;
+      QueryAtom *qa = nullptr;
       if (!at->hasQuery()) {
         QueryAtom atQueryAtom(*at);
         constexpr bool updateLabel = false;
@@ -437,7 +437,7 @@ void adjustQueryProperties(RWMol &mol, const AdjustQueryParameters *inParams) {
           atomicNum) &&
         !((params.adjustHeavyDegreeFlags & ADJUST_IGNOREMAPPED) &&
           isMapped(at))) {
-      QueryAtom *qa;
+      QueryAtom *qa = nullptr;
       if (!at->hasQuery()) {
         QueryAtom atQueryAtom(*at);
         constexpr bool updateLabel = false;
@@ -459,7 +459,7 @@ void adjustQueryProperties(RWMol &mol, const AdjustQueryParameters *inParams) {
           atomicNum) &&
         !((params.adjustRingCountFlags & ADJUST_IGNOREMAPPED) &&
           isMapped(at))) {
-      QueryAtom *qa;
+      QueryAtom *qa = nullptr;
       if (!at->hasQuery()) {
         QueryAtom atQueryAtom(*at);
         constexpr bool updateLabel = false;
@@ -480,7 +480,7 @@ void adjustQueryProperties(RWMol &mol, const AdjustQueryParameters *inParams) {
           atomicNum) &&
         !((params.adjustRingChainFlags & ADJUST_IGNOREMAPPED) &&
           isMapped(at))) {
-      QueryAtom *qa;
+      QueryAtom *qa = nullptr;
       if (!at->hasQuery()) {
         QueryAtom atQueryAtom(*at);
         constexpr bool updateLabel = false;
