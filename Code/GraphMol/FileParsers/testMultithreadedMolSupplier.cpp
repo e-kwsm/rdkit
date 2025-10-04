@@ -138,11 +138,9 @@ void testSmiCorrectness() {
   /*
           TEST CORRECTNESS
   */
-  std::string path;
-  unsigned int expectedResult;
   std::string rdbase = getenv("RDBASE");
-  path = "/Code/GraphMol/FileParsers/test_data/fewSmi.csv";
-  expectedResult = 10;
+  std::string path = "/Code/GraphMol/FileParsers/test_data/fewSmi.csv";
+  unsigned int expectedResult = 10;
   testSmiConcurrent(path, ",", 1, 0, false, true, 2, 5, 5, expectedResult);
 
   path = "/Code/GraphMol/FileParsers/test_data/fewSmi.2.csv";
@@ -268,10 +266,8 @@ void testSDCorrectness() {
           TEST CORRECTNESS
   */
   std::string rdbase = getenv("RDBASE");
-  std::string path;
-  unsigned int expectedResult;
-  path = "/Code/GraphMol/FileParsers/test_data/NCI_aids_few.sdf";
-  expectedResult = 16;
+  std::string path = "/Code/GraphMol/FileParsers/test_data/NCI_aids_few.sdf";
+  unsigned int expectedResult = 16;
   testSDConcurrent(path, false, true, true, 2, 5, 5, expectedResult);
 
   path = "/Code/GraphMol/FileParsers/test_data/esters_end.sdf";

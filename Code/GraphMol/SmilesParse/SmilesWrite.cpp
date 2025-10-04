@@ -232,7 +232,7 @@ std::string GetAtomSmiles(const Atom *atom, const SmilesWriteParams &params) {
       }
     }
 
-    int mapNum;
+    int mapNum = 0;
     if (atom->getPropIfPresent(common_properties::molAtomMapNumber, mapNum)) {
       res += ":";
       res += std::to_string(mapNum);
@@ -394,7 +394,7 @@ std::string FragmentSmilesConstruct(
   molStack.reserve(mol.getNumAtoms() + mol.getNumBonds());
 
   std::map<int, int> ringClosureMap;
-  int ringIdx, closureVal;
+  int ringIdx = 0, closureVal = 0;
   if (!params.canonical) {
     mol.setProp(common_properties::_StereochemDone, 1);
   }
@@ -501,7 +501,7 @@ std::string MolToSmiles(const ROMol &mol, const SmilesWriteParams &params,
           static_cast<unsigned int>(params.rootedAtAtom) < mol.getNumAtoms(),
       "rootedAtAtom must be less than the number of atoms");
 
-  int rootedAtAtom;
+  int rootedAtAtom = 0;
   std::vector<int> fragsRootedAtAtom;
   std::vector<std::vector<int>> fragsMolAtomMapping;
   auto mols =

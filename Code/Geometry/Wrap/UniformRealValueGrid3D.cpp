@@ -56,7 +56,7 @@ void setValPoint(UniformRealValueGrid3D &grid, const Point3D &pt, double val) {
 
 python::tuple getGridIndicesWrap(const UniformRealValueGrid3D &grid,
                                  unsigned int idx) {
-  unsigned int xi, yi, zi;
+  unsigned int xi = 0, yi = 0, zi = 0;
   grid.getGridIndices(idx, xi, yi, zi);
   return python::make_tuple(xi, yi, zi);
 }

@@ -33,12 +33,10 @@ bool hanoi(int *base, int nel, int *temp, int *count, int *changed,
   assert(count);
   assert(changed);
   // std::cerr<<"  hanoi: "<<nel<< " start " << (*base)+1 << std::endl;
-  int *b1, *b2;
-  int *t1, *t2;
-  int *s1, *s2;
-  int n1, n2;
-  int result;
-  int *ptr;
+  int *s1 = nullptr, *s2 = nullptr;
+  int n1 = 0, n2 = 0;
+  int result = 0;
+  int *ptr = nullptr;
 
   if (nel == 1) {
     count[base[0]] = 1;
@@ -67,10 +65,10 @@ bool hanoi(int *base, int nel, int *temp, int *count, int *changed,
 
   n1 = nel / 2;
   n2 = nel - n1;
-  b1 = base;
-  t1 = temp;
-  b2 = base + n1;
-  t2 = temp + n1;
+  int *b1 = base;
+  int *t1 = temp;
+  int *b2 = base + n1;
+  int *t2 = temp + n1;
 
   if (hanoi(b1, n1, t1, count, changed, compar)) {
     if (hanoi(b2, n2, t2, count, changed, compar)) {

@@ -61,7 +61,7 @@ std::string DrawColourToSVG(const DrawColour &col) {
   bool hasAlpha = 1.0 - col.a > 1e-3;
   std::string res(hasAlpha ? 9 : 7, ' ');
   res[0] = '#';
-  unsigned int v;
+  unsigned int v = 0;
   unsigned int i = 1;
   v = int(255 * col.r);
   if (v > 255) {

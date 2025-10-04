@@ -12,6 +12,7 @@
 // A concrete class derived from DrawText that uses SVG
 // to draw text onto a picture.
 
+#include <cmath>
 #include <sstream>
 #include <RDGeneral/BoostStartInclude.h>
 #include <boost/algorithm/string.hpp>
@@ -76,7 +77,7 @@ void DrawTextSVG::getStringRects(
     std::vector<char> &draw_chars) const {
   double running_x = 0.0;
   double act_font_size = fontSize();
-  double char_height;
+  double char_height = NAN;
   double max_width = 0.0;
   TextDrawType draw_mode = TextDrawType::TextDrawNormal;
   for (size_t i = 0; i < text.length(); ++i) {

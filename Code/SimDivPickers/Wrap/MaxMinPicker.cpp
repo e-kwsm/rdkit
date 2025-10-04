@@ -40,9 +40,8 @@ RDKit::INT_VECT MaxMinPicks(MaxMinPicker *picker, python::object distMat,
     throw ValueErrorException("distance mat argument must be a numpy matrix");
   }
 
-  PyArrayObject *copy;
-  copy = (PyArrayObject *)PyArray_ContiguousFromObject(distMat.ptr(),
-                                                       NPY_DOUBLE, 1, 1);
+  PyArrayObject *copy = (PyArrayObject *)PyArray_ContiguousFromObject(
+      distMat.ptr(), NPY_DOUBLE, 1, 1);
   auto *dMat = (double *)PyArray_DATA(copy);
 
   RDKit::INT_VECT firstPickVect;

@@ -24,7 +24,7 @@ namespace RDKit {
 PyObject *computeCanonTrans(const Conformer &conf,
                             const RDGeom::Point3D *center = nullptr,
                             bool normalizeCovar = false, bool ignoreHs = true) {
-  RDGeom::Transform3D *trans;
+  RDGeom::Transform3D *trans = nullptr;
   trans = MolTransforms::computeCanonicalTransform(conf, center, normalizeCovar,
                                                    ignoreHs);
   npy_intp dims[2];
@@ -48,7 +48,7 @@ PyObject *computePrincAxesMomentsHelper(
   Eigen::Vector3d moments;
   std::vector<double> *weightsVecPtr = nullptr;
   std::vector<double> weightsVec;
-  size_t i;
+  size_t i = 0;
   if (weights != python::object()) {
     size_t numElements = python::len(weights);
     if (numElements != conf.getNumAtoms()) {

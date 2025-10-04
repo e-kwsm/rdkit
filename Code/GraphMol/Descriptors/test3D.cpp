@@ -14,6 +14,7 @@
 #endif
 
 #include <RDGeneral/test.h>
+#include <cmath>
 #include <fstream>
 
 #include <RDGeneral/BoostStartInclude.h>
@@ -67,8 +68,8 @@ void testPMI1() {
     std::string inm;
     instrm >> inm;
     TEST_ASSERT(inm == nm);
-    double val;
-    double pmi1_m, pmi2_m, pmi3_m, pmi1_nom, pmi2_nom, pmi3_nom;
+    double pmi1_m = NAN, pmi2_m = NAN, pmi3_m = NAN, pmi1_nom = NAN,
+           pmi2_nom = NAN, pmi3_nom = NAN;
     instrm >> pmi1_m;
     instrm >> pmi2_m;
     instrm >> pmi3_m;
@@ -76,7 +77,7 @@ void testPMI1() {
     instrm >> pmi2_nom;
     instrm >> pmi3_nom;
 
-    val = RDKit::Descriptors::PMI1(*m);
+    double val = RDKit::Descriptors::PMI1(*m);
     TEST_ASSERT(compare(inm, pmi1_m, val));
     val = RDKit::Descriptors::PMI2(*m);
     TEST_ASSERT(compare(inm, pmi2_m, val));
@@ -121,9 +122,8 @@ void testPMIEdges() {
 
     RDKit::ROMol *m = MolFileToMol(sdfName);
     TEST_ASSERT(m);
-    double val;
 
-    val = RDKit::Descriptors::PMI1(*m);
+    double val = RDKit::Descriptors::PMI1(*m);
     TEST_ASSERT(fabs(val) < 1e-4);
     val = RDKit::Descriptors::PMI2(*m);
     TEST_ASSERT(fabs(val) >= 10);
@@ -141,9 +141,8 @@ void testPMIEdges() {
 
     RDKit::ROMol *m = MolFileToMol(sdfName);
     TEST_ASSERT(m);
-    double val;
 
-    val = RDKit::Descriptors::PMI1(*m);
+    double val = RDKit::Descriptors::PMI1(*m);
     TEST_ASSERT(fabs(val) < 1e-4);
     val = RDKit::Descriptors::PMI2(*m);
     TEST_ASSERT(fabs(val) >= 1);
@@ -256,16 +255,14 @@ void testNPR1() {
     std::string nm;
     m->getProp("_Name", nm);
 
-    double val;
-    double pmi1_m, pmi2_m, pmi3_m, pmi1_nom, pmi2_nom, pmi3_nom;
-    pmi1_m = RDKit::Descriptors::PMI1(*m);
-    pmi2_m = RDKit::Descriptors::PMI2(*m);
-    pmi3_m = RDKit::Descriptors::PMI3(*m);
-    pmi1_nom = RDKit::Descriptors::PMI1(*m, -1, false);
-    pmi2_nom = RDKit::Descriptors::PMI2(*m, -1, false);
-    pmi3_nom = RDKit::Descriptors::PMI3(*m, -1, false);
+    double pmi1_m = RDKit::Descriptors::PMI1(*m);
+    double pmi2_m = RDKit::Descriptors::PMI2(*m);
+    double pmi3_m = RDKit::Descriptors::PMI3(*m);
+    double pmi1_nom = RDKit::Descriptors::PMI1(*m, -1, false);
+    double pmi2_nom = RDKit::Descriptors::PMI2(*m, -1, false);
+    double pmi3_nom = RDKit::Descriptors::PMI3(*m, -1, false);
 
-    val = RDKit::Descriptors::NPR1(*m);
+    double val = RDKit::Descriptors::NPR1(*m);
     compare(nm, pmi1_m / pmi3_m, val);
     val = RDKit::Descriptors::NPR2(*m);
     compare(nm, pmi2_m / pmi3_m, val);
@@ -291,7 +288,7 @@ void testNPREdges() {
 
     RDKit::ROMol *m = MolFileToMol(sdfName);
     TEST_ASSERT(m);
-    double val;
+    double val = NAN;
 
     val = RDKit::Descriptors::NPR1(*m);
     TEST_ASSERT(fabs(val) < 1e-4);
@@ -307,7 +304,7 @@ void testNPREdges() {
 
     RDKit::ROMol *m = MolFileToMol(sdfName);
     TEST_ASSERT(m);
-    double val;
+    double val = NAN;
 
     val = RDKit::Descriptors::NPR1(*m);
     TEST_ASSERT(fabs(val) < 1e-4);
@@ -323,7 +320,7 @@ void testNPREdges() {
 
     RDKit::ROMol *m = MolFileToMol(sdfName);
     TEST_ASSERT(m);
-    double val;
+    double val = NAN;
 
     val = RDKit::Descriptors::NPR1(*m);
     TEST_ASSERT(fabs(val - 0.5) < 1e-4);
@@ -339,7 +336,7 @@ void testNPREdges() {
 
     RDKit::ROMol *m = MolFileToMol(sdfName);
     TEST_ASSERT(m);
-    double val;
+    double val = NAN;
 
     val = RDKit::Descriptors::NPR1(*m);
     TEST_ASSERT(fabs(val - 0.5) < 1e-4);
@@ -377,7 +374,7 @@ void test3DVals() {
         rdbase + "/Code/GraphMol/MolTransforms/test_data/github1262_1.mol";
     RWMol *m = MolFileToMol(fName, true, false);
     TEST_ASSERT(m);
-    double val;
+    double val = NAN;
 
     val = RDKit::Descriptors::radiusOfGyration(*m);
     TEST_ASSERT(fabs(val - 1.511) < 1e-2);
@@ -395,7 +392,7 @@ void test3DVals() {
         rdbase + "/Code/GraphMol/MolTransforms/test_data/github1262_2.mol";
     RWMol *m = MolFileToMol(fName, true, false);
     TEST_ASSERT(m);
-    double val;
+    double val = NAN;
 
     val = RDKit::Descriptors::radiusOfGyration(*m);
     TEST_ASSERT(fabs(val - 1.686) < 1e-2);
@@ -414,7 +411,7 @@ void test3DVals() {
         rdbase + "/Code/GraphMol/MolTransforms/test_data/github1262_3.mol";
     RWMol *m = MolFileToMol(fName, true, false);
     TEST_ASSERT(m);
-    double val;
+    double val = NAN;
 
     val = RDKit::Descriptors::radiusOfGyration(*m);
     TEST_ASSERT(fabs(val - 1.827) < 1e-2);
@@ -451,7 +448,7 @@ void test3DEdges() {
     m.getConformer().setAtomPos(3, RDGeom::Point3D(0, -1, 0));
     m.getConformer().setAtomPos(4, RDGeom::Point3D(0, 0, 1));
     m.getConformer().setAtomPos(5, RDGeom::Point3D(0, 0, -1));
-    double val;
+    double val = NAN;
     val = RDKit::Descriptors::radiusOfGyration(m);
     TEST_ASSERT(fabs(val) > 0.1);
     val = RDKit::Descriptors::eccentricity(m);
@@ -473,7 +470,7 @@ void test3DEdges() {
     m.addAtom(new RDKit::Atom(6), updateLabel, takeOwnership);
     m.addAtom(new RDKit::Atom(6), updateLabel, takeOwnership);
     m.addConformer(new RDKit::Conformer(m.getNumAtoms()));
-    double val;
+    double val = NAN;
     val = RDKit::Descriptors::radiusOfGyration(m);
     TEST_ASSERT(fabs(val) < 1e-4);
     val = RDKit::Descriptors::inertialShapeFactor(m);
