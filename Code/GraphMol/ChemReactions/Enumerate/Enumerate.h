@@ -159,7 +159,7 @@ class RDKIT_CHEMREACTIONS_EXPORT EnumerateLibrary
   void load(Archive &ar, const unsigned int /*version*/) {
     ar &boost::serialization::base_object<EnumerateLibraryBase>(*this);
 
-    size_t sz;
+    size_t sz = 0;
     ar & sz;
 
     m_bbs.resize(sz);
