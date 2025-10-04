@@ -42,9 +42,9 @@ typedef class ROMol Mol;
 
 TEST_CASE("test1") {
   string smi;
-  Mol *m;
+  Mol *m = nullptr;
   INT_VECT iv;
-  unsigned int count;
+  unsigned int count = 0;
   std::vector<ROMOL_SPTR> frags;
   std::vector<std::unique_ptr<ROMol>> otherFrags;
 
@@ -110,9 +110,9 @@ TEST_CASE("test1") {
 
 TEST_CASE("test2") {
   string smi;
-  Mol *m;
+  Mol *m = nullptr;
   INT_VECT iv;
-  int count;
+  int count = 0;
   smi = "CCCC(=O)O";
   m = SmilesToMol(smi);
   REQUIRE_MSG(m, "smiles parse failed");
@@ -139,10 +139,10 @@ TEST_CASE("test2") {
 
 TEST_CASE("test3") {
   string smi;
-  Mol *m;
+  Mol *m = nullptr;
   VECT_INT_VECT sssr;
   INT_VECT rings;
-  int count;
+  int count = 0;
 
   smi = "C1CC1";
   m = SmilesToMol(smi);
@@ -519,10 +519,10 @@ TEST_CASE("test4") {
 
 TEST_CASE("test5") {
   string smi;
-  Mol *m;
+  Mol *m = nullptr;
   VECT_INT_VECT sssr;
 
-  int count;
+  int count = 0;
   smi = "C1C4C5C3C(=O)C2C5C1C2C34";
   m = SmilesToMol(smi, 0, 0);
   count = MolOps::findSSSR(*m, sssr);
@@ -788,7 +788,7 @@ TEST_CASE("Testing Distance Matrix Operations") {
 
   bool useBO = false;
   bool useAtomWts = false;
-  double *dMat;
+  double *dMat = nullptr;
   dMat = MolOps::getDistanceMat(*m, useBO, useAtomWts);
   REQUIRE(dMat);
   REQUIRE(dMat[0] == 0.0);
