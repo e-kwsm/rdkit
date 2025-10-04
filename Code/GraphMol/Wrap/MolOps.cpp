@@ -408,7 +408,7 @@ void reapplyWedging(ROMol &mol, bool allBondTypes, bool verify) {
 MolOps::SanitizeFlags sanitizeMol(ROMol &mol, boost::uint64_t sanitizeOps,
                                   bool catchErrors) {
   auto &wmol = static_cast<RWMol &>(mol);
-  unsigned int operationThatFailed;
+  unsigned int operationThatFailed = 0;
   if (catchErrors) {
     try {
       MolOps::sanitizeMol(wmol, operationThatFailed, sanitizeOps);
@@ -505,9 +505,8 @@ PyObject *getDistanceMatrix(ROMol &mol, bool useBO = false,
   npy_intp dims[2];
   dims[0] = nats;
   dims[1] = nats;
-  double *distMat;
-
-  distMat = MolOps::getDistanceMat(mol, useBO, useAtomWts, force, prefix);
+  double *distMat =
+      MolOps::getDistanceMat(mol, useBO, useAtomWts, force, prefix);
 
   auto *res = (PyArrayObject *)PyArray_SimpleNew(2, dims, NPY_DOUBLE);
 
@@ -523,9 +522,8 @@ PyObject *get3DDistanceMatrix(ROMol &mol, int confId = -1,
   npy_intp dims[2];
   dims[0] = nats;
   dims[1] = nats;
-  double *distMat;
-
-  distMat = MolOps::get3DDistanceMat(mol, confId, useAtomWts, force, prefix);
+  double *distMat =
+      MolOps::get3DDistanceMat(mol, confId, useAtomWts, force, prefix);
 
   auto *res = (PyArrayObject *)PyArray_SimpleNew(2, dims, NPY_DOUBLE);
 
@@ -548,7 +546,7 @@ PyObject *getAdjacencyMatrix(ROMol &mol, bool useBO = false, int emptyVal = 0,
   double *tmpMat =
       MolOps::getAdjacencyMatrix(mol, useBO, emptyVal, force, prefix);
 
-  PyArrayObject *res;
+  PyArrayObject *res = nullptr;
   if (useBO) {
     // if we're using valence, the results matrix is made up of doubles
     res = (PyArrayObject *)PyArray_SimpleNew(2, dims, NPY_DOUBLE);
@@ -643,10 +641,9 @@ ExplicitBitVect *wrapLayeredFingerprint(
     }
   }
 
-  ExplicitBitVect *res;
-  res = RDKit::LayeredFingerprintMol(mol, layerFlags, minPath, maxPath, fpSize,
-                                     atomCountsV.get(), includeOnlyBits,
-                                     branchedPaths, lFromAtoms.get());
+  ExplicitBitVect *res = RDKit::LayeredFingerprintMol(
+      mol, layerFlags, minPath, maxPath, fpSize, atomCountsV.get(),
+      includeOnlyBits, branchedPaths, lFromAtoms.get());
 
   if (atomCountsV) {
     for (unsigned int i = 0; i < atomCountsV->size(); ++i) {
@@ -673,9 +670,8 @@ ExplicitBitVect *wrapPatternFingerprint(const ROMol &mol, unsigned int fpSize,
     }
   }
 
-  ExplicitBitVect *res;
-  res = RDKit::PatternFingerprintMol(mol, fpSize, atomCountsV, includeOnlyBits,
-                                     tautomerFingerprints);
+  ExplicitBitVect *res = RDKit::PatternFingerprintMol(
+      mol, fpSize, atomCountsV, includeOnlyBits, tautomerFingerprints);
 
   if (atomCountsV) {
     for (unsigned int i = 0; i < atomCountsV->size(); ++i) {
@@ -690,7 +686,7 @@ ExplicitBitVect *wrapPatternFingerprintBundle(const MolBundle &bundle,
                                               unsigned int fpSize,
                                               ExplicitBitVect *includeOnlyBits,
                                               bool tautomerFingerprints) {
-  ExplicitBitVect *res;
+  ExplicitBitVect *res = nullptr;
   res = RDKit::PatternFingerprintMol(bundle, fpSize, includeOnlyBits,
                                      tautomerFingerprints);
   return res;
@@ -715,11 +711,10 @@ ExplicitBitVect *wrapRDKFingerprintMol(
   if (bitInfo != python::object()) {
     lBitInfo = new std::map<std::uint32_t, std::vector<std::vector<int>>>;
   }
-  ExplicitBitVect *res;
-  res = RDKit::RDKFingerprintMol(mol, minPath, maxPath, fpSize, nBitsPerHash,
-                                 useHs, tgtDensity, minSize, branchedPaths,
-                                 useBondOrder, lAtomInvariants.get(),
-                                 lFromAtoms.get(), lAtomBits, lBitInfo);
+  ExplicitBitVect *res = RDKit::RDKFingerprintMol(
+      mol, minPath, maxPath, fpSize, nBitsPerHash, useHs, tgtDensity, minSize,
+      branchedPaths, useBondOrder, lAtomInvariants.get(), lFromAtoms.get(),
+      lAtomBits, lBitInfo);
 
   if (lAtomBits) {
     auto &pyl = static_cast<python::list &>(atomBits);
@@ -774,8 +769,7 @@ SparseIntVect<boost::uint64_t> *wrapUnfoldedRDKFingerprintMol(
     lBitInfo = new std::map<boost::uint64_t, std::vector<std::vector<int>>>;
   }
 
-  SparseIntVect<boost::uint64_t> *res;
-  res = getUnfoldedRDKFingerprintMol(
+  SparseIntVect<boost::uint64_t> *res = getUnfoldedRDKFingerprintMol(
       mol, minPath, maxPath, useHs, branchedPaths, useBondOrder,
       lAtomInvariants.get(), lFromAtoms.get(), lAtomBits, lBitInfo);
 
@@ -860,13 +854,12 @@ PATH_TYPE findAtomEnvironmentOfRadiusNHelper(const ROMol &mol,
 
 ROMol *pathToSubmolHelper(const ROMol &mol, python::object &path, bool useQuery,
                           python::object atomMap) {
-  ROMol *result;
   PATH_TYPE pth;
   for (unsigned int i = 0; i < python::len(path); ++i) {
     pth.push_back(python::extract<unsigned int>(path[i]));
   }
   std::map<int, int> mapping;
-  result = Subgraphs::pathToSubmol(mol, pth, useQuery, mapping);
+  ROMol *result = Subgraphs::pathToSubmol(mol, pth, useQuery, mapping);
   if (atomMap != python::object()) {
     // make sure the optional argument actually was a dictionary
     python::dict typecheck = python::extract<python::dict>(atomMap);
@@ -933,7 +926,7 @@ ROMol *replaceCoreHelper(const ROMol &mol, const ROMol &core,
       sz = 1;
     }
 
-    int v1, v2;
+    int v1 = 0, v2 = 0;
     switch (sz) {
       case 1:
         if (length != core.getNumAtoms()) {
