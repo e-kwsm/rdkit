@@ -29,6 +29,7 @@
 #include <GraphMol/FileParsers/FileParsers.h>
 #include <GraphMol/ForceFieldHelpers/UFF/Builder.h>
 #include <GraphMol/MolTransforms/MolTransforms.h>
+#include <math.h>
 
 using namespace RDKit;
 
@@ -70,7 +71,7 @@ void testUFF1() {
   std::cerr << "Unit tests for basics of UFF bond-stretch terms." << std::endl;
 
   ForceFields::UFF::AtomicParams p1, p2;
-  double restLen, forceConstant;
+  double restLen = NAN, forceConstant = NAN;
 
   // sp3 carbon:
   p1.r1 = .757;
@@ -148,12 +149,12 @@ void testUFF2() {
   param1.GMP_Xi = 5.343;
 
   // C_3 - C_3, r0=1.514, k01=699.5918
-  ForceFields::ForceFieldContrib *bs;
+  ForceFields::ForceFieldContrib *bs = nullptr;
   bs = new ForceFields::UFF::BondStretchContrib(&ff, 0, 1, 1, &param1, &param1);
   ff.contribs().push_back(ForceFields::ContribPtr(bs));
   ff.initialize();
 
-  double *p, *g;
+  double *p = nullptr, *g = nullptr;
   p = new double[6];
   g = new double[6];
   for (int i = 0; i < 6; i++) {
@@ -161,7 +162,7 @@ void testUFF2() {
     g[i] = 0.0;
   }
 
-  double E;
+  double E = NAN;
   // edge case: zero bond length:
   E = bs->getEnergy(p);
   TEST_ASSERT(E > 0.0);
@@ -245,7 +246,7 @@ void testUFF3() {
   std::cerr << "Unit tests for basics of UFF angle terms." << std::endl;
 
   ForceFields::UFF::AtomicParams p1, p2, p3;
-  double restLen, forceConstant;
+  double restLen = NAN, forceConstant = NAN;
 
   // sp3 carbon:
   p3.r1 = .757;
@@ -306,7 +307,7 @@ void testUFF4() {
   param1.theta0 = 90.0 * M_PI / 180.;
 
   // C_3 - C_3, r0=1.514, k01=699.5918
-  ForceFields::ForceFieldContrib *contrib;
+  ForceFields::ForceFieldContrib *contrib = nullptr;
   contrib =
       new ForceFields::UFF::BondStretchContrib(&ff, 0, 1, 1, &param1, &param1);
   ff.contribs().push_back(ForceFields::ContribPtr(contrib));
@@ -318,7 +319,7 @@ void testUFF4() {
   ff.contribs().push_back(ForceFields::ContribPtr(contrib));
 
   RDGeom::Point3D d, v1, v2;
-  double theta;
+  double theta = NAN;
   // ------- ------- ------- ------- ------- ------- -------
   // try a bit of minimization
   ff.initialize();
@@ -526,7 +527,7 @@ void testUFF5() {
   param2.Z1 = 0.712;
   param2.GMP_Xi = 4.528;
 
-  ForceFields::ForceFieldContrib *contrib;
+  ForceFields::ForceFieldContrib *contrib = nullptr;
 
   // build ethylene:
   contrib =
@@ -592,7 +593,7 @@ void testUFF5() {
   p6.z = 0.0;
 
   RDGeom::Point3D d, v1, v2;
-  double theta;
+  double theta = NAN;
   // ------- ------- ------- ------- ------- ------- -------
   // try a bit of minimization
   ff.initialize();
@@ -644,7 +645,7 @@ void testUFF6() {
   param1.D1 = 0.105;
 
   ff.initialize();
-  ForceFields::ForceFieldContrib *contrib;
+  ForceFields::ForceFieldContrib *contrib = nullptr;
   contrib = new ForceFields::UFF::vdWContrib(&ff, 0, 1, &param1, &param1);
   ff.contribs().push_back(ForceFields::ContribPtr(contrib));
 
@@ -653,7 +654,7 @@ void testUFF6() {
   ff.initialize();
 
   // edge case: our energy at zero length should be zero:
-  double E;
+  double E = NAN;
   E = ff.calcEnergy();
   TEST_ASSERT(RDKit::feq(E, 0.0));
 
@@ -703,9 +704,9 @@ void testUFF7() {
   param1.U1 = 2.0;
 
   RDGeom::Point3D d, v1, v2;
-  double cosPhi;
+  double cosPhi = NAN;
 
-  ForceFields::ForceFieldContrib *contrib;
+  ForceFields::ForceFieldContrib *contrib = nullptr;
   // ------- ------- ------- ------- ------- ------- -------
   // Basic SP3 - SP3
   // ------- ------- ------- ------- ------- ------- -------
@@ -913,7 +914,7 @@ void testUFFParams() {
   auto params = ForceFields::UFF::ParamCollection::getParams();
   TEST_ASSERT(params);
 
-  const ForceFields::UFF::AtomicParams *ptr;
+  const ForceFields::UFF::AtomicParams *ptr = nullptr;
   ptr = (*params)("C_3");
   TEST_ASSERT(ptr);
   TEST_ASSERT(RDKit::feq(ptr->r1, 0.757));
@@ -949,7 +950,7 @@ void testUFF8() {
   ps.push_back(&p6);
 
   auto params = ForceFields::UFF::ParamCollection::getParams();
-  const ForceFields::UFF::AtomicParams *param1, *param2;
+  const ForceFields::UFF::AtomicParams *param1 = nullptr, *param2 = nullptr;
 
   // C_2 (sp2 carbon):
   param1 = (*params)("C_2");
@@ -957,7 +958,7 @@ void testUFF8() {
   // H_:
   param2 = (*params)("H_");
   TEST_ASSERT(param2);
-  ForceFields::ForceFieldContrib *contrib;
+  ForceFields::ForceFieldContrib *contrib = nullptr;
 
   // build ethylene:
   // BONDS:
@@ -1040,7 +1041,7 @@ void testUFF8() {
   p6.z = 0.0;
 
   RDGeom::Point3D d, v1, v2;
-  double theta;
+  double theta = NAN;
   // ------- ------- ------- ------- ------- ------- -------
   // try a bit of minimization
   ff.initialize();
@@ -1089,7 +1090,8 @@ void testUFFTorsionConflict() {
   ps.push_back(&p7);
 
   auto params = ForceFields::UFF::ParamCollection::getParams();
-  const ForceFields::UFF::AtomicParams *param1, *param2, *param3;
+  const ForceFields::UFF::AtomicParams *param1 = nullptr, *param2 = nullptr,
+                                       *param3 = nullptr;
 
   // C_2 (sp2 carbon):
   param1 = (*params)("C_2");
@@ -1101,7 +1103,7 @@ void testUFFTorsionConflict() {
   param3 = (*params)("C_3");
   TEST_ASSERT(param3);
 
-  ForceFields::ForceFieldContrib *contrib;
+  ForceFields::ForceFieldContrib *contrib = nullptr;
 
   // BONDS:
   contrib =
@@ -1227,7 +1229,7 @@ void testUFFDistanceConstraints() {
   ps.push_back(&p1);
   ps.push_back(&p2);
 
-  double *p, *g;
+  double *p = nullptr, *g = nullptr;
   p = new double[6];
   g = new double[6];
   for (int i = 0; i < 6; i++) {
@@ -1243,7 +1245,7 @@ void testUFFDistanceConstraints() {
   auto distContribs = new ForceFields::DistanceConstraintContribs(&ff);
   distContribs->addContrib(0, 1, 1.35, 1.55, 1000.0);
   ff.contribs().emplace_back(distContribs);
-  double E;
+  double E = NAN;
   E = distContribs->getEnergy(p);
   TEST_ASSERT(RDKit::feq(E, 0.0));
   distContribs->getGrad(p, g);
@@ -1332,11 +1334,11 @@ void testUFFAllConstraints() {
       "  9 11  1  0  0  0  0\n"
       "  9 12  1  0  0  0  0\n"
       "M  END\n";
-  RDKit::RWMol *mol;
-  ForceFields::ForceField *field;
+  RDKit::RWMol *mol = nullptr;
+  ForceFields::ForceField *field = nullptr;
 
   // distance constraints
-  ForceFields::DistanceConstraintContribs *dc;
+  ForceFields::DistanceConstraintContribs *dc = nullptr;
   mol = RDKit::MolBlockToMol(molBlock, true, false);
   TEST_ASSERT(mol);
   MolTransforms::setBondLength(mol->getConformer(), 1, 3, 2.0);
@@ -1361,7 +1363,7 @@ void testUFFAllConstraints() {
   delete mol;
 
   // angle constraints
-  ForceFields::AngleConstraintContribs *ac;
+  ForceFields::AngleConstraintContribs *ac = nullptr;
   mol = RDKit::MolBlockToMol(molBlock, true, false);
   TEST_ASSERT(mol);
   MolTransforms::setAngleDeg(mol->getConformer(), 1, 3, 6, 90.0);
@@ -1387,7 +1389,7 @@ void testUFFAllConstraints() {
   delete mol;
 
   // torsion constraints
-  ForceFields::UFF::TorsionConstraintContrib *tc;
+  ForceFields::UFF::TorsionConstraintContrib *tc = nullptr;
   mol = RDKit::MolBlockToMol(molBlock, true, false);
   TEST_ASSERT(mol);
   MolTransforms::setDihedralDeg(mol->getConformer(), 1, 3, 6, 8, 15.0);
@@ -1427,7 +1429,7 @@ void testUFFAllConstraints() {
   delete mol;
 
   // position constraints
-  ForceFields::UFF::PositionConstraintContrib *pc;
+  ForceFields::UFF::PositionConstraintContrib *pc = nullptr;
   mol = RDKit::MolBlockToMol(molBlock, true, false);
   TEST_ASSERT(mol);
   field = RDKit::UFF::constructForceField(*mol);
