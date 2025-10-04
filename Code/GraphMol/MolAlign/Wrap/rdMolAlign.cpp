@@ -22,6 +22,7 @@
 #include <RDBoost/PySequenceHolder.h>
 #include <RDBoost/Wrap.h>
 #include <GraphMol/ROMol.h>
+#include <math.h>
 
 namespace python = boost::python;
 
@@ -132,7 +133,7 @@ PyObject *generateRmsdTransMatchPyTuple(double rmsd,
   dims[1] = 4;
   auto *res = (PyArrayObject *)PyArray_SimpleNew(2, dims, NPY_DOUBLE);
   auto *resData = reinterpret_cast<double *>(PyArray_DATA(res));
-  unsigned int i, j, itab;
+  unsigned int i = 0, j = 0, itab = 0;
   const double *tdata = trans.getData();
   for (i = 0; i < trans.numRows(); ++i) {
     itab = i * 4;
@@ -165,7 +166,7 @@ PyObject *getMolAlignTransform(const ROMol &prbMol, const ROMol &refMol,
                                bool reflect = false,
                                unsigned int maxIters = 50) {
   std::unique_ptr<MatchVectType> aMap(translateAtomMap(atomMap));
-  unsigned int nAtms;
+  unsigned int nAtms = 0;
   if (aMap) {
     nAtms = aMap->size();
   } else {
@@ -178,7 +179,7 @@ PyObject *getMolAlignTransform(const ROMol &prbMol, const ROMol &refMol,
     }
   }
   RDGeom::Transform3D trans;
-  double rmsd;
+  double rmsd = NAN;
   {
     NOGIL gil;
     rmsd = MolAlign::getAlignmentTransform(prbMol, refMol, trans, prbCid,
@@ -195,7 +196,7 @@ PyObject *getBestMolAlignTransform(
     int refCid = -1, bool reflect = false, unsigned int maxIters = 50) {
   RDGeom::Transform3D bestTrans;
   MatchVectType bestMatch;
-  double rmsd;
+  double rmsd = NAN;
   {
     NOGIL gil;
     rmsd = MolAlign::getBestAlignmentTransform(prbMol, refMol, bestTrans,
@@ -224,7 +225,7 @@ double AlignMolecule(ROMol &prbMol, const ROMol &refMol, int prbCid = -1,
                      python::object weights = python::list(),
                      bool reflect = false, unsigned int maxIters = 50) {
   std::unique_ptr<MatchVectType> aMap(translateAtomMap(atomMap));
-  unsigned int nAtms;
+  unsigned int nAtms = 0;
   if (aMap) {
     nAtms = aMap->size();
   } else {
@@ -237,7 +238,7 @@ double AlignMolecule(ROMol &prbMol, const ROMol &refMol, int prbCid = -1,
     }
   }
 
-  double rmsd;
+  double rmsd = NAN;
   {
     NOGIL gil;
     rmsd = MolAlign::alignMol(prbMol, refMol, prbCid, refCid, aMap.get(),
@@ -304,7 +305,7 @@ double CalcRMS(ROMol &prbMol, ROMol &refMol, int prbCid, int refCid,
     aMapVec = translateAtomMapSeq(map);
   }
   std::unique_ptr<RDNumeric::DoubleVector> wtsVec(translateDoubleSeq(weights));
-  double rmsd;
+  double rmsd = NAN;
   {
     NOGIL gil;
     rmsd =
@@ -409,7 +410,7 @@ PyO3A *getMMFFO3A(ROMol &prbMol, ROMol &refMol, python::object prbProps,
     }
     refMolPropsPtr = refMolProps.get();
   }
-  O3A *o3a;
+  O3A *o3a = nullptr;
   {
     NOGIL gil;
     o3a = new MolAlign::O3A(prbMol, refMol, prbMolPropsPtr, refMolPropsPtr,
@@ -562,7 +563,7 @@ PyO3A *getCrippenO3A(ROMol &prbMol, ROMol &refMol,
                                         true, &refAtomTypes,
                                         &refAtomTypeLabels);
   }
-  O3A *o3a;
+  O3A *o3a = nullptr;
   {
     NOGIL gil;
     o3a = new MolAlign::O3A(prbMol, refMol, &prbLogpContribs, &refLogpContribs,
