@@ -34,7 +34,7 @@ void testMol1() {
   BOOST_LOG(rdInfoLog) << "-------------------------------------" << std::endl;
   BOOST_LOG(rdInfoLog) << "CIP codes from a mol file (1)" << std::endl;
   std::string rdbase = getenv("RDBASE");
-  RWMol *m;
+  RWMol *m = nullptr;
   std::string fName, smi;
   std::string cip;
 
@@ -123,7 +123,7 @@ void testRoundTrip() {
   BOOST_LOG(rdInfoLog) << "CIP codes from a mol->smiles conversion (1)"
                        << std::endl;
   std::string rdbase = getenv("RDBASE");
-  RWMol *m;
+  RWMol *m = nullptr;
   std::string fName, smi, smi2;
   std::string cip;
 
@@ -269,7 +269,7 @@ void testMol2() {
   BOOST_LOG(rdInfoLog) << "-------------------------------------" << std::endl;
   BOOST_LOG(rdInfoLog) << "CIP codes from a mol file (2)" << std::endl;
   std::string rdbase = getenv("RDBASE");
-  RWMol *m;
+  RWMol *m = nullptr;
   std::string fName, smi;
   std::string cip;
 
@@ -1103,7 +1103,7 @@ void testChiralityFrom3D() {
                        << std::endl;
 
   std::string rdbase = getenv("RDBASE");
-  RWMol *m;
+  RWMol *m = nullptr;
   std::string fName, smi;
   std::string cip;
 
@@ -1718,7 +1718,7 @@ void testIssue2705543() {
 
   std::string rdbase = getenv("RDBASE");
   std::string fName;
-  RWMol *m;
+  RWMol *m = nullptr;
   std::string cip;
 
   {
@@ -1875,7 +1875,7 @@ void testIssue2762917() {
   std::string rdbase = getenv("RDBASE");
 
   {
-    RWMol *m;
+    RWMol *m = nullptr;
     std::string cip;
     std::string smiles = "[C@@H](C)(Cl)O";
     m = SmilesToMol(smiles);
@@ -1902,7 +1902,7 @@ void testIssue2762917() {
   }
 
   {
-    RWMol *m;
+    RWMol *m = nullptr;
     std::string cip;
     std::string smiles = "CCC.[C@@H](C)(Cl)O";
     m = SmilesToMol(smiles);
@@ -1931,7 +1931,7 @@ void testIssue2762917() {
   }
 
   {
-    RWMol *m;
+    RWMol *m = nullptr;
     std::string cip;
     std::string smiles = "[C@@H]([C@H](C)O)(C)O";
     m = SmilesToMol(smiles);
@@ -1973,7 +1973,7 @@ void testIssue2762917() {
   }
 
   {
-    RWMol *m;
+    RWMol *m = nullptr;
     std::string cip;
     std::string smiles = "C1CC.[C@@H]1(Cl)O";
     m = SmilesToMol(smiles);
@@ -2009,15 +2009,15 @@ void testIssue3009911() {
   BOOST_LOG(rdInfoLog) << "Issue 3009911: bad atom priorities" << std::endl;
 
   {
-    RWMol *m;
+    RWMol *m = nullptr;
     std::string smiles = "F[C@](O)(c1ccccc1)C(=C)CO";
     m = SmilesToMol(smiles);
     TEST_ASSERT(m);
-    int *ranks;
+    int *ranks = nullptr;
     ranks = new int[m->getNumAtoms()];
     MolOps::assignStereochemistry(*m, true);
     for (unsigned int i = 0; i < m->getNumAtoms(); ++i) {
-      unsigned int rank;
+      unsigned int rank = 0;
       TEST_ASSERT(m->getAtomWithIdx(i)->hasProp(common_properties::_CIPRank))
       m->getAtomWithIdx(i)->getProp(common_properties::_CIPRank, rank);
       ranks[i] = rank;
@@ -2037,15 +2037,15 @@ void testIssue3009911() {
     delete[] ranks;
   }
   {
-    RWMol *m;
+    RWMol *m = nullptr;
     std::string smiles = "COC(C)(OC)[C@](O)(F)C(C)=O";
     m = SmilesToMol(smiles);
     TEST_ASSERT(m);
-    int *ranks;
+    int *ranks = nullptr;
     ranks = new int[m->getNumAtoms()];
     MolOps::assignStereochemistry(*m, true);
     for (unsigned int i = 0; i < m->getNumAtoms(); ++i) {
-      unsigned int rank;
+      unsigned int rank = 0;
       TEST_ASSERT(m->getAtomWithIdx(i)->hasProp(common_properties::_CIPRank))
       m->getAtomWithIdx(i)->getProp(common_properties::_CIPRank, rank);
       ranks[i] = rank;
@@ -2078,7 +2078,7 @@ void testIssue3139534() {
 
   // tests that the creation and assignment are correct:
   {
-    RWMol *m;
+    RWMol *m = nullptr;
     std::string smiles = "C1COCC/C=C\\CC1";
     m = SmilesToMol(smiles);
     TEST_ASSERT(m);
@@ -2086,7 +2086,7 @@ void testIssue3139534() {
     delete m;
   }
   {
-    RWMol *m;
+    RWMol *m = nullptr;
     std::string smiles = "C1COCC/C=C/CC1";
     m = SmilesToMol(smiles);
     TEST_ASSERT(m);
@@ -2094,7 +2094,7 @@ void testIssue3139534() {
     delete m;
   }
   {
-    RWMol *m;
+    RWMol *m = nullptr;
     std::string smiles = "C/1=C/OCCC=CCC1";
     m = SmilesToMol(smiles);
     TEST_ASSERT(m);
@@ -2102,7 +2102,7 @@ void testIssue3139534() {
     delete m;
   }
   {
-    RWMol *m;
+    RWMol *m = nullptr;
     std::string smiles = "C1=C/OCCC=CCC\\1";
     m = SmilesToMol(smiles);
     TEST_ASSERT(m);
@@ -2110,7 +2110,7 @@ void testIssue3139534() {
     delete m;
   }
   {
-    RWMol *m;
+    RWMol *m = nullptr;
     std::string smiles = "C\\1=C/OCCC=CCC1";
     m = SmilesToMol(smiles);
     TEST_ASSERT(m);
@@ -2118,7 +2118,7 @@ void testIssue3139534() {
     delete m;
   }
   {
-    RWMol *m;
+    RWMol *m = nullptr;
     std::string smiles = "C1=C/OCCC=CCC/1";
     m = SmilesToMol(smiles);
     TEST_ASSERT(m);
@@ -2127,7 +2127,7 @@ void testIssue3139534() {
   }
 
   {
-    RWMol *m;
+    RWMol *m = nullptr;
     std::string smiles = "C/1=C/OCC/C=C\\CC1";
     m = SmilesToMol(smiles);
     TEST_ASSERT(m);
@@ -2136,7 +2136,7 @@ void testIssue3139534() {
     delete m;
   }
   {
-    RWMol *m;
+    RWMol *m = nullptr;
     std::string smiles = "C\\1=C/OCC/C=C\\CC1";
     m = SmilesToMol(smiles);
     TEST_ASSERT(m);
@@ -2145,7 +2145,7 @@ void testIssue3139534() {
     delete m;
   }
   {
-    RWMol *m;
+    RWMol *m = nullptr;
     std::string smiles = "C1=C/OCC/C=C\\CC\\1";
     m = SmilesToMol(smiles);
     TEST_ASSERT(m);
@@ -2154,7 +2154,7 @@ void testIssue3139534() {
     delete m;
   }
   {
-    RWMol *m;
+    RWMol *m = nullptr;
     std::string smiles = "C1=C/OCC/C=C\\CC/1";
     m = SmilesToMol(smiles);
     TEST_ASSERT(m);
@@ -2171,7 +2171,7 @@ void testFindChiralAtoms() {
 
   {
     // by default the chirality possible flag is not assigned:
-    RWMol *m;
+    RWMol *m = nullptr;
     std::string smiles = "F[C@H](Cl)C(Cl)(Br)C(F)(F)F";
     m = SmilesToMol(smiles);
     TEST_ASSERT(m);
@@ -2211,7 +2211,7 @@ void testIssue3453172() {
       << std::endl;
 
   {
-    RWMol *m;
+    RWMol *m = nullptr;
     std::string smiles = "C=[S@](F)Br";
     m = SmilesToMol(smiles);
     TEST_ASSERT(m);
@@ -2219,7 +2219,7 @@ void testIssue3453172() {
     delete m;
   }
   {
-    RWMol *m;
+    RWMol *m = nullptr;
     std::string smiles = "C[S@+](F)Br";
     m = SmilesToMol(smiles);
     TEST_ASSERT(m);
@@ -2227,7 +2227,7 @@ void testIssue3453172() {
     delete m;
   }
   {
-    RWMol *m;
+    RWMol *m = nullptr;
     std::string smiles = "C=[Se@](F)Br";
     m = SmilesToMol(smiles);
     TEST_ASSERT(m);
@@ -2235,7 +2235,7 @@ void testIssue3453172() {
     delete m;
   }
   {
-    RWMol *m;
+    RWMol *m = nullptr;
     std::string smiles = "C[Se@+](F)Br";
     m = SmilesToMol(smiles);
     TEST_ASSERT(m);
@@ -2243,7 +2243,7 @@ void testIssue3453172() {
     delete m;
   }
   {
-    RWMol *m;
+    RWMol *m = nullptr;
     std::string smiles = "C=[S@](Br)Br";
     m = SmilesToMol(smiles);
     TEST_ASSERT(m);
@@ -2251,7 +2251,7 @@ void testIssue3453172() {
     delete m;
   }
   {
-    RWMol *m;
+    RWMol *m = nullptr;
     std::string smiles = "C[S@+](Br)Br";
     m = SmilesToMol(smiles);
     TEST_ASSERT(m);
@@ -2259,7 +2259,7 @@ void testIssue3453172() {
     delete m;
   }
   {
-    RWMol *m;
+    RWMol *m = nullptr;
     std::string smiles = "C=[Se@](Br)Br";
     m = SmilesToMol(smiles);
     TEST_ASSERT(m);
@@ -2267,7 +2267,7 @@ void testIssue3453172() {
     delete m;
   }
   {
-    RWMol *m;
+    RWMol *m = nullptr;
     std::string smiles = "C[Se@+](Br)Br";
     m = SmilesToMol(smiles);
     TEST_ASSERT(m);
@@ -2277,7 +2277,7 @@ void testIssue3453172() {
 
   {
     // this was issue 254
-    RWMol *m;
+    RWMol *m = nullptr;
     std::string smiles = "O=[S@](c1ccccc1)C";
     m = SmilesToMol(smiles);
     TEST_ASSERT(m);
