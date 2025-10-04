@@ -19,6 +19,7 @@
 #include <RDGeneral/utils.h>
 #include <boost/shared_ptr.hpp>
 #include <vector>
+#include <cmath>
 #include <ctime>
 
 using namespace RDKit;
@@ -188,7 +189,7 @@ TEST_CASE("testRDValue") {
   }
   {
     std::clock_t clock1 = std::clock();
-    std::any *v = nullptr, *vv;
+    std::any *v = nullptr, *vv = nullptr;
     for (int i = 0; i < loops; ++i) {
       vv = new std::any(v ? std::any_cast<int>(*v) + i : i);
       delete v;
@@ -216,7 +217,7 @@ TEST_CASE("testRDValue") {
 
   {
     std::clock_t clock1 = std::clock();
-    RDAny *v = nullptr, *vv;
+    RDAny *v = nullptr, *vv = nullptr;
     for (int i = 0; i < loops; ++i) {
       vv = new RDAny(v ? rdany_cast<int>(*v) + i : i);
       delete v;
@@ -363,14 +364,14 @@ TEST_CASE("testStringPickleRoundtrips") {
     std::string sv;
     sv = "1";
     d.setVal("foo", sv);
-    int iv;
+    int iv = 0;
     d.getVal("foo", iv);
     REQUIRE(iv == 1);
   }
   {
     Dict d;
     d.setVal("foo", "1");
-    int iv;
+    int iv = 0;
     d.getVal("foo", iv);
     REQUIRE(iv == 1);
   }
@@ -379,7 +380,7 @@ TEST_CASE("testStringPickleRoundtrips") {
     std::string sv;
     sv = "1.3";
     d.setVal("foo", sv);
-    double dv;
+    double dv = NAN;
     d.getVal("foo", dv);
     REQUIRE(feq(dv, 1.3));
   }
@@ -473,7 +474,7 @@ TEST_CASE("testConstReturns") {
     RDAny anyv(v);
     d.setVal("foo", v);
 
-    std::clock_t start, end;
+    std::clock_t start = 0, end = 0;
 
     double ls = 0;
     start = std::clock();
@@ -669,7 +670,7 @@ TEST_CASE("basics") {
   d.setVal("foo", x);
   REQUIRE(d.hasVal("foo"));
   REQUIRE(!d.hasVal("bar"));
-  int v, v2;
+  int v = 0, v2 = 0;
   d.getVal("foo", v);
   REQUIRE(v == 1);
   v2 = d.getVal<int>("foo");
