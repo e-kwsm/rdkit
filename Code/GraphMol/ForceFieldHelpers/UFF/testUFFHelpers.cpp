@@ -26,13 +26,14 @@
 #include <GraphMol/ForceFieldHelpers/UFF/UFF.h>
 #include <ForceField/ForceField.h>
 #include <GraphMol/DistGeomHelpers/Embedder.h>
+#include <math.h>
 
 using namespace RDKit;
 void testUFFTyper1() {
   BOOST_LOG(rdErrorLog) << "-------------------------------------" << std::endl;
   BOOST_LOG(rdErrorLog) << "    Test UFF atom labels." << std::endl;
 
-  ROMol *mol;
+  ROMol *mol = nullptr;
   std::string key;
 
   mol = SmilesToMol("[SiH3]CC(=O)NC");
@@ -138,14 +139,14 @@ void testUFFTyper2() {
   BOOST_LOG(rdErrorLog) << "-------------------------------------" << std::endl;
   BOOST_LOG(rdErrorLog) << "    Test UFF atom typer." << std::endl;
 
-  ROMol *mol, *mol2;
+  ROMol *mol = nullptr, *mol2 = nullptr;
   std::string key;
 
   mol = SmilesToMol("[SiH3]CC(=O)NC");
   TEST_ASSERT(mol);
 
   UFF::AtomicParamVect types;
-  bool foundAll;
+  bool foundAll = false;
   boost::tie(types, foundAll) = UFF::getAtomTypes(*mol);
   TEST_ASSERT(foundAll);
   TEST_ASSERT(types.size() == mol->getNumAtoms());
@@ -208,12 +209,12 @@ void testUFFBuilder1() {
   BOOST_LOG(rdErrorLog) << "-------------------------------------" << std::endl;
   BOOST_LOG(rdErrorLog) << "    Testing UFF builder tools." << std::endl;
 
-  ROMol *mol, *mol2;
+  ROMol *mol = nullptr, *mol2 = nullptr;
   std::string key;
 
   UFF::AtomicParamVect types;
-  bool foundAll;
-  ForceFields::ForceField *field;
+  bool foundAll = false;
+  ForceFields::ForceField *field = nullptr;
   boost::shared_array<std::uint8_t> nbrMat;
 
   mol = SmilesToMol("CC(O)C");
@@ -367,7 +368,7 @@ void testUFFBuilder2() {
     TEST_ASSERT(mol);
     MolOps::sanitizeMol(*mol);
 
-    ForceFields::ForceField *field;
+    ForceFields::ForceField *field = nullptr;
     field = UFF::constructForceField(*mol);
     TEST_ASSERT(field);
     field->initialize();
@@ -388,7 +389,7 @@ void testUFFBuilder2() {
     RDGeom::Point3D p0 = mol->getConformer().getAtomPos(0);
     RDGeom::Point3D p1 = mol->getConformer().getAtomPos(1);
 
-    ForceFields::ForceField *field;
+    ForceFields::ForceField *field = nullptr;
     field = UFF::constructForceField(*mol, 100, 111);
     TEST_ASSERT(field);
     field->initialize();
@@ -412,7 +413,7 @@ void testUFFBuilder2() {
     TEST_ASSERT(mol);
     MolOps::sanitizeMol(*mol);
 
-    ForceFields::ForceField *field;
+    ForceFields::ForceField *field = nullptr;
     field = UFF::constructForceField(*mol);
     TEST_ASSERT(field);
     field->initialize();
@@ -427,7 +428,7 @@ void testUFFBuilder2() {
     TEST_ASSERT(mol);
     MolOps::sanitizeMol(*mol);
 
-    ForceFields::ForceField *field;
+    ForceFields::ForceField *field = nullptr;
     field = UFF::constructForceField(*mol);
     TEST_ASSERT(field);
     field->initialize();
@@ -442,7 +443,7 @@ void testUFFBuilder2() {
     TEST_ASSERT(mol);
     MolOps::sanitizeMol(*mol);
 
-    ForceFields::ForceField *field;
+    ForceFields::ForceField *field = nullptr;
     field = UFF::constructForceField(*mol);
     TEST_ASSERT(field);
     field->initialize();
@@ -457,7 +458,7 @@ void testUFFBuilder2() {
     TEST_ASSERT(mol);
     MolOps::sanitizeMol(*mol);
 
-    ForceFields::ForceField *field;
+    ForceFields::ForceField *field = nullptr;
     field = UFF::constructForceField(*mol);
     TEST_ASSERT(field);
     field->initialize();
@@ -474,11 +475,11 @@ void testUFFBuilder2() {
     MolOps::sanitizeMol(*mol);
 
     UFF::AtomicParamVect types;
-    bool foundAll;
+    bool foundAll = false;
     boost::shared_array<std::uint8_t> nbrMat;
     boost::tie(types, foundAll) = UFF::getAtomTypes(*mol);
 
-    ForceFields::ForceField *field;
+    ForceFields::ForceField *field = nullptr;
     field = new ForceFields::ForceField();
 
     // add the atomic positions:
@@ -531,7 +532,7 @@ void testUFFBuilder2() {
     newConf->setId(111);
     mol->addConformer(newConf, false);
 
-    ForceFields::ForceField *field;
+    ForceFields::ForceField *field = nullptr;
     field = UFF::constructForceField(*mol, 100, 111);
     TEST_ASSERT(field);
     field->initialize();
@@ -623,11 +624,11 @@ void testUFFBuilderSpecialCases() {
   BOOST_LOG(rdErrorLog) << "-------------------------------------" << std::endl;
   BOOST_LOG(rdErrorLog) << "    Testing UFF special cases." << std::endl;
 
-  RWMol *mol;
+  RWMol *mol = nullptr;
   std::string key;
-  int needMore;
+  int needMore = 0;
   RDGeom::Point3D v1, v2;
-  ForceFields::ForceField *field;
+  ForceFields::ForceField *field = nullptr;
 
   std::string pathName = getenv("RDBASE");
   pathName += "/Code/GraphMol/ForceFieldHelpers/UFF/test_data";
@@ -682,11 +683,11 @@ void testIssue239() {
   BOOST_LOG(rdErrorLog) << "-------------------------------------" << std::endl;
   BOOST_LOG(rdErrorLog) << "    Testing Issue239." << std::endl;
 
-  RWMol *mol;
-  int needMore;
+  RWMol *mol = nullptr;
+  int needMore = 0;
   (void)needMore;  // add test later
-  ForceFields::ForceField *field;
-  double e1, e2;
+  ForceFields::ForceField *field = nullptr;
+  double e1 = NAN, e2 = NAN;
 
   std::string pathName = getenv("RDBASE");
   pathName += "/Code/GraphMol/ForceFieldHelpers/UFF/test_data";
@@ -714,9 +715,9 @@ void testCalcEnergyPassedCoords() {
   BOOST_LOG(rdErrorLog) << "    Testing calcEnergy with passed coords."
                         << std::endl;
 
-  RWMol *mol;
-  ForceFields::ForceField *field;
-  double e1, e2, e3;
+  RWMol *mol = nullptr;
+  ForceFields::ForceField *field = nullptr;
+  double e1 = NAN, e2 = NAN, e3 = NAN;
 
   std::string pathName = getenv("RDBASE");
   pathName += "/Code/GraphMol/ForceFieldHelpers/MMFF/test_data";
@@ -752,8 +753,8 @@ void testCalcGrad() {
   BOOST_LOG(rdErrorLog) << "-------------------------------------" << std::endl;
   BOOST_LOG(rdErrorLog) << "    Testing calcGrad." << std::endl;
 
-  RWMol *mol;
-  ForceFields::ForceField *field;
+  RWMol *mol = nullptr;
+  ForceFields::ForceField *field = nullptr;
 
   std::string pathName = getenv("RDBASE");
   pathName += "/Code/GraphMol/ForceFieldHelpers/MMFF/test_data";
@@ -809,9 +810,9 @@ void testSFIssue1653802() {
   BOOST_LOG(rdErrorLog) << "-------------------------------------" << std::endl;
   BOOST_LOG(rdErrorLog) << "    Testing SFIssue1653802." << std::endl;
 
-  RWMol *mol;
-  int needMore;
-  ForceFields::ForceField *field;
+  RWMol *mol = nullptr;
+  int needMore = 0;
+  ForceFields::ForceField *field = nullptr;
 
   std::string pathName = getenv("RDBASE");
   pathName += "/Code/GraphMol/ForceFieldHelpers/UFF/test_data";
@@ -821,7 +822,7 @@ void testSFIssue1653802() {
   MolOps::sanitizeMol(*mol);
 
   UFF::AtomicParamVect types;
-  bool foundAll;
+  bool foundAll = false;
   boost::shared_array<std::uint8_t> nbrMat;
   boost::tie(types, foundAll) = UFF::getAtomTypes(*mol);
   TEST_ASSERT(foundAll);
@@ -922,7 +923,7 @@ void testMissingParams() {
 
   {
     UFF::AtomicParamVect types;
-    bool foundAll;
+    bool foundAll = false;
 
     ROMol *mol = SmilesToMol("[Cu](C)(C)(C)(C)C");
     TEST_ASSERT(mol);
@@ -1267,7 +1268,7 @@ void testGitHubIssue613() {
     mol->getAtomWithIdx(0)->setHybridization(Atom::SP3D2);
 
     UFF::AtomicParamVect types;
-    bool foundAll;
+    bool foundAll = false;
     boost::tie(types, foundAll) = UFF::getAtomTypes(*mol);
     TEST_ASSERT(foundAll);
     TEST_ASSERT(types.size() == mol->getNumAtoms());
