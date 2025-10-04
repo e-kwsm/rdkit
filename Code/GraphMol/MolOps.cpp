@@ -59,7 +59,6 @@ void nitrogenCleanup(RWMol &mol, Atom *atom) {
   //   C-N=N#N -> C-N=[N+]=[N-]
 
   PRECONDITION(atom, "bad atom");
-  bool aromHolder;
 
   // we only want to do neutrals so that things like this don't get
   // munged:
@@ -72,7 +71,7 @@ void nitrogenCleanup(RWMol &mol, Atom *atom) {
   // we need to play this little aromaticity game because the
   // explicit valence code modifies its results for aromatic
   // atoms.
-  aromHolder = atom->getIsAromatic();
+  bool aromHolder = atom->getIsAromatic();
   atom->setIsAromatic(0);
   // NOTE that we are calling calcExplicitValence() here, we do
   // this because we cannot be sure that it has already been
@@ -475,7 +474,7 @@ MolOps::Hybridizations::Hybridizations(const ROMol &mol) {
   // compute them in a copy of the mol, so as not to change the mol passed in
 
   RWMol molCopy(mol);
-  unsigned int operationThatFailed;
+  unsigned int operationThatFailed = 0;
   unsigned int santitizeOps =
       MolOps::SANITIZE_SETCONJUGATION | MolOps::SANITIZE_SETHYBRIDIZATION;
   MolOps::sanitizeMol(molCopy, operationThatFailed, santitizeOps);
@@ -629,8 +628,7 @@ std::vector<std::unique_ptr<MolSanitizeException>> detectChemistryProblems(
   // clear out any cached properties
   mol.clearComputedProps();
 
-  int operation;
-  operation = SANITIZE_CLEANUP;
+  int operation = SANITIZE_CLEANUP;
   if (sanitizeOps & operation) {
     // clean up things like nitro groups
     cleanUp(mol);
@@ -1259,7 +1257,7 @@ bool isAttachmentPoint(const Atom *atom, bool markedOnly) {
 
 void expandAttachmentPoints(RWMol &mol, bool addAsQueries, bool addCoords) {
   for (auto atom : mol.atoms()) {
-    int value;
+    int value = 0;
     if (atom->getPropIfPresent(common_properties::molAttachPoint, value)) {
       std::vector<int> tgtVals;
       if (value == 1 || value == -1) {
