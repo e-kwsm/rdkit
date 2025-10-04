@@ -36,9 +36,7 @@ class RDKIT_DATASTRUCTS_EXPORT SparseBitVect : public BitVect {
  public:
   SparseBitVect() {}
   //! initialize with a particular size;
-  explicit SparseBitVect(unsigned int size) : dp_bits(nullptr), d_size(0) {
-    _initForSize(size);
-  }
+  explicit SparseBitVect(unsigned int size) { _initForSize(size); }
 
   //! copy constructor
   SparseBitVect(const SparseBitVect &other) : BitVect(other) {

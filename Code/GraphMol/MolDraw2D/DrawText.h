@@ -167,7 +167,7 @@ class RDKIT_MOLDRAW2D_EXPORT DrawText {
   constexpr static double SUPER_SCALE = 0.66;
 
   DrawColour colour_;
-  double font_scale_;
+  double font_scale_{1.0};
   double max_font_size_;
   double min_font_size_;
   double base_font_size_ = DEFAULT_FONT_SCALE;
