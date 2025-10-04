@@ -260,8 +260,8 @@ std::string getAtomSmartsSimple(const QueryAtom *qatom,
     res << "$(*=,:,#*)";
     needParen = true;
   } else if (descrip == "AtomType" && equery) {
-    int atNum;
-    bool isAromatic;
+    int atNum = 0;
+    bool isAromatic = false;
     parseAtomType(equery->getVal(), atNum, isAromatic);
     if (!checkForSymbol || !qatom->hasProp(common_properties::smilesSymbol)) {
       std::string symbol = PeriodicTable::getTable()->getElementSymbol(atNum);
@@ -502,7 +502,7 @@ std::string _recurseGetSmarts(const QueryAtom *qatom,
   CHECK_INVARIANT(chi != node->endChildren(),
                   "Not enough children on the query");
 
-  bool needParen;
+  bool needParen = false;
   std::string csmarts1;
   // deal with the first child
   if (dsc1 == "RecursiveStructure") {
@@ -592,8 +592,8 @@ std::string _recurseBondSmarts(const Bond *bond,
   std::string descrip = node->getDescription();
   std::string res = "";
 
-  const QueryBond::QUERYBOND_QUERY *child1;
-  const QueryBond::QUERYBOND_QUERY *child2;
+  const QueryBond::QUERYBOND_QUERY *child1 = nullptr;
+  const QueryBond::QUERYBOND_QUERY *child2 = nullptr;
   unsigned int child1Features = 0;
   unsigned int child2Features = 0;
   QueryBond::QUERYBOND_QUERY::CHILD_VECT_CI chi;
@@ -787,7 +787,7 @@ std::string getNonQueryAtomSmarts(const Atom *atom) {
       res << "+" << atom->getFormalCharge();
     }
   }
-  int mapNum;
+  int mapNum = 0;
   if (atom->getPropIfPresent(common_properties::molAtomMapNumber, mapNum)) {
     res << ":";
     res << mapNum;
