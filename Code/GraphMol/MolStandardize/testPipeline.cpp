@@ -1746,12 +1746,12 @@ M  END
     auto useLegacy = GENERATE(true, false);
     CAPTURE(useLegacy);
     UseLegacyStereoPerceptionFixture fx(useLegacy);
-    const char *molblock;
+    const char *molblock = nullptr;
     MolStandardize::PipelineResult result;
     std::unique_ptr<RWMol> parentMol;
     std::string parentSmiles;
-    const Bond *wavy;
-    const Bond *doubleBond;
+    const Bond *wavy = nullptr;
+    const Bond *doubleBond = nullptr;
 
     // simplest case: wavy bond adjacent a double bond
     molblock = R"(
