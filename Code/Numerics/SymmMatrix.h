@@ -40,7 +40,7 @@ class SymmMatrix {
   SymmMatrix(unsigned int N, TYPE val)
       : d_size(N), d_dataSize(N * (N + 1) / 2) {
     TYPE *data = new TYPE[d_dataSize];
-    unsigned int i;
+    unsigned int i = 0;
     for (i = 0; i < d_dataSize; i++) {
       data[i] = val;
     }
@@ -83,7 +83,7 @@ class SymmMatrix {
   TYPE getVal(unsigned int i, unsigned int j) const {
     URANGE_CHECK(i, d_size);
     URANGE_CHECK(j, d_size);
-    unsigned int id;
+    unsigned int id = 0;
     if (i >= j) {
       id = i * (i + 1) / 2 + j;
     } else {
@@ -95,7 +95,7 @@ class SymmMatrix {
   void setVal(unsigned int i, unsigned int j, TYPE val) {
     URANGE_CHECK(i, d_size);
     URANGE_CHECK(j, d_size);
-    unsigned int id;
+    unsigned int id = 0;
     if (i >= j) {
       id = i * (i + 1) / 2 + j;
     } else {
@@ -109,7 +109,7 @@ class SymmMatrix {
     TYPE *rData = row.getData();
     TYPE *data = d_data.get();
     for (unsigned int j = 0; j < d_size; j++) {
-      unsigned int id;
+      unsigned int id = 0;
       if (j <= i) {
         id = i * (i + 1) / 2 + j;
       } else {
@@ -124,7 +124,7 @@ class SymmMatrix {
     TYPE *rData = col.getData();
     TYPE *data = d_data.get();
     for (unsigned int j = 0; j < d_size; j++) {
-      unsigned int id;
+      unsigned int id = 0;
       if (i <= j) {
         id = j * (j + 1) / 2 + i;
       } else {
@@ -191,7 +191,7 @@ class SymmMatrix {
         unsigned int idCt = idC + j;
         cData[idCt] = (TYPE)0.0;
         for (unsigned int k = 0; k < d_size; k++) {
-          unsigned int idA, idB;
+          unsigned int idA = 0, idB = 0;
           if (k <= i) {
             idA = i * (i + 1) / 2 + k;
           } else {
@@ -275,7 +275,7 @@ SymmMatrix<TYPE> &multiply(const SymmMatrix<TYPE> &A, const SymmMatrix<TYPE> &B,
       unsigned int idCt = idC + j;
       cData[idCt] = (TYPE)0.0;
       for (unsigned int k = 0; k < aSize; k++) {
-        unsigned int idA, idB;
+        unsigned int idA = 0, idB = 0;
         if (k <= i) {
           idA = i * (i + 1) / 2 + k;
         } else {
