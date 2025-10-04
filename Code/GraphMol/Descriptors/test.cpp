@@ -40,6 +40,7 @@
 
 #include <DataStructs/BitVects.h>
 #include <DataStructs/BitOps.h>
+#include <math.h>
 using namespace RDKit;
 using namespace RDKit::Descriptors;
 
@@ -63,8 +64,8 @@ void test2() {
   BOOST_LOG(rdErrorLog) << "-------------------------------------" << std::endl;
   BOOST_LOG(rdErrorLog) << "    Test Crippen calculation." << std::endl;
 
-  ROMol *mol;
-  double logp, mr;
+  ROMol *mol = nullptr;
+  double logp = NAN, mr = NAN;
 
   mol = SmilesToMol("C");
   TEST_ASSERT(mol);
@@ -146,10 +147,10 @@ void testIssue262() {
       << "    Test Issue262: problems with Crippen calculation from pickles."
       << std::endl;
 
-  ROMol *mol, *mol2;
-  RWMol *mol3;
+  ROMol *mol = nullptr, *mol2 = nullptr;
+  RWMol *mol3 = nullptr;
   std::string pkl;
-  double rlogp, rmr, logp, mr;
+  double rlogp = NAN, rmr = NAN, logp = NAN, mr = NAN;
 
   mol = SmilesToMol("c1ncccc1");
   TEST_ASSERT(mol);
@@ -182,8 +183,8 @@ void test3() {
   BOOST_LOG(rdErrorLog) << "-------------------------------------" << std::endl;
   BOOST_LOG(rdErrorLog) << "    Test AMW calculation." << std::endl;
 
-  ROMol *mol, *mol2;
-  double amw;
+  ROMol *mol = nullptr, *mol2 = nullptr;
+  double amw = NAN;
 
   mol = SmilesToMol("C");
   TEST_ASSERT(mol);
@@ -221,8 +222,8 @@ void test3a() {
   BOOST_LOG(rdErrorLog) << "-------------------------------------" << std::endl;
   BOOST_LOG(rdErrorLog) << "    Test Exact MW calculation." << std::endl;
 
-  ROMol *mol, *mol2;
-  double mw;
+  ROMol *mol = nullptr, *mol2 = nullptr;
+  double mw = NAN;
 
   mol = SmilesToMol("C");
   TEST_ASSERT(mol);
@@ -284,8 +285,8 @@ void test3a() {
 void testLabute() {
   BOOST_LOG(rdErrorLog) << "-------------------------------------" << std::endl;
   BOOST_LOG(rdErrorLog) << "    Test Labute ASA descriptors." << std::endl;
-  ROMol *mol;
-  double asa;
+  ROMol *mol = nullptr;
+  double asa = NAN;
 
   mol = SmilesToMol("CO");
   asa = calcLabuteASA(*mol);
@@ -391,7 +392,7 @@ void testLipinski1() {
       continue;
     }
 
-    unsigned int oVal, nVal;
+    unsigned int oVal = 0, nVal = 0;
     std::string foo;
 
     mol->getProp("NUM_HACCEPTORS", foo);
@@ -486,7 +487,7 @@ void testVSADescriptors() {
   BOOST_LOG(rdErrorLog) << "    Test VSA descriptors." << std::endl;
 
   {
-    ROMol *mol;
+    ROMol *mol = nullptr;
     std::vector<double> vals;
 
     mol = SmilesToMol("CO");
@@ -542,7 +543,7 @@ void testVSADescriptors() {
   }
 
   {
-    ROMol *mol;
+    ROMol *mol = nullptr;
     std::vector<double> vals;
 
     mol = SmilesToMol("CO");
@@ -584,7 +585,7 @@ void testVSADescriptors() {
   }
 
   {
-    ROMol *mol;
+    ROMol *mol = nullptr;
     std::vector<double> vals;
 
     mol = SmilesToMol("CO");
@@ -633,7 +634,7 @@ void testMolFormula() {
   BOOST_LOG(rdErrorLog) << "    Test molecular formula calculation."
                         << std::endl;
 
-  ROMol *mol, *mol2;
+  ROMol *mol = nullptr, *mol2 = nullptr;
   std::string formula;
 
   mol = SmilesToMol("C");
@@ -810,8 +811,8 @@ void testIssue3433771() {
       << "    Test Issue3433771: Bad definition for Crippen atom type O11."
       << std::endl;
 
-  ROMol *mol;
-  double logp, mr;
+  ROMol *mol = nullptr;
+  double logp = NAN, mr = NAN;
 
   mol = SmilesToMol("O=C(NC)n1cccc1");
   TEST_ASSERT(mol);
@@ -841,7 +842,7 @@ void runblock(const std::vector<ROMol *> &mols, unsigned int count,
       int nHBD = calcNumHBD(*mol);
       int nHBA = calcNumHBA(*mol);
 
-      int oVal;
+      int oVal = 0;
       std::string foo;
       mol->getProp("NUM_HACCEPTORS", foo);
       oVal = boost::lexical_cast<int>(foo);
@@ -852,7 +853,7 @@ void runblock(const std::vector<ROMol *> &mols, unsigned int count,
 
       unsigned int nAmide = calcNumAmideBonds(*mol);
       (void)nAmide;
-      double logp, mr;
+      double logp = NAN, mr = NAN;
       calcCrippenDescriptors(*mol, logp, mr);
     }
   }
@@ -908,7 +909,7 @@ void testCrippenContribs() {
                         << std::endl;
 
   {
-    ROMol *mol;
+    ROMol *mol = nullptr;
     mol = SmilesToMol("n1ccccc1CO");
     TEST_ASSERT(mol);
     std::vector<double> logp(mol->getNumAtoms());
@@ -941,7 +942,7 @@ void testIssue252() {
       << std::endl;
 
   {
-    ROMol *mol;
+    ROMol *mol = nullptr;
     mol = SmilesToMol("O=[N+]([O-])C");
     TEST_ASSERT(mol);
     std::vector<double> logp(mol->getNumAtoms());
@@ -955,7 +956,7 @@ void testIssue252() {
     delete mol;
   }
   {
-    ROMol *mol;
+    ROMol *mol = nullptr;
     mol = SmilesToMol("CP");
     TEST_ASSERT(mol);
     std::vector<double> logp(mol->getNumAtoms());
@@ -966,7 +967,7 @@ void testIssue252() {
     delete mol;
   }
   {
-    ROMol *mol;
+    ROMol *mol = nullptr;
     mol = SmilesToMol("C(C)P");
     TEST_ASSERT(mol);
     std::vector<double> logp(mol->getNumAtoms());
@@ -977,7 +978,7 @@ void testIssue252() {
     delete mol;
   }
   {
-    ROMol *mol;
+    ROMol *mol = nullptr;
     mol = SmilesToMol("C(C)(C)P");
     TEST_ASSERT(mol);
     std::vector<double> logp(mol->getNumAtoms());
@@ -988,7 +989,7 @@ void testIssue252() {
     delete mol;
   }
   {
-    ROMol *mol;
+    ROMol *mol = nullptr;
     mol = SmilesToMol("C(C)(C)(C)P");
     TEST_ASSERT(mol);
     std::vector<double> logp(mol->getNumAtoms());
@@ -999,7 +1000,7 @@ void testIssue252() {
     delete mol;
   }
   {
-    ROMol *mol;
+    ROMol *mol = nullptr;
     mol = SmilesToMol("C(=C)c1ccccc1");
     TEST_ASSERT(mol);
     std::vector<double> logp(mol->getNumAtoms());
@@ -1010,7 +1011,7 @@ void testIssue252() {
     delete mol;
   }
   {
-    ROMol *mol;
+    ROMol *mol = nullptr;
     mol = SmilesToMol("C(=C)(C)c1ccccc1");
     TEST_ASSERT(mol);
     std::vector<double> logp(mol->getNumAtoms());
@@ -1021,7 +1022,7 @@ void testIssue252() {
     delete mol;
   }
   {
-    ROMol *mol;
+    ROMol *mol = nullptr;
     mol = SmilesToMol("C=C");
     TEST_ASSERT(mol);
     std::vector<double> logp(mol->getNumAtoms());
@@ -1032,7 +1033,7 @@ void testIssue252() {
     delete mol;
   }
   {
-    ROMol *mol;
+    ROMol *mol = nullptr;
     mol = SmilesToMol("O=S");
     TEST_ASSERT(mol);
     std::vector<double> logp(mol->getNumAtoms());
@@ -1043,7 +1044,7 @@ void testIssue252() {
     delete mol;
   }
   {
-    ROMol *mol;
+    ROMol *mol = nullptr;
     mol = SmilesToMol("S=O");
     TEST_ASSERT(mol);
     std::vector<double> logp(mol->getNumAtoms());
@@ -1054,7 +1055,7 @@ void testIssue252() {
     delete mol;
   }
   {
-    ROMol *mol;
+    ROMol *mol = nullptr;
     mol = SmilesToMol("C(Cl)C");
     TEST_ASSERT(mol);
     std::vector<double> logp(mol->getNumAtoms());
@@ -1065,7 +1066,7 @@ void testIssue252() {
     delete mol;
   }
   {
-    ROMol *mol;
+    ROMol *mol = nullptr;
     mol = SmilesToMol("C(Cl)(Cl)C");
     TEST_ASSERT(mol);
     std::vector<double> logp(mol->getNumAtoms());
@@ -1076,7 +1077,7 @@ void testIssue252() {
     delete mol;
   }
   {
-    ROMol *mol;
+    ROMol *mol = nullptr;
     mol = SmilesToMol("C(Cl)(Cl)(Cl)C");
     TEST_ASSERT(mol);
     std::vector<double> logp(mol->getNumAtoms());
@@ -1087,7 +1088,7 @@ void testIssue252() {
     delete mol;
   }
   {
-    ROMol *mol;
+    ROMol *mol = nullptr;
     mol = SmilesToMol("C(Cl)c1ccccc1");
     TEST_ASSERT(mol);
     std::vector<double> logp(mol->getNumAtoms());
@@ -1098,7 +1099,7 @@ void testIssue252() {
     delete mol;
   }
   {
-    ROMol *mol;
+    ROMol *mol = nullptr;
     mol = SmilesToMol("C(Cl)(Cl)c1ccccc1");
     TEST_ASSERT(mol);
     std::vector<double> logp(mol->getNumAtoms());
@@ -1109,7 +1110,7 @@ void testIssue252() {
     delete mol;
   }
   {
-    ROMol *mol;
+    ROMol *mol = nullptr;
     mol = SmilesToMol("C(Cl)(Cl)(Cl)c1ccccc1");
     TEST_ASSERT(mol);
     std::vector<double> logp(mol->getNumAtoms());
@@ -1136,7 +1137,7 @@ void testChiVs() {
                       4.439, 4.654, 3.834, 2.841, 3.671, 4.242};
     unsigned int idx = 0;
     while (sdata[idx] != "EOS") {
-      ROMol *mol;
+      ROMol *mol = nullptr;
       mol = SmilesToMol(sdata[idx]);
       TEST_ASSERT(mol);
       double v = calcChi0v(*mol);
@@ -1154,7 +1155,7 @@ void testChiVs() {
                       2.523, 2.489, 2.284, 2.134};
     unsigned int idx = 0;
     while (sdata[idx] != "EOS") {
-      ROMol *mol;
+      ROMol *mol = nullptr;
       mol = SmilesToMol(sdata[idx]);
       TEST_ASSERT(mol);
       double v = calcChi1v(*mol);
@@ -1173,7 +1174,7 @@ void testChiVs() {
 
     unsigned int idx = 0;
     while (sdata[idx] != "EOS") {
-      ROMol *mol;
+      ROMol *mol = nullptr;
       mol = SmilesToMol(sdata[idx]);
       TEST_ASSERT(mol);
       double v = calcChi2v(*mol);
@@ -1193,7 +1194,7 @@ void testChiVs() {
 
     unsigned int idx = 0;
     while (sdata[idx] != "EOS") {
-      ROMol *mol;
+      ROMol *mol = nullptr;
       mol = SmilesToMol(sdata[idx]);
       TEST_ASSERT(mol);
       double v = calcChi3v(*mol);
@@ -1213,7 +1214,7 @@ void testChiVs() {
 
     unsigned int idx = 0;
     while (sdata[idx] != "EOS") {
-      ROMol *mol;
+      ROMol *mol = nullptr;
       mol = SmilesToMol(sdata[idx]);
       TEST_ASSERT(mol);
       double v = calcChi4v(*mol);
@@ -1239,7 +1240,7 @@ void testChiNs() {
                       4.439, 4.654, 3.834, 2.085, 2.085, 2.085};
     unsigned int idx = 0;
     while (sdata[idx] != "EOS") {
-      ROMol *mol;
+      ROMol *mol = nullptr;
       mol = SmilesToMol(sdata[idx]);
       TEST_ASSERT(mol);
       double v = calcChi0n(*mol);
@@ -1257,7 +1258,7 @@ void testChiNs() {
                       2.523, 2.489, 2.284, 2.134, 0.289};
     unsigned int idx = 0;
     while (sdata[idx] != "EOS") {
-      ROMol *mol;
+      ROMol *mol = nullptr;
       mol = SmilesToMol(sdata[idx]);
       TEST_ASSERT(mol);
       double v = calcChi1n(*mol);
@@ -1276,7 +1277,7 @@ void testChiNs() {
 
     unsigned int idx = 0;
     while (sdata[idx] != "EOS") {
-      ROMol *mol;
+      ROMol *mol = nullptr;
       mol = SmilesToMol(sdata[idx]);
       TEST_ASSERT(mol);
       double v = calcChi2n(*mol);
@@ -1296,7 +1297,7 @@ void testChiNs() {
 
     unsigned int idx = 0;
     while (sdata[idx] != "EOS") {
-      ROMol *mol;
+      ROMol *mol = nullptr;
       mol = SmilesToMol(sdata[idx]);
       TEST_ASSERT(mol);
       double v = calcChi3n(*mol);
@@ -1316,7 +1317,7 @@ void testChiNs() {
 
     unsigned int idx = 0;
     while (sdata[idx] != "EOS") {
-      ROMol *mol;
+      ROMol *mol = nullptr;
       mol = SmilesToMol(sdata[idx]);
       TEST_ASSERT(mol);
       double v = calcChi4n(*mol);
@@ -1352,7 +1353,7 @@ void testHallKierAlpha() {
     };
     unsigned int idx = 0;
     while (sdata[idx] != "EOS") {
-      ROMol *mol;
+      ROMol *mol = nullptr;
       mol = SmilesToMol(sdata[idx]);
       TEST_ASSERT(mol);
       double v = calcHallKierAlpha(*mol);
@@ -1375,7 +1376,7 @@ void testKappa1() {
     double ddata[] = {2.344, 3.061, 4.167, 6.000, 9.091, 9.091, 9.091};
     unsigned int idx = 0;
     while (sdata[idx] != "EOS") {
-      ROMol *mol;
+      ROMol *mol = nullptr;
       mol = SmilesToMol(sdata[idx]);
       TEST_ASSERT(mol);
       double v = calcKappa1(*mol);
@@ -1430,7 +1431,7 @@ void testKappa2() {
       // we have some structures with unhappy valences, so be careful about the
       // sanitization:
       mol->updatePropertyCache(false);
-      unsigned int opThatFailed;
+      unsigned int opThatFailed = 0;
       MolOps::sanitizeMol(*mol, opThatFailed,
                           MolOps::SANITIZE_ALL ^ MolOps::SANITIZE_PROPERTIES);
       double v = calcKappa2(*mol);
@@ -1460,7 +1461,7 @@ void testKappa3() {
       // we have some structures with unhappy valences, so be careful about the
       // sanitization:
       mol->updatePropertyCache(false);
-      unsigned int opThatFailed;
+      unsigned int opThatFailed = 0;
       MolOps::sanitizeMol(*mol, opThatFailed,
                           MolOps::SANITIZE_ALL ^ MolOps::SANITIZE_PROPERTIES);
       double v = calcKappa3(*mol);
@@ -1481,7 +1482,7 @@ void testRingDescriptors() {
   while (!suppl.atEnd()) {
     ROMol *mol = suppl.next();
     TEST_ASSERT(mol);
-    unsigned int iv;
+    unsigned int iv = 0;
     mol->getProp("NumRings", iv);
     TEST_ASSERT(iv == calcNumRings(*mol));
     mol->getProp("NumAromaticRings", iv);
@@ -1516,25 +1517,25 @@ void testMiscCountDescriptors() {
   BOOST_LOG(rdErrorLog) << "    Test other count descriptors." << std::endl;
 
   {
-    ROMol *mol;
+    ROMol *mol = nullptr;
     mol = SmilesToMol("OCCO");
     TEST_ASSERT(feq(calcFractionCSP3(*mol), 1.0, 0.001));
     delete mol;
   }
   {
-    ROMol *mol;
+    ROMol *mol = nullptr;
     mol = SmilesToMol("OO");
     TEST_ASSERT(feq(calcFractionCSP3(*mol), 0.0, 0.001));
     delete mol;
   }
   {
-    ROMol *mol;
+    ROMol *mol = nullptr;
     mol = SmilesToMol("OC=CO");
     TEST_ASSERT(feq(calcFractionCSP3(*mol), 0.0, 0.001));
     delete mol;
   }
   {
-    ROMol *mol;
+    ROMol *mol = nullptr;
     mol = SmilesToMol("CCC=C");
     TEST_ASSERT(feq(calcFractionCSP3(*mol), 0.5, 0.001));
     delete mol;
@@ -1586,7 +1587,7 @@ void testMQNs() {
     }
   }
   {  // github #623
-    ROMol *mol;
+    ROMol *mol = nullptr;
     mol = SmilesToMol("CC*");
     TEST_ASSERT(mol);
     std::vector<unsigned int> v = calcMQNs(*mol);
@@ -1594,7 +1595,7 @@ void testMQNs() {
     delete mol;
   }
   {  // github #623
-    ROMol *mol;
+    ROMol *mol = nullptr;
     mol = SmilesToMol("[2H][2H]");
     TEST_ASSERT(mol);
     std::vector<unsigned int> v = calcMQNs(*mol);
@@ -1609,9 +1610,9 @@ void testGitHubIssue56() {
   BOOST_LOG(rdErrorLog) << "    Test GitHub Issue 56." << std::endl;
 
   {
-    ROMol *mol;
+    ROMol *mol = nullptr;
     mol = SmilesToMol("[H+]");
-    double mw;
+    double mw = NAN;
     mw = calcAMW(*mol);
     TEST_ASSERT(feq(mw, 1.008, 0.001));
     mw = calcExactMW(*mol);
@@ -1619,9 +1620,9 @@ void testGitHubIssue56() {
     delete mol;
   }
   {
-    ROMol *mol;
+    ROMol *mol = nullptr;
     mol = SmilesToMol("[2H+]");
-    double mw;
+    double mw = NAN;
     mw = calcAMW(*mol);
     TEST_ASSERT(feq(mw, 2.014, 0.001));
     mw = calcExactMW(*mol);
@@ -1629,9 +1630,9 @@ void testGitHubIssue56() {
     delete mol;
   }
   {
-    ROMol *mol;
+    ROMol *mol = nullptr;
     mol = SmilesToMol("[H]");
-    double mw;
+    double mw = NAN;
     mw = calcAMW(*mol);
     TEST_ASSERT(feq(mw, 1.008, 0.001));
     mw = calcExactMW(*mol);
@@ -1639,9 +1640,9 @@ void testGitHubIssue56() {
     delete mol;
   }
   {
-    ROMol *mol;
+    ROMol *mol = nullptr;
     mol = SmilesToMol("[2H]");
-    double mw;
+    double mw = NAN;
     mw = calcAMW(*mol);
     TEST_ASSERT(feq(mw, 2.014, 0.001));
     mw = calcExactMW(*mol);
@@ -1658,7 +1659,7 @@ void testGitHubIssue92() {
       << "    Test Github92: Bad Crippen atom type for pyrrole H." << std::endl;
 
   {
-    RWMol *mol;
+    RWMol *mol = nullptr;
     mol = SmilesToMol("c1cccn1[H]", 0, 0);
     TEST_ASSERT(mol);
     MolOps::sanitizeMol(*mol);
@@ -1679,7 +1680,7 @@ void testGitHubIssue463() {
       << std::endl;
 
   {  // start with the hall-kier delta values:
-    RWMol *mol;
+    RWMol *mol = nullptr;
     mol = SmilesToMol("O=C(Nc1nccs1)NC(C1CC1)C");
     TEST_ASSERT(mol);
     TEST_ASSERT(mol->getNumAtoms() == 14);
@@ -1704,7 +1705,7 @@ void testGitHubIssue463() {
 
   {  // now chiNv values, where the problem was reported:
 
-    RWMol *mol;
+    RWMol *mol = nullptr;
     mol = SmilesToMol("O=C(Nc1nccs1)NC(C1CC1)C");
     TEST_ASSERT(mol);
     TEST_ASSERT(mol->getNumAtoms() == 14);
@@ -1725,7 +1726,7 @@ void testGitHubIssue463() {
 
   {  // now chiNn values, where the problem was reported:
 
-    RWMol *mol;
+    RWMol *mol = nullptr;
     mol = SmilesToMol("O=C(Nc1nccs1)NC(C1CC1)C");
     TEST_ASSERT(mol);
     TEST_ASSERT(mol->getNumAtoms() == 14);
@@ -1745,7 +1746,7 @@ void testGitHubIssue463() {
   }
 
   {  // the root cause was handling of rings
-    RWMol *mol;
+    RWMol *mol = nullptr;
     mol = SmilesToMol("C1CC1");
     TEST_ASSERT(mol);
     TEST_ASSERT(mol->getNumAtoms() == 3);
@@ -1769,7 +1770,7 @@ void testSpiroAndBridgeheads() {
       << "    Test calculation of spiro and bridgehead counts." << std::endl;
 
   {
-    RWMol *mol;
+    RWMol *mol = nullptr;
     mol = SmilesToMol("C1CC2CCC1CC2");
     TEST_ASSERT(mol);
 
@@ -1783,7 +1784,7 @@ void testSpiroAndBridgeheads() {
   }
 
   {
-    RWMol *mol;
+    RWMol *mol = nullptr;
     mol = SmilesToMol("C1CCC2(C1)CC1CCC2CC1");
     TEST_ASSERT(mol);
 
@@ -1797,7 +1798,7 @@ void testSpiroAndBridgeheads() {
   }
 
   {
-    RWMol *mol;
+    RWMol *mol = nullptr;
     mol = SmilesToMol("CC1(C)CC2(C)CCC1(C)CC2");
     TEST_ASSERT(mol);
 
@@ -1811,7 +1812,7 @@ void testSpiroAndBridgeheads() {
   }
 
   {  // test the atoms parameter
-    RWMol *mol;
+    RWMol *mol = nullptr;
     mol = SmilesToMol("C1CCC2(C1)CC1CCC2CC1");
     TEST_ASSERT(mol);
 
@@ -1890,7 +1891,7 @@ void testProperties() {
 
     TEST_ASSERT(names == all_names);
 
-    RWMol *mol;
+    RWMol *mol = nullptr;
     mol = SmilesToMol("C1CCC2(C1)CC1CCC2CC1");
     std::vector<double> props = sink.computeProperties(*mol);
 
@@ -1918,7 +1919,7 @@ void testProperties() {
     res.push_back(1.);
     res.push_back(2.);
 
-    RWMol *mol;
+    RWMol *mol = nullptr;
     mol = SmilesToMol("C1CCC2(C1)CC1CCC2CC1");
     TEST_ASSERT(mol);
     // Test annotation as well
@@ -1952,7 +1953,7 @@ void testProperties() {
 }
 
 void testPropertyQueries() {
-  RWMol *mol;
+  RWMol *mol = nullptr;
   mol = SmilesToMol("C1CCC2(C1)CC1CCC2CC1");
   {
     PROP_RANGE_QUERY *query = makePropertyRangeQuery("exactmw", 50, 300);
