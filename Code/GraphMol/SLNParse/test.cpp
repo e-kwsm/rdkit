@@ -43,7 +43,7 @@
 using namespace std;
 
 void test1() {
-  RDKit::RWMol *mol;
+  RDKit::RWMol *mol = nullptr;
   std::string sln;
 
   BOOST_LOG(rdInfoLog) << "-------------------------------------" << std::endl;
@@ -146,7 +146,7 @@ void test1() {
 }
 
 void test2() {
-  RDKit::RWMol *mol;
+  RDKit::RWMol *mol = nullptr;
   std::string sln;
 
   BOOST_LOG(rdInfoLog) << "-------------------------------------" << std::endl;
@@ -227,7 +227,7 @@ void test2() {
 
 void test3() {
   std::string pval;
-  RDKit::RWMol *mol;
+  RDKit::RWMol *mol = nullptr;
   std::string sln;
 
   BOOST_LOG(rdInfoLog) << "-------------------------------------" << std::endl;
@@ -339,7 +339,7 @@ void test3() {
 }
 
 void test4() {
-  RDKit::RWMol *mol;
+  RDKit::RWMol *mol = nullptr;
   std::string sln;
 
   BOOST_LOG(rdInfoLog) << "-------------------------------------" << std::endl;
@@ -368,7 +368,7 @@ void test4() {
 
 void test5() {
   std::string pval;
-  RDKit::RWMol *patt, *mol;
+  RDKit::RWMol *patt = nullptr, *mol = nullptr;
   std::vector<RDKit::MatchVectType> mV;
   std::string sln, smi;
 
@@ -588,7 +588,7 @@ void test5() {
 
 void test6() {
   std::string pval;
-  RDKit::RWMol *patt, *mol;
+  RDKit::RWMol *patt = nullptr, *mol = nullptr;
   std::vector<RDKit::MatchVectType> mV;
   std::string sln, smi;
 
@@ -741,7 +741,7 @@ void test6() {
 
 void test7() {
   std::string pval;
-  RDKit::RWMol *patt, *mol;
+  RDKit::RWMol *patt = nullptr, *mol = nullptr;
   std::vector<RDKit::MatchVectType> mV;
   std::string sln, smi;
 
@@ -906,7 +906,7 @@ void test7() {
 
 void test8() {
   std::string pval;
-  RDKit::RWMol *patt, *mol;
+  RDKit::RWMol *patt = nullptr, *mol = nullptr;
   std::vector<RDKit::MatchVectType> mV;
   std::string sln, smi;
 
@@ -1069,7 +1069,7 @@ void test8() {
 
 void test9() {
   std::string pval;
-  RDKit::RWMol *patt, *mol;
+  RDKit::RWMol *patt = nullptr, *mol = nullptr;
   std::vector<RDKit::MatchVectType> mV;
   std::string sln, smi;
 
@@ -1186,7 +1186,7 @@ void test9() {
 
 void test10() {
   std::string pval;
-  RDKit::RWMol *patt, *mol;
+  RDKit::RWMol *patt = nullptr, *mol = nullptr;
   std::vector<RDKit::MatchVectType> mV;
   std::string sln, smi;
 
@@ -1264,7 +1264,7 @@ void test10() {
 }
 
 void test12() {
-  RDKit::RWMol *patt, *mol;
+  RDKit::RWMol *patt = nullptr, *mol = nullptr;
   std::vector<RDKit::MatchVectType> mV;
   std::string sln, smi;
 
@@ -1387,7 +1387,7 @@ void test12() {
 }
 
 void test13() {
-  RDKit::RWMol *mol;
+  RDKit::RWMol *mol = nullptr;
   std::string sln;
 
   BOOST_LOG(rdInfoLog) << "-------------------------------------" << std::endl;
@@ -1534,7 +1534,7 @@ void test13() {
 }
 
 void test14() {
-  RDKit::RWMol *mol;
+  RDKit::RWMol *mol = nullptr;
   std::string sln;
 
   BOOST_LOG(rdInfoLog) << "-------------------------------------" << std::endl;
@@ -1554,7 +1554,7 @@ void test14() {
 }
 
 void test15() {
-  RDKit::RWMol *mol;
+  RDKit::RWMol *mol = nullptr;
   std::string sln;
 
   BOOST_LOG(rdInfoLog) << "-------------------------------------" << std::endl;
@@ -1640,7 +1640,7 @@ void test15() {
 }
 
 void test16() {
-  RDKit::RWMol *mol;
+  RDKit::RWMol *mol = nullptr;
   std::string sln;
 
   BOOST_LOG(rdInfoLog) << "-------------------------------------" << std::endl;
@@ -1841,7 +1841,7 @@ void testIssue277() {
 }
 
 void test17() {
-  RDKit::RWMol *mol;
+  RDKit::RWMol *mol = nullptr;
   std::string sln;
 
   BOOST_LOG(rdInfoLog) << "-------------------------------------" << std::endl;
