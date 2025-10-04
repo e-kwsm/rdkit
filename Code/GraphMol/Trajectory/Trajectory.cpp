@@ -12,6 +12,7 @@
 #include <RDGeneral/BadFileException.h>
 #include <GraphMol/ROMol.h>
 #include <GraphMol/Conformer.h>
+#include <math.h>
 #include <fstream>
 #include <sstream>
 #include <set>
@@ -97,8 +98,8 @@ unsigned int Trajectory::addConformersToMol(ROMol &mol, int from, int to) {
     to = size() - 1;
   }
   PRECONDITION(!size() || (from <= to), "from must be <= to");
-  int n;
-  unsigned int nConf;
+  int n = 0;
+  unsigned int nConf = 0;
   for (n = from, nConf = 0; size() && (n <= to); ++n, ++nConf) {
     auto *conf = new Conformer(mol.getNumAtoms());
     for (unsigned int i = 0; i < mol.getNumAtoms(); ++i) {
@@ -192,7 +193,7 @@ unsigned int readGromosTrajectory(const std::string &fName, Trajectory &traj) {
           continue;
         }
         std::stringstream ls(tempStr);
-        double x, y, z;
+        double x = NAN, y = NAN, z = NAN;
         if (!(ls >> x >> y >> z)) {
           throw ValueErrorException("Error while reading file");
         }
