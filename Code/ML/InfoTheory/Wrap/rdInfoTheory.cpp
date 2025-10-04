@@ -22,8 +22,7 @@ double infoEntropy(python::object resArr) {
   if (!PyArray_Check(matObj)) {
     throw_value_error("Expecting a Numeric array object");
   }
-  PyArrayObject *copy;
-  copy = (PyArrayObject *)PyArray_ContiguousFromObject(
+  PyArrayObject *copy = (PyArrayObject *)PyArray_ContiguousFromObject(
       matObj, PyArray_DESCR((PyArrayObject *)matObj)->type_num, 1, 1);
   double res = 0.0;
   // we are expecting a 1 dimensional array
@@ -51,8 +50,7 @@ double infoGain(python::object resArr) {
   if (!PyArray_Check(matObj)) {
     throw_value_error("Expecting a Numeric array object");
   }
-  PyArrayObject *copy;
-  copy = (PyArrayObject *)PyArray_ContiguousFromObject(
+  PyArrayObject *copy = (PyArrayObject *)PyArray_ContiguousFromObject(
       matObj, PyArray_DESCR((PyArrayObject *)matObj)->type_num, 2, 2);
   auto rows = (long int)PyArray_DIM((PyArrayObject *)matObj, 0);
   auto cols = (long int)PyArray_DIM((PyArrayObject *)matObj, 1);
@@ -82,8 +80,7 @@ double chiSquare(python::object resArr) {
   if (!PyArray_Check(matObj)) {
     throw_value_error("Expecting a Numeric array object");
   }
-  PyArrayObject *copy;
-  copy = (PyArrayObject *)PyArray_ContiguousFromObject(
+  PyArrayObject *copy = (PyArrayObject *)PyArray_ContiguousFromObject(
       matObj, PyArray_DESCR((PyArrayObject *)matObj)->type_num, 2, 2);
   auto rows = (long int)PyArray_DIM((PyArrayObject *)matObj, 0);
   auto cols = (long int)PyArray_DIM((PyArrayObject *)matObj, 1);
