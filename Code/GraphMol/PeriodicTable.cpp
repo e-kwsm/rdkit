@@ -9,6 +9,8 @@
 //  of the RDKit source tree.
 //
 #include "PeriodicTable.h"
+
+#include <math.h>
 #include <string>
 #include <boost/tokenizer.hpp>
 typedef boost::tokenizer<boost::char_separator<char>> tokenizer;
@@ -60,7 +62,7 @@ PeriodicTable::PeriodicTable() {
       if (*line != " ") {
         tokenizer tokens(*line, spaceSep);
         tokenizer::iterator token = tokens.begin();
-        int anum;
+        int anum = 0;
         istr.clear();
         istr.str(*token);
         istr >> anum;
@@ -73,7 +75,7 @@ PeriodicTable::PeriodicTable() {
         if (token == tokens.end()) {
           continue;
         }
-        unsigned int isotope;
+        unsigned int isotope = 0;
         istr.clear();
         istr.str(*token);
         istr >> isotope;
@@ -81,7 +83,7 @@ PeriodicTable::PeriodicTable() {
         if (token == tokens.end()) {
           continue;
         }
-        double mass;
+        double mass = NAN;
         istr.clear();
         istr.str(*token);
         istr >> mass;
@@ -89,7 +91,7 @@ PeriodicTable::PeriodicTable() {
         if (token == tokens.end()) {
           continue;
         }
-        double abundance;
+        double abundance = NAN;
         istr.clear();
         istr.str(*token);
         istr >> abundance;
