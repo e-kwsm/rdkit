@@ -343,7 +343,7 @@ void testRandMolSup() {
   names.push_back(std::string("213"));
   names.push_back(std::string("229"));
 
-  int i;
+  int i = 0;
   for (i = 0; i < 8; i++) {
     ROMol *mol = sdsup[2 * i];
     std::string mname;
@@ -380,7 +380,7 @@ void testRandMolSup() {
 void testSmilesSup() {
   std::string mname;
   std::string fname;
-  ROMol *mol;
+  ROMol *mol = nullptr;
 
   std::string rdbase = getenv("RDBASE");
   fname = rdbase + "/Code/GraphMol/FileParsers/test_data/fewSmi.2.csv";
@@ -497,12 +497,12 @@ void testSmilesSup() {
 void testSmilesSupFromText() {
   std::string mname;
   std::string fname;
-  ROMol *mol;
+  ROMol *mol = nullptr;
 
   SmilesMolSupplier nSup2;
   std::string text;
-  bool failed;
-  int nAts;
+  bool failed = false;
+  int nAts = 0;
 
   // this was a delightful boundary condition:
   BOOST_LOG(rdErrorLog)
@@ -1033,7 +1033,7 @@ void testCisTrans() {
   // do the round t;est
   // parse the sd file and write it out to smiles
 
-  SDMolSupplier *reader;
+  SDMolSupplier *reader = nullptr;
   try {
     reader = new SDMolSupplier("cisTrans_molsupplier.sdf");
   } catch (FileParseException &) {
@@ -1059,7 +1059,7 @@ void testStereoRound() {
   std::string rdbase = getenv("RDBASE");
   std::string infile =
       rdbase + "/Code/GraphMol/FileParsers/test_data/cdk2_stereo.csv";
-  SmilesMolSupplier *smiSup;
+  SmilesMolSupplier *smiSup = nullptr;
   try {
     smiSup = new SmilesMolSupplier(infile, ",", 0, 1, false, true);
   } catch (FileParseException &) {
@@ -1104,7 +1104,7 @@ void testStereoRound() {
   delete writer;
 
   // now read the SD file back in check if the canonical smiles are the same
-  SDMolSupplier *reader;
+  SDMolSupplier *reader = nullptr;
   try {
     reader = new SDMolSupplier(ofile);
   } catch (FileParseException &) {
@@ -1135,7 +1135,7 @@ void testIssue226() {
       rdbase + "/Code/GraphMol/FileParsers/test_data/Issue226.sdf";
   SDMolSupplier sdsup(fname);
 
-  ROMol *mol;
+  ROMol *mol = nullptr;
 
   mol = sdsup.next();
   TEST_ASSERT(mol);
@@ -1215,7 +1215,7 @@ int testTDTSupplier2() {
   std::string rdbase = getenv("RDBASE");
   std::string fname =
       rdbase + "/Code/GraphMol/FileParsers/test_data/acd_few.tdt";
-  int i;
+  int i = 0;
   std::string prop1, prop2;
 
   TDTMolSupplier suppl(fname, "PN", 2);
@@ -1248,7 +1248,7 @@ int testTDTSupplier2() {
 }
 int testTDTSupplier3() {
   std::string data;
-  int i;
+  int i = 0;
   std::string prop1, prop2;
 
   TDTMolSupplier suppl;
@@ -1693,7 +1693,7 @@ void testSDErrorHandling() {
   std::string rdbase = getenv("RDBASE");
   std::string fname =
       rdbase + "/Code/GraphMol/FileParsers/test_data/sdErrors1.sdf";
-  SDMolSupplier *sdsup;
+  SDMolSupplier *sdsup = nullptr;
   ROMol *nmol = nullptr;
 
   // entry 1: bad properties
@@ -1740,10 +1740,10 @@ void testIssue381() {
   std::string rdbase = getenv("RDBASE");
   std::string fname =
       rdbase + "/Code/GraphMol/FileParsers/test_data/Issue381.sdf";
-  SDMolSupplier *sdsup;
+  SDMolSupplier *sdsup = nullptr;
 
   ROMol *nmol = nullptr;
-  int count;
+  int count = 0;
 
   // entry 1: bad properties
   sdsup = new SDMolSupplier(fname);
@@ -1787,10 +1787,10 @@ void testSetStreamIndices() {
     }
   }
   ifs.close();
-  SDMolSupplier *sdsup;
+  SDMolSupplier *sdsup = nullptr;
 
   ROMol *nmol = nullptr;
-  int count;
+  int count = 0;
 
   sdsup = new SDMolSupplier(fname);
   sdsup->setStreamIndices(indices);
@@ -1817,10 +1817,10 @@ int testMixIterAndRandom() {
   std::string rdbase = getenv("RDBASE");
   std::string fname =
       rdbase + "/Code/GraphMol/FileParsers/test_data/esters.sdf";
-  bool ok;
+  bool ok = false;
 
-  SDMolSupplier *sdsup;
-  ROMol *mol;
+  SDMolSupplier *sdsup = nullptr;
+  ROMol *mol = nullptr;
   std::string name;
 
   sdsup = new SDMolSupplier(fname);
@@ -1872,7 +1872,7 @@ int testMixIterAndRandom() {
   delete sdsup;
 
   fname = rdbase + "/Code/GraphMol/FileParsers/test_data/fewSmi.csv";
-  SmilesMolSupplier *nSup;
+  SmilesMolSupplier *nSup = nullptr;
   nSup = new SmilesMolSupplier(fname, ",", 1, 0, false);
   TEST_ASSERT(nSup);
   TEST_ASSERT(nSup->length() == 10);
@@ -1922,7 +1922,7 @@ int testMixIterAndRandom() {
   delete nSup;
 
   fname = rdbase + "/Code/GraphMol/FileParsers/test_data/acd_few.tdt";
-  TDTMolSupplier *tSup;
+  TDTMolSupplier *tSup = nullptr;
   tSup = new TDTMolSupplier(fname);
   TEST_ASSERT(tSup);
   TEST_ASSERT(tSup->length() == 10);
@@ -1991,7 +1991,7 @@ int testRemoveHs() {
       rdbase + "/Code/GraphMol/FileParsers/test_data/withHs.sdf";
 
   SDMolSupplier sdsup(fname);
-  ROMol *nmol;
+  ROMol *nmol = nullptr;
 
   nmol = sdsup.next();
   TEST_ASSERT(nmol);
@@ -2021,9 +2021,9 @@ void testGetItemText() {
   std::string rdbase = getenv("RDBASE");
   std::string fname;
 
-  ROMol *mol1, *mol2;
+  ROMol *mol1 = nullptr, *mol2 = nullptr;
   std::string molB, smiles;
-  bool ok;
+  bool ok = false;
 
   {
     fname = rdbase + "/Code/GraphMol/FileParsers/test_data/NCI_aids_few.sdf";
@@ -2402,7 +2402,7 @@ void testIssue3525673() {
       rdbase + "/Code/GraphMol/FileParsers/test_data/Issue3525673.sdf";
   std::ifstream ins(infile.c_str());
   ForwardSDMolSupplier reader(&ins, false);
-  ROMol *nmol;
+  ROMol *nmol = nullptr;
 
   nmol = reader.next();
   TEST_ASSERT(nmol);
@@ -2449,7 +2449,7 @@ void testBlankLinesInProps() {
       rdbase + "/Code/GraphMol/FileParsers/test_data/BlankPropLines.sdf";
   std::ifstream ins(infile.c_str());
   ForwardSDMolSupplier reader(&ins, false);
-  ROMol *nmol;
+  ROMol *nmol = nullptr;
   std::string pval;
 
   nmol = reader.next();
@@ -2471,7 +2471,7 @@ void testSkipLines() {
       rdbase + "/Code/GraphMol/FileParsers/test_data/SkipLines.sdf";
   std::ifstream ins(infile.c_str());
   ForwardSDMolSupplier reader(&ins, false);
-  ROMol *nmol;
+  ROMol *nmol = nullptr;
   std::string pval;
 
   nmol = reader.next();
@@ -2505,7 +2505,7 @@ void testGitHub88() {
       rdbase + "/Code/GraphMol/FileParsers/test_data/github88.v3k.sdf";
   std::ifstream ins(infile.c_str());
   ForwardSDMolSupplier reader(&ins, false);
-  ROMol *nmol;
+  ROMol *nmol = nullptr;
 
   nmol = reader.next();
   TEST_ASSERT(nmol);

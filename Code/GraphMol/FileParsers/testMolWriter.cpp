@@ -88,7 +88,7 @@ void testSmilesWriter2() {
     bool takeOwnership = false, includeHeader = false, isomericSmiles = false;
     SmilesWriter *writer = new SmilesWriter(&ss, " ", "Name", takeOwnership,
                                             includeHeader, isomericSmiles);
-    RWMol *mol;
+    RWMol *mol = nullptr;
 
     mol = SmilesToMol("c1ccccc1");
     // MolOps::Kekulize(*mol);
@@ -107,7 +107,7 @@ void testSmilesWriter2() {
     bool takeOwnership = false, includeHeader = false, isomericSmiles = true;
     SmilesWriter *writer = new SmilesWriter(&ss, " ", "Name", takeOwnership,
                                             includeHeader, isomericSmiles);
-    RWMol *mol;
+    RWMol *mol = nullptr;
 
     mol = SmilesToMol("c1ccccc1");
     MolOps::Kekulize(*mol);

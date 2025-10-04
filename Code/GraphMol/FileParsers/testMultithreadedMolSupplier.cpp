@@ -139,7 +139,7 @@ void testSmiCorrectness() {
           TEST CORRECTNESS
   */
   std::string path;
-  unsigned int expectedResult;
+  unsigned int expectedResult = 0;
   std::string rdbase = getenv("RDBASE");
   path = "/Code/GraphMol/FileParsers/test_data/fewSmi.csv";
   expectedResult = 10;
@@ -269,7 +269,7 @@ void testSDCorrectness() {
   */
   std::string rdbase = getenv("RDBASE");
   std::string path;
-  unsigned int expectedResult;
+  unsigned int expectedResult = 0;
   path = "/Code/GraphMol/FileParsers/test_data/NCI_aids_few.sdf";
   expectedResult = 16;
   testSDConcurrent(path, false, true, true, 2, 5, 5, expectedResult);
