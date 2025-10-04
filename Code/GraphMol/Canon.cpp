@@ -672,7 +672,7 @@ void dfsBuildStack(ROMol &mol, int atomIdx, int inBondIdx,
       travList.push_back(bIdx);
       Bond *bond = mol.getBondWithIdx(bIdx);
       seenFromHere.set(bond->getOtherAtomIdx(atomIdx));
-      unsigned int ringIdx;
+      unsigned int ringIdx = 0;
       if (bond->getPropIfPresent(common_properties::_TraversalRingClosureBond,
                                  ringIdx)) {
         // this is end of the ring closure
@@ -1163,7 +1163,7 @@ void canonicalizeFragment(ROMol &mol, int atomIdx,
               ringStereoChemAdjusted.set(nbrIdx);
             }
           }
-        } else if (size_t sgidx;
+        } else if (size_t sgidx = 0;
                    msI.obj.atom->getPropIfPresent("_stereoGroup", sgidx) &&
                    mol.getStereoGroups().size() > sgidx) {
           // make sure that the reference atom in the stereogroup is CCW
