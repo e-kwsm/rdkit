@@ -13,6 +13,7 @@
 #include <GraphMol/Bond.h>
 #include <GraphMol/BondIterators.h>
 #include <GraphMol/MolOps.h>
+#include <math.h>
 #include <memory>
 #include <boost/shared_array.hpp>
 #include <algorithm>
@@ -38,9 +39,9 @@ pathMat: the path matrix, should be dim x dim
 -----------------------------------------------*/
 template <class T>
 void FloydWarshall(int dim, T *adjMat, int *pathMat) {
-  int k, i, j;
-  T *currD, *lastD, *tTemp;
-  int *currP, *lastP, *iTemp;
+  int k = 0, i = 0, j = 0;
+  T *currD = nullptr, *lastD = nullptr, *tTemp = nullptr;
+  int *currP = nullptr, *lastP = nullptr, *iTemp = nullptr;
 
   currD = new T[dim * dim];
   currP = new int[dim * dim];
@@ -102,8 +103,8 @@ void FloydWarshall(int dim, T *adjMat, int *pathMat) {
 template <class T>
 void FloydWarshall(int dim, T *adjMat, int *pathMat,
                    const std::vector<int> &activeAtoms) {
-  T *currD, *lastD, *tTemp;
-  int *currP, *lastP, *iTemp;
+  T *currD = nullptr, *lastD = nullptr, *tTemp = nullptr;
+  int *currP = nullptr, *lastP = nullptr, *iTemp = nullptr;
 
   currD = new T[dim * dim];
   currP = new int[dim * dim];
@@ -187,7 +188,7 @@ double *getDistanceMat(const ROMol &mol, bool useBO, bool useAtomWts,
   }
   int nAts = mol.getNumAtoms();
   auto *dMat = new double[nAts * nAts];
-  int i, j;
+  int i = 0, j = 0;
   // initialize off diagonals to LOCAL_INF and diagonals to 0
   for (i = 0; i < nAts * nAts; i++) {
     dMat[i] = LOCAL_INF;
@@ -202,7 +203,7 @@ double *getDistanceMat(const ROMol &mol, bool useBO, bool useAtomWts,
     const Bond *bond = mol[*firstB];
     i = bond->getBeginAtomIdx();
     j = bond->getEndAtomIdx();
-    double contrib;
+    double contrib = NAN;
     if (useBO) {
       if (!bond->getIsAromatic()) {
         contrib = 1. / bond->getBondTypeAsDouble();
@@ -241,7 +242,7 @@ double *getDistanceMat(const ROMol &mol, const std::vector<int> &activeAtoms,
   const int nAts = rdcast<int>(activeAtoms.size());
 
   auto *dMat = new double[nAts * nAts];
-  int i, j;
+  int i = 0, j = 0;
   // initialize off diagonals to LOCAL_INF and diagonals to 0
   for (i = 0; i < nAts * nAts; i++) {
     dMat[i] = LOCAL_INF;
@@ -257,7 +258,7 @@ double *getDistanceMat(const ROMol &mol, const std::vector<int> &activeAtoms,
     j = rdcast<int>(std::find(activeAtoms.begin(), activeAtoms.end(),
                               static_cast<int>(bond->getEndAtomIdx())) -
                     activeAtoms.begin());
-    double contrib;
+    double contrib = NAN;
     if (useBO) {
       if (!bond->getIsAromatic()) {
         contrib = 1. / bond->getBondTypeAsDouble();
