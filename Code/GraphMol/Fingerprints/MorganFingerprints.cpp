@@ -61,7 +61,7 @@ SparseIntVect<uint32_t> *getFingerprint(
     ao.allocateBitInfoMap();
   }
 
-  SparseIntVect<uint32_t> *res;
+  SparseIntVect<uint32_t> *res = nullptr;
   if (!useCounts) {
     auto tmp = fpgen->getSparseFingerprint(mol, args);
     res = new SparseIntVect<uint32_t>(std::numeric_limits<uint32_t>::max());
