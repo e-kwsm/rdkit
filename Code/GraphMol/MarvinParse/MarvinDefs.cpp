@@ -243,7 +243,7 @@ void MarvinMolBase::parseAtomsAndBonds(ptree &molTree) {
     // -1.3109 -1.3109 -2.8509 -0.5410"></atomArray>
 
     std::vector<std::string> atomIds;
-    size_t atomCount;
+    size_t atomCount = 0;
     if (atomID == "") {
       atomCount = 0;
     } else {
@@ -1656,7 +1656,7 @@ MarvinMultipleSgroup::MarvinMultipleSgroup(MarvinMolBase *parentInit,
   }
 
   this->title = molTree.get<std::string>("<xmlattr>.title", "");
-  int testInt;
+  int testInt = 0;
   if (this->title == "" || !getCleanNumber(this->title, testInt) ||
       testInt <= 0) {
     throw FileParseException(
@@ -2192,7 +2192,7 @@ MarvinSuperatomSgroup::MarvinSuperatomSgroup(MarvinMolBase *parentInit,
 
   this->parseAtomsAndBonds(molTree);
 
-  bool found;
+  bool found = false;
 
   try {
     boost::property_tree::ptree AttachmentPointArrayTree =
@@ -2242,7 +2242,7 @@ MarvinSuperatomSgroup::MarvinSuperatomSgroup(MarvinMolBase *parentInit,
 
       // the order must be an integer
 
-      int orderInt;
+      int orderInt = 0;
       if (!getCleanNumber(marvinAttachmentPoint->order, orderInt)) {
         throw FileParseException(
             "Order for an AttachmentPoint definition must be an integer in MRV file");
@@ -3146,7 +3146,7 @@ void MarvinSuperatomSgroup::convertFromOneSuperAtom() {
       // one of the two atoms in the bond is NOT in the mol - we deleted the
       // dummy atom.
 
-      int atomIndex;
+      int atomIndex = 0;
       for (atomIndex = 0; atomIndex < 2; ++atomIndex) {
         if (std::find_if(actualParent->atoms.begin(), actualParent->atoms.end(),
                          [&, bondIter, atomIndex](auto a) {

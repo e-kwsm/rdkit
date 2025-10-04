@@ -85,7 +85,7 @@ char *Base64Decode(const char *inText, unsigned int *size) {
   unsigned char transTable[256];
   size_t inLen = strlen(inText);
 
-  size_t i;
+  size_t i = 0;
   // FIX: we don't really need to build this table here
   for (i = 0; i < 255; i++) {
     transTable[i] = 0x80;

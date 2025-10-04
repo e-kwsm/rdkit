@@ -56,7 +56,7 @@ ROMol *renumberAtoms(const ROMol &mol,
       nAtom->setProp(common_properties::_ringStereoAtoms, nAtoms, true);
     }
 
-    unsigned int otherAtom;
+    unsigned int otherAtom = 0;
     if (nAtom->getPropIfPresent(common_properties::_ringStereoOtherAtom,
                                 otherAtom)) {
       otherAtom = revOrder[otherAtom];

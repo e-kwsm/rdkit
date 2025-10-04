@@ -193,7 +193,7 @@ AtomPairEnvGenerator<OutputType>::getEnvironments(
   auto *atomPairArguments = dynamic_cast<AtomPairArguments *>(arguments);
   std::vector<AtomEnvironment<OutputType> *> result =
       std::vector<AtomEnvironment<OutputType> *>();
-  const double *distanceMatrix;
+  const double *distanceMatrix = nullptr;
   if (atomPairArguments->df_use2D) {
     distanceMatrix = MolOps::getDistanceMat(mol);
   } else {

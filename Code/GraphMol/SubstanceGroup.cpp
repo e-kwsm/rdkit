@@ -344,7 +344,7 @@ bool SubstanceGroupChecks::isValidClass(const std::string &sgroupClass) {
 bool SubstanceGroupChecks::isSubstanceGroupIdFree(const ROMol &mol,
                                                   unsigned int id) {
   auto match_sgroup = [id](const SubstanceGroup &sg) {
-    unsigned int storedId;
+    unsigned int storedId = 0;
     return sg.getPropIfPresent("ID", storedId) && id == storedId;
   };
 
@@ -394,7 +394,7 @@ bool removedParentInHierarchy(
     return true;
   }
 
-  unsigned int parent;
+  unsigned int parent = 0;
   if (sgs[idx].getPropIfPresent("PARENT", parent)) {
     auto piter = indexLookup.find(parent);
     if (piter != indexLookup.end()) {
@@ -429,7 +429,7 @@ void removeSubstanceGroupsReferencing(RWMol &mol, unsigned int idx) {
     std::map<unsigned int, unsigned int> indexLookup;
     if (parentsPresent && nRemoved) {
       for (unsigned int i = 0; i < sgs.size(); ++i) {
-        unsigned int index;
+        unsigned int index = 0;
         if (sgs[i].getPropIfPresent("index", index)) {
           indexLookup[index] = i;
         }
@@ -447,7 +447,7 @@ void removeSubstanceGroupsReferencing(RWMol &mol, unsigned int idx) {
           ADJUST_METHOD(sg, idx);
           newsgs.push_back(std::move(sg));
         } else if (parentsPresent) {
-          unsigned int parent;
+          unsigned int parent = 0;
           // has our parent been removed?
           if (sg.getPropIfPresent("PARENT", parent)) {
             auto piter = indexLookup.find(parent);

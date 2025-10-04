@@ -279,7 +279,7 @@ double calcHallKierAlpha(const ROMol &mol, std::vector<double> *atomContribs) {
     if (!n) {
       continue;
     }
-    bool found;
+    bool found = false;
     double alpha = detail::getAlpha(*(at), found);
     if (!found) {
       double rA = tbl->getRb0(n);

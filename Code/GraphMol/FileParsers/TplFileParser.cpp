@@ -39,7 +39,7 @@ void ParseTPLAtomLine(std::string text, unsigned int lineNum, RWMol *mol,
     throw FileParseException(errout.str());
   }
   auto *atom = new Atom(splitLine[1]);
-  unsigned int atomId;
+  unsigned int atomId = 0;
   atomId = mol->addAtom(atom, false, true);
 
   atom->setFormalCharge(FileParserUtils::stripSpacesAndCast<int>(splitLine[2]));
@@ -92,7 +92,7 @@ void ParseTPLBondLine(std::string text, unsigned int lineNum, RWMol *mol) {
            << std::endl;
     throw FileParseException(errout.str());
   }
-  unsigned int idx1, idx2;
+  unsigned int idx1 = 0, idx2 = 0;
   idx1 = FileParserUtils::stripSpacesAndCast<unsigned int>(splitLine[2]) - 1;
   idx2 = FileParserUtils::stripSpacesAndCast<unsigned int>(splitLine[3]) - 1;
 
@@ -213,7 +213,7 @@ std::unique_ptr<RWMol> MolFromTPLDataStream(std::istream &inStream,
   // we're at the counts line:
   boost::split(splitText, tempStr, boost::is_any_of(" \t"),
                boost::token_compress_on);
-  unsigned int nAtoms, nBonds;
+  unsigned int nAtoms = 0, nBonds = 0;
   nAtoms = FileParserUtils::stripSpacesAndCast<unsigned int>(splitText[0]);
   nBonds = FileParserUtils::stripSpacesAndCast<unsigned int>(splitText[1]);
 

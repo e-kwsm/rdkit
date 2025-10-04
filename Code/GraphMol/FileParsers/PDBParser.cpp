@@ -77,7 +77,7 @@ void PDBAtomLine(RWMol *mol, const char *ptr, unsigned int len,
     }
   }
 
-  int serialno;
+  int serialno = 0;
   tmp = std::string(ptr + 6, 5);
   try {
     serialno = FileParserUtils::toInt(tmp);
@@ -184,7 +184,7 @@ void PDBAtomLine(RWMol *mol, const char *ptr, unsigned int len,
       throw FileParseException(errout.str());
     }
 
-    Conformer *conf;
+    Conformer *conf = nullptr;
     if (!mol->getNumConformers()) {
       conf = new RDKit::Conformer(mol->getNumAtoms());
       conf->set3D(pos.z != 0.0);
@@ -318,7 +318,7 @@ void PDBBondLine(RWMol *mol, const char *ptr, unsigned int len,
 
   std::string tmp(ptr + 6, 5);
   bool fail = false;
-  int src, dst;
+  int src = 0, dst = 0;
 
   try {
     src = FileParserUtils::toInt(tmp);
@@ -559,7 +559,7 @@ std::unique_ptr<RWMol> parsePdbBlock(const char *str, bool sanitize,
   std::unique_ptr<RWMol> mol;
 
   while (*str) {
-    unsigned int len;
+    unsigned int len = 0;
     const char *next = str + 1;
     for (;;) {
       if (*next == '\r') {

@@ -215,7 +215,7 @@ Atom::ChiralType getChirality(ROMol &mol, Atom *center_atom, Conformer &conf) {
       }
 
       for (auto bond : mol.atomBonds(center_atom)) {
-        int bond_id;
+        int bond_id = 0;
         if (bond->getPropIfPresent<int>(CDX_BOND_ID, bond_id)) {
         } else {
           return Atom::ChiralType::CHI_UNSPECIFIED;

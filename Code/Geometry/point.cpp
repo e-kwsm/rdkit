@@ -114,7 +114,7 @@ Point2D operator/(const Point2D &p1, double v) {
 }
 
 PointND operator+(const PointND &p1, const PointND &p2) {
-  unsigned int dim;
+  unsigned int dim = 0;
   if (p1.dimension() < p2.dimension()) {
     dim = p1.dimension();
   } else {
@@ -127,7 +127,7 @@ PointND operator+(const PointND &p1, const PointND &p2) {
   return res;
 }
 PointND operator-(const PointND &p1, const PointND &p2) {
-  unsigned int dim;
+  unsigned int dim = 0;
   if (p1.dimension() < p2.dimension()) {
     dim = p1.dimension();
   } else {

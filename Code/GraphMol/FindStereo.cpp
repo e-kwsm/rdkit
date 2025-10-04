@@ -190,7 +190,7 @@ StereoInfo getStereoInfo(const Bond *bond) {
       if (satoms.size() != 2) {
         throw ValueErrorException("only can support 2 stereo neighbors");
       }
-      bool firstAtBegin;
+      bool firstAtBegin = false;
       if (satoms[0] == static_cast<int>(sinfo.controllingAtoms[0])) {
         firstAtBegin = true;
       } else if (satoms[0] == static_cast<int>(sinfo.controllingAtoms[1])) {
@@ -198,7 +198,7 @@ StereoInfo getStereoInfo(const Bond *bond) {
       } else {
         throw ValueErrorException("controlling atom mismatch at begin");
       }
-      bool firstAtEnd;
+      bool firstAtEnd = false;
       if (satoms[1] == static_cast<int>(sinfo.controllingAtoms[2])) {
         firstAtEnd = true;
       } else if (satoms[1] == static_cast<int>(sinfo.controllingAtoms[3])) {
@@ -358,7 +358,7 @@ StereoInfo getStereoInfo(const Atom *atom) {
         default:
           break;
       }
-      unsigned int permutation;
+      unsigned int permutation = 0;
       if (atom->getPropIfPresent(common_properties::_chiralPermutation,
                                  permutation)) {
         sinfo.permutation = permutation;

@@ -11,6 +11,7 @@
 #include "Atom.h"
 #include "ROMol.h"
 #include <RDGeneral/Invariant.h>
+#include <cmath>
 #include "Atropisomers.h"
 
 namespace RDKit {
@@ -126,7 +127,7 @@ Atom *Bond::getOtherAtom(Atom const *what) const {
 };
 
 double Bond::getBondTypeAsDouble() const {
-  double res;
+  double res = NAN;
   switch (getBondType()) {
     case UNSPECIFIED:
     case IONIC:
@@ -188,7 +189,7 @@ double Bond::getValenceContrib(const Atom *atom) const {
   if (atom != getBeginAtom() && atom != getEndAtom()) {
     return 0.0;
   }
-  double res;
+  double res = NAN;
   if ((getBondType() == DATIVE || getBondType() == DATIVEONE) &&
       atom->getIdx() != getEndAtomIdx()) {
     res = 0.0;
@@ -216,7 +217,7 @@ Bond::QUERYBOND_QUERY *Bond::getQuery() const {
 };
 
 bool Bond::Match(Bond const *what) const {
-  bool res;
+  bool res = false;
   if (getBondType() == Bond::UNSPECIFIED ||
       what->getBondType() == Bond::UNSPECIFIED) {
     res = true;

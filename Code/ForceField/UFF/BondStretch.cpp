@@ -15,6 +15,7 @@
 #include <ForceField/ForceField.h>
 #include <RDGeneral/Invariant.h>
 #include <RDGeneral/utils.h>
+#include <math.h>
 
 namespace ForceFields {
 namespace UFF {
@@ -88,7 +89,7 @@ void BondStretchContrib::getGrad(double *pos, double *grad) const {
   double *end1Coords = &(pos[3 * d_end1Idx]);
   double *end2Coords = &(pos[3 * d_end2Idx]);
   for (int i = 0; i < 3; i++) {
-    double dGrad;
+    double dGrad = NAN;
     if (dist > 0.0) {
       dGrad = preFactor * (end1Coords[i] - end2Coords[i]) / dist;
     } else {

@@ -125,7 +125,7 @@ ExpTorsionAngleCollection::ExpTorsionAngleCollection(
       for (unsigned int i = 0; i < (angle.dp_pattern.get())->getNumAtoms();
            ++i) {
         Atom const *atom = (angle.dp_pattern.get())->getAtomWithIdx(i);
-        int num;
+        int num = 0;
         if (atom->getPropIfPresent("molAtomMapNumber", num)) {
           if (num > 0 && num < 5) {
             angle.idx[num - 1] = i;
@@ -160,8 +160,8 @@ void getExperimentalTorsions(
   details.expTorsionAngles.clear();
   details.improperAtoms.clear();
 
-  unsigned int aid1, aid2, aid3, aid4;
-  unsigned int bid2;
+  unsigned int aid1 = 0, aid2 = 0, aid3 = 0, aid4 = 0;
+  unsigned int bid2 = 0;
 
   // exclude bonds in bridged ring systems
   boost::dynamic_bitset<> excludedBonds(nb);

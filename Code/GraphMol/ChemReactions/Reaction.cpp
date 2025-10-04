@@ -70,7 +70,7 @@ ChemicalReaction::ChemicalReaction(const std::string &pickle) {
 }
 
 void ChemicalReaction::initReactantMatchers(bool silent) {
-  unsigned int nWarnings, nErrors;
+  unsigned int nWarnings = 0, nErrors = 0;
   if (!this->validate(nWarnings, nErrors, silent)) {
     BOOST_LOG(rdErrorLog) << "initialization failed\n";
     this->df_needsInit = true;
@@ -109,7 +109,7 @@ bool ChemicalReaction::validate(unsigned int &numWarnings,
     bool thisMolMapped = false;
     for (ROMol::AtomIterator atomIt = (*molIter)->beginAtoms();
          atomIt != (*molIter)->endAtoms(); ++atomIt) {
-      int mapNum;
+      int mapNum = 0;
       if ((*atomIt)->getPropIfPresent(common_properties::molAtomMapNumber,
                                       mapNum)) {
         thisMolMapped = true;
@@ -161,7 +161,7 @@ bool ChemicalReaction::validate(unsigned int &numWarnings,
     bool thisMolMapped = false;
     for (ROMol::AtomIterator atomIt = (*molIter)->beginAtoms();
          atomIt != (*molIter)->endAtoms(); ++atomIt) {
-      int mapNum;
+      int mapNum = 0;
       if ((*atomIt)->getPropIfPresent(common_properties::molAtomMapNumber,
                                       mapNum)) {
         thisMolMapped = true;
@@ -226,7 +226,7 @@ bool ChemicalReaction::validate(unsigned int &numWarnings,
           }
           if (query->getDescription() == "AtomFormalCharge" ||
               query->getDescription() == "AtomNegativeFormalCharge") {
-            int qval;
+            int qval = 0;
             int neg =
                 query->getDescription() == "AtomNegativeFormalCharge" ? -1 : 1;
             if ((*atomIt)->getPropIfPresent(
@@ -249,7 +249,7 @@ bool ChemicalReaction::validate(unsigned int &numWarnings,
                       static_cast<const ATOM_EQUALS_QUERY *>(query)->getVal());
             }
           } else if (query->getDescription() == "AtomHCount") {
-            int qval;
+            int qval = 0;
             if ((*atomIt)->getPropIfPresent(common_properties::_QueryHCount,
                                             qval) &&
                 qval !=
@@ -266,7 +266,7 @@ bool ChemicalReaction::validate(unsigned int &numWarnings,
                   static_cast<const ATOM_EQUALS_QUERY *>(query)->getVal());
             }
           } else if (query->getDescription() == "AtomMass") {
-            int qval;
+            int qval = 0;
             if ((*atomIt)->getPropIfPresent(common_properties::_QueryMass,
                                             qval) &&
                 qval !=
@@ -284,7 +284,7 @@ bool ChemicalReaction::validate(unsigned int &numWarnings,
                       massIntegerConversionFactor);
             }
           } else if (query->getDescription() == "AtomIsotope") {
-            int qval;
+            int qval = 0;
             if ((*atomIt)->getPropIfPresent(common_properties::_QueryIsotope,
                                             qval) &&
                 qval !=
@@ -368,7 +368,7 @@ bool isMoleculeReactantOfReaction(const ChemicalReaction &rxn, const ROMol &mol,
 
 bool isMoleculeReactantOfReaction(const ChemicalReaction &rxn,
                                   const ROMol &mol) {
-  unsigned int ignore;
+  unsigned int ignore = 0;
   return isMoleculeReactantOfReaction(rxn, mol, ignore);
 }
 
@@ -408,7 +408,7 @@ bool isMoleculeProductOfReaction(const ChemicalReaction &rxn, const ROMol &mol,
 
 bool isMoleculeProductOfReaction(const ChemicalReaction &rxn,
                                  const ROMol &mol) {
-  unsigned int ignore;
+  unsigned int ignore = 0;
   return isMoleculeProductOfReaction(rxn, mol, ignore);
 }
 
@@ -442,7 +442,7 @@ bool isMoleculeAgentOfReaction(const ChemicalReaction &rxn, const ROMol &mol,
 }
 
 bool isMoleculeAgentOfReaction(const ChemicalReaction &rxn, const ROMol &mol) {
-  unsigned int ignore;
+  unsigned int ignore = 0;
   return isMoleculeAgentOfReaction(rxn, mol, ignore);
 }
 
@@ -513,7 +513,7 @@ bool isChangedAtom(const Atom &rAtom, const Atom &pAtom, int mapNum,
   for (const auto &nbrIdx : boost::make_iterator_range(
            rAtom.getOwningMol().getAtomNeighbors(&rAtom))) {
     const Atom *nbr = rAtom.getOwningMol()[nbrIdx];
-    int mapNum;
+    int mapNum = 0;
     if (nbr->getPropIfPresent(common_properties::molAtomMapNumber, mapNum)) {
       reactantBonds[mapNum] = rAtom.getOwningMol().getBondBetweenAtoms(
           rAtom.getIdx(), nbr->getIdx());
@@ -526,7 +526,7 @@ bool isChangedAtom(const Atom &rAtom, const Atom &pAtom, int mapNum,
   for (const auto &nbrIdx : boost::make_iterator_range(
            pAtom.getOwningMol().getAtomNeighbors(&pAtom))) {
     const Atom *nbr = pAtom.getOwningMol()[nbrIdx];
-    int mapNum;
+    int mapNum = 0;
     if (nbr->getPropIfPresent(common_properties::molAtomMapNumber, mapNum)) {
       // if we don't have a bond to a similarly mapped atom in the reactant,
       // we're done:
@@ -596,7 +596,7 @@ template <class T>
 void getMappedAtoms(T &rIt, std::map<int, const Atom *> &mappedAtoms) {
   for (const auto atom : rIt->atoms()) {
     // we only worry about mapped atoms:
-    int mapNum;
+    int mapNum = 0;
     if (atom->getPropIfPresent(common_properties::molAtomMapNumber, mapNum)) {
       mappedAtoms[mapNum] = atom;
     }
@@ -627,7 +627,7 @@ VECT_INT_VECT getReactingAtoms(const ChemicalReaction &rxn,
        rIt != rxn.endReactantTemplates(); ++rIt, ++resIt) {
     for (const auto oAtom : (*rIt)->atoms()) {
       // unmapped atoms are definitely changing:
-      int mapNum;
+      int mapNum = 0;
       if (!oAtom->getPropIfPresent(common_properties::molAtomMapNumber,
                                    mapNum)) {
         if (!mappedAtomsOnly) {

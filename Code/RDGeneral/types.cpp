@@ -47,7 +47,7 @@ void Intersect(const INT_VECT &r1, const INT_VECT &r2, INT_VECT &res) {
 void Union(const VECT_INT_VECT &rings, INT_VECT &res, const INT_VECT *exclude) {
   res.resize(0);
   INT_VECT ring;
-  unsigned int id;
+  unsigned int id = 0;
   auto nrings = static_cast<unsigned int>(rings.size());
   INT_VECT_CI ri;
 
@@ -78,7 +78,7 @@ int nextCombination(INT_VECT &comb, int tot) {
     }
   }
 
-  unsigned int i;
+  unsigned int i = 0;
   comb[celem] += 1;
   for (i = celem + 1; i < comb.size(); i++) {
     comb[i] = comb[i - 1] + 1;

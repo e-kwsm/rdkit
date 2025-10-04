@@ -160,7 +160,7 @@ TEST_CASE("testUniformGridPickling") {
     std::string pklName = dirName + "grid1.bin";
     std::ifstream inS;
     inS.open(pklName.c_str(), std::ios_base::binary);
-    unsigned int length;
+    unsigned int length = 0;
     inS >> length;
     auto *buff = new char[length];
     unsigned int nRead = 0;
@@ -232,7 +232,7 @@ TEST_CASE("testUniformGridIndexing") {
   {
     unsigned int xi = 3, yi = 3, zi = 3;
     unsigned int idx = grd.getGridIndex(xi, yi, zi);
-    unsigned int nxi, nyi, nzi;
+    unsigned int nxi = 0, nyi = 0, nzi = 0;
     grd.getGridIndices(idx, nxi, nyi, nzi);
     REQUIRE(nxi == xi);
     REQUIRE(nyi == yi);
@@ -241,7 +241,7 @@ TEST_CASE("testUniformGridIndexing") {
   {
     unsigned int xi = 3, yi = 3, zi = 5;
     unsigned int idx = grd.getGridIndex(xi, yi, zi);
-    unsigned int nxi, nyi, nzi;
+    unsigned int nxi = 0, nyi = 0, nzi = 0;
     grd.getGridIndices(idx, nxi, nyi, nzi);
     REQUIRE(nxi == xi);
     REQUIRE(nyi == yi);
@@ -250,7 +250,7 @@ TEST_CASE("testUniformGridIndexing") {
   {
     unsigned int xi = 3, yi = 6, zi = 3;
     unsigned int idx = grd.getGridIndex(xi, yi, zi);
-    unsigned int nxi, nyi, nzi;
+    unsigned int nxi = 0, nyi = 0, nzi = 0;
     grd.getGridIndices(idx, nxi, nyi, nzi);
     REQUIRE(nxi == xi);
     REQUIRE(nyi == yi);
@@ -259,7 +259,7 @@ TEST_CASE("testUniformGridIndexing") {
   {
     unsigned int xi = 0, yi = 0, zi = 0;
     unsigned int idx = grd.getGridIndex(xi, yi, zi);
-    unsigned int nxi, nyi, nzi;
+    unsigned int nxi = 0, nyi = 0, nzi = 0;
     grd.getGridIndices(idx, nxi, nyi, nzi);
     REQUIRE(nxi == xi);
     REQUIRE(nyi == yi);
@@ -268,7 +268,7 @@ TEST_CASE("testUniformGridIndexing") {
   {
     unsigned int xi = 8, yi = 2, zi = 1;
     unsigned int idx = grd.getGridIndex(xi, yi, zi);
-    unsigned int nxi, nyi, nzi;
+    unsigned int nxi = 0, nyi = 0, nzi = 0;
     grd.getGridIndices(idx, nxi, nyi, nzi);
     REQUIRE(nxi == xi);
     REQUIRE(nyi == yi);

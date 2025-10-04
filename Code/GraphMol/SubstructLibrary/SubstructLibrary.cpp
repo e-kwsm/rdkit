@@ -330,7 +330,7 @@ int internalGetMatches(const Query &query, MolHolderBase &mols,
     if (idxs) {
       internal_results.resize(numThreads);
     }
-    int thread_group_idx;
+    int thread_group_idx = 0;
     for (thread_group_idx = 0; thread_group_idx < numThreads;
          ++thread_group_idx) {
       internal_found[thread_group_idx] = found;
@@ -344,7 +344,7 @@ int internalGetMatches(const Query &query, MolHolderBase &mols,
           std::ref(internal_found[thread_group_idx]), std::ref(searchOrder),
           idxs ? &internal_results[thread_group_idx] : nullptr));
     }
-    unsigned int maxEndIdx;
+    unsigned int maxEndIdx = 0;
     if (maxResults > 0) {
       // If we are running with maxResults in a multi-threaded settings,
       // some threads may have screened more molecules than others.

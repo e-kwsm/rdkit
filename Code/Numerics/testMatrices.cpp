@@ -38,7 +38,7 @@ TEST_CASE("test1Vector") {
   Vector<double> *v2 = new Vector<double>(3, sdata);
   REQUIRE_THAT(v2->normL1(), Catch::Matchers::WithinAbs(6.0, 1e-4));
   Vector<double> v3(v1);
-  unsigned int i;
+  unsigned int i = 0;
   for (i = 0; i < v1.size(); i++) {
     REQUIRE_THAT(v1.getVal(i), Catch::Matchers::WithinAbs(v3.getVal(i), 1e-4));
   }
@@ -164,7 +164,7 @@ TEST_CASE("test3SquareMatrix") {
   SquareMatrix<double> E(*D);
   multiply((*D), E, A);
 
-  unsigned int i, j;
+  unsigned int i = 0, j = 0;
   for (i = 0; i < 2; i++) {
     for (j = 0; j < 2; j++) {
       REQUIRE_THAT(B.getVal(i, j),
@@ -197,7 +197,7 @@ TEST_CASE("test4SymmMatrix") {
   multiply(A, B, C);
 
   B *= A;
-  unsigned int i, j;
+  unsigned int i = 0, j = 0;
   for (i = 0; i < 3; i++) {
     for (j = 0; j < 3; j++) {
       REQUIRE_THAT(B.getVal(i, j),

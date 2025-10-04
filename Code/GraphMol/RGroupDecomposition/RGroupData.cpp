@@ -111,7 +111,7 @@ std::map<int, int> RGroupData::getNumBondsToRlabels() const {
   std::map<int, int> rlabelsUsedCount;
 
   for (const auto atom : combinedMol->atoms()) {
-    int rlabel;
+    int rlabel = 0;
     if (atom->getPropIfPresent<int>(RLABEL, rlabel)) {
       ++rlabelsUsedCount[rlabel];
     }

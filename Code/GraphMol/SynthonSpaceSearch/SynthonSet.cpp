@@ -107,10 +107,10 @@ void SynthonSet::writeToDBStream(std::ostream &os) const {
 
 namespace {
 void readBitSet(std::istream &is, boost::dynamic_bitset<> &bitset) {
-  size_t bsSize;
+  size_t bsSize = 0;
   streamRead(is, bsSize);
   bitset.resize(bsSize);
-  bool s;
+  bool s = false;
   for (size_t i = 0; i < bsSize; ++i) {
     streamRead(is, s);
     bitset[i] = s;
@@ -122,7 +122,7 @@ void SynthonSet::readFromDBStream(std::istream &is, const SynthonSpace &space,
                                   std::uint32_t version) {
   PRECONDITION(version >= 3000, "Binary database version no longer supported.");
   streamRead(is, d_id, 0);
-  std::uint64_t numConnRegs;
+  std::uint64_t numConnRegs = 0;
   streamRead(is, numConnRegs);
   d_connectorRegions.resize(numConnRegs);
   d_connRegSmis.resize(numConnRegs);
@@ -131,7 +131,7 @@ void SynthonSet::readFromDBStream(std::istream &is, const SynthonSpace &space,
     MolPickler::molFromPickle(is, *d_connectorRegions[i]);
     d_connRegSmis[i] = MolToSmiles(*d_connectorRegions[i]);
   }
-  std::uint64_t numConnRegFPs;
+  std::uint64_t numConnRegFPs = 0;
   streamRead(is, numConnRegFPs);
   for (std::uint64_t i = 0; i < numConnRegFPs; ++i) {
     std::string pickle;
@@ -139,7 +139,7 @@ void SynthonSet::readFromDBStream(std::istream &is, const SynthonSpace &space,
     d_connRegFPs.push_back(std::make_unique<ExplicitBitVect>(pickle));
   }
   readBitSet(is, d_connectors);
-  std::uint64_t numSynthConnPatts;
+  std::uint64_t numSynthConnPatts = 0;
   streamRead(is, numSynthConnPatts);
   d_synthConnPatts.resize(numSynthConnPatts);
   for (std::uint64_t i = 0; i < numSynthConnPatts; ++i) {
@@ -148,11 +148,11 @@ void SynthonSet::readFromDBStream(std::istream &is, const SynthonSpace &space,
     d_synthConnPatts[i] = synthConnPatt;
   }
 
-  std::uint64_t numRS;
+  std::uint64_t numRS = 0;
   streamRead(is, numRS);
   d_synthons.clear();
   for (std::uint64_t i = 0; i < numRS; ++i) {
-    std::uint64_t numR;
+    std::uint64_t numR = 0;
     streamRead(is, numR);
     d_synthons.emplace_back();
     d_synthons[i].resize(numR);
@@ -172,7 +172,7 @@ void SynthonSet::readFromDBStream(std::istream &is, const SynthonSpace &space,
     }
   }
 
-  bool haveAddFP;
+  bool haveAddFP = false;
   streamRead(is, haveAddFP);
   if (haveAddFP) {
     std::string fString;
@@ -181,7 +181,7 @@ void SynthonSet::readFromDBStream(std::istream &is, const SynthonSpace &space,
     streamRead(is, fString, 0);
     d_subtractFP = std::make_unique<ExplicitBitVect>(fString);
   }
-  std::uint64_t numConns;
+  std::uint64_t numConns = 0;
   streamRead(is, numConns);
   d_numConnectors.resize(numConns);
   for (unsigned int i = 0; i < numConns; ++i) {
@@ -324,7 +324,7 @@ void SynthonSet::makeSynthonSearchMols() {
           break;
         }
       }
-      unsigned int otf;
+      unsigned int otf = 0;
       sanitizeMol(*static_cast<RWMol *>(molFrags[fragWeWant].get()), otf,
                   MolOps::SANITIZE_SYMMRINGS);
       d_synthons[synthSetNum][j].second->setSearchMol(
