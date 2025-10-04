@@ -376,7 +376,7 @@ unsigned int ROMol::addAtom(Atom *atom_pin, bool updateLabel,
   PRECONDITION(!takeOwnership || !atom_pin->hasOwningMol() ||
                    &atom_pin->getOwningMol() == this,
                "cannot take ownership of an atom which already has an owner");
-  Atom *atom_p;
+  Atom *atom_p = nullptr;
   if (!takeOwnership) {
     atom_p = atom_pin->copy();
   } else {
@@ -410,7 +410,7 @@ unsigned int ROMol::addBond(Bond *bond_pin, bool takeOwnership) {
                      .second),
                "bond already exists");
 
-  Bond *bond_p;
+  Bond *bond_p = nullptr;
   if (!takeOwnership) {
     bond_p = bond_pin->copy();
   } else {
