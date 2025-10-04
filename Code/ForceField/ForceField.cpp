@@ -13,7 +13,7 @@
 
 #include <RDGeneral/Invariant.h>
 #include <Numerics/Optimizer/BFGSOpt.h>
-#include <math.h>
+#include <cmath>
 
 namespace RDKit {
 namespace ForceFieldsHelper {
