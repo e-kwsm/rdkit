@@ -12,6 +12,7 @@
 #include <cmath>
 #include <ForceField/ForceField.h>
 #include <RDGeneral/Invariant.h>
+#include <math.h>
 
 namespace ForceFields {
 namespace MMFF {
@@ -151,7 +152,7 @@ void TorsionAngleContrib::getGrad(double *pos, double *grad) const {
   PRECONDITION(pos, "bad vector");
   PRECONDITION(grad, "bad vector");
   double d[2];
-  double cosPhi;
+  double cosPhi = NAN;
 
   const int numTorsions = d_at1Idx.size();
   for (int i = 0; i < numTorsions; ++i) {
