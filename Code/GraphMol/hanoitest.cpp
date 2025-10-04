@@ -136,7 +136,7 @@ class atomcomparefunctor {
   atomcomparefunctor(Canon::canon_atom *atoms) : d_atoms(atoms) {};
   int operator()(int i, int j) const {
     PRECONDITION(d_atoms, "no atoms");
-    unsigned int ivi, ivj;
+    unsigned int ivi = 0, ivj = 0;
 
     // always start with the current class:
     ivi = d_atoms[i].index;
@@ -166,7 +166,7 @@ class atomcomparefunctor2 {
   atomcomparefunctor2(Canon::canon_atom *atoms) : d_atoms(atoms) {};
   int operator()(int i, int j) const {
     PRECONDITION(d_atoms, "no atoms");
-    unsigned int ivi, ivj;
+    unsigned int ivi = 0, ivj = 0;
 
     // always start with the current class:
     ivi = d_atoms[i].index;
@@ -258,7 +258,7 @@ void test3() {
     RDKit::Canon::canon_atom *data = &atoms.front();
     int *count = (int *)malloc(atoms.size() * sizeof(int));
     int *order = (int *)malloc(atoms.size() * sizeof(int));
-    int activeset;
+    int activeset = 0;
     int *next = (int *)malloc(atoms.size() * sizeof(int));
     int *changed = (int *)malloc(atoms.size() * sizeof(int));
     memset(changed, 1, atoms.size() * sizeof(int));
@@ -317,7 +317,7 @@ void test3() {
     RDKit::Canon::canon_atom *data = &atoms.front();
     int *count = (int *)malloc(atoms.size() * sizeof(int));
     int *order = (int *)malloc(atoms.size() * sizeof(int));
-    int activeset;
+    int activeset = 0;
     int *next = (int *)malloc(atoms.size() * sizeof(int));
     int *changed = (int *)malloc(atoms.size() * sizeof(int));
     memset(changed, 1, atoms.size() * sizeof(int));
@@ -385,7 +385,7 @@ class atomcomparefunctor3 {
   }
   int basecomp(int i, int j) const {
     PRECONDITION(dp_atoms, "no atoms");
-    unsigned int ivi, ivj;
+    unsigned int ivi = 0, ivj = 0;
 
     // always start with the current class:
     ivi = dp_atoms[i].index;
@@ -429,7 +429,7 @@ class atomcomparefunctor3 {
     if (v) {
       return v;
     }
-    unsigned int ivi, ivj;
+    unsigned int ivi = 0, ivj = 0;
     if (df_useNbrs) {
       ivi = dp_atoms[i].index + 1 + getAtomNeighborhood(i);
       ivj = dp_atoms[j].index + 1 + getAtomNeighborhood(j);
@@ -459,7 +459,7 @@ void test4() {
     RDKit::Canon::canon_atom *data = &atoms.front();
     int *count = (int *)malloc(atoms.size() * sizeof(int));
     int *order = (int *)malloc(atoms.size() * sizeof(int));
-    int activeset;
+    int activeset = 0;
     int *next = (int *)malloc(atoms.size() * sizeof(int));
     int *changed = (int *)malloc(atoms.size() * sizeof(int));
     memset(changed, 1, atoms.size() * sizeof(int));
@@ -526,7 +526,7 @@ void test4() {
     RDKit::Canon::canon_atom *data = &atoms.front();
     int *count = (int *)malloc(atoms.size() * sizeof(int));
     int *order = (int *)malloc(atoms.size() * sizeof(int));
-    int activeset;
+    int activeset = 0;
     int *next = (int *)malloc(atoms.size() * sizeof(int));
     int *changed = (int *)malloc(atoms.size() * sizeof(int));
     memset(changed, 1, atoms.size() * sizeof(int));
@@ -580,7 +580,7 @@ void test4() {
     RDKit::Canon::canon_atom *data = &atoms.front();
     int *count = (int *)malloc(atoms.size() * sizeof(int));
     int *order = (int *)malloc(atoms.size() * sizeof(int));
-    int activeset;
+    int activeset = 0;
     int *next = (int *)malloc(atoms.size() * sizeof(int));
     int *changed = (int *)malloc(atoms.size() * sizeof(int));
     memset(changed, 1, atoms.size() * sizeof(int));
@@ -656,7 +656,7 @@ void test5() {
     RDKit::Canon::canon_atom *data = &atoms.front();
     int *count = (int *)malloc(atoms.size() * sizeof(int));
     int *order = (int *)malloc(atoms.size() * sizeof(int));
-    int activeset;
+    int activeset = 0;
     int *next = (int *)malloc(atoms.size() * sizeof(int));
     int *changed = (int *)malloc(atoms.size() * sizeof(int));
     memset(changed, 1, atoms.size() * sizeof(int));
