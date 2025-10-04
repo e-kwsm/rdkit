@@ -24,7 +24,7 @@ class GA_EXPORT Chromosome {
  private:
   static int idCounter;
   int chromosomeId;
-  double fitness;
+  double fitness{0};
   Chromosome(const Chromosome &other) = delete;
   Chromosome &operator=(const Chromosome &other) = delete;
 
