@@ -38,7 +38,7 @@ bool hasSubstructHelper(const ROMol &mol, const ExtendedQueryMol &query,
   if (iparams) {
     params = *iparams;
   }
-  bool res;
+  bool res = false;
   {
     NOGIL gil;
     res = hasSubstructMatch(mol, query, params);
