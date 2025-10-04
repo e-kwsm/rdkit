@@ -24,6 +24,7 @@
 #include <GraphMol/DistGeomHelpers/Embedder.h>
 #include <GraphMol/MolTransforms/MolTransforms.h>
 #include <ForceField/ForceField.h>
+#include <cmath>
 #include <iomanip>
 #include <fstream>
 #include <sstream>
@@ -65,7 +66,7 @@ bool getLineByNum(std::fstream &stream, std::streampos startPos, unsigned int n,
                   std::string &line) {
   std::streampos current = stream.tellg();
   stream.seekg(startPos);
-  bool fail;
+  bool fail = false;
   unsigned int i = 0;
   while ((i <= n) && (!(fail = std::getline(stream, line).rdstate() &
                                std::ifstream::failbit))) {
@@ -332,7 +333,7 @@ int mmffValidationSuite(int argc, char *argv[]) {
         SDWriter *sdfWriter =
             new SDWriter(molFileIt.substr(0, molFileIt.length() - 4) + "_min" +
                          ((molTypeIt == "smi") ? "_from_SMILES" : "") + ".sdf");
-        ROMol *mol;
+        ROMol *mol = nullptr;
         std::string molName;
         std::vector<std::string> nameArray;
 
@@ -408,16 +409,16 @@ int mmffValidationSuite(int argc, char *argv[]) {
         std::vector<OopBendInstance *> refOopBendInstanceVec;
         std::vector<TorsionInstance *> rdkTorsionInstanceVec;
         std::vector<TorsionInstance *> refTorsionInstanceVec;
-        double rdkEnergy;
-        double rdkEleEnergy;
-        double refEnergy;
-        double refVdWEnergy;
-        double refEleEnergy;
+        double rdkEnergy = NAN;
+        double rdkEleEnergy = NAN;
+        double refEnergy = NAN;
+        double refVdWEnergy = NAN;
+        double refEleEnergy = NAN;
         unsigned int n_failed = 0;
         bool failed = false;
         rdkFStream.seekg(0);
         fgrep(rdkFStream, computingKey);
-        size_t ii;
+        size_t ii = 0;
         for (ii = 0; ii < nameArray.size(); ii += inc) {
           error = false;
           failed = false;
@@ -612,7 +613,7 @@ int mmffValidationSuite(int argc, char *argv[]) {
                          refBondStretchInstanceVec[j]->kb) > FCON_TOLERANCE));
               if (error) {
                 failed = true;
-                bool haveLine;
+                bool haveLine = false;
                 haveLine =
                     getLineByNum(rdkFStream, rdkPos,
                                  rdkBondStretchInstanceVec[j]->idx, rdkLine);
@@ -768,7 +769,7 @@ int mmffValidationSuite(int argc, char *argv[]) {
                              refAngleBendInstanceVec[j]->ka) > FCON_TOLERANCE));
               if (error) {
                 failed = true;
-                bool haveLine;
+                bool haveLine = false;
                 haveLine =
                     getLineByNum(rdkFStream, rdkPos,
                                  rdkAngleBendInstanceVec[j]->idx, rdkLine);
@@ -929,7 +930,7 @@ int mmffValidationSuite(int argc, char *argv[]) {
                          refStretchBendInstanceVec[j]->kba) > FCON_TOLERANCE));
               if (error) {
                 failed = true;
-                bool haveLine;
+                bool haveLine = false;
                 haveLine =
                     getLineByNum(rdkFStream, rdkPos,
                                  rdkStretchBendInstanceVec[j]->idx, rdkLine);
@@ -1087,7 +1088,7 @@ int mmffValidationSuite(int argc, char *argv[]) {
                              refOopBendInstanceVec[j]->koop) > FCON_TOLERANCE));
               if (error) {
                 failed = true;
-                bool haveLine;
+                bool haveLine = false;
                 haveLine = getLineByNum(rdkFStream, rdkPos,
                                         rdkOopBendInstanceVec[j]->idx, rdkLine);
                 if (haveLine) {
@@ -1185,7 +1186,7 @@ int mmffValidationSuite(int argc, char *argv[]) {
             refTorsionInstanceVec.clear();
             refPos = refFStream.tellg();
             n = 0;
-            double refTorsionEnergy;
+            double refTorsionEnergy = NAN;
             while ((!found) && (!(std::getline(refFStream, refLine).rdstate() &
                                   std::ifstream::failbit))) {
               found = (!(refLine.length()));
@@ -1257,7 +1258,7 @@ int mmffValidationSuite(int argc, char *argv[]) {
                              refTorsionInstanceVec[j]->V3) > FCON_TOLERANCE));
               if (error) {
                 failed = true;
-                bool haveLine;
+                bool haveLine = false;
                 haveLine = getLineByNum(rdkFStream, rdkPos,
                                         rdkTorsionInstanceVec[j]->idx, rdkLine);
                 if (haveLine) {
@@ -1442,12 +1443,12 @@ void testMMFFAllConstraints() {
       "  9 11  1  0  0  0  0\n"
       "  9 12  1  0  0  0  0\n"
       "M  END\n";
-  RDKit::RWMol *mol;
-  ForceFields::ForceField *field;
-  MMFF::MMFFMolProperties *mmffMolProperties;
+  RDKit::RWMol *mol = nullptr;
+  ForceFields::ForceField *field = nullptr;
+  MMFF::MMFFMolProperties *mmffMolProperties = nullptr;
 
   // distance constraints
-  ForceFields::DistanceConstraintContribs *dc;
+  ForceFields::DistanceConstraintContribs *dc = nullptr;
   mol = RDKit::MolBlockToMol(molBlock, true, false);
   TEST_ASSERT(mol);
   MolTransforms::setBondLength(mol->getConformer(), 1, 3, 2.0);
@@ -1480,7 +1481,7 @@ void testMMFFAllConstraints() {
   delete mol;
 
   // angle constraints
-  ForceFields::AngleConstraintContribs *ac;
+  ForceFields::AngleConstraintContribs *ac = nullptr;
   mol = RDKit::MolBlockToMol(molBlock, true, false);
   TEST_ASSERT(mol);
   MolTransforms::setAngleDeg(mol->getConformer(), 1, 3, 6, 90.0);
@@ -1514,7 +1515,7 @@ void testMMFFAllConstraints() {
   delete mol;
 
   // torsion constraints
-  ForceFields::MMFF::TorsionConstraintContrib *tc;
+  ForceFields::MMFF::TorsionConstraintContrib *tc = nullptr;
   mol = RDKit::MolBlockToMol(molBlock, true, false);
   TEST_ASSERT(mol);
   MolTransforms::setDihedralDeg(mol->getConformer(), 1, 3, 6, 8, 15.0);
@@ -1568,7 +1569,7 @@ void testMMFFAllConstraints() {
   delete mol;
 
   // position constraints
-  ForceFields::MMFF::PositionConstraintContrib *pc;
+  ForceFields::MMFF::PositionConstraintContrib *pc = nullptr;
   mol = RDKit::MolBlockToMol(molBlock, true, false);
   TEST_ASSERT(mol);
   mmffMolProperties = new MMFF::MMFFMolProperties(*mol);
@@ -1636,7 +1637,7 @@ void testMMFFTorsionConstraints() {
  10 11  1  0  0  0  0
 M  END
 )";
-  RDKit::RWMol *mol;
+  RDKit::RWMol *mol = nullptr;
 
   // torsion constraints
   mol = RDKit::MolBlockToMol(molBlock, true, false);
