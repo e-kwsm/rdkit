@@ -13,6 +13,7 @@
 #include <Geometry/point.h>
 #include <Geometry/Transform3D.h>
 #include <Numerics/Vector.h>
+#include <math.h>
 
 constexpr double TOLERANCE = 1.e-6;
 
@@ -63,7 +64,7 @@ double _sumOfWeights(const DoubleVector &weights) {
 void _computeCovarianceMat(const RDGeom::Point3DConstPtrVect &refPoints,
                            const RDGeom::Point3DConstPtrVect &probePoints,
                            const DoubleVector &weights, double covMat[3][3]) {
-  unsigned int i, j;
+  unsigned int i = 0, j = 0;
   for (i = 0; i < 3; i++) {
     for (j = 0; j < 3; j++) {
       covMat[i][j] = 0.0;
@@ -75,8 +76,8 @@ void _computeCovarianceMat(const RDGeom::Point3DConstPtrVect &refPoints,
                   "Number of points and number of weights do not match");
   const double *wData = weights.getData();
 
-  const RDGeom::Point3D *rpt, *ppt;
-  double w;
+  const RDGeom::Point3D *rpt = nullptr, *ppt = nullptr;
+  double w = NAN;
   for (i = 0; i < npt; i++) {
     rpt = refPoints[i];
     ppt = probePoints[i];
@@ -100,10 +101,10 @@ void _covertCovMatToQuad(const double covMat[3][3],
                          const RDGeom::Point3D &rptSum,
                          const RDGeom::Point3D &pptSum, double wtsSum,
                          double quad[4][4]) {
-  double PxRx, PxRy, PxRz;
-  double PyRx, PyRy, PyRz;
-  double PzRx, PzRy, PzRz;
-  double temp;
+  double PxRx = NAN, PxRy = NAN, PxRz = NAN;
+  double PyRx = NAN, PyRy = NAN, PyRz = NAN;
+  double PzRx = NAN, PzRy = NAN, PzRz = NAN;
+  double temp = NAN;
 
   temp = pptSum.x / wtsSum;
   PxRx = covMat[0][0] - temp * rptSum.x;
@@ -164,11 +165,11 @@ void _covertCovMatToQuad(const double covMat[3][3],
 
 unsigned int jacobi(double quad[4][4], double eigenVals[4],
                     double eigenVecs[4][4], unsigned int maxIter) {
-  double offDiagNorm, diagNorm;
-  double b, dma, q, t, c, s;
-  double atemp, vtemp, dtemp;
-  int i, j, k;
-  unsigned int l;
+  double offDiagNorm = NAN, diagNorm = NAN;
+  double b = NAN, dma = NAN, q = NAN, t = NAN, c = NAN, s = NAN;
+  double atemp = NAN, vtemp = NAN, dtemp = NAN;
+  int i = 0, j = 0, k = 0;
+  unsigned int l = 0;
 
   // initialize the eigen vector to Identity
   for (j = 0; j <= 3; j++) {
@@ -263,7 +264,7 @@ Exit_now:
 }
 
 void reflectCovMat(double covMat[3][3]) {
-  unsigned int i, j;
+  unsigned int i = 0, j = 0;
   for (i = 0; i < 3; i++) {
     for (j = 0; j < 3; j++) {
       covMat[i][j] = -covMat[i][j];
@@ -278,9 +279,9 @@ double AlignPoints(const RDGeom::Point3DConstPtrVect &refPoints,
   unsigned int npt = refPoints.size();
   PRECONDITION(npt == probePoints.size(), "Mismatch in number of points");
   trans.setToIdentity();
-  const DoubleVector *wts;
-  double wtsSum;
-  bool ownWts;
+  const DoubleVector *wts = nullptr;
+  double wtsSum = NAN;
+  bool ownWts = false;
   if (weights) {
     PRECONDITION(npt == weights->size(), "Mismatch in number of points");
     wts = weights;
