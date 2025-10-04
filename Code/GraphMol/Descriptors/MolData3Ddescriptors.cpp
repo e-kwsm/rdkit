@@ -1,6 +1,7 @@
 #include <cstdlib>
 #include "MolData3Ddescriptors.h"
 #include <GraphMol/RDKitBase.h>
+#include <math.h>
 
 #include "GraphMol/PartialCharges/GasteigerCharges.h"
 #include "GraphMol/PartialCharges/GasteigerParams.h"
@@ -179,7 +180,7 @@ std::vector<double> MolData3Ddescriptors::GetEState(const RDKit::ROMol &mol) {
 
   std::vector<double> Is = GetIState(mol);
 
-  double tmp, p;
+  double tmp = NAN, p = NAN;
   double *dist = RDKit::MolOps::getDistanceMat(mol, false, false);
   std::vector<double> accum(numAtoms, 0.0);
 
@@ -208,7 +209,7 @@ std::vector<double> MolData3Ddescriptors::GetEState2(const RDKit::ROMol &mol) {
   std::vector<double> Si = GetIState(mol);
 
   // in WHIM definition it's write:
-  double tmp, p, d;
+  double tmp = NAN, p = NAN, d = NAN;
   double *dist = RDKit::MolOps::getDistanceMat(mol, false, false);
   std::vector<double> accum(numAtoms, 0.0);
 
