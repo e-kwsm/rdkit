@@ -176,7 +176,7 @@ void setHybridization(ROMol &mol) {
           break;
       }
       // otherwise we have to do some work
-      int norbs;
+      int norbs = 0;
       // try to be smart for early elements, but for later
       // ones just use the degree
       // FIX: we should probably also be using the degree for metals

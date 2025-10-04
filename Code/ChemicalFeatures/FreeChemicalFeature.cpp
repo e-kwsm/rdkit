@@ -45,7 +45,7 @@ void FreeChemicalFeature::initFromString(const std::string &pickle) {
   std::stringstream ss(
       pickle, std::ios_base::binary | std::ios_base::in | std::ios_base::out);
   int version = 0;
-  uint32_t tInt;
+  uint32_t tInt = 0;
   streamRead(ss, tInt);
   switch (tInt) {
     case 0x0010:
@@ -64,7 +64,7 @@ void FreeChemicalFeature::initFromString(const std::string &pickle) {
     streamRead(ss, d_id);
   }
 
-  char *tmpChr;
+  char *tmpChr = nullptr;
 
   streamRead(ss, tInt);
   tmpChr = new char[tInt];
