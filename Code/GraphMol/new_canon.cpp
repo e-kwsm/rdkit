@@ -116,13 +116,13 @@ void ActivatePartitions(unsigned int nAtoms, std::vector<int> &order,
   PRECONDITION(!changed.empty(), "changed should not be empty");
   unsigned int i, j;
   activeset = -1;
-  for (i = 0; i < nAtoms; i++) {
+  for (unsigned int i = 0; i < nAtoms; i++) {
     next[i] = -2;
   }
 
-  i = 0;
+  unsigned int i = 0;
   do {
-    j = order[i];
+    unsigned int j = order[i];
     if (count[j] > 1) {
       next[j] = activeset;
       activeset = j;
@@ -133,7 +133,7 @@ void ActivatePartitions(unsigned int nAtoms, std::vector<int> &order,
   } while (i < nAtoms);
 
   for (i = 0; i < nAtoms; i++) {
-    j = order[i];
+    unsigned int j = order[i];
     int flag = 1;
     // #define SKIP_NODE_CHANGED_OPTIMIZATION 0
     // #ifndef SKIP_NODE_CHANGED_OPTIMIZATION

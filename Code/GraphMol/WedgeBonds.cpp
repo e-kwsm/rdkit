@@ -118,8 +118,8 @@ Bond::BondDir determineBondWedgeState(const Bond *bond,
     return res;
   }
 
-  Atom *atom;
-  Atom *bondAtom;
+  Atom *atom = nullptr;
+  Atom *bondAtom = nullptr;
   if (bond->getBeginAtom()->getIdx() == fromAtomIdx) {
     atom = bond->getBeginAtom();
     bondAtom = bond->getEndAtom();

@@ -134,7 +134,7 @@ void test1Canonicalization() {
   canonicalizeConformer(conf1);
 
   Conformer &conf2 = mol2->getConformer();
-  unsigned int i, nats = mol->getNumAtoms();
+  unsigned int i = 0, nats = mol->getNumAtoms();
   for (i = 0; i < nats; ++i) {
     CHECK_INVARIANT(comparePts(conf1.getAtomPos(i), conf2.getAtomPos(i)), "");
   }
