@@ -60,10 +60,7 @@ class RDKIT_DATASTRUCTS_EXPORT MultiFPBReader {
     will not be called until the first search is done. This is useful with large
     FPB readers.
   */
-  MultiFPBReader(bool initOnSearch)
-      : df_init(false),
-        df_initOnSearch(initOnSearch),
-        df_takeOwnership(false) {}
+  MultiFPBReader(bool initOnSearch) : df_initOnSearch(initOnSearch) {}
   /*!
     \param readers: the set of FPBReader objects to use.
     \param takeOwnership: if true, we own the memory for the FPBReaders
