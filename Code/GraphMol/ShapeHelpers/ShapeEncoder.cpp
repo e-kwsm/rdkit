@@ -19,6 +19,7 @@
 #include <GraphMol/Conformer.h>
 // #include <GraphMol/PeriodicTable.h>
 #include <GraphMol/RDKitBase.h>
+#include <math.h>
 namespace RDKit {
 namespace MolShapes {
 void EncodeShape(const ROMol &mol, RDGeom::UniformGrid3D &grid, int confId,
@@ -33,8 +34,8 @@ void EncodeShape(const Conformer &conf, RDGeom::UniformGrid3D &grid,
                  double stepSize, int maxLayers, bool ignoreHs) {
   const ROMol &mol = conf.getOwningMol();
   ROMol::ConstAtomIterator ai;
-  double rad;
-  unsigned int aid, anum;
+  double rad = NAN;
+  unsigned int aid = 0, anum = 0;
   for (ai = mol.beginAtoms(); ai != mol.endAtoms(); ai++) {
     anum = (*ai)->getAtomicNum();
     if ((anum == 1) && (ignoreHs)) {  // ignore hydrigens
