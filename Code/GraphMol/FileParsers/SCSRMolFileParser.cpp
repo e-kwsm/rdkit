@@ -538,8 +538,8 @@ class MolFromSCSRMolConverter {
   }
 
   void processBondInMainMol(const Bond *bond) {
-    unsigned int newBeginAtom;
-    unsigned int newEndAtom;
+    unsigned int newBeginAtom = 0;
+    unsigned int newEndAtom = 0;
 
     if (bond->getBondType() != Bond::HYDROGEN) {
       newBeginAtom =
@@ -928,7 +928,7 @@ class MolFromSCSRMolConverter {
         //  find the template that matches the class and label
 
         ROMol *templateMol = nullptr;
-        unsigned int templateIdx;
+        unsigned int templateIdx = 0;
         bool templateFound = false;
         std::string templateNameToUse = "";
         for (templateIdx = 0; templateIdx < scsrMol->getTemplateCount();
