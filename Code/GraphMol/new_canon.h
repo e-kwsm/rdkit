@@ -299,11 +299,9 @@ class RDKIT_GRAPHMOL_EXPORT AtomCompareFunctor {
   }
 
   int basecomp(int i, int j) const {
-    unsigned int ivi, ivj;
-
     // always start with the current class:
-    ivi = dp_atoms[i].index;
-    ivj = dp_atoms[j].index;
+    unsigned int ivi = dp_atoms[i].index;
+    unsigned int ivj = dp_atoms[j].index;
     if (ivi < ivj) {
       return -1;
     } else if (ivi > ivj) {
@@ -585,7 +583,7 @@ class RDKIT_GRAPHMOL_EXPORT ChiralAtomCompareFunctor {
 
   int basecomp(int i, int j) const {
     PRECONDITION(dp_atoms, "no atoms");
-    unsigned int ivi, ivj;
+    unsigned int ivi = 0, ivj = 0;
 
     // always start with the current class:
     ivi = dp_atoms[i].index;
@@ -697,13 +695,7 @@ void RefinePartitions(const ROMol &mol, canon_atom *atoms, CompareFunc compar,
                       int mode, int *order, int *count, int &activeset,
                       int *next, int *changed, char *touchedPartitions) {
   unsigned int nAtoms = mol.getNumAtoms();
-  int partition;
   int symclass = 0;
-  int *start;
-  int offset;
-  int index;
-  int len;
-  int i;
   // std::vector<char> touchedPartitions(mol.getNumAtoms(),0);
 
   // std::cerr<<"&&&&&&&&&&&&&&&& RP"<<std::endl;
@@ -719,13 +711,13 @@ void RefinePartitions(const ROMol &mol, canon_atom *atoms, CompareFunc compar,
     //   "<<atoms[order[ii]].index<<std::endl;
     // }
 
-    partition = activeset;
+    int partition = activeset;
     activeset = next[partition];
     next[partition] = -2;
 
-    len = count[partition];
-    offset = atoms[partition].index;
-    start = order + offset;
+    int len = count[partition];
+    int offset = atoms[partition].index;
+    int *start = order + offset;
     // std::cerr<<"\n\n**************************************************************"<<std::endl;
     // std::cerr<<"  sort - class:"<<atoms[partition].index<<" len: "<<len<<":";
     // for(unsigned int ii=0;ii<len;++ii){
@@ -747,10 +739,10 @@ void RefinePartitions(const ROMol &mol, canon_atom *atoms, CompareFunc compar,
       changed[start[k]] = 0;
     }
 
-    index = start[0];
+    int index = start[0];
     // std::cerr<<"  len:"<<len<<" index:"<<index<<"
     // count:"<<count[index]<<std::endl;
-    for (i = count[index]; i < len; i++) {
+    for (int i = count[index]; i < len; i++) {
       index = start[i];
       if (count[index]) {
         symclass = offset + i;
@@ -768,7 +760,7 @@ void RefinePartitions(const ROMol &mol, canon_atom *atoms, CompareFunc compar,
 
     if (mode) {
       index = start[0];
-      for (i = count[index]; i < len; i++) {
+      for (int i = count[index]; i < len; i++) {
         index = start[i];
         for (unsigned j = 0; j < atoms[index].degree; ++j) {
           unsigned int nbor = atoms[index].nbrIds[j];
@@ -794,10 +786,10 @@ void BreakTies(const ROMol &mol, canon_atom *atoms, CompareFunc compar,
                int mode, int *order, int *count, int &activeset, int *next,
                int *changed, char *touchedPartitions) {
   unsigned int nAtoms = mol.getNumAtoms();
-  int partition;
-  int offset;
-  int index;
-  int len;
+  int partition = 0;
+  int offset = 0;
+  int index = 0;
+  int len = 0;
   int oldPart = 0;
 
   for (unsigned int i = 0; i < nAtoms; i++) {
