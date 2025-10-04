@@ -54,8 +54,8 @@ void testBaseFunctionality() {
   BOOST_LOG(rdInfoLog) << "-----------------------\n"
                        << "testBaseFunctionality" << std::endl;
 
-  ResonanceMolSupplier *resMolSuppl;
-  RWMol *mol;
+  ResonanceMolSupplier *resMolSuppl = nullptr;
+  RWMol *mol = nullptr;
   mol = SmilesToMol("CC");
   resMolSuppl = new ResonanceMolSupplier((ROMol &)*mol);
   TEST_ASSERT((resMolSuppl->getAtomConjGrpIdx(0) == -1) &&
@@ -167,7 +167,7 @@ void testBenzylCation() {
   BOOST_LOG(rdInfoLog) << "-----------------------\n"
                        << "testBenzylCation" << std::endl;
   RWMol *mol = SmilesToMol("[CH2+]c1ccccc1");
-  ResonanceMolSupplier *resMolSuppl;
+  ResonanceMolSupplier *resMolSuppl = nullptr;
   std::map<unsigned int, int> fcMap;
   resMolSuppl = new ResonanceMolSupplier((ROMol &)*mol);
   TEST_ASSERT(resMolSuppl->length() == 4);
@@ -189,7 +189,7 @@ void testBenzylAnion() {
   BOOST_LOG(rdInfoLog) << "-----------------------\n"
                        << "testBenzylAnion" << std::endl;
   RWMol *mol = SmilesToMol("[CH2-]c1ccccc1");
-  ResonanceMolSupplier *resMolSuppl;
+  ResonanceMolSupplier *resMolSuppl = nullptr;
   std::map<unsigned int, int> fcMap;
   resMolSuppl = new ResonanceMolSupplier((ROMol &)*mol);
   TEST_ASSERT(resMolSuppl->length() == 4);
@@ -211,7 +211,7 @@ void testButadiene() {
   BOOST_LOG(rdInfoLog) << "-----------------------\n"
                        << "testButadiene" << std::endl;
   RWMol *mol = SmilesToMol("C=CC=C");
-  ResonanceMolSupplier *resMolSuppl;
+  ResonanceMolSupplier *resMolSuppl = nullptr;
 
   resMolSuppl = new ResonanceMolSupplier((ROMol &)*mol);
   TEST_ASSERT(resMolSuppl->length() == 1);
@@ -240,7 +240,7 @@ void testZwitterion() {
   BOOST_LOG(rdInfoLog) << "-----------------------\n"
                        << "testZwitterion" << std::endl;
   RWMol *mol = SmilesToMol("NC=CC=CC=O");
-  ResonanceMolSupplier *resMolSuppl;
+  ResonanceMolSupplier *resMolSuppl = nullptr;
 
   resMolSuppl = new ResonanceMolSupplier((ROMol &)*mol);
   TEST_ASSERT(resMolSuppl->length() == 1);
@@ -266,7 +266,7 @@ void testChargeMigration() {
   BOOST_LOG(rdInfoLog) << "-----------------------\n"
                        << "testChargeMigration" << std::endl;
   RWMol *mol = SmilesToMol("C=CC=CC=C[CH2+]");
-  ResonanceMolSupplier *resMolSuppl;
+  ResonanceMolSupplier *resMolSuppl = nullptr;
 
   resMolSuppl = new ResonanceMolSupplier((ROMol &)*mol);
   TEST_ASSERT(resMolSuppl->length() == 4);
@@ -289,7 +289,7 @@ void testChargeSeparation1() {
   BOOST_LOG(rdInfoLog) << "-----------------------\n"
                        << "testChargeSeparation1" << std::endl;
   RWMol *mol = SmilesToMol("[NH2+]=C1C=CC(C=C1)=CN=CN");
-  ResonanceMolSupplier *resMolSuppl;
+  ResonanceMolSupplier *resMolSuppl = nullptr;
 
   resMolSuppl = new ResonanceMolSupplier((ROMol &)*mol);
   TEST_ASSERT(resMolSuppl->length() == 3);
@@ -322,7 +322,7 @@ void testChargeSeparation2() {
   BOOST_LOG(rdInfoLog) << "-----------------------\n"
                        << "testChargeSeparation2" << std::endl;
   RWMol *mol = SmilesToMol("NC(C(=O)[O-])=CC=CC=O");
-  ResonanceMolSupplier *resMolSuppl;
+  ResonanceMolSupplier *resMolSuppl = nullptr;
 
   resMolSuppl = new ResonanceMolSupplier((ROMol &)*mol);
   TEST_ASSERT(resMolSuppl->length() == 2);
@@ -384,7 +384,7 @@ void testMultipleConjGroups1() {
   BOOST_LOG(rdInfoLog) << "-----------------------\n"
                        << "testMultipleConjGroups1" << std::endl;
   RWMol *mol = SmilesToMol("NC(C(=O)[O-])=CC=C(CCC(=O)[O-])C=O");
-  ResonanceMolSupplier *resMolSuppl;
+  ResonanceMolSupplier *resMolSuppl = nullptr;
 
   resMolSuppl = new ResonanceMolSupplier(
       (ROMol &)*mol, ResonanceMolSupplier::ALLOW_CHARGE_SEPARATION);
@@ -445,7 +445,7 @@ void testMultipleConjGroups2() {
   BOOST_LOG(rdInfoLog) << "-----------------------\n"
                        << "testMultipleConjGroups2" << std::endl;
   RWMol *mol = SmilesToMol("[N-]=[N+]=NCN=[N+]=[N-]");
-  ResonanceMolSupplier *resMolSuppl;
+  ResonanceMolSupplier *resMolSuppl = nullptr;
 
   resMolSuppl = new ResonanceMolSupplier(
       (ROMol &)*mol, ResonanceMolSupplier::ALLOW_CHARGE_SEPARATION);
@@ -475,7 +475,7 @@ void testDimethylMalonate() {
   BOOST_LOG(rdInfoLog) << "-----------------------\n"
                        << "testDimethylMalonate" << std::endl;
   RWMol *mol = SmilesToMol("COC(=O)[CH-]C(=O)OC");
-  ResonanceMolSupplier *resMolSuppl;
+  ResonanceMolSupplier *resMolSuppl = nullptr;
 
   resMolSuppl = new ResonanceMolSupplier((ROMol &)*mol);
   TEST_ASSERT(resMolSuppl->length() == 3);
@@ -500,7 +500,7 @@ void testMethylAcetate() {
   BOOST_LOG(rdInfoLog) << "-----------------------\n"
                        << "testMethylAcetate" << std::endl;
   RWMol *mol = SmilesToMol("CC(=O)OC");
-  ResonanceMolSupplier *resMolSuppl;
+  ResonanceMolSupplier *resMolSuppl = nullptr;
 
   resMolSuppl = new ResonanceMolSupplier((ROMol &)*mol);
   TEST_ASSERT(resMolSuppl->length() == 1);
@@ -542,7 +542,7 @@ void testPyranium2_6dicarboxylate() {
   BOOST_LOG(rdInfoLog) << "-----------------------\n"
                        << "testPyranium2_6dicarboxylate" << std::endl;
   RWMol *mol = SmilesToMol("[o+]1c(C(=O)[O-])cccc1C(=O)[O-]");
-  ResonanceMolSupplier *resMolSuppl;
+  ResonanceMolSupplier *resMolSuppl = nullptr;
 
   resMolSuppl = new ResonanceMolSupplier((ROMol &)*mol);
   TEST_ASSERT(resMolSuppl->length() == 4);
@@ -560,8 +560,8 @@ void testSubstructMatchAcetate() {
                        << "testSubstructMatchAcetate" << std::endl;
   RWMol *mol = SmilesToMol("CC(=O)[O-]");
   RWMol *query = SmartsToMol("C(=O)[O-]");
-  ResonanceMolSupplier *resMolSuppl;
-  unsigned int n;
+  ResonanceMolSupplier *resMolSuppl = nullptr;
+  unsigned int n = 0;
 
   resMolSuppl = new ResonanceMolSupplier((ROMol &)*mol);
   std::vector<MatchVectType> matchVect;
@@ -581,8 +581,8 @@ void testSubstructMatchDMAP() {
                        << "testSubstructMatchDMAP" << std::endl;
   RWMol *mol = SmilesToMol("C(C)Nc1cc[nH+]cc1");
   RWMol *query = SmartsToMol("[#7+]");
-  ResonanceMolSupplier *resMolSuppl;
-  unsigned int n;
+  ResonanceMolSupplier *resMolSuppl = nullptr;
+  unsigned int n = 0;
   MatchVectType p;
 
   resMolSuppl = new ResonanceMolSupplier((ROMol &)*mol);
@@ -658,8 +658,8 @@ void testCrambin() {
   pathName += "/Code/GraphMol/FileParsers/test_data/1CRN.pdb";
   RWMol *crambin = PDBFileToMol(pathName);
   TEST_ASSERT(crambin);
-  RWMol *query;
-  unsigned int n;
+  RWMol *query = nullptr;
+  unsigned int n = 0;
   std::vector<RWMol *> res;
   // protonate NH2
   query = SmartsToMol("[Nh2][Ch;Ch2]");
