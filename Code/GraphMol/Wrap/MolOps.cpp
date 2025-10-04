@@ -403,7 +403,7 @@ void reapplyWedging(ROMol &mol, bool allBondTypes) {
 MolOps::SanitizeFlags sanitizeMol(ROMol &mol, boost::uint64_t sanitizeOps,
                                   bool catchErrors) {
   auto &wmol = static_cast<RWMol &>(mol);
-  unsigned int operationThatFailed;
+  unsigned int operationThatFailed = 0;
   if (catchErrors) {
     try {
       MolOps::sanitizeMol(wmol, operationThatFailed, sanitizeOps);
@@ -500,7 +500,7 @@ PyObject *getDistanceMatrix(ROMol &mol, bool useBO = false,
   npy_intp dims[2];
   dims[0] = nats;
   dims[1] = nats;
-  double *distMat;
+  double *distMat = nullptr;
 
   distMat = MolOps::getDistanceMat(mol, useBO, useAtomWts, force, prefix);
 
@@ -518,7 +518,7 @@ PyObject *get3DDistanceMatrix(ROMol &mol, int confId = -1,
   npy_intp dims[2];
   dims[0] = nats;
   dims[1] = nats;
-  double *distMat;
+  double *distMat = nullptr;
 
   distMat = MolOps::get3DDistanceMat(mol, confId, useAtomWts, force, prefix);
 
@@ -543,7 +543,7 @@ PyObject *getAdjacencyMatrix(ROMol &mol, bool useBO = false, int emptyVal = 0,
   double *tmpMat =
       MolOps::getAdjacencyMatrix(mol, useBO, emptyVal, force, prefix);
 
-  PyArrayObject *res;
+  PyArrayObject *res = nullptr;
   if (useBO) {
     // if we're using valence, the results matrix is made up of doubles
     res = (PyArrayObject *)PyArray_SimpleNew(2, dims, NPY_DOUBLE);
@@ -639,7 +639,7 @@ ExplicitBitVect *wrapLayeredFingerprint(
     }
   }
 
-  ExplicitBitVect *res;
+  ExplicitBitVect *res = nullptr;
   res = RDKit::LayeredFingerprintMol(mol, layerFlags, minPath, maxPath, fpSize,
                                      atomCountsV.get(), includeOnlyBits,
                                      branchedPaths, lFromAtoms.get());
@@ -670,7 +670,7 @@ ExplicitBitVect *wrapPatternFingerprint(const ROMol &mol, unsigned int fpSize,
     }
   }
 
-  ExplicitBitVect *res;
+  ExplicitBitVect *res = nullptr;
   res = RDKit::PatternFingerprintMol(mol, fpSize, atomCountsV, includeOnlyBits,
                                      tautomerFingerprints);
 
@@ -687,7 +687,7 @@ ExplicitBitVect *wrapPatternFingerprintBundle(const MolBundle &bundle,
                                               unsigned int fpSize,
                                               ExplicitBitVect *includeOnlyBits,
                                               bool tautomerFingerprints) {
-  ExplicitBitVect *res;
+  ExplicitBitVect *res = nullptr;
   res = RDKit::PatternFingerprintMol(bundle, fpSize, includeOnlyBits,
                                      tautomerFingerprints);
   return res;
@@ -712,7 +712,7 @@ ExplicitBitVect *wrapRDKFingerprintMol(
   if (bitInfo != python::object()) {
     lBitInfo = new std::map<std::uint32_t, std::vector<std::vector<int>>>;
   }
-  ExplicitBitVect *res;
+  ExplicitBitVect *res = nullptr;
   res = RDKit::RDKFingerprintMol(mol, minPath, maxPath, fpSize, nBitsPerHash,
                                  useHs, tgtDensity, minSize, branchedPaths,
                                  useBondOrder, lAtomInvariants.get(),
@@ -771,7 +771,7 @@ SparseIntVect<boost::uint64_t> *wrapUnfoldedRDKFingerprintMol(
     lBitInfo = new std::map<boost::uint64_t, std::vector<std::vector<int>>>;
   }
 
-  SparseIntVect<boost::uint64_t> *res;
+  SparseIntVect<boost::uint64_t> *res = nullptr;
   res = getUnfoldedRDKFingerprintMol(
       mol, minPath, maxPath, useHs, branchedPaths, useBondOrder,
       lAtomInvariants.get(), lFromAtoms.get(), lAtomBits, lBitInfo);
@@ -857,7 +857,7 @@ PATH_TYPE findAtomEnvironmentOfRadiusNHelper(const ROMol &mol,
 
 ROMol *pathToSubmolHelper(const ROMol &mol, python::object &path, bool useQuery,
                           python::object atomMap) {
-  ROMol *result;
+  ROMol *result = nullptr;
   PATH_TYPE pth;
   for (unsigned int i = 0;
        i < python::extract<unsigned int>(path.attr("__len__")()); ++i) {
@@ -930,7 +930,7 @@ ROMol *replaceCoreHelper(const ROMol &mol, const ROMol &core,
       sz = python::extract<unsigned int>(match[i].attr("__len__")());
     }
 
-    int v1, v2;
+    int v1 = 0, v2 = 0;
     switch (sz) {
       case 1:
         if (length != core.getNumAtoms()) {
