@@ -32,6 +32,7 @@
 // Adding RBF descriptors to 3D descriptors by Guillaume Godin
 
 #include <GraphMol/RDKitBase.h>
+#include <math.h>
 
 #include "RDF.h"
 #include "MolData3Ddescriptors.h"
@@ -81,7 +82,7 @@ void getRDFDesc(double *DM, const ROMol &mol, const Conformer &conf,
   std::vector<double> RelativeVdW = moldata3D.GetRelativeVdW(mol);
   std::vector<double> IState = prepareIState(mol);
 
-  double p;
+  double p = NAN;
   for (size_t i = 0; i < R.size(); i++) {
     double res1 = 0.0;
     double res2 = 0.0;
@@ -132,7 +133,7 @@ void getRDFDescCustom(double *DM, const ROMol &mol, const Conformer &conf,
   std::vector<double> customAtomArray =
       moldata3D.GetCustomAtomProp(mol, customAtomPropName);
 
-  double p;
+  double p = NAN;
   for (size_t i = 0; i < R.size(); i++) {
     double res = 0.0;
     for (int j = 0; j < numAtoms - 1; j++) {

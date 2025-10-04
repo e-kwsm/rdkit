@@ -29,7 +29,7 @@ TEST_CASE("testGithub1421") {
 
 TEST_CASE("testGithub2245") {
   const int MAX_ALLOWED_FAILURES = 3;
-  int maxAllowedFailures;
+  int maxAllowedFailures = 0;
   {
     RDPickers::MaxMinPicker pkr;
     int poolSz = 1000;

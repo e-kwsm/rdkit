@@ -276,7 +276,7 @@ void Seed::grow(MaximumCommonSubgraph &mcs) const {
       throw std::runtime_error(
           "Number of new external bonds of a seed must be below 64");
     }
-    BitSet maxCompositionValue;
+    BitSet maxCompositionValue = 0;
     Composition2N::compute2N(NewBonds.size(), maxCompositionValue);
     --maxCompositionValue;  // 2^N-1
     Composition2N composition(maxCompositionValue, maxCompositionValue);

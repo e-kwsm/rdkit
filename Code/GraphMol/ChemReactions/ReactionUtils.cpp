@@ -173,7 +173,7 @@ void getMappingNumAtomIdxMapReactants(
   for (auto reactIt = rxn.beginReactantTemplates();
        reactIt != rxn.endReactantTemplates(); ++reactIt) {
     for (const auto atom : (*reactIt)->atoms()) {
-      int reactMapNum;
+      int reactMapNum = 0;
       if (atom->getPropIfPresent(common_properties::molAtomMapNumber,
                                  reactMapNum)) {
         reactantAtomMapping[reactMapNum] = atom;
@@ -242,11 +242,11 @@ int countSwapsBetweenReactantAndProduct(const Atom *reactAtom,
       std::abs(static_cast<int>(prodAtom->getDegree()) -
                static_cast<int>(reactAtom->getDegree())) <= 1) {
     std::vector<int> reactOrder;
-    unsigned int nReactUnmapped;
+    unsigned int nReactUnmapped = 0;
     std::tie(nReactUnmapped, reactOrder) = getNbrOrder(reactAtom, prodAtom);
     if (nReactUnmapped <= 1) {
       std::vector<int> prodOrder;
-      unsigned int nProdUnmapped;
+      unsigned int nProdUnmapped = 0;
       std::tie(nProdUnmapped, prodOrder) = getNbrOrder(prodAtom, reactAtom);
       if (nProdUnmapped <= 1) {
         // check that each element of the product mappings is
@@ -279,7 +279,7 @@ void updateProductsStereochem(ChemicalReaction *rxn) {
         prodAtom->setProp(common_properties::molInversionFlag, 4);
         continue;
       }
-      int mapNum;
+      int mapNum = 0;
       prodAtom->getProp(common_properties::molAtomMapNumber, mapNum);
       if (reactantMapping.find(mapNum) != reactantMapping.end()) {
         const auto reactAtom = reactantMapping[mapNum];

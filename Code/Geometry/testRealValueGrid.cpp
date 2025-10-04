@@ -63,7 +63,7 @@ TEST_CASE("test3UniformRealValueGrid3DIndexing") {
   {
     unsigned int xi = 3, yi = 3, zi = 3;
     unsigned int idx = grd.getGridIndex(xi, yi, zi);
-    unsigned int nxi, nyi, nzi;
+    unsigned int nxi = 0, nyi = 0, nzi = 0;
     grd.getGridIndices(idx, nxi, nyi, nzi);
     REQUIRE(nxi == xi);
     REQUIRE(nyi == yi);
@@ -72,7 +72,7 @@ TEST_CASE("test3UniformRealValueGrid3DIndexing") {
   {
     unsigned int xi = 3, yi = 3, zi = 5;
     unsigned int idx = grd.getGridIndex(xi, yi, zi);
-    unsigned int nxi, nyi, nzi;
+    unsigned int nxi = 0, nyi = 0, nzi = 0;
     grd.getGridIndices(idx, nxi, nyi, nzi);
     REQUIRE(nxi == xi);
     REQUIRE(nyi == yi);
@@ -81,7 +81,7 @@ TEST_CASE("test3UniformRealValueGrid3DIndexing") {
   {
     unsigned int xi = 3, yi = 6, zi = 3;
     unsigned int idx = grd.getGridIndex(xi, yi, zi);
-    unsigned int nxi, nyi, nzi;
+    unsigned int nxi = 0, nyi = 0, nzi = 0;
     grd.getGridIndices(idx, nxi, nyi, nzi);
     REQUIRE(nxi == xi);
     REQUIRE(nyi == yi);
@@ -90,7 +90,7 @@ TEST_CASE("test3UniformRealValueGrid3DIndexing") {
   {
     unsigned int xi = 0, yi = 0, zi = 0;
     unsigned int idx = grd.getGridIndex(xi, yi, zi);
-    unsigned int nxi, nyi, nzi;
+    unsigned int nxi = 0, nyi = 0, nzi = 0;
     grd.getGridIndices(idx, nxi, nyi, nzi);
     REQUIRE(nxi == xi);
     REQUIRE(nyi == yi);
@@ -99,7 +99,7 @@ TEST_CASE("test3UniformRealValueGrid3DIndexing") {
   {
     unsigned int xi = 8, yi = 2, zi = 1;
     unsigned int idx = grd.getGridIndex(xi, yi, zi);
-    unsigned int nxi, nyi, nzi;
+    unsigned int nxi = 0, nyi = 0, nzi = 0;
     grd.getGridIndices(idx, nxi, nyi, nzi);
     REQUIRE(nxi == xi);
     REQUIRE(nyi == yi);

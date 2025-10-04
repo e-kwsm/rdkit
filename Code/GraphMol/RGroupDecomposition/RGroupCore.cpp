@@ -57,7 +57,7 @@ void RCore::findIndicesWithRLabel() {
   // label and set their indices to 1 in core_atoms_with_user_labels
   core_atoms_with_user_labels.resize(core->getNumAtoms());
   for (const auto atom : core->atoms()) {
-    int label;
+    int label = 0;
     if (atom->getPropIfPresent(RLABEL, label) && label > 0) {
       core_atoms_with_user_labels.set(atom->getIdx());
     }
@@ -75,10 +75,11 @@ RWMOL_SPTR RCore::extractCoreFromMolMatch(
   for (const auto &pair : match) {
     const auto queryAtom = core->getAtomWithIdx(pair.first);
     const auto targetAtom = extractedCore->getAtomWithIdx(pair.second);
-    if (int rLabel; queryAtom->getPropIfPresent(RLABEL, rLabel)) {
+    if (int rLabel = 0; queryAtom->getPropIfPresent(RLABEL, rLabel)) {
       targetAtom->setProp(RLABEL, rLabel);
     }
-    if (int rLabelType; queryAtom->getPropIfPresent(RLABEL_TYPE, rLabelType)) {
+    if (int rLabelType = 0;
+        queryAtom->getPropIfPresent(RLABEL_TYPE, rLabelType)) {
       targetAtom->setProp(RLABEL_TYPE, rLabelType);
     }
 
@@ -265,7 +266,7 @@ RWMOL_SPTR RCore::extractCoreFromMolMatch(
       if (isUserRLabel(*atom)) {
         int rLabel = atom->getProp<int>(RLABEL);
         for (const auto coreAtom : core->atoms()) {
-          if (int l; coreAtom->getPropIfPresent(RLABEL, l) && l == rLabel) {
+          if (int l = 0; coreAtom->getPropIfPresent(RLABEL, l) && l == rLabel) {
             int i = 0;
             for (auto citer = core->beginConformers();
                  citer != core->endConformers(); ++citer, ++i) {
@@ -293,7 +294,7 @@ RWMOL_SPTR RCore::extractCoreFromMolMatch(
 #endif
 
   try {
-    unsigned int failed;
+    unsigned int failed = 0;
     MolOps::sanitizeMol(*extractedCore, failed,
                         MolOps::SANITIZE_SYMMRINGS | MolOps::SANITIZE_CLEANUP);
   } catch (const MolSanitizeException &) {

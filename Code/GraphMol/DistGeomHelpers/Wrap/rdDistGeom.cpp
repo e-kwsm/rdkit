@@ -147,7 +147,7 @@ int EmbedMolecule(ROMol &mol, unsigned int maxAttempts, int seed,
       .useMacrocycleTorsions = useMacrocycleTorsions,
       .useMacrocycle14config = useMacrocycle14config};
 
-  int res;
+  int res = 0;
   {
     NOGIL gil;
     res = DGeomHelpers::EmbedMolecule(mol, params);
@@ -160,7 +160,7 @@ int EmbedMolecule(ROMol &mol, unsigned int maxAttempts, int seed,
 }
 
 int EmbedMolecule2(ROMol &mol, DGeomHelpers::EmbedParameters &params) {
-  int res;
+  int res = 0;
   {
     NOGIL gil;
     res = DGeomHelpers::EmbedMolecule(mol, params);

@@ -161,7 +161,7 @@ void RWMol::insertMol(const ROMol &other) {
       }
       newAt->setProp(common_properties::_ringStereoAtoms, nAtoms, true);
     }
-    if (unsigned int val;
+    if (unsigned int val = 0;
         oatom->getPropIfPresent(common_properties::_ringStereoOtherAtom, val)) {
       newAt->setProp(common_properties::_ringStereoOtherAtom,
                      val + origNumAtoms, true);
@@ -170,7 +170,7 @@ void RWMol::insertMol(const ROMol &other) {
 
   for (const auto obond : other.bonds()) {
     Bond *bond_p = obond->copy();
-    unsigned int idx1, idx2;
+    unsigned int idx1 = 0, idx2 = 0;
     idx1 = bond_p->getBeginAtomIdx() + origNumAtoms;
     idx2 = bond_p->getEndAtomIdx() + origNumAtoms;
     bond_p->setOwningMol(this);

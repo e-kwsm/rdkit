@@ -83,7 +83,7 @@ std::string BuildV2000SLBLines(const ROMol &mol) {
   unsigned int count = 0;
   const auto &sgroups = getSubstanceGroups(mol);
   for (auto sg = sgroups.begin(); sg != sgroups.end(); ++sg) {
-    unsigned int id;
+    unsigned int id = 0;
     // Write value if assigned, else 0
     if (sg->getPropIfPresent("ID", id)) {
       temp << FormatV2000IntField(1 + (sg - sgroups.begin()))
@@ -162,7 +162,7 @@ std::string BuildV2000SNCLines(const ROMol &mol) {
   unsigned int count = 0;
   const auto &sgroups = getSubstanceGroups(mol);
   for (auto sg = sgroups.begin(); sg != sgroups.end(); ++sg) {
-    unsigned int compno;
+    unsigned int compno = 0;
     // Write field only if compno is set
     if (sg->getPropIfPresent("COMPNO", compno)) {
       temp << FormatV2000IntField(1 + (sg - sgroups.begin()))
@@ -547,7 +547,7 @@ std::string FormatV3000ParentBlock(const SubstanceGroup &sgroup) {
 std::string FormatV3000CompNoBlock(const SubstanceGroup &sgroup) {
   std::ostringstream ret;
 
-  unsigned int compno;
+  unsigned int compno = 0;
 
   if (sgroup.getPropIfPresent("COMPNO", compno)) {
     ret << " COMPNO=" << compno;
