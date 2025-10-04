@@ -176,7 +176,7 @@ RDNumeric::DoubleVector *generateErGFingerprintForReducedGraph(
         for (auto tj : tvs[j]) {
           int ijMin = std::min(ti, tj);
           int ijMax = std::max(ti, tj);
-          int block;
+          int block = 0;
           if (ijMin > 0) {
             block = ijMin * nTypes - (ijMin * (ijMin + 1)) / 2;
           } else {
