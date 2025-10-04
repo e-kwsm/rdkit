@@ -14,6 +14,7 @@
 #include <RDGeneral/StreamOps.h>
 #include <RDGeneral/Exceptions.h>
 #include <Geometry/point.h>
+#include <math.h>
 #include <fstream>
 #include <iomanip>
 
@@ -237,7 +238,7 @@ std::string UniformRealValueGrid3D::toString() const {
                        std::ios_base::in);
   std::int32_t tVers = ci_RealValueGrid3DPICKLE_VERSION * -1;
   streamWrite(ss, tVers);
-  std::uint32_t tInt;
+  std::uint32_t tInt = 0;
   tInt = d_numX;
   streamWrite(ss, tInt);
   tInt = d_numY;
@@ -261,13 +262,13 @@ void UniformRealValueGrid3D::initFromText(const char *pkl,
   std::stringstream ss(std::ios_base::binary | std::ios_base::in |
                        std::ios_base::out);
   ss.write(pkl, length);
-  std::int32_t tVers;
+  std::int32_t tVers = 0;
   streamRead(ss, tVers);
   tVers = -tVers;
   if (tVers != 0x1) {
     throw ValueErrorException("bad version in UniformRealValueGrid3D pickle");
   }
-  std::uint32_t tInt;
+  std::uint32_t tInt = 0;
   streamRead(ss, tInt);
   d_numX = tInt;
   streamRead(ss, tInt);
@@ -275,13 +276,13 @@ void UniformRealValueGrid3D::initFromText(const char *pkl,
   streamRead(ss, tInt);
   d_numZ = tInt;
   streamRead(ss, d_spacing);
-  double oX, oY, oZ;
+  double oX = NAN, oY = NAN, oZ = NAN;
   streamRead(ss, oX);
   streamRead(ss, oY);
   streamRead(ss, oZ);
   d_offSet = RDGeom::Point3D(oX, oY, oZ);
 
-  std::uint32_t pklSz;
+  std::uint32_t pklSz = 0;
   streamRead(ss, pklSz);
   std::vector<char> buff(pklSz);
   ss.read(buff.data(), pklSz * sizeof(char));

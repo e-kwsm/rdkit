@@ -12,6 +12,7 @@
 #include <DataStructs/DiscreteValueVect.h>
 #include <RDGeneral/StreamOps.h>
 #include <RDGeneral/Exceptions.h>
+#include <math.h>
 #include "point.h"
 #include <fstream>
 #include <cstdint>
@@ -212,7 +213,8 @@ void UniformGrid3D::setSphereOccupancy(const Point3D &center, double radius,
       bgRad + nLayers * gStepSize;  // largest radius in grid coords
   double gRad2 = gRadius * gRadius;
   double bgRad2 = bgRad * bgRad;
-  double dx, dy, dz, d, d2, dy2z2, dz2;
+  double dx = NAN, dy = NAN, dz = NAN, d = NAN, d2 = NAN, dy2z2 = NAN,
+         dz2 = NAN;
   int xmax = static_cast<int>(floor(gPt.x + gRadius));
   int xmin = static_cast<int>(ceil(gPt.x - gRadius));
   int ymax = static_cast<int>(floor(gPt.y + gRadius));
@@ -220,8 +222,8 @@ void UniformGrid3D::setSphereOccupancy(const Point3D &center, double radius,
   int zmax = static_cast<int>(floor(gPt.z + gRadius));
   int zmin = static_cast<int>(ceil(gPt.z - gRadius));
 
-  unsigned int oval, val, valChange;
-  int ptId1, ptId2;
+  unsigned int oval = 0, val = 0, valChange = 0;
+  int ptId1 = 0, ptId2 = 0;
   for (int k = zmin; k <= zmax; ++k) {
     if ((k >= 0) &&
         (k < static_cast<int>(
@@ -324,7 +326,7 @@ std::string UniformGrid3D::toString() const {
                        std::ios_base::in);
   std::int32_t tVers = ci_GRIDPICKLE_VERSION * -1;
   streamWrite(ss, tVers);
-  std::uint32_t tInt;
+  std::uint32_t tInt = 0;
   tInt = d_numX;
   streamWrite(ss, tInt);
   tInt = d_numY;
@@ -348,14 +350,14 @@ void UniformGrid3D::initFromText(const char *pkl, const unsigned int length) {
   std::stringstream ss(std::ios_base::binary | std::ios_base::in |
                        std::ios_base::out);
   ss.write(pkl, length);
-  std::int32_t tVers;
+  std::int32_t tVers = 0;
   streamRead(ss, tVers);
   tVers *= -1;
   if (tVers == 0x1) {
   } else {
     throw ValueErrorException("bad version in UniformGrid3D pickle");
   }
-  std::uint32_t tInt;
+  std::uint32_t tInt = 0;
   streamRead(ss, tInt);
   d_numX = tInt;
   streamRead(ss, tInt);
@@ -363,13 +365,13 @@ void UniformGrid3D::initFromText(const char *pkl, const unsigned int length) {
   streamRead(ss, tInt);
   d_numZ = tInt;
   streamRead(ss, d_spacing);
-  double oX, oY, oZ;
+  double oX = NAN, oY = NAN, oZ = NAN;
   streamRead(ss, oX);
   streamRead(ss, oY);
   streamRead(ss, oZ);
   d_offSet = Point3D(oX, oY, oZ);
 
-  std::uint32_t pklSz;
+  std::uint32_t pklSz = 0;
   streamRead(ss, pklSz);
   auto *buff = new char[pklSz];
   ss.read(buff, pklSz * sizeof(char));
@@ -413,7 +415,7 @@ void writeGridToStream(const UniformGrid3D &grid, std::ostream &outStrm) {
   outStrm << "1"
           << " " << outX1 << " " << outX2 << " " << outY1 << " " << outY2 << " "
           << outZ1 << " " << outZ2 << "\n";
-  unsigned int i, nPts = grid.getSize();
+  unsigned int i = 0, nPts = grid.getSize();
   for (i = 0; i < nPts; i++) {
     outStrm << static_cast<double>(grid.getVal(i)) << std::endl;
   }
