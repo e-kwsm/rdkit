@@ -12,7 +12,7 @@
 #include <DataStructs/DiscreteValueVect.h>
 #include <RDGeneral/StreamOps.h>
 #include <RDGeneral/Exceptions.h>
-#include <math.h>
+#include <cmath>
 #include "point.h"
 #include <fstream>
 #include <cstdint>
