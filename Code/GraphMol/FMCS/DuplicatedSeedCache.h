@@ -60,7 +60,7 @@ class DuplicatedSeedCache {
       }
 
       // everything is equal -> perform straight comparison
-      int diff;
+      int diff = 0;
       diff = std::memcmp(&AtomIdx[0], &right.AtomIdx[0],
                          AtomIdx.size() * sizeof(unsigned int));
       if (diff < 0) {
