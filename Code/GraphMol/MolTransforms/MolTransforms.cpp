@@ -17,7 +17,7 @@
 #include <stack>
 #include <boost/dynamic_bitset.hpp>
 #include <RDGeneral/Exceptions.h>
-#include <math.h>
+#include <cmath>
 
 #ifndef RDK_HAS_EIGEN3
 constexpr double EIGEN_TOLERANCE = 5.0e-2;

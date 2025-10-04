@@ -19,7 +19,7 @@
 #include <Numerics/Alignment/AlignPoints.h>
 #include <GraphMol/MolTransforms/MolTransforms.h>
 #include <RDGeneral/RDThreads.h>
-#include <math.h>
+#include <cmath>
 
 namespace RDKit {
 namespace MolAlign {
