@@ -26,7 +26,7 @@ typedef ROMol Mol;
 #if LOCAL_TEST_ALL
 void testPass() {
   int i = 0;
-  Mol *mol;
+  Mol *mol = nullptr;
   BOOST_LOG(rdInfoLog) << "-------------------------------------" << std::endl;
   BOOST_LOG(rdInfoLog) << "Testing patterns which should parse." << std::endl;
   string smis[] = {
@@ -100,7 +100,7 @@ void testPass() {
 
 void testFail() {
   int i = 0;
-  Mol *mol;
+  Mol *mol = nullptr;
 
   BOOST_LOG(rdInfoLog) << "-------------------------------------" << std::endl;
   BOOST_LOG(rdInfoLog) << "Testing patterns which should fail to parse."
@@ -149,9 +149,10 @@ std::vector<MatchVectType> _checkMatches(std::string smarts, std::string smiles,
   //  lenFirst : length of the first match
   //
   // Return the list of all matches just in case want to do additional testing
-  ROMol *mol, *mol2, *matcher, *matcher2;
-  bool matches;
-  unsigned int matchCount;
+  ROMol *mol = nullptr, *mol2 = nullptr, *matcher = nullptr,
+        *matcher2 = nullptr;
+  bool matches = false;
+  unsigned int matchCount = 0;
   std::string pickle;
   MatchVectType mV;
   std::vector<MatchVectType> mVV;
@@ -201,9 +202,9 @@ std::vector<MatchVectType> _checkMatches(std::string smarts, std::string smiles,
 
 void _checkNoMatches(std::string smarts, std::string smiles,
                      bool addHs = false) {
-  ROMol *mol, *matcher, *matcher2;
+  ROMol *mol = nullptr, *matcher = nullptr, *matcher2 = nullptr;
   std::string pickle;
-  bool matches;
+  bool matches = false;
   MatchVectType mV;
 
   matcher = SmartsToMol(smarts);
@@ -511,7 +512,7 @@ void testProblems() {
 
 void testFrags() {
   int i = 0;
-  Mol *mol;
+  Mol *mol = nullptr;
   BOOST_LOG(rdInfoLog) << "-------------------------------------" << std::endl;
   BOOST_LOG(rdInfoLog) << "Testing fragment patterns." << std::endl;
   string smis[] = {"C=O",
@@ -587,7 +588,7 @@ void testFrags() {
 
 void testSmartsWrite() {
   int i = 0;
-  Mol *mol;
+  Mol *mol = nullptr;
   BOOST_LOG(rdInfoLog) << "-------------------------------------" << std::endl;
   BOOST_LOG(rdInfoLog) << "Testing Smarts Writer." << std::endl;
   string smis[] = {"[v3]",
@@ -717,7 +718,7 @@ void testSmartsWrite() {
   std::vector<std::string>::const_iterator dsmi;
   i = 0;
   MatchVectType mV1, mV2;
-  bool mts1, mts2;
+  bool mts1 = false, mts2 = false;
   while (smiles[i] != "EOS") {
     ROMol *nmol = SmilesToMol(smiles[i]);
     TEST_ASSERT(nmol);
@@ -759,7 +760,7 @@ void testIssue196() {
   TEST_ASSERT(matcher1);
 
   MatchVectType mV1;
-  bool mts1;
+  bool mts1 = false;
   mts1 = SubstructMatch(*mol1, *matcher1, mV1);
   TEST_ASSERT(mts1);
   TEST_ASSERT(mV1.size() == 2);
@@ -770,11 +771,11 @@ void testIssue196() {
 }
 
 void testIssue254() {
-  ROMol *mol1, *mol2;
-  ROMol *matcher1, *matcher2;
+  ROMol *mol1 = nullptr, *mol2 = nullptr;
+  ROMol *matcher1 = nullptr, *matcher2 = nullptr;
   std::string smi, sma;
   MatchVectType mV;
-  bool mts;
+  bool mts = false;
 
   BOOST_LOG(rdInfoLog) << "-------------------------------------" << std::endl;
   BOOST_LOG(rdInfoLog)
@@ -833,7 +834,7 @@ void testIssue254() {
 }
 
 void testIssue330() {
-  ROMol *matcher1;
+  ROMol *matcher1 = nullptr;
   std::string sma, wsma;
   BOOST_LOG(rdInfoLog) << "-------------------------------------" << std::endl;
   BOOST_LOG(rdInfoLog)
@@ -851,7 +852,7 @@ void testIssue330() {
 
 #endif
 void testIssue351() {
-  ROMol *matcher1;
+  ROMol *matcher1 = nullptr;
   std::string sma;
   BOOST_LOG(rdInfoLog) << "-------------------------------------" << std::endl;
   BOOST_LOG(rdInfoLog) << "Testing Issue 351:" << std::endl;
@@ -872,12 +873,12 @@ void testIssue351() {
 }
 
 void testAtomMap() {
-  ROMol *matcher1;
+  ROMol *matcher1 = nullptr;
   std::string sma;
   BOOST_LOG(rdInfoLog) << "-------------------------------------" << std::endl;
   BOOST_LOG(rdInfoLog) << "Testing atom map assignment:" << std::endl;
 
-  int mapNum;
+  int mapNum = 0;
 
   sma = "[C:10]CC";
   matcher1 = SmartsToMol(sma);
@@ -935,7 +936,7 @@ void testAtomMap() {
 }
 
 void testIssue1804420() {
-  ROMol *matcher1;
+  ROMol *matcher1 = nullptr;
   std::string sma;
   BOOST_LOG(rdInfoLog) << "-------------------------------------" << std::endl;
   BOOST_LOG(rdInfoLog)
@@ -973,7 +974,7 @@ void testIssue1804420() {
 }
 
 void testSmartsSmiles() {
-  RWMol *mol;
+  RWMol *mol = nullptr;
   std::string sma, smi;
 
   BOOST_LOG(rdInfoLog) << "-------------------------------------" << std::endl;
@@ -997,7 +998,7 @@ void testSmartsSmiles() {
 }
 
 void testSmilesSmarts() {
-  RWMol *mol;
+  RWMol *mol = nullptr;
   std::string sma, smi;
 
   BOOST_LOG(rdInfoLog) << "-------------------------------------" << std::endl;
@@ -1058,7 +1059,7 @@ void testSmilesSmarts() {
 }
 
 void testIssue1914154() {
-  RWMol *mol;
+  RWMol *mol = nullptr;
   std::string sma;
 
   BOOST_LOG(rdInfoLog) << "-------------------------------------" << std::endl;
@@ -1126,7 +1127,7 @@ void testIssue1914154() {
 }
 
 void testMiscSmartsWriting() {
-  RWMol *mol;
+  RWMol *mol = nullptr;
   std::string sma;
 
   BOOST_LOG(rdInfoLog) << "-------------------------------------" << std::endl;
@@ -1188,7 +1189,7 @@ void testIssue2884178_part1() {
 
   {
     // part one of the problem: number of unique matches incorrect
-    RWMol *patt, *mol;
+    RWMol *patt = nullptr, *mol = nullptr;
     std::string sma;
     sma = "*~1~*~*~*~*~*~*~*~*~*~*~*~*~*1";
     patt = SmartsToMol(sma);
@@ -1213,11 +1214,11 @@ void testIssue2884178_part2() {
                        << std::endl;
 
   {
-    RWMol *patt, *mol;
+    RWMol *patt = nullptr, *mol = nullptr;
     std::string sma;
     sma = "C~1~C~C~1";
     patt = SmartsToMol(sma);
-    unsigned int count;
+    unsigned int count = 0;
 
     TEST_ASSERT(patt);
     TEST_ASSERT(patt->getBondBetweenAtoms(0, 1));
@@ -1249,10 +1250,10 @@ void testIssue2884178_part2() {
     delete mol;
   }
   {
-    RWMol *patt, *mol;
+    RWMol *patt = nullptr, *mol = nullptr;
     std::string sma;
     sma = "C~1~C~C1";
-    unsigned int count;
+    unsigned int count = 0;
 
     patt = SmartsToMol(sma);
     TEST_ASSERT(patt);
@@ -1285,9 +1286,9 @@ void testIssue2884178_part2() {
     delete mol;
   }
   {
-    RWMol *patt, *mol;
+    RWMol *patt = nullptr, *mol = nullptr;
     std::string sma;
-    unsigned int count;
+    unsigned int count = 0;
 
     sma = "C1~C~C~1";
     patt = SmartsToMol(sma);
@@ -1541,7 +1542,7 @@ void testGithub378() {
                           "thing for odd dot-disconnected construct"
                        << std::endl;
   {
-    RWMol *m;
+    RWMol *m = nullptr;
     std::string smiles = "C1.C1CO1.N1";
     m = SmartsToMol(smiles);
     TEST_ASSERT(m);
@@ -1551,7 +1552,7 @@ void testGithub378() {
     delete m;
   }
   {
-    RWMol *m;
+    RWMol *m = nullptr;
     std::string smiles = "C1(O.C1)CO1.N1";
     m = SmartsToMol(smiles);
     TEST_ASSERT(m);
@@ -1571,7 +1572,7 @@ void testGithub544() {
       << "Testing Github 544: merging query Hs failing on recursive SMARTS"
       << std::endl;
   {
-    RWMol *p;
+    RWMol *p = nullptr;
     std::string smiles = "O[H]";
     p = SmartsToMol(smiles);
     TEST_ASSERT(p);
@@ -1589,7 +1590,7 @@ void testGithub544() {
     delete m;
   }
   {
-    RWMol *p;
+    RWMol *p = nullptr;
     std::string smiles = "[O;$(O[H])]";
     p = SmartsToMol(smiles);
     TEST_ASSERT(p);
@@ -1607,7 +1608,7 @@ void testGithub544() {
     delete m;
   }
   {
-    RWMol *p;
+    RWMol *p = nullptr;
     std::string smiles = "[O;$(O[H])]";
     p = SmartsToMol(smiles, false, true);
     TEST_ASSERT(p);
@@ -1622,7 +1623,7 @@ void testGithub544() {
     delete m;
   }
   {
-    RWMol *p;
+    RWMol *p = nullptr;
     std::string smiles = "C[O;$([O;$(O[H])])]";  // test nesting
     p = SmartsToMol(smiles);
     TEST_ASSERT(p);
@@ -1639,7 +1640,7 @@ void testGithub544() {
     delete m;
   }
   {
-    RWMol *p;
+    RWMol *p = nullptr;
     std::string smiles = "[$([#6]-[#1])]";
     p = SmartsToMol(smiles);
     TEST_ASSERT(p);
@@ -1656,7 +1657,7 @@ void testGithub544() {
     delete p;
   }
   {
-    RWMol *p;
+    RWMol *p = nullptr;
     std::string smiles = "[$([#6]-[#1])]";
     p = SmartsToMol(smiles);
     TEST_ASSERT(p);
@@ -1690,7 +1691,7 @@ void testGithub544() {
   }
 
   {
-    RWMol *p;
+    RWMol *p = nullptr;
     std::string smiles = "C(-[!#1])-[!#1]";
     p = SmartsToMol(smiles);
     TEST_ASSERT(p);
@@ -1702,7 +1703,7 @@ void testGithub544() {
   }
 
   {
-    RWMol *p;
+    RWMol *p = nullptr;
     std::string smiles = "[!#1]-[#1]";
     p = SmartsToMol(smiles);
     TEST_ASSERT(p);
@@ -1714,7 +1715,7 @@ void testGithub544() {
   }
 
   {
-    RWMol *p;
+    RWMol *p = nullptr;
     std::string smiles = "[#6]-[#1,#6]";
     p = SmartsToMol(smiles);
     TEST_ASSERT(p);
@@ -1724,7 +1725,7 @@ void testGithub544() {
     delete p;
   }
   {
-    RWMol *p;
+    RWMol *p = nullptr;
     std::string smiles = "[#6]-[#6,#1]";
     p = SmartsToMol(smiles);
     TEST_ASSERT(p);
@@ -1734,7 +1735,7 @@ void testGithub544() {
     delete p;
   }
   {
-    RWMol *p;
+    RWMol *p = nullptr;
     std::string smiles = "[#6]-[#6;H1]";
     p = SmartsToMol(smiles);
     TEST_ASSERT(p);
@@ -1748,7 +1749,7 @@ void testGithub544() {
   // of ORs,
   // these next few test those.
   {
-    RWMol *p;
+    RWMol *p = nullptr;
     std::string smiles = "[$([#6]-[#7]),$([#6]-[#1])]";
     p = SmartsToMol(smiles);
     TEST_ASSERT(p);
@@ -1772,7 +1773,7 @@ void testGithub544() {
     delete p;
   }
   {
-    RWMol *p;
+    RWMol *p = nullptr;
     std::string smiles = "[$([#6]-[#7]),$([#6]-[#1]),$([#6])]";
     p = SmartsToMol(smiles);
     TEST_ASSERT(p);
@@ -1807,7 +1808,7 @@ void testGithub766() {
                           "as single when joining rings in SMARTS"
                        << std::endl;
   {
-    RWMol *p;
+    RWMol *p = nullptr;
     std::string sma = "C~1~C~C~1";
     p = SmartsToMol(sma);
     TEST_ASSERT(p);
@@ -1826,7 +1827,7 @@ void testGithub893() {
                           "aromaticity when writing SMARTS"
                        << std::endl;
   {
-    RWMol *p;
+    RWMol *p = nullptr;
     std::string sma = "[#6&!a]";
     p = SmartsToMol(sma);
     TEST_ASSERT(p);
@@ -1841,7 +1842,7 @@ void testGithub893() {
     delete p;
   }
   {
-    RWMol *p;
+    RWMol *p = nullptr;
     std::string sma = "[#6&!A]";
     p = SmartsToMol(sma);
     TEST_ASSERT(p);
@@ -1856,7 +1857,7 @@ void testGithub893() {
     delete p;
   }
   {
-    RWMol *p;
+    RWMol *p = nullptr;
     std::string sma = "[!#6&!a]";
     p = SmartsToMol(sma);
     TEST_ASSERT(p);
@@ -1865,7 +1866,7 @@ void testGithub893() {
     delete p;
   }
   {
-    RWMol *p;
+    RWMol *p = nullptr;
     std::string sma = "[!#6&a]";
     p = SmartsToMol(sma);
     TEST_ASSERT(p);
@@ -1888,7 +1889,7 @@ void testGithub1338() {
       << "Testing Github 1338: SMARTS proton query parsed incorrectly"
       << std::endl;
   {  // this worked all along
-    RWMol *p;
+    RWMol *p = nullptr;
     std::string sma = "[#1+]";
     p = SmartsToMol(sma);
     TEST_ASSERT(p);
@@ -1896,7 +1897,7 @@ void testGithub1338() {
     delete p;
   }
   {  // make sure we aren't breaking anything else
-    RWMol *p;
+    RWMol *p = nullptr;
     std::string sma = "[H2]";
     p = SmartsToMol(sma);
     TEST_ASSERT(p);
@@ -1904,7 +1905,7 @@ void testGithub1338() {
     delete p;
   }
   {  // this was the problem
-    RWMol *p;
+    RWMol *p = nullptr;
     std::string sma = "[H+]";
     p = SmartsToMol(sma);
     TEST_ASSERT(p);
@@ -1913,7 +1914,7 @@ void testGithub1338() {
     delete p;
   }
   {  // this was the problem
-    RWMol *p;
+    RWMol *p = nullptr;
     std::string sma = "[H]";
     p = SmartsToMol(sma);
     TEST_ASSERT(p);
@@ -1922,7 +1923,7 @@ void testGithub1338() {
     delete p;
   }
   {
-    RWMol *p;
+    RWMol *p = nullptr;
     std::string sma = "[2H]";
     p = SmartsToMol(sma);
     TEST_ASSERT(p);
@@ -1932,7 +1933,7 @@ void testGithub1338() {
     delete p;
   }
   {
-    RWMol *p;
+    RWMol *p = nullptr;
     std::string sma = "[2H+]";
     p = SmartsToMol(sma);
     TEST_ASSERT(p);
@@ -1942,7 +1943,7 @@ void testGithub1338() {
     delete p;
   }
   {
-    RWMol *p;
+    RWMol *p = nullptr;
     std::string sma = "[2H:3]";
     p = SmartsToMol(sma);
     TEST_ASSERT(p);
@@ -1956,7 +1957,7 @@ void testGithub1338() {
     delete p;
   }
   {
-    RWMol *p;
+    RWMol *p = nullptr;
     std::string sma = "[H:3]";
     p = SmartsToMol(sma);
     TEST_ASSERT(p);
@@ -1965,7 +1966,7 @@ void testGithub1338() {
     delete p;
   }
   {
-    RWMol *p;
+    RWMol *p = nullptr;
     std::string sma = "[H+:3]";
     p = SmartsToMol(sma);
     TEST_ASSERT(p);
@@ -1976,7 +1977,7 @@ void testGithub1338() {
 
   // -- a series around Hs following other symbols:
   {
-    RWMol *p;
+    RWMol *p = nullptr;
     std::string sma = "[NH1+]";
     p = SmartsToMol(sma);
     TEST_ASSERT(p);
@@ -1987,7 +1988,7 @@ void testGithub1338() {
     delete p;
   }
   {
-    RWMol *p;
+    RWMol *p = nullptr;
     std::string sma = "[N;H+]";
     p = SmartsToMol(sma);
     TEST_ASSERT(p);
@@ -1998,7 +1999,7 @@ void testGithub1338() {
     delete p;
   }
   {
-    RWMol *p;
+    RWMol *p = nullptr;
     std::string sma = "[N;H]";
     p = SmartsToMol(sma);
     TEST_ASSERT(p);
@@ -2009,7 +2010,7 @@ void testGithub1338() {
     delete p;
   }
   {
-    RWMol *p;
+    RWMol *p = nullptr;
     std::string sma = "[NH+]";
     p = SmartsToMol(sma);
     TEST_ASSERT(p);
@@ -2020,7 +2021,7 @@ void testGithub1338() {
     delete p;
   }
   {
-    RWMol *p;
+    RWMol *p = nullptr;
     std::string sma = "[NH]";
     p = SmartsToMol(sma);
     TEST_ASSERT(p);
@@ -2031,7 +2032,7 @@ void testGithub1338() {
     delete p;
   }
   {
-    RWMol *p;
+    RWMol *p = nullptr;
     std::string sma = "[N;2H+]";
     p = SmartsToMol(sma);
     TEST_ASSERT(p);
@@ -2050,7 +2051,7 @@ void testGithub1472() {
                           "atom map info for molecules built from SMILES"
                        << std::endl;
   {  // worked all along
-    ROMol *p;
+    ROMol *p = nullptr;
     std::string smi = "[*:1]";
     p = SmartsToMol(smi);
     TEST_ASSERT(p);
@@ -2061,7 +2062,7 @@ void testGithub1472() {
     delete p;
   }
   {  // this was the problem
-    ROMol *p;
+    ROMol *p = nullptr;
     std::string smi = "[*:1]";
     p = SmilesToMol(smi);
     TEST_ASSERT(p);
@@ -2072,7 +2073,7 @@ void testGithub1472() {
     delete p;
   }
   {  // isotopes also weren't being written
-    ROMol *p;
+    ROMol *p = nullptr;
     std::string smi = "[3*]";
     p = SmilesToMol(smi);
     TEST_ASSERT(p);
@@ -2083,7 +2084,7 @@ void testGithub1472() {
     delete p;
   }
   {  // confirm ordering
-    ROMol *p;
+    ROMol *p = nullptr;
     std::string smi = "[13CH3-:1]";
     p = SmilesToMol(smi);
     TEST_ASSERT(p);
