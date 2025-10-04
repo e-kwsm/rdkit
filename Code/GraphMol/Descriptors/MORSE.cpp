@@ -32,6 +32,7 @@
 // Created by Guillaume GODIN 2016
 
 #include <GraphMol/RDKitBase.h>
+#include <math.h>
 
 #include "MORSE.h"
 #include "MolData3Ddescriptors.h"
@@ -80,7 +81,7 @@ void getMORSEDesc(const double *DM, const ROMol &mol, const Conformer &conf,
   std::vector<double> RelativeVdW = moldata3D.GetRelativeVdW(mol);
   std::vector<double> IState = prepareIState(mol);
 
-  double p;
+  double p = NAN;
   for (size_t i = 0; i < R.size(); i++) {
     double res1 = 0.0;
     double res2 = 0.0;
@@ -135,7 +136,7 @@ void getMORSEDescCustom(const double *DM, const ROMol &mol,
   std::vector<double> customAtomArray =
       moldata3D.GetCustomAtomProp(mol, customAtomPropName);
 
-  double p;
+  double p = NAN;
   for (size_t i = 0; i < R.size(); i++) {
     double res1 = 0.0;
 

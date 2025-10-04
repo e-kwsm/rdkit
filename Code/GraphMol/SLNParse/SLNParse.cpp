@@ -50,7 +50,7 @@ extern int yysln_debug;
 
 int sln_parse(const std::string &inp, bool doQueries,
               std::vector<RDKit::RWMol *> &molVect) {
-  void *scanner;
+  void *scanner = nullptr;
   TEST_ASSERT(!yysln_lex_init(&scanner));
   setup_sln_string(inp, scanner);
   yysln_set_extra((void *)doQueries, scanner);

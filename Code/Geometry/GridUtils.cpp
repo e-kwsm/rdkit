@@ -14,6 +14,7 @@
 #include "point.h"
 #include <RDGeneral/Exceptions.h>
 #include <DataStructs/DiscreteValueVect.h>
+#include <math.h>
 #include <cmath>
 
 using namespace RDKit;
@@ -154,7 +155,7 @@ std::vector<Point3D> findGridTerminalPoints(const UniformGrid3D &grid,
     double maxPossValInSphere = nPtsHere * maxGridVal;
     if (volInSphere / maxPossValInSphere <= inclusionFraction) {
       Point3D ptI = grid.getGridPointLoc(i);
-      double weightSum;
+      double weightSum = NAN;
       Point3D centroid =
           computeGridCentroid(grid, ptI, windowRadius, weightSum);
       res.push_back(centroid);

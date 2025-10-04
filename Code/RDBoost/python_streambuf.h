@@ -259,8 +259,8 @@ class streambuf : public std::basic_streambuf<char> {
           "That Python file object has no 'read' attribute");
     }
     read_buffer = py_read(buffer_size);
-    char *read_buffer_data;
-    bp::ssize_t py_n_read;
+    char *read_buffer_data = nullptr;
+    bp::ssize_t py_n_read = 0;
     if (PyBytes_AsStringAndSize(read_buffer.ptr(), &read_buffer_data,
                                 &py_n_read) == -1) {
       setg(nullptr, nullptr, nullptr);
@@ -385,7 +385,7 @@ class streambuf : public std::basic_streambuf<char> {
     }
 
     // compute the whence parameter for Python seek
-    int whence;
+    int whence = 0;
     switch (way) {
       case std::ios_base::beg:
         whence = 0;
@@ -460,8 +460,8 @@ class streambuf : public std::basic_streambuf<char> {
     boost::optional<off_type> const failure = off_type(-1);
 
     // Buffer range and current position
-    off_type buf_begin, buf_end, buf_cur, upper_bound;
-    off_type pos_of_buffer_end_in_py_file;
+    off_type buf_begin = 0, buf_end = 0, buf_cur = 0, upper_bound = 0;
+    off_type pos_of_buffer_end_in_py_file = 0;
     if (which == std::ios_base::in) {
       pos_of_buffer_end_in_py_file = pos_of_read_buffer_end_in_py_file;
       buf_begin = reinterpret_cast<std::streamsize>(eback());
@@ -480,7 +480,7 @@ class streambuf : public std::basic_streambuf<char> {
     }
 
     // Sought position in "buffer coordinate"
-    off_type buf_sought;
+    off_type buf_sought = 0;
     if (way == std::ios_base::cur) {
       buf_sought = buf_cur + off;
     } else if (way == std::ios_base::beg) {

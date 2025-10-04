@@ -31,7 +31,7 @@ template <typename T>
 void FromDaylightString(T &sbv, const std::string &s) {
   sbv.clearBits();
   size_t length = s.length();
-  size_t nBits;
+  size_t nBits = 0;
 
   if (s[length - 1] == '\n') {
     length -= 1;
@@ -111,7 +111,7 @@ template RDKIT_DATASTRUCTS_EXPORT void FromBitString(ExplicitBitVect &sbv,
 ********************************************************************
 */
 void a2b(const char *a4, char *b3) {
-  int i;
+  int i = 0;
   char byte = 0x00, b = 0x00;
 
   /*********************************************

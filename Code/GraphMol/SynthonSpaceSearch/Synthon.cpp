@@ -157,7 +157,7 @@ void Synthon::readFromDBStream(std::istream &is, std::uint32_t version) {
   std::string pickle;
   streamRead(is, pickle, 0);
   dp_pattFP = std::make_unique<ExplicitBitVect>(pickle);
-  size_t numConnRegs;
+  size_t numConnRegs = 0;
   streamRead(is, numConnRegs);
   d_connRegions.resize(numConnRegs);
   for (size_t i = 0; i < numConnRegs; ++i) {

@@ -117,14 +117,14 @@ void extractArenaDetails(FPBReader_impl *dp_impl, boost::uint64_t sz) {
   PRECONDITION(dp_impl, "bad pointer");
   PRECONDITION(dp_impl->df_lazy, "should only be used in lazy mode");
 
-  boost::uint32_t numBytesPerFingerprint;
+  boost::uint32_t numBytesPerFingerprint = 0;
   streamRead(*dp_impl->istrm, numBytesPerFingerprint);
   dp_impl->nBits = numBytesPerFingerprint * 8;
 
-  boost::uint32_t numBytesStoredPerFingerprint;
+  boost::uint32_t numBytesStoredPerFingerprint = 0;
   streamRead(*dp_impl->istrm, numBytesStoredPerFingerprint);
   dp_impl->numBytesStoredPerFingerprint = numBytesStoredPerFingerprint;
-  boost::uint8_t spacer;
+  boost::uint8_t spacer = 0;
   streamRead(*dp_impl->istrm, spacer);
   dp_impl->len = (sz - 9 - spacer) / numBytesStoredPerFingerprint;
 
@@ -188,7 +188,7 @@ void extractBytes(const FPBReader_impl *dp_impl, unsigned int which,
 // the caller is responsible for delete[]'ing this
 boost::uint8_t *copyBytes(const FPBReader_impl *dp_impl, unsigned int which) {
   PRECONDITION(dp_impl, "bad reader pointer");
-  boost::uint8_t *res;
+  boost::uint8_t *res = nullptr;
   res = new boost::uint8_t[dp_impl->numBytesStoredPerFingerprint];
   if (!dp_impl->df_lazy) {
     boost::uint8_t *fpData = nullptr;
@@ -232,7 +232,7 @@ RDKIT_DATASTRUCTS_EXPORT boost::uint8_t *bitsetToBytes(
 // the caller is responsible for delete'ing this
 ExplicitBitVect *extractFP(const FPBReader_impl *dp_impl, unsigned int which) {
   PRECONDITION(dp_impl, "bad reader pointer");
-  boost::uint8_t *fpData;
+  boost::uint8_t *fpData = nullptr;
   if (dp_impl->df_lazy) {
     fpData = new boost::uint8_t[dp_impl->numBytesStoredPerFingerprint];
   }
@@ -251,7 +251,7 @@ double tanimoto(const FPBReader_impl *dp_impl, unsigned int which,
   if (which >= dp_impl->len) {
     throw ValueErrorException("bad index");
   }
-  boost::uint8_t *fpData;
+  boost::uint8_t *fpData = nullptr;
   if (dp_impl->df_lazy) {
     fpData = new boost::uint8_t[dp_impl->numBytesStoredPerFingerprint];
   }
@@ -271,7 +271,7 @@ double tversky(const FPBReader_impl *dp_impl, unsigned int which,
   if (which >= dp_impl->len) {
     throw ValueErrorException("bad index");
   }
-  boost::uint8_t *fpData;
+  boost::uint8_t *fpData = nullptr;
   if (dp_impl->df_lazy) {
     fpData = new boost::uint8_t[dp_impl->numBytesStoredPerFingerprint];
   }
@@ -456,7 +456,7 @@ void tanimotoNeighbors(const FPBReader_impl *dp_impl, const boost::uint8_t *bv,
     endScan = dp_impl->popCountOffsets[maxDbCount + 1];
     // std::cerr << " scan: " << startScan << "-" << endScan << std::endl;
   }
-  boost::uint8_t *dbv;
+  boost::uint8_t *dbv = nullptr;
   if (dp_impl->df_lazy) {
     dbv = new boost::uint8_t[dp_impl->numBytesStoredPerFingerprint * readCache];
   }
@@ -514,7 +514,7 @@ void tverskyNeighbors(const FPBReader_impl *dp_impl, const boost::uint8_t *bv,
     // std::cerr << " scan: " << startScan << "-" << endScan << std::endl;
   }
 
-  boost::uint8_t *dbv;
+  boost::uint8_t *dbv = nullptr;
   if (dp_impl->df_lazy) {
     dbv = new boost::uint8_t[dp_impl->numBytesStoredPerFingerprint];
   }
@@ -547,7 +547,7 @@ void containingNeighbors(const FPBReader_impl *dp_impl,
     startScan = dp_impl->popCountOffsets[probeCount];
     // std::cerr << " scan: " << startScan << "-" << endScan << std::endl;
   }
-  boost::uint8_t *dbv;
+  boost::uint8_t *dbv = nullptr;
   if (dp_impl->df_lazy) {
     dbv = new boost::uint8_t[dp_impl->numBytesStoredPerFingerprint];
   }
@@ -585,7 +585,7 @@ void FPBReader::init() {
       throw BadFileException("EOF hit before FEND record");
     }
     std::string chunkNm;
-    boost::uint64_t chunkSz;
+    boost::uint64_t chunkSz = 0;
     boost::uint8_t *chunk = nullptr;
     detail::readChunkDetails(*dp_istrm, chunkNm, chunkSz);
     // std::cerr << " Chunk: " << chunkNm << " " << chunkSz << std::endl;

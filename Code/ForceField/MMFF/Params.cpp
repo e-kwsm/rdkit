@@ -49,7 +49,7 @@ MMFFDefCollection::MMFFDefCollection(std::string mmffDef) {
   std::istringstream inStream(mmffDef);
   std::string inLine = RDKit::getLine(inStream);
   unsigned int oldAtomType = 0;
-  unsigned int atomType;
+  unsigned int atomType = 0;
   while (!(inStream.eof())) {
     if (inLine[0] != '*') {
       MMFFDef mmffDefObj;

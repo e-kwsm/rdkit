@@ -93,9 +93,9 @@ boost::dynamic_bitset<> pythonObjectToDynBitset(
 std::vector<std::pair<int, int>> *translateAtomMap(
     const python::object &atomMap) {
   PySequenceHolder<python::object> pyAtomMap(atomMap);
-  std::vector<std::pair<int, int>> *res;
+  std::vector<std::pair<int, int>> *res = nullptr;
   res = nullptr;
-  unsigned int i;
+  unsigned int i = 0;
   unsigned int n = pyAtomMap.size();
   if (n > 0) {
     res = new std::vector<std::pair<int, int>>;
@@ -127,9 +127,9 @@ std::vector<std::vector<std::pair<int, int>>> translateAtomMapSeq(
 RDNumeric::DoubleVector *translateDoubleSeq(const python::object &doubleSeq) {
   PySequenceHolder<double> doubles(doubleSeq);
   unsigned int nDoubles = doubles.size();
-  RDNumeric::DoubleVector *doubleVec;
+  RDNumeric::DoubleVector *doubleVec = nullptr;
   doubleVec = nullptr;
-  unsigned int i;
+  unsigned int i = 0;
   if (nDoubles > 0) {
     doubleVec = new RDNumeric::DoubleVector(nDoubles);
     for (i = 0; i < nDoubles; ++i) {

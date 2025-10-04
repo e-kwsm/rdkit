@@ -31,20 +31,17 @@ extern "C" void distdriver_(boost::int64_t *n, boost::int64_t *len, real *dists,
 static void clusterit(real *dataP, boost::int64_t n, boost::int64_t m,
                       boost::int64_t iopt, boost::int64_t *ia,
                       boost::int64_t *ib, real *crit) {
-  real *dists;
-  boost::int64_t len;
+  real *dists = nullptr;
   boost::int64_t pos = 0;
-  boost::int64_t i, j, k, iTab, jTab;
-  double tmp;
-  len = (n * (n - 1)) / 2;
+  boost::int64_t len = (n * (n - 1)) / 2;
   dists = (real *)calloc(len, sizeof(real));
   CHECK_INVARIANT(dists, "failed to allocate memory");
-  for (i = 1; i < n; i++) {
-    iTab = i * m;
-    for (j = 0; j < i; j++) {
-      jTab = j * m;
-      for (k = 0; k < m; k++) {
-        tmp = dataP[iTab + k] - dataP[jTab + k];
+  for (boost::int64_t i = 1; i < n; i++) {
+    boost::int64_t iTab = i * m;
+    for (boost::int64_t j = 0; j < i; j++) {
+      boost::int64_t jTab = j * m;
+      for (boost::int64_t k = 0; k < m; k++) {
+        double tmp = dataP[iTab + k] - dataP[jTab + k];
         dists[pos] += tmp * tmp;
       }
       pos++;
@@ -61,11 +58,7 @@ static void capsule_cleanup(PyObject *capsule) {
 
 static PyObject *Clustering_MurtaghCluster(python::object data, int nPts,
                                            int sz, int option) {
-  PyArrayObject *dataContig;
-  boost::int64_t *ia, *ib;
-  real *crit;
-  PyObject *res;
-  PyObject *tmp;
+  PyArrayObject *dataContig = nullptr;
   npy_intp dims[2];
 
   if (PyArray_Check(data.ptr())) {
@@ -76,25 +69,25 @@ static PyObject *Clustering_MurtaghCluster(python::object data, int nPts,
     return nullptr;
   }
 
-  ia = (boost::int64_t *)calloc(nPts, sizeof(boost::int64_t));
+  boost::int64_t *ia = (boost::int64_t *)calloc(nPts, sizeof(boost::int64_t));
   auto ia_capsule = PyCapsule_New(ia, nullptr, capsule_cleanup);
 
-  ib = (boost::int64_t *)calloc(nPts, sizeof(boost::int64_t));
+  boost::int64_t *ib = (boost::int64_t *)calloc(nPts, sizeof(boost::int64_t));
   auto ib_capsule = PyCapsule_New(ib, nullptr, capsule_cleanup);
 
-  crit = (real *)calloc(nPts, sizeof(real));
+  real *crit = (real *)calloc(nPts, sizeof(real));
   auto crit_capsule = PyCapsule_New(crit, nullptr, capsule_cleanup);
 
   clusterit((real *)PyArray_DATA(dataContig), nPts, sz, option, ia, ib, crit);
 
   dims[0] = nPts;
-  res = PyTuple_New(3);
+  PyObject *res = PyTuple_New(3);
 
   //  NOTE: these operations maintain pointers to the respective arrays,
   //  that's why it's ok that we do not free them in this function,
   //  Python will take care of it for us.
   //
-  tmp = PyArray_SimpleNewFromData(1, dims, NPY_LONG, (void *)ia);
+  PyObject *tmp = PyArray_SimpleNewFromData(1, dims, NPY_LONG, (void *)ia);
   PyArray_SetBaseObject((PyArrayObject *)tmp, ia_capsule);
   PyTuple_SetItem(res, 0, (PyObject *)tmp);
 
@@ -111,7 +104,7 @@ static PyObject *Clustering_MurtaghCluster(python::object data, int nPts,
 
 void distclusterit(real *dists, boost::int64_t n, boost::int64_t iopt,
                    boost::int64_t *ia, boost::int64_t *ib, real *crit) {
-  boost::int64_t len;
+  boost::int64_t len = 0;
 
   len = (n * (n - 1)) / 2;
   distdriver_(&n, &len, dists, &iopt, ia, ib, crit);
@@ -119,11 +112,11 @@ void distclusterit(real *dists, boost::int64_t n, boost::int64_t iopt,
 
 static PyObject *Clustering_MurtaghDistCluster(python::object data, int nPts,
                                                int option) {
-  PyArrayObject *dataContig;
-  boost::int64_t *ia, *ib;
-  real *crit;
+  PyArrayObject *dataContig = nullptr;
+  boost::int64_t *ia = nullptr, *ib = nullptr;
+  real *crit = nullptr;
   PyObject *res = PyTuple_New(3);
-  PyObject *tmp;
+  PyObject *tmp = nullptr;
   npy_intp dims[] = {1};
 
   if (PyArray_Check(data.ptr())) {

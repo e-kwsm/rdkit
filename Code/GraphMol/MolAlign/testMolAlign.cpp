@@ -43,7 +43,7 @@ void test1MolAlign() {
   ROMol *m3 = MolFileToMol(fname3);
   const Conformer &conf1 = m2->getConformer(0);
   const Conformer &conf2 = m3->getConformer(0);
-  unsigned int i, nat = m3->getNumAtoms();
+  unsigned int i = 0, nat = m3->getNumAtoms();
   for (i = 0; i < nat; i++) {
     RDGeom::Point3D pt1 = conf1.getAtomPos(i);
     RDGeom::Point3D pt2 = conf2.getAtomPos(i);
@@ -170,7 +170,7 @@ void test1MolWithQueryAlign() {
 
   const Conformer &conf1 = m2->getConformer(0);
   const Conformer &conf2 = m3->getConformer(0);
-  unsigned int i, nat = m3->getNumAtoms();
+  unsigned int i = 0, nat = m3->getNumAtoms();
   for (i = 0; i < nat; i++) {
     RDGeom::Point3D pt1 = conf1.getAtomPos(i);
     RDGeom::Point3D pt2 = conf2.getAtomPos(i);

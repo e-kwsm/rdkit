@@ -58,12 +58,11 @@ void pickFusedRings(int curr, const INT_INT_VECT_MAP &neighMap, INT_VECT &res,
 bool checkFused(const INT_VECT &rids, INT_INT_VECT_MAP &ringNeighs) {
   auto nrings = rdcast<int>(ringNeighs.size());
   boost::dynamic_bitset<> done(nrings);
-  int rid;
   INT_VECT fused;
 
   // mark all rings in the system other than those in rids as done
   for (const auto &nci : ringNeighs) {
-    rid = nci.first;
+    int rid = nci.first;
     if (std::find(rids.begin(), rids.end(), rid) == rids.end()) {
       done[rid] = 1;
     }
@@ -83,17 +82,16 @@ void makeRingNeighborMap(const VECT_INT_VECT &brings,
                          INT_INT_VECT_MAP &neighMap, unsigned int maxSize,
                          unsigned int maxOverlapSize) {
   auto nrings = rdcast<int>(brings.size());
-  int i, j;
   INT_VECT ring1;
 
-  for (i = 0; i < nrings; ++i) {
+  for (int i = 0; i < nrings; ++i) {
     // create an empty INT_VECT at neighMap[i] if it does not yet exist
     neighMap[i];
     if (maxSize && brings[i].size() > maxSize) {
       continue;
     }
     ring1 = brings[i];
-    for (j = i + 1; j < nrings; ++j) {
+    for (int j = i + 1; j < nrings; ++j) {
       if (maxSize && brings[j].size() > maxSize) {
         continue;
       }
@@ -266,7 +264,7 @@ bool applyHuckel(ROMol &, const INT_VECT &ring, const VECT_EDON_TYPE &edon,
   if (ring.size() < minRingSize) {
     return false;
   }
-  int atlw, atup, rlw, rup, rie;
+  int atlw = 0, atup = 0, rlw = 0, rup = 0, rie = 0;
   bool aromatic = false;
   rlw = 0;
   rup = 0;
@@ -318,11 +316,11 @@ void applyHuckelToFused(
   INT_VECT curRs;
   curRs.push_back(fused.front());
   int pos = -1;
-  unsigned int i;
+  unsigned int i = 0;
   unsigned int curSize = 0;
   INT_VECT comb;
 
-  size_t nRingBonds;
+  size_t nRingBonds = 0;
   {
     boost::dynamic_bitset<> fusedBonds(mol.getNumBonds());
     for (auto ridx : fused) {
@@ -746,7 +744,7 @@ int mdlAromaticityHelper(RWMol &mol, const VECT_INT_VECT &srings) {
     applyHuckelToFused(mol, cRings, brings, fused, edon, neighMap, narom,
                        maxFused, bondsByIdx, minRingSize);
 
-    int rix;
+    int rix = 0;
     for (rix = 0; rix < cnrs; ++rix) {
       if (!fusDone[rix]) {
         curr = rix;
@@ -898,7 +896,7 @@ int aromaticityHelper(RWMol &mol, const VECT_INT_VECT &srings,
       applyHuckelToFused(mol, cRings, brings, fused, edon, neighMap, narom, 6,
                          bondsByIdx);
 
-      int rix;
+      int rix = 0;
       for (rix = 0; rix < cnrs; ++rix) {
         if (!fusDone[rix]) {
           curr = rix;
@@ -925,15 +923,13 @@ void setMMFFAromaticity(RWMol &mol) {
   bool aromRingsAllSet = false;
   bool exoDoubleBond = false;
   bool canBeAromatic = false;
-  unsigned int i;
-  unsigned int j;
-  unsigned int nextInRing;
+  unsigned int nextInRing = 0;
   unsigned int pi_e = 0;
   int nAromSet = 0;
   int old_nAromSet = -1;
   RingInfo *ringInfo = mol.getRingInfo();
-  Atom *atom;
-  Bond *bond;
+  Atom *atom = nullptr;
+  Bond *bond = nullptr;
   const VECT_INT_VECT &atomRings = ringInfo->atomRings();
   ROMol::ADJ_ITER nbrIdx;
   ROMol::ADJ_ITER endNbrs;
@@ -942,10 +938,10 @@ void setMMFFAromaticity(RWMol &mol) {
 
   while ((!aromRingsAllSet) && atomRings.size() && (nAromSet > old_nAromSet)) {
     // loop over all rings
-    for (i = 0; i < atomRings.size(); ++i) {
+    for (unsigned int i = 0; i < atomRings.size(); ++i) {
       // add 2 pi electrons for each double bond in the ring
-      for (j = 0, pi_e = 0, moveToNextRing = false, isNOSinRing = false,
-          exoDoubleBond = false;
+      for (unsigned int j = 0, pi_e = 0, moveToNextRing = false,
+                        isNOSinRing = false, exoDoubleBond = false;
            (!moveToNextRing) && (j < atomRings[i].size()); ++j) {
         atom = mol.getAtomWithIdx(atomRings[i][j]);
         // remember if this atom is nitrogen, oxygen or divalent sulfur
@@ -1013,7 +1009,8 @@ void setMMFFAromaticity(RWMol &mol) {
         continue;
       }
       // loop again over all ring atoms
-      for (j = 0, canBeAromatic = true; j < atomRings[i].size(); ++j) {
+      for (unsigned int j = 0, canBeAromatic = true; j < atomRings[i].size();
+           ++j) {
         // set aromaticity as perceived
         aromBitVect[atomRings[i][j]] = 1;
         atom = mol.getAtomWithIdx(atomRings[i][j]);
@@ -1037,7 +1034,7 @@ void setMMFFAromaticity(RWMol &mol) {
       // then mark its atoms as aromatic
       if ((pi_e > 2) && (!((pi_e - 2) % 4))) {
         aromRingBitVect[i] = 1;
-        for (j = 0; j < atomRings[i].size(); ++j) {
+        for (unsigned int j = 0; j < atomRings[i].size(); ++j) {
           atom = mol.getAtomWithIdx(atomRings[i][j]);
           atom->setIsAromatic(true);
         }
@@ -1049,8 +1046,8 @@ void setMMFFAromaticity(RWMol &mol) {
     old_nAromSet = nAromSet;
     nAromSet = 0;
     aromRingsAllSet = true;
-    for (i = 0; i < atomRings.size(); ++i) {
-      for (j = 0; j < atomRings[i].size(); ++j) {
+    for (unsigned int i = 0; i < atomRings.size(); ++i) {
+      for (unsigned int j = 0; j < atomRings[i].size(); ++j) {
         if (aromBitVect[atomRings[i][j]]) {
           ++nAromSet;
         } else {
@@ -1059,12 +1056,12 @@ void setMMFFAromaticity(RWMol &mol) {
       }
     }
   }
-  for (i = 0; i < atomRings.size(); ++i) {
+  for (unsigned int i = 0; i < atomRings.size(); ++i) {
     // if the ring is not aromatic, move to the next one
     if (!aromRingBitVect[i]) {
       continue;
     }
-    for (j = 0; j < atomRings[i].size(); ++j) {
+    for (unsigned int j = 0; j < atomRings[i].size(); ++j) {
       // mark all ring bonds as aromatic
       nextInRing = (j == (atomRings[i].size() - 1)) ? atomRings[i][0]
                                                     : atomRings[i][j + 1];
@@ -1073,12 +1070,12 @@ void setMMFFAromaticity(RWMol &mol) {
       bond->setIsAromatic(true);
     }
   }
-  for (i = 0; i < atomRings.size(); ++i) {
+  for (unsigned int i = 0; i < atomRings.size(); ++i) {
     // if the ring is not aromatic, move to the next one
     if (!aromRingBitVect[i]) {
       continue;
     }
-    for (j = 0; j < atomRings[i].size(); ++j) {
+    for (unsigned int j = 0; j < atomRings[i].size(); ++j) {
       atom = mol.getAtomWithIdx(atomRings[i][j]);
       if (atom->getAtomicNum() != 6) {
         int iv = atom->calcImplicitValence(false);
@@ -1105,7 +1102,7 @@ int setAromaticity(RWMol &mol, AromaticityModel model, int (*func)(RWMol &)) {
     MolOps::symmetrizeSSSR(mol, srings);
   }
 
-  int res;
+  int res = 0;
   switch (model) {
     case AROMATICITY_DEFAULT:
     case AROMATICITY_RDKIT:

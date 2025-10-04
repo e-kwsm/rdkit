@@ -12,6 +12,7 @@
 #include <RDGeneral/BoostStartInclude.h>
 #include <RDGeneral/BoostEndInclude.h>
 #include <RDGeneral/Invariant.h>
+#include <math.h>
 
 #include <boost/math/special_functions/round.hpp>
 
@@ -90,7 +91,7 @@ TorsionConstraintContrib::TorsionConstraintContrib(
   checkPrecondition(owner, idx1, idx2, idx3, idx4, minDihedralDeg,
                     maxDihedralDeg);
   if (relative) {
-    double dihedral;
+    double dihedral = NAN;
     RDKit::ForceFieldsHelper::computeDihedral(owner->positions(), idx1, idx2,
                                               idx3, idx4, &dihedral);
     dihedral *= RAD2DEG;
@@ -104,7 +105,7 @@ TorsionConstraintContrib::TorsionConstraintContrib(
 double TorsionConstraintContrib::getEnergy(double *pos) const {
   PRECONDITION(dp_forceField, "no owner");
   PRECONDITION(pos, "bad vector");
-  double dihedral;
+  double dihedral = NAN;
   RDKit::ForceFieldsHelper::computeDihedral(pos, d_at1Idx, d_at2Idx, d_at3Idx,
                                             d_at4Idx, &dihedral);
   dihedral *= RAD2DEG;
@@ -125,7 +126,7 @@ void TorsionConstraintContrib::getGrad(double *pos, double *grad) const {
   RDGeom::Point3D r[4];
   RDGeom::Point3D t[2];
   double d[2];
-  double dihedral;
+  double dihedral = NAN;
   RDKit::ForceFieldsHelper::computeDihedral(
       pos, d_at1Idx, d_at2Idx, d_at3Idx, d_at4Idx, &dihedral, nullptr, r, t, d);
   dihedral *= RAD2DEG;

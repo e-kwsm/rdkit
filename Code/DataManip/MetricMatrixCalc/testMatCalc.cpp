@@ -21,18 +21,17 @@ int main() {
   int n = 10;
   int m = 3;
   int dlen = n * (n - 1) / 2;
-  int i, j;
   auto *desc = new double[n * m];
   auto **desc2D = new double *[n];
 
-  for (i = 0; i < n; i++) {
+  for (int i = 0; i < n; i++) {
     desc2D[i] = desc;
     desc += m;
   }
   desc = desc2D[0];
 
-  for (i = 0; i < n; i++) {
-    for (j = 0; j < m; j++) {
+  for (int i = 0; i < n; i++) {
+    for (int j = 0; j < m; j++) {
       desc[i * m + j] = ((double)rand()) / 10;
     }
   }
@@ -43,7 +42,7 @@ int main() {
   mmCalc.setMetricFunc(&EuclideanDistanceMetric<double *, double *>);
   mmCalc.calcMetricMatrix(desc2D, n, m, dmat);
 
-  for (i = 0; i < dlen; i++) {
+  for (int i = 0; i < dlen; i++) {
     std::cout << dmat[i] << "\n";
   }
 

@@ -415,7 +415,7 @@ bool checkChiralPermutation(int chiralTag, int permutation) {
 void CheckChiralitySpecifications(RDKit::RWMol *mol, bool strict) {
   PRECONDITION(mol, "no molecule");
   for (const auto atom : mol->atoms()) {
-    int permutation;
+    int permutation = 0;
     if (atom->getChiralTag() > RDKit::Atom::ChiralType::CHI_OTHER &&
         permutationLimits.find(atom->getChiralTag()) !=
             permutationLimits.end() &&
@@ -532,7 +532,7 @@ void CloseMolRings(RWMol *mol, bool toleratePartials) {
                            bond2->getProp<unsigned int>("_cxsmilesBondIdx"));
           }
 
-          Bond *matchedBond;
+          Bond *matchedBond = nullptr;
 
           // figure out which (if either) bond has a specified type, we'll
           // keep that one.  We also need to update the end atom index to
@@ -680,7 +680,7 @@ void CleanupAfterParsing(RWMol *mol) {
 RDKit::QueryBond *getUnspecifiedQueryBond(const RDKit::Atom *a1,
                                           const RDKit::Atom *a2) {
   PRECONDITION(a1, "bad atom pointer");
-  QueryBond *newB;
+  QueryBond *newB = nullptr;
   if (!a1->getIsAromatic() || (a2 && !a2->getIsAromatic())) {
     newB = new QueryBond(Bond::SINGLE);
     newB->setQuery(makeSingleOrAromaticBondQuery());

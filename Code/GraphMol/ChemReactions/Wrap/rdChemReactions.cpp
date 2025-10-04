@@ -174,7 +174,7 @@ bool RunReactantInPlace(ChemicalReaction *self, ROMol *reactant,
 
 python::tuple ValidateReaction(const ChemicalReaction *self,
                                bool silent = false) {
-  unsigned int numWarn, numError;
+  unsigned int numWarn = 0, numError = 0;
   self->validate(numWarn, numError, silent);
   return python::make_tuple(numWarn, numError);
 }
@@ -283,16 +283,16 @@ void Compute2DCoordsForReaction(RDKit::ChemicalReaction &rxn,
 
 bool IsMoleculeReactantOfReaction(const ChemicalReaction &rxn,
                                   const ROMol &mol) {
-  unsigned int which;
+  unsigned int which = 0;
   return isMoleculeReactantOfReaction(rxn, mol, which);
 }
 bool IsMoleculeProductOfReaction(const ChemicalReaction &rxn,
                                  const ROMol &mol) {
-  unsigned int which;
+  unsigned int which = 0;
   return isMoleculeProductOfReaction(rxn, mol, which);
 }
 bool IsMoleculeAgentOfReaction(const ChemicalReaction &rxn, const ROMol &mol) {
-  unsigned int which;
+  unsigned int which = 0;
   return isMoleculeAgentOfReaction(rxn, mol, which);
 }
 
@@ -306,7 +306,7 @@ ChemicalReaction *ReactionFromSmarts(const char *smarts, python::dict replDict,
     replacements[python::extract<std::string>(item[0])] =
         python::extract<std::string>(item[1]);
   }
-  ChemicalReaction *res;
+  ChemicalReaction *res = nullptr;
   res = RxnSmartsToChemicalReaction(smarts, &replacements, useSmiles);
   return res;
 }
@@ -451,7 +451,7 @@ python::object PreprocessReaction(ChemicalReaction &reaction,
 
   unsigned int nReactants = reaction.getNumReactantTemplates();
   unsigned int nProducts = reaction.getNumProductTemplates();
-  unsigned int nWarn, nError;
+  unsigned int nWarn = 0, nError = 0;
   reaction.validate(nWarn, nError);
   std::vector<std::vector<std::pair<unsigned int, std::string>>> labels;
 
