@@ -660,7 +660,7 @@ bool Atom::hasValenceViolation() const {
     return false;
   }
 
-  unsigned int effectiveAtomicNum;
+  unsigned int effectiveAtomicNum = 0;
   try {
     bool checkIt = true;
     effectiveAtomicNum = getEffectiveAtomicNum(*this, checkIt);
@@ -822,7 +822,7 @@ static const unsigned char trigonalbipyramidal_invert[21] = {
 };
 
 bool Atom::invertChirality() {
-  unsigned int perm;
+  unsigned int perm = 0;
   switch (getChiralTag()) {
     case CHI_TETRAHEDRAL_CW:
       setChiralTag(CHI_TETRAHEDRAL_CCW);
@@ -1023,7 +1023,7 @@ std::ostream &operator<<(std::ostream &target, const RDKit::Atom &at) {
   }
   if (at.getChiralTag() != RDKit::Atom::CHI_UNSPECIFIED) {
     target << " chi: " << chiralityToString(at.getChiralTag());
-    int perm;
+    int perm = 0;
     if (at.getPropIfPresent(RDKit::common_properties::_chiralPermutation,
                             perm)) {
       target << "(" << perm << ")";

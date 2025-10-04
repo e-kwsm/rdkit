@@ -723,7 +723,7 @@ class RDKIT_GRAPHMOL_EXPORT AtomRingQuery
 
   bool Match(const ConstAtomPtr what) const override {
     int v = this->TypeConvert(what, Queries::Int2Type<true>());
-    bool res;
+    bool res = false;
     if (this->d_val < 0) {
       res = v != 0;
     } else {
