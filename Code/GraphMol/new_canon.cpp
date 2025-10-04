@@ -113,7 +113,7 @@ void ActivatePartitions(unsigned int nAtoms, int *order, int *count,
   PRECONDITION(count, "bad pointer");
   PRECONDITION(next, "bad pointer");
   PRECONDITION(changed, "bad pointer");
-  unsigned int i, j;
+  unsigned int i = 0, j = 0;
   activeset = -1;
   for (i = 0; i < nAtoms; i++) {
     next[i] = -2;
@@ -261,7 +261,7 @@ void rankWithFunctor(T &ftor, bool breakTies, int *order, bool useSpecial,
   memset(changed.get(), 1, nAts * sizeof(int));
   auto touched = std::make_unique<char[]>(nAts);
   memset(touched.get(), 0, nAts * sizeof(char));
-  int activeset;
+  int activeset = 0;
   CreateSinglePartition(nAts, order, count.get(), atoms);
 // ActivatePartitions(nAts,order,count,activeset,next,changed);
 // RefinePartitions(mol,atoms,ftor,false,order,count,activeset,next,changed,touched);
