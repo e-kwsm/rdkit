@@ -14,7 +14,7 @@
 #include <Geometry/Transform3D.h>
 #include <GraphMol/MolTransforms/MolTransforms.h>
 #include <Geometry/GridUtils.h>
-#include <math.h>
+#include <cmath>
 
 namespace RDKit {
 namespace MolShapes {

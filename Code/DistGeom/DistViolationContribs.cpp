@@ -11,7 +11,7 @@
 #include "DistViolationContribs.h"
 #include <ForceField/ForceField.h>
 #include <RDGeneral/Invariant.h>
-#include <math.h>
+#include <cmath>
 
 namespace DistGeom {
 

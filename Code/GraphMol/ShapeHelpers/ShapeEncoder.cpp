@@ -19,7 +19,7 @@
 #include <GraphMol/Conformer.h>
 // #include <GraphMol/PeriodicTable.h>
 #include <GraphMol/RDKitBase.h>
-#include <math.h>
+#include <cmath>
 namespace RDKit {
 namespace MolShapes {
 void EncodeShape(const ROMol &mol, RDGeom::UniformGrid3D &grid, int confId,

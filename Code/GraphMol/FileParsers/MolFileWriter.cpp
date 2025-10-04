@@ -35,7 +35,7 @@
 #include <GraphMol/SmilesParse/SmartsWrite.h>
 #include <GraphMol/Depictor/RDDepictor.h>
 #include <GraphMol/GenericGroups/GenericGroups.h>
-#include <math.h>
+#include <cmath>
 
 #include <boost/algorithm/string.hpp>
 
