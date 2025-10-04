@@ -11,6 +11,7 @@
 #include <iostream>
 #include <cmath>
 #include <RDGeneral/Invariant.h>
+#include <math.h>
 #include <catch2/catch_all.hpp>
 
 #include "BFGSOpt.h"
@@ -66,12 +67,12 @@ double grad2(double *v, double *grad) {
 
 TEST_CASE("testLinearSearch") {
   int dim = 2;
-  double oLoc[2], oVal;
+  double oLoc[2], oVal = NAN;
   double grad[2], dir[2];
-  double nLoc[2], nVal;
-  int resCode;
-  double (*func)(double *);
-  double (*gradFunc)(double *, double *);
+  double nLoc[2], nVal = NAN;
+  int resCode = 0;
+  double (*func)(double *) = nullptr;
+  double (*gradFunc)(double * = nullptr, double *);
 
   func = circ_0_0;
   gradFunc = circ_0_0_grad;
@@ -124,11 +125,11 @@ TEST_CASE("testLinearSearch") {
 
 TEST_CASE("testBFGSOptimization") {
   unsigned int dim = 2;
-  double oLoc[2], oVal;
-  double nVal;
-  unsigned int nIters;
-  double (*func)(double *);
-  double (*gradFunc)(double *, double *);
+  double oLoc[2], oVal = NAN;
+  double nVal = NAN;
+  unsigned int nIters = 0;
+  double (*func)(double *) = nullptr;
+  double (*gradFunc)(double * = nullptr, double *);
 
   func = circ_0_0;
   gradFunc = circ_0_0_grad;

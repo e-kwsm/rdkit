@@ -44,8 +44,8 @@ class PointVectManager {
 void GetPointsFromPythonSequence(python::object &points,
                                  RDGeom::Point3DConstPtrVect &pts) {
   PyObject *pyObj = points.ptr();
-  unsigned int nrows, ncols;
-  double *data;
+  unsigned int nrows = 0, ncols = 0;
+  double *data = nullptr;
   if (PyArray_Check(pyObj)) {
     // get the dimensions of the array
     auto *ptsMat = reinterpret_cast<PyArrayObject *>(pyObj);
@@ -119,7 +119,7 @@ PyObject *AlignPointPairs(python::object refPoints, python::object probePoints,
 
   PyObject *weightsObj = weights.ptr();
   std::unique_ptr<RDNumeric::DoubleVector> wtsVec;
-  double *data;
+  double *data = nullptr;
   if (PyArray_Check(weightsObj)) {
     auto *wtsMat = reinterpret_cast<PyArrayObject *>(weightsObj);
     unsigned int nwts = PyArray_DIM(wtsMat, 0);
