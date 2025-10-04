@@ -13,6 +13,7 @@
 #include <GraphMol/MolDraw2D/DrawAnnotation.h>
 #include <GraphMol/MolDraw2D/DrawText.h>
 #include <GraphMol/MolDraw2D/MolDraw2D.h>
+#include <math.h>
 
 namespace RDKit {
 namespace MolDraw2D_detail {
@@ -58,7 +59,7 @@ void DrawAnnotation::findExtremes(double &xmin, double &xmax, double &ymin,
 
 // ****************************************************************************
 void DrawAnnotation::getDimensions(double &width, double &height) const {
-  double xMin, yMin, xMax, yMax;
+  double xMin = NAN, yMin = NAN, xMax = NAN, yMax = NAN;
   xMin = yMin = std::numeric_limits<double>::max();
   xMax = yMax = std::numeric_limits<double>::lowest();
   findExtremes(xMin, xMax, yMin, yMax);

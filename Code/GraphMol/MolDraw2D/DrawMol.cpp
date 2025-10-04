@@ -34,6 +34,7 @@
 #include <GraphMol/Depictor/RDDepictor.h>
 #include <GraphMol/StereoGroup.h>
 #include <GraphMol/Atropisomers.h>
+#include <math.h>
 
 namespace RDKit {
 namespace MolDraw2D_detail {
@@ -398,7 +399,7 @@ void DrawMol::extractMolNotes() {
   std::string note;
   // the molNote property takes priority
   if (!drawMol_->getPropIfPresent(common_properties::molNote, note)) {
-    unsigned int chiralFlag;
+    unsigned int chiralFlag = 0;
     if (drawOptions_.includeChiralFlagLabel &&
         drawMol_->getPropIfPresent(common_properties::_MolFileChiralFlag,
                                    chiralFlag) &&
@@ -411,7 +412,7 @@ void DrawMol::extractMolNotes() {
     // molecule annotations use a full-size font, hence the 1 below.
     DrawAnnotation tmp(note, TextAlignType::START, "note", 1, Point2D(0.0, 0.0),
                        drawOptions_.annotationColour, textDrawer_);
-    double height, width;
+    double height = NAN, width = NAN;
     tmp.getDimensions(width, height);
     // Try all 4 corners until there's no clash with the underlying molecule.
     // Even though alignment is START, the DrawAnnotation puts the middle
@@ -1809,7 +1810,7 @@ void DrawMol::extractLegend() {
                                 double &total_height) {
     total_width = total_height = 0;
     for (auto &bit : legend_bits) {
-      double height, width;
+      double height = NAN, width = NAN;
       DrawAnnotation da(bit, TextAlignType::MIDDLE, "legend", relFontScale,
                         Point2D(0.0, 0.0), drawOptions_.legendColour,
                         textDrawer_);
@@ -1840,7 +1841,7 @@ void DrawMol::extractLegend() {
   // padding round the picture.
   double fsize = textDrawer_.fontSize();
   double relFontScale = drawOptions_.legendFontSize / fsize;
-  double total_width, total_height;
+  double total_width = NAN, total_height = NAN;
   calc_legend_height(legend_bits, relFontScale, total_width, total_height);
   if (total_width >= drawWidth_) {
     if (!flexiCanvasX_) {
@@ -1880,7 +1881,7 @@ void DrawMol::extractLegend() {
   // The letters have different amounts above and below the centre,
   // which matters when placing them vertically.
   // Draw them from the bottom up.
-  double xmin, xmax, ymin, ymax;
+  double xmin = NAN, xmax = NAN, ymin = NAN, ymax = NAN;
   xmin = ymin = std::numeric_limits<double>::max();
   xmax = ymax = std::numeric_limits<double>::lowest();
   legends_.back()->findExtremes(xmin, xmax, ymin, ymax);
@@ -2206,7 +2207,7 @@ void DrawMol::makeWedgedBond(Bond *bond,
   std::vector<Point2D> pts{end1, t1, t2};
 
   // deliberately not scaling highlighted bond width
-  DrawShape *s;
+  DrawShape *s = nullptr;
   double lineWidth = drawOptions_.bondLineWidth < 1.0
                          ? drawOptions_.bondLineWidth
                          : drawOptions_.bondLineWidth / 2.0;
@@ -2435,7 +2436,7 @@ void DrawMol::makeAtomEllipseHighlights(double lineWidth) {
         col = highlightAtomMap_.find(thisIdx)->second;
       }
       Point2D centre = atCds_[thisIdx];
-      double xradius, yradius;
+      double xradius = NAN, yradius = NAN;
       if (highlightRadii_.find(thisIdx) != highlightRadii_.end()) {
         xradius = highlightRadii_.find(thisIdx)->second;
       } else {
@@ -2443,7 +2444,7 @@ void DrawMol::makeAtomEllipseHighlights(double lineWidth) {
       }
       yradius = xradius;
       if (!drawOptions_.atomHighlightsAreCircles && atomLabels_[thisIdx]) {
-        double xMin, yMin, xMax, yMax;
+        double xMin = NAN, yMin = NAN, xMax = NAN, yMax = NAN;
         xMin = yMin = std::numeric_limits<double>::max();
         xMax = yMax = std::numeric_limits<double>::lowest();
         atomLabels_[thisIdx]->findExtremes(xMin, xMax, yMin, yMax);
@@ -2796,7 +2797,7 @@ OrientType DrawMol::calcRadicalRect(const Atom *atom,
   }
   OrientType orient = atomSyms_[atom->getIdx()].second;
   double rad_size = (4 * num_rade - 2) * spot_rad / fontScale_;
-  double x_min, y_min, x_max, y_max;
+  double x_min = NAN, y_min = NAN, x_max = NAN, y_max = NAN;
   if (atomLabels_[atom->getIdx()]) {
     x_min = y_min = std::numeric_limits<double>::max();
     x_max = y_max = std::numeric_limits<double>::lowest();
