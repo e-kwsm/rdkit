@@ -42,9 +42,9 @@ typedef class ROMol Mol;
 
 void test1() {
   string smi;
-  Mol *m;
+  Mol *m = nullptr;
   INT_VECT iv;
-  unsigned int count;
+  unsigned int count = 0;
   std::vector<ROMOL_SPTR> frags;
   std::vector<std::unique_ptr<ROMol>> otherFrags;
 
@@ -110,9 +110,9 @@ void test1() {
 
 void test2() {
   string smi;
-  Mol *m;
+  Mol *m = nullptr;
   INT_VECT iv;
-  int count;
+  int count = 0;
   smi = "CCCC(=O)O";
   m = SmilesToMol(smi);
   CHECK_INVARIANT(m, "smiles parse failed");
@@ -139,10 +139,10 @@ void test2() {
 
 void test3() {
   string smi;
-  Mol *m;
+  Mol *m = nullptr;
   VECT_INT_VECT sssr;
   INT_VECT rings;
-  int count;
+  int count = 0;
 
   smi = "C1CC1";
   m = SmilesToMol(smi);
@@ -519,10 +519,10 @@ void test4() {
 
 void test5() {
   string smi;
-  Mol *m;
+  Mol *m = nullptr;
   VECT_INT_VECT sssr;
 
-  int count;
+  int count = 0;
   smi = "C1C4C5C3C(=O)C2C5C1C2C34";
   m = SmilesToMol(smi, 0, 0);
   count = MolOps::findSSSR(*m, sssr);
@@ -540,7 +540,7 @@ void test5() {
 void test8() {
   BOOST_LOG(rdInfoLog) << "-----------------------\n Testing Hydrogen Ops"
                        << std::endl;
-  ROMol *m, *m2, *m3;
+  ROMol *m = nullptr, *m2 = nullptr, *m3 = nullptr;
   INT_VECT tree;
 
   std::string smi = "CCC";
@@ -807,7 +807,7 @@ void test9() {
 
   bool useBO = false;
   bool useAtomWts = false;
-  double *dMat;
+  double *dMat = nullptr;
   dMat = MolOps::getDistanceMat(*m, useBO, useAtomWts);
   TEST_ASSERT(dMat);
   TEST_ASSERT(dMat[0] == 0.0);
@@ -936,7 +936,7 @@ void test9() {
 void test10() {
   BOOST_LOG(rdInfoLog) << "-----------------------\n Testing Atom Ranking"
                        << std::endl;
-  ROMol *m;
+  ROMol *m = nullptr;
   std::string smi = "FC(Cl)(Br)C";
   m = SmilesToMol(smi);
   TEST_ASSERT(m);
@@ -945,7 +945,7 @@ void test10() {
   ranks.resize(m->getNumAtoms());
   Chirality::assignAtomCIPRanks(*m, ranks);
 
-  unsigned int cip1, cip2;
+  unsigned int cip1 = 0, cip2 = 0;
   TEST_ASSERT(m->getAtomWithIdx(0)->hasProp(common_properties::_CIPRank));
   m->getAtomWithIdx(0)->getProp(common_properties::_CIPRank, cip1);
   TEST_ASSERT(cip1 == ranks[0]);
@@ -968,7 +968,7 @@ void test10() {
   ranks.resize(m->getNumAtoms());
   Chirality::assignAtomCIPRanks(*m, ranks);
   for (unsigned int i = 0; i < m->getNumAtoms(); i++) {
-    unsigned int cip;
+    unsigned int cip = 0;
     TEST_ASSERT(m->getAtomWithIdx(i)->hasProp(common_properties::_CIPRank));
     m->getAtomWithIdx(i)->getProp(common_properties::_CIPRank, cip);
   }
@@ -980,7 +980,7 @@ void test10() {
 void test11() {
   BOOST_LOG(rdInfoLog) << "-----------------------\n Testing CIP chirality"
                        << std::endl;
-  ROMol *m;
+  ROMol *m = nullptr;
   std::string cip;
   std::string smi = "F[C@]([C@])(Cl)Br";
 
@@ -1594,7 +1594,7 @@ void testIssue183() {
 
   BOOST_LOG(rdInfoLog) << "-----------------------\n Testing Issue 183\n"
                        << std::endl;
-  RWMol *m, *m2;
+  RWMol *m = nullptr, *m2 = nullptr;
   std::string smi;
   std::string refSmi;
 
@@ -1640,9 +1640,9 @@ void testIssue188() {
   BOOST_LOG(rdInfoLog)
       << "-----------------------\n Testing Issue 188: bad CIP rankings"
       << std::endl;
-  ROMol *m;
+  ROMol *m = nullptr;
   std::string smi;
-  unsigned int cip1, cip2, cip3;
+  unsigned int cip1 = 0, cip2 = 0, cip3 = 0;
 
   smi = "OC[C@H](C=C)C";
   m = SmilesToMol(smi);
@@ -1683,9 +1683,9 @@ void testIssue189() {
   BOOST_LOG(rdInfoLog) << "-----------------------\n Testing Issue 189: "
                           "BondDirs not getting properly cleared."
                        << std::endl;
-  ROMol *m;
+  ROMol *m = nullptr;
   std::string smi, refSmi;
-  int count;
+  int count = 0;
 
   smi = "C(=S)/N=c(/n1C)scc1";
   m = SmilesToMol(smi);
@@ -1739,9 +1739,9 @@ void testIssue190() {
   BOOST_LOG(rdInfoLog) << "-----------------------\n Testing Issue 190: "
                           "BondDirs incorrectly cleared."
                        << std::endl;
-  ROMol *m;
+  ROMol *m = nullptr;
   std::string smi, refSmi;
-  int count;
+  int count = 0;
 
   smi = "O\\N=C\\NC(\\C)=N/OC";
   m = SmilesToMol(smi);
@@ -1933,7 +1933,7 @@ void testShortestPath() {
 void testIssue210() {
   BOOST_LOG(rdInfoLog) << "-----------------------\n Testing Issue 210"
                        << std::endl;
-  ROMol *m, *m2;
+  ROMol *m = nullptr, *m2 = nullptr;
 
   std::string smi = "C1CC1";
   m = SmilesToMol(smi);
@@ -1953,7 +1953,7 @@ void testIssue210() {
 void testIssue211() {
   BOOST_LOG(rdInfoLog) << "-----------------------\n Testing Issue 211"
                        << std::endl;
-  ROMol *m;
+  ROMol *m = nullptr;
 
   std::string smi = "P(c1ccccc1)(c1ccccc1)c1ccccc1";
   m = SmilesToMol(smi);
@@ -1970,7 +1970,7 @@ void testIssue211() {
 void testIssue212() {
   BOOST_LOG(rdInfoLog) << "-----------------------\n Testing Issue 212"
                        << std::endl;
-  ROMol *m, *m2;
+  ROMol *m = nullptr, *m2 = nullptr;
   std::string smi, mb;
   smi = "C";
   m = SmilesToMol(smi);
@@ -1997,7 +1997,7 @@ void testAddHsCoords() {
   BOOST_LOG(rdInfoLog)
       << "-----------------------\n Testing AddHs with coordinates"
       << std::endl;
-  ROMol *m, *m2;
+  ROMol *m = nullptr, *m2 = nullptr;
   RDGeom::Point3D v;
   double bondLength = PeriodicTable::getTable()->getRb0(1) +
                       PeriodicTable::getTable()->getRb0(6);
@@ -2209,7 +2209,7 @@ void testAddHsCoords() {
 void testSanitOps() {
   BOOST_LOG(rdInfoLog) << "-----------------------\n Sanitization special cases"
                        << std::endl;
-  ROMol *m;
+  ROMol *m = nullptr;
   std::string smi, pathName;
 
   smi = "CN(=O)=O";
@@ -2426,7 +2426,7 @@ void testAddConformers() {
 
   std::string smi = "CC";
   ROMol *m = SmilesToMol(smi);
-  unsigned int i;
+  unsigned int i = 0;
   for (i = 0; i < 5; i++) {
     auto *conf = new Conformer(2);
     conf->setAtomPos(0, RDGeom::Point3D(0.0, 0.0, 0.0));
@@ -2499,7 +2499,7 @@ void testHsAndAromaticity() {
   BOOST_LOG(rdInfoLog)
       << "-----------------------\n Additional Aromaticity Cases" << std::endl;
   std::string smi;
-  ROMol *mol;
+  ROMol *mol = nullptr;
 
   smi = "[CH]1-[CH]-[CH]-[CH]-[CH]-[CH]-1";
   mol = SmilesToMol(smi);
@@ -2531,7 +2531,7 @@ void testSFIssue1694023() {
   BOOST_LOG(rdInfoLog) << "-----------------------\n Testing sf.net issue "
                           "1694023 (bad chiral smiles after removing Hs) "
                        << std::endl;
-  ROMol *m;
+  ROMol *m = nullptr;
 
   std::string smi;
 
@@ -2626,7 +2626,7 @@ void testSFIssue1719053() {
   BOOST_LOG(rdInfoLog) << "-----------------------\n Testing sf.net issue "
                           "1719053 (Ring stereochemistry incorrectly removed) "
                        << std::endl;
-  ROMol *m;
+  ROMol *m = nullptr;
 
   std::string smi;
 
@@ -2687,7 +2687,7 @@ void testSFIssue1811276() {
   BOOST_LOG(rdInfoLog) << "-----------------------\n Testing sf.net issue "
                           "1811276 (kekulization failing) "
                        << std::endl;
-  ROMol *m;
+  ROMol *m = nullptr;
 
   std::string smi;
 
@@ -2733,10 +2733,10 @@ void testSFIssue1836576() {
   BOOST_LOG(rdInfoLog) << "-----------------------\n Testing sf.net issue "
                           "1836576 (sanitization crash) "
                        << std::endl;
-  RWMol *m;
+  RWMol *m = nullptr;
 
   std::string smi;
-  bool ok;
+  bool ok = false;
 
   // the original form of the test runs foul of the rules for explicit
   // valence on B:
@@ -2747,7 +2747,7 @@ void testSFIssue1836576() {
   m = SmilesToMol(smi, false, false);
   TEST_ASSERT(m);
 
-  unsigned int opThatFailed;
+  unsigned int opThatFailed = 0;
   ok = false;
   try {
     MolOps::sanitizeMol(*m, opThatFailed);
@@ -2765,7 +2765,7 @@ void testChiralityAndRemoveHs() {
   BOOST_LOG(rdInfoLog)
       << "-----------------------\n Testing impact of removeHs on chirality"
       << std::endl;
-  ROMol *m, *m2;
+  ROMol *m = nullptr, *m2 = nullptr;
 
   std::string smi, code;
 
@@ -2940,7 +2940,7 @@ void testSFIssue1894348() {
   BOOST_LOG(rdInfoLog) << "-----------------------\n Testing SFIssue1894348 "
                           "(impact of removeHs on bond stereo atoms)"
                        << std::endl;
-  RWMol *m, *m2;
+  RWMol *m = nullptr, *m2 = nullptr;
 
   std::string smi;
 
@@ -2986,7 +2986,7 @@ void testAromaticityEdges() {
   BOOST_LOG(rdInfoLog)
       << "-----------------------\n Testing some aromaticity edge cases "
       << std::endl;
-  RWMol *m;
+  RWMol *m = nullptr;
 
   std::string smi;
 
@@ -3100,7 +3100,7 @@ void testAromaticityEdges() {
 void testSFIssue1942657() {
   BOOST_LOG(rdInfoLog)
       << "-----------------------\n Testing sf.net issue 1942657 " << std::endl;
-  RWMol *m;
+  RWMol *m = nullptr;
 
   std::string smi;
 
@@ -3142,7 +3142,7 @@ void testSFIssue1942657() {
 void testSFIssue1968608() {
   BOOST_LOG(rdInfoLog)
       << "-----------------------\n Testing sf.net issue 198608 " << std::endl;
-  RWMol *m;
+  RWMol *m = nullptr;
 
   std::string smi;
 
@@ -3163,7 +3163,7 @@ void testHybridization() {
       << std::endl;
 
   {
-    RWMol *m;
+    RWMol *m = nullptr;
     std::string smi = "CCC";
     m = SmilesToMol(smi);
     TEST_ASSERT(m);
@@ -3173,7 +3173,7 @@ void testHybridization() {
   }
 
   {
-    RWMol *m;
+    RWMol *m = nullptr;
     std::string smi = "CNC";
     m = SmilesToMol(smi);
     TEST_ASSERT(m);
@@ -3183,7 +3183,7 @@ void testHybridization() {
   }
 
   {
-    RWMol *m;
+    RWMol *m = nullptr;
     std::string smi = "COC";
     m = SmilesToMol(smi);
     TEST_ASSERT(m);
@@ -3193,7 +3193,7 @@ void testHybridization() {
   }
 
   {
-    RWMol *m;
+    RWMol *m = nullptr;
     std::string smi = "C[C-2]C";
     m = SmilesToMol(smi);
     TEST_ASSERT(m);
@@ -3203,7 +3203,7 @@ void testHybridization() {
   }
 
   {
-    RWMol *m;
+    RWMol *m = nullptr;
     std::string smi = "C[CH-]C";
     m = SmilesToMol(smi);
     TEST_ASSERT(m);
@@ -3213,7 +3213,7 @@ void testHybridization() {
   }
 
   {
-    RWMol *m;
+    RWMol *m = nullptr;
     std::string smi = "C[CH]C";
     m = SmilesToMol(smi);
     TEST_ASSERT(m);
@@ -3223,7 +3223,7 @@ void testHybridization() {
   }
 
   {
-    RWMol *m;
+    RWMol *m = nullptr;
     std::string smi = "C[C]C";
     m = SmilesToMol(smi);
     TEST_ASSERT(m);
@@ -3233,7 +3233,7 @@ void testHybridization() {
   }
 
   {
-    RWMol *m;
+    RWMol *m = nullptr;
     std::string smi = "C[C-]C";
     m = SmilesToMol(smi);
     TEST_ASSERT(m);
@@ -3243,7 +3243,7 @@ void testHybridization() {
   }
 
   {
-    RWMol *m;
+    RWMol *m = nullptr;
     std::string smi = "C[CH+]C";
     m = SmilesToMol(smi);
     TEST_ASSERT(m);
@@ -3253,7 +3253,7 @@ void testHybridization() {
   }
 
   {
-    RWMol *m;
+    RWMol *m = nullptr;
     std::string smi = "CC=C";
     m = SmilesToMol(smi);
     TEST_ASSERT(m);
@@ -3263,7 +3263,7 @@ void testHybridization() {
   }
 
   {
-    RWMol *m;
+    RWMol *m = nullptr;
     std::string smi = "CN=C";
     m = SmilesToMol(smi);
     TEST_ASSERT(m);
@@ -3273,7 +3273,7 @@ void testHybridization() {
   }
 
   {
-    RWMol *m;
+    RWMol *m = nullptr;
     std::string smi = "C[C-]=C";
     m = SmilesToMol(smi);
     TEST_ASSERT(m);
@@ -3283,7 +3283,7 @@ void testHybridization() {
   }
 
   {
-    RWMol *m;
+    RWMol *m = nullptr;
     std::string smi = "C[C]=C";
     m = SmilesToMol(smi);
     TEST_ASSERT(m);
@@ -3293,7 +3293,7 @@ void testHybridization() {
   }
 
   {
-    RWMol *m;
+    RWMol *m = nullptr;
     std::string smi = "C[N+]=C";
     m = SmilesToMol(smi);
     TEST_ASSERT(m);
@@ -3303,7 +3303,7 @@ void testHybridization() {
   }
 
   {
-    RWMol *m;
+    RWMol *m = nullptr;
     std::string smi = "C#C";
     m = SmilesToMol(smi);
     TEST_ASSERT(m);
@@ -3312,7 +3312,7 @@ void testHybridization() {
   }
 
   {
-    RWMol *m;
+    RWMol *m = nullptr;
     std::string smi = "C#[C-]";
     m = SmilesToMol(smi);
     TEST_ASSERT(m);
@@ -3321,7 +3321,7 @@ void testHybridization() {
   }
 
   {
-    RWMol *m;
+    RWMol *m = nullptr;
     std::string smi = "C#[C]";
     m = SmilesToMol(smi);
     TEST_ASSERT(m);
@@ -3330,7 +3330,7 @@ void testHybridization() {
   }
 
   {
-    RWMol *m;
+    RWMol *m = nullptr;
     std::string smi = "C[O]";
     m = SmilesToMol(smi);
     TEST_ASSERT(m);
@@ -3339,7 +3339,7 @@ void testHybridization() {
   }
 
   {
-    RWMol *m;
+    RWMol *m = nullptr;
     std::string smi = "C[N-]";
     m = SmilesToMol(smi);
     TEST_ASSERT(m);
@@ -3688,7 +3688,7 @@ void testSanitizeNonringAromatics() {
 
     RWMol *m = SmilesToMol(smi, 0, false);
     bool ok = false;
-    unsigned int opThatFailed;
+    unsigned int opThatFailed = 0;
     try {
       MolOps::sanitizeMol(*m, opThatFailed);
     } catch (MolSanitizeException &) {
@@ -3925,7 +3925,7 @@ void testSFNetIssue3185548() {
     TEST_ASSERT(m);
 
     m->getRingInfo()->reset();
-    unsigned int nsssr;
+    unsigned int nsssr = 0;
     VECT_INT_VECT sssrs;
     nsssr = MolOps::findSSSR(*m, sssrs);
     TEST_ASSERT(nsssr = 48);
@@ -7121,7 +7121,7 @@ void testKekulizeErrorReporting() {
   {
     sstrm.str("");
     std::string smi = "c1cccc1";
-    ROMol *m;
+    ROMol *m = nullptr;
     try {
       m = SmilesToMol(smi);
     } catch (MolSanitizeException &) {
@@ -7134,7 +7134,7 @@ void testKekulizeErrorReporting() {
   {
     sstrm.str("");
     std::string smi = "c1ccccc1.c1cccc1";
-    ROMol *m;
+    ROMol *m = nullptr;
     try {
       m = SmilesToMol(smi);
     } catch (MolSanitizeException &) {
@@ -7147,7 +7147,7 @@ void testKekulizeErrorReporting() {
   {
     sstrm.str("");
     std::string smi = "c1cccc1.c1cccc1";
-    ROMol *m;
+    ROMol *m = nullptr;
     try {
       m = SmilesToMol(smi);
     } catch (MolSanitizeException &) {
@@ -7526,7 +7526,7 @@ void testGithub1605() {
     {  // easy to test; we shouldn't throw an exception. :-)
       RWMol *m = SmilesToMol(smiles, 0, false);
       TEST_ASSERT(m);
-      unsigned int failed;
+      unsigned int failed = 0;
       MolOps::sanitizeMol(
           *m, failed,
           MolOps::SANITIZE_SETAROMATICITY | MolOps::SANITIZE_ADJUSTHS);
@@ -8068,8 +8068,8 @@ void testRemoveAndTrackIsotopes() {
   TEST_ASSERT(m.get());
   std::unique_ptr<IsotopicHsCount> m_isotopicHsPerHeavy(
       new IsotopicHsCount(*m));
-  unsigned int m_numExplicitHs;
-  unsigned int m_numImplicitHs;
+  unsigned int m_numExplicitHs = 0;
+  unsigned int m_numImplicitHs = 0;
   IsotopicHsCount::countExplicitImplicitHs(*m, m_numExplicitHs,
                                            m_numImplicitHs);
   TEST_ASSERT(m_numExplicitHs == 0);
@@ -8090,8 +8090,8 @@ void testRemoveAndTrackIsotopes() {
       !mNoH->getAtomWithIdx(30)->hasProp(common_properties::_isotopicHs));
 
   IsotopicHsCount mNoH_isotopicHsPerHeavy(*mNoH);
-  unsigned int mNoH_numExplicitHs;
-  unsigned int mNoH_numImplicitHs;
+  unsigned int mNoH_numExplicitHs = 0;
+  unsigned int mNoH_numImplicitHs = 0;
   IsotopicHsCount::countExplicitImplicitHs(*mNoH, mNoH_numExplicitHs,
                                            mNoH_numImplicitHs);
   TEST_ASSERT(mNoH_numExplicitHs == 0);
@@ -8100,8 +8100,8 @@ void testRemoveAndTrackIsotopes() {
   std::unique_ptr<ROMol> mH(MolOps::addHs(*mNoH));
   std::unique_ptr<IsotopicHsCount> mH_isotopicHsPerHeavy(
       new IsotopicHsCount(*mH));
-  unsigned int mH_numExplicitHs;
-  unsigned int mH_numImplicitHs;
+  unsigned int mH_numExplicitHs = 0;
+  unsigned int mH_numImplicitHs = 0;
   IsotopicHsCount::countExplicitImplicitHs(*mH, mH_numExplicitHs,
                                            mH_numImplicitHs);
   TEST_ASSERT(mH_numExplicitHs == 0);
@@ -8114,8 +8114,8 @@ void testRemoveAndTrackIsotopes() {
   TEST_ASSERT(m->getNumAtoms() == mH2->getNumAtoms());
   std::unique_ptr<IsotopicHsCount> mH2_isotopicHsPerHeavy(
       new IsotopicHsCount(*mH2));
-  unsigned int mH2_numExplicitHs;
-  unsigned int mH2_numImplicitHs;
+  unsigned int mH2_numExplicitHs = 0;
+  unsigned int mH2_numImplicitHs = 0;
   IsotopicHsCount::countExplicitImplicitHs(*mH2, mH2_numExplicitHs,
                                            mH2_numImplicitHs);
   MatchVectType matchH2;
