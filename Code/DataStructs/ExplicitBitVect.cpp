@@ -225,7 +225,7 @@ std::string ExplicitBitVect::toString() const {
   RDKit::streamWrite(ss, tInt);
 
   int prev = -1;
-  unsigned int zeroes;
+  unsigned int zeroes = 0;
   for (unsigned int i = 0; i < d_size; i++) {
     if ((bool)(*dp_bits)[i]) {
       zeroes = i - prev - 1;
